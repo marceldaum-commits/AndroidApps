@@ -42,6 +42,7 @@ fun GardenScreen(
     onShop: () -> Unit,
     decos: Set<String> = emptySet(),
     reminderPrompt: (@Composable () -> Unit)? = null,
+    onDuel: (() -> Unit)? = null,
 ) {
     val cards = remember(beds) { beds.flatMap { it.cards } }
     val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }
@@ -101,6 +102,9 @@ fun GardenScreen(
         item { Box(Modifier.padding(horizontal = 16.dp)) { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) } }
         if (beds.isEmpty()) item {
             Box(Modifier.padding(horizontal = 16.dp)) { EmptyGarden(onShop) }
+        }
+        if (onDuel != null && beds.isNotEmpty()) item {
+            Box(Modifier.padding(horizontal = 16.dp)) { de.wissensgarten.app.ui.duel.DuelEntryCard(onDuel) }
         }
         items(beds, key = { it.bed.id }) { b -> Box(Modifier.padding(horizontal = 16.dp)) { BedCard(b, now) { onOpenBed(b.bed.id) } } }
         if (beds.isNotEmpty()) item {

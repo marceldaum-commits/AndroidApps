@@ -104,6 +104,10 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
         )
     }
 
+    suspend fun addDew(profileId: String, amount: Int) = db.withTransaction {
+        dao.profile(profileId)?.let { dao.updateProfile(it.copy(dewdrops = it.dewdrops + amount)) }
+    }
+
     // --- Gartenladen ---
 
     fun inventory(profileId: String) = dao.inventory(profileId)

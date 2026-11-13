@@ -15,6 +15,8 @@ import de.wissensgarten.app.ui.review.ReviewScreen
 import de.wissensgarten.app.ui.shop.ShopScreen
 import de.wissensgarten.app.ui.theme.WissensgartenTheme
 import de.wissensgarten.app.ui.store.StoreScreen
+import de.wissensgarten.app.ui.duel.DuelHubScreen
+import de.wissensgarten.app.ui.duel.DuelPlayScreen
 import de.wissensgarten.core.data.ThemeMode
 import de.wissensgarten.core.data.db.*
 import de.wissensgarten.core.model.*
@@ -150,6 +152,39 @@ class ScreenshotTest {
     @Test fun storeDeco() = shot("12_laden_deko") {
         StoreScreen(profile, listOf(InventoryEntity("p1", "zwerg", true, 0), InventoryEntity("p1", "windrad", false, 0)), garden,
             emptyList(), { _, _ -> }, { _, _ -> }, { _, _ -> }, {}, initialTab = 1)
+    }
+
+    private val duel by lazy {
+        Duel("s1-erdkunde-europa", 1, 4242, listOf(DuelResult("Lena", "🦊", 8, 74_000, 1012), DuelResult("Papa", "🐻", 7, 98_000, 841)))
+    }
+
+    @Test fun duelHub() = shot("13_duell_start") {
+        DuelHubScreen("Ben", packs, listOf(duel.copy(seed = 77)), duel, {}, {}, { true }, {}, {})
+    }
+
+    @Test fun duelQuestion() = shot("14_duell_frage", settle = 0, prepare = { r ->
+        r.mainClock.autoAdvance = false
+        r.mainClock.advanceTimeBy(2300)
+        r.mainClock.advanceTimeBy(5000)
+    }) {
+        DuelPlayScreen(duel, pack("s1-erdkunde-europa"), "Ben", { _, _, _ -> duel to 0 }, {})
+    }
+
+    @Test fun duelResult() = shot("15_duell_ergebnis", settle = 0, prepare = { r ->
+        r.mainClock.autoAdvance = false
+        r.mainClock.advanceTimeBy(2300)
+        val qs = Duels.questions(pack("s1-erdkunde-europa"), duel.seed)
+        qs.forEachIndexed { i, q ->
+            r.mainClock.advanceTimeBy(600L + i * 150)
+            r.onNodeWithText(q.answer, useUnmergedTree = true).performClick()
+            r.mainClock.advanceTimeBy(900)
+        }
+        r.mainClock.advanceTimeBy(1600)
+    }) {
+        var d = duel
+        DuelPlayScreen(duel, pack("s1-erdkunde-europa"), "Ben", { c, ms, sc ->
+            d = duel.withResult(DuelResult("Ben", "🐸", c, ms, sc)); d to (c * 2 + 10)
+        }, {})
     }
 
     @Test fun bed() = shot("05_beet") {

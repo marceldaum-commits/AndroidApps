@@ -36,6 +36,11 @@ import de.wissensgarten.app.ui.review.ReviewScreen
 import de.wissensgarten.app.ui.settings.SettingsScreen
 import de.wissensgarten.app.ui.shop.ShopScreen
 import de.wissensgarten.app.ui.store.StoreScreen
+import de.wissensgarten.app.ui.duel.DuelHubScreen
+import de.wissensgarten.app.ui.duel.DuelPlayScreen
+import de.wissensgarten.app.ui.common.PackBrowser
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.unit.dp
 import de.wissensgarten.app.notify.ReminderPromptCard
 import de.wissensgarten.app.notify.rememberNotificationPermission
 import de.wissensgarten.app.ui.theme.WissensgartenTheme
@@ -57,6 +62,9 @@ object Routes {
     const val BED = "beet/{id}"
     fun bed(id: String) = "beet/$id"
     const val REVIEW = "giessen"
+    const val DUEL = "duell"
+    const val DUEL_PACK = "duell-paket"
+    const val DUEL_PLAY = "duell-spiel"
 }
 
 private data class Tab(val route: String, val label: String, val icon: ImageVector)
@@ -72,11 +80,19 @@ private val TABS = listOf(
 class MainActivity : ComponentActivity() {
     private val vm: AppViewModel by viewModels()
     private val waterRequest = MutableStateFlow(false)
+    /** Duell-Code aus Link oder geteilter Nachricht */
+    private val duelRequest = MutableStateFlow<String?>(null)
+
+    private fun readDuelIntent(i: Intent?) {
+        val text = i?.dataString ?: i?.getStringExtra(Intent.EXTRA_TEXT)
+        if (text != null && text.contains("WG1-")) duelRequest.value = text
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         waterRequest.value = intent?.getBooleanExtra(EXTRA_WATER, false) == true
+        readDuelIntent(intent)
         val startRoute = if (vm.onboarded.value) Routes.GARDEN else Routes.ONBOARDING
 
         setContent {
@@ -92,6 +108,14 @@ class MainActivity : ComponentActivity() {
                     // Widget-Tipp: direkt in die Gieß-Runde
                     val water by waterRequest.collectAsStateWithLifecycle()
                     val beds by vm.beds.collectAsStateWithLifecycle()
+                    val duelText by duelRequest.collectAsStateWithLifecycle()
+                    val onboardedNow by vm.onboarded.collectAsStateWithLifecycle()
+                    LaunchedEffect(duelText, onboardedNow) {
+                        val t = duelText ?: return@LaunchedEffect
+                        if (!onboardedNow) return@LaunchedEffect
+                        duelRequest.value = null
+                        if (vm.openDuelCode(t)) nav.navigate(Routes.DUEL)
+                    }
                     LaunchedEffect(water, beds) {
                         if (water && beds.isNotEmpty()) {
                             waterRequest.value = false
@@ -107,6 +131,7 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         if (intent.getBooleanExtra(EXTRA_WATER, false)) waterRequest.value = true
+        readDuelIntent(intent)
     }
 
     override fun onResume() {
@@ -184,6 +209,7 @@ class MainActivity : ComponentActivity() {
                             onProfile = { goTab(Routes.FAMILY) },
                             onShop = { goTab(Routes.SHOP) },
                             decos = decos,
+                            onDuel = { nav.navigate(Routes.DUEL) },
                             reminderPrompt = if (asked) null else {
                                 { ReminderPromptCard(hour, onYes = askPermission, onNo = { vm.setReminder(false) }) }
                             },
@@ -213,6 +239,49 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 }
+                composable(Routes.DUEL) {
+                    val history by vm.duelHistory.collectAsStateWithLifecycle()
+                    DuelHubScreen(
+                        myName = profile?.name ?: "",
+                        packs = packs, history = history, preview = vm.currentDuel,
+                        onBack = { nav.popBackStack() },
+                        onNew = { nav.navigate(Routes.DUEL_PACK) },
+                        onCode = vm::openDuelCode,
+                        onPlay = { d -> vm.showDuel(d); nav.navigate(Routes.DUEL_PLAY) },
+                        onShowDuel = { vm.showDuel(it) },
+                    )
+                }
+                composable(Routes.DUEL_PACK) {
+                    Column(Modifier.fillMaxSize()) {
+                        PackBrowser(
+                            packs = packs, level = profile?.level ?: 0,
+                            isChosen = { false },
+                            onToggle = { p -> vm.newDuel(p); nav.navigate(Routes.DUEL_PLAY) { popUpTo(Routes.DUEL) } },
+                            chosenLabel = "", chooseLabel = "Duell",
+                            modifier = Modifier.fillMaxSize().statusBarsPadding(),
+                            header = {
+                                item {
+                                    Text("Worum geht's im Duell?", style = MaterialTheme.typography.headlineSmall)
+                                    Text("Wähle ein Wissenspaket – dein Gegner bekommt genau dieselben 10 Fragen.", style = MaterialTheme.typography.bodyMedium)
+                                }
+                            },
+                        )
+                    }
+                }
+                composable(Routes.DUEL_PLAY) {
+                    val d = vm.currentDuel
+                    val pack = d?.let { dd -> packs.firstOrNull { it.id == dd.packId } }
+                    if (d == null || pack == null) {
+                        Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.Center) {
+                            Text("Dieses Wissenspaket gibt es in deiner App-Version nicht. Bitte aktualisiere den Wissensgarten.")
+                            TextButton(onClick = { nav.popBackStack() }) { Text("Zurück") }
+                        }
+                    } else DuelPlayScreen(
+                        duel = d, pack = pack, myName = profile?.name ?: "Ich",
+                        onFinish = { c, ms, sc -> vm.finishDuel(c, ms, sc) },
+                        onClose = { nav.popBackStack(Routes.DUEL, inclusive = false).let { ok -> if (!ok) nav.navigate(Routes.DUEL) } },
+                    )
+                }
                 composable(Routes.FAMILY) {
                     val allBeds by vm.allBeds.collectAsStateWithLifecycle()
                     val logs by vm.weekLogs.collectAsStateWithLifecycle()
@@ -220,6 +289,7 @@ class MainActivity : ComponentActivity() {
                         profiles, profile?.id, allBeds, logs, now,
                         onSwitch = { vm.switchProfile(it); goTab(Routes.GARDEN) },
                         onAdd = { nav.navigate(Routes.ADD_PROFILE) },
+                        onDuel = { nav.navigate(Routes.DUEL) },
                     )
                 }
                 composable(Routes.SETTINGS) {

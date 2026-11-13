@@ -16,6 +16,8 @@ import de.wissensgarten.core.model.StudyCard
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import kotlinx.coroutines.launch
 
 /** Verbindet Datenbank, Pakete und Einstellungen mit der Oberfläche. */
@@ -68,6 +70,42 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun setBedSpecies(bedId: String, species: String) = viewModelScope.launch { repo.setBedSpecies(bedId, species) }
+
+    // --- Duell ---
+
+    val duelHistory = c.duels.duels
+
+    /** Duell, das als Nächstes gespielt bzw. angezeigt wird. */
+    var currentDuel by androidx.compose.runtime.mutableStateOf<de.wissensgarten.core.model.Duel?>(null)
+        private set
+
+    fun newDuel(pack: Pack) { currentDuel = de.wissensgarten.core.model.Duels.new(pack) }
+
+    fun showDuel(d: de.wissensgarten.core.model.Duel) { currentDuel = d }
+
+    /** Liest einen Code (auch aus einer ganzen Nachricht). */
+    fun openDuelCode(text: String): Boolean {
+        val d = de.wissensgarten.core.model.Duels.decode(text) ?: return false
+        currentDuel = d
+        return true
+    }
+
+    /** Ergebnis anhängen, speichern, Tautropfen gutschreiben. @return neuer Stand und verdiente Tropfen */
+    fun finishDuel(correct: Int, millis: Long, score: Int): Pair<de.wissensgarten.core.model.Duel, Int> {
+        val p = profile.value
+        val d0 = currentDuel ?: return de.wissensgarten.core.model.Duels.new(packs.value.first()) to 0
+        val me = de.wissensgarten.core.model.DuelResult(p?.name ?: "Ich", p?.avatar ?: "🌱", correct, millis, score)
+        val wasLeader = d0.results.isNotEmpty() && d0.results.all { score > it.score }
+        val d = d0.withResult(me)
+        currentDuel = d
+        c.duels.save(d)
+        var dew = 0
+        if (p != null && c.duels.claimReward(p.id, d)) {
+            dew = correct * 2 + if (wasLeader) 10 else 0
+            viewModelScope.launch { repo.addDew(p.id, dew) }
+        }
+        return d to dew
+    }
 
     val allBeds: StateFlow<List<BedWithCards>> =
         repo.allBeds().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())

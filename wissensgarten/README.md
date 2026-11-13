@@ -4,6 +4,10 @@ Lernkarten als gemütliches Garten-Spiel – für die ganze Familie, von Klasse 
 Jede Karte ist eine Pflanze: Sie wächst mit dem Wissen und welkt nach der Vergessenskurve.
 Gießen = Wiederholen zum richtigen Zeitpunkt.
 
+| Duell | Duell-Frage | Duell-Ergebnis |
+| --- | --- | --- |
+| ![](screenshots/13_duell_start.png) | ![](screenshots/14_duell_frage.png) | ![](screenshots/15_duell_ergebnis.png) |
+
 | Geschmückter Garten | … bei Nacht | Laden: Pflanzen | Laden: Deko |
 | --- | --- | --- | --- |
 | ![](screenshots/04d_garten_geschmueckt.png) | ![](screenshots/04e_garten_geschmueckt_nacht.png) | ![](screenshots/11_laden_pflanzen.png) | ![](screenshots/12_laden_deko.png) |
@@ -38,6 +42,9 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 - **Gartenladen**: Tautropfen gegen 7 Pflanzenarten (Sonnenblume, Tulpe, Kaktus, Rose, Tanne, Kirschbaum,
   Zauberblume – pro Beet wählbar) und 9 Deko-Stücke (Zaun, Zwerg, Windrad, Bank, Vogelhaus, Teich, Laterne,
   Bienenstock, Regenbogen) tauschen. Reiter „Wissen Plus“ als Platz für spätere Bezahl-Pakete.
+- **Duell per Code** (ohne Server): Paket wählen, 10 Fragen à 15 s, Punkte für Richtig + Tempo. Der Code geht per
+  WhatsApp raus; wer ihn einfügt (oder die Nachricht an die App teilt), spielt dieselben Fragen und hängt sein Ergebnis an.
+  Siegerpodest, Konfetti, Tautropfen. Im Code stehen nur Profilname, Tier und Punkte (`core/model/Duel.kt`).
 - **Gieß-Erinnerung**: täglich zur Wunschzeit, nur wenn Pflanzen Durst haben, für alle Profile in einer Nachricht
   (WorkManager, `notify/Reminders.kt`).
 - **Ton**: alle Geräusche werden im Code erzeugt (`ui/fx/Synth.kt`) – keine Audiodateien, keine Lizenzen.
@@ -75,7 +82,8 @@ Benötigt JDK 17+ und Android SDK (Plattform 36).
 
 ## Nächste Ideen
 
-- Online-Duell (braucht Server, Konten, Datenschutz-Konzept für Kinder)
+- Anklickbarer Duell-Link (braucht eine kleine Webseite für Android App Links)
+- Echtes Online-Duell mit Konten (Server, Datenschutz-Konzept für Kinder)
 - Pakete aus dem Internet nachladen; Karten-Sets teilen (Link/QR), CSV-Import
 - Dungeon-Modus: gewachsene Pflanzen werden Kampfkarten
 - Play Store: eigener Upload-Schlüssel, Datenschutzerklärung, Billing für „Plus“

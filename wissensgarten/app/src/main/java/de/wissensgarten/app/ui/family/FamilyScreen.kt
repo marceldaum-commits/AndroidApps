@@ -36,6 +36,7 @@ fun FamilyScreen(
     now: Long,
     onSwitch: (String) -> Unit,
     onAdd: () -> Unit,
+    onDuel: () -> Unit = {},
 ) {
     LazyColumn(
         Modifier.fillMaxSize().statusBarsPadding(),
@@ -49,6 +50,7 @@ fun FamilyScreen(
                 style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp),
             )
         }
+        item { de.wissensgarten.app.ui.duel.DuelEntryCard(onDuel) }
         items(profiles, key = { it.id }) { p ->
             ProfileCard(
                 p, p.id == activeId,

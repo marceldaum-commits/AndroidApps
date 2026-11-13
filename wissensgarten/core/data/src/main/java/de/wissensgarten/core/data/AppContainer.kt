@@ -11,4 +11,5 @@ class AppContainer(context: Context) {
     val catalog: PackCatalog by lazy { PackCatalog(app.assets) }
     val settings: Settings by lazy { Settings(app) }
     val entitlements: Entitlements by lazy { LocalEntitlements() }
+    val duels: DuelHistory by lazy { DuelHistory(app) }
 }
