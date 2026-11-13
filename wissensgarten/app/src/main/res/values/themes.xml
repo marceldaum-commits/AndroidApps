@@ -1,0 +1,10 @@
+<resources>
+    <style name="Theme.Wissensgarten" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/window_bg</item>
+    </style>
+    <color name="cream">#FBF6EC</color>
+    <color name="window_bg">#FBF6EC</color>
+    <color name="moss">#3F6B3A</color>
+    <color name="leaf">#6FA35A</color>
+    <color name="soil">#7A5232</color>
+</resources>

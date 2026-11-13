@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Wissensgarten</string>
+    <string name="widget_name">Wissensgarten</string>
+    <string name="widget_desc">Zeigt, welche Pflanzen Durst haben</string>
+</resources>

@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Erdhügel -->
+    <path android:fillColor="#7A5232" android:pathData="M30,74 Q54,62 78,74 L78,78 Q54,84 30,78 Z"/>
+    <!-- Stängel -->
+    <path android:strokeColor="#3F6B3A" android:strokeWidth="4" android:strokeLineCap="round"
+        android:pathData="M54,72 Q52,56 54,40"/>
+    <!-- Blätter -->
+    <path android:fillColor="#6FA35A" android:pathData="M53,60 Q38,58 34,46 Q48,46 53,60 Z"/>
+    <path android:fillColor="#3F6B3A" android:pathData="M55,54 Q70,52 74,40 Q60,40 55,54 Z"/>
+    <!-- Blüte als Buch: zwei Seiten -->
+    <path android:fillColor="#F28AB2" android:pathData="M54,40 Q46,30 38,32 L38,26 Q47,24 54,32 Z"/>
+    <path android:fillColor="#E26A9C" android:pathData="M54,40 Q62,30 70,32 L70,26 Q61,24 54,32 Z"/>
+    <path android:fillColor="#FFD54F" android:pathData="M54,30 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0"/>
+</vector>
