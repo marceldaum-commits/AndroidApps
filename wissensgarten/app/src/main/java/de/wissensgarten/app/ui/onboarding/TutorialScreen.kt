@@ -14,6 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.wissensgarten.app.ui.common.Plant
 import de.wissensgarten.app.ui.common.formatDays
+import de.wissensgarten.app.ui.fx.*
 import de.wissensgarten.core.model.Memory
 import de.wissensgarten.core.model.Rating
 import de.wissensgarten.core.model.Scheduler
@@ -35,6 +36,8 @@ fun TutorialScreen(onDone: () -> Unit) {
     var beforeStability by remember { mutableDoubleStateOf(0.0) }
     val grow = remember { Animatable(1f) }
     val scope = rememberCoroutineScope()
+    val sfx = LocalSfx.current
+    val particles = rememberParticles()
     val now = start + (days * Scheduler.DAY_MS).toLong()
 
     fun growTo(m: Memory) {
@@ -42,6 +45,7 @@ fun TutorialScreen(onDone: () -> Unit) {
         scope.launch { grow.snapTo(0.5f); grow.animateTo(1f, tween(700)) }
     }
 
+    Box(Modifier.fillMaxSize()) {
     Scaffold { pad ->
         Column(
             Modifier.fillMaxSize().padding(pad).verticalScroll(rememberScrollState()).padding(24.dp),
@@ -73,7 +77,7 @@ fun TutorialScreen(onDone: () -> Unit) {
                 0 -> Explain(
                     "Jede Karte ist ein Samen 🌰",
                     "In deinem Garten wächst Wissen. Jede Frage, die du lernst, ist eine eigene Pflanze.",
-                ) { Button(onClick = { step = 1 }, Modifier.fillMaxWidth().height(54.dp)) { Text("Ersten Samen säen") } }
+                ) { JuicyButton(onClick = { step = 1 }, Modifier.fillMaxWidth().height(54.dp), sound = Sound.PLOP) { Text("Ersten Samen säen") } }
 
                 1 -> Explain("Probier's aus!", "Wie viele Beine hat eine Spinne?") {
                     listOf("6", "8", "10").forEach { o ->
@@ -87,6 +91,7 @@ fun TutorialScreen(onDone: () -> Unit) {
                             onClick = {
                                 if (answered == null) {
                                     answered = o
+                                    if (o == "8") { sfx?.play(Sound.CORRECT); particles.burst(Burst.SPARKLE, 0.5f, 0.6f, 26) } else sfx?.play(Sound.WRONG)
                                     growTo(Scheduler.review(memory, if (o == "8") Rating.GOOD else Rating.AGAIN, start))
                                 }
                             },
@@ -99,7 +104,7 @@ fun TutorialScreen(onDone: () -> Unit) {
                             if (answered == "8") "Richtig! Dein Samen keimt. 🌱" else "Fast – es sind 8. Auch so keimt der Samen, nur schwächer.",
                             textAlign = TextAlign.Center, modifier = Modifier.padding(8.dp),
                         )
-                        Button(onClick = { step = 2 }, Modifier.fillMaxWidth().height(54.dp)) { Text("Weiter") }
+                        JuicyButton(onClick = { step = 2 }, Modifier.fillMaxWidth().height(54.dp)) { Text("Weiter") }
                     }
                 }
 
@@ -116,7 +121,7 @@ fun TutorialScreen(onDone: () -> Unit) {
                                 "Laut Vergessenskurve ist das nach ${formatDays(memory.stability)} der Fall.",
                             textAlign = TextAlign.Center,
                         )
-                        Button(onClick = { step = 3 }, Modifier.fillMaxWidth().height(54.dp)) { Text("Weiter") }
+                        JuicyButton(onClick = { step = 3 }, Modifier.fillMaxWidth().height(54.dp)) { Text("Weiter") }
                     }
                 }
 
@@ -127,6 +132,9 @@ fun TutorialScreen(onDone: () -> Unit) {
                     Button(
                         onClick = {
                             beforeStability = memory.stability
+                            sfx?.play(Sound.WATER)
+                            particles.burst(Burst.WATER, 0.5f, 0.1f, 30)
+                            scope.launch { kotlinx.coroutines.delay(500); sfx?.play(Sound.LEVEL_UP); particles.burst(Burst.LEAVES, 0.5f, 0.3f, 30) }
                             growTo(Scheduler.review(memory, Rating.GOOD, now))
                             step = 4
                         },
@@ -140,9 +148,11 @@ fun TutorialScreen(onDone: () -> Unit) {
                     "Vorher hielt das Wissen ${formatDays(beforeStability)}, jetzt etwa ${formatDays(memory.stability)}. " +
                         "Mit jedem rechtzeitigen Gießen wird aus dem Keimling ein Busch, eine Blüte und schließlich ein Baum – " +
                         "dann sitzt das Wissen für Monate.\n\nKein Stress: Welke Pflanzen kann man jederzeit retten.",
-                ) { Button(onClick = onDone, Modifier.fillMaxWidth().height(54.dp)) { Text("Zu meinem Garten") } }
+                ) { JuicyButton(onClick = onDone, Modifier.fillMaxWidth().height(54.dp)) { Text("Zu meinem Garten") } }
             }
         }
+    }
+    ParticleLayer(particles, Modifier.matchParentSize())
     }
 }
 

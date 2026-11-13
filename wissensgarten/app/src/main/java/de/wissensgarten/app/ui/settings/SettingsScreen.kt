@@ -20,6 +20,8 @@ fun SettingsScreen(
     profile: ProfileEntity,
     canDeleteProfile: Boolean,
     theme: ThemeMode,
+    sound: Boolean,
+    onSound: (Boolean) -> Unit,
     packCount: Int,
     cardCount: Int,
     version: String,
@@ -57,6 +59,13 @@ fun SettingsScreen(
                 "Weniger neue Samen = weniger Gießarbeit an den Folgetagen.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+
+        Section("Ton") {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Geräusche & Musik", Modifier.weight(1f))
+                Switch(checked = sound, onCheckedChange = onSound)
+            }
         }
 
         Section("Aussehen") {

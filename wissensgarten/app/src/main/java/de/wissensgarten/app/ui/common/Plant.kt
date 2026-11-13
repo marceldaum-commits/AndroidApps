@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.StrokeCap
 import de.wissensgarten.core.model.Stage
+import de.wissensgarten.app.ui.fx.LocalWind
 import de.wissensgarten.app.ui.theme.Soil
 import de.wissensgarten.app.ui.theme.SoilDark
 import kotlin.math.PI
@@ -33,10 +34,17 @@ private val Bark = Color(0xFF6B4A2B)
  */
 @Composable
 fun Plant(stage: Stage, wilt: Float, hue: Float, variant: Int, modifier: Modifier = Modifier, grow: Float = 1f) {
-    Canvas(modifier) { drawPlant(stage, wilt, hue, variant, grow) }
+    val wind = LocalWind.current
+    Canvas(modifier) {
+        // Wind nur in der Zeichenphase lesen – kein Neuaufbau der Oberfläche pro Bild
+        val t = wind?.value ?: 0f
+        val strength = (if (stage == Stage.TREE) 1.2f else 3.5f) * (1f - wilt * 0.6f)
+        val sway = (sin(t * 1.6f + variant * 0.7f) + 0.4f * sin(t * 3.1f + variant)) * strength
+        drawPlant(stage, wilt, hue, variant, grow, sway)
+    }
 }
 
-fun DrawScope.drawPlant(stage: Stage, wilt: Float, hue: Float, variant: Int, grow: Float = 1f) {
+fun DrawScope.drawPlant(stage: Stage, wilt: Float, hue: Float, variant: Int, grow: Float = 1f, sway: Float = 0f) {
     val w = size.width
     val h = size.height
     val base = Offset(w / 2, h * 0.86f)
@@ -55,6 +63,7 @@ fun DrawScope.drawPlant(stage: Stage, wilt: Float, hue: Float, variant: Int, gro
         return
     }
 
+    rotate(sway, pivot = base) {
     val heightFrac = when (stage) {
         Stage.SPROUT -> 0.22f
         Stage.SHOOT -> 0.40f
@@ -96,6 +105,7 @@ fun DrawScope.drawPlant(stage: Stage, wilt: Float, hue: Float, variant: Int, gro
     }
     if (stage == Stage.BLOOM) {
         drawFlower(tip, w * 0.13f * (0.5f + 0.5f * grow), petal, center, variant, wilt)
+    }
     }
 }
 

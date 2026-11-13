@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.wissensgarten.app.ui.common.*
+import de.wissensgarten.app.ui.fx.*
 import de.wissensgarten.core.model.Levels
 import de.wissensgarten.core.model.Pack
 import de.wissensgarten.core.model.Stage
@@ -74,7 +75,8 @@ fun OnboardingScreen(
                 Step.BEDS -> (if (total == 0) "Mindestens ein Beet wählen" else "$total ${if (total == 1) "Beet" else "Beete"} anlegen") to (total > 0)
             }
             Surface(tonalElevation = 3.dp) {
-                Button(
+                JuicyButton(
+                    sound = if (step == Step.BEDS) Sound.LEVEL_UP else Sound.TAP,
                     onClick = {
                         if (step == Step.BEDS) onFinish(name, avatar, level, chosen, ownBeds) else index++
                     },

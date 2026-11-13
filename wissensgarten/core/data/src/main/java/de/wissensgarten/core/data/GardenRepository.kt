@@ -83,7 +83,7 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
     suspend fun deleteCard(cardId: String) = dao.deleteCard(cardId)
 
     /** Eine Wiederholung speichern: Gedächtnis, Protokoll, Tautropfen, Samen-Zähler. */
-    suspend fun review(profileId: String, card: StudyCard, rating: Rating) = db.withTransaction {
+    suspend fun review(profileId: String, card: StudyCard, rating: Rating, dew: Int = baseDew(rating)) = db.withTransaction {
         val now = clock()
         val entity = dao.card(card.id) ?: return@withTransaction
         val wasSeed = entity.memory.isSeed
@@ -95,7 +95,7 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
         val seedsToday = if (p.seedDay == today) p.seedsToday else 0
         dao.updateProfile(
             p.copy(
-                dewdrops = p.dewdrops + if (rating == Rating.AGAIN) 1 else 3,
+                dewdrops = p.dewdrops + dew,
                 seedDay = today,
                 seedsToday = seedsToday + if (wasSeed) 1 else 0,
             )
@@ -144,6 +144,15 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
     }
 
     companion object {
+        fun baseDew(r: Rating) = if (r == Rating.AGAIN) 1 else 3
+
+        /** Serien-Bonus: ab 5 richtigen in Folge doppelt, ab 10 dreifach. */
+        fun comboMultiplier(streak: Int) = when {
+            streak >= 10 -> 3
+            streak >= 5 -> 2
+            else -> 1
+        }
+
         val OWN_BED_EMOJIS = listOf("✏️", "🌻", "📐", "🧪", "🌍", "📜", "💬", "🎵", "🧠", "⚽", "🍎", "🚗")
         val OWN_HUE = Subject.EIGENE.hue
     }

@@ -35,6 +35,9 @@ import de.wissensgarten.app.ui.review.ReviewScreen
 import de.wissensgarten.app.ui.settings.SettingsScreen
 import de.wissensgarten.app.ui.shop.ShopScreen
 import de.wissensgarten.app.ui.theme.WissensgartenTheme
+import de.wissensgarten.app.ui.fx.LocalSfx
+import de.wissensgarten.app.ui.fx.LocalWind
+import de.wissensgarten.app.ui.fx.rememberWind
 import kotlinx.coroutines.flow.MutableStateFlow
 
 object Routes {
@@ -72,7 +75,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val theme by vm.theme.collectAsStateWithLifecycle()
+            val soundOn by vm.settings.sound.collectAsStateWithLifecycle()
+            val sfx = (application as WissensgartenApp).sfx
+            LaunchedEffect(soundOn) { sfx.enabled = soundOn }
             WissensgartenTheme(theme) {
+              CompositionLocalProvider(LocalWind provides rememberWind(), LocalSfx provides sfx) {
                 Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     val nav = rememberNavController()
                     AppNav(nav, startRoute)
@@ -86,6 +93,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 }
+              }
             }
         }
     }
@@ -122,13 +130,14 @@ class MainActivity : ComponentActivity() {
             restoreState = true
         }
 
+        val sfx = LocalSfx.current
         Scaffold(
             bottomBar = {
                 if (showBar) NavigationBar {
                     TABS.forEach { t ->
                         NavigationBarItem(
                             selected = route == t.route,
-                            onClick = { goTab(t.route) },
+                            onClick = { sfx?.play(de.wissensgarten.app.ui.fx.Sound.TAP, volume = 0.5f); goTab(t.route) },
                             icon = { Icon(t.icon, null) },
                             label = { Text(t.label) },
                         )
@@ -188,9 +197,11 @@ class MainActivity : ComponentActivity() {
                 }
                 composable(Routes.SETTINGS) {
                     val theme by vm.theme.collectAsStateWithLifecycle()
+                    val sound by vm.settings.sound.collectAsStateWithLifecycle()
                     WithProfile(profile) { p ->
                         SettingsScreen(
                             profile = p, canDeleteProfile = profiles.size > 1, theme = theme,
+                            sound = sound, onSound = { vm.settings.setSound(it) },
                             packCount = packs.size, cardCount = packs.sumOf { it.cards.size }, version = BuildConfig.VERSION_NAME,
                             onTheme = { vm.setTheme(it) }, onUpdateProfile = { vm.updateProfile(it) },
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
@@ -218,7 +229,7 @@ class MainActivity : ComponentActivity() {
                         items = session,
                         beds = beds.associate { it.bed.id to it.bed },
                         simpleRating = profile?.simpleRating == true,
-                        onRate = vm::review,
+                        onRate = { c, r, dew -> vm.review(c, r, dew) },
                         onClose = { vm.endSession(); nav.popBackStack() },
                     )
                 }

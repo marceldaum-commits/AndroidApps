@@ -133,7 +133,9 @@ fun PackBrowser(
 }
 
 @Composable
-fun PackRow(pack: Pack, chosen: Boolean, chosenLabel: String, chooseLabel: String, onToggle: () -> Unit) {
+fun PackRow(pack: Pack, chosen: Boolean, chosenLabel: String, chooseLabel: String, onToggle0: () -> Unit) {
+    val sfx = de.wissensgarten.app.ui.fx.LocalSfx.current
+    val onToggle = { sfx?.play(if (chosen) de.wissensgarten.app.ui.fx.Sound.TAP else de.wissensgarten.app.ui.fx.Sound.PLOP); onToggle0() }
     val container = if (chosen) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainerLow
     Card(
         onClick = onToggle,

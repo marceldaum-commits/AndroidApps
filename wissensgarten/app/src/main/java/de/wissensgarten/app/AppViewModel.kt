@@ -81,9 +81,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         return session.isNotEmpty()
     }
 
-    fun review(card: StudyCard, rating: Rating) {
+    /** @param dew Tautropfen inkl. Serien-Bonus */
+    fun review(card: StudyCard, rating: Rating, dew: Int) {
         val p = profile.value ?: return
-        viewModelScope.launch { repo.review(p.id, card, rating) }
+        viewModelScope.launch { repo.review(p.id, card, rating, dew) }
     }
 
     fun endSession() { tick(); refreshWidget() }

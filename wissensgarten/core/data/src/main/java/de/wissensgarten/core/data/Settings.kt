@@ -22,6 +22,10 @@ class Settings(context: Context) {
     private val _onboarded = MutableStateFlow(prefs.getBoolean(K_ONBOARDED, false))
     val onboarded: StateFlow<Boolean> = _onboarded.asStateFlow()
 
+    private val _sound = MutableStateFlow(prefs.getBoolean(K_SOUND, true))
+    val sound: StateFlow<Boolean> = _sound.asStateFlow()
+    fun setSound(v: Boolean) { prefs.edit().putBoolean(K_SOUND, v).apply(); _sound.value = v }
+
     fun setActiveProfile(id: String?) { prefs.edit().putString(K_PROFILE, id).apply(); _activeProfile.value = id }
     fun setTheme(t: ThemeMode) { prefs.edit().putString(K_THEME, t.name).apply(); _theme.value = t }
     fun setOnboarded(v: Boolean) { prefs.edit().putBoolean(K_ONBOARDED, v).apply(); _onboarded.value = v }
@@ -30,5 +34,6 @@ class Settings(context: Context) {
         const val K_PROFILE = "aktives_profil"
         const val K_THEME = "design"
         const val K_ONBOARDED = "einrichtung_fertig"
+        const val K_SOUND = "ton"
     }
 }

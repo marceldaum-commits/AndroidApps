@@ -32,7 +32,8 @@ import java.io.File
 class ScreenshotTest {
     @get:Rule val rule = createComposeRule()
 
-    private val now = 1_763_000_000_000L
+    private val now = 1_763_031_600_000L // 11:00 UTC – Tageshimmel
+    private val night = 1_763_071_200_000L // 22:00 UTC
     private val day = Scheduler.DAY_MS
     private val packs = File("../content/src/main/assets/packs").listFiles()!!.filter { it.extension == "json" }
         .map { PackJson.parse(it.readText()) }
@@ -65,11 +66,11 @@ class ScreenshotTest {
         )
     }
 
-    private fun shot(name: String, prepare: (ComposeContentTestRule) -> Unit = {}, content: @Composable () -> Unit) {
+    private fun shot(name: String, settle: Long = 1500, prepare: (ComposeContentTestRule) -> Unit = {}, content: @Composable () -> Unit) {
         rule.setContent { WissensgartenTheme(ThemeMode.LIGHT) { Surface { content() } } }
         rule.mainClock.advanceTimeBy(1500)
         prepare(rule)
-        rule.mainClock.advanceTimeBy(1500)
+        rule.mainClock.advanceTimeBy(settle)
         rule.onRoot().captureRoboImage("../screenshots/$name.png")
     }
 
@@ -100,6 +101,37 @@ class ScreenshotTest {
         GardenScreen(profile, garden, now, 10, {}, {}, {}, {})
     }
 
+    @Test fun gardenNight() = shot("04b_garten_nacht") {
+        GardenScreen(profile, garden, night, 10, {}, {}, {}, {})
+    }
+
+    @Test fun gardenEvening() = shot("04c_garten_abend") {
+        GardenScreen(profile, garden.map { b -> b.copy(cards = b.cards.map { it.copy(lastReview = if (it.reps > 0) now else 0) }) }, now + 7 * 3_600_000L, 10, {}, {}, {}, {})
+    }
+
+    @Test fun levelUp() = shot("06b_aufgestiegen", settle = 1150, prepare = { r ->
+        r.onNodeWithText("went – gone").performClick()
+        r.mainClock.advanceTimeBy(300)
+        r.mainClock.autoAdvance = false
+        r.onNodeWithText("Gießen 💧").performClick()
+    }) {
+        // Karte kurz vor dem Aufstieg zum Busch
+        val c = garden[0].cards.first { it.sourceId == "001" }
+        val m = Memory(6.5, 5.0, now - 7 * day, 3, 0)
+        ReviewScreen(listOf(c.withMemory(m).toStudy()), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {})
+    }
+
+    @Test fun sessionDone() = shot("10_runde_fertig", settle = 1000, prepare = { r ->
+        r.onNodeWithText("went – gone").performClick()
+        r.mainClock.advanceTimeBy(300)
+        r.mainClock.autoAdvance = false
+        r.onNodeWithText("Gießen 💧").performClick()
+        r.mainClock.advanceTimeBy(2000)
+    }) {
+        val c = garden[0].cards.first { it.sourceId == "001" }.toStudy()
+        ReviewScreen(listOf(c), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {})
+    }
+
     @Test fun bed() = shot("05_beet") {
         BedScreen(garden[0], now, 10, {}, {}, { _, _, _ -> }, {}, {})
     }
@@ -108,12 +140,12 @@ class ScreenshotTest {
         r.onNodeWithText("went – gone").performClick()
     }) {
         val card = garden[0].cards.first { it.sourceId == "001" }.toStudy()
-        ReviewScreen(listOf(card), garden.associate { it.bed.id to it.bed }, false, { _, _ -> }, {})
+        ReviewScreen(listOf(card), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {})
     }
 
     @Test fun reviewKids() = shot("07_giessen_grundschule") {
         val kid = bed(pack("gs-tiere"), 6, "kid")
-        ReviewScreen(listOf(kid.cards[2].toStudy()), mapOf(kid.bed.id to kid.bed), true, { _, _ -> }, {})
+        ReviewScreen(listOf(kid.cards[2].toStudy()), mapOf(kid.bed.id to kid.bed), true, { _, _, _ -> }, {})
     }
 
     @Test fun shop() = shot("08_samenhandlung") {

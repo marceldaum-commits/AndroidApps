@@ -23,6 +23,8 @@ import de.wissensgarten.app.ui.common.Plant
 import de.wissensgarten.app.ui.common.formatDays
 import de.wissensgarten.app.ui.common.plantsWord
 import de.wissensgarten.app.ui.theme.BigNumber
+import de.wissensgarten.app.ui.fx.*
+import androidx.compose.ui.graphics.Color
 import de.wissensgarten.core.data.db.BedWithCards
 import de.wissensgarten.core.data.db.ProfileEntity
 import de.wissensgarten.core.model.Scheduler
@@ -45,39 +47,72 @@ fun GardenScreen(
     val nextAt = cards.filter { !it.memory.isSeed }.map { Scheduler.dueAt(it.memory) }.filter { it > now }.minOrNull()
     val trees = cards.count { Stage.of(it.memory) == Stage.TREE }
 
+    // Panorama: bis zu 3 durstige (zum Retten) + die schönsten Pflanzen
+    val panorama = remember(beds, now) {
+        val all = beds.flatMap { b -> b.cards.filter { !it.memory.isSeed }.map { it to b.bed.hue } }
+        val dry = all.filter { Scheduler.isThirsty(it.first.memory, now) }.take(3)
+        val best = all.filter { it !in dry }.sortedByDescending { it.first.stability }.take(7 - dry.size)
+        (best + dry).sortedBy { it.first.id.hashCode() }
+    }
+
     LazyColumn(
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(bottom = 16.dp),
         verticalArrangement = Arrangement.spacedBy(14.dp),
-        modifier = Modifier.fillMaxSize().statusBarsPadding(),
+        modifier = Modifier.fillMaxSize(),
     ) {
         item {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Box(
-                    Modifier.size(48.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer).clickable(onClick = onProfile),
-                    contentAlignment = Alignment.Center,
-                ) { Text(profile.avatar, fontSize = 26.sp) }
-                Spacer(Modifier.width(12.dp))
-                Column(Modifier.weight(1f)) {
-                    Text("Hallo ${profile.name}!", style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    Text(
-                        "${cards.count { !it.memory.isSeed }} Pflanzen · $trees ${if (trees == 1) "Baum" else "Bäume"}",
-                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
+            val textColor = skyTextColor(now)
+            SkyScene(now, happy = thirsty == 0 && cards.any { !it.memory.isSeed }, modifier = Modifier.fillMaxWidth().height(280.dp)) {
+                Row(
+                    Modifier.fillMaxWidth().statusBarsPadding().padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Box(
+                        Modifier.size(48.dp).clip(CircleShape).background(Color.White.copy(alpha = 0.85f)).clickable(onClick = onProfile),
+                        contentAlignment = Alignment.Center,
+                    ) { Text(profile.avatar, fontSize = 26.sp) }
+                    Spacer(Modifier.width(12.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text(greeting(now, profile.name), style = MaterialTheme.typography.titleLarge, color = textColor, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        Text(
+                            "${cards.count { !it.memory.isSeed }} Pflanzen · $trees ${if (trees == 1) "Baum" else "Bäume"}",
+                            style = MaterialTheme.typography.bodySmall, color = textColor.copy(alpha = 0.85f),
+                        )
+                    }
+                    DewChip(profile.dewdrops)
                 }
-                DewChip(profile.dewdrops)
+                Row(
+                    Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(horizontal = 8.dp).height(120.dp),
+                    verticalAlignment = Alignment.Bottom,
+                ) {
+                    if (panorama.isEmpty()) {
+                        Spacer(Modifier.weight(1f))
+                        repeat(3) { Plant(Stage.SEED, 0f, 0f, it, Modifier.weight(1f).fillMaxHeight()) }
+                        Spacer(Modifier.weight(1f))
+                    } else panorama.forEach { (c, hue) ->
+                        Plant(Stage.of(c.memory), Scheduler.wilt(c.memory, now), hue, c.id.hashCode() and 0xff, Modifier.weight(1f).fillMaxHeight())
+                    }
+                }
             }
         }
-        item { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) }
+        item { Box(Modifier.padding(horizontal = 16.dp)) { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) } }
         if (beds.isEmpty()) item {
-            EmptyGarden(onShop)
+            Box(Modifier.padding(horizontal = 16.dp)) { EmptyGarden(onShop) }
         }
-        items(beds, key = { it.bed.id }) { b -> BedCard(b, now) { onOpenBed(b.bed.id) } }
+        items(beds, key = { it.bed.id }) { b -> Box(Modifier.padding(horizontal = 16.dp)) { BedCard(b, now) { onOpenBed(b.bed.id) } } }
         if (beds.isNotEmpty()) item {
-            OutlinedButton(onClick = onShop, modifier = Modifier.fillMaxWidth().height(52.dp)) {
+            OutlinedButton(onClick = onShop, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth().height(52.dp)) {
                 Icon(Icons.Filled.Add, null); Spacer(Modifier.width(6.dp)); Text("Weiteres Beet anlegen")
             }
         }
     }
+}
+
+private fun greeting(now: Long, name: String): String = when (DayTime.now(now).first) {
+    DayTime.DAWN -> "Guten Morgen, $name!"
+    DayTime.DAY -> "Hallo $name!"
+    DayTime.EVENING -> "Guten Abend, $name!"
+    DayTime.NIGHT -> "Gute Nacht, $name 🌙"
 }
 
 @Composable
@@ -88,7 +123,7 @@ fun DewChip(dew: Int) {
     ) {
         Icon(Icons.Filled.WaterDrop, "Tautropfen", tint = MaterialTheme.colorScheme.secondary, modifier = Modifier.size(18.dp))
         Spacer(Modifier.width(4.dp))
-        Text("$dew", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondaryContainer)
+        Text("${animatedCount(dew)}", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSecondaryContainer)
     }
 }
 
@@ -115,11 +150,12 @@ private fun WaterHero(thirsty: Int, seeds: Int, nextInDays: Double?, onWater: ()
                 Text(hint, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
             }
             Spacer(Modifier.height(16.dp))
-            Button(
+            JuicyButton(
                 onClick = onWater,
                 enabled = thirsty + seeds > 0,
-                modifier = Modifier.fillMaxWidth().height(56.dp),
+                modifier = Modifier.fillMaxWidth().height(60.dp).pulse(thirsty + seeds > 0),
                 colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
+                sound = Sound.PLOP,
             ) {
                 Icon(if (thirsty > 0) Icons.Filled.WaterDrop else Icons.Outlined.Spa, null)
                 Spacer(Modifier.width(8.dp))
