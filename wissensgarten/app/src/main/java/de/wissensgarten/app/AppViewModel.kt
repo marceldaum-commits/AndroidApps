@@ -47,6 +47,28 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         if (id == null) flowOf(emptyList()) else repo.beds(id)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    /** Gekaufte Artikel des aktiven Profils. */
+    val inventory: StateFlow<List<de.wissensgarten.core.data.db.InventoryEntity>> =
+        profile.map { it?.id }.distinctUntilChanged().flatMapLatest { id ->
+            if (id == null) flowOf(emptyList()) else repo.inventory(id)
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    /** Aufgestellte Deko. */
+    val activeDecos: StateFlow<Set<String>> = inventory.map { inv -> inv.filter { it.active }.map { it.itemId }.toSet() }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptySet())
+
+    fun buy(itemId: String, onResult: (de.wissensgarten.core.data.GardenRepository.BuyResult) -> Unit) {
+        val p = profile.value ?: return
+        viewModelScope.launch { onResult(repo.buy(p.id, itemId)) }
+    }
+
+    fun setDecoActive(itemId: String, active: Boolean) {
+        val p = profile.value ?: return
+        viewModelScope.launch { repo.setDecoActive(p.id, itemId, active) }
+    }
+
+    fun setBedSpecies(bedId: String, species: String) = viewModelScope.launch { repo.setBedSpecies(bedId, species) }
+
     val allBeds: StateFlow<List<BedWithCards>> =
         repo.allBeds().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -147,6 +169,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun deleteCard(id: String) = viewModelScope.launch { repo.deleteCard(id) }
 
     fun setTheme(t: ThemeMode) = settings.setTheme(t)
+
+    fun setReminder(on: Boolean, hour: Int = settings.reminderHour.value) {
+        settings.setReminder(on, hour)
+        val ctx = getApplication<Application>()
+        if (on) de.wissensgarten.app.notify.Reminders.schedule(ctx, hour) else de.wissensgarten.app.notify.Reminders.cancel(ctx)
+    }
 
 
     fun refreshWidget() {

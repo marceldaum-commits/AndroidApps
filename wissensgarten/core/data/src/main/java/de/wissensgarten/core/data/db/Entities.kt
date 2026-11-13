@@ -43,6 +43,8 @@ data class BedEntity(
     val packVersion: Int = 0,
     val createdAt: Long,
     val sortIndex: Int = 0,
+    /** Pflanzenart aus dem Gartenladen (seit DB-Version 2) */
+    @androidx.room.ColumnInfo(defaultValue = "klassik") val species: String = "klassik",
 )
 
 @Entity(
@@ -83,6 +85,20 @@ data class CardEntity(
         fun joinChoices(list: List<String>?): String? = list?.takeIf { it.isNotEmpty() }?.joinToString(SEP)
     }
 }
+
+/** Gekaufte Artikel aus dem Gartenladen (seit DB-Version 2). */
+@Entity(
+    tableName = "inventory",
+    primaryKeys = ["profileId", "itemId"],
+    foreignKeys = [ForeignKey(ProfileEntity::class, ["id"], ["profileId"], onDelete = ForeignKey.CASCADE)],
+)
+data class InventoryEntity(
+    val profileId: String,
+    val itemId: String,
+    /** Deko: im Garten aufgestellt? */
+    val active: Boolean = true,
+    val boughtAt: Long,
+)
 
 /** Protokoll jeder Wiederholung – Grundlage für Eltern-Übersicht und Statistiken. */
 @Entity(tableName = "review_log", indices = [Index("profileId", "time")])

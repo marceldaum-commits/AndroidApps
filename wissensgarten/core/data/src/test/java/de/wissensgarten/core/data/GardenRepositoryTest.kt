@@ -82,6 +82,28 @@ class GardenRepositoryTest {
         assertEquals("zweiter Sync ändert nichts", 0, repo.syncPacks(listOf(v2)))
     }
 
+    @Test fun shopBuyingRules() = runTest {
+        val p = repo.createProfile("Mia", "🦊", 5)
+        assertEquals(GardenRepository.BuyResult.TOO_EXPENSIVE, repo.buy(p.id, "zwerg"))
+        repo.updateProfile(repo.profile(p.id)!!.copy(dewdrops = 100))
+        assertEquals(GardenRepository.BuyResult.OK, repo.buy(p.id, "zwerg"))      // 80
+        assertEquals(20, repo.profile(p.id)!!.dewdrops)
+        assertEquals(GardenRepository.BuyResult.ALREADY_OWNED, repo.buy(p.id, "zwerg"))
+        assertEquals(GardenRepository.BuyResult.UNKNOWN, repo.buy(p.id, "gibtsnicht"))
+        assertEquals(GardenRepository.BuyResult.ALREADY_OWNED, repo.buy(p.id, "klassik")) // gratis, immer da
+        repo.setDecoActive(p.id, "zwerg", false)
+        assertEquals(false, repo.inventory(p.id).first().single().active)
+        assertEquals(20, repo.profile(p.id)!!.dewdrops)
+    }
+
+    @Test fun bedSpeciesCanBeChanged() = runTest {
+        val p = repo.createProfile("Mia", "🦊", 5)
+        val id = repo.plantPack(p.id, v1)
+        assertEquals("klassik", repo.beds(p.id).first()[0].bed.species)
+        repo.setBedSpecies(id, "rose")
+        assertEquals("rose", repo.beds(p.id).first()[0].bed.species)
+    }
+
     @Test fun deletingProfileRemovesItsGarden() = runTest {
         val a = repo.createProfile("Mia", "🦊", 5)
         val b = repo.createProfile("Papa", "🐻", 14)

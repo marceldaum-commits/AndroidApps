@@ -12,8 +12,8 @@ android {
         applicationId = "de.wissensgarten.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "0.3.0"
+        versionCode = 4
+        versionName = "0.4.0"
     }
 
     buildTypes {
@@ -69,6 +69,7 @@ dependencies {
     implementation(project(":core:data"))
     implementation(project(":content"))
     implementation("androidx.navigation:navigation-compose:2.9.6")
+    implementation("androidx.work:work-runtime-ktx:2.11.2")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.17")

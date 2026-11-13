@@ -14,6 +14,7 @@ import de.wissensgarten.app.ui.onboarding.TutorialScreen
 import de.wissensgarten.app.ui.review.ReviewScreen
 import de.wissensgarten.app.ui.shop.ShopScreen
 import de.wissensgarten.app.ui.theme.WissensgartenTheme
+import de.wissensgarten.app.ui.store.StoreScreen
 import de.wissensgarten.core.data.ThemeMode
 import de.wissensgarten.core.data.db.*
 import de.wissensgarten.core.model.*
@@ -130,6 +131,25 @@ class ScreenshotTest {
     }) {
         val c = garden[0].cards.first { it.sourceId == "001" }.toStudy()
         ReviewScreen(listOf(c), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {})
+    }
+
+    @Test fun gardenDecorated() = shot("04d_garten_geschmueckt") {
+        val decorated = garden.mapIndexed { i, b -> b.copy(bed = b.bed.copy(species = listOf("sonnenblume", "kirschbaum", "tulpe", "kaktus")[i])) }
+        GardenScreen(profile, decorated, now, 10, {}, {}, {}, {}, decos = ShopItems.decos.map { it.id }.toSet())
+    }
+
+    @Test fun gardenDecoratedNight() = shot("04e_garten_geschmueckt_nacht") {
+        val decorated = garden.mapIndexed { i, b -> b.copy(bed = b.bed.copy(species = listOf("zauberblume", "tanne", "rose", "kaktus")[i])) }
+        GardenScreen(profile, decorated, night, 10, {}, {}, {}, {}, decos = setOf("laterne", "zwerg", "teich", "zaun", "vogelhaus"))
+    }
+
+    @Test fun storePlants() = shot("11_laden_pflanzen") {
+        StoreScreen(profile, listOf(InventoryEntity("p1", "sonnenblume", true, 0)), garden, emptyList(), { _, _ -> }, { _, _ -> }, { _, _ -> }, {})
+    }
+
+    @Test fun storeDeco() = shot("12_laden_deko") {
+        StoreScreen(profile, listOf(InventoryEntity("p1", "zwerg", true, 0), InventoryEntity("p1", "windrad", false, 0)), garden,
+            emptyList(), { _, _ -> }, { _, _ -> }, { _, _ -> }, {}, initialTab = 1)
     }
 
     @Test fun bed() = shot("05_beet") {

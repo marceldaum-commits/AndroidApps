@@ -67,6 +67,19 @@ interface GardenDao {
     @Query("DELETE FROM cards WHERE id = :id")
     suspend fun deleteCard(id: String)
 
+    // Gartenladen
+    @Query("SELECT * FROM inventory WHERE profileId = :profileId")
+    fun inventory(profileId: String): Flow<List<InventoryEntity>>
+
+    @Query("SELECT * FROM inventory WHERE profileId = :profileId AND itemId = :itemId")
+    suspend fun owned(profileId: String, itemId: String): InventoryEntity?
+
+    @Insert suspend fun insertItem(i: InventoryEntity)
+    @Update suspend fun updateItem(i: InventoryEntity)
+
+    @Query("UPDATE beds SET species = :species WHERE id = :bedId")
+    suspend fun setBedSpecies(bedId: String, species: String)
+
     // Protokoll
     @Insert suspend fun insertLog(l: ReviewLogEntity)
 

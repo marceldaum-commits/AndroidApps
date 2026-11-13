@@ -5,11 +5,13 @@ import de.wissensgarten.core.data.db.BedEntity
 import de.wissensgarten.core.data.db.BedWithCards
 import de.wissensgarten.core.data.db.CardEntity
 import de.wissensgarten.core.data.db.GardenDatabase
+import de.wissensgarten.core.data.db.InventoryEntity
 import de.wissensgarten.core.data.db.ProfileEntity
 import de.wissensgarten.core.data.db.ReviewLogEntity
 import de.wissensgarten.core.model.Pack
 import de.wissensgarten.core.model.Rating
 import de.wissensgarten.core.model.Scheduler
+import de.wissensgarten.core.model.ShopItems
 import de.wissensgarten.core.model.StudyCard
 import de.wissensgarten.core.model.Subject
 import kotlinx.coroutines.flow.Flow
@@ -101,6 +103,29 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
             )
         )
     }
+
+    // --- Gartenladen ---
+
+    fun inventory(profileId: String) = dao.inventory(profileId)
+
+    enum class BuyResult { OK, TOO_EXPENSIVE, ALREADY_OWNED, UNKNOWN }
+
+    /** Kauft einen Artikel mit Tautropfen. Preis kommt immer aus dem Katalog. */
+    suspend fun buy(profileId: String, itemId: String): BuyResult = db.withTransaction {
+        val item = ShopItems.byId(itemId) ?: return@withTransaction BuyResult.UNKNOWN
+        if (item.price == 0 || dao.owned(profileId, itemId) != null) return@withTransaction BuyResult.ALREADY_OWNED
+        val p = dao.profile(profileId) ?: return@withTransaction BuyResult.UNKNOWN
+        if (p.dewdrops < item.price) return@withTransaction BuyResult.TOO_EXPENSIVE
+        dao.updateProfile(p.copy(dewdrops = p.dewdrops - item.price))
+        dao.insertItem(InventoryEntity(profileId, itemId, active = true, boughtAt = clock()))
+        BuyResult.OK
+    }
+
+    suspend fun setDecoActive(profileId: String, itemId: String, active: Boolean) {
+        dao.owned(profileId, itemId)?.let { dao.updateItem(it.copy(active = active)) }
+    }
+
+    suspend fun setBedSpecies(bedId: String, species: String) = dao.setBedSpecies(bedId, species)
 
     /**
      * Paket-Updates einspielen: neue Karten kommen als Samen dazu, geänderte Texte werden übernommen,

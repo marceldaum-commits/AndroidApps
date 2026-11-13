@@ -26,6 +26,20 @@ class Settings(context: Context) {
     val sound: StateFlow<Boolean> = _sound.asStateFlow()
     fun setSound(v: Boolean) { prefs.edit().putBoolean(K_SOUND, v).apply(); _sound.value = v }
 
+    // Gieß-Erinnerung
+    private val _reminderOn = MutableStateFlow(prefs.getBoolean(K_REMINDER, false))
+    val reminderOn: StateFlow<Boolean> = _reminderOn.asStateFlow()
+    private val _reminderHour = MutableStateFlow(prefs.getInt(K_REMINDER_HOUR, 17))
+    val reminderHour: StateFlow<Int> = _reminderHour.asStateFlow()
+    private val _reminderAsked = MutableStateFlow(prefs.getBoolean(K_REMINDER_ASKED, false))
+    /** Wurde die Erinnerungs-Frage im Garten schon beantwortet? */
+    val reminderAsked: StateFlow<Boolean> = _reminderAsked.asStateFlow()
+
+    fun setReminder(on: Boolean, hour: Int = _reminderHour.value) {
+        prefs.edit().putBoolean(K_REMINDER, on).putInt(K_REMINDER_HOUR, hour).putBoolean(K_REMINDER_ASKED, true).apply()
+        _reminderOn.value = on; _reminderHour.value = hour; _reminderAsked.value = true
+    }
+
     fun setActiveProfile(id: String?) { prefs.edit().putString(K_PROFILE, id).apply(); _activeProfile.value = id }
     fun setTheme(t: ThemeMode) { prefs.edit().putString(K_THEME, t.name).apply(); _theme.value = t }
     fun setOnboarded(v: Boolean) { prefs.edit().putBoolean(K_ONBOARDED, v).apply(); _onboarded.value = v }
@@ -35,5 +49,8 @@ class Settings(context: Context) {
         const val K_THEME = "design"
         const val K_ONBOARDED = "einrichtung_fertig"
         const val K_SOUND = "ton"
+        const val K_REMINDER = "erinnerung"
+        const val K_REMINDER_HOUR = "erinnerung_stunde"
+        const val K_REMINDER_ASKED = "erinnerung_gefragt"
     }
 }

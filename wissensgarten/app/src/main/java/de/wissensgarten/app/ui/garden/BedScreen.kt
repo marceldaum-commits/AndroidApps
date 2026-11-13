@@ -26,6 +26,7 @@ import de.wissensgarten.core.data.db.BedWithCards
 import de.wissensgarten.core.data.db.CardEntity
 import de.wissensgarten.core.model.Scheduler
 import de.wissensgarten.core.model.Stage
+import de.wissensgarten.core.model.ShopItems
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -39,8 +40,11 @@ fun BedScreen(
     onAddCard: (String, String, String?) -> Unit,
     onDeleteCard: (String) -> Unit,
     onDeleteBed: () -> Unit,
+    ownedSpecies: List<String> = listOf(ShopItems.DEFAULT_SPECIES),
+    onSpecies: (String) -> Unit = {},
 ) {
     val bed = data.bed
+    var pickSpecies by remember { mutableStateOf(false) }
     val cards = data.cards.sortedBy { it.sortIndex }
     var showAdd by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf<CardEntity?>(null) }
@@ -53,7 +57,10 @@ fun BedScreen(
             TopAppBar(
                 title = { Text("${bed.emoji} ${bed.name}", maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück") } },
-                actions = { IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Outlined.Delete, "Beet löschen") } },
+                actions = {
+                    TextButton(onClick = { pickSpecies = true }) { Text("🌸 Pflanzenart") }
+                    IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Outlined.Delete, "Beet löschen") }
+                },
             )
         },
         floatingActionButton = {
@@ -98,10 +105,11 @@ fun BedScreen(
             if (cards.isEmpty()) item(span = { GridItemSpan(maxLineSpan) }) {
                 Text("Das Beet ist leer. Tippe auf „Karte“ und pflanze deine erste Frage.", Modifier.padding(16.dp))
             }
-            items(cards, key = { it.id }) { c -> PlantTile(c, bed.hue, now) { selected = c } }
+            items(cards, key = { it.id }) { c -> PlantTile(c, bed.hue, bed.species, now) { selected = c } }
         }
     }
 
+    if (pickSpecies) SpeciesDialog(bed.species, bed.hue, ownedSpecies, onDismiss = { pickSpecies = false }) { onSpecies(it); pickSpecies = false }
     if (showAdd) AddCardDialog(onDismiss = { showAdd = false }, onAdd = onAddCard)
     selected?.let { c -> CardDetailDialog(c, now, { selected = null }) { onDeleteCard(c.id); selected = null } }
     if (confirmDelete) AlertDialog(
@@ -114,7 +122,35 @@ fun BedScreen(
 }
 
 @Composable
-private fun PlantTile(card: CardEntity, hue: Float, now: Long, onClick: () -> Unit) {
+private fun SpeciesDialog(current: String, hue: Float, owned: List<String>, onDismiss: () -> Unit, onPick: (String) -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Pflanzenart für dieses Beet") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                LazyVerticalGrid(GridCells.Fixed(3), Modifier.heightIn(max = 360.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    items(ShopItems.species.filter { it.id in owned || it.id == ShopItems.DEFAULT_SPECIES }) { sp ->
+                        val sel = sp.id == current
+                        Column(
+                            Modifier.clip(MaterialTheme.shapes.medium)
+                                .background(if (sel) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceContainer)
+                                .clickable { onPick(sp.id) }.padding(6.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                        ) {
+                            Plant(Stage.BLOOM, 0f, hue, 3, Modifier.fillMaxWidth().aspectRatio(0.9f), species = sp.id)
+                            Text(sp.name, style = MaterialTheme.typography.labelMedium, maxLines = 1)
+                        }
+                    }
+                }
+                Text("Weitere Arten gibt's im Laden 🛍️", style = MaterialTheme.typography.bodySmall)
+            }
+        },
+        confirmButton = { TextButton(onClick = onDismiss) { Text("Fertig") } },
+    )
+}
+
+@Composable
+private fun PlantTile(card: CardEntity, hue: Float, species: String, now: Long, onClick: () -> Unit) {
     val thirsty = Scheduler.isThirsty(card.memory, now)
     Column(
         Modifier.clip(MaterialTheme.shapes.medium)
@@ -122,7 +158,7 @@ private fun PlantTile(card: CardEntity, hue: Float, now: Long, onClick: () -> Un
             .clickable(onClick = onClick).padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Plant(Stage.of(card.memory), Scheduler.wilt(card.memory, now), hue, card.id.hashCode() and 0xff, Modifier.fillMaxWidth().aspectRatio(1f))
+        Plant(Stage.of(card.memory), Scheduler.wilt(card.memory, now), hue, card.id.hashCode() and 0xff, Modifier.fillMaxWidth().aspectRatio(1f), species = species)
         Text(card.front, style = MaterialTheme.typography.labelLarge, maxLines = 1, overflow = TextOverflow.Ellipsis, textAlign = TextAlign.Center)
         Text(
             if (thirsty) "durstig" else Stage.of(card.memory).label,

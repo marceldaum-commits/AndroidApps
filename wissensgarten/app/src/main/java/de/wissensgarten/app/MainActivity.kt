@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Group
 import androidx.compose.material.icons.filled.LocalFlorist
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Storefront
+import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -34,6 +35,9 @@ import de.wissensgarten.app.ui.onboarding.TutorialScreen
 import de.wissensgarten.app.ui.review.ReviewScreen
 import de.wissensgarten.app.ui.settings.SettingsScreen
 import de.wissensgarten.app.ui.shop.ShopScreen
+import de.wissensgarten.app.ui.store.StoreScreen
+import de.wissensgarten.app.notify.ReminderPromptCard
+import de.wissensgarten.app.notify.rememberNotificationPermission
 import de.wissensgarten.app.ui.theme.WissensgartenTheme
 import de.wissensgarten.app.ui.fx.LocalSfx
 import de.wissensgarten.app.ui.fx.LocalWind
@@ -47,6 +51,7 @@ object Routes {
     fun tutorial(first: Boolean) = "anleitung?erstes=$first"
     const val GARDEN = "garten"
     const val SHOP = "samen"
+    const val STORE = "laden"
     const val FAMILY = "familie"
     const val SETTINGS = "mehr"
     const val BED = "beet/{id}"
@@ -58,7 +63,8 @@ private data class Tab(val route: String, val label: String, val icon: ImageVect
 
 private val TABS = listOf(
     Tab(Routes.GARDEN, "Garten", Icons.Filled.LocalFlorist),
-    Tab(Routes.SHOP, "Samen", Icons.Filled.Storefront),
+    Tab(Routes.SHOP, "Samen", Icons.Filled.Spa),
+    Tab(Routes.STORE, "Laden", Icons.Filled.Storefront),
     Tab(Routes.FAMILY, "Familie", Icons.Filled.Group),
     Tab(Routes.SETTINGS, "Mehr", Icons.Filled.Settings),
 )
@@ -166,6 +172,10 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 composable(Routes.GARDEN) {
+                    val decos by vm.activeDecos.collectAsStateWithLifecycle()
+                    val asked by vm.settings.reminderAsked.collectAsStateWithLifecycle()
+                    val hour by vm.settings.reminderHour.collectAsStateWithLifecycle()
+                    val askPermission = rememberNotificationPermission { ok -> vm.setReminder(ok, hour) }
                     WithProfile(profile) { p ->
                         GardenScreen(
                             profile = p, beds = beds, now = now, seedsLeft = vm.seedsLeft(p),
@@ -173,6 +183,10 @@ class MainActivity : ComponentActivity() {
                             onOpenBed = { nav.navigate(Routes.bed(it)) },
                             onProfile = { goTab(Routes.FAMILY) },
                             onShop = { goTab(Routes.SHOP) },
+                            decos = decos,
+                            reminderPrompt = if (asked) null else {
+                                { ReminderPromptCard(hour, onYes = askPermission, onNo = { vm.setReminder(false) }) }
+                            },
                         )
                     }
                 }
@@ -183,6 +197,19 @@ class MainActivity : ComponentActivity() {
                             onPlant = vm::plantPack,
                             onOpenBed = { nav.navigate(Routes.bed(it)) },
                             onOwnBed = { n, e -> vm.addOwnBed(n, e) { id -> nav.navigate(Routes.bed(id)) } },
+                        )
+                    }
+                }
+                composable(Routes.STORE) {
+                    val inventory by vm.inventory.collectAsStateWithLifecycle()
+                    WithProfile(profile) { p ->
+                        StoreScreen(
+                            profile = p, inventory = inventory, beds = beds,
+                            plusPacks = packs.filter { it.isPlus },
+                            onBuy = vm::buy,
+                            onToggleDeco = vm::setDecoActive,
+                            onUseSpecies = { bed, sp -> vm.setBedSpecies(bed, sp) },
+                            onOpenPacks = { goTab(Routes.SHOP) },
                         )
                     }
                 }
@@ -198,10 +225,13 @@ class MainActivity : ComponentActivity() {
                 composable(Routes.SETTINGS) {
                     val theme by vm.theme.collectAsStateWithLifecycle()
                     val sound by vm.settings.sound.collectAsStateWithLifecycle()
+                    val reminderOn by vm.settings.reminderOn.collectAsStateWithLifecycle()
+                    val reminderHour by vm.settings.reminderHour.collectAsStateWithLifecycle()
                     WithProfile(profile) { p ->
                         SettingsScreen(
                             profile = p, canDeleteProfile = profiles.size > 1, theme = theme,
                             sound = sound, onSound = { vm.settings.setSound(it) },
+                            reminderOn = reminderOn, reminderHour = reminderHour, onReminder = { on, h -> vm.setReminder(on, h) },
                             packCount = packs.size, cardCount = packs.sumOf { it.cards.size }, version = BuildConfig.VERSION_NAME,
                             onTheme = { vm.setTheme(it) }, onUpdateProfile = { vm.updateProfile(it) },
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
@@ -210,6 +240,7 @@ class MainActivity : ComponentActivity() {
                     }
                 }
                 composable(Routes.BED) { entry ->
+                    val inventory by vm.inventory.collectAsStateWithLifecycle()
                     val id = entry.arguments?.getString("id")
                     val data = beds.firstOrNull { it.bed.id == id }
                     if (data == null) {
@@ -221,6 +252,8 @@ class MainActivity : ComponentActivity() {
                         onAddCard = { f, b, i -> vm.addCard(data.bed.id, f, b, i) },
                         onDeleteCard = { vm.deleteCard(it) },
                         onDeleteBed = { nav.popBackStack(); vm.deleteBed(data.bed.id) },
+                        ownedSpecies = inventory.map { it.itemId },
+                        onSpecies = { vm.setBedSpecies(data.bed.id, it) },
                     )
                 }
                 composable(Routes.REVIEW) {

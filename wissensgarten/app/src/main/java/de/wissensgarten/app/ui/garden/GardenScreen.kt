@@ -40,6 +40,8 @@ fun GardenScreen(
     onOpenBed: (String) -> Unit,
     onProfile: () -> Unit,
     onShop: () -> Unit,
+    decos: Set<String> = emptySet(),
+    reminderPrompt: (@Composable () -> Unit)? = null,
 ) {
     val cards = remember(beds) { beds.flatMap { it.cards } }
     val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }
@@ -49,7 +51,7 @@ fun GardenScreen(
 
     // Panorama: bis zu 3 durstige (zum Retten) + die schönsten Pflanzen
     val panorama = remember(beds, now) {
-        val all = beds.flatMap { b -> b.cards.filter { !it.memory.isSeed }.map { it to b.bed.hue } }
+        val all = beds.flatMap { b -> b.cards.filter { !it.memory.isSeed }.map { it to b.bed } }
         val dry = all.filter { Scheduler.isThirsty(it.first.memory, now) }.take(3)
         val best = all.filter { it !in dry }.sortedByDescending { it.first.stability }.take(7 - dry.size)
         (best + dry).sortedBy { it.first.id.hashCode() }
@@ -62,7 +64,7 @@ fun GardenScreen(
     ) {
         item {
             val textColor = skyTextColor(now)
-            SkyScene(now, happy = thirsty == 0 && cards.any { !it.memory.isSeed }, modifier = Modifier.fillMaxWidth().height(280.dp)) {
+            SkyScene(now, happy = thirsty == 0 && cards.any { !it.memory.isSeed }, modifier = Modifier.fillMaxWidth().height(290.dp), decos = decos) {
                 Row(
                     Modifier.fillMaxWidth().statusBarsPadding().padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -89,12 +91,13 @@ fun GardenScreen(
                         Spacer(Modifier.weight(1f))
                         repeat(3) { Plant(Stage.SEED, 0f, 0f, it, Modifier.weight(1f).fillMaxHeight()) }
                         Spacer(Modifier.weight(1f))
-                    } else panorama.forEach { (c, hue) ->
-                        Plant(Stage.of(c.memory), Scheduler.wilt(c.memory, now), hue, c.id.hashCode() and 0xff, Modifier.weight(1f).fillMaxHeight())
+                    } else panorama.forEach { (c, bed) ->
+                        Plant(Stage.of(c.memory), Scheduler.wilt(c.memory, now), bed.hue, c.id.hashCode() and 0xff, Modifier.weight(1f).fillMaxHeight(), species = bed.species)
                     }
                 }
             }
         }
+        if (reminderPrompt != null && cards.any { !it.memory.isSeed }) item { Box(Modifier.padding(horizontal = 16.dp)) { reminderPrompt() } }
         item { Box(Modifier.padding(horizontal = 16.dp)) { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) } }
         if (beds.isEmpty()) item {
             Box(Modifier.padding(horizontal = 16.dp)) { EmptyGarden(onShop) }
@@ -206,7 +209,7 @@ private fun BedCard(b: BedWithCards, now: Long, onClick: () -> Unit) {
                 b.cards.sortedByDescending { it.stability }.take(8).forEach { c ->
                     Plant(
                         Stage.of(c.memory), Scheduler.wilt(c.memory, now), b.bed.hue, c.id.hashCode() and 0xff,
-                        Modifier.weight(1f).aspectRatio(0.8f),
+                        Modifier.weight(1f).aspectRatio(0.8f), species = b.bed.species,
                     )
                 }
                 repeat((8 - b.cards.size).coerceAtLeast(0)) { Spacer(Modifier.weight(1f)) }

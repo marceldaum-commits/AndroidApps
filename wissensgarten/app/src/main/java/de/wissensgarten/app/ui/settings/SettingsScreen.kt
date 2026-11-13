@@ -22,6 +22,9 @@ fun SettingsScreen(
     theme: ThemeMode,
     sound: Boolean,
     onSound: (Boolean) -> Unit,
+    reminderOn: Boolean = false,
+    reminderHour: Int = 17,
+    onReminder: (Boolean, Int) -> Unit = { _, _ -> },
     packCount: Int,
     cardCount: Int,
     version: String,
@@ -58,6 +61,33 @@ fun SettingsScreen(
             Text(
                 "Weniger neue Samen = weniger Gießarbeit an den Folgetagen.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+
+        Section("Erinnerung") {
+            var denied by remember { mutableStateOf(false) }
+            var pendingHour by remember { mutableIntStateOf(reminderHour) }
+            val ask = de.wissensgarten.app.notify.rememberNotificationPermission { ok ->
+                denied = !ok
+                onReminder(ok, pendingHour)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Täglich ans Gießen erinnern", Modifier.weight(1f))
+                Switch(checked = reminderOn, onCheckedChange = { on -> if (on) { pendingHour = reminderHour; ask() } else onReminder(false, reminderHour) })
+            }
+            if (reminderOn) {
+                Text("Uhrzeit", style = MaterialTheme.typography.labelLarge)
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf(7, 12, 14, 15, 16, 17, 18, 19, 20).forEach { h ->
+                        FilterChip(selected = reminderHour == h, onClick = { onReminder(true, h) }, label = { Text("$h Uhr") })
+                    }
+                }
+            }
+            Text(
+                if (denied) "Benachrichtigungen sind blockiert. Erlaube sie in den Android-Einstellungen für den Wissensgarten."
+                else "Nur wenn Pflanzen Durst haben – für alle Familienmitglieder in einer Nachricht.",
+                style = MaterialTheme.typography.bodySmall,
+                color = if (denied) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
 

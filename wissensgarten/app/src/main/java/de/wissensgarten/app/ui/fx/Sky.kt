@@ -51,6 +51,7 @@ fun SkyScene(
     nowMs: Long,
     happy: Boolean,
     modifier: Modifier = Modifier,
+    decos: Set<String> = emptySet(),
     content: @Composable BoxScope.() -> Unit,
 ) {
     val (time, hour) = DayTime.now(nowMs)
@@ -62,12 +63,24 @@ fun SkyScene(
             drawRect(Brush.verticalGradient(listOf(top, bottom)))
             if (time == DayTime.NIGHT) stars(t)
             sunOrMoon(time, hour)
+            if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, t, false)
             clouds(t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
             hills(time)
+            if ("zaun" in decos) drawDeco("zaun", 0f, size.height - 22.dp.toPx(), 40.dp.toPx(), t, false)
             if (happy && time != DayTime.NIGHT) butterflies(t)
             if (time == DayTime.NIGHT) fireflies(t)
         }
         content()
+        // Vordergrund-Deko zwischen den Pflanzen
+        val front = decos.filter { it in DecoSlots.front }
+        if (front.isNotEmpty()) Canvas(Modifier.matchParentSize()) {
+            val t = wind?.value ?: 0f
+            val ground = size.height - 12.dp.toPx()
+            for (id in front) {
+                val h = (if (id == "teich") 38 else 44).dp.toPx()
+                drawDeco(id, size.width * DecoSlots.front.getValue(id), ground, h, t, time == DayTime.NIGHT)
+            }
+        }
     }
 }
 

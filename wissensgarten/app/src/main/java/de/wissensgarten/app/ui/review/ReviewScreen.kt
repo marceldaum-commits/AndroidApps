@@ -187,6 +187,7 @@ fun ReviewScreen(
                         card.id.hashCode() and 0xff,
                         Modifier.fillMaxHeight(0.95f).aspectRatio(0.85f),
                         grow = growAnim.value,
+                        species = bed?.species ?: "klassik",
                     )
                     if (pourAnim.value > 0f && pourAnim.value < 1f) WateringCan(pourAnim.value, Modifier.matchParentSize())
                     if (gainAnim.value in 0.01f..0.99f) Text(
