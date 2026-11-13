@@ -1,0 +1,412 @@
+{
+  "id": "s1-latein-grundwortschatz",
+  "version": 1,
+  "title": "Latein Grundwortschatz",
+  "subject": "latein",
+  "grades": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "emoji": "🏛️",
+  "tier": "free",
+  "description": "Wichtige lateinische Grundwörter – Verben, Nomen, Adjektive – mit deutscher Bedeutung.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "amare",
+      "a": "lieben",
+      "choices": [
+        "loben",
+        "rufen",
+        "arbeiten"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "videre",
+      "a": "sehen",
+      "choices": [
+        "hören",
+        "wissen",
+        "kommen"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "audire",
+      "a": "hören",
+      "choices": [
+        "sehen",
+        "wagen",
+        "sagen"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "venire",
+      "a": "kommen",
+      "choices": [
+        "verkaufen",
+        "sehen",
+        "siegen"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "dicere",
+      "a": "sagen",
+      "choices": [
+        "lehren",
+        "führen",
+        "schreiben"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "esse",
+      "a": "sein",
+      "choices": [
+        "essen",
+        "haben",
+        "sitzen"
+      ],
+      "info": "Achtung: esse heißt nicht „essen“!"
+    },
+    {
+      "id": "007",
+      "q": "habere",
+      "a": "haben",
+      "choices": [
+        "sein",
+        "wohnen",
+        "geben"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "laborare",
+      "a": "arbeiten",
+      "choices": [
+        "lachen",
+        "loben",
+        "lieben"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "clamare",
+      "a": "rufen, schreien",
+      "choices": [
+        "lachen",
+        "klagen",
+        "schweigen"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "ridere",
+      "a": "lachen",
+      "choices": [
+        "schreien",
+        "weinen",
+        "zurückgeben"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "currere",
+      "a": "laufen, eilen",
+      "choices": [
+        "sorgen",
+        "stehen",
+        "sitzen"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "scribere",
+      "a": "schreiben",
+      "choices": [
+        "sagen",
+        "lesen",
+        "zeigen"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "legere",
+      "a": "lesen",
+      "choices": [
+        "schreiben",
+        "legen",
+        "liegen"
+      ],
+      "info": "legere ≠ legen!"
+    },
+    {
+      "id": "014",
+      "q": "dare",
+      "a": "geben",
+      "choices": [
+        "nehmen",
+        "dürfen",
+        "sagen"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "stare",
+      "a": "stehen",
+      "choices": [
+        "sitzen",
+        "laufen",
+        "starren"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "sedere",
+      "a": "sitzen",
+      "choices": [
+        "stehen",
+        "sehen",
+        "säen"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "timere",
+      "a": "fürchten",
+      "choices": [
+        "zählen",
+        "lieben",
+        "hoffen"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "debere",
+      "a": "müssen, sollen",
+      "choices": [
+        "können",
+        "wollen",
+        "geben"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "posse",
+      "a": "können",
+      "choices": [
+        "müssen",
+        "setzen",
+        "besitzen"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "vocare",
+      "a": "rufen, nennen",
+      "choices": [
+        "fragen",
+        "wohnen",
+        "sehen"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "servus",
+      "a": "Sklave, Diener",
+      "choices": [
+        "Herr",
+        "Bauer",
+        "Soldat"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "dominus",
+      "a": "Herr",
+      "choices": [
+        "Sklave",
+        "Haus",
+        "Kirche"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "amicus",
+      "a": "Freund",
+      "choices": [
+        "Feind",
+        "Bruder",
+        "Gast"
+      ],
+      "info": "inimicus = Feind"
+    },
+    {
+      "id": "024",
+      "q": "puella",
+      "a": "Mädchen",
+      "choices": [
+        "Junge",
+        "Frau",
+        "Mutter"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "puer",
+      "a": "Junge",
+      "choices": [
+        "Mädchen",
+        "Vater",
+        "Mann"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "forum",
+      "a": "Marktplatz",
+      "choices": [
+        "Wald",
+        "Tempel",
+        "Hafen"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "villa",
+      "a": "Landhaus",
+      "choices": [
+        "Dorf",
+        "Stadt",
+        "Straße"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "aqua",
+      "a": "Wasser",
+      "choices": [
+        "Luft",
+        "Erde",
+        "Feuer"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "terra",
+      "a": "Land, Erde",
+      "choices": [
+        "Meer",
+        "Himmel",
+        "Wasser"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "via",
+      "a": "Weg, Straße",
+      "choices": [
+        "Leben",
+        "Stadt",
+        "Haus"
+      ],
+      "info": "vita = Leben"
+    },
+    {
+      "id": "031",
+      "q": "urbs",
+      "a": "Stadt",
+      "choices": [
+        "Land",
+        "Feld",
+        "Berg"
+      ]
+    },
+    {
+      "id": "032",
+      "q": "deus",
+      "a": "Gott",
+      "choices": [
+        "Tag",
+        "Herr",
+        "König"
+      ],
+      "info": "dies = Tag"
+    },
+    {
+      "id": "033",
+      "q": "pater",
+      "a": "Vater",
+      "choices": [
+        "Mutter",
+        "Bruder",
+        "Pate"
+      ]
+    },
+    {
+      "id": "034",
+      "q": "mater",
+      "a": "Mutter",
+      "choices": [
+        "Vater",
+        "Material",
+        "Schwester"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "bonus, -a, -um",
+      "a": "gut",
+      "choices": [
+        "schön",
+        "groß",
+        "schlecht"
+      ]
+    },
+    {
+      "id": "036",
+      "q": "magnus, -a, -um",
+      "a": "groß",
+      "choices": [
+        "klein",
+        "viel",
+        "mächtig"
+      ]
+    },
+    {
+      "id": "037",
+      "q": "parvus, -a, -um",
+      "a": "klein",
+      "choices": [
+        "groß",
+        "arm",
+        "neu"
+      ]
+    },
+    {
+      "id": "038",
+      "q": "semper",
+      "a": "immer",
+      "choices": [
+        "nie",
+        "oft",
+        "heute"
+      ]
+    },
+    {
+      "id": "039",
+      "q": "non",
+      "a": "nicht",
+      "choices": [
+        "nie",
+        "nun",
+        "auch"
+      ]
+    }
+  ]
+}

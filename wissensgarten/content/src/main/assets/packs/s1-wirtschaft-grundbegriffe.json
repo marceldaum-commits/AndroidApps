@@ -1,0 +1,316 @@
+{
+  "id": "s1-wirtschaft-grundbegriffe",
+  "version": 1,
+  "title": "Wirtschaft und Geld",
+  "subject": "wirtschaft",
+  "grades": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "emoji": "💰",
+  "tier": "free",
+  "description": "Finanzbildung kompakt: Markt, Preise, Zinsen, Steuern, Girokonto und kluger Umgang mit Geld.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was passiert meist mit dem Preis, wenn die Nachfrage steigt und das Angebot gleich bleibt?",
+      "a": "Er steigt",
+      "choices": [
+        "Er sinkt",
+        "Er bleibt gleich"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Was passiert meist mit dem Preis, wenn das Angebot steigt und die Nachfrage gleich bleibt?",
+      "a": "Er sinkt",
+      "choices": [
+        "Er steigt",
+        "Er bleibt gleich"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Was versteht man unter Inflation?",
+      "a": "Einen anhaltenden Anstieg des allgemeinen Preisniveaus",
+      "info": "Das Geld verliert dabei an Kaufkraft."
+    },
+    {
+      "id": "004",
+      "q": "Wie nennt man einen anhaltenden Rückgang des allgemeinen Preisniveaus?",
+      "a": "Deflation",
+      "choices": [
+        "Inflation",
+        "Rezession",
+        "Stagnation"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Welche Inflationsrate strebt die Europäische Zentralbank mittelfristig an?",
+      "a": "2 Prozent",
+      "choices": [
+        "0 Prozent",
+        "5 Prozent",
+        "1 Prozent"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Wer legt im Euroraum den Leitzins fest?",
+      "a": "Die Europäische Zentralbank (EZB)",
+      "choices": [
+        "Die Bundesregierung",
+        "Die Deutsche Bank",
+        "Der Bundestag"
+      ]
+    },
+    {
+      "id": "007",
+      "q": "Was misst das Bruttoinlandsprodukt (BIP)?",
+      "a": "Den Wert aller im Inland erzeugten Waren und Dienstleistungen",
+      "info": "Gemeint ist der Wert innerhalb eines Jahres bzw. Zeitraums."
+    },
+    {
+      "id": "008",
+      "q": "Wie nennt man einen Markt mit nur einem Anbieter?",
+      "a": "Monopol",
+      "choices": [
+        "Oligopol",
+        "Polypol",
+        "Kartell"
+      ],
+      "info": "Beim Oligopol gibt es wenige Anbieter, beim Polypol viele."
+    },
+    {
+      "id": "009",
+      "q": "Wer gilt als Vater des „Wirtschaftswunders“ und der Sozialen Marktwirtschaft?",
+      "a": "Ludwig Erhard",
+      "choices": [
+        "Konrad Adenauer",
+        "Karl Marx",
+        "Otto von Bismarck"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Wie hoch ist der reguläre Mehrwertsteuersatz in Deutschland?",
+      "a": "19 Prozent",
+      "choices": [
+        "7 Prozent",
+        "16 Prozent",
+        "21 Prozent"
+      ],
+      "info": "Für viele Lebensmittel und Bücher gilt der ermäßigte Satz von 7 %."
+    },
+    {
+      "id": "011",
+      "q": "Was ist der Unterschied zwischen Brutto- und Nettolohn?",
+      "a": "Netto ist Brutto minus Steuern und Sozialabgaben"
+    },
+    {
+      "id": "012",
+      "q": "Was bedeutet ein progressiver Steuertarif bei der Einkommensteuer?",
+      "a": "Höhere Einkommen zahlen einen höheren Steuersatz"
+    },
+    {
+      "id": "013",
+      "q": "Welche fünf Zweige hat die gesetzliche Sozialversicherung?",
+      "a": "Kranken-, Pflege-, Renten-, Arbeitslosen-, Unfallversicherung"
+    },
+    {
+      "id": "014",
+      "q": "Wie wird die gesetzliche Rente in Deutschland hauptsächlich finanziert?",
+      "a": "Im Umlageverfahren (Generationenvertrag)",
+      "choices": [
+        "Allein aus der Mehrwertsteuer",
+        "Über ein privates Sparkonto jedes Einzelnen"
+      ],
+      "info": "Die heutigen Beitragszahlenden finanzieren die heutigen Renten, dazu kommt ein Zuschuss des Bundes."
+    },
+    {
+      "id": "015",
+      "q": "Du legst 1000 € für ein Jahr zu 3 % Zinsen an. Wie viele Zinsen bekommst du?",
+      "a": "30 €",
+      "choices": [
+        "3 €",
+        "300 €",
+        "13 €"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "1000 € zu 10 % Zinsen, 2 Jahre, Zinsen bleiben angelegt. Endbetrag?",
+      "a": "1210 €",
+      "choices": [
+        "1200 €",
+        "1100 €",
+        "1020 €"
+      ],
+      "info": "Zinseszins: Im zweiten Jahr gibt es auch Zinsen auf die Zinsen des ersten Jahres."
+    },
+    {
+      "id": "017",
+      "q": "Nach der 72er-Regel: Wann verdoppelt sich Geld bei 6 % Zinsen pro Jahr etwa?",
+      "a": "Nach etwa 12 Jahren",
+      "choices": [
+        "Nach etwa 6 Jahren",
+        "Nach etwa 20 Jahren",
+        "Nach etwa 72 Jahren"
+      ],
+      "info": "72 geteilt durch den Zinssatz ergibt ungefähr die Verdopplungszeit."
+    },
+    {
+      "id": "018",
+      "q": "Wofür braucht man ein Girokonto vor allem?",
+      "a": "Für den täglichen Zahlungsverkehr",
+      "info": "Lohn empfangen, Miete überweisen, mit Karte bezahlen."
+    },
+    {
+      "id": "019",
+      "q": "Aus wie vielen Zeichen besteht eine deutsche IBAN?",
+      "a": "22",
+      "choices": [
+        "16",
+        "20",
+        "24"
+      ],
+      "info": "DE, zwei Prüfziffern und 18 Stellen für Bankleitzahl und Kontonummer."
+    },
+    {
+      "id": "020",
+      "q": "Was ist ein Dispositionskredit („Dispo“)?",
+      "a": "Ein Überziehungsrahmen auf dem Girokonto",
+      "info": "Er ist bequem, aber meist ein sehr teurer Kredit."
+    },
+    {
+      "id": "021",
+      "q": "Bis zu welchem Betrag sind Spareinlagen pro Kunde und Bank in der EU gesetzlich gesichert?",
+      "a": "100 000 €",
+      "choices": [
+        "10 000 €",
+        "50 000 €",
+        "1 Million €"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "Deine Bank bittet per E-Mail um PIN und TAN. Was tust du?",
+      "a": "Nichts eingeben – es ist Betrug (Phishing)",
+      "choices": [
+        "Daten schnell eingeben",
+        "Per Antwort-Mail schicken"
+      ],
+      "info": "Banken fragen niemals per E-Mail oder Telefon nach PIN oder TAN."
+    },
+    {
+      "id": "023",
+      "q": "Welche Angabe eignet sich am besten, um Kreditangebote zu vergleichen?",
+      "a": "Der effektive Jahreszins",
+      "choices": [
+        "Der Sollzins",
+        "Die Monatsrate",
+        "Die Laufzeit"
+      ],
+      "info": "Er enthält neben dem Zins auch weitere Kosten des Kredits."
+    },
+    {
+      "id": "024",
+      "q": "Was ist die SCHUFA?",
+      "a": "Eine Auskunftei, die Daten zur Kreditwürdigkeit sammelt"
+    },
+    {
+      "id": "025",
+      "q": "Was erwirbt man mit einer Aktie?",
+      "a": "Einen Anteil an einem Unternehmen",
+      "choices": [
+        "Ein Darlehen an den Staat",
+        "Ein Sparbuch",
+        "Eine Versicherung"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Wie heißt der Gewinnanteil, den eine Aktiengesellschaft an Aktionäre ausschüttet?",
+      "a": "Dividende"
+    },
+    {
+      "id": "027",
+      "q": "Was ist eine Anleihe?",
+      "a": "Ein Wertpapier: Man leiht Staat oder Unternehmen Geld"
+    },
+    {
+      "id": "028",
+      "q": "Was ist ein ETF?",
+      "a": "Ein börsengehandelter Fonds, meist auf einen Index"
+    },
+    {
+      "id": "029",
+      "q": "Wie viele Unternehmen sind im DAX enthalten?",
+      "a": "40",
+      "choices": [
+        "30",
+        "50",
+        "100"
+      ],
+      "info": "Seit September 2021 sind es 40 statt 30."
+    },
+    {
+      "id": "030",
+      "q": "Was bedeutet Diversifikation bei der Geldanlage?",
+      "a": "Das Geld auf verschiedene Anlagen verteilen",
+      "info": "So sinkt das Risiko, alles auf einmal zu verlieren."
+    },
+    {
+      "id": "031",
+      "q": "Welche drei Ziele bilden das „magische Dreieck“ der Geldanlage?",
+      "a": "Rendite, Sicherheit, Liquidität",
+      "info": "Alle drei gleichzeitig maximal zu erreichen ist nicht möglich."
+    },
+    {
+      "id": "032",
+      "q": "Wie heißt die Regel, nach der Minderjährige mit ihrem Taschengeld wirksam kaufen können?",
+      "a": "Taschengeldparagraf (§ 110 BGB)"
+    },
+    {
+      "id": "033",
+      "q": "Ab welchem Alter ist man in Deutschland voll geschäftsfähig?",
+      "a": "Ab 18 Jahren",
+      "choices": [
+        "Ab 14 Jahren",
+        "Ab 16 Jahren",
+        "Ab 21 Jahren"
+      ],
+      "info": "Von 7 bis 17 Jahren ist man beschränkt geschäftsfähig."
+    },
+    {
+      "id": "034",
+      "q": "Wie lange gilt beim Online-Kauf in der Regel das Widerrufsrecht?",
+      "a": "14 Tage",
+      "choices": [
+        "7 Tage",
+        "30 Tage",
+        "2 Jahre"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "Wie lange gilt die gesetzliche Gewährleistung beim Kauf neuer Ware vom Händler?",
+      "a": "2 Jahre",
+      "choices": [
+        "6 Monate",
+        "1 Jahr",
+        "5 Jahre"
+      ]
+    },
+    {
+      "id": "036",
+      "q": "Was sind Opportunitätskosten?",
+      "a": "Der entgangene Nutzen der nicht gewählten Alternative"
+    }
+  ]
+}

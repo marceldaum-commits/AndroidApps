@@ -1,0 +1,332 @@
+{
+  "id": "gs-tiere",
+  "version": 1,
+  "title": "Tiere entdecken",
+  "subject": "sachunterricht",
+  "grades": [
+    1,
+    2,
+    3
+  ],
+  "emoji": "🐶",
+  "tier": "free",
+  "description": "Tierkinder, Tiergruppen und wo Tiere leben – spannend für kleine Forscher.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie heißt das Kind der Kuh?",
+      "a": "Kalb",
+      "choices": [
+        "Fohlen",
+        "Lamm",
+        "Ferkel"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Wie heißt das Kind vom Pferd?",
+      "a": "Fohlen",
+      "choices": [
+        "Kalb",
+        "Welpe",
+        "Küken"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Wie heißt das Kind vom Schaf?",
+      "a": "Lamm",
+      "choices": [
+        "Zicklein",
+        "Ferkel",
+        "Fohlen"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Wie heißt das Kind vom Schwein?",
+      "a": "Ferkel",
+      "choices": [
+        "Kalb",
+        "Lamm",
+        "Kitz"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Wie heißt das Kind vom Hund?",
+      "a": "Welpe",
+      "choices": [
+        "Fohlen",
+        "Küken",
+        "Ferkel"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Wie heißt das Kind vom Huhn?",
+      "a": "Küken",
+      "choices": [
+        "Welpe",
+        "Kalb",
+        "Lamm"
+      ]
+    },
+    {
+      "id": "007",
+      "q": "Wie heißt das Kind der Ziege?",
+      "a": "Zicklein",
+      "choices": [
+        "Ferkel",
+        "Fohlen",
+        "Welpe"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "Wie heißt das Kind vom Reh?",
+      "a": "Kitz",
+      "choices": [
+        "Fohlen",
+        "Ferkel",
+        "Küken"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "Was schlüpft aus dem Froschlaich?",
+      "a": "Kaulquappe",
+      "choices": [
+        "Raupe",
+        "Welpe",
+        "Küken"
+      ],
+      "info": "Aus Kaulquappen werden später Frösche."
+    },
+    {
+      "id": "010",
+      "q": "Was schlüpft aus dem Ei eines Schmetterlings?",
+      "a": "Raupe",
+      "choices": [
+        "Kaulquappe",
+        "Küken",
+        "Fohlen"
+      ],
+      "info": "Ei – Raupe – Puppe – Schmetterling"
+    },
+    {
+      "id": "011",
+      "q": "Wie nennt man ein männliches Huhn?",
+      "a": "Hahn",
+      "choices": [
+        "Henne",
+        "Küken",
+        "Hengst"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "Wie heißt die Mutter beim Pferd?",
+      "a": "Stute",
+      "choices": [
+        "Hengst",
+        "Kuh",
+        "Sau"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Welches Tier ist ein Säugetier?",
+      "a": "Hund",
+      "choices": [
+        "Huhn",
+        "Frosch",
+        "Forelle"
+      ],
+      "info": "Säugetiere trinken als Baby Milch bei ihrer Mutter."
+    },
+    {
+      "id": "014",
+      "q": "Welches Tier ist ein Vogel?",
+      "a": "Amsel",
+      "choices": [
+        "Fledermaus",
+        "Biene",
+        "Eichhörnchen"
+      ],
+      "info": "Vögel haben Federn. Die Fledermaus ist ein Säugetier."
+    },
+    {
+      "id": "015",
+      "q": "Welches Tier ist ein Fisch?",
+      "a": "Forelle",
+      "choices": [
+        "Wal",
+        "Delfin",
+        "Seehund"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Ist der Wal ein Fisch?",
+      "a": "Nein, ein Säugetier",
+      "choices": [
+        "Ja, ein Fisch",
+        "Nein, ein Reptil"
+      ],
+      "info": "Wale atmen mit einer Lunge und säugen ihre Jungen."
+    },
+    {
+      "id": "017",
+      "q": "Welches Tier ist ein Insekt?",
+      "a": "Ameise",
+      "choices": [
+        "Spinne",
+        "Schnecke",
+        "Regenwurm"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Wie viele Beine hat ein Insekt?",
+      "a": "6",
+      "choices": [
+        "8",
+        "4",
+        "10"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Wie viele Beine hat eine Spinne?",
+      "a": "8",
+      "choices": [
+        "6",
+        "4",
+        "10"
+      ],
+      "info": "Spinnen sind keine Insekten."
+    },
+    {
+      "id": "020",
+      "q": "Welches Tier ist ein Reptil?",
+      "a": "Eidechse",
+      "choices": [
+        "Frosch",
+        "Maus",
+        "Molch"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Welches Tier ist ein Lurch (Amphibie)?",
+      "a": "Frosch",
+      "choices": [
+        "Eidechse",
+        "Schildkröte",
+        "Maus"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "Welches Tier legt Eier?",
+      "a": "Huhn",
+      "choices": [
+        "Kuh",
+        "Pferd",
+        "Katze"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "Womit atmen Fische?",
+      "a": "Kiemen",
+      "choices": [
+        "Lunge",
+        "Nase",
+        "Federn"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Wo lebt ein Maulwurf?",
+      "a": "Unter der Erde",
+      "choices": [
+        "Im Wasser",
+        "Auf Bäumen",
+        "In der Wüste"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Wo baut der Biber seine Burg?",
+      "a": "Am Wasser",
+      "choices": [
+        "In der Wüste",
+        "Auf hohen Bergen",
+        "Oben in Baumkronen"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Welches Tier lebt bei uns im Wald?",
+      "a": "Wildschwein",
+      "choices": [
+        "Kamel",
+        "Pinguin",
+        "Löwe"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Wo lebt der Eisbär?",
+      "a": "In der Arktis",
+      "choices": [
+        "In der Antarktis",
+        "In der Wüste",
+        "Im Regenwald"
+      ],
+      "info": "Eisbären leben im hohen Norden, Pinguine im Süden."
+    },
+    {
+      "id": "028",
+      "q": "Welches Tier frisst am liebsten Bambus?",
+      "a": "Panda",
+      "choices": [
+        "Koala",
+        "Giraffe",
+        "Löwe"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Welches Tier ist ein Pflanzenfresser?",
+      "a": "Kuh",
+      "choices": [
+        "Wolf",
+        "Fuchs",
+        "Katze"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Welches Tier hält Winterschlaf?",
+      "a": "Igel",
+      "choices": [
+        "Fuchs",
+        "Reh",
+        "Amsel"
+      ]
+    },
+    {
+      "id": "031",
+      "q": "Was machen Zugvögel im Herbst?",
+      "a": "Sie fliegen in den Süden",
+      "choices": [
+        "Sie halten Winterschlaf",
+        "Sie bauen Nester",
+        "Sie legen Eier"
+      ]
+    }
+  ]
+}

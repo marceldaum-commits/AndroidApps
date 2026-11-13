@@ -1,0 +1,375 @@
+{
+  "id": "s1-franzoesisch-grundwortschatz",
+  "version": 1,
+  "title": "Französisch Grundwortschatz",
+  "subject": "franzoesisch",
+  "grades": [
+    6,
+    7,
+    8
+  ],
+  "emoji": "🥖",
+  "tier": "free",
+  "description": "Wichtige französische Wörter mit Artikel (le, la, l', les): Deutsch → Französisch.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "das Haus",
+      "a": "la maison",
+      "choices": [
+        "le maison",
+        "la mairie",
+        "le magasin"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "der Vater",
+      "a": "le père",
+      "choices": [
+        "la père",
+        "le pére",
+        "le mère"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "die Mutter",
+      "a": "la mère",
+      "choices": [
+        "la mer",
+        "le mère",
+        "la maire"
+      ],
+      "info": "la mer = das Meer"
+    },
+    {
+      "id": "004",
+      "q": "der Bruder",
+      "a": "le frère",
+      "choices": [
+        "la frère",
+        "le frére",
+        "la sœur"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "die Schwester",
+      "a": "la sœur",
+      "choices": [
+        "le sœur",
+        "la soeure",
+        "la fille"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "die Schule",
+      "a": "l'école",
+      "choices": [
+        "la école",
+        "le école",
+        "l'écolle"
+      ],
+      "info": "école ist weiblich; vor Vokal wird la zu l'."
+    },
+    {
+      "id": "007",
+      "q": "das Buch",
+      "a": "le livre",
+      "choices": [
+        "la livre",
+        "le libre",
+        "le lièvre"
+      ],
+      "info": "la livre = das Pfund, le lièvre = der Hase"
+    },
+    {
+      "id": "008",
+      "q": "der Hund",
+      "a": "le chien",
+      "choices": [
+        "la chien",
+        "le chat",
+        "le chient"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "die Katze",
+      "a": "le chat",
+      "choices": [
+        "la chat",
+        "le chien",
+        "le chapeau"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "das Brot",
+      "a": "le pain",
+      "choices": [
+        "la pain",
+        "le pin",
+        "le pied"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "der Käse",
+      "a": "le fromage",
+      "choices": [
+        "la fromage",
+        "le fromache",
+        "le fraise"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "das Wasser",
+      "a": "l'eau",
+      "choices": [
+        "le eau",
+        "la eau",
+        "l'au"
+      ],
+      "info": "eau ist weiblich: l'eau (f)."
+    },
+    {
+      "id": "013",
+      "q": "der Apfel",
+      "a": "la pomme",
+      "choices": [
+        "le pomme",
+        "la poire",
+        "la pome"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "die Stadt",
+      "a": "la ville",
+      "choices": [
+        "le ville",
+        "la vie",
+        "la vile"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "der Baum",
+      "a": "l'arbre",
+      "choices": [
+        "la arbre",
+        "le arbre",
+        "l'arbe"
+      ],
+      "info": "arbre ist männlich: l'arbre (m)."
+    },
+    {
+      "id": "016",
+      "q": "das Auto",
+      "a": "la voiture",
+      "choices": [
+        "le voiture",
+        "le vélo",
+        "la vitre"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "das Fahrrad",
+      "a": "le vélo",
+      "choices": [
+        "la vélo",
+        "le velo",
+        "la voiture"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "das Schlafzimmer",
+      "a": "la chambre",
+      "choices": [
+        "le chambre",
+        "la cuisine",
+        "la chamber"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "die Küche",
+      "a": "la cuisine",
+      "choices": [
+        "le cuisine",
+        "la cousine",
+        "la chambre"
+      ],
+      "info": "la cousine = die Cousine"
+    },
+    {
+      "id": "020",
+      "q": "der Tisch",
+      "a": "la table",
+      "choices": [
+        "le table",
+        "la tableau",
+        "la tabel"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "das Fenster",
+      "a": "la fenêtre",
+      "choices": [
+        "le fenêtre",
+        "la fenètre",
+        "la porte"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "die Tür",
+      "a": "la porte",
+      "choices": [
+        "le porte",
+        "la port",
+        "la fenêtre"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "der Tag",
+      "a": "le jour",
+      "choices": [
+        "la jour",
+        "le journal",
+        "la nuit"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "die Nacht",
+      "a": "la nuit",
+      "choices": [
+        "le nuit",
+        "la nuite",
+        "le jour"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "die Woche",
+      "a": "la semaine",
+      "choices": [
+        "le semaine",
+        "la semène",
+        "le week-end"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "das Meer",
+      "a": "la mer",
+      "choices": [
+        "la mère",
+        "le mer",
+        "la mare"
+      ],
+      "info": "la mère = die Mutter, la mare = der Teich"
+    },
+    {
+      "id": "027",
+      "q": "die Sonne",
+      "a": "le soleil",
+      "choices": [
+        "la soleil",
+        "le sol",
+        "le soleille"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "der Mond",
+      "a": "la lune",
+      "choices": [
+        "le lune",
+        "la lumière",
+        "la lunne"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "die Hausaufgaben",
+      "a": "les devoirs",
+      "choices": [
+        "les devoir",
+        "la devoirs",
+        "les travails"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "der Bahnhof",
+      "a": "la gare",
+      "choices": [
+        "le gare",
+        "la guerre",
+        "le garage"
+      ],
+      "info": "la guerre = der Krieg"
+    },
+    {
+      "id": "031",
+      "q": "das Geld",
+      "a": "l'argent",
+      "choices": [
+        "la argent",
+        "le argent",
+        "l'argant"
+      ],
+      "info": "argent ist männlich: l'argent (m)."
+    },
+    {
+      "id": "032",
+      "q": "das Heft",
+      "a": "le cahier",
+      "choices": [
+        "la cahier",
+        "le cahié",
+        "le cayer"
+      ]
+    },
+    {
+      "id": "033",
+      "q": "der Garten",
+      "a": "le jardin",
+      "choices": [
+        "la jardin",
+        "le gardin",
+        "le jardain"
+      ]
+    },
+    {
+      "id": "034",
+      "q": "die Blume",
+      "a": "la fleur",
+      "choices": [
+        "le fleur",
+        "la flor",
+        "la fleure"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "das Kind",
+      "a": "l'enfant",
+      "choices": [
+        "la enfant",
+        "l'enfent",
+        "l'infant"
+      ]
+    }
+  ]
+}

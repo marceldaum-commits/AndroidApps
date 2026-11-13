@@ -1,0 +1,344 @@
+{
+  "id": "s1-erdkunde-welt",
+  "version": 1,
+  "title": "Rund um die Welt",
+  "subject": "erdkunde",
+  "grades": [
+    7,
+    8,
+    9,
+    10,
+    14
+  ],
+  "emoji": "🌋",
+  "tier": "free",
+  "description": "Kontinente, Ozeane, Rekorde der Erde und Hauptstädte aus aller Welt.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele Kontinente unterscheidet man in Deutschland üblicherweise?",
+      "a": "7",
+      "choices": [
+        "5",
+        "6",
+        "8"
+      ],
+      "info": "Afrika, Antarktika, Asien, Australien, Europa, Nordamerika, Südamerika."
+    },
+    {
+      "id": "002",
+      "q": "Welcher ist der größte Kontinent?",
+      "a": "Asien",
+      "choices": [
+        "Afrika",
+        "Nordamerika",
+        "Antarktika"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Welcher ist der kleinste Kontinent?",
+      "a": "Australien",
+      "choices": [
+        "Europa",
+        "Antarktika",
+        "Südamerika"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Welcher ist der größte Ozean?",
+      "a": "Pazifik (Pazifischer Ozean)",
+      "choices": [
+        "Atlantik",
+        "Indischer Ozean",
+        "Arktischer Ozean"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Welcher Ozean liegt zwischen Europa/Afrika und Amerika?",
+      "a": "Atlantik"
+    },
+    {
+      "id": "006",
+      "q": "Welches Land ist flächenmäßig das größte der Welt?",
+      "a": "Russland",
+      "choices": [
+        "Kanada",
+        "China",
+        "USA"
+      ]
+    },
+    {
+      "id": "007",
+      "q": "Welches Land hat die meisten Einwohner (Stand 2026)?",
+      "a": "Indien",
+      "choices": [
+        "China",
+        "USA",
+        "Indonesien"
+      ],
+      "info": "Indien hat China um das Jahr 2023 überholt."
+    },
+    {
+      "id": "008",
+      "q": "Wie heißt der höchste Berg der Erde?",
+      "a": "Mount Everest",
+      "choices": [
+        "K2",
+        "Kangchendzönga",
+        "Aconcagua"
+      ],
+      "info": "Er ist 8849 m hoch und liegt im Himalaya an der Grenze von Nepal und China."
+    },
+    {
+      "id": "009",
+      "q": "Höchster Berg Afrikas?",
+      "a": "Kilimandscharo",
+      "choices": [
+        "Mount Kenya",
+        "Atlas",
+        "Mont Blanc"
+      ],
+      "info": "Der Kilimandscharo (5895 m) liegt in Tansania."
+    },
+    {
+      "id": "010",
+      "q": "Höchster Berg Südamerikas?",
+      "a": "Aconcagua",
+      "info": "Der Aconcagua (rund 6960 m) liegt in Argentinien."
+    },
+    {
+      "id": "011",
+      "q": "Längster Fluss Afrikas?",
+      "a": "Nil",
+      "choices": [
+        "Kongo",
+        "Niger",
+        "Sambesi"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "Welcher Fluss führt das meiste Wasser der Erde?",
+      "a": "Amazonas",
+      "choices": [
+        "Nil",
+        "Jangtse",
+        "Mississippi"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Welches Gebirge ist das längste der Erde (über dem Meeresspiegel)?",
+      "a": "Anden",
+      "choices": [
+        "Himalaya",
+        "Rocky Mountains",
+        "Alpen"
+      ],
+      "info": "Die Anden ziehen sich rund 7000 km an der Westküste Südamerikas entlang."
+    },
+    {
+      "id": "014",
+      "q": "Wie heißt die größte heiße Wüste der Erde?",
+      "a": "Sahara",
+      "choices": [
+        "Gobi",
+        "Kalahari",
+        "Atacama"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "Welches ist die größte Insel der Erde?",
+      "a": "Grönland",
+      "choices": [
+        "Madagaskar",
+        "Borneo",
+        "Neuguinea"
+      ],
+      "info": "Australien zählt als Kontinent, nicht als Insel."
+    },
+    {
+      "id": "016",
+      "q": "Wo liegt die tiefste bekannte Stelle der Ozeane?",
+      "a": "Im Marianengraben",
+      "info": "Der Marianengraben im Pazifik ist rund 11 000 m tief."
+    },
+    {
+      "id": "017",
+      "q": "Welches ist der tiefste See der Erde?",
+      "a": "Baikalsee",
+      "choices": [
+        "Tanganjikasee",
+        "Victoriasee",
+        "Kaspisches Meer"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Welcher Kanal verbindet Atlantik und Pazifik?",
+      "a": "Panamakanal",
+      "choices": [
+        "Suezkanal",
+        "Nord-Ostsee-Kanal"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Welche Meere verbindet der Suezkanal?",
+      "a": "Mittelmeer und Rotes Meer"
+    },
+    {
+      "id": "020",
+      "q": "Wie heißt die gedachte Linie, die die Erde in Nord- und Südhalbkugel teilt?",
+      "a": "Äquator"
+    },
+    {
+      "id": "021",
+      "q": "Vor welchem Land liegt das Great Barrier Reef?",
+      "a": "Australien"
+    },
+    {
+      "id": "022",
+      "q": "Hauptstadt der USA?",
+      "a": "Washington, D.C.",
+      "choices": [
+        "New York",
+        "Los Angeles",
+        "Chicago"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "Hauptstadt von Kanada?",
+      "a": "Ottawa",
+      "choices": [
+        "Toronto",
+        "Montreal",
+        "Vancouver"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Hauptstadt von Australien?",
+      "a": "Canberra",
+      "choices": [
+        "Sydney",
+        "Melbourne",
+        "Perth"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Hauptstadt von Brasilien?",
+      "a": "Brasília",
+      "choices": [
+        "Rio de Janeiro",
+        "São Paulo",
+        "Salvador"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Hauptstadt von Argentinien?",
+      "a": "Buenos Aires"
+    },
+    {
+      "id": "027",
+      "q": "Hauptstadt von Japan?",
+      "a": "Tokio",
+      "choices": [
+        "Osaka",
+        "Kyoto"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Hauptstadt von China?",
+      "a": "Peking",
+      "choices": [
+        "Shanghai",
+        "Hongkong",
+        "Guangzhou"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Hauptstadt von Indien?",
+      "a": "Neu-Delhi",
+      "choices": [
+        "Mumbai",
+        "Kalkutta",
+        "Bangalore"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Hauptstadt der Türkei?",
+      "a": "Ankara",
+      "choices": [
+        "Istanbul",
+        "Izmir",
+        "Antalya"
+      ],
+      "info": "Istanbul ist die größte Stadt, Hauptstadt ist seit 1923 Ankara."
+    },
+    {
+      "id": "031",
+      "q": "Hauptstadt von Ägypten?",
+      "a": "Kairo"
+    },
+    {
+      "id": "032",
+      "q": "Hauptstadt von Kenia?",
+      "a": "Nairobi"
+    },
+    {
+      "id": "033",
+      "q": "Hauptstadt von Nigeria?",
+      "a": "Abuja",
+      "choices": [
+        "Lagos",
+        "Kano"
+      ],
+      "info": "Lagos ist größer, seit 1991 ist aber Abuja Hauptstadt."
+    },
+    {
+      "id": "034",
+      "q": "Hauptstadt von Neuseeland?",
+      "a": "Wellington",
+      "choices": [
+        "Auckland",
+        "Christchurch"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "Hauptstadt von Mexiko?",
+      "a": "Mexiko-Stadt"
+    },
+    {
+      "id": "036",
+      "q": "Hauptstadt von Südkorea?",
+      "a": "Seoul"
+    },
+    {
+      "id": "037",
+      "q": "Hauptstadt von Thailand?",
+      "a": "Bangkok"
+    },
+    {
+      "id": "038",
+      "q": "Hauptstadt von Peru?",
+      "a": "Lima",
+      "choices": [
+        "Cusco",
+        "Quito",
+        "La Paz"
+      ]
+    }
+  ]
+}

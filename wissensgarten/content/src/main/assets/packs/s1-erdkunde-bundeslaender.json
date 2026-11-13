@@ -1,0 +1,320 @@
+{
+  "id": "s1-erdkunde-bundeslaender",
+  "version": 1,
+  "title": "Deutschlands Bundesländer",
+  "subject": "erdkunde",
+  "grades": [
+    5,
+    6,
+    7
+  ],
+  "emoji": "🏔️",
+  "tier": "free",
+  "description": "Bundesländer und ihre Hauptstädte, dazu die wichtigsten Flüsse, Seen und Gebirge Deutschlands.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele Bundesländer hat Deutschland?",
+      "a": "16",
+      "choices": [
+        "12",
+        "15",
+        "18"
+      ],
+      "info": "Seit der Wiedervereinigung 1990 besteht Deutschland aus 16 Ländern."
+    },
+    {
+      "id": "002",
+      "q": "Landeshauptstadt von Bayern?",
+      "a": "München",
+      "choices": [
+        "Nürnberg",
+        "Augsburg",
+        "Regensburg"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Landeshauptstadt von Baden-Württemberg?",
+      "a": "Stuttgart"
+    },
+    {
+      "id": "004",
+      "q": "Landeshauptstadt von Nordrhein-Westfalen?",
+      "a": "Düsseldorf",
+      "choices": [
+        "Köln",
+        "Dortmund",
+        "Bonn"
+      ],
+      "info": "Köln ist die größte Stadt in NRW, Hauptstadt ist aber Düsseldorf."
+    },
+    {
+      "id": "005",
+      "q": "Landeshauptstadt von Niedersachsen?",
+      "a": "Hannover"
+    },
+    {
+      "id": "006",
+      "q": "Landeshauptstadt von Hessen?",
+      "a": "Wiesbaden",
+      "choices": [
+        "Frankfurt am Main",
+        "Kassel",
+        "Darmstadt"
+      ],
+      "info": "Frankfurt ist die größte Stadt Hessens, Regierungssitz ist Wiesbaden."
+    },
+    {
+      "id": "007",
+      "q": "Landeshauptstadt von Rheinland-Pfalz?",
+      "a": "Mainz"
+    },
+    {
+      "id": "008",
+      "q": "Landeshauptstadt des Saarlandes?",
+      "a": "Saarbrücken"
+    },
+    {
+      "id": "009",
+      "q": "Landeshauptstadt von Sachsen?",
+      "a": "Dresden",
+      "choices": [
+        "Leipzig",
+        "Chemnitz",
+        "Zwickau"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Landeshauptstadt von Sachsen-Anhalt?",
+      "a": "Magdeburg",
+      "choices": [
+        "Halle (Saale)",
+        "Dessau-Roßlau"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Landeshauptstadt von Thüringen?",
+      "a": "Erfurt"
+    },
+    {
+      "id": "012",
+      "q": "Landeshauptstadt von Brandenburg?",
+      "a": "Potsdam",
+      "choices": [
+        "Cottbus",
+        "Frankfurt (Oder)"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Landeshauptstadt von Mecklenburg-Vorpommern?",
+      "a": "Schwerin",
+      "choices": [
+        "Rostock",
+        "Stralsund",
+        "Greifswald"
+      ],
+      "info": "Rostock ist die größte Stadt des Landes, Hauptstadt ist Schwerin."
+    },
+    {
+      "id": "014",
+      "q": "Landeshauptstadt von Schleswig-Holstein?",
+      "a": "Kiel"
+    },
+    {
+      "id": "015",
+      "q": "Welche drei Bundesländer sind Stadtstaaten?",
+      "a": "Berlin, Hamburg und Bremen",
+      "info": "Bei Stadtstaaten ist die Stadt selbst ein Bundesland. Zum Land Bremen gehört auch Bremerhaven."
+    },
+    {
+      "id": "016",
+      "q": "Welches Bundesland ist flächenmäßig das größte?",
+      "a": "Bayern",
+      "choices": [
+        "Niedersachsen",
+        "Baden-Württemberg",
+        "Nordrhein-Westfalen"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Welches Bundesland hat die meisten Einwohner?",
+      "a": "Nordrhein-Westfalen",
+      "choices": [
+        "Bayern",
+        "Baden-Württemberg",
+        "Niedersachsen"
+      ],
+      "info": "In NRW leben rund 18 Millionen Menschen."
+    },
+    {
+      "id": "018",
+      "q": "Welches Bundesland ist flächenmäßig das kleinste?",
+      "a": "Bremen",
+      "choices": [
+        "Saarland",
+        "Hamburg",
+        "Berlin"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Wie heißt der höchste Berg Deutschlands?",
+      "a": "Zugspitze",
+      "choices": [
+        "Watzmann",
+        "Feldberg",
+        "Brocken"
+      ],
+      "info": "Die Zugspitze ist 2962 m hoch und liegt in Bayern an der Grenze zu Österreich."
+    },
+    {
+      "id": "020",
+      "q": "Wie hoch ist die Zugspitze ungefähr?",
+      "a": "2962 m"
+    },
+    {
+      "id": "021",
+      "q": "Wie heißt der höchste Berg im Harz?",
+      "a": "Brocken",
+      "choices": [
+        "Fichtelberg",
+        "Feldberg",
+        "Großer Arber"
+      ],
+      "info": "Der Brocken (1141 m) liegt in Sachsen-Anhalt."
+    },
+    {
+      "id": "022",
+      "q": "Wie heißt der höchste Berg im Schwarzwald?",
+      "a": "Feldberg",
+      "info": "Der Feldberg ist 1493 m hoch."
+    },
+    {
+      "id": "023",
+      "q": "Welches Mittelgebirge bildet einen Teil der Grenze zwischen Sachsen und Tschechien?",
+      "a": "Erzgebirge",
+      "choices": [
+        "Harz",
+        "Rhön",
+        "Eifel"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Welcher Fluss hat den längsten Lauf innerhalb Deutschlands?",
+      "a": "Rhein",
+      "choices": [
+        "Elbe",
+        "Donau",
+        "Weser"
+      ],
+      "info": "Rund 865 km des Rheins liegen in Deutschland."
+    },
+    {
+      "id": "025",
+      "q": "In welches Meer mündet der Rhein?",
+      "a": "Nordsee",
+      "choices": [
+        "Ostsee",
+        "Schwarzes Meer",
+        "Mittelmeer"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "In welches Meer mündet die Donau?",
+      "a": "Schwarzes Meer",
+      "choices": [
+        "Nordsee",
+        "Ostsee",
+        "Mittelmeer"
+      ],
+      "info": "Die Donau entspringt im Schwarzwald und fließt nach Osten."
+    },
+    {
+      "id": "027",
+      "q": "Welcher große Fluss fließt durch Hamburg?",
+      "a": "Elbe"
+    },
+    {
+      "id": "028",
+      "q": "Welcher Fluss fließt durch Berlin?",
+      "a": "Spree",
+      "choices": [
+        "Oder",
+        "Elbe",
+        "Saale"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Durch welche Stadt fließt die Isar?",
+      "a": "München",
+      "choices": [
+        "Nürnberg",
+        "Augsburg",
+        "Regensburg"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Bei welcher Stadt mündet die Mosel in den Rhein?",
+      "a": "Koblenz",
+      "info": "Die Landzunge an der Mündung heißt Deutsches Eck."
+    },
+    {
+      "id": "031",
+      "q": "Welcher Fluss bildet einen großen Teil der Grenze zu Polen?",
+      "a": "Oder",
+      "info": "Oder und Neiße bilden zusammen die deutsch-polnische Grenze."
+    },
+    {
+      "id": "032",
+      "q": "Wie heißt der größte See, der ganz in Deutschland liegt?",
+      "a": "Müritz",
+      "choices": [
+        "Chiemsee",
+        "Starnberger See",
+        "Steinhuder Meer"
+      ],
+      "info": "Die Müritz liegt in Mecklenburg-Vorpommern."
+    },
+    {
+      "id": "033",
+      "q": "An welchem See grenzen Deutschland, Österreich und die Schweiz aneinander?",
+      "a": "Bodensee"
+    },
+    {
+      "id": "034",
+      "q": "Welche ist die größte Insel Deutschlands?",
+      "a": "Rügen",
+      "choices": [
+        "Usedom",
+        "Sylt",
+        "Fehmarn"
+      ],
+      "info": "Rügen liegt in der Ostsee und gehört zu Mecklenburg-Vorpommern."
+    },
+    {
+      "id": "035",
+      "q": "An welche zwei Meere grenzt Deutschland?",
+      "a": "Nordsee und Ostsee"
+    },
+    {
+      "id": "036",
+      "q": "Wie viele Nachbarländer hat Deutschland?",
+      "a": "9",
+      "choices": [
+        "7",
+        "8",
+        "10"
+      ],
+      "info": "Dänemark, Polen, Tschechien, Österreich, Schweiz, Frankreich, Luxemburg, Belgien, Niederlande."
+    }
+  ]
+}

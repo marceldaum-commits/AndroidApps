@@ -1,0 +1,321 @@
+{
+  "id": "s1-mathe-brueche-prozent",
+  "version": 1,
+  "title": "Brüche & Prozent",
+  "subject": "mathe",
+  "grades": [
+    6,
+    7
+  ],
+  "emoji": "➗",
+  "tier": "free",
+  "description": "Bruchrechnung, Dezimalzahlen und Prozentrechnung sicher beherrschen.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "1/2 + 1/4 = ?",
+      "a": "3/4",
+      "choices": [
+        "2/6",
+        "2/4",
+        "1/8"
+      ],
+      "info": "Gleichnamig machen: 2/4 + 1/4 = 3/4"
+    },
+    {
+      "id": "002",
+      "q": "2/3 · 3/4 = ?",
+      "a": "1/2",
+      "choices": [
+        "5/7",
+        "8/9",
+        "2/7"
+      ],
+      "info": "Zähler mal Zähler, Nenner mal Nenner: 6/12 = 1/2"
+    },
+    {
+      "id": "003",
+      "q": "3/5 : 3/10 = ?",
+      "a": "2",
+      "choices": [
+        "9/50",
+        "1/2",
+        "3/2"
+      ],
+      "info": "Mit dem Kehrwert multiplizieren: 3/5 · 10/3 = 2"
+    },
+    {
+      "id": "004",
+      "q": "5/6 − 1/4 = ?",
+      "a": "7/12",
+      "choices": [
+        "4/2",
+        "1/2",
+        "4/10"
+      ],
+      "info": "Hauptnenner 12: 10/12 − 3/12 = 7/12"
+    },
+    {
+      "id": "005",
+      "q": "Kürze 12/18 vollständig.",
+      "a": "2/3",
+      "choices": [
+        "3/4",
+        "4/9",
+        "3/2"
+      ],
+      "info": "Zähler und Nenner durch 6 teilen (ggT)."
+    },
+    {
+      "id": "006",
+      "q": "Erweitere 3/4 auf den Nenner 20.",
+      "a": "15/20",
+      "choices": [
+        "12/20",
+        "3/20",
+        "16/20"
+      ],
+      "info": "Zähler und Nenner mit 5 multiplizieren."
+    },
+    {
+      "id": "007",
+      "q": "Hauptnenner von 1/4 und 1/6?",
+      "a": "12",
+      "choices": [
+        "24",
+        "10",
+        "6"
+      ],
+      "info": "Kleinstes gemeinsames Vielfaches (kgV) von 4 und 6 ist 12."
+    },
+    {
+      "id": "008",
+      "q": "Wie dividiert man durch einen Bruch?",
+      "a": "Mit dem Kehrwert multiplizieren",
+      "info": "Beispiel: 1/2 : 1/4 = 1/2 · 4/1 = 2"
+    },
+    {
+      "id": "009",
+      "q": "Kehrwert von 5/7?",
+      "a": "7/5",
+      "info": "Zähler und Nenner werden vertauscht."
+    },
+    {
+      "id": "010",
+      "q": "Was ist ein echter Bruch?",
+      "a": "Zähler ist kleiner als der Nenner",
+      "info": "Beispiel: 3/4. Bei 5/4 spricht man von einem unechten Bruch."
+    },
+    {
+      "id": "011",
+      "q": "Bei 3/7: Wie heißt die Zahl 3?",
+      "a": "Zähler",
+      "choices": [
+        "Nenner",
+        "Quotient",
+        "Faktor"
+      ],
+      "info": "Der Zähler steht oben, der Nenner unten."
+    },
+    {
+      "id": "012",
+      "q": "Schreibe 2 1/3 als unechten Bruch.",
+      "a": "7/3",
+      "choices": [
+        "5/3",
+        "6/3",
+        "3/7"
+      ],
+      "info": "2 · 3 + 1 = 7, also 7/3"
+    },
+    {
+      "id": "013",
+      "q": "Schreibe 17/5 als gemischte Zahl.",
+      "a": "3 2/5",
+      "choices": [
+        "3 1/5",
+        "2 3/5",
+        "4 2/5"
+      ],
+      "info": "17 : 5 = 3 Rest 2"
+    },
+    {
+      "id": "014",
+      "q": "Was ist größer: 3/5 oder 5/8?",
+      "a": "5/8",
+      "choices": [
+        "3/5",
+        "Beide sind gleich groß"
+      ],
+      "info": "3/5 = 0,6 und 5/8 = 0,625"
+    },
+    {
+      "id": "015",
+      "q": "Was sind 3/4 von 24?",
+      "a": "18",
+      "info": "24 : 4 · 3 = 18"
+    },
+    {
+      "id": "016",
+      "q": "0,75 als vollständig gekürzter Bruch?",
+      "a": "3/4",
+      "choices": [
+        "7/5",
+        "3/5",
+        "7/10"
+      ],
+      "info": "0,75 = 75/100 = 3/4"
+    },
+    {
+      "id": "017",
+      "q": "1/8 als Dezimalzahl?",
+      "a": "0,125",
+      "choices": [
+        "0,8",
+        "0,18",
+        "0,25"
+      ],
+      "info": "1 : 8 = 0,125"
+    },
+    {
+      "id": "018",
+      "q": "1/3 als Dezimalzahl?",
+      "a": "0,333… (periodisch)",
+      "info": "Man schreibt 0,3 mit Periodenstrich über der 3."
+    },
+    {
+      "id": "019",
+      "q": "2/9 als Dezimalzahl?",
+      "a": "0,222… (periodisch)",
+      "info": "Neuntel ergeben Perioden: 1/9 = 0,111…"
+    },
+    {
+      "id": "020",
+      "q": "0,4 · 0,3 = ?",
+      "a": "0,12",
+      "choices": [
+        "1,2",
+        "0,7",
+        "0,012"
+      ],
+      "info": "4 · 3 = 12; insgesamt zwei Nachkommastellen."
+    },
+    {
+      "id": "021",
+      "q": "1,5 : 0,5 = ?",
+      "a": "3",
+      "choices": [
+        "0,3",
+        "30",
+        "0,75"
+      ],
+      "info": "Beide Zahlen mal 10: 15 : 5 = 3"
+    },
+    {
+      "id": "022",
+      "q": "2/5 in Prozent?",
+      "a": "40 %",
+      "choices": [
+        "25 %",
+        "20 %",
+        "52 %"
+      ],
+      "info": "2/5 = 4/10 = 40/100"
+    },
+    {
+      "id": "023",
+      "q": "1 % als Dezimalzahl?",
+      "a": "0,01",
+      "info": "Prozent heißt „von Hundert“: 1/100"
+    },
+    {
+      "id": "024",
+      "q": "125 % als Dezimalzahl?",
+      "a": "1,25",
+      "choices": [
+        "12,5",
+        "0,125",
+        "1,025"
+      ],
+      "info": "125/100 = 1,25"
+    },
+    {
+      "id": "025",
+      "q": "20 % von 80 = ?",
+      "a": "16",
+      "choices": [
+        "4",
+        "20",
+        "60"
+      ],
+      "info": "80 · 0,2 = 16"
+    },
+    {
+      "id": "026",
+      "q": "Formel für den Prozentwert W (Grundwert G, Prozentsatz p %)?",
+      "a": "W = G · p/100",
+      "info": "Beispiel: 30 % von 200 = 200 · 30/100 = 60"
+    },
+    {
+      "id": "027",
+      "q": "15 von 60 Kindern fehlen. Wie viel Prozent sind das?",
+      "a": "25 %",
+      "choices": [
+        "15 %",
+        "40 %",
+        "4 %"
+      ],
+      "info": "15/60 = 1/4 = 25 %"
+    },
+    {
+      "id": "028",
+      "q": "Ein Preis von 50 € steigt um 10 %. Neuer Preis?",
+      "a": "55 €",
+      "choices": [
+        "60 €",
+        "51 €",
+        "45 €"
+      ],
+      "info": "10 % von 50 € sind 5 €."
+    },
+    {
+      "id": "029",
+      "q": "Nach 20 % Rabatt kostet ein Pulli 40 €. Ursprünglicher Preis?",
+      "a": "50 €",
+      "choices": [
+        "48 €",
+        "60 €",
+        "32 €"
+      ],
+      "info": "40 € sind 80 % des alten Preises: 40 : 0,8 = 50"
+    },
+    {
+      "id": "030",
+      "q": "Ein Wert steigt von 80 auf 100. Um wie viel Prozent?",
+      "a": "25 %",
+      "choices": [
+        "20 %",
+        "80 %",
+        "125 %"
+      ],
+      "info": "Zunahme 20, bezogen auf den Grundwert 80: 20/80 = 25 %"
+    },
+    {
+      "id": "031",
+      "q": "Zinsen für 1000 € bei 3 % Jahreszins nach 1 Jahr?",
+      "a": "30 €",
+      "choices": [
+        "300 €",
+        "3 €",
+        "1030 €"
+      ],
+      "info": "1000 € · 0,03 = 30 €. 1030 € wäre das neue Guthaben."
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet Promille (‰)?",
+      "a": "Tausendstel",
+      "info": "1 ‰ = 1/1000 = 0,1 %"
+    }
+  ]
+}

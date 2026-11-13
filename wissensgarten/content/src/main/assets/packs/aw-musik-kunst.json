@@ -1,0 +1,321 @@
+{
+  "id": "aw-musik-kunst",
+  "version": 1,
+  "title": "Musik und Kunst",
+  "subject": "musik",
+  "grades": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    14
+  ],
+  "emoji": "🎻",
+  "tier": "free",
+  "description": "Berühmte Komponisten, Instrumente und Notenwerte sowie große Gemälde und ihre Künstler.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wer komponierte die 9. Sinfonie mit der „Ode an die Freude“?",
+      "a": "Ludwig van Beethoven",
+      "choices": [
+        "Wolfgang Amadeus Mozart",
+        "Johann Sebastian Bach",
+        "Joseph Haydn"
+      ],
+      "info": "Ihre Melodie ist heute die Europahymne."
+    },
+    {
+      "id": "002",
+      "q": "In welcher Stadt wurde Beethoven geboren?",
+      "a": "Bonn",
+      "choices": [
+        "Wien",
+        "Salzburg",
+        "Leipzig"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "In welcher Stadt wurde Mozart geboren?",
+      "a": "Salzburg",
+      "choices": [
+        "Wien",
+        "Prag",
+        "München"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Wer komponierte die Oper „Die Zauberflöte“?",
+      "a": "Wolfgang Amadeus Mozart",
+      "choices": [
+        "Richard Wagner",
+        "Giuseppe Verdi",
+        "Ludwig van Beethoven"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "In welcher Stadt war Johann Sebastian Bach Thomaskantor?",
+      "a": "Leipzig",
+      "choices": [
+        "Dresden",
+        "Weimar",
+        "Eisenach"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Wer komponierte „Die vier Jahreszeiten“?",
+      "a": "Antonio Vivaldi"
+    },
+    {
+      "id": "007",
+      "q": "Wer komponierte den Opernzyklus „Der Ring des Nibelungen“?",
+      "a": "Richard Wagner",
+      "choices": [
+        "Richard Strauss",
+        "Giuseppe Verdi",
+        "Carl Maria von Weber"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "Wer komponierte die „Wassermusik“?",
+      "a": "Georg Friedrich Händel"
+    },
+    {
+      "id": "009",
+      "q": "Wie viele Viertelnoten passen in eine ganze Note?",
+      "a": "4",
+      "choices": [
+        "2",
+        "3",
+        "8"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Wie viele Achtelnoten dauern so lange wie eine Viertelnote?",
+      "a": "2"
+    },
+    {
+      "id": "011",
+      "q": "Wie viele Viertel dauert eine punktierte halbe Note?",
+      "a": "3",
+      "choices": [
+        "2",
+        "4",
+        "2½"
+      ],
+      "info": "Der Punkt verlängert eine Note um die Hälfte ihres Wertes."
+    },
+    {
+      "id": "012",
+      "q": "Aus wie vielen Linien besteht ein Notensystem?",
+      "a": "5",
+      "choices": [
+        "4",
+        "6",
+        "7"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Welcher Schlüssel wird auch G-Schlüssel genannt?",
+      "a": "Violinschlüssel",
+      "choices": [
+        "Bassschlüssel",
+        "Altschlüssel"
+      ],
+      "info": "Der Bassschlüssel ist ein F-Schlüssel."
+    },
+    {
+      "id": "014",
+      "q": "Was bedeutet die Angabe „piano“ (p) in den Noten?",
+      "a": "Leise",
+      "choices": [
+        "Laut",
+        "Schnell",
+        "Langsam"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „crescendo“?",
+      "a": "Allmählich lauter werden"
+    },
+    {
+      "id": "016",
+      "q": "Wie viele Tasten hat ein normales Klavier?",
+      "a": "88",
+      "choices": [
+        "76",
+        "96",
+        "100"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Wie viele Saiten hat eine normale Gitarre?",
+      "a": "6"
+    },
+    {
+      "id": "018",
+      "q": "Wie viele Saiten hat eine Geige?",
+      "a": "4"
+    },
+    {
+      "id": "019",
+      "q": "Welches ist das tiefste Streichinstrument im Orchester?",
+      "a": "Kontrabass",
+      "choices": [
+        "Violoncello",
+        "Bratsche",
+        "Tuba"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "Zu welcher Instrumentengruppe zählt das Saxophon?",
+      "a": "Holzblasinstrumente",
+      "choices": [
+        "Blechblasinstrumente",
+        "Schlaginstrumente",
+        "Streichinstrumente"
+      ],
+      "info": "Der Ton entsteht wie bei der Klarinette mit einem Rohrblatt."
+    },
+    {
+      "id": "021",
+      "q": "Welche Dur-Tonleiter kommt ohne Vorzeichen aus?",
+      "a": "C-Dur"
+    },
+    {
+      "id": "022",
+      "q": "Wer malte die „Mona Lisa“?",
+      "a": "Leonardo da Vinci",
+      "choices": [
+        "Michelangelo",
+        "Raffael",
+        "Sandro Botticelli"
+      ],
+      "info": "Das Bild hängt im Louvre in Paris."
+    },
+    {
+      "id": "023",
+      "q": "Wer malte die Decke der Sixtinischen Kapelle?",
+      "a": "Michelangelo"
+    },
+    {
+      "id": "024",
+      "q": "Wer malte „Die Geburt der Venus“?",
+      "a": "Sandro Botticelli",
+      "choices": [
+        "Tizian",
+        "Leonardo da Vinci",
+        "Raffael"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Wer malte 1889 „Die Sternennacht“?",
+      "a": "Vincent van Gogh",
+      "choices": [
+        "Claude Monet",
+        "Paul Gauguin",
+        "Paul Cézanne"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Wer malte „Guernica“?",
+      "a": "Pablo Picasso",
+      "choices": [
+        "Salvador Dalí",
+        "Joan Miró",
+        "Henri Matisse"
+      ],
+      "info": "Das Bild von 1937 zeigt die Zerstörung der Stadt Guernica im Spanischen Bürgerkrieg."
+    },
+    {
+      "id": "027",
+      "q": "Wer malte „Der Schrei“?",
+      "a": "Edvard Munch"
+    },
+    {
+      "id": "028",
+      "q": "Wer malte „Das Mädchen mit dem Perlenohrring“?",
+      "a": "Jan Vermeer",
+      "choices": [
+        "Rembrandt",
+        "Peter Paul Rubens",
+        "Frans Hals"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Wer malte „Die Nachtwache“?",
+      "a": "Rembrandt"
+    },
+    {
+      "id": "030",
+      "q": "Wer malte „Der Wanderer über dem Nebelmeer“?",
+      "a": "Caspar David Friedrich",
+      "choices": [
+        "Albrecht Dürer",
+        "Franz Marc",
+        "Max Liebermann"
+      ],
+      "info": "Er ist ein Hauptvertreter der deutschen Romantik."
+    },
+    {
+      "id": "031",
+      "q": "Welcher deutsche Künstler schuf 1502 das berühmte Bild „Feldhase“?",
+      "a": "Albrecht Dürer"
+    },
+    {
+      "id": "032",
+      "q": "Wer malte die Bilderserie der „Seerosen“?",
+      "a": "Claude Monet",
+      "choices": [
+        "Édouard Manet",
+        "Auguste Renoir",
+        "Edgar Degas"
+      ]
+    },
+    {
+      "id": "033",
+      "q": "Welche Kunstrichtung ist nach einem Bild von Monet benannt?",
+      "a": "Impressionismus",
+      "choices": [
+        "Expressionismus",
+        "Kubismus",
+        "Surrealismus"
+      ],
+      "info": "Das Bild heißt „Impression, Sonnenaufgang“."
+    },
+    {
+      "id": "034",
+      "q": "Welche Kunstschule gründete Walter Gropius 1919 in Weimar?",
+      "a": "Bauhaus"
+    },
+    {
+      "id": "035",
+      "q": "Welche drei Grundfarben hat der Farbkreis nach Itten?",
+      "a": "Gelb, Rot, Blau",
+      "choices": [
+        "Rot, Grün, Blau",
+        "Gelb, Grün, Blau"
+      ],
+      "info": "Rot, Grün, Blau sind die Grundfarben des Lichts (z. B. am Bildschirm)."
+    },
+    {
+      "id": "036",
+      "q": "Welche Farbe ist im Farbkreis nach Itten die Komplementärfarbe zu Rot?",
+      "a": "Grün"
+    }
+  ]
+}

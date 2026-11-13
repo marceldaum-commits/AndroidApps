@@ -1,0 +1,307 @@
+{
+  "id": "s1-spanisch-grundwortschatz",
+  "version": 1,
+  "title": "Spanisch Grundwortschatz",
+  "subject": "spanisch",
+  "grades": [
+    8,
+    9,
+    10
+  ],
+  "emoji": "💃",
+  "tier": "free",
+  "description": "Wichtige spanische Wörter und Sätze für den Einstieg: Deutsch → Spanisch.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "das Haus",
+      "a": "la casa",
+      "choices": [
+        "el casa",
+        "la cosa",
+        "la caza"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "der Hund",
+      "a": "el perro",
+      "info": "Doppel-r wird gerollt: pe-rro."
+    },
+    {
+      "id": "003",
+      "q": "die Katze",
+      "a": "el gato",
+      "choices": [
+        "la gato",
+        "el pato",
+        "el gatto"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "die Schule",
+      "a": "la escuela",
+      "info": "Auch üblich: el colegio."
+    },
+    {
+      "id": "005",
+      "q": "das Buch",
+      "a": "el libro",
+      "choices": [
+        "la libra",
+        "el libre",
+        "el livro"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "der Freund",
+      "a": "el amigo"
+    },
+    {
+      "id": "007",
+      "q": "die Familie",
+      "a": "la familia",
+      "choices": [
+        "el familia",
+        "la famillia",
+        "la família"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "der Vater",
+      "a": "el padre"
+    },
+    {
+      "id": "009",
+      "q": "die Mutter",
+      "a": "la madre",
+      "choices": [
+        "el madre",
+        "la madra",
+        "la padre"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "der Bruder",
+      "a": "el hermano"
+    },
+    {
+      "id": "011",
+      "q": "die Schwester",
+      "a": "la hermana",
+      "choices": [
+        "la hermano",
+        "la ermana",
+        "el hermana"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "das Wasser",
+      "a": "el agua",
+      "choices": [
+        "la agua",
+        "el aqua",
+        "la água"
+      ],
+      "info": "agua ist weiblich, bekommt aber im Singular „el“ (betontes a am Anfang)."
+    },
+    {
+      "id": "013",
+      "q": "das Brot",
+      "a": "el pan"
+    },
+    {
+      "id": "014",
+      "q": "der Apfel",
+      "a": "la manzana",
+      "choices": [
+        "el manzano",
+        "la manzanilla",
+        "la mansana"
+      ],
+      "info": "el manzano = der Apfelbaum"
+    },
+    {
+      "id": "015",
+      "q": "die Stadt",
+      "a": "la ciudad"
+    },
+    {
+      "id": "016",
+      "q": "der Tag",
+      "a": "el día",
+      "choices": [
+        "la día",
+        "el diario",
+        "la noche"
+      ],
+      "info": "día ist männlich, obwohl es auf -a endet."
+    },
+    {
+      "id": "017",
+      "q": "die Nacht",
+      "a": "la noche"
+    },
+    {
+      "id": "018",
+      "q": "die Woche",
+      "a": "la semana",
+      "choices": [
+        "el semana",
+        "la semena",
+        "la mañana"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "das Jahr",
+      "a": "el año",
+      "info": "Ohne ñ (ano) bedeutet es etwas ganz anderes!"
+    },
+    {
+      "id": "020",
+      "q": "heute",
+      "a": "hoy",
+      "choices": [
+        "ayer",
+        "mañana",
+        "hay"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "morgen (am nächsten Tag)",
+      "a": "mañana"
+    },
+    {
+      "id": "022",
+      "q": "gestern",
+      "a": "ayer",
+      "choices": [
+        "hoy",
+        "mañana",
+        "anoche"
+      ],
+      "info": "anoche = gestern Abend/Nacht"
+    },
+    {
+      "id": "023",
+      "q": "danke",
+      "a": "gracias"
+    },
+    {
+      "id": "024",
+      "q": "bitte (um etwas bitten)",
+      "a": "por favor",
+      "choices": [
+        "de nada",
+        "perdón",
+        "para favor"
+      ],
+      "info": "de nada = gern geschehen"
+    },
+    {
+      "id": "025",
+      "q": "sprechen",
+      "a": "hablar"
+    },
+    {
+      "id": "026",
+      "q": "essen",
+      "a": "comer",
+      "choices": [
+        "beber",
+        "vivir",
+        "cocinar"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "trinken",
+      "a": "beber"
+    },
+    {
+      "id": "028",
+      "q": "wohnen, leben",
+      "a": "vivir",
+      "choices": [
+        "vender",
+        "venir",
+        "ver"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "haben (besitzen)",
+      "a": "tener"
+    },
+    {
+      "id": "030",
+      "q": "der Strand",
+      "a": "la playa",
+      "choices": [
+        "el playa",
+        "la plaza",
+        "la plata"
+      ],
+      "info": "la plaza = der Platz, la plata = das Silber"
+    },
+    {
+      "id": "031",
+      "q": "das Meer",
+      "a": "el mar"
+    },
+    {
+      "id": "032",
+      "q": "die Hand",
+      "a": "la mano",
+      "choices": [
+        "el mano",
+        "la mana",
+        "el brazo"
+      ],
+      "info": "mano ist weiblich, obwohl es auf -o endet."
+    },
+    {
+      "id": "033",
+      "q": "das Problem",
+      "a": "el problema"
+    },
+    {
+      "id": "034",
+      "q": "der Bahnhof",
+      "a": "la estación",
+      "choices": [
+        "el estación",
+        "la estacion",
+        "la estancia"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "Wie heißt du?",
+      "a": "¿Cómo te llamas?",
+      "choices": [
+        "¿Cómo estás?",
+        "¿Cómo se llama?",
+        "¿Qué te llamas?"
+      ]
+    },
+    {
+      "id": "036",
+      "q": "Ich bin 15 Jahre alt.",
+      "a": "Tengo 15 años.",
+      "choices": [
+        "Soy 15 años.",
+        "Estoy 15 años.",
+        "Tengo 15 anos."
+      ],
+      "info": "Das Alter drückt man im Spanischen mit „tener“ aus."
+    }
+  ]
+}

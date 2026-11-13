@@ -1,0 +1,339 @@
+{
+  "id": "s1-chemie-elemente",
+  "version": 1,
+  "title": "Chemische Elemente",
+  "subject": "chemie",
+  "grades": [
+    7,
+    8,
+    9
+  ],
+  "emoji": "⚗️",
+  "tier": "free",
+  "description": "Elementsymbole, Hauptgruppen und Edelgase des Periodensystems.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Elementsymbol von Wasserstoff?",
+      "a": "H",
+      "choices": [
+        "W",
+        "He",
+        "Hy"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Elementsymbol von Sauerstoff?",
+      "a": "O",
+      "choices": [
+        "S",
+        "Sa",
+        "Ox"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Elementsymbol von Stickstoff?",
+      "a": "N",
+      "choices": [
+        "S",
+        "St",
+        "Ni"
+      ],
+      "info": "Von lateinisch Nitrogenium"
+    },
+    {
+      "id": "004",
+      "q": "Elementsymbol von Kohlenstoff?",
+      "a": "C",
+      "choices": [
+        "K",
+        "Ko",
+        "Co"
+      ],
+      "info": "Von lateinisch Carboneum"
+    },
+    {
+      "id": "005",
+      "q": "Elementsymbol von Natrium?",
+      "a": "Na",
+      "choices": [
+        "N",
+        "Nt",
+        "Ne"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Elementsymbol von Kalium?",
+      "a": "K",
+      "choices": [
+        "Ka",
+        "Ca",
+        "Kl"
+      ]
+    },
+    {
+      "id": "007",
+      "q": "Elementsymbol von Eisen?",
+      "a": "Fe",
+      "choices": [
+        "Ei",
+        "E",
+        "Ir"
+      ],
+      "info": "Von lateinisch Ferrum"
+    },
+    {
+      "id": "008",
+      "q": "Elementsymbol von Kupfer?",
+      "a": "Cu",
+      "choices": [
+        "Ku",
+        "Co",
+        "Kp"
+      ],
+      "info": "Von lateinisch Cuprum"
+    },
+    {
+      "id": "009",
+      "q": "Elementsymbol von Silber?",
+      "a": "Ag",
+      "choices": [
+        "Si",
+        "S",
+        "Sr"
+      ],
+      "info": "Von lateinisch Argentum"
+    },
+    {
+      "id": "010",
+      "q": "Elementsymbol von Gold?",
+      "a": "Au",
+      "choices": [
+        "Go",
+        "G",
+        "Ag"
+      ],
+      "info": "Von lateinisch Aurum"
+    },
+    {
+      "id": "011",
+      "q": "Elementsymbol von Blei?",
+      "a": "Pb",
+      "choices": [
+        "Bl",
+        "B",
+        "Pl"
+      ],
+      "info": "Von lateinisch Plumbum"
+    },
+    {
+      "id": "012",
+      "q": "Elementsymbol von Quecksilber?",
+      "a": "Hg",
+      "choices": [
+        "Q",
+        "Qs",
+        "Me"
+      ],
+      "info": "Von griechisch-lateinisch Hydrargyrum"
+    },
+    {
+      "id": "013",
+      "q": "Elementsymbol von Schwefel?",
+      "a": "S",
+      "choices": [
+        "Sw",
+        "Sf",
+        "Se"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "Elementsymbol von Zinn?",
+      "a": "Sn",
+      "choices": [
+        "Zn",
+        "Zi",
+        "Ti"
+      ],
+      "info": "Von lateinisch Stannum"
+    },
+    {
+      "id": "015",
+      "q": "Elementsymbol von Zink?",
+      "a": "Zn"
+    },
+    {
+      "id": "016",
+      "q": "Elementsymbol von Chlor?",
+      "a": "Cl"
+    },
+    {
+      "id": "017",
+      "q": "Elementsymbol von Calcium?",
+      "a": "Ca"
+    },
+    {
+      "id": "018",
+      "q": "Elementsymbol von Magnesium?",
+      "a": "Mg"
+    },
+    {
+      "id": "019",
+      "q": "Welches Element hat das Symbol Al?",
+      "a": "Aluminium"
+    },
+    {
+      "id": "020",
+      "q": "Welches Element hat das Symbol Si?",
+      "a": "Silicium",
+      "choices": [
+        "Silber",
+        "Schwefel",
+        "Selen"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Welches Element hat das Symbol P?",
+      "a": "Phosphor",
+      "choices": [
+        "Platin",
+        "Kalium",
+        "Blei"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "Welches Element hat das Symbol F?",
+      "a": "Fluor"
+    },
+    {
+      "id": "023",
+      "q": "Welches Element hat das Symbol I?",
+      "a": "Iod"
+    },
+    {
+      "id": "024",
+      "q": "Welches Element hat das Symbol He?",
+      "a": "Helium"
+    },
+    {
+      "id": "025",
+      "q": "Wie heißen die Elemente der 1. Hauptgruppe (ohne Wasserstoff)?",
+      "a": "Alkalimetalle",
+      "choices": [
+        "Erdalkalimetalle",
+        "Halogene",
+        "Edelgase"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Wie heißen die Elemente der 2. Hauptgruppe?",
+      "a": "Erdalkalimetalle"
+    },
+    {
+      "id": "027",
+      "q": "Wie heißen die Elemente der 7. Hauptgruppe?",
+      "a": "Halogene",
+      "choices": [
+        "Edelgase",
+        "Alkalimetalle",
+        "Chalkogene"
+      ],
+      "info": "Halogen bedeutet „Salzbildner“."
+    },
+    {
+      "id": "028",
+      "q": "Wie heißen die Elemente der 8. Hauptgruppe?",
+      "a": "Edelgase"
+    },
+    {
+      "id": "029",
+      "q": "Wie viele Außenelektronen haben die Halogene?",
+      "a": "7",
+      "choices": [
+        "1",
+        "8",
+        "2"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Wie viele Außenelektronen haben die Alkalimetalle?",
+      "a": "1"
+    },
+    {
+      "id": "031",
+      "q": "Die sechs natürlichen Edelgase?",
+      "a": "Helium, Neon, Argon, Krypton, Xenon, Radon"
+    },
+    {
+      "id": "032",
+      "q": "Warum reagieren Edelgase kaum?",
+      "a": "Ihre äußere Schale ist voll besetzt",
+      "info": "Man spricht von Edelgaskonfiguration."
+    },
+    {
+      "id": "033",
+      "q": "Welches Edelgas kommt in der Luft am häufigsten vor?",
+      "a": "Argon",
+      "choices": [
+        "Neon",
+        "Helium",
+        "Xenon"
+      ],
+      "info": "Etwa 0,9 % der Luft sind Argon."
+    },
+    {
+      "id": "034",
+      "q": "Welches Edelgas leuchtet in Leuchtröhren typisch rot-orange?",
+      "a": "Neon",
+      "choices": [
+        "Argon",
+        "Helium",
+        "Radon"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "Mit welchem Edelgas füllt man Ballons, die aufsteigen?",
+      "a": "Helium"
+    },
+    {
+      "id": "036",
+      "q": "Häufigstes Gas der Luft?",
+      "a": "Stickstoff",
+      "choices": [
+        "Sauerstoff",
+        "Kohlenstoffdioxid",
+        "Argon"
+      ],
+      "info": "Etwa 78 % Stickstoff, 21 % Sauerstoff"
+    },
+    {
+      "id": "037",
+      "q": "Einziges Metall, das bei Raumtemperatur flüssig ist?",
+      "a": "Quecksilber",
+      "choices": [
+        "Natrium",
+        "Blei",
+        "Zinn"
+      ]
+    },
+    {
+      "id": "038",
+      "q": "Was gibt die Ordnungszahl eines Elements an?",
+      "a": "Die Anzahl der Protonen im Kern",
+      "choices": [
+        "Die Anzahl der Neutronen",
+        "Die Atommasse",
+        "Die Anzahl der Schalen"
+      ]
+    }
+  ]
+}

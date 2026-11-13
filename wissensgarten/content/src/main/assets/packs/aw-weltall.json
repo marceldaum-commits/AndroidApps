@@ -1,0 +1,319 @@
+{
+  "id": "aw-weltall",
+  "version": 1,
+  "title": "Reise ins Weltall",
+  "subject": "allgemeinwissen",
+  "grades": [
+    4,
+    5,
+    6,
+    7,
+    8,
+    14
+  ],
+  "emoji": "🚀",
+  "tier": "free",
+  "description": "Planeten, Sonne, Mond, Sterne und die spannendsten Momente der Raumfahrt.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele Planeten hat unser Sonnensystem?",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "10"
+      ],
+      "info": "Pluto gilt seit 2006 als Zwergplanet."
+    },
+    {
+      "id": "002",
+      "q": "Wie heißen die Planeten in der Reihenfolge von der Sonne aus?",
+      "a": "Merkur, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun",
+      "info": "Merkspruch: Mein Vater erklärt mir jeden Sonntag unseren Nachthimmel."
+    },
+    {
+      "id": "003",
+      "q": "Welcher Planet ist der Sonne am nächsten?",
+      "a": "Merkur",
+      "choices": [
+        "Venus",
+        "Mars",
+        "Erde"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Welcher ist der größte Planet unseres Sonnensystems?",
+      "a": "Jupiter",
+      "choices": [
+        "Saturn",
+        "Neptun",
+        "Uranus"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Welcher ist der kleinste Planet unseres Sonnensystems?",
+      "a": "Merkur",
+      "choices": [
+        "Mars",
+        "Venus",
+        "Pluto"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Welcher Planet ist der heißeste?",
+      "a": "Venus",
+      "choices": [
+        "Merkur",
+        "Mars",
+        "Jupiter"
+      ],
+      "info": "Ihre dichte Atmosphäre hält die Wärme fest, es ist dort rund 460 °C heiß."
+    },
+    {
+      "id": "007",
+      "q": "Welcher Planet wird „der Rote Planet“ genannt?",
+      "a": "Mars"
+    },
+    {
+      "id": "008",
+      "q": "Welcher Planet ist für seine auffälligen Ringe bekannt?",
+      "a": "Saturn",
+      "choices": [
+        "Mars",
+        "Venus",
+        "Merkur"
+      ],
+      "info": "Auch Jupiter, Uranus und Neptun haben Ringe, aber viel schwächere."
+    },
+    {
+      "id": "009",
+      "q": "Welcher Planet ist am weitesten von der Sonne entfernt?",
+      "a": "Neptun",
+      "choices": [
+        "Uranus",
+        "Pluto",
+        "Saturn"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Seit welchem Jahr gilt Pluto als Zwergplanet?",
+      "a": "2006",
+      "choices": [
+        "1930",
+        "1990",
+        "2015"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Was ist die Sonne?",
+      "a": "Ein Stern",
+      "choices": [
+        "Ein Planet",
+        "Ein Mond",
+        "Ein Komet"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "Wie lange braucht das Sonnenlicht ungefähr bis zur Erde?",
+      "a": "Etwa 8 Minuten",
+      "choices": [
+        "Etwa 8 Sekunden",
+        "Etwa 8 Stunden",
+        "Etwa 1 Tag"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Wie lange braucht die Erde für eine Runde um die Sonne?",
+      "a": "Etwa 365 Tage (ein Jahr)"
+    },
+    {
+      "id": "014",
+      "q": "Wie weit ist der Mond im Mittel von der Erde entfernt?",
+      "a": "Etwa 384 000 km",
+      "choices": [
+        "Etwa 38 000 km",
+        "Etwa 3,8 Millionen km",
+        "Etwa 150 Millionen km"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "Wie lange dauert es von einem Vollmond bis zum nächsten?",
+      "a": "Etwa 29,5 Tage",
+      "choices": [
+        "Etwa 7 Tage",
+        "Etwa 14 Tage",
+        "Etwa 365 Tage"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Was verursacht hauptsächlich Ebbe und Flut?",
+      "a": "Die Anziehungskraft des Mondes"
+    },
+    {
+      "id": "017",
+      "q": "Warum gibt es auf der Erde Jahreszeiten?",
+      "a": "Weil die Erdachse geneigt ist",
+      "choices": [
+        "Weil sich der Abstand zur Sonne stark ändert",
+        "Weil die Sonne mal heller, mal dunkler leuchtet"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Was steht bei einer Sonnenfinsternis zwischen Sonne und Erde?",
+      "a": "Der Mond",
+      "info": "Bei einer Mondfinsternis steht dagegen die Erde zwischen Sonne und Mond."
+    },
+    {
+      "id": "019",
+      "q": "Wie heißt unsere Galaxie?",
+      "a": "Milchstraße",
+      "choices": [
+        "Andromeda",
+        "Orion",
+        "Sirius"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "Was misst ein Lichtjahr?",
+      "a": "Eine Entfernung",
+      "choices": [
+        "Eine Zeitdauer",
+        "Eine Helligkeit",
+        "Eine Geschwindigkeit"
+      ],
+      "info": "Die Strecke, die Licht in einem Jahr zurücklegt: rund 9,5 Billionen km."
+    },
+    {
+      "id": "021",
+      "q": "Wo liegt der Asteroidengürtel?",
+      "a": "Zwischen Mars und Jupiter",
+      "choices": [
+        "Zwischen Erde und Mars",
+        "Zwischen Saturn und Uranus"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "Wie heißt der größte bekannte Vulkan im Sonnensystem?",
+      "a": "Olympus Mons auf dem Mars"
+    },
+    {
+      "id": "023",
+      "q": "Wie heißt der größte Mond im Sonnensystem?",
+      "a": "Ganymed (Jupitermond)",
+      "choices": [
+        "Titan (Saturnmond)",
+        "Erdmond",
+        "Europa (Jupitermond)"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Wie heißen die beiden Monde des Mars?",
+      "a": "Phobos und Deimos"
+    },
+    {
+      "id": "025",
+      "q": "Wie heißt der erste künstliche Satellit, gestartet 1957?",
+      "a": "Sputnik 1",
+      "choices": [
+        "Apollo 1",
+        "Explorer 1",
+        "Wostok 1"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Wer war 1961 der erste Mensch im Weltall?",
+      "a": "Juri Gagarin",
+      "choices": [
+        "Neil Armstrong",
+        "Sigmund Jähn",
+        "John Glenn"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Wer betrat 1969 als erster Mensch den Mond?",
+      "a": "Neil Armstrong",
+      "choices": [
+        "Buzz Aldrin",
+        "Juri Gagarin",
+        "Michael Collins"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Mit welcher Mission landeten 1969 die ersten Menschen auf dem Mond?",
+      "a": "Apollo 11"
+    },
+    {
+      "id": "029",
+      "q": "Wer flog 1978 als erster Deutscher ins All?",
+      "a": "Sigmund Jähn",
+      "choices": [
+        "Alexander Gerst",
+        "Ulf Merbold",
+        "Thomas Reiter"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Welcher deutsche Astronaut war 2014 und 2018 auf der ISS?",
+      "a": "Alexander Gerst",
+      "info": "2018 war er als erster Deutscher Kommandant der ISS."
+    },
+    {
+      "id": "031",
+      "q": "Wofür steht die Abkürzung ISS?",
+      "a": "Internationale Raumstation"
+    },
+    {
+      "id": "032",
+      "q": "Wie lange braucht die ISS ungefähr für eine Erdumrundung?",
+      "a": "Etwa 90 Minuten",
+      "choices": [
+        "Etwa 24 Stunden",
+        "Etwa 10 Minuten",
+        "Etwa 1 Woche"
+      ]
+    },
+    {
+      "id": "033",
+      "q": "Wie heißt das große Weltraumteleskop, das im Dezember 2021 startete?",
+      "a": "James-Webb-Weltraumteleskop"
+    },
+    {
+      "id": "034",
+      "q": "Welcher Stern zeigt am Nachthimmel ungefähr die Nordrichtung an?",
+      "a": "Polarstern",
+      "choices": [
+        "Sirius",
+        "Abendstern",
+        "Sonne"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "Wie alt ist die Erde ungefähr?",
+      "a": "Etwa 4,6 Milliarden Jahre",
+      "choices": [
+        "Etwa 6000 Jahre",
+        "Etwa 46 Millionen Jahre",
+        "Etwa 46 Milliarden Jahre"
+      ]
+    }
+  ]
+}

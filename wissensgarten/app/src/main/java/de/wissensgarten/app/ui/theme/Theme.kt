@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.wissensgarten.core.data.ThemeMode
 
 // Eigene, warme Garten-Palette statt Systemfarben: der Garten soll immer nach Garten aussehen.
 val Moss = Color(0xFF3F6B3A)
@@ -41,17 +42,17 @@ private val Light = lightColorScheme(
 
 private val Dark = darkColorScheme(
     primary = Color(0xFFA6D394), onPrimary = Color(0xFF123A0E),
-    primaryContainer = Color(0xFF2A5124), onPrimaryContainer = Color(0xFFCDE8BE),
+    primaryContainer = Color(0xFF3E6B36), onPrimaryContainer = Color(0xFFE2F4D8),
     secondary = Color(0xFF9CCBEE), onSecondary = Color(0xFF0B2D45),
-    secondaryContainer = Color(0xFF214A68), onSecondaryContainer = Color(0xFFD3E8F7),
+    secondaryContainer = Color(0xFF2F6188), onSecondaryContainer = Color(0xFFE3F1FB),
     tertiary = Color(0xFFFFB68A), onTertiary = Color(0xFF552100),
-    tertiaryContainer = Color(0xFF7A3A12), onTertiaryContainer = Color(0xFFFFDCC4),
-    background = Color(0xFF15190F), onBackground = Color(0xFFE5E3D6),
-    surface = Color(0xFF15190F), onSurface = Color(0xFFE5E3D6),
-    surfaceVariant = Color(0xFF2E3326), onSurfaceVariant = Color(0xFFC6C2B0),
-    surfaceContainer = Color(0xFF1E2318), surfaceContainerHigh = Color(0xFF282D21),
-    surfaceContainerLow = Color(0xFF1A1E14), surfaceContainerHighest = Color(0xFF32382B),
-    outline = Color(0xFF908C7B),
+    tertiaryContainer = Color(0xFF8F4D22), onTertiaryContainer = Color(0xFFFFE6D6),
+    background = Color(0xFF283024), onBackground = Color(0xFFF0EEE4),
+    surface = Color(0xFF283024), onSurface = Color(0xFFF0EEE4),
+    surfaceVariant = Color(0xFF3B4535), onSurfaceVariant = Color(0xFFD6D2C2),
+    surfaceContainer = Color(0xFF323B2D), surfaceContainerHigh = Color(0xFF3B4535),
+    surfaceContainerLow = Color(0xFF2D3528), surfaceContainerHighest = Color(0xFF45503E),
+    outline = Color(0xFFA19D8C),
 )
 
 private val Rounded = FontFamily.SansSerif
@@ -73,8 +74,14 @@ private val AppShapes = Shapes(
     extraLarge = RoundedCornerShape(36.dp),
 )
 
+/** Standard ist hell – der Garten soll freundlich aussehen, auch wenn das Handy dunkel eingestellt ist. */
 @Composable
-fun WissensgartenTheme(dark: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun WissensgartenTheme(mode: ThemeMode = ThemeMode.LIGHT, content: @Composable () -> Unit) {
+    val dark = when (mode) {
+        ThemeMode.LIGHT -> false
+        ThemeMode.DARK -> true
+        ThemeMode.SYSTEM -> isSystemInDarkTheme()
+    }
     MaterialTheme(
         colorScheme = if (dark) Dark else Light,
         typography = AppTypography,

@@ -1,0 +1,327 @@
+{
+  "id": "gs-englisch-basics",
+  "version": 1,
+  "title": "Englisch für Anfänger",
+  "subject": "englisch",
+  "grades": [
+    3,
+    4
+  ],
+  "emoji": "🎩",
+  "tier": "free",
+  "description": "Erste englische Wörter: Farben, Zahlen, Tiere und Familie.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „rot“ auf Englisch?",
+      "a": "red",
+      "choices": [
+        "blue",
+        "green",
+        "yellow"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Was heißt „blau“ auf Englisch?",
+      "a": "blue",
+      "choices": [
+        "black",
+        "brown",
+        "green"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Was heißt „gelb“ auf Englisch?",
+      "a": "yellow",
+      "choices": [
+        "orange",
+        "white",
+        "pink"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Was heißt „grün“ auf Englisch?",
+      "a": "green",
+      "choices": [
+        "grey",
+        "red",
+        "blue"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Was heißt „schwarz“ auf Englisch?",
+      "a": "black",
+      "choices": [
+        "white",
+        "brown",
+        "purple"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Was heißt „weiß“ auf Englisch?",
+      "a": "white",
+      "choices": [
+        "black",
+        "grey",
+        "pink"
+      ]
+    },
+    {
+      "id": "007",
+      "q": "Was heißt „drei“ auf Englisch?",
+      "a": "three",
+      "choices": [
+        "tree",
+        "thirteen",
+        "two"
+      ],
+      "info": "Achtung: „tree“ heißt Baum."
+    },
+    {
+      "id": "008",
+      "q": "Was heißt „sieben“ auf Englisch?",
+      "a": "seven",
+      "choices": [
+        "six",
+        "eleven",
+        "nine"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „zehn“ auf Englisch?",
+      "a": "ten",
+      "choices": [
+        "two",
+        "nine",
+        "eleven"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Was heißt „zwölf“ auf Englisch?",
+      "a": "twelve",
+      "choices": [
+        "twenty",
+        "eleven",
+        "two"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Was heißt „zwanzig“ auf Englisch?",
+      "a": "twenty",
+      "choices": [
+        "twelve",
+        "thirty",
+        "two"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "Was heißt „Hund“ auf Englisch?",
+      "a": "dog",
+      "choices": [
+        "cat",
+        "duck",
+        "frog"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Was heißt „Katze“ auf Englisch?",
+      "a": "cat",
+      "choices": [
+        "dog",
+        "cow",
+        "rat"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „Pferd“ auf Englisch?",
+      "a": "horse",
+      "choices": [
+        "house",
+        "mouse",
+        "pig"
+      ],
+      "info": "Achtung: „house“ heißt Haus."
+    },
+    {
+      "id": "015",
+      "q": "Was heißt „Vogel“ auf Englisch?",
+      "a": "bird",
+      "choices": [
+        "fish",
+        "bear",
+        "pig"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Was heißt „Maus“ auf Englisch?",
+      "a": "mouse",
+      "choices": [
+        "house",
+        "horse",
+        "rabbit"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Was heißt „Kuh“ auf Englisch?",
+      "a": "cow",
+      "choices": [
+        "pig",
+        "owl",
+        "sheep"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Was heißt „Fisch“ auf Englisch?",
+      "a": "fish",
+      "choices": [
+        "dish",
+        "duck",
+        "frog"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Was heißt „Mutter“ auf Englisch?",
+      "a": "mother",
+      "choices": [
+        "father",
+        "sister",
+        "brother"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "Was heißt „Vater“ auf Englisch?",
+      "a": "father",
+      "choices": [
+        "mother",
+        "uncle",
+        "brother"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Was heißt „Schwester“ auf Englisch?",
+      "a": "sister",
+      "choices": [
+        "brother",
+        "aunt",
+        "mother"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "Was heißt „Bruder“ auf Englisch?",
+      "a": "brother",
+      "choices": [
+        "sister",
+        "uncle",
+        "father"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „Großmutter“ auf Englisch?",
+      "a": "grandmother",
+      "choices": [
+        "grandfather",
+        "aunt",
+        "mother"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „Onkel“ auf Englisch?",
+      "a": "uncle",
+      "choices": [
+        "aunt",
+        "cousin",
+        "brother"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Was heißt „Tante“ auf Englisch?",
+      "a": "aunt",
+      "choices": [
+        "uncle",
+        "sister",
+        "grandmother"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Was heißt „Hallo“ auf Englisch?",
+      "a": "hello",
+      "choices": [
+        "goodbye",
+        "thank you",
+        "please"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Was heißt „Danke“ auf Englisch?",
+      "a": "thank you",
+      "choices": [
+        "please",
+        "sorry",
+        "hello"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Was heißt „Tschüss“ auf Englisch?",
+      "a": "goodbye",
+      "choices": [
+        "hello",
+        "good morning",
+        "thank you"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Was bedeutet „How are you?“",
+      "a": "Wie geht es dir?",
+      "choices": [
+        "Wie heißt du?",
+        "Wie alt bist du?",
+        "Wo wohnst du?"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Was bedeutet „My name is Tom.“?",
+      "a": "Ich heiße Tom.",
+      "choices": [
+        "Ich wohne bei Tom.",
+        "Ich mag Tom.",
+        "Tom ist mein Freund."
+      ]
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet „I am eight years old.“?",
+      "a": "Ich bin acht Jahre alt.",
+      "choices": [
+        "Ich habe acht Jahre.",
+        "Ich wohne in Haus acht.",
+        "Ich habe acht Freunde."
+      ]
+    }
+  ]
+}

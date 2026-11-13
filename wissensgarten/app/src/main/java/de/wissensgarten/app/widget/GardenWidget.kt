@@ -25,16 +25,23 @@ import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 import androidx.glance.unit.ColorProvider
 import de.wissensgarten.app.MainActivity
-import de.wissensgarten.app.data.GardenRepository
-import de.wissensgarten.app.data.Session
+import de.wissensgarten.app.WissensgartenApp
+import de.wissensgarten.core.model.Scheduler
+import de.wissensgarten.core.model.SessionBuilder
+import kotlinx.coroutines.flow.first
 
 /** Startbildschirm-Widget: zeigt, wie viele Pflanzen Durst haben. Antippen startet das Gießen. */
 class GardenWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
-        val state = GardenRepository.get(context).state.value
+        val c = (context.applicationContext as WissensgartenApp).container
         val now = System.currentTimeMillis()
-        val thirsty = Session.thirstyCount(state, now)
-        val seeds = Session.build(state, now).size - thirsty
+        val profiles = c.repository.profiles.first()
+        val profile = profiles.firstOrNull { it.id == c.settings.activeProfileId.value } ?: profiles.firstOrNull()
+        val cards = profile?.let { p -> c.database.dao().bedsWithCardsOnce(p.id).flatMap { it.cards } }.orEmpty()
+        val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }
+        val seeds = profile?.let { p ->
+            minOf(SessionBuilder.seedsLeft(p.seedsPerDay, p.seedDay, p.seedsToday, now), cards.count { it.memory.isSeed })
+        } ?: 0
         val intent = Intent(context, MainActivity::class.java)
             .putExtra(MainActivity.EXTRA_WATER, true)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)

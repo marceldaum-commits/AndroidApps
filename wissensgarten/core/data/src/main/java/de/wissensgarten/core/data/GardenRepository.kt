@@ -1,0 +1,150 @@
+package de.wissensgarten.core.data
+
+import androidx.room.withTransaction
+import de.wissensgarten.core.data.db.BedEntity
+import de.wissensgarten.core.data.db.BedWithCards
+import de.wissensgarten.core.data.db.CardEntity
+import de.wissensgarten.core.data.db.GardenDatabase
+import de.wissensgarten.core.data.db.ProfileEntity
+import de.wissensgarten.core.data.db.ReviewLogEntity
+import de.wissensgarten.core.model.Pack
+import de.wissensgarten.core.model.Rating
+import de.wissensgarten.core.model.Scheduler
+import de.wissensgarten.core.model.StudyCard
+import de.wissensgarten.core.model.Subject
+import kotlinx.coroutines.flow.Flow
+import java.util.UUID
+
+class GardenRepository(private val db: GardenDatabase, private val clock: () -> Long = System::currentTimeMillis) {
+    private val dao = db.dao()
+
+    val profiles: Flow<List<ProfileEntity>> = dao.profiles()
+    fun beds(profileId: String): Flow<List<BedWithCards>> = dao.bedsWithCards(profileId)
+    fun allBeds(): Flow<List<BedWithCards>> = dao.allBedsWithCards()
+    fun logsSince(since: Long) = dao.logsSince(since)
+
+    suspend fun profile(id: String) = dao.profile(id)
+
+    suspend fun createProfile(name: String, avatar: String, level: Int): ProfileEntity {
+        val p = ProfileEntity(
+            id = UUID.randomUUID().toString(), name = name.trim(), avatar = avatar, level = level,
+            seedsPerDay = if (level in 1..4) 5 else 10, createdAt = clock(),
+        )
+        dao.insertProfile(p)
+        return p
+    }
+
+    suspend fun updateProfile(p: ProfileEntity) = dao.updateProfile(p)
+    suspend fun deleteProfile(id: String) = dao.deleteProfile(id)
+
+    /** Pflanzt ein Wissenspaket als neues Beet. */
+    suspend fun plantPack(profileId: String, pack: Pack): String = db.withTransaction {
+        val now = clock()
+        val bed = BedEntity(
+            id = UUID.randomUUID().toString(), profileId = profileId, name = pack.title, emoji = pack.emoji,
+            hue = pack.subjectInfo.hue, packId = pack.id, packVersion = pack.version, createdAt = now,
+            sortIndex = dao.maxBedSort(profileId) + 1,
+        )
+        dao.insertBed(bed)
+        dao.insertCards(pack.cards.mapIndexed { i, c ->
+            CardEntity(
+                id = UUID.randomUUID().toString(), bedId = bed.id, profileId = profileId, sourceId = c.id,
+                front = c.q, back = c.a, choices = CardEntity.joinChoices(c.choices), info = c.info,
+                createdAt = now, sortIndex = i,
+            )
+        })
+        bed.id
+    }
+
+    suspend fun addOwnBed(profileId: String, name: String, emoji: String): String {
+        val hues = listOf(330f, 45f, 200f, 280f, 15f, 160f, 90f)
+        val sort = dao.maxBedSort(profileId) + 1
+        val bed = BedEntity(
+            id = UUID.randomUUID().toString(), profileId = profileId, name = name.trim(), emoji = emoji,
+            hue = hues[sort % hues.size], createdAt = clock(), sortIndex = sort,
+        )
+        dao.insertBed(bed)
+        return bed.id
+    }
+
+    suspend fun deleteBed(bedId: String) = dao.deleteBed(bedId)
+
+    suspend fun addCard(bed: BedEntity, front: String, back: String, info: String? = null) {
+        val existing = dao.cardsOfBed(bed.id).size
+        dao.insertCards(listOf(
+            CardEntity(
+                id = UUID.randomUUID().toString(), bedId = bed.id, profileId = bed.profileId,
+                front = front.trim(), back = back.trim(), info = info?.trim()?.ifEmpty { null },
+                createdAt = clock(), sortIndex = existing,
+            )
+        ))
+    }
+
+    suspend fun deleteCard(cardId: String) = dao.deleteCard(cardId)
+
+    /** Eine Wiederholung speichern: Gedächtnis, Protokoll, Tautropfen, Samen-Zähler. */
+    suspend fun review(profileId: String, card: StudyCard, rating: Rating) = db.withTransaction {
+        val now = clock()
+        val entity = dao.card(card.id) ?: return@withTransaction
+        val wasSeed = entity.memory.isSeed
+        val m = Scheduler.review(entity.memory, rating, now)
+        dao.updateCard(entity.withMemory(m))
+        dao.insertLog(ReviewLogEntity(profileId = profileId, cardId = card.id, time = now, rating = rating.ordinal, stabilityAfter = m.stability))
+        val p = dao.profile(profileId) ?: return@withTransaction
+        val today = now / Scheduler.DAY_MS
+        val seedsToday = if (p.seedDay == today) p.seedsToday else 0
+        dao.updateProfile(
+            p.copy(
+                dewdrops = p.dewdrops + if (rating == Rating.AGAIN) 1 else 3,
+                seedDay = today,
+                seedsToday = seedsToday + if (wasSeed) 1 else 0,
+            )
+        )
+    }
+
+    /**
+     * Paket-Updates einspielen: neue Karten kommen als Samen dazu, geänderte Texte werden übernommen,
+     * entfernte Karten verschwinden. Der Lernfortschritt bleibt über die Karten-ID erhalten.
+     * @return Anzahl aktualisierter Beete
+     */
+    suspend fun syncPacks(catalog: List<Pack>): Int {
+        val byId = catalog.associateBy { it.id }
+        var updated = 0
+        for (bed in dao.packBeds()) {
+            val pack = byId[bed.packId] ?: continue
+            if (pack.version <= bed.packVersion) continue
+            db.withTransaction {
+                val now = clock()
+                val existing = dao.cardsOfBed(bed.id).associateBy { it.sourceId }
+                val packIds = pack.cards.map { it.id }.toSet()
+                val changed = mutableListOf<CardEntity>()
+                val added = mutableListOf<CardEntity>()
+                pack.cards.forEachIndexed { i, c ->
+                    val e = existing[c.id]
+                    if (e == null) {
+                        added += CardEntity(
+                            id = UUID.randomUUID().toString(), bedId = bed.id, profileId = bed.profileId, sourceId = c.id,
+                            front = c.q, back = c.a, choices = CardEntity.joinChoices(c.choices), info = c.info,
+                            createdAt = now, sortIndex = i,
+                        )
+                    } else {
+                        val n = e.copy(front = c.q, back = c.a, choices = CardEntity.joinChoices(c.choices), info = c.info, sortIndex = i)
+                        if (n != e) changed += n
+                    }
+                }
+                val removed = existing.values.filter { it.sourceId != null && it.sourceId !in packIds }
+                if (added.isNotEmpty()) dao.insertCards(added)
+                if (changed.isNotEmpty()) dao.updateCards(changed)
+                if (removed.isNotEmpty()) dao.deleteCards(removed)
+                dao.updateBed(bed.copy(packVersion = pack.version, name = pack.title, emoji = pack.emoji))
+            }
+            updated++
+        }
+        return updated
+    }
+
+    companion object {
+        val OWN_BED_EMOJIS = listOf("✏️", "🌻", "📐", "🧪", "🌍", "📜", "💬", "🎵", "🧠", "⚽", "🍎", "🚗")
+        val OWN_HUE = Subject.EIGENE.hue
+    }
+}

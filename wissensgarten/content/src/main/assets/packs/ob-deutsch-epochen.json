@@ -1,0 +1,318 @@
+{
+  "id": "ob-deutsch-epochen",
+  "version": 1,
+  "title": "Literaturepochen",
+  "subject": "deutsch",
+  "grades": [
+    11,
+    12,
+    13
+  ],
+  "emoji": "📜",
+  "tier": "plus",
+  "description": "Deutsche Literaturepochen vom Barock bis zur Nachkriegszeit: Zeiträume, Autoren, Werke.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Zeitraum des Barock",
+      "a": "ca. 1600–1720",
+      "choices": [
+        "ca. 1720–1800",
+        "ca. 1767–1785",
+        "ca. 1848–1890"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Barockmotiv: „Bedenke, dass du sterben musst“",
+      "a": "memento mori",
+      "choices": [
+        "sapere aude",
+        "l'art pour l'art",
+        "in dubio pro reo"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Autor des Sonetts „Es ist alles eitel“",
+      "a": "Andreas Gryphius",
+      "choices": [
+        "Friedrich Schiller",
+        "Joseph von Eichendorff",
+        "Gotthold Ephraim Lessing"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Autor des Barockromans „Der abenteuerliche Simplicissimus“",
+      "a": "Grimmelshausen"
+    },
+    {
+      "id": "005",
+      "q": "Zeitraum der Aufklärung",
+      "a": "ca. 1720–1800"
+    },
+    {
+      "id": "006",
+      "q": "Wer nannte Aufklärung „Ausgang des Menschen aus seiner selbstverschuldeten Unmündigkeit“?",
+      "a": "Immanuel Kant",
+      "choices": [
+        "Gotthold Ephraim Lessing",
+        "Johann Gottfried Herder",
+        "Friedrich Schiller"
+      ],
+      "info": "Kant, „Beantwortung der Frage: Was ist Aufklärung?“ (1784)"
+    },
+    {
+      "id": "007",
+      "q": "Autor von „Nathan der Weise“ (mit der Ringparabel)",
+      "a": "Gotthold Ephraim Lessing",
+      "choices": [
+        "Friedrich Schiller",
+        "Johann Wolfgang von Goethe",
+        "Heinrich von Kleist"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "Epoche von Lessings „Emilia Galotti“",
+      "a": "Aufklärung",
+      "info": "Bürgerliches Trauerspiel, 1772"
+    },
+    {
+      "id": "009",
+      "q": "Zeitraum des Sturm und Drang",
+      "a": "ca. 1767–1785",
+      "choices": [
+        "ca. 1600–1720",
+        "ca. 1786–1805",
+        "ca. 1880–1900"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Zentrales Leitbild des Sturm und Drang",
+      "a": "das Genie (Originalgenie)",
+      "choices": [
+        "die Vernunft",
+        "die Frömmigkeit",
+        "die Sachlichkeit"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Goethes Briefroman aus dem Sturm und Drang (1774)",
+      "a": "Die Leiden des jungen Werthers",
+      "choices": [
+        "Wilhelm Meisters Lehrjahre",
+        "Faust",
+        "Die Wahlverwandtschaften"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "Epoche von Schillers Drama „Die Räuber“ (1781)",
+      "a": "Sturm und Drang"
+    },
+    {
+      "id": "013",
+      "q": "Zeitraum der Weimarer Klassik",
+      "a": "ca. 1786–1805",
+      "choices": [
+        "ca. 1720–1800",
+        "ca. 1830–1848",
+        "ca. 1910–1925"
+      ],
+      "info": "Von Goethes Italienreise bis zu Schillers Tod"
+    },
+    {
+      "id": "014",
+      "q": "Hauptvertreter der Weimarer Klassik",
+      "a": "Goethe und Schiller",
+      "choices": [
+        "Lessing und Kant",
+        "Novalis und Tieck",
+        "Büchner und Heine"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "Leitideal der Weimarer Klassik",
+      "a": "Humanität",
+      "info": "Harmonie von Vernunft und Gefühl; das Wahre, Gute und Schöne"
+    },
+    {
+      "id": "016",
+      "q": "Goethes Drama der „reinen Menschlichkeit“, Weimarer Klassik",
+      "a": "Iphigenie auf Tauris",
+      "choices": [
+        "Götz von Berlichingen",
+        "Kabale und Liebe",
+        "Woyzeck"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Zeitraum der Romantik",
+      "a": "ca. 1795–1835"
+    },
+    {
+      "id": "018",
+      "q": "Sehnsuchtssymbol der Romantik (Novalis)",
+      "a": "die blaue Blume",
+      "choices": [
+        "die rote Rose",
+        "der weiße Schwan",
+        "die goldene Kugel"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Romantiker: „Mondnacht“, „Aus dem Leben eines Taugenichts“",
+      "a": "Joseph von Eichendorff",
+      "choices": [
+        "Heinrich Heine",
+        "Theodor Fontane",
+        "Friedrich Schiller"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "Epoche von E. T. A. Hoffmanns „Der Sandmann“",
+      "a": "Romantik",
+      "info": "Gehört zur sogenannten Schwarzen Romantik."
+    },
+    {
+      "id": "021",
+      "q": "Wer veröffentlichte ab 1812 die „Kinder- und Hausmärchen“?",
+      "a": "Jacob und Wilhelm Grimm"
+    },
+    {
+      "id": "022",
+      "q": "Zeitraum des Vormärz",
+      "a": "ca. 1830–1848",
+      "choices": [
+        "ca. 1786–1805",
+        "ca. 1880–1900",
+        "ca. 1920–1933"
+      ],
+      "info": "Endet mit der Märzrevolution 1848."
+    },
+    {
+      "id": "023",
+      "q": "Epoche von Georg Büchners „Woyzeck“",
+      "a": "Vormärz",
+      "choices": [
+        "Romantik",
+        "Weimarer Klassik",
+        "Expressionismus"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Heines „Deutschland. Ein Wintermärchen“ (1844) – Epoche",
+      "a": "Vormärz"
+    },
+    {
+      "id": "025",
+      "q": "Zeitraum des (poetischen) Realismus",
+      "a": "ca. 1848–1890",
+      "choices": [
+        "ca. 1795–1835",
+        "ca. 1910–1925",
+        "ca. 1600–1720"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Fontanes Roman über eine junge Frau, die an Konventionen zerbricht (1895)",
+      "a": "Effi Briest",
+      "choices": [
+        "Der Schimmelreiter",
+        "Buddenbrooks",
+        "Die Marquise von O…."
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Theodor Storms Novelle über einen Deichgrafen (1888)",
+      "a": "Der Schimmelreiter"
+    },
+    {
+      "id": "028",
+      "q": "Zeitraum des Naturalismus",
+      "a": "ca. 1880–1900"
+    },
+    {
+      "id": "029",
+      "q": "Epoche von Gerhart Hauptmanns „Die Weber“",
+      "a": "Naturalismus",
+      "choices": [
+        "Realismus",
+        "Expressionismus",
+        "Romantik"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Arno Holz' Formel des konsequenten Naturalismus",
+      "a": "Kunst = Natur – x",
+      "info": "x steht für die Mittel und ihre Handhabung durch den Künstler."
+    },
+    {
+      "id": "031",
+      "q": "Zeitraum des Expressionismus",
+      "a": "ca. 1910–1925",
+      "choices": [
+        "ca. 1848–1890",
+        "ca. 1945–1950",
+        "ca. 1767–1785"
+      ]
+    },
+    {
+      "id": "032",
+      "q": "Epoche von Jakob van Hoddis' Gedicht „Weltende“ (1911)",
+      "a": "Expressionismus"
+    },
+    {
+      "id": "033",
+      "q": "Autor der Erzählung „Die Verwandlung“ (1915)",
+      "a": "Franz Kafka",
+      "choices": [
+        "Thomas Mann",
+        "Georg Heym",
+        "Alfred Döblin"
+      ]
+    },
+    {
+      "id": "034",
+      "q": "Epoche von Irmgard Keuns „Das kunstseidene Mädchen“ (1932)",
+      "a": "Neue Sachlichkeit",
+      "choices": [
+        "Expressionismus",
+        "Naturalismus",
+        "Trümmerliteratur"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "Anna Seghers' „Das siebte Kreuz“ entstand in der …",
+      "a": "Exilliteratur"
+    },
+    {
+      "id": "036",
+      "q": "Wolfgang Borcherts „Draußen vor der Tür“ (1947) gehört zur …",
+      "a": "Trümmerliteratur",
+      "choices": [
+        "Exilliteratur",
+        "Neuen Sachlichkeit",
+        "Romantik"
+      ]
+    },
+    {
+      "id": "037",
+      "q": "Von Hans Werner Richter 1947 gegründete Schriftstellervereinigung",
+      "a": "Gruppe 47"
+    }
+  ]
+}

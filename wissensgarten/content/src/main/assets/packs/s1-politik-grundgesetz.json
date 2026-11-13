@@ -1,0 +1,304 @@
+{
+  "id": "s1-politik-grundgesetz",
+  "version": 1,
+  "title": "Grundgesetz und Staat",
+  "subject": "politik",
+  "grades": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "emoji": "🗳️",
+  "tier": "free",
+  "description": "Grundrechte, Verfassungsorgane, Wahlen und die Europäische Union verständlich erklärt.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wann trat das Grundgesetz in Kraft?",
+      "a": "23. Mai 1949",
+      "choices": [
+        "8. Mai 1945",
+        "7. Oktober 1949",
+        "3. Oktober 1990"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Wie lautet Artikel 1, Satz 1 des Grundgesetzes?",
+      "a": "Die Würde des Menschen ist unantastbar."
+    },
+    {
+      "id": "003",
+      "q": "In welchen Artikeln des Grundgesetzes stehen die Grundrechte?",
+      "a": "Artikel 1 bis 19",
+      "choices": [
+        "Artikel 20 bis 37",
+        "Artikel 1 bis 10",
+        "Artikel 50 bis 69"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Welcher Artikel garantiert die Gleichheit vor dem Gesetz?",
+      "a": "Artikel 3",
+      "choices": [
+        "Artikel 1",
+        "Artikel 5",
+        "Artikel 20"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Welches Grundrecht schützt Artikel 5 unter anderem?",
+      "a": "Meinungs- und Pressefreiheit",
+      "choices": [
+        "Religionsfreiheit",
+        "Asylrecht",
+        "Briefgeheimnis"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Was bedeutet Gewaltenteilung?",
+      "a": "Trennung von Gesetzgebung, Regierung und Rechtsprechung",
+      "info": "Legislative, Exekutive und Judikative kontrollieren sich gegenseitig."
+    },
+    {
+      "id": "007",
+      "q": "Welche Staatsgewalt ist die Judikative?",
+      "a": "Die Rechtsprechung (Gerichte)",
+      "choices": [
+        "Die Gesetzgebung",
+        "Die ausführende Gewalt",
+        "Die Presse"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "Welche fünf Grundsätze gelten für die Bundestagswahl?",
+      "a": "Allgemein, unmittelbar, frei, gleich, geheim",
+      "info": "Sie stehen in Artikel 38 des Grundgesetzes."
+    },
+    {
+      "id": "009",
+      "q": "Ab welchem Alter darf man den Bundestag wählen?",
+      "a": "Ab 18 Jahren",
+      "choices": [
+        "Ab 16 Jahren",
+        "Ab 21 Jahren"
+      ],
+      "info": "Bei der Europawahl und bei manchen Landtags- und Kommunalwahlen schon ab 16."
+    },
+    {
+      "id": "010",
+      "q": "Für wie viele Jahre wird der Bundestag gewählt?",
+      "a": "4 Jahre",
+      "choices": [
+        "5 Jahre",
+        "6 Jahre",
+        "3 Jahre"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Was wählt man mit der Erststimme?",
+      "a": "Eine Direktkandidatin bzw. einen Direktkandidaten"
+    },
+    {
+      "id": "012",
+      "q": "Welche Stimme entscheidet über die Sitzverteilung im Bundestag?",
+      "a": "Die Zweitstimme",
+      "choices": [
+        "Die Erststimme",
+        "Beide gleich stark"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Wie hoch ist die Sperrklausel bei der Bundestagswahl?",
+      "a": "5 Prozent",
+      "choices": [
+        "3 Prozent",
+        "10 Prozent",
+        "1 Prozent"
+      ],
+      "info": "Ausnahmen gibt es z. B. für Parteien nationaler Minderheiten."
+    },
+    {
+      "id": "014",
+      "q": "Wie viele Sitze hat der Bundestag nach der Wahlrechtsreform von 2023?",
+      "a": "630",
+      "choices": [
+        "598",
+        "736",
+        "709"
+      ],
+      "info": "Überhang- und Ausgleichsmandate gibt es seitdem nicht mehr."
+    },
+    {
+      "id": "015",
+      "q": "Wer wählt die Bundeskanzlerin oder den Bundeskanzler?",
+      "a": "Der Bundestag",
+      "choices": [
+        "Das Volk direkt",
+        "Der Bundesrat",
+        "Die Bundesversammlung"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Wer wählt den Bundespräsidenten?",
+      "a": "Die Bundesversammlung",
+      "choices": [
+        "Der Bundestag",
+        "Das Volk direkt",
+        "Der Bundesrat"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Wer gehört zur Bundesversammlung?",
+      "a": "Alle Bundestagsabgeordneten und ebenso viele Ländervertreter"
+    },
+    {
+      "id": "018",
+      "q": "Wie lange dauert die Amtszeit des Bundespräsidenten?",
+      "a": "5 Jahre",
+      "choices": [
+        "4 Jahre",
+        "6 Jahre",
+        "7 Jahre"
+      ],
+      "info": "Eine einmalige Wiederwahl ist möglich."
+    },
+    {
+      "id": "019",
+      "q": "Über welches Organ wirken die Länder an der Gesetzgebung des Bundes mit?",
+      "a": "Bundesrat",
+      "choices": [
+        "Bundestag",
+        "Bundesversammlung",
+        "Bundesverfassungsgericht"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "In welcher Stadt sitzt das Bundesverfassungsgericht?",
+      "a": "Karlsruhe",
+      "choices": [
+        "Berlin",
+        "Leipzig",
+        "Bonn"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Wer bestimmt die Richtlinien der Politik?",
+      "a": "Der Bundeskanzler bzw. die Bundeskanzlerin",
+      "info": "Das nennt man Richtlinienkompetenz (Artikel 65)."
+    },
+    {
+      "id": "022",
+      "q": "Wie kann der Bundestag einen Kanzler vorzeitig abwählen?",
+      "a": "Konstruktives Misstrauensvotum: Wahl eines Nachfolgers",
+      "info": "Bisher gelang das nur einmal: 1982 wurde Helmut Kohl so Kanzler."
+    },
+    {
+      "id": "023",
+      "q": "Welche Mehrheiten braucht eine Änderung des Grundgesetzes?",
+      "a": "Zwei Drittel im Bundestag und im Bundesrat",
+      "choices": [
+        "Einfache Mehrheit im Bundestag",
+        "Drei Viertel im Bundestag",
+        "Eine Volksabstimmung"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Was schützt die „Ewigkeitsklausel“ (Art. 79 Abs. 3)?",
+      "a": "Grundsätze aus Art. 1 und 20, Gliederung in Länder",
+      "info": "Diese Teile dürfen auch mit Zweidrittelmehrheit nicht abgeschafft werden."
+    },
+    {
+      "id": "025",
+      "q": "Wie nennt man es, dass Deutschland aus Bund und Ländern besteht?",
+      "a": "Föderalismus",
+      "choices": [
+        "Zentralismus",
+        "Absolutismus",
+        "Parlamentarismus"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Was besagt das freie Mandat der Abgeordneten?",
+      "a": "Sie sind nur ihrem Gewissen unterworfen",
+      "info": "Sie sind an Aufträge und Weisungen nicht gebunden (Art. 38)."
+    },
+    {
+      "id": "027",
+      "q": "Welche Farben hat die Bundesflagge?",
+      "a": "Schwarz, Rot, Gold"
+    },
+    {
+      "id": "028",
+      "q": "Welches Recht aus Art. 17 erlaubt Bitten und Beschwerden an das Parlament?",
+      "a": "Petitionsrecht"
+    },
+    {
+      "id": "029",
+      "q": "Wie viele Mitgliedstaaten hat die EU (Stand 2026)?",
+      "a": "27",
+      "choices": [
+        "25",
+        "28",
+        "30"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Ab welchem Alter darf man in Deutschland das Europäische Parlament wählen?",
+      "a": "Ab 16 Jahren",
+      "choices": [
+        "Ab 18 Jahren",
+        "Ab 14 Jahren",
+        "Ab 21 Jahren"
+      ],
+      "info": "Das gilt seit der Europawahl 2024."
+    },
+    {
+      "id": "031",
+      "q": "Wie oft wird das Europäische Parlament gewählt?",
+      "a": "Alle 5 Jahre"
+    },
+    {
+      "id": "032",
+      "q": "In welcher Stadt hat die Europäische Zentralbank ihren Sitz?",
+      "a": "Frankfurt am Main",
+      "choices": [
+        "Brüssel",
+        "Straßburg",
+        "Luxemburg"
+      ]
+    },
+    {
+      "id": "033",
+      "q": "In welcher Stadt hat die Europäische Kommission ihren Hauptsitz?",
+      "a": "Brüssel"
+    },
+    {
+      "id": "034",
+      "q": "Wo finden die meisten Plenarsitzungen des Europäischen Parlaments statt?",
+      "a": "Straßburg",
+      "choices": [
+        "Brüssel",
+        "Luxemburg",
+        "Den Haag"
+      ]
+    }
+  ]
+}

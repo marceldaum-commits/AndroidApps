@@ -1,0 +1,299 @@
+{
+  "id": "s1-geschichte-20-jahrhundert",
+  "version": 1,
+  "title": "Das 20. Jahrhundert",
+  "subject": "geschichte",
+  "grades": [
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "🕊️",
+  "tier": "plus",
+  "description": "Weltkriege, Weimarer Republik, NS-Diktatur, deutsche Teilung und Wiedervereinigung – sachlich erklärt.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welches Attentat löste 1914 den Ersten Weltkrieg aus?",
+      "a": "Attentat von Sarajevo",
+      "info": "Am 28. Juni 1914 wurde der österreichische Thronfolger Franz Ferdinand ermordet."
+    },
+    {
+      "id": "002",
+      "q": "Wann endeten die Kämpfe des Ersten Weltkriegs mit einem Waffenstillstand?",
+      "a": "11. November 1918",
+      "choices": [
+        "9. November 1918",
+        "28. Juni 1919",
+        "8. Mai 1918"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Welcher Friedensvertrag von 1919 legte Deutschland hohe Reparationen auf?",
+      "a": "Versailler Vertrag",
+      "choices": [
+        "Vertrag von Locarno",
+        "Westfälischer Frieden",
+        "Vertrag von Rapallo"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "An welchem Tag wurde 1918 in Deutschland die Republik ausgerufen?",
+      "a": "9. November 1918",
+      "info": "Philipp Scheidemann rief sie vom Reichstagsgebäude aus."
+    },
+    {
+      "id": "005",
+      "q": "Wer war der erste Reichspräsident der Weimarer Republik?",
+      "a": "Friedrich Ebert",
+      "choices": [
+        "Paul von Hindenburg",
+        "Gustav Stresemann",
+        "Philipp Scheidemann"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Seit welchem Jahr haben Frauen in Deutschland das Wahlrecht?",
+      "a": "1918",
+      "choices": [
+        "1871",
+        "1949",
+        "1933"
+      ],
+      "info": "Erstmals wählten Frauen am 19. Januar 1919 bei der Wahl zur Nationalversammlung."
+    },
+    {
+      "id": "007",
+      "q": "In welchem Jahr erreichte die Hyperinflation in Deutschland ihren Höhepunkt?",
+      "a": "1923",
+      "choices": [
+        "1919",
+        "1929",
+        "1933"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "Welches Ereignis 1929 löste die Weltwirtschaftskrise aus?",
+      "a": "Börsencrash in New York"
+    },
+    {
+      "id": "009",
+      "q": "Wann wurde Adolf Hitler zum Reichskanzler ernannt?",
+      "a": "30. Januar 1933",
+      "choices": [
+        "9. November 1923",
+        "1. September 1939",
+        "27. Februar 1933"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Welches Gesetz von 1933 erlaubte der Regierung, Gesetze ohne Parlament zu erlassen?",
+      "a": "Ermächtigungsgesetz"
+    },
+    {
+      "id": "011",
+      "q": "Welche Gesetze von 1935 entrechteten Jüdinnen und Juden in Deutschland?",
+      "a": "Nürnberger Gesetze",
+      "choices": [
+        "Ermächtigungsgesetz",
+        "Sozialistengesetze",
+        "Notverordnungen"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "Wie nennt man die Gewalttaten gegen Juden am 9./10. November 1938?",
+      "a": "Novemberpogrome",
+      "info": "Synagogen wurden in Brand gesetzt, Geschäfte zerstört, Menschen verhaftet und ermordet."
+    },
+    {
+      "id": "013",
+      "q": "Womit begann am 1. September 1939 der Zweite Weltkrieg in Europa?",
+      "a": "Mit dem deutschen Überfall auf Polen"
+    },
+    {
+      "id": "014",
+      "q": "Wie viele europäische Juden wurden im Holocaust ermordet?",
+      "a": "Rund 6 Millionen",
+      "choices": [
+        "Rund 600 000",
+        "Rund 1 Million",
+        "Rund 20 Millionen"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "Wie hieß das größte deutsche Vernichtungslager im besetzten Polen?",
+      "a": "Auschwitz-Birkenau",
+      "info": "Der 27. Januar, Tag der Befreiung von Auschwitz 1945, ist heute Holocaust-Gedenktag."
+    },
+    {
+      "id": "016",
+      "q": "Auf welcher Konferenz im Januar 1942 wurde die Ermordung der Juden organisiert?",
+      "a": "Wannseekonferenz",
+      "choices": [
+        "Potsdamer Konferenz",
+        "Konferenz von Jalta",
+        "Münchner Konferenz"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Welcher Münchner Widerstandsgruppe gehörten Sophie und Hans Scholl an?",
+      "a": "Weiße Rose",
+      "choices": [
+        "Rote Kapelle",
+        "Kreisauer Kreis",
+        "Edelweißpiraten"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Wer verübte am 20. Juli 1944 ein Attentat auf Hitler?",
+      "a": "Claus Schenk Graf von Stauffenberg"
+    },
+    {
+      "id": "019",
+      "q": "Wann trat die bedingungslose Kapitulation der Wehrmacht in Kraft?",
+      "a": "8. Mai 1945",
+      "choices": [
+        "1. September 1945",
+        "9. November 1945",
+        "30. April 1945"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "Auf welche Stadt warfen die USA am 6. August 1945 eine Atombombe?",
+      "a": "Hiroshima",
+      "choices": [
+        "Nagasaki",
+        "Tokio",
+        "Osaka"
+      ],
+      "info": "Drei Tage später folgte Nagasaki."
+    },
+    {
+      "id": "021",
+      "q": "Wie wurde West-Berlin während der Blockade 1948/49 versorgt?",
+      "a": "Über die Berliner Luftbrücke"
+    },
+    {
+      "id": "022",
+      "q": "Wann trat das Grundgesetz in Kraft und wurde die Bundesrepublik gegründet?",
+      "a": "23. Mai 1949",
+      "choices": [
+        "7. Oktober 1949",
+        "3. Oktober 1990",
+        "8. Mai 1949"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "Wann wurde die DDR gegründet?",
+      "a": "7. Oktober 1949"
+    },
+    {
+      "id": "024",
+      "q": "Wer war der erste Bundeskanzler der Bundesrepublik?",
+      "a": "Konrad Adenauer",
+      "choices": [
+        "Ludwig Erhard",
+        "Willy Brandt",
+        "Theodor Heuss"
+      ],
+      "info": "Theodor Heuss war der erste Bundespräsident."
+    },
+    {
+      "id": "025",
+      "q": "Welche Partei beherrschte die DDR?",
+      "a": "SED",
+      "choices": [
+        "SPD",
+        "KPD",
+        "PDS"
+      ],
+      "info": "Sozialistische Einheitspartei Deutschlands."
+    },
+    {
+      "id": "026",
+      "q": "Wie hieß der Geheimdienst der DDR?",
+      "a": "Ministerium für Staatssicherheit (Stasi)"
+    },
+    {
+      "id": "027",
+      "q": "Was geschah am 17. Juni 1953 in der DDR?",
+      "a": "Ein Volksaufstand",
+      "info": "Er wurde von sowjetischen Panzern niedergeschlagen."
+    },
+    {
+      "id": "028",
+      "q": "Wann begann der Bau der Berliner Mauer?",
+      "a": "13. August 1961",
+      "choices": [
+        "17. Juni 1953",
+        "9. November 1961",
+        "13. August 1949"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Welcher Bundeskanzler kniete 1970 in Warschau am Ehrenmal des Ghettos nieder?",
+      "a": "Willy Brandt",
+      "choices": [
+        "Helmut Schmidt",
+        "Helmut Kohl",
+        "Konrad Adenauer"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "In welcher Stadt fanden 1989 die großen Montagsdemonstrationen statt?",
+      "a": "Leipzig",
+      "choices": [
+        "Dresden",
+        "Ost-Berlin",
+        "Rostock"
+      ],
+      "info": "Ein Ruf der Demonstrierenden war „Wir sind das Volk“."
+    },
+    {
+      "id": "031",
+      "q": "An welchem Tag fiel die Berliner Mauer?",
+      "a": "9. November 1989",
+      "choices": [
+        "3. Oktober 1989",
+        "9. November 1990",
+        "13. August 1989"
+      ]
+    },
+    {
+      "id": "032",
+      "q": "Wann trat die DDR der Bundesrepublik bei (Deutsche Einheit)?",
+      "a": "3. Oktober 1990",
+      "info": "Seitdem ist der 3. Oktober Nationalfeiertag."
+    },
+    {
+      "id": "033",
+      "q": "Welcher Vertrag regelte 1990 mit den vier Siegermächten die äußeren Fragen der Einheit?",
+      "a": "Zwei-plus-Vier-Vertrag",
+      "choices": [
+        "Einigungsvertrag",
+        "Grundlagenvertrag",
+        "Maastricht-Vertrag"
+      ]
+    },
+    {
+      "id": "034",
+      "q": "Welche Krise brachte 1962 die USA und die Sowjetunion an den Rand eines Atomkriegs?",
+      "a": "Kubakrise"
+    }
+  ]
+}

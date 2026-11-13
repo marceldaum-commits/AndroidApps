@@ -1,23 +1,31 @@
 package de.wissensgarten.app.ui
 
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import com.github.takahirom.roborazzi.captureRoboImage
-import de.wissensgarten.app.data.Grade
-import de.wissensgarten.app.data.GardenState
-import de.wissensgarten.app.data.Scheduler
-import de.wissensgarten.app.data.Session
-import de.wissensgarten.app.data.StarterBeds
+import de.wissensgarten.app.ui.family.FamilyScreen
+import de.wissensgarten.app.ui.garden.BedScreen
+import de.wissensgarten.app.ui.garden.GardenScreen
+import de.wissensgarten.app.ui.onboarding.OnboardingScreen
+import de.wissensgarten.app.ui.onboarding.TutorialScreen
+import de.wissensgarten.app.ui.review.ReviewScreen
+import de.wissensgarten.app.ui.shop.ShopScreen
 import de.wissensgarten.app.ui.theme.WissensgartenTheme
+import de.wissensgarten.core.data.ThemeMode
+import de.wissensgarten.core.data.db.*
+import de.wissensgarten.core.model.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import org.robolectric.annotation.GraphicsMode
+import java.io.File
 
-/** Rendert die Bildschirme mit einem „gelebten“ Garten, damit man das Design ohne Gerät sieht. */
+/** Rendert die Bildschirme mit echten Paketen und einem „gelebten“ Garten – ohne Gerät. */
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [35], qualifiers = "w400dp-h860dp-xxhdpi")
@@ -26,45 +34,99 @@ class ScreenshotTest {
 
     private val now = 1_763_000_000_000L
     private val day = Scheduler.DAY_MS
+    private val packs = File("../content/src/main/assets/packs").listFiles()!!.filter { it.extension == "json" }
+        .map { PackJson.parse(it.readText()) }
+    private val profile = ProfileEntity("p1", "Lena", "🦊", 7, dewdrops = 214, createdAt = 0)
 
-    /** Garten mit Pflanzen in allen Stufen, manche durstig. */
-    private fun demo(): GardenState {
-        val beds = StarterBeds.all().mapIndexed { bi, bed ->
-            bed.copy(cards = bed.cards.mapIndexed { i, c ->
-                if (i >= 10 - bi * 3) return@mapIndexed c // Rest bleibt Samen
-                var card = Scheduler.review(c, Grade.GOOD, now - 400 * day)
-                var t = now - 400 * day
-                repeat(i % 6) { t = Scheduler.dueAt(card); if (t < now) card = Scheduler.review(card, Grade.GOOD, t) }
-                // jede dritte Pflanze lange nicht gegossen → welk
-                if (i % 3 == 1) card = card.copy(lastReview = now - (card.stability * 4 * day).toLong())
-                else card = card.copy(lastReview = now - (card.stability * 0.3 * day).toLong())
-                card
-            })
+    private fun pack(id: String) = packs.first { it.id == id }
+
+    /** Beet mit Pflanzen in allen Stufen, manche durstig. */
+    private fun bed(p: Pack, grownCount: Int, profileId: String = profile.id): BedWithCards {
+        val bed = BedEntity(p.id + profileId, profileId, p.title, p.emoji, p.subjectInfo.hue, p.id, p.version, 0)
+        val cards = p.cards.mapIndexed { i, c ->
+            var m = Memory()
+            if (i < grownCount) {
+                m = Scheduler.review(m, Rating.GOOD, now - 400 * day)
+                repeat(i % 6) { val t = Scheduler.dueAt(m); if (t < now) m = Scheduler.review(m, Rating.GOOD, t) }
+                m = m.copy(lastReview = now - (m.stability * (if (i % 3 == 1) 4.0 else 0.3) * day).toLong())
+            }
+            CardEntity("${bed.id}-$i", bed.id, profileId, c.id, c.q, c.a, CardEntity.joinChoices(c.choices), c.info,
+                m.stability, m.difficulty, m.lastReview, m.reps, m.lapses, 0, i)
         }
-        return GardenState(beds = beds, dewdrops = 128)
+        return BedWithCards(bed, cards)
     }
 
-    private fun shot(name: String, dark: Boolean = false, content: @Composable () -> Unit) {
-        rule.setContent { WissensgartenTheme(dark = dark) { androidx.compose.material3.Surface { content() } } }
-        rule.mainClock.advanceTimeBy(2000)
+    private val garden by lazy {
+        listOf(
+            bed(pack("s1-englisch-irregular-verbs"), 14),
+            bed(pack("s1-bio-zelle-mensch"), 9),
+            bed(pack("s1-erdkunde-europa"), 5),
+            bed(pack("s1-mathe-brueche-prozent"), 2),
+        )
+    }
+
+    private fun shot(name: String, prepare: (ComposeContentTestRule) -> Unit = {}, content: @Composable () -> Unit) {
+        rule.setContent { WissensgartenTheme(ThemeMode.LIGHT) { Surface { content() } } }
+        rule.mainClock.advanceTimeBy(1500)
+        prepare(rule)
+        rule.mainClock.advanceTimeBy(1500)
         rule.onRoot().captureRoboImage("../screenshots/$name.png")
     }
 
-    @Test fun garden() = shot("1_garten") {
-        GardenScreen(demo(), now, {}, {}, { _, _ -> })
+    @Test fun onboardingWelcome() = shot("01_willkommen") {
+        OnboardingScreen(packs, false, {}) { _, _, _, _, _ -> }
     }
 
-    @Test fun gardenDark() = shot("2_garten_dunkel", dark = true) {
-        GardenScreen(demo(), now, {}, {}, { _, _ -> })
+    @Test fun onboardingBeds() = shot("02_beete_waehlen", prepare = { r ->
+        r.onNodeWithText("Los geht's").performClick(); r.mainClock.advanceTimeBy(800)
+        r.onNodeWithText("Mein Kind").performClick()
+        r.onNodeWithText("Weiter").performClick(); r.mainClock.advanceTimeBy(800)
+        r.onNode(hasSetTextAction()).performTextInput("Lena")
+        r.onNodeWithText("Weiter").performClick(); r.mainClock.advanceTimeBy(800)
+        r.onNodeWithText("7").performClick()
+        r.onNodeWithText("Weiter").performClick(); r.mainClock.advanceTimeBy(800)
+        r.onAllNodesWithText("Wählen")[0].performClick()
+        r.onAllNodesWithText("Wählen")[0].performClick()
+    }) {
+        OnboardingScreen(packs, false, {}) { _, _, _, _, _ -> }
     }
 
-    @Test fun bed() = shot("3_beet") {
-        val s = demo()
-        BedScreen(s.beds[0], now, {}, {}, { _, _ -> }, {}, {})
+    @Test fun tutorial() = shot("03_anleitung", prepare = { r ->
+        r.onNodeWithText("Ersten Samen säen").performClick()
+        r.onNodeWithText("8").performClick()
+    }) { TutorialScreen {} }
+
+    @Test fun garden() = shot("04_garten") {
+        GardenScreen(profile, garden, now, 10, {}, {}, {}, {})
     }
 
-    @Test fun review() = shot("4_giessen") {
-        val s = demo()
-        ReviewScreen(Session.build(s, now), s, { _, _ -> }, {})
+    @Test fun bed() = shot("05_beet") {
+        BedScreen(garden[0], now, 10, {}, {}, { _, _, _ -> }, {}, {})
+    }
+
+    @Test fun reviewChoice() = shot("06_giessen_auswahl", prepare = { r ->
+        r.onNodeWithText("went – gone").performClick()
+    }) {
+        val card = garden[0].cards.first { it.sourceId == "001" }.toStudy()
+        ReviewScreen(listOf(card), garden.associate { it.bed.id to it.bed }, false, { _, _ -> }, {})
+    }
+
+    @Test fun reviewKids() = shot("07_giessen_grundschule") {
+        val kid = bed(pack("gs-tiere"), 6, "kid")
+        ReviewScreen(listOf(kid.cards[2].toStudy()), mapOf(kid.bed.id to kid.bed), true, { _, _ -> }, {})
+    }
+
+    @Test fun shop() = shot("08_samenhandlung") {
+        ShopScreen(profile, packs, garden, { true }, {}, {}, { _, _ -> })
+    }
+
+    @Test fun family() = shot("09_familie") {
+        val kid = profile.copy(id = "kid", name = "Ben", avatar = "🐸", level = 3, dewdrops = 88)
+        val mama = profile.copy(id = "mama", name = "Mama", avatar = "🦉", level = Levels.ADULT, dewdrops = 40)
+        val allBeds = garden + bed(pack("gs-einmaleins"), 20, "kid") + bed(pack("aw-erste-hilfe"), 8, "mama")
+        val logs = (0 until 60).map { i ->
+            ReviewLogEntity(i.toLong(), listOf("p1", "kid", "kid", "mama")[i % 4], "c", now - (i % 6) * day - i * 1000L, 2, 3.0)
+        }
+        FamilyScreen(listOf(profile, kid, mama), "p1", allBeds, logs, now, {}, {})
     }
 }

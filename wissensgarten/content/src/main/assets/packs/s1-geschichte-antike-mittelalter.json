@@ -1,0 +1,285 @@
+{
+  "id": "s1-geschichte-antike-mittelalter",
+  "version": 1,
+  "title": "Antike und Mittelalter",
+  "subject": "geschichte",
+  "grades": [
+    6,
+    7
+  ],
+  "emoji": "🏺",
+  "tier": "free",
+  "description": "Von den Pharaonen über Griechen und Römer bis zu Rittern, Burgen und Klöstern.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welcher Fluss war die Lebensader des alten Ägypten?",
+      "a": "Nil",
+      "choices": [
+        "Euphrat",
+        "Tigris",
+        "Jordan"
+      ],
+      "info": "Die jährliche Nilflut brachte fruchtbaren Schlamm auf die Felder."
+    },
+    {
+      "id": "002",
+      "q": "Wie heißt die Bilderschrift der alten Ägypter?",
+      "a": "Hieroglyphen",
+      "choices": [
+        "Keilschrift",
+        "Runen",
+        "Kyrillisch"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Wer entzifferte 1822 die Hieroglyphen?",
+      "a": "Jean-François Champollion",
+      "info": "Geholfen hat ihm der Stein von Rosetta mit demselben Text in drei Schriften."
+    },
+    {
+      "id": "004",
+      "q": "Wie hieß der Herrscher im alten Ägypten?",
+      "a": "Pharao"
+    },
+    {
+      "id": "005",
+      "q": "Bei welcher Stadt stehen die großen Pyramiden, darunter die Cheops-Pyramide?",
+      "a": "Gizeh",
+      "choices": [
+        "Luxor",
+        "Alexandria",
+        "Assuan"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Wessen nahezu unberührtes Grab entdeckte Howard Carter 1922?",
+      "a": "Tutanchamun",
+      "choices": [
+        "Ramses II.",
+        "Cheops",
+        "Kleopatra"
+      ]
+    },
+    {
+      "id": "007",
+      "q": "In welchem Jahr fanden der Überlieferung nach die ersten Olympischen Spiele statt?",
+      "a": "776 v. Chr.",
+      "choices": [
+        "1896 v. Chr.",
+        "44 v. Chr.",
+        "480 n. Chr."
+      ],
+      "info": "Sie wurden in Olympia zu Ehren des Gottes Zeus ausgetragen."
+    },
+    {
+      "id": "008",
+      "q": "Welche griechische Stadt gilt als Wiege der Demokratie?",
+      "a": "Athen",
+      "choices": [
+        "Sparta",
+        "Korinth",
+        "Theben"
+      ],
+      "info": "Wählen durften dort allerdings nur freie Männer mit Bürgerrecht."
+    },
+    {
+      "id": "009",
+      "q": "Welche griechische Stadt war für ihre strenge militärische Erziehung bekannt?",
+      "a": "Sparta"
+    },
+    {
+      "id": "010",
+      "q": "Welchem Dichter werden „Ilias“ und „Odyssee“ zugeschrieben?",
+      "a": "Homer",
+      "choices": [
+        "Sokrates",
+        "Platon",
+        "Vergil"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Welcher Makedonenkönig eroberte ein Reich bis nach Indien?",
+      "a": "Alexander der Große",
+      "info": "Er lebte von 356 bis 323 v. Chr."
+    },
+    {
+      "id": "012",
+      "q": "Welches Gründungsjahr Roms nennt die Sage?",
+      "a": "753 v. Chr.",
+      "choices": [
+        "476 v. Chr.",
+        "1000 v. Chr.",
+        "44 v. Chr."
+      ],
+      "info": "Merkspruch: Sieben-fünf-drei, Rom schlüpft aus dem Ei."
+    },
+    {
+      "id": "013",
+      "q": "Wie heißen die Zwillinge der römischen Gründungssage?",
+      "a": "Romulus und Remus"
+    },
+    {
+      "id": "014",
+      "q": "In welchem Jahr wurde Julius Caesar ermordet?",
+      "a": "44 v. Chr.",
+      "choices": [
+        "27 v. Chr.",
+        "9 n. Chr.",
+        "79 n. Chr."
+      ],
+      "info": "Er wurde an den Iden des März (15. März) erstochen."
+    },
+    {
+      "id": "015",
+      "q": "Wer war der erste römische Kaiser?",
+      "a": "Augustus",
+      "choices": [
+        "Julius Caesar",
+        "Nero",
+        "Konstantin"
+      ],
+      "info": "Caesar war Diktator, aber nicht Kaiser."
+    },
+    {
+      "id": "016",
+      "q": "Wie heißt die befestigte Grenze der Römer in Germanien?",
+      "a": "Limes"
+    },
+    {
+      "id": "017",
+      "q": "Welche Schlacht verloren die Römer im Jahr 9 n. Chr. gegen Arminius?",
+      "a": "Varusschlacht"
+    },
+    {
+      "id": "018",
+      "q": "Welche Stadt wurde 79 n. Chr. beim Ausbruch des Vesuvs verschüttet?",
+      "a": "Pompeji",
+      "choices": [
+        "Ostia",
+        "Neapel",
+        "Syrakus"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Wie heißt das große Amphitheater im antiken Rom?",
+      "a": "Kolosseum"
+    },
+    {
+      "id": "020",
+      "q": "In welchem Jahr endete das Weströmische Reich?",
+      "a": "476 n. Chr.",
+      "choices": [
+        "395 n. Chr.",
+        "800 n. Chr.",
+        "1453 n. Chr."
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Wo und wann wurde Karl der Große zum Kaiser gekrönt?",
+      "a": "In Rom, im Jahr 800"
+    },
+    {
+      "id": "022",
+      "q": "Wie hießen die drei Stände des Mittelalters?",
+      "a": "Klerus, Adel, Bauern",
+      "info": "Merkhilfe: Die einen beten, die anderen kämpfen, die dritten arbeiten."
+    },
+    {
+      "id": "023",
+      "q": "Wie nennt man einen Gefolgsmann, der von einem Herrn ein Lehen erhält?",
+      "a": "Vasall",
+      "choices": [
+        "Leibeigener",
+        "Zunftmeister",
+        "Abt"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "In welcher Reihenfolge verlief die Ausbildung zum Ritter?",
+      "a": "Page, Knappe, Ritter",
+      "choices": [
+        "Knappe, Page, Ritter",
+        "Page, Ritter, Knappe"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Wie heißt der Hauptturm einer Burg?",
+      "a": "Bergfried",
+      "choices": [
+        "Palas",
+        "Zwinger",
+        "Kemenate"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Was bedeutet die Mönchsregel „ora et labora“?",
+      "a": "Bete und arbeite",
+      "info": "Sie geht auf Benedikt von Nursia zurück."
+    },
+    {
+      "id": "027",
+      "q": "Welcher König ging 1077 als Büßer nach Canossa?",
+      "a": "Heinrich IV.",
+      "choices": [
+        "Otto I.",
+        "Karl der Große",
+        "Friedrich Barbarossa"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Welcher Papst rief 1095 zum ersten Kreuzzug auf?",
+      "a": "Urban II."
+    },
+    {
+      "id": "029",
+      "q": "Welche Seuche tötete ab 1347 einen großen Teil der Menschen in Europa?",
+      "a": "Pest („Schwarzer Tod“)",
+      "choices": [
+        "Pocken",
+        "Cholera",
+        "Grippe"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Wie hieß der mächtige Bund norddeutscher Kaufleute und Städte?",
+      "a": "Hanse",
+      "info": "Lübeck galt als „Königin der Hanse“."
+    },
+    {
+      "id": "031",
+      "q": "Wie nennt man die Vereinigungen von Handwerkern in mittelalterlichen Städten?",
+      "a": "Zünfte",
+      "choices": [
+        "Hanse",
+        "Orden",
+        "Lehen"
+      ]
+    },
+    {
+      "id": "032",
+      "q": "Welches englische Dokument von 1215 beschränkte die Macht des Königs?",
+      "a": "Magna Carta"
+    },
+    {
+      "id": "033",
+      "q": "Wer erfand um 1450 in Mainz den Buchdruck mit beweglichen Lettern?",
+      "a": "Johannes Gutenberg",
+      "choices": [
+        "Martin Luther",
+        "Albrecht Dürer",
+        "Leonardo da Vinci"
+      ]
+    }
+  ]
+}

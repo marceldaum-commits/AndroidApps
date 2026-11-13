@@ -1,0 +1,303 @@
+{
+  "id": "ob-englisch-abi-vokabeln",
+  "version": 1,
+  "title": "Englisch Abi-Vokabeln",
+  "subject": "englisch",
+  "grades": [
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "🌍",
+  "tier": "plus",
+  "description": "Anspruchsvolle Vokabeln zu Politik, Umwelt und Gesellschaft für Oberstufe und Abitur.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "die Nachhaltigkeit",
+      "a": "sustainability",
+      "choices": [
+        "sustenance",
+        "durability",
+        "viability"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "der Klimawandel",
+      "a": "climate change"
+    },
+    {
+      "id": "003",
+      "q": "erneuerbare Energien",
+      "a": "renewable energy",
+      "choices": [
+        "recycled energy",
+        "reusable energy",
+        "renewed energy"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "der Treibhauseffekt",
+      "a": "greenhouse effect"
+    },
+    {
+      "id": "005",
+      "q": "die Artenvielfalt",
+      "a": "biodiversity",
+      "choices": [
+        "biology",
+        "biosphere",
+        "bioethics"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "die Abholzung",
+      "a": "deforestation"
+    },
+    {
+      "id": "007",
+      "q": "die Umweltverschmutzung",
+      "a": "pollution",
+      "choices": [
+        "population",
+        "polling",
+        "pollination"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "der CO₂-Fußabdruck",
+      "a": "carbon footprint"
+    },
+    {
+      "id": "009",
+      "q": "die Einwanderung",
+      "a": "immigration",
+      "choices": [
+        "emigration",
+        "deportation",
+        "integrity"
+      ],
+      "info": "emigration = Auswanderung"
+    },
+    {
+      "id": "010",
+      "q": "die Auswanderung",
+      "a": "emigration"
+    },
+    {
+      "id": "011",
+      "q": "die Wahl (politisch)",
+      "a": "election",
+      "choices": [
+        "selection",
+        "elocution",
+        "elector"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "das Wahlrecht (Recht zu wählen)",
+      "a": "the right to vote",
+      "info": "Fachwort auch: suffrage"
+    },
+    {
+      "id": "013",
+      "q": "die Regierung",
+      "a": "government",
+      "choices": [
+        "governor",
+        "governance board",
+        "governing"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "die Gesetzgebung",
+      "a": "legislation"
+    },
+    {
+      "id": "015",
+      "q": "die Verfassung (eines Staates)",
+      "a": "constitution",
+      "choices": [
+        "constellation",
+        "institution",
+        "condition"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "die Rechtsstaatlichkeit",
+      "a": "the rule of law"
+    },
+    {
+      "id": "017",
+      "q": "die Gewaltenteilung",
+      "a": "separation of powers",
+      "choices": [
+        "division of violence",
+        "balance of violence",
+        "sharing of forces"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "die Armut",
+      "a": "poverty"
+    },
+    {
+      "id": "019",
+      "q": "die Arbeitslosigkeit",
+      "a": "unemployment",
+      "choices": [
+        "employment",
+        "unemployed",
+        "underemployment"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "die Ungleichheit",
+      "a": "inequality"
+    },
+    {
+      "id": "021",
+      "q": "die Vielfalt (z. B. kulturell)",
+      "a": "diversity",
+      "choices": [
+        "diversion",
+        "divinity",
+        "density"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "das Vorurteil",
+      "a": "prejudice",
+      "choices": [
+        "precedent",
+        "preference",
+        "presumption"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "die Rassentrennung (USA)",
+      "a": "segregation"
+    },
+    {
+      "id": "024",
+      "q": "die Bürgerrechtsbewegung",
+      "a": "civil rights movement",
+      "choices": [
+        "civil war movement",
+        "citizen law motion",
+        "civic duty movement"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "der Flüchtling",
+      "a": "refugee",
+      "choices": [
+        "refuge",
+        "fugitive",
+        "resident"
+      ],
+      "info": "refuge = Zuflucht, fugitive = Flüchtiger (auf der Flucht vor der Justiz)"
+    },
+    {
+      "id": "026",
+      "q": "die Asylbewerberin / der Asylbewerber",
+      "a": "asylum seeker"
+    },
+    {
+      "id": "027",
+      "q": "die Meinungsfreiheit",
+      "a": "freedom of speech"
+    },
+    {
+      "id": "028",
+      "q": "die Zensur",
+      "a": "censorship",
+      "choices": [
+        "censure",
+        "census",
+        "consensus"
+      ],
+      "info": "census = Volkszählung, censure = scharfe Kritik/Rüge"
+    },
+    {
+      "id": "029",
+      "q": "die Überwachung (z. B. durch Kameras)",
+      "a": "surveillance"
+    },
+    {
+      "id": "030",
+      "q": "die Volksabstimmung",
+      "a": "referendum",
+      "choices": [
+        "referee",
+        "reference",
+        "reform"
+      ]
+    },
+    {
+      "id": "031",
+      "q": "die Wirtschaft (eines Landes)",
+      "a": "economy",
+      "choices": [
+        "economics",
+        "ecology",
+        "economist"
+      ],
+      "info": "economics = Wirtschaftswissenschaft"
+    },
+    {
+      "id": "032",
+      "q": "der Wohlstand",
+      "a": "prosperity",
+      "info": "auch: wealth, affluence"
+    },
+    {
+      "id": "033",
+      "q": "die Gesundheitsversorgung",
+      "a": "healthcare",
+      "choices": [
+        "health insurance",
+        "wellness",
+        "welfare"
+      ]
+    },
+    {
+      "id": "034",
+      "q": "die Massentierhaltung",
+      "a": "factory farming"
+    },
+    {
+      "id": "035",
+      "q": "der Anstieg des Meeresspiegels",
+      "a": "sea-level rise",
+      "choices": [
+        "sea-level fall",
+        "tidal wave",
+        "sea-mirror rise"
+      ]
+    },
+    {
+      "id": "036",
+      "q": "die Herausforderung",
+      "a": "challenge"
+    },
+    {
+      "id": "037",
+      "q": "die Arbeitslosenquote",
+      "a": "unemployment rate"
+    }
+  ]
+}

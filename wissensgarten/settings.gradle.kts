@@ -15,4 +15,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Wissensgarten"
-include(":app")
+
+include(":app")            // Oberfläche, Navigation, Widget
+include(":core:model")     // reine Kotlin-Logik: Vergessenskurve, Pakete, Runden (ohne Android)
+include(":core:data")      // Datenbank, Profile, Paket-Installation, Freischaltungen
+include(":content")        // Wissenspakete als JSON (austauschbar / später nachladbar)

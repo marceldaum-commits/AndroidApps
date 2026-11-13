@@ -1,0 +1,318 @@
+{
+  "id": "s1-physik-einheiten-formeln",
+  "version": 1,
+  "title": "Physik: Einheiten & Formeln",
+  "subject": "physik",
+  "grades": [
+    7,
+    8,
+    9,
+    10
+  ],
+  "emoji": "⚡",
+  "tier": "free",
+  "description": "SI-Einheiten, physikalische Größen und die wichtigsten Grundformeln.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "SI-Einheit der Kraft?",
+      "a": "Newton (N)",
+      "choices": [
+        "Joule (J)",
+        "Watt (W)",
+        "Pascal (Pa)"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "SI-Einheit der Energie?",
+      "a": "Joule (J)",
+      "choices": [
+        "Newton (N)",
+        "Watt (W)",
+        "Volt (V)"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "SI-Einheit der Leistung?",
+      "a": "Watt (W)",
+      "choices": [
+        "Joule (J)",
+        "Ampere (A)",
+        "Newton (N)"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "SI-Einheit des Drucks?",
+      "a": "Pascal (Pa)",
+      "info": "1 Pa = 1 N/m²; 1 bar = 100 000 Pa"
+    },
+    {
+      "id": "005",
+      "q": "SI-Einheit der elektrischen Stromstärke?",
+      "a": "Ampere (A)",
+      "choices": [
+        "Volt (V)",
+        "Ohm (Ω)",
+        "Coulomb (C)"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "SI-Einheit der elektrischen Spannung?",
+      "a": "Volt (V)"
+    },
+    {
+      "id": "007",
+      "q": "SI-Einheit des elektrischen Widerstands?",
+      "a": "Ohm (Ω)"
+    },
+    {
+      "id": "008",
+      "q": "SI-Einheit der Frequenz?",
+      "a": "Hertz (Hz)",
+      "choices": [
+        "Sekunde (s)",
+        "Watt (W)",
+        "Tesla (T)"
+      ],
+      "info": "1 Hz = 1/s"
+    },
+    {
+      "id": "009",
+      "q": "SI-Einheit der elektrischen Ladung?",
+      "a": "Coulomb (C)",
+      "info": "1 C = 1 A · s"
+    },
+    {
+      "id": "010",
+      "q": "SI-Basiseinheit der Temperatur?",
+      "a": "Kelvin (K)",
+      "choices": [
+        "Grad Celsius (°C)",
+        "Grad Fahrenheit (°F)",
+        "Joule (J)"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Die sieben SI-Basiseinheiten?",
+      "a": "Meter, Kilogramm, Sekunde, Ampere, Kelvin, Mol, Candela"
+    },
+    {
+      "id": "012",
+      "q": "1 Newton in SI-Basiseinheiten?",
+      "a": "1 kg · m/s²",
+      "choices": [
+        "1 kg · m²/s²",
+        "1 kg · m/s",
+        "1 kg/(m · s²)"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "1 Joule = ?",
+      "a": "1 N · m",
+      "choices": [
+        "1 N/m",
+        "1 W/s",
+        "1 kg · m/s"
+      ],
+      "info": "Auch: 1 J = 1 W · s"
+    },
+    {
+      "id": "014",
+      "q": "1 kWh in Joule?",
+      "a": "3,6 · 10⁶ J",
+      "choices": [
+        "1 000 J",
+        "3 600 J",
+        "36 000 J"
+      ],
+      "info": "1000 W · 3600 s"
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet die Vorsilbe Mega (M)?",
+      "a": "10⁶ (Million)",
+      "choices": [
+        "10³ (Tausend)",
+        "10⁹ (Milliarde)",
+        "10⁻⁶ (Millionstel)"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Was bedeutet die Vorsilbe Mikro (µ)?",
+      "a": "10⁻⁶"
+    },
+    {
+      "id": "017",
+      "q": "Formel für die Geschwindigkeit (gleichförmige Bewegung)?",
+      "a": "v = s / t",
+      "choices": [
+        "v = s · t",
+        "v = t / s",
+        "v = m · s"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "72 km/h in m/s?",
+      "a": "20 m/s",
+      "choices": [
+        "7,2 m/s",
+        "36 m/s",
+        "259,2 m/s"
+      ],
+      "info": "Durch 3,6 teilen."
+    },
+    {
+      "id": "019",
+      "q": "Formel für die Beschleunigung?",
+      "a": "a = Δv / Δt"
+    },
+    {
+      "id": "020",
+      "q": "Zweites Newtonsches Gesetz (Grundgleichung der Mechanik)?",
+      "a": "F = m · a",
+      "choices": [
+        "F = m / a",
+        "F = m · v",
+        "F = a / m"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Formel für die Gewichtskraft?",
+      "a": "F_G = m · g"
+    },
+    {
+      "id": "022",
+      "q": "Ortsfaktor g auf der Erde etwa?",
+      "a": "9,81 N/kg",
+      "choices": [
+        "9,81 kg/N",
+        "6,67 N/kg",
+        "1,62 N/kg"
+      ],
+      "info": "1,62 N/kg gilt auf dem Mond."
+    },
+    {
+      "id": "023",
+      "q": "Formel für die Dichte?",
+      "a": "ρ = m / V",
+      "choices": [
+        "ρ = m · V",
+        "ρ = V / m",
+        "ρ = F / A"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Formel für den Druck?",
+      "a": "p = F / A",
+      "choices": [
+        "p = F · A",
+        "p = A / F",
+        "p = m · A"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Formel für die mechanische Arbeit (Kraft in Wegrichtung)?",
+      "a": "W = F · s"
+    },
+    {
+      "id": "026",
+      "q": "Formel für die Leistung?",
+      "a": "P = W / t",
+      "choices": [
+        "P = W · t",
+        "P = t / W",
+        "P = F / t"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Formel für die kinetische Energie?",
+      "a": "E_kin = ½ · m · v²",
+      "choices": [
+        "E_kin = m · v²",
+        "E_kin = ½ · m · v",
+        "E_kin = m · g · h"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Formel für die potenzielle Energie (Lageenergie)?",
+      "a": "E_pot = m · g · h"
+    },
+    {
+      "id": "029",
+      "q": "Hebelgesetz?",
+      "a": "F₁ · l₁ = F₂ · l₂",
+      "info": "Kraft mal Kraftarm = Last mal Lastarm"
+    },
+    {
+      "id": "030",
+      "q": "Ohmsches Gesetz?",
+      "a": "U = R · I",
+      "choices": [
+        "R = U · I",
+        "I = U · R",
+        "U = R / I"
+      ]
+    },
+    {
+      "id": "031",
+      "q": "U = 230 V, R = 46 Ω. Stromstärke I?",
+      "a": "5 A",
+      "choices": [
+        "0,2 A",
+        "10 A",
+        "2,5 A"
+      ],
+      "info": "I = U / R = 230 V / 46 Ω"
+    },
+    {
+      "id": "032",
+      "q": "Formel für die elektrische Leistung?",
+      "a": "P = U · I"
+    },
+    {
+      "id": "033",
+      "q": "Formel für die elektrische Energie?",
+      "a": "E = U · I · t",
+      "info": "Gleichwertig: E = P · t"
+    },
+    {
+      "id": "034",
+      "q": "Gesamtwiderstand bei Reihenschaltung?",
+      "a": "R = R₁ + R₂",
+      "choices": [
+        "1/R = 1/R₁ + 1/R₂",
+        "R = R₁ · R₂",
+        "R = R₁ − R₂"
+      ]
+    },
+    {
+      "id": "035",
+      "q": "Gesamtwiderstand bei Parallelschaltung?",
+      "a": "1/R = 1/R₁ + 1/R₂"
+    },
+    {
+      "id": "036",
+      "q": "Wirkungsgrad η?",
+      "a": "η = E_nutz / E_zu",
+      "info": "Er ist immer kleiner als 1 (100 %)."
+    },
+    {
+      "id": "037",
+      "q": "Zusammenhang Wellenlänge λ, Frequenz f und Ausbreitungsgeschwindigkeit c?",
+      "a": "c = λ · f"
+    }
+  ]
+}

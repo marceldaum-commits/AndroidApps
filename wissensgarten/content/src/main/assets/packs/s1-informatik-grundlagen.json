@@ -1,0 +1,300 @@
+{
+  "id": "s1-informatik-grundlagen",
+  "version": 1,
+  "title": "Informatik-Grundlagen",
+  "subject": "informatik",
+  "grades": [
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "emoji": "💻",
+  "tier": "free",
+  "description": "Bits und Bytes, Zahlensysteme, Programmier- und Netzwerkbegriffe.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was ist ein Bit?",
+      "a": "Die kleinste Informationseinheit (0 oder 1)"
+    },
+    {
+      "id": "002",
+      "q": "1 Byte = ?",
+      "a": "8 Bit",
+      "choices": [
+        "4 Bit",
+        "16 Bit",
+        "10 Bit"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "1 KiB (Kibibyte) = ?",
+      "a": "1024 Byte",
+      "choices": [
+        "1000 Byte",
+        "1024 Bit",
+        "8000 Byte"
+      ],
+      "info": "1 kB (Kilobyte) = 1000 Byte"
+    },
+    {
+      "id": "004",
+      "q": "Wie viele verschiedene Werte lassen sich mit 8 Bit darstellen?",
+      "a": "256",
+      "choices": [
+        "255",
+        "128",
+        "512"
+      ],
+      "info": "2⁸ = 256 (Werte 0 bis 255)"
+    },
+    {
+      "id": "005",
+      "q": "Dezimalzahl 13 im Binärsystem?",
+      "a": "1101",
+      "choices": [
+        "1011",
+        "1110",
+        "1001"
+      ],
+      "info": "8 + 4 + 0 + 1 = 13"
+    },
+    {
+      "id": "006",
+      "q": "Binärzahl 101010 im Dezimalsystem?",
+      "a": "42",
+      "choices": [
+        "21",
+        "84",
+        "40"
+      ],
+      "info": "32 + 8 + 2 = 42"
+    },
+    {
+      "id": "007",
+      "q": "Binärzahl 1111 im Dezimalsystem?",
+      "a": "15"
+    },
+    {
+      "id": "008",
+      "q": "Basis des Hexadezimalsystems?",
+      "a": "16",
+      "choices": [
+        "8",
+        "12",
+        "20"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "Hexadezimalzahl FF im Dezimalsystem?",
+      "a": "255",
+      "choices": [
+        "256",
+        "225",
+        "160"
+      ],
+      "info": "15 · 16 + 15 = 255"
+    },
+    {
+      "id": "010",
+      "q": "Was ist ein Algorithmus?",
+      "a": "Endliche, eindeutige Handlungsvorschrift zur Problemlösung"
+    },
+    {
+      "id": "011",
+      "q": "Was ist eine Variable?",
+      "a": "Ein benannter Speicherplatz für einen Wert"
+    },
+    {
+      "id": "012",
+      "q": "Wozu dient eine Schleife?",
+      "a": "Um Anweisungen zu wiederholen",
+      "choices": [
+        "Um Anweisungen nur unter einer Bedingung auszuführen",
+        "Um Daten zu speichern",
+        "Um ein Programm zu beenden"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Wozu dient eine Verzweigung (if)?",
+      "a": "Anweisungen nur unter einer Bedingung auszuführen"
+    },
+    {
+      "id": "014",
+      "q": "Was ist Rekursion?",
+      "a": "Eine Funktion ruft sich selbst auf"
+    },
+    {
+      "id": "015",
+      "q": "Datentyp für Wahrheitswerte (wahr/falsch)?",
+      "a": "Boolean",
+      "choices": [
+        "Integer",
+        "String",
+        "Float"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Datentyp für Zeichenketten?",
+      "a": "String",
+      "choices": [
+        "Boolean",
+        "Integer",
+        "Char"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Datentyp für ganze Zahlen?",
+      "a": "Integer"
+    },
+    {
+      "id": "018",
+      "q": "Index des ersten Elements einer Liste in Python oder Java?",
+      "a": "0",
+      "choices": [
+        "1",
+        "−1"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "1 UND 0 = ?",
+      "a": "0",
+      "info": "UND ist nur wahr, wenn beide Eingänge 1 sind."
+    },
+    {
+      "id": "020",
+      "q": "1 XOR 1 = ?",
+      "a": "0",
+      "info": "XOR ist wahr, wenn genau ein Eingang 1 ist."
+    },
+    {
+      "id": "021",
+      "q": "Was macht ein Compiler?",
+      "a": "Er übersetzt Quelltext in Maschinencode"
+    },
+    {
+      "id": "022",
+      "q": "Voraussetzung für die binäre Suche?",
+      "a": "Die Daten müssen sortiert sein"
+    },
+    {
+      "id": "023",
+      "q": "Was ist Bubblesort?",
+      "a": "Ein Sortierverfahren",
+      "choices": [
+        "Ein Suchverfahren",
+        "Ein Verschlüsselungsverfahren",
+        "Ein Kompressionsverfahren"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Wofür steht HTML?",
+      "a": "Hypertext Markup Language",
+      "choices": [
+        "Hyperlink Text Machine Language",
+        "Home Tool Markup Language",
+        "Hypertext Machine Learning"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Was für eine Sprache ist HTML?",
+      "a": "Eine Auszeichnungssprache",
+      "choices": [
+        "Eine Programmiersprache",
+        "Eine Datenbanksprache",
+        "Ein Betriebssystem"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Wofür verwendet man CSS?",
+      "a": "Zur Gestaltung von Webseiten",
+      "info": "CSS = Cascading Style Sheets"
+    },
+    {
+      "id": "027",
+      "q": "Sprache zum Abfragen relationaler Datenbanken?",
+      "a": "SQL",
+      "choices": [
+        "HTML",
+        "CSS",
+        "XML"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Was ist eine IP-Adresse?",
+      "a": "Eine Adresse eines Geräts in einem Netzwerk"
+    },
+    {
+      "id": "029",
+      "q": "Wie viele Bit hat eine IPv4-Adresse?",
+      "a": "32",
+      "choices": [
+        "64",
+        "128",
+        "16"
+      ],
+      "info": "IPv6-Adressen haben 128 Bit."
+    },
+    {
+      "id": "030",
+      "q": "Was macht DNS?",
+      "a": "Übersetzt Domainnamen in IP-Adressen",
+      "choices": [
+        "Verschlüsselt Datenverkehr",
+        "Speichert Webseiten dauerhaft",
+        "Prüft E-Mails auf Viren"
+      ]
+    },
+    {
+      "id": "031",
+      "q": "Wofür steht das „S“ in HTTPS?",
+      "a": "Secure (verschlüsselte Übertragung)"
+    },
+    {
+      "id": "032",
+      "q": "Was macht ein Router?",
+      "a": "Er leitet Datenpakete zwischen Netzwerken weiter"
+    },
+    {
+      "id": "033",
+      "q": "Wofür steht CPU?",
+      "a": "Central Processing Unit (Hauptprozessor)"
+    },
+    {
+      "id": "034",
+      "q": "Was ist der RAM?",
+      "a": "Flüchtiger Arbeitsspeicher",
+      "choices": [
+        "Dauerhafter Festplattenspeicher",
+        "Der Hauptprozessor",
+        "Die Grafikkarte"
+      ],
+      "info": "Ohne Strom gehen die Daten verloren."
+    },
+    {
+      "id": "035",
+      "q": "Was ist Phishing?",
+      "a": "Datendiebstahl über gefälschte Nachrichten oder Webseiten"
+    },
+    {
+      "id": "036",
+      "q": "Was bedeutet Open Source?",
+      "a": "Quelltext ist offen einsehbar und darf verändert werden"
+    }
+  ]
+}

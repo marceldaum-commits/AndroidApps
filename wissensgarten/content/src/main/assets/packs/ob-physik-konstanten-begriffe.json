@@ -1,0 +1,286 @@
+{
+  "id": "ob-physik-konstanten-begriffe",
+  "version": 1,
+  "title": "Naturkonstanten & Begriffe",
+  "subject": "physik",
+  "grades": [
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "⚛️",
+  "tier": "plus",
+  "description": "Wichtige Naturkonstanten mit Wert und Einheit sowie Kernbegriffe aus Mechanik, E-Lehre und Quantenphysik.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Lichtgeschwindigkeit im Vakuum c?",
+      "a": "≈ 3,00 · 10⁸ m/s",
+      "choices": [
+        "≈ 3,00 · 10⁶ m/s",
+        "≈ 3,00 · 10⁸ km/s",
+        "≈ 3,43 · 10² m/s"
+      ],
+      "info": "Exakt 299 792 458 m/s; 343 m/s ist die Schallgeschwindigkeit in Luft."
+    },
+    {
+      "id": "002",
+      "q": "Elementarladung e?",
+      "a": "≈ 1,602 · 10⁻¹⁹ C",
+      "choices": [
+        "≈ 9,109 · 10⁻³¹ C",
+        "≈ 1,602 · 10¹⁹ C",
+        "≈ 6,022 · 10⁻²³ C"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Plancksches Wirkungsquantum h?",
+      "a": "≈ 6,626 · 10⁻³⁴ J · s",
+      "choices": [
+        "≈ 6,626 · 10⁻³⁴ J/s",
+        "≈ 6,674 · 10⁻¹¹ J · s",
+        "≈ 6,626 · 10³⁴ J · s"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Gravitationskonstante G?",
+      "a": "≈ 6,674 · 10⁻¹¹ N · m²/kg²",
+      "choices": [
+        "≈ 6,674 · 10¹¹ N · m²/kg²",
+        "≈ 9,81 N · m²/kg²",
+        "≈ 6,626 · 10⁻³⁴ N · m²/kg²"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Masse eines Elektrons?",
+      "a": "≈ 9,109 · 10⁻³¹ kg",
+      "choices": [
+        "≈ 1,673 · 10⁻²⁷ kg",
+        "≈ 1,602 · 10⁻¹⁹ kg",
+        "≈ 9,109 · 10⁻²⁷ kg"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Masse eines Protons?",
+      "a": "≈ 1,673 · 10⁻²⁷ kg",
+      "info": "Etwa 1836-mal so groß wie die Elektronenmasse."
+    },
+    {
+      "id": "007",
+      "q": "Avogadro-Konstante N_A?",
+      "a": "≈ 6,022 · 10²³ 1/mol"
+    },
+    {
+      "id": "008",
+      "q": "Boltzmann-Konstante k_B?",
+      "a": "≈ 1,381 · 10⁻²³ J/K",
+      "choices": [
+        "≈ 8,314 J/K",
+        "≈ 1,381 · 10²³ J/K",
+        "≈ 1,602 · 10⁻¹⁹ J/K"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "Universelle Gaskonstante R?",
+      "a": "≈ 8,314 J/(mol · K)",
+      "info": "R = N_A · k_B"
+    },
+    {
+      "id": "010",
+      "q": "Elektrische Feldkonstante ε₀?",
+      "a": "≈ 8,854 · 10⁻¹² A · s/(V · m)"
+    },
+    {
+      "id": "011",
+      "q": "Magnetische Feldkonstante μ₀?",
+      "a": "≈ 1,257 · 10⁻⁶ N/A²",
+      "info": "Näherungsweise 4π · 10⁻⁷ N/A²"
+    },
+    {
+      "id": "012",
+      "q": "1 Elektronenvolt (eV) in Joule?",
+      "a": "≈ 1,602 · 10⁻¹⁹ J"
+    },
+    {
+      "id": "013",
+      "q": "Absoluter Nullpunkt in °C?",
+      "a": "−273,15 °C",
+      "choices": [
+        "−237,15 °C",
+        "−100 °C",
+        "−459,67 °C"
+      ],
+      "info": "0 K = −273,15 °C"
+    },
+    {
+      "id": "014",
+      "q": "1. Newtonsches Gesetz?",
+      "a": "Trägheitsprinzip",
+      "choices": [
+        "Wechselwirkungsprinzip",
+        "Aktionsprinzip",
+        "Energieerhaltungssatz"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "3. Newtonsches Gesetz?",
+      "a": "Wechselwirkungsprinzip (actio = reactio)"
+    },
+    {
+      "id": "016",
+      "q": "Formel für den Impuls?",
+      "a": "p = m · v",
+      "choices": [
+        "p = m · a",
+        "p = ½ · m · v²",
+        "p = F · s"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Formel für die Zentripetalkraft?",
+      "a": "F = m · v² / r",
+      "choices": [
+        "F = m · v / r",
+        "F = m · r / v²",
+        "F = m · v² · r"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Periodendauer eines Fadenpendels (kleine Auslenkung)?",
+      "a": "T = 2π · √(l / g)",
+      "choices": [
+        "T = 2π · √(g / l)",
+        "T = 2π · l / g",
+        "T = π · √(l · g)"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Periodendauer eines Federpendels (Federkonstante D)?",
+      "a": "T = 2π · √(m / D)"
+    },
+    {
+      "id": "020",
+      "q": "3. Keplersches Gesetz?",
+      "a": "T² / a³ ist für alle Planeten gleich",
+      "info": "T: Umlaufzeit, a: große Halbachse"
+    },
+    {
+      "id": "021",
+      "q": "Coulomb-Gesetz: Kraft zwischen zwei Ladungen?",
+      "a": "F = 1/(4πε₀) · q₁ · q₂ / r²"
+    },
+    {
+      "id": "022",
+      "q": "Kapazität eines Kondensators?",
+      "a": "C = Q / U",
+      "choices": [
+        "C = Q · U",
+        "C = U / Q",
+        "C = Q / I"
+      ],
+      "info": "Einheit: Farad (F)"
+    },
+    {
+      "id": "023",
+      "q": "Einheit der magnetischen Flussdichte B?",
+      "a": "Tesla (T)",
+      "choices": [
+        "Weber (Wb)",
+        "Henry (H)",
+        "Farad (F)"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Lorentzkraft auf eine Ladung q (v senkrecht zu B)?",
+      "a": "F = q · v · B"
+    },
+    {
+      "id": "025",
+      "q": "Wann wird eine Spannung induziert?",
+      "a": "Wenn sich der magnetische Fluss ändert"
+    },
+    {
+      "id": "026",
+      "q": "Lenzsche Regel?",
+      "a": "Der Induktionsstrom wirkt seiner Ursache entgegen"
+    },
+    {
+      "id": "027",
+      "q": "Energie eines Photons?",
+      "a": "E = h · f",
+      "choices": [
+        "E = h / f",
+        "E = h · λ",
+        "E = m · f²"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Energiebilanz beim Fotoeffekt?",
+      "a": "E_kin = h · f − W_A",
+      "info": "W_A: Austrittsarbeit des Metalls"
+    },
+    {
+      "id": "029",
+      "q": "Wer erklärte den Fotoeffekt mit Lichtquanten?",
+      "a": "Albert Einstein",
+      "choices": [
+        "Max Planck",
+        "Niels Bohr",
+        "Werner Heisenberg"
+      ],
+      "info": "Dafür erhielt er den Nobelpreis für Physik (1921)."
+    },
+    {
+      "id": "030",
+      "q": "De-Broglie-Wellenlänge eines Teilchens?",
+      "a": "λ = h / p"
+    },
+    {
+      "id": "031",
+      "q": "Heisenbergsche Unschärferelation (Ort und Impuls)?",
+      "a": "Δx · Δp ≥ h / (4π)"
+    },
+    {
+      "id": "032",
+      "q": "Äquivalenz von Masse und Energie?",
+      "a": "E = m · c²"
+    },
+    {
+      "id": "033",
+      "q": "Woraus besteht Alphastrahlung?",
+      "a": "Aus Heliumkernen (2 Protonen, 2 Neutronen)",
+      "choices": [
+        "Aus Elektronen",
+        "Aus Photonen",
+        "Aus einzelnen Neutronen"
+      ]
+    },
+    {
+      "id": "034",
+      "q": "Woraus besteht Beta-minus-Strahlung?",
+      "a": "Aus Elektronen"
+    },
+    {
+      "id": "035",
+      "q": "Was ist Gammastrahlung?",
+      "a": "Energiereiche elektromagnetische Strahlung"
+    },
+    {
+      "id": "036",
+      "q": "Was ist die Halbwertszeit?",
+      "a": "Zeit, nach der die Hälfte der Kerne zerfallen ist"
+    }
+  ]
+}

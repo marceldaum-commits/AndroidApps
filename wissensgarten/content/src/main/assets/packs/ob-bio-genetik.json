@@ -1,0 +1,298 @@
+{
+  "id": "ob-bio-genetik",
+  "version": 1,
+  "title": "Genetik",
+  "subject": "biologie",
+  "grades": [
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "🧬",
+  "tier": "plus",
+  "description": "DNA, Proteinbiosynthese, Mendelsche Regeln sowie Mitose und Meiose.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wofür steht die Abkürzung DNA (deutsch DNS)?",
+      "a": "Desoxyribonukleinsäure",
+      "choices": [
+        "Ribonukleinsäure",
+        "Desoxyribose-Nitratsäure",
+        "Diaminonukleinsäure"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Die vier Basen der DNA?",
+      "a": "Adenin, Thymin, Guanin, Cytosin"
+    },
+    {
+      "id": "003",
+      "q": "Welche Basen paaren sich in der DNA?",
+      "a": "A mit T und G mit C",
+      "choices": [
+        "A mit G und T mit C",
+        "A mit C und G mit T",
+        "A mit U und G mit C"
+      ],
+      "info": "Komplementäre Basenpaarung"
+    },
+    {
+      "id": "004",
+      "q": "Welche Base ersetzt in der RNA das Thymin?",
+      "a": "Uracil",
+      "choices": [
+        "Adenin",
+        "Cytosin",
+        "Guanin"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Welcher Zucker ist Baustein der DNA?",
+      "a": "Desoxyribose",
+      "choices": [
+        "Ribose",
+        "Glucose",
+        "Fructose"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Räumliche Struktur der DNA?",
+      "a": "Doppelhelix"
+    },
+    {
+      "id": "007",
+      "q": "Wer beschrieb 1953 die Doppelhelix-Struktur der DNA?",
+      "a": "Watson und Crick",
+      "choices": [
+        "Mendel und Darwin",
+        "Pasteur und Koch",
+        "Hooke und Schleiden"
+      ],
+      "info": "Wichtige Grundlage lieferten Röntgenbilder von Rosalind Franklin."
+    },
+    {
+      "id": "008",
+      "q": "Wie heißt die identische Verdopplung der DNA?",
+      "a": "Replikation",
+      "choices": [
+        "Transkription",
+        "Translation",
+        "Mutation"
+      ],
+      "info": "Sie verläuft semikonservativ."
+    },
+    {
+      "id": "009",
+      "q": "Die zwei Hauptschritte der Proteinbiosynthese?",
+      "a": "Transkription und Translation"
+    },
+    {
+      "id": "010",
+      "q": "Was geschieht bei der Transkription?",
+      "a": "Ein DNA-Abschnitt wird in mRNA umgeschrieben",
+      "choices": [
+        "mRNA wird in ein Protein übersetzt",
+        "Die DNA wird verdoppelt",
+        "Der Zellkern teilt sich"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Wo findet die Translation statt?",
+      "a": "An den Ribosomen"
+    },
+    {
+      "id": "012",
+      "q": "Was ist ein Codon?",
+      "a": "Basentriplett der mRNA, das eine Aminosäure codiert"
+    },
+    {
+      "id": "013",
+      "q": "Aus wie vielen Basen besteht ein Codon?",
+      "a": "3",
+      "choices": [
+        "2",
+        "4",
+        "1"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "Wie viele verschiedene Codons gibt es?",
+      "a": "64",
+      "choices": [
+        "20",
+        "16",
+        "12"
+      ],
+      "info": "4 Basen, je 3 Stellen: 4³ = 64"
+    },
+    {
+      "id": "015",
+      "q": "Welches Codon ist das Startcodon?",
+      "a": "AUG",
+      "choices": [
+        "UAA",
+        "UGA",
+        "GGA"
+      ],
+      "info": "AUG codiert auch die Aminosäure Methionin."
+    },
+    {
+      "id": "016",
+      "q": "Die drei Stoppcodons?",
+      "a": "UAA, UAG, UGA"
+    },
+    {
+      "id": "017",
+      "q": "Welche Moleküle bringen Aminosäuren zum Ribosom?",
+      "a": "tRNA",
+      "choices": [
+        "mRNA",
+        "rRNA",
+        "DNA-Polymerase"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Was ist ein Gen?",
+      "a": "DNA-Abschnitt, der ein Genprodukt (z. B. Protein) codiert"
+    },
+    {
+      "id": "019",
+      "q": "Was ist eine Mutation?",
+      "a": "Eine dauerhafte Veränderung der Erbinformation"
+    },
+    {
+      "id": "020",
+      "q": "Ergebnis der Mitose?",
+      "a": "Zwei erbgleiche Tochterzellen",
+      "choices": [
+        "Vier haploide Keimzellen",
+        "Zwei haploide Keimzellen",
+        "Vier erbgleiche diploide Zellen"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Ergebnis der Meiose?",
+      "a": "Vier haploide, genetisch verschiedene Zellen"
+    },
+    {
+      "id": "022",
+      "q": "Reihenfolge der Mitosephasen?",
+      "a": "Prophase, Metaphase, Anaphase, Telophase",
+      "choices": [
+        "Prophase, Anaphase, Metaphase, Telophase",
+        "Metaphase, Prophase, Anaphase, Telophase",
+        "Telophase, Metaphase, Anaphase, Prophase"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "In welcher Phase ordnen sich die Chromosomen in der Äquatorialebene an?",
+      "a": "Metaphase",
+      "choices": [
+        "Prophase",
+        "Anaphase",
+        "Telophase"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "In welcher Phase findet das Crossing-over statt?",
+      "a": "Prophase I der Meiose"
+    },
+    {
+      "id": "025",
+      "q": "Chromosomenzahl einer menschlichen Körperzelle?",
+      "a": "46",
+      "choices": [
+        "23",
+        "44",
+        "48"
+      ],
+      "info": "23 Chromosomenpaare"
+    },
+    {
+      "id": "026",
+      "q": "Was bedeutet haploid?",
+      "a": "Einfacher Chromosomensatz (n)",
+      "choices": [
+        "Doppelter Chromosomensatz (2n)",
+        "Dreifacher Chromosomensatz",
+        "Ohne Geschlechtschromosomen"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Geschlechtschromosomen eines Mannes?",
+      "a": "XY",
+      "choices": [
+        "XX",
+        "YY",
+        "X0"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Welche Krankheit wird durch Trisomie 21 verursacht?",
+      "a": "Down-Syndrom"
+    },
+    {
+      "id": "029",
+      "q": "Was ist ein Allel?",
+      "a": "Eine Ausprägungsform eines Gens"
+    },
+    {
+      "id": "030",
+      "q": "Was bedeutet homozygot?",
+      "a": "Reinerbig: zwei gleiche Allele",
+      "choices": [
+        "Mischerbig: zwei verschiedene Allele",
+        "Nur ein Allel vorhanden",
+        "Ohne dominantes Allel"
+      ]
+    },
+    {
+      "id": "031",
+      "q": "Was versteht man unter dem Phänotyp?",
+      "a": "Das äußere Erscheinungsbild",
+      "info": "Der Genotyp ist die Gesamtheit der Erbanlagen."
+    },
+    {
+      "id": "032",
+      "q": "1. Mendelsche Regel?",
+      "a": "Uniformitätsregel",
+      "info": "Kreuzt man zwei reinerbige Eltern, sind alle Nachkommen der F1 gleich."
+    },
+    {
+      "id": "033",
+      "q": "Phänotyp-Verhältnis in der F2 bei dominant-rezessivem, monohybridem Erbgang?",
+      "a": "3 : 1",
+      "choices": [
+        "1 : 2 : 1",
+        "1 : 1",
+        "9 : 3 : 3 : 1"
+      ],
+      "info": "1 : 2 : 1 ist das Genotyp-Verhältnis."
+    },
+    {
+      "id": "034",
+      "q": "Wie heißt die 3. Mendelsche Regel?",
+      "a": "Unabhängigkeitsregel (Neukombinationsregel)",
+      "info": "Dihybrider Erbgang: F2-Verhältnis 9 : 3 : 3 : 1"
+    },
+    {
+      "id": "035",
+      "q": "Mit wem kreuzt man bei der Rückkreuzung (Testkreuzung)?",
+      "a": "Mit einem homozygot-rezessiven Partner"
+    }
+  ]
+}

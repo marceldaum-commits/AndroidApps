@@ -1,0 +1,318 @@
+{
+  "id": "gs-verkehr-deutschland",
+  "version": 1,
+  "title": "Verkehr und Deutschland",
+  "subject": "sachunterricht",
+  "grades": [
+    3,
+    4
+  ],
+  "emoji": "🚦",
+  "tier": "free",
+  "description": "Sicher unterwegs zu Fuß und mit dem Rad – und erstes Wissen über Deutschland.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Bei welcher Ampelfarbe dürfen Fußgänger gehen?",
+      "a": "Grün",
+      "choices": [
+        "Rot",
+        "Gelb"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Wo überquerst du die Straße am sichersten?",
+      "a": "An der Ampel oder am Zebrastreifen",
+      "choices": [
+        "Zwischen parkenden Autos",
+        "Direkt hinter einer Kurve",
+        "Mitten auf der Kreuzung"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Was machst du, bevor du über den Zebrastreifen gehst?",
+      "a": "Schauen und warten, bis die Autos halten",
+      "choices": [
+        "Einfach schnell losrennen",
+        "Auf das Handy schauen",
+        "Rückwärts gehen"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Warum sollst du nicht zwischen parkenden Autos auf die Straße laufen?",
+      "a": "Autofahrer können dich dort schlecht sehen",
+      "choices": [
+        "Dort ist es verboten zu stehen",
+        "Die Autos könnten kaputt gehen",
+        "Dort ist der Weg zu lang"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Was ziehst du im Dunkeln an, damit man dich gut sieht?",
+      "a": "Helle Kleidung oder eine Warnweste",
+      "choices": [
+        "Dunkle Kleidung",
+        "Eine schwarze Mütze",
+        "Sandalen"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Was solltest du beim Radfahren immer tragen?",
+      "a": "Einen Helm",
+      "choices": [
+        "Eine Sonnenbrille",
+        "Kopfhörer",
+        "Eine Mütze"
+      ],
+      "info": "Ein Helm schützt deinen Kopf bei einem Sturz."
+    },
+    {
+      "id": "007",
+      "q": "Bis zu welchem Alter MÜSSEN Kinder mit dem Rad auf dem Gehweg fahren?",
+      "a": "bis zum 8. Geburtstag",
+      "choices": [
+        "bis zum 12. Geburtstag",
+        "bis zum 5. Geburtstag",
+        "bis zum 14. Geburtstag"
+      ],
+      "info": "Gibt es einen extra abgetrennten Radweg, dürfen sie auch diesen nutzen."
+    },
+    {
+      "id": "008",
+      "q": "Bis zu welchem Alter DÜRFEN Kinder mit dem Rad auf dem Gehweg fahren?",
+      "a": "bis zum 10. Geburtstag",
+      "choices": [
+        "bis zum 14. Geburtstag",
+        "bis zum 6. Geburtstag",
+        "bis zum 18. Geburtstag"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "Was ist an einem verkehrssicheren Fahrrad Pflicht?",
+      "a": "Eine Klingel",
+      "choices": [
+        "Ein Gepäckträger",
+        "Ein Fahrradkorb",
+        "Ein Ständer"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Welche Farbe hat das Licht vorne am Fahrrad?",
+      "a": "weiß",
+      "choices": [
+        "rot",
+        "gelb",
+        "grün"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Welche Farbe hat das Rücklicht am Fahrrad?",
+      "a": "rot",
+      "choices": [
+        "weiß",
+        "blau",
+        "grün"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "Welche Farbe haben die Rückstrahler an den Pedalen?",
+      "a": "gelb",
+      "choices": [
+        "rot",
+        "blau",
+        "grün"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Wie zeigst du mit dem Rad an, dass du links abbiegen willst?",
+      "a": "Linken Arm ausstrecken",
+      "choices": [
+        "Rechten Arm ausstrecken",
+        "Klingeln",
+        "Laut rufen"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "Auf welcher Straßenseite fährt man in Deutschland?",
+      "a": "rechts",
+      "choices": [
+        "links",
+        "in der Mitte"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet das rote, achteckige Schild mit „STOP“?",
+      "a": "Anhalten und Vorfahrt gewähren",
+      "choices": [
+        "Schneller fahren",
+        "Hier darf man parken",
+        "Ich habe Vorfahrt"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Was bedeutet ein rundes blaues Schild mit weißem Fahrrad?",
+      "a": "Radweg",
+      "choices": [
+        "Fahrräder verboten",
+        "Fahrradladen",
+        "Fahrrad-Parkplatz"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Was zeigt ein dreieckiges Schild mit rotem Rand und Spitze nach oben?",
+      "a": "Achtung, Gefahr!",
+      "choices": [
+        "Hier ist ein Parkplatz",
+        "Hier ist eine Schule zu Ende",
+        "Hier darfst du schneller fahren"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Wer hat an einer Kreuzung ohne Schilder und Ampel Vorfahrt?",
+      "a": "Wer von rechts kommt",
+      "choices": [
+        "Wer von links kommt",
+        "Wer schneller ist",
+        "Das größere Fahrzeug"
+      ],
+      "info": "Merksatz: Rechts vor links."
+    },
+    {
+      "id": "019",
+      "q": "Welche Nummer rufst du, wenn es brennt?",
+      "a": "112",
+      "choices": [
+        "110",
+        "911",
+        "115"
+      ],
+      "info": "112: Feuerwehr und Rettungsdienst"
+    },
+    {
+      "id": "020",
+      "q": "Welche Notrufnummer hat die Polizei?",
+      "a": "110",
+      "choices": [
+        "112",
+        "911",
+        "115"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Wie heißt die Hauptstadt von Deutschland?",
+      "a": "Berlin",
+      "choices": [
+        "Bonn",
+        "München",
+        "Hamburg"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "Wie viele Bundesländer hat Deutschland?",
+      "a": "16",
+      "choices": [
+        "12",
+        "18",
+        "10"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "Welche Farben hat die deutsche Flagge (von oben nach unten)?",
+      "a": "Schwarz, Rot, Gold",
+      "choices": [
+        "Schwarz, Gold, Rot",
+        "Rot, Weiß, Rot",
+        "Blau, Weiß, Rot"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Welche Stadt ist auch ein eigenes Bundesland?",
+      "a": "Hamburg",
+      "choices": [
+        "Köln",
+        "München",
+        "Frankfurt am Main"
+      ],
+      "info": "Stadtstaaten: Berlin, Hamburg und Bremen"
+    },
+    {
+      "id": "025",
+      "q": "Welches ist das größte Bundesland?",
+      "a": "Bayern",
+      "choices": [
+        "Saarland",
+        "Hessen",
+        "Berlin"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Welches ist das kleinste Bundesland?",
+      "a": "Bremen",
+      "choices": [
+        "Bayern",
+        "Niedersachsen",
+        "Sachsen"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Welcher Fluss fließt durch Berlin?",
+      "a": "Spree",
+      "choices": [
+        "Rhein",
+        "Elbe",
+        "Donau"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Wie heißt das berühmte Tor in Berlin?",
+      "a": "Brandenburger Tor",
+      "choices": [
+        "Holstentor",
+        "Siegestor",
+        "Porta Nigra"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Wie heißt der höchste Berg Deutschlands?",
+      "a": "Zugspitze",
+      "choices": [
+        "Brocken",
+        "Feldberg",
+        "Watzmann"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Welches Meer liegt neben der Ostsee im Norden Deutschlands?",
+      "a": "Nordsee",
+      "choices": [
+        "Mittelmeer",
+        "Schwarzes Meer",
+        "Rotes Meer"
+      ]
+    }
+  ]
+}

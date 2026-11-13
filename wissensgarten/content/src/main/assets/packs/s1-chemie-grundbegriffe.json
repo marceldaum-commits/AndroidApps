@@ -1,0 +1,332 @@
+{
+  "id": "s1-chemie-grundbegriffe",
+  "version": 1,
+  "title": "Chemie-Grundbegriffe",
+  "subject": "chemie",
+  "grades": [
+    7,
+    8,
+    9,
+    10
+  ],
+  "emoji": "🧪",
+  "tier": "free",
+  "description": "Atombau, Ionen, Säuren und Basen, pH-Wert, Reaktionsarten und wichtige Formeln.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Aus welchen Teilchen besteht der Atomkern?",
+      "a": "Protonen und Neutronen",
+      "choices": [
+        "Protonen und Elektronen",
+        "Neutronen und Elektronen",
+        "Nur Protonen"
+      ]
+    },
+    {
+      "id": "002",
+      "q": "Welche Ladung hat ein Elektron?",
+      "a": "Negativ",
+      "choices": [
+        "Positiv",
+        "Keine",
+        "Mal positiv, mal negativ"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Welche Ladung hat ein Neutron?",
+      "a": "Keine (neutral)"
+    },
+    {
+      "id": "004",
+      "q": "Wie viele Elektronen passen höchstens auf die erste Schale?",
+      "a": "2",
+      "choices": [
+        "8",
+        "18",
+        "1"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Was sind Isotope?",
+      "a": "Gleiche Protonenzahl, verschiedene Neutronenzahl",
+      "choices": [
+        "Gleiche Neutronenzahl, verschiedene Protonenzahl",
+        "Gleiche Protonenzahl, verschiedene Elektronenzahl",
+        "Moleküle aus gleichen Atomen"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Was ist ein Ion?",
+      "a": "Ein elektrisch geladenes Teilchen"
+    },
+    {
+      "id": "007",
+      "q": "Wie heißt ein positiv geladenes Ion?",
+      "a": "Kation",
+      "choices": [
+        "Anion",
+        "Isotop",
+        "Proton"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "Wie heißt ein negativ geladenes Ion?",
+      "a": "Anion"
+    },
+    {
+      "id": "009",
+      "q": "Welches Ion bildet ein Natrium-Atom?",
+      "a": "Na⁺",
+      "choices": [
+        "Na⁻",
+        "Na²⁺",
+        "Na²⁻"
+      ],
+      "info": "Natrium gibt sein einziges Außenelektron ab."
+    },
+    {
+      "id": "010",
+      "q": "Welches Ion bildet ein Chlor-Atom?",
+      "a": "Cl⁻",
+      "choices": [
+        "Cl⁺",
+        "Cl²⁻",
+        "Cl²⁺"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Zwischen welchen Elementen bildet sich typischerweise eine Ionenbindung?",
+      "a": "Zwischen Metall und Nichtmetall"
+    },
+    {
+      "id": "012",
+      "q": "Welche Bindung verbindet die Atome im Wassermolekül?",
+      "a": "Elektronenpaarbindung",
+      "choices": [
+        "Ionenbindung",
+        "Metallbindung",
+        "Wasserstoffbrückenbindung"
+      ],
+      "info": "Auch kovalente Bindung genannt."
+    },
+    {
+      "id": "013",
+      "q": "pH-Wert einer neutralen Lösung (25 °C)?",
+      "a": "7",
+      "choices": [
+        "0",
+        "14",
+        "1"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "Eine Lösung hat pH 3. Sie ist …",
+      "a": "sauer",
+      "choices": [
+        "basisch",
+        "neutral"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "Welche Farbe zeigt Universalindikator in stark saurer Lösung?",
+      "a": "Rot",
+      "choices": [
+        "Blau",
+        "Grün",
+        "Violett"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Säure nach Brønsted?",
+      "a": "Protonendonator",
+      "choices": [
+        "Protonenakzeptor",
+        "Elektronendonator",
+        "Neutronendonator"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Base nach Brønsted?",
+      "a": "Protonenakzeptor"
+    },
+    {
+      "id": "018",
+      "q": "Welche Ionen kennzeichnen saure Lösungen?",
+      "a": "Oxonium-Ionen (H₃O⁺)",
+      "choices": [
+        "Hydroxid-Ionen (OH⁻)",
+        "Natrium-Ionen (Na⁺)",
+        "Chlorid-Ionen (Cl⁻)"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Welche Ionen kennzeichnen basische (alkalische) Lösungen?",
+      "a": "Hydroxid-Ionen (OH⁻)"
+    },
+    {
+      "id": "020",
+      "q": "Neutralisation: Säure + Base → ?",
+      "a": "Salz + Wasser",
+      "choices": [
+        "Salz + Sauerstoff",
+        "Säure + Wasser",
+        "Base + Wasserstoff"
+      ]
+    },
+    {
+      "id": "021",
+      "q": "Oxidation im erweiterten Sinn bedeutet …",
+      "a": "Elektronenabgabe",
+      "choices": [
+        "Elektronenaufnahme",
+        "Protonenaufnahme",
+        "Protonenabgabe"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "Reduktion im erweiterten Sinn bedeutet …",
+      "a": "Elektronenaufnahme",
+      "info": "Merkhilfe: OIL RIG – Oxidation is loss, reduction is gain."
+    },
+    {
+      "id": "023",
+      "q": "Was ist eine Redoxreaktion?",
+      "a": "Eine Reaktion mit Elektronenübertragung",
+      "info": "Oxidation und Reduktion laufen immer gleichzeitig ab."
+    },
+    {
+      "id": "024",
+      "q": "Was ist eine exotherme Reaktion?",
+      "a": "Eine Reaktion, die Energie abgibt",
+      "choices": [
+        "Eine Reaktion, die Energie aufnimmt",
+        "Eine Reaktion ohne Energieumsatz",
+        "Eine Reaktion nur bei Kälte"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Was bewirkt ein Katalysator?",
+      "a": "Er senkt die Aktivierungsenergie und wird nicht verbraucht"
+    },
+    {
+      "id": "026",
+      "q": "Wie heißen die Ausgangsstoffe einer chemischen Reaktion?",
+      "a": "Edukte",
+      "choices": [
+        "Produkte",
+        "Katalysatoren",
+        "Indikatoren"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Gesetz von der Erhaltung der Masse?",
+      "a": "Die Gesamtmasse bleibt bei einer Reaktion gleich"
+    },
+    {
+      "id": "028",
+      "q": "Übergang von fest direkt zu gasförmig?",
+      "a": "Sublimation",
+      "choices": [
+        "Resublimation",
+        "Kondensation",
+        "Verdampfen"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Wie viele Teilchen enthält 1 mol eines Stoffes?",
+      "a": "≈ 6,022 · 10²³",
+      "choices": [
+        "≈ 6,022 · 10²²",
+        "≈ 1,602 · 10⁻¹⁹",
+        "≈ 3,0 · 10⁸"
+      ],
+      "info": "Avogadro-Konstante"
+    },
+    {
+      "id": "030",
+      "q": "Molare Masse von Wasser?",
+      "a": "≈ 18 g/mol",
+      "choices": [
+        "≈ 16 g/mol",
+        "≈ 10 g/mol",
+        "≈ 20 g/mol"
+      ],
+      "info": "2 · 1 g/mol + 16 g/mol"
+    },
+    {
+      "id": "031",
+      "q": "Formel von Kochsalz (Natriumchlorid)?",
+      "a": "NaCl",
+      "choices": [
+        "NaCl₂",
+        "Na₂Cl",
+        "KCl"
+      ]
+    },
+    {
+      "id": "032",
+      "q": "Formel von Kohlenstoffdioxid?",
+      "a": "CO₂",
+      "choices": [
+        "CO",
+        "C₂O",
+        "CO₃"
+      ]
+    },
+    {
+      "id": "033",
+      "q": "Formel von Schwefelsäure?",
+      "a": "H₂SO₄",
+      "choices": [
+        "H₂SO₃",
+        "HSO₄",
+        "H₂S"
+      ]
+    },
+    {
+      "id": "034",
+      "q": "Formel von Salzsäure (Chlorwasserstoff)?",
+      "a": "HCl"
+    },
+    {
+      "id": "035",
+      "q": "Formel von Natronlauge (Natriumhydroxid)?",
+      "a": "NaOH"
+    },
+    {
+      "id": "036",
+      "q": "Formel von Ammoniak?",
+      "a": "NH₃",
+      "choices": [
+        "NH₄",
+        "NO₃",
+        "N₂H"
+      ]
+    },
+    {
+      "id": "037",
+      "q": "Formel von Methan?",
+      "a": "CH₄"
+    },
+    {
+      "id": "038",
+      "q": "Formel von Calciumcarbonat (Kalk)?",
+      "a": "CaCO₃"
+    }
+  ]
+}

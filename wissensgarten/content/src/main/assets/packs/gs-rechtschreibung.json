@@ -1,0 +1,366 @@
+{
+  "id": "gs-rechtschreibung",
+  "version": 1,
+  "title": "Richtig schreiben",
+  "subject": "deutsch",
+  "grades": [
+    3,
+    4
+  ],
+  "emoji": "📝",
+  "tier": "free",
+  "description": "Wörter mit ie, ei, ß, ss und Dehnungs-h sowie Groß- und Kleinschreibung üben.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Biene",
+      "choices": [
+        "Bine",
+        "Bihne",
+        "Bienne"
+      ],
+      "info": "Langes i schreibt man meistens ie."
+    },
+    {
+      "id": "002",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Spiel",
+      "choices": [
+        "Spil",
+        "Spiehl",
+        "Schpiel"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Brief",
+      "choices": [
+        "Brif",
+        "Breif",
+        "Brihf"
+      ]
+    },
+    {
+      "id": "004",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Riese",
+      "choices": [
+        "Rise",
+        "Rihse",
+        "Riehse"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Tier",
+      "choices": [
+        "Tir",
+        "Teir",
+        "Tihr"
+      ]
+    },
+    {
+      "id": "006",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Fliege",
+      "choices": [
+        "Flige",
+        "Fleige",
+        "Fliehge"
+      ]
+    },
+    {
+      "id": "007",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Zeit",
+      "choices": [
+        "Zait",
+        "Zeid",
+        "Ceit"
+      ],
+      "info": "Den Laut „ai“ schreibt man meistens ei."
+    },
+    {
+      "id": "008",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "klein",
+      "choices": [
+        "klain",
+        "kleien",
+        "klien"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Fleisch",
+      "choices": [
+        "Flaisch",
+        "Flesch",
+        "Fleischt"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Eis",
+      "choices": [
+        "Ais",
+        "Eiß",
+        "Ies"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Straße",
+      "choices": [
+        "Strase",
+        "Schtraße",
+        "Strahße"
+      ],
+      "info": "Nach langem Vokal schreibt man den scharfen s-Laut oft ß."
+    },
+    {
+      "id": "012",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Fuß",
+      "choices": [
+        "Fus",
+        "Fuhs",
+        "Fuhß"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "groß",
+      "choices": [
+        "gros",
+        "grohs",
+        "groos"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "heiß",
+      "choices": [
+        "heis",
+        "haiß",
+        "heihs"
+      ],
+      "info": "Nach ei schreibt man den scharfen s-Laut oft ß."
+    },
+    {
+      "id": "015",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "draußen",
+      "choices": [
+        "drausen",
+        "drauhsen",
+        "dreußen"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Wasser",
+      "choices": [
+        "Waser",
+        "Wasa",
+        "Wasßer"
+      ],
+      "info": "Nach kurzem Vokal schreibt man oft ss."
+    },
+    {
+      "id": "017",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Kuss",
+      "choices": [
+        "Kus",
+        "Kuß",
+        "Kuhs"
+      ],
+      "info": "Nach kurzem u: ss – der Kuss."
+    },
+    {
+      "id": "018",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Nuss",
+      "choices": [
+        "Nuß",
+        "Nus",
+        "Nuhs"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Schluss",
+      "choices": [
+        "Schlus",
+        "Schluß",
+        "Schlusz"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Fahrrad",
+      "choices": [
+        "Farrad",
+        "Fahrad",
+        "Varrad"
+      ],
+      "info": "Fahr-rad: fahren + Rad"
+    },
+    {
+      "id": "021",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Zahn",
+      "choices": [
+        "Zan",
+        "Tsahn",
+        "Zaan"
+      ],
+      "info": "Das h macht den Vokal lang: Dehnungs-h."
+    },
+    {
+      "id": "022",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Stuhl",
+      "choices": [
+        "Stul",
+        "Stuhel",
+        "Schtuhl"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "fühlen",
+      "choices": [
+        "fülen",
+        "fühllen",
+        "vühlen"
+      ]
+    },
+    {
+      "id": "024",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Sohn",
+      "choices": [
+        "Son",
+        "Sohhn",
+        "Soon"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Lehrer",
+      "choices": [
+        "Lerer",
+        "Lehra",
+        "Lehrrer"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "wohnen",
+      "choices": [
+        "wonen",
+        "woonen",
+        "wohnnen"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Kuh",
+      "choices": [
+        "Ku",
+        "Kuhh",
+        "Kue"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Mehl",
+      "choices": [
+        "Mel",
+        "Mähl",
+        "Meel"
+      ]
+    },
+    {
+      "id": "029",
+      "q": "Welches Wort ist richtig geschrieben?",
+      "a": "Sahne",
+      "choices": [
+        "Sane",
+        "Saane",
+        "Sahhne"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Wie schreibt man es richtig? „Ich sehe einen ...“",
+      "a": "Vogel",
+      "choices": [
+        "vogel",
+        "Fogel",
+        "fogel"
+      ],
+      "info": "Vogel ist ein Nomen – Nomen schreibt man groß."
+    },
+    {
+      "id": "031",
+      "q": "Wie schreibt man es richtig? „Ich trinke ein Glas ...“",
+      "a": "Milch",
+      "choices": [
+        "milch",
+        "Milsch",
+        "Millch"
+      ]
+    },
+    {
+      "id": "032",
+      "q": "Wie schreibt man es richtig? „Ich ... ein Buch.“",
+      "a": "lese",
+      "choices": [
+        "Lese",
+        "lehse",
+        "leese"
+      ],
+      "info": "lesen ist ein Verb – Verben schreibt man klein."
+    },
+    {
+      "id": "033",
+      "q": "Welcher Satz ist richtig geschrieben?",
+      "a": "Der Hund spielt im Garten.",
+      "choices": [
+        "der Hund spielt im Garten.",
+        "Der hund spielt im garten.",
+        "Der Hund Spielt im Garten."
+      ],
+      "info": "Satzanfang und Nomen schreibt man groß."
+    },
+    {
+      "id": "034",
+      "q": "Welcher Satz ist richtig geschrieben?",
+      "a": "Wir gehen heute schwimmen.",
+      "choices": [
+        "Wir Gehen heute schwimmen.",
+        "wir gehen heute Schwimmen.",
+        "Wir gehen Heute schwimmen."
+      ]
+    }
+  ]
+}

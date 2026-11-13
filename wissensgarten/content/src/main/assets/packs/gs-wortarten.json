@@ -1,0 +1,335 @@
+{
+  "id": "gs-wortarten",
+  "version": 1,
+  "title": "Wortarten",
+  "subject": "deutsch",
+  "grades": [
+    2,
+    3,
+    4
+  ],
+  "emoji": "💬",
+  "tier": "free",
+  "description": "Nomen, Verben und Adjektive erkennen und den richtigen Artikel finden.",
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welches Wort ist ein Nomen?",
+      "a": "Hund",
+      "choices": [
+        "laufen",
+        "groß",
+        "schön"
+      ],
+      "info": "Nomen sind Namen für Lebewesen, Dinge und Gefühle."
+    },
+    {
+      "id": "002",
+      "q": "Welches Wort ist ein Nomen?",
+      "a": "Schule",
+      "choices": [
+        "lesen",
+        "klein",
+        "rot"
+      ]
+    },
+    {
+      "id": "003",
+      "q": "Welches Wort ist ein Verb?",
+      "a": "springen",
+      "choices": [
+        "Ball",
+        "lustig",
+        "Baum"
+      ],
+      "info": "Verben sagen, was jemand tut."
+    },
+    {
+      "id": "004",
+      "q": "Welches Wort ist ein Verb?",
+      "a": "schreiben",
+      "choices": [
+        "Heft",
+        "bunt",
+        "leise"
+      ]
+    },
+    {
+      "id": "005",
+      "q": "Welches Wort ist ein Adjektiv?",
+      "a": "kalt",
+      "choices": [
+        "Winter",
+        "frieren",
+        "Schnee"
+      ],
+      "info": "Adjektive sagen, wie etwas ist."
+    },
+    {
+      "id": "006",
+      "q": "Welches Wort ist ein Adjektiv?",
+      "a": "freundlich",
+      "choices": [
+        "Freund",
+        "helfen",
+        "Lehrerin"
+      ]
+    },
+    {
+      "id": "007",
+      "q": "Welche Wortart ist „Blume“?",
+      "a": "Nomen",
+      "choices": [
+        "Verb",
+        "Adjektiv",
+        "Artikel"
+      ]
+    },
+    {
+      "id": "008",
+      "q": "Welche Wortart ist „singen“?",
+      "a": "Verb",
+      "choices": [
+        "Nomen",
+        "Adjektiv",
+        "Artikel"
+      ]
+    },
+    {
+      "id": "009",
+      "q": "Welche Wortart ist „müde“?",
+      "a": "Adjektiv",
+      "choices": [
+        "Nomen",
+        "Verb",
+        "Artikel"
+      ]
+    },
+    {
+      "id": "010",
+      "q": "Welche Wortart ist „Freude“?",
+      "a": "Nomen",
+      "choices": [
+        "Verb",
+        "Adjektiv",
+        "Artikel"
+      ]
+    },
+    {
+      "id": "011",
+      "q": "Welche Wortart ist „spielen“?",
+      "a": "Verb",
+      "choices": [
+        "Nomen",
+        "Adjektiv",
+        "Artikel"
+      ]
+    },
+    {
+      "id": "012",
+      "q": "Welche Wortart ist „langsam“?",
+      "a": "Adjektiv",
+      "choices": [
+        "Nomen",
+        "Verb",
+        "Artikel"
+      ]
+    },
+    {
+      "id": "013",
+      "q": "Welcher Artikel passt? ___ Sonne",
+      "a": "die",
+      "choices": [
+        "der",
+        "das"
+      ]
+    },
+    {
+      "id": "014",
+      "q": "Welcher Artikel passt? ___ Tisch",
+      "a": "der",
+      "choices": [
+        "die",
+        "das"
+      ]
+    },
+    {
+      "id": "015",
+      "q": "Welcher Artikel passt? ___ Haus",
+      "a": "das",
+      "choices": [
+        "der",
+        "die"
+      ]
+    },
+    {
+      "id": "016",
+      "q": "Welcher Artikel passt? ___ Katze",
+      "a": "die",
+      "choices": [
+        "der",
+        "das"
+      ]
+    },
+    {
+      "id": "017",
+      "q": "Welcher Artikel passt? ___ Apfel",
+      "a": "der",
+      "choices": [
+        "die",
+        "das"
+      ]
+    },
+    {
+      "id": "018",
+      "q": "Welcher Artikel passt? ___ Fenster",
+      "a": "das",
+      "choices": [
+        "der",
+        "die"
+      ]
+    },
+    {
+      "id": "019",
+      "q": "Welcher Artikel passt? ___ Mond",
+      "a": "der",
+      "choices": [
+        "die",
+        "das"
+      ]
+    },
+    {
+      "id": "020",
+      "q": "Welche Wörter schreibt man immer groß?",
+      "a": "Nomen",
+      "choices": [
+        "Verben",
+        "Adjektive"
+      ],
+      "info": "Nomen schreibt man groß: der Hund, die Freude."
+    },
+    {
+      "id": "021",
+      "q": "Was ist die Mehrzahl von „Kind“?",
+      "a": "Kinder",
+      "choices": [
+        "Kinds",
+        "Kinde",
+        "Kinden"
+      ]
+    },
+    {
+      "id": "022",
+      "q": "Was ist die Mehrzahl von „Maus“?",
+      "a": "Mäuse",
+      "choices": [
+        "Mausen",
+        "Mause",
+        "Mäuser"
+      ]
+    },
+    {
+      "id": "023",
+      "q": "Wie heißt die Grundform von „er läuft“?",
+      "a": "laufen",
+      "choices": [
+        "läufen",
+        "laufte",
+        "läuften"
+      ],
+      "info": "Die Grundform (Infinitiv) endet meist auf -en."
+    },
+    {
+      "id": "024",
+      "q": "schnell – schneller – ?",
+      "a": "am schnellsten",
+      "choices": [
+        "am schnellesten",
+        "schnellerer",
+        "am schnellen"
+      ]
+    },
+    {
+      "id": "025",
+      "q": "Welches Wort ist das Verb? „Der Hund bellt laut.“",
+      "a": "bellt",
+      "choices": [
+        "Hund",
+        "laut",
+        "Der"
+      ]
+    },
+    {
+      "id": "026",
+      "q": "Welches Wort ist das Adjektiv? „Die rote Ampel leuchtet.“",
+      "a": "rote",
+      "choices": [
+        "Ampel",
+        "leuchtet",
+        "Die"
+      ]
+    },
+    {
+      "id": "027",
+      "q": "Welches Wort ist das Nomen? „Wir essen heute Nudeln.“",
+      "a": "Nudeln",
+      "choices": [
+        "essen",
+        "heute",
+        "Wir"
+      ]
+    },
+    {
+      "id": "028",
+      "q": "Welcher Artikel ist ein unbestimmter Artikel?",
+      "a": "ein",
+      "choices": [
+        "der",
+        "die",
+        "das"
+      ],
+      "info": "Unbestimmte Artikel: ein, eine. Bestimmte: der, die, das."
+    },
+    {
+      "id": "029",
+      "q": "Wie heißt es richtig?",
+      "a": "ich gehe",
+      "choices": [
+        "ich gehst",
+        "ich geht",
+        "ich gehen"
+      ]
+    },
+    {
+      "id": "030",
+      "q": "Was sind die Wörter „ich, du, er“?",
+      "a": "Pronomen (Fürwörter)",
+      "choices": [
+        "Nomen",
+        "Verben",
+        "Adjektive"
+      ],
+      "info": "Pronomen stehen für ein Nomen."
+    },
+    {
+      "id": "031",
+      "q": "Welche Wortart sagt, wie etwas ist?",
+      "a": "Adjektiv",
+      "choices": [
+        "Nomen",
+        "Verb",
+        "Artikel"
+      ]
+    },
+    {
+      "id": "032",
+      "q": "Welche Wortart sagt, was jemand tut?",
+      "a": "Verb",
+      "choices": [
+        "Nomen",
+        "Adjektiv",
+        "Artikel"
+      ]
+    }
+  ]
+}
