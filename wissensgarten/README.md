@@ -8,7 +8,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 
 | Advent im Garten | Brummi beibringen | Kipp-Spiel | Abenteuer-Geschichte | Kreuzungs-Blume | Kreuzungen im Album |
 | --- | --- | --- | --- | --- | --- |
-| ![](screenshots/27_garten_advent.png) | ![](screenshots/25_brummi_beibringen.png) | ![](screenshots/26_kipp_spiel.png) | ![](screenshots/28_abenteuer_geschichte.png) | ![](screenshots/29_kreuzung.png) | ![](screenshots/30_album_kreuzungen.png) |
+| ![](screenshots/27_garten_advent.png) | ![](screenshots/25_brummi_beibringen.png) | ![](screenshots/26_kipp_spiel.png) | ![](screenshots/28_abenteuer_geschichte.png) ![](screenshots/28b_kapitel_geschafft.png) | ![](screenshots/29_kreuzung.png) | ![](screenshots/30_album_kreuzungen.png) |
 
 | Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Arbeitsblatt-Foto | Widget (Tag / Party) |
 | --- | --- | --- | --- | --- | --- |
