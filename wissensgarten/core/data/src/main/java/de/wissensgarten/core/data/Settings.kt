@@ -105,6 +105,8 @@ class Settings(context: Context) {
 
     fun hybrids(profileId: String): Set<String> = prefs.getStringSet("kreuzungen_$profileId", emptySet())!!
     fun addHybrid(profileId: String, id: String) { prefs.edit().putStringSet("kreuzungen_$profileId", hybrids(profileId) + id).apply(); bump() }
+    fun familyReward(): String = prefs.getString("familien_belohnung", "")!!
+    fun setFamilyReward(v: String) { prefs.edit().putString("familien_belohnung", v).apply(); bump() }
     fun familyClaimedWeek() = prefs.getLong("familienbaum_woche", -1)
     fun setFamilyClaimedWeek(w: Long) { prefs.edit().putLong("familienbaum_woche", w).apply(); bump() }
 

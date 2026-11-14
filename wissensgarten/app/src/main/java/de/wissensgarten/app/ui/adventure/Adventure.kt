@@ -254,7 +254,8 @@ fun RarityBadge(r: Rarity) {
 /** Album aller Gartenfreunde. Die nächste Figur ist als Schatten sichtbar – man weiß, worauf man hinarbeitet. */
 @Composable
 fun FriendsAlbum(opened: Int, earned: Int, inGarden: Set<String>, onToggle: (String) -> Unit, onOpenChest: () -> Unit,
-                 hybrids: List<de.wissensgarten.core.model.Hybrid> = emptyList()) {
+                 hybrids: List<de.wissensgarten.core.model.Hybrid> = emptyList(),
+                 crystals: List<Pair<String, String>> = emptyList(), crystalsOnTheWay: Int = 0) {
     LazyVerticalGrid(GridCells.Adaptive(104.dp), contentPadding = PaddingValues(12.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item(span = { GridItemSpan(maxLineSpan) }) {
@@ -266,6 +267,27 @@ fun FriendsAlbum(opened: Int, earned: Int, inGarden: Set<String>, onToggle: (Str
                     Spacer(Modifier.height(8.dp))
                     JuicyButton(onClick = onOpenChest, modifier = Modifier.fillMaxWidth().pulse(true), sound = Sound.PLOP,
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7E57C2))) { Text("🎁 ${earned - opened} Truhe(n) öffnen!", fontWeight = FontWeight.Bold) }
+                }
+            }
+        }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            Column {
+                Text("💎 Kristalle: ${crystals.size}", style = MaterialTheme.typography.titleMedium)
+                Text(if (crystals.isEmpty()) "Karten, die dir schwerfielen und die du jetzt sicher kannst, werden zu Kristallen." +
+                        (if (crystalsOnTheWay > 0) " $crystalsOnTheWay sind schon auf dem Weg!" else "")
+                    else "Früher schwer – jetzt sitzt es. Darauf kannst du stolz sein!",
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        items(crystals.size) { i ->
+            val (q, a) = crystals[i]
+            val shine by rememberInfiniteTransition(label = "k").animateFloat(0.85f, 1.1f,
+                infiniteRepeatable(tween(900 + i * 37 % 400), RepeatMode.Reverse), label = "s")
+            Card(colors = CardDefaults.cardColors(containerColor = Color(0xFFE1F5FE))) {
+                Column(Modifier.fillMaxWidth().padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("💎", fontSize = 34.sp, modifier = Modifier.graphicsLayer { scaleX = shine; scaleY = shine })
+                    Text(a, style = MaterialTheme.typography.labelMedium, textAlign = TextAlign.Center, maxLines = 2, fontWeight = FontWeight.Bold)
+                    Text(q, style = MaterialTheme.typography.labelSmall, textAlign = TextAlign.Center, maxLines = 2)
                 }
             }
         }

@@ -39,7 +39,10 @@ fun FamilyScreen(
     onDuel: () -> Unit = {},
     familyClaimed: Boolean = false,
     onClaimFamily: () -> Unit = {},
+    familyReward: String = "",
+    onFamilyReward: (String) -> Unit = {},
     onPostcard: (String) -> Unit = {},
+    onLocalDuel: () -> Unit = {},
     onCertificate: (String) -> Unit = {},
 ) {
     LazyColumn(
@@ -54,8 +57,9 @@ fun FamilyScreen(
                 style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp),
             )
         }
-        item { FamilyTree(profiles, logs, familyClaimed, onClaimFamily) }
+        item { FamilyTree(profiles, logs, familyClaimed, onClaimFamily, familyReward, onFamilyReward) }
         item { de.wissensgarten.app.ui.duel.DuelEntryCard(onDuel) }
+        item { de.wissensgarten.app.ui.duel.LocalDuelEntryCard(onLocalDuel) }
         items(profiles, key = { it.id }) { p ->
             ProfileCard(
                 p, p.id == activeId,
@@ -167,7 +171,9 @@ private fun WeekBars(perDay: List<Int>, now: Long) {
  * Gemeinsames Ziel statt Wettkampf – ist es erreicht, bekommt jeder Tautropfen.
  */
 @Composable
-private fun FamilyTree(profiles: List<ProfileEntity>, logs: List<ReviewLogEntity>, claimed: Boolean, onClaim: () -> Unit) {
+private fun FamilyTree(profiles: List<ProfileEntity>, logs: List<ReviewLogEntity>, claimed: Boolean, onClaim: () -> Unit,
+                       reward: String = "", onReward: (String) -> Unit = {}) {
+    var editReward by remember { mutableStateOf(false) }
     val goal = 20 * profiles.size.coerceAtLeast(1)
     val total = logs.size
     val p = (total.toFloat() / goal).coerceIn(0f, 1f)
@@ -195,13 +201,40 @@ private fun FamilyTree(profiles: List<ProfileEntity>, logs: List<ReviewLogEntity
             }
             LinearProgressIndicator(progress = { p }, modifier = Modifier.fillMaxWidth().height(10.dp).clip(CircleShape))
             Text("$total von $goal gemeinsam gegossen", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 6.dp))
+            // Echte Belohnung, die Eltern festlegen – darauf freut sich die ganze Familie
+            Surface(onClick = { editReward = true }, shape = MaterialTheme.shapes.medium, color = androidx.compose.ui.graphics.Color(0xFFFFF3C4),
+                modifier = Modifier.padding(top = 8.dp)) {
+                Text(if (reward.isBlank()) "🎁 Familien-Belohnung festlegen ✏️" else "🎁 Wenn der Baum voll ist: $reward ✏️",
+                    style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp))
+            }
             if (p >= 1f) {
-                if (claimed) Text("🎉 Geschafft! Belohnung abgeholt – nächste Woche geht's weiter.", style = MaterialTheme.typography.bodySmall)
+                if (claimed) Text(if (reward.isBlank()) "🎉 Geschafft! Belohnung abgeholt – nächste Woche geht's weiter." else "🎉 Geschafft! Zeit für: $reward",
+                    style = MaterialTheme.typography.bodyMedium, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold, textAlign = TextAlign.Center)
                 else de.wissensgarten.app.ui.fx.JuicyButton(onClick = { sfx?.play(de.wissensgarten.app.ui.fx.Sound.FANFARE); onClaim() }, modifier = Modifier.padding(top = 8.dp)) {
                     Text("🎁 Jeder bekommt +20 💧")
                 }
             }
         }
+    }
+    if (editReward) {
+        var text by remember { mutableStateOf(reward) }
+        AlertDialog(
+            onDismissRequest = { editReward = false },
+            title = { Text("🎁 Familien-Belohnung") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Worauf freut ihr euch, wenn der Familienbaum diese Woche voll ist?", style = MaterialTheme.typography.bodyMedium)
+                    OutlinedTextField(text, { text = it.take(40) }, singleLine = true, modifier = Modifier.fillMaxWidth(), placeholder = { Text("z. B. Eis essen 🍦") })
+                    androidx.compose.foundation.layout.FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                        listOf("Eis essen 🍦", "Spieleabend 🎲", "Kino-Abend 🍿", "Ausflug 🚲", "Pizza backen 🍕").forEach { s ->
+                            SuggestionChip(onClick = { text = s }, label = { Text(s) })
+                        }
+                    }
+                }
+            },
+            confirmButton = { TextButton(onClick = { onReward(text.trim()); editReward = false }) { Text("Speichern") } },
+            dismissButton = { TextButton(onClick = { editReward = false }) { Text("Abbrechen") } },
+        )
     }
 }
 

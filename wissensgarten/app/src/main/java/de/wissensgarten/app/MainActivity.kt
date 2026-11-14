@@ -73,6 +73,7 @@ object Routes {
     const val KLASSE = "klasse"
     const val RADIO = "radio"
     const val SAFARI = "safari"
+    const val LOCAL_DUEL = "zu-zweit"
     const val WORKSHEET = "arbeitsblatt/{bed}"
     fun worksheet(bed: String) = "arbeitsblatt/$bed"
     const val CHAPTER = "kapitel/{n}"
@@ -217,7 +218,13 @@ class MainActivity : ComponentActivity() {
                 route == Routes.REVIEW && vm.sessionCalm -> de.wissensgarten.core.model.MusicMood.NIGHT
                 route == Routes.REVIEW || route == Routes.DUEL_PLAY -> de.wissensgarten.core.model.MusicMood.PLAY
                 evening || route == Routes.STORY || route == Routes.CHAPTER -> de.wissensgarten.core.model.MusicMood.NIGHT
-                else -> de.wissensgarten.core.model.MusicMood.GARDEN
+                // Festzeit: eigene Musik im Garten
+                else -> when (de.wissensgarten.core.model.Seasons.festival(java.time.LocalDate.now())?.id) {
+                    "advent" -> de.wissensgarten.core.model.MusicMood.ADVENT
+                    "halloween" -> de.wissensgarten.core.model.MusicMood.HALLOWEEN
+                    "ostern" -> de.wissensgarten.core.model.MusicMood.OSTERN
+                    else -> de.wissensgarten.core.model.MusicMood.GARDEN
+                }
             })
         }
         Scaffold(
@@ -359,7 +366,9 @@ class MainActivity : ComponentActivity() {
                                 val earned = remember(rev, beds) { vm.chestsEarned() }
                                 val inGarden = remember(rev, p) { vm.gardenFriends().map { it.id }.toSet() }
                                 FriendsAlbum(opened, earned, inGarden, onToggle = { vm.toggleGardenFriend(it) }, onOpenChest = { nav.navigate(Routes.CHEST) },
-                                    hybrids = remember(rev) { vm.hybrids() })
+                                    hybrids = remember(rev) { vm.hybrids() },
+                                    crystals = remember(beds) { beds.flatMap { b -> b.cards.filter { de.wissensgarten.core.model.Crystals.isCrystal(it.memory) }.map { it.front to it.back } } },
+                                    crystalsOnTheWay = remember(beds) { beds.sumOf { b -> b.cards.count { c -> de.wissensgarten.core.model.Crystals.progress(c.memory)?.let { it < 1.0 } == true } } })
                             },
                         )
                     }
@@ -370,6 +379,15 @@ class MainActivity : ComponentActivity() {
                     if (pack == null) LaunchedEffect(Unit) { nav.popBackStack() } else IntroScreen(pack) {
                         vm.markIntroSeen(pack.id); nav.popBackStack()
                     }
+                }
+                composable(Routes.LOCAL_DUEL) {
+                    // Thema: ein Paket aus dem Garten des aktiven Profils (sonst ein passendes für die Stufe)
+                    val pack = remember {
+                        val mine = beds.mapNotNull { b -> b.bed.packId?.let { pid -> packs.firstOrNull { it.id == pid } } }
+                        (mine.ifEmpty { packs.filter { (profile?.level ?: 0) in it.grades }.ifEmpty { packs } }).random()
+                    }
+                    val qs = remember(pack) { de.wissensgarten.core.model.Duels.questions(pack, kotlin.random.Random.nextInt()) }
+                    de.wissensgarten.app.ui.duel.LocalDuelScreen(qs, "${pack.emoji} ${pack.title}", onClose = { nav.popBackStack() }, onDew = { vm.addDew(it) })
                 }
                 composable(Routes.SAFARI) {
                     de.wissensgarten.app.ui.safari.SafariScreen(
@@ -494,6 +512,9 @@ class MainActivity : ComponentActivity() {
                         onDuel = { nav.navigate(Routes.DUEL) },
                         familyClaimed = remember(fRev) { vm.familyClaimed() },
                         onClaimFamily = { vm.claimFamilyTree() },
+                        familyReward = remember(fRev) { vm.settings.familyReward() },
+                        onFamilyReward = { vm.settings.setFamilyReward(it) },
+                        onLocalDuel = { nav.navigate(Routes.LOCAL_DUEL) },
                         onPostcard = { id ->
                             scope.launch {
                                 val d = vm.keepsakeData(id)

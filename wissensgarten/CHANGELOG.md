@@ -3,6 +3,16 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.13.0
+- Neu: **Oma-Postkarte** 💌 – in der Familien-Übersicht: ein Bild mit dem Garten, was diese Woche gelernt wurde und
+  einem Gruß von Brummi, zum Verschicken per WhatsApp.
+- Neu: **Urkunde** 🏅 als PDF zum Ausdrucken (z. B. zum Schuljahresende).
+- Neu: **Kristalle** 💎 – eine Karte, die dir schwerfiel und jetzt sicher sitzt, wird zum Kristall. Mit Feier und
+  eigenem Platz im Album. Fehler sind etwas Wertvolles!
+- Neu: **Zu zweit an einem Handy** 👫 – Handy flach hinlegen, jeder tippt von seiner Seite, wer ist schneller?
+- Neu: **Familien-Belohnung** 🎁 beim Familienbaum („Wenn der Baum voll ist: Eis essen 🍦“).
+- Neu: **Feste-Musik** – zu Advent, Halloween und Ostern spielt im Garten eine eigene Melodie.
+
 ## 0.12.0
 - Neu: **Wissens-Safari** 🔭 – fotografiere Dinge um dich herum (Spielzeug, Obst, Haustier …). Das Handy erkennt sie
   (auf dem Gerät), Brummi sagt das Wort auf Deutsch und Englisch, und es wächst mit **deinem Foto** als Merkbild

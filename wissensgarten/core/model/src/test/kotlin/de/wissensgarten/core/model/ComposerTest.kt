@@ -9,9 +9,10 @@ class ComposerTest {
     @Test fun allNotesStayInKeyAndInsideTheLoop() {
         for (mood in MusicMood.entries) {
             val s = Composer.compose(mood)
-            val key = when (mood) { MusicMood.GARDEN -> 60; MusicMood.NIGHT -> 65; MusicMood.PLAY -> 62 }
+            val st = Composer.style(mood)
+            val allowed = (if (st.minor) Composer.MINOR else Composer.MAJOR).toSet()
             s.voices.flatMap { it.notes }.forEach { n ->
-                assertTrue("$mood: ${n.pitch} nicht in der Tonart", Math.floorMod(n.pitch - key, 12) in major)
+                assertTrue("$mood: ${n.pitch} nicht in der Tonart", Math.floorMod(n.pitch - st.key, 12) in allowed)
                 assertTrue("$mood: Ton außerhalb der Schleife", n.beat >= 0 && n.beat < s.beats)
                 assertTrue(n.pitch in 24..96)
             }
@@ -22,6 +23,8 @@ class ComposerTest {
         val s = Composer.compose(MusicMood.GARDEN)
         val last = s.voices[0].notes.maxBy { it.beat }
         assertEquals(0, Math.floorMod(last.pitch - 60, 12))
+        val h = Composer.compose(MusicMood.HALLOWEEN)
+        assertEquals(0, Math.floorMod(h.voices[0].notes.maxBy { it.beat }.pitch - 57, 12))
     }
 
     @Test fun lengthsAreKidFriendly() {

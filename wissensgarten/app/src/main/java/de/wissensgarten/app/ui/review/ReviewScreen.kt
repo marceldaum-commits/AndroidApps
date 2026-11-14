@@ -39,6 +39,7 @@ import de.wissensgarten.core.data.GardenRepository
 import de.wissensgarten.core.data.db.BedEntity
 import de.wissensgarten.core.model.Memory
 import de.wissensgarten.core.model.Rating
+import de.wissensgarten.core.model.Crystals
 import de.wissensgarten.core.model.Scheduler
 import de.wissensgarten.core.model.Stage
 import de.wissensgarten.core.model.StudyCard
@@ -185,7 +186,13 @@ fun ReviewScreen(
             pourAnim.animateTo(1f, tween(650, easing = LinearEasing))
             growAnim.snapTo(0.45f)
             val sprouted = up && card.memory.isSeed
-            if (up && !sprouted) {
+            if (Crystals.formed(card.memory, after)) {
+                // Aus einem Fehler wurde ein Kristall – das schönste Lob
+                levelUp = "💎 Kristall! Früher schwer – jetzt sitzt es!"
+                sfx?.play(Sound.FANFARE)
+                repeat(3) { particles.burst(Burst.SPARKLE, 0.5f, 0.3f, 30) }
+                mood = Mood.CHEER; speech = "Weißt du noch, wie schwer die war? Jetzt ist sie ein Kristall! 💎"
+            } else if (up && !sprouted) {
                 levelUp = "⬆ Aufgestiegen: ${Stage.of(after).label}!"
                 sfx?.play(Sound.LEVEL_UP)
                 particles.burst(Burst.LEAVES, 0.3f, 0.15f, 36)
@@ -195,7 +202,7 @@ fun ReviewScreen(
             } else sfx?.play(Sound.GROW, volume = 0.5f)
             growAnim.animateTo(1f, spring(dampingRatio = 0.35f, stiffness = 220f))
             // Richtig: automatisch weiter. Falsch: Zeit zum Lesen, weiter per Knopf.
-            if (right) { delay(if (up && !sprouted) 1600 else 1300); if (phase == Phase.REVEAL && !revealPaused) next() }
+            if (right) { delay(if (Crystals.formed(card.memory, after)) 2600 else if (up && !sprouted) 1600 else 1300); if (phase == Phase.REVEAL && !revealPaused) next() }
         }
     }
 

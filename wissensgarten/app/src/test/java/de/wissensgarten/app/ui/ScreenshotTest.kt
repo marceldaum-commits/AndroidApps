@@ -497,4 +497,28 @@ class ScreenshotTest {
         File("../screenshots/47_urkunde.png").outputStream().use { cert.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
         assertTrue(ctx != null)
     }
+
+    @Test fun localDuel() {
+        // Der 15-Sekunden-Timer würde bei laufender Test-Uhr sofort ablaufen – Uhr von Hand weiterdrehen
+        rule.mainClock.autoAdvance = false
+        val p = pack("gs-tiere")
+        val qs = Duels.questions(p, 4)
+        rule.setContent { WissensgartenTheme(ThemeMode.LIGHT) { Surface { de.wissensgarten.app.ui.duel.LocalDuelScreen(qs, "${p.emoji} ${p.title}", {}) } } }
+        rule.mainClock.advanceTimeBy(1200)
+        rule.onAllNodesWithText(qs[0].answer)[1].performClick() // unten (Blau) tippt richtig
+        rule.mainClock.advanceTimeBy(400)
+        rule.onRoot().captureRoboImage("../screenshots/48_zu_zweit.png")
+    }
+
+    @Test fun albumCrystals() = shot("49_kristalle") {
+        Column { FriendsAlbum(opened = 2, earned = 2, inGarden = emptySet(), onToggle = {}, onOpenChest = {},
+            crystals = listOf("to choose" to "chose – chosen", "Hauptstadt von Australien?" to "Canberra", "7 × 8" to "56", "Mitochondrium" to "Kraftwerk der Zelle"),
+            crystalsOnTheWay = 5) }
+    }
+
+    @Test fun familyReward() = shot("50_familienbelohnung") {
+        val kid = profile.copy(id = "kid", name = "Ben", avatar = "🐸", level = 3, dewdrops = 88)
+        val logs = (0 until 40).map { i -> ReviewLogEntity(i.toLong(), listOf("p1", "kid")[i % 2], "c", now - (i % 6) * day, 2, 3.0) }
+        FamilyScreen(listOf(profile, kid), "p1", garden, logs, now, {}, {}, familyClaimed = true, familyReward = "Eis essen 🍦")
+    }
 }

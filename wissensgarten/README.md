@@ -12,7 +12,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 
 | Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Arbeitsblatt-Foto | Widget (Tag / Party) |
 | --- | --- | --- | --- | --- | --- |
-| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) ![](screenshots/40_geraete_sync.png) ![](screenshots/41_klassenarbeit.png) ![](screenshots/42_brummi_radio.png) ![](screenshots/43_silben_klatschen.png) ![](screenshots/44_silben_farbig.png) ![](screenshots/45_wissens_safari.png) |
+| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) ![](screenshots/40_geraete_sync.png) ![](screenshots/41_klassenarbeit.png) ![](screenshots/42_brummi_radio.png) ![](screenshots/43_silben_klatschen.png) ![](screenshots/44_silben_farbig.png) ![](screenshots/45_wissens_safari.png) ![](screenshots/46_postkarte.png) ![](screenshots/47_urkunde.png) ![](screenshots/48_zu_zweit.png) ![](screenshots/49_kristalle.png) ![](screenshots/50_familienbelohnung.png) |
 
 | Erklär-Geschichte | Abenteuerpfad | 3D-Truhe | Truhe offen | Sammelalbum | Garten mit Freunden |
 | --- | --- | --- | --- | --- | --- |
@@ -57,6 +57,9 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 - **Brummi die Hummel** begleitet jede Runde und den Garten: freut sich, tröstet, denkt mit, schläft nachts, gibt Tipps
   (`app/ui/fx/Mascot.kt`).
 
+- **Andenken & Extras** (0.13): Oma-Postkarte (Bild) und Urkunde (PDF) aus echten Lerndaten (`ui/share/Keepsakes.kt`),
+  Kristalle für gemeisterte schwere Karten (`core/model/Crystals.kt`), Zu-zweit-Duell an einem Handy
+  (`ui/duel/LocalDuelScreen.kt`), Familien-Belohnung, Feste-Musik (Advent/Halloween in Moll/Ostern).
 - **Wissens-Safari** (0.12): Foto → Bilderkennung auf dem Gerät (ML Kit über Play-Dienste) → deutsches/englisches Wort
   mit Emoji (`core/model/Safari.kt`) → Karte mit eigenem Foto als Merkbild im Beet „Meine Safari“.
 - **Silben-Modus** (0.11): deutsche Sprechsilben (`core/model/Syllables.kt`, Regeln + Testwortliste), Silben blau/rot
