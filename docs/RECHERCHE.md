@@ -50,3 +50,19 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
 - Quellen: https://thesun.my/news/world-news/parents-turn-to-audio-toys-to-cut-kids-screen-time/ ·
   https://www.ewn.co.za/2026/07/09/parents-spending-thousands-on-the-yoto-player-to-wean-kids-off-screen-time ·
   https://thepeninsulaqatar.com/article/23/05/2026/screen-shunning-parents-turn-to-audio-toys
+
+## Klasse 5–10: Was fesselt Jugendliche bei Mathe/Physik? (Nov. 2026)
+
+- „Edutainment“ scheitert, wenn das Spiel nur Belohnung fürs Lernen ist; für Teenager soll das Spiel ein Werkzeug sein,
+  mit dem man etwas baut (screenwiseapp.com). Minecraft ist Lieblingsspiel deutscher Jugendlicher (JIM 2024).
+- Graphwar: Funktionen als „Waffen“ machen abstrakte Mathe zum Wettkampf.
+- DragonBox: Hersteller-Studie (3.600 Siebtklässler) positiv; unabhängige Studien (CMU, Achtklässler) zeigen mehr
+  Begeisterung, aber weniger Lernzuwachs als normale Aufgaben. „From Here to There“ (Terme direkt umformen) wirkte
+  stärker → **Rechnen muss die Spielhandlung selbst sein**, kein Quiz zwischen Spielphasen.
+- Physik-Spiele: Motivation steigt verlässlich, Konzeptverständnis gemischt (Space Tow Truck, n=294; Portal-Studie).
+  Rätsel fördern höheres Denken (Puzzle-Based Learning, Kl. 11) → physikalische Größen direkt einstellen und Wirkung sehen.
+- JIMplus 2026: 72 % der 14–17-Jährigen fühlen sich von Social Media abgelenkt → kurze Runden, keine Sog-Mechaniken,
+  keine Streak-Angst.
+- Folgerung für „Quanta“: direkte Manipulation (Griffe am Graphen ziehen, Formel ändert sich live), sofortiges
+  sichtbares Ergebnis (Flug), wenige Versuche = mehr Sterne, eigene Levels/Duelle für soziale Motivation, Look für
+  Jugendliche (Weltraum, Neon), Maskottchen frech statt niedlich.
