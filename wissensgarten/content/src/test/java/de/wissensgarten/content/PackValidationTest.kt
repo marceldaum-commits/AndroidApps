@@ -39,6 +39,9 @@ class PackValidationTest {
             if (p.tier != Tier.FREE && p.tier != Tier.PLUS) err("tier ungültig")
             if (p.title.isBlank() || p.description.isBlank() || p.emoji.isBlank()) err("Titel/Beschreibung/Emoji fehlt")
             if (p.cards.size !in 15..60) err("Kartenzahl ${p.cards.size}")
+            if (p.intro.size !in 3..5) err("intro: 3–5 Erklär-Szenen nötig")
+            p.intro.forEach { if (it.text.isBlank() || it.text.length > 170 || it.img.isBlank()) err("intro-Szene ungültig") }
+            if (p.cards.any { it.img.isNullOrBlank() }) err("Merkbild (img) fehlt bei mindestens einer Karte")
             val cardIds = mutableSetOf<String>()
             val questions = mutableSetOf<String>()
             for (c in p.cards) {

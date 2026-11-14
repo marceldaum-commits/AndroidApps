@@ -12,6 +12,28 @@
   "emoji": "🌍",
   "tier": "plus",
   "description": "Anspruchsvolle Vokabeln zu Politik, Umwelt und Gesellschaft für Oberstufe und Abitur.",
+  "intro": [
+    {
+      "img": "🏛️🔤",
+      "text": "Wusstest du, dass ein großer Teil des englischen Wortschatzes aus dem Lateinischen und Französischen stammt? Gerade die Abi-Wörter sind oft solche Lehnwörter."
+    },
+    {
+      "img": "♻️🌍",
+      "text": "Hier geht’s um Wörter zu Umwelt, Politik und Gesellschaft – genau das, was du in Klausuren, Comments und der mündlichen Prüfung brauchst."
+    },
+    {
+      "img": "🧩🔍",
+      "text": "Lerntrick: Zerleg Wörter in Bausteine. sustain-abil-ity, re-new-able – wer die Wortfamilie kennt, erschließt sich auch unbekannte Wörter."
+    },
+    {
+      "img": "📝💬",
+      "text": "Noch ein Trick: Lern Vokabeln in Kollokationen, z. B. „to tackle climate change“. So klingt dein Englisch gleich viel natürlicher."
+    },
+    {
+      "img": "🎯🚀",
+      "text": "Jedes Wort hier ist ein Punktgewinn im Abi. Let’s get started!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

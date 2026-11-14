@@ -40,6 +40,22 @@ class Settings(context: Context) {
         _reminderOn.value = on; _reminderHour.value = hour; _reminderAsked.value = true
     }
 
+    // Abenteuer: gesehene Erklärungen, geöffnete Truhen, Freunde im Garten (pro Profil)
+    private val _rev = MutableStateFlow(0)
+    /** Zählt bei jeder Änderung hoch – damit die Oberfläche neu liest. */
+    val adventureRev: StateFlow<Int> = _rev.asStateFlow()
+    private fun bump() { _rev.value++ }
+
+    fun introSeen(profileId: String, packId: String) = prefs.getBoolean("intro_${profileId}_$packId", false)
+    fun markIntroSeen(profileId: String, packId: String) { prefs.edit().putBoolean("intro_${profileId}_$packId", true).apply(); bump() }
+
+    fun chestsOpened(profileId: String) = prefs.getInt("truhen_$profileId", 0)
+    fun setChestsOpened(profileId: String, n: Int) { prefs.edit().putInt("truhen_$profileId", n).apply(); bump() }
+
+    /** Ausgewählte Freunde für den Garten; null = automatisch die neuesten. */
+    fun gardenFriends(profileId: String): Set<String>? = prefs.getStringSet("freunde_$profileId", null)
+    fun setGardenFriends(profileId: String, ids: Set<String>) { prefs.edit().putStringSet("freunde_$profileId", ids).apply(); bump() }
+
     fun setActiveProfile(id: String?) { prefs.edit().putString(K_PROFILE, id).apply(); _activeProfile.value = id }
     fun setTheme(t: ThemeMode) { prefs.edit().putString(K_THEME, t.name).apply(); _theme.value = t }
     fun setOnboarded(v: Boolean) { prefs.edit().putBoolean(K_ONBOARDED, v).apply(); _onboarded.value = v }

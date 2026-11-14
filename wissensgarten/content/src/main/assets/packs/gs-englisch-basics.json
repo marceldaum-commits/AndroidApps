@@ -10,6 +10,28 @@
   "emoji": "🎩",
   "tier": "free",
   "description": "Erste englische Wörter: Farben, Zahlen, Tiere und Familie.",
+  "intro": [
+    {
+      "img": "👋😃",
+      "text": "Hello! Wusstest du, dass du schon Englisch kannst? „Hallo“ heißt „hello“ – das klingt fast gleich!"
+    },
+    {
+      "img": "🏠🐭🐟",
+      "text": "Viele Wörter sind wie Geschwister: Haus – house, Maus – mouse, Fisch – fish. Hör genau hin!"
+    },
+    {
+      "img": "❤️💙💛",
+      "text": "Farben machen Spaß: rot ist red, blau ist blue, gelb ist yellow. Und grün? Green – wie ein Frosch 🐸!"
+    },
+    {
+      "img": "👂🗣️",
+      "text": "Achtung: Englisch spricht man oft anders, als man es schreibt. „blue“ sagt man wie „blu“."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Let's go – los geht's! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

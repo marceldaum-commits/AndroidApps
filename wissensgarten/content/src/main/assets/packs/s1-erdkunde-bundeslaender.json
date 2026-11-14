@@ -11,6 +11,28 @@
   "emoji": "🏔️",
   "tier": "free",
   "description": "Bundesländer und ihre Hauptstädte, dazu die wichtigsten Flüsse, Seen und Gebirge Deutschlands.",
+  "intro": [
+    {
+      "img": "🗺️🧩",
+      "text": "Deutschland ist wie ein Puzzle aus 16 Teilen – den Bundesländern! Jedes hat seine eigene Landeshauptstadt."
+    },
+    {
+      "img": "🏙️",
+      "text": "Drei Teile sind Städte und Land zugleich: Berlin, Hamburg und Bremen. Man nennt sie Stadtstaaten."
+    },
+    {
+      "img": "🧠⚠️",
+      "text": "Achtung Falle: Die größte Stadt ist nicht immer die Hauptstadt! In NRW regiert Düsseldorf (nicht Köln), in Hessen Wiesbaden (nicht Frankfurt)."
+    },
+    {
+      "img": "🏔️🌊",
+      "text": "Dazu Berge und Flüsse: Die Zugspitze (2962 m) ist der höchste Gipfel. Der Rhein fließt in die Nordsee, die Donau ins Schwarze Meer."
+    },
+    {
+      "img": "🐝🧭",
+      "text": "Auf zur Deutschland-Rundreise – ich fliege voraus!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

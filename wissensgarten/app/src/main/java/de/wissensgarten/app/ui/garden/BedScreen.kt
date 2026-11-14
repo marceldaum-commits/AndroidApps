@@ -42,7 +42,9 @@ fun BedScreen(
     onDeleteBed: () -> Unit,
     ownedSpecies: List<String> = listOf(ShopItems.DEFAULT_SPECIES),
     onSpecies: (String) -> Unit = {},
+    path: (@Composable () -> Unit)? = null,
 ) {
+    var showPath by remember { mutableStateOf(path != null) }
     val bed = data.bed
     var pickSpecies by remember { mutableStateOf(false) }
     val cards = data.cards.sortedBy { it.sortIndex }
@@ -72,9 +74,15 @@ fun BedScreen(
             )
         },
     ) { pad ->
+      Column(Modifier.padding(top = pad.calculateTopPadding())) {
+        if (path != null) PrimaryTabRow(selectedTabIndex = if (showPath) 0 else 1) {
+            Tab(selected = showPath, onClick = { showPath = true }, text = { Text("🗺️ Pfad") })
+            Tab(selected = !showPath, onClick = { showPath = false }, text = { Text("🌿 Beet") })
+        }
+        if (showPath && path != null) path() else
         LazyVerticalGrid(
             columns = GridCells.Adaptive(104.dp),
-            contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = pad.calculateTopPadding(), bottom = 100.dp),
+            contentPadding = PaddingValues(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 100.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
@@ -107,6 +115,7 @@ fun BedScreen(
             }
             items(cards, key = { it.id }) { c -> PlantTile(c, bed.hue, bed.species, now) { selected = c } }
         }
+      }
     }
 
     if (pickSpecies) SpeciesDialog(bed.species, bed.hue, ownedSpecies, onDismiss = { pickSpecies = false }) { onSpecies(it); pickSpecies = false }

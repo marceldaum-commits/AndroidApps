@@ -10,6 +10,28 @@
   "emoji": "⚓",
   "tier": "free",
   "description": "Entdeckungsfahrten, Reformation, Französische Revolution, Industrialisierung und Kaiserreich.",
+  "intro": [
+    {
+      "img": "⛵🌍",
+      "text": "1492 wollte Kolumbus nach Indien segeln – und landete in Amerika. Bis zu seinem Tod glaubte er, Asien erreicht zu haben!"
+    },
+    {
+      "img": "📅",
+      "text": "Zeitstrahl der Neuzeit: 1492 Kolumbus · 1517 Luthers Thesen · 1618–1648 Dreißigjähriger Krieg · 1789 Französische Revolution · 1871 Kaiserreich."
+    },
+    {
+      "img": "🧠⚖️",
+      "text": "Merktrick: „Freiheit, Gleichheit, Brüderlichkeit“ – die drei Ideale von 1789 stecken bis heute in unseren Grundrechten."
+    },
+    {
+      "img": "🏭🚂",
+      "text": "Dann kam die Dampfmaschine: Fabriken und Eisenbahnen entstanden, Städte wuchsen rasant – die Industrialisierung veränderte das Leben der Menschen."
+    },
+    {
+      "img": "🐝⚓",
+      "text": "Anker lichten – auf geht’s in die Neuzeit!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

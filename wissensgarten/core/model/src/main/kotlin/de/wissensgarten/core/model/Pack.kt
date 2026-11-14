@@ -14,11 +14,16 @@ data class Pack(
     val emoji: String,
     val tier: String = Tier.FREE,
     val description: String = "",
+    /** Erklär-Geschichte, die Brummi vor dem Start erzählt (3–5 Szenen) */
+    val intro: List<IntroScene> = emptyList(),
     val cards: List<PackCard>,
 ) {
     val subjectInfo: Subject get() = Subject.of(subject)
     val isPlus: Boolean get() = tier == Tier.PLUS
 }
+
+@Serializable
+data class IntroScene(val img: String, val text: String)
 
 @Serializable
 data class PackCard(

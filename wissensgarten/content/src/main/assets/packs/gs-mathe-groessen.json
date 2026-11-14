@@ -10,6 +10,28 @@
   "emoji": "⏰",
   "tier": "free",
   "description": "Uhrzeiten, Geld, Längen und Gewichte kennen und umrechnen.",
+  "intro": [
+    {
+      "img": "⏰🤔",
+      "text": "Wie viele Minuten hat eine Stunde? 60! Und ein Tag hat 24 Stunden. Heute messen wir Zeit, Geld und Längen."
+    },
+    {
+      "img": "📏💯",
+      "text": "Merktrick: 1 Meter sind 100 Zentimeter. Und 1 Euro sind 100 Cent. Beide Male die 100!"
+    },
+    {
+      "img": "⚖️🏃",
+      "text": "„Kilo“ heißt tausend: 1 kg sind 1000 g, und 1 km sind 1000 m."
+    },
+    {
+      "img": "🕢🕗",
+      "text": "Halb acht ist 7:30 Uhr – die halbe Stunde vor acht. Eine Viertelstunde hat 15 Minuten."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

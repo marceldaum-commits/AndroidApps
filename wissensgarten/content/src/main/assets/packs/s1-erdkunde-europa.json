@@ -12,6 +12,28 @@
   "emoji": "🧭",
   "tier": "free",
   "description": "Hauptstädte, Länder, Flüsse und Meere Europas – von Lissabon bis Helsinki.",
+  "intro": [
+    {
+      "img": "🧭❓",
+      "text": "Wusstest du? Die Schweiz hat offiziell gar keine Hauptstadt – Bern heißt dort „Bundesstadt“!"
+    },
+    {
+      "img": "🗺️",
+      "text": "Europa hat über 40 Länder – von Lissabon im Westen bis Helsinki im Norden. Hier lernst du ihre Hauptstädte, Flüsse und Meere kennen."
+    },
+    {
+      "img": "🌊🏛️",
+      "text": "Rekordfluss: Die Donau fließt durch zehn Länder und vier Hauptstädte – Wien, Bratislava, Budapest und Belgrad."
+    },
+    {
+      "img": "🧠🗼",
+      "text": "Merktrick: Gib jeder Hauptstadt ein Bild – Paris = Eiffelturm, Rom = Kolosseum, Amsterdam = Fahrräder. Bilder bleiben besser hängen als Listen."
+    },
+    {
+      "img": "🐝✈️",
+      "text": "Koffer gepackt? Dann los zur Europareise!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

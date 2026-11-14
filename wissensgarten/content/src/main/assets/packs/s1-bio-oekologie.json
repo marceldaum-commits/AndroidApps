@@ -12,6 +12,28 @@
   "emoji": "🌱",
   "tier": "free",
   "description": "Nahrungsketten, Fotosynthese und wichtige Begriffe rund ums Ökosystem.",
+  "intro": [
+    {
+      "img": "🌊🦠",
+      "text": "Winzige Algen im Meer, das Phytoplankton, produzieren etwa die Hälfte des Sauerstoffs auf der Erde – jeder zweite Atemzug kommt aus dem Ozean!"
+    },
+    {
+      "img": "🍃🏭",
+      "text": "Ein Blatt ist wie eine Solarfabrik: Mit Sonnenlicht baut es aus Kohlenstoffdioxid und Wasser Traubenzucker – und Sauerstoff fällt dabei ab."
+    },
+    {
+      "img": "🔄🔥",
+      "text": "Eselsbrücke: Die Zellatmung ist die Fotosynthese rückwärts. Was die Pflanze aufbaut, verbrennen Lebewesen wieder zu CO₂ und Wasser."
+    },
+    {
+      "img": "🌾🐇🦊",
+      "text": "Nahrungskette: Pflanze → Pflanzenfresser → Fleischfresser. Die Destruenten sind die Müllabfuhr der Natur: Sie machen aus Resten wieder Nährstoffe."
+    },
+    {
+      "img": "🐝🌱",
+      "text": "Ich als Hummel weiß: In der Natur hängt alles zusammen. Finde heraus, wie – los geht's!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

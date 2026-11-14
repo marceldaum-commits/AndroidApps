@@ -9,6 +9,28 @@
   "emoji": "🎈",
   "tier": "free",
   "description": "Plusaufgaben und Minusaufgaben im Zahlenraum bis 20 üben.",
+  "intro": [
+    {
+      "img": "🖐️🖐️",
+      "text": "Wie viele Finger hast du? 10! Zwei Kinder haben zusammen 20 Finger. Bis 20 rechnen wir heute!"
+    },
+    {
+      "img": "🍎➕🍎",
+      "text": "Plus heißt: dazu. 3 Äpfel und 4 Äpfel dazu – das sind 7 Äpfel."
+    },
+    {
+      "img": "🔟🚀",
+      "text": "Trick: Erst bis zur 10! Bei 8 + 5 rechnest du 8 + 2 = 10, dann noch 3 dazu. Das ist 13."
+    },
+    {
+      "img": "🎈➖",
+      "text": "Minus heißt: weg. 15 − 7: Erst 5 weg, dann bist du bei 10. Dann noch 2 weg – das ist 8."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

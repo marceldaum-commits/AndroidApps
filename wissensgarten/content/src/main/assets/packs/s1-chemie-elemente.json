@@ -11,6 +11,28 @@
   "emoji": "⚗️",
   "tier": "free",
   "description": "Elementsymbole, Hauptgruppen und Edelgase des Periodensystems.",
+  "intro": [
+    {
+      "img": "🌍🔢",
+      "text": "Alles um dich herum – du, dein Handy, die Luft – ist aus nur 118 bekannten Elementen gebaut. Wie ein riesiger Baukasten!"
+    },
+    {
+      "img": "🏢🔑",
+      "text": "Das Periodensystem ist wie ein Wohnhaus: Jede Zeile ist ein Stockwerk (Periode), jede Spalte eine Familie (Gruppe) mit ähnlichen Eigenschaften."
+    },
+    {
+      "img": "👑😴",
+      "text": "Die Edelgase sind die vornehmen Adligen: Ihre Außenschale ist voll – deshalb reagieren sie kaum mit anderen Elementen."
+    },
+    {
+      "img": "🥇📜",
+      "text": "Eselsbrücke: Viele Symbole kommen aus dem Latein. Gold = Aurum → Au, Eisen = Ferrum → Fe, Silber = Argentum → Ag."
+    },
+    {
+      "img": "🐝⚗️",
+      "text": "Symbole, Gruppen, Edelgase – bald liest du das Periodensystem wie eine Landkarte. Auf geht's!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

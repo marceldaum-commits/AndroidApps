@@ -11,6 +11,28 @@
   "emoji": "📈",
   "tier": "plus",
   "description": "Ableitungsregeln, Stammfunktionen und Kurvendiskussion für die Oberstufe.",
+  "intro": [
+    {
+      "img": "🚗⏱️",
+      "text": "Dein Tacho zeigt nicht, wie schnell du im Schnitt warst, sondern genau jetzt – das ist Analysis: Die Momentangeschwindigkeit ist eine Ableitung!"
+    },
+    {
+      "img": "⛷️⛰️",
+      "text": "Stell dir den Graphen als Skipiste vor: Die Ableitung f'(x) sagt dir an jeder Stelle, wie steil es gerade bergauf oder bergab geht."
+    },
+    {
+      "img": "⬇️🔢",
+      "text": "Eselsbrücke Potenzregel: „Exponent nach vorn, dann eins weniger.“ Aus x³ wird 3x², aus x⁵ wird 5x⁴."
+    },
+    {
+      "img": "📈🔍",
+      "text": "Bei f'(x) = 0 ist die Piste flach – dort liegen Hoch- und Tiefpunkte. Die Stammfunktion geht den Weg rückwärts und hilft, Flächen zu berechnen."
+    },
+    {
+      "img": "🐝💪",
+      "text": "Ableiten, Integrieren, Kurvendiskussion – mit diesen Regeln im Kopf rockst du jede Abi-Aufgabe. Los geht's!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

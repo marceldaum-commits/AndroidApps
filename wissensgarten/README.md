@@ -4,6 +4,10 @@ Lernkarten als gemütliches Garten-Spiel – für die ganze Familie, von Klasse 
 Jede Karte ist eine Pflanze: Sie wächst mit dem Wissen und welkt nach der Vergessenskurve.
 Gießen = Wiederholen zum richtigen Zeitpunkt.
 
+| Erklär-Geschichte | Abenteuerpfad | Schatztruhe | Sammelalbum | Garten mit Freunden |
+| --- | --- | --- | --- | --- |
+| ![](screenshots/21_erklaerung.png) | ![](screenshots/22_abenteuerpfad.png) | ![](screenshots/23_truhe.png) | ![](screenshots/24_album.png) | ![](screenshots/04f_garten_freunde.png) |
+
 | Entdecken | Merkbild + Gießen | Ballon-Jagd | Buchstabensalat | Stimmt's? | Zuordnen-Bonus | Brummi |
 | --- | --- | --- | --- | --- | --- | --- |
 | ![](screenshots/06_entdecken.png) | ![](screenshots/06b_merkbild_gegossen.png) | ![](screenshots/16_ballons.png) | ![](screenshots/17_buchstabensalat.png) | ![](screenshots/18_stimmts.png) | ![](screenshots/19_zuordnen.png) | ![](screenshots/20_brummi.png) |
@@ -34,6 +38,11 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
   neue Karten werden erst **entdeckt** und dann geprüft. Die Runde mischt automatisch **5 Spielarten**:
   🎈 Ballon-Jagd, 🔤 Buchstabensalat, 👆 Stimmt's? (wischen), Auswahl und Aufdecken; alle 6 Karten ein 🧩 Zuordnen-Bonus.
   Auswahl der Spielart: `core/model/Games.kt`, Spiele: `app/ui/play/`.
+- **Erklär-Geschichten**: Zu jedem der 43 Pakete erzählt Brummi beim ersten Öffnen eine animierte Geschichte
+  (3–5 Szenen mit Bildern, Haken, Eselsbrücke) – jederzeit wieder abspielbar (`app/ui/adventure/IntroScreen.kt`).
+- **Abenteuerpfad**: Jedes Beet ist ein Weg mit Stationen à 5 Karten; jede dritte Station hat eine Schatztruhe.
+- **Gartenfreunde**: 24 Sammelfiguren (normal, selten, legendär) – nur durch Lernfortschritt, feste Reihenfolge,
+  die nächste ist sichtbar (kein Glücksspiel). Sie spazieren durch den Garten; Album im Laden.
 - **Brummi die Hummel** begleitet jede Runde und den Garten: freut sich, tröstet, denkt mit, schläft nachts, gibt Tipps
   (`app/ui/fx/Mascot.kt`).
 
@@ -83,6 +92,12 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
   bzw. `app/ui/fx/Decor.kt` (Deko).
 - **Bezahlversion (später)**: Pakete mit `"tier": "plus"` sind markiert. `Entitlements`/`Monetization.ENFORCED` in
   `core/data` sind die einzige Stelle, an der Google Play Billing angeschlossen werden muss. Heute ist alles frei.
+
+## Signieren
+
+Release-APKs werden mit dem Upload-Schlüssel signiert, wenn `keystore.properties` + `wissensgarten-upload.jks` im
+Ordner `wissensgarten/` liegen (beides per `.gitignore` ausgeschlossen, Ablage: Google Drive → Wissensgarten →
+„Schlüssel (geheim)“). Ohne die Dateien wird mit dem Test-Schlüssel gebaut.
 
 ## Bauen & Testen
 

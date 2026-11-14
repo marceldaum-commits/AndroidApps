@@ -17,6 +17,28 @@
   "emoji": "⛑️",
   "tier": "free",
   "description": "Notruf, stabile Seitenlage, Wiederbelebung und Hilfe bei Verbrennungen – das Wichtigste für Laien. Ersetzt keinen Erste-Hilfe-Kurs.",
+  "intro": [
+    {
+      "img": "🚑📞",
+      "text": "Wusstest du? In ganz Europa erreichst du Rettungsdienst und Feuerwehr unter derselben Nummer: 112 – kostenlos von jedem Telefon."
+    },
+    {
+      "img": "⚠️📞",
+      "text": "Erst Eigenschutz, dann helfen: Unfallstelle sichern, 112 rufen, Erste Hilfe leisten. Sag beim Notruf zuerst, WO es passiert ist, und warte auf Rückfragen."
+    },
+    {
+      "img": "❤️⏱️",
+      "text": "Bewusstlos und keine normale Atmung? 112 rufen und fest in der Brustmitte drücken: 5–6 cm tief, 100- bis 120-mal pro Minute. Ein AED sagt dir jeden Schritt an."
+    },
+    {
+      "img": "🎵🤝",
+      "text": "Merktrick fürs Tempo: Drück im Takt von „Stayin’ Alive“. Und denk dran: Der einzige echte Fehler ist, gar nichts zu tun."
+    },
+    {
+      "img": "⛑️✅",
+      "text": "Das ersetzt keinen Erste-Hilfe-Kurs – aber es gibt dir Sicherheit. Los geht’s: Jede richtige Antwort macht dich zu einer besseren Hilfe!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

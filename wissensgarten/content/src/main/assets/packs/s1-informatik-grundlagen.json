@@ -16,6 +16,28 @@
   "emoji": "💻",
   "tier": "free",
   "description": "Bits und Bytes, Zahlensysteme, Programmier- und Netzwerkbegriffe.",
+  "intro": [
+    {
+      "img": "💡📱",
+      "text": "Jedes Foto, jedes Lied und jedes Video auf deinem Handy besteht am Ende nur aus zwei Zeichen: 0 und 1!"
+    },
+    {
+      "img": "🔌💡",
+      "text": "Ein Bit ist wie ein Lichtschalter: an (1) oder aus (0). Mit 8 Schaltern – einem Byte – kannst du schon 2⁸ = 256 verschiedene Muster bilden."
+    },
+    {
+      "img": "🔢✌️",
+      "text": "Eselsbrücke Binärzahlen: Die Stellenwerte verdoppeln sich von rechts nach links: 1, 2, 4, 8, 16 … So ist 101₂ = 4 + 1 = 5."
+    },
+    {
+      "img": "📨🌐",
+      "text": "Das Internet funktioniert wie die Post: Daten werden in Pakete gepackt, mit einer Adresse (IP) versehen und Stück für Stück verschickt."
+    },
+    {
+      "img": "🐝💻",
+      "text": "Bits, Bytes, Code und Netzwerke – lerne die Sprache der Computer. Starte jetzt!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

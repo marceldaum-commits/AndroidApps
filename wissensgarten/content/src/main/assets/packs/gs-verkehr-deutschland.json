@@ -10,6 +10,28 @@
   "emoji": "🚦",
   "tier": "free",
   "description": "Sicher unterwegs zu Fuß und mit dem Rad – und erstes Wissen über Deutschland.",
+  "intro": [
+    {
+      "img": "🚦👀",
+      "text": "Rot oder Grün – weißt du, was die Ampel dir sagt? Wer das kennt, ist sicher unterwegs!"
+    },
+    {
+      "img": "✋🚶",
+      "text": "Merkspruch: Bei Rot bleib stehn, bei Grün darfst du gehn. Aber vorher immer schauen!"
+    },
+    {
+      "img": "🚲⛑️",
+      "text": "Auf dem Fahrrad trägst du immer einen Helm. Im Dunkeln hilft helle Kleidung, damit Autofahrer dich sehen."
+    },
+    {
+      "img": "🚒🚓",
+      "text": "Notruf merken: 112 bei Feuer und Unfall, 110 für die Polizei."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Deutschland hat 16 Bundesländer, die Hauptstadt ist Berlin. Los geht's – jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

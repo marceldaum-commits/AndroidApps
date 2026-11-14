@@ -10,6 +10,28 @@
   "emoji": "🔢",
   "tier": "free",
   "description": "Mal- und Geteiltaufgaben bis 10 × 10 – gemischt geübt.",
+  "intro": [
+    {
+      "img": "🐝🐝🐝",
+      "text": "Summ! Wie viele Beine haben 3 Hummeln zusammen? Jede hat 6. Mit dem Einmaleins weißt du es blitzschnell: 3 × 6 = 18!"
+    },
+    {
+      "img": "🍽️🍪",
+      "text": "3 × 4 heißt: 3 Teller mit je 4 Keksen. Zähl alle Kekse zusammen – es sind 12!"
+    },
+    {
+      "img": "🔄🍪",
+      "text": "Trick: Tauschen ist erlaubt! 4 × 3 ist genauso viel wie 3 × 4. So musst du dir nur halb so viel merken."
+    },
+    {
+      "img": "🍪➗🍽️",
+      "text": "Geteilt heißt gerecht verteilen: 12 Kekse auf 3 Teller – auf jedem liegen 4. Also 12 : 3 = 4."
+    },
+    {
+      "img": "🌱🚀",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze in deinem Garten wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

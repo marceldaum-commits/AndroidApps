@@ -36,6 +36,7 @@ import de.wissensgarten.app.ui.review.ReviewScreen
 import de.wissensgarten.app.ui.settings.SettingsScreen
 import de.wissensgarten.app.ui.shop.ShopScreen
 import de.wissensgarten.app.ui.store.StoreScreen
+import de.wissensgarten.app.ui.adventure.*
 import de.wissensgarten.app.ui.duel.DuelHubScreen
 import de.wissensgarten.app.ui.duel.DuelPlayScreen
 import de.wissensgarten.app.ui.common.PackBrowser
@@ -63,6 +64,9 @@ object Routes {
     fun bed(id: String) = "beet/$id"
     const val REVIEW = "giessen"
     const val DUEL = "duell"
+    const val INTRO = "erklaerung/{pack}"
+    fun intro(pack: String) = "erklaerung/$pack"
+    const val CHEST = "truhe"
     const val DUEL_PACK = "duell-paket"
     const val DUEL_PLAY = "duell-spiel"
 }
@@ -198,6 +202,9 @@ class MainActivity : ComponentActivity() {
                 }
                 composable(Routes.GARDEN) {
                     val decos by vm.activeDecos.collectAsStateWithLifecycle()
+                    val rev by vm.adventureRev.collectAsStateWithLifecycle()
+                    val friends = remember(rev, profile) { vm.gardenFriends() }
+                    val waiting = remember(rev, beds) { (vm.chestsEarned() - vm.chestsOpened()).coerceAtLeast(0) }
                     val asked by vm.settings.reminderAsked.collectAsStateWithLifecycle()
                     val hour by vm.settings.reminderHour.collectAsStateWithLifecycle()
                     val askPermission = rememberNotificationPermission { ok -> vm.setReminder(ok, hour) }
@@ -210,6 +217,7 @@ class MainActivity : ComponentActivity() {
                             onShop = { goTab(Routes.SHOP) },
                             decos = decos,
                             onDuel = { nav.navigate(Routes.DUEL) },
+                            friends = friends, chestsWaiting = waiting, onChest = { nav.navigate(Routes.CHEST) },
                             reminderPrompt = if (asked) null else {
                                 { ReminderPromptCard(hour, onYes = askPermission, onNo = { vm.setReminder(false) }) }
                             },
@@ -236,8 +244,25 @@ class MainActivity : ComponentActivity() {
                             onToggleDeco = vm::setDecoActive,
                             onUseSpecies = { bed, sp -> vm.setBedSpecies(bed, sp) },
                             onOpenPacks = { goTab(Routes.SHOP) },
+                            album = {
+                                val rev by vm.adventureRev.collectAsStateWithLifecycle()
+                                val opened = remember(rev, p) { vm.chestsOpened() }
+                                val earned = remember(rev, beds) { vm.chestsEarned() }
+                                val inGarden = remember(rev, p) { vm.gardenFriends().map { it.id }.toSet() }
+                                FriendsAlbum(opened, earned, inGarden, onToggle = { vm.toggleGardenFriend(it) }, onOpenChest = { nav.navigate(Routes.CHEST) })
+                            },
                         )
                     }
+                }
+                composable(Routes.INTRO) { entry ->
+                    val pid = entry.arguments?.getString("pack")
+                    val pack = packs.firstOrNull { it.id == pid }
+                    if (pack == null) LaunchedEffect(Unit) { nav.popBackStack() } else IntroScreen(pack) {
+                        vm.markIntroSeen(pack.id); nav.popBackStack()
+                    }
+                }
+                composable(Routes.CHEST) {
+                    ChestReveal(onOpen = { vm.openChest() }, onClose = { nav.popBackStack() })
                 }
                 composable(Routes.DUEL) {
                     val history by vm.duelHistory.collectAsStateWithLifecycle()
@@ -313,6 +338,12 @@ class MainActivity : ComponentActivity() {
                     val inventory by vm.inventory.collectAsStateWithLifecycle()
                     val id = entry.arguments?.getString("id")
                     val data = beds.firstOrNull { it.bed.id == id }
+                    val rev by vm.adventureRev.collectAsStateWithLifecycle()
+                    val pack = data?.bed?.packId?.let { pid -> packs.firstOrNull { it.id == pid } }
+                    // Erste Begegnung mit einem Paket: Brummi erklärt das Thema
+                    LaunchedEffect(pack?.id) {
+                        if (pack != null && pack.intro.isNotEmpty() && !vm.introSeen(pack.id)) nav.navigate(Routes.intro(pack.id))
+                    }
                     if (data == null) {
                         Box(Modifier.fillMaxSize())
                     } else BedScreen(
@@ -324,6 +355,14 @@ class MainActivity : ComponentActivity() {
                         onDeleteBed = { nav.popBackStack(); vm.deleteBed(data.bed.id) },
                         ownedSpecies = inventory.map { it.itemId },
                         onSpecies = { vm.setBedSpecies(data.bed.id, it) },
+                        path = {
+                            val stations = remember(beds, rev) { vm.stations(data.bed.id) }
+                            AdventurePathView(
+                                stations,
+                                onStation = { st -> if (vm.startStation(data.bed.id, st.index)) nav.navigate(Routes.REVIEW) },
+                                onIntro = pack?.takeIf { it.intro.isNotEmpty() }?.let { pk -> { nav.navigate(Routes.intro(pk.id)) } },
+                            )
+                        },
                     )
                 }
                 composable(Routes.REVIEW) {
@@ -335,7 +374,11 @@ class MainActivity : ComponentActivity() {
                         onRate = { c, r, dew -> vm.review(c, r, dew) },
                         peers = beds.associate { b -> b.bed.id to b.cards.map { it.back } },
                         onBonus = { vm.addDew(it) },
-                        onClose = { vm.endSession(); nav.popBackStack() },
+                        onClose = {
+                            vm.endSession(); nav.popBackStack()
+                            // Truhen-Station geschafft? Dann gleich öffnen.
+                            if (vm.chestsEarned() > vm.chestsOpened()) nav.navigate(Routes.CHEST)
+                        },
                     )
                 }
             }

@@ -1,6 +1,10 @@
 package de.wissensgarten.app.ui.garden
 
 import androidx.compose.foundation.background
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.foundation.layout.BoxWithConstraints
+import kotlinx.coroutines.launch
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -43,6 +47,9 @@ fun GardenScreen(
     decos: Set<String> = emptySet(),
     reminderPrompt: (@Composable () -> Unit)? = null,
     onDuel: (() -> Unit)? = null,
+    friends: List<de.wissensgarten.core.model.Friend> = emptyList(),
+    chestsWaiting: Int = 0,
+    onChest: () -> Unit = {},
 ) {
     val cards = remember(beds) { beds.flatMap { it.cards } }
     val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }
@@ -100,6 +107,7 @@ fun GardenScreen(
                     size = 72.dp, speech = line, bubbleOnLeft = true,
                     onTap = { sfx?.play(Sound.PLOP, pitch = 1.4f); tip++ },
                 )
+                GardenFriends(friends, Modifier.align(Alignment.BottomCenter).fillMaxWidth().height(150.dp))
                 Row(
                     Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(horizontal = 8.dp).height(120.dp),
                     verticalAlignment = Alignment.Bottom,
@@ -111,6 +119,22 @@ fun GardenScreen(
                     } else panorama.forEach { (c, bed) ->
                         Plant(Stage.of(c.memory), Scheduler.wilt(c.memory, now), bed.hue, c.id.hashCode() and 0xff, Modifier.weight(1f).fillMaxHeight(), species = bed.species)
                     }
+                }
+            }
+        }
+        if (chestsWaiting > 0) item {
+            Card(
+                onClick = onChest, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth().pulse(true, 0.03f),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF7E57C2)),
+            ) {
+                Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text("🎁", fontSize = 34.sp)
+                    Spacer(Modifier.width(12.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text("Eine Schatztruhe wartet!", color = Color.White, style = MaterialTheme.typography.titleMedium)
+                        Text("Darin steckt ein neuer Gartenfreund.", color = Color.White, style = MaterialTheme.typography.bodySmall)
+                    }
+                    Text("Öffnen ›", color = Color.White, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -234,6 +258,42 @@ private fun BedCard(b: BedWithCards, now: Long, onClick: () -> Unit) {
                 }
                 repeat((8 - b.cards.size).coerceAtLeast(0)) { Spacer(Modifier.weight(1f)) }
             }
+        }
+    }
+}
+
+
+/** Gartenfreunde spazieren über den Hügel und hüpfen ab und zu. Antippen = Freudensprung. */
+@Composable
+private fun GardenFriends(friends: List<de.wissensgarten.core.model.Friend>, modifier: Modifier) {
+    if (friends.isEmpty()) return
+    val t by androidx.compose.animation.core.rememberInfiniteTransition(label = "freunde").animateFloat(
+        0f, 1000f, androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(1_000_000, easing = androidx.compose.animation.core.LinearEasing)), label = "t",
+    )
+    val sfx = LocalSfx.current
+    BoxWithConstraints(modifier) {
+        friends.forEachIndexed { i, f ->
+            val jump = remember { androidx.compose.animation.core.Animatable(0f) }
+            val scope = rememberCoroutineScope()
+            // hin und her laufen (Ping-Pong), jeder in eigenem Tempo
+            val speed = 0.012f + (i % 3) * 0.004f
+            val raw = (t * speed + i * 0.37f) % 2f
+            val pos = if (raw < 1f) raw else 2f - raw
+            val facingRight = raw < 1f
+            val hop = kotlin.math.abs(kotlin.math.sin(t * 6f + i)) * 6f
+            Text(
+                f.emoji, fontSize = 28.sp,
+                modifier = Modifier
+                    .offset(x = maxWidth * (0.04f + pos * 0.88f), y = maxHeight * 0.18f + 14.dp * (i % 2))
+                    .graphicsLayer {
+                        translationY = -(hop + jump.value * 60f) * density
+                        scaleX = if (facingRight) -1f else 1f
+                    }
+                    .clickable(androidx.compose.foundation.interaction.MutableInteractionSource(), null) {
+                        sfx?.play(Sound.PLOP, pitch = 1.5f)
+                        scope.launch { jump.snapTo(0f); jump.animateTo(1f, androidx.compose.animation.core.tween(180)); jump.animateTo(0f, androidx.compose.animation.core.spring(dampingRatio = 0.4f)) }
+                    },
+            )
         }
     }
 }

@@ -71,6 +71,58 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun setBedSpecies(bedId: String, species: String) = viewModelScope.launch { repo.setBedSpecies(bedId, species) }
 
+    // --- Abenteuer: Erklär-Szenen, Pfad, Gartenfreunde ---
+
+    val adventureRev = settings.adventureRev
+
+    fun introSeen(packId: String) = profile.value?.let { settings.introSeen(it.id, packId) } ?: true
+    fun markIntroSeen(packId: String) { profile.value?.let { settings.markIntroSeen(it.id, packId) } }
+
+    fun stations(bedId: String): List<de.wissensgarten.core.model.Station> {
+        val b = beds.value.firstOrNull { it.bed.id == bedId } ?: return emptyList()
+        return de.wissensgarten.core.model.AdventurePath.stations(b.cards.sortedBy { it.sortIndex }.map { it.toStudy() }, System.currentTimeMillis())
+    }
+
+    fun startStation(bedId: String, index: Int): Boolean {
+        val b = beds.value.firstOrNull { it.bed.id == bedId } ?: return false
+        val cards = b.cards.sortedBy { it.sortIndex }.map { it.toStudy() }
+        val st = stations(bedId).getOrNull(index) ?: return false
+        session = de.wissensgarten.core.model.AdventurePath.sessionFor(st, cards, System.currentTimeMillis())
+        return session.isNotEmpty()
+    }
+
+    /** Freigeschaltete Freunde = geschaffte Truhen-Stationen (über alle Beete). */
+    fun chestsEarned(): Int = de.wissensgarten.core.model.AdventurePath.chestsEarned(
+        beds.value.map { b -> b.cards.sortedBy { it.sortIndex }.map { it.toStudy() } }, System.currentTimeMillis(),
+    )
+
+    fun chestsOpened(): Int = profile.value?.let { settings.chestsOpened(it.id) } ?: 0
+
+    /** Öffnet die nächste Truhe und liefert den neuen Freund. */
+    fun openChest(): de.wissensgarten.core.model.Friend? {
+        val p = profile.value ?: return null
+        val opened = settings.chestsOpened(p.id)
+        if (opened >= chestsEarned()) return null
+        val f = de.wissensgarten.core.model.Friends.next(opened) ?: return null
+        settings.setChestsOpened(p.id, opened + 1)
+        addDew(15)
+        return f
+    }
+
+    fun gardenFriends(): List<de.wissensgarten.core.model.Friend> {
+        val p = profile.value ?: return emptyList()
+        val owned = de.wissensgarten.core.model.Friends.earned(settings.chestsOpened(p.id))
+        val chosen = settings.gardenFriends(p.id)
+        return if (chosen == null) owned.takeLast(5) else owned.filter { it.id in chosen }
+    }
+
+    fun toggleGardenFriend(id: String) {
+        val p = profile.value ?: return
+        val current = gardenFriends().map { it.id }.toMutableSet()
+        if (!current.remove(id)) { if (current.size >= 6) return; current += id }
+        settings.setGardenFriends(p.id, current)
+    }
+
     // --- Duell ---
 
     val duelHistory = c.duels.duels

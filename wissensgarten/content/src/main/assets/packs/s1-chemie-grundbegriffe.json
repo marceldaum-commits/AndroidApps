@@ -12,6 +12,28 @@
   "emoji": "🧪",
   "tier": "free",
   "description": "Atombau, Ionen, Säuren und Basen, pH-Wert, Reaktionsarten und wichtige Formeln.",
+  "intro": [
+    {
+      "img": "⚛️🏟️",
+      "text": "Ein Atom ist fast nur leerer Raum: Sein Kern ist 10 000- bis 100 000-mal kleiner als das Atom – wie eine Erbse mitten im Fußballstadion!"
+    },
+    {
+      "img": "🎯⚛️",
+      "text": "Stell dir das Atom wie eine Zielscheibe vor: In der Mitte der Kern aus Protonen (+) und Neutronen, außen die Ringe – die Schalen mit den Elektronen (−)."
+    },
+    {
+      "img": "🍋🧼",
+      "text": "Der pH-Wert ist das Sauer-Messgerät: Unter 7 ist es sauer wie Zitronensaft, 7 ist neutral, über 7 basisch wie Seifenlauge."
+    },
+    {
+      "img": "💧⚠️",
+      "text": "Eselsbrücke für die Sicherheit: „Erst das Wasser, dann die Säure, sonst geschieht das Ungeheure!“"
+    },
+    {
+      "img": "🐝🧪",
+      "text": "Atome, Ionen, Reaktionen – zieh deinen Laborkittel an, wir fangen an zu experimentieren!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

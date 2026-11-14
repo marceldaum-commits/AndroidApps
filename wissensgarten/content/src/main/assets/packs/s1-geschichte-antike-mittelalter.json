@@ -10,6 +10,28 @@
   "emoji": "🏺",
   "tier": "free",
   "description": "Von den Pharaonen über Griechen und Römer bis zu Rittern, Burgen und Klöstern.",
+  "intro": [
+    {
+      "img": "🏺🔺",
+      "text": "Stell dir vor: Die große Cheops-Pyramide ist rund 4500 Jahre alt – und war über 3800 Jahre lang das höchste Bauwerk der Welt!"
+    },
+    {
+      "img": "📅",
+      "text": "Zeitstrahl im Kopf: Ägypter bauen Pyramiden → Griechen erfinden die Demokratie → Römer bauen ein Weltreich → Mittelalter mit Rittern und Burgen."
+    },
+    {
+      "img": "🥚🏛️",
+      "text": "Eselsbrücke: „Sieben – fünf – drei, Rom schlüpft aus dem Ei.“ So merkst du dir das sagenhafte Gründungsjahr Roms: 753 v. Chr."
+    },
+    {
+      "img": "🏰⛪",
+      "text": "Das Mittelalter dauerte rund 1000 Jahre, etwa von 500 bis 1500 n. Chr. Die Menschen gehörten zu drei Ständen: Klerus, Adel und Bauern."
+    },
+    {
+      "img": "🐝⏳",
+      "text": "Steig in die Zeitmaschine – los geht’s in die Vergangenheit!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

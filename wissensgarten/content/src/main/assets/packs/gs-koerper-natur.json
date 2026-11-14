@@ -10,6 +10,28 @@
   "emoji": "🌻",
   "tier": "free",
   "description": "Körper und Sinne, Jahreszeiten, Wetter und Pflanzen kennenlernen.",
+  "intro": [
+    {
+      "img": "✋🤔",
+      "text": "Rate mal: Was ist dein größtes Sinnesorgan? Deine Haut! Sie spürt warm, kalt und jedes Kitzeln."
+    },
+    {
+      "img": "👀👂👃👅",
+      "text": "Du hast 5 Sinne: sehen mit den Augen, hören mit den Ohren, riechen mit der Nase, schmecken mit der Zunge und fühlen mit der Haut."
+    },
+    {
+      "img": "❤️💨",
+      "text": "Dein Herz ist eine Pumpe, die das Blut durch den Körper schickt. Die Lunge holt Luft. Die Rippen schützen beide."
+    },
+    {
+      "img": "🌻💧☀️",
+      "text": "Pflanzen sind schlau: Die Wurzel trinkt Wasser, der Stängel ist wie ein Strohhalm, und die Blätter brauchen Sonnenlicht."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's, kleiner Forscher! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

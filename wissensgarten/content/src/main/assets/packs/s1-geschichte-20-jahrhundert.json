@@ -13,6 +13,28 @@
   "emoji": "🕊️",
   "tier": "plus",
   "description": "Weltkriege, Weimarer Republik, NS-Diktatur, deutsche Teilung und Wiedervereinigung – sachlich erklärt.",
+  "intro": [
+    {
+      "img": "📜🕰️",
+      "text": "Innerhalb von nur 31 Jahren – 1914 bis 1945 – erlebte Europa zwei Weltkriege. Das 20. Jahrhundert prägt unsere Welt bis heute."
+    },
+    {
+      "img": "📅",
+      "text": "Zeitstrahl, Teil 1: 1914–1918 Erster Weltkrieg · 1918/19 Weimarer Republik · 1933 Beginn der NS-Diktatur · 1939–1945 Zweiter Weltkrieg."
+    },
+    {
+      "img": "🕯️⚖️",
+      "text": "Die Nationalsozialisten verfolgten und ermordeten Millionen Menschen, darunter rund sechs Millionen Jüdinnen und Juden. Erinnern heißt: Verantwortung übernehmen."
+    },
+    {
+      "img": "📅🕊️",
+      "text": "Zeitstrahl, Teil 2: 1949 zwei deutsche Staaten · 1961 Mauerbau · 9. November 1989 Mauerfall · 3. Oktober 1990 Deutsche Einheit."
+    },
+    {
+      "img": "📚",
+      "text": "Jedes Datum, das du einordnest, hilft dir, die Gegenwart besser zu verstehen. Bereit? Dann starte jetzt."
+    }
+  ],
   "cards": [
     {
       "id": "001",

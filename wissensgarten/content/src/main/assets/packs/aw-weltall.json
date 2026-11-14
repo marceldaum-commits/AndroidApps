@@ -14,6 +14,28 @@
   "emoji": "🚀",
   "tier": "free",
   "description": "Planeten, Sonne, Mond, Sterne und die spannendsten Momente der Raumfahrt.",
+  "intro": [
+    {
+      "img": "☀️🌍",
+      "text": "Wusstest du? Sonnenlicht braucht etwa 8 Minuten bis zu uns. Wenn du die Sonne siehst, schaust du also ein kleines Stück in die Vergangenheit!"
+    },
+    {
+      "img": "🌌🔭",
+      "text": "Unser Sonnensystem hat 8 Planeten. Pluto gehörte früher dazu, gilt aber seit 2006 als Zwergplanet."
+    },
+    {
+      "img": "🧠✨",
+      "text": "Eselsbrücke: „Mein Vater erklärt mir jeden Sonntag unseren Nachthimmel“ – Merkur, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun."
+    },
+    {
+      "img": "🌕👣",
+      "text": "1969 betrat Neil Armstrong als erster Mensch den Mond. Seine Fußspuren sind wohl bis heute dort – auf dem Mond gibt es keinen Wind, der sie verweht."
+    },
+    {
+      "img": "🚀🐝",
+      "text": "Countdown läuft: 3 … 2 … 1 … Start! Flieg mit mir durchs Weltall!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

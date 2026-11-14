@@ -15,6 +15,7 @@ import de.wissensgarten.app.ui.review.ReviewScreen
 import de.wissensgarten.app.ui.shop.ShopScreen
 import de.wissensgarten.app.ui.theme.WissensgartenTheme
 import de.wissensgarten.app.ui.play.*
+import de.wissensgarten.app.ui.adventure.*
 import de.wissensgarten.app.ui.fx.Brummi
 import de.wissensgarten.app.ui.fx.Mood
 import androidx.compose.foundation.layout.*
@@ -239,6 +240,31 @@ class ScreenshotTest {
             Brummi(Mood.CHEER, size = 110.dp, speech = "🔥 Du bist on fire!")
             Brummi(Mood.SLEEP, size = 110.dp, speech = "Zzz … bis morgen!")
         }
+    }
+
+    @Test fun intro() = shot("21_erklaerung", settle = 2500, prepare = { r ->
+        r.onNodeWithText("Überspringen").assertExists()
+        r.mainClock.advanceTimeBy(5000)
+        r.onNodeWithText("Weiter").performClick()
+    }) { IntroScreen(pack("s1-mathe-brueche-prozent")) {} }
+
+    @Test fun adventurePath() = shot("22_abenteuerpfad") {
+        val cards = garden[0].cards.sortedBy { it.sortIndex }.map { it.toStudy() }
+        AdventurePathView(AdventurePath.stations(cards, now), {}, {}, Modifier.fillMaxSize())
+    }
+
+    @Test fun chest() = shot("23_truhe", settle = 0, prepare = { r ->
+        r.onNodeWithText("Tippe, um sie zu öffnen 👆").performClick()
+        r.mainClock.advanceTimeBy(2500)
+    }) { ChestReveal(onOpen = { Friends.all[12] }, onClose = {}) }
+
+    @Test fun album() = shot("24_album") {
+        Column { FriendsAlbum(opened = 7, earned = 8, inGarden = setOf("marie", "quaki", "ignaz"), onToggle = {}, onOpenChest = {}) }
+    }
+
+    @Test fun gardenWithFriends() = shot("04f_garten_freunde") {
+        GardenScreen(profile, garden, now, 10, {}, {}, {}, {}, decos = setOf("teich", "zaun"),
+            friends = Friends.all.take(6), chestsWaiting = 1)
     }
 
     @Test fun bed() = shot("05_beet") {

@@ -11,6 +11,28 @@
   "emoji": "💬",
   "tier": "free",
   "description": "Wichtige englische Wörter und Sätze aus Schule und Alltag: Deutsch → Englisch.",
+  "intro": [
+    {
+      "img": "🏠🐭📖",
+      "text": "Wusstest du, dass Englisch und Deutsch verwandt sind? Haus – house, Maus – mouse, Buch – book: Viele Wörter klingen fast gleich!"
+    },
+    {
+      "img": "🏫🍎",
+      "text": "In diesem Paket lernst du wichtige Wörter aus Schule und Alltag. Mit ihnen kannst du schon richtig viel sagen."
+    },
+    {
+      "img": "⚠️🎭",
+      "text": "Aber Vorsicht vor „falschen Freunden“: „become“ heißt nicht bekommen, sondern werden! Und „pen“ ist kein Bleistift, sondern ein Kuli oder Füller."
+    },
+    {
+      "img": "🗣️🔁",
+      "text": "Lerntrick: Sprich jedes Wort laut aus – Englisch schreibt man oft anders, als man es spricht. Und wiederhol es lieber oft kurz als einmal lang."
+    },
+    {
+      "img": "🌟🚀",
+      "text": "Every word counts! Lass uns loslegen."
+    }
+  ],
   "cards": [
     {
       "id": "001",

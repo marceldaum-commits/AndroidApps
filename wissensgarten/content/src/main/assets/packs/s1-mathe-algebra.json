@@ -12,6 +12,28 @@
   "emoji": "🔢",
   "tier": "free",
   "description": "Binomische Formeln, Potenzgesetze, lineare und quadratische Funktionen.",
+  "intro": [
+    {
+      "img": "🤯🔢",
+      "text": "Was ist 21²? Mit einem Trick rechnest du es im Kopf: 20² + 2 · 20 · 1 + 1² = 400 + 40 + 1 = 441!"
+    },
+    {
+      "img": "⬛📐",
+      "text": "Das ist die 1. binomische Formel: Ein Quadrat mit Seite a + b zerfällt in a², b² und zwei Rechtecke a · b – also a² + 2ab + b²."
+    },
+    {
+      "img": "🗣️✌️",
+      "text": "Eselsbrücke: „Erstes Quadrat, plus doppeltes Produkt, plus zweites Quadrat.“ Bei (a − b)² wird nur das Plus in der Mitte zum Minus."
+    },
+    {
+      "img": "🎰➡️",
+      "text": "Eine Funktion ist wie ein Automat: Du wirfst ein x hinein und bekommst genau ein y heraus. Bei f(x) = 2x + 1 wird aus 3 die 7."
+    },
+    {
+      "img": "🐝💪",
+      "text": "Formeln, Potenzen, Parabeln – mit diesen Werkzeugen wird Algebra zum Kinderspiel. Leg los!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

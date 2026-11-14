@@ -10,6 +10,28 @@
   "emoji": "➗",
   "tier": "free",
   "description": "Bruchrechnung, Dezimalzahlen und Prozentrechnung sicher beherrschen.",
+  "intro": [
+    {
+      "img": "🏷️😲",
+      "text": "50 % Rabatt und dann nochmal 50 % – ist das gratis? Nein! Du zahlst noch 25 %, denn die Hälfte von der Hälfte ist ein Viertel."
+    },
+    {
+      "img": "🍕✂️",
+      "text": "Ein Bruch ist wie eine Pizza: Der Nenner sagt, in wie viele Stücke sie geschnitten ist, der Zähler, wie viele Stücke du bekommst."
+    },
+    {
+      "img": "💯🔍",
+      "text": "Prozent heißt „von Hundert“: 25 % sind 25 von 100 Stücken – also 25/100 = 1/4 = 0,25."
+    },
+    {
+      "img": "🔄➗",
+      "text": "Eselsbrücke: „Durch einen Bruch teilt man, indem man mit dem Kehrwert malnimmt.“ 1/2 : 1/4 = 1/2 · 4/1 = 2."
+    },
+    {
+      "img": "🐝🍰",
+      "text": "Brüche, Dezimalzahlen, Prozente – bald teilst du jede Pizza gerecht. Los geht's!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

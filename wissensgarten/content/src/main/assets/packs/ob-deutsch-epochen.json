@@ -11,6 +11,28 @@
   "emoji": "📜",
   "tier": "plus",
   "description": "Deutsche Literaturepochen vom Barock bis zur Nachkriegszeit: Zeiträume, Autoren, Werke.",
+  "intro": [
+    {
+      "img": "📘💔🧥",
+      "text": "1774 erschien Goethes „Werther“ – und junge Männer trugen plötzlich blauen Frack und gelbe Weste wie ihr Romanheld. Literatur konnte schon damals Trends setzen!"
+    },
+    {
+      "img": "🕰️📚",
+      "text": "Epochen sind wie Kapitel der Literaturgeschichte: Jede hat ihr Lebensgefühl, ihre Themen und typische Autoren – vom Barock bis zur Nachkriegszeit."
+    },
+    {
+      "img": "💀💡🔥🏛️",
+      "text": "Trick: Gib jeder Epoche ein Schlagwort. Barock = memento mori, Aufklärung = Vernunft, Sturm und Drang = Gefühl & Genie, Klassik = Humanität."
+    },
+    {
+      "img": "⚖️🔄",
+      "text": "Noch ein Trick: Epochen reagieren oft aufeinander – wie ein Pendel. Auf Vernunft folgt Gefühl, auf Ideal folgt Wirklichkeit. Frag dich immer: Wogegen richtet sie sich?"
+    },
+    {
+      "img": "🎓🚀",
+      "text": "Mit diesem Überblick ordnest du jeden Text im Abi sicher ein. Los geht’s mit der Zeitreise durch die Literatur!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

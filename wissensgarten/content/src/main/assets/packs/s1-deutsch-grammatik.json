@@ -11,6 +11,28 @@
   "emoji": "✏️",
   "tier": "free",
   "description": "Fälle, Satzglieder, das/dass und Zeitformen sicher erkennen und anwenden.",
+  "intro": [
+    {
+      "img": "🤔🐝",
+      "text": "Wusstest du, dass „das“ und „dass“ nur ein s unterscheidet – und es trotzdem einer der häufigsten Fehler überhaupt ist? Ich zeig dir, wie du ihn vermeidest!"
+    },
+    {
+      "img": "4️⃣🗂️",
+      "text": "Im Deutschen gibt es vier Fälle: Nominativ, Genitiv, Dativ, Akkusativ. Du findest sie mit Fragen: Wer? Wessen? Wem? Wen?"
+    },
+    {
+      "img": "🔄✅",
+      "text": "Trick für das/dass: Kannst du „dieses“, „jenes“ oder „welches“ einsetzen? Dann schreibst du „das“. Sonst ist es „dass“."
+    },
+    {
+      "img": "🧱🔀",
+      "text": "Satzglieder findest du mit der Umstellprobe: Was beim Umstellen zusammenbleibt, ist ein Satzglied. Probier’s aus!"
+    },
+    {
+      "img": "💪🌟",
+      "text": "Grammatik ist wie ein Baukasten – wenn du die Teile kennst, baust du tolle Sätze. Los geht’s!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

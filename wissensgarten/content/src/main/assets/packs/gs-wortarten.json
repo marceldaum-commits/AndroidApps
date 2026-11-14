@@ -11,6 +11,28 @@
   "emoji": "💬",
   "tier": "free",
   "description": "Nomen, Verben und Adjektive erkennen und den richtigen Artikel finden.",
+  "intro": [
+    {
+      "img": "🦁🐒🦒",
+      "text": "Wörter sind wie Tiere im Zoo: Es gibt verschiedene Arten! Drei davon lernst du heute kennen."
+    },
+    {
+      "img": "🐕🏫",
+      "text": "Nomen sind Namen für Menschen, Tiere, Dinge und Gefühle: Hund, Schule, Freude. Man schreibt sie groß – davor passt der, die oder das."
+    },
+    {
+      "img": "🤸✍️",
+      "text": "Verben sagen, was jemand tut: springen, lesen, singen. Test: Passt „wir“ davor? Wir springen – ja, ein Verb!"
+    },
+    {
+      "img": "🌈😴",
+      "text": "Adjektive sagen, wie etwas ist: groß, rot, müde. Test: „Der Ball ist …“ – rot? Passt! Also ein Adjektiv."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

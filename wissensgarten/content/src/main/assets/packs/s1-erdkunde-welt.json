@@ -13,6 +13,28 @@
   "emoji": "🌋",
   "tier": "free",
   "description": "Kontinente, Ozeane, Rekorde der Erde und Hauptstädte aus aller Welt.",
+  "intro": [
+    {
+      "img": "🌊😮",
+      "text": "Verblüffend: Der Pazifik ist größer als alle Landflächen der Erde zusammen!"
+    },
+    {
+      "img": "🌍🌎🌏",
+      "text": "Meist zählt man 7 Kontinente, von groß nach klein: Asien, Afrika, Nordamerika, Südamerika, Antarktika, Europa, Australien."
+    },
+    {
+      "img": "🏔️📏",
+      "text": "Rekorde merkst du dir als Reise: Starte auf dem Mount Everest (8849 m), wandere zum Kilimandscharo in Afrika und weiter zum Aconcagua in Südamerika."
+    },
+    {
+      "img": "👥",
+      "text": "Übrigens: Seit 2023 hat Indien mehr Einwohner als China – und ist damit das bevölkerungsreichste Land der Erde."
+    },
+    {
+      "img": "🐝🧭",
+      "text": "Schnapp dir den Globus im Kopf – los geht’s rund um die Welt!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

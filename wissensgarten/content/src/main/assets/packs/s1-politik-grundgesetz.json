@@ -15,6 +15,28 @@
   "emoji": "🗳️",
   "tier": "free",
   "description": "Grundrechte, Verfassungsorgane, Wahlen und die Europäische Union verständlich erklärt.",
+  "intro": [
+    {
+      "img": "📜",
+      "text": "„Die Würde des Menschen ist unantastbar.“ Mit diesem Satz beginnen die Grundrechte unseres Grundgesetzes – seit dem 23. Mai 1949."
+    },
+    {
+      "img": "⚖️👧👦",
+      "text": "Gewaltenteilung ist wie drei Kinder, die sich gegenseitig aufpassen: Eins macht Regeln (Legislative), eins führt sie aus (Exekutive), eins schlichtet (Judikative)."
+    },
+    {
+      "img": "🗳️",
+      "text": "Wahl-Trick: Erst die Person, dann die Partei. Mit der Erststimme wählst du jemanden im Wahlkreis, die Zweitstimme entscheidet über die Sitze im Bundestag."
+    },
+    {
+      "img": "🏛️🗳️",
+      "text": "Ab 18 darfst du den Bundestag wählen – alle vier Jahre. Demokratie lebt davon, dass Menschen mitmachen."
+    },
+    {
+      "img": "🐝💪",
+      "text": "Jetzt wirst du fit für Staat und Verfassung. Los geht’s!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

@@ -12,6 +12,28 @@
   "emoji": "📐",
   "tier": "free",
   "description": "Die wichtigsten Formeln für Fläche, Umfang, Volumen, Kreis und Pythagoras.",
+  "intro": [
+    {
+      "img": "🍕⭕",
+      "text": "Egal ob Pizza, Fahrradreifen oder Riesenrad: Teilst du den Umfang eines Kreises durch seinen Durchmesser, kommt immer π ≈ 3,14 heraus!"
+    },
+    {
+      "img": "📏🧱",
+      "text": "Fläche ist wie Fliesen legen: Beim Rechteck zählst du a Reihen mit je b Fliesen – A = a · b. Der Umfang ist der Zaun drum herum."
+    },
+    {
+      "img": "📐✅",
+      "text": "Pythagoras: Im rechtwinkligen Dreieck gilt a² + b² = c². Ein Dreieck mit 3, 4 und 5 m hat genau einen rechten Winkel – das nutzen Handwerker!"
+    },
+    {
+      "img": "🧠🔑",
+      "text": "Eselsbrücke: Die Hypotenuse c liegt dem rechten Winkel gegenüber und ist immer die längste Seite."
+    },
+    {
+      "img": "🐝📐",
+      "text": "Fläche, Umfang, Volumen – mit diesen Formeln vermisst du die Welt. Auf geht's!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

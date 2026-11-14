@@ -11,6 +11,28 @@
   "emoji": "🥖",
   "tier": "free",
   "description": "Wichtige französische Wörter mit Artikel (le, la, l', les): Deutsch → Französisch.",
+  "intro": [
+    {
+      "img": "👛🍽️",
+      "text": "Wusstest du, dass du schon Französisch kannst? Portemonnaie, Restaurant, Garage – all diese Wörter kommen aus dem Französischen!"
+    },
+    {
+      "img": "🏠🔄",
+      "text": "Im Französischen gibt es nur zwei Geschlechter: männlich (le) und weiblich (la). Und die stimmen oft nicht mit dem Deutschen überein: das Haus = la maison."
+    },
+    {
+      "img": "📌✏️",
+      "text": "Lerntrick: Lern jedes Nomen immer mit Artikel – also nicht „maison“, sondern „la maison“. Dann musst du später nie raten."
+    },
+    {
+      "img": "👂🌊",
+      "text": "Achte auf ähnliche Wörter: la mère (die Mutter) und la mer (das Meer) klingen gleich! Ein Bild im Kopf hilft: Mama am Meer."
+    },
+    {
+      "img": "🥐🚀",
+      "text": "Allez, on y va! Los geht’s mit deinen ersten französischen Wörtern."
+    }
+  ],
   "cards": [
     {
       "id": "001",

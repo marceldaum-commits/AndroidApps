@@ -14,6 +14,28 @@
   "emoji": "🎭",
   "tier": "free",
   "description": "Rhetorische Stilmittel an eigenen Beispielsätzen erkennen und benennen.",
+  "intro": [
+    {
+      "img": "🥛📺",
+      "text": "„Milch macht müde Männer munter“ – ein alter Werbespruch. Warum bleibt er im Kopf? Weil ein Stilmittel drinsteckt: die Alliteration!"
+    },
+    {
+      "img": "🎭✨",
+      "text": "Stilmittel sind die Werkzeuge der Sprache. Man findet sie in Gedichten, aber auch in Songs, Reden und Werbung. Sie machen Texte lebendig und wirkungsvoll."
+    },
+    {
+      "img": "🔍🐻",
+      "text": "Lerntrick: Achte auf Signalwörter. Steht „wie“ oder „als ob“ da, ist es ein Vergleich. Fehlt das „wie“, ist es oft eine Metapher."
+    },
+    {
+      "img": "📝💡",
+      "text": "Wichtig für die Analyse: Benenne nicht nur das Stilmittel, sondern sag auch, wie es wirkt. Und: Denk dir zu jedem Stilmittel einen eigenen Beispielsatz aus!"
+    },
+    {
+      "img": "🚀🏆",
+      "text": "Bald erkennst du Stilmittel überall – sogar in der Werbung. Auf geht’s!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

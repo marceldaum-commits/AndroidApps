@@ -14,6 +14,28 @@
   "emoji": "💰",
   "tier": "free",
   "description": "Finanzbildung kompakt: Markt, Preise, Zinsen, Steuern, Girokonto und kluger Umgang mit Geld.",
+  "intro": [
+    {
+      "img": "💶📉",
+      "text": "Wusstest du? Bei 2 % Inflation pro Jahr verliert Geld in rund 35 Jahren etwa die Hälfte seiner Kaufkraft."
+    },
+    {
+      "img": "⚖️🛒",
+      "text": "Der Markt ist wie eine Wippe: Wollen viele etwas kaufen, steigt der Preis meist. Gibt es plötzlich sehr viel davon, sinkt er."
+    },
+    {
+      "img": "🧾",
+      "text": "Lerntrick: Brutto ist der Betrag „mit allem“, Netto das, was nach Steuern und Sozialabgaben wirklich auf deinem Konto landet."
+    },
+    {
+      "img": "💡📈",
+      "text": "Faustregel 72: Teile 72 durch den Zinssatz – so viele Jahre dauert es ungefähr, bis sich Geld verdoppelt. Bei 6 % also etwa 12 Jahre."
+    },
+    {
+      "img": "🐝💰",
+      "text": "Kluge Geldentscheidungen beginnen mit Wissen. Leg los!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

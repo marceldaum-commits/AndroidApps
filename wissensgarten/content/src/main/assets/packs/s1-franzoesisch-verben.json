@@ -11,6 +11,28 @@
   "emoji": "🗣️",
   "tier": "free",
   "description": "Die vier wichtigsten unregelmäßigen französischen Verben im Präsens konjugieren.",
+  "intro": [
+    {
+      "img": "🗣️⭐",
+      "text": "Wusstest du, dass „aller“ (gehen) aus mehreren lateinischen Verben zusammengesetzt ist? Deshalb heißt es „je vais“, aber „nous allons“."
+    },
+    {
+      "img": "🔑4️⃣",
+      "text": "être, avoir, aller und faire sind die wichtigsten Verben: Mit avoir und être bildest du das passé composé, mit aller das futur composé."
+    },
+    {
+      "img": "🎵🔁",
+      "text": "Lerntrick: Die ils-Formen reimen sich: ils sont, ils ont, ils vont, ils font. Sprich sie wie einen Reim – so vergisst du sie nie!"
+    },
+    {
+      "img": "🧠💡",
+      "text": "Noch ein Trick: Nur drei Verben enden bei vous auf -tes statt -ez: vous êtes, vous faites, vous dites. Merk dir diese Ausnahmen!"
+    },
+    {
+      "img": "💪🚀",
+      "text": "Wenn du diese vier Verben kannst, kannst du fast alles sagen. Allez, c’est parti!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

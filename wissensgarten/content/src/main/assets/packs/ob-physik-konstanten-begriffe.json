@@ -12,6 +12,28 @@
   "emoji": "⚛️",
   "tier": "plus",
   "description": "Wichtige Naturkonstanten mit Wert und Einheit sowie Kernbegriffe aus Mechanik, E-Lehre und Quantenphysik.",
+  "intro": [
+    {
+      "img": "💡🌍",
+      "text": "Licht schafft rund 300 000 km pro Sekunde – damit könnte es die Erde in einer Sekunde etwa 7,5-mal umrunden!"
+    },
+    {
+      "img": "📜🌌",
+      "text": "Naturkonstanten sind wie die festen Spielregeln des Universums: Ob hier oder in einer fernen Galaxie – c, e und h haben überall denselben Wert."
+    },
+    {
+      "img": "⚡🔢",
+      "text": "Eselsbrücke: c ≈ 3 · 10⁸ m/s – „eine Drei mit acht Nullen“. Und jede Ladung ist ein ganzzahliges Vielfaches der Elementarladung e ≈ 1,602 · 10⁻¹⁹ C."
+    },
+    {
+      "img": "⚛️🔦",
+      "text": "In der Quantenwelt kommt Licht in Päckchen: Ein Photon hat die Energie E = h · f. Je höher die Frequenz, desto energiereicher das Päckchen."
+    },
+    {
+      "img": "🐝🎯",
+      "text": "Konstanten, Gesetze, Quanten – das ist das Werkzeug echter Physiker. Schnapp es dir, wir starten!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

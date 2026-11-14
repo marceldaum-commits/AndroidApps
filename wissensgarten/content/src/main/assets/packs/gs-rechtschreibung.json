@@ -10,6 +10,28 @@
   "emoji": "📝",
   "tier": "free",
   "description": "Wörter mit ie, ei, ß, ss und Dehnungs-h sowie Groß- und Kleinschreibung üben.",
+  "intro": [
+    {
+      "img": "🐝❓",
+      "text": "Bine, Bihne oder Biene? Meine Freundin, die Biene, schreibt man mit ie! Weißt du auch, warum?"
+    },
+    {
+      "img": "👂📝",
+      "text": "Hörst du ein langes i? Dann schreibt man meistens ie: Biene, Spiel, Tier."
+    },
+    {
+      "img": "👣💧",
+      "text": "Nach einem langen Laut steht oft ß: Fuß, Straße. Nach einem kurzen Laut steht ss: Wasser, Kuss."
+    },
+    {
+      "img": "🐕🏫",
+      "text": "Nomen schreibt man groß: der Hund, die Schule. Und jeder Satz beginnt mit einem großen Buchstaben!"
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's! Jedes richtig geschriebene Wort lässt eine Pflanze wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

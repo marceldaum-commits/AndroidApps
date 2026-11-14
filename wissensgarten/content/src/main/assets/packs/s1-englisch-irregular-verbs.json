@@ -12,6 +12,28 @@
   "emoji": "📝",
   "tier": "free",
   "description": "Die wichtigsten unregelmäßigen englischen Verben mit Simple Past und Past Participle.",
+  "intro": [
+    {
+      "img": "🚶💨",
+      "text": "Wusstest du, dass „went“ eigentlich gar nicht von „go“ kommt? Es stammt vom alten Verb „wend“ – verwandt mit unserem „wenden“!"
+    },
+    {
+      "img": "📝🔀",
+      "text": "Die meisten Verben bilden die Vergangenheit mit -ed: play – played. Unregelmäßige Verben machen ihr eigenes Ding: see – saw – seen."
+    },
+    {
+      "img": "🎵🔁",
+      "text": "Lerntrick: Sprich die drei Formen wie einen Rap: „go – went – gone“, „see – saw – seen“. Der Rhythmus bleibt im Kopf hängen!"
+    },
+    {
+      "img": "🧩👀",
+      "text": "Noch ein Trick: Lern Verben in Gruppen, die gleich klingen: sing – sang – sung, drink – drank – drunk, swim – swam – swum."
+    },
+    {
+      "img": "💪🚀",
+      "text": "Die wichtigsten Verben brauchst du in fast jedem Satz. Ready? Let’s go!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

@@ -13,6 +13,28 @@
   "emoji": "🧬",
   "tier": "plus",
   "description": "DNA, Proteinbiosynthese, Mendelsche Regeln sowie Mitose und Meiose.",
+  "intro": [
+    {
+      "img": "🧬📏",
+      "text": "Würdest du die DNA aus einer einzigen deiner Zellen ausrollen, wäre sie rund 2 Meter lang – zusammengefaltet in einem Kern, viel kleiner als ein Staubkorn!"
+    },
+    {
+      "img": "📖🔤",
+      "text": "Stell dir die DNA als Kochbuch vor: Die Basen A, T, G und C sind die Buchstaben, ein Gen ist ein Rezept – und das fertige Gericht ist ein Protein."
+    },
+    {
+      "img": "📝🏭",
+      "text": "Proteinbiosynthese: Die Zelle schreibt das Rezept als mRNA ab (Transkription), und das Ribosom kocht danach das Protein (Translation)."
+    },
+    {
+      "img": "🔗🧠",
+      "text": "Eselsbrücke für die Basenpaare: A und T, G und C – „Apfel-Tomate, Gurke-Citrone“. In der RNA ersetzt Uracil das Thymin."
+    },
+    {
+      "img": "🐝🚀",
+      "text": "Mendel, Mitose, Meiose – klingt viel, ist aber logisch. Lass uns den Code des Lebens gemeinsam knacken!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

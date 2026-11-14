@@ -34,7 +34,7 @@ import de.wissensgarten.core.model.ShopItems
 import de.wissensgarten.core.model.Stage
 import kotlinx.coroutines.launch
 
-private enum class StoreTab(val label: String) { PLANTS("🌸 Pflanzen"), DECO("🏡 Deko"), PLUS("⭐ Wissen Plus") }
+private enum class StoreTab(val label: String) { PLANTS("🌸 Pflanzen"), DECO("🏡 Deko"), FRIENDS("🐾 Freunde"), PLUS("⭐ Plus") }
 
 /**
  * Gartenladen: Tautropfen gegen Pflanzenarten und Deko tauschen.
@@ -51,6 +51,7 @@ fun StoreScreen(
     onUseSpecies: (bedId: String, species: String) -> Unit,
     onOpenPacks: () -> Unit,
     initialTab: Int = 0,
+    album: (@Composable () -> Unit)? = null,
 ) {
     var tab by remember { mutableIntStateOf(initialTab) }
     val owned = inventory.associateBy { it.itemId }
@@ -106,6 +107,7 @@ fun StoreScreen(
                 when (StoreTab.entries[tab]) {
                     StoreTab.PLANTS -> ItemGrid(ShopItems.species, owned, profile.dewdrops, ::buy, onToggleDeco)
                     StoreTab.DECO -> ItemGrid(ShopItems.decos, owned, profile.dewdrops, ::buy, onToggleDeco)
+                    StoreTab.FRIENDS -> album?.invoke()
                     StoreTab.PLUS -> PlusTab(plusPacks, onOpenPacks)
                 }
             }

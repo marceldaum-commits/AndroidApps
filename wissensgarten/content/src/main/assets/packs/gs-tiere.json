@@ -11,6 +11,28 @@
   "emoji": "🐶",
   "tier": "free",
   "description": "Tierkinder, Tiergruppen und wo Tiere leben – spannend für kleine Forscher.",
+  "intro": [
+    {
+      "img": "🐋🤔",
+      "text": "Wusstest du? Der Wal lebt im Meer, ist aber kein Fisch! Er atmet mit einer Lunge, so wie du."
+    },
+    {
+      "img": "🐄🍼",
+      "text": "Tierkinder haben eigene Namen: Die Kuh hat ein Kalb, das Pferd ein Fohlen und das Schaf ein Lamm."
+    },
+    {
+      "img": "🐜🕷️",
+      "text": "Zähl die Beine! Insekten wie die Ameise haben 6 Beine, Spinnen haben 8. Eine Spinne ist also kein Insekt."
+    },
+    {
+      "img": "🦔❄️",
+      "text": "Jedes Tier hat seinen Trick: Der Igel hält Winterschlaf, und Zugvögel fliegen im Herbst in den Süden."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's, kleiner Tierforscher! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

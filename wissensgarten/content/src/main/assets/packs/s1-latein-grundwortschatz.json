@@ -12,6 +12,28 @@
   "emoji": "🏛️",
   "tier": "free",
   "description": "Wichtige lateinische Grundwörter – Verben, Nomen, Adjektive – mit deutscher Bedeutung.",
+  "intro": [
+    {
+      "img": "📺👁️",
+      "text": "Wusstest du, dass „video“ ein lateinisches Wort ist? Es heißt „ich sehe“! Und „audio“ bedeutet „ich höre“."
+    },
+    {
+      "img": "🏛️📜",
+      "text": "Latein wurde im alten Rom gesprochen und steckt in vielen Sprachen – auch im Deutschen und Englischen. Wer Latein lernt, versteht plötzlich viele Fremdwörter."
+    },
+    {
+      "img": "🔗🐠",
+      "text": "Lerntrick: Such zu jedem Wort ein bekanntes Fremdwort. aqua → Aquarium, terra → Terrasse, scribere → Skript. So bleibt die Bedeutung hängen!"
+    },
+    {
+      "img": "📝👂",
+      "text": "Noch ein Trick: Sprich die Wörter laut und schreib sie auf. Was du siehst, hörst und schreibst, merkst du dir dreifach."
+    },
+    {
+      "img": "🦉🚀",
+      "text": "Bald verstehst du, was die alten Römer gesagt haben. Age! – das heißt: Los!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

@@ -11,6 +11,28 @@
   "emoji": "💃",
   "tier": "free",
   "description": "Wichtige spanische Wörter und Sätze für den Einstieg: Deutsch → Spanisch.",
+  "intro": [
+    {
+      "img": "🌎💃",
+      "text": "Wusstest du, dass Spanisch in rund 20 Ländern Amtssprache ist? Mehr als 450 Millionen Menschen sprechen es als Muttersprache!"
+    },
+    {
+      "img": "🔤👄",
+      "text": "Gute Nachricht: Spanisch spricht man fast so, wie man es schreibt. Nur ein paar Regeln merken, z. B.: Das h bleibt stumm, das rr wird gerollt."
+    },
+    {
+      "img": "🏡🐱",
+      "text": "Lerntrick: Lern jedes Nomen mit Artikel – el oder la. Oft hilft die Endung: -o ist meist männlich (el gato), -a meist weiblich (la casa). Ausnahmen gibt’s aber!"
+    },
+    {
+      "img": "🗣️🔁",
+      "text": "Noch ein Trick: Sprich die Wörter laut nach und bau kleine Sätze damit, z. B. „Tengo un perro.“ – „Ich habe einen Hund.“"
+    },
+    {
+      "img": "☀️🚀",
+      "text": "¡Vamos! Lass uns mit deinen ersten spanischen Wörtern loslegen."
+    }
+  ],
   "cards": [
     {
       "id": "001",

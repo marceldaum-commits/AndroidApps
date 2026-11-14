@@ -15,6 +15,28 @@
   "emoji": "💡",
   "tier": "free",
   "description": "Bunter Quiz-Mix aus Literatur, Wissenschaft, Natur, Sport und Alltag – ideal auch für Eltern.",
+  "intro": [
+    {
+      "img": "💥🏅",
+      "text": "Verblüffend: Alfred Nobel wurde mit Dynamit reich – und stiftete von seinem Vermögen die Nobelpreise. Wissen geht oft überraschende Wege!"
+    },
+    {
+      "img": "📚🔬⚽",
+      "text": "Hier geht’s quer durch Literatur, Wissenschaft, Natur, Sport und Alltag. Jede Frage ist ein Puzzleteil für dein Weltwissen."
+    },
+    {
+      "img": "🧠🔗",
+      "text": "Lerntrick: Verknüpfe Namen mit Bildern! Goethe → Faust, Schiller → Die Räuber. Je verrückter dein inneres Bild, desto fester sitzt es."
+    },
+    {
+      "img": "🥇⚗️",
+      "text": "Eselsbrücke: Gold heißt auf Latein „aurum“ – darum Au. Und Wasserstoff (H) ist das leichteste Element und steht ganz vorn im Periodensystem."
+    },
+    {
+      "img": "🐝🚀",
+      "text": "Rate ruhig mutig – auch Fehler helfen beim Merken. Los geht’s mit dem großen Mix!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

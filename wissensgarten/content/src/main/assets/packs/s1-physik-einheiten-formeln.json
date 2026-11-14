@@ -12,6 +12,28 @@
   "emoji": "⚡",
   "tier": "free",
   "description": "SI-Einheiten, physikalische Größen und die wichtigsten Grundformeln.",
+  "intro": [
+    {
+      "img": "🍫⚖️",
+      "text": "Eine 100-g-Tafel Schokolade drückt mit etwa 1 Newton auf deine Hand – so fühlt sich die Einheit der Kraft an!"
+    },
+    {
+      "img": "📏🔤",
+      "text": "Einheiten sind wie eine gemeinsame Sprache: Nur wenn alle in Meter, Kilogramm und Sekunde messen, verstehen sich Forscher auf der ganzen Welt."
+    },
+    {
+      "img": "💧🚰",
+      "text": "Strom ist wie Wasser im Rohr: Die Spannung U ist der Druck, die Stromstärke I die Wassermenge, der Widerstand R ein enges Rohr."
+    },
+    {
+      "img": "🧠⚡",
+      "text": "Eselsbrücke: „URI“ – U = R · I. Und für die Leistung „PUI“ – P = U · I."
+    },
+    {
+      "img": "🐝🚀",
+      "text": "Newton, Joule, Watt – mit den richtigen Einheiten löst du jede Physikaufgabe. Starte jetzt!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

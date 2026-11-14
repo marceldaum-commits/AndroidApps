@@ -14,6 +14,28 @@
   "emoji": "🎻",
   "tier": "free",
   "description": "Berühmte Komponisten, Instrumente und Notenwerte sowie große Gemälde und ihre Künstler.",
+  "intro": [
+    {
+      "img": "🎼👂",
+      "text": "Verblüffend: Beethoven schrieb seine 9. Sinfonie mit der „Ode an die Freude“, als er fast völlig taub war!"
+    },
+    {
+      "img": "🎹🖼️",
+      "text": "Hier triffst du große Komponisten, lernst Instrumente und Notenwerte kennen – und berühmte Gemälde samt den Künstlern dahinter."
+    },
+    {
+      "img": "🍕🎵",
+      "text": "Notentrick: Die ganze Note ist eine Pizza. Halbe = 2 Stücke, Viertel = 4, Achtel = 8. Ein Punkt hinter der Note verlängert sie um die Hälfte."
+    },
+    {
+      "img": "🎻📅",
+      "text": "Zeitstrahl-Hilfe: Bach (Barock) → Mozart (Klassik) → Beethoven (Brücke zur Romantik). Mozart kam aus Salzburg, Beethoven aus Bonn."
+    },
+    {
+      "img": "🎨🐝",
+      "text": "Spitz die Ohren und öffne die Augen – los geht’s mit Musik und Kunst!"
+    }
+  ],
   "cards": [
     {
       "id": "001",

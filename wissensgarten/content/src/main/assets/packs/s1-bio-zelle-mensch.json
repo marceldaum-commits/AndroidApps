@@ -12,6 +12,28 @@
   "emoji": "🔬",
   "tier": "free",
   "description": "Zellbestandteile, Organe, Verdauung, Blutkreislauf und Sinnesorgane.",
+  "intro": [
+    {
+      "img": "🔬✨",
+      "text": "Dein Körper besteht aus rund 30 Billionen Zellen – die meisten davon sind rote Blutkörperchen, die Sauerstoff durch dich hindurchtragen!"
+    },
+    {
+      "img": "🏭🏢",
+      "text": "Eine Zelle ist wie eine Fabrik: Der Zellkern ist das Chefbüro mit den Bauplänen, die Mitochondrien liefern Energie, die Zellmembran ist der Pförtner."
+    },
+    {
+      "img": "❤️🔁",
+      "text": "Dein Herz schlägt etwa 100 000-mal am Tag und pumpt das Blut im Kreis – wie ein Lieferdienst, der Sauerstoff und Nährstoffe überall hinbringt."
+    },
+    {
+      "img": "🧠💡",
+      "text": "Eselsbrücke: Arterien führen vom Herzen weg – „A wie ab“. Venen führen zum Herzen hin."
+    },
+    {
+      "img": "🐝🚀",
+      "text": "Zellen, Organe, Sinne – entdecke die spannendste Maschine der Welt: dich selbst! Los geht's!"
+    }
+  ],
   "cards": [
     {
       "id": "001",
