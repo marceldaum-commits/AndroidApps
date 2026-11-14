@@ -1,6 +1,6 @@
 {
   "id": "gs-mathe-groessen",
-  "version": 2,
+  "version": 3,
   "title": "Uhr, Geld und Maße",
   "subject": "mathe",
   "grades": [
@@ -230,7 +230,7 @@
         "30 Minuten",
         "34 Minuten"
       ],
-      "img": "🕘"
+      "img": "⏳"
     },
     {
       "id": "019",
@@ -287,7 +287,7 @@
         "halb fünf",
         "Viertel vor fünf"
       ],
-      "img": "🕓🍰"
+      "img": "⏰🍰"
     },
     {
       "id": "024",
@@ -298,7 +298,7 @@
         "halb sechs",
         "Viertel vor fünf"
       ],
-      "img": "🕠⬅️"
+      "img": "⏰⬅️"
     },
     {
       "id": "025",

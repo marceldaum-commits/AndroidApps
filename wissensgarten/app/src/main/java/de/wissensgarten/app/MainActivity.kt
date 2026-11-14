@@ -50,6 +50,7 @@ import de.wissensgarten.app.ui.fx.LocalWind
 import de.wissensgarten.app.ui.fx.rememberWind
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import androidx.compose.ui.graphics.Color
 
 object Routes {
     const val ONBOARDING = "einrichtung"
@@ -74,8 +75,6 @@ object Routes {
     const val RADIO = "radio"
     const val SAFARI = "safari"
     const val LOCAL_DUEL = "zu-zweit"
-    const val WORKSHEET = "arbeitsblatt/{bed}"
-    fun worksheet(bed: String) = "arbeitsblatt/$bed"
     const val CHAPTER = "kapitel/{n}"
     fun chapter(n: Int) = "kapitel/$n"
     const val DUEL_PACK = "duell-paket"
@@ -91,6 +90,21 @@ private val TABS = listOf(
     Tab(Routes.FAMILY, "Familie", Icons.Filled.Group),
     Tab(Routes.SETTINGS, "Mehr", Icons.Filled.Settings),
 )
+
+/** Nur zurück, wenn der Bildschirm gerade aktiv ist – ein Doppeltipp auf „Zurück“ darf nicht den Garten wegnehmen. */
+fun androidx.navigation.NavController.popSafe(): Boolean {
+    val cur = currentBackStackEntry ?: return false
+    if (cur.lifecycle.currentState != androidx.lifecycle.Lifecycle.State.RESUMED || previousBackStackEntry == null) return false
+    return popBackStack()
+}
+
+/** Für Start-Knöpfe: ein Doppeltipp startet nicht zwei Runden übereinander. */
+fun androidx.navigation.NavController.goOnce(route: String) {
+    val cur = currentBackStackEntry
+    if (cur != null && cur.lifecycle.currentState != androidx.lifecycle.Lifecycle.State.RESUMED) return
+    if (cur?.destination?.route == route) return
+    navigate(route) { launchSingleTop = true }
+}
 
 class MainActivity : ComponentActivity() {
     private val vm: AppViewModel by viewModels()
@@ -108,7 +122,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         waterRequest.value = intent?.getBooleanExtra(EXTRA_WATER, false) == true
         readDuelIntent(intent)
-        vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
+        if (savedInstanceState == null) vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         val startRoute = if (vm.onboarded.value) Routes.GARDEN else Routes.ONBOARDING
 
         setContent {
@@ -137,8 +151,10 @@ class MainActivity : ComponentActivity() {
                   de.wissensgarten.app.ui.fx.LocalVoice provides (application as WissensgartenApp).voice,
                   de.wissensgarten.app.ui.fx.LocalReadAloud provides readAloud,
                   de.wissensgarten.app.ui.fx.LocalSyllables provides syllablesOn,
+                  de.wissensgarten.app.ui.fx.LocalVibration provides vm.settings.vibration.collectAsStateWithLifecycle().value,
               ) {
-                Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                // imePadding: Eingabefelder rutschen über die Tastatur (bei Randlos-Darstellung nötig)
+                Surface(Modifier.fillMaxSize().imePadding(), color = MaterialTheme.colorScheme.background) {
                     val nav = rememberNavController()
                     AppNav(nav, startRoute)
                     // Widget-Tipp: direkt in die Gieß-Runde
@@ -269,15 +285,15 @@ class MainActivity : ComponentActivity() {
                     })
                 }
                 composable(Routes.ADD_PROFILE) {
-                    OnboardingScreen(packs, addingProfile = true, onCancel = { nav.popBackStack() }) { name, avatar, level, ids, own ->
+                    OnboardingScreen(packs, addingProfile = true, onCancel = { nav.popSafe() }) { name, avatar, level, ids, own ->
                         vm.addProfile(name, avatar, level, ids, own)
-                        nav.popBackStack(); goTab(Routes.GARDEN)
+                        nav.popSafe(); goTab(Routes.GARDEN)
                     }
                 }
                 composable(Routes.TUTORIAL) { entry ->
                     val first = entry.arguments?.getString("erstes") == "true"
                     TutorialScreen {
-                        if (first) nav.navigate(Routes.GARDEN) { popUpTo(0) { inclusive = true } } else nav.popBackStack()
+                        if (first) nav.navigate(Routes.GARDEN) { popUpTo(0) { inclusive = true } } else nav.popSafe()
                     }
                 }
                 composable(Routes.GARDEN) {
@@ -291,13 +307,13 @@ class MainActivity : ComponentActivity() {
                     WithProfile(profile) { p ->
                         GardenScreen(
                             profile = p, beds = beds, now = now, seedsLeft = vm.seedsLeft(p),
-                            onWater = { if (vm.startSession()) nav.navigate(Routes.REVIEW) },
+                            onWater = { if (vm.startSession()) nav.goOnce(Routes.REVIEW) },
                             onOpenBed = { nav.navigate(Routes.bed(it)) },
                             onProfile = { goTab(Routes.FAMILY) },
                             onShop = { goTab(Routes.SHOP) },
                             decos = decos,
                             onDuel = { nav.navigate(Routes.DUEL) },
-                            friends = friends, chestsWaiting = waiting, onChest = { nav.navigate(Routes.CHEST) },
+                            friends = friends, chestsWaiting = waiting, onChest = { nav.goOnce(Routes.CHEST) },
                             surprises = remember(rev, profile) { vm.surprises() },
                             festivalGreeting = vm.festival()?.greeting,
                             onSurprise = { vm.collectSurprise(it) },
@@ -312,27 +328,35 @@ class MainActivity : ComponentActivity() {
                                     plans.forEach { plan ->
                                         de.wissensgarten.app.ui.exam.ExamCard(
                                             plan, beds.firstOrNull { it.bed.id == plan.exam.bedId }?.bed?.name ?: "",
-                                            onStart = { if (vm.startExamSession(plan.exam.id)) nav.navigate(Routes.REVIEW) },
+                                            onStart = { if (vm.startExamSession(plan.exam.id)) nav.goOnce(Routes.REVIEW) },
                                             onFeedback = { vm.removeExam(plan.exam.id) },
                                             onDelete = { vm.removeExam(plan.exam.id) },
                                         )
                                     }
-                                    if (plans.isEmpty() && (profile?.level ?: 0) in 1..13 && beds.isNotEmpty())
-                                        de.wissensgarten.app.ui.exam.ExamPromptCard { addExam = true }
-                                    else if (plans.isNotEmpty()) TextButton(onClick = { addExam = true }, modifier = Modifier.padding(horizontal = 16.dp)) { Text("🗓️ Weiteren Termin eintragen") }
+                                    if (plans.isNotEmpty()) TextButton(onClick = { addExam = true }, modifier = Modifier.padding(horizontal = 16.dp)) { Text("📝 Weiteren Termin eintragen") }
                                     if (addExam) de.wissensgarten.app.ui.exam.AddExamDialog(
                                         beds.map { it.bed.id to "${it.bed.emoji} ${it.bed.name}" }, null,
                                         onDismiss = { addExam = false },
                                         onAdd = { b, t, d -> vm.addExam(b, t, d); addExam = false },
                                     )
-                                    StoryEntryCard(newCh) { nav.navigate(Routes.STORY) }
-                                    if (beds.isNotEmpty()) de.wissensgarten.app.ui.radio.RadioEntryCard { nav.navigate(Routes.RADIO) }
-                                    de.wissensgarten.app.ui.safari.SafariEntryCard { nav.navigate(Routes.SAFARI) }
+                                    // Alles Weitere als kompakte Kachelreihe – „Gießen“ bleibt oben sichtbar
                                     val mix = remember(beds, packs) { vm.mixCandidates() }
-                                    if (mix != null) MixEntryCard(mix.first.bed.name, mix.second.bed.name) { if (vm.startMixed()) nav.navigate(Routes.REVIEW) }
+                                    de.wissensgarten.app.ui.garden.DiscoverRow(buildList {
+                                        add(de.wissensgarten.app.ui.garden.DiscoverItem("📖", "Abenteuer",
+                                            newCh?.let { "Neues Kapitel: ${it.title}" } ?: "Die Geschichte von der Wissensblume", Color(0xFFEDE7F6),
+                                            badge = if (newCh != null) "NEU" else null) { nav.navigate(Routes.STORY) })
+                                        if (mix != null) add(de.wissensgarten.app.ui.garden.DiscoverItem("🔀", "Mischrunde",
+                                            "${mix.first.bed.name} × ${mix.second.bed.name} – züchte eine Kreuzung!", Color(0xFFE0F7FA)) { if (vm.startMixed()) nav.goOnce(Routes.REVIEW) })
+                                        if (plans.isEmpty() && (profile?.level ?: 0) in 1..13 && beds.isNotEmpty()) add(de.wissensgarten.app.ui.garden.DiscoverItem("📝", "Klassenarbeit?",
+                                            "Eintragen – Brummi plant, damit am Tag X alles sitzt.", Color(0xFFFFF8E1)) { addExam = true })
+                                        if (beds.isNotEmpty()) add(de.wissensgarten.app.ui.garden.DiscoverItem("🎧", "Brummi-Radio",
+                                            "Lernen ohne Bildschirm – zuhören und laut antworten.", Color(0xFFE8EAF6)) { nav.navigate(Routes.RADIO) })
+                                        add(de.wissensgarten.app.ui.garden.DiscoverItem("🔭", "Wissens-Safari",
+                                            "Dinge fotografieren und benennen.", Color(0xFFE8F5E9)) { nav.navigate(Routes.SAFARI) })
+                                    })
                                 }
                             },
-                            onGoodNight = if (remember(rev) { vm.goodNightDoneToday() }) null else { { if (vm.startGoodNight()) nav.navigate(Routes.REVIEW) } },
+                            onGoodNight = if (remember(rev) { vm.goodNightDoneToday() }) null else { { if (vm.startGoodNight()) nav.goOnce(Routes.REVIEW) } },
                             reminderPrompt = if (asked) null else {
                                 { ReminderPromptCard(hour, onYes = askPermission, onNo = { vm.setReminder(false) }) }
                             },
@@ -365,7 +389,7 @@ class MainActivity : ComponentActivity() {
                                 val opened = remember(rev, p) { vm.chestsOpened() }
                                 val earned = remember(rev, beds) { vm.chestsEarned() }
                                 val inGarden = remember(rev, p) { vm.gardenFriends().map { it.id }.toSet() }
-                                FriendsAlbum(opened, earned, inGarden, onToggle = { vm.toggleGardenFriend(it) }, onOpenChest = { nav.navigate(Routes.CHEST) },
+                                FriendsAlbum(opened, earned, inGarden, onToggle = { vm.toggleGardenFriend(it) }, onOpenChest = { nav.goOnce(Routes.CHEST) },
                                     hybrids = remember(rev) { vm.hybrids() },
                                     crystals = remember(beds) { beds.flatMap { b -> b.cards.filter { de.wissensgarten.core.model.Crystals.isCrystal(it.memory) }.map { it.front to it.back } } },
                                     crystalsOnTheWay = remember(beds) { beds.sumOf { b -> b.cards.count { c -> de.wissensgarten.core.model.Crystals.progress(c.memory)?.let { it < 1.0 } == true } } })
@@ -377,24 +401,26 @@ class MainActivity : ComponentActivity() {
                     val pid = entry.arguments?.getString("pack")
                     val pack = packs.firstOrNull { it.id == pid }
                     if (pack == null) LaunchedEffect(Unit) { nav.popBackStack() } else IntroScreen(pack) {
-                        vm.markIntroSeen(pack.id); nav.popBackStack()
+                        vm.markIntroSeen(pack.id); nav.popSafe()
                     }
                 }
                 composable(Routes.LOCAL_DUEL) {
                     // Thema: ein Paket aus dem Garten des aktiven Profils (sonst ein passendes für die Stufe)
                     val pack = remember {
                         val mine = beds.mapNotNull { b -> b.bed.packId?.let { pid -> packs.firstOrNull { it.id == pid } } }
-                        (mine.ifEmpty { packs.filter { (profile?.level ?: 0) in it.grades }.ifEmpty { packs } }).random()
+                        (mine.ifEmpty { packs.filter { (profile?.level ?: 0) in it.grades }.ifEmpty { packs } }).randomOrNull()
                     }
+                    // Pakete noch nicht geladen (z. B. nach Neustart der App) → zurück statt Absturz
+                    if (pack == null) { LaunchedEffect(Unit) { nav.popBackStack() }; return@composable }
                     val qs = remember(pack) { de.wissensgarten.core.model.Duels.questions(pack, kotlin.random.Random.nextInt()) }
-                    de.wissensgarten.app.ui.duel.LocalDuelScreen(qs, "${pack.emoji} ${pack.title}", onClose = { nav.popBackStack() }, onDew = { vm.addDew(it) })
+                    de.wissensgarten.app.ui.duel.LocalDuelScreen(qs, "${pack.emoji} ${pack.title}", onClose = { nav.popSafe() }, onDew = { vm.addDew(it) })
                 }
                 composable(Routes.SAFARI) {
                     de.wissensgarten.app.ui.safari.SafariScreen(
                         found = remember { vm.safariCount() },
                         englishDefault = (profile?.level ?: 0) !in 1..2,
                         onPlant = { w, en, bmp -> vm.addSafariFind(w, en, bmp) },
-                        onBack = { nav.popBackStack() },
+                        onBack = { nav.popSafe() },
                     )
                 }
                 composable(Routes.RADIO) {
@@ -407,7 +433,7 @@ class MainActivity : ComponentActivity() {
                         peers = beds.associate { b -> b.bed.id to b.cards.map { it.back }.distinct() },
                         subjects = beds.associate { b -> b.bed.id to b.bed.packId?.let { pid -> packs.firstOrNull { it.id == pid }?.subject } },
                         onRate = { c, r, d -> vm.review(c, r, d) },
-                        onClose = { vm.endSession(); nav.popBackStack(); app.sync.syncSoon(5_000) },
+                        onClose = { vm.endSession(); nav.popSafe(); app.sync.syncSoon(5_000) },
                     )
                 }
                 composable(Routes.KLASSE) {
@@ -416,27 +442,17 @@ class MainActivity : ComponentActivity() {
                         initial = initial,
                         onDecode = { de.wissensgarten.core.model.ClassCodes.decode(it) },
                         onPlant = { s -> vm.importClassSet(s) { id -> nav.navigate(Routes.bed(id)) { popUpTo(Routes.KLASSE) { inclusive = true } } } },
-                        onBack = { nav.popBackStack() },
-                    )
-                }
-                composable(Routes.WORKSHEET) { entry ->
-                    val id = entry.arguments?.getString("bed") ?: ""
-                    val bed = beds.firstOrNull { it.bed.id == id }?.bed
-                    de.wissensgarten.app.ui.klasse.WorksheetScreen(
-                        bedName = bed?.name ?: "Beet",
-                        lexicon = { vm.lexicon },
-                        onAdd = { vm.addCardsTo(id, it) },
-                        onBack = { nav.popBackStack() },
+                        onBack = { nav.popSafe() },
                     )
                 }
                 composable(Routes.HYBRID) {
                     val h = remember { vm.consumeNewHybrid() }
-                    if (h == null) LaunchedEffect(Unit) { nav.popBackStack() } else HybridReveal(h) { nav.popBackStack() }
+                    if (h == null) LaunchedEffect(Unit) { nav.popBackStack() } else HybridReveal(h) { nav.popSafe() }
                 }
                 composable(Routes.STORY) {
                     val rev by vm.adventureRev.collectAsStateWithLifecycle()
                     StoryScreen(remember(beds) { vm.grownPlants() }, remember(rev) { vm.chaptersRead() },
-                        onBack = { nav.popBackStack() }, onRead = { nav.navigate(Routes.chapter(it.number)) })
+                        onBack = { nav.popSafe() }, onRead = { nav.navigate(Routes.chapter(it.number)) })
                 }
                 composable(Routes.CHAPTER) { entry ->
                     val n = entry.arguments?.getString("n")?.toIntOrNull()
@@ -451,18 +467,18 @@ class MainActivity : ComponentActivity() {
                             nav.popBackStack(Routes.STORY, inclusive = true)
                             if (vm.startSession()) nav.navigate(Routes.REVIEW) else nav.navigate(Routes.SHOP)
                         },
-                        onList = { nav.popBackStack() },
+                        onList = { nav.popSafe() },
                     )
                 }
                 composable(Routes.CHEST) {
-                    ChestReveal(onOpen = { vm.openChest() }, onClose = { nav.popBackStack() })
+                    ChestReveal(onOpen = { vm.openChest() }, onClose = { nav.popSafe() })
                 }
                 composable(Routes.DUEL) {
                     val history by vm.duelHistory.collectAsStateWithLifecycle()
                     DuelHubScreen(
                         myName = profile?.name ?: "",
                         packs = packs, history = history, preview = vm.currentDuel,
-                        onBack = { nav.popBackStack() },
+                        onBack = { nav.popSafe() },
                         onNew = { nav.navigate(Routes.DUEL_PACK) },
                         onCode = vm::openDuelCode,
                         onPlay = { d -> vm.showDuel(d); nav.navigate(Routes.DUEL_PLAY) },
@@ -492,7 +508,7 @@ class MainActivity : ComponentActivity() {
                     if (d == null || pack == null) {
                         Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.Center) {
                             Text("Dieses Wissenspaket gibt es in deiner App-Version nicht. Bitte aktualisiere den Wissensgarten.")
-                            TextButton(onClick = { nav.popBackStack() }) { Text("Zurück") }
+                            TextButton(onClick = { nav.popSafe() }) { Text("Zurück") }
                         }
                     } else DuelPlayScreen(
                         duel = d, pack = pack, myName = profile?.name ?: "Ich",
@@ -517,20 +533,25 @@ class MainActivity : ComponentActivity() {
                         onLocalDuel = { nav.navigate(Routes.LOCAL_DUEL) },
                         onPostcard = { id ->
                             scope.launch {
-                                val d = vm.keepsakeData(id)
-                                val f = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
-                                    de.wissensgarten.app.ui.share.Keepsakes.savePng(this@MainActivity, de.wissensgarten.app.ui.share.Keepsakes.postcard(d), "Postkarte-${d.name}.png")
-                                }
-                                de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "image/png", "💌 Grüße aus ${d.name}s Wissensgarten! 🌻")
+                                runCatching {
+                                    val d = vm.keepsakeData(id)
+                                    val f = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                                        de.wissensgarten.app.ui.share.Keepsakes.savePng(this@MainActivity, de.wissensgarten.app.ui.share.Keepsakes.postcard(d),
+                                            "Postkarte-${de.wissensgarten.app.ui.share.Keepsakes.safe(d.name)}.png")
+                                    }
+                                    de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "image/png", "💌 Grüße aus ${d.name}s Wissensgarten! 🌻")
+                                }.onFailure { android.widget.Toast.makeText(this@MainActivity, "Die Postkarte konnte nicht erstellt werden.", android.widget.Toast.LENGTH_SHORT).show() }
                             }
                         },
                         onCertificate = { id ->
                             scope.launch {
-                                val d = vm.keepsakeData(id)
-                                val f = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
-                                    de.wissensgarten.app.ui.share.Keepsakes.certificatePdf(this@MainActivity, d)
-                                }
-                                de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "application/pdf", "🏅 Urkunde für ${d.name} aus dem Wissensgarten")
+                                runCatching {
+                                    val d = vm.keepsakeData(id)
+                                    val f = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                                        de.wissensgarten.app.ui.share.Keepsakes.certificatePdf(this@MainActivity, d)
+                                    }
+                                    de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "application/pdf", "🏅 Urkunde für ${d.name} aus dem Wissensgarten")
+                                }.onFailure { android.widget.Toast.makeText(this@MainActivity, "Die Urkunde konnte nicht erstellt werden.", android.widget.Toast.LENGTH_SHORT).show() }
                             }
                         },
                     )
@@ -556,6 +577,7 @@ class MainActivity : ComponentActivity() {
                             update = upd, autoUpdate = autoUpd, onAutoUpdate = { vm.settings.setAutoUpdate(it) },
                             music = vm.settings.music.collectAsStateWithLifecycle().value, onMusic = { vm.settings.setMusic(it) },
                             syllables = vm.settings.syllables.collectAsStateWithLifecycle().value, onSyllables = { vm.settings.setSyllables(it) },
+                            vibration = vm.settings.vibration.collectAsStateWithLifecycle().value, onVibration = { vm.settings.setVibration(it) },
                             syncCard = { de.wissensgarten.app.ui.settings.SyncSectionLive((application as WissensgartenApp).sync) },
                         )
                     }
@@ -574,20 +596,19 @@ class MainActivity : ComponentActivity() {
                         Box(Modifier.fillMaxSize())
                     } else BedScreen(
                         data = data, now = now, seedsLeft = vm.seedsLeft(),
-                        onBack = { nav.popBackStack() },
-                        onWater = { if (vm.startSession(data.bed.id)) nav.navigate(Routes.REVIEW) },
+                        onBack = { nav.popSafe() },
+                        onWater = { if (vm.startSession(data.bed.id)) nav.goOnce(Routes.REVIEW) },
                         onAddCard = { f, b, i -> vm.addCard(data.bed.id, f, b, i) },
                         onDeleteCard = { vm.deleteCard(it) },
-                        onDeleteBed = { nav.popBackStack(); vm.deleteBed(data.bed.id) },
+                        onDeleteBed = { nav.popSafe(); vm.deleteBed(data.bed.id) },
                         ownedSpecies = inventory.map { it.itemId },
                         onSpecies = { vm.setBedSpecies(data.bed.id, it) },
-                        onWorksheet = { nav.navigate(Routes.worksheet(data.bed.id)) },
                         classSet = { vm.classSetOf(data.bed.id) },
                         path = {
                             val stations = remember(beds, rev) { vm.stations(data.bed.id) }
                             AdventurePathView(
                                 stations,
-                                onStation = { st -> if (vm.startStation(data.bed.id, st.index)) nav.navigate(Routes.REVIEW) },
+                                onStation = { st -> if (vm.startStation(data.bed.id, st.index)) nav.goOnce(Routes.REVIEW) },
                                 onIntro = pack?.takeIf { it.intro.isNotEmpty() }?.let { pk -> { nav.navigate(Routes.intro(pk.id)) } },
                             )
                         },
@@ -606,11 +627,14 @@ class MainActivity : ComponentActivity() {
                         subjects = beds.associate { b -> b.bed.id to b.bed.packId?.let { pid -> packs.firstOrNull { it.id == pid }?.subject } },
                         onBonus = { vm.addDew(it) },
                         onClose = {
-                            vm.endSession(); nav.popBackStack()
-                            (application as WissensgartenApp).sync.syncSoon(minGapMs = 5_000)
-                            // Truhen-Station geschafft? Dann gleich öffnen.
-                            if (vm.newHybrid != null) nav.navigate(Routes.HYBRID)
-                            else if (vm.chestsEarned() > vm.chestsOpened()) nav.navigate(Routes.CHEST)
+                            // Doppeltipp auf „Schließen“: nur einmal zurück und nur einmal Truhe/Kreuzung öffnen
+                            if (nav.popSafe()) {
+                                vm.endSession()
+                                (application as WissensgartenApp).sync.syncSoon(minGapMs = 5_000)
+                                // Truhen-Station geschafft? Dann gleich öffnen.
+                                if (vm.newHybrid != null) nav.navigate(Routes.HYBRID)
+                                else if (vm.chestsEarned() > vm.chestsOpened()) nav.navigate(Routes.CHEST)
+                            }
                         },
                     )
                 }

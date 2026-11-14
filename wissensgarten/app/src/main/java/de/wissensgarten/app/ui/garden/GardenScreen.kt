@@ -107,7 +107,9 @@ fun GardenScreen(
                     tip >= 0 -> Mood.HAPPY to BrummiSays.pick(BrummiSays.tips, tip)
                     festivalGreeting != null && surprises.isNotEmpty() -> Mood.CHEER to festivalGreeting
                     night -> Mood.SLEEP to "Zzz … bis morgen!"
-                    thirsty > 0 -> Mood.THINK to "${thirsty} ${if (thirsty == 1) "Pflanze hat" else "Pflanzen haben"} Durst!"
+                    // Die Zahl steht schon auf der Gieß-Karte – Brummi ermuntert lieber (wechselt täglich)
+                    thirsty > 0 -> Mood.HAPPY to listOf("Komm, wir gießen zusammen! 💧", "Ich hab die Gießkanne schon gefüllt!",
+                        "Ein paar Minuten – und alles blüht wieder! 🌸", "Deine Pflanzen winken dir schon zu! 👋")[Math.floorMod(de.wissensgarten.core.model.Scheduler.localDay(now).toInt(), 4)]
                     cards.isEmpty() -> Mood.HAPPY to "Hallo! Ich bin Brummi 🐝"
                     else -> Mood.HAPPY to "Dein Garten blüht! 🌸"
                 }
@@ -131,6 +133,8 @@ fun GardenScreen(
                 }
             }
         }
+        // Das Wichtigste zuerst: Gießen direkt unter dem Garten
+        item { Box(Modifier.padding(horizontal = 16.dp)) { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) } }
         if (onGoodNight != null && cards.any { !it.memory.isSeed } && java.util.Calendar.getInstance().apply { timeInMillis = now }.get(java.util.Calendar.HOUR_OF_DAY) >= 18) item {
             Card(
                 onClick = onGoodNight, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
@@ -164,7 +168,6 @@ fun GardenScreen(
             }
         }
         if (reminderPrompt != null && cards.any { !it.memory.isSeed }) item { Box(Modifier.padding(horizontal = 16.dp)) { reminderPrompt() } }
-        item { Box(Modifier.padding(horizontal = 16.dp)) { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) } }
         if (beds.isEmpty()) item {
             Box(Modifier.padding(horizontal = 16.dp)) { EmptyGarden(onShop) }
         }
@@ -210,7 +213,7 @@ private fun WaterHero(thirsty: Int, seeds: Int, nextInDays: Double?, onWater: ()
                 Text("$thirsty", style = BigNumber, color = MaterialTheme.colorScheme.onPrimaryContainer)
                 Text("${plantsWord(thirsty)} ${if (thirsty == 1) "hat" else "haben"} Durst", style = MaterialTheme.typography.titleLarge)
                 Text(
-                    "Gieß sie, bevor das Wissen verblasst." + if (seeds > 0) " Dazu $seeds neue Samen." else "",
+                    "Ein paar Minuten Gießen – und dein Wissen bleibt frisch. 💧" + if (seeds > 0) " Dazu $seeds neue Samen." else "",
                     style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp),
                 )
             } else {
@@ -314,7 +317,7 @@ private fun GardenFriends(friends: List<de.wissensgarten.core.model.Friend>, mod
                         translationY = -(hop + jump.value * 60f) * density
                         scaleX = if (facingRight) -1f else 1f
                     }
-                    .clickable(androidx.compose.foundation.interaction.MutableInteractionSource(), null) {
+                    .clickable(androidx.compose.runtime.remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, null) {
                         sfx?.play(Sound.PLOP, pitch = 1.5f)
                         scope.launch { jump.snapTo(0f); jump.animateTo(1f, androidx.compose.animation.core.tween(180)); jump.animateTo(0f, androidx.compose.animation.core.spring(dampingRatio = 0.4f)) }
                     },

@@ -29,6 +29,10 @@ class Settings(context: Context) {
     val sound: StateFlow<Boolean> = _sound.asStateFlow()
     fun setSound(v: Boolean) { prefs.edit().putBoolean(K_SOUND, v).apply(); _sound.value = v }
 
+    private val _vibration = MutableStateFlow(prefs.getBoolean("vibration", true))
+    val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
+    fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
+
     private val _music = MutableStateFlow(prefs.getBoolean("musik", true))
     val music: StateFlow<Boolean> = _music.asStateFlow()
     fun setMusic(v: Boolean) { prefs.edit().putBoolean("musik", v).apply(); _music.value = v }

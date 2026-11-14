@@ -78,7 +78,7 @@ object Keepsakes {
         val page = doc.startPage(PdfDocument.PageInfo.Builder(595, 842, 1).create())
         drawCertificate(page.canvas, d)
         doc.finishPage(page)
-        val f = File(dir(ctx), "Urkunde-${d.name}.pdf")
+        val f = File(dir(ctx), "Urkunde-${safe(d.name)}.pdf")
         f.outputStream().use { doc.writeTo(it) }
         doc.close()
         return f
@@ -130,6 +130,9 @@ object Keepsakes {
     }
 
     private fun dir(ctx: Context) = File(ctx.cacheDir, "teilen").apply { mkdirs() }
+
+    /** Namen wie „Lena/Ben“ dürfen keinen Dateipfad zerschießen */
+    fun safe(name: String) = name.replace(Regex("[^\\p{L}\\p{N}_-]"), "_").ifBlank { "Garten" }
 
     private fun text(c: Canvas, s: String, x: Float, y: Float, size: Float, color: Int, bold: Boolean = false, center: Boolean = false) {
         val p = Paint(Paint.ANTI_ALIAS_FLAG).apply {

@@ -47,6 +47,7 @@ fun ClapBonus(words: List<String>, onDone: (mistakes: Int) -> Unit) {
     var hint by remember(word) { mutableStateOf("Hör gut zu …") }
     val handScale = remember { Animatable(1f) }
     val pops = remember(word) { parts.map { Animatable(1f) } }
+    var completing by remember(word) { mutableStateOf(false) }
 
     // Vormachen: Silbe für Silbe sprechen und leuchten lassen
     LaunchedEffect(word) {
@@ -63,12 +64,12 @@ fun ClapBonus(words: List<String>, onDone: (mistakes: Int) -> Unit) {
     }
 
     fun clap() {
-        if (demo) return
+        if (demo || completing) return
         sfx?.play(Sound.CLAP)
         scope.launch { handScale.snapTo(0.8f); handScale.animateTo(1f, spring(dampingRatio = 0.3f, stiffness = 700f)) }
         if (lit >= parts.size) {
             // zu viel geklatscht – freundlich nochmal
-            mistakes++; lit = 0; hint = "Ups, eine zu viel! Nochmal von vorn 🙂"; sfx?.play(Sound.PLOP, pitch = 0.7f)
+            mistakes++; lit = 0; hint = "Ups, eine zu viel! Noch mal von vorn 🙂"; sfx?.play(Sound.PLOP, pitch = 0.7f)
             return
         }
         val i = lit
@@ -76,7 +77,8 @@ fun ClapBonus(words: List<String>, onDone: (mistakes: Int) -> Unit) {
         scope.launch { pops[i].snapTo(1.5f); pops[i].animateTo(1f, spring(dampingRatio = 0.35f)) }
         if (lit == parts.size) scope.launch {
             delay(700)
-            if (lit != parts.size) return@launch
+            if (lit != parts.size || completing) return@launch
+            completing = true
             sfx?.play(Sound.CORRECT)
             particles.burst(Burst.SPARKLE, count = 30)
             hint = "${parts.size} Silben – super! 🎉"
@@ -111,7 +113,7 @@ fun ClapBonus(words: List<String>, onDone: (mistakes: Int) -> Unit) {
             Box(
                 Modifier.size(150.dp).graphicsLayer { scaleX = handScale.value; scaleY = handScale.value }
                     .clip(CircleShape).background(if (demo) Color(0xFFF1EDE0) else Color(0xFFFFE082))
-                    .clickable(MutableInteractionSource(), null) { clap() },
+                    .clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) { clap() },
                 contentAlignment = Alignment.Center,
             ) { Text("👏", fontSize = 76.sp) }
         }

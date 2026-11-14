@@ -1,5 +1,8 @@
 package de.wissensgarten.app.ui.garden
 
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -43,7 +46,6 @@ fun BedScreen(
     ownedSpecies: List<String> = listOf(ShopItems.DEFAULT_SPECIES),
     onSpecies: (String) -> Unit = {},
     path: (@Composable () -> Unit)? = null,
-    onWorksheet: () -> Unit = {},
     classSet: (() -> de.wissensgarten.core.model.ClassSet?)? = null,
 ) {
     var shareClass by remember { mutableStateOf<de.wissensgarten.core.model.ClassSet?>(null) }
@@ -63,7 +65,8 @@ fun BedScreen(
                 title = { Text("${bed.emoji} ${bed.name}", maxLines = 1, overflow = TextOverflow.Ellipsis) },
                 navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück") } },
                 actions = {
-                    TextButton(onClick = { pickSpecies = true }) { Text("🌸 Pflanzenart") }
+                    // nur das Symbol – sonst wird der Beet-Name abgeschnitten
+                    IconButton(onClick = { pickSpecies = true }, modifier = Modifier.semantics { contentDescription = "Pflanzenart wählen" }) { Text("🌸", fontSize = 22.sp) }
                     IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Outlined.Delete, "Beet löschen") }
                 },
             )
@@ -107,7 +110,6 @@ fun BedScreen(
                         )
                     }
                     Row(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedButton(onClick = onWorksheet, modifier = Modifier.weight(1f)) { Text("📷 Arbeitsblatt", maxLines = 1) }
                         if (bed.packId == null && classSet != null) OutlinedButton(onClick = { shareClass = classSet() }, modifier = Modifier.weight(1f)) { Text("🏫 Klassen-Code", maxLines = 1) }
                     }
                     if (bed.packId != null) Text(

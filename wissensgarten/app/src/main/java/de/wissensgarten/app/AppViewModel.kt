@@ -93,7 +93,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val picked = (grown.filter { Scheduler.localDay(it.memory.lastReview) == today }.shuffled() +
             grown.filter { Scheduler.isThirsty(it.memory, now) } + grown.shuffled()).distinctBy { it.id }.take(3)
         if (picked.isEmpty()) return false
-        session = picked; sessionCalm = true
+        session = picked; sessionCalm = true; mixPair = null
         profile.value?.let { settings.markGoodNight(it.id, today) }
         return true
     }
@@ -178,7 +178,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun goodNightDoneToday(): Boolean = profile.value?.let { settings.goodNightDay(it.id) == Scheduler.localDay(System.currentTimeMillis()) } ?: true
 
     fun startStation(bedId: String, index: Int): Boolean {
-        sessionCalm = false
+        sessionCalm = false; mixPair = null
         val b = beds.value.firstOrNull { it.bed.id == bedId } ?: return false
         val cards = b.cards.sortedBy { it.sortIndex }.map { it.toStudy() }
         val st = stations(bedId).getOrNull(index) ?: return false
@@ -303,9 +303,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { repo.bedEntity(bedId)?.let { repo.addCards(it, cards) } }
     }
 
-    val lexicon by lazy {
-        de.wissensgarten.core.model.EmojiLexicon.parse(getApplication<Application>().assets.open("emoji_de.tsv").bufferedReader().readText())
-    }
+
 
     fun openDuelCode(text: String): Boolean {
         val d = de.wissensgarten.core.model.Duels.decode(text) ?: return false

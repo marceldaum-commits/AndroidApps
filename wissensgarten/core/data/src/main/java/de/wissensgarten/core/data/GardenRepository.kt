@@ -93,7 +93,7 @@ class GardenRepository(
         ))
     }
 
-    /** Mehrere Karten auf einmal (Klassen-Code, Arbeitsblatt-Foto). */
+    /** Mehrere Karten auf einmal (Klassen-Code, Wissens-Safari). */
     /** @return IDs der neuen Karten (z. B. um ein Foto als Merkbild zuzuordnen) */
     suspend fun addCards(bed: BedEntity, cards: List<de.wissensgarten.core.model.ClassCard>): List<String> {
         val existing = dao.cardsOfBed(bed.id).size

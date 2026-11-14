@@ -24,7 +24,7 @@ object Story {
         Chapter(3, "Schnecki weiß es besser", "🐌", 15, listOf(
             IntroScene("🐌🏃", "Am Wegrand trifft Brummi Schnecki. „Du bist aber langsam!“, lacht Brummi."),
             IntroScene("🐌🧠", "„Langsam ja“, sagt Schnecki, „aber ich vergesse nie etwas. Ich wiederhole jeden Tag ein kleines bisschen.“"),
-            IntroScene("📅💧", "Brummi staunt: Lieber jeden Tag ein paar Minuten gießen als einmal ganz viel. So mag das Gehirn es am liebsten."),
+            IntroScene("☀️💧", "Brummi staunt: Lieber jeden Tag ein paar Minuten gießen als einmal ganz viel. So mag das Gehirn es am liebsten."),
             IntroScene("🌸🧡", "Ein zweites Blütenblatt leuchtet – orange wie Schneckis Haus."),
         )),
         Chapter(4, "Der Nebelwald", "🌲", 30, listOf(

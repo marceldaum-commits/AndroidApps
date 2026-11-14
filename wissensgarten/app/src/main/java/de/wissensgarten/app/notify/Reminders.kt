@@ -75,7 +75,7 @@ object Reminders {
             val total = thirsty.sumOf { it.second }
             val text = if (entries.size == 1) "$total ${if (total == 1) "Pflanze wartet" else "Pflanzen warten"} aufs Gießen. Ein paar Minuten reichen!"
             else thirsty.joinToString(" · ") { "${it.first}: ${it.second}" } + " – jetzt gießen!"
-            return Message(if (total == 1) "🥀 Eine Pflanze hat Durst" else "🥀 $total Pflanzen haben Durst", text)
+            return Message(if (total == 1) "💧 Eine Pflanze freut sich auf Wasser" else "💧 $total Pflanzen freuen sich auf Wasser", text)
         }
         val seeds = entries.filter { it.third > 0 }
         if (seeds.isNotEmpty()) {

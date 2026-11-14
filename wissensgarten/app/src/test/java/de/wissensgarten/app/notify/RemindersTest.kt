@@ -11,13 +11,13 @@ class RemindersTest {
 
     @Test fun thirstyPlantsAreListedPerProfile() {
         val m = Reminders.message(listOf(Triple("Lena", 5, 0), Triple("Ben", 3, 10), Triple("Mama", 0, 0)))!!
-        assertEquals("🥀 8 Pflanzen haben Durst", m.title)
+        assertEquals("💧 8 Pflanzen freuen sich auf Wasser", m.title)
         assertEquals("Lena: 5 · Ben: 3 – jetzt gießen!", m.text)
     }
 
     @Test fun singleProfileGetsFriendlyText() {
         val m = Reminders.message(listOf(Triple("Lena", 1, 0)))!!
-        assertEquals("🥀 Eine Pflanze hat Durst", m.title)
+        assertEquals("💧 Eine Pflanze freut sich auf Wasser", m.title)
         assertTrue(m.text.startsWith("1 Pflanze wartet"))
     }
 

@@ -215,7 +215,7 @@ class ScreenshotTest {
 
     @Test fun gameLetters() = shot("17_buchstabensalat", prepare = { r ->
         r.onAllNodesWithText("P")[0].performClick()
-        r.onAllNodesWithText("A")[0].performClick()
+        r.onAllNodesWithText("a")[0].performClick()
     }) {
         val c = StudyCard("cap", "b", "Hauptstadt von Frankreich?", "Paris", null, null, Memory(3.0, 5.0, 0, 2, 0), "🗼🥐")
         Column(Modifier.padding(16.dp)) { LetterGame(c) {} }
@@ -367,10 +367,6 @@ class ScreenshotTest {
         de.wissensgarten.app.ui.klasse.ClassImportScreen(set, { null }, {}, {})
     }
 
-    @Test fun worksheet() = shot("35_arbeitsblatt") {
-        de.wissensgarten.app.ui.klasse.WorksheetScreen("Englisch Unit 3", { EmojiLexicon(emptyMap()) }, {}, {})
-    }
-
     @Test fun widget() {
         val flowers = listOf(de.wissensgarten.app.widget.Flower(330f, 1f, true), de.wissensgarten.app.widget.Flower(200f, 0.3f, true),
             de.wissensgarten.app.widget.Flower(45f, 0.8f, true), de.wissensgarten.app.widget.Flower(120f, 1f, false))
@@ -520,5 +516,16 @@ class ScreenshotTest {
         val kid = profile.copy(id = "kid", name = "Ben", avatar = "🐸", level = 3, dewdrops = 88)
         val logs = (0 until 40).map { i -> ReviewLogEntity(i.toLong(), listOf("p1", "kid")[i % 2], "c", now - (i % 6) * day, 2, 3.0) }
         FamilyScreen(listOf(profile, kid), "p1", garden, logs, now, {}, {}, familyClaimed = true, familyReward = "Eis essen 🍦")
+    }
+
+    @Test fun gardenHome() = shot("04g_garten_start") {
+        GardenScreen(profile, garden, now, 10, {}, {}, {}, {}, extraCards = {
+            de.wissensgarten.app.ui.garden.DiscoverRow(listOf(
+                de.wissensgarten.app.ui.garden.DiscoverItem("📖", "Abenteuer", "Neues Kapitel: Schnecki weiß es besser", androidx.compose.ui.graphics.Color(0xFFEDE7F6), "NEU") {},
+                de.wissensgarten.app.ui.garden.DiscoverItem("🔀", "Mischrunde", "Englisch × Biologie – züchte eine Kreuzung!", androidx.compose.ui.graphics.Color(0xFFE0F7FA)) {},
+                de.wissensgarten.app.ui.garden.DiscoverItem("📝", "Klassenarbeit?", "Eintragen – Brummi plant, damit am Tag X alles sitzt.", androidx.compose.ui.graphics.Color(0xFFFFF8E1)) {},
+                de.wissensgarten.app.ui.garden.DiscoverItem("🎧", "Brummi-Radio", "Lernen ohne Bildschirm.", androidx.compose.ui.graphics.Color(0xFFE8EAF6)) {},
+            ))
+        })
     }
 }

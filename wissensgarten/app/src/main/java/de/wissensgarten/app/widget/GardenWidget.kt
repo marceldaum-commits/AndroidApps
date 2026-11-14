@@ -79,7 +79,7 @@ class GardenWidget : GlanceAppWidget() {
         val garden = GardenBitmap.render(480, 240, flowers, hour, party)
         val open = Intent(context, MainActivity::class.java)
             .putExtra(MainActivity.EXTRA_WATER, true)
-            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)   // ohne CLEAR_TASK: ein offenes Spiel bleibt erhalten
         provideContent {
             GlanceTheme {
                 val big = LocalSize.current.width >= LARGE.width && LocalSize.current.height >= 170.dp

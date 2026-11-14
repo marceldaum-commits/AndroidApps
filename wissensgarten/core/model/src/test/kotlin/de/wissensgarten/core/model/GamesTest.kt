@@ -37,8 +37,8 @@ class GamesTest {
 
     @Test fun tilesAreShuffledButComplete() {
         val t = Games.letterTiles("Paris", 3)
-        assertEquals("PARIS".toList().sorted(), t.sorted())
-        assertNotEquals("PARIS".toList(), t)
+        assertEquals("Paris".toList().sorted(), t.sorted())
+        assertNotEquals("Paris".toList(), t)
     }
 
     @Test fun swipeShowsTrueOrFalseStatement() {
@@ -74,5 +74,13 @@ class GamesTest {
         val cs = (1..5).map { card("$it", "F$it", "A$it") }
         assertEquals(4, Games.matchPairs(cs)!!.size)
         assertNull(Games.matchPairs(cs.take(3)))
+    }
+
+    @Test fun articlesAndCaseAreNotLeftToSpeech() {
+        assertFalse(Games.speakPossible("die"))
+        assertFalse(Games.speakPossible("la maison"))
+        assertFalse(Games.speakPossible("der Hund"))
+        assertTrue(Games.speakPossible("Hund"))
+        assertEquals(setOf('V', 'o', 'g', 'e', 'l'), Games.letterTiles("Vogel", 1).toSet())
     }
 }

@@ -82,7 +82,7 @@ fun UpdateSection(
                     if (AppUpdater.canInstall(ctx)) AppUpdater.install(ctx, f)
                     else { waitingForPermission = true; AppUpdater.openInstallPermission(ctx) }
                 },
-                onFailure = { state = UpdateState.Failed("Download abgebrochen. Probier es gleich nochmal.") },
+                onFailure = { state = UpdateState.Failed("Download abgebrochen. Probier es gleich noch mal.") },
             )
         }
     }
@@ -115,7 +115,7 @@ fun UpdateSection(
                                 Brummi(Mood.HAPPY, size = 56.dp)
                                 Text("Alles aktuell! Du hast die neueste Version ($installed).", modifier = Modifier.padding(start = 8.dp))
                             }
-                            TextButton(onClick = { check() }) { Text("Nochmal prüfen") }
+                            TextButton(onClick = { check() }) { Text("Noch mal prüfen") }
                         }
                         is UpdateState.Available -> {
                             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -150,7 +150,7 @@ fun UpdateSection(
                         }
                         is UpdateState.Failed -> {
                             Text("😕 ${s.msg}")
-                            TextButton(onClick = { check() }) { Text("Nochmal versuchen") }
+                            TextButton(onClick = { check() }) { Text("Noch mal versuchen") }
                         }
                     }
                 }

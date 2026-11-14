@@ -53,7 +53,7 @@ fun MerkBild(img: String?, modifier: Modifier = Modifier, emojiSize: TextUnit = 
         }
     }
     Row(
-        modifier.clickable(MutableInteractionSource(), null) {
+        modifier.clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) {
             sfx?.play(Sound.PLOP, pitch = 1.3f)
             scope.launch { pops.forEach { launch { it.snapTo(1.35f); it.animateTo(1f, spring(dampingRatio = 0.3f)) } } }
         },

@@ -31,7 +31,8 @@ data class ExamPlan(
  * am Prüfungstag nur ein Aufwärmen. Kein Pauken am Vorabend nötig.
  */
 object ExamPlanner {
-    const val MAX_PER_DAY = 30
+    /** kurze Einheiten: lieber mehrere kleine Runden als eine lange */
+    const val MAX_PER_DAY = 20
     const val MIN_PER_DAY = 5
     /** Ab wann eine Karte „sitzt“: am Prüfungstag mit 90 % Wahrscheinlichkeit gewusst */
     const val READY = 0.9
@@ -98,15 +99,16 @@ object ExamPlanner {
 
     /** Was Brummi zum Stand sagt – ermutigend, nie Druck. */
     fun brummiSays(p: ExamPlan): String = when (p.phase) {
-        ExamPlan.Phase.PAST -> "Wie lief ${p.exam.title}?"
-        ExamPlan.Phase.EXAM_DAY -> "Heute ist ${p.exam.title}! Kurz aufwärmen – du schaffst das! 🍀"
+        ExamPlan.Phase.PAST -> "Wie ist es gelaufen? Erzähl's mir!"
+        ExamPlan.Phase.EXAM_DAY -> "Heute ist der große Tag! Kurz aufwärmen – du schaffst das! 🍀"
         ExamPlan.Phase.FINAL_DAY -> if (p.fitness >= 0.8) "Morgen ist es so weit – du bist schon richtig fit! Eine kleine Generalprobe?"
-            else "Morgen ist ${p.exam.title}. Lass uns die wackeligen Karten noch einmal gießen!"
+            else "Morgen ist es so weit. Lass uns die wackeligen Karten noch einmal gießen!"
         ExamPlan.Phase.EARLY -> "Super, dass du so früh anfängst – so bleibt es am besten hängen!"
         ExamPlan.Phase.BUILD -> when {
             p.today.isEmpty() -> "Für heute ist alles erledigt. Morgen geht's weiter! 🌱"
             p.fitness >= 0.8 -> "Du bist schon zu ${p.fitnessPercent} % fit – weiter so!"
-            else -> "Noch ${p.daysLeft} Tage. Heute ${p.today.size} Karten – dann sitzt es am Tag X!"
+            p.readyCards == 0 -> "Noch ${p.daysLeft} Tage – genug Zeit! Heute ${p.today.size} Karten, dann wächst es Stück für Stück."
+            else -> "Noch ${p.daysLeft} Tage. ${p.readyCards} Karten sitzen schon – heute ${p.today.size} dazu!"
         }
     }
 }

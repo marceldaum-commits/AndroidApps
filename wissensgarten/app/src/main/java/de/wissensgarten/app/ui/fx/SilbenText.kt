@@ -19,6 +19,9 @@ import de.wissensgarten.core.model.Syllables
 /** Silben farbig anzeigen? (Einstellung „Silben farbig“, automatisch für Klasse 1–2) */
 val LocalSyllables = staticCompositionLocalOf { false }
 
+/** Vibration erlaubt? (Einstellung „Vibration“) */
+val LocalVibration = staticCompositionLocalOf { true }
+
 val SILBE_BLAU = Color(0xFF1565C0)
 val SILBE_ROT = Color(0xFFD32F2F)
 private val FOREIGN = setOf("englisch", "franzoesisch", "spanisch", "latein")

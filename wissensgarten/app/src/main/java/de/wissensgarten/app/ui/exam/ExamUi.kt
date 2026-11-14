@@ -35,6 +35,9 @@ fun ExamCard(plan: ExamPlan, bedName: String, onStart: () -> Unit, onFeedback: (
     val sfx = LocalSfx.current
     val particles = rememberParticles()
     var menu by remember { mutableStateOf(false) }
+    // Antwort auf „Wie lief's?“: Brummi reagiert erst, dann verschwindet die Karte
+    var feedback by remember { mutableStateOf<Int?>(null) }
+    LaunchedEffect(feedback) { feedback?.let { kotlinx.coroutines.delay(2600); onFeedback(it) } }
     Card(Modifier.padding(horizontal = 16.dp).fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF8E1))) {
         Box {
             Column(Modifier.padding(16.dp)) {
@@ -56,15 +59,21 @@ fun ExamCard(plan: ExamPlan, bedName: String, onStart: () -> Unit, onFeedback: (
                 Spacer(Modifier.height(10.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Brummi(if (plan.phase == ExamPlan.Phase.EXAM_DAY || plan.fitness >= 0.8) Mood.CHEER else Mood.HAPPY, size = 44.dp)
-                    Text(ExamPlanner.brummiSays(plan), style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(start = 8.dp), color = Color(0xFF3E2C00))
+                    Text(when (feedback) {
+                        0 -> "Juhu! Das Gießen hat sich gelohnt! 🎉"
+                        1 -> "Prima! Darauf kannst du stolz sein. 🌻"
+                        2 -> "Das ist okay! Jede Arbeit ist anders – und alles, was du gelernt hast, bleibt in deinem Garten. 💛"
+                        else -> ExamPlanner.brummiSays(plan)
+                    }, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(start = 8.dp), color = Color(0xFF3E2C00))
                 }
                 Spacer(Modifier.height(10.dp))
                 if (plan.phase == ExamPlan.Phase.PAST) {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                         listOf("😃" to "Super", "🙂" to "Gut", "😕" to "Naja").forEachIndexed { i, (e, l) ->
                             OutlinedButton(onClick = {
+                                if (feedback != null) return@OutlinedButton
                                 if (i == 0) { sfx?.play(Sound.FANFARE); particles.burst(Burst.CONFETTI, count = 60) } else sfx?.play(Sound.GROW)
-                                onFeedback(i)
+                                feedback = i
                             }, modifier = Modifier.weight(1f)) { Text("$e $l") }
                         }
                     }
@@ -94,10 +103,10 @@ private fun CalendarPage(daysLeft: Int) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(Modifier.fillMaxWidth().background(Color(0xFFE53935)).padding(vertical = 2.dp), contentAlignment = Alignment.Center) {
-            Text(when { daysLeft == 0 -> "HEUTE"; daysLeft == 1 -> "MORGEN"; daysLeft < 0 -> "VORBEI"; else -> "NOCH" }, color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Black)
+            Text(when { daysLeft == 0 -> "HEUTE"; daysLeft == 1 -> "MORGEN"; daysLeft < 0 -> "VORBEI"; else -> "NOCH" }, color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Black)
         }
         Text(if (daysLeft > 1) "$daysLeft" else if (daysLeft == 1) "1" else "🍀", fontSize = 28.sp, fontWeight = FontWeight.Black, color = Color(0xFF3E2C00))
-        Text(if (daysLeft > 1) "Tage" else if (daysLeft == 1) "Tag" else "", fontSize = 11.sp, color = Color(0xFF6D5A1E))
+        Text(if (daysLeft > 1) "Tage" else if (daysLeft == 1) "Tag" else "", fontSize = 13.sp, color = Color(0xFF6D5A1E))
         Spacer(Modifier.height(4.dp))
     }
 }
@@ -113,9 +122,11 @@ private fun FitnessRing(fitness: Double) {
             drawArc(Color(0xFFE6DCC0), 0f, 360f, false, Offset(inset, inset), Size(size.width - 2 * inset, size.height - 2 * inset), style = s)
             drawArc(if (p >= 0.8f) Color(0xFF43A047) else Color(0xFFFFB300), -90f, 360f * p, false, Offset(inset, inset), Size(size.width - 2 * inset, size.height - 2 * inset), style = s)
         }
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("${(p * 100).toInt()}%", fontWeight = FontWeight.Black, fontSize = 14.sp)
-            Text("fit", fontSize = 9.sp)
+        // ganz am Anfang kein entmutigendes „0 %“ – sondern ein Keimling
+        if (fitness < 0.2) Text("🌱", fontSize = 24.sp)
+        else Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("${(p * 100).toInt()}%", fontWeight = FontWeight.Black, fontSize = 15.sp)
+            Text("fit", fontSize = 12.sp)
         }
     }
 }
@@ -125,7 +136,7 @@ private fun FitnessRing(fitness: Double) {
 fun ExamPromptCard(onClick: () -> Unit) {
     OutlinedCard(onClick = onClick, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth()) {
         Row(Modifier.padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text("🗓️", fontSize = 28.sp)
+            Text("📝", fontSize = 28.sp)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text("Klassenarbeit bald?", style = MaterialTheme.typography.titleSmall)
@@ -152,7 +163,7 @@ fun AddExamDialog(beds: List<Pair<String, String>>, preselect: String?, onDismis
     val chosenDay = picker.selectedDateMillis?.let { it / 86_400_000L }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("🗓️ Termin eintragen") },
+        title = { Text("📝 Termin eintragen") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -166,7 +177,7 @@ fun AddExamDialog(beds: List<Pair<String, String>>, preselect: String?, onDismis
                     beds.forEach { (id, name) -> FilterChip(bed == id, { bed = id }, label = { Text(name, maxLines = 1) }) }
                 }
                 OutlinedButton(onClick = { pickDate = true }, modifier = Modifier.fillMaxWidth()) {
-                    Text(chosenDay?.let { "🗓️ " + LocalDate.ofEpochDay(it).format(DATE) } ?: "🗓️ Datum wählen")
+                    Text(chosenDay?.let { "📝 " + LocalDate.ofEpochDay(it).format(DATE) } ?: "📝 Datum wählen")
                 }
             }
         },

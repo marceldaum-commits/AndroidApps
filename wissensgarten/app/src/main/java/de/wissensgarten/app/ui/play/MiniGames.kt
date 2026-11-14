@@ -1,5 +1,8 @@
 package de.wissensgarten.app.ui.play
 
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
@@ -171,7 +174,8 @@ fun BalloonGame(card: StudyCard, options: List<String>, onResult: (GameResult) -
                     Modifier.offset { androidx.compose.ui.unit.IntOffset(x.roundToInt(), y.roundToInt()) }
                         .size(96.dp, 116.dp)
                         .graphicsLayer { scaleX = deflate; scaleY = deflate; alpha = if (b.deflated) 0.45f else 1f }
-                        .clickable(MutableInteractionSource(), null) {
+                        .semantics { contentDescription = "Ballon: ${b.text}"; role = androidx.compose.ui.semantics.Role.Button }
+                        .clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) {
                             if (done || b.deflated) return@clickable
                             if (b.text == card.back) {
                                 b.popped = true; done = true
@@ -216,7 +220,7 @@ fun BalloonGame(card: StudyCard, options: List<String>, onResult: (GameResult) -
 fun LetterGame(card: StudyCard, onResult: (GameResult) -> Unit) {
     val sfx = LocalSfx.current
     val scope = rememberCoroutineScope()
-    val target = remember(card.id) { card.back.uppercase() }
+    val target = remember(card.id) { card.back }
     val tiles = remember(card.id) { Games.letterTiles(card.back, card.id.hashCode() + card.memory.reps).mapIndexed { i, c -> i to c } }
     val used = remember(card.id) { mutableStateListOf<Int>() }
     var mistakes by remember(card.id) { mutableIntStateOf(0) }
@@ -243,8 +247,10 @@ fun LetterGame(card: StudyCard, onResult: (GameResult) -> Unit) {
     }
 
     Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        // Merkbild zeigt, welches Wort gemeint ist (z. B. „Welches Wort ist richtig geschrieben?“)
+        MerkBild(card.img, emojiSize = 44.sp, key = "l" + card.id, cardId = card.id)
         QuestionText(card.front)
-        Text("🔤 Leg die Antwort aus den Buchstaben", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
+        Text("🔤 Leg die Antwort aus den Buchstaben – auf Groß und klein achten!", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
         Spacer(Modifier.height(14.dp))
         // Lücken
         FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp, Alignment.CenterHorizontally), verticalArrangement = Arrangement.spacedBy(6.dp)) {

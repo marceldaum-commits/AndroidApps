@@ -77,16 +77,14 @@ fun SafariScreen(found: Int, englishDefault: Boolean, onPlant: (Safari.Word, Boo
                         else sfx?.play(Sound.GROW)
                     }
                 }
-                .addOnFailureListener { scanning = false; words = emptyList(); message = "Die Erkennung lädt noch – versuch es gleich nochmal." }
+                .addOnFailureListener { scanning = false; words = emptyList(); message = "Die Erkennung lädt noch – versuch es gleich noch mal." }
         }.onFailure { scanning = false; words = emptyList(); message = "Die Erkennung ist auf diesem Handy nicht verfügbar." }
     }
 
     val camera = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { ok ->
         if (!ok) return@rememberLauncherForActivityResult
-        val opts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        BitmapFactory.decodeFile(photoFile.path, opts)
-        val sample = maxOf(1, maxOf(opts.outWidth, opts.outHeight) / 1024)
-        BitmapFactory.decodeFile(photoFile.path, BitmapFactory.Options().apply { inSampleSize = sample })?.let { recognize(rotate(photoFile, it)) }
+        // im Hintergrund laden (große Fotos ruckeln sonst) – verkleinert und richtig gedreht
+        scope.launch { de.wissensgarten.app.ui.common.Images.load(ctx, photoUri, maxSide = 1024)?.let { recognize(it) } }
     }
 
     fun choose(w: Safari.Word) {

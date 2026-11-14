@@ -40,6 +40,8 @@ fun SettingsScreen(
     syncCard: @Composable () -> Unit = {},
     syllables: de.wissensgarten.core.data.ReadAloud = de.wissensgarten.core.data.ReadAloud.AUTO,
     onSyllables: (de.wissensgarten.core.data.ReadAloud) -> Unit = {},
+    vibration: Boolean = true,
+    onVibration: (Boolean) -> Unit = {},
     music: Boolean = true,
     onMusic: (Boolean) -> Unit = {},
 ) {
@@ -128,6 +130,10 @@ fun SettingsScreen(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text("Geräusche", Modifier.weight(1f))
                 Switch(checked = sound, onCheckedChange = onSound)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Vibration bei richtigen Antworten", Modifier.weight(1f))
+                Switch(checked = vibration, onCheckedChange = onVibration)
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {

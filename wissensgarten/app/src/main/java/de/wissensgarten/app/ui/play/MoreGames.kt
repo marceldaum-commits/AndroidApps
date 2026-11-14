@@ -265,7 +265,7 @@ fun SpeakGame(card: StudyCard, options: List<String>?, locale: Locale, onResult:
         heard?.let { h ->
             val ok = SpokenAnswer.matches(h, card.back)
             Text(
-                if (ok) "Ich habe „$h“ gehört – richtig! 🎉" else if (tries >= 2) "„$h“ – richtig ist: ${card.back}" else "Ich habe „$h“ gehört. Versuch's nochmal!",
+                if (ok) "Ich habe „$h“ gehört – richtig! 🎉" else if (tries >= 2) "„$h“ – richtig ist: ${card.back}" else "Ich habe „$h“ gehört. Versuch's noch mal!",
                 textAlign = TextAlign.Center, fontWeight = FontWeight.Bold,
                 color = if (ok) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
                 modifier = Modifier.padding(top = 14.dp),

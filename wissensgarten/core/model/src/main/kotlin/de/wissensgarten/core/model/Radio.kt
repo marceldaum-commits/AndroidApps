@@ -67,6 +67,8 @@ object Radio {
         val all = heard.map { SpokenAnswer.normalize(it) }.filter { it.isNotBlank() }.ifEmpty { raw }
         val first = all.first()
         fun has(vararg w: String) = all.any { h -> w.any { h == it || h.startsWith("$it ") || h.endsWith(" $it") || h.contains(" $it ") } }
+        // Ist die richtige Antwort selbst ein Steuerwort („Ende“, „weiter“, „was“ …)? Dann zählt sie als Antwort.
+        if ((q.mode == Mode.FREE || q.mode == Mode.LEARN) && all.any { SpokenAnswer.matches(it, q.card.back) }) return Reply.Correct
         if (has("stopp", "stop", "aufhören", "beenden", "ende", "schluss")) return Reply.Stop
         if (has("nochmal", "noch mal", "wiederholen", "wie bitte", "was")) return Reply.Repeat
         if (all.any { it.contains("weiß nicht") || it.contains("weiss nicht") || it.contains("keine ahnung") } || has("passe", "weiter")) return Reply.DontKnow

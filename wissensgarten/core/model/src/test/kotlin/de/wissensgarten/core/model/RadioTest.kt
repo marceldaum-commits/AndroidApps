@@ -17,8 +17,8 @@ class RadioTest {
     }
 
     @Test fun understandsFreeAnswersWithArticlesAndSmallErrors() {
-        val q = Radio.question(card("dog?", "der Hund"), emptyList())
-        assertEquals(Radio.Reply.Correct, Radio.interpret(listOf("Hund"), q))
+        val q = Radio.question(card("dog?", "Hund"), emptyList())
+        assertEquals(Radio.Reply.Correct, Radio.interpret(listOf("der Hund"), q))
         assertEquals(Radio.Reply.Correct, Radio.interpret(listOf("Hunt", "Hund"), q))
         assertTrue(Radio.interpret(listOf("Katze"), q) is Radio.Reply.Wrong)
     }
@@ -51,5 +51,11 @@ class RadioTest {
     @Test fun promptReadsOptions() {
         val q = Radio.Question(card("Hauptstadt?", "Paris"), Radio.Mode.CHOICE, listOf("Rom", "Paris"))
         assertEquals("Hauptstadt? A: Rom. B: Paris.", Radio.prompt(q))
+    }
+
+    @Test fun answerThatIsAControlWordStillCounts() {
+        val q = Radio.question(card("Gegenteil von Anfang?", "Ende"), emptyList())
+        assertEquals(Radio.Reply.Correct, Radio.interpret(listOf("Ende"), q))
+        assertEquals(Radio.Reply.Stop, Radio.interpret(listOf("stopp"), q))
     }
 }

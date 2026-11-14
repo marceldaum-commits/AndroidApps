@@ -90,7 +90,7 @@ fun SkyScene(
                     emoji, fontSize = androidx.compose.ui.unit.TextUnit(30f, androidx.compose.ui.unit.TextUnitType.Sp),
                     modifier = Modifier.offset(x = maxWidth * fx - 18.dp, y = maxHeight * fy)
                         .graphicsLayer { rotationZ = kotlin.math.sin(wobble * 3f + i) * 12f }
-                        .clickable(androidx.compose.foundation.interaction.MutableInteractionSource(), null) { onSurprise(i) },
+                        .clickable(androidx.compose.runtime.remember { androidx.compose.foundation.interaction.MutableInteractionSource() }, null) { onSurprise(i) },
                 )
             }
         }

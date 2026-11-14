@@ -51,7 +51,9 @@ object Games {
      * damit dieselbe Karte beim nächsten Mal anders gespielt wird.
      */
     fun speakPossible(answer: String) = answer.length in 2..24 && answer.trim().split(Regex("\\s+")).size <= 3 &&
-        answer.none { it.isDigit() || it in "=+×÷²³√π/()" }
+        answer.none { it.isDigit() || it in "=+×÷²³√π/()" } &&
+        // Artikel gehören zur Antwort („la maison“, „der“)? Die Spracherkennung kann sie nicht sicher prüfen.
+        SpokenAnswer.normalize(answer) == answer.lowercase().replace(Regex("[^\\p{L}\\p{N} ]"), " ").trim().replace(Regex("\\s+"), " ")
 
     fun tiltPossible(options: List<String>) = options.size <= 4 && options.all { it.length <= 16 }
 
@@ -78,8 +80,9 @@ object Games {
     }
 
     /** Buchstaben-Kacheln: Antwort gemischt (nie in richtiger Reihenfolge). */
+    /** Buchstaben in Original-Schreibweise – Groß/klein gehört bei Rechtschreibung dazu („Vogel“ ≠ „vogel“). */
     fun letterTiles(answer: String, seed: Int): List<Char> {
-        val chars = answer.uppercase().toList()
+        val chars = answer.toList()
         val rnd = Random(seed)
         repeat(10) {
             val s = chars.shuffled(rnd)

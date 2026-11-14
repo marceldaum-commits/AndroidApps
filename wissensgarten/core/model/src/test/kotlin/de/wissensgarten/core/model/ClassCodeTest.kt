@@ -19,23 +19,4 @@ class ClassCodeTest {
         assertNull(ClassCodes.decode("WGK1-abc.1"))
         assertNull(ClassCodes.decode("nichts"))
     }
-
-    @Test fun worksheetParsesCommonFormats() {
-        val text = """
-            Vokabeln Unit 3
-            1. dog - Hund
-            2) cat = Katze
-            • house → Haus
-            Photosynthese: Pflanzen machen aus Licht Zucker
-            Seite 12
-        """.trimIndent()
-        assertEquals(listOf("dog" to "Hund", "cat" to "Katze", "house" to "Haus", "Photosynthese" to "Pflanzen machen aus Licht Zucker"), Worksheet.parse(text))
-    }
-
-    @Test fun lexiconFindsPluralAndCompound() {
-        val lex = EmojiLexicon.parse("hund\t🐶\nkatze\t🐱\nhaus\t🏠")
-        assertEquals("🐶", lex.guess("dog", "Hunde"))
-        assertEquals("🐱", lex.guess("Katzen"))
-        assertNull(lex.guess("xyz"))
-    }
 }

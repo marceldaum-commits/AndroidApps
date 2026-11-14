@@ -49,4 +49,45 @@ class ReviewDrawTest {
         assert(!completed)
         rule.onAllNodesWithText("Wie heißt Katze auf Englisch?", substring = true).onFirst().assertExists()
     }
+
+    /** Doppeltipp auf „Gemerkt – weiter“ darf keine Karte überspringen. */
+    @Test fun doubleTapOnNextSkipsNothing() {
+        val third = StudyCard("c5", "b", "Wie heißt Vogel auf Englisch?", "bird", listOf("dog", "cat", "cow"), null, known, "🐦")
+        val rated = mutableListOf<String>()
+        rule.setContent {
+            WissensgartenTheme(ThemeMode.LIGHT) { Surface {
+                ReviewScreen(listOf(card, second, third), mapOf("b" to BedEntity("b", "p", "Englisch", "💬", 340f, null, 0, 0)),
+                    true, { c, _, _ -> rated += c.id }, {}, calm = true)
+            } }
+        }
+        rule.mainClock.advanceTimeBy(1500)
+        rule.onNodeWithText("cat").performClick()          // falsch → Antwort mit „weiter“-Knopf
+        rule.mainClock.advanceTimeBy(1500)
+        val next = rule.onNodeWithText("Gemerkt – weiter")
+        next.performClick(); runCatching { next.performClick() }  // zweiter Tipp während des Ausblendens
+        rule.mainClock.advanceTimeBy(1500)
+        rule.onAllNodesWithText("Wie heißt Katze auf Englisch?", substring = true).onFirst().assertExists()
+        assert(rated == listOf("c1")) { rated.toString() }
+    }
+
+    /** Drehen des Handys in der Antwort-Anzeige: dieselbe Karte darf nicht noch einmal bewertet werden. */
+    @Test fun rotationDuringRevealDoesNotRateTwice() {
+        val rated = mutableListOf<String>()
+        val restore = androidx.compose.ui.test.junit4.StateRestorationTester(rule)
+        restore.setContent {
+            WissensgartenTheme(ThemeMode.LIGHT) { Surface {
+                ReviewScreen(listOf(card, second), mapOf("b" to BedEntity("b", "p", "Englisch", "💬", 340f, null, 0, 0)),
+                    true, { c, _, _ -> rated += c.id }, {}, calm = true)
+            } }
+        }
+        rule.mainClock.advanceTimeBy(1500)
+        rule.onNodeWithText("cat").performClick()          // falsch → Antwort-Anzeige
+        rule.mainClock.advanceTimeBy(2000)
+        rule.onNodeWithText("Gemerkt – weiter").assertExists()
+        assert(rated == listOf("c1")) { rated.toString() }
+        restore.emulateSavedInstanceStateRestore()           // wie Drehen des Handys
+        rule.mainClock.advanceTimeBy(800)
+        rule.onNodeWithText("Gemerkt – weiter").assertExists()  // wir sind noch bei der Antwort – nicht wieder bei der Frage
+        assert(rated == listOf("c1")) { rated.toString() }
+    }
 }

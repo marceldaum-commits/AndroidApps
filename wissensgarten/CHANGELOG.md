@@ -3,6 +3,34 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.14.0 – Großer Prüf- und Reparatur-Durchgang
+**Lernfortschritt & Tautropfen**
+- Handy gedreht, während die Antwort angezeigt wird: Die Karte wird nicht mehr doppelt bewertet.
+- Doppeltipp auf „weiter“ überspringt keine Karte mehr; Doppeltipps starten keine zwei Runden und schließen nicht den Garten.
+- Abgebrochene Mischrunde verschenkt keine Kreuzungs-Blume mehr; „Noch mal“ im Zu-zweit-Duell gibt keine Extra-Tautropfen.
+- Geräte-Sync: Gießen, Einkaufen und Löschen während des Abgleichs gehen nicht mehr verloren; keine doppelt gezählten
+  Tautropfen nach Abbruch oder Neu-Verbinden; zwei Geräte gleichzeitig sind abgesichert; Gelöschtes kommt nicht zurück.
+**Brummi-Radio**
+- Technische Fehler der Spracherkennung zählen nicht mehr als „vergessen“; zweimal nichts gehört → nächste Karte ohne Bewertung.
+- Pausiert, wenn die App in den Hintergrund geht; „Weiter hören“ setzt dort fort. Antworten wie „Ende“ oder „weiter“ werden erkannt.
+- Hinweis, wenn keine Sprachausgabe installiert ist; Mikrofon-Erlaubnis auch nach „Nie wieder fragen“ erreichbar.
+**Spiele & Inhalte**
+- Sag's laut: keine Artikel-/Geschlechts-Fragen mehr (die kann Spracherkennung nicht prüfen), nicht bei Deutsch/Rechtschreibung.
+- Buchstabensalat achtet auf Groß- und Kleinschreibung und zeigt das Merkbild.
+- Uhrzeit-Merkbilder korrigiert (Viertel nach/vor, Dreiviertelstunde), „Fliege“ zeigt keine Mücke mehr.
+**Freundlicher**
+- „Gießen“ steht wieder ganz oben; Abenteuer, Mischrunde, Radio, Safari als Kachelreihe „Mehr entdecken“.
+- Keine Druck-Sätze mehr („bevor das Wissen verblasst“, 🥀, „Schnell, bevor sie wegfliegen“); Brummi ermuntert.
+- Klassenarbeit: Keimling statt „0 % fit“, größere Schrift, kürzere Runden, Brummi tröstet bei „Naja“.
+- Neuer Schalter „Vibration“ – kurzer Ruck nur bei richtigen Antworten.
+**Entfernt**
+- „Foto vom Arbeitsblatt“: Ohne KI lässt sich aus einem Foto nicht zuverlässig erkennen, was Frage und was Antwort ist.
+
+**Technik**
+- Fotos werden im Hintergrund geladen; läuft ab Android 8; Tastatur verdeckt keine Eingabefelder mehr.
+- Musik kommt nach kurzer Unterbrechung (Assistent, Navi) wieder; Widget-Tipp löscht kein offenes Spiel mehr.
+- Postkarte/Urkunde stürzen bei Sonderzeichen im Namen nicht mehr ab; Kalender-Emojis zeigten „July 17“.
+
 ## 0.13.0
 - Neu: **Oma-Postkarte** 💌 – in der Familien-Übersicht: ein Bild mit dem Garten, was diese Woche gelernt wurde und
   einem Gruß von Brummi, zum Verschicken per WhatsApp.

@@ -26,15 +26,22 @@ class BackgroundMusic(private val context: Context) {
     private var level = 0f
     private val cache = HashMap<MusicMood, ShortArray>()
     private var fadeJob: Job? = null
+    private var interrupted = false
 
     private val focusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
         .setAudioAttributes(attributes())
         .setOnAudioFocusChangeListener { change ->
             scope.launch {
                 when (change) {
-                    AudioManager.AUDIOFOCUS_LOSS, AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> stopNow()
+                    // dauerhaft verloren (andere Musik-App): aufhören
+                    AudioManager.AUDIOFOCUS_LOSS -> stopNow()
+                    // kurz unterbrochen (Assistent, Navi-Ansage, Wecker): nur anhalten, Fokus behalten → danach weiter
+                    AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> { fadeTo(0f, 200); runCatching { track?.pause() }; interrupted = true }
                     AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> fadeTo(0.3f * BASE)
-                    AudioManager.AUDIOFOCUS_GAIN -> refresh()
+                    AudioManager.AUDIOFOCUS_GAIN -> {
+                        if (interrupted) { interrupted = false; runCatching { track?.play() } }
+                        refresh()
+                    }
                 }
             }
         }.build()

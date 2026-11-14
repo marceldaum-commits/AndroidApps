@@ -194,7 +194,7 @@ fun ChestReveal(onOpen: () -> Friend?, onClose: () -> Unit) {
     }
     Box(
         Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF283593), Color(0xFF7E57C2), Color(0xFFFFB74D))))
-            .clickable(MutableInteractionSource(), null) { if (!opening) opening = true },
+            .clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) { if (!opening) opening = true },
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(24.dp)) {
@@ -266,7 +266,7 @@ fun FriendsAlbum(opened: Int, earned: Int, inGarden: Set<String>, onToggle: (Str
                 if (earned > opened) {
                     Spacer(Modifier.height(8.dp))
                     JuicyButton(onClick = onOpenChest, modifier = Modifier.fillMaxWidth().pulse(true), sound = Sound.PLOP,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7E57C2))) { Text("🎁 ${earned - opened} Truhe(n) öffnen!", fontWeight = FontWeight.Bold) }
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7E57C2))) { Text(if (earned - opened == 1) "🎁 Truhe öffnen!" else "🎁 ${earned - opened} Truhen öffnen!", fontWeight = FontWeight.Bold) }
                 }
             }
         }

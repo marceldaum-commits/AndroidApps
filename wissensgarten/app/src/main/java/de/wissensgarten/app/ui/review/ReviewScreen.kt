@@ -70,9 +70,12 @@ fun ReviewScreen(
     val voice = LocalVoice.current
     val readAloud = LocalReadAloud.current
     var index by rememberSaveable { mutableIntStateOf(0) }
-    var phase by remember { mutableStateOf(Phase.PLAY) }
+    // Phase und Ergebnis überleben Drehen des Handys – sonst würde dieselbe Karte ein zweites Mal bewertet
+    var phase by rememberSaveable { mutableStateOf(Phase.PLAY) }
     var grownMemory by remember { mutableStateOf<Memory?>(null) }
-    var lastRight by remember { mutableStateOf(true) }
+    var lastRight by rememberSaveable { mutableStateOf(true) }
+    // läuft gerade das automatische Weiterblättern? (nach dem Drehen nicht mehr → Knopf zeigen)
+    var autoAdvancing by remember { mutableStateOf(false) }
     var grown by rememberSaveable { mutableIntStateOf(0) }
     var dew by rememberSaveable { mutableIntStateOf(0) }
     var correct by rememberSaveable { mutableIntStateOf(0) }
@@ -87,6 +90,7 @@ fun ReviewScreen(
     var mood by remember { mutableStateOf(Mood.IDLE) }
     var speech by remember { mutableStateOf<String?>(null) }
     val haptics = LocalHapticFeedback.current
+    val vibrationOn = LocalVibration.current
     val sfx = LocalSfx.current
     val scope = rememberCoroutineScope()
     val particles = rememberParticles()
@@ -95,6 +99,9 @@ fun ReviewScreen(
     val gainAnim = remember { Animatable(0f) }
 
     BackHandler { onClose() }
+    DisposableEffect(Unit) { onDispose { voice?.stop() } }
+    // Nach dem Wiederherstellen fehlen die Bonus-Karten → einfach mit der nächsten Karte weitermachen
+    LaunchedEffect(Unit) { if (phase == Phase.BONUS && bonusCards.isEmpty() && clapList.isEmpty()) phase = Phase.PLAY }
 
     if (items.isEmpty() || index >= items.size) {
         LaunchedEffect(Unit) { onComplete(correct, items.size) }
@@ -105,7 +112,8 @@ fun ReviewScreen(
     val bed = beds[card.bedId]
     val now = remember(index) { System.currentTimeMillis() }
     val cardPeers = peers[card.bedId].orEmpty()
-    val mode = remember(card.id) { Games.choose(card, cardPeers, simpleRating, canSpeak, calm) }
+    // Deutsch (Rechtschreibung, Grammatik): Sprechen kann Schreibweise nicht prüfen → dort kein Sprech-Spiel
+    val mode = remember(card.id) { Games.choose(card, cardPeers, simpleRating, canSpeak && subjects[card.bedId] != "deutsch", calm) }
     val subject = subjects[card.bedId]
     val options = remember(card.id) { Games.options(card, cardPeers) }
     val shownMemory = if (phase == Phase.REVEAL) grownMemory ?: card.memory else card.memory
@@ -115,7 +123,7 @@ fun ReviewScreen(
         mood = if (calm) Mood.IDLE else if (mode == GameMode.DISCOVER) Mood.HAPPY else Mood.THINK
         speech = if (calm) "Psst … ganz ruhig 🌙" else when (mode) {
             GameMode.DISCOVER -> "Neu! Schau dir das Bild gut an 👀"
-            GameMode.BALLOONS -> "Schnell, bevor sie wegfliegen!"
+            GameMode.BALLOONS -> "Fang den richtigen Ballon!"
             GameMode.LETTERS -> "Bau das Wort zusammen!"
             GameMode.SWIPE -> "Stimmt das wirklich? 🤔"
             GameMode.TILT -> "Kipp das Handy! 📱"
@@ -129,6 +137,9 @@ fun ReviewScreen(
     var revealPaused by remember { mutableStateOf(false) }
 
     fun next() {
+        // Doppeltipp auf „weiter“ (während die Karte noch ausblendet) darf keine Karte überspringen
+        if (phase != Phase.REVEAL) return
+        autoAdvancing = false
         revealPaused = false
         levelUp = null
         grownMemory = null
@@ -156,10 +167,11 @@ fun ReviewScreen(
 
     fun finish(r: Rating) {
         if (phase != Phase.PLAY) return
-        haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         val after = Scheduler.review(card.memory, r, now)
         val up = Stage.of(after) > Stage.of(card.memory)
         val right = r != Rating.AGAIN
+        // kurzer, fröhlicher Ruck bei richtig – bei falsch keiner (kein Strafe-Gefühl); abschaltbar
+        if (right && vibrationOn) haptics.performHapticFeedback(HapticFeedbackType.Confirm)
         lastRight = right
         if (up) grown++
         if (right) { correct++; streak++; bestStreak = maxOf(bestStreak, streak) } else streak = 0
@@ -177,6 +189,7 @@ fun ReviewScreen(
         }
         if (right) particles.burst(Burst.SPARKLE, 0.5f, 0.2f, 26)
         phase = Phase.REVEAL
+        autoAdvancing = right
         if (readAloud) voice?.speak(card.back, Voice.localeFor(subject, card.back))
         sfx?.play(Sound.WATER, volume = if (calm) 0.4f else 0.9f)
         scope.launch {
@@ -202,7 +215,12 @@ fun ReviewScreen(
             } else sfx?.play(Sound.GROW, volume = 0.5f)
             growAnim.animateTo(1f, spring(dampingRatio = 0.35f, stiffness = 220f))
             // Richtig: automatisch weiter. Falsch: Zeit zum Lesen, weiter per Knopf.
-            if (right) { delay(if (Crystals.formed(card.memory, after)) 2600 else if (up && !sprouted) 1600 else 1300); if (phase == Phase.REVEAL && !revealPaused) next() }
+            if (right) {
+                val myIndex = index
+                delay(if (Crystals.formed(card.memory, after)) 2600 else if (up && !sprouted) 1600 else 1300)
+                // nur weiterblättern, wenn wir noch bei DIESER Karte sind
+                if (phase == Phase.REVEAL && !revealPaused && index == myIndex) next()
+            }
         }
     }
 
@@ -282,7 +300,7 @@ fun ReviewScreen(
                                 mood = Mood.CHEER; speech = "+$bonus 💧 Bonus!"
                                 phase = Phase.PLAY
                             }
-                            Phase.REVEAL -> RevealCard(card, lastRight, revealPaused, onPause = { revealPaused = true }) { next() }
+                            Phase.REVEAL -> RevealCard(card, lastRight, revealPaused || !autoAdvancing, onPause = { revealPaused = true }) { next() }
                             Phase.PLAY -> CompositionLocalProvider(LocalSubject provides subject) { when (mode) {
                                 GameMode.DISCOVER -> DiscoverGame(card, options) { finish(it.rating) }
                                 GameMode.BALLOONS -> BalloonGame(card, options!!) { finish(it.rating) }

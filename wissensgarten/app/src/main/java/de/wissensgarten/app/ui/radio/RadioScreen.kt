@@ -54,11 +54,14 @@ fun RadioScreen(
     val sfx = LocalSfx.current
     val listener = remember { Listener(ctx) }
     var granted by remember { mutableStateOf(preview || ContextCompat.checkSelfPermission(ctx, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) }
-    val ask = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted = it }
+    var askedOnce by remember { mutableStateOf(false) }
+    val ask = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted = it; askedOnce = true }
     var phase by remember { mutableStateOf(RadioPhase.READY) }
     var caption by remember { mutableStateOf("") }
-    var index by remember { mutableIntStateOf(0) }
-    var correct by remember { mutableIntStateOf(0) }
+    var index by androidx.compose.runtime.saveable.rememberSaveable { mutableIntStateOf(0) }
+    var correct by androidx.compose.runtime.saveable.rememberSaveable { mutableIntStateOf(0) }
+    var paused by remember { mutableStateOf(false) }
+    var problem by remember { mutableStateOf<String?>(null) }
     var level by remember { mutableFloatStateOf(0f) }
     var running by remember { mutableStateOf(false) }
     var stopRequested by remember { mutableStateOf(false) }
@@ -79,17 +82,33 @@ fun RadioScreen(
     DisposableEffect(Unit) { onDispose { voice?.stop(); listener.release() } }
     BackHandler { stopRequested = true; voice?.stop(); onClose() }
 
+    // App in den Hintergrund (Bildschirm aus, andere App): Radio anhalten. Im Hintergrund darf Android
+    // das Mikrofon nicht freigeben – sonst würden Karten ungewollt als „vergessen“ zählen.
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_STOP) {
+        if (running) { running = false; paused = true; voice?.stop(); listener.cancel() }
+    }
+    // Zurück aus den Android-Einstellungen: Mikrofon-Erlaubnis neu prüfen
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+        granted = preview || ContextCompat.checkSelfPermission(ctx, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+    }
+
     LaunchedEffect(running) {
         if (!running) return@LaunchedEffect
         suspend fun say(t: String, l: Locale = Locale.GERMAN) { phase = RadioPhase.SPEAKING; caption = t; voice?.speakAndWait(t, l) }
-        say("Hallo, hier ist Brummi-Radio! Ich stelle dir Fragen – antworte einfach laut. Wenn du aufhören willst, sag: Stopp.")
-        loop@ for ((i, card) in cards.withIndex()) {
+        // Sprachausgabe noch nicht bereit (kalter Start)? Kurz warten, sonst ehrlich sagen.
+        var waited = 0
+        while (voice?.isReady != true && waited < 4000) { delay(200); waited += 200 }
+        if (voice?.isReady != true) { problem = "Auf diesem Handy ist keine Sprachausgabe eingerichtet. In den Android-Einstellungen unter „Sprachausgabe“ lässt sie sich installieren."; running = false; return@LaunchedEffect }
+        if (index == 0) say("Hallo, hier ist Brummi-Radio! Ich stelle dir Fragen – antworte einfach laut. Wenn du aufhören willst, sag: Stopp.")
+        else say("Weiter geht's!")
+        loop@ for (i in index until cards.size) {
             if (stopRequested) break
             index = i
+            val card = cards[i]
             val q = Radio.question(card, peers[card.bedId].orEmpty())
             val subject = subjects[card.bedId]
             val answerLocale = Voice.localeFor(subject, card.back)
-            var tries = 0
+            var silent = 0
             while (true) {
                 say(Radio.prompt(q), Voice.localeFor(subject, card.front).takeIf { q.mode == Radio.Mode.FREE } ?: Locale.GERMAN)
                 if (q.mode == Radio.Mode.SELF) { delay(3500); say(Radio.selfReveal(q)) }
@@ -97,12 +116,21 @@ fun RadioScreen(
                 sfx?.play(Sound.TAP, pitch = 1.6f, volume = 0.5f)
                 phase = RadioPhase.LISTENING; caption = "Ich höre zu …"
                 val heard = listener.listen(if (q.mode == Radio.Mode.FREE || q.mode == Radio.Mode.LEARN) answerLocale else Locale.GERMAN)
-                when (val r = Radio.interpret(heard, q)) {
+                if (heard is Heard.Failed) {
+                    // Technischer Fehler: nichts bewerten, Radio anhalten
+                    problem = "Brummi kann gerade nicht zuhören (Spracherkennung meldet Fehler ${heard.code}). Versuch es gleich noch mal."
+                    running = false; paused = true
+                    return@LaunchedEffect
+                }
+                val words = (heard as? Heard.Words)?.list.orEmpty()
+                when (val r = Radio.interpret(words, q)) {
                     Radio.Reply.Stop -> break@loop
                     Radio.Reply.Repeat -> continue
                     Radio.Reply.Unclear -> {
-                        if (++tries < 2) { say("Ich hab dich nicht verstanden. Nochmal!"); continue }
-                        say(Radio.correction(q)); onRate(card, Rating.AGAIN, GardenRepository.baseDew(Rating.AGAIN)); break
+                        if (++silent < 2) { say("Ich hab dich nicht verstanden. Noch mal!"); continue }
+                        // Zweimal nichts verstanden: weiter zur nächsten Karte – ohne Bewertung
+                        say("Macht nichts – die heben wir uns für später auf. ${Radio.correction(q).removePrefix("Fast! ")}")
+                        break
                     }
                     else -> {
                         val rating = Radio.rating(r, q.mode) ?: Rating.AGAIN
@@ -113,7 +141,7 @@ fun RadioScreen(
                             good && q.mode == Radio.Mode.LEARN -> say("Super nachgesprochen! Diese Pflanze ist gesät.")
                             good -> say(Radio.praise(i))
                             r == Radio.Reply.No -> say("Kein Problem – das üben wir bald wieder.")
-                            q.mode == Radio.Mode.LEARN -> say("Hör nochmal: ${card.back}. Das üben wir bald wieder.")
+                            q.mode == Radio.Mode.LEARN -> say("Hör noch mal: ${card.back}. Das üben wir bald wieder.")
                             else -> say(Radio.correction(q))
                         }
                         break
@@ -131,7 +159,7 @@ fun RadioScreen(
     Box(Modifier.fillMaxSize().background(Color(0xFF0B1026))) {
         Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text("🎧 Brummi-Radio", color = Color(0xFFFFE082), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-            Text("Lernen mit den Ohren – Bildschirm darf aus bleiben", color = Color.White.copy(alpha = 0.6f), style = MaterialTheme.typography.bodySmall)
+            Text("Lernen mit den Ohren – einfach zuhören und laut antworten", color = Color.White.copy(alpha = 0.6f), style = MaterialTheme.typography.bodySmall)
             // Fortschritt als Punkte
             Row(horizontalArrangement = Arrangement.spacedBy(5.dp), modifier = Modifier.padding(top = 10.dp)) {
                 cards.indices.forEach { i ->
@@ -160,10 +188,20 @@ fun RadioScreen(
                     Text("Damit Brummi deine Antworten hört, braucht er das Mikrofon. Es wird nichts aufgenommen oder gespeichert.",
                         color = Color.White, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodyMedium)
                     Spacer(Modifier.height(12.dp))
-                    JuicyButton(onClick = { ask.launch(Manifest.permission.RECORD_AUDIO) }, modifier = Modifier.fillMaxWidth().height(56.dp)) { Text("🎤 Mikrofon erlauben") }
+                    val activity = ctx as? Activity
+                    // Schon einmal „Nie wieder fragen“ gewählt? Dann führt der Knopf in die App-Einstellungen.
+                    val blocked = askedOnce && activity != null && !androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.RECORD_AUDIO)
+                    JuicyButton(onClick = {
+                        if (blocked) ctx.startActivity(android.content.Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                            android.net.Uri.parse("package:${ctx.packageName}")))
+                        else ask.launch(Manifest.permission.RECORD_AUDIO)
+                    }, modifier = Modifier.fillMaxWidth().height(56.dp)) { Text(if (blocked) "⚙️ In den Einstellungen erlauben" else "🎤 Mikrofon erlauben") }
                 }
-                phase == RadioPhase.READY && !running -> JuicyButton(onClick = { running = true }, modifier = Modifier.fillMaxWidth().height(60.dp)) {
-                    Text("▶️ Radio starten (${cards.size} Fragen)", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                !running && phase != RadioPhase.DONE -> Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    problem?.let { Text(it, color = Color(0xFFFFCC80), textAlign = TextAlign.Center, modifier = Modifier.padding(bottom = 10.dp)) }
+                    JuicyButton(onClick = { problem = null; stopRequested = false; paused = false; running = true }, modifier = Modifier.fillMaxWidth().height(60.dp)) {
+                        Text(if (paused || index > 0) "▶️ Weiter hören (${index + 1}/${cards.size})" else "▶️ Radio starten (${cards.size} Fragen)", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                    }
                 }
                 phase == RadioPhase.DONE -> JuicyButton(onClick = onClose, modifier = Modifier.fillMaxWidth().height(56.dp)) { Text("Fertig – $correct von ${cards.size} richtig 🎉") }
                 else -> OutlinedButton(onClick = { stopRequested = true; voice?.stop(); onClose() }, modifier = Modifier.fillMaxWidth().height(56.dp)) {

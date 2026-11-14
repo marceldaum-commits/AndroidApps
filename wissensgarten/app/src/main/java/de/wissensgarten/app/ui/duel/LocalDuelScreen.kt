@@ -55,7 +55,8 @@ fun LocalDuelScreen(questions: List<DuelQuestion>, title: String, onClose: () ->
         delay(1500)
         if (round + 1 < questions.size) round++ else {
             done = true; sfx?.play(Sound.FANFARE); particles.burst(Burst.CONFETTI, count = 90)
-            onDew(scoreA + scoreB)
+            // Tautropfen nur für die erste Partie – „Nochmal“ ist zum Spaß, nicht zum Sammeln
+            if (restart == 0) onDew(scoreA + scoreB)
         }
     }
     fun tap(player: Int, option: String) {
@@ -87,7 +88,7 @@ fun LocalDuelScreen(questions: List<DuelQuestion>, title: String, onClose: () ->
             Half(Modifier.weight(1f), "Blau", BLUE, scoreA, q, lockedA, winner, 0, done, scoreA, scoreB) { tap(0, it) }
         }
         if (done) Row(Modifier.align(Alignment.Center).padding(16.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            JuicyButton(onClick = { round = 0; scoreA = 0; scoreB = 0; done = false; restart++ }) { Text("🔁 Nochmal") }
+            JuicyButton(onClick = { round = 0; scoreA = 0; scoreB = 0; done = false; restart++ }) { Text("🔁 Noch mal") }
             OutlinedButton(onClick = onClose, colors = ButtonDefaults.outlinedButtonColors(containerColor = Color.White)) { Text("Fertig") }
         }
         ParticleLayer(particles, Modifier.matchParentSize())

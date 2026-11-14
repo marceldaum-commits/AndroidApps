@@ -69,7 +69,7 @@ fun StoryPlayer(title: String, scenes: List<de.wissensgarten.core.model.IntroSce
     Box(
         Modifier.fillMaxSize()
             .background(Brush.verticalGradient(listOf(Color(0xFF8EC5EA), Color(0xFFCDEBFA), Color(0xFFE8F5E9))))
-            .clickable(MutableInteractionSource(), null) { advance() },
+            .clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) { advance() },
     ) {
         Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(20.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {

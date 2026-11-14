@@ -61,7 +61,7 @@ fun Brummi(
             jump.snapTo(0f); jump.animateTo(1f, tween(220, easing = FastOutSlowInEasing)); jump.animateTo(0f, spring(dampingRatio = 0.35f))
         }
     }
-    val tapMod = if (onTap != null) Modifier.clickable(MutableInteractionSource(), null) { onTap() } else Modifier
+    val tapMod = if (onTap != null) Modifier.clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) { onTap() } else Modifier
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
         if (bubbleOnLeft) Bubble(speech, Modifier.weight(1f, fill = false))
         Canvas(Modifier.size(size).then(tapMod).graphicsLayer { translationY = -jump.value * size.toPx() * 0.25f }) {

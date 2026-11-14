@@ -10,9 +10,9 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 | --- | --- | --- | --- | --- | --- |
 | ![](screenshots/27_garten_advent.png) | ![](screenshots/25_brummi_beibringen.png) | ![](screenshots/26_kipp_spiel.png) | ![](screenshots/28_abenteuer_geschichte.png) ![](screenshots/28b_kapitel_geschafft.png) | ![](screenshots/29_kreuzung.png) | ![](screenshots/30_album_kreuzungen.png) |
 
-| Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Arbeitsblatt-Foto | Widget (Tag / Party) |
-| --- | --- | --- | --- | --- | --- |
-| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) ![](screenshots/40_geraete_sync.png) ![](screenshots/41_klassenarbeit.png) ![](screenshots/42_brummi_radio.png) ![](screenshots/43_silben_klatschen.png) ![](screenshots/44_silben_farbig.png) ![](screenshots/45_wissens_safari.png) ![](screenshots/46_postkarte.png) ![](screenshots/47_urkunde.png) ![](screenshots/48_zu_zweit.png) ![](screenshots/49_kristalle.png) ![](screenshots/50_familienbelohnung.png) |
+| Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Widget (Tag / Party) |
+| --- | --- | --- | --- | --- |
+| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) ![](screenshots/40_geraete_sync.png) ![](screenshots/41_klassenarbeit.png) ![](screenshots/42_brummi_radio.png) ![](screenshots/43_silben_klatschen.png) ![](screenshots/44_silben_farbig.png) ![](screenshots/45_wissens_safari.png) ![](screenshots/46_postkarte.png) ![](screenshots/47_urkunde.png) ![](screenshots/48_zu_zweit.png) ![](screenshots/49_kristalle.png) ![](screenshots/50_familienbelohnung.png) |
 
 | Erklär-Geschichte | Abenteuerpfad | 3D-Truhe | Truhe offen | Sammelalbum | Garten mit Freunden |
 | --- | --- | --- | --- | --- | --- |
@@ -85,8 +85,6 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 - **Klassen-Code**: eigenes Beet als QR-Code am Beamer zeigen oder als Link teilen; die Klasse scannt (Google Code Scanner,
   ohne Kamera-Berechtigung) und hat sofort das Beet. Alles steckt im Code – kein Server, keine Schülerdaten
   (`core/model/ClassCode.kt`, Ausweich-Seite `web/klasse/`).
-- **Foto vom Arbeitsblatt → Beet**: Vokabelliste fotografieren, Texterkennung läuft auf dem Gerät (ML Kit), „Wort – Bedeutung“
-  und zweispaltige Listen werden zu Karten, passende Emojis kommen aus einem deutschen Emoji-Wörterbuch.
 - **Lebendes Widget**: Mini-Garten mit Tageszeit-Himmel (durstige Beete lassen die Köpfe hängen) und – ab 3×2 Feldern –
   eine Quizfrage mit zwei Antwortknöpfen direkt auf dem Startbildschirm.
 

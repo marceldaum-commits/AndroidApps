@@ -9,6 +9,8 @@ import de.wissensgarten.core.model.AppRelease
 import de.wissensgarten.core.model.Updates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.ensureActive
+import kotlin.coroutines.coroutineContext
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -51,6 +53,7 @@ object AppUpdater {
                 f.outputStream().use { out ->
                     val buf = ByteArray(64 * 1024); var done = 0L
                     while (true) {
+                        coroutineContext.ensureActive()   // Bildschirm verlassen → Download abbrechen
                         val n = input.read(buf); if (n < 0) break
                         out.write(buf, 0, n); done += n
                         if (total > 0) onProgress((done.toFloat() / total).coerceIn(0f, 1f))
