@@ -128,7 +128,7 @@ class GardenRepository(
         dao.updateCard(entity.withMemory(m))
         dao.insertLog(ReviewLogEntity(profileId = profileId, cardId = card.id, time = now, rating = rating.ordinal, stabilityAfter = m.stability))
         val p = dao.profile(profileId) ?: return@withTransaction
-        val today = now / Scheduler.DAY_MS
+        val today = Scheduler.localDay(now)
         val seedsToday = if (p.seedDay == today) p.seedsToday else 0
         dao.updateProfile(
             p.copy(
@@ -199,7 +199,11 @@ class GardenRepository(
                 val removed = existing.values.filter { it.sourceId != null && it.sourceId !in packIds }
                 if (added.isNotEmpty()) dao.insertCards(added)
                 if (changed.isNotEmpty()) dao.updateCards(changed)
-                if (removed.isNotEmpty()) dao.deleteCards(removed)
+                if (removed.isNotEmpty()) {
+                    // aus dem Paket entfernte Karten: auch auf anderen Geräten weg (sonst holt der Sync sie zurück)
+                    tombstones?.add(removed.map { it.id })
+                    dao.deleteCards(removed)
+                }
                 dao.updateBed(bed.copy(packVersion = pack.version, name = pack.title, emoji = pack.emoji))
             }
             updated++

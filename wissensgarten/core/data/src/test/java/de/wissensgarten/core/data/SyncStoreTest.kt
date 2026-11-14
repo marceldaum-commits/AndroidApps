@@ -45,9 +45,10 @@ class SyncStoreTest {
         val phoneStore = store(phoneDb); val tabletStore = store(tabletDb)
         val drive1 = Sync.merge(phoneStore.snapshot(), null, null, now)
         val drive2 = Sync.merge(tabletStore.snapshot(), drive1, null, now)
-        tabletStore.apply(drive2)
-        val drive3 = Sync.merge(phoneStore.snapshot(), drive2, drive1, now)
-        phoneStore.apply(drive3)
+        tabletStore.apply(drive2, tabletStore.snapshot())
+        val phoneTaken = phoneStore.snapshot()
+        val drive3 = Sync.merge(phoneTaken, drive2, drive1, now)
+        phoneStore.apply(drive3, phoneTaken)
 
         for (db in listOf(phoneDb, tabletDb)) {
             val profiles = db.dao().allProfiles()
@@ -66,9 +67,35 @@ class SyncStoreTest {
         val p = phone.createProfile("Ben", "🐸", 3); phone.plantPack(p.id, pack)
         val s = store(phoneDb)
         val snap = Sync.merge(s.snapshot(), null, null, now)
-        s.apply(snap); s.apply(snap)
+        val t = s.snapshot()
+        s.apply(snap, t); s.apply(snap, t)
         assertEquals(5, phoneDb.dao().allCards().size)
         assertEquals(0, phoneDb.dao().logsSinceOnce(0).size)
         assertEquals(snap.copy(savedAt = 0, deleted = emptySet()), s.snapshot().copy(savedAt = 0, deleted = emptySet()))
+    }
+
+    /** Während des Abgleichs gegossen und eingekauft: nichts davon darf verloren gehen. */
+    @Test fun changesDuringSyncSurvive() = runTest {
+        val repo = GardenRepository(phoneDb) { now }
+        val p = repo.createProfile("Mia", "🐸", 3); repo.plantPack(p.id, pack)
+        repo.addDew(p.id, 100)
+        val s = store(phoneDb)
+        val taken = s.snapshot()                               // Abgleich beginnt …
+        val merged = Sync.merge(taken, taken.copy(), taken, now)
+        repo.addDew(p.id, 15)                                   // … währenddessen 15 💧 verdient
+        s.apply(merged, taken)                                  // … Abgleich schreibt zurück
+        assertEquals(115, phoneDb.dao().allProfiles().single().dewdrops)
+    }
+
+    @Test fun deletionDuringSyncIsKept() = runTest {
+        val repo = GardenRepository(phoneDb, Tombstones(ctx)) { now }
+        val p = repo.createProfile("Mia", "🐸", 3); repo.plantPack(p.id, pack)
+        val s = store(phoneDb)
+        val taken = s.snapshot()
+        val bed = phoneDb.dao().allBeds().single()
+        repo.deleteBed(bed.id)                                  // während des Abgleichs gelöscht
+        s.apply(Sync.merge(taken, taken, taken, now), taken)
+        assertTrue(phoneDb.dao().allBeds().isEmpty())
+        assertTrue(bed.id in Tombstones(ctx).all())
     }
 }

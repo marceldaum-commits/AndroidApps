@@ -46,6 +46,9 @@ enum class Stage(val label: String) {
  */
 object Scheduler {
     const val DAY_MS = 24L * 60 * 60 * 1000
+
+    /** Kalendertag nach Ortszeit – damit „heute“ um Mitternacht wechselt, nicht um 1 oder 2 Uhr (UTC). */
+    fun localDay(ms: Long, zone: java.util.TimeZone = java.util.TimeZone.getDefault()): Long = Math.floorDiv(ms + zone.getOffset(ms), DAY_MS)
     const val TARGET = 0.9
 
     fun retrievability(m: Memory, now: Long): Double {

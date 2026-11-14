@@ -115,7 +115,7 @@ class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWork
             val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }
             val seeds = minOf(SessionBuilder.seedsLeft(p.seedsPerDay, p.seedDay, p.seedsToday, now), cards.count { it.memory.isSeed })
             // Samen nur erwähnen, wenn heute noch nichts gesät wurde
-            val today = now / Scheduler.DAY_MS
+            val today = Scheduler.localDay(now)
             Triple(p.name, thirsty, if (p.seedDay == today && p.seedsToday > 0) 0 else seeds)
         }
         Reminders.message(entries)?.let { Reminders.show(applicationContext, it) }

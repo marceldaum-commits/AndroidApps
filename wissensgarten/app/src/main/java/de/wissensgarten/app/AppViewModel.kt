@@ -88,9 +88,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     /** 3 ruhige Karten vor dem Schlafen: bevorzugt heute gelernte, sonst durstige, sonst gewachsene. */
     fun startGoodNight(): Boolean {
         val now = System.currentTimeMillis()
-        val today = now / Scheduler.DAY_MS
+        val today = Scheduler.localDay(now)
         val grown = beds.value.flatMap { b -> b.cards.filter { !it.memory.isSeed }.map { it.toStudy() } }
-        val picked = (grown.filter { it.memory.lastReview / Scheduler.DAY_MS == today }.shuffled() +
+        val picked = (grown.filter { Scheduler.localDay(it.memory.lastReview) == today }.shuffled() +
             grown.filter { Scheduler.isThirsty(it.memory, now) } + grown.shuffled()).distinctBy { it.id }.take(3)
         if (picked.isEmpty()) return false
         session = picked; sessionCalm = true
@@ -104,13 +104,13 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun surprises(): List<Pair<Int, String>> {
         val p = profile.value ?: return emptyList()
         val f = festival() ?: return emptyList()
-        val day = System.currentTimeMillis() / Scheduler.DAY_MS
+        val day = Scheduler.localDay(System.currentTimeMillis())
         return f.items.mapIndexed { i, e -> i to e }.filter { (i, _) -> !settings.surpriseFound(p.id, day, i) }
     }
 
     fun collectSurprise(i: Int) {
         val p = profile.value ?: return
-        settings.markSurprise(p.id, System.currentTimeMillis() / Scheduler.DAY_MS, i)
+        settings.markSurprise(p.id, Scheduler.localDay(System.currentTimeMillis()), i)
         addDew(5)
     }
 
@@ -166,7 +166,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun hybrids() = profile.value?.let { p -> settings.hybrids(p.id).mapNotNull { de.wissensgarten.core.model.Hybrids.byId(it) } } ?: emptyList()
 
     // --- Familienbaum ---
-    fun familyWeek() = System.currentTimeMillis() / Scheduler.DAY_MS / 7
+    /** Kalenderwoche (Montag bis Sonntag, Ortszeit) */
+    fun familyWeek() = Math.floorDiv(Scheduler.localDay(System.currentTimeMillis()) + 3, 7)
     fun familyClaimed() = settings.familyClaimedWeek() == familyWeek()
     fun claimFamilyTree() {
         if (familyClaimed()) return
@@ -174,7 +175,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { profiles.value.forEach { repo.addDew(it.id, 20) } }
     }
 
-    fun goodNightDoneToday(): Boolean = profile.value?.let { settings.goodNightDay(it.id) == System.currentTimeMillis() / Scheduler.DAY_MS } ?: true
+    fun goodNightDoneToday(): Boolean = profile.value?.let { settings.goodNightDay(it.id) == Scheduler.localDay(System.currentTimeMillis()) } ?: true
 
     fun startStation(bedId: String, index: Int): Boolean {
         sessionCalm = false

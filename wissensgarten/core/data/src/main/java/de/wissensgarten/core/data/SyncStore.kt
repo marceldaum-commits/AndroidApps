@@ -55,41 +55,102 @@ class SyncStore(
         )
     }
 
-    /** Schreibt einen (zusammengeführten) Stand in Datenbank und Einstellungen. Nichts wird gelöscht außer Gelöschtem. */
-    suspend fun apply(s: SyncSnapshot) {
+    /**
+     * Schreibt einen zusammengeführten Stand in Datenbank und Einstellungen.
+     * [taken] ist der eigene Stand, der in die Zusammenführung einging. Was sich SEITDEM auf dem Gerät geändert hat
+     * (während des Abgleichs gegossen, gekauft, gelöscht …), bleibt erhalten und wird eingerechnet.
+     */
+    suspend fun apply(s: SyncSnapshot, taken: SyncSnapshot) {
+        val tookProfiles = taken.profiles.associateBy { it.id }
+        val tookBeds = taken.beds.associateBy { it.id }
+        val tookItems = taken.inventory.associateBy { it.profileId to it.itemId }
         db.withTransaction {
-            dao.upsertProfiles(s.profiles.map { ProfileEntity(it.id, it.name, it.avatar, it.level, it.dewdrops, it.seedDay, it.seedsToday, it.seedsPerDay, it.createdAt) })
-            dao.upsertBeds(s.beds.map { BedEntity(it.id, it.profileId, it.name, it.emoji, it.hue, it.packId, it.packVersion, it.createdAt, it.sortIndex, it.species) })
+            // Inzwischen Gelöschtes zählt mit
+            val tombs = tombstones.all() + s.deleted
+            val curProfiles = dao.allProfiles().associateBy { it.id }
+            dao.upsertProfiles(s.profiles.filter { it.id !in tombs }.map { m ->
+                val cur = curProfiles[m.id]; val t = tookProfiles[m.id]
+                if (cur == null || t == null) ProfileEntity(m.id, m.name, m.avatar, m.level, m.dewdrops, m.seedDay, m.seedsToday, m.seedsPerDay, m.createdAt)
+                else {
+                    // Tautropfen: Änderung seit dem Schnappschuss dazurechnen; Einstellungen: lokale Änderung gewinnt
+                    val dew = (m.dewdrops + (cur.dewdrops - t.dewdrops)).coerceAtLeast(0)
+                    val (seedDay, seedsToday) = when {
+                        cur.seedDay > m.seedDay -> cur.seedDay to cur.seedsToday
+                        cur.seedDay == m.seedDay -> m.seedDay to maxOf(m.seedsToday, cur.seedsToday)
+                        else -> m.seedDay to m.seedsToday
+                    }
+                    ProfileEntity(m.id,
+                        if (cur.name != t.name) cur.name else m.name,
+                        if (cur.avatar != t.avatar) cur.avatar else m.avatar,
+                        if (cur.level != t.level) cur.level else m.level,
+                        dew, seedDay, seedsToday,
+                        if (cur.seedsPerDay != t.seedsPerDay) cur.seedsPerDay else m.seedsPerDay,
+                        minOf(cur.createdAt, m.createdAt))
+                }
+            })
+            val curBeds = dao.allBeds().associateBy { it.id }
+            dao.upsertBeds(s.beds.filter { it.id !in tombs }.filter { m ->
+                // während des Abgleichs geändertes Beet (z. B. neue Pflanzenart) nicht zurückdrehen
+                val cur = curBeds[m.id]; val t = tookBeds[m.id]
+                cur == null || t == null || (cur.species == t.species && cur.name == t.name && cur.packVersion == t.packVersion)
+            }.map { BedEntity(it.id, it.profileId, it.name, it.emoji, it.hue, it.packId, it.packVersion, it.createdAt, it.sortIndex, it.species) })
             // Während des Abgleichs gegossen? Dann bleibt der neuere Stand aus der Datenbank.
             val current = dao.allCards().associate { it.id to it.lastReview }
-            dao.upsertCards(s.cards.filter { (current[it.id] ?: Long.MIN_VALUE) <= it.lastReview }.map {
+            dao.upsertCards(s.cards.filter { it.id !in tombs && (current[it.id] ?: Long.MIN_VALUE) <= it.lastReview }.map {
                 CardEntity(it.id, it.bedId, it.profileId, it.sourceId, it.front, it.back, it.choices, it.info, it.stability, it.difficulty,
                     it.lastReview, it.reps, it.lapses, it.createdAt, it.sortIndex, it.img)
             })
-            dao.upsertItems(s.inventory.map { InventoryEntity(it.profileId, it.itemId, it.active, it.boughtAt) })
+            val curItems = dao.allInventory().associateBy { it.profileId to it.itemId }
+            dao.upsertItems(s.inventory.filter { it.profileId !in tombs }.map { m ->
+                val k = m.profileId to m.itemId
+                val cur = curItems[k]; val t = tookItems[k]
+                val active = if (cur != null && t != null && cur.active != t.active) cur.active else m.active
+                InventoryEntity(m.profileId, m.itemId, active, m.boughtAt)
+            })
             val since = s.logs.minOfOrNull { it.time } ?: Long.MAX_VALUE
             val have = dao.logsSinceOnce(since).map { Triple(it.profileId, it.cardId, it.time) }.toHashSet()
-            dao.insertLogs(s.logs.filter { Triple(it.profileId, it.cardId, it.time) !in have }
+            dao.insertLogs(s.logs.filter { Triple(it.profileId, it.cardId, it.time) !in have && it.profileId !in tombs }
                 .map { ReviewLogEntity(profileId = it.profileId, cardId = it.cardId, time = it.time, rating = it.rating, stabilityAfter = it.stabilityAfter) })
-            if (s.deleted.isNotEmpty()) {
-                val ids = s.deleted.toList()
-                ids.chunked(500).forEach { dao.deleteCardsById(it); dao.deleteBedsById(it); dao.deleteProfilesById(it) }
+            if (tombs.isNotEmpty()) {
+                tombs.toList().chunked(500).forEach { dao.deleteCardsById(it); dao.deleteBedsById(it); dao.deleteProfilesById(it) }
             }
         }
-        tombstones.set(s.deleted)
+        // Gelöschtes nur ergänzen – nie Einträge verlieren, die während des Abgleichs dazukamen
+        tombstones.add(s.deleted)
+        val tombs = tombstones.all()
         s.extras.forEach { (pid, e) ->
+            if (pid in tombs) return@forEach
+            val t = taken.extras[pid]
             settings.setIntros(pid, e.intros)
             if (e.chestsOpened > settings.chestsOpened(pid)) settings.setChestsOpened(pid, e.chestsOpened)
-            if (e.friends != null) settings.setGardenFriends(pid, e.friends!!)
-            settings.setChaptersRead(pid, e.chapters)
-            settings.setHybrids(pid, e.hybrids)
-            settings.setGoodNightDay(pid, e.goodNightDay)
-            settings.setExams(pid, e.exams)
+            // Gartenfreunde: lokal inzwischen umgestellt? Dann bleibt das.
+            val curFriends = settings.gardenFriends(pid)
+            if (e.friends != null && (t == null || curFriends == t.friends)) settings.setGardenFriends(pid, e.friends!!)
+            settings.setChaptersRead(pid, settings.chaptersRead(pid) + e.chapters)
+            settings.setHybrids(pid, settings.hybrids(pid) + e.hybrids)
+            settings.setGoodNightDay(pid, maxOf(settings.goodNightDay(pid), e.goodNightDay))
+            settings.setExams(pid, (settings.exams(pid) + e.exams).distinctBy { it.id }.filter { it.id !in tombs })
         }
         if (s.familyWeek > settings.familyClaimedWeek()) settings.setFamilyClaimedWeek(s.familyWeek)
         // Aktives Profil weg (auf anderem Gerät gelöscht)? Dann das erste nehmen.
-        if (s.profiles.none { it.id == settings.activeProfileId.value }) settings.setActiveProfile(s.profiles.firstOrNull()?.id)
-        if (s.profiles.isNotEmpty()) settings.setOnboarded(true)
+        val alive = dao.allProfiles()
+        if (alive.none { it.id == settings.activeProfileId.value }) settings.setActiveProfile(alive.firstOrNull()?.id)
+        if (alive.isNotEmpty()) settings.setOnboarded(true)
         settings.syncChanged()
     }
+
+    // ---- Abgleich in zwei Schritten absichern: erst „vorgemerkt“, nach Erfolg zur Basis
+
+    private val pendingFile = File(context.filesDir, "sync_vorgemerkt.gz")
+    private val pendingTakenFile = File(context.filesDir, "sync_vorgemerkt_eigen.gz")
+
+    /** Vor dem Hochladen merken, was hochgeladen wird – falls die App mittendrin beendet wird. */
+    fun savePending(merged: SyncSnapshot, taken: SyncSnapshot) {
+        pendingTakenFile.writeBytes(Sync.encode(taken))
+        pendingFile.writeBytes(Sync.encode(merged))
+    }
+    fun pending(): Pair<SyncSnapshot, SyncSnapshot>? = runCatching {
+        Sync.decode(pendingFile.readBytes()) to Sync.decode(pendingTakenFile.readBytes())
+    }.getOrNull()
+    fun clearPending() { pendingFile.delete(); pendingTakenFile.delete() }
 }

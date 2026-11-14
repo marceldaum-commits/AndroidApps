@@ -128,4 +128,26 @@ class SyncTest {
         assertEquals(listOf("p1"), m.profiles.map { it.id })
         assertEquals("Lena M.", m.profiles.single().name)
     }
+
+    @Test fun reconnectWithoutBaseDoesNotDoubleDew() {
+        // A und B haben „Lena“ getrennt angelegt und schon einmal abgeglichen (Alias t-p ↔ p1), beide 200 💧
+        val first = Sync.merge(phone.copy(profiles = listOf(profile("p1", dew = 100))),
+            SyncSnapshot(profiles = listOf(profile("t-p", dew = 100))), null, now)
+        assertEquals(200, first.profiles.single().dewdrops)
+        // B trennt und verbindet neu (Basis gelöscht) – Drive enthält den Stand mit Alias
+        val tablet = SyncSnapshot(profiles = listOf(profile("t-p", dew = 200)))
+        assertEquals(200, Sync.merge(tablet, first, null, now).profiles.single().dewdrops)
+    }
+
+    @Test fun deletionFollowsAliases() {
+        val tablet = SyncSnapshot(profiles = listOf(profile("t-p")))
+        val first = Sync.merge(phone, tablet, null, now)          // p1 ↔ t-p verbunden
+        // Tablet löscht „seine“ Lena (t-p)
+        val tabletAfter = SyncSnapshot(deleted = setOf("t-p"), aliases = first.aliases)
+        val m = Sync.merge(first, tabletAfter, first, now)
+        assertTrue(m.profiles.isEmpty())
+        assertTrue("p1" in m.deleted)
+    }
+
+    @Test fun mergeCarriesFormat() = assertEquals(Sync.FORMAT, Sync.merge(phone, phone, null, now).format)
 }

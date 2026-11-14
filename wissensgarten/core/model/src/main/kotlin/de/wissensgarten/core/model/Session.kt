@@ -42,7 +42,7 @@ object SessionBuilder {
     }
 
     fun seedsLeft(perDay: Int, seedDay: Long, seedsToday: Int, now: Long): Int {
-        val today = now / Scheduler.DAY_MS
+        val today = Scheduler.localDay(now)
         return (perDay - if (seedDay == today) seedsToday else 0).coerceAtLeast(0)
     }
 }

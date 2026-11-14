@@ -32,6 +32,8 @@ data class SyncSnapshot(
     val deleted: Set<String> = emptySet(),
     /** Einmal zugeordnete IDs (z. B. „Lena“ auf zwei Geräten getrennt angelegt) – bleiben verbunden, auch nach Umbenennen */
     val aliases: Map<String, String> = emptyMap(),
+    /** Kennung dieses Stands – damit ein Gerät prüfen kann, ob SEIN Upload im Drive angekommen ist */
+    val syncId: String = "",
 )
 
 @Serializable
@@ -71,6 +73,9 @@ data class SExtras(
 )
 
 object Sync {
+    /** Höchste Format-Version, die diese App versteht. Neuere Stände nie überschreiben (Daten würden verloren gehen). */
+    const val FORMAT = 1
+
     /** Protokolle älter als das bleiben nur auf dem Gerät (die Eltern-Übersicht braucht 7 Tage). */
     const val LOG_DAYS = 120L
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = false }
@@ -94,7 +99,6 @@ object Sync {
      */
     fun merge(local: SyncSnapshot, remote: SyncSnapshot?, base: SyncSnapshot?, now: Long): SyncSnapshot {
         if (remote == null) return local.copy(savedAt = now)
-        val deleted = local.deleted + remote.deleted
         val knownAliases = local.aliases + remote.aliases
         val edges = HashMap<String, MutableSet<String>>()
         knownAliases.forEach { (a, b) -> edges.getOrPut(a) { HashSet() } += b; edges.getOrPut(b) { HashSet() } += a }
@@ -104,21 +108,24 @@ object Sync {
             while (todo.isNotEmpty()) edges[todo.removeFirst()]?.forEach { if (seen.add(it)) todo += it }
             return seen
         }
+        // Gelöschtes gilt für alle Geräte – auch unter den IDs, unter denen es dort bekannt ist
+        val deleted = (local.deleted + remote.deleted).flatMap { linked(it) }.toSet()
 
         // ---- Zuordnung: gleiche Dinge mit verschiedenen IDs (auf zwei Geräten getrennt angelegt)
         val profileMap = HashMap<String, String>()
+        // Nur in DIESEM Abgleich über den Namen zugeordnet = zwei unabhängige Anfänge (Tautropfen addieren).
+        // Über eine bekannte Verbindung (Alias) zugeordnet = schon einmal abgeglichen → nicht addieren.
+        val joinedByName = HashSet<String>()
         for (rp in remote.profiles) {
             profileMap[rp.id] = when {
                 local.profiles.any { it.id == rp.id } -> rp.id
                 else -> linked(rp.id).firstOrNull { a -> local.profiles.any { it.id == a } } ?: local.profiles.firstOrNull { lp ->
                     lp.name.trim().equals(rp.name.trim(), ignoreCase = true) && remote.profiles.none { it.id == lp.id } &&
                         profileMap.values.none { it == lp.id }
-                }?.id ?: rp.id
+                }?.id?.also { joinedByName += it } ?: rp.id
             }
         }
         fun pid(id: String) = profileMap[id] ?: id
-        // Über den Namen zugeordnet = auf zwei Geräten unabhängig voneinander angefangen
-        val joinedByName = profileMap.filter { (r, l) -> r != l }.values.toSet()
 
         val bedMap = HashMap<String, String>()
         for (rb in remote.beds) {

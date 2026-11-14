@@ -94,19 +94,34 @@ class DriveSync(private val context: Context, private val container: AppContaine
             withContext(Dispatchers.IO) {
                 val token = token()
                 val store = container.syncStore
+                // 1) Wurde die App beim letzten Mal mitten im Abgleich beendet? Dann sauber zu Ende bringen.
+                store.pending()?.let { (merged, taken) ->
+                    val remoteNow = listFiles(token).firstOrNull()?.let { Sync.decode(download(token, it.first)) }
+                    if (remoteNow?.syncId == merged.syncId) { store.apply(merged, taken); store.saveBase(merged) }
+                    store.clearPending()
+                }
                 var foundRemote = false
-                repeat(3) { attempt ->
-                    val meta = findFile(token)
-                    val remote = meta?.let { Sync.decode(download(token, it.first)) }
-                    foundRemote = foundRemote || remote != null
-                    val merged = Sync.merge(store.snapshot(), remote, store.base(), System.currentTimeMillis())
-                    // Hat jemand während des Zusammenführens hochgeladen? Dann nochmal.
-                    val now = findFile(token)
-                    if (meta != null && now != null && now.second != meta.second && attempt < 2) return@repeat
-                    // Erst hochladen, dann übernehmen: scheitert das Hochladen, bleibt alles wie es war
-                    upload(token, meta?.first, Sync.encode(merged))
-                    store.apply(merged)
+                repeat(4) { attempt ->
+                    val files = listFiles(token)
+                    val remotes = files.map { Sync.decode(download(token, it.first)) }
+                    remotes.firstOrNull { it.format > Sync.FORMAT }?.let {
+                        error("Ein anderes Gerät hat eine neuere Wissensgarten-Version. Bitte aktualisiere die App auf diesem Gerät.")
+                    }
+                    foundRemote = foundRemote || remotes.isNotEmpty()
+                    val now = System.currentTimeMillis()
+                    // Doppelte Dateien (zwei Geräte haben gleichzeitig zum ersten Mal abgeglichen) zusammenlegen
+                    val remote = remotes.reduceOrNull { a, b -> Sync.merge(a, b, store.base(), now) }
+                    val taken = store.snapshot()
+                    val merged = Sync.merge(taken, remote, store.base(), now).copy(format = Sync.FORMAT, syncId = java.util.UUID.randomUUID().toString())
+                    store.savePending(merged, taken)
+                    upload(token, files.firstOrNull()?.first, Sync.encode(merged))
+                    // 2) Ist genau unser Stand angekommen? Sonst hat ein anderes Gerät dazwischen hochgeladen → nochmal.
+                    val check = listFiles(token).firstOrNull()?.let { Sync.decode(download(token, it.first)) }
+                    if (check?.syncId != merged.syncId && attempt < 3) { store.clearPending(); return@repeat }
+                    store.apply(merged, taken)
                     store.saveBase(merged)
+                    store.clearPending()
+                    files.drop(1).forEach { runCatching { delete(token, it.first) } }
                     return@withContext foundRemote
                 }
                 foundRemote
@@ -123,7 +138,7 @@ class DriveSync(private val context: Context, private val container: AppContaine
     }
 
     /** Gibt es im Drive schon einen Garten (z. B. zum Wiederherstellen auf einem neuen Gerät)? */
-    suspend fun remoteExists(): Boolean = withContext(Dispatchers.IO) { findFile(token()) != null }
+    suspend fun remoteExists(): Boolean = withContext(Dispatchers.IO) { listFiles(token()).isNotEmpty() }
 
     // ------------------------------------------------------------ Drive-REST (ohne große Bibliothek)
 
@@ -145,15 +160,18 @@ class DriveSync(private val context: Context, private val container: AppContaine
             setRequestProperty("Authorization", "Bearer $token")
         }
 
-    /** (Datei-ID, Änderungszeit) der Sync-Datei im App-Ordner */
-    private fun findFile(token: String): Pair<String, String>? {
+    /** Alle Sync-Dateien im App-Ordner, neueste zuerst: (Datei-ID, Änderungszeit) */
+    private fun listFiles(token: String): List<Pair<String, String>> {
         val q = URLEncoder.encode("name = '$FILE' and trashed = false", "UTF-8")
         val c = http("$API/files?spaces=appDataFolder&q=$q&fields=files(id,modifiedTime)&orderBy=modifiedTime%20desc", token)
         check(c.responseCode == 200) { "Drive antwortet mit ${c.responseCode}" }
         val files = JSONObject(c.inputStream.bufferedReader().readText()).getJSONArray("files")
-        if (files.length() == 0) return null
-        val f = files.getJSONObject(0)
-        return f.getString("id") to f.optString("modifiedTime")
+        return (0 until files.length()).map { files.getJSONObject(it).let { f -> f.getString("id") to f.optString("modifiedTime") } }
+    }
+
+    private fun delete(token: String, id: String) {
+        val c = http("$API/files/$id", token, "DELETE")
+        check(c.responseCode in 200..299 || c.responseCode == 404) { "Löschen fehlgeschlagen (${c.responseCode})" }
     }
 
     private fun download(token: String, id: String): ByteArray {
@@ -187,6 +205,8 @@ class DriveSync(private val context: Context, private val container: AppContaine
         t is ApiException && t.statusCode == 7 -> "Keine Internetverbindung."
         t is ApiException && (t.statusCode == 16 || t.statusCode == 12501) -> "Anmeldung abgebrochen."
         t is java.net.UnknownHostException || t is java.net.SocketTimeoutException -> "Keine Internetverbindung."
+        t is kotlinx.serialization.SerializationException || t is java.util.zip.ZipException || t is java.io.EOFException ->
+            "Der gespeicherte Garten im Drive ist beschädigt. Er wird nicht überschrieben – bitte melde dich bei uns."
         else -> t.message ?: "Unbekannter Fehler"
     }
 
