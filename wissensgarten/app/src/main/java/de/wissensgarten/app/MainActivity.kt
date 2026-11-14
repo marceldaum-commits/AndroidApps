@@ -71,6 +71,7 @@ object Routes {
     const val HYBRID = "kreuzung"
     const val KLASSE = "klasse"
     const val RADIO = "radio"
+    const val SAFARI = "safari"
     const val WORKSHEET = "arbeitsblatt/{bed}"
     fun worksheet(bed: String) = "arbeitsblatt/$bed"
     const val CHAPTER = "kapitel/{n}"
@@ -318,6 +319,7 @@ class MainActivity : ComponentActivity() {
                                     )
                                     StoryEntryCard(newCh) { nav.navigate(Routes.STORY) }
                                     if (beds.isNotEmpty()) de.wissensgarten.app.ui.radio.RadioEntryCard { nav.navigate(Routes.RADIO) }
+                                    de.wissensgarten.app.ui.safari.SafariEntryCard { nav.navigate(Routes.SAFARI) }
                                     val mix = remember(beds, packs) { vm.mixCandidates() }
                                     if (mix != null) MixEntryCard(mix.first.bed.name, mix.second.bed.name) { if (vm.startMixed()) nav.navigate(Routes.REVIEW) }
                                 }
@@ -367,6 +369,14 @@ class MainActivity : ComponentActivity() {
                     if (pack == null) LaunchedEffect(Unit) { nav.popBackStack() } else IntroScreen(pack) {
                         vm.markIntroSeen(pack.id); nav.popBackStack()
                     }
+                }
+                composable(Routes.SAFARI) {
+                    de.wissensgarten.app.ui.safari.SafariScreen(
+                        found = remember { vm.safariCount() },
+                        englishDefault = (profile?.level ?: 0) !in 1..2,
+                        onPlant = { w, en, bmp -> vm.addSafariFind(w, en, bmp) },
+                        onBack = { nav.popBackStack() },
+                    )
                 }
                 composable(Routes.RADIO) {
                     val cards = remember { vm.radioCards() }

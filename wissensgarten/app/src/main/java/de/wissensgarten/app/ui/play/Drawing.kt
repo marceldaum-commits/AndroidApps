@@ -69,6 +69,15 @@ object Drawings {
     }
 
     fun delete(ctx: Context, cardId: String) { file(ctx, cardId).delete(); rev++ }
+
+    /** Ein Foto als Merkbild (quadratisch zugeschnitten, 512 px). */
+    fun saveBitmap(ctx: Context, cardId: String, src: Bitmap) {
+        val side = minOf(src.width, src.height)
+        val sq = Bitmap.createBitmap(src, (src.width - side) / 2, (src.height - side) / 2, side, side)
+        val out = Bitmap.createScaledBitmap(sq, 512, 512, true)
+        file(ctx, cardId).outputStream().use { out.compress(Bitmap.CompressFormat.PNG, 100, it) }
+        rev++
+    }
 }
 
 /** Ein Pinselstrich, Punkte normiert auf 0..1. */

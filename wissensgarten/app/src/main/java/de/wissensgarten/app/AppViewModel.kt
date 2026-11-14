@@ -22,6 +22,8 @@ import kotlinx.coroutines.launch
 
 /** Verbindet Datenbank, Pakete und Einstellungen mit der Oberfläche. */
 @OptIn(ExperimentalCoroutinesApi::class)
+const val SAFARI_BED = "Meine Safari"
+
 class AppViewModel(app: Application) : AndroidViewModel(app) {
     private val c = (app as WissensgartenApp).container
     private val repo = c.repository
@@ -252,6 +254,23 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             then(id)
         }
     }
+
+    /** Wissens-Safari: Fundstück als Karte ins Safari-Beet, Foto wird zum Merkbild. */
+    fun addSafariFind(word: de.wissensgarten.core.model.Safari.Word, english: Boolean, photo: android.graphics.Bitmap?, then: () -> Unit = {}) {
+        val p = profile.value ?: return
+        viewModelScope.launch {
+            val bedId = beds.value.firstOrNull { it.bed.packId == null && it.bed.name == SAFARI_BED }?.bed?.id
+                ?: repo.addOwnBed(p.id, SAFARI_BED, "📷")
+            val bed = repo.bedEntity(bedId) ?: return@launch
+            val id = repo.addCards(bed, listOf(de.wissensgarten.core.model.Safari.card(word, english))).first()
+            if (photo != null) kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                de.wissensgarten.app.ui.play.Drawings.saveBitmap(getApplication(), id, photo)
+            }
+            then()
+        }
+    }
+
+    fun safariCount() = beds.value.firstOrNull { it.bed.packId == null && it.bed.name == SAFARI_BED }?.cards?.size ?: 0
 
     fun addCardsTo(bedId: String, cards: List<de.wissensgarten.core.model.ClassCard>) {
         viewModelScope.launch { repo.bedEntity(bedId)?.let { repo.addCards(it, cards) } }

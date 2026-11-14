@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.12.0
+- Neu: **Wissens-Safari** 🔭 – fotografiere Dinge um dich herum (Spielzeug, Obst, Haustier …). Das Handy erkennt sie
+  (auf dem Gerät), Brummi sagt das Wort auf Deutsch und Englisch, und es wächst mit **deinem Foto** als Merkbild
+  im Beet „Meine Safari“. Das Foto bleibt auf dem Handy.
+
 ## 0.11.0
 - Neu: **Silben farbig** – Lesehilfe wie in der Fibel: Silben abwechselnd blau und rot (automatisch für Klasse 1–2,
   in den Einstellungen für alle einschaltbar). Nur bei deutschen Texten.

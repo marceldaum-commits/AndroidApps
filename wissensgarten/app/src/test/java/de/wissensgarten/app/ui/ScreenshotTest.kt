@@ -468,4 +468,16 @@ class ScreenshotTest {
             ReviewScreen(listOf(kid.cards[2].toStudy()), mapOf(kid.bed.id to kid.bed), true, { _, _, _ -> }, {}, subjects = mapOf(kid.bed.id to "sachunterricht"))
         }
     }
+
+    @Test fun safari() = shot("45_wissens_safari", prepare = { r -> r.onNodeWithText("🐶  der Hund").performClick(); r.mainClock.advanceTimeBy(1200) }) {
+        // Testbild: ein gemalter „Hund“ (brauner Kreis mit Ohren) auf Wiese
+        val bmp = android.graphics.Bitmap.createBitmap(600, 600, android.graphics.Bitmap.Config.ARGB_8888).apply {
+            val c = android.graphics.Canvas(this); val p = android.graphics.Paint(android.graphics.Paint.ANTI_ALIAS_FLAG)
+            c.drawColor(0xFF9CCC65.toInt()); p.color = 0xFF8D6E63.toInt(); c.drawCircle(300f, 320f, 170f, p)
+            c.drawOval(100f, 160f, 220f, 380f, p); c.drawOval(380f, 160f, 500f, 380f, p)
+            p.color = 0xFF000000.toInt(); c.drawCircle(240f, 300f, 18f, p); c.drawCircle(360f, 300f, 18f, p); c.drawCircle(300f, 380f, 28f, p)
+        }
+        de.wissensgarten.app.ui.safari.SafariScreen(6, true, { _, _, _ -> }, {}, previewPhoto = bmp,
+            previewWords = Safari.candidates(listOf("Dog" to 0.9f, "Pet" to 0.8f, "Bear" to 0.6f)))
+    }
 }

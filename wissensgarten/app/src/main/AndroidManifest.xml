@@ -66,7 +66,7 @@
         </provider>
 
         <!-- Texterkennungs-Modell gleich bei der Installation über Play-Dienste laden -->
-        <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="ocr" />
+        <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="ocr,ica" />
 
         <receiver
             android:name=".widget.GardenWidgetReceiver"
