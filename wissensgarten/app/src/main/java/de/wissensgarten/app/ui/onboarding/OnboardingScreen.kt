@@ -6,6 +6,10 @@ import androidx.compose.animation.core.*
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.SizeTransform
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -66,6 +70,8 @@ fun OnboardingScreen(
             )
         },
         bottomBar = {
+            val keyboard = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
+            val focus = androidx.compose.ui.platform.LocalFocusManager.current
             val total = chosen.size + ownBeds.size
             val (label, enabled) = when (step) {
                 Step.WELCOME -> "Los geht's" to true
@@ -78,6 +84,8 @@ fun OnboardingScreen(
                 JuicyButton(
                     sound = if (step == Step.BEDS) Sound.LEVEL_UP else Sound.TAP,
                     onClick = {
+                        // Tastatur vor dem Seitenwechsel schließen – sonst springt das Layout mitten in der Animation
+                        keyboard?.hide(); focus.clearFocus()
                         if (step == Step.BEDS) onFinish(name, avatar, level, chosen, ownBeds) else index++
                     },
                     enabled = enabled,
@@ -88,9 +96,17 @@ fun OnboardingScreen(
     ) { pad ->
         AnimatedContent(
             targetState = step,
-            transitionSpec = { slideInHorizontally { it / 3 } togetherWith slideOutHorizontally { -it / 3 } },
+            // Ganze Seite schieben, alte Seite blendet schnell aus – nichts liegt übereinander.
+            // Richtung folgt der Navigation (vor = von rechts, zurück = von links).
+            transitionSpec = {
+                val forward = targetState.ordinal > initialState.ordinal
+                (slideInHorizontally(tween(340, easing = FastOutSlowInEasing)) { if (forward) it else -it } +
+                    fadeIn(tween(220, delayMillis = 90))) togetherWith
+                    (slideOutHorizontally(tween(340, easing = FastOutSlowInEasing)) { if (forward) -it else it } +
+                        fadeOut(tween(120))) using SizeTransform(clip = true)
+            },
             label = "onboarding",
-            modifier = Modifier.padding(pad),
+            modifier = Modifier.padding(pad).fillMaxSize().clipToBounds(),
         ) { s ->
             when (s) {
                 Step.WELCOME -> Welcome()

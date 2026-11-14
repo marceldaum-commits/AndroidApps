@@ -391,4 +391,19 @@ class ScreenshotTest {
             de.wissensgarten.app.ui.settings.UpdateSection("0.8.3", de.wissensgarten.app.ui.settings.UpdateState.UpToDate)
         }
     }
+
+    /** Seitenwechsel „Wie heißt du?“ → „In welcher Klasse?“ mitten in der Animation: nichts darf übereinanderliegen. */
+    @Test fun onboardingTransition() {
+        rule.setContent { WissensgartenTheme(ThemeMode.LIGHT) { Surface { OnboardingScreen(packs, false, {}) { _, _, _, _, _ -> } } } }
+        rule.onNodeWithText("Los geht's").performClick(); rule.mainClock.advanceTimeBy(800)
+        rule.onNodeWithText("Mein Kind").performClick()
+        rule.onNodeWithText("Weiter").performClick(); rule.mainClock.advanceTimeBy(800)
+        rule.onNode(hasSetTextAction()).performTextInput("Lena")
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithText("Weiter").performClick()
+        rule.mainClock.advanceTimeBy(100)
+        rule.onRoot().captureRoboImage("build/uebergang_100ms.png")
+        rule.mainClock.advanceTimeBy(100)
+        rule.onRoot().captureRoboImage("build/uebergang_200ms.png")
+    }
 }

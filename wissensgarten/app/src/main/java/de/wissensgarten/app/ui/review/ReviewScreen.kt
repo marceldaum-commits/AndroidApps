@@ -242,7 +242,8 @@ fun ReviewScreen(
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
                     AnimatedContent(
                         targetState = Triple(phase, card.id, bonusAt),
-                        transitionSpec = { (slideInHorizontally { it / 2 } + fadeIn()) togetherWith (slideOutHorizontally { -it / 2 } + fadeOut()) },
+                        // wie im Onboarding: alte Karte blendet schnell aus, neue kommt kurz danach – kein Durcheinander
+                        transitionSpec = { (slideInHorizontally { it / 2 } + fadeIn(tween(220, delayMillis = 90))) togetherWith (slideOutHorizontally { -it / 2 } + fadeOut(tween(110))) },
                         contentKey = { if (it.first == Phase.REVEAL) "reveal-${it.second}" else "${it.first}-${it.second}" },
                         label = "spiel",
                     ) { (p, _, _) ->
