@@ -1,6 +1,6 @@
 {
   "id": "gs-wortarten",
-  "version": 1,
+  "version": 2,
   "title": "Wortarten",
   "subject": "deutsch",
   "grades": [
@@ -21,7 +21,8 @@
         "groß",
         "schön"
       ],
-      "info": "Nomen sind Namen für Lebewesen, Dinge und Gefühle."
+      "info": "Nomen sind Namen für Lebewesen, Dinge und Gefühle.",
+      "img": "🐕"
     },
     {
       "id": "002",
@@ -31,7 +32,8 @@
         "lesen",
         "klein",
         "rot"
-      ]
+      ],
+      "img": "🏫"
     },
     {
       "id": "003",
@@ -42,7 +44,8 @@
         "lustig",
         "Baum"
       ],
-      "info": "Verben sagen, was jemand tut."
+      "info": "Verben sagen, was jemand tut.",
+      "img": "🤸"
     },
     {
       "id": "004",
@@ -52,7 +55,8 @@
         "Heft",
         "bunt",
         "leise"
-      ]
+      ],
+      "img": "✍️"
     },
     {
       "id": "005",
@@ -63,7 +67,8 @@
         "frieren",
         "Schnee"
       ],
-      "info": "Adjektive sagen, wie etwas ist."
+      "info": "Adjektive sagen, wie etwas ist.",
+      "img": "🥶"
     },
     {
       "id": "006",
@@ -73,7 +78,8 @@
         "Freund",
         "helfen",
         "Lehrerin"
-      ]
+      ],
+      "img": "😊"
     },
     {
       "id": "007",
@@ -83,7 +89,8 @@
         "Verb",
         "Adjektiv",
         "Artikel"
-      ]
+      ],
+      "img": "🌼🏷️"
     },
     {
       "id": "008",
@@ -93,7 +100,8 @@
         "Nomen",
         "Adjektiv",
         "Artikel"
-      ]
+      ],
+      "img": "🎤🏃"
     },
     {
       "id": "009",
@@ -103,7 +111,8 @@
         "Nomen",
         "Verb",
         "Artikel"
-      ]
+      ],
+      "img": "😴🎨"
     },
     {
       "id": "010",
@@ -113,7 +122,8 @@
         "Verb",
         "Adjektiv",
         "Artikel"
-      ]
+      ],
+      "img": "😄🏷️"
     },
     {
       "id": "011",
@@ -123,7 +133,8 @@
         "Nomen",
         "Adjektiv",
         "Artikel"
-      ]
+      ],
+      "img": "⚽🏃"
     },
     {
       "id": "012",
@@ -133,7 +144,8 @@
         "Nomen",
         "Verb",
         "Artikel"
-      ]
+      ],
+      "img": "🐌🎨"
     },
     {
       "id": "013",
@@ -142,7 +154,8 @@
       "choices": [
         "der",
         "das"
-      ]
+      ],
+      "img": "☀️👩"
     },
     {
       "id": "014",
@@ -151,7 +164,8 @@
       "choices": [
         "die",
         "das"
-      ]
+      ],
+      "img": "🍽️👨"
     },
     {
       "id": "015",
@@ -160,7 +174,8 @@
       "choices": [
         "der",
         "die"
-      ]
+      ],
+      "img": "🏠👶"
     },
     {
       "id": "016",
@@ -169,7 +184,8 @@
       "choices": [
         "der",
         "das"
-      ]
+      ],
+      "img": "🐈👩"
     },
     {
       "id": "017",
@@ -178,7 +194,8 @@
       "choices": [
         "die",
         "das"
-      ]
+      ],
+      "img": "🍎👨"
     },
     {
       "id": "018",
@@ -187,7 +204,8 @@
       "choices": [
         "der",
         "die"
-      ]
+      ],
+      "img": "🖼️👶"
     },
     {
       "id": "019",
@@ -196,7 +214,8 @@
       "choices": [
         "die",
         "das"
-      ]
+      ],
+      "img": "🌙👨"
     },
     {
       "id": "020",
@@ -206,7 +225,8 @@
         "Verben",
         "Adjektive"
       ],
-      "info": "Nomen schreibt man groß: der Hund, die Freude."
+      "info": "Nomen schreibt man groß: der Hund, die Freude.",
+      "img": "🔠🏷️"
     },
     {
       "id": "021",
@@ -216,7 +236,8 @@
         "Kinds",
         "Kinde",
         "Kinden"
-      ]
+      ],
+      "img": "👧👦👶"
     },
     {
       "id": "022",
@@ -226,7 +247,8 @@
         "Mausen",
         "Mause",
         "Mäuser"
-      ]
+      ],
+      "img": "🐭🐭🐭"
     },
     {
       "id": "023",
@@ -237,7 +259,8 @@
         "laufte",
         "läuften"
       ],
-      "info": "Die Grundform (Infinitiv) endet meist auf -en."
+      "info": "Die Grundform (Infinitiv) endet meist auf -en.",
+      "img": "🏃💨"
     },
     {
       "id": "024",
@@ -247,7 +270,8 @@
         "am schnellesten",
         "schnellerer",
         "am schnellen"
-      ]
+      ],
+      "img": "🥇🏃"
     },
     {
       "id": "025",
@@ -257,7 +281,8 @@
         "Hund",
         "laut",
         "Der"
-      ]
+      ],
+      "img": "🐕🔊"
     },
     {
       "id": "026",
@@ -267,7 +292,8 @@
         "Ampel",
         "leuchtet",
         "Die"
-      ]
+      ],
+      "img": "🔴🚦"
     },
     {
       "id": "027",
@@ -277,7 +303,8 @@
         "essen",
         "heute",
         "Wir"
-      ]
+      ],
+      "img": "🍝"
     },
     {
       "id": "028",
@@ -288,7 +315,8 @@
         "die",
         "das"
       ],
-      "info": "Unbestimmte Artikel: ein, eine. Bestimmte: der, die, das."
+      "info": "Unbestimmte Artikel: ein, eine. Bestimmte: der, die, das.",
+      "img": "1️⃣"
     },
     {
       "id": "029",
@@ -298,7 +326,8 @@
         "ich gehst",
         "ich geht",
         "ich gehen"
-      ]
+      ],
+      "img": "🚶"
     },
     {
       "id": "030",
@@ -309,7 +338,8 @@
         "Verben",
         "Adjektive"
       ],
-      "info": "Pronomen stehen für ein Nomen."
+      "info": "Pronomen stehen für ein Nomen.",
+      "img": "🙋👉"
     },
     {
       "id": "031",
@@ -319,7 +349,8 @@
         "Nomen",
         "Verb",
         "Artikel"
-      ]
+      ],
+      "img": "🎨"
     },
     {
       "id": "032",
@@ -329,7 +360,8 @@
         "Nomen",
         "Adjektiv",
         "Artikel"
-      ]
+      ],
+      "img": "🏃"
     }
   ]
 }

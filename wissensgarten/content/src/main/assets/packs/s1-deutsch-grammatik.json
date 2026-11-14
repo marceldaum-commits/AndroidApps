@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-grammatik",
-  "version": 1,
+  "version": 2,
   "title": "Deutsch Grammatik",
   "subject": "deutsch",
   "grades": [
@@ -21,7 +21,8 @@
         "fünf",
         "sechs"
       ],
-      "info": "Nominativ, Genitiv, Dativ, Akkusativ"
+      "info": "Nominativ, Genitiv, Dativ, Akkusativ",
+      "img": "4️⃣🗂️"
     },
     {
       "id": "002",
@@ -31,7 +32,8 @@
         "Wen oder was?",
         "Wem?",
         "Wessen?"
-      ]
+      ],
+      "img": "🙋❓"
     },
     {
       "id": "003",
@@ -41,7 +43,8 @@
         "Wem?",
         "Wen oder was?",
         "Wer oder was?"
-      ]
+      ],
+      "img": "👜❓"
     },
     {
       "id": "004",
@@ -51,7 +54,8 @@
         "Wessen?",
         "Wen oder was?",
         "Wer oder was?"
-      ]
+      ],
+      "img": "🎁❓"
     },
     {
       "id": "005",
@@ -61,7 +65,8 @@
         "Wer oder was?",
         "Wem?",
         "Wessen?"
-      ]
+      ],
+      "img": "🎯❓"
     },
     {
       "id": "006",
@@ -71,7 +76,8 @@
         "Genitiv",
         "Dativ",
         "Akkusativ"
-      ]
+      ],
+      "img": "⚽💨"
     },
     {
       "id": "007",
@@ -81,7 +87,8 @@
         "Nominativ",
         "Dativ",
         "Akkusativ"
-      ]
+      ],
+      "img": "📕👓"
     },
     {
       "id": "008",
@@ -91,7 +98,8 @@
         "Nominativ",
         "Genitiv",
         "Akkusativ"
-      ]
+      ],
+      "img": "🐕🦴"
     },
     {
       "id": "009",
@@ -101,7 +109,8 @@
         "Nominativ",
         "Genitiv",
         "Dativ"
-      ]
+      ],
+      "img": "👀🌕"
     },
     {
       "id": "010",
@@ -112,7 +121,8 @@
         "Genitiv",
         "Akkusativ"
       ],
-      "info": "mit dem Rad, mit der Bahn"
+      "info": "mit dem Rad, mit der Bahn",
+      "img": "🤝🎁"
     },
     {
       "id": "011",
@@ -123,7 +133,8 @@
         "Genitiv",
         "Dativ"
       ],
-      "info": "für den Freund, für die Oma"
+      "info": "für den Freund, für die Oma",
+      "img": "🎯🎀"
     },
     {
       "id": "012",
@@ -133,7 +144,8 @@
         "Prädikat",
         "Akkusativobjekt",
         "Dativobjekt"
-      ]
+      ],
+      "img": "👧📖"
     },
     {
       "id": "013",
@@ -143,7 +155,8 @@
         "Die Kinder",
         "im Garten",
         "Garten"
-      ]
+      ],
+      "img": "🤸🌳"
     },
     {
       "id": "014",
@@ -153,7 +166,8 @@
         "Akkusativobjekt",
         "Subjekt",
         "Genitivobjekt"
-      ]
+      ],
+      "img": "👵🎁"
     },
     {
       "id": "015",
@@ -163,7 +177,8 @@
         "Dativobjekt",
         "Subjekt",
         "Prädikat"
-      ]
+      ],
+      "img": "💐🎯"
     },
     {
       "id": "016",
@@ -173,7 +188,8 @@
         "des Ortes",
         "der Art und Weise",
         "des Grundes"
-      ]
+      ],
+      "img": "🕒📅"
     },
     {
       "id": "017",
@@ -183,7 +199,8 @@
         "der Zeit",
         "der Art und Weise",
         "des Grundes"
-      ]
+      ],
+      "img": "📍🏙️"
     },
     {
       "id": "018",
@@ -193,7 +210,8 @@
         "der Zeit",
         "des Ortes",
         "der Art und Weise"
-      ]
+      ],
+      "img": "🤧🤒"
     },
     {
       "id": "019",
@@ -203,7 +221,8 @@
         "der Zeit",
         "des Ortes",
         "des Grundes"
-      ]
+      ],
+      "img": "🎤🔊"
     },
     {
       "id": "020",
@@ -214,7 +233,8 @@
         "Silbenprobe",
         "Rechtschreibprobe"
       ],
-      "info": "Was beim Umstellen zusammenbleibt, ist ein Satzglied."
+      "info": "Was beim Umstellen zusammenbleibt, ist ein Satzglied.",
+      "img": "🔄🧩"
     },
     {
       "id": "021",
@@ -225,7 +245,8 @@
         "daß",
         "was"
       ],
-      "info": "dass leitet einen Nebensatz ein und lässt sich nicht durch „dieses/welches“ ersetzen."
+      "info": "dass leitet einen Nebensatz ein und lässt sich nicht durch „dieses/welches“ ersetzen.",
+      "img": "🤞🔗"
     },
     {
       "id": "022",
@@ -236,7 +257,8 @@
         "was",
         "den"
       ],
-      "info": "Relativpronomen: ersetzbar durch „welches“."
+      "info": "Relativpronomen: ersetzbar durch „welches“.",
+      "img": "🚲👉"
     },
     {
       "id": "023",
@@ -247,7 +269,8 @@
         "Was",
         "Des"
       ],
-      "info": "Artikel: ersetzbar durch „dieses“."
+      "info": "Artikel: ersetzbar durch „dieses“.",
+      "img": "🌤️"
     },
     {
       "id": "024",
@@ -257,7 +280,8 @@
         "das",
         "daß",
         "was"
-      ]
+      ],
+      "img": "🗣️😴"
     },
     {
       "id": "025",
@@ -267,7 +291,8 @@
         "weil oder damit",
         "ob oder wenn",
         "und oder aber"
-      ]
+      ],
+      "img": "👈👉❓"
     },
     {
       "id": "026",
@@ -277,7 +302,8 @@
         "Präteritum",
         "Perfekt",
         "Futur I"
-      ]
+      ],
+      "img": "▶️🏠"
     },
     {
       "id": "027",
@@ -287,7 +313,8 @@
         "Präsens",
         "Perfekt",
         "Plusquamperfekt"
-      ]
+      ],
+      "img": "📜🚶"
     },
     {
       "id": "028",
@@ -297,7 +324,8 @@
         "Präteritum",
         "Plusquamperfekt",
         "Futur II"
-      ]
+      ],
+      "img": "✅🏠"
     },
     {
       "id": "029",
@@ -307,7 +335,8 @@
         "Perfekt",
         "Präteritum",
         "Futur II"
-      ]
+      ],
+      "img": "⏪⏪"
     },
     {
       "id": "030",
@@ -317,7 +346,8 @@
         "Futur II",
         "Präsens",
         "Perfekt"
-      ]
+      ],
+      "img": "⏩🏠"
     },
     {
       "id": "031",
@@ -327,7 +357,8 @@
         "Futur I",
         "Plusquamperfekt",
         "Perfekt"
-      ]
+      ],
+      "img": "⏩✅"
     },
     {
       "id": "032",
@@ -337,7 +368,8 @@
         "Sie hat gekommen.",
         "Sie war gekommen.",
         "Sie kam."
-      ]
+      ],
+      "img": "🚪👋"
     },
     {
       "id": "033",
@@ -347,7 +379,8 @@
         "Wir singten.",
         "Wir sungen.",
         "Wir haben gesungen."
-      ]
+      ],
+      "img": "🎤🎶"
     },
     {
       "id": "034",
@@ -357,7 +390,8 @@
         "Er bringte.",
         "Er brang.",
         "Er bracht."
-      ]
+      ],
+      "img": "📦🚚"
     }
   ]
 }

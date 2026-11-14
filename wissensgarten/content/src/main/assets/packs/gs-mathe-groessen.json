@@ -1,6 +1,6 @@
 {
   "id": "gs-mathe-groessen",
-  "version": 1,
+  "version": 2,
   "title": "Uhr, Geld und Maße",
   "subject": "mathe",
   "grades": [
@@ -19,7 +19,8 @@
         "10 cm",
         "1000 cm",
         "60 cm"
-      ]
+      ],
+      "img": "📏💯"
     },
     {
       "id": "002",
@@ -29,7 +30,8 @@
         "100 m",
         "10 m",
         "10 000 m"
-      ]
+      ],
+      "img": "🏃🛣️"
     },
     {
       "id": "003",
@@ -39,7 +41,8 @@
         "100 mm",
         "1 mm",
         "1000 mm"
-      ]
+      ],
+      "img": "🐜📏"
     },
     {
       "id": "004",
@@ -49,7 +52,8 @@
         "100 g",
         "10 g",
         "500 g"
-      ]
+      ],
+      "img": "⚖️🥔"
     },
     {
       "id": "005",
@@ -59,7 +63,8 @@
         "100 kg",
         "10 kg",
         "10 000 kg"
-      ]
+      ],
+      "img": "🚚⚖️"
     },
     {
       "id": "006",
@@ -69,7 +74,8 @@
         "100 Minuten",
         "30 Minuten",
         "24 Minuten"
-      ]
+      ],
+      "img": "⏰"
     },
     {
       "id": "007",
@@ -79,7 +85,8 @@
         "100 Sekunden",
         "10 Sekunden",
         "30 Sekunden"
-      ]
+      ],
+      "img": "⏱️"
     },
     {
       "id": "008",
@@ -89,7 +96,8 @@
         "12 Stunden",
         "20 Stunden",
         "60 Stunden"
-      ]
+      ],
+      "img": "🌞🌙"
     },
     {
       "id": "009",
@@ -99,7 +107,8 @@
         "10 Cent",
         "1000 Cent",
         "50 Cent"
-      ]
+      ],
+      "img": "💶💯"
     },
     {
       "id": "010",
@@ -109,7 +118,8 @@
         "100 ml",
         "10 ml",
         "500 ml"
-      ]
+      ],
+      "img": "🥛🥄"
     },
     {
       "id": "011",
@@ -119,7 +129,8 @@
         "30 cm",
         "3000 cm",
         "3 cm"
-      ]
+      ],
+      "img": "📏📏📏"
     },
     {
       "id": "012",
@@ -129,7 +140,8 @@
         "200 g",
         "20 g",
         "20 000 g"
-      ]
+      ],
+      "img": "🍉🍉"
     },
     {
       "id": "013",
@@ -140,7 +152,8 @@
         "2 m 5 cm",
         "20 m 50 cm"
       ],
-      "info": "100 cm = 1 m, also 250 cm = 2 m 50 cm"
+      "info": "100 cm = 1 m, also 250 cm = 2 m 50 cm",
+      "img": "🦒📏"
     },
     {
       "id": "014",
@@ -150,7 +163,8 @@
         "1035 cm",
         "1350 cm",
         "35 cm"
-      ]
+      ],
+      "img": "👦📏"
     },
     {
       "id": "015",
@@ -160,7 +174,8 @@
         "50 g",
         "5000 g",
         "250 g"
-      ]
+      ],
+      "img": "🍞⚖️"
     },
     {
       "id": "016",
@@ -170,7 +185,8 @@
         "50 Minuten",
         "15 Minuten",
         "20 Minuten"
-      ]
+      ],
+      "img": "🕧"
     },
     {
       "id": "017",
@@ -180,7 +196,8 @@
         "25 Minuten",
         "4 Minuten",
         "20 Minuten"
-      ]
+      ],
+      "img": "🕒"
     },
     {
       "id": "018",
@@ -190,7 +207,8 @@
         "75 Minuten",
         "30 Minuten",
         "34 Minuten"
-      ]
+      ],
+      "img": "🕘"
     },
     {
       "id": "019",
@@ -200,7 +218,8 @@
         "9:45 Uhr",
         "9:05 Uhr",
         "9:00 Uhr"
-      ]
+      ],
+      "img": "⏰➕🕧"
     },
     {
       "id": "020",
@@ -211,7 +230,8 @@
         "16:50 Uhr",
         "17:30 Uhr"
       ],
-      "info": "90 Minuten = 1 Stunde und 30 Minuten"
+      "info": "90 Minuten = 1 Stunde und 30 Minuten",
+      "img": "🎬🍿"
     },
     {
       "id": "021",
@@ -222,7 +242,8 @@
         "Viertel nach 3",
         "halb 4"
       ],
-      "info": "Der große Zeiger auf der 12 bedeutet: volle Stunde."
+      "info": "Der große Zeiger auf der 12 bedeutet: volle Stunde.",
+      "img": "🕒"
     },
     {
       "id": "022",
@@ -232,7 +253,8 @@
         "halb sieben",
         "Viertel nach sieben",
         "Viertel vor acht"
-      ]
+      ],
+      "img": "🕢"
     },
     {
       "id": "023",
@@ -242,7 +264,8 @@
         "Viertel vor vier",
         "halb fünf",
         "Viertel vor fünf"
-      ]
+      ],
+      "img": "🕓🍰"
     },
     {
       "id": "024",
@@ -252,7 +275,8 @@
         "Viertel nach fünf",
         "halb sechs",
         "Viertel vor fünf"
-      ]
+      ],
+      "img": "🕠⬅️"
     },
     {
       "id": "025",
@@ -262,7 +286,8 @@
         "5",
         "10",
         "6"
-      ]
+      ],
+      "img": "📅🌈"
     },
     {
       "id": "026",
@@ -272,7 +297,8 @@
         "10",
         "7",
         "24"
-      ]
+      ],
+      "img": "🗓️🕛"
     },
     {
       "id": "027",
@@ -283,7 +309,8 @@
         "0,20 €",
         "0,90 €"
       ],
-      "info": "2,00 € − 1,20 € = 0,80 €"
+      "info": "2,00 € − 1,20 € = 0,80 €",
+      "img": "🍦💶"
     },
     {
       "id": "028",
@@ -294,7 +321,8 @@
         "2,10 €",
         "3,50 €"
       ],
-      "info": "50 ct + 50 ct = 100 ct = 1 €"
+      "info": "50 ct + 50 ct = 100 ct = 1 €",
+      "img": "💶💶💶"
     },
     {
       "id": "029",
@@ -304,7 +332,8 @@
         "1 Cent",
         "2 Cent",
         "5 Cent"
-      ]
+      ],
+      "img": "🚫3️⃣"
     },
     {
       "id": "030",
@@ -314,7 +343,8 @@
         "Kilometer (km)",
         "Kilogramm (kg)",
         "Liter (l)"
-      ]
+      ],
+      "img": "✏️📏"
     },
     {
       "id": "031",
@@ -324,7 +354,8 @@
         "Gramm (g)",
         "Zentimeter (cm)",
         "Milliliter (ml)"
-      ]
+      ],
+      "img": "🐘⚖️"
     },
     {
       "id": "032",
@@ -334,7 +365,8 @@
         "Die Steine",
         "Die Federn"
       ],
-      "info": "1 kg ist immer 1 kg – egal, woraus."
+      "info": "1 kg ist immer 1 kg – egal, woraus.",
+      "img": "🕊️⚖️🗿"
     }
   ]
 }

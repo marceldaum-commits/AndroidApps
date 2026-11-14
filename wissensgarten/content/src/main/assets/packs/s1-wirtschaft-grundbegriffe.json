@@ -1,6 +1,6 @@
 {
   "id": "s1-wirtschaft-grundbegriffe",
-  "version": 1,
+  "version": 2,
   "title": "Wirtschaft und Geld",
   "subject": "wirtschaft",
   "grades": [
@@ -22,7 +22,8 @@
       "choices": [
         "Er sinkt",
         "Er bleibt gleich"
-      ]
+      ],
+      "img": "🙋📈💰"
     },
     {
       "id": "002",
@@ -31,13 +32,15 @@
       "choices": [
         "Er steigt",
         "Er bleibt gleich"
-      ]
+      ],
+      "img": "📦📉💰"
     },
     {
       "id": "003",
       "q": "Was versteht man unter Inflation?",
       "a": "Einen anhaltenden Anstieg des allgemeinen Preisniveaus",
-      "info": "Das Geld verliert dabei an Kaufkraft."
+      "info": "Das Geld verliert dabei an Kaufkraft.",
+      "img": "💶📉🎈"
     },
     {
       "id": "004",
@@ -47,7 +50,8 @@
         "Inflation",
         "Rezession",
         "Stagnation"
-      ]
+      ],
+      "img": "🏷️⬇️🐌"
     },
     {
       "id": "005",
@@ -57,7 +61,8 @@
         "0 Prozent",
         "5 Prozent",
         "1 Prozent"
-      ]
+      ],
+      "img": "🎯2️⃣"
     },
     {
       "id": "006",
@@ -67,13 +72,15 @@
         "Die Bundesregierung",
         "Die Deutsche Bank",
         "Der Bundestag"
-      ]
+      ],
+      "img": "🏦🎚️"
     },
     {
       "id": "007",
       "q": "Was misst das Bruttoinlandsprodukt (BIP)?",
       "a": "Den Wert aller im Inland erzeugten Waren und Dienstleistungen",
-      "info": "Gemeint ist der Wert innerhalb eines Jahres bzw. Zeitraums."
+      "info": "Gemeint ist der Wert innerhalb eines Jahres bzw. Zeitraums.",
+      "img": "🏭📊🛒"
     },
     {
       "id": "008",
@@ -84,7 +91,8 @@
         "Polypol",
         "Kartell"
       ],
-      "info": "Beim Oligopol gibt es wenige Anbieter, beim Polypol viele."
+      "info": "Beim Oligopol gibt es wenige Anbieter, beim Polypol viele.",
+      "img": "👑🏪"
     },
     {
       "id": "009",
@@ -94,7 +102,8 @@
         "Konrad Adenauer",
         "Karl Marx",
         "Otto von Bismarck"
-      ]
+      ],
+      "img": "🍰🚀🎩"
     },
     {
       "id": "010",
@@ -105,22 +114,26 @@
         "16 Prozent",
         "21 Prozent"
       ],
-      "info": "Für viele Lebensmittel und Bücher gilt der ermäßigte Satz von 7 %."
+      "info": "Für viele Lebensmittel und Bücher gilt der ermäßigte Satz von 7 %.",
+      "img": "🧾1️⃣9️⃣"
     },
     {
       "id": "011",
       "q": "Was ist der Unterschied zwischen Brutto- und Nettolohn?",
-      "a": "Netto ist Brutto minus Steuern und Sozialabgaben"
+      "a": "Netto ist Brutto minus Steuern und Sozialabgaben",
+      "img": "💰✂️"
     },
     {
       "id": "012",
       "q": "Was bedeutet ein progressiver Steuertarif bei der Einkommensteuer?",
-      "a": "Höhere Einkommen zahlen einen höheren Steuersatz"
+      "a": "Höhere Einkommen zahlen einen höheren Steuersatz",
+      "img": "📈🧾"
     },
     {
       "id": "013",
       "q": "Welche fünf Zweige hat die gesetzliche Sozialversicherung?",
-      "a": "Kranken-, Pflege-, Renten-, Arbeitslosen-, Unfallversicherung"
+      "a": "Kranken-, Pflege-, Renten-, Arbeitslosen-, Unfallversicherung",
+      "img": "☂️5️⃣"
     },
     {
       "id": "014",
@@ -130,7 +143,8 @@
         "Allein aus der Mehrwertsteuer",
         "Über ein privates Sparkonto jedes Einzelnen"
       ],
-      "info": "Die heutigen Beitragszahlenden finanzieren die heutigen Renten, dazu kommt ein Zuschuss des Bundes."
+      "info": "Die heutigen Beitragszahlenden finanzieren die heutigen Renten, dazu kommt ein Zuschuss des Bundes.",
+      "img": "👴🔄👦"
     },
     {
       "id": "015",
@@ -140,7 +154,8 @@
         "3 €",
         "300 €",
         "13 €"
-      ]
+      ],
+      "img": "🌱3️⃣0️⃣"
     },
     {
       "id": "016",
@@ -151,7 +166,8 @@
         "1100 €",
         "1020 €"
       ],
-      "info": "Zinseszins: Im zweiten Jahr gibt es auch Zinsen auf die Zinsen des ersten Jahres."
+      "info": "Zinseszins: Im zweiten Jahr gibt es auch Zinsen auf die Zinsen des ersten Jahres.",
+      "img": "❄️🌱⏳"
     },
     {
       "id": "017",
@@ -162,13 +178,15 @@
         "Nach etwa 20 Jahren",
         "Nach etwa 72 Jahren"
       ],
-      "info": "72 geteilt durch den Zinssatz ergibt ungefähr die Verdopplungszeit."
+      "info": "72 geteilt durch den Zinssatz ergibt ungefähr die Verdopplungszeit.",
+      "img": "⏳✌️💰"
     },
     {
       "id": "018",
       "q": "Wofür braucht man ein Girokonto vor allem?",
       "a": "Für den täglichen Zahlungsverkehr",
-      "info": "Lohn empfangen, Miete überweisen, mit Karte bezahlen."
+      "info": "Lohn empfangen, Miete überweisen, mit Karte bezahlen.",
+      "img": "💳🔄"
     },
     {
       "id": "019",
@@ -179,13 +197,15 @@
         "20",
         "24"
       ],
-      "info": "DE, zwei Prüfziffern und 18 Stellen für Bankleitzahl und Kontonummer."
+      "info": "DE, zwei Prüfziffern und 18 Stellen für Bankleitzahl und Kontonummer.",
+      "img": "🔢2️⃣2️⃣"
     },
     {
       "id": "020",
       "q": "Was ist ein Dispositionskredit („Dispo“)?",
       "a": "Ein Überziehungsrahmen auf dem Girokonto",
-      "info": "Er ist bequem, aber meist ein sehr teurer Kredit."
+      "info": "Er ist bequem, aber meist ein sehr teurer Kredit.",
+      "img": "💳➖"
     },
     {
       "id": "021",
@@ -195,7 +215,8 @@
         "10 000 €",
         "50 000 €",
         "1 Million €"
-      ]
+      ],
+      "img": "🛡️💯"
     },
     {
       "id": "022",
@@ -205,7 +226,8 @@
         "Daten schnell eingeben",
         "Per Antwort-Mail schicken"
       ],
-      "info": "Banken fragen niemals per E-Mail oder Telefon nach PIN oder TAN."
+      "info": "Banken fragen niemals per E-Mail oder Telefon nach PIN oder TAN.",
+      "img": "🎣🚫🔑"
     },
     {
       "id": "023",
@@ -216,12 +238,14 @@
         "Die Monatsrate",
         "Die Laufzeit"
       ],
-      "info": "Er enthält neben dem Zins auch weitere Kosten des Kredits."
+      "info": "Er enthält neben dem Zins auch weitere Kosten des Kredits.",
+      "img": "🔍📊"
     },
     {
       "id": "024",
       "q": "Was ist die SCHUFA?",
-      "a": "Eine Auskunftei, die Daten zur Kreditwürdigkeit sammelt"
+      "a": "Eine Auskunftei, die Daten zur Kreditwürdigkeit sammelt",
+      "img": "📋🔍"
     },
     {
       "id": "025",
@@ -231,22 +255,26 @@
         "Ein Darlehen an den Staat",
         "Ein Sparbuch",
         "Eine Versicherung"
-      ]
+      ],
+      "img": "🍰🏢"
     },
     {
       "id": "026",
       "q": "Wie heißt der Gewinnanteil, den eine Aktiengesellschaft an Aktionäre ausschüttet?",
-      "a": "Dividende"
+      "a": "Dividende",
+      "img": "💵🍰"
     },
     {
       "id": "027",
       "q": "Was ist eine Anleihe?",
-      "a": "Ein Wertpapier: Man leiht Staat oder Unternehmen Geld"
+      "a": "Ein Wertpapier: Man leiht Staat oder Unternehmen Geld",
+      "img": "📜🤝🏛️"
     },
     {
       "id": "028",
       "q": "Was ist ein ETF?",
-      "a": "Ein börsengehandelter Fonds, meist auf einen Index"
+      "a": "Ein börsengehandelter Fonds, meist auf einen Index",
+      "img": "🧺📈"
     },
     {
       "id": "029",
@@ -257,24 +285,28 @@
         "50",
         "100"
       ],
-      "info": "Seit September 2021 sind es 40 statt 30."
+      "info": "Seit September 2021 sind es 40 statt 30.",
+      "img": "4️⃣0️⃣📈"
     },
     {
       "id": "030",
       "q": "Was bedeutet Diversifikation bei der Geldanlage?",
       "a": "Das Geld auf verschiedene Anlagen verteilen",
-      "info": "So sinkt das Risiko, alles auf einmal zu verlieren."
+      "info": "So sinkt das Risiko, alles auf einmal zu verlieren.",
+      "img": "🥚🧺"
     },
     {
       "id": "031",
       "q": "Welche drei Ziele bilden das „magische Dreieck“ der Geldanlage?",
       "a": "Rendite, Sicherheit, Liquidität",
-      "info": "Alle drei gleichzeitig maximal zu erreichen ist nicht möglich."
+      "info": "Alle drei gleichzeitig maximal zu erreichen ist nicht möglich.",
+      "img": "🔺💰🛡️"
     },
     {
       "id": "032",
       "q": "Wie heißt die Regel, nach der Minderjährige mit ihrem Taschengeld wirksam kaufen können?",
-      "a": "Taschengeldparagraf (§ 110 BGB)"
+      "a": "Taschengeldparagraf (§ 110 BGB)",
+      "img": "👛🧒"
     },
     {
       "id": "033",
@@ -285,7 +317,8 @@
         "Ab 16 Jahren",
         "Ab 21 Jahren"
       ],
-      "info": "Von 7 bis 17 Jahren ist man beschränkt geschäftsfähig."
+      "info": "Von 7 bis 17 Jahren ist man beschränkt geschäftsfähig.",
+      "img": "🎂🔞"
     },
     {
       "id": "034",
@@ -295,7 +328,8 @@
         "7 Tage",
         "30 Tage",
         "2 Jahre"
-      ]
+      ],
+      "img": "↩️📦"
     },
     {
       "id": "035",
@@ -305,12 +339,14 @@
         "6 Monate",
         "1 Jahr",
         "5 Jahre"
-      ]
+      ],
+      "img": "🛠️2️⃣"
     },
     {
       "id": "036",
       "q": "Was sind Opportunitätskosten?",
-      "a": "Der entgangene Nutzen der nicht gewählten Alternative"
+      "a": "Der entgangene Nutzen der nicht gewählten Alternative",
+      "img": "🤔🚪"
     }
   ]
 }

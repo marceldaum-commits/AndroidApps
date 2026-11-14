@@ -1,6 +1,6 @@
 {
   "id": "aw-musik-kunst",
-  "version": 1,
+  "version": 2,
   "title": "Musik und Kunst",
   "subject": "musik",
   "grades": [
@@ -24,7 +24,8 @@
         "Johann Sebastian Bach",
         "Joseph Haydn"
       ],
-      "info": "Ihre Melodie ist heute die Europahymne."
+      "info": "Ihre Melodie ist heute die Europahymne.",
+      "img": "🎼🎉😃"
     },
     {
       "id": "002",
@@ -34,7 +35,8 @@
         "Wien",
         "Salzburg",
         "Leipzig"
-      ]
+      ],
+      "img": "🎹🏠"
     },
     {
       "id": "003",
@@ -44,7 +46,8 @@
         "Wien",
         "Prag",
         "München"
-      ]
+      ],
+      "img": "🎻🧂🏰"
     },
     {
       "id": "004",
@@ -54,7 +57,8 @@
         "Richard Wagner",
         "Giuseppe Verdi",
         "Ludwig van Beethoven"
-      ]
+      ],
+      "img": "🧙🎶🐦"
     },
     {
       "id": "005",
@@ -64,12 +68,14 @@
         "Dresden",
         "Weimar",
         "Eisenach"
-      ]
+      ],
+      "img": "⛪🎹"
     },
     {
       "id": "006",
       "q": "Wer komponierte „Die vier Jahreszeiten“?",
-      "a": "Antonio Vivaldi"
+      "a": "Antonio Vivaldi",
+      "img": "🌸☀️🍂"
     },
     {
       "id": "007",
@@ -79,12 +85,14 @@
         "Richard Strauss",
         "Giuseppe Verdi",
         "Carl Maria von Weber"
-      ]
+      ],
+      "img": "💍🐉"
     },
     {
       "id": "008",
       "q": "Wer komponierte die „Wassermusik“?",
-      "a": "Georg Friedrich Händel"
+      "a": "Georg Friedrich Händel",
+      "img": "⛵🎺🌊"
     },
     {
       "id": "009",
@@ -94,12 +102,14 @@
         "2",
         "3",
         "8"
-      ]
+      ],
+      "img": "🎵4️⃣"
     },
     {
       "id": "010",
       "q": "Wie viele Achtelnoten dauern so lange wie eine Viertelnote?",
-      "a": "2"
+      "a": "2",
+      "img": "🎶✌️"
     },
     {
       "id": "011",
@@ -110,7 +120,8 @@
         "4",
         "2½"
       ],
-      "info": "Der Punkt verlängert eine Note um die Hälfte ihres Wertes."
+      "info": "Der Punkt verlängert eine Note um die Hälfte ihres Wertes.",
+      "img": "🎵➕"
     },
     {
       "id": "012",
@@ -120,7 +131,8 @@
         "4",
         "6",
         "7"
-      ]
+      ],
+      "img": "🖐️〰️"
     },
     {
       "id": "013",
@@ -130,7 +142,8 @@
         "Bassschlüssel",
         "Altschlüssel"
       ],
-      "info": "Der Bassschlüssel ist ein F-Schlüssel."
+      "info": "Der Bassschlüssel ist ein F-Schlüssel.",
+      "img": "🎻🌀"
     },
     {
       "id": "014",
@@ -140,12 +153,14 @@
         "Laut",
         "Schnell",
         "Langsam"
-      ]
+      ],
+      "img": "🤫🎹"
     },
     {
       "id": "015",
       "q": "Was bedeutet „crescendo“?",
-      "a": "Allmählich lauter werden"
+      "a": "Allmählich lauter werden",
+      "img": "📈🔊"
     },
     {
       "id": "016",
@@ -155,17 +170,20 @@
         "76",
         "96",
         "100"
-      ]
+      ],
+      "img": "🎹8️⃣8️⃣"
     },
     {
       "id": "017",
       "q": "Wie viele Saiten hat eine normale Gitarre?",
-      "a": "6"
+      "a": "6",
+      "img": "🎸6️⃣"
     },
     {
       "id": "018",
       "q": "Wie viele Saiten hat eine Geige?",
-      "a": "4"
+      "a": "4",
+      "img": "🎻4️⃣"
     },
     {
       "id": "019",
@@ -175,7 +193,8 @@
         "Violoncello",
         "Bratsche",
         "Tuba"
-      ]
+      ],
+      "img": "🎻🐘"
     },
     {
       "id": "020",
@@ -186,12 +205,14 @@
         "Schlaginstrumente",
         "Streichinstrumente"
       ],
-      "info": "Der Ton entsteht wie bei der Klarinette mit einem Rohrblatt."
+      "info": "Der Ton entsteht wie bei der Klarinette mit einem Rohrblatt.",
+      "img": "🎷🌳"
     },
     {
       "id": "021",
       "q": "Welche Dur-Tonleiter kommt ohne Vorzeichen aus?",
-      "a": "C-Dur"
+      "a": "C-Dur",
+      "img": "⬜🎹"
     },
     {
       "id": "022",
@@ -202,12 +223,14 @@
         "Raffael",
         "Sandro Botticelli"
       ],
-      "info": "Das Bild hängt im Louvre in Paris."
+      "info": "Das Bild hängt im Louvre in Paris.",
+      "img": "🖼️😏"
     },
     {
       "id": "023",
       "q": "Wer malte die Decke der Sixtinischen Kapelle?",
-      "a": "Michelangelo"
+      "a": "Michelangelo",
+      "img": "⛪🎨👆"
     },
     {
       "id": "024",
@@ -217,7 +240,8 @@
         "Tizian",
         "Leonardo da Vinci",
         "Raffael"
-      ]
+      ],
+      "img": "🐚🌊👩"
     },
     {
       "id": "025",
@@ -227,7 +251,8 @@
         "Claude Monet",
         "Paul Gauguin",
         "Paul Cézanne"
-      ]
+      ],
+      "img": "🌌🌀🌻"
     },
     {
       "id": "026",
@@ -238,12 +263,14 @@
         "Joan Miró",
         "Henri Matisse"
       ],
-      "info": "Das Bild von 1937 zeigt die Zerstörung der Stadt Guernica im Spanischen Bürgerkrieg."
+      "info": "Das Bild von 1937 zeigt die Zerstörung der Stadt Guernica im Spanischen Bürgerkrieg.",
+      "img": "💣🐂🖼️"
     },
     {
       "id": "027",
       "q": "Wer malte „Der Schrei“?",
-      "a": "Edvard Munch"
+      "a": "Edvard Munch",
+      "img": "😱🌅"
     },
     {
       "id": "028",
@@ -253,12 +280,14 @@
         "Rembrandt",
         "Peter Paul Rubens",
         "Frans Hals"
-      ]
+      ],
+      "img": "👧💎"
     },
     {
       "id": "029",
       "q": "Wer malte „Die Nachtwache“?",
-      "a": "Rembrandt"
+      "a": "Rembrandt",
+      "img": "🌃💂"
     },
     {
       "id": "030",
@@ -269,12 +298,14 @@
         "Franz Marc",
         "Max Liebermann"
       ],
-      "info": "Er ist ein Hauptvertreter der deutschen Romantik."
+      "info": "Er ist ein Hauptvertreter der deutschen Romantik.",
+      "img": "🚶🌫️⛰️"
     },
     {
       "id": "031",
       "q": "Welcher deutsche Künstler schuf 1502 das berühmte Bild „Feldhase“?",
-      "a": "Albrecht Dürer"
+      "a": "Albrecht Dürer",
+      "img": "🐇🎨"
     },
     {
       "id": "032",
@@ -284,7 +315,8 @@
         "Édouard Manet",
         "Auguste Renoir",
         "Edgar Degas"
-      ]
+      ],
+      "img": "🌷🐸💧"
     },
     {
       "id": "033",
@@ -295,12 +327,14 @@
         "Kubismus",
         "Surrealismus"
       ],
-      "info": "Das Bild heißt „Impression, Sonnenaufgang“."
+      "info": "Das Bild heißt „Impression, Sonnenaufgang“.",
+      "img": "🌅🎨"
     },
     {
       "id": "034",
       "q": "Welche Kunstschule gründete Walter Gropius 1919 in Weimar?",
-      "a": "Bauhaus"
+      "a": "Bauhaus",
+      "img": "📐🏫"
     },
     {
       "id": "035",
@@ -310,12 +344,14 @@
         "Rot, Grün, Blau",
         "Gelb, Grün, Blau"
       ],
-      "info": "Rot, Grün, Blau sind die Grundfarben des Lichts (z. B. am Bildschirm)."
+      "info": "Rot, Grün, Blau sind die Grundfarben des Lichts (z. B. am Bildschirm).",
+      "img": "💛❤️💙"
     },
     {
       "id": "036",
       "q": "Welche Farbe ist im Farbkreis nach Itten die Komplementärfarbe zu Rot?",
-      "a": "Grün"
+      "a": "Grün",
+      "img": "❤️💚"
     }
   ]
 }

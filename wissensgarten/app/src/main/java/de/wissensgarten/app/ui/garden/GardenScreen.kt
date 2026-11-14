@@ -84,6 +84,22 @@ fun GardenScreen(
                     }
                     DewChip(profile.dewdrops)
                 }
+                // Brummi fliegt über dem Garten – antippen für Tipps
+                val night = DayTime.now(now).first == DayTime.NIGHT
+                var tip by remember { mutableIntStateOf(-1) }
+                val sfx = LocalSfx.current
+                val (mood, line) = when {
+                    tip >= 0 -> Mood.HAPPY to BrummiSays.pick(BrummiSays.tips, tip)
+                    night -> Mood.SLEEP to "Zzz … bis morgen!"
+                    thirsty > 0 -> Mood.THINK to "${thirsty} ${if (thirsty == 1) "Pflanze hat" else "Pflanzen haben"} Durst!"
+                    cards.isEmpty() -> Mood.HAPPY to "Hallo! Ich bin Brummi 🐝"
+                    else -> Mood.HAPPY to "Dein Garten blüht! 🌸"
+                }
+                Brummi(
+                    mood, Modifier.align(Alignment.CenterEnd).padding(end = 8.dp, bottom = 40.dp).widthIn(max = 260.dp),
+                    size = 72.dp, speech = line, bubbleOnLeft = true,
+                    onTap = { sfx?.play(Sound.PLOP, pitch = 1.4f); tip++ },
+                )
                 Row(
                     Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(horizontal = 8.dp).height(120.dp),
                     verticalAlignment = Alignment.Bottom,

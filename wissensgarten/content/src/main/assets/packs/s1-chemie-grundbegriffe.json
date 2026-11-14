@@ -1,6 +1,6 @@
 {
   "id": "s1-chemie-grundbegriffe",
-  "version": 1,
+  "version": 2,
   "title": "Chemie-Grundbegriffe",
   "subject": "chemie",
   "grades": [
@@ -21,7 +21,8 @@
         "Protonen und Elektronen",
         "Neutronen und Elektronen",
         "Nur Protonen"
-      ]
+      ],
+      "img": "➕⚪"
     },
     {
       "id": "002",
@@ -31,12 +32,14 @@
         "Positiv",
         "Keine",
         "Mal positiv, mal negativ"
-      ]
+      ],
+      "img": "➖"
     },
     {
       "id": "003",
       "q": "Welche Ladung hat ein Neutron?",
-      "a": "Keine (neutral)"
+      "a": "Keine (neutral)",
+      "img": "😐"
     },
     {
       "id": "004",
@@ -46,7 +49,8 @@
         "8",
         "18",
         "1"
-      ]
+      ],
+      "img": "🥚🥚"
     },
     {
       "id": "005",
@@ -56,12 +60,14 @@
         "Gleiche Neutronenzahl, verschiedene Protonenzahl",
         "Gleiche Protonenzahl, verschiedene Elektronenzahl",
         "Moleküle aus gleichen Atomen"
-      ]
+      ],
+      "img": "⚖️👯"
     },
     {
       "id": "006",
       "q": "Was ist ein Ion?",
-      "a": "Ein elektrisch geladenes Teilchen"
+      "a": "Ein elektrisch geladenes Teilchen",
+      "img": "⚡"
     },
     {
       "id": "007",
@@ -71,12 +77,14 @@
         "Anion",
         "Isotop",
         "Proton"
-      ]
+      ],
+      "img": "🐱➕"
     },
     {
       "id": "008",
       "q": "Wie heißt ein negativ geladenes Ion?",
-      "a": "Anion"
+      "a": "Anion",
+      "img": "⚛️➖"
     },
     {
       "id": "009",
@@ -87,7 +95,8 @@
         "Na²⁺",
         "Na²⁻"
       ],
-      "info": "Natrium gibt sein einziges Außenelektron ab."
+      "info": "Natrium gibt sein einziges Außenelektron ab.",
+      "img": "🧂➕"
     },
     {
       "id": "010",
@@ -97,12 +106,14 @@
         "Cl⁺",
         "Cl²⁻",
         "Cl²⁺"
-      ]
+      ],
+      "img": "🏊➖"
     },
     {
       "id": "011",
       "q": "Zwischen welchen Elementen bildet sich typischerweise eine Ionenbindung?",
-      "a": "Zwischen Metall und Nichtmetall"
+      "a": "Zwischen Metall und Nichtmetall",
+      "img": "🔩🤝"
     },
     {
       "id": "012",
@@ -113,7 +124,8 @@
         "Metallbindung",
         "Wasserstoffbrückenbindung"
       ],
-      "info": "Auch kovalente Bindung genannt."
+      "info": "Auch kovalente Bindung genannt.",
+      "img": "💧🤝"
     },
     {
       "id": "013",
@@ -123,7 +135,8 @@
         "0",
         "14",
         "1"
-      ]
+      ],
+      "img": "💧7️⃣"
     },
     {
       "id": "014",
@@ -132,7 +145,8 @@
       "choices": [
         "basisch",
         "neutral"
-      ]
+      ],
+      "img": "🍋"
     },
     {
       "id": "015",
@@ -142,7 +156,8 @@
         "Blau",
         "Grün",
         "Violett"
-      ]
+      ],
+      "img": "🚨"
     },
     {
       "id": "016",
@@ -152,12 +167,14 @@
         "Protonenakzeptor",
         "Elektronendonator",
         "Neutronendonator"
-      ]
+      ],
+      "img": "🎁"
     },
     {
       "id": "017",
       "q": "Base nach Brønsted?",
-      "a": "Protonenakzeptor"
+      "a": "Protonenakzeptor",
+      "img": "🧤"
     },
     {
       "id": "018",
@@ -167,12 +184,14 @@
         "Hydroxid-Ionen (OH⁻)",
         "Natrium-Ionen (Na⁺)",
         "Chlorid-Ionen (Cl⁻)"
-      ]
+      ],
+      "img": "🍋➕"
     },
     {
       "id": "019",
       "q": "Welche Ionen kennzeichnen basische (alkalische) Lösungen?",
-      "a": "Hydroxid-Ionen (OH⁻)"
+      "a": "Hydroxid-Ionen (OH⁻)",
+      "img": "🧼"
     },
     {
       "id": "020",
@@ -182,7 +201,8 @@
         "Salz + Sauerstoff",
         "Säure + Wasser",
         "Base + Wasserstoff"
-      ]
+      ],
+      "img": "🧂💧"
     },
     {
       "id": "021",
@@ -192,19 +212,22 @@
         "Elektronenaufnahme",
         "Protonenaufnahme",
         "Protonenabgabe"
-      ]
+      ],
+      "img": "📤"
     },
     {
       "id": "022",
       "q": "Reduktion im erweiterten Sinn bedeutet …",
       "a": "Elektronenaufnahme",
-      "info": "Merkhilfe: OIL RIG – Oxidation is loss, reduction is gain."
+      "info": "Merkhilfe: OIL RIG – Oxidation is loss, reduction is gain.",
+      "img": "📥"
     },
     {
       "id": "023",
       "q": "Was ist eine Redoxreaktion?",
       "a": "Eine Reaktion mit Elektronenübertragung",
-      "info": "Oxidation und Reduktion laufen immer gleichzeitig ab."
+      "info": "Oxidation und Reduktion laufen immer gleichzeitig ab.",
+      "img": "🏓⚡"
     },
     {
       "id": "024",
@@ -214,12 +237,14 @@
         "Eine Reaktion, die Energie aufnimmt",
         "Eine Reaktion ohne Energieumsatz",
         "Eine Reaktion nur bei Kälte"
-      ]
+      ],
+      "img": "🔥"
     },
     {
       "id": "025",
       "q": "Was bewirkt ein Katalysator?",
-      "a": "Er senkt die Aktivierungsenergie und wird nicht verbraucht"
+      "a": "Er senkt die Aktivierungsenergie und wird nicht verbraucht",
+      "img": "🚇"
     },
     {
       "id": "026",
@@ -229,12 +254,14 @@
         "Produkte",
         "Katalysatoren",
         "Indikatoren"
-      ]
+      ],
+      "img": "🥚"
     },
     {
       "id": "027",
       "q": "Gesetz von der Erhaltung der Masse?",
-      "a": "Die Gesamtmasse bleibt bei einer Reaktion gleich"
+      "a": "Die Gesamtmasse bleibt bei einer Reaktion gleich",
+      "img": "⚖️"
     },
     {
       "id": "028",
@@ -244,7 +271,8 @@
         "Resublimation",
         "Kondensation",
         "Verdampfen"
-      ]
+      ],
+      "img": "❄️💨"
     },
     {
       "id": "029",
@@ -255,7 +283,8 @@
         "≈ 1,602 · 10⁻¹⁹",
         "≈ 3,0 · 10⁸"
       ],
-      "info": "Avogadro-Konstante"
+      "info": "Avogadro-Konstante",
+      "img": "🧮"
     },
     {
       "id": "030",
@@ -266,7 +295,8 @@
         "≈ 10 g/mol",
         "≈ 20 g/mol"
       ],
-      "info": "2 · 1 g/mol + 16 g/mol"
+      "info": "2 · 1 g/mol + 16 g/mol",
+      "img": "💧⚖️"
     },
     {
       "id": "031",
@@ -276,7 +306,8 @@
         "NaCl₂",
         "Na₂Cl",
         "KCl"
-      ]
+      ],
+      "img": "🧂"
     },
     {
       "id": "032",
@@ -286,7 +317,8 @@
         "CO",
         "C₂O",
         "CO₃"
-      ]
+      ],
+      "img": "🥤"
     },
     {
       "id": "033",
@@ -296,17 +328,20 @@
         "H₂SO₃",
         "HSO₄",
         "H₂S"
-      ]
+      ],
+      "img": "🔋"
     },
     {
       "id": "034",
       "q": "Formel von Salzsäure (Chlorwasserstoff)?",
-      "a": "HCl"
+      "a": "HCl",
+      "img": "🏊🧪"
     },
     {
       "id": "035",
       "q": "Formel von Natronlauge (Natriumhydroxid)?",
-      "a": "NaOH"
+      "a": "NaOH",
+      "img": "🚽"
     },
     {
       "id": "036",
@@ -316,17 +351,20 @@
         "NH₄",
         "NO₃",
         "N₂H"
-      ]
+      ],
+      "img": "👃💨"
     },
     {
       "id": "037",
       "q": "Formel von Methan?",
-      "a": "CH₄"
+      "a": "CH₄",
+      "img": "🐄💨"
     },
     {
       "id": "038",
       "q": "Formel von Calciumcarbonat (Kalk)?",
-      "a": "CaCO₃"
+      "a": "CaCO₃",
+      "img": "🐚"
     }
   ]
 }

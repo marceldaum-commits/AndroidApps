@@ -1,6 +1,6 @@
 {
   "id": "s1-informatik-grundlagen",
-  "version": 1,
+  "version": 2,
   "title": "Informatik-Grundlagen",
   "subject": "informatik",
   "grades": [
@@ -20,7 +20,8 @@
     {
       "id": "001",
       "q": "Was ist ein Bit?",
-      "a": "Die kleinste Informationseinheit (0 oder 1)"
+      "a": "Die kleinste Informationseinheit (0 oder 1)",
+      "img": "💡"
     },
     {
       "id": "002",
@@ -30,7 +31,8 @@
         "4 Bit",
         "16 Bit",
         "10 Bit"
-      ]
+      ],
+      "img": "🎱"
     },
     {
       "id": "003",
@@ -41,7 +43,8 @@
         "1024 Bit",
         "8000 Byte"
       ],
-      "info": "1 kB (Kilobyte) = 1000 Byte"
+      "info": "1 kB (Kilobyte) = 1000 Byte",
+      "img": "🗄️"
     },
     {
       "id": "004",
@@ -52,7 +55,8 @@
         "128",
         "512"
       ],
-      "info": "2⁸ = 256 (Werte 0 bis 255)"
+      "info": "2⁸ = 256 (Werte 0 bis 255)",
+      "img": "🌈"
     },
     {
       "id": "005",
@@ -63,7 +67,8 @@
         "1110",
         "1001"
       ],
-      "info": "8 + 4 + 0 + 1 = 13"
+      "info": "8 + 4 + 0 + 1 = 13",
+      "img": "🔢"
     },
     {
       "id": "006",
@@ -74,12 +79,14 @@
         "84",
         "40"
       ],
-      "info": "32 + 8 + 2 = 42"
+      "info": "32 + 8 + 2 = 42",
+      "img": "🌌"
     },
     {
       "id": "007",
       "q": "Binärzahl 1111 im Dezimalsystem?",
-      "a": "15"
+      "a": "15",
+      "img": "💡💡"
     },
     {
       "id": "008",
@@ -89,7 +96,8 @@
         "8",
         "12",
         "20"
-      ]
+      ],
+      "img": "🧙"
     },
     {
       "id": "009",
@@ -100,17 +108,20 @@
         "225",
         "160"
       ],
-      "info": "15 · 16 + 15 = 255"
+      "info": "15 · 16 + 15 = 255",
+      "img": "🧙💯"
     },
     {
       "id": "010",
       "q": "Was ist ein Algorithmus?",
-      "a": "Endliche, eindeutige Handlungsvorschrift zur Problemlösung"
+      "a": "Endliche, eindeutige Handlungsvorschrift zur Problemlösung",
+      "img": "📋🍰"
     },
     {
       "id": "011",
       "q": "Was ist eine Variable?",
-      "a": "Ein benannter Speicherplatz für einen Wert"
+      "a": "Ein benannter Speicherplatz für einen Wert",
+      "img": "📦🏷️"
     },
     {
       "id": "012",
@@ -120,17 +131,20 @@
         "Um Anweisungen nur unter einer Bedingung auszuführen",
         "Um Daten zu speichern",
         "Um ein Programm zu beenden"
-      ]
+      ],
+      "img": "🔁"
     },
     {
       "id": "013",
       "q": "Wozu dient eine Verzweigung (if)?",
-      "a": "Anweisungen nur unter einer Bedingung auszuführen"
+      "a": "Anweisungen nur unter einer Bedingung auszuführen",
+      "img": "🔀"
     },
     {
       "id": "014",
       "q": "Was ist Rekursion?",
-      "a": "Eine Funktion ruft sich selbst auf"
+      "a": "Eine Funktion ruft sich selbst auf",
+      "img": "🌀"
     },
     {
       "id": "015",
@@ -140,7 +154,8 @@
         "Integer",
         "String",
         "Float"
-      ]
+      ],
+      "img": "✅❌"
     },
     {
       "id": "016",
@@ -150,12 +165,14 @@
         "Boolean",
         "Integer",
         "Char"
-      ]
+      ],
+      "img": "🧵"
     },
     {
       "id": "017",
       "q": "Datentyp für ganze Zahlen?",
-      "a": "Integer"
+      "a": "Integer",
+      "img": "🔢"
     },
     {
       "id": "018",
@@ -164,29 +181,34 @@
       "choices": [
         "1",
         "−1"
-      ]
+      ],
+      "img": "0️⃣"
     },
     {
       "id": "019",
       "q": "1 UND 0 = ?",
       "a": "0",
-      "info": "UND ist nur wahr, wenn beide Eingänge 1 sind."
+      "info": "UND ist nur wahr, wenn beide Eingänge 1 sind.",
+      "img": "🔒🔒"
     },
     {
       "id": "020",
       "q": "1 XOR 1 = ?",
       "a": "0",
-      "info": "XOR ist wahr, wenn genau ein Eingang 1 ist."
+      "info": "XOR ist wahr, wenn genau ein Eingang 1 ist.",
+      "img": "⚔️"
     },
     {
       "id": "021",
       "q": "Was macht ein Compiler?",
-      "a": "Er übersetzt Quelltext in Maschinencode"
+      "a": "Er übersetzt Quelltext in Maschinencode",
+      "img": "🗣️🤖"
     },
     {
       "id": "022",
       "q": "Voraussetzung für die binäre Suche?",
-      "a": "Die Daten müssen sortiert sein"
+      "a": "Die Daten müssen sortiert sein",
+      "img": "📚🔍"
     },
     {
       "id": "023",
@@ -196,7 +218,8 @@
         "Ein Suchverfahren",
         "Ein Verschlüsselungsverfahren",
         "Ein Kompressionsverfahren"
-      ]
+      ],
+      "img": "🔃"
     },
     {
       "id": "024",
@@ -206,7 +229,8 @@
         "Hyperlink Text Machine Language",
         "Home Tool Markup Language",
         "Hypertext Machine Learning"
-      ]
+      ],
+      "img": "🌐"
     },
     {
       "id": "025",
@@ -216,13 +240,15 @@
         "Eine Programmiersprache",
         "Eine Datenbanksprache",
         "Ein Betriebssystem"
-      ]
+      ],
+      "img": "🏷️"
     },
     {
       "id": "026",
       "q": "Wofür verwendet man CSS?",
       "a": "Zur Gestaltung von Webseiten",
-      "info": "CSS = Cascading Style Sheets"
+      "info": "CSS = Cascading Style Sheets",
+      "img": "💅"
     },
     {
       "id": "027",
@@ -232,12 +258,14 @@
         "HTML",
         "CSS",
         "XML"
-      ]
+      ],
+      "img": "🗄️🔍"
     },
     {
       "id": "028",
       "q": "Was ist eine IP-Adresse?",
-      "a": "Eine Adresse eines Geräts in einem Netzwerk"
+      "a": "Eine Adresse eines Geräts in einem Netzwerk",
+      "img": "🏠📮"
     },
     {
       "id": "029",
@@ -248,7 +276,8 @@
         "128",
         "16"
       ],
-      "info": "IPv6-Adressen haben 128 Bit."
+      "info": "IPv6-Adressen haben 128 Bit.",
+      "img": "3️⃣2️⃣"
     },
     {
       "id": "030",
@@ -258,22 +287,26 @@
         "Verschlüsselt Datenverkehr",
         "Speichert Webseiten dauerhaft",
         "Prüft E-Mails auf Viren"
-      ]
+      ],
+      "img": "📒"
     },
     {
       "id": "031",
       "q": "Wofür steht das „S“ in HTTPS?",
-      "a": "Secure (verschlüsselte Übertragung)"
+      "a": "Secure (verschlüsselte Übertragung)",
+      "img": "🔒"
     },
     {
       "id": "032",
       "q": "Was macht ein Router?",
-      "a": "Er leitet Datenpakete zwischen Netzwerken weiter"
+      "a": "Er leitet Datenpakete zwischen Netzwerken weiter",
+      "img": "🚦"
     },
     {
       "id": "033",
       "q": "Wofür steht CPU?",
-      "a": "Central Processing Unit (Hauptprozessor)"
+      "a": "Central Processing Unit (Hauptprozessor)",
+      "img": "🧠"
     },
     {
       "id": "034",
@@ -284,17 +317,20 @@
         "Der Hauptprozessor",
         "Die Grafikkarte"
       ],
-      "info": "Ohne Strom gehen die Daten verloren."
+      "info": "Ohne Strom gehen die Daten verloren.",
+      "img": "📝💨"
     },
     {
       "id": "035",
       "q": "Was ist Phishing?",
-      "a": "Datendiebstahl über gefälschte Nachrichten oder Webseiten"
+      "a": "Datendiebstahl über gefälschte Nachrichten oder Webseiten",
+      "img": "🎣"
     },
     {
       "id": "036",
       "q": "Was bedeutet Open Source?",
-      "a": "Quelltext ist offen einsehbar und darf verändert werden"
+      "a": "Quelltext ist offen einsehbar und darf verändert werden",
+      "img": "📖🔓"
     }
   ]
 }

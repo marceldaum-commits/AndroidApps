@@ -1,6 +1,6 @@
 {
   "id": "gs-englisch-basics",
-  "version": 1,
+  "version": 2,
   "title": "Englisch für Anfänger",
   "subject": "englisch",
   "grades": [
@@ -19,7 +19,8 @@
         "blue",
         "green",
         "yellow"
-      ]
+      ],
+      "img": "❤️🍎"
     },
     {
       "id": "002",
@@ -29,7 +30,8 @@
         "black",
         "brown",
         "green"
-      ]
+      ],
+      "img": "💙🌊"
     },
     {
       "id": "003",
@@ -39,7 +41,8 @@
         "orange",
         "white",
         "pink"
-      ]
+      ],
+      "img": "💛🍌"
     },
     {
       "id": "004",
@@ -49,7 +52,8 @@
         "grey",
         "red",
         "blue"
-      ]
+      ],
+      "img": "💚🐸"
     },
     {
       "id": "005",
@@ -59,7 +63,8 @@
         "white",
         "brown",
         "purple"
-      ]
+      ],
+      "img": "🖤🎩"
     },
     {
       "id": "006",
@@ -69,7 +74,8 @@
         "black",
         "grey",
         "pink"
-      ]
+      ],
+      "img": "⚪⛄"
     },
     {
       "id": "007",
@@ -80,7 +86,8 @@
         "thirteen",
         "two"
       ],
-      "info": "Achtung: „tree“ heißt Baum."
+      "info": "Achtung: „tree“ heißt Baum.",
+      "img": "🐷🐷🐷"
     },
     {
       "id": "008",
@@ -90,7 +97,8 @@
         "six",
         "eleven",
         "nine"
-      ]
+      ],
+      "img": "7️⃣🌈"
     },
     {
       "id": "009",
@@ -100,7 +108,8 @@
         "two",
         "nine",
         "eleven"
-      ]
+      ],
+      "img": "🔟👐"
     },
     {
       "id": "010",
@@ -110,7 +119,8 @@
         "twenty",
         "eleven",
         "two"
-      ]
+      ],
+      "img": "🕛"
     },
     {
       "id": "011",
@@ -120,7 +130,8 @@
         "twelve",
         "thirty",
         "two"
-      ]
+      ],
+      "img": "2️⃣0️⃣"
     },
     {
       "id": "012",
@@ -130,7 +141,8 @@
         "cat",
         "duck",
         "frog"
-      ]
+      ],
+      "img": "🐶"
     },
     {
       "id": "013",
@@ -140,7 +152,8 @@
         "dog",
         "cow",
         "rat"
-      ]
+      ],
+      "img": "🐱"
     },
     {
       "id": "014",
@@ -151,7 +164,8 @@
         "mouse",
         "pig"
       ],
-      "info": "Achtung: „house“ heißt Haus."
+      "info": "Achtung: „house“ heißt Haus.",
+      "img": "🐴"
     },
     {
       "id": "015",
@@ -161,7 +175,8 @@
         "fish",
         "bear",
         "pig"
-      ]
+      ],
+      "img": "🐦"
     },
     {
       "id": "016",
@@ -171,7 +186,8 @@
         "house",
         "horse",
         "rabbit"
-      ]
+      ],
+      "img": "🐭"
     },
     {
       "id": "017",
@@ -181,7 +197,8 @@
         "pig",
         "owl",
         "sheep"
-      ]
+      ],
+      "img": "🐮"
     },
     {
       "id": "018",
@@ -191,7 +208,8 @@
         "dish",
         "duck",
         "frog"
-      ]
+      ],
+      "img": "🐟"
     },
     {
       "id": "019",
@@ -201,7 +219,8 @@
         "father",
         "sister",
         "brother"
-      ]
+      ],
+      "img": "👩💕"
     },
     {
       "id": "020",
@@ -211,7 +230,8 @@
         "mother",
         "uncle",
         "brother"
-      ]
+      ],
+      "img": "👨🎩"
     },
     {
       "id": "021",
@@ -221,7 +241,8 @@
         "brother",
         "aunt",
         "mother"
-      ]
+      ],
+      "img": "👧"
     },
     {
       "id": "022",
@@ -231,7 +252,8 @@
         "sister",
         "uncle",
         "father"
-      ]
+      ],
+      "img": "👦"
     },
     {
       "id": "023",
@@ -241,7 +263,8 @@
         "grandfather",
         "aunt",
         "mother"
-      ]
+      ],
+      "img": "👵"
     },
     {
       "id": "024",
@@ -251,7 +274,8 @@
         "aunt",
         "cousin",
         "brother"
-      ]
+      ],
+      "img": "👨🎁"
     },
     {
       "id": "025",
@@ -261,7 +285,8 @@
         "uncle",
         "sister",
         "grandmother"
-      ]
+      ],
+      "img": "👩🎁"
     },
     {
       "id": "026",
@@ -271,7 +296,8 @@
         "goodbye",
         "thank you",
         "please"
-      ]
+      ],
+      "img": "👋"
     },
     {
       "id": "027",
@@ -281,7 +307,8 @@
         "please",
         "sorry",
         "hello"
-      ]
+      ],
+      "img": "🙏"
     },
     {
       "id": "028",
@@ -291,7 +318,8 @@
         "hello",
         "good morning",
         "thank you"
-      ]
+      ],
+      "img": "👋🚪"
     },
     {
       "id": "029",
@@ -301,7 +329,8 @@
         "Wie heißt du?",
         "Wie alt bist du?",
         "Wo wohnst du?"
-      ]
+      ],
+      "img": "🙂❓"
     },
     {
       "id": "030",
@@ -311,7 +340,8 @@
         "Ich wohne bei Tom.",
         "Ich mag Tom.",
         "Tom ist mein Freund."
-      ]
+      ],
+      "img": "🏷️👦"
     },
     {
       "id": "031",
@@ -321,7 +351,8 @@
         "Ich habe acht Jahre.",
         "Ich wohne in Haus acht.",
         "Ich habe acht Freunde."
-      ]
+      ],
+      "img": "🎂8️⃣"
     }
   ]
 }

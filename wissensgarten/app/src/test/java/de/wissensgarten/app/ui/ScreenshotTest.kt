@@ -14,6 +14,12 @@ import de.wissensgarten.app.ui.onboarding.TutorialScreen
 import de.wissensgarten.app.ui.review.ReviewScreen
 import de.wissensgarten.app.ui.shop.ShopScreen
 import de.wissensgarten.app.ui.theme.WissensgartenTheme
+import de.wissensgarten.app.ui.play.*
+import de.wissensgarten.app.ui.fx.Brummi
+import de.wissensgarten.app.ui.fx.Mood
+import androidx.compose.foundation.layout.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import de.wissensgarten.app.ui.store.StoreScreen
 import de.wissensgarten.app.ui.duel.DuelHubScreen
 import de.wissensgarten.app.ui.duel.DuelPlayScreen
@@ -112,29 +118,6 @@ class ScreenshotTest {
         GardenScreen(profile, garden.map { b -> b.copy(cards = b.cards.map { it.copy(lastReview = if (it.reps > 0) now else 0) }) }, now + 7 * 3_600_000L, 10, {}, {}, {}, {})
     }
 
-    @Test fun levelUp() = shot("06b_aufgestiegen", settle = 1150, prepare = { r ->
-        r.onNodeWithText("went – gone").performClick()
-        r.mainClock.advanceTimeBy(300)
-        r.mainClock.autoAdvance = false
-        r.onNodeWithText("Gießen 💧").performClick()
-    }) {
-        // Karte kurz vor dem Aufstieg zum Busch
-        val c = garden[0].cards.first { it.sourceId == "001" }
-        val m = Memory(6.5, 5.0, now - 7 * day, 3, 0)
-        ReviewScreen(listOf(c.withMemory(m).toStudy()), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {})
-    }
-
-    @Test fun sessionDone() = shot("10_runde_fertig", settle = 1000, prepare = { r ->
-        r.onNodeWithText("went – gone").performClick()
-        r.mainClock.advanceTimeBy(300)
-        r.mainClock.autoAdvance = false
-        r.onNodeWithText("Gießen 💧").performClick()
-        r.mainClock.advanceTimeBy(2000)
-    }) {
-        val c = garden[0].cards.first { it.sourceId == "001" }.toStudy()
-        ReviewScreen(listOf(c), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {})
-    }
-
     @Test fun gardenDecorated() = shot("04d_garten_geschmueckt") {
         val decorated = garden.mapIndexed { i, b -> b.copy(bed = b.bed.copy(species = listOf("sonnenblume", "kirschbaum", "tulpe", "kaktus")[i])) }
         GardenScreen(profile, decorated, now, 10, {}, {}, {}, {}, decos = ShopItems.decos.map { it.id }.toSet())
@@ -187,15 +170,79 @@ class ScreenshotTest {
         }, {})
     }
 
-    @Test fun bed() = shot("05_beet") {
-        BedScreen(garden[0], now, 10, {}, {}, { _, _, _ -> }, {}, {})
+    private val verbs get() = pack("s1-englisch-irregular-verbs")
+    private fun seedCard(id: String = "001"): StudyCard {
+        val c = verbs.cards.first { it.id == id }
+        return StudyCard("seed-$id", garden[0].bed.id, c.q, c.a, c.choices, c.info, Memory(), c.img)
+    }
+    private fun grownCard(id: String): StudyCard = seedCard(id).copy(id = "g-$id", memory = Memory(3.0, 5.0, now - 5 * day, 2, 0))
+    private val verbPeers get() = mapOf(garden[0].bed.id to verbs.cards.map { it.a })
+
+    @Test fun reviewDiscover() = shot("06_entdecken") {
+        ReviewScreen(listOf(seedCard()), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {}, verbPeers)
     }
 
-    @Test fun reviewChoice() = shot("06_giessen_auswahl", prepare = { r ->
+    @Test fun reviewReveal() = shot("06b_merkbild_gegossen", settle = 1100, prepare = { r ->
+        r.onNodeWithText("Gemerkt! 👍").performClick()
+        r.mainClock.advanceTimeBy(800)
+        r.mainClock.autoAdvance = false
         r.onNodeWithText("went – gone").performClick()
+        r.mainClock.advanceTimeBy(600)
     }) {
-        val card = garden[0].cards.first { it.sourceId == "001" }.toStudy()
-        ReviewScreen(listOf(card), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {})
+        ReviewScreen(listOf(seedCard()), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {}, verbPeers)
+    }
+
+    @Test fun sessionDone() = shot("10_runde_fertig", settle = 1000, prepare = { r ->
+        r.onNodeWithText("Gemerkt! 👍").performClick()
+        r.mainClock.advanceTimeBy(800)
+        r.mainClock.autoAdvance = false
+        r.onNodeWithText("went – gone").performClick()
+        r.mainClock.advanceTimeBy(4500)
+    }) {
+        ReviewScreen(listOf(seedCard()), garden.associate { it.bed.id to it.bed }, false, { _, _, _ -> }, {}, verbPeers)
+    }
+
+    @Test fun gameBalloons() = shot("16_ballons", settle = 0, prepare = { r ->
+        r.mainClock.autoAdvance = false; r.mainClock.advanceTimeBy(2500)
+    }) {
+        val c = grownCard("003")
+        Column(Modifier.padding(16.dp)) { BalloonGame(c, Games.options(c, verbs.cards.map { it.a })!!) {} }
+    }
+
+    @Test fun gameLetters() = shot("17_buchstabensalat", prepare = { r ->
+        r.onAllNodesWithText("P")[0].performClick()
+        r.onAllNodesWithText("A")[0].performClick()
+    }) {
+        val c = StudyCard("cap", "b", "Hauptstadt von Frankreich?", "Paris", null, null, Memory(3.0, 5.0, 0, 2, 0), "🗼🥐")
+        Column(Modifier.padding(16.dp)) { LetterGame(c) {} }
+    }
+
+    @Test fun gameSwipe() = shot("18_stimmts") {
+        val c = grownCard("010")
+        Column(Modifier.padding(16.dp)) { SwipeGame(c, Games.options(c, verbs.cards.map { it.a })!!) {} }
+    }
+
+    @Test fun gameMatch() = shot("19_zuordnen", prepare = { r ->
+        r.onNodeWithText("to go").performClick()
+        r.onNodeWithText("went – gone").performClick()
+        r.onNodeWithText("to be").performClick()
+    }) {
+        val cs = listOf("001", "002", "003", "004").map { grownCard(it) }
+        Column(Modifier.padding(16.dp)) { MatchBonus(cs) {} }
+    }
+
+    @Test fun brummiMoods() = shot("20_brummi") {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Brummi(Mood.HAPPY, size = 110.dp, speech = "Super! 🌟")
+            Brummi(Mood.SAD, size = 110.dp, speech = "Fehler sind Dünger fürs Wissen 🌱")
+            Brummi(Mood.THINK, size = 110.dp, speech = "Stimmt das wirklich? 🤔")
+            Brummi(Mood.CHEER, size = 110.dp, speech = "🔥 Du bist on fire!")
+            Brummi(Mood.SLEEP, size = 110.dp, speech = "Zzz … bis morgen!")
+        }
+    }
+
+    @Test fun bed() = shot("05_beet") {
+        BedScreen(garden[0], now, 10, {}, {}, { _, _, _ -> }, {}, {})
     }
 
     @Test fun reviewKids() = shot("07_giessen_grundschule") {

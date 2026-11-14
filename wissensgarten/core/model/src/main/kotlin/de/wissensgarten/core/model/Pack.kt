@@ -28,6 +28,8 @@ data class PackCard(
     /** Nur falsche Antworten. Vorhanden = Auswahl-Aufgabe. */
     val choices: List<String>? = null,
     val info: String? = null,
+    /** Merkbild: 1–3 Emojis */
+    val img: String? = null,
 )
 
 object Tier {

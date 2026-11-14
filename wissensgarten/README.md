@@ -4,6 +4,10 @@ Lernkarten als gemütliches Garten-Spiel – für die ganze Familie, von Klasse 
 Jede Karte ist eine Pflanze: Sie wächst mit dem Wissen und welkt nach der Vergessenskurve.
 Gießen = Wiederholen zum richtigen Zeitpunkt.
 
+| Entdecken | Merkbild + Gießen | Ballon-Jagd | Buchstabensalat | Stimmt's? | Zuordnen-Bonus | Brummi |
+| --- | --- | --- | --- | --- | --- | --- |
+| ![](screenshots/06_entdecken.png) | ![](screenshots/06b_merkbild_gegossen.png) | ![](screenshots/16_ballons.png) | ![](screenshots/17_buchstabensalat.png) | ![](screenshots/18_stimmts.png) | ![](screenshots/19_zuordnen.png) | ![](screenshots/20_brummi.png) |
+
 | Duell | Duell-Frage | Duell-Ergebnis |
 | --- | --- | --- |
 | ![](screenshots/13_duell_start.png) | ![](screenshots/14_duell_frage.png) | ![](screenshots/15_duell_ergebnis.png) |
@@ -12,19 +16,26 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 | --- | --- | --- | --- |
 | ![](screenshots/04d_garten_geschmueckt.png) | ![](screenshots/04e_garten_geschmueckt_nacht.png) | ![](screenshots/11_laden_pflanzen.png) | ![](screenshots/12_laden_deko.png) |
 
-| Garten (Tag) | Abend | Nacht | Aufgestiegen! | Runde fertig |
-| --- | --- | --- | --- | --- |
-| ![](screenshots/04_garten.png) | ![](screenshots/04c_garten_abend.png) | ![](screenshots/04b_garten_nacht.png) | ![](screenshots/06b_aufgestiegen.png) | ![](screenshots/10_runde_fertig.png) |
+| Garten (Tag) | Abend | Nacht | Runde fertig |
+| --- | --- | --- | --- |
+| ![](screenshots/04_garten.png) | ![](screenshots/04c_garten_abend.png) | ![](screenshots/04b_garten_nacht.png) | ![](screenshots/10_runde_fertig.png) |
 
-| Willkommen | Beete wählen | Anleitung | Beet | Gießen (Auswahl) |
-| --- | --- | --- | --- | --- |
-| ![](screenshots/01_willkommen.png) | ![](screenshots/02_beete_waehlen.png) | ![](screenshots/03_anleitung.png) | ![](screenshots/05_beet.png) | ![](screenshots/06_giessen_auswahl.png) |
+| Willkommen | Beete wählen | Anleitung | Beet |
+| --- | --- | --- | --- |
+| ![](screenshots/01_willkommen.png) | ![](screenshots/02_beete_waehlen.png) | ![](screenshots/03_anleitung.png) | ![](screenshots/05_beet.png) |
 
 | Grundschule | Samenhandlung | Familie |
 | --- | --- | --- |
 | ![](screenshots/07_giessen_grundschule.png) | ![](screenshots/08_samenhandlung.png) | ![](screenshots/09_familie.png) |
 
 ## Funktionen
+
+- **Erlebnis-Lernen statt Karteikarten** – jede Karte hat ein animiertes **Merkbild** (1–3 Emojis als Eselsbrücke),
+  neue Karten werden erst **entdeckt** und dann geprüft. Die Runde mischt automatisch **5 Spielarten**:
+  🎈 Ballon-Jagd, 🔤 Buchstabensalat, 👆 Stimmt's? (wischen), Auswahl und Aufdecken; alle 6 Karten ein 🧩 Zuordnen-Bonus.
+  Auswahl der Spielart: `core/model/Games.kt`, Spiele: `app/ui/play/`.
+- **Brummi die Hummel** begleitet jede Runde und den Garten: freut sich, tröstet, denkt mit, schläft nachts, gibt Tipps
+  (`app/ui/fx/Mascot.kt`).
 
 - **Einrichtung**: Wer lernt (selbst / Kind), Name + Tier-Avatar, Klassenstufe, dann **beliebige Beete** wählen –
   die Stufe hebt nur passende Pakete hervor. Eigene Beete jederzeit möglich.

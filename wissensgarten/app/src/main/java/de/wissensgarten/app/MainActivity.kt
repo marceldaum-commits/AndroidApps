@@ -333,6 +333,8 @@ class MainActivity : ComponentActivity() {
                         beds = beds.associate { it.bed.id to it.bed },
                         simpleRating = profile?.simpleRating == true,
                         onRate = { c, r, dew -> vm.review(c, r, dew) },
+                        peers = beds.associate { b -> b.bed.id to b.cards.map { it.back } },
+                        onBonus = { vm.addDew(it) },
                         onClose = { vm.endSession(); nav.popBackStack() },
                     )
                 }

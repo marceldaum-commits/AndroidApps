@@ -42,13 +42,13 @@ import de.wissensgarten.core.model.Rating
 import de.wissensgarten.core.model.Scheduler
 import de.wissensgarten.core.model.Stage
 import de.wissensgarten.core.model.StudyCard
+import de.wissensgarten.core.model.GameMode
+import de.wissensgarten.core.model.Games
+import de.wissensgarten.app.ui.play.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private enum class Phase { QUESTION, ANSWER, GROWING }
-
-private val RightGreen = Color(0xFFBFE3AE)
-private val WrongOrange = Color(0xFFFFCBB0)
+private enum class Phase { PLAY, REVEAL, BONUS }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,23 +58,28 @@ fun ReviewScreen(
     simpleRating: Boolean,
     onRate: (StudyCard, Rating, Int) -> Unit,
     onClose: () -> Unit,
+    peers: Map<String, List<String>> = emptyMap(),
+    onBonus: (Int) -> Unit = {},
 ) {
     var index by rememberSaveable { mutableIntStateOf(0) }
-    var phase by remember { mutableStateOf(Phase.QUESTION) }
-    var picked by remember { mutableStateOf<String?>(null) }
+    var phase by remember { mutableStateOf(Phase.PLAY) }
     var grownMemory by remember { mutableStateOf<Memory?>(null) }
+    var lastRight by remember { mutableStateOf(true) }
     var grown by rememberSaveable { mutableIntStateOf(0) }
     var dew by rememberSaveable { mutableIntStateOf(0) }
     var correct by rememberSaveable { mutableIntStateOf(0) }
     var streak by rememberSaveable { mutableIntStateOf(0) }
     var bestStreak by rememberSaveable { mutableIntStateOf(0) }
+    var bonusAt by rememberSaveable { mutableIntStateOf(-1) }
+    var bonusCards by remember { mutableStateOf<List<StudyCard>>(emptyList()) }
     var levelUp by remember { mutableStateOf<String?>(null) }
     var gainText by remember { mutableStateOf("") }
+    var mood by remember { mutableStateOf(Mood.IDLE) }
+    var speech by remember { mutableStateOf<String?>(null) }
     val haptics = LocalHapticFeedback.current
     val sfx = LocalSfx.current
     val scope = rememberCoroutineScope()
     val particles = rememberParticles()
-    val shake = rememberShake()
     val growAnim = remember { Animatable(1f) }
     val pourAnim = remember { Animatable(0f) }
     val gainAnim = remember { Animatable(0f) }
@@ -88,28 +93,65 @@ fun ReviewScreen(
     val card = items[index]
     val bed = beds[card.bedId]
     val now = remember(index) { System.currentTimeMillis() }
-    val shownMemory = if (phase == Phase.GROWING) grownMemory ?: card.memory else card.memory
+    val cardPeers = peers[card.bedId].orEmpty()
+    val mode = remember(card.id) { Games.choose(card, cardPeers, simpleRating) }
+    val options = remember(card.id) { Games.options(card, cardPeers) }
+    val shownMemory = if (phase == Phase.REVEAL) grownMemory ?: card.memory else card.memory
 
-    fun rate(r: Rating) {
-        if (phase == Phase.GROWING) return
+    // Brummi begrüßt jede Karte passend
+    LaunchedEffect(card.id) {
+        mood = if (mode == GameMode.DISCOVER) Mood.HAPPY else Mood.THINK
+        speech = when (mode) {
+            GameMode.DISCOVER -> "Neu! Schau dir das Bild gut an 👀"
+            GameMode.BALLOONS -> "Schnell, bevor sie wegfliegen!"
+            GameMode.LETTERS -> "Bau das Wort zusammen!"
+            GameMode.SWIPE -> "Stimmt das wirklich? 🤔"
+            else -> null
+        }
+    }
+
+    fun next() {
+        levelUp = null
+        grownMemory = null
+        index++
+        // Alle 6 Karten: Zuordnen-Bonus aus bereits gespielten Karten
+        if (index < items.size && index % 6 == 0 && bonusAt != index) {
+            Games.matchPairs(items.take(index).filter { !it.memory.isSeed || it.img != null })?.let {
+                bonusAt = index; bonusCards = it; phase = Phase.BONUS
+                mood = Mood.CHEER; speech = "Bonusrunde! 🧩"
+                return
+            }
+        }
+        phase = Phase.PLAY
+    }
+
+    fun finish(r: Rating) {
+        if (phase != Phase.PLAY) return
         haptics.performHapticFeedback(HapticFeedbackType.LongPress)
         val after = Scheduler.review(card.memory, r, now)
         val up = Stage.of(after) > Stage.of(card.memory)
+        val right = r != Rating.AGAIN
+        lastRight = right
         if (up) grown++
-        if (r != Rating.AGAIN) { correct++; streak++; bestStreak = maxOf(bestStreak, streak) } else streak = 0
-        val mult = if (r != Rating.AGAIN) GardenRepository.comboMultiplier(streak) else 1
+        if (right) { correct++; streak++; bestStreak = maxOf(bestStreak, streak) } else streak = 0
+        val mult = if (right) GardenRepository.comboMultiplier(streak) else 1
         val gain = GardenRepository.baseDew(r) * mult
         dew += gain
         gainText = "+$gain 💧" + if (mult > 1) "  ×$mult" else ""
         grownMemory = after
         onRate(card, r, gain)
-        phase = Phase.GROWING
+        mood = when { !right -> Mood.SAD; streak >= 5 -> Mood.CHEER; else -> Mood.HAPPY }
+        speech = when {
+            !right -> BrummiSays.pick(BrummiSays.comfort, card.id.hashCode())
+            streak >= 5 && streak % 5 == 0 -> BrummiSays.pick(BrummiSays.streak, streak)
+            else -> BrummiSays.pick(BrummiSays.praise, card.id.hashCode() + streak)
+        }
+        if (right) particles.burst(Burst.SPARKLE, 0.5f, 0.2f, 26)
+        phase = Phase.REVEAL
         sfx?.play(Sound.WATER)
         scope.launch {
             launch { gainAnim.snapTo(0f); gainAnim.animateTo(1f, tween(1300, easing = LinearOutSlowInEasing)) }
-            launch {
-                repeat(4) { particles.burst(Burst.WATER, 0.5f, 0.12f, 10); delay(120) }
-            }
+            launch { repeat(4) { particles.burst(Burst.WATER, 0.3f, 0.1f, 8); delay(120) } }
             pourAnim.snapTo(0f)
             pourAnim.animateTo(1f, tween(650, easing = LinearEasing))
             growAnim.snapTo(0.45f)
@@ -117,35 +159,14 @@ fun ReviewScreen(
             if (up && !sprouted) {
                 levelUp = "⬆ Aufgestiegen: ${Stage.of(after).label}!"
                 sfx?.play(Sound.LEVEL_UP)
-                particles.burst(Burst.LEAVES, 0.5f, 0.3f, 36)
-                particles.burst(Burst.SPARKLE, 0.5f, 0.25f, 24)
+                particles.burst(Burst.LEAVES, 0.3f, 0.15f, 36)
             } else if (sprouted) {
-                levelUp = if (r == Rating.AGAIN) "🌱 Gesät" else "🌱 Gekeimt!"
+                levelUp = if (right) "🌱 Gekeimt!" else "🌱 Gesät"
                 sfx?.play(Sound.GROW, volume = 0.7f)
-                particles.burst(Burst.LEAVES, 0.5f, 0.45f, 10)
             } else sfx?.play(Sound.GROW, volume = 0.5f)
             growAnim.animateTo(1f, spring(dampingRatio = 0.35f, stiffness = 220f))
-            delay(if (up && !sprouted) 900 else 350)
-            levelUp = null
-            picked = null
-            grownMemory = null
-            phase = Phase.QUESTION
-            index++
-        }
-    }
-
-    fun pick(o: String) {
-        if (picked != null) return
-        picked = o
-        phase = Phase.ANSWER
-        if (o == card.back) {
-            sfx?.play(Sound.CORRECT, pitch = 1f + 0.06f * minOf(streak, 8))
-            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-            particles.burst(Burst.SPARKLE, 0.5f, 0.62f, 28)
-        } else {
-            sfx?.play(Sound.WRONG)
-            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-            scope.launch { shake.shake() }
+            // Richtig: automatisch weiter. Falsch: Zeit zum Lesen, weiter per Knopf.
+            if (right) { delay(if (up && !sprouted) 1300 else 900); if (phase == Phase.REVEAL) next() }
         }
     }
 
@@ -167,100 +188,65 @@ fun ReviewScreen(
                 )
             },
         ) { pad ->
-            Column(
-                Modifier.fillMaxSize().padding(pad).padding(horizontal = 20.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
+            Column(Modifier.fillMaxSize().padding(pad).padding(horizontal = 18.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         "${bed?.emoji ?: ""} ${bed?.name ?: ""}",
-                        style = MaterialTheme.typography.labelLarge,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1, modifier = Modifier.weight(1f, fill = false),
                     )
                     StreakBadge(streak)
                 }
-                Box(Modifier.fillMaxWidth().weight(0.8f), contentAlignment = Alignment.Center) {
-                    Plant(
-                        Stage.of(shownMemory),
-                        if (phase == Phase.GROWING) 0f else Scheduler.wilt(shownMemory, now),
-                        bed?.hue ?: 120f,
-                        card.id.hashCode() and 0xff,
-                        Modifier.fillMaxHeight(0.95f).aspectRatio(0.85f),
-                        grow = growAnim.value,
-                        species = bed?.species ?: "klassik",
-                    )
-                    if (pourAnim.value > 0f && pourAnim.value < 1f) WateringCan(pourAnim.value, Modifier.matchParentSize())
-                    if (gainAnim.value in 0.01f..0.99f) Text(
-                        gainText,
-                        style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Black,
-                        color = MaterialTheme.colorScheme.secondary,
-                        modifier = Modifier.align(Alignment.TopEnd).padding(end = 12.dp)
-                            .graphicsLayer {
-                                translationY = 60.dp.toPx() * (1 - gainAnim.value) - 20.dp.toPx()
+                // Pflanze links, Brummi mit Sprechblase rechts
+                Row(Modifier.fillMaxWidth().height(150.dp), verticalAlignment = Alignment.Bottom) {
+                    Box(Modifier.width(130.dp).fillMaxHeight(), contentAlignment = Alignment.BottomCenter) {
+                        Plant(
+                            Stage.of(shownMemory),
+                            if (phase == Phase.REVEAL) 0f else Scheduler.wilt(shownMemory, now),
+                            bed?.hue ?: 120f, card.id.hashCode() and 0xff,
+                            Modifier.fillMaxHeight().aspectRatio(0.85f),
+                            grow = growAnim.value, species = bed?.species ?: "klassik",
+                        )
+                        if (pourAnim.value > 0f && pourAnim.value < 1f) WateringCan(pourAnim.value, Modifier.matchParentSize())
+                        if (gainAnim.value in 0.01f..0.99f) Text(
+                            gainText, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black,
+                            color = MaterialTheme.colorScheme.secondary,
+                            modifier = Modifier.align(Alignment.TopCenter).graphicsLayer {
+                                translationY = 40.dp.toPx() * (1 - gainAnim.value)
                                 alpha = if (gainAnim.value < 0.7f) 1f else (1 - gainAnim.value) / 0.3f
                             },
-                    )
-                    LevelUpBanner(levelUp, Modifier.align(Alignment.TopCenter))
-                }
-
-                Column(
-                    Modifier.weight(1.2f).verticalScroll(rememberScrollState()).shake(shake),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    AnimatedContent(card.id, transitionSpec = {
-                        (slideInHorizontally { it / 2 } + fadeIn()) togetherWith (slideOutHorizontally { -it / 2 } + fadeOut())
-                    }, label = "q") { _ ->
-                        Text(card.front, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                        )
                     }
-                    Spacer(Modifier.height(14.dp))
+                    Brummi(mood, Modifier.weight(1f).align(Alignment.CenterVertically), size = 84.dp, speech = speech)
+                }
+                LevelUpBanner(levelUp, Modifier.align(Alignment.CenterHorizontally))
+                Spacer(Modifier.height(8.dp))
 
-                    if (card.isChoice) {
-                        card.options().forEach { o -> ChoiceButton(o, card.back, picked) { pick(o) } }
-                        if (picked != null) {
-                            val right = picked == card.back
-                            Feedback(right, card)
-                            JuicyButton(
-                                onClick = { rate(if (right) Rating.GOOD else Rating.AGAIN) },
-                                enabled = phase == Phase.ANSWER,
-                                modifier = Modifier.fillMaxWidth().height(58.dp).pulse(phase == Phase.ANSWER, 0.03f),
-                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary),
-                                sound = null,
-                            ) { Text(if (right) "Gießen 💧" else "Trotzdem gießen 💧", style = MaterialTheme.typography.titleMedium) }
-                        }
-                    } else {
-                        AnimatedContent(phase == Phase.QUESTION, transitionSpec = { fadeIn(tween(200)) togetherWith fadeOut(tween(150)) }, label = "phase") { asking ->
-                            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
-                                if (asking) {
-                                    Text(
-                                        if (card.memory.isSeed) "Neuer Samen – kennst du es schon?" else "Weißt du es noch?",
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                    Spacer(Modifier.height(16.dp))
-                                    JuicyButton(onClick = { phase = Phase.ANSWER }, modifier = Modifier.fillMaxWidth().height(60.dp)) {
-                                        Text("Antwort zeigen", style = MaterialTheme.typography.titleMedium)
-                                    }
-                                } else {
-                                    Card(
-                                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
-                                        modifier = Modifier.fillMaxWidth(),
-                                    ) {
-                                        Column(Modifier.fillMaxWidth().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                                            Text(card.back, style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center)
-                                            card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 6.dp)) }
-                                        }
-                                    }
-                                    Spacer(Modifier.height(14.dp))
-                                    RatingButtons(card.memory, now, simpleRating, enabled = phase == Phase.ANSWER) { r ->
-                                        if (r != Rating.AGAIN) {
-                                            sfx?.play(Sound.CORRECT, pitch = 1f + 0.06f * minOf(streak, 8))
-                                            particles.burst(Burst.SPARKLE, 0.5f, 0.7f, 22)
-                                        } else {
-                                            sfx?.play(Sound.WRONG, volume = 0.6f)
-                                            scope.launch { shake.shake() }
-                                        }
-                                        rate(r)
-                                    }
-                                }
+                Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
+                    AnimatedContent(
+                        targetState = Triple(phase, card.id, bonusAt),
+                        transitionSpec = { (slideInHorizontally { it / 2 } + fadeIn()) togetherWith (slideOutHorizontally { -it / 2 } + fadeOut()) },
+                        contentKey = { if (it.first == Phase.REVEAL) "reveal-${it.second}" else "${it.first}-${it.second}" },
+                        label = "spiel",
+                    ) { (p, _, _) ->
+                        when (p) {
+                            Phase.BONUS -> MatchBonus(bonusCards) { mistakes ->
+                                val bonus = (10 - mistakes * 2).coerceAtLeast(2)
+                                dew += bonus
+                                onBonus(bonus)
+                                sfx?.play(Sound.DEW)
+                                particles.burst(Burst.CONFETTI, count = 60)
+                                mood = Mood.CHEER; speech = "+$bonus 💧 Bonus!"
+                                phase = Phase.PLAY
+                            }
+                            Phase.REVEAL -> RevealCard(card, lastRight) { next() }
+                            Phase.PLAY -> when (mode) {
+                                GameMode.DISCOVER -> DiscoverGame(card, options) { finish(it.rating) }
+                                GameMode.BALLOONS -> BalloonGame(card, options!!) { finish(it.rating) }
+                                GameMode.LETTERS -> LetterGame(card) { finish(it.rating) }
+                                GameMode.SWIPE -> SwipeGame(card, options!!) { finish(it.rating) }
+                                GameMode.CHOICE -> ChoiceGame(card, options!!) { finish(it.rating) }
+                                GameMode.FLIP -> FlipGame(card, now, simpleRating) { finish(it) }
                             }
                         }
                     }
@@ -269,6 +255,54 @@ fun ReviewScreen(
             }
         }
         ParticleLayer(particles, Modifier.matchParentSize())
+    }
+}
+
+/** Nach dem Spiel: Merkbild + Antwort, damit sich Bild und Wissen verbinden. */
+@Composable
+private fun RevealCard(card: StudyCard, right: Boolean, onNext: () -> Unit) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+        Card(
+            colors = CardDefaults.cardColors(containerColor = if (right) Color(0xFFE6F4DD) else Color(0xFFFFEDE2)),
+            shape = MaterialTheme.shapes.extraLarge, modifier = Modifier.fillMaxWidth(),
+        ) {
+            Column(Modifier.fillMaxWidth().padding(18.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                MerkBild(card.img, emojiSize = 56.sp, key = "r" + card.id)
+                Text(card.front, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F))
+                Text(card.back, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, color = Color(0xFF22261F))
+                card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F), modifier = Modifier.padding(top = 6.dp)) }
+            }
+        }
+        if (!right) {
+            Spacer(Modifier.height(12.dp))
+            JuicyButton(onClick = onNext, modifier = Modifier.fillMaxWidth().height(56.dp)) { Text("Gemerkt – weiter", style = MaterialTheme.typography.titleMedium) }
+        }
+    }
+}
+
+/** Eigene Karten ohne Auswahl: aufdecken und selbst einschätzen. */
+@Composable
+private fun FlipGame(card: StudyCard, now: Long, simple: Boolean, onRate: (Rating) -> Unit) {
+    var open by remember(card.id) { mutableStateOf(false) }
+    val sfx = LocalSfx.current
+    val flip by animateFloatAsState(if (open) 180f else 0f, tween(450), label = "flip")
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+        Card(
+            modifier = Modifier.fillMaxWidth().height(180.dp).graphicsLayer { rotationY = flip; cameraDistance = 12f * density },
+            colors = CardDefaults.cardColors(containerColor = if (flip > 90f) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainerLow),
+            shape = MaterialTheme.shapes.extraLarge,
+        ) {
+            Box(Modifier.fillMaxSize().graphicsLayer { rotationY = if (flip > 90f) 180f else 0f }.padding(16.dp), contentAlignment = Alignment.Center) {
+                Text(if (flip > 90f) card.back else card.front, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
+            }
+        }
+        Spacer(Modifier.height(14.dp))
+        if (!open) JuicyButton(onClick = { sfx?.play(Sound.PLOP); open = true }, modifier = Modifier.fillMaxWidth().height(58.dp)) {
+            Text("Umdrehen 🔄", style = MaterialTheme.typography.titleMedium)
+        } else RatingButtons(card.memory, now, simple, enabled = true) { r ->
+            sfx?.play(if (r == Rating.AGAIN) Sound.WRONG else Sound.CORRECT, volume = 0.7f)
+            onRate(r)
+        }
     }
 }
 
@@ -307,52 +341,6 @@ private fun LevelUpBanner(text: String?, modifier: Modifier) {
                 modifier = Modifier.padding(horizontal = 18.dp, vertical = 10.dp),
             )
         }
-    }
-}
-
-@Composable
-private fun ChoiceButton(option: String, answer: String, picked: String?, onClick: () -> Unit) {
-    val isRight = option == answer
-    val target = when {
-        picked == null -> MaterialTheme.colorScheme.surfaceContainerLow
-        isRight -> RightGreen
-        option == picked -> WrongOrange
-        else -> MaterialTheme.colorScheme.surfaceContainerLow
-    }
-    val bg by animateColorAsState(target, tween(250), label = "bg")
-    val pop = remember { Animatable(1f) }
-    LaunchedEffect(picked) {
-        if (picked != null && isRight) { pop.snapTo(1.08f); pop.animateTo(1f, spring(dampingRatio = 0.3f)) }
-    }
-    val interaction = remember { MutableInteractionSource() }
-    val dim = picked != null && !isRight && option != picked
-    OutlinedButton(
-        onClick = onClick,
-        interactionSource = interaction,
-        colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = bg,
-            contentColor = if (picked != null && (isRight || option == picked)) Color(0xFF22261F) else MaterialTheme.colorScheme.onSurface,
-        ),
-        modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp).padding(vertical = 4.dp)
-            .pressBounce(interaction)
-            .graphicsLayer { scaleX = pop.value; scaleY = pop.value; alpha = if (dim) 0.5f else 1f },
-    ) {
-        Text(
-            (if (picked != null && isRight) "✓ " else if (picked == option && !isRight) "✗ " else "") + option,
-            style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center,
-        )
-    }
-}
-
-@Composable
-private fun Feedback(right: Boolean, card: StudyCard) {
-    Column(Modifier.fillMaxWidth().padding(vertical = 10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(
-            if (right) listOf("Richtig! 🎉", "Super! ⭐", "Genau! 🌟", "Klasse! 🙌")[card.id.hashCode().mod(4)] else "Richtig ist: ${card.back}",
-            style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold,
-            color = if (right) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.tertiary,
-        )
-        card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 4.dp)) }
     }
 }
 

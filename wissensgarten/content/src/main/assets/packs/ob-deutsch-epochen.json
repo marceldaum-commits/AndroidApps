@@ -1,6 +1,6 @@
 {
   "id": "ob-deutsch-epochen",
-  "version": 1,
+  "version": 2,
   "title": "Literaturepochen",
   "subject": "deutsch",
   "grades": [
@@ -20,7 +20,8 @@
         "ca. 1720–1800",
         "ca. 1767–1785",
         "ca. 1848–1890"
-      ]
+      ],
+      "img": "💀🕯️⏳"
     },
     {
       "id": "002",
@@ -30,7 +31,8 @@
         "sapere aude",
         "l'art pour l'art",
         "in dubio pro reo"
-      ]
+      ],
+      "img": "💀⏳"
     },
     {
       "id": "003",
@@ -40,17 +42,20 @@
         "Friedrich Schiller",
         "Joseph von Eichendorff",
         "Gotthold Ephraim Lessing"
-      ]
+      ],
+      "img": "🥀🍂"
     },
     {
       "id": "004",
       "q": "Autor des Barockromans „Der abenteuerliche Simplicissimus“",
-      "a": "Grimmelshausen"
+      "a": "Grimmelshausen",
+      "img": "🗡️🧭"
     },
     {
       "id": "005",
       "q": "Zeitraum der Aufklärung",
-      "a": "ca. 1720–1800"
+      "a": "ca. 1720–1800",
+      "img": "💡📖"
     },
     {
       "id": "006",
@@ -61,7 +66,8 @@
         "Johann Gottfried Herder",
         "Friedrich Schiller"
       ],
-      "info": "Kant, „Beantwortung der Frage: Was ist Aufklärung?“ (1784)"
+      "info": "Kant, „Beantwortung der Frage: Was ist Aufklärung?“ (1784)",
+      "img": "🧠🔓"
     },
     {
       "id": "007",
@@ -71,13 +77,15 @@
         "Friedrich Schiller",
         "Johann Wolfgang von Goethe",
         "Heinrich von Kleist"
-      ]
+      ],
+      "img": "💍💍💍"
     },
     {
       "id": "008",
       "q": "Epoche von Lessings „Emilia Galotti“",
       "a": "Aufklärung",
-      "info": "Bürgerliches Trauerspiel, 1772"
+      "info": "Bürgerliches Trauerspiel, 1772",
+      "img": "💡🗡️"
     },
     {
       "id": "009",
@@ -87,7 +95,8 @@
         "ca. 1600–1720",
         "ca. 1786–1805",
         "ca. 1880–1900"
-      ]
+      ],
+      "img": "🌪️⚡"
     },
     {
       "id": "010",
@@ -97,7 +106,8 @@
         "die Vernunft",
         "die Frömmigkeit",
         "die Sachlichkeit"
-      ]
+      ],
+      "img": "🧞✨"
     },
     {
       "id": "011",
@@ -107,12 +117,14 @@
         "Wilhelm Meisters Lehrjahre",
         "Faust",
         "Die Wahlverwandtschaften"
-      ]
+      ],
+      "img": "💌💔"
     },
     {
       "id": "012",
       "q": "Epoche von Schillers Drama „Die Räuber“ (1781)",
-      "a": "Sturm und Drang"
+      "a": "Sturm und Drang",
+      "img": "🌲🗡️⚡"
     },
     {
       "id": "013",
@@ -123,7 +135,8 @@
         "ca. 1830–1848",
         "ca. 1910–1925"
       ],
-      "info": "Von Goethes Italienreise bis zu Schillers Tod"
+      "info": "Von Goethes Italienreise bis zu Schillers Tod",
+      "img": "🏛️⚖️"
     },
     {
       "id": "014",
@@ -133,13 +146,15 @@
         "Lessing und Kant",
         "Novalis und Tieck",
         "Büchner und Heine"
-      ]
+      ],
+      "img": "👬✍️"
     },
     {
       "id": "015",
       "q": "Leitideal der Weimarer Klassik",
       "a": "Humanität",
-      "info": "Harmonie von Vernunft und Gefühl; das Wahre, Gute und Schöne"
+      "info": "Harmonie von Vernunft und Gefühl; das Wahre, Gute und Schöne",
+      "img": "🤝❤️"
     },
     {
       "id": "016",
@@ -149,12 +164,14 @@
         "Götz von Berlichingen",
         "Kabale und Liebe",
         "Woyzeck"
-      ]
+      ],
+      "img": "🏛️🕊️"
     },
     {
       "id": "017",
       "q": "Zeitraum der Romantik",
-      "a": "ca. 1795–1835"
+      "a": "ca. 1795–1835",
+      "img": "🌙🌲"
     },
     {
       "id": "018",
@@ -164,7 +181,8 @@
         "die rote Rose",
         "der weiße Schwan",
         "die goldene Kugel"
-      ]
+      ],
+      "img": "💙🌷"
     },
     {
       "id": "019",
@@ -174,18 +192,21 @@
         "Heinrich Heine",
         "Theodor Fontane",
         "Friedrich Schiller"
-      ]
+      ],
+      "img": "🌙🎻"
     },
     {
       "id": "020",
       "q": "Epoche von E. T. A. Hoffmanns „Der Sandmann“",
       "a": "Romantik",
-      "info": "Gehört zur sogenannten Schwarzen Romantik."
+      "info": "Gehört zur sogenannten Schwarzen Romantik.",
+      "img": "👀🔭"
     },
     {
       "id": "021",
       "q": "Wer veröffentlichte ab 1812 die „Kinder- und Hausmärchen“?",
-      "a": "Jacob und Wilhelm Grimm"
+      "a": "Jacob und Wilhelm Grimm",
+      "img": "🏰🐺"
     },
     {
       "id": "022",
@@ -196,7 +217,8 @@
         "ca. 1880–1900",
         "ca. 1920–1933"
       ],
-      "info": "Endet mit der Märzrevolution 1848."
+      "info": "Endet mit der Märzrevolution 1848.",
+      "img": "✊📰"
     },
     {
       "id": "023",
@@ -206,12 +228,14 @@
         "Romantik",
         "Weimarer Klassik",
         "Expressionismus"
-      ]
+      ],
+      "img": "🔪🌕"
     },
     {
       "id": "024",
       "q": "Heines „Deutschland. Ein Wintermärchen“ (1844) – Epoche",
-      "a": "Vormärz"
+      "a": "Vormärz",
+      "img": "❄️✊"
     },
     {
       "id": "025",
@@ -221,7 +245,8 @@
         "ca. 1795–1835",
         "ca. 1910–1925",
         "ca. 1600–1720"
-      ]
+      ],
+      "img": "🔍🏘️"
     },
     {
       "id": "026",
@@ -231,17 +256,20 @@
         "Der Schimmelreiter",
         "Buddenbrooks",
         "Die Marquise von O…."
-      ]
+      ],
+      "img": "👒💔"
     },
     {
       "id": "027",
       "q": "Theodor Storms Novelle über einen Deichgrafen (1888)",
-      "a": "Der Schimmelreiter"
+      "a": "Der Schimmelreiter",
+      "img": "🐴🌊"
     },
     {
       "id": "028",
       "q": "Zeitraum des Naturalismus",
-      "a": "ca. 1880–1900"
+      "a": "ca. 1880–1900",
+      "img": "🏭🔬"
     },
     {
       "id": "029",
@@ -251,13 +279,15 @@
         "Realismus",
         "Expressionismus",
         "Romantik"
-      ]
+      ],
+      "img": "🧵✊"
     },
     {
       "id": "030",
       "q": "Arno Holz' Formel des konsequenten Naturalismus",
       "a": "Kunst = Natur – x",
-      "info": "x steht für die Mittel und ihre Handhabung durch den Künstler."
+      "info": "x steht für die Mittel und ihre Handhabung durch den Künstler.",
+      "img": "🎨🌳➖"
     },
     {
       "id": "031",
@@ -267,12 +297,14 @@
         "ca. 1848–1890",
         "ca. 1945–1950",
         "ca. 1767–1785"
-      ]
+      ],
+      "img": "😱🌆"
     },
     {
       "id": "032",
       "q": "Epoche von Jakob van Hoddis' Gedicht „Weltende“ (1911)",
-      "a": "Expressionismus"
+      "a": "Expressionismus",
+      "img": "🌍💥"
     },
     {
       "id": "033",
@@ -282,7 +314,8 @@
         "Thomas Mann",
         "Georg Heym",
         "Alfred Döblin"
-      ]
+      ],
+      "img": "🛏️🐛"
     },
     {
       "id": "034",
@@ -292,12 +325,14 @@
         "Expressionismus",
         "Naturalismus",
         "Trümmerliteratur"
-      ]
+      ],
+      "img": "📸🏙️"
     },
     {
       "id": "035",
       "q": "Anna Seghers' „Das siebte Kreuz“ entstand in der …",
-      "a": "Exilliteratur"
+      "a": "Exilliteratur",
+      "img": "🧳✒️"
     },
     {
       "id": "036",
@@ -307,12 +342,14 @@
         "Exilliteratur",
         "Neuen Sachlichkeit",
         "Romantik"
-      ]
+      ],
+      "img": "🏚️🧱"
     },
     {
       "id": "037",
       "q": "Von Hans Werner Richter 1947 gegründete Schriftstellervereinigung",
-      "a": "Gruppe 47"
+      "a": "Gruppe 47",
+      "img": "4️⃣7️⃣👥"
     }
   ]
 }

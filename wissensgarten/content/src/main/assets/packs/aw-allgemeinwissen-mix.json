@@ -1,6 +1,6 @@
 {
   "id": "aw-allgemeinwissen-mix",
-  "version": 1,
+  "version": 2,
   "title": "Allgemeinwissen-Quiz",
   "subject": "allgemeinwissen",
   "grades": [
@@ -24,7 +24,8 @@
         "Friedrich Schiller",
         "Heinrich Heine",
         "Thomas Mann"
-      ]
+      ],
+      "img": "📖😈🎭"
     },
     {
       "id": "002",
@@ -34,12 +35,14 @@
         "Johann Wolfgang von Goethe",
         "Gotthold Ephraim Lessing",
         "Bertolt Brecht"
-      ]
+      ],
+      "img": "🌲🔫📜"
     },
     {
       "id": "003",
       "q": "Wer schrieb „Romeo und Julia“?",
-      "a": "William Shakespeare"
+      "a": "William Shakespeare",
+      "img": "💑🌹☠️"
     },
     {
       "id": "004",
@@ -49,12 +52,14 @@
         "Jules Verne",
         "Victor Hugo",
         "Albert Camus"
-      ]
+      ],
+      "img": "👦🌹⭐"
     },
     {
       "id": "005",
       "q": "Welche Brüder sammelten Märchen wie „Hänsel und Gretel“?",
-      "a": "Jacob und Wilhelm Grimm"
+      "a": "Jacob und Wilhelm Grimm",
+      "img": "🍬🏠🧙"
     },
     {
       "id": "006",
@@ -64,7 +69,8 @@
         "Isaac Newton",
         "Max Planck",
         "Niels Bohr"
-      ]
+      ],
+      "img": "🧠⚡⏳"
     },
     {
       "id": "007",
@@ -74,13 +80,15 @@
         "Robert Koch",
         "Louis Pasteur",
         "Marie Curie"
-      ]
+      ],
+      "img": "🍞🦠💊"
     },
     {
       "id": "008",
       "q": "Wer beschrieb 1953 die Doppelhelix-Struktur der DNA?",
       "a": "James Watson und Francis Crick",
-      "info": "Wichtige Röntgenbilder dafür stammten von Rosalind Franklin."
+      "info": "Wichtige Röntgenbilder dafür stammten von Rosalind Franklin.",
+      "img": "🧬🌀"
     },
     {
       "id": "009",
@@ -90,13 +98,15 @@
         "Gottlieb Daimler",
         "Rudolf Diesel",
         "Henry Ford"
-      ]
+      ],
+      "img": "🚗⛽📜"
     },
     {
       "id": "010",
       "q": "Welche Erfindung machte Alfred Nobel reich?",
       "a": "Das Dynamit",
-      "info": "Mit seinem Vermögen stiftete er die Nobelpreise."
+      "info": "Mit seinem Vermögen stiftete er die Nobelpreise.",
+      "img": "💥🧨💰"
     },
     {
       "id": "011",
@@ -107,7 +117,8 @@
         "Ag",
         "Gd"
       ],
-      "info": "Von lateinisch aurum. Ag ist Silber."
+      "info": "Von lateinisch aurum. Ag ist Silber.",
+      "img": "🥇✨"
     },
     {
       "id": "012",
@@ -117,7 +128,8 @@
         "Helium",
         "Sauerstoff",
         "Kohlenstoff"
-      ]
+      ],
+      "img": "💧🎈"
     },
     {
       "id": "013",
@@ -128,12 +140,14 @@
         "Kohlenstoffdioxid",
         "Argon"
       ],
-      "info": "Luft besteht zu etwa 78 % aus Stickstoff und 21 % aus Sauerstoff."
+      "info": "Luft besteht zu etwa 78 % aus Stickstoff und 21 % aus Sauerstoff.",
+      "img": "🌬️🌍"
     },
     {
       "id": "014",
       "q": "Bei welcher Temperatur siedet Wasser bei normalem Luftdruck?",
-      "a": "100 °C"
+      "a": "100 °C",
+      "img": "💧♨️🔥"
     },
     {
       "id": "015",
@@ -143,7 +157,8 @@
         "300 000 km pro Stunde",
         "3000 km pro Sekunde",
         "30 000 km pro Sekunde"
-      ]
+      ],
+      "img": "💡⚡💨"
     },
     {
       "id": "016",
@@ -153,7 +168,8 @@
         "Watt",
         "Joule",
         "Pascal"
-      ]
+      ],
+      "img": "🍎⬇️💪"
     },
     {
       "id": "017",
@@ -163,7 +179,8 @@
         "Thermometer",
         "Hygrometer",
         "Tachometer"
-      ]
+      ],
+      "img": "🌡️🌬️📏"
     },
     {
       "id": "018",
@@ -173,23 +190,27 @@
         "Die Leber",
         "Die Lunge",
         "Das Gehirn"
-      ]
+      ],
+      "img": "🖐️🧴"
     },
     {
       "id": "019",
       "q": "Wie viele Knochen hat ein erwachsener Mensch ungefähr?",
       "a": "206",
-      "info": "Babys haben mehr Knochen, einige wachsen später zusammen."
+      "info": "Babys haben mehr Knochen, einige wachsen später zusammen.",
+      "img": "🦴💀"
     },
     {
       "id": "020",
       "q": "Welches ist der längste Knochen des Menschen?",
-      "a": "Der Oberschenkelknochen"
+      "a": "Der Oberschenkelknochen",
+      "img": "🦵🦴"
     },
     {
       "id": "021",
       "q": "Welches ist das größte Tier der Erde?",
-      "a": "Der Blauwal"
+      "a": "Der Blauwal",
+      "img": "🐋🌊"
     },
     {
       "id": "022",
@@ -199,7 +220,8 @@
         "Der Löwe",
         "Die Gazelle",
         "Das Pferd"
-      ]
+      ],
+      "img": "🐆💨"
     },
     {
       "id": "023",
@@ -210,7 +232,8 @@
         "8",
         "10"
       ],
-      "info": "Spinnen haben 8 Beine und sind keine Insekten."
+      "info": "Spinnen haben 8 Beine und sind keine Insekten.",
+      "img": "🐜6️⃣"
     },
     {
       "id": "024",
@@ -220,12 +243,14 @@
         "Englisch",
         "Spanisch",
         "Hindi"
-      ]
+      ],
+      "img": "🐉🗣️"
     },
     {
       "id": "025",
       "q": "Wie viele Tage hat ein Schaltjahr?",
-      "a": "366"
+      "a": "366",
+      "img": "📅➕1️⃣"
     },
     {
       "id": "026",
@@ -236,7 +261,8 @@
         "1340",
         "1600"
       ],
-      "info": "24 × 60 = 1440"
+      "info": "24 × 60 = 1440",
+      "img": "🕐🔄"
     },
     {
       "id": "027",
@@ -246,12 +272,14 @@
         "100",
         "500",
         "1000"
-      ]
+      ],
+      "img": "🔤5️⃣0️⃣"
     },
     {
       "id": "028",
       "q": "Welche Zahl bedeutet das römische Zahlzeichen M?",
-      "a": "1000"
+      "a": "1000",
+      "img": "👑🔢"
     },
     {
       "id": "029",
@@ -262,12 +290,14 @@
         "1. Januar 2000",
         "3. Oktober 1990"
       ],
-      "info": "Als Buchgeld gab es den Euro schon seit 1999."
+      "info": "Als Buchgeld gab es den Euro schon seit 1999.",
+      "img": "💶🎆"
     },
     {
       "id": "030",
       "q": "Wie viele Ringe hat das olympische Symbol?",
-      "a": "5"
+      "a": "5",
+      "img": "⭕🏅"
     },
     {
       "id": "031",
@@ -277,18 +307,21 @@
         "Südafrika",
         "Russland",
         "Katar"
-      ]
+      ],
+      "img": "⚽🏆☀️"
     },
     {
       "id": "032",
       "q": "Wie viele Spieler einer Fußballmannschaft stehen gleichzeitig auf dem Feld?",
-      "a": "11"
+      "a": "11",
+      "img": "⚽👕"
     },
     {
       "id": "033",
       "q": "Welches ist das höchste Gebäude der Welt (Stand 2026)?",
       "a": "Burj Khalifa in Dubai",
-      "info": "Es ist rund 828 m hoch."
+      "info": "Es ist rund 828 m hoch.",
+      "img": "🏙️🌴🏜️"
     },
     {
       "id": "034",
@@ -298,7 +331,8 @@
         "Potsdam",
         "Brandenburg an der Havel",
         "Hamburg"
-      ]
+      ],
+      "img": "🐻🏛️"
     },
     {
       "id": "035",
@@ -308,12 +342,14 @@
         "Sauerstoff",
         "Stickstoff",
         "Wasserstoff"
-      ]
+      ],
+      "img": "🌿💨"
     },
     {
       "id": "036",
       "q": "Wie viele Ecken hat ein Sechseck?",
-      "a": "6"
+      "a": "6",
+      "img": "🐝🔷"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "ob-bio-genetik",
-  "version": 1,
+  "version": 2,
   "title": "Genetik",
   "subject": "biologie",
   "grades": [
@@ -22,12 +22,14 @@
         "Ribonukleinsäure",
         "Desoxyribose-Nitratsäure",
         "Diaminonukleinsäure"
-      ]
+      ],
+      "img": "🧬"
     },
     {
       "id": "002",
       "q": "Die vier Basen der DNA?",
-      "a": "Adenin, Thymin, Guanin, Cytosin"
+      "a": "Adenin, Thymin, Guanin, Cytosin",
+      "img": "🧬4️⃣"
     },
     {
       "id": "003",
@@ -38,7 +40,8 @@
         "A mit C und G mit T",
         "A mit U und G mit C"
       ],
-      "info": "Komplementäre Basenpaarung"
+      "info": "Komplementäre Basenpaarung",
+      "img": "🤝🧩"
     },
     {
       "id": "004",
@@ -48,7 +51,8 @@
         "Adenin",
         "Cytosin",
         "Guanin"
-      ]
+      ],
+      "img": "☂️"
     },
     {
       "id": "005",
@@ -58,12 +62,14 @@
         "Ribose",
         "Glucose",
         "Fructose"
-      ]
+      ],
+      "img": "🍬🧬"
     },
     {
       "id": "006",
       "q": "Räumliche Struktur der DNA?",
-      "a": "Doppelhelix"
+      "a": "Doppelhelix",
+      "img": "🌀🌀"
     },
     {
       "id": "007",
@@ -74,7 +80,8 @@
         "Pasteur und Koch",
         "Hooke und Schleiden"
       ],
-      "info": "Wichtige Grundlage lieferten Röntgenbilder von Rosalind Franklin."
+      "info": "Wichtige Grundlage lieferten Röntgenbilder von Rosalind Franklin.",
+      "img": "👬🔍"
     },
     {
       "id": "008",
@@ -85,12 +92,14 @@
         "Translation",
         "Mutation"
       ],
-      "info": "Sie verläuft semikonservativ."
+      "info": "Sie verläuft semikonservativ.",
+      "img": "🖨️🧬"
     },
     {
       "id": "009",
       "q": "Die zwei Hauptschritte der Proteinbiosynthese?",
-      "a": "Transkription und Translation"
+      "a": "Transkription und Translation",
+      "img": "✍️🌐"
     },
     {
       "id": "010",
@@ -100,17 +109,20 @@
         "mRNA wird in ein Protein übersetzt",
         "Die DNA wird verdoppelt",
         "Der Zellkern teilt sich"
-      ]
+      ],
+      "img": "📜✍️"
     },
     {
       "id": "011",
       "q": "Wo findet die Translation statt?",
-      "a": "An den Ribosomen"
+      "a": "An den Ribosomen",
+      "img": "🏭"
     },
     {
       "id": "012",
       "q": "Was ist ein Codon?",
-      "a": "Basentriplett der mRNA, das eine Aminosäure codiert"
+      "a": "Basentriplett der mRNA, das eine Aminosäure codiert",
+      "img": "3️⃣🔤"
     },
     {
       "id": "013",
@@ -120,7 +132,8 @@
         "2",
         "4",
         "1"
-      ]
+      ],
+      "img": "3️⃣"
     },
     {
       "id": "014",
@@ -131,7 +144,8 @@
         "16",
         "12"
       ],
-      "info": "4 Basen, je 3 Stellen: 4³ = 64"
+      "info": "4 Basen, je 3 Stellen: 4³ = 64",
+      "img": "♟️"
     },
     {
       "id": "015",
@@ -142,12 +156,14 @@
         "UGA",
         "GGA"
       ],
-      "info": "AUG codiert auch die Aminosäure Methionin."
+      "info": "AUG codiert auch die Aminosäure Methionin.",
+      "img": "🚀"
     },
     {
       "id": "016",
       "q": "Die drei Stoppcodons?",
-      "a": "UAA, UAG, UGA"
+      "a": "UAA, UAG, UGA",
+      "img": "🛑"
     },
     {
       "id": "017",
@@ -157,17 +173,20 @@
         "mRNA",
         "rRNA",
         "DNA-Polymerase"
-      ]
+      ],
+      "img": "🚚"
     },
     {
       "id": "018",
       "q": "Was ist ein Gen?",
-      "a": "DNA-Abschnitt, der ein Genprodukt (z. B. Protein) codiert"
+      "a": "DNA-Abschnitt, der ein Genprodukt (z. B. Protein) codiert",
+      "img": "📖🧬"
     },
     {
       "id": "019",
       "q": "Was ist eine Mutation?",
-      "a": "Eine dauerhafte Veränderung der Erbinformation"
+      "a": "Eine dauerhafte Veränderung der Erbinformation",
+      "img": "🎲🧬"
     },
     {
       "id": "020",
@@ -177,12 +196,14 @@
         "Vier haploide Keimzellen",
         "Zwei haploide Keimzellen",
         "Vier erbgleiche diploide Zellen"
-      ]
+      ],
+      "img": "👯"
     },
     {
       "id": "021",
       "q": "Ergebnis der Meiose?",
-      "a": "Vier haploide, genetisch verschiedene Zellen"
+      "a": "Vier haploide, genetisch verschiedene Zellen",
+      "img": "4️⃣🎨"
     },
     {
       "id": "022",
@@ -192,7 +213,8 @@
         "Prophase, Anaphase, Metaphase, Telophase",
         "Metaphase, Prophase, Anaphase, Telophase",
         "Telophase, Metaphase, Anaphase, Prophase"
-      ]
+      ],
+      "img": "🚂🚃🚃"
     },
     {
       "id": "023",
@@ -202,12 +224,14 @@
         "Prophase",
         "Anaphase",
         "Telophase"
-      ]
+      ],
+      "img": "🌍📏"
     },
     {
       "id": "024",
       "q": "In welcher Phase findet das Crossing-over statt?",
-      "a": "Prophase I der Meiose"
+      "a": "Prophase I der Meiose",
+      "img": "❌🔀"
     },
     {
       "id": "025",
@@ -218,7 +242,8 @@
         "44",
         "48"
       ],
-      "info": "23 Chromosomenpaare"
+      "info": "23 Chromosomenpaare",
+      "img": "👥2️⃣3️⃣"
     },
     {
       "id": "026",
@@ -228,7 +253,8 @@
         "Doppelter Chromosomensatz (2n)",
         "Dreifacher Chromosomensatz",
         "Ohne Geschlechtschromosomen"
-      ]
+      ],
+      "img": "☝️"
     },
     {
       "id": "027",
@@ -238,17 +264,20 @@
         "XX",
         "YY",
         "X0"
-      ]
+      ],
+      "img": "♂️"
     },
     {
       "id": "028",
       "q": "Welche Krankheit wird durch Trisomie 21 verursacht?",
-      "a": "Down-Syndrom"
+      "a": "Down-Syndrom",
+      "img": "🧦"
     },
     {
       "id": "029",
       "q": "Was ist ein Allel?",
-      "a": "Eine Ausprägungsform eines Gens"
+      "a": "Eine Ausprägungsform eines Gens",
+      "img": "🎨"
     },
     {
       "id": "030",
@@ -258,19 +287,22 @@
         "Mischerbig: zwei verschiedene Allele",
         "Nur ein Allel vorhanden",
         "Ohne dominantes Allel"
-      ]
+      ],
+      "img": "👟👟"
     },
     {
       "id": "031",
       "q": "Was versteht man unter dem Phänotyp?",
       "a": "Das äußere Erscheinungsbild",
-      "info": "Der Genotyp ist die Gesamtheit der Erbanlagen."
+      "info": "Der Genotyp ist die Gesamtheit der Erbanlagen.",
+      "img": "👀🌸"
     },
     {
       "id": "032",
       "q": "1. Mendelsche Regel?",
       "a": "Uniformitätsregel",
-      "info": "Kreuzt man zwei reinerbige Eltern, sind alle Nachkommen der F1 gleich."
+      "info": "Kreuzt man zwei reinerbige Eltern, sind alle Nachkommen der F1 gleich.",
+      "img": "👔👔"
     },
     {
       "id": "033",
@@ -281,18 +313,21 @@
         "1 : 1",
         "9 : 3 : 3 : 1"
       ],
-      "info": "1 : 2 : 1 ist das Genotyp-Verhältnis."
+      "info": "1 : 2 : 1 ist das Genotyp-Verhältnis.",
+      "img": "⚖️3️⃣"
     },
     {
       "id": "034",
       "q": "Wie heißt die 3. Mendelsche Regel?",
       "a": "Unabhängigkeitsregel (Neukombinationsregel)",
-      "info": "Dihybrider Erbgang: F2-Verhältnis 9 : 3 : 3 : 1"
+      "info": "Dihybrider Erbgang: F2-Verhältnis 9 : 3 : 3 : 1",
+      "img": "🕊️🔀"
     },
     {
       "id": "035",
       "q": "Mit wem kreuzt man bei der Rückkreuzung (Testkreuzung)?",
-      "a": "Mit einem homozygot-rezessiven Partner"
+      "a": "Mit einem homozygot-rezessiven Partner",
+      "img": "🔙🧪"
     }
   ]
 }

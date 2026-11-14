@@ -1,6 +1,6 @@
 {
   "id": "s1-chemie-elemente",
-  "version": 1,
+  "version": 2,
   "title": "Chemische Elemente",
   "subject": "chemie",
   "grades": [
@@ -20,7 +20,8 @@
         "W",
         "He",
         "Hy"
-      ]
+      ],
+      "img": "💧"
     },
     {
       "id": "002",
@@ -30,7 +31,8 @@
         "S",
         "Sa",
         "Ox"
-      ]
+      ],
+      "img": "⭕💨"
     },
     {
       "id": "003",
@@ -41,7 +43,8 @@
         "St",
         "Ni"
       ],
-      "info": "Von lateinisch Nitrogenium"
+      "info": "Von lateinisch Nitrogenium",
+      "img": "🌫️"
     },
     {
       "id": "004",
@@ -52,7 +55,8 @@
         "Ko",
         "Co"
       ],
-      "info": "Von lateinisch Carboneum"
+      "info": "Von lateinisch Carboneum",
+      "img": "💎✏️"
     },
     {
       "id": "005",
@@ -62,7 +66,8 @@
         "N",
         "Nt",
         "Ne"
-      ]
+      ],
+      "img": "🧂"
     },
     {
       "id": "006",
@@ -72,7 +77,8 @@
         "Ka",
         "Ca",
         "Kl"
-      ]
+      ],
+      "img": "🍌"
     },
     {
       "id": "007",
@@ -83,7 +89,8 @@
         "E",
         "Ir"
       ],
-      "info": "Von lateinisch Ferrum"
+      "info": "Von lateinisch Ferrum",
+      "img": "🔩"
     },
     {
       "id": "008",
@@ -94,7 +101,8 @@
         "Co",
         "Kp"
       ],
-      "info": "Von lateinisch Cuprum"
+      "info": "Von lateinisch Cuprum",
+      "img": "🥉"
     },
     {
       "id": "009",
@@ -105,7 +113,8 @@
         "S",
         "Sr"
       ],
-      "info": "Von lateinisch Argentum"
+      "info": "Von lateinisch Argentum",
+      "img": "🥈"
     },
     {
       "id": "010",
@@ -116,7 +125,8 @@
         "G",
         "Ag"
       ],
-      "info": "Von lateinisch Aurum"
+      "info": "Von lateinisch Aurum",
+      "img": "🥇"
     },
     {
       "id": "011",
@@ -127,7 +137,8 @@
         "B",
         "Pl"
       ],
-      "info": "Von lateinisch Plumbum"
+      "info": "Von lateinisch Plumbum",
+      "img": "🎣"
     },
     {
       "id": "012",
@@ -138,7 +149,8 @@
         "Qs",
         "Me"
       ],
-      "info": "Von griechisch-lateinisch Hydrargyrum"
+      "info": "Von griechisch-lateinisch Hydrargyrum",
+      "img": "🌡️"
     },
     {
       "id": "013",
@@ -148,7 +160,8 @@
         "Sw",
         "Sf",
         "Se"
-      ]
+      ],
+      "img": "🌋"
     },
     {
       "id": "014",
@@ -159,32 +172,38 @@
         "Zi",
         "Ti"
       ],
-      "info": "Von lateinisch Stannum"
+      "info": "Von lateinisch Stannum",
+      "img": "🥫"
     },
     {
       "id": "015",
       "q": "Elementsymbol von Zink?",
-      "a": "Zn"
+      "a": "Zn",
+      "img": "🧴"
     },
     {
       "id": "016",
       "q": "Elementsymbol von Chlor?",
-      "a": "Cl"
+      "a": "Cl",
+      "img": "🏊"
     },
     {
       "id": "017",
       "q": "Elementsymbol von Calcium?",
-      "a": "Ca"
+      "a": "Ca",
+      "img": "🦴"
     },
     {
       "id": "018",
       "q": "Elementsymbol von Magnesium?",
-      "a": "Mg"
+      "a": "Mg",
+      "img": "🎆"
     },
     {
       "id": "019",
       "q": "Welches Element hat das Symbol Al?",
-      "a": "Aluminium"
+      "a": "Aluminium",
+      "img": "🥤"
     },
     {
       "id": "020",
@@ -194,7 +213,8 @@
         "Silber",
         "Schwefel",
         "Selen"
-      ]
+      ],
+      "img": "💻"
     },
     {
       "id": "021",
@@ -204,22 +224,26 @@
         "Platin",
         "Kalium",
         "Blei"
-      ]
+      ],
+      "img": "🔥"
     },
     {
       "id": "022",
       "q": "Welches Element hat das Symbol F?",
-      "a": "Fluor"
+      "a": "Fluor",
+      "img": "🦷"
     },
     {
       "id": "023",
       "q": "Welches Element hat das Symbol I?",
-      "a": "Iod"
+      "a": "Iod",
+      "img": "🌊🐟"
     },
     {
       "id": "024",
       "q": "Welches Element hat das Symbol He?",
-      "a": "Helium"
+      "a": "Helium",
+      "img": "🎈"
     },
     {
       "id": "025",
@@ -229,12 +253,14 @@
         "Erdalkalimetalle",
         "Halogene",
         "Edelgase"
-      ]
+      ],
+      "img": "💥💧"
     },
     {
       "id": "026",
       "q": "Wie heißen die Elemente der 2. Hauptgruppe?",
-      "a": "Erdalkalimetalle"
+      "a": "Erdalkalimetalle",
+      "img": "🌍🦴"
     },
     {
       "id": "027",
@@ -245,12 +271,14 @@
         "Alkalimetalle",
         "Chalkogene"
       ],
-      "info": "Halogen bedeutet „Salzbildner“."
+      "info": "Halogen bedeutet „Salzbildner“.",
+      "img": "🧂"
     },
     {
       "id": "028",
       "q": "Wie heißen die Elemente der 8. Hauptgruppe?",
-      "a": "Edelgase"
+      "a": "Edelgase",
+      "img": "👑"
     },
     {
       "id": "029",
@@ -260,23 +288,27 @@
         "1",
         "8",
         "2"
-      ]
+      ],
+      "img": "7️⃣"
     },
     {
       "id": "030",
       "q": "Wie viele Außenelektronen haben die Alkalimetalle?",
-      "a": "1"
+      "a": "1",
+      "img": "1️⃣"
     },
     {
       "id": "031",
       "q": "Die sechs natürlichen Edelgase?",
-      "a": "Helium, Neon, Argon, Krypton, Xenon, Radon"
+      "a": "Helium, Neon, Argon, Krypton, Xenon, Radon",
+      "img": "6️⃣👑"
     },
     {
       "id": "032",
       "q": "Warum reagieren Edelgase kaum?",
       "a": "Ihre äußere Schale ist voll besetzt",
-      "info": "Man spricht von Edelgaskonfiguration."
+      "info": "Man spricht von Edelgaskonfiguration.",
+      "img": "✅🔒"
     },
     {
       "id": "033",
@@ -287,7 +319,8 @@
         "Helium",
         "Xenon"
       ],
-      "info": "Etwa 0,9 % der Luft sind Argon."
+      "info": "Etwa 0,9 % der Luft sind Argon.",
+      "img": "🌬️"
     },
     {
       "id": "034",
@@ -297,12 +330,14 @@
         "Argon",
         "Helium",
         "Radon"
-      ]
+      ],
+      "img": "🔴💡"
     },
     {
       "id": "035",
       "q": "Mit welchem Edelgas füllt man Ballons, die aufsteigen?",
-      "a": "Helium"
+      "a": "Helium",
+      "img": "🎈⬆️"
     },
     {
       "id": "036",
@@ -313,7 +348,8 @@
         "Kohlenstoffdioxid",
         "Argon"
       ],
-      "info": "Etwa 78 % Stickstoff, 21 % Sauerstoff"
+      "info": "Etwa 78 % Stickstoff, 21 % Sauerstoff",
+      "img": "🌬️🥇"
     },
     {
       "id": "037",
@@ -323,7 +359,8 @@
         "Natrium",
         "Blei",
         "Zinn"
-      ]
+      ],
+      "img": "🌡️💧"
     },
     {
       "id": "038",
@@ -333,7 +370,8 @@
         "Die Anzahl der Neutronen",
         "Die Atommasse",
         "Die Anzahl der Schalen"
-      ]
+      ],
+      "img": "🔢➕"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "id": "s1-politik-grundgesetz",
-  "version": 1,
+  "version": 2,
   "title": "Grundgesetz und Staat",
   "subject": "politik",
   "grades": [
@@ -24,12 +24,14 @@
         "8. Mai 1945",
         "7. Oktober 1949",
         "3. Oktober 1990"
-      ]
+      ],
+      "img": "📜🎂"
     },
     {
       "id": "002",
       "q": "Wie lautet Artikel 1, Satz 1 des Grundgesetzes?",
-      "a": "Die Würde des Menschen ist unantastbar."
+      "a": "Die Würde des Menschen ist unantastbar.",
+      "img": "💎👤"
     },
     {
       "id": "003",
@@ -39,7 +41,8 @@
         "Artikel 20 bis 37",
         "Artikel 1 bis 10",
         "Artikel 50 bis 69"
-      ]
+      ],
+      "img": "📜1️⃣9️⃣"
     },
     {
       "id": "004",
@@ -49,7 +52,8 @@
         "Artikel 1",
         "Artikel 5",
         "Artikel 20"
-      ]
+      ],
+      "img": "⚖️👫"
     },
     {
       "id": "005",
@@ -59,13 +63,15 @@
         "Religionsfreiheit",
         "Asylrecht",
         "Briefgeheimnis"
-      ]
+      ],
+      "img": "🗣️📰"
     },
     {
       "id": "006",
       "q": "Was bedeutet Gewaltenteilung?",
       "a": "Trennung von Gesetzgebung, Regierung und Rechtsprechung",
-      "info": "Legislative, Exekutive und Judikative kontrollieren sich gegenseitig."
+      "info": "Legislative, Exekutive und Judikative kontrollieren sich gegenseitig.",
+      "img": "🏛️✂️3️⃣"
     },
     {
       "id": "007",
@@ -75,13 +81,15 @@
         "Die Gesetzgebung",
         "Die ausführende Gewalt",
         "Die Presse"
-      ]
+      ],
+      "img": "⚖️🔨"
     },
     {
       "id": "008",
       "q": "Welche fünf Grundsätze gelten für die Bundestagswahl?",
       "a": "Allgemein, unmittelbar, frei, gleich, geheim",
-      "info": "Sie stehen in Artikel 38 des Grundgesetzes."
+      "info": "Sie stehen in Artikel 38 des Grundgesetzes.",
+      "img": "🗳️5️⃣"
     },
     {
       "id": "009",
@@ -91,7 +99,8 @@
         "Ab 16 Jahren",
         "Ab 21 Jahren"
       ],
-      "info": "Bei der Europawahl und bei manchen Landtags- und Kommunalwahlen schon ab 16."
+      "info": "Bei der Europawahl und bei manchen Landtags- und Kommunalwahlen schon ab 16.",
+      "img": "🗳️🎂"
     },
     {
       "id": "010",
@@ -101,12 +110,14 @@
         "5 Jahre",
         "6 Jahre",
         "3 Jahre"
-      ]
+      ],
+      "img": "🗳️4️⃣"
     },
     {
       "id": "011",
       "q": "Was wählt man mit der Erststimme?",
-      "a": "Eine Direktkandidatin bzw. einen Direktkandidaten"
+      "a": "Eine Direktkandidatin bzw. einen Direktkandidaten",
+      "img": "☝️🧑"
     },
     {
       "id": "012",
@@ -115,7 +126,8 @@
       "choices": [
         "Die Erststimme",
         "Beide gleich stark"
-      ]
+      ],
+      "img": "✌️🗳️"
     },
     {
       "id": "013",
@@ -126,7 +138,8 @@
         "10 Prozent",
         "1 Prozent"
       ],
-      "info": "Ausnahmen gibt es z. B. für Parteien nationaler Minderheiten."
+      "info": "Ausnahmen gibt es z. B. für Parteien nationaler Minderheiten.",
+      "img": "5️⃣🚧"
     },
     {
       "id": "014",
@@ -137,7 +150,8 @@
         "736",
         "709"
       ],
-      "info": "Überhang- und Ausgleichsmandate gibt es seitdem nicht mehr."
+      "info": "Überhang- und Ausgleichsmandate gibt es seitdem nicht mehr.",
+      "img": "💺6️⃣3️⃣"
     },
     {
       "id": "015",
@@ -147,7 +161,8 @@
         "Das Volk direkt",
         "Der Bundesrat",
         "Die Bundesversammlung"
-      ]
+      ],
+      "img": "🏛️👑"
     },
     {
       "id": "016",
@@ -157,12 +172,14 @@
         "Der Bundestag",
         "Das Volk direkt",
         "Der Bundesrat"
-      ]
+      ],
+      "img": "👥🗳️👑"
     },
     {
       "id": "017",
       "q": "Wer gehört zur Bundesversammlung?",
-      "a": "Alle Bundestagsabgeordneten und ebenso viele Ländervertreter"
+      "a": "Alle Bundestagsabgeordneten und ebenso viele Ländervertreter",
+      "img": "🏛️🤝🗺️"
     },
     {
       "id": "018",
@@ -173,7 +190,8 @@
         "6 Jahre",
         "7 Jahre"
       ],
-      "info": "Eine einmalige Wiederwahl ist möglich."
+      "info": "Eine einmalige Wiederwahl ist möglich.",
+      "img": "5️⃣📅👑"
     },
     {
       "id": "019",
@@ -183,7 +201,8 @@
         "Bundestag",
         "Bundesversammlung",
         "Bundesverfassungsgericht"
-      ]
+      ],
+      "img": "🏛️🗺️"
     },
     {
       "id": "020",
@@ -193,19 +212,22 @@
         "Berlin",
         "Leipzig",
         "Bonn"
-      ]
+      ],
+      "img": "⚖️🔴"
     },
     {
       "id": "021",
       "q": "Wer bestimmt die Richtlinien der Politik?",
       "a": "Der Bundeskanzler bzw. die Bundeskanzlerin",
-      "info": "Das nennt man Richtlinienkompetenz (Artikel 65)."
+      "info": "Das nennt man Richtlinienkompetenz (Artikel 65).",
+      "img": "🧭🏛️"
     },
     {
       "id": "022",
       "q": "Wie kann der Bundestag einen Kanzler vorzeitig abwählen?",
       "a": "Konstruktives Misstrauensvotum: Wahl eines Nachfolgers",
-      "info": "Bisher gelang das nur einmal: 1982 wurde Helmut Kohl so Kanzler."
+      "info": "Bisher gelang das nur einmal: 1982 wurde Helmut Kohl so Kanzler.",
+      "img": "🔄🗳️"
     },
     {
       "id": "023",
@@ -215,13 +237,15 @@
         "Einfache Mehrheit im Bundestag",
         "Drei Viertel im Bundestag",
         "Eine Volksabstimmung"
-      ]
+      ],
+      "img": "2️⃣3️⃣🤝"
     },
     {
       "id": "024",
       "q": "Was schützt die „Ewigkeitsklausel“ (Art. 79 Abs. 3)?",
       "a": "Grundsätze aus Art. 1 und 20, Gliederung in Länder",
-      "info": "Diese Teile dürfen auch mit Zweidrittelmehrheit nicht abgeschafft werden."
+      "info": "Diese Teile dürfen auch mit Zweidrittelmehrheit nicht abgeschafft werden.",
+      "img": "🔒♾️"
     },
     {
       "id": "025",
@@ -231,23 +255,27 @@
         "Zentralismus",
         "Absolutismus",
         "Parlamentarismus"
-      ]
+      ],
+      "img": "🧩🏛️"
     },
     {
       "id": "026",
       "q": "Was besagt das freie Mandat der Abgeordneten?",
       "a": "Sie sind nur ihrem Gewissen unterworfen",
-      "info": "Sie sind an Aufträge und Weisungen nicht gebunden (Art. 38)."
+      "info": "Sie sind an Aufträge und Weisungen nicht gebunden (Art. 38).",
+      "img": "🧠🙋"
     },
     {
       "id": "027",
       "q": "Welche Farben hat die Bundesflagge?",
-      "a": "Schwarz, Rot, Gold"
+      "a": "Schwarz, Rot, Gold",
+      "img": "⚫❤️💛"
     },
     {
       "id": "028",
       "q": "Welches Recht aus Art. 17 erlaubt Bitten und Beschwerden an das Parlament?",
-      "a": "Petitionsrecht"
+      "a": "Petitionsrecht",
+      "img": "✉️📬"
     },
     {
       "id": "029",
@@ -257,7 +285,8 @@
         "25",
         "28",
         "30"
-      ]
+      ],
+      "img": "⭐2️⃣7️⃣"
     },
     {
       "id": "030",
@@ -268,12 +297,14 @@
         "Ab 14 Jahren",
         "Ab 21 Jahren"
       ],
-      "info": "Das gilt seit der Europawahl 2024."
+      "info": "Das gilt seit der Europawahl 2024.",
+      "img": "🗳️1️⃣6️⃣"
     },
     {
       "id": "031",
       "q": "Wie oft wird das Europäische Parlament gewählt?",
-      "a": "Alle 5 Jahre"
+      "a": "Alle 5 Jahre",
+      "img": "🗳️5️⃣🔁"
     },
     {
       "id": "032",
@@ -283,12 +314,14 @@
         "Brüssel",
         "Straßburg",
         "Luxemburg"
-      ]
+      ],
+      "img": "🏦💶🏙️"
     },
     {
       "id": "033",
       "q": "In welcher Stadt hat die Europäische Kommission ihren Hauptsitz?",
-      "a": "Brüssel"
+      "a": "Brüssel",
+      "img": "🍟🏢"
     },
     {
       "id": "034",
@@ -298,7 +331,8 @@
         "Brüssel",
         "Luxemburg",
         "Den Haag"
-      ]
+      ],
+      "img": "🏛️🥨"
     }
   ]
 }

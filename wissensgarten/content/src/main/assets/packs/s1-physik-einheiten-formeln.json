@@ -1,6 +1,6 @@
 {
   "id": "s1-physik-einheiten-formeln",
-  "version": 1,
+  "version": 2,
   "title": "Physik: Einheiten & Formeln",
   "subject": "physik",
   "grades": [
@@ -21,7 +21,8 @@
         "Joule (J)",
         "Watt (W)",
         "Pascal (Pa)"
-      ]
+      ],
+      "img": "🍎"
     },
     {
       "id": "002",
@@ -31,7 +32,8 @@
         "Newton (N)",
         "Watt (W)",
         "Volt (V)"
-      ]
+      ],
+      "img": "🔋"
     },
     {
       "id": "003",
@@ -41,13 +43,15 @@
         "Joule (J)",
         "Ampere (A)",
         "Newton (N)"
-      ]
+      ],
+      "img": "💡"
     },
     {
       "id": "004",
       "q": "SI-Einheit des Drucks?",
       "a": "Pascal (Pa)",
-      "info": "1 Pa = 1 N/m²; 1 bar = 100 000 Pa"
+      "info": "1 Pa = 1 N/m²; 1 bar = 100 000 Pa",
+      "img": "👠"
     },
     {
       "id": "005",
@@ -57,17 +61,20 @@
         "Volt (V)",
         "Ohm (Ω)",
         "Coulomb (C)"
-      ]
+      ],
+      "img": "🔌"
     },
     {
       "id": "006",
       "q": "SI-Einheit der elektrischen Spannung?",
-      "a": "Volt (V)"
+      "a": "Volt (V)",
+      "img": "⚡"
     },
     {
       "id": "007",
       "q": "SI-Einheit des elektrischen Widerstands?",
-      "a": "Ohm (Ω)"
+      "a": "Ohm (Ω)",
+      "img": "🚧"
     },
     {
       "id": "008",
@@ -78,13 +85,15 @@
         "Watt (W)",
         "Tesla (T)"
       ],
-      "info": "1 Hz = 1/s"
+      "info": "1 Hz = 1/s",
+      "img": "💓"
     },
     {
       "id": "009",
       "q": "SI-Einheit der elektrischen Ladung?",
       "a": "Coulomb (C)",
-      "info": "1 C = 1 A · s"
+      "info": "1 C = 1 A · s",
+      "img": "🎈⚡"
     },
     {
       "id": "010",
@@ -94,12 +103,14 @@
         "Grad Celsius (°C)",
         "Grad Fahrenheit (°F)",
         "Joule (J)"
-      ]
+      ],
+      "img": "🥶"
     },
     {
       "id": "011",
       "q": "Die sieben SI-Basiseinheiten?",
-      "a": "Meter, Kilogramm, Sekunde, Ampere, Kelvin, Mol, Candela"
+      "a": "Meter, Kilogramm, Sekunde, Ampere, Kelvin, Mol, Candela",
+      "img": "7️⃣📏"
     },
     {
       "id": "012",
@@ -109,7 +120,8 @@
         "1 kg · m²/s²",
         "1 kg · m/s",
         "1 kg/(m · s²)"
-      ]
+      ],
+      "img": "🍎⚖️"
     },
     {
       "id": "013",
@@ -120,7 +132,8 @@
         "1 W/s",
         "1 kg · m/s"
       ],
-      "info": "Auch: 1 J = 1 W · s"
+      "info": "Auch: 1 J = 1 W · s",
+      "img": "🔧"
     },
     {
       "id": "014",
@@ -131,7 +144,8 @@
         "3 600 J",
         "36 000 J"
       ],
-      "info": "1000 W · 3600 s"
+      "info": "1000 W · 3600 s",
+      "img": "🏠🔌"
     },
     {
       "id": "015",
@@ -141,12 +155,14 @@
         "10³ (Tausend)",
         "10⁹ (Milliarde)",
         "10⁻⁶ (Millionstel)"
-      ]
+      ],
+      "img": "🏙️"
     },
     {
       "id": "016",
       "q": "Was bedeutet die Vorsilbe Mikro (µ)?",
-      "a": "10⁻⁶"
+      "a": "10⁻⁶",
+      "img": "🔬"
     },
     {
       "id": "017",
@@ -156,7 +172,8 @@
         "v = s · t",
         "v = t / s",
         "v = m · s"
-      ]
+      ],
+      "img": "🏎️"
     },
     {
       "id": "018",
@@ -167,12 +184,14 @@
         "36 m/s",
         "259,2 m/s"
       ],
-      "info": "Durch 3,6 teilen."
+      "info": "Durch 3,6 teilen.",
+      "img": "🚗"
     },
     {
       "id": "019",
       "q": "Formel für die Beschleunigung?",
-      "a": "a = Δv / Δt"
+      "a": "a = Δv / Δt",
+      "img": "🚀"
     },
     {
       "id": "020",
@@ -182,12 +201,14 @@
         "F = m / a",
         "F = m · v",
         "F = a / m"
-      ]
+      ],
+      "img": "🏋️"
     },
     {
       "id": "021",
       "q": "Formel für die Gewichtskraft?",
-      "a": "F_G = m · g"
+      "a": "F_G = m · g",
+      "img": "⚖️🌍"
     },
     {
       "id": "022",
@@ -198,7 +219,8 @@
         "6,67 N/kg",
         "1,62 N/kg"
       ],
-      "info": "1,62 N/kg gilt auf dem Mond."
+      "info": "1,62 N/kg gilt auf dem Mond.",
+      "img": "🌍"
     },
     {
       "id": "023",
@@ -208,7 +230,8 @@
         "ρ = m · V",
         "ρ = V / m",
         "ρ = F / A"
-      ]
+      ],
+      "img": "🎈🧱"
     },
     {
       "id": "024",
@@ -218,12 +241,14 @@
         "p = F · A",
         "p = A / F",
         "p = m · A"
-      ]
+      ],
+      "img": "📌"
     },
     {
       "id": "025",
       "q": "Formel für die mechanische Arbeit (Kraft in Wegrichtung)?",
-      "a": "W = F · s"
+      "a": "W = F · s",
+      "img": "🛒"
     },
     {
       "id": "026",
@@ -233,7 +258,8 @@
         "P = W · t",
         "P = t / W",
         "P = F / t"
-      ]
+      ],
+      "img": "⏱️💪"
     },
     {
       "id": "027",
@@ -243,18 +269,21 @@
         "E_kin = m · v²",
         "E_kin = ½ · m · v",
         "E_kin = m · g · h"
-      ]
+      ],
+      "img": "🏃"
     },
     {
       "id": "028",
       "q": "Formel für die potenzielle Energie (Lageenergie)?",
-      "a": "E_pot = m · g · h"
+      "a": "E_pot = m · g · h",
+      "img": "🎢"
     },
     {
       "id": "029",
       "q": "Hebelgesetz?",
       "a": "F₁ · l₁ = F₂ · l₂",
-      "info": "Kraft mal Kraftarm = Last mal Lastarm"
+      "info": "Kraft mal Kraftarm = Last mal Lastarm",
+      "img": "🏗️"
     },
     {
       "id": "030",
@@ -264,7 +293,8 @@
         "R = U · I",
         "I = U · R",
         "U = R / I"
-      ]
+      ],
+      "img": "🔌🚧"
     },
     {
       "id": "031",
@@ -275,18 +305,21 @@
         "10 A",
         "2,5 A"
       ],
-      "info": "I = U / R = 230 V / 46 Ω"
+      "info": "I = U / R = 230 V / 46 Ω",
+      "img": "🖐️"
     },
     {
       "id": "032",
       "q": "Formel für die elektrische Leistung?",
-      "a": "P = U · I"
+      "a": "P = U · I",
+      "img": "💡⚡"
     },
     {
       "id": "033",
       "q": "Formel für die elektrische Energie?",
       "a": "E = U · I · t",
-      "info": "Gleichwertig: E = P · t"
+      "info": "Gleichwertig: E = P · t",
+      "img": "🧾⚡"
     },
     {
       "id": "034",
@@ -296,23 +329,27 @@
         "1/R = 1/R₁ + 1/R₂",
         "R = R₁ · R₂",
         "R = R₁ − R₂"
-      ]
+      ],
+      "img": "🚃🚃"
     },
     {
       "id": "035",
       "q": "Gesamtwiderstand bei Parallelschaltung?",
-      "a": "1/R = 1/R₁ + 1/R₂"
+      "a": "1/R = 1/R₁ + 1/R₂",
+      "img": "🛤️"
     },
     {
       "id": "036",
       "q": "Wirkungsgrad η?",
       "a": "η = E_nutz / E_zu",
-      "info": "Er ist immer kleiner als 1 (100 %)."
+      "info": "Er ist immer kleiner als 1 (100 %).",
+      "img": "🎯"
     },
     {
       "id": "037",
       "q": "Zusammenhang Wellenlänge λ, Frequenz f und Ausbreitungsgeschwindigkeit c?",
-      "a": "c = λ · f"
+      "a": "c = λ · f",
+      "img": "🌊"
     }
   ]
 }

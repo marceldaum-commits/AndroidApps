@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-oekologie",
-  "version": 1,
+  "version": 2,
   "title": "Ökologie",
   "subject": "biologie",
   "grades": [
@@ -22,7 +22,8 @@
         "Sauerstoff + Wasser → Traubenzucker + Kohlenstoffdioxid",
         "Kohlenstoffdioxid + Sauerstoff → Traubenzucker + Wasser"
       ],
-      "info": "Energiequelle ist das Sonnenlicht."
+      "info": "Energiequelle ist das Sonnenlicht.",
+      "img": "☀️🌿"
     },
     {
       "id": "002",
@@ -32,18 +33,21 @@
         "C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O",
         "6 CO₂ + 6 O₂ → C₆H₁₂O₆ + 6 H₂O",
         "3 CO₂ + 3 H₂O → C₆H₁₂O₆ + 3 O₂"
-      ]
+      ],
+      "img": "🧪🌿"
     },
     {
       "id": "003",
       "q": "Gleichung der Zellatmung?",
       "a": "C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O",
-      "info": "Dabei wird Energie freigesetzt – die Umkehrung der Fotosynthese."
+      "info": "Dabei wird Energie freigesetzt – die Umkehrung der Fotosynthese.",
+      "img": "🔥🍬"
     },
     {
       "id": "004",
       "q": "In welchen Zellbestandteilen läuft die Fotosynthese ab?",
-      "a": "Chloroplasten"
+      "a": "Chloroplasten",
+      "img": "🍃🏭"
     },
     {
       "id": "005",
@@ -53,7 +57,8 @@
         "Hämoglobin",
         "Carotin",
         "Melanin"
-      ]
+      ],
+      "img": "💚"
     },
     {
       "id": "006",
@@ -63,12 +68,14 @@
         "Kohlenstoffdioxid",
         "Stickstoff",
         "Methan"
-      ]
+      ],
+      "img": "🌳💨"
     },
     {
       "id": "007",
       "q": "Öffnungen an der Blattunterseite für den Gasaustausch?",
-      "a": "Spaltöffnungen (Stomata)"
+      "a": "Spaltöffnungen (Stomata)",
+      "img": "👄🍃"
     },
     {
       "id": "008",
@@ -79,7 +86,8 @@
         "Destruenten",
         "Parasiten"
       ],
-      "info": "Vor allem grüne Pflanzen und Algen."
+      "info": "Vor allem grüne Pflanzen und Algen.",
+      "img": "🌾"
     },
     {
       "id": "009",
@@ -90,12 +98,14 @@
         "Konsumenten",
         "Symbionten"
       ],
-      "info": "Zum Beispiel Bakterien und Pilze."
+      "info": "Zum Beispiel Bakterien und Pilze.",
+      "img": "🍄"
     },
     {
       "id": "010",
       "q": "Wie nennt man Pflanzenfresser in einer Nahrungskette?",
-      "a": "Primärkonsumenten (Konsumenten 1. Ordnung)"
+      "a": "Primärkonsumenten (Konsumenten 1. Ordnung)",
+      "img": "🐄"
     },
     {
       "id": "011",
@@ -105,7 +115,8 @@
         "Produzent",
         "Primärkonsument",
         "Destruent"
-      ]
+      ],
+      "img": "🦅"
     },
     {
       "id": "012",
@@ -116,12 +127,14 @@
         "Gras → Frosch → Heuschrecke → Storch",
         "Storch → Frosch → Heuschrecke → Gras"
       ],
-      "info": "Der Pfeil zeigt: „wird gefressen von“."
+      "info": "Der Pfeil zeigt: „wird gefressen von“.",
+      "img": "🌾🦗🐸"
     },
     {
       "id": "013",
       "q": "Was ist ein Nahrungsnetz?",
-      "a": "Mehrere miteinander verknüpfte Nahrungsketten"
+      "a": "Mehrere miteinander verknüpfte Nahrungsketten",
+      "img": "🕸️"
     },
     {
       "id": "014",
@@ -132,17 +145,20 @@
         "Etwa 90 %",
         "100 %"
       ],
-      "info": "Der Rest wird vor allem als Wärme abgegeben."
+      "info": "Der Rest wird vor allem als Wärme abgegeben.",
+      "img": "🔟"
     },
     {
       "id": "015",
       "q": "Was ist ein Biotop?",
-      "a": "Der Lebensraum mit seinen unbelebten Bedingungen"
+      "a": "Der Lebensraum mit seinen unbelebten Bedingungen",
+      "img": "🏞️"
     },
     {
       "id": "016",
       "q": "Was ist eine Biozönose?",
-      "a": "Die Lebensgemeinschaft aller Lebewesen in einem Biotop"
+      "a": "Die Lebensgemeinschaft aller Lebewesen in einem Biotop",
+      "img": "🐾"
     },
     {
       "id": "017",
@@ -152,12 +168,14 @@
         "Population + Art",
         "Produzenten + Konsumenten",
         "Biotop + Population"
-      ]
+      ],
+      "img": "🏞️➕🐾"
     },
     {
       "id": "018",
       "q": "Was ist eine Population?",
-      "a": "Alle Individuen einer Art in einem Gebiet zur gleichen Zeit"
+      "a": "Alle Individuen einer Art in einem Gebiet zur gleichen Zeit",
+      "img": "🐟🐟🐟"
     },
     {
       "id": "019",
@@ -167,12 +185,14 @@
         "Fressfeinde",
         "Parasiten",
         "Konkurrenten"
-      ]
+      ],
+      "img": "🌡️"
     },
     {
       "id": "020",
       "q": "Was sind biotische Umweltfaktoren?",
-      "a": "Einflüsse, die von Lebewesen ausgehen"
+      "a": "Einflüsse, die von Lebewesen ausgehen",
+      "img": "🐺"
     },
     {
       "id": "021",
@@ -182,12 +202,14 @@
         "Parasitismus",
         "Konkurrenz",
         "Räuber-Beute-Beziehung"
-      ]
+      ],
+      "img": "🤝"
     },
     {
       "id": "022",
       "q": "Was ist Parasitismus?",
-      "a": "Ein Lebewesen nutzt ein anderes und schadet ihm dabei"
+      "a": "Ein Lebewesen nutzt ein anderes und schadet ihm dabei",
+      "img": "🦟"
     },
     {
       "id": "023",
@@ -197,18 +219,21 @@
         "Moos und Pilz",
         "Farn und Alge",
         "Moos und Alge"
-      ]
+      ],
+      "img": "🍄🌿"
     },
     {
       "id": "024",
       "q": "Was versteht man unter der ökologischen Nische?",
       "a": "Alle Ansprüche und Beziehungen einer Art zu ihrer Umwelt",
-      "info": "Man sagt auch: der „Beruf“ einer Art."
+      "info": "Man sagt auch: der „Beruf“ einer Art.",
+      "img": "🏠"
     },
     {
       "id": "025",
       "q": "Konkurrenzausschlussprinzip?",
-      "a": "Gleiche Nische: keine dauerhafte Koexistenz zweier Arten"
+      "a": "Gleiche Nische: keine dauerhafte Koexistenz zweier Arten",
+      "img": "🥊"
     },
     {
       "id": "026",
@@ -218,19 +243,22 @@
         "Pessimum",
         "Minimum",
         "Maximum"
-      ]
+      ],
+      "img": "👌"
     },
     {
       "id": "027",
       "q": "Was ist ein Bioindikator?",
       "a": "Ein Lebewesen, das Umweltbedingungen anzeigt",
-      "info": "Beispiel: Flechten zeigen die Luftqualität an."
+      "info": "Beispiel: Flechten zeigen die Luftqualität an.",
+      "img": "🚦🌱"
     },
     {
       "id": "028",
       "q": "Was ist Eutrophierung?",
       "a": "Überdüngung eines Gewässers mit Nährstoffen",
-      "info": "Folge: Algenblüte und Sauerstoffmangel."
+      "info": "Folge: Algenblüte und Sauerstoffmangel.",
+      "img": "🌊🧪"
     },
     {
       "id": "029",
@@ -240,7 +268,8 @@
         "Zellatmung",
         "Verbrennung",
         "Zersetzung"
-      ]
+      ],
+      "img": "🌳☁️"
     },
     {
       "id": "030",
@@ -250,12 +279,14 @@
         "Sauerstoff (O₂)",
         "Stickstoff (N₂)",
         "Argon (Ar)"
-      ]
+      ],
+      "img": "🏭🌡️"
     },
     {
       "id": "031",
       "q": "Stockwerke des Waldes von unten nach oben?",
-      "a": "Wurzel-, Moos-, Kraut-, Strauch-, Baumschicht"
+      "a": "Wurzel-, Moos-, Kraut-, Strauch-, Baumschicht",
+      "img": "🏢🌲"
     },
     {
       "id": "032",
@@ -265,7 +296,8 @@
         "Endemiten",
         "Epiphyten",
         "Saprophyten"
-      ]
+      ],
+      "img": "🚢🌺"
     }
   ]
 }

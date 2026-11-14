@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-grundwortschatz",
-  "version": 1,
+  "version": 2,
   "title": "Englisch Grundwortschatz",
   "subject": "englisch",
   "grades": [
@@ -20,7 +20,8 @@
         "shool",
         "class",
         "lesson"
-      ]
+      ],
+      "img": "🏫"
     },
     {
       "id": "002",
@@ -30,7 +31,8 @@
         "student",
         "pupil",
         "teatcher"
-      ]
+      ],
+      "img": "📚🍎"
     },
     {
       "id": "003",
@@ -40,7 +42,8 @@
         "boot",
         "box",
         "bag"
-      ]
+      ],
+      "img": "📖"
     },
     {
       "id": "004",
@@ -51,7 +54,8 @@
         "ruler",
         "pencel"
       ],
-      "info": "pen = Kugelschreiber / Füller"
+      "info": "pen = Kugelschreiber / Füller",
+      "img": "✏️"
     },
     {
       "id": "005",
@@ -61,7 +65,8 @@
         "rubber",
         "pencil",
         "rule"
-      ]
+      ],
+      "img": "📏"
     },
     {
       "id": "006",
@@ -72,7 +77,8 @@
         "homeworks",
         "housejob"
       ],
-      "info": "„homework“ hat keine Mehrzahl mit -s."
+      "info": "„homework“ hat keine Mehrzahl mit -s.",
+      "img": "📝🏠"
     },
     {
       "id": "007",
@@ -82,7 +88,8 @@
         "frend",
         "fried",
         "family"
-      ]
+      ],
+      "img": "🤝"
     },
     {
       "id": "008",
@@ -92,7 +99,8 @@
         "familie",
         "famly",
         "friend"
-      ]
+      ],
+      "img": "👪"
     },
     {
       "id": "009",
@@ -102,7 +110,8 @@
         "mather",
         "father",
         "brother"
-      ]
+      ],
+      "img": "🤱"
     },
     {
       "id": "010",
@@ -112,7 +121,8 @@
         "bruther",
         "sister",
         "brader"
-      ]
+      ],
+      "img": "👦"
     },
     {
       "id": "011",
@@ -122,7 +132,8 @@
         "sista",
         "brother",
         "sisster"
-      ]
+      ],
+      "img": "👧"
     },
     {
       "id": "012",
@@ -132,7 +143,8 @@
         "cat",
         "dock",
         "hound"
-      ]
+      ],
+      "img": "🐕"
     },
     {
       "id": "013",
@@ -142,7 +154,8 @@
         "dog",
         "kat",
         "cut"
-      ]
+      ],
+      "img": "🐈"
     },
     {
       "id": "014",
@@ -152,7 +165,8 @@
         "horse",
         "hous",
         "mouse"
-      ]
+      ],
+      "img": "🏠"
     },
     {
       "id": "015",
@@ -163,7 +177,8 @@
         "kitten",
         "bathroom"
       ],
-      "info": "Achtung: chicken = Huhn, kitten = Kätzchen."
+      "info": "Achtung: chicken = Huhn, kitten = Kätzchen.",
+      "img": "🍳🔪"
     },
     {
       "id": "016",
@@ -173,7 +188,8 @@
         "bathroom",
         "living room",
         "bed"
-      ]
+      ],
+      "img": "🛏️"
     },
     {
       "id": "017",
@@ -183,7 +199,8 @@
         "chair",
         "tabel",
         "desk lamp"
-      ]
+      ],
+      "img": "🍽️"
     },
     {
       "id": "018",
@@ -193,7 +210,8 @@
         "table",
         "char",
         "cheer"
-      ]
+      ],
+      "img": "💺"
     },
     {
       "id": "019",
@@ -203,7 +221,8 @@
         "door",
         "windo",
         "wall"
-      ]
+      ],
+      "img": "🖼️🌤️"
     },
     {
       "id": "020",
@@ -213,7 +232,8 @@
         "window",
         "dor",
         "floor"
-      ]
+      ],
+      "img": "🚪"
     },
     {
       "id": "021",
@@ -223,7 +243,8 @@
         "lunch",
         "dinner",
         "breakfest"
-      ]
+      ],
+      "img": "🥞☕"
     },
     {
       "id": "022",
@@ -233,7 +254,8 @@
         "bred",
         "butter",
         "brown"
-      ]
+      ],
+      "img": "🍞"
     },
     {
       "id": "023",
@@ -243,7 +265,8 @@
         "apel",
         "pear",
         "orange"
-      ]
+      ],
+      "img": "🍎"
     },
     {
       "id": "024",
@@ -253,7 +276,8 @@
         "wather",
         "waiter",
         "winter"
-      ]
+      ],
+      "img": "💧"
     },
     {
       "id": "025",
@@ -263,7 +287,8 @@
         "Sunday",
         "Mondey",
         "Tuesday"
-      ]
+      ],
+      "img": "😩📅"
     },
     {
       "id": "026",
@@ -273,7 +298,8 @@
         "Tuesday",
         "Thursday",
         "Wensday"
-      ]
+      ],
+      "img": "🐫📅"
     },
     {
       "id": "027",
@@ -283,7 +309,8 @@
         "Tuesday",
         "Thirsday",
         "Wednesday"
-      ]
+      ],
+      "img": "⚡📅"
     },
     {
       "id": "028",
@@ -293,7 +320,8 @@
         "birthdate",
         "berthday",
         "party"
-      ]
+      ],
+      "img": "🎂🎈"
     },
     {
       "id": "029",
@@ -303,7 +331,8 @@
         "How are you old?",
         "What old are you?",
         "How old you are?"
-      ]
+      ],
+      "img": "🎂❓"
     },
     {
       "id": "030",
@@ -313,7 +342,8 @@
         "I hot Tom.",
         "My name has Tom.",
         "Me name is Tom."
-      ]
+      ],
+      "img": "👋🏷️"
     },
     {
       "id": "031",
@@ -323,7 +353,8 @@
         "today",
         "tomorrow",
         "yesterdey"
-      ]
+      ],
+      "img": "⬅️📅"
     },
     {
       "id": "032",
@@ -334,7 +365,8 @@
         "today",
         "yesterday"
       ],
-      "info": "morning = der Morgen (Tageszeit)"
+      "info": "morning = der Morgen (Tageszeit)",
+      "img": "➡️📅"
     },
     {
       "id": "033",
@@ -344,7 +376,8 @@
         "stadium",
         "airport",
         "bus stop"
-      ]
+      ],
+      "img": "🚉"
     },
     {
       "id": "034",
@@ -354,7 +387,8 @@
         "grey",
         "grin",
         "brown"
-      ]
+      ],
+      "img": "🍀"
     },
     {
       "id": "035",
@@ -364,7 +398,8 @@
         "to write",
         "to red",
         "to learn"
-      ]
+      ],
+      "img": "📖👀"
     },
     {
       "id": "036",
@@ -374,7 +409,8 @@
         "to read",
         "to right",
         "to wright"
-      ]
+      ],
+      "img": "✍️📄"
     },
     {
       "id": "037",
@@ -384,7 +420,8 @@
         "read",
         "rat",
         "rod"
-      ]
+      ],
+      "img": "🔴🍓"
     }
   ]
 }

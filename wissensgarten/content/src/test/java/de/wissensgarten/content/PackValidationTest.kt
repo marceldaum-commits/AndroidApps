@@ -46,6 +46,7 @@ class PackValidationTest {
                 if (c.q.isBlank() || c.a.isBlank()) err("leere Karte ${c.id}")
                 if (c.q.length > 120) err("Frage zu lang ${c.id}")
                 if (c.a.length > 80) err("Antwort zu lang ${c.id}")
+                c.img?.let { if (it.isBlank() || it.length > 24 || it.any { ch -> ch in 'a'..'z' || ch in 'A'..'Z' }) err("${c.id}: img ungültig") }
                 c.choices?.let { ch ->
                     if (ch.size !in 2..3) err("${c.id}: 2–3 Ablenker nötig")
                     if (c.a in ch) err("${c.id}: Antwort steht in choices")

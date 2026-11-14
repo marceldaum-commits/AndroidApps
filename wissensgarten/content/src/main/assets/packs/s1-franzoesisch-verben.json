@@ -1,6 +1,6 @@
 {
   "id": "s1-franzoesisch-verben",
-  "version": 1,
+  "version": 2,
   "title": "être, avoir, aller, faire",
   "subject": "franzoesisch",
   "grades": [
@@ -20,13 +20,15 @@
         "je es",
         "je sois",
         "j'est"
-      ]
+      ],
+      "img": "🙋🌟"
     },
     {
       "id": "002",
       "q": "tu – être",
       "a": "tu es",
-      "info": "Gleiche Aussprache wie il est."
+      "info": "Gleiche Aussprache wie il est.",
+      "img": "👉🌟"
     },
     {
       "id": "003",
@@ -36,7 +38,8 @@
         "il es",
         "il et",
         "il sont"
-      ]
+      ],
+      "img": "👨🌟"
     },
     {
       "id": "004",
@@ -46,13 +49,15 @@
         "nous êtes",
         "nous étons",
         "nous sont"
-      ]
+      ],
+      "img": "👫☀️"
     },
     {
       "id": "005",
       "q": "vous – être",
       "a": "vous êtes",
-      "info": "Merke: vous êtes, vous faites, vous dites – ohne -ez!"
+      "info": "Merke: vous êtes, vous faites, vous dites – ohne -ez!",
+      "img": "👥🌟"
     },
     {
       "id": "006",
@@ -63,7 +68,8 @@
         "ils sommes",
         "ils étent"
       ],
-      "info": "ils ont kommt von avoir."
+      "info": "ils ont kommt von avoir.",
+      "img": "👬🌟"
     },
     {
       "id": "007",
@@ -74,12 +80,14 @@
         "j'as",
         "j'a"
       ],
-      "info": "Vor Vokal wird je zu j'."
+      "info": "Vor Vokal wird je zu j'.",
+      "img": "🙋🎒"
     },
     {
       "id": "008",
       "q": "tu – avoir",
-      "a": "tu as"
+      "a": "tu as",
+      "img": "👉🎒"
     },
     {
       "id": "009",
@@ -90,12 +98,14 @@
         "il à",
         "il ai"
       ],
-      "info": "à mit Akzent ist die Präposition „nach/zu“."
+      "info": "à mit Akzent ist die Präposition „nach/zu“.",
+      "img": "👨🎒"
     },
     {
       "id": "010",
       "q": "nous – avoir",
-      "a": "nous avons"
+      "a": "nous avons",
+      "img": "👫🎒"
     },
     {
       "id": "011",
@@ -105,12 +115,14 @@
         "vous avons",
         "vous êtes",
         "vous avoir"
-      ]
+      ],
+      "img": "👥🎒"
     },
     {
       "id": "012",
       "q": "ils – avoir",
-      "a": "ils ont"
+      "a": "ils ont",
+      "img": "👬🎒"
     },
     {
       "id": "013",
@@ -120,12 +132,14 @@
         "je va",
         "je vas",
         "j'alle"
-      ]
+      ],
+      "img": "🙋🚶"
     },
     {
       "id": "014",
       "q": "tu – aller",
-      "a": "tu vas"
+      "a": "tu vas",
+      "img": "👉🚶"
     },
     {
       "id": "015",
@@ -135,12 +149,14 @@
         "il vas",
         "il vait",
         "il alle"
-      ]
+      ],
+      "img": "👨🚶"
     },
     {
       "id": "016",
       "q": "nous – aller",
-      "a": "nous allons"
+      "a": "nous allons",
+      "img": "👫🚶"
     },
     {
       "id": "017",
@@ -150,12 +166,14 @@
         "vous allons",
         "vous vaites",
         "vous allés"
-      ]
+      ],
+      "img": "👥🚶"
     },
     {
       "id": "018",
       "q": "ils – aller",
-      "a": "ils vont"
+      "a": "ils vont",
+      "img": "👬🚶"
     },
     {
       "id": "019",
@@ -165,12 +183,14 @@
         "je fait",
         "je fai",
         "je fasse"
-      ]
+      ],
+      "img": "🙋🔨"
     },
     {
       "id": "020",
       "q": "tu – faire",
-      "a": "tu fais"
+      "a": "tu fais",
+      "img": "👉🔨"
     },
     {
       "id": "021",
@@ -180,13 +200,15 @@
         "il fais",
         "il fai",
         "il fit"
-      ]
+      ],
+      "img": "👨🔨"
     },
     {
       "id": "022",
       "q": "nous – faire",
       "a": "nous faisons",
-      "info": "Gesprochen wie „fe-son“."
+      "info": "Gesprochen wie „fe-son“.",
+      "img": "👫🔨"
     },
     {
       "id": "023",
@@ -196,12 +218,14 @@
         "vous faisez",
         "vous fais",
         "vous faisons"
-      ]
+      ],
+      "img": "👥🔨"
     },
     {
       "id": "024",
       "q": "ils – faire",
-      "a": "ils font"
+      "a": "ils font",
+      "img": "👬🔨"
     },
     {
       "id": "025",
@@ -211,13 +235,15 @@
         "elles sont",
         "elles avent",
         "elles a"
-      ]
+      ],
+      "img": "👭🎒"
     },
     {
       "id": "026",
       "q": "on – aller",
       "a": "on va",
-      "info": "on wird wie il/elle konjugiert."
+      "info": "on wird wie il/elle konjugiert.",
+      "img": "👤🚶"
     },
     {
       "id": "027",
@@ -227,12 +253,14 @@
         "elle fais",
         "elle font",
         "elle faite"
-      ]
+      ],
+      "img": "👩🔨"
     },
     {
       "id": "028",
       "q": "on – être",
-      "a": "on est"
+      "a": "on est",
+      "img": "👤🌟"
     },
     {
       "id": "029",
@@ -242,12 +270,14 @@
         "être",
         "avoir",
         "aller"
-      ]
+      ],
+      "img": "🔨🔧"
     },
     {
       "id": "030",
       "q": "Zu welchem Verb gehört „ils vont“?",
-      "a": "aller"
+      "a": "aller",
+      "img": "🚶🛣️"
     },
     {
       "id": "031",
@@ -257,12 +287,14 @@
         "avoir",
         "aller",
         "faire"
-      ]
+      ],
+      "img": "🌟😊"
     },
     {
       "id": "032",
       "q": "Zu welchem Verb gehört „ils ont“?",
-      "a": "avoir"
+      "a": "avoir",
+      "img": "🎒🎁"
     }
   ]
 }

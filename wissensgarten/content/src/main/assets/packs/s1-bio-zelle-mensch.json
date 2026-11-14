@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-zelle-mensch",
-  "version": 1,
+  "version": 2,
   "title": "Zelle & Mensch",
   "subject": "biologie",
   "grades": [
@@ -21,7 +21,8 @@
         "Das Organ",
         "Das Gewebe",
         "Das Atom"
-      ]
+      ],
+      "img": "🥚"
     },
     {
       "id": "002",
@@ -31,7 +32,8 @@
         "Mitochondrium",
         "Zellmembran",
         "Vakuole"
-      ]
+      ],
+      "img": "🥑"
     },
     {
       "id": "003",
@@ -42,7 +44,8 @@
         "Chloroplasten",
         "Vakuolen"
       ],
-      "info": "Hier läuft die Zellatmung ab."
+      "info": "Hier läuft die Zellatmung ab.",
+      "img": "🔋⚡"
     },
     {
       "id": "004",
@@ -52,12 +55,14 @@
         "Mitochondrien",
         "Ribosomen",
         "Zellkern"
-      ]
+      ],
+      "img": "☀️🍃"
     },
     {
       "id": "005",
       "q": "Drei Bestandteile, die Pflanzenzellen, aber nicht Tierzellen haben?",
-      "a": "Zellwand, Chloroplasten, große Vakuole"
+      "a": "Zellwand, Chloroplasten, große Vakuole",
+      "img": "🌻🧱"
     },
     {
       "id": "006",
@@ -67,12 +72,14 @@
         "Zellwand",
         "Kernhülle",
         "Vakuole"
-      ]
+      ],
+      "img": "🎈"
     },
     {
       "id": "007",
       "q": "Wo werden in der Zelle Proteine hergestellt?",
-      "a": "An den Ribosomen"
+      "a": "An den Ribosomen",
+      "img": "🏭"
     },
     {
       "id": "008",
@@ -83,7 +90,8 @@
         "Im Dünndarm",
         "Im Dickdarm"
       ],
-      "info": "Das Enzym Amylase im Speichel spaltet Stärke."
+      "info": "Das Enzym Amylase im Speichel spaltet Stärke.",
+      "img": "👄🍞"
     },
     {
       "id": "009",
@@ -93,7 +101,8 @@
         "Schwefelsäure",
         "Essigsäure",
         "Zitronensäure"
-      ]
+      ],
+      "img": "🧂🧪"
     },
     {
       "id": "010",
@@ -104,12 +113,14 @@
         "Im Dickdarm",
         "In der Speiseröhre"
       ],
-      "info": "Darmzotten vergrößern die Oberfläche stark."
+      "info": "Darmzotten vergrößern die Oberfläche stark.",
+      "img": "🍝"
     },
     {
       "id": "011",
       "q": "Hauptaufgabe des Dickdarms?",
-      "a": "Dem Nahrungsbrei Wasser entziehen"
+      "a": "Dem Nahrungsbrei Wasser entziehen",
+      "img": "💧🔙"
     },
     {
       "id": "012",
@@ -120,12 +131,14 @@
         "Bauchspeicheldrüse",
         "Milz"
       ],
-      "info": "Die Gallenblase speichert die Galle nur."
+      "info": "Die Gallenblase speichert die Galle nur.",
+      "img": "🍷"
     },
     {
       "id": "013",
       "q": "Wozu dient die Gallenflüssigkeit?",
-      "a": "Sie zerteilt (emulgiert) Fette"
+      "a": "Sie zerteilt (emulgiert) Fette",
+      "img": "🍳🧽"
     },
     {
       "id": "014",
@@ -135,7 +148,8 @@
         "Leber",
         "Harnblase",
         "Milz"
-      ]
+      ],
+      "img": "🚰"
     },
     {
       "id": "015",
@@ -145,7 +159,8 @@
         "1 Vorhof und 2 Kammern",
         "2 Vorhöfe und 1 Kammer",
         "4 Vorhöfe und 4 Kammern"
-      ]
+      ],
+      "img": "❤️4️⃣"
     },
     {
       "id": "016",
@@ -155,17 +170,20 @@
         "Venen",
         "Kapillaren",
         "Lymphgefäße"
-      ]
+      ],
+      "img": "❤️➡️"
     },
     {
       "id": "017",
       "q": "Blutgefäße, die Blut zum Herzen hinführen?",
-      "a": "Venen"
+      "a": "Venen",
+      "img": "➡️❤️"
     },
     {
       "id": "018",
       "q": "Feinste Blutgefäße, in denen der Stoffaustausch stattfindet?",
-      "a": "Kapillaren (Haargefäße)"
+      "a": "Kapillaren (Haargefäße)",
+      "img": "💇"
     },
     {
       "id": "019",
@@ -175,13 +193,15 @@
         "Hohlvene",
         "Lungenvene",
         "Pfortader"
-      ]
+      ],
+      "img": "🛣️"
     },
     {
       "id": "020",
       "q": "Wo nimmt das Blut Sauerstoff auf?",
       "a": "In den Lungenbläschen",
-      "info": "Lungenkreislauf: Herz → Lunge → Herz"
+      "info": "Lungenkreislauf: Herz → Lunge → Herz",
+      "img": "🍇"
     },
     {
       "id": "021",
@@ -191,17 +211,20 @@
         "Krankheitserreger abwehren",
         "Blutgerinnung",
         "Hormone bilden"
-      ]
+      ],
+      "img": "🔴🚚"
     },
     {
       "id": "022",
       "q": "Aufgabe der weißen Blutkörperchen?",
-      "a": "Abwehr von Krankheitserregern"
+      "a": "Abwehr von Krankheitserregern",
+      "img": "⚪🛡️"
     },
     {
       "id": "023",
       "q": "Aufgabe der Blutplättchen?",
-      "a": "Blutgerinnung (Wundverschluss)"
+      "a": "Blutgerinnung (Wundverschluss)",
+      "img": "🚧"
     },
     {
       "id": "024",
@@ -211,7 +234,8 @@
         "Chlorophyll",
         "Melanin",
         "Insulin"
-      ]
+      ],
+      "img": "🍅"
     },
     {
       "id": "025",
@@ -221,7 +245,8 @@
         "Hornhaut",
         "Lederhaut",
         "Aderhaut"
-      ]
+      ],
+      "img": "🎞️"
     },
     {
       "id": "026",
@@ -231,7 +256,8 @@
         "Linse",
         "Netzhaut",
         "Glaskörper"
-      ]
+      ],
+      "img": "🌈"
     },
     {
       "id": "027",
@@ -242,17 +268,20 @@
         "Haarzellen",
         "Riechzellen"
       ],
-      "info": "Stäbchen sind für das Hell-Dunkel-Sehen zuständig."
+      "info": "Stäbchen sind für das Hell-Dunkel-Sehen zuständig.",
+      "img": "🌲"
     },
     {
       "id": "028",
       "q": "Was ist der blinde Fleck?",
-      "a": "Austrittsstelle des Sehnervs ohne Sinneszellen"
+      "a": "Austrittsstelle des Sehnervs ohne Sinneszellen",
+      "img": "🙈"
     },
     {
       "id": "029",
       "q": "Die drei Gehörknöchelchen?",
-      "a": "Hammer, Amboss, Steigbügel"
+      "a": "Hammer, Amboss, Steigbügel",
+      "img": "🔨🏇"
     },
     {
       "id": "030",
@@ -262,17 +291,20 @@
         "Im Mittelohr",
         "In der Ohrmuschel",
         "Im Trommelfell"
-      ]
+      ],
+      "img": "👂⚖️"
     },
     {
       "id": "031",
       "q": "Die fünf klassischen Sinne?",
-      "a": "Sehen, Hören, Riechen, Schmecken, Tasten"
+      "a": "Sehen, Hören, Riechen, Schmecken, Tasten",
+      "img": "🖐️"
     },
     {
       "id": "032",
       "q": "Die fünf Grundgeschmacksrichtungen?",
-      "a": "Süß, sauer, salzig, bitter, umami"
+      "a": "Süß, sauer, salzig, bitter, umami",
+      "img": "🍬🍋🧂"
     }
   ]
 }

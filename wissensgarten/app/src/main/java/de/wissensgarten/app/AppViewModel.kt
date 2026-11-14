@@ -147,6 +147,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { repo.review(p.id, card, rating, dew) }
     }
 
+    fun addDew(amount: Int) {
+        val p = profile.value ?: return
+        viewModelScope.launch { repo.addDew(p.id, amount) }
+    }
+
     fun endSession() { tick(); refreshWidget() }
 
     // --- Einrichtung & Profile ---

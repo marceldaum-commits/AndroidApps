@@ -1,6 +1,6 @@
 {
   "id": "aw-erste-hilfe",
-  "version": 1,
+  "version": 2,
   "title": "Erste Hilfe",
   "subject": "allgemeinwissen",
   "grades": [
@@ -27,7 +27,8 @@
         "116 117",
         "911"
       ],
-      "info": "Die 112 funktioniert in ganz Europa kostenlos, auch ohne Guthaben."
+      "info": "Die 112 funktioniert in ganz Europa kostenlos, auch ohne Guthaben.",
+      "img": "🚑🚒"
     },
     {
       "id": "002",
@@ -37,12 +38,14 @@
         "112",
         "115",
         "116 116"
-      ]
+      ],
+      "img": "🚓👮"
     },
     {
       "id": "003",
       "q": "Was ist bei einem Notfall immer der erste Grundsatz?",
-      "a": "Eigenschutz: Bringe dich nicht selbst in Gefahr"
+      "a": "Eigenschutz: Bringe dich nicht selbst in Gefahr",
+      "img": "⚠️🛡️"
     },
     {
       "id": "004",
@@ -52,7 +55,8 @@
         "Bis der Rettungswagen da ist",
         "Auf nichts – sofort auflegen"
       ],
-      "info": "Die Leitstelle beendet das Gespräch, nicht du."
+      "info": "Die Leitstelle beendet das Gespräch, nicht du.",
+      "img": "📞❓⏳"
     },
     {
       "id": "005",
@@ -63,17 +67,20 @@
         "Welches Wetter herrscht",
         "Wie alt du bist"
       ],
-      "info": "Der Ort ist am wichtigsten, damit Hilfe losgeschickt werden kann."
+      "info": "Der Ort ist am wichtigsten, damit Hilfe losgeschickt werden kann.",
+      "img": "📍📞"
     },
     {
       "id": "006",
       "q": "Wie prüfst du, ob eine Person bei Bewusstsein ist?",
-      "a": "Laut ansprechen und an den Schultern rütteln"
+      "a": "Laut ansprechen und an den Schultern rütteln",
+      "img": "🗣️👐"
     },
     {
       "id": "007",
       "q": "Wie machst du bei einer bewusstlosen Person die Atemwege frei?",
-      "a": "Kopf überstrecken und Kinn anheben"
+      "a": "Kopf überstrecken und Kinn anheben",
+      "img": "🙆👄"
     },
     {
       "id": "008",
@@ -84,7 +91,8 @@
         "2 Sekunden",
         "30 Sekunden"
       ],
-      "info": "Sehen, hören, fühlen."
+      "info": "Sehen, hören, fühlen.",
+      "img": "⏱️🔟"
     },
     {
       "id": "009",
@@ -94,7 +102,8 @@
         "Sofort Herzdruckmassage",
         "Beine hochlegen und warten",
         "Etwas zu trinken geben"
-      ]
+      ],
+      "img": "🛌🔄📞"
     },
     {
       "id": "010",
@@ -104,7 +113,8 @@
         "Stabile Seitenlage",
         "Nur auf den Rettungsdienst warten",
         "Wasser ins Gesicht spritzen"
-      ]
+      ],
+      "img": "📞❤️👐"
     },
     {
       "id": "011",
@@ -114,7 +124,8 @@
         "Auf den Bauch",
         "Links auf die Rippen",
         "Auf das obere Ende des Brustbeins"
-      ]
+      ],
+      "img": "👐🎯"
     },
     {
       "id": "012",
@@ -124,7 +135,8 @@
         "1 bis 2 cm",
         "10 bis 12 cm",
         "3 mm"
-      ]
+      ],
+      "img": "📏✋"
     },
     {
       "id": "013",
@@ -135,7 +147,8 @@
         "60-mal",
         "150- bis 180-mal"
       ],
-      "info": "Hilfe zum Takt: Lieder wie „Stayin’ Alive“ haben ungefähr dieses Tempo."
+      "info": "Hilfe zum Takt: Lieder wie „Stayin’ Alive“ haben ungefähr dieses Tempo.",
+      "img": "🎵💓"
     },
     {
       "id": "014",
@@ -146,7 +159,8 @@
         "5 : 1",
         "30 : 5"
       ],
-      "info": "30-mal drücken, 2-mal beatmen."
+      "info": "30-mal drücken, 2-mal beatmen.",
+      "img": "❤️👐"
     },
     {
       "id": "015",
@@ -156,12 +170,14 @@
         "Die Wiederbelebung abbrechen",
         "Nur beatmen"
       ],
-      "info": "Herzdruckmassage allein ist viel besser als gar nichts."
+      "info": "Herzdruckmassage allein ist viel besser als gar nichts.",
+      "img": "👐🔁"
     },
     {
       "id": "016",
       "q": "Wie lange führst du die Wiederbelebung durch?",
-      "a": "Bis der Rettungsdienst übernimmt oder die Person normal atmet"
+      "a": "Bis der Rettungsdienst übernimmt oder die Person normal atmet",
+      "img": "🚑🤝"
     },
     {
       "id": "017",
@@ -171,7 +187,8 @@
         "Nein, nur Ärzte",
         "Nur mit Erste-Hilfe-Schein"
       ],
-      "info": "Der AED prüft selbst, ob ein Schock nötig ist."
+      "info": "Der AED prüft selbst, ob ein Schock nötig ist.",
+      "img": "⚡💓🔊"
     },
     {
       "id": "018",
@@ -182,17 +199,20 @@
         "Mit Butter oder Mehl bestreichen",
         "Die Blasen aufstechen"
       ],
-      "info": "Eis kann das Gewebe zusätzlich schädigen."
+      "info": "Eis kann das Gewebe zusätzlich schädigen.",
+      "img": "🤚💧⏲️"
     },
     {
       "id": "019",
       "q": "Sollte man großflächige Verbrennungen lange mit Wasser kühlen?",
-      "a": "Nein, es droht Unterkühlung – keimfrei abdecken, 112"
+      "a": "Nein, es droht Unterkühlung – keimfrei abdecken, 112",
+      "img": "🔥🛁❌"
     },
     {
       "id": "020",
       "q": "Was tust du mit Kleidung, die an einer Brandwunde festklebt?",
-      "a": "Am Körper lassen, nicht abziehen"
+      "a": "Am Körper lassen, nicht abziehen",
+      "img": "👕🚫✋"
     },
     {
       "id": "021",
@@ -203,18 +223,21 @@
         "Hinlegen und Beine hoch",
         "Fest schnäuzen"
       ],
-      "info": "Kühle Umschläge im Nacken können zusätzlich helfen."
+      "info": "Kühle Umschläge im Nacken können zusätzlich helfen.",
+      "img": "👃🙇"
     },
     {
       "id": "022",
       "q": "Was tust du bei einer stark blutenden Wunde am Arm?",
-      "a": "Arm hochhalten, Wunde abdrücken, Druckverband"
+      "a": "Arm hochhalten, Wunde abdrücken, Druckverband",
+      "img": "💪⬆️🎗️"
     },
     {
       "id": "023",
       "q": "Wie lagerst du jemanden mit Schockanzeichen (blass, kalter Schweiß, unruhig)?",
       "a": "Flach hinlegen, Beine leicht hochlagern, zudecken",
-      "info": "Nicht bei Verletzungen an Beinen, Becken oder Wirbelsäule und nicht bei Atemnot."
+      "info": "Nicht bei Verletzungen an Beinen, Becken oder Wirbelsäule und nicht bei Atemnot.",
+      "img": "🛌🦵🧣"
     },
     {
       "id": "024",
@@ -225,7 +248,8 @@
         "In stabiler Seitenlage",
         "Auf dem Bauch"
       ],
-      "info": "Und sofort 112 anrufen."
+      "info": "Und sofort 112 anrufen.",
+      "img": "🛏️💔"
     },
     {
       "id": "025",
@@ -236,7 +260,8 @@
         "Prüfen der Atmung",
         "Erkennen einer Vergiftung"
       ],
-      "info": "Face (Gesicht), Arms (Arme), Speech (Sprache), Time (sofort 112)."
+      "info": "Face (Gesicht), Arms (Arme), Speech (Sprache), Time (sofort 112).",
+      "img": "🙂💪🗣️"
     },
     {
       "id": "026",
@@ -247,19 +272,22 @@
         "Flach auf den Rücken legen",
         "Abwarten"
       ],
-      "info": "Hilft das nicht: bis zu 5 Oberbauchkompressionen, im Wechsel. Notruf 112."
+      "info": "Hilft das nicht: bis zu 5 Oberbauchkompressionen, im Wechsel. Notruf 112.",
+      "img": "🔙👋"
     },
     {
       "id": "027",
       "q": "Jemand hat etwas Giftiges geschluckt. Solltest du Erbrechen auslösen?",
       "a": "Nein",
-      "info": "Notruf 112 oder Giftnotruf anrufen, Packung aufbewahren."
+      "info": "Notruf 112 oder Giftnotruf anrufen, Packung aufbewahren.",
+      "img": "🧪🚫🤮"
     },
     {
       "id": "028",
       "q": "Was tust du bei einem Wespenstich im Mund?",
       "a": "Eis lutschen lassen, Hals außen kühlen, 112 rufen",
-      "info": "Die Schwellung kann die Atemwege verengen."
+      "info": "Die Schwellung kann die Atemwege verengen.",
+      "img": "🐝👄🍦"
     },
     {
       "id": "029",
@@ -269,7 +297,8 @@
         "Nein, niemals",
         "Nur ein Arzt darf das"
       ],
-      "info": "Sonst kann man Atmung und Atemwege nicht sichern."
+      "info": "Sonst kann man Atmung und Atemwege nicht sichern.",
+      "img": "🏍️⛑️👐"
     },
     {
       "id": "030",
@@ -279,7 +308,8 @@
         "Mit Öl beträufeln",
         "Mit Klebstoff ersticken",
         "Abbrennen"
-      ]
+      ],
+      "img": "🕷️🔧"
     },
     {
       "id": "031",
@@ -289,13 +319,15 @@
         "Etwa 10 m",
         "Etwa 500 m"
       ],
-      "info": "Innerorts etwa 50 m, auf der Autobahn mindestens 200 m."
+      "info": "Innerorts etwa 50 m, auf der Autobahn mindestens 200 m.",
+      "img": "⚠️📏"
     },
     {
       "id": "032",
       "q": "Ist man in Deutschland zur Ersten Hilfe verpflichtet?",
       "a": "Ja, im Rahmen des Zumutbaren",
-      "info": "Unterlassene Hilfeleistung ist strafbar (§ 323c StGB). Schon der Notruf ist Hilfe."
+      "info": "Unterlassene Hilfeleistung ist strafbar (§ 323c StGB). Schon der Notruf ist Hilfe.",
+      "img": "🤝⚖️"
     },
     {
       "id": "033",
@@ -305,7 +337,8 @@
         "4",
         "16",
         "24"
-      ]
+      ],
+      "img": "🎓9️⃣"
     }
   ]
 }

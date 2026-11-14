@@ -9,6 +9,8 @@ data class StudyCard(
     val choices: List<String>?,
     val info: String?,
     val memory: Memory,
+    /** Merkbild (Emojis), falls vorhanden */
+    val img: String? = null,
 ) {
     val isChoice: Boolean get() = !choices.isNullOrEmpty()
 

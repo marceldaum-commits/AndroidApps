@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-europa",
-  "version": 1,
+  "version": 2,
   "title": "Europa entdecken",
   "subject": "erdkunde",
   "grades": [
@@ -16,7 +16,8 @@
     {
       "id": "001",
       "q": "Hauptstadt von Frankreich?",
-      "a": "Paris"
+      "a": "Paris",
+      "img": "🗼🥐"
     },
     {
       "id": "002",
@@ -26,7 +27,8 @@
         "Barcelona",
         "Sevilla",
         "Valencia"
-      ]
+      ],
+      "img": "🐂☀️"
     },
     {
       "id": "003",
@@ -36,12 +38,14 @@
         "Porto",
         "Faro",
         "Coimbra"
-      ]
+      ],
+      "img": "🚋🐟"
     },
     {
       "id": "004",
       "q": "Hauptstadt von Italien?",
-      "a": "Rom"
+      "a": "Rom",
+      "img": "🏛️🍝"
     },
     {
       "id": "005",
@@ -52,12 +56,14 @@
         "Danzig",
         "Breslau"
       ],
-      "info": "Krakau war früher Königsresidenz, heute ist Warschau Hauptstadt."
+      "info": "Krakau war früher Königsresidenz, heute ist Warschau Hauptstadt.",
+      "img": "🧜🗡️"
     },
     {
       "id": "006",
       "q": "Hauptstadt von Tschechien?",
-      "a": "Prag"
+      "a": "Prag",
+      "img": "🌉🏰"
     },
     {
       "id": "007",
@@ -67,7 +73,8 @@
         "Salzburg",
         "Graz",
         "Innsbruck"
-      ]
+      ],
+      "img": "🎻🍰"
     },
     {
       "id": "008",
@@ -78,7 +85,8 @@
         "Genf",
         "Basel"
       ],
-      "info": "Offiziell heißt Bern „Bundesstadt“, ist aber Sitz von Regierung und Parlament."
+      "info": "Offiziell heißt Bern „Bundesstadt“, ist aber Sitz von Regierung und Parlament.",
+      "img": "🐻⛰️"
     },
     {
       "id": "009",
@@ -89,12 +97,14 @@
         "Rotterdam",
         "Utrecht"
       ],
-      "info": "Regierung und Parlament sitzen in Den Haag, Hauptstadt laut Verfassung ist Amsterdam."
+      "info": "Regierung und Parlament sitzen in Den Haag, Hauptstadt laut Verfassung ist Amsterdam.",
+      "img": "🌷🚲"
     },
     {
       "id": "010",
       "q": "Hauptstadt von Belgien?",
-      "a": "Brüssel"
+      "a": "Brüssel",
+      "img": "🍫🍟"
     },
     {
       "id": "011",
@@ -103,7 +113,8 @@
       "choices": [
         "Aarhus",
         "Odense"
-      ]
+      ],
+      "img": "🧜🧱"
     },
     {
       "id": "012",
@@ -113,12 +124,14 @@
         "Göteborg",
         "Malmö",
         "Uppsala"
-      ]
+      ],
+      "img": "👑🏝️"
     },
     {
       "id": "013",
       "q": "Hauptstadt von Norwegen?",
-      "a": "Oslo"
+      "a": "Oslo",
+      "img": "⛷️🌲🛳️"
     },
     {
       "id": "014",
@@ -127,17 +140,20 @@
       "choices": [
         "Turku",
         "Tampere"
-      ]
+      ],
+      "img": "🦌🌲🧖"
     },
     {
       "id": "015",
       "q": "Hauptstadt von Irland?",
-      "a": "Dublin"
+      "a": "Dublin",
+      "img": "🍀🎻"
     },
     {
       "id": "016",
       "q": "Hauptstadt des Vereinigten Königreichs?",
-      "a": "London"
+      "a": "London",
+      "img": "💂🕰️"
     },
     {
       "id": "017",
@@ -147,12 +163,14 @@
         "Thessaloniki",
         "Sparta",
         "Patras"
-      ]
+      ],
+      "img": "🦉🏛️"
     },
     {
       "id": "018",
       "q": "Hauptstadt von Ungarn?",
-      "a": "Budapest"
+      "a": "Budapest",
+      "img": "🛁🌉"
     },
     {
       "id": "019",
@@ -162,12 +180,14 @@
         "Budapest",
         "Sofia",
         "Belgrad"
-      ]
+      ],
+      "img": "🧛🏰"
     },
     {
       "id": "020",
       "q": "Hauptstadt von Bulgarien?",
-      "a": "Sofia"
+      "a": "Sofia",
+      "img": "🌹🌄"
     },
     {
       "id": "021",
@@ -177,7 +197,8 @@
         "Split",
         "Dubrovnik",
         "Ljubljana"
-      ]
+      ],
+      "img": "🏰⚽"
     },
     {
       "id": "022",
@@ -187,22 +208,26 @@
         "Ljubljana",
         "Prag",
         "Košice"
-      ]
+      ],
+      "img": "🏰🍷"
     },
     {
       "id": "023",
       "q": "Hauptstadt von Slowenien?",
-      "a": "Ljubljana"
+      "a": "Ljubljana",
+      "img": "🐉🌉"
     },
     {
       "id": "024",
       "q": "Hauptstädte der baltischen Staaten Estland, Lettland, Litauen?",
-      "a": "Tallinn, Riga, Vilnius"
+      "a": "Tallinn, Riga, Vilnius",
+      "img": "🌲🌲🌲"
     },
     {
       "id": "025",
       "q": "Hauptstadt von Island?",
-      "a": "Reykjavík"
+      "a": "Reykjavík",
+      "img": "🌋❄️💨"
     },
     {
       "id": "026",
@@ -212,7 +237,8 @@
         "Lwiw",
         "Odessa",
         "Charkiw"
-      ]
+      ],
+      "img": "🌻⛪"
     },
     {
       "id": "027",
@@ -223,7 +249,8 @@
         "28",
         "30"
       ],
-      "info": "Seit dem Austritt des Vereinigten Königreichs 2020 sind es 27."
+      "info": "Seit dem Austritt des Vereinigten Königreichs 2020 sind es 27.",
+      "img": "⭐2️⃣7️⃣"
     },
     {
       "id": "028",
@@ -233,7 +260,8 @@
         "Monaco",
         "San Marino",
         "Liechtenstein"
-      ]
+      ],
+      "img": "⛪🔑"
     },
     {
       "id": "029",
@@ -244,7 +272,8 @@
         "Spanien",
         "Deutschland"
       ],
-      "info": "Russland ist größer, liegt aber zum größten Teil in Asien."
+      "info": "Russland ist größer, liegt aber zum größten Teil in Asien.",
+      "img": "🌻🌾"
     },
     {
       "id": "030",
@@ -255,12 +284,14 @@
         "Rhein",
         "Dnepr"
       ],
-      "info": "Die Wolga fließt durch Russland ins Kaspische Meer."
+      "info": "Die Wolga fließt durch Russland ins Kaspische Meer.",
+      "img": "🌊🐟"
     },
     {
       "id": "031",
       "q": "Welcher Fluss fließt durch Wien, Bratislava, Budapest und Belgrad?",
-      "a": "Donau"
+      "a": "Donau",
+      "img": "🎶🌊💙"
     },
     {
       "id": "032",
@@ -270,12 +301,14 @@
         "Loire",
         "Rhone",
         "Garonne"
-      ]
+      ],
+      "img": "🗼🛶"
     },
     {
       "id": "033",
       "q": "Welcher Fluss fließt durch London?",
-      "a": "Themse"
+      "a": "Themse",
+      "img": "🕰️🚣"
     },
     {
       "id": "034",
@@ -286,7 +319,8 @@
         "Großglockner",
         "Zugspitze"
       ],
-      "info": "Der Mont Blanc ist rund 4800 m hoch und liegt an der Grenze von Frankreich und Italien."
+      "info": "Der Mont Blanc ist rund 4800 m hoch und liegt an der Grenze von Frankreich und Italien.",
+      "img": "🏔️⛄"
     },
     {
       "id": "035",
@@ -296,19 +330,22 @@
         "Ägäis",
         "Tyrrhenisches Meer",
         "Ostsee"
-      ]
+      ],
+      "img": "🏖️🐬"
     },
     {
       "id": "036",
       "q": "Welche Meerenge trennt Spanien von Afrika?",
       "a": "Straße von Gibraltar",
-      "info": "An der engsten Stelle ist sie nur etwa 14 km breit."
+      "info": "An der engsten Stelle ist sie nur etwa 14 km breit.",
+      "img": "🐒🌉"
     },
     {
       "id": "037",
       "q": "Welche zwei Länder liegen auf der Iberischen Halbinsel?",
       "a": "Spanien und Portugal",
-      "info": "Dazu kommen noch der Kleinstaat Andorra und das britische Gibraltar."
+      "info": "Dazu kommen noch der Kleinstaat Andorra und das britische Gibraltar.",
+      "img": "🌍🍊"
     },
     {
       "id": "038",
@@ -318,7 +355,8 @@
         "Sardinien",
         "Korsika",
         "Kreta"
-      ]
+      ],
+      "img": "🌋🍋"
     }
   ]
 }

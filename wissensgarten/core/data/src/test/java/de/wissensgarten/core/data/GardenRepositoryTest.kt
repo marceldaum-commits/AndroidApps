@@ -66,7 +66,7 @@ class GardenRepositoryTest {
 
         val v2 = v1.copy(
             version = 2, cards = listOf(
-                PackCard("002", "2+2", "4", info = "verdoppeln"), // geändert, Fortschritt bleibt
+                PackCard("002", "2+2", "4", info = "verdoppeln", img = "🍪🍪"), // geändert, Fortschritt bleibt
                 PackCard("003", "3+3", "6"),
                 PackCard("004", "4+4", "8"), // neu
             )
@@ -77,6 +77,7 @@ class GardenRepositoryTest {
         val kept = cards.first { it.sourceId == "002" }
         assertEquals(learned.id, kept.id)
         assertEquals("verdoppeln", kept.info)
+        assertEquals("🍪🍪", kept.img)
         assertFalse("Lernstand muss erhalten bleiben", kept.memory.isSeed)
         assertEquals(2, repo.beds(p.id).first()[0].bed.packVersion)
         assertEquals("zweiter Sync ändert nichts", 0, repo.syncPacks(listOf(v2)))

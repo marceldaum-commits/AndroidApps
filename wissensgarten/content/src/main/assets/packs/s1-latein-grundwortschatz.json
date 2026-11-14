@@ -1,6 +1,6 @@
 {
   "id": "s1-latein-grundwortschatz",
-  "version": 1,
+  "version": 2,
   "title": "Latein Grundwortschatz",
   "subject": "latein",
   "grades": [
@@ -21,7 +21,8 @@
         "loben",
         "rufen",
         "arbeiten"
-      ]
+      ],
+      "img": "❤️"
     },
     {
       "id": "002",
@@ -31,7 +32,8 @@
         "hören",
         "wissen",
         "kommen"
-      ]
+      ],
+      "img": "👁️"
     },
     {
       "id": "003",
@@ -41,7 +43,8 @@
         "sehen",
         "wagen",
         "sagen"
-      ]
+      ],
+      "img": "👂🔊"
     },
     {
       "id": "004",
@@ -51,7 +54,8 @@
         "verkaufen",
         "sehen",
         "siegen"
-      ]
+      ],
+      "img": "🛬"
     },
     {
       "id": "005",
@@ -61,7 +65,8 @@
         "lehren",
         "führen",
         "schreiben"
-      ]
+      ],
+      "img": "🗣️💬"
     },
     {
       "id": "006",
@@ -72,7 +77,8 @@
         "haben",
         "sitzen"
       ],
-      "info": "Achtung: esse heißt nicht „essen“!"
+      "info": "Achtung: esse heißt nicht „essen“!",
+      "img": "😌"
     },
     {
       "id": "007",
@@ -82,7 +88,8 @@
         "sein",
         "wohnen",
         "geben"
-      ]
+      ],
+      "img": "👜💰"
     },
     {
       "id": "008",
@@ -92,7 +99,8 @@
         "lachen",
         "loben",
         "lieben"
-      ]
+      ],
+      "img": "⚒️💦"
     },
     {
       "id": "009",
@@ -102,7 +110,8 @@
         "lachen",
         "klagen",
         "schweigen"
-      ]
+      ],
+      "img": "📢"
     },
     {
       "id": "010",
@@ -112,7 +121,8 @@
         "schreien",
         "weinen",
         "zurückgeben"
-      ]
+      ],
+      "img": "😂"
     },
     {
       "id": "011",
@@ -122,7 +132,8 @@
         "sorgen",
         "stehen",
         "sitzen"
-      ]
+      ],
+      "img": "🏃⏱️"
     },
     {
       "id": "012",
@@ -132,7 +143,8 @@
         "sagen",
         "lesen",
         "zeigen"
-      ]
+      ],
+      "img": "✒️📜"
     },
     {
       "id": "013",
@@ -143,7 +155,8 @@
         "legen",
         "liegen"
       ],
-      "info": "legere ≠ legen!"
+      "info": "legere ≠ legen!",
+      "img": "📖🕯️"
     },
     {
       "id": "014",
@@ -153,7 +166,8 @@
         "nehmen",
         "dürfen",
         "sagen"
-      ]
+      ],
+      "img": "🎁➡️"
     },
     {
       "id": "015",
@@ -163,7 +177,8 @@
         "sitzen",
         "laufen",
         "starren"
-      ]
+      ],
+      "img": "💂"
     },
     {
       "id": "016",
@@ -173,7 +188,8 @@
         "stehen",
         "sehen",
         "säen"
-      ]
+      ],
+      "img": "🧘"
     },
     {
       "id": "017",
@@ -183,7 +199,8 @@
         "zählen",
         "lieben",
         "hoffen"
-      ]
+      ],
+      "img": "😱"
     },
     {
       "id": "018",
@@ -193,7 +210,8 @@
         "können",
         "wollen",
         "geben"
-      ]
+      ],
+      "img": "⚠️📋"
     },
     {
       "id": "019",
@@ -203,7 +221,8 @@
         "müssen",
         "setzen",
         "besitzen"
-      ]
+      ],
+      "img": "💪"
     },
     {
       "id": "020",
@@ -213,7 +232,8 @@
         "fragen",
         "wohnen",
         "sehen"
-      ]
+      ],
+      "img": "📞"
     },
     {
       "id": "021",
@@ -223,7 +243,8 @@
         "Herr",
         "Bauer",
         "Soldat"
-      ]
+      ],
+      "img": "⛓️🧹"
     },
     {
       "id": "022",
@@ -233,7 +254,8 @@
         "Sklave",
         "Haus",
         "Kirche"
-      ]
+      ],
+      "img": "👑"
     },
     {
       "id": "023",
@@ -244,7 +266,8 @@
         "Bruder",
         "Gast"
       ],
-      "info": "inimicus = Feind"
+      "info": "inimicus = Feind",
+      "img": "🤝😊"
     },
     {
       "id": "024",
@@ -254,7 +277,8 @@
         "Junge",
         "Frau",
         "Mutter"
-      ]
+      ],
+      "img": "👧🌸"
     },
     {
       "id": "025",
@@ -264,7 +288,8 @@
         "Mädchen",
         "Vater",
         "Mann"
-      ]
+      ],
+      "img": "👦⚽"
     },
     {
       "id": "026",
@@ -274,7 +299,8 @@
         "Wald",
         "Tempel",
         "Hafen"
-      ]
+      ],
+      "img": "🏛️🛍️"
     },
     {
       "id": "027",
@@ -284,7 +310,8 @@
         "Dorf",
         "Stadt",
         "Straße"
-      ]
+      ],
+      "img": "🏡🌳"
     },
     {
       "id": "028",
@@ -294,7 +321,8 @@
         "Luft",
         "Erde",
         "Feuer"
-      ]
+      ],
+      "img": "🐠💧"
     },
     {
       "id": "029",
@@ -304,7 +332,8 @@
         "Meer",
         "Himmel",
         "Wasser"
-      ]
+      ],
+      "img": "🌍"
     },
     {
       "id": "030",
@@ -315,7 +344,8 @@
         "Stadt",
         "Haus"
       ],
-      "info": "vita = Leben"
+      "info": "vita = Leben",
+      "img": "🛣️"
     },
     {
       "id": "031",
@@ -325,7 +355,8 @@
         "Land",
         "Feld",
         "Berg"
-      ]
+      ],
+      "img": "🏙️🏛️"
     },
     {
       "id": "032",
@@ -336,7 +367,8 @@
         "Herr",
         "König"
       ],
-      "info": "dies = Tag"
+      "info": "dies = Tag",
+      "img": "⚡☁️"
     },
     {
       "id": "033",
@@ -346,7 +378,8 @@
         "Mutter",
         "Bruder",
         "Pate"
-      ]
+      ],
+      "img": "👨"
     },
     {
       "id": "034",
@@ -356,7 +389,8 @@
         "Vater",
         "Material",
         "Schwester"
-      ]
+      ],
+      "img": "👩🍼"
     },
     {
       "id": "035",
@@ -366,7 +400,8 @@
         "schön",
         "groß",
         "schlecht"
-      ]
+      ],
+      "img": "👍"
     },
     {
       "id": "036",
@@ -376,7 +411,8 @@
         "klein",
         "viel",
         "mächtig"
-      ]
+      ],
+      "img": "🐘"
     },
     {
       "id": "037",
@@ -386,7 +422,8 @@
         "groß",
         "arm",
         "neu"
-      ]
+      ],
+      "img": "🐭"
     },
     {
       "id": "038",
@@ -396,7 +433,8 @@
         "nie",
         "oft",
         "heute"
-      ]
+      ],
+      "img": "♾️"
     },
     {
       "id": "039",
@@ -406,7 +444,8 @@
         "nie",
         "nun",
         "auch"
-      ]
+      ],
+      "img": "🚫"
     }
   ]
 }

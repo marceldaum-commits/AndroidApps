@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-welt",
-  "version": 1,
+  "version": 2,
   "title": "Rund um die Welt",
   "subject": "erdkunde",
   "grades": [
@@ -23,7 +23,8 @@
         "6",
         "8"
       ],
-      "info": "Afrika, Antarktika, Asien, Australien, Europa, Nordamerika, Südamerika."
+      "info": "Afrika, Antarktika, Asien, Australien, Europa, Nordamerika, Südamerika.",
+      "img": "🌍7️⃣"
     },
     {
       "id": "002",
@@ -33,7 +34,8 @@
         "Afrika",
         "Nordamerika",
         "Antarktika"
-      ]
+      ],
+      "img": "🐼🐘🏯"
     },
     {
       "id": "003",
@@ -43,7 +45,8 @@
         "Europa",
         "Antarktika",
         "Südamerika"
-      ]
+      ],
+      "img": "🦘🐨"
     },
     {
       "id": "004",
@@ -53,12 +56,14 @@
         "Atlantik",
         "Indischer Ozean",
         "Arktischer Ozean"
-      ]
+      ],
+      "img": "🌊🏄"
     },
     {
       "id": "005",
       "q": "Welcher Ozean liegt zwischen Europa/Afrika und Amerika?",
-      "a": "Atlantik"
+      "a": "Atlantik",
+      "img": "🚢🌊🗽"
     },
     {
       "id": "006",
@@ -68,7 +73,8 @@
         "Kanada",
         "China",
         "USA"
-      ]
+      ],
+      "img": "🐻❄️"
     },
     {
       "id": "007",
@@ -79,7 +85,8 @@
         "USA",
         "Indonesien"
       ],
-      "info": "Indien hat China um das Jahr 2023 überholt."
+      "info": "Indien hat China um das Jahr 2023 überholt.",
+      "img": "🐘🕌👥"
     },
     {
       "id": "008",
@@ -90,7 +97,8 @@
         "Kangchendzönga",
         "Aconcagua"
       ],
-      "info": "Er ist 8849 m hoch und liegt im Himalaya an der Grenze von Nepal und China."
+      "info": "Er ist 8849 m hoch und liegt im Himalaya an der Grenze von Nepal und China.",
+      "img": "🏔️🧗"
     },
     {
       "id": "009",
@@ -101,13 +109,15 @@
         "Atlas",
         "Mont Blanc"
       ],
-      "info": "Der Kilimandscharo (5895 m) liegt in Tansania."
+      "info": "Der Kilimandscharo (5895 m) liegt in Tansania.",
+      "img": "🦒🏔️"
     },
     {
       "id": "010",
       "q": "Höchster Berg Südamerikas?",
       "a": "Aconcagua",
-      "info": "Der Aconcagua (rund 6960 m) liegt in Argentinien."
+      "info": "Der Aconcagua (rund 6960 m) liegt in Argentinien.",
+      "img": "🦙🏔️"
     },
     {
       "id": "011",
@@ -117,7 +127,8 @@
         "Kongo",
         "Niger",
         "Sambesi"
-      ]
+      ],
+      "img": "🐊🏺"
     },
     {
       "id": "012",
@@ -127,7 +138,8 @@
         "Nil",
         "Jangtse",
         "Mississippi"
-      ]
+      ],
+      "img": "🦜🌳💧"
     },
     {
       "id": "013",
@@ -138,7 +150,8 @@
         "Rocky Mountains",
         "Alpen"
       ],
-      "info": "Die Anden ziehen sich rund 7000 km an der Westküste Südamerikas entlang."
+      "info": "Die Anden ziehen sich rund 7000 km an der Westküste Südamerikas entlang.",
+      "img": "🦙⛰️"
     },
     {
       "id": "014",
@@ -148,7 +161,8 @@
         "Gobi",
         "Kalahari",
         "Atacama"
-      ]
+      ],
+      "img": "🐪🏜️"
     },
     {
       "id": "015",
@@ -159,13 +173,15 @@
         "Borneo",
         "Neuguinea"
       ],
-      "info": "Australien zählt als Kontinent, nicht als Insel."
+      "info": "Australien zählt als Kontinent, nicht als Insel.",
+      "img": "❄️🏝️"
     },
     {
       "id": "016",
       "q": "Wo liegt die tiefste bekannte Stelle der Ozeane?",
       "a": "Im Marianengraben",
-      "info": "Der Marianengraben im Pazifik ist rund 11 000 m tief."
+      "info": "Der Marianengraben im Pazifik ist rund 11 000 m tief.",
+      "img": "🌊🕳️🐙"
     },
     {
       "id": "017",
@@ -175,7 +191,8 @@
         "Tanganjikasee",
         "Victoriasee",
         "Kaspisches Meer"
-      ]
+      ],
+      "img": "🕳️💧"
     },
     {
       "id": "018",
@@ -184,22 +201,26 @@
       "choices": [
         "Suezkanal",
         "Nord-Ostsee-Kanal"
-      ]
+      ],
+      "img": "🚢🔒"
     },
     {
       "id": "019",
       "q": "Welche Meere verbindet der Suezkanal?",
-      "a": "Mittelmeer und Rotes Meer"
+      "a": "Mittelmeer und Rotes Meer",
+      "img": "🚢🐫"
     },
     {
       "id": "020",
       "q": "Wie heißt die gedachte Linie, die die Erde in Nord- und Südhalbkugel teilt?",
-      "a": "Äquator"
+      "a": "Äquator",
+      "img": "🌍🌡️〰️"
     },
     {
       "id": "021",
       "q": "Vor welchem Land liegt das Great Barrier Reef?",
-      "a": "Australien"
+      "a": "Australien",
+      "img": "🐠🐢"
     },
     {
       "id": "022",
@@ -209,7 +230,8 @@
         "New York",
         "Los Angeles",
         "Chicago"
-      ]
+      ],
+      "img": "🏛️🦅"
     },
     {
       "id": "023",
@@ -219,7 +241,8 @@
         "Toronto",
         "Montreal",
         "Vancouver"
-      ]
+      ],
+      "img": "🍁🏒"
     },
     {
       "id": "024",
@@ -229,7 +252,8 @@
         "Sydney",
         "Melbourne",
         "Perth"
-      ]
+      ],
+      "img": "🦘🏛️"
     },
     {
       "id": "025",
@@ -239,12 +263,14 @@
         "Rio de Janeiro",
         "São Paulo",
         "Salvador"
-      ]
+      ],
+      "img": "⚽🌳"
     },
     {
       "id": "026",
       "q": "Hauptstadt von Argentinien?",
-      "a": "Buenos Aires"
+      "a": "Buenos Aires",
+      "img": "🥩💃"
     },
     {
       "id": "027",
@@ -253,7 +279,8 @@
       "choices": [
         "Osaka",
         "Kyoto"
-      ]
+      ],
+      "img": "🍣🗻"
     },
     {
       "id": "028",
@@ -263,7 +290,8 @@
         "Shanghai",
         "Hongkong",
         "Guangzhou"
-      ]
+      ],
+      "img": "🐼🏯"
     },
     {
       "id": "029",
@@ -273,7 +301,8 @@
         "Mumbai",
         "Kalkutta",
         "Bangalore"
-      ]
+      ],
+      "img": "🐘🕌"
     },
     {
       "id": "030",
@@ -284,17 +313,20 @@
         "Izmir",
         "Antalya"
       ],
-      "info": "Istanbul ist die größte Stadt, Hauptstadt ist seit 1923 Ankara."
+      "info": "Istanbul ist die größte Stadt, Hauptstadt ist seit 1923 Ankara.",
+      "img": "🕌☕"
     },
     {
       "id": "031",
       "q": "Hauptstadt von Ägypten?",
-      "a": "Kairo"
+      "a": "Kairo",
+      "img": "🐫🔺"
     },
     {
       "id": "032",
       "q": "Hauptstadt von Kenia?",
-      "a": "Nairobi"
+      "a": "Nairobi",
+      "img": "🦁🦒"
     },
     {
       "id": "033",
@@ -304,7 +336,8 @@
         "Lagos",
         "Kano"
       ],
-      "info": "Lagos ist größer, seit 1991 ist aber Abuja Hauptstadt."
+      "info": "Lagos ist größer, seit 1991 ist aber Abuja Hauptstadt.",
+      "img": "🌳🏛️"
     },
     {
       "id": "034",
@@ -313,22 +346,26 @@
       "choices": [
         "Auckland",
         "Christchurch"
-      ]
+      ],
+      "img": "🥝🐑"
     },
     {
       "id": "035",
       "q": "Hauptstadt von Mexiko?",
-      "a": "Mexiko-Stadt"
+      "a": "Mexiko-Stadt",
+      "img": "🌮🌵"
     },
     {
       "id": "036",
       "q": "Hauptstadt von Südkorea?",
-      "a": "Seoul"
+      "a": "Seoul",
+      "img": "🏯🥢"
     },
     {
       "id": "037",
       "q": "Hauptstadt von Thailand?",
-      "a": "Bangkok"
+      "a": "Bangkok",
+      "img": "🐘🛶🌶️"
     },
     {
       "id": "038",
@@ -338,7 +375,8 @@
         "Cusco",
         "Quito",
         "La Paz"
-      ]
+      ],
+      "img": "🦙🏛️"
     }
   ]
 }

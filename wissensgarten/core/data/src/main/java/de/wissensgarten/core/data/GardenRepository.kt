@@ -52,7 +52,7 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
             CardEntity(
                 id = UUID.randomUUID().toString(), bedId = bed.id, profileId = profileId, sourceId = c.id,
                 front = c.q, back = c.a, choices = CardEntity.joinChoices(c.choices), info = c.info,
-                createdAt = now, sortIndex = i,
+                createdAt = now, sortIndex = i, img = c.img,
             )
         })
         bed.id
@@ -154,10 +154,10 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
                         added += CardEntity(
                             id = UUID.randomUUID().toString(), bedId = bed.id, profileId = bed.profileId, sourceId = c.id,
                             front = c.q, back = c.a, choices = CardEntity.joinChoices(c.choices), info = c.info,
-                            createdAt = now, sortIndex = i,
+                            createdAt = now, sortIndex = i, img = c.img,
                         )
                     } else {
-                        val n = e.copy(front = c.q, back = c.a, choices = CardEntity.joinChoices(c.choices), info = c.info, sortIndex = i)
+                        val n = e.copy(front = c.q, back = c.a, choices = CardEntity.joinChoices(c.choices), info = c.info, sortIndex = i, img = c.img)
                         if (n != e) changed += n
                     }
                 }

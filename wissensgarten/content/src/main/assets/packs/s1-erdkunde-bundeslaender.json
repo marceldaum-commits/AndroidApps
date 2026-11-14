@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-bundeslaender",
-  "version": 1,
+  "version": 2,
   "title": "Deutschlands Bundesländer",
   "subject": "erdkunde",
   "grades": [
@@ -21,7 +21,8 @@
         "15",
         "18"
       ],
-      "info": "Seit der Wiedervereinigung 1990 besteht Deutschland aus 16 Ländern."
+      "info": "Seit der Wiedervereinigung 1990 besteht Deutschland aus 16 Ländern.",
+      "img": "🗺️1️⃣6️⃣"
     },
     {
       "id": "002",
@@ -31,12 +32,14 @@
         "Nürnberg",
         "Augsburg",
         "Regensburg"
-      ]
+      ],
+      "img": "🥨⛪"
     },
     {
       "id": "003",
       "q": "Landeshauptstadt von Baden-Württemberg?",
-      "a": "Stuttgart"
+      "a": "Stuttgart",
+      "img": "🚗🐴"
     },
     {
       "id": "004",
@@ -47,12 +50,14 @@
         "Dortmund",
         "Bonn"
       ],
-      "info": "Köln ist die größte Stadt in NRW, Hauptstadt ist aber Düsseldorf."
+      "info": "Köln ist die größte Stadt in NRW, Hauptstadt ist aber Düsseldorf.",
+      "img": "🎨🌊🏙️"
     },
     {
       "id": "005",
       "q": "Landeshauptstadt von Niedersachsen?",
-      "a": "Hannover"
+      "a": "Hannover",
+      "img": "🐴🎡"
     },
     {
       "id": "006",
@@ -63,17 +68,20 @@
         "Kassel",
         "Darmstadt"
       ],
-      "info": "Frankfurt ist die größte Stadt Hessens, Regierungssitz ist Wiesbaden."
+      "info": "Frankfurt ist die größte Stadt Hessens, Regierungssitz ist Wiesbaden.",
+      "img": "♨️🍇"
     },
     {
       "id": "007",
       "q": "Landeshauptstadt von Rheinland-Pfalz?",
-      "a": "Mainz"
+      "a": "Mainz",
+      "img": "🎭⛪🍷"
     },
     {
       "id": "008",
       "q": "Landeshauptstadt des Saarlandes?",
-      "a": "Saarbrücken"
+      "a": "Saarbrücken",
+      "img": "⚒️🌲"
     },
     {
       "id": "009",
@@ -83,7 +91,8 @@
         "Leipzig",
         "Chemnitz",
         "Zwickau"
-      ]
+      ],
+      "img": "🎻🏰🌉"
     },
     {
       "id": "010",
@@ -92,12 +101,14 @@
       "choices": [
         "Halle (Saale)",
         "Dessau-Roßlau"
-      ]
+      ],
+      "img": "🏰⛪🍴"
     },
     {
       "id": "011",
       "q": "Landeshauptstadt von Thüringen?",
-      "a": "Erfurt"
+      "a": "Erfurt",
+      "img": "🌭⛪"
     },
     {
       "id": "012",
@@ -106,7 +117,8 @@
       "choices": [
         "Cottbus",
         "Frankfurt (Oder)"
-      ]
+      ],
+      "img": "🏰🌳👑"
     },
     {
       "id": "013",
@@ -117,18 +129,21 @@
         "Stralsund",
         "Greifswald"
       ],
-      "info": "Rostock ist die größte Stadt des Landes, Hauptstadt ist Schwerin."
+      "info": "Rostock ist die größte Stadt des Landes, Hauptstadt ist Schwerin.",
+      "img": "🏰🦢💧"
     },
     {
       "id": "014",
       "q": "Landeshauptstadt von Schleswig-Holstein?",
-      "a": "Kiel"
+      "a": "Kiel",
+      "img": "⛵🌊"
     },
     {
       "id": "015",
       "q": "Welche drei Bundesländer sind Stadtstaaten?",
       "a": "Berlin, Hamburg und Bremen",
-      "info": "Bei Stadtstaaten ist die Stadt selbst ein Bundesland. Zum Land Bremen gehört auch Bremerhaven."
+      "info": "Bei Stadtstaaten ist die Stadt selbst ein Bundesland. Zum Land Bremen gehört auch Bremerhaven.",
+      "img": "🐻⚓🐓"
     },
     {
       "id": "016",
@@ -138,7 +153,8 @@
         "Niedersachsen",
         "Baden-Württemberg",
         "Nordrhein-Westfalen"
-      ]
+      ],
+      "img": "🥨🏔️"
     },
     {
       "id": "017",
@@ -149,7 +165,8 @@
         "Baden-Württemberg",
         "Niedersachsen"
       ],
-      "info": "In NRW leben rund 18 Millionen Menschen."
+      "info": "In NRW leben rund 18 Millionen Menschen.",
+      "img": "🏭👥"
     },
     {
       "id": "018",
@@ -159,7 +176,8 @@
         "Saarland",
         "Hamburg",
         "Berlin"
-      ]
+      ],
+      "img": "🐓🎺"
     },
     {
       "id": "019",
@@ -170,12 +188,14 @@
         "Feldberg",
         "Brocken"
       ],
-      "info": "Die Zugspitze ist 2962 m hoch und liegt in Bayern an der Grenze zu Österreich."
+      "info": "Die Zugspitze ist 2962 m hoch und liegt in Bayern an der Grenze zu Österreich.",
+      "img": "🏔️👑"
     },
     {
       "id": "020",
       "q": "Wie hoch ist die Zugspitze ungefähr?",
-      "a": "2962 m"
+      "a": "2962 m",
+      "img": "🏔️📏"
     },
     {
       "id": "021",
@@ -186,13 +206,15 @@
         "Feldberg",
         "Großer Arber"
       ],
-      "info": "Der Brocken (1141 m) liegt in Sachsen-Anhalt."
+      "info": "Der Brocken (1141 m) liegt in Sachsen-Anhalt.",
+      "img": "🧙🌫️⛰️"
     },
     {
       "id": "022",
       "q": "Wie heißt der höchste Berg im Schwarzwald?",
       "a": "Feldberg",
-      "info": "Der Feldberg ist 1493 m hoch."
+      "info": "Der Feldberg ist 1493 m hoch.",
+      "img": "🌲🎂⛰️"
     },
     {
       "id": "023",
@@ -202,7 +224,8 @@
         "Harz",
         "Rhön",
         "Eifel"
-      ]
+      ],
+      "img": "⛏️🎄"
     },
     {
       "id": "024",
@@ -213,7 +236,8 @@
         "Donau",
         "Weser"
       ],
-      "info": "Rund 865 km des Rheins liegen in Deutschland."
+      "info": "Rund 865 km des Rheins liegen in Deutschland.",
+      "img": "🏞️🚢"
     },
     {
       "id": "025",
@@ -223,7 +247,8 @@
         "Ostsee",
         "Schwarzes Meer",
         "Mittelmeer"
-      ]
+      ],
+      "img": "🌊⛵"
     },
     {
       "id": "026",
@@ -234,12 +259,14 @@
         "Ostsee",
         "Mittelmeer"
       ],
-      "info": "Die Donau entspringt im Schwarzwald und fließt nach Osten."
+      "info": "Die Donau entspringt im Schwarzwald und fließt nach Osten.",
+      "img": "🌊⚫"
     },
     {
       "id": "027",
       "q": "Welcher große Fluss fließt durch Hamburg?",
-      "a": "Elbe"
+      "a": "Elbe",
+      "img": "🏙️⚓🚢"
     },
     {
       "id": "028",
@@ -249,7 +276,8 @@
         "Oder",
         "Elbe",
         "Saale"
-      ]
+      ],
+      "img": "🐻🌊"
     },
     {
       "id": "029",
@@ -259,19 +287,22 @@
         "Nürnberg",
         "Augsburg",
         "Regensburg"
-      ]
+      ],
+      "img": "🥨🌊"
     },
     {
       "id": "030",
       "q": "Bei welcher Stadt mündet die Mosel in den Rhein?",
       "a": "Koblenz",
-      "info": "Die Landzunge an der Mündung heißt Deutsches Eck."
+      "info": "Die Landzunge an der Mündung heißt Deutsches Eck.",
+      "img": "🏰🔱"
     },
     {
       "id": "031",
       "q": "Welcher Fluss bildet einen großen Teil der Grenze zu Polen?",
       "a": "Oder",
-      "info": "Oder und Neiße bilden zusammen die deutsch-polnische Grenze."
+      "info": "Oder und Neiße bilden zusammen die deutsch-polnische Grenze.",
+      "img": "🌊🌉🏞️"
     },
     {
       "id": "032",
@@ -282,12 +313,14 @@
         "Starnberger See",
         "Steinhuder Meer"
       ],
-      "info": "Die Müritz liegt in Mecklenburg-Vorpommern."
+      "info": "Die Müritz liegt in Mecklenburg-Vorpommern.",
+      "img": "🦢🏞️"
     },
     {
       "id": "033",
       "q": "An welchem See grenzen Deutschland, Österreich und die Schweiz aneinander?",
-      "a": "Bodensee"
+      "a": "Bodensee",
+      "img": "⛵🏔️"
     },
     {
       "id": "034",
@@ -298,12 +331,14 @@
         "Sylt",
         "Fehmarn"
       ],
-      "info": "Rügen liegt in der Ostsee und gehört zu Mecklenburg-Vorpommern."
+      "info": "Rügen liegt in der Ostsee und gehört zu Mecklenburg-Vorpommern.",
+      "img": "🏝️⛰️"
     },
     {
       "id": "035",
       "q": "An welche zwei Meere grenzt Deutschland?",
-      "a": "Nordsee und Ostsee"
+      "a": "Nordsee und Ostsee",
+      "img": "🌊🐚🌊"
     },
     {
       "id": "036",
@@ -314,7 +349,8 @@
         "8",
         "10"
       ],
-      "info": "Dänemark, Polen, Tschechien, Österreich, Schweiz, Frankreich, Luxemburg, Belgien, Niederlande."
+      "info": "Dänemark, Polen, Tschechien, Österreich, Schweiz, Frankreich, Luxemburg, Belgien, Niederlande.",
+      "img": "🏡9️⃣"
     }
   ]
 }

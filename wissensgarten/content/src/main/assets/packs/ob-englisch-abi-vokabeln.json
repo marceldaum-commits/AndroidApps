@@ -1,6 +1,6 @@
 {
   "id": "ob-englisch-abi-vokabeln",
-  "version": 1,
+  "version": 2,
   "title": "Englisch Abi-Vokabeln",
   "subject": "englisch",
   "grades": [
@@ -21,12 +21,14 @@
         "sustenance",
         "durability",
         "viability"
-      ]
+      ],
+      "img": "♻️🌱"
     },
     {
       "id": "002",
       "q": "der Klimawandel",
-      "a": "climate change"
+      "a": "climate change",
+      "img": "🌡️🌍"
     },
     {
       "id": "003",
@@ -36,12 +38,14 @@
         "recycled energy",
         "reusable energy",
         "renewed energy"
-      ]
+      ],
+      "img": "☀️🌬️"
     },
     {
       "id": "004",
       "q": "der Treibhauseffekt",
-      "a": "greenhouse effect"
+      "a": "greenhouse effect",
+      "img": "🏠🌿🌡️"
     },
     {
       "id": "005",
@@ -51,12 +55,14 @@
         "biology",
         "biosphere",
         "bioethics"
-      ]
+      ],
+      "img": "🦋🐸🌺"
     },
     {
       "id": "006",
       "q": "die Abholzung",
-      "a": "deforestation"
+      "a": "deforestation",
+      "img": "🌲🚜"
     },
     {
       "id": "007",
@@ -66,12 +72,14 @@
         "population",
         "polling",
         "pollination"
-      ]
+      ],
+      "img": "🏭💨"
     },
     {
       "id": "008",
       "q": "der CO₂-Fußabdruck",
-      "a": "carbon footprint"
+      "a": "carbon footprint",
+      "img": "👣💨"
     },
     {
       "id": "009",
@@ -82,12 +90,14 @@
         "deportation",
         "integrity"
       ],
-      "info": "emigration = Auswanderung"
+      "info": "emigration = Auswanderung",
+      "img": "🧳➡️🏠"
     },
     {
       "id": "010",
       "q": "die Auswanderung",
-      "a": "emigration"
+      "a": "emigration",
+      "img": "🏠➡️🧳"
     },
     {
       "id": "011",
@@ -97,13 +107,15 @@
         "selection",
         "elocution",
         "elector"
-      ]
+      ],
+      "img": "🗳️"
     },
     {
       "id": "012",
       "q": "das Wahlrecht (Recht zu wählen)",
       "a": "the right to vote",
-      "info": "Fachwort auch: suffrage"
+      "info": "Fachwort auch: suffrage",
+      "img": "🗳️✅"
     },
     {
       "id": "013",
@@ -113,12 +125,14 @@
         "governor",
         "governance board",
         "governing"
-      ]
+      ],
+      "img": "🏛️👔"
     },
     {
       "id": "014",
       "q": "die Gesetzgebung",
-      "a": "legislation"
+      "a": "legislation",
+      "img": "📜🔨"
     },
     {
       "id": "015",
@@ -128,12 +142,14 @@
         "constellation",
         "institution",
         "condition"
-      ]
+      ],
+      "img": "📜⚖️"
     },
     {
       "id": "016",
       "q": "die Rechtsstaatlichkeit",
-      "a": "the rule of law"
+      "a": "the rule of law",
+      "img": "⚖️👑"
     },
     {
       "id": "017",
@@ -143,12 +159,14 @@
         "division of violence",
         "balance of violence",
         "sharing of forces"
-      ]
+      ],
+      "img": "🏛️🏛️🏛️"
     },
     {
       "id": "018",
       "q": "die Armut",
-      "a": "poverty"
+      "a": "poverty",
+      "img": "👛🕳️"
     },
     {
       "id": "019",
@@ -158,12 +176,14 @@
         "employment",
         "unemployed",
         "underemployment"
-      ]
+      ],
+      "img": "💼❌"
     },
     {
       "id": "020",
       "q": "die Ungleichheit",
-      "a": "inequality"
+      "a": "inequality",
+      "img": "⬆️⬇️⚖️"
     },
     {
       "id": "021",
@@ -173,7 +193,8 @@
         "diversion",
         "divinity",
         "density"
-      ]
+      ],
+      "img": "🌈👥"
     },
     {
       "id": "022",
@@ -183,12 +204,14 @@
         "precedent",
         "preference",
         "presumption"
-      ]
+      ],
+      "img": "🏷️🧐"
     },
     {
       "id": "023",
       "q": "die Rassentrennung (USA)",
-      "a": "segregation"
+      "a": "segregation",
+      "img": "🚌🚧"
     },
     {
       "id": "024",
@@ -198,7 +221,8 @@
         "civil war movement",
         "citizen law motion",
         "civic duty movement"
-      ]
+      ],
+      "img": "✊🎤"
     },
     {
       "id": "025",
@@ -209,17 +233,20 @@
         "fugitive",
         "resident"
       ],
-      "info": "refuge = Zuflucht, fugitive = Flüchtiger (auf der Flucht vor der Justiz)"
+      "info": "refuge = Zuflucht, fugitive = Flüchtiger (auf der Flucht vor der Justiz)",
+      "img": "⛺🧳"
     },
     {
       "id": "026",
       "q": "die Asylbewerberin / der Asylbewerber",
-      "a": "asylum seeker"
+      "a": "asylum seeker",
+      "img": "🛡️🧳"
     },
     {
       "id": "027",
       "q": "die Meinungsfreiheit",
-      "a": "freedom of speech"
+      "a": "freedom of speech",
+      "img": "🗣️🕊️"
     },
     {
       "id": "028",
@@ -230,12 +257,14 @@
         "census",
         "consensus"
       ],
-      "info": "census = Volkszählung, censure = scharfe Kritik/Rüge"
+      "info": "census = Volkszählung, censure = scharfe Kritik/Rüge",
+      "img": "🤐📰"
     },
     {
       "id": "029",
       "q": "die Überwachung (z. B. durch Kameras)",
-      "a": "surveillance"
+      "a": "surveillance",
+      "img": "📹👁️"
     },
     {
       "id": "030",
@@ -245,7 +274,8 @@
         "referee",
         "reference",
         "reform"
-      ]
+      ],
+      "img": "✅❌🗳️"
     },
     {
       "id": "031",
@@ -256,13 +286,15 @@
         "ecology",
         "economist"
       ],
-      "info": "economics = Wirtschaftswissenschaft"
+      "info": "economics = Wirtschaftswissenschaft",
+      "img": "📈🏭"
     },
     {
       "id": "032",
       "q": "der Wohlstand",
       "a": "prosperity",
-      "info": "auch: wealth, affluence"
+      "info": "auch: wealth, affluence",
+      "img": "💰🏡"
     },
     {
       "id": "033",
@@ -272,12 +304,14 @@
         "health insurance",
         "wellness",
         "welfare"
-      ]
+      ],
+      "img": "🏥💊"
     },
     {
       "id": "034",
       "q": "die Massentierhaltung",
-      "a": "factory farming"
+      "a": "factory farming",
+      "img": "🐖🐖🏭"
     },
     {
       "id": "035",
@@ -287,17 +321,20 @@
         "sea-level fall",
         "tidal wave",
         "sea-mirror rise"
-      ]
+      ],
+      "img": "🌊⬆️🏝️"
     },
     {
       "id": "036",
       "q": "die Herausforderung",
-      "a": "challenge"
+      "a": "challenge",
+      "img": "🧗⛰️"
     },
     {
       "id": "037",
       "q": "die Arbeitslosenquote",
-      "a": "unemployment rate"
+      "a": "unemployment rate",
+      "img": "💼📊"
     }
   ]
 }

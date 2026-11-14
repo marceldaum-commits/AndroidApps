@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-geometrie-formeln",
-  "version": 1,
+  "version": 2,
   "title": "Geometrie-Formeln",
   "subject": "mathe",
   "grades": [
@@ -21,7 +21,8 @@
         "A = 2a + 2b",
         "A = a + b",
         "A = a² · b"
-      ]
+      ],
+      "img": "📱"
     },
     {
       "id": "002",
@@ -32,12 +33,14 @@
         "u = 4a",
         "u = a + b"
       ],
-      "info": "Gleichwertig: u = 2 · (a + b)"
+      "info": "Gleichwertig: u = 2 · (a + b)",
+      "img": "🏟️"
     },
     {
       "id": "003",
       "q": "Flächeninhalt eines Quadrats mit Seite a?",
-      "a": "A = a²"
+      "a": "A = a²",
+      "img": "⬛"
     },
     {
       "id": "004",
@@ -48,13 +51,15 @@
         "A = g + h",
         "A = 2 · g · h"
       ],
-      "info": "Ein Dreieck ist ein halbes Parallelogramm."
+      "info": "Ein Dreieck ist ein halbes Parallelogramm.",
+      "img": "⛺"
     },
     {
       "id": "005",
       "q": "Flächeninhalt eines Parallelogramms?",
       "a": "A = g · h",
-      "info": "h steht senkrecht auf der Grundseite g."
+      "info": "h steht senkrecht auf der Grundseite g.",
+      "img": "📏📏"
     },
     {
       "id": "006",
@@ -65,12 +70,14 @@
         "A = a · c · h",
         "A = ½ · a · c"
       ],
-      "info": "Mittelwert der parallelen Seiten mal Höhe."
+      "info": "Mittelwert der parallelen Seiten mal Höhe.",
+      "img": "🧺"
     },
     {
       "id": "007",
       "q": "Flächeninhalt einer Raute mit Diagonalen e und f?",
-      "a": "A = ½ · e · f"
+      "a": "A = ½ · e · f",
+      "img": "♦️"
     },
     {
       "id": "008",
@@ -80,7 +87,8 @@
         "A = 2 · π · r",
         "A = π · d²",
         "A = π² · r"
-      ]
+      ],
+      "img": "🍕"
     },
     {
       "id": "009",
@@ -91,12 +99,14 @@
         "u = π · r",
         "u = 2 · r²"
       ],
-      "info": "Gleichwertig: u = π · d"
+      "info": "Gleichwertig: u = π · d",
+      "img": "🎡"
     },
     {
       "id": "010",
       "q": "Fläche eines Kreisausschnitts mit Mittelpunktswinkel α?",
-      "a": "A = α/360° · π · r²"
+      "a": "A = α/360° · π · r²",
+      "img": "🧀"
     },
     {
       "id": "011",
@@ -107,12 +117,14 @@
         "≈ 31,4 cm²",
         "≈ 100 cm²"
       ],
-      "info": "π · 10² ≈ 3,14 · 100"
+      "info": "π · 10² ≈ 3,14 · 100",
+      "img": "🍕3️⃣"
     },
     {
       "id": "012",
       "q": "Volumen eines Würfels mit Kante a?",
-      "a": "V = a³"
+      "a": "V = a³",
+      "img": "🎲"
     },
     {
       "id": "013",
@@ -123,7 +135,8 @@
         "18 cm³",
         "54 cm³"
       ],
-      "info": "3 · 3 · 3 = 27"
+      "info": "3 · 3 · 3 = 27",
+      "img": "🎲3️⃣"
     },
     {
       "id": "014",
@@ -134,18 +147,21 @@
         "O = 4 · a²",
         "O = 12 · a"
       ],
-      "info": "Ein Würfel hat 6 gleich große quadratische Flächen."
+      "info": "Ein Würfel hat 6 gleich große quadratische Flächen.",
+      "img": "🎁"
     },
     {
       "id": "015",
       "q": "Volumen eines Quaders?",
-      "a": "V = a · b · c"
+      "a": "V = a · b · c",
+      "img": "📦"
     },
     {
       "id": "016",
       "q": "Oberfläche eines Quaders?",
       "a": "O = 2 · (ab + ac + bc)",
-      "info": "Je zwei gegenüberliegende Flächen sind gleich groß."
+      "info": "Je zwei gegenüberliegende Flächen sind gleich groß.",
+      "img": "📦🖌️"
     },
     {
       "id": "017",
@@ -156,13 +172,15 @@
         "V = ⅓ · π · r² · h",
         "V = π · r · h²"
       ],
-      "info": "Grundfläche (Kreis) mal Höhe."
+      "info": "Grundfläche (Kreis) mal Höhe.",
+      "img": "🥫"
     },
     {
       "id": "018",
       "q": "Volumen eines Kegels?",
       "a": "V = ⅓ · π · r² · h",
-      "info": "Ein Drittel des passenden Zylinders."
+      "info": "Ein Drittel des passenden Zylinders.",
+      "img": "🍦"
     },
     {
       "id": "019",
@@ -172,7 +190,8 @@
         "V = G · h",
         "V = ½ · G · h",
         "V = 3 · G · h"
-      ]
+      ],
+      "img": "🔺"
     },
     {
       "id": "020",
@@ -182,12 +201,14 @@
         "V = 4 · π · r²",
         "V = ⅓ · π · r³",
         "V = 4/3 · π · r²"
-      ]
+      ],
+      "img": "⚽"
     },
     {
       "id": "021",
       "q": "Oberfläche einer Kugel?",
-      "a": "O = 4 · π · r²"
+      "a": "O = 4 · π · r²",
+      "img": "🏀"
     },
     {
       "id": "022",
@@ -198,13 +219,15 @@
         "a² − b² = c²",
         "a² + c² = b²"
       ],
-      "info": "Gilt nur im rechtwinkligen Dreieck."
+      "info": "Gilt nur im rechtwinkligen Dreieck.",
+      "img": "📐"
     },
     {
       "id": "023",
       "q": "Welche Seite heißt Hypotenuse?",
       "a": "Die Seite gegenüber dem rechten Winkel",
-      "info": "Sie ist die längste Seite im rechtwinkligen Dreieck."
+      "info": "Sie ist die längste Seite im rechtwinkligen Dreieck.",
+      "img": "📐↗️"
     },
     {
       "id": "024",
@@ -215,7 +238,8 @@
         "6 cm",
         "25 cm"
       ],
-      "info": "√(9 + 16) = √25 = 5"
+      "info": "√(9 + 16) = √25 = 5",
+      "img": "3️⃣4️⃣5️⃣"
     },
     {
       "id": "025",
@@ -226,7 +250,8 @@
         "18 cm",
         "11 cm"
       ],
-      "info": "√(169 − 25) = √144 = 12"
+      "info": "√(169 − 25) = √144 = 12",
+      "img": "5️⃣1️⃣2️⃣"
     },
     {
       "id": "026",
@@ -236,12 +261,14 @@
         "d = a · √3",
         "d = 2 · a",
         "d = a / 2"
-      ]
+      ],
+      "img": "⬛✂️"
     },
     {
       "id": "027",
       "q": "Länge der Raumdiagonale eines Würfels mit Kante a?",
-      "a": "d = a · √3"
+      "a": "d = a · √3",
+      "img": "🎲📏"
     },
     {
       "id": "028",
@@ -251,17 +278,20 @@
         "360°",
         "90°",
         "270°"
-      ]
+      ],
+      "img": "🛹"
     },
     {
       "id": "029",
       "q": "Winkelsumme im Viereck?",
-      "a": "360°"
+      "a": "360°",
+      "img": "🔄"
     },
     {
       "id": "030",
       "q": "Satz des Thales: C liegt auf dem Kreis mit Durchmesser AB. Was gilt?",
-      "a": "Der Winkel bei C ist 90°"
+      "a": "Der Winkel bei C ist 90°",
+      "img": "⭕📐"
     },
     {
       "id": "031",
@@ -272,7 +302,8 @@
         "1 000 cm²",
         "100 000 cm²"
       ],
-      "info": "Flächeneinheiten: Umrechnungszahl 100 (100 · 100)."
+      "info": "Flächeneinheiten: Umrechnungszahl 100 (100 · 100).",
+      "img": "🧱"
     },
     {
       "id": "032",
@@ -282,13 +313,15 @@
         "1 Milliliter",
         "10 Liter",
         "100 Liter"
-      ]
+      ],
+      "img": "🥛"
     },
     {
       "id": "033",
       "q": "1 m³ = ? Liter",
       "a": "1 000 Liter",
-      "info": "1 m³ = 1 000 dm³"
+      "info": "1 m³ = 1 000 dm³",
+      "img": "🛁"
     }
   ]
 }

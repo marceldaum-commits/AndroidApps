@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-stilmittel",
-  "version": 1,
+  "version": 2,
   "title": "Stilmittel erkennen",
   "subject": "deutsch",
   "grades": [
@@ -24,7 +24,8 @@
         "Personifikation",
         "Alliteration"
       ],
-      "info": "Bildhafter Ausdruck ohne „wie“."
+      "info": "Bildhafter Ausdruck ohne „wie“.",
+      "img": "❤️🗿"
     },
     {
       "id": "002",
@@ -35,7 +36,8 @@
         "Personifikation",
         "Ellipse"
       ],
-      "info": "Erkennbar an „wie“ oder „als ob“."
+      "info": "Erkennbar an „wie“ oder „als ob“.",
+      "img": "🐻💪"
     },
     {
       "id": "003",
@@ -46,7 +48,8 @@
         "Epipher",
         "Ellipse"
       ],
-      "info": "Gleicher Anfangslaut aufeinanderfolgender Wörter."
+      "info": "Gleicher Anfangslaut aufeinanderfolgender Wörter.",
+      "img": "🥛Ⓜ️Ⓜ️"
     },
     {
       "id": "004",
@@ -57,7 +60,8 @@
         "Alliteration",
         "Ironie"
       ],
-      "info": "Unbelebtes erhält menschliche Eigenschaften."
+      "info": "Unbelebtes erhält menschliche Eigenschaften.",
+      "img": "🌞😂"
     },
     {
       "id": "005",
@@ -68,7 +72,8 @@
         "Euphemismus",
         "Ellipse"
       ],
-      "info": "Starke Übertreibung."
+      "info": "Starke Übertreibung.",
+      "img": "🔊💯"
     },
     {
       "id": "006",
@@ -79,7 +84,8 @@
         "Oxymoron",
         "Chiasmus"
       ],
-      "info": "Wiederholung am Anfang aufeinanderfolgender Sätze."
+      "info": "Wiederholung am Anfang aufeinanderfolgender Sätze.",
+      "img": "🚦🔁"
     },
     {
       "id": "007",
@@ -90,12 +96,14 @@
         "Chiasmus",
         "Hyperbel"
       ],
-      "info": "Wiederholung am Ende aufeinanderfolgender Sätze."
+      "info": "Wiederholung am Ende aufeinanderfolgender Sätze.",
+      "img": "🔁🔚"
     },
     {
       "id": "008",
       "q": "„Wer hat schon Lust auf Montag?“ (Antwort ist klar)",
-      "a": "rhetorische Frage"
+      "a": "rhetorische Frage",
+      "img": "❓🙄"
     },
     {
       "id": "009",
@@ -106,7 +114,8 @@
         "Hyperbel",
         "Vergleich"
       ],
-      "info": "Zwei widersprüchliche Begriffe in einem Ausdruck."
+      "info": "Zwei widersprüchliche Begriffe in einem Ausdruck.",
+      "img": "🍬🍋"
     },
     {
       "id": "010",
@@ -117,7 +126,8 @@
         "Parallelismus",
         "Klimax"
       ],
-      "info": "Überkreuzstellung: lang – kurz / Kunst – Leben."
+      "info": "Überkreuzstellung: lang – kurz / Kunst – Leben.",
+      "img": "✖️🔀"
     },
     {
       "id": "011",
@@ -128,7 +138,8 @@
         "Anapher",
         "Euphemismus"
       ],
-      "info": "Gegenüberstellung von Gegensätzen."
+      "info": "Gegenüberstellung von Gegensätzen.",
+      "img": "🌹⚰️"
     },
     {
       "id": "012",
@@ -139,7 +150,8 @@
         "Euphemismus",
         "Oxymoron"
       ],
-      "info": "Steigerung vom schwächeren zum stärkeren Ausdruck."
+      "info": "Steigerung vom schwächeren zum stärkeren Ausdruck.",
+      "img": "📈🏆"
     },
     {
       "id": "013",
@@ -150,12 +162,14 @@
         "Ironie",
         "Metapher"
       ],
-      "info": "Beschönigende Umschreibung."
+      "info": "Beschönigende Umschreibung.",
+      "img": "🌸☁️"
     },
     {
       "id": "014",
       "q": "„Na toll, schon wieder Regen!“",
-      "a": "Ironie"
+      "a": "Ironie",
+      "img": "🌧️👍"
     },
     {
       "id": "015",
@@ -166,12 +180,14 @@
         "Antithese",
         "Litotes"
       ],
-      "info": "Unvollständiger Satz – Teile werden weggelassen."
+      "info": "Unvollständiger Satz – Teile werden weggelassen.",
+      "img": "✂️💬"
     },
     {
       "id": "016",
       "q": "„Die Bienen summen, es brummt und zischt.“",
-      "a": "Onomatopoesie (Lautmalerei)"
+      "a": "Onomatopoesie (Lautmalerei)",
+      "img": "🐝🔊"
     },
     {
       "id": "017",
@@ -182,18 +198,21 @@
         "Anapher",
         "Klimax"
       ],
-      "info": "Gleicher Satzbau in aufeinanderfolgenden Sätzen."
+      "info": "Gleicher Satzbau in aufeinanderfolgenden Sätzen.",
+      "img": "🛤️"
     },
     {
       "id": "018",
       "q": "Wie heißt eine sprachliche Neuschöpfung, z. B. „Handyverbotszone“?",
-      "a": "Neologismus"
+      "a": "Neologismus",
+      "img": "🆕🔤"
     },
     {
       "id": "019",
       "q": "„Wir brauchen ein Dach über dem Kopf.“ (Dach für Haus)",
       "a": "Pars pro toto",
-      "info": "Ein Teil steht für das Ganze."
+      "info": "Ein Teil steht für das Ganze.",
+      "img": "🧩➡️🏠"
     },
     {
       "id": "020",
@@ -203,29 +222,34 @@
         "Vergleich",
         "Alliteration",
         "Hyperbel"
-      ]
+      ],
+      "img": "🌬️🤫"
     },
     {
       "id": "021",
       "q": "„Das war gar nicht mal so schlecht.“ (= ziemlich gut)",
       "a": "Litotes",
-      "info": "Untertreibung durch Verneinung des Gegenteils."
+      "info": "Untertreibung durch Verneinung des Gegenteils.",
+      "img": "👎❌"
     },
     {
       "id": "022",
       "q": "Die Taube steht für Frieden, das Herz für Liebe.",
-      "a": "Symbol"
+      "a": "Symbol",
+      "img": "🕊️❤️"
     },
     {
       "id": "023",
       "q": "„Groß war die Freude.“",
       "a": "Inversion",
-      "info": "Umstellung der gewohnten Wortstellung."
+      "info": "Umstellung der gewohnten Wortstellung.",
+      "img": "🙃🔀"
     },
     {
       "id": "024",
       "q": "„Ich warte hier schon eine Ewigkeit!“",
-      "a": "Hyperbel"
+      "a": "Hyperbel",
+      "img": "♾️⏳"
     },
     {
       "id": "025",
@@ -235,7 +259,8 @@
         "Vergleich",
         "Ironie",
         "Euphemismus"
-      ]
+      ],
+      "img": "🌍🎒"
     },
     {
       "id": "026",
@@ -245,30 +270,35 @@
         "Anapher",
         "Epipher",
         "Ellipse"
-      ]
+      ],
+      "img": "🧒🎳"
     },
     {
       "id": "027",
       "q": "„ein schreiendes Rot“",
       "a": "Synästhesie",
-      "info": "Vermischung von Sinneseindrücken (Hören und Sehen)."
+      "info": "Vermischung von Sinneseindrücken (Hören und Sehen).",
+      "img": "🔴📢"
     },
     {
       "id": "028",
       "q": "„Und es wallet und siedet und brauset und zischt“ (Schiller)",
       "a": "Polysyndeton",
-      "info": "Häufung von Konjunktionen, hier „und“."
+      "info": "Häufung von Konjunktionen, hier „und“.",
+      "img": "➕➕➕"
     },
     {
       "id": "029",
       "q": "„Äpfel, Birnen, Pflaumen, Kirschen – das ganze Obst lag am Boden.“",
       "a": "Akkumulation",
-      "info": "Aufzählung von Unterbegriffen zu einem Oberbegriff."
+      "info": "Aufzählung von Unterbegriffen zu einem Oberbegriff.",
+      "img": "🍎🍐🍒"
     },
     {
       "id": "030",
       "q": "Ein Stilmittel, das etwas Gemeintes durch sein Gegenteil ausdrückt",
-      "a": "Ironie"
+      "a": "Ironie",
+      "img": "😏🔄"
     }
   ]
 }

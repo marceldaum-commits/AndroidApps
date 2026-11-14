@@ -14,7 +14,7 @@ Pakete sind reine Daten: Neue Pakete oder Updates brauchen keinen Code.
   "tier": "free",
   "description": "Alle Malaufgaben bis 10 × 10.",
   "cards": [
-    { "id": "001", "q": "3 × 4", "a": "12", "choices": ["7", "14", "16"], "info": "3 × 4 = 4 + 4 + 4" }
+    { "id": "001", "q": "3 × 4", "a": "12", "choices": ["7", "14", "16"], "info": "3 × 4 = 4 + 4 + 4", "img": "🍪🍪🍪" }
   ]
 }
 ```
@@ -35,6 +35,7 @@ Pakete sind reine Daten: Neue Pakete oder Updates brauchen keinen Code.
 | `cards[].q` | ja | Frage/Vorderseite, kurz (max. ~90 Zeichen) |
 | `cards[].a` | ja | Antwort, kurz (max. ~60 Zeichen), eindeutig |
 | `cards[].choices` | nein | **nur falsche** Antworten (2–3 Stück), plausibel, gleiche Form wie `a`. Mit `choices` wird die Karte als Auswahl-Aufgabe gespielt und automatisch bewertet. Für Klasse 1–4 Pflicht |
+| `cards[].img` | empfohlen | **Merkbild**: 1–3 Emojis, die zusammen eine einprägsame Szene/Eselsbrücke ergeben (z. B. Paris → `🗼🥐`). Nur Emoji-Version ≤ 11.0 (bis 2018), keine Flaggen, keine Hautfarben, keine ZWJ-Kombinationen. Wird animiert gezeigt. |
 | `cards[].info` | nein | kurze Erklärung/Merkhilfe (max. ~140 Zeichen), wird nach der Antwort gezeigt |
 
 ## Fach-IDs

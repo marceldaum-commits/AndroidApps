@@ -13,7 +13,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
  */
 @Database(
     entities = [ProfileEntity::class, BedEntity::class, CardEntity::class, ReviewLogEntity::class, InventoryEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 abstract class GardenDatabase : RoomDatabase() {
@@ -23,7 +23,14 @@ abstract class GardenDatabase : RoomDatabase() {
         fun create(context: Context, inMemory: Boolean = false): GardenDatabase {
             val b = if (inMemory) Room.inMemoryDatabaseBuilder(context, GardenDatabase::class.java)
             else Room.databaseBuilder(context, GardenDatabase::class.java, "garten.db")
-            return b.addMigrations(MIGRATION_1_2).build()
+            return b.addMigrations(MIGRATION_1_2, MIGRATION_2_3).build()
+        }
+
+        /** v3: Merkbilder für Karten. */
+        val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `cards` ADD COLUMN `img` TEXT")
+            }
         }
 
         /** v2: Gartenladen – Inventar und Pflanzenart pro Beet. */

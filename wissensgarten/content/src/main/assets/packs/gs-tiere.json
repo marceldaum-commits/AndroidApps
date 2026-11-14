@@ -1,6 +1,6 @@
 {
   "id": "gs-tiere",
-  "version": 1,
+  "version": 2,
   "title": "Tiere entdecken",
   "subject": "sachunterricht",
   "grades": [
@@ -20,7 +20,8 @@
         "Fohlen",
         "Lamm",
         "Ferkel"
-      ]
+      ],
+      "img": "🐄🍼"
     },
     {
       "id": "002",
@@ -30,7 +31,8 @@
         "Kalb",
         "Welpe",
         "Küken"
-      ]
+      ],
+      "img": "🐴🍼"
     },
     {
       "id": "003",
@@ -40,7 +42,8 @@
         "Zicklein",
         "Ferkel",
         "Fohlen"
-      ]
+      ],
+      "img": "🐑🍼"
     },
     {
       "id": "004",
@@ -50,7 +53,8 @@
         "Kalb",
         "Lamm",
         "Kitz"
-      ]
+      ],
+      "img": "🐖🍼"
     },
     {
       "id": "005",
@@ -60,7 +64,8 @@
         "Fohlen",
         "Küken",
         "Ferkel"
-      ]
+      ],
+      "img": "🐶🦴"
     },
     {
       "id": "006",
@@ -70,7 +75,8 @@
         "Welpe",
         "Kalb",
         "Lamm"
-      ]
+      ],
+      "img": "🐣"
     },
     {
       "id": "007",
@@ -80,7 +86,8 @@
         "Ferkel",
         "Fohlen",
         "Welpe"
-      ]
+      ],
+      "img": "🐐🍼"
     },
     {
       "id": "008",
@@ -90,7 +97,8 @@
         "Fohlen",
         "Ferkel",
         "Küken"
-      ]
+      ],
+      "img": "🦌🍼"
     },
     {
       "id": "009",
@@ -101,7 +109,8 @@
         "Welpe",
         "Küken"
       ],
-      "info": "Aus Kaulquappen werden später Frösche."
+      "info": "Aus Kaulquappen werden später Frösche.",
+      "img": "🐸🥚"
     },
     {
       "id": "010",
@@ -112,7 +121,8 @@
         "Küken",
         "Fohlen"
       ],
-      "info": "Ei – Raupe – Puppe – Schmetterling"
+      "info": "Ei – Raupe – Puppe – Schmetterling",
+      "img": "🦋🐛"
     },
     {
       "id": "011",
@@ -122,7 +132,8 @@
         "Henne",
         "Küken",
         "Hengst"
-      ]
+      ],
+      "img": "🐓🌅"
     },
     {
       "id": "012",
@@ -132,7 +143,8 @@
         "Hengst",
         "Kuh",
         "Sau"
-      ]
+      ],
+      "img": "🐎🤱"
     },
     {
       "id": "013",
@@ -143,7 +155,8 @@
         "Frosch",
         "Forelle"
       ],
-      "info": "Säugetiere trinken als Baby Milch bei ihrer Mutter."
+      "info": "Säugetiere trinken als Baby Milch bei ihrer Mutter.",
+      "img": "🐕🥛"
     },
     {
       "id": "014",
@@ -154,7 +167,8 @@
         "Biene",
         "Eichhörnchen"
       ],
-      "info": "Vögel haben Federn. Die Fledermaus ist ein Säugetier."
+      "info": "Vögel haben Federn. Die Fledermaus ist ein Säugetier.",
+      "img": "🐦🎶"
     },
     {
       "id": "015",
@@ -164,7 +178,8 @@
         "Wal",
         "Delfin",
         "Seehund"
-      ]
+      ],
+      "img": "🐟🌊"
     },
     {
       "id": "016",
@@ -174,7 +189,8 @@
         "Ja, ein Fisch",
         "Nein, ein Reptil"
       ],
-      "info": "Wale atmen mit einer Lunge und säugen ihre Jungen."
+      "info": "Wale atmen mit einer Lunge und säugen ihre Jungen.",
+      "img": "🐋🥛"
     },
     {
       "id": "017",
@@ -184,7 +200,8 @@
         "Spinne",
         "Schnecke",
         "Regenwurm"
-      ]
+      ],
+      "img": "🐜"
     },
     {
       "id": "018",
@@ -194,7 +211,8 @@
         "8",
         "4",
         "10"
-      ]
+      ],
+      "img": "🐞🎲"
     },
     {
       "id": "019",
@@ -205,7 +223,8 @@
         "4",
         "10"
       ],
-      "info": "Spinnen sind keine Insekten."
+      "info": "Spinnen sind keine Insekten.",
+      "img": "🕷️🕸️"
     },
     {
       "id": "020",
@@ -215,7 +234,8 @@
         "Frosch",
         "Maus",
         "Molch"
-      ]
+      ],
+      "img": "🦎"
     },
     {
       "id": "021",
@@ -225,7 +245,8 @@
         "Eidechse",
         "Schildkröte",
         "Maus"
-      ]
+      ],
+      "img": "🐸"
     },
     {
       "id": "022",
@@ -235,7 +256,8 @@
         "Kuh",
         "Pferd",
         "Katze"
-      ]
+      ],
+      "img": "🐔🥚"
     },
     {
       "id": "023",
@@ -245,7 +267,8 @@
         "Lunge",
         "Nase",
         "Federn"
-      ]
+      ],
+      "img": "🐠💧"
     },
     {
       "id": "024",
@@ -255,7 +278,8 @@
         "Im Wasser",
         "Auf Bäumen",
         "In der Wüste"
-      ]
+      ],
+      "img": "🕳️🌱"
     },
     {
       "id": "025",
@@ -265,7 +289,8 @@
         "In der Wüste",
         "Auf hohen Bergen",
         "Oben in Baumkronen"
-      ]
+      ],
+      "img": "🌊🏠"
     },
     {
       "id": "026",
@@ -275,7 +300,8 @@
         "Kamel",
         "Pinguin",
         "Löwe"
-      ]
+      ],
+      "img": "🐗🌲"
     },
     {
       "id": "027",
@@ -286,7 +312,8 @@
         "In der Wüste",
         "Im Regenwald"
       ],
-      "info": "Eisbären leben im hohen Norden, Pinguine im Süden."
+      "info": "Eisbären leben im hohen Norden, Pinguine im Süden.",
+      "img": "❄️🐻"
     },
     {
       "id": "028",
@@ -296,7 +323,8 @@
         "Koala",
         "Giraffe",
         "Löwe"
-      ]
+      ],
+      "img": "🐼🎋"
     },
     {
       "id": "029",
@@ -306,7 +334,8 @@
         "Wolf",
         "Fuchs",
         "Katze"
-      ]
+      ],
+      "img": "🐄🌿"
     },
     {
       "id": "030",
@@ -316,7 +345,8 @@
         "Fuchs",
         "Reh",
         "Amsel"
-      ]
+      ],
+      "img": "🦔💤"
     },
     {
       "id": "031",
@@ -326,7 +356,8 @@
         "Sie halten Winterschlaf",
         "Sie bauen Nester",
         "Sie legen Eier"
-      ]
+      ],
+      "img": "🍂🐦☀️"
     }
   ]
 }

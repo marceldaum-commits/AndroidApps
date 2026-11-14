@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-antike-mittelalter",
-  "version": 1,
+  "version": 2,
   "title": "Antike und Mittelalter",
   "subject": "geschichte",
   "grades": [
@@ -20,7 +20,8 @@
         "Tigris",
         "Jordan"
       ],
-      "info": "Die jährliche Nilflut brachte fruchtbaren Schlamm auf die Felder."
+      "info": "Die jährliche Nilflut brachte fruchtbaren Schlamm auf die Felder.",
+      "img": "🏺🌊🐊"
     },
     {
       "id": "002",
@@ -30,18 +31,21 @@
         "Keilschrift",
         "Runen",
         "Kyrillisch"
-      ]
+      ],
+      "img": "🐦👁️📜"
     },
     {
       "id": "003",
       "q": "Wer entzifferte 1822 die Hieroglyphen?",
       "a": "Jean-François Champollion",
-      "info": "Geholfen hat ihm der Stein von Rosetta mit demselben Text in drei Schriften."
+      "info": "Geholfen hat ihm der Stein von Rosetta mit demselben Text in drei Schriften.",
+      "img": "🔍📜🗿"
     },
     {
       "id": "004",
       "q": "Wie hieß der Herrscher im alten Ägypten?",
-      "a": "Pharao"
+      "a": "Pharao",
+      "img": "👑🐍"
     },
     {
       "id": "005",
@@ -51,7 +55,8 @@
         "Luxor",
         "Alexandria",
         "Assuan"
-      ]
+      ],
+      "img": "🔺🐫"
     },
     {
       "id": "006",
@@ -61,7 +66,8 @@
         "Ramses II.",
         "Cheops",
         "Kleopatra"
-      ]
+      ],
+      "img": "👑⚱️"
     },
     {
       "id": "007",
@@ -72,7 +78,8 @@
         "44 v. Chr.",
         "480 n. Chr."
       ],
-      "info": "Sie wurden in Olympia zu Ehren des Gottes Zeus ausgetragen."
+      "info": "Sie wurden in Olympia zu Ehren des Gottes Zeus ausgetragen.",
+      "img": "🏅🏃🔥"
     },
     {
       "id": "008",
@@ -83,12 +90,14 @@
         "Korinth",
         "Theben"
       ],
-      "info": "Wählen durften dort allerdings nur freie Männer mit Bürgerrecht."
+      "info": "Wählen durften dort allerdings nur freie Männer mit Bürgerrecht.",
+      "img": "🏛️🗳️"
     },
     {
       "id": "009",
       "q": "Welche griechische Stadt war für ihre strenge militärische Erziehung bekannt?",
-      "a": "Sparta"
+      "a": "Sparta",
+      "img": "🛡️⚔️"
     },
     {
       "id": "010",
@@ -98,13 +107,15 @@
         "Sokrates",
         "Platon",
         "Vergil"
-      ]
+      ],
+      "img": "📜⛵🐴"
     },
     {
       "id": "011",
       "q": "Welcher Makedonenkönig eroberte ein Reich bis nach Indien?",
       "a": "Alexander der Große",
-      "info": "Er lebte von 356 bis 323 v. Chr."
+      "info": "Er lebte von 356 bis 323 v. Chr.",
+      "img": "🐴⚔️🐘"
     },
     {
       "id": "012",
@@ -115,12 +126,14 @@
         "1000 v. Chr.",
         "44 v. Chr."
       ],
-      "info": "Merkspruch: Sieben-fünf-drei, Rom schlüpft aus dem Ei."
+      "info": "Merkspruch: Sieben-fünf-drei, Rom schlüpft aus dem Ei.",
+      "img": "🐺🏛️"
     },
     {
       "id": "013",
       "q": "Wie heißen die Zwillinge der römischen Gründungssage?",
-      "a": "Romulus und Remus"
+      "a": "Romulus und Remus",
+      "img": "👶👶🐺"
     },
     {
       "id": "014",
@@ -131,7 +144,8 @@
         "9 n. Chr.",
         "79 n. Chr."
       ],
-      "info": "Er wurde an den Iden des März (15. März) erstochen."
+      "info": "Er wurde an den Iden des März (15. März) erstochen.",
+      "img": "🗡️📜"
     },
     {
       "id": "015",
@@ -142,17 +156,20 @@
         "Nero",
         "Konstantin"
       ],
-      "info": "Caesar war Diktator, aber nicht Kaiser."
+      "info": "Caesar war Diktator, aber nicht Kaiser.",
+      "img": "👑🏛️"
     },
     {
       "id": "016",
       "q": "Wie heißt die befestigte Grenze der Römer in Germanien?",
-      "a": "Limes"
+      "a": "Limes",
+      "img": "🧱🌲"
     },
     {
       "id": "017",
       "q": "Welche Schlacht verloren die Römer im Jahr 9 n. Chr. gegen Arminius?",
-      "a": "Varusschlacht"
+      "a": "Varusschlacht",
+      "img": "⚔️🌲"
     },
     {
       "id": "018",
@@ -162,12 +179,14 @@
         "Ostia",
         "Neapel",
         "Syrakus"
-      ]
+      ],
+      "img": "🌋🏛️"
     },
     {
       "id": "019",
       "q": "Wie heißt das große Amphitheater im antiken Rom?",
-      "a": "Kolosseum"
+      "a": "Kolosseum",
+      "img": "🏟️🦁"
     },
     {
       "id": "020",
@@ -177,18 +196,21 @@
         "395 n. Chr.",
         "800 n. Chr.",
         "1453 n. Chr."
-      ]
+      ],
+      "img": "🏛️💥"
     },
     {
       "id": "021",
       "q": "Wo und wann wurde Karl der Große zum Kaiser gekrönt?",
-      "a": "In Rom, im Jahr 800"
+      "a": "In Rom, im Jahr 800",
+      "img": "👑⛪"
     },
     {
       "id": "022",
       "q": "Wie hießen die drei Stände des Mittelalters?",
       "a": "Klerus, Adel, Bauern",
-      "info": "Merkhilfe: Die einen beten, die anderen kämpfen, die dritten arbeiten."
+      "info": "Merkhilfe: Die einen beten, die anderen kämpfen, die dritten arbeiten.",
+      "img": "⛪🛡️🌾"
     },
     {
       "id": "023",
@@ -198,7 +220,8 @@
         "Leibeigener",
         "Zunftmeister",
         "Abt"
-      ]
+      ],
+      "img": "🤝🏰"
     },
     {
       "id": "024",
@@ -207,7 +230,8 @@
       "choices": [
         "Knappe, Page, Ritter",
         "Page, Ritter, Knappe"
-      ]
+      ],
+      "img": "👦🛡️⚔️"
     },
     {
       "id": "025",
@@ -217,13 +241,15 @@
         "Palas",
         "Zwinger",
         "Kemenate"
-      ]
+      ],
+      "img": "🏰🗼"
     },
     {
       "id": "026",
       "q": "Was bedeutet die Mönchsregel „ora et labora“?",
       "a": "Bete und arbeite",
-      "info": "Sie geht auf Benedikt von Nursia zurück."
+      "info": "Sie geht auf Benedikt von Nursia zurück.",
+      "img": "🙏⛏️"
     },
     {
       "id": "027",
@@ -233,12 +259,14 @@
         "Otto I.",
         "Karl der Große",
         "Friedrich Barbarossa"
-      ]
+      ],
+      "img": "🙇❄️⛪"
     },
     {
       "id": "028",
       "q": "Welcher Papst rief 1095 zum ersten Kreuzzug auf?",
-      "a": "Urban II."
+      "a": "Urban II.",
+      "img": "✝️⚔️"
     },
     {
       "id": "029",
@@ -248,13 +276,15 @@
         "Pocken",
         "Cholera",
         "Grippe"
-      ]
+      ],
+      "img": "🐀💀"
     },
     {
       "id": "030",
       "q": "Wie hieß der mächtige Bund norddeutscher Kaufleute und Städte?",
       "a": "Hanse",
-      "info": "Lübeck galt als „Königin der Hanse“."
+      "info": "Lübeck galt als „Königin der Hanse“.",
+      "img": "⛵📦⚓"
     },
     {
       "id": "031",
@@ -264,12 +294,14 @@
         "Hanse",
         "Orden",
         "Lehen"
-      ]
+      ],
+      "img": "🔨🍞"
     },
     {
       "id": "032",
       "q": "Welches englische Dokument von 1215 beschränkte die Macht des Königs?",
-      "a": "Magna Carta"
+      "a": "Magna Carta",
+      "img": "📜👑✒️"
     },
     {
       "id": "033",
@@ -279,7 +311,8 @@
         "Martin Luther",
         "Albrecht Dürer",
         "Leonardo da Vinci"
-      ]
+      ],
+      "img": "📖🖨️"
     }
   ]
 }

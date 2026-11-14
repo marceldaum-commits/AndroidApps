@@ -45,13 +45,13 @@ class MigrationTest {
         db.close()
     }
 
-    @Test fun v1ToV2KeepsGarden() = runTest {
+    @Test fun v1ToCurrentKeepsGarden() = runTest {
         val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
         val file = ctx.getDatabasePath("migration-test.db").apply { parentFile?.mkdirs(); delete() }
         createV1(file)
 
         val db = Room.databaseBuilder(ctx, GardenDatabase::class.java, file.absolutePath)
-            .addMigrations(GardenDatabase.MIGRATION_1_2).build()
+            .addMigrations(GardenDatabase.MIGRATION_1_2, GardenDatabase.MIGRATION_2_3).build()
         val repo = GardenRepository(db) { 0L }
         val beds = repo.beds("p").first()
         assertEquals("klassik", beds[0].bed.species)

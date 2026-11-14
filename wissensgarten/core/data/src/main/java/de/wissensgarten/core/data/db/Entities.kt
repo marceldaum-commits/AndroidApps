@@ -70,6 +70,8 @@ data class CardEntity(
     val lapses: Int = 0,
     val createdAt: Long,
     val sortIndex: Int = 0,
+    /** Merkbild aus dem Paket (seit DB-Version 3) */
+    val img: String? = null,
 ) {
     val memory: Memory get() = Memory(stability, difficulty, lastReview, reps, lapses)
     val choiceList: List<String>? get() = choices?.split(SEP)?.filter { it.isNotBlank() }?.ifEmpty { null }
@@ -78,7 +80,7 @@ data class CardEntity(
         stability = m.stability, difficulty = m.difficulty, lastReview = m.lastReview, reps = m.reps, lapses = m.lapses,
     )
 
-    fun toStudy() = StudyCard(id, bedId, front, back, choiceList, info, memory)
+    fun toStudy() = StudyCard(id, bedId, front, back, choiceList, info, memory, img)
 
     companion object {
         const val SEP = "\u001F"

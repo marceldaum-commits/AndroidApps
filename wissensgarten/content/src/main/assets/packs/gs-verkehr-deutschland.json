@@ -1,6 +1,6 @@
 {
   "id": "gs-verkehr-deutschland",
-  "version": 1,
+  "version": 2,
   "title": "Verkehr und Deutschland",
   "subject": "sachunterricht",
   "grades": [
@@ -18,7 +18,8 @@
       "choices": [
         "Rot",
         "Gelb"
-      ]
+      ],
+      "img": "🚦💚"
     },
     {
       "id": "002",
@@ -28,7 +29,8 @@
         "Zwischen parkenden Autos",
         "Direkt hinter einer Kurve",
         "Mitten auf der Kreuzung"
-      ]
+      ],
+      "img": "🚦🦓"
     },
     {
       "id": "003",
@@ -38,7 +40,8 @@
         "Einfach schnell losrennen",
         "Auf das Handy schauen",
         "Rückwärts gehen"
-      ]
+      ],
+      "img": "👀🦓✋"
     },
     {
       "id": "004",
@@ -48,7 +51,8 @@
         "Dort ist es verboten zu stehen",
         "Die Autos könnten kaputt gehen",
         "Dort ist der Weg zu lang"
-      ]
+      ],
+      "img": "🚗🙈"
     },
     {
       "id": "005",
@@ -58,7 +62,8 @@
         "Dunkle Kleidung",
         "Eine schwarze Mütze",
         "Sandalen"
-      ]
+      ],
+      "img": "🌙🔦👕"
     },
     {
       "id": "006",
@@ -69,7 +74,8 @@
         "Kopfhörer",
         "Eine Mütze"
       ],
-      "info": "Ein Helm schützt deinen Kopf bei einem Sturz."
+      "info": "Ein Helm schützt deinen Kopf bei einem Sturz.",
+      "img": "⛑️🚲"
     },
     {
       "id": "007",
@@ -80,7 +86,8 @@
         "bis zum 5. Geburtstag",
         "bis zum 14. Geburtstag"
       ],
-      "info": "Gibt es einen extra abgetrennten Radweg, dürfen sie auch diesen nutzen."
+      "info": "Gibt es einen extra abgetrennten Radweg, dürfen sie auch diesen nutzen.",
+      "img": "🚲8️⃣"
     },
     {
       "id": "008",
@@ -90,7 +97,8 @@
         "bis zum 14. Geburtstag",
         "bis zum 6. Geburtstag",
         "bis zum 18. Geburtstag"
-      ]
+      ],
+      "img": "🚲🔟"
     },
     {
       "id": "009",
@@ -100,7 +108,8 @@
         "Ein Gepäckträger",
         "Ein Fahrradkorb",
         "Ein Ständer"
-      ]
+      ],
+      "img": "🔔🚲"
     },
     {
       "id": "010",
@@ -110,7 +119,8 @@
         "rot",
         "gelb",
         "grün"
-      ]
+      ],
+      "img": "💡⚪"
     },
     {
       "id": "011",
@@ -120,7 +130,8 @@
         "weiß",
         "blau",
         "grün"
-      ]
+      ],
+      "img": "🚲🔴"
     },
     {
       "id": "012",
@@ -130,7 +141,8 @@
         "rot",
         "blau",
         "grün"
-      ]
+      ],
+      "img": "💛🔆"
     },
     {
       "id": "013",
@@ -140,7 +152,8 @@
         "Rechten Arm ausstrecken",
         "Klingeln",
         "Laut rufen"
-      ]
+      ],
+      "img": "⬅️💪"
     },
     {
       "id": "014",
@@ -149,7 +162,8 @@
       "choices": [
         "links",
         "in der Mitte"
-      ]
+      ],
+      "img": "➡️🚗"
     },
     {
       "id": "015",
@@ -159,7 +173,8 @@
         "Schneller fahren",
         "Hier darf man parken",
         "Ich habe Vorfahrt"
-      ]
+      ],
+      "img": "🛑✋"
     },
     {
       "id": "016",
@@ -169,7 +184,8 @@
         "Fahrräder verboten",
         "Fahrradladen",
         "Fahrrad-Parkplatz"
-      ]
+      ],
+      "img": "🔵🚲"
     },
     {
       "id": "017",
@@ -179,7 +195,8 @@
         "Hier ist ein Parkplatz",
         "Hier ist eine Schule zu Ende",
         "Hier darfst du schneller fahren"
-      ]
+      ],
+      "img": "⚠️"
     },
     {
       "id": "018",
@@ -190,7 +207,8 @@
         "Wer schneller ist",
         "Das größere Fahrzeug"
       ],
-      "info": "Merksatz: Rechts vor links."
+      "info": "Merksatz: Rechts vor links.",
+      "img": "🚗⬅️"
     },
     {
       "id": "019",
@@ -201,7 +219,8 @@
         "911",
         "115"
       ],
-      "info": "112: Feuerwehr und Rettungsdienst"
+      "info": "112: Feuerwehr und Rettungsdienst",
+      "img": "🚒☎️"
     },
     {
       "id": "020",
@@ -211,7 +230,8 @@
         "112",
         "911",
         "115"
-      ]
+      ],
+      "img": "🚓☎️"
     },
     {
       "id": "021",
@@ -221,7 +241,8 @@
         "Bonn",
         "München",
         "Hamburg"
-      ]
+      ],
+      "img": "🐻🏛️"
     },
     {
       "id": "022",
@@ -231,7 +252,8 @@
         "12",
         "18",
         "10"
-      ]
+      ],
+      "img": "🧩🗺️"
     },
     {
       "id": "023",
@@ -241,7 +263,8 @@
         "Schwarz, Gold, Rot",
         "Rot, Weiß, Rot",
         "Blau, Weiß, Rot"
-      ]
+      ],
+      "img": "🖤❤️💛"
     },
     {
       "id": "024",
@@ -252,7 +275,8 @@
         "München",
         "Frankfurt am Main"
       ],
-      "info": "Stadtstaaten: Berlin, Hamburg und Bremen"
+      "info": "Stadtstaaten: Berlin, Hamburg und Bremen",
+      "img": "⚓🚢"
     },
     {
       "id": "025",
@@ -262,7 +286,8 @@
         "Saarland",
         "Hessen",
         "Berlin"
-      ]
+      ],
+      "img": "🥨🏔️"
     },
     {
       "id": "026",
@@ -272,7 +297,8 @@
         "Bayern",
         "Niedersachsen",
         "Sachsen"
-      ]
+      ],
+      "img": "🐓🐈🐕"
     },
     {
       "id": "027",
@@ -282,7 +308,8 @@
         "Rhein",
         "Elbe",
         "Donau"
-      ]
+      ],
+      "img": "🌊🐻"
     },
     {
       "id": "028",
@@ -292,7 +319,8 @@
         "Holstentor",
         "Siegestor",
         "Porta Nigra"
-      ]
+      ],
+      "img": "🐎🏛️"
     },
     {
       "id": "029",
@@ -302,7 +330,8 @@
         "Brocken",
         "Feldberg",
         "Watzmann"
-      ]
+      ],
+      "img": "🏔️⛷️"
     },
     {
       "id": "030",
@@ -312,7 +341,8 @@
         "Mittelmeer",
         "Schwarzes Meer",
         "Rotes Meer"
-      ]
+      ],
+      "img": "🌊🦀"
     }
   ]
 }

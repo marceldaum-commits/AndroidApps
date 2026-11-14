@@ -1,6 +1,6 @@
 {
   "id": "ob-physik-konstanten-begriffe",
-  "version": 1,
+  "version": 2,
   "title": "Naturkonstanten & Begriffe",
   "subject": "physik",
   "grades": [
@@ -22,7 +22,8 @@
         "≈ 3,00 · 10⁸ km/s",
         "≈ 3,43 · 10² m/s"
       ],
-      "info": "Exakt 299 792 458 m/s; 343 m/s ist die Schallgeschwindigkeit in Luft."
+      "info": "Exakt 299 792 458 m/s; 343 m/s ist die Schallgeschwindigkeit in Luft.",
+      "img": "💡🚀"
     },
     {
       "id": "002",
@@ -32,7 +33,8 @@
         "≈ 9,109 · 10⁻³¹ C",
         "≈ 1,602 · 10¹⁹ C",
         "≈ 6,022 · 10⁻²³ C"
-      ]
+      ],
+      "img": "⚡"
     },
     {
       "id": "003",
@@ -42,7 +44,8 @@
         "≈ 6,626 · 10⁻³⁴ J/s",
         "≈ 6,674 · 10⁻¹¹ J · s",
         "≈ 6,626 · 10³⁴ J · s"
-      ]
+      ],
+      "img": "⚛️"
     },
     {
       "id": "004",
@@ -52,7 +55,8 @@
         "≈ 6,674 · 10¹¹ N · m²/kg²",
         "≈ 9,81 N · m²/kg²",
         "≈ 6,626 · 10⁻³⁴ N · m²/kg²"
-      ]
+      ],
+      "img": "🍎🌍"
     },
     {
       "id": "005",
@@ -62,18 +66,21 @@
         "≈ 1,673 · 10⁻²⁷ kg",
         "≈ 1,602 · 10⁻¹⁹ kg",
         "≈ 9,109 · 10⁻²⁷ kg"
-      ]
+      ],
+      "img": "🐜"
     },
     {
       "id": "006",
       "q": "Masse eines Protons?",
       "a": "≈ 1,673 · 10⁻²⁷ kg",
-      "info": "Etwa 1836-mal so groß wie die Elektronenmasse."
+      "info": "Etwa 1836-mal so groß wie die Elektronenmasse.",
+      "img": "🐘"
     },
     {
       "id": "007",
       "q": "Avogadro-Konstante N_A?",
-      "a": "≈ 6,022 · 10²³ 1/mol"
+      "a": "≈ 6,022 · 10²³ 1/mol",
+      "img": "🧮"
     },
     {
       "id": "008",
@@ -83,29 +90,34 @@
         "≈ 8,314 J/K",
         "≈ 1,381 · 10²³ J/K",
         "≈ 1,602 · 10⁻¹⁹ J/K"
-      ]
+      ],
+      "img": "🌡️⚛️"
     },
     {
       "id": "009",
       "q": "Universelle Gaskonstante R?",
       "a": "≈ 8,314 J/(mol · K)",
-      "info": "R = N_A · k_B"
+      "info": "R = N_A · k_B",
+      "img": "🌬️"
     },
     {
       "id": "010",
       "q": "Elektrische Feldkonstante ε₀?",
-      "a": "≈ 8,854 · 10⁻¹² A · s/(V · m)"
+      "a": "≈ 8,854 · 10⁻¹² A · s/(V · m)",
+      "img": "⚡🌌"
     },
     {
       "id": "011",
       "q": "Magnetische Feldkonstante μ₀?",
       "a": "≈ 1,257 · 10⁻⁶ N/A²",
-      "info": "Näherungsweise 4π · 10⁻⁷ N/A²"
+      "info": "Näherungsweise 4π · 10⁻⁷ N/A²",
+      "img": "🧲🌌"
     },
     {
       "id": "012",
       "q": "1 Elektronenvolt (eV) in Joule?",
-      "a": "≈ 1,602 · 10⁻¹⁹ J"
+      "a": "≈ 1,602 · 10⁻¹⁹ J",
+      "img": "🔋"
     },
     {
       "id": "013",
@@ -116,7 +128,8 @@
         "−100 °C",
         "−459,67 °C"
       ],
-      "info": "0 K = −273,15 °C"
+      "info": "0 K = −273,15 °C",
+      "img": "🥶"
     },
     {
       "id": "014",
@@ -126,12 +139,14 @@
         "Wechselwirkungsprinzip",
         "Aktionsprinzip",
         "Energieerhaltungssatz"
-      ]
+      ],
+      "img": "🛋️"
     },
     {
       "id": "015",
       "q": "3. Newtonsches Gesetz?",
-      "a": "Wechselwirkungsprinzip (actio = reactio)"
+      "a": "Wechselwirkungsprinzip (actio = reactio)",
+      "img": "🏓"
     },
     {
       "id": "016",
@@ -141,7 +156,8 @@
         "p = m · a",
         "p = ½ · m · v²",
         "p = F · s"
-      ]
+      ],
+      "img": "🎱"
     },
     {
       "id": "017",
@@ -151,7 +167,8 @@
         "F = m · v / r",
         "F = m · r / v²",
         "F = m · v² · r"
-      ]
+      ],
+      "img": "🎠"
     },
     {
       "id": "018",
@@ -161,23 +178,27 @@
         "T = 2π · √(g / l)",
         "T = 2π · l / g",
         "T = π · √(l · g)"
-      ]
+      ],
+      "img": "🕰️"
     },
     {
       "id": "019",
       "q": "Periodendauer eines Federpendels (Federkonstante D)?",
-      "a": "T = 2π · √(m / D)"
+      "a": "T = 2π · √(m / D)",
+      "img": "🦘"
     },
     {
       "id": "020",
       "q": "3. Keplersches Gesetz?",
       "a": "T² / a³ ist für alle Planeten gleich",
-      "info": "T: Umlaufzeit, a: große Halbachse"
+      "info": "T: Umlaufzeit, a: große Halbachse",
+      "img": "🔭"
     },
     {
       "id": "021",
       "q": "Coulomb-Gesetz: Kraft zwischen zwei Ladungen?",
-      "a": "F = 1/(4πε₀) · q₁ · q₂ / r²"
+      "a": "F = 1/(4πε₀) · q₁ · q₂ / r²",
+      "img": "➕➖"
     },
     {
       "id": "022",
@@ -188,7 +209,8 @@
         "C = U / Q",
         "C = Q / I"
       ],
-      "info": "Einheit: Farad (F)"
+      "info": "Einheit: Farad (F)",
+      "img": "🔋📦"
     },
     {
       "id": "023",
@@ -198,22 +220,26 @@
         "Weber (Wb)",
         "Henry (H)",
         "Farad (F)"
-      ]
+      ],
+      "img": "🧲"
     },
     {
       "id": "024",
       "q": "Lorentzkraft auf eine Ladung q (v senkrecht zu B)?",
-      "a": "F = q · v · B"
+      "a": "F = q · v · B",
+      "img": "✋🧲"
     },
     {
       "id": "025",
       "q": "Wann wird eine Spannung induziert?",
-      "a": "Wenn sich der magnetische Fluss ändert"
+      "a": "Wenn sich der magnetische Fluss ändert",
+      "img": "🧲🔄"
     },
     {
       "id": "026",
       "q": "Lenzsche Regel?",
-      "a": "Der Induktionsstrom wirkt seiner Ursache entgegen"
+      "a": "Der Induktionsstrom wirkt seiner Ursache entgegen",
+      "img": "🙅"
     },
     {
       "id": "027",
@@ -223,13 +249,15 @@
         "E = h / f",
         "E = h · λ",
         "E = m · f²"
-      ]
+      ],
+      "img": "🌈⚡"
     },
     {
       "id": "028",
       "q": "Energiebilanz beim Fotoeffekt?",
       "a": "E_kin = h · f − W_A",
-      "info": "W_A: Austrittsarbeit des Metalls"
+      "info": "W_A: Austrittsarbeit des Metalls",
+      "img": "💡💥"
     },
     {
       "id": "029",
@@ -240,22 +268,26 @@
         "Niels Bohr",
         "Werner Heisenberg"
       ],
-      "info": "Dafür erhielt er den Nobelpreis für Physik (1921)."
+      "info": "Dafür erhielt er den Nobelpreis für Physik (1921).",
+      "img": "👅"
     },
     {
       "id": "030",
       "q": "De-Broglie-Wellenlänge eines Teilchens?",
-      "a": "λ = h / p"
+      "a": "λ = h / p",
+      "img": "🌊⚾"
     },
     {
       "id": "031",
       "q": "Heisenbergsche Unschärferelation (Ort und Impuls)?",
-      "a": "Δx · Δp ≥ h / (4π)"
+      "a": "Δx · Δp ≥ h / (4π)",
+      "img": "🌫️🎯"
     },
     {
       "id": "032",
       "q": "Äquivalenz von Masse und Energie?",
-      "a": "E = m · c²"
+      "a": "E = m · c²",
+      "img": "⚖️💥"
     },
     {
       "id": "033",
@@ -265,22 +297,26 @@
         "Aus Elektronen",
         "Aus Photonen",
         "Aus einzelnen Neutronen"
-      ]
+      ],
+      "img": "🎈"
     },
     {
       "id": "034",
       "q": "Woraus besteht Beta-minus-Strahlung?",
-      "a": "Aus Elektronen"
+      "a": "Aus Elektronen",
+      "img": "➖🏃"
     },
     {
       "id": "035",
       "q": "Was ist Gammastrahlung?",
-      "a": "Energiereiche elektromagnetische Strahlung"
+      "a": "Energiereiche elektromagnetische Strahlung",
+      "img": "☢️"
     },
     {
       "id": "036",
       "q": "Was ist die Halbwertszeit?",
-      "a": "Zeit, nach der die Hälfte der Kerne zerfallen ist"
+      "a": "Zeit, nach der die Hälfte der Kerne zerfallen ist",
+      "img": "⏳"
     }
   ]
 }
