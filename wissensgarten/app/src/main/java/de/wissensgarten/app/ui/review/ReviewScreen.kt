@@ -122,7 +122,11 @@ fun ReviewScreen(
         }
     }
 
+    // Wer malt oder in Ruhe schauen will, hält das automatische Weiterblättern an
+    var revealPaused by remember { mutableStateOf(false) }
+
     fun next() {
+        revealPaused = false
         levelUp = null
         grownMemory = null
         index++
@@ -179,7 +183,7 @@ fun ReviewScreen(
             } else sfx?.play(Sound.GROW, volume = 0.5f)
             growAnim.animateTo(1f, spring(dampingRatio = 0.35f, stiffness = 220f))
             // Richtig: automatisch weiter. Falsch: Zeit zum Lesen, weiter per Knopf.
-            if (right) { delay(if (up && !sprouted) 1300 else 900); if (phase == Phase.REVEAL) next() }
+            if (right) { delay(if (up && !sprouted) 1600 else 1300); if (phase == Phase.REVEAL && !revealPaused) next() }
         }
     }
 
@@ -252,7 +256,7 @@ fun ReviewScreen(
                                 mood = Mood.CHEER; speech = "+$bonus 💧 Bonus!"
                                 phase = Phase.PLAY
                             }
-                            Phase.REVEAL -> RevealCard(card, lastRight) { next() }
+                            Phase.REVEAL -> RevealCard(card, lastRight, revealPaused, onPause = { revealPaused = true }) { next() }
                             Phase.PLAY -> CompositionLocalProvider(LocalSubject provides subject) { when (mode) {
                                 GameMode.DISCOVER -> DiscoverGame(card, options) { finish(it.rating) }
                                 GameMode.BALLOONS -> BalloonGame(card, options!!) { finish(it.rating) }
@@ -276,7 +280,7 @@ fun ReviewScreen(
 
 /** Nach dem Spiel: Merkbild + Antwort, damit sich Bild und Wissen verbinden. */
 @Composable
-private fun RevealCard(card: StudyCard, right: Boolean, onNext: () -> Unit) {
+private fun RevealCard(card: StudyCard, right: Boolean, paused: Boolean, onPause: () -> Unit, onNext: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         Card(
             colors = CardDefaults.cardColors(containerColor = if (right) Color(0xFFE6F4DD) else Color(0xFFFFEDE2)),
@@ -285,14 +289,14 @@ private fun RevealCard(card: StudyCard, right: Boolean, onNext: () -> Unit) {
             Column(Modifier.fillMaxWidth().padding(18.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 MerkBild(card.img, emojiSize = 56.sp, key = "r" + card.id, cardId = card.id)
                 var drawing by remember(card.id) { mutableStateOf(false) }
-                AssistChip(onClick = { drawing = true }, label = { Text(if (de.wissensgarten.app.ui.play.Drawings.rev >= 0 && de.wissensgarten.app.ui.play.Drawings.has(androidx.compose.ui.platform.LocalContext.current, card.id)) "✏️ Neu malen" else "✏️ Selbst malen") })
+                AssistChip(onClick = { onPause(); drawing = true }, label = { Text(if (de.wissensgarten.app.ui.play.Drawings.rev >= 0 && de.wissensgarten.app.ui.play.Drawings.has(androidx.compose.ui.platform.LocalContext.current, card.id)) "✏️ Neu malen" else "✏️ Selbst malen") })
                 if (drawing) de.wissensgarten.app.ui.play.DrawDialog(card.id, "${card.front} → ${card.back}", card.img) { drawing = false }
                 Text(card.front, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F))
                 Text(card.back, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, color = Color(0xFF22261F))
                 card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F), modifier = Modifier.padding(top = 6.dp)) }
             }
         }
-        if (!right) {
+        if (!right || paused) {
             Spacer(Modifier.height(12.dp))
             JuicyButton(onClick = onNext, modifier = Modifier.fillMaxWidth().height(56.dp)) { Text("Gemerkt – weiter", style = MaterialTheme.typography.titleMedium) }
         }
