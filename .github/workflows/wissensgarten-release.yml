@@ -1,14 +1,20 @@
 # Baut den Wissensgarten, signiert ihn mit dem Upload-Schlüssel und stellt die APK unter „Releases“ bereit.
-# Start: GitHub → Actions → „Wissensgarten APK“ → „Run workflow“ (oder automatisch bei Tag wissensgarten-v*).
-# Benötigt zwei Repository-Secrets (Settings → Secrets and variables → Actions):
+# Läuft automatisch bei jedem Push, der den Wissensgarten ändert. Veröffentlicht wird nur, wenn die Version
+# (versionName in app/build.gradle.kts) neu ist – jede Version genau einmal. Von Hand: Actions → „Run workflow“.
+#
+# Secrets (Settings → Secrets and variables → Actions):
 #   WG_KEYSTORE_BASE64     = Inhalt von „wissensgarten-upload.jks.base64.txt“ (Drive, Ordner „Schlüssel (geheim)“)
 #   WG_KEYSTORE_PROPERTIES = Inhalt von „keystore.properties“ (gleicher Ordner)
+# Optional für den Drive-Upload:
+#   GDRIVE_SA_JSON         = JSON-Schlüssel eines Google-Dienstkontos
+#   GDRIVE_IMPERSONATE     = E-Mail, in deren Namen hochgeladen wird (nur mit domainweiter Delegierung)
+# Variable (Settings → Variables): WG_DRIVE_FOLDER = ID des Drive-Ordners „Wissensgarten“
 name: Wissensgarten APK
 
 on:
   workflow_dispatch:
   push:
-    tags: ["wissensgarten-v*"]
+    paths: ["wissensgarten/**", ".github/**"]
 
 permissions:
   contents: write
@@ -16,6 +22,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Secrets dürfen in „if:“ nicht direkt stehen – darum hier als Merker
+      HAS_DRIVE: ${{ secrets.GDRIVE_SA_JSON != '' }}
     defaults:
       run:
         working-directory: wissensgarten
@@ -67,6 +76,18 @@ jobs:
         id: version
         run: echo "name=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)" >> "$GITHUB_OUTPUT"
 
+      - name: Schon veröffentlicht?
+        id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "wissensgarten-v${{ steps.version.outputs.name }}" > /dev/null 2>&1; then
+            echo "Version ${{ steps.version.outputs.name }} gibt es schon – nur bauen und testen, nichts veröffentlichen."
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Logik-Tests
         run: ./gradlew --no-daemon :core:model:test
 
@@ -83,6 +104,7 @@ jobs:
             || { echo "::error::APK ist nicht mit dem Upload-Schlüssel signiert."; exit 1; }
 
       - name: Release veröffentlichen
+        if: steps.check.outputs.new == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: wissensgarten-v${{ steps.version.outputs.name }}
@@ -92,6 +114,15 @@ jobs:
             Signierte APK zum Installieren auf Android (ab Android 8).
             Herunterladen, öffnen, „Aus dieser Quelle installieren“ erlauben. Updates behalten den Lernfortschritt.
           files: wissensgarten/Wissensgarten-${{ steps.version.outputs.name }}.apk
+
+      - name: In Google Drive hochladen
+        if: steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.WG_DRIVE_FOLDER != ''
+        env:
+          GDRIVE_SA_JSON: ${{ secrets.GDRIVE_SA_JSON }}
+          GDRIVE_IMPERSONATE: ${{ secrets.GDRIVE_IMPERSONATE }}
+        run: |
+          pip install --quiet google-auth requests
+          python ../.github/scripts/drive_upload.py "Wissensgarten-${{ steps.version.outputs.name }}.apk" "${{ vars.WG_DRIVE_FOLDER }}"
 
       - name: Schlüssel entfernen
         if: always()
