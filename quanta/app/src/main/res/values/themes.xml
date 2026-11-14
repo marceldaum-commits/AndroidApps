@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.Quanta" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/space</item>
+        <item name="android:statusBarColor">@color/space</item>
+        <item name="android:navigationBarColor">@color/space</item>
+    </style>
+    <color name="space">#0B1026</color>
+</resources>

@@ -1,0 +1,360 @@
+package de.quanta.app.ui.flight
+
+import androidx.activity.compose.BackHandler
+import androidx.compose.animation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import de.quanta.app.ui.fx.*
+import de.quanta.app.ui.theme.Q
+import de.quanta.app.ui.volt.Volt
+import de.quanta.app.ui.volt.VoltMood
+import de.quanta.core.model.*
+import kotlinx.coroutines.delay
+import kotlin.math.max
+import kotlin.math.min
+
+private enum class Phase { AIM, FLYING, DONE }
+
+/** Farben der Regler – dieselbe Farbe in Formel und Regler, damit man sieht, was was ist. */
+private val paramColors = listOf(Q.Cyan, Q.Pink, Q.Yellow)
+
+/**
+ * Ein Level von Kurvenflug: Formel einstellen, starten, zusehen, daraus lernen.
+ * @param onSolved Sterne, eingesammelte Energiezellen, Versuche
+ */
+@Composable
+fun LevelScreen(
+    level: Level,
+    chapter: Chapter,
+    probeColor: Color,
+    showIntro: Boolean,
+    onIntroSeen: () -> Unit,
+    onSolved: (stars: Int, cells: Set<Int>, attempts: Int) -> Unit,
+    onNext: (() -> Unit)?,
+    onBack: () -> Unit,
+    /** für Bildschirmfotos: Startwerte vorgeben */
+    initialValues: Map<String, Double>? = null,
+) {
+    val sfx = LocalSfx.current
+    val view = LocalView.current
+    val vib = LocalVibration.current
+
+    var values by rememberSaveable(level.id) { mutableStateOf(HashMap(initialValues ?: level.start)) }
+    var attempt by rememberSaveable(level.id) { mutableIntStateOf(0) }
+    var help by rememberSaveable(level.id) { mutableStateOf(false) }
+    var usedHelp by rememberSaveable(level.id) { mutableStateOf(false) }
+    var phase by rememberSaveable(level.id) { mutableStateOf(Phase.AIM) }
+    var stars by rememberSaveable(level.id) { mutableIntStateOf(0) }
+    var intro by rememberSaveable(level.id) { mutableStateOf(showIntro) }
+    var ghosts by remember(level.id) { mutableStateOf(listOf<List<Vec>>()) }
+    var result by remember(level.id) { mutableStateOf<FlightResult?>(null) }
+    var shown by remember(level.id) { mutableIntStateOf(0) }
+    var hits by remember(level.id) { mutableStateOf(setOf<Int>()) }
+    var taken by remember(level.id) { mutableStateOf(setOf<Int>()) }
+    var bursts by remember(level.id) { mutableStateOf(listOf<Pair<Burst, Long>>()) }
+    var mood by remember(level.id) { mutableStateOf(VoltMood.IDLE) }
+    var speech by remember(level.id) { mutableStateOf(level.task) }
+    var canvasSize by remember { mutableStateOf(IntSize.Zero) }
+    // Wird ein abgeschlossenes Level nach dem Drehen wiederhergestellt, fehlt der Flug → Ergebnis direkt zeigen
+    LaunchedEffect(Unit) { if (phase == Phase.FLYING) phase = Phase.AIM }
+
+    // Uhr für Funkeln und Partikel
+    // (Endlos-Animation statt eigener Bild-Schleife – Tests und Akku danken es)
+    val clockF by rememberInfiniteTransition(label = "clock").animateFloat(0f, 3_600_000f,
+        infiniteRepeatable(tween(3_600_000, easing = LinearEasing)), label = "ms")
+    val clock = clockF.toLong()
+
+    BackHandler { onBack() }
+
+    val preview = remember(values, help, level.id) {
+        if (level.kind == Kind.POINT) emptyList()
+        else Flight.path(level, values).let { p ->
+            if (help) p else when (level.kind) {
+                Kind.THROW -> p.take(min(p.size, 70))     // die ersten ~1,5 m: Abschussrichtung
+                else -> p.take(min(p.size, 100))          // die ersten 2 Kästchen am Rand
+            }
+        }
+    }
+
+    fun toPx(p: Vec) = Offset(((p.x + Flight.R) / (2 * Flight.R) * canvasSize.width).toFloat(), ((Flight.R - p.y) / (2 * Flight.R) * canvasSize.height).toFloat())
+
+    fun launch() {
+        if (phase != Phase.AIM) return
+        attempt++
+        if (help) usedHelp = true
+        val r = Flight.fly(level, values)
+        result = r; shown = 0; hits = emptySet(); taken = emptySet()
+        phase = Phase.FLYING
+        mood = VoltMood.THINK; speech = "3 … 2 … 1 … 🚀"
+        sfx?.play(Sound.LAUNCH)
+    }
+
+    // Flug abspielen – Treffer, Zellen und Absturz genau dann, wenn die Sonde dort ist
+    LaunchedEffect(phase, result) {
+        val r = result ?: return@LaunchedEffect
+        if (phase != Phase.FLYING) return@LaunchedEffect
+        val total = r.path.size
+        val firstHit = level.targets.indices.associateWith { i -> r.path.indexOfFirst { level.targets[i].contains(it) } }
+        val firstCell = level.cells.indices.associateWith { i -> r.path.indexOfFirst { level.cells[i].contains(it, 0.15) } }
+        val dur = (total * 2.0).coerceIn(900.0, 2600.0)
+        val t0 = withFrameMillis { it }
+        var last = -1
+        while (true) {
+            val now = withFrameMillis { it }
+            val idx = min(total - 1, ((now - t0) / dur * total).toInt())
+            for (i in (last + 1)..idx) {
+                firstCell.forEach { (c, at) -> if (at == i && c in r.cells) {
+                    taken = taken + c; sfx?.play(Sound.CELL); view.buzz(Buzz.TICK, vib)
+                } }
+                if (level.kind != Kind.POINT) firstHit.forEach { (tg, at) -> if (at == i && tg in r.hitTargets) {
+                    hits = hits + tg; sfx?.play(Sound.HIT); view.buzz(Buzz.HIT, vib)
+                    bursts = bursts + (Burst(toPx(Vec(level.targets[tg].x, level.targets[tg].y)), listOf(Q.Green, Q.Cyan, Color.White), seed = tg + attempt) to clockF.toLong())
+                } }
+            }
+            shown = idx; last = idx
+            if (idx >= total - 1) break
+        }
+        val end = r.path.last()
+        if (level.kind == Kind.POINT && r.hitTargets.isNotEmpty()) {
+            hits = r.hitTargets; sfx?.play(Sound.HIT); view.buzz(Buzz.HIT, vib)
+            bursts = bursts + (Burst(toPx(end), listOf(Q.Green, Q.Cyan, Color.White), seed = attempt) to clockF.toLong())
+        }
+        if (r.crash != null) {
+            sfx?.play(Sound.CRASH); view.buzz(Buzz.CRASH, vib)
+            bursts = bursts + (Burst(toPx(end), listOf(Q.Orange, Q.Yellow, Color(0xFFFF4A4A)), count = 48, speed = 200f, seed = attempt) to clockF.toLong())
+        }
+        delay(450)
+        if (r.success) {
+            stars = Flight.stars(attempt, usedHelp)
+            sfx?.play(Sound.WIN)
+            mood = VoltMood.WOW
+            speech = when (stars) { 3 -> "Volltreffer beim ersten Versuch! Genial berechnet! 🤯"; 2 -> "Treffer! Stark! 💪"; else -> "Geschafft! Dranbleiben zahlt sich aus. 🙌" }
+            bursts = bursts + (Burst(Offset(canvasSize.width / 2f, canvasSize.height / 3f), listOf(Q.Pink, Q.Yellow, Q.Cyan, Q.Green), count = 70, speed = 320f, seed = 99, gravity = 400f) to clockF.toLong())
+            onSolved(stars, r.cells, attempt)
+            phase = Phase.DONE
+        } else {
+            ghosts = (ghosts + listOf(r.path)).takeLast(3)
+            result = null; shown = 0; hits = emptySet(); taken = emptySet()
+            mood = VoltMood.OOPS
+            val fb = Feedback.after(level, values, r)
+            speech = if (attempt >= 2) "$fb\n💡 ${level.tip}" else fb
+            if (r.crash == null) sfx?.play(Sound.WRONG)
+            phase = Phase.AIM
+        }
+    }
+
+    val r = result
+    val spaceView = SpaceView(
+        level = level,
+        preview = if (phase == Phase.AIM) preview else emptyList(),
+        crosshair = if (phase == Phase.AIM && level.kind == Kind.POINT && help) Vec(values.getValue("x"), values.getValue("y")) else null,
+        ghosts = ghosts,
+        trail = r?.path?.take(shown + 1).orEmpty(),
+        probe = if (phase == Phase.FLYING && r != null) r.path[min(shown, r.path.size - 1)] else null,
+        hitTargets = if (phase == Phase.DONE) level.targets.indices.toSet() else hits,
+        takenCells = taken,
+        revealHidden = phase == Phase.DONE,
+        bursts = bursts.map { (b, at) -> b to (clock - at) / 1000f }.filter { it.second in 0f..1.4f },
+        probeColor = probeColor,
+        time = clock / 1000f,
+    )
+
+    Box(Modifier.fillMaxSize()) {
+        Starfield(seed = level.chapter * 10 + level.number)
+        Column(Modifier.fillMaxSize().systemBarsPadding()) {
+            // Kopfzeile
+            Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
+                Column(Modifier.weight(1f)) {
+                    Text("${chapter.emoji} ${chapter.title} · Level ${level.number}", style = MaterialTheme.typography.labelMedium, color = Q.Muted)
+                    Text(level.title, style = MaterialTheme.typography.titleLarge, color = Q.Text)
+                }
+                Text(if (attempt == 0) "" else "Versuch $attempt", style = MaterialTheme.typography.labelMedium, color = Q.Muted, modifier = Modifier.padding(end = 12.dp))
+            }
+            Volt(mood, Modifier.padding(horizontal = 12.dp).heightIn(min = 64.dp), size = 60.dp, speech = speech)
+            Spacer(Modifier.height(6.dp))
+            // Spielfeld
+            Box(
+                Modifier.padding(horizontal = 12.dp).fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(18.dp))
+                    .background(Color(0x66070B20)).border(1.5.dp, Q.Cyan.copy(alpha = 0.35f), RoundedCornerShape(18.dp))
+            ) {
+                SpaceCanvas(spaceView, Modifier.fillMaxSize().onSizeChanged { canvasSize = it })
+            }
+            Spacer(Modifier.height(8.dp))
+            // Steuerung
+            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Formula(level, values)
+                level.params.forEachIndexed { i, p ->
+                    ParamRow(p, values.getValue(p.key), paramColors[i % paramColors.size], enabled = phase == Phase.AIM) { nv ->
+                        values = HashMap(values).apply { put(p.key, nv) }
+                    }
+                }
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    FilterChip(
+                        selected = help, onClick = { help = !help; sfx?.play(Sound.TICK) }, enabled = phase == Phase.AIM,
+                        label = { Text(if (level.kind == Kind.POINT) "👁 Zielhilfe" else "👁 Ganze Bahn") },
+                        colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Violet.copy(alpha = 0.35f), labelColor = Q.Text, selectedLabelColor = Q.Text),
+                    )
+                    Text(if (help) "max. 2 ⭐" else "Rechnen = 3 ⭐", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+                    Spacer(Modifier.weight(1f))
+                    NeonButton(onClick = { launch() }, color = Q.Green, enabled = phase == Phase.AIM, modifier = Modifier.pulse(phase == Phase.AIM && attempt == 0, 0.03f)) {
+                        Text("🚀 Start", fontWeight = FontWeight.Black, color = Q.Text, fontSize = 18.sp)
+                    }
+                }
+                Spacer(Modifier.height(8.dp))
+            }
+        }
+
+        // Ergebnis
+        AnimatedVisibility(phase == Phase.DONE, enter = fadeIn() + scaleIn(initialScale = 0.8f, animationSpec = spring(dampingRatio = 0.6f)), exit = fadeOut(),
+            modifier = Modifier.align(Alignment.BottomCenter)) {
+            ResultCard(stars, taken.size + 0, level.cells.size, usedHelp,
+                onRetry = {
+                    phase = Phase.AIM; attempt = 0; usedHelp = false; ghosts = emptyList(); result = null; hits = emptySet(); taken = emptySet()
+                    values = HashMap(level.start); mood = VoltMood.IDLE; speech = level.task
+                },
+                onNext = onNext, onBack = onBack)
+        }
+
+        if (intro) IntroOverlay(chapter) { intro = false; onIntroSeen() }
+    }
+}
+
+/** Die Formel mit den eingestellten Zahlen – farbig wie die Regler. */
+@Composable
+private fun Formula(level: Level, values: Map<String, Double>) {
+    val v = level.values(values)
+    val colorOf = level.params.mapIndexed { i, p -> p.key to paramColors[i % paramColors.size] }.toMap()
+    val text = buildAnnotatedString {
+        fun n(key: String, unit: String = "") {
+            val s = num(v.getValue(key)) + unit
+            val c = colorOf[key]
+            if (c != null) withStyle(SpanStyle(color = c, fontWeight = FontWeight.Black)) { append(s) } else append(s)
+        }
+        // Negative Zahlen in Klammern, damit „· (−2)“ eindeutig ist
+        fun factor(key: String) { if (v.getValue(key) < 0) { append("("); n(key); append(")") } else n(key) }
+        when (level.kind) {
+            Kind.POINT -> { append("Ziel  ( "); n("x"); append(" | "); n("y"); append(" )") }
+            Kind.LINE -> { append("y = "); factor("m"); append(" · x + "); factor("b") }
+            Kind.PARABOLA -> { append("y = "); factor("a"); append(" · (x − "); factor("d"); append(")² + "); factor("e") }
+            Kind.THROW -> { append("α = "); n("angle", "°"); append("   v = "); n("v", " m/s") }
+        }
+    }
+    Text(text, color = Q.Text, fontFamily = FontFamily.Monospace, fontSize = 20.sp, fontWeight = FontWeight.Bold,
+        modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Q.Panel).padding(horizontal = 14.dp, vertical = 10.dp))
+}
+
+@Composable
+private fun ParamRow(p: Param, value: Double, color: Color, enabled: Boolean, onChange: (Double) -> Unit) {
+    val sfx = LocalSfx.current
+    val view = LocalView.current
+    val vib = LocalVibration.current
+    fun set(v: Double) {
+        val s = p.snap(v)
+        if (s != value) { sfx?.play(Sound.TICK, volume = 0.5f); view.buzz(Buzz.TICK, vib); onChange(s) }
+    }
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Text(p.label, color = color, fontWeight = FontWeight.Black, modifier = Modifier.width(64.dp), maxLines = 1)
+        StepButton("−", color, enabled) { set(value - p.step) }
+        Slider(
+            value = value.toFloat(), onValueChange = { set(it.toDouble()) },
+            valueRange = p.min.toFloat()..p.max.toFloat(), enabled = enabled,
+            colors = SliderDefaults.colors(thumbColor = color, activeTrackColor = color, inactiveTrackColor = color.copy(alpha = 0.2f)),
+            modifier = Modifier.weight(1f).padding(horizontal = 4.dp),
+        )
+        StepButton("+", color, enabled) { set(value + p.step) }
+    }
+}
+
+@Composable
+private fun StepButton(label: String, color: Color, enabled: Boolean, onClick: () -> Unit) {
+    val interaction = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
+    Box(
+        Modifier.size(40.dp).pressBounce(interaction).clip(RoundedCornerShape(12.dp)).background(color.copy(alpha = if (enabled) 0.18f else 0.06f))
+            .border(1.5.dp, color.copy(alpha = if (enabled) 0.8f else 0.2f), RoundedCornerShape(12.dp))
+            .then(if (enabled) Modifier.clickableNoRipple(interaction, onClick) else Modifier),
+        contentAlignment = Alignment.Center,
+    ) { Text(label, color = color, fontSize = 22.sp, fontWeight = FontWeight.Black) }
+}
+
+private fun Modifier.clickableNoRipple(i: androidx.compose.foundation.interaction.MutableInteractionSource, onClick: () -> Unit) =
+    this.then(Modifier.clickable(i, null, onClick = onClick))
+
+@Composable
+private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean, onRetry: () -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit) {
+    Card(
+        Modifier.padding(16.dp).fillMaxWidth().navigationBarsPadding(),
+        colors = CardDefaults.cardColors(containerColor = Q.Panel),
+        shape = RoundedCornerShape(24.dp),
+    ) {
+        Column(Modifier.padding(20.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Row {
+                for (i in 1..3) {
+                    val s = remember { Animatable(0f) }
+                    LaunchedEffect(Unit) { delay(200L * i); s.animateTo(1f, spring(dampingRatio = 0.4f)) }
+                    Text(if (i <= stars) "⭐" else "☆", fontSize = 44.sp, color = if (i <= stars) Color.Unspecified else Q.Muted,
+                        modifier = Modifier.graphicsLayer { scaleX = s.value; scaleY = s.value; rotationZ = (1 - s.value) * -90f })
+                }
+            }
+            if (totalCells > 0) Text("⚡ $cells von $totalCells Energiezellen", color = Q.Yellow, style = MaterialTheme.typography.bodyMedium)
+            if (helped && stars == 2) Text("Ohne Zielhilfe gibt's 3 ⭐ – traust du dich?", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+            Spacer(Modifier.height(12.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                NeonButton(onClick = onRetry, color = Q.Violet) { Text("↻ Nochmal", color = Q.Text) }
+                if (onNext != null) NeonButton(onClick = onNext, color = Q.Green, modifier = Modifier.pulse(true, 0.03f)) { Text("Weiter ›", color = Q.Text, fontWeight = FontWeight.Black) }
+                else NeonButton(onClick = onBack, color = Q.Green) { Text("Kapitel fertig! 🏆", color = Q.Text, fontWeight = FontWeight.Black) }
+            }
+        }
+    }
+}
+
+/** Volt erklärt das Kapitel in wenigen kurzen Schritten. */
+@Composable
+fun IntroOverlay(chapter: Chapter, onDone: () -> Unit) {
+    var page by rememberSaveable { mutableIntStateOf(0) }
+    val sfx = LocalSfx.current
+    LaunchedEffect(page) { sfx?.play(Sound.BEEP, volume = 0.5f) }
+    Box(Modifier.fillMaxSize().background(Color(0xE6070B20)).clickableNoRipple(remember { androidx.compose.foundation.interaction.MutableInteractionSource() }) {}, contentAlignment = Alignment.Center) {
+        Column(Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Text("${chapter.emoji} ${chapter.title}", style = MaterialTheme.typography.headlineMedium, color = Q.Cyan)
+            Text(chapter.grades, color = Q.Muted)
+            AnimatedContent(page, transitionSpec = { (slideInHorizontally { it / 2 } + fadeIn()) togetherWith (slideOutHorizontally { -it / 2 } + fadeOut()) }, label = "intro") { p ->
+                Volt(if (p == chapter.intro.lastIndex) VoltMood.HAPPY else VoltMood.IDLE, size = 84.dp, speech = chapter.intro[p])
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                chapter.intro.indices.forEach { i -> Box(Modifier.size(if (i == page) 10.dp else 7.dp).clip(RoundedCornerShape(50)).background(if (i == page) Q.Cyan else Q.Muted)) }
+            }
+            NeonButton(onClick = { if (page < chapter.intro.lastIndex) page++ else onDone() }, color = Q.Cyan) {
+                Text(if (page < chapter.intro.lastIndex) "Weiter ›" else "Los geht's! 🚀", color = Q.Text, fontWeight = FontWeight.Bold)
+            }
+            if (page < chapter.intro.lastIndex) TextButton(onClick = onDone) { Text("Überspringen", color = Q.Muted) }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Flugbahn (Parabel) -->
+    <path android:strokeColor="#38E8FF" android:strokeWidth="3.5" android:strokeLineCap="round"
+        android:pathData="M30,76 Q46,26 76,62"/>
+    <!-- Ziel-Planet -->
+    <path android:fillColor="#FF5CA8" android:pathData="M76,62 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0"/>
+    <!-- Sonde -->
+    <path android:fillColor="#FFD54F" android:pathData="M50,38 L58,43 L50,48 L52,43 Z"/>
+    <!-- Sterne -->
+    <path android:fillColor="#FFFFFF" android:pathData="M36,38 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0"/>
+    <path android:fillColor="#FFFFFF" android:pathData="M70,34 m-1.2,0 a1.2,1.2 0 1,0 2.4,0 a1.2,1.2 0 1,0 -2.4,0"/>
+</vector>
