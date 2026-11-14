@@ -4,9 +4,9 @@ Lernkarten als gemütliches Garten-Spiel – für die ganze Familie, von Klasse 
 Jede Karte ist eine Pflanze: Sie wächst mit dem Wissen und welkt nach der Vergessenskurve.
 Gießen = Wiederholen zum richtigen Zeitpunkt.
 
-| Erklär-Geschichte | Abenteuerpfad | Schatztruhe | Sammelalbum | Garten mit Freunden |
-| --- | --- | --- | --- | --- |
-| ![](screenshots/21_erklaerung.png) | ![](screenshots/22_abenteuerpfad.png) | ![](screenshots/23_truhe.png) | ![](screenshots/24_album.png) | ![](screenshots/04f_garten_freunde.png) |
+| Erklär-Geschichte | Abenteuerpfad | 3D-Truhe | Truhe offen | Sammelalbum | Garten mit Freunden |
+| --- | --- | --- | --- | --- | --- |
+| ![](screenshots/21_erklaerung.png) | ![](screenshots/22_abenteuerpfad.png) | ![](screenshots/23a_truhe_zu.png) | ![](screenshots/23_truhe.png) | ![](screenshots/24_album.png) | ![](screenshots/04f_garten_freunde.png) |
 
 | Entdecken | Merkbild + Gießen | Ballon-Jagd | Buchstabensalat | Stimmt's? | Zuordnen-Bonus | Brummi |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -42,7 +42,8 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
   (3–5 Szenen mit Bildern, Haken, Eselsbrücke) – jederzeit wieder abspielbar (`app/ui/adventure/IntroScreen.kt`).
 - **Abenteuerpfad**: Jedes Beet ist ein Weg mit Stationen à 5 Karten; jede dritte Station hat eine Schatztruhe.
 - **Gartenfreunde**: 24 Sammelfiguren (normal, selten, legendär) – nur durch Lernfortschritt, feste Reihenfolge,
-  die nächste ist sichtbar (kein Glücksspiel). Sie spazieren durch den Garten; Album im Laden.
+  die nächste ist sichtbar (kein Glücksspiel). Die Schatztruhe ist echtes 3D (eigener Mini-Renderer
+  `app/ui/adventure/Chest3D.kt`: Perspektive, Licht/Schatten, Deckel klappt am Scharnier auf). Sie spazieren durch den Garten; Album im Laden.
 - **Brummi die Hummel** begleitet jede Runde und den Garten: freut sich, tröstet, denkt mit, schläft nachts, gibt Tipps
   (`app/ui/fx/Mascot.kt`).
 

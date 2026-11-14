@@ -253,6 +253,8 @@ class ScreenshotTest {
         AdventurePathView(AdventurePath.stations(cards, now), {}, {}, Modifier.fillMaxSize())
     }
 
+    @Test fun chestClosed() = shot("23a_truhe_zu", settle = 900) { ChestReveal(onOpen = { Friends.all[12] }, onClose = {}) }
+
     @Test fun chest() = shot("23_truhe", settle = 0, prepare = { r ->
         r.onNodeWithText("Tippe, um sie zu öffnen 👆").performClick()
         r.mainClock.advanceTimeBy(2500)

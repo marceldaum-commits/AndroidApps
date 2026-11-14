@@ -36,6 +36,7 @@ import de.wissensgarten.core.model.Rarity
 import de.wissensgarten.core.model.Station
 import de.wissensgarten.core.model.StationState
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.sin
 
 private val Meadow = listOf(Color(0xFFE8F5E9), Color(0xFFDCEFD0), Color(0xFFCDE8BE))
@@ -164,51 +165,52 @@ fun ChestReveal(onOpen: () -> Friend?, onClose: () -> Unit) {
     val particles = rememberParticles()
     var friend by remember { mutableStateOf<Friend?>(null) }
     var opening by remember { mutableStateOf(false) }
-    val wobble = rememberInfiniteTransition(label = "w").animateFloat(-6f, 6f, infiniteRepeatable(tween(160), RepeatMode.Reverse), label = "r")
+    val inf = rememberInfiniteTransition(label = "truhe")
+    // Drehteller: langsam hin und her, damit man die 3D-Form sieht
+    val spin by inf.animateFloat(-32f, 32f, infiniteRepeatable(tween(3200, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "yaw")
+    val bob by inf.animateFloat(0f, 1f, infiniteRepeatable(tween(1400, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "bob")
+    val shake = remember { Animatable(0f) }
     val lid = remember { Animatable(0f) }
+    val glow = remember { Animatable(0f) }
     val rise = remember { Animatable(0f) }
+    val face = remember { Animatable(0f) }   // dreht die Truhe zum Öffnen nach vorn
     LaunchedEffect(opening) {
         if (!opening) return@LaunchedEffect
         sfx?.play(Sound.GROW)
-        // Spannung: Deckel ruckelt kurz an, bevor er aufspringt (bildgesteuert statt Wartezeit)
-        lid.animateTo(-0.06f, tween(250)); lid.animateTo(0.03f, tween(150)); lid.animateTo(0f, tween(100))
+        launch { face.animateTo(1f, tween(400)) }
+        // Spannung: Truhe ruckelt, Deckel hebt sich kurz an
+        shake.animateTo(0f, keyframes { durationMillis = 600; 10f at 80; -10f at 160; 8f at 240; -8f at 320; 5f at 400; -3f at 480 })
+        lid.animateTo(0.08f, tween(120)); lid.animateTo(0f, tween(120))
         friend = onOpen()
         sfx?.play(Sound.FANFARE)
+        launch { glow.animateTo(1f, tween(500)) }
         particles.burst(Burst.SPARKLE, 0.5f, 0.45f, 40)
         particles.burst(Burst.CONFETTI, count = 100)
-        lid.animateTo(1f, spring(dampingRatio = 0.4f))
+        launch { lid.animateTo(1f, spring(dampingRatio = 0.45f, stiffness = 140f)) }
+        delay(150)
         rise.animateTo(1f, spring(dampingRatio = 0.45f, stiffness = 120f))
     }
     Box(
-        Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF3949AB), Color(0xFF7E57C2), Color(0xFFFFB74D))))
+        Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF283593), Color(0xFF7E57C2), Color(0xFFFFB74D))))
             .clickable(MutableInteractionSource(), null) { if (!opening) opening = true },
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(24.dp)) {
             Text(if (friend == null) "Du hast eine Schatztruhe gefunden!" else "Ein neuer Gartenfreund!", color = Color.White,
                 style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold)
-            Spacer(Modifier.height(30.dp))
-            Box(Modifier.size(240.dp), contentAlignment = Alignment.BottomCenter) {
+            Spacer(Modifier.height(10.dp))
+            Box(Modifier.size(300.dp), contentAlignment = Alignment.Center) {
+                Canvas(Modifier.fillMaxSize().graphicsLayer { translationY = -bob * 10f * density * (1 - face.value) }) {
+                    drawChest3D(yaw = spin * (1 - face.value) + 0f, open = lid.value, glow = glow.value, wobble = shake.value)
+                }
                 friend?.let { f ->
-                    Text(f.emoji, fontSize = 110.sp, modifier = Modifier.align(Alignment.Center).graphicsLayer {
-                        translationY = (1 - rise.value) * 220f - 40f; scaleX = rise.value; scaleY = rise.value
+                    Text(f.emoji, fontSize = 96.sp, modifier = Modifier.align(Alignment.Center).graphicsLayer {
+                        translationY = 40f * density - rise.value * 150f * density
+                        scaleX = 0.3f + 0.7f * rise.value; scaleY = 0.3f + 0.7f * rise.value
+                        alpha = rise.value.coerceIn(0f, 1f)
                     })
                 }
-                Canvas(Modifier.size(180.dp, 130.dp).graphicsLayer { rotationZ = if (!opening) wobble.value else 0f }) {
-                    val w = size.width; val h = size.height
-                    val wood = Color(0xFF8D5524); val gold = Color(0xFFFFD54F)
-                    drawRoundRect(wood, Offset(0f, h * 0.35f), Size(w, h * 0.65f), androidx.compose.ui.geometry.CornerRadius(14f))
-                    drawRect(gold, Offset(w * 0.45f, h * 0.35f), Size(w * 0.1f, h * 0.65f))
-                    drawRect(gold, Offset(0f, h * 0.5f), Size(w, h * 0.06f))
-                    // Deckel klappt auf
-                    rotate(-110f * lid.value, Offset(w * 0.02f, h * 0.35f)) {
-                        drawRoundRect(Color(0xFFA0522D), Offset(0f, 0f), Size(w, h * 0.38f), androidx.compose.ui.geometry.CornerRadius(30f))
-                        drawRect(gold, Offset(w * 0.45f, 0f), Size(w * 0.1f, h * 0.38f))
-                    }
-                    drawCircle(gold, w * 0.05f, Offset(w * 0.5f, h * 0.45f))
-                }
             }
-            Spacer(Modifier.height(20.dp))
             AnimatedVisibility(friend != null, enter = fadeIn() + expandVertically()) {
                 friend?.let { f ->
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
