@@ -82,7 +82,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view "quanta-v${{ steps.version.outputs.name }}" > /dev/null 2>&1; then
+          if gh release view "kurvenflug-v${{ steps.version.outputs.name }}" > /dev/null 2>&1; then
             echo "Version ${{ steps.version.outputs.name }} gibt es schon – nur bauen und testen, nichts veröffentlichen."
             echo "new=false" >> "$GITHUB_OUTPUT"
           else
@@ -91,8 +91,8 @@ jobs:
 
       - name: Änderungen aus CHANGELOG.md
         run: |
-          # Abschnitt „## <Version>“ bis zur nächsten Überschrift
-          awk -v v="## ${{ steps.version.outputs.name }}" '$0==v{on=1;next} /^## /{on=0} on' CHANGELOG.md > notes.md
+          # Abschnitt „## <Version>“ (auch mit Titel: „## 0.2.0 – Neues“) bis zur nächsten Überschrift
+          awk -v v="## ${{ steps.version.outputs.name }}" '$0==v || index($0, v " ")==1 {on=1;next} /^## /{on=0} on' CHANGELOG.md > notes.md
           [ -s notes.md ] || echo "- Verbesserungen und Fehlerbehebungen" > notes.md
           printf '\nInstallieren: APK herunterladen, öffnen, „Aus dieser Quelle installieren“ erlauben. Oder in der App: Einstellungen → App-Update.\n' >> notes.md
           cat notes.md
@@ -116,7 +116,7 @@ jobs:
         if: steps.check.outputs.new == 'true'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: quanta-v${{ steps.version.outputs.name }}
+          tag_name: kurvenflug-v${{ steps.version.outputs.name }}
           target_commitish: ${{ github.sha }}
           name: Kurvenflug ${{ steps.version.outputs.name }}
           body_path: kurvenflug/notes.md
