@@ -20,6 +20,8 @@ import de.wissensgarten.app.ui.fx.Brummi
 import de.wissensgarten.app.ui.fx.Mood
 import androidx.compose.foundation.layout.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import de.wissensgarten.app.ui.klasse.ClassShareDialog
 import androidx.compose.ui.unit.dp
 import de.wissensgarten.app.ui.store.StoreScreen
 import de.wissensgarten.app.ui.duel.DuelHubScreen
@@ -290,5 +292,91 @@ class ScreenshotTest {
             ReviewLogEntity(i.toLong(), listOf("p1", "kid", "kid", "mama")[i % 4], "c", now - (i % 6) * day - i * 1000L, 2, 3.0)
         }
         FamilyScreen(listOf(profile, kid, mama), "p1", allBeds, logs, now, {}, {})
+    }
+
+    // ---------------------------------------------------------------- 0.8.0
+
+    private val advent = 1_796_900_400_000L // 10.12.2026, 11:00 UTC
+
+    @Test fun teach() = shot("25_brummi_beibringen") {
+        val c = garden[0].cards[3].toStudy().copy(img = "🏃💨")
+        Column(Modifier.padding(16.dp)) { TeachGame(c, Games.options(c, garden[0].cards.map { it.back }) ?: listOf(c.back, "x")) {} }
+    }
+
+    @Test fun tilt() {
+        // Das Kipp-Spiel läuft Bild für Bild – Uhr von Hand weiterdrehen
+        rule.mainClock.autoAdvance = false
+        val c = garden[1].cards[2].toStudy()
+        rule.setContent { WissensgartenTheme(ThemeMode.LIGHT) { Surface {
+            Column(Modifier.padding(16.dp)) { TiltGame(c, Games.options(c, garden[1].cards.map { it.back })?.let { o -> listOf(c.back, o.first { it != c.back }) } ?: listOf(c.back, "x")) {} }
+        } } }
+        rule.mainClock.advanceTimeBy(1800)
+        rule.onRoot().captureRoboImage("../screenshots/26_kipp_spiel.png")
+    }
+
+    @Test fun festivalGarden() = shot("27_garten_advent") {
+        GardenScreen(profile, garden, advent, 10, {}, {}, {}, {}, decos = setOf("teich"),
+            friends = Friends.all.take(3), surprises = listOf(0 to "🎁", 1 to "⭐", 2 to "🍪"),
+            festivalGreeting = Seasons.festival(java.time.LocalDate.of(2026, 12, 10))?.greeting,
+            onGoodNight = {},
+            extraCards = {
+                Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                    StoryEntryCard(Story.chapters[2]) {}
+                    MixEntryCard("Englisch", "Biologie") {}
+                }
+            })
+    }
+
+    @Test fun story() = shot("28_abenteuer_geschichte") { StoryScreen(grown = 40, read = setOf(1, 2), onBack = {}, onRead = {}) }
+
+    @Test fun hybrid() = shot("29_kreuzung", settle = 2500) {
+        HybridReveal(Hybrids.of(Subject.MATHE, Subject.MUSIK)) {}
+    }
+
+    @Test fun albumHybrids() = shot("30_album_kreuzungen") {
+        Column { FriendsAlbum(opened = 3, earned = 3, inGarden = setOf("marie"), onToggle = {}, onOpenChest = {},
+            hybrids = listOf(Hybrids.of(Subject.MATHE, Subject.MUSIK), Hybrids.of(Subject.BIOLOGIE, Subject.ENGLISCH), Hybrids.of(Subject.GESCHICHTE, Subject.DEUTSCH))) }
+    }
+
+    @Test fun familyTree() = shot("31_familienbaum") {
+        val kid = profile.copy(id = "kid", name = "Ben", avatar = "🐸", level = 3, dewdrops = 88)
+        val logs = (0 until 31).map { i -> ReviewLogEntity(i.toLong(), listOf("p1", "kid", "kid")[i % 3], "c", now - (i % 6) * day, 2, 3.0) }
+        FamilyScreen(listOf(profile, kid), "p1", garden, logs, now, {}, {})
+    }
+
+    @Test fun drawDialog() = shot("32_merkbild_malen", prepare = { r ->
+        r.onNode(isDialog()).performTouchInput {
+            // Zickzack-Strich auf der Malfläche
+            swipe(Offset(width * 0.25f, height * 0.3f), Offset(width * 0.75f, height * 0.42f), 300)
+        }
+        r.waitForIdle()
+        r.onNodeWithText("Fertig! 🎨").assertIsEnabled()
+    }) {
+        DrawDialog("demo", "dog → Hund", "🐶") {}
+    }
+
+    @Test fun classQr() = shot("33_klassen_code", settle = 2000) {
+        ClassShareDialog(ClassSet("Englisch Unit 3", "🎩", garden[0].cards.take(25).map { ClassCard(it.front, it.back, "🏃") })) {}
+    }
+
+    @Test fun classImport() = shot("34_klassen_beet") {
+        val set = ClassSet("Tiere auf Englisch", "🐾", listOf(
+            ClassCard("dog", "Hund", "🐶"), ClassCard("cat", "Katze", "🐱"), ClassCard("horse", "Pferd", "🐴"),
+            ClassCard("bird", "Vogel", "🐦"), ClassCard("cow", "Kuh", "🐮"), ClassCard("fish", "Fisch", "🐟")))
+        de.wissensgarten.app.ui.klasse.ClassImportScreen(set, { null }, {}, {})
+    }
+
+    @Test fun worksheet() = shot("35_arbeitsblatt") {
+        de.wissensgarten.app.ui.klasse.WorksheetScreen("Englisch Unit 3", { EmojiLexicon(emptyMap()) }, {}, {})
+    }
+
+    @Test fun widget() {
+        val flowers = listOf(de.wissensgarten.app.widget.Flower(330f, 1f, true), de.wissensgarten.app.widget.Flower(200f, 0.3f, true),
+            de.wissensgarten.app.widget.Flower(45f, 0.8f, true), de.wissensgarten.app.widget.Flower(120f, 1f, false))
+        val day = de.wissensgarten.app.widget.GardenBitmap.render(480, 240, flowers, 11, false)
+        val party = de.wissensgarten.app.widget.GardenBitmap.render(480, 240, flowers, 22, true)
+        val out = android.graphics.Bitmap.createBitmap(480, 490, android.graphics.Bitmap.Config.ARGB_8888)
+        android.graphics.Canvas(out).apply { drawColor(android.graphics.Color.WHITE); drawBitmap(day, 0f, 0f, null); drawBitmap(party, 0f, 250f, null) }
+        File("../screenshots/36_widget_garten.png").outputStream().use { out.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
     }
 }

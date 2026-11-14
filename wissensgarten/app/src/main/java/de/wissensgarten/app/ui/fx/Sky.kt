@@ -2,6 +2,8 @@ package de.wissensgarten.app.ui.fx
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,9 +54,14 @@ fun SkyScene(
     happy: Boolean,
     modifier: Modifier = Modifier,
     decos: Set<String> = emptySet(),
+    surprises: List<Pair<Int, String>> = emptyList(),
+    onSurprise: (Int) -> Unit = {},
     content: @Composable BoxScope.() -> Unit,
 ) {
     val (time, hour) = DayTime.now(nowMs)
+    val date = java.time.Instant.ofEpochMilli(nowMs).atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+    val season = de.wissensgarten.core.model.Seasons.season(date)
+    val festival = de.wissensgarten.core.model.Seasons.festival(date)
     val wind = LocalWind.current
     Box(modifier.clip(androidx.compose.foundation.shape.RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))) {
         Canvas(Modifier.matchParentSize()) {
@@ -65,12 +72,28 @@ fun SkyScene(
             sunOrMoon(time, hour)
             if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, t, false)
             clouds(t, if (time == DayTime.NIGHT) 0.18f else 0.9f)
-            hills(time)
+            hills(time, season)
             if ("zaun" in decos) drawDeco("zaun", 0f, size.height - 22.dp.toPx(), 40.dp.toPx(), t, false)
             if (happy && time != DayTime.NIGHT) butterflies(t)
-            if (time == DayTime.NIGHT) fireflies(t)
+            if (time == DayTime.NIGHT && season != de.wissensgarten.core.model.Season.WINTER) fireflies(t)
+            seasonParticles(season, t)
+            if (festival?.id == "silvester") fireworks(t)
         }
         content()
+        // Fest-Überraschungen: in den Hügeln versteckt, antippen zum Einsammeln
+        if (surprises.isNotEmpty()) BoxWithConstraints(Modifier.matchParentSize()) {
+            val spots = listOf(0.1f to 0.55f, 0.5f to 0.5f, 0.86f to 0.6f)
+            val wobble = (wind?.value ?: 0f)
+            surprises.forEach { (i, emoji) ->
+                val (fx, fy) = spots[i % spots.size]
+                androidx.compose.material3.Text(
+                    emoji, fontSize = androidx.compose.ui.unit.TextUnit(30f, androidx.compose.ui.unit.TextUnitType.Sp),
+                    modifier = Modifier.offset(x = maxWidth * fx - 18.dp, y = maxHeight * fy)
+                        .graphicsLayer { rotationZ = kotlin.math.sin(wobble * 3f + i) * 12f }
+                        .clickable(androidx.compose.foundation.interaction.MutableInteractionSource(), null) { onSurprise(i) },
+                )
+            }
+        }
         // Vordergrund-Deko zwischen den Pflanzen
         val front = decos.filter { it in DecoSlots.front }
         if (front.isNotEmpty()) Canvas(Modifier.matchParentSize()) {
@@ -135,11 +158,17 @@ private fun DrawScope.clouds(t: Float, alpha: Float) {
     }
 }
 
-private fun DrawScope.hills(time: DayTime) {
+private fun DrawScope.hills(time: DayTime, season: de.wissensgarten.core.model.Season) {
     val w = size.width; val h = size.height
     val dim = when (time) { DayTime.NIGHT -> 0.55f; DayTime.EVENING -> 0.2f; else -> 0f }
-    val back = lerp(Color(0xFF9CCC65), Color(0xFF1B2A1A), dim)
-    val front = lerp(Color(0xFF6FA35A), Color(0xFF162414), dim)
+    val (b0, f0) = when (season) {
+        de.wissensgarten.core.model.Season.WINTER -> Color(0xFFF1F5F9) to Color(0xFFDDE6EE)
+        de.wissensgarten.core.model.Season.AUTUMN -> Color(0xFFD4B24C) to Color(0xFFB98C3A)
+        de.wissensgarten.core.model.Season.SPRING -> Color(0xFFAEDB7A) to Color(0xFF7DBB5F)
+        else -> Color(0xFF9CCC65) to Color(0xFF6FA35A)
+    }
+    val back = lerp(b0, Color(0xFF1B2A1A), dim)
+    val front = lerp(f0, Color(0xFF162414), dim)
     val p1 = Path().apply {
         moveTo(0f, h * 0.62f)
         cubicTo(w * 0.25f, h * 0.48f, w * 0.45f, h * 0.7f, w * 0.7f, h * 0.56f)
@@ -191,4 +220,46 @@ private fun DrawScope.fireflies(t: Float) {
 fun skyTextColor(nowMs: Long): Color = when (DayTime.now(nowMs).first) {
     DayTime.NIGHT, DayTime.EVENING -> Color.White
     else -> Color(0xFF14321A)
+}
+
+
+/** Schnee, Herbstlaub oder Blütenblätter – je nach Jahreszeit. */
+private fun DrawScope.seasonParticles(season: de.wissensgarten.core.model.Season, t: Float) {
+    val w = size.width; val h = size.height
+    val (count, color) = when (season) {
+        de.wissensgarten.core.model.Season.WINTER -> 45 to Color.White
+        de.wissensgarten.core.model.Season.AUTUMN -> 14 to Color(0xFFE67E22)
+        de.wissensgarten.core.model.Season.SPRING -> 16 to Color(0xFFF8BBD0)
+        else -> return
+    }
+    val r = kotlin.random.Random(21)
+    repeat(count) { i ->
+        val speed = 0.04f + r.nextFloat() * 0.05f
+        val x0 = r.nextFloat()
+        val y = ((r.nextFloat() + t * speed) % 1.1f) - 0.05f
+        val x = (x0 + sin(t * 0.8f + i) * 0.03f) * w
+        val p = Offset(x, y * h)
+        when (season) {
+            de.wissensgarten.core.model.Season.WINTER -> drawCircle(color.copy(alpha = 0.85f), (1.5f + r.nextFloat() * 2.5f) * density, p)
+            else -> rotate(t * 90f + i * 40f, p) {
+                val c = if (season == de.wissensgarten.core.model.Season.AUTUMN) listOf(Color(0xFFE67E22), Color(0xFFC0392B), Color(0xFFF1C40F))[i % 3] else color
+                drawOval(c, Offset(p.x - 5 * density, p.y - 3 * density), Size(10 * density, 6 * density))
+            }
+        }
+    }
+}
+
+/** Silvester: Raketen platzen am Himmel. */
+private fun DrawScope.fireworks(t: Float) {
+    val w = size.width; val h = size.height
+    val cols = listOf(Color(0xFFFFD54F), Color(0xFFFF5252), Color(0xFF69F0AE), Color(0xFF40C4FF))
+    for (k in 0 until 3) {
+        val phase = (t * 0.45f + k * 0.33f) % 1f
+        val c = Offset(w * (0.2f + 0.3f * k), h * (0.18f + 0.08f * (k % 2)))
+        val r = phase * h * 0.18f
+        for (j in 0 until 12) {
+            val a = j * 0.5236f
+            drawCircle(cols[(k + j) % 4].copy(alpha = (1 - phase)), 2.5f * density, Offset(c.x + kotlin.math.cos(a) * r, c.y + sin(a) * r))
+        }
+    }
 }

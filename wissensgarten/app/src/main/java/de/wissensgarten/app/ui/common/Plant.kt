@@ -127,7 +127,10 @@ fun DrawScope.drawPlant(
             "tanne" -> drawCones(tip, r, wilt)
             "kirschbaum" -> { drawBlossom(tip, r * 0.8f, wilt); drawBlossom(quad(base, ctrl, tip, 0.65f), r * 0.55f, wilt) }
             "zauberblume" -> drawMagicFlower(tip, r, wilt, time, variant)
-            else -> drawFlower(tip, r, petal, center, variant, wilt)
+            else -> if (species.startsWith("kreuzung:")) {
+                val hue2 = species.removePrefix("kreuzung:").toFloatOrNull() ?: hue
+                drawHybridFlower(tip, r * 1.15f, hue, hue2, wilt, variant, time)
+            } else drawFlower(tip, r, petal, center, variant, wilt)
         }
     }
     }
@@ -410,4 +413,19 @@ private fun DrawScope.drawCactus(stage: Stage, base: Offset, wilt: Float, hue: F
         }
         drawCircle(Color(0xFFFFEB3B), bw * 0.14f, Offset(base.x, top))
     }
+}
+
+
+/** Kreuzungs-Blüte: Blütenblätter abwechselnd in den Farben beider Fächer, mit Glitzer. */
+private fun DrawScope.drawHybridFlower(c: Offset, r: Float, hue: Float, hue2: Float, wilt: Float, variant: Int, t: Float) {
+    val a1 = dry(Color.hsv(hue, 0.65f, 0.95f), wilt); val a2 = dry(Color.hsv(hue2, 0.65f, 0.95f), wilt)
+    rotate(variant * 11f + t * 8f, c) {
+        for (i in 0 until 8) {
+            val a = 2 * PI * i / 8
+            val pc = Offset(c.x + cos(a).toFloat() * r * 0.78f, c.y + sin(a).toFloat() * r * 0.78f)
+            drawOval(if (i % 2 == 0) a1 else a2, Offset(pc.x - r * 0.42f, pc.y - r * 0.3f), Size(r * 0.84f, r * 0.6f))
+        }
+    }
+    drawCircle(Color(0xFFFFF176), r * 0.38f, c)
+    drawCircle(Color.White.copy(alpha = 0.5f + 0.5f * sin(t * 3f)), r * 0.12f, Offset(c.x + r * 0.9f, c.y - r * 0.9f))
 }

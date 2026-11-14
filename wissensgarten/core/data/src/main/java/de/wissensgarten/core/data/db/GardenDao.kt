@@ -49,6 +49,9 @@ interface GardenDao {
     @Insert suspend fun insertBed(b: BedEntity)
     @Update suspend fun updateBed(b: BedEntity)
 
+    @Query("SELECT * FROM beds WHERE id = :id")
+    suspend fun bed(id: String): BedEntity?
+
     @Query("DELETE FROM beds WHERE id = :id")
     suspend fun deleteBed(id: String)
 

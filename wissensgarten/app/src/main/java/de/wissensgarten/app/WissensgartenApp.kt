@@ -9,6 +9,7 @@ class WissensgartenApp : Application() {
     lateinit var container: AppContainer
         private set
 
+    val voice: de.wissensgarten.app.ui.fx.Voice by lazy { de.wissensgarten.app.ui.fx.Voice(this) }
     val sfx: Sfx by lazy { Sfx(this).also { it.enabled = container.settings.sound.value } }
 
     override fun onCreate() {

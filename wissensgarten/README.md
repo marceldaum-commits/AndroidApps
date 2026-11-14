@@ -4,6 +4,16 @@ Lernkarten als gemütliches Garten-Spiel – für die ganze Familie, von Klasse 
 Jede Karte ist eine Pflanze: Sie wächst mit dem Wissen und welkt nach der Vergessenskurve.
 Gießen = Wiederholen zum richtigen Zeitpunkt.
 
+**Neu in 0.8.0**
+
+| Advent im Garten | Brummi beibringen | Kipp-Spiel | Abenteuer-Geschichte | Kreuzungs-Blume | Kreuzungen im Album |
+| --- | --- | --- | --- | --- | --- |
+| ![](screenshots/27_garten_advent.png) | ![](screenshots/25_brummi_beibringen.png) | ![](screenshots/26_kipp_spiel.png) | ![](screenshots/28_abenteuer_geschichte.png) | ![](screenshots/29_kreuzung.png) | ![](screenshots/30_album_kreuzungen.png) |
+
+| Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Arbeitsblatt-Foto | Widget (Tag / Party) |
+| --- | --- | --- | --- | --- | --- |
+| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) |
+
 | Erklär-Geschichte | Abenteuerpfad | 3D-Truhe | Truhe offen | Sammelalbum | Garten mit Freunden |
 | --- | --- | --- | --- | --- | --- |
 | ![](screenshots/21_erklaerung.png) | ![](screenshots/22_abenteuerpfad.png) | ![](screenshots/23a_truhe_zu.png) | ![](screenshots/23_truhe.png) | ![](screenshots/24_album.png) | ![](screenshots/04f_garten_freunde.png) |
@@ -46,6 +56,26 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
   `app/ui/adventure/Chest3D.kt`: Perspektive, Licht/Schatten, Deckel klappt am Scharnier auf). Sie spazieren durch den Garten; Album im Laden.
 - **Brummi die Hummel** begleitet jede Runde und den Garten: freut sich, tröstet, denkt mit, schläft nachts, gibt Tipps
   (`app/ui/fx/Mascot.kt`).
+
+- **Brummi spricht und hört zu** (0.8): liest Fragen und Antworten vor (Android-Sprachausgabe, Sprache passend zum Fach;
+  „Brummi liest vor“: automatisch bis Klasse 4 / an / aus). Neue Spielart 🎤 *Sag's laut* per Spracherkennung.
+- **Neue Spielarten**: 🎓 *Brummi beibringen* (Brummi rät, du korrigierst – Protégé-Effekt), 📱 *Kipp-Spiel*
+  (Handy neigen, Antwort einfangen). **Gute-Nacht-Runde**: 5 ruhige Karten vor dem Schlafen, ohne Zeitdruck.
+- **Jahreszeiten & Feste**: Hügel, Schnee, Blätter und Blüten je nach Jahreszeit; zu Ostern, Halloween, Advent und
+  Silvester versteckt der Garten Überraschungen zum Antippen.
+- **Brummis Abenteuer**: 10 Kapitel „Brummi und die Wissensblume“, freigeschaltet durch gewachsene Pflanzen.
+- **Kreuzungs-Blumen**: Mischrunde aus zwei Fächern (Interleaving); ab 75 % richtig blüht eine eigene Mischblüte
+  (z. B. „Zahlennotenveilchen“), gesammelt im Album.
+- **Familienbaum**: gemeinsames Wochenziel der Familie statt Wettkampf; ist es geschafft, bekommt jeder +20 💧.
+- **Merkbild selbst malen**: nach jeder Karte „✏️ Selbst malen“ – das eigene Bild ersetzt die Emojis (Drawing Effect).
+  Bilder bleiben als PNG auf dem Gerät.
+- **Klassen-Code**: eigenes Beet als QR-Code am Beamer zeigen oder als Link teilen; die Klasse scannt (Google Code Scanner,
+  ohne Kamera-Berechtigung) und hat sofort das Beet. Alles steckt im Code – kein Server, keine Schülerdaten
+  (`core/model/ClassCode.kt`, Ausweich-Seite `web/klasse/`).
+- **Foto vom Arbeitsblatt → Beet**: Vokabelliste fotografieren, Texterkennung läuft auf dem Gerät (ML Kit), „Wort – Bedeutung“
+  und zweispaltige Listen werden zu Karten, passende Emojis kommen aus einem deutschen Emoji-Wörterbuch.
+- **Lebendes Widget**: Mini-Garten mit Tageszeit-Himmel (durstige Beete lassen die Köpfe hängen) und – ab 3×2 Feldern –
+  eine Quizfrage mit zwei Antwortknöpfen direkt auf dem Startbildschirm.
 
 - **Einrichtung**: Wer lernt (selbst / Kind), Name + Tier-Avatar, Klassenstufe, dann **beliebige Beete** wählen –
   die Stufe hebt nur passende Pakete hervor. Eigene Beete jederzeit möglich.
@@ -112,6 +142,6 @@ Benötigt JDK 17+ und Android SDK (Plattform 36).
 ## Nächste Ideen
 
 - Echtes Online-Duell mit Konten (Server, Datenschutz-Konzept für Kinder)
-- Pakete aus dem Internet nachladen; Karten-Sets teilen (Link/QR), CSV-Import
+- Pakete aus dem Internet nachladen; CSV-Import
 - Dungeon-Modus: gewachsene Pflanzen werden Kampfkarten
 - Play Store: eigener Upload-Schlüssel, Datenschutzerklärung, Billing für „Plus“

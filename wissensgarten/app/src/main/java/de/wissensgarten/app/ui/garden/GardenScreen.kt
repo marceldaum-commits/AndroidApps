@@ -50,6 +50,11 @@ fun GardenScreen(
     friends: List<de.wissensgarten.core.model.Friend> = emptyList(),
     chestsWaiting: Int = 0,
     onChest: () -> Unit = {},
+    onGoodNight: (() -> Unit)? = null,
+    surprises: List<Pair<Int, String>> = emptyList(),
+    festivalGreeting: String? = null,
+    onSurprise: (Int) -> Unit = {},
+    extraCards: @Composable () -> Unit = {},
 ) {
     val cards = remember(beds) { beds.flatMap { it.cards } }
     val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }
@@ -71,8 +76,12 @@ fun GardenScreen(
         modifier = Modifier.fillMaxSize(),
     ) {
         item {
+            val sfx = LocalSfx.current
             val textColor = skyTextColor(now)
-            SkyScene(now, happy = thirsty == 0 && cards.any { !it.memory.isSeed }, modifier = Modifier.fillMaxWidth().height(290.dp), decos = decos) {
+            SkyScene(now, happy = thirsty == 0 && cards.any { !it.memory.isSeed }, modifier = Modifier.fillMaxWidth().height(290.dp), decos = decos,
+                surprises = surprises, onSurprise = { i ->
+                    sfx?.play(Sound.DEW); onSurprise(i)
+                }) {
                 Row(
                     Modifier.fillMaxWidth().statusBarsPadding().padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -94,9 +103,9 @@ fun GardenScreen(
                 // Brummi fliegt über dem Garten – antippen für Tipps
                 val night = DayTime.now(now).first == DayTime.NIGHT
                 var tip by remember { mutableIntStateOf(-1) }
-                val sfx = LocalSfx.current
                 val (mood, line) = when {
                     tip >= 0 -> Mood.HAPPY to BrummiSays.pick(BrummiSays.tips, tip)
+                    festivalGreeting != null && surprises.isNotEmpty() -> Mood.CHEER to festivalGreeting
                     night -> Mood.SLEEP to "Zzz … bis morgen!"
                     thirsty > 0 -> Mood.THINK to "${thirsty} ${if (thirsty == 1) "Pflanze hat" else "Pflanzen haben"} Durst!"
                     cards.isEmpty() -> Mood.HAPPY to "Hallo! Ich bin Brummi 🐝"
@@ -122,6 +131,22 @@ fun GardenScreen(
                 }
             }
         }
+        if (onGoodNight != null && cards.any { !it.memory.isSeed } && java.util.Calendar.getInstance().apply { timeInMillis = now }.get(java.util.Calendar.HOUR_OF_DAY) >= 18) item {
+            Card(
+                onClick = onGoodNight, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFF283593)),
+            ) {
+                Row(Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text("🌙", fontSize = 32.sp)
+                    Spacer(Modifier.width(12.dp))
+                    Column(Modifier.weight(1f)) {
+                        Text("Gute-Nacht-Runde", color = Color.White, style = MaterialTheme.typography.titleMedium)
+                        Text("3 ruhige Karten zum Einschlafen – im Schlaf festigt sich das Wissen.", color = Color.White.copy(alpha = 0.85f), style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+            }
+        }
+        item { extraCards() }
         if (chestsWaiting > 0) item {
             Card(
                 onClick = onChest, modifier = Modifier.padding(horizontal = 16.dp).fillMaxWidth().pulse(true, 0.03f),

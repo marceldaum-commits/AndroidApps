@@ -16,6 +16,12 @@ enum class GameMode {
     CHOICE,
     /** Aufdecken + Selbsteinschätzung (eigene Karten ohne Auswahl) */
     FLIP,
+    /** Brummi rät (oft falsch) – das Kind korrigiert ihn (Lernen durch Lehren) */
+    TEACH,
+    /** Handy kippen: Gießkanne fängt die richtige Antwort-Wolke */
+    TILT,
+    /** Antwort laut sagen (Spracherkennung) */
+    SPEAK,
 }
 
 /** Ergebnis eines Mini-Spiels – wird in eine Bewertung für die Vergessenskurve übersetzt. */
@@ -44,15 +50,28 @@ object Games {
      * Wählt das Spiel. Abwechslung entsteht über Karten-ID + Anzahl Wiederholungen,
      * damit dieselbe Karte beim nächsten Mal anders gespielt wird.
      */
-    fun choose(card: StudyCard, peers: List<String>, simple: Boolean): GameMode {
+    fun speakPossible(answer: String) = answer.length in 2..24 && answer.trim().split(Regex("\\s+")).size <= 3 &&
+        answer.none { it.isDigit() || it in "=+×÷²³√π/()" }
+
+    fun tiltPossible(options: List<String>) = options.size <= 4 && options.all { it.length <= 16 }
+
+    /**
+     * @param canSpeak Spracherkennung auf dem Gerät verfügbar
+     * @param calm Gute-Nacht-Runde: nur ruhige Spielarten
+     */
+    fun choose(card: StudyCard, peers: List<String>, simple: Boolean, canSpeak: Boolean = false, calm: Boolean = false): GameMode {
         val opts = options(card, peers)
         if (card.memory.isSeed) return GameMode.DISCOVER
         if (opts == null) return GameMode.FLIP
+        if (calm) return if (card.id.hashCode() % 2 == 0) GameMode.CHOICE else GameMode.TEACH
         val pool = buildList {
             add(GameMode.CHOICE)
             add(GameMode.SWIPE)
+            add(GameMode.TEACH)
             if (balloonsPossible(opts)) { add(GameMode.BALLOONS); add(GameMode.BALLOONS) }
             if (lettersPossible(card.back, simple)) { add(GameMode.LETTERS); add(GameMode.LETTERS) }
+            if (tiltPossible(opts)) add(GameMode.TILT)
+            if (canSpeak && speakPossible(card.back)) add(GameMode.SPEAK)
         }
         val pick = Math.floorMod(card.id.hashCode() * 31 + card.memory.reps * 7, pool.size)
         return pool[pick]
@@ -81,5 +100,36 @@ object Games {
         val ok = cards.filter { it.front.length <= 28 && it.back.length <= 22 }
             .distinctBy { it.back }.distinctBy { it.front }
         return if (ok.size >= count) ok.take(count) else null
+    }
+}
+
+
+/** Vergleich für gesprochene Antworten: Groß/klein, Satzzeichen und Artikel egal, kleine Tippfehler erlaubt. */
+object SpokenAnswer {
+    private val articles = setOf("der", "die", "das", "the", "a", "an", "le", "la", "les", "l", "un", "une", "el", "los", "las")
+
+    fun normalize(s: String): String = s.lowercase()
+        .replace(Regex("[^\\p{L}\\p{N} ]"), " ")
+        .split(Regex("\\s+")).filter { it.isNotBlank() && it !in articles }.joinToString(" ")
+
+    fun matches(heard: String, answer: String): Boolean {
+        val a = normalize(answer); val h = normalize(heard)
+        if (a.isEmpty()) return false
+        if (h == a || h.contains(a)) return true
+        val tolerance = maxOf(1, a.length / 6)
+        return levenshtein(h, a) <= tolerance
+    }
+
+    fun levenshtein(x: String, y: String): Int {
+        val d = IntArray(y.length + 1) { it }
+        for (i in 1..x.length) {
+            var prev = d[0]; d[0] = i
+            for (j in 1..y.length) {
+                val tmp = d[j]
+                d[j] = minOf(d[j] + 1, d[j - 1] + 1, prev + if (x[i - 1] == y[j - 1]) 0 else 1)
+                prev = tmp
+            }
+        }
+        return d[y.length]
     }
 }

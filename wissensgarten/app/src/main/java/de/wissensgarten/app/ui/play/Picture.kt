@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.wissensgarten.app.ui.fx.LocalSfx
 import de.wissensgarten.app.ui.fx.Sound
@@ -37,7 +38,8 @@ fun splitEmojis(s: String): List<String> {
  * Antippen lässt sie hüpfen – damit sich das Bild einprägt.
  */
 @Composable
-fun MerkBild(img: String?, modifier: Modifier = Modifier, emojiSize: TextUnit = 64.sp, key: Any = img ?: "") {
+fun MerkBild(img: String?, modifier: Modifier = Modifier, emojiSize: TextUnit = 64.sp, key: Any = img ?: "", cardId: String? = null) {
+    if (cardId != null && DrawnPicture(cardId, (emojiSize.value * 1.7f).dp, modifier)) return
     if (img.isNullOrBlank()) return
     val parts = remember(img) { splitEmojis(img) }
     val sfx = LocalSfx.current

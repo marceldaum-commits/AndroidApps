@@ -60,7 +60,14 @@ fun ReviewScreen(
     onClose: () -> Unit,
     peers: Map<String, List<String>> = emptyMap(),
     onBonus: (Int) -> Unit = {},
+    calm: Boolean = false,
+    subjects: Map<String, String?> = emptyMap(),
+    onComplete: (correct: Int, total: Int) -> Unit = { _, _ -> },
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val canSpeak = remember { runCatching { speechAvailable(context) }.getOrDefault(false) }
+    val voice = LocalVoice.current
+    val readAloud = LocalReadAloud.current
     var index by rememberSaveable { mutableIntStateOf(0) }
     var phase by remember { mutableStateOf(Phase.PLAY) }
     var grownMemory by remember { mutableStateOf<Memory?>(null) }
@@ -87,25 +94,30 @@ fun ReviewScreen(
     BackHandler { onClose() }
 
     if (items.isEmpty() || index >= items.size) {
-        SessionDone(items.size, grown, dew, correct, bestStreak, onClose)
+        LaunchedEffect(Unit) { onComplete(correct, items.size) }
+        if (calm) GoodNightDone(items.size, correct, onClose) else SessionDone(items.size, grown, dew, correct, bestStreak, onClose)
         return
     }
     val card = items[index]
     val bed = beds[card.bedId]
     val now = remember(index) { System.currentTimeMillis() }
     val cardPeers = peers[card.bedId].orEmpty()
-    val mode = remember(card.id) { Games.choose(card, cardPeers, simpleRating) }
+    val mode = remember(card.id) { Games.choose(card, cardPeers, simpleRating, canSpeak, calm) }
+    val subject = subjects[card.bedId]
     val options = remember(card.id) { Games.options(card, cardPeers) }
     val shownMemory = if (phase == Phase.REVEAL) grownMemory ?: card.memory else card.memory
 
     // Brummi begrüßt jede Karte passend
     LaunchedEffect(card.id) {
-        mood = if (mode == GameMode.DISCOVER) Mood.HAPPY else Mood.THINK
-        speech = when (mode) {
+        mood = if (calm) Mood.IDLE else if (mode == GameMode.DISCOVER) Mood.HAPPY else Mood.THINK
+        speech = if (calm) "Psst … ganz ruhig 🌙" else when (mode) {
             GameMode.DISCOVER -> "Neu! Schau dir das Bild gut an 👀"
             GameMode.BALLOONS -> "Schnell, bevor sie wegfliegen!"
             GameMode.LETTERS -> "Bau das Wort zusammen!"
             GameMode.SWIPE -> "Stimmt das wirklich? 🤔"
+            GameMode.TILT -> "Kipp das Handy! 📱"
+            GameMode.SPEAK -> "Ich höre zu! 👂"
+            GameMode.TEACH -> null
             else -> null
         }
     }
@@ -148,7 +160,8 @@ fun ReviewScreen(
         }
         if (right) particles.burst(Burst.SPARKLE, 0.5f, 0.2f, 26)
         phase = Phase.REVEAL
-        sfx?.play(Sound.WATER)
+        if (readAloud) voice?.speak(card.back, Voice.localeFor(subject, card.back))
+        sfx?.play(Sound.WATER, volume = if (calm) 0.4f else 0.9f)
         scope.launch {
             launch { gainAnim.snapTo(0f); gainAnim.animateTo(1f, tween(1300, easing = LinearOutSlowInEasing)) }
             launch { repeat(4) { particles.burst(Burst.WATER, 0.3f, 0.1f, 8); delay(120) } }
@@ -240,14 +253,17 @@ fun ReviewScreen(
                                 phase = Phase.PLAY
                             }
                             Phase.REVEAL -> RevealCard(card, lastRight) { next() }
-                            Phase.PLAY -> when (mode) {
+                            Phase.PLAY -> CompositionLocalProvider(LocalSubject provides subject) { when (mode) {
                                 GameMode.DISCOVER -> DiscoverGame(card, options) { finish(it.rating) }
                                 GameMode.BALLOONS -> BalloonGame(card, options!!) { finish(it.rating) }
                                 GameMode.LETTERS -> LetterGame(card) { finish(it.rating) }
                                 GameMode.SWIPE -> SwipeGame(card, options!!) { finish(it.rating) }
                                 GameMode.CHOICE -> ChoiceGame(card, options!!) { finish(it.rating) }
                                 GameMode.FLIP -> FlipGame(card, now, simpleRating) { finish(it) }
-                            }
+                                GameMode.TEACH -> TeachGame(card, options!!) { finish(it.rating) }
+                                GameMode.TILT -> TiltGame(card, options!!) { finish(it.rating) }
+                                GameMode.SPEAK -> SpeakGame(card, options, Voice.localeFor(subject, card.back)) { finish(it.rating) }
+                            } }
                         }
                     }
                     Spacer(Modifier.height(16.dp))
@@ -267,7 +283,10 @@ private fun RevealCard(card: StudyCard, right: Boolean, onNext: () -> Unit) {
             shape = MaterialTheme.shapes.extraLarge, modifier = Modifier.fillMaxWidth(),
         ) {
             Column(Modifier.fillMaxWidth().padding(18.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                MerkBild(card.img, emojiSize = 56.sp, key = "r" + card.id)
+                MerkBild(card.img, emojiSize = 56.sp, key = "r" + card.id, cardId = card.id)
+                var drawing by remember(card.id) { mutableStateOf(false) }
+                AssistChip(onClick = { drawing = true }, label = { Text(if (de.wissensgarten.app.ui.play.Drawings.rev >= 0 && de.wissensgarten.app.ui.play.Drawings.has(androidx.compose.ui.platform.LocalContext.current, card.id)) "✏️ Neu malen" else "✏️ Selbst malen") })
+                if (drawing) de.wissensgarten.app.ui.play.DrawDialog(card.id, "${card.front} → ${card.back}", card.img) { drawing = false }
                 Text(card.front, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F))
                 Text(card.back, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, color = Color(0xFF22261F))
                 card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F), modifier = Modifier.padding(top = 6.dp)) }
@@ -476,6 +495,32 @@ private fun StatTile(icon: String, value: String, label: String, modifier: Modif
             Text(icon, fontSize = 20.sp)
             Text(value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
             Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+        }
+    }
+}
+
+
+/** Ende der Gute-Nacht-Runde: ruhig, Sternenhimmel, schlafender Brummi. */
+@Composable
+private fun GoodNightDone(count: Int, correct: Int, onClose: () -> Unit) {
+    val sfx = LocalSfx.current
+    LaunchedEffect(Unit) { sfx?.play(Sound.DEW, volume = 0.4f) }
+    Box(
+        Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(Color(0xFF0D1B3D), Color(0xFF34477A)))),
+        contentAlignment = Alignment.Center,
+    ) {
+        Canvas(Modifier.matchParentSize()) {
+            val r = kotlin.random.Random(5)
+            repeat(60) { drawCircle(Color.White.copy(alpha = 0.3f + r.nextFloat() * 0.6f), 1.5f + r.nextFloat() * 2f, Offset(r.nextFloat() * size.width, r.nextFloat() * size.height * 0.7f)) }
+        }
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(28.dp)) {
+            Brummi(Mood.SLEEP, size = 120.dp)
+            Text("Gute Nacht! 🌙", color = Color.White, style = MaterialTheme.typography.headlineMedium)
+            Text("$correct von $count gewusst. Dein Gehirn sortiert das jetzt im Schlaf – so bleibt es besser hängen.",
+                color = Color.White.copy(alpha = 0.85f), textAlign = TextAlign.Center, modifier = Modifier.padding(top = 8.dp))
+            Spacer(Modifier.height(28.dp))
+            JuicyButton(onClick = onClose, sound = null, modifier = Modifier.fillMaxWidth().height(56.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF5C6BC0))) { Text("Schlaf gut 💤") }
         }
     }
 }

@@ -253,7 +253,8 @@ fun RarityBadge(r: Rarity) {
 
 /** Album aller Gartenfreunde. Die nächste Figur ist als Schatten sichtbar – man weiß, worauf man hinarbeitet. */
 @Composable
-fun FriendsAlbum(opened: Int, earned: Int, inGarden: Set<String>, onToggle: (String) -> Unit, onOpenChest: () -> Unit) {
+fun FriendsAlbum(opened: Int, earned: Int, inGarden: Set<String>, onToggle: (String) -> Unit, onOpenChest: () -> Unit,
+                 hybrids: List<de.wissensgarten.core.model.Hybrid> = emptyList()) {
     LazyVerticalGrid(GridCells.Adaptive(104.dp), contentPadding = PaddingValues(12.dp),
         horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item(span = { GridItemSpan(maxLineSpan) }) {
@@ -268,6 +269,24 @@ fun FriendsAlbum(opened: Int, earned: Int, inGarden: Set<String>, onToggle: (Str
                 }
             }
         }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            Column {
+                Text("🌺 Kreuzungen: ${hybrids.size}", style = MaterialTheme.typography.titleMedium)
+                Text(if (hybrids.isEmpty()) "Spiel eine Mischrunde aus zwei Fächern – mit 75 % richtig züchtest du eine Mischblüte."
+                    else "Jede Fächer-Kombination ergibt eine eigene Blume.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
+        items(hybrids.size) { i ->
+            val h = hybrids[i]
+            Card(colors = CardDefaults.cardColors(containerColor = Color(0xFFE0F7FA))) {
+                Column(Modifier.fillMaxWidth().padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                    de.wissensgarten.app.ui.common.Plant(de.wissensgarten.core.model.Stage.BLOOM, 0f, h.a.hue, i, Modifier.size(64.dp), species = h.species())
+                    Text(h.name, style = MaterialTheme.typography.labelMedium, textAlign = TextAlign.Center, maxLines = 2)
+                    Text("${h.a.emoji}×${h.b.emoji}", style = MaterialTheme.typography.labelSmall)
+                }
+            }
+        }
+        item(span = { GridItemSpan(maxLineSpan) }) { Text("🐾 Gartenfreunde", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 8.dp)) }
         items(Friends.all.size) { i ->
             val f = Friends.all[i]
             val have = i < opened

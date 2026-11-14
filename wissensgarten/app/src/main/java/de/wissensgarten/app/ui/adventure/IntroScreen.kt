@@ -32,8 +32,11 @@ import kotlin.math.sin
  * Bilder fliegen herein, der Text erscheint wie gesprochen. Tippen = weiter.
  */
 @Composable
-fun IntroScreen(pack: Pack, onDone: () -> Unit) {
-    val scenes = pack.intro
+fun IntroScreen(pack: Pack, onDone: () -> Unit) = StoryPlayer("${pack.emoji} ${pack.title}", pack.intro, onDone)
+
+/** Spielt eine Szenenfolge ab (Erklär-Geschichte oder Kapitel aus Brummis Abenteuer). */
+@Composable
+fun StoryPlayer(title: String, scenes: List<de.wissensgarten.core.model.IntroScene>, onDone: () -> Unit) {
     var index by remember { mutableIntStateOf(0) }
     var shown by remember { mutableIntStateOf(0) }
     val sfx = LocalSfx.current
@@ -44,9 +47,12 @@ fun IntroScreen(pack: Pack, onDone: () -> Unit) {
     val last = index == scenes.lastIndex
     val typing = shown < scene.text.length
 
-    // Schreibmaschinen-Effekt
+    val voice = LocalVoice.current
+    val auto = LocalReadAloud.current
+    // Schreibmaschinen-Effekt (und vorlesen)
     LaunchedEffect(index) {
         shown = 0
+        if (auto) voice?.speak(scene.text)
         sfx?.play(Sound.PLOP, pitch = 1f + index * 0.08f)
         delay(350)
         while (shown < scene.text.length) { shown++; delay(22) }
@@ -67,7 +73,7 @@ fun IntroScreen(pack: Pack, onDone: () -> Unit) {
     ) {
         Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(20.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("${pack.emoji} ${pack.title}", style = MaterialTheme.typography.titleMedium, color = Color(0xFF14321A), modifier = Modifier.weight(1f))
+                Text(title, style = MaterialTheme.typography.titleMedium, color = Color(0xFF14321A), modifier = Modifier.weight(1f))
                 TextButton(onClick = onDone) { Text("Überspringen", color = Color(0xFF14321A)) }
             }
             // Fortschritts-Punkte
@@ -85,7 +91,7 @@ fun IntroScreen(pack: Pack, onDone: () -> Unit) {
             }
             // Brummi erzählt
             Row(verticalAlignment = Alignment.Bottom) {
-                Brummi(if (last && !typing) Mood.CHEER else if (typing) Mood.HAPPY else Mood.IDLE, size = 92.dp)
+                Brummi(if (last && !typing) Mood.CHEER else if (typing) Mood.HAPPY else Mood.IDLE, size = 92.dp, onTap = { voice?.speak(scene.text) })
                 Surface(color = Color.White, shape = MaterialTheme.shapes.extraLarge, shadowElevation = 4.dp, modifier = Modifier.weight(1f).padding(bottom = 24.dp)) {
                     Box(Modifier.padding(16.dp)) {
                         // Platz für den vollen Text reservieren, damit nichts springt

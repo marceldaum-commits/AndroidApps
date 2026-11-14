@@ -27,6 +27,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="https" android:host="www.mathenachhilfe-online.com" android:pathPrefix="/duell" />
+                <data android:pathPrefix="/klasse" />
             </intent-filter>
             <!-- Duell-Link von der Ausweich-Seite: wissensgarten://duell/WG1-… -->
             <intent-filter>
@@ -34,6 +35,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="wissensgarten" android:host="duell" />
+                <data android:host="klasse" />
             </intent-filter>
             <!-- WhatsApp-Nachricht mit Duell-Code an den Wissensgarten teilen -->
             <intent-filter android:label="Duell öffnen">
@@ -42,6 +44,9 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+
+        <!-- Texterkennungs-Modell gleich bei der Installation über Play-Dienste laden -->
+        <meta-data android:name="com.google.mlkit.vision.DEPENDENCIES" android:value="ocr" />
 
         <receiver
             android:name=".widget.GardenWidgetReceiver"

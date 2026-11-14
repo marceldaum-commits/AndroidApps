@@ -67,6 +67,13 @@ object Routes {
     const val INTRO = "erklaerung/{pack}"
     fun intro(pack: String) = "erklaerung/$pack"
     const val CHEST = "truhe"
+    const val STORY = "abenteuer"
+    const val HYBRID = "kreuzung"
+    const val KLASSE = "klasse"
+    const val WORKSHEET = "arbeitsblatt/{bed}"
+    fun worksheet(bed: String) = "arbeitsblatt/$bed"
+    const val CHAPTER = "kapitel/{n}"
+    fun chapter(n: Int) = "kapitel/$n"
     const val DUEL_PACK = "duell-paket"
     const val DUEL_PLAY = "duell-spiel"
 }
@@ -89,7 +96,7 @@ class MainActivity : ComponentActivity() {
 
     private fun readDuelIntent(i: Intent?) {
         val text = i?.dataString ?: i?.getStringExtra(Intent.EXTRA_TEXT)
-        if (text != null && text.contains("WG1-")) duelRequest.value = text
+        if (text != null && (text.contains("WG1-") || text.contains("WGK1-"))) duelRequest.value = text
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,7 +112,18 @@ class MainActivity : ComponentActivity() {
             val sfx = (application as WissensgartenApp).sfx
             LaunchedEffect(soundOn) { sfx.enabled = soundOn }
             WissensgartenTheme(theme) {
-              CompositionLocalProvider(LocalWind provides rememberWind(), LocalSfx provides sfx) {
+              val readMode by vm.settings.readAloud.collectAsStateWithLifecycle()
+              val prof by vm.profile.collectAsStateWithLifecycle()
+              val readAloud = when (readMode) {
+                  de.wissensgarten.core.data.ReadAloud.ON -> true
+                  de.wissensgarten.core.data.ReadAloud.OFF -> false
+                  de.wissensgarten.core.data.ReadAloud.AUTO -> (prof?.level ?: 0) in 1..4
+              }
+              CompositionLocalProvider(
+                  LocalWind provides rememberWind(), LocalSfx provides sfx,
+                  de.wissensgarten.app.ui.fx.LocalVoice provides (application as WissensgartenApp).voice,
+                  de.wissensgarten.app.ui.fx.LocalReadAloud provides readAloud,
+              ) {
                 Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     val nav = rememberNavController()
                     AppNav(nav, startRoute)
@@ -118,7 +136,8 @@ class MainActivity : ComponentActivity() {
                         val t = duelText ?: return@LaunchedEffect
                         if (!onboardedNow) return@LaunchedEffect
                         duelRequest.value = null
-                        if (vm.openDuelCode(t)) nav.navigate(Routes.DUEL)
+                        if (t.contains("WGK1-")) { if (vm.openClassCode(t)) nav.navigate(Routes.KLASSE) }
+                        else if (vm.openDuelCode(t)) nav.navigate(Routes.DUEL)
                     }
                     LaunchedEffect(water, beds) {
                         if (water && beds.isNotEmpty()) {
@@ -218,6 +237,18 @@ class MainActivity : ComponentActivity() {
                             decos = decos,
                             onDuel = { nav.navigate(Routes.DUEL) },
                             friends = friends, chestsWaiting = waiting, onChest = { nav.navigate(Routes.CHEST) },
+                            surprises = remember(rev, profile) { vm.surprises() },
+                            festivalGreeting = vm.festival()?.greeting,
+                            onSurprise = { vm.collectSurprise(it) },
+                            extraCards = {
+                                val newCh = remember(rev, beds) { vm.newChapter() }
+                                Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                                    StoryEntryCard(newCh) { nav.navigate(Routes.STORY) }
+                                    val mix = remember(beds, packs) { vm.mixCandidates() }
+                                    if (mix != null) MixEntryCard(mix.first.bed.name, mix.second.bed.name) { if (vm.startMixed()) nav.navigate(Routes.REVIEW) }
+                                }
+                            },
+                            onGoodNight = if (remember(rev) { vm.goodNightDoneToday() }) null else { { if (vm.startGoodNight()) nav.navigate(Routes.REVIEW) } },
                             reminderPrompt = if (asked) null else {
                                 { ReminderPromptCard(hour, onYes = askPermission, onNo = { vm.setReminder(false) }) }
                             },
@@ -231,6 +262,7 @@ class MainActivity : ComponentActivity() {
                             onPlant = vm::plantPack,
                             onOpenBed = { nav.navigate(Routes.bed(it)) },
                             onOwnBed = { n, e -> vm.addOwnBed(n, e) { id -> nav.navigate(Routes.bed(id)) } },
+                            onClassCode = { vm.pendingClassSet = null; nav.navigate(Routes.KLASSE) },
                         )
                     }
                 }
@@ -249,7 +281,8 @@ class MainActivity : ComponentActivity() {
                                 val opened = remember(rev, p) { vm.chestsOpened() }
                                 val earned = remember(rev, beds) { vm.chestsEarned() }
                                 val inGarden = remember(rev, p) { vm.gardenFriends().map { it.id }.toSet() }
-                                FriendsAlbum(opened, earned, inGarden, onToggle = { vm.toggleGardenFriend(it) }, onOpenChest = { nav.navigate(Routes.CHEST) })
+                                FriendsAlbum(opened, earned, inGarden, onToggle = { vm.toggleGardenFriend(it) }, onOpenChest = { nav.navigate(Routes.CHEST) },
+                                    hybrids = remember(rev) { vm.hybrids() })
                             },
                         )
                     }
@@ -260,6 +293,40 @@ class MainActivity : ComponentActivity() {
                     if (pack == null) LaunchedEffect(Unit) { nav.popBackStack() } else IntroScreen(pack) {
                         vm.markIntroSeen(pack.id); nav.popBackStack()
                     }
+                }
+                composable(Routes.KLASSE) {
+                    val initial = remember { vm.pendingClassSet.also { vm.pendingClassSet = null } }
+                    de.wissensgarten.app.ui.klasse.ClassImportScreen(
+                        initial = initial,
+                        onDecode = { de.wissensgarten.core.model.ClassCodes.decode(it) },
+                        onPlant = { s -> vm.importClassSet(s) { id -> nav.navigate(Routes.bed(id)) { popUpTo(Routes.KLASSE) { inclusive = true } } } },
+                        onBack = { nav.popBackStack() },
+                    )
+                }
+                composable(Routes.WORKSHEET) { entry ->
+                    val id = entry.arguments?.getString("bed") ?: ""
+                    val bed = beds.firstOrNull { it.bed.id == id }?.bed
+                    de.wissensgarten.app.ui.klasse.WorksheetScreen(
+                        bedName = bed?.name ?: "Beet",
+                        lexicon = { vm.lexicon },
+                        onAdd = { vm.addCardsTo(id, it) },
+                        onBack = { nav.popBackStack() },
+                    )
+                }
+                composable(Routes.HYBRID) {
+                    val h = remember { vm.consumeNewHybrid() }
+                    if (h == null) LaunchedEffect(Unit) { nav.popBackStack() } else HybridReveal(h) { nav.popBackStack() }
+                }
+                composable(Routes.STORY) {
+                    val rev by vm.adventureRev.collectAsStateWithLifecycle()
+                    StoryScreen(remember(beds) { vm.grownPlants() }, remember(rev) { vm.chaptersRead() },
+                        onBack = { nav.popBackStack() }, onRead = { nav.navigate(Routes.chapter(it.number)) })
+                }
+                composable(Routes.CHAPTER) { entry ->
+                    val n = entry.arguments?.getString("n")?.toIntOrNull()
+                    val ch = de.wissensgarten.core.model.Story.chapters.firstOrNull { it.number == n }
+                    if (ch == null) LaunchedEffect(Unit) { nav.popBackStack() } else
+                        StoryPlayer("Kapitel ${ch.number}: ${ch.title}", ch.scenes) { vm.markChapterRead(ch.number); nav.popBackStack() }
                 }
                 composable(Routes.CHEST) {
                     ChestReveal(onOpen = { vm.openChest() }, onClose = { nav.popBackStack() })
@@ -310,23 +377,28 @@ class MainActivity : ComponentActivity() {
                 composable(Routes.FAMILY) {
                     val allBeds by vm.allBeds.collectAsStateWithLifecycle()
                     val logs by vm.weekLogs.collectAsStateWithLifecycle()
+                    val fRev by vm.adventureRev.collectAsStateWithLifecycle()
                     FamilyScreen(
                         profiles, profile?.id, allBeds, logs, now,
                         onSwitch = { vm.switchProfile(it); goTab(Routes.GARDEN) },
                         onAdd = { nav.navigate(Routes.ADD_PROFILE) },
                         onDuel = { nav.navigate(Routes.DUEL) },
+                        familyClaimed = remember(fRev) { vm.familyClaimed() },
+                        onClaimFamily = { vm.claimFamilyTree() },
                     )
                 }
                 composable(Routes.SETTINGS) {
                     val theme by vm.theme.collectAsStateWithLifecycle()
                     val sound by vm.settings.sound.collectAsStateWithLifecycle()
                     val reminderOn by vm.settings.reminderOn.collectAsStateWithLifecycle()
+                    val readMode2 by vm.settings.readAloud.collectAsStateWithLifecycle()
                     val reminderHour by vm.settings.reminderHour.collectAsStateWithLifecycle()
                     WithProfile(profile) { p ->
                         SettingsScreen(
                             profile = p, canDeleteProfile = profiles.size > 1, theme = theme,
                             sound = sound, onSound = { vm.settings.setSound(it) },
                             reminderOn = reminderOn, reminderHour = reminderHour, onReminder = { on, h -> vm.setReminder(on, h) },
+                            readAloud = readMode2, onReadAloud = { vm.settings.setReadAloud(it) },
                             packCount = packs.size, cardCount = packs.sumOf { it.cards.size }, version = BuildConfig.VERSION_NAME,
                             onTheme = { vm.setTheme(it) }, onUpdateProfile = { vm.updateProfile(it) },
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
@@ -355,6 +427,8 @@ class MainActivity : ComponentActivity() {
                         onDeleteBed = { nav.popBackStack(); vm.deleteBed(data.bed.id) },
                         ownedSpecies = inventory.map { it.itemId },
                         onSpecies = { vm.setBedSpecies(data.bed.id, it) },
+                        onWorksheet = { nav.navigate(Routes.worksheet(data.bed.id)) },
+                        classSet = { vm.classSetOf(data.bed.id) },
                         path = {
                             val stations = remember(beds, rev) { vm.stations(data.bed.id) }
                             AdventurePathView(
@@ -373,11 +447,15 @@ class MainActivity : ComponentActivity() {
                         simpleRating = profile?.simpleRating == true,
                         onRate = { c, r, dew -> vm.review(c, r, dew) },
                         peers = beds.associate { b -> b.bed.id to b.cards.map { it.back } },
+                        calm = vm.sessionCalm,
+                        onComplete = { c, t -> vm.sessionComplete(c, t) },
+                        subjects = beds.associate { b -> b.bed.id to b.bed.packId?.let { pid -> packs.firstOrNull { it.id == pid }?.subject } },
                         onBonus = { vm.addDew(it) },
                         onClose = {
                             vm.endSession(); nav.popBackStack()
                             // Truhen-Station geschafft? Dann gleich öffnen.
-                            if (vm.chestsEarned() > vm.chestsOpened()) nav.navigate(Routes.CHEST)
+                            if (vm.newHybrid != null) nav.navigate(Routes.HYBRID)
+                            else if (vm.chestsEarned() > vm.chestsOpened()) nav.navigate(Routes.CHEST)
                         },
                     )
                 }

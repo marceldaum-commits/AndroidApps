@@ -37,6 +37,8 @@ fun FamilyScreen(
     onSwitch: (String) -> Unit,
     onAdd: () -> Unit,
     onDuel: () -> Unit = {},
+    familyClaimed: Boolean = false,
+    onClaimFamily: () -> Unit = {},
 ) {
     LazyColumn(
         Modifier.fillMaxSize().statusBarsPadding(),
@@ -50,6 +52,7 @@ fun FamilyScreen(
                 style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp),
             )
         }
+        item { FamilyTree(profiles, logs, familyClaimed, onClaimFamily) }
         item { de.wissensgarten.app.ui.duel.DuelEntryCard(onDuel) }
         items(profiles, key = { it.id }) { p ->
             ProfileCard(
@@ -149,3 +152,48 @@ private fun WeekBars(perDay: List<Int>, now: Long) {
         }
     }
 }
+
+
+/**
+ * Familienbaum: wächst mit allem, was die ganze Familie diese Woche gießt.
+ * Gemeinsames Ziel statt Wettkampf – ist es erreicht, bekommt jeder Tautropfen.
+ */
+@Composable
+private fun FamilyTree(profiles: List<ProfileEntity>, logs: List<ReviewLogEntity>, claimed: Boolean, onClaim: () -> Unit) {
+    val goal = 20 * profiles.size.coerceAtLeast(1)
+    val total = logs.size
+    val p = (total.toFloat() / goal).coerceIn(0f, 1f)
+    // erst Keimling, ab 30 % ein Baum, der bis zum Ziel immer größer wird
+    val stage = when { p < 0.1f -> Stage.SEED; p < 0.2f -> Stage.SPROUT; p < 0.3f -> Stage.SHOOT; else -> Stage.TREE }
+    val treeGrow = if (stage == Stage.TREE) ((p - 0.3f) / 0.7f).coerceIn(0f, 1f) else 1f
+    val sfx = de.wissensgarten.app.ui.fx.LocalSfx.current
+    Card(colors = CardDefaults.cardColors(containerColor = androidx.compose.ui.graphics.Color(0xFFE8F5E9)), shape = MaterialTheme.shapes.extraLarge) {
+        Column(Modifier.padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Text("🌳 Familienbaum", style = MaterialTheme.typography.titleLarge)
+            Text("Wächst mit allem, was ihr zusammen diese Woche gießt.", style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
+            Box(Modifier.fillMaxWidth().height(170.dp), contentAlignment = Alignment.Center) {
+                de.wissensgarten.app.ui.common.Plant(stage, 0f, 330f, 7, Modifier.size(170.dp), grow = treeGrow, species = "kirschbaum")
+                // Wer hat mitgegossen? Avatare rund um den Baum
+                profiles.forEachIndexed { i, pr ->
+                    val n = logs.count { it.profileId == pr.id }
+                    // abwechselnd links und rechts neben den Baum, wie Gärtner beim Gießen
+                    val side = if (i % 2 == 0) -1 else 1
+                    val row = i / 2
+                    Column(Modifier.offset(x = (side * (115 + row * 10)).dp, y = (45 - row * 55).dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(pr.avatar, fontSize = 26.sp)
+                        Text("$n", style = MaterialTheme.typography.labelSmall)
+                    }
+                }
+            }
+            LinearProgressIndicator(progress = { p }, modifier = Modifier.fillMaxWidth().height(10.dp).clip(CircleShape))
+            Text("$total von $goal gemeinsam gegossen", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 6.dp))
+            if (p >= 1f) {
+                if (claimed) Text("🎉 Geschafft! Belohnung abgeholt – nächste Woche geht's weiter.", style = MaterialTheme.typography.bodySmall)
+                else de.wissensgarten.app.ui.fx.JuicyButton(onClick = { sfx?.play(de.wissensgarten.app.ui.fx.Sound.FANFARE); onClaim() }, modifier = Modifier.padding(top = 8.dp)) {
+                    Text("🎁 Jeder bekommt +20 💧")
+                }
+            }
+        }
+    }
+}
+

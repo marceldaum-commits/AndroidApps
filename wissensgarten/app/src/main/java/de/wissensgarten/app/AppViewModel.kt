@@ -83,7 +83,99 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         return de.wissensgarten.core.model.AdventurePath.stations(b.cards.sortedBy { it.sortIndex }.map { it.toStudy() }, System.currentTimeMillis())
     }
 
+    /** 3 ruhige Karten vor dem Schlafen: bevorzugt heute gelernte, sonst durstige, sonst gewachsene. */
+    fun startGoodNight(): Boolean {
+        val now = System.currentTimeMillis()
+        val today = now / Scheduler.DAY_MS
+        val grown = beds.value.flatMap { b -> b.cards.filter { !it.memory.isSeed }.map { it.toStudy() } }
+        val picked = (grown.filter { it.memory.lastReview / Scheduler.DAY_MS == today }.shuffled() +
+            grown.filter { Scheduler.isThirsty(it.memory, now) } + grown.shuffled()).distinctBy { it.id }.take(3)
+        if (picked.isEmpty()) return false
+        session = picked; sessionCalm = true
+        profile.value?.let { settings.markGoodNight(it.id, today) }
+        return true
+    }
+
+    /** Heutiges Fest und noch nicht eingesammelte Überraschungen (Index, Emoji). */
+    fun festival() = de.wissensgarten.core.model.Seasons.festival(java.time.LocalDate.now())
+
+    fun surprises(): List<Pair<Int, String>> {
+        val p = profile.value ?: return emptyList()
+        val f = festival() ?: return emptyList()
+        val day = System.currentTimeMillis() / Scheduler.DAY_MS
+        return f.items.mapIndexed { i, e -> i to e }.filter { (i, _) -> !settings.surpriseFound(p.id, day, i) }
+    }
+
+    fun collectSurprise(i: Int) {
+        val p = profile.value ?: return
+        settings.markSurprise(p.id, System.currentTimeMillis() / Scheduler.DAY_MS, i)
+        addDew(5)
+    }
+
+    fun grownPlants() = beds.value.sumOf { b -> b.cards.count { !it.memory.isSeed } }
+    fun chaptersRead() = profile.value?.let { settings.chaptersRead(it.id) } ?: emptySet()
+    fun markChapterRead(n: Int) { profile.value?.let { settings.markChapterRead(it.id, n) } }
+    fun newChapter(): de.wissensgarten.core.model.Chapter? {
+        val read = chaptersRead()
+        return de.wissensgarten.core.model.Story.unlocked(grownPlants()).firstOrNull { it.number !in read }
+    }
+
+    // --- Kreuzungen (Mischrunde) ---
+    var mixPair: Pair<de.wissensgarten.core.model.Subject, de.wissensgarten.core.model.Subject>? = null
+        private set
+    /** Gerade gezüchtete Kreuzung (für die Enthüllung) */
+    var newHybrid: de.wissensgarten.core.model.Hybrid? = null
+        private set
+
+    private fun subjectOf(b: BedWithCards): de.wissensgarten.core.model.Subject =
+        b.bed.packId?.let { pid -> packs.value.firstOrNull { it.id == pid }?.subjectInfo } ?: de.wissensgarten.core.model.Subject.EIGENE
+
+    /** Zwei Beete aus verschiedenen Fächern mit gewachsenen Pflanzen – oder null. */
+    fun mixCandidates(): Pair<BedWithCards, BedWithCards>? {
+        val ok = beds.value.filter { b -> b.cards.count { !it.memory.isSeed } >= 4 }
+        for (i in ok.indices) for (j in i + 1 until ok.size)
+            if (subjectOf(ok[i]) != subjectOf(ok[j])) return ok[i] to ok[j]
+        return null
+    }
+
+    fun startMixed(): Boolean {
+        val (a, b) = mixCandidates() ?: return false
+        val now = System.currentTimeMillis()
+        fun pick(x: BedWithCards) = x.cards.filter { !it.memory.isSeed }.map { it.toStudy() }
+            .sortedBy { Scheduler.retrievability(it.memory, now) }
+        session = de.wissensgarten.core.model.Hybrids.interleave(pick(a), pick(b))
+        sessionCalm = false
+        mixPair = subjectOf(a) to subjectOf(b)
+        return session.isNotEmpty()
+    }
+
+    /** Am Ende jeder Runde aufgerufen. Bei Mischrunden mit ≥ 75 % gibt's eine Kreuzung. */
+    fun sessionComplete(correct: Int, total: Int) {
+        val pair = mixPair ?: return
+        mixPair = null
+        val p = profile.value ?: return
+        if (total > 0 && correct.toDouble() / total >= de.wissensgarten.core.model.Hybrids.PASS_RATIO) {
+            val h = de.wissensgarten.core.model.Hybrids.of(pair.first, pair.second)
+            if (h.id !in settings.hybrids(p.id)) { settings.addHybrid(p.id, h.id); newHybrid = h }
+        }
+    }
+
+    fun consumeNewHybrid(): de.wissensgarten.core.model.Hybrid? = newHybrid.also { newHybrid = null }
+    fun hybrids() = profile.value?.let { p -> settings.hybrids(p.id).mapNotNull { de.wissensgarten.core.model.Hybrids.byId(it) } } ?: emptyList()
+
+    // --- Familienbaum ---
+    fun familyWeek() = System.currentTimeMillis() / Scheduler.DAY_MS / 7
+    fun familyClaimed() = settings.familyClaimedWeek() == familyWeek()
+    fun claimFamilyTree() {
+        if (familyClaimed()) return
+        settings.setFamilyClaimedWeek(familyWeek())
+        viewModelScope.launch { profiles.value.forEach { repo.addDew(it.id, 20) } }
+    }
+
+    fun goodNightDoneToday(): Boolean = profile.value?.let { settings.goodNightDay(it.id) == System.currentTimeMillis() / Scheduler.DAY_MS } ?: true
+
     fun startStation(bedId: String, index: Int): Boolean {
+        sessionCalm = false
         val b = beds.value.firstOrNull { it.bed.id == bedId } ?: return false
         val cards = b.cards.sortedBy { it.sortIndex }.map { it.toStudy() }
         val st = stations(bedId).getOrNull(index) ?: return false
@@ -136,6 +228,39 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun showDuel(d: de.wissensgarten.core.model.Duel) { currentDuel = d }
 
     /** Liest einen Code (auch aus einer ganzen Nachricht). */
+    // ------------------------------------------------------------ Klassen-Code & Arbeitsblatt
+
+    /** Beet als Klassen-Code (nur eigene Beete; Fortschritt bleibt privat). */
+    fun classSetOf(bedId: String): de.wissensgarten.core.model.ClassSet? {
+        val b = beds.value.firstOrNull { it.bed.id == bedId } ?: return null
+        return de.wissensgarten.core.model.ClassSet(b.bed.name, b.bed.emoji,
+            b.cards.sortedBy { it.sortIndex }.map { de.wissensgarten.core.model.ClassCard(it.front, it.back, it.img, it.info) })
+    }
+
+    var pendingClassSet: de.wissensgarten.core.model.ClassSet? = null
+
+    fun openClassCode(text: String): Boolean {
+        pendingClassSet = de.wissensgarten.core.model.ClassCodes.decode(text) ?: return false
+        return true
+    }
+
+    fun importClassSet(set: de.wissensgarten.core.model.ClassSet, then: (String) -> Unit) {
+        val p = profile.value ?: return
+        viewModelScope.launch {
+            val id = repo.addOwnBed(p.id, set.title.ifBlank { "Klasse" }, set.emoji.ifBlank { "🏫" })
+            repo.bedEntity(id)?.let { repo.addCards(it, set.cards) }
+            then(id)
+        }
+    }
+
+    fun addCardsTo(bedId: String, cards: List<de.wissensgarten.core.model.ClassCard>) {
+        viewModelScope.launch { repo.bedEntity(bedId)?.let { repo.addCards(it, cards) } }
+    }
+
+    val lexicon by lazy {
+        de.wissensgarten.core.model.EmojiLexicon.parse(getApplication<Application>().assets.open("emoji_de.tsv").bufferedReader().readText())
+    }
+
     fun openDuelCode(text: String): Boolean {
         val d = de.wissensgarten.core.model.Duels.decode(text) ?: return false
         currentDuel = d
@@ -188,7 +313,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         return SessionBuilder.build(cards, System.currentTimeMillis(), seedsLeft())
     }
 
+    /** Gute-Nacht-Runde aktiv? (ruhige Spielarten, leise) */
+    var sessionCalm = false
+        private set
+
     fun startSession(bedId: String? = null): Boolean {
+        sessionCalm = false; mixPair = null
         session = buildSession(bedId)
         return session.isNotEmpty()
     }

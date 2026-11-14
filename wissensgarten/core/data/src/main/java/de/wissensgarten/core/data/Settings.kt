@@ -5,6 +5,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
+/** Vorlesen: AUTO = für Grundschulkinder an, sonst aus. */
+enum class ReadAloud(val label: String) { AUTO("Automatisch"), ON("Immer"), OFF("Nie") }
+
 enum class ThemeMode(val label: String) { LIGHT("Hell"), DARK("Dunkel"), SYSTEM("Wie das Handy") }
 
 /** Kleine Geräte-Einstellungen. Lernstand liegt in der Datenbank. */
@@ -25,6 +28,10 @@ class Settings(context: Context) {
     private val _sound = MutableStateFlow(prefs.getBoolean(K_SOUND, true))
     val sound: StateFlow<Boolean> = _sound.asStateFlow()
     fun setSound(v: Boolean) { prefs.edit().putBoolean(K_SOUND, v).apply(); _sound.value = v }
+
+    private val _readAloud = MutableStateFlow(runCatching { ReadAloud.valueOf(prefs.getString("vorlesen", "AUTO")!!) }.getOrDefault(ReadAloud.AUTO))
+    val readAloud: StateFlow<ReadAloud> = _readAloud.asStateFlow()
+    fun setReadAloud(r: ReadAloud) { prefs.edit().putString("vorlesen", r.name).apply(); _readAloud.value = r }
 
     // Gieß-Erinnerung
     private val _reminderOn = MutableStateFlow(prefs.getBoolean(K_REMINDER, false))
@@ -55,6 +62,20 @@ class Settings(context: Context) {
     /** Ausgewählte Freunde für den Garten; null = automatisch die neuesten. */
     fun gardenFriends(profileId: String): Set<String>? = prefs.getStringSet("freunde_$profileId", null)
     fun setGardenFriends(profileId: String, ids: Set<String>) { prefs.edit().putStringSet("freunde_$profileId", ids).apply(); bump() }
+
+    fun chaptersRead(profileId: String): Set<Int> = prefs.getStringSet("kapitel_$profileId", emptySet())!!.mapNotNull { it.toIntOrNull() }.toSet()
+    fun markChapterRead(profileId: String, n: Int) { prefs.edit().putStringSet("kapitel_$profileId", (chaptersRead(profileId) + n).map { "$it" }.toSet()).apply(); bump() }
+
+    fun hybrids(profileId: String): Set<String> = prefs.getStringSet("kreuzungen_$profileId", emptySet())!!
+    fun addHybrid(profileId: String, id: String) { prefs.edit().putStringSet("kreuzungen_$profileId", hybrids(profileId) + id).apply(); bump() }
+    fun familyClaimedWeek() = prefs.getLong("familienbaum_woche", -1)
+    fun setFamilyClaimedWeek(w: Long) { prefs.edit().putLong("familienbaum_woche", w).apply(); bump() }
+
+    fun surpriseFound(profileId: String, day: Long, i: Int) = prefs.getBoolean("fest_${profileId}_${day}_$i", false)
+    fun markSurprise(profileId: String, day: Long, i: Int) { prefs.edit().putBoolean("fest_${profileId}_${day}_$i", true).apply(); bump() }
+
+    fun goodNightDay(profileId: String) = prefs.getLong("gutenacht_$profileId", -1)
+    fun markGoodNight(profileId: String, day: Long) { prefs.edit().putLong("gutenacht_$profileId", day).apply(); bump() }
 
     fun setActiveProfile(id: String?) { prefs.edit().putString(K_PROFILE, id).apply(); _activeProfile.value = id }
     fun setTheme(t: ThemeMode) { prefs.edit().putString(K_THEME, t.name).apply(); _theme.value = t }

@@ -21,6 +21,7 @@ fun ShopScreen(
     onPlant: (Pack) -> Unit,
     onOpenBed: (String) -> Unit,
     onOwnBed: (String, String) -> Unit,
+    onClassCode: () -> Unit = {},
 ) {
     val planted = beds.mapNotNull { b -> b.bed.packId?.let { it to b.bed.id } }.toMap()
     var showOwn by remember { mutableStateOf(false) }
@@ -50,6 +51,18 @@ fun ShopScreen(
                             Spacer(Modifier.height(8.dp))
                             OwnBedForm { n, e -> onOwnBed(n, e); showOwn = false }
                         } else TextButton(onClick = { showOwn = true }) { Text("Eigenes Beet anlegen") }
+                    }
+                }
+            }
+            item {
+                ElevatedCard(onClick = onClassCode, modifier = Modifier.fillMaxWidth(), colors = CardDefaults.elevatedCardColors(containerColor = androidx.compose.ui.graphics.Color(0xFFE3F2FD))) {
+                    Row(Modifier.padding(14.dp), verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+                        Text("🏫", fontSize = androidx.compose.ui.unit.TextUnit(30f, androidx.compose.ui.unit.TextUnitType.Sp))
+                        Spacer(Modifier.width(12.dp))
+                        Column {
+                            Text("Klassen-Code", style = MaterialTheme.typography.titleMedium)
+                            Text("QR-Code von Lehrerin oder Lehrer scannen – das Beet der Klasse wächst sofort bei dir.", style = MaterialTheme.typography.bodySmall)
+                        }
                     }
                 }
             }

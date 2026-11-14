@@ -82,6 +82,21 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
         ))
     }
 
+    /** Mehrere Karten auf einmal (Klassen-Code, Arbeitsblatt-Foto). */
+    suspend fun addCards(bed: BedEntity, cards: List<de.wissensgarten.core.model.ClassCard>) {
+        val existing = dao.cardsOfBed(bed.id).size
+        val now = clock()
+        dao.insertCards(cards.mapIndexed { i, c ->
+            CardEntity(
+                id = UUID.randomUUID().toString(), bedId = bed.id, profileId = bed.profileId,
+                front = c.q.trim(), back = c.a.trim(), info = c.info?.trim()?.ifEmpty { null },
+                createdAt = now, sortIndex = existing + i, img = c.img,
+            )
+        })
+    }
+
+    suspend fun bedEntity(bedId: String) = dao.bed(bedId)
+
     suspend fun deleteCard(cardId: String) = dao.deleteCard(cardId)
 
     /** Eine Wiederholung speichern: Gedächtnis, Protokoll, Tautropfen, Samen-Zähler. */

@@ -1,14 +1,15 @@
 # Dateien für www.mathenachhilfe-online.com
 
-Diese zwei Dateien machen Duell-Links anklickbar (`https://www.mathenachhilfe-online.com/duell/#WG1-…`).
+Diese Dateien machen Duell- und Klassen-Links anklickbar (`https://www.mathenachhilfe-online.com/duell/#WG1-…`, `…/klasse/#WGK1-…`).
 
 | Datei | Hochladen nach | Zweck |
 | --- | --- | --- |
 | `.well-known/assetlinks.json` | `https://www.mathenachhilfe-online.com/.well-known/assetlinks.json` | Android prüft damit, dass die Domain der App vertraut („App Links“). Ist die App installiert, öffnet der Link direkt das Duell. |
+| `klasse/index.html` | `https://www.mathenachhilfe-online.com/klasse/` | Ausweich-Seite für Klassen-Codes: zeigt Titel und erste Karten, Code kopieren. |
 | `duell/index.html` | `https://www.mathenachhilfe-online.com/duell/` | Ausweich-Seite für alle ohne App: zeigt Thema und Punktestand, Code kopieren, Anleitung. |
 
 **Hochladen:** per SFTP/FTP ins Hauptverzeichnis der WordPress-Installation (dort, wo `wp-config.php` liegt) –
-die Ordner `.well-known` und `duell` einfach daneben anlegen. WordPress wird dadurch nicht verändert.
+die Ordner `.well-known`, `duell` und `klasse` einfach daneben anlegen. WordPress wird dadurch nicht verändert.
 
 **Wichtig**
 - `assetlinks.json` muss **ohne Weiterleitung** und mit Status 200 erreichbar sein (Content-Type `application/json`).

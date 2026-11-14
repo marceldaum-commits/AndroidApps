@@ -48,6 +48,28 @@ class GamesTest {
         assertEquals(truth, shown == "Rom")
     }
 
+    @Test fun calmModeOnlyQuietGames() {
+        val modes = (1..30).map { Games.choose(card("c$it", "Land", "Paris", reps = 2), peers, false, calm = true) }.toSet()
+        assertEquals(setOf(GameMode.CHOICE, GameMode.TEACH), modes)
+    }
+
+    @Test fun speakOnlyWhenAvailableAndShort() {
+        val c = card("x", "Italien", "Rom")
+        val withSpeech = (1..60).map { Games.choose(c.copy(id = "s$it"), peers, false, canSpeak = true) }
+        val without = (1..60).map { Games.choose(c.copy(id = "s$it"), peers, false, canSpeak = false) }
+        assertTrue(GameMode.SPEAK in withSpeech)
+        assertFalse(GameMode.SPEAK in without)
+        assertFalse(Games.speakPossible("A = π · r²"))
+    }
+
+    @Test fun spokenAnswersAreForgiving() {
+        assertTrue(SpokenAnswer.matches("the apple", "apple"))
+        assertTrue(SpokenAnswer.matches("Kopenhagn", "Kopenhagen"))
+        assertTrue(SpokenAnswer.matches("la lune", "la lune"))
+        assertFalse(SpokenAnswer.matches("Paris", "Rom"))
+        assertFalse(SpokenAnswer.matches("", "Rom"))
+    }
+
     @Test fun matchNeedsFourDistinctShortCards() {
         val cs = (1..5).map { card("$it", "F$it", "A$it") }
         assertEquals(4, Games.matchPairs(cs)!!.size)

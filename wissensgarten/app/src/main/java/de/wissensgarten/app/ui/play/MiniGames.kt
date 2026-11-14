@@ -45,9 +45,17 @@ private val RightGreen = Color(0xFFBFE3AE)
 private val WrongOrange = Color(0xFFFFCBB0)
 private val BalloonColors = listOf(Color(0xFFEF5350), Color(0xFF42A5F5), Color(0xFFFFCA28), Color(0xFF66BB6A), Color(0xFFAB47BC))
 
+/** Frage mit Lautsprecher-Knopf; liest bei Bedarf automatisch vor. */
 @Composable
 fun QuestionText(text: String, modifier: Modifier = Modifier) {
-    Text(text, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = modifier.fillMaxWidth())
+    val voice = LocalVoice.current
+    val auto = LocalReadAloud.current
+    val subject = LocalSubject.current
+    LaunchedEffect(text) { if (auto) { delay(250); voice?.speak(text, Voice.localeFor(subject, text)) } }
+    Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+        Text(text, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
+        if (voice != null) IconButton(onClick = { voice.speak(text, Voice.localeFor(subject, text)) }) { Text("🔊", fontSize = 20.sp) }
+    }
 }
 
 // ---------------------------------------------------------------- Entdecken
@@ -62,7 +70,7 @@ fun DiscoverGame(card: StudyCard, options: List<String>?, onResult: (GameResult)
                 Text("✨ Neu entdeckt", color = Color(0xFF4E3B00), fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp))
             }
             Spacer(Modifier.height(10.dp))
-            MerkBild(card.img, emojiSize = 72.sp, key = card.id)
+            MerkBild(card.img, emojiSize = 72.sp, key = card.id, cardId = card.id)
             Spacer(Modifier.height(8.dp))
             QuestionText(card.front)
             Text("↓", fontSize = 26.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)

@@ -20,8 +20,8 @@ android {
         applicationId = "de.wissensgarten.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 10
-        versionName = "0.7.2"
+        versionCode = 11
+        versionName = "0.8.0"
     }
 
     signingConfigs {
@@ -85,6 +85,11 @@ dependencies {
     implementation(project(":content"))
     implementation("androidx.navigation:navigation-compose:2.9.6")
     implementation("androidx.work:work-runtime-ktx:2.11.2")
+    // Klassen-Code: QR erzeugen (zxing) und scannen (Google Code Scanner – ohne Kamera-Berechtigung)
+    implementation("com.google.zxing:core:3.5.4")
+    implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
+    // Arbeitsblatt-Foto: Texterkennung läuft auf dem Gerät (Modell kommt über Play-Dienste, hält die APK klein)
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.17")

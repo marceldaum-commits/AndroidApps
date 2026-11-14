@@ -22,6 +22,8 @@ fun SettingsScreen(
     theme: ThemeMode,
     sound: Boolean,
     onSound: (Boolean) -> Unit,
+    readAloud: de.wissensgarten.core.data.ReadAloud = de.wissensgarten.core.data.ReadAloud.AUTO,
+    onReadAloud: (de.wissensgarten.core.data.ReadAloud) -> Unit = {},
     reminderOn: Boolean = false,
     reminderHour: Int = 17,
     onReminder: (Boolean, Int) -> Unit = { _, _ -> },
@@ -89,6 +91,14 @@ fun SettingsScreen(
                 style = MaterialTheme.typography.bodySmall,
                 color = if (denied) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+
+        Section("Brummi liest vor") {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                de.wissensgarten.core.data.ReadAloud.entries.forEach { r -> FilterChip(selected = r == readAloud, onClick = { onReadAloud(r) }, label = { Text(r.label) }) }
+            }
+            Text("Automatisch: für Grundschulkinder an. Mit 🔊 an jeder Frage geht's immer. Englisch, Französisch und Spanisch werden in der richtigen Sprache gesprochen.",
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
 
         Section("Ton") {

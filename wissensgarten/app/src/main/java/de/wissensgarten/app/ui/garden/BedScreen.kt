@@ -43,7 +43,10 @@ fun BedScreen(
     ownedSpecies: List<String> = listOf(ShopItems.DEFAULT_SPECIES),
     onSpecies: (String) -> Unit = {},
     path: (@Composable () -> Unit)? = null,
+    onWorksheet: () -> Unit = {},
+    classSet: (() -> de.wissensgarten.core.model.ClassSet?)? = null,
 ) {
+    var shareClass by remember { mutableStateOf<de.wissensgarten.core.model.ClassSet?>(null) }
     var showPath by remember { mutableStateOf(path != null) }
     val bed = data.bed
     var pickSpecies by remember { mutableStateOf(false) }
@@ -103,6 +106,10 @@ fun BedScreen(
                             }
                         )
                     }
+                    Row(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedButton(onClick = onWorksheet, modifier = Modifier.weight(1f)) { Text("📷 Arbeitsblatt", maxLines = 1) }
+                        if (bed.packId == null && classSet != null) OutlinedButton(onClick = { shareClass = classSet() }, modifier = Modifier.weight(1f)) { Text("🏫 Klassen-Code", maxLines = 1) }
+                    }
                     if (bed.packId != null) Text(
                         "Wissenspaket · Version ${bed.packVersion} · ${cards.size} Karten. Du kannst eigene Karten ergänzen.",
                         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -118,6 +125,7 @@ fun BedScreen(
       }
     }
 
+    shareClass?.let { de.wissensgarten.app.ui.klasse.ClassShareDialog(it) { shareClass = null } }
     if (pickSpecies) SpeciesDialog(bed.species, bed.hue, ownedSpecies, onDismiss = { pickSpecies = false }) { onSpecies(it); pickSpecies = false }
     if (showAdd) AddCardDialog(onDismiss = { showAdd = false }, onAdd = onAddCard)
     selected?.let { c -> CardDetailDialog(c, now, { selected = null }) { onDeleteCard(c.id); selected = null } }
