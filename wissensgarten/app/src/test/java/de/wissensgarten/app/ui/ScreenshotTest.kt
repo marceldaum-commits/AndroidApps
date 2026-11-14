@@ -406,4 +406,20 @@ class ScreenshotTest {
         rule.mainClock.advanceTimeBy(100)
         rule.onRoot().captureRoboImage("build/uebergang_200ms.png")
     }
+
+    @Test fun settings() {
+        rule.setContent { WissensgartenTheme(ThemeMode.LIGHT) { Surface {
+            de.wissensgarten.app.ui.settings.SettingsScreen(profile, true, ThemeMode.LIGHT, true, {}, packCount = 43, cardCount = 1479,
+                version = "0.8.4", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {},
+                update = AppRelease("0.8.5", "Brummi schaut beim Start nach Updates.", "https://example.org/a.apk", 3_500_000))
+        } } }
+        rule.mainClock.advanceTimeBy(800)
+        rule.onRoot().captureRoboImage("../screenshots/38_einstellungen_update.png")
+    }
+
+    @Test fun gardenUpdateBanner() = shot("39_garten_update") {
+        GardenScreen(profile, garden, now, 10, {}, {}, {}, {}, extraCards = {
+            de.wissensgarten.app.ui.settings.UpdateBanner("0.8.5") {}
+        })
+    }
 }

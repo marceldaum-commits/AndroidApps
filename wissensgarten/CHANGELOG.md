@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.8.5
+- Updates kommen jetzt von selbst: Beim Start schaut Brummi (höchstens einmal am Tag) nach einer neuen Version.
+  Gibt es eine, erscheint im Garten ein Geschenk-Banner – antippen, aktualisieren, fertig.
+- Die Update-Karte steht jetzt ganz oben in den Einstellungen; automatisches Nachsehen ist dort abschaltbar.
+
 ## 0.8.4
 - Einrichtung: Der Wechsel zwischen den Seiten (z. B. „Wie heißt du?“ → „In welcher Klasse?“) ist jetzt sauber – nichts liegt mehr übereinander.
 - Auch in der Gieß-Runde wechseln die Karten ruhiger.

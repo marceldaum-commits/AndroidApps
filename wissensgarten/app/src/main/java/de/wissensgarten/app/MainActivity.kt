@@ -104,6 +104,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         waterRequest.value = intent?.getBooleanExtra(EXTRA_WATER, false) == true
         readDuelIntent(intent)
+        vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         val startRoute = if (vm.onboarded.value) Routes.GARDEN else Routes.ONBOARDING
 
         setContent {
@@ -243,6 +244,8 @@ class MainActivity : ComponentActivity() {
                             extraCards = {
                                 val newCh = remember(rev, beds) { vm.newChapter() }
                                 Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                                    val upd by vm.availableUpdate.collectAsStateWithLifecycle()
+                                    upd?.let { de.wissensgarten.app.ui.settings.UpdateBanner(it.version) { goTab(Routes.SETTINGS) } }
                                     StoryEntryCard(newCh) { nav.navigate(Routes.STORY) }
                                     val mix = remember(beds, packs) { vm.mixCandidates() }
                                     if (mix != null) MixEntryCard(mix.first.bed.name, mix.second.bed.name) { if (vm.startMixed()) nav.navigate(Routes.REVIEW) }
@@ -403,6 +406,8 @@ class MainActivity : ComponentActivity() {
                     val reminderOn by vm.settings.reminderOn.collectAsStateWithLifecycle()
                     val readMode2 by vm.settings.readAloud.collectAsStateWithLifecycle()
                     val reminderHour by vm.settings.reminderHour.collectAsStateWithLifecycle()
+                    val upd by vm.availableUpdate.collectAsStateWithLifecycle()
+                    val autoUpd by vm.settings.autoUpdate.collectAsStateWithLifecycle()
                     WithProfile(profile) { p ->
                         SettingsScreen(
                             profile = p, canDeleteProfile = profiles.size > 1, theme = theme,
@@ -413,6 +418,7 @@ class MainActivity : ComponentActivity() {
                             onTheme = { vm.setTheme(it) }, onUpdateProfile = { vm.updateProfile(it) },
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
                             onTutorial = { nav.navigate(Routes.tutorial(false)) },
+                            update = upd, autoUpdate = autoUpd, onAutoUpdate = { vm.settings.setAutoUpdate(it) },
                         )
                     }
                 }

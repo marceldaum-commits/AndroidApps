@@ -34,6 +34,9 @@ fun SettingsScreen(
     onUpdateProfile: (ProfileEntity) -> Unit,
     onDeleteProfile: () -> Unit,
     onTutorial: () -> Unit,
+    update: de.wissensgarten.core.model.AppRelease? = null,
+    autoUpdate: Boolean = true,
+    onAutoUpdate: (Boolean) -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
     var confirmDelete by remember { mutableStateOf(false) }
@@ -43,6 +46,11 @@ fun SettingsScreen(
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
         Text("Einstellungen", style = MaterialTheme.typography.headlineMedium)
+
+        // Ganz oben, damit man es findet
+        if (de.wissensgarten.app.BuildConfig.SELF_UPDATE) key(update?.version) {
+            UpdateSection(version, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, autoUpdate, onAutoUpdate)
+        }
 
         Section("Profil") {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -122,8 +130,6 @@ fun SettingsScreen(
                 style = MaterialTheme.typography.bodySmall,
             )
         }
-
-        if (de.wissensgarten.app.BuildConfig.SELF_UPDATE) UpdateSection(version)
 
         Section("Über") {
             Text("Wissensgarten $version")

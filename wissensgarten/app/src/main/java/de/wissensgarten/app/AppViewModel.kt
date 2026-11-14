@@ -305,6 +305,27 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun tick() { _now.value = System.currentTimeMillis() }
 
+    // ------------------------------------------------------------ App-Update
+
+    private val _update = kotlinx.coroutines.flow.MutableStateFlow<de.wissensgarten.core.model.AppRelease?>(null)
+    /** Neue Version, falls beim automatischen Nachsehen gefunden. */
+    val availableUpdate: StateFlow<de.wissensgarten.core.model.AppRelease?> = _update
+
+    /** Beim Start: höchstens alle 20 Stunden bei GitHub nachsehen (abschaltbar). */
+    fun checkForUpdateIfDue(installed: String) {
+        if (!BuildConfig.SELF_UPDATE || !settings.autoUpdate.value) return
+        val now = System.currentTimeMillis()
+        if (_update.value == null && now - settings.lastUpdateCheck < 20 * 3_600_000L) return
+        viewModelScope.launch {
+            de.wissensgarten.app.update.AppUpdater.check().onSuccess { r ->
+                val newer = r?.takeIf { de.wissensgarten.core.model.Updates.isNewer(it.version, installed) }
+                // Nur „nichts Neues“ merken – ein gefundenes Update soll beim nächsten Start wieder angezeigt werden
+                if (newer == null) settings.lastUpdateCheck = now
+                _update.value = newer
+            }
+        }
+    }
+
     fun seedsLeft(p: ProfileEntity? = profile.value): Int =
         p?.let { SessionBuilder.seedsLeft(it.seedsPerDay, it.seedDay, it.seedsToday, System.currentTimeMillis()) } ?: 0
 

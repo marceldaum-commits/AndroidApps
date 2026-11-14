@@ -29,6 +29,14 @@ class Settings(context: Context) {
     val sound: StateFlow<Boolean> = _sound.asStateFlow()
     fun setSound(v: Boolean) { prefs.edit().putBoolean(K_SOUND, v).apply(); _sound.value = v }
 
+    /** Beim Start (höchstens einmal am Tag) bei GitHub nach einer neuen App-Version schauen. */
+    private val _autoUpdate = MutableStateFlow(prefs.getBoolean("auto_update", true))
+    val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
+    fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("auto_update", v).apply(); _autoUpdate.value = v }
+    var lastUpdateCheck: Long
+        get() = prefs.getLong("update_check", 0)
+        set(v) { prefs.edit().putLong("update_check", v).apply() }
+
     private val _readAloud = MutableStateFlow(runCatching { ReadAloud.valueOf(prefs.getString("vorlesen", "AUTO")!!) }.getOrDefault(ReadAloud.AUTO))
     val readAloud: StateFlow<ReadAloud> = _readAloud.asStateFlow()
     fun setReadAloud(r: ReadAloud) { prefs.edit().putString("vorlesen", r.name).apply(); _readAloud.value = r }

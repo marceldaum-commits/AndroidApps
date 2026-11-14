@@ -12,7 +12,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 
 | Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Arbeitsblatt-Foto | Widget (Tag / Party) |
 | --- | --- | --- | --- | --- | --- |
-| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) |
+| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) |
 
 | Erklär-Geschichte | Abenteuerpfad | 3D-Truhe | Truhe offen | Sammelalbum | Garten mit Freunden |
 | --- | --- | --- | --- | --- | --- |
@@ -138,7 +138,8 @@ veröffentlicht `Wissensgarten-<Version>.apk` unter **Releases** – und, wenn e
 Benötigte Secrets stehen im Kopf der Workflow-Datei. Die Release-Notizen kommen aus [`CHANGELOG.md`](CHANGELOG.md).
 
 **Update-Knopf in der App** (Einstellungen → App-Update): fragt GitHub nach der neuesten Version, lädt die APK und öffnet
-den Android-Installer (einmalig „Apps installieren erlauben“). Nur auf Knopfdruck, keine Daten werden gesendet.
+den Android-Installer (einmalig „Apps installieren erlauben“). Beim Start schaut die App höchstens einmal am Tag nach
+(abschaltbar) und zeigt im Garten ein Banner, wenn es etwas Neues gibt. Es werden keine Daten gesendet.
 Für eine Play-Store-Version `SELF_UPDATE` in `app/build.gradle.kts` auf `false` setzen (und die Berechtigung
 `REQUEST_INSTALL_PACKAGES` entfernen).
 
