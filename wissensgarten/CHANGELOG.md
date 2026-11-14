@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.9.1
+- Neu: **Musik!** Leise Melodien, im Code komponiert: tagsüber eine fröhliche Kalimba im Garten, in der Gieß-Runde
+  etwas schwungvoller, abends und bei der Gute-Nacht-Runde ein Spieluhr-Schlaflied.
+- Wenn Brummi spricht, wird die Musik leiser. Läuft schon andere Musik auf dem Handy, bleibt der Garten still.
+- Einstellungen → Ton: „Geräusche“ und „Musik“ jetzt getrennt abschaltbar.
+
 ## 0.9.0
 - Neu: **Auf allen Geräten** – auf dem Handy anfangen, auf dem Tablet weitermachen. Einstellungen → „Mit Google-Konto verbinden“.
   Der Garten der ganzen Familie liegt dann in einem versteckten Ordner im eigenen Google Drive (kein fremder Server).

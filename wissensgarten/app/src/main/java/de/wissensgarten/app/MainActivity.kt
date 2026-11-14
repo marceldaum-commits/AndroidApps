@@ -112,6 +112,8 @@ class MainActivity : ComponentActivity() {
             val soundOn by vm.settings.sound.collectAsStateWithLifecycle()
             val sfx = (application as WissensgartenApp).sfx
             LaunchedEffect(soundOn) { sfx.enabled = soundOn }
+            val musicOn by vm.settings.music.collectAsStateWithLifecycle()
+            LaunchedEffect(musicOn) { (application as WissensgartenApp).music.setEnabled(musicOn) }
             WissensgartenTheme(theme) {
               val readMode by vm.settings.readAloud.collectAsStateWithLifecycle()
               val prof by vm.profile.collectAsStateWithLifecycle()
@@ -164,8 +166,14 @@ class MainActivity : ComponentActivity() {
         (application as WissensgartenApp).sync.syncSoon()
     }
 
+    override fun onStart() {
+        super.onStart()
+        (application as WissensgartenApp).music.onForeground(true)
+    }
+
     override fun onStop() {
         super.onStop()
+        (application as WissensgartenApp).music.onForeground(false)
         vm.refreshWidget()
         // Beim Verlassen der App gleich abgleichen, damit das andere Gerät den neuesten Stand bekommt
         (application as WissensgartenApp).sync.syncSoon(minGapMs = 5_000)
@@ -189,6 +197,19 @@ class MainActivity : ComponentActivity() {
         }
 
         val sfx = LocalSfx.current
+        // Musik passend zum Ort: Gieß-Runde/Duell schwungvoll, Gute-Nacht/abends ein Schlaflied, sonst Garten
+        val music = (androidx.compose.ui.platform.LocalContext.current.applicationContext as WissensgartenApp).music
+        val hour = remember(now) { java.util.Calendar.getInstance().apply { timeInMillis = now }.get(java.util.Calendar.HOUR_OF_DAY) }
+        LaunchedEffect(Unit) { music.prepare(de.wissensgarten.core.model.MusicMood.GARDEN, de.wissensgarten.core.model.MusicMood.PLAY, de.wissensgarten.core.model.MusicMood.NIGHT) }
+        LaunchedEffect(route, hour) {
+            val evening = hour >= 19 || hour < 6
+            music.setMood(when {
+                route == Routes.REVIEW && vm.sessionCalm -> de.wissensgarten.core.model.MusicMood.NIGHT
+                route == Routes.REVIEW || route == Routes.DUEL_PLAY -> de.wissensgarten.core.model.MusicMood.PLAY
+                evening || route == Routes.STORY || route == Routes.CHAPTER -> de.wissensgarten.core.model.MusicMood.NIGHT
+                else -> de.wissensgarten.core.model.MusicMood.GARDEN
+            })
+        }
         Scaffold(
             bottomBar = {
                 if (showBar) NavigationBar {
@@ -441,6 +462,7 @@ class MainActivity : ComponentActivity() {
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
                             onTutorial = { nav.navigate(Routes.tutorial(false)) },
                             update = upd, autoUpdate = autoUpd, onAutoUpdate = { vm.settings.setAutoUpdate(it) },
+                            music = vm.settings.music.collectAsStateWithLifecycle().value, onMusic = { vm.settings.setMusic(it) },
                             syncCard = { de.wissensgarten.app.ui.settings.SyncSectionLive((application as WissensgartenApp).sync) },
                         )
                     }

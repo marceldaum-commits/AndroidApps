@@ -38,6 +38,8 @@ fun SettingsScreen(
     autoUpdate: Boolean = true,
     onAutoUpdate: (Boolean) -> Unit = {},
     syncCard: @Composable () -> Unit = {},
+    music: Boolean = true,
+    onMusic: (Boolean) -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
     var confirmDelete by remember { mutableStateOf(false) }
@@ -114,8 +116,16 @@ fun SettingsScreen(
 
         Section("Ton") {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Text("Geräusche & Musik", Modifier.weight(1f))
+                Text("Geräusche", Modifier.weight(1f))
                 Switch(checked = sound, onCheckedChange = onSound)
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text("Musik")
+                    Text("Leise Melodien – tagsüber fröhlich, abends ein Schlaflied. Läuft schon andere Musik auf dem Handy, bleibt sie aus.",
+                        style = MaterialTheme.typography.bodySmall)
+                }
+                Switch(checked = music, onCheckedChange = onMusic)
             }
         }
 

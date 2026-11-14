@@ -11,6 +11,9 @@ class WissensgartenApp : Application() {
 
     val voice: de.wissensgarten.app.ui.fx.Voice by lazy { de.wissensgarten.app.ui.fx.Voice(this) }
     val sync: de.wissensgarten.app.sync.DriveSync by lazy { de.wissensgarten.app.sync.DriveSync(this, container) }
+    val music: de.wissensgarten.app.ui.fx.BackgroundMusic by lazy {
+        de.wissensgarten.app.ui.fx.BackgroundMusic(this).also { m -> voice.onSpeaking = { m.duck(it) } }
+    }
     val sfx: Sfx by lazy { Sfx(this).also { it.enabled = container.settings.sound.value } }
 
     override fun onCreate() {

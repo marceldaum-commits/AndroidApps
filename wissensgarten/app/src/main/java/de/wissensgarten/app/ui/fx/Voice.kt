@@ -13,9 +13,20 @@ class Voice(context: Context) : TextToSpeech.OnInitListener {
     private val tts = TextToSpeech(context.applicationContext, this)
     @Volatile private var ready = false
 
+    /** Wird aufgerufen, wenn Brummi anfängt / aufhört zu sprechen (Musik leiser stellen). */
+    var onSpeaking: (Boolean) -> Unit = {}
+
     override fun onInit(status: Int) {
         ready = status == TextToSpeech.SUCCESS
-        if (ready) { tts.setPitch(1.25f); tts.setSpeechRate(0.95f) }
+        if (ready) {
+            tts.setPitch(1.25f); tts.setSpeechRate(0.95f)
+            tts.setOnUtteranceProgressListener(object : android.speech.tts.UtteranceProgressListener() {
+                override fun onStart(id: String?) = onSpeaking(true)
+                override fun onDone(id: String?) = onSpeaking(false)
+                @Deprecated("Deprecated in Java") override fun onError(id: String?) = onSpeaking(false)
+                override fun onStop(id: String?, interrupted: Boolean) = onSpeaking(false)
+            })
+        }
     }
 
     fun speak(text: String, locale: Locale = Locale.GERMAN) {

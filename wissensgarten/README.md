@@ -102,6 +102,9 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
   ohne App zeigt er eine Ausweich-Seite. Server-Dateien und Anleitung: [`web/`](web/README.md).
 - **Gieß-Erinnerung**: täglich zur Wunschzeit, nur wenn Pflanzen Durst haben, für alle Profile in einer Nachricht
   (WorkManager, `notify/Reminders.kt`).
+- **Musik** (0.9.1): drei Stücke, im Code komponiert (`core/model/Music.kt`: Akkordfolgen, pentatonische Melodien in
+  A-A'-B-A-Form) und erzeugt (`ui/fx/MusicSynth.kt`: Kalimba, Spieluhr, Zupfklang, Klangteppich, Bass, Hall).
+  Nahtlose Schleife, Überblendung je Ort (Garten / Gieß-Runde / Nacht), leiser während Brummi spricht, eigener Schalter.
 - **Ton**: alle Geräusche werden im Code erzeugt (`ui/fx/Synth.kt`) – keine Audiodateien, keine Lizenzen.
   Abschaltbar in den Einstellungen.
 

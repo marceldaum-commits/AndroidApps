@@ -29,6 +29,10 @@ class Settings(context: Context) {
     val sound: StateFlow<Boolean> = _sound.asStateFlow()
     fun setSound(v: Boolean) { prefs.edit().putBoolean(K_SOUND, v).apply(); _sound.value = v }
 
+    private val _music = MutableStateFlow(prefs.getBoolean("musik", true))
+    val music: StateFlow<Boolean> = _music.asStateFlow()
+    fun setMusic(v: Boolean) { prefs.edit().putBoolean("musik", v).apply(); _music.value = v }
+
     /** Beim Start (höchstens einmal am Tag) bei GitHub nach einer neuen App-Version schauen. */
     private val _autoUpdate = MutableStateFlow(prefs.getBoolean("auto_update", true))
     val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
