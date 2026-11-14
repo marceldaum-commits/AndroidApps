@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.15.0 – Weitermachen, wo du warst
+- **Gieß-Runde geht nicht mehr verloren:** Beendet Android die App im Hintergrund (z. B. beim Telefonieren oder Spielen), geht es danach mit derselben Karte weiter.
+- **Abenteuerpfad zeigt „Du bist hier“:** Brummi zeigt auf die aktuelle Station, der geschaffte Weg leuchtet golden und die Ansicht springt gleich an die richtige Stelle.
+- **Wortarten leichter verständlich:** feste Zeichen, die Brummi in der Erklärung vorstellt – 🏷️ Namenwort (Nomen), 🏃 Tuwort (Verb), 🎨 Wiewort (Adjektiv). Artikel-Herzen wie in der Grundschule: 💙 der, ❤️ die, 💚 das. Unklare Bilder (Teller für „Tisch“, Bilderrahmen für „Fenster“) sind ersetzt.
+
 ## 0.14.0 – Großer Prüf- und Reparatur-Durchgang
 **Lernfortschritt & Tautropfen**
 - Handy gedreht, während die Antwort angezeigt wird: Die Karte wird nicht mehr doppelt bewertet.

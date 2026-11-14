@@ -49,6 +49,7 @@ import de.wissensgarten.app.ui.fx.LocalSfx
 import de.wissensgarten.app.ui.fx.LocalWind
 import de.wissensgarten.app.ui.fx.rememberWind
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import androidx.compose.ui.graphics.Color
 
@@ -615,9 +616,15 @@ class MainActivity : ComponentActivity() {
                     )
                 }
                 composable(Routes.REVIEW) {
-                    val session = remember { vm.session }
-                    ReviewScreen(
-                        items = session,
+                    // Nach einem Neustart durch Android: Runde aus der Datenbank zurückholen, sobald die Beete geladen sind
+                    var session by remember { mutableStateOf(vm.session.takeIf { it.isNotEmpty() || !vm.hasSavedSession() }) }
+                    if (session == null) LaunchedEffect(Unit) {
+                        val loaded = kotlinx.coroutines.withTimeoutOrNull(5_000) { vm.beds.first { it.isNotEmpty() } }.orEmpty()
+                        session = vm.restoreSession(loaded)
+                    }
+                    val items = session
+                    if (items == null) Box(Modifier.fillMaxSize()) else ReviewScreen(
+                        items = items,
                         beds = beds.associate { it.bed.id to it.bed },
                         simpleRating = profile?.simpleRating == true,
                         onRate = { c, r, dew -> vm.review(c, r, dew) },

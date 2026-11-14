@@ -1,6 +1,6 @@
 {
   "id": "gs-wortarten",
-  "version": 2,
+  "version": 3,
   "title": "Wortarten",
   "subject": "deutsch",
   "grades": [
@@ -17,16 +17,20 @@
       "text": "Wörter sind wie Tiere im Zoo: Es gibt verschiedene Arten! Drei davon lernst du heute kennen."
     },
     {
-      "img": "🐕🏫",
-      "text": "Nomen sind Namen für Menschen, Tiere, Dinge und Gefühle: Hund, Schule, Freude. Man schreibt sie groß – davor passt der, die oder das."
+      "img": "🐕🏷️",
+      "text": "Nomen sind Namenwörter – wie ein Namensschild 🏷️: Hund, Schule, Freude. Man schreibt sie groß, davor passt der, die oder das."
     },
     {
-      "img": "🤸✍️",
-      "text": "Verben sagen, was jemand tut: springen, lesen, singen. Test: Passt „wir“ davor? Wir springen – ja, ein Verb!"
+      "img": "🤸🏃",
+      "text": "Verben sind Tuwörter – der Läufer 🏃 zeigt: hier tut jemand was! Springen, lesen, singen. Test: „wir springen“ – passt!"
     },
     {
-      "img": "🌈😴",
-      "text": "Adjektive sagen, wie etwas ist: groß, rot, müde. Test: „Der Ball ist …“ – rot? Passt! Also ein Adjektiv."
+      "img": "🌈🎨",
+      "text": "Adjektive sind Wiewörter – der Malkasten 🎨 zeigt: so sieht etwas aus! Groß, rot, müde. Test: „Der Ball ist rot“ – passt!"
+    },
+    {
+      "img": "💙❤️💚",
+      "text": "Die Herzen helfen beim Artikel: 💙 der Mond, ❤️ die Sonne, 💚 das Haus."
     },
     {
       "img": "🌱🎉",
@@ -44,7 +48,7 @@
         "schön"
       ],
       "info": "Nomen sind Namen für Lebewesen, Dinge und Gefühle.",
-      "img": "🐕"
+      "img": "🐕🏷️"
     },
     {
       "id": "002",
@@ -55,7 +59,7 @@
         "klein",
         "rot"
       ],
-      "img": "🏫"
+      "img": "🏫🏷️"
     },
     {
       "id": "003",
@@ -67,7 +71,7 @@
         "Baum"
       ],
       "info": "Verben sagen, was jemand tut.",
-      "img": "🤸"
+      "img": "🤸🏃"
     },
     {
       "id": "004",
@@ -78,7 +82,7 @@
         "bunt",
         "leise"
       ],
-      "img": "✍️"
+      "img": "✍️🏃"
     },
     {
       "id": "005",
@@ -90,7 +94,7 @@
         "Schnee"
       ],
       "info": "Adjektive sagen, wie etwas ist.",
-      "img": "🥶"
+      "img": "🥶🎨"
     },
     {
       "id": "006",
@@ -101,7 +105,7 @@
         "helfen",
         "Lehrerin"
       ],
-      "img": "😊"
+      "img": "😊🎨"
     },
     {
       "id": "007",
@@ -112,7 +116,8 @@
         "Adjektiv",
         "Artikel"
       ],
-      "img": "🌼🏷️"
+      "img": "🌼🏷️",
+      "info": "🏷️ Namenwort: die Blume – davor passt „die“."
     },
     {
       "id": "008",
@@ -123,7 +128,8 @@
         "Adjektiv",
         "Artikel"
       ],
-      "img": "🎤🏃"
+      "img": "🎤🏃",
+      "info": "🏃 Tuwort: wir singen."
     },
     {
       "id": "009",
@@ -134,7 +140,8 @@
         "Verb",
         "Artikel"
       ],
-      "img": "😴🎨"
+      "img": "😴🎨",
+      "info": "🎨 Wiewort: Ich bin müde."
     },
     {
       "id": "010",
@@ -145,7 +152,8 @@
         "Adjektiv",
         "Artikel"
       ],
-      "img": "😄🏷️"
+      "img": "😄🏷️",
+      "info": "🏷️ Auch Gefühle sind Nomen: die Freude."
     },
     {
       "id": "011",
@@ -156,7 +164,8 @@
         "Adjektiv",
         "Artikel"
       ],
-      "img": "⚽🏃"
+      "img": "⚽🏃",
+      "info": "🏃 Tuwort: wir spielen."
     },
     {
       "id": "012",
@@ -167,7 +176,8 @@
         "Verb",
         "Artikel"
       ],
-      "img": "🐌🎨"
+      "img": "🐌🎨",
+      "info": "🎨 Wiewort: Die Schnecke ist langsam."
     },
     {
       "id": "013",
@@ -177,17 +187,19 @@
         "der",
         "das"
       ],
-      "img": "☀️👩"
+      "img": "☀️❤️",
+      "info": "❤️ die Sonne"
     },
     {
       "id": "014",
-      "q": "Welcher Artikel passt? ___ Tisch",
+      "q": "Welcher Artikel passt? ___ Ball",
       "a": "der",
       "choices": [
         "die",
         "das"
       ],
-      "img": "🍽️👨"
+      "img": "⚽💙",
+      "info": "💙 der Ball"
     },
     {
       "id": "015",
@@ -197,7 +209,8 @@
         "der",
         "die"
       ],
-      "img": "🏠👶"
+      "img": "🏠💚",
+      "info": "💚 das Haus"
     },
     {
       "id": "016",
@@ -207,7 +220,8 @@
         "der",
         "das"
       ],
-      "img": "🐈👩"
+      "img": "🐈❤️",
+      "info": "❤️ die Katze"
     },
     {
       "id": "017",
@@ -217,17 +231,19 @@
         "die",
         "das"
       ],
-      "img": "🍎👨"
+      "img": "🍎💙",
+      "info": "💙 der Apfel"
     },
     {
       "id": "018",
-      "q": "Welcher Artikel passt? ___ Fenster",
+      "q": "Welcher Artikel passt? ___ Auto",
       "a": "das",
       "choices": [
         "der",
         "die"
       ],
-      "img": "🖼️👶"
+      "img": "🚗💚",
+      "info": "💚 das Auto"
     },
     {
       "id": "019",
@@ -237,7 +253,8 @@
         "die",
         "das"
       ],
-      "img": "🌙👨"
+      "img": "🌙💙",
+      "info": "💙 der Mond"
     },
     {
       "id": "020",
@@ -372,7 +389,8 @@
         "Verb",
         "Artikel"
       ],
-      "img": "🎨"
+      "img": "🌈🎨",
+      "info": "🎨 Adjektive sind Wiewörter."
     },
     {
       "id": "032",
@@ -383,7 +401,8 @@
         "Adjektiv",
         "Artikel"
       ],
-      "img": "🏃"
+      "img": "🤸🏃",
+      "info": "🏃 Verben sind Tuwörter."
     }
   ]
 }

@@ -24,7 +24,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalCoroutinesApi::class)
 const val SAFARI_BED = "Meine Safari"
 
-class AppViewModel(app: Application) : AndroidViewModel(app) {
+class AppViewModel(app: Application, private val saved: androidx.lifecycle.SavedStateHandle) : AndroidViewModel(app) {
     private val c = (app as WissensgartenApp).container
     private val repo = c.repository
     val settings = c.settings
@@ -124,7 +124,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     // --- Kreuzungen (Mischrunde) ---
     var mixPair: Pair<de.wissensgarten.core.model.Subject, de.wissensgarten.core.model.Subject>? = null
-        private set
+        private set(v) { field = v; saved[K_MIX] = v?.let { "${it.first.name},${it.second.name}" } }
     /** Gerade gezüchtete Kreuzung (für die Enthüllung) */
     var newHybrid: de.wissensgarten.core.model.Hybrid? = null
         private set
@@ -336,7 +336,28 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Karten der laufenden Gieß-Runde (fest, damit sie während der Runde nicht springt). */
     var session: List<StudyCard> = emptyList()
-        private set
+        private set(v) { field = v; saved[K_SESSION] = ArrayList(v.map { it.id }) }
+
+    /**
+     * Beendet Android die App im Hintergrund, ist [session] danach leer. Die Karten-IDs liegen aber im
+     * gespeicherten Zustand → hier mit dem aktuellen Lernstand aus der Datenbank wieder zusammensetzen.
+     * Die Position in der Runde merkt sich der Bildschirm selbst (rememberSaveable).
+     */
+    fun restoreSession(all: List<BedWithCards>): List<StudyCard> {
+        if (session.isNotEmpty()) return session
+        val ids = saved.get<ArrayList<String>>(K_SESSION).orEmpty()
+        if (ids.isEmpty()) return emptyList()
+        val byId = all.flatMap { it.cards }.associateBy { it.id }
+        session = ids.mapNotNull { byId[it]?.toStudy() }
+        sessionCalm = saved.get<Boolean>(K_CALM) == true
+        if (mixPair == null) mixPair = saved.get<String>(K_MIX)?.split(',')?.takeIf { it.size == 2 }?.let { (a, b) ->
+            runCatching { de.wissensgarten.core.model.Subject.valueOf(a) to de.wissensgarten.core.model.Subject.valueOf(b) }.getOrNull()
+        }
+        return session
+    }
+
+    /** Liegt eine unterbrochene Runde im gespeicherten Zustand? */
+    fun hasSavedSession(): Boolean = session.isEmpty() && !saved.get<ArrayList<String>>(K_SESSION).isNullOrEmpty()
 
     init {
         viewModelScope.launch {
@@ -412,7 +433,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     /** Gute-Nacht-Runde aktiv? (ruhige Spielarten, leise) */
     var sessionCalm = false
-        private set
+        private set(v) { field = v; saved[K_CALM] = v }
 
     fun startSession(bedId: String? = null): Boolean {
         sessionCalm = false; mixPair = null
@@ -431,7 +452,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { repo.addDew(p.id, amount) }
     }
 
-    fun endSession() { tick(); refreshWidget() }
+    fun endSession() { session = emptyList(); saved[K_MIX] = null; tick(); refreshWidget() }
 
     // --- Einrichtung & Profile ---
 
@@ -501,5 +522,11 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     fun refreshWidget() {
         viewModelScope.launch { runCatching { GardenWidget().updateAll(getApplication()) } }
+    }
+
+    private companion object {
+        const val K_SESSION = "session_ids"
+        const val K_CALM = "session_calm"
+        const val K_MIX = "session_mix"
     }
 }

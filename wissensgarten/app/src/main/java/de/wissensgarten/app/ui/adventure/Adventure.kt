@@ -60,11 +60,18 @@ fun AdventurePathView(
     val sfx = LocalSfx.current
     val done = stations.count { it.state == StationState.DONE }
     val nodeH = 108.dp
-    Column(modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+    val currentIdx = stations.indexOfFirst { it.state == StationState.CURRENT }
+    val scroll = rememberScrollState()
+    // Gleich dorthin scrollen, wo es weitergeht (eine Station davor bleibt sichtbar)
+    val density = LocalDensity.current
+    LaunchedEffect(currentIdx) {
+        if (currentIdx > 1) scroll.animateScrollTo(with(density) { (nodeH * (currentIdx - 1)).roundToPx() })
+    }
+    Column(modifier.fillMaxWidth().verticalScroll(scroll)) {
         Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text("🗺️ Abenteuerpfad", style = MaterialTheme.typography.titleLarge)
-                Text("$done von ${stations.size} Stationen geschafft", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(if (currentIdx >= 0) "$done von ${stations.size} geschafft · weiter bei Station ${currentIdx + 1}" else "Alle ${stations.size} Stationen geschafft! 🏆", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             if (onIntro != null) FilledTonalButton(onClick = onIntro) { Text("▶️ Erklärung") }
         }
@@ -89,6 +96,20 @@ fun AdventurePathView(
                 drawPath(path, Color(0xFFE6D3A3), style = Stroke(width = 26.dp.toPx(), cap = StrokeCap.Round))
                 drawPath(path, Color(0xFFF3E6C4), style = Stroke(width = 16.dp.toPx(), cap = StrokeCap.Round,
                     pathEffect = PathEffect.dashPathEffect(floatArrayOf(18f, 16f))))
+                // Schon gegangener Weg leuchtet golden – bis zur aktuellen Station
+                val walkedTo = if (currentIdx >= 0) currentIdx else stations.lastIndex
+                if (walkedTo > 0) {
+                    val walked = Path()
+                    for (i in 0..walkedTo) {
+                        val p = nodePos(i, size.width, step, top)
+                        if (i == 0) walked.moveTo(p.x, p.y) else {
+                            val prev = nodePos(i - 1, size.width, step, top)
+                            walked.cubicTo(prev.x, prev.y + step * 0.5f, p.x, p.y - step * 0.5f, p.x, p.y)
+                        }
+                    }
+                    drawPath(walked, Color(0xFFFFCA28), style = Stroke(width = 12.dp.toPx(), cap = StrokeCap.Round,
+                        pathEffect = PathEffect.dashPathEffect(floatArrayOf(18f, 16f))))
+                }
                 val r = kotlin.random.Random(7)
                 repeat(stations.size * 3) {
                     val x = r.nextFloat() * size.width; val y = r.nextFloat() * size.height
@@ -112,8 +133,13 @@ fun AdventurePathView(
                             if (st.state == StationState.LOCKED) sfx?.play(Sound.WRONG, volume = 0.4f) else { sfx?.play(Sound.PLOP); onStation(st) }
                         }
                         if (st.state == StationState.CURRENT) {
-                            val bx = if (xFrac < 0.5f) mw * xFrac + 44.dp else mw * xFrac - 130.dp
-                            Brummi(Mood.HAPPY, Modifier.align(Alignment.CenterStart).offset(x = bx), size = 64.dp)
+                            // Brummi steht auf der freien Seite und zeigt, wo es weitergeht
+                            val say = "Du bist hier! Tipp auf den Kreis 👆"
+                            if (xFrac < 0.5f) Box(Modifier.align(Alignment.CenterStart).offset(x = mw * xFrac + 44.dp).width(mw * (1 - xFrac) - 44.dp)) {
+                                Brummi(Mood.HAPPY, Modifier.align(Alignment.CenterStart), size = 56.dp, speech = say)
+                            } else Box(Modifier.align(Alignment.CenterStart).width(mw * xFrac - 44.dp)) {
+                                Brummi(Mood.HAPPY, Modifier.align(Alignment.CenterEnd), size = 56.dp, speech = say, bubbleOnLeft = true)
+                            }
                         }
                     }
                 }
@@ -151,7 +177,7 @@ private fun StationNode(st: Station, modifier: Modifier, onClick: () -> Unit) {
             )
         }
         Text(
-            when { st.state == StationState.CURRENT -> "Start!"; st.thirsty > 0 -> "${st.thirsty} durstig"; else -> "Station ${st.index + 1}" },
+            when { st.state == StationState.CURRENT -> "📍 Station ${st.index + 1}"; st.thirsty > 0 -> "${st.thirsty} durstig"; else -> "Station ${st.index + 1}" },
             style = MaterialTheme.typography.labelMedium, fontWeight = if (current) FontWeight.Black else FontWeight.Medium,
             color = if (current) Color(0xFF8D5A00) else Color(0xFF4D4A3F),
         )
