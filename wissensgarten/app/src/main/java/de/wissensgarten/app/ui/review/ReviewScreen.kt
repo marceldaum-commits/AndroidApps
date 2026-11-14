@@ -79,6 +79,8 @@ fun ReviewScreen(
     var bestStreak by rememberSaveable { mutableIntStateOf(0) }
     var bonusAt by rememberSaveable { mutableIntStateOf(-1) }
     var bonusCards by remember { mutableStateOf<List<StudyCard>>(emptyList()) }
+    var clapList by remember { mutableStateOf<List<String>>(emptyList()) }
+    val syllablesOn = LocalSyllables.current
     var levelUp by remember { mutableStateOf<String?>(null) }
     var gainText by remember { mutableStateOf("") }
     var mood by remember { mutableStateOf(Mood.IDLE) }
@@ -132,6 +134,16 @@ fun ReviewScreen(
         index++
         // Alle 6 Karten: Zuordnen-Bonus aus bereits gespielten Karten
         if (index < items.size && index % 6 == 0 && bonusAt != index) {
+            // Silben-Modus: jede zweite Bonusrunde wird Silben-Klatschen (nur deutsche Wörter)
+            if (syllablesOn && (index / 6) % 2 == 1) {
+                val words = clapWords(items.take(index).filter { subjects[it.bedId] !in setOf("englisch", "franzoesisch", "spanisch", "latein") }.map { it.back })
+                if (words.size >= 2) {
+                    bonusAt = index; clapList = words; phase = Phase.BONUS
+                    mood = Mood.CHEER; speech = "Klatsch mit! 👏"
+                    return
+                }
+            }
+            clapList = emptyList()
             Games.matchPairs(items.take(index).filter { !it.memory.isSeed || it.img != null })?.let {
                 bonusAt = index; bonusCards = it; phase = Phase.BONUS
                 mood = Mood.CHEER; speech = "Bonusrunde! 🧩"
@@ -248,7 +260,13 @@ fun ReviewScreen(
                         label = "spiel",
                     ) { (p, _, _) ->
                         when (p) {
-                            Phase.BONUS -> MatchBonus(bonusCards) { mistakes ->
+                            Phase.BONUS -> if (clapList.isNotEmpty()) ClapBonus(clapList) { mistakes ->
+                                val bonus = (8 - mistakes).coerceAtLeast(3)
+                                dew += bonus; onBonus(bonus); sfx?.play(Sound.DEW)
+                                particles.burst(Burst.CONFETTI, count = 60)
+                                mood = Mood.CHEER; speech = "+$bonus 💧 Silben-Profi!"
+                                clapList = emptyList(); phase = Phase.PLAY
+                            } else MatchBonus(bonusCards) { mistakes ->
                                 val bonus = (10 - mistakes * 2).coerceAtLeast(2)
                                 dew += bonus
                                 onBonus(bonus)
@@ -292,8 +310,8 @@ private fun RevealCard(card: StudyCard, right: Boolean, paused: Boolean, onPause
                 var drawing by remember(card.id) { mutableStateOf(false) }
                 AssistChip(onClick = { onPause(); drawing = true }, label = { Text(if (de.wissensgarten.app.ui.play.Drawings.rev >= 0 && de.wissensgarten.app.ui.play.Drawings.has(androidx.compose.ui.platform.LocalContext.current, card.id)) "✏️ Neu malen" else "✏️ Selbst malen") })
                 if (drawing) de.wissensgarten.app.ui.play.DrawDialog(card.id, "${card.front} → ${card.back}", card.img) { drawing = false }
-                Text(card.front, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F))
-                Text(card.back, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, color = Color(0xFF22261F))
+                SilbenText(card.front, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F))
+                SilbenText(card.back, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, color = Color(0xFF22261F))
                 card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F), modifier = Modifier.padding(top = 6.dp)) }
             }
         }

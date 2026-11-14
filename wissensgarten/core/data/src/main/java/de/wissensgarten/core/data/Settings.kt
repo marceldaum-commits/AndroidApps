@@ -43,6 +43,11 @@ class Settings(context: Context) {
 
     private val _readAloud = MutableStateFlow(runCatching { ReadAloud.valueOf(prefs.getString("vorlesen", "AUTO")!!) }.getOrDefault(ReadAloud.AUTO))
     val readAloud: StateFlow<ReadAloud> = _readAloud.asStateFlow()
+    /** Silben farbig (Silbenmethode). AUTO = Klasse 1–2 */
+    private val _syllables = MutableStateFlow(runCatching { ReadAloud.valueOf(prefs.getString("silben", "AUTO")!!) }.getOrDefault(ReadAloud.AUTO))
+    val syllables: StateFlow<ReadAloud> = _syllables.asStateFlow()
+    fun setSyllables(r: ReadAloud) { prefs.edit().putString("silben", r.name).apply(); _syllables.value = r }
+
     fun setReadAloud(r: ReadAloud) { prefs.edit().putString("vorlesen", r.name).apply(); _readAloud.value = r }
 
     // Gieß-Erinnerung

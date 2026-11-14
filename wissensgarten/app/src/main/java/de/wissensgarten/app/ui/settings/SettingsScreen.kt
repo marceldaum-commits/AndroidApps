@@ -38,6 +38,8 @@ fun SettingsScreen(
     autoUpdate: Boolean = true,
     onAutoUpdate: (Boolean) -> Unit = {},
     syncCard: @Composable () -> Unit = {},
+    syllables: de.wissensgarten.core.data.ReadAloud = de.wissensgarten.core.data.ReadAloud.AUTO,
+    onSyllables: (de.wissensgarten.core.data.ReadAloud) -> Unit = {},
     music: Boolean = true,
     onMusic: (Boolean) -> Unit = {},
 ) {
@@ -112,6 +114,14 @@ fun SettingsScreen(
             }
             Text("Automatisch: für Grundschulkinder an. Mit 🔊 an jeder Frage geht's immer. Englisch, Französisch und Spanisch werden in der richtigen Sprache gesprochen.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+
+        Section("Silben farbig") {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                de.wissensgarten.core.data.ReadAloud.entries.forEach { r -> FilterChip(selected = r == syllables, onClick = { onSyllables(r) }, label = { Text(r.label) }) }
+            }
+            Text(de.wissensgarten.app.ui.fx.silbenString("Lesehilfe wie in der Fibel: Silben abwechselnd blau und rot. Automatisch für Klasse 1 und 2."),
+                style = MaterialTheme.typography.bodySmall)
         }
 
         Section("Ton") {

@@ -10,7 +10,7 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 /** Alle Spiel-Geräusche. Werden beim ersten Start im Code erzeugt – keine Audiodateien, keine Lizenzen. */
-enum class Sound { TAP, CORRECT, WRONG, WATER, GROW, LEVEL_UP, PLOP, FANFARE, DEW }
+enum class Sound { TAP, CORRECT, WRONG, WATER, GROW, LEVEL_UP, PLOP, FANFARE, DEW, CLAP }
 
 /** Kleiner Synthesizer: Glocken, Tonhöhen-Rutscher, Blubbern, Rauschen. */
 object Synth {
@@ -53,6 +53,21 @@ object Synth {
                 0.40 to listOf(659.25, 830.61, 987.77),
                 0.65 to listOf(1046.5, 1318.5, 1568.0),
             ).forEach { (t, chord) -> chord.forEach { f -> bell(it, t, f, if (t > 0.6) 1.2 else 0.35, 0.2) } }
+        }
+        // Klatschen: drei winzige Rausch-Stöße kurz hintereinander (so klingen echte Hände)
+        Sound.CLAP -> buf(0.18).also { out ->
+            val r = Random(11)
+            for ((start, amp) in listOf(0.0 to 0.7, 0.008 to 0.9, 0.018 to 1.0)) {
+                val s0 = (start * SR).toInt()
+                var prev = 0.0
+                for (i in 0 until (0.15 * SR).toInt()) {
+                    if (s0 + i >= out.size) break
+                    val t = i.toDouble() / SR
+                    val w = r.nextDouble(-1.0, 1.0)
+                    val hp = w - prev; prev = w                 // hell: Hochpass
+                    out[s0 + i] += (amp * hp * exp(-t * (if (start < 0.015) 120 else 28))).toFloat()
+                }
+            }
         }
         Sound.DEW -> buf(0.5).also {
             bell(it, 0.0, 1760.0, 0.3, 0.3)

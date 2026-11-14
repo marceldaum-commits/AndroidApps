@@ -454,4 +454,18 @@ class ScreenshotTest {
         val cards = garden[0].cards.take(10).map { it.toStudy() }
         de.wissensgarten.app.ui.radio.RadioScreen(cards, emptyMap(), emptyMap(), { _, _, _ -> }, {}, preview = true)
     }
+
+    @Test fun clapGame() = shot("43_silben_klatschen", settle = 300, prepare = { r ->
+        r.mainClock.advanceTimeBy(3500) // Brummi macht vor
+        repeat(2) { r.onNodeWithText("👏").performClick(); r.mainClock.advanceTimeBy(120) }
+    }) {
+        Column(Modifier.padding(16.dp)) { ClapBonus(listOf("Giraffe", "Elefant")) {} }
+    }
+
+    @Test fun syllablesInReview() = shot("44_silben_farbig") {
+        val kid = bed(pack("gs-tiere"), 6, "kid")
+        androidx.compose.runtime.CompositionLocalProvider(de.wissensgarten.app.ui.fx.LocalSyllables provides true) {
+            ReviewScreen(listOf(kid.cards[2].toStudy()), mapOf(kid.bed.id to kid.bed), true, { _, _, _ -> }, {}, subjects = mapOf(kid.bed.id to "sachunterricht"))
+        }
+    }
 }

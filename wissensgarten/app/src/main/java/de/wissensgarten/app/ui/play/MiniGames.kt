@@ -53,7 +53,7 @@ fun QuestionText(text: String, modifier: Modifier = Modifier) {
     val subject = LocalSubject.current
     LaunchedEffect(text) { if (auto) { delay(250); voice?.speak(text, Voice.localeFor(subject, text)) } }
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-        Text(text, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
+        SilbenText(text, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
         if (voice != null) IconButton(onClick = { voice.speak(text, Voice.localeFor(subject, text)) }) { Text("🔊", fontSize = 20.sp) }
     }
 }

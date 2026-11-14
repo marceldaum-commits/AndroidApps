@@ -118,6 +118,12 @@ class MainActivity : ComponentActivity() {
             WissensgartenTheme(theme) {
               val readMode by vm.settings.readAloud.collectAsStateWithLifecycle()
               val prof by vm.profile.collectAsStateWithLifecycle()
+              val sylMode by vm.settings.syllables.collectAsStateWithLifecycle()
+              val syllablesOn = when (sylMode) {
+                  de.wissensgarten.core.data.ReadAloud.ON -> true
+                  de.wissensgarten.core.data.ReadAloud.OFF -> false
+                  de.wissensgarten.core.data.ReadAloud.AUTO -> (prof?.level ?: 0) in 1..2
+              }
               val readAloud = when (readMode) {
                   de.wissensgarten.core.data.ReadAloud.ON -> true
                   de.wissensgarten.core.data.ReadAloud.OFF -> false
@@ -127,6 +133,7 @@ class MainActivity : ComponentActivity() {
                   LocalWind provides rememberWind(), LocalSfx provides sfx,
                   de.wissensgarten.app.ui.fx.LocalVoice provides (application as WissensgartenApp).voice,
                   de.wissensgarten.app.ui.fx.LocalReadAloud provides readAloud,
+                  de.wissensgarten.app.ui.fx.LocalSyllables provides syllablesOn,
               ) {
                 Surface(Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     val nav = rememberNavController()
@@ -497,6 +504,7 @@ class MainActivity : ComponentActivity() {
                             onTutorial = { nav.navigate(Routes.tutorial(false)) },
                             update = upd, autoUpdate = autoUpd, onAutoUpdate = { vm.settings.setAutoUpdate(it) },
                             music = vm.settings.music.collectAsStateWithLifecycle().value, onMusic = { vm.settings.setMusic(it) },
+                            syllables = vm.settings.syllables.collectAsStateWithLifecycle().value, onSyllables = { vm.settings.setSyllables(it) },
                             syncCard = { de.wissensgarten.app.ui.settings.SyncSectionLive((application as WissensgartenApp).sync) },
                         )
                     }

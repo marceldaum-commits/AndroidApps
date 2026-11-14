@@ -12,7 +12,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 
 | Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Arbeitsblatt-Foto | Widget (Tag / Party) |
 | --- | --- | --- | --- | --- | --- |
-| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) ![](screenshots/40_geraete_sync.png) ![](screenshots/41_klassenarbeit.png) ![](screenshots/42_brummi_radio.png) |
+| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) ![](screenshots/40_geraete_sync.png) ![](screenshots/41_klassenarbeit.png) ![](screenshots/42_brummi_radio.png) ![](screenshots/43_silben_klatschen.png) ![](screenshots/44_silben_farbig.png) |
 
 | Erklär-Geschichte | Abenteuerpfad | 3D-Truhe | Truhe offen | Sammelalbum | Garten mit Freunden |
 | --- | --- | --- | --- | --- | --- |
@@ -57,6 +57,8 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 - **Brummi die Hummel** begleitet jede Runde und den Garten: freut sich, tröstet, denkt mit, schläft nachts, gibt Tipps
   (`app/ui/fx/Mascot.kt`).
 
+- **Silben-Modus** (0.11): deutsche Sprechsilben (`core/model/Syllables.kt`, Regeln + Testwortliste), Silben blau/rot
+  wie in der Fibel (`ui/fx/SilbenText.kt`), Bonusrunde Silben-Klatschen (`ui/play/ClapGame.kt`).
 - **Klassenarbeits-Countdown** (0.10): Termin + Beet eintragen, `core/model/Exams.kt` plant die Karten bis zum Termin
   (Abstand ~20 % der Restzeit, Generalprobe am Vortag, Aufwärmen am Prüfungstag), Fitness-Ring „wie viel sitzt am Tag X“.
 - **Brummi-Radio** (0.10): Lernen nur mit Ohren und Stimme, Bildschirm dunkel; `core/model/Radio.kt` versteht freie Antworten,

@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.11.0
+- Neu: **Silben farbig** – Lesehilfe wie in der Fibel: Silben abwechselnd blau und rot (automatisch für Klasse 1–2,
+  in den Einstellungen für alle einschaltbar). Nur bei deutschen Texten.
+- Neu: **Silben-Klatschen** als Bonusrunde: Brummi spricht vor, die Silben leuchten auf – dann klatschst du nach. 👏
+
 ## 0.10.0
 - Neu: **Klassenarbeits-Countdown.** Termin eintragen („Mathe-Arbeit am Freitag“), Brummi verteilt die Karten so auf die
   Tage, dass am Tag X alles sitzt – mit Kalenderblatt, Fitness-Ring, Generalprobe am Vortag und Aufwärmen am Prüfungstag.
