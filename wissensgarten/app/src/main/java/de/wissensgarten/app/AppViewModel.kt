@@ -270,6 +270,32 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /** Zahlen und Beispiele für Postkarte und Urkunde eines Profils */
+    suspend fun keepsakeData(profileId: String): de.wissensgarten.app.ui.share.KeepsakeData {
+        val p = repo.profile(profileId)
+        val bedList = repo.bedsOnce(profileId)
+        val cards = bedList.flatMap { it.cards }
+        val now = System.currentTimeMillis()
+        val week = repo.profileLogsSince(profileId, now - 7 * Scheduler.DAY_MS)
+        val byId = cards.associateBy { it.id }
+        val learned = week.filter { it.rating >= 2 }.map { it.cardId }.distinct().mapNotNull { byId[it] }
+            .filter { it.back.length <= 30 }.take(3)
+            .map { c -> (c.img?.let { de.wissensgarten.app.ui.play.splitEmojis(it).firstOrNull() } ?: "🌱") to "${c.front.take(28).trimEnd('?')} → ${c.back}" }
+        return de.wissensgarten.app.ui.share.KeepsakeData(
+            name = p?.name ?: "", avatar = p?.avatar ?: "🌱",
+            grown = cards.count { !it.memory.isSeed },
+            trees = cards.count { de.wissensgarten.core.model.Stage.of(it.memory) == de.wissensgarten.core.model.Stage.TREE },
+            reviewsTotal = repo.logCount(profileId), reviewsWeek = week.size,
+            newThisWeek = cards.count { it.memory.reps in 1..2 && now - it.lastReview < 7 * Scheduler.DAY_MS },
+            learned = learned,
+            flowers = bedList.sortedBy { it.bed.sortIndex }.take(5).map { b ->
+                val n = b.cards.size.coerceAtLeast(1)
+                de.wissensgarten.app.widget.Flower(b.bed.hue, 1f - b.cards.count { Scheduler.isThirsty(it.memory, now) }.toFloat() / n, b.cards.any { !it.memory.isSeed })
+            },
+            beds = bedList.map { it.bed.name },
+        )
+    }
+
     fun safariCount() = beds.value.firstOrNull { it.bed.packId == null && it.bed.name == SAFARI_BED }?.cards?.size ?: 0
 
     fun addCardsTo(bedId: String, cards: List<de.wissensgarten.core.model.ClassCard>) {

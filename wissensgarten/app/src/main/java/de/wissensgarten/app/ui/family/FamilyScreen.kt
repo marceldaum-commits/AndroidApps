@@ -39,6 +39,8 @@ fun FamilyScreen(
     onDuel: () -> Unit = {},
     familyClaimed: Boolean = false,
     onClaimFamily: () -> Unit = {},
+    onPostcard: (String) -> Unit = {},
+    onCertificate: (String) -> Unit = {},
 ) {
     LazyColumn(
         Modifier.fillMaxSize().statusBarsPadding(),
@@ -59,6 +61,7 @@ fun FamilyScreen(
                 p, p.id == activeId,
                 beds.filter { it.bed.profileId == p.id },
                 logs.filter { it.profileId == p.id }, now,
+                onPostcard = { onPostcard(p.id) }, onCertificate = { onCertificate(p.id) },
             ) { onSwitch(p.id) }
         }
         item {
@@ -79,7 +82,8 @@ fun FamilyScreen(
 
 @Composable
 private fun ProfileCard(
-    p: ProfileEntity, active: Boolean, beds: List<BedWithCards>, logs: List<ReviewLogEntity>, now: Long, onClick: () -> Unit,
+    p: ProfileEntity, active: Boolean, beds: List<BedWithCards>, logs: List<ReviewLogEntity>, now: Long,
+    onPostcard: () -> Unit = {}, onCertificate: () -> Unit = {}, onClick: () -> Unit,
 ) {
     val cards = beds.flatMap { it.cards }
     val grown = cards.count { !it.memory.isSeed }
@@ -114,6 +118,10 @@ private fun ProfileCard(
             Spacer(Modifier.height(12.dp))
             Text("Gegossen in den letzten 7 Tagen: ${perDay.sum()}", style = MaterialTheme.typography.labelLarge)
             WeekBars(perDay, now)
+            if (grown > 0) Row(Modifier.fillMaxWidth().padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilledTonalButton(onClick = onPostcard, modifier = Modifier.weight(1f)) { Text("💌 Postkarte", maxLines = 1) }
+                FilledTonalButton(onClick = onCertificate, modifier = Modifier.weight(1f)) { Text("🏅 Urkunde", maxLines = 1) }
+            }
         }
     }
 }

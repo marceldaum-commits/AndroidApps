@@ -110,6 +110,9 @@ class GardenRepository(
     }
 
     suspend fun bedEntity(bedId: String) = dao.bed(bedId)
+    suspend fun logCount(profileId: String) = dao.logCount(profileId)
+    suspend fun profileLogsSince(profileId: String, since: Long) = dao.profileLogsSince(profileId, since)
+    suspend fun bedsOnce(profileId: String) = dao.bedsWithCardsOnce(profileId)
 
     suspend fun deleteCard(cardId: String) {
         tombstones?.add(listOf(cardId))

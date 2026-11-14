@@ -49,6 +49,7 @@ import de.wissensgarten.app.ui.fx.LocalSfx
 import de.wissensgarten.app.ui.fx.LocalWind
 import de.wissensgarten.app.ui.fx.rememberWind
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 
 object Routes {
     const val ONBOARDING = "einrichtung"
@@ -485,6 +486,7 @@ class MainActivity : ComponentActivity() {
                     val allBeds by vm.allBeds.collectAsStateWithLifecycle()
                     val logs by vm.weekLogs.collectAsStateWithLifecycle()
                     val fRev by vm.adventureRev.collectAsStateWithLifecycle()
+                    val scope = rememberCoroutineScope()
                     FamilyScreen(
                         profiles, profile?.id, allBeds, logs, now,
                         onSwitch = { vm.switchProfile(it); goTab(Routes.GARDEN) },
@@ -492,6 +494,24 @@ class MainActivity : ComponentActivity() {
                         onDuel = { nav.navigate(Routes.DUEL) },
                         familyClaimed = remember(fRev) { vm.familyClaimed() },
                         onClaimFamily = { vm.claimFamilyTree() },
+                        onPostcard = { id ->
+                            scope.launch {
+                                val d = vm.keepsakeData(id)
+                                val f = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                                    de.wissensgarten.app.ui.share.Keepsakes.savePng(this@MainActivity, de.wissensgarten.app.ui.share.Keepsakes.postcard(d), "Postkarte-${d.name}.png")
+                                }
+                                de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "image/png", "💌 Grüße aus ${d.name}s Wissensgarten! 🌻")
+                            }
+                        },
+                        onCertificate = { id ->
+                            scope.launch {
+                                val d = vm.keepsakeData(id)
+                                val f = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Default) {
+                                    de.wissensgarten.app.ui.share.Keepsakes.certificatePdf(this@MainActivity, d)
+                                }
+                                de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "application/pdf", "🏅 Urkunde für ${d.name} aus dem Wissensgarten")
+                            }
+                        },
                     )
                 }
                 composable(Routes.SETTINGS) {

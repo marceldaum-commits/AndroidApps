@@ -31,6 +31,7 @@ import de.wissensgarten.core.data.db.*
 import de.wissensgarten.core.model.*
 import org.junit.Rule
 import org.junit.Test
+import org.junit.Assert.assertTrue
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -479,5 +480,21 @@ class ScreenshotTest {
         }
         de.wissensgarten.app.ui.safari.SafariScreen(6, true, { _, _, _ -> }, {}, previewPhoto = bmp,
             previewWords = Safari.candidates(listOf("Dog" to 0.9f, "Pet" to 0.8f, "Bear" to 0.6f)))
+    }
+
+    @Test fun keepsakes() {
+        val d = de.wissensgarten.app.ui.share.KeepsakeData("Lena", "🦊", 86, 12, 1234, 47, 9,
+            listOf("🐘" to "Größtes Landtier → Elefant", "🏃" to "to run → ran – run", "➗" to "1/2 + 1/4 → 3/4"),
+            listOf(de.wissensgarten.app.widget.Flower(340f, 1f, true), de.wissensgarten.app.widget.Flower(120f, 0.7f, true),
+                de.wissensgarten.app.widget.Flower(210f, 1f, true), de.wissensgarten.app.widget.Flower(45f, 0.9f, false)),
+            listOf("Irregular Verbs", "Zelle & Mensch", "Europa", "Brüche"))
+        val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
+        val png = de.wissensgarten.app.ui.share.Keepsakes.postcard(d)
+        File("../screenshots/46_postkarte.png").outputStream().use { png.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+        // PDF gibt es nur auf dem Gerät – hier dieselbe Zeichnung als Bild (doppelte Auflösung)
+        val cert = android.graphics.Bitmap.createBitmap(1190, 1684, android.graphics.Bitmap.Config.ARGB_8888)
+        android.graphics.Canvas(cert).apply { scale(2f, 2f); de.wissensgarten.app.ui.share.Keepsakes.drawCertificate(this, d) }
+        File("../screenshots/47_urkunde.png").outputStream().use { cert.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+        assertTrue(ctx != null)
     }
 }

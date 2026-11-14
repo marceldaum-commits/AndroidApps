@@ -86,6 +86,10 @@ interface GardenDao {
     // Protokoll
     @Insert suspend fun insertLog(l: ReviewLogEntity)
 
+    // ---- Postkarte und Urkunde
+    @Query("SELECT COUNT(*) FROM review_log WHERE profileId = :profileId") suspend fun logCount(profileId: String): Int
+    @Query("SELECT * FROM review_log WHERE profileId = :profileId AND time >= :since") suspend fun profileLogsSince(profileId: String, since: Long): List<ReviewLogEntity>
+
     // ---- Geräte-Sync: alles lesen, zusammengeführten Stand zurückschreiben
     @Query("SELECT * FROM profiles") suspend fun allProfiles(): List<ProfileEntity>
     @Query("SELECT * FROM beds") suspend fun allBeds(): List<BedEntity>
