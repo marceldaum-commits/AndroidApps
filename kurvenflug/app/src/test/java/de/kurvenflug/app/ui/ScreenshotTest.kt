@@ -70,7 +70,7 @@ class ScreenshotTest {
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
     @Test fun throwHelp() = level("4-5", name = "09_wurf_berg", values = mapOf("angle" to 60.0, "v" to 12.0),
-        prepare = { it.onNodeWithText("👁 Ganze Bahn").performClick() })
+        prepare = { it.onNodeWithText("👁 Bahn").performClick() })
 
     @Test fun throwMoon() = level("4-6", name = "10_wurf_mond", values = mapOf("angle" to 35.0, "v" to 5.5), settle = 1500,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
@@ -88,7 +88,7 @@ class ScreenshotTest {
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
     @Test fun slingshotHelp() = level("6-3", name = "15_schleuder_ganze_bahn", values = mapOf("angle" to 70.0, "v" to 7.0),
-        prepare = { it.onNodeWithText("👁 Ganze Bahn").performClick() })
+        prepare = { it.onNodeWithText("👁 Bahn").performClick() })
 
     @Test fun daily() {
         val l = de.kurvenflug.core.model.Daily.forDay(20_501)
@@ -120,5 +120,26 @@ class ScreenshotTest {
 
     @Test fun badges() = shot("23_abzeichen") {
         de.kurvenflug.app.ui.modes.BadgesScreen(de.kurvenflug.core.model.Stats(stars = 40, perfect = 12, chaptersDone = 2, cells = 30, stormBest = 11, duelsPlayed = 2), {})
+    }
+
+    @Test fun dragMode() = level("3-4", name = "24_kurve_ziehen", values = mapOf("d" to 1.0, "e" to 2.0),
+        prepare = { it.onNodeWithText("✋ Ziehen").performClick() })
+
+    @Test fun builder() {
+        val spec = de.kurvenflug.core.model.LevelSpec.of(Levels.byId("2-7")!!).copy(title = "Gürtel-Chaos", task = "Schaffst du das?")
+        shot("25_baukasten") { de.kurvenflug.app.ui.build.BuilderScreen(spec, Q.Cyan, {}, {}, {}) }
+    }
+
+    @Test fun builderHome() {
+        val mine = listOf(de.kurvenflug.core.model.Codec.encodeLevel(de.kurvenflug.core.model.LevelSpec.of(Levels.byId("3-5")!!).copy(title = "Lenas Bogen")))
+        shot("26_baukasten_start") { de.kurvenflug.app.ui.build.BuilderHome(mine, {}, {}, {}, {}, {}, {}, {}) }
+    }
+
+    @Test fun challengeComposer() = shot("27_klassen_challenge", prepare = { r ->
+        r.onAllNodesWithText("1")[1].performClick(); r.onAllNodesWithText("2")[1].performClick()
+    }) { de.kurvenflug.app.ui.build.ChallengeComposer(emptyList()) {} }
+
+    @Test fun detective() = shot("28_formel_detektiv") {
+        de.kurvenflug.app.ui.build.DetectiveScreen(3, Q.Cyan, {}, {}, seed = 4)
     }
 }

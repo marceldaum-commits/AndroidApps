@@ -44,6 +44,8 @@ data class SpaceView(
     val preview2: List<Vec> = emptyList(),
     val trail2: List<Vec> = emptyList(),
     val probe2: Vec? = null,
+    /** Griffe zum Ziehen: Position, Farbe, gerade gegriffen */
+    val handles: List<Triple<Vec, Color, Boolean>> = emptyList(),
 )
 
 /** Zeichnet das All: Raster, Achsen, Stationen, Asteroiden, Energiezellen, Bahnen und die Sonde. */
@@ -112,6 +114,17 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             val prev = v.trail.getOrNull(v.trail.size - 6) ?: v.trail.firstOrNull() ?: p
             val ang = atan2(-(p.y - prev.y), p.x - prev.x).toFloat()
             drawProbe(px(p), unit, Math.toDegrees(ang.toDouble()).toFloat(), v.probeColor, v.time)
+        }
+        v.handles.forEach { (p, c, active) ->
+            val o = px(p)
+            val pulse = 1f + 0.12f * sin(v.time * 5f)
+            drawCircle(c.copy(alpha = 0.25f), unit * (if (active) 1.1f else 0.8f) * pulse, o)
+            drawCircle(c, unit * 0.38f, o)
+            drawCircle(Color.White, unit * 0.38f, o, style = Stroke(unit * 0.08f))
+        }
+        // Zielpfeil bei Wurf/Schleuder
+        if (v.handles.isNotEmpty() && (l.kind == Kind.THROW || l.kind == Kind.ORBIT)) {
+            drawLine(Q.Yellow.copy(alpha = 0.7f), px(l.launch), px(v.handles[0].first), unit * 0.12f, cap = StrokeCap.Round)
         }
         v.bursts.forEach { (b, s) -> drawBurst(b, s) }
     }

@@ -50,6 +50,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     val maxStars = Levels.all.size * 3
 
+    /** Übergabe zwischen Bildschirmen: zu spielendes Level (Testflug, geteilter Code) bzw. Code */
+    var playLevel: de.kurvenflug.core.model.Level? = null
+    var openCode: String? = null
+
     /** Heutiger Tag (Ortszeit) – daraus wird die Tagesmission gebaut */
     fun today(): Long = java.time.LocalDate.now().toEpochDay()
     fun daily() = Daily.forDay(today())

@@ -22,6 +22,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -77,6 +79,9 @@ fun LevelScreen(
     var values by rememberSaveable(level.id) { mutableStateOf(HashMap(initialValues ?: level.start)) }
     var attempt by rememberSaveable(level.id) { mutableIntStateOf(0) }
     var help by rememberSaveable(level.id) { mutableStateOf(false) }
+    /** Kurve mit dem Finger ziehen (zeigt die ganze Bahn → zählt wie Hilfe) */
+    var drag by rememberSaveable(level.id) { mutableStateOf(false) }
+    var grabbed by remember(level.id) { mutableIntStateOf(-1) }
     var usedHelp by rememberSaveable(level.id) { mutableStateOf(false) }
     var phase by rememberSaveable(level.id) { mutableStateOf(Phase.AIM) }
     var stars by rememberSaveable(level.id) { mutableIntStateOf(0) }
@@ -188,6 +193,7 @@ fun LevelScreen(
         preview = if (phase == Phase.AIM) preview else emptyList(),
         crosshair = if (phase == Phase.AIM && (level.kind == Kind.POINT && help || level.kind == Kind.RENDEZVOUS)) Vec(values.getValue("x"), values.getValue("y")) else null,
         preview2 = if (phase == Phase.AIM) preview2 else emptyList(),
+        handles = if (phase == Phase.AIM && drag) handlesFor(level, values).mapIndexed { i, h -> Triple(h.pos, h.color, i == grabbed) } else emptyList(),
         trail2 = r?.path2?.let { p2 -> p2.take(((shown + 1).toDouble() / r.path.size * p2.size).toInt().coerceIn(0, p2.size)) }.orEmpty(),
         probe2 = if (phase == Phase.FLYING && r != null && r.path2.isNotEmpty()) r.path2[((shown.toDouble() / r.path.size) * r.path2.size).toInt().coerceIn(0, r.path2.size - 1)] else null,
         ghosts = ghosts,
@@ -220,7 +226,26 @@ fun LevelScreen(
                 Modifier.padding(horizontal = 12.dp).fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(18.dp))
                     .background(Color(0x66070B20)).border(1.5.dp, Q.Cyan.copy(alpha = 0.35f), RoundedCornerShape(18.dp))
             ) {
-                SpaceCanvas(spaceView, Modifier.fillMaxSize().onSizeChanged { canvasSize = it })
+                SpaceCanvas(spaceView, Modifier.fillMaxSize().onSizeChanged { canvasSize = it }.pointerInput(drag, phase, level.id) {
+                    if (!drag || phase != Phase.AIM) return@pointerInput
+                    fun world(o: Offset) = Vec(o.x / size.width * 2 * Flight.R - Flight.R, Flight.R - o.y / size.height * 2 * Flight.R)
+                    detectDragGestures(
+                        onDragStart = { o ->
+                            val w = world(o)
+                            val hs = handlesFor(level, values)
+                            grabbed = hs.indices.minByOrNull { kotlin.math.hypot(hs[it].pos.x - w.x, hs[it].pos.y - w.y) }
+                                ?.takeIf { kotlin.math.hypot(hs[it].pos.x - w.x, hs[it].pos.y - w.y) < 2.0 } ?: -1
+                            if (grabbed >= 0) view.buzz(Buzz.TICK, vib)
+                        },
+                        onDragEnd = { grabbed = -1 }, onDragCancel = { grabbed = -1 },
+                        onDrag = { change, _ ->
+                            val h = handlesFor(level, values).getOrNull(grabbed) ?: return@detectDragGestures
+                            change.consume()
+                            val upd = h.apply(world(change.position))
+                            if (upd.any { (k, x) -> values[k] != x }) { values = HashMap(values).apply { putAll(upd) }; sfx?.play(Sound.TICK, volume = 0.3f) }
+                        },
+                    )
+                })
             }
             Spacer(Modifier.height(8.dp))
             // Steuerung
@@ -231,14 +256,19 @@ fun LevelScreen(
                         values = HashMap(values).apply { put(p.key, nv) }
                     }
                 }
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     FilterChip(
-                        selected = help, onClick = { help = !help; sfx?.play(Sound.TICK) }, enabled = phase == Phase.AIM,
-                        label = { Text(if (level.kind == Kind.POINT) "👁 Zielhilfe" else "👁 Ganze Bahn") },
+                        selected = help, onClick = { help = !help; if (!help) drag = false; sfx?.play(Sound.TICK) }, enabled = phase == Phase.AIM,
+                        label = { Text(if (level.kind == Kind.POINT) "👁 Hilfe" else "👁 Bahn") },
                         colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Violet.copy(alpha = 0.35f), labelColor = Q.Text, selectedLabelColor = Q.Text),
                     )
-                    Text(if (help) "max. 2 ⭐" else "Rechnen = 3 ⭐", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+                    FilterChip(
+                        selected = drag, onClick = { drag = !drag; if (drag) help = true; sfx?.play(Sound.TICK) }, enabled = phase == Phase.AIM,
+                        label = { Text("✋ Ziehen") },
+                        colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Yellow.copy(alpha = 0.3f), labelColor = Q.Text, selectedLabelColor = Q.Text),
+                    )
                     Spacer(Modifier.weight(1f))
+                    Text(if (help) "max.\n2 ⭐" else "3 ⭐\nmöglich", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                     NeonButton(onClick = { launch() }, color = Q.Green, enabled = phase == Phase.AIM, modifier = Modifier.pulse(phase == Phase.AIM && attempt == 0, 0.03f)) {
                         Text("🚀 Start", fontWeight = FontWeight.Black, color = Q.Text, fontSize = 18.sp)
                     }

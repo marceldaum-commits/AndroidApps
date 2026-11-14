@@ -3,6 +3,15 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.4.0 – Baukasten, Klassen-Challenge, Kurve ziehen & Formel-Detektiv
+- **🛠️ Baukasten**: Eigene Level bauen – Stationen, Asteroiden, Energiezellen und Planeten aufs Feld tippen, Lösung einstellen,
+  als Code an Freunde schicken. Geteilt wird nur, was fair und lösbar ist.
+- **🏫 Klassen-Challenge**: Lehrkräfte wählen bis zu 10 Level (auch eigene) und teilen einen Code. Die Schüler spielen
+  der Reihe nach und zeigen am Ende eine Ergebnis-Karte mit Datum und Prüfcode.
+- **✋ Kurve ziehen**: Die Bahn direkt mit dem Finger formen – Scheitel, Steigung oder Zielpfeil ziehen, die Formel rechnet live mit.
+- **🔎 Formel-Detektiv**: Umgekehrt! Die Kurve ist zu sehen, du tippst die Formel (Komma und Brüche wie 1/2 gehen). 8 Fälle pro Runde.
+- Codes aus WhatsApp: „Teilen → Kurvenflug“ öffnet Level, Challenges und Duelle direkt.
+
 ## 0.3.0 – Duell, Bosse, Sturm & Rendezvous
 - **⚔️ Duell**: zu zweit am selben Handy (3 Runden, abwechselnd) oder per Code an Freunde schicken – wer weniger Versuche braucht, gewinnt.
   Den Code einfach in WhatsApp teilen; „Teilen → Kurvenflug“ öffnet die Herausforderung direkt.

@@ -25,7 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!-- Duell-Code aus WhatsApp & Co. per „Teilen“ an Kurvenflug schicken -->
-            <intent-filter android:label="Duell annehmen">
+            <intent-filter android:label="In Kurvenflug öffnen">
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />

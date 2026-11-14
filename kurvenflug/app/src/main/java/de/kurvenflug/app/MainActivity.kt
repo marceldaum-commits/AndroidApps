@@ -48,6 +48,12 @@ object Routes {
     const val DUEL = "duell"
     const val BADGES = "abzeichen"
     fun boss(chapter: Int) = "boss/$chapter"
+    const val BUILD_HOME = "baukasten"
+    const val BUILDER = "bauen"
+    const val PLAY = "spielen"
+    const val CHALLENGE_NEW = "challenge-neu"
+    const val CHALLENGE = "challenge"
+    const val DETECTIVE = "detektiv"
     fun level(id: String) = "level/$id"
 }
 
@@ -67,7 +73,7 @@ class MainActivity : ComponentActivity() {
 
     private fun readShared(intent: android.content.Intent?) {
         val text = intent?.takeIf { it.action == android.content.Intent.ACTION_SEND }?.getStringExtra(android.content.Intent.EXTRA_TEXT) ?: return
-        DuelCode.decode(text)?.let { incomingDuel.value = DuelCode.encode(it.seed, it.attempts) }
+        if (de.kurvenflug.core.model.Codec.detect(text) != null) incomingDuel.value = text
     }
 
     override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); readShared(intent) }
@@ -115,7 +121,17 @@ class MainActivity : ComponentActivity() {
         val probeColor = Skins.getOrElse(skin) { Skins[0] }.color
         // Duell-Code von außen → direkt ins Duell
         val shared by incomingDuel
-        LaunchedEffect(shared) { if (shared != null) nav.navigate(Routes.DUEL) { launchSingleTop = true } }
+        fun openCode(text: String) {
+            when (de.kurvenflug.core.model.Codec.detect(text)) {
+                de.kurvenflug.core.model.Codec.Type.DUEL -> { incomingDuel.value = text; nav.navigate(Routes.DUEL) { launchSingleTop = true }; return }
+                de.kurvenflug.core.model.Codec.Type.LEVEL -> de.kurvenflug.core.model.Codec.decodeLevel(text)?.toLevel("geteilt")?.let {
+                    vm.playLevel = it; nav.navigate(Routes.PLAY) }
+                de.kurvenflug.core.model.Codec.Type.CHALLENGE -> { vm.openCode = text; nav.navigate(Routes.CHALLENGE) }
+                null -> {}
+            }
+            incomingDuel.value = null
+        }
+        LaunchedEffect(shared) { shared?.let { openCode(it) } }
         val stats by vm.stats.collectAsStateWithLifecycle()
         var celebrate by remember { mutableStateOf<List<de.kurvenflug.core.model.Badge>>(emptyList()) }
         LaunchedEffect(stats) { val n = vm.newBadges(stats); if (n.isNotEmpty()) celebrate = n }
@@ -137,6 +153,7 @@ class MainActivity : ComponentActivity() {
                     badges = de.kurvenflug.core.model.Badges.earned(stats).size,
                     stormBest = stats.stormBest,
                     onDuel = { nav.goOnce(Routes.DUEL) }, onStorm = { nav.goOnce(Routes.STORM) }, onBadges = { nav.goOnce(Routes.BADGES) },
+                    onBuild = { nav.goOnce(Routes.BUILD_HOME) }, onDetective = { nav.goOnce(Routes.DETECTIVE) },
                     banner = upd?.let { u -> { UpdateBanner(u.version) { nav.goOnce(Routes.SETTINGS) } } },
                 )
             }
@@ -171,6 +188,45 @@ class MainActivity : ComponentActivity() {
                 DuelScreen(probeColor, code, onResult = { vm.settings.recordDuel(it) }, onBack = { nav.popSafe() })
             }
             composable(Routes.BADGES) { BadgesScreen(stats) { nav.popSafe() } }
+            composable(Routes.BUILD_HOME) {
+                val mine by vm.settings.myLevels.collectAsStateWithLifecycle()
+                de.kurvenflug.app.ui.build.BuilderHome(
+                    mine,
+                    onNew = { vm.openCode = null; nav.goOnce(Routes.BUILDER) },
+                    onEdit = { vm.openCode = it; nav.goOnce(Routes.BUILDER) },
+                    onPlay = { c -> de.kurvenflug.core.model.Codec.decodeLevel(c)?.toLevel("eigenes")?.let { vm.playLevel = it; nav.goOnce(Routes.PLAY) } },
+                    onDelete = vm.settings::deleteMyLevel,
+                    onCode = { openCode(it) },
+                    onChallenge = { nav.goOnce(Routes.CHALLENGE_NEW) },
+                    onBack = { nav.popSafe() },
+                )
+            }
+            composable(Routes.BUILDER) {
+                val editing = remember { vm.openCode }
+                val initial = remember { editing?.let { de.kurvenflug.core.model.Codec.decodeLevel(it) } }
+                de.kurvenflug.app.ui.build.BuilderScreen(initial, probeColor,
+                    onSave = { vm.settings.saveMyLevel(it, replace = editing) },
+                    onTest = { vm.playLevel = it; nav.goOnce(Routes.PLAY) },
+                    onBack = { nav.popSafe() })
+            }
+            composable(Routes.PLAY) {
+                val l = remember { vm.playLevel } ?: run { LaunchedEffect(Unit) { nav.popSafe() }; return@composable }
+                LevelScreen(l, Chapter(0, "Eigenes Level", "", "🛠️", emptyList(), listOf(l)), probeColor, false, {},
+                    onSolved = { _, _, _ -> }, onNext = null, onBack = { nav.popSafe() })
+            }
+            composable(Routes.CHALLENGE_NEW) {
+                val mine by vm.settings.myLevels.collectAsStateWithLifecycle()
+                de.kurvenflug.app.ui.build.ChallengeComposer(mine) { nav.popSafe() }
+            }
+            composable(Routes.CHALLENGE) {
+                val spec = remember { vm.openCode?.let { de.kurvenflug.core.model.Codec.decodeChallenge(it) } }
+                if (spec == null) LaunchedEffect(Unit) { nav.popSafe() }
+                else de.kurvenflug.app.ui.build.ChallengeRun(spec, probeColor) { nav.popSafe() }
+            }
+            composable(Routes.DETECTIVE) {
+                de.kurvenflug.app.ui.build.DetectiveScreen(vm.settings.detectiveBest, probeColor,
+                    onFinished = { if (it > vm.settings.detectiveBest) vm.settings.detectiveBest = it }, onBack = { nav.popSafe() })
+            }
             composable(Routes.SETTINGS) {
                 val upd by vm.availableUpdate.collectAsStateWithLifecycle()
                 val autoUpd by vm.settings.autoUpdate.collectAsStateWithLifecycle()

@@ -57,6 +57,21 @@ class Settings(ctx: Context) {
         get() = prefs.getStringSet("badgesSeen", emptySet()).orEmpty()
         set(v) = prefs.edit().putStringSet("badgesSeen", v).apply()
 
+    /** Eigene Level aus dem Baukasten (als Teil-Codes, neueste zuerst) */
+    private val _myLevels = MutableStateFlow(prefs.getString("myLevels", "").orEmpty().lines().filter { it.isNotBlank() })
+    val myLevels: StateFlow<List<String>> = _myLevels.asStateFlow()
+    fun saveMyLevel(code: String, replace: String? = null) {
+        val l = _myLevels.value.filter { it != code && it != replace }
+        setMyLevels(listOf(code) + l)
+    }
+    fun deleteMyLevel(code: String) = setMyLevels(_myLevels.value - code)
+    private fun setMyLevels(l: List<String>) { _myLevels.value = l.take(50); prefs.edit().putString("myLevels", _myLevels.value.joinToString("\n")).apply() }
+
+    /** Rekord im Formel-Detektiv (richtige Fälle von 8) */
+    var detectiveBest: Int
+        get() = prefs.getInt("detectiveBest", 0)
+        set(v) = prefs.edit().putInt("detectiveBest", v).apply()
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

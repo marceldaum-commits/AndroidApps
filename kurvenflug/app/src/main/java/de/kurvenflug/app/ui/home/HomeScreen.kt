@@ -59,6 +59,8 @@ fun HomeScreen(
     onDuel: (() -> Unit)? = null,
     onStorm: (() -> Unit)? = null,
     onBadges: (() -> Unit)? = null,
+    onBuild: (() -> Unit)? = null,
+    onDetective: (() -> Unit)? = null,
     banner: (@Composable () -> Unit)? = null,
 ) {
     Box(Modifier.fillMaxSize()) {
@@ -83,6 +85,10 @@ fun HomeScreen(
                 ModeTile("⚔️", "Duell", "zu zweit", Q.Cyan, Modifier.weight(1f), onDuel)
                 ModeTile("☄️", "Sturm", if (stormBest > 0) "Rekord $stormBest" else "endlos", Q.Orange, Modifier.weight(1f)) { onStorm?.invoke() }
                 ModeTile("🏅", "Abzeichen", "$badges/${de.kurvenflug.core.model.Badges.all.size}", Q.Yellow, Modifier.weight(1f)) { onBadges?.invoke() }
+            }
+            if (onBuild != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                ModeTile("🛠️", "Baukasten", "bauen & teilen", Q.Green, Modifier.weight(1f), onBuild)
+                ModeTile("🔎", "Detektiv", "Formel finden", Q.Violet, Modifier.weight(1f)) { onDetective?.invoke() }
             }
             chapters.forEachIndexed { i, c ->
                 de.kurvenflug.app.ui.flight.ChapterCard(c, i, levelStars, onLevel, bossStars[c.number] ?: 0, onBoss?.let { b -> { b(c.number) } })

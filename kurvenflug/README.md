@@ -3,7 +3,8 @@
 Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
 selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).
 
-Inhalte (46 Level in 7 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Duell, Asteroidensturm, Abzeichen): Koordinaten (Kl. 5–6), Geraden (Kl. 7–8), Parabeln (Kl. 9),
+Inhalte (46 Level in 7 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Duell, Asteroidensturm, Abzeichen,
+Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv): Koordinaten (Kl. 5–6), Geraden (Kl. 7–8), Parabeln (Kl. 9),
 Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10).
 
 ## So funktioniert Kurvenflug
@@ -24,7 +25,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/15_schleuder_ganze_bahn.png) | ![](screenshots/16_tagesmission.png) | ![](screenshots/17_rendezvous.png) |
 | ![](screenshots/18_rendezvous_daneben.png) | ![](screenshots/19_boss.png) | ![](screenshots/20_asteroidensturm.png) |
 | ![](screenshots/21_duell.png) | ![](screenshots/22_duell_zu_zweit.png) | ![](screenshots/23_abzeichen.png) |
-| ![](screenshots/11_einstellungen.png) | | |
+| ![](screenshots/24_kurve_ziehen.png) | ![](screenshots/25_baukasten.png) | ![](screenshots/26_baukasten_start.png) |
+| ![](screenshots/27_klassen_challenge.png) | ![](screenshots/28_formel_detektiv.png) | ![](screenshots/11_einstellungen.png) |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,
