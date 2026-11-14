@@ -25,8 +25,9 @@ data class Body(val x: Double, val y: Double, val r: Double) {
  * - [SINE]: Schwingungen y = a·sin(b·x) + d (Kl. 10)
  * - [EXP]: Wachstum und Zerfall y = a·bˣ + d (Kl. 10)
  * - [ORBIT]: Schwerkraft-Schleuder – Planeten ziehen die Sonde an, Kraft ~ M / r² (Physik Kl. 10)
+ * - [RENDEZVOUS]: zwei Sonden auf zwei Geraden – Treffpunkt = Lösung des Gleichungssystems (Kl. 8)
  */
-enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT }
+enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS }
 
 /** Hat diese Spielart eine Funktionsgleichung y = f(x)? */
 val Kind.isFunction get() = this == Kind.LINE || this == Kind.PARABOLA || this == Kind.SINE || this == Kind.EXP
@@ -62,6 +63,8 @@ data class FlightResult(
     /** Index des getroffenen Asteroiden oder null */
     val crash: Int?,
     val success: Boolean,
+    /** zweite Sonde (nur Rendezvous) */
+    val path2: List<Vec> = emptyList(),
 )
 
 object Flight {
@@ -117,7 +120,29 @@ object Flight {
                 out
             }
             Kind.ORBIT -> orbit(level, v)
+            Kind.RENDEZVOUS -> lineTo(v.getValue("m1"), v.getValue("b1"), -R, v.getValue("x"))
         }
+    }
+
+    /** Rendezvous: Bahn der zweiten Sonde – kommt von rechts. */
+    fun path2(level: Level, values: Map<String, Double>): List<Vec> {
+        if (level.kind != Kind.RENDEZVOUS) return emptyList()
+        val v = level.values(values)
+        return lineTo(v.getValue("m2"), v.getValue("b2"), R, v.getValue("x"))
+    }
+
+    /** Gerade y = m·x + b von x0 bis x1, nur der sichtbare Teil. */
+    private fun lineTo(m: Double, b: Double, x0: Double, x1: Double): List<Vec> {
+        val n = max(1, (abs(x1 - x0) / STEP).toInt())
+        return (0..n).map { i -> val x = x0 + (x1 - x0) * i / n; Vec(x, m * x + b) }.filter { abs(it.y) <= R }
+            .ifEmpty { listOf(Vec(x1, m * x1 + b)) }
+    }
+
+    /** Wo sich die beiden Rendezvous-Geraden schneiden (null = parallel). */
+    fun intersection(m1: Double, b1: Double, m2: Double, b2: Double): Vec? {
+        if (abs(m1 - m2) < 1e-9) return null
+        val x = (b2 - b1) / (m1 - m2)
+        return Vec(x, m1 * x + b1)
     }
 
     /** Gravitationskonstante im Spiel (Einheiten so gewählt, dass Massen 10–60 gut spielbar sind). */
@@ -160,6 +185,7 @@ object Flight {
 
     /** Fliegt die Bahn ab: Ziele, Energiezellen, Asteroiden. */
     fun fly(level: Level, values: Map<String, Double>): FlightResult {
+        if (level.kind == Kind.RENDEZVOUS) return rendezvous(level, values)
         val full = path(level, values)
         val hits = linkedSetOf<Int>(); val cells = linkedSetOf<Int>()
         var crash: Int? = null
@@ -178,6 +204,19 @@ object Flight {
             level.targets.forEachIndexed { i, t -> if (t.contains(end)) hits += i }
         }
         return FlightResult(flown, hits, cells, crash, crash == null && hits.size == level.targets.size)
+    }
+
+    /** Beide Sonden fliegen bis zur Andock-Stelle x. Treffen sie sich dort genau an der Station? */
+    private fun rendezvous(level: Level, values: Map<String, Double>): FlightResult {
+        val v = level.values(values)
+        val a = path(level, values); val b = path2(level, values)
+        val dock = Vec(v.getValue("x"), v.getValue("y"))
+        val endA = Vec(dock.x, v.getValue("m1") * dock.x + v.getValue("b1"))
+        val endB = Vec(dock.x, v.getValue("m2") * dock.x + v.getValue("b2"))
+        val crash = level.asteroids.indexOfFirst { r -> (a + b).any { r.contains(it) } }.takeIf { it >= 0 }
+        val hits = level.targets.indices.filter { i -> val t = level.targets[i]; t.contains(dock) && t.contains(endA) && t.contains(endB) }.toSet()
+        val cells = level.cells.indices.filter { i -> (a + b).any { level.cells[i].contains(it, 0.15) } }.toSet()
+        return FlightResult(a, hits, cells, crash, crash == null && hits.size == level.targets.size, b)
     }
 
     /** Sterne: 3 beim ersten Versuch, je Fehlversuch einer weniger (mindestens 1). Mit Zielhilfe höchstens 2. */

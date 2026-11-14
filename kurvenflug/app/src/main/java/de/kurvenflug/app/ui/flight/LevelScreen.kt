@@ -61,6 +61,14 @@ fun LevelScreen(
     onBack: () -> Unit,
     /** für Bildschirmfotos: Startwerte vorgeben */
     initialValues: Map<String, Double>? = null,
+    /** Beschriftung des Weiter-Knopfs (Duell, Boss, Sturm) */
+    nextLabel: String = "Weiter ›",
+    /** „Nochmal“ anbieten? (nicht im Duell/Sturm/Boss) */
+    allowRetry: Boolean = true,
+    /** nach jedem Fehlversuch (Sturm: Spiel vorbei, Boss: Schild hält) */
+    onMiss: ((attempt: Int) -> Unit)? = null,
+    /** eigene Zeile über dem Titel (z. B. „Duell · Spieler 2“) */
+    header: String? = null,
 ) {
     val sfx = LocalSfx.current
     val view = LocalView.current
@@ -93,6 +101,9 @@ fun LevelScreen(
 
     BackHandler { onBack() }
 
+    val preview2 = remember(values, help, level.id) {
+        Flight.path2(level, values).let { p -> if (help) p else p.take(min(p.size, 100)) }
+    }
     val preview = remember(values, help, level.id) {
         if (level.kind == Kind.POINT) emptyList()
         else Flight.path(level, values).let { p ->
@@ -167,6 +178,7 @@ fun LevelScreen(
             speech = if (attempt >= 2) "$fb\n💡 ${level.tip}" else fb
             if (r.crash == null) sfx?.play(Sound.WRONG)
             phase = Phase.AIM
+            onMiss?.invoke(attempt)
         }
     }
 
@@ -174,7 +186,10 @@ fun LevelScreen(
     val spaceView = SpaceView(
         level = level,
         preview = if (phase == Phase.AIM) preview else emptyList(),
-        crosshair = if (phase == Phase.AIM && level.kind == Kind.POINT && help) Vec(values.getValue("x"), values.getValue("y")) else null,
+        crosshair = if (phase == Phase.AIM && (level.kind == Kind.POINT && help || level.kind == Kind.RENDEZVOUS)) Vec(values.getValue("x"), values.getValue("y")) else null,
+        preview2 = if (phase == Phase.AIM) preview2 else emptyList(),
+        trail2 = r?.path2?.let { p2 -> p2.take(((shown + 1).toDouble() / r.path.size * p2.size).toInt().coerceIn(0, p2.size)) }.orEmpty(),
+        probe2 = if (phase == Phase.FLYING && r != null && r.path2.isNotEmpty()) r.path2[((shown.toDouble() / r.path.size) * r.path2.size).toInt().coerceIn(0, r.path2.size - 1)] else null,
         ghosts = ghosts,
         trail = r?.path?.take(shown + 1).orEmpty(),
         probe = if (phase == Phase.FLYING && r != null) r.path[min(shown, r.path.size - 1)] else null,
@@ -193,7 +208,7 @@ fun LevelScreen(
             Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
                 Column(Modifier.weight(1f)) {
-                    Text(if (level.number == 0) "${chapter.emoji} ${chapter.title}" else "${chapter.emoji} ${chapter.title} · Level ${level.number}", style = MaterialTheme.typography.labelMedium, color = Q.Muted)
+                    Text(header ?: if (level.number == 0) "${chapter.emoji} ${chapter.title}" else "${chapter.emoji} ${chapter.title} · Level ${level.number}", style = MaterialTheme.typography.labelMedium, color = Q.Muted)
                     Text(level.title, style = MaterialTheme.typography.titleLarge, color = Q.Text)
                 }
                 Text(if (attempt == 0) "" else "Versuch $attempt", style = MaterialTheme.typography.labelMedium, color = Q.Muted, modifier = Modifier.padding(end = 12.dp))
@@ -235,7 +250,7 @@ fun LevelScreen(
         // Ergebnis
         AnimatedVisibility(phase == Phase.DONE, enter = fadeIn() + scaleIn(initialScale = 0.8f, animationSpec = spring(dampingRatio = 0.6f)), exit = fadeOut(),
             modifier = Modifier.align(Alignment.BottomCenter)) {
-            ResultCard(stars, taken.size + 0, level.cells.size, usedHelp,
+            ResultCard(stars, taken.size + 0, level.cells.size, usedHelp, nextLabel, allowRetry,
                 onRetry = {
                     phase = Phase.AIM; attempt = 0; usedHelp = false; ghosts = emptyList(); result = null; hits = emptySet(); taken = emptySet()
                     values = HashMap(level.start); mood = VoltMood.IDLE; speech = level.task
@@ -246,6 +261,8 @@ fun LevelScreen(
         if (intro) IntroOverlay(chapter) { intro = false; onIntroSeen() }
     }
 }
+
+private fun lin(m: Double, b: Double) = "y = ${when (m) { 1.0 -> ""; -1.0 -> "−"; else -> num(m) }}x ${if (b < 0) "−" else "+"} ${num(kotlin.math.abs(b))}"
 
 /** Die Formel mit den eingestellten Zahlen – farbig wie die Regler. */
 @Composable
@@ -266,6 +283,12 @@ private fun Formula(level: Level, values: Map<String, Double>) {
             Kind.PARABOLA -> { append("y = "); factor("a"); append(" · (x − "); factor("d"); append(")² + "); factor("e") }
             Kind.THROW -> { append("α = "); n("angle", "°"); append("   v = "); n("v", " m/s") }
             Kind.ORBIT -> { append("α = "); n("angle", "°"); append("   v = "); n("v") }
+            Kind.RENDEZVOUS -> {
+                val eq = level.equations ?: listOf("A:  " + lin(v.getValue("m1"), v.getValue("b1")), "B:  " + lin(v.getValue("m2"), v.getValue("b2")))
+                withStyle(SpanStyle(color = Q.Cyan)) { append(eq[0]) }; append("\n")
+                withStyle(SpanStyle(color = Q.Orange)) { append(eq[1]) }; append("\n")
+                append("Treffpunkt  ( "); n("x"); append(" | "); n("y"); append(" )")
+            }
             Kind.SINE -> {
                 append("y = "); factor("a"); append(" · sin("); factor("b"); append(" · x)")
                 if (v.getValue("d") != 0.0 || "d" in colorOf) { append(" + "); factor("d") }
@@ -317,7 +340,8 @@ private fun Modifier.clickableNoRipple(i: androidx.compose.foundation.interactio
     this.then(Modifier.clickable(i, null, onClick = onClick))
 
 @Composable
-private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean, onRetry: () -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit) {
+private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean, nextLabel: String, allowRetry: Boolean,
+                       onRetry: () -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit) {
     Card(
         Modifier.padding(16.dp).fillMaxWidth().navigationBarsPadding(),
         colors = CardDefaults.cardColors(containerColor = Q.Panel),
@@ -336,8 +360,8 @@ private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean,
             if (helped && stars == 2) Text("Ohne Zielhilfe gibt's 3 ⭐ – traust du dich?", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
             Spacer(Modifier.height(12.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                NeonButton(onClick = onRetry, color = Q.Violet) { Text("↻ Nochmal", color = Q.Text) }
-                if (onNext != null) NeonButton(onClick = onNext, color = Q.Green, modifier = Modifier.pulse(true, 0.03f)) { Text("Weiter ›", color = Q.Text, fontWeight = FontWeight.Black) }
+                if (allowRetry) NeonButton(onClick = onRetry, color = Q.Violet) { Text("↻ Nochmal", color = Q.Text) }
+                if (onNext != null) NeonButton(onClick = onNext, color = Q.Green, modifier = Modifier.pulse(true, 0.03f)) { Text(nextLabel, color = Q.Text, fontWeight = FontWeight.Black) }
                 else NeonButton(onClick = onBack, color = Q.Green) { Text("Fertig! 🏆", color = Q.Text, fontWeight = FontWeight.Black) }
             }
         }

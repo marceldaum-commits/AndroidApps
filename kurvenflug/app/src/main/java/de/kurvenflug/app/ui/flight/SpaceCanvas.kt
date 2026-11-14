@@ -40,6 +40,10 @@ data class SpaceView(
     val bursts: List<Pair<Burst, Float>>,
     val probeColor: Color,
     val time: Float,
+    /** zweite Sonde (Rendezvous) */
+    val preview2: List<Vec> = emptyList(),
+    val trail2: List<Vec> = emptyList(),
+    val probe2: Vec? = null,
 )
 
 /** Zeichnet das All: Raster, Achsen, Stationen, Asteroiden, Energiezellen, Bahnen und die Sonde. */
@@ -83,6 +87,16 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
         v.ghosts.forEach { g -> drawPathLine(g, ::px, Color.White.copy(alpha = 0.18f), unit * 0.08f, dashed = false) }
         // Vorschau
         if (v.preview.size > 1) drawPathLine(v.preview, ::px, v.probeColor.copy(alpha = 0.75f), unit * 0.1f, dashed = true)
+        if (v.preview2.size > 1) drawPathLine(v.preview2, ::px, Q.Orange.copy(alpha = 0.75f), unit * 0.1f, dashed = true)
+        if (v.trail2.size > 1) {
+            drawPathLine(v.trail2, ::px, Q.Orange.copy(alpha = 0.35f), unit * 0.35f, dashed = false)
+            drawPathLine(v.trail2, ::px, Q.Orange, unit * 0.12f, dashed = false)
+        }
+        v.probe2?.let { p ->
+            val prev = v.trail2.getOrNull(v.trail2.size - 6) ?: p
+            val ang = atan2(-(p.y - prev.y), p.x - prev.x).toFloat()
+            drawProbe(px(p), unit, Math.toDegrees(ang.toDouble()).toFloat(), Q.Orange, v.time)
+        }
         v.crosshair?.let { c ->
             val o = px(c)
             drawCircle(v.probeColor.copy(alpha = 0.8f), unit * 0.45f, o, style = Stroke(unit * 0.08f))

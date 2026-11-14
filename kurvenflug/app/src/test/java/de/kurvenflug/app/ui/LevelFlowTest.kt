@@ -45,4 +45,29 @@ class LevelFlowTest {
         rule.mainClock.advanceTimeBy(4000)
         assertEquals(1, solved.size)
     }
+
+    @Test fun stormEndsOnFirstMissAndReportsWaves() {
+        var reported = -1
+        rule.setContent { KurvenflugTheme { Surface(color = Q.Space) {
+            de.kurvenflug.app.ui.modes.StormScreen(3, Q.Cyan, { reported = it; it > 3 }, {}, seed = 9)
+        } } }
+        rule.mainClock.advanceTimeBy(1000)
+        rule.onNodeWithText("Los! 🚀").performClick()
+        rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithText("🚀 Start").performClick()      // Startwerte treffen nie → Fehlschuss
+        rule.mainClock.advanceTimeBy(5000)
+        assertEquals(0, reported)
+        rule.onNodeWithText("Sturm vorbei").assertExists()
+        rule.onNodeWithText("Neuer Sturm ↻").assertExists()
+    }
+
+    @Test fun duelCodeOpensChallenge() {
+        val code = de.kurvenflug.core.model.DuelCode.encode(123456, 2)
+        rule.setContent { KurvenflugTheme { Surface(color = Q.Space) {
+            de.kurvenflug.app.ui.modes.DuelScreen(Q.Cyan, "Schau mal: $code", {}, {})
+        } } }
+        rule.mainClock.advanceTimeBy(1000)
+        rule.onNodeWithText("Herausforderung!").assertExists()
+        rule.onNodeWithText("2 Versuchen", substring = true).assertExists()
+    }
 }

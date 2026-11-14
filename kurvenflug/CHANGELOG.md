@@ -3,6 +3,15 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.3.0 – Duell, Bosse, Sturm & Rendezvous
+- **⚔️ Duell**: zu zweit am selben Handy (3 Runden, abwechselnd) oder per Code an Freunde schicken – wer weniger Versuche braucht, gewinnt.
+  Den Code einfach in WhatsApp teilen; „Teilen → Kurvenflug“ öffnet die Herausforderung direkt.
+- **🤝 Neues Kapitel „Rendezvous“ (Klasse 8)**: Zwei Sonden auf zwei Geraden sollen sich treffen – du rechnest den Schnittpunkt aus
+  (lineare Gleichungssysteme), 7 Level.
+- **👾 Boss-Kämpfe**: Am Ende jedes Kapitels wartet ein Alien-Mutterschiff mit drei Schild-Segmenten – drei schwere Etappen am Stück.
+- **☄️ Asteroidensturm**: Welle um Welle, jede muss beim ersten Versuch sitzen. Keine Uhr, nur dein Rekord.
+- **🏅 Abzeichen**: 14 Abzeichen zum Sammeln – Volt feiert jedes neue.
+
 ## 0.2.1 – Updates kommen schneller
 - Die App schaut jetzt bei **jedem Öffnen** nach einer neuen Version (höchstens alle 30 Minuten) – auch wenn sie nur aus dem Hintergrund zurückkommt. Vorher nur einmal am Tag.
 - Ist eine neue Version da, erscheint oben auf der Startseite ein 🎁-Hinweis. Antippen → laden → installieren. Dein Fortschritt bleibt erhalten.

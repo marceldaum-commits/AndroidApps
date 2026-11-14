@@ -28,6 +28,12 @@ import de.kurvenflug.app.ui.settings.UpdateState
 import de.kurvenflug.app.ui.theme.Q
 import de.kurvenflug.app.ui.theme.KurvenflugTheme
 import de.kurvenflug.core.model.Chapter
+import de.kurvenflug.core.model.DuelCode
+import de.kurvenflug.app.ui.modes.BadgesScreen
+import de.kurvenflug.app.ui.modes.BossScreen
+import de.kurvenflug.app.ui.modes.DuelScreen
+import de.kurvenflug.app.ui.modes.NewBadgesOverlay
+import de.kurvenflug.app.ui.modes.StormScreen
 import de.kurvenflug.core.model.Daily
 import de.kurvenflug.core.model.Levels
 import de.kurvenflug.core.model.MusicMood
@@ -37,6 +43,11 @@ object Routes {
     const val HOME = "start"
     const val LEVEL = "level/{id}"
     const val SETTINGS = "einstellungen"
+    const val BOSS = "boss/{chapter}"
+    const val STORM = "sturm"
+    const val DUEL = "duell"
+    const val BADGES = "abzeichen"
+    fun boss(chapter: Int) = "boss/$chapter"
     fun level(id: String) = "level/$id"
 }
 
@@ -51,11 +62,21 @@ fun NavController.goOnce(route: String) {
 
 class MainActivity : ComponentActivity() {
     private val vm: AppViewModel by viewModels()
+    /** Duell-Code, der per „Teilen“ (z. B. aus WhatsApp) hereinkam */
+    private val incomingDuel = androidx.compose.runtime.mutableStateOf<String?>(null)
+
+    private fun readShared(intent: android.content.Intent?) {
+        val text = intent?.takeIf { it.action == android.content.Intent.ACTION_SEND }?.getStringExtra(android.content.Intent.EXTRA_TEXT) ?: return
+        DuelCode.decode(text)?.let { incomingDuel.value = DuelCode.encode(it.seed, it.attempts) }
+    }
+
+    override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); readShared(intent) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val app = application as KurvenflugApp
+        if (savedInstanceState == null) readShared(intent)
         (application as KurvenflugApp).music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
@@ -92,6 +113,12 @@ class MainActivity : ComponentActivity() {
         val cells by vm.totalCells.collectAsStateWithLifecycle()
         val skin by vm.skin.collectAsStateWithLifecycle()
         val probeColor = Skins.getOrElse(skin) { Skins[0] }.color
+        // Duell-Code von außen → direkt ins Duell
+        val shared by incomingDuel
+        LaunchedEffect(shared) { if (shared != null) nav.navigate(Routes.DUEL) { launchSingleTop = true } }
+        val stats by vm.stats.collectAsStateWithLifecycle()
+        var celebrate by remember { mutableStateOf<List<de.kurvenflug.core.model.Badge>>(emptyList()) }
+        LaunchedEffect(stats) { val n = vm.newBadges(stats); if (n.isNotEmpty()) celebrate = n }
         NavHost(nav, Routes.HOME) {
             composable(Routes.HOME) {
                 val upd by vm.availableUpdate.collectAsStateWithLifecycle()
@@ -105,6 +132,11 @@ class MainActivity : ComponentActivity() {
                     onLevel = { nav.goOnce(Routes.level(it.id)) },
                     onSettings = { nav.goOnce(Routes.SETTINGS) },
                     daily = daily, dailyStars = progress[daily.id]?.stars ?: 0, dailiesDone = dailiesDone,
+                    bossStars = vm.bossStars.collectAsStateWithLifecycle().value,
+                    onBoss = { nav.goOnce(Routes.boss(it)) },
+                    badges = de.kurvenflug.core.model.Badges.earned(stats).size,
+                    stormBest = stats.stormBest,
+                    onDuel = { nav.goOnce(Routes.DUEL) }, onStorm = { nav.goOnce(Routes.STORM) }, onBadges = { nav.goOnce(Routes.BADGES) },
                     banner = upd?.let { u -> { UpdateBanner(u.version) { nav.goOnce(Routes.SETTINGS) } } },
                 )
             }
@@ -127,6 +159,18 @@ class MainActivity : ComponentActivity() {
                     onBack = { nav.popSafe() },
                 )
             }
+            composable(Routes.BOSS, arguments = listOf(navArgument("chapter") { type = NavType.IntType })) { e ->
+                val boss = de.kurvenflug.core.model.Bosses.forChapter(e.arguments?.getInt("chapter") ?: 0) ?: return@composable
+                BossScreen(boss, probeColor, onWon = { s, m -> vm.record(boss.id, s, emptySet(), m + boss.stages.size) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.STORM) {
+                StormScreen(stats.stormBest, probeColor, onFinished = { vm.settings.recordStorm(it) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.DUEL) {
+                val code = remember { incomingDuel.value.also { incomingDuel.value = null } }
+                DuelScreen(probeColor, code, onResult = { vm.settings.recordDuel(it) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.BADGES) { BadgesScreen(stats) { nav.popSafe() } }
             composable(Routes.SETTINGS) {
                 val upd by vm.availableUpdate.collectAsStateWithLifecycle()
                 val autoUpd by vm.settings.autoUpdate.collectAsStateWithLifecycle()
@@ -143,6 +187,10 @@ class MainActivity : ComponentActivity() {
                     onBack = { nav.popSafe() },
                 )
             }
+        }
+        // Neue Abzeichen auf der Startseite feiern (nicht mitten im Level)
+        if (celebrate.isNotEmpty() && route == Routes.HOME) NewBadgesOverlay(celebrate) {
+            vm.markBadgesSeen(celebrate.map { it.id }); celebrate = emptyList()
         }
     }
 }

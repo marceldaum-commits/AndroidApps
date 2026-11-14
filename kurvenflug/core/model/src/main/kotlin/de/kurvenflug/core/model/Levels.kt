@@ -28,6 +28,8 @@ data class Level(
     val masses: List<Double> = emptyList(),
     /** Tipp nach dem zweiten Fehlversuch */
     val tip: String,
+    /** eigene Schreibweise der Gleichungen (z. B. „2x + y = 7“) statt der automatisch erzeugten */
+    val equations: List<String>? = null,
 ) {
     /** Startwerte + feste Werte + aktuelle Einstellung */
     fun values(v: Map<String, Double>): Map<String, Double> = params.associate { it.key to it.start } + fixed + v
@@ -69,6 +71,12 @@ object Feedback {
                 if (abs(y) > Flight.R) "Bei x = ${num(t.x)} ist deine Kurve ganz aus dem Bild (y = ${num(y)}). Ziel: y = ${num(t.y)}."
                 else "Bei x = ${num(t.x)} war die Sonde bei y = ${num(y)} – das Ziel liegt bei y = ${num(t.y)}. " +
                     (if (y < t.y) "Etwas höher! ⬆️" else "Etwas tiefer! ⬇️")
+            }
+            Kind.RENDEZVOUS -> {
+                val x = v.getValue("x"); val y = v.getValue("y")
+                val ya = v.getValue("m1") * x + v.getValue("b1"); val yb = v.getValue("m2") * x + v.getValue("b2")
+                if (kotlin.math.abs(ya - yb) > 0.3) "Bei x = ${num(x)} war Sonde A auf y = ${num(ya)}, Sonde B auf y = ${num(yb)} – dort treffen sie sich nicht. Setz beide Gleichungen gleich!"
+                else "Die Sonden treffen sich bei x = ${num(x)} auf y = ${num(ya)} – aber dein Andockpunkt hat y = ${num(y)}."
             }
             Kind.ORBIT -> {
                 val near = r.path.minByOrNull { kotlin.math.hypot(it.x - t.x, it.y - t.y) } ?: return "Nochmal!"
@@ -115,6 +123,17 @@ object Levels {
     private val oV = p("v", "Tempo", 1.0, 10.0, 0.5, 4.0)
     private const val PI = Math.PI
     private fun planet(x: Double, y: Double, r: Double) = Body(x, y, r)
+    private val rx = p("x", "x", -9.0, 9.0, 0.5, 0.0)
+    private val ry = p("y", "y", -9.0, 9.0, 0.5, 0.0)
+
+    /** Rendezvous-Level: Lösung = Schnittpunkt, Station dort versteckt. */
+    private fun meet(n: Int, title: String, m1: Double, b1: Double, m2: Double, b2: Double, task: String, tip: String,
+                     equations: List<String>? = null, rocks: List<Body> = emptyList()): Level {
+        val s = Flight.intersection(m1, b1, m2, b2)!!
+        return Level("7-$n", 7, n, title, Kind.RENDEZVOUS, task, listOf(Body(s.x, s.y, 0.35)), listOf(rx, ry),
+            mapOf("x" to s.x, "y" to s.y), fixed = mapOf("m1" to m1, "b1" to b1, "m2" to m2, "b2" to b2),
+            asteroids = rocks, hidden = true, tip = tip, equations = equations)
+    }
 
     val chapters: List<Chapter> = listOf(
         Chapter(
@@ -208,6 +227,33 @@ object Levels {
                     asteroids = listOf(rock(-2.0, 5.5, 1.2), rock(-2.0, 0.5, 1.2), rock(3.0, 3.0)),
                     cells = listOf(cell(-2.0, 3.0)),
                     tip = "Die Gerade muss durch (−2 | 3) und (6 | −5). Berechne m und b."),
+            ),
+        ),
+        Chapter(
+            7, "Rendezvous", "Klasse 8", "🤝",
+            listOf(
+                "Zwei Sonden, zwei Geraden! Sonde A kommt von links, Sonde B von rechts.",
+                "Sie sollen sich an einer Raumstation treffen. Die Station ist getarnt – du musst den Treffpunkt ausrechnen.",
+                "Am Treffpunkt sind beide y-Werte gleich. Also: beide Gleichungen gleichsetzen und nach x auflösen. Dann y ausrechnen.",
+                "Das nennt man ein lineares Gleichungssystem. Stell den Andockpunkt (x | y) ein – und los!",
+            ),
+            listOf(
+                meet(1, "Erstes Treffen", 1.0, 1.0, -1.0, 5.0, "A: y = x + 1 und B: y = −x + 5. Wo treffen sie sich?",
+                    "x + 1 = −x + 5 → 2x = 4 → x = 2. Dann y = 2 + 1."),
+                meet(2, "Gegenverkehr", 2.0, -4.0, -1.0, 5.0, "A: y = 2x − 4 und B: y = −x + 5.",
+                    "2x − 4 = −x + 5 → 3x = 9."),
+                meet(3, "Sanfte Steigung", 0.5, 2.0, -0.5, 4.0, "A: y = 0,5x + 2 und B: y = −0,5x + 4.",
+                    "0,5x + 2 = −0,5x + 4 → x = 2.", rocks = listOf(Body(-4.0, 6.0, 1.0))),
+                meet(4, "Halbe Sachen", 3.0, 1.0, 1.0, 4.0, "A: y = 3x + 1 und B: y = x + 4. Achtung, Kommazahlen!",
+                    "3x + 1 = x + 4 → 2x = 3 → x = 1,5."),
+                meet(5, "Tief unten", -2.0, 1.0, 1.0, -5.0, "A: y = −2x + 1 und B: y = x − 5.",
+                    "−2x + 1 = x − 5 → −3x = −6."),
+                meet(6, "Andere Schreibweise", -2.0, 7.0, 1.0, 1.0, "Funkspruch: A: 2x + y = 7 und B: x − y = −1.",
+                    "Erst nach y umstellen: y = −2x + 7 und y = x + 1. Dann gleichsetzen.",
+                    equations = listOf("A:  2x + y = 7", "B:  x − y = −1")),
+                meet(7, "Kreuzung im Gürtel", 1.5, -2.0, -0.5, 4.0, "A: y = 1,5x − 2 und B: y = −0,5x + 4.",
+                    "1,5x − 2 = −0,5x + 4 → 2x = 6. y mit Kommastelle!",
+                    rocks = listOf(Body(-3.0, 0.5, 1.0), Body(6.0, 3.0, 1.0))),
             ),
         ),
         Chapter(

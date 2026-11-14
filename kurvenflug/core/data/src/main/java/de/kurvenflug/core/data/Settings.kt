@@ -33,6 +33,30 @@ class Settings(ctx: Context) {
         get() = prefs.getInt("skin", 0)
         set(v) = prefs.edit().putInt("skin", v).apply()
 
+    private val _stormBest = MutableStateFlow(prefs.getInt("stormBest", 0))
+    private val _duelWins = MutableStateFlow(prefs.getInt("duelWins", 0))
+    private val _duelsPlayed = MutableStateFlow(prefs.getInt("duelsPlayed", 0))
+    /** Rekord im Asteroidensturm (Wellen) */
+    val stormBest: StateFlow<Int> = _stormBest.asStateFlow()
+    val duelWins: StateFlow<Int> = _duelWins.asStateFlow()
+    val duelsPlayed: StateFlow<Int> = _duelsPlayed.asStateFlow()
+
+    /** @return true bei neuem Rekord */
+    fun recordStorm(waves: Int): Boolean {
+        if (waves <= _stormBest.value) return false
+        prefs.edit().putInt("stormBest", waves).apply(); _stormBest.value = waves
+        return true
+    }
+    fun recordDuel(won: Boolean) {
+        _duelsPlayed.value += 1; if (won) _duelWins.value += 1
+        prefs.edit().putInt("duelsPlayed", _duelsPlayed.value).putInt("duelWins", _duelWins.value).apply()
+    }
+
+    /** Schon gefeierte Abzeichen (damit „Neu!“ nur einmal erscheint) */
+    var badgesSeen: Set<String>
+        get() = prefs.getStringSet("badgesSeen", emptySet()).orEmpty()
+        set(v) = prefs.edit().putStringSet("badgesSeen", v).apply()
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

@@ -19,8 +19,31 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
     /** Sterne der Kapitel-Level (Tagesmissionen zählen extra) */
-    val stars: StateFlow<Map<String, Int>> = progress.map { m -> m.filterKeys { !Daily.isDaily(it) }.mapValues { it.value.stars } }
+    val stars: StateFlow<Map<String, Int>> = progress.map { m -> m.filterKeys { Levels.byId(it) != null }.mapValues { it.value.stars } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+
+    /** Boss-Sterne je Kapitel */
+    val bossStars: StateFlow<Map<Int, Int>> = progress.map { m ->
+        de.kurvenflug.core.model.Bosses.all.associate { b -> b.chapter to (m[b.id]?.stars ?: 0) }
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
+
+    /** Alles für die Abzeichen */
+    val stats: StateFlow<de.kurvenflug.core.model.Stats> = combine(progress, settings.stormBest, settings.duelWins, settings.duelsPlayed) { m, storm, wins, played ->
+        val lv = m.filterKeys { Levels.byId(it) != null }
+        de.kurvenflug.core.model.Stats(
+            stars = lv.values.sumOf { it.stars },
+            perfect = lv.values.count { it.stars == 3 },
+            chaptersDone = Levels.chapters.count { c -> c.levels.all { (lv[it.id]?.stars ?: 0) > 0 } },
+            cells = m.values.sumOf { Integer.bitCount(it.cellMask) },
+            dailies = m.keys.count { Daily.isDaily(it) },
+            bosses = m.keys.count { it.startsWith("boss-") },
+            stormBest = storm, duelWins = wins, duelsPlayed = played,
+        )
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, de.kurvenflug.core.model.Stats())
+
+    /** Neu verdiente, noch nicht gefeierte Abzeichen */
+    fun newBadges(s: de.kurvenflug.core.model.Stats) = de.kurvenflug.core.model.Badges.earned(s).filter { it.id !in settings.badgesSeen }
+    fun markBadgesSeen(ids: Collection<String>) { settings.badgesSeen = settings.badgesSeen + ids }
 
     val totalCells: StateFlow<Int> = progress.map { m -> m.values.sumOf { Integer.bitCount(it.cellMask) } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, 0)

@@ -52,6 +52,13 @@ fun HomeScreen(
     daily: de.kurvenflug.core.model.Level? = null,
     dailyStars: Int = 0,
     dailiesDone: Int = 0,
+    bossStars: Map<Int, Int> = emptyMap(),
+    onBoss: ((Int) -> Unit)? = null,
+    badges: Int = 0,
+    stormBest: Int = 0,
+    onDuel: (() -> Unit)? = null,
+    onStorm: (() -> Unit)? = null,
+    onBadges: (() -> Unit)? = null,
     banner: (@Composable () -> Unit)? = null,
 ) {
     Box(Modifier.fillMaxSize()) {
@@ -72,7 +79,14 @@ fun HomeScreen(
                 Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
             }
             daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
-            chapters.forEachIndexed { i, c -> de.kurvenflug.app.ui.flight.ChapterCard(c, i, levelStars, onLevel) }
+            if (onDuel != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                ModeTile("⚔️", "Duell", "zu zweit", Q.Cyan, Modifier.weight(1f), onDuel)
+                ModeTile("☄️", "Sturm", if (stormBest > 0) "Rekord $stormBest" else "endlos", Q.Orange, Modifier.weight(1f)) { onStorm?.invoke() }
+                ModeTile("🏅", "Abzeichen", "$badges/${de.kurvenflug.core.model.Badges.all.size}", Q.Yellow, Modifier.weight(1f)) { onBadges?.invoke() }
+            }
+            chapters.forEachIndexed { i, c ->
+                de.kurvenflug.app.ui.flight.ChapterCard(c, i, levelStars, onLevel, bossStars[c.number] ?: 0, onBoss?.let { b -> { b(c.number) } })
+            }
             // Hangar: Sonden-Farbe
             Text("Hangar – deine Sonde", style = MaterialTheme.typography.titleMedium, color = Q.Text)
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -131,5 +145,21 @@ private fun DailyCard(l: de.kurvenflug.core.model.Level, stars: Int, done: Int, 
             if (done > 0) Text("Schon $done Missionen geschafft", style = MaterialTheme.typography.labelSmall, color = Q.Violet)
         }
         Text(if (stars > 0) "★".repeat(stars) + "☆".repeat(3 - stars) else "Los ›", color = if (stars > 0) Q.Yellow else Q.Violet, fontWeight = FontWeight.Black)
+    }
+}
+
+@Composable
+private fun ModeTile(emoji: String, title: String, sub: String, color: Color, modifier: Modifier, onClick: () -> Unit) {
+    val interaction = remember { MutableInteractionSource() }
+    val sfx = LocalSfx.current
+    Column(
+        modifier.pressBounce(interaction).clip(RoundedCornerShape(18.dp)).background(color.copy(alpha = 0.14f))
+            .border(1.5.dp, color.copy(alpha = 0.6f), RoundedCornerShape(18.dp))
+            .clickable(interaction, null) { sfx?.play(Sound.TAP); onClick() }.padding(vertical = 12.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Text(emoji, fontSize = 28.sp)
+        Text(title, fontWeight = FontWeight.Bold, color = Q.Text)
+        Text(sub, style = MaterialTheme.typography.labelSmall, color = Q.Muted)
     }
 }

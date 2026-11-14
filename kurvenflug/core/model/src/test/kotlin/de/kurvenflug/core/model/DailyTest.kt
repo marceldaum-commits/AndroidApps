@@ -14,8 +14,7 @@ class DailyTest {
             assertTrue("Tag $d nicht lösbar", Flight.fly(l, l.solution).success)
             assertFalse("Tag $d mit Startwerten gelöst", Flight.fly(l, l.start).success)
             l.params.forEach { p -> assertEquals("Tag $d/${p.key}", l.solution.getValue(p.key), p.snap(l.solution.getValue(p.key)), 1e-9) }
-            if (l.task.isEmpty() || l.kind == Kind.LINE && l.title != "Tagesmission") fallbacks++
-            if (Levels.all.any { it.targets == l.targets && it.kind == l.kind }) fallbacks++
+            if (l.title == Gen.FALLBACK) fallbacks++
         }
         assertEquals("Notfall-Level benutzt", 0, fallbacks)
     }

@@ -4,30 +4,59 @@ import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.random.Random
 
-/**
- * Tagesmission: jeden Tag ein neues Level, für alle gleich (Startwert = Tag).
- * Erst wird eine Lösung auf dem Regler-Raster gewürfelt, dann die Stationen *auf* diese Bahn gelegt –
- * so ist jede Mission garantiert lösbar. Danach wird geprüft, dass die Startwerte nicht schon treffen.
- */
+/** Tagesmission: jeden Tag ein neues Level, für alle gleich (Startwert = Tag). */
 object Daily {
     const val PREFIX = "daily-"
+    private val rotation = listOf(Kind.LINE, Kind.PARABOLA, Kind.EXP, Kind.THROW)
 
     fun id(day: Long) = "$PREFIX$day"
     fun isDaily(id: String) = id.startsWith(PREFIX)
 
-    fun forDay(day: Long): Level {
-        val r = Random(day * 7919 + 17)
-        repeat(200) {
-            val l = when (Math.floorMod(day, 4L).toInt()) {
-                0 -> line(day, r)
-                1 -> parabola(day, r)
-                2 -> exp(day, r)
-                else -> throwLevel(day, r)
-            }
-            if (l != null && valid(l)) return l
+    fun forDay(day: Long): Level =
+        Gen.level(rotation[Math.floorMod(day, 4L).toInt()], day * 7919 + 17, 1).let { it.copy(id = id(day), title = if (it.title == Gen.FALLBACK) it.title else "Tagesmission") }
+}
+
+/**
+ * Level-Generator für Tagesmission, Duell, Asteroidensturm und Boss-Kämpfe.
+ * Erst wird eine Lösung auf dem Regler-Raster gewürfelt, dann die Stationen *auf* diese Bahn gelegt –
+ * so ist jedes Level garantiert lösbar. Danach wird geprüft, dass die Startwerte nicht schon treffen.
+ */
+object Gen {
+    /** Bahnarten, die der Generator kann (Schleuder braucht Handarbeit). */
+    const val FALLBACK = "Ersatz-Mission"
+    val kinds = listOf(Kind.POINT, Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.THROW, Kind.RENDEZVOUS)
+
+    /** @param difficulty 0 = leicht, 1 = normal (ein, zwei Asteroiden), 2 = schwer (mehr Asteroiden, krumme Zahlen) */
+    fun level(kind: Kind, seed: Long, difficulty: Int = 1, id: String = "gen-$seed"): Level {
+        val r = Random(seed)
+        val day = seed
+        repeat(300) {
+            val l = when (kind) {
+                Kind.POINT -> point(day, r, difficulty)
+                Kind.LINE -> line(day, r)
+                Kind.PARABOLA -> parabola(day, r)
+                Kind.SINE -> sine(day, r)
+                Kind.EXP -> exp(day, r)
+                Kind.THROW -> throwLevel(day, r)
+                Kind.RENDEZVOUS -> rendezvous(day, r, difficulty)
+                else -> null
+            }?.let { harder(it, r, difficulty) }
+            if (l != null && valid(l)) return l.copy(id = id)
         }
-        // Notfall (sollte nie passieren – im Test für 3 Jahre geprüft)
-        return Levels.byId("2-6")!!.copy(id = id(day), chapter = 0, number = 0, title = "Tagesmission")
+        // Notfall (sollte nie passieren – im Test geprüft)
+        return Levels.byId("2-6")!!.copy(id = id, chapter = 0, number = 0, title = FALLBACK)
+    }
+
+    /** Zufällige Bahnart + Level – für Duell und Asteroidensturm. */
+    fun any(seed: Long, difficulty: Int = 1, id: String = "gen-$seed"): Level =
+        level(kinds[Math.floorMod(seed, kinds.size.toLong()).toInt()], seed, difficulty, id)
+
+    /** Schwer: zusätzliche Asteroiden nahe (aber nicht auf) der Lösungsbahn. */
+    private fun harder(l: Level, r: Random, difficulty: Int): Level {
+        if (difficulty < 2 || l.kind == Kind.POINT || l.kind == Kind.RENDEZVOUS) return l
+        val path = Flight.path(l, l.solution)
+        val extra = rocks(r, path, l.targets + l.asteroids, 2, gap = 0.35)
+        return l.copy(asteroids = l.asteroids + extra)
     }
 
     private fun valid(l: Level): Boolean {
@@ -40,18 +69,18 @@ object Daily {
         return min + nextInt(n + 1) * step
     }
 
-    private fun mk(day: Long, kind: Kind, task: String, targets: List<Body>, params: List<Param>, sol: Map<String, Double>,
+    private fun mk(@Suppress("UNUSED_PARAMETER") day: Long, kind: Kind, task: String, targets: List<Body>, params: List<Param>, sol: Map<String, Double>,
                    fixed: Map<String, Double> = emptyMap(), cells: List<Body> = emptyList(), rocks: List<Body> = emptyList(),
                    planet: Planet = Planet.EARTH, tip: String) =
-        Level(id(day), 0, 0, "Tagesmission", kind, task, targets, params, sol, fixed, rocks, cells, planet = planet, tip = tip)
+        Level("gen", 0, 0, "Mission", kind, task, targets, params, sol, fixed, rocks, cells, planet = planet, tip = tip)
 
     /** Asteroiden, die nicht auf der Lösungsbahn liegen. */
-    private fun rocks(r: Random, path: List<Vec>, avoid: List<Body>, n: Int): List<Body> {
+    private fun rocks(r: Random, path: List<Vec>, avoid: List<Body>, n: Int, gap: Double = 1.0): List<Body> {
         val out = ArrayList<Body>()
         var tries = 0
         while (out.size < n && tries++ < 200) {
             val b = Body(r.pick(-8.0, 8.0, 1.0), r.pick(-8.0, 8.0, 1.0), 0.9)
-            val clear = path.all { hypot(it.x - b.x, it.y - b.y) > b.r + 1.0 } &&
+            val clear = path.all { hypot(it.x - b.x, it.y - b.y) > b.r + gap } &&
                 avoid.all { hypot(it.x - b.x, it.y - b.y) > 2.5 } && out.all { hypot(it.x - b.x, it.y - b.y) > 3 }
             if (clear) out += b
         }
@@ -112,5 +141,47 @@ object Daily {
         val t = listOf(Body(land.x, l.launch.y, 0.8))
         l = l.copy(targets = t, task = "${planet.emoji} ${planet.label}: Ziel ${num(dist, 1)} m entfernt. Winkel und Tempo – du entscheidest!")
         return l
+    }
+
+    private fun point(day: Long, r: Random, difficulty: Int): Level? {
+        val x = r.pick(-8.0, 8.0, 1.0); val y = r.pick(-8.0, 8.0, 1.0)
+        if (x == 0.0 || y == 0.0) return null
+        val px = Param("x", "x", -9.0, 9.0, 1.0, 0.0); val py = Param("y", "y", -9.0, 9.0, 1.0, 0.0)
+        // Ab „normal“: getarnt, nur ein Rechen-Funkspruch verrät die Koordinaten
+        val hidden = difficulty >= 1
+        val task = if (!hidden) "Flieg zur Station bei (${num(x)} | ${num(y)})." else {
+            val k = r.nextInt(2, 5)
+            val a = r.nextInt(1, 9)
+            "Getarnt! Funkspruch: x = ${num(x * k)} : $k,  y = ${num(y - a)} + $a"
+        }
+        return mk(day, Kind.POINT, task, listOf(Body(x, y, 0.7)), listOf(px, py), mapOf("x" to x, "y" to y),
+            tip = "Erst x (rechts/links), dann y (oben/unten). Minus heißt links bzw. unten.").copy(hidden = hidden)
+    }
+
+    private fun sine(day: Long, r: Random): Level? {
+        val a = listOf(-3.0, -2.0, 2.0, 3.0, 4.0)[r.nextInt(5)]
+        val b = listOf(0.5, 1.0, 2.0)[r.nextInt(3)]
+        val d = r.pick(-3.0, 3.0, 1.0)
+        val params = listOf(Param("a", "a", -5.0, 5.0, 0.5, 1.0), Param("b", "b", 0.25, 3.0, 0.25, 1.0), Param("d", "d", -8.0, 8.0, 1.0, 0.0))
+        var l = mk(day, Kind.SINE, "", emptyList(), params, mapOf("a" to a, "b" to b, "d" to d),
+            tip = "Bei x = 0 ist sin = 0 – dort liest du d ab. Der erste Berg liegt bei x = π/2 : b.")
+        val peak = Math.PI / 2 / b
+        val t = pointsOn(l, listOf(0.0, peak))
+        l = l.copy(targets = t, task = "Durch (0 | ${num(d)}) und den ersten Wellen-${if (a > 0) "berg" else "tal"} bei x ≈ ${num(peak)} (y = ${num(a + d)}).")
+        return l.copy(asteroids = rocks(r, Flight.path(l, l.solution), t, 2))
+    }
+
+    private fun rendezvous(day: Long, r: Random, difficulty: Int): Level? {
+        val step = if (difficulty >= 2) 0.5 else 1.0
+        val x = r.pick(-6.0, 6.0, step); val y = r.pick(-6.0, 6.0, step)
+        val m1 = r.pick(-3.0, 3.0, 0.5); val m2 = r.pick(-3.0, 3.0, 0.5)
+        if (m1 == m2 || (x == 0.0 && y == 0.0)) return null
+        val b1 = y - m1 * x; val b2 = y - m2 * x
+        if (b1 != Math.round(b1 * 2) / 2.0 || b2 != Math.round(b2 * 2) / 2.0 || kotlin.math.abs(b1) > 9 || kotlin.math.abs(b2) > 9) return null
+        val params = listOf(Param("x", "x", -9.0, 9.0, 0.5, 0.0), Param("y", "y", -9.0, 9.0, 0.5, 0.0))
+        fun lin(m: Double, b: Double) = "y = ${when (m) { 1.0 -> ""; -1.0 -> "−"; else -> num(m) }}x ${if (b < 0) "−" else "+"} ${num(kotlin.math.abs(b))}"
+        return mk(day, Kind.RENDEZVOUS, "A: ${lin(m1, b1)} und B: ${lin(m2, b2)}. Wo treffen sie sich?",
+            listOf(Body(x, y, 0.35)), params, mapOf("x" to x, "y" to y), fixed = mapOf("m1" to m1, "b1" to b1, "m2" to m2, "b2" to b2),
+            tip = "Beide Gleichungen gleichsetzen, nach x auflösen, dann y ausrechnen.").copy(hidden = true)
     }
 }

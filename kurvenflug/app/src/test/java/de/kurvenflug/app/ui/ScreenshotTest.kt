@@ -48,7 +48,8 @@ class ScreenshotTest {
 
     @Test fun home() = shot("01_start") {
         HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {},
-            daily = de.kurvenflug.core.model.Daily.forDay(20_500), dailiesDone = 4)
+            daily = de.kurvenflug.core.model.Daily.forDay(20_500), dailiesDone = 4,
+            bossStars = mapOf(1 to 2), onBoss = {}, badges = 3, stormBest = 7, onDuel = {}, onStorm = {}, onBadges = {})
     }
 
     @Test fun intro() = shot("03_volt_erklaert", prepare = { it.onNodeWithText("Weiter ›").performClick() }) {
@@ -95,5 +96,29 @@ class ScreenshotTest {
             LevelScreen(l, de.kurvenflug.core.model.Chapter(0, "Tagesmission", "Jeden Tag neu", "🛰️", emptyList(), listOf(l)),
                 Q.Pink, false, {}, { _, _, _ -> }, null, {})
         }
+    }
+
+    @Test fun rendezvous() = level("7-4", name = "17_rendezvous", values = mapOf("x" to 1.5, "y" to 5.5), settle = 1000,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun rendezvousMiss() = level("7-2", name = "18_rendezvous_daneben", values = mapOf("x" to 2.0, "y" to 1.0), settle = 3500,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun bossIntro() = shot("19_boss") {
+        de.kurvenflug.app.ui.modes.BossScreen(de.kurvenflug.core.model.Bosses.forChapter(3)!!, Q.Cyan, { _, _ -> }, {})
+    }
+
+    @Test fun storm() = shot("20_asteroidensturm", prepare = { it.onNodeWithText("Los! 🚀").performClick() }) {
+        de.kurvenflug.app.ui.modes.StormScreen(12, Q.Cyan, { false }, {}, seed = 5)
+    }
+
+    @Test fun duelMenu() = shot("21_duell") { de.kurvenflug.app.ui.modes.DuelScreen(Q.Cyan, null, {}, {}) }
+
+    @Test fun duelHandover() = shot("22_duell_zu_zweit", prepare = { it.onNodeWithText("Zu zweit an diesem Handy").performClick() }) {
+        de.kurvenflug.app.ui.modes.DuelScreen(Q.Cyan, null, {}, {})
+    }
+
+    @Test fun badges() = shot("23_abzeichen") {
+        de.kurvenflug.app.ui.modes.BadgesScreen(de.kurvenflug.core.model.Stats(stars = 40, perfect = 12, chaptersDone = 2, cells = 30, stormBest = 11, duelsPlayed = 2), {})
     }
 }
