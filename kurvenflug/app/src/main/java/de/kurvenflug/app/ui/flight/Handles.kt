@@ -59,6 +59,39 @@ fun handlesFor(level: Level, values: Map<String, Double>): List<Handle> {
         }
         Kind.POINT, Kind.RENDEZVOUS ->
             out += Handle(Vec(v.getValue("x"), v.getValue("y")), Q.Yellow) { p -> snap("x", p.x) + snap("y", p.y) }
+        Kind.PROP, Kind.ANTI -> {
+            val x0 = 4.0
+            if (has("k")) out += Handle(Vec(x0, if (level.kind == Kind.PROP) v.getValue("k") * x0 else v.getValue("k") / x0), Q.Cyan) { p ->
+                snap("k", if (level.kind == Kind.PROP) p.y / x0 else p.y * x0)
+            }
+        }
+        Kind.LOG -> {
+            val b = v.getValue("b"); val d = v.getValue("d")
+            if (has("d")) out += Handle(Vec(1.0, d), Q.Pink) { p -> snap("d", p.y) }
+            if (has("b")) out += Handle(Vec(8.0, kotlin.math.ln(8.0) / kotlin.math.ln(b) + d), Q.Cyan) { p ->
+                val e = p.y - d
+                if (kotlin.math.abs(e) > 0.2) snap("b", Math.pow(8.0, 1 / e)) else emptyMap()
+            }
+        }
+        Kind.MOTION -> {
+            val vv = v.getValue("v"); val s0 = v.getValue("s0")
+            if (has("s0")) out += Handle(Vec(0.0, s0), Q.Pink) { p -> snap("s0", p.y) }
+            if (has("v")) out += Handle(Vec(4.0, 4 * vv + s0), Q.Cyan) { p -> snap("v", (p.y - s0) / 4) }
+        }
+        Kind.RADIUS -> {
+            val r = v.getValue("r")
+            out += Handle(Vec(level.launch.x + r, level.launch.y), Q.Cyan) { p -> snap("r", hypot(p.x - level.launch.x, p.y - level.launch.y)) }
+        }
+        Kind.LASER -> {
+            val ang = Math.toRadians(v.getValue("angle"))
+            out += Handle(Vec(level.launch.x + cos(ang) * 3, level.launch.y + sin(ang) * 3), Q.Yellow) { p ->
+                snap("angle", Math.toDegrees(atan2(p.y - level.launch.y, p.x - level.launch.x)))
+            }
+        }
+        Kind.RAMP -> {
+            val y = level.ground + v.getValue("h")
+            out += Handle(Vec(-8.0, y), Q.Yellow) { p -> snap("h", p.y - level.ground) }
+        }
     }
     return out
 }

@@ -14,6 +14,8 @@ object Templates {
     fun label(k: Kind) = when (k) {
         Kind.POINT -> "📍 Koordinaten"; Kind.LINE -> "📈 Gerade"; Kind.PARABOLA -> "🌙 Parabel"; Kind.SINE -> "🌊 Sinus"
         Kind.EXP -> "🦠 Exponentiell"; Kind.THROW -> "🎯 Wurf"; Kind.ORBIT -> "🪐 Schleuder"; Kind.RENDEZVOUS -> "🤝 Rendezvous"
+        Kind.PROP -> "⚖️ Proportional"; Kind.ANTI -> "⚖️ Antiproportional"; Kind.LOG -> "🔢 Logarithmus"; Kind.RADIUS -> "📡 Pythagoras"
+        Kind.LASER -> "🔦 Laser"; Kind.RAMP -> "🎢 Rampe"; Kind.MOTION -> "⏱️ Weg & Zeit"
     }
 
     fun params(k: Kind): List<Param> = when (k) {
@@ -25,6 +27,12 @@ object Templates {
         Kind.THROW -> listOf(Param("angle", "Winkel", 5.0, 85.0, 1.0, 45.0, "°"), Param("v", "Tempo", 1.0, 20.0, 0.5, 8.0, "m/s"))
         Kind.ORBIT -> listOf(Param("angle", "Winkel", -80.0, 80.0, 1.0, 0.0, "°"), Param("v", "Tempo", 1.0, 10.0, 0.5, 4.0))
         Kind.RENDEZVOUS -> listOf(Param("x", "x", -9.0, 9.0, 0.5, 0.0), Param("y", "y", -9.0, 9.0, 0.5, 0.0))
+        Kind.PROP, Kind.ANTI -> listOf(Param("k", "k", -20.0, 20.0, 0.25, 1.0))
+        Kind.LOG -> listOf(Param("b", "b", 0.5, 10.0, 0.5, 10.0), Param("d", "d", -8.0, 8.0, 1.0, 0.0))
+        Kind.RADIUS -> listOf(Param("r", "Radius r", 0.5, 15.0, 0.1, 1.0))
+        Kind.LASER -> listOf(Param("angle", "Winkel", -89.0, 89.0, 1.0, 0.0, "°"))
+        Kind.RAMP -> listOf(Param("h", "Höhe h", 0.5, 17.5, 0.5, 5.0, " m"))
+        Kind.MOTION -> listOf(Param("v", "v", -3.0, 3.0, 0.25, 1.0, " m/s"), Param("s0", "s₀", -9.0, 9.0, 1.0, 0.0, " m"))
     }
 
     fun fixed(k: Kind): Map<String, Double> = if (k == Kind.EXP) mapOf("d" to 0.0) else emptyMap()
@@ -40,6 +48,13 @@ object Templates {
         Kind.THROW -> "Wurfweite auf ebenem Boden: w = v² · sin(2α) : g."
         Kind.ORBIT -> "Planeten ziehen dich an – nah vorbei biegt stark."
         Kind.RENDEZVOUS -> "Beide Gleichungen gleichsetzen."
+        Kind.PROP -> "Proportional: y : x ist immer gleich k."
+        Kind.ANTI -> "Antiproportional: x · y ist immer gleich k."
+        Kind.LOG -> "log_b(x) fragt: b hoch wie viel ergibt x?"
+        Kind.RADIUS -> "Abstand² = Δx² + Δy²."
+        Kind.LASER -> "Einfallswinkel = Ausfallswinkel."
+        Kind.RAMP -> "m·g·h = ½·m·v²."
+        Kind.MOTION -> "s = v · t + s₀."
     }
 }
 

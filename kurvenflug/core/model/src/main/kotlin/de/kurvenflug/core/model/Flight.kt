@@ -26,11 +26,20 @@ data class Body(val x: Double, val y: Double, val r: Double) {
  * - [EXP]: Wachstum und Zerfall y = a·bˣ + d (Kl. 10)
  * - [ORBIT]: Schwerkraft-Schleuder – Planeten ziehen die Sonde an, Kraft ~ M / r² (Physik Kl. 10)
  * - [RENDEZVOUS]: zwei Sonden auf zwei Geraden – Treffpunkt = Lösung des Gleichungssystems (Kl. 8)
+ * - [PROP] / [ANTI]: proportionale y = k·x und antiproportionale Zuordnung y = k : x (Kl. 6/7)
+ * - [LOG]: Logarithmus y = log_b(x) + d (Kl. 10)
+ * - [RADIUS]: Funkwelle mit Radius r – Abstand per Pythagoras (Kl. 8/9)
+ * - [LASER]: Laserstrahl über Spiegel – Einfallswinkel = Ausfallswinkel (Physik Kl. 7)
+ * - [RAMP]: Kugel rollt von Höhe h die Rampe hinab – Energieerhaltung (Physik Kl. 8/9)
+ * - [MOTION]: gleichförmige Bewegung im s-t-Diagramm s = v·t + s₀ (Physik Kl. 7)
  */
-enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS }
+enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS, PROP, ANTI, LOG, RADIUS, LASER, RAMP, MOTION }
 
 /** Hat diese Spielart eine Funktionsgleichung y = f(x)? */
-val Kind.isFunction get() = this == Kind.LINE || this == Kind.PARABOLA || this == Kind.SINE || this == Kind.EXP
+val Kind.isFunction get() = this in setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION)
+
+/** Funktionen, die erst rechts von x = 0 definiert/sinnvoll sind (Zeit, Logarithmus, k : x). */
+val Kind.startsAtZero get() = this == Kind.ANTI || this == Kind.LOG || this == Kind.MOTION
 
 /** Einstellbarer Wert in der Formel. */
 data class Param(
@@ -80,6 +89,10 @@ object Flight {
             Kind.PARABOLA -> p.getValue("a") * (x - p.getValue("d")).let { it * it } + p.getValue("e")
             Kind.SINE -> p.getValue("a") * sin(p.getValue("b") * x) + p.getValue("d")
             Kind.EXP -> p.getValue("a") * Math.pow(p.getValue("b"), x) + p.getValue("d")
+            Kind.PROP -> p.getValue("k") * x
+            Kind.ANTI -> if (x == 0.0) Double.POSITIVE_INFINITY else p.getValue("k") / x
+            Kind.LOG -> if (x <= 0) Double.NEGATIVE_INFINITY else kotlin.math.ln(x) / kotlin.math.ln(p.getValue("b")) + p.getValue("d")
+            Kind.MOTION -> p.getValue("v") * x + p.getValue("s0")
             else -> error("keine Funktion")
         }
     }
@@ -93,10 +106,10 @@ object Flight {
                 val x = v.getValue("x"); val y = v.getValue("y")
                 line(Vec(0.0, 0.0), Vec(x, 0.0)) + line(Vec(x, 0.0), Vec(x, y)).drop(1)
             }
-            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP -> {
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION -> {
                 // Sichtbarer Teil des Graphen von links nach rechts – die Sonde „springt“ am Rand ins Bild
                 val out = ArrayList<Vec>()
-                var x = -R
+                var x = if (level.kind.startsAtZero) STEP else -R
                 while (x <= R + 1e-9) {
                     val y = f(level, values, x)
                     if (abs(y) <= R) out += Vec(x, y) else if (out.isNotEmpty()) break
@@ -121,7 +134,93 @@ object Flight {
             }
             Kind.ORBIT -> orbit(level, v)
             Kind.RENDEZVOUS -> lineTo(v.getValue("m1"), v.getValue("b1"), -R, v.getValue("x"))
+            Kind.RADIUS -> {
+                // Funkwelle: Kreis um den Sender, gegen den Uhrzeigersinn abgefahren
+                val r = v.getValue("r"); val c = level.launch
+                val n = max(60, (2 * Math.PI * r / STEP).toInt())
+                (0..n).map { i -> val a = 2 * Math.PI * i / n; Vec(c.x + r * cos(a), c.y + r * sin(a)) }
+            }
+            Kind.LASER -> laser(level, v.getValue("angle"))
+            Kind.RAMP -> ramp(level, v.getValue("h"))
         }
+    }
+
+    /** Laserstrahl: geradeaus, an Spiegeln reflektiert (Einfallswinkel = Ausfallswinkel), höchstens 8-mal. */
+    private fun laser(level: Level, angleDeg: Double): List<Vec> {
+        var px = level.launch.x; var py = level.launch.y
+        val a = Math.toRadians(angleDeg)
+        var dx = cos(a); var dy = sin(a)
+        val out = arrayListOf(Vec(px, py))
+        var last = -1
+        repeat(9) {
+            // nächster Spiegel auf dem Strahl
+            var best = Double.MAX_VALUE; var hit = -1
+            level.mirrors.forEachIndexed { i, m ->
+                if (i == last) return@forEachIndexed
+                val ex = m[2] - m[0]; val ey = m[3] - m[1]
+                val den = dx * ey - dy * ex
+                if (abs(den) < 1e-12) return@forEachIndexed
+                val t = ((m[0] - px) * ey - (m[1] - py) * ex) / den
+                val u = ((m[0] - px) * dy - (m[1] - py) * dx) / den
+                if (t > 1e-9 && u in 0.0..1.0 && t < best) { best = t; hit = i }
+            }
+            // Rand des Bildes
+            val edge = listOf(if (dx > 0) (R + 0.5 - px) / dx else if (dx < 0) (-R - 0.5 - px) / dx else Double.MAX_VALUE,
+                if (dy > 0) (R + 0.5 - py) / dy else if (dy < 0) (-R - 0.5 - py) / dy else Double.MAX_VALUE).min()
+            val t = min(best, edge)
+            val n = max(1, (t / STEP).toInt())
+            for (i in 1..n) out += Vec(px + dx * t * i / n, py + dy * t * i / n)
+            px += dx * t; py += dy * t
+            if (hit < 0 || best > edge) return out
+            // Spiegeln an der Normalen
+            val m = level.mirrors[hit]
+            val ex = m[2] - m[0]; val ey = m[3] - m[1]; val len = hypot(ex, ey)
+            val nx = -ey / len; val ny = ex / len
+            val d = dx * nx + dy * ny
+            dx -= 2 * d * nx; dy -= 2 * d * ny
+            last = hit
+        }
+        return out
+    }
+
+    /**
+     * Rampe: Kugel startet in Höhe h (Meter über dem Boden), rollt reibungsfrei bis zur Kante in Höhe h0
+     * und fliegt waagerecht ab mit v = √(2·g·(h − h0)) – Lageenergie wird Bewegungsenergie.
+     */
+    private fun ramp(level: Level, h: Double): List<Vec> {
+        val v = level.values(emptyMap())
+        val h0 = v.getValue("h0"); val g = level.planet.g
+        val groundY = level.ground
+        val edge = Vec(RAMP_EDGE_X, groundY + h0)
+        val top = groundY + RAMP_TOP
+        // Rampenform: y = Kante + (Spitze − Kante)·(1 − s)², waagerecht an der Kante
+        val y0 = groundY + h
+        if (h <= h0) return listOf(rampPoint(level, 1 - kotlin.math.sqrt(((y0 - edge.y) / (top - edge.y)).coerceIn(0.0, 1.0))))
+        val s0 = 1 - kotlin.math.sqrt(((y0 - edge.y) / (top - edge.y)).coerceIn(0.0, 1.0))
+        val out = ArrayList<Vec>()
+        val n = 120
+        for (i in 0..n) out += rampPoint(level, s0 + (1 - s0) * i / n)
+        val speed = kotlin.math.sqrt(2 * g * (h - h0))
+        val dt = STEP / max(0.5, speed)
+        var t = dt
+        while (t < 30) {
+            val p = Vec(edge.x + speed * t, edge.y - 0.5 * g * t * t)
+            out += p
+            if (p.y < groundY || p.x > R + 0.5) break
+            t += dt
+        }
+        return out
+    }
+
+    const val RAMP_EDGE_X = -4.0
+    const val RAMP_START_X = -9.5
+    /** Höhe der Rampenspitze über dem Boden (m) */
+    const val RAMP_TOP = 18.0
+
+    fun rampPoint(level: Level, s: Double): Vec {
+        val h0 = level.values(emptyMap()).getValue("h0")
+        val edgeY = level.ground + h0; val top = level.ground + RAMP_TOP
+        return Vec(RAMP_START_X + (RAMP_EDGE_X - RAMP_START_X) * s, edgeY + (top - edgeY) * (1 - s) * (1 - s))
     }
 
     /** Rendezvous: Bahn der zweiten Sonde – kommt von rechts. */
@@ -197,7 +296,7 @@ object Flight {
             if (level.kind != Kind.POINT) level.targets.forEachIndexed { i, t -> if (t.contains(p)) hits += i }
             level.cells.forEachIndexed { i, c -> if (c.contains(p, 0.15)) cells += i }
             // Alle Stationen erreicht → andocken, nicht weiterfliegen
-            if (level.kind != Kind.POINT && hits.size == level.targets.size) break
+            if (level.kind != Kind.POINT && level.kind != Kind.RADIUS && hits.size == level.targets.size) break
         }
         // Koordinaten: zählt nur, wo die Sonde ankommt
         if (level.kind == Kind.POINT && crash == null) full.lastOrNull()?.let { end ->

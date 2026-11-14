@@ -3,6 +3,17 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.5.0 – Sechs neue Kapitel, Lexikon & Werkstatt
+- **⚖️ Zuordnungen (Kl. 6–7)**: proportional y = k · x (auch Prozent) und antiproportional y = k : x – die Hyperbel.
+- **⏱️ Weg & Zeit (Physik Kl. 7)**: gleichförmige Bewegung im s-t-Diagramm, s = v · t + s₀.
+- **🔦 Laser-Optik (Physik Kl. 7)**: Strahl über Spiegel lenken – Einfallswinkel = Ausfallswinkel. Periskop, Zickzack, Kehrtwende.
+- **📡 Pythagoras (Kl. 8–9)**: Funkwelle mit genau dem richtigen Radius – zu groß, und ein Störsender funkt dazwischen.
+- **🎢 Energie (Physik Kl. 8–9)**: Kugel von der Rampe – Lageenergie wird Bewegungsenergie. Überraschung auf dem Mond!
+- **🔢 Logarithmus (Kl. 10)**: y = log_b(x) + d, auch mit fallender Kurve.
+- **🪐 Planeten-Lexikon**: 14 Himmelskörper mit echten Fakten – mit Sternen freischalten.
+- **🎨 Werkstatt**: Sonden-Formen (Rakete, UFO, Komet), Spuren (Funken, Regenbogen, Doppel) und Hüte für Volt – mit Energiezellen freischalten.
+- Kapitel sind jetzt nach Klassenstufe sortiert. Insgesamt 75 Level in 13 Kapiteln.
+
 ## 0.4.0 – Baukasten, Klassen-Challenge, Kurve ziehen & Formel-Detektiv
 - **🛠️ Baukasten**: Eigene Level bauen – Stationen, Asteroiden, Energiezellen und Planeten aufs Feld tippen, Lösung einstellen,
   als Code an Freunde schicken. Geteilt wird nur, was fair und lösbar ist.

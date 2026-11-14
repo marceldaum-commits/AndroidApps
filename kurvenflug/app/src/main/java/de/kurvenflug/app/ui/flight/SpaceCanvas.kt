@@ -48,10 +48,14 @@ data class SpaceView(
     val handles: List<Triple<Vec, Color, Boolean>> = emptyList(),
 )
 
+/** Aussehen aus der Werkstatt (Form der Sonde, Spur, Volts Hut) – gilt für alle Spielfelder. */
+val LocalLook = androidx.compose.runtime.staticCompositionLocalOf { Triple(0, 0, 0) }
+
 /** Zeichnet das All: Raster, Achsen, Stationen, Asteroiden, Energiezellen, Bahnen und die Sonde. */
 @Composable
 fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
     val tm = rememberTextMeasurer()
+    val (shape, trailStyle, _) = LocalLook.current
     Canvas(modifier) {
         val l = v.level
         fun px(p: Vec) = Offset(((p.x + Flight.R) / (2 * Flight.R) * size.width).toFloat(), ((Flight.R - p.y) / (2 * Flight.R) * size.height).toFloat())
@@ -60,9 +64,24 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
         when (l.kind) {
             Kind.THROW -> drawThrowScene(l, ::px, unit, tm)
             Kind.ORBIT -> drawOrbitScene(l, ::px, unit, v.time)
+            Kind.RAMP -> drawRampScene(l, ::px, unit, tm)
+            Kind.LASER -> {
+                drawOrbitScene(l, ::px, unit, v.time)
+                l.mirrors.forEach { m ->
+                    drawLine(Color(0xFFB0BEC5), px(Vec(m[0], m[1])), px(Vec(m[2], m[3])), unit * 0.28f, cap = StrokeCap.Round)
+                    drawLine(Color.White, px(Vec(m[0], m[1])), px(Vec(m[2], m[3])), unit * 0.08f, cap = StrokeCap.Round)
+                }
+            }
             else -> {
-                drawGrid(::px, unit, tm)
+                drawGrid(::px, unit, tm, if (l.kind == Kind.MOTION) "t" to "s" else "x" to "y")
                 if (l.kind == Kind.SINE) drawPiMarks(::px, unit, tm)
+                if (l.kind == Kind.RADIUS) {
+                    // Sender mit Antenne
+                    val c = px(l.launch)
+                    drawCircle(Q.Cyan.copy(alpha = 0.25f), unit * (0.9f + 0.2f * sin(v.time * 4)), c)
+                    drawCircle(Q.Cyan, unit * 0.4f, c)
+                    drawLine(Q.Cyan, c, c + Offset(0f, -unit * 1f), unit * 0.1f)
+                }
             }
         }
 
@@ -106,15 +125,15 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             drawLine(v.probeColor, o - Offset(0f, unit * 0.7f), o + Offset(0f, unit * 0.7f), unit * 0.06f)
         }
         // Flug
-        if (v.trail.size > 1) {
-            drawPathLine(v.trail, ::px, v.probeColor.copy(alpha = 0.35f), unit * 0.35f, dashed = false)
-            drawPathLine(v.trail, ::px, v.probeColor, unit * 0.12f, dashed = false)
-        }
+        if (v.trail.size > 1) drawTrail(v.trail, ::px, v.probeColor, unit, trailStyle, v.time)
         v.probe?.let { p ->
             val prev = v.trail.getOrNull(v.trail.size - 6) ?: v.trail.firstOrNull() ?: p
             val ang = atan2(-(p.y - prev.y), p.x - prev.x).toFloat()
-            drawProbe(px(p), unit, Math.toDegrees(ang.toDouble()).toFloat(), v.probeColor, v.time)
+            if (l.kind == Kind.RAMP) drawBall(px(p), unit)
+            else drawProbe(px(p), unit, Math.toDegrees(ang.toDouble()).toFloat(), v.probeColor, v.time, shape)
         }
+        // Rampe: Kugel am Start zeigen, solange nicht geflogen wird
+        if (l.kind == Kind.RAMP && v.probe == null && v.preview.isNotEmpty()) drawBall(px(v.preview.first()), unit)
         v.handles.forEach { (p, c, active) ->
             val o = px(p)
             val pulse = 1f + 0.12f * sin(v.time * 5f)
@@ -135,7 +154,7 @@ private fun DrawScope.label(tm: TextMeasurer, text: String, at: Offset, color: C
     drawText(r, topLeft = Offset(at.x - r.size.width / 2f, at.y - r.size.height / 2f))
 }
 
-private fun DrawScope.drawGrid(px: (Vec) -> Offset, unit: Float, tm: TextMeasurer) {
+private fun DrawScope.drawGrid(px: (Vec) -> Offset, unit: Float, tm: TextMeasurer, axes: Pair<String, String> = "x" to "y") {
     val r = Flight.R.toInt()
     for (i in -r..r) {
         val major = i % 5 == 0
@@ -149,8 +168,8 @@ private fun DrawScope.drawGrid(px: (Vec) -> Offset, unit: Float, tm: TextMeasure
         label(tm, i.toString().replace("-", "−"), px(Vec(i.toDouble(), 0.0)) + Offset(0f, unit * 0.55f))
         label(tm, i.toString().replace("-", "−"), px(Vec(0.0, i.toDouble())) + Offset(-unit * 0.6f, 0f))
     }
-    label(tm, "x", px(Vec(9.6, 0.0)) + Offset(0f, -unit * 0.5f), Q.Cyan, 12)
-    label(tm, "y", px(Vec(0.0, 9.6)) + Offset(unit * 0.5f, 0f), Q.Cyan, 12)
+    label(tm, axes.first, px(Vec(9.6, 0.0)) + Offset(0f, -unit * 0.5f), Q.Cyan, 12)
+    label(tm, axes.second, px(Vec(0.0, 9.6)) + Offset(unit * 0.5f, 0f), Q.Cyan, 12)
 }
 
 private fun DrawScope.drawThrowScene(l: Level, px: (Vec) -> Offset, unit: Float, tm: TextMeasurer) {
@@ -180,6 +199,40 @@ private fun DrawScope.drawThrowScene(l: Level, px: (Vec) -> Offset, unit: Float,
     val lo = px(l.launch)
     drawCircle(Color(0xFF2B3266), unit * 0.6f, lo)
     drawCircle(Q.Cyan, unit * 0.6f, lo, style = Stroke(unit * 0.1f))
+    label(tm, "${l.planet.emoji} ${l.planet.label} · g = ${num(l.planet.g)} m/s²", Offset(size.width / 2, unit * 0.8f), Q.Text, 12)
+}
+
+/** Rampe mit Boden, Kante und Höhenmarken (Meter über dem Boden). */
+private fun DrawScope.drawRampScene(l: Level, px: (Vec) -> Offset, unit: Float, tm: TextMeasurer) {
+    val ground = px(Vec(-Flight.R, l.ground))
+    val (top, bottom) = when (l.planet) {
+        Planet.EARTH -> Color(0xFF3E8E5B) to Color(0xFF1D4630)
+        Planet.MOON -> Color(0xFF9EA3B5) to Color(0xFF50556A)
+        Planet.MARS -> Color(0xFFD0653A) to Color(0xFF6E2A14)
+    }
+    drawRect(Brush.verticalGradient(listOf(top, bottom), startY = ground.y, endY = size.height), Offset(0f, ground.y), Size(size.width, size.height - ground.y))
+    for (h in 2..18 step 2) {
+        val y = l.ground + h
+        if (y > Flight.R) break
+        drawLine(Q.Grid, px(Vec(-Flight.R, y)), px(Vec(Flight.R, y)), 1f)
+        label(tm, "$h m", px(Vec(9.0, y)) + Offset(0f, -unit * 0.3f))
+    }
+    // Rampe als gefüllte Kurve bis zum Boden
+    val path = Path()
+    val pts = (0..60).map { Flight.rampPoint(l, it / 60.0) }
+    path.moveTo(px(Vec(pts.first().x, l.ground)).x, px(Vec(pts.first().x, l.ground)).y)
+    pts.forEach { val o = px(it); path.lineTo(o.x, o.y) }
+    val edge = px(Vec(Flight.RAMP_EDGE_X, l.ground)); path.lineTo(edge.x, edge.y); path.close()
+    drawPath(path, Color(0xFF4A5287))
+    pts.zipWithNext().forEach { (a, b) -> drawLine(Q.Cyan, px(a), px(b), unit * 0.12f) }
+    // Meter ab der Kante
+    for (m in 2..14 step 2) {
+        val x = Flight.RAMP_EDGE_X + m
+        if (x > Flight.R) break
+        val o = px(Vec(x, l.ground))
+        drawLine(Color.White.copy(alpha = 0.5f), o, o + Offset(0f, unit * 0.35f), 2f)
+        label(tm, "$m m", o + Offset(0f, unit * 0.75f), Color.White.copy(alpha = 0.8f))
+    }
     label(tm, "${l.planet.emoji} ${l.planet.label} · g = ${num(l.planet.g)} m/s²", Offset(size.width / 2, unit * 0.8f), Q.Text, 12)
 }
 
@@ -265,16 +318,70 @@ private fun DrawScope.drawBolt(o: Offset, s: Float) {
     drawPath(p, Q.Yellow)
 }
 
-private fun DrawScope.drawProbe(o: Offset, unit: Float, deg: Float, color: Color, t: Float) {
-    rotate(deg, o) {
-        val flame = 0.7f + 0.3f * sin(t * 40f)
-        drawCircle(Q.Orange.copy(alpha = 0.8f), unit * 0.3f * flame, o - Offset(unit * 0.55f, 0f))
-        drawCircle(Q.Yellow, unit * 0.16f * flame, o - Offset(unit * 0.5f, 0f))
-        val p = Path().apply {
-            moveTo(o.x + unit * 0.6f, o.y); lineTo(o.x - unit * 0.4f, o.y - unit * 0.35f)
-            lineTo(o.x - unit * 0.25f, o.y); lineTo(o.x - unit * 0.4f, o.y + unit * 0.35f); close()
+private fun DrawScope.drawBall(o: Offset, unit: Float) {
+    drawCircle(Color(0xFFCFD8DC), unit * 0.45f, o)
+    drawCircle(Color.White, unit * 0.15f, o - Offset(unit * 0.12f, unit * 0.12f))
+}
+
+/** Spur aus der Werkstatt: 0 Neon, 1 Funken, 2 Regenbogen, 3 Doppel. */
+private fun DrawScope.drawTrail(trail: List<Vec>, px: (Vec) -> Offset, color: Color, unit: Float, style: Int, t: Float) {
+    when (style) {
+        1 -> {
+            drawPathLine(trail, px, color.copy(alpha = 0.5f), unit * 0.1f, dashed = false)
+            val r = kotlin.random.Random(3)
+            trail.forEachIndexed { i, p -> if (i % 12 == 0) {
+                val j = Offset((r.nextFloat() - 0.5f) * unit * 0.6f, (r.nextFloat() - 0.5f) * unit * 0.6f)
+                drawCircle(listOf(Q.Yellow, Q.Orange, Color.White)[i % 3].copy(alpha = 0.6f + 0.4f * sin(t * 8 + i)), unit * 0.09f, px(p) + j)
+            } }
         }
-        drawPath(p, color)
-        drawCircle(Color.White, unit * 0.1f, o + Offset(unit * 0.12f, 0f))
+        2 -> trail.zipWithNext().forEachIndexed { i, (a, b) ->
+            drawLine(Color.hsv((i * 1.2f) % 360f, 0.75f, 1f), px(a), px(b), unit * 0.22f, cap = StrokeCap.Round)
+        }
+        3 -> {
+            drawPathLine(trail, { px(it) + Offset(0f, -unit * 0.18f) }, color, unit * 0.08f, dashed = false)
+            drawPathLine(trail, { px(it) + Offset(0f, unit * 0.18f) }, Q.Pink, unit * 0.08f, dashed = false)
+        }
+        else -> {
+            drawPathLine(trail, px, color.copy(alpha = 0.35f), unit * 0.35f, dashed = false)
+            drawPathLine(trail, px, color, unit * 0.12f, dashed = false)
+        }
+    }
+}
+
+/** Sonde aus der Werkstatt: 0 Pfeil, 1 Rakete, 2 UFO, 3 Komet. */
+private fun DrawScope.drawProbe(o: Offset, unit: Float, deg: Float, color: Color, t: Float, shape: Int = 0) {
+    val flame = 0.7f + 0.3f * sin(t * 40f)
+    if (shape == 2) {   // UFO dreht sich nicht mit
+        drawOval(color, o - Offset(unit * 0.7f, unit * 0.2f), Size(unit * 1.4f, unit * 0.4f))
+        drawCircle(Color.White.copy(alpha = 0.8f), unit * 0.28f, o - Offset(0f, unit * 0.18f))
+        for (k in -1..1) drawCircle(if ((t * 6).toInt() % 3 == k + 1) Q.Yellow else Q.Pink, unit * 0.07f, o + Offset(k * unit * 0.4f, unit * 0.05f))
+        return
+    }
+    rotate(deg, o) {
+        when (shape) {
+            1 -> {
+                drawCircle(Q.Orange.copy(alpha = 0.8f), unit * 0.32f * flame, o - Offset(unit * 0.75f, 0f))
+                drawRoundRect(Color.White, o - Offset(unit * 0.55f, unit * 0.22f), Size(unit * 1f, unit * 0.44f), androidx.compose.ui.geometry.CornerRadius(unit * 0.2f))
+                drawPath(Path().apply { moveTo(o.x + unit * 0.45f, o.y - unit * 0.22f); lineTo(o.x + unit * 0.8f, o.y); lineTo(o.x + unit * 0.45f, o.y + unit * 0.22f); close() }, color)
+                drawPath(Path().apply { moveTo(o.x - unit * 0.55f, o.y - unit * 0.22f); lineTo(o.x - unit * 0.75f, o.y - unit * 0.45f); lineTo(o.x - unit * 0.3f, o.y - unit * 0.22f); close() }, color)
+                drawPath(Path().apply { moveTo(o.x - unit * 0.55f, o.y + unit * 0.22f); lineTo(o.x - unit * 0.75f, o.y + unit * 0.45f); lineTo(o.x - unit * 0.3f, o.y + unit * 0.22f); close() }, color)
+                drawCircle(Q.Cyan, unit * 0.1f, o + Offset(unit * 0.1f, 0f))
+            }
+            3 -> {
+                for (k in 1..5) drawCircle(color.copy(alpha = 0.5f / k), unit * (0.45f - k * 0.05f), o - Offset(unit * 0.3f * k, 0f))
+                drawCircle(Color.White, unit * 0.35f, o)
+                drawCircle(color, unit * 0.25f, o)
+            }
+            else -> {
+                drawCircle(Q.Orange.copy(alpha = 0.8f), unit * 0.3f * flame, o - Offset(unit * 0.55f, 0f))
+                drawCircle(Q.Yellow, unit * 0.16f * flame, o - Offset(unit * 0.5f, 0f))
+                val p = Path().apply {
+                    moveTo(o.x + unit * 0.6f, o.y); lineTo(o.x - unit * 0.4f, o.y - unit * 0.35f)
+                    lineTo(o.x - unit * 0.25f, o.y); lineTo(o.x - unit * 0.4f, o.y + unit * 0.35f); close()
+                }
+                drawPath(p, color)
+                drawCircle(Color.White, unit * 0.1f, o + Offset(unit * 0.12f, 0f))
+            }
+        }
     }
 }

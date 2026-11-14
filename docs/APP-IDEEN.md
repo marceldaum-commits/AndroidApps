@@ -10,7 +10,7 @@ Reihenfolge: eine App fertig optimieren, dann die nächste. Das Rechnen ist jewe
 
 | App | Spielprinzip | Inhalte | Status |
 |---|---|---|---|
-| 🚀 **Kurvenflug** (`kurvenflug/`) | Die Flugbahn einer Sonde ist eine Funktion, die man selbst formt. Ziele treffen, Asteroiden ausweichen, Energiezellen sammeln. Maskottchen Volt (Roboter) | Koordinaten (5/6), Geraden (7/8), Parabeln (9), Wurf auf Erde/Mond/Mars; geplant: Sinus/Exponential (10), Schwerkraft-Schleuder, Duell, Level-Baukasten | 🔨 |
+| 🚀 **Kurvenflug** (`kurvenflug/`) | Die Flugbahn einer Sonde ist eine Funktion, die man selbst formt. Ziele treffen, Asteroiden ausweichen, Energiezellen sammeln. Maskottchen Volt (Roboter) | 13 Kapitel / 75 Level von Klasse 5 bis 10 (Mathe + Physik), Bosse, Tagesmission, Duell, Asteroidensturm, Baukasten, Klassen-Challenge, Formel-Detektiv, Lexikon, Werkstatt | ✅ 0.5.0 |
 | ⚙️ **Werkstatt der Maschinen** | Kettenreaktionen bauen: Hebel, Rollen, Rampen, Federn, Spiegel, Stromkreise. Rechnen, wo Probieren nicht reicht | Hebelgesetz, Energieerhaltung, Reflexion/Brechung, Ohmsches Gesetz, Winkel | 💡 |
 | 🗡️ **Formel-Dungeon** | Roguelike-Kartenspiel: Karten sind Rechenoperationen. Gegner-Zahlen und Gleichungen umformen, bis sie zerfallen. Bosse = Gleichungssysteme | Bruchrechnen, Terme, Gleichungen, Potenzen, Wurzeln, Gleichungssysteme | 💡 |
 

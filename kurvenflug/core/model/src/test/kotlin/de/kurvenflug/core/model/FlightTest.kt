@@ -111,4 +111,31 @@ class FlightTest {
         val r = Flight.fly(l, mapOf("angle" to 0.0))
         assertTrue(Feedback.after(l, mapOf("angle" to 0.0), r).contains("Planet"))
     }
+
+    @Test fun rampDistanceFollowsEnergyAndIgnoresGravity() {
+        val earth = Levels.byId("12-1")!!
+        for (pl in Planet.entries) {
+            val l = earth.copy(planet = pl)
+            val land = Flight.path(l, mapOf("h" to 8.0)).last { it.y >= l.ground - 0.01 }
+            assertEquals("${pl.label}", Flight.RAMP_EDGE_X + 2 * kotlin.math.sqrt((8.0 - 4.0) * 4.0), land.x, 0.1)
+        }
+        // Unter der Kante gestartet: kommt nicht drüber
+        assertFalse(Flight.fly(earth, mapOf("h" to 3.0)).success)
+    }
+
+    @Test fun laserReflectsWithEqualAngles() {
+        val l = Levels.byId("11-1")!!   // Spiegel waagerecht bei y = −6
+        val p = Flight.path(l, mapOf("angle" to -45.0))
+        val bounce = p.minByOrNull { it.y }!!
+        assertEquals(-6.0, bounce.y, 0.05)
+        val after = p[p.indexOf(bounce) + 50]
+        // nach dem Abprallen wieder 45° nach oben
+        assertEquals(1.0, (after.y - bounce.y) / (after.x - bounce.x), 0.02)
+    }
+
+    @Test fun radiusWaveTouchingAJammerFails() {
+        val l = Levels.byId("9-3")!!
+        assertTrue(Flight.fly(l, mapOf("r" to 7.1)).success)
+        assertNotNull(Flight.fly(l, mapOf("r" to 7.6)).crash)
+    }
 }

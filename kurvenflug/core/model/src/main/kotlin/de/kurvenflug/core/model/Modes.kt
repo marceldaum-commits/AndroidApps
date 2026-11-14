@@ -32,8 +32,8 @@ object Bosses {
         else -> (1..3).map { k -> Gen.level(kindOf.getValue(chapter), chapter * 1000L + k * 37, 2, "boss-$chapter-$k") }
     }.mapIndexed { i, l -> l.copy(chapter = chapter, number = i + 1, title = "Etappe ${i + 1} von 3") }
 
-    val all: List<Boss> = Levels.chapters.map { c ->
-        val (n, e) = names.getValue(c.number)
+    val all: List<Boss> = Levels.chapters.mapNotNull { c ->
+        val (n, e) = names[c.number] ?: return@mapNotNull null
         Boss(c.number, n, e, stagesFor(c.number))
     }
 
@@ -111,7 +111,7 @@ object Badges {
         Badge("cells", "⚡", "Energiebündel", "25 Energiezellen gesammelt") { it.cells >= 25 },
         Badge("daily", "🛰️", "Missions-Fan", "5 Tagesmissionen geschafft") { it.dailies >= 5 },
         Badge("boss", "👾", "Boss-Bezwinger", "Ersten Boss besiegt") { it.bosses >= 1 },
-        Badge("bosses", "🏆", "Flottenadmiral", "Alle Bosse besiegt") { it.bosses >= Levels.chapters.size },
+        Badge("bosses", "🏆", "Flottenadmiral", "Alle Bosse besiegt") { it.bosses >= Bosses.all.size },
         Badge("storm10", "☄️", "Sturmreiter", "10 Wellen im Asteroidensturm") { it.stormBest >= 10 },
         Badge("storm25", "🌪️", "Sturmbändiger", "25 Wellen im Asteroidensturm") { it.stormBest >= 25 },
         Badge("duel", "⚔️", "Herausforderer", "Erstes Duell gespielt") { it.duelsPlayed >= 1 },

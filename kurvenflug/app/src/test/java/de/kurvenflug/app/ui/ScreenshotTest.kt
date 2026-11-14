@@ -142,4 +142,27 @@ class ScreenshotTest {
     @Test fun detective() = shot("28_formel_detektiv") {
         de.kurvenflug.app.ui.build.DetectiveScreen(3, Q.Cyan, {}, {}, seed = 4)
     }
+
+    @Test fun anti() = level("8-5", name = "29_antiproportional", values = mapOf("k" to 12.0), settle = 1200,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun pythagoras() = level("9-3", name = "30_pythagoras", values = mapOf("r" to 7.6), settle = 3500,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun laser() = level("11-2", name = "31_laser", values = mapOf("angle" to 4.0), settle = 1500,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun log() = level("10-5", name = "33_logarithmus", values = mapOf("b" to 3.0, "d" to -2.0), prepare = { it.onNodeWithText("👁 Bahn").performClick() })
+
+    @Test fun motion() = level("13-3", name = "34_weg_zeit", values = mapOf("v" to 0.5, "s0" to 5.0), settle = 1300,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun codex() = shot("35_lexikon") { de.kurvenflug.app.ui.collection.CodexScreen(32) {} }
+
+    @Test fun workshop() = shot("36_werkstatt") {
+        de.kurvenflug.app.ui.collection.WorkshopScreen(30, 22, 1, Triple(1, 2, 2), {}, { _, _, _ -> }, {})
+    }
 }

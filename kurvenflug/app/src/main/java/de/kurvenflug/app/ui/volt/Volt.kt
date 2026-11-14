@@ -27,6 +27,9 @@ import androidx.compose.ui.unit.dp
 import de.kurvenflug.app.ui.theme.Q
 import kotlin.math.sin
 
+/** Volts Hut aus der Werkstatt (0 = ohne). */
+val LocalVoltHat = androidx.compose.runtime.staticCompositionLocalOf { 0 }
+
 /** Volts Stimmungen. */
 enum class VoltMood { IDLE, THINK, HAPPY, OOPS, WOW }
 
@@ -36,6 +39,7 @@ enum class VoltMood { IDLE, THINK, HAPPY, OOPS, WOW }
  */
 @Composable
 fun Volt(mood: VoltMood, modifier: Modifier = Modifier, size: Dp = 72.dp, speech: String? = null) {
+    val hat = LocalVoltHat.current
     val t by rememberInfiniteTransition(label = "volt").animateFloat(0f, 1000f,
         infiniteRepeatable(tween(1_000_000, easing = LinearEasing)), label = "t")
     val hop = remember { Animatable(0f) }
@@ -50,7 +54,7 @@ fun Volt(mood: VoltMood, modifier: Modifier = Modifier, size: Dp = 72.dp, speech
         Canvas(Modifier.size(size).graphicsLayer {
             if (mood == VoltMood.OOPS) translationX = hop.value * size.toPx() * 0.3f
             else translationY = -hop.value * size.toPx() * 0.25f
-        }) { drawVolt(mood, t) }
+        }) { drawVolt(mood, t, hat) }
         AnimatedContent(speech, transitionSpec = { (scaleIn(spring(dampingRatio = 0.5f)) + fadeIn()) togetherWith fadeOut(tween(100)) },
             label = "say", modifier = Modifier.weight(1f, fill = false)) { s ->
             if (s != null) Surface(
@@ -61,7 +65,7 @@ fun Volt(mood: VoltMood, modifier: Modifier = Modifier, size: Dp = 72.dp, speech
     }
 }
 
-fun DrawScope.drawVolt(mood: VoltMood, t: Float) {
+fun DrawScope.drawVolt(mood: VoltMood, t: Float, hat: Int = 0) {
     val w = size.width; val h = size.height
     val bob = sin(t * 2.2f) * h * 0.03f
     val body = Color(0xFFDDE3FF); val shade = Color(0xFFAEB7E8); val dark = Color(0xFF1A1F45)
@@ -114,4 +118,35 @@ fun DrawScope.drawVolt(mood: VoltMood, t: Float) {
     val mw = if (mood == VoltMood.WOW) fs.width * 0.1f else fs.width * 0.22f
     if (mood == VoltMood.WOW) drawCircle(eye, w * 0.025f, Offset(w * 0.5f, my))
     else drawLine(eye.copy(alpha = 0.8f), Offset(w * 0.5f - mw / 2, my), Offset(w * 0.5f + mw / 2, my), w * 0.022f, StrokeCap.Round)
+    drawHat(hat, w, h, bob)
+}
+
+/** Hüte: 1 Helm, 2 Partyhut, 3 Kopfhörer, 4 Krone. */
+private fun DrawScope.drawHat(hat: Int, w: Float, h: Float, bob: Float) {
+    val top = h * 0.2f + bob
+    when (hat) {
+        1 -> {
+            drawArc(Color(0xFFFF5252), 180f, 180f, true, Offset(w * 0.2f, top - h * 0.12f), Size(w * 0.6f, h * 0.26f))
+            drawLine(Color.White, Offset(w * 0.5f, top - h * 0.12f), Offset(w * 0.5f, top + h * 0.01f), w * 0.04f)
+        }
+        2 -> {
+            val p = androidx.compose.ui.graphics.Path().apply { moveTo(w * 0.38f, top + h * 0.01f); lineTo(w * 0.5f, top - h * 0.22f); lineTo(w * 0.62f, top + h * 0.01f); close() }
+            drawPath(p, Q.Pink)
+            drawCircle(Q.Yellow, w * 0.04f, Offset(w * 0.5f, top - h * 0.22f))
+            drawCircle(Q.Yellow, w * 0.02f, Offset(w * 0.47f, top - h * 0.08f)); drawCircle(Q.Cyan, w * 0.02f, Offset(w * 0.54f, top - h * 0.13f))
+        }
+        3 -> {
+            drawArc(Color(0xFF263238), 180f, 180f, false, Offset(w * 0.12f, top - h * 0.06f), Size(w * 0.76f, h * 0.4f), style = Stroke(w * 0.05f))
+            drawRoundRect(Q.Pink, Offset(w * 0.08f, top + h * 0.1f), Size(w * 0.1f, h * 0.18f), CornerRadius(w * 0.04f))
+            drawRoundRect(Q.Pink, Offset(w * 0.82f, top + h * 0.1f), Size(w * 0.1f, h * 0.18f), CornerRadius(w * 0.04f))
+        }
+        4 -> {
+            val p = androidx.compose.ui.graphics.Path().apply {
+                moveTo(w * 0.32f, top + h * 0.01f); lineTo(w * 0.32f, top - h * 0.12f); lineTo(w * 0.41f, top - h * 0.05f)
+                lineTo(w * 0.5f, top - h * 0.15f); lineTo(w * 0.59f, top - h * 0.05f); lineTo(w * 0.68f, top - h * 0.12f); lineTo(w * 0.68f, top + h * 0.01f); close()
+            }
+            drawPath(p, Q.Yellow)
+            drawCircle(Q.Pink, w * 0.025f, Offset(w * 0.5f, top - h * 0.05f))
+        }
+    }
 }

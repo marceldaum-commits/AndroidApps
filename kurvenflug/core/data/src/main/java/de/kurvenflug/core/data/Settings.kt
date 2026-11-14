@@ -28,6 +28,14 @@ class Settings(ctx: Context) {
     fun introSeen(chapter: Int) = prefs.getBoolean("intro_$chapter", false)
     fun markIntroSeen(chapter: Int) = prefs.edit().putBoolean("intro_$chapter", true).apply()
 
+    /** Werkstatt: Form, Spur, Volts Hut (Indizes in Workshop.*) */
+    private val _look = MutableStateFlow(Triple(prefs.getInt("shape", 0), prefs.getInt("trail", 0), prefs.getInt("hat", 0)))
+    val look: StateFlow<Triple<Int, Int, Int>> = _look.asStateFlow()
+    fun setLook(shape: Int = _look.value.first, trail: Int = _look.value.second, hat: Int = _look.value.third) {
+        _look.value = Triple(shape, trail, hat)
+        prefs.edit().putInt("shape", shape).putInt("trail", trail).putInt("hat", hat).apply()
+    }
+
     /** Gewählte Sonden-Farbe */
     var skin: Int
         get() = prefs.getInt("skin", 0)

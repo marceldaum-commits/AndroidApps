@@ -61,6 +61,8 @@ fun HomeScreen(
     onBadges: (() -> Unit)? = null,
     onBuild: (() -> Unit)? = null,
     onDetective: (() -> Unit)? = null,
+    onCodex: (() -> Unit)? = null,
+    onWorkshop: (() -> Unit)? = null,
     banner: (@Composable () -> Unit)? = null,
 ) {
     Box(Modifier.fillMaxSize()) {
@@ -89,25 +91,11 @@ fun HomeScreen(
             if (onBuild != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 ModeTile("🛠️", "Baukasten", "bauen & teilen", Q.Green, Modifier.weight(1f), onBuild)
                 ModeTile("🔎", "Detektiv", "Formel finden", Q.Violet, Modifier.weight(1f)) { onDetective?.invoke() }
+                ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, Modifier.weight(1f)) { onCodex?.invoke() }
+                ModeTile("🎨", "Werkstatt", "Sonde & Volt", Q.Orange, Modifier.weight(1f)) { onWorkshop?.invoke() }
             }
             chapters.forEachIndexed { i, c ->
                 de.kurvenflug.app.ui.flight.ChapterCard(c, i, levelStars, onLevel, bossStars[c.number] ?: 0, onBoss?.let { b -> { b(c.number) } })
-            }
-            // Hangar: Sonden-Farbe
-            Text("Hangar – deine Sonde", style = MaterialTheme.typography.titleMedium, color = Q.Text)
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Skins.forEachIndexed { i, s ->
-                    val unlocked = stars >= s.needStars
-                    Column(
-                        Modifier.weight(1f).clip(RoundedCornerShape(14.dp)).background(Q.Panel)
-                            .border(2.dp, if (i == skin) s.color else Color.Transparent, RoundedCornerShape(14.dp))
-                            .clickable(enabled = unlocked) { onSkin(i) }.padding(vertical = 10.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        Box(Modifier.size(22.dp).clip(CircleShape).background(if (unlocked) s.color else Q.Muted.copy(alpha = 0.3f)))
-                        Text(if (unlocked) s.name else "🔒 ${s.needStars}⭐", style = MaterialTheme.typography.labelSmall, color = if (unlocked) Q.Text else Q.Muted)
-                    }
-                }
             }
             Spacer(Modifier.height(12.dp))
         }

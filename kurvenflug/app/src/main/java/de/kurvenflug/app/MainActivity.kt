@@ -54,6 +54,8 @@ object Routes {
     const val CHALLENGE_NEW = "challenge-neu"
     const val CHALLENGE = "challenge"
     const val DETECTIVE = "detektiv"
+    const val CODEX = "lexikon"
+    const val WORKSHOP = "werkstatt"
     fun level(id: String) = "level/$id"
 }
 
@@ -91,7 +93,9 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(sound) { app.sfx.enabled = sound }
             LaunchedEffect(music) { app.music.setEnabled(music) }
             KurvenflugTheme {
-                CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration) {
+                val look by vm.settings.look.collectAsStateWithLifecycle()
+                CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration,
+                    de.kurvenflug.app.ui.flight.LocalLook provides look, de.kurvenflug.app.ui.volt.LocalVoltHat provides look.third) {
                     Surface(Modifier.fillMaxSize(), color = Q.Space) { Nav() }
                 }
             }
@@ -154,6 +158,7 @@ class MainActivity : ComponentActivity() {
                     stormBest = stats.stormBest,
                     onDuel = { nav.goOnce(Routes.DUEL) }, onStorm = { nav.goOnce(Routes.STORM) }, onBadges = { nav.goOnce(Routes.BADGES) },
                     onBuild = { nav.goOnce(Routes.BUILD_HOME) }, onDetective = { nav.goOnce(Routes.DETECTIVE) },
+                    onCodex = { nav.goOnce(Routes.CODEX) }, onWorkshop = { nav.goOnce(Routes.WORKSHOP) },
                     banner = upd?.let { u -> { UpdateBanner(u.version) { nav.goOnce(Routes.SETTINGS) } } },
                 )
             }
@@ -188,6 +193,12 @@ class MainActivity : ComponentActivity() {
                 DuelScreen(probeColor, code, onResult = { vm.settings.recordDuel(it) }, onBack = { nav.popSafe() })
             }
             composable(Routes.BADGES) { BadgesScreen(stats) { nav.popSafe() } }
+            composable(Routes.CODEX) { de.kurvenflug.app.ui.collection.CodexScreen(stats.stars) { nav.popSafe() } }
+            composable(Routes.WORKSHOP) {
+                val look by vm.settings.look.collectAsStateWithLifecycle()
+                de.kurvenflug.app.ui.collection.WorkshopScreen(stats.stars, stats.cells, skin, look, vm::setSkin,
+                    onLook = { a, b, c -> vm.settings.setLook(a, b, c) }, onBack = { nav.popSafe() })
+            }
             composable(Routes.BUILD_HOME) {
                 val mine by vm.settings.myLevels.collectAsStateWithLifecycle()
                 de.kurvenflug.app.ui.build.BuilderHome(

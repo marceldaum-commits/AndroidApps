@@ -110,10 +110,11 @@ fun LevelScreen(
         Flight.path2(level, values).let { p -> if (help) p else p.take(min(p.size, 100)) }
     }
     val preview = remember(values, help, level.id) {
-        if (level.kind == Kind.POINT) emptyList()
+        if (level.kind == Kind.POINT || level.kind == Kind.RADIUS && !help) emptyList()
         else Flight.path(level, values).let { p ->
             if (help) p else when (level.kind) {
-                Kind.THROW, Kind.ORBIT -> p.take(min(p.size, 70))     // die ersten ~1,5 Kästchen: Abschussrichtung
+                Kind.THROW, Kind.ORBIT, Kind.LASER -> p.take(min(p.size, 70))     // die ersten ~1,5 Kästchen: Abschussrichtung
+                Kind.RAMP -> p.take(1)                                            // nur die Kugel am Start
                 else -> p.take(min(p.size, 100))          // die ersten 2 Kästchen am Rand
             }
         }
@@ -313,6 +314,21 @@ private fun Formula(level: Level, values: Map<String, Double>) {
             Kind.PARABOLA -> { append("y = "); factor("a"); append(" · (x − "); factor("d"); append(")² + "); factor("e") }
             Kind.THROW -> { append("α = "); n("angle", "°"); append("   v = "); n("v", " m/s") }
             Kind.ORBIT -> { append("α = "); n("angle", "°"); append("   v = "); n("v") }
+            Kind.PROP -> { append("y = "); factor("k"); append(" · x") }
+            Kind.ANTI -> { append("y = "); factor("k"); append(" : x") }
+            Kind.LOG -> {
+                append("y = log")
+                withStyle(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Subscript, fontSize = 14.sp)) { n("b") }
+                append("(x)")
+                if (v.getValue("d") != 0.0 || "d" in colorOf) { append(" + "); factor("d") }
+            }
+            Kind.RADIUS -> { append("r = "); n("r"); append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("r² = Δx² + Δy²") } }
+            Kind.LASER -> { append("α = "); n("angle", "°") }
+            Kind.RAMP -> {
+                append("h = "); n("h", " m"); append("   Kante h₀ = "); append(num(v.getValue("h0")) + " m")
+                append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("m·g·h = ½·m·v²") }
+            }
+            Kind.MOTION -> { append("s = "); factor("v"); append(" · t + "); factor("s0") }
             Kind.RENDEZVOUS -> {
                 val eq = level.equations ?: listOf("A:  " + lin(v.getValue("m1"), v.getValue("b1")), "B:  " + lin(v.getValue("m2"), v.getValue("b2")))
                 withStyle(SpanStyle(color = Q.Cyan)) { append(eq[0]) }; append("\n")

@@ -30,6 +30,8 @@ data class Level(
     val tip: String,
     /** eigene Schreibweise der Gleichungen (z. B. „2x + y = 7“) statt der automatisch erzeugten */
     val equations: List<String>? = null,
+    /** Spiegel für den Laser: je Spiegel [x1, y1, x2, y2] */
+    val mirrors: List<List<Double>> = emptyList(),
 ) {
     /** Startwerte + feste Werte + aktuelle Einstellung */
     fun values(v: Map<String, Double>): Map<String, Double> = params.associate { it.key to it.start } + fixed + v
@@ -51,6 +53,8 @@ data class Chapter(
 object Feedback {
     fun after(level: Level, values: Map<String, Double>, r: FlightResult): String {
         if (r.success) return ""
+        if (r.crash != null && level.kind == Kind.RADIUS) return "Störsender gestreift! 📡 Deine Welle ist zu groß – genau ausrechnen, nicht aufrunden."
+        if (r.crash != null && level.kind == Kind.LASER) return "Der Asteroid hat den Strahl geschluckt. Anderer Winkel – über einen Spiegel!"
         if (r.crash != null) return if (level.masses.getOrElse(r.crash) { 0.0 } > 0)
             "Eingefangen! 🪐 Der Planet hat dich angezogen. Schneller sein oder weiter an ihm vorbeizielen."
         else "Bumm – Asteroid! ☄️ Die Bahn muss an ihm vorbei."
@@ -66,7 +70,22 @@ object Feedback {
                     else -> "x stimmt! Jetzt noch die Höhe (y) – oben ist plus, unten minus."
                 }
             }
-            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP -> {
+            Kind.RADIUS -> {
+                val dx = t.x - level.launch.x; val dy = t.y - level.launch.y
+                "Deine Welle hatte r = ${num(v.getValue("r"))}. Zur Station: ${num(kotlin.math.abs(dx))} nach ${if (dx >= 0) "rechts" else "links"}, " +
+                    "${num(kotlin.math.abs(dy))} nach ${if (dy >= 0) "oben" else "unten"} – Pythagoras: r² = Δx² + Δy²."
+            }
+            Kind.LASER -> {
+                val near = r.path.minByOrNull { kotlin.math.hypot(it.x - t.x, it.y - t.y) } ?: return "Nochmal!"
+                "Der Strahl verfehlt die Station um ${num(kotlin.math.hypot(near.x - t.x, near.y - t.y) - t.r, 1)} Kästchen. Einfallswinkel = Ausfallswinkel!"
+            }
+            Kind.RAMP -> {
+                val land = r.path.lastOrNull() ?: return "Nochmal!"
+                val h0 = v.getValue("h0")
+                if (v.getValue("h") <= h0) "Die Kugel kommt nicht über die Kante (${num(h0)} m) – sie braucht mehr Lageenergie!"
+                else { val dx = land.x - t.x; "${num(kotlin.math.abs(dx), 1)} m ${if (dx < 0) "zu kurz – höher starten!" else "zu weit – tiefer starten!"}" }
+            }
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION -> {
                 val y = Flight.f(level, values, t.x)
                 if (abs(y) > Flight.R) "Bei x = ${num(t.x)} ist deine Kurve ganz aus dem Bild (y = ${num(y)}). Ziel: y = ${num(t.y)}."
                 else "Bei x = ${num(t.x)} war die Sonde bei y = ${num(y)} – das Ziel liegt bei y = ${num(t.y)}. " +
@@ -123,6 +142,21 @@ object Levels {
     private val oV = p("v", "Tempo", 1.0, 10.0, 0.5, 4.0)
     private const val PI = Math.PI
     private fun planet(x: Double, y: Double, r: Double) = Body(x, y, r)
+    private val pk = p("k", "k", -20.0, 20.0, 0.25, 1.0)
+    private val pr = p("r", "Radius r", 0.5, 15.0, 0.1, 1.0)
+    private val lb = p("b", "b", 0.5, 10.0, 0.5, 10.0)
+    private val ld = p("d", "d", -8.0, 8.0, 1.0, 0.0)
+    private val la = p("angle", "Winkel", -89.0, 89.0, 1.0, 0.0, "°")
+    private val ph = p("h", "Höhe h", 0.5, 17.5, 0.5, 5.0, " m")
+    private val mv = p("v", "v", -3.0, 3.0, 0.25, 1.0, " m/s")
+    private val ms = p("s0", "s₀", -9.0, 9.0, 1.0, 0.0, " m")
+    private fun mirror(x1: Double, y1: Double, x2: Double, y2: Double) = listOf(x1, y1, x2, y2)
+    /** Landeplatz der Rampen-Kugel: Weite s = 2·√((h − h0)·h0) ab der Kante */
+    private fun rampTarget(h: Double, h0: Double) = Body(Flight.RAMP_EDGE_X + 2 * kotlin.math.sqrt((h - h0) * h0), -9.0, 0.8)
+    private fun rampLevel(n: Int, title: String, h: Double, h0: Double, task: String, tip: String, planet: Planet = Planet.EARTH, rocks: List<Body> = emptyList()) =
+        Level("12-$n", 12, n, title, Kind.RAMP, task, listOf(rampTarget(h, h0)), listOf(ph), mapOf("h" to h), fixed = mapOf("h0" to h0),
+            ground = -9.0, planet = planet, asteroids = rocks, tip = tip)
+
     private val rx = p("x", "x", -9.0, 9.0, 0.5, 0.0)
     private val ry = p("y", "y", -9.0, 9.0, 0.5, 0.0)
 
@@ -135,7 +169,7 @@ object Levels {
             asteroids = rocks, hidden = true, tip = tip, equations = equations)
     }
 
-    val chapters: List<Chapter> = listOf(
+    private val baseChapters: List<Chapter> = listOf(
         Chapter(
             1, "Koordinaten", "Klasse 5–6", "📍",
             listOf(
@@ -423,6 +457,164 @@ object Levels {
             ),
         ),
     )
+
+
+    private val extraChapters = listOf(
+        Chapter(
+            8, "Zuordnungen", "Klasse 6–7", "⚖️",
+            listOf(
+                "Proportional heißt: doppelt so viel x → doppelt so viel y. Die Gerade geht durch (0 | 0): y = k · x.",
+                "k ist der Quotient: k = y : x. Prozent sind auch proportional – 25 % heißt k = 0,25.",
+                "Antiproportional heißt: doppelt so viel x → halb so viel y. Dann ist x · y immer gleich k: y = k : x.",
+                "Die Bahn ist dann eine Hyperbel – sie kommt der Achse nahe, berührt sie aber nie.",
+            ),
+            listOf(
+                Level("8-1", 8, 1, "Treibstoff", Kind.PROP, "Proportional: y = k · x. Die Station liegt bei (4 | 6).",
+                    listOf(t(4.0, 6.0)), listOf(pk), mapOf("k" to 1.5), cells = listOf(cell(2.0, 3.0)), tip = "k = y : x = 6 : 4."),
+                Level("8-2", 8, 2, "Bergab", Kind.PROP, "y = k · x durch (6 | −3).",
+                    listOf(t(6.0, -3.0)), listOf(pk), mapOf("k" to -0.5), asteroids = listOf(rock(4.0, 4.0)), tip = "k = −3 : 6."),
+                Level("8-3", 8, 3, "Prozent-Schub", Kind.PROP, "Bei x = 8 soll y genau 25 % von 8 sein. Wie groß ist k?",
+                    listOf(t(8.0, 2.0)), listOf(pk), mapOf("k" to 0.25), cells = listOf(cell(4.0, 1.0)), tip = "25 % = 25/100 = 0,25."),
+                Level("8-4", 8, 4, "Hyperbel", Kind.ANTI, "Antiproportional: y = k : x. Die Station liegt bei (2 | 6).",
+                    listOf(t(2.0, 6.0)), listOf(pk), mapOf("k" to 12.0), cells = listOf(cell(1.5, 8.0)), tip = "k = x · y = 2 · 6."),
+                Level("8-5", 8, 5, "Zwei Stationen", Kind.ANTI, "y = k : x durch (3 | 4) und (6 | 2).",
+                    listOf(t(3.0, 4.0), t(6.0, 2.0)), listOf(pk), mapOf("k" to 12.0), asteroids = listOf(rock(6.0, 6.0)),
+                    tip = "Bei beiden ist x · y gleich – genau das ist k."),
+                Level("8-6", 8, 6, "Kopfüber", Kind.ANTI, "y = k : x durch (4 | −2).",
+                    listOf(t(4.0, -2.0)), listOf(pk), mapOf("k" to -8.0), tip = "k = 4 · (−2)."),
+            ),
+        ),
+        Chapter(
+            13, "Weg & Zeit", "Physik Klasse 7", "⏱️",
+            listOf(
+                "Jetzt ist das Bild ein Weg-Zeit-Diagramm: nach rechts die Zeit t in Sekunden, nach oben der Weg s in Metern.",
+                "Gleichförmige Bewegung: s = v · t + s₀. v ist die Geschwindigkeit, s₀ der Startpunkt.",
+                "Je steiler die Gerade, desto schneller. Fällt sie, fliegt die Sonde zurück.",
+                "Triff die Stationen zur richtigen Zeit am richtigen Ort!",
+            ),
+            listOf(
+                Level("13-1", 13, 1, "Pünktlich", Kind.MOTION, "Start bei 0 m. Nach 4 s soll die Sonde bei 8 m sein.",
+                    listOf(t(4.0, 8.0)), listOf(mv), mapOf("v" to 2.0), fixed = mapOf("s0" to 0.0), tip = "v = Weg : Zeit = 8 m : 4 s."),
+                Level("13-2", 13, 2, "Schleichfahrt", Kind.MOTION, "Start bei 2 m. Nach 6 s bei 5 m.",
+                    listOf(t(6.0, 5.0)), listOf(mv), mapOf("v" to 0.5), fixed = mapOf("s0" to 2.0), cells = listOf(cell(2.0, 3.0)),
+                    tip = "In 6 s kommen 3 m dazu."),
+                Level("13-3", 13, 3, "Zwei Termine", Kind.MOTION, "Nach 2 s bei 6 m, nach 8 s bei 9 m. Wo und wie schnell?",
+                    listOf(t(2.0, 6.0), t(8.0, 9.0)), listOf(mv, ms), mapOf("v" to 0.5, "s0" to 5.0),
+                    tip = "v = (9 − 6) : (8 − 2). Dann zurückrechnen auf t = 0."),
+                Level("13-4", 13, 4, "Rückflug", Kind.MOTION, "Start bei 8 m, nach 8 s zurück an der Basis (0 m).",
+                    listOf(t(8.0, 0.0)), listOf(mv, ms), mapOf("v" to -1.0, "s0" to 8.0), cells = listOf(cell(4.0, 4.0)),
+                    tip = "Zurück heißt: v ist negativ."),
+            ),
+        ),
+        Chapter(
+            11, "Laser-Optik", "Physik Klasse 7", "🔦",
+            listOf(
+                "Laser! Der Strahl läuft schnurgerade – bis er auf einen Spiegel trifft.",
+                "Reflexionsgesetz: Einfallswinkel = Ausfallswinkel. Der Strahl prallt ab wie ein Ball von der Bande.",
+                "Asteroiden schlucken das Licht. Du stellst nur den Winkel ein, unter dem der Laser feuert.",
+                "Tipp: Spiegel die Station am Spiegel – dann zielst du einfach auf das Spiegelbild!",
+            ),
+            listOf(
+                Level("11-1", 11, 1, "Über Bande", Kind.LASER, "Der direkte Weg ist versperrt. Nutz den Spiegel am Boden!",
+                    listOf(t(6.0, 3.0, 0.6)), listOf(la), mapOf("angle" to -45.0), mirrors = listOf(mirror(-6.0, -6.0, 3.0, -6.0)),
+                    asteroids = listOf(rock(-1.5, 1.5, 1.2)), launch = Vec(-9.0, 0.0),
+                    tip = "Spiegelbild der Station unterm Boden-Spiegel: (6 | −15). Ziel darauf – oder probier −45°."),
+                Level("11-2", 11, 2, "Periskop", Kind.LASER, "Zwei schräge Spiegel wie in einem U-Boot-Periskop.",
+                    listOf(t(8.0, 7.0, 0.6)), listOf(la), mapOf("angle" to 4.0),
+                    mirrors = listOf(mirror(-2.0, -7.0, 2.0, -3.0), mirror(-2.0, 3.0, 2.0, 7.0)),
+                    asteroids = listOf(rock(-4.0, -1.5, 1.2)), launch = Vec(-9.0, -5.0),
+                    tip = "Der 45°-Spiegel lenkt einen waagerechten Strahl senkrecht nach oben. Ziel fast waagerecht!"),
+                Level("11-3", 11, 3, "Zickzack", Kind.LASER, "Decke und Boden sind Spiegel. Die Station liegt hinter dem Felsen.",
+                    listOf(t(8.0, -7.0, 0.6)), listOf(la), mapOf("angle" to 58.0),
+                    mirrors = listOf(mirror(-6.0, 7.0, 6.0, 7.0), mirror(-4.0, -8.0, 4.0, -8.0)),
+                    asteroids = listOf(rock(0.0, -6.5, 1.5)), launch = Vec(-9.0, -7.0),
+                    tip = "Steil nach oben, an der Decke abprallen – der Strahl kommt steil herunter."),
+                Level("11-4", 11, 4, "Kehrtwende", Kind.LASER, "Die Station liegt links oben – hinter dir! Der Spiegel rechts hilft.",
+                    listOf(t(-8.0, 6.0, 0.6)), listOf(la), mapOf("angle" to 16.0), mirrors = listOf(mirror(7.0, -6.0, 7.0, 6.0)),
+                    asteroids = listOf(rock(-8.5, 2.0)), launch = Vec(-9.0, -3.0),
+                    tip = "Am senkrechten Spiegel kehrt sich nur die Richtung nach rechts/links um – die Steigung bleibt."),
+                Level("11-5", 11, 5, "Doppel-Z", Kind.LASER, "Erst nach rechts unten, dann hoch, dann zurück nach links.",
+                    listOf(t(-6.0, 4.0, 0.6)), listOf(la), mapOf("angle" to -1.0),
+                    mirrors = listOf(mirror(5.0, -8.0, 8.0, -5.0), mirror(4.0, 6.0, 8.0, 2.0)),
+                    asteroids = listOf(rock(-7.5, -1.0, 1.2), rock(0.0, 0.0, 1.5)), launch = Vec(-9.0, -6.0),
+                    tip = "Fast waagerecht feuern – die schrägen Spiegel machen den Rest."),
+            ),
+        ),
+        Chapter(
+            9, "Pythagoras", "Klasse 8–9", "📡",
+            listOf(
+                "Funkstille! Dein Sender schickt eine kreisrunde Welle mit Radius r.",
+                "Die Welle muss genau die Station erreichen – aber keinen Störsender ☄️ streifen. Also: r genau ausrechnen!",
+                "Abstand zwischen zwei Punkten: erst Δx und Δy zählen, dann Satz des Pythagoras: r² = Δx² + Δy².",
+                "Beispiel: 3 rechts, 4 hoch → r² = 9 + 16 = 25 → r = 5.",
+            ),
+            listOf(
+                Level("9-1", 9, 1, "Erstkontakt", Kind.RADIUS, "Sender in der Mitte. Station bei (3 | 4). Welcher Radius?",
+                    listOf(t(3.0, 4.0, 0.25)), listOf(pr), mapOf("r" to 5.0), asteroids = listOf(rock(7.0, 6.0)), launch = Vec(0.0, 0.0),
+                    tip = "r² = 3² + 4²."),
+                Level("9-2", 9, 2, "Weiter Weg", Kind.RADIUS, "Sender bei (−5 | −5), Station bei (1 | 3).",
+                    listOf(t(1.0, 3.0, 0.25)), listOf(pr), mapOf("r" to 10.0), launch = Vec(-5.0, -5.0),
+                    tip = "Δx = 6, Δy = 8."),
+                Level("9-3", 9, 3, "Wurzel-Welle", Kind.RADIUS, "Sender in der Mitte, Station bei (5 | −5). Achtung, Störsender oben links!",
+                    listOf(t(5.0, -5.0, 0.25)), listOf(pr), mapOf("r" to 7.1), asteroids = listOf(rock(-6.0, 6.0)), launch = Vec(0.0, 0.0),
+                    tip = "r² = 25 + 25 = 50 → r = √50 ≈ 7,1. Nicht aufrunden – sonst triffst du den Störsender!"),
+                Level("9-4", 9, 4, "Große Reichweite", Kind.RADIUS, "Sender bei (−6 | 2), Station bei (6 | 7).",
+                    listOf(t(6.0, 7.0, 0.25)), listOf(pr), mapOf("r" to 13.0), launch = Vec(-6.0, 2.0),
+                    tip = "Δx = 12, Δy = 5 → 144 + 25."),
+                Level("9-5", 9, 5, "Doppelfunk", Kind.RADIUS, "Eine Welle für zwei Stationen: (6 | 8) und (−8 | −6).",
+                    listOf(t(6.0, 8.0, 0.25), t(-8.0, -6.0, 0.25)), listOf(pr), mapOf("r" to 10.0),
+                    asteroids = listOf(rock(0.0, 4.0)), launch = Vec(0.0, 0.0), tip = "Beide sind gleich weit weg: 36 + 64."),
+            ),
+        ),
+        Chapter(
+            12, "Energie", "Physik Klasse 8–9", "🎢",
+            listOf(
+                "Eine Kugel rollt die Rampe hinunter. Oben hat sie Lageenergie, unten Bewegungsenergie.",
+                "Energieerhaltung (ohne Reibung): m · g · h = ½ · m · v². Je höher du startest, desto schneller ist sie unten.",
+                "An der Kante fliegt sie waagerecht ab. Die Weite ist: s = 2 · √((h − h₀) · h₀), h₀ = Höhe der Kante.",
+                "Verrückt: In dieser Formel kommt g gar nicht vor! Wähl die Starthöhe h.",
+            ),
+            listOf(
+                rampLevel(1, "Erster Sprung", 8.0, 4.0, "Die Kante liegt 4 m hoch. Das Ziel ist 8 m hinter der Kante.",
+                    "8 = 2 · √((h − 4) · 4) → √((h − 4) · 4) = 4 → (h − 4) · 4 = 16."),
+                rampLevel(2, "Niedrige Kante", 10.0, 2.0, "Kante nur 2 m hoch, Ziel wieder 8 m weit.",
+                    "(h − 2) · 2 = 16 – rechne h aus."),
+                rampLevel(3, "Mini-Kante", 10.0, 1.0, "Kante 1 m hoch, Ziel 6 m weit.", "(h − 1) · 1 = 9."),
+                rampLevel(4, "Mond-Rampe", 8.0, 4.0, "Auf dem Mond! Kante 4 m, Ziel 8 m – wie auf der Erde. Ändert sich was?",
+                    "Die Weite hängt nicht von g ab – es ist dieselbe Rechnung wie in Level 1!", planet = Planet.MOON),
+                rampLevel(5, "Mars-Hürde", 7.0, 3.0, "Mars. Kante 3 m, Ziel rund 6,9 m weit.",
+                    "(h − 3) · 3 = 12 → h − 3 = 4.", planet = Planet.MARS),
+            ),
+        ),
+        Chapter(
+            10, "Logarithmus", "Klasse 10", "🔢",
+            listOf(
+                "Der Logarithmus ist die Umkehrung der Potenz: log₂(8) = 3, weil 2³ = 8.",
+                "log_b(x) fragt: Mit welcher Hochzahl wird b zu x?",
+                "Die Kurve y = log_b(x) + d gibt es nur rechts von der y-Achse. Bei x = 1 ist log immer 0 – dort liest du d ab.",
+                "Ist b kleiner als 1, fällt die Kurve. Los!",
+            ),
+            listOf(
+                Level("10-1", 10, 1, "Zweierpotenz", Kind.LOG, "y = log_b(x). Die Station liegt bei (8 | 3).",
+                    listOf(t(8.0, 3.0)), listOf(lb), mapOf("b" to 2.0), fixed = mapOf("d" to 0.0), cells = listOf(cell(4.0, 2.0)),
+                    tip = "b³ = 8. Welche Zahl hoch 3 ist 8?"),
+                Level("10-2", 10, 2, "Dreierpotenz", Kind.LOG, "y = log_b(x) durch (9 | 2).",
+                    listOf(t(9.0, 2.0)), listOf(lb), mapOf("b" to 3.0), fixed = mapOf("d" to 0.0), tip = "b² = 9."),
+                Level("10-3", 10, 3, "Höhenschub", Kind.LOG, "y = log₂(x) + d durch (4 | 5).",
+                    listOf(t(4.0, 5.0)), listOf(ld), mapOf("d" to 3.0), fixed = mapOf("b" to 2.0), tip = "log₂(4) = 2, also 2 + d = 5."),
+                Level("10-4", 10, 4, "Abwärts", Kind.LOG, "y = log_b(x) durch (4 | −2). Die Kurve fällt!",
+                    listOf(t(4.0, -2.0)), listOf(lb), mapOf("b" to 0.5), fixed = mapOf("d" to 0.0),
+                    tip = "b⁻² = 4 → b = 1/2. Bei b < 1 fällt die Kurve."),
+                Level("10-5", 10, 5, "Doppelspur", Kind.LOG, "Beide Regler: durch (1 | −2) und (8 | 1).",
+                    listOf(t(1.0, -2.0), t(8.0, 1.0)), listOf(lb, ld), mapOf("b" to 2.0, "d" to -2.0),
+                    tip = "Bei x = 1 ist log = 0 – das verrät d. Dann: log_b(8) = 3."),
+            ),
+        ),
+    )
+
+    /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand) */
+    private val order = listOf(1, 8, 13, 11, 2, 7, 9, 3, 12, 4, 5, 10, 6)
+    val chapters: List<Chapter> = (baseChapters + extraChapters).sortedBy { order.indexOf(it.number) }
 
     val all: List<Level> = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }

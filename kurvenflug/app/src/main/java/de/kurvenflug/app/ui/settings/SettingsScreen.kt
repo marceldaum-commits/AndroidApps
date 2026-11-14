@@ -43,9 +43,9 @@ fun SettingsScreen(
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     Text("Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
                         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
-                    Text("Inhalte: Koordinatensystem (Kl. 5/6), lineare Funktionen (Kl. 7/8), quadratische Funktionen in Scheitelform (Kl. 9), " +
-                        "schräger Wurf mit Fallbeschleunigung auf Erde, Mond und Mars (Physik), Sinus- und Exponentialfunktionen (Kl. 10), " +
-                        "Gravitation und Swing-by an Planeten (Physik Kl. 10).", style = MaterialTheme.typography.bodySmall)
+                    Text("Inhalte: Koordinaten (Kl. 5/6), Zuordnungen und Prozent (Kl. 6/7), lineare Funktionen und Gleichungssysteme (Kl. 7/8), " +
+                        "Pythagoras (Kl. 8/9), quadratische Funktionen (Kl. 9), Sinus, Exponential- und Logarithmusfunktionen (Kl. 10). " +
+                        "Physik: gleichförmige Bewegung, Reflexion, Energieerhaltung, schräger Wurf, Gravitation.", style = MaterialTheme.typography.bodySmall)
                     Text("Version $installed", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                 }
             }
