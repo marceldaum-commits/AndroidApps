@@ -358,6 +358,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         return session.isNotEmpty()
     }
 
+    /** Brummi-Radio: eine kurze Runde (höchstens 12 Karten) */
+    fun radioCards(): List<StudyCard> = buildSession().take(12)
+
     fun buildSession(bedId: String? = null): List<StudyCard> {
         val cards = beds.value.filter { bedId == null || it.bed.id == bedId }.flatMap { b -> b.cards.map { it.toStudy() } }
         return SessionBuilder.build(cards, System.currentTimeMillis(), seedsLeft())

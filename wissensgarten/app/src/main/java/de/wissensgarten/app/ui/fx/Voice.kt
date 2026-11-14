@@ -22,9 +22,9 @@ class Voice(context: Context) : TextToSpeech.OnInitListener {
             tts.setPitch(1.25f); tts.setSpeechRate(0.95f)
             tts.setOnUtteranceProgressListener(object : android.speech.tts.UtteranceProgressListener() {
                 override fun onStart(id: String?) = onSpeaking(true)
-                override fun onDone(id: String?) = onSpeaking(false)
-                @Deprecated("Deprecated in Java") override fun onError(id: String?) = onSpeaking(false)
-                override fun onStop(id: String?, interrupted: Boolean) = onSpeaking(false)
+                override fun onDone(id: String?) { onSpeaking(false); waiting.remove(id)?.complete(Unit) }
+                @Deprecated("Deprecated in Java") override fun onError(id: String?) { onSpeaking(false); waiting.remove(id)?.complete(Unit) }
+                override fun onStop(id: String?, interrupted: Boolean) { onSpeaking(false); waiting.remove(id)?.complete(Unit) }
             })
         }
     }
@@ -38,7 +38,25 @@ class Voice(context: Context) : TextToSpeech.OnInitListener {
         tts.speak(clean, TextToSpeech.QUEUE_FLUSH, null, "brummi")
     }
 
-    fun stop() { if (ready) tts.stop() }
+    fun stop() { if (ready) tts.stop(); waiting.values.forEach { it.complete(Unit) }; waiting.clear() }
+
+    val isReady get() = ready
+    private val waiting = java.util.concurrent.ConcurrentHashMap<String, kotlinx.coroutines.CompletableDeferred<Unit>>()
+
+    /** Sprechen und warten, bis Brummi fertig ist (für Brummi-Radio). */
+    suspend fun speakAndWait(text: String, locale: Locale = Locale.GERMAN) {
+        if (!ready) return
+        val clean = stripEmoji(text).trim()
+        if (clean.isEmpty()) return
+        val id = "radio-" + System.nanoTime()
+        val done = kotlinx.coroutines.CompletableDeferred<Unit>()
+        waiting[id] = done
+        tts.language = if (tts.isLanguageAvailable(locale) >= TextToSpeech.LANG_AVAILABLE) locale else Locale.GERMAN
+        tts.speak(clean, TextToSpeech.QUEUE_ADD, null, id)
+        // Sicherheitsnetz, falls die Sprachausgabe hängt
+        kotlinx.coroutines.withTimeoutOrNull(30_000) { done.await() }
+        waiting.remove(id)
+    }
 
     companion object {
         private val EMOJI = Regex("[\\p{So}\\p{Cs}\\uFE0F\\u200D]")

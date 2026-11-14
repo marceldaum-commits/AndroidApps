@@ -3,6 +3,14 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.10.0
+- Neu: **Klassenarbeits-Countdown.** Termin eintragen („Mathe-Arbeit am Freitag“), Brummi verteilt die Karten so auf die
+  Tage, dass am Tag X alles sitzt – mit Kalenderblatt, Fitness-Ring, Generalprobe am Vortag und Aufwärmen am Prüfungstag.
+  Ohne Pauken am Vorabend (nach der Forschung zum verteilten Lernen).
+- Neu: **Brummi-Radio.** Lernen ohne Bildschirm – fürs Auto, den Schulweg oder vorm Einschlafen. Brummi liest vor,
+  du antwortest laut („A“, „B“ oder die Antwort), „nochmal“ und „stopp“ versteht er auch. Der Bildschirm bleibt dunkel.
+- Behoben: „Sag's laut“ wurde auf neueren Android-Versionen manchmal nie angeboten.
+
 ## 0.9.1
 - Neu: **Musik!** Leise Melodien, im Code komponiert: tagsüber eine fröhliche Kalimba im Garten, in der Gieß-Runde
   etwas schwungvoller, abends und bei der Gute-Nacht-Runde ein Spieluhr-Schlaflied.

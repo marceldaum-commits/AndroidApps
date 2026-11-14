@@ -4,7 +4,16 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <!-- App-Update aus GitHub: neue Version laden und Installer öffnen (nur außerhalb des Play Stores) -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Brummi-Radio: Antworten sprechen (nur während des Radios, nichts wird gespeichert) -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <!-- Spracherkennung finden (Android 11+ sieht andere Apps sonst nicht) -->
+    <queries>
+        <intent><action android:name="android.speech.RecognitionService" /></intent>
+        <intent><action android:name="android.speech.action.RECOGNIZE_SPEECH" /></intent>
+        <intent><action android:name="android.intent.action.TTS_SERVICE" /></intent>
+    </queries>
 
     <application
         android:name=".WissensgartenApp"

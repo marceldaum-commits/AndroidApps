@@ -449,4 +449,9 @@ class ScreenshotTest {
             de.wissensgarten.app.ui.exam.ExamPromptCard {}
         }
     }
+
+    @Test fun radio() = shot("42_brummi_radio") {
+        val cards = garden[0].cards.take(10).map { it.toStudy() }
+        de.wissensgarten.app.ui.radio.RadioScreen(cards, emptyMap(), emptyMap(), { _, _, _ -> }, {}, preview = true)
+    }
 }

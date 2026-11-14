@@ -70,6 +70,7 @@ object Routes {
     const val STORY = "abenteuer"
     const val HYBRID = "kreuzung"
     const val KLASSE = "klasse"
+    const val RADIO = "radio"
     const val WORKSHEET = "arbeitsblatt/{bed}"
     fun worksheet(bed: String) = "arbeitsblatt/$bed"
     const val CHAPTER = "kapitel/{n}"
@@ -309,6 +310,7 @@ class MainActivity : ComponentActivity() {
                                         onAdd = { b, t, d -> vm.addExam(b, t, d); addExam = false },
                                     )
                                     StoryEntryCard(newCh) { nav.navigate(Routes.STORY) }
+                                    if (beds.isNotEmpty()) de.wissensgarten.app.ui.radio.RadioEntryCard { nav.navigate(Routes.RADIO) }
                                     val mix = remember(beds, packs) { vm.mixCandidates() }
                                     if (mix != null) MixEntryCard(mix.first.bed.name, mix.second.bed.name) { if (vm.startMixed()) nav.navigate(Routes.REVIEW) }
                                 }
@@ -358,6 +360,19 @@ class MainActivity : ComponentActivity() {
                     if (pack == null) LaunchedEffect(Unit) { nav.popBackStack() } else IntroScreen(pack) {
                         vm.markIntroSeen(pack.id); nav.popBackStack()
                     }
+                }
+                composable(Routes.RADIO) {
+                    val cards = remember { vm.radioCards() }
+                    val app = application as WissensgartenApp
+                    // Keine Musik im Radio – Brummi und das Kind sollen sich hören
+                    DisposableEffect(Unit) { app.music.setEnabled(false); onDispose { app.music.setEnabled(vm.settings.music.value) } }
+                    de.wissensgarten.app.ui.radio.RadioScreen(
+                        cards = cards,
+                        peers = beds.associate { b -> b.bed.id to b.cards.map { it.back }.distinct() },
+                        subjects = beds.associate { b -> b.bed.id to b.bed.packId?.let { pid -> packs.firstOrNull { it.id == pid }?.subject } },
+                        onRate = { c, r, d -> vm.review(c, r, d) },
+                        onClose = { vm.endSession(); nav.popBackStack(); app.sync.syncSoon(5_000) },
+                    )
                 }
                 composable(Routes.KLASSE) {
                     val initial = remember { vm.pendingClassSet.also { vm.pendingClassSet = null } }
