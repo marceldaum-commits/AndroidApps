@@ -97,7 +97,7 @@ fun LevelScreen(
         if (level.kind == Kind.POINT) emptyList()
         else Flight.path(level, values).let { p ->
             if (help) p else when (level.kind) {
-                Kind.THROW -> p.take(min(p.size, 70))     // die ersten ~1,5 m: Abschussrichtung
+                Kind.THROW, Kind.ORBIT -> p.take(min(p.size, 70))     // die ersten ~1,5 Kästchen: Abschussrichtung
                 else -> p.take(min(p.size, 100))          // die ersten 2 Kästchen am Rand
             }
         }
@@ -193,7 +193,7 @@ fun LevelScreen(
             Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
                 Column(Modifier.weight(1f)) {
-                    Text("${chapter.emoji} ${chapter.title} · Level ${level.number}", style = MaterialTheme.typography.labelMedium, color = Q.Muted)
+                    Text(if (level.number == 0) "${chapter.emoji} ${chapter.title}" else "${chapter.emoji} ${chapter.title} · Level ${level.number}", style = MaterialTheme.typography.labelMedium, color = Q.Muted)
                     Text(level.title, style = MaterialTheme.typography.titleLarge, color = Q.Text)
                 }
                 Text(if (attempt == 0) "" else "Versuch $attempt", style = MaterialTheme.typography.labelMedium, color = Q.Muted, modifier = Modifier.padding(end = 12.dp))
@@ -265,6 +265,15 @@ private fun Formula(level: Level, values: Map<String, Double>) {
             Kind.LINE -> { append("y = "); factor("m"); append(" · x + "); factor("b") }
             Kind.PARABOLA -> { append("y = "); factor("a"); append(" · (x − "); factor("d"); append(")² + "); factor("e") }
             Kind.THROW -> { append("α = "); n("angle", "°"); append("   v = "); n("v", " m/s") }
+            Kind.ORBIT -> { append("α = "); n("angle", "°"); append("   v = "); n("v") }
+            Kind.SINE -> {
+                append("y = "); factor("a"); append(" · sin("); factor("b"); append(" · x)")
+                if (v.getValue("d") != 0.0 || "d" in colorOf) { append(" + "); factor("d") }
+            }
+            Kind.EXP -> {
+                append("y = "); factor("a"); append(" · "); factor("b"); append("ˣ")
+                if (v.getValue("d") != 0.0 || "d" in colorOf) { append(" + "); factor("d") }
+            }
         }
     }
     Text(text, color = Q.Text, fontFamily = FontFamily.Monospace, fontSize = 20.sp, fontWeight = FontWeight.Bold,
@@ -329,7 +338,7 @@ private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean,
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 NeonButton(onClick = onRetry, color = Q.Violet) { Text("↻ Nochmal", color = Q.Text) }
                 if (onNext != null) NeonButton(onClick = onNext, color = Q.Green, modifier = Modifier.pulse(true, 0.03f)) { Text("Weiter ›", color = Q.Text, fontWeight = FontWeight.Black) }
-                else NeonButton(onClick = onBack, color = Q.Green) { Text("Kapitel fertig! 🏆", color = Q.Text, fontWeight = FontWeight.Black) }
+                else NeonButton(onClick = onBack, color = Q.Green) { Text("Fertig! 🏆", color = Q.Text, fontWeight = FontWeight.Black) }
             }
         }
     }

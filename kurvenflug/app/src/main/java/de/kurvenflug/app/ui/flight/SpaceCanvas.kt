@@ -51,10 +51,21 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
         fun px(p: Vec) = Offset(((p.x + Flight.R) / (2 * Flight.R) * size.width).toFloat(), ((Flight.R - p.y) / (2 * Flight.R) * size.height).toFloat())
         val unit = size.width / (2 * Flight.R).toFloat()
 
-        if (l.kind == Kind.THROW) drawThrowScene(l, ::px, unit, tm) else drawGrid(::px, unit, tm)
+        when (l.kind) {
+            Kind.THROW -> drawThrowScene(l, ::px, unit, tm)
+            Kind.ORBIT -> drawOrbitScene(l, ::px, unit, v.time)
+            else -> {
+                drawGrid(::px, unit, tm)
+                if (l.kind == Kind.SINE) drawPiMarks(::px, unit, tm)
+            }
+        }
 
-        // Asteroiden
-        l.asteroids.forEachIndexed { i, a -> drawAsteroid(px(Vec(a.x, a.y)), a.r.toFloat() * unit, i, l.kind == Kind.THROW) }
+        // Asteroiden und Planeten
+        l.asteroids.forEachIndexed { i, a ->
+            val mass = l.masses.getOrElse(i) { 0.0 }
+            if (mass > 0) drawPlanet(px(Vec(a.x, a.y)), a.r.toFloat() * unit, mass, i, v.time)
+            else drawAsteroid(px(Vec(a.x, a.y)), a.r.toFloat() * unit, i, l.kind == Kind.THROW)
+        }
         // Energiezellen
         l.cells.forEachIndexed { i, c ->
             if (i in v.takenCells) return@forEachIndexed
@@ -143,6 +154,47 @@ private fun DrawScope.drawThrowScene(l: Level, px: (Vec) -> Offset, unit: Float,
     drawCircle(Color(0xFF2B3266), unit * 0.6f, lo)
     drawCircle(Q.Cyan, unit * 0.6f, lo, style = Stroke(unit * 0.1f))
     label(tm, "${l.planet.emoji} ${l.planet.label} · g = ${num(l.planet.g)} m/s²", Offset(size.width / 2, unit * 0.8f), Q.Text, 12)
+}
+
+/** π-Marken auf der x-Achse – Sinus denkt in π, nicht in Kästchen. */
+private fun DrawScope.drawPiMarks(px: (Vec) -> Offset, unit: Float, tm: TextMeasurer) {
+    val marks = listOf(-2 to "−2π", -1 to "−π", 1 to "π", 2 to "2π")
+    for ((k, text) in marks) {
+        val o = px(Vec(k * Math.PI, 0.0))
+        drawLine(Q.Pink.copy(alpha = 0.7f), o - Offset(0f, unit * 0.35f), o + Offset(0f, unit * 0.35f), 3f)
+        label(tm, text, o + Offset(0f, -unit * 0.75f), Q.Pink, 11)
+    }
+    for (k in listOf(-1, 1)) {
+        val o = px(Vec(k * Math.PI / 2, 0.0))
+        drawLine(Q.Pink.copy(alpha = 0.45f), o - Offset(0f, unit * 0.25f), o + Offset(0f, unit * 0.25f), 2f)
+    }
+}
+
+/** Weltraum ohne Boden: Startrampe und ein feines Raster zur Orientierung. */
+private fun DrawScope.drawOrbitScene(l: Level, px: (Vec) -> Offset, unit: Float, t: Float) {
+    for (i in -10..10 step 2) {
+        drawLine(Q.Grid, px(Vec(i.toDouble(), -Flight.R)), px(Vec(i.toDouble(), Flight.R)), 1f)
+        drawLine(Q.Grid, px(Vec(-Flight.R, i.toDouble())), px(Vec(Flight.R, i.toDouble())), 1f)
+    }
+    val lo = px(l.launch)
+    drawCircle(Color(0xFF2B3266), unit * 0.6f, lo)
+    drawCircle(Q.Cyan, unit * 0.6f, lo, style = Stroke(unit * 0.1f))
+}
+
+/** Planet mit Schwerkraft-Feld: Ringe zeigen, wie weit er zieht (mehr Masse → größeres Feld). */
+private fun DrawScope.drawPlanet(o: Offset, r: Float, mass: Double, seed: Int, t: Float) {
+    val colors = listOf(Color(0xFF7C4DFF) to Color(0xFF3D1A99), Color(0xFFFF8A3D) to Color(0xFF8A3300), Color(0xFF26C6DA) to Color(0xFF00616D))
+    val (c1, c2) = colors[seed % colors.size]
+    val field = (kotlin.math.sqrt(mass) * 0.75).toFloat() * r / 1.4f
+    // Feldlinien: nach innen wandernde Ringe
+    for (k in 0 until 3) {
+        val ph = ((t * 0.35f + k / 3f) % 1f)
+        val rr = r + (field * 2.2f) * (1 - ph)
+        drawCircle(c1.copy(alpha = 0.25f * ph), rr, o, style = Stroke(2.5f))
+    }
+    drawCircle(Brush.radialGradient(listOf(c1.copy(alpha = 0.35f), Color.Transparent), o, r * 2.2f), r * 2.2f, o)
+    drawCircle(Brush.radialGradient(listOf(c1, c2), o - Offset(r * 0.3f, r * 0.3f), r * 1.6f), r, o)
+    drawArc(Color.White.copy(alpha = 0.15f), 200f, 80f, false, o - Offset(r * 0.75f, r * 0.75f), Size(r * 1.5f, r * 1.5f), style = Stroke(r * 0.12f))
 }
 
 private fun DrawScope.drawPathLine(path: List<Vec>, px: (Vec) -> Offset, color: Color, width: Float, dashed: Boolean) {

@@ -7,6 +7,7 @@ import de.kurvenflug.core.data.AppContainer
 class KurvenflugApp : Application() {
     lateinit var container: AppContainer
         private set
+    val music: de.kurvenflug.app.ui.fx.BackgroundMusic by lazy { de.kurvenflug.app.ui.fx.BackgroundMusic(this) }
     val sfx: Sfx by lazy { Sfx(this).also { it.enabled = container.settings.sound.value } }
 
     override fun onCreate() {

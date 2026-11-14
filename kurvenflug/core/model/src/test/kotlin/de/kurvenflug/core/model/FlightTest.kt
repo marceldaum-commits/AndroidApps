@@ -88,4 +88,27 @@ class FlightTest {
             {"tag_name":"kurvenflug-v0.2.0","body":"neu","assets":[{"name":"Kurvenflug-0.2.0.apk","browser_download_url":"q","size":5}]}]"""
         assertEquals("0.2.0", Updates.latest(json)!!.version)
     }
+
+    @Test fun sineAndExpFollowTheirFormulas() {
+        val sine = Levels.byId("5-4")!!
+        assertEquals(3 * kotlin.math.sin(2 * 1.0) - 1, Flight.f(sine, mapOf("a" to 3.0, "b" to 2.0, "d" to -1.0), 1.0), 1e-9)
+        val exp = Levels.byId("5-6")!!
+        assertEquals(27.0, Flight.f(exp, mapOf("b" to 3.0), 3.0), 1e-9)
+    }
+
+    @Test fun gravityBendsTowardsThePlanet() {
+        val l = Levels.byId("6-1")!!
+        // Ohne Planet flöge die Sonde bei 0° geradeaus auf y = 0; mit Planet stürzt sie hinein
+        assertNotNull(Flight.fly(l, mapOf("angle" to 0.0)).crash)
+        // Leicht nach oben gezielt: die Bahn wird zum Planeten hin (nach unten) gebogen
+        val p = Flight.path(l, mapOf("angle" to 20.0))
+        val straightY = l.launch.y + kotlin.math.tan(Math.toRadians(20.0)) * (0.0 - l.launch.x)
+        assertTrue(p.first { it.x >= 0 }.y < straightY - 0.5)
+    }
+
+    @Test fun planetCrashHasOwnMessage() {
+        val l = Levels.byId("6-1")!!
+        val r = Flight.fly(l, mapOf("angle" to 0.0))
+        assertTrue(Feedback.after(l, mapOf("angle" to 0.0), r).contains("Planet"))
+    }
 }

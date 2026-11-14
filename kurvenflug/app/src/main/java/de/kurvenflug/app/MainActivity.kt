@@ -27,7 +27,11 @@ import de.kurvenflug.app.ui.settings.UpdateBanner
 import de.kurvenflug.app.ui.settings.UpdateState
 import de.kurvenflug.app.ui.theme.Q
 import de.kurvenflug.app.ui.theme.KurvenflugTheme
+import de.kurvenflug.core.model.Chapter
+import de.kurvenflug.core.model.Daily
 import de.kurvenflug.core.model.Levels
+import de.kurvenflug.core.model.MusicMood
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 object Routes {
     const val HOME = "start"
@@ -53,10 +57,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val app = application as KurvenflugApp
         if (savedInstanceState == null) vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
+        (application as KurvenflugApp).music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
             val vibration by vm.settings.vibration.collectAsStateWithLifecycle()
+            val music by vm.settings.music.collectAsStateWithLifecycle()
             LaunchedEffect(sound) { app.sfx.enabled = sound }
+            LaunchedEffect(music) { app.music.setEnabled(music) }
             KurvenflugTheme {
                 CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration) {
                     Surface(Modifier.fillMaxSize(), color = Q.Space) { Nav() }
@@ -65,9 +72,18 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onStart() { super.onStart(); (application as KurvenflugApp).music.onForeground(true) }
+    override fun onStop() { (application as KurvenflugApp).music.onForeground(false); super.onStop() }
+
     @Composable
     private fun Nav() {
         val nav = rememberNavController()
+        // Musik passend zum Bildschirm: ruhig im Menü, treibend im Level
+        val entry by nav.currentBackStackEntryAsState()
+        val route = entry?.destination?.route
+        LaunchedEffect(route) {
+            (application as KurvenflugApp).music.setMood(if (route == Routes.LEVEL) MusicMood.FLIGHT else MusicMood.MENU)
+        }
         val stars by vm.stars.collectAsStateWithLifecycle()
         val cells by vm.totalCells.collectAsStateWithLifecycle()
         val skin by vm.skin.collectAsStateWithLifecycle()
@@ -75,22 +91,30 @@ class MainActivity : ComponentActivity() {
         NavHost(nav, Routes.HOME) {
             composable(Routes.HOME) {
                 val upd by vm.availableUpdate.collectAsStateWithLifecycle()
+                val progress by vm.progress.collectAsStateWithLifecycle()
+                val dailiesDone by vm.dailiesDone.collectAsStateWithLifecycle()
+                val daily = remember(progress) { vm.daily() }
                 HomeScreen(
                     stars = stars.values.sum(), maxStars = vm.maxStars, cells = cells, skin = skin,
                     onSkin = vm::setSkin,
                     chapters = Levels.chapters, levelStars = stars,
                     onLevel = { nav.goOnce(Routes.level(it.id)) },
                     onSettings = { nav.goOnce(Routes.SETTINGS) },
+                    daily = daily, dailyStars = progress[daily.id]?.stars ?: 0, dailiesDone = dailiesDone,
                     banner = upd?.let { u -> { UpdateBanner(u.version) { nav.goOnce(Routes.SETTINGS) } } },
                 )
             }
             composable(Routes.LEVEL, arguments = listOf(navArgument("id") { type = NavType.StringType })) { e ->
-                val level = Levels.byId(e.arguments?.getString("id").orEmpty()) ?: return@composable
-                val chapter = Levels.chapters.first { it.number == level.chapter }
+                val id = e.arguments?.getString("id").orEmpty()
+                val level = remember(id) {
+                    if (Daily.isDaily(id)) id.removePrefix(Daily.PREFIX).toLongOrNull()?.let { Daily.forDay(it) } else Levels.byId(id)
+                } ?: return@composable
+                val chapter = Levels.chapters.firstOrNull { it.number == level.chapter }
+                    ?: Chapter(0, "Tagesmission", "Jeden Tag neu", "🛰️", emptyList(), listOf(level))
                 val next = Levels.next(level.id)?.takeIf { it.chapter == level.chapter }
                 LevelScreen(
                     level = level, chapter = chapter, probeColor = probeColor,
-                    showIntro = level.number == 1 && !vm.settings.introSeen(chapter.number),
+                    showIntro = level.number == 1 && chapter.intro.isNotEmpty() && !vm.settings.introSeen(chapter.number),
                     onIntroSeen = { vm.settings.markIntroSeen(chapter.number) },
                     onSolved = { s, c, a -> vm.record(level.id, s, c, a) },
                     onNext = next?.let { n -> {
@@ -104,7 +128,9 @@ class MainActivity : ComponentActivity() {
                 val autoUpd by vm.settings.autoUpdate.collectAsStateWithLifecycle()
                 val sound by vm.settings.sound.collectAsStateWithLifecycle()
                 val vibration by vm.settings.vibration.collectAsStateWithLifecycle()
+                val music by vm.settings.music.collectAsStateWithLifecycle()
                 SettingsScreen(
+                    music = music, onMusic = vm.settings::setMusic,
                     sound = sound, onSound = vm.settings::setSound,
                     vibration = vibration, onVibration = vm.settings::setVibration,
                     autoUpdate = autoUpd, onAutoUpdate = vm.settings::setAutoUpdate,

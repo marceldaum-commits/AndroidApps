@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import de.kurvenflug.core.data.LevelProgress
 import de.kurvenflug.core.model.AppRelease
+import de.kurvenflug.core.model.Daily
 import de.kurvenflug.core.model.Levels
 import de.kurvenflug.core.model.Updates
 import kotlinx.coroutines.flow.*
@@ -17,13 +18,22 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val progress: StateFlow<Map<String, LevelProgress>> = c.progress.all.map { l -> l.associateBy { it.levelId } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
-    val stars: StateFlow<Map<String, Int>> = progress.map { m -> m.mapValues { it.value.stars } }
+    /** Sterne der Kapitel-Level (Tagesmissionen zählen extra) */
+    val stars: StateFlow<Map<String, Int>> = progress.map { m -> m.filterKeys { !Daily.isDaily(it) }.mapValues { it.value.stars } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
     val totalCells: StateFlow<Int> = progress.map { m -> m.values.sumOf { Integer.bitCount(it.cellMask) } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
     val maxStars = Levels.all.size * 3
+
+    /** Heutiger Tag (Ortszeit) – daraus wird die Tagesmission gebaut */
+    fun today(): Long = java.time.LocalDate.now().toEpochDay()
+    fun daily() = Daily.forDay(today())
+
+    /** Wie viele Tagesmissionen schon geschafft wurden */
+    val dailiesDone: StateFlow<Int> = progress.map { m -> m.keys.count { Daily.isDaily(it) } }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, 0)
 
     private val _skin = MutableStateFlow(settings.skin)
     val skin: StateFlow<Int> = _skin

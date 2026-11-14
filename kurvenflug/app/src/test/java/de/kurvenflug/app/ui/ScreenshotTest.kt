@@ -47,7 +47,8 @@ class ScreenshotTest {
     }
 
     @Test fun home() = shot("01_start") {
-        HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {})
+        HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {},
+            daily = de.kurvenflug.core.model.Daily.forDay(20_500), dailiesDone = 4)
     }
 
     @Test fun intro() = shot("03_volt_erklaert", prepare = { it.onNodeWithText("Weiter ›").performClick() }) {
@@ -74,6 +75,25 @@ class ScreenshotTest {
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
     @Test fun settings() = shot("11_einstellungen") {
-        SettingsScreen(true, {}, true, {}, true, {}, "0.1.0", UpdateState.Idle, {})
+        SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "0.2.0", update = UpdateState.Idle, onBack = {})
+    }
+
+    @Test fun sine() = level("5-4", name = "12_sinus", values = mapOf("a" to 2.0, "b" to 1.0, "d" to -1.0), settle = 3500,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun exponential() = level("5-7", name = "13_zerfall", values = mapOf("b" to 0.75))
+
+    @Test fun slingshot() = level("6-4", name = "14_schwerkraft_schleuder", values = mapOf("angle" to 0.0, "v" to 3.5), settle = 1600,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun slingshotHelp() = level("6-3", name = "15_schleuder_ganze_bahn", values = mapOf("angle" to 70.0, "v" to 7.0),
+        prepare = { it.onNodeWithText("👁 Ganze Bahn").performClick() })
+
+    @Test fun daily() {
+        val l = de.kurvenflug.core.model.Daily.forDay(20_501)
+        shot("16_tagesmission") {
+            LevelScreen(l, de.kurvenflug.core.model.Chapter(0, "Tagesmission", "Jeden Tag neu", "🛰️", emptyList(), listOf(l)),
+                Q.Pink, false, {}, { _, _, _ -> }, null, {})
+        }
     }
 }

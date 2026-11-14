@@ -3,7 +3,8 @@
 Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
 selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).
 
-Inhalte: Koordinaten (Kl. 5–6), Geraden (Kl. 7–8), Parabeln (Kl. 9), schräger Wurf auf Erde/Mond/Mars (Physik).
+Inhalte (39 Level in 6 Kapiteln + tägliche Mission): Koordinaten (Kl. 5–6), Geraden (Kl. 7–8), Parabeln (Kl. 9),
+schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10).
 
 ## So funktioniert Kurvenflug
 - Die Sonde fliegt auf der eingestellten Bahn: `(x | y)`, `y = m·x + b`, `y = a·(x − d)² + e` oder Wurf mit `α`, `v`, `g`.
@@ -19,10 +20,12 @@ Inhalte: Koordinaten (Kl. 5–6), Geraden (Kl. 7–8), Parabeln (Kl. 9), schräg
 | ![](screenshots/01_start.png) | ![](screenshots/03_volt_erklaert.png) | ![](screenshots/04_koordinaten.png) |
 | ![](screenshots/05_gerade_zielen.png) | ![](screenshots/06_gerade_daneben.png) | ![](screenshots/07_gerade_flug.png) |
 | ![](screenshots/08_parabel_geschafft.png) | ![](screenshots/09_wurf_berg.png) | ![](screenshots/10_wurf_mond.png) |
-| ![](screenshots/11_einstellungen.png) | | |
+| ![](screenshots/12_sinus.png) | ![](screenshots/13_zerfall.png) | ![](screenshots/14_schwerkraft_schleuder.png) |
+| ![](screenshots/15_schleuder_ganze_bahn.png) | ![](screenshots/16_tagesmission.png) | ![](screenshots/11_einstellungen.png) |
 
 ## Aufbau
-- `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Kollisionen, Level, Rückmeldungen, Update-Prüfung (Unit-Tests)
+- `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,
+  Musik-Komposition, Rückmeldungen, Update-Prüfung (Unit-Tests; Tagesmission für 3 Jahre auf Lösbarkeit geprüft)
 - `core/data` – Fortschritt (Room, Bestwerte bleiben), Einstellungen
 - `app` – Compose-Oberfläche, Volt, im Code erzeugte Geräusche, Updater
 

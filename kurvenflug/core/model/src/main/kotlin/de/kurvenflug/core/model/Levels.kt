@@ -24,6 +24,8 @@ data class Level(
     val planet: Planet = Planet.EARTH,
     val launch: Vec = Vec(-9.0, -9.0),
     val ground: Double = -9.5,
+    /** Masse je Asteroid/Planet (gleiche Reihenfolge wie [asteroids]); > 0 heißt: zieht die Sonde an */
+    val masses: List<Double> = emptyList(),
     /** Tipp nach dem zweiten Fehlversuch */
     val tip: String,
 ) {
@@ -47,7 +49,9 @@ data class Chapter(
 object Feedback {
     fun after(level: Level, values: Map<String, Double>, r: FlightResult): String {
         if (r.success) return ""
-        if (r.crash != null) return "Bumm – Asteroid! ☄️ Die Bahn muss an ihm vorbei."
+        if (r.crash != null) return if (level.masses.getOrElse(r.crash) { 0.0 } > 0)
+            "Eingefangen! 🪐 Der Planet hat dich angezogen. Schneller sein oder weiter an ihm vorbeizielen."
+        else "Bumm – Asteroid! ☄️ Die Bahn muss an ihm vorbei."
         val missing = level.targets.indices.firstOrNull { it !in r.hitTargets } ?: 0
         val t = level.targets[missing]
         val v = level.values(values)
@@ -60,11 +64,17 @@ object Feedback {
                     else -> "x stimmt! Jetzt noch die Höhe (y) – oben ist plus, unten minus."
                 }
             }
-            Kind.LINE, Kind.PARABOLA -> {
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP -> {
                 val y = Flight.f(level, values, t.x)
                 if (abs(y) > Flight.R) "Bei x = ${num(t.x)} ist deine Kurve ganz aus dem Bild (y = ${num(y)}). Ziel: y = ${num(t.y)}."
                 else "Bei x = ${num(t.x)} war die Sonde bei y = ${num(y)} – das Ziel liegt bei y = ${num(t.y)}. " +
                     (if (y < t.y) "Etwas höher! ⬆️" else "Etwas tiefer! ⬇️")
+            }
+            Kind.ORBIT -> {
+                val near = r.path.minByOrNull { kotlin.math.hypot(it.x - t.x, it.y - t.y) } ?: return "Nochmal!"
+                val d = kotlin.math.hypot(near.x - t.x, near.y - t.y) - t.r
+                val side = if (near.y > t.y) "über" else "unter"
+                "Knapp ${num(d, 1)} Kästchen $side der Station vorbei. Winkel oder Tempo ein bisschen ändern – die Planeten lenken mit!"
             }
             Kind.THROW -> {
                 val land = r.path.lastOrNull() ?: return "Nochmal!"
@@ -96,6 +106,15 @@ object Levels {
     private val pe = p("e", "e", -9.0, 9.0, 1.0, 0.0)
     private val pAngle = p("angle", "Winkel", 5.0, 85.0, 1.0, 45.0, "°")
     private fun pV(start: Double = 8.0) = p("v", "Tempo", 1.0, 20.0, 0.5, start, "m/s")
+    private val sa = p("a", "a", -5.0, 5.0, 0.5, 1.0)
+    private val sb = p("b", "b", 0.25, 3.0, 0.25, 1.0)
+    private val sd = p("d", "d", -8.0, 8.0, 1.0, 0.0)
+    private val ea = p("a", "a", 0.25, 4.0, 0.25, 1.0)
+    private val eb = p("b", "b", 0.25, 4.0, 0.25, 1.0)
+    private val oAngle = p("angle", "Winkel", -80.0, 80.0, 1.0, 0.0, "°")
+    private val oV = p("v", "Tempo", 1.0, 10.0, 0.5, 4.0)
+    private const val PI = Math.PI
+    private fun planet(x: Double, y: Double, r: Double) = Body(x, y, r)
 
     val chapters: List<Chapter> = listOf(
         Chapter(
@@ -234,7 +253,7 @@ object Levels {
             ),
         ),
         Chapter(
-            4, "Wurf & Schwerkraft", "Physik Klasse 7–10", "🪐",
+            4, "Wurf & Schwerkraft", "Physik Klasse 7–10", "🎯",
             listOf(
                 "Jetzt echte Physik: Du schießt eine Kapsel mit Tempo v und Winkel α ab. Die Schwerkraft zieht sie nach unten.",
                 "Waagerecht fliegt sie gleichmäßig: x = v · cos α · t. Senkrecht wird sie gebremst: y = v · sin α · t − ½ · g · t².",
@@ -270,6 +289,91 @@ object Levels {
                     listOf(t(9.0, -9.0, 0.8)), listOf(pAngle, pV(3.0)), mapOf("angle" to 35.0, "v" to 5.5),
                     planet = Planet.MOON, asteroids = listOf(Body(0.0, -2.5, 1.3)),
                     tip = "Flacher als 45°, z. B. 35°: v² = 18 · 1,62 : sin(70°)."),
+            ),
+        ),
+
+        Chapter(
+            5, "Wellen & Wachstum", "Klasse 10", "🌊",
+            listOf(
+                "Funkwellen und Bakterien! Jetzt fliegt die Sonde auf Schwingungen und Wachstumskurven.",
+                "Sinus: y = a · sin(b · x) + d. a ist die Amplitude – so hoch schlägt die Welle aus.",
+                "b staucht die Welle: Eine ganze Schwingung ist 2π : b lang. d schiebt alles nach oben oder unten.",
+                "Exponentiell: y = a · bˣ. Pro Kästchen nach rechts wird mit b malgenommen – b > 1 wächst, b < 1 zerfällt.",
+            ),
+            listOf(
+                Level("5-1", 5, 1, "Wellenreiter", Kind.SINE,
+                    "y = a · sin(x). Der Wellenberg bei x = π/2 ≈ 1,57 soll die Station (1,57 | 3) treffen.",
+                    listOf(t(PI / 2, 3.0)), listOf(sa), mapOf("a" to 3.0), fixed = mapOf("b" to 1.0, "d" to 0.0),
+                    cells = listOf(cell(-PI / 2, -3.0)),
+                    tip = "sin(π/2) = 1. Also ist der Berg genau a hoch."),
+                Level("5-2", 5, 2, "Lange Welle", Kind.SINE,
+                    "y = 3 · sin(b · x). Der erste Wellenberg soll erst bei x = π ≈ 3,14 kommen.",
+                    listOf(t(PI, 3.0)), listOf(sb), mapOf("b" to 0.5), fixed = mapOf("a" to 3.0, "d" to 0.0),
+                    asteroids = listOf(rock(PI / 2, 3.6, 0.6)),
+                    tip = "Der Berg liegt dort, wo b · x = π/2 ist. Mit x = π: b · π = π/2."),
+                Level("5-3", 5, 3, "Höhenflug", Kind.SINE,
+                    "y = 2 · sin(x) + d. Das Wellental bei x = −π/2 soll die Station (−1,57 | 3) treffen.",
+                    listOf(t(-PI / 2, 3.0)), listOf(sd), mapOf("d" to 5.0), fixed = mapOf("a" to 2.0, "b" to 1.0),
+                    cells = listOf(cell(-4.0, 2 * kotlin.math.sin(-4.0) + 5)),
+                    tip = "sin(−π/2) = −1, also −2 + d = 3."),
+                Level("5-4", 5, 4, "Wellentunnel", Kind.SINE,
+                    "Alle drei Regler! Durch (0 | −1) und den Wellenberg (1,57 | 2).",
+                    listOf(t(0.0, -1.0), t(PI / 2, 2.0)), listOf(sa, sb, sd), mapOf("a" to 3.0, "b" to 1.0, "d" to -1.0),
+                    asteroids = listOf(rock(-3.0, 3.0), rock(3.5, 4.0)),
+                    tip = "Bei x = 0 ist sin = 0 – die Station dort verrät dir d. Dann: Berg = a + d."),
+                Level("5-5", 5, 5, "Verdopplung", Kind.EXP,
+                    "Bakterien verdoppeln sich: y = a · 2ˣ. Die Kurve soll durch (3 | 4).",
+                    listOf(t(3.0, 4.0)), listOf(ea), mapOf("a" to 0.5), fixed = mapOf("b" to 2.0, "d" to 0.0),
+                    cells = listOf(cell(1.0, 1.0)),
+                    tip = "2³ = 8. Also a · 8 = 4."),
+                Level("5-6", 5, 6, "Wachstumsrate", Kind.EXP,
+                    "y = bˣ. Welcher Wachstumsfaktor b bringt dich nach (2 | 9)?",
+                    listOf(t(2.0, 9.0)), listOf(eb), mapOf("b" to 3.0), fixed = mapOf("a" to 1.0, "d" to 0.0),
+                    asteroids = listOf(rock(3.0, 8.0, 0.7)), cells = listOf(cell(1.0, 3.0)),
+                    tip = "b² = 9. Welche Zahl mal sich selbst ist 9?"),
+                Level("5-7", 5, 7, "Zerfall", Kind.EXP,
+                    "Radioaktiver Zerfall: y = 8 · bˣ. Nach 3 Kästchen ist nur noch 1 übrig – Station (3 | 1).",
+                    listOf(t(3.0, 1.0)), listOf(eb), mapOf("b" to 0.5), fixed = mapOf("a" to 8.0, "d" to 0.0),
+                    cells = listOf(cell(1.0, 4.0)),
+                    tip = "8 · b³ = 1 → b³ = 1/8. Jedes Kästchen halbiert sich der Wert: Halbwertszeit 1!"),
+            ),
+        ),
+        Chapter(
+            6, "Schwerkraft-Schleuder", "Physik Klasse 10", "🪐",
+            listOf(
+                "Jetzt wird's wie bei echten Raumsonden: Planeten ziehen dich an!",
+                "Gravitationsgesetz: F = G · m · M / r². Doppelte Masse M → doppelte Kraft. Doppelter Abstand r → nur ein Viertel der Kraft.",
+                "Fliegst du nah vorbei, wird deine Bahn stark gebogen. Schnell vorbei → weniger Ablenkung.",
+                "So holen sich echte Sonden wie Voyager Schwung. Stell Winkel und Tempo ein – die Planeten lenken mit!",
+            ),
+            listOf(
+                Level("6-1", 6, 1, "Um die Ecke", Kind.ORBIT,
+                    "Die Station liegt genau hinter dem Planeten. Tempo 5 ist fest – welcher Winkel biegt dich drumherum?",
+                    listOf(t(8.5, 0.0, 0.8)), listOf(oAngle), mapOf("angle" to -20.0), fixed = mapOf("v" to 5.0),
+                    asteroids = listOf(planet(0.0, 0.0, 1.6)), masses = listOf(25.0), launch = Vec(-9.0, 0.0),
+                    tip = "Zielst du etwas am Planeten vorbei, zieht er dich zur Station zurück. Probier Winkel um −20°."),
+                Level("6-2", 6, 2, "Abwärts", Kind.ORBIT,
+                    "Die Station liegt tief unten rechts. Lass dich vom großen Planeten hinunterziehen.",
+                    listOf(t(7.0, -7.0, 0.8)), listOf(oAngle, oV), mapOf("angle" to -55.0, "v" to 4.5),
+                    asteroids = listOf(planet(1.0, -2.0, 1.5), rock(6.0, 2.0)), masses = listOf(35.0, 0.0), launch = Vec(-9.0, 5.0),
+                    tip = "Steil nach unten zielen (etwa −55°) und nicht zu schnell."),
+                Level("6-3", 6, 3, "Kehrtwende", Kind.ORBIT,
+                    "Die Station liegt hinter dir oben links! Schwing dich um den Planeten herum zurück.",
+                    listOf(t(-7.0, 6.0, 0.8)), listOf(oAngle, oV), mapOf("angle" to 75.0, "v" to 7.0),
+                    asteroids = listOf(planet(2.0, 1.0, 1.4)), masses = listOf(40.0), launch = Vec(-9.0, -3.0),
+                    tip = "Fast senkrecht nach oben (um 75°) und schnell – dann holt dich der Planet in einem Bogen zurück."),
+                Level("6-4", 6, 4, "Doppelzug", Kind.ORBIT,
+                    "Zwei Planeten ziehen gleichzeitig. Ziel: die Station oben rechts.",
+                    listOf(t(8.0, 7.0, 0.8)), listOf(oAngle, oV), mapOf("angle" to 0.0, "v" to 3.5),
+                    asteroids = listOf(planet(-2.0, -3.0, 1.3), planet(4.0, 3.0, 1.2), rock(1.0, 8.0)), masses = listOf(25.0, 25.0, 0.0),
+                    launch = Vec(-9.0, -8.0),
+                    tip = "Flach starten (0°), ein bisschen langsamer als 4 – die Planeten heben dich hoch."),
+                Level("6-5", 6, 5, "Slalom", Kind.ORBIT,
+                    "Zwischen zwei Planeten hindurch zur Station oben rechts.",
+                    listOf(t(8.5, 5.0, 0.8)), listOf(oAngle, oV), mapOf("angle" to -1.0, "v" to 4.0),
+                    asteroids = listOf(planet(-4.0, 3.0, 1.2), planet(3.0, -2.0, 1.2), rock(2.0, 6.0)), masses = listOf(20.0, 30.0, 0.0),
+                    launch = Vec(-9.0, -6.0),
+                    tip = "Fast waagerecht (um 0°) mit Tempo 4 – die Planeten machen den Rest."),
             ),
         ),
     )

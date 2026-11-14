@@ -39,7 +39,7 @@ class LevelFlowTest {
         rule.onNodeWithText("🚀 Start").performClick()
         rule.mainClock.advanceTimeBy(4000)
         assertEquals(listOf(Triple(2, emptySet<Int>(), 2)), solved)
-        rule.onNodeWithText("Kapitel fertig! 🏆").assertExists()
+        rule.onNodeWithText("Fertig! 🏆").assertExists()
         // Start ist gesperrt – kein zweites Speichern durch Doppeltipp
         rule.onNodeWithText("🚀 Start").performClick()
         rule.mainClock.advanceTimeBy(4000)

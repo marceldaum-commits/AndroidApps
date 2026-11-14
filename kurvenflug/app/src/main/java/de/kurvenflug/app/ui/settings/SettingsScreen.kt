@@ -15,6 +15,7 @@ import de.kurvenflug.app.ui.theme.Q
 
 @Composable
 fun SettingsScreen(
+    music: Boolean = true, onMusic: (Boolean) -> Unit = {},
     sound: Boolean, onSound: (Boolean) -> Unit,
     vibration: Boolean, onVibration: (Boolean) -> Unit,
     autoUpdate: Boolean, onAutoUpdate: (Boolean) -> Unit,
@@ -32,6 +33,7 @@ fun SettingsScreen(
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    Toggle("🎵 Musik", "Leise Weltraum-Klänge im Hintergrund", music, onMusic)
                     Toggle("🔊 Geräusche", "Start, Treffer, Volts Piepsen", sound, onSound)
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
                 }
@@ -42,7 +44,8 @@ fun SettingsScreen(
                     Text("Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
                         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinatensystem (Kl. 5/6), lineare Funktionen (Kl. 7/8), quadratische Funktionen in Scheitelform (Kl. 9), " +
-                        "schräger Wurf mit Fallbeschleunigung auf Erde, Mond und Mars (Physik).", style = MaterialTheme.typography.bodySmall)
+                        "schräger Wurf mit Fallbeschleunigung auf Erde, Mond und Mars (Physik), Sinus- und Exponentialfunktionen (Kl. 10), " +
+                        "Gravitation und Swing-by an Planeten (Physik Kl. 10).", style = MaterialTheme.typography.bodySmall)
                     Text("Version $installed", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                 }
             }

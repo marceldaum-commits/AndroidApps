@@ -22,6 +22,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,6 +49,9 @@ fun HomeScreen(
     levelStars: Map<String, Int>,
     onLevel: (de.kurvenflug.core.model.Level) -> Unit,
     onSettings: () -> Unit,
+    daily: de.kurvenflug.core.model.Level? = null,
+    dailyStars: Int = 0,
+    dailiesDone: Int = 0,
     banner: (@Composable () -> Unit)? = null,
 ) {
     Box(Modifier.fillMaxSize()) {
@@ -67,6 +71,7 @@ fun HomeScreen(
                 Stat("⭐", "$stars / $maxStars", Q.Yellow, Modifier.weight(1f))
                 Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
             }
+            daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
             chapters.forEachIndexed { i, c -> de.kurvenflug.app.ui.flight.ChapterCard(c, i, levelStars, onLevel) }
             // Hangar: Sonden-Farbe
             Text("Hangar – deine Sonde", style = MaterialTheme.typography.titleMedium, color = Q.Text)
@@ -94,5 +99,37 @@ private fun Stat(icon: String, value: String, color: Color, modifier: Modifier) 
     Row(modifier.clip(RoundedCornerShape(14.dp)).background(Q.Panel).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
         Text(icon, fontSize = 20.sp); Spacer(Modifier.width(8.dp))
         Text(value, color = color, fontWeight = FontWeight.Black, fontSize = 18.sp)
+    }
+}
+
+/** Tagesmission: jeden Tag eine neue, für alle gleich. Kein Druck – verpasste Tage verfallen einfach. */
+@Composable
+private fun DailyCard(l: de.kurvenflug.core.model.Level, stars: Int, done: Int, onClick: () -> Unit) {
+    val interaction = remember { MutableInteractionSource() }
+    val sfx = LocalSfx.current
+    val kind = when (l.kind) {
+        de.kurvenflug.core.model.Kind.LINE -> "Gerade 📈"
+        de.kurvenflug.core.model.Kind.PARABOLA -> "Parabel 🌙"
+        de.kurvenflug.core.model.Kind.EXP -> "Wachstum 🦠"
+        de.kurvenflug.core.model.Kind.THROW -> "Wurf ${l.planet.emoji}"
+        else -> "Überraschung"
+    }
+    val wobble by rememberInfiniteTransition(label = "sat").animateFloat(-10f, 10f,
+        infiniteRepeatable(tween(1400, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "w")
+    Row(
+        Modifier.fillMaxWidth().pressBounce(interaction).pulse(stars == 0, 0.015f).clip(RoundedCornerShape(20.dp))
+            .background(Brush.horizontalGradient(listOf(Q.Violet.copy(alpha = 0.35f), Q.Panel)))
+            .border(2.dp, if (stars == 0) Q.Violet else Q.Green.copy(alpha = 0.6f), RoundedCornerShape(20.dp))
+            .clickable(interaction, null) { sfx?.play(Sound.TAP); onClick() }.padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text("🛰️", fontSize = 36.sp, modifier = Modifier.graphicsLayer { rotationZ = wobble })
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text("Tagesmission", style = MaterialTheme.typography.titleMedium, color = Q.Text)
+            Text("Heute: $kind · jeden Tag neu", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+            if (done > 0) Text("Schon $done Missionen geschafft", style = MaterialTheme.typography.labelSmall, color = Q.Violet)
+        }
+        Text(if (stars > 0) "★".repeat(stars) + "☆".repeat(3 - stars) else "Los ›", color = if (stars > 0) Q.Yellow else Q.Violet, fontWeight = FontWeight.Black)
     }
 }

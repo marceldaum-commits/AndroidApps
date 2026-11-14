@@ -22,8 +22,14 @@ data class Body(val x: Double, val y: Double, val r: Double) {
  * - [LINE]: Geraden y = m·x + b (Kl. 7/8)
  * - [PARABOLA]: Parabeln in Scheitelform y = a·(x − d)² + e (Kl. 9)
  * - [THROW]: schräger Wurf mit Winkel und Geschwindigkeit auf Erde, Mond, Mars (Physik Kl. 7–10)
+ * - [SINE]: Schwingungen y = a·sin(b·x) + d (Kl. 10)
+ * - [EXP]: Wachstum und Zerfall y = a·bˣ + d (Kl. 10)
+ * - [ORBIT]: Schwerkraft-Schleuder – Planeten ziehen die Sonde an, Kraft ~ M / r² (Physik Kl. 10)
  */
-enum class Kind { POINT, LINE, PARABOLA, THROW }
+enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT }
+
+/** Hat diese Spielart eine Funktionsgleichung y = f(x)? */
+val Kind.isFunction get() = this == Kind.LINE || this == Kind.PARABOLA || this == Kind.SINE || this == Kind.EXP
 
 /** Einstellbarer Wert in der Formel. */
 data class Param(
@@ -63,12 +69,14 @@ object Flight {
     const val R = 10.0
     private const val STEP = 0.02
 
-    /** Wert der Funktion an der Stelle x (nur für LINE/PARABOLA). */
+    /** Wert der Funktion an der Stelle x (nur für Funktions-Level). */
     fun f(level: Level, v: Map<String, Double>, x: Double): Double {
         val p = level.values(v)
         return when (level.kind) {
             Kind.LINE -> p.getValue("m") * x + p.getValue("b")
             Kind.PARABOLA -> p.getValue("a") * (x - p.getValue("d")).let { it * it } + p.getValue("e")
+            Kind.SINE -> p.getValue("a") * sin(p.getValue("b") * x) + p.getValue("d")
+            Kind.EXP -> p.getValue("a") * Math.pow(p.getValue("b"), x) + p.getValue("d")
             else -> error("keine Funktion")
         }
     }
@@ -82,7 +90,7 @@ object Flight {
                 val x = v.getValue("x"); val y = v.getValue("y")
                 line(Vec(0.0, 0.0), Vec(x, 0.0)) + line(Vec(x, 0.0), Vec(x, y)).drop(1)
             }
-            Kind.LINE, Kind.PARABOLA -> {
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP -> {
                 // Sichtbarer Teil des Graphen von links nach rechts – die Sonde „springt“ am Rand ins Bild
                 val out = ArrayList<Vec>()
                 var x = -R
@@ -108,7 +116,46 @@ object Flight {
                 }
                 out
             }
+            Kind.ORBIT -> orbit(level, v)
         }
+    }
+
+    /** Gravitationskonstante im Spiel (Einheiten so gewählt, dass Massen 10–60 gut spielbar sind). */
+    const val G = 1.0
+
+    /**
+     * Schwerkraft-Schleuder: Jeder Planet zieht mit a = G·M / r² in seine Richtung.
+     * Schritt für Schritt gerechnet (Leapfrog-Verfahren – hält die Energie stabil, keine falschen Spiralen).
+     */
+    private fun orbit(level: Level, v: Map<String, Double>): List<Vec> {
+        val a = Math.toRadians(v.getValue("angle")); val s = v.getValue("v")
+        var x = level.launch.x; var y = level.launch.y
+        var vx = s * cos(a); var vy = s * sin(a)
+        val wells = level.asteroids.zip(level.masses).filter { it.second > 0 }
+        fun acc(px: Double, py: Double): Pair<Double, Double> {
+            var ax = 0.0; var ay = 0.0
+            for ((b, m) in wells) {
+                val dx = b.x - px; val dy = b.y - py
+                val r2 = dx * dx + dy * dy
+                val r = kotlin.math.sqrt(r2)
+                ax += G * m * dx / (r2 * r); ay += G * m * dy / (r2 * r)
+            }
+            return ax to ay
+        }
+        val out = arrayListOf(Vec(x, y))
+        var t = 0.0
+        var (ax, ay) = acc(x, y)
+        while (t < 40 && out.size < 6000) {
+            val dt = STEP / max(0.5, hypot(vx, vy))
+            vx += 0.5 * dt * ax; vy += 0.5 * dt * ay
+            x += dt * vx; y += dt * vy
+            acc(x, y).let { ax = it.first; ay = it.second }
+            vx += 0.5 * dt * ax; vy += 0.5 * dt * ay
+            t += dt
+            out += Vec(x, y)
+            if (abs(x) > R + 0.5 || abs(y) > R + 0.5) break
+        }
+        return out
     }
 
     /** Fliegt die Bahn ab: Ziele, Energiezellen, Asteroiden. */
