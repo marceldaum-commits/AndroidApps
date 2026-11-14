@@ -20,6 +20,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
@@ -203,12 +205,17 @@ fun ChestReveal(onOpen: () -> Friend?, onClose: () -> Unit) {
                 Canvas(Modifier.fillMaxSize().graphicsLayer { translationY = -bob * 10f * density * (1 - face.value) }) {
                     drawChest3D(yaw = spin * (1 - face.value) + 0f, open = lid.value, glow = glow.value, wobble = shake.value)
                 }
+                // Freund steigt aus dem Inneren: alles unterhalb der Vorderkante wird abgeschnitten
                 friend?.let { f ->
-                    Text(f.emoji, fontSize = 96.sp, modifier = Modifier.align(Alignment.Center).graphicsLayer {
-                        translationY = 40f * density - rise.value * 150f * density
-                        scaleX = 0.3f + 0.7f * rise.value; scaleY = 0.3f + 0.7f * rise.value
-                        alpha = rise.value.coerceIn(0f, 1f)
-                    })
+                    BoxWithConstraints(Modifier.fillMaxSize()) {
+                        val rim = with(LocalDensity.current) { chestRimY(constraints.maxWidth.toFloat(), constraints.maxHeight.toFloat()).toDp() }
+                        Box(Modifier.fillMaxWidth().height(rim).clipToBounds(), contentAlignment = Alignment.BottomCenter) {
+                            Text(f.emoji, fontSize = 96.sp, modifier = Modifier.graphicsLayer {
+                                translationY = (1 - rise.value) * 130f * density - rise.value * 20f * density
+                                scaleX = 0.7f + 0.3f * rise.value; scaleY = 0.7f + 0.3f * rise.value
+                            })
+                        }
+                    }
                 }
             }
             AnimatedVisibility(friend != null, enter = fadeIn() + expandVertically()) {

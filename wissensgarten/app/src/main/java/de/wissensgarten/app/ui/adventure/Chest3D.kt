@@ -34,7 +34,7 @@ private val Gold = Color(0xFFFFC83D)
 private val Inside = Color(0xFF3E2414)
 private val LIGHT = V3(-0.5f, 0.8f, 0.6f).norm()
 
-private fun box(x0: Float, y0: Float, z0: Float, x1: Float, y1: Float, z1: Float, c: Color): List<Face> {
+private fun box(x0: Float, y0: Float, z0: Float, x1: Float, y1: Float, z1: Float, c: Color, sides: Set<Int>? = null): List<Face> {
     val p = listOf(
         V3(x0, y0, z0), V3(x1, y0, z0), V3(x1, y1, z0), V3(x0, y1, z0),
         V3(x0, y0, z1), V3(x1, y0, z1), V3(x1, y1, z1), V3(x0, y1, z1),
@@ -46,11 +46,11 @@ private fun box(x0: Float, y0: Float, z0: Float, x1: Float, y1: Float, z1: Float
         Face(listOf(p[5], p[1], p[2], p[6]), c), // rechts
         Face(listOf(p[3], p[7], p[6], p[2]), c), // oben
         Face(listOf(p[0], p[1], p[5], p[4]), c), // unten
-    )
+    ).filterIndexed { i, _ -> sides == null || i in sides }
 }
 
 /** Gewölbter Deckel: Querschnitt (z,y) als Bogen, entlang x ausgezogen. Liegt im Scharnier-Koordinatensystem. */
-private fun lid(x0: Float, x1: Float, depth: Float, height: Float, bulge: Float, c: Color): List<Face> {
+private fun lid(x0: Float, x1: Float, depth: Float, height: Float, bulge: Float, c: Color, caps: Boolean = true): List<Face> {
     val seg = 6
     val cs = buildList {
         add(0f to 0f)
@@ -65,8 +65,10 @@ private fun lid(x0: Float, x1: Float, depth: Float, height: Float, bulge: Float,
         val a = cs[i]; val b = cs[(i + 1) % cs.size]
         faces += Face(listOf(V3(x0, a.second, a.first), V3(x1, a.second, a.first), V3(x1, b.second, b.first), V3(x0, b.second, b.first)), c)
     }
-    faces += Face(cs.map { V3(x0, it.second, it.first) }, lerp(c, Color.Black, 0.1f))
-    faces += Face(cs.map { V3(x1, it.second, it.first) }, lerp(c, Color.Black, 0.1f))
+    if (caps) {
+        faces += Face(cs.map { V3(x0, it.second, it.first) }, lerp(c, Color.Black, 0.1f))
+        faces += Face(cs.map { V3(x1, it.second, it.first) }, lerp(c, Color.Black, 0.1f))
+    }
     return faces
 }
 
@@ -85,14 +87,14 @@ fun DrawScope.drawChest3D(yaw: Float, open: Float, glow: Float, wobble: Float = 
     faces += Face(listOf(V3(-w / 2 + 0.06f, hb - 0.08f, d / 2 - 0.06f), V3(w / 2 - 0.06f, hb - 0.08f, d / 2 - 0.06f),
         V3(w / 2 - 0.06f, hb - 0.08f, -d / 2 + 0.06f), V3(-w / 2 + 0.06f, hb - 0.08f, -d / 2 + 0.06f)), Inside, glow = true)
     // Goldbeschläge am Korpus
-    for (bx in listOf(-0.62f, 0.62f)) faces += box(bx - 0.08f, -0.01f, -d / 2 - 0.02f, bx + 0.08f, hb + 0.005f, d / 2 + 0.02f, Gold)
+    for (bx in listOf(-0.62f, 0.62f)) faces += box(bx - 0.08f, -0.01f, -d / 2 - 0.02f, bx + 0.08f, hb + 0.005f, d / 2 + 0.02f, Gold, sides = setOf(0, 1))
     faces += box(-w / 2 - 0.02f, 0.0f, -d / 2 - 0.02f, w / 2 + 0.02f, 0.1f, d / 2 + 0.02f, WoodDark)
     // Schloss
     faces += box(-0.16f, hb - 0.42f, d / 2, 0.16f, hb - 0.06f, d / 2 + 0.07f, Gold)
 
     // Deckel (um Scharnier hinten-oben gedreht)
     val lidFaces = lid(-w / 2 - 0.02f, w / 2 + 0.02f, d + 0.04f, lidH, bulge, Wood) +
-        listOf(-0.62f, 0.62f).flatMap { bx -> lid(bx - 0.08f, bx + 0.08f, d + 0.08f, lidH + 0.02f, bulge + 0.02f, Gold) }
+        listOf(-0.62f, 0.62f).flatMap { bx -> lid(bx - 0.08f, bx + 0.08f, d + 0.08f, lidH + 0.02f, bulge + 0.02f, Gold, caps = false).drop(1) }
     val hinge = V3(0f, hb, -d / 2 - 0.02f)
     fun rotLid(p: V3): V3 {
         val y = p.y * cos(hingeAngle) - p.z * sin(hingeAngle)
@@ -150,4 +152,18 @@ fun DrawScope.drawChest3D(yaw: Float, open: Float, glow: Float, wobble: Float = 
             drawLine(Color(0x66FFF59D), top, Offset(top.x + cos(a).toFloat() * len, top.y + sin(a).toFloat() * len), strokeWidth = scale * 0.05f)
         }
     }
+}
+
+
+/** Bildschirm-Y der vorderen Oberkante (Truhe frontal, yaw = 0) – dort taucht der Freund auf. */
+fun chestRimY(width: Float, height: Float): Float {
+    val hb = 1.05f; val d = 1.3f
+    val pitch = 22f * (PI / 180f).toFloat()
+    val py = hb - 0.75f; val pz = d / 2
+    val y2 = py * cos(pitch) - pz * sin(pitch)
+    val z2 = py * sin(pitch) + pz * cos(pitch)
+    val camDist = 6.5f
+    val scale = minOf(width, height) * 0.62f
+    val f = camDist / (camDist - z2)
+    return height * 0.55f - y2 * f * scale / 2.2f
 }
