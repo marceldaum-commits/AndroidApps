@@ -67,6 +67,7 @@ data class SExtras(
     val chapters: Set<Int> = emptySet(),
     val hybrids: Set<String> = emptySet(),
     val goodNightDay: Long = -1,
+    val exams: List<Exam> = emptyList(),
 )
 
 object Sync {
@@ -215,6 +216,7 @@ object Sync {
                 chapters = l.chapters + re.chapters,
                 hybrids = l.hybrids + re.hybrids,
                 goodNightDay = maxOf(l.goodNightDay, re.goodNightDay),
+                exams = (l.exams + re.exams.map { it.copy(bedId = bid(it.bedId)) }).distinctBy { it.id }.filter { it.id !in deleted && it.bedId in bedIds },
             )
         }
 

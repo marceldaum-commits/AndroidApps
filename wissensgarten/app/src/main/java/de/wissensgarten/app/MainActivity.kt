@@ -289,6 +289,25 @@ class MainActivity : ComponentActivity() {
                                 Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                                     val upd by vm.availableUpdate.collectAsStateWithLifecycle()
                                     upd?.let { de.wissensgarten.app.ui.settings.UpdateBanner(it.version) { goTab(Routes.SETTINGS) } }
+                                    // Klassenarbeiten: Countdown-Karten oder Einladung zum Eintragen
+                                    val plans = remember(rev, beds, now) { vm.examPlans() }
+                                    var addExam by remember { mutableStateOf(false) }
+                                    plans.forEach { plan ->
+                                        de.wissensgarten.app.ui.exam.ExamCard(
+                                            plan, beds.firstOrNull { it.bed.id == plan.exam.bedId }?.bed?.name ?: "",
+                                            onStart = { if (vm.startExamSession(plan.exam.id)) nav.navigate(Routes.REVIEW) },
+                                            onFeedback = { vm.removeExam(plan.exam.id) },
+                                            onDelete = { vm.removeExam(plan.exam.id) },
+                                        )
+                                    }
+                                    if (plans.isEmpty() && (profile?.level ?: 0) in 1..13 && beds.isNotEmpty())
+                                        de.wissensgarten.app.ui.exam.ExamPromptCard { addExam = true }
+                                    else if (plans.isNotEmpty()) TextButton(onClick = { addExam = true }, modifier = Modifier.padding(horizontal = 16.dp)) { Text("🗓️ Weiteren Termin eintragen") }
+                                    if (addExam) de.wissensgarten.app.ui.exam.AddExamDialog(
+                                        beds.map { it.bed.id to "${it.bed.emoji} ${it.bed.name}" }, null,
+                                        onDismiss = { addExam = false },
+                                        onAdd = { b, t, d -> vm.addExam(b, t, d); addExam = false },
+                                    )
                                     StoryEntryCard(newCh) { nav.navigate(Routes.STORY) }
                                     val mix = remember(beds, packs) { vm.mixCandidates() }
                                     if (mix != null) MixEntryCard(mix.first.bed.name, mix.second.bed.name) { if (vm.startMixed()) nav.navigate(Routes.REVIEW) }

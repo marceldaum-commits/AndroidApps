@@ -46,6 +46,7 @@ class SyncStore(
                     chapters = settings.chaptersRead(p.id),
                     hybrids = settings.hybrids(p.id),
                     goodNightDay = settings.goodNightDay(p.id),
+                    exams = settings.exams(p.id),
                 )
             },
             familyWeek = settings.familyClaimedWeek(),
@@ -83,6 +84,7 @@ class SyncStore(
             settings.setChaptersRead(pid, e.chapters)
             settings.setHybrids(pid, e.hybrids)
             settings.setGoodNightDay(pid, e.goodNightDay)
+            settings.setExams(pid, e.exams)
         }
         if (s.familyWeek > settings.familyClaimedWeek()) settings.setFamilyClaimedWeek(s.familyWeek)
         // Aktives Profil weg (auf anderem Gerät gelöscht)? Dann das erste nehmen.

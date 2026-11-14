@@ -436,4 +436,17 @@ class ScreenshotTest {
             androidx.compose.material3.OutlinedButton(onClick = {}) { androidx.compose.material3.Text("☁️ Schon einen Garten? Mit Google wiederherstellen") }
         }) { _, _, _, _, _ -> }
     }
+
+    @Test fun examCards() = shot("41_klassenarbeit") {
+        val cards = garden[3].cards.map { it.toStudy() }
+        val bedId = garden[3].bed.id
+        val today = ExamPlanner.day(now)
+        Column(Modifier.padding(vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            listOf(6, 1, -1).forEach { d ->
+                val plan = ExamPlanner.plan(Exam("e$d", bedId, if (d < 0) "Vokabeltest" else "Mathe-Arbeit", today + d), cards, now)
+                de.wissensgarten.app.ui.exam.ExamCard(plan, "Brüche & Prozent", {}, {}, {})
+            }
+            de.wissensgarten.app.ui.exam.ExamPromptCard {}
+        }
+    }
 }

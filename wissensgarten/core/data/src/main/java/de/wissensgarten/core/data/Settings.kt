@@ -76,6 +76,15 @@ class Settings(context: Context) {
     /** Nach einem Sync: alle Ansichten neu laden */
     fun syncChanged() = bump()
 
+    // ---- Klassenarbeiten (Prüfungsmodus)
+    private val examJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+    private val examList = kotlinx.serialization.builtins.ListSerializer(de.wissensgarten.core.model.Exam.serializer())
+    fun exams(profileId: String): List<de.wissensgarten.core.model.Exam> =
+        prefs.getString("pruefungen_$profileId", null)?.let { runCatching { examJson.decodeFromString(examList, it) }.getOrNull() }.orEmpty()
+    fun setExams(profileId: String, list: List<de.wissensgarten.core.model.Exam>) {
+        prefs.edit().putString("pruefungen_$profileId", examJson.encodeToString(examList, list.sortedBy { it.day })).apply(); bump()
+    }
+
     fun introSeen(profileId: String, packId: String) = prefs.getBoolean("intro_${profileId}_$packId", false)
     fun markIntroSeen(profileId: String, packId: String) { prefs.edit().putBoolean("intro_${profileId}_$packId", true).apply(); bump() }
 

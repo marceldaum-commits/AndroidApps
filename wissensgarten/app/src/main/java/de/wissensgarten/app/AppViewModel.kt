@@ -329,6 +329,35 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun seedsLeft(p: ProfileEntity? = profile.value): Int =
         p?.let { SessionBuilder.seedsLeft(it.seedsPerDay, it.seedDay, it.seedsToday, System.currentTimeMillis()) } ?: 0
 
+    // ------------------------------------------------------------ Klassenarbeiten
+
+    fun exams(): List<de.wissensgarten.core.model.Exam> = profile.value?.let { settings.exams(it.id) }.orEmpty()
+
+    fun examPlans(): List<de.wissensgarten.core.model.ExamPlan> {
+        val cards = beds.value.flatMap { b -> b.cards.map { it.toStudy() } }
+        val now = System.currentTimeMillis()
+        return exams().filter { e -> beds.value.any { it.bed.id == e.bedId } }.map { de.wissensgarten.core.model.ExamPlanner.plan(it, cards, now) }
+    }
+
+    fun addExam(bedId: String, title: String, day: Long) {
+        val p = profile.value ?: return
+        val e = de.wissensgarten.core.model.Exam(java.util.UUID.randomUUID().toString(), bedId, title.trim().ifBlank { "Klassenarbeit" }, day, System.currentTimeMillis())
+        settings.setExams(p.id, exams() + e)
+    }
+
+    fun removeExam(id: String) {
+        val p = profile.value ?: return
+        settings.setExams(p.id, exams().filterNot { it.id == id })
+        c.tombstones.add(listOf(id))
+    }
+
+    fun startExamSession(examId: String): Boolean {
+        val plan = examPlans().firstOrNull { it.exam.id == examId } ?: return false
+        sessionCalm = false; mixPair = null
+        session = plan.today
+        return session.isNotEmpty()
+    }
+
     fun buildSession(bedId: String? = null): List<StudyCard> {
         val cards = beds.value.filter { bedId == null || it.bed.id == bedId }.flatMap { b -> b.cards.map { it.toStudy() } }
         return SessionBuilder.build(cards, System.currentTimeMillis(), seedsLeft())

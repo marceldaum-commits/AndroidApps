@@ -22,3 +22,31 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
 - [news4teachers (Feb. 2026): Warum Spiele im Unterricht mehr bringen als Motivation](https://www.news4teachers.de/2026/02/schule-der-zukunft-warum-spiele-im-unterricht-mehr-hervorbringen-als-motivation-und-wie-game-design-das-lernen-veraendern-kann/?amp=1)
 - [Friedrich Verlag: Lernspiel zum Kopfrechnen (Grundschule)](https://www.friedrich-verlag.de/friedrich-plus/grundschule/grundschulmagazin/wuerfelglueck-ein-lernspiel-zum-kopfrechnen-8521)
 - [Spektrum: Gamification – Zocken statt Pauken?](https://www.spektrum.de/magazin/gamification-zocken-statt-pauken/1871476)
+
+## November 2026: Recherche für Prüfungsmodus, Brummi-Radio, Silben-Modus
+
+**Lernen auf einen Termin hin (Prüfungsmodus)**
+- Cepeda et al. (2008, *Psychological Science*, 1 354 Teilnehmende): Der beste Abstand zwischen Wiederholungen hängt
+  vom Testtermin ab. Bei einer Woche bis zum Test liegt er bei etwa 20–40 % der Zeit, bei einem Jahr nur noch bei 5–10 %.
+  Ein gut gewählter Abstand verbesserte das Behalten um bis zu 150 %.
+  → Planer: neue Karten früh säen, Wiederholungen auf die Tage bis zum Termin verteilen, am Vortag eine kurze letzte Runde.
+- Pauken am Vorabend reicht für den nächsten Tag, verliert aber deutlich, sobald der Test Wochen entfernt ist.
+  → Brummi empfiehlt, den Termin früh einzutragen.
+- Quellen: https://escholarship.org/uc/item/1n15d7xr.pdf · https://digitalcommons.usf.edu/psy_facpub/1766/ ·
+  https://researchschool.org.uk/durrington/news/using-spaced-practice-in-inform-curriculum-design
+
+**Silbenmethode (Grundschule)**
+- Verbreitet in deutschen Fibeln: Silben abwechselnd blau und rot (z. B. „Gi-raf-fe“). Unabhängige Belege gibt es für
+  silbenbasiertes Lesetraining (Würzburger Replikationsstudie, Worterkennung), weniger für die Farbe selbst.
+  → Silben-Modus als Option für Klasse 1–4, kombiniert mit aktivem Silben-Klatschen (Training, nicht nur Farbe).
+- Quellen: https://www.psychologie.uni-wuerzburg.de/fileadmin/06020400/2021/Mueller_Karageorgos_Richter_2021__Kinderpsychologie_preprint.pdf ·
+  https://directory.doabooks.org/handle/20.500.12854/94252 ·
+  https://deutsch-sprache.maxklug.de/zusatzmaterialien/phonologische-bewusstheit/silben/was-ist-die-silbenmethode?print=1
+
+**Lernen ohne Bildschirm (Brummi-Radio)**
+- 2026 ein klarer Trend: Eltern greifen zu reinen Audio-Geräten (Tonies, Yoto), um Bildschirmzeit zu senken
+  (Marktberichte, teils von Herstellern, Zahlen mit Vorsicht).
+  → Brummi-Radio: Fragen hören, laut antworten, Bildschirm dunkel. Starkes Argument für Eltern.
+- Quellen: https://thesun.my/news/world-news/parents-turn-to-audio-toys-to-cut-kids-screen-time/ ·
+  https://www.ewn.co.za/2026/07/09/parents-spending-thousands-on-the-yoto-player-to-wean-kids-off-screen-time ·
+  https://thepeninsulaqatar.com/article/23/05/2026/screen-shunning-parents-turn-to-audio-toys
