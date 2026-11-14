@@ -39,8 +39,29 @@ jobs:
             echo "::error::Secrets WG_KEYSTORE_BASE64 und WG_KEYSTORE_PROPERTIES fehlen (siehe Kopf dieser Datei)."
             exit 1
           fi
-          echo "$KEYSTORE_BASE64" | base64 -di > wissensgarten-upload.jks
-          printf '%s\n' "$KEYSTORE_PROPERTIES" > keystore.properties
+          # Häufigster Fehler: die beiden Secrets vertauscht
+          if printf '%s' "$KEYSTORE_BASE64" | grep -q "storePassword"; then
+            echo "::error::In WG_KEYSTORE_BASE64 steht der Inhalt von keystore.properties – die beiden Secrets sind vertauscht."
+            exit 1
+          fi
+          if ! printf '%s' "$KEYSTORE_PROPERTIES" | grep -q "storePassword"; then
+            echo "::error::WG_KEYSTORE_PROPERTIES enthält keine Zeile 'storePassword=' – bitte den Inhalt von keystore.properties einfügen."
+            exit 1
+          fi
+          # Zeilenumbrüche, Leerzeichen und Windows-Zeilenenden entfernen, dann entschlüsseln
+          printf '%s' "$KEYSTORE_BASE64" | tr -d ' \r\n\t' > key.b64
+          echo "Länge des Schlüsseltexts: $(wc -c < key.b64) Zeichen (erwartet: 5812)"
+          if grep -q '[^A-Za-z0-9+/=]' key.b64; then
+            echo "::error::WG_KEYSTORE_BASE64 enthält Zeichen, die nicht in den Schlüsseltext gehören (evtl. Überschrift oder Anführungszeichen mitkopiert)."
+            exit 1
+          fi
+          base64 -d key.b64 > wissensgarten-upload.jks || { echo "::error::Schlüsseltext unvollständig – bitte die ganze Datei kopieren."; exit 1; }
+          rm key.b64
+          printf '%s\n' "$KEYSTORE_PROPERTIES" | tr -d '\r' > keystore.properties
+          # Passt das Passwort zum Schlüssel?
+          PASS=$(grep '^storePassword=' keystore.properties | cut -d= -f2-)
+          keytool -list -keystore wissensgarten-upload.jks -storepass "$PASS" > /dev/null \
+            || { echo "::error::Schlüssel und Passwort passen nicht zusammen."; exit 1; }
 
       - name: Version lesen
         id: version
@@ -74,4 +95,4 @@ jobs:
 
       - name: Schlüssel entfernen
         if: always()
-        run: rm -f wissensgarten-upload.jks keystore.properties
+        run: rm -f wissensgarten-upload.jks keystore.properties key.b64
