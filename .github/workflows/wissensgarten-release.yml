@@ -1,0 +1,77 @@
+# Baut den Wissensgarten, signiert ihn mit dem Upload-Schlüssel und stellt die APK unter „Releases“ bereit.
+# Start: GitHub → Actions → „Wissensgarten APK“ → „Run workflow“ (oder automatisch bei Tag wissensgarten-v*).
+# Benötigt zwei Repository-Secrets (Settings → Secrets and variables → Actions):
+#   WG_KEYSTORE_BASE64     = Inhalt von „wissensgarten-upload.jks.base64.txt“ (Drive, Ordner „Schlüssel (geheim)“)
+#   WG_KEYSTORE_PROPERTIES = Inhalt von „keystore.properties“ (gleicher Ordner)
+name: Wissensgarten APK
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["wissensgarten-v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: wissensgarten
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Signatur-Schlüssel einrichten
+        env:
+          KEYSTORE_BASE64: ${{ secrets.WG_KEYSTORE_BASE64 }}
+          KEYSTORE_PROPERTIES: ${{ secrets.WG_KEYSTORE_PROPERTIES }}
+        run: |
+          # Ohne Schlüssel würde mit dem Test-Schlüssel gebaut – solche APKs ließen sich nicht als Update installieren.
+          if [ -z "$KEYSTORE_BASE64" ] || [ -z "$KEYSTORE_PROPERTIES" ]; then
+            echo "::error::Secrets WG_KEYSTORE_BASE64 und WG_KEYSTORE_PROPERTIES fehlen (siehe Kopf dieser Datei)."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -di > wissensgarten-upload.jks
+          printf '%s\n' "$KEYSTORE_PROPERTIES" > keystore.properties
+
+      - name: Version lesen
+        id: version
+        run: echo "name=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)" >> "$GITHUB_OUTPUT"
+
+      - name: Logik-Tests
+        run: ./gradlew --no-daemon :core:model:test
+
+      - name: APK bauen
+        run: |
+          ./gradlew --no-daemon assembleRelease
+          cp app/build/outputs/apk/release/app-release.apk "Wissensgarten-${{ steps.version.outputs.name }}.apk"
+
+      - name: Signatur prüfen
+        run: |
+          $ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)/apksigner verify --print-certs \
+            "Wissensgarten-${{ steps.version.outputs.name }}.apk" | tee cert.txt
+          grep -qi "9ece481266794bba5ace46e73a8df5a4aec51183d1685fae10438537f5a4d8eb" cert.txt \
+            || { echo "::error::APK ist nicht mit dem Upload-Schlüssel signiert."; exit 1; }
+
+      - name: Release veröffentlichen
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: wissensgarten-v${{ steps.version.outputs.name }}
+          target_commitish: ${{ github.sha }}
+          name: Wissensgarten ${{ steps.version.outputs.name }}
+          body: |
+            Signierte APK zum Installieren auf Android (ab Android 8).
+            Herunterladen, öffnen, „Aus dieser Quelle installieren“ erlauben. Updates behalten den Lernfortschritt.
+          files: wissensgarten/Wissensgarten-${{ steps.version.outputs.name }}.apk
+
+      - name: Schlüssel entfernen
+        if: always()
+        run: rm -f wissensgarten-upload.jks keystore.properties

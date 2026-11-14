@@ -130,6 +130,12 @@ Release-APKs werden mit dem Upload-Schlüssel signiert, wenn `keystore.propertie
 Ordner `wissensgarten/` liegen (beides per `.gitignore` ausgeschlossen, Ablage: Google Drive → Wissensgarten →
 „Schlüssel (geheim)“). Ohne die Dateien wird mit dem Test-Schlüssel gebaut.
 
+## Download (GitHub Releases)
+
+Jede Version wird von GitHub selbst gebaut, signiert und unter **Releases** angeboten
+(`.github/workflows/wissensgarten-release.yml`). Neue Version veröffentlichen: GitHub → **Actions** → „Wissensgarten APK“
+→ **Run workflow**. Einmalig nötig sind zwei Secrets mit dem Upload-Schlüssel (siehe Kopf der Workflow-Datei).
+
 ## Bauen & Testen
 
 Benötigt JDK 17+ und Android SDK (Plattform 36).
