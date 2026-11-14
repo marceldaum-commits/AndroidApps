@@ -12,7 +12,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 
 | Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Arbeitsblatt-Foto | Widget (Tag / Party) |
 | --- | --- | --- | --- | --- | --- |
-| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) |
+| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) |
 
 | Erklär-Geschichte | Abenteuerpfad | 3D-Truhe | Truhe offen | Sammelalbum | Garten mit Freunden |
 | --- | --- | --- | --- | --- | --- |
@@ -135,7 +135,14 @@ Ordner `wissensgarten/` liegen (beides per `.gitignore` ausgeschlossen, Ablage: 
 Bei jedem Push mit neuer Version (`versionName`) baut GitHub die App, signiert sie, prüft die Signatur und
 veröffentlicht `Wissensgarten-<Version>.apk` unter **Releases** – und, wenn eingerichtet, im Drive-Ordner „Wissensgarten“
 (`.github/workflows/wissensgarten-release.yml`, Upload: `.github/scripts/drive_upload.py`).
-Benötigte Secrets stehen im Kopf der Workflow-Datei.
+Benötigte Secrets stehen im Kopf der Workflow-Datei. Die Release-Notizen kommen aus [`CHANGELOG.md`](CHANGELOG.md).
+
+**Update-Knopf in der App** (Einstellungen → App-Update): fragt GitHub nach der neuesten Version, lädt die APK und öffnet
+den Android-Installer (einmalig „Apps installieren erlauben“). Nur auf Knopfdruck, keine Daten werden gesendet.
+Für eine Play-Store-Version `SELF_UPDATE` in `app/build.gradle.kts` auf `false` setzen (und die Berechtigung
+`REQUEST_INSTALL_PACKAGES` entfernen).
+
+**Neue Version ausliefern:** `versionCode`/`versionName` erhöhen, Abschnitt in `CHANGELOG.md` ergänzen, pushen.
 
 ## Bauen & Testen
 

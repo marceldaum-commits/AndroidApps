@@ -88,6 +88,14 @@ jobs:
             echo "new=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Änderungen aus CHANGELOG.md
+        run: |
+          # Abschnitt „## <Version>“ bis zur nächsten Überschrift
+          awk -v v="## ${{ steps.version.outputs.name }}" '$0==v{on=1;next} /^## /{on=0} on' CHANGELOG.md > notes.md
+          [ -s notes.md ] || echo "- Verbesserungen und Fehlerbehebungen" > notes.md
+          printf '\nInstallieren: APK herunterladen, öffnen, „Aus dieser Quelle installieren“ erlauben. Oder in der App: Einstellungen → App-Update.\n' >> notes.md
+          cat notes.md
+
       - name: Logik-Tests
         run: ./gradlew --no-daemon :core:model:test
 
@@ -110,9 +118,7 @@ jobs:
           tag_name: wissensgarten-v${{ steps.version.outputs.name }}
           target_commitish: ${{ github.sha }}
           name: Wissensgarten ${{ steps.version.outputs.name }}
-          body: |
-            Signierte APK zum Installieren auf Android (ab Android 8).
-            Herunterladen, öffnen, „Aus dieser Quelle installieren“ erlauben. Updates behalten den Lernfortschritt.
+          body_path: wissensgarten/notes.md
           files: wissensgarten/Wissensgarten-${{ steps.version.outputs.name }}.apk
 
       - name: In Google Drive hochladen

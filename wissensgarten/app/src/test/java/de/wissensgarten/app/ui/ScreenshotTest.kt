@@ -381,4 +381,14 @@ class ScreenshotTest {
     }
 
     @Test fun chapterEnd() = shot("28b_kapitel_geschafft") { ChapterEnd(Story.chapters[0], grown = 2, onNext = {}, onWater = {}, onList = {}) }
+
+    @Test fun appUpdate() = shot("37_app_update") {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            de.wissensgarten.app.ui.settings.UpdateSection("0.8.2", de.wissensgarten.app.ui.settings.UpdateState.Available(
+                AppRelease("0.8.3", "Malen hält jetzt die Runde an. Neuer Knopf für App-Updates.", "https://example.org/a.apk", 3_484_701)))
+            de.wissensgarten.app.ui.settings.UpdateSection("0.8.2", de.wissensgarten.app.ui.settings.UpdateState.Downloading(
+                AppRelease("0.8.3", "", "https://example.org/a.apk", 3_484_701), 0.62f))
+            de.wissensgarten.app.ui.settings.UpdateSection("0.8.3", de.wissensgarten.app.ui.settings.UpdateState.UpToDate)
+        }
+    }
 }

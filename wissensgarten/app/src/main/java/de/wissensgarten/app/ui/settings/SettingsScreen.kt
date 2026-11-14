@@ -123,6 +123,8 @@ fun SettingsScreen(
             )
         }
 
+        if (de.wissensgarten.app.BuildConfig.SELF_UPDATE) UpdateSection(version)
+
         Section("Über") {
             Text("Wissensgarten $version")
             Text("$packCount Wissenspakete · $cardCount Karten", style = MaterialTheme.typography.bodySmall)
