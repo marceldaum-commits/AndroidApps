@@ -86,6 +86,21 @@ interface GardenDao {
     // Protokoll
     @Insert suspend fun insertLog(l: ReviewLogEntity)
 
+    // ---- Geräte-Sync: alles lesen, zusammengeführten Stand zurückschreiben
+    @Query("SELECT * FROM profiles") suspend fun allProfiles(): List<ProfileEntity>
+    @Query("SELECT * FROM beds") suspend fun allBeds(): List<BedEntity>
+    @Query("SELECT * FROM cards") suspend fun allCards(): List<CardEntity>
+    @Query("SELECT * FROM inventory") suspend fun allInventory(): List<InventoryEntity>
+    @Query("SELECT * FROM review_log WHERE time >= :since") suspend fun logsSinceOnce(since: Long): List<ReviewLogEntity>
+    @androidx.room.Upsert suspend fun upsertProfiles(p: List<ProfileEntity>)
+    @androidx.room.Upsert suspend fun upsertBeds(b: List<BedEntity>)
+    @androidx.room.Upsert suspend fun upsertCards(c: List<CardEntity>)
+    @androidx.room.Upsert suspend fun upsertItems(i: List<InventoryEntity>)
+    @Insert suspend fun insertLogs(l: List<ReviewLogEntity>)
+    @Query("DELETE FROM cards WHERE id IN (:ids)") suspend fun deleteCardsById(ids: List<String>)
+    @Query("DELETE FROM beds WHERE id IN (:ids)") suspend fun deleteBedsById(ids: List<String>)
+    @Query("DELETE FROM profiles WHERE id IN (:ids)") suspend fun deleteProfilesById(ids: List<String>)
+
     @Query("SELECT * FROM review_log WHERE time >= :since ORDER BY time")
     fun logsSince(since: Long): Flow<List<ReviewLogEntity>>
 }

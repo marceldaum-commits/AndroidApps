@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.9.0
+- Neu: **Auf allen Geräten** – auf dem Handy anfangen, auf dem Tablet weitermachen. Einstellungen → „Mit Google-Konto verbinden“.
+  Der Garten der ganzen Familie liegt dann in einem versteckten Ordner im eigenen Google Drive (kein fremder Server).
+- Abgleich automatisch beim Öffnen, nach jeder Gieß-Runde und beim Verlassen der App. Nichts geht verloren:
+  der neueste Lernstand gewinnt, Tautropfen und Sammelstücke beider Geräte werden zusammengeführt.
+- Neues Gerät: Auf der Willkommensseite „Schon einen Garten? Mit Google wiederherstellen“.
+
 ## 0.8.5
 - Updates kommen jetzt von selbst: Beim Start schaut Brummi (höchstens einmal am Tag) nach einer neuen Version.
   Gibt es eine, erscheint im Garten ein Geschenk-Banner – antippen, aktualisieren, fertig.

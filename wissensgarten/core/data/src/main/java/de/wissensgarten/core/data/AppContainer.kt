@@ -7,9 +7,11 @@ import de.wissensgarten.core.data.db.GardenDatabase
 class AppContainer(context: Context) {
     private val app = context.applicationContext
     val database: GardenDatabase by lazy { GardenDatabase.create(app) }
-    val repository: GardenRepository by lazy { GardenRepository(database) }
+    val tombstones: Tombstones by lazy { Tombstones(app) }
+    val repository: GardenRepository by lazy { GardenRepository(database, tombstones = tombstones) }
     val catalog: PackCatalog by lazy { PackCatalog(app.assets) }
     val settings: Settings by lazy { Settings(app) }
     val entitlements: Entitlements by lazy { LocalEntitlements() }
     val duels: DuelHistory by lazy { DuelHistory(app) }
+    val syncStore: SyncStore by lazy { SyncStore(app, database, settings, tombstones) }
 }

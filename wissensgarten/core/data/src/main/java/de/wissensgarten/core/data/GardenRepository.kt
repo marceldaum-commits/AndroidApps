@@ -17,7 +17,11 @@ import de.wissensgarten.core.model.Subject
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
-class GardenRepository(private val db: GardenDatabase, private val clock: () -> Long = System::currentTimeMillis) {
+class GardenRepository(
+    private val db: GardenDatabase,
+    private val tombstones: Tombstones? = null,
+    private val clock: () -> Long = System::currentTimeMillis,
+) {
     private val dao = db.dao()
 
     val profiles: Flow<List<ProfileEntity>> = dao.profiles()
@@ -37,7 +41,11 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
     }
 
     suspend fun updateProfile(p: ProfileEntity) = dao.updateProfile(p)
-    suspend fun deleteProfile(id: String) = dao.deleteProfile(id)
+    suspend fun deleteProfile(id: String) {
+        val beds = dao.bedsWithCardsOnce(id)
+        tombstones?.add(listOf(id) + beds.map { it.bed.id } + beds.flatMap { b -> b.cards.map { it.id } })
+        dao.deleteProfile(id)
+    }
 
     /** Pflanzt ein Wissenspaket als neues Beet. */
     suspend fun plantPack(profileId: String, pack: Pack): String = db.withTransaction {
@@ -69,7 +77,10 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
         return bed.id
     }
 
-    suspend fun deleteBed(bedId: String) = dao.deleteBed(bedId)
+    suspend fun deleteBed(bedId: String) {
+        tombstones?.add(listOf(bedId) + dao.cardsOfBed(bedId).map { it.id })
+        dao.deleteBed(bedId)
+    }
 
     suspend fun addCard(bed: BedEntity, front: String, back: String, info: String? = null) {
         val existing = dao.cardsOfBed(bed.id).size
@@ -97,7 +108,10 @@ class GardenRepository(private val db: GardenDatabase, private val clock: () -> 
 
     suspend fun bedEntity(bedId: String) = dao.bed(bedId)
 
-    suspend fun deleteCard(cardId: String) = dao.deleteCard(cardId)
+    suspend fun deleteCard(cardId: String) {
+        tombstones?.add(listOf(cardId))
+        dao.deleteCard(cardId)
+    }
 
     /** Eine Wiederholung speichern: Gedächtnis, Protokoll, Tautropfen, Samen-Zähler. */
     suspend fun review(profileId: String, card: StudyCard, rating: Rating, dew: Int = baseDew(rating)) = db.withTransaction {

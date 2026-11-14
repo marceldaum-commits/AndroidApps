@@ -20,8 +20,8 @@ android {
         applicationId = "de.wissensgarten.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 16
-        versionName = "0.8.5"
+        versionCode = 17
+        versionName = "0.9.0"
         // Update-Knopf (lädt neue Versionen aus GitHub Releases). Für den Play Store auf false setzen –
         // dort kommen Updates über den Store, und die Installations-Berechtigung ist nicht erlaubt.
         buildConfigField("boolean", "SELF_UPDATE", "true")
@@ -93,6 +93,9 @@ dependencies {
     implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
     // Arbeitsblatt-Foto: Texterkennung läuft auf dem Gerät (Modell kommt über Play-Dienste, hält die APK klein)
     implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.1")
+    // Geräte-Sync: Google-Anmeldung nur für den versteckten App-Ordner im Drive
+    implementation("com.google.android.gms:play-services-auth:21.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.17")

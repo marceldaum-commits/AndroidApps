@@ -12,7 +12,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 
 | Familienbaum | Merkbild malen | Klassen-Code (QR) | Klassen-Beet | Arbeitsblatt-Foto | Widget (Tag / Party) |
 | --- | --- | --- | --- | --- | --- |
-| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) |
+| ![](screenshots/31_familienbaum.png) | ![](screenshots/32_merkbild_malen.png) | ![](screenshots/33_klassen_code.png) | ![](screenshots/34_klassen_beet.png) | ![](screenshots/35_arbeitsblatt.png) | ![](screenshots/36_widget_garten.png) ![](screenshots/37_app_update.png) ![](screenshots/39_garten_update.png) ![](screenshots/40_geraete_sync.png) |
 
 | Erklär-Geschichte | Abenteuerpfad | 3D-Truhe | Truhe offen | Sammelalbum | Garten mit Freunden |
 | --- | --- | --- | --- | --- | --- |
@@ -57,6 +57,8 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 - **Brummi die Hummel** begleitet jede Runde und den Garten: freut sich, tröstet, denkt mit, schläft nachts, gibt Tipps
   (`app/ui/fx/Mascot.kt`).
 
+- **Auf allen Geräten** (0.9): Garten der ganzen Familie im versteckten App-Ordner des eigenen Google Drive,
+  automatischer Abgleich mit sicherer Zusammenführung. Einrichtung und Regeln: [`docs/GOOGLE-SYNC.md`](docs/GOOGLE-SYNC.md).
 - **Brummi spricht und hört zu** (0.8): liest Fragen und Antworten vor (Android-Sprachausgabe, Sprache passend zum Fach;
   „Brummi liest vor“: automatisch bis Klasse 4 / an / aus). Neue Spielart 🎤 *Sag's laut* per Spracherkennung.
 - **Neue Spielarten**: 🎓 *Brummi beibringen* (Brummi rät, du korrigierst – Protégé-Effekt), 📱 *Kipp-Spiel*

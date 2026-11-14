@@ -37,6 +37,7 @@ fun SettingsScreen(
     update: de.wissensgarten.core.model.AppRelease? = null,
     autoUpdate: Boolean = true,
     onAutoUpdate: (Boolean) -> Unit = {},
+    syncCard: @Composable () -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
     var confirmDelete by remember { mutableStateOf(false) }
@@ -51,6 +52,8 @@ fun SettingsScreen(
         if (de.wissensgarten.app.BuildConfig.SELF_UPDATE) key(update?.version) {
             UpdateSection(version, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, autoUpdate, onAutoUpdate)
         }
+
+        syncCard()
 
         Section("Profil") {
             Row(verticalAlignment = Alignment.CenterVertically) {

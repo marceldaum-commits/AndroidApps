@@ -42,6 +42,8 @@ fun OnboardingScreen(
     packs: List<Pack>,
     addingProfile: Boolean,
     onCancel: () -> Unit,
+    /** Auf der Willkommensseite: „Schon einen Garten? Wiederherstellen“ */
+    welcomeExtra: @Composable () -> Unit = {},
     onFinish: (name: String, avatar: String, level: Int, packIds: Set<String>, ownBeds: List<Pair<String, String>>) -> Unit,
 ) {
     val steps = if (addingProfile) listOf(Step.NAME, Step.LEVEL, Step.BEDS) else Step.entries
@@ -109,7 +111,7 @@ fun OnboardingScreen(
             modifier = Modifier.padding(pad).fillMaxSize().clipToBounds(),
         ) { s ->
             when (s) {
-                Step.WELCOME -> Welcome()
+                Step.WELCOME -> Welcome(welcomeExtra)
                 Step.WHO -> Page("Wer lernt hier?", "Du kannst später weitere Familienmitglieder hinzufügen.") {
                     ChoiceCard("🙋", "Ich selbst", "Ich will selbst etwas lernen", !forChild) { forChild = false }
                     ChoiceCard("👨‍👧", "Mein Kind", "Ich richte den Garten für mein Kind ein", forChild) { forChild = true }
@@ -171,7 +173,7 @@ fun OnboardingScreen(
 }
 
 @Composable
-private fun Welcome() {
+private fun Welcome(extra: @Composable () -> Unit = {}) {
     val t = rememberInfiniteTransition(label = "grow")
     val grow by t.animateFloat(0.4f, 1f, infiniteRepeatable(tween(1800, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "g")
     Column(
@@ -199,6 +201,8 @@ private fun Welcome() {
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        Spacer(Modifier.height(24.dp))
+        extra()
     }
 }
 

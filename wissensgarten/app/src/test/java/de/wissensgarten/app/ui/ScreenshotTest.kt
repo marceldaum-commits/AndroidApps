@@ -422,4 +422,18 @@ class ScreenshotTest {
             de.wissensgarten.app.ui.settings.UpdateBanner("0.8.5") {}
         })
     }
+
+    @Test fun syncCards() = shot("40_geraete_sync") {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            de.wissensgarten.app.ui.settings.SyncCard(de.wissensgarten.app.sync.SyncStatus(), null, {}, {}, {})
+            de.wissensgarten.app.ui.settings.SyncCard(de.wissensgarten.app.sync.SyncStatus(connected = true, account = "familie.daum@gmail.com",
+                lastSync = System.currentTimeMillis() - 3 * 60_000), "Garten zusammengeführt! 🎉", {}, {}, {})
+        }
+    }
+
+    @Test fun welcomeRestore() = shot("01b_willkommen_wiederherstellen") {
+        OnboardingScreen(packs, false, {}, welcomeExtra = {
+            androidx.compose.material3.OutlinedButton(onClick = {}) { androidx.compose.material3.Text("☁️ Schon einen Garten? Mit Google wiederherstellen") }
+        }) { _, _, _, _, _ -> }
+    }
 }

@@ -61,6 +61,17 @@ class Settings(context: Context) {
     val adventureRev: StateFlow<Int> = _rev.asStateFlow()
     private fun bump() { _rev.value++ }
 
+    /** Alle Pakete, deren Erklär-Geschichte dieses Profil schon gesehen hat (für den Geräte-Sync). */
+    fun introsOf(profileId: String): Set<String> = prefs.all.keys.filter { it.startsWith("intro_${profileId}_") && prefs.getBoolean(it, false) }
+        .map { it.removePrefix("intro_${profileId}_") }.toSet()
+    fun setIntros(profileId: String, packs: Set<String>) { prefs.edit().apply { packs.forEach { putBoolean("intro_${profileId}_$it", true) } }.apply() }
+    fun setChaptersRead(profileId: String, ns: Set<Int>) { prefs.edit().putStringSet("kapitel_$profileId", ns.map { "$it" }.toSet()).apply() }
+    fun setHybrids(profileId: String, ids: Set<String>) { prefs.edit().putStringSet("kreuzungen_$profileId", ids).apply() }
+    fun setGoodNightDay(profileId: String, day: Long) { prefs.edit().putLong("gutenacht_$profileId", day).apply() }
+    fun clearGardenFriends(profileId: String) { prefs.edit().remove("freunde_$profileId").apply() }
+    /** Nach einem Sync: alle Ansichten neu laden */
+    fun syncChanged() = bump()
+
     fun introSeen(profileId: String, packId: String) = prefs.getBoolean("intro_${profileId}_$packId", false)
     fun markIntroSeen(profileId: String, packId: String) { prefs.edit().putBoolean("intro_${profileId}_$packId", true).apply(); bump() }
 

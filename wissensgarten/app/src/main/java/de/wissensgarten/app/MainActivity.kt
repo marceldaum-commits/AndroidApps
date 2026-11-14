@@ -161,11 +161,14 @@ class MainActivity : ComponentActivity() {
     override fun onResume() {
         super.onResume()
         vm.tick()
+        (application as WissensgartenApp).sync.syncSoon()
     }
 
     override fun onStop() {
         super.onStop()
         vm.refreshWidget()
+        // Beim Verlassen der App gleich abgleichen, damit das andere Gerät den neuesten Stand bekommt
+        (application as WissensgartenApp).sync.syncSoon(minGapMs = 5_000)
     }
 
     @Composable
@@ -203,10 +206,29 @@ class MainActivity : ComponentActivity() {
         ) { pad ->
             NavHost(nav, startDestination = startRoute, modifier = Modifier.padding(pad)) {
                 composable(Routes.ONBOARDING) {
-                    OnboardingScreen(packs, addingProfile = false, onCancel = {}) { name, avatar, level, ids, own ->
+                    OnboardingScreen(packs, addingProfile = false, onCancel = {}, onFinish = { name, avatar, level, ids, own ->
                         vm.finishOnboarding(name, avatar, level, ids, own)
                         nav.navigate(Routes.tutorial(true)) { popUpTo(Routes.ONBOARDING) { inclusive = true } }
-                    }
+                    }, welcomeExtra = {
+                        // Neues Gerät: Garten aus dem Google Drive holen
+                        val sync = (application as WissensgartenApp).sync
+                        val status by sync.status.collectAsStateWithLifecycle()
+                        var msg by remember { mutableStateOf<String?>(null) }
+                        val connect = de.wissensgarten.app.ui.settings.rememberGoogleConnect(sync) { r ->
+                            r.fold(
+                                onSuccess = { found ->
+                                    if (found && vm.settings.onboarded.value) nav.navigate(Routes.GARDEN) { popUpTo(Routes.ONBOARDING) { inclusive = true } }
+                                    else msg = "Im Google Drive liegt noch kein Garten – leg einfach los, er wird dann automatisch gesichert."
+                                },
+                                onFailure = { msg = it.message },
+                            )
+                        }
+                        OutlinedButton(onClick = { msg = null; connect() }, enabled = !status.running) {
+                            Text(if (status.running) "☁️ Hole deinen Garten …" else "☁️ Schon einen Garten? Mit Google wiederherstellen",
+                                textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                        }
+                        msg?.let { Text(it, style = MaterialTheme.typography.bodySmall, textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.padding(top = 8.dp)) }
+                    })
                 }
                 composable(Routes.ADD_PROFILE) {
                     OnboardingScreen(packs, addingProfile = true, onCancel = { nav.popBackStack() }) { name, avatar, level, ids, own ->
@@ -419,6 +441,7 @@ class MainActivity : ComponentActivity() {
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
                             onTutorial = { nav.navigate(Routes.tutorial(false)) },
                             update = upd, autoUpdate = autoUpd, onAutoUpdate = { vm.settings.setAutoUpdate(it) },
+                            syncCard = { de.wissensgarten.app.ui.settings.SyncSectionLive((application as WissensgartenApp).sync) },
                         )
                     }
                 }
@@ -469,6 +492,7 @@ class MainActivity : ComponentActivity() {
                         onBonus = { vm.addDew(it) },
                         onClose = {
                             vm.endSession(); nav.popBackStack()
+                            (application as WissensgartenApp).sync.syncSoon(minGapMs = 5_000)
                             // Truhen-Station geschafft? Dann gleich öffnen.
                             if (vm.newHybrid != null) nav.navigate(Routes.HYBRID)
                             else if (vm.chestsEarned() > vm.chestsOpened()) nav.navigate(Routes.CHEST)
