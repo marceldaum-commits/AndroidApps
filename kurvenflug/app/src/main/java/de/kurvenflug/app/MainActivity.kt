@@ -201,7 +201,7 @@ class MainActivity : ComponentActivity() {
             }
             composable(Routes.BUILD_HOME) {
                 val mine by vm.settings.myLevels.collectAsStateWithLifecycle()
-                de.kurvenflug.app.ui.build.BuilderHome(
+                de.kurvenflug.app.ui.maker.BuilderHome(
                     mine,
                     onNew = { vm.openCode = null; nav.goOnce(Routes.BUILDER) },
                     onEdit = { vm.openCode = it; nav.goOnce(Routes.BUILDER) },
@@ -215,7 +215,7 @@ class MainActivity : ComponentActivity() {
             composable(Routes.BUILDER) {
                 val editing = remember { vm.openCode }
                 val initial = remember { editing?.let { de.kurvenflug.core.model.Codec.decodeLevel(it) } }
-                de.kurvenflug.app.ui.build.BuilderScreen(initial, probeColor,
+                de.kurvenflug.app.ui.maker.BuilderScreen(initial, probeColor,
                     onSave = { vm.settings.saveMyLevel(it, replace = editing) },
                     onTest = { vm.playLevel = it; nav.goOnce(Routes.PLAY) },
                     onBack = { nav.popSafe() })
@@ -227,15 +227,15 @@ class MainActivity : ComponentActivity() {
             }
             composable(Routes.CHALLENGE_NEW) {
                 val mine by vm.settings.myLevels.collectAsStateWithLifecycle()
-                de.kurvenflug.app.ui.build.ChallengeComposer(mine) { nav.popSafe() }
+                de.kurvenflug.app.ui.maker.ChallengeComposer(mine) { nav.popSafe() }
             }
             composable(Routes.CHALLENGE) {
                 val spec = remember { vm.openCode?.let { de.kurvenflug.core.model.Codec.decodeChallenge(it) } }
                 if (spec == null) LaunchedEffect(Unit) { nav.popSafe() }
-                else de.kurvenflug.app.ui.build.ChallengeRun(spec, probeColor) { nav.popSafe() }
+                else de.kurvenflug.app.ui.maker.ChallengeRun(spec, probeColor) { nav.popSafe() }
             }
             composable(Routes.DETECTIVE) {
-                de.kurvenflug.app.ui.build.DetectiveScreen(vm.settings.detectiveBest, probeColor,
+                de.kurvenflug.app.ui.maker.DetectiveScreen(vm.settings.detectiveBest, probeColor,
                     onFinished = { if (it > vm.settings.detectiveBest) vm.settings.detectiveBest = it }, onBack = { nav.popSafe() })
             }
             composable(Routes.SETTINGS) {

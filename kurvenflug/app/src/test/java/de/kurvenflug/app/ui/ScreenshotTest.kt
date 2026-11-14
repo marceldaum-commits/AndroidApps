@@ -127,20 +127,20 @@ class ScreenshotTest {
 
     @Test fun builder() {
         val spec = de.kurvenflug.core.model.LevelSpec.of(Levels.byId("2-7")!!).copy(title = "Gürtel-Chaos", task = "Schaffst du das?")
-        shot("25_baukasten") { de.kurvenflug.app.ui.build.BuilderScreen(spec, Q.Cyan, {}, {}, {}) }
+        shot("25_baukasten") { de.kurvenflug.app.ui.maker.BuilderScreen(spec, Q.Cyan, {}, {}, {}) }
     }
 
     @Test fun builderHome() {
         val mine = listOf(de.kurvenflug.core.model.Codec.encodeLevel(de.kurvenflug.core.model.LevelSpec.of(Levels.byId("3-5")!!).copy(title = "Lenas Bogen")))
-        shot("26_baukasten_start") { de.kurvenflug.app.ui.build.BuilderHome(mine, {}, {}, {}, {}, {}, {}, {}) }
+        shot("26_baukasten_start") { de.kurvenflug.app.ui.maker.BuilderHome(mine, {}, {}, {}, {}, {}, {}, {}) }
     }
 
     @Test fun challengeComposer() = shot("27_klassen_challenge", prepare = { r ->
         r.onAllNodesWithText("1")[1].performClick(); r.onAllNodesWithText("2")[1].performClick()
-    }) { de.kurvenflug.app.ui.build.ChallengeComposer(emptyList()) {} }
+    }) { de.kurvenflug.app.ui.maker.ChallengeComposer(emptyList()) {} }
 
     @Test fun detective() = shot("28_formel_detektiv") {
-        de.kurvenflug.app.ui.build.DetectiveScreen(3, Q.Cyan, {}, {}, seed = 4)
+        de.kurvenflug.app.ui.maker.DetectiveScreen(3, Q.Cyan, {}, {}, seed = 4)
     }
 
     @Test fun anti() = level("8-5", name = "29_antiproportional", values = mapOf("k" to 12.0), settle = 1200,
