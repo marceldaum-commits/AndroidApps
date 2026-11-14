@@ -29,3 +29,20 @@ Lernforschung) und die Erkenntnisse in den Entwurf einfließen lassen.
 - Bildschirmfotos nach Änderungen ansehen und prüfen, bevor ausgeliefert wird.
 - Fertige APKs in den gemeinsamen Google-Drive-Ordner – **jede App in ihren eigenen Unterordner**.
 - Datenbank-Änderungen nur mit Migration + Migrationstest; Lernfortschritt darf nie verloren gehen.
+
+## Neue App aufsetzen (Pflicht-Ausstattung, Vorbild: `wissensgarten/`)
+
+- **Ordner**: `<appname>/` im Repo-Stamm, eigenes Gradle-Projekt, Paketname `de.<appname>.app`, minSdk 26.
+  Modular wie der Wissensgarten (`core/model` reine Logik + Tests, `core/data` Room, `app` Compose).
+- **Git**: nur auf den Entwicklungs-Branch der Sitzung pushen, keine Pull Requests ohne Auftrag. Mathe-Trainer nicht anfassen.
+- **Automatische Releases**: eigener Workflow `.github/workflows/<appname>-release.yml` (Kopie des
+  Wissensgarten-Workflows, Pfade/Tag anpassen). Tag `<appname>-v<versionName>`, Release-Text aus `<appname>/CHANGELOG.md`.
+  Signieren mit denselben Secrets `WG_KEYSTORE_BASE64` / `WG_KEYSTORE_PROPERTIES` (gleicher Schlüssel für alle Apps),
+  Keystore und `keystore.properties` nie committen.
+- **Ausliefern** = versionCode/versionName erhöhen + CHANGELOG-Abschnitt (kindgerecht, für Eltern verständlich) + pushen.
+- **Update in der App**: Updater wie im Wissensgarten (GitHub-Releases prüfen, beim Start höchstens alle 20 h,
+  Banner + Knopf in den Einstellungen, abschaltbar, `SELF_UPDATE`-Schalter für eine spätere Play-Store-Version).
+- **Google Drive**: APK zusätzlich in den gemeinsamen Drive-Ordner, Unterordner je App (sobald `GDRIVE_SA_JSON` eingerichtet ist).
+- **Qualität**: Unit-Tests für Logik, Robolectric/Roborazzi-Bildschirmfotos in `screenshots/` (vor Auslieferung ansehen),
+  Lint ohne Fehler, Sounds im Code erzeugt, Musik/Ton/Vibration abschaltbar, keine Werbung, keine unnötigen Berechtigungen.
+- **Recherche** vorher in `docs/RECHERCHE.md` ergänzen.
