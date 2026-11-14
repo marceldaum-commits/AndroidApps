@@ -45,13 +45,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
 
     // ------------------------------------------------------------ App-Update
     private val _update = MutableStateFlow<AppRelease?>(null)
+    private companion object { const val CHECK_EVERY_MS = 30 * 60_000L }
     val availableUpdate: StateFlow<AppRelease?> = _update
 
-    /** Beim Start: höchstens alle 20 Stunden bei GitHub nachsehen (abschaltbar). */
+    /** Bei jedem Öffnen der App: höchstens alle 30 Minuten bei GitHub nachsehen (abschaltbar). */
     fun checkForUpdateIfDue(installed: String) {
         if (!BuildConfig.SELF_UPDATE || !settings.autoUpdate.value) return
         val now = System.currentTimeMillis()
-        if (now - settings.lastUpdateCheck < 20 * 3_600_000L) return
+        if (_update.value == null && now - settings.lastUpdateCheck < CHECK_EVERY_MS) return
         viewModelScope.launch {
             de.kurvenflug.app.update.AppUpdater.check().onSuccess { r ->
                 val newer = r?.takeIf { Updates.isNewer(it.version, installed) }

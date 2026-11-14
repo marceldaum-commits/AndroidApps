@@ -102,7 +102,7 @@ fun UpdateSection(
                             if (onAutoCheck != null) Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Text("Beim Start automatisch nachsehen", style = MaterialTheme.typography.bodyMedium)
-                                    Text("Höchstens einmal am Tag. Es werden keine Daten gesendet.", style = MaterialTheme.typography.bodySmall)
+                                    Text("Bei jedem Öffnen der App (höchstens alle 30 Minuten). Es werden keine Daten gesendet.", style = MaterialTheme.typography.bodySmall)
                                 }
                                 Switch(autoCheck, onAutoCheck)
                             }

@@ -123,7 +123,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         waterRequest.value = intent?.getBooleanExtra(EXTRA_WATER, false) == true
         readDuelIntent(intent)
-        if (savedInstanceState == null) vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         val startRoute = if (vm.onboarded.value) Routes.GARDEN else Routes.ONBOARDING
 
         setContent {
@@ -196,6 +195,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+        // Bei jedem Öffnen (auch aus dem Hintergrund) nach neuen Versionen schauen
+        vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         (application as WissensgartenApp).music.onForeground(true)
     }
 

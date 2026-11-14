@@ -3,6 +3,10 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.15.1 – Updates kommen schneller
+- Die App schaut jetzt bei **jedem Öffnen** nach einer neuen Version (höchstens alle 30 Minuten) – auch wenn sie nur aus dem Hintergrund zurückkommt. Vorher nur einmal am Tag.
+- Ist eine neue Version da, erscheint oben auf der Startseite ein 🎁-Hinweis. Antippen → laden → installieren. Dein Fortschritt bleibt erhalten.
+
 ## 0.15.0 – Weitermachen, wo du warst
 - **Gieß-Runde geht nicht mehr verloren:** Beendet Android die App im Hintergrund (z. B. beim Telefonieren oder Spielen), geht es danach mit derselben Karte weiter.
 - **Abenteuerpfad zeigt „Du bist hier“:** Brummi zeigt auf die aktuelle Station, der geschaffte Weg leuchtet golden und die Ansicht springt gleich an die richtige Stelle.

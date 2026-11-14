@@ -56,7 +56,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val app = application as KurvenflugApp
-        if (savedInstanceState == null) vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         (application as KurvenflugApp).music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
@@ -72,7 +71,12 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onStart() { super.onStart(); (application as KurvenflugApp).music.onForeground(true) }
+    override fun onStart() {
+        super.onStart()
+        (application as KurvenflugApp).music.onForeground(true)
+        // Auch beim Zurückkehren aus dem Hintergrund nach neuen Versionen schauen
+        vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
+    }
     override fun onStop() { (application as KurvenflugApp).music.onForeground(false); super.onStop() }
 
     @Composable

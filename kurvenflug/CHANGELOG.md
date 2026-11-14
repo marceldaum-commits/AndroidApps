@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.2.1 – Updates kommen schneller
+- Die App schaut jetzt bei **jedem Öffnen** nach einer neuen Version (höchstens alle 30 Minuten) – auch wenn sie nur aus dem Hintergrund zurückkommt. Vorher nur einmal am Tag.
+- Ist eine neue Version da, erscheint oben auf der Startseite ein 🎁-Hinweis. Antippen → laden → installieren. Dein Fortschritt bleibt erhalten.
+
 ## 0.2.0 – Klasse 10, Schwerkraft und Tagesmission
 - **Neues Kapitel „Wellen & Wachstum“ (Klasse 10)** 🌊: Sinus-Wellen y = a · sin(b · x) + d mit π-Markierungen,
   Wachstum und radioaktiver Zerfall y = a · bˣ – 7 neue Level.

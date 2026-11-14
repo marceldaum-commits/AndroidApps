@@ -376,11 +376,11 @@ class AppViewModel(app: Application, private val saved: androidx.lifecycle.Saved
     /** Neue Version, falls beim automatischen Nachsehen gefunden. */
     val availableUpdate: StateFlow<de.wissensgarten.core.model.AppRelease?> = _update
 
-    /** Beim Start: höchstens alle 20 Stunden bei GitHub nachsehen (abschaltbar). */
+    /** Bei jedem Öffnen der App: höchstens alle 30 Minuten bei GitHub nachsehen (abschaltbar). */
     fun checkForUpdateIfDue(installed: String) {
         if (!BuildConfig.SELF_UPDATE || !settings.autoUpdate.value) return
         val now = System.currentTimeMillis()
-        if (_update.value == null && now - settings.lastUpdateCheck < 20 * 3_600_000L) return
+        if (_update.value == null && now - settings.lastUpdateCheck < 30 * 60_000L) return
         viewModelScope.launch {
             de.wissensgarten.app.update.AppUpdater.check().onSuccess { r ->
                 val newer = r?.takeIf { de.wissensgarten.core.model.Updates.isNewer(it.version, installed) }
