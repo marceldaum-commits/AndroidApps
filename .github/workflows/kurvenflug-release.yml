@@ -1,5 +1,5 @@
-# Baut Quanta, signiert ihn mit dem Upload-Schlüssel und stellt die APK unter „Releases“ bereit.
-# Läuft automatisch bei jedem Push, der Quanta ändert. Veröffentlicht wird nur, wenn die Version
+# Baut Kurvenflug, signiert ihn mit dem Upload-Schlüssel und stellt die APK unter „Releases“ bereit.
+# Läuft automatisch bei jedem Push, der Kurvenflug ändert. Veröffentlicht wird nur, wenn die Version
 # (versionName in app/build.gradle.kts) neu ist – jede Version genau einmal. Von Hand: Actions → „Run workflow“.
 # Signiert mit demselben Schlüssel wie der Wissensgarten (Secrets WG_…).
 #
@@ -9,13 +9,13 @@
 # Optional für den Drive-Upload:
 #   GDRIVE_SA_JSON         = JSON-Schlüssel eines Google-Dienstkontos
 #   GDRIVE_IMPERSONATE     = E-Mail, in deren Namen hochgeladen wird (nur mit domainweiter Delegierung)
-# Variable (Settings → Variables): QUANTA_DRIVE_FOLDER = ID des Drive-Ordners „Quanta“ (eigener Unterordner)
-name: Quanta APK
+# Variable (Settings → Variables): KURVENFLUG_DRIVE_FOLDER = ID des Drive-Ordners „Kurvenflug“ (eigener Unterordner)
+name: Kurvenflug APK
 
 on:
   workflow_dispatch:
   push:
-    paths: ["quanta/**", ".github/workflows/quanta-release.yml", ".github/scripts/**"]
+    paths: ["kurvenflug/**", ".github/workflows/kurvenflug-release.yml", ".github/scripts/**"]
 
 permissions:
   contents: write
@@ -28,7 +28,7 @@ jobs:
       HAS_DRIVE: ${{ secrets.GDRIVE_SA_JSON != '' }}
     defaults:
       run:
-        working-directory: quanta
+        working-directory: kurvenflug
     steps:
       - uses: actions/checkout@v4
 
@@ -103,12 +103,12 @@ jobs:
       - name: APK bauen
         run: |
           ./gradlew --no-daemon assembleRelease
-          cp app/build/outputs/apk/release/app-release.apk "Quanta-${{ steps.version.outputs.name }}.apk"
+          cp app/build/outputs/apk/release/app-release.apk "Kurvenflug-${{ steps.version.outputs.name }}.apk"
 
       - name: Signatur prüfen
         run: |
           $ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)/apksigner verify --print-certs \
-            "Quanta-${{ steps.version.outputs.name }}.apk" | tee cert.txt
+            "Kurvenflug-${{ steps.version.outputs.name }}.apk" | tee cert.txt
           grep -qi "9ece481266794bba5ace46e73a8df5a4aec51183d1685fae10438537f5a4d8eb" cert.txt \
             || { echo "::error::APK ist nicht mit dem Upload-Schlüssel signiert."; exit 1; }
 
@@ -118,18 +118,18 @@ jobs:
         with:
           tag_name: quanta-v${{ steps.version.outputs.name }}
           target_commitish: ${{ github.sha }}
-          name: Quanta ${{ steps.version.outputs.name }}
-          body_path: quanta/notes.md
-          files: quanta/Quanta-${{ steps.version.outputs.name }}.apk
+          name: Kurvenflug ${{ steps.version.outputs.name }}
+          body_path: kurvenflug/notes.md
+          files: kurvenflug/Kurvenflug-${{ steps.version.outputs.name }}.apk
 
       - name: In Google Drive hochladen
-        if: steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.QUANTA_DRIVE_FOLDER != ''
+        if: steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.KURVENFLUG_DRIVE_FOLDER != ''
         env:
           GDRIVE_SA_JSON: ${{ secrets.GDRIVE_SA_JSON }}
           GDRIVE_IMPERSONATE: ${{ secrets.GDRIVE_IMPERSONATE }}
         run: |
           pip install --quiet google-auth requests
-          python ../.github/scripts/drive_upload.py "Quanta-${{ steps.version.outputs.name }}.apk" "${{ vars.QUANTA_DRIVE_FOLDER }}"
+          python ../.github/scripts/drive_upload.py "Kurvenflug-${{ steps.version.outputs.name }}.apk" "${{ vars.KURVENFLUG_DRIVE_FOLDER }}"
 
       - name: Schlüssel entfernen
         if: always()

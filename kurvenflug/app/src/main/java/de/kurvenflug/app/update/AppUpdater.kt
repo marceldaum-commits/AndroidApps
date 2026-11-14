@@ -1,12 +1,12 @@
-package de.quanta.app.update
+package de.kurvenflug.app.update
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import androidx.core.content.FileProvider
-import de.quanta.core.model.AppRelease
-import de.quanta.core.model.Updates
+import de.kurvenflug.core.model.AppRelease
+import de.kurvenflug.core.model.Updates
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.ensureActive
@@ -25,7 +25,7 @@ object AppUpdater {
         connectTimeout = 15_000; readTimeout = 30_000
         instanceFollowRedirects = true
         setRequestProperty("Accept", "application/vnd.github+json")
-        setRequestProperty("User-Agent", "Quanta-App")
+        setRequestProperty("User-Agent", "Kurvenflug-App")
     }
 
     /** Neueste veröffentlichte Version (oder Fehler). */
@@ -37,7 +37,7 @@ object AppUpdater {
         }
     }
 
-    private fun apkFile(ctx: Context) = File(ctx.cacheDir, "updates").apply { mkdirs() }.resolve("quanta-update.apk")
+    private fun apkFile(ctx: Context) = File(ctx.cacheDir, "updates").apply { mkdirs() }.resolve("kurvenflug-update.apk")
 
     /** Lädt die APK herunter; [onProgress] bekommt 0..1. */
     suspend fun download(ctx: Context, r: AppRelease, onProgress: (Float) -> Unit): Result<File> = withContext(Dispatchers.IO) {

@@ -1,4 +1,4 @@
-package de.quanta.app.ui.fx
+package de.kurvenflug.app.ui.fx
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color

@@ -1,4 +1,4 @@
-package de.quanta.app.ui.flight
+package de.kurvenflug.app.ui.flight
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
@@ -14,10 +14,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.sp
-import de.quanta.app.ui.fx.Burst
-import de.quanta.app.ui.fx.drawBurst
-import de.quanta.app.ui.theme.Q
-import de.quanta.core.model.*
+import de.kurvenflug.app.ui.fx.Burst
+import de.kurvenflug.app.ui.fx.drawBurst
+import de.kurvenflug.app.ui.theme.Q
+import de.kurvenflug.core.model.*
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin

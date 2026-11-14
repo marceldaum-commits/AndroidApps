@@ -1,4 +1,4 @@
-package de.quanta.core.model
+package de.kurvenflug.core.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -9,12 +9,12 @@ data class AppRelease(val version: String, val notes: String, val apkUrl: String
 
 /**
  * App-Updates aus GitHub Releases – für Installationen außerhalb des Play Stores.
- * Tags heißen „quanta-v0.1.0“, die APK „Quanta-0.1.0.apk“.
+ * Tags heißen „kurvenflug-v0.1.0“, die APK „Kurvenflug-0.1.0.apk“.
  */
 object Updates {
     const val REPO = "marceldaum-commits/AndroidApps"
     const val API = "https://api.github.com/repos/$REPO/releases?per_page=30"
-    const val TAG_PREFIX = "quanta-v"
+    const val TAG_PREFIX = "kurvenflug-v"
 
     @Serializable private data class Asset(val name: String, @SerialName("browser_download_url") val url: String, val size: Long = 0)
     @Serializable private data class Release(
@@ -26,7 +26,7 @@ object Updates {
     )
     private val json = Json { ignoreUnknownKeys = true }
 
-    /** Neueste Quanta-Version aus der GitHub-Antwort (andere Apps im selben Repo werden ignoriert). */
+    /** Neueste Kurvenflug-Version aus der GitHub-Antwort (andere Apps im selben Repo werden ignoriert). */
     fun latest(apiResponse: String): AppRelease? =
         json.decodeFromString<List<Release>>(apiResponse)
             .filter { !it.draft && !it.prerelease && it.tag.startsWith(TAG_PREFIX) }

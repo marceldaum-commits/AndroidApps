@@ -13,11 +13,11 @@ val keystoreProps = Properties().apply {
 }
 
 android {
-    namespace = "de.quanta.app"
+    namespace = "de.kurvenflug.app"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "de.quanta.app"
+        applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
         versionCode = 1

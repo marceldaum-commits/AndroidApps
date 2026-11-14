@@ -2,17 +2,17 @@
 
 Gesammelte Ideen, werden nach und nach gebaut. Status: 💡 Idee · 🔨 in Arbeit · ✅ fertig.
 
-## Klasse 5–10: Kombi-App „Quanta“ (Mathe + Physik) 🔨
+## Klasse 5–10: drei eigene Apps (Mathe + Physik)
 
-Eine App, drei Welten. Jede Welt ist ein eigenes Spielprinzip, das Rechnen ist die Spielhandlung selbst
-(siehe Recherche: Engagement allein reicht nicht – die Mathematik muss die Mechanik sein).
-Maskottchen: **Volt**, ein kleiner Roboter (cool statt kindlich).
+Erst als Kombi-App „Quanta“ begonnen, dann getrennt: jede App ein klares Versprechen, eigener Stil.
+Reihenfolge: eine App fertig optimieren, dann die nächste. Das Rechnen ist jeweils die Spielmechanik selbst
+(Recherche: Engagement allein reicht nicht).
 
-| Welt | Spielprinzip | Inhalte | Status |
+| App | Spielprinzip | Inhalte | Status |
 |---|---|---|---|
-| 🚀 **Kurvenflug** | Die Flugbahn einer Sonde ist eine Funktion, die man selbst formt. Ziele treffen, Asteroiden ausweichen, Sterne sammeln. Später Wurf und Schwerkraft-Schleudern an Planeten, Duell zu zweit, Level-Baukasten | Koordinaten (5/6), Geraden (7/8), Parabeln (9), Wurf auf Erde/Mond/Mars, Sinus/Exponential (10), Energie, Geschwindigkeit | 🔨 |
+| 🚀 **Kurvenflug** (`kurvenflug/`) | Die Flugbahn einer Sonde ist eine Funktion, die man selbst formt. Ziele treffen, Asteroiden ausweichen, Energiezellen sammeln. Maskottchen Volt (Roboter) | Koordinaten (5/6), Geraden (7/8), Parabeln (9), Wurf auf Erde/Mond/Mars; geplant: Sinus/Exponential (10), Schwerkraft-Schleuder, Duell, Level-Baukasten | 🔨 |
 | ⚙️ **Werkstatt der Maschinen** | Kettenreaktionen bauen: Hebel, Rollen, Rampen, Federn, Spiegel, Stromkreise. Rechnen, wo Probieren nicht reicht | Hebelgesetz, Energieerhaltung, Reflexion/Brechung, Ohmsches Gesetz, Winkel | 💡 |
-| 🗡️ **Formel-Dungeon** | Roguelike-Kartenspiel: Karten sind Rechenoperationen (×2, −7, Wurzel, ausklammern). Gegner-Zahlen und Gleichungen umformen, bis sie zerfallen. Bosse = Gleichungssysteme | Bruchrechnen, Terme, Gleichungen, Potenzen, Wurzeln, Gleichungssysteme | 💡 |
+| 🗡️ **Formel-Dungeon** | Roguelike-Kartenspiel: Karten sind Rechenoperationen. Gegner-Zahlen und Gleichungen umformen, bis sie zerfallen. Bosse = Gleichungssysteme | Bruchrechnen, Terme, Gleichungen, Potenzen, Wurzeln, Gleichungssysteme | 💡 |
 
 ## Grundschule 💡
 

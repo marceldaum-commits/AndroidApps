@@ -1,4 +1,4 @@
-package de.quanta.core.data
+package de.kurvenflug.core.data
 
 import android.content.Context
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 /** Einstellungen – nur auf dem Gerät, keine persönlichen Daten. */
 class Settings(ctx: Context) {
-    private val prefs = ctx.getSharedPreferences("quanta", Context.MODE_PRIVATE)
+    private val prefs = ctx.getSharedPreferences("kurvenflug", Context.MODE_PRIVATE)
 
     private fun flag(key: String, default: Boolean) = MutableStateFlow(prefs.getBoolean(key, default))
     private val _sound = flag("sound", true)
@@ -40,7 +40,7 @@ class Settings(ctx: Context) {
 
 /** Alles, was die App braucht, an einer Stelle. */
 class AppContainer(ctx: Context) {
-    val db = QuantaDatabase.create(ctx)
+    val db = FlightDatabase.create(ctx)
     val progress = ProgressRepository(db.progress())
     val settings = Settings(ctx)
 }

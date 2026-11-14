@@ -1,4 +1,4 @@
-package de.quanta.app.ui.fx
+package de.kurvenflug.app.ui.fx
 
 import java.io.ByteArrayOutputStream
 import kotlin.math.PI

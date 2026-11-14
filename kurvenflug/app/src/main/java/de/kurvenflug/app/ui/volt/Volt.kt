@@ -1,4 +1,4 @@
-package de.quanta.app.ui.volt
+package de.kurvenflug.app.ui.volt
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.*
@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import de.quanta.app.ui.theme.Q
+import de.kurvenflug.app.ui.theme.Q
 import kotlin.math.sin
 
 /** Volts Stimmungen. */

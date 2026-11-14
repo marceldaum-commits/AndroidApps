@@ -1,4 +1,4 @@
-package de.quanta.app.ui.flight
+package de.kurvenflug.app.ui.flight
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
@@ -31,11 +31,11 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.quanta.app.ui.fx.*
-import de.quanta.app.ui.theme.Q
-import de.quanta.app.ui.volt.Volt
-import de.quanta.app.ui.volt.VoltMood
-import de.quanta.core.model.*
+import de.kurvenflug.app.ui.fx.*
+import de.kurvenflug.app.ui.theme.Q
+import de.kurvenflug.app.ui.volt.Volt
+import de.kurvenflug.app.ui.volt.VoltMood
+import de.kurvenflug.core.model.*
 import kotlinx.coroutines.delay
 import kotlin.math.max
 import kotlin.math.min

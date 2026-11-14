@@ -6,7 +6,7 @@ plugins {
     id("androidx.room")
 }
 android {
-    namespace = "de.quanta.core.data"
+    namespace = "de.kurvenflug.core.data"
     compileSdk = 36
     defaultConfig {
         minSdk = 26

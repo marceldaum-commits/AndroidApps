@@ -1,4 +1,4 @@
-package de.quanta.app.ui.settings
+package de.kurvenflug.app.ui.settings
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.quanta.app.BuildConfig
-import de.quanta.app.ui.theme.Q
+import de.kurvenflug.app.BuildConfig
+import de.kurvenflug.app.ui.theme.Q
 
 @Composable
 fun SettingsScreen(
@@ -39,7 +39,7 @@ fun SettingsScreen(
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                    Text("Quanta speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
+                    Text("Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
                         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinatensystem (Kl. 5/6), lineare Funktionen (Kl. 7/8), quadratische Funktionen in Scheitelform (Kl. 9), " +
                         "schräger Wurf mit Fallbeschleunigung auf Erde, Mond und Mars (Physik).", style = MaterialTheme.typography.bodySmall)

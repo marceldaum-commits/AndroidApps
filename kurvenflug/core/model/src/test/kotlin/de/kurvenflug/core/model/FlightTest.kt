@@ -1,4 +1,4 @@
-package de.quanta.core.model
+package de.kurvenflug.core.model
 
 import org.junit.Assert.*
 import org.junit.Test
@@ -83,9 +83,9 @@ class FlightTest {
         assertTrue(Feedback.after(p, mapOf("x" to 3.0, "y" to 6.0), Flight.fly(p, mapOf("x" to 3.0, "y" to 6.0))).contains("x stimmt"))
     }
 
-    @Test fun onlyQuantaReleasesCount() {
-        val json = """[{"tag_name":"wissensgarten-v9.0.0","assets":[{"name":"W.apk","browser_download_url":"u"}]},
-            {"tag_name":"quanta-v0.2.0","body":"neu","assets":[{"name":"Quanta-0.2.0.apk","browser_download_url":"q","size":5}]}]"""
+    @Test fun onlyKurvenflugReleasesCount() {
+        val json = """[{"tag_name":"quanta-v5.0.0","assets":[{"name":"Q.apk","browser_download_url":"x"}]},{"tag_name":"wissensgarten-v9.0.0","assets":[{"name":"W.apk","browser_download_url":"u"}]},
+            {"tag_name":"kurvenflug-v0.2.0","body":"neu","assets":[{"name":"Kurvenflug-0.2.0.apk","browser_download_url":"q","size":5}]}]"""
         assertEquals("0.2.0", Updates.latest(json)!!.version)
     }
 }

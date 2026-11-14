@@ -1,4 +1,4 @@
-package de.quanta.app.ui.fx
+package de.kurvenflug.app.ui.fx
 
 import android.content.Context
 import android.media.AudioAttributes

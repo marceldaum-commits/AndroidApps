@@ -1,4 +1,4 @@
-package de.quanta.app.ui.fx
+package de.kurvenflug.app.ui.fx
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
-import de.quanta.app.ui.theme.Q
+import de.kurvenflug.app.ui.theme.Q
 import kotlin.math.sin
 import kotlin.random.Random
 

@@ -1,4 +1,4 @@
-package de.quanta.core.data
+package de.kurvenflug.core.data
 
 import androidx.test.core.app.ApplicationProvider
 import kotlinx.coroutines.flow.first
@@ -12,7 +12,7 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [35])
 class ProgressTest {
-    private val db = QuantaDatabase.create(ApplicationProvider.getApplicationContext(), inMemory = true)
+    private val db = FlightDatabase.create(ApplicationProvider.getApplicationContext(), inMemory = true)
     private val repo = ProgressRepository(db.progress()) { 1000L }
 
     @Test fun bestResultIsKept() = runTest {

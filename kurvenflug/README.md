@@ -1,13 +1,9 @@
-# Quanta – Mathe & Physik spielen (Klasse 5–10)
+# Kurvenflug – Mathe & Physik im All (Klasse 5–10)
 
-Eine App, drei Welten. Das Rechnen ist die Spielsteuerung selbst – kein Quiz zwischen zwei Spielphasen
-(Recherche: `../docs/RECHERCHE.md`, Ideen: `../docs/APP-IDEEN.md`).
+Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
+selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).
 
-| Welt | Inhalt | Status |
-|---|---|---|
-| 🚀 Kurvenflug | Koordinaten, Geraden, Parabeln, schräger Wurf auf Erde/Mond/Mars | ✅ 27 Level |
-| ⚙️ Werkstatt der Maschinen | Hebel, Rollen, Spiegel, Stromkreise | geplant |
-| 🗡️ Formel-Dungeon | Terme und Gleichungen als Karten-Abenteuer | geplant |
+Inhalte: Koordinaten (Kl. 5–6), Geraden (Kl. 7–8), Parabeln (Kl. 9), schräger Wurf auf Erde/Mond/Mars (Physik).
 
 ## So funktioniert Kurvenflug
 - Die Sonde fliegt auf der eingestellten Bahn: `(x | y)`, `y = m·x + b`, `y = a·(x − d)² + e` oder Wurf mit `α`, `v`, `g`.
@@ -20,10 +16,10 @@ Eine App, drei Welten. Das Rechnen ist die Spielsteuerung selbst – kein Quiz z
 ## Bildschirme
 | | | |
 |---|---|---|
-| ![](screenshots/01_start.png) | ![](screenshots/02_kurvenflug_kapitel.png) | ![](screenshots/03_volt_erklaert.png) |
-| ![](screenshots/04_koordinaten.png) | ![](screenshots/05_gerade_zielen.png) | ![](screenshots/06_gerade_daneben.png) |
-| ![](screenshots/07_gerade_flug.png) | ![](screenshots/08_parabel_geschafft.png) | ![](screenshots/09_wurf_berg.png) |
-| ![](screenshots/10_wurf_mond.png) | ![](screenshots/11_einstellungen.png) | |
+| ![](screenshots/01_start.png) | ![](screenshots/03_volt_erklaert.png) | ![](screenshots/04_koordinaten.png) |
+| ![](screenshots/05_gerade_zielen.png) | ![](screenshots/06_gerade_daneben.png) | ![](screenshots/07_gerade_flug.png) |
+| ![](screenshots/08_parabel_geschafft.png) | ![](screenshots/09_wurf_berg.png) | ![](screenshots/10_wurf_mond.png) |
+| ![](screenshots/11_einstellungen.png) | | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Kollisionen, Level, Rückmeldungen, Update-Prüfung (Unit-Tests)
@@ -37,5 +33,5 @@ export ANDROID_HOME=/opt/android-sdk
 ./gradlew assembleRelease
 ```
 Ausliefern: `versionCode`/`versionName` in `app/build.gradle.kts` erhöhen, Abschnitt in `CHANGELOG.md`, pushen.
-GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `quanta-v<Version>` unter Releases.
+GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `kurvenflug-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).

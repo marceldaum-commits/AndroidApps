@@ -14,7 +14,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Quanta"
+rootProject.name = "Kurvenflug"
 
 include(":app")            // Oberfläche: Weltenkarte, Spiele, Einstellungen
 include(":core:model")     // reine Kotlin-Logik: Flugbahnen, Physik, Level (ohne Android)

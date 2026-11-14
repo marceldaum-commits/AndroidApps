@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.Quanta" parent="android:Theme.Material.NoActionBar">
+    <style name="Theme.Kurvenflug" parent="android:Theme.Material.NoActionBar">
         <item name="android:windowBackground">@color/space</item>
         <item name="android:statusBarColor">@color/space</item>
         <item name="android:navigationBarColor">@color/space</item>

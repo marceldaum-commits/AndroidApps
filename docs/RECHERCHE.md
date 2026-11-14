@@ -63,6 +63,6 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
   Rätsel fördern höheres Denken (Puzzle-Based Learning, Kl. 11) → physikalische Größen direkt einstellen und Wirkung sehen.
 - JIMplus 2026: 72 % der 14–17-Jährigen fühlen sich von Social Media abgelenkt → kurze Runden, keine Sog-Mechaniken,
   keine Streak-Angst.
-- Folgerung für „Quanta“: direkte Manipulation (Griffe am Graphen ziehen, Formel ändert sich live), sofortiges
+- Folgerung für Kurvenflug & Co.: direkte Manipulation (Griffe am Graphen ziehen, Formel ändert sich live), sofortiges
   sichtbares Ergebnis (Flug), wenige Versuche = mehr Sterne, eigene Levels/Duelle für soziale Motivation, Look für
   Jugendliche (Weltraum, Neon), Maskottchen frech statt niedlich.

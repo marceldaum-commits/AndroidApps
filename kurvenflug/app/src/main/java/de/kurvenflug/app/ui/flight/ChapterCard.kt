@@ -1,4 +1,4 @@
-package de.quanta.app.ui.flight
+package de.kurvenflug.app.ui.flight
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,56 +19,42 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.quanta.app.ui.fx.*
-import de.quanta.app.ui.theme.Q
-import de.quanta.core.model.Chapter
-import de.quanta.core.model.Level
+import de.kurvenflug.app.ui.fx.*
+import de.kurvenflug.app.ui.theme.Q
+import de.kurvenflug.core.model.Chapter
+import de.kurvenflug.core.model.Level
 
 /** Ein Level ist offen, wenn es das erste im Kapitel ist oder das vorige geschafft wurde. */
 fun unlocked(chapter: Chapter, index: Int, stars: Map<String, Int>) = index == 0 || (stars[chapter.levels[index - 1].id] ?: 0) > 0
 
-/** Kurvenflug: Kapitel nach Klassenstufe – alle Kapitel sind offen, innerhalb geht es Level für Level. */
+private val chapterColors = listOf(Q.Cyan, Q.Pink, Q.Yellow, Q.Green, Q.Violet, Q.Orange)
+
+/** Ein Kapitel mit seinen Level-Kacheln – alle Kapitel sind offen, innerhalb geht es Level für Level. */
 @Composable
-fun ChaptersScreen(chapters: List<Chapter>, stars: Map<String, Int>, onLevel: (Level) -> Unit, onBack: () -> Unit) {
-    val colors = listOf(Q.Cyan, Q.Pink, Q.Yellow, Q.Green)
-    Box(Modifier.fillMaxSize()) {
-        Starfield(seed = 3)
-        Column(Modifier.fillMaxSize().systemBarsPadding()) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
-                Text("🚀 Kurvenflug", style = MaterialTheme.typography.titleLarge, color = Q.Text)
+fun ChapterCard(c: Chapter, index: Int, stars: Map<String, Int>, onLevel: (Level) -> Unit) {
+    val color = chapterColors[index % chapterColors.size]
+    val got = c.levels.sumOf { stars[it.id] ?: 0 }
+    Column(
+        Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(Q.Panel.copy(alpha = 0.9f))
+            .border(1.5.dp, color.copy(alpha = 0.5f), RoundedCornerShape(20.dp)).padding(14.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text(c.emoji, fontSize = 28.sp)
+            Spacer(Modifier.width(10.dp))
+            Column(Modifier.weight(1f)) {
+                Text(c.title, style = MaterialTheme.typography.titleMedium, color = Q.Text)
+                Text(c.grades, style = MaterialTheme.typography.labelMedium, color = color)
             }
-            Column(Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-                chapters.forEachIndexed { ci, c ->
-                    val color = colors[ci % colors.size]
-                    val got = c.levels.sumOf { stars[it.id] ?: 0 }
-                    Column(
-                        Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(Q.Panel.copy(alpha = 0.9f))
-                            .border(1.5.dp, color.copy(alpha = 0.5f), RoundedCornerShape(20.dp)).padding(14.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                    ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Text(c.emoji, fontSize = 28.sp)
-                            Spacer(Modifier.width(10.dp))
-                            Column(Modifier.weight(1f)) {
-                                Text(c.title, style = MaterialTheme.typography.titleMedium, color = Q.Text)
-                                Text(c.grades, style = MaterialTheme.typography.labelMedium, color = color)
-                            }
-                            Text("$got / ${c.levels.size * 3} ⭐", color = Q.Yellow, fontWeight = FontWeight.Bold)
-                        }
-                        // Level-Kacheln
-                        c.levels.chunked(4).forEach { row ->
-                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                row.forEach { l ->
-                                    val idx = c.levels.indexOf(l)
-                                    LevelTile(l, stars[l.id] ?: 0, unlocked(c, idx, stars), color, Modifier.weight(1f)) { onLevel(l) }
-                                }
-                                repeat(4 - row.size) { Spacer(Modifier.weight(1f)) }
-                            }
-                        }
-                    }
+            Text("$got / ${c.levels.size * 3} ⭐", color = Q.Yellow, fontWeight = FontWeight.Bold)
+        }
+        c.levels.chunked(4).forEach { row ->
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                row.forEach { l ->
+                    val idx = c.levels.indexOf(l)
+                    LevelTile(l, stars[l.id] ?: 0, unlocked(c, idx, stars), color, Modifier.weight(1f)) { onLevel(l) }
                 }
-                Spacer(Modifier.height(16.dp))
+                repeat(4 - row.size) { Spacer(Modifier.weight(1f)) }
             }
         }
     }

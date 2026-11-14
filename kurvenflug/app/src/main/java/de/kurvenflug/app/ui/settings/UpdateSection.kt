@@ -1,4 +1,4 @@
-package de.quanta.app.ui.settings
+package de.kurvenflug.app.ui.settings
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.*
@@ -20,13 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.LifecycleResumeEffect
-import de.quanta.app.ui.fx.*
-import de.quanta.app.ui.theme.Q
-import de.quanta.app.ui.volt.Volt
-import de.quanta.app.ui.volt.VoltMood
-import de.quanta.app.update.AppUpdater
-import de.quanta.core.model.AppRelease
-import de.quanta.core.model.Updates
+import de.kurvenflug.app.ui.fx.*
+import de.kurvenflug.app.ui.theme.Q
+import de.kurvenflug.app.ui.volt.Volt
+import de.kurvenflug.app.ui.volt.VoltMood
+import de.kurvenflug.app.update.AppUpdater
+import de.kurvenflug.core.model.AppRelease
+import de.kurvenflug.core.model.Updates
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -144,7 +144,7 @@ fun UpdateSection(
                         }
                         is UpdateState.Ready -> {
                             Text("✅ Version ${s.r.version} ist geladen.", fontWeight = FontWeight.Bold)
-                            if (!AppUpdater.canInstall(ctx)) Text("Einmalig nötig: In den Android-Einstellungen „Quanta“ erlauben, Apps zu installieren – dann zurückkommen.",
+                            if (!AppUpdater.canInstall(ctx)) Text("Einmalig nötig: In den Android-Einstellungen „Kurvenflug“ erlauben, Apps zu installieren – dann zurückkommen.",
                                 style = MaterialTheme.typography.bodySmall)
                             NeonButton(onClick = {
                                 if (AppUpdater.canInstall(ctx)) AppUpdater.install(ctx, s.apk)

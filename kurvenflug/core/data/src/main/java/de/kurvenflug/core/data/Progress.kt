@@ -1,4 +1,4 @@
-package de.quanta.core.data
+package de.kurvenflug.core.data
 
 import android.content.Context
 import androidx.room.*
@@ -23,13 +23,13 @@ interface ProgressDao {
 }
 
 @Database(entities = [LevelProgress::class], version = 1, exportSchema = true)
-abstract class QuantaDatabase : RoomDatabase() {
+abstract class FlightDatabase : RoomDatabase() {
     abstract fun progress(): ProgressDao
 
     companion object {
-        fun create(ctx: Context, inMemory: Boolean = false): QuantaDatabase =
-            (if (inMemory) Room.inMemoryDatabaseBuilder(ctx, QuantaDatabase::class.java)
-            else Room.databaseBuilder(ctx, QuantaDatabase::class.java, "quanta.db")).build()
+        fun create(ctx: Context, inMemory: Boolean = false): FlightDatabase =
+            (if (inMemory) Room.inMemoryDatabaseBuilder(ctx, FlightDatabase::class.java)
+            else Room.databaseBuilder(ctx, FlightDatabase::class.java, "kurvenflug.db")).build()
     }
 }
 

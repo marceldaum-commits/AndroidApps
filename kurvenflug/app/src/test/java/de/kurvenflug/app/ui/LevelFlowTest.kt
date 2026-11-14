@@ -1,12 +1,12 @@
-package de.quanta.app.ui
+package de.kurvenflug.app.ui
 
 import androidx.compose.material3.Surface
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import de.quanta.app.ui.flight.LevelScreen
-import de.quanta.app.ui.theme.Q
-import de.quanta.app.ui.theme.QuantaTheme
-import de.quanta.core.model.Levels
+import de.kurvenflug.app.ui.flight.LevelScreen
+import de.kurvenflug.app.ui.theme.Q
+import de.kurvenflug.app.ui.theme.KurvenflugTheme
+import de.kurvenflug.core.model.Levels
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -23,7 +23,7 @@ class LevelFlowTest {
     @Test fun missThenHitGivesTwoStarsOnce() {
         val l = Levels.byId("1-1")!!
         val solved = mutableListOf<Triple<Int, Set<Int>, Int>>()
-        rule.setContent { QuantaTheme { Surface(color = Q.Space) {
+        rule.setContent { KurvenflugTheme { Surface(color = Q.Space) {
             LevelScreen(l, Levels.chapters[0], Q.Cyan, false, {}, { s, c, a -> solved += Triple(s, c, a) }, null, {})
         } } }
         rule.mainClock.advanceTimeBy(1000)

@@ -1,4 +1,4 @@
-package de.quanta.app.ui
+package de.kurvenflug.app.ui
 
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -6,15 +6,14 @@ import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.github.takahirom.roborazzi.captureRoboImage
-import de.quanta.app.ui.flight.ChaptersScreen
-import de.quanta.app.ui.flight.IntroOverlay
-import de.quanta.app.ui.flight.LevelScreen
-import de.quanta.app.ui.home.HomeScreen
-import de.quanta.app.ui.settings.SettingsScreen
-import de.quanta.app.ui.settings.UpdateState
-import de.quanta.app.ui.theme.Q
-import de.quanta.app.ui.theme.QuantaTheme
-import de.quanta.core.model.Levels
+import de.kurvenflug.app.ui.flight.IntroOverlay
+import de.kurvenflug.app.ui.flight.LevelScreen
+import de.kurvenflug.app.ui.home.HomeScreen
+import de.kurvenflug.app.ui.settings.SettingsScreen
+import de.kurvenflug.app.ui.settings.UpdateState
+import de.kurvenflug.app.ui.theme.Q
+import de.kurvenflug.app.ui.theme.KurvenflugTheme
+import de.kurvenflug.core.model.Levels
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,7 +29,7 @@ class ScreenshotTest {
     @get:Rule val rule = createComposeRule()
 
     private fun shot(name: String, settle: Long = 1500, prepare: (ComposeContentTestRule) -> Unit = {}, content: @Composable () -> Unit) {
-        rule.setContent { QuantaTheme { Surface(color = Q.Space) { content() } } }
+        rule.setContent { KurvenflugTheme { Surface(color = Q.Space) { content() } } }
         rule.mainClock.advanceTimeBy(1500)
         prepare(rule)
         rule.mainClock.advanceTimeBy(settle)
@@ -48,10 +47,8 @@ class ScreenshotTest {
     }
 
     @Test fun home() = shot("01_start") {
-        HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, {}, {})
+        HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {})
     }
-
-    @Test fun chapters() = shot("02_kurvenflug_kapitel") { ChaptersScreen(Levels.chapters, someStars, {}, {}) }
 
     @Test fun intro() = shot("03_volt_erklaert", prepare = { it.onNodeWithText("Weiter ›").performClick() }) {
         IntroOverlay(Levels.chapters[1]) {}

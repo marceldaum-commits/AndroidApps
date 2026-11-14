@@ -1,4 +1,4 @@
-package de.quanta.app.ui.theme
+package de.kurvenflug.app.ui.theme
 
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -32,7 +32,7 @@ private val scheme = darkColorScheme(
 )
 
 @Composable
-fun QuantaTheme(content: @Composable () -> Unit) {
+fun KurvenflugTheme(content: @Composable () -> Unit) {
     val t = Typography()
     MaterialTheme(
         colorScheme = scheme,

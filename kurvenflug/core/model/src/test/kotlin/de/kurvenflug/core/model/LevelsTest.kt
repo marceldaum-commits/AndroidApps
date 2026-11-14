@@ -1,4 +1,4 @@
-package de.quanta.core.model
+package de.kurvenflug.core.model
 
 import org.junit.Assert.*
 import org.junit.Test

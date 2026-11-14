@@ -1,4 +1,4 @@
-package de.quanta.core.model
+package de.kurvenflug.core.model
 
 import kotlin.math.abs
 import kotlin.math.cos

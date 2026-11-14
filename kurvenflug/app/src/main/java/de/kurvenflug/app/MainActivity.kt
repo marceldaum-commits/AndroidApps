@@ -1,4 +1,4 @@
-package de.quanta.app
+package de.kurvenflug.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,22 +17,20 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import de.quanta.app.ui.flight.ChaptersScreen
-import de.quanta.app.ui.flight.LevelScreen
-import de.quanta.app.ui.fx.LocalSfx
-import de.quanta.app.ui.fx.LocalVibration
-import de.quanta.app.ui.home.HomeScreen
-import de.quanta.app.ui.home.Skins
-import de.quanta.app.ui.settings.SettingsScreen
-import de.quanta.app.ui.settings.UpdateBanner
-import de.quanta.app.ui.settings.UpdateState
-import de.quanta.app.ui.theme.Q
-import de.quanta.app.ui.theme.QuantaTheme
-import de.quanta.core.model.Levels
+import de.kurvenflug.app.ui.flight.LevelScreen
+import de.kurvenflug.app.ui.fx.LocalSfx
+import de.kurvenflug.app.ui.fx.LocalVibration
+import de.kurvenflug.app.ui.home.HomeScreen
+import de.kurvenflug.app.ui.home.Skins
+import de.kurvenflug.app.ui.settings.SettingsScreen
+import de.kurvenflug.app.ui.settings.UpdateBanner
+import de.kurvenflug.app.ui.settings.UpdateState
+import de.kurvenflug.app.ui.theme.Q
+import de.kurvenflug.app.ui.theme.KurvenflugTheme
+import de.kurvenflug.core.model.Levels
 
 object Routes {
     const val HOME = "start"
-    const val FLIGHT = "kurvenflug"
     const val LEVEL = "level/{id}"
     const val SETTINGS = "einstellungen"
     fun level(id: String) = "level/$id"
@@ -53,13 +51,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-        val app = application as QuantaApp
+        val app = application as KurvenflugApp
         if (savedInstanceState == null) vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
             val vibration by vm.settings.vibration.collectAsStateWithLifecycle()
             LaunchedEffect(sound) { app.sfx.enabled = sound }
-            QuantaTheme {
+            KurvenflugTheme {
                 CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration) {
                     Surface(Modifier.fillMaxSize(), color = Q.Space) { Nav() }
                 }
@@ -80,13 +78,11 @@ class MainActivity : ComponentActivity() {
                 HomeScreen(
                     stars = stars.values.sum(), maxStars = vm.maxStars, cells = cells, skin = skin,
                     onSkin = vm::setSkin,
-                    onFlight = { nav.goOnce(Routes.FLIGHT) },
+                    chapters = Levels.chapters, levelStars = stars,
+                    onLevel = { nav.goOnce(Routes.level(it.id)) },
                     onSettings = { nav.goOnce(Routes.SETTINGS) },
                     banner = upd?.let { u -> { UpdateBanner(u.version) { nav.goOnce(Routes.SETTINGS) } } },
                 )
-            }
-            composable(Routes.FLIGHT) {
-                ChaptersScreen(Levels.chapters, stars, onLevel = { nav.goOnce(Routes.level(it.id)) }, onBack = { nav.popSafe() })
             }
             composable(Routes.LEVEL, arguments = listOf(navArgument("id") { type = NavType.StringType })) { e ->
                 val level = Levels.byId(e.arguments?.getString("id").orEmpty()) ?: return@composable

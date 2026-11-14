@@ -1,17 +1,17 @@
-package de.quanta.app
+package de.kurvenflug.app
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import de.quanta.core.data.LevelProgress
-import de.quanta.core.model.AppRelease
-import de.quanta.core.model.Levels
-import de.quanta.core.model.Updates
+import de.kurvenflug.core.data.LevelProgress
+import de.kurvenflug.core.model.AppRelease
+import de.kurvenflug.core.model.Levels
+import de.kurvenflug.core.model.Updates
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class AppViewModel(app: Application) : AndroidViewModel(app) {
-    private val c = (app as QuantaApp).container
+    private val c = (app as KurvenflugApp).container
     val settings = c.settings
 
     val progress: StateFlow<Map<String, LevelProgress>> = c.progress.all.map { l -> l.associateBy { it.levelId } }
@@ -43,7 +43,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val now = System.currentTimeMillis()
         if (now - settings.lastUpdateCheck < 20 * 3_600_000L) return
         viewModelScope.launch {
-            de.quanta.app.update.AppUpdater.check().onSuccess { r ->
+            de.kurvenflug.app.update.AppUpdater.check().onSuccess { r ->
                 val newer = r?.takeIf { Updates.isNewer(it.version, installed) }
                 if (newer == null) settings.lastUpdateCheck = now
                 _update.value = newer
