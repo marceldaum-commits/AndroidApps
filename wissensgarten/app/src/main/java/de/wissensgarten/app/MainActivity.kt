@@ -325,8 +325,18 @@ class MainActivity : ComponentActivity() {
                 composable(Routes.CHAPTER) { entry ->
                     val n = entry.arguments?.getString("n")?.toIntOrNull()
                     val ch = de.wissensgarten.core.model.Story.chapters.firstOrNull { it.number == n }
-                    if (ch == null) LaunchedEffect(Unit) { nav.popBackStack() } else
-                        StoryPlayer("Kapitel ${ch.number}: ${ch.title}", ch.scenes) { vm.markChapterRead(ch.number); nav.popBackStack() }
+                    var finished by remember(n) { mutableStateOf(false) }
+                    if (ch == null) LaunchedEffect(Unit) { nav.popBackStack() }
+                    else if (!finished) StoryPlayer("Kapitel ${ch.number}: ${ch.title}", ch.scenes) { vm.markChapterRead(ch.number); finished = true }
+                    else ChapterEnd(
+                        done = ch, grown = remember(beds) { vm.grownPlants() },
+                        onNext = { nx -> nav.navigate(Routes.chapter(nx.number)) { popUpTo(Routes.STORY) } },
+                        onWater = {
+                            nav.popBackStack(Routes.STORY, inclusive = true)
+                            if (vm.startSession()) nav.navigate(Routes.REVIEW) else nav.navigate(Routes.SHOP)
+                        },
+                        onList = { nav.popBackStack() },
+                    )
                 }
                 composable(Routes.CHEST) {
                     ChestReveal(onOpen = { vm.openChest() }, onClose = { nav.popBackStack() })

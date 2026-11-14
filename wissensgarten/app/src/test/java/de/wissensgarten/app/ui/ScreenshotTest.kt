@@ -379,4 +379,6 @@ class ScreenshotTest {
         android.graphics.Canvas(out).apply { drawColor(android.graphics.Color.WHITE); drawBitmap(day, 0f, 0f, null); drawBitmap(party, 0f, 250f, null) }
         File("../screenshots/36_widget_garten.png").outputStream().use { out.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
     }
+
+    @Test fun chapterEnd() = shot("28b_kapitel_geschafft") { ChapterEnd(Story.chapters[0], grown = 2, onNext = {}, onWater = {}, onList = {}) }
 }

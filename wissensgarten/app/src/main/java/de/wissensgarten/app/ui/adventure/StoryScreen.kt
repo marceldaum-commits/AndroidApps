@@ -105,3 +105,57 @@ fun StoryEntryCard(newChapter: Chapter?, onClick: () -> Unit) {
         }
     }
 }
+
+/**
+ * Abschluss eines Kapitels: Konfetti, und vor allem ein klarer nächster Schritt –
+ * entweder das nächste Kapitel lesen oder Pflanzen gießen, um es freizuschalten.
+ */
+@Composable
+fun ChapterEnd(done: Chapter, grown: Int, onNext: (Chapter) -> Unit, onWater: () -> Unit, onList: () -> Unit) {
+    val sfx = LocalSfx.current
+    val particles = rememberParticles()
+    val next = Story.chapters.firstOrNull { it.number == done.number + 1 }
+    val open = next != null && grown >= next.unlockAt
+    androidx.compose.runtime.LaunchedEffect(Unit) {
+        sfx?.play(Sound.FANFARE)
+        particles.burst(Burst.CONFETTI, count = 70)
+    }
+    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF5C6BC0), Color(0xFFAB47BC), Color(0xFFF3E5F5))))) {
+        Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+            Text("Kapitel ${done.number} geschafft! 🎉", color = Color.White, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+            Spacer(Modifier.height(16.dp))
+            Brummi(Mood.CHEER, size = 120.dp, speech = when {
+                next == null -> "Wir haben es geschafft – die Wissensblume leuchtet wieder! Danke, dass du mir geholfen hast!"
+                open -> "Weiter geht's! Kapitel ${next.number} wartet schon auf uns!"
+                else -> "Damit es weitergeht, braucht der Garten Kraft. Lass noch ${next.unlockAt - grown} Pflanzen wachsen – dann geht unser Abenteuer weiter!"
+            })
+            Spacer(Modifier.height(20.dp))
+            if (next != null && !open) {
+                val prev = done.unlockAt
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("🌱", fontSize = 24.sp)
+                    LinearProgressIndicator(
+                        progress = { ((grown - prev).toFloat() / (next.unlockAt - prev)).coerceIn(0f, 1f) },
+                        modifier = Modifier.weight(1f).padding(horizontal = 10.dp).height(12.dp).clip(CircleShape),
+                        color = Color(0xFFFFD54F), trackColor = Color.White.copy(alpha = 0.35f),
+                    )
+                    Text("🔒 ${next.number}", color = Color.White, fontWeight = FontWeight.Bold)
+                }
+                Text("$grown von ${next.unlockAt} Pflanzen gewachsen", color = Color.White, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 6.dp))
+                Spacer(Modifier.height(20.dp))
+                JuicyButton(onClick = onWater, modifier = Modifier.fillMaxWidth().height(60.dp).pulse(true, 0.03f),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4F9FD6))) {
+                    Text("💧 Jetzt Pflanzen wachsen lassen", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
+            } else if (next != null) {
+                JuicyButton(onClick = { onNext(next) }, modifier = Modifier.fillMaxWidth().height(60.dp).pulse(true, 0.03f),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3F6B3A))) {
+                    Text("📖 Weiter mit Kapitel ${next.number}", fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                }
+            }
+            TextButton(onClick = onList, modifier = Modifier.padding(top = 8.dp)) { Text("Zur Kapitelübersicht", color = Color.White) }
+        }
+        ParticleLayer(particles, Modifier.matchParentSize())
+    }
+}
