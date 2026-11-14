@@ -45,6 +45,8 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 - **Duell per Code** (ohne Server): Paket wählen, 10 Fragen à 15 s, Punkte für Richtig + Tempo. Der Code geht per
   WhatsApp raus; wer ihn einfügt (oder die Nachricht an die App teilt), spielt dieselben Fragen und hängt sein Ergebnis an.
   Siegerpodest, Konfetti, Tautropfen. Im Code stehen nur Profilname, Tier und Punkte (`core/model/Duel.kt`).
+  Der geteilte Link `https://www.mathenachhilfe-online.com/duell/#WG1-…` öffnet direkt die App (Android App Link);
+  ohne App zeigt er eine Ausweich-Seite. Server-Dateien und Anleitung: [`web/`](web/README.md).
 - **Gieß-Erinnerung**: täglich zur Wunschzeit, nur wenn Pflanzen Durst haben, für alle Profile in einer Nachricht
   (WorkManager, `notify/Reminders.kt`).
 - **Ton**: alle Geräusche werden im Code erzeugt (`ui/fx/Synth.kt`) – keine Audiodateien, keine Lizenzen.
@@ -82,7 +84,6 @@ Benötigt JDK 17+ und Android SDK (Plattform 36).
 
 ## Nächste Ideen
 
-- Anklickbarer Duell-Link (braucht eine kleine Webseite für Android App Links)
 - Echtes Online-Duell mit Konten (Server, Datenschutz-Konzept für Kinder)
 - Pakete aus dem Internet nachladen; Karten-Sets teilen (Link/QR), CSV-Import
 - Dungeon-Modus: gewachsene Pflanzen werden Kampfkarten

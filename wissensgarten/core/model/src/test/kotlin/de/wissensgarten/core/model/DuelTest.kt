@@ -39,6 +39,15 @@ class DuelTest {
         assertEquals(d, Duels.decode("Hey! Schaffst du das?\n$code\nViel Glück 😄"))
     }
 
+    @Test fun shareTextContainsClickableLinkThatDecodes() {
+        val me = DuelResult("Lena", "🦊", 8, 61_000, 980)
+        val d = Duels.new(pack).withResult(me)
+        val text = Duels.shareText(d, "Test", me)
+        assertTrue(text.contains("https://www.mathenachhilfe-online.com/duell/#WG1-"))
+        assertEquals(d, Duels.decode(text))
+        assertEquals(d, Duels.decode(Duels.link(d)))
+    }
+
     @Test fun brokenCodeIsRejected() {
         val code = Duels.encode(Duels.new(pack))
         val i = code.length / 2

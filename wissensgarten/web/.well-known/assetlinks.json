@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "de.wissensgarten.app",
+      "sha256_cert_fingerprints": [
+        "9A:5B:A3:75:D3:D0:DC:C7:D5:9D:7D:D1:28:22:0B:91:D7:D5:FA:70:CB:0D:A2:2B:53:70:FC:4A:5E:83:C1:D7"
+      ]
+    }
+  }
+]

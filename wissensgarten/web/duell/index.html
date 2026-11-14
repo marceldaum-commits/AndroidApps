@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Duell im Wissensgarten</title>
+<meta property="og:title" content="⚔️ Du wurdest zum Duell herausgefordert!">
+<meta property="og:description" content="10 Fragen, 15 Sekunden pro Frage – schaffst du mehr Punkte? Ein Lernspiel aus dem Wissensgarten.">
+<style>
+  :root { --moss:#3F6B3A; --cream:#FBF6EC; --ink:#22261F; --orange:#FF7043; --card:#FFFFFF; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--cream); color: var(--ink); }
+  .sky { background: linear-gradient(#8EC5EA, #CDEBFA); padding: 28px 16px 70px; text-align:center; position:relative; overflow:hidden; }
+  .sky h1 { margin: 6px 0 4px; font-size: 26px; color:#14321A; }
+  .sky p { margin:0; color:#14321A; }
+  .hill { position:absolute; left:-10%; right:-10%; bottom:-40px; height:90px; background:#6FA35A; border-radius:50% 50% 0 0; }
+  .plants { font-size: 34px; position:relative; z-index:1; margin-top:10px; }
+  main { max-width: 520px; margin: -40px auto 0; padding: 0 16px 40px; position:relative; }
+  .card { background: var(--card); border-radius: 24px; padding: 20px; box-shadow: 0 6px 20px rgba(0,0,0,.08); margin-bottom: 16px; }
+  .topic { font-size: 18px; font-weight: 700; margin: 0 0 10px; }
+  table { width:100%; border-collapse: collapse; }
+  td { padding: 6px 2px; font-size: 17px; }
+  td.score { text-align:right; font-weight:800; color: var(--orange); }
+  .btn { display:block; width:100%; text-align:center; text-decoration:none; border:0; cursor:pointer;
+         padding: 16px; border-radius: 999px; font-size: 17px; font-weight: 700; margin-top: 10px; }
+  .primary { background: var(--orange); color:#fff; }
+  .secondary { background: #E8F5E9; color: var(--moss); }
+  ol { padding-left: 20px; line-height: 1.6; margin: 8px 0 0; }
+  .small { font-size: 13px; color:#5b5f55; }
+  .err { color:#B0602F; }
+  code { word-break: break-all; font-size: 12px; background:#F3ECDD; padding: 2px 4px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<div class="sky">
+  <div style="font-size:44px">⚔️</div>
+  <h1 id="headline">Duell im Wissensgarten</h1>
+  <p>10 Fragen · 15 Sekunden pro Frage · wer schafft mehr?</p>
+  <div class="plants">🌱 🌷 🌻 🌳</div>
+  <div class="hill"></div>
+</div>
+<main>
+  <div class="card" id="duel">
+    <p class="topic" id="topic">Lade Duell …</p>
+    <table id="ranking"></table>
+  </div>
+
+  <div class="card">
+    <strong>So nimmst du das Duell an</strong>
+    <a class="btn primary" id="open" href="#">In der App öffnen</a>
+    <button class="btn secondary" id="copy">Code kopieren</button>
+    <ol>
+      <li>Wissensgarten-App installieren (falls noch nicht da).</li>
+      <li>Code kopieren.</li>
+      <li>In der App: <b>Duell → „Aus Zwischenablage einfügen“</b>.</li>
+    </ol>
+    <p class="small" id="store">Die App kommt bald in den Google Play Store. Bis dahin bekommst du sie von der Person, die dich herausgefordert hat.</p>
+  </div>
+
+  <p class="small">Datenschutz: Der Duell-Code steht nur hinter dem #-Zeichen der Adresse. Dieser Teil wird nicht an unseren Server
+  gesendet und nirgends gespeichert – diese Seite liest ihn nur in deinem Browser.</p>
+</main>
+<script>
+  // Paket-IDs → Titel (aus den Wissenspaketen der App erzeugt)
+  var PACKS = {"aw-allgemeinwissen-mix": ["💡", "Allgemeinwissen-Quiz"], "aw-erste-hilfe": ["⛑️", "Erste Hilfe"], "aw-musik-kunst": ["🎻", "Musik und Kunst"], "aw-weltall": ["🚀", "Reise ins Weltall"], "gs-einmaleins": ["🔢", "Das kleine Einmaleins"], "gs-englisch-basics": ["🎩", "Englisch für Anfänger"], "gs-koerper-natur": ["🌻", "Körper und Natur"], "gs-mathe-groessen": ["⏰", "Uhr, Geld und Maße"], "gs-plus-minus-20": ["🎈", "Plus und Minus bis 20"], "gs-rechtschreibung": ["📝", "Richtig schreiben"], "gs-tiere": ["🐶", "Tiere entdecken"], "gs-verkehr-deutschland": ["🚦", "Verkehr und Deutschland"], "gs-wortarten": ["💬", "Wortarten"], "ob-bio-genetik": ["🧬", "Genetik"], "ob-deutsch-epochen": ["📜", "Literaturepochen"], "ob-englisch-abi-vokabeln": ["🌍", "Englisch Abi-Vokabeln"], "ob-mathe-analysis": ["📈", "Analysis kompakt"], "ob-physik-konstanten-begriffe": ["⚛️", "Naturkonstanten & Begriffe"], "s1-bio-oekologie": ["🌱", "Ökologie"], "s1-bio-zelle-mensch": ["🔬", "Zelle & Mensch"], "s1-chemie-elemente": ["⚗️", "Chemische Elemente"], "s1-chemie-grundbegriffe": ["🧪", "Chemie-Grundbegriffe"], "s1-deutsch-grammatik": ["✏️", "Deutsch Grammatik"], "s1-deutsch-stilmittel": ["🎭", "Stilmittel erkennen"], "s1-englisch-grundwortschatz": ["💬", "Englisch Grundwortschatz"], "s1-englisch-irregular-verbs": ["📝", "Irregular Verbs"], "s1-erdkunde-bundeslaender": ["🏔️", "Deutschlands Bundesländer"], "s1-erdkunde-europa": ["🧭", "Europa entdecken"], "s1-erdkunde-welt": ["🌋", "Rund um die Welt"], "s1-franzoesisch-grundwortschatz": ["🥖", "Französisch Grundwortschatz"], "s1-franzoesisch-verben": ["🗣️", "être, avoir, aller, faire"], "s1-geschichte-20-jahrhundert": ["🕊️", "Das 20. Jahrhundert"], "s1-geschichte-antike-mittelalter": ["🏺", "Antike und Mittelalter"], "s1-geschichte-neuzeit": ["⚓", "Die Neuzeit"], "s1-informatik-grundlagen": ["💻", "Informatik-Grundlagen"], "s1-latein-grundwortschatz": ["🏛️", "Latein Grundwortschatz"], "s1-mathe-algebra": ["🔢", "Algebra & Funktionen"], "s1-mathe-brueche-prozent": ["➗", "Brüche & Prozent"], "s1-mathe-geometrie-formeln": ["📐", "Geometrie-Formeln"], "s1-physik-einheiten-formeln": ["⚡", "Physik: Einheiten & Formeln"], "s1-politik-grundgesetz": ["🗳️", "Grundgesetz und Staat"], "s1-spanisch-grundwortschatz": ["💃", "Spanisch Grundwortschatz"], "s1-wirtschaft-grundbegriffe": ["💰", "Wirtschaft und Geld"]};
+  function decode(text) {
+    var m = /WG1-([A-Za-z0-9_-]+)\.([0-9a-z]+)/.exec(text || "");
+    if (!m) return null;
+    try {
+      var b64 = m[1].replace(/-/g, "+").replace(/_/g, "/");
+      while (b64.length % 4) b64 += "=";
+      var bytes = Uint8Array.from(atob(b64), function (c) { return c.charCodeAt(0); });
+      return { code: m[0], duel: JSON.parse(new TextDecoder().decode(bytes)) };
+    } catch (e) { return null; }
+  }
+  function esc(s) { var d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+  var hash = decodeURIComponent(location.hash.slice(1));
+  var found = decode(hash);
+  var topic = document.getElementById("topic");
+  if (!found) {
+    topic.innerHTML = '<span class="err">Kein gültiger Duell-Code gefunden.</span> Bitte den ganzen Link aus der Nachricht öffnen.';
+    document.getElementById("open").style.display = "none";
+    document.getElementById("copy").style.display = "none";
+  } else {
+    var d = found.duel, p = PACKS[d.p];
+    topic.textContent = "Thema: " + (p ? p[0] + " " + p[1] : d.p);
+    var r = (d.r || []).slice().sort(function (a, b) { return b.k - a.k || a.t - b.t; });
+    if (r.length) document.getElementById("headline").textContent = r[0].n + " fordert dich heraus!";
+    var medals = ["🥇", "🥈", "🥉"];
+    document.getElementById("ranking").innerHTML = r.map(function (x, i) {
+      return "<tr><td>" + (medals[i] || (i + 1) + ".") + " " + esc(x.a) + " " + esc(x.n) +
+             "</td><td class='score'>" + x.k + "</td></tr>";
+    }).join("");
+    document.getElementById("open").href = "wissensgarten://duell/" + found.code;
+    document.getElementById("copy").onclick = function () {
+      var b = this;
+      navigator.clipboard.writeText(found.code).then(function () { b.textContent = "✓ Kopiert!"; });
+    };
+  }
+</script>
+</body>
+</html>

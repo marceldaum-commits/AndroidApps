@@ -42,6 +42,10 @@ object Duels {
     const val SECONDS = 15
     const val MAX_PLAYERS = 8
     private const val PREFIX = "WG1-"
+    /** Ausweich-Seite + Android App Link. Code steht hinter # und wird nie an den Server gesendet. */
+    const val LINK_BASE = "https://www.mathenachhilfe-online.com/duell/#"
+
+    fun link(d: Duel) = LINK_BASE + encode(d)
     private val json = Json { ignoreUnknownKeys = true }
 
     fun new(pack: Pack, random: Random = Random.Default) = Duel(pack.id, pack.version, random.nextInt(1, Int.MAX_VALUE))
@@ -93,6 +97,6 @@ object Duels {
         val head = if (others.isEmpty()) "⚔️ ${me.name} fordert dich im Wissensgarten heraus!"
         else "⚔️ Duell-Stand im Wissensgarten:"
         val table = d.ranking.joinToString("\n") { "${it.avatar} ${it.name}: ${it.score} Punkte (${it.correct}/$QUESTIONS)" }
-        return "$head\nThema: $packTitle\n$table\n\nSchaffst du mehr? Öffne den Wissensgarten → Duell → „Code einfügen“:\n${encode(d)}"
+        return "$head\nThema: $packTitle\n$table\n\nSchaffst du mehr? Tipp auf den Link:\n${link(d)}"
     }
 }
