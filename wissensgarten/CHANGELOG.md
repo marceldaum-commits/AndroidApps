@@ -3,6 +3,9 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.17.1 – Widget-Fragen laufen weiter
+- **🐝 Startbildschirm-Widget:** Nach dem Antippen einer Antwort blieb die Frage manchmal einfach stehen. Jetzt kommt sofort die Rückmeldung („🎉 Richtig! +5 💧“ oder „🌱 Fast! Richtig ist: …“) – und gleich die nächste Frage, ohne Extra-Knopf. Dieselbe Karte kommt nicht zweimal hintereinander.
+
 ## 0.17.0 – Mehr für Grundschule und Eltern
 - **⌨️ Antwort selbst eintippen (ab Klasse 5):** Manchmal fragt Brummi „ganz aus dem Kopf“. Kleine Tippfehler zählen als „fast richtig“ – in Deutsch zählt die genaue Schreibweise. Abschaltbar unter Einstellungen → Spielarten.
 - **🧒 Vier neue Grundschul-Pakete:** Die Uhr und die Zeit, Rechnen mit Geld, Lesestart, Wetter und Jahreszeiten – zusammen 128 neue Karten mit Merkbildern.

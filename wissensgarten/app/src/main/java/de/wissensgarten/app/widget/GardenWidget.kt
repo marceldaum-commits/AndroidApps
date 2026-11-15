@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
@@ -44,6 +46,7 @@ import kotlin.math.sin
 private val KEY_FEEDBACK = stringPreferencesKey("fb")
 private val KEY_FEEDBACK_AT = longPreferencesKey("fbAt")
 private val KEY_CELEBRATE = longPreferencesKey("party")
+private val KEY_LAST = stringPreferencesKey("last")
 private val P_CARD = ActionParameters.Key<String>("card")
 private val P_RIGHT = ActionParameters.Key<Boolean>("right")
 
@@ -55,7 +58,10 @@ class GardenWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Responsive(setOf(SMALL, LARGE))
     override val stateDefinition = PreferencesGlanceStateDefinition
 
-    override suspend fun provideGlance(context: Context, id: GlanceId) {
+    /** Alles, was das Widget zeigt – wird nach jeder Antwort neu geladen. */
+    private class Data(val garden: Bitmap, val thirsty: Int, val seeds: Int, val q: de.wissensgarten.core.model.WidgetQuestion?, val feedback: String?)
+
+    private suspend fun load(context: Context, state: Preferences): Data {
         val c = (context.applicationContext as WissensgartenApp).container
         val now = System.currentTimeMillis()
         val profiles = c.repository.profiles.first()
@@ -66,24 +72,35 @@ class GardenWidget : GlanceAppWidget() {
         val seeds = profile?.let { p ->
             minOf(SessionBuilder.seedsLeft(p.seedsPerDay, p.seedDay, p.seedsToday, now), cards.count { it.memory.isSeed })
         } ?: 0
-        val state = getAppWidgetState(context, PreferencesGlanceStateDefinition, id)
         val feedback = state[KEY_FEEDBACK]?.takeIf { now - (state[KEY_FEEDBACK_AT] ?: 0) < 30 * 60_000L }
-        val party = now - (state[KEY_CELEBRATE] ?: 0) < 30 * 60_000L && feedback != null
-        val question = if (feedback == null) WidgetQuiz.pick(cards.map { it.toStudy() }, now) else null
+        val party = now - (state[KEY_CELEBRATE] ?: 0) < 2 * 60_000L
+        // Gleich die nächste Frage – nur nicht dieselbe Karte noch einmal
+        val last = state[KEY_LAST]
+        val study = cards.map { it.toStudy() }
+        val question = WidgetQuiz.pick(study.filter { it.id != last }, now) ?: WidgetQuiz.pick(study, now)
         // Blumen: eine pro Beet (max. 5), Gesundheit = Anteil nicht durstiger Karten
         val flowers = beds.sortedBy { it.bed.sortIndex }.take(5).map { b ->
             val n = b.cards.size.coerceAtLeast(1)
             Flower(b.bed.hue, 1f - b.cards.count { Scheduler.isThirsty(it.memory, now) }.toFloat() / n, b.cards.any { !it.memory.isSeed })
         }.ifEmpty { listOf(Flower(45f, 1f, false)) }
         val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-        val garden = GardenBitmap.render(480, 240, flowers, hour, party)
+        return Data(GardenBitmap.render(480, 240, flowers, hour, party), thirsty, seeds, question, feedback)
+    }
+
+    override suspend fun provideGlance(context: Context, id: GlanceId) {
+        val first = load(context, getAppWidgetState(context, PreferencesGlanceStateDefinition, id))
         val open = Intent(context, MainActivity::class.java)
             .putExtra(MainActivity.EXTRA_WATER, true)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)   // ohne CLEAR_TASK: ein offenes Spiel bleibt erhalten
         provideContent {
+            // Läuft das Widget schon, kommt nach einer Antwort nur der neue Zustand an – dann hier neu laden.
+            // (Früher wurde nur beim Start geladen: nach dem Antippen blieb die alte Frage stehen.)
+            val state = currentState<Preferences>()
+            var data by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(first) }
+            androidx.compose.runtime.LaunchedEffect(state[KEY_FEEDBACK_AT], state[KEY_LAST]) { data = load(context, state) }
             GlanceTheme {
                 val big = LocalSize.current.width >= LARGE.width && LocalSize.current.height >= 170.dp
-                Content(big, garden, thirsty, seeds, question, feedback, open)
+                Content(big, data.garden, data.thirsty, data.seeds, data.q, data.feedback, open)
             }
         }
     }
@@ -101,12 +118,11 @@ class GardenWidget : GlanceAppWidget() {
                 )
             }
             if (big) Column(GlanceModifier.fillMaxWidth().padding(10.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                if (feedback != null) {
+                    Text(feedback, maxLines = 2, style = TextStyle(fontSize = 13.sp, fontWeight = FontWeight.Bold, color = ColorProvider(Color(0xFF2E7D32)), textAlign = TextAlign.Center))
+                    Spacer(GlanceModifier.height(4.dp))
+                }
                 when {
-                    feedback != null -> {
-                        Text(feedback, style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Bold, color = ColorProvider(fg), textAlign = TextAlign.Center))
-                        Spacer(GlanceModifier.height(6.dp))
-                        Button("Nächste Frage ▶", actionRunCallback<NextAction>(), GlanceModifier.fillMaxWidth())
-                    }
                     q != null -> {
                         Text("🐝 " + q.card.front, maxLines = 2, style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium, color = ColorProvider(fg), textAlign = TextAlign.Center))
                         Spacer(GlanceModifier.height(6.dp))
@@ -146,15 +162,11 @@ class AnswerAction : ActionCallback {
                 else "🌱 Fast! Richtig ist: ${card.back}"
             p[KEY_FEEDBACK_AT] = now
             if (right) p[KEY_CELEBRATE] = now
+            p[KEY_LAST] = id
         }
-        GardenWidget().updateAll(context)
-    }
-}
-
-class NextAction : ActionCallback {
-    override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
-        updateAppWidgetState(context, glanceId) { p -> p.remove(KEY_FEEDBACK); p.remove(KEY_CELEBRATE) }
+        // dieses Widget sofort, weitere Widgets auf dem Startbildschirm ebenfalls
         GardenWidget().update(context, glanceId)
+        GardenWidget().updateAll(context)
     }
 }
 
