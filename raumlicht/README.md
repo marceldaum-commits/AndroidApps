@@ -94,7 +94,9 @@ Raumlicht entsteht für Android und Web aus einer Codebasis (Compose Multiplatfo
   `cd scene && node test/web.mjs http://localhost:8765/ <Ordner für Bilder>` (Start, Bühne, Aufgabe lösen, Speicher, Version, Manifest, Konsolenfehler).
 - Automatisches Update ohne Knopf (Service Worker + Selbst-Neuladen an ruhiger Stelle): `cd scene && node test/web-update.mjs ../webapp` stellt einen
   Versionswechsel nach und prüft Update, Speicher und Offline-Start. Nach jeder Änderung an `index.html` oder `sw.js` laufen lassen.
-- Ausliefern: Branch `raumlicht-test` (der Server holt `raumlicht/webapp/`); `raumlicht-live` setzt nur der Leitstand. Meldungen: `MELDUNG_AN_LEITSTAND.md`.
+- Ausliefern: Der Workflow `.github/workflows/raumlicht-web-test.yml` spult den Branch `raumlicht-test` nach jedem Push auf den Standard-Branch vor,
+  der `raumlicht/webapp/` ändert (prüft vorher Vollständigkeit, Dateitypen und gleiche Version wie die Android-App). Der Server holt den Branch;
+  `raumlicht-live` setzt nur der Leitstand. Meldungen: `MELDUNG_AN_LEITSTAND.md`.
 - Stand: Vorschau mit allen Tour-Aufgaben; die Android-Oberfläche und die Extras ziehen schrittweise in den gemeinsamen Code um.
 
 **Bedien-Test der echten Bühne** (seit 2.3.1): `cd scene && node test/interact.mjs ../core/model/build/scenes.json` spielt Antippen, Ziehen und Wischen mit echten

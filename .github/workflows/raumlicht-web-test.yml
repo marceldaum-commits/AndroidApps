@@ -1,0 +1,51 @@
+# Hält den Branch „raumlicht-test“ aktuell. Von dort holt sich der Server alle 5 Minuten die fertige WebApp (Ordner raumlicht/webapp/)
+# und liefert sie unter https://raumlicht-test.mathenachhilfe-online.com aus.
+#
+# Läuft automatisch, sobald auf dem Standard-Branch die WebApp oder die Meldung an den Leitstand geändert wurde. Von Hand: Actions → „Run workflow“.
+# Der Branch wird nur vorgespult (kein Überschreiben): Hat jemand anderes dort etwas geändert, bricht der Lauf ab, statt es zu zerstören.
+# „raumlicht-live“ fasst dieser Workflow nicht an – den setzt nur der Leitstand nach dem Test.
+name: Raumlicht WebApp → Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["ccr-0e3accf3-cdxlc8"]
+    paths: ["raumlicht/webapp/**", "raumlicht/MELDUNG_AN_LEITSTAND.md", ".github/workflows/raumlicht-web-test.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: raumlicht-web-test
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ccr-0e3accf3-cdxlc8
+          fetch-depth: 0
+
+      - name: WebApp prüfen (vollständig, nur erlaubte Dateien, Version passt zur Android-App)
+        working-directory: raumlicht
+        run: |
+          set -euo pipefail
+          for f in index.html sw.js raumlicht.js manifest.webmanifest version.json scene/scene.js scene/index.html; do
+            [ -s "webapp/$f" ] || { echo "::error::webapp/$f fehlt"; exit 1; }
+          done
+          node --check webapp/sw.js
+          # nur Dateitypen, die der Server ausliefert; keine Symlinks
+          bad=$(find webapp -type f ! -regex '.*\.\(html\|css\|js\|mjs\|json\|webmanifest\|svg\|png\|jpg\|webp\|ico\|woff2\|ttf\|otf\|txt\|wasm\|map\|mp3\|ogg\|wav\)$' || true)
+          [ -z "$bad" ] || { echo "::error::Nicht erlaubte Dateien: $bad"; exit 1; }
+          [ -z "$(find webapp -type l)" ] || { echo "::error::Symlinks in webapp/"; exit 1; }
+          size=$(du -sm webapp | cut -f1); [ "$size" -le 120 ] || { echo "::error::webapp ist $size MB groß (erlaubt: 120)"; exit 1; }
+          # Gleichstand: Die WebApp trägt dieselbe Versionsnummer wie die Android-App
+          app=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
+          web=$(grep -oP '"version": "\K[^"]+' webapp/version.json)
+          [ "$app" = "$web" ] || { echo "::error::WebApp ist Version $web, Android-App ist $app – bitte ./gradlew :web:webapp neu bauen"; exit 1; }
+          echo "WebApp $web, $size MB – in Ordnung"
+
+      - name: Branch raumlicht-test vorspulen
+        run: git push origin HEAD:refs/heads/raumlicht-test
