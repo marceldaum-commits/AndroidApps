@@ -1,9 +1,40 @@
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
+// Daten: gemeinsame Lern-Logik (Repository, Einstellungen) für Android und Web.
+// Android speichert in Room (Schema unverändert seit Version 3), das Web im Browser.
 plugins {
+    id("org.jetbrains.kotlin.multiplatform")
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("com.google.devtools.ksp")
     id("androidx.room")
+}
+kotlin {
+    androidTarget { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs { browser() }
+    compilerOptions { optIn.add("kotlin.uuid.ExperimentalUuidApi") }
+    sourceSets {
+        commonMain.dependencies {
+            api(project(":core:model"))
+            api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+        }
+        androidMain.dependencies {
+            api("androidx.room:room-runtime:2.8.4")
+            implementation("androidx.room:room-ktx:2.8.4")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+        }
+        val androidUnitTest by getting {
+            dependencies {
+                implementation("junit:junit:4.13.2")
+                implementation("org.robolectric:robolectric:4.17")
+                implementation("androidx.test:core:1.7.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+                implementation(project(":content"))
+            }
+        }
+        wasmJsMain.dependencies { implementation("org.jetbrains.kotlinx:kotlinx-browser:0.5.0") }
+    }
 }
 android {
     namespace = "de.wissensgarten.core.data"
@@ -15,17 +46,5 @@ android {
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
     testOptions { unitTests.isIncludeAndroidResources = true }
 }
-kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
 room { schemaDirectory("$projectDir/schemas") }
-dependencies {
-    api(project(":core:model"))
-    api("androidx.room:room-runtime:2.8.4")
-    implementation("androidx.room:room-ktx:2.8.4")
-    ksp("androidx.room:room-compiler:2.8.4")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.robolectric:robolectric:4.17")
-    testImplementation("androidx.test:core:1.7.0")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
-    testImplementation(project(":content"))
-}
+dependencies { add("kspAndroid", "androidx.room:room-compiler:2.8.4") }

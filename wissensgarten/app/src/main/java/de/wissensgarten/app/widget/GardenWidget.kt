@@ -66,7 +66,7 @@ class GardenWidget : GlanceAppWidget() {
         val now = System.currentTimeMillis()
         val profiles = c.repository.profiles.first()
         val profile = profiles.firstOrNull { it.id == c.settings.activeProfileId.value } ?: profiles.firstOrNull()
-        val beds = profile?.let { p -> c.database.dao().bedsWithCardsOnce(p.id) }.orEmpty()
+        val beds = profile?.let { p -> c.store.bedsWithCardsOnce(p.id) }.orEmpty()
         val cards = beds.flatMap { it.cards }
         val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }
         val seeds = profile?.let { p ->
@@ -152,7 +152,7 @@ class AnswerAction : ActionCallback {
         val c = (context.applicationContext as WissensgartenApp).container
         val id = parameters[P_CARD] ?: return
         val right = parameters[P_RIGHT] ?: false
-        val card = c.database.dao().card(id) ?: return
+        val card = c.store.card(id) ?: return
         val rating = if (right) Rating.GOOD else Rating.AGAIN
         val dew = GardenRepository.baseDew(rating)
         c.repository.review(card.profileId, card.toStudy(), rating, dew)

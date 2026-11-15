@@ -330,7 +330,7 @@ open class ScreenshotTest {
     @Test fun festivalGarden() = shot("27_garten_advent") {
         GardenScreen(profile, garden, advent, 10, {}, {}, {}, {}, decos = setOf("teich"),
             friends = Friends.all.take(3), surprises = listOf(0 to "🎁", 1 to "⭐", 2 to "🍪"),
-            festivalGreeting = Seasons.festival(java.time.LocalDate.of(2026, 12, 10))?.greeting,
+            festivalGreeting = Seasons.festival(kotlinx.datetime.LocalDate(2026, 12, 10))?.greeting,
             onGoodNight = {},
             extraCards = {
                 Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {

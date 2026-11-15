@@ -59,7 +59,7 @@ fun SkyScene(
     content: @Composable BoxScope.() -> Unit,
 ) {
     val (time, hour) = DayTime.now(nowMs)
-    val date = java.time.Instant.ofEpochMilli(nowMs).atZone(java.time.ZoneId.systemDefault()).toLocalDate()
+    val date = kotlinx.datetime.LocalDate.fromEpochDays(de.wissensgarten.core.model.Scheduler.localDay(nowMs).toInt())
     val season = de.wissensgarten.core.model.Seasons.season(date)
     val festival = de.wissensgarten.core.model.Seasons.festival(date)
     val wind = LocalWind.current
