@@ -89,6 +89,9 @@ class PlayFlowTest {
         slide("fahrt-regler", 0.5f); slide("fahrt-regler", 1f)
         assertTrue(stage.lastState!!.contains("\"id\":\"ableitung\"") && stage.lastState!!.contains("\"id\":\"plus"))
         rule.onNodeWithText("10,67").assertExists()                                       // ∫₀⁴ (−x² + 4x) dx = 32/3
+        assertFalse(stage.lastState!!.contains("\"id\":\"zweite\""))
+        rule.onNodeWithTag("zeige-zweite").performScrollTo().performClick(); rule.mainClock.advanceTimeBy(400)
+        assertTrue(stage.lastState!!.contains("\"id\":\"zweite\"") && stage.lastState!!.contains("\"label\":\"f″\""))
     }
 
     @Test fun introShowsTheFirstTaskBeingSolved() {

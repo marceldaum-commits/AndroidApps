@@ -663,7 +663,8 @@ function setState(state) {
   // Was verschwindet, zerplatzt in Funken (z. B. abgeschossene Kugeln)
   for (const [id, o] of objects) if (!seen.has(id)) { if (o.pop && clock.elapsedTime - o.born > 0.5) { const q = o.pop(); burst(fromV(q.p), q.c, 70, 0.9); shake = Math.max(shake, 0.18); } world.remove(o.g); objects.delete(id); }
 }
-const sig = (s) => [s.type, s.color, s.style, s.dashed, s.thin, s.segments?.length, !!s.faces].join('|');
+// Woran man erkennt, dass ein Ding neu gebaut werden muss. Das Achsenkreuz ist starr gebaut: Ändert sich sein Ort oder Maßstab, entsteht es neu.
+const sig = (s) => [s.type, s.color, s.style, s.dashed, s.thin, s.segments?.length, !!s.faces, s.type === 'axes2d' ? JSON.stringify([s.p, s.d, s.corners]) : ''].join('|');
 
 // ───────── Effekte ─────────
 const effects = [];

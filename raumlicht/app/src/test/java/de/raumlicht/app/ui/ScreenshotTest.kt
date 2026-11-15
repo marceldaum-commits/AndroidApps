@@ -176,7 +176,7 @@ class ScreenshotTest {
         de.raumlicht.app.ui.home.BalloonScreen(24, {}, {}, seed = 10)
     }
     @Test fun derivativeAxis() = shot("67_ableitung_gemeinsame_achse", "ableitung", prepare = {
-        it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("zeige-ableitung").performClick()
+        it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("zeige-ableitung").performClick(); it.onNodeWithTag("zeige-zweite").performClick()
         it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.65f) }
     }) { de.raumlicht.app.ui.home.RideScreen({}, "huegel") }
     @Test fun diary() = shot("59_fehler_tagebuch", "start") {

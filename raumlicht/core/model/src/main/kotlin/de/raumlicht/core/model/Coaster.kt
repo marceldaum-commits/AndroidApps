@@ -57,45 +57,43 @@ class Ride(val id: String, val title: String, val text: String, val from: Double
 
     /** Fläche zwischen Bahn und Nulllinie vom Start bis x (unter der Achse wird abgezogen) – numerisch */
     fun integral(x: Double): Double { val n = 400; val h = (x - from) / n; return (0 until n).sumOf { f(from + h * (it + 0.5)) } * h }
-    /** Maßstab in der Höhe: [sy] je Einheit, x-Achse auf Höhe [oz]; f′ wird mit [k] gestaucht oder gestreckt gezeichnet */
-    private class Frame(val sy: Double, val oz: Double, val k: Double)
-    private val plain = Frame(sy, oz, 1.0)
+    /** Maßstab in der Höhe: [sy] je Einheit, x-Achse auf Höhe [oz] */
+    private class Frame(val sy: Double, val oz: Double)
+    private val plain = Frame(sy, oz)
     /**
-     * Mit Ableitung teilen sich f und f′ dieselbe x-Achse: f′ geht genau unter jedem Hoch- und Tiefpunkt durch die Achse.
-     * Dafür rückt die Achse so weit hoch, dass auch der negative Teil von f′ Platz hat.
+     * Mit Ableitungen stehen alle Kurven unverzerrt am selben Achsenkreuz: Werte von f, f′ und f″ lassen sich an derselben y-Achse ablesen,
+     * und f′ geht genau unter jedem Hoch- und Tiefpunkt durch die x-Achse (f″ unter jedem Wendepunkt).
+     * Dafür wird der Maßstab so gewählt, dass alles Gezeigte ins Bild passt.
      */
-    private val withD: Frame by lazy {
+    private fun frame(d1: Boolean, d2: Boolean): Frame {
+        if (!d1 && !d2) return plain
         val xs = (0..120).map { from + (to - from) * it / 120 }
-        val fs = xs.map { f(it) }; val ds = xs.map { df(it) }.sorted()
-        // nur bei Polstellen: Ausreißer von f′ sollen den Maßstab nicht sprengen – sonst zählt der ganze Wertebereich
-        val cut = if (clipped) ds.size / 20 else 0
-        val dLo = minOf(ds[cut], 0.0); val dHi = maxOf(ds[ds.size - 1 - cut], 0.0)
-        val fLo = minOf(fs.min(), 0.0); val fHi = maxOf(fs.max(), 0.0); val fr = maxOf(fHi - fLo, 1e-9); val dr = dHi - dLo
-        val k = if (dr < 1e-9 || (dr <= 2.5 * fr && dr >= fr / 2.5)) 1.0 else fr / dr
-        val lo = minOf(fLo, k * dLo); val hi = maxOf(fHi, k * dHi)
-        val s = minOf(sy, 5.6 / maxOf(hi - lo, 1e-9))
-        Frame(s, 0.5 - lo * s, k)
+        // nur bei Polstellen: Ausreißer der Ableitungen sollen den Maßstab nicht sprengen – sonst zählt der ganze Wertebereich
+        fun range(g: (Double) -> Double): Pair<Double, Double> { val v = xs.map(g).sorted(); val cut = if (clipped) v.size / 20 else 0; return v[cut] to v[v.size - 1 - cut] }
+        val rs = listOfNotNull(xs.map { f(it) }.let { it.min() to it.max() }, if (d1) range(df) else null, if (d2) range(ddf) else null)
+        val lo = minOf(rs.minOf { it.first }, 0.0); val hi = maxOf(rs.maxOf { it.second }, 0.0)
+        val s = 5.6 / maxOf(hi - lo, 1e-9)
+        return Frame(s, 0.5 - lo * s)
     }
-    private fun at(x: Double, fr: Frame) = V3(4.0, ox + x * sx, fr.oz + f(x) * fr.sy)
-    private fun dAt(x: Double, fr: Frame) = V3(4.0, ox + x * sx, fr.oz + df(x) * fr.k * fr.sy)
-    /** Wie stark f′ in der Höhe gestaucht (< 1) oder gestreckt (> 1) gezeichnet wird, damit beide Kurven Platz haben */
-    val derivativeScale: Double get() = withD.k
+    private fun at(x: Double, fr: Frame, g: (Double) -> Double = f) = V3(4.0, ox + x * sx, fr.oz + g(x) * fr.sy)
+    /** Eine Ableitung als zusätzliche Bahn samt Punkt an der Stelle x; [marks]: an diesen Stellen von f kreuzt sie die x-Achse (Lot dorthin) */
+    private fun extraCurve(id: String, name: String, color: String, g: (Double) -> Double, x: Double, fr: Frame, marks: List<Spot>): List<Obj> {
+        val pts = (0..96).map { at(from + (to - from) * it / 96, fr, g) }
+        return listOf(
+            // was nicht ins Bild passt (neben Polstellen), wird weggelassen statt plattgedrückt
+            Stage.edges(id, pts.zipWithNext().filter { (a, b) -> a.z in 0.05..6.8 && b.z in 0.05..6.8 }, color),
+            Stage.point("punkt-$id", at(x, fr, g).let { V3(it.x, it.y, it.z.coerceIn(0.05, 6.8)) }, color, name, drop = false),
+        ) + marks.take(12).mapIndexed { i, s -> val top = at(s.x, fr); Stage.line("lot-$id-$i", V3(4.0, top.y, fr.oz), V3(0.0, 0.0, top.z - fr.oz), 0.0, 1.0, color, dashed = true) }
+    }
     /**
-     * Bühne mit Zusätzen: [derivative] zeigt f′ als pinke Bahn samt Punkt an der Stelle x,
+     * Bühne mit Zusätzen: [derivative] zeigt f′ als pinke, [second] f″ als violette Bahn samt Punkt an der Stelle x,
      * [fill] füllt die Fläche vom Start bis x mit Licht (gelb über, orange unter der Nulllinie).
      */
-    fun scene(x: Double, derivative: Boolean, fill: Boolean): String {
-        val fr = if (derivative) withD else plain
+    fun scene(x: Double, derivative: Boolean, fill: Boolean, second: Boolean = false): String {
+        val fr = frame(derivative, second)
         val extra = ArrayList<Obj>()
-        if (derivative) {
-            val pts = (0..96).map { dAt(from + (to - from) * it / 96, fr) }
-            // was nicht ins Bild passt (neben Polstellen), wird weggelassen statt plattgedrückt
-            extra += Stage.edges("ableitung", pts.zipWithNext().filter { (a, b) -> a.z in 0.05..6.8 && b.z in 0.05..6.8 }, "pink")
-            extra += Stage.point("dpunkt", dAt(x, fr).let { V3(it.x, it.y, it.z.coerceIn(0.05, 6.8)) }, "pink", if (abs(fr.k - 1) < 1e-9) "f′" else "f′ (Höhe × ${Geo.num(fr.k)})", drop = false)
-            // Lot von jedem Hoch- und Tiefpunkt auf die Achse: genau dort schneidet f′ die x-Achse
-            spots.filter { it.kind == SpotKind.HIGH || it.kind == SpotKind.LOW }.take(12).forEachIndexed { i, s ->
-                val top = at(s.x, fr); extra += Stage.line("lot$i", V3(4.0, top.y, fr.oz), V3(0.0, 0.0, top.z - fr.oz), 0.0, 1.0, "white", dashed = true) }
-        }
+        if (derivative) extra += extraCurve("ableitung", "f′", "pink", df, x, fr, spots.filter { it.kind == SpotKind.HIGH || it.kind == SpotKind.LOW })
+        if (second) extra += extraCurve("zweite", "f″", "violet", ddf, x, fr, spots.filter { it.kind == SpotKind.TURN })
         if (fill && x > from + 1e-6) {
             val n = maxOf(2, ((x - from) / (to - from) * 36).toInt()); val xs = (0..n).map { from + (x - from) * it / n }
             fun quads(sign: Int) = xs.zipWithNext().filter { (a, b) -> f((a + b) / 2) * sign > 0 }.map { (a, b) -> listOf(V3(4.0, ox + a * sx, fr.oz), V3(4.0, ox + b * sx, fr.oz), at(b, fr), at(a, fr)) }

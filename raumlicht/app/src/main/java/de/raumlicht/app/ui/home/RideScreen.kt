@@ -73,6 +73,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     var inside by rememberSaveable { mutableStateOf(true) }
     var showD by rememberSaveable { mutableStateOf(false) }
     var showFill by rememberSaveable { mutableStateOf(false) }
+    var showD2 by rememberSaveable { mutableStateOf(false) }
     // Tempo der automatischen Fahrt: Index in TEMPO (½×, 1×, 2×, 4×)
     var tempo by rememberSaveable { mutableIntStateOf(1) }
     var seen by remember(key) { mutableStateOf<Spot?>(null) }
@@ -80,8 +81,8 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     val d = ride.data(u.toDouble())
 
     // Mit Zusätzen wird die Bühne in kleinen Schritten nachgeführt (Punkt auf f′ wandert mit, die Fläche wächst)
-    LaunchedEffect(key, showD, showFill, if (showD || showFill) (u * 100).toInt() else -1) {
-        controller.setState(if (showD || showFill) ride.scene(ride.x(u.toDouble()), showD, showFill) else ride.scene())
+    LaunchedEffect(key, showD, showD2, showFill, if (showD || showD2 || showFill) (u * 100).toInt() else -1) {
+        controller.setState(if (showD || showD2 || showFill) ride.scene(ride.x(u.toDouble()), showD, showFill, showD2) else ride.scene())
     }
     LaunchedEffect(key, u, inside) { controller.ride(u.toDouble(), inside) }
     DisposableEffect(controller) { onDispose { controller.rideOff() } }
@@ -166,6 +167,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
             }
             Pick(TEMPO[tempo].first, tempo != 1, Q.Orange, "tempo") { tempo = (tempo + 1) % TEMPO.size; sfx?.play(Sound.TICK, 0.8f + tempo * 0.25f) }
             Pick("f′ als zweite Bahn", showD, Q.Pink, "zeige-ableitung") { showD = !showD }
+            Pick("f″ als dritte Bahn", showD2, Q.Violet, "zeige-zweite") { showD2 = !showD2 }
             Pick("∫ Fläche füllen", showFill, Q.Yellow, "zeige-flaeche") { showFill = !showFill }
         }
         Slider(u, { u = it; driving = false }, Modifier.fillMaxWidth().padding(horizontal = 16.dp).testTag("fahrt-regler"),

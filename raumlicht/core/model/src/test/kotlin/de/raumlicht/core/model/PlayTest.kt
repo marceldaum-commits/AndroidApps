@@ -61,7 +61,7 @@ class PlayTest {
         val wave = Coaster.byId("welle")!!                                 // 2·sin(x): eine volle Periode hebt sich auf
         assertEquals(0.0, wave.integral(2 * Math.PI), 1e-3); assertEquals(4.0, wave.integral(Math.PI), 1e-3)
         val plain = r.scene(); val both = r.scene(2.0, derivative = true, fill = true)
-        assertFalse(plain.contains("ableitung")); assertTrue(both.contains("\"id\":\"ableitung\"") && both.contains("\"id\":\"dpunkt\"") && both.contains("\"id\":\"plus"))
+        assertFalse(plain.contains("ableitung")); assertTrue(both.contains("\"id\":\"ableitung\"") && both.contains("\"id\":\"punkt-ableitung\"") && both.contains("\"id\":\"plus"))
         assertTrue(wave.scene(5.0, derivative = false, fill = true).contains("\"id\":\"minus"))     // unter der Achse: orange
         assertFalse(r.scene(0.0, derivative = false, fill = true).contains("plus"))
     }

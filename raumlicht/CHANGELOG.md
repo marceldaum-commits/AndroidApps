@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.7.1 – Ableitungen am richtigen Achsenkreuz (15.11.2026)
+- **Fehler behoben:** Beim Einschalten von f′ rutschte die Kurve auf eine neue Höhe, das Achsenkreuz blieb aber stehen – Kurve, Ableitung und Zahlen passten nicht zusammen.
+  Jetzt wandert das Achsenkreuz mit.
+- **Alles unverzerrt an einer y-Achse:** f, f′ und f″ werden im selben Maßstab gezeichnet. Jeder Wert lässt sich direkt an der y-Achse ablesen
+  (keine gestauchte Ableitung mehr).
+- **Neu: f″ als dritte Bahn** (violett). Ein Lot zeigt: f′ kreuzt die x-Achse unter jedem Hoch- und Tiefpunkt, f″ unter jedem Wendepunkt.
+
 ## 0.7.0 – Ballerbude und saubere Ableitung (15.11.2026)
 - **🎈 Ballerbude – nur zum Spaß:** 45 Sekunden lang steigen Leuchtballons auf. Antippen, und Lux ballert sie mit dem Laser ab.
   Treffer in Folge bauen eine Serie auf (alle fünf Treffer zählt jeder Ballon einen Punkt mehr), der Goldballon bringt 5 Punkte,

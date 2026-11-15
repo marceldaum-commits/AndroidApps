@@ -25,24 +25,29 @@ class FunTest {
         assertEquals(0, BalloonScore().hit(BalloonKind.DUD).points)                                          // nie unter null
     }
 
-    /** f′ und f teilen sich die x-Achse: unter jedem Hoch- und Tiefpunkt geht die Ableitungsbahn genau durch die Achse. */
-    @Test fun derivativeTrackCrossesTheAxisBelowEveryExtremum() {
+    /** f, f′ und f″ stehen unverzerrt am selben Achsenkreuz: f′ kreuzt die x-Achse unter jedem Extremum, f″ unter jedem Wendepunkt. */
+    @Test fun derivativesShareOneTrueAxis() {
         (Coaster.rides + Coaster.custom(Expr.parse("e^(-0,3x)*sin(3x)").getOrThrow(), 0.0, 8.0)!! + Coaster.custom(Expr.parse("x^4-4x^2").getOrThrow(), -2.0, 2.0)!!).forEach { r ->
-            val o = Json.parseToJsonElement(r.scene(r.from, derivative = true, fill = false)).jsonObject.getValue("objects").jsonArray.map { it.jsonObject }
-            val axisZ = o.first { it["type"]!!.jsonPrimitive.content == "axes2d" }["p"]!!.jsonArray[2].jsonPrimitive.double
-            assertTrue(r.id, o.none { it["id"]!!.jsonPrimitive.content == "dnull" })                         // keine zweite, verschobene Nulllinie mehr
-            val segs = o.first { it["id"]!!.jsonPrimitive.content == "ableitung" }["segments"]!!.jsonArray.map { s -> s.jsonArray.map { p -> p.jsonArray.map { it.jsonPrimitive.double } } }
-            assertTrue(r.id, segs.size >= 90 && segs.all { s -> s.all { it[2] in 0.05..6.8 } })               // ganz im Bild, nichts plattgedrückt
-            val track = o.first { it["id"]!!.jsonPrimitive.content == "bahn" }["corners"]!!.jsonArray.map { p -> p.jsonArray.map { it.jsonPrimitive.double } }
-            assertTrue(r.id, track.all { it[2] in 0.3..6.5 })
-            val ex = r.spots.filter { it.kind == SpotKind.HIGH || it.kind == SpotKind.LOW }; assertTrue(r.id, ex.isNotEmpty())
-            ex.forEach { s ->
-                val y = track.first()[1] + (s.x - r.from) / (r.to - r.from) * (track.last()[1] - track.first()[1])     // Bühnen-Ort der Stelle
-                val seg = segs.minBy { abs((it[0][1] + it[1][1]) / 2 - y) }
-                assertTrue("${r.id} x=${s.x}", minOf(seg[0][2], seg[1][2]) - 0.02 <= axisZ && axisZ <= maxOf(seg[0][2], seg[1][2]) + 0.02)   // f′ kreuzt dort die Achse
+            val o = Json.parseToJsonElement(r.scene(r.from, derivative = true, fill = false, second = true)).jsonObject.getValue("objects").jsonArray.map { it.jsonObject }
+            fun id(e: JsonObject) = e["id"]!!.jsonPrimitive.content
+            val axes = o.first { it["type"]!!.jsonPrimitive.content == "axes2d" }
+            val oz = axes["p"]!!.jsonArray[2].jsonPrimitive.double; val ox = axes["p"]!!.jsonArray[1].jsonPrimitive.double
+            val sx = axes["d"]!!.jsonArray[0].jsonPrimitive.double; val sy = axes["d"]!!.jsonArray[1].jsonPrimitive.double
+            fun segs(name: String) = o.first { id(it) == name }["segments"]!!.jsonArray.map { s -> s.jsonArray.map { p -> p.jsonArray.map { it.jsonPrimitive.double } } }
+            // jede Kurve liegt genau dort, wo das Achsenkreuz ihren Wert anzeigt – ohne Stauchung
+            listOf("ableitung" to r.df, "zweite" to r.ddf).forEach { (name, g) ->
+                val s = segs(name); assertTrue("${r.id} $name", s.size >= 90)
+                s.forEach { (a, _) -> assertEquals("${r.id} $name", g((a[1] - ox) / sx), (a[2] - oz) / sy, 1e-6); assertTrue(a[2] in 0.05..6.8) }
             }
-            assertEquals(r.id, ex.take(12).size, o.count { it["id"]!!.jsonPrimitive.content.startsWith("lot") })
+            val track = o.first { id(it) == "bahn" }["corners"]!!.jsonArray.map { p -> p.jsonArray.map { it.jsonPrimitive.double } }
+            track.forEach { p -> assertEquals(r.id, r.f((p[1] - ox) / sx), (p[2] - oz) / sy, 1e-6); assertTrue(r.id, p[2] in 0.3..6.5) }
+            fun crosses(name: String, x: Double): Boolean { val y = ox + x * sx; val seg = segs(name).minBy { abs((it[0][1] + it[1][1]) / 2 - y) }
+                return minOf(seg[0][2], seg[1][2]) - 0.03 <= oz && oz <= maxOf(seg[0][2], seg[1][2]) + 0.03 }
+            val ex = r.spots.filter { it.kind == SpotKind.HIGH || it.kind == SpotKind.LOW }; val turns = r.spots.filter { it.kind == SpotKind.TURN }
+            ex.forEach { assertTrue("${r.id} f′ bei ${it.x}", crosses("ableitung", it.x)) }; turns.forEach { assertTrue("${r.id} f″ bei ${it.x}", crosses("zweite", it.x)) }
+            assertEquals(r.id, ex.take(12).size, o.count { id(it).startsWith("lot-ableitung") }); assertEquals(r.id, turns.take(12).size, o.count { id(it).startsWith("lot-zweite") })
         }
-        assertEquals(1.0, Coaster.byId("huegel")!!.derivativeScale, 1e-9)                                    // f′ = −2x + 4 passt unverzerrt
+        // ohne Zusätze bleibt die Bühne wie sie war
+        val h = Coaster.byId("huegel")!!; assertEquals(h.scene(), h.scene(1.0, derivative = false, fill = false))
     }
 }
