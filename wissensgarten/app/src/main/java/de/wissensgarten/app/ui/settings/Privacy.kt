@@ -58,7 +58,11 @@ object PrivacyText {
             "Auch das Deinstallieren der App löscht alle Daten auf dem Gerät.",
         "Für Kinder gemacht" to
             "Der Wissensgarten richtet sich an Kinder und ihre Eltern. Bereiche, in denen Daten das Gerät verlassen könnten (Sync, Teilen, Updates, Kamera), " +
-            "sind durch eine Eltern-Aufgabe geschützt. Es gibt keine In-App-Käufe und keine Links zu Werbung oder sozialen Netzwerken.",
+            "sind durch eine Eltern-Aufgabe geschützt. Es gibt keine Werbung und keine Links zu sozialen Netzwerken.",
+        "Käufe (Wissensgarten Plus)" to
+            "Im Moment gibt es keine Käufe – alles ist kostenlos. Später kommt ein freiwilliges „Wissensgarten Plus“ mit zusätzlichen Paketen. " +
+            "Gekauft wird dann nur nach der Eltern-Aufgabe und über Google Play mit eurem Google-Konto. Die Zahlung wickelt Google ab; " +
+            "wir erhalten keine Zahlungs- oder Kontodaten, nur die Bestätigung, dass Plus freigeschaltet ist.",
         "Eure Rechte" to
             "Ihr habt nach der DSGVO das Recht auf Auskunft, Berichtigung, Löschung und Beschwerde bei einer Datenschutz-Aufsichtsbehörde. " +
             "Da wir selbst keine Daten von euch erhalten, könnt ihr alles direkt in der App einsehen und löschen. Bei Fragen schreibt uns über das Impressum.",
