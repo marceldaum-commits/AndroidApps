@@ -40,6 +40,8 @@ class StageController {
 
     /** Griff wurde in der Bühne gezogen: neue (ganzzahlige) Position */
     var onDrag: ((id: String, p: List<Int>) -> Unit)? = null
+    /** Eine Kugel wurde kurz angetippt */
+    var onTap: ((id: String) -> Unit)? = null
     /** Zuletzt gesetzter Zustand (für Tests) */
     val lastState get() = state
     val log = ArrayList<String>()
@@ -82,6 +84,7 @@ class StageController {
             "ready" -> { ready = true; state?.let { run("RL.setState($it)") }; queue.forEach(::run); queue.clear() }
             "info" -> info = json
             "error" -> if (problem == null) problem = o["msg"]?.jsonPrimitive?.content
+            "tap" -> onTap?.invoke(o.getValue("id").jsonPrimitive.content)
             "drag" -> onDrag?.invoke(o.getValue("id").jsonPrimitive.content, o.getValue("p").jsonArray.map { it.jsonPrimitive.int })
         }
     }

@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.7.0 – Ballerbude und saubere Ableitung (15.11.2026)
+- **🎈 Ballerbude – nur zum Spaß:** 45 Sekunden lang steigen Leuchtballons auf. Antippen, und Lux ballert sie mit dem Laser ab.
+  Treffer in Folge bauen eine Serie auf (alle fünf Treffer zählt jeder Ballon einen Punkt mehr), der Goldballon bringt 5 Punkte,
+  der dicke orange Blindgänger kostet 2 und die Serie. Verpasste Ballons kosten nichts. Zu finden unter „Mehr“ → Erleben.
+- **Ableitung passt jetzt zur Kurve:** f′ und f teilen sich dieselbe x-Achse. Unter jedem Hoch- und Tiefpunkt geht die Ableitungsbahn
+  genau durch die Achse – ein gestricheltes Lot zeigt die Stelle. Die Achse rückt dafür so weit hoch, dass auch der negative Teil von f′ Platz hat
+  (vorher hatte f′ teils eine eigene, verschobene Nulllinie). Muss f′ in der Höhe gestaucht werden, steht der Faktor am Schild.
+
 ## 0.6.0 – Eigene Funktionen abfahren (15.11.2026)
 - **✏️ Eigene Funktion:** In „Kurve abfahren“ kannst du jetzt einen beliebigen Term eintippen – z. B. `x^3-3x`, `2sin(x)`, `e^(-x)*cos(3x)`, `√(x+1)` –
   und den Abschnitt von–bis wählen. Die App baut daraus die Bahn; der Maßstab passt sich an, das Achsenkreuz zeigt die echten Werte.

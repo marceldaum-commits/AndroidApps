@@ -459,7 +459,7 @@ makers.sphere = (s) => {
   g.add(ball, ring);
   const cur = V(s.p); let tgt = cur.clone(), r = s.rhs, tr = s.rhs, lab = null, labText = null;
   return {
-    g, pop: () => ({ p: cur, c }),
+    g, pop: () => ({ p: cur, c }), ball: () => ({ p: cur, r }),
     update(n) { tgt = V(n.p); tr = n.rhs; if (n.label !== labText) { if (lab) g.parent && g.remove(lab); lab = n.label ? label(n.label, hex(c)) : null; labText = n.label; if (lab) world.add(lab); } },
     tick(dt, t) { damp(cur, tgt, dt); r += (tr - r) * (1 - Math.exp(-10 * dt)); ball.position.copy(cur); ball.scale.setScalar(r); ring.position.copy(cur); ring.scale.setScalar(r); mat.uniforms.t.value = t;
       if (lab) lab.position.copy(cur).add(new THREE.Vector3(0, r + 0.4, 0)); },
@@ -759,7 +759,7 @@ canvas.addEventListener('pointerdown', (e) => {
       // Tippen auf die Kugel: in der Bodenebene ziehen (x1, x2); auf einen Pfeil: entlang dieser Achse
       drag = { id: h.o.id, axis: h.axis, start, last: start.slice(), origin: h.o.pos.clone(), v0: h.axis >= 0 ? axisValue(h.o.pos, V([[1, 0, 0], [0, 1, 0], [0, 0, 1]][h.axis]), e) : 0 };
       emit('grab', { id: drag.id });
-    } else drag = { orbit: true, x: e.clientX, y: e.clientY };
+    } else drag = { orbit: true, x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now() };
   } else { drag = null; const [a, b] = [...pointers.values()]; pinch = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
 });
 canvas.addEventListener('pointermove', (e) => {
@@ -773,7 +773,18 @@ canvas.addEventListener('pointermove', (e) => {
   const { min, max } = bounds; for (let i = 0; i < 3; i++) p[i] = THREE.MathUtils.clamp(p[i], Math.min(min[i], -max[i] * (i < 2 ? 0 : 0)), max[i]);
   if (p.some((v, i) => v !== drag.last[i])) { drag.last = p; emit('drag', { id: drag.id, p }); }
 });
-const up = (e) => { pointers.delete(e.pointerId); if (drag && !drag.orbit) emit('drop', { id: drag.id, p: drag.last }); drag = null; pinch = 0; };
+// Kurzes Antippen einer Kugel (ohne Wischen) meldet 'tap' – großzügig gemessen, Finger sind dicker als Mauszeiger
+function tapped(e) {
+  ray.setFromCamera(ndc(e), camera); let best = null;
+  for (const o of objects.values()) { if (!o.ball) continue; const b = o.ball(), d = ray.ray.distanceToPoint(b.p); if (d < b.r * 1.5 + 0.15 && (!best || d < best.d)) best = { id: o.id, d }; }
+  return best;
+}
+const up = (e) => {
+  pointers.delete(e.pointerId);
+  if (drag && !drag.orbit) emit('drop', { id: drag.id, p: drag.last });
+  else if (drag && e.type === 'pointerup' && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 14 && performance.now() - drag.t0 < 450) { const h = tapped(e); if (h) emit('tap', { id: h.id }); }
+  drag = null; pinch = 0;
+};
 canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
 
 // ───────── Zeichnen: Himmel → gespiegelte Welt → Boden und Welt ─────────

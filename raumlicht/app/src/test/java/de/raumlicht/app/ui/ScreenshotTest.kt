@@ -172,6 +172,13 @@ class ScreenshotTest {
         it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.35f) }
     }) { de.raumlicht.app.ui.home.RideScreen({}, de.raumlicht.core.model.Coaster.CUSTOM, custom = "e^(-0,3x)*sin(3x)|0|8") }
     @Test fun ownRideEditor() = shot("65_eigene_funktion_eingabe", "eigene-pol", prepare = { it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("eigene-aendern").performClick() }) { de.raumlicht.app.ui.home.RideScreen({}, de.raumlicht.core.model.Coaster.CUSTOM, custom = "1/x|-2|2") }
+    @Test fun balloons() = shot("66_ballerbude", "ballerbude", prepare = { it.mainClock.autoAdvance = false; it.onNodeWithTag("ballern").performClick(); it.mainClock.advanceTimeBy(9000) }) {
+        de.raumlicht.app.ui.home.BalloonScreen(24, {}, {}, seed = 10)
+    }
+    @Test fun derivativeAxis() = shot("67_ableitung_gemeinsame_achse", "ableitung", prepare = {
+        it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("zeige-ableitung").performClick()
+        it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.65f) }
+    }) { de.raumlicht.app.ui.home.RideScreen({}, "huegel") }
     @Test fun diary() = shot("59_fehler_tagebuch", "start") {
         de.raumlicht.app.ui.home.DiaryScreen(listOf(
             de.raumlicht.app.ui.home.DiaryEntry(4, "2-1", "Du hast A − B gerechnet. Es heißt Spitze minus Fuß: B − A – alle Vorzeichen drehen sich um."),

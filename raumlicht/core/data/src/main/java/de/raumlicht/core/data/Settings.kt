@@ -43,6 +43,15 @@ class Settings(ctx: Context) {
         return true
     }
 
+    /** Ballerbude: bester Punktestand */
+    private val _balloonBest = MutableStateFlow(prefs.getInt("balloonBest", 0))
+    val balloonBest: StateFlow<Int> = _balloonBest.asStateFlow()
+    fun recordBalloons(points: Int): Boolean {
+        if (points <= _balloonBest.value) return false
+        prefs.edit().putInt("balloonBest", points).apply(); _balloonBest.value = points
+        return true
+    }
+
     /** Lage-Check: beste Runde (richtige von 8) */
     private val _lageBest = MutableStateFlow(prefs.getInt("lageBest", 0))
     val lageBest: StateFlow<Int> = _lageBest.asStateFlow()
@@ -82,9 +91,9 @@ class Settings(ctx: Context) {
     fun resetProgress() {
         val e = prefs.edit()
         prefs.all.keys.filter { it.startsWith("intro_") || it.startsWith("exam_") }.forEach { e.remove(it) }
-        listOf("jamBest", "lageBest", "diary", "skin", "trail", "hat").forEach { e.remove(it) }
+        listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat").forEach { e.remove(it) }
         e.apply()
-        _jamBest.value = 0; _lageBest.value = 0; _exams.value = emptyMap(); _diary.value = ""; _skin.value = "pink"; _look.value = "none" to "none"
+        _jamBest.value = 0; _lageBest.value = 0; _balloonBest.value = 0; _exams.value = emptyMap(); _diary.value = ""; _skin.value = "pink"; _look.value = "none" to "none"
     }
 
     /** Klausur-Planer: Termin und Kapitel (leer = kein Plan) */

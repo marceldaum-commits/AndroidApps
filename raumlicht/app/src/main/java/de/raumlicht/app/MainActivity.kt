@@ -64,6 +64,7 @@ object Routes {
     const val RIDE = "achterbahn/{id}"
     const val FLIGHT = "raumflug"
     const val GALTON = "galton"
+    const val BALLOONS = "ballerbude"
     const val QUICK = "pflichtteil"
     const val DIARY = "fehler-tagebuch"
     const val CALENDAR = "kalender"
@@ -203,6 +204,7 @@ class MainActivity : ComponentActivity() {
                 BackstageScreen(listOf(
                     BackstageEntry("🎢", "Kurve abfahren (Fahrersicht)", "Analysis erleben: Höhe, Steigung, Krümmung, Ableitungsbahn und Fläche live", Q.Cyan, "Erleben") { nav.goOnce(Routes.ride(Coaster.rides.first().id)) },
                     BackstageEntry("🚀", "Flug durch den Raum", "Geometrie erleben: eine Gerade entlangfliegen, durch Ebenen und Kugeln", Q.Cyan, "Erleben") { nav.goOnce(Routes.FLIGHT) },
+                    BackstageEntry("🎈", "Ballerbude", "Nur zum Spaß: Ballons antippen, Lux ballert sie ab", Q.Pink, "Erleben") { nav.goOnce(Routes.BALLOONS) },
                     BackstageEntry("🎰", "Galton-Brett", "Stochastik erleben: Kugeln fallen, die Binomialverteilung wächst", Q.Pink, "Erleben") { nav.goOnce(Routes.GALTON) },
                     BackstageEntry("🧩", "Rechenweg in Schritten", "Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand – Schritt für Schritt", Q.Green, "Üben") { nav.goOnce(Routes.GUIDES) },
                     BackstageEntry("✍️", "Ohne Hilfsmittel", "6 kurze Aufgaben wie im Pflichtteil – ohne Tipp", Q.Yellow, "Üben") { nav.goOnce(Routes.QUICK) },
@@ -251,6 +253,7 @@ class MainActivity : ComponentActivity() {
             }
             composable(Routes.FLIGHT) { FlightScreen({ nav.popSafe() }) }
             composable(Routes.GALTON) { GaltonScreen({ nav.popSafe() }) }
+            composable(Routes.BALLOONS) { val best by vm.settings.balloonBest.collectAsStateWithLifecycle(); de.raumlicht.app.ui.home.BalloonScreen(best, { vm.settings.recordBalloons(it) }, { nav.popSafe() }) }
             composable(Routes.QUICK) { QuickScreen({ l, s, a -> vm.record(l.id, s, a) }, { nav.popSafe() }) }
             composable(Routes.DIARY) { DiaryScreen(diary, { nav.goOnce(Routes.level(it)) }, { vm.settings.setDiary("") }) { nav.popSafe() } }
             composable(Routes.CALENDAR) { CalendarScreen(vm.today(), remember(stars) { Calendar.solved(stars) }, { nav.goOnce(Routes.DAILY) }) { nav.popSafe() } }

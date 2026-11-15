@@ -182,4 +182,24 @@ class PlayFlowTest {
         assertTrue("$normal $fast", fast > normal * 2.5)
         rule.onNodeWithTag("tempo").performClick(); rule.onNodeWithText("🐢 ½×").assertExists()
     }
+
+    @Test fun balloonBoothIsJustForFun() {
+        val scores = ArrayList<Int>(); val g = BalloonGame(5 + 1)                          // Runde 1 nutzt seed + 1
+        show { BalloonScreen(3, { scores += it }, {}, controller = stage, seed = 5) }
+        rule.onNodeWithText("Nur zum Spaß 🎈").assertExists(); rule.onNodeWithTag("bestwert").assertTextEquals("Bestwert 3")
+        stage.onTap?.invoke("b0"); rule.onNodeWithTag("punkte").assertTextEquals("0")       // vor dem Start zählt nichts
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("ballern").performClick(); rule.mainClock.advanceTimeBy(4000)
+        val t = 4.0; val up = g.alive(t - 0.2, emptySet()).filter { it.kind != BalloonKind.DUD }; assertTrue(up.isNotEmpty())
+        assertTrue(stage.lastState!!.contains("\"id\":\"b${up[0].id}\""))
+        stage.onTap?.invoke("b${up[0].id}"); rule.mainClock.advanceTimeBy(100)
+        rule.onNodeWithTag("punkte").assertTextEquals("${up[0].kind.points}")
+        assertTrue(stage.log.any { it.startsWith("RL.fire") } && stage.log.any { it.startsWith("RL.burst") })    // Lux ballert
+        assertFalse(stage.lastState!!.contains("\"id\":\"b${up[0].id}\""))
+        stage.onTap?.invoke("b${up[0].id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("${up[0].kind.points}")   // weg ist weg
+        rule.mainClock.advanceTimeBy(45_000)
+        rule.onNodeWithTag("ergebnis").assertExists(); rule.onNodeWithText("↻ Noch eine Runde").assertExists()
+        assertEquals(listOf(up[0].kind.points), scores)
+        rule.mainClock.autoAdvance = true
+    }
 }

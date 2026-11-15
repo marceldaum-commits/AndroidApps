@@ -56,6 +56,8 @@ class SceneDumpTest {
             Levels.byId("13-5")!!.let { l -> shot("blitz", l.scene(l.start, Phase.AIM)) },
             shot("eigene", Coaster.custom(Expr.parse("e^(-0,3x)*sin(3x)").getOrThrow(), 0.0, 8.0)!!.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.35,"view":"out"},"wait":1.0}]"""),
             shot("eigene-pol", Coaster.custom(Expr.parse("1/x").getOrThrow(), -2.0, 2.0)!!.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.2,"view":"out"},"wait":1.0}]"""),
+            shot("ballerbude", BalloonGame(11).scene(9.0, emptySet())),
+            shot("ableitung", Coaster.byId("huegel")!!.scene(2.6, derivative = true, fill = false), ""","actions":[{"ride":{"id":"bahn","u":0.65,"view":"out"},"wait":1.0}]"""),
             level("16-1"),
             level("16-3"),
             level("17-4", mapOf("a" to listOf(3))),
