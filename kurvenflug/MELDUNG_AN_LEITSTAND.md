@@ -7,7 +7,7 @@ Neueste Meldung oben. Zweig `kurvenflug-test`, Ordner `kurvenflug/webapp/` (inde
 ## 0.17.0 – erste WebApp (Gleichstand mit APK 0.17.0)
 
 - **Version:** 0.17.0 (APK und WebApp gleich; steht im Ladebildschirm, in `version.json` und unter Einstellungen „Version 0.17.0 · WebApp“)
-- **Commit:** {{COMMIT}} (Quellcode), WebApp darauf gebaut mit `./gradlew :web:webapp`
+- **Commit:** 3d78727 (Zweig claude/gifted-shannon-657gpr) (Quellcode), WebApp darauf gebaut mit `./gradlew :web:webapp`
 - **Größe:** ca. 15 MB, nur erlaubte Dateitypen (html, js, wasm, json, webmanifest, png, svg, ttf, txt), keine Symlinks, kein Server-Code
 - **Technik:** eine gemeinsame Codebasis (Kotlin Multiplatform + Compose Multiplatform, Kotlin/Wasm). Ein Gleichstands-Test
   rechnet alle Level, Flugbahnen, Tagesmissionen und Codes auf Android (JVM) und im Browser (Wasm) und vergleicht den Fingerabdruck.
