@@ -616,6 +616,21 @@ function resize() {
 }
 addEventListener('resize', resize);
 
+// Selbstdiagnose: Was sieht die Bühne wirklich? Meldet Gerät, Größe und ob das Bild einfarbig ist.
+let diagnosed = false;
+function diagnose() {
+  const W = gl.drawingBufferWidth, H = gl.drawingBufferHeight, px = new Uint8Array(4), seen = new Set();
+  for (let i = 1; i < 8; i++) for (let j = 1; j < 8; j++) { gl.readPixels(Math.floor(W * i / 8), Math.floor(H * j / 8), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); seen.add(px[0] >> 2 << 16 | px[1] >> 2 << 8 | px[2] >> 2); }
+  const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+  const info = { size: innerWidth + 'x' + innerHeight, buffer: W + 'x' + H, dpr: window.devicePixelRatio, gpu: dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : '?',
+    webgl2: renderer.capabilities.isWebGL2, direct, lost: gl.isContextLost(), colors: seen.size, dist: Math.round(cam.dist * 10) / 10, objects: objects.size, calls: renderer.info.render.calls };
+  emit('info', info);
+  if (seen.size < 3) {
+    // Einfarbiges Bild: erst ohne Nachbearbeitung versuchen, dann melden
+    if (!direct) { direct = true; diagnosed = false; clock.elapsedTime = 1.5; } else emit('error', { msg: 'Bild einfarbig – ' + JSON.stringify(info) });
+  }
+}
+canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); emit('error', { msg: 'Grafik-Kontext verloren' }); });
 const clock = new THREE.Clock(); let frames = 0, slow = 0, paused = false, fixedTime = null;
 function frame() {
   if (paused) return;
@@ -650,6 +665,7 @@ function step(dt) {
   }
   for (let i = effects.length - 1; i >= 0; i--) if (!effects[i](dt)) effects.splice(i, 1);
   draw(dt);
+  if (!diagnosed && fixedTime == null && clock.elapsedTime > 2.5 && gl.drawingBufferHeight > 16) { diagnosed = true; diagnose(); }
 
   // Bei schwachen Geräten automatisch sparen
   if (fixedTime == null) { frames++; if (dt > 0.03) slow++; if (frames === 90) { if (slow > 45 && pixelRatio > 1) { pixelRatio = Math.max(1, pixelRatio * 0.75); resize(); } else if (slow > 45 && quality > 0) quality = 0; frames = slow = 0; } }

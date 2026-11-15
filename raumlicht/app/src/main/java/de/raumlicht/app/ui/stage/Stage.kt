@@ -47,6 +47,9 @@ class StageController {
     var problem by androidx.compose.runtime.mutableStateOf<String?>(null)
         internal set
     internal val isReady get() = ready
+    /** Selbstauskunft der Bühne (Gerät, Größe, Farben) */
+    var info by androidx.compose.runtime.mutableStateOf<String?>(null)
+        internal set
 
     fun setState(json: String) { state = json; if (ready) run("RL.setState($json)") }
     fun fire(b: Beam, ms: Int) = send("RL.fire({from:${js(b.from)},to:${js(b.to)},color:'${b.color}',ms:$ms,hit:${b.hit}})")
@@ -66,6 +69,7 @@ class StageController {
         val o = runCatching { Json.parseToJsonElement(json).jsonObject }.getOrNull() ?: return
         when (o["type"]?.jsonPrimitive?.content) {
             "ready" -> { ready = true; state?.let { run("RL.setState($it)") }; queue.forEach(::run); queue.clear() }
+            "info" -> info = json
             "error" -> if (problem == null) problem = o["msg"]?.jsonPrimitive?.content
             "drag" -> onDrag?.invoke(o.getValue("id").jsonPrimitive.content, o.getValue("p").jsonArray.map { it.jsonPrimitive.int })
         }

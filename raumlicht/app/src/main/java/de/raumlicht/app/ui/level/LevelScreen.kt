@@ -62,6 +62,8 @@ fun LevelScreen(
     var override by remember(level.id) { mutableStateOf<String?>(null) }
     var stars by remember(level.id) { mutableIntStateOf(0) }
     var intro by remember(level.id) { mutableStateOf(showIntro) }
+    var taps by remember { mutableIntStateOf(0) }
+    var showInfo by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
     val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current
     val accent = stageColor(chapter.color)
@@ -122,9 +124,13 @@ fun LevelScreen(
                 StarRow(if (phase == Phase.DONE) stars else Level.stars(attempts + 1, usedTip), lit = phase == Phase.DONE)
             }
             // Bühne
-            Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp).clip(RoundedCornerShape(22.dp)).border(1.5.dp, accent.copy(alpha = 0.45f), RoundedCornerShape(22.dp))) {
+            // Bewusst ohne runden Beschnitt: Manche Geräte zeichnen eine Web-Ansicht in einer rund beschnittenen Fläche nicht.
+            Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp).border(1.5.dp, accent.copy(alpha = 0.45f))) {
                 Stage(controller, Modifier.fillMaxSize())
                 Text("☝ drehen · ✌ zoomen", Modifier.align(Alignment.TopEnd).padding(10.dp), color = Q.Muted.copy(alpha = 0.8f), fontSize = 11.sp)
+                // Dreimal auf den Hinweis tippen zeigt die Selbstauskunft der Bühne (für Fehlersuche)
+                if (showInfo) Text(controller.info ?: "Bühne hat sich noch nicht gemeldet", Modifier.align(Alignment.BottomStart).background(Q.Space.copy(alpha = 0.85f)).padding(8.dp), color = Q.Yellow, fontSize = 10.sp, lineHeight = 12.sp)
+                Box(Modifier.align(Alignment.TopEnd).size(150.dp, 40.dp).clickable(remember { MutableInteractionSource() }, null) { taps++; if (taps >= 3) { showInfo = !showInfo; taps = 0 } })
             }
             // Lux spricht
             Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp, top = 8.dp), verticalAlignment = Alignment.CenterVertically) {

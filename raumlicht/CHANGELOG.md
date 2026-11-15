@@ -1,5 +1,10 @@
 # Änderungen
 
+## 0.1.2 – Fehlersuche Bühne
+- Die 3D-Bühne wird im Level nicht mehr mit runden Ecken beschnitten – auf manchen Handys blieb sie dadurch leer.
+- Die Bühne prüft sich selbst: Bleibt das Bild einfarbig, schaltet sie auf einfaches Zeichnen um und meldet sonst die Ursache.
+- Dreimal oben rechts auf „drehen · zoomen“ tippen zeigt technische Angaben zur Bühne (für die Fehlersuche).
+
 ## 0.1.1 – Bühne an
 - **Behoben:** Auf manchen Handys blieb die 3D-Bühne schwarz. Ursache war ein Fehler in der Licht-Berechnung, den nur echte Handy-Grafikchips zeigen.
 - Kann ein Gerät den Leucht-Effekt nicht darstellen, zeichnet die Bühne jetzt automatisch ohne ihn – sichtbar bleibt sie immer.
