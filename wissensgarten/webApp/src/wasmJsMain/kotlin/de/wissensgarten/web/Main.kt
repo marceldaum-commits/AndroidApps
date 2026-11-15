@@ -1,0 +1,105 @@
+@file:OptIn(kotlin.js.ExperimentalWasmJsInterop::class)
+package de.wissensgarten.web
+
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFontFamilyResolver
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.ComposeViewport
+import de.wissensgarten.app.AppViewModel
+import de.wissensgarten.app.Routes
+import de.wissensgarten.app.WissensgartenApp
+import de.wissensgarten.core.data.DataContainer
+import de.wissensgarten.core.data.MemoryGardenStore
+import de.wissensgarten.core.data.StoreState
+import de.wissensgarten.core.model.Platform
+import de.wissensgarten.core.model.Scheduler
+import de.wissensgarten.web.res.Res
+import de.wissensgarten.web.res.noto_color_emoji
+import kotlinx.browser.document
+import kotlinx.browser.localStorage
+import kotlinx.browser.window
+import kotlinx.coroutines.*
+import kotlinx.serialization.json.Json
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.preloadFont
+import org.w3c.fetch.Response
+
+private const val STORE_KEY = "wg.garten"
+private val json = Json { ignoreUnknownKeys = true; encodeDefaults = false }
+
+private suspend fun fetchText(url: String): String {
+    val r = window.fetch(url).await<Response>()
+    if (!r.ok) error("$url: ${r.status}")
+    return r.text().await<JsString>().toString()
+}
+
+/** Wissenspakete: dieselben JSON-Dateien wie in der Android-App, mitgeliefert unter packs/. */
+private suspend fun packTexts(): List<String> = coroutineScope {
+    val names = Json.parseToJsonElement(fetchText("packs/index.json")).let { it as kotlinx.serialization.json.JsonArray }
+        .map { (it as kotlinx.serialization.json.JsonPrimitive).content }
+    names.map { n -> async { runCatching { fetchText("packs/$n") }.getOrNull() } }.awaitAll().filterNotNull()
+}
+
+private fun hideSplash(): Unit = js("(() => { const s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(() => s.remove(), 600); } })()")
+private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', () => cb(document.visibilityState === 'visible'))")
+private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', () => cb())")
+
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
+fun main() {
+    // Lernstand aus dem Browser-Speicher laden (nur auf diesem Gerät, kein Server)
+    val saved = runCatching { localStorage.getItem(STORE_KEY)?.let { json.decodeFromString(StoreState.serializer(), it) } }.getOrNull() ?: StoreState()
+    val scope = MainScope()
+    var saveJob: Job? = null
+    var latest: StoreState? = null
+    fun saveNow() {
+        val s = latest ?: return
+        latest = null
+        // Protokoll auf ein Jahr begrenzen, damit der Speicher nicht vollläuft
+        val cut = Platform.nowMs() - 400 * Scheduler.DAY_MS
+        val slim = if (s.logs.size > 20_000) s.copy(logs = s.logs.filter { it.time >= cut }) else s
+        runCatching { localStorage.setItem(STORE_KEY, json.encodeToString(StoreState.serializer(), slim)) }
+            .onFailure { jsToast("Der Browser-Speicher ist voll – der Lernstand konnte nicht gesichert werden.") }
+    }
+    val store = MemoryGardenStore(saved) { s ->
+        latest = s
+        saveJob?.cancel()
+        saveJob = scope.launch { delay(400); saveNow() }
+    }
+    val container = DataContainer(store, ::localStorageStore, ::packTexts)
+    val host = WebHost()
+    de.wissensgarten.app.ui.play.Drawings.store = host.images
+    val vm = AppViewModel(container, host)
+
+    // Gesunde Lernzeit: sichtbare Zeit pro Tag mitzählen (nur lokal)
+    var fgSince = Platform.nowMs()
+    fun flush() {
+        val t = Platform.nowMs()
+        if (fgSince > 0 && t > fgSince) container.settings.addUsage(Scheduler.localDay(t), minOf(t - fgSince, 5 * 60_000L))
+        fgSince = if (fgSince > 0) t else 0
+    }
+    onVisibility { visible ->
+        if (visible) { fgSince = Platform.nowMs(); vm.tick(); host.music.onForeground(true) }
+        else { flush(); fgSince = 0; host.music.onForeground(false); saveNow() }
+    }
+    onBeforeUnload { saveNow() }
+    val hostWithUsage = object : de.wissensgarten.app.AppHost by host { override fun flushUsage() = flush() }
+
+    ComposeViewport(document.body!!) {
+        // Emoji-Schrift laden (Merkbilder!), danach erst die App zeigen
+        val emoji by preloadFont(Res.font.noto_color_emoji)
+        val resolver = LocalFontFamilyResolver.current
+        var ready by remember { mutableStateOf(false) }
+        LaunchedEffect(emoji) { emoji?.let { resolver.preload(FontFamily(it)); ready = true; hideSplash() } }
+        if (ready) {
+            val start = remember { if (vm.onboarded.value) Routes.GARDEN else Routes.ONBOARDING }
+            WissensgartenApp(vm, hostWithUsage, start)
+        } else Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+    }
+}

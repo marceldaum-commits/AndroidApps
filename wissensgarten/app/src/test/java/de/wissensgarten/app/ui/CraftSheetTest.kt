@@ -16,13 +16,13 @@ import java.io.File
 class CraftSheetTest {
     @Test fun rendersPage() {
         val items = listOf(
-            CraftSheet.Item("Was ist 7 × 8?", "56", "🔢"),
-            CraftSheet.Item("Hauptstadt von Frankreich?", "Paris", "🗼🥐"),
-            CraftSheet.Item("the dog – der …?", "der Hund", "🐶"),
-            CraftSheet.Item("Wie viele Beine hat eine Spinne?", "acht", "🕷️"),
-            CraftSheet.Item("Wie heißt der größte Planet unseres Sonnensystems?", "Jupiter", "🪐"),
-            CraftSheet.Item("Was ist die Mehrzahl von „Maus“?", "Mäuse", "🐭"),
-            CraftSheet.Item("Siebte Karte – kommt auf Seite 2", "…", null),
+            de.wissensgarten.app.ui.share.CraftItem("Was ist 7 × 8?", "56", "🔢"),
+            de.wissensgarten.app.ui.share.CraftItem("Hauptstadt von Frankreich?", "Paris", "🗼🥐"),
+            de.wissensgarten.app.ui.share.CraftItem("the dog – der …?", "der Hund", "🐶"),
+            de.wissensgarten.app.ui.share.CraftItem("Wie viele Beine hat eine Spinne?", "acht", "🕷️"),
+            de.wissensgarten.app.ui.share.CraftItem("Wie heißt der größte Planet unseres Sonnensystems?", "Jupiter", "🪐"),
+            de.wissensgarten.app.ui.share.CraftItem("Was ist die Mehrzahl von „Maus“?", "Mäuse", "🐭"),
+            de.wissensgarten.app.ui.share.CraftItem("Siebte Karte – kommt auf Seite 2", "…", null),
         )
         val bmp = CraftSheet.preview("Mein Lernbeet", "🌻", items)
         assertEquals(1190, bmp.width)

@@ -16,6 +16,7 @@ import org.robolectric.annotation.Config
 
 /** Regression: Nach einer richtigen Antwort darf die Runde nicht weiterspringen, während man ein Merkbild malt. */
 @RunWith(RobolectricTestRunner::class)
+@org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)
 @Config(sdk = [35], qualifiers = "w400dp-h860dp-xxhdpi")
 class ReviewDrawTest {
     @get:Rule val rule = createComposeRule()

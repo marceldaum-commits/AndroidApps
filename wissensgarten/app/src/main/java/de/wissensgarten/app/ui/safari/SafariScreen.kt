@@ -37,7 +37,7 @@ import de.wissensgarten.core.model.Safari
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
-import java.util.Locale
+import de.wissensgarten.app.ui.fx.Locale
 
 /**
  * Wissens-Safari: Ein Ding um dich herum fotografieren, das Handy erkennt es (auf dem Gerät),

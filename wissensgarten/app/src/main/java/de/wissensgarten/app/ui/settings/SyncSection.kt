@@ -134,3 +134,24 @@ private fun ago(t: Long): String {
         else -> "vor ${m / 1440} Tagen"
     }
 }
+
+/** Erster Start auf einem neuen Gerät: Garten aus dem Google Drive holen. */
+@Composable
+fun WelcomeRestore(sync: DriveSync, onRestored: (Boolean) -> Unit) {
+    val status by sync.status.collectAsState()
+    var msg by remember { mutableStateOf<String?>(null) }
+    val connect = rememberGoogleConnect(sync) { r ->
+        r.fold(
+            onSuccess = { found ->
+                if (found) onRestored(true)
+                else msg = "Im Google Drive liegt noch kein Garten – leg einfach los, er wird dann automatisch gesichert."
+            },
+            onFailure = { msg = it.message },
+        )
+    }
+    OutlinedButton(onClick = { msg = null; connect() }, enabled = !status.running) {
+        Text(if (status.running) "☁️ Hole deinen Garten …" else "☁️ Schon einen Garten? Mit Google wiederherstellen",
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+    }
+    msg?.let { Text(it, style = MaterialTheme.typography.bodySmall, textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier.padding(top = 8.dp)) }
+}

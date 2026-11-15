@@ -103,6 +103,7 @@ dependencies {
     implementation("androidx.glance:glance-appwidget:1.1.1")
     implementation("androidx.glance:glance-material3:1.1.1")
     implementation(project(":core:data"))
+    implementation(project(":shared"))
     implementation(project(":content"))
     implementation("androidx.navigation:navigation-compose:2.9.6")
     implementation("androidx.work:work-runtime-ktx:2.11.2")
