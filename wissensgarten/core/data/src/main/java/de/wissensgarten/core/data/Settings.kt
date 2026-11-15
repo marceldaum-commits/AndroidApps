@@ -117,6 +117,31 @@ class Settings(context: Context) {
     /** Nach einem Sync: alle Ansichten neu laden */
     fun syncChanged() = bump()
 
+    // ---- 0.18: Unkraut, Bienenstock, Serien-Tiere, Gedächtnis-Spaziergang, Tagesaufgaben (pro Profil, nur lokal)
+    /** Gezupftes Unkraut: Karte → Zahl der Fehler beim Zupfen */
+    fun weedsPulled(pid: String): Map<String, Int> = de.wissensgarten.core.model.Quests.decode(prefs.getString("unkraut_$pid", ""))
+    fun weedCount(pid: String) = prefs.getInt("unkraut_n_$pid", 0)
+    fun pullWeed(pid: String, cardId: String, lapses: Int) {
+        val m = weedsPulled(pid) + (cardId to lapses)
+        prefs.edit().putString("unkraut_$pid", de.wissensgarten.core.model.Quests.encode(m)).putInt("unkraut_n_$pid", weedCount(pid) + 1).apply(); bump()
+    }
+    fun hiveFurniture(pid: String, roomId: String): Int = prefs.getInt("stock_${pid}_$roomId", -1)
+    fun setHiveFurniture(pid: String, roomId: String, i: Int) { prefs.edit().putInt("stock_${pid}_$roomId", i).apply(); bump() }
+    fun bestStreak(pid: String) = prefs.getInt("serie_best_$pid", 0)
+    fun setBestStreak(pid: String, n: Int) { if (n > bestStreak(pid)) prefs.edit().putInt("serie_best_$pid", n).apply() }
+    fun loci(pid: String): Map<Int, String> = de.wissensgarten.core.model.Loci.decode(prefs.getString("loci_$pid", ""))
+    fun setLoci(pid: String, m: Map<Int, String>) { prefs.edit().putString("loci_$pid", de.wissensgarten.core.model.Loci.encode(m)).apply(); bump() }
+    fun questProgress(pid: String, day: Long): Map<String, Int> = de.wissensgarten.core.model.Quests.decode(prefs.getString("aufgaben_${pid}_$day", ""))
+    fun addQuestProgress(pid: String, day: Long, kind: String, n: Int) {
+        val m = questProgress(pid, day).let { it + (kind to (it[kind] ?: 0) + n) }
+        prefs.edit().putString("aufgaben_${pid}_$day", de.wissensgarten.core.model.Quests.encode(m)).apply(); bump()
+    }
+    /** Die Aufgaben eines Tages werden beim ersten Anzeigen festgelegt und gemerkt. */
+    fun questList(pid: String, day: Long): Map<String, Int>? = prefs.getString("aufgaben_liste_${pid}_$day", null)?.let { de.wissensgarten.core.model.Quests.decode(it) }
+    fun setQuestList(pid: String, day: Long, m: Map<String, Int>) { prefs.edit().putString("aufgaben_liste_${pid}_$day", de.wissensgarten.core.model.Quests.encode(m)).apply() }
+    fun questChestWeek(pid: String) = prefs.getLong("aufgaben_kiste_$pid", -1)
+    fun setQuestChestWeek(pid: String, w: Long) { prefs.edit().putLong("aufgaben_kiste_$pid", w).apply(); bump() }
+
     // ---- Klassenarbeiten (Prüfungsmodus)
     private val examJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
     private val examList = kotlinx.serialization.builtins.ListSerializer(de.wissensgarten.core.model.Exam.serializer())

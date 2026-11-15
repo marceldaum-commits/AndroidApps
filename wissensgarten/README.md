@@ -57,6 +57,12 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 - **Brummi die Hummel** begleitet jede Runde und den Garten: freut sich, tröstet, denkt mit, schläft nachts, gibt Tipps
   (`app/ui/fx/Mascot.kt`).
 
+- **Neu in 0.18 (15.11.2026)**: 🌿 *Unkraut-Jäten* (oft vergessene Karten als Monster, nach richtiger Antwort mit dem Finger
+  rausziehen), ⚡ *Gewitter-Blitzrunde* (60 s, ohne Verlieren), 🎵 *Rhythmus-Runde* (Antwort im Takt tippen),
+  🍯 *Brummis Bienenstock* (Honig-Waben aus Wiederholungen, Räume einrichten), 🦔 *Garten-Bewohner* (Serien-Tiere, die
+  nie verloren gehen), 🎬 *Garten-Film* (Zeitraffer + Filmstreifen), 🚶 *Gedächtnis-Spaziergang* (Loci-Methode),
+  📋 *Tagesaufgaben* mit Wochenkiste, ✂️ *Bastelbogen* (Beet als A4-PDF). Logik in `core/model/Extras.kt`.
+  ![Unkraut](screenshots/58_unkraut.png) ![Bienenstock](screenshots/61_bienenstock.png) ![Spaziergang](screenshots/63_gedaechtnis_spaziergang.png)
 - **Andenken & Extras** (0.13): Oma-Postkarte (Bild) und Urkunde (PDF) aus echten Lerndaten (`ui/share/Keepsakes.kt`),
   Kristalle für gemeisterte schwere Karten (`core/model/Crystals.kt`), Zu-zweit-Duell an einem Handy
   (`ui/duel/LocalDuelScreen.kt`), Familien-Belohnung, Feste-Musik (Advent/Halloween in Moll/Ostern).

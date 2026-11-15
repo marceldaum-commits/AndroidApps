@@ -3,6 +3,18 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.18.0 – Unkraut, Gewitter, Rhythmus und Brummis Bienenstock (15.11.2026)
+- **🌿 Unkraut-Jäten:** Karten, die immer wieder vergessen werden, wachsen als freche Unkraut-Monster. Richtig antworten – dann mit dem Finger rausziehen! Alle 5 Unkräuter wächst eine Sonderblume.
+- **⚡ Gewitter-Blitzrunde:** 60 Sekunden, so viele Antworten wie möglich. Jede richtige vertreibt ein Stück Gewitter – am Ende kommt der Regenbogen. Falsche Antworten kosten nichts.
+- **🎵 Rhythmus-Runde:** Die Antworten leuchten im Takt auf – tippen, wenn die richtige leuchtet. „Perfekt!“ gibt's für genaues Timing.
+- **🍯 Brummis Bienenstock:** Jede gegossene Karte füllt Honig in die Waben. Volle Waben öffnen neue Räume, die du selbst einrichtest – vom Bett bis zur Disco.
+- **🦔 Garten-Bewohner:** Bei Lernserien ziehen Tiere ein (Igel nach 3 Tagen, Vogel nach 7 …). Sie bleiben für immer – bei einer Pause schlafen sie nur.
+- **🎬 Garten-Film:** Ein Zeitraffer zeigt, wie dein Garten gewachsen ist. Als Filmstreifen an Oma schicken (nach der Eltern-Aufgabe).
+- **🚶 Gedächtnis-Spaziergang:** Schwierige Karten an Orte im Garten legen (Brunnen, Teich, Baum …) und später den Weg im Kopf ablaufen – so merken sich Gedächtnis-Profis Dinge.
+- **📋 Tagesaufgaben:** Jeden Tag drei kleine Aufgaben. Erledigte Aufgaben füllen die Wochenkiste mit 40 Tautropfen – verpasste Tage zählen nicht.
+- **✂️ Bastelbogen für Eltern:** Jedes Beet als PDF zum Ausdrucken – ausschneiden, falten, fertig sind echte Lernkarten.
+- In den Einstellungen steht jetzt die Version mit Datum.
+
 ## 0.17.1 – Widget-Fragen laufen weiter
 - **🐝 Startbildschirm-Widget:** Nach dem Antippen einer Antwort blieb die Frage manchmal einfach stehen. Jetzt kommt sofort die Rückmeldung („🎉 Richtig! +5 💧“ oder „🌱 Fast! Richtig ist: …“) – und gleich die nächste Frage, ohne Extra-Knopf. Dieselbe Karte kommt nicht zweimal hintereinander.
 

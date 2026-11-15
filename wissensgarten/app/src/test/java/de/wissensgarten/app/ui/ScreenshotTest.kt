@@ -576,6 +576,46 @@ open class ScreenshotTest {
 
     @Test fun restTime() = shot("56_garten_ruht") { de.wissensgarten.app.ui.parents.RestOverlay("Lena") {} }
 
+    private fun pool() = verbs.cards.take(12).mapIndexed { i, c ->
+        StudyCard("v$i", "b", c.q, c.a, c.choices, c.info, Memory(2.0 + i, 5.0, now - 3 * day, 3, if (i < 3) 3 else 0), c.img)
+    }
+    private fun peerMap() = mapOf("b" to verbs.cards.map { it.a })
+
+    @Test fun weeds() = shot("58_unkraut") {
+        de.wissensgarten.app.ui.play.WeedScreen(pool().take(3), peerMap(), 7, {}, {}) {}
+    }
+
+    @Test fun blitz() = shot("59_blitzrunde", prepare = { r -> r.onNodeWithText("Los geht's! ⚡").performClick(); r.mainClock.advanceTimeBy(300) }) {
+        de.wissensgarten.app.ui.play.BlitzScreen(pool(), peerMap(), {}) {}
+    }
+
+    @Test fun rhythm() = shot("60_rhythmus", prepare = { r -> r.onNodeWithText("Musik ab! 🎶").performClick(); r.mainClock.advanceTimeBy(Rhythm.BEAT_MS + 50) }) {
+        de.wissensgarten.app.ui.play.RhythmScreen(pool(), peerMap(), { _, _ -> }) {}
+    }
+
+    @Test fun hive() = shot("61_bienenstock") {
+        de.wissensgarten.app.ui.garden.HiveScreen(187, { if (it == "eingang") 0 else if (it == "schlafen") 1 else -1 }, { _, _ -> }) {}
+    }
+
+    @Test fun questsAndCritters() = shot("62_aufgaben_tiere") {
+        Column(Modifier.padding(vertical = 16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+            de.wissensgarten.app.ui.garden.QuestCard(
+                listOf(Quests.Quest(Quests.Kind.WATER, 10), Quests.Quest(Quests.Kind.WEED, 1), Quests.Quest(Quests.Kind.RHYTHM, 1)),
+                mapOf("WATER" to 6, "WEED" to 1), 8, false) {}
+            de.wissensgarten.app.ui.garden.CrittersCard(9, 16)
+        }
+    }
+
+    @Test fun loci() = shot("63_gedaechtnis_spaziergang", prepare = { r -> r.onAllNodesWithText("🌲")[0].performClick() }) {
+        val cards = pool()
+        de.wissensgarten.app.ui.garden.LociScreen(cards.take(6), cards.associateBy { it.id }, mapOf(0 to "v0", 2 to "v1"), peerMap(), {}, { _, _ -> }, {}) {}
+    }
+
+    @Test fun film() = shot("64_garten_film", settle = 200) {
+        val plants = (0 until 36).map { i -> GardenFilm.Plant(now - (60 - i) * day, now - (i % 5) * day, (i % 9) * 8.0 + 0.5, if (i % 7 == 0) 0 else 3 + i % 4) }
+        de.wissensgarten.app.ui.share.GardenFilmScreen(GardenFilm.frames(plants, now).takeLast(1), "Lena", {}) {}
+    }
+
     @Test fun parentSettings() = shot("57_eltern_einstellungen") {
         de.wissensgarten.app.ui.settings.SettingsScreen(profile, true, ThemeMode.LIGHT, true, {}, packCount = 47, cardCount = 1607,
             version = "0.17.0", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {},

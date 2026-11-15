@@ -47,6 +47,7 @@ fun BedScreen(
     onSpecies: (String) -> Unit = {},
     path: (@Composable () -> Unit)? = null,
     classSet: (() -> de.wissensgarten.core.model.ClassSet?)? = null,
+    onCraft: (() -> Unit)? = null,
 ) {
     var shareClass by remember { mutableStateOf<de.wissensgarten.core.model.ClassSet?>(null) }
     var showPath by remember { mutableStateOf(path != null) }
@@ -111,6 +112,7 @@ fun BedScreen(
                     }
                     Row(Modifier.fillMaxWidth().padding(top = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         if (bed.packId == null && classSet != null) OutlinedButton(onClick = { shareClass = classSet() }, modifier = Modifier.weight(1f)) { Text("🏫 Klassen-Code", maxLines = 1) }
+                        if (onCraft != null && cards.isNotEmpty()) OutlinedButton(onClick = onCraft, modifier = Modifier.weight(1f)) { Text("✂️ Bastelbogen", maxLines = 1) }
                     }
                     if (bed.packId != null) Text(
                         "Wissenspaket · Version ${bed.packVersion} · ${cards.size} Karten. Du kannst eigene Karten ergänzen.",

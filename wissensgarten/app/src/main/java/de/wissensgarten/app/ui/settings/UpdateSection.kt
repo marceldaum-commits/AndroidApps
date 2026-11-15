@@ -94,7 +94,7 @@ fun UpdateSection(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     when (s) {
                         UpdateState.Idle -> {
-                            Text("Installiert: Version $installed", style = MaterialTheme.typography.bodyMedium)
+                            Text("Installiert: Version $installed vom ${de.wissensgarten.app.BuildConfig.VERSION_DATE}", style = MaterialTheme.typography.bodyMedium)
                             JuicyButton(onClick = { check() }, modifier = Modifier.fillMaxWidth()) { Text("🔄 Nach neuer Version suchen") }
                             if (onAutoCheck != null) Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {

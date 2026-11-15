@@ -445,7 +445,69 @@ class AppViewModel(app: Application, private val saved: androidx.lifecycle.Saved
     fun review(card: StudyCard, rating: Rating, dew: Int) {
         val p = profile.value ?: return
         viewModelScope.launch { repo.review(p.id, card, rating, dew) }
+        quest(de.wissensgarten.core.model.Quests.Kind.WATER)
+        if (rating != Rating.AGAIN) quest(de.wissensgarten.core.model.Quests.Kind.RIGHT)
     }
+
+    // ───── 0.18: Unkraut, Blitz, Rhythmus, Bienenstock, Tiere, Spaziergang, Tagesaufgaben, Film
+    private fun pid() = profile.value?.id
+    private fun today() = Scheduler.localDay(System.currentTimeMillis())
+    fun studyCards(): List<StudyCard> = beds.value.flatMap { b -> b.cards.map { it.toStudy() } }
+    fun peers(): Map<String, List<String>> = beds.value.associate { b -> b.bed.id to b.cards.map { it.back } }
+    fun weeds(): List<StudyCard> = pid()?.let { de.wissensgarten.core.model.Weeds.active(studyCards(), settings.weedsPulled(it)) }.orEmpty()
+    fun weedCount() = pid()?.let { settings.weedCount(it) } ?: 0
+    fun pullWeed(card: StudyCard) {
+        val p = pid() ?: return
+        review(card, Rating.GOOD, 3)
+        settings.pullWeed(p, card.id, card.memory.lapses)
+        quest(de.wissensgarten.core.model.Quests.Kind.WEED)
+    }
+    fun quest(kind: de.wissensgarten.core.model.Quests.Kind, n: Int = 1) { pid()?.let { settings.addQuestProgress(it, today(), kind.name, n) } }
+    fun blitzDone(correct: Int) {
+        addDew(de.wissensgarten.core.model.Blitz.dew(correct))
+        quest(de.wissensgarten.core.model.Quests.Kind.BLITZ); quest(de.wissensgarten.core.model.Quests.Kind.RIGHT, correct)
+    }
+    fun rhythmDone(points: Int, right: Int) {
+        addDew(de.wissensgarten.core.model.Rhythm.dew(points))
+        quest(de.wissensgarten.core.model.Quests.Kind.RHYTHM); quest(de.wissensgarten.core.model.Quests.Kind.RIGHT, right)
+    }
+    fun totalReps() = beds.value.sumOf { b -> b.cards.sumOf { it.reps } }
+    /** Aktuelle Serie und Rekord (Rekord wird gespeichert – Tiere bleiben für immer). */
+    suspend fun streaks(): Pair<Int, Int> {
+        val p = pid() ?: return 0 to 0
+        val days = c.database.dao().profileLogsSince(p, System.currentTimeMillis() - 400 * Scheduler.DAY_MS).map { Scheduler.localDay(it.time) }.toSet()
+        val cur = de.wissensgarten.core.model.Critters.streak(days, today())
+        settings.setBestStreak(p, cur)
+        return cur to settings.bestStreak(p)
+    }
+    private fun questsOf(p: String, day: Long): List<de.wissensgarten.core.model.Quests.Quest>? = settings.questList(p, day)?.mapNotNull { (k, n) ->
+        runCatching { de.wissensgarten.core.model.Quests.Quest(de.wissensgarten.core.model.Quests.Kind.valueOf(k), n) }.getOrNull() }?.ifEmpty { null }
+    fun questsToday(): List<de.wissensgarten.core.model.Quests.Quest> {
+        val p = pid() ?: return emptyList()
+        return questsOf(p, today()) ?: de.wissensgarten.core.model.Quests.forDay(today(), p, weeds().isNotEmpty()).also { l ->
+            settings.setQuestList(p, today(), l.associate { it.kind.name to it.amount })
+        }
+    }
+    fun questProgress(): Map<String, Int> = pid()?.let { settings.questProgress(it, today()) }.orEmpty()
+    /** Erledigte Aufgaben dieser Woche (Mo–So) */
+    fun questWeekDone(): Int {
+        val p = pid() ?: return 0
+        val t = today(); val w = de.wissensgarten.core.model.Quests.week(t)
+        return (0..6).map { t - it }.filter { de.wissensgarten.core.model.Quests.week(it) == w }.sumOf { d ->
+            val prog = settings.questProgress(p, d)
+            questsOf(p, d).orEmpty().count { de.wissensgarten.core.model.Quests.done(it, prog) }
+                .coerceAtMost(de.wissensgarten.core.model.Quests.PER_DAY)
+        }
+    }
+    fun questChestOpened() = pid()?.let { settings.questChestWeek(it) == de.wissensgarten.core.model.Quests.week(today()) } ?: true
+    fun openQuestChest() {
+        val p = pid() ?: return
+        settings.setQuestChestWeek(p, de.wissensgarten.core.model.Quests.week(today()))
+        addDew(de.wissensgarten.core.model.Quests.CHEST_DEW)
+    }
+    fun filmFrames(): List<de.wissensgarten.core.model.GardenFilm.Frame> = de.wissensgarten.core.model.GardenFilm.frames(
+        beds.value.flatMap { b -> b.cards.map { de.wissensgarten.core.model.GardenFilm.Plant(it.createdAt, it.lastReview, it.stability, it.reps) } },
+        System.currentTimeMillis())
 
     fun addDew(amount: Int) {
         val p = profile.value ?: return
