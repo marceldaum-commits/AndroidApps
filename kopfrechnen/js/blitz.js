@@ -6,8 +6,9 @@
    ===================================================================== */
 const BZ = { or: '#ff7418', dk: '#d9530b', nv: '#101b43', cr: '#fff6ec', gd: '#ffc83d' };
 let bzN = 0;
-function blitzSvg(mood = 'happy', size = 64) {
+function blitzSvg(mood = 'happy', size = 64, outfit) {
   const id = 'bz' + (++bzN);
+  const L = slot => { try { return typeof bzLayer === 'function' ? bzLayer(slot, outfit) : ''; } catch { return ''; } };
   const eyes = {
     happy: `<path d="M44 47 q5 -6 10 0 M66 47 q5 -6 10 0" stroke="${BZ.nv}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`,
     cheer: `<path d="M44 47 q5 -6 10 0 M66 47 q5 -6 10 0" stroke="${BZ.nv}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`,
@@ -37,19 +38,22 @@ function blitzSvg(mood = 'happy', size = 64) {
     comfort: `<path d="M98 30 c0 -5 7 -6 7 0 c0 -6 7 -5 7 0 c0 5 -7 9 -7 11 c0 -2 -7 -6 -7 -11z" fill="#ff5b7a"/>`,
     cheer: `<g fill="${BZ.gd}"><circle cx="18" cy="40" r="2.4"/><circle cx="104" cy="38" r="2.4"/><circle cx="12" cy="58" r="1.8"/><circle cx="110" cy="56" r="1.8"/></g>`,
   }[mood] || '';
-  return `<svg class="blitz bz-${mood}" viewBox="0 0 120 120" width="${size}" height="${size}" role="img" aria-label="Blitz">
+  return `<svg class="blitz bz-${mood}" viewBox="0 -16 120 136" width="${size}" height="${size}" role="img" aria-label="Blitz">
     <defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a3a"/><stop offset="1" stop-color="${BZ.or}"/></linearGradient></defs>
     <path class="bz-tail" d="M84 92 L108 62 L98 64 L112 40 L88 70 L98 68 Z" fill="${BZ.gd}" stroke="${BZ.dk}" stroke-width="2" stroke-linejoin="round"/>
+    ${L('back')}
     <ellipse cx="60" cy="92" rx="25" ry="22" fill="url(#${id})"/>
     <ellipse cx="60" cy="96" rx="14" ry="13" fill="${BZ.cr}"/>
+    ${L('body')}
     ${armL}
     <path d="M38 72 q22 12 44 0 l-3 8 q-19 9 -38 0z" fill="${BZ.nv}"/><path d="M60 76 l-4 7 h4 l-2 6 6 -8 h-4 l2 -5z" fill="${BZ.gd}"/>
+    ${L('neck')}
     <path d="M30 40 L26 8 L52 26 Z" fill="${BZ.or}"/><path d="M33 33 L31 15 L46 26 Z" fill="${BZ.dk}"/>
     <path d="M90 40 L94 8 L68 26 Z" fill="${BZ.or}"/><path d="M87 33 L89 15 L74 26 Z" fill="${BZ.dk}"/>
     <ellipse cx="60" cy="48" rx="32" ry="27" fill="url(#${id})"/>
     <path d="M28 52 q14 -2 22 6 q10 8 10 8 q0 0 10 -8 q8 -8 22 -6 q-6 20 -32 21 q-26 -1 -32 -21z" fill="${BZ.cr}"/>
     <ellipse cx="60" cy="55" rx="4.6" ry="3.4" fill="${BZ.nv}"/>
-    ${eyes}${mouth}${armR}${extra}</svg>`;
+    ${eyes}${L('eyes')}${mouth}${armR}${extra}${L('hat')}</svg>`;
 }
 /** Blitz mit Sprechblase (für Karten, Overlays, Ergebnis) */
 const blitzSay = (mood, text, size = 64) => `<div class="blitz-say"><div class="bz-fig">${blitzSvg(mood, size)}</div><div class="bz-bubble">${text}</div></div>`;

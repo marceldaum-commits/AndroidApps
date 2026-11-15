@@ -108,7 +108,8 @@ function merkAnswer(key, ok, dt) {
   if (G_MERK && c.b >= MERK.SOLID && before < MERK.SOLID) G_MERK.solidNow = key;
   if (c.b >= MERK.SOLID && before < MERK.SOLID) {   // ganzes Sternbild geschafft?
     const cs = merkConstOf(key);
-    if (cs && merkConstDone(cs) && !(st.consts ||= {})[cs.id]) { st.consts[cs.id] = todayStr(); if (G_MERK) (G_MERK.consts ||= []).push(cs.id); award('sternbild'); }
+    if (cs && merkConstDone(cs) && !(st.consts ||= {})[cs.id]) { st.consts[cs.id] = todayStr(); if (G_MERK) (G_MERK.consts ||= []).push(cs.id); award('sternbild'); addFunken(FUNKEN.sternbild); }
+    addFunken(FUNKEN.solid);
   }
   c.due = dayStr(-MERK.INT[c.b]);
   if (merkSolidAll() >= 25) award('merk25');

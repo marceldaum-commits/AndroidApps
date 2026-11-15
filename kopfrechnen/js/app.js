@@ -214,6 +214,8 @@ const BADGES = [
   ['reise5', '🐉', 'Drachenbezwinger', 'Kapitel 5 der Rechen-Reise geschafft'],
   ['reise6', '👑', 'Sternenkönig', 'Kapitel 6 der Rechen-Reise geschafft'],
   ['reiseAll', '⚡', 'Echter Rechenblitz', 'Die ganze Rechen-Reise geschafft'],
+  ['raetsel', '🧩', 'Rätselprofi', 'Das Rätsel des Tages gelöst'],
+  ['shop', '🎩', 'Modefuchs', 'Blitz das erste Outfit oder Deko gekauft'],
 ].map(([id, icon, name, desc]) => ({ id, icon, name, desc }));
 let newBadges = [];
 function award(id) { if (!S.badges[id]) { S.badges[id] = todayStr(); newBadges.push(id); } }
@@ -257,7 +259,8 @@ function renderHome() {
   $('sDays').textContent = streakDays();
   $('sToday').textContent = `${S.today.date === todayStr() ? S.today.solved : 0}/${DAILY_GOAL}`;
   renderSoundIcons();
-  renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard();
+  renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); renderWeltCard();
+  if ($('sFunken')) $('sFunken').textContent = S.funken ?? 0;
   if ($('bzHome')) $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting(), 54) : '';
   if (typeof widgetUpdate === 'function') widgetUpdate();   // APK: Startbildschirm-Widget aktualisieren
 
@@ -502,6 +505,7 @@ function creditCorrect() {
   const today = todayStr();
   if (S.today.date !== today) S.today = { date: today, solved: 0 };
   S.today.solved++; S.total++;
+  addFunken(FUNKEN.correct + (S.today.solved === DAILY_GOAL ? FUNKEN.goal : 0));   // 💫 je richtige Antwort, Bonus fürs Tagesziel
   if (S.days.last !== today) { S.days.streak = S.days.last === dayStr(1) ? S.days.streak + 1 : 1; S.days.last = today; }
 }
 function submit() {
@@ -692,6 +696,7 @@ function renderResult(r) {
   if (levelFromXp(S.xp) > r.lvBefore) xpText += ` · Stufe ${levelFromXp(S.xp)} erreicht!`;
   if (r.goalBefore && S.today.solved >= DAILY_GOAL) xpText += ' · Tagesziel geschafft! 🎯';
   if (G.adapt) xpText += ` · Auto-Stufe jetzt ${G.lvl + 1}`;
+  if (G.funken) xpText += ` · +${G.funken} 💫`;
   $('result').innerHTML = `
     <h2>${title}</h2>
     ${bzOn() && G.mode !== 'reise' ? blitzSay(G.mode === 'test' || cfg.calm ? 'happy' : (r.stars ?? 1) >= 2 ? 'cheer' : (r.stars ?? 1) === 1 ? 'happy' : 'comfort', esc(blitzResultLine(r.stars ?? 1, cfg.calm ? 'zen' : G.mode)), 60) : ''}
@@ -823,7 +828,11 @@ function duelEnd(w) {
 
 /* ================= Tastatur ================= */
 addEventListener('keydown', e => {
-  if (Sheet.open) { if (e.key === 'Escape') closeSheet(); return; }
+  if (Sheet.open) {
+    const top = Sheet.stack[Sheet.stack.length - 1];
+    if (top && top[0] === 'raetsel' && PANELS.raetsel.key && !e.target.closest?.('input,textarea') && PANELS.raetsel.key(e)) { e.preventDefault(); return; }
+    if (e.key === 'Escape') closeSheet(); return;
+  }
   const scr = currentScreen();
   if (scr === 'game') {
     const map = { Backspace: 'del', Enter: 'ok', ',': ',', '.': ',', '/': '/', '-': 'neg' };

@@ -67,3 +67,4 @@ Jeden Tag ein vollständiges, getestetes Paket. Status: `[ ]` offen · `[x]` erl
 - 14.11. – 3.9.0: Rechen-Reise Kapitel 1–3 (Zahlenwald, Rechenfluss, Funkenhöhle) + Fehler-Check mit 20 Korrekturen (Sicherheit der Links, Timing, Fortschritt, Postausgang, Offline-Cache, Sommerzeit, Barrierefreiheit). Nächster Tag: Rechen-Reise Kapitel 4–6.
 - 15.11. – 3.10.0: Rechen-Reise Kapitel 4–6 + Finale, Sticker-Album, große Urkunde; alle Aufgabentexte und Advents-Vorschau in EN/UK vervollständigt. Nächster Tag: Rechengarten.
 - 15.11. – 3.10.1: Knopf „Nach Updates suchen“; 3.11.0: Android-Widget für den Startbildschirm (aus Tag 20 vorgezogen, Marcel).
+- 15.11. – 3.11.1: einzelne Bereiche zurücksetzen; 3.12.0: großes Paket „Blitz-Welt“ (Funken, Garderobe, Zimmer, Rätsel des Tages, Jahreszeiten-Events) auf Marcels Wunsch zusätzlich zum Plan.

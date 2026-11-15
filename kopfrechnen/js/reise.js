@@ -84,6 +84,7 @@ function reiseFinish(acc) {
   (st.ch[r.c] ||= {});
   const first = !r.before && stars > 0, chDone = r.boss && stars > 0 && !r.before;
   if (stars > (st.ch[r.c][r.s] || 0)) st.ch[r.c][r.s] = stars;
+  if (first) addFunken(r.boss ? FUNKEN.boss : FUNKEN.etappe);
   if (chDone) award('reise' + (r.c + 1));
   const ch = REISE_CH[r.c], nx = reiseCurrent();
   let html = `<div class="card reise-res"><div class="rr-stars">${[1, 2, 3].map(i => `<span class="${i <= stars ? 'on' : ''}">★</span>`).join('')}</div>`;

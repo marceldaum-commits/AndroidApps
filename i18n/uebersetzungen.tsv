@@ -1337,3 +1337,85 @@ Fehlerkiste wirklich leeren?	Really empty the mistake box?	Справді очи
 ↺ Reise neu starten	↺ Restart journey	↺ Почати подорож заново
 ↺ Merk-Training zurücksetzen	↺ Reset memory training	↺ Скинути тренування пам'яті
 Neu: einzelne Bereiche zurücksetzen – Rechen-Reise, Merk-Training, Abzeichen oder Fehlerkiste	New: reset individual areas – maths journey, memory training, badges or mistake box	Нове: скидання окремих розділів – подорож, тренування пам'яті, значки або скринька помилок
+Funken	Sparks	Іскри
+Rätsel	Puzzle	Загадка
+Heute neu	New today	Нова сьогодні
+Garderobe	Wardrobe	Гардероб
+Zimmer	Room	Кімната
+Einrichten	Decorate	Облаштувати
+Blitz-Welt	Blitz world	Світ Бліца
+Herbstzeit	Autumn time	Осінь
+Winterzauber	Winter magic	Зимове диво
+Fasching	Carnival	Карнавал
+Frühlingsfest	Spring festival	Весняне свято
+Sommerferien	Summer holidays	Літні канікули
+Sonder-Outfit nur bis {}.	Special outfit only until {}.	Особливе вбрання лише до {}.
+Hüte	Hats	Капелюхи
+Brillen	Glasses	Окуляри
+Hals	Neck	Шия
+Anzug	Outfit	Костюм
+Umhang	Cape	Плащ
+Basecap	Baseball cap	Бейсболка
+Schlaue Brille	Clever glasses	Розумні окуляри
+Fliege	Bow tie	Метелик
+Zylinder	Top hat	Циліндр
+Fußball-Trikot	Football shirt	Футбольна форма
+Sternen-Brille	Star glasses	Зіркові окуляри
+Zauberhut	Wizard hat	Чарівний капелюх
+Helden-Umhang	Hero cape	Плащ героя
+Astronauten-Helm	Astronaut helmet	Шолом астронавта
+Königskrone	Royal crown	Королівська корона
+Pilzhut	Mushroom hat	Капелюх-гриб
+Wintermütze	Winter hat	Зимова шапка
+Ringelschal	Striped scarf	Смугастий шарф
+Partyhut	Party hat	Святковий ковпак
+Blumenkranz	Flower crown	Вінок
+Sonnenbrille	Sunglasses	Сонцезахисні окуляри
+Nur jetzt	Only now	Лише зараз
+✓ An	✓ On	✓ Вдягнено
+Anziehen	Put on	Вдягнути
+✓ Im Zimmer	✓ In the room	✓ У кімнаті
+Hut ausziehen	Take off hat	Зняти капелюх
+Teil ausziehen	Take off item	Зняти річ
+Funken gibt es für jede richtige Antwort, Etappen der Rechen-Reise, Sternbilder, das Rätsel des Tages und das Tagesziel.	You get sparks for every correct answer, maths journey stages, constellations, the daily puzzle and the daily goal.	Іскри даються за кожну правильну відповідь, етапи подорожі, сузір'я, загадку дня й денну мету.
+Für {} Funken kaufen?	Buy for {} sparks?	Купити за {} іскор?
+Dir fehlen noch 💫 {} Funken	You still need 💫 {} sparks	Тобі бракує ще 💫 {} іскор
+✨ Blitz hat ein neues Outfit!	✨ Blitz has a new outfit!	✨ Бліц має нове вбрання!
+Neu in Blitz' Zimmer!	New in Blitz's room!	Нове в кімнаті Бліца!
+Blitz' Zimmer	Blitz's room	Кімната Бліца
+Sticker aus der Rechen-Reise	Stickers from the maths journey	Наліпки з подорожі
+Zimmerpflanze	Houseplant	Кімнатна рослина
+Leselampe	Reading lamp	Лампа для читання
+Bunter Teppich	Colourful rug	Кольоровий килим
+Globus	Globe	Глобус
+Aquarium	Aquarium	Акваріум
+Gitarre	Guitar	Гітара
+Raketen-Modell	Rocket model	Модель ракети
+Katze Pixel	Pixel the cat	Кішка Піксель
+Rätsel des Tages	Puzzle of the day	Загадка дня
+Finde die geheime dreistellige Blitz-Zahl in {} Versuchen. 🟩 richtige Stelle · 🟨 andere Stelle · ⬜ kommt nicht vor.	Find the secret three-digit Blitz number in {} tries. 🟩 right place · 🟨 other place · ⬜ not in the number.	Знайди таємне тризначне число Бліца за {} спроб. 🟩 правильне місце · 🟨 інше місце · ⬜ немає в числі.
+Finde die geheime zweistellige Blitz-Zahl in {} Versuchen. 🟩 richtige Stelle · 🟨 andere Stelle · ⬜ kommt nicht vor.	Find the secret two-digit Blitz number in {} tries. 🟩 right place · 🟨 other place · ⬜ not in the number.	Знайди таємне двозначне число Бліца за {} спроб. 🟩 правильне місце · 🟨 інше місце · ⬜ немає в числі.
+Die Zahl ist gerade.	The number is even.	Число парне.
+Die Zahl ist ungerade.	The number is odd.	Число непарне.
+Die Quersumme ist {}.	The digit sum is {}.	Сума цифр – {}.
+Die Zahl liegt zwischen {} und {}.	The number is between {} and {}.	Число між {} і {}.
+Die Zahl ist durch {} teilbar.	The number is divisible by {}.	Число ділиться на {}.
+Die Zahl ist nicht durch {} teilbar.	The number is not divisible by {}.	Число не ділиться на {}.
+Die letzte Ziffer ist {}.	The last digit is {}.	Остання цифра – {}.
+Geschafft!	You did it!	Вийшло!
+Die Blitz-Zahl war	The Blitz number was	Число Бліца було
+Diesmal nicht – die Zahl war	Not this time – the number was	Цього разу ні – число було
+Morgen gibt es ein neues Rätsel!	There's a new puzzle tomorrow!	Завтра буде нова загадка!
+gespielt	played	зіграно
+gelöst	solved	розгадано
+in Folge	in a row	поспіль
+Schaffst du es schneller?	Can you do it faster?	А ти зможеш швидше?
+Bitte {} Ziffern eingeben	Please enter {} digits	Введи, будь ласка, {} цифри
+Die Zahl beginnt nicht mit {}	The number doesn't start with {}	Число не починається з {}
+Rätselprofi	Puzzle pro	Профі загадок
+Das Rätsel des Tages gelöst	Solved the puzzle of the day	Розгадано загадку дня
+Modefuchs	Fashion fox	Модний лис
+Blitz das erste Outfit oder Deko gekauft	Bought Blitz his first outfit or decoration	Купив Бліцу перше вбрання чи прикрасу
+Neu: Blitz-Welt 💫 – sammle Funken und kauf damit Outfits für Blitz und Deko für sein Zimmer	New: Blitz world 💫 – collect sparks and buy outfits for Blitz and decorations for his room	Нове: Світ Бліца 💫 – збирай іскри й купуй вбрання для Бліца та прикраси для його кімнати
+Rätsel des Tages: finde die geheime Blitz-Zahl in {} Versuchen – mit Mathe-Hinweisen	Puzzle of the day: find the secret Blitz number in {} tries – with maths clues	Загадка дня: знайди таємне число Бліца за {} спроб – з математичними підказками
+Jahreszeiten-Events mit Sonder-Outfits – jetzt: Pilzhut zur Herbstzeit	Seasonal events with special outfits – now: mushroom hat for autumn	Сезонні події з особливим вбранням – зараз: капелюх-гриб восени

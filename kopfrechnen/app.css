@@ -788,3 +788,53 @@ button.badge{font:inherit;cursor:pointer}
 .rr-album span{background:linear-gradient(160deg,#fff7e6,#ffe7b8);border-radius:14px;padding:6px 0;box-shadow:0 0 0 2px #ffc83d inset}
 .rr-album.small{font-size:24px}
 .rr-album span.lock{background:var(--chip);box-shadow:none;filter:grayscale(1);opacity:.5}
+
+/* ===== 3.12.0 Blitz-Welt: Kacheln, Laden, Zimmer, Rätsel ===== */
+.welt-card{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:8px}
+.welt-card .wt{display:flex;flex-direction:column;align-items:center;gap:1px;padding:10px 4px;border-radius:14px;background:var(--chip);font:inherit;color:var(--head);min-width:0}
+.welt-card .wt-i{font-size:26px;line-height:1.1}
+.welt-card .wt b{font-size:13.5px}.welt-card .wt small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.welt{display:flex;flex-direction:column;gap:12px}
+.welt-top{position:relative;display:flex;justify-content:center;align-items:flex-end;min-height:120px;border-radius:18px;background:radial-gradient(circle at 50% 70%,color-mix(in srgb,var(--orange) 16%,transparent),transparent 70%)}
+.welt-bz .blitz{animation:bzhop .55s ease-out 1}
+.welt-funken{position:absolute;right:8px;top:8px;background:var(--navy);color:#fff;border-radius:14px;padding:6px 10px;text-align:center;line-height:1.1}
+.welt-funken b{display:block;font-size:17px;color:#ffc83d}.welt-funken span{font-size:11px;color:#c9d3ea}
+.welt-ev{font-size:13.5px;padding:8px 12px;border-radius:12px;background:color-mix(in srgb,var(--orange) 12%,transparent);color:var(--text)}
+.welt-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+.welt-tabs button{display:flex;flex-direction:column;align-items:center;padding:6px 0;border-radius:12px;background:var(--chip);font:inherit;color:var(--head);min-width:0}
+.welt-tabs button span{font-size:20px}.welt-tabs button small{font-size:10.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.welt-tabs button.sel{background:var(--orange);color:#fff}
+.shop-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.shop-item{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 4px 8px;border-radius:16px;background:var(--surface);border:2px solid var(--border);font:inherit;color:var(--text);min-width:0}
+.shop-item.worn{border-color:var(--orange)}
+.shop-item b{font-size:12.5px;color:var(--head);text-align:center;line-height:1.2;overflow-wrap:anywhere}
+.shop-emoji{font-size:44px;line-height:74px}
+.shop-price{font-size:13px;font-weight:800;color:var(--head)}.shop-price.poor{color:var(--muted);opacity:.7}
+.shop-tag{font-size:12px;font-weight:700;color:var(--orange-d)}.shop-tag.on{color:var(--good)}
+.shop-ev{position:absolute;top:4px;left:4px;font-size:10px;font-weight:700;background:var(--orange);color:#fff;border-radius:8px;padding:1px 6px}
+.room-wrap{width:100%;border-radius:18px;overflow:hidden;box-shadow:0 6px 18px rgba(16,27,67,.15)}
+.room{display:block;width:100%;height:auto}
+.welt-top:has(.room-wrap){min-height:0;background:none}
+@media (max-width:360px){.shop-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.welt-tabs small{display:none}}
+/* Rätsel */
+.raetsel{display:flex;flex-direction:column;gap:10px}
+.rz-grid{display:flex;flex-direction:column;gap:6px;align-items:center}
+.rz-row{display:flex;gap:6px}
+.rz-c{width:46px;height:46px;border-radius:12px;border:2px solid var(--border);background:var(--surface);display:grid;place-items:center;font-size:24px;font-weight:800;color:var(--head)}
+.rz-row.cur .rz-c{border-color:color-mix(in srgb,var(--orange) 50%,var(--border))}
+.rz-c.c-g{background:#2f9e5f;border-color:#2f9e5f;color:#fff;animation:rzflip .45s backwards;animation-delay:calc(var(--i) * .12s)}
+.rz-c.c-y{background:#f5b74a;border-color:#f5b74a;color:#fff;animation:rzflip .45s backwards;animation-delay:calc(var(--i) * .12s)}
+.rz-c.c-n{background:#8a93ad;border-color:#8a93ad;color:#fff;animation:rzflip .45s backwards;animation-delay:calc(var(--i) * .12s)}
+@keyframes rzflip{0%{transform:rotateX(90deg)}100%{transform:none}}
+.rz-hints{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.rz-hints li{font-size:14px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:7px 10px;animation:mvpop .35s backwards}
+.rz-keys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.rz-keys button{height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--border);font:inherit;font-size:20px;font-weight:700;color:var(--head);box-shadow:0 2px 0 var(--border)}
+.rz-keys button.ok{background:var(--orange);color:#fff;border-color:var(--orange)}.rz-keys button.fn{background:var(--chip)}
+.rz-end{display:flex;flex-direction:column;gap:10px}
+.rz-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.rz-stats div{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:8px 4px;text-align:center}
+.rz-stats b{display:block;font-size:20px;color:var(--head)}.rz-stats span{font-size:12px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.rz-c,.rz-hints li{animation:none!important}}
+.welt-funken-line{align-self:center;background:var(--navy);color:#fff;border-radius:99px;padding:5px 14px;font-size:14px}.welt-funken-line b{color:#ffc83d}
+@media (max-width:360px){.statusbar .sb-stat:last-child{display:none}}

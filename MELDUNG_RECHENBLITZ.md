@@ -2,8 +2,39 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.11.1** (Rechen-Reise komplett, „Nach Updates suchen“, Android-Widget, einzelnes Zurücksetzen), siehe Meldungen (28)–(31). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
+> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.12.0** (Blitz-Welt: Funken, Garderobe, Zimmer, Rätsel des Tages, Jahreszeiten-Events), siehe Meldungen (28)–(32). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
 > - **Bitte testen und live freigeben.** Seit heute läuft die Advents-Vorschau (ab 15.11.), ihre Texte sind jetzt auch auf EN/UK vollständig.
+## 15.11.2026 (32) – Großes Paket „Blitz-Welt“ (3.12.0)
+
+- **Marcel 15.11.:** Er hat das große Paket („leg alles um“) freigegeben.
+- **💫 Funken (Währung):**
+  - **Verdienen:** +1 je richtige Antwort, +10 Tagesziel, +10 je erste geschaffte Reise-Etappe (+25 Boss), +15 je Sternbild, +3 wenn eine Merk-Aufgabe fest sitzt, +10 bis +15 für das Rätsel des Tages. Start mit 30 Funken.
+  - **Anzeige:** in der Statusleiste und im Ergebnis („+20 💫“).
+- **🎩 Blitz-Garderobe:**
+  - 16 selbst gezeichnete Teile in 5 Bereichen: Hüte (Basecap, Zylinder, Zauberhut, Astronauten-Helm, Königskrone …), Brillen, Hals (Fliege, Schal), Anzug (Fußball-Trikot) und Umhang. Sie kosten 30–400 Funken.
+  - Blitz trägt sein Outfit überall: Startseite, Spiel, Ergebnis, Merk-Karten, Reise-Karte und Widget-Bild beim nächsten Neubau.
+  - Bereits gekaufte Teile kann man an- und ausziehen.
+- **🏠 Blitz' Zimmer:**
+  - Fenster mit Tag- und Nachthimmel (Merk-Sterne nachts), Regal mit den Reise-Stickern, Pokale für Abzeichen, Teleskop, sobald Merk-Aufgaben fest sitzen.
+  - Kaufbare Deko: Pflanze, Lampe, Teppich, Globus, Aquarium, Gitarre, Rakete, Katze „Pixel“.
+- **🧩 Rätsel des Tages („Blitz-Zahl“):**
+  - Eine geheime dreistellige Zahl (Klasse 1–2: zweistellig) in 6 Versuchen finden, jeden Tag für alle gleich.
+  - Felder zeigen 🟩 richtige Stelle, 🟨 andere Stelle, ⬜ kommt nicht vor. Jeder Versuch schaltet einen Mathe-Hinweis frei: gerade/ungerade, Quersumme, Bereich, Teilbarkeit durch 3, letzte Ziffer.
+  - Statistik (gespielt, gelöst, in Folge). Das Ergebnis lässt sich als Kästchen-Muster teilen, mit Link zur App (Werbung).
+- **🍂 Jahreszeiten-Events** mit Sonder-Outfits, die nur im Zeitraum kaufbar sind (gekaufte bleiben):
+  - Herbstzeit (bis 30.11., Pilzhut – läuft jetzt);
+  - Winterzauber (1.12.–6.1., Wintermütze und Ringelschal);
+  - Fasching (Partyhut), Frühlingsfest (Blumenkranz), Sommerferien (Sonnenbrille).
+- **Startseite:** eine Kachelzeile „🧩 Rätsel · 🎩 Garderobe · 🏠 Zimmer“ (mit Funkenstand und aktuellem Event).
+- **Abzeichen:** „Rätselprofi“, „Modefuchs“.
+- **Daten:** nur auf dem Gerät (`S.funken`, `S.welt`, `S.raetsel`). Keine neuen Server-Daten.
+- **Getestet:**
+  - alle Outfits gezeichnet, Kauf, An- und Ausziehen, Zimmer-Deko, Event-Teil, Rätsel gewinnen und verlieren, Teilen, Tastatur;
+  - Funken aus Training, Reise, Merk;
+  - DE/EN/UK ohne Fehlstellen (1410 Einträge), 320 px;
+  - komplette Regression inklusive Aufgaben-Sweep.
+- **Neue APK: 3.12.0** – GitHub baut sie selbst.
+
 ## 15.11.2026 (31) – Einzelne Bereiche zurücksetzen (3.11.1)
 
 - **Marcel 15.11.:** „Bitte einfügen, dass man es zurücksetzen kann.“
