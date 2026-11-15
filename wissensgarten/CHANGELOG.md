@@ -3,6 +3,15 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.18.1 – Alles reagiert so, wie man es erwartet (15.11.2026)
+- **🎵 Rhythmus-Runde:** Eine richtige Antwort zählt jetzt immer („Gut!“). Wer sie genau dann antippt, wenn sie leuchtet, bekommt „Perfekt!“. Vorher gab es bei richtiger Antwort zur falschen Zeit ein „Fast!“ – das war verwirrend.
+- **🌿 Unkraut-Jäten:** Das Unkraut lässt sich jetzt auch durch dreimal Antippen herausziehen, nicht nur durch Wischen. Wischen geht leichter.
+- **🚶 Spaziergang:** Wer zuerst einen Ort antippt, bekommt einen Hinweis („Erst unten eine Karte antippen“). Die Kachel heißt kürzer „Spaziergang“, damit der Name ganz zu lesen ist.
+- **🍯 Bienenstock:** Die Auswahl der Einrichtung erscheint sofort.
+- **🎬 Garten-Film:** Bei einem ganz jungen Garten erklärt Brummi, dass der Film nach ein paar Tagen spannender wird.
+- **🌙 Gesunde Lernzeit:** Der Ruhe-Bildschirm lässt keine Tipper mehr zum Garten darunter durch.
+- Neue automatische Klick-Tests für alle neuen Spiele.
+
 ## 0.18.0 – Unkraut, Gewitter, Rhythmus und Brummis Bienenstock (15.11.2026)
 - **🌿 Unkraut-Jäten:** Karten, die immer wieder vergessen werden, wachsen als freche Unkraut-Monster. Richtig antworten – dann mit dem Finger rausziehen! Alle 5 Unkräuter wächst eine Sonderblume.
 - **⚡ Gewitter-Blitzrunde:** 60 Sekunden, so viele Antworten wie möglich. Jede richtige vertreibt ein Stück Gewitter – am Ende kommt der Regenbogen. Falsche Antworten kosten nichts.

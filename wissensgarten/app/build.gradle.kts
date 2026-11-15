@@ -20,8 +20,8 @@ android {
         applicationId = "de.wissensgarten.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 31
-        versionName = "0.18.0"
+        versionCode = 32
+        versionName = "0.18.1"
         buildConfigField("String", "VERSION_DATE", "\"15.11.2026\"")
     }
 
