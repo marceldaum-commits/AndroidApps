@@ -122,4 +122,15 @@ class PlayFlowTest {
         assertEquals(42, v.findViewById<android.widget.ProgressBar>(de.raumlicht.app.R.id.learn_bar_0).progress)
         val card = ShareCard.draw("🎪 Festivalzelt", "11 von 12 BE", Exam.verdict(11, 12)); assertEquals(1080, card.width); assertEquals(1080, card.height)
     }
+
+    @Test fun resetAsksFirst() {
+        var resets = 0
+        show { de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "0.5.3", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, onReset = { resets++ }) }
+        rule.onNodeWithTag("zuruecksetzen").performScrollTo().performClick(); rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithText("Wirklich alles zurücksetzen?").assertExists()
+        rule.onNodeWithTag("zuruecksetzen-nein").performClick(); rule.mainClock.advanceTimeBy(500); assertEquals(0, resets)      // Abbrechen löscht nichts
+        rule.onNodeWithTag("zuruecksetzen").performScrollTo().performClick(); rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithTag("zuruecksetzen-ja").performClick(); rule.mainClock.advanceTimeBy(500); assertEquals(1, resets)
+        rule.onNodeWithText("✓ Alles zurückgesetzt – du startest wieder bei null.").assertExists()
+    }
 }

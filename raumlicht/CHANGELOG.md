@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.5.3 – Neu anfangen (15.11.2026)
+- **🧹 Fortschritt zurücksetzen:** In den Einstellungen gibt es jetzt einen Knopf, der alles Bisherige löscht – Sterne, Rekorde, Abi-Punkte,
+  Fehler-Tagebuch, Kalender und das freigespielte Aussehen von Lux. Vorher wird nachgefragt; Ton-Einstellungen und Klausur-Plan bleiben.
+
 ## 0.5.2 – Jedes Gebiet mit passender Bühne (15.11.2026)
 - **Raumachsen nur noch bei Vektoren:** Das dreidimensionale Koordinatensystem x₁/x₂/x₃ gibt es nur noch in der Geometrie.
 - **Analysis überall eben:** Auch die Rotationskörper haben jetzt das x-y-Achsenkreuz ihrer Kurve.

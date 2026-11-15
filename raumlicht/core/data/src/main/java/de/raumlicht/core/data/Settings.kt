@@ -70,6 +70,18 @@ class Settings(ctx: Context) {
     val diary: StateFlow<String> = _diary.asStateFlow()
     fun setDiary(s: String) { prefs.edit().putString("diary", s).apply(); _diary.value = s }
 
+    /**
+     * Neu anfangen: Rekorde, Abi-Punkte, Fehler-Tagebuch, gesehene Erklärungen und das freigespielte Aussehen von Lux zurücksetzen.
+     * Ton-, Update-Einstellungen, Klausur-Plan und die gebaute Show bleiben.
+     */
+    fun resetProgress() {
+        val e = prefs.edit()
+        prefs.all.keys.filter { it.startsWith("intro_") || it.startsWith("exam_") }.forEach { e.remove(it) }
+        listOf("jamBest", "lageBest", "diary", "skin", "trail", "hat").forEach { e.remove(it) }
+        e.apply()
+        _jamBest.value = 0; _lageBest.value = 0; _exams.value = emptyMap(); _diary.value = ""; _skin.value = "pink"; _look.value = "none" to "none"
+    }
+
     /** Klausur-Planer: Termin und Kapitel (leer = kein Plan) */
     private val _plan = MutableStateFlow(prefs.getString("plan", "") ?: "")
     val plan: StateFlow<String> = _plan.asStateFlow()

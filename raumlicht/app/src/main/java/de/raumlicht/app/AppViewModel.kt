@@ -23,6 +23,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch { c.progress.record(levelId, stars, attempts); de.raumlicht.app.widget.DailyWidget.refresh(getApplication()); de.raumlicht.app.widget.LearnWidget.refresh(getApplication()) }
     }
 
+    /** Neu anfangen: Sterne, Rekorde und Tagebuch löschen – nur nach Rückfrage in den Einstellungen */
+    fun resetAll() {
+        settings.resetProgress()
+        viewModelScope.launch { c.progress.clear(); de.raumlicht.app.widget.DailyWidget.refresh(getApplication()); de.raumlicht.app.widget.LearnWidget.refresh(getApplication()) }
+    }
+
     // ------------------------------------------------------------ App-Update
     private val _update = MutableStateFlow<AppRelease?>(null)
     val availableUpdate: StateFlow<AppRelease?> = _update
