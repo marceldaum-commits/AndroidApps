@@ -66,6 +66,8 @@ object Routes {
     const val RESCUE = "rettung/{n}"
     fun rescue(n: Int) = "rettung/$n"
     const val ANDROMEDA = "andromeda"
+    const val STATION = "station"
+    const val SEASON = "gastplanet"
     fun level(id: String) = "level/$id"
 }
 
@@ -229,6 +231,12 @@ class MainActivity : ComponentActivity() {
                         else (de.kurvenflug.core.model.Andromeda.completed(allStars) + 1) to de.kurvenflug.core.model.Andromeda.novaParts(allStars)
                     },
                     onAndromeda = { nav.goOnce(Routes.ANDROMEDA) },
+                    season = remember(allStars) {
+                        val today = java.time.LocalDate.now()
+                        de.kurvenflug.core.model.Seasons.active(today)?.let { e -> e to de.kurvenflug.core.model.Seasons.done(e, de.kurvenflug.core.model.Seasons.year(today, e), allStars) }
+                    },
+                    onSeason = { nav.goOnce(Routes.SEASON) },
+                    onStation = { nav.goOnce(Routes.STATION) },
                     onCrew = { nav.goOnce(Routes.CREW) },
                     learning = {
                         val now = remember(progress) { System.currentTimeMillis() }
@@ -246,19 +254,32 @@ class MainActivity : ComponentActivity() {
                     if (Daily.isDaily(id)) id.removePrefix(Daily.PREFIX).toLongOrNull()?.let { Daily.forDay(it) }
                     else if (de.kurvenflug.core.model.Learning.isReview(id)) de.kurvenflug.core.model.Learning.levelFor(id)
                     else if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.levelFor(id)
+                    else if (de.kurvenflug.core.model.Seasons.isSeason(id)) de.kurvenflug.core.model.Seasons.levelFor(id)
                     else Levels.byId(id)
                 } ?: return@composable
                 val chapter = (if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.chapter(id.removePrefix(de.kurvenflug.core.model.Andromeda.PREFIX).substringBefore('-').toInt()) else null)
+                    ?: (if (de.kurvenflug.core.model.Seasons.isSeason(id)) id.removePrefix(de.kurvenflug.core.model.Seasons.PREFIX).split('-').let { p ->
+                        de.kurvenflug.core.model.SeasonEvent.entries.firstOrNull { it.key == p[0] }?.let { e -> de.kurvenflug.core.model.Seasons.chapter(e, p[1].toInt()) } } else null)
                     ?: Levels.chapters.firstOrNull { it.number == level.chapter }
                     ?: Chapter(0, "Tagesmission", "Jeden Tag neu", "🛰️", emptyList(), listOf(level))
                 val next = if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.next(id)
+                    else if (de.kurvenflug.core.model.Seasons.isSeason(id)) de.kurvenflug.core.model.Seasons.next(id)
                     else Levels.next(level.id)?.takeIf { it.chapter == level.chapter }
                 val opened = remember(id) { System.currentTimeMillis() }
                 LevelScreen(
                     level = level, chapter = chapter, probeColor = probeColor,
                     showIntro = level.number == 1 && chapter.intro.isNotEmpty() && !vm.settings.introSeen(chapter.number),
                     onIntroSeen = { vm.settings.markIntroSeen(chapter.number) },
-                    onSolved = { s, c, a -> vm.record(level.id, s, c, a, ((System.currentTimeMillis() - opened) / 1000).toInt()) },
+                    onSolved = { s, c, a ->
+                        vm.record(level.id, s, c, a, ((System.currentTimeMillis() - opened) / 1000).toInt())
+                        // Gast-Planet geschafft → Themen-Sticker ins Album
+                        if (de.kurvenflug.core.model.Seasons.isSeason(level.id)) {
+                            val p = level.id.removePrefix(de.kurvenflug.core.model.Seasons.PREFIX).split('-')
+                            val e = de.kurvenflug.core.model.SeasonEvent.entries.firstOrNull { it.key == p[0] }
+                            val y = p.getOrNull(1)?.toIntOrNull()
+                            if (e != null && y != null && de.kurvenflug.core.model.Seasons.done(e, y, allStars + (level.id to s))) vm.settings.addSticker(e.sticker.id)
+                        }
+                    },
                     onMiss = { a -> if (a == 3) vm.stuck(level.id, a, ((System.currentTimeMillis() - opened) / 1000).toInt()) },
                     onNext = next?.let { n -> {
                         nav.navigate(Routes.level(n.id)) { popUpTo(Routes.LEVEL) { inclusive = true } }
@@ -309,6 +330,20 @@ class MainActivity : ComponentActivity() {
                 de.kurvenflug.app.ui.story.HangarScreen(remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars) }, { nav.popSafe() },
                     gold = remember(stars) { de.kurvenflug.core.model.Season2.gold(Levels.chapters, stars) }, onCrew = { nav.goOnce(Routes.CREW) },
                     onAndromeda = { nav.goOnce(Routes.ANDROMEDA) })
+            }
+            composable(Routes.STATION) {
+                val rooms by vm.settings.rooms.collectAsStateWithLifecycle()
+                val decor by vm.settings.decor.collectAsStateWithLifecycle()
+                val owned by vm.settings.stickers.collectAsStateWithLifecycle()
+                de.kurvenflug.app.ui.story.StationScreen(allStars, rooms, decor, owned, rescued,
+                    onUnlock = { id -> de.kurvenflug.core.model.Station.rooms.first { it.id == id }.let { r -> if (de.kurvenflug.core.model.Station.canUnlock(r, allStars, rooms)) vm.settings.unlockRoom(id) } },
+                    onDecor = { r, sl, k -> vm.settings.setDecor(r, sl, k) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.SEASON) {
+                val today = remember { java.time.LocalDate.now() }
+                val e = de.kurvenflug.core.model.Seasons.active(today) ?: run { LaunchedEffect(Unit) { nav.popSafe() }; return@composable }
+                de.kurvenflug.app.ui.story.SeasonScreen(e, de.kurvenflug.core.model.Seasons.year(today, e), allStars,
+                    onLevel = { nav.goOnce(Routes.level(it.id)) }, onBack = { nav.popSafe() })
             }
             composable(Routes.ANDROMEDA) {
                 de.kurvenflug.app.ui.story.AndromedaScreen(allStars, onLevel = { nav.goOnce(Routes.level(it.id)) }, onBack = { nav.popSafe() })

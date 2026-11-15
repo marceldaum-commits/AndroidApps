@@ -122,6 +122,8 @@ class Settings(ctx: Context) {
     private val _duelsPlayed = MutableStateFlow(0)
     private val _storySeen = MutableStateFlow(false)
     private val _stickers = MutableStateFlow(emptySet<String>())
+    private val _rooms = MutableStateFlow(emptySet<Int>())
+    private val _decor = MutableStateFlow(emptyMap<String, String>())
 
     /** Werte des aktuellen Profils in die Flows laden */
     private fun load() {
@@ -133,6 +135,8 @@ class Settings(ctx: Context) {
         _duelsPlayed.value = prefs.getInt(k("duelsPlayed"), 0)
         _storySeen.value = prefs.getBoolean(k("storySeen"), false)
         _stickers.value = prefs.getStringSet(k("stickers"), emptySet()).orEmpty().toSet()
+        _rooms.value = prefs.getStringSet(k("rooms"), emptySet()).orEmpty().mapNotNull { it.toIntOrNull() }.toSet()
+        _decor.value = prefs.getStringSet(k("decor"), emptySet()).orEmpty().mapNotNull { e -> e.split('=', limit = 2).takeIf { it.size == 2 }?.let { it[0] to it[1] } }.toMap()
     }
     init { load() }
 
@@ -199,13 +203,23 @@ class Settings(ctx: Context) {
     val stickers: StateFlow<Set<String>> = _stickers.asStateFlow()
     fun addSticker(key: String) { _stickers.value = _stickers.value + key; prefs.edit().putStringSet(k("stickers"), _stickers.value).apply() }
 
+    /** Raumstation: freigeschaltete Räume und Sticker-Deko („Raum:Platz“ → Sticker-Schlüssel) */
+    val rooms: StateFlow<Set<Int>> = _rooms.asStateFlow()
+    val decor: StateFlow<Map<String, String>> = _decor.asStateFlow()
+    fun unlockRoom(id: Int) { _rooms.value = _rooms.value + id; prefs.edit().putStringSet(k("rooms"), _rooms.value.map { it.toString() }.toSet()).apply() }
+    fun setDecor(room: Int, slot: Int, sticker: String?) {
+        val key = "$room:$slot"
+        _decor.value = if (sticker == null) _decor.value - key else _decor.value + (key to sticker)
+        prefs.edit().putStringSet(k("decor"), _decor.value.map { "${it.key}=${it.value}" }.toSet()).apply()
+    }
+
     /** Rekord im Formel-Detektiv (richtige Fälle von 8) */
     var detectiveBest: Int
         get() = prefs.getInt(k("detectiveBest"), 0)
         set(v) = prefs.edit().putInt(k("detectiveBest"), v).apply()
 
     private val gameKeys = listOf("grade", "gradeAsked", "shape", "trail", "hat", "skin", "stormBest", "duelWins", "duelsPlayed",
-        "badgesSeen", "detectiveBest", "partsSeen", "storySeen", "stickers", "lastOpen", "goldSeen")
+        "badgesSeen", "detectiveBest", "partsSeen", "storySeen", "stickers", "lastOpen", "goldSeen", "rooms", "decor")
 
     private fun clearGameKeys() {
         val e = prefs.edit()

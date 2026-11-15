@@ -27,6 +27,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
   Etappen (gemischtes Üben); gerettete Freunde bilden die Crew und sprechen täglich wechselnd auf der Startseite.
 - Andromeda (nach fertiger Aurora): endlose, aus der Planetennummer erzeugte Galaxie, je Planet 3 schwere Level;
   die ersten 18 Planeten bauen das zweite Schiff „Nova“.
+- Raumstation: 6 Räume mit Sternenstaub (= alle gesammelten Sterne) freischalten, mit Stickern dekorieren, Crew wohnt dort.
+  Gast-Planeten zu Halloween, Advent, Ostern (Gaußsche Osterformel) und Sommerferien mit Themen-Sticker – jedes Jahr wieder.
 - Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
@@ -68,7 +70,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/59_sticker_gewonnen.png) | ![](screenshots/60_foto.png) | ![](screenshots/61_spieler.png) |
 | ![](screenshots/62_eltern.png) | ![](screenshots/63_bestenliste.png) | ![](screenshots/64_hangar_gold.png) |
 | ![](screenshots/65_crew.png) | ![](screenshots/66_notruf.png) | ![](screenshots/67_start_crew.png) |
-| ![](screenshots/68_andromeda.png) | | |
+| ![](screenshots/68_andromeda.png) | ![](screenshots/69_raumstation.png) | ![](screenshots/70_gastplanet.png) |
+| ![](screenshots/71_start_gastplanet.png) | | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

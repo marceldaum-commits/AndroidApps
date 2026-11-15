@@ -3,6 +3,13 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.16.0 – Zuhause im All
+- **🏠 Deine Raumstation**: Jeder Stern, den du sammelst, wird zu Sternenstaub ✨. Damit schaltest du Räume frei –
+  Labor, Garten, Werkstatt, Sternwarte, Lounge – und klebst deine Sticker an die Wände. Deine gerettete Crew zieht ein
+  und läuft dort herum. (🎒 Ich → Station)
+- **🎃 Gast-Planeten**: Zu Halloween, in der Adventszeit, rund um Ostern und in den Sommerferien kommt ein besonderer
+  Planet zu Besuch – 5 Etappen und ein Themen-Sticker. Keine Sorge: Er kommt jedes Jahr wieder.
+
 ## 0.15.0 – Andromeda
 - **🌌 Eine zweite Galaxie**: Ist die Aurora fertig, fliegt Volt mit dir nach Andromeda. Jeder Planet dort hat
   3 schwerere Etappen – mehr Asteroiden, kniffligere Zahlen.

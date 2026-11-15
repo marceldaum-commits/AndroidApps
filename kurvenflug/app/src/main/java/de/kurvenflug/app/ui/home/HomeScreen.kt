@@ -97,6 +97,10 @@ fun HomeScreen(
     /** Andromeda: aktueller Planet und Nova-Teile (null = noch nicht freigeschaltet) */
     andromeda: Pair<Int, Int>? = null,
     onAndromeda: (() -> Unit)? = null,
+    /** Gast-Planet der Jahreszeit (und ob schon geschafft), Raumstation */
+    season: Pair<de.kurvenflug.core.model.SeasonEvent, Boolean>? = null,
+    onSeason: (() -> Unit)? = null,
+    onStation: (() -> Unit)? = null,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(initialTab) }
     var picking by rememberSaveable { mutableStateOf(false) }
@@ -129,6 +133,7 @@ fun HomeScreen(
                                 Stat("⭐", "$stars / $maxStars", Q.Yellow, Modifier.weight(1f))
                                 Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
                             }
+                            season?.let { (e, done) -> de.kurvenflug.app.ui.story.SeasonCard(e, done) { onSeason?.invoke() } }
                             rescueCall?.let { m -> de.kurvenflug.app.ui.story.RescueCallCard(m) { onCrew?.invoke() } }
                             continueLevel?.let { l -> ContinueCard(l, chapters.firstOrNull { it.number == l.chapter }) { onLevel(l) } }
                             daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
@@ -167,7 +172,7 @@ fun HomeScreen(
                             }
                             if (onCrew != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("🎖️", "Crew", "$crewCount/${de.kurvenflug.core.model.Season2.crew.size} gerettet", Q.Green, Modifier.weight(1f), onCrew)
-                                Spacer(Modifier.weight(1f))
+                                ModeTile("🏠", "Station", "Räume & Deko", Q.Yellow, Modifier.weight(1f)) { onStation?.invoke() }
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, Modifier.weight(1f)) { onCodex?.invoke() }

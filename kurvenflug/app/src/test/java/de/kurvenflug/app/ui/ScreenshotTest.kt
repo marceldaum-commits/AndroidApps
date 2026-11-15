@@ -306,6 +306,22 @@ class ScreenshotTest {
         de.kurvenflug.app.ui.story.AndromedaScreen((1..5).flatMap { n -> (1..3).map { "andro-$n-$it" to 3 } }.toMap() + ("andro-6-1" to 2), {}, {})
     }
 
+    @Test fun station() = shot("69_raumstation", settle = 1500) {
+        de.kurvenflug.app.ui.story.StationScreen(allFound, unlocked = setOf(1, 2), owned = setOf("rocket", "unicorn*", "planet", "alien", "s_halloween"),
+            decor = mapOf("0:0" to "rocket", "0:1" to "unicorn*", "0:4" to "planet", "1:0" to "alien", "1:2" to "s_halloween"), rescued = setOf(1, 2, 3, 4),
+            onUnlock = {}, onDecor = { _, _, _ -> }, onBack = {})
+    }
+
+    @Test fun seasonPlanet() = shot("70_gastplanet", settle = 1500) {
+        val e = de.kurvenflug.core.model.SeasonEvent.HALLOWEEN
+        de.kurvenflug.app.ui.story.SeasonScreen(e, 2026, de.kurvenflug.core.model.Seasons.levels(e, 2026).take(2).associate { it.id to 3 }, {}, {})
+    }
+
+    @Test fun homeSeason() = shot("71_start_gastplanet") {
+        HomeScreen(allFound.values.sum(), Levels.all.size * 3, 40, 0, {}, Levels.chapters, allFound, {}, {}, grade = 7,
+            season = de.kurvenflug.core.model.SeasonEvent.ADVENT to false, onSeason = {}, andromeda = 6 to 5, onAndromeda = {}, partsFound = 18, onHangar = {})
+    }
+
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 

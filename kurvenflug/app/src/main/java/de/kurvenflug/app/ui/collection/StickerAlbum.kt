@@ -47,6 +47,12 @@ fun StickerAlbum(owned: Set<String>, onBack: () -> Unit) {
             Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Volt(VoltMood.HAPPY, size = 52.dp, speech = if (count == 0) "Schaff Level – manchmal gibt's danach einen Sticker als Überraschung! 🎁"
                     else "$count Sticker gesammelt${if (glitter > 0) ", davon $glitter mit Glitzer ✨" else ""}! Mit 3 ⭐ kommen sie öfter.")
+                // Jahreszeiten-Sticker (kommen jedes Jahr wieder)
+                Text("Jahreszeiten · ${de.kurvenflug.core.model.SeasonEvent.entries.count { it.sticker.id in owned }}/${de.kurvenflug.core.model.SeasonEvent.entries.size}",
+                    color = Q.Orange, fontWeight = FontWeight.Bold)
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    de.kurvenflug.core.model.SeasonEvent.entries.forEach { e -> StickerTile(e.sticker, e.sticker.id in owned, false, Modifier.weight(1f)) }
+                }
                 Rarity.entries.forEach { r ->
                     Text("${r.label} · ${Stickers.all.count { it.rarity == r && (it.id in owned || "${it.id}*" in owned) }}/${Stickers.all.count { it.rarity == r }}",
                         color = r.color(), fontWeight = FontWeight.Bold)
