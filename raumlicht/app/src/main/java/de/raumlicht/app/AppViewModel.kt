@@ -16,6 +16,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val stars: StateFlow<Map<String, Int>> = c.progress.all.map { l -> l.associate { it.levelId to it.stars } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyMap())
 
+    /** Heutiger Tag (Ortszeit) – daraus entsteht der Tagesgig */
+    fun today(): Long = java.time.LocalDate.now().toEpochDay()
+
     fun record(levelId: String, stars: Int, attempts: Int) {
         viewModelScope.launch { c.progress.record(levelId, stars, attempts) }
     }

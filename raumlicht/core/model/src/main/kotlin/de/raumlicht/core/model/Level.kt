@@ -6,6 +6,8 @@ enum class ControlKind { POINT, VECTOR, SCALAR }
 data class Control(
     val key: String, val name: String, val kind: ControlKind,
     val start: List<Int>, val min: List<Int>, val max: List<Int>, val color: String,
+    /** Anzeige = Wert · step + suffix (z. B. Winkel in 15°-Schritten) */
+    val step: Int = 1, val suffix: String = "",
 ) {
     val size get() = start.size
 }

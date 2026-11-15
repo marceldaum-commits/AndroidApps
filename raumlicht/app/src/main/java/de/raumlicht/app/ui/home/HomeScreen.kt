@@ -37,9 +37,11 @@ import kotlinx.coroutines.delay
 fun HomeScreen(
     chapters: List<Chapter>, stars: Map<String, Int>, onLevel: (String) -> Unit, onSettings: () -> Unit,
     updateVersion: String? = null, onUpdate: () -> Unit = {},
+    dailyDone: Boolean = false, jamBest: Int = 0, badges: Int = 0, badgeCount: Int = 0,
+    onDaily: () -> Unit = {}, onJam: () -> Unit = {}, onSheet: () -> Unit = {}, onBadges: () -> Unit = {},
     controller: StageController = remember { StageController() },
 ) {
-    val total = stars.values.sum(); val max = chapters.sumOf { it.levels.size } * 3
+    val total = chapters.sumOf { c -> c.levels.sumOf { stars[it.id] ?: 0 } }; val max = chapters.sumOf { it.levels.size } * 3
     val next = chapters.flatMap { it.levels }.firstOrNull { (stars[it.id] ?: 0) == 0 }
     LaunchedEffect(controller) { controller.setState(Showreel.scene()); controller.camera(az = 0.75, el = 0.3, dist = 17.0) }
     // Alle paar Sekunden ein kleiner Lichtblitz – die Bühne lebt
@@ -68,6 +70,7 @@ fun HomeScreen(
             }
         }
         if (updateVersion != null) item { de.raumlicht.app.ui.settings.UpdateBanner(updateVersion, onUpdate) }
+        item { ModeTiles(dailyDone, jamBest, badges, badgeCount, onDaily, onJam, onSheet, onBadges) }
         itemsIndexed(chapters) { _, c -> ChapterCard(c, stars, next?.id, onLevel) }
         item {
             Text("Analytische Geometrie der Oberstufe · keine Werbung · keine Anmeldung", Modifier.fillMaxWidth().padding(20.dp),

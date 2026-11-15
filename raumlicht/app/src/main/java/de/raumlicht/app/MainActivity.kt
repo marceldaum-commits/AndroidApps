@@ -25,12 +25,28 @@ import de.raumlicht.app.ui.settings.UpdateState
 import de.raumlicht.app.ui.theme.Q
 import de.raumlicht.app.ui.theme.RaumlichtTheme
 import de.raumlicht.core.model.Levels
+import de.raumlicht.core.model.Badges
+import de.raumlicht.core.model.Chapter
+import de.raumlicht.core.model.Daily
+import de.raumlicht.core.model.Gen
+import de.raumlicht.core.model.JamTopic
+import de.raumlicht.core.model.Sheet
+import de.raumlicht.app.ui.home.BadgesScreen
+import de.raumlicht.app.ui.home.JamPicker
+import de.raumlicht.app.ui.home.SheetScreen
+import androidx.compose.runtime.saveable.rememberSaveable
 import de.raumlicht.core.model.MusicMood
 
 object Routes {
     const val HOME = "start"
     const val LEVEL = "level/{id}"
     const val SETTINGS = "einstellungen"
+    const val DAILY = "tagesgig"
+    const val JAM_HOME = "jam"
+    const val JAM = "jam/{topic}"
+    const val SHEET = "spickzettel"
+    const val BADGES = "abzeichen"
+    fun jam(topic: String) = "jam/$topic"
     fun level(id: String) = "level/$id"
 }
 
@@ -78,14 +94,18 @@ class MainActivity : ComponentActivity() {
         // Musik passend zum Bildschirm: ruhig im Tourplan, treibend auf der Bühne
         val entry by nav.currentBackStackEntryAsState()
         val route = entry?.destination?.route
-        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route == Routes.LEVEL) MusicMood.FLIGHT else MusicMood.MENU) }
+        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route == Routes.LEVEL || route == Routes.JAM || route == Routes.DAILY) MusicMood.FLIGHT else MusicMood.MENU) }
         val stars by vm.stars.collectAsStateWithLifecycle()
         val update by vm.availableUpdate.collectAsStateWithLifecycle()
+        val jamBest by vm.settings.jamBest.collectAsStateWithLifecycle()
+        val badges = remember(stars, jamBest) { Badges.all(stars, jamBest) }
 
         NavHost(nav, Routes.HOME) {
             composable(Routes.HOME) {
                 HomeScreen(Levels.chapters, stars, { nav.goOnce(Routes.level(it)) }, { nav.goOnce(Routes.SETTINGS) },
-                    updateVersion = update?.version, onUpdate = { nav.goOnce(Routes.SETTINGS) })
+                    updateVersion = update?.version, onUpdate = { nav.goOnce(Routes.SETTINGS) },
+                    dailyDone = (stars[Daily.id(vm.today())] ?: 0) > 0, jamBest = jamBest, badges = badges.count { it.earned }, badgeCount = badges.size,
+                    onDaily = { nav.goOnce(Routes.DAILY) }, onJam = { nav.goOnce(Routes.JAM_HOME) }, onSheet = { nav.goOnce(Routes.SHEET) }, onBadges = { nav.goOnce(Routes.BADGES) })
             }
             composable(Routes.LEVEL) { e ->
                 val level = Levels.byId(e.arguments?.getString("id").orEmpty())
@@ -99,6 +119,28 @@ class MainActivity : ComponentActivity() {
                     onNext = next?.let { n -> { nav.navigate(Routes.level(n.id)) { popUpTo(Routes.HOME); launchSingleTop = true } } },
                     onBack = { nav.popSafe() })
             }
+            composable(Routes.DAILY) {
+                val day = remember { vm.today() }
+                val level = remember(day) { Daily.forDay(day) }
+                LevelScreen(level, Chapter(0, "Tagesgig", level.title, "Tagesgig", "📅", "orange", emptyList(), emptyList()), false, {},
+                    onSolved = { s, a -> vm.record(level.id, s, a) }, onNext = null, onBack = { nav.popSafe() },
+                    caption = "📅 Tagesgig · ${level.title}", doneLabel = "Fertig für heute ✓")
+            }
+            composable(Routes.JAM_HOME) { JamPicker(jamBest, { nav.goOnce(Routes.jam(it.name)) }, { nav.popSafe() }) }
+            composable(Routes.JAM) { e ->
+                val topic = JamTopic.entries.firstOrNull { it.name == e.arguments?.getString("topic") } ?: JamTopic.MIX
+                val session = rememberSaveable { System.currentTimeMillis() % 1_000_000 }
+                var n by rememberSaveable { mutableIntStateOf(0) }
+                var streak by rememberSaveable { mutableIntStateOf(0) }
+                val level = remember(session, n) { Gen.jam(topic, session, n) }
+                LevelScreen(level, Chapter(0, topic.title, topic.title, "Jam-Session", topic.emoji, topic.color, emptyList(), emptyList()), false, {},
+                    // Serie: nur Treffer beim ersten Versuch zählen
+                    onSolved = { s, _ -> streak = if (s == 3) streak + 1 else 0; vm.settings.recordJam(streak) },
+                    onNext = { n++ }, onBack = { nav.popSafe() },
+                    caption = "${topic.emoji} Jam · ${level.title} · Nr. ${n + 1}", badge = if (streak > 0) "🔥 $streak" else null)
+            }
+            composable(Routes.SHEET) { SheetScreen(Sheet.cards) { nav.popSafe() } }
+            composable(Routes.BADGES) { BadgesScreen(badges) { nav.popSafe() } }
             composable(Routes.SETTINGS) {
                 val sound by vm.settings.sound.collectAsStateWithLifecycle()
                 val vibration by vm.settings.vibration.collectAsStateWithLifecycle()

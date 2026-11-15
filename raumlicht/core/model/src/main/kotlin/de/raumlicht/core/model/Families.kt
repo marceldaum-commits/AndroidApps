@@ -128,7 +128,7 @@ object Families {
     fun param(
         id: String, chapter: Int, title: String, mission: String, a: V3, d: V3, tStar: Int, range: IntRange,
         tip: String, way: List<String>, bounds: Bounds = Bounds(), abi: Boolean = false, live: Boolean = false,
-        start: Int = 0, symbol: String = "t", vectorName: String = "d⃗", prefix: String = "g: x⃗ = ", lineLabel: String? = "g",
+        start: Int = 0, symbol: String = "t", vectorName: String = "d⃗", prefix: String = "g: x⃗ = ", lineLabel: String? = "g", hidden: Boolean = false,
         extras: (Phase) -> List<Obj> = { emptyList() },
     ): Level {
         val z = a + d * tStar
@@ -136,13 +136,13 @@ object Families {
             id, chapter, title, mission, bounds,
             controls = listOf(Control("t", symbol, ControlKind.SCALAR, listOf(start), listOf(range.first), listOf(range.last), "pink")),
             solution = mapOf("t" to listOf(tStar)), tip = tip, way = way, abi = abi,
-            formula = { v -> listOf(listOf(Txt(prefix), col(a), Txt(" + "), Num(Geo.num(v.int("t")), "t"), Txt(" · "), col(d)), listOf(Txt("Ziel Z${z.fmt()}"))) },
+            formula = { v -> listOf(listOf(Txt(prefix), col(a), Txt(" + "), Num(Geo.num(v.int("t")), "t"), Txt(" · "), col(d)), (if (hidden) emptyList() else listOf(Txt("Ziel Z${z.fmt()}")))) },
             objects = { v, ph ->
                 extras(ph) + listOfNotNull(
                     Stage.fullLine("g", a, d, bounds, "cyan", lineLabel),
                     Stage.point("A", a, "cyan", "A${a.fmt()}"),
                     Stage.vector("pfeil", a, a + d, "cyan", vectorName),
-                    Stage.point("ziel", z, "green", "Z${z.fmt()}", "target"),
+                    if (!hidden || ph == Phase.DONE) Stage.point("ziel", z, "green", "Z${z.fmt()}", "target") else null,
                     Stage.drone(if (ph == Phase.DONE) z else a, if (ph == Phase.DONE) "happy" else "idle"),
                     if (live && ph == Phase.AIM) Stage.point("marke", a + d * v.int("t"), "pink", style = "ghost") else null,
                 )
@@ -204,6 +204,7 @@ object Families {
     fun plane(
         id: String, chapter: Int, title: String, mission: String, points: List<Pair<String, V3>>, n: V3, c: Int,
         tip: String, way: List<String>, bounds: Bounds = Bounds(), abi: Boolean = false, maxC: Int = 24,
+        normal: V3? = null, normalHint: String = "", given: List<List<Part>> = emptyList(),
         extras: (Phase) -> List<Obj> = { emptyList() },
     ) = Level(
         id, chapter, title, mission, bounds,
@@ -214,7 +215,7 @@ object Families {
         solution = mapOf("n" to n.ints, "c" to listOf(c)), tip = tip, way = way, abi = abi,
         formula = { v ->
             val nn = v.getValue("n")
-            listOf(buildList {
+            given + listOf(buildList {
                 add(Txt("E: "))
                 nn.forEachIndexed { i, k ->
                     if (i > 0) add(Txt(if (k < 0) " − " else " + "))
@@ -234,9 +235,50 @@ object Families {
             if (nn.isZero) Outcome(false, "Mit n⃗ = (0|0|0) gibt es keine Ebene.")
             else {
                 val (good, bad) = points.partition { Geo.onPlane(it.second, nn, cc) }
-                if (bad.isEmpty()) Outcome(true, "Alle Punkte liegen in E – die Scheibe sitzt!")
+                if (bad.isEmpty() && normal != null && !Geo.parallel(nn, normal)) Outcome(false, normalHint)
+                else if (bad.isEmpty()) Outcome(true, "Die Scheibe sitzt genau richtig!")
                 else Outcome(false, (if (good.isEmpty()) "" else good.joinToString(", ") { it.first } + " ✓  ") + bad.joinToString(", ") { it.first } + " ✗ – setz die Punkte ein und prüfe die Gleichung.")
             }
         },
     )
+
+    private fun lineText(name: String, a: V3, d: V3, param: String = "t") = listOf(Txt("$name: x⃗ = "), col(a), Txt(" + $param · "), col(d))
+
+    /** Durchstoßpunkt: Gerade trifft Ebene n·x = rhs. */
+    fun pierce(
+        id: String, chapter: Int, title: String, mission: String, a: V3, d: V3, n: V3, rhs: Int,
+        tip: String, way: List<String>, planeText: String = Geo.planeText(n, rhs), abi: Boolean = false, extras: List<Obj> = emptyList(),
+    ): Level {
+        val s = a + d * Geo.linePlane(a, d, n, rhs.toDouble())!!
+        return sensor(id, chapter, title, mission, listOf(Ray("g", a, d, "cyan", s)), s,
+            listOf(Check("liegt auf g") { Geo.onLine(it, a, d) }, Check("liegt in E") { Geo.onPlane(it, n, rhs.toDouble()) }),
+            given = listOf(lineText("g", a, d), listOf(Txt("E: $planeText"))), tip = tip, way = way, abi = abi,
+            extras = { extras + Stage.plane("E", n, rhs.toDouble(), "violet", "E") })
+    }
+
+    /** Schnittpunkt zweier Geraden. */
+    fun crossing(id: String, chapter: Int, title: String, mission: String, a: V3, d1: V3, b: V3, d2: V3, tip: String, way: List<String>, abi: Boolean = false): Level {
+        val s = Geo.lineLine(a, d1, b, d2).point!!
+        return sensor(id, chapter, title, mission, listOf(Ray("g", a, d1, "cyan", s), Ray("h", b, d2, "yellow", s)), s,
+            listOf(Check("liegt auf g") { Geo.onLine(it, a, d1) }, Check("liegt auf h") { Geo.onLine(it, b, d2) }),
+            given = listOf(lineText("g", a, d1, "s"), lineText("h", b, d2)), tip = tip, way = way, abi = abi)
+    }
+
+    /** Eine einzelne Zahl ist gesucht (Winkel, Abstand, Fläche, Radius …). */
+    fun scalar(
+        id: String, chapter: Int, title: String, mission: String, name: String, range: IntRange, solution: Int, start: Int,
+        tip: String, way: List<String>, color: String = "pink", step: Int = 1, suffix: String = "", bounds: Bounds = Bounds(), abi: Boolean = false,
+        formula: (Int) -> List<List<Part>>, objects: (Int, Phase) -> List<Obj>, check: (Int) -> Outcome,
+    ) = Level(id, chapter, title, mission, bounds,
+        listOf(Control("a", name, ControlKind.SCALAR, listOf(start), listOf(range.first), listOf(range.last), color, step, suffix)), mapOf("a" to listOf(solution)),
+        tip, way, abi, formula = { formula(it.int("a")) },
+        objects = { v, ph -> objects(v.int("a"), ph) + Stage.drone(V3(bounds.max[0].toDouble(), bounds.min[1].toDouble(), 1.0), if (ph == Phase.DONE) "happy" else "idle") },
+        evaluate = { check(it.int("a")) })
+
+    /** Rückmeldung für Zahlen-Level: zu klein / zu groß, ohne die Lösung zu verraten. */
+    fun compare(value: Int, solution: Int, what: String, ok: String, beams: (Boolean) -> List<Beam> = { emptyList() }) = when {
+        value == solution -> Outcome(true, ok, beams(true))
+        value < solution -> Outcome(false, "$what ist größer. Rechne noch einmal nach.", beams(false))
+        else -> Outcome(false, "$what ist kleiner. Rechne noch einmal nach.", beams(false))
+    }
 }

@@ -1,5 +1,18 @@
 # Änderungen
 
+## 0.2.0 – Die große Tour
+- **4 neue Kapitel, 21 neue Gigs** (jetzt 55 in 10 Kapiteln):
+  - 📐 **Winkel** – zwischen Vektoren, Gerade und Ebene, zwei Ebenen. Der Winkelbogen leuchtet in der Bühne.
+  - 📏 **Abstände** – Lot auf eine Gerade, parallele Ebenen, windschiefe Geraden, nächster Punkt einer Flugbahn.
+  - 🪩 **Kugeln** – eine Discokugel aus Glas in 3D: Radius, Mittelpunkt, Laser trifft Kugel, Tangentialebene, Schnittkreis.
+  - 🎆 **Kreuzprodukt** – Flächen von Lichtsegeln, Volumen von Zelten, Schnittgerade zweier Ebenen.
+- **🎧 Jam-Session:** endlos neue Aufgaben mit immer anderen Zahlen – nach Thema oder bunt gemischt wie in der Klausur.
+  Wer beim ersten Versuch trifft, baut eine Serie auf.
+- **📅 Tagesgig:** jeden Tag eine neue Aufgabe.
+- **📓 Spickzettel:** alle Formeln der analytischen Geometrie zum Nachschlagen.
+- **🏅 Abzeichen:** 14 Auszeichnungen für Können – nicht fürs bloße Wiederkommen.
+- Zahlen-Aufgaben (Winkel, Abstand, Fläche, Volumen) sagen nach einem Fehlversuch, ob das Ergebnis größer oder kleiner ist.
+
 ## 0.1.3 – Bühne sichtbar
 - **Behoben:** Die 3D-Bühne blieb dunkel, weil sie intern keine Höhe bekam. Jetzt füllt sie ihre Fläche.
 - Hat die Bühne trotzdem einmal keine Größe, meldet sie das.

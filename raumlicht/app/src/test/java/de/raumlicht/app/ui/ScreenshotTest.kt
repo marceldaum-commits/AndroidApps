@@ -64,7 +64,7 @@ class ScreenshotTest {
 
     private val someStars = Levels.all.take(8).mapIndexed { i, l -> l.id to (3 - i % 3 % 2) }.toMap()
 
-    @Test fun home() = shot("01_start", "start") { HomeScreen(Levels.chapters, someStars, {}, {}) }
+    @Test fun home() = shot("01_start", "start") { HomeScreen(Levels.chapters, someStars, {}, {}, jamBest = 7, badges = 3, badgeCount = 14) }
     @Test fun intro() = shot("02_lux_erklaert", "start", prepare = { it.onNodeWithText("Weiter ›").performClick() }) { IntroOverlay(Levels.chapters[0]) {} }
     @Test fun point() = level("03_punkt", "1-2", values = mapOf("P" to listOf(2, 3, 0)))
     @Test fun pointMiss() = level("04_daneben", "1-2", values = mapOf("P" to listOf(2, 3, 0)), go = true)
@@ -78,6 +78,28 @@ class ScreenshotTest {
     @Test fun normal() = level("12_normalenvektor", "5-4", values = mapOf("d" to listOf(1, 0, -2)))
     @Test fun mirror() = level("13_spiegelpunkt", "6-3", "6-3-fertig", solve = true)
     @Test fun bank() = level("14_ueber_bande", "6-5", "6-5-fertig", solve = true)
+    @Test fun angle() = level("16_winkel", "7-2")
+    @Test fun skewDistance() = level("17_abstand_windschief", "8-4", "8-4-fertig", solve = true)
+    @Test fun discoBall() = level("18_discokugel", "9-1", values = mapOf("a" to listOf(2)))
+    @Test fun ballHit() = level("19_kugel_treffer", "9-3", "9-3-fertig", solve = true)
+    @Test fun dome() = level("20_lichtkuppel", "9-5", values = mapOf("a" to listOf(2)))
+    @Test fun sail() = level("21_lichtsegel", "10-1", "10-1-fertig", solve = true)
+    @Test fun tent() = level("22_zeltvolumen", "10-3")
+    @Test fun jamPicker() = shot("23_jam_session", "start") { de.raumlicht.app.ui.home.JamPicker(7, {}, {}) }
+    @Test fun jamLevel() = shot("24_jam_aufgabe", "jam") {
+        val l = de.raumlicht.core.model.Gen.jam(de.raumlicht.core.model.JamTopic.MIX, 1, 0)
+        LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Alles gemischt", "Alles gemischt", "Jam-Session", "🎧", "pink", emptyList(), emptyList()), false, {}, { _, _ -> }, {}, {},
+            caption = "🎧 Jam · ${l.title} · Nr. 4", badge = "🔥 3")
+    }
+    @Test fun daily() = shot("25_tagesgig", "tag") {
+        val l = de.raumlicht.core.model.Daily.forDay(20_772)
+        LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Tagesgig", l.title, "Tagesgig", "📅", "orange", emptyList(), emptyList()), false, {}, { _, _ -> }, null, {},
+            caption = "📅 Tagesgig · ${l.title}", doneLabel = "Fertig für heute ✓")
+    }
+    @Test fun sheet() = shot("26_spickzettel", "start") { de.raumlicht.app.ui.home.SheetScreen(de.raumlicht.core.model.Sheet.cards) {} }
+    @Test fun badges() = shot("27_abzeichen", "start") {
+        de.raumlicht.app.ui.home.BadgesScreen(de.raumlicht.core.model.Badges.all(Levels.all.take(30).associate { it.id to 3 } + mapOf("tag-1" to 3, "tag-2" to 2, "tag-3" to 3), 6)) {}
+    }
     @Test fun settings() = shot("15_einstellungen", "start") {
         SettingsScreen(true, {}, true, {}, true, {}, true, {}, "0.1.0", UpdateState.Idle, {})
     }

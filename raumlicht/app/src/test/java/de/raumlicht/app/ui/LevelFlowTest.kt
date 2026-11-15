@@ -81,4 +81,22 @@ class LevelFlowTest {
         rule.mainClock.advanceTimeBy(300)
         assertTrue(stage.lastState!!.contains("\"id\":\"marke\",\"type\":\"point\",\"p\":[0.0,0.0,0.0]"))
     }
+
+    @Test fun angleStepperCountsInFifteenDegreeSteps() {
+        play("7-1")
+        tap("plus-a-0", 3)
+        rule.mainClock.advanceTimeBy(600)
+        rule.onAllNodesWithText("45°")[0].assertExists()
+        go()
+        assertEquals(listOf(3 to 1), solved)
+    }
+
+    @Test fun wrongNumberSaysBiggerOrSmaller() {
+        play("9-1")                                               // Radius startet bei 1, richtig ist 3
+        go()
+        rule.onNodeWithText("Der Radius ist größer. Rechne noch einmal nach.").assertExists()
+        assertTrue(stage.lastState!!.contains("\"type\":\"sphere\""))
+        tap("plus-a-0", 2); go()
+        assertEquals(listOf(2 to 2), solved)
+    }
 }

@@ -91,3 +91,14 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
   https://www.nibis.de/uploads/nlq-mey/Mathe-SekII/KC%20Materialien/33%20OM%20Raumanschauung%20und%20Koordinatisierung%20eA.pdf ·
   https://www.preprints.org/manuscript/202508.1502 · https://par.nsf.gov/biblio/10346131 ·
   https://mpfs.de/app/uploads/2026/07/JIMplus-2026_PDF.pdf · https://www.cio.de/article/4090945/chatgpt-und-andere-ki-tools-alltagswerkzeug-fuer-jugend.html
+
+## Gemischtes Üben (Nov. 2026, für die Jam-Session in Raumlicht 0.2.0)
+
+- **Verschachteltes Üben** (Aufgabenarten gemischt statt blockweise) brachte in einer vorregistrierten, cluster-randomisierten Studie
+  (Rohrer u. a. 2019/2020, 54 Klassen, 787 Lernende, 7. Klasse, vier Monate) im unangekündigten Test 61 % statt 38 % richtige Lösungen
+  (d = 0,83; erfüllt die Standards des What Works Clearinghouse ohne Einschränkung). Einschränkung: nur Arbeitsblätter, ein US-Schulbezirk,
+  jüngere Lernende als unsere Zielgruppe – eine Wiederholungsstudie läuft.
+  → Jam-Session „Alles gemischt“: Man muss zuerst erkennen, *welches* Verfahren gefragt ist – wie in der Klausur. Daneben Themen einzeln zum Einüben.
+- Dazu passend: Serie nur für Treffer beim ersten Versuch (Rechnen statt Raten), ohne Zeitdruck und ohne Strafe; Abzeichen für Können, nicht fürs Wiederkommen.
+- Quellen: https://ies.ed.gov/ncee/wwc/Study/88770 · https://zendy.io/pdf-viewer/10.1037/edu0000367 ·
+  https://ies.ed.gov/use-work/awards/systematic-replication-study-interleaved-mathematics-practice

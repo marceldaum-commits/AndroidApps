@@ -28,6 +28,15 @@ class SceneDumpTest {
             level("5-3", mapOf("n" to listOf(1, 2, 2), "c" to listOf(6))),
             level("5-4", mapOf("d" to listOf(1, 0, -2))),
             level("6-3", phase = Phase.DONE, extra = party),
+            level("7-2"),
+            level("8-4", phase = Phase.DONE, extra = party),
+            level("9-1", mapOf("a" to listOf(2))),
+            level("9-3", phase = Phase.DONE, extra = party),
+            level("9-5", mapOf("a" to listOf(2))),
+            level("10-1", phase = Phase.DONE, extra = party),
+            level("10-3"),
+            Gen.jam(JamTopic.MIX, 1, 0).let { shot("jam", it.scene(it.start, Phase.AIM)) },
+            Daily.forDay(20_772).let { shot("tag", it.scene(it.start, Phase.AIM)) },
             level("6-5", phase = Phase.DONE, extra = ""","actions":[{"fire":{"from":[4,1,1],"to":[0,5,3],"color":"cyan","ms":300,"hit":false},"wait":0.35},{"fire":{"from":[0,5,3],"to":[2,7,4],"color":"cyan","ms":300},"wait":0.5}]"""),
         )
         File("build").mkdirs()

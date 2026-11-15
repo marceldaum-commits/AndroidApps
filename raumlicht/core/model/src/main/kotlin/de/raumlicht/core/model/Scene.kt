@@ -51,6 +51,25 @@ object Stage {
         Obj(id, "plane", corners = corners.map { it.list }, color = color, label = label)
     fun edges(id: String, segments: List<Pair<V3, V3>>, color: String = "white", faces: List<List<V3>>? = null) =
         Obj(id, "edges", segments = segments.map { listOf(it.first.list, it.second.list) }, faces = faces?.map { f -> f.map { it.list } }, color = color)
+    /** Kugel mit Mittelpunkt und Radius (Discokugel) */
+    fun sphere(id: String, m: V3, r: Double, color: String = "cyan", label: String? = null) =
+        Obj(id, "sphere", p = m.list, rhs = r, color = color, label = label)
+    /** Winkelbogen zwischen den Richtungen u und v, von o aus – als Linienzug */
+    fun arc(id: String, o: V3, u: V3, v: V3, radius: Double = 1.2, color: String = "yellow"): Obj {
+        val a = u * (1 / u.length); val w0 = v * (1 / v.length) - a * (a dot (v * (1 / v.length)))
+        val pts = if (w0.isZero) listOf(o + a * radius, o + a * radius) else {
+            val w = w0 * (1 / w0.length); val th = kotlin.math.acos(((u dot v) / (u.length * v.length)).coerceIn(-1.0, 1.0))
+            (0..14).map { o + (a * kotlin.math.cos(th * it / 14) + w * kotlin.math.sin(th * it / 14)) * radius }
+        }
+        return edges(id, pts.zipWithNext(), color)
+    }
+    /** Kreis in der Ebene senkrecht zu n um m – als Linienzug */
+    fun circle(id: String, m: V3, n: V3, radius: Double, color: String = "yellow"): Obj {
+        val k = n * (1 / n.length); val h = if (kotlin.math.abs(k.x) < 0.9) V3(1, 0, 0) else V3(0, 1, 0)
+        val u = (k cross h).let { it * (1 / it.length) }; val w = k cross u
+        val pts = (0..40).map { val t = 2 * Math.PI * it / 40; m + (u * kotlin.math.cos(t) + w * kotlin.math.sin(t)) * radius }
+        return edges(id, pts.zipWithNext(), color)
+    }
     fun drone(p: V3, mood: String = "idle") = Obj("lux", "drone", p = p.list, mood = mood)
     fun handle(id: String, p: V3, color: String) = Obj(id, "handle", p = p.list, color = color)
 }

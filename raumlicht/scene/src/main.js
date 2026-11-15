@@ -382,6 +382,35 @@ makers.edges = (s) => {
   };
 };
 
+// Kugel: Discokugel aus Glas mit Längen- und Breitenkreisen; der Radius ändert sich weich
+makers.sphere = (s) => {
+  const g = new THREE.Group(), c = s.color ?? 'cyan';
+  const mat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, side: THREE.DoubleSide,
+    uniforms: { c: { value: col(c) }, t: { value: 0 } },
+    vertexShader: 'varying vec3 n, v, lp; void main(){ lp = position; vec4 w = modelMatrix*vec4(position,1.); n = normalize(mat3(modelMatrix)*normal); v = normalize(cameraPosition-w.xyz); gl_Position = projectionMatrix*viewMatrix*w; }',
+    fragmentShader: `varying vec3 n, v, lp; uniform vec3 c; uniform float t;
+      void main(){ float fr = pow(clamp(1.-abs(dot(normalize(n), normalize(v))), 0., 1.), 2.2);
+        vec3 q = normalize(lp); float lon = atan(q.z, q.x) + t*0.25, lat = asin(clamp(q.y, -1., 1.));
+        vec2 cell = vec2(lon, lat) * 7.6394; vec2 f = abs(fract(cell) - .5);
+        float tile = 1.0 - smoothstep(.40, .47, max(f.x, f.y));
+        float spark = step(.93, fract(sin(dot(floor(cell), vec2(12.9898, 78.233))) * 43758.5453 + t*0.6));
+        vec3 colr = c*(0.10 + fr*1.6 + tile*0.16) + vec3(1.)*spark*tile*0.9;
+        gl_FragColor = vec4(colr, 0.10 + fr*0.55 + tile*0.07 + spark*tile*0.5); }`,
+  });
+  const ball = new THREE.Mesh(new THREE.SphereGeometry(1, 48, 32), mat); ball.renderOrder = 4;
+  const ring = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(Array.from({ length: 64 }, (_, i) => new THREE.Vector3(Math.cos(i / 64 * Math.PI * 2), 0, Math.sin(i / 64 * Math.PI * 2)))),
+    new THREE.LineBasicMaterial({ color: hdr(c, 1.6), transparent: true, opacity: 0.7 }));
+  g.add(ball, ring);
+  const cur = V(s.p); let tgt = cur.clone(), r = s.rhs, tr = s.rhs, lab = null, labText = null;
+  return {
+    g,
+    update(n) { tgt = V(n.p); tr = n.rhs; if (n.label !== labText) { if (lab) g.parent && g.remove(lab); lab = n.label ? label(n.label, hex(c)) : null; labText = n.label; if (lab) world.add(lab); } },
+    tick(dt, t) { damp(cur, tgt, dt); r += (tr - r) * (1 - Math.exp(-10 * dt)); ball.position.copy(cur); ball.scale.setScalar(r); ring.position.copy(cur); ring.scale.setScalar(r); mat.uniforms.t.value = t;
+      if (lab) lab.position.copy(cur).add(new THREE.Vector3(0, r + 0.4, 0)); },
+  };
+};
+
 // Lux, die Lichtdrohne
 makers.drone = (s) => {
   const g = new THREE.Group(), body = new THREE.Group(); g.add(body); body.scale.setScalar(1.75);

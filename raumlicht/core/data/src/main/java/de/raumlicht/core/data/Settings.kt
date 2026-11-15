@@ -28,6 +28,16 @@ class Settings(ctx: Context) {
     fun introSeen(chapter: Int) = prefs.getBoolean("intro_$chapter", false)
     fun markIntroSeen(chapter: Int) = prefs.edit().putBoolean("intro_$chapter", true).apply()
 
+    /** Jam-Session: längste Serie von Treffern beim ersten Versuch */
+    private val _jamBest = MutableStateFlow(prefs.getInt("jamBest", 0))
+    val jamBest: StateFlow<Int> = _jamBest.asStateFlow()
+    /** @return true bei neuem Rekord */
+    fun recordJam(streak: Int): Boolean {
+        if (streak <= _jamBest.value) return false
+        prefs.edit().putInt("jamBest", streak).apply(); _jamBest.value = streak
+        return true
+    }
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

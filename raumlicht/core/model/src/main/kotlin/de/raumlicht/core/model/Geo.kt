@@ -44,6 +44,19 @@ object Geo {
     }
     fun num(v: Int) = num(v.toDouble())
 
+    /** Winkel zwischen zwei Vektoren in Grad */
+    fun angle(a: V3, b: V3) = Math.toDegrees(kotlin.math.acos(((a dot b) / (a.length * b.length)).coerceIn(-1.0, 1.0)))
+    /** „x₁ + 2x₂ − x₃ = 6“ */
+    fun planeText(n: V3, rhs: Int): String {
+        val names = listOf("x₁", "x₂", "x₃"); val sb = StringBuilder()
+        n.ints.forEachIndexed { i, k ->
+            if (k == 0) return@forEachIndexed
+            val a = kotlin.math.abs(k); val f = if (a == 1) "" else a.toString()
+            sb.append(if (sb.isEmpty()) (if (k < 0) "−" else "") else if (k < 0) " − " else " + ").append(f).append(names[i])
+        }
+        return "$sb = ${num(rhs)}"
+    }
+
     fun parallel(a: V3, b: V3) = !a.isZero && !b.isZero && (a cross b).length < EPS
     fun sameDirection(a: V3, b: V3) = parallel(a, b) && (a dot b) > 0
 

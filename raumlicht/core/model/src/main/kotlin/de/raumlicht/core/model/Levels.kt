@@ -4,7 +4,7 @@ import de.raumlicht.core.model.Families.col
 import de.raumlicht.core.model.Part.Num
 import de.raumlicht.core.model.Part.Txt
 
-/** Alle Gigs: sechs Kapitel analytische Geometrie, vom Punkt im Raum bis zur Spiegelung an der Ebene. */
+/** Alle Gigs: zehn Kapitel analytische Geometrie, vom Punkt im Raum bis zu Kugeln und Volumen (Kapitel 7–10 in MoreLevels). */
 object Levels {
     private fun p(x: Int, y: Int, z: Int) = V3(x, y, z)
     private val FLOOR = p(0, 0, 1)
@@ -131,12 +131,8 @@ object Levels {
     )
 
     // ───────────────────────── 4 · Lagebeziehungen ─────────────────────────
-    private fun crossing(id: String, title: String, mission: String, a: V3, d1: V3, b: V3, d2: V3, tip: String, way: List<String>, abi: Boolean = false): Level {
-        val s = Geo.lineLine(a, d1, b, d2).point!!
-        return Families.sensor(id, 4, title, mission, listOf(Ray("g", a, d1, "cyan", s), Ray("h", b, d2, "yellow", s)), s,
-            listOf(Check("liegt auf g") { Geo.onLine(it, a, d1) }, Check("liegt auf h") { Geo.onLine(it, b, d2) }),
-            given = listOf(lineText("g", a, d1, "s"), lineText("h", b, d2)), tip = tip, way = way, abi = abi)
-    }
+    private fun crossing(id: String, title: String, mission: String, a: V3, d1: V3, b: V3, d2: V3, tip: String, way: List<String>, abi: Boolean = false) =
+        Families.crossing(id, 4, title, mission, a, d1, b, d2, tip, way, abi)
     private val skewA = p(0, 6, 1); private val skewD = p(2, -1, 1); private val skewB = p(7, 1, 0)
     private val ch4 = listOf(
         crossing("4-1", "Kreuzung", "Zwei Laser, ein Treffpunkt. Wo kreuzen sich g und h? Dort gehört der Sensor hin.",
@@ -179,13 +175,7 @@ object Levels {
 
     // ───────────────────────── 5 · Ebenen ─────────────────────────
     private fun pierce(id: String, title: String, mission: String, a: V3, d: V3, n: V3, rhs: Int, planeText: String, tip: String, way: List<String>,
-                       abi: Boolean = false, extras: List<Obj> = emptyList()): Level {
-        val s = a + d * Geo.linePlane(a, d, n, rhs.toDouble())!!
-        return Families.sensor(id, 5, title, mission, listOf(Ray("g", a, d, "cyan", s)), s,
-            listOf(Check("liegt auf g") { Geo.onLine(it, a, d) }, Check("liegt in E") { Geo.onPlane(it, n, rhs.toDouble()) }),
-            given = listOf(lineText("g", a, d), listOf(Txt("E: $planeText"))), tip = tip, way = way, abi = abi,
-            extras = { extras + Stage.plane("E", n, rhs.toDouble(), "violet", "E") })
-    }
+                       abi: Boolean = false, extras: List<Obj> = emptyList()) = Families.pierce(id, 5, title, mission, a, d, n, rhs, tip, way, planeText, abi, extras)
     private val ch5 = listOf(
         pierce("5-1", "Glasdecke", "Über der Bühne hängt eine Glasscheibe E. Wo stößt der Laser durch? Das ist der Durchstoßpunkt.",
             p(1, 1, 0), p(1, 2, 2), FLOOR, 4, "x₃ = 4",
@@ -314,7 +304,7 @@ object Levels {
             "Die große Bühne. Hier zählt jeder Winkel.",
             "Skalarprodukt null heißt senkrecht. Damit findest du Lote, Abstände und Spiegelbilder.",
             "Das ist Abi-Niveau – und du bist bereit."), ch6),
-    )
+    ) + MoreLevels.chapters
     val all = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }
     fun next(id: String): Level? = all.getOrNull(all.indexOfFirst { it.id == id } + 1)

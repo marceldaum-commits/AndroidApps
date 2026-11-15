@@ -1,8 +1,9 @@
 // Rendert Szenen-Zustände zu PNGs: node test/shot.mjs <states.json> <outDir> [width height]
 import { createRequire } from 'module'; const { chromium } = createRequire(import.meta.url)('playwright');
 import fs from 'fs'; import path from 'path'; import { pathToFileURL } from 'url';
-const [,, statesFile, outDir, W = '400', H = '470'] = process.argv;
-const states = JSON.parse(fs.readFileSync(statesFile, 'utf8'));
+const [,, statesFile, outDir, W = '400', H = '470', only = ''] = process.argv;
+// Optional: nur Bilder, deren Name zum Muster passt (z. B. '^(9-|jam)')
+const states = JSON.parse(fs.readFileSync(statesFile, 'utf8')).filter((s) => !only || new RegExp(only).test(s.name));
 fs.mkdirSync(outDir, { recursive: true });
 const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const page = await browser.newPage({ viewport: { width: +W, height: +H }, deviceScaleFactor: 2 });

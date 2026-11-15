@@ -45,7 +45,7 @@ fun SettingsScreen(
                         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: analytische Geometrie der Oberstufe – Punkte und Vektoren im Raum, Geraden in Parameterform, " +
                         "Lagebeziehungen, Ebenen in Koordinatenform, Durchstoßpunkte, Normalenvektor, Skalarprodukt, Lotfußpunkt, " +
-                        "Abstand und Spiegelung. Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)
+                        "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen. Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)
                     Text("Version $installed", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                 }
             }

@@ -52,6 +52,11 @@ fun LevelScreen(
     level: Level, chapter: Chapter, showIntro: Boolean, onIntroSeen: () -> Unit,
     onSolved: (stars: Int, attempts: Int) -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit,
     initial: Values? = null, controller: StageController = remember(level.id) { StageController() },
+    /** Eigene Überschrift (Jam-Session, Tagesgig) statt „Gig 1-2“ */
+    caption: String? = null,
+    /** Kleine Anzeige rechts oben, z. B. die Serie in der Jam-Session */
+    badge: String? = null,
+    doneLabel: String = "Tour geschafft! 🏆",
 ) {
     var values by remember(level.id) { mutableStateOf(initial ?: level.start) }
     var phase by remember(level.id) { mutableStateOf(Phase.AIM) }
@@ -116,11 +121,12 @@ fun LevelScreen(
             Row(Modifier.fillMaxWidth().padding(end = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
                 Column(Modifier.weight(1f)) {
-                    Text("${chapter.emoji} Gig ${level.id} · ${chapter.topic}", style = MaterialTheme.typography.labelMedium, color = accent)
+                    Text(caption ?: "${chapter.emoji} Gig ${level.id} · ${chapter.topic}", style = MaterialTheme.typography.labelMedium, color = accent)
                     Text(level.title, style = MaterialTheme.typography.titleMedium, maxLines = 1)
                 }
                 if (level.abi) Text("🎓 Abi", Modifier.padding(end = 8.dp).background(Q.Orange.copy(alpha = 0.2f), RoundedCornerShape(8.dp)).border(1.dp, Q.Orange, RoundedCornerShape(8.dp)).padding(horizontal = 8.dp, vertical = 3.dp),
                     color = Q.Orange, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                if (badge != null) Text(badge, Modifier.padding(end = 8.dp), color = Q.Orange, fontWeight = FontWeight.Black, fontSize = 15.sp)
                 StarRow(if (phase == Phase.DONE) stars else Level.stars(attempts + 1, usedTip), lit = phase == Phase.DONE)
             }
             // Bühne
@@ -149,7 +155,7 @@ fun LevelScreen(
                     Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 3.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                         Text(c.name, Modifier.width(30.dp), color = stageColor(c.color), fontWeight = FontWeight.Black, fontSize = 18.sp, textAlign = TextAlign.Center)
                         repeat(c.size) { i ->
-                            Stepper(if (c.kind == ControlKind.SCALAR) null else X[i], values.getValue(c.key)[i], stageColor(c.color), "${c.key}-$i", Modifier.weight(1f),
+                            Stepper(if (c.kind == ControlKind.SCALAR) null else X[i], values.getValue(c.key)[i], Geo.num(values.getValue(c.key)[i] * c.step) + c.suffix, stageColor(c.color), "${c.key}-$i", Modifier.weight(1f),
                                 canDown = values.getValue(c.key)[i] > c.min[i], canUp = values.getValue(c.key)[i] < c.max[i]) { d ->
                                 change(c.key, values.getValue(c.key).toMutableList().also { it[i] += d })
                             }
@@ -168,7 +174,7 @@ fun LevelScreen(
                 }
                 Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     NeonButton({ values = level.start; attempts = 0; usedTip = false; phase = Phase.AIM; says = level.mission to LuxMood.IDLE }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Neu") }
-                    NeonButton(onNext ?: onBack, Modifier.weight(2f).pulse(true, 0.025f), color = Q.Green) { Text(if (onNext != null) "Weiter ▸" else "Tour geschafft! 🏆", fontWeight = FontWeight.Black, fontSize = 18.sp) }
+                    NeonButton(onNext ?: onBack, Modifier.weight(2f).pulse(true, 0.025f), color = Q.Green) { Text(if (onNext != null) "Weiter ▸" else doneLabel, fontWeight = FontWeight.Black, fontSize = 18.sp) }
                 }
             }
         }
@@ -192,13 +198,13 @@ fun StarRow(n: Int, lit: Boolean, size: Int = 20) {
 }
 
 @Composable
-private fun Stepper(label: String?, value: Int, color: Color, tag: String, modifier: Modifier, canDown: Boolean, canUp: Boolean, onStep: (Int) -> Unit) {
+private fun Stepper(label: String?, value: Int, text: String, color: Color, tag: String, modifier: Modifier, canDown: Boolean, canUp: Boolean, onStep: (Int) -> Unit) {
     Row(modifier.height(46.dp).background(Q.Deep, RoundedCornerShape(14.dp)).border(1.dp, color.copy(alpha = 0.5f), RoundedCornerShape(14.dp)), verticalAlignment = Alignment.CenterVertically) {
         StepButton("−", color, canDown, "minus-$tag") { onStep(-1) }
         Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
             if (label != null) Text(label, fontSize = 10.sp, color = Q.Muted, lineHeight = 10.sp)
             AnimatedContent(value, transitionSpec = { (slideInVertically { if (targetState > initialState) it else -it } + fadeIn()) togetherWith fadeOut() }, label = "wert") {
-                Text(Geo.num(it), fontSize = 19.sp, fontWeight = FontWeight.Black, color = color, lineHeight = 20.sp)
+                Text(if (it == value) text else Geo.num(it), fontSize = 19.sp, fontWeight = FontWeight.Black, color = color, lineHeight = 20.sp)
             }
         }
         StepButton("+", color, canUp, "plus-$tag") { onStep(1) }
