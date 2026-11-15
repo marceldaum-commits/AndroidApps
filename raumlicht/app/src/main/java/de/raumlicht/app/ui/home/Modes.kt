@@ -53,6 +53,7 @@ import de.raumlicht.app.ui.lux.LuxMood
 import de.raumlicht.app.ui.stage.LocalLuxSkin
 import de.raumlicht.app.ui.stage.Stage
 import de.raumlicht.app.ui.stage.StageController
+import de.raumlicht.app.ui.stage.StageFrame
 import de.raumlicht.app.ui.theme.Q
 import de.raumlicht.core.model.*
 import kotlinx.coroutines.delay
@@ -111,15 +112,23 @@ fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
 // ───────────────────────── Abi-Simulation ─────────────────────────
 
 @Composable
-fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam) -> Unit, onBack: () -> Unit) {
+fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam, Boolean) -> Unit, onBack: () -> Unit) {
+    var timed by rememberSaveable { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Abi-Simulation", onBack)
         Speech("Eine Aufgabe, mehrere Teile – wie im Abitur. Volle Punkte gibt es nur beim ersten Versuch.")
+        Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+                Text("⏱ Auf Zeit spielen", fontWeight = FontWeight.Bold)
+                Text("Freiwillig: ${Exam.clock(Exam.seconds(exams.first()))} Minuten je Aufgabe. Läuft die Zeit ab, zählt, was bis dahin gelöst ist.", color = Q.Muted, fontSize = 12.sp)
+            }
+            Switch(timed, { timed = it }, Modifier.testTag("zeit"))
+        }
         LazyColumn(contentPadding = PaddingValues(14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(exams) { _, e ->
                 val interaction = remember { MutableInteractionSource() }
                 Column(Modifier.fillMaxWidth().pressBounce(interaction).clip(RoundedCornerShape(20.dp)).background(Brush.horizontalGradient(listOf(Q.Orange.copy(alpha = 0.22f), Q.Deep)))
-                    .border(1.5.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(20.dp)).clickable(interaction, null) { onExam(e) }.padding(14.dp)) {
+                    .border(1.5.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(20.dp)).clickable(interaction, null) { onExam(e, timed) }.padding(14.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(e.emoji, fontSize = 28.sp)
                         Text(e.title, Modifier.weight(1f).padding(start = 10.dp), style = MaterialTheme.typography.titleMedium)
@@ -135,21 +144,29 @@ fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam) -> Unit
 
 /** Spielt die Teilaufgaben nacheinander und wertet am Ende in Bewertungseinheiten aus. */
 @Composable
-fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit) {
+fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, timed: Boolean = false) {
     var idx by rememberSaveable(exam.id) { mutableIntStateOf(0) }
     var got by rememberSaveable(exam.id) { mutableStateOf(listOf<Int>()) }
+    var left by rememberSaveable(exam.id) { mutableIntStateOf(Exam.seconds(exam)) }
+    var timeUp by rememberSaveable(exam.id) { mutableStateOf(false) }
+    // Zeit-Modus: Die Uhr läuft nur, solange noch Teilaufgaben offen sind
+    LaunchedEffect(timed, idx >= exam.parts.size) {
+        while (timed && idx < exam.parts.size && left > 0) { delay(1000); left-- }
+        if (timed && left <= 0 && idx < exam.parts.size) { timeUp = true; onFinished(got.sum()); idx = exam.parts.size }
+    }
     if (idx < exam.parts.size) {
         val part = exam.parts[idx]
         LevelScreen(part.level, Chapter(0, exam.title, exam.title, "Abi-Simulation", "🎓", "orange", emptyList(), emptyList()), false, {},
             onSolved = { s, _ -> got = got + Exam.points(part, s); if (idx == exam.parts.lastIndex) onFinished(got.sum()) },
             onNext = { idx++ }, onBack = onBack,
-            caption = "🎓 ${exam.title} · Teil ${part.label}) · ${part.points} BE", badge = "${got.sum()} BE")
+            caption = "🎓 ${exam.title} · Teil ${part.label}) · ${part.points} BE", badge = (if (timed) "⏱ ${Exam.clock(left)}  " else "") + "${got.sum()} BE")
     } else {
         val total = got.sum()
         Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
             Bar("Auswertung", onBack)
             Lux(if (total * 100 >= exam.maxPoints * 60) LuxMood.HAPPY else LuxMood.THINK, size = 120.dp)
             Text("$total von ${exam.maxPoints} BE", fontSize = 34.sp, fontWeight = FontWeight.Black, color = Q.Yellow)
+            if (timed) Text(if (timeUp) "⏱ Die Zeit ist abgelaufen" else "⏱ geschafft mit ${Exam.clock(left)} Restzeit", color = if (timeUp) Q.Orange else Q.Green, fontWeight = FontWeight.Bold)
             Text(Exam.verdict(total, exam.maxPoints), Modifier.padding(horizontal = 24.dp, vertical = 8.dp), textAlign = TextAlign.Center)
             exam.parts.forEachIndexed { i, p ->
                 Row(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 4.dp).background(Q.Deep, RoundedCornerShape(12.dp)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -158,7 +175,7 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit) 
                 }
             }
             Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                NeonButton({ idx = 0; got = emptyList() }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Nochmal") }
+                NeonButton({ idx = 0; got = emptyList(); left = Exam.seconds(exam); timeUp = false }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Nochmal") }
                 NeonButton(onBack, Modifier.weight(1f), color = Q.Green) { Text("Fertig ✓", fontWeight = FontWeight.Black) }
             }
         }
@@ -194,8 +211,9 @@ fun LageScreen(best: Int, onScore: (Int) -> Boolean, onBack: () -> Unit, session
             }
             return@Column
         }
-        Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp).border(1.5.dp, Q.Yellow.copy(alpha = 0.45f))) {
+        Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) {
             Stage(controller, Modifier.fillMaxSize())
+            StageFrame(Q.Yellow)
             if (answer == null) Text("Erst entscheiden – dann siehst du die Geraden.", Modifier.align(Alignment.Center).background(Q.Space.copy(alpha = 0.7f), RoundedCornerShape(12.dp)).padding(12.dp), color = Q.Muted)
         }
         FormulaView(round.formula, { Q.Text }, Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp).background(Q.Deep, RoundedCornerShape(16.dp)).padding(12.dp))
@@ -339,7 +357,7 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Show-Baukasten", onBack) { Text("${items.size}/${Show.MAX}", color = Q.Muted) }
-        Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp).border(1.5.dp, Q.Violet.copy(alpha = 0.45f))) { Stage(controller, Modifier.fillMaxSize()) }
+        Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Violet) }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 10.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             items.forEachIndexed { i, it ->
                 val interaction = remember { MutableInteractionSource() }

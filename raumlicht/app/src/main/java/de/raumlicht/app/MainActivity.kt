@@ -49,13 +49,13 @@ object Routes {
     const val BADGES = "abzeichen"
     const val BACKSTAGE = "backstage"
     const val EXAMS = "abi"
-    const val EXAM = "abi/{id}"
+    const val EXAM = "abi/{id}/{zeit}"
     const val LAGE = "lage"
     const val DUEL = "duell"
     const val TRAINING = "zweite-chance"
     const val WORKSHOP = "werkstatt"
     const val BUILDER = "baukasten"
-    fun exam(id: String) = "abi/$id"
+    fun exam(id: String, timed: Boolean) = "abi/$id/${if (timed) 1 else 0}"
     fun jam(topic: String) = "jam/$topic"
     fun level(id: String) = "level/$id"
 }
@@ -183,11 +183,11 @@ class MainActivity : ComponentActivity() {
                     BackstageEntry("🏅", "Abzeichen", "${badges.count { it.earned }} von ${badges.size} verdient", Q.Yellow) { nav.goOnce(Routes.BADGES) },
                 )) { nav.popSafe() }
             }
-            composable(Routes.EXAMS) { ExamPicker(Exams.all, exams, { nav.goOnce(Routes.exam(it.id)) }) { nav.popSafe() } }
+            composable(Routes.EXAMS) { ExamPicker(Exams.all, exams, { e, timed -> nav.goOnce(Routes.exam(e.id, timed)) }) { nav.popSafe() } }
             composable(Routes.EXAM) { e ->
                 val exam = Exams.byId(e.arguments?.getString("id").orEmpty())
                 if (exam == null) { LaunchedEffect(Unit) { nav.popSafe() }; return@composable }
-                ExamPlay(exam, onFinished = { vm.settings.recordExam(exam.id, it) }, onBack = { nav.popSafe() })
+                ExamPlay(exam, onFinished = { vm.settings.recordExam(exam.id, it) }, onBack = { nav.popSafe() }, timed = e.arguments?.getString("zeit") == "1")
             }
             composable(Routes.LAGE) { LageScreen(lageBest, vm.settings::recordLage, { nav.popSafe() }) }
             composable(Routes.DUEL) { DuelScreen({ nav.popSafe() }) }

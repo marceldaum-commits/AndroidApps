@@ -142,3 +142,22 @@ private fun WebStage(controller: StageController, modifier: Modifier) {
         onDispose { owner.lifecycle.removeObserver(obs) }
     }
 }
+
+/**
+ * Runde Ecken für die Bühne, ohne die Web-Ansicht zu beschneiden: Die vier Ecken werden in der Hintergrundfarbe
+ * übermalt, darüber liegt der leuchtende Rand. So bleibt die Bühne auf jedem Gerät sichtbar.
+ */
+@Composable
+fun androidx.compose.foundation.layout.BoxScope.StageFrame(accent: androidx.compose.ui.graphics.Color, radius: androidx.compose.ui.unit.Dp = 22.dp) {
+    val bg = de.raumlicht.app.ui.theme.Q.Space
+    androidx.compose.foundation.Canvas(Modifier.matchParentSize()) {
+        val r = radius.toPx()
+        val round = androidx.compose.ui.geometry.RoundRect(0f, 0f, size.width, size.height, androidx.compose.ui.geometry.CornerRadius(r))
+        val corners = androidx.compose.ui.graphics.Path().apply {
+            fillType = androidx.compose.ui.graphics.PathFillType.EvenOdd
+            addRect(androidx.compose.ui.geometry.Rect(0f, 0f, size.width, size.height)); addRoundRect(round)
+        }
+        drawPath(corners, bg)
+        drawRoundRect(accent.copy(alpha = 0.5f), cornerRadius = androidx.compose.ui.geometry.CornerRadius(r), style = androidx.compose.ui.graphics.drawscope.Stroke(1.5.dp.toPx()))
+    }
+}

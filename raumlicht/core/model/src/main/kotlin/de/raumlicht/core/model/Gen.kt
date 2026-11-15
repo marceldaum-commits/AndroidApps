@@ -10,6 +10,7 @@ enum class JamTopic(val title: String, val emoji: String, val color: String, val
     SCHNITT("Schnittpunkte", "✨", "yellow", listOf(Gen.Kind.CROSS)),
     EBENEN("Ebenen", "🔷", "violet", listOf(Gen.Kind.PIERCE_FLAT, Gen.Kind.PIERCE_SKEW)),
     WINKEL("Winkel, Abstände, Kugeln", "📐", "orange", listOf(Gen.Kind.ANGLE, Gen.Kind.DIST_PLANE, Gen.Kind.FOOT, Gen.Kind.RADIUS)),
+    BEWEGUNG("Bewegung & Rotation", "🛫", "green", listOf(Gen.Kind.MOTION_POS, Gen.Kind.MOTION_SPEED, Gen.Kind.MOTION_TIME, Gen.Kind.ROTATION)),
     MIX("Alles gemischt", "🎧", "pink", Gen.Kind.entries),
 }
 
@@ -18,7 +19,7 @@ enum class JamTopic(val title: String, val emoji: String, val color: String, val
  * Grundlage für Jam-Session (endlos üben) und Tagesgig (jeden Tag eine neue Aufgabe für alle).
  */
 object Gen {
-    enum class Kind { MIDPOINT, VECTOR, AIM, PARAM, TRACE, CROSS, PIERCE_FLAT, PIERCE_SKEW, ANGLE, DIST_PLANE, FOOT, RADIUS }
+    enum class Kind { MIDPOINT, VECTOR, AIM, PARAM, TRACE, CROSS, PIERCE_FLAT, PIERCE_SKEW, ANGLE, DIST_PLANE, FOOT, RADIUS, MOTION_POS, MOTION_SPEED, MOTION_TIME, ROTATION }
 
     private val B = Bounds()
     private fun inRoom(v: V3) = (0..2).all { v.list[it] >= B.min[it] && v.list[it] <= B.max[it] }
@@ -88,6 +89,7 @@ object Gen {
                 way = listOf("einsetzen → ${Geo.num((n dot a).toInt())} + ${Geo.num((n dot d).toInt())} · t = $rhs", "t = $t", "S = A + $t · d⃗ = ${s.fmt()}"))
         }
         Kind.ANGLE, Kind.DIST_PLANE, Kind.FOOT, Kind.RADIUS -> buildMore(kind, r, id, ch)
+        Kind.MOTION_POS, Kind.MOTION_SPEED, Kind.MOTION_TIME, Kind.ROTATION -> buildMotion(kind, r, id, ch)
         Kind.CROSS -> {
             val s = r.point(0, 1); val d1 = r.dir(2); val d2 = r.dir(2)
             val u = listOf(-3, -2, -1, 1, 2, 3).random(r); val w = listOf(-3, -2, -1, 1, 2, 3).random(r)
@@ -139,6 +141,55 @@ object Gen {
                 formula = { a -> listOf(listOf(Txt("M${m.fmt()}   P${q.fmt()}")), listOf(Txt("r = "), Part.Num(Geo.num(a), "a"))) },
                 objects = { a, _ -> listOf(Stage.sphere("K", m, a.toDouble(), "cyan"), Stage.point("M", m, "white", "M", drop = false), Stage.point("P", q, "yellow", "P${q.fmt()}")) },
                 check = { a -> Families.compare(a, rad, "Der Radius", "r = $rad – P liegt auf der Kugel.") })
+        }
+        else -> null
+    }
+
+    private val wholeSpeeds = listOf(V3(1, 2, 2), V3(2, 1, 2), V3(2, 2, 1), V3(0, 3, 4), V3(3, 4, 0), V3(4, 0, 3), V3(2, 0, 0), V3(0, 0, 3))
+    /** Rotationskörper mit „schönem“ Volumen: Funktionstext, f, obere Grenze, Volumen in Vielfachen von π, Schrittweite, Rechenweg */
+    private class Turn(val text: String, val to: Int, val piTimes: Int, val step: Int, val way: List<String>, val f: (Double) -> Double)
+    private val turns = listOf(
+        Turn("1", 3, 3, 1, listOf("f(x)² = 1", "∫₀³ 1 dx = 3", "V = 3π")) { 1.0 },
+        Turn("2", 2, 8, 4, listOf("f(x)² = 4", "∫₀² 4 dx = 8", "V = 8π")) { 2.0 },
+        Turn("2", 3, 12, 4, listOf("f(x)² = 4", "∫₀³ 4 dx = 12", "V = 12π")) { 2.0 },
+        Turn("3", 2, 18, 9, listOf("f(x)² = 9", "∫₀² 9 dx = 18", "V = 18π")) { 3.0 },
+        Turn("x", 3, 9, 3, listOf("f(x)² = x², Stammfunktion ⅓x³", "[⅓x³]₀³ = 9", "V = 9π")) { it },
+        Turn("√x", 2, 2, 1, listOf("f(x)² = x, Stammfunktion ½x²", "[½x²]₀² = 2", "V = 2π")) { kotlin.math.sqrt(it) },
+        Turn("√x", 4, 8, 2, listOf("f(x)² = x, Stammfunktion ½x²", "[½x²]₀⁴ = 8", "V = 8π")) { kotlin.math.sqrt(it) },
+        Turn("√(x + 1)", 2, 4, 2, listOf("f(x)² = x + 1, Stammfunktion ½x² + x", "[½x² + x]₀² = 4", "V = 4π")) { kotlin.math.sqrt(it + 1) },
+        Turn("√(x + 1)", 4, 12, 4, listOf("f(x)² = x + 1, Stammfunktion ½x² + x", "[½x² + x]₀⁴ = 12", "V = 12π")) { kotlin.math.sqrt(it + 1) },
+    )
+
+    private fun buildMotion(kind: Kind, r: Random, id: String, ch: Int): Level? = when (kind) {
+        Kind.MOTION_POS -> {
+            val a = r.point(); val v = r.dir(2); val t = r.nextInt(2, 5); val q = a + v * t
+            if (!inRoom(q) || q.isZero || v.ints.count { it != 0 } < 2) null else Families.point(id, ch, "Flugplan", "Ich starte in A und fliege jede Sekunde um v⃗ weiter. Wo bin ich nach $t Sekunden?", q, hidden = true, home = a,
+                given = listOf(listOf(Txt("A${a.fmt()},  v⃗ = "), Families.col(v), Txt("  pro Sekunde"))),
+                tip = "Ort zur Zeit t: x⃗ = A + t · v⃗.", way = listOf("x⃗($t) = A + $t · v⃗", "P${q.fmt()}"),
+                extras = { listOf(Stage.point("A", a, "cyan", "A"), Stage.vector("v", a, a + v, "pink", "v⃗")) })
+        }
+        Kind.MOTION_SPEED -> {
+            val v = wholeSpeeds.random(r).let { V3(it.x * listOf(-1, 1).random(r), it.y * listOf(-1, 1).random(r), it.z) }; val a = r.point(0, 1); val sp = v.length.toInt()
+            if (!inRoom(a + v)) null else Families.scalar(id, ch, "Tempo", "Wie schnell fliege ich, wenn ich pro Sekunde um v⃗ weiterkomme?", "v", 0..8, sp, 1,
+                tip = "Tempo = Länge des Vektors.", way = listOf("|v⃗| = √(${v.ints.joinToString(" + ") { (it * it).toString() }})", "= $sp Einheiten pro Sekunde"),
+                formula = { x -> listOf(listOf(Txt("v⃗ = "), Families.col(v)), listOf(Txt("|v⃗| = "), Part.Num(Geo.num(x), "a"))) },
+                objects = { _, _ -> listOf(Stage.point("A", a, "cyan", "A"), Stage.vector("v", a, a + v, "pink", "v⃗")) },
+                check = { x -> Families.compare(x, sp, "Das Tempo", "$sp Einheiten pro Sekunde.") })
+        }
+        Kind.MOTION_TIME -> {
+            val v = r.dir(2); val t = r.nextInt(2, 6); val a = r.point(); val q = a + v * t; val h = q.ints[2]
+            if (!inRoom(q) || v.ints[2] == 0 || v.ints.count { it != 0 } < 2 || h == 0) null else Families.param(id, ch, "Flughöhe", "Nach wie vielen Sekunden erreiche ich die Höhe $h?", a, v, t, 0..6, hidden = true,
+                tip = "Höhe ist die x₃-Koordinate: ${Geo.num(a.ints[2])} + t · ${if (v.ints[2] < 0) "(${Geo.num(v.ints[2])})" else Geo.num(v.ints[2])} = $h.",
+                way = listOf("x₃(t) = $h", "t = $t → Ort ${q.fmt()}"), extras = { listOf(Stage.plane("E", V3(0, 0, 1), h.toDouble(), "violet", "x₃ = $h")) })
+        }
+        Kind.ROTATION -> {
+            val k = turns.random(r); val origin = V3(4.0, 1.0 + r.nextInt(0, 3), 3.0)
+            val profile = (0..28).map { val x = k.to * it / 28.0; x to k.f(x) }
+            Families.scalar(id, ch, "Rotationskörper", "Die Kurve f dreht sich um die x-Achse. Welches Volumen hat der Körper?", "V", 0..(k.piTimes / k.step + 4), k.piTimes / k.step, 0,
+                tip = "V = π · ∫ f(x)² dx. Erst f(x)² ausrechnen, dann integrieren.", way = k.way, color = "violet", step = k.step, suffix = "π",
+                formula = { x -> listOf(listOf(Txt("f(x) = ${k.text},  x von 0 bis ${k.to}")), listOf(Txt("V = π · ∫ f(x)² dx = "), Part.Num("${x * k.step}π", "a"))) },
+                objects = { _, _ -> listOf(Stage.lathe("körper", origin, profile)) },
+                check = { x -> Families.compare(x * k.step, k.piTimes, "Das Volumen", "V = ${k.piTimes}π.") })
         }
         else -> null
     }
@@ -239,9 +290,9 @@ object Sheet {
             "Ort zur Zeit t: x⃗(t) = A + t · v⃗",
             "Geschwindigkeit: |v⃗|",
             "Treffen: beide Orte mit demselben t gleichsetzen",
-            "Kleinster Abstand: d⃗(t) · (w⃗ − v⃗) = 0"), listOf(11)),
+            "Kleinster Abstand: d⃗(t) · (w⃗ − v⃗) = 0"), listOf(11), JamTopic.BEWEGUNG),
         SheetCard("🏺", "Rotationskörper", "violet", listOf(
             "V = π · ∫ f(x)² dx (Rotation um die x-Achse)",
-            "Zylinder: πr²h · Kegel: ⅓πr²h · Kugel: ⁴⁄₃πr³"), listOf(12)),
+            "Zylinder: πr²h · Kegel: ⅓πr²h · Kugel: ⁴⁄₃πr³"), listOf(12), JamTopic.BEWEGUNG),
     )
 }

@@ -23,7 +23,7 @@ Zweite Chance, Show-Baukasten, Lux-Werkstatt, Spickzettel und Abzeichen:
 | 12 Lichtskulpturen | Analysis in 3D | Rotationskörper: Zylinder, Kegel, Vase, Kugel, Trichter (V = π·∫f²) |
 
 **Weitere Spielarten**
-- 🎓 **Abi-Simulation** – drei zusammenhängende Aufgaben mit je vier Teilaufgaben und Bewertungseinheiten (`Exams`).
+- 🎓 **Abi-Simulation** – drei zusammenhängende Aufgaben mit je vier Teilaufgaben und Bewertungseinheiten (`Exams`); freiwillig auf Zeit (45 s je BE).
 - 🧭 **Lage-Check** – acht Runden Lagebeziehung zweier Geraden erkennen; die Bühne zeigt die Geraden erst nach der Antwort.
 - ⚔️ **Duell** – Code wie `RL-4A1B2X` (Thema + Seed + Prüfziffer) steht für dieselben fünf Aufgaben, ohne Server.
 - 📱 **Widget** – Tagesgig auf dem Startbildschirm (`app/widget/DailyWidget`), ein Tipp öffnet die Aufgabe.

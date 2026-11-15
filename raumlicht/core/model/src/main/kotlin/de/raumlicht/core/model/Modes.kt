@@ -16,6 +16,9 @@ data class Exam(val id: String, val title: String, val emoji: String, val intro:
     companion object {
         /** Volle BE beim ersten Versuch, die Hälfte beim zweiten, sonst 1 BE. [stars] wie im Level (3/2/1). */
         fun points(part: ExamPart, stars: Int) = when (stars) { 3 -> part.points; 2 -> (part.points + 1) / 2; else -> 1 }
+        /** Zeit im freiwilligen Zeit-Modus: 45 Sekunden je Bewertungseinheit */
+        fun seconds(exam: Exam) = exam.maxPoints * 45
+        fun clock(seconds: Int) = "${seconds / 60}:${(seconds % 60).toString().padStart(2, '0')}"
         fun verdict(got: Int, max: Int) = when {
             got * 100 >= max * 85 -> "Stark! Das wäre im Abi eine sehr gute Aufgabe."
             got * 100 >= max * 60 -> "Solide. Schau dir die Teile an, die zwei Anläufe brauchten."

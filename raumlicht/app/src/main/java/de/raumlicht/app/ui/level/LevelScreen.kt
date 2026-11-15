@@ -36,6 +36,7 @@ import de.raumlicht.app.ui.lux.Lux
 import de.raumlicht.app.ui.lux.LuxMood
 import de.raumlicht.app.ui.stage.Stage
 import de.raumlicht.app.ui.stage.StageController
+import de.raumlicht.app.ui.stage.StageFrame
 import de.raumlicht.app.ui.theme.Q
 import de.raumlicht.core.model.*
 import kotlinx.coroutines.delay
@@ -130,9 +131,10 @@ fun LevelScreen(
                 StarRow(if (phase == Phase.DONE) stars else Level.stars(attempts + 1, usedTip), lit = phase == Phase.DONE)
             }
             // Bühne
-            // Bewusst ohne runden Beschnitt: Manche Geräte zeichnen eine Web-Ansicht in einer rund beschnittenen Fläche nicht.
-            Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp).border(1.5.dp, accent.copy(alpha = 0.45f))) {
+            // Runde Ecken kommen als Rahmen ÜBER der Bühne (StageFrame) – die Web-Ansicht selbst wird nicht beschnitten.
+            Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) {
                 Stage(controller, Modifier.fillMaxSize())
+                StageFrame(accent)
                 Text("☝ drehen · ✌ zoomen", Modifier.align(Alignment.TopEnd).padding(10.dp), color = Q.Muted.copy(alpha = 0.8f), fontSize = 11.sp)
                 // Dreimal auf den Hinweis tippen zeigt die Selbstauskunft der Bühne (für Fehlersuche)
                 if (showInfo) Text(controller.info ?: "Bühne hat sich noch nicht gemeldet", Modifier.align(Alignment.BottomStart).background(Q.Space.copy(alpha = 0.85f)).padding(8.dp), color = Q.Yellow, fontSize = 10.sp, lineHeight = 12.sp)

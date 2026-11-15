@@ -95,4 +95,26 @@ class ModesFlowTest {
         rule.onNodeWithText("▶ Kapitel 2").performClick(); rule.onNodeWithText("🎧 Jam").performClick()
         assertEquals(listOf(2), chapters); assertEquals(listOf(JamTopic.PUNKTE), jams)
     }
+
+    @Test fun timedExamEndsWhenTheClockRunsOut() {
+        val exam = Exams.byId("zelt")!!
+        var finished = -1
+        show { ExamPlay(exam, { finished = it }, {}, timed = true) }
+        rule.onNodeWithText("⏱ 9:00", substring = true).assertExists()     // 12 BE · 45 s
+        rule.mainClock.advanceTimeBy(3000)
+        rule.onNodeWithText("⏱ 8:5", substring = true).assertExists()      // die Uhr läuft
+        rule.mainClock.advanceTimeBy(Exam.seconds(exam) * 1000L + 2000)
+        assertEquals(0, finished)
+        rule.onNodeWithText("⏱ Die Zeit ist abgelaufen").assertExists()
+        rule.onNodeWithText("0 von 12 BE").assertExists()
+    }
+
+    @Test fun examPickerPassesTheTimeSwitch() {
+        val picked = ArrayList<Pair<String, Boolean>>()
+        show { ExamPicker(Exams.all, emptyMap(), { e, t -> picked += e.id to t }) {} }
+        rule.onNodeWithText("Festivalzelt").performClick()
+        rule.onNodeWithTag("zeit").performClick(); rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithText("Festivalzelt").performClick()
+        assertEquals(listOf("zelt" to false, "zelt" to true), picked)
+    }
 }

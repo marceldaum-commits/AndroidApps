@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.3.2 – Feinschliff (15.11.2026)
+- **Abi-Simulation auf Zeit:** freiwilliger Schalter – 9 Minuten je Aufgabe, die Uhr läuft oben mit. Ist die Zeit um, zählt, was bis dahin gelöst ist.
+- **Jam-Session „Bewegung & Rotation“:** neue Zufallsaufgaben zu Ort nach t Sekunden, Tempo, Flughöhe und Rotationskörpern – auch in „Alles gemischt“.
+- Vom Spickzettel geht es bei Bewegung und Rotationskörpern jetzt auch direkt in die Jam-Session.
+- Die Bühne hat wieder runde Ecken.
+
 ## 0.3.1 – Widget (15.11.2026)
 - **Neu: Widget für den Startbildschirm.** Es zeigt den Tagesgig, ob er heute schon geschafft ist, und deine Sterne. Ein Tipp öffnet die Aufgabe.
   Hinzufügen: lange auf den Startbildschirm drücken → Widgets → Raumlicht.

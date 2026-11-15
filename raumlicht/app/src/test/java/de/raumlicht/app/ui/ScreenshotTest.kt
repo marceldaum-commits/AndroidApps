@@ -109,7 +109,7 @@ class ScreenshotTest {
             de.raumlicht.app.ui.home.BackstageEntry("📓", "Spickzettel", "alle Formeln – mit Sprung zu den Aufgaben", Q.Green) {},
             de.raumlicht.app.ui.home.BackstageEntry("🏅", "Abzeichen", "9 von 14 verdient", Q.Yellow) {})) {}
     }
-    @Test fun examPicker() = shot("31_abi_simulation", "start") { de.raumlicht.app.ui.home.ExamPicker(de.raumlicht.core.model.Exams.all, mapOf("zelt" to 10), {}) {} }
+    @Test fun examPicker() = shot("31_abi_simulation", "start") { de.raumlicht.app.ui.home.ExamPicker(de.raumlicht.core.model.Exams.all, mapOf("zelt" to 10), { _, _ -> }) {} }
     @Test fun examPart() = shot("32_abi_teilaufgabe", "abi") {
         val e = de.raumlicht.core.model.Exams.all[0]; val part = e.parts[1]
         LevelScreen(part.level, de.raumlicht.core.model.Chapter(0, e.title, e.title, "Abi-Simulation", "🎓", "orange", emptyList(), emptyList()), false, {}, { _, _ -> }, {}, {},
