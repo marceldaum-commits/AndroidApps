@@ -48,4 +48,6 @@ tasks.register<Sync>("exportWebApp") {
     into(rootProject.file("webapp"))
     exclude("**/*.map")
     filesMatching(listOf("index.html", "sw.js", "manifest.webmanifest")) { filter { it.replace("@VERSION@", versionName) } }
+    val versionDate = Regex("""VERSION_DATE", "\\"([0-9.]+)\\""""").find(appGradle)!!.groupValues[1]
+    doLast { rootProject.file("webapp/version.json").writeText("{\n  \"version\": \"$versionName\",\n  \"date\": \"$versionDate\"\n}\n") }
 }

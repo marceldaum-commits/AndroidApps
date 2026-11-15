@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.19.0 – Der Wissensgarten als WebApp (16.11.2026)
+- **🌐 Jetzt auch im Browser:** Der Wissensgarten läuft als WebApp – am Handy, Tablet und PC, ohne Installation (lässt sich aber wie eine App auf den Startbildschirm legen und funktioniert auch offline).
+- **Genau gleich wie die App:** Garten, alle 47 Wissenspakete, alle Spiele, Brummi, Bienenstock, Tagesaufgaben – App und WebApp entstehen jetzt aus demselben Programmcode und haben immer dieselbe Versionsnummer.
+- **Datensparsam:** In der WebApp bleibt der Lernstand nur im Browser des Geräts – kein Konto, keine Werbung, nichts wird an einen Server geschickt.
+- Nur in der Android-App: Widget, tägliche Erinnerung, Geräte-Sync über Google Drive, Wissens-Safari mit der Kamera, Postkarte und Urkunde.
+- Hinter den Kulissen: großer Umbau auf eine gemeinsame Grundlage (Compose Multiplatform). Dein Garten in der App bleibt dabei vollständig erhalten.
+
 ## 0.18.1 – Alles reagiert so, wie man es erwartet (15.11.2026)
 - **🎵 Rhythmus-Runde:** Eine richtige Antwort zählt jetzt immer („Gut!“). Wer sie genau dann antippt, wenn sie leuchtet, bekommt „Perfekt!“. Vorher gab es bei richtiger Antwort zur falschen Zeit ein „Fast!“ – das war verwirrend.
 - **🌿 Unkraut-Jäten:** Das Unkraut lässt sich jetzt auch durch dreimal Antippen herausziehen, nicht nur durch Wischen. Wischen geht leichter.

@@ -42,6 +42,19 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 | --- | --- | --- |
 | ![](screenshots/07_giessen_grundschule.png) | ![](screenshots/08_samenhandlung.png) | ![](screenshots/09_familie.png) |
 
+## App und WebApp aus einem Code (seit 0.19.0)
+
+- **Module**: `core/model` (Lern-Logik, Kotlin Multiplatform: jvm + wasmJs), `core/data` (Repository und Einstellungen gemeinsam;
+  Android speichert in Room – Schema unverändert –, das Web im `localStorage`), `shared` (die komplette Compose-Oberfläche,
+  Compose Multiplatform), `app` (Android: Widget, Erinnerungen, Drive-Sync, Safari, Updater, Postkarte/Urkunde/PDF),
+  `webApp` (Kotlin/Wasm-Einstieg, PWA mit Manifest und Service Worker).
+- **Plattform-Brücke**: `shared/.../AppHost.kt` – Ton, Musik, Vorlesen, Spracherkennung, Teilen, Bilder; Android: `app/.../platform/AndroidHost.kt`,
+  Web: `webApp/.../WebPlatform.kt` + `webApp/src/wasmJsMain/resources/wg-platform.js` (WebAudio, speechSynthesis, SpeechRecognition).
+- **Gleichstand**: Versionsnummer aus `app/build.gradle.kts` wird als `AppInfo` erzeugt; die WebApp bekommt dieselben Paket-Dateien
+  (`content/src/main/assets/packs`). `StoreParityTest` prüft, dass Android-Datenbank und Web-Speicher denselben Garten ergeben.
+- **WebApp bauen**: `./gradlew :webApp:exportWebApp` → fertige Dateien in `webapp/` (wird auf den Branch `wissensgarten-test` gelegt).
+  Emoji-Schrift für den Browser: `python3 webApp/tools/emoji_subset.py` (Noto Color Emoji + DejaVu-Sonderzeichen, nur benutzte Zeichen).
+
 ## Funktionen
 
 - **Erlebnis-Lernen statt Karteikarten** – jede Karte hat ein animiertes **Merkbild** (1–3 Emojis als Eselsbrücke),

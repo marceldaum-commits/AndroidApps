@@ -22,6 +22,7 @@ import de.wissensgarten.core.model.Platform
 import de.wissensgarten.core.model.Scheduler
 import de.wissensgarten.web.res.Res
 import de.wissensgarten.web.res.noto_color_emoji
+import de.wissensgarten.web.res.dejavu_symbols
 import kotlinx.browser.document
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
@@ -94,9 +95,13 @@ fun main() {
     ComposeViewport(document.body!!) {
         // Emoji-Schrift laden (Merkbilder!), danach erst die App zeigen
         val emoji by preloadFont(Res.font.noto_color_emoji)
+        val symbols by preloadFont(Res.font.dejavu_symbols)
         val resolver = LocalFontFamilyResolver.current
         var ready by remember { mutableStateOf(false) }
-        LaunchedEffect(emoji) { emoji?.let { resolver.preload(FontFamily(it)); ready = true; hideSplash() } }
+        LaunchedEffect(emoji, symbols) {
+            val e = emoji; val s = symbols
+            if (e != null && s != null) { resolver.preload(FontFamily(e)); resolver.preload(FontFamily(s)); ready = true; hideSplash() }
+        }
         if (ready) {
             val start = remember { if (vm.onboarded.value) Routes.GARDEN else Routes.ONBOARDING }
             WissensgartenApp(vm, hostWithUsage, start)

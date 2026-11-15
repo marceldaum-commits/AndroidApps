@@ -8,5 +8,3 @@ local.properties
 *.jks
 *.p12
 keystore.properties
-# WebApp-Build (wird nur auf den Branch wissensgarten-test gelegt)
-/webapp/
