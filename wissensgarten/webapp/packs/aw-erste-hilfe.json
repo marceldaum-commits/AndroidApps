@@ -1,0 +1,366 @@
+{
+  "id": "aw-erste-hilfe",
+  "version": 3,
+  "title": "Erste Hilfe",
+  "subject": "allgemeinwissen",
+  "grades": [
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "emoji": "⛑️",
+  "tier": "free",
+  "description": "Notruf, stabile Seitenlage, Wiederbelebung und Hilfe bei Verbrennungen – das Wichtigste für Laien. Ersetzt keinen Erste-Hilfe-Kurs.",
+  "intro": [
+    {
+      "img": "🚑📞",
+      "text": "Wusstest du? In ganz Europa erreichst du Rettungsdienst und Feuerwehr unter derselben Nummer: 112 – kostenlos von jedem Telefon."
+    },
+    {
+      "img": "⚠️📞",
+      "text": "Erst Eigenschutz, dann helfen: Unfallstelle sichern, 112 rufen, Erste Hilfe leisten. Sag beim Notruf zuerst, WO es passiert ist, und warte auf Rückfragen."
+    },
+    {
+      "img": "❤️⏱️",
+      "text": "Bewusstlos und keine normale Atmung? 112 rufen und fest in der Brustmitte drücken: 5–6 cm tief, 100- bis 120-mal pro Minute. Ein AED sagt dir jeden Schritt an."
+    },
+    {
+      "img": "🎵🤝",
+      "text": "Merktrick fürs Tempo: Drück im Takt von „Stayin’ Alive“. Und denk dran: Der einzige echte Fehler ist, gar nichts zu tun."
+    },
+    {
+      "img": "⛑️✅",
+      "text": "Das ersetzt keinen Erste-Hilfe-Kurs – aber es gibt dir Sicherheit. Los geht’s: Jede richtige Antwort macht dich zu einer besseren Hilfe!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welche Nummer wählst du für Rettungsdienst und Feuerwehr?",
+      "a": "112",
+      "choices": [
+        "110",
+        "116 117",
+        "911"
+      ],
+      "info": "Die 112 funktioniert in ganz Europa kostenlos, auch ohne Guthaben.",
+      "img": "🚑🚒"
+    },
+    {
+      "id": "002",
+      "q": "Welche Nummer hat der Polizeinotruf in Deutschland?",
+      "a": "110",
+      "choices": [
+        "112",
+        "115",
+        "116 116"
+      ],
+      "img": "🚓👮"
+    },
+    {
+      "id": "003",
+      "q": "Was ist bei einem Notfall immer der erste Grundsatz?",
+      "a": "Eigenschutz: Bringe dich nicht selbst in Gefahr",
+      "img": "⚠️🛡️"
+    },
+    {
+      "id": "004",
+      "q": "Worauf solltest du beim Notruf am Ende warten?",
+      "a": "Auf Rückfragen der Leitstelle",
+      "choices": [
+        "Bis der Rettungswagen da ist",
+        "Auf nichts – sofort auflegen"
+      ],
+      "info": "Die Leitstelle beendet das Gespräch, nicht du.",
+      "img": "📞❓⏳"
+    },
+    {
+      "id": "005",
+      "q": "Was sagst du beim Notruf zuerst?",
+      "a": "Wo der Notfall ist",
+      "choices": [
+        "Wie du heißt",
+        "Welches Wetter herrscht",
+        "Wie alt du bist"
+      ],
+      "info": "Der Ort ist am wichtigsten, damit Hilfe losgeschickt werden kann.",
+      "img": "📍📞"
+    },
+    {
+      "id": "006",
+      "q": "Wie prüfst du, ob eine Person bei Bewusstsein ist?",
+      "a": "Laut ansprechen und an den Schultern rütteln",
+      "img": "🗣️👐"
+    },
+    {
+      "id": "007",
+      "q": "Wie machst du bei einer bewusstlosen Person die Atemwege frei?",
+      "a": "Kopf überstrecken und Kinn anheben",
+      "img": "🙆👄"
+    },
+    {
+      "id": "008",
+      "q": "Wie lange prüfst du höchstens, ob jemand normal atmet?",
+      "a": "Höchstens 10 Sekunden",
+      "choices": [
+        "1 Minute",
+        "2 Sekunden",
+        "30 Sekunden"
+      ],
+      "info": "Sehen, hören, fühlen.",
+      "img": "⏱️🔟"
+    },
+    {
+      "id": "009",
+      "q": "Jemand ist bewusstlos, atmet aber normal. Was tust du?",
+      "a": "Stabile Seitenlage, Notruf, Atmung immer wieder prüfen",
+      "choices": [
+        "Sofort Herzdruckmassage",
+        "Beine hochlegen und warten",
+        "Etwas zu trinken geben"
+      ],
+      "img": "🛌🔄📞"
+    },
+    {
+      "id": "010",
+      "q": "Jemand ist bewusstlos und atmet nicht normal. Was tust du?",
+      "a": "Notruf 112 und sofort mit der Herzdruckmassage beginnen",
+      "choices": [
+        "Stabile Seitenlage",
+        "Nur auf den Rettungsdienst warten",
+        "Wasser ins Gesicht spritzen"
+      ],
+      "img": "📞❤️👐"
+    },
+    {
+      "id": "011",
+      "q": "Wo drückst du bei der Herzdruckmassage?",
+      "a": "In der Mitte des Brustkorbs (untere Hälfte des Brustbeins)",
+      "choices": [
+        "Auf den Bauch",
+        "Links auf die Rippen",
+        "Auf das obere Ende des Brustbeins"
+      ],
+      "img": "👐🎯"
+    },
+    {
+      "id": "012",
+      "q": "Wie tief drückst du bei Erwachsenen den Brustkorb ein?",
+      "a": "5 bis 6 cm",
+      "choices": [
+        "1 bis 2 cm",
+        "10 bis 12 cm",
+        "3 mm"
+      ],
+      "img": "📏✋"
+    },
+    {
+      "id": "013",
+      "q": "Wie oft pro Minute drückst du bei der Herzdruckmassage?",
+      "a": "100- bis 120-mal",
+      "choices": [
+        "30- bis 40-mal",
+        "60-mal",
+        "150- bis 180-mal"
+      ],
+      "info": "Hilfe zum Takt: Lieder wie „Stayin’ Alive“ haben ungefähr dieses Tempo.",
+      "img": "🎵💓"
+    },
+    {
+      "id": "014",
+      "q": "In welchem Verhältnis wechseln sich Herzdruckmassage und Beatmung ab?",
+      "a": "30 : 2",
+      "choices": [
+        "15 : 2",
+        "5 : 1",
+        "30 : 5"
+      ],
+      "info": "30-mal drücken, 2-mal beatmen.",
+      "img": "❤️👐"
+    },
+    {
+      "id": "015",
+      "q": "Was tust du, wenn du nicht beatmen kannst oder willst?",
+      "a": "Ununterbrochen weiter drücken",
+      "choices": [
+        "Die Wiederbelebung abbrechen",
+        "Nur beatmen"
+      ],
+      "info": "Herzdruckmassage allein ist viel besser als gar nichts.",
+      "img": "👐🔁"
+    },
+    {
+      "id": "016",
+      "q": "Wie lange führst du die Wiederbelebung durch?",
+      "a": "Bis der Rettungsdienst übernimmt oder die Person normal atmet",
+      "img": "🚑🤝"
+    },
+    {
+      "id": "017",
+      "q": "Dürfen Laien einen Defibrillator (AED) benutzen?",
+      "a": "Ja, das Gerät gibt Sprachanweisungen",
+      "choices": [
+        "Nein, nur Ärzte",
+        "Nur mit Erste-Hilfe-Schein"
+      ],
+      "info": "Der AED prüft selbst, ob ein Schock nötig ist.",
+      "img": "⚡💓🔊"
+    },
+    {
+      "id": "018",
+      "q": "Was tust du bei einer kleinen Verbrennung an der Hand?",
+      "a": "Etwa 20 Minuten mit kühlem (nicht eiskaltem) Wasser kühlen",
+      "choices": [
+        "Sofort mit Eiswürfeln kühlen",
+        "Mit Butter oder Mehl bestreichen",
+        "Die Blasen aufstechen"
+      ],
+      "info": "So empfehlen es die europäischen Erste-Hilfe-Leitlinien. Kein Eis – das schädigt die Haut zusätzlich. Bei großen Verbrennungen sofort 112.",
+      "img": "🤚💧⏲️"
+    },
+    {
+      "id": "019",
+      "q": "Sollte man großflächige Verbrennungen lange mit Wasser kühlen?",
+      "a": "Nein, es droht Unterkühlung – keimfrei abdecken, 112",
+      "img": "🔥🛁❌"
+    },
+    {
+      "id": "020",
+      "q": "Was tust du mit Kleidung, die an einer Brandwunde festklebt?",
+      "a": "Am Körper lassen, nicht abziehen",
+      "img": "👕🚫✋"
+    },
+    {
+      "id": "021",
+      "q": "Wie hilfst du bei Nasenbluten?",
+      "a": "Kopf nach vorn beugen, Nasenflügel zudrücken",
+      "choices": [
+        "Kopf in den Nacken legen",
+        "Hinlegen und Beine hoch",
+        "Fest schnäuzen"
+      ],
+      "info": "Kühle Umschläge im Nacken können zusätzlich helfen.",
+      "img": "👃🙇"
+    },
+    {
+      "id": "022",
+      "q": "Was tust du bei einer stark blutenden Wunde am Arm?",
+      "a": "Arm hochhalten, Wunde abdrücken, Druckverband",
+      "img": "💪⬆️🎗️"
+    },
+    {
+      "id": "023",
+      "q": "Wie lagerst du jemanden mit Schockanzeichen (blass, kalter Schweiß, unruhig)?",
+      "a": "Flach hinlegen, Beine leicht hochlagern, zudecken",
+      "info": "Nicht bei Verletzungen an Beinen, Becken oder Wirbelsäule und nicht bei Atemnot.",
+      "img": "🛌🦵🧣"
+    },
+    {
+      "id": "024",
+      "q": "Wie lagerst du jemanden mit Verdacht auf Herzinfarkt?",
+      "a": "Mit erhöhtem Oberkörper",
+      "choices": [
+        "Flach mit hochgelegten Beinen",
+        "In stabiler Seitenlage",
+        "Auf dem Bauch"
+      ],
+      "info": "Und sofort 112 anrufen.",
+      "img": "🛏️💔"
+    },
+    {
+      "id": "025",
+      "q": "Wofür steht der FAST-Test?",
+      "a": "Erkennen eines Schlaganfalls",
+      "choices": [
+        "Erkennen eines Herzinfarkts",
+        "Prüfen der Atmung",
+        "Erkennen einer Vergiftung"
+      ],
+      "info": "Face (Gesicht), Arms (Arme), Speech (Sprache), Time (sofort 112).",
+      "img": "🙂💪🗣️"
+    },
+    {
+      "id": "026",
+      "q": "Ein Erwachsener hat sich verschluckt und kann nicht mehr husten. Erste Maßnahme?",
+      "a": "Bis zu 5 kräftige Schläge zwischen die Schulterblätter",
+      "choices": [
+        "Etwas zu trinken geben",
+        "Flach auf den Rücken legen",
+        "Abwarten"
+      ],
+      "info": "Hilft das nicht: bis zu 5 Oberbauchkompressionen, im Wechsel. Notruf 112.",
+      "img": "🔙👋"
+    },
+    {
+      "id": "027",
+      "q": "Jemand hat etwas Giftiges geschluckt. Solltest du Erbrechen auslösen?",
+      "a": "Nein",
+      "info": "Notruf 112 oder Giftnotruf anrufen, Packung aufbewahren.",
+      "img": "🧪🚫🤮"
+    },
+    {
+      "id": "028",
+      "q": "Was tust du bei einem Wespenstich im Mund?",
+      "a": "Eis lutschen lassen, Hals außen kühlen, 112 rufen",
+      "info": "Die Schwellung kann die Atemwege verengen.",
+      "img": "🐝👄🍦"
+    },
+    {
+      "id": "029",
+      "q": "Muss man einem bewusstlosen Motorradfahrer den Helm abnehmen?",
+      "a": "Ja, möglichst zu zweit und vorsichtig",
+      "choices": [
+        "Nein, niemals",
+        "Nur ein Arzt darf das"
+      ],
+      "info": "Sonst kann man Atmung und Atemwege nicht sichern.",
+      "img": "🏍️⛑️👐"
+    },
+    {
+      "id": "030",
+      "q": "Wie entfernst du eine Zecke?",
+      "a": "Mit Pinzette oder Zeckenkarte hautnah fassen, herausziehen",
+      "choices": [
+        "Mit Öl beträufeln",
+        "Mit Klebstoff ersticken",
+        "Abbrennen"
+      ],
+      "img": "🕷️🔧"
+    },
+    {
+      "id": "031",
+      "q": "Wie weit stellst du auf der Landstraße ungefähr das Warndreieck auf?",
+      "a": "Etwa 100 m",
+      "choices": [
+        "Etwa 10 m",
+        "Etwa 500 m"
+      ],
+      "info": "Innerorts etwa 50 m, auf der Autobahn mindestens 200 m.",
+      "img": "⚠️📏"
+    },
+    {
+      "id": "032",
+      "q": "Ist man in Deutschland zur Ersten Hilfe verpflichtet?",
+      "a": "Ja, im Rahmen des Zumutbaren",
+      "info": "Unterlassene Hilfeleistung ist strafbar (§ 323c StGB). Schon der Notruf ist Hilfe.",
+      "img": "🤝⚖️"
+    },
+    {
+      "id": "033",
+      "q": "Wie viele Unterrichtseinheiten hat der Erste-Hilfe-Kurs für den Führerschein?",
+      "a": "9",
+      "choices": [
+        "4",
+        "16",
+        "24"
+      ],
+      "img": "🎓9️⃣"
+    }
+  ]
+}

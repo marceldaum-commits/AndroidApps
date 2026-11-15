@@ -1,0 +1,362 @@
+{
+  "id": "ob-englisch-abi-vokabeln",
+  "version": 2,
+  "title": "Englisch Abi-Vokabeln",
+  "subject": "englisch",
+  "grades": [
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "🌍",
+  "tier": "plus",
+  "description": "Anspruchsvolle Vokabeln zu Politik, Umwelt und Gesellschaft für Oberstufe und Abitur.",
+  "intro": [
+    {
+      "img": "🏛️🔤",
+      "text": "Wusstest du, dass ein großer Teil des englischen Wortschatzes aus dem Lateinischen und Französischen stammt? Gerade die Abi-Wörter sind oft solche Lehnwörter."
+    },
+    {
+      "img": "♻️🌍",
+      "text": "Hier geht’s um Wörter zu Umwelt, Politik und Gesellschaft – genau das, was du in Klausuren, Comments und der mündlichen Prüfung brauchst."
+    },
+    {
+      "img": "🧩🔍",
+      "text": "Lerntrick: Zerleg Wörter in Bausteine. sustain-abil-ity, re-new-able – wer die Wortfamilie kennt, erschließt sich auch unbekannte Wörter."
+    },
+    {
+      "img": "📝💬",
+      "text": "Noch ein Trick: Lern Vokabeln in Kollokationen, z. B. „to tackle climate change“. So klingt dein Englisch gleich viel natürlicher."
+    },
+    {
+      "img": "🎯🚀",
+      "text": "Jedes Wort hier ist ein Punktgewinn im Abi. Let’s get started!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "die Nachhaltigkeit",
+      "a": "sustainability",
+      "choices": [
+        "sustenance",
+        "durability",
+        "viability"
+      ],
+      "img": "♻️🌱"
+    },
+    {
+      "id": "002",
+      "q": "der Klimawandel",
+      "a": "climate change",
+      "img": "🌡️🌍"
+    },
+    {
+      "id": "003",
+      "q": "erneuerbare Energien",
+      "a": "renewable energy",
+      "choices": [
+        "recycled energy",
+        "reusable energy",
+        "renewed energy"
+      ],
+      "img": "☀️🌬️"
+    },
+    {
+      "id": "004",
+      "q": "der Treibhauseffekt",
+      "a": "greenhouse effect",
+      "img": "🏠🌿🌡️"
+    },
+    {
+      "id": "005",
+      "q": "die Artenvielfalt",
+      "a": "biodiversity",
+      "choices": [
+        "biology",
+        "biosphere",
+        "bioethics"
+      ],
+      "img": "🦋🐸🌺"
+    },
+    {
+      "id": "006",
+      "q": "die Abholzung",
+      "a": "deforestation",
+      "img": "🌲🚜"
+    },
+    {
+      "id": "007",
+      "q": "die Umweltverschmutzung",
+      "a": "pollution",
+      "choices": [
+        "population",
+        "polling",
+        "pollination"
+      ],
+      "img": "🏭💨"
+    },
+    {
+      "id": "008",
+      "q": "der CO₂-Fußabdruck",
+      "a": "carbon footprint",
+      "img": "👣💨"
+    },
+    {
+      "id": "009",
+      "q": "die Einwanderung",
+      "a": "immigration",
+      "choices": [
+        "emigration",
+        "deportation",
+        "integrity"
+      ],
+      "info": "emigration = Auswanderung",
+      "img": "🧳➡️🏠"
+    },
+    {
+      "id": "010",
+      "q": "die Auswanderung",
+      "a": "emigration",
+      "img": "🏠➡️🧳"
+    },
+    {
+      "id": "011",
+      "q": "die Wahl (politisch)",
+      "a": "election",
+      "choices": [
+        "selection",
+        "elocution",
+        "elector"
+      ],
+      "img": "🗳️"
+    },
+    {
+      "id": "012",
+      "q": "das Wahlrecht (Recht zu wählen)",
+      "a": "the right to vote",
+      "info": "Fachwort auch: suffrage",
+      "img": "🗳️✅"
+    },
+    {
+      "id": "013",
+      "q": "die Regierung",
+      "a": "government",
+      "choices": [
+        "governor",
+        "governance board",
+        "governing"
+      ],
+      "img": "🏛️👔"
+    },
+    {
+      "id": "014",
+      "q": "die Gesetzgebung",
+      "a": "legislation",
+      "img": "📜🔨"
+    },
+    {
+      "id": "015",
+      "q": "die Verfassung (eines Staates)",
+      "a": "constitution",
+      "choices": [
+        "constellation",
+        "institution",
+        "condition"
+      ],
+      "img": "📜⚖️"
+    },
+    {
+      "id": "016",
+      "q": "die Rechtsstaatlichkeit",
+      "a": "the rule of law",
+      "img": "⚖️👑"
+    },
+    {
+      "id": "017",
+      "q": "die Gewaltenteilung",
+      "a": "separation of powers",
+      "choices": [
+        "division of violence",
+        "balance of violence",
+        "sharing of forces"
+      ],
+      "img": "🏛️🏛️🏛️"
+    },
+    {
+      "id": "018",
+      "q": "die Armut",
+      "a": "poverty",
+      "img": "👛🕳️"
+    },
+    {
+      "id": "019",
+      "q": "die Arbeitslosigkeit",
+      "a": "unemployment",
+      "choices": [
+        "employment",
+        "unemployed",
+        "underemployment"
+      ],
+      "img": "💼❌"
+    },
+    {
+      "id": "020",
+      "q": "die Ungleichheit",
+      "a": "inequality",
+      "img": "⬆️⬇️⚖️"
+    },
+    {
+      "id": "021",
+      "q": "die Vielfalt (z. B. kulturell)",
+      "a": "diversity",
+      "choices": [
+        "diversion",
+        "divinity",
+        "density"
+      ],
+      "img": "🌈👥"
+    },
+    {
+      "id": "022",
+      "q": "das Vorurteil",
+      "a": "prejudice",
+      "choices": [
+        "precedent",
+        "preference",
+        "presumption"
+      ],
+      "img": "🏷️🧐"
+    },
+    {
+      "id": "023",
+      "q": "die Rassentrennung (USA)",
+      "a": "segregation",
+      "img": "🚌🚧"
+    },
+    {
+      "id": "024",
+      "q": "die Bürgerrechtsbewegung",
+      "a": "civil rights movement",
+      "choices": [
+        "civil war movement",
+        "citizen law motion",
+        "civic duty movement"
+      ],
+      "img": "✊🎤"
+    },
+    {
+      "id": "025",
+      "q": "der Flüchtling",
+      "a": "refugee",
+      "choices": [
+        "refuge",
+        "fugitive",
+        "resident"
+      ],
+      "info": "refuge = Zuflucht, fugitive = Flüchtiger (auf der Flucht vor der Justiz)",
+      "img": "⛺🧳"
+    },
+    {
+      "id": "026",
+      "q": "die Asylbewerberin / der Asylbewerber",
+      "a": "asylum seeker",
+      "img": "🛡️🧳"
+    },
+    {
+      "id": "027",
+      "q": "die Meinungsfreiheit",
+      "a": "freedom of speech",
+      "img": "🗣️🕊️"
+    },
+    {
+      "id": "028",
+      "q": "die Zensur",
+      "a": "censorship",
+      "choices": [
+        "censure",
+        "census",
+        "consensus"
+      ],
+      "info": "census = Volkszählung, censure = scharfe Kritik/Rüge",
+      "img": "🤐📰"
+    },
+    {
+      "id": "029",
+      "q": "die Überwachung (z. B. durch Kameras)",
+      "a": "surveillance",
+      "img": "📹👁️"
+    },
+    {
+      "id": "030",
+      "q": "die Volksabstimmung",
+      "a": "referendum",
+      "choices": [
+        "referee",
+        "reference",
+        "reform"
+      ],
+      "img": "✅❌🗳️"
+    },
+    {
+      "id": "031",
+      "q": "die Wirtschaft (eines Landes)",
+      "a": "economy",
+      "choices": [
+        "economics",
+        "ecology",
+        "economist"
+      ],
+      "info": "economics = Wirtschaftswissenschaft",
+      "img": "📈🏭"
+    },
+    {
+      "id": "032",
+      "q": "der Wohlstand",
+      "a": "prosperity",
+      "info": "auch: wealth, affluence",
+      "img": "💰🏡"
+    },
+    {
+      "id": "033",
+      "q": "die Gesundheitsversorgung",
+      "a": "healthcare",
+      "choices": [
+        "health insurance",
+        "wellness",
+        "welfare"
+      ],
+      "img": "🏥💊"
+    },
+    {
+      "id": "034",
+      "q": "die Massentierhaltung",
+      "a": "factory farming",
+      "img": "🐖🐖🏭"
+    },
+    {
+      "id": "035",
+      "q": "der Anstieg des Meeresspiegels",
+      "a": "sea-level rise",
+      "choices": [
+        "sea-level fall",
+        "tidal wave",
+        "sea-mirror rise"
+      ],
+      "img": "🌊⬆️🏝️"
+    },
+    {
+      "id": "036",
+      "q": "die Herausforderung",
+      "a": "challenge",
+      "img": "🧗⛰️"
+    },
+    {
+      "id": "037",
+      "q": "die Arbeitslosenquote",
+      "a": "unemployment rate",
+      "img": "💼📊"
+    }
+  ]
+}

@@ -1,0 +1,349 @@
+{
+  "id": "s1-mathe-geometrie-formeln",
+  "version": 2,
+  "title": "Geometrie-Formeln",
+  "subject": "mathe",
+  "grades": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "emoji": "📐",
+  "tier": "free",
+  "description": "Die wichtigsten Formeln für Fläche, Umfang, Volumen, Kreis und Pythagoras.",
+  "intro": [
+    {
+      "img": "🍕⭕",
+      "text": "Egal ob Pizza, Fahrradreifen oder Riesenrad: Teilst du den Umfang eines Kreises durch seinen Durchmesser, kommt immer π ≈ 3,14 heraus!"
+    },
+    {
+      "img": "📏🧱",
+      "text": "Fläche ist wie Fliesen legen: Beim Rechteck zählst du a Reihen mit je b Fliesen – A = a · b. Der Umfang ist der Zaun drum herum."
+    },
+    {
+      "img": "📐✅",
+      "text": "Pythagoras: Im rechtwinkligen Dreieck gilt a² + b² = c². Ein Dreieck mit 3, 4 und 5 m hat genau einen rechten Winkel – das nutzen Handwerker!"
+    },
+    {
+      "img": "🧠🔑",
+      "text": "Eselsbrücke: Die Hypotenuse c liegt dem rechten Winkel gegenüber und ist immer die längste Seite."
+    },
+    {
+      "img": "🐝📐",
+      "text": "Fläche, Umfang, Volumen – mit diesen Formeln vermisst du die Welt. Auf geht's!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Flächeninhalt eines Rechtecks?",
+      "a": "A = a · b",
+      "choices": [
+        "A = 2a + 2b",
+        "A = a + b",
+        "A = a² · b"
+      ],
+      "img": "📱"
+    },
+    {
+      "id": "002",
+      "q": "Umfang eines Rechtecks?",
+      "a": "u = 2a + 2b",
+      "choices": [
+        "u = a · b",
+        "u = 4a",
+        "u = a + b"
+      ],
+      "info": "Gleichwertig: u = 2 · (a + b)",
+      "img": "🏟️"
+    },
+    {
+      "id": "003",
+      "q": "Flächeninhalt eines Quadrats mit Seite a?",
+      "a": "A = a²",
+      "img": "⬛"
+    },
+    {
+      "id": "004",
+      "q": "Flächeninhalt eines Dreiecks?",
+      "a": "A = ½ · g · h",
+      "choices": [
+        "A = g · h",
+        "A = g + h",
+        "A = 2 · g · h"
+      ],
+      "info": "Ein Dreieck ist ein halbes Parallelogramm.",
+      "img": "⛺"
+    },
+    {
+      "id": "005",
+      "q": "Flächeninhalt eines Parallelogramms?",
+      "a": "A = g · h",
+      "info": "h steht senkrecht auf der Grundseite g.",
+      "img": "📏📏"
+    },
+    {
+      "id": "006",
+      "q": "Flächeninhalt eines Trapezes (parallele Seiten a, c)?",
+      "a": "A = ½ · (a + c) · h",
+      "choices": [
+        "A = (a + c) · h",
+        "A = a · c · h",
+        "A = ½ · a · c"
+      ],
+      "info": "Mittelwert der parallelen Seiten mal Höhe.",
+      "img": "🧺"
+    },
+    {
+      "id": "007",
+      "q": "Flächeninhalt einer Raute mit Diagonalen e und f?",
+      "a": "A = ½ · e · f",
+      "img": "♦️"
+    },
+    {
+      "id": "008",
+      "q": "Flächeninhalt eines Kreises?",
+      "a": "A = π · r²",
+      "choices": [
+        "A = 2 · π · r",
+        "A = π · d²",
+        "A = π² · r"
+      ],
+      "img": "🍕"
+    },
+    {
+      "id": "009",
+      "q": "Umfang eines Kreises?",
+      "a": "u = 2 · π · r",
+      "choices": [
+        "u = π · r²",
+        "u = π · r",
+        "u = 2 · r²"
+      ],
+      "info": "Gleichwertig: u = π · d",
+      "img": "🎡"
+    },
+    {
+      "id": "010",
+      "q": "Fläche eines Kreisausschnitts mit Mittelpunktswinkel α?",
+      "a": "A = α/360° · π · r²",
+      "img": "🧀"
+    },
+    {
+      "id": "011",
+      "q": "Kreis mit r = 10 cm: Flächeninhalt ungefähr?",
+      "a": "≈ 314 cm²",
+      "choices": [
+        "≈ 62,8 cm²",
+        "≈ 31,4 cm²",
+        "≈ 100 cm²"
+      ],
+      "info": "π · 10² ≈ 3,14 · 100",
+      "img": "🍕3️⃣"
+    },
+    {
+      "id": "012",
+      "q": "Volumen eines Würfels mit Kante a?",
+      "a": "V = a³",
+      "img": "🎲"
+    },
+    {
+      "id": "013",
+      "q": "Volumen eines Würfels mit a = 3 cm?",
+      "a": "27 cm³",
+      "choices": [
+        "9 cm³",
+        "18 cm³",
+        "54 cm³"
+      ],
+      "info": "3 · 3 · 3 = 27",
+      "img": "🎲3️⃣"
+    },
+    {
+      "id": "014",
+      "q": "Oberfläche eines Würfels?",
+      "a": "O = 6 · a²",
+      "choices": [
+        "O = a³",
+        "O = 4 · a²",
+        "O = 12 · a"
+      ],
+      "info": "Ein Würfel hat 6 gleich große quadratische Flächen.",
+      "img": "🎁"
+    },
+    {
+      "id": "015",
+      "q": "Volumen eines Quaders?",
+      "a": "V = a · b · c",
+      "img": "📦"
+    },
+    {
+      "id": "016",
+      "q": "Oberfläche eines Quaders?",
+      "a": "O = 2 · (ab + ac + bc)",
+      "info": "Je zwei gegenüberliegende Flächen sind gleich groß.",
+      "img": "📦🖌️"
+    },
+    {
+      "id": "017",
+      "q": "Volumen eines Zylinders?",
+      "a": "V = π · r² · h",
+      "choices": [
+        "V = 2 · π · r · h",
+        "V = ⅓ · π · r² · h",
+        "V = π · r · h²"
+      ],
+      "info": "Grundfläche (Kreis) mal Höhe.",
+      "img": "🥫"
+    },
+    {
+      "id": "018",
+      "q": "Volumen eines Kegels?",
+      "a": "V = ⅓ · π · r² · h",
+      "info": "Ein Drittel des passenden Zylinders.",
+      "img": "🍦"
+    },
+    {
+      "id": "019",
+      "q": "Volumen einer Pyramide (Grundfläche G)?",
+      "a": "V = ⅓ · G · h",
+      "choices": [
+        "V = G · h",
+        "V = ½ · G · h",
+        "V = 3 · G · h"
+      ],
+      "img": "🔺"
+    },
+    {
+      "id": "020",
+      "q": "Volumen einer Kugel?",
+      "a": "V = 4/3 · π · r³",
+      "choices": [
+        "V = 4 · π · r²",
+        "V = ⅓ · π · r³",
+        "V = 4/3 · π · r²"
+      ],
+      "img": "⚽"
+    },
+    {
+      "id": "021",
+      "q": "Oberfläche einer Kugel?",
+      "a": "O = 4 · π · r²",
+      "img": "🏀"
+    },
+    {
+      "id": "022",
+      "q": "Satz des Pythagoras (c = Hypotenuse)?",
+      "a": "a² + b² = c²",
+      "choices": [
+        "a + b = c",
+        "a² − b² = c²",
+        "a² + c² = b²"
+      ],
+      "info": "Gilt nur im rechtwinkligen Dreieck.",
+      "img": "📐"
+    },
+    {
+      "id": "023",
+      "q": "Welche Seite heißt Hypotenuse?",
+      "a": "Die Seite gegenüber dem rechten Winkel",
+      "info": "Sie ist die längste Seite im rechtwinkligen Dreieck.",
+      "img": "📐↗️"
+    },
+    {
+      "id": "024",
+      "q": "Katheten 3 cm und 4 cm: Länge der Hypotenuse?",
+      "a": "5 cm",
+      "choices": [
+        "7 cm",
+        "6 cm",
+        "25 cm"
+      ],
+      "info": "√(9 + 16) = √25 = 5",
+      "img": "3️⃣4️⃣5️⃣"
+    },
+    {
+      "id": "025",
+      "q": "Hypotenuse 13 cm, eine Kathete 5 cm: andere Kathete?",
+      "a": "12 cm",
+      "choices": [
+        "8 cm",
+        "18 cm",
+        "11 cm"
+      ],
+      "info": "√(169 − 25) = √144 = 12",
+      "img": "5️⃣1️⃣2️⃣"
+    },
+    {
+      "id": "026",
+      "q": "Länge der Diagonale eines Quadrats mit Seite a?",
+      "a": "d = a · √2",
+      "choices": [
+        "d = a · √3",
+        "d = 2 · a",
+        "d = a / 2"
+      ],
+      "img": "⬛✂️"
+    },
+    {
+      "id": "027",
+      "q": "Länge der Raumdiagonale eines Würfels mit Kante a?",
+      "a": "d = a · √3",
+      "img": "🎲📏"
+    },
+    {
+      "id": "028",
+      "q": "Winkelsumme im Dreieck?",
+      "a": "180°",
+      "choices": [
+        "360°",
+        "90°",
+        "270°"
+      ],
+      "img": "🛹"
+    },
+    {
+      "id": "029",
+      "q": "Winkelsumme im Viereck?",
+      "a": "360°",
+      "img": "🔄"
+    },
+    {
+      "id": "030",
+      "q": "Satz des Thales: C liegt auf dem Kreis mit Durchmesser AB. Was gilt?",
+      "a": "Der Winkel bei C ist 90°",
+      "img": "⭕📐"
+    },
+    {
+      "id": "031",
+      "q": "1 m² = ? cm²",
+      "a": "10 000 cm²",
+      "choices": [
+        "100 cm²",
+        "1 000 cm²",
+        "100 000 cm²"
+      ],
+      "info": "Flächeneinheiten: Umrechnungszahl 100 (100 · 100).",
+      "img": "🧱"
+    },
+    {
+      "id": "032",
+      "q": "1 dm³ = ?",
+      "a": "1 Liter",
+      "choices": [
+        "1 Milliliter",
+        "10 Liter",
+        "100 Liter"
+      ],
+      "img": "🥛"
+    },
+    {
+      "id": "033",
+      "q": "1 m³ = ? Liter",
+      "a": "1 000 Liter",
+      "info": "1 m³ = 1 000 dm³",
+      "img": "🛁"
+    }
+  ]
+}

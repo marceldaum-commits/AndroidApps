@@ -1,0 +1,332 @@
+{
+  "id": "s1-bio-zelle-mensch",
+  "version": 3,
+  "title": "Zelle & Mensch",
+  "subject": "biologie",
+  "grades": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "emoji": "🔬",
+  "tier": "free",
+  "description": "Zellbestandteile, Organe, Verdauung, Blutkreislauf und Sinnesorgane.",
+  "intro": [
+    {
+      "img": "🔬✨",
+      "text": "Dein Körper besteht aus rund 30 Billionen Zellen – die meisten davon sind rote Blutkörperchen, die Sauerstoff durch dich hindurchtragen!"
+    },
+    {
+      "img": "🏭🏢",
+      "text": "Eine Zelle ist wie eine Fabrik: Der Zellkern ist das Chefbüro mit den Bauplänen, die Mitochondrien liefern Energie, die Zellmembran ist der Pförtner."
+    },
+    {
+      "img": "❤️🔁",
+      "text": "Dein Herz schlägt etwa 100 000-mal am Tag und pumpt das Blut im Kreis – wie ein Lieferdienst, der Sauerstoff und Nährstoffe überall hinbringt."
+    },
+    {
+      "img": "🧠💡",
+      "text": "Eselsbrücke: Arterien führen vom Herzen weg – „A wie ab“. Venen führen zum Herzen hin."
+    },
+    {
+      "img": "🐝🚀",
+      "text": "Zellen, Organe, Sinne – entdecke die spannendste Maschine der Welt: dich selbst! Los geht's!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Kleinste lebende Einheit aller Lebewesen?",
+      "a": "Die Zelle",
+      "choices": [
+        "Das Organ",
+        "Das Gewebe",
+        "Das Atom"
+      ],
+      "img": "🥚"
+    },
+    {
+      "id": "002",
+      "q": "Welcher Zellbestandteil enthält die Erbinformation (DNA)?",
+      "a": "Zellkern",
+      "choices": [
+        "Ribosom",
+        "Zellmembran",
+        "Vakuole"
+      ],
+      "img": "🥑"
+    },
+    {
+      "id": "003",
+      "q": "Welche Zellbestandteile gelten als „Kraftwerke“ der Zelle?",
+      "a": "Mitochondrien",
+      "choices": [
+        "Ribosomen",
+        "Chloroplasten",
+        "Vakuolen"
+      ],
+      "info": "Hier läuft die Zellatmung ab.",
+      "img": "🔋⚡"
+    },
+    {
+      "id": "004",
+      "q": "In welchen Zellbestandteilen findet die Fotosynthese statt?",
+      "a": "Chloroplasten",
+      "choices": [
+        "Mitochondrien",
+        "Ribosomen",
+        "Zellkern"
+      ],
+      "img": "☀️🍃"
+    },
+    {
+      "id": "005",
+      "q": "Drei Bestandteile, die Pflanzenzellen, aber nicht Tierzellen haben?",
+      "a": "Zellwand, Chloroplasten, große Vakuole",
+      "img": "🌻🧱"
+    },
+    {
+      "id": "006",
+      "q": "Welche dünne Hülle umgibt jede Zelle?",
+      "a": "Zellmembran",
+      "choices": [
+        "Zellwand",
+        "Kernhülle",
+        "Vakuole"
+      ],
+      "img": "🎈"
+    },
+    {
+      "id": "007",
+      "q": "Wo werden in der Zelle Proteine hergestellt?",
+      "a": "An den Ribosomen",
+      "img": "🏭"
+    },
+    {
+      "id": "008",
+      "q": "Wo beginnt die Verdauung von Kohlenhydraten (Stärke)?",
+      "a": "Im Mund",
+      "choices": [
+        "Im Magen",
+        "Im Dünndarm",
+        "Im Dickdarm"
+      ],
+      "info": "Das Enzym Amylase im Speichel spaltet Stärke.",
+      "img": "👄🍞"
+    },
+    {
+      "id": "009",
+      "q": "Welche Säure enthält der Magensaft?",
+      "a": "Salzsäure",
+      "choices": [
+        "Schwefelsäure",
+        "Essigsäure",
+        "Zitronensäure"
+      ],
+      "img": "🧂🧪"
+    },
+    {
+      "id": "010",
+      "q": "Wo werden die meisten Nährstoffe ins Blut aufgenommen?",
+      "a": "Im Dünndarm",
+      "choices": [
+        "Im Magen",
+        "Im Dickdarm",
+        "In der Speiseröhre"
+      ],
+      "info": "Darmzotten vergrößern die Oberfläche stark.",
+      "img": "🍝"
+    },
+    {
+      "id": "011",
+      "q": "Hauptaufgabe des Dickdarms?",
+      "a": "Dem Nahrungsbrei Wasser entziehen",
+      "img": "💧🔙"
+    },
+    {
+      "id": "012",
+      "q": "Welches Organ bildet die Gallenflüssigkeit?",
+      "a": "Leber",
+      "choices": [
+        "Gallenblase",
+        "Bauchspeicheldrüse",
+        "Milz"
+      ],
+      "info": "Die Gallenblase speichert die Galle nur.",
+      "img": "🍷"
+    },
+    {
+      "id": "013",
+      "q": "Wozu dient die Gallenflüssigkeit?",
+      "a": "Sie zerteilt (emulgiert) Fette",
+      "img": "🍳🧽"
+    },
+    {
+      "id": "014",
+      "q": "Welches Organ filtert das Blut und bildet Harn?",
+      "a": "Niere",
+      "choices": [
+        "Leber",
+        "Harnblase",
+        "Milz"
+      ],
+      "img": "🚰"
+    },
+    {
+      "id": "015",
+      "q": "Aus welchen Räumen besteht das menschliche Herz?",
+      "a": "2 Vorhöfe und 2 Kammern",
+      "choices": [
+        "1 Vorhof und 2 Kammern",
+        "2 Vorhöfe und 1 Kammer",
+        "4 Vorhöfe und 4 Kammern"
+      ],
+      "img": "❤️4️⃣"
+    },
+    {
+      "id": "016",
+      "q": "Blutgefäße, die Blut vom Herzen wegführen?",
+      "a": "Arterien",
+      "choices": [
+        "Venen",
+        "Kapillaren",
+        "Lymphgefäße"
+      ],
+      "img": "❤️➡️"
+    },
+    {
+      "id": "017",
+      "q": "Blutgefäße, die Blut zum Herzen hinführen?",
+      "a": "Venen",
+      "img": "➡️❤️"
+    },
+    {
+      "id": "018",
+      "q": "Feinste Blutgefäße, in denen der Stoffaustausch stattfindet?",
+      "a": "Kapillaren (Haargefäße)",
+      "img": "💇"
+    },
+    {
+      "id": "019",
+      "q": "Wie heißt die größte Arterie des Körpers?",
+      "a": "Aorta (Hauptschlagader)",
+      "choices": [
+        "Hohlvene",
+        "Lungenvene",
+        "Pfortader"
+      ],
+      "img": "🛣️"
+    },
+    {
+      "id": "020",
+      "q": "Wo nimmt das Blut Sauerstoff auf?",
+      "a": "In den Lungenbläschen",
+      "info": "Lungenkreislauf: Herz → Lunge → Herz",
+      "img": "🍇"
+    },
+    {
+      "id": "021",
+      "q": "Aufgabe der roten Blutkörperchen?",
+      "a": "Sauerstofftransport",
+      "choices": [
+        "Krankheitserreger abwehren",
+        "Blutgerinnung",
+        "Hormone bilden"
+      ],
+      "img": "🔴🚚"
+    },
+    {
+      "id": "022",
+      "q": "Aufgabe der weißen Blutkörperchen?",
+      "a": "Abwehr von Krankheitserregern",
+      "img": "⚪🛡️"
+    },
+    {
+      "id": "023",
+      "q": "Aufgabe der Blutplättchen?",
+      "a": "Blutgerinnung (Wundverschluss)",
+      "img": "🚧"
+    },
+    {
+      "id": "024",
+      "q": "Name des roten Blutfarbstoffs?",
+      "a": "Hämoglobin",
+      "choices": [
+        "Chlorophyll",
+        "Melanin",
+        "Insulin"
+      ],
+      "img": "🍅"
+    },
+    {
+      "id": "025",
+      "q": "Lichtempfindliche Schicht im Auge mit den Sinneszellen?",
+      "a": "Netzhaut",
+      "choices": [
+        "Hornhaut",
+        "Lederhaut",
+        "Aderhaut"
+      ],
+      "img": "🎞️"
+    },
+    {
+      "id": "026",
+      "q": "Welcher Teil des Auges regelt mit der Pupille den Lichteinfall?",
+      "a": "Iris (Regenbogenhaut)",
+      "choices": [
+        "Linse",
+        "Netzhaut",
+        "Glaskörper"
+      ],
+      "img": "🌈"
+    },
+    {
+      "id": "027",
+      "q": "Welche Sinneszellen der Netzhaut ermöglichen das Farbensehen?",
+      "a": "Zapfen",
+      "choices": [
+        "Stäbchen",
+        "Haarzellen",
+        "Riechzellen"
+      ],
+      "info": "Stäbchen sind für das Hell-Dunkel-Sehen zuständig.",
+      "img": "🌲"
+    },
+    {
+      "id": "028",
+      "q": "Was ist der blinde Fleck?",
+      "a": "Austrittsstelle des Sehnervs ohne Sinneszellen",
+      "img": "🙈"
+    },
+    {
+      "id": "029",
+      "q": "Die drei Gehörknöchelchen?",
+      "a": "Hammer, Amboss, Steigbügel",
+      "img": "🔨🏇"
+    },
+    {
+      "id": "030",
+      "q": "Wo liegt das Gleichgewichtsorgan?",
+      "a": "Im Innenohr",
+      "choices": [
+        "Im Mittelohr",
+        "In der Ohrmuschel",
+        "Im Trommelfell"
+      ],
+      "img": "👂⚖️"
+    },
+    {
+      "id": "031",
+      "q": "Die fünf klassischen Sinne?",
+      "a": "Sehen, Hören, Riechen, Schmecken, Tasten",
+      "img": "🖐️"
+    },
+    {
+      "id": "032",
+      "q": "Die fünf Grundgeschmacksrichtungen?",
+      "a": "Süß, sauer, salzig, bitter, umami",
+      "img": "🍬🍋🧂"
+    }
+  ]
+}

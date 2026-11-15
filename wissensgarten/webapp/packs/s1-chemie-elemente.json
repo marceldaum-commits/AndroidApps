@@ -1,0 +1,399 @@
+{
+  "id": "s1-chemie-elemente",
+  "version": 2,
+  "title": "Chemische Elemente",
+  "subject": "chemie",
+  "grades": [
+    7,
+    8,
+    9
+  ],
+  "emoji": "⚗️",
+  "tier": "free",
+  "description": "Elementsymbole, Hauptgruppen und Edelgase des Periodensystems.",
+  "intro": [
+    {
+      "img": "🌍🔢",
+      "text": "Alles um dich herum – du, dein Handy, die Luft – ist aus nur 118 bekannten Elementen gebaut. Wie ein riesiger Baukasten!"
+    },
+    {
+      "img": "🏢🔑",
+      "text": "Das Periodensystem ist wie ein Wohnhaus: Jede Zeile ist ein Stockwerk (Periode), jede Spalte eine Familie (Gruppe) mit ähnlichen Eigenschaften."
+    },
+    {
+      "img": "👑😴",
+      "text": "Die Edelgase sind die vornehmen Adligen: Ihre Außenschale ist voll – deshalb reagieren sie kaum mit anderen Elementen."
+    },
+    {
+      "img": "🥇📜",
+      "text": "Eselsbrücke: Viele Symbole kommen aus dem Latein. Gold = Aurum → Au, Eisen = Ferrum → Fe, Silber = Argentum → Ag."
+    },
+    {
+      "img": "🐝⚗️",
+      "text": "Symbole, Gruppen, Edelgase – bald liest du das Periodensystem wie eine Landkarte. Auf geht's!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Elementsymbol von Wasserstoff?",
+      "a": "H",
+      "choices": [
+        "W",
+        "He",
+        "Hy"
+      ],
+      "img": "💧"
+    },
+    {
+      "id": "002",
+      "q": "Elementsymbol von Sauerstoff?",
+      "a": "O",
+      "choices": [
+        "S",
+        "Sa",
+        "Ox"
+      ],
+      "img": "⭕💨"
+    },
+    {
+      "id": "003",
+      "q": "Elementsymbol von Stickstoff?",
+      "a": "N",
+      "choices": [
+        "S",
+        "St",
+        "Ni"
+      ],
+      "info": "Von lateinisch Nitrogenium",
+      "img": "🌫️"
+    },
+    {
+      "id": "004",
+      "q": "Elementsymbol von Kohlenstoff?",
+      "a": "C",
+      "choices": [
+        "K",
+        "Ko",
+        "Co"
+      ],
+      "info": "Von lateinisch Carboneum",
+      "img": "💎✏️"
+    },
+    {
+      "id": "005",
+      "q": "Elementsymbol von Natrium?",
+      "a": "Na",
+      "choices": [
+        "N",
+        "Nt",
+        "Ne"
+      ],
+      "img": "🧂"
+    },
+    {
+      "id": "006",
+      "q": "Elementsymbol von Kalium?",
+      "a": "K",
+      "choices": [
+        "Ka",
+        "Ca",
+        "Kl"
+      ],
+      "img": "🍌"
+    },
+    {
+      "id": "007",
+      "q": "Elementsymbol von Eisen?",
+      "a": "Fe",
+      "choices": [
+        "Ei",
+        "E",
+        "Ir"
+      ],
+      "info": "Von lateinisch Ferrum",
+      "img": "🔩"
+    },
+    {
+      "id": "008",
+      "q": "Elementsymbol von Kupfer?",
+      "a": "Cu",
+      "choices": [
+        "Ku",
+        "Co",
+        "Kp"
+      ],
+      "info": "Von lateinisch Cuprum",
+      "img": "🥉"
+    },
+    {
+      "id": "009",
+      "q": "Elementsymbol von Silber?",
+      "a": "Ag",
+      "choices": [
+        "Si",
+        "S",
+        "Sr"
+      ],
+      "info": "Von lateinisch Argentum",
+      "img": "🥈"
+    },
+    {
+      "id": "010",
+      "q": "Elementsymbol von Gold?",
+      "a": "Au",
+      "choices": [
+        "Go",
+        "G",
+        "Ag"
+      ],
+      "info": "Von lateinisch Aurum",
+      "img": "🥇"
+    },
+    {
+      "id": "011",
+      "q": "Elementsymbol von Blei?",
+      "a": "Pb",
+      "choices": [
+        "Bl",
+        "B",
+        "Pl"
+      ],
+      "info": "Von lateinisch Plumbum",
+      "img": "🎣"
+    },
+    {
+      "id": "012",
+      "q": "Elementsymbol von Quecksilber?",
+      "a": "Hg",
+      "choices": [
+        "Q",
+        "Qs",
+        "Me"
+      ],
+      "info": "Von griechisch-lateinisch Hydrargyrum",
+      "img": "🌡️"
+    },
+    {
+      "id": "013",
+      "q": "Elementsymbol von Schwefel?",
+      "a": "S",
+      "choices": [
+        "Sw",
+        "Sf",
+        "Se"
+      ],
+      "img": "🌋"
+    },
+    {
+      "id": "014",
+      "q": "Elementsymbol von Zinn?",
+      "a": "Sn",
+      "choices": [
+        "Zn",
+        "Zi",
+        "Ti"
+      ],
+      "info": "Von lateinisch Stannum",
+      "img": "🥫"
+    },
+    {
+      "id": "015",
+      "q": "Elementsymbol von Zink?",
+      "a": "Zn",
+      "img": "🧴"
+    },
+    {
+      "id": "016",
+      "q": "Elementsymbol von Chlor?",
+      "a": "Cl",
+      "img": "🏊"
+    },
+    {
+      "id": "017",
+      "q": "Elementsymbol von Calcium?",
+      "a": "Ca",
+      "img": "🦴"
+    },
+    {
+      "id": "018",
+      "q": "Elementsymbol von Magnesium?",
+      "a": "Mg",
+      "img": "🎆"
+    },
+    {
+      "id": "019",
+      "q": "Welches Element hat das Symbol Al?",
+      "a": "Aluminium",
+      "img": "🥤"
+    },
+    {
+      "id": "020",
+      "q": "Welches Element hat das Symbol Si?",
+      "a": "Silicium",
+      "choices": [
+        "Silber",
+        "Schwefel",
+        "Selen"
+      ],
+      "img": "💻"
+    },
+    {
+      "id": "021",
+      "q": "Welches Element hat das Symbol P?",
+      "a": "Phosphor",
+      "choices": [
+        "Platin",
+        "Kalium",
+        "Blei"
+      ],
+      "img": "🔥"
+    },
+    {
+      "id": "022",
+      "q": "Welches Element hat das Symbol F?",
+      "a": "Fluor",
+      "img": "🦷"
+    },
+    {
+      "id": "023",
+      "q": "Welches Element hat das Symbol I?",
+      "a": "Iod",
+      "img": "🌊🐟"
+    },
+    {
+      "id": "024",
+      "q": "Welches Element hat das Symbol He?",
+      "a": "Helium",
+      "img": "🎈"
+    },
+    {
+      "id": "025",
+      "q": "Wie heißen die Elemente der 1. Hauptgruppe (ohne Wasserstoff)?",
+      "a": "Alkalimetalle",
+      "choices": [
+        "Erdalkalimetalle",
+        "Halogene",
+        "Edelgase"
+      ],
+      "img": "💥💧"
+    },
+    {
+      "id": "026",
+      "q": "Wie heißen die Elemente der 2. Hauptgruppe?",
+      "a": "Erdalkalimetalle",
+      "img": "🌍🦴"
+    },
+    {
+      "id": "027",
+      "q": "Wie heißen die Elemente der 7. Hauptgruppe?",
+      "a": "Halogene",
+      "choices": [
+        "Edelgase",
+        "Alkalimetalle",
+        "Chalkogene"
+      ],
+      "info": "Halogen bedeutet „Salzbildner“.",
+      "img": "🧂"
+    },
+    {
+      "id": "028",
+      "q": "Wie heißen die Elemente der 8. Hauptgruppe?",
+      "a": "Edelgase",
+      "img": "👑"
+    },
+    {
+      "id": "029",
+      "q": "Wie viele Außenelektronen haben die Halogene?",
+      "a": "7",
+      "choices": [
+        "1",
+        "8",
+        "2"
+      ],
+      "img": "7️⃣"
+    },
+    {
+      "id": "030",
+      "q": "Wie viele Außenelektronen haben die Alkalimetalle?",
+      "a": "1",
+      "img": "1️⃣"
+    },
+    {
+      "id": "031",
+      "q": "Die sechs natürlichen Edelgase?",
+      "a": "Helium, Neon, Argon, Krypton, Xenon, Radon",
+      "img": "6️⃣👑"
+    },
+    {
+      "id": "032",
+      "q": "Warum reagieren Edelgase kaum?",
+      "a": "Ihre äußere Schale ist voll besetzt",
+      "info": "Man spricht von Edelgaskonfiguration.",
+      "img": "✅🔒"
+    },
+    {
+      "id": "033",
+      "q": "Welches Edelgas kommt in der Luft am häufigsten vor?",
+      "a": "Argon",
+      "choices": [
+        "Neon",
+        "Helium",
+        "Xenon"
+      ],
+      "info": "Etwa 0,9 % der Luft sind Argon.",
+      "img": "🌬️"
+    },
+    {
+      "id": "034",
+      "q": "Welches Edelgas leuchtet in Leuchtröhren typisch rot-orange?",
+      "a": "Neon",
+      "choices": [
+        "Argon",
+        "Helium",
+        "Radon"
+      ],
+      "img": "🔴💡"
+    },
+    {
+      "id": "035",
+      "q": "Mit welchem Edelgas füllt man Ballons, die aufsteigen?",
+      "a": "Helium",
+      "img": "🎈⬆️"
+    },
+    {
+      "id": "036",
+      "q": "Häufigstes Gas der Luft?",
+      "a": "Stickstoff",
+      "choices": [
+        "Sauerstoff",
+        "Kohlenstoffdioxid",
+        "Argon"
+      ],
+      "info": "Etwa 78 % Stickstoff, 21 % Sauerstoff",
+      "img": "🌬️🥇"
+    },
+    {
+      "id": "037",
+      "q": "Einziges Metall, das bei Raumtemperatur flüssig ist?",
+      "a": "Quecksilber",
+      "choices": [
+        "Natrium",
+        "Blei",
+        "Zinn"
+      ],
+      "img": "🌡️💧"
+    },
+    {
+      "id": "038",
+      "q": "Was gibt die Ordnungszahl eines Elements an?",
+      "a": "Die Anzahl der Protonen im Kern",
+      "choices": [
+        "Die Anzahl der Neutronen",
+        "Die Atommasse",
+        "Die Anzahl der Schalen"
+      ],
+      "img": "🔢➕"
+    }
+  ]
+}

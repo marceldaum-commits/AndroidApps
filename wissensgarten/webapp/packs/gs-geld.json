@@ -1,0 +1,417 @@
+{
+  "id": "gs-geld",
+  "version": 1,
+  "title": "Rechnen mit Geld",
+  "subject": "mathe",
+  "grades": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "emoji": "💶",
+  "tier": "free",
+  "description": "Münzen und Scheine kennen, Euro und Cent umrechnen, Preise vergleichen und Wechselgeld berechnen.",
+  "intro": [
+    {
+      "img": "🐝🛒",
+      "text": "Summ! Brummi geht einkaufen. Kommst du mit? Dafür brauchen wir Geld!"
+    },
+    {
+      "img": "💰💵",
+      "text": "Es gibt Münzen und Scheine. Münzen gibt es von 1 Cent bis 2 €. Scheine fangen bei 5 € an."
+    },
+    {
+      "img": "💶💯",
+      "text": "Merke: 1 € sind 100 Cent. Statt Cent schreibt man kurz ct."
+    },
+    {
+      "img": "🏷️🔍",
+      "text": "Auf dem Preisschild steht 2,50 €. Vor dem Komma die Euro, dahinter die Cent: 2 € und 50 ct."
+    },
+    {
+      "img": "🛍️💵",
+      "text": "Zahlst du mit mehr Geld, bekommst du Wechselgeld zurück. Rechne vom Preis hoch bis zu deinem Geld!"
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze in deinem Garten wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Ist 2 € eine Münze oder ein Schein?",
+      "a": "eine Münze",
+      "choices": [
+        "ein Schein",
+        "ein Gutschein",
+        "eine Briefmarke"
+      ],
+      "info": "1 € und 2 € sind Münzen. Ab 5 € gibt es Scheine.",
+      "img": "💰🤔"
+    },
+    {
+      "id": "002",
+      "q": "Welcher Euro-Schein ist der kleinste?",
+      "a": "5 €",
+      "choices": [
+        "10 €",
+        "1 €",
+        "2 €"
+      ],
+      "info": "Die Scheine: 5, 10, 20, 50, 100 € und mehr.",
+      "img": "💵🔍"
+    },
+    {
+      "id": "003",
+      "q": "Welche Münze ist am meisten wert?",
+      "a": "2 €",
+      "choices": [
+        "50 ct",
+        "1 €",
+        "20 ct"
+      ],
+      "img": "💰🏆"
+    },
+    {
+      "id": "004",
+      "q": "Welchen Euro-Schein gibt es wirklich?",
+      "a": "20 €",
+      "choices": [
+        "30 €",
+        "25 €",
+        "15 €"
+      ],
+      "img": "💶✅"
+    },
+    {
+      "id": "005",
+      "q": "Wie viele verschiedene Euro-Münzen gibt es?",
+      "a": "8",
+      "choices": [
+        "6",
+        "10",
+        "12"
+      ],
+      "info": "1, 2, 5, 10, 20 und 50 Cent – dazu 1 € und 2 €.",
+      "img": "💰🔢"
+    },
+    {
+      "id": "006",
+      "q": "Wie viele 50-ct-Münzen ergeben 1 €?",
+      "a": "2",
+      "choices": [
+        "5",
+        "50",
+        "10"
+      ],
+      "info": "50 ct + 50 ct = 100 ct = 1 €",
+      "img": "💰💰"
+    },
+    {
+      "id": "007",
+      "q": "Wie viele 10-ct-Münzen ergeben 1 €?",
+      "a": "10",
+      "choices": [
+        "100",
+        "5",
+        "20"
+      ],
+      "img": "💰🔟"
+    },
+    {
+      "id": "008",
+      "q": "20 ct + 20 ct + 10 ct = ?",
+      "a": "50 ct",
+      "choices": [
+        "40 ct",
+        "30 ct",
+        "60 ct"
+      ],
+      "img": "🍬🍬"
+    },
+    {
+      "id": "009",
+      "q": "5 € + 2 € + 1 € = ?",
+      "a": "8 €",
+      "choices": [
+        "7 €",
+        "9 €",
+        "6 €"
+      ],
+      "img": "💵💰"
+    },
+    {
+      "id": "010",
+      "q": "10 € + 5 € + 5 € = ?",
+      "a": "20 €",
+      "choices": [
+        "15 €",
+        "25 €",
+        "10 €"
+      ],
+      "img": "💶💵"
+    },
+    {
+      "id": "011",
+      "q": "Ein Apfel kostet 40 ct, eine Birne 50 ct. Was kostet beides?",
+      "a": "90 ct",
+      "choices": [
+        "80 ct",
+        "1 €",
+        "95 ct"
+      ],
+      "img": "🍎🍐"
+    },
+    {
+      "id": "012",
+      "q": "3 € = ? Cent",
+      "a": "300 ct",
+      "choices": [
+        "30 ct",
+        "3000 ct",
+        "103 ct"
+      ],
+      "info": "1 € = 100 ct, also 3 € = 300 ct.",
+      "img": "🧃🧃🧃"
+    },
+    {
+      "id": "013",
+      "q": "250 ct = ?",
+      "a": "2,50 €",
+      "choices": [
+        "25,00 €",
+        "0,25 €",
+        "2,05 €"
+      ],
+      "info": "200 ct sind 2 €, dazu noch 50 ct.",
+      "img": "🥨🥨"
+    },
+    {
+      "id": "014",
+      "q": "Was bedeutet 4,80 €?",
+      "a": "4 € und 80 ct",
+      "choices": [
+        "48 €",
+        "4 € und 8 ct",
+        "480 €"
+      ],
+      "info": "Vor dem Komma stehen die Euro, dahinter die Cent.",
+      "img": "🧸🏷️"
+    },
+    {
+      "id": "015",
+      "q": "Wie schreibt man 1 € und 5 ct?",
+      "a": "1,05 €",
+      "choices": [
+        "1,5 €",
+        "1,50 €",
+        "15,00 €"
+      ],
+      "info": "Nach dem Komma stehen immer 2 Ziffern für die Cent.",
+      "img": "🍎💰"
+    },
+    {
+      "id": "016",
+      "q": "Was ist mehr: 2,05 € oder 2,50 €?",
+      "a": "2,50 €",
+      "choices": [
+        "2,05 €",
+        "beide gleich viel",
+        "kann man nicht sagen"
+      ],
+      "info": "2,50 € sind 2 € und 50 ct. 2,05 € sind nur 2 € und 5 ct.",
+      "img": "⚖️💶"
+    },
+    {
+      "id": "017",
+      "q": "Welcher Preis ist am niedrigsten?",
+      "a": "0,99 €",
+      "choices": [
+        "1,09 €",
+        "1,90 €",
+        "9,10 €"
+      ],
+      "info": "Schau zuerst auf die Euro vor dem Komma.",
+      "img": "🏷️🔍"
+    },
+    {
+      "id": "018",
+      "q": "1 € − 35 ct = ?",
+      "a": "65 ct",
+      "choices": [
+        "75 ct",
+        "55 ct",
+        "35 ct"
+      ],
+      "info": "Von 35 ct bis 100 ct fehlen noch 65 ct.",
+      "img": "🍬💰"
+    },
+    {
+      "id": "019",
+      "q": "Ein Ball kostet 12 €. Du hast 8 €. Wie viel fehlt dir?",
+      "a": "4 €",
+      "choices": [
+        "20 €",
+        "3 €",
+        "5 €"
+      ],
+      "img": "⚽🐷"
+    },
+    {
+      "id": "020",
+      "q": "Du zahlst mit 5 €. Es kostet 3,50 €. Wie viel bekommst du zurück?",
+      "a": "1,50 €",
+      "choices": [
+        "2,50 €",
+        "8,50 €",
+        "1,05 €"
+      ],
+      "info": "3,50 € + 1,50 € = 5,00 €",
+      "img": "🛒💵"
+    },
+    {
+      "id": "021",
+      "q": "Eine Brezel kostet 0,80 €, ein Saft 1,50 €. Was kostet beides?",
+      "a": "2,30 €",
+      "choices": [
+        "2,20 €",
+        "2,03 €",
+        "3,30 €"
+      ],
+      "info": "80 ct + 50 ct = 1,30 €. Dazu noch 1 €.",
+      "img": "🥨🧃"
+    },
+    {
+      "id": "022",
+      "q": "Brot kostet 2,40 €, Milch 1,10 €. Was kostet beides?",
+      "a": "3,50 €",
+      "choices": [
+        "3,40 €",
+        "3,30 €",
+        "4,50 €"
+      ],
+      "img": "🍞🥛"
+    },
+    {
+      "id": "023",
+      "q": "Welche Münzen ergeben genau 75 ct?",
+      "a": "50 ct + 20 ct + 5 ct",
+      "choices": [
+        "50 ct + 20 ct + 2 ct",
+        "50 ct + 10 ct + 5 ct",
+        "20 ct + 20 ct + 5 ct"
+      ],
+      "img": "💰🧩"
+    },
+    {
+      "id": "024",
+      "q": "Du hast 10 €. Ein Buch kostet 6,50 €. Wie viel bleibt übrig?",
+      "a": "3,50 €",
+      "choices": [
+        "4,50 €",
+        "3,05 €",
+        "16,50 €"
+      ],
+      "info": "6,50 € + 3,50 € = 10,00 €",
+      "img": "📚💶"
+    },
+    {
+      "id": "025",
+      "q": "Ein Heft kostet 1,20 €. Du kaufst 3 Hefte. Was zahlst du?",
+      "a": "3,60 €",
+      "choices": [
+        "3,20 €",
+        "3,06 €",
+        "4,20 €"
+      ],
+      "info": "3 × 1 € = 3 €, 3 × 20 ct = 60 ct",
+      "img": "📒📒📒"
+    },
+    {
+      "id": "026",
+      "q": "Ein Lolli kostet 1,50 €. Du kaufst 2 und zahlst mit 5 €. Rückgeld?",
+      "a": "2,00 €",
+      "choices": [
+        "3,00 €",
+        "3,50 €",
+        "2,50 €"
+      ],
+      "info": "2 Lollis kosten 3,00 €. 5 € − 3 € = 2 €.",
+      "img": "🍭🍭"
+    },
+    {
+      "id": "027",
+      "q": "Wie viele 5-€-Scheine sind zusammen 50 €?",
+      "a": "10",
+      "choices": [
+        "5",
+        "25",
+        "15"
+      ],
+      "info": "10 × 5 € = 50 €",
+      "img": "💵💵"
+    },
+    {
+      "id": "028",
+      "q": "Du sparst jede Woche 2 €. Wie viel hast du nach 8 Wochen?",
+      "a": "16 €",
+      "choices": [
+        "10 €",
+        "18 €",
+        "14 €"
+      ],
+      "info": "8 × 2 € = 16 €",
+      "img": "🐷💰"
+    },
+    {
+      "id": "029",
+      "q": "Du zahlst 3,50 € mit einem 20-€-Schein. Wie viel bekommst du zurück?",
+      "a": "16,50 €",
+      "choices": [
+        "17,50 €",
+        "15,50 €",
+        "23,50 €"
+      ],
+      "info": "3,50 € + 16,50 € = 20,00 €",
+      "img": "🛍️💶"
+    },
+    {
+      "id": "030",
+      "q": "Ein Kinoticket kostet 7,50 €. Was kosten 4 Tickets?",
+      "a": "30,00 €",
+      "choices": [
+        "28,00 €",
+        "30,50 €",
+        "32,00 €"
+      ],
+      "info": "4 × 7 € = 28 €, 4 × 50 ct = 2 €. Zusammen 30 €.",
+      "img": "🎟️🎟️"
+    },
+    {
+      "id": "031",
+      "q": "Was ist teurer: 3 Äpfel zu je 0,50 € oder 1 Melone für 1,20 €?",
+      "a": "die 3 Äpfel",
+      "choices": [
+        "die Melone",
+        "beide gleich teuer",
+        "kann man nicht wissen"
+      ],
+      "info": "3 × 0,50 € = 1,50 €. Das ist mehr als 1,20 €.",
+      "img": "🍎🍉"
+    },
+    {
+      "id": "032",
+      "q": "Was ist pro Brötchen billiger: 2 Stück für 1 € oder 1 Stück für 0,45 €?",
+      "a": "1 Stück für 0,45 €",
+      "choices": [
+        "2 Stück für 1 €",
+        "beide gleich teuer",
+        "kann man nicht sagen"
+      ],
+      "info": "2 Stück für 1 € heißt: 1 Stück kostet 0,50 €.",
+      "img": "🥖⚖️"
+    }
+  ]
+}

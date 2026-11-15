@@ -1,0 +1,419 @@
+{
+  "id": "s1-deutsch-grammatik",
+  "version": 2,
+  "title": "Deutsch Grammatik",
+  "subject": "deutsch",
+  "grades": [
+    5,
+    6,
+    7
+  ],
+  "emoji": "✏️",
+  "tier": "free",
+  "description": "Fälle, Satzglieder, das/dass und Zeitformen sicher erkennen und anwenden.",
+  "intro": [
+    {
+      "img": "🤔🐝",
+      "text": "Wusstest du, dass „das“ und „dass“ nur ein s unterscheidet – und es trotzdem einer der häufigsten Fehler überhaupt ist? Ich zeig dir, wie du ihn vermeidest!"
+    },
+    {
+      "img": "4️⃣🗂️",
+      "text": "Im Deutschen gibt es vier Fälle: Nominativ, Genitiv, Dativ, Akkusativ. Du findest sie mit Fragen: Wer? Wessen? Wem? Wen?"
+    },
+    {
+      "img": "🔄✅",
+      "text": "Trick für das/dass: Kannst du „dieses“, „jenes“ oder „welches“ einsetzen? Dann schreibst du „das“. Sonst ist es „dass“."
+    },
+    {
+      "img": "🧱🔀",
+      "text": "Satzglieder findest du mit der Umstellprobe: Was beim Umstellen zusammenbleibt, ist ein Satzglied. Probier’s aus!"
+    },
+    {
+      "img": "💪🌟",
+      "text": "Grammatik ist wie ein Baukasten – wenn du die Teile kennst, baust du tolle Sätze. Los geht’s!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele Fälle gibt es im Deutschen?",
+      "a": "vier",
+      "choices": [
+        "drei",
+        "fünf",
+        "sechs"
+      ],
+      "info": "Nominativ, Genitiv, Dativ, Akkusativ",
+      "img": "4️⃣🗂️"
+    },
+    {
+      "id": "002",
+      "q": "Mit welcher Frage findest du den Nominativ?",
+      "a": "Wer oder was?",
+      "choices": [
+        "Wen oder was?",
+        "Wem?",
+        "Wessen?"
+      ],
+      "img": "🙋❓"
+    },
+    {
+      "id": "003",
+      "q": "Mit welcher Frage findest du den Genitiv?",
+      "a": "Wessen?",
+      "choices": [
+        "Wem?",
+        "Wen oder was?",
+        "Wer oder was?"
+      ],
+      "img": "👜❓"
+    },
+    {
+      "id": "004",
+      "q": "Mit welcher Frage findest du den Dativ?",
+      "a": "Wem?",
+      "choices": [
+        "Wessen?",
+        "Wen oder was?",
+        "Wer oder was?"
+      ],
+      "img": "🎁❓"
+    },
+    {
+      "id": "005",
+      "q": "Mit welcher Frage findest du den Akkusativ?",
+      "a": "Wen oder was?",
+      "choices": [
+        "Wer oder was?",
+        "Wem?",
+        "Wessen?"
+      ],
+      "img": "🎯❓"
+    },
+    {
+      "id": "006",
+      "q": "„Der Ball rollt.“ – Fall von „Der Ball“?",
+      "a": "Nominativ",
+      "choices": [
+        "Genitiv",
+        "Dativ",
+        "Akkusativ"
+      ],
+      "img": "⚽💨"
+    },
+    {
+      "id": "007",
+      "q": "„Das ist das Buch des Lehrers.“ – Fall von „des Lehrers“?",
+      "a": "Genitiv",
+      "choices": [
+        "Nominativ",
+        "Dativ",
+        "Akkusativ"
+      ],
+      "img": "📕👓"
+    },
+    {
+      "id": "008",
+      "q": "„Ich gebe dem Hund einen Knochen.“ – Fall von „dem Hund“?",
+      "a": "Dativ",
+      "choices": [
+        "Nominativ",
+        "Genitiv",
+        "Akkusativ"
+      ],
+      "img": "🐕🦴"
+    },
+    {
+      "id": "009",
+      "q": "„Ich sehe den Mond.“ – Fall von „den Mond“?",
+      "a": "Akkusativ",
+      "choices": [
+        "Nominativ",
+        "Genitiv",
+        "Dativ"
+      ],
+      "img": "👀🌕"
+    },
+    {
+      "id": "010",
+      "q": "Welcher Fall folgt auf die Präposition „mit“?",
+      "a": "Dativ",
+      "choices": [
+        "Nominativ",
+        "Genitiv",
+        "Akkusativ"
+      ],
+      "info": "mit dem Rad, mit der Bahn",
+      "img": "🤝🎁"
+    },
+    {
+      "id": "011",
+      "q": "Welcher Fall folgt auf die Präposition „für“?",
+      "a": "Akkusativ",
+      "choices": [
+        "Nominativ",
+        "Genitiv",
+        "Dativ"
+      ],
+      "info": "für den Freund, für die Oma",
+      "img": "🎯🎀"
+    },
+    {
+      "id": "012",
+      "q": "„Lena liest ein Buch.“ – Welches Satzglied ist „Lena“?",
+      "a": "Subjekt",
+      "choices": [
+        "Prädikat",
+        "Akkusativobjekt",
+        "Dativobjekt"
+      ],
+      "img": "👧📖"
+    },
+    {
+      "id": "013",
+      "q": "„Die Kinder spielen im Garten.“ – Was ist das Prädikat?",
+      "a": "spielen",
+      "choices": [
+        "Die Kinder",
+        "im Garten",
+        "Garten"
+      ],
+      "img": "🤸🌳"
+    },
+    {
+      "id": "014",
+      "q": "„Tim schenkt seiner Oma Blumen.“ – Satzglied „seiner Oma“?",
+      "a": "Dativobjekt",
+      "choices": [
+        "Akkusativobjekt",
+        "Subjekt",
+        "Genitivobjekt"
+      ],
+      "img": "👵🎁"
+    },
+    {
+      "id": "015",
+      "q": "„Tim schenkt seiner Oma Blumen.“ – Satzglied „Blumen“?",
+      "a": "Akkusativobjekt",
+      "choices": [
+        "Dativobjekt",
+        "Subjekt",
+        "Prädikat"
+      ],
+      "img": "💐🎯"
+    },
+    {
+      "id": "016",
+      "q": "„Wir treffen uns am Montag.“ – „am Montag“ ist eine adverbiale Bestimmung …",
+      "a": "der Zeit",
+      "choices": [
+        "des Ortes",
+        "der Art und Weise",
+        "des Grundes"
+      ],
+      "img": "🕒📅"
+    },
+    {
+      "id": "017",
+      "q": "„Er wohnt in Berlin.“ – „in Berlin“ ist eine adverbiale Bestimmung …",
+      "a": "des Ortes",
+      "choices": [
+        "der Zeit",
+        "der Art und Weise",
+        "des Grundes"
+      ],
+      "img": "📍🏙️"
+    },
+    {
+      "id": "018",
+      "q": "„Sie fehlt wegen einer Erkältung.“ – „wegen einer Erkältung“ ist adverbiale Bestimmung …",
+      "a": "des Grundes",
+      "choices": [
+        "der Zeit",
+        "des Ortes",
+        "der Art und Weise"
+      ],
+      "img": "🤧🤒"
+    },
+    {
+      "id": "019",
+      "q": "„Er singt laut.“ – „laut“ ist eine adverbiale Bestimmung …",
+      "a": "der Art und Weise",
+      "choices": [
+        "der Zeit",
+        "des Ortes",
+        "des Grundes"
+      ],
+      "img": "🎤🔊"
+    },
+    {
+      "id": "020",
+      "q": "Mit welcher Probe ermittelt man Satzglieder?",
+      "a": "Umstellprobe",
+      "choices": [
+        "Verlängerungsprobe",
+        "Silbenprobe",
+        "Rechtschreibprobe"
+      ],
+      "info": "Was beim Umstellen zusammenbleibt, ist ein Satzglied.",
+      "img": "🔄🧩"
+    },
+    {
+      "id": "021",
+      "q": "„Ich hoffe, ___ du morgen kommst.“",
+      "a": "dass",
+      "choices": [
+        "das",
+        "daß",
+        "was"
+      ],
+      "info": "dass leitet einen Nebensatz ein und lässt sich nicht durch „dieses/welches“ ersetzen.",
+      "img": "🤞🔗"
+    },
+    {
+      "id": "022",
+      "q": "„Das Fahrrad, ___ dort steht, gehört mir.“",
+      "a": "das",
+      "choices": [
+        "dass",
+        "was",
+        "den"
+      ],
+      "info": "Relativpronomen: ersetzbar durch „welches“.",
+      "img": "🚲👉"
+    },
+    {
+      "id": "023",
+      "q": "„___ Wetter ist heute schön.“",
+      "a": "Das",
+      "choices": [
+        "Dass",
+        "Was",
+        "Des"
+      ],
+      "info": "Artikel: ersetzbar durch „dieses“.",
+      "img": "🌤️"
+    },
+    {
+      "id": "024",
+      "q": "„Er sagt, ___ er müde ist.“",
+      "a": "dass",
+      "choices": [
+        "das",
+        "daß",
+        "was"
+      ],
+      "img": "🗣️😴"
+    },
+    {
+      "id": "025",
+      "q": "„das“ schreibt man mit einem s, wenn man es ersetzen kann durch …",
+      "a": "dieses, jenes oder welches",
+      "choices": [
+        "weil oder damit",
+        "ob oder wenn",
+        "und oder aber"
+      ],
+      "img": "👈👉❓"
+    },
+    {
+      "id": "026",
+      "q": "Zeitform: „Ich gehe nach Hause.“",
+      "a": "Präsens",
+      "choices": [
+        "Präteritum",
+        "Perfekt",
+        "Futur I"
+      ],
+      "img": "▶️🏠"
+    },
+    {
+      "id": "027",
+      "q": "Zeitform: „Ich ging nach Hause.“",
+      "a": "Präteritum",
+      "choices": [
+        "Präsens",
+        "Perfekt",
+        "Plusquamperfekt"
+      ],
+      "img": "📜🚶"
+    },
+    {
+      "id": "028",
+      "q": "Zeitform: „Ich bin nach Hause gegangen.“",
+      "a": "Perfekt",
+      "choices": [
+        "Präteritum",
+        "Plusquamperfekt",
+        "Futur II"
+      ],
+      "img": "✅🏠"
+    },
+    {
+      "id": "029",
+      "q": "Zeitform: „Ich war nach Hause gegangen.“",
+      "a": "Plusquamperfekt",
+      "choices": [
+        "Perfekt",
+        "Präteritum",
+        "Futur II"
+      ],
+      "img": "⏪⏪"
+    },
+    {
+      "id": "030",
+      "q": "Zeitform: „Ich werde nach Hause gehen.“",
+      "a": "Futur I",
+      "choices": [
+        "Futur II",
+        "Präsens",
+        "Perfekt"
+      ],
+      "img": "⏩🏠"
+    },
+    {
+      "id": "031",
+      "q": "Zeitform: „Ich werde nach Hause gegangen sein.“",
+      "a": "Futur II",
+      "choices": [
+        "Futur I",
+        "Plusquamperfekt",
+        "Perfekt"
+      ],
+      "img": "⏩✅"
+    },
+    {
+      "id": "032",
+      "q": "Perfekt von „Sie kommt.“",
+      "a": "Sie ist gekommen.",
+      "choices": [
+        "Sie hat gekommen.",
+        "Sie war gekommen.",
+        "Sie kam."
+      ],
+      "img": "🚪👋"
+    },
+    {
+      "id": "033",
+      "q": "Präteritum von „Wir singen.“",
+      "a": "Wir sangen.",
+      "choices": [
+        "Wir singten.",
+        "Wir sungen.",
+        "Wir haben gesungen."
+      ],
+      "img": "🎤🎶"
+    },
+    {
+      "id": "034",
+      "q": "Präteritum von „Er bringt.“",
+      "a": "Er brachte.",
+      "choices": [
+        "Er bringte.",
+        "Er brang.",
+        "Er bracht."
+      ],
+      "img": "📦🚚"
+    }
+  ]
+}

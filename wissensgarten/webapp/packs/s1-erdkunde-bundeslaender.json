@@ -1,0 +1,378 @@
+{
+  "id": "s1-erdkunde-bundeslaender",
+  "version": 2,
+  "title": "Deutschlands Bundesländer",
+  "subject": "erdkunde",
+  "grades": [
+    5,
+    6,
+    7
+  ],
+  "emoji": "🏔️",
+  "tier": "free",
+  "description": "Bundesländer und ihre Hauptstädte, dazu die wichtigsten Flüsse, Seen und Gebirge Deutschlands.",
+  "intro": [
+    {
+      "img": "🗺️🧩",
+      "text": "Deutschland ist wie ein Puzzle aus 16 Teilen – den Bundesländern! Jedes hat seine eigene Landeshauptstadt."
+    },
+    {
+      "img": "🏙️",
+      "text": "Drei Teile sind Städte und Land zugleich: Berlin, Hamburg und Bremen. Man nennt sie Stadtstaaten."
+    },
+    {
+      "img": "🧠⚠️",
+      "text": "Achtung Falle: Die größte Stadt ist nicht immer die Hauptstadt! In NRW regiert Düsseldorf (nicht Köln), in Hessen Wiesbaden (nicht Frankfurt)."
+    },
+    {
+      "img": "🏔️🌊",
+      "text": "Dazu Berge und Flüsse: Die Zugspitze (2962 m) ist der höchste Gipfel. Der Rhein fließt in die Nordsee, die Donau ins Schwarze Meer."
+    },
+    {
+      "img": "🐝🧭",
+      "text": "Auf zur Deutschland-Rundreise – ich fliege voraus!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele Bundesländer hat Deutschland?",
+      "a": "16",
+      "choices": [
+        "12",
+        "15",
+        "18"
+      ],
+      "info": "Seit der Wiedervereinigung 1990 besteht Deutschland aus 16 Ländern.",
+      "img": "🗺️1️⃣6️⃣"
+    },
+    {
+      "id": "002",
+      "q": "Landeshauptstadt von Bayern?",
+      "a": "München",
+      "choices": [
+        "Nürnberg",
+        "Augsburg",
+        "Regensburg"
+      ],
+      "img": "🥨⛪"
+    },
+    {
+      "id": "003",
+      "q": "Landeshauptstadt von Baden-Württemberg?",
+      "a": "Stuttgart",
+      "img": "🚗🐴"
+    },
+    {
+      "id": "004",
+      "q": "Landeshauptstadt von Nordrhein-Westfalen?",
+      "a": "Düsseldorf",
+      "choices": [
+        "Köln",
+        "Dortmund",
+        "Bonn"
+      ],
+      "info": "Köln ist die größte Stadt in NRW, Hauptstadt ist aber Düsseldorf.",
+      "img": "🎨🌊🏙️"
+    },
+    {
+      "id": "005",
+      "q": "Landeshauptstadt von Niedersachsen?",
+      "a": "Hannover",
+      "img": "🐴🎡"
+    },
+    {
+      "id": "006",
+      "q": "Landeshauptstadt von Hessen?",
+      "a": "Wiesbaden",
+      "choices": [
+        "Frankfurt am Main",
+        "Kassel",
+        "Darmstadt"
+      ],
+      "info": "Frankfurt ist die größte Stadt Hessens, Regierungssitz ist Wiesbaden.",
+      "img": "♨️🍇"
+    },
+    {
+      "id": "007",
+      "q": "Landeshauptstadt von Rheinland-Pfalz?",
+      "a": "Mainz",
+      "img": "🎭⛪🍷"
+    },
+    {
+      "id": "008",
+      "q": "Landeshauptstadt des Saarlandes?",
+      "a": "Saarbrücken",
+      "img": "⚒️🌲"
+    },
+    {
+      "id": "009",
+      "q": "Landeshauptstadt von Sachsen?",
+      "a": "Dresden",
+      "choices": [
+        "Leipzig",
+        "Chemnitz",
+        "Zwickau"
+      ],
+      "img": "🎻🏰🌉"
+    },
+    {
+      "id": "010",
+      "q": "Landeshauptstadt von Sachsen-Anhalt?",
+      "a": "Magdeburg",
+      "choices": [
+        "Halle (Saale)",
+        "Dessau-Roßlau"
+      ],
+      "img": "🏰⛪🍴"
+    },
+    {
+      "id": "011",
+      "q": "Landeshauptstadt von Thüringen?",
+      "a": "Erfurt",
+      "img": "🌭⛪"
+    },
+    {
+      "id": "012",
+      "q": "Landeshauptstadt von Brandenburg?",
+      "a": "Potsdam",
+      "choices": [
+        "Cottbus",
+        "Frankfurt (Oder)"
+      ],
+      "img": "🏰🌳👑"
+    },
+    {
+      "id": "013",
+      "q": "Landeshauptstadt von Mecklenburg-Vorpommern?",
+      "a": "Schwerin",
+      "choices": [
+        "Rostock",
+        "Stralsund",
+        "Greifswald"
+      ],
+      "info": "Rostock ist die größte Stadt des Landes, Hauptstadt ist Schwerin.",
+      "img": "🏰🦢💧"
+    },
+    {
+      "id": "014",
+      "q": "Landeshauptstadt von Schleswig-Holstein?",
+      "a": "Kiel",
+      "img": "⛵🌊"
+    },
+    {
+      "id": "015",
+      "q": "Welche drei Bundesländer sind Stadtstaaten?",
+      "a": "Berlin, Hamburg und Bremen",
+      "info": "Bei Stadtstaaten ist die Stadt selbst ein Bundesland. Zum Land Bremen gehört auch Bremerhaven.",
+      "img": "🐻⚓🐓"
+    },
+    {
+      "id": "016",
+      "q": "Welches Bundesland ist flächenmäßig das größte?",
+      "a": "Bayern",
+      "choices": [
+        "Niedersachsen",
+        "Baden-Württemberg",
+        "Nordrhein-Westfalen"
+      ],
+      "img": "🥨🏔️"
+    },
+    {
+      "id": "017",
+      "q": "Welches Bundesland hat die meisten Einwohner?",
+      "a": "Nordrhein-Westfalen",
+      "choices": [
+        "Bayern",
+        "Baden-Württemberg",
+        "Niedersachsen"
+      ],
+      "info": "In NRW leben rund 18 Millionen Menschen.",
+      "img": "🏭👥"
+    },
+    {
+      "id": "018",
+      "q": "Welches Bundesland ist flächenmäßig das kleinste?",
+      "a": "Bremen",
+      "choices": [
+        "Saarland",
+        "Hamburg",
+        "Berlin"
+      ],
+      "img": "🐓🎺"
+    },
+    {
+      "id": "019",
+      "q": "Wie heißt der höchste Berg Deutschlands?",
+      "a": "Zugspitze",
+      "choices": [
+        "Watzmann",
+        "Feldberg",
+        "Brocken"
+      ],
+      "info": "Die Zugspitze ist 2962 m hoch und liegt in Bayern an der Grenze zu Österreich.",
+      "img": "🏔️👑"
+    },
+    {
+      "id": "020",
+      "q": "Wie hoch ist die Zugspitze ungefähr?",
+      "a": "2962 m",
+      "img": "🏔️📏"
+    },
+    {
+      "id": "021",
+      "q": "Wie heißt der höchste Berg im Harz?",
+      "a": "Brocken",
+      "choices": [
+        "Fichtelberg",
+        "Feldberg",
+        "Großer Arber"
+      ],
+      "info": "Der Brocken (1141 m) liegt in Sachsen-Anhalt.",
+      "img": "🧙🌫️⛰️"
+    },
+    {
+      "id": "022",
+      "q": "Wie heißt der höchste Berg im Schwarzwald?",
+      "a": "Feldberg",
+      "info": "Der Feldberg ist 1493 m hoch.",
+      "img": "🌲🎂⛰️"
+    },
+    {
+      "id": "023",
+      "q": "Welches Mittelgebirge bildet einen Teil der Grenze zwischen Sachsen und Tschechien?",
+      "a": "Erzgebirge",
+      "choices": [
+        "Harz",
+        "Rhön",
+        "Eifel"
+      ],
+      "img": "⛏️🎄"
+    },
+    {
+      "id": "024",
+      "q": "Welcher Fluss hat den längsten Lauf innerhalb Deutschlands?",
+      "a": "Rhein",
+      "choices": [
+        "Elbe",
+        "Donau",
+        "Weser"
+      ],
+      "info": "Rund 865 km des Rheins liegen in Deutschland.",
+      "img": "🏞️🚢"
+    },
+    {
+      "id": "025",
+      "q": "In welches Meer mündet der Rhein?",
+      "a": "Nordsee",
+      "choices": [
+        "Ostsee",
+        "Schwarzes Meer",
+        "Mittelmeer"
+      ],
+      "img": "🌊⛵"
+    },
+    {
+      "id": "026",
+      "q": "In welches Meer mündet die Donau?",
+      "a": "Schwarzes Meer",
+      "choices": [
+        "Nordsee",
+        "Ostsee",
+        "Mittelmeer"
+      ],
+      "info": "Die Donau entspringt im Schwarzwald und fließt nach Osten.",
+      "img": "🌊⚫"
+    },
+    {
+      "id": "027",
+      "q": "Welcher große Fluss fließt durch Hamburg?",
+      "a": "Elbe",
+      "img": "🏙️⚓🚢"
+    },
+    {
+      "id": "028",
+      "q": "Welcher Fluss fließt durch Berlin?",
+      "a": "Spree",
+      "choices": [
+        "Oder",
+        "Elbe",
+        "Saale"
+      ],
+      "img": "🐻🌊"
+    },
+    {
+      "id": "029",
+      "q": "Durch welche Stadt fließt die Isar?",
+      "a": "München",
+      "choices": [
+        "Nürnberg",
+        "Augsburg",
+        "Regensburg"
+      ],
+      "img": "🥨🌊"
+    },
+    {
+      "id": "030",
+      "q": "Bei welcher Stadt mündet die Mosel in den Rhein?",
+      "a": "Koblenz",
+      "info": "Die Landzunge an der Mündung heißt Deutsches Eck.",
+      "img": "🏰🔱"
+    },
+    {
+      "id": "031",
+      "q": "Welcher Fluss bildet einen großen Teil der Grenze zu Polen?",
+      "a": "Oder",
+      "info": "Oder und Neiße bilden zusammen die deutsch-polnische Grenze.",
+      "img": "🌊🌉🏞️"
+    },
+    {
+      "id": "032",
+      "q": "Wie heißt der größte See, der ganz in Deutschland liegt?",
+      "a": "Müritz",
+      "choices": [
+        "Chiemsee",
+        "Starnberger See",
+        "Steinhuder Meer"
+      ],
+      "info": "Die Müritz liegt in Mecklenburg-Vorpommern.",
+      "img": "🦢🏞️"
+    },
+    {
+      "id": "033",
+      "q": "An welchem See grenzen Deutschland, Österreich und die Schweiz aneinander?",
+      "a": "Bodensee",
+      "img": "⛵🏔️"
+    },
+    {
+      "id": "034",
+      "q": "Welche ist die größte Insel Deutschlands?",
+      "a": "Rügen",
+      "choices": [
+        "Usedom",
+        "Sylt",
+        "Fehmarn"
+      ],
+      "info": "Rügen liegt in der Ostsee und gehört zu Mecklenburg-Vorpommern.",
+      "img": "🏝️⛰️"
+    },
+    {
+      "id": "035",
+      "q": "An welche zwei Meere grenzt Deutschland?",
+      "a": "Nordsee und Ostsee",
+      "img": "🌊🐚🌊"
+    },
+    {
+      "id": "036",
+      "q": "Wie viele Nachbarländer hat Deutschland?",
+      "a": "9",
+      "choices": [
+        "7",
+        "8",
+        "10"
+      ],
+      "info": "Dänemark, Polen, Tschechien, Österreich, Schweiz, Frankreich, Luxemburg, Belgien, Niederlande.",
+      "img": "🏡9️⃣"
+    }
+  ]
+}

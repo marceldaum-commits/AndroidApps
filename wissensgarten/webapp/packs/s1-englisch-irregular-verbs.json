@@ -1,0 +1,484 @@
+{
+  "id": "s1-englisch-irregular-verbs",
+  "version": 2,
+  "title": "Irregular Verbs",
+  "subject": "englisch",
+  "grades": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "emoji": "📝",
+  "tier": "free",
+  "description": "Die wichtigsten unregelmäßigen englischen Verben mit Simple Past und Past Participle.",
+  "intro": [
+    {
+      "img": "🚶💨",
+      "text": "Wusstest du, dass „went“ eigentlich gar nicht von „go“ kommt? Es stammt vom alten Verb „wend“ – verwandt mit unserem „wenden“!"
+    },
+    {
+      "img": "📝🔀",
+      "text": "Die meisten Verben bilden die Vergangenheit mit -ed: play – played. Unregelmäßige Verben machen ihr eigenes Ding: see – saw – seen."
+    },
+    {
+      "img": "🎵🔁",
+      "text": "Lerntrick: Sprich die drei Formen wie einen Rap: „go – went – gone“, „see – saw – seen“. Der Rhythmus bleibt im Kopf hängen!"
+    },
+    {
+      "img": "🧩👀",
+      "text": "Noch ein Trick: Lern Verben in Gruppen, die gleich klingen: sing – sang – sung, drink – drank – drunk, swim – swam – swum."
+    },
+    {
+      "img": "💪🚀",
+      "text": "Die wichtigsten Verben brauchst du in fast jedem Satz. Ready? Let’s go!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "to go",
+      "a": "went – gone",
+      "choices": [
+        "goed – goed",
+        "gone – went",
+        "went – went"
+      ],
+      "info": "I went home. – I have gone home.",
+      "img": "🚶💨"
+    },
+    {
+      "id": "002",
+      "q": "to be",
+      "a": "was/were – been",
+      "choices": [
+        "was/were – be",
+        "been – was/were",
+        "is/are – been"
+      ],
+      "info": "I was, you were – I have been.",
+      "img": "🧘"
+    },
+    {
+      "id": "003",
+      "q": "to have",
+      "a": "had – had",
+      "choices": [
+        "haved – haved",
+        "had – haven",
+        "has – had"
+      ],
+      "img": "🎁🤲"
+    },
+    {
+      "id": "004",
+      "q": "to do",
+      "a": "did – done",
+      "choices": [
+        "done – did",
+        "did – did",
+        "doed – done"
+      ],
+      "img": "🛠️"
+    },
+    {
+      "id": "005",
+      "q": "to see",
+      "a": "saw – seen",
+      "choices": [
+        "seen – saw",
+        "saw – sawn",
+        "seed – seen"
+      ],
+      "img": "👀"
+    },
+    {
+      "id": "006",
+      "q": "to come",
+      "a": "came – come",
+      "choices": [
+        "came – came",
+        "comed – come",
+        "come – came"
+      ],
+      "info": "Das Past Participle sieht aus wie der Infinitiv.",
+      "img": "🏃🏠"
+    },
+    {
+      "id": "007",
+      "q": "to take",
+      "a": "took – taken",
+      "choices": [
+        "taked – taken",
+        "took – took",
+        "taken – took"
+      ],
+      "img": "📸"
+    },
+    {
+      "id": "008",
+      "q": "to give",
+      "a": "gave – given",
+      "choices": [
+        "gived – given",
+        "gave – gave",
+        "given – gave"
+      ],
+      "img": "🎁"
+    },
+    {
+      "id": "009",
+      "q": "to eat",
+      "a": "ate – eaten",
+      "choices": [
+        "eated – eaten",
+        "ate – ate",
+        "eaten – ate"
+      ],
+      "img": "🍔😋"
+    },
+    {
+      "id": "010",
+      "q": "to drink",
+      "a": "drank – drunk",
+      "choices": [
+        "drunk – drank",
+        "drank – drank",
+        "drinked – drunk"
+      ],
+      "img": "🥤"
+    },
+    {
+      "id": "011",
+      "q": "to write",
+      "a": "wrote – written",
+      "choices": [
+        "writed – written",
+        "wrote – wrote",
+        "written – wrote"
+      ],
+      "img": "✍️📝"
+    },
+    {
+      "id": "012",
+      "q": "to speak",
+      "a": "spoke – spoken",
+      "choices": [
+        "speaked – spoken",
+        "spoke – spoke",
+        "spoken – spoke"
+      ],
+      "img": "🗣️"
+    },
+    {
+      "id": "013",
+      "q": "to know",
+      "a": "knew – known",
+      "choices": [
+        "knowed – known",
+        "knew – knew",
+        "known – knew"
+      ],
+      "img": "🧠💡"
+    },
+    {
+      "id": "014",
+      "q": "to buy",
+      "a": "bought – bought",
+      "choices": [
+        "brought – brought",
+        "buyed – buyed",
+        "bought – buyen"
+      ],
+      "info": "Nicht verwechseln: buy – bought (kaufen), bring – brought (bringen).",
+      "img": "🛒💳"
+    },
+    {
+      "id": "015",
+      "q": "to bring",
+      "a": "brought – brought",
+      "choices": [
+        "bought – bought",
+        "bringed – bringed",
+        "brang – brung"
+      ],
+      "img": "🍕🛵"
+    },
+    {
+      "id": "016",
+      "q": "to think",
+      "a": "thought – thought",
+      "choices": [
+        "thinked – thinked",
+        "thank – thunk",
+        "taught – taught"
+      ],
+      "img": "🤔"
+    },
+    {
+      "id": "017",
+      "q": "to catch",
+      "a": "caught – caught",
+      "choices": [
+        "catched – catched",
+        "cought – cought",
+        "caught – catchen"
+      ],
+      "img": "⚾🧤"
+    },
+    {
+      "id": "018",
+      "q": "to teach",
+      "a": "taught – taught",
+      "choices": [
+        "teached – teached",
+        "thought – thought",
+        "tought – tought"
+      ],
+      "img": "🎓📖"
+    },
+    {
+      "id": "019",
+      "q": "to swim",
+      "a": "swam – swum",
+      "choices": [
+        "swum – swam",
+        "swimmed – swimmed",
+        "swam – swam"
+      ],
+      "img": "🏊🌊"
+    },
+    {
+      "id": "020",
+      "q": "to sing",
+      "a": "sang – sung",
+      "choices": [
+        "sung – sang",
+        "singed – singed",
+        "sang – sang"
+      ],
+      "img": "🎙️🎵"
+    },
+    {
+      "id": "021",
+      "q": "to begin",
+      "a": "began – begun",
+      "choices": [
+        "begun – began",
+        "beginned – beginned",
+        "began – began"
+      ],
+      "img": "🔛🚀"
+    },
+    {
+      "id": "022",
+      "q": "to run",
+      "a": "ran – run",
+      "choices": [
+        "runned – runned",
+        "ran – ran",
+        "run – ran"
+      ],
+      "img": "🏃💨"
+    },
+    {
+      "id": "023",
+      "q": "to sleep",
+      "a": "slept – slept",
+      "choices": [
+        "sleeped – sleeped",
+        "slep – slep",
+        "slept – sleepen"
+      ],
+      "img": "😴💤"
+    },
+    {
+      "id": "024",
+      "q": "to leave",
+      "a": "left – left",
+      "choices": [
+        "leaved – leaved",
+        "lived – lived",
+        "left – leaven"
+      ],
+      "img": "🚪👋"
+    },
+    {
+      "id": "025",
+      "q": "to feel",
+      "a": "felt – felt",
+      "choices": [
+        "feeled – feeled",
+        "fell – fallen",
+        "fealt – fealt"
+      ],
+      "img": "❤️🤗"
+    },
+    {
+      "id": "026",
+      "q": "to find",
+      "a": "found – found",
+      "choices": [
+        "finded – finded",
+        "fand – founden",
+        "found – finden"
+      ],
+      "img": "🔍💎"
+    },
+    {
+      "id": "027",
+      "q": "to make",
+      "a": "made – made",
+      "choices": [
+        "maked – maked",
+        "made – maken",
+        "mad – mad"
+      ],
+      "img": "🔨🏗️"
+    },
+    {
+      "id": "028",
+      "q": "to say",
+      "a": "said – said",
+      "choices": [
+        "sayed – sayed",
+        "sed – sed",
+        "said – sayen"
+      ],
+      "img": "💬"
+    },
+    {
+      "id": "029",
+      "q": "to tell",
+      "a": "told – told",
+      "choices": [
+        "telled – telled",
+        "tolled – tolled",
+        "told – tellen"
+      ],
+      "img": "📖🗣️"
+    },
+    {
+      "id": "030",
+      "q": "to sit",
+      "a": "sat – sat",
+      "choices": [
+        "sitted – sitted",
+        "set – set",
+        "sat – sitten"
+      ],
+      "img": "🛋️"
+    },
+    {
+      "id": "031",
+      "q": "to stand",
+      "a": "stood – stood",
+      "choices": [
+        "standed – standed",
+        "stud – stud",
+        "stood – standen"
+      ],
+      "img": "🗽"
+    },
+    {
+      "id": "032",
+      "q": "to fly",
+      "a": "flew – flown",
+      "choices": [
+        "flied – flied",
+        "flown – flew",
+        "flew – flew"
+      ],
+      "img": "🦅✈️"
+    },
+    {
+      "id": "033",
+      "q": "to break",
+      "a": "broke – broken",
+      "choices": [
+        "breaked – breaked",
+        "broken – broke",
+        "broke – broke"
+      ],
+      "img": "🥚💥"
+    },
+    {
+      "id": "034",
+      "q": "to choose",
+      "a": "chose – chosen",
+      "choices": [
+        "choosed – choosed",
+        "chosen – chose",
+        "chose – chose"
+      ],
+      "img": "🔀✅"
+    },
+    {
+      "id": "035",
+      "q": "to forget",
+      "a": "forgot – forgotten",
+      "choices": [
+        "forgetted – forgetted",
+        "forgotten – forgot",
+        "forgot – forgetten"
+      ],
+      "img": "🔑❓"
+    },
+    {
+      "id": "036",
+      "q": "to ride",
+      "a": "rode – ridden",
+      "choices": [
+        "rided – rided",
+        "ridden – rode",
+        "rode – rode"
+      ],
+      "img": "🏇"
+    },
+    {
+      "id": "037",
+      "q": "to wear",
+      "a": "wore – worn",
+      "choices": [
+        "weared – weared",
+        "worn – wore",
+        "wore – wore"
+      ],
+      "img": "👕👖"
+    },
+    {
+      "id": "038",
+      "q": "to throw",
+      "a": "threw – thrown",
+      "choices": [
+        "throwed – throwed",
+        "thrown – threw",
+        "threw – threw"
+      ],
+      "img": "🏈🤾"
+    },
+    {
+      "id": "039",
+      "q": "to fall",
+      "a": "fell – fallen",
+      "choices": [
+        "falled – falled",
+        "felt – felt",
+        "fallen – fell"
+      ],
+      "img": "🍂⬇️"
+    },
+    {
+      "id": "040",
+      "q": "to get",
+      "a": "got – got",
+      "choices": [
+        "getted – getted",
+        "gat – gotten",
+        "get – got"
+      ],
+      "info": "Im amerikanischen Englisch lautet das Past Participle meist „gotten“.",
+      "img": "📬✅"
+    }
+  ]
+}

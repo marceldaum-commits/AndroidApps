@@ -1,0 +1,381 @@
+{
+  "id": "gs-plus-minus-20",
+  "version": 4,
+  "title": "Plus und Minus bis 20",
+  "subject": "mathe",
+  "grades": [
+    1
+  ],
+  "emoji": "🎈",
+  "tier": "free",
+  "description": "Plusaufgaben und Minusaufgaben im Zahlenraum bis 20 üben.",
+  "intro": [
+    {
+      "img": "🖐️🖐️",
+      "text": "Wie viele Finger hast du? 10! Zwei Kinder haben zusammen 20 Finger. Bis 20 rechnen wir heute!"
+    },
+    {
+      "img": "🍎➕🍎",
+      "text": "Plus heißt: dazu. 3 Äpfel und 4 Äpfel dazu – das sind 7 Äpfel."
+    },
+    {
+      "img": "🔟🚀",
+      "text": "Trick: Erst bis zur 10! Bei 8 + 5 rechnest du 8 + 2 = 10, dann noch 3 dazu. Das ist 13."
+    },
+    {
+      "img": "🎈➖",
+      "text": "Minus heißt: weg. 15 − 7: Erst 5 weg, dann bist du bei 10. Dann noch 2 weg – das ist 8."
+    },
+    {
+      "img": "🎳9️⃣",
+      "text": "Merkbild für die 9: Beim Kegeln stehen 9 Kegel – wer alle umwirft, ruft „Alle Neune!“. Siehst du 🎳, denk an die 9."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "3 + 4",
+      "a": "7",
+      "choices": [
+        "6",
+        "8",
+        "5"
+      ],
+      "img": "☘️➕🍀"
+    },
+    {
+      "id": "002",
+      "q": "8 + 5",
+      "a": "13",
+      "choices": [
+        "12",
+        "14",
+        "15"
+      ],
+      "info": "Tipp: 8 + 2 = 10, dann noch 3 dazu.",
+      "img": "🐙➕🖐️"
+    },
+    {
+      "id": "003",
+      "q": "9 + 6",
+      "a": "15",
+      "choices": [
+        "14",
+        "16",
+        "13"
+      ],
+      "info": "Tipp: 9 + 1 = 10, dann noch 5 dazu.",
+      "img": "🎳➕🐜"
+    },
+    {
+      "id": "004",
+      "q": "7 + 7",
+      "a": "14",
+      "choices": [
+        "13",
+        "15",
+        "12"
+      ],
+      "info": "Verdoppeln: 7 + 7 = 14",
+      "img": "🌈🌈"
+    },
+    {
+      "id": "005",
+      "q": "12 + 5",
+      "a": "17",
+      "choices": [
+        "16",
+        "18",
+        "15"
+      ],
+      "img": "🕛➕🖐️"
+    },
+    {
+      "id": "006",
+      "q": "6 + 8",
+      "a": "14",
+      "choices": [
+        "13",
+        "15",
+        "12"
+      ],
+      "img": "🐜➕🕷️"
+    },
+    {
+      "id": "007",
+      "q": "10 + 9",
+      "a": "19",
+      "choices": [
+        "18",
+        "20",
+        "17"
+      ],
+      "img": "👐➕🎳"
+    },
+    {
+      "id": "008",
+      "q": "11 + 7",
+      "a": "18",
+      "choices": [
+        "17",
+        "19",
+        "16"
+      ],
+      "img": "⚽➕🌈"
+    },
+    {
+      "id": "009",
+      "q": "4 + 9",
+      "a": "13",
+      "choices": [
+        "12",
+        "14",
+        "11"
+      ],
+      "img": "🍀➕🎳"
+    },
+    {
+      "id": "010",
+      "q": "15 + 3",
+      "a": "18",
+      "choices": [
+        "17",
+        "19",
+        "16"
+      ],
+      "img": "1️⃣5️⃣➕☘️"
+    },
+    {
+      "id": "011",
+      "q": "9 − 4",
+      "a": "5",
+      "choices": [
+        "4",
+        "6",
+        "3"
+      ],
+      "img": "🎳➖🍀"
+    },
+    {
+      "id": "012",
+      "q": "13 − 5",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "6"
+      ],
+      "info": "Tipp: 13 − 3 = 10, dann noch 2 weg.",
+      "img": "🍪➖🖐️"
+    },
+    {
+      "id": "013",
+      "q": "17 − 9",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "10"
+      ],
+      "img": "🕷️"
+    },
+    {
+      "id": "014",
+      "q": "20 − 6",
+      "a": "14",
+      "choices": [
+        "13",
+        "15",
+        "12"
+      ],
+      "img": "🎈➖🎲"
+    },
+    {
+      "id": "015",
+      "q": "15 − 7",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "6"
+      ],
+      "img": "1️⃣5️⃣➖🌈"
+    },
+    {
+      "id": "016",
+      "q": "18 − 10",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "10"
+      ],
+      "img": "🎂➖🔟"
+    },
+    {
+      "id": "017",
+      "q": "12 − 8",
+      "a": "4",
+      "choices": [
+        "3",
+        "5",
+        "6"
+      ],
+      "img": "🥚➖🕷️"
+    },
+    {
+      "id": "018",
+      "q": "16 − 4",
+      "a": "12",
+      "choices": [
+        "11",
+        "13",
+        "10"
+      ],
+      "img": "🕛"
+    },
+    {
+      "id": "019",
+      "q": "11 − 3",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "6"
+      ],
+      "img": "⚽➖☘️"
+    },
+    {
+      "id": "020",
+      "q": "14 − 9",
+      "a": "5",
+      "choices": [
+        "4",
+        "6",
+        "3"
+      ],
+      "img": "🖐️"
+    },
+    {
+      "id": "021",
+      "q": "5 + ? = 12",
+      "a": "7",
+      "choices": [
+        "6",
+        "8",
+        "17"
+      ],
+      "info": "Probe: 5 + 7 = 12",
+      "img": "🖐️❓🕛"
+    },
+    {
+      "id": "022",
+      "q": "? + 8 = 15",
+      "a": "7",
+      "choices": [
+        "6",
+        "8",
+        "9"
+      ],
+      "info": "Probe: 7 + 8 = 15",
+      "img": "❓🐙"
+    },
+    {
+      "id": "023",
+      "q": "20 − ? = 13",
+      "a": "7",
+      "choices": [
+        "6",
+        "8",
+        "9"
+      ],
+      "info": "Probe: 20 − 7 = 13",
+      "img": "🎈❓"
+    },
+    {
+      "id": "024",
+      "q": "Lisa hat 8 Äpfel. Sie bekommt 6 dazu. Wie viele hat sie jetzt?",
+      "a": "14",
+      "choices": [
+        "13",
+        "15",
+        "2"
+      ],
+      "info": "8 + 6 = 14",
+      "img": "🍎🍎👧"
+    },
+    {
+      "id": "025",
+      "q": "Tom hat 15 Murmeln und verliert 7. Wie viele hat er noch?",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "22"
+      ],
+      "info": "15 − 7 = 8",
+      "img": "🔵👦😢"
+    },
+    {
+      "id": "026",
+      "q": "Was ist das Doppelte von 9?",
+      "a": "18",
+      "choices": [
+        "16",
+        "17",
+        "19"
+      ],
+      "info": "9 + 9 = 18",
+      "img": "🎳🎳"
+    },
+    {
+      "id": "027",
+      "q": "Was ist die Hälfte von 16?",
+      "a": "8",
+      "choices": [
+        "6",
+        "7",
+        "9"
+      ],
+      "info": "8 + 8 = 16",
+      "img": "✂️🍕"
+    },
+    {
+      "id": "028",
+      "q": "Welche Zahl kommt nach 19?",
+      "a": "20",
+      "choices": [
+        "18",
+        "21",
+        "10"
+      ],
+      "img": "➡️🎉"
+    },
+    {
+      "id": "029",
+      "q": "Welche Zahl liegt zwischen 13 und 15?",
+      "a": "14",
+      "choices": [
+        "12",
+        "16",
+        "15"
+      ],
+      "img": "🥪"
+    },
+    {
+      "id": "030",
+      "q": "6 + 6 + 6",
+      "a": "18",
+      "choices": [
+        "16",
+        "12",
+        "17"
+      ],
+      "img": "🎲🎲🎲"
+    }
+  ]
+}

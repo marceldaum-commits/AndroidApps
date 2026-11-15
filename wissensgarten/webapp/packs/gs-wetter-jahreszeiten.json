@@ -1,0 +1,411 @@
+{
+  "id": "gs-wetter-jahreszeiten",
+  "version": 1,
+  "title": "Wetter und Jahreszeiten",
+  "subject": "sachunterricht",
+  "grades": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "emoji": "🌦️",
+  "tier": "free",
+  "description": "Sonne, Regen, Blitz und Schnee – entdecke Wetter und Jahreszeiten.",
+  "intro": [
+    {
+      "img": "🐝🌦️",
+      "text": "Hallo, ich bin Brummi! Ich schaue jeden Morgen zum Himmel. Wie wird das Wetter heute?"
+    },
+    {
+      "img": "🌷☀️🍂❄️",
+      "text": "Es gibt vier Jahreszeiten: Frühling, Sommer, Herbst und Winter. Jede dauert etwa drei Monate."
+    },
+    {
+      "img": "☀️💧☁️",
+      "text": "Die Sonne wärmt das Wasser. Es steigt hoch und wird zur Wolke. Dann regnet es wieder."
+    },
+    {
+      "img": "⚡⏱️",
+      "text": "Blitz gesehen? Zähl bis zum Donner! Etwa 3 Sekunden sind 1 Kilometer."
+    },
+    {
+      "img": "🦔💤",
+      "text": "Tiere haben Tricks für den Winter: Manche schlafen, andere fliegen in den warmen Süden."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's, kleiner Wetterforscher! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "In welcher Jahreszeit ist Weihnachten?",
+      "a": "Winter",
+      "choices": [
+        "Frühling",
+        "Sommer",
+        "Herbst"
+      ],
+      "img": "🎁🕯️"
+    },
+    {
+      "id": "002",
+      "q": "Zu welcher Jahreszeit gehört der Mai?",
+      "a": "Frühling",
+      "choices": [
+        "Sommer",
+        "Herbst",
+        "Winter"
+      ],
+      "img": "📅"
+    },
+    {
+      "id": "003",
+      "q": "Zu welcher Jahreszeit gehört der Oktober?",
+      "a": "Herbst",
+      "choices": [
+        "Frühling",
+        "Sommer",
+        "Winter"
+      ],
+      "img": "📅"
+    },
+    {
+      "id": "004",
+      "q": "Welcher Monat gehört zum Winter?",
+      "a": "Januar",
+      "choices": [
+        "April",
+        "Juni",
+        "Oktober"
+      ],
+      "info": "Zum Winter gehören Dezember, Januar und Februar.",
+      "img": "📅❄️"
+    },
+    {
+      "id": "005",
+      "q": "Wie viele Monate hat ein Jahr?",
+      "a": "12",
+      "choices": [
+        "10",
+        "4",
+        "52"
+      ],
+      "info": "Ein Jahr hat 12 Monate und 52 Wochen.",
+      "img": "📅"
+    },
+    {
+      "id": "006",
+      "q": "Wie viele Monate dauert eine Jahreszeit ungefähr?",
+      "a": "3",
+      "choices": [
+        "1",
+        "4",
+        "6"
+      ],
+      "info": "4 Jahreszeiten mal 3 Monate sind 12 Monate.",
+      "img": "📅🔄"
+    },
+    {
+      "id": "007",
+      "q": "In welchem Monat beginnt der Sommer?",
+      "a": "Juni",
+      "choices": [
+        "März",
+        "September",
+        "Dezember"
+      ],
+      "info": "Der Sommer beginnt am 21. Juni.",
+      "img": "☀️📅"
+    },
+    {
+      "id": "008",
+      "q": "Was ist Nebel?",
+      "a": "Eine Wolke am Boden",
+      "choices": [
+        "Rauch vom Feuer",
+        "Gefrorener Regen",
+        "Starker Wind"
+      ],
+      "info": "Nebel besteht aus winzigen Wassertröpfchen – wie eine Wolke.",
+      "img": "🌫️"
+    },
+    {
+      "id": "009",
+      "q": "Wo muss die Sonne stehen, damit du einen Regenbogen siehst?",
+      "a": "Hinter dir",
+      "choices": [
+        "Vor dir",
+        "Genau über dir",
+        "Hinter den Wolken"
+      ],
+      "info": "Die Sonne ist in deinem Rücken, der Regen vor dir.",
+      "img": "🌦️👀"
+    },
+    {
+      "id": "010",
+      "q": "Wie viele Farben zählt man meist im Regenbogen?",
+      "a": "7",
+      "choices": [
+        "3",
+        "5",
+        "10"
+      ],
+      "img": "🌈"
+    },
+    {
+      "id": "011",
+      "q": "Welche Farbe ist ganz außen im Regenbogen?",
+      "a": "Rot",
+      "choices": [
+        "Violett",
+        "Grün",
+        "Gelb"
+      ],
+      "info": "Außen ist Rot, innen ist Violett.",
+      "img": "🌈"
+    },
+    {
+      "id": "012",
+      "q": "Wie nennt man sehr starken Wind?",
+      "a": "Sturm",
+      "choices": [
+        "Nebel",
+        "Frost",
+        "Tau"
+      ],
+      "img": "💨🌳"
+    },
+    {
+      "id": "013",
+      "q": "Was ist Tau?",
+      "a": "Tropfen im Gras am Morgen",
+      "choices": [
+        "Eis auf dem See",
+        "Schnee auf dem Dach",
+        "Ein dicker Nebel"
+      ],
+      "info": "Nachts kühlt die Luft ab. Dann bilden sich kleine Tropfen.",
+      "img": "🌱💧"
+    },
+    {
+      "id": "014",
+      "q": "Das Thermometer zeigt 30 °C. Wie ist es draußen?",
+      "a": "Heiß",
+      "choices": [
+        "Eiskalt",
+        "Kühl",
+        "Frostig"
+      ],
+      "img": "🌡️"
+    },
+    {
+      "id": "015",
+      "q": "Es sind −5 °C. Was passiert mit Pfützen?",
+      "a": "Sie frieren zu",
+      "choices": [
+        "Sie kochen",
+        "Sie werden warm",
+        "Sie werden größer"
+      ],
+      "info": "Unter 0 °C wird Wasser zu Eis.",
+      "img": "🌡️💧"
+    },
+    {
+      "id": "016",
+      "q": "In welcher Einheit messen wir die Temperatur?",
+      "a": "Grad Celsius",
+      "choices": [
+        "Meter",
+        "Kilogramm",
+        "Liter"
+      ],
+      "img": "🌡️"
+    },
+    {
+      "id": "017",
+      "q": "Wie nennt man Temperaturen unter 0 °C?",
+      "a": "Minusgrade",
+      "choices": [
+        "Plusgrade",
+        "Hitzegrade",
+        "Nullgrade"
+      ],
+      "img": "🌡️❄️"
+    },
+    {
+      "id": "018",
+      "q": "Was passiert mit Wasser, wenn die Sonne es wärmt?",
+      "a": "Es verdunstet",
+      "choices": [
+        "Es gefriert",
+        "Es wird zu Stein",
+        "Es wird salzig"
+      ],
+      "info": "Das Wasser steigt unsichtbar als Wasserdampf nach oben.",
+      "img": "☀️💧"
+    },
+    {
+      "id": "019",
+      "q": "Woraus bestehen Wolken?",
+      "a": "Aus Wassertröpfchen",
+      "choices": [
+        "Aus Watte",
+        "Aus Rauch",
+        "Aus Luftblasen"
+      ],
+      "img": "☁️"
+    },
+    {
+      "id": "020",
+      "q": "Wie heißt der Weg des Wassers: Meer, Wolke, Regen, Meer?",
+      "a": "Wasserkreislauf",
+      "choices": [
+        "Wasserfall",
+        "Wasserrad",
+        "Regenrinne"
+      ],
+      "info": "Das Wasser wandert immer im Kreis – seit Millionen Jahren.",
+      "img": "🌊☁️🌧️"
+    },
+    {
+      "id": "021",
+      "q": "Was ist der Donner?",
+      "a": "Der Knall vom Blitz",
+      "choices": [
+        "Wolken stoßen zusammen",
+        "Ein Riese trommelt",
+        "Lauter Regen"
+      ],
+      "info": "Der Blitz macht die Luft blitzschnell heiß. Das knallt!",
+      "img": "⛈️"
+    },
+    {
+      "id": "022",
+      "q": "Warum siehst du den Blitz vor dem Donner?",
+      "a": "Licht ist schneller",
+      "choices": [
+        "Donner ist leiser",
+        "Augen sind schneller",
+        "Blitz ist näher"
+      ],
+      "img": "⚡👀"
+    },
+    {
+      "id": "023",
+      "q": "Zwischen Blitz und Donner zählst du 3 Sekunden. Wie weit ist das Gewitter etwa weg?",
+      "a": "1 Kilometer",
+      "choices": [
+        "3 Kilometer",
+        "10 Kilometer",
+        "100 Meter"
+      ],
+      "info": "Der Schall braucht etwa 3 Sekunden für 1 Kilometer.",
+      "img": "⚡⏱️"
+    },
+    {
+      "id": "024",
+      "q": "Wo bist du bei Gewitter sicher?",
+      "a": "Im Haus",
+      "choices": [
+        "Unter einem Baum",
+        "Auf einer Wiese",
+        "Im Freibad"
+      ],
+      "img": "⛈️❓"
+    },
+    {
+      "id": "025",
+      "q": "Wo hält der Igel seinen Winterschlaf?",
+      "a": "In einem Laubhaufen",
+      "choices": [
+        "Im Teich",
+        "Oben im Baum",
+        "Im Vogelnest"
+      ],
+      "info": "Darum lass im Herbst ruhig einen Laubhaufen im Garten liegen!",
+      "img": "🦔💤"
+    },
+    {
+      "id": "026",
+      "q": "Welcher Vogel ist ein Zugvogel?",
+      "a": "Storch",
+      "choices": [
+        "Spatz",
+        "Amsel",
+        "Meise"
+      ],
+      "info": "Der Storch fliegt im Herbst bis nach Afrika.",
+      "img": "🐦🌍"
+    },
+    {
+      "id": "027",
+      "q": "Warum werfen viele Bäume im Herbst ihre Blätter ab?",
+      "a": "Um Wasser zu sparen",
+      "choices": [
+        "Weil sie krank sind",
+        "Damit Tiere sie essen",
+        "Weil der Wind es will"
+      ],
+      "info": "Im Winter ist der Boden oft gefroren. Dann bekommt der Baum kaum Wasser.",
+      "img": "🍂🌳"
+    },
+    {
+      "id": "028",
+      "q": "Was sammelt das Eichhörnchen im Herbst als Vorrat?",
+      "a": "Nüsse",
+      "choices": [
+        "Steine",
+        "Federn",
+        "Muscheln"
+      ],
+      "img": "🐿️"
+    },
+    {
+      "id": "029",
+      "q": "Welche Blume blüht oft schon im Schnee?",
+      "a": "Schneeglöckchen",
+      "choices": [
+        "Sonnenblume",
+        "Rose",
+        "Mohnblume"
+      ],
+      "img": "🌱❄️"
+    },
+    {
+      "id": "030",
+      "q": "Was ziehst du bei Regen an?",
+      "a": "Regenjacke",
+      "choices": [
+        "Badehose",
+        "Sandalen",
+        "Sonnenhut"
+      ],
+      "img": "☔👦"
+    },
+    {
+      "id": "031",
+      "q": "Was schützt deine Haut vor Sonnenbrand?",
+      "a": "Sonnencreme",
+      "choices": [
+        "Schal",
+        "Handschuhe",
+        "Wollmütze"
+      ],
+      "img": "☀️👕"
+    },
+    {
+      "id": "032",
+      "q": "Was brauchst du bei Frost für die Hände?",
+      "a": "Handschuhe",
+      "choices": [
+        "Sandalen",
+        "Sonnenbrille",
+        "Badehose"
+      ],
+      "img": "❄️🥶"
+    }
+  ]
+}

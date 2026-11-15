@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Wissensgarten – Lernen & Gießen</title>
+  <meta name="description" content="Wissensgarten: Lernen wie Gärtnern – jede Karte eine Pflanze, die wächst, wenn du sie gießt. Ohne Werbung, ohne Konto, Fortschritt bleibt im Browser.">
+  <meta name="theme-color" content="#3f6b3a">
+  <meta name="wg-version" content="0.19.0">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fbf6ec; overscroll-behavior: none; }
+    body { touch-action: manipulation; }
+    #splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #3f6b3a; background: linear-gradient(#e1f5fe, #fbf6ec 55%, #c5e1a5);
+      z-index: 10; transition: opacity .5s; text-align: center; padding: 16px; box-sizing: border-box; }
+    #splash.weg { opacity: 0; pointer-events: none; }
+    #splash .b { font-size: 72px; animation: hop 1.2s ease-in-out infinite; }
+    #splash h1 { margin: 0; font-size: 26px; }
+    #splash p { margin: 0; color: #5a6b55; }
+    #splash .links { position: absolute; bottom: 14px; font-size: 13px; }
+    #splash a { color: #3f6b3a; }
+    @keyframes hop { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-12px) } }
+    #wg-toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 40px); opacity: 0; transition: all .3s;
+      background: #2e3b2c; color: #fff; padding: 10px 16px; border-radius: 20px; font: 15px system-ui, sans-serif; max-width: 88vw; z-index: 20; }
+    #wg-toast.show { opacity: 1; transform: translate(-50%, 0); }
+  </style>
+  <script src="wg-platform.js"></script>
+</head>
+<body>
+  <div id="splash">
+    <div class="b">🐝</div>
+    <h1>Wissensgarten</h1>
+    <p>Brummi gießt gerade die Blumen … 🌱</p>
+    <noscript><p>Bitte JavaScript einschalten, dann wächst der Garten.</p></noscript>
+    <div class="links">Version 0.19.0 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
+      <a href="https://www.mathenachhilfe-online.com/datenschutz/" rel="noopener">Datenschutz</a></div>
+  </div>
+  <script>
+    if (!('WebAssembly' in window)) document.querySelector('#splash p').textContent = 'Dieser Browser ist leider zu alt. Bitte Chrome, Edge, Firefox oder Safari aktualisieren.';
+    // Automatische Updates ohne Knopf: neue Version wird im Hintergrund geladen und eingespielt –
+    // gleich beim Öffnen, sonst sobald die Seite kurz verlassen wird (keine Lernrunde wird unterbrochen).
+    if ('serviceWorker' in navigator) {
+      const started = Date.now();
+      let waiting = false;
+      const hadController = !!navigator.serviceWorker.controller;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!hadController) return;                      // erste Installation: nichts neu laden
+        if (Date.now() - started < 15000 || document.visibilityState === 'hidden') location.reload();
+        else waiting = true;
+      });
+      document.addEventListener('visibilitychange', () => { if (waiting && document.visibilityState === 'hidden') location.reload(); });
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+          const check = () => reg.update().catch(() => {});
+          setInterval(check, 30 * 60 * 1000);
+          document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+        }).catch(() => {});
+      });
+    }
+  </script>
+  <script src="wissensgarten.js"></script>
+</body>
+</html>
