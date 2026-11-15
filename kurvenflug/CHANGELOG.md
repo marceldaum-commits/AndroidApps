@@ -3,6 +3,14 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.8.0 – Aufgeräumte Startseite
+- **Vier Reiter statt einer langen Liste**: 🚀 Heute, 🗺️ Galaxie, 🎮 Spiele und 🎒 Ich.
+- **🚀 Weiter geht's!**: Eine große Karte bringt dich mit einem Tipp genau dorthin, wo du aufgehört hast.
+- **🎓 Deine Klasse**: Volt fragt einmal, in welcher Klasse du bist, und zeigt zuerst, was gerade im Unterricht dran ist.
+  Darunter „Zum Wiederholen“ und „Für später“. Gesperrt wird nichts – und die Klasse lässt sich jederzeit ändern.
+- **🗺️ Galaxie**: Kapitel sind eingeklappt und zeigen ihren Fortschritt als Ring. Antippen klappt die Level auf.
+  Mit den Filtern 📐 Mathe und ⚛️ Physik findest du dein Fach schneller.
+
 ## 0.7.0 – Rechenweg mit Volt
 - **🧮 Rechenweg zum Mitrechnen**: Klappt es dreimal nicht, rechnet Volt mit dir Schritt für Schritt – du tippst jedes
   Zwischenergebnis selbst an. Beim ersten Mal rechnet Volt einen Schritt vor, danach rechnest du allein.

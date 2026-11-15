@@ -8,6 +8,13 @@ Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv, Pla
 Weg-Zeit und Laser-Optik (Physik 7), Energieerhaltung (Physik 8–9),
 Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10).
 
+## Aufbau der Startseite
+- Vier Reiter unten: 🚀 **Heute** („Weiter, wo du warst“, Tagesmission, Auffrischen), 🗺️ **Galaxie** (Kapitel nach Klasse,
+  eingeklappt mit Fortschrittsring, Filter Mathe/Physik), 🎮 **Spiele** (Duell, Sturm, Detektiv, Baukasten), 🎒 **Ich**
+  (Lernstand, Abzeichen, Lexikon, Werkstatt, Klasse, Einstellungen).
+- Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
+  „Für später“ – gesperrt wird nichts.
+
 ## So funktioniert Kurvenflug
 - Die Sonde fliegt auf der eingestellten Bahn: `(x | y)`, `y = m·x + b`, `y = a·(x − d)² + e` oder Wurf mit `α`, `v`, `g`.
 - Regler mit −/+ und Schieber, die Formel zeigt live die Zahlen – in derselben Farbe wie der Regler.
@@ -37,7 +44,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/33_logarithmus.png) | ![](screenshots/34_weg_zeit.png) | ![](screenshots/35_lexikon.png) |
 | ![](screenshots/36_werkstatt.png) | ![](screenshots/37_laser_zielen.png) | ![](screenshots/38_abstand_pfeil.png) |
 | ![](screenshots/39_trig_laser.png) | ![](screenshots/40_trig_funk.png) | ![](screenshots/41_lernstand.png) |
-| ![](screenshots/42_rechenweg.png) | ![](screenshots/11_einstellungen.png) | |
+| ![](screenshots/42_rechenweg.png) | ![](screenshots/43_galaxie.png) | ![](screenshots/44_spiele.png) |
+| ![](screenshots/46_ich.png) | ![](screenshots/45_klasse_waehlen.png) | ![](screenshots/11_einstellungen.png) |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

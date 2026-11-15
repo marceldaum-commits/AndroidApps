@@ -146,6 +146,8 @@ class MainActivity : ComponentActivity() {
                 val progress by vm.progress.collectAsStateWithLifecycle()
                 val dailiesDone by vm.dailiesDone.collectAsStateWithLifecycle()
                 val daily = remember(progress) { vm.daily() }
+                val grade by vm.settings.grade.collectAsStateWithLifecycle()
+                val gradeAsked by vm.settings.gradeAsked.collectAsStateWithLifecycle()
                 HomeScreen(
                     stars = stars.values.sum(), maxStars = vm.maxStars, cells = cells, skin = skin,
                     onSkin = vm::setSkin,
@@ -161,6 +163,9 @@ class MainActivity : ComponentActivity() {
                     onBuild = { nav.goOnce(Routes.BUILD_HOME) }, onDetective = { nav.goOnce(Routes.DETECTIVE) },
                     onCodex = { nav.goOnce(Routes.CODEX) }, onWorkshop = { nav.goOnce(Routes.WORKSHOP) },
                     banner = upd?.let { u -> { UpdateBanner(u.version) { nav.goOnce(Routes.SETTINGS) } } },
+                    grade = grade, onGrade = vm.settings::setGrade, askGrade = !gradeAsked,
+                    continueLevel = remember(progress, grade) { de.kurvenflug.core.model.Plan.next(Levels.chapters, grade, vm.played(progress)) },
+                    onLearn = { nav.goOnce(Routes.LEARN) },
                     learning = {
                         val now = remember(progress) { System.currentTimeMillis() }
                         val played = remember(progress) { vm.played(progress) }

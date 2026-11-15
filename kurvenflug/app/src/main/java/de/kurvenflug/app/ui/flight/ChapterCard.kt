@@ -31,7 +31,8 @@ private val chapterColors = listOf(Q.Cyan, Q.Pink, Q.Yellow, Q.Green, Q.Violet, 
 
 /** Ein Kapitel mit seinen Level-Kacheln – alle Kapitel sind offen, innerhalb geht es Level für Level. */
 @Composable
-fun ChapterCard(c: Chapter, index: Int, stars: Map<String, Int>, onLevel: (Level) -> Unit, bossStars: Int = 0, onBoss: (() -> Unit)? = null) {
+fun ChapterCard(c: Chapter, index: Int, stars: Map<String, Int>, onLevel: (Level) -> Unit, bossStars: Int = 0, onBoss: (() -> Unit)? = null,
+                header: Boolean = true) {
     val color = chapterColors[index % chapterColors.size]
     val got = c.levels.sumOf { stars[it.id] ?: 0 }
     Column(
@@ -39,7 +40,7 @@ fun ChapterCard(c: Chapter, index: Int, stars: Map<String, Int>, onLevel: (Level
             .border(1.5.dp, color.copy(alpha = 0.5f), RoundedCornerShape(20.dp)).padding(14.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        if (header) Row(verticalAlignment = Alignment.CenterVertically) {
             Text(c.emoji, fontSize = 28.sp)
             Spacer(Modifier.width(10.dp))
             Column(Modifier.weight(1f)) {

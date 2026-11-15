@@ -56,7 +56,25 @@ class ScreenshotTest {
                 val now = 20_500L * Learning.DAY_MS
                 val played = someStars.mapValues { Played(it.value, now - 3 * Learning.DAY_MS) }
                 de.kurvenflug.app.ui.learning.LearningCard(Learning.status(played, now), Learning.review(played, now, 20_500L)) {}
-            })
+            },
+            grade = 7, continueLevel = Levels.byId("1-4"))
+    }
+
+    @Test fun homeGalaxy() = shot("43_galaxie") {
+        HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {},
+            grade = 7, continueLevel = Levels.byId("2-1"), initialTab = 1)
+    }
+
+    @Test fun homeGames() = shot("44_spiele") {
+        HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {}, stormBest = 7, initialTab = 2)
+    }
+
+    @Test fun homeMe() = shot("46_ich") {
+        HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {}, badges = 3, grade = 7, initialTab = 3)
+    }
+
+    @Test fun gradePicker() = shot("45_klasse_waehlen") {
+        HomeScreen(0, Levels.all.size * 3, 0, 0, {}, Levels.chapters, emptyMap(), {}, {}, onGrade = {}, askGrade = true)
     }
 
     @Test fun intro() = shot("03_volt_erklaert", prepare = { it.onNodeWithText("Weiter ›").performClick() }) {

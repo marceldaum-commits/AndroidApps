@@ -24,6 +24,16 @@ class Settings(ctx: Context) {
     fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("autoUpdate", v).apply(); _autoUpdate.value = v }
 
+    /** Klassenstufe 5–10 (null = alle Kapitel zeigen); gefragt wird nur einmal, danach über 🎓 änderbar */
+    private val _grade = MutableStateFlow(prefs.getInt("grade", 0).takeIf { it in 5..10 })
+    private val _gradeAsked = flag("gradeAsked", false)
+    val grade: StateFlow<Int?> = _grade.asStateFlow()
+    val gradeAsked: StateFlow<Boolean> = _gradeAsked.asStateFlow()
+    fun setGrade(g: Int?) {
+        prefs.edit().putInt("grade", g ?: 0).putBoolean("gradeAsked", true).apply()
+        _grade.value = g; _gradeAsked.value = true
+    }
+
     /** Kapitel-Erklärung schon gesehen? */
     fun introSeen(chapter: Int) = prefs.getBoolean("intro_$chapter", false)
     fun markIntroSeen(chapter: Int) = prefs.edit().putBoolean("intro_$chapter", true).apply()

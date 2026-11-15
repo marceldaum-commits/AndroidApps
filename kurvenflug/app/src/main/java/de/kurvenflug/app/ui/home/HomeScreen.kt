@@ -1,5 +1,6 @@
 package de.kurvenflug.app.ui.home
 
+import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,7 +39,7 @@ import kotlin.math.sin
 data class Skin(val name: String, val color: Color, val needStars: Int)
 val Skins = listOf(Skin("Neon", Q.Cyan, 0), Skin("Plasma", Q.Pink, 10), Skin("Gold", Q.Yellow, 25), Skin("Aurora", Q.Green, 45))
 
-/** Startseite: Volt, Fortschritt, alle Kapitel mit ihren Leveln, Hangar. */
+/** Startseite: vier Reiter – Heute, Galaxie, Spiele, Ich – statt einer langen Liste. */
 @Composable
 fun HomeScreen(
     stars: Int,
@@ -66,41 +68,225 @@ fun HomeScreen(
     banner: (@Composable () -> Unit)? = null,
     /** Lernstand-Karte (mit Auffrisch-Hinweis) */
     learning: (@Composable () -> Unit)? = null,
+    /** Klassenstufe (null = nicht gewählt → alle Kapitel) */
+    grade: Int? = null,
+    onGrade: ((Int?) -> Unit)? = null,
+    /** Beim ersten Start nach der Klasse fragen */
+    askGrade: Boolean = false,
+    /** „Weiter, wo du warst“ */
+    continueLevel: de.kurvenflug.core.model.Level? = null,
+    onLearn: (() -> Unit)? = null,
+    initialTab: Int = 0,
 ) {
+    var tab by rememberSaveable { mutableIntStateOf(initialTab) }
+    var picking by rememberSaveable { mutableStateOf(false) }
+    val sfx = LocalSfx.current
     Box(Modifier.fillMaxSize()) {
         Starfield()
-        Column(Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column(Modifier.weight(1f)) {
-                    Text("KURVENFLUG", fontSize = 30.sp, fontWeight = FontWeight.Black, color = Q.Cyan, letterSpacing = 4.sp)
-                    Text("Mathe & Physik im All · Klasse 5–10", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+        Column(Modifier.fillMaxSize().systemBarsPadding()) {
+            AnimatedContent(tab, Modifier.weight(1f), label = "tab", transitionSpec = {
+                val dir = if (targetState > initialState) 1 else -1
+                (slideInHorizontally(tween(260)) { it / 4 * dir } + fadeIn(tween(260))) togetherWith
+                    (slideOutHorizontally(tween(200)) { -it / 4 * dir } + fadeOut(tween(200)))
+            }) { t ->
+                Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                    when (t) {
+                        0 -> {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Column(Modifier.weight(1f)) {
+                                    Text("KURVENFLUG", fontSize = 30.sp, fontWeight = FontWeight.Black, color = Q.Cyan, letterSpacing = 4.sp)
+                                    Text("Mathe & Physik im All · ${grade?.let { "Klasse $it" } ?: "Klasse 5–10"}", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+                                }
+                                IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Einstellungen", tint = Q.Muted) }
+                            }
+                            banner?.invoke()
+                            Volt(if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = 64.dp,
+                                speech = if (stars == 0) "Hey! Ich bin Volt. Bereit für deine erste Mission? 🚀" else "Schon $stars ⭐ gesammelt. Weiter so, Commander!")
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                Stat("⭐", "$stars / $maxStars", Q.Yellow, Modifier.weight(1f))
+                                Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
+                            }
+                            continueLevel?.let { l -> ContinueCard(l, chapters.firstOrNull { it.number == l.chapter }) { onLevel(l) } }
+                            daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
+                            learning?.invoke()
+                            Text("Alle Kapitel findest du in der 🗺️ Galaxie.", color = Q.Muted, style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.clickable { sfx?.play(Sound.TAP); tab = 1 })
+                        }
+                        1 -> Galaxy(chapters, levelStars, onLevel, bossStars, onBoss, grade, continueLevel) { picking = true }
+                        2 -> {
+                            TabTitle("🎮 Spiele", "Zum Wetteifern, Knobeln und Selberbauen")
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                ModeTile("⚔️", "Duell", "zu zweit oder per Code", Q.Cyan, Modifier.weight(1f)) { onDuel?.invoke() }
+                                ModeTile("☄️", "Sturm", if (stormBest > 0) "Rekord $stormBest" else "Welle um Welle", Q.Orange, Modifier.weight(1f)) { onStorm?.invoke() }
+                            }
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                ModeTile("🔎", "Detektiv", "Formel zur Kurve finden", Q.Violet, Modifier.weight(1f)) { onDetective?.invoke() }
+                                ModeTile("🛠️", "Baukasten", "Level bauen & teilen", Q.Green, Modifier.weight(1f)) { onBuild?.invoke() }
+                            }
+                            Text("🏫 Lehrkräfte: Die Klassen-Challenge steckt im Baukasten.", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+                        }
+                        else -> {
+                            TabTitle("🎒 Ich", "Dein Fortschritt und deine Sammlung")
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                ModeTile("📊", "Lernstand", "Was sitzt schon?", Q.Green, Modifier.weight(1f)) { onLearn?.invoke() }
+                                ModeTile("🏅", "Abzeichen", "$badges/${de.kurvenflug.core.model.Badges.all.size}", Q.Yellow, Modifier.weight(1f)) { onBadges?.invoke() }
+                            }
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, Modifier.weight(1f)) { onCodex?.invoke() }
+                                ModeTile("🎨", "Werkstatt", "Sonde & Volt", Q.Orange, Modifier.weight(1f)) { onWorkshop?.invoke() }
+                            }
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                ModeTile("🎓", "Klasse", grade?.let { "Klasse $it" } ?: "alle", Q.Cyan, Modifier.weight(1f)) { picking = true }
+                                ModeTile("⚙️", "Einstellungen", "Ton, Musik, Update", Q.Muted, Modifier.weight(1f), onSettings)
+                            }
+                        }
+                    }
+                    Spacer(Modifier.height(8.dp))
                 }
-                IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Einstellungen", tint = Q.Muted) }
             }
-            banner?.invoke()
-            Volt(if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = 64.dp,
-                speech = if (stars == 0) "Hey! Ich bin Volt. Bereit für deine erste Mission? 🚀" else "Schon $stars ⭐ gesammelt. Weiter so, Commander!")
-            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                Stat("⭐", "$stars / $maxStars", Q.Yellow, Modifier.weight(1f))
-                Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
+            NavigationBar(containerColor = Q.Panel.copy(alpha = 0.96f), tonalElevation = 0.dp) {
+                listOf("🚀" to "Heute", "🗺️" to "Galaxie", "🎮" to "Spiele", "🎒" to "Ich").forEachIndexed { i, (icon, label) ->
+                    val selected = tab == i
+                    val scale by animateFloatAsState(if (selected) 1.25f else 1f, spring(dampingRatio = 0.4f), label = "tabIcon")
+                    NavigationBarItem(
+                        selected = selected,
+                        onClick = { if (tab != i) { sfx?.play(Sound.TICK); tab = i } },
+                        icon = { Text(icon, fontSize = 22.sp, modifier = Modifier.graphicsLayer { scaleX = scale; scaleY = scale }) },
+                        label = { Text(label, fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal) },
+                        colors = NavigationBarItemDefaults.colors(indicatorColor = Q.Cyan.copy(alpha = 0.2f),
+                            selectedTextColor = Q.Cyan, unselectedTextColor = Q.Muted),
+                    )
+                }
             }
-            daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
-            learning?.invoke()
-            if (onDuel != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                ModeTile("⚔️", "Duell", "zu zweit", Q.Cyan, Modifier.weight(1f), onDuel)
-                ModeTile("☄️", "Sturm", if (stormBest > 0) "Rekord $stormBest" else "endlos", Q.Orange, Modifier.weight(1f)) { onStorm?.invoke() }
-                ModeTile("🏅", "Abzeichen", "$badges/${de.kurvenflug.core.model.Badges.all.size}", Q.Yellow, Modifier.weight(1f)) { onBadges?.invoke() }
+        }
+        if ((askGrade || picking) && onGrade != null) GradePicker(grade, first = askGrade && !picking) { g -> picking = false; onGrade(g) }
+    }
+}
+
+@Composable
+private fun TabTitle(title: String, sub: String) {
+    Column {
+        Text(title, fontSize = 26.sp, fontWeight = FontWeight.Black, color = Q.Text)
+        Text(sub, color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+    }
+}
+
+/** Große Karte „Weiter, wo du warst“ – ein Tipp und es geht los. */
+@Composable
+private fun ContinueCard(l: de.kurvenflug.core.model.Level, c: de.kurvenflug.core.model.Chapter?, onClick: () -> Unit) {
+    val interaction = remember { MutableInteractionSource() }
+    val sfx = LocalSfx.current
+    val bob by rememberInfiniteTransition(label = "rocket").animateFloat(-4f, 4f,
+        infiniteRepeatable(tween(900, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "bob")
+    Row(
+        Modifier.fillMaxWidth().pressBounce(interaction).pulse(true, 0.012f).clip(RoundedCornerShape(22.dp))
+            .background(Brush.horizontalGradient(listOf(Q.Cyan.copy(alpha = 0.35f), Q.Panel)))
+            .border(2.dp, Q.Cyan, RoundedCornerShape(22.dp))
+            .clickable(interaction, null) { sfx?.play(Sound.TAP); onClick() }.padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text("🚀", fontSize = 40.sp, modifier = Modifier.graphicsLayer { translationY = bob })
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text("Weiter geht's!", fontWeight = FontWeight.Black, color = Q.Text, fontSize = 20.sp)
+            Text("${c?.emoji ?: ""} ${c?.title ?: ""} · Level ${l.number}: ${l.title}", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+        }
+        Text("Los ›", color = Q.Cyan, fontWeight = FontWeight.Black)
+    }
+}
+
+/** Galaxie: Kapitel nach Klasse geordnet, eingeklappt mit Fortschrittsring, Filter Mathe/Physik. */
+@Composable
+private fun Galaxy(
+    chapters: List<de.kurvenflug.core.model.Chapter>, stars: Map<String, Int>, onLevel: (de.kurvenflug.core.model.Level) -> Unit,
+    bossStars: Map<Int, Int>, onBoss: ((Int) -> Unit)?, grade: Int?, continueLevel: de.kurvenflug.core.model.Level?, onPickGrade: () -> Unit,
+) {
+    var subject by rememberSaveable { mutableStateOf<de.kurvenflug.core.model.Subject?>(null) }
+    var open by rememberSaveable { mutableStateOf(listOfNotNull(continueLevel?.chapter)) }
+    val sfx = LocalSfx.current
+    TabTitle("🗺️ Galaxie", "${chapters.size} Kapitel · alle offen, Level für Level")
+    AssistChip(onClick = { sfx?.play(Sound.TAP); onPickGrade() }, label = { Text("🎓 ${grade?.let { "Klasse $it · ändern" } ?: "Klasse wählen"}") },
+        colors = AssistChipDefaults.assistChipColors(labelColor = Q.Text))
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+        listOf(null, de.kurvenflug.core.model.Subject.MATH, de.kurvenflug.core.model.Subject.PHYSICS).forEach { s ->
+            FilterChip(selected = subject == s, onClick = { sfx?.play(Sound.TICK); subject = s },
+                label = { Text(s?.let { "${it.emoji} ${it.label}" } ?: "Alle") },
+                colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Cyan.copy(alpha = 0.25f), labelColor = Q.Muted, selectedLabelColor = Q.Text))
+        }
+    }
+    de.kurvenflug.core.model.Plan.sections(chapters, grade, subject).forEach { sec ->
+        Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+            Text(sec.title, fontWeight = FontWeight.Black, color = Q.Text, fontSize = 18.sp)
+            Text(sec.hint, color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+        }
+        sec.chapters.forEach { c ->
+            val index = chapters.indexOf(c)
+            val expanded = c.number in open
+            CompactChapter(c, index, stars, expanded) { sfx?.play(Sound.TAP); open = if (expanded) open - c.number else open + c.number }
+            AnimatedVisibility(expanded, enter = expandVertically(spring(dampingRatio = 0.8f)) + fadeIn(), exit = shrinkVertically() + fadeOut()) {
+                de.kurvenflug.app.ui.flight.ChapterCard(c, index, stars, onLevel, bossStars[c.number] ?: 0, onBoss?.let { b -> { b(c.number) } }, header = false)
             }
-            if (onBuild != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                ModeTile("🛠️", "Baukasten", "bauen & teilen", Q.Green, Modifier.weight(1f), onBuild)
-                ModeTile("🔎", "Detektiv", "Formel finden", Q.Violet, Modifier.weight(1f)) { onDetective?.invoke() }
-                ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, Modifier.weight(1f)) { onCodex?.invoke() }
-                ModeTile("🎨", "Werkstatt", "Sonde & Volt", Q.Orange, Modifier.weight(1f)) { onWorkshop?.invoke() }
+        }
+    }
+}
+
+private val ringColors = listOf(Q.Cyan, Q.Pink, Q.Yellow, Q.Green, Q.Violet, Q.Orange)
+
+/** Eingeklapptes Kapitel: Fortschrittsring, Titel, Klasse – antippen klappt die Level auf. */
+@Composable
+private fun CompactChapter(c: de.kurvenflug.core.model.Chapter, index: Int, stars: Map<String, Int>, expanded: Boolean, onClick: () -> Unit) {
+    val interaction = remember { MutableInteractionSource() }
+    val color = ringColors[index % ringColors.size]
+    val got = c.levels.sumOf { stars[it.id] ?: 0 }
+    val share by animateFloatAsState(got.toFloat() / (c.levels.size * 3), tween(700), label = "ring")
+    val turn by animateFloatAsState(if (expanded) 90f else 0f, spring(dampingRatio = 0.6f), label = "chevron")
+    Row(
+        Modifier.fillMaxWidth().pressBounce(interaction).clip(RoundedCornerShape(18.dp)).background(Q.Panel.copy(alpha = 0.9f))
+            .border(1.5.dp, color.copy(alpha = if (expanded) 0.9f else 0.35f), RoundedCornerShape(18.dp))
+            .clickable(interaction, null, onClick = onClick).padding(horizontal = 14.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Box(Modifier.size(48.dp), contentAlignment = Alignment.Center) {
+            Canvas(Modifier.fillMaxSize()) {
+                drawCircle(Color.White.copy(alpha = 0.08f), style = Stroke(5.dp.toPx()))
+                drawArc(color, -90f, 360f * share, false, style = Stroke(5.dp.toPx(), cap = androidx.compose.ui.graphics.StrokeCap.Round))
             }
-            chapters.forEachIndexed { i, c ->
-                de.kurvenflug.app.ui.flight.ChapterCard(c, i, levelStars, onLevel, bossStars[c.number] ?: 0, onBoss?.let { b -> { b(c.number) } })
+            Text(c.emoji, fontSize = 22.sp)
+        }
+        Spacer(Modifier.width(12.dp))
+        Column(Modifier.weight(1f)) {
+            Text(c.title, fontWeight = FontWeight.Bold, color = Q.Text)
+            Text("${c.grades} · $got/${c.levels.size * 3} ⭐", style = MaterialTheme.typography.labelSmall, color = color)
+        }
+        Text("›", fontSize = 24.sp, color = color, fontWeight = FontWeight.Black, modifier = Modifier.graphicsLayer { rotationZ = turn })
+    }
+}
+
+/** Volt fragt nach der Klasse – beim ersten Start und jederzeit über 🎓 änderbar. */
+@Composable
+private fun GradePicker(current: Int?, first: Boolean, onPick: (Int?) -> Unit) {
+    val sfx = LocalSfx.current
+    Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.65f)).clickable(remember { MutableInteractionSource() }, null) {},
+        contentAlignment = Alignment.Center) {
+        Column(
+            Modifier.padding(20.dp).clip(RoundedCornerShape(24.dp)).background(Q.Panel).border(2.dp, Q.Cyan, RoundedCornerShape(24.dp)).padding(18.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp),
+        ) {
+            Volt(VoltMood.HAPPY, size = 56.dp, speech = if (first) "Hi! In welcher Klasse bist du? Dann zeige ich dir zuerst, was gerade dran ist. 🎓"
+                else "In welcher Klasse bist du jetzt?")
+            de.kurvenflug.core.model.Plan.grades.chunked(3).forEach { row ->
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    row.forEach { g ->
+                        NeonButton(onClick = { sfx?.play(Sound.HIT); onPick(g) }, color = if (g == current) Q.Green else Q.Cyan, modifier = Modifier.weight(1f)) {
+                            Text("$g", fontWeight = FontWeight.Black, fontSize = 22.sp)
+                        }
+                    }
+                }
             }
-            Spacer(Modifier.height(12.dp))
+            Text("Alle Klassen zeigen", color = Q.Muted, modifier = Modifier.align(Alignment.End)
+                .clickable { sfx?.play(Sound.TAP); onPick(null) }.padding(6.dp))
+            Text("Kein Kapitel wird gesperrt – die Klasse sortiert nur. Eltern: Die Angabe bleibt auf dem Gerät.",
+                color = Q.Muted, style = MaterialTheme.typography.labelSmall)
         }
     }
 }
