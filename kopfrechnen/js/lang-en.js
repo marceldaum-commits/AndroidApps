@@ -1446,4 +1446,5 @@ I18N.add('en', {"% sind":"% are",
 "App-Paket":"App package",
 "Kanal":"Channel",
 "Hülle":"Shell",
-"Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde":"Android app: settings now show where the running version was loaded from"});
+"Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde":"Android app: settings now show where the running version was loaded from",
+"Rechenblitz im Browser aktualisiert sich jetzt von selbst – nie mitten in einer Runde":"Rechenblitz in the browser now updates by itself – never in the middle of a round"});

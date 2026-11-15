@@ -4,6 +4,18 @@ Neueste Meldung oben.
 
 > **AKTUELLER STAND (15.11.2026, abends) – für den Leitstand:** Live ist 3.12.1 (b83bcaa, freigegeben). Auf `rechenblitz-test` liegt **3.13.0**: Die Android-App aktualisiert ihre Inhalte selbst (GitHub, Ersatz eigener Server), siehe Meldung (34). Bitte testen und freigeben. Mit der Freigabe auf `rechenblitz-live` bekommt der Live-Kanal neue Stände automatisch.
 
+## 15.11.2026 (36) – Web-App aktualisiert sich selbst, kein Update-Knopf mehr (3.13.2)
+
+- **Marcel 15.11.:** „Die WebApp soll automatisch updaten. Dort kein Button zum Aktualisieren.“
+- **Web-App (Browser/PWA):**
+  - „Nach Updates suchen“ ist aus Menü und Einstellungen entfernt.
+  - Beim Start und bei jeder Rückkehr in die App (höchstens alle 10 Minuten) prüft sie still `js/changelog.js` auf dem Server.
+  - Ist eine neuere Version da, wird der Service Worker aktualisiert und die Seite neu geladen, sobald man auf der Startseite ist. Nie mitten in einer Runde oder bei offenem Menü.
+  - Danach zeigt Blitz „Was ist neu?“. Der Lernstand bleibt.
+  - Schutz gegen Neulade-Schleifen: höchstens ein Versuch pro Version und Sitzung.
+- **Android-App:** unverändert. Neue Stände kommen von selbst (Meldung 34). Der Knopf in den Einstellungen dient dort nur zur Kontrolle.
+- **Test:** Das Update erscheint während einer Runde → kein Neuladen. Nach dem Wechsel auf die Startseite wird genau einmal neu geladen, ohne zweites Neuladen. Knöpfe in der Web-App sind weg. Keine JS-Fehler.
+
 ## 15.11.2026 (35) – Erster Selbst-Update-Test: 3.13.1 (keine neue APK nötig)
 
 - Marcel hat 3.13.0 (Hülle 2) installiert. 3.13.1 ist der erste Stand, den die App **von selbst** von `rechenblitz-test` holen soll.

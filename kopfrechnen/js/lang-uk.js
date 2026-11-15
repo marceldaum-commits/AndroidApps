@@ -1446,4 +1446,5 @@ I18N.add('uk', {"% sind":"% — це",
 "App-Paket":"Пакет застосунку",
 "Kanal":"Канал",
 "Hülle":"Оболонка",
-"Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde":"Android-застосунок: у налаштуваннях тепер видно, звідки завантажено поточну версію"});
+"Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde":"Android-застосунок: у налаштуваннях тепер видно, звідки завантажено поточну версію",
+"Rechenblitz im Browser aktualisiert sich jetzt von selbst – nie mitten in einer Runde":"Rechenblitz у браузері тепер оновлюється сам – ніколи посеред раунду"});

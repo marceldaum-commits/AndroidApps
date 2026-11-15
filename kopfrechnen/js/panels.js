@@ -32,7 +32,7 @@ const PANELS = {
       ${miLink(siteLink(CONFIG.trialUrl, 'menu-probestunde'), '🎓', 'Kostenlose Probestunde', 'Unverbindlich ausprobieren')}
       ${CONFIG.lernraumUrl ? `<a class="mi" href="${esc(siteLink(CONFIG.lernraumUrl, 'menu-lernraum'))}"><div class="ico">📚</div><div><b>Zurück zum Lernraum</b><span>Weitere Lernspiele und Übungen</span></div><span class="chev">←</span></a>` : ''}
       ${mi('news', '🆕', 'Was ist neu?', `Version ${versionLabel()}`)}
-      <button class="mi" data-upd><div class="ico">🔄</div><div><b>Nach Updates suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span></div><span class="chev">›</span></button>
+      ${IS_NATIVE ? `<button class="mi" data-upd><div class="ico">🔄</div><div><b>Nach Updates suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span></div><span class="chev">›</span></button>` : ''}   
       ${mi('invite', '💌', 'Freunde einladen', 'Rechenblitz ist kostenlos – teile es!')}
       ${adventPhase() !== 'off' ? mi('advent', '🎄', 'Rechen-Adventskalender', 'Jeden Tag ein Türchen') : ''}
       ${CONFIG.classApi ? mi('klasse', '🏫', 'Klassen-Challenge', S.klasse ? 'Rangliste deiner Klasse' : 'Mit Klassencode beitreten') : ''}
@@ -102,7 +102,7 @@ const PANELS = {
         <div class="chips" id="langSeg"><button data-v="auto" class="${(ROOT.lang || 'auto') === 'auto' ? 'sel' : ''}">Automatisch</button>${Object.entries(I18N.langs).map(([k, n]) => `<button data-v="${k}" translate="no" class="${ROOT.lang === k ? 'sel' : ''}">${n}</button>`).join('')}</div></div>
       <div class="setrow col"><div><b>Design</b><span>Hell, dunkel oder wie das Gerät</span></div>
         <div class="seg" id="themeSeg">${[['auto', 'Automatisch'], ['light', 'Hell'], ['dark', 'Dunkel']].map(([v, l]) => `<button data-v="${v}" class="${S.settings.theme === v ? 'sel' : ''}">${l}</button>`).join('')}</div></div>
-      ${!IS_NATIVE || CONFIG.apkUpdates ? `<button class="mi" id="btnUpd"><div class="ico">⬆️</div><div><b>Nach Update suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span><span id="updInfo" style="display:block;font-size:12px"></span></div></button>` : ''}
+      ${IS_NATIVE && CONFIG.apkUpdates ? `<button class="mi" id="btnUpd"><div class="ico">⬆️</div><div><b>Nach Update suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span><span id="updInfo" style="display:block;font-size:12px"></span></div></button>` : ''}
       <div class="mlabel">Zurücksetzen</div>
       <button class="mi" data-reset="reise"><div class="ico">🗺️</div><div><b>Rechen-Reise neu starten</b><span>Sterne, Sticker und Klassenwahl der Reise löschen</span></div></button>
       <button class="mi" data-reset="merk"><div class="ico">🧠</div><div><b>Merk-Training zurücksetzen</b><span>Merkstärken, Sternenhimmel und Sternbilder löschen</span></div></button>
@@ -580,6 +580,34 @@ async function checkForUpdate() {
   finally { updChecking = false; }
 }
 document.addEventListener('click', e => { if (e.target.closest('[data-upd]')) { Sound.click(); checkForUpdate(); } });
+
+/* ---------- Web-App: aktualisiert sich selbst, ohne Knopf (Marcel 15.11.) ----------
+   Beim Start und bei jeder Rückkehr in die App (höchstens alle 10 Min.) still die Version auf dem Server prüfen.
+   Ist sie neuer: Service Worker aktualisieren und neu laden, sobald man auf der Startseite ist (nie mitten in einer Runde).
+   Danach zeigt Blitz „Was ist neu?“. */
+let webUpd = { at: 0, ver: null };
+async function webAutoUpdate() {
+  if (IS_NATIVE || !location.protocol.startsWith('http') || !navigator.onLine || document.hidden) return;
+  if (webUpd.ver || Date.now() - webUpd.at < 600000) return;
+  webUpd.at = Date.now();
+  try {
+    const r = await fetch('js/changelog.js?u=' + Date.now(), { cache: 'no-store' });
+    const v = r.ok ? ((await r.text()).match(/APP_VERSION = '([\d.]+)'/) || [])[1] : null;
+    if (!v || verNum(v) <= verNum(APP_VERSION)) return;
+    let tried = null; try { tried = sessionStorage.getItem('rbAutoUpd'); } catch {}
+    if (tried === v) return;   // schon einmal versucht (z. B. Cache hängt) → keine Neulade-Schleife
+    try { const reg = await navigator.serviceWorker?.getRegistration(); await reg?.update(); } catch {}
+    webUpd.ver = v; webUpdReload();
+  } catch {}
+}
+function webUpdReload() {
+  if (!webUpd.ver) return;
+  if (currentScreen() !== 'home' || Sheet.open || document.hidden) return setTimeout(webUpdReload, 4000);   // erst wenn nichts läuft
+  try { sessionStorage.setItem('rbAutoUpd', webUpd.ver); } catch {}
+  save(); location.reload();
+}
+document.addEventListener('visibilitychange', () => { if (!document.hidden) webAutoUpdate(); });
+setTimeout(webAutoUpdate, 5000);
 
 /* ---------- Einzelne Bereiche zurücksetzen (Marcel 15.11.) ---------- */
 const RESET_ASK = {
