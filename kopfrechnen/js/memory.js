@@ -229,6 +229,7 @@ function merkOverlay(t, mode) {
   const head = { intro: '✨ Neu – merk dir das!', tip: '💡 Bild-Tipp', wrong: '🔁 Schau nochmal genau hin' }[mode];
   $('merkOv')?.remove();
   $('game').insertAdjacentHTML('beforeend', `<div class="merk-ov ${mode}" id="merkOv" role="dialog" aria-modal="true" aria-label="${esc(head)}"><div class="merk-ov-card">
+    <button class="mo-x" id="moQuit" aria-label="Runde beenden" title="Runde beenden">✕</button>
     <div class="mo-head">${head}</div>
     <div class="merk-eq${mode === 'wrong' ? ' good' : ''}"><span translate="no">${esc(eq)}</span></div>
     ${merkVisual(t)}
@@ -236,6 +237,7 @@ function merkOverlay(t, mode) {
     ${mode === 'wrong' && t.w && t.w.length ? `<ol class="steps">${t.w.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
     <button class="btn primary block" id="solNext">${{ intro: 'Jetzt du!', tip: 'Zurück zur Aufgabe', wrong: 'Weiter' }[mode]} <span class="muted-on-dark">(OK)</span></button></div></div>`);
   $('solNext').onclick = continueAfterSolution;
+  $('moQuit').onclick = () => { Sound.click(); quitGame(); };
   $('solNext').focus({ preventScroll: true });
   if (mode === 'intro') Sound.hint();
 }

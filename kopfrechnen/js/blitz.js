@@ -76,7 +76,7 @@ function blitzGreeting() {
   try {
     const m = typeof merkStats === 'function' ? merkStats() : null;
     if (m && m.todo) line = `Im Merk-Training warten ${m.todo} Aufgaben auf dich.`;
-    else if (S.challenge.date !== todayStr()) line = 'Die Tageschallenge wartet auf dich!';
+    else if (S.challenge.date !== todayStr() && chVisible()) line = 'Die Tageschallenge wartet auf dich!';
   } catch {}
   return `<b>${hi}</b> ${line}`;
 }
@@ -86,4 +86,6 @@ function blitzResultLine(stars, mode) {
   return stars >= 3 ? 'Perfekt! Ich bin stolz auf dich!' : stars === 2 ? 'Richtig gut gemacht!' : stars === 1 ? 'Gut gemacht – weiter so!' : 'Übung macht den Meister – probier’s nochmal!';
 }
 
+/** Tageschallenge-Karte sichtbar? (im Advent ersetzt der Kalender sie) */
+const chVisible = () => typeof adventPhase !== 'function' || !['on', 'after'].includes(adventPhase());
 const bzOn = () => S.settings.blitz !== false;

@@ -262,12 +262,13 @@ function renderHome() {
   renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); renderWeltCard();
   if ($('sFunken')) $('sFunken').textContent = S.funken ?? 0;
   if ($('bzHome')) {
-    $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting(), 54) : '';
-    $('bzHome').onclick = () => {   // Blitz' Vorschlag direkt starten
+    $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting() + ' <button class="bz-go" id="bzGo">Los →</button>', 54) : '';
+    $('bzGo') && ($('bzGo').onclick = () => {   // Blitz' Vorschlag starten – nur über den eigenen Knopf, nicht beim Antippen des Fuchses
       const m = typeof merkStats === 'function' ? merkStats() : null;
-      if (m && m.todo) startMerk(); else if (S.challenge.date !== todayStr()) $('chStart')?.click(); else $('btnStart').click();
-    };
-    $('bzHome').setAttribute('role', bzOn() ? 'button' : 'none'); $('bzHome').tabIndex = bzOn() ? 0 : -1;
+      if (m && m.todo) startMerk(); else if (S.challenge.date !== todayStr() && chVisible()) $('chStart')?.click(); else $('btnStart').click();
+    });
+    $('bzHome').onclick = e => { if (!e.target.closest('#bzGo')) { const f = $('bzHome').querySelector('.blitz'); f?.classList.remove('bz-hop'); void f?.getBoundingClientRect(); f?.classList.add('bz-hop'); } };
+    $('bzHome').removeAttribute('role'); $('bzHome').tabIndex = -1;
   }
   if (typeof widgetUpdate === 'function') widgetUpdate();   // APK: Startbildschirm-Widget aktualisieren
 
@@ -321,6 +322,7 @@ $('modes').addEventListener('click', e => {
 
 function show(id) {
   for (const s of ['home', 'game', 'result', 'duel']) $(s).hidden = s !== id;
+  if (id !== 'home' && typeof armBack === 'function') armBack();
   document.body.classList.toggle('ingame', id === 'game');
   document.body.classList.toggle('induel', id === 'duel');
   scrollTo(0, 0);
@@ -426,11 +428,11 @@ function startGame(mode, opts = {}) {
   $('winTitle').textContent = G.title || (mode === 'training' || mode === 'blitz' || mode === 'zen' ? TOPICS[op].name : cfg.title);
   updateHud(); show('game');
   G.goalBefore = S.today.date !== todayStr() || S.today.solved < DAILY_GOAL;
-  if (mode === 'challenge') { G.chFirst = S.challenge.date !== todayStr() && S.challenge.tried !== todayStr(); S.challenge.tried = todayStr(); save(); }
+  if (mode === 'challenge') G.chFirst = S.challenge.date !== todayStr() && S.challenge.tried !== todayStr();   // als Versuch zählt die Runde erst ab der ersten Antwort
   const g0 = G;
   const go = () => {
     if (G !== g0 || !G || G.over) return;   // nur für genau diese Runde
-    G.locked = false;
+    G.locked = false; G.started = Date.now();   // Zeit ohne 3-2-1
     if (cfg.timed) G.endAt = performance.now() + cfg.timed;
     if (Sheet.open) pauseGame(true);
     cancelAnimationFrame(timerRaf); timerRaf = requestAnimationFrame(timerLoop);
@@ -528,6 +530,7 @@ function submit() {
   }
   const dt = performance.now() - G.t0, key = keyOf(t), cfg = G.cfg;
   G.locked = true; G.idx++; $('mTip')?.remove();
+  if (G.mode === 'challenge' && G.idx === 1 && S.challenge.tried !== todayStr()) S.challenge.tried = todayStr();
   lastAnswered = { task: taskText(t) + (t.noEq ? '' : ` ${t.eqSign || '='} ?`), given: G.input.replace('-', '−'), expected: showAns(a) + (t.unit ? ' ' + t.unit : ''), correct: equal, topic: TOPICS[t.topic].name, level: t.lvl + 1, mode: G.mode, _task: t };
   recordAnswer(t, equal, dt);
   if (t.card) { merkAnswer(t.card, equal, dt); if (!equal && G.gen && G.gen.requeue) G.gen.requeue(t.card); } else merkFromPlay(t, equal);
@@ -633,11 +636,19 @@ function pauseGame(on) {
 }
 // App kurz verlassen (anderes Fenster, Bildschirm aus): Runde pausiert, Blitzrunde läuft nicht weiter
 document.addEventListener('visibilitychange', () => { if (document.hidden) pauseGame(true); else if (!Sheet.open) pauseGame(false); });
-function quitGame() {
-  if (G && !G.over && G.cfg.calm && G.idx > 0) return finish();   // ruhiges Üben endet mit einer kleinen Übersicht
+function quitGame(silent) {   // silent: ohne Übersicht/Rücksprung (Profilwechsel, Zurücksetzen)
+  if (!silent && G && !G.over && G.cfg.calm && G.idx > 0) return finish();   // ruhiges Üben endet mit einer kleinen Übersicht
   if (G) G.over = true; $('merkOv')?.remove(); cancelAnimationFrame(timerRaf); $('overlay').innerHTML = '';
   if ('speechSynthesis' in window) speechSynthesis.cancel();
+  silent ? goHome() : backToOrigin();
+}
+/** nach Abbruch/Ergebnis: zurück dorthin, wo die Runde gestartet wurde (Reise-Karte, Adventskalender, Merk-Übersicht) */
+function backToOrigin() {
+  const m = G && G.mode, c = m === 'reise' && typeof G_REISE !== 'undefined' && G_REISE ? G_REISE.c : null;
   goHome();
+  if (m === 'reise') openSheet('reise', c != null ? { c } : undefined);
+  else if (m === 'advent') openSheet('advent');
+  else if (m === 'merk') openSheet('merk');
 }
 $('btnQuit').onclick = () => { Sound.click(); quitGame(); };
 
@@ -716,11 +727,11 @@ function renderResult(r) {
     <div class="muted small">${xpText}</div>
     ${resultExtrasHtml(r)}
     ${resultPromo()}
-    <div class="btns"><button class="btn" id="btnMenu">Menü</button><button class="btn primary" id="btnAgain">${G.mode === 'test' ? 'Weiter üben' : 'Nochmal'}</button></div>`;
+    <div class="btns"><button class="btn" id="btnMenu">${['reise', 'advent', 'merk'].includes(G.mode) ? 'Zurück' : 'Startseite'}</button><button class="btn primary" id="btnAgain">${G.mode === 'test' ? 'Weiter üben' : G.mode === 'fehler' && !Object.keys(S.box).length ? 'Fertig' : G.mode === 'merk' && !merkStats().todo ? 'Zur Übersicht' : 'Nochmal'}</button></div>`;
   show('result');
-  $('btnMenu').onclick = () => { Sound.click(); goHome(); };
+  $('btnMenu').onclick = () => { Sound.click(); backToOrigin(); };
   $('btnAgain').onclick = () => {
-    if (G.mode === 'test') return goHome();
+    if (G.mode === 'test') return startGame('training');   // vom Test vorgewähltes Thema
     if (G.mode === 'fehler' && !Object.keys(S.box).length) return goHome();
     if (G.mode === 'advent') return startAdventDoor(G.door);
     if (G.mode === 'challenge') return startGame('challenge', { queue: challengeTasks(), op: 'mix', lvl: 0 });

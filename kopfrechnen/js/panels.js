@@ -108,7 +108,7 @@ const PANELS = {
       <button class="mi" data-reset="merk"><div class="ico">🧠</div><div><b>Merk-Training zurücksetzen</b><span>Merkstärken, Sternenhimmel und Sternbilder löschen</span></div></button>
       <button class="mi" data-reset="badges"><div class="ico">🏅</div><div><b>Abzeichen zurücksetzen</b><span>Alle Abzeichen dieses Profils löschen</span></div></button>
       <button class="mi" data-reset="box"><div class="ico">📦</div><div><b>Fehlerkiste leeren</b><span>Gesammelte Fehler-Aufgaben löschen</span></div></button>
-      <button class="mi" id="btnReset"><div class="ico">↺</div><div><b>Alles zurücksetzen</b><span>Punkte, Rekorde, Abzeichen, Fehlerkiste, Merk-Training und Reise dieses Profils löschen</span></div></button>
+      <button class="mi" id="btnReset"><div class="ico">↺</div><div><b>Alles zurücksetzen</b><span>Punkte, Rekorde, Abzeichen, Fehlerkiste, Merk-Training, Reise, Funken, Garderobe und Rätsel dieses Profils löschen – Auftrag der Lehrkraft, Adventskalender und Klasse bleiben</span></div></button>
       </div>`, init: initSettings };
   },
 
@@ -225,6 +225,7 @@ const PANELS = {
 /* ---------- Sheet-Steuerung ---------- */
 function openSheet(panel = 'menu', opts) {
   Sound.init();
+  armBack();
   if (!Sheet.open) { Sheet.open = true; $('sheetBg').hidden = false; pauseGame(true); Sheet.lastFocus = document.activeElement; Sheet.stack = []; }
   showPanel(panel, opts, true);
 }
@@ -238,6 +239,19 @@ function showPanel(panel, opts, push) {
   p.init && p.init();
   (p.focus ? $(p.focus) : $('sheetClose')).focus({ preventScroll: true });
 }
+/* ---------- Zurück-Taste (Android-App und Browser): schließt Fenster bzw. beendet die Runde, statt die App zu verlassen ---------- */
+let navGuard = false;
+function armBack() { if (navGuard) return; navGuard = true; try { history.pushState({ rb: 1 }, '', location.pathname + location.search); } catch { navGuard = false; } }
+addEventListener('popstate', () => {
+  if (!navGuard || location.hash.length > 1) return;   // Links mit #… (Klassen-Code usw.) laufen über hashchange
+  navGuard = false;
+  if (Sheet.open) { if (Sheet.stack.length > 1) $('sheetBack').click(); else closeSheet(); }
+  else {
+    const scr = currentScreen();
+    if (scr === 'game') quitGame(); else if (scr === 'result') $('btnMenu')?.click(); else if (scr === 'duel') { DU = null; goHome(); }
+  }
+  if (Sheet.open || currentScreen() !== 'home') armBack();
+});
 function closeSheet() { Sheet.open = false; $('sheetBg').hidden = true; pauseGame(false); Sheet.lastFocus?.focus?.(); }
 $('fab').onclick = () => { Sound.click(); Sheet.open ? closeSheet() : openSheet('menu'); };
 $('sheetClose').onclick = closeSheet;
@@ -262,8 +276,8 @@ function initSettings() {
   $('sheetBody').querySelectorAll('[data-reset]').forEach(b => b.onclick = () => resetPart(b.dataset.reset));
   $('btnReset').onclick = () => {
     if (!confirm(tr(`Wirklich den gesamten Fortschritt von „${profile().name}“ löschen? Das kann nicht rückgängig gemacht werden.`))) return;
-    if (G && !G.over) quitGame();
-    const keep = { settings: S.settings, sel: S.sel };
+    if (G && !G.over) quitGame(true);
+    const keep = { settings: S.settings, sel: S.sel, assign: S.assign, advent: S.advent, klasse: S.klasse, klassePending: S.klassePending };
     ROOT.profiles[ROOT.cur].data = Object.assign(PROFILE_DEFAULT(), keep); useProfile(ROOT.cur);
     save(); renderHome(); closeSheet(); toast('Fortschritt zurückgesetzt');
   };
@@ -273,7 +287,7 @@ function initSettings() {
 function initProfiles() {
   let emoji = EMOJIS[1], editing = false;
   $('profEmoji').onclick = e => { const b = e.target.closest('button'); if (!b) return; emoji = b.dataset.e; $('profEmoji').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); };
-  $('sheetBody').querySelectorAll('[data-prof]').forEach(b => b.onclick = () => { if (G && !G.over) quitGame(); useProfile(b.dataset.prof); save(); applyTheme(); renderHome(); closeSheet(); toast(`Hallo ${esc(profile().name)}! ${profile().emoji}`); });
+  $('sheetBody').querySelectorAll('[data-prof]').forEach(b => b.onclick = () => { if (G && !G.over) quitGame(true); useProfile(b.dataset.prof); save(); applyTheme(); renderHome(); closeSheet(); toast(`Hallo ${esc(profile().name)}! ${profile().emoji}`); });
   $('profEdit').onclick = () => {
     editing = true; const p = profile(); $('profFormTitle').textContent = 'Profil bearbeiten'; $('profName').value = p.name; $('profSave').textContent = 'Speichern';
     emoji = p.emoji; $('profEmoji').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x.dataset.e === emoji)); $('profName').focus();
@@ -281,7 +295,7 @@ function initProfiles() {
   $('profForm').onsubmit = e => {
     e.preventDefault(); const name = $('profName').value.trim(); if (!name) return $('profName').focus();
     if (editing) Object.assign(profile(), { name, emoji });
-    else { if (G && !G.over) quitGame(); const id = 'p' + Date.now().toString(36); ROOT.profiles[id] = { id, name, emoji, data: PROFILE_DEFAULT() }; useProfile(id); }
+    else { if (G && !G.over) quitGame(true); const id = 'p' + Date.now().toString(36); ROOT.profiles[id] = { id, name, emoji, data: PROFILE_DEFAULT() }; useProfile(id); }
     save(); applyTheme(); renderHome(); closeSheet(); toast(`${emoji} ${esc(name)}`);
   };
   $('profDel') && ($('profDel').onclick = () => {
@@ -563,7 +577,7 @@ const RESET_ASK = {
 };
 function resetPart(what, after) {
   if (!RESET_ASK[what] || !confirm(tr(RESET_ASK[what]))) return;
-  if (G && !G.over) quitGame();
+  if (G && !G.over && G.mode === { reise: 'reise', merk: 'merk', box: 'fehler' }[what]) quitGame(true);   // andere laufende Runden bleiben unberührt
   if (what === 'reise') { S.reise = null; G_REISE = null; }
   if (what === 'merk') { S.merk = null; G_MERK = null; }
   if (what === 'badges') S.badges = {};

@@ -15,7 +15,10 @@ function raetselSecret(date = todayStr(), len = raetselLen()) {
 }
 function raetselState() {
   const t = todayStr(), len = raetselLen();
-  if (!S.raetsel || S.raetsel.date !== t || S.raetsel.len !== len) S.raetsel = { date: t, len, g: [], done: false, won: false };
+  // je Tag und Länge ein eigener Stand – ein Klassenwechsel löscht kein angefangenes Rätsel
+  if (!S.raetselDay || S.raetselDay.date !== t) S.raetselDay = { date: t, by: {}, paid: false, counted: false };
+  if (S.raetsel && S.raetsel.date === t && !S.raetselDay.by[S.raetsel.len]) { S.raetselDay.by[S.raetsel.len] = S.raetsel; if (S.raetsel.done) { S.raetselDay.counted = true; S.raetselDay.paid = !!S.raetsel.won; } }   // Stand aus 3.12.0 übernehmen
+  S.raetsel = S.raetselDay.by[len] ||= { date: t, len, g: [], done: false, won: false };
   S.raetselStats ||= { played: 0, won: 0, streak: 0, last: '' };
   return S.raetsel;
 }
@@ -52,7 +55,7 @@ PANELS.raetsel = () => {
     return `<div class="rz-row${cur ? ' cur' : ''}" translate="no">${Array.from({ length: st.len }, (_, i) => `<span class="rz-c ${sc ? 'c-' + sc[i] : ''}" style="--i:${i}">${g ? g[i] : cur ? (input[i] || '') : ''}</span>`).join('')}</div>`;
   }).join('');
   const hints = () => `<ul class="rz-hints">${raetselHints(sec, st.g.length).map((h, i) => `<li style="--i:${i}"><span>💡</span> <span>${esc(h)}</span></li>`).join('')}</ul>`;
-  const end = () => st.done ? `<div class="rz-end">${blitzSay(st.won ? 'cheer' : 'comfort', st.won ? `<b>Geschafft!</b> <span>Die Blitz-Zahl war</span> <b translate="no">${sec}</b>. <span>+${FUNKEN.raetsel + RAETSEL_TRIES - st.g.length} 💫</span>` : `<span>Diesmal nicht – die Zahl war</span> <b translate="no">${sec}</b>. <span>Morgen gibt es ein neues Rätsel!</span>`, 56)}
+  const end = () => st.done ? `<div class="rz-end">${blitzSay(st.won ? 'cheer' : 'comfort', st.won ? `<b>Geschafft!</b> <span>Die Blitz-Zahl war</span> <b translate="no">${sec}</b>. ${st.paid ? `<span>+${st.paid} 💫</span>` : ''}` : `<span>Diesmal nicht – die Zahl war</span> <b translate="no">${sec}</b>. <span>Morgen gibt es ein neues Rätsel!</span>`, 56)}
       <div class="rz-stats"><div><b>${stats.played}</b><span>gespielt</span></div><div><b>${stats.won}</b><span>gelöst</span></div><div><b>${stats.streak}</b><span>in Folge</span></div></div>
       <button class="btn primary block" id="rzShare">Ergebnis teilen</button></div>` : '';
   const keys = () => st.done ? '' : `<div class="rz-keys">${['1', '2', '3', '4', '5', '6', '7', '8', '9', 'del', '0', 'ok'].map(k => `<button data-k="${k}" class="${k === 'ok' ? 'ok' : k === 'del' ? 'fn' : ''}">${k === 'del' ? '⌫' : k === 'ok' ? 'OK' : k}</button>`).join('')}</div>`;
@@ -66,9 +69,14 @@ PANELS.raetsel = () => {
     st.g.push(input); input = ''; Sound.click();
     const won = st.g[st.g.length - 1] === sec;
     if (won || st.g.length >= RAETSEL_TRIES) {
-      st.done = true; st.won = won; stats.played++;
-      if (won) { stats.won++; stats.streak = stats.last === dayStr(1) ? stats.streak + 1 : 1; stats.last = st.date; addFunken(FUNKEN.raetsel + RAETSEL_TRIES - st.g.length); award('raetsel'); Sound.milestone(); Confetti.burst(120); }
-      else { stats.streak = 0; Sound.wrong(); }
+      st.done = true; st.won = won;
+      const day = S.raetselDay, first = !day.counted; day.counted = true;   // Statistik und Funken nur einmal pro Tag
+      if (first) stats.played++;
+      if (won) {
+        if (stats.last !== st.date) { stats.won++; stats.streak = stats.last === dayStr(1) ? stats.streak + 1 : 1; stats.last = st.date; }
+        if (!day.paid) { day.paid = true; st.paid = FUNKEN.raetsel + RAETSEL_TRIES - st.g.length; addFunken(st.paid); }
+        award('raetsel'); announceBadges(); Sound.milestone(); Confetti.burst(120);
+      } else { if (first) stats.streak = 0; Sound.wrong(); }
     } else { const sc = raetselScore(st.g[st.g.length - 1], sec); sc.every(x => x !== 'n') ? Sound.hint() : Sound.click(); }
     save(); draw(); renderHome();
   };

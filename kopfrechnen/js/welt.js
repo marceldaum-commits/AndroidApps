@@ -116,7 +116,7 @@ PANELS.welt = (o = {}) => {
     ${ev ? `<div class="welt-ev">${ev.icon} <b>${esc(ev.name)}</b> – <span>Sonder-Outfit nur bis ${eventEnd(ev)}</span></div>` : ''}
     <div class="welt-tabs">${tabs}</div>
     <div class="shop-grid">${items.map(card).join('')}</div>
-    ${tab !== 'room' && Object.values(w.wear).some(Boolean) ? `<button class="linkbtn" id="weltOff" style="align-self:center">${tab === 'hat' ? 'Hut' : 'Teil'} ausziehen</button>` : ''}
+    ${tab !== 'room' && w.wear[tab] ? `<button class="linkbtn" id="weltOff" style="align-self:center">${tab === 'hat' ? 'Hut' : 'Teil'} ausziehen</button>` : ''}
     <p class="small muted" style="margin:0;text-align:center">Funken gibt es für jede richtige Antwort, Etappen der Rechen-Reise, Sternbilder, das Rätsel des Tages und das Tagesziel.</p></div>`,
     init() {
       const body = $('sheetBody'), keep = () => body.parentElement.scrollTop, re = (t, sc) => { showPanel('welt', { tab: t }); body.parentElement.scrollTop = sc; };
@@ -129,7 +129,7 @@ PANELS.welt = (o = {}) => {
         if (!confirm(`${tr(it.name)} – ${tr(`Für ${it.price} Funken kaufen?`)}`)) return;
         S.funken -= it.price;
         if (kind === 'deco') w.deco[id] = todayStr(); else { w.own[id] = todayStr(); w.wear[it.slot] = id; }
-        save(); Sound.milestone(); Confetti.burst(80); award('shop'); renderHome();
+        save(); Sound.milestone(); Confetti.burst(80); award('shop'); announceBadges(); renderHome();
         toast(kind === 'deco' ? `<span>${esc(it.icon || '✨')}</span> <span>Neu in Blitz' Zimmer!</span>` : '<span>✨ Blitz hat ein neues Outfit!</span>', 1800);
         re(tab, sc);
       });

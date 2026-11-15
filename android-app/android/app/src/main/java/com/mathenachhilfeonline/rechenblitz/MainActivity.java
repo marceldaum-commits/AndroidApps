@@ -1,6 +1,8 @@
 package com.mathenachhilfeonline.rechenblitz;
 
 import android.os.Bundle;
+import android.webkit.WebView;
+import androidx.activity.OnBackPressedCallback;
 import com.getcapacitor.BridgeActivity;
 
 public class MainActivity extends BridgeActivity {
@@ -8,5 +10,15 @@ public class MainActivity extends BridgeActivity {
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(RbWidgetPlugin.class);   // Brücke Web-App → Startbildschirm-Widget
         super.onCreate(savedInstanceState);
+        // Zurück-Taste: erst die Web-App reagieren lassen (Fenster schließen, Runde beenden),
+        // die App wird nur auf der Startseite verlassen.
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                WebView wv = getBridge() != null ? getBridge().getWebView() : null;
+                if (wv != null && wv.canGoBack()) wv.goBack();
+                else { setEnabled(false); getOnBackPressedDispatcher().onBackPressed(); setEnabled(true); }
+            }
+        });
     }
 }

@@ -244,7 +244,7 @@ Object.assign(PANELS, {
         <p class="small muted" style="margin:0 0 8px">Damit die Aufgaben zu dir passen. Die Klassenstufe gilt für den ganzen Kalender – wer sie später ändert, fängt wieder bei Türchen 1 an.</p>
         ${voucher() ? `<p class="note">🎁 <b>Wichtig:</b> Der ${voucher().percent || 10}-%-Gutschein für alle 24 Türchen gilt nur, wenn die Klassenstufe stimmt (Prüfung bei der Buchung) und ist einmal je Familie einlösbar.</p>` : ''}
         <div class="chips big" id="advK">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => `<button data-v="${n}" class="${pre === n ? 'sel' : ''}">${n}</button>`).join('')}<button data-v="11" style="flex-basis:100%">Oberstufe (11–13)</button></div>`,
-        init() { $('advK').onclick = e => { const b = e.target.closest('button'); if (!b) return; const k = +b.dataset.v; st.klasse = k; if (k <= 10 && !S.settings.klasse) S.settings.klasse = k; save(); renderHome(); showPanel('advent'); toast(`🎄 ${adventClassName(k)} – viel Spaß!`); }; } };
+        init() { $('advK').onclick = e => { const b = e.target.closest('button'); if (!b) return; const k = +b.dataset.v; st.klasse = k; const adopt = k <= 10 && !S.settings.klasse; if (adopt) S.settings.klasse = k; save(); renderHome(); showPanel('advent'); toast(`🎄 ${adventClassName(k)} – viel Spaß!` + (adopt ? ` <span>${tr('Klassenstufe auch für die App übernommen (änderbar in den Einstellungen).')}</span>` : ''), 3200); }; } };
     }
     const doors = ADVENT_ORDER.map(d => {
       const r = st.doors[d], open = adventOpen(d);
@@ -394,7 +394,7 @@ function renderExtrasHome() {
     const v = voucher();
     $('promo').innerHTML = `<div class="pr-ico">🎁</div><div class="pr-txt"><span class="eyebrow">Adventsaktion</span><b>${v.percent || 10} % ${esc(v.text || 'auf ein Stundenpaket')}</b><p>Öffne alle 24 Türchen im Rechen-Adventskalender und hol dir deinen Gutschein für die Nachhilfe – online${v.until ? ` (gültig bis ${fmtDay(v.until)})` : ''}.</p></div><button class="btn primary small" data-open="advent">Zum Adventskalender</button>`;
   }
-  $('challengeCard').hidden = ph === 'on' || ph === 'after';
+  $('challengeCard').hidden = !chVisible();
   const cc = $('classCard');
   if (cc) {
     cc.hidden = !CONFIG.classApi;
@@ -413,9 +413,8 @@ function extrasAfterGame(acc) {
     if (ok) { award('advent'); if (Object.keys(st.doors).length >= 24) award('advent24'); }
     const [icon, fact] = ADVENT_FACTS[G.door - 1];
     html += ok || prev
-      ? `<div class="card doorview"><div class="dicon">${icon}</div><b>Türchen ${G.door} geöffnet!</b><p class="fact">${esc(fact)}</p><button class="btn block" data-open="advent">Zum Adventskalender</button></div>`
-      : `<div class="card doorview"><div class="dicon">🔒</div><b>Fast! ${G.correct} von 5 richtig</b><p class="muted">Für Türchen ${G.door} brauchst du mindestens ${ADVENT_MIN_OK} richtige. Schau dir die Lösungswege an und probier's nochmal!</p><button class="btn primary block" id="doorRetry">Nochmal versuchen</button></div>`;
-    if (!ok && !prev) setTimeout(() => { const b = $('doorRetry'); if (b) b.onclick = () => startAdventDoor(G.door); }, 50);
+      ? `<div class="card doorview"><div class="dicon">${icon}</div><b>${ok ? `Türchen ${G.door} geöffnet!` : `Türchen ${G.door} ist schon offen`}</b>${!ok || (prev && prev.correct > G.correct) ? `<p class="small muted" style="margin:4px 0">Dein bestes Ergebnis bleibt: ${Math.max(prev ? prev.correct : 0, G.correct)}/5</p>` : ''}<p class="fact">${esc(fact)}</p><button class="btn block" data-open="advent">Zum Adventskalender</button></div>`
+      : `<div class="card doorview"><div class="dicon">🔒</div><b>Fast! ${G.correct} von 5 richtig</b><p class="muted">Für Türchen ${G.door} brauchst du mindestens ${ADVENT_MIN_OK} richtige. Schau dir die Lösungswege an und probier's nochmal!</p></div>`;
     if (allNow && voucher()) { html += `<div class="card"><h3 style="margin:0 0 10px">🎉 Alle 24 Türchen geschafft!</h3>${voucherHtml()}</div>`; setTimeout(bindVoucher, 50); Confetti.burst(200); }
   }
   if (S.klasse && CONFIG.classApi && G.correct > 0 && G.mode !== 'test') {
@@ -426,7 +425,7 @@ function extrasAfterGame(acc) {
   return html;
 }
 function resultExtrasHtml(r) {
-  const cert = (r.stars >= 2 || r.badges.length || G.mode === 'test' || G.mode === 'advent') && G.correct > 0;
+  const cert = (r.stars >= 2 || r.badges.length || G.mode === 'test' || (G.mode === 'advent' && G.correct >= ADVENT_MIN_OK)) && G.correct > 0;
   return `<div class="sharerow">${cert ? '<button class="btn" id="rCert">🏅 Urkunde</button>' : ''}<button class="btn" id="rInvite">💌 Freunde einladen</button></div>`;
 }
 function bindResultExtras(r) {

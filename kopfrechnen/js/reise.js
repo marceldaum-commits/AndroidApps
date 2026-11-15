@@ -84,7 +84,7 @@ function reiseFinish(acc) {
   (st.ch[r.c] ||= {});
   const first = !r.before && stars > 0, chDone = r.boss && stars > 0 && !r.before;
   if (stars > (st.ch[r.c][r.s] || 0)) st.ch[r.c][r.s] = stars;
-  if (first) addFunken(r.boss ? FUNKEN.boss : FUNKEN.etappe);
+  if (first) { const n = r.boss ? FUNKEN.boss : FUNKEN.etappe; addFunken(n); G.funken = (G.funken || 0) + n; }   // Runde ist schon beendet → Bonus in der Ergebnisanzeige mitzählen
   if (chDone) award('reise' + (r.c + 1));
   const ch = REISE_CH[r.c], nx = reiseCurrent();
   let html = `<div class="card reise-res"><div class="rr-stars">${[1, 2, 3].map(i => `<span class="${i <= stars ? 'on' : ''}">★</span>`).join('')}</div>`;
@@ -165,7 +165,18 @@ PANELS.reise = (o = {}) => {
       });
       $('rkGo') && ($('rkGo').onclick = () => showPanel('reiseStation', { c: cur.c, s: cur.s }, true));
       $('rkReset') && ($('rkReset').onclick = () => resetPart('reise', () => showPanel('reise')));
-      $('rkChange').onclick = () => { if (confirm(tr('Klassenstufe ändern? Deine Sterne bleiben erhalten, die Aufgaben passen sich an.'))) { st.k = 0; save(); showPanel('reise'); } };
+      $('rkChange').onclick = () => showPanel('reiseKlasse', { c }, true);
+    } };
+};
+PANELS.reiseKlasse = ({ c } = {}) => {
+  const st = reiseState(), cur = reiseKlasse();
+  return { title: '<span>🗺️</span> <span>Klassenstufe</span>', html: `<div class="reise">${blitzSay('think', '<span>In welche Klasse gehst du? Deine Sterne bleiben erhalten, die Aufgaben passen sich an.</span>', 56)}
+    <div class="chips big" id="rkK2">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(k => `<button data-v="${k}" class="${k === cur ? 'sel' : ''}" aria-pressed="${k === cur}">${k}</button>`).join('')}</div>
+    <button class="btn block" id="rkCancel">Abbrechen</button></div>`,
+    init() {
+      const back = () => { Sheet.stack.pop(); showPanel('reise', { c }); };
+      $('rkK2').onclick = e => { const b = e.target.closest('button'); if (!b) return; const k = +b.dataset.v; if (k !== cur) { st.k = k; save(); renderHome(); toast(`<span>🗺️</span> <span>Klasse ${k}</span>`); } back(); };
+      $('rkCancel').onclick = back;
     } };
 };
 PANELS.reiseStation = ({ c, s }) => {

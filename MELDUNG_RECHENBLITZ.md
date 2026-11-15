@@ -2,8 +2,53 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.12.0** (Blitz-Welt: Funken, Garderobe, Zimmer, Rätsel des Tages, Jahreszeiten-Events), siehe Meldungen (28)–(32). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
+> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.12.1** (3.12.0 Blitz-Welt + Bedien-Korrekturen aus dem Klick-Test), siehe Meldungen (28)–(33). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
 > - **Bitte testen und live freigeben.** Seit heute läuft die Advents-Vorschau (ab 15.11.), ihre Texte sind jetzt auch auf EN/UK vollständig.
+## 15.11.2026 (33) – Bedien-Check: Korrekturen nach Marcels Klick-Test (3.12.1)
+
+- **Anlass:** Marcel hat bemerkt, dass manche Stellen nicht wie erwartet reagieren. Ein Beispiel war die Rechen-Reise: Nach Rein und Raus fehlte die Karte. Deshalb gab es zwei Prüfungen:
+  - eine automatische Klick-Prüfung: jedes anklickbare Element in 26 Ansichten, ohne echte Funde;
+  - einen unabhängigen Bedien-Test wie ein Kind: Abbrechen, Neuladen, Doppeltipp, Zurück.
+- **Behoben:**
+  - **Rechen-Reise:**
+    - Die Startkarte öffnet immer die Karte, dort gibt es „▶ Etappe N spielen“.
+    - Abbrechen und „Zurück“ führen zur Karte zurück.
+    - „ändern“ zeigt eine echte Klassenauswahl, mit Vorauswahl und „Abbrechen“.
+    - Die Funken-Anzeige im Ergebnis enthält jetzt den Etappen-Bonus.
+  - **Adventskalender und Merk-Training:** Abbrechen und „Zurück“ führen in den Kalender bzw. die Merk-Übersicht statt zur Startseite.
+  - **Zurück-Taste (Android-App und Browser):**
+    - schließt Fenster bzw. geht im Menü eine Ebene zurück;
+    - beendet laufende Runden;
+    - verlässt die App erst auf der Startseite.
+    - Dafür gibt es eine Änderung in der APK (`MainActivity`).
+  - **Tageschallenge:**
+    - Ein abgebrochener Countdown zählt nicht mehr als Versuch.
+    - Die gemessene Zeit enthält das 3-2-1 nicht mehr.
+    - Im Advent (Karte ausgeblendet) schlägt Blitz die Challenge nicht mehr vor.
+  - **Blitz auf der Startseite:** Ein Antippen des Fuchses startet keine Runde mehr (er hüpft nur). Gestartet wird über den Knopf „Los →“ in der Sprechblase.
+  - **Rätsel des Tages:** Ein Klassenwechsel löscht kein angefangenes Rätsel mehr. Funken und Statistik gibt es nur einmal pro Tag.
+  - **Abzeichen** „Modefuchs“ und „Rätselprofi“ erscheinen sofort.
+  - **Garderobe:** „ausziehen“ erscheint nur, wenn im Bereich etwas getragen wird.
+  - **Zurücksetzen:**
+    - Teil-Zurücksetzen beendet nur die passende Runde.
+    - „Alles zurücksetzen“ behält Auftrag der Lehrkraft, Adventskalender und Klasse. Der Text nennt jetzt alles, was gelöscht wird.
+  - **Advent-Ergebnis:**
+    - keine Urkunde unter 3 richtigen;
+    - nur ein Wiederholen-Knopf;
+    - bei schlechterer Wiederholung: „Dein bestes Ergebnis bleibt“.
+    - Die Klassenwahl im Kalender meldet, dass sie auch für die App gilt.
+  - **Merk-Training:** Die Erklärkarte hat ein eigenes ✕ zum Beenden.
+  - **Ergebnis-Knöpfe:**
+    - „Menü“ heißt jetzt „Startseite“ bzw. „Zurück“.
+    - Nach dem Einstufungstest startet „Weiter üben“ direkt ein Training.
+    - Nach leerer Fehlerkiste heißt der Knopf „Fertig“.
+  - **Startseite:** unten mehr Platz, damit der runde Menü-Knopf keine Karten-Knöpfe verdeckt.
+- **Bewusst so gelassen:** Im Merk-Training wächst der Zähler bei Fehlern, z. B. 3/7. Falsche Aufgaben kommen in derselben Runde noch einmal dran, das ist gewollt.
+- **Tests:**
+  - 41 gezielte Prüfungen (DE und EN);
+  - kompletter Regressionstest: Breite 320 px, offline, APK-Modus, Merk, Reise, Welt, Abzeichen, Update-Knopf, Widget, 423 Zufallsaktionen;
+  - keine JS-Fehler, keine fehlenden Übersetzungen (1434 Einträge).
+
 ## 15.11.2026 (32) – Großes Paket „Blitz-Welt“ (3.12.0)
 
 - **Marcel 15.11.:** Er hat das große Paket („leg alles um“) freigegeben.
