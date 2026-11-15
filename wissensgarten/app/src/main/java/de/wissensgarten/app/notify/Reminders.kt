@@ -111,7 +111,7 @@ class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWork
         // Ferien: Der Garten schläft – keine Erinnerungen
         if (de.wissensgarten.core.model.Holidays.isActive(c.settings.holidays.value)) return Result.success()
         val now = System.currentTimeMillis()
-        val dao = c.database.dao()
+        val dao = c.store
         val entries = c.repository.profiles.first().map { p ->
             val cards = dao.bedsWithCardsOnce(p.id).flatMap { it.cards }
             val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }

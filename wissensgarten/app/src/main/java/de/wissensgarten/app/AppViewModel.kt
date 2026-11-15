@@ -475,7 +475,7 @@ class AppViewModel(app: Application, private val saved: androidx.lifecycle.Saved
     /** Aktuelle Serie und Rekord (Rekord wird gespeichert – Tiere bleiben für immer). */
     suspend fun streaks(): Pair<Int, Int> {
         val p = pid() ?: return 0 to 0
-        val days = c.database.dao().profileLogsSince(p, System.currentTimeMillis() - 400 * Scheduler.DAY_MS).map { Scheduler.localDay(it.time) }.toSet()
+        val days = c.store.profileLogsSince(p, System.currentTimeMillis() - 400 * Scheduler.DAY_MS).map { Scheduler.localDay(it.time) }.toSet()
         val cur = de.wissensgarten.core.model.Critters.streak(days, today())
         settings.setBestStreak(p, cur)
         return cur to settings.bestStreak(p)

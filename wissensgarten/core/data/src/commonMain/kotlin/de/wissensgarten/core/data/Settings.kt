@@ -1,0 +1,191 @@
+package de.wissensgarten.core.data
+
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+
+/** Vorlesen: AUTO = für Grundschulkinder an, sonst aus. */
+enum class ReadAloud(val label: String) { AUTO("Automatisch"), ON("Immer"), OFF("Nie") }
+
+enum class ThemeMode(val label: String) { LIGHT("Hell"), DARK("Dunkel"), SYSTEM("Wie das Handy") }
+
+/** Kleine Geräte-Einstellungen. Lernstand liegt in der Datenbank. */
+class Settings(private val prefs: KeyValueStore) {
+
+    private val _activeProfile = MutableStateFlow(prefs.getString(K_PROFILE, null))
+    val activeProfileId: StateFlow<String?> = _activeProfile.asStateFlow()
+
+    private val _theme = MutableStateFlow(
+        runCatching { ThemeMode.valueOf(prefs.getString(K_THEME, ThemeMode.LIGHT.name)!!) }.getOrDefault(ThemeMode.LIGHT)
+    )
+    val theme: StateFlow<ThemeMode> = _theme.asStateFlow()
+
+    private val _onboarded = MutableStateFlow(prefs.getBoolean(K_ONBOARDED, false))
+    val onboarded: StateFlow<Boolean> = _onboarded.asStateFlow()
+
+    private val _sound = MutableStateFlow(prefs.getBoolean(K_SOUND, true))
+    val sound: StateFlow<Boolean> = _sound.asStateFlow()
+    fun setSound(v: Boolean) { prefs.edit().putBoolean(K_SOUND, v).apply(); _sound.value = v }
+
+    private val _vibration = MutableStateFlow(prefs.getBoolean("vibration", true))
+    val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
+    fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
+
+    private val _music = MutableStateFlow(prefs.getBoolean("musik", true))
+    val music: StateFlow<Boolean> = _music.asStateFlow()
+    fun setMusic(v: Boolean) { prefs.edit().putBoolean("musik", v).apply(); _music.value = v }
+
+    /** Beim Start (höchstens einmal am Tag) bei GitHub nach einer neuen App-Version schauen. */
+    private val _autoUpdate = MutableStateFlow(prefs.getBoolean("auto_update", true))
+    val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
+    fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("auto_update", v).apply(); _autoUpdate.value = v }
+    /** Eingabe-Spiel (Antwort tippen) ab Klasse 5 – abschaltbar */
+    private val _typing = MutableStateFlow(prefs.getBoolean("typing", true))
+    val typing: StateFlow<Boolean> = _typing.asStateFlow()
+    fun setTyping(v: Boolean) { prefs.edit().putBoolean("typing", v).apply(); _typing.value = v }
+
+    /** Ferien-Modus (Eltern): Zeiträume, in denen der Garten langsamer welkt. */
+    private val _holidays = MutableStateFlow(de.wissensgarten.core.model.Holidays.decode(prefs.getString("ferien", ""))
+        .also { de.wissensgarten.core.model.Scheduler.holidays = it })
+    val holidays: StateFlow<List<LongRange>> = _holidays.asStateFlow()
+    fun setHoliday(on: Boolean, now: Long = de.wissensgarten.core.model.Platform.nowMs()) {
+        val p = de.wissensgarten.core.model.Holidays.toggle(_holidays.value, on, now)
+        prefs.edit().putString("ferien", de.wissensgarten.core.model.Holidays.encode(p)).apply()
+        _holidays.value = p
+        de.wissensgarten.core.model.Scheduler.holidays = p
+    }
+
+    /** Gesunde Lernzeit (Eltern): Minuten pro Tag, 0 = ohne Grenze. */
+    private val _dailyLimit = MutableStateFlow(prefs.getInt("tageslimit", 0))
+    val dailyLimit: StateFlow<Int> = _dailyLimit.asStateFlow()
+    fun setDailyLimit(min: Int) { prefs.edit().putInt("tageslimit", min).apply(); _dailyLimit.value = min }
+    /** Heute genutzte Zeit (ms) und Extra-Minuten, die Eltern heute freigegeben haben. */
+    fun usage(day: Long): Pair<Long, Int> =
+        if (prefs.getLong("zeit_tag", -1) == day) prefs.getLong("zeit_ms", 0) to prefs.getInt("zeit_extra", 0) else 0L to 0
+    fun addUsage(day: Long, ms: Long) {
+        val (used, extra) = usage(day)
+        prefs.edit().putLong("zeit_tag", day).putLong("zeit_ms", used + ms).putInt("zeit_extra", extra).apply()
+    }
+    fun addExtraMinutes(day: Long, min: Int) {
+        val (used, extra) = usage(day)
+        prefs.edit().putLong("zeit_tag", day).putLong("zeit_ms", used).putInt("zeit_extra", extra + min).apply()
+    }
+
+    var lastUpdateCheck: Long
+        get() = prefs.getLong("update_check", 0)
+        set(v) { prefs.edit().putLong("update_check", v).apply() }
+
+    private val _readAloud = MutableStateFlow(runCatching { ReadAloud.valueOf(prefs.getString("vorlesen", "AUTO")!!) }.getOrDefault(ReadAloud.AUTO))
+    val readAloud: StateFlow<ReadAloud> = _readAloud.asStateFlow()
+    /** Silben farbig (Silbenmethode). AUTO = Klasse 1–2 */
+    private val _syllables = MutableStateFlow(runCatching { ReadAloud.valueOf(prefs.getString("silben", "AUTO")!!) }.getOrDefault(ReadAloud.AUTO))
+    val syllables: StateFlow<ReadAloud> = _syllables.asStateFlow()
+    fun setSyllables(r: ReadAloud) { prefs.edit().putString("silben", r.name).apply(); _syllables.value = r }
+
+    fun setReadAloud(r: ReadAloud) { prefs.edit().putString("vorlesen", r.name).apply(); _readAloud.value = r }
+
+    // Gieß-Erinnerung
+    private val _reminderOn = MutableStateFlow(prefs.getBoolean(K_REMINDER, false))
+    val reminderOn: StateFlow<Boolean> = _reminderOn.asStateFlow()
+    private val _reminderHour = MutableStateFlow(prefs.getInt(K_REMINDER_HOUR, 17))
+    val reminderHour: StateFlow<Int> = _reminderHour.asStateFlow()
+    private val _reminderAsked = MutableStateFlow(prefs.getBoolean(K_REMINDER_ASKED, false))
+    /** Wurde die Erinnerungs-Frage im Garten schon beantwortet? */
+    val reminderAsked: StateFlow<Boolean> = _reminderAsked.asStateFlow()
+
+    fun setReminder(on: Boolean, hour: Int = _reminderHour.value) {
+        prefs.edit().putBoolean(K_REMINDER, on).putInt(K_REMINDER_HOUR, hour).putBoolean(K_REMINDER_ASKED, true).apply()
+        _reminderOn.value = on; _reminderHour.value = hour; _reminderAsked.value = true
+    }
+
+    // Abenteuer: gesehene Erklärungen, geöffnete Truhen, Freunde im Garten (pro Profil)
+    private val _rev = MutableStateFlow(0)
+    /** Zählt bei jeder Änderung hoch – damit die Oberfläche neu liest. */
+    val adventureRev: StateFlow<Int> = _rev.asStateFlow()
+    private fun bump() { _rev.value++ }
+
+    /** Alle Pakete, deren Erklär-Geschichte dieses Profil schon gesehen hat (für den Geräte-Sync). */
+    fun introsOf(profileId: String): Set<String> = prefs.keys().filter { it.startsWith("intro_${profileId}_") && prefs.getBoolean(it, false) }
+        .map { it.removePrefix("intro_${profileId}_") }.toSet()
+    fun setIntros(profileId: String, packs: Set<String>) { prefs.edit().apply { packs.forEach { putBoolean("intro_${profileId}_$it", true) } }.apply() }
+    fun setChaptersRead(profileId: String, ns: Set<Int>) { prefs.edit().putStringSet("kapitel_$profileId", ns.map { "$it" }.toSet()).apply() }
+    fun setHybrids(profileId: String, ids: Set<String>) { prefs.edit().putStringSet("kreuzungen_$profileId", ids).apply() }
+    fun setGoodNightDay(profileId: String, day: Long) { prefs.edit().putLong("gutenacht_$profileId", day).apply() }
+    fun clearGardenFriends(profileId: String) { prefs.edit().remove("freunde_$profileId").apply() }
+    /** Nach einem Sync: alle Ansichten neu laden */
+    fun syncChanged() = bump()
+
+    // ---- 0.18: Unkraut, Bienenstock, Serien-Tiere, Gedächtnis-Spaziergang, Tagesaufgaben (pro Profil, nur lokal)
+    /** Gezupftes Unkraut: Karte → Zahl der Fehler beim Zupfen */
+    fun weedsPulled(pid: String): Map<String, Int> = de.wissensgarten.core.model.Quests.decode(prefs.getString("unkraut_$pid", ""))
+    fun weedCount(pid: String) = prefs.getInt("unkraut_n_$pid", 0)
+    fun pullWeed(pid: String, cardId: String, lapses: Int) {
+        val m = weedsPulled(pid) + (cardId to lapses)
+        prefs.edit().putString("unkraut_$pid", de.wissensgarten.core.model.Quests.encode(m)).putInt("unkraut_n_$pid", weedCount(pid) + 1).apply(); bump()
+    }
+    fun hiveFurniture(pid: String, roomId: String): Int = prefs.getInt("stock_${pid}_$roomId", -1)
+    fun setHiveFurniture(pid: String, roomId: String, i: Int) { prefs.edit().putInt("stock_${pid}_$roomId", i).apply(); bump() }
+    fun bestStreak(pid: String) = prefs.getInt("serie_best_$pid", 0)
+    fun setBestStreak(pid: String, n: Int) { if (n > bestStreak(pid)) prefs.edit().putInt("serie_best_$pid", n).apply() }
+    fun loci(pid: String): Map<Int, String> = de.wissensgarten.core.model.Loci.decode(prefs.getString("loci_$pid", ""))
+    fun setLoci(pid: String, m: Map<Int, String>) { prefs.edit().putString("loci_$pid", de.wissensgarten.core.model.Loci.encode(m)).apply(); bump() }
+    fun questProgress(pid: String, day: Long): Map<String, Int> = de.wissensgarten.core.model.Quests.decode(prefs.getString("aufgaben_${pid}_$day", ""))
+    fun addQuestProgress(pid: String, day: Long, kind: String, n: Int) {
+        val m = questProgress(pid, day).let { it + (kind to (it[kind] ?: 0) + n) }
+        prefs.edit().putString("aufgaben_${pid}_$day", de.wissensgarten.core.model.Quests.encode(m)).apply(); bump()
+    }
+    /** Die Aufgaben eines Tages werden beim ersten Anzeigen festgelegt und gemerkt. */
+    fun questList(pid: String, day: Long): Map<String, Int>? = prefs.getString("aufgaben_liste_${pid}_$day", null)?.let { de.wissensgarten.core.model.Quests.decode(it) }
+    fun setQuestList(pid: String, day: Long, m: Map<String, Int>) { prefs.edit().putString("aufgaben_liste_${pid}_$day", de.wissensgarten.core.model.Quests.encode(m)).apply() }
+    fun questChestWeek(pid: String) = prefs.getLong("aufgaben_kiste_$pid", -1)
+    fun setQuestChestWeek(pid: String, w: Long) { prefs.edit().putLong("aufgaben_kiste_$pid", w).apply(); bump() }
+
+    // ---- Klassenarbeiten (Prüfungsmodus)
+    private val examJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+    private val examList = kotlinx.serialization.builtins.ListSerializer(de.wissensgarten.core.model.Exam.serializer())
+    fun exams(profileId: String): List<de.wissensgarten.core.model.Exam> =
+        prefs.getString("pruefungen_$profileId", null)?.let { runCatching { examJson.decodeFromString(examList, it) }.getOrNull() }.orEmpty()
+    fun setExams(profileId: String, list: List<de.wissensgarten.core.model.Exam>) {
+        prefs.edit().putString("pruefungen_$profileId", examJson.encodeToString(examList, list.sortedBy { it.day })).apply(); bump()
+    }
+
+    fun introSeen(profileId: String, packId: String) = prefs.getBoolean("intro_${profileId}_$packId", false)
+    fun markIntroSeen(profileId: String, packId: String) { prefs.edit().putBoolean("intro_${profileId}_$packId", true).apply(); bump() }
+
+    fun chestsOpened(profileId: String) = prefs.getInt("truhen_$profileId", 0)
+    fun setChestsOpened(profileId: String, n: Int) { prefs.edit().putInt("truhen_$profileId", n).apply(); bump() }
+
+    /** Ausgewählte Freunde für den Garten; null = automatisch die neuesten. */
+    fun gardenFriends(profileId: String): Set<String>? = prefs.getStringSet("freunde_$profileId", null)
+    fun setGardenFriends(profileId: String, ids: Set<String>) { prefs.edit().putStringSet("freunde_$profileId", ids).apply(); bump() }
+
+    fun chaptersRead(profileId: String): Set<Int> = prefs.getStringSet("kapitel_$profileId", emptySet())!!.mapNotNull { it.toIntOrNull() }.toSet()
+    fun markChapterRead(profileId: String, n: Int) { prefs.edit().putStringSet("kapitel_$profileId", (chaptersRead(profileId) + n).map { "$it" }.toSet()).apply(); bump() }
+
+    fun hybrids(profileId: String): Set<String> = prefs.getStringSet("kreuzungen_$profileId", emptySet())!!
+    fun addHybrid(profileId: String, id: String) { prefs.edit().putStringSet("kreuzungen_$profileId", hybrids(profileId) + id).apply(); bump() }
+    fun familyReward(): String = prefs.getString("familien_belohnung", "")!!
+    fun setFamilyReward(v: String) { prefs.edit().putString("familien_belohnung", v).apply(); bump() }
+    fun familyClaimedWeek() = prefs.getLong("familienbaum_woche", -1)
+    fun setFamilyClaimedWeek(w: Long) { prefs.edit().putLong("familienbaum_woche", w).apply(); bump() }
+
+    fun surpriseFound(profileId: String, day: Long, i: Int) = prefs.getBoolean("fest_${profileId}_${day}_$i", false)
+    fun markSurprise(profileId: String, day: Long, i: Int) { prefs.edit().putBoolean("fest_${profileId}_${day}_$i", true).apply(); bump() }
+
+    fun goodNightDay(profileId: String) = prefs.getLong("gutenacht_$profileId", -1)
+    fun markGoodNight(profileId: String, day: Long) { prefs.edit().putLong("gutenacht_$profileId", day).apply(); bump() }
+
+    fun setActiveProfile(id: String?) { prefs.edit().putString(K_PROFILE, id).apply(); _activeProfile.value = id }
+    fun setTheme(t: ThemeMode) { prefs.edit().putString(K_THEME, t.name).apply(); _theme.value = t }
+    fun setOnboarded(v: Boolean) { prefs.edit().putBoolean(K_ONBOARDED, v).apply(); _onboarded.value = v }
+
+    private companion object {
+        const val K_PROFILE = "aktives_profil"
+        const val K_THEME = "design"
+        const val K_ONBOARDED = "einrichtung_fertig"
+        const val K_SOUND = "ton"
+        const val K_REMINDER = "erinnerung"
+        const val K_REMINDER_HOUR = "erinnerung_stunde"
+        const val K_REMINDER_ASKED = "erinnerung_gefragt"
+    }
+}
