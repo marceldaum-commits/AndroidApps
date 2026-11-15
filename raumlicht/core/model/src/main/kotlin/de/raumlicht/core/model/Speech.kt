@@ -19,6 +19,8 @@ object Speech {
         s = s.replace("^", " hoch ").replace(" = ", " gleich ").replace(" + ", " plus ").replace("=", " gleich ")
         // Emojis und sonstige Bildzeichen stumm
         s = s.filter { it.isLetterOrDigit() || it.isWhitespace() || it in ".,;:!?()-/" }
-        return s.replace(Regex("""\s+"""), " ").replace(" ,", ",").replace(" .", ".").trim()
+        // Klammern liest eine Sprachausgabe oft hölzern mit – als kleine Pause klingt es flüssiger
+        s = s.replace(" (", ", ").replace("(", " ").replace(")", " ")
+        return s.replace(Regex("""\s+"""), " ").replace(" ,", ",").replace(",,", ",").replace(" .", ".").replace(" !", "!").replace(" ?", "?").trim()
     }
 }

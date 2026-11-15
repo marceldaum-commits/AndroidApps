@@ -26,6 +26,8 @@ fun SettingsScreen(
     onReset: () -> Unit = {},
     volume: Int = 100, onVolume: (Int) -> Unit = {},
     voice: Boolean = true, onVoice: (Boolean) -> Unit = {}, voiceAvailable: Boolean = true,
+    /** Knöpfe zum Aussuchen der Stimme (nur wenn Lux spricht) */
+    voiceControls: @Composable () -> Unit = {},
 ) {
     val speaker = de.raumlicht.app.ui.fx.LocalSpeaker.current
     val sfx = de.raumlicht.app.ui.fx.LocalSfx.current
@@ -44,6 +46,7 @@ fun SettingsScreen(
                     Toggle("🔊 Geräusche", "Laser, Treffer, Lux’ Piepsen", sound, onSound)
                     Toggle("🗣️ Lux spricht", if (voiceAvailable) "Lux liest ihre Sprechblasen laut vor (Sprachausgabe des Geräts)" else "Auf diesem Gerät ist keine deutsche Stimme eingerichtet – Lux bleibt stumm.", voice) {
                         onVoice(it); if (it) speaker?.say("Hallo, ich bin Lux!") }
+                    if (voice && voiceAvailable) voiceControls()
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
                     Text("🔉 Lautstärke: $volume %", Modifier.padding(top = 8.dp).testTag("lautstaerke-text"), style = MaterialTheme.typography.bodyLarge)
                     Text("Für Musik und Geräusche zusammen", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
@@ -88,5 +91,19 @@ private fun Toggle(title: String, sub: String, on: Boolean, onChange: (Boolean) 
             Text(sub, style = MaterialTheme.typography.bodySmall, color = Q.Muted)
         }
         Switch(on, onChange)
+    }
+}
+
+/** Stimme aussuchen: durch die deutschen Stimmen des Geräts schalten (jede stellt sich vor) und die Stimmlage wählen. */
+@Composable
+fun VoiceControls(position: Pair<Int, Int>, bright: Boolean, onNext: () -> Unit, onBright: (Boolean) -> Unit) {
+    var isBright by remember { mutableStateOf(bright) }
+    Column(Modifier.padding(bottom = 6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+            OutlinedButton(onNext, Modifier.testTag("stimme-wechseln"), enabled = position.second > 1) { Text(if (position.second > 1) "Andere Stimme (${position.first} von ${position.second})" else "Nur eine Stimme vorhanden") }
+            OutlinedButton({ isBright = !isBright; onBright(isBright) }, Modifier.testTag("stimmlage")) { Text(if (isBright) "Lage: hell" else "Lage: natürlich") }
+        }
+        Text("Klingt es noch nach Automat? Dann liegt es an der Stimme des Handys. Bessere gibt es in den Android-Einstellungen unter " +
+            "„Sprachausgabe“ → Einstellungen der Sprachausgabe → „Sprachdaten installieren“ → Deutsch.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
     }
 }

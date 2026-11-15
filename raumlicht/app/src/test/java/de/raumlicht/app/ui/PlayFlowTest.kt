@@ -380,4 +380,17 @@ class PlayFlowTest {
         rule.onNodeWithTag("ring-weiter").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("ring-runde").assertTextEquals("Runde 2")
         rule.onNodeWithTag("ring-daten").assertTextContains("A${RingRun(6).a.fmt()}", substring = true)
     }
+
+    @Test fun luxPicksThePleasantVoice() {
+        val all = listOf(de.raumlicht.app.ui.fx.VoiceInfo("de-netz-top", 500, network = true, missing = false), de.raumlicht.app.ui.fx.VoiceInfo("de-lokal-gut", 400, false, false),
+            de.raumlicht.app.ui.fx.VoiceInfo("de-lokal-einfach", 200, false, false), de.raumlicht.app.ui.fx.VoiceInfo("de-fehlt", 500, false, missing = true), de.raumlicht.app.ui.fx.VoiceInfo("de-lokal-b", 400, false, false))
+        val ok = de.raumlicht.app.ui.fx.usable(all)
+        assertEquals(listOf("de-lokal-b", "de-lokal-gut", "de-lokal-einfach"), ok.map { it.name })               // ohne Netz, installiert, beste zuerst
+        assertEquals("de-lokal-b", de.raumlicht.app.ui.fx.choose(ok, null)); assertEquals("de-lokal-einfach", de.raumlicht.app.ui.fx.choose(ok, "de-lokal-einfach"))
+        assertEquals("de-lokal-b", de.raumlicht.app.ui.fx.choose(ok, "gibt-es-nicht-mehr")); assertNull(de.raumlicht.app.ui.fx.choose(emptyList(), "x"))
+        var next = 0; var bright: Boolean? = null
+        show { de.raumlicht.app.ui.settings.VoiceControls(2 to 3, false, { next++ }, { bright = it }) }
+        rule.onNodeWithText("Andere Stimme (2 von 3)").performClick(); assertEquals(1, next)
+        rule.onNodeWithText("Lage: natürlich").performClick(); assertEquals(true, bright); rule.onNodeWithText("Lage: hell").assertExists()
+    }
 }

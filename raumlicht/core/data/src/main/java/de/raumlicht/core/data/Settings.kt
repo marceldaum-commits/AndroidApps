@@ -28,6 +28,14 @@ class Settings(ctx: Context) {
     fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("autoUpdate", v).apply(); _autoUpdate.value = v }
 
+    /** Lux' Stimme: gemerkter Name der Gerätestimme (leer = die beste) und ob sie heller klingen soll */
+    var voiceName: String
+        get() = prefs.getString("voiceName", "") ?: ""
+        set(v) = prefs.edit().putString("voiceName", v).apply()
+    var voiceBright: Boolean
+        get() = prefs.getBoolean("voiceBright", false)
+        set(v) = prefs.edit().putBoolean("voiceBright", v).apply()
+
     /** Lautstärke von Musik und Geräuschen in Prozent (Standard: voll) */
     private val _volume = MutableStateFlow(prefs.getInt("volume", 100))
     val volume: StateFlow<Int> = _volume.asStateFlow()

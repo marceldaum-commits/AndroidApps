@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.3.2 – Lux klingt angenehmer (15.11.2026)
+- **Natürlichere Stimme:** Lux spricht jetzt in natürlicher Tonlage und etwas ruhiger. Die stark erhöhte „Drohnen“-Lage ließ die Stimme blechern klingen.
+- **Beste Stimme des Geräts:** Unter den deutschen Stimmen, die ohne Internet auskommen, wird die hochwertigste gewählt.
+- **Stimme aussuchen:** In den Einstellungen unter „Lux spricht“ kannst du durch die Stimmen des Geräts schalten (jede stellt sich vor) und die Lage wählen
+  (natürlich oder hell). Dort steht auch, wo man in Android bessere Stimmen nachlädt.
+- Klammern und Gedankenstriche werden als kurze Pausen gesprochen statt mitgelesen.
+
 ## 2.3.1 – Fehlerkorrekturen nach dem Durchprüfen (15.11.2026)
 - **Ballerbude mit Aufgabe:** Nach dem Regelwechsel wurde weiter nach der ersten Regel gewertet – jetzt zählt immer die Regel, die gerade gilt.
 - **Ballerbude zu zweit:** Tippen beide gleichzeitig, zählen jetzt beide Treffer (vorher ging beides verloren).

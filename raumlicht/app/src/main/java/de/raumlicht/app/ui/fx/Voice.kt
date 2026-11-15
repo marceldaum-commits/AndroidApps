@@ -29,6 +29,13 @@ class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {})
     var checked by androidx.compose.runtime.mutableStateOf(false)
         private set
     private var ready = false
+    private var wanted: String? = null
+    private var bright = false
+    /** Deutsche Stimmen des Geräts, beste zuerst */
+    var voices by androidx.compose.runtime.mutableStateOf(emptyList<VoiceInfo>())
+        private set
+    var current by androidx.compose.runtime.mutableStateOf<String?>(null)
+        private set
     private var pending: String? = null
     private val main = android.os.Handler(android.os.Looper.getMainLooper())
     // Manche Geräte melden sich schon, während die Sprachausgabe noch angelegt wird – deshalb erst im nächsten Schritt einrichten
@@ -38,9 +45,9 @@ class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {})
         val ok = runCatching { tts.setLanguage(Locale.GERMANY) }.getOrDefault(TextToSpeech.LANG_NOT_SUPPORTED)
         available = ok >= TextToSpeech.LANG_AVAILABLE
         if (!available) return
-        // lieber eine Stimme, die auf dem Gerät rechnet – dann geht kein Text ins Netz
-        runCatching { tts.voices?.filter { it.locale.language == "de" && !it.isNetworkConnectionRequired }?.minByOrNull { it.quality * -1 }?.let { tts.voice = it } }
-        tts.setPitch(1.45f); tts.setSpeechRate(1.08f)
+        // Stimmen, die auf dem Gerät rechnen (dann geht kein Text ins Netz) und schon installiert sind – die hochwertigste zuerst
+        voices = runCatching { tts.voices.orEmpty().filter { it.locale.language == "de" }.map { VoiceInfo(it.name, it.quality, it.isNetworkConnectionRequired, "notInstalled" in it.features.orEmpty()) } }.getOrDefault(emptyList()).let(::usable)
+        apply()
         tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
             override fun onStart(id: String?) = onSpeaking(true)
             override fun onDone(id: String?) = onSpeaking(false)
@@ -50,6 +57,24 @@ class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {})
         ready = true
         pending?.let { say(it) }; pending = null
     }
+
+    /** Stimme und Stimmlage einstellen: [wanted] = gemerkter Name (sonst die beste), [bright] = hellere „Drohnen“-Lage statt natürlicher */
+    private fun apply() {
+        val name = choose(voices, wanted) ?: return
+        current = name
+        runCatching { tts.voices?.firstOrNull { it.name == name }?.let { tts.voice = it } }
+        // natürlich: fast unverändert und etwas ruhiger – stark verstellte Tonhöhe klingt blechern
+        tts.setPitch(if (bright) 1.3f else 1.04f); tts.setSpeechRate(if (bright) 1.0f else 0.94f)
+    }
+    /** Nächste deutsche Stimme des Geräts wählen und gleich vorstellen. @return ihr Name */
+    fun nextVoice(): String? {
+        if (voices.size < 2) return current
+        wanted = voices[(voices.indexOfFirst { it.name == current } + 1) % voices.size].name; apply(); say("Hallo, ich bin Lux. So klinge ich jetzt."); return current
+    }
+    fun setBright(on: Boolean) { bright = on; if (ready) { apply(); say("So klinge ich jetzt.") } }
+    fun use(name: String, brightVoice: Boolean) { wanted = name.ifBlank { null }; bright = brightVoice; if (ready) apply() }
+    /** Wievielte von wie vielen Stimmen gerade spricht, z. B. 2 to 5 */
+    val position: Pair<Int, Int> get() = (voices.indexOfFirst { it.name == current } + 1) to voices.size
 
     /** Liest den Text vor; ein neuer Satz unterbricht den alten (Lux redet nie durcheinander). */
     override fun say(text: String) {
@@ -61,3 +86,10 @@ class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {})
     fun stop() { pending = null; runCatching { tts.stop() }; onSpeaking(false) }
     fun shutdown() { runCatching { tts.shutdown() } }
 }
+
+/** Was man über eine Stimme des Geräts wissen muss, um die angenehmste auszusuchen */
+data class VoiceInfo(val name: String, val quality: Int, val network: Boolean, val missing: Boolean)
+/** Brauchbar sind installierte Stimmen ohne Netz; sortiert nach Qualität (bei Gleichstand nach Namen, damit die Reihenfolge fest ist) */
+fun usable(all: List<VoiceInfo>): List<VoiceInfo> = all.filter { !it.network && !it.missing }.sortedWith(compareByDescending<VoiceInfo> { it.quality }.thenBy { it.name })
+/** Die gemerkte Stimme, wenn es sie noch gibt – sonst die hochwertigste */
+fun choose(usable: List<VoiceInfo>, wanted: String?): String? = usable.firstOrNull { it.name == wanted }?.name ?: usable.firstOrNull()?.name
