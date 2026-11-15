@@ -64,4 +64,9 @@ class Level(
     }
 }
 
-data class Chapter(val number: Int, val title: String, val topic: String, val venue: String, val emoji: String, val color: String, val intro: List<String>, val levels: List<Level>)
+/** Die drei Gebiete des Mathe-Abiturs – danach ist die Tour auf der Startseite geordnet. */
+enum class Area(val title: String, val emoji: String, val color: String) { GEOMETRIE("Geometrie", "📐", "cyan"), ANALYSIS("Analysis", "📈", "yellow"), STOCHASTIK("Stochastik", "🎲", "pink") }
+
+/** [title] sagt, worum es geht (z. B. „Geraden“); [topic] zählt die Inhalte auf; [venue] ist nur die Kulisse. */
+data class Chapter(val number: Int, val title: String, val topic: String, val venue: String, val emoji: String, val color: String, val intro: List<String>, val levels: List<Level>,
+                   val area: Area = Area.GEOMETRIE)

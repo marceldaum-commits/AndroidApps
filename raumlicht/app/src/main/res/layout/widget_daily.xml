@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Startbildschirm-Widget: Tagesgig von Raumlicht. Ein Tipp öffnet die Aufgabe. -->
+<!-- Startbildschirm-Widget: Tagesaufgabe von Raumlicht. Ein Tipp öffnet die Aufgabe. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="0.12"
-            android:text="RAUMLICHT · TAGESGIG"
+            android:text="RAUMLICHT · TAGESAUFGABE"
             android:textColor="#38E8FF"
             android:textSize="10sp"
             android:textStyle="bold" />

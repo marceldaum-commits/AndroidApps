@@ -45,11 +45,11 @@ private fun TopBar(title: String, onBack: () -> Unit) {
     }
 }
 
-/** Jam-Session: Thema wählen, dann endlos neue Aufgaben. Eine Serie zählt Treffer beim ersten Versuch. */
+/** Endlos üben: Thema wählen, dann endlos neue Aufgaben. Eine Serie zählt Treffer beim ersten Versuch. */
 @Composable
 fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        TopBar("Jam-Session", onBack)
+        TopBar("Endlos üben", onBack)
         Row(Modifier.padding(horizontal = 16.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
             Lux(LuxMood.HAPPY, size = 64.dp)
             Text("Endlos neue Aufgaben, jedes Mal andere Zahlen. Triffst du beim ersten Versuch, wächst deine Serie." + if (best > 0) " Dein Rekord: $best 🔥" else "",
@@ -76,12 +76,12 @@ fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit) {
     }
 }
 
-/** Spickzettel: alle Formeln zum Nachschlagen – mit direktem Sprung in die passenden Gigs und in die Jam-Session. */
+/** Spickzettel: alle Formeln zum Nachschlagen – mit direktem Sprung in die passenden Aufgaben und in die Jam-Session. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SheetScreen(cards: List<SheetCard>, onChapter: (Int) -> Unit = {}, onJam: (JamTopic) -> Unit = {}, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        TopBar("Spickzettel", onBack)
+        TopBar("Formelsammlung", onBack)
         LazyColumn(contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(cards) { _, card ->
                 val c = stageColor(card.color)
@@ -96,7 +96,7 @@ fun SheetScreen(cards: List<SheetCard>, onChapter: (Int) -> Unit = {}, onJam: (J
                     }
                     FlowRow(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         card.chapters.forEach { n -> Jump("▶ Kapitel $n", c) { onChapter(n) } }
-                        card.jam?.let { t -> Jump("🎧 Jam", Q.Pink) { onJam(t) } }
+                        card.jam?.let { t -> Jump("♾️ Üben", Q.Pink) { onJam(t) } }
                     }
                 }
             }
@@ -115,7 +115,7 @@ private fun Jump(text: String, color: androidx.compose.ui.graphics.Color, onClic
 @Composable
 fun BadgesScreen(badges: List<Badge>, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        TopBar("Abzeichen", onBack)
+        TopBar("Erfolge", onBack)
         Text("${badges.count { it.earned }} von ${badges.size} verdient", Modifier.padding(horizontal = 18.dp), color = Q.Yellow, fontWeight = FontWeight.Bold)
         LazyVerticalGrid(GridCells.Fixed(2), contentPadding = PaddingValues(14.dp), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(badges) { i, b ->
@@ -135,14 +135,14 @@ fun BadgesScreen(badges: List<Badge>, onBack: () -> Unit) {
     }
 }
 
-/** Schmale Leiste auf der Startseite: Tagesgig, Jam-Session, Abi-Simulation und der Eingang zu allem Weiteren. */
+/** Schmale Leiste auf der Startseite: Tagesaufgabe, Jam-Session, Abi-Simulation und der Eingang zu allem Weiteren. */
 @Composable
 fun ModeTiles(dailyDone: Boolean, jamBest: Int, onDaily: () -> Unit, onJam: () -> Unit, onExam: () -> Unit, onMore: () -> Unit) {
     Row(Modifier.padding(horizontal = 14.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Tile("🎟️", "Tagesgig", if (dailyDone) "✓" else "neu", Q.Orange, !dailyDone, Modifier.weight(1f), onDaily)
-        Tile("🎧", "Jam", if (jamBest > 0) "🔥 $jamBest" else "endlos", Q.Pink, false, Modifier.weight(1f), onJam)
-        Tile("🎓", "Abi-Sim", "3 Aufgaben", Q.Yellow, false, Modifier.weight(1f), onExam)
-        Tile("🎛️", "Backstage", "mehr", Q.Violet, false, Modifier.weight(1f), onMore)
+        Tile("🎟️", "Heute", if (dailyDone) "geschafft ✓" else "Tagesaufgabe", Q.Orange, !dailyDone, Modifier.weight(1f), onDaily)
+        Tile("♾️", "Üben", if (jamBest > 0) "Serie 🔥 $jamBest" else "endlos", Q.Pink, false, Modifier.weight(1f), onJam)
+        Tile("🎓", "Abi", "Prüfung üben", Q.Yellow, false, Modifier.weight(1f), onExam)
+        Tile("☰", "Mehr", "alle Bereiche", Q.Violet, false, Modifier.weight(1f), onMore)
     }
 }
 

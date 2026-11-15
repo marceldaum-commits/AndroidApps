@@ -99,4 +99,18 @@ class LevelFlowTest {
         tap("plus-a-0", 2); go()
         assertEquals(listOf(2 to 2), solved)
     }
+
+    @Test fun missionCanBeShownAgainAfterFeedbackOrTip() {
+        play("1-1")
+        val mission = Levels.byId("1-1")!!.mission
+        rule.onNodeWithText(mission).assertExists(); rule.onNodeWithTag("aufgabe").assertDoesNotExist()
+        go()                                                       // daneben → Rückmeldung verdrängt die Aufgabe
+        rule.onNodeWithText(mission).assertDoesNotExist()
+        rule.onNodeWithTag("aufgabe").performClick(); rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithText(mission).assertExists(); rule.onNodeWithTag("aufgabe").assertDoesNotExist()
+        rule.onNodeWithText("💡 Tipp").performClick(); rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithText(mission).assertDoesNotExist()
+        rule.onNodeWithTag("aufgabe").performClick(); rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithText(mission).assertExists()
+    }
 }

@@ -78,7 +78,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     }
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar("Achterbahn", onBack) { Text("f(x) = ${ride.text}", color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp) }
+        Bar("Kurve abfahren", onBack) { Text("f(x) = ${ride.text}", color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp) }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 10.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Coaster.rides.forEach { r ->
                 val interaction = remember { MutableInteractionSource() }

@@ -65,10 +65,10 @@ class ExtrasTest {
     @Test fun plannerSpreadsTheWork() {
         val plan = Plan(100, setOf(3, 4)); assertEquals(plan, Plan.decode(plan.encode())); assertNull(Plan.decode("quatsch")); assertNull(Plan.decode("5;"))
         assertEquals(11, Planner.open(plan, emptyMap()).size)
-        assertEquals(3, Planner.today(plan, 96, emptyMap()).size)                 // 11 Gigs auf 4 Tage → 3 pro Tag
+        assertEquals(3, Planner.today(plan, 96, emptyMap()).size)                 // 11 Aufgaben auf 4 Tage → 3 pro Tag
         assertEquals(Planner.MAX_PER_DAY, Planner.today(plan, 99, emptyMap()).size)
         assertTrue(Planner.today(plan, 101, emptyMap()).isEmpty()); assertNull(Planner.headline(plan, 101, emptyMap()))
-        assertEquals("Klausur in 4 Tagen · heute 3 Gigs", Planner.headline(plan, 96, emptyMap()))
+        assertEquals("Klausur in 4 Tagen · heute 3 Aufgaben", Planner.headline(plan, 96, emptyMap()))
         assertEquals("Klausur heute – viel Erfolg!", Planner.headline(plan, 100, emptyMap()))
         val all = Levels.chapters.filter { it.number in plan.chapters }.flatMap { it.levels }.associate { it.id to 3 }
         assertEquals("Klausur in 1 Tag · alles sitzt ✓", Planner.headline(plan, 99, all))

@@ -128,7 +128,7 @@ object Planner {
             left < 0 -> null
             left == 0 -> "Klausur heute – viel Erfolg!"
             n == 0 -> "Klausur in $left ${if (left == 1) "Tag" else "Tagen"} · alles sitzt ✓"
-            else -> "Klausur in $left ${if (left == 1) "Tag" else "Tagen"} · heute $n ${if (n == 1) "Gig" else "Gigs"}"
+            else -> "Klausur in $left ${if (left == 1) "Tag" else "Tagen"} · heute $n ${if (n == 1) "Aufgabe" else "Aufgaben"}"
         }
     }
 }

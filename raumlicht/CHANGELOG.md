@@ -2,6 +2,15 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.4.2 – Finden statt suchen (15.11.2026)
+- **Drei Gebiete wie im Abitur:** Die Startseite ist in **Geometrie, Analysis und Stochastik** aufgeteilt. Ein Tipp auf das Gebiet zeigt alle Kapitel dazu mit Namen.
+- **Namen, die sagen, was drin ist:** Kapitel heißen jetzt nach ihrem Thema („Geraden“, „Ebenen“, „Kurvendiskussion“ …) statt nach der Kulisse.
+  Aus „Gig“ wird „Aufgabe“, aus „Tagesgig“ die „Tagesaufgabe“, aus „Jam-Session“ „Endlos üben“, aus „Backstage“ „Mehr“,
+  aus „Spickzettel“ die „Formelsammlung“, aus „Zweite Chance“ „Fehler wiederholen“, aus „Abzeichen“ „Erfolge“.
+- Lernstand und Klassen-Paket sind ebenfalls nach Gebieten geordnet.
+- **Aufgabe wieder anzeigen:** Steht ein Tipp oder eine Rückmeldung in der Sprechblase, holt „📋 Aufgabe zeigen“ (oder ein Tipp auf die Sprechblase) die Aufgabenstellung zurück.
+- Der Spielstand bleibt vollständig erhalten.
+
 ## 0.4.1 – Einsteigen bitte (15.11.2026)
 - **🎢 Achterbahn aus der Fahrersicht:** Der Graph ist die Bahn – du sitzt im Wagen. Schienen und Schwellen laufen auf dich zu,
   bergab wird es schneller, bergauf langsamer.

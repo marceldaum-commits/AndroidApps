@@ -287,6 +287,6 @@ object Skins {
 // ───────────────────────── Schwachstellen-Training ─────────────────────────
 
 object Training {
-    /** Gigs, die schon gelöst sind, aber nicht beim ersten Versuch – die lohnen eine zweite Runde. */
+    /** Aufgaben, die schon gelöst sind, aber nicht beim ersten Versuch – die lohnen eine zweite Runde. */
     fun levels(stars: Map<String, Int>): List<Level> = Levels.all.filter { (stars[it.id] ?: 0) in 1..2 }
 }

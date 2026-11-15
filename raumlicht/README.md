@@ -41,6 +41,9 @@ Lage-Check, Duell, Zu zweit, Klasse, Klausur-Planer, Lernstand, Zweite Chance, B
 - 📅 **Tagesgig** – jeden Tag eine Aufgabe (Themen wechseln reihum), für drei Jahre im Test auf Lösbarkeit geprüft.
 - 📓 **Spickzettel** – Formelsammlung. 🏅 **Abzeichen** – 14 Auszeichnungen für Fortschritt.
 
+**Aufbau für Nutzer (seit 0.4.2):** drei Gebiete – Geometrie (Kapitel 1–11), Analysis (12, 14), Stochastik (13). Kapitel heißen nach ihrem Thema;
+in älteren Abschnitten dieses READMEs stehen teils noch die früheren Namen (Gig = Aufgabe, Jam-Session = Endlos üben, Backstage = Mehr, Spickzettel = Formelsammlung).
+
 ## So funktioniert Raumlicht
 - Einstellen: Griff in der Bühne ziehen (Kugel = in der Bodenebene, Pfeile = entlang einer Achse) oder Zahlen mit −/+ tippen.
   Die Formel zeigt die Zahlen live, als Spaltenvektoren wie im Heft.

@@ -4,7 +4,7 @@ import de.raumlicht.core.model.Families.col
 import de.raumlicht.core.model.Part.Num
 import de.raumlicht.core.model.Part.Txt
 
-/** Alle Gigs: zehn Kapitel analytische Geometrie, vom Punkt im Raum bis zu Kugeln und Volumen (Kapitel 7–10 in MoreLevels). */
+/** Alle Aufgaben: zehn Kapitel analytische Geometrie, vom Punkt im Raum bis zu Kugeln und Volumen (Kapitel 7–10 in MoreLevels). */
 object Levels {
     private fun p(x: Int, y: Int, z: Int) = V3(x, y, z)
     private val FLOOR = p(0, 0, 1)
@@ -283,27 +283,27 @@ object Levels {
     }
 
     val chapters = listOf(
-        Chapter(1, "Soundcheck", "Punkte im Raum", "Kellerclub", "🎚️", "cyan", listOf(
+        Chapter(1, "Punkte im Raum", "Koordinaten ablesen, Mittelpunkt, Spiegeln", "Kellerclub", "🎚️", "cyan", listOf(
             "Hi, ich bin Lux – deine Lichtdrohne. Du sagst, wohin. Ich fliege.",
             "Jeder Ort auf der Bühne hat drei Koordinaten: x₁ nach vorn, x₂ nach rechts, x₃ nach oben.",
             "Dreh die Bühne mit dem Finger. Zieh den Griff oder tippe die Zahlen – dann „Los“."), ch1),
-        Chapter(2, "Drohnen-Choreo", "Vektoren", "Dachterrasse", "🛸", "pink", listOf(
+        Chapter(2, "Vektoren", "Verbindungsvektor, Vielfaches, Schwerpunkt", "Dachterrasse", "🛸", "pink", listOf(
             "Ein Vektor ist eine Flugansage: so weit vor, so weit rüber, so weit hoch.",
             "Von A nach B? Immer Spitze minus Fuß: B − A.",
             "Wer rechnet statt rät, landet beim ersten Versuch – das gibt drei Sterne."), ch2),
-        Chapter(3, "Erster Laser", "Geraden", "Club", "🔦", "green", listOf(
+        Chapter(3, "Geraden", "Richtungsvektor, Parameter t, Spurpunkt", "Club", "🔦", "green", listOf(
             "Ein Laserstrahl ist eine Gerade: ein Stützpunkt und eine Richtung.",
             "g: x⃗ = A + t · d⃗. Mit t wanderst du auf dem Strahl entlang.",
             "Du siehst nur den Anfang des Strahls. Den Rest verrät dir die Rechnung."), ch3),
-        Chapter(4, "Strahlen kreuzen", "Lagebeziehungen", "Konzerthalle", "✨", "yellow", listOf(
+        Chapter(4, "Lage von Geraden", "Schnittpunkt, parallel, windschief", "Konzerthalle", "✨", "yellow", listOf(
             "Zwei Geraden im Raum können sich schneiden, parallel laufen – oder windschief aneinander vorbei.",
             "Schnittpunkt gesucht? Gleichsetzen und das Gleichungssystem lösen.",
             "Stimmt die dritte Zeile nicht, verfehlen sich die Strahlen."), ch4),
-        Chapter(5, "Glas & Leinwand", "Ebenen", "Open Air", "🔷", "violet", listOf(
+        Chapter(5, "Ebenen", "Durchstoßpunkt, Koordinatenform, Normalenvektor", "Open Air", "🔷", "violet", listOf(
             "Scheiben und Leinwände sind Ebenen. Am schnellsten rechnet man mit der Koordinatenform.",
             "Der Normalenvektor n⃗ steht senkrecht auf der Ebene – seine Einträge sind die Vorfaktoren.",
             "Durchstoßpunkt: Gerade in die Ebenengleichung einsetzen, t ausrechnen, fertig."), ch5),
-        Chapter(6, "Headliner", "Skalarprodukt · Abstand · Spiegelung", "Festival", "🏟️", "orange", listOf(
+        Chapter(6, "Skalarprodukt & Spiegelung", "senkrecht, Lotfußpunkt, Abstand, Spiegelpunkt", "Festival", "🏟️", "orange", listOf(
             "Die große Bühne. Hier zählt jeder Winkel.",
             "Skalarprodukt null heißt senkrecht. Damit findest du Lote, Abstände und Spiegelbilder.",
             "Das ist Abi-Niveau – und du bist bereit."), ch6),

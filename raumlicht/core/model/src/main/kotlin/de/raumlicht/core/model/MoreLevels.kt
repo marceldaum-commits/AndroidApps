@@ -210,22 +210,22 @@ internal object MoreLevels {
     }
 
     val chapters = listOf(
-        Chapter(7, "Im richtigen Winkel", "Winkel", "Theater", "📐", "yellow", listOf(
+        Chapter(7, "Winkel", "zwischen Vektoren, Geraden und Ebenen", "Theater", "📐", "yellow", listOf(
             "Scheinwerfer müssen im richtigen Winkel stehen – und den rechnest du mit dem Skalarprodukt aus.",
             "Zwei Vektoren oder zwei Ebenen: Kosinus. Gerade und Ebene: Sinus.",
             "Stell den Winkel in 15°-Schritten ein. Der Bogen in der Bühne zeigt, welcher Winkel gemeint ist."), ch7),
-        Chapter(8, "Auf Abstand", "Abstände", "Messehalle", "📏", "pink", listOf(
+        Chapter(8, "Abstände", "Punkt–Gerade, parallele Ebenen, windschief", "Messehalle", "📏", "pink", listOf(
             "Sicherheitsabstände sind Pflicht. Kürzester Weg heißt immer: senkrecht.",
             "Punkt–Gerade: Lotfußpunkt suchen. Parallele Ebenen und windschiefe Geraden: Normalenvektor nutzen.",
             "Der Strahl zeigt dir, ob deine Länge passt."), ch8),
-        Chapter(9, "Discokugel", "Kugeln", "Großraumdisco", "🔮", "cyan", listOf(
+        Chapter(9, "Kugeln", "Radius, Tangentialebene, Schnittkreis", "Großraumdisco", "🔮", "cyan", listOf(
             "Eine Kugel ist alles, was vom Mittelpunkt gleich weit entfernt ist.",
             "Kugelgleichung: (x₁ − m₁)² + (x₂ − m₂)² + (x₃ − m₃)² = r².",
             "Trifft ein Laser die Kugel, gibt das eine quadratische Gleichung – mit Ein- und Austritt."), ch9),
-        Chapter(10, "Zugabe", "Kreuzprodukt · Flächen · Volumen", "Stadion", "🎆", "green", listOf(
+        Chapter(10, "Kreuzprodukt", "Flächen, Volumen, Schnittgerade", "Stadion", "🎆", "green", listOf(
             "Das Kreuzprodukt kann mehr als Normalenvektoren.",
             "Seine Länge ist eine Fläche. Mit einem dritten Vektor wird daraus ein Volumen.",
-            "Letzter Gig der Tour. Zeig, was du kannst."), ch10),
+            "Das letzte Kapitel der Geometrie. Zeig, was du kannst."), ch10),
     )
 }
 
@@ -308,14 +308,14 @@ internal object TourThree {
     )
 
     val chapters = listOf(
-        Chapter(11, "Flugplan", "Bewegung mit Zeit", "Flugfeld", "🛫", "orange", listOf(
+        Chapter(11, "Bewegung", "Ort nach t Sekunden, Tempo, Treffpunkt", "Flugfeld", "🛫", "orange", listOf(
             "Jetzt kommt die Zeit dazu: Der Parameter t sind Sekunden.",
             "Der Richtungsvektor ist die Geschwindigkeit – seine Länge das Tempo.",
             "Achtung, Abi-Klassiker: Bahnen können sich kreuzen, ohne dass die Drohnen sich treffen."), ch11),
-        Chapter(12, "Lichtskulpturen", "Analysis in 3D: Rotationskörper", "Lichtkunst-Museum", "🏺", "violet", listOf(
+        Chapter(12, "Rotationskörper", "Volumen mit dem Integral", "Lichtkunst-Museum", "🏺", "violet", listOf(
             "Bonus-Tour: Analysis zum Anfassen.",
             "Dreht sich eine Kurve um die x-Achse, entsteht ein Körper. Sein Volumen: V = π · ∫ f(x)² dx.",
-            "Du stellst das Vielfache von π ein."), ch12),
+            "Du stellst das Vielfache von π ein."), ch12, Area.ANALYSIS),
     )
 }
 
@@ -405,13 +405,13 @@ internal object TourFour {
     }
 
     val chapters = listOf(
-        Chapter(13, "Lichtlotterie", "Stochastik: Wahrscheinlichkeit", "Lostrommel", "🎲", "pink", listOf(
+        Chapter(13, "Wahrscheinlichkeit", "Laplace, Pfadregel, Erwartungswert", "Lostrommel", "🎲", "pink", listOf(
             "Zweites Abi-Gebiet: Zufall. Die Leuchtkugeln zeigen dir, was möglich ist.",
             "Günstige durch mögliche Ergebnisse. Entlang eines Pfades multiplizieren, Pfade addieren.",
-            "„Mindestens eins“? Immer über das Gegenereignis."), ch13),
-        Chapter(14, "Achterbahn", "Analysis: Kurvendiskussion", "Freizeitpark", "🎢", "cyan", listOf(
+            "„Mindestens eins“? Immer über das Gegenereignis."), ch13, Area.STOCHASTIK),
+        Chapter(14, "Kurvendiskussion", "Nullstelle, Extrema, Wendestelle, Fläche", "Freizeitpark", "🎢", "cyan", listOf(
             "Drittes Abi-Gebiet: Analysis. Ich fahre die Kurve ab – du sagst, wo ich halten soll.",
             "Die gelbe Linie ist die Tangente. Waagerecht heißt: f′(x) = 0.",
-            "Hoch- oder Tiefpunkt entscheidet f″. Wendestelle: f″(x) = 0."), ch14),
+            "Hoch- oder Tiefpunkt entscheidet f″. Wendestelle: f″(x) = 0."), ch14, Area.ANALYSIS),
     )
 }

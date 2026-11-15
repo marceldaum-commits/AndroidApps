@@ -25,10 +25,10 @@ class WidgetTest {
         assertEquals(Daily.forDay(day).title, open.title); assertFalse(open.done); assertEquals("★ 5", open.stars)
         assertEquals("heute neu – antippen ▶", open.status)
         val done = DailyWidget.texts(day, mapOf(Daily.id(day) to 3, "1-1" to 3))
-        assertTrue(done.done); assertEquals("heute geschafft ✓  ★★★", done.status); assertEquals("★ 3", done.stars)   // Tagesgigs zählen nicht zu den Tour-Sternen
+        assertTrue(done.done); assertEquals("heute geschafft ✓  ★★★", done.status); assertEquals("★ 3", done.stars)   // Tagesaufgaben zählen nicht zu den Tour-Sternen
         assertFalse(DailyWidget.texts(day + 1, mapOf(Daily.id(day) to 3)).done)
-        assertEquals("RAUMLICHT · TAGESGIG", open.caption)
-        assertEquals("KLAUSUR IN 4 TAGEN · HEUTE 3 GIGS", DailyWidget.texts(day, emptyMap(), de.raumlicht.core.model.Plan(day + 4, setOf(3, 4))).caption)                                          // am nächsten Tag wieder offen
+        assertEquals("RAUMLICHT · TAGESAUFGABE", open.caption)
+        assertEquals("KLAUSUR IN 4 TAGEN · HEUTE 3 AUFGABEN", DailyWidget.texts(day, emptyMap(), de.raumlicht.core.model.Plan(day + 4, setOf(3, 4))).caption)                                          // am nächsten Tag wieder offen
     }
 
     @Test fun remoteViewsRenderAndOpenTheDaily() {

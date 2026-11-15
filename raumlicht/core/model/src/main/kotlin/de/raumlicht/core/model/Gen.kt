@@ -16,7 +16,7 @@ enum class JamTopic(val title: String, val emoji: String, val color: String, val
 
 /**
  * Erzeugt aus einer Zahl (Seed) immer dieselbe Aufgabe – mit ganzzahliger Lösung, die im Raum liegt.
- * Grundlage für Jam-Session (endlos üben) und Tagesgig (jeden Tag eine neue Aufgabe für alle).
+ * Grundlage für Jam-Session (endlos üben) und Tagesaufgabe (jeden Tag eine neue Aufgabe für alle).
  */
 object Gen {
     enum class Kind { MIDPOINT, VECTOR, AIM, PARAM, TRACE, CROSS, PIERCE_FLAT, PIERCE_SKEW, ANGLE, DIST_PLANE, FOOT, RADIUS, MOTION_POS, MOTION_SPEED, MOTION_TIME, ROTATION }
@@ -202,7 +202,7 @@ object Gen {
     }
 }
 
-/** Tagesgig: jeden Tag eine Aufgabe, für alle dieselbe. Die Themen wechseln reihum. */
+/** Tagesaufgabe: jeden Tag eine Aufgabe, für alle dieselbe. Die Themen wechseln reihum. */
 object Daily {
     const val PREFIX = "tag-"
     fun id(day: Long) = "$PREFIX$day"
@@ -223,7 +223,7 @@ object Badges {
         fun chapterDone(n: Int) = Levels.chapters.first { it.number == n }.levels.all { (tour[it.id] ?: 0) > 0 }
         val abi = Levels.all.filter { it.abi }
         return listOf(
-            Badge("start", "🎬", "Erster Gig", "Ein Level geschafft", tour.isNotEmpty()),
+            Badge("start", "🎬", "Erste Aufgabe", "Ein Level geschafft", tour.isNotEmpty()),
             Badge("perfekt5", "🎯", "Rechnen statt raten", "5 Level beim ersten Versuch", tour.values.count { it == 3 } >= 5),
             Badge("perfekt20", "💎", "Präzisionsarbeit", "20 Level mit drei Sternen", tour.values.count { it == 3 } >= 20),
             Badge("geraden", "🔦", "Laser-Profi", "Kapitel 3 und 4 gespielt", chapterDone(3) && chapterDone(4)),
@@ -231,12 +231,12 @@ object Badges {
             Badge("kugel", "🔮", "Discokönig:in", "Kapitel 9 gespielt", chapterDone(9)),
             Badge("abi3", "🎓", "Abi-Luft", "3 Abi-Checks bestanden", abi.count { (tour[it.id] ?: 0) > 0 } >= 3),
             Badge("abi", "🏆", "Abi-ready", "Alle Abi-Checks bestanden", abi.all { (tour[it.id] ?: 0) > 0 }),
-            Badge("halb", "🚐", "Halbe Tour", "Die Hälfte aller Gigs gespielt", tour.size * 2 >= Levels.all.size),
-            Badge("tour", "🎆", "Tour geschafft", "Alle Gigs gespielt", tour.size == Levels.all.size),
-            Badge("tag3", "🎟️", "Stammgast", "3 Tagesgigs gelöst", dailies >= 3),
-            Badge("tag10", "🗓️", "Residency", "10 Tagesgigs gelöst", dailies >= 10),
-            Badge("jam5", "🎧", "Im Flow", "Jam-Session: 5 in Folge beim ersten Versuch", jamBest >= 5),
-            Badge("jam15", "🔥", "Unaufhaltsam", "Jam-Session: 15 in Folge", jamBest >= 15),
+            Badge("halb", "🚐", "Halbe Tour", "Die Hälfte aller Aufgaben gespielt", tour.size * 2 >= Levels.all.size),
+            Badge("tour", "🎆", "Tour geschafft", "Alle Aufgaben gespielt", tour.size == Levels.all.size),
+            Badge("tag3", "🎟️", "Stammgast", "3 Tagesaufgaben gelöst", dailies >= 3),
+            Badge("tag10", "🗓️", "Residency", "10 Tagesaufgaben gelöst", dailies >= 10),
+            Badge("jam5", "🎧", "Im Flow", "Endlos üben: 5 in Folge beim ersten Versuch", jamBest >= 5),
+            Badge("jam15", "🔥", "Unaufhaltsam", "Endlos üben: 15 in Folge", jamBest >= 15),
         )
     }
 }

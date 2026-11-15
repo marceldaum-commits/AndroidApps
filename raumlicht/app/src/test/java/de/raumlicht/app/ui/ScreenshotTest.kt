@@ -91,23 +91,29 @@ class ScreenshotTest {
         LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Alles gemischt", "Alles gemischt", "Jam-Session", "🎧", "pink", emptyList(), emptyList()), false, {}, { _, _ -> }, {}, {},
             caption = "🎧 Jam · ${l.title} · Nr. 4", badge = "🔥 3")
     }
-    @Test fun daily() = shot("25_tagesgig", "tag") {
+    @Test fun daily() = shot("25_tagesaufgabe", "tag") {
         val l = de.raumlicht.core.model.Daily.forDay(20_772)
-        LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Tagesgig", l.title, "Tagesgig", "🎟️", "orange", emptyList(), emptyList()), false, {}, { _, _ -> }, null, {},
-            caption = "🎟️ Tagesgig · ${l.title}", doneLabel = "Fertig für heute ✓")
+        LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Tagesaufgabe", l.title, "Tagesaufgabe", "🎟️", "orange", emptyList(), emptyList()), false, {}, { _, _ -> }, null, {},
+            caption = "🎟️ Tagesaufgabe · ${l.title}", doneLabel = "Fertig für heute ✓")
     }
     @Test fun sheet() = shot("26_spickzettel", "start") { de.raumlicht.app.ui.home.SheetScreen(de.raumlicht.core.model.Sheet.cards, onBack = {}) }
     @Test fun motion() = level("28_bewegung", "11-5", values = mapOf("a" to listOf(1)))
     @Test fun vase() = level("29_rotationskoerper", "12-3", values = mapOf("a" to listOf(3)))
     @Test fun backstage() = shot("30_backstage", "start") {
         de.raumlicht.app.ui.home.BackstageScreen(listOf(
-            de.raumlicht.app.ui.home.BackstageEntry("🧭", "Lage-Check", "parallel, identisch, schneidend, windschief? · Rekord 6/8", Q.Yellow) {},
-            de.raumlicht.app.ui.home.BackstageEntry("⚔️", "Duell", "5 Aufgaben per Code an Freunde schicken", Q.Pink) {},
-            de.raumlicht.app.ui.home.BackstageEntry("🔁", "Zweite Chance", "4 Gigs, die nicht beim ersten Versuch saßen", Q.Orange) {},
-            de.raumlicht.app.ui.home.BackstageEntry("🎇", "Show-Baukasten", "eigene Lichtshow aus Formeln bauen und teilen", Q.Violet) {},
-            de.raumlicht.app.ui.home.BackstageEntry("🎨", "Lux-Werkstatt", "3 von 6 Farben frei", Q.Cyan) {},
-            de.raumlicht.app.ui.home.BackstageEntry("📓", "Spickzettel", "alle Formeln – mit Sprung zu den Aufgaben", Q.Green) {},
-            de.raumlicht.app.ui.home.BackstageEntry("🏅", "Abzeichen", "9 von 14 verdient", Q.Yellow) {})) {}
+            de.raumlicht.app.ui.home.BackstageEntry("🎢", "Kurve abfahren (Fahrersicht)", "Analysis erleben: Höhe, Steigung und Krümmung live im Cockpit", Q.Cyan) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🧩", "Rechenweg in Schritten", "Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand – Schritt für Schritt", Q.Green) {},
+            de.raumlicht.app.ui.home.BackstageEntry("📊", "Lernstand", "2 sicher · 3 wackelig · 9 offen", Q.Cyan) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🗓️", "Klausur-Planer", "Klausur in 4 Tagen · heute 3 Aufgaben", Q.Orange) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🧭", "Lage von Geraden erkennen", "parallel, identisch, schneidend, windschief? · Rekord 6/8", Q.Yellow) {},
+            de.raumlicht.app.ui.home.BackstageEntry("⚔️", "Duell per Code", "5 Aufgaben an Freunde schicken – wer trifft öfter?", Q.Pink) {},
+            de.raumlicht.app.ui.home.BackstageEntry("👥", "Zu zweit an einem Gerät", "abwechselnd spielen – wer rechnet besser?", Q.Cyan) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🏫", "Klassen-Paket (für Lehrkräfte)", "Aufgaben auswählen und als Code an die Klasse geben", Q.Green) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🔁", "Fehler wiederholen", "4 Aufgaben, die nicht beim ersten Versuch saßen", Q.Orange) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🧮", "3D-Rechner & Baukasten", "Schulbuch-Aufgabe eingeben und nachrechnen – oder eigene Lichtshow bauen", Q.Violet) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🎨", "Farbe für Lux", "3 von 6 Farben frei", Q.Cyan) {},
+            de.raumlicht.app.ui.home.BackstageEntry("📓", "Formelsammlung", "alle Formeln – mit Sprung zu den passenden Aufgaben", Q.Green) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🏅", "Erfolge", "9 von 14 verdient", Q.Yellow) {})) {}
     }
     @Test fun examPicker() = shot("31_abi_simulation", "start") { de.raumlicht.app.ui.home.ExamPicker(de.raumlicht.core.model.Exams.all, mapOf("zelt" to 10), { _, _ -> }) {} }
     @Test fun examPart() = shot("32_abi_teilaufgabe", "abi") {

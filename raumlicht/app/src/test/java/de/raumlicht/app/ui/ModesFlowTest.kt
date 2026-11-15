@@ -92,7 +92,7 @@ class ModesFlowTest {
     @Test fun sheetJumpsToChapterAndJam() {
         val chapters = ArrayList<Int>(); val jams = ArrayList<JamTopic>()
         show { SheetScreen(Sheet.cards.take(1), { chapters += it }, { jams += it }, {}) }
-        rule.onNodeWithText("▶ Kapitel 2").performClick(); rule.onNodeWithText("🎧 Jam").performClick()
+        rule.onNodeWithText("▶ Kapitel 2").performClick(); rule.onNodeWithText("♾️ Üben").performClick()
         assertEquals(listOf(2), chapters); assertEquals(listOf(JamTopic.PUNKTE), jams)
     }
 
@@ -123,11 +123,11 @@ class ModesFlowTest {
         show { PlannerScreen(null, 100, emptyMap(), { saved += it }, { _, _, _ -> }) {} }
         rule.onNodeWithTag("kapitel-3").performClick(); rule.mainClock.advanceTimeBy(300)
         assertEquals(Plan(107, setOf(3)), saved.last())
-        rule.onNodeWithText("Klausur in 7 Tagen · heute 1 Gig").assertExists()
+        rule.onNodeWithText("Klausur in 7 Tagen · heute 1 Aufgabe").assertExists()
         rule.onNodeWithTag("minus-tage").performClick(); rule.mainClock.advanceTimeBy(300)
         assertEquals(Plan(106, setOf(3)), saved.last())
         rule.onNodeWithText("▶ Heutiges Paket spielen").performClick(); rule.mainClock.advanceTimeBy(800)
-        rule.onNodeWithText("🗓️ Klausur-Paket · 1/1 · Gig 3-1").assertExists()
+        rule.onNodeWithText("🗓️ Klausur-Paket · 1/1 · Aufgabe 3-1").assertExists()
     }
 
     @Test fun classPackageCodeIsBuiltAndPlayable() {
@@ -136,7 +136,7 @@ class ModesFlowTest {
         val code = ClassCode.encode(listOf(Levels.byId("1-1")!!, Levels.byId("1-2")!!))
         rule.onNodeWithTag("paket-code").assertTextEquals(code)
         rule.onNodeWithTag("klassen-code").performTextInput(code); rule.onNodeWithText("Los").performClick(); rule.mainClock.advanceTimeBy(800)
-        rule.onNodeWithText("🏫 Klassenpaket · 1/2 · Gig 1-1").assertExists()
+        rule.onNodeWithText("🏫 Klassenpaket · 1/2 · Aufgabe 1-1").assertExists()
     }
 
     @Test fun twoPlayersTakeTurns() {
@@ -191,5 +191,19 @@ class ModesFlowTest {
         rule.mainClock.autoAdvance = true
         rule.onNodeWithTag("bahn-welle").performClick(); rule.mainClock.advanceTimeBy(500)
         rule.onNodeWithText("f(x) = 2 · sin(x)").assertExists(); rule.onNodeWithText("▶ Losfahren").assertExists()
+    }
+
+    @Test fun homeIsSplitIntoThreeAreas() {
+        val opened = ArrayList<String>()
+        show { HomeScreen(Levels.chapters, mapOf("1-1" to 3), { opened += it }, {}) }
+        rule.onNodeWithTag("kapitel-3").assertExists(); rule.onNodeWithTag("kapitel-14").assertDoesNotExist()       // Start: Geometrie
+        rule.onNodeWithTag("gebiet-ANALYSIS").performClick(); rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithTag("kapitel-12").assertExists(); rule.onNodeWithTag("kapitel-14").assertExists(); rule.onNodeWithTag("kapitel-3").assertDoesNotExist()
+        rule.onNodeWithTag("kapitel-14").performClick(); rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithText("Nullstelle, Extrema, Wendestelle, Fläche").assertExists()
+        rule.onNodeWithTag("gebiet-STOCHASTIK").performClick(); rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithTag("kapitel-13").assertExists(); rule.onNodeWithText("Laplace, Pfadregel, Erwartungswert").assertExists()
+        assertEquals(Area.entries.toSet(), Levels.chapters.map { it.area }.toSet())
+        assertEquals(listOf(12, 14), Levels.chapters.filter { it.area == Area.ANALYSIS }.map { it.number })
     }
 }

@@ -45,7 +45,7 @@ import kotlinx.coroutines.launch
 private val X = listOf("x₁", "x₂", "x₃")
 
 /**
- * Ein Gig: oben die 3D-Bühne, darunter Lux' Auftrag, die Formel und die Regler.
+ * Ein Aufgabe: oben die 3D-Bühne, darunter Lux' Auftrag, die Formel und die Regler.
  * Einstellen (Griff ziehen oder Zahlen tippen) → „Los“ → Lux fliegt bzw. der Laser feuert.
  */
 @Composable
@@ -53,7 +53,7 @@ fun LevelScreen(
     level: Level, chapter: Chapter, showIntro: Boolean, onIntroSeen: () -> Unit,
     onSolved: (stars: Int, attempts: Int) -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit,
     initial: Values? = null, controller: StageController = remember(level.id) { StageController() },
-    /** Eigene Überschrift (Jam-Session, Tagesgig) statt „Gig 1-2“ */
+    /** Eigene Überschrift (Jam-Session, Tagesaufgabe) statt „Aufgabe 1-2“ */
     caption: String? = null,
     /** Kleine Anzeige rechts oben, z. B. die Serie in der Jam-Session */
     badge: String? = null,
@@ -124,7 +124,7 @@ fun LevelScreen(
             Row(Modifier.fillMaxWidth().padding(end = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
                 Column(Modifier.weight(1f)) {
-                    Text(caption ?: "${chapter.emoji} Gig ${level.id} · ${chapter.topic}", style = MaterialTheme.typography.labelMedium, color = accent)
+                    Text(caption ?: "${chapter.emoji} ${chapter.title} · Aufgabe ${level.id}", style = MaterialTheme.typography.labelMedium, color = accent)
                     Text(level.title, style = MaterialTheme.typography.titleMedium, maxLines = 1)
                 }
                 if (level.abi) Text("🎓 Abi", Modifier.padding(end = 8.dp).background(Q.Orange.copy(alpha = 0.2f), RoundedCornerShape(8.dp)).border(1.dp, Q.Orange, RoundedCornerShape(8.dp)).padding(horizontal = 8.dp, vertical = 3.dp),
@@ -151,10 +151,16 @@ fun LevelScreen(
                 Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp, top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                     Lux(says.second, size = 50.dp)
                     AnimatedContent(says.first, Modifier.weight(1f), transitionSpec = { (slideInVertically { it / 3 } + fadeIn()) togetherWith fadeOut() }, label = "lux") { text ->
-                        Text(text, Modifier.fillMaxWidth().background(Q.Panel, RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).padding(horizontal = 12.dp, vertical = 8.dp),
+                        // Antippen holt die Aufgabenstellung zurück
+                        Text(text, Modifier.fillMaxWidth().clip(RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).background(Q.Panel)
+                            .clickable(remember { MutableInteractionSource() }, null) { if (phase == Phase.AIM) says = level.mission to LuxMood.IDLE }.padding(horizontal = 12.dp, vertical = 8.dp),
                             style = MaterialTheme.typography.bodyMedium, color = Q.Text)
                     }
                 }
+                // Steht gerade ein Tipp oder eine Rückmeldung da, lässt sich die Aufgabenstellung wieder einblenden
+                if (phase == Phase.AIM && says.first != level.mission) Text("📋 Aufgabe zeigen", Modifier.align(Alignment.End).padding(end = 12.dp, top = 4.dp).testTag("aufgabe").clip(RoundedCornerShape(10.dp))
+                    .background(Q.Deep).border(1.dp, accent.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).clickable(remember { MutableInteractionSource() }, null) { says = level.mission to LuxMood.IDLE }
+                    .padding(horizontal = 10.dp, vertical = 5.dp), color = Q.Text, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 // Formel
                 FormulaView(level.formula(if (phase == Phase.DONE) level.solutionShown(values) else values), { stageColor(level.control(it).color) },
                     Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp).background(Q.Deep, RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 8.dp))

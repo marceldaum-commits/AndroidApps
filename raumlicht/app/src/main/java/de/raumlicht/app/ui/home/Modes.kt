@@ -87,7 +87,7 @@ data class BackstageEntry(val emoji: String, val title: String, val sub: String,
 @Composable
 fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar("Backstage", onBack)
+        Bar("Mehr", onBack)
         LazyColumn(contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             itemsIndexed(entries) { i, e ->
                 val interaction = remember { MutableInteractionSource() }
@@ -115,7 +115,7 @@ fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
 fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam, Boolean) -> Unit, guided: Boolean = false, onBack: () -> Unit) {
     var timed by rememberSaveable { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar(if (guided) "Schritt für Schritt" else "Abi-Simulation", onBack)
+        Bar(if (guided) "Rechenweg in Schritten" else "Abi-Prüfungsaufgaben", onBack)
         Speech(if (guided) "Schwere Verfahren, in kleine Schritte zerlegt. Nach jedem Schritt sage ich dir, ob du auf Kurs bist." else "Eine Aufgabe, mehrere Teile – wie im Abitur. Volle Punkte gibt es nur beim ersten Versuch.")
         if (!guided) Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
@@ -198,7 +198,7 @@ fun LageScreen(best: Int, onScore: (Int) -> Boolean, onBack: () -> Unit, session
     LaunchedEffect(round, answer) { controller.setState(round.scene(answer != null)) }
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar("Lage-Check", onBack) { Text(if (done) "" else "Runde ${n + 1}/${LageCheck.ROUNDS}   ✓ $score", color = Q.Yellow, fontWeight = FontWeight.Bold) }
+        Bar("Lage von Geraden", onBack) { Text(if (done) "" else "Runde ${n + 1}/${LageCheck.ROUNDS}   ✓ $score", color = Q.Yellow, fontWeight = FontWeight.Bold) }
         if (done) {
             Column(Modifier.fillMaxSize().padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
                 Lux(if (score >= 6) LuxMood.HAPPY else LuxMood.THINK, size = 130.dp)
@@ -294,9 +294,9 @@ fun DuelScreen(onBack: () -> Unit, incoming: String? = null) {
 
 // ───────────────────────── Schwachstellen-Training ─────────────────────────
 
-/** Spielt noch einmal die Gigs, die nicht beim ersten Versuch geklappt haben. */
+/** Spielt noch einmal die Aufgaben, die nicht beim ersten Versuch geklappt haben. */
 @Composable
-fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title: String = "Zweite Chance", emoji: String = "🔁", onBack: () -> Unit) {
+fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title: String = "Fehler wiederholen", emoji: String = "🔁", onBack: () -> Unit) {
     var idx by rememberSaveable { mutableIntStateOf(0) }
     val level = levels.getOrNull(idx)
     if (level == null) {
@@ -305,7 +305,7 @@ fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title
             Spacer(Modifier.height(40.dp))
             Lux(LuxMood.HAPPY, size = 130.dp)
             Text(if (levels.isEmpty()) "Nichts offen!" else "Runde geschafft!", fontSize = 26.sp, fontWeight = FontWeight.Black, modifier = Modifier.padding(top = 12.dp))
-            Text(if (levels.isEmpty()) "Alle gespielten Gigs hast du beim ersten Versuch gelöst. Hier landen nur Aufgaben, die mehrere Anläufe gebraucht haben."
+            Text(if (levels.isEmpty()) "Alle gespielten Aufgaben hast du beim ersten Versuch gelöst. Hier landen nur Aufgaben, die mehrere Anläufe gebraucht haben."
                 else "Du hast alle ${levels.size} Wackelkandidaten noch einmal gespielt.", Modifier.padding(horizontal = 28.dp, vertical = 10.dp), textAlign = TextAlign.Center)
             NeonButton(onBack, Modifier.padding(16.dp), color = Q.Green) { Text("Zurück", fontWeight = FontWeight.Bold) }
         }
@@ -313,7 +313,7 @@ fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title
     }
     val chapter = Levels.chapters.first { it.number == level.chapter }
     LevelScreen(level, chapter, false, {}, onSolved = { s, a -> onSolved(level, s, a) }, onNext = { idx++ }, onBack = onBack,
-        caption = "$emoji $title · ${idx + 1}/${levels.size} · Gig ${level.id}")
+        caption = "$emoji $title · ${idx + 1}/${levels.size} · Aufgabe ${level.id}")
 }
 
 // ───────────────────────── Lux-Werkstatt ─────────────────────────
@@ -321,7 +321,7 @@ fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title
 @Composable
 fun WorkshopScreen(tourStars: Int, selected: String, onSelect: (String) -> Unit, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Bar("Lux-Werkstatt", onBack) { Text("★ $tourStars", color = Q.Yellow, fontWeight = FontWeight.Bold) }
+        Bar("Farbe für Lux", onBack) { Text("★ $tourStars", color = Q.Yellow, fontWeight = FontWeight.Bold) }
         CompositionLocalProvider(LocalLuxSkin provides selected) { Lux(LuxMood.HAPPY, size = 150.dp) }
         Text("Such dir Lux' Leuchtfarbe aus. Neue Farben schaltest du mit Sternen aus der Tour frei.", Modifier.padding(horizontal = 24.dp, vertical = 8.dp), textAlign = TextAlign.Center, color = Q.Muted)
         LazyVerticalGrid(GridCells.Fixed(2), contentPadding = PaddingValues(14.dp), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -358,7 +358,7 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
     LaunchedEffect(items) { controller.setState(Show.scene(items)) }
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar("Show-Baukasten", onBack) { Text("${items.size}/${Show.MAX}", color = Q.Muted) }
+        Bar("3D-Rechner & Baukasten", onBack) { Text("${items.size}/${Show.MAX}", color = Q.Muted) }
         Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Violet) }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 10.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             items.forEachIndexed { i, it ->

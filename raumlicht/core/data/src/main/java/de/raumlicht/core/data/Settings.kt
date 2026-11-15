@@ -28,7 +28,7 @@ class Settings(ctx: Context) {
     fun introSeen(chapter: Int) = prefs.getBoolean("intro_$chapter", false)
     fun markIntroSeen(chapter: Int) = prefs.edit().putBoolean("intro_$chapter", true).apply()
 
-    /** Jam-Session: längste Serie von Treffern beim ersten Versuch */
+    /** Endlos üben: längste Serie von Treffern beim ersten Versuch */
     private val _jamBest = MutableStateFlow(prefs.getInt("jamBest", 0))
     val jamBest: StateFlow<Int> = _jamBest.asStateFlow()
     /** @return true bei neuem Rekord */

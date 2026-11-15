@@ -62,7 +62,9 @@ fun LearnScreen(topics: List<TopicState>, onChapter: (Int) -> Unit, onBack: () -
         Bar("Lernstand", onBack)
         Text(Learn.summary(topics), Modifier.padding(horizontal = 18.dp, vertical = 4.dp), color = Q.Yellow, fontWeight = FontWeight.Bold)
         LazyColumn(contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 24.dp, top = 6.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            itemsIndexed(topics) { _, t ->
+            itemsIndexed(topics) { i, t ->
+                // Überschrift, sobald ein neues Gebiet beginnt
+                if (i == 0 || topics[i - 1].chapter.area != t.chapter.area) Text("${t.chapter.area.emoji} ${t.chapter.area.title}".uppercase(), Modifier.padding(start = 4.dp, top = if (i == 0) 0.dp else 10.dp, bottom = 6.dp), color = stageColor(t.chapter.area.color), fontSize = 12.sp, fontWeight = FontWeight.Black, letterSpacing = 1.5.sp)
                 val c = when (t.grip) { Grip.SICHER -> Q.Green; Grip.WACKELIG -> Q.Orange; Grip.OFFEN -> Q.Muted }
                 val interaction = remember { MutableInteractionSource() }
                 val w by animateFloatAsState(t.share, spring(dampingRatio = 0.7f, stiffness = 120f), label = "balken")
@@ -71,8 +73,8 @@ fun LearnScreen(topics: List<TopicState>, onChapter: (Int) -> Unit, onBack: () -
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(t.chapter.emoji, fontSize = 20.sp)
                         Column(Modifier.weight(1f).padding(start = 10.dp)) {
-                            Text(t.chapter.topic, fontWeight = FontWeight.Bold, maxLines = 1)
-                            Text("${t.played} von ${t.total} Gigs gespielt · ★ ${t.stars}", color = Q.Muted, fontSize = 12.sp)
+                            Text(t.chapter.title, fontWeight = FontWeight.Bold, maxLines = 1)
+                            Text("${t.played} von ${t.total} Aufgaben gespielt · ★ ${t.stars}", color = Q.Muted, fontSize = 12.sp)
                         }
                         Text(t.grip.label, color = c, fontWeight = FontWeight.Black, fontSize = 13.sp)
                     }
@@ -107,7 +109,7 @@ fun PlannerScreen(plan: Plan?, today: Long, stars: Map<String, Int>, onSave: (Pl
         Text("Diese Kapitel kommen dran", Modifier.padding(start = 16.dp, top = 8.dp, bottom = 6.dp), color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
         FlowRow(Modifier.padding(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Levels.chapters.forEach { c ->
-                Chip("${c.emoji} ${c.number} ${c.topic.substringBefore(':').substringBefore(" ·")}", c.number in chosen, stageColor(c.color), Modifier.testTag("kapitel-${c.number}")) {
+                Chip("${c.emoji} ${c.title}", c.number in chosen, stageColor(c.color), Modifier.testTag("kapitel-${c.number}")) {
                     chosen = if (c.number in chosen) chosen - c.number else chosen + c.number
                     onSave(if (chosen.isEmpty()) null else Plan(today + days, chosen.toSet()))
                 }
@@ -117,7 +119,7 @@ fun PlannerScreen(plan: Plan?, today: Long, stars: Map<String, Int>, onSave: (Pl
             val pack = Planner.today(current, today, stars); val rest = Planner.open(current, stars).size
             Column(Modifier.fillMaxWidth().padding(14.dp).background(Brush.verticalGradient(listOf(Q.Orange.copy(alpha = 0.2f), Q.Deep)), RoundedCornerShape(18.dp)).border(1.5.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(14.dp)) {
                 Text(Planner.headline(current, today, stars) ?: "", fontWeight = FontWeight.Black, fontSize = 17.sp)
-                Text(if (rest == 0) "In diesen Kapiteln hast du alles mit drei Sternen. Mehr geht nicht!" else "Insgesamt noch $rest Gigs ohne drei Sterne. Heute: ${pack.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
+                Text(if (rest == 0) "In diesen Kapiteln hast du alles mit drei Sternen. Mehr geht nicht!" else "Insgesamt noch $rest Aufgaben ohne drei Sterne. Heute: ${pack.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
                 if (pack.isNotEmpty()) NeonButton({ playing = pack }, Modifier.fillMaxWidth().padding(top = 10.dp), color = Q.Green) { Text("▶ Heutiges Paket spielen", fontWeight = FontWeight.Black) }
             }
             NeonButton({ chosen = emptyList(); onSave(null) }, Modifier.padding(horizontal = 14.dp), color = Q.Muted) { Text("Plan löschen") }
@@ -144,11 +146,11 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
     if (run != null && idx < run.size) {
         val level = run[idx]
         LevelScreen(level, Levels.chapters.first { it.number == level.chapter }, false, {}, onSolved = { s, a -> if (s == 3) hits++; onSolved(level, s, a) }, onNext = { idx++ }, onBack = { pack = null },
-            caption = "🏫 Klassenpaket · ${idx + 1}/${run.size} · Gig ${level.id}", badge = "🎯 $hits")
+            caption = "🏫 Klassenpaket · ${idx + 1}/${run.size} · Aufgabe ${level.id}", badge = "🎯 $hits")
         return
     }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState())) {
-        Bar("Klasse", onBack)
+        Bar("Klassen-Paket", onBack)
         if (run != null) {
             Column(Modifier.fillMaxWidth().padding(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Lux(if (hits * 2 >= run.size) LuxMood.HAPPY else LuxMood.THINK, size = 120.dp)
@@ -166,12 +168,12 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
                 supportingText = { if (error) Text("Diesen Code kenne ich nicht – bitte prüfen.") })
             NeonButton({ ClassCode.find(code)?.let { pack = it; idx = 0; hits = 0 } ?: run { error = true } }, color = Q.Pink) { Text("Los") }
         }
-        Text("Paket zusammenstellen (bis ${ClassCode.MAX} Gigs)", Modifier.padding(start = 16.dp, top = 16.dp, bottom = 6.dp), color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        Text("Paket zusammenstellen (bis ${ClassCode.MAX} Aufgaben)", Modifier.padding(start = 16.dp, top = 16.dp, bottom = 6.dp), color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
         Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Levels.chapters.forEach { c -> Chip("${c.emoji} ${c.number}", c.number == chapter, stageColor(c.color)) { chapter = c.number } }
         }
         val ch = Levels.chapters.first { it.number == chapter }
-        Text(ch.topic, Modifier.padding(start = 16.dp, top = 8.dp), color = stageColor(ch.color), fontWeight = FontWeight.Bold)
+        Text("${ch.area.title} · ${ch.title}", Modifier.padding(start = 16.dp, top = 8.dp), color = stageColor(ch.color), fontWeight = FontWeight.Bold)
         FlowRow(Modifier.padding(horizontal = 14.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             ch.levels.forEach { l ->
                 Chip("${l.id} ${l.title}", l.id in picked, stageColor(ch.color), Modifier.testTag("wahl-${l.id}")) {
@@ -182,7 +184,7 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
         if (picked.isNotEmpty()) {
             val levels = picked.mapNotNull { Levels.byId(it) }; val c = ClassCode.encode(levels)
             Column(Modifier.fillMaxWidth().padding(14.dp).background(Q.Deep, RoundedCornerShape(18.dp)).border(1.5.dp, Q.Pink.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("${levels.size} Gigs: ${levels.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
+                Text("${levels.size} Aufgaben: ${levels.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
                 Text(c, Modifier.padding(vertical = 8.dp).testTag("paket-code"), fontSize = 20.sp, fontWeight = FontWeight.Black, letterSpacing = 2.sp, color = Q.Pink)
                 NeonButton({ shareText(ctx, ClassCode.shareText(levels)) }, Modifier.fillMaxWidth(), color = Q.Pink) { Text("📤 Code an die Klasse schicken", fontWeight = FontWeight.Bold) }
             }

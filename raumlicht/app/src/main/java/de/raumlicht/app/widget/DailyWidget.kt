@@ -18,11 +18,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /** Was das Widget zeigt – getrennt vom Android-Teil, damit es sich testen lässt. */
-data class WidgetText(val title: String, val status: String, val stars: String, val done: Boolean, val caption: String = "RAUMLICHT · TAGESGIG")
+data class WidgetText(val title: String, val status: String, val stars: String, val done: Boolean, val caption: String = "RAUMLICHT · TAGESAUFGABE")
 
 /**
- * Startbildschirm-Widget „Tagesgig“: heutige Aufgabe, ob sie schon geschafft ist, und die Sterne der Tour.
- * Ein Tipp öffnet den Tagesgig. Das Widget liest nur den Spielstand auf dem Gerät – kein Netz, keine Daten nach außen.
+ * Startbildschirm-Widget „Tagesaufgabe“: heutige Aufgabe, ob sie schon geschafft ist, und die Sterne der Tour.
+ * Ein Tipp öffnet den Tagesaufgabe. Das Widget liest nur den Spielstand auf dem Gerät – kein Netz, keine Daten nach außen.
  */
 class DailyWidget : AppWidgetProvider() {
     override fun onUpdate(context: Context, manager: AppWidgetManager, ids: IntArray) {
@@ -38,13 +38,13 @@ class DailyWidget : AppWidgetProvider() {
 
     companion object {
         const val EXTRA_OPEN = "raumlicht.open"
-        const val OPEN_DAILY = "tagesgig"
+        const val OPEN_DAILY = "tagesaufgabe"
 
         fun texts(day: Long, stars: Map<String, Int>, plan: de.raumlicht.core.model.Plan? = null): WidgetText {
             val level = Daily.forDay(day); val got = stars[level.id] ?: 0
             val tour = Levels.all.sumOf { stars[it.id] ?: 0 }
             return WidgetText(level.title, if (got > 0) "heute geschafft ✓  " + "★".repeat(got) else "heute neu – antippen ▶", "★ $tour", got > 0,
-                plan?.let { de.raumlicht.core.model.Planner.headline(it, day, stars) }?.uppercase() ?: "RAUMLICHT · TAGESGIG")
+                plan?.let { de.raumlicht.core.model.Planner.headline(it, day, stars) }?.uppercase() ?: "RAUMLICHT · TAGESAUFGABE")
         }
 
         fun views(context: Context, t: WidgetText): RemoteViews = RemoteViews(context.packageName, R.layout.widget_daily).apply {
