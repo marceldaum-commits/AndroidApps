@@ -23,6 +23,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 - Mehrere Spieler auf einem Gerät (bis 6, Spitzname + Bild), je eigener Spielstand; Eltern-Ansicht mit Wochenübersicht
   (Tage, Minuten, Themen, wo Hilfe gut täte) aus dem Durchgangs-Protokoll; Klassen-Challenge mit Ergebnis-Codes (KFR1) und
   Bestenliste mit Prüfcode – alles ohne Server. Datenbank v2 (Profil-Spalte, Tabelle `plays`) mit Migration und Migrationstest.
+- Staffel 2: Gold-Teile (Kapitel komplett mit 3 ⭐, Goldglanz + Warp-Antrieb) und 8 Rettungsmissionen mit je 5 gemischten
+  Etappen (gemischtes Üben); gerettete Freunde bilden die Crew und sprechen täglich wechselnd auf der Startseite.
 - Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
@@ -62,7 +64,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/53_sternenkarte.png) | ![](screenshots/54_hangar.png) | ![](screenshots/55_bauteil_gefunden.png) |
 | ![](screenshots/56_geschichte.png) | ![](screenshots/57_sticker.png) | ![](screenshots/58_volt_launen.png) |
 | ![](screenshots/59_sticker_gewonnen.png) | ![](screenshots/60_foto.png) | ![](screenshots/61_spieler.png) |
-| ![](screenshots/62_eltern.png) | ![](screenshots/63_bestenliste.png) | |
+| ![](screenshots/62_eltern.png) | ![](screenshots/63_bestenliste.png) | ![](screenshots/64_hangar_gold.png) |
+| ![](screenshots/65_crew.png) | ![](screenshots/66_notruf.png) | ![](screenshots/67_start_crew.png) |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

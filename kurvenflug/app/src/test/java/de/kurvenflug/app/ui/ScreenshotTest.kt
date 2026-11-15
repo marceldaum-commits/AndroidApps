@@ -226,12 +226,12 @@ class ScreenshotTest {
     }
 
     @Test fun hangar() = shot("54_hangar") {
-        de.kurvenflug.app.ui.story.HangarScreen(de.kurvenflug.core.model.Story.found(Levels.chapters, storyStars)) {}
+        de.kurvenflug.app.ui.story.HangarScreen(de.kurvenflug.core.model.Story.found(Levels.chapters, storyStars), {})
     }
 
     @Test fun partFound() = shot("55_bauteil_gefunden", settle = 1200) {
         val found = de.kurvenflug.core.model.Story.found(Levels.chapters, storyStars)
-        de.kurvenflug.app.ui.story.PartFoundOverlay(found.take(1), found.map { it.chapter }.toSet()) {}
+        de.kurvenflug.app.ui.story.PartFoundOverlay(found.take(1), found.map { it.chapter }.toSet(), {})
     }
 
     @Test fun storyIntro() = shot("56_geschichte") { de.kurvenflug.app.ui.story.StoryIntroOverlay {} }
@@ -278,6 +278,28 @@ class ScreenshotTest {
             .joinToString("\n") { de.kurvenflug.core.model.Codec.encodeResult(it) } + "\n" +
             de.kurvenflug.core.model.Codec.encodeResult(r("Tom", listOf(1, 1, 1, 1)).copy(attempts = listOf(1, 1, 1, 1), check = "0000"))
         de.kurvenflug.app.ui.together.ResultsBoard({}, initial = text)
+    }
+
+    private val allFound = Levels.all.associate { it.id to if (it.chapter in setOf(1, 15, 2, 8, 3, 13)) 3 else 2 }
+
+    @Test fun hangarGold() = shot("64_hangar_gold", settle = 1500) {
+        de.kurvenflug.app.ui.story.HangarScreen(de.kurvenflug.core.model.Story.found(Levels.chapters, allFound), {},
+            gold = de.kurvenflug.core.model.Season2.gold(Levels.chapters, allFound), onCrew = {})
+    }
+
+    @Test fun crew() = shot("65_crew") {
+        de.kurvenflug.app.ui.story.CrewScreen(setOf(1, 2, 3), parts = 18, gold = 3, onRescue = {}, onBack = {})
+    }
+
+    @Test fun rescueIntro() = shot("66_notruf") {
+        de.kurvenflug.app.ui.story.RescueScreen(4, Q.Cyan, { _, _ -> }, {})
+    }
+
+    @Test fun homeCrew() = shot("67_start_crew") {
+        HomeScreen(allFound.values.sum(), Levels.all.size * 3, 40, 0, {}, Levels.chapters, allFound, {}, {},
+            daily = de.kurvenflug.core.model.Daily.forDay(20_500), dailiesDone = 12, grade = 8,
+            crewLine = de.kurvenflug.core.model.Season2.crew[1] to de.kurvenflug.core.model.Season2.crew[1].lines[0],
+            rescueCall = de.kurvenflug.core.model.Season2.crew[3], crewCount = 3, onCrew = {}, partsFound = 18, onHangar = {})
     }
 
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,

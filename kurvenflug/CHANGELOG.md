@@ -3,6 +3,15 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.14.0 – Staffel 2: Gold & Crew
+- **✨ Gold-Teile**: Die Aurora ist fertig? Jetzt wird sie golden! Schaffst du alle Level eines Kapitels mit 3 ⭐, glänzt
+  sein Bauteil golden. Mit allen 18 Gold-Teilen zündet der Warp-Antrieb.
+- **🆘 Rettungsmissionen**: 8 Freunde von Volt sind in der Galaxie gestrandet – eine Piratin, ein Physik-Professor,
+  eine Mond-Katze und mehr. Jede Rettung: 5 Etappen mit Aufgaben aus ganz verschiedenen Themen. Kein Zeitdruck,
+  kein Scheitern – probier so oft, wie du willst.
+- **🎖️ Deine Crew**: Gerettete Freunde ziehen ein und sagen jeden Tag etwas auf der Startseite – Tipps, Witze, Lob.
+- Die ersten Notrufe kommen schon unterwegs (ab 3 Bauteilen), die letzten erst mit fertiger und goldener Aurora.
+
 ## 0.13.0 – Gemeinsam spielen
 - **👥 Mehrere Spieler**: Geschwister teilen sich das Handy? Jeder bekommt einen eigenen Spielstand mit Spitzname und Bild
   (🎒 Ich → Spieler). Wechseln mit einem Tipp. Bis zu 6 Spieler. Dein bisheriger Spielstand bleibt natürlich erhalten.

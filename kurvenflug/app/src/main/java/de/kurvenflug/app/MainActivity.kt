@@ -62,6 +62,9 @@ object Routes {
     const val PROFILES = "spieler"
     const val PARENT = "eltern"
     const val RESULTS = "ergebnisse"
+    const val CREW = "crew"
+    const val RESCUE = "rettung/{n}"
+    fun rescue(n: Int) = "rettung/$n"
     fun level(id: String) = "level/$id"
 }
 
@@ -159,6 +162,8 @@ class MainActivity : ComponentActivity() {
         LaunchedEffect(fromWidget) {
             fromWidget?.let { id -> nav.navigate(Routes.level(id)) { launchSingleTop = true }; widgetLevel.value = null }
         }
+        val allProgress by vm.progress.collectAsStateWithLifecycle()
+        val rescued = remember(allProgress) { allProgress.keys.filter { de.kurvenflug.core.model.Season2.isRescue(it) }.mapNotNull { it.removePrefix(de.kurvenflug.core.model.Season2.PREFIX).toIntOrNull() }.toSet() }
         val stats by vm.stats.collectAsStateWithLifecycle()
         var celebrate by remember { mutableStateOf<List<de.kurvenflug.core.model.Badge>>(emptyList()) }
         LaunchedEffect(stats) { val n = vm.newBadges(stats); if (n.isNotEmpty()) celebrate = n }
@@ -205,6 +210,19 @@ class MainActivity : ComponentActivity() {
                         ps.firstOrNull { it.id == id }?.takeIf { ps.size > 1 || it.name != "Spieler 1" }?.let { "${it.avatar} ${it.name}" } },
                     onProfiles = { nav.goOnce(Routes.PROFILES) },
                     onParent = { nav.goOnce(Routes.PARENT) },
+                    crewLine = remember(rescued) {
+                        // jeden Tag sagt ein anderes Crew-Mitglied etwas (nur gerettete)
+                        val saved = de.kurvenflug.core.model.Season2.crew.filter { it.n in rescued }
+                        val day = vm.today()
+                        saved.takeIf { it.isNotEmpty() }?.let { l -> val m = l[Math.floorMod(day, l.size.toLong()).toInt()]; m to m.lines[Math.floorMod(day / l.size, m.lines.size.toLong()).toInt()] }
+                    },
+                    rescueCall = remember(rescued, stars) {
+                        val parts = de.kurvenflug.core.model.Story.found(Levels.chapters, stars).size
+                        val gold = de.kurvenflug.core.model.Season2.gold(Levels.chapters, stars).size
+                        de.kurvenflug.core.model.Season2.crew.firstOrNull { it.n !in rescued && de.kurvenflug.core.model.Season2.lock(it.n, parts, gold) == null }
+                    },
+                    crewCount = rescued.size,
+                    onCrew = { nav.goOnce(Routes.CREW) },
                     learning = {
                         val now = remember(progress) { System.currentTimeMillis() }
                         val played = remember(progress) { vm.played(progress) }
@@ -278,7 +296,18 @@ class MainActivity : ComponentActivity() {
                 de.kurvenflug.app.ui.collection.StickerAlbum(owned) { nav.popSafe() }
             }
             composable(Routes.HANGAR) {
-                de.kurvenflug.app.ui.story.HangarScreen(remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars) }) { nav.popSafe() }
+                de.kurvenflug.app.ui.story.HangarScreen(remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars) }, { nav.popSafe() },
+                    gold = remember(stars) { de.kurvenflug.core.model.Season2.gold(Levels.chapters, stars) }, onCrew = { nav.goOnce(Routes.CREW) })
+            }
+            composable(Routes.CREW) {
+                de.kurvenflug.app.ui.story.CrewScreen(rescued, remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars).size },
+                    remember(stars) { de.kurvenflug.core.model.Season2.gold(Levels.chapters, stars).size },
+                    onRescue = { nav.goOnce(Routes.rescue(it)) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.RESCUE, arguments = listOf(navArgument("n") { type = NavType.IntType })) { e ->
+                val n = e.arguments?.getInt("n") ?: return@composable
+                de.kurvenflug.app.ui.story.RescueScreen(n, probeColor, onWon = { s, m -> vm.record(de.kurvenflug.core.model.Season2.id(n), s, emptySet(), m + 5) },
+                    onBack = { nav.popSafe() }, reward = { s -> vm.rollSticker(s) })
             }
             composable(Routes.LEARN) {
                 val progress by vm.progress.collectAsStateWithLifecycle()
@@ -369,13 +398,21 @@ class MainActivity : ComponentActivity() {
         val foundParts = remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars) }
         var newParts by remember { mutableStateOf(emptyList<de.kurvenflug.core.model.Part>()) }
         LaunchedEffect(foundParts) { newParts = foundParts.filter { it.chapter.toString() !in vm.settings.partsSeen } }
+        val goldParts = remember(stars) { de.kurvenflug.core.model.Season2.gold(Levels.chapters, stars) }
+        var newGold by remember { mutableStateOf(emptyList<de.kurvenflug.core.model.Part>()) }
+        LaunchedEffect(goldParts) { newGold = goldParts.filter { it.chapter.toString() !in vm.settings.goldSeen } }
         if (route == Routes.HOME && celebrate.isEmpty()) {
             if (gradeAskedNow && !storySeen) de.kurvenflug.app.ui.story.StoryIntroOverlay { vm.settings.markStorySeen() }
-            else if (storySeen && newParts.isNotEmpty()) de.kurvenflug.app.ui.story.PartFoundOverlay(newParts, foundParts.map { it.chapter }.toSet()) {
+            else if (storySeen && newParts.isNotEmpty()) de.kurvenflug.app.ui.story.PartFoundOverlay(newParts, foundParts.map { it.chapter }.toSet(), {
                 vm.settings.partsSeen = vm.settings.partsSeen + newParts.map { it.chapter.toString() }
                 newParts = emptyList()
                 nav.goOnce(Routes.HANGAR)
-            }
+            }, gold = goldParts.map { it.chapter }.toSet())
+            else if (storySeen && newGold.isNotEmpty()) de.kurvenflug.app.ui.story.PartFoundOverlay(newGold, foundParts.map { it.chapter }.toSet(), {
+                vm.settings.goldSeen = vm.settings.goldSeen + newGold.map { it.chapter.toString() }
+                newGold = emptyList()
+                nav.goOnce(Routes.HANGAR)
+            }, gold = goldParts.map { it.chapter }.toSet(), isGold = true)
         }
     }
 }

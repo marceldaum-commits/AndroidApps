@@ -149,7 +149,7 @@ fun AuroraCard(found: Int, total: Int, onClick: () -> Unit) {
 
 /** Hangar: die Aurora wächst mit jedem gefundenen Bauteil zusammen. */
 @Composable
-fun HangarScreen(found: List<Part>, onBack: () -> Unit) {
+fun HangarScreen(found: List<Part>, onBack: () -> Unit, gold: List<Part> = emptyList(), onCrew: (() -> Unit)? = null) {
     val time by rememberInfiniteTransition(label = "hangar").animateFloat(0f, 1000f, infiniteRepeatable(tween(1_000_000, easing = LinearEasing)), label = "t")
     val complete = found.size == Story.parts.size
     Box(Modifier.fillMaxSize()) {
@@ -161,22 +161,30 @@ fun HangarScreen(found: List<Part>, onBack: () -> Unit) {
             }
             Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 Volt(if (complete) VoltMood.WOW else VoltMood.HAPPY, size = 56.dp, speech = when {
-                    complete -> "Die ${Story.SHIP} ist komplett! Danke, Commander – du hast die ganze Galaxie gerettet! 🎉"
+                    gold.size == Story.parts.size -> "Alles Gold! Die ${Story.SHIP} fliegt mit Warp-Antrieb – du bist ein echter Profi! 🌟"
+                    complete && gold.isNotEmpty() -> "Schon ${gold.size} Gold-Teile! Jedes Kapitel mit lauter 3 ⭐ macht ein Teil golden. ✨"
+                    complete -> "Die ${Story.SHIP} fliegt! Jetzt machen wir sie golden: Schaff ein Kapitel ganz mit 3 ⭐ – dann glänzt sein Teil. ✨"
                     found.isEmpty() -> "Hier bauen wir die ${Story.SHIP} wieder zusammen. Schaff ein ganzes Kapitel – dann finden wir das erste Teil!"
                     else -> "Schon ${found.size} Teile! Jeder Planet, den du ganz schaffst, bringt eins mehr. 🔧"
                 })
                 Box(Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(24.dp)).background(Color(0x55070B20))
                     .border(1.5.dp, Q.Orange.copy(alpha = 0.5f), RoundedCornerShape(24.dp)).padding(24.dp)) {
-                    ShipCanvas(found.map { it.chapter }.toSet(), Modifier.fillMaxSize(), time, flames = complete)
+                    ShipCanvas(found.map { it.chapter }.toSet(), Modifier.fillMaxSize(), time, flames = complete, gold = gold.map { it.chapter }.toSet())
+                }
+                if (complete) Text("✨ Gold-Teile: ${gold.size}/${Story.parts.size}", color = Q.Yellow, fontWeight = FontWeight.Black)
+                if (onCrew != null) NeonButton(onClick = onCrew, color = Q.Pink, modifier = Modifier.fillMaxWidth()) {
+                    Text("🆘 Notrufe & Crew", fontWeight = FontWeight.Bold)
                 }
                 Story.parts.forEach { p ->
                     val got = found.any { it.chapter == p.chapter }
-                    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(if (got) Q.Green.copy(alpha = 0.12f) else Q.Panel).padding(10.dp),
+                    val isGold = gold.any { it.chapter == p.chapter }
+                    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(if (isGold) Q.Yellow.copy(alpha = 0.16f) else if (got) Q.Green.copy(alpha = 0.12f) else Q.Panel).padding(10.dp),
                         verticalAlignment = Alignment.CenterVertically) {
                         Text(if (got) p.emoji else "❔", fontSize = 22.sp)
                         Spacer(Modifier.width(10.dp))
                         Column(Modifier.weight(1f)) {
-                            Text(if (got) p.name else "???", fontWeight = FontWeight.Bold, color = if (got) Q.Text else Q.Muted)
+                            Text(if (got) p.name + (if (isGold) " ✨ Gold" else "") else "???", fontWeight = FontWeight.Bold,
+                                color = if (isGold) Q.Yellow else if (got) Q.Text else Q.Muted)
                             val c = Levels.chapters.firstOrNull { it.number == p.chapter }
                             Text(if (got) p.found else "Auf dem Planeten ${c?.emoji ?: ""} ${c?.title ?: ""}",
                                 style = MaterialTheme.typography.labelSmall, color = Q.Muted)
@@ -193,7 +201,7 @@ fun HangarScreen(found: List<Part>, onBack: () -> Unit) {
  * Gefundene Teile leuchten in Farbe, fehlende sind nur als gestrichelter Umriss zu sehen.
  */
 @Composable
-fun ShipCanvas(found: Set<Int>, modifier: Modifier, time: Float, flames: Boolean = false) {
+fun ShipCanvas(found: Set<Int>, modifier: Modifier, time: Float, flames: Boolean = false, gold: Set<Int> = emptySet()) {
     Canvas(modifier) {
         val w = size.width; val h = size.height
         fun o(x: Float, y: Float) = Offset(x * w, y * h)
@@ -218,13 +226,17 @@ fun ShipCanvas(found: Set<Int>, modifier: Modifier, time: Float, flames: Boolean
             { c, f -> part(poly(0.62f, 0.7f, 0.8f, 0.9f, 0.62f, 0.84f), c, f) },                        // Rechenkern (Ruder rechts)
             { c, f -> part(poly(0.52f, 0.78f, 0.6f, 0.78f, 0.6f, 0.88f, 0.52f, 0.88f), c, f) },         // Antrieb
         )
+        val warp = gold.size == Story.parts.size
         if (flames) for (x in listOf(0.44f, 0.56f)) {
-            val fl = 0.06f + 0.02f * sin(time * 20f + x * 10f)
-            drawPath(poly(x - 0.035f, 0.88f, x + 0.035f, 0.88f, x, 0.88f + fl), Q.Orange)
+            val fl = (if (warp) 0.11f else 0.06f) + 0.02f * sin(time * 20f + x * 10f)
+            drawPath(poly(x - 0.035f, 0.88f, x + 0.035f, 0.88f, x, 0.88f + fl), if (warp) Q.Cyan else Q.Orange)
         }
         Story.parts.forEachIndexed { i, p ->
-            val color = planetColors[i % planetColors.size]
+            val g = p.chapter in gold
+            val color = if (g) Color(0xFFFFD54F) else planetColors[i % planetColors.size]
             shapes.getOrNull(i)?.invoke(this, color, p.chapter in found)
+            // Gold funkelt
+            if (g && sin(time * 3f + i * 1.3f) > 0.85f) drawCircle(Color.White, 0.012f * w, Offset(w * (0.2f + (i * 0.37f) % 0.6f), h * (0.1f + (i * 0.53f) % 0.8f)))
         }
     }
 }
@@ -260,20 +272,20 @@ fun StoryIntroOverlay(onDone: () -> Unit) {
 
 /** Feier, wenn ein Kapitel geschafft ist und ein Bauteil zurück ist. */
 @Composable
-fun PartFoundOverlay(parts: List<Part>, foundTotal: Set<Int>, onDone: () -> Unit) {
+fun PartFoundOverlay(parts: List<Part>, foundTotal: Set<Int>, onDone: () -> Unit, gold: Set<Int> = emptySet(), isGold: Boolean = false) {
     val sfx = LocalSfx.current
     val pop = remember { Animatable(0.3f) }
     LaunchedEffect(Unit) { sfx?.play(Sound.WIN); pop.animateTo(1f, spring(dampingRatio = 0.45f)) }
     val time by rememberInfiniteTransition(label = "found").animateFloat(0f, 1000f, infiniteRepeatable(tween(1_000_000, easing = LinearEasing)), label = "t")
     Box(Modifier.fillMaxSize().background(Color(0xEE070B20)).clickable(remember { MutableInteractionSource() }, null) {}, contentAlignment = Alignment.Center) {
         Column(Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(14.dp)) {
-            Text("🔧 Bauteil gefunden!", style = MaterialTheme.typography.headlineMedium, color = Q.Orange)
+            Text(if (isGold) "✨ Gold-Teil!" else "🔧 Bauteil gefunden!", style = MaterialTheme.typography.headlineMedium, color = if (isGold) Q.Yellow else Q.Orange)
             parts.forEach { p ->
                 Text(p.emoji, fontSize = 64.sp, modifier = Modifier.graphicsLayerScale(pop.value))
                 Text(p.name, style = MaterialTheme.typography.titleLarge, color = Q.Text)
-                Volt(VoltMood.WOW, size = 56.dp, speech = p.found)
+                Volt(VoltMood.DANCE, size = 56.dp, speech = if (isGold) "Alle Level mit 3 ⭐ – mein ${p.name} glänzt jetzt golden!" else p.found)
             }
-            Box(Modifier.size(140.dp)) { ShipCanvas(foundTotal, Modifier.fillMaxSize(), time, flames = foundTotal.size == Story.parts.size) }
+            Box(Modifier.size(140.dp)) { ShipCanvas(foundTotal, Modifier.fillMaxSize(), time, flames = foundTotal.size == Story.parts.size, gold = gold) }
             Text("${foundTotal.size} von ${Story.parts.size} Teilen", color = Q.Muted)
             NeonButton(onClick = onDone, color = Q.Orange) { Text("Ab in den Hangar! 🛸", fontWeight = FontWeight.Black) }
         }

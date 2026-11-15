@@ -89,6 +89,11 @@ fun HomeScreen(
     player: String? = null,
     onProfiles: (() -> Unit)? = null,
     onParent: (() -> Unit)? = null,
+    /** Staffel 2: ein Crew-Mitglied sagt etwas, ein offener Notruf, Crew-Seite */
+    crewLine: Pair<de.kurvenflug.core.model.CrewMember, String>? = null,
+    rescueCall: de.kurvenflug.core.model.CrewMember? = null,
+    crewCount: Int = 0,
+    onCrew: (() -> Unit)? = null,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(initialTab) }
     var picking by rememberSaveable { mutableStateOf(false) }
@@ -116,10 +121,12 @@ fun HomeScreen(
                             banner?.invoke()
                             Volt(greeting?.first ?: if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = 64.dp,
                                 speech = greeting?.second ?: if (stars == 0) "Hey! Ich bin Volt. Bereit für deine erste Mission? 🚀" else "Schon $stars ⭐ gesammelt. Weiter so, Commander!")
+                            crewLine?.let { (m, line) -> de.kurvenflug.app.ui.story.CrewSays(m, line) }
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 Stat("⭐", "$stars / $maxStars", Q.Yellow, Modifier.weight(1f))
                                 Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
                             }
+                            rescueCall?.let { m -> de.kurvenflug.app.ui.story.RescueCallCard(m) { onCrew?.invoke() } }
                             continueLevel?.let { l -> ContinueCard(l, chapters.firstOrNull { it.number == l.chapter }) { onLevel(l) } }
                             daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
                             learning?.invoke()
@@ -153,6 +160,10 @@ fun HomeScreen(
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("🛸", "Hangar", "$partsFound/${de.kurvenflug.core.model.Story.parts.size} Bauteile", Q.Orange, Modifier.weight(1f)) { onHangar?.invoke() }
                                 ModeTile("📒", "Sticker", "$stickers/${de.kurvenflug.core.model.Stickers.all.size}", Q.Pink, Modifier.weight(1f)) { onStickers?.invoke() }
+                            }
+                            if (onCrew != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                ModeTile("🎖️", "Crew", "$crewCount/${de.kurvenflug.core.model.Season2.crew.size} gerettet", Q.Green, Modifier.weight(1f), onCrew)
+                                Spacer(Modifier.weight(1f))
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, Modifier.weight(1f)) { onCodex?.invoke() }

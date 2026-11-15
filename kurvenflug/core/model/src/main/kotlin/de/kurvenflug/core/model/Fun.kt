@@ -34,7 +34,7 @@ object Stickers {
         Sticker("planet", "🪐", "Ringplanet", Rarity.COMMON), Sticker("sat", "🛰️", "Satellit", Rarity.COMMON),
         Sticker("ufo", "🛸", "Ufo", Rarity.COMMON), Sticker("earth", "🌍", "Erde", Rarity.COMMON),
         Sticker("sun", "☀️", "Sonne", Rarity.COMMON), Sticker("bolt", "⚡", "Energiezelle", Rarity.COMMON),
-        Sticker("scope", "🔭", "Teleskop", Rarity.COMMON), Sticker("astro", "🧑‍🚀", "Astronaut", Rarity.COMMON),
+        Sticker("scope", "🔭", "Teleskop", Rarity.COMMON), Sticker("astro", "🌑", "Neumond", Rarity.COMMON),
         Sticker("alien", "👽", "Alien", Rarity.RARE), Sticker("robot", "🤖", "Robo-Freund", Rarity.RARE),
         Sticker("galaxy", "🌌", "Galaxie", Rarity.RARE), Sticker("meteor", "🌠", "Sternschnuppe", Rarity.RARE),
         Sticker("crystal", "💎", "Weltraumkristall", Rarity.RARE), Sticker("blackhole", "🕳️", "Schwarzes Loch", Rarity.RARE),

@@ -60,7 +60,7 @@ class Settings(ctx: Context) {
 
     companion object {
         const val MAX_PROFILES = 6
-        val AVATARS = listOf("🧑‍🚀", "👩‍🚀", "🦊", "🐱", "🐼", "🦖", "🐙", "🤖")
+        val AVATARS = listOf("🚀", "🦁", "🦊", "🐱", "🐼", "🦖", "🐙", "🤖")
     }
 
     private fun readProfiles(): List<Profile> = prefs.getString("profiles", null)?.lines()?.mapNotNull { line ->
@@ -188,6 +188,10 @@ class Settings(ctx: Context) {
     var partsSeen: Set<String>
         get() = prefs.getStringSet(k("partsSeen"), emptySet()).orEmpty()
         set(v) = prefs.edit().putStringSet(k("partsSeen"), v).apply()
+    /** Schon gefeierte Gold-Teile */
+    var goldSeen: Set<String>
+        get() = prefs.getStringSet(k("goldSeen"), emptySet()).orEmpty()
+        set(v) = prefs.edit().putStringSet(k("goldSeen"), v).apply()
     val storySeen: StateFlow<Boolean> = _storySeen.asStateFlow()
     fun markStorySeen() { prefs.edit().putBoolean(k("storySeen"), true).apply(); _storySeen.value = true }
 
@@ -201,7 +205,7 @@ class Settings(ctx: Context) {
         set(v) = prefs.edit().putInt(k("detectiveBest"), v).apply()
 
     private val gameKeys = listOf("grade", "gradeAsked", "shape", "trail", "hat", "skin", "stormBest", "duelWins", "duelsPlayed",
-        "badgesSeen", "detectiveBest", "partsSeen", "storySeen", "stickers", "lastOpen")
+        "badgesSeen", "detectiveBest", "partsSeen", "storySeen", "stickers", "lastOpen", "goldSeen")
 
     private fun clearGameKeys() {
         val e = prefs.edit()
