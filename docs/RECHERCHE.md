@@ -66,3 +66,28 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
 - Folgerung für Kurvenflug & Co.: direkte Manipulation (Griffe am Graphen ziehen, Formel ändert sich live), sofortiges
   sichtbares Ergebnis (Flug), wenige Versuche = mehr Sterne, eigene Levels/Duelle für soziale Motivation, Look für
   Jugendliche (Weltraum, Neon), Maskottchen frech statt niedlich.
+
+## Oberstufe: Was fesselt 16- bis 19-Jährige an analytischer Geometrie? (Nov. 2026, für Raumlicht)
+
+- **Raumvorstellung ist die Hürde.** Sie baut sich langsam auf und ist auch in der Oberstufe noch sehr unterschiedlich ausgeprägt;
+  3D-Konzepte werden oft nicht mit den Vorstellungen aus der ebenen Geometrie verknüpft. Schattenwurf/Projektionen im Sachkontext
+  fallen besonders schwer (Friedrich Verlag, Fachbeiträge Sek II; NiBiS-Material „Raumanschauung und Koordinatisierung“).
+  → Echte, frei drehbare 3D-Bühne statt Schrägbild; Koordinaten-Quader als Hilfslinien; Level zu Schatten und Spiegelung.
+- **3D mit direkter Manipulation und Sofort-Rückmeldung** verbesserte in einer quasi-experimentellen Studie zu räumlichen Vektoren
+  (Chang/Wu/Tarng, Applied Sciences 2025) Einstellung und Zutrauen stärker als herkömmliches Material. Belastbare Lernzuwachs-Zahlen
+  für die Oberstufe haben wir nicht gefunden – wir behaupten also keine.
+  → Griffe im Raum ziehen, Formel ändert sich live; gezielte Rückmeldung („liegt auf g ✓, nicht in E ✗“).
+- **Vector Unknown** (3D-Spiel zu Linearkombinationen, US-Hochschulen): Spielende wechseln mit der Zeit von Raten zu Rechnen, wenn das
+  Spiel Rechnen belohnt. Dazu passt die DragonBox-Erkenntnis von früher: Rechnen muss die Spielhandlung sein.
+  → Vom Strahl ist nur der Anfang sichtbar; Treffer beim ersten Versuch gibt 3 Sterne.
+- **JIM 2025 / JIMplus 2026**: Fast alle Jugendlichen nutzen täglich das Smartphone, 74 % nutzen KI für Hausaufgaben und Lernen,
+  68 % sind oft länger am Handy als geplant (Zahlen aus Sekundärquellen).
+  → Kurze Gigs (1–3 Minuten), kein Sog, keine Streak-Angst; nach jedem Level der Rechenweg zum Nachlesen – ein Grund, die App statt
+  eines Chatbots zu öffnen, ist das Anfassen im Raum.
+- Gestaltung für die Altersgruppe: kein Kinder-Look. Thema Lichtshow/Festival, elektronische Musik, Abi-Bezug sichtbar („Abi-Check“),
+  nichts gesperrt (gezielt für die Klausur üben).
+- Quellen: https://www.friedrich-verlag.de/friedrich-plus/sekundarstufe/mathematik/geometrie/raumlich-lesen-lernen-17086 ·
+  https://www.friedrich-verlag.de/friedrich-plus/sekundarstufe/mathematik/geometrie/raumkonzepte-vorstellungsbasiert-verknupfen-21360 ·
+  https://www.nibis.de/uploads/nlq-mey/Mathe-SekII/KC%20Materialien/33%20OM%20Raumanschauung%20und%20Koordinatisierung%20eA.pdf ·
+  https://www.preprints.org/manuscript/202508.1502 · https://par.nsf.gov/biblio/10346131 ·
+  https://mpfs.de/app/uploads/2026/07/JIMplus-2026_PDF.pdf · https://www.cio.de/article/4090945/chatgpt-und-andere-ki-tools-alltagswerkzeug-fuer-jugend.html

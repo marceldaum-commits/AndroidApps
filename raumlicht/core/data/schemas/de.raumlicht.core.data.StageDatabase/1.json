@@ -1,0 +1,49 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "a5fa3502f3c0b5ee5b634676889f41d7",
+    "entities": [
+      {
+        "tableName": "progress",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`levelId` TEXT NOT NULL, `stars` INTEGER NOT NULL, `attempts` INTEGER NOT NULL, `solvedAt` INTEGER NOT NULL, PRIMARY KEY(`levelId`))",
+        "fields": [
+          {
+            "fieldPath": "levelId",
+            "columnName": "levelId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stars",
+            "columnName": "stars",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "attempts",
+            "columnName": "attempts",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "solvedAt",
+            "columnName": "solvedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "levelId"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5fa3502f3c0b5ee5b634676889f41d7')"
+    ]
+  }
+}

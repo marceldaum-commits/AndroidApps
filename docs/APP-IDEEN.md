@@ -14,6 +14,14 @@ Reihenfolge: eine App fertig optimieren, dann die nächste. Das Rechnen ist jewe
 | ⚙️ **Werkstatt der Maschinen** | Kettenreaktionen bauen: Hebel, Rollen, Rampen, Federn, Spiegel, Stromkreise. Rechnen, wo Probieren nicht reicht | Hebelgesetz, Energieerhaltung, Reflexion/Brechung, Ohmsches Gesetz, Winkel | 💡 |
 | 🗡️ **Formel-Dungeon** | Roguelike-Kartenspiel: Karten sind Rechenoperationen. Gegner-Zahlen und Gleichungen umformen, bis sie zerfallen. Bosse = Gleichungssysteme | Bruchrechnen, Terme, Gleichungen, Potenzen, Wurzeln, Gleichungssysteme | 💡 |
 
+## Oberstufe (ab Klasse 11)
+
+| App | Spielprinzip | Inhalte | Status |
+|---|---|---|---|
+| 💡 **Raumlicht** (`raumlicht/`) | Lichtshow in echtem 3D: Laser = Geraden, Glas = Ebenen, Drohne Lux fliegt Vektoren. Man sieht nur den Anfang des Strahls – der Rest ist Rechnung. Jedes Kapitel endet mit einem Abi-Check | Analytische Geometrie: Punkte, Vektoren, Geraden, Lagebeziehungen, Ebenen, Skalarprodukt, Abstand, Spiegelung (34 Level) | ✅ 0.1.0 |
+
+Ideen für später: Tagesaufgabe, Abi-Simulation auf Zeit, eigene Shows bauen und als Code teilen, Kugeln/Kreise, Winkel, Analysis in 3D (Rotationskörper).
+
 ## Grundschule 💡
 
 | App | Worum geht's | Besonders |
