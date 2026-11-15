@@ -79,6 +79,11 @@ class StageController {
 
     internal fun attach(w: WebView) { web = w; ready = false }
     internal fun detach() { web = null; ready = false }
+    /** Zählt hoch, wenn die Bühne neu aufgebaut werden muss */
+    var generation by androidx.compose.runtime.mutableIntStateOf(0)
+        private set
+    /** Der Darstellungsprozess ist weg: alte Ansicht loslassen, neue anfordern. Der letzte Bühnen-Zustand wird nach dem Start wieder gezeigt. */
+    internal fun rendererGone() { web = null; ready = false; queue.clear(); generation++ }
     internal fun report(msg: String) { if (problem == null) problem = msg }
     internal fun onEvent(json: String) {
         val o = runCatching { Json.parseToJsonElement(json).jsonObject }.getOrNull() ?: return
@@ -115,7 +120,8 @@ fun Stage(controller: StageController, modifier: Modifier = Modifier) {
 private fun WebStage(controller: StageController, modifier: Modifier) {
     val owner = LocalLifecycleOwner.current
     val main = Handler(Looper.getMainLooper())
-    AndroidView(
+    // Nach einem Verlust des Darstellungsprozesses entsteht die Web-Ansicht neu (die alte ist unbrauchbar)
+    androidx.compose.runtime.key(controller.generation) { AndroidView(
         modifier = modifier,
         factory = { ctx ->
             WebView(ctx).apply {
@@ -131,6 +137,13 @@ private fun WebStage(controller: StageController, modifier: Modifier) {
                 // Nur die mitgelieferte Szene – keine Navigation ins Netz
                 webViewClient = object : WebViewClient() {
                     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest) = true
+                    // Beendet Android den Darstellungsprozess der Bühne (zu wenig Speicher oder ein Fehler darin), würde ohne diese Antwort
+                    // die ganze App geschlossen. So bleibt die App offen und die Bühne wird frisch aufgebaut.
+                    override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail): Boolean {
+                        de.raumlicht.app.Diagnose.note(view.context, "3D-Bühne vom System beendet (${if (detail.didCrash()) "Fehler in der Darstellung" else "zu wenig Speicher"}) – wurde neu gestartet")
+                        main.post { controller.rendererGone() }
+                        return true
+                    }
                 }
                 webChromeClient = object : android.webkit.WebChromeClient() {
                     override fun onConsoleMessage(m: android.webkit.ConsoleMessage): Boolean {
@@ -144,7 +157,7 @@ private fun WebStage(controller: StageController, modifier: Modifier) {
             }
         },
         onRelease = { controller.detach(); it.destroy() },
-    )
+    ) }
     // Meldet sich die Bühne nicht, sagen wir das – statt nur schwarz zu bleiben
     androidx.compose.runtime.LaunchedEffect(controller) {
         kotlinx.coroutines.delay(6000)

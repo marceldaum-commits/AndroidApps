@@ -17,6 +17,7 @@ class RaumlichtApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        Diagnose.install(this)
         container = AppContainer(this)
     }
 }

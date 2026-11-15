@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.4.1 – App bleibt offen (15.11.2026)
+- **Kein „Wegklappen“ mehr durch die 3D-Bühne:** Wenn Android die Darstellung der Bühne beendet (meist bei knappem Speicher), ging bisher die ganze App zu.
+  Jetzt bleibt die App offen und die Bühne baut sich an derselben Stelle neu auf.
+- **Abbruch-Bericht:** Geht die App doch einmal unerwartet zu, steht beim nächsten Öffnen in den Einstellungen, was passiert ist.
+  Der Bericht bleibt auf dem Gerät; man kann ihn kopieren und weitergeben.
+
 ## 2.4.0 – Natürliche Stimme für Lux (15.11.2026)
 - **✨ Natürliche Stimme „Thorsten“:** Auf Wunsch spricht Lux mit einer deutlich natürlicheren Stimme, die ganz auf dem Handy rechnet – ohne Internet,
   nichts wird verschickt. In den Einstellungen unter „Lux spricht“ einmalig laden (63 MB, am besten im WLAN), danach ein- und ausschalten oder wieder entfernen.

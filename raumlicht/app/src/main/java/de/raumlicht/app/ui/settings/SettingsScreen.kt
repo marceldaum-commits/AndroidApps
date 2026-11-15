@@ -28,6 +28,8 @@ fun SettingsScreen(
     voice: Boolean = true, onVoice: (Boolean) -> Unit = {}, voiceAvailable: Boolean = true,
     /** Knöpfe zum Aussuchen der Stimme (nur wenn Lux spricht) */
     voiceControls: @Composable () -> Unit = {},
+    /** Bericht über den letzten unerwarteten Abbruch (null = keiner) */
+    lastProblem: String? = null, onProblemSeen: () -> Unit = {},
 ) {
     val speaker = de.raumlicht.app.ui.fx.LocalSpeaker.current
     val sfx = de.raumlicht.app.ui.fx.LocalSfx.current
@@ -62,6 +64,19 @@ fun SettingsScreen(
                         "Lagebeziehungen, Ebenen in Koordinatenform, Durchstoßpunkte, Normalenvektor, Skalarprodukt, Lotfußpunkt, " +
                         "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen, Bewegungsaufgaben; dazu Analysis (Funktionen, Ableitung, Kurvendiskussion, Integral, Rotationskörper) und Stochastik (Laplace, Pfadregel, Vierfeldertafel, Binomialverteilung). Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)
                     Text("Version $installed vom ${BuildConfig.VERSION_DATE}", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+                }
+            }
+            if (lastProblem != null) ElevatedCard(Modifier.fillMaxWidth()) {
+                val clip = androidx.compose.ui.platform.LocalClipboardManager.current
+                var copied by remember { mutableStateOf(false) }
+                Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Letzter unerwarteter Abbruch", style = MaterialTheme.typography.titleMedium, color = Q.Orange)
+                    Text("Die App ist zuletzt unerwartet zugegangen. Dieser Bericht bleibt auf dem Gerät – du kannst ihn kopieren und weitergeben, damit der Fehler gefunden wird.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                    Text(lastProblem.take(1200), Modifier.testTag("abbruch-bericht"), style = MaterialTheme.typography.bodySmall)
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        OutlinedButton({ clip.setText(androidx.compose.ui.text.AnnotatedString(lastProblem)); copied = true }, Modifier.testTag("abbruch-kopieren")) { Text(if (copied) "✓ Kopiert" else "Bericht kopieren") }
+                        OutlinedButton(onProblemSeen, Modifier.testTag("abbruch-weg")) { Text("Ausblenden") }
+                    }
                 }
             }
             ElevatedCard(Modifier.fillMaxWidth()) {

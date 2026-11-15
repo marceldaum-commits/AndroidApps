@@ -2,9 +2,9 @@
 
 Neueste oben.
 
-## 15.11.2026 – Erste Web-Vorschau (Version 2.4.0)
+## 15.11.2026 – Erste Web-Vorschau (Version 2.4.1)
 
-**Stand:** Web-Vorschau, gebaut aus demselben Code wie die Android-App 2.4.0 vom 15.11.2026.
+**Stand:** Web-Vorschau, gebaut aus demselben Code wie die Android-App 2.4.1 vom 15.11.2026.
 Die fertigen Dateien liegen in `raumlicht/webapp/` (15 MB; nur html, js, map, json, webmanifest, png, ttf, wasm – keine Symlinks, kein Server-Code, keine fremden Adressen).
 
 **Weg (entschieden):** Compose Multiplatform mit Kotlin/Wasm. Gemeinsam sind bereits
@@ -22,7 +22,7 @@ schrittweise in den gemeinsamen Code um. Erst dann ist Web = Android. Emojis feh
 natürliche Stimme „Thorsten“, In-App-Updater.
 
 **Bitte auf der Testadresse prüfen** (https://raumlicht-test.mathenachhilfe-online.com):
-1. Seite lädt, oben steht „Version 2.4.0 vom 15.11.2026“; keine Fehler in der Browser-Konsole.
+1. Seite lädt, oben steht „Version 2.4.1 vom 15.11.2026“; keine Fehler in der Browser-Konsole.
 2. Aufgabe 1-1 öffnen: 3D-Bühne erscheint im Rahmen, lässt sich mit Finger/Maus drehen. P auf (4|2|0) stellen, „Los“ → Erfolgsmeldung, Stern auf der Startseite.
 3. Seite neu laden: Stern ist noch da.
 4. Handy (Hochformat) und PC: Bühne sitzt jeweils im Rahmen.

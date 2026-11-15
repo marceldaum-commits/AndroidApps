@@ -82,4 +82,25 @@ class VoicePackTest {
         rule.onNodeWithTag("stimme-entfernen").performClick()
         assertEquals(listOf("laden", "abbrechen", "nutzen:true", "nutzen:false", "entfernen"), did)
     }
+
+    @Test fun stageRebuildsWhenItsRendererIsGone() {
+        val c = de.raumlicht.app.ui.stage.StageController(); c.setState("{\"objects\":[]}")
+        assertEquals(0, c.generation); c.rendererGone(); assertEquals(1, c.generation)
+        assertEquals("{\"objects\":[]}", c.lastState)                                         // der letzte Zustand bleibt für den Neustart erhalten
+        c.fire(de.raumlicht.core.model.Beam(de.raumlicht.core.model.V3(0, 0, 0), de.raumlicht.core.model.V3(1, 1, 1), "pink", true), 100)   // Befehle ohne Bühne stürzen nicht ab
+    }
+
+    @Test fun lastProblemIsShownAndCanBeDismissed() {
+        de.raumlicht.app.Diagnose.clear(ctx); assertNull(de.raumlicht.app.Diagnose.last(ctx))
+        de.raumlicht.app.Diagnose.note(ctx, "3D-Bühne vom System beendet (zu wenig Speicher) – wurde neu gestartet")
+        val text = de.raumlicht.app.Diagnose.last(ctx)!!; assertTrue(text, text.startsWith("Raumlicht ") && text.contains("zu wenig Speicher") && text.contains("Android "))
+        assertEquals("Vom System beendet: zu wenig Arbeitsspeicher", de.raumlicht.app.Diagnose.reasonText(android.app.ApplicationExitInfo.REASON_LOW_MEMORY))
+        assertNull(de.raumlicht.app.Diagnose.reasonText(android.app.ApplicationExitInfo.REASON_USER_REQUESTED))   // vom Nutzer geschlossen ist kein Problem
+        var seen = 0
+        rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.4.1", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, lastProblem = text, onProblemSeen = { seen++ }) } } }
+        rule.onNodeWithTag("abbruch-bericht").performScrollTo().assertTextContains("zu wenig Speicher", substring = true)
+        rule.onNodeWithTag("abbruch-kopieren").performScrollTo().performClick(); rule.onNodeWithText("✓ Kopiert").assertExists()
+        rule.onNodeWithTag("abbruch-weg").performClick(); assertEquals(1, seen)
+        de.raumlicht.app.Diagnose.clear(ctx); assertNull(de.raumlicht.app.Diagnose.last(ctx))
+    }
 }

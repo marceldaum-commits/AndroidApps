@@ -278,10 +278,12 @@ class MainActivity : ComponentActivity() {
             composable(Routes.SETTINGS) {
                 val sound by vm.settings.sound.collectAsStateWithLifecycle()
                 val vibration by vm.settings.vibration.collectAsStateWithLifecycle()
+                var problem by remember { mutableStateOf(Diagnose.last(this@MainActivity)) }
                 val music by vm.settings.music.collectAsStateWithLifecycle()
                 val auto by vm.settings.autoUpdate.collectAsStateWithLifecycle()
                 SettingsScreen(music, vm.settings::setMusic, sound, vm.settings::setSound, vibration, vm.settings::setVibration, auto, vm.settings::setAutoUpdate,
                     BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, { nav.popSafe() }, onReset = vm::resetAll, voice = vm.settings.voice.collectAsStateWithLifecycle().value, onVoice = vm.settings::setVoice,
+                    lastProblem = problem, onProblemSeen = { Diagnose.clear(this@MainActivity); problem = null },
                     voiceControls = { val app = application as RaumlichtApp; val v = app.voice
                         var natural by remember { mutableStateOf(vm.settings.voiceNatural) }
                         LaunchedEffect(app.voicePack.state) { natural = vm.settings.voiceNatural }

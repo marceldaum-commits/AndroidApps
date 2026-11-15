@@ -1,5 +1,5 @@
 // Service Worker: macht Raumlicht offline nutzbar. Jede Version hat ihren eigenen Speicher – nach einem Update wird alles frisch geladen.
-const CACHE = 'raumlicht-2.4.0';
+const CACHE = 'raumlicht-2.4.1';
 self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', 'index.html', 'raumlicht.js', 'scene/index.html', 'scene/scene.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'fonts/dejavu_sans.ttf', 'fonts/dejavu_sans_bold.ttf']))); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', (e) => {
