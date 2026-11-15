@@ -210,6 +210,10 @@ const BADGES = [
   ['reise1', '🌲', 'Waldläufer', 'Kapitel 1 der Rechen-Reise geschafft'],
   ['reise2', '🌊', 'Flussspringer', 'Kapitel 2 der Rechen-Reise geschafft'],
   ['reise3', '💎', 'Höhlenforscher', 'Kapitel 3 der Rechen-Reise geschafft'],
+  ['reise4', '🎈', 'Wolkenflieger', 'Kapitel 4 der Rechen-Reise geschafft'],
+  ['reise5', '🐉', 'Drachenbezwinger', 'Kapitel 5 der Rechen-Reise geschafft'],
+  ['reise6', '👑', 'Sternenkönig', 'Kapitel 6 der Rechen-Reise geschafft'],
+  ['reiseAll', '⚡', 'Echter Rechenblitz', 'Die ganze Rechen-Reise geschafft'],
 ].map(([id, icon, name, desc]) => ({ id, icon, name, desc }));
 let newBadges = [];
 function award(id) { if (!S.badges[id]) { S.badges[id] = todayStr(); newBadges.push(id); } }

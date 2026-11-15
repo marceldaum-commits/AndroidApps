@@ -2,10 +2,28 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (14.11.2026, 18:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.9.0** (Rechen-Reise + 20 Fehlerbehebungen), siehe Meldung (27).
-> - Startbild Merk-Training ist seit 3.7.1 erledigt.
-> - **Bitte 3.9.0 testen und live freigeben** – sie enthält Sicherheitskorrekturen (Auftrags- und Ergebnis-Links).
----
+> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.10.0** (Rechen-Reise komplett), siehe Meldung (28). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
+> - **Bitte testen und live freigeben.** Seit heute läuft die Advents-Vorschau (ab 15.11.), ihre Texte sind jetzt auch auf EN/UK vollständig.
+## 15.11.2026 (28) – Entwicklungstag: Rechen-Reise komplett (Kapitel 4–6), Übersetzungen vervollständigt (3.10.0)
+
+- **Rechen-Reise, Roadmap Tag 4:**
+  - **Kapitel 4–6** mit Geschichte, Karte, je 5 Etappen und Boss:
+    - Wolkenstadt ☁️ (Ballon, Wolkenmarkt, Regenbogenbrücke);
+    - Feuerberg 🌋 (Lava-Brücke, Feuerdrache);
+    - Sternenschloss 🏰 (Spiegelsaal, Sternentreppe, Sternenwächter).
+  - **Schwierigkeit:** Ab Kapitel 4 kommen Textaufgaben dazu, jedes Kapitel eine Stufe höher (passend zur Klasse). Die Bosse in Kapitel 5 und 6 haben 12 Aufgaben.
+  - **Finale nach Kapitel 6:** Blitz leuchtet golden („Rechen-Reise geschafft!“), alle 6 Sticker, große Urkunde („Die ganze Rechen-Reise geschafft – alle 6 Kapitel!“) und viel Konfetti.
+  - **Sticker-Album** in der Reise-Übersicht (🦉 🐟 💎 🎈 🐉 👑, noch fehlende als ❔).
+  - **Abzeichen:** Wolkenflieger, Drachenbezwinger, Sternenkönig, „Echter Rechenblitz“.
+  - **Karte:** Etappen-Sterne werden nicht mehr abgeschnitten. Blitz ragt an der obersten Etappe nicht mehr über den Rand.
+- **Übersetzungen vervollständigt:**
+  - Ein Durchlauf über 7 500 erzeugte Aufgaben je Sprache (alle Themen und Stufen) fand 15 fehlende Texte, vor allem in „Das üben wir nochmal“: Kürze …, Runde auf Hunderter/Tausender, kg/g, h/min, Quersumme, Teiler, Primfaktor u. a. Alle sind ergänzt, der erneute Durchlauf findet 0.
+  - **Advents-Vorschau** (läuft seit heute, 15.11.): „Ab 1. Dezember: jeden Tag ein Türchen mit Rechen-Rätseln“ fehlte auf EN/UK und ist jetzt ergänzt.
+- **Getestet:**
+  - Kapitel 1–6 durchgespielt, Finale, Urkunde, Album.
+  - Komplette Regression: 320 px, offline, APK-Modus, Merk, Blitz, Reise.
+  - DE/EN/UK ohne Fehlstellen, Zufalls-Stresstest.
+- **Neue APK: 3.10.0** – GitHub baut die Release-Seite `rechenblitz-3.10.0` selbst. Die Android-App bietet das Update an.
 
 ## 14.11.2026 (27) – Rechen-Reise (Kapitel 1–3) + großer Fehler-Check (3.9.0)
 

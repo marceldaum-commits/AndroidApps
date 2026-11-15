@@ -779,3 +779,12 @@ button.badge{font:inherit;cursor:pointer}
 .rr-sticker{font-size:72px;text-align:center;animation:mvpop .6s .2s backwards;filter:drop-shadow(0 6px 10px rgba(0,0,0,.2))}
 @media (prefers-reduced-motion:reduce){.reise-map .rn.here circle,.rr-stars .on,.rr-sticker{animation:none}}
 .toast{white-space:normal;max-width:calc(100vw - 32px);width:max-content;text-align:center;border-radius:22px;line-height:1.3}
+/* 3.10.0 Rechen-Reise Finale + Sticker-Album */
+.rr-final{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.rr-final b{font-size:22px;color:var(--head)}
+.rr-glow{border-radius:50%;padding:8px;background:radial-gradient(circle,rgba(255,200,61,.55),rgba(255,200,61,0) 70%);animation:mvpop .6s .2s backwards}
+.rr-glow .blitz{filter:drop-shadow(0 0 12px #ffc83d)}
+.rr-album{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;text-align:center;font-size:30px}
+.rr-album span{background:linear-gradient(160deg,#fff7e6,#ffe7b8);border-radius:14px;padding:6px 0;box-shadow:0 0 0 2px #ffc83d inset}
+.rr-album.small{font-size:24px}
+.rr-album span.lock{background:var(--chip);box-shadow:none;filter:grayscale(1);opacity:.5}

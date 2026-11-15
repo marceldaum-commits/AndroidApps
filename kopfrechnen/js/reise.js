@@ -23,9 +23,18 @@ const REISE_CH = [
     intro: 'Die letzten Funken liegen tief in der Höhle. Jede richtige Antwort macht es heller!',
     st: ['Es ist dunkel – jede richtige Antwort ist ein Licht.', 'Kristalle funkeln an der Decke.', 'Fledermäuse! Nicht ablenken lassen.', 'Ein unterirdischer See spiegelt die Zahlen.', 'Das Echo rechnet mit dir.', 'Der Höhlen-Troll bewacht den größten Funken!'],
     done: 'Die Höhle strahlt! Du hast den größten Funken gefunden – ein Kristall-Sticker für dich.', off: 0, hard: true },
-  { id: 'wolken', icon: '☁️', name: 'Die Wolkenstadt', soon: true },
-  { id: 'vulkan', icon: '🌋', name: 'Der Feuerberg', soon: true },
-  { id: 'schloss', icon: '🏰', name: 'Das Sternenschloss', soon: true },
+  { id: 'wolken', icon: '☁️', name: 'Die Wolkenstadt', sky: ['#7fb2ff', '#3a6fd1'], path: '#ffffff', node: '#5a8dee', sticker: '🎈', words: true,
+    intro: 'Ein Windstoß hat Funken bis hoch in die Wolkenstadt getragen. Wir fliegen mit dem Ballon hinterher!',
+    st: ['Der Ballon steigt – jede richtige Antwort bringt uns höher.', 'Auf dem Wolkenmarkt wird gerechnet und gehandelt.', 'Regenbogenbrücke! Nur sichere Schritte zählen.', 'Die Wolkenschafe wollen gezählt werden.', 'Gewitter! Bleib ruhig und rechne weiter.', 'Der Wolkenkönig prüft dich – zeig, was du kannst!'],
+    done: 'Die Wolkenstadt glitzert! Der Wolkenkönig schenkt dir einen Ballon-Sticker.', off: 1 },
+  { id: 'vulkan', icon: '🌋', name: 'Der Feuerberg', sky: ['#ff8a3d', '#7a1d0b'], path: '#3b1a10', node: '#e8501c', sticker: '🐉', words: true,
+    intro: 'Im Feuerberg glühen meine Funken in der Lava. Wir brauchen kühle Köpfe und schnelle Rechnungen!',
+    st: ['Heiße Steine – rechne schnell, bevor es warm wird!', 'Die Lava-Brücke hält nur richtige Ergebnisse.', 'Feuerfunken springen umher – fang sie ein!', 'Dampfwolken versperren die Sicht. Konzentrier dich!', 'Fast am Gipfel – noch ein Stück!', 'Der Feuerdrache! Nur mit den besten Rechentricks kommst du vorbei.'],
+    done: 'Du hast den Feuerdrachen besiegt – er schenkt dir einen Drachen-Sticker!', off: 1, hard: true, boss: 12 },
+  { id: 'schloss', icon: '🏰', name: 'Das Sternenschloss', sky: ['#2a3a8c', '#070b24'], path: '#ffc83d', node: '#7a5cff', sticker: '👑', words: true,
+    intro: 'Der allerletzte Funke liegt im Sternenschloss. Wenn wir ihn finden, leuchte ich wieder ganz!',
+    st: ['Das Schlosstor öffnet sich nur für richtige Antworten.', 'Im Spiegelsaal sieht alles doppelt aus.', 'Die Sternentreppe – Stufe für Stufe nach oben.', 'Die Bibliothek der Rechentricks.', 'Der Thronsaal funkelt schon …', 'Der Sternenwächter! Die letzte Prüfung – du schaffst das!'],
+    done: 'Alle Funken sind zurück – ich leuchte wieder! Danke, du bist ein echter Rechenblitz! 👑', off: 2, boss: 12 },
 ];
 
 function reiseState() {
@@ -36,8 +45,8 @@ const reiseKlasse = () => reiseState().k || S.settings.klasse || 0;
 /** Themen + Stufen für Kapitel c (nach Klassenstufe): Kapitel 1 leichter, Kapitel 3 Stufe höher */
 function reiseTopics(c) {
   const k = Math.max(1, Math.min(10, reiseKlasse() || 4)), ch = REISE_CH[c];
-  let list = (CLASS_TOPICS[k] || []).filter(([t]) => t !== 'word');
-  if (list.length < 3) list = list.concat((CLASS_TOPICS[Math.max(1, k - 1)] || []).filter(([t]) => t !== 'word'));
+  let list = (CLASS_TOPICS[k] || []).filter(([t]) => ch.words || t !== 'word');
+  if (list.length < 3) list = list.concat((CLASS_TOPICS[Math.max(1, k - 1)] || []).filter(([t]) => ch.words || t !== 'word'));
   return list.map(([t, l]) => [t, Math.max(0, Math.min(4, l + (ch.off || 0) + (ch.hard ? 1 : 0)))]);
 }
 function reiseStationTopics(c, s) {
@@ -61,7 +70,7 @@ const reiseTotalStars = () => Object.values(reiseState().ch).reduce((a, o) => a 
 /* ---------- Etappe spielen ---------- */
 let G_REISE = null;
 function startReise(c, s) {
-  const tops = reiseStationTopics(c, s), boss = s === REISE.N - 1, n = boss ? REISE.BOSS : REISE.TASKS;
+  const tops = reiseStationTopics(c, s), boss = s === REISE.N - 1, n = boss ? (REISE_CH[c].boss || REISE.BOSS) : REISE.TASKS;
   G_REISE = { c, s, boss, before: reiseStars(c, s) };
   let i = 0;
   const gen = () => { const [t, l] = tops[i++ % tops.length]; return makeTask(t, l); };
@@ -79,27 +88,33 @@ function reiseFinish(acc) {
   const ch = REISE_CH[r.c], nx = reiseCurrent();
   let html = `<div class="card reise-res"><div class="rr-stars">${[1, 2, 3].map(i => `<span class="${i <= stars ? 'on' : ''}">★</span>`).join('')}</div>`;
   if (stars === 0) html += blitzSay('comfort', `<span>Fast! Mit mindestens 60 % schaffst du die Etappe. Probier’s nochmal – ich glaub an dich!</span>`, 56);
-  else if (chDone) html += `<div class="rr-sticker">${ch.sticker}</div>` + blitzSay('cheer', `<b>${esc(ch.name)}</b> <span>geschafft!</span> <span>${esc(ch.done)}</span>`, 60)
+  else if (chDone && r.c === REISE_CH.length - 1) {   // Finale: alle Funken gesammelt
+    award('reiseAll');
+    html += `<div class="rr-final"><div class="rr-glow">${blitzSvg('cheer', 120)}</div><b>Rechen-Reise geschafft!</b></div>` + blitzSay('cheer', `<span>${esc(ch.done)}</span>`, 56)
+      + `<div class="rr-album">${REISE_CH.map(x => `<span>${x.sticker}</span>`).join('')}</div><button class="btn block" id="rrCert">🏅 Große Urkunde</button>`;
+  } else if (chDone) html += `<div class="rr-sticker">${ch.sticker}</div>` + blitzSay('cheer', `<b>${esc(ch.name)}</b> <span>geschafft!</span> <span>${esc(ch.done)}</span>`, 60)
     + '<button class="btn block" id="rrCert">🏅 Urkunde</button>';
   else html += blitzSay(first ? 'cheer' : 'happy', `<span>${first ? 'Etappe geschafft! Weiter geht’s.' : 'Stark – noch besser als vorher?'}</span>`, 56);
-  html += `<button class="btn primary block" id="rrNext">${stars === 0 ? '↻ Nochmal versuchen' : nx.soon ? '🗺️ Zur Karte' : '▶ Nächste Etappe'}</button></div>`;
+  html += `<button class="btn primary block" id="rrNext">${stars === 0 ? '↻ Nochmal versuchen' : nx.soon || nx.all ? '🗺️ Zur Karte' : '▶ Nächste Etappe'}</button></div>`;
   setTimeout(() => {
     $('rrNext') && ($('rrNext').onclick = () => { if (stars === 0) startReise(r.c, r.s); else if (nx.soon || nx.all) { goHome(); openSheet('reise'); } else startReise(nx.c, nx.s); });
-    $('rrCert') && ($('rrCert').onclick = () => openSheet('cert', { line1: `${ch.name} – Kapitel ${r.c + 1} geschafft`, line2: `Rechen-Reise mit Blitz · Klasse ${reiseKlasse() || '–'}`, icon: ch.sticker }));
-    if (chDone) Confetti.burst(220);
+    const fin = chDone && r.c === REISE_CH.length - 1;
+    $('rrCert') && ($('rrCert').onclick = () => openSheet('cert', fin ? { line1: 'Die ganze Rechen-Reise geschafft – alle 6 Kapitel!', line2: `Alle Funken für Blitz gesammelt · Klasse ${reiseKlasse() || '–'}`, icon: '👑' }
+      : { line1: `${ch.name} – Kapitel ${r.c + 1} geschafft`, line2: `Rechen-Reise mit Blitz · Klasse ${reiseKlasse() || '–'}`, icon: ch.sticker }));
+    if (chDone) { Confetti.burst(fin ? 400 : 220); if (fin) setTimeout(() => Confetti.burst(300), 900); }
   }, 60);
   return html;
 }
 
 /* ---------- Karte ---------- */
 function reiseMap(c) {
-  const ch = REISE_CH[c], W = 340, H = 300, pts = [[60, 262], [210, 238], [292, 178], [160, 140], [62, 86], [214, 42]];
+  const ch = REISE_CH[c], W = 340, H = 300, pts = [[60, 246], [210, 226], [292, 170], [160, 134], [62, 86], [214, 46]];
   const cur = reiseCurrent();
   const d = 'M' + pts.map(p => p.join(',')).join(' L');
   let deco = '';
-  for (let i = 0; i < 14; i++) { const x = (mvHash(ch.id + i) * W) | 0, y = (mvHash(ch.id + i + 'y') * H) | 0; deco += `<text x="${x}" y="${y}" font-size="${14 + (i % 3) * 5}" opacity=".55">${{ wald: '🌲', fluss: '〰️', hoehle: '💎' }[ch.id] || '·'}</text>`; }
+  for (let i = 0; i < 14; i++) { const x = (mvHash(ch.id + i) * W) | 0, y = (mvHash(ch.id + i + 'y') * H) | 0; deco += `<text x="${x}" y="${y}" font-size="${14 + (i % 3) * 5}" opacity=".55">${{ wald: '🌲', fluss: '〰️', hoehle: '💎', wolken: '☁️', vulkan: '🔥', schloss: '✨' }[ch.id] || '·'}</text>`; }
   const nodes = pts.map(([x, y], s) => {
-    const stars = reiseStars(c, s), open = reiseUnlocked(c, s), here = cur.c === c && cur.s === s && !cur.soon, boss = s === REISE.N - 1;
+    const stars = reiseStars(c, s), open = reiseUnlocked(c, s), here = cur.c === c && cur.s === s && !cur.soon && !cur.all, boss = s === REISE.N - 1;
     return `<g class="rn ${open ? 'open' : 'lock'}${here ? ' here' : ''}" data-st="${s}" role="button" tabindex="${open ? 0 : -1}" aria-label="Etappe ${s + 1}">
       <circle cx="${x}" cy="${y}" r="${boss ? 25 : 20}" fill="${open ? ch.node : '#6b7390'}" stroke="#fff" stroke-width="3"/>
       <text x="${x}" y="${y + 6}" text-anchor="middle" font-size="${boss ? 20 : 16}" font-weight="800" fill="#fff">${boss ? '👑' : open ? s + 1 : '🔒'}</text>
@@ -111,7 +126,7 @@ function reiseMap(c) {
     <rect width="${W}" height="${H}" rx="18" fill="url(#rg${c})"/>${deco}
     <path d="${d}" fill="none" stroke="${ch.path}" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
     <path d="${d}" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round" opacity=".7"/>
-    ${nodes}${bz ? `<g class="rn-bz" transform="translate(${bz[0] - 22} ${bz[1] - 66})">${blitzSvg('wave', 44)}</g>` : ''}</svg>`;
+    ${nodes}${bz ? `<g class="rn-bz" transform="translate(${bz[1] < 90 ? bz[0] + (bz[0] > 250 ? -76 : 26) : bz[0] - 22} ${bz[1] < 90 ? bz[1] - 26 : bz[1] - 66})">${blitzSvg('wave', 44)}</g>` : ''}</svg>`;
 }
 
 PANELS.reise = (o = {}) => {
@@ -128,6 +143,8 @@ PANELS.reise = (o = {}) => {
     <h3 class="reise-h">${esc(ch.name)} <span class="muted">· Kapitel ${c + 1}</span></h3>
     ${blitzSay(reiseChapterDone(c) ? 'cheer' : 'wave', `<span>${esc(reiseChapterDone(c) ? ch.done : ch.intro)}</span>`, 52)}
     <div class="reise-wrap">${reiseMap(c)}</div>
+    <div class="mlabel">Sticker-Album</div>
+    <div class="rr-album small">${REISE_CH.map((x, i) => `<span class="${reiseChapterDone(i) ? '' : 'lock'}" title="${esc(x.name)}">${reiseChapterDone(i) ? x.sticker : '❔'}</span>`).join('')}</div>
     <p class="small muted" style="margin:0;text-align:center">⭐ ${reiseTotalStars()} Sterne gesammelt · Klasse ${reiseKlasse()} <button class="linkbtn" id="rkChange">ändern</button></p>
     ${REISE_CH.slice(3).some(x => x.soon) ? '<p class="small muted" style="margin:0;text-align:center">Kapitel 4–6 kommen bald: Wolkenstadt, Feuerberg und Sternenschloss.</p>' : ''}</div>`,
     init() {
@@ -144,7 +161,7 @@ PANELS.reiseStation = ({ c, s }) => {
   const names = [...new Set(tops.map(([t]) => TOPICS[t].name))];
   return { title: `<span>${ch.icon}</span> <span>${boss ? 'Boss-Etappe' : `Etappe ${s + 1}`}</span>`, html: `<div class="reise">
     ${blitzSay(boss ? 'wow' : 'happy', `<span>${esc(ch.st[s])}</span>`, 60)}
-    <div class="rs-info"><div><b>${boss ? REISE.BOSS : REISE.TASKS}</b><span>Aufgaben</span></div><div><b>${names.length > 3 ? 'Mix' : names.map(n => `<span>${esc(n)}</span>`).join(' + ')}</b><span>Thema</span></div><div><b>${stars ? '★'.repeat(stars) : '–'}</b><span>Bestes</span></div></div>
+    <div class="rs-info"><div><b>${boss ? (ch.boss || REISE.BOSS) : REISE.TASKS}</b><span>Aufgaben</span></div><div><b>${names.length > 3 ? 'Mix' : names.map(n => `<span>${esc(n)}</span>`).join(' + ')}</b><span>Thema</span></div><div><b>${stars ? '★'.repeat(stars) : '–'}</b><span>Bestes</span></div></div>
     <p class="small muted" style="margin:0">Ab 60 % richtig ist die Etappe geschafft – 80 % gibt zwei Sterne, 95 % drei.</p>
     <button class="btn primary block" id="rsGo">▶ Los geht’s</button></div>`,
     init() { $('rsGo').onclick = () => { closeSheet(); startReise(c, s); }; } };
@@ -155,8 +172,8 @@ function renderReiseCard() {
   const el = $('reiseCard'); if (!el) return;
   const cur = reiseCurrent(), ch = REISE_CH[cur.soon ? Math.max(0, cur.c - 1) : cur.c];
   el.hidden = false;
-  const line = !reiseKlasse() ? 'Hilf Blitz, seine Funken einzusammeln!' : cur.soon ? 'Kapitel 1–3 geschafft! Bald geht’s weiter.' : `${ch.name} · Etappe ${cur.s + 1}/${REISE.N}`;
+  const line = !reiseKlasse() ? 'Hilf Blitz, seine Funken einzusammeln!' : cur.all ? 'Alle Funken gesammelt! 👑' : cur.soon ? 'Kapitel 1–3 geschafft! Bald geht’s weiter.' : `${ch.name} · Etappe ${cur.s + 1}/${REISE.N}`;
   el.innerHTML = `<div class="ch-ico reise-ico" aria-hidden="true">${ch.icon}</div><div class="ch-txt"><b>Rechen-Reise</b><span>${esc(line)}${reiseTotalStars() ? ` · ⭐ ${reiseTotalStars()}` : ''}</span></div>
-    <button class="btn small primary" id="reiseGo">${cur.soon ? 'Karte' : 'Weiter'}</button>`;
-  $('reiseGo').onclick = () => { if (!reiseKlasse() || cur.soon) openSheet('reise'); else openSheet('reiseStation', { c: cur.c, s: cur.s }); };
+    <button class="btn small primary" id="reiseGo">${cur.soon || cur.all ? 'Karte' : 'Weiter'}</button>`;
+  $('reiseGo').onclick = () => { if (!reiseKlasse() || cur.soon || cur.all) openSheet('reise'); else openSheet('reiseStation', { c: cur.c, s: cur.s }); };
 }
