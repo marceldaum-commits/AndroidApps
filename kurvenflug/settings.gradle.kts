@@ -7,7 +7,8 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    // Kotlin/Wasm holt Node.js und Binaryen über eigene Quellen – daher Projekt-Quellen erlauben
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
     repositories {
         google()
         maven("https://maven-central.storage-download.googleapis.com/maven2/")

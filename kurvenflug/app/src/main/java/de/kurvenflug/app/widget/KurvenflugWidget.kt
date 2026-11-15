@@ -66,7 +66,7 @@ class KurvenflugWidget(private val fixed: WidgetInfo? = null) : GlanceAppWidget(
         val all = c.progress.all.first()
         val played = all.associate { it.levelId to Played(it.stars, it.solvedAt) }
         val cells = all.sumOf { Integer.bitCount(it.cellMask) }
-        return WidgetInfo.of(played, cells, java.time.LocalDate.now().toEpochDay(), System.currentTimeMillis(), c.settings.grade.value)
+        return WidgetInfo.of(played, cells, de.kurvenflug.core.model.CalDate.today().toEpochDay(), System.currentTimeMillis(), c.settings.grade.value)
     }
 
     @Composable

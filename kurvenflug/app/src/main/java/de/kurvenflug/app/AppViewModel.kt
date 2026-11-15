@@ -58,7 +58,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun played(m: Map<String, LevelProgress>) = m.mapValues { de.kurvenflug.core.model.Played(it.value.stars, it.value.solvedAt) }
 
     /** Heutiger Tag (Ortszeit) – daraus wird die Tagesmission gebaut */
-    fun today(): Long = java.time.LocalDate.now().toEpochDay()
+    fun today(): Long = de.kurvenflug.core.model.CalDate.today().toEpochDay()
     fun daily() = Daily.forDay(today())
 
     /** Wie viele Tagesmissionen schon geschafft wurden */

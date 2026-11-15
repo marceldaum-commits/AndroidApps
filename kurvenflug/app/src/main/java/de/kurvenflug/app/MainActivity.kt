@@ -239,7 +239,7 @@ class MainActivity : ComponentActivity() {
                     },
                     onAndromeda = { nav.goOnce(Routes.ANDROMEDA) },
                     season = remember(allStars) {
-                        val today = java.time.LocalDate.now()
+                        val today = de.kurvenflug.core.model.CalDate.today()
                         de.kurvenflug.core.model.Seasons.active(today)?.let { e -> e to de.kurvenflug.core.model.Seasons.done(e, de.kurvenflug.core.model.Seasons.year(today, e), allStars) }
                     },
                     onSeason = { nav.goOnce(Routes.SEASON) },
@@ -316,8 +316,8 @@ class MainActivity : ComponentActivity() {
                     onRename = { id, n, a -> vm.settings.renameProfile(id, n, a) }, onDelete = vm::deleteProfile, onBack = { nav.popSafe() })
             }
             composable(Routes.PARENT) {
-                val today = remember { java.time.LocalDate.now() }
-                val todayStart = remember { today.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli() }
+                val today = remember { de.kurvenflug.core.model.CalDate.today() }
+                val todayStart = remember { de.kurvenflug.core.model.CalDate.startOfToday() }
                 val plays by remember { vm.weekPlays(todayStart - 13 * de.kurvenflug.core.model.Weekly.DAY) }.collectAsStateWithLifecycle(emptyList())
                 val ps by vm.profiles.collectAsStateWithLifecycle()
                 val cur by vm.profile.collectAsStateWithLifecycle()
@@ -325,7 +325,7 @@ class MainActivity : ComponentActivity() {
                     de.kurvenflug.core.model.Weekly.summary(plays.map { de.kurvenflug.core.model.PlayRecord(it.levelId, it.stars, it.attempts, it.seconds, it.at) },
                         System.currentTimeMillis(), todayStart)
                 }
-                val labels = remember { (6 downTo 0).map { today.minusDays(it.toLong()).dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale.GERMAN).take(2) } }
+                val labels = remember { (6 downTo 0).map { de.kurvenflug.core.model.CalDate.WEEKDAYS[today.minusDays(it.toLong()).dayOfWeek - 1] } }
                 de.kurvenflug.app.ui.together.ParentScreen(ps.first { it.id == cur }, week, labels) { nav.popSafe() }
             }
             composable(Routes.RESULTS) { de.kurvenflug.app.ui.together.ResultsBoard({ nav.popSafe() }) }
@@ -347,7 +347,7 @@ class MainActivity : ComponentActivity() {
                     onDecor = { r, sl, k -> vm.settings.setDecor(r, sl, k) }, onBack = { nav.popSafe() })
             }
             composable(Routes.SEASON) {
-                val today = remember { java.time.LocalDate.now() }
+                val today = remember { de.kurvenflug.core.model.CalDate.today() }
                 val e = de.kurvenflug.core.model.Seasons.active(today) ?: run { LaunchedEffect(Unit) { nav.popSafe() }; return@composable }
                 de.kurvenflug.app.ui.story.SeasonScreen(e, de.kurvenflug.core.model.Seasons.year(today, e), allStars,
                     onLevel = { nav.goOnce(Routes.level(it.id)) }, onBack = { nav.popSafe() })
