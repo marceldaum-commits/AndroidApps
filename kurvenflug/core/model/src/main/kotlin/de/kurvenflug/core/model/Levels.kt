@@ -34,6 +34,12 @@ data class Level(
     val mirrors: List<List<Double>> = emptyList(),
     /** Merkbild: rechtwinkliges Dreieck vom Start zur ersten Station mit beschrifteten Seiten (Trigonometrie) */
     val triangle: Triangle? = null,
+    /** Kristall für den Laser: [x1, y1, x2, y2, Brechzahl n] (Rechteck) */
+    val crystal: List<Double>? = null,
+    /** Geodreieck am Laser einblenden (Winkel messen, Kl. 5–6) */
+    val protractor: Boolean = false,
+    /** gegebene Gleichung, die umgeformt werden soll (z. B. „y = x² − 6x + 5“) */
+    val given: String? = null,
 ) {
     /** Startwerte + feste Werte + aktuelle Einstellung */
     fun values(v: Map<String, Double>): Map<String, Double> = params.associate { it.key to it.start } + fixed + v
@@ -94,6 +100,9 @@ object Feedback {
         return when (level.kind) {
             Kind.POINT -> {
                 val dx = t.x - v.getValue("x"); val dy = t.y - v.getValue("y")
+                // Zahlenstrahl (nur x einstellbar)
+                if (level.params.none { it.key == "y" })
+                    return "Gelandet bei ${num(v.getValue("x"))}. Die Station liegt weiter ${if (dx > 0) "rechts ➡️" else "links ⬅️"}."
                 when {
                     dx != 0.0 && dy != 0.0 -> "Gelandet bei (${num(v.getValue("x"))} | ${num(v.getValue("y"))}). Beide Werte passen noch nicht."
                     dx != 0.0 -> "Die Höhe stimmt! Aber nach rechts/links (x) passt es noch nicht."
@@ -111,6 +120,17 @@ object Feedback {
                     "${num(kotlin.math.abs(dy))} nach ${if (dy >= 0) "oben" else "unten"} – Pythagoras: r² = Δx² + Δy²."
             }
             Kind.LASER -> {
+                if (level.protractor) {
+                    val want = Math.toDegrees(kotlin.math.atan2(t.y - level.launch.y, t.x - level.launch.x))
+                    val got = v.getValue("angle")
+                    return "Dein Winkel: ${num(got)}°. Die Station liegt bei einem ${if (want > got) "größeren" else "kleineren"} Winkel – " +
+                        "weiter nach ${if (want > got) "links" else "rechts"} drehen."
+                }
+                if (level.crystal != null && r.crash == null) {
+                    val near = r.path.minByOrNull { kotlin.math.hypot(it.x - t.x, it.y - t.y) } ?: return "Nochmal!"
+                    return "Knapp ${num(kotlin.math.hypot(near.x - t.x, near.y - t.y) - t.r, 1)} Kästchen daneben. " +
+                        "Im Glas knickt der Strahl zum Lot hin, beim Herauskommen vom Lot weg."
+                }
                 val near = r.path.minByOrNull { kotlin.math.hypot(it.x - t.x, it.y - t.y) } ?: return "Nochmal!"
                 "Der Strahl verfehlt die Station um ${num(kotlin.math.hypot(near.x - t.x, near.y - t.y) - t.r, 1)} Kästchen. Einfallswinkel = Ausfallswinkel!"
             }
@@ -691,9 +711,134 @@ object Levels {
         ),
     )
 
+    /** Zahlenstrahl: nur x, y bleibt 0 (Kl. 5–6) */
+    private val nlQ = p("x", "x", -9.0, 9.0, 0.25, 0.0)
+    private val nlD = p("x", "x", -9.0, 9.0, 0.1, 0.0)
+    private fun nl(x: Double) = Body(x, 0.0, 0.06)
+    /** Winkel 0–180° mit Geodreieck, Laser von unten Mitte */
+    private val wAng = p("angle", "Winkel", 0.0, 180.0, 1.0, 0.0, "°")
+    private val wLaunch = Vec(0.0, -7.0)
+    private fun atAngle(deg: Double, dist: Double = 10.0) =
+        Body(wLaunch.x + dist * kotlin.math.cos(Math.toRadians(deg)), wLaunch.y + dist * kotlin.math.sin(Math.toRadians(deg)), 0.3)
+    private fun angleLevel(n: Int, title: String, deg: Double, task: String, tip: String, hidden: Boolean = false) =
+        Level("16-$n", 16, n, title, Kind.LASER, task, listOf(atAngle(deg)), listOf(wAng), mapOf("angle" to deg),
+            launch = wLaunch, protractor = true, hidden = hidden, tip = tip)
+
+    private val newChapters = listOf(
+        Chapter(
+            15, "Brüche & Kommazahlen", "Klasse 5–6", "🍕",
+            listOf(
+                "Jetzt landest du auf dem Zahlenstrahl! Ein Kästchen ist 1 – und es lässt sich teilen wie eine Pizza. 🍕",
+                "½ heißt: ein Kästchen in 2 Teile, einer davon. ¾: in 4 Teile, drei davon.",
+                "Kommazahlen sind Zehntel: 0,5 = 5 Zehntel = ½. Und 0,25 = ¼.",
+                "Minus heißt wieder: nach links. Los geht's!",
+            ),
+            listOf(
+                Level("15-1", 15, 1, "Halbe Sache", Kind.POINT, "Die Station liegt bei 2½ – zweieinhalb Kästchen nach rechts.",
+                    listOf(nl(2.5)), listOf(nlQ), mapOf("x" to 2.5), fixed = mapOf("y" to 0.0), tip = "2½ = 2 + ½. Mit dem Regler: 2,5."),
+                Level("15-2", 15, 2, "Dreiviertel", Kind.POINT, "Station bei ¾. Ein Kästchen hat 4 Viertel.",
+                    listOf(nl(0.75)), listOf(nlQ), mapOf("x" to 0.75), fixed = mapOf("y" to 0.0), tip = "¾ = 3 Viertel = 0,75."),
+                Level("15-3", 15, 3, "Mehr als ein Ganzes", Kind.POINT, "Station bei 7/4. Wie viele Ganze stecken drin?",
+                    listOf(nl(1.75)), listOf(nlQ), mapOf("x" to 1.75), fixed = mapOf("y" to 0.0), tip = "7/4 = 4/4 + 3/4 = 1¾ = 1,75."),
+                Level("15-4", 15, 4, "Links vom Start", Kind.POINT, "Station bei −1¼. Minus heißt: nach links!",
+                    listOf(nl(-1.25)), listOf(nlQ), mapOf("x" to -1.25), fixed = mapOf("y" to 0.0), tip = "1¼ = 1,25 – also −1,25."),
+                Level("15-5", 15, 5, "Zehntel", Kind.POINT, "Station bei 3,7 – drei Ganze und sieben Zehntel.",
+                    listOf(nl(3.7)), listOf(nlD), mapOf("x" to 3.7), fixed = mapOf("y" to 0.0), tip = "3,7: bis zur 3, dann noch 7 kleine Striche."),
+                Level("15-6", 15, 6, "Komma-Funkspruch", Kind.POINT, "Getarnt! Funkspruch: „0,8 + 1,5“",
+                    listOf(nl(2.3)), listOf(nlD), mapOf("x" to 2.3), fixed = mapOf("y" to 0.0), hidden = true,
+                    tip = "Zehntel zusammenzählen: 8 + 15 = 23 Zehntel = 2,3."),
+                Level("15-7", 15, 7, "Die Hälfte", Kind.POINT, "Getarnt! Die Station liegt bei der Hälfte von 7.",
+                    listOf(nl(3.5)), listOf(nlQ), mapOf("x" to 3.5), fixed = mapOf("y" to 0.0), hidden = true, tip = "7 : 2 = 3½ = 3,5."),
+                Level("15-8", 15, 8, "Bruch wird Komma", Kind.POINT, "Getarnt! Station bei −3/5.",
+                    listOf(nl(-0.6)), listOf(nlD), mapOf("x" to -0.6), fixed = mapOf("y" to 0.0), hidden = true,
+                    tip = "3/5 = 6/10 = 0,6 – und das Minus heißt links."),
+            ),
+        ),
+        Chapter(
+            16, "Winkel", "Klasse 5–6", "📐",
+            listOf(
+                "Das ist ein Geodreieck! Der Laser dreht sich von rechts (0°) über oben (90°) bis nach links (180°).",
+                "90° ist ein rechter Winkel – genau senkrecht. Kleiner als 90°: spitz. Größer: stumpf.",
+                "Lies die Station am Geodreieck ab – oder rechne den Winkel aus.",
+                "Alle Winkel im Dreieck zusammen: 180°. Nebenwinkel ergänzen sich auch zu 180°.",
+            ),
+            listOf(
+                angleLevel(1, "Rechter Winkel", 90.0, "Feuere genau senkrecht nach oben – ein rechter Winkel.", "Rechter Winkel = 90°."),
+                angleLevel(2, "Halb so viel", 45.0, "Die Station liegt genau auf halbem Weg zwischen 0° und 90°.", "90° : 2 = 45°."),
+                angleLevel(3, "Spitz", 30.0, "Lies den Winkel der Station am Geodreieck ab.", "Zähl die kleinen Striche: je 10°."),
+                angleLevel(4, "Stumpf", 120.0, "Ein stumpfer Winkel – über die 90° hinaus.", "90° + 30° = 120°."),
+                angleLevel(5, "Nebenwinkel", 130.0, "Getarnt! Der Strahl soll den Nebenwinkel von 50° nehmen.",
+                    "Nebenwinkel: 180° − 50° = 130°.", hidden = true),
+                angleLevel(6, "Dreieck", 50.0, "Getarnt! Im Dreieck sind zwei Winkel 60° und 70°. Feuere unter dem dritten.",
+                    "180° − 60° − 70° = 50°.", hidden = true),
+            ),
+        ),
+        Chapter(
+            17, "Lichtbrechung", "Physik Klasse 9", "💎",
+            listOf(
+                "Kristalle! Wenn Licht von Luft in Glas geht, knickt es ab – zum Lot hin. Beim Herausgehen wieder vom Lot weg.",
+                "Brechungsgesetz: sin α₁ = n · sin α₂. Glas hat n ≈ 1,5, Wasser n ≈ 1,33.",
+                "Kommt Licht von innen sehr flach an die Kante, kann es gar nicht heraus: Totalreflexion! Wie in einem Glasfaserkabel.",
+                "Tipp: „Ganze Bahn“ zeigt dir, wie der Strahl knickt – zum Tüfteln erlaubt.",
+            ),
+            listOf(
+                Level("17-1", 17, 1, "Glasplatte", Kind.LASER, "Der Strahl muss durch die Glasplatte. Danach läuft er parallel weiter – aber versetzt!",
+                    listOf(t(8.0, 2.0, 0.5)), listOf(la), mapOf("angle" to 22.0), launch = Vec(-9.0, -4.0),
+                    crystal = listOf(-3.0, -9.5, 3.0, 9.5, 1.5),
+                    tip = "Im Glas knickt der Strahl zum Lot hin – er wird flacher. Ziel also etwas steiler als direkt."),
+                Level("17-2", 17, 2, "Wasserbecken", Kind.LASER, "Von oben ins Wasser: Die Station liegt am Grund.",
+                    listOf(t(4.0, -8.0, 0.5)), listOf(la), mapOf("angle" to -46.0), launch = Vec(-8.0, 7.0),
+                    crystal = listOf(-9.5, -9.5, 9.5, -1.0, 1.33),
+                    tip = "Beim Eintauchen knickt der Strahl zum Lot (senkrecht) hin – er wird steiler."),
+                Level("17-3", 17, 3, "Totalreflexion", Kind.LASER, "Du bist im Glas, ein Felsen ist im Weg. Lass den Strahl an der Glaskante zurückprallen – ganz ohne Spiegel!",
+                    listOf(t(1.5, -6.0, 0.5)), listOf(la), mapOf("angle" to 40.0), launch = Vec(-8.0, -6.0),
+                    crystal = listOf(-9.5, -9.5, 9.5, -2.0, 1.5), asteroids = listOf(rock(-3.0, -6.0, 1.0)),
+                    tip = "Flach genug zielen (unter 48°), dann bleibt das Licht im Glas: Totalreflexion."),
+                Level("17-4", 17, 4, "Um die Ecke", Kind.LASER, "Ein Felsen versperrt den Weg. Der Glasblock lenkt den Strahl.",
+                    listOf(t(7.0, -7.0, 0.5)), listOf(la), mapOf("angle" to -25.0), launch = Vec(-9.0, 5.0),
+                    crystal = listOf(-3.0, -9.5, 9.5, 0.0, 1.5), asteroids = listOf(rock(1.0, -3.0, 1.2)),
+                    tip = "Im Glas wird der Strahl steiler. Probier mit „Ganze Bahn“, wo er durchkommt."),
+                Level("17-5", 17, 5, "Glasfaser", Kind.LASER, "Ein langer Glasstab. Der Strahl soll im Zickzack bis zum Ende laufen.",
+                    listOf(t(8.5, 0.0, 0.5)), listOf(la), mapOf("angle" to 13.0), launch = Vec(-9.0, 0.0),
+                    crystal = listOf(-9.5, -2.0, 9.5, 2.0, 1.5), asteroids = listOf(rock(0.0, 0.0, 1.0)),
+                    tip = "Schräg feuern, aber flach genug für Totalreflexion an den Kanten."),
+            ),
+        ),
+        Chapter(
+            18, "Nullstellen", "Klasse 9", "🎯",
+            listOf(
+                "Wo landet die Sonde? Dort, wo die Parabel die x-Achse schneidet: die Nullstellen.",
+                "Die Nullstellen liegen symmetrisch um den Scheitel. Also: Scheitel-x = Mitte der Nullstellen.",
+                "Normalform y = x² + px + q in Scheitelform bringen: d = −p : 2 und e = q − d² (quadratische Ergänzung).",
+                "Oder gleich die pq-Formel: x = −p/2 ± √((p/2)² − q). Los!",
+            ),
+            listOf(
+                Level("18-1", 18, 1, "Genau in der Mitte", Kind.PARABOLA, "y = (x − d)² − 4. Die Sonde soll bei x = 1 und x = 5 landen.",
+                    listOf(t(1.0, 0.0), t(5.0, 0.0)), listOf(pd), mapOf("d" to 3.0), fixed = mapOf("a" to 1.0, "e" to -4.0),
+                    tip = "Der Scheitel liegt genau in der Mitte: (1 + 5) : 2."),
+                Level("18-2", 18, 2, "Wie tief?", Kind.PARABOLA, "y = (x − d)² + e. Landeplätze bei x = −2 und x = 4.",
+                    listOf(t(-2.0, 0.0), t(4.0, 0.0)), listOf(pd, pe), mapOf("d" to 1.0, "e" to -9.0), fixed = mapOf("a" to 1.0),
+                    tip = "d = Mitte = 1. Von dort 3 bis zur Nullstelle: 3² = 9 nach unten, also e = −9."),
+                Level("18-3", 18, 3, "Normalform", Kind.PARABOLA, "Gegeben ist y = x² − 4x − 5. Bring sie in Scheitelform!",
+                    listOf(t(-1.0, 0.0), t(5.0, 0.0)), listOf(pd, pe), mapOf("d" to 2.0, "e" to -9.0), fixed = mapOf("a" to 1.0),
+                    given = "y = x² − 4x − 5", tip = "d = −p : 2 = 4 : 2 = 2. e = q − d² = −5 − 4 = −9."),
+                Level("18-4", 18, 4, "pq-Formel", Kind.PARABOLA, "Getarnt! y = x² + 2x − 8. Die Landeplätze sind unsichtbar – rechne!",
+                    listOf(t(-4.0, 0.0), t(2.0, 0.0)), listOf(pd, pe), mapOf("d" to -1.0, "e" to -9.0), fixed = mapOf("a" to 1.0),
+                    given = "y = x² + 2x − 8", hidden = true,
+                    tip = "pq-Formel: x = −1 ± √(1 + 8) = −1 ± 3. Scheitel: d = −1, e = −8 − 1 = −9."),
+                Level("18-5", 18, 5, "Gestreckt", Kind.PARABOLA, "Gegeben ist y = 2x² − 8x + 6. Erst die 2 ausklammern!",
+                    listOf(t(1.0, 0.0), t(3.0, 0.0)), listOf(pd, pe), mapOf("d" to 2.0, "e" to -2.0), fixed = mapOf("a" to 2.0),
+                    given = "y = 2x² − 8x + 6", tip = "y = 2·(x² − 4x + 3). Innen: d = 2, 3 − 4 = −1. Mal 2: e = −2."),
+                Level("18-6", 18, 6, "Kopfüber", Kind.PARABOLA, "Gegeben ist y = −x² + 6x − 5. Die Parabel ist nach unten geöffnet.",
+                    listOf(t(1.0, 0.0), t(5.0, 0.0)), listOf(pd, pe), mapOf("d" to 3.0, "e" to 4.0), fixed = mapOf("a" to -1.0),
+                    given = "y = −x² + 6x − 5", tip = "y = −(x² − 6x + 5). Innen: d = 3, 5 − 9 = −4. Mal −1: e = 4."),
+            ),
+        ),
+    )
+
     /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand) */
-    private val order = listOf(1, 8, 13, 11, 2, 7, 9, 3, 12, 4, 14, 5, 10, 6)
-    val chapters: List<Chapter> = (baseChapters + extraChapters).sortedBy { order.indexOf(it.number) }
+    private val order = listOf(1, 15, 16, 8, 13, 11, 2, 7, 9, 3, 18, 12, 17, 4, 14, 5, 10, 6)
+    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters).sortedBy { order.indexOf(it.number) }
 
     val all: List<Level> = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }

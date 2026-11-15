@@ -207,6 +207,13 @@ class ScreenshotTest {
         de.kurvenflug.app.ui.flight.WalkthroughOverlay(l, de.kurvenflug.core.model.Walkthrough.of(l)!!, voltSolves = 1) {}
     }
 
+    @Test fun fractions() = level("15-1", name = "49_brueche", values = mapOf("x" to 2.75))
+    @Test fun angles() = level("16-4", name = "50_winkel", values = mapOf("angle" to 100.0))
+    @Test fun refraction() = level("17-1", name = "51_lichtbrechung", values = mapOf("angle" to 22.0),
+        prepare = { it.onNodeWithText("👁 Bahn").performClick() })
+    @Test fun zeros() = level("18-3", name = "52_nullstellen", values = mapOf("d" to 2.0, "e" to -5.0),
+        prepare = { it.onNodeWithText("👁 Bahn").performClick() })
+
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 

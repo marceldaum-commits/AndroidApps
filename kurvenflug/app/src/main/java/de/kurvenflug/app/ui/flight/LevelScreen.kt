@@ -313,6 +313,14 @@ fun LevelScreen(
     }
 }
 
+/** Viertel als gemischter Bruch: 2,75 → „2¾“, −1,25 → „−1¼“ (sonst null) */
+private fun frac(x: Double): String? {
+    val q = Math.round(kotlin.math.abs(x) * 4)
+    if (kotlin.math.abs(kotlin.math.abs(x) * 4 - q) > 1e-6 || q % 4 == 0L) return null
+    val whole = q / 4; val part = when (q % 4) { 1L -> "¼"; 2L -> "½"; else -> "¾" }
+    return (if (x < 0) "−" else "") + (if (whole > 0) "$whole" else "") + part
+}
+
 private fun lin(m: Double, b: Double) = "y = ${when (m) { 1.0 -> ""; -1.0 -> "−"; else -> num(m) }}x ${if (b < 0) "−" else "+"} ${num(kotlin.math.abs(b))}"
 
 /** Die Formel mit den eingestellten Zahlen – farbig wie die Regler. */
@@ -336,9 +344,15 @@ private fun Formula(level: Level, values: Map<String, Double>) {
             append(" "); colored(key, (if (minus) "− " else "+ ") + num(kotlin.math.abs(raw)))
         }
         when (level.kind) {
-            Kind.POINT -> { append("Ziel  ( "); n("x"); append(" | "); n("y"); append(" )") }
+            Kind.POINT -> if (level.params.none { it.key == "y" }) {
+                // Zahlenstrahl: Kommazahl und – bei Vierteln – auch als Bruch
+                append("x = "); n("x"); frac(v.getValue("x"))?.let { withStyle(SpanStyle(color = Q.Muted)) { append("  = $it") } }
+            } else { append("Ziel  ( "); n("x"); append(" | "); n("y"); append(" )") }
             Kind.LINE -> { append("y = "); factor("m"); append(" · x"); term("b") }
-            Kind.PARABOLA -> { append("y = "); factor("a"); append(" · (x"); term("d", -1); append(")²"); term("e") }
+            Kind.PARABOLA -> {
+                append("y = "); factor("a"); append(" · (x"); term("d", -1); append(")²"); term("e")
+                level.given?.let { append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("gegeben: $it") } }
+            }
             Kind.THROW -> { append("α = "); n("angle", "°"); append("   v = "); n("v", " m/s") }
             Kind.ORBIT -> { append("α = "); n("angle", "°"); append("   v = "); n("v") }
             Kind.PROP -> { append("y = "); factor("k"); append(" · x") }

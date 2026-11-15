@@ -3,6 +3,17 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.10.0 – Vier neue Kapitel
+- **🍕 Brüche & Kommazahlen (Klasse 5–6)**: Lande auf dem Zahlenstrahl bei 2½, ¾, 7/4 oder 3,7 – mit Vierteln und Zehnteln
+  zum Ablesen. Die App zeigt dir, dass 2,75 dasselbe ist wie 2¾. 8 Level.
+- **📐 Winkel (Klasse 5–6)**: Ein Geodreieck am Laser! Rechte, spitze und stumpfe Winkel ablesen, Nebenwinkel und
+  Winkel im Dreieck ausrechnen. 6 Level.
+- **💎 Lichtbrechung (Physik Klasse 9)**: Glasplatte, Wasserbecken und Glasfaser – Licht knickt im Kristall ab
+  (Brechungsgesetz) und bleibt bei flachem Winkel sogar ganz drin: Totalreflexion. 5 Level.
+- **🎯 Nullstellen (Klasse 9)**: Wo landet die Sonde? Scheitel in der Mitte der Nullstellen, Normalform in Scheitelform
+  bringen, pq-Formel. Mit Rechenweg zum Mitrechnen. 6 Level.
+- Jetzt 107 Level in 18 Kapiteln.
+
 ## 0.9.1 – Neu anfangen
 - **🔄 Fortschritt zurücksetzen**: In den Einstellungen ganz unten unter „Neu anfangen“. Löscht Sterne, Energiezellen,
   Tagesmissionen, Rekorde, Abzeichen und die gewählte Klasse – praktisch, wenn ein Geschwisterkind von vorn beginnt.

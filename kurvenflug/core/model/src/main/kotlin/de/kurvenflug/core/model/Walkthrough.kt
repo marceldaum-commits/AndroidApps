@@ -80,18 +80,38 @@ object Walkthrough {
                 keys == setOf("v", "s0") && t.size >= 2 -> twoPoints(t[0], t[1], "v", "s0", "t", "s")
                 else -> null
             }
-            Kind.PARABOLA -> when (keys) {
-                setOf("e") -> { val a = fixed.getValue("a"); val d = fixed.getValue("d"); val (x, y) = t[0].x to t[0].y
+            Kind.PARABOLA -> when {
+                keys == setOf("e") -> { val a = fixed.getValue("a"); val d = fixed.getValue("d"); val (x, y) = t[0].x to t[0].y
                     val sq = (x - d) * (x - d)
                     listOf(step("(x − d)² = (${f(x)} − ${p(d)})² = ?", sq),
                         step("a · ${f(sq)} = ${p(a)} · ${f(sq)} = ?", a * sq),
                         step("e = y − ${p(a * sq)} = ${p(y)} − ${p(a * sq)} = ?", y - a * sq, "e")) }
-                setOf("a") -> { val d = fixed.getValue("d"); val e = fixed.getValue("e"); val (x, y) = t[0].x to t[0].y
+                keys == setOf("a") -> { val d = fixed.getValue("d"); val e = fixed.getValue("e"); val (x, y) = t[0].x to t[0].y
                     val sq = (x - d) * (x - d)
                     listOf(step("y − e = ${p(y)} − ${p(e)} = ?", y - e),
                         step("(x − d)² = (${f(x)} − ${p(d)})² = ?", sq),
                         step("a = ${p(y - e)} : ${f(sq)} = ?", (y - e) / sq, "a")) }
-                setOf("d", "e") -> {
+                keys == setOf("d") -> {
+                    // Nullstellen-Mitte: zwei Stationen auf gleicher Höhe → Scheitel-x in der Mitte
+                    if (t.size < 2 || t[0].y != t[1].y) null
+                    else listOf(step("Mitte zwischen ${p(t[0].x)} und ${p(t[1].x)}: (${p(t[0].x)} + ${p(t[1].x)}) : 2 = ?", (t[0].x + t[1].x) / 2, "d"))
+                }
+                keys == setOf("d", "e") && l.given != null -> {
+                    // Normalform → Scheitelform (quadratische Ergänzung); a vorher ausklammern
+                    val a = fixed.getValue("a"); val d = l.solution.getValue("d"); val e = l.solution.getValue("e")
+                    val pp = -2 * d; val q = d * d + e / a
+                    (if (a != 1.0) listOf(step("${l.given}: erst a = ${p(a)} ausklammern. Innen bleibt x² + p·x + q mit p = ?", pp)) else emptyList()) + listOf(
+                        step("d = −p : 2 = −${p(pp)} : 2 = ?", d, "d"),
+                        step("Innen: q − d² = ${p(q)} − ${f(d * d)} = ?", q - d * d),
+                        step("e = a · ${p(q - d * d)} = ${p(a)} · ${p(q - d * d)} = ?", e, "e"))
+                }
+                keys == setOf("d", "e") && t.size >= 2 && t[0].y == 0.0 && t[1].y == 0.0 && fixed["a"] == 1.0 && (t[0].x + t[1].x) / 2 == l.solution["d"] -> {
+                    val d = (t[0].x + t[1].x) / 2; val half = abs(t[1].x - d)
+                    listOf(step("d = Mitte = (${p(t[0].x)} + ${p(t[1].x)}) : 2 = ?", d, "d"),
+                        step("Abstand zur Nullstelle: ${f(half)}. ${f(half)}² = ?", half * half),
+                        step("Der Scheitel liegt so tief: e = ?", -half * half, "e"))
+                }
+                keys == setOf("d", "e") -> {
                     // Scheitel-Aufgabe: Die erste Station sitzt auf dem Gipfel/Tal → (d | e) direkt ablesen
                     val top = t[0]
                     if (top.x != l.solution["d"] || top.y != l.solution["e"]) null
@@ -136,7 +156,8 @@ object Walkthrough {
                         step("r = ${f(dx.r())} : ${f(cos(Math.toRadians(alpha)).r())} ≈ ?", (dx / cos(Math.toRadians(alpha))).r(1), "r"))
                 }
             }
-            Kind.LASER -> l.triangle?.let {
+            Kind.LASER -> if (l.protractor && l.hidden) listOf(step(l.tip.substringBefore("=").trim() + " = ?", l.solution.getValue("angle"), "angle"))
+            else l.triangle?.let {
                 val dx = t[0].x - l.launch.x; val dy = t[0].y - l.launch.y
                 val ratio = abs(dy) / abs(dx)
                 val deg = Math.toDegrees(atan2(abs(dy), abs(dx))).r(0)

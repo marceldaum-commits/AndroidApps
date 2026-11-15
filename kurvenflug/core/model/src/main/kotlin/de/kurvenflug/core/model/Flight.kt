@@ -145,17 +145,26 @@ object Flight {
         }
     }
 
-    /** Laserstrahl: geradeaus, an Spiegeln reflektiert (Einfallswinkel = Ausfallswinkel), höchstens 8-mal. */
+    /**
+     * Laserstrahl: geradeaus, an Spiegeln reflektiert (Einfallswinkel = Ausfallswinkel), höchstens 12 Knicke.
+     * Mit Kristall ([Level.crystal], Rechteck mit Brechzahl n): an jeder Kante gebrochen nach Snellius
+     * n₁·sin α₁ = n₂·sin α₂ – oder totalreflektiert, wenn es keinen Brechungswinkel gibt.
+     */
     private fun laser(level: Level, angleDeg: Double): List<Vec> {
         var px = level.launch.x; var py = level.launch.y
         val a = Math.toRadians(angleDeg)
         var dx = cos(a); var dy = sin(a)
         val out = arrayListOf(Vec(px, py))
+        // Flächen: Spiegel, dann die vier Kristallkanten
+        val c = level.crystal
+        val faces = level.mirrors + (c?.let { k -> listOf(
+            listOf(k[0], k[1], k[2], k[1]), listOf(k[2], k[1], k[2], k[3]), listOf(k[2], k[3], k[0], k[3]), listOf(k[0], k[3], k[0], k[1]),
+        ) } ?: emptyList())
+        fun inside(x: Double, y: Double) = c != null && x > c[0] && x < c[2] && y > c[1] && y < c[3]
         var last = -1
-        repeat(9) {
-            // nächster Spiegel auf dem Strahl
+        repeat(13) {
             var best = Double.MAX_VALUE; var hit = -1
-            level.mirrors.forEachIndexed { i, m ->
+            faces.forEachIndexed { i, m ->
                 if (i == last) return@forEachIndexed
                 val ex = m[2] - m[0]; val ey = m[3] - m[1]
                 val den = dx * ey - dy * ex
@@ -164,20 +173,32 @@ object Flight {
                 val u = ((m[0] - px) * dy - (m[1] - py) * dx) / den
                 if (t > 1e-9 && u in 0.0..1.0 && t < best) { best = t; hit = i }
             }
-            // Rand des Bildes
             val edge = listOf(if (dx > 0) (R + 0.5 - px) / dx else if (dx < 0) (-R - 0.5 - px) / dx else Double.MAX_VALUE,
                 if (dy > 0) (R + 0.5 - py) / dy else if (dy < 0) (-R - 0.5 - py) / dy else Double.MAX_VALUE).min()
             val t = min(best, edge)
             val n = max(1, (t / STEP).toInt())
             for (i in 1..n) out += Vec(px + dx * t * i / n, py + dy * t * i / n)
-            px += dx * t; py += dy * t
             if (hit < 0 || best > edge) return out
-            // Spiegeln an der Normalen
-            val m = level.mirrors[hit]
+            val wasInside = inside(px + dx * t * 0.5, py + dy * t * 0.5)
+            px += dx * t; py += dy * t
+            val m = faces[hit]
             val ex = m[2] - m[0]; val ey = m[3] - m[1]; val len = hypot(ex, ey)
-            val nx = -ey / len; val ny = ex / len
-            val d = dx * nx + dy * ny
-            dx -= 2 * d * nx; dy -= 2 * d * ny
+            var nx = -ey / len; var ny = ex / len
+            if (hit < level.mirrors.size) {
+                // Spiegeln an der Normalen
+                val d = dx * nx + dy * ny
+                dx -= 2 * d * nx; dy -= 2 * d * ny
+            } else {
+                // Brechung: Normale gegen die Laufrichtung drehen
+                if (dx * nx + dy * ny > 0) { nx = -nx; ny = -ny }
+                val n1 = if (wasInside) c!![4] else 1.0; val n2 = if (wasInside) 1.0 else c!![4]
+                val r = n1 / n2
+                val cosI = -(dx * nx + dy * ny)
+                val k = 1 - r * r * (1 - cosI * cosI)
+                if (k < 0) { dx += 2 * cosI * nx; dy += 2 * cosI * ny }          // Totalreflexion
+                else { val f = r * cosI - kotlin.math.sqrt(k); dx = r * dx + f * nx; dy = r * dy + f * ny }
+                val l = hypot(dx, dy); dx /= l; dy /= l
+            }
             last = hit
         }
         return out

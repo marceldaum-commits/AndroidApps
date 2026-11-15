@@ -70,6 +70,8 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             Kind.RAMP -> drawRampScene(l, ::px, unit, tm)
             Kind.LASER -> {
                 drawOrbitScene(l, ::px, unit, v.time)
+                l.crystal?.let { drawCrystal(it, ::px, unit, tm, v.time) }
+                if (l.protractor) drawProtractor(l.launch, ::px, unit, tm)
                 l.mirrors.forEach { m ->
                     drawLine(Color(0xFFB0BEC5), px(Vec(m[0], m[1])), px(Vec(m[2], m[3])), unit * 0.28f, cap = StrokeCap.Round)
                     drawLine(Color.White, px(Vec(m[0], m[1])), px(Vec(m[2], m[3])), unit * 0.08f, cap = StrokeCap.Round)
@@ -78,6 +80,7 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             else -> {
                 drawGrid(::px, unit, tm, if (l.kind == Kind.MOTION) "t" to "s" else "x" to "y")
                 if (l.kind == Kind.SINE) drawPiMarks(::px, unit, tm)
+                if (l.kind == Kind.POINT && l.params.none { it.key == "y" }) drawNumberLine(::px, unit, l.params.first().step)
                 if (l.kind == Kind.RADIUS) {
                     // Sender mit Antenne
                     val c = px(l.launch)
@@ -107,7 +110,12 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
         // Stationen
         l.targets.forEachIndexed { i, t ->
             if (l.hidden && !v.revealHidden && i !in v.hitTargets) return@forEachIndexed
-            drawStation(px(Vec(t.x, t.y)), t.r.toFloat() * unit, i in v.hitTargets, v.time + i)
+            // Sehr kleine Trefferkreise (Zahlenstrahl, Funk) trotzdem gut sichtbar zeichnen
+            val o = px(Vec(t.x, t.y))
+            if (l.kind == Kind.POINT && l.params.none { it.key == "y" })
+                drawLine(Q.Pink, o + Offset(0f, unit * 0.9f), o + Offset(0f, -unit * 0.9f), unit * 0.08f)
+            drawStation(if (l.kind == Kind.POINT && l.params.none { it.key == "y" }) o - Offset(0f, unit * 1.3f) else o,
+                maxOf(t.r.toFloat(), 0.3f) * unit, i in v.hitTargets, v.time + i)
         }
         // Frühere Versuche
         v.ghosts.forEach { g -> drawPathLine(g, ::px, Color.White.copy(alpha = 0.18f), unit * 0.08f, dashed = false) }
@@ -153,6 +161,51 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
         v.gap?.let { drawGap(it, ::px, unit, tm, v.time) }
         v.bursts.forEach { (b, s) -> drawBurst(b, s) }
     }
+}
+
+/** Zahlenstrahl: feine Striche je Viertel bzw. Zehntel, halbe Kästchen etwas länger. */
+private fun DrawScope.drawNumberLine(px: (Vec) -> Offset, unit: Float, step: Double) {
+    val n = (2 * Flight.R / step).toInt()
+    for (i in 0..n) {
+        val x = -Flight.R + i * step
+        val whole = kotlin.math.abs(x - Math.round(x)) < 1e-6
+        val half = kotlin.math.abs(x * 2 - Math.round(x * 2)) < 1e-6
+        val h = unit * (if (whole) 0.45f else if (half) 0.3f else 0.18f)
+        val o = px(Vec(x, 0.0))
+        drawLine(Q.Cyan.copy(alpha = if (whole) 0.9f else 0.6f), o - Offset(0f, h), o + Offset(0f, h), if (whole) 3f else 1.5f)
+    }
+}
+
+/** Geodreieck am Laser: Halbkreis mit Strichen alle 10°, Zahlen alle 30°. */
+private fun DrawScope.drawProtractor(c: Vec, px: (Vec) -> Offset, unit: Float, tm: TextMeasurer) {
+    val o = px(c); val r = unit * 3.4f
+    drawArc(Q.Yellow.copy(alpha = 0.12f), 180f, 180f, true, topLeft = o - Offset(r, r), size = Size(2 * r, 2 * r))
+    drawArc(Q.Yellow.copy(alpha = 0.8f), 180f, 180f, false, topLeft = o - Offset(r, r), size = Size(2 * r, 2 * r), style = Stroke(unit * 0.06f))
+    drawLine(Q.Yellow.copy(alpha = 0.8f), o - Offset(r, 0f), o + Offset(r, 0f), unit * 0.06f)
+    for (d in 0..180 step 10) {
+        val a = Math.toRadians(d.toDouble())
+        val dir = Offset(kotlin.math.cos(a).toFloat(), -kotlin.math.sin(a).toFloat())
+        val len = if (d % 30 == 0) unit * 0.6f else unit * 0.3f
+        drawLine(Q.Yellow.copy(alpha = 0.8f), o + dir * r, o + dir * (r - len), unit * 0.05f)
+        if (d % 30 == 0) label(tm, "$d°", o + dir * (r + unit * 0.55f), Q.Yellow, 9)
+    }
+}
+
+/** Kristall: durchscheinendes Glas mit Glitzern und Brechzahl. */
+private fun DrawScope.drawCrystal(k: List<Double>, px: (Vec) -> Offset, unit: Float, tm: TextMeasurer, time: Float) {
+    val tl = px(Vec(k[0], k[3])); val br = px(Vec(k[2], k[1]))
+    val size = Size(br.x - tl.x, br.y - tl.y)
+    drawRect(Brush.linearGradient(listOf(Q.Cyan.copy(alpha = 0.22f), Q.Violet.copy(alpha = 0.18f), Q.Cyan.copy(alpha = 0.12f)), tl, br), tl, size)
+    drawRect(Q.Cyan.copy(alpha = 0.7f), tl, size, style = Stroke(unit * 0.06f))
+    // Glitzer
+    for (i in 0 until 6) {
+        val fx = ((i * 0.37f + 0.11f) % 1f); val fy = ((i * 0.61f + 0.23f) % 1f)
+        val tw = (0.5f + 0.5f * sin(time * 2.5f + i * 1.7f))
+        val p = Offset(tl.x + size.width * fx, tl.y + size.height * fy)
+        drawLine(Color.White.copy(alpha = 0.5f * tw), p - Offset(unit * 0.25f, 0f), p + Offset(unit * 0.25f, 0f), 2f)
+        drawLine(Color.White.copy(alpha = 0.5f * tw), p - Offset(0f, unit * 0.25f), p + Offset(0f, unit * 0.25f), 2f)
+    }
+    label(tm, "n = ${num(k[4])}", Offset(br.x - unit * 1.4f, tl.y + unit * 0.6f), Q.Cyan, 11)
 }
 
 /** Rechtwinkliges Dreieck mit beschrifteten Seiten und Winkelbogen – das Merkbild der Trigonometrie. */

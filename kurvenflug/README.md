@@ -3,10 +3,10 @@
 Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
 selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).
 
-Inhalte (82 Level in 14 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
-Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv, Planeten-Lexikon, Werkstatt): Koordinaten (Kl. 5–6), Zuordnungen/Prozent (Kl. 6–7), Geraden (Kl. 7–8), Pythagoras (Kl. 8–9), Parabeln (Kl. 9), Logarithmus (Kl. 10),
+Inhalte (107 Level in 18 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
+Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv, Planeten-Lexikon, Werkstatt): Koordinaten, Brüche & Kommazahlen am Zahlenstrahl, Winkel mit Geodreieck (Kl. 5–6), Zuordnungen/Prozent (Kl. 6–7), Geraden (Kl. 7–8), Pythagoras (Kl. 8–9), Parabeln (Kl. 9), Logarithmus (Kl. 10),
 Weg-Zeit und Laser-Optik (Physik 7), Energieerhaltung (Physik 8–9),
-Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10).
+Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9).
 
 ## Aufbau der Startseite
 - Vier Reiter unten: 🚀 **Heute** („Weiter, wo du warst“, Tagesmission, Auffrischen), 🗺️ **Galaxie** (Kapitel nach Klasse,
@@ -48,7 +48,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/39_trig_laser.png) | ![](screenshots/40_trig_funk.png) | ![](screenshots/41_lernstand.png) |
 | ![](screenshots/42_rechenweg.png) | ![](screenshots/43_galaxie.png) | ![](screenshots/44_spiele.png) |
 | ![](screenshots/46_ich.png) | ![](screenshots/45_klasse_waehlen.png) | ![](screenshots/11_einstellungen.png) |
-| ![](screenshots/47_widget.png) | ![](screenshots/48_widget_klein.png) | |
+| ![](screenshots/47_widget.png) | ![](screenshots/48_widget_klein.png) | ![](screenshots/49_brueche.png) |
+| ![](screenshots/50_winkel.png) | ![](screenshots/51_lichtbrechung.png) | ![](screenshots/52_nullstellen.png) |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,
