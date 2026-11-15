@@ -74,7 +74,9 @@ jobs:
 
       - name: Version lesen
         id: version
-        run: echo "name=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "name=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)" >> "$GITHUB_OUTPUT"
+          echo "date=$(grep -oP 'VERSION_DATE.*?\K[0-9]{2}\.[0-9]{2}\.[0-9]{4}' app/build.gradle.kts)" >> "$GITHUB_OUTPUT"
 
       - name: Schon veröffentlicht?
         id: check
@@ -118,7 +120,7 @@ jobs:
         with:
           tag_name: wissensgarten-v${{ steps.version.outputs.name }}
           target_commitish: ${{ github.sha }}
-          name: Wissensgarten ${{ steps.version.outputs.name }}
+          name: Wissensgarten ${{ steps.version.outputs.name }} (${{ steps.version.outputs.date }})
           body_path: wissensgarten/notes.md
           files: |
             wissensgarten/Wissensgarten-${{ steps.version.outputs.name }}.apk

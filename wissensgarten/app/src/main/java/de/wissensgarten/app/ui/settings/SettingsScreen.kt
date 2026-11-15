@@ -212,7 +212,7 @@ fun SettingsScreen(
         }
 
         Section("Über") {
-            Text("Wissensgarten $version")
+            Text("Wissensgarten · Version $version vom ${de.wissensgarten.app.BuildConfig.VERSION_DATE}")
             Text("$packCount Wissenspakete · $cardCount Karten", style = MaterialTheme.typography.bodySmall)
         }
 

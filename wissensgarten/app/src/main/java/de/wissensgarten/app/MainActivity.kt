@@ -1,6 +1,8 @@
 package de.wissensgarten.app
 
 import android.content.Intent
+import de.wissensgarten.app.ui.garden.QuestCard
+import de.wissensgarten.app.ui.garden.CrittersCard
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -77,6 +79,12 @@ object Routes {
     const val SAFARI = "safari"
     const val PRIVACY = "datenschutz"
     const val WEEK_REPORT = "wochenbericht"
+    const val WEEDS = "unkraut"
+    const val BLITZ = "blitz"
+    const val RHYTHM = "rhythmus"
+    const val HIVE = "bienenstock"
+    const val LOCI = "spaziergang"
+    const val FILM = "film"
     const val LOCAL_DUEL = "zu-zweit"
     const val CHAPTER = "kapitel/{n}"
     fun chapter(n: Int) = "kapitel/$n"
@@ -251,11 +259,12 @@ class MainActivity : ComponentActivity() {
         val music = (androidx.compose.ui.platform.LocalContext.current.applicationContext as WissensgartenApp).music
         val hour = remember(now) { java.util.Calendar.getInstance().apply { timeInMillis = now }.get(java.util.Calendar.HOUR_OF_DAY) }
         LaunchedEffect(Unit) { music.prepare(de.wissensgarten.core.model.MusicMood.GARDEN, de.wissensgarten.core.model.MusicMood.PLAY, de.wissensgarten.core.model.MusicMood.NIGHT) }
+        LaunchedEffect(route) { music.duck(route == Routes.RHYTHM) }
         LaunchedEffect(route, hour) {
             val evening = hour >= 19 || hour < 6
             music.setMood(when {
                 route == Routes.REVIEW && vm.sessionCalm -> de.wissensgarten.core.model.MusicMood.NIGHT
-                route == Routes.REVIEW || route == Routes.DUEL_PLAY -> de.wissensgarten.core.model.MusicMood.PLAY
+                route == Routes.REVIEW || route == Routes.DUEL_PLAY || route == Routes.BLITZ || route == Routes.WEEDS -> de.wissensgarten.core.model.MusicMood.PLAY
                 evening || route == Routes.STORY || route == Routes.CHAPTER -> de.wissensgarten.core.model.MusicMood.NIGHT
                 // Festzeit: eigene Musik im Garten
                 else -> when (de.wissensgarten.core.model.Seasons.festival(java.time.LocalDate.now())?.id) {
@@ -275,7 +284,7 @@ class MainActivity : ComponentActivity() {
             val (used, extra) = vm.settings.usage(de.wissensgarten.core.model.Scheduler.localDay(System.currentTimeMillis()))
             resting = de.wissensgarten.core.model.StudyTime.isOver(used, limit, extra)
         }
-        val playing = route in setOf(Routes.REVIEW, Routes.DUEL_PLAY, Routes.LOCAL_DUEL, Routes.ONBOARDING, Routes.TUTORIAL, Routes.ADD_PROFILE, Routes.PRIVACY)
+        val playing = route in setOf(Routes.WEEDS, Routes.BLITZ, Routes.RHYTHM, Routes.LOCI, Routes.REVIEW, Routes.DUEL_PLAY, Routes.LOCAL_DUEL, Routes.ONBOARDING, Routes.TUTORIAL, Routes.ADD_PROFILE, Routes.PRIVACY)
         Box(Modifier.fillMaxSize()) {
         Scaffold(
             bottomBar = {
@@ -378,9 +387,32 @@ class MainActivity : ComponentActivity() {
                                         onDismiss = { addExam = false },
                                         onAdd = { b, t, d -> vm.addExam(b, t, d); addExam = false },
                                     )
+                                    // Tagesaufgaben und Garten-Bewohner
+                                    if (beds.isNotEmpty()) {
+                                        val quests = remember(rev, beds) { vm.questsToday() }
+                                        QuestCard(quests, remember(rev, beds) { vm.questProgress() }, remember(rev, beds) { vm.questWeekDone() },
+                                            remember(rev) { vm.questChestOpened() }) { vm.openQuestChest() }
+                                        var streak by remember { mutableStateOf(0 to 0) }
+                                        LaunchedEffect(beds, now) { streak = vm.streaks() }
+                                        CrittersCard(streak.first, streak.second)
+                                    }
                                     // Alles Weitere als kompakte Kachelreihe – „Gießen“ bleibt oben sichtbar
                                     val mix = remember(beds, packs) { vm.mixCandidates() }
+                                    val weeds = remember(rev, beds) { vm.weeds() }
+                                    val known = remember(beds) { beds.sumOf { b -> b.cards.count { !it.memory.isSeed } } }
                                     de.wissensgarten.app.ui.garden.DiscoverRow(buildList {
+                                        if (weeds.isNotEmpty()) add(de.wissensgarten.app.ui.garden.DiscoverItem("🌿", "Unkraut-Jäten",
+                                            "${weeds.size} freche Unkräuter wachsen – zupf sie raus!", Color(0xFFDCEDC8), badge = "${weeds.size}") { nav.navigate(Routes.WEEDS) })
+                                        if (known >= 4) add(de.wissensgarten.app.ui.garden.DiscoverItem("⚡", "Blitzrunde",
+                                            "60 Sekunden Gewitter – vertreib es mit Wissen!", Color(0xFFCFD8DC)) { nav.navigate(Routes.BLITZ) })
+                                        if (known >= 4) add(de.wissensgarten.app.ui.garden.DiscoverItem("🎵", "Rhythmus",
+                                            "Tippe die richtige Antwort im Takt!", Color(0xFFF3E5F5)) { nav.navigate(Routes.RHYTHM) })
+                                        add(de.wissensgarten.app.ui.garden.DiscoverItem("🍯", "Bienenstock",
+                                            "Brummis Zuhause – mit Honig Räume freischalten.", Color(0xFFFFF8E1)) { nav.navigate(Routes.HIVE) })
+                                        if (known >= 3) add(de.wissensgarten.app.ui.garden.DiscoverItem("🚶", "Gedächtnis-Spaziergang",
+                                            "Schwierige Karten an Orte im Garten legen.", Color(0xFFE0F2F1)) { nav.navigate(Routes.LOCI) })
+                                        if (known >= 1) add(de.wissensgarten.app.ui.garden.DiscoverItem("🎬", "Garten-Film",
+                                            "Zeitraffer: So ist dein Garten gewachsen.", Color(0xFFFCE4EC)) { nav.navigate(Routes.FILM) })
                                         add(de.wissensgarten.app.ui.garden.DiscoverItem("📖", "Abenteuer",
                                             newCh?.let { "Neues Kapitel: ${it.title}" } ?: "Die Geschichte von der Wissensblume", Color(0xFFEDE7F6),
                                             badge = if (newCh != null) "NEU" else null) { nav.navigate(Routes.STORY) })
@@ -660,6 +692,13 @@ class MainActivity : ComponentActivity() {
                         ownedSpecies = inventory.map { it.itemId },
                         onSpecies = { vm.setBedSpecies(data.bed.id, it) },
                         classSet = { vm.classSetOf(data.bed.id) },
+                        onCraft = { gate("Der Bastelbogen wird als PDF an eine andere App (Drucken, Mail …) gegeben.") {
+                            runCatching {
+                                val f = de.wissensgarten.app.ui.share.CraftSheet.pdf(this@MainActivity, data.bed.name, data.bed.emoji,
+                                    data.cards.sortedBy { it.sortIndex }.map { de.wissensgarten.app.ui.share.CraftSheet.Item(it.front, it.back, it.img) })
+                                de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "application/pdf", "✂️ Lernkarten zum Ausdrucken: ${data.bed.name}")
+                            }.onFailure { android.widget.Toast.makeText(this@MainActivity, "Der Bastelbogen konnte nicht erstellt werden.", android.widget.Toast.LENGTH_SHORT).show() }
+                        } },
                         path = {
                             val stations = remember(beds, rev) { vm.stations(data.bed.id) }
                             AdventurePathView(
@@ -700,6 +739,48 @@ class MainActivity : ComponentActivity() {
                             }
                         },
                     )
+                }
+                composable(Routes.WEEDS) {
+                    val list = remember { vm.weeds() }
+                    de.wissensgarten.app.ui.play.WeedScreen(list, remember { vm.peers() }, remember { vm.weedCount() },
+                        onRight = { vm.pullWeed(it) }, onWrong = { vm.review(it, de.wissensgarten.core.model.Rating.AGAIN, 0) }) { nav.popSafe(); vm.tick() }
+                }
+                composable(Routes.BLITZ) {
+                    de.wissensgarten.app.ui.play.BlitzScreen(remember { de.wissensgarten.core.model.Blitz.pool(vm.studyCards()) }, remember { vm.peers() },
+                        onDone = { vm.blitzDone(it) }) { nav.popSafe() }
+                }
+                composable(Routes.RHYTHM) {
+                    de.wissensgarten.app.ui.play.RhythmScreen(remember { de.wissensgarten.core.model.Blitz.pool(vm.studyCards()) }, remember { vm.peers() },
+                        onDone = { p, r -> vm.rhythmDone(p, r) }) { nav.popSafe() }
+                }
+                composable(Routes.HIVE) {
+                    val hRev by vm.adventureRev.collectAsStateWithLifecycle()
+                    LaunchedEffect(Unit) { vm.quest(de.wissensgarten.core.model.Quests.Kind.HIVE) }
+                    val pid = profile?.id ?: ""
+                    de.wissensgarten.app.ui.garden.HiveScreen(remember(beds) { vm.totalReps() }, furniture = { room -> hRev; vm.settings.hiveFurniture(pid, room) },
+                        onFurnish = { room, i -> vm.settings.setHiveFurniture(pid, room, i) }) { nav.popSafe() }
+                }
+                composable(Routes.LOCI) {
+                    val pid = profile?.id ?: ""
+                    val all = remember { vm.studyCards().associateBy { it.id } }
+                    de.wissensgarten.app.ui.garden.LociScreen(remember { de.wissensgarten.core.model.Loci.suggest(all.values.toList()) }, all,
+                        remember { vm.settings.loci(pid) }, remember { vm.peers() },
+                        onPlace = { vm.settings.setLoci(pid, it) },
+                        onAnswer = { c, ok -> vm.review(c, if (ok) de.wissensgarten.core.model.Rating.GOOD else de.wissensgarten.core.model.Rating.AGAIN, if (ok) 2 else 0) },
+                        onWalked = { vm.quest(de.wissensgarten.core.model.Quests.Kind.LOCI) }) { nav.popSafe() }
+                }
+                composable(Routes.FILM) {
+                    val frames = remember { vm.filmFrames() }
+                    val name = profile?.name ?: ""
+                    de.wissensgarten.app.ui.share.GardenFilmScreen(frames, name, onShare = {
+                        gate("Der Garten-Film wird als Bild an eine andere App (z. B. WhatsApp) geschickt.") {
+                            runCatching {
+                                val f = de.wissensgarten.app.ui.share.Keepsakes.savePng(this@MainActivity,
+                                    de.wissensgarten.app.ui.share.FilmPainter.strip(frames, name), "Garten-Film-${de.wissensgarten.app.ui.share.Keepsakes.safe(name)}.png")
+                                de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "image/png", "🎬 So ist ${name}s Wissensgarten gewachsen! 🌻")
+                            }.onFailure { android.widget.Toast.makeText(this@MainActivity, "Der Film konnte nicht erstellt werden.", android.widget.Toast.LENGTH_SHORT).show() }
+                        }
+                    }) { nav.popSafe() }
                 }
                 composable(Routes.WEEK_REPORT) {
                     val allBeds by vm.allBeds.collectAsStateWithLifecycle()

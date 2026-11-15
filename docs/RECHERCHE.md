@@ -139,3 +139,22 @@ Keine neue Suche; Anwendung der Befunde oben und bekannter Didaktik:
 - **Fehler-Tagebuch**: Rückmeldung auf den Fehler statt auf das Ergebnis (siehe 0.4.0); ausdrücklich ohne Strafe formuliert.
 - **Kalender ohne Druck**, Zubehör nur für Können – passend zu „Belohnung ohne Druck“ in den Leitlinien.
 - Eigene Wirksamkeitsdaten gibt es für keinen dieser Bausteine.
+
+## Wissensgarten 0.18.0 – Unkraut, Blitz, Rhythmus, Bienenstock, Gedächtnis-Spaziergang (15.11.2026)
+
+- **Gedächtnis-Spaziergang (Loci-Methode)**: Kleine Studien mit Grundschulkindern zeigen bessere Wortschatz-Merkleistung,
+  eine iranische Studie (6. Klasse, 2025) sah Loci vor Schlüsselwort- und Peg-Methode. Die Belege sind dünn (kleine Gruppen,
+  teils ohne Kontrollgruppe), und Kinder mit schwächerem räumlichem Vorstellungsvermögen profitieren weniger
+  (learningandthebrain.com, „Not all of us work effectively in a memory palace“). → **Freiwillig**, nur für wenige
+  (max. 8) schwierige Karten, Orte fest vorgegeben und bildlich gezeigt statt frei vorzustellen.
+- **Abrufübung (Testing Effect)** ist gut belegt; für Zeitdruck-Quizze gibt es kaum Belege für besseres Langzeitlernen.
+  → Blitzrunde **ohne Verlieren und ohne Minuspunkte**, sie ändert den Lernplan nicht (nur Tautropfen) – Spaß-Pause,
+  kein Prüfungsersatz.
+- **Rhythmus**: Rhythmus-Wahrnehmung hängt mit phonologischer Bewusstheit und Lesen zusammen (JMIR Serious Games 2024);
+  spielbasiertes Musiklernen erhöhte Beteiligung in der Grundschule (JMIR Serious Games 2026). → Rhythmus-Runde mit
+  klarem Takt, großzügigem Zeitfenster, „Gut“ statt „Daneben“.
+- **Fehler als Unkraut**: Rückmeldung auf schwierige Inhalte statt auf Versagen; Unkraut verschwindet von selbst, wenn die
+  Karte sitzt – keine Strafe, kein Verfall.
+- **Serien-Tiere**: Serien motivieren, aber Verlust-Angst nicht (Leitlinie „Belohnung ohne Druck“) → verdiente Tiere bleiben
+  für immer, bei Pause schlafen sie nur.
+- Eigene Wirksamkeitsdaten gibt es für keinen dieser Bausteine.

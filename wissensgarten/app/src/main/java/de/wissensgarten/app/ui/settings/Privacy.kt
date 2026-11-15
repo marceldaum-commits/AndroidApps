@@ -45,8 +45,8 @@ object PrivacyText {
             "Google-Konto an und der Wissensgarten legt eine Datei mit Profilen und Lernstand in einem versteckten App-Ordner eures Google Drive ab. " +
             "Nur die App auf euren Geräten kann diese Datei lesen – wir als Anbieter haben keinen Zugriff. Ihr könnt den Sync jederzeit trennen " +
             "und die Datei mit „Alle Daten löschen“ entfernen.",
-        "Duelle und Klassen-Codes" to
-            "Wenn ihr ein Duell oder einen Klassen-Code teilt, enthält der Text die Fragen, die Punkte und den Spitznamen, den ihr selbst eingegeben habt. " +
+        "Teilen: Duelle, Klassen-Codes, Postkarten, Garten-Film, Bastelbogen" to
+            "Wenn ihr ein Duell, einen Klassen-Code, eine Postkarte, den Garten-Film oder einen Bastelbogen teilt, enthält das geteilte Bild oder der Text nur Fragen, Antworten, Punkte und den Spitznamen, den ihr selbst eingegeben habt. " +
             "Geteilt wird nur über die App, die ihr auswählt (z. B. einen Messenger). Teilen ist erst nach der Eltern-Aufgabe möglich.",
         "Erinnerungen" to
             "Die tägliche Gieß-Erinnerung ist eine Benachrichtigung, die das Gerät selbst plant. Es werden dafür keine Daten gesendet.",
