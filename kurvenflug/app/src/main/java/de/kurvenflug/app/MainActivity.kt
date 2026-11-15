@@ -59,6 +59,9 @@ object Routes {
     const val LEARN = "lernstand"
     const val HANGAR = "hangar"
     const val STICKERS = "sticker"
+    const val PROFILES = "spieler"
+    const val PARENT = "eltern"
+    const val RESULTS = "ergebnisse"
     fun level(id: String) = "level/$id"
 }
 
@@ -198,6 +201,10 @@ class MainActivity : ComponentActivity() {
                     },
                     stickers = vm.settings.stickers.collectAsStateWithLifecycle().value.map { it.removeSuffix("*") }.toSet().size,
                     onStickers = { nav.goOnce(Routes.STICKERS) },
+                    player = vm.profiles.collectAsStateWithLifecycle().value.let { ps -> val id = vm.profile.collectAsStateWithLifecycle().value
+                        ps.firstOrNull { it.id == id }?.takeIf { ps.size > 1 || it.name != "Spieler 1" }?.let { "${it.avatar} ${it.name}" } },
+                    onProfiles = { nav.goOnce(Routes.PROFILES) },
+                    onParent = { nav.goOnce(Routes.PARENT) },
                     learning = {
                         val now = remember(progress) { System.currentTimeMillis() }
                         val played = remember(progress) { vm.played(progress) }
@@ -218,11 +225,13 @@ class MainActivity : ComponentActivity() {
                 val chapter = Levels.chapters.firstOrNull { it.number == level.chapter }
                     ?: Chapter(0, "Tagesmission", "Jeden Tag neu", "🛰️", emptyList(), listOf(level))
                 val next = Levels.next(level.id)?.takeIf { it.chapter == level.chapter }
+                val opened = remember(id) { System.currentTimeMillis() }
                 LevelScreen(
                     level = level, chapter = chapter, probeColor = probeColor,
                     showIntro = level.number == 1 && chapter.intro.isNotEmpty() && !vm.settings.introSeen(chapter.number),
                     onIntroSeen = { vm.settings.markIntroSeen(chapter.number) },
-                    onSolved = { s, c, a -> vm.record(level.id, s, c, a) },
+                    onSolved = { s, c, a -> vm.record(level.id, s, c, a, ((System.currentTimeMillis() - opened) / 1000).toInt()) },
+                    onMiss = { a -> if (a == 3) vm.stuck(level.id, a, ((System.currentTimeMillis() - opened) / 1000).toInt()) },
                     onNext = next?.let { n -> {
                         nav.navigate(Routes.level(n.id)) { popUpTo(Routes.LEVEL) { inclusive = true } }
                     } },
@@ -244,6 +253,26 @@ class MainActivity : ComponentActivity() {
                 val code = remember { incomingDuel.value.also { incomingDuel.value = null } }
                 DuelScreen(probeColor, code, onResult = { vm.settings.recordDuel(it) }, onBack = { nav.popSafe() })
             }
+            composable(Routes.PROFILES) {
+                val ps by vm.profiles.collectAsStateWithLifecycle()
+                val cur by vm.profile.collectAsStateWithLifecycle()
+                de.kurvenflug.app.ui.together.ProfileScreen(ps, cur, onSwitch = { vm.switchProfile(it) }, onAdd = vm::addProfile,
+                    onRename = { id, n, a -> vm.settings.renameProfile(id, n, a) }, onDelete = vm::deleteProfile, onBack = { nav.popSafe() })
+            }
+            composable(Routes.PARENT) {
+                val today = remember { java.time.LocalDate.now() }
+                val todayStart = remember { today.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli() }
+                val plays by remember { vm.weekPlays(todayStart - 13 * de.kurvenflug.core.model.Weekly.DAY) }.collectAsStateWithLifecycle(emptyList())
+                val ps by vm.profiles.collectAsStateWithLifecycle()
+                val cur by vm.profile.collectAsStateWithLifecycle()
+                val week = remember(plays) {
+                    de.kurvenflug.core.model.Weekly.summary(plays.map { de.kurvenflug.core.model.PlayRecord(it.levelId, it.stars, it.attempts, it.seconds, it.at) },
+                        System.currentTimeMillis(), todayStart)
+                }
+                val labels = remember { (6 downTo 0).map { today.minusDays(it.toLong()).dayOfWeek.getDisplayName(java.time.format.TextStyle.SHORT, java.util.Locale.GERMAN).take(2) } }
+                de.kurvenflug.app.ui.together.ParentScreen(ps.first { it.id == cur }, week, labels) { nav.popSafe() }
+            }
+            composable(Routes.RESULTS) { de.kurvenflug.app.ui.together.ResultsBoard({ nav.popSafe() }) }
             composable(Routes.STICKERS) {
                 val owned by vm.settings.stickers.collectAsStateWithLifecycle()
                 de.kurvenflug.app.ui.collection.StickerAlbum(owned) { nav.popSafe() }
@@ -281,6 +310,7 @@ class MainActivity : ComponentActivity() {
                     onDelete = vm.settings::deleteMyLevel,
                     onCode = { openCode(it) },
                     onChallenge = { nav.goOnce(Routes.CHALLENGE_NEW) },
+                    onResults = { nav.goOnce(Routes.RESULTS) },
                     onBack = { nav.popSafe() },
                 )
             }

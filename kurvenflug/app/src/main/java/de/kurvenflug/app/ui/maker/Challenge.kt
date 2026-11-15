@@ -133,7 +133,8 @@ private fun ResultSheet(spec: ChallengeSpec, levels: List<Level>, attempts: List
     val stars = attempts.map { Flight.stars(it, false) }
     val date = remember { SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY).format(Date()) }
     // Prüfcode: aus Ergebnis + Challenge – schnell nachrechenbar, schwer zu fälschen ohne App
-    val check = remember { Integer.toHexString((spec.title + name + attempts.joinToString() + date).hashCode() and 0xFFFF).uppercase().padStart(4, '0') }
+    val check = remember { ChallengeResult.checkOf(spec.title, name, attempts, date) }
+    val ctx = androidx.compose.ui.platform.LocalContext.current
     Box(Modifier.fillMaxSize().background(Q.Space), contentAlignment = Alignment.Center) {
         Starfield(seed = 5)
         Column(Modifier.padding(20.dp).clip(RoundedCornerShape(24.dp)).background(Q.Panel).border(2.dp, Q.Yellow, RoundedCornerShape(24.dp)).padding(20.dp)
@@ -149,6 +150,13 @@ private fun ResultSheet(spec: ChallengeSpec, levels: List<Level>, attempts: List
             }
             Text("$date · Prüfcode $check", fontFamily = FontFamily.Monospace, color = Q.Muted, style = MaterialTheme.typography.labelMedium)
             Text("Zeig diesen Bildschirm deiner Lehrkraft (oder mach ein Bildschirmfoto).", color = Q.Muted, textAlign = TextAlign.Center, style = MaterialTheme.typography.bodySmall)
+            NeonButton(onClick = {
+                val code = Codec.encodeResult(ChallengeResult(spec.title, name, attempts, date, check))
+                val send = android.content.Intent(android.content.Intent.ACTION_SEND).apply {
+                    type = "text/plain"; putExtra(android.content.Intent.EXTRA_TEXT, "🏆 Mein Ergebnis bei „${spec.title}“: ${stars.sum()} ⭐\n$code")
+                }
+                runCatching { ctx.startActivity(android.content.Intent.createChooser(send, "Ergebnis senden")) }
+            }, color = Q.Yellow) { Text("📤 Ergebnis an Lehrkraft senden", fontWeight = FontWeight.Bold) }
             NeonButton(onClick = onBack, color = Q.Green) { Text("Fertig") }
         }
     }

@@ -125,8 +125,27 @@ data class ChallengeSpec(
     }
 }
 
+/** Ergebnis einer Klassen-Challenge zum Teilen an die Lehrkraft. [check] = Prüfcode wie auf der Ergebnis-Karte. */
+@kotlinx.serialization.Serializable
+data class ChallengeResult(val title: String, val name: String, val attempts: List<Int>, val date: String, val check: String) {
+    val stars get() = attempts.sumOf { Flight.stars(it, false) }
+    val tries get() = attempts.sum()
+    /** Stimmt der Prüfcode? (Schutz gegen Abtippen/Ändern) */
+    val valid get() = check == checkOf(title, name, attempts, date)
+
+    companion object {
+        fun checkOf(title: String, name: String, attempts: List<Int>, date: String) =
+            Integer.toHexString((title + name + attempts.joinToString() + date).hashCode() and 0xFFFF).uppercase().padStart(4, '0')
+
+        /** Bestenliste: gültige zuerst, dann mehr Sterne, bei Gleichstand weniger Versuche; doppelte Einsendungen nur einmal */
+        fun ranking(results: List<ChallengeResult>): List<ChallengeResult> =
+            results.distinctBy { it.name.trim().lowercase() to it.check }
+                .sortedWith(compareByDescending<ChallengeResult> { it.valid }.thenByDescending { it.stars }.thenBy { it.tries })
+    }
+}
+
 /**
- * Codes zum Teilen: „KFL1:…“ für ein Level, „KFC1:…“ für eine Challenge.
+ * Codes zum Teilen: „KFL1:…“ für ein Level, „KFC1:…“ für eine Challenge, „KFR1:…“ für ein Challenge-Ergebnis.
  * JSON → zusammengedrückt (Deflate) → Base64 ohne Sonderzeichen. Kein Server nötig.
  */
 object Codec {
@@ -139,6 +158,20 @@ object Codec {
 
     fun decodeLevel(text: String): LevelSpec? = find(text, LEVEL)?.let { runCatching { json.decodeFromString(LevelSpec.serializer(), unpack(it)) }.getOrNull() }
     fun decodeChallenge(text: String): ChallengeSpec? = find(text, CHALLENGE)?.let { runCatching { json.decodeFromString(ChallengeSpec.serializer(), unpack(it)) }.getOrNull() }
+
+    private const val RESULT = "KFR1:"
+    fun encodeResult(r: ChallengeResult) = RESULT + pack(json.encodeToString(ChallengeResult.serializer(), r))
+    /** Alle Ergebnis-Codes in einem Text (z. B. viele WhatsApp-Nachrichten hintereinander eingefügt) */
+    fun decodeResults(text: String): List<ChallengeResult> {
+        val out = ArrayList<ChallengeResult>(); var from = 0
+        while (true) {
+            val i = text.indexOf(RESULT, from); if (i < 0) break
+            val code = text.substring(i + RESULT.length).takeWhile { it.isLetterOrDigit() || it == '-' || it == '_' }
+            runCatching { json.decodeFromString(ChallengeResult.serializer(), unpack(code)) }.getOrNull()?.let(out::add)
+            from = i + RESULT.length
+        }
+        return out
+    }
 
     /** Welche Art Code steckt im Text? */
     enum class Type { LEVEL, CHALLENGE, DUEL }

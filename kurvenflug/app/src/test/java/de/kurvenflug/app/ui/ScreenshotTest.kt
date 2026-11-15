@@ -253,6 +253,33 @@ class ScreenshotTest {
     @Test fun rewardCard() = level("2-1", name = "59_sticker_gewonnen", values = mapOf("b" to 4.0), settle = 5000,
         prepare = { it.onNodeWithText("🚀 Start").performClick() }, reward = { de.kurvenflug.core.model.StickerDrop(de.kurvenflug.core.model.Stickers.byId("unicorn")!!, true, true) })
 
+    @Test fun profiles() = shot("61_spieler") {
+        de.kurvenflug.app.ui.together.ProfileScreen(
+            listOf(de.kurvenflug.core.data.Profile(0, "Lena", "🦊"), de.kurvenflug.core.data.Profile(1, "Max", "🦖"), de.kurvenflug.core.data.Profile(2, "Papa", "🐼")),
+            current = 0, onSwitch = {}, onAdd = { _, _ -> }, onRename = { _, _, _ -> }, onDelete = {}, onBack = {})
+    }
+
+    @Test fun parents() = shot("62_eltern", settle = 2000) {
+        val today = 20_500L * de.kurvenflug.core.model.Weekly.DAY
+        val d = de.kurvenflug.core.model.Weekly.DAY
+        val plays = listOf(
+            de.kurvenflug.core.model.PlayRecord("2-1", 3, 1, 180, today - 5 * d), de.kurvenflug.core.model.PlayRecord("2-2", 3, 1, 240, today - 5 * d),
+            de.kurvenflug.core.model.PlayRecord("2-3", 3, 1, 200, today - 3 * d), de.kurvenflug.core.model.PlayRecord("2-4", 2, 2, 300, today - 3 * d),
+            de.kurvenflug.core.model.PlayRecord("3-1", 0, 3, 400, today - d), de.kurvenflug.core.model.PlayRecord("15-1", 3, 1, 120, today),
+            de.kurvenflug.core.model.PlayRecord("15-2", 3, 1, 90, today), de.kurvenflug.core.model.PlayRecord("2-5", 3, 1, 260, today))
+        de.kurvenflug.app.ui.together.ParentScreen(de.kurvenflug.core.data.Profile(0, "Lena", "🦊"),
+            de.kurvenflug.core.model.Weekly.summary(plays, today + 3_600_000L, today), listOf("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")) {}
+    }
+
+    @Test fun results() = shot("63_bestenliste") {
+        fun r(n: String, a: List<Int>) = de.kurvenflug.core.model.ChallengeResult("Klasse 7b – Geraden", n, a, "15.11.2026 10:15",
+            de.kurvenflug.core.model.ChallengeResult.checkOf("Klasse 7b – Geraden", n, a, "15.11.2026 10:15"))
+        val text = listOf(r("Mia", listOf(1, 1, 2, 1)), r("Ben", listOf(1, 1, 1, 1)), r("Ali", listOf(2, 1, 3, 1)), r("Emma", listOf(1, 2, 1, 1)))
+            .joinToString("\n") { de.kurvenflug.core.model.Codec.encodeResult(it) } + "\n" +
+            de.kurvenflug.core.model.Codec.encodeResult(r("Tom", listOf(1, 1, 1, 1)).copy(attempts = listOf(1, 1, 1, 1), check = "0000"))
+        de.kurvenflug.app.ui.together.ResultsBoard({}, initial = text)
+    }
+
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 

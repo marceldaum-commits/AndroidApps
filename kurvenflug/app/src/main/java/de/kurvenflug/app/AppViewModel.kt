@@ -69,12 +69,31 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val skin: StateFlow<Int> = _skin
     fun setSkin(i: Int) { settings.skin = i; _skin.value = i }
 
-    fun record(levelId: String, stars: Int, cells: Set<Int>, attempts: Int) {
+    fun record(levelId: String, stars: Int, cells: Set<Int>, attempts: Int, seconds: Int = 0) {
         viewModelScope.launch {
-            c.progress.record(levelId, stars, cells, attempts)
+            c.progress.record(levelId, stars, cells, attempts, seconds)
             de.kurvenflug.app.widget.KurvenflugWidget.refresh(getApplication())
         }
     }
+
+    /** Nach 3 Fehlversuchen: fürs Eltern-Protokoll merken, wo es hakt */
+    fun stuck(levelId: String, attempts: Int, seconds: Int) { viewModelScope.launch { c.progress.stuck(levelId, attempts, seconds) } }
+
+    // ------------------------------------------------------------ Spieler (Profile)
+    val profiles = settings.profiles
+    val profile = settings.profile
+    fun switchProfile(id: Int) {
+        settings.switchProfile(id); _skin.value = settings.skin
+        viewModelScope.launch { de.kurvenflug.app.widget.KurvenflugWidget.refresh(getApplication()) }
+    }
+    fun addProfile(name: String, avatar: String) { settings.addProfile(name, avatar)?.let { switchProfile(it.id) } }
+    fun deleteProfile(id: Int) {
+        viewModelScope.launch { c.progress.clear(id); settings.deleteProfile(id); _skin.value = settings.skin
+            de.kurvenflug.app.widget.KurvenflugWidget.refresh(getApplication()) }
+    }
+
+    /** Eltern-Ansicht: Durchgänge der letzten 14 Tage */
+    fun weekPlays(since: Long) = c.progress.plays(since)
 
     /** Tage seit dem letzten Öffnen – einmal beim Start gelesen */
     val daysAway: Int = settings.daysSinceLastOpen()

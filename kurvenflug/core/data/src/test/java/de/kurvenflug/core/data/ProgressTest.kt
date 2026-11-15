@@ -13,7 +13,8 @@ import org.robolectric.annotation.Config
 @Config(sdk = [35])
 class ProgressTest {
     private val db = FlightDatabase.create(ApplicationProvider.getApplicationContext(), inMemory = true)
-    private val repo = ProgressRepository(db.progress()) { 1000L }
+    private val profile = kotlinx.coroutines.flow.MutableStateFlow(0)
+    private val repo = ProgressRepository(db.progress(), profile) { 1000L }
 
     @Test fun bestResultIsKept() = runTest {
         repo.record("2-1", 3, setOf(0), 1)
@@ -46,5 +47,39 @@ class ProgressTest {
         // auch nach Neustart (neu aus den Einstellungen gelesen)
         val again = Settings(ApplicationProvider.getApplicationContext())
         assertNull(again.grade.value); assertFalse(again.sound.value)
+    }
+
+    /** Jeder Spieler hat seinen eigenen Spielstand; Löschen trifft nur den einen. */
+    @Test fun profilesHaveSeparateProgress() = runTest {
+        repo.record("2-1", 3, emptySet(), 1)
+        profile.value = 1
+        assertTrue(repo.all.first().isEmpty())
+        repo.record("2-1", 1, emptySet(), 3); repo.record("3-1", 2, emptySet(), 2)
+        assertEquals(2, repo.all.first().size)
+        repo.clear()
+        assertTrue(repo.all.first().isEmpty())
+        profile.value = 0
+        assertEquals(3, repo.all.first().single().stars)
+        assertEquals(1, repo.plays(0).first().size)
+    }
+
+    @Test fun settingsArePerProfileButSoundIsShared() {
+        val s = Settings(ApplicationProvider.getApplicationContext())
+        s.setGrade(6); s.recordStorm(5); s.addSticker("rocket"); s.setSound(false)
+        val lena = s.addProfile("Lena", Settings.AVATARS[2])!!
+        s.switchProfile(lena.id)
+        assertNull(s.grade.value); assertEquals(0, s.stormBest.value); assertTrue(s.stickers.value.isEmpty())
+        assertFalse(s.sound.value)                                   // Ton gilt für alle
+        s.setGrade(9); s.addSticker("ufo")
+        s.resetGame()                                                // nur Lena
+        assertNull(s.grade.value)
+        s.switchProfile(0)
+        assertEquals(6, s.grade.value); assertEquals(5, s.stormBest.value); assertEquals(setOf("rocket"), s.stickers.value)
+        assertTrue(s.deleteProfile(lena.id))
+        assertEquals(1, s.profiles.value.size)
+        assertFalse(s.deleteProfile(0))                              // das letzte bleibt
+        // nach Neustart: alles noch da
+        val again = Settings(ApplicationProvider.getApplicationContext())
+        assertEquals(6, again.grade.value); assertEquals(0, again.profile.value)
     }
 }

@@ -20,6 +20,9 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 - Volt lebt: plappert in Roboter-Sprache (im Code erzeugt, abschaltbar), schläft abends, freut sich nach einer Pause,
   tanzt bei 3 ⭐. Überraschungs-Sticker (24, drei Seltenheiten, 10 % Glitzer) nach geschafften Leveln; Fotomodus teilt die
   Flugbahn als Bild (nur das Bild, keine Daten).
+- Mehrere Spieler auf einem Gerät (bis 6, Spitzname + Bild), je eigener Spielstand; Eltern-Ansicht mit Wochenübersicht
+  (Tage, Minuten, Themen, wo Hilfe gut täte) aus dem Durchgangs-Protokoll; Klassen-Challenge mit Ergebnis-Codes (KFR1) und
+  Bestenliste mit Prüfcode – alles ohne Server. Datenbank v2 (Profil-Spalte, Tabelle `plays`) mit Migration und Migrationstest.
 - Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
@@ -58,7 +61,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/50_winkel.png) | ![](screenshots/51_lichtbrechung.png) | ![](screenshots/52_nullstellen.png) |
 | ![](screenshots/53_sternenkarte.png) | ![](screenshots/54_hangar.png) | ![](screenshots/55_bauteil_gefunden.png) |
 | ![](screenshots/56_geschichte.png) | ![](screenshots/57_sticker.png) | ![](screenshots/58_volt_launen.png) |
-| ![](screenshots/59_sticker_gewonnen.png) | ![](screenshots/60_foto.png) | |
+| ![](screenshots/59_sticker_gewonnen.png) | ![](screenshots/60_foto.png) | ![](screenshots/61_spieler.png) |
+| ![](screenshots/62_eltern.png) | ![](screenshots/63_bestenliste.png) | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

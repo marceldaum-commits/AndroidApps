@@ -85,6 +85,10 @@ fun HomeScreen(
     greeting: Pair<VoltMood, String>? = null,
     stickers: Int = 0,
     onStickers: (() -> Unit)? = null,
+    /** Spieler: „🦊 Lena“, Spieler wechseln, Eltern-Ansicht */
+    player: String? = null,
+    onProfiles: (() -> Unit)? = null,
+    onParent: (() -> Unit)? = null,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(initialTab) }
     var picking by rememberSaveable { mutableStateOf(false) }
@@ -103,7 +107,9 @@ fun HomeScreen(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Text("KURVENFLUG", fontSize = 30.sp, fontWeight = FontWeight.Black, color = Q.Cyan, letterSpacing = 4.sp)
-                                    Text("Mathe & Physik im All · ${grade?.let { "Klasse $it" } ?: "Klasse 5–10"}", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+                                    Text("${player?.let { "$it · " } ?: ""}Mathe & Physik im All · ${grade?.let { "Klasse $it" } ?: "Klasse 5–10"}",
+                                        color = Q.Muted, style = MaterialTheme.typography.bodySmall,
+                                        modifier = Modifier.clickable(enabled = onProfiles != null) { onProfiles?.invoke() })
                                 }
                                 IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Einstellungen", tint = Q.Muted) }
                             }
@@ -136,6 +142,10 @@ fun HomeScreen(
                         }
                         else -> {
                             TabTitle("🎒 Ich", "Dein Fortschritt und deine Sammlung")
+                            if (onProfiles != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                ModeTile("👥", "Spieler", player ?: "wechseln", Q.Cyan, Modifier.weight(1f), onProfiles)
+                                ModeTile("👪", "Für Eltern", "Wochenübersicht", Q.Violet, Modifier.weight(1f)) { onParent?.invoke() }
+                            }
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("📊", "Lernstand", "Was sitzt schon?", Q.Green, Modifier.weight(1f)) { onLearn?.invoke() }
                                 ModeTile("🏅", "Abzeichen", "$badges/${de.kurvenflug.core.model.Badges.all.size}", Q.Yellow, Modifier.weight(1f)) { onBadges?.invoke() }

@@ -3,6 +3,15 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.13.0 – Gemeinsam spielen
+- **👥 Mehrere Spieler**: Geschwister teilen sich das Handy? Jeder bekommt einen eigenen Spielstand mit Spitzname und Bild
+  (🎒 Ich → Spieler). Wechseln mit einem Tipp. Bis zu 6 Spieler. Dein bisheriger Spielstand bleibt natürlich erhalten.
+- **👪 Für Eltern**: Eine Wochenübersicht zeigt, an wie vielen Tagen und wie lange geübt wurde, welche Themen dran waren,
+  wo Hilfe gut täte und was richtig gut läuft. Ohne Bewertung – und alles bleibt auf dem Gerät.
+- **🏆 Bestenliste für die Klasse**: Nach der Klassen-Challenge schicken Schüler ihr Ergebnis mit einem Tipp an die Lehrkraft.
+  Die fügt alle Nachrichten im Baukasten unter „Ergebnisse sammeln“ ein und bekommt eine Bestenliste – mit Prüfcode gegen
+  geschummelte Ergebnisse. Ganz ohne Anmeldung oder Server.
+
 ## 0.12.0 – Volt wird lebendig
 - **🤖 Volt spricht**: Er plappert jetzt in Roboter-Sprache, wenn er etwas sagt. (Einstellungen → „Volt-Stimme“ zum Abschalten.)
 - **😴 Volt hat Launen**: Abends ist er müde und schlägt vor, bald ins Bett zu gehen. Nach ein paar Tagen Pause freut er sich

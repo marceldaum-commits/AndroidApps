@@ -183,6 +183,7 @@ fun BuilderHome(
     onCode: (String) -> Unit,
     onChallenge: () -> Unit,
     onBack: () -> Unit,
+    onResults: () -> Unit = {},
 ) {
     val ctx = LocalContext.current
     var code by rememberSaveable { mutableStateOf("") }
@@ -197,6 +198,7 @@ fun BuilderHome(
             Volt(VoltMood.HAPPY, size = 56.dp, speech = "Bau dein eigenes Level und schick es Freunden – wer kann es knacken?")
             ModeCard("➕", "Neues Level bauen", "Stationen, Asteroiden, Planeten setzen – Lösung festlegen – teilen", Q.Green, onNew)
             ModeCard("🏫", "Klassen-Challenge", "Für Lehrkräfte: mehrere Level als Hausaufgabe-Code", Q.Yellow, onChallenge)
+            ModeCard("🏆", "Ergebnisse sammeln", "Für Lehrkräfte: Ergebnis-Codes einfügen – Bestenliste mit Prüfcode", Q.Orange, onResults)
             Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(Q.Panel).padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text("🔑 Code eingeben", style = MaterialTheme.typography.titleMedium, color = Q.Text)
                 Text("Level-, Challenge- oder Duell-Code einfügen", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
