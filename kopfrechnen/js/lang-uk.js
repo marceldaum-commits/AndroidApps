@@ -1447,4 +1447,6 @@ I18N.add('uk', {"% sind":"% — це",
 "Kanal":"Канал",
 "Hülle":"Оболонка",
 "Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde":"Android-застосунок: у налаштуваннях тепер видно, звідки завантажено поточну версію",
-"Rechenblitz im Browser aktualisiert sich jetzt von selbst – nie mitten in einer Runde":"Rechenblitz у браузері тепер оновлюється сам – ніколи посеред раунду"});
+"Rechenblitz im Browser aktualisiert sich jetzt von selbst – nie mitten in einer Runde":"Rechenblitz у браузері тепер оновлюється сам – ніколи посеред раунду",
+"Aktualisiert sich automatisch":"Оновлюється автоматично",
+"Android-App: neue Versionen spielen sich von selbst ein – ganz ohne Knopf, nie mitten in einer Runde":"Android-застосунок: нові версії встановлюються самі – без кнопки, ніколи посеред раунду"});

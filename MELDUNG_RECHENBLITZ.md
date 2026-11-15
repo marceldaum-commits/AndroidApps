@@ -4,6 +4,19 @@ Neueste Meldung oben.
 
 > **AKTUELLER STAND (15.11.2026, abends) – für den Leitstand:** Live ist 3.12.1 (b83bcaa, freigegeben). Auf `rechenblitz-test` liegt **3.13.0**: Die Android-App aktualisiert ihre Inhalte selbst (GitHub, Ersatz eigener Server), siehe Meldung (34). Bitte testen und freigeben. Mit der Freigabe auf `rechenblitz-live` bekommt der Live-Kanal neue Stände automatisch.
 
+## 15.11.2026 (37) – Android-App ebenfalls ohne Update-Knopf (3.13.3, keine neue APK nötig)
+
+- **Marcel 15.11.:** Auch in der App soll es keinen Update-Knopf mehr geben.
+- **Entfernt:** „Nach Updates suchen“ in Menü und Einstellungen. In den Einstellungen steht stattdessen eine Info-Zeile: „✨ Aktualisiert sich automatisch · Installiert: Version … · Geladen von: GitHub/Server/App-Paket · Kanal · Hülle“.
+- **Ablauf:**
+  - Einen neu geladenen Stand spielt die App von selbst ein, sobald man auf der Startseite ist, nie mitten in einer Runde oder bei offenem Menü. Höchstens ein Versuch pro Version und Sitzung.
+  - Spätestens beim nächsten Start ist er ohnehin aktiv.
+- **Bleibt:** Nur wenn eine neue App-Hülle nötig ist, erscheint die Karte „Neue App-Version nötig · Herunterladen“, weil Android die Installation selbst bestätigen lässt.
+- **Test (nachgebildete App-Schnittstelle):**
+  - Ein Stand, der auf der Startseite ankommt, wird sofort eingespielt.
+  - Kommt er während einer Runde an, wird er dort nicht eingespielt, sondern erst nach der Rückkehr zur Startseite.
+  - Die Karte für eine neue Hülle erscheint, und es gibt keinen Knopf mehr. Keine JS-Fehler.
+
 ## 15.11.2026 (36) – Web-App aktualisiert sich selbst, kein Update-Knopf mehr (3.13.2)
 
 - **Marcel 15.11.:** „Die WebApp soll automatisch updaten. Dort kein Button zum Aktualisieren.“

@@ -29,7 +29,7 @@ const verNum = v => String(v || '').split('.').map(Number).reduce((a, n) => a * 
 const apkNewer = v => !!v && verNum(v) > verNum(APP_VERSION);
 /* ---------- APK ab Hülle 2: Inhalte kommen von selbst (Marcel 15.11.: „der Updateserver soll der Git sein“) ----------
    Die App lädt neue Stände im Hintergrund von GitHub (Ersatz: eigener Server), prüft jede Datei und übernimmt
-   nur vollständige Stände – beim nächsten Start oder sofort mit „Jetzt neu starten“. Eine neue APK ist nur nötig,
+   nur vollständige Stände – beim nächsten Start oder von selbst, sobald man auf der Startseite ist. Eine neue APK ist nur nötig,
    wenn sich die App-Hülle ändert (stand.json „shell“). */
 const RbUpd = () => (IS_NATIVE && window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.RbUpdate) || null;
 let liveUpd = null;
@@ -49,10 +49,23 @@ async function shellApkFetch() {   // Download-Adresse der neuen APK (GitHub-Rel
     if (apk && liveUpd) { liveUpd.apkUrl = apk.browser_download_url; renderLiveUpdate(); }
   } catch {}
 }
+/** geladenen Stand automatisch aktivieren – erst auf der Startseite, nie mitten in einer Runde (Marcel 15.11.: kein Update-Knopf) */
+let autoApplyT = 0;
+function nativeAutoApply() {
+  clearTimeout(autoApplyT);
+  const v = liveUpd && liveUpd.pending; if (!v || v === APP_VERSION) return;
+  let tried = null; try { tried = sessionStorage.getItem('rbApplied'); } catch {}
+  if (tried === v) return;   // höchstens ein Versuch je Version und Sitzung
+  if (typeof currentScreen !== 'function' || currentScreen() !== 'home' || (typeof Sheet !== 'undefined' && Sheet.open) || document.hidden) { autoApplyT = setTimeout(nativeAutoApply, 4000); return; }
+  try { sessionStorage.setItem('rbApplied', v); } catch {}
+  try { save(); } catch {}
+  RbUpd()?.apply().catch(() => {});
+}
 function renderLiveUpdate() {
   const u = liveUpd || {}, home = $('home');
   let el = $('apkUpd');
-  const kind = u.needShell ? 'shell' : u.pending && u.pending !== APP_VERSION ? 'ready' : '';
+  if (!u.needShell && u.pending && u.pending !== APP_VERSION) nativeAutoApply();   // neuer Stand geladen → von selbst einspielen
+  const kind = u.needShell ? 'shell' : '';
   if (!kind || !home) { if (el) el.remove(); return; }
   if (!el) { home.querySelector('.col-left').insertAdjacentHTML('afterbegin', '<div class="card apk-upd" id="apkUpd"></div>'); el = $('apkUpd'); }
   el.innerHTML = kind === 'ready'

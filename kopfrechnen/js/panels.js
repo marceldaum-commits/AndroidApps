@@ -32,7 +32,6 @@ const PANELS = {
       ${miLink(siteLink(CONFIG.trialUrl, 'menu-probestunde'), '🎓', 'Kostenlose Probestunde', 'Unverbindlich ausprobieren')}
       ${CONFIG.lernraumUrl ? `<a class="mi" href="${esc(siteLink(CONFIG.lernraumUrl, 'menu-lernraum'))}"><div class="ico">📚</div><div><b>Zurück zum Lernraum</b><span>Weitere Lernspiele und Übungen</span></div><span class="chev">←</span></a>` : ''}
       ${mi('news', '🆕', 'Was ist neu?', `Version ${versionLabel()}`)}
-      ${IS_NATIVE ? `<button class="mi" data-upd><div class="ico">🔄</div><div><b>Nach Updates suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span></div><span class="chev">›</span></button>` : ''}   
       ${mi('invite', '💌', 'Freunde einladen', 'Rechenblitz ist kostenlos – teile es!')}
       ${adventPhase() !== 'off' ? mi('advent', '🎄', 'Rechen-Adventskalender', 'Jeden Tag ein Türchen') : ''}
       ${CONFIG.classApi ? mi('klasse', '🏫', 'Klassen-Challenge', S.klasse ? 'Rangliste deiner Klasse' : 'Mit Klassencode beitreten') : ''}
@@ -102,7 +101,7 @@ const PANELS = {
         <div class="chips" id="langSeg"><button data-v="auto" class="${(ROOT.lang || 'auto') === 'auto' ? 'sel' : ''}">Automatisch</button>${Object.entries(I18N.langs).map(([k, n]) => `<button data-v="${k}" translate="no" class="${ROOT.lang === k ? 'sel' : ''}">${n}</button>`).join('')}</div></div>
       <div class="setrow col"><div><b>Design</b><span>Hell, dunkel oder wie das Gerät</span></div>
         <div class="seg" id="themeSeg">${[['auto', 'Automatisch'], ['light', 'Hell'], ['dark', 'Dunkel']].map(([v, l]) => `<button data-v="${v}" class="${S.settings.theme === v ? 'sel' : ''}">${l}</button>`).join('')}</div></div>
-      ${IS_NATIVE && CONFIG.apkUpdates ? `<button class="mi" id="btnUpd"><div class="ico">⬆️</div><div><b>Nach Update suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span><span id="updInfo" style="display:block;font-size:12px"></span></div></button>` : ''}
+      ${IS_NATIVE ? `<div class="mi" style="cursor:default"><div class="ico">✨</div><div><b>Aktualisiert sich automatisch</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span><span id="updInfo" style="display:block;font-size:12px"></span></div></div>` : ''}
       <div class="mlabel">Zurücksetzen</div>
       <button class="mi" data-reset="reise"><div class="ico">🗺️</div><div><b>Rechen-Reise neu starten</b><span>Sterne, Sticker und Klassenwahl der Reise löschen</span></div></button>
       <button class="mi" data-reset="merk"><div class="ico">🧠</div><div><b>Merk-Training zurücksetzen</b><span>Merkstärken, Sternenhimmel und Sternbilder löschen</span></div></button>
@@ -272,7 +271,6 @@ function initSettings() {
   $('klSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.klasse = +b.dataset.v; homeShowAll = false; save(); $('klSeg').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); renderHome(); };
   $('langSeg').onclick = e => { const b = e.target.closest('button'); if (b) setLanguage(b.dataset.v); };
   $('themeSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.theme = b.dataset.v; save(); applyTheme(); $('themeSeg').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); };
-  $('btnUpd') && ($('btnUpd').onclick = checkForUpdate);
   if (RbUpd()) RbUpd().status().then(u => {   // App: woher der laufende Stand kommt (zur Kontrolle der Selbst-Aktualisierung)
     const el = $('updInfo'); if (!el || !u) return;
     const src = u.version && u.version !== u.bundled ? (u.source === 'server' ? 'Server' : 'GitHub') : 'App-Paket';
@@ -545,7 +543,7 @@ function init() {
 }
 
 /* ---------- Nach Updates suchen (Menü + Einstellungen; Marcel 15.11.) ----------
-   Android-App (Hülle 2+): neuen Stand von GitHub/Server laden → „Jetzt neu starten“; ältere Hülle: GitHub-Release-Seite.
+   Android-App (Hülle 2+): neuen Stand von GitHub/Server laden und von selbst einspielen; ältere Hülle: GitHub-Release-Seite.
    Web-App: aktuelle Version vom Server lesen; ist sie neuer, Service Worker aktualisieren und neu laden. */
 let updChecking = false;
 async function checkForUpdate() {
