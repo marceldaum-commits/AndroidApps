@@ -18,6 +18,9 @@ const emit = (name, data) => {
   if (window.onSceneEvent) window.onSceneEvent(JSON.parse(msg));
 };
 
+window.addEventListener('error', (e) => emit('error', { msg: String(e.message || e) + ' (Zeile ' + (e.lineno || '?') + ')' }));
+window.addEventListener('unhandledrejection', (e) => emit('error', { msg: String(e.reason) }));
+
 // ───────── Grundaufbau ─────────
 const canvas = document.getElementById('c');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
@@ -61,7 +64,7 @@ scene.add(new THREE.HemisphereLight(0x5566cc, 0x1a1030, 1.3));
       void main(){ float h = p.y;
         vec3 top = vec3(0.006,0.008,0.03), mid = vec3(0.02,0.014,0.07), hor = vec3(0.07,0.022,0.11);
         vec3 c = mix(hor, mid, smoothstep(-0.05,0.25,h)); c = mix(c, top, smoothstep(0.2,0.8,h));
-        c = mix(c, vec3(0.01,0.012,0.035), smoothstep(0.0,-0.35,h));
+        c = mix(c, vec3(0.01,0.012,0.035), 1.0 - smoothstep(-0.35,0.0,h));
         float glow = exp(-abs(h)*9.0); c += vec3(0.05,0.012,0.08)*glow*(0.8+0.2*sin(t*0.3+p.x*4.));
         gl_FragColor = vec4(c,1.); }`,
   });
@@ -75,7 +78,7 @@ scene.add(new THREE.HemisphereLight(0x5566cc, 0x1a1030, 1.3));
   const sm = new THREE.ShaderMaterial({
     transparent: true, depthWrite: false, fog: false, blending: THREE.AdditiveBlending, uniforms: { t: { value: 0 }, pr: { value: pixelRatio } },
     vertexShader: 'attribute float s; varying float a; uniform float t, pr; void main(){ a = 0.45+0.55*sin(t*(0.6+s*2.)+s*40.); gl_PointSize = (1.2+s*2.2)*pr; gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.); }',
-    fragmentShader: 'varying float a; void main(){ float d = length(gl_PointCoord-.5); gl_FragColor = vec4(vec3(0.85,0.9,1.)*a*1.6, smoothstep(.5,.0,d)); }',
+    fragmentShader: 'varying float a; void main(){ float d = length(gl_PointCoord-.5); gl_FragColor = vec4(vec3(0.85,0.9,1.)*a*1.6, 1.0 - smoothstep(.0,.5,d)); }',
   });
   sky.add(new THREE.Points(sg, sm)); sky.userData.stars = sm;
 }
@@ -169,7 +172,7 @@ const heads = [];
       transparent: true, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, fog: false,
       uniforms: { c: { value: col(c) }, k: { value: 0.1 } },
       vertexShader: 'varying float h, dz; varying vec3 n, v; void main(){ h = -position.y; n = normalize(normalMatrix*normal); vec4 mv = modelViewMatrix*vec4(position,1.); v = normalize(-mv.xyz); dz = -mv.z; gl_Position = projectionMatrix*mv; }',
-      fragmentShader: 'varying float h, dz; varying vec3 n, v; uniform vec3 c; uniform float k; void main(){ float f = pow(abs(dot(normalize(n), normalize(v))), 1.6); gl_FragColor = vec4(c*k*f*(1.-h)*(1.-h)*3.*smoothstep(9.,24.,dz), 1.); }',
+      fragmentShader: 'varying float h, dz; varying vec3 n, v; uniform vec3 c; uniform float k; void main(){ float f = pow(clamp(abs(dot(normalize(n), normalize(v))), 0.0001, 1.), 1.6); float q = clamp(1.-h, 0., 1.); gl_FragColor = vec4(c*k*f*q*q*3.*smoothstep(9.,24.,dz), 1.); }',
     });
     const cone = new THREE.Mesh(coneGeo, m); cone.scale.set(1.7, 24, 1.7);
     const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.28, 12, 12), new THREE.MeshBasicMaterial({ color: hdr(c, 3), fog: false }));
@@ -184,7 +187,7 @@ const dust = (() => {
   const m = new THREE.ShaderMaterial({
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: { t: { value: 0 }, pr: { value: pixelRatio } },
     vertexShader: 'attribute float s; uniform float t, pr; varying float a; void main(){ vec3 p = position; p.y = mod(p.y + t*(0.08+s*0.12), 11.); p.x += sin(t*0.2+s*30.)*0.6; vec4 mv = modelViewMatrix*vec4(p,1.); a = 0.18+0.16*sin(t+s*20.); gl_PointSize = pr*(1.+s*2.)*7./-mv.z; gl_Position = projectionMatrix*mv; }',
-    fragmentShader: 'varying float a; void main(){ float d = length(gl_PointCoord-.5); gl_FragColor = vec4(vec3(0.6,0.7,1.)*a, smoothstep(.5,.1,d)); }',
+    fragmentShader: 'varying float a; void main(){ float d = length(gl_PointCoord-.5); gl_FragColor = vec4(vec3(0.6,0.7,1.)*a, 1.0 - smoothstep(.1,.5,d)); }',
   });
   const p = new THREE.Points(g, m); p.frustumCulled = false; decor.add(p); return m;
 })();
@@ -330,7 +333,7 @@ makers.plane = (s) => {
     vertexShader: 'varying vec3 wp, n, v; void main(){ vec4 w = modelMatrix*vec4(position,1.); wp = w.xyz; n = normalize(mat3(modelMatrix)*normal); v = normalize(cameraPosition-w.xyz); gl_Position = projectionMatrix*viewMatrix*w; }',
     fragmentShader: `varying vec3 wp, n, v; uniform vec3 c; uniform float t, o;
       float gridLine(float x){ float f = abs(fract(x-.5)-.5)/fwidth(x); return 1.-min(f,1.); }
-      void main(){ float fr = pow(1.-abs(dot(normalize(n), normalize(v))), 2.5);
+      void main(){ float fr = pow(clamp(1.-abs(dot(normalize(n), normalize(v))), 0., 1.), 2.5);
         vec3 a = abs(n); vec2 uv = a.y > a.x && a.y > a.z ? wp.xz : (a.x > a.z ? wp.zy : wp.xy);
         float g = max(gridLine(uv.x), gridLine(uv.y));
         float sweep = smoothstep(.92,1.,sin((wp.x+wp.y+wp.z)*.9 - t*1.2));
@@ -571,16 +574,17 @@ const up = (e) => { pointers.delete(e.pointerId); if (drag && !drag.orbit) emit(
 canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
 
 // ───────── Zeichnen: Himmel → gespiegelte Welt → Boden und Welt ─────────
+function drawStage(r, target) {
+  r.setRenderTarget(target); r.setClearColor(0x000000, 1); r.clear();
+  const vis = (s, d, f, w) => { sky.visible = s; decor.visible = d; floor.visible = f; world.visible = w; fx.visible = w; };
+  vis(true, false, false, false); r.render(scene, camera); r.clearDepth();
+  if (quality > 0) { vis(false, false, false, true); scene.scale.y = -1; scene.updateMatrixWorld(true); labelsVisible(false); r.render(scene, camera); labelsVisible(true); scene.scale.y = 1; scene.updateMatrixWorld(true); r.clearDepth(); }
+  vis(false, true, true, true); r.shadowMap.needsUpdate = true; r.render(scene, camera);
+  vis(true, true, true, true);
+}
 class StagePass extends Pass {
   constructor() { super(); this.needsSwap = false; }
-  render(r, writeBuffer, readBuffer) {
-    r.setRenderTarget(this.renderToScreen ? null : readBuffer); r.setClearColor(0x000000, 1); r.clear();
-    const vis = (s, d, f, w) => { sky.visible = s; decor.visible = d; floor.visible = f; world.visible = w; fx.visible = w; };
-    vis(true, false, false, false); r.render(scene, camera); r.clearDepth();
-    if (quality > 0) { vis(false, false, false, true); scene.scale.y = -1; scene.updateMatrixWorld(true); labelsVisible(false); r.render(scene, camera); labelsVisible(true); scene.scale.y = 1; scene.updateMatrixWorld(true); r.clearDepth(); }
-    vis(false, true, true, true); r.shadowMap.needsUpdate = true; r.render(scene, camera);
-    vis(true, true, true, true);
-  }
+  render(r, writeBuffer, readBuffer) { drawStage(r, this.renderToScreen ? null : readBuffer); }
 }
 function labelsVisible(v) { scene.traverse((o) => { if (o.userData.isLabel) o.visible = v; }); for (const o of objects.values()) if (o.isHandle) o.g.visible = v; }
 let quality = 1;
@@ -588,6 +592,22 @@ const composer = new EffectComposer(renderer);
 composer.addPass(new StagePass());
 const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.62, 0.7, 0.92);
 composer.addPass(bloom); composer.addPass(new OutputPass());
+// Leuchten (Bloom) braucht Farbpuffer mit hoher Genauigkeit. Kann der Grafikchip das nicht, wird direkt gezeichnet – ohne Schein, aber sichtbar.
+const gl = renderer.getContext();
+let direct = /[?&]direkt/.test(location.search) || !(renderer.capabilities.isWebGL2 && (gl.getExtension('EXT_color_buffer_float') || gl.getExtension('EXT_color_buffer_half_float')));
+let checked = false;
+function draw(dt) {
+  if (direct) { drawStage(renderer, null); return; }
+  composer.render(dt);
+  if (!checked && gl.drawingBufferHeight > 16 && clock.elapsedTime > 0.3) {
+    checked = true;
+    // Einmal prüfen, ob in den Puffer wirklich gezeichnet werden konnte und etwas Sichtbares herauskommt
+    renderer.setRenderTarget(composer.renderTarget1); const incomplete = gl.checkFramebufferStatus(gl.FRAMEBUFFER) !== gl.FRAMEBUFFER_COMPLETE; renderer.setRenderTarget(null);
+    const px = new Uint8Array(4 * 64); gl.readPixels(0, Math.floor(gl.drawingBufferHeight * 0.9), 64, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+    const dark = px.every((v, i) => i % 4 === 3 || v === 0);
+    if (incomplete || dark) { direct = true; emit('mode', { direct: true, incomplete, dark }); drawStage(renderer, null); }
+  }
+}
 
 function resize() {
   const w = innerWidth, h = innerHeight; if (!w || !h) return;
@@ -605,6 +625,7 @@ function frame() {
 function step(dt) {
   const t = fixedTime ?? clock.elapsedTime;
   // Kamera: weich nachführen, in Ruhe ganz leicht schwenken
+  if (!isFinite(cam.dist)) cam.dist = cam.tDist; if (!isFinite(cam.az)) cam.az = cam.tAz;
   const idle = t - lastTouch > 4 ? Math.sin(t * 0.25) * 0.05 : 0, k = 1 - Math.exp(-7 * dt);
   cam.az += (cam.tAz + idle - cam.az) * k; cam.el += (cam.tEl - cam.el) * k; cam.dist += (cam.tDist - cam.dist) * k; cam.target.lerp(cam.tTarget, k);
   shake = Math.max(0, shake - dt * 1.4);
@@ -628,7 +649,7 @@ function step(dt) {
     const age = t - o.born; if (age < 0.6) { const e = Math.min(1, age / 0.45), b = 1 + 2.2 * Math.pow(e - 1, 3) + 1.2 * Math.pow(e - 1, 2); o.g.scale.setScalar(Math.max(0.001, b)); } else o.g.scale.setScalar(1);
   }
   for (let i = effects.length - 1; i >= 0; i--) if (!effects[i](dt)) effects.splice(i, 1);
-  composer.render(dt);
+  draw(dt);
 
   // Bei schwachen Geräten automatisch sparen
   if (fixedTime == null) { frames++; if (dt > 0.03) slow++; if (frames === 90) { if (slow > 45 && pixelRatio > 1) { pixelRatio = Math.max(1, pixelRatio * 0.75); resize(); } else if (slow > 45 && quality > 0) quality = 0; frames = slow = 0; } }

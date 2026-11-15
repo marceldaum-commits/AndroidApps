@@ -1,5 +1,10 @@
 # Änderungen
 
+## 0.1.1 – Bühne an
+- **Behoben:** Auf manchen Handys blieb die 3D-Bühne schwarz. Ursache war ein Fehler in der Licht-Berechnung, den nur echte Handy-Grafikchips zeigen.
+- Kann ein Gerät den Leucht-Effekt nicht darstellen, zeichnet die Bühne jetzt automatisch ohne ihn – sichtbar bleibt sie immer.
+- Falls die Bühne doch einmal nicht startet, steht jetzt eine Meldung da statt einer schwarzen Fläche.
+
 ## 0.1.0 – Erste Tour
 - **Neu: Raumlicht** – analytische Geometrie der Oberstufe als Lichtshow in echtem 3D. Du bist Lichtdesigner:in:
   Laser sind Geraden, Glasscheiben sind Ebenen, die Drohne Lux fliegt deine Vektoren.
