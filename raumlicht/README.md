@@ -85,6 +85,16 @@ Seit 0.6.0: eigene Funktionen in „Kurve abfahren“ (`Expr` liest den Term, `C
 | ![](screenshots/64_eigene_funktion.png) | ![](screenshots/65_eigene_funktion_eingabe.png) |
 |---|---|
 
+## WebApp (seit 15.11.2026, im Aufbau)
+
+Raumlicht entsteht für Android und Web aus einer Codebasis (Compose Multiplatform, Kotlin/Wasm):
+- `core/model` ist ein Multiplattform-Modul – dieselbe Rechenlogik für beide.
+- `web/` ist die WebApp; sie bindet dieselbe 3D-Bühne ein (`app/src/main/assets/scene/scene.js`) und liest die Version aus `app/build.gradle.kts`.
+- Bauen: `./gradlew :web:webapp` legt die fertigen Dateien nach `webapp/`. Prüfen: `cd webapp && python3 -m http.server 8765`, dann
+  `cd scene && node test/web.mjs http://localhost:8765/ <Ordner für Bilder>` (Start, Bühne, Aufgabe lösen, Speicher, Version, Manifest, Konsolenfehler).
+- Ausliefern: Branch `raumlicht-test` (der Server holt `raumlicht/webapp/`); `raumlicht-live` setzt nur der Leitstand. Meldungen: `MELDUNG_AN_LEITSTAND.md`.
+- Stand: Vorschau mit allen Tour-Aufgaben; die Android-Oberfläche und die Extras ziehen schrittweise in den gemeinsamen Code um.
+
 **Bedien-Test der echten Bühne** (seit 2.3.1): `cd scene && node test/interact.mjs ../core/model/build/scenes.json` spielt Antippen, Ziehen und Wischen mit echten
 Zeiger-Ereignissen im Browser durch und prüft, was die Bühne meldet. Vor jeder Auslieferung laufen lassen, wenn sich an der Bedienung der Bühne etwas ändert –
 die Robolectric-Tests ersetzen die Bühne durch eine Attrappe und sehen solche Fehler nicht.
