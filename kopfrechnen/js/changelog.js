@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.13.3';
+const APP_VERSION = '3.13.4';
 const APP_DATE = '2026-11-15';
 const CHANGELOG = [
+  ['3.13.4', '2026-11-15', ['Aufgeräumter Kopfbereich: das Logo führt zur Website']],
   ['3.13.3', '2026-11-15', ['Android-App: neue Versionen spielen sich von selbst ein – ganz ohne Knopf, nie mitten in einer Runde']],
   ['3.13.2', '2026-11-15', ['Rechenblitz im Browser aktualisiert sich jetzt von selbst – nie mitten in einer Runde']],
   ['3.13.1', '2026-11-15', ['Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde']],

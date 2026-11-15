@@ -4,6 +4,11 @@ Neueste Meldung oben.
 
 > **AKTUELLER STAND (15.11.2026, abends) – für den Leitstand:** Live ist 3.12.1 (b83bcaa, freigegeben). Auf `rechenblitz-test` liegt **3.13.0**: Die Android-App aktualisiert ihre Inhalte selbst (GitHub, Ersatz eigener Server), siehe Meldung (34). Bitte testen und freigeben. Mit der Freigabe auf `rechenblitz-live` bekommt der Live-Kanal neue Stände automatisch.
 
+## 15.11.2026 (38) – Knopf „Zur Website“ entfernt (3.13.4, keine neue APK nötig)
+
+- **Marcel 15.11.:** Den Knopf „Zur Website“ oben rechts braucht es nicht. Das Logo oben links führt bereits zur Website.
+- **Kopfzeile jetzt:** links „← Lernraum“ (bzw. „Persönliche Online-Nachhilfe 1:1“). Die Website bleibt über Logo, Menü und Fußzeile erreichbar.
+
 ## 15.11.2026 (37) – Android-App ebenfalls ohne Update-Knopf (3.13.3, keine neue APK nötig)
 
 - **Marcel 15.11.:** Auch in der App soll es keinen Update-Knopf mehr geben.
