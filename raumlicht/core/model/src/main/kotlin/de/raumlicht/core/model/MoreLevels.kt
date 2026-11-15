@@ -368,7 +368,7 @@ internal object TourFour {
     private class Track(val from: Double, val to: Double, val sx: Double, val ox: Double, val sy: Double, val oz: Double, val f: (Double) -> Double, val df: (Double) -> Double) {
         fun at(x: Double) = V3(4.0, ox + x * sx, oz + f(x) * sy)
         fun curve(id: String = "bahn", color: String = "cyan") = Stage.edges(id, (0..48).map { at(from + (to - from) * it / 48) }.zipWithNext(), color)
-        fun axis() = Stage.line("achse", V3(4.0, ox + from * sx, oz), V3(0.0, (to - from) * sx, 0.0), 0.0, 1.0, "white", dashed = true)
+        fun axis() = Stage.axes2d(ox, oz, sx, sy, from, to)
         /** Ehrenrunde: einmal die ganze Bahn entlang und zurück zur gesuchten Stelle */
         fun lap(stop: Double): List<V3> { val up = V3(0.0, 0.0, 0.45); val n = 16
             return (0..n).map { at(from + (to - from) * it / n) + up } + (0..6).map { at(to + (stop - to) * it / 6) + up } }

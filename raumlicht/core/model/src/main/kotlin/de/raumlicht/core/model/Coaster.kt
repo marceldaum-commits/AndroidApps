@@ -79,7 +79,7 @@ class Ride(val id: String, val title: String, val text: String, val from: Double
     fun scene(): String = Stage.encode(Bounds(), base())
     private fun base(): List<Obj> = (listOf(
         Obj("bahn", "track", corners = points.map { it.list }, color = "cyan"),
-        Stage.line("null", V3(4.0, ox + from * sx, oz), V3(0.0, (to - from) * sx, 0.0), 0.0, 1.0, "white", dashed = true),
+        Stage.axes2d(ox, oz, sx, sy, from, to),
     // Markierungen stehen wie Schilder neben der Strecke (nach hinten versetzt), nicht mitten auf der Bahn
     ) + spots.mapIndexed { i, s -> Stage.point("stelle$i", at(s.x) + V3(-0.9, 0.0, 0.5), s.kind.color, s.kind.letter, style = "ghost", drop = false) })
 

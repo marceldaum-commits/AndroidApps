@@ -16,8 +16,13 @@ object MistakeBook {
 /** Zeichnet Funktionsgraphen in die Ebene x₁ = 4: x nach rechts, y nach oben. */
 internal class Graph(val from: Double, val to: Double, private val sx: Double, private val ox: Double, private val sy: Double, private val oz: Double) {
     fun at(x: Double, y: Double) = V3(4.0, ox + x * sx, (oz + y * sy).coerceIn(0.05, 6.6))
-    fun curve(id: String, color: String, f: (Double) -> Double) = Stage.edges(id, (0..48).map { val x = from + (to - from) * it / 48; at(x, f(x)) }.zipWithNext(), color)
-    fun axis() = Stage.line("achse", at(from, 0.0), at(to, 0.0) - at(from, 0.0), 0.0, 1.0, "white", dashed = true)
+    /** Der Graph endet am Rand des Achsenkreuzes – er wird nicht am Boden plattgedrückt (das wäre eine falsche Kurve) */
+    fun curve(id: String, color: String, f: (Double) -> Double): Obj {
+        val pts = (0..96).map { val x = from + (to - from) * it / 96; x to f(x) }
+        fun inside(y: Double) = oz + y * sy in 0.05..6.6
+        return Stage.edges(id, pts.zipWithNext().filter { (a, b) -> inside(a.second) && inside(b.second) }.map { (a, b) -> at(a.first, a.second) to at(b.first, b.second) }, color)
+    }
+    fun axis() = Stage.axes2d(ox, oz, sx, sy, from, to)
     fun line(id: String, x0: Double, y0: Double, x1: Double, y1: Double, color: String, dashed: Boolean = false) = Stage.line(id, at(x0, y0), at(x1, y1) - at(x0, y0), 0.0, 1.0, color, dashed = dashed, thin = !dashed)
     fun lap(f: (Double) -> Double, stop: Double): List<V3> { val up = V3(0.0, 0.0, 0.45)
         return (0..16).map { val x = from + (to - from) * it / 16; at(x, f(x)) + up } + (0..5).map { val x = to + (stop - to) * it / 5; at(x, f(x)) + up } }

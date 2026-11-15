@@ -129,6 +129,7 @@ const hex = (c) => '#' + col(c).getHexString();
 // ───────── Raster und Achsen ─────────
 const gridGroup = new THREE.Group(); decor.add(gridGroup);
 let bounds = { min: [0, 0, 0], max: [8, 8, 6] };
+let axesGroup = null, flat = false;   // flat: ebenes x-y-Koordinatensystem (Analysis) statt Raumachsen
 function buildGrid() {
   gridGroup.clear();
   const { min, max } = bounds, pts = [], strong = [];
@@ -157,7 +158,9 @@ function buildGrid() {
     }
     return g;
   };
-  gridGroup.add(axis([1, 0, 0], max[0], -min[0], 'pink', 'x₁'), axis([0, 1, 0], max[1], -min[1], 'green', 'x₂'), axis([0, 0, 1], max[2], 0, 'cyan', 'x₃'));
+  axesGroup = new THREE.Group(); axesGroup.visible = !flat;
+  axesGroup.add(axis([1, 0, 0], max[0], -min[0], 'pink', 'x₁'), axis([0, 1, 0], max[1], -min[1], 'green', 'x₂'), axis([0, 0, 1], max[2], 0, 'cyan', 'x₃'));
+  gridGroup.add(axesGroup);
 }
 
 // ───────── Bühnen-Deko: Scheinwerfer mit Lichtkegeln, Dunst ─────────
@@ -293,6 +296,36 @@ makers.vector = (s) => {
 };
 
 // Gerade / Laserstrahl: Stützpunkt p, Richtung d, Parameterbereich [t0, t1]
+// Ebenes Achsenkreuz für Funktionsgraphen: beschriftet in Einheiten der Funktion (Ursprung s.p, Maßstab s.d)
+makers.axes2d = (s) => {
+  const g = new THREE.Group(), o = V(s.p), [sx, sy] = s.d, [[x0, x1], [y0, y1]] = s.corners;
+  const P = (x, y) => new THREE.Vector3(o.x + x * sx, o.y + y * sy, o.z);
+  const yx = Math.min(Math.max(0, x0), x1);                       // die y-Achse steht bei x = 0, sonst am Rand
+  const step = (k) => [1, 2, 5, 10, 20, 50].find((n) => n * k >= 0.55) ?? 100;
+  const main = [], grid = [], ex = 0.45 / sx, ey = 0.45 / sy;
+  main.push(P(x0 - ex * 0.5, 0), P(x1 + ex, 0), P(yx, y0 - ey * 0.5), P(yx, y1 + ey));
+  const mkTip = (p, up) => { const t = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.26, 12), new THREE.MeshBasicMaterial({ color: hdr('white', 1.2) })); t.position.copy(p); if (!up) t.rotation.z = -Math.PI / 2; g.add(t); };
+  mkTip(P(x1 + ex, 0), false); mkTip(P(yx, y1 + ey), true);
+  const name = (t, p) => { const l = label(t, '#ffffff', 0.95, false); l.position.copy(p); g.add(l); };
+  name('x', P(x1 + ex, 0).add(new THREE.Vector3(0.1, -0.38, 0))); name('y', P(yx, y1 + ey).add(new THREE.Vector3(-0.38, 0.05, 0)));
+  const num = (v, p) => { const l = label(String(v).replace('-', '−'), '#dfe6ff', 0.62, false); l.material.opacity = 0.9; l.position.copy(p); g.add(l); };
+  const dx = step(sx), dy = step(sy);
+  for (let x = Math.ceil(x0 / dx) * dx; x <= x1; x += dx) {
+    if (x !== yx) grid.push(P(x, y0), P(x, y1));
+    main.push(P(x, 0).add(new THREE.Vector3(0, -0.09, 0)), P(x, 0).add(new THREE.Vector3(0, 0.09, 0)));
+    if (x !== 0) num(x, P(x, 0).add(new THREE.Vector3(0, -0.34, 0)));
+  }
+  for (let y = Math.ceil(y0 / dy) * dy; y <= y1; y += dy) {
+    if (y !== 0) grid.push(P(x0, y), P(x1, y));
+    main.push(P(yx, y).add(new THREE.Vector3(-0.09, 0, 0)), P(yx, y).add(new THREE.Vector3(0.09, 0, 0)));
+    if (y !== 0) num(y, P(yx, y).add(new THREE.Vector3(-0.36, 0, 0)));
+  }
+  if (yx === 0) num(0, P(0, 0).add(new THREE.Vector3(-0.3, -0.32, 0)));
+  const seg = (pts, c, op) => new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: c, transparent: true, opacity: op, depthWrite: false }));
+  g.add(seg(grid, 0x8f9dff, 0.2), seg(main, 0xffffff, 0.95));
+  return { g, update() {}, tick() {} };
+};
+
 makers.line = (s) => {
   const g = new THREE.Group(), c = s.color ?? 'cyan';
   const rod = s.dashed ? null : glowRod(c, s.thin ? 0.018 : 0.035, s.thin ? 1.6 : 3);
@@ -592,6 +625,12 @@ makers.handle = (s) => {
 const objects = new Map();
 function setState(state) {
   if (state.bounds && JSON.stringify(state.bounds) !== JSON.stringify(bounds)) { bounds = state.bounds; buildGrid(); frameBounds(false); }
+  if (!!state.flat !== flat) {
+    flat = !!state.flat; if (axesGroup) axesGroup.visible = !flat;
+    // Funktionsgraphen schaut man von vorn an – sonst täuscht die Perspektive beim Ablesen
+    if (flat) { cam.tAz = 0; cam.tEl = 0.1; frameBounds(false); cam.tTarget.copy(V([4, (bounds.min[1] + bounds.max[1]) / 2, 3.0])); cam.tDist *= 0.8; }
+    else { cam.tAz = 0.62; cam.tEl = 0.42; frameBounds(false); }
+  }
   const seen = new Set();
   for (const s of state.objects ?? []) {
     seen.add(s.id);

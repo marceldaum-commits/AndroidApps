@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.5.1 – Funktionen mit echtem Achsenkreuz (15.11.2026)
+- **Analysis lässt sich jetzt richtig ablesen:** Funktionsgraphen bekommen ein eigenes x-y-Achsenkreuz mit Zahlen in den Einheiten der Funktion
+  (vorher standen dort die Raumachsen x₁/x₂/x₃ – Nullstellen und Schnittpunkte passten nicht zur Aufgabe).
+- Der Blick geht bei Funktionen von vorn auf die Ebene; drehen und zoomen geht weiterhin.
+- Kurven enden am Rand des Achsenkreuzes und werden nicht mehr am Boden abgeknickt.
+
 ## 0.5.0 – Das große Erlebnis-Paket (15.11.2026)
 **Erleben**
 - **🚀 Flug durch den Raum:** Geometrie aus der Fahrersicht – du fliegst eine Gerade entlang, durch Ebenen und die Discokugel. Das Cockpit zeigt Ort, Parameter t
