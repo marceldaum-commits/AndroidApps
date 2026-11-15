@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.0.0 – Lux spricht (15.11.2026)
+- **🗣️ Lux kann sprechen:** Lux liest ihre Sprechblasen laut vor – den Auftrag, Rückmeldungen, Tipps, die Kapitel-Erklärung, jeden Schritt ihrer Aktionen
+  („1. Zug: pink, 2 von 5 …“) und beim Kurvenfahren die besonderen Stellen („Hochpunkt bei x = 2“). Formelzeichen werden dabei als Wörter gesprochen.
+- Die Stimme kommt von der Sprachausgabe des Geräts, etwas höher gestellt. Während Lux spricht, wird die Musik leiser.
+- Abschaltbar in den Einstellungen unter „Ton & Gefühl“; die Lautstärke folgt dem Lautstärke-Regler. Ist auf dem Gerät keine deutsche Stimme eingerichtet, bleibt Lux stumm.
+- Die Versionsnummer springt auf 2.0.0.
+
 ## 0.7.2 – Eigene Funktion leichter eingeben (15.11.2026)
 - Bei „Eigene Funktion“ steht die Funktion jetzt als gut sichtbare Zeile über der Bühne: antippen („✏️ Funktion eingeben“) öffnet die Eingabe.
   Vorher war sie nur über den kleinen Knopf „ändern“ erreichbar.

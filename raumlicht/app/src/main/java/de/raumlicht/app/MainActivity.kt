@@ -107,9 +107,11 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(sound) { app.sfx.enabled = sound }
             LaunchedEffect(music) { app.music.setEnabled(music) }
             val volume by vm.settings.volume.collectAsStateWithLifecycle()
-            LaunchedEffect(volume) { app.sfx.master = volume / 100f; app.music.setVolume(volume / 100f) }
+            LaunchedEffect(volume) { app.sfx.master = volume / 100f; app.music.setVolume(volume / 100f); app.voice.volume = volume / 100f }
+            val voice by vm.settings.voice.collectAsStateWithLifecycle()
+            LaunchedEffect(voice) { app.voice.enabled = voice; if (!voice) app.voice.stop() }
             RaumlichtTheme {
-                CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration) {
+                CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration, de.raumlicht.app.ui.fx.LocalSpeaker provides app.voice) {
                     Surface(Modifier.fillMaxSize(), color = Q.Space) { Nav() }
                 }
             }
@@ -122,7 +124,7 @@ class MainActivity : ComponentActivity() {
         de.raumlicht.app.widget.DailyWidget.refresh(this)   // z. B. nach Mitternacht: neuer Tagesaufgabe
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
     }
-    override fun onStop() { (application as RaumlichtApp).music.onForeground(false); super.onStop() }
+    override fun onStop() { (application as RaumlichtApp).music.onForeground(false); (application as RaumlichtApp).voice.stop(); super.onStop() }
 
     @Composable
     private fun Nav() {
@@ -267,7 +269,7 @@ class MainActivity : ComponentActivity() {
                 val music by vm.settings.music.collectAsStateWithLifecycle()
                 val auto by vm.settings.autoUpdate.collectAsStateWithLifecycle()
                 SettingsScreen(music, vm.settings::setMusic, sound, vm.settings::setSound, vibration, vm.settings::setVibration, auto, vm.settings::setAutoUpdate,
-                    BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, { nav.popSafe() }, onReset = vm::resetAll, volume = vm.settings.volume.collectAsStateWithLifecycle().value, onVolume = vm.settings::setVolume)
+                    BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, { nav.popSafe() }, onReset = vm::resetAll, voice = vm.settings.voice.collectAsStateWithLifecycle().value, onVoice = vm.settings::setVoice, voiceAvailable = (application as RaumlichtApp).voice.available, volume = vm.settings.volume.collectAsStateWithLifecycle().value, onVolume = vm.settings::setVolume)
             }
         }
         }

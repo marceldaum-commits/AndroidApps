@@ -86,6 +86,9 @@ fun LevelScreen(
         if (n != values) { values = n; override = null; sfx?.play(Sound.TICK); view.buzz(Buzz.TICK, vib) }
     }
     // Während Lux das Kapitel erklärt, führt die Bühne die erste Aufgabe vor: Ausgangslage → eingestellt → gelöst
+    // Lux liest jede neue Sprechblase vor (abschaltbar); während der Kapitel-Erklärung spricht die Erklärung
+    val speaker = LocalSpeaker.current
+    LaunchedEffect(says.first, intro, introStep) { speaker?.say(if (intro) chapter.intro.getOrElse(introStep) { "" } else says.first) }
     LaunchedEffect(values, phase, override, intro, introStep) {
         controller.setState(when {
             !intro -> override ?: level.scene(values, phase)

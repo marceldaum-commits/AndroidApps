@@ -84,7 +84,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     // Tempo der automatischen Fahrt: Index in TEMPO (½×, 1×, 2×, 4×)
     var tempo by rememberSaveable { mutableIntStateOf(1) }
     var seen by remember(key) { mutableStateOf<Spot?>(null) }
-    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current
+    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
     val d = ride.data(u.toDouble())
 
     // Mit Zusätzen wird die Bühne in kleinen Schritten nachgeführt (Punkt auf f′ wandert mit, die Fläche wächst)
@@ -108,7 +108,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     // An Hoch-, Tief-, Wendepunkten und Nullstellen: Lux meldet sich, es vibriert kurz
     LaunchedEffect(d.x) {
         val s = ride.spotNear(d.x, if (driving) 0.05 else 0.04)
-        if (s != null && s != seen) { seen = s; sfx?.play(Sound.HIT); view.buzz(Buzz.HIT, vib); controller.party(1.0) }
+        if (s != null && s != seen) { seen = s; sfx?.play(Sound.HIT); view.buzz(Buzz.HIT, vib); controller.party(1.0); speaker?.say("${s.kind.title} bei x = ${Geo.num(s.x)}") }
         else if (s == null && seen != null && abs(seen!!.x - d.x) > 0.25) seen = null
     }
 

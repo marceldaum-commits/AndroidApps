@@ -215,4 +215,25 @@ class PlayFlowTest {
         assertEquals(listOf(up[0].kind.points), scores)
         rule.mainClock.autoAdvance = true
     }
+
+    @Test fun luxReadsHerSpeechBubblesAloud() {
+        val heard = ArrayList<String>(); val l = Levels.byId("13-3")!!
+        rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }, de.raumlicht.app.ui.fx.LocalSpeaker provides de.raumlicht.app.ui.fx.Speaker { heard += it }) {
+            LevelScreen(l, Levels.chapters.first { it.number == 13 }, false, {}, { _, _ -> }, {}, {}, mapOf("a" to listOf(2)))
+        } } } }
+        rule.mainClock.advanceTimeBy(600); assertEquals(listOf(l.mission), heard)                          // Auftrag beim Öffnen
+        rule.onNodeWithText("▶ Los").performClick(); rule.mainClock.advanceTimeBy(8000)
+        assertTrue(heard.toString(), heard.any { it.startsWith("1. Zug: pink") } && heard.any { it.contains("nur noch 1 von 4") } && heard.last() == "Genau 10 % – Treffer!")
+        assertEquals("1. Zug: pink, 2 von 5. Die Kugel bleibt draußen.", Speech.clean(heard[1]))
+    }
+
+    @Test fun voiceSwitchInSettings() {
+        var on = true; val heard = ArrayList<String>()
+        show { CompositionLocalProvider(de.raumlicht.app.ui.fx.LocalSpeaker provides de.raumlicht.app.ui.fx.Speaker { heard += it }) {
+            de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.0.0", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, voice = on, onVoice = { on = it }) } }
+        rule.onNodeWithText("🗣️ Lux spricht").assertExists()
+        val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
+        val s = de.raumlicht.core.data.Settings(ctx); assertTrue(s.voice.value); s.setVoice(false); assertFalse(de.raumlicht.core.data.Settings(ctx).voice.value)
+        val v = de.raumlicht.app.ui.fx.LuxVoice(ctx); v.enabled = false; v.say("still"); v.stop(); v.shutdown()      // ohne Stimme oder ausgeschaltet: kein Absturz
+    }
 }

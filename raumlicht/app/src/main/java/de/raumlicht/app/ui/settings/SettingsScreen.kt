@@ -25,7 +25,9 @@ fun SettingsScreen(
     onBack: () -> Unit,
     onReset: () -> Unit = {},
     volume: Int = 100, onVolume: (Int) -> Unit = {},
+    voice: Boolean = true, onVoice: (Boolean) -> Unit = {}, voiceAvailable: Boolean = true,
 ) {
+    val speaker = de.raumlicht.app.ui.fx.LocalSpeaker.current
     val sfx = de.raumlicht.app.ui.fx.LocalSfx.current
     var ask by remember { mutableStateOf(false) }; var done by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -40,6 +42,8 @@ fun SettingsScreen(
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     Toggle("🎵 Musik", "Elektronische Klänge im Hintergrund", music, onMusic)
                     Toggle("🔊 Geräusche", "Laser, Treffer, Lux’ Piepsen", sound, onSound)
+                    Toggle("🗣️ Lux spricht", if (voiceAvailable) "Lux liest ihre Sprechblasen laut vor (Sprachausgabe des Geräts)" else "Auf diesem Gerät ist keine deutsche Stimme eingerichtet – Lux bleibt stumm.", voice) {
+                        onVoice(it); if (it) speaker?.say("Hallo, ich bin Lux!") }
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
                     Text("🔉 Lautstärke: $volume %", Modifier.padding(top = 8.dp).testTag("lautstaerke-text"), style = MaterialTheme.typography.bodyLarge)
                     Text("Für Musik und Geräusche zusammen", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
@@ -50,7 +54,7 @@ fun SettingsScreen(
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Datenschutz & Inhalte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     Text("Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
-                        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
+                        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar). Lux spricht mit der Sprachausgabe deines Geräts.", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Mathematik der Oberstufe. Analytische Geometrie – Punkte und Vektoren im Raum, Geraden in Parameterform, " +
                         "Lagebeziehungen, Ebenen in Koordinatenform, Durchstoßpunkte, Normalenvektor, Skalarprodukt, Lotfußpunkt, " +
                         "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen, Bewegungsaufgaben; dazu Analysis (Funktionen, Ableitung, Kurvendiskussion, Integral, Rotationskörper) und Stochastik (Laplace, Pfadregel, Vierfeldertafel, Binomialverteilung). Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)

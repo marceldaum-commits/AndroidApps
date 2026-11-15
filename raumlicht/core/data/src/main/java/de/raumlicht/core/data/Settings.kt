@@ -14,6 +14,10 @@ class Settings(ctx: Context) {
     private val _music = flag("music", true)
     private val _vibration = flag("vibration", true)
     private val _autoUpdate = flag("autoUpdate", true)
+    private val _voice = flag("voice", true)
+    /** Lux liest ihre Sprechblasen laut vor */
+    val voice: StateFlow<Boolean> = _voice.asStateFlow()
+    fun setVoice(v: Boolean) { prefs.edit().putBoolean("voice", v).apply(); _voice.value = v }
     val sound: StateFlow<Boolean> = _sound.asStateFlow()
     val music: StateFlow<Boolean> = _music.asStateFlow()
     val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
