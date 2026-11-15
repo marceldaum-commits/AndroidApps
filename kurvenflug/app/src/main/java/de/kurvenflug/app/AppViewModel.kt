@@ -70,7 +70,10 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun setSkin(i: Int) { settings.skin = i; _skin.value = i }
 
     fun record(levelId: String, stars: Int, cells: Set<Int>, attempts: Int) {
-        viewModelScope.launch { c.progress.record(levelId, stars, cells, attempts) }
+        viewModelScope.launch {
+            c.progress.record(levelId, stars, cells, attempts)
+            de.kurvenflug.app.widget.KurvenflugWidget.refresh(getApplication())
+        }
     }
 
     // ------------------------------------------------------------ App-Update

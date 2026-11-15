@@ -79,13 +79,23 @@ class MainActivity : ComponentActivity() {
         if (de.kurvenflug.core.model.Codec.detect(text) != null) incomingDuel.value = text
     }
 
-    override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); readShared(intent) }
+    /** Level, das ein Widget-Knopf öffnen soll (kurvenflug://level/<id>) */
+    private val widgetLevel = androidx.compose.runtime.mutableStateOf<String?>(null)
+
+    private fun readWidget(intent: android.content.Intent?) {
+        val uri = intent?.data?.takeIf { it.scheme == "kurvenflug" && it.host == "level" } ?: return
+        val id = uri.lastPathSegment ?: return
+        val known = Levels.byId(id) != null || Daily.isDaily(id) || de.kurvenflug.core.model.Learning.levelFor(id) != null
+        if (known) widgetLevel.value = id
+    }
+
+    override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); readShared(intent); readWidget(intent) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val app = application as KurvenflugApp
-        if (savedInstanceState == null) readShared(intent)
+        if (savedInstanceState == null) { readShared(intent); readWidget(intent) }
         (application as KurvenflugApp).music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
@@ -137,6 +147,11 @@ class MainActivity : ComponentActivity() {
             incomingDuel.value = null
         }
         LaunchedEffect(shared) { shared?.let { openCode(it) } }
+        // Vom Widget: direkt ins Level
+        val fromWidget by widgetLevel
+        LaunchedEffect(fromWidget) {
+            fromWidget?.let { id -> nav.navigate(Routes.level(id)) { launchSingleTop = true }; widgetLevel.value = null }
+        }
         val stats by vm.stats.collectAsStateWithLifecycle()
         var celebrate by remember { mutableStateOf<List<de.kurvenflug.core.model.Badge>>(emptyList()) }
         LaunchedEffect(stats) { val n = vm.newBadges(stats); if (n.isNotEmpty()) celebrate = n }

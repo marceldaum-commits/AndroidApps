@@ -12,6 +12,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 - Vier Reiter unten: 🚀 **Heute** („Weiter, wo du warst“, Tagesmission, Auffrischen), 🗺️ **Galaxie** (Kapitel nach Klasse,
   eingeklappt mit Fortschrittsring, Filter Mathe/Physik), 🎮 **Spiele** (Duell, Sturm, Detektiv, Baukasten), 🎒 **Ich**
   (Lernstand, Abzeichen, Lexikon, Werkstatt, Klasse, Einstellungen).
+- Startbildschirm-Widget (Jetpack Glance): Tagesmission, „Weiter“ und fälliges Auffrischen, jeder Knopf springt direkt ins
+  Level (`kurvenflug://level/<id>`). Klein (2×2) nur Sterne und „Weiter“. Aktualisiert sich nach jedem Level und alle 30 Minuten.
 - Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
@@ -46,6 +48,7 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/39_trig_laser.png) | ![](screenshots/40_trig_funk.png) | ![](screenshots/41_lernstand.png) |
 | ![](screenshots/42_rechenweg.png) | ![](screenshots/43_galaxie.png) | ![](screenshots/44_spiele.png) |
 | ![](screenshots/46_ich.png) | ![](screenshots/45_klasse_waehlen.png) | ![](screenshots/11_einstellungen.png) |
+| ![](screenshots/47_widget.png) | ![](screenshots/48_widget_klein.png) | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

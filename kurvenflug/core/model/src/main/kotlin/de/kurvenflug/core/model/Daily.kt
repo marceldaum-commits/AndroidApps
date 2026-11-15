@@ -12,6 +12,12 @@ object Daily {
     fun id(day: Long) = "$PREFIX$day"
     fun isDaily(id: String) = id.startsWith(PREFIX)
 
+    /** Kurzname für Karte und Widget */
+    fun label(l: Level): String = when (l.kind) {
+        Kind.LINE -> "Gerade 📈"; Kind.PARABOLA -> "Parabel 🌙"; Kind.EXP -> "Wachstum 🦠"; Kind.THROW -> "Wurf ${l.planet.emoji}"
+        else -> "Überraschung"
+    }
+
     fun forDay(day: Long): Level =
         Gen.level(rotation[Math.floorMod(day, 4L).toInt()], day * 7919 + 17, 1).let { it.copy(id = id(day), title = if (it.title == Gen.FALLBACK) it.title else "Tagesmission") }
 }

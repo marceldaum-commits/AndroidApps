@@ -3,6 +3,13 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.9.0 – Widget für den Startbildschirm
+- **📱 Kurvenflug-Widget**: Lange auf den Startbildschirm drücken → Widgets → Kurvenflug. Volt zeigt dort, was heute dran ist:
+  die Tagesmission, „Weiter geht's“ mit deinem nächsten Level und – wenn fällig – ein Thema zum Auffrischen.
+  Ein Tipp, und du bist direkt im Level.
+- Das Widget lässt sich groß oder klein ziehen. Klein zeigt es nur deine Sterne und „Weiter“.
+- Es liest nur deinen Spielstand auf dem Handy – keine Daten nach draußen.
+
 ## 0.8.0 – Aufgeräumte Startseite
 - **Vier Reiter statt einer langen Liste**: 🚀 Heute, 🗺️ Galaxie, 🎮 Spiele und 🎒 Ich.
 - **🚀 Weiter geht's!**: Eine große Karte bringt dich mit einem Tipp genau dorthin, wo du aufgehört hast.

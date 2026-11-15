@@ -32,6 +32,17 @@
             </intent-filter>
         </activity>
 
+        <!-- Startbildschirm-Widget -->
+        <receiver
+            android:name=".widget.KurvenflugWidgetReceiver"
+            android:exported="true"
+            android:label="Kurvenflug">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/kurvenflug_widget_info" />
+        </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.updates"
