@@ -50,6 +50,29 @@ Meldet Maven Central „429 Too Many Requests“, eine Minute warten und neu sta
 
 Die APK fragt einmal täglich die neueste Release-Seite ab (`apkUpdates` in `config.js`). Gibt es eine neuere Version, zeigt die Startseite „Jetzt aktualisieren“. Der Knopf lädt die APK, Android installiert sie als Update. **Für die Play-Store-Fassung `apkUpdates: null` setzen.**
 
+## Inhalte aktualisieren sich selbst (ab 3.13.0, Hülle 2 – Marcel 15.11.2026)
+
+- **Ablauf in der App:** Beim Start lädt die App im Hintergrund `stand.json`, mit Version, Hüllen-Nummer und SHA-256 jeder Datei.
+  - **Test-Kanal:** `https://raw.githubusercontent.com/marceldaum-commits/School/rechenblitz-test/kopfrechnen/stand.json`, ersatzweise `https://rechenblitz-test.mathenachhilfe-online.com/stand.json`.
+  - **Live-/Store-Kanal:** dieselben Adressen mit `rechenblitz-live` bzw. `https://rechenblitz.mathenachhilfe-online.com/`.
+- **Übernahme:**
+  - Neue oder geänderte Dateien werden geladen und geprüft. Nur ein vollständig geprüfter Stand wird übernommen, und zwar in einen eigenen Ordner auf dem Gerät.
+  - Aktiv wird er beim nächsten Start oder sofort über „Jetzt neu starten“.
+  - Ohne Netz bleibt der letzte gute Stand. Ältere Stände als der mitgelieferte werden nie geladen.
+- **Kanal festlegen:** über die Umgebungsvariable `RB_CHANNEL` beim Bauen. `test` ist der Standard (GitHub-Ablauf); für den Store gilt `RB_CHANNEL=live bash build.sh release`.
+- **Hüllen-Nummer:**
+  - `android-app/SHELL` erhöhen, sobald sich die App-Hülle ändert.
+  - Verlangt ein Stand eine neuere Hülle, übernimmt die App nichts. Sie zeigt dann „Neue App-Version nötig“ und den Download der neuesten Release-APK.
+- **Code:**
+  - `RbUpdatePlugin.java` (Hülle);
+  - `liveUpdateCheck()` in `kopfrechnen/js/native.js` (Anzeige);
+  - `android-app/stand.js` erzeugt und prüft `stand.json`.
+- **Abgerufene Adressen (für die Datenschutzerklärung):**
+  - `raw.githubusercontent.com`: stand.json und geänderte Dateien;
+  - `rechenblitz.mathenachhilfe-online.com` bzw. `rechenblitz-test.mathenachhilfe-online.com`: Ersatz;
+  - nur wenn eine neue Hülle nötig ist: `api.github.com` (Release-Info) sowie `github.com` / `objects.githubusercontent.com` (APK-Download nach Tipp).
+  - Dabei werden keine Nutzerdaten gesendet. Übertragen werden nur die üblichen Verbindungsdaten (IP-Adresse) und die Kennung „Rechenblitz-App“.
+
 ## Release-Seiten auf GitHub (Marcel 14.11.2026, Variante 1)
 
 Bei jedem Push auf `rechenblitz-test`, der `kopfrechnen/` oder `android-app/` ändert, baut GitHub (`.github/workflows/rechenblitz-release.yml`) automatisch:

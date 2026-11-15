@@ -540,7 +540,7 @@ function init() {
 }
 
 /* ---------- Nach Updates suchen (Menü + Einstellungen; Marcel 15.11.) ----------
-   Android-App: neueste GitHub-Release-Seite abfragen → Karte „Jetzt aktualisieren“.
+   Android-App (Hülle 2+): neuen Stand von GitHub/Server laden → „Jetzt neu starten“; ältere Hülle: GitHub-Release-Seite.
    Web-App: aktuelle Version vom Server lesen; ist sie neuer, Service Worker aktualisieren und neu laden. */
 let updChecking = false;
 async function checkForUpdate() {
@@ -548,6 +548,14 @@ async function checkForUpdate() {
   if (!navigator.onLine) { toast('Gerade keine Verbindung – bitte später nochmal'); return; }
   updChecking = true; toast('Suche nach Updates …', 1200);
   try {
+    if (IS_NATIVE && RbUpd()) {
+      const st = await liveUpdateCheck(true);
+      if (!st || st.result === 'offline' || st.result === 'error') toast('Gerade keine Verbindung – bitte später nochmal');
+      else if (st.result === 'downloaded' || (st.pending && st.pending !== APP_VERSION)) { closeSheet(); goHome(); toast(`Version ${esc(st.pending)} ist geladen`); }
+      else if (st.needShell) { closeSheet(); goHome(); toast('Für das nächste Update bitte die App neu installieren'); }
+      else toast('Du hast die neueste Version ✓');
+      return;
+    }
     if (IS_NATIVE) {
       const st = await apkUpdateCheck(true);
       if (!st) toast('Gerade keine Verbindung – bitte später nochmal');

@@ -6,6 +6,10 @@ cd "$(dirname "$0")"
 MODE="${1:-debug}"
 export ANDROID_HOME="${ANDROID_HOME:-$HOME/android-sdk}"
 
+# 0. stand.json muss zum Inhalt passen (die App vergleicht damit neue Stände von GitHub/Server)
+node stand.js --check
+echo "Kanal: ${RB_CHANNEL:-test} · Hülle $(cat SHELL)"
+
 # 1. Web-App 1:1 übernehmen (eine Quelle für Web und APK); Service Worker braucht die APK nicht
 rm -rf www && mkdir www
 cp -r ../kopfrechnen/. www/

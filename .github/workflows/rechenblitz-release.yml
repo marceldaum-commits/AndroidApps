@@ -57,7 +57,7 @@ jobs:
         working-directory: android-app
         run: |
           npm ci --no-audit --no-fund
-          bash build.sh
+          RB_CHANNEL=test bash build.sh   # Test-Kanal: Inhalte kommen danach von selbst vom Branch rechenblitz-test
           # Sicherheitsprüfung: nur veröffentlichen, wenn die APK mit dem festen Test-Schlüssel signiert ist
           SIGNER=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)apksigner
           FP=$("$SIGNER" verify --print-certs android/app/build/outputs/apk/debug/app-debug.apk | grep -oP 'SHA-256 digest: \K[0-9a-f]+' | head -1)
@@ -84,7 +84,7 @@ jobs:
             const e = log.find(x => x[0] === process.env.V) || [process.env.V, process.env.D, []];
             const [y, m, d] = e[1].split("-");
             const lines = [`**Rechenblitz ${e[0]} · ${d}.${m}.${y}**`, "", ...e[2].map(i => `- ${i}`), "",
-              "**Android:** `Rechenblitz-" + e[0] + ".apk` herunterladen und installieren. Das ist eine Testfassung mit Test-Signatur, deshalb kann Play Protect warnen. Sie installiert sich als Update über ältere Testfassungen, der Lernstand bleibt. Die App läuft komplett ohne Internet.",
+              "**Android:** `Rechenblitz-" + e[0] + ".apk` herunterladen und installieren. Das ist eine Testfassung mit Test-Signatur, deshalb kann Play Protect warnen. Sie installiert sich als Update über ältere Testfassungen, der Lernstand bleibt. Die App läuft ohne Internet. Ab Hülle 2 (Version 3.13.0) lädt sie neue Inhalte selbst vom Branch rechenblitz-test – eine neue APK braucht es nur noch, wenn die App das meldet.",
               "**Web:** `Rechenblitz-WebApp-" + e[0] + ".zip` enthält den Ordner `kopfrechnen/`, also genau das, was auf rechenblitz.mathenachhilfe-online.com läuft."];
             require("fs").writeFileSync(process.env.RUNNER_TEMP + "/notes.md", lines.join("\n"));'
           TAG="rechenblitz-$V"

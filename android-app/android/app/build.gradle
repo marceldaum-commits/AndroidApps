@@ -7,9 +7,12 @@ android {
         applicationId "com.mathenachhilfeonline.rechenblitz"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 30702
-        versionName "3.7.2"
+        versionCode 31300
+        versionName "3.13.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // Hüllen-Nummer (android-app/SHELL) und Kanal: test = Branch rechenblitz-test, live = rechenblitz-live (RB_CHANNEL=live für Store)
+        buildConfigField "int", "RB_SHELL", file('../../SHELL').text.trim()
+        buildConfigField "String", "RB_CHANNEL", "\"${System.getenv('RB_CHANNEL') ?: 'test'}\""
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
              // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
@@ -26,6 +29,7 @@ android {
             keyPassword 'android'
         }
     }
+    buildFeatures { buildConfig true }
     buildTypes {
         // Beide Fassungen verkleinert (R8): ungenutzter Code und Ressourcen fliegen raus → kleine APK
         debug {

@@ -27,7 +27,46 @@ if (IS_NATIVE) {
    Update, Lernstand bleibt). Für die Play-Store-Fassung in config.js apkUpdates: null setzen. */
 const verNum = v => String(v || '').split('.').map(Number).reduce((a, n) => a * 1000 + (n || 0), 0);
 const apkNewer = v => !!v && verNum(v) > verNum(APP_VERSION);
+/* ---------- APK ab Hülle 2: Inhalte kommen von selbst (Marcel 15.11.: „der Updateserver soll der Git sein“) ----------
+   Die App lädt neue Stände im Hintergrund von GitHub (Ersatz: eigener Server), prüft jede Datei und übernimmt
+   nur vollständige Stände – beim nächsten Start oder sofort mit „Jetzt neu starten“. Eine neue APK ist nur nötig,
+   wenn sich die App-Hülle ändert (stand.json „shell“). */
+const RbUpd = () => (IS_NATIVE && window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.RbUpdate) || null;
+let liveUpd = null;
+async function liveUpdateCheck(force) {
+  const U = RbUpd(); if (!U) return null;
+  try { liveUpd = force ? await U.check() : await U.status(); } catch { return null; }
+  renderLiveUpdate();
+  if (liveUpd.needShell) shellApkFetch();
+  return liveUpd;
+}
+async function shellApkFetch() {   // Download-Adresse der neuen APK (GitHub-Release) für die Karte
+  const cfg = CONFIG.apkUpdates; if (!cfg || !cfg.repo || !navigator.onLine) return;
+  try {
+    const r = await fetch(`https://api.github.com/repos/${cfg.repo}/releases/latest`, { headers: { Accept: 'application/vnd.github+json' } });
+    if (!r.ok) return;
+    const j = await r.json(), apk = (j.assets || []).find(a => /\.apk$/i.test(a.name));
+    if (apk && liveUpd) { liveUpd.apkUrl = apk.browser_download_url; renderLiveUpdate(); }
+  } catch {}
+}
+function renderLiveUpdate() {
+  const u = liveUpd || {}, home = $('home');
+  let el = $('apkUpd');
+  const kind = u.needShell ? 'shell' : u.pending && u.pending !== APP_VERSION ? 'ready' : '';
+  if (!kind || !home) { if (el) el.remove(); return; }
+  if (!el) { home.querySelector('.col-left').insertAdjacentHTML('afterbegin', '<div class="card apk-upd" id="apkUpd"></div>'); el = $('apkUpd'); }
+  el.innerHTML = kind === 'ready'
+    ? `<div class="ch-ico">✨</div><div class="ch-txt"><b>Version ${esc(u.pending)} ist geladen</b><span>Lernstand bleibt erhalten</span></div><button class="btn small primary" id="apkGo">Jetzt neu starten</button>`
+    : `<div class="ch-ico">⬆️</div><div class="ch-txt"><b>Neue App-Version nötig</b><span>Für Version ${esc(u.needVersion || '')} bitte die App einmal neu installieren – der Lernstand bleibt</span></div>${u.apkUrl ? '<button class="btn small primary" id="apkGo">Herunterladen</button>' : ''}`;
+  $('apkGo') && ($('apkGo').onclick = () => {
+    if (kind === 'ready') { save(); RbUpd()?.apply().catch(() => {}); return; }
+    toast('Download startet – danach „Installieren“ antippen', 3000); setTimeout(() => { location.href = u.apkUrl; }, 400);
+  });
+}
+if (RbUpd()) RbUpd().addListener('ready', s => { liveUpd = s; renderLiveUpdate(); if (s.needShell) shellApkFetch(); }).catch?.(() => {});
+
 async function apkUpdateCheck(force) {
+  if (RbUpd()) return liveUpdateCheck(force);   // neue Hülle: Inhalte über stand.json, kein APK-Download nötig
   const cfg = CONFIG.apkUpdates;
   if (!IS_NATIVE || !cfg || !cfg.repo) return null;
   const st = (ROOT.apkUpd ||= {});

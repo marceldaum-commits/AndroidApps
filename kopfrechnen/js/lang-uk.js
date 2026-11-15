@@ -1433,4 +1433,12 @@ I18N.add('uk', {"% sind":"% — це",
 "Abbrechen führt zurück zur Reise-Karte, zum Adventskalender oder zum Merk-Training":"Вихід повертає до карти подорожі, адвент-календаря або тренування пам'яті",
 "Zurück-Taste am Handy schließt Fenster und beendet Runden, statt die App zu verlassen":"Кнопка «Назад» на телефоні закриває вікна й завершує раунди, а не виходить із застосунку",
 "Tageschallenge: ein abgebrochener Start zählt nicht mehr als Versuch":"Щоденний виклик: перерваний старт більше не вважається спробою",
-"Viele kleine Verbesserungen: Funken-Anzeige, Rätsel, Garderobe, Zurücksetzen":"Багато дрібних покращень: показ іскор, загадка, гардероб, скидання"});
+"Viele kleine Verbesserungen: Funken-Anzeige, Rätsel, Garderobe, Zurücksetzen":"Багато дрібних покращень: показ іскор, загадка, гардероб, скидання",
+"Version {} ist geladen":"Версію {} завантажено",
+"Jetzt neu starten":"Перезапустити",
+"Neue App-Version nötig":"Потрібна нова версія застосунку",
+"Für Version {} bitte die App einmal neu installieren – der Lernstand bleibt":"Для версії {} перевстанови застосунок один раз – прогрес збережеться",
+"Herunterladen":"Завантажити",
+"Für das nächste Update bitte die App neu installieren":"Для наступного оновлення перевстанови застосунок",
+"Android-App: neue Versionen kommen jetzt von selbst – ohne Neuinstallation, der Lernstand bleibt":"Android-застосунок: нові версії тепер приходять самі – без перевстановлення, прогрес зберігається",
+"Ohne Internet läuft immer der zuletzt geladene Stand":"Без інтернету працює остання завантажена версія"});

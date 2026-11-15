@@ -2,8 +2,39 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.12.1** (3.12.0 Blitz-Welt + Bedien-Korrekturen aus dem Klick-Test), siehe Meldungen (28)–(33). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
-> - **Bitte testen und live freigeben.** Seit heute läuft die Advents-Vorschau (ab 15.11.), ihre Texte sind jetzt auch auf EN/UK vollständig.
+> **AKTUELLER STAND (15.11.2026, abends) – für den Leitstand:** Live ist 3.12.1 (b83bcaa, freigegeben). Auf `rechenblitz-test` liegt **3.13.0**: Die Android-App aktualisiert ihre Inhalte selbst (GitHub, Ersatz eigener Server), siehe Meldung (34). Bitte testen und freigeben. Mit der Freigabe auf `rechenblitz-live` bekommt der Live-Kanal neue Stände automatisch.
+
+## 15.11.2026 (34) – Android-App aktualisiert ihre Inhalte selbst (3.13.0 · Hülle 2) · NEUE APK INSTALLIEREN (einmalig)
+
+- **Auftrag:** Leitstand, von Marcel am 15.11. bestätigt: „der Updateserver soll der Git sein“.
+- **So funktioniert es:**
+  - Die App bringt einen vollständigen Stand mit und läuft sofort und ohne Internet.
+  - Kurz nach jedem Start lädt sie im Hintergrund `stand.json` (Version, Hüllen-Nummer, SHA-256 jeder Datei).
+  - Zuerst fragt sie **GitHub** ab, ersatzweise den **eigenen Server**:
+    - **Test-Kanal:** Branch `rechenblitz-test` bzw. `rechenblitz-test.mathenachhilfe-online.com`. Ihn hat jede APK aus dem GitHub-Ablauf.
+    - **Live-/Store-Kanal:** Branch `rechenblitz-live` bzw. `rechenblitz.mathenachhilfe-online.com`. Er ist für den Store-Build gedacht (`RB_CHANNEL=live`), bekommt also nur, was der Leitstand auf `rechenblitz-live` freigibt.
+  - Geänderte Dateien werden geladen und per Prüfsumme kontrolliert, unveränderte vom Gerät kopiert.
+  - **Nur ein vollständig geprüfter Stand** wird übernommen. Aktiv wird er beim nächsten Start oder sofort über die Karte „Version X ist geladen · Jetzt neu starten“.
+  - Ohne Netz oder bei einem Fehler bleibt der letzte gute Stand. Ältere Stände als der mitgelieferte werden nie geladen.
+  - Kein Bestätigen, keine Neuinstallation. Der Lernstand bleibt.
+  - „Nach Updates suchen“ prüft sofort.
+- **Neue APK** braucht es nur noch, wenn sich die App-Hülle ändert (`android-app/SHELL`, jetzt **2**). Verlangt ein Stand eine neuere Hülle, übernimmt die App nichts. Sie zeigt dann „Neue App-Version nötig“ mit Download-Knopf. In der Meldung steht das künftig jedes Mal deutlich.
+- **⚠️ NEUE APK INSTALLIEREN (einmalig):**
+  - Marcel muss **Rechenblitz 3.13.0** einmal installieren (Release `rechenblitz-3.13.0` bzw. Drive). Die bisherigen APKs (bis 3.12.1, Hülle 1) zeigen das Update von selbst an.
+  - Danach kommen alle Versionen automatisch.
+- **Versionsnummer:** Web-App und App sind immer gleich, denn die App zeigt die Version des geladenen Standes. `stand.json` wird mit `node android-app/stand.js` erzeugt. GitHub-Ablauf und `build.sh` brechen ab, wenn sie veraltet ist (neue Regel 9 in der Roadmap).
+- **Für die Datenschutzerklärung – diese Adressen ruft die App ab:**
+  - `raw.githubusercontent.com` (GitHub; nur `stand.json` und geänderte Dateien der Web-App aus dem öffentlichen Repo `marceldaum-commits/School`);
+  - als Ersatz `rechenblitz.mathenachhilfe-online.com` bzw. `rechenblitz-test.mathenachhilfe-online.com`;
+  - nur wenn eine neue App-Hülle nötig ist: `api.github.com` (Release-Info), nach Tipp auf „Herunterladen“ `github.com` / `objects.githubusercontent.com` (APK).
+  - Es werden **keine Nutzerdaten** gesendet, nur die technisch nötigen Verbindungsdaten (IP-Adresse, Kennung „Rechenblitz-App“).
+  - Unverändert bleiben die Server-Funktionen (Fehler melden, Gutschein, Klassen-Challenge) über `rechenblitz.mathenachhilfe-online.com`.
+- **Tests:**
+  - Die APK kompiliert, und `stand.json` ist in der APK.
+  - Die Web-Anzeige ist mit einer nachgebildeten App-Schnittstelle getestet: geladen, Hülle nötig, aktuell; DE/EN; keine JS-Fehler.
+  - Der Download-Weg ist nach dem Push gegen GitHub und den Server geprüft: alle Prüfsummen stimmen.
+  - Auf einem echten Gerät ist noch nicht getestet, denn hier läuft kein Android-Emulator. **Bitte auf dem Handy prüfen:** 3.13.0 installieren. Bei der nächsten Version muss die Karte „Version … ist geladen“ erscheinen.
+
 ## 15.11.2026 (33) – Bedien-Check: Korrekturen nach Marcels Klick-Test (3.12.1)
 
 - **Anlass:** Marcel hat bemerkt, dass manche Stellen nicht wie erwartet reagieren. Ein Beispiel war die Rechen-Reise: Nach Rein und Raus fehlte die Karte. Deshalb gab es zwei Prüfungen:

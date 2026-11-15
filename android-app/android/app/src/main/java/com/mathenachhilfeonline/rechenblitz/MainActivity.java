@@ -9,6 +9,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(RbWidgetPlugin.class);   // Brücke Web-App → Startbildschirm-Widget
+        registerPlugin(RbUpdatePlugin.class);   // Inhalte selbst aktualisieren (GitHub, Ersatz: eigener Server)
         super.onCreate(savedInstanceState);
         // Zurück-Taste: erst die Web-App reagieren lassen (Fenster schließen, Runde beenden),
         // die App wird nur auf der Startseite verlassen.

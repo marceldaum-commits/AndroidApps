@@ -1433,4 +1433,12 @@ I18N.add('en', {"% sind":"% are",
 "Abbrechen führt zurück zur Reise-Karte, zum Adventskalender oder zum Merk-Training":"Quitting takes you back to the journey map, the advent calendar or memory training",
 "Zurück-Taste am Handy schließt Fenster und beendet Runden, statt die App zu verlassen":"The phone's back button closes windows and ends rounds instead of leaving the app",
 "Tageschallenge: ein abgebrochener Start zählt nicht mehr als Versuch":"Daily challenge: a cancelled start no longer counts as an attempt",
-"Viele kleine Verbesserungen: Funken-Anzeige, Rätsel, Garderobe, Zurücksetzen":"Many small improvements: sparks display, puzzle, wardrobe, reset"});
+"Viele kleine Verbesserungen: Funken-Anzeige, Rätsel, Garderobe, Zurücksetzen":"Many small improvements: sparks display, puzzle, wardrobe, reset",
+"Version {} ist geladen":"Version {} is ready",
+"Jetzt neu starten":"Restart now",
+"Neue App-Version nötig":"New app version needed",
+"Für Version {} bitte die App einmal neu installieren – der Lernstand bleibt":"For version {} please reinstall the app once – your progress stays",
+"Herunterladen":"Download",
+"Für das nächste Update bitte die App neu installieren":"Please reinstall the app for the next update",
+"Android-App: neue Versionen kommen jetzt von selbst – ohne Neuinstallation, der Lernstand bleibt":"Android app: new versions now arrive by themselves – no reinstall, your progress stays",
+"Ohne Internet läuft immer der zuletzt geladene Stand":"Without internet, the last downloaded version runs"});
