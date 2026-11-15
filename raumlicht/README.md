@@ -92,6 +92,8 @@ Raumlicht entsteht für Android und Web aus einer Codebasis (Compose Multiplatfo
 - `web/` ist die WebApp; sie bindet dieselbe 3D-Bühne ein (`app/src/main/assets/scene/scene.js`) und liest die Version aus `app/build.gradle.kts`.
 - Bauen: `./gradlew :web:webapp` legt die fertigen Dateien nach `webapp/`. Prüfen: `cd webapp && python3 -m http.server 8765`, dann
   `cd scene && node test/web.mjs http://localhost:8765/ <Ordner für Bilder>` (Start, Bühne, Aufgabe lösen, Speicher, Version, Manifest, Konsolenfehler).
+- Automatisches Update ohne Knopf (Service Worker + Selbst-Neuladen an ruhiger Stelle): `cd scene && node test/web-update.mjs ../webapp` stellt einen
+  Versionswechsel nach und prüft Update, Speicher und Offline-Start. Nach jeder Änderung an `index.html` oder `sw.js` laufen lassen.
 - Ausliefern: Branch `raumlicht-test` (der Server holt `raumlicht/webapp/`); `raumlicht-live` setzt nur der Leitstand. Meldungen: `MELDUNG_AN_LEITSTAND.md`.
 - Stand: Vorschau mit allen Tour-Aufgaben; die Android-Oberfläche und die Extras ziehen schrittweise in den gemeinsamen Code um.
 

@@ -14,6 +14,8 @@ fun storeGet(key: String): String? = js("localStorage.getItem(key)")
 fun storeSet(key: String, value: String): Unit = js("localStorage.setItem(key, value)")
 fun openLink(url: String): Unit = js("window.open(url, '_blank', 'noopener')")
 fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s) s.style.display = 'none'; }")
+/** Der Seite sagen, ob gerade die Startseite offen ist – nur dort (oder im Hintergrund) lädt sie sich nach einem Update selbst neu */
+fun atHome(on: Boolean): Unit = js("{ window.__rlHome = on; if (on && window.__rlTry) window.__rlTry(); }")
 fun pixelRatio(): Double = js("window.devicePixelRatio || 1")
 
 // Schrift laden: zwei Dateien aus fonts/ holen und als Bytes an die Oberfläche geben

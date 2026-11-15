@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-version="2.4.1">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -25,7 +25,20 @@
 <script>
   // Ohne WebAssembly-GC (sehr alte Browser) startet die App nicht – das sagen wir, statt eine leere Seite zu zeigen
   window.addEventListener('error', function (e) { var t = document.getElementById('start-text'); if (t && document.getElementById('start').style.display !== 'none') { t.className = 'fehler'; t.textContent = 'Das hat nicht geklappt. Raumlicht braucht einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).'; } });
-  if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js');
+  // Automatisches Update – ohne Knopf: Die Seite fragt beim Öffnen, beim Zurückkehren und alle 30 Minuten nach einer neuen Version.
+  // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
+  // (Startseite oder App im Hintergrund), nie mitten in einer Aufgabe.
+  window.__rlHome = true; var updateWaiting = false;
+  window.__rlTry = function () { if (updateWaiting && (document.hidden || window.__rlHome)) { updateWaiting = false; location.reload(); } };
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    var hadWorker = !!navigator.serviceWorker.controller;      // beim allerersten Besuch gibt es nichts zu aktualisieren
+    navigator.serviceWorker.addEventListener('controllerchange', function () { if (hadWorker) { updateWaiting = true; window.__rlTry(); } hadWorker = true; });
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
+      var check = function () { reg.update().catch(function () {}); };
+      document.addEventListener('visibilitychange', function () { if (document.hidden) window.__rlTry(); else check(); });
+      setInterval(check, 30 * 60 * 1000);
+    });
+  }
 </script>
 <script src="raumlicht.js"></script>
 </body>

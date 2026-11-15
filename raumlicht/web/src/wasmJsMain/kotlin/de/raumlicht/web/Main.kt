@@ -68,7 +68,7 @@ private fun App() {
 
 @Composable
 private fun Home(stars: Map<String, Int>, onOpen: (Level) -> Unit) {
-    LaunchedEffect(Unit) { placeStage(0.0, 0.0, 0.0, 0.0, false) }
+    LaunchedEffect(Unit) { placeStage(0.0, 0.0, 0.0, 0.0, false); atHome(true) }
     var area by remember { mutableStateOf(Area.GEOMETRIE) }
     Column(Modifier.fillMaxSize().background(Space).padding(horizontal = 14.dp)) {
         Row(Modifier.fillMaxWidth().padding(top = 14.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -115,7 +115,7 @@ private fun LevelView(level: Level, onBack: () -> Unit, onSolved: (Int) -> Unit)
     var attempts by remember(level.id) { mutableStateOf(0) }
     var says by remember(level.id) { mutableStateOf(level.mission) }
     LaunchedEffect(values, phase) { stageRun("RL.setState(${level.scene(values, phase)})") }
-    DisposableEffect(Unit) { onDispose { placeStage(0.0, 0.0, 0.0, 0.0, false) } }
+    DisposableEffect(Unit) { atHome(false); onDispose { placeStage(0.0, 0.0, 0.0, 0.0, false) } }
     Column(Modifier.fillMaxSize().background(Space).padding(12.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text("‹ zurück", Modifier.clickable(onClick = onBack).padding(8.dp), color = Cyan, fontWeight = FontWeight.Bold)
