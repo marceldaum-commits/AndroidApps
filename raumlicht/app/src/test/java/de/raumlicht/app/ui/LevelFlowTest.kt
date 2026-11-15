@@ -124,11 +124,18 @@ class LevelFlowTest {
         rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(600)
     }
 
-    @Test fun luxShootsTheDrawnBallsOnSuccess() {
-        play("13-1")
-        tap("plus-a-0", 3); go()
+    @Test fun luxActsOutWhatTheQuestionAsks() {
+        play("13-2")                                               // zweimal ziehen MIT Zurücklegen
+        tap("plus-a-0", 5); rule.mainClock.autoAdvance = false
+        rule.onNodeWithText("▶ Los").performClick(); rule.mainClock.advanceTimeBy(700)
+        rule.onNodeWithText("1. Zug: pink – 5 von 10.").assertExists()
+        rule.mainClock.advanceTimeBy(1500); rule.onNodeWithText("Zurücklegen – wieder alle 10 da.").assertExists()
+        assertEquals(10, Regex("\"type\":\"sphere\"").findAll(stage.lastState!!).count())
+        rule.mainClock.advanceTimeBy(1300); rule.onNodeWithText("2. Zug: pink – 5 von 10.").assertExists()
+        rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(4000)
         assertEquals(listOf(3 to 1), solved)
-        assertEquals(3, stage.log.count { it.startsWith("RL.fire") && it.contains("color:'pink'") })
-        assertEquals(7, Regex("\"type\":\"sphere\"").findAll(stage.lastState!!).count())
+        assertEquals(10, Regex("\"type\":\"sphere\"").findAll(stage.lastState!!).count())          // keine Kugel verschwindet
+        assertTrue(stage.lastState!!.contains("\"plain\":true") && stage.lastState!!.contains("2. Zug"))
+        assertEquals(2, stage.log.count { it.startsWith("RL.fire") })
     }
 }

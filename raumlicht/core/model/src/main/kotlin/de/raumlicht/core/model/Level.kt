@@ -40,7 +40,13 @@ enum class Phase { AIM, DONE }
  * Was Lux zur Belohnung tut, wenn die Lösung stimmt: eine Strecke abfliegen ([path]) und/oder Ziele mit dem Laser anblitzen ([beams]).
  * Ohne eigene Angabe blitzt Lux die wichtigen Punkte der Szene an.
  */
-data class Finale(val beams: List<Beam> = emptyList(), val path: List<V3> = emptyList()) {
+/**
+ * Ein Schritt im Drehbuch des Finales: Lux sagt [say], schießt/zeigt mit [beams] und danach steht die Bühne so da wie in [objects] (ohne Lux).
+ * So passt das, was Lux tut, zur Frage – z. B. ziehen, zurücklegen, noch einmal ziehen.
+ */
+data class Act(val say: String, val objects: List<Obj>? = null, val beams: List<Beam> = emptyList(), val ms: Int = 1300)
+
+data class Finale(val beams: List<Beam> = emptyList(), val path: List<V3> = emptyList(), val acts: List<Act> = emptyList()) {
     companion object {
         private val colors = listOf("pink", "cyan", "yellow", "green", "violet", "orange")
         fun default(aim: List<Obj>, done: List<Obj>, out: Outcome): Finale {
@@ -75,7 +81,9 @@ class Level(
         val c = control(key)
         return values + (key to v.mapIndexed { i, x -> x.coerceIn(c.min[i], c.max[i]) })
     }
-    fun scene(values: Values, phase: Phase): String = objects(values, phase).let { o -> Stage.encode(bounds, if (chapter in STOCHASTICS && o.none { it.type == "podium" }) o + Stage.podium() else o) }
+    fun scene(values: Values, phase: Phase): String = encode(objects(values, phase))
+    /** Bühne aus beliebigen Dingen dieser Aufgabe – Stochastik steht immer auf der Showbühne */
+    fun encode(o: List<Obj>): String = Stage.encode(bounds, if (chapter in STOCHASTICS && o.none { it.type == "podium" }) o + Stage.podium() else o)
 
     companion object {
         /** Sterne: beim ersten Versuch 3, beim zweiten 2, danach 1. Mit Rechentipp höchstens 2. */

@@ -112,13 +112,26 @@ class ExtrasTest {
     }
 
     @Test fun finaleGivesLuxSomethingToDo() {
-        // Stochastik: Lux schießt genau die gezogenen pinken Kugeln ab, danach sind sie weg
-        val l = Levels.byId("13-1")!!
-        val fin = l.finale!!(l.solution); assertEquals(3, fin.beams.size); assertTrue(fin.beams.all { it.hit && it.color == "pink" })
-        val before = l.objects(l.solution, Phase.AIM).count { it.type == "sphere" }; val after = l.objects(l.solution, Phase.DONE).count { it.type == "sphere" }
-        assertEquals(10, before); assertEquals(7, after)
-        assertEquals(fin.beams.map { it.to.list }, l.objects(l.solution, Phase.AIM).filter { it.type == "sphere" }.take(3).map { it.p })
-        assertEquals(2, Levels.byId("13-3")!!.finale!!(mapOf("a" to listOf(2))).beams.size)
+        // Stochastik: Was Lux tut, passt zur Frage
+        fun spheres(o: List<Obj>) = o.count { it.type == "sphere" }
+        fun fin(id: String) = Levels.byId(id)!!.let { it.finale!!(it.solution) to it.objects(it.solution, Phase.DONE) }
+        // ein Zug: erst die 3 günstigen zeigen, dann eine ziehen – alle 10 bleiben da
+        fin("13-1").let { (f, done) -> assertEquals(3, f.acts[0].beams.size); assertTrue(f.acts[0].beams.none { it.hit }); assertEquals(10, spheres(done)); assertTrue(done.any { it.label == "gezogen" }) }
+        // mit Zurücklegen: ziehen – zurücklegen – ziehen; nie fehlt eine Kugel
+        fin("13-2").let { (f, done) -> assertEquals(listOf("1. Zug: pink – 5 von 10.", "Zurücklegen – wieder alle 10 da.", "2. Zug: pink – 5 von 10."), f.acts.map { it.say })
+            assertTrue(f.acts.all { spheres(it.objects!!) == 10 }); assertEquals(10, spheres(done)); assertTrue(f.acts.flatMap { it.beams }.none { it.hit }) }
+        // ohne Zurücklegen: jede gezogene Kugel wird abgeschossen und bleibt draußen
+        fin("13-3").let { (f, done) -> assertEquals(listOf(4, 3), f.acts.map { spheres(it.objects!!) }); assertTrue(f.acts.all { it.beams.single().hit }); assertEquals(3, spheres(done))
+            assertTrue(f.acts[1].say.contains("nur noch 1 von 4")) }
+        // mindestens eins: nur der Fall „keins“ fällt weg
+        fin("13-5").let { (f, done) -> assertEquals(6, spheres(done)); assertTrue(done.none { it.label == "keins" }); assertEquals(8, spheres(Levels.byId("13-5")!!.objects(mapOf("a" to listOf(0)), Phase.AIM))) }
+        // Baum: genau die zwei passenden Pfade; Kombinationen: alle sechs; bedingt: nur die VIP-Felder bleiben
+        assertEquals(listOf(2, 2, 0), fin("16-1").first.acts.map { it.beams.size }); assertEquals(6, fin("16-2").first.acts.size)
+        assertEquals(setOf("f0", "t0", "f1", "t1"), fin("16-4").second.map { it.id }.filter { it != "lux" }.toSet())
+        // jede Stochastik-Aufgabe (auch im Abi) hat ein eigenes Drehbuch
+        (Levels.chapters.filter { it.area == Area.STOCHASTIK }.flatMap { it.levels } + Exams.all.first { it.id == "trommel" }.parts.map { it.level }).forEach { l ->
+            assertTrue(l.id, l.finale!!(l.solution).acts.isNotEmpty()) }
+        assertEquals(5, spheres(Exams.all.first { it.id == "trommel" }.parts[1].level.let { it.objects(it.solution, Phase.DONE) }))
         // Achterbahn: Lux fährt die ganze Bahn ab und hält an der gesuchten Stelle
         val ride = Levels.byId("14-2")!!; val lap = ride.finale!!(ride.solution).path
         assertTrue(lap.size > 15); assertEquals(ride.objects(ride.solution, Phase.DONE).first { it.type == "drone" }.p, lap.last().list)

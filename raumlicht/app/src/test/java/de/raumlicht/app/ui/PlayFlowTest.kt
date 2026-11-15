@@ -133,4 +133,13 @@ class PlayFlowTest {
         rule.onNodeWithTag("zuruecksetzen-ja").performClick(); rule.mainClock.advanceTimeBy(500); assertEquals(1, resets)
         rule.onNodeWithText("✓ Alles zurückgesetzt – du startest wieder bei null.").assertExists()
     }
+
+    @Test fun volumeSliderInSettings() {
+        var v = 100
+        show { de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "0.5.4", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, volume = v, onVolume = { v = it }) }
+        rule.onNodeWithText("🔉 Lautstärke: 100 %").assertExists()
+        slide("lautstaerke", 0.42f); assertEquals(40, v)                                                    // in Schritten von 5 %
+        val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
+        val s = de.raumlicht.core.data.Settings(ctx); assertEquals(100, s.volume.value); s.setVolume(130); assertEquals(100, s.volume.value); s.setVolume(35); assertEquals(35, de.raumlicht.core.data.Settings(ctx).volume.value)
+    }
 }

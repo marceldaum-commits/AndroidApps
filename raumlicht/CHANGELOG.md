@@ -2,6 +2,17 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.5.4 – Lux tut, wonach gefragt ist (15.11.2026)
+- **Stochastik: Aktion passt zur Frage.** Nach der Lösung spielt Lux genau das nach, worum es ging, und sagt dazu, was passiert:
+  - *mit Zurücklegen:* ziehen – zurücklegen – noch einmal ziehen; es bleiben immer alle Kugeln da.
+  - *ohne Zurücklegen:* jede gezogene Kugel wird abgeschossen und bleibt draußen („nur noch 1 von 4“).
+  - *ein Zug:* erst die günstigen Kugeln zeigen, dann eine ziehen.
+  - *mindestens eins:* vier gleich wahrscheinliche Fälle – nur „keins“ fällt weg.
+  - *Baumdiagramm:* Lux leuchtet genau die zwei passenden Pfade nach. *Pfade zählen:* alle sechs Möglichkeiten nacheinander.
+  - *Vierfeldertafel / bedingte Wahrscheinlichkeit:* die Felder, die nicht mitzählen, verschwinden.
+  - gilt auch für die Abi-Aufgabe „Lostrommel“.
+- **Ton lauter und regelbar:** Musik und Geräusche sind ab Werk lauter; in den Einstellungen gibt es einen Lautstärke-Regler.
+
 ## 0.5.3 – Neu anfangen (15.11.2026)
 - **🧹 Fortschritt zurücksetzen:** In den Einstellungen gibt es jetzt einen Knopf, der alles Bisherige löscht – Sterne, Rekorde, Abi-Punkte,
   Fehler-Tagebuch, Kalender und das freigespielte Aussehen von Lux. Vorher wird nachgefragt; Ton-Einstellungen und Klausur-Plan bleiben.

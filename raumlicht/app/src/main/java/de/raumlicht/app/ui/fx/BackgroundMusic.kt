@@ -23,6 +23,7 @@ class BackgroundMusic(private val context: Context) {
     private var enabled = true
     private var foreground = false
     private var ducked = false
+    private var master = 1f
     private var level = 0f
     private val cache = HashMap<MusicMood, ShortArray>()
     private var fadeJob: Job? = null
@@ -37,7 +38,7 @@ class BackgroundMusic(private val context: Context) {
                     AudioManager.AUDIOFOCUS_LOSS -> stopNow()
                     // kurz unterbrochen (Assistent, Navi-Ansage, Wecker): nur anhalten, Fokus behalten → danach weiter
                     AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> { fadeTo(0f, 200); runCatching { track?.pause() }; interrupted = true }
-                    AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> fadeTo(0.3f * BASE)
+                    AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> fadeTo(0.3f * BASE * master)
                     AudioManager.AUDIOFOCUS_GAIN -> {
                         if (interrupted) { interrupted = false; runCatching { track?.play() } }
                         refresh()
@@ -50,11 +51,13 @@ class BackgroundMusic(private val context: Context) {
     fun setMood(m: MusicMood) = scope.launch { wanted = m; refresh() }
     fun onForeground(on: Boolean) = scope.launch { foreground = on; refresh() }
     fun duck(on: Boolean) = scope.launch { ducked = on; if (track != null) fadeTo(target()) }
+    /** Lautstärke aus den Einstellungen, 0..1 */
+    fun setVolume(v: Float) = scope.launch { master = v.coerceIn(0f, 1f); if (track != null) fadeTo(target(), 150) }
 
     /** Musik schon vorab erzeugen, damit sie sofort da ist. */
     fun prepare(vararg moods: MusicMood) = scope.launch { moods.forEach { pcm(it) } }
 
-    private fun target() = if (ducked) BASE * 0.35f else BASE
+    private fun target() = (if (ducked) BASE * 0.35f else BASE) * master
 
     private suspend fun refresh() {
         val m = wanted
@@ -129,8 +132,8 @@ class BackgroundMusic(private val context: Context) {
         .setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
 
     companion object {
-        /** Musik bewusst leise – Geräusche sollen vorne bleiben. */
-        const val BASE = 0.32f
+        /** Musik bleibt hinter den Geräuschen, ist aber gut hörbar. */
+        const val BASE = 0.55f
         /** Erhöhen, wenn sich Komponist oder Klang ändern (alter Cache wird dann ignoriert). */
         const val VERSION = 1
     }

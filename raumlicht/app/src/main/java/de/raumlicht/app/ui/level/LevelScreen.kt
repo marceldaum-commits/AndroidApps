@@ -107,7 +107,7 @@ fun LevelScreen(
         scope.launch {
             sfx?.play(Sound.LAUNCH)
             out.flyTo?.let { to ->
-                override = Stage.encode(level.bounds, level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list) else it })
+                override = level.encode(level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list) else it })
                 delay(1100)
             }
             out.beams.forEach { b ->
@@ -120,9 +120,16 @@ fun LevelScreen(
                 // Finale: Lux fährt eine Strecke ab und/oder blitzt Ziele an – je nach Aufgabe
                 val aim = level.objects(values, Phase.AIM)
                 val fin = level.finale?.invoke(values) ?: Finale.default(aim, level.objects(values, Phase.DONE), out)
-                fin.path.forEach { pt -> override = Stage.encode(level.bounds, aim.map { if (it.type == "drone") it.copy(p = pt.list) else it }); delay(90) }
+                fin.path.forEach { pt -> override = level.encode(aim.map { if (it.type == "drone") it.copy(p = pt.list) else it }); delay(90) }
                 fin.beams.forEachIndexed { i, b -> controller.fire(b, 240); sfx?.play(Sound.HIT, 1f + i * 0.08f); view.buzz(Buzz.TICK, vib); delay(170) }
                 if (fin.beams.isNotEmpty()) delay(260)
+                // Drehbuch: Schritt für Schritt das tun, wonach gefragt war – Lux sagt dazu, was gerade passiert
+                fin.acts.forEach { act ->
+                    says = act.say to LuxMood.HAPPY
+                    act.beams.forEachIndexed { i, b -> controller.fire(b, 260); sfx?.play(Sound.HIT, 1f + i * 0.08f); view.buzz(Buzz.TICK, vib); delay(200) }
+                    act.objects?.let { o -> override = level.encode(o + aim.filter { it.type == "drone" }) }
+                    delay(act.ms.toLong())
+                }
                 out.flyTo?.let { controller.burst(it, "green") }
                 controller.party(); sfx?.play(Sound.WIN); view.buzz(Buzz.HIT, vib)
                 override = null; phase = Phase.DONE
@@ -130,7 +137,7 @@ fun LevelScreen(
                 onSolved(stars, attempts)
             } else {
                 sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib)
-                out.flyTo?.let { to -> override = Stage.encode(level.bounds, level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list, mood = "sad") else it }) }
+                out.flyTo?.let { to -> override = level.encode(level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list, mood = "sad") else it }) }
                 if (MistakeBook.isNamed(out.message)) sink(level.id, out.message)      // typischer Fehler → ins Fehler-Tagebuch
                 says = (out.message + if (attempts == 2 && !usedTip && !strict) " Tipp gefällig? 💡" else "") to LuxMood.SAD
             }

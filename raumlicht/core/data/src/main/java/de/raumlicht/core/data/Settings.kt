@@ -24,6 +24,11 @@ class Settings(ctx: Context) {
     fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("autoUpdate", v).apply(); _autoUpdate.value = v }
 
+    /** Lautstärke von Musik und Geräuschen in Prozent (Standard: voll) */
+    private val _volume = MutableStateFlow(prefs.getInt("volume", 100))
+    val volume: StateFlow<Int> = _volume.asStateFlow()
+    fun setVolume(v: Int) { val c = v.coerceIn(0, 100); prefs.edit().putInt("volume", c).apply(); _volume.value = c }
+
     /** Kapitel-Erklärung schon gesehen? */
     fun introSeen(chapter: Int) = prefs.getBoolean("intro_$chapter", false)
     fun markIntroSeen(chapter: Int) = prefs.edit().putBoolean("intro_$chapter", true).apply()

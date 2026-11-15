@@ -90,7 +90,7 @@ object Synth {
 
     private fun normalize(a: FloatArray) {
         val peak = a.maxOf { abs(it) }.coerceAtLeast(1e-6f)
-        val g = 0.8f / peak
+        val g = 0.97f / peak
         for (i in a.indices) a[i] *= g
     }
 

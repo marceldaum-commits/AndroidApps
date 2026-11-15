@@ -324,43 +324,50 @@ internal object TourFour {
     private fun p(x: Int, y: Int, z: Int) = V3(x, y, z)
 
     // ───────────────────────── 13 · Stochastik ─────────────────────────
-    /** Leuchtkugeln in einer Reihe (oder in mehreren Reihen): die ersten [pink] sind pink, der Rest blau. */
     private fun ballAt(i: Int, perRow: Int) = V3(4.0, 1.6 + (i % perRow) * 1.2, 1.2 + (i / perRow) * 1.2)
-    /** [gone]: so viele pinke Kugeln hat Lux schon abgeschossen (nach dem Lösen) */
-    private fun balls(total: Int, pink: Int, perRow: Int = 5, gone: Int = 0): List<Obj> = (gone until total).map { i ->
-        Stage.sphere("k$i", ballAt(i, perRow), 0.45, if (i < pink) "pink" else "cyan")
-    }
-    /** Lux schießt [shots] pinke Kugeln ab – eine nach der anderen */
-    private fun shoot(shots: Int, perRow: Int = 5) = Finale((0 until shots).map { Beam(V3(8, 0, 1), ballAt(it, perRow), "pink", true) })
-    private fun chance(id: String, title: String, mission: String, percent: Int, step: Int, formula: String, tip: String, way: List<String>, total: Int, pink: Int, shots: Int, perRow: Int = 5,
-                       abi: Boolean = false, mistakes: Map<Int, String> = emptyMap()) =
-        Families.scalar(id, 13, title, mission, "P", 0..(100 / step), percent / step, 0, tip, way, "pink", step = step, suffix = " %", abi = abi,
+    /** [play] legt fest, was Lux nach der Lösung tut – passend zur Frage (ziehen, zurücklegen, abschießen …) */
+    private fun chance(id: String, title: String, mission: String, percent: Int, step: Int, formula: String, tip: String, way: List<String>, total: Int, pink: Int, perRow: Int = 5,
+                       abi: Boolean = false, mistakes: Map<Int, String> = emptyMap(), play: (Urn) -> Pair<Finale, List<Obj>>): Level {
+        val urn = Urn(total, pink, { ballAt(it, perRow) }); val (fin, done) = play(urn)
+        return Families.scalar(id, 13, title, mission, "P", 0..(100 / step), percent / step, 0, tip, way, "pink", step = step, suffix = " %", abi = abi,
             formula = { a -> listOf(listOf(Txt(formula)), listOf(Txt("P = "), Num("${a * step} %", "a"))) },
-            finale = { shoot(shots, perRow) },
-            objects = { _, ph -> balls(total, pink, perRow, if (ph == Phase.DONE) shots else 0) },
+            finale = { fin },
+            objects = { _, ph -> if (ph == Phase.DONE) done else urn.balls() },
             check = { a -> Families.compare(a * step, percent, "Die Wahrscheinlichkeit", "Genau $percent % – Treffer!", mistakes) })
+    }
+    /** Zwei Blitzlichter: die vier gleich wahrscheinlichen Fälle als Paare (gelb = zündet, violett = bleibt dunkel) */
+    private fun flashCases(without: Set<Int> = emptySet()): List<Obj> = listOf(listOf(true, true) to "beide", listOf(true, false) to "nur 1.", listOf(false, true) to "nur 2.", listOf(false, false) to "keins")
+        .mapIndexed { i, (on, name) -> if (i in without) emptyList() else { val y = 1.3 + i * 1.8
+            listOf(Stage.sphere("f${i}a", V3(4.0, y, 3.0), 0.42, if (on[0]) "yellow" else "violet"), Stage.sphere("f${i}b", V3(4.0, y, 1.9), 0.42, if (on[1]) "yellow" else "violet"),
+                Stage.point("n$i", V3(4.0, y, 3.9), if (i == 3) "violet" else "yellow", name, style = "ghost", drop = false)) } }.flatten()
 
+    private val lamps = Urn(20, 2, { ballAt(it, 5) })
     private val ch13 = listOf(
         chance("13-1", "Lichtlotterie", "Zehn Leuchtkugeln, drei davon pink. Ich greife blind eine heraus. Wie wahrscheinlich ist sie pink?", 30, 10,
-            "10 Kugeln, 3 pink", tip = "Laplace: günstige durch mögliche Ergebnisse.", way = listOf("P = günstige : mögliche", "= 3 : 10", "= 30 %"), total = 10, pink = 3, shots = 3),
+            "10 Kugeln, 3 pink", tip = "Laplace: günstige durch mögliche Ergebnisse.", way = listOf("P = günstige : mögliche", "= 3 : 10", "= 30 %"), total = 10, pink = 3) { it.one(1) },
         chance("13-2", "Zweimal ziehen", "Fünf von zehn Kugeln sind pink. Ich ziehe zweimal und lege die erste zurück. Wie wahrscheinlich sind beide pink?", 25, 5,
             "10 Kugeln, 5 pink · zweimal ziehen mit Zurücklegen", tip = "Pfadregel: entlang des Pfades multiplizieren. Mit Zurücklegen bleibt die Wahrscheinlichkeit gleich.",
-            way = listOf("P(pink) = 5 : 10 = ½", "P(pink, pink) = ½ · ½", "= ¼ = 25 %"), total = 10, pink = 5, shots = 2,
-            mistakes = mapOf(100 to "Wahrscheinlichkeiten entlang eines Pfades werden multipliziert, nicht addiert.", 50 to "50 % gilt für eine Kugel. Für zwei hintereinander: ½ · ½.")),
+            way = listOf("P(pink) = 5 : 10 = ½", "P(pink, pink) = ½ · ½", "= ¼ = 25 %"), total = 10, pink = 5,
+            mistakes = mapOf(100 to "Wahrscheinlichkeiten entlang eines Pfades werden multipliziert, nicht addiert.", 50 to "50 % gilt für eine Kugel. Für zwei hintereinander: ½ · ½.")) { it.withReplacement(listOf(1, 3)) },
         chance("13-3", "Ohne Zurücklegen", "Jetzt sind nur zwei von fünf Kugeln pink – und die erste bleibt draußen. Wie wahrscheinlich ziehe ich beide pinken?", 10, 5,
             "5 Kugeln, 2 pink · zweimal ziehen ohne Zurücklegen", tip = "Nach dem ersten Zug ist eine pinke Kugel weniger da – und insgesamt eine weniger.",
-            way = listOf("erster Zug: 2 : 5", "zweiter Zug: 1 : 4", "P = ⅖ · ¼ = 2 : 20 = 10 %"), total = 5, pink = 2, shots = 2,
-            mistakes = mapOf(15 to "Fast: ⅖ · ⅖ = 16 % wäre mit Zurücklegen. Hier fehlt beim zweiten Zug eine Kugel.")),
+            way = listOf("erster Zug: 2 : 5", "zweiter Zug: 1 : 4", "P = ⅖ · ¼ = 2 : 20 = 10 %"), total = 5, pink = 2,
+            mistakes = mapOf(15 to "Fast: ⅖ · ⅖ = 16 % wäre mit Zurücklegen. Hier fehlt beim zweiten Zug eine Kugel.")) { it.without(listOf(0, 1)) },
         Families.scalar("13-4", 13, "Ausfälle einplanen", "In der Show hängen 20 Scheinwerfer. Jeder fällt unabhängig mit 10 % aus. Mit wie vielen Ausfällen muss ich im Schnitt rechnen?", "μ", 0..10, 2, 0,
             tip = "Erwartungswert der Binomialverteilung: μ = n · p.", way = listOf("n = 20, p = 0,1", "μ = n · p = 20 · 0,1", "= 2 Ausfälle"), color = "pink",
             formula = { a -> listOf(listOf(Txt("n = 20, p = 10 %  (binomialverteilt)")), listOf(Txt("μ = n · p = "), Num(Geo.num(a), "a"))) },
-            finale = { shoot(2) },
-            objects = { _, ph -> balls(20, 2, 5, if (ph == Phase.DONE) 2 else 0) },
+            finale = { lamps.fail(2, "Im Schnitt fallen 2 von 20 aus – zum Beispiel diese beiden.").first },
+            objects = { _, ph -> if (ph == Phase.DONE) lamps.balls(setOf(0, 1)) else lamps.balls() },
             check = { a -> Families.compare(a, 2, "Der Erwartungswert", "Im Schnitt 2 Ausfälle – also zwei Ersatzlampen einpacken.") }),
-        chance("13-5", "Abi-Check: Mindestens einer", "Ein Blitzlicht zündet mit 50 %. Ich habe zwei davon. Wie wahrscheinlich zündet mindestens eines?", 75, 5,
-            "2 Blitzlichter, jedes zündet mit 50 %", tip = "„Mindestens eins“ rechnet man über das Gegenereignis: 1 − P(keins).",
-            way = listOf("P(keins zündet) = ½ · ½ = ¼", "P(mindestens eins) = 1 − ¼", "= 75 %"), total = 2, pink = 1, shots = 1, perRow = 2, abi = true,
-            mistakes = mapOf(100 to "Einfach addieren geht nicht – sonst wären es bei drei Blitzlichtern 150 %. Nimm das Gegenereignis.", 25 to "25 % ist die Wahrscheinlichkeit, dass beide zünden. Gesucht ist: mindestens eines.")),
+        Families.scalar("13-5", 13, "Abi-Check: Mindestens einer", "Ein Blitzlicht zündet mit 50 %. Ich habe zwei davon. Wie wahrscheinlich zündet mindestens eines?", "P", 0..20, 15, 0,
+            tip = "„Mindestens eins“ rechnet man über das Gegenereignis: 1 − P(keins).", way = listOf("P(keins zündet) = ½ · ½ = ¼", "P(mindestens eins) = 1 − ¼", "= 75 %"), color = "pink", step = 5, suffix = " %", abi = true,
+            formula = { a -> listOf(listOf(Txt("2 Blitzlichter, jedes zündet mit 50 % · vier gleich wahrscheinliche Fälle")), listOf(Txt("P = "), Num("${a * 5} %", "a"))) },
+            finale = { Finale(acts = listOf(
+                Act("Vier gleich wahrscheinliche Fälle. Nur bei einem zündet keins.", beams = listOf(Beam(V3(8, 0, 1), V3(4.0, 6.7, 2.45), "violet", false))),
+                Act("Das Gegenereignis fällt weg: 3 von 4 Fällen bleiben.", flashCases(setOf(3)), listOf(Beam(V3(8, 0, 1), V3(4.0, 6.7, 3.0), "pink", true), Beam(V3(8, 0, 1), V3(4.0, 6.7, 1.9), "pink", true))))) },
+            objects = { _, ph -> flashCases(if (ph == Phase.DONE) setOf(3) else emptySet()) },
+            check = { a -> Families.compare(a * 5, 75, "Die Wahrscheinlichkeit", "Genau 75 % – Treffer!",
+                mapOf(100 to "Einfach addieren geht nicht – sonst wären es bei drei Blitzlichtern 150 %. Nimm das Gegenereignis.", 25 to "25 % ist die Wahrscheinlichkeit, dass beide zünden. Gesucht ist: mindestens eines.")) }),
     )
 
     // ───────────────────────── 14 · Analysis: Achterbahn ─────────────────────────
@@ -425,4 +432,35 @@ internal object TourFour {
             "Die gelbe Linie ist die Tangente. Waagerecht heißt: f′(x) = 0.",
             "Hoch- oder Tiefpunkt entscheidet f″. Wendestelle: f″(x) = 0."), ch14, Area.ANALYSIS),
     )
+}
+
+/**
+ * Kugeln in der Lostrommel: die ersten [pink] sind pink, der Rest blau. Liefert zu jeder Art von Zug das passende Drehbuch für Lux
+ * und dazu, wie die Bühne danach aussieht.
+ */
+internal class Urn(val total: Int, val pink: Int, val pos: (Int) -> V3, val r: Double = 0.45) {
+    private val lux = V3(8, 0, 1); private val hand = V3(4.0, 4.0, 4.7)
+    private fun color(i: Int) = if (i < pink) "pink" else "cyan"
+    /** [gone]: abgeschossen (draußen); [lifted]: gerade gezogen und hochgehalten, mit Schild [label] */
+    fun balls(gone: Set<Int> = emptySet(), lifted: Int? = null, label: String? = null): List<Obj> =
+        (0 until total).filter { it !in gone }.map { i -> Stage.sphere("k$i", if (i == lifted) hand else pos(i), r, color(i)) } +
+            listOfNotNull(if (lifted != null && label != null) Stage.point("zug", hand + V3(0.0, 0.0, 0.85), color(lifted), label, style = "ghost", drop = false) else null) + Stage.podium()
+    private fun grab(i: Int) = Beam(lux, pos(i), color(i), false)
+    /** Ein Zug: erst die günstigen zeigen, dann eine davon ziehen */
+    fun one(pick: Int): Pair<Finale, List<Obj>> { val done = balls(lifted = pick, label = "gezogen")
+        return Finale(acts = listOf(Act("Günstig sind die $pink pinken von $total Kugeln.", beams = (0 until pink).map { grab(it) }),
+            Act("Ich ziehe eine – pink! Das klappt in $pink von $total Fällen.", done, listOf(grab(pick))))) to done }
+    /** Mit Zurücklegen: ziehen, zurücklegen, wieder ziehen – es bleiben immer alle Kugeln da */
+    fun withReplacement(picks: List<Int>): Pair<Finale, List<Obj>> {
+        val acts = picks.flatMapIndexed { n, i -> listOfNotNull(Act("${n + 1}. Zug: pink – $pink von $total.", balls(lifted = i, label = "${n + 1}. Zug"), listOf(grab(i))),
+            if (n < picks.lastIndex) Act("Zurücklegen – wieder alle $total da.", balls(), ms = 1100) else null) }
+        return Finale(acts = acts) to balls(lifted = picks.last(), label = "${picks.size}. Zug") }
+    /** Ohne Zurücklegen: jede gezogene Kugel bleibt draußen – Lux schießt sie ab */
+    fun without(picks: List<Int>): Pair<Finale, List<Obj>> {
+        val acts = picks.mapIndexed { n, i -> Act("${n + 1}. Zug: pink – ${if (n == 0) "" else "nur noch "}${pink - n} von ${total - n}. Die Kugel bleibt draußen.", balls(picks.take(n + 1).toSet()), listOf(Beam(lux, pos(i), "pink", true))) }
+        return Finale(acts = acts) to balls(picks.toSet()) }
+    /** Die ersten [n] fallen aus (Erwartungswert) */
+    fun fail(n: Int, say: String): Pair<Finale, List<Obj>> = Finale(acts = (0 until n).map { Act(say, balls((0..it).toSet()), listOf(Beam(lux, pos(it), "pink", true)), ms = 700) }) to balls((0 until n).toSet())
+    /** Nichts wird gezogen: Lux zeigt nur auf die Gewinnkugeln und erklärt */
+    fun explain(vararg say: String): Pair<Finale, List<Obj>> = Finale(acts = say.mapIndexed { n, t -> Act(t, beams = if (n == 0) (0 until pink).map { grab(it) } else emptyList()) }) to balls()
 }

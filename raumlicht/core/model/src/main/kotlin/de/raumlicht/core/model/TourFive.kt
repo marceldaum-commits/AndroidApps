@@ -80,15 +80,21 @@ internal object TourFive {
     // ───────────────────────── 16 · Stochastik: Bäume, Tafeln, Binomial ─────────────────────────
     private fun p(x: Int, y: Int, z: Int) = V3(x, y, z)
     private fun percent(id: String, title: String, mission: String, pct: Int, step: Int, formula: String, tip: String, way: List<String>, objects: List<Obj>,
-                        abi: Boolean = false, mistakes: Map<Int, String> = emptyMap()) =
+                        abi: Boolean = false, mistakes: Map<Int, String> = emptyMap(), done: List<Obj> = objects, finale: Finale) =
         Families.scalar(id, 16, title, mission, "P", 0..(100 / step), pct / step, 0, tip, way, "pink", step = step, suffix = " %", abi = abi,
-            formula = { a -> listOf(listOf(Txt(formula)), listOf(Txt("P = "), Num("${a * step} %", "a"))) }, objects = { _, _ -> objects },
+            formula = { a -> listOf(listOf(Txt(formula)), listOf(Txt("P = "), Num("${a * step} %", "a"))) }, objects = { _, ph -> if (ph == Phase.DONE) done else objects }, finale = { finale },
             check = { a -> Families.compare(a * step, pct, "Die Wahrscheinlichkeit", "Genau $pct %.", mistakes) })
 
+    private val root = V3(4.0, 4.0, 5.2); private val nodeA = V3(4.0, 2.2, 3.4); private val nodeB = V3(4.0, 5.8, 3.4)
+    private val leaves = listOf(V3(4.0, 1.2, 1.4), V3(4.0, 3.2, 1.4), V3(4.0, 4.8, 1.4), V3(4.0, 6.8, 1.4))
+    /** Lux leuchtet einen Pfad im Baum nach: Start → [mid] → Blatt [leaf] */
+    private fun pathBeams(mid: V3, leaf: Int, color: String) = listOf(Beam(root, mid, color, false), Beam(mid, leaves[leaf], color, true))
+    private val fields = listOf(Triple("VIP + Band 12", 12, "pink"), Triple("nur VIP 28", 28, "yellow"), Triple("nur Band 18", 18, "cyan"))
+    private fun fieldAt(i: Int) = V3(4.0, 1.2 + (i % 2) * 3.0 + 1.3, 0.6 + (i / 2) * 2.8 + 0.4)
+    private val luxAt = V3(8, 0, 1)
     /** Zweistufiges Baumdiagramm mit Wahrscheinlichkeit [q] für „pink“ */
     private fun tree(q: String, r: String): List<Obj> {
-        val root = V3(4.0, 4.0, 5.2); val a = V3(4.0, 2.2, 3.4); val b = V3(4.0, 5.8, 3.4)
-        val leaves = listOf(V3(4.0, 1.2, 1.4), V3(4.0, 3.2, 1.4), V3(4.0, 4.8, 1.4), V3(4.0, 6.8, 1.4))
+        val a = nodeA; val b = nodeB
         return listOf(Stage.edges("baum", listOf(root to a, root to b, a to leaves[0], a to leaves[1], b to leaves[2], b to leaves[3]), "white"),
             Stage.point("w", root, "white", "Start", drop = false), Stage.point("a", a, "pink", "pink $q", drop = false), Stage.point("b", b, "cyan", "blau $r", drop = false),
             Stage.point("l0", leaves[0], "pink", "pink", drop = false), Stage.point("l1", leaves[1], "cyan", "blau", drop = false),
@@ -101,28 +107,41 @@ internal object TourFive {
         listOf(Stage.edges("f$i", q.indices.map { q[it] to q[(it + 1) % 4] }, color, faces = listOf(q)), Stage.point("t$i", V3(4.0, x0 + 1.3, z0 + h + 0.35), color, label, style = "ghost", drop = false))
     }.flatten()
 
+    /** Vier Lampen in einer Reihe; das Paar [on] leuchtet gelb */
+    private fun lampRow(on: Pair<Int, Int>) = (0 until 4).map { Stage.sphere("k$it", V3(4.0, 2.0 + it * 1.4, 2.5), 0.5, if (it == on.first || it == on.second) "yellow" else "cyan") }
+    private val pairs = listOf(0 to 1, 0 to 2, 0 to 3, 1 to 2, 1 to 3, 2 to 3)
+
     private val ch16 = listOf(
         percent("16-1", "Baumdiagramm", "Zwei von zehn Kugeln sind pink. Ich ziehe zweimal mit Zurücklegen. Wie wahrscheinlich ist genau eine davon pink?", 32, 4,
             "P(pink) = 0,2 · zweimal ziehen · genau einmal pink", tip = "Es gibt zwei Pfade: erst pink, dann blau – und umgekehrt. Pfade multiplizieren, dann addieren.",
             way = listOf("pink, blau: 0,2 · 0,8 = 0,16", "blau, pink: 0,8 · 0,2 = 0,16", "zusammen 0,32 = 32 %"), objects = tree("0,2", "0,8"),
+            finale = Finale(acts = listOf(Act("Pfad 1: erst pink, dann blau – 0,2 · 0,8 = 0,16.", beams = pathBeams(nodeA, 1, "pink")),
+                Act("Pfad 2: erst blau, dann pink – 0,8 · 0,2 = 0,16.", beams = pathBeams(nodeB, 2, "cyan")), Act("Beide Pfade zusammen: 0,16 + 0,16 = 32 %.", ms = 900))),
             mistakes = mapOf(16 to "16 % ist nur ein Pfad. Es gibt zwei Reihenfolgen: pink–blau und blau–pink.", 4 to "4 % ist „beide pink“. Gesucht ist: genau eine.")),
         Families.scalar("16-2", 16, "Pfade zählen", "Vier Lampen, jede geht an oder bleibt aus. Auf wie viele Arten können genau zwei leuchten?", "k", 0..12, 6, 0,
             tip = "Binomialkoeffizient „4 über 2“: 4 · 3 : (2 · 1).", way = listOf("4 über 2 = 4! : (2! · 2!)", "= (4 · 3) : (2 · 1)", "= 6"), color = "pink",
             formula = { a -> listOf(listOf(Txt("n = 4 Lampen, genau k = 2 leuchten")), listOf(Txt("Anzahl der Möglichkeiten = "), Num(Geo.num(a), "a"))) },
-            objects = { _, _ -> (0 until 4).map { Stage.sphere("k$it", V3(4.0, 2.0 + it * 1.4, 2.5), 0.5, if (it < 2) "yellow" else "cyan") } },
+            finale = { Finale(acts = pairs.mapIndexed { n, on -> Act("Möglichkeit ${n + 1} von 6: Lampe ${on.first + 1} und ${on.second + 1} leuchten.", lampRow(on), ms = 650) }) },
+            objects = { _, _ -> lampRow(0 to 1) },
             check = { a -> Families.compare(a, 6, "Die Anzahl", "6 Möglichkeiten – genau der Binomialkoeffizient.", mapOf(8 to "4 · 2 zählt etwas anderes. Hier gilt: 4 · 3 : 2.", 12 to "4 · 3 = 12 zählt jede Auswahl doppelt (Reihenfolge egal). Teile noch durch 2.")) }),
         Families.scalar("16-3", 16, "Vierfeldertafel", "100 Gäste: 40 haben ein VIP-Ticket, 30 ein Leuchtband, 12 beides. Wie viele haben weder noch?", "n", 0..10, 7, 0,
             tip = "Erst: Wie viele haben mindestens eins? 40 + 30 − 12. Der Rest hat keins.", way = listOf("VIP oder Band: 40 + 30 − 12 = 58", "weder noch: 100 − 58", "= 42"), color = "pink", step = 6,
             formula = { a -> listOf(listOf(Txt("100 Gäste · VIP 40 · Band 30 · beides 12")), listOf(Txt("weder VIP noch Band = "), Num(Geo.num(a * 6), "a"))) },
-            objects = { _, _ -> table(listOf(Triple("VIP + Band 12", 12, "pink"), Triple("nur VIP 28", 28, "yellow"), Triple("nur Band 18", 18, "cyan"), Triple("weder noch ?", 42, "violet"))) },
+            finale = { Finale(acts = listOf(Act("VIP oder Band: 12 + 28 + 18 = 58 Gäste.", beams = (0..2).map { Beam(luxAt, fieldAt(it), fields[it].third, false) }),
+                Act("Der Rest hat keins von beiden: 100 − 58 = 42.", table(fields + Triple("weder noch 42", 42, "violet")), listOf(Beam(luxAt, fieldAt(3), "violet", true))))) },
+            objects = { _, ph -> table(fields + Triple(if (ph == Phase.DONE) "weder noch 42" else "weder noch ?", 42, "violet")) },
             check = { a -> Families.compare(a * 6, 42, "Die Anzahl", "42 Gäste haben weder VIP noch Band.", mapOf(30 to "Bei 100 − 40 − 30 ziehst du die 12 doppelt ab – sie stecken in beiden Gruppen.")) }),
         percent("16-4", "Bedingte Wahrscheinlichkeit", "Ich weiß schon: Dieser Gast hat ein VIP-Ticket. Wie wahrscheinlich trägt er dann auch ein Leuchtband?", 30, 10,
             "40 VIP, davon 12 mit Band · P(Band | VIP)", tip = "Nur noch die 40 VIP-Gäste zählen. Wie viele davon haben ein Band?", way = listOf("P(Band | VIP) = 12 : 40", "= 0,3", "= 30 %"),
-            objects = table(listOf(Triple("VIP + Band 12", 12, "pink"), Triple("nur VIP 28", 28, "yellow"), Triple("nur Band 18", 18, "cyan"), Triple("weder noch 42", 42, "violet"))),
+            objects = table(fields + Triple("weder noch 42", 42, "violet")), done = table(fields.take(2)),
+            finale = Finale(acts = listOf(Act("Bedingung „VIP“: Wer kein VIP-Ticket hat, zählt nicht mehr mit.", table(fields.take(2)), listOf(Beam(luxAt, fieldAt(2), "cyan", true), Beam(luxAt, fieldAt(3), "violet", true))),
+                Act("Von den 40 VIP-Gästen tragen 12 ein Band: 12 von 40.", beams = listOf(Beam(luxAt, fieldAt(0), "pink", false))))),
             mistakes = mapOf(40 to "40 % ist P(VIP) – der Anteil der VIP-Gäste an allen. Gesucht ist der Anteil mit Band unter den VIP-Gästen.", 10 to "12 : 100 wäre P(VIP und Band). Bei der Bedingung „VIP“ teilst du durch 40.")),
         Families.scalar("16-5", 16, "Abi-Check: Streuung", "100 Blitzlichter, jedes zündet mit 50 %. Wie groß ist die Standardabweichung σ der Anzahl der Zündungen?", "σ", 0..25, 5, 0,
             tip = "σ = √(n · p · (1 − p)).", way = listOf("n · p · (1 − p) = 100 · 0,5 · 0,5 = 25", "σ = √25", "= 5 (also meist zwischen 40 und 60 Zündungen)"), color = "pink", abi = true,
             formula = { a -> listOf(listOf(Txt("n = 100, p = 0,5 (binomialverteilt), μ = 50")), listOf(Txt("σ = √(n · p · (1 − p)) = "), Num(Geo.num(a), "a"))) },
+            finale = { Finale(acts = listOf(Act("Im Mittel zündet die Hälfte: μ = 100 · 0,5 = 50.", beams = (0 until 10 step 2).map { Beam(luxAt, V3(4.0, 1.2 + (it % 5) * 1.4, 1.5 + (it / 5) * 1.6), "yellow", false) }),
+                Act("Meist liegt die Anzahl nah dran: zwischen 45 und 55, also μ ± σ."))) },
             objects = { _, _ -> (0 until 10).map { Stage.sphere("k$it", V3(4.0, 1.2 + (it % 5) * 1.4, 1.5 + (it / 5) * 1.6), 0.5, if (it % 2 == 0) "yellow" else "cyan") } },
             check = { a -> Families.compare(a, 5, "Die Standardabweichung", "σ = 5.", mapOf(25 to "25 ist die Varianz σ². Die Standardabweichung ist die Wurzel daraus.")) }),
     )
@@ -189,9 +208,10 @@ internal object MoreExams {
     private val g = Graph(0.0, 2.0, 2.5, 1.5, 1.2, 1.0)
     private fun part(label: String, pts: Int, l: Level) = ExamPart(label, pts, l)
     private fun num(id: String, title: String, mission: String, name: String, range: IntRange, solution: Int, start: Int, way: List<String>, tip: String, what: String, mistakes: Map<Int, String> = emptyMap(),
-                    step: Int = 1, suffix: String = "", objects: () -> List<Obj>) =
+                    step: Int = 1, suffix: String = "", play: Pair<Finale, List<Obj>>? = null, objects: () -> List<Obj>) =
         Families.scalar(id, 0, title, mission, name, range, solution / step, start, tip, way, "yellow", step = step, suffix = suffix,
-            formula = { a -> listOf(listOf(Txt("$name = "), Num(Geo.num(a * step) + suffix, "a"))) }, objects = { _, _ -> objects() },
+            formula = { a -> listOf(listOf(Txt("$name = "), Num(Geo.num(a * step) + suffix, "a"))) }, objects = { _, ph -> if (ph == Phase.DONE && play != null) play.second else objects() },
+            finale = play?.let { p -> { _: Int -> p.first } },
             check = { a -> Families.compare(a * step, solution, what, "Richtig: ${Geo.num(solution)}$suffix.", mistakes) })
 
     private val bow = Exam("bogen", "Lichtbogen", "🌈", "Ein Lichtbogen hat die Form des Graphen von f(x) = −3x² + 6x (x und f(x) in Metern).", listOf(
@@ -209,14 +229,16 @@ internal object MoreExams {
             listOf(Stage.edges("fläche", pts.zipWithNext() + listOf(pts.last() to pts.first()), "yellow", faces = listOf(pts)), g.axis()) }),
     ))
 
-    private fun urn() = (0 until 5).map { Stage.sphere("k$it", V3(4.0, 1.6 + it * 1.2, 2.2), 0.5, if (it < 2) "pink" else "cyan") } + Stage.podium()
+    private val drumUrn = Urn(5, 2, { V3(4.0, 1.6 + it * 1.2, 2.2) }, 0.5)
+    private fun urn() = drumUrn.balls()
     private val drum = Exam("trommel", "Lostrommel", "🎰", "In einer Lostrommel liegen 5 Kugeln, 2 davon sind pink (Gewinn).", listOf(
-        part("a", 2, num("abi-trommel-a", "Ein Zug", "Wie wahrscheinlich ist ein Gewinn bei einem Zug?", "P", 0..10, 40, 0, listOf("P = 2 : 5", "= 40 %"), "Günstige durch mögliche.", "Die Wahrscheinlichkeit", step = 10, suffix = " %") { urn() }),
+        part("a", 2, num("abi-trommel-a", "Ein Zug", "Wie wahrscheinlich ist ein Gewinn bei einem Zug?", "P", 0..10, 40, 0, listOf("P = 2 : 5", "= 40 %"), "Günstige durch mögliche.", "Die Wahrscheinlichkeit", step = 10, suffix = " %", play = drumUrn.one(0)) { urn() }),
         part("b", 3, num("abi-trommel-b", "Zweimal mit Zurücklegen", "Zwei Züge mit Zurücklegen: Wie wahrscheinlich sind zwei Gewinne?", "P", 0..25, 16, 0, listOf("0,4 · 0,4", "= 0,16 = 16 %"), "Pfadregel: multiplizieren.", "Die Wahrscheinlichkeit",
-            mapOf(80 to "Nicht addieren – entlang des Pfades wird multipliziert."), step = 4, suffix = " %") { urn() }),
+            mapOf(80 to "Nicht addieren – entlang des Pfades wird multipliziert."), step = 4, suffix = " %", play = drumUrn.withReplacement(listOf(0, 1))) { urn() }),
         part("c", 3, num("abi-trommel-c", "Zweimal ohne Zurücklegen", "Und ohne Zurücklegen?", "P", 0..20, 10, 0, listOf("erster Zug 2 : 5, zweiter 1 : 4", "⅖ · ¼ = 2 : 20", "= 10 %"), "Beim zweiten Zug fehlt eine pinke Kugel – und insgesamt eine.", "Die Wahrscheinlichkeit",
-            step = 5, suffix = " %") { urn() }),
-        part("d", 4, num("abi-trommel-d", "Viele Züge", "Es wird 20-mal mit Zurücklegen gezogen. Mit wie vielen Gewinnen ist im Mittel zu rechnen?", "μ", 0..12, 8, 0, listOf("μ = n · p", "= 20 · 0,4", "= 8"), "Erwartungswert der Binomialverteilung.", "Der Erwartungswert") { urn() }),
+            step = 5, suffix = " %", play = drumUrn.without(listOf(0, 1))) { urn() }),
+        part("d", 4, num("abi-trommel-d", "Viele Züge", "Es wird 20-mal mit Zurücklegen gezogen. Mit wie vielen Gewinnen ist im Mittel zu rechnen?", "μ", 0..12, 8, 0, listOf("μ = n · p", "= 20 · 0,4", "= 8"), "Erwartungswert der Binomialverteilung.", "Der Erwartungswert",
+            play = drumUrn.explain("Bei jedem Zug gewinnen 2 von 5 Kugeln: p = 0,4.", "20 Züge mit Zurücklegen: im Mittel 20 · 0,4 = 8 Gewinne.")) { urn() }),
     ))
     val all = listOf(bow, drum)
 }

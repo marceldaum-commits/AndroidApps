@@ -22,6 +22,8 @@ class Sfx(context: Context) {
     private val ready = ConcurrentHashMap.newKeySet<Int>()
 
     @Volatile var enabled = true
+    /** Lautstärke aus den Einstellungen, 0..1 */
+    @Volatile var master = 1f
 
     init {
         pool.setOnLoadCompleteListener { _, id, status -> if (status == 0) ready += id }
@@ -38,14 +40,15 @@ class Sfx(context: Context) {
     }
 
     /** @param pitch 1 = normal, >1 höher (z. B. bei Serien) */
-    fun play(s: Sound, pitch: Float = 1f, volume: Float = 0.9f) {
+    fun play(s: Sound, pitch: Float = 1f, volume: Float = 1f) {
         if (!enabled) return
         val id = ids[s] ?: return
         if (id !in ready) return
-        pool.play(id, volume, volume, 1, 0, pitch.coerceIn(0.5f, 2f))
+        val v = (volume * master).coerceIn(0f, 1f); if (v <= 0f) return
+        pool.play(id, v, v, 1, 0, pitch.coerceIn(0.5f, 2f))
     }
 
-    private companion object { const val VERSION_ = "v1" }
+    private companion object { const val VERSION_ = "v2" }
 }
 
 val LocalSfx = staticCompositionLocalOf<Sfx?> { null }

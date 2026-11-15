@@ -52,6 +52,8 @@ class SceneDumpTest {
                 ""","actions":[{"fire":{"from":[8,0,1],"to":[4,1.6,1.2],"color":"pink","ms":240},"wait":0.2},{"fire":{"from":[8,0,1],"to":[4,2.8,1.2],"color":"pink","ms":240},"wait":0.2},""" +
                 """{"fire":{"from":[8,0,1],"to":[4,4,1.2],"color":"pink","ms":240},"wait":0.3},{"state":${l.scene(l.solution, Phase.DONE)},"wait":0.25}]""") },
             level("15-3", mapOf("a" to listOf(-1), "d" to listOf(1), "e" to listOf(4))),
+            Levels.byId("13-2")!!.let { l -> shot("zug", l.scene(l.solution, Phase.DONE)) },
+            Levels.byId("13-5")!!.let { l -> shot("blitz", l.scene(l.start, Phase.AIM)) },
             level("16-1"),
             level("16-3"),
             level("17-4", mapOf("a" to listOf(3))),

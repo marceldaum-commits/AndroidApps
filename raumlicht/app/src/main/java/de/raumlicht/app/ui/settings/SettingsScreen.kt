@@ -24,7 +24,9 @@ fun SettingsScreen(
     update: UpdateState,
     onBack: () -> Unit,
     onReset: () -> Unit = {},
+    volume: Int = 100, onVolume: (Int) -> Unit = {},
 ) {
+    val sfx = de.raumlicht.app.ui.fx.LocalSfx.current
     var ask by remember { mutableStateOf(false) }; var done by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -39,6 +41,9 @@ fun SettingsScreen(
                     Toggle("🎵 Musik", "Elektronische Klänge im Hintergrund", music, onMusic)
                     Toggle("🔊 Geräusche", "Laser, Treffer, Lux’ Piepsen", sound, onSound)
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
+                    Text("🔉 Lautstärke: $volume %", Modifier.padding(top = 8.dp).testTag("lautstaerke-text"), style = MaterialTheme.typography.bodyLarge)
+                    Text("Für Musik und Geräusche zusammen", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                    Slider(volume / 100f, { onVolume((it * 20).toInt() * 5) }, Modifier.testTag("lautstaerke"), onValueChangeFinished = { sfx?.play(de.raumlicht.app.ui.fx.Sound.HIT) })
                 }
             }
             ElevatedCard(Modifier.fillMaxWidth()) {

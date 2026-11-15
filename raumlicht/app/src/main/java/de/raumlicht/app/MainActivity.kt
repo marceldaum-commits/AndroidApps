@@ -105,6 +105,8 @@ class MainActivity : ComponentActivity() {
             val music by vm.settings.music.collectAsStateWithLifecycle()
             LaunchedEffect(sound) { app.sfx.enabled = sound }
             LaunchedEffect(music) { app.music.setEnabled(music) }
+            val volume by vm.settings.volume.collectAsStateWithLifecycle()
+            LaunchedEffect(volume) { app.sfx.master = volume / 100f; app.music.setVolume(volume / 100f) }
             RaumlichtTheme {
                 CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration) {
                     Surface(Modifier.fillMaxSize(), color = Q.Space) { Nav() }
@@ -262,7 +264,7 @@ class MainActivity : ComponentActivity() {
                 val music by vm.settings.music.collectAsStateWithLifecycle()
                 val auto by vm.settings.autoUpdate.collectAsStateWithLifecycle()
                 SettingsScreen(music, vm.settings::setMusic, sound, vm.settings::setSound, vibration, vm.settings::setVibration, auto, vm.settings::setAutoUpdate,
-                    BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, { nav.popSafe() }, onReset = vm::resetAll)
+                    BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, { nav.popSafe() }, onReset = vm::resetAll, volume = vm.settings.volume.collectAsStateWithLifecycle().value, onVolume = vm.settings::setVolume)
             }
         }
         }
