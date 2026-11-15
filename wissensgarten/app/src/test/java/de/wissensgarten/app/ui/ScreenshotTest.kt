@@ -546,6 +546,10 @@ open class ScreenshotTest {
     }
 
     @Test fun privacy() = shot("52_datenschutz") { de.wissensgarten.app.ui.settings.PrivacyScreen {} }
+
+    @Test fun storePlusSoon() = shot("53_plus_kommt_bald") {
+        StoreScreen(profile, emptyList(), garden, packs.filter { it.isPlus }, { _, _ -> }, { _, _ -> }, { _, _ -> }, {}, initialTab = 3)
+    }
 }
 
 /** Play-Store-Fotos Handy: 1080 × 1920 (9:16, Store verlangt höchstens 2:1). */

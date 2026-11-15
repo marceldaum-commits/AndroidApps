@@ -59,3 +59,18 @@ Pluspunkte: keine Werbung, Eltern-Tor, fachlich geprüfte Inhalte, Vorlesen und 
 ## 8. Später: Updates
 GitHub-Version wie gehabt (push → Release). Für den Store: die neue `…-PlayStore.aab` aus dem Release in der Play Console hochladen
 (*Produktion → Neuen Release erstellen*). Die Versionsnummer erhöhe ich bei jeder neuen Version mit.
+
+## 9. In-App-Käufe: Wissensgarten Plus (kommt später)
+Heute ist alles kostenlos; im Laden (Reiter „⭐ Plus“) steht „Kommt bald“, Plus-Pakete sind bis dahin gratis.
+Store-Text und Datenschutzerklärung kündigen Plus bereits an (Kauf nur durch Eltern, über Google Play).
+
+**Wenn es losgehen soll:**
+1. Play Console → *Monetarisierung* → **Zahlungsprofil** des Firmenkontos anlegen (Bankverbindung, Steuerangaben).
+2. *Produkte → In-App-Produkte* → Produkt **`plus_familie`**, einmaliger Kauf (kein Abo – passt besser zu Familien).
+   Vorschlag: 4,99 € einmalig (Einführungspreis 2,99 €). Alternativ einzelne Pakete à 0,99–1,99 €.
+3. Ich binde Google Play Billing in der Play-Variante an (Kauf nur hinter dem Eltern-Tor, „Kauf wiederherstellen“-Knopf)
+   und schalte `Monetization.ENFORCED` ein. Alles, was es heute gibt, bleibt frei – nur neue Plus-Pakete brauchen Plus.
+4. Fragebogen anpassen: **IARC** „digitale Käufe: ja“, **Datensicherheit** „Finanzinfos → Kaufverlauf“ (von Google verarbeitet,
+   Zweck App-Funktionen). Play zeigt dann automatisch „Enthält In-App-Käufe“ im Store-Eintrag.
+5. Familien-Richtlinie: Käufe in Kinder-Apps sind erlaubt, wenn Kinder nicht unter Druck gesetzt werden und
+   ein Erwachsener bestätigt – beides ist eingebaut (Eltern-Tor, kein „Jetzt kaufen!“-Drängeln, Brummi bettelt nie).

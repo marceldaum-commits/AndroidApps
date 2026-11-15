@@ -1,5 +1,9 @@
 package de.wissensgarten.app.ui.store
 
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -216,15 +220,27 @@ private fun ItemCard(item: ShopItem, inv: InventoryEntity?, dew: Int, onBuy: (Sh
 
 @Composable
 private fun PlusTab(plusPacks: List<Pack>, onOpenPacks: () -> Unit) {
-    Column(Modifier.fillMaxSize().padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    val gate = de.wissensgarten.app.ui.common.LocalParentGate.current
+    var parentInfo by remember { mutableStateOf(false) }
+    val shine by rememberInfiniteTransition(label = "plus").animateFloat(-6f, 6f,
+        infiniteRepeatable(tween(900, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "s")
+    Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
         Card(colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3C4))) {
-            Column(Modifier.padding(18.dp)) {
-                Text("⭐ Wissensgarten Plus", style = MaterialTheme.typography.titleLarge, color = Color(0xFF4E3B00))
-                Text(
-                    "Bald gibt es hier zusätzliche Wissenspakete für noch mehr Fächer und Prüfungen. " +
-                        "Im Moment sind alle Plus-Pakete kostenlos – probier sie aus!",
-                    style = MaterialTheme.typography.bodyMedium, color = Color(0xFF4E3B00), modifier = Modifier.padding(top = 6.dp),
-                )
+            Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("⭐", fontSize = 34.sp, modifier = Modifier.graphicsLayer { rotationZ = shine })
+                    Spacer(Modifier.width(8.dp))
+                    Column {
+                        Text("Wissensgarten Plus", style = MaterialTheme.typography.titleLarge, color = Color(0xFF4E3B00))
+                        Box(Modifier.clip(CircleShape).background(Color(0xFFFF8A65)).padding(horizontal = 10.dp, vertical = 2.dp)) {
+                            Text("KOMMT BALD", fontWeight = FontWeight.Black, fontSize = 11.sp, color = Color.White)
+                        }
+                    }
+                }
+                Text("Bald gibt es hier zusätzliche Wissenspakete – für Prüfungen, Abitur und noch mehr Fächer. " +
+                    "Bis dahin sind alle Plus-Pakete gratis. Probier sie aus! 🎁",
+                    style = MaterialTheme.typography.bodyMedium, color = Color(0xFF4E3B00))
+                Text("Alles, was es heute gibt, bleibt kostenlos – versprochen.", style = MaterialTheme.typography.bodySmall, color = Color(0xFF4E3B00))
             }
         }
         Text("Plus-Pakete (gerade gratis)", style = MaterialTheme.typography.titleMedium)
@@ -246,5 +262,20 @@ private fun PlusTab(plusPacks: List<Pack>, onOpenPacks: () -> Unit) {
             }
         }
         OutlinedButton(onClick = onOpenPacks, modifier = Modifier.fillMaxWidth()) { Text("Alle Wissenspakete ansehen") }
+        TextButton(onClick = { gate("Hier steht, wie Käufe im Wissensgarten später funktionieren werden.") { parentInfo = true } },
+            modifier = Modifier.fillMaxWidth()) { Text("👨‍👩‍👧 Für Eltern: Wie wird Plus funktionieren?") }
     }
+    if (parentInfo) AlertDialog(
+        onDismissRequest = { parentInfo = false },
+        title = { Text("Wissensgarten Plus – für Eltern") },
+        text = {
+            Text("• Plus wird ein freiwilliger Zusatz mit weiteren Wissenspaketen.\n" +
+                "• Alles, was es heute gibt, bleibt kostenlos.\n" +
+                "• Kaufen geht nur hinter der Eltern-Aufgabe und über Google Play mit eurem Google-Konto – wir sehen keine Zahlungsdaten.\n" +
+                "• Keine Werbung, keine Lockangebote, kein Kaufdruck auf Kinder. Brummi bettelt nie.\n" +
+                "• Ein Kauf gilt für die ganze Familie auf allen Geräten mit demselben Google-Konto.")
+        },
+        confirmButton = { TextButton(onClick = { parentInfo = false }) { Text("Verstanden") } },
+    )
 }
+

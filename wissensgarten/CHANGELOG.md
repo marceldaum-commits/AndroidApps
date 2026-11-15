@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.16.2 – Wissensgarten Plus kommt bald
+- **⭐ Plus-Vorschau im Laden:** „Kommt bald“ – zusätzliche Pakete für Prüfungen, Abitur und mehr Fächer. Bis zum Start sind alle Plus-Pakete gratis, alle Grundpakete bleiben dauerhaft kostenlos.
+- **Für Eltern:** hinter der Eltern-Aufgabe steht, wie Plus funktionieren wird – Kauf nur durch Eltern über Google Play, ein Kauf für die ganze Familie, kein Kaufdruck auf Kinder.
+- Datenschutzerklärung um den Abschnitt „Käufe“ ergänzt.
+
 ## 0.16.1 – Zwei fachliche Verbesserungen
 - **Erste Hilfe:** Verbrennungen jetzt etwa 20 Minuten mit kühlem (nicht eiskaltem) Wasser kühlen – so empfehlen es die europäischen Leitlinien.
 - **Merkbild für die 9:** Statt der Katze (die hat auf Deutsch ja „sieben Leben“) jetzt 🎳 – beim Kegeln heißt es „Alle Neune!“.
