@@ -129,8 +129,13 @@ fun GardenFilmScreen(frames: List<GardenFilm.Frame>, name: String, onShare: () -
                 Button(onClick = { i = 0; playing = true }) { Text("▶ Nochmal abspielen") }
                 OutlinedButton(onClick = onShare) { Text("💌 An Oma schicken") }
             }
+            val young = remember(frames) { frames.map { it.stages }.distinct().size <= 1 || frames.last().time - frames.first().time < 2 * de.wissensgarten.core.model.Scheduler.DAY_MS }
             Brummi(if (playing) Mood.HAPPY else Mood.CHEER, size = 72.dp,
-                speech = if (playing) "Schau, wie alles wächst! 🌱" else "Das hast du alles selbst gegossen! 🌻")
+                speech = when {
+                    young && !playing -> "Dein Garten ist noch ganz jung! Gieß ein paar Tage – dann wird der Film richtig spannend. 🌱"
+                    playing -> "Schau, wie alles wächst! 🌱"
+                    else -> "Das hast du alles selbst gegossen! 🌻"
+                })
             Text("Der Film wird aus dem Lernstand berechnet – ohne Fotos, alles auf dem Gerät.", style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
         }
     }
