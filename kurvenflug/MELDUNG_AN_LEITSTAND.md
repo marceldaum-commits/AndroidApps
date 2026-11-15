@@ -4,6 +4,18 @@ Neueste Meldung oben. Zweig `kurvenflug-test`, Ordner `kurvenflug/webapp/` (inde
 
 ---
 
+## 0.17.1 – WebApp aktualisiert sich selbst (Gleichstand mit APK 0.17.1)
+
+- **Version:** 0.17.1 (Ladebildschirm, `version.json`, Einstellungen)
+- **Commit:** {{COMMIT}}
+- **Neu:** kein Update-Knopf, die WebApp aktualisiert sich selbst. Sie sucht beim Öffnen, beim Zurückkehren in den Tab
+  und alle 30 Minuten nach einer neuen Version. Ist die Seite gerade erst geöffnet (unter 15 s), wird sofort neu geladen.
+  Sonst wird gewechselt, sobald der Tab im Hintergrund war (nie mitten im Level). Der Spielstand bleibt erhalten.
+- **Prüfen:** Seite öffnen → „Version 0.17.1“. Wer 0.17.0 schon offen hatte, sieht nach dem nächsten Öffnen 0.17.1, ohne etwas zu tun.
+- Selbst geprüft: Wechsel A → B beim Öffnen (sofort) und im laufenden Spiel (erst nach Hintergrund), ohne Konsolenfehler.
+
+---
+
 ## 0.17.0 – erste WebApp (Gleichstand mit APK 0.17.0)
 
 - **Version:** 0.17.0 (APK und WebApp gleich; steht im Ladebildschirm, in `version.json` und unter Einstellungen „Version 0.17.0 · WebApp“)
