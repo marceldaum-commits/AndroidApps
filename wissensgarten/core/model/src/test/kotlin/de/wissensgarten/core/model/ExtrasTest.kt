@@ -21,7 +21,7 @@ class ExtrasTest {
         assertEquals(Rhythm.Hit.PERFECT, Rhythm.judge(b + 10, 1, 1, 4))
         assertEquals(Rhythm.Hit.GOOD, Rhythm.judge(b + b * 9 / 10, 1, 1, 4))
         assertEquals(Rhythm.Hit.MISS, Rhythm.judge(b + 10, 2, 1, 4))
-        assertEquals(Rhythm.Hit.MISS, Rhythm.judge(2 * b + 10, 1, 1, 4))
+        assertEquals(Rhythm.Hit.GOOD, Rhythm.judge(2 * b + 10, 1, 1, 4))   // richtig, aber nicht im Takt
     }
 
     @Test fun hiveRoomsOpenWithHoney() {
