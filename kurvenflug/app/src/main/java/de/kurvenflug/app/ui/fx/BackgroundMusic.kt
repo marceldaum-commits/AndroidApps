@@ -15,7 +15,9 @@ import java.nio.ByteOrder
  * Läuft schon andere Musik auf dem Handy (z. B. Hörspiel), bleibt Kurvenflug still.
  */
 class BackgroundMusic(private val context: Context) {
-    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default.limitedParallelism(1))
+    // Ein Fehler im Audiosystem darf nie die App beenden – dann bleibt es eben still
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default.limitedParallelism(1) +
+        CoroutineExceptionHandler { _, e -> android.util.Log.w("Musik", "Musik aus: ${e.message}") })
     private val audio = context.getSystemService(AudioManager::class.java)
     private var track: AudioTrack? = null
     private var current: MusicMood? = null
@@ -66,17 +68,24 @@ class BackgroundMusic(private val context: Context) {
         fadeOutAndStop()
         if (audio.requestAudioFocus(focusRequest) != AudioManager.AUDIOFOCUS_REQUEST_GRANTED) return
         val data = pcm(m!!)
-        val t = AudioTrack.Builder()
-            .setAudioAttributes(attributes())
-            .setAudioFormat(AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(MusicSynth.SR)
-                .setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build())
-            .setTransferMode(AudioTrack.MODE_STATIC)
-            .setBufferSizeInBytes(data.size * 2)
-            .build()
-        t.write(data, 0, data.size)
-        t.setLoopPoints(0, data.size, -1)
-        level = 0f; t.setVolume(0f)
-        t.play()
+        // Tonspur anlegen kann scheitern (Audiosystem belegt, zu wenig Speicher) – dann ohne Musik weiter
+        val t = runCatching {
+            AudioTrack.Builder()
+                .setAudioAttributes(attributes())
+                .setAudioFormat(AudioFormat.Builder().setEncoding(AudioFormat.ENCODING_PCM_16BIT).setSampleRate(MusicSynth.SR)
+                    .setChannelMask(AudioFormat.CHANNEL_OUT_MONO).build())
+                .setTransferMode(AudioTrack.MODE_STATIC)
+                .setBufferSizeInBytes(data.size * 2)
+                .build()
+        }.getOrNull() ?: run { audio.abandonAudioFocusRequest(focusRequest); return }
+        val ok = runCatching {
+            t.write(data, 0, data.size)
+            check(t.state == AudioTrack.STATE_INITIALIZED) { "Tonspur nicht bereit" }
+            t.setLoopPoints(0, data.size, -1)
+            level = 0f; t.setVolume(0f)
+            t.play()
+        }.isSuccess
+        if (!ok) { runCatching { t.release() }; audio.abandonAudioFocusRequest(focusRequest); return }
         track = t; current = m
         fadeTo(target(), 1500)
     }

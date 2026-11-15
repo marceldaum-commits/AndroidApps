@@ -3,6 +3,13 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.16.1 – Reagiert schneller
+- **Tippen wirkt sofort**: Nach dem Zurückgehen hat die App fast eine Sekunde lang Tipps verschluckt (wegen einer langen
+  Überblend-Animation). Jetzt reagiert jeder Knopf gleich.
+- **Zurück-Taste**: Auf „Galaxie“, „Spiele“ oder „Ich“ springt sie jetzt zu „Heute“, statt die App zu schließen.
+  Im Level schließt sie zuerst den Rechenweg bzw. Volts Erklärung.
+- **Stabiler**: Wenn das Handy gerade keine Musik abspielen kann, läuft die App jetzt einfach still weiter, statt abzustürzen.
+
 ## 0.16.0 – Zuhause im All
 - **🏠 Deine Raumstation**: Jeder Stern, den du sammelst, wird zu Sternenstaub ✨. Damit schaltest du Räume frei –
   Labor, Garten, Werkstatt, Sternwarte, Lounge – und klebst deine Sticker an die Wände. Deine gerettete Crew zieht ein

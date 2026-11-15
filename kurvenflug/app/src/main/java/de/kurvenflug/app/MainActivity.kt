@@ -171,7 +171,14 @@ class MainActivity : ComponentActivity() {
         val stats by vm.stats.collectAsStateWithLifecycle()
         var celebrate by remember { mutableStateOf<List<de.kurvenflug.core.model.Badge>>(emptyList()) }
         LaunchedEffect(stats) { val n = vm.newBadges(stats); if (n.isNotEmpty()) celebrate = n }
-        NavHost(nav, Routes.HOME) {
+        // Kurze Übergänge: Während des Überblendens nimmt ein Bildschirm keine Tipps an – bei 700 ms (Standard)
+        // wirkte die App nach „Zurück“ wie eingefroren, wenn Kinder schnell weitertippen.
+        NavHost(nav, Routes.HOME,
+            enterTransition = { androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(150)) },
+            exitTransition = { androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(100)) },
+            popEnterTransition = { androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(150)) },
+            popExitTransition = { androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(100)) },
+        ) {
             composable(Routes.HOME) {
                 val upd by vm.availableUpdate.collectAsStateWithLifecycle()
                 val progress by vm.progress.collectAsStateWithLifecycle()

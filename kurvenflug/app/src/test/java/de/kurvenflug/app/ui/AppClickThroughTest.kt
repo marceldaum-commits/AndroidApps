@@ -24,17 +24,23 @@ class AppClickThroughTest {
     private val log = File(System.getProperty("java.io.tmpdir"), "klicktest.log")
     private fun note(s: String) = log.appendText("${System.currentTimeMillis() / 1000 % 100000} $s\n")
 
-    private fun tick(ms: Long = 400) { rule.mainClock.advanceTimeBy(ms); rule.waitForIdle() }
+    /** Zeit in kleinen Schritten vorspulen – wie echte Bilder auf dem Handy */
+    private fun tick(ms: Long = 400) { repeat((ms / 50).toInt().coerceAtLeast(1)) { rule.mainClock.advanceTimeBy(50) }; rule.waitForIdle() }
     private fun onHome() = rule.onAllNodesWithText("Heute").fetchSemanticsNodes().isNotEmpty()
     private fun back() { rule.activityRule.scenario.onActivity { it.onBackPressedDispatcher.onBackPressed() }; tick() }
-    private fun tab(name: String) { rule.onAllNodesWithText(name).onLast().performClick(); tick() }
+    private fun tab(name: String) { rule.onAllNodesWithText(name).onLast().performClick(); tick(700) }
 
     private fun start() {
         rule.mainClock.autoAdvance = false
         tick(800)
-        rule.onNodeWithText("7").performClick(); tick()
-        repeat(3) { rule.onAllNodesWithText("Weiter ›").onFirst().performClick(); tick(300) }
-        rule.onNodeWithText("Klar helfe ich! 🚀").performClick(); tick()
+        // Erststart (in Robolectric bleibt der Spielstand zwischen Tests teils erhalten): nur wenn gefragt
+        if (rule.onAllNodesWithText("In welcher Klasse", substring = true).fetchSemanticsNodes().isNotEmpty()) { rule.onNodeWithText("7").performClick(); tick() }
+        if (rule.onAllNodesWithText("Klar helfe ich! 🚀").fetchSemanticsNodes().isEmpty() && rule.onAllNodesWithText("Weiter ›").fetchSemanticsNodes().isNotEmpty()) {
+            repeat(3) { rule.onAllNodesWithText("Weiter ›").onFirst().performClick(); tick(300) }
+        }
+        val story = rule.onAllNodesWithText("Klar helfe ich! 🚀").fetchSemanticsNodes().isNotEmpty()
+        if (story) { rule.onNodeWithText("Klar helfe ich! 🚀").performClick(); tick() }
+        note("Geschichte gezeigt: $story")
         if (!onHome()) fail("Nach Klassen-Wahl und Geschichte keine Startseite")
         note("start ok")
     }
@@ -56,6 +62,9 @@ class AppClickThroughTest {
         if (!onHome()) problems += "„$label“: Zurück führt nicht zur Startseite"
         note("  ok $label")
     }
+
+    private fun dump(where: String) = note("BAUM $where:\n" + rule.onRoot(useUnmergedTree = false).printToString(maxDepth = 30).lines()
+        .filter { "Text =" in it || "ContentDescription" in it }.joinToString("\n").take(4000))
 
     private fun report() { note("Probleme: $problems"); if (problems.isNotEmpty()) fail("Gefundene Probleme:\n" + problems.joinToString("\n")) }
 
@@ -86,6 +95,15 @@ class AppClickThroughTest {
         report()
     }
 
+    /** Direkt nach „Zurück“ muss der nächste Tipp wirken (früher: 700 ms Überblenden schluckten Tipps) */
+    @Test fun tapRightAfterBackWorks() {
+        start()
+        visit("Volts Schiff", "Heute", "Hangar")
+        rule.onAllNodesWithText("Spiele").onLast().performClick(); tick(100)
+        if (rule.onAllNodesWithText("Duell", substring = true).fetchSemanticsNodes().isEmpty()) problems += "Tipp direkt nach Zurück wird verschluckt"
+        report()
+    }
+
     @Test fun galaxy() {
         start()
         tab("Galaxie")
@@ -100,8 +118,15 @@ class AppClickThroughTest {
         note("→ Liste")
         tab("Galaxie")
         rule.onNodeWithText("📋 Liste").performClick(); tick()
-        rule.onAllNodesWithText("Geraden").onFirst().performScrollTo().performClick(); tick()
-        if (rule.onAllNodesWithText("Boss", substring = true).fetchSemanticsNodes().isEmpty()) problems += "Galaxie-Liste: Kapitel klappt nicht auf"
+        // Zuordnungen (aktuelles Kapitel) ist aufgeklappt: zuklappen, wieder aufklappen
+        fun tiles() = rule.onAllNodesWithText("🔒").fetchSemanticsNodes().size
+        val before = tiles()
+        rule.onAllNodesWithText("Zuordnungen").onFirst().performClick(); tick(600)
+        val closed = tiles()
+        rule.onAllNodesWithText("Zuordnungen").onFirst().performClick(); tick(600)
+        val reopened = tiles()
+        note("Liste: Kacheln $before → $closed → $reopened")
+        if (!(closed < before && reopened == before)) problems += "Galaxie-Liste: Auf-/Zuklappen reagiert nicht ($before → $closed → $reopened)"
         report()
     }
 }
