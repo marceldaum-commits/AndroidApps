@@ -139,7 +139,7 @@ fun BadgesScreen(badges: List<Badge>, onBack: () -> Unit) {
 @Composable
 fun ModeTiles(dailyDone: Boolean, jamBest: Int, onDaily: () -> Unit, onJam: () -> Unit, onExam: () -> Unit, onMore: () -> Unit) {
     Row(Modifier.padding(horizontal = 14.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Tile("📅", "Tagesgig", if (dailyDone) "✓" else "neu", Q.Orange, !dailyDone, Modifier.weight(1f), onDaily)
+        Tile("🎟️", "Tagesgig", if (dailyDone) "✓" else "neu", Q.Orange, !dailyDone, Modifier.weight(1f), onDaily)
         Tile("🎧", "Jam", if (jamBest > 0) "🔥 $jamBest" else "endlos", Q.Pink, false, Modifier.weight(1f), onJam)
         Tile("🎓", "Abi-Sim", "3 Aufgaben", Q.Yellow, false, Modifier.weight(1f), onExam)
         Tile("🎛️", "Backstage", "mehr", Q.Violet, false, Modifier.weight(1f), onMore)

@@ -148,9 +148,9 @@ class MainActivity : ComponentActivity() {
             composable(Routes.DAILY) {
                 val day = remember { vm.today() }
                 val level = remember(day) { Daily.forDay(day) }
-                LevelScreen(level, Chapter(0, "Tagesgig", level.title, "Tagesgig", "📅", "orange", emptyList(), emptyList()), false, {},
+                LevelScreen(level, Chapter(0, "Tagesgig", level.title, "Tagesgig", "🎟️", "orange", emptyList(), emptyList()), false, {},
                     onSolved = { s, a -> vm.record(level.id, s, a) }, onNext = null, onBack = { nav.popSafe() },
-                    caption = "📅 Tagesgig · ${level.title}", doneLabel = "Fertig für heute ✓")
+                    caption = "🎟️ Tagesgig · ${level.title}", doneLabel = "Fertig für heute ✓")
             }
             composable(Routes.JAM_HOME) { JamPicker(jamBest, { nav.goOnce(Routes.jam(it.name)) }, { nav.popSafe() }) }
             composable(Routes.JAM) { e ->

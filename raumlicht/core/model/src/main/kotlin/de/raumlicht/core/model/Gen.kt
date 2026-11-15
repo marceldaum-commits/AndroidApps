@@ -232,7 +232,7 @@ object Badges {
             Badge("abi", "🏆", "Abi-ready", "Alle Abi-Checks bestanden", abi.all { (tour[it.id] ?: 0) > 0 }),
             Badge("halb", "🚐", "Halbe Tour", "Die Hälfte aller Gigs gespielt", tour.size * 2 >= Levels.all.size),
             Badge("tour", "🎆", "Tour geschafft", "Alle Gigs gespielt", tour.size == Levels.all.size),
-            Badge("tag3", "📅", "Stammgast", "3 Tagesgigs gelöst", dailies >= 3),
+            Badge("tag3", "🎟️", "Stammgast", "3 Tagesgigs gelöst", dailies >= 3),
             Badge("tag10", "🗓️", "Residency", "10 Tagesgigs gelöst", dailies >= 10),
             Badge("jam5", "🎧", "Im Flow", "Jam-Session: 5 in Folge beim ersten Versuch", jamBest >= 5),
             Badge("jam15", "🔥", "Unaufhaltsam", "Jam-Session: 15 in Folge", jamBest >= 15),

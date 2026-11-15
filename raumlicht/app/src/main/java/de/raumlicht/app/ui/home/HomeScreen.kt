@@ -6,6 +6,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -55,7 +62,7 @@ fun HomeScreen(
 
     LazyColumn(Modifier.fillMaxSize().background(Q.Space), contentPadding = PaddingValues(bottom = 24.dp)) {
         item {
-            Box(Modifier.fillMaxWidth().height(250.dp)) {
+            Box(Modifier.fillMaxWidth().height(330.dp)) {
                 Stage(controller, Modifier.fillMaxSize())
                 Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0f to Q.Space.copy(alpha = 0.55f), 0.3f to Color.Transparent, 0.75f to Color.Transparent, 1f to Q.Space)))
                 Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start = 18.dp, end = 6.dp, top = 6.dp), verticalAlignment = Alignment.Top) {
@@ -72,42 +79,64 @@ fun HomeScreen(
         }
         if (updateVersion != null) item { de.raumlicht.app.ui.settings.UpdateBanner(updateVersion, onUpdate) }
         item { ModeTiles(dailyDone, jamBest, onDaily, onJam, onExam, onMore) }
-        item { Text("TOUR", Modifier.padding(start = 18.dp, top = 12.dp, bottom = 2.dp), color = Q.Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp) }
-        itemsIndexed(chapters) { _, c -> ChapterCard(c, stars, next?.id, open == c.number, { open = if (open == c.number) -1 else c.number }, onLevel) }
         item {
-            Text("Analytische Geometrie der Oberstufe · keine Werbung · keine Anmeldung", Modifier.fillMaxWidth().padding(20.dp),
-                color = Q.Muted, fontSize = 11.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            Row(Modifier.fillMaxWidth().padding(start = 18.dp, end = 18.dp, top = 12.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text("TOUR", color = Q.Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp)
+                Spacer(Modifier.weight(1f))
+                Text("${chapters.count { c -> c.levels.all { (stars[it.id] ?: 0) > 0 } }} von ${chapters.size} Kapiteln gespielt · wischen ›", color = Q.Muted, fontSize = 11.sp)
+            }
+        }
+        // Kapitel als schmale Leiste zum seitlichen Wischen – darunter nur das gewählte Kapitel
+        item {
+            val row = rememberLazyListState()
+            LaunchedEffect(Unit) { row.scrollToItem((chapters.indexOfFirst { it.number == open } - 1).coerceAtLeast(0)) }
+            LazyRow(state = row, contentPadding = PaddingValues(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                itemsIndexed(chapters) { _, c -> ChapterChip(c, stars, open == c.number, c.levels.any { it.id == next?.id }) { open = c.number } }
+            }
+        }
+        item {
+            val c = chapters.firstOrNull { it.number == open } ?: chapters.first()
+            AnimatedContent(c, transitionSpec = { (slideInHorizontally { if (targetState.number > initialState.number) it / 3 else -it / 3 } + fadeIn()) togetherWith fadeOut() }, label = "kapitel") { ch ->
+                ChapterDetail(ch, stars, next?.id, onLevel)
+            }
         }
     }
 }
 
+/** Ein Kapitel in der Leiste: Symbol, Nummer, Fortschrittsbalken. */
 @Composable
-private fun ChapterCard(c: Chapter, stars: Map<String, Int>, nextId: String?, expanded: Boolean, onToggle: () -> Unit, onLevel: (String) -> Unit) {
-    val accent = stageColor(c.color)
-    val got = c.levels.sumOf { stars[it.id] ?: 0 }; val played = c.levels.count { (stars[it.id] ?: 0) > 0 }; val done = played == c.levels.size
-    val turn by animateFloatAsState(if (expanded) 90f else 0f, spring(dampingRatio = 0.6f), label = "pfeil")
-    val head = remember { MutableInteractionSource() }
-    Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 4.dp).clip(RoundedCornerShape(18.dp))
-        .background(Brush.horizontalGradient(listOf(accent.copy(alpha = if (expanded) 0.2f else 0.1f), Q.Deep)))
-        .border(if (expanded) 1.5.dp else 1.dp, accent.copy(alpha = if (expanded) 0.8f else 0.3f), RoundedCornerShape(18.dp))
-        .animateContentSize(spring(dampingRatio = 0.75f, stiffness = 400f))) {
-        Row(Modifier.fillMaxWidth().clickable(head, null, onClick = onToggle).padding(horizontal = 12.dp, vertical = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-            Text(c.emoji, fontSize = 22.sp)
-            Column(Modifier.weight(1f).padding(start = 10.dp)) {
-                Text("${c.number} · ${c.title}", fontWeight = FontWeight.Bold, fontSize = 16.sp, maxLines = 1)
-                Text(c.topic, color = Q.Muted, fontSize = 12.sp, maxLines = 1)
-            }
-            Text(if (done) "✓ " else "", color = Q.Green, fontWeight = FontWeight.Black)
-            Text("★ $got", color = if (got > 0) Q.Yellow else Q.Muted, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            Text("›", Modifier.padding(start = 10.dp).graphicsLayer { rotationZ = turn }, color = accent, fontSize = 22.sp, fontWeight = FontWeight.Black)
-        }
-        // Fortschrittsbalken: wie viele Gigs des Kapitels schon gespielt sind
-        Box(Modifier.fillMaxWidth().height(3.dp).background(Q.Panel)) {
+private fun ChapterChip(c: Chapter, stars: Map<String, Int>, selected: Boolean, current: Boolean, onClick: () -> Unit) {
+    val accent = stageColor(c.color); val interaction = remember { MutableInteractionSource() }
+    val played = c.levels.count { (stars[it.id] ?: 0) > 0 }; val done = played == c.levels.size
+    val s by animateFloatAsState(if (selected) 1.08f else 1f, spring(dampingRatio = 0.5f, stiffness = 400f), label = "chip")
+    Column(Modifier.graphicsLayer { scaleX = s; scaleY = s }.pressBounce(interaction).width(62.dp).clip(RoundedCornerShape(16.dp))
+        .background(if (selected) accent.copy(alpha = 0.3f) else Q.Deep)
+        .border(if (selected) 2.dp else 1.dp, if (selected) accent else if (current) Q.Green else accent.copy(alpha = 0.35f), RoundedCornerShape(16.dp))
+        .clickable(interaction, null, onClick = onClick).padding(top = 8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(c.emoji, fontSize = 22.sp)
+        Text(if (done) "${c.number} ✓" else "${c.number}", fontWeight = FontWeight.Bold, fontSize = 13.sp, color = if (done) Q.Green else Q.Text)
+        Box(Modifier.padding(top = 6.dp).fillMaxWidth().height(4.dp).background(Q.Panel)) {
             Box(Modifier.fillMaxWidth(played / c.levels.size.toFloat()).fillMaxHeight().background(accent))
         }
-        if (expanded) {
-            Text("${c.venue} · ${c.levels.size} Gigs, der letzte ist der Abi-Check", Modifier.padding(start = 12.dp, top = 8.dp), color = accent, fontSize = 11.sp)
-        Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp, top = 6.dp, bottom = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+    }
+}
+
+/** Das gewählte Kapitel mit seinen Gigs. */
+@Composable
+private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, onLevel: (String) -> Unit) {
+    val accent = stageColor(c.color)
+    val got = c.levels.sumOf { stars[it.id] ?: 0 }
+    Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp).clip(RoundedCornerShape(20.dp))
+        .background(Brush.horizontalGradient(listOf(accent.copy(alpha = 0.2f), Q.Deep))).border(1.5.dp, accent.copy(alpha = 0.7f), RoundedCornerShape(20.dp)).padding(bottom = 12.dp)) {
+        Row(Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
+            Column(Modifier.weight(1f)) {
+                Text("${c.number} · ${c.venue}".uppercase(), color = accent, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
+                Text(c.title, style = MaterialTheme.typography.titleLarge, maxLines = 1)
+                Text(c.topic, color = Q.Muted, style = MaterialTheme.typography.bodySmall, maxLines = 1)
+            }
+            Text("★ $got/${c.levels.size * 3}", color = Q.Yellow, fontWeight = FontWeight.Bold)
+        }
+        Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp, top = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             c.levels.forEach { l ->
                 val s = stars[l.id] ?: 0
                 val interaction = remember { MutableInteractionSource() }
@@ -119,7 +148,6 @@ private fun ChapterCard(c: Chapter, stars: Map<String, Int>, nextId: String?, ex
                     Box(Modifier.graphicsLayer { scaleX = 0.62f; scaleY = 0.62f }) { StarRow(s, lit = true, size = 16) }
                 }
             }
-        }
         }
     }
 }

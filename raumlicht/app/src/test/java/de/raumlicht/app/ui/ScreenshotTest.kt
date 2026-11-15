@@ -93,8 +93,8 @@ class ScreenshotTest {
     }
     @Test fun daily() = shot("25_tagesgig", "tag") {
         val l = de.raumlicht.core.model.Daily.forDay(20_772)
-        LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Tagesgig", l.title, "Tagesgig", "📅", "orange", emptyList(), emptyList()), false, {}, { _, _ -> }, null, {},
-            caption = "📅 Tagesgig · ${l.title}", doneLabel = "Fertig für heute ✓")
+        LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Tagesgig", l.title, "Tagesgig", "🎟️", "orange", emptyList(), emptyList()), false, {}, { _, _ -> }, null, {},
+            caption = "🎟️ Tagesgig · ${l.title}", doneLabel = "Fertig für heute ✓")
     }
     @Test fun sheet() = shot("26_spickzettel", "start") { de.raumlicht.app.ui.home.SheetScreen(de.raumlicht.core.model.Sheet.cards, onBack = {}) }
     @Test fun motion() = level("28_bewegung", "11-5", values = mapOf("a" to listOf(1)))

@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.3.3 – Alles auf einen Blick (15.11.2026)
+- **Startseite ohne lange Liste:** Die zwölf Kapitel sind jetzt eine schmale Leiste zum seitlichen Wischen. Darunter steht nur das gewählte Kapitel
+  mit seinen Gigs. Die ganze Startseite passt auf einen Bildschirm.
+- Die Leiste springt beim Öffnen zu dem Kapitel, in dem es weitergeht (grün umrandet).
+
 ## 0.3.2 – Feinschliff (15.11.2026)
 - **Abi-Simulation auf Zeit:** freiwilliger Schalter – 9 Minuten je Aufgabe, die Uhr läuft oben mit. Ist die Zeit um, zählt, was bis dahin gelöst ist.
 - **Jam-Session „Bewegung & Rotation“:** neue Zufallsaufgaben zu Ort nach t Sekunden, Tempo, Flughöhe und Rotationskörpern – auch in „Alles gemischt“.
