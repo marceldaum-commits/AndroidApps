@@ -325,35 +325,41 @@ internal object TourFour {
 
     // ───────────────────────── 13 · Stochastik ─────────────────────────
     /** Leuchtkugeln in einer Reihe (oder in mehreren Reihen): die ersten [pink] sind pink, der Rest blau. */
-    private fun balls(total: Int, pink: Int, perRow: Int = 5): List<Obj> = (0 until total).map { i ->
-        Stage.sphere("k$i", V3(4.0, 1.6 + (i % perRow) * 1.2, 1.2 + (i / perRow) * 1.2), 0.45, if (i < pink) "pink" else "cyan")
+    private fun ballAt(i: Int, perRow: Int) = V3(4.0, 1.6 + (i % perRow) * 1.2, 1.2 + (i / perRow) * 1.2)
+    /** [gone]: so viele pinke Kugeln hat Lux schon abgeschossen (nach dem Lösen) */
+    private fun balls(total: Int, pink: Int, perRow: Int = 5, gone: Int = 0): List<Obj> = (gone until total).map { i ->
+        Stage.sphere("k$i", ballAt(i, perRow), 0.45, if (i < pink) "pink" else "cyan")
     }
-    private fun chance(id: String, title: String, mission: String, percent: Int, step: Int, formula: String, tip: String, way: List<String>, objects: List<Obj>,
+    /** Lux schießt [shots] pinke Kugeln ab – eine nach der anderen */
+    private fun shoot(shots: Int, perRow: Int = 5) = Finale((0 until shots).map { Beam(V3(8, 0, 1), ballAt(it, perRow), "pink", true) })
+    private fun chance(id: String, title: String, mission: String, percent: Int, step: Int, formula: String, tip: String, way: List<String>, total: Int, pink: Int, shots: Int, perRow: Int = 5,
                        abi: Boolean = false, mistakes: Map<Int, String> = emptyMap()) =
         Families.scalar(id, 13, title, mission, "P", 0..(100 / step), percent / step, 0, tip, way, "pink", step = step, suffix = " %", abi = abi,
             formula = { a -> listOf(listOf(Txt(formula)), listOf(Txt("P = "), Num("${a * step} %", "a"))) },
-            objects = { _, _ -> objects },
-            check = { a -> Families.compare(a * step, percent, "Die Wahrscheinlichkeit", "Genau $percent %.", mistakes) })
+            finale = { shoot(shots, perRow) },
+            objects = { _, ph -> balls(total, pink, perRow, if (ph == Phase.DONE) shots else 0) },
+            check = { a -> Families.compare(a * step, percent, "Die Wahrscheinlichkeit", "Genau $percent % – Treffer!", mistakes) })
 
     private val ch13 = listOf(
         chance("13-1", "Lichtlotterie", "Zehn Leuchtkugeln, drei davon pink. Ich greife blind eine heraus. Wie wahrscheinlich ist sie pink?", 30, 10,
-            "10 Kugeln, 3 pink", tip = "Laplace: günstige durch mögliche Ergebnisse.", way = listOf("P = günstige : mögliche", "= 3 : 10", "= 30 %"), objects = balls(10, 3)),
+            "10 Kugeln, 3 pink", tip = "Laplace: günstige durch mögliche Ergebnisse.", way = listOf("P = günstige : mögliche", "= 3 : 10", "= 30 %"), total = 10, pink = 3, shots = 3),
         chance("13-2", "Zweimal ziehen", "Fünf von zehn Kugeln sind pink. Ich ziehe zweimal und lege die erste zurück. Wie wahrscheinlich sind beide pink?", 25, 5,
             "10 Kugeln, 5 pink · zweimal ziehen mit Zurücklegen", tip = "Pfadregel: entlang des Pfades multiplizieren. Mit Zurücklegen bleibt die Wahrscheinlichkeit gleich.",
-            way = listOf("P(pink) = 5 : 10 = ½", "P(pink, pink) = ½ · ½", "= ¼ = 25 %"), objects = balls(10, 5),
+            way = listOf("P(pink) = 5 : 10 = ½", "P(pink, pink) = ½ · ½", "= ¼ = 25 %"), total = 10, pink = 5, shots = 2,
             mistakes = mapOf(100 to "Wahrscheinlichkeiten entlang eines Pfades werden multipliziert, nicht addiert.", 50 to "50 % gilt für eine Kugel. Für zwei hintereinander: ½ · ½.")),
         chance("13-3", "Ohne Zurücklegen", "Jetzt sind nur zwei von fünf Kugeln pink – und die erste bleibt draußen. Wie wahrscheinlich ziehe ich beide pinken?", 10, 5,
             "5 Kugeln, 2 pink · zweimal ziehen ohne Zurücklegen", tip = "Nach dem ersten Zug ist eine pinke Kugel weniger da – und insgesamt eine weniger.",
-            way = listOf("erster Zug: 2 : 5", "zweiter Zug: 1 : 4", "P = ⅖ · ¼ = 2 : 20 = 10 %"), objects = balls(5, 2),
+            way = listOf("erster Zug: 2 : 5", "zweiter Zug: 1 : 4", "P = ⅖ · ¼ = 2 : 20 = 10 %"), total = 5, pink = 2, shots = 2,
             mistakes = mapOf(15 to "Fast: ⅖ · ⅖ = 16 % wäre mit Zurücklegen. Hier fehlt beim zweiten Zug eine Kugel.")),
         Families.scalar("13-4", 13, "Ausfälle einplanen", "In der Show hängen 20 Scheinwerfer. Jeder fällt unabhängig mit 10 % aus. Mit wie vielen Ausfällen muss ich im Schnitt rechnen?", "μ", 0..10, 2, 0,
             tip = "Erwartungswert der Binomialverteilung: μ = n · p.", way = listOf("n = 20, p = 0,1", "μ = n · p = 20 · 0,1", "= 2 Ausfälle"), color = "pink",
             formula = { a -> listOf(listOf(Txt("n = 20, p = 10 %  (binomialverteilt)")), listOf(Txt("μ = n · p = "), Num(Geo.num(a), "a"))) },
-            objects = { _, _ -> balls(20, 2, 5) },
+            finale = { shoot(2) },
+            objects = { _, ph -> balls(20, 2, 5, if (ph == Phase.DONE) 2 else 0) },
             check = { a -> Families.compare(a, 2, "Der Erwartungswert", "Im Schnitt 2 Ausfälle – also zwei Ersatzlampen einpacken.") }),
         chance("13-5", "Abi-Check: Mindestens einer", "Ein Blitzlicht zündet mit 50 %. Ich habe zwei davon. Wie wahrscheinlich zündet mindestens eines?", 75, 5,
             "2 Blitzlichter, jedes zündet mit 50 %", tip = "„Mindestens eins“ rechnet man über das Gegenereignis: 1 − P(keins).",
-            way = listOf("P(keins zündet) = ½ · ½ = ¼", "P(mindestens eins) = 1 − ¼", "= 75 %"), objects = balls(2, 1, 2), abi = true,
+            way = listOf("P(keins zündet) = ½ · ½ = ¼", "P(mindestens eins) = 1 − ¼", "= 75 %"), total = 2, pink = 1, shots = 1, perRow = 2, abi = true,
             mistakes = mapOf(100 to "Einfach addieren geht nicht – sonst wären es bei drei Blitzlichtern 150 %. Nimm das Gegenereignis.", 25 to "25 % ist die Wahrscheinlichkeit, dass beide zünden. Gesucht ist: mindestens eines.")),
     )
 
@@ -363,12 +369,16 @@ internal object TourFour {
         fun at(x: Double) = V3(4.0, ox + x * sx, oz + f(x) * sy)
         fun curve(id: String = "bahn", color: String = "cyan") = Stage.edges(id, (0..48).map { at(from + (to - from) * it / 48) }.zipWithNext(), color)
         fun axis() = Stage.line("achse", V3(4.0, ox + from * sx, oz), V3(0.0, (to - from) * sx, 0.0), 0.0, 1.0, "white", dashed = true)
+        /** Ehrenrunde: einmal die ganze Bahn entlang und zurück zur gesuchten Stelle */
+        fun lap(stop: Double): List<V3> { val up = V3(0.0, 0.0, 0.45); val n = 16
+            return (0..n).map { at(from + (to - from) * it / n) + up } + (0..6).map { at(to + (stop - to) * it / 6) + up } }
         fun tangent(x: Double) = Stage.line("tangente", at(x), V3(0.0, sx, df(x) * sy), -1.0, 1.0, "yellow", thin = true)
     }
     private fun ride(id: String, title: String, mission: String, track: Track, text: String, name: String, range: IntRange, solution: Int, start: Int, ok: String,
                      tip: String, way: List<String>, abi: Boolean = false, tangent: Boolean = true, mistakes: Map<Int, String> = emptyMap(), hint: (Int) -> String) =
         Families.scalar(id, 14, title, mission, name, range, solution, start, tip, way, "yellow", abi = abi,
             lux = { a, _ -> track.at(a.toDouble()) + V3(0.0, 0.0, 0.45) },
+            finale = { Finale(path = track.lap(solution.toDouble())) },
             formula = { a -> listOf(listOf(Txt("f(x) = $text")), listOf(Txt("$name = "), Num(Geo.num(a), "a"))) },
             objects = { a, _ -> listOf(track.curve(), track.axis(), Stage.point("stelle", track.at(a.toDouble()), "yellow", drop = false)) + if (tangent) listOf(track.tangent(a.toDouble())) else emptyList() },
             check = { a -> if (a == solution) Outcome(true, ok) else Outcome(false, mistakes[a] ?: hint(a)) })
@@ -398,6 +408,7 @@ internal object TourFour {
             Families.scalar("14-5", 14, "Abi-Check: Leuchtfläche", "Der Bogen der Bahn soll mit Licht gefüllt werden. Wie groß ist die Fläche zwischen Bahn und x-Achse?", "A", 0..10, 4, 0,
                 tip = "Integral von 0 bis 2. Stammfunktion: F(x) = −x³ + 3x².", way = listOf("A = ∫₀² (−3x² + 6x) dx", "= [−x³ + 3x²]₀²", "= −8 + 12 = 4"), color = "yellow", abi = true,
                 formula = { a -> listOf(listOf(Txt("f(x) = −3x² + 6x,  x von 0 bis 2")), listOf(Txt("A = ∫ f(x) dx = "), Num(Geo.num(a), "a"))) },
+                finale = { Finale(path = t5.lap(1.0)) },
                 objects = { _, _ -> val pts = (0..32).map { t5.at(2.0 * it / 32) }
                     listOf(Stage.edges("fläche", pts.zipWithNext() + listOf(pts.last() to pts.first()), "yellow", faces = listOf(pts)), t5.axis()) },
                 check = { a -> Families.compare(a, 4, "Die Fläche", "4 Flächeneinheiten leuchten unter dem Bogen.", mapOf(6 to "6 wäre Grundseite mal Höhe – der Bogen ist aber kein Rechteck. Nimm das Integral.")) }),

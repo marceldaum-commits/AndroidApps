@@ -104,6 +104,12 @@ fun LevelScreen(
             }
             if (out.success) {
                 stars = Level.stars(attempts, usedTip)
+                // Finale: Lux fährt eine Strecke ab und/oder blitzt Ziele an – je nach Aufgabe
+                val aim = level.objects(values, Phase.AIM)
+                val fin = level.finale?.invoke(values) ?: Finale.default(aim, level.objects(values, Phase.DONE), out)
+                fin.path.forEach { pt -> override = Stage.encode(level.bounds, aim.map { if (it.type == "drone") it.copy(p = pt.list) else it }); delay(90) }
+                fin.beams.forEachIndexed { i, b -> controller.fire(b, 240); sfx?.play(Sound.HIT, 1f + i * 0.08f); view.buzz(Buzz.TICK, vib); delay(170) }
+                if (fin.beams.isNotEmpty()) delay(260)
                 out.flyTo?.let { controller.burst(it, "green") }
                 controller.party(); sfx?.play(Sound.WIN); view.buzz(Buzz.HIT, vib)
                 override = null; phase = Phase.DONE
@@ -229,8 +235,10 @@ internal fun Stepper(label: String?, value: Int, text: String, color: Color, tag
         StepButton("−", color, canDown, "minus-$tag") { onStep(-1) }
         Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
             if (label != null) Text(label, fontSize = 10.sp, color = Q.Muted, lineHeight = 10.sp)
-            AnimatedContent(value, transitionSpec = { (slideInVertically { if (targetState > initialState) it else -it } + fadeIn()) togetherWith fadeOut() }, label = "wert") {
-                Text(if (it == value) text else Geo.num(it), fontSize = 19.sp, fontWeight = FontWeight.Black, color = color, lineHeight = 20.sp)
+            // Blättert zwischen den fertig beschrifteten Werten (z. B. „20 %“ → „30 %“) – nie über den internen Zählwert
+            AnimatedContent(value to text, transitionSpec = { (slideInVertically { if (targetState.first > initialState.first) it else -it } + fadeIn()) togetherWith fadeOut() },
+                contentKey = { it.first }, label = "wert") {
+                Text(it.second, fontSize = 19.sp, fontWeight = FontWeight.Black, color = color, lineHeight = 20.sp)
             }
         }
         StepButton("+", color, canUp, "plus-$tag") { onStep(1) }

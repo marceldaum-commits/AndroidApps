@@ -48,6 +48,9 @@ class SceneDumpTest {
             shot("fahrt", Coaster.byId("doppel")!!.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.12,"view":"fp"},"wait":1.2}]"""),
             shot("fahrt-gipfel", Coaster.byId("bergtal")!!.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.2,"view":"fp"},"wait":1.2}]"""),
             shot("fahrt-aussen", Coaster.byId("doppel")!!.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.5,"view":"out"},"wait":1.2}]"""),
+            Levels.byId("13-1")!!.let { l -> shot("abschuss", l.scene(l.solution, Phase.AIM),
+                ""","actions":[{"fire":{"from":[8,0,1],"to":[4,1.6,1.2],"color":"pink","ms":240},"wait":0.2},{"fire":{"from":[8,0,1],"to":[4,2.8,1.2],"color":"pink","ms":240},"wait":0.2},""" +
+                """{"fire":{"from":[8,0,1],"to":[4,4,1.2],"color":"pink","ms":240},"wait":0.3},{"state":${l.scene(l.solution, Phase.DONE)},"wait":0.25}]""") },
             Gen.jam(JamTopic.MIX, 1, 0).let { shot("jam", it.scene(it.start, Phase.AIM)) },
             Daily.forDay(20_772).let { shot("tag", it.scene(it.start, Phase.AIM)) },
             level("6-5", phase = Phase.DONE, extra = ""","actions":[{"fire":{"from":[4,1,1],"to":[0,5,3],"color":"cyan","ms":300,"hit":false},"wait":0.35},{"fire":{"from":[0,5,3],"to":[2,7,4],"color":"cyan","ms":300},"wait":0.5}]"""),

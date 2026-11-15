@@ -36,6 +36,23 @@ data class Handle(val control: String, val anchor: V3)
 
 enum class Phase { AIM, DONE }
 
+/**
+ * Was Lux zur Belohnung tut, wenn die Lösung stimmt: eine Strecke abfliegen ([path]) und/oder Ziele mit dem Laser anblitzen ([beams]).
+ * Ohne eigene Angabe blitzt Lux die wichtigen Punkte der Szene an.
+ */
+data class Finale(val beams: List<Beam> = emptyList(), val path: List<V3> = emptyList()) {
+    companion object {
+        private val colors = listOf("pink", "cyan", "yellow", "green", "violet", "orange")
+        fun default(aim: List<Obj>, done: List<Obj>, out: Outcome): Finale {
+            // Flug oder eigener Laserschuss ist schon Belohnung genug
+            if (out.beams.isNotEmpty() || out.flyTo != null) return Finale()
+            val lux = aim.firstOrNull { it.type == "drone" }?.p?.let { V3(it[0], it[1], it[2]) } ?: return Finale()
+            val targets = done.filter { (it.type == "point" || it.type == "sphere") && it.p != null }.map { V3(it.p!![0], it.p[1], it.p[2]) }.filter { !it.near(lux) }.distinct().take(6)
+            return Finale(targets.mapIndexed { i, t -> Beam(lux, t, colors[i % colors.size], true) })
+        }
+    }
+}
+
 class Level(
     val id: String, val chapter: Int, val title: String, val mission: String,
     val bounds: Bounds, val controls: List<Control>, val solution: Values,
@@ -45,6 +62,8 @@ class Level(
     val way: List<String>,
     val abi: Boolean = false,
     val handle: Handle? = null,
+    /** Eigenes Finale (sonst [Finale.default]) */
+    val finale: ((Values) -> Finale)? = null,
     val formula: (Values) -> List<List<Part>>,
     val objects: (Values, Phase) -> List<Obj>,
     val evaluate: (Values) -> Outcome,

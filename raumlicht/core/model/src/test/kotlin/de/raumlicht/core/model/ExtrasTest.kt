@@ -110,4 +110,24 @@ class ExtrasTest {
         // Punkt lässt sich wie die anderen Bausteine teilen
         val items = listOf(d(1, 2, 3), l(0, 0, 0, 1, 1, 1)); assertEquals(items, Show.decode(Show.encode(items)))
     }
+
+    @Test fun finaleGivesLuxSomethingToDo() {
+        // Stochastik: Lux schießt genau die gezogenen pinken Kugeln ab, danach sind sie weg
+        val l = Levels.byId("13-1")!!
+        val fin = l.finale!!(l.solution); assertEquals(3, fin.beams.size); assertTrue(fin.beams.all { it.hit && it.color == "pink" })
+        val before = l.objects(l.solution, Phase.AIM).count { it.type == "sphere" }; val after = l.objects(l.solution, Phase.DONE).count { it.type == "sphere" }
+        assertEquals(10, before); assertEquals(7, after)
+        assertEquals(fin.beams.map { it.to.list }, l.objects(l.solution, Phase.AIM).filter { it.type == "sphere" }.take(3).map { it.p })
+        assertEquals(2, Levels.byId("13-3")!!.finale!!(mapOf("a" to listOf(2))).beams.size)
+        // Achterbahn: Lux fährt die ganze Bahn ab und hält an der gesuchten Stelle
+        val ride = Levels.byId("14-2")!!; val lap = ride.finale!!(ride.solution).path
+        assertTrue(lap.size > 15); assertEquals(ride.objects(ride.solution, Phase.DONE).first { it.type == "drone" }.p, lap.last().list)
+        assertTrue(lap.all { it.y in 0.0..8.0 && it.z in 0.0..6.5 })
+        // Ohne eigenes Finale: Lux blitzt die wichtigen Punkte an – aber nur, wenn nicht schon geflogen oder geschossen wurde
+        val plane = Levels.byId("5-3")!!
+        val def = Finale.default(plane.objects(plane.solution, Phase.AIM), plane.objects(plane.solution, Phase.DONE), plane.evaluate(plane.solution))
+        assertEquals(3, def.beams.size); assertTrue(def.beams.all { it.from.near(V3(8, 0, 1)) })
+        val fly = Levels.byId("1-1")!!
+        assertTrue(Finale.default(fly.objects(fly.solution, Phase.AIM), fly.objects(fly.solution, Phase.DONE), fly.evaluate(fly.solution)).beams.isEmpty())
+    }
 }

@@ -277,10 +277,11 @@ object Families {
         tip: String, way: List<String>, color: String = "pink", step: Int = 1, suffix: String = "", bounds: Bounds = Bounds(), abi: Boolean = false,
         /** Wo Lux steht (z. B. auf einer Kurve); sonst parkt sie am Rand */
         lux: ((Int, Phase) -> V3)? = null,
+        finale: ((Int) -> Finale)? = null,
         formula: (Int) -> List<List<Part>>, objects: (Int, Phase) -> List<Obj>, check: (Int) -> Outcome,
     ) = Level(id, chapter, title, mission, bounds,
         listOf(Control("a", name, ControlKind.SCALAR, listOf(start), listOf(range.first), listOf(range.last), color, step, suffix)), mapOf("a" to listOf(solution)),
-        tip, way, abi, formula = { formula(it.int("a")) },
+        tip, way, abi, finale = finale?.let { f -> { v: Values -> f(v.int("a")) } }, formula = { formula(it.int("a")) },
         objects = { v, ph -> objects(v.int("a"), ph) + Stage.drone(lux?.invoke(v.int("a"), ph) ?: V3(bounds.max[0].toDouble(), bounds.min[1].toDouble(), 1.0), if (ph == Phase.DONE) "happy" else "idle") },
         evaluate = { check(it.int("a")) })
 

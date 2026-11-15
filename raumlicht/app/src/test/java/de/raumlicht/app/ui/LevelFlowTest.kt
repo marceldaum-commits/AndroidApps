@@ -113,4 +113,22 @@ class LevelFlowTest {
         rule.onNodeWithTag("aufgabe").performClick(); rule.mainClock.advanceTimeBy(600)
         rule.onNodeWithText(mission).assertExists()
     }
+
+    @Test fun stepperNeverShowsTheRawCounter() {
+        play("13-1")                                               // Schritte von 10 %
+        rule.mainClock.autoAdvance = false
+        tap("plus-a-0"); rule.mainClock.advanceTimeByFrame(); rule.mainClock.advanceTimeByFrame()
+        // Mitten im Umblättern: alt und neu sind beide fertig beschriftet – nie die nackte „1“
+        rule.onAllNodesWithText("1").assertCountEquals(0)
+        rule.onAllNodesWithText("10 %")[0].assertExists()
+        rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(600)
+    }
+
+    @Test fun luxShootsTheDrawnBallsOnSuccess() {
+        play("13-1")
+        tap("plus-a-0", 3); go()
+        assertEquals(listOf(3 to 1), solved)
+        assertEquals(3, stage.log.count { it.startsWith("RL.fire") && it.contains("color:'pink'") })
+        assertEquals(7, Regex("\"type\":\"sphere\"").findAll(stage.lastState!!).count())
+    }
 }

@@ -2,6 +2,15 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.4.3 – Mehr Action (15.11.2026)
+- **Lux feiert richtig:** Stimmt die Lösung, tut Lux etwas Passendes zur Aufgabe.
+  - Stochastik: Lux schießt die gezogenen Kugeln ab – sie zerplatzen in Funken.
+  - Kurvendiskussion: Lux fährt die ganze Bahn ab und hält an der gesuchten Stelle.
+  - Winkel, Flächen, Volumen, Kugeln, Ebenen: Lux blitzt nacheinander die wichtigen Punkte an.
+  - Danach dreht Lux eine Jubel-Spirale mit Salto.
+- Bei einem Fehlversuch schüttelt Lux kurz den Kopf, und ein Fehlschuss verpufft in kleinen Funken.
+- **Behoben:** Beim Einstellen von Prozent- und Winkelwerten blitzte kurz eine falsche Zahl auf (z. B. „3“ statt „30 %“).
+
 ## 0.4.2 – Finden statt suchen (15.11.2026)
 - **Drei Gebiete wie im Abitur:** Die Startseite ist in **Geometrie, Analysis und Stochastik** aufgeteilt. Ein Tipp auf das Gebiet zeigt alle Kapitel dazu mit Namen.
 - **Namen, die sagen, was drin ist:** Kapitel heißen jetzt nach ihrem Thema („Geraden“, „Ebenen“, „Kurvendiskussion“ …) statt nach der Kulisse.

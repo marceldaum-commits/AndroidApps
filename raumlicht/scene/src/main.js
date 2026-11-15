@@ -406,7 +406,7 @@ makers.sphere = (s) => {
   g.add(ball, ring);
   const cur = V(s.p); let tgt = cur.clone(), r = s.rhs, tr = s.rhs, lab = null, labText = null;
   return {
-    g,
+    g, pop: () => ({ p: cur, c }),
     update(n) { tgt = V(n.p); tr = n.rhs; if (n.label !== labText) { if (lab) g.parent && g.remove(lab); lab = n.label ? label(n.label, hex(c)) : null; labText = n.label; if (lab) world.add(lab); } },
     tick(dt, t) { damp(cur, tgt, dt); r += (tr - r) * (1 - Math.exp(-10 * dt)); ball.position.copy(cur); ball.scale.setScalar(r); ring.position.copy(cur); ring.scale.setScalar(r); mat.uniforms.t.value = t;
       if (lab) lab.position.copy(cur).add(new THREE.Vector3(0, r + 0.4, 0)); },
@@ -513,10 +513,10 @@ makers.drone = (s) => {
   const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.05, 16, 12), new THREE.MeshBasicMaterial({ color: hdr('yellow', 3) })); lamp.position.y = -0.19; body.add(lamp);
   const halo = glowSprite('cyan', 1.1, 0.35); body.add(halo);
   const drop = dashed('cyan', 0.35), foot = glowSprite('cyan', 1.2, 0.3); foot.material.depthTest = false; g.add(drop, foot);
-  const cur = V(s.p), vel = new THREE.Vector3(); let tgt = cur.clone(), mood = 'idle', lab = null, labText = null;
+  const cur = V(s.p), vel = new THREE.Vector3(); let tgt = cur.clone(), mood = 'idle', moodAt = -99, lab = null, labText = null;
   return {
     g, pos: cur, skin(c) { band.material.color.copy(hdr(c, 2.4)); },
-    update(n) { tgt = V(n.p); mood = n.mood ?? 'idle'; eyeM.color.copy(hdr(mood === 'sad' ? 'orange' : mood === 'happy' ? 'green' : 'cyan', 3.2));
+    update(n) { tgt = V(n.p); const m0 = mood; mood = n.mood ?? 'idle'; if (mood !== m0) moodAt = clock.elapsedTime; eyeM.color.copy(hdr(mood === 'sad' ? 'orange' : mood === 'happy' ? 'green' : 'cyan', 3.2));
       if (n.label !== labText) { if (lab) g.remove(lab); lab = n.label ? label(n.label, hex('cyan')) : null; if (lab) g.add(lab); labText = n.label; } },
     tick(dt, t) {
       // Feder-Flug mit Neigung in Flugrichtung
@@ -524,7 +524,15 @@ makers.drone = (s) => {
       body.position.copy(cur).add(new THREE.Vector3(0, Math.sin(t * 2.2) * 0.05, 0));
       body.rotation.z = THREE.MathUtils.clamp(-vel.x * 0.12, -0.5, 0.5); body.rotation.x = THREE.MathUtils.clamp(vel.z * 0.12, -0.5, 0.5);
       const look = Math.atan2(camera.position.x - cur.x, camera.position.z - cur.z); body.rotation.y += (look - body.rotation.y) * Math.min(1, dt * 4);
-      if (mood === 'happy') body.rotation.y += Math.sin(t * 9) * 0.25;
+      const since = t - moodAt;
+      if (mood === 'happy') {
+        // Jubel: Spirale nach oben mit Salto, danach fröhliches Wackeln
+        if (since < 1.4) { const k = since / 1.4, e = Math.sin(k * Math.PI); body.position.add(new THREE.Vector3(Math.cos(k * 12) * 0.55 * e, e * 0.9, Math.sin(k * 12) * 0.55 * e)); body.rotation.z += k * Math.PI * 2; }
+        else body.rotation.y += Math.sin(t * 9) * 0.25;
+      } else if (mood === 'sad') {
+        // Daneben: kurz den Kopf schütteln und absacken
+        const k = Math.max(0, 1 - since / 1.2); body.rotation.y += Math.sin(since * 22) * 0.4 * k; body.position.y -= 0.18 * Math.min(1, since * 3); body.rotation.x += 0.25;
+      }
       rotors.forEach((r, i) => (r.rotation.y = t * 38 * (i % 2 ? 1 : -1)));
       const blink = (t % 3.7) < 0.12 ? 0.15 : 1; eyes.forEach((e) => (e.scale.y = (mood === 'happy' ? 0.8 : 1.5) * blink));
       const f = new THREE.Vector3(cur.x, 0.02, cur.z); drop.set(body.position, f); foot.position.copy(f);
@@ -567,7 +575,8 @@ function setState(state) {
     if (!o) { o = makers[s.type](s); o.sig = sig(s); o.id = s.id; objects.set(s.id, o); world.add(o.g); o.g.scale.setScalar(0.001); o.born = clock.elapsedTime; }
     o.update(s);
   }
-  for (const [id, o] of objects) if (!seen.has(id)) { world.remove(o.g); objects.delete(id); }
+  // Was verschwindet, zerplatzt in Funken (z. B. abgeschossene Kugeln)
+  for (const [id, o] of objects) if (!seen.has(id)) { if (o.pop && clock.elapsedTime - o.born > 0.5) { const q = o.pop(); burst(fromV(q.p), q.c, 70, 0.9); shake = Math.max(shake, 0.18); } world.remove(o.g); objects.delete(id); }
 }
 const sig = (s) => [s.type, s.color, s.style, s.dashed, s.thin, s.segments?.length, !!s.faces].join('|');
 
@@ -602,6 +611,7 @@ function fire({ id = 'shot', from, to, color = 'cyan', ms = 900, hit = true, kee
     rod.set(a, p); head.position.copy(p); head.scale.setScalar(1.2 + Math.sin(t * 40) * 0.25);
     if (k < 1) return true;
     if (hit) { burst(fromV(b), burstColor ?? color, 110, 1.15); shake = 0.35; }
+    else burst(fromV(b), 'orange', 22, 0.45);   // Fehlschuss verpufft
     emit('fired', { id, hit });
     let f = 0; fx.remove(head);
     effects.push((d2) => { f += d2; if (keep && hit) return f < 30; rod.fade(Math.max(0, 1 - f / 0.6)); if (f > 0.6) { fx.remove(rod); return false; } return true; });
