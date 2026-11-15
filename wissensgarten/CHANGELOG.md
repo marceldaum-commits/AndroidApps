@@ -6,6 +6,7 @@ im GitHub-Release und in der App unter „App-Update“.
 ## 0.19.0 – Der Wissensgarten als WebApp (16.11.2026)
 - **🌐 Jetzt auch im Browser:** Der Wissensgarten läuft als WebApp – am Handy, Tablet und PC, ohne Installation (lässt sich aber wie eine App auf den Startbildschirm legen und funktioniert auch offline).
 - **Genau gleich wie die App:** Garten, alle 47 Wissenspakete, alle Spiele, Brummi, Bienenstock, Tagesaufgaben – App und WebApp entstehen jetzt aus demselben Programmcode und haben immer dieselbe Versionsnummer.
+- **Immer aktuell, ganz von allein:** Die WebApp holt neue Versionen selbst – ohne Knopf. Eine laufende Lernrunde wird dabei nie unterbrochen.
 - **Datensparsam:** In der WebApp bleibt der Lernstand nur im Browser des Geräts – kein Konto, keine Werbung, nichts wird an einen Server geschickt.
 - Nur in der Android-App: Widget, tägliche Erinnerung, Geräte-Sync über Google Drive, Wissens-Safari mit der Kamera, Postkarte und Urkunde.
 - Hinter den Kulissen: großer Umbau auf eine gemeinsame Grundlage (Compose Multiplatform). Dein Garten in der App bleibt dabei vollständig erhalten.
