@@ -1,0 +1,417 @@
+{
+  "id": "gs-uhrzeit",
+  "version": 1,
+  "title": "Die Uhr und die Zeit",
+  "subject": "mathe",
+  "grades": [
+    1,
+    2,
+    3
+  ],
+  "emoji": "⏰",
+  "tier": "free",
+  "description": "Uhr lesen, Viertel und halb, 24-Stunden-Zeit, Zeitspannen sowie Wochentage und Monate.",
+  "intro": [
+    {
+      "img": "🐝⏰",
+      "text": "Summ! Ich bin Brummi. Weißt du, wann die Schule anfängt? Mit der Uhr findest du es heraus!"
+    },
+    {
+      "img": "👆⏰",
+      "text": "Die Uhr hat zwei Zeiger. Der kleine zeigt die Stunde, der große die Minuten."
+    },
+    {
+      "img": "🕒",
+      "text": "Steht der große Zeiger auf der 12, ist es eine volle Stunde. Hier steht der kleine auf der 3: Es ist 3 Uhr!"
+    },
+    {
+      "img": "🍰⏰",
+      "text": "Denk an eine Torte: Eine halbe Torte ist eine halbe Stunde, ein Viertel sind 15 Minuten."
+    },
+    {
+      "img": "☀️🌙",
+      "text": "Ein Tag hat 24 Stunden. Nach 12 Uhr mittags zählt man weiter: 13, 14, 15 Uhr … 15 Uhr ist 3 Uhr nachmittags."
+    },
+    {
+      "img": "🌱🚀",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze in deinem Garten wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welcher Zeiger zeigt die Stunden?",
+      "a": "der kleine Zeiger",
+      "choices": [
+        "der große Zeiger",
+        "der Sekundenzeiger",
+        "beide Zeiger"
+      ],
+      "info": "Der kleine Zeiger ist langsam – er zeigt die Stunde. Der große zeigt die Minuten.",
+      "img": "⏰👆"
+    },
+    {
+      "id": "002",
+      "q": "Wo steht der große Zeiger bei einer vollen Stunde?",
+      "a": "auf der 12",
+      "choices": [
+        "auf der 6",
+        "auf der 3",
+        "auf der 1"
+      ],
+      "img": "⏰🔝"
+    },
+    {
+      "id": "003",
+      "q": "Der kleine Zeiger steht auf der 8, der große auf der 12. Wie spät ist es?",
+      "a": "8 Uhr",
+      "choices": [
+        "12 Uhr",
+        "halb 8",
+        "Viertel nach 8"
+      ],
+      "img": "🥣🎒"
+    },
+    {
+      "id": "004",
+      "q": "Der große Zeiger springt von einer Zahl zur nächsten. Wie viele Minuten sind das?",
+      "a": "5 Minuten",
+      "choices": [
+        "1 Minute",
+        "10 Minuten",
+        "12 Minuten"
+      ],
+      "info": "Darum zählst du in 5er-Schritten: 5, 10, 15, 20 …",
+      "img": "⏰🦘"
+    },
+    {
+      "id": "005",
+      "q": "Der große Zeiger steht auf der 3. Wie viele Minuten nach der vollen Stunde?",
+      "a": "15 Minuten",
+      "choices": [
+        "3 Minuten",
+        "30 Minuten",
+        "45 Minuten"
+      ],
+      "info": "Jede Zahl steht für 5 Minuten: 3 × 5 = 15.",
+      "img": "⏰🖐️"
+    },
+    {
+      "id": "006",
+      "q": "Der große Zeiger steht auf der 6, der kleine zwischen 2 und 3. Wie spät ist es?",
+      "a": "halb drei",
+      "choices": [
+        "halb zwei",
+        "sechs Uhr",
+        "Viertel nach zwei"
+      ],
+      "info": "Halb drei ist 2:30 Uhr – halb auf dem Weg zur 3.",
+      "img": "⏰🍰"
+    },
+    {
+      "id": "007",
+      "q": "Es ist „halb sechs“. Wie schreibst du das?",
+      "a": "5:30 Uhr",
+      "choices": [
+        "6:30 Uhr",
+        "6:00 Uhr",
+        "5:00 Uhr"
+      ],
+      "info": "„Halb sechs“ heißt: die halbe Stunde bis 6 Uhr ist schon um.",
+      "img": "🌇⏰"
+    },
+    {
+      "id": "008",
+      "q": "Der große Zeiger steht auf der 9. Wie sagt man dazu?",
+      "a": "Viertel vor",
+      "choices": [
+        "Viertel nach",
+        "halb",
+        "volle Stunde"
+      ],
+      "info": "Bis zur 12 fehlen noch 3 Zahlen – also 15 Minuten.",
+      "img": "⏰🧩"
+    },
+    {
+      "id": "009",
+      "q": "Es ist Viertel nach neun. Wie schreibst du das?",
+      "a": "9:15 Uhr",
+      "choices": [
+        "8:45 Uhr",
+        "9:45 Uhr",
+        "9:25 Uhr"
+      ],
+      "img": "🏫🔔"
+    },
+    {
+      "id": "010",
+      "q": "Es ist Viertel vor zwölf. Wie schreibst du das?",
+      "a": "11:45 Uhr",
+      "choices": [
+        "12:45 Uhr",
+        "12:15 Uhr",
+        "11:15 Uhr"
+      ],
+      "info": "Viertel vor zwölf: Noch 15 Minuten bis 12 Uhr.",
+      "img": "🍽️⏰"
+    },
+    {
+      "id": "011",
+      "q": "Welcher Tag kommt nach Mittwoch?",
+      "a": "Donnerstag",
+      "choices": [
+        "Dienstag",
+        "Freitag",
+        "Montag"
+      ],
+      "img": "📅➡️"
+    },
+    {
+      "id": "012",
+      "q": "Welcher Tag kommt vor Montag?",
+      "a": "Sonntag",
+      "choices": [
+        "Dienstag",
+        "Samstag",
+        "Freitag"
+      ],
+      "img": "📅⬅️"
+    },
+    {
+      "id": "013",
+      "q": "Heute ist Freitag. Welcher Tag ist übermorgen?",
+      "a": "Sonntag",
+      "choices": [
+        "Samstag",
+        "Montag",
+        "Donnerstag"
+      ],
+      "info": "Morgen ist Samstag, übermorgen Sonntag.",
+      "img": "🎒😎"
+    },
+    {
+      "id": "014",
+      "q": "Welcher Monat kommt nach April?",
+      "a": "Mai",
+      "choices": [
+        "März",
+        "Juni",
+        "August"
+      ],
+      "img": "🌷🐞"
+    },
+    {
+      "id": "015",
+      "q": "Welcher ist der 10. Monat des Jahres?",
+      "a": "Oktober",
+      "choices": [
+        "September",
+        "November",
+        "Dezember"
+      ],
+      "info": "Januar, Februar, März … Zähl mit: der 10. ist der Oktober.",
+      "img": "🍂🎃"
+    },
+    {
+      "id": "016",
+      "q": "Um 15 Uhr ist es …",
+      "a": "3 Uhr nachmittags",
+      "choices": [
+        "5 Uhr nachmittags",
+        "3 Uhr morgens",
+        "1 Uhr nachmittags"
+      ],
+      "info": "Nach 12 Uhr zählt man weiter: 15 − 12 = 3.",
+      "img": "☀️🍪"
+    },
+    {
+      "id": "017",
+      "q": "7 Uhr abends ist …",
+      "a": "19 Uhr",
+      "choices": [
+        "17 Uhr",
+        "7 Uhr",
+        "21 Uhr"
+      ],
+      "info": "7 + 12 = 19",
+      "img": "🌆🍝"
+    },
+    {
+      "id": "018",
+      "q": "Um 20 Uhr ist es …",
+      "a": "8 Uhr abends",
+      "choices": [
+        "2 Uhr nachmittags",
+        "10 Uhr abends",
+        "8 Uhr morgens"
+      ],
+      "info": "20 − 12 = 8",
+      "img": "🌙🛏️"
+    },
+    {
+      "id": "019",
+      "q": "Wie nennt man 12 Uhr nachts noch?",
+      "a": "0 Uhr",
+      "choices": [
+        "12 Uhr mittags",
+        "6 Uhr",
+        "1 Uhr"
+      ],
+      "info": "Um Mitternacht beginnt ein neuer Tag. Man sagt 0 Uhr oder 24 Uhr.",
+      "img": "🌙⭐"
+    },
+    {
+      "id": "020",
+      "q": "2 Stunden = ? Minuten",
+      "a": "120 Minuten",
+      "choices": [
+        "200 Minuten",
+        "60 Minuten",
+        "100 Minuten"
+      ],
+      "info": "1 Stunde hat 60 Minuten: 60 + 60 = 120.",
+      "img": "⏰⏰"
+    },
+    {
+      "id": "021",
+      "q": "2 Wochen = ? Tage",
+      "a": "14 Tage",
+      "choices": [
+        "12 Tage",
+        "7 Tage",
+        "20 Tage"
+      ],
+      "info": "Eine Woche hat 7 Tage: 7 + 7 = 14.",
+      "img": "🏖️🧳"
+    },
+    {
+      "id": "022",
+      "q": "Wie viele Tage hat ein Jahr?",
+      "a": "365 Tage",
+      "choices": [
+        "360 Tage",
+        "12 Tage",
+        "100 Tage"
+      ],
+      "info": "Alle 4 Jahre gibt es ein Schaltjahr mit 366 Tagen.",
+      "img": "🎂🌍"
+    },
+    {
+      "id": "023",
+      "q": "Wie viele Wochen hat ein Jahr ungefähr?",
+      "a": "52 Wochen",
+      "choices": [
+        "12 Wochen",
+        "48 Wochen",
+        "100 Wochen"
+      ],
+      "img": "📅🔁"
+    },
+    {
+      "id": "024",
+      "q": "Wie viele Tage hat der Februar meistens?",
+      "a": "28 Tage",
+      "choices": [
+        "30 Tage",
+        "31 Tage",
+        "26 Tage"
+      ],
+      "info": "Im Schaltjahr hat er einen Tag mehr: 29.",
+      "img": "❄️⛄"
+    },
+    {
+      "id": "025",
+      "q": "Welcher Monat hat 31 Tage?",
+      "a": "Juli",
+      "choices": [
+        "April",
+        "Juni",
+        "September"
+      ],
+      "info": "Knöchel-Trick: Monate auf einem Knöchel haben 31 Tage.",
+      "img": "✊🍦"
+    },
+    {
+      "id": "026",
+      "q": "Von 8 Uhr bis 9 Uhr. Wie lange ist das?",
+      "a": "1 Stunde",
+      "choices": [
+        "2 Stunden",
+        "10 Minuten",
+        "30 Minuten"
+      ],
+      "img": "🏫⏳"
+    },
+    {
+      "id": "027",
+      "q": "Von 8 Uhr bis 9:30 Uhr – wie lange?",
+      "a": "1 Stunde 30 Minuten",
+      "choices": [
+        "1 Stunde",
+        "2 Stunden 30 Minuten",
+        "130 Minuten"
+      ],
+      "info": "8 bis 9 Uhr: 1 Stunde. 9 bis 9:30 Uhr: noch 30 Minuten.",
+      "img": "🏊⏳"
+    },
+    {
+      "id": "028",
+      "q": "Ein Hörspiel dauert 1 Stunde 15 Minuten. Wie viele Minuten sind das?",
+      "a": "75 Minuten",
+      "choices": [
+        "115 Minuten",
+        "65 Minuten",
+        "85 Minuten"
+      ],
+      "info": "60 + 15 = 75",
+      "img": "🎧📖"
+    },
+    {
+      "id": "029",
+      "q": "Der Bus kommt um 7:35 Uhr. Du bist um 7:20 Uhr da. Wie lange wartest du?",
+      "a": "15 Minuten",
+      "choices": [
+        "55 Minuten",
+        "20 Minuten",
+        "25 Minuten"
+      ],
+      "img": "🚌⏳"
+    },
+    {
+      "id": "030",
+      "q": "Es ist 10:50 Uhr. Wie spät ist es in 20 Minuten?",
+      "a": "11:10 Uhr",
+      "choices": [
+        "10:70 Uhr",
+        "11:20 Uhr",
+        "11:00 Uhr"
+      ],
+      "info": "10 Minuten bis 11 Uhr, dann noch 10 Minuten.",
+      "img": "⏰➡️"
+    },
+    {
+      "id": "031",
+      "q": "Die Pause geht von 9:45 Uhr bis 10:05 Uhr. Wie lange dauert sie?",
+      "a": "20 Minuten",
+      "choices": [
+        "60 Minuten",
+        "40 Minuten",
+        "15 Minuten"
+      ],
+      "info": "9:45 bis 10:00 Uhr sind 15 Minuten, dann noch 5.",
+      "img": "🍎⚽"
+    },
+    {
+      "id": "032",
+      "q": "Du schläfst von 20 Uhr bis 7 Uhr. Wie lange ist das?",
+      "a": "11 Stunden",
+      "choices": [
+        "13 Stunden",
+        "27 Stunden",
+        "12 Stunden"
+      ],
+      "info": "20 bis 24 Uhr: 4 Stunden. 0 bis 7 Uhr: 7 Stunden. Zusammen 11.",
+      "img": "😴🌙"
+    }
+  ]
+}

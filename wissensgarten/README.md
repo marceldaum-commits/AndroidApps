@@ -48,7 +48,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
   neue Karten werden erst **entdeckt** und dann geprüft. Die Runde mischt automatisch **5 Spielarten**:
   🎈 Ballon-Jagd, 🔤 Buchstabensalat, 👆 Stimmt's? (wischen), Auswahl und Aufdecken; alle 6 Karten ein 🧩 Zuordnen-Bonus.
   Auswahl der Spielart: `core/model/Games.kt`, Spiele: `app/ui/play/`.
-- **Erklär-Geschichten**: Zu jedem der 43 Pakete erzählt Brummi beim ersten Öffnen eine animierte Geschichte
+- **Erklär-Geschichten**: Zu jedem der 47 Pakete erzählt Brummi beim ersten Öffnen eine animierte Geschichte
   (3–5 Szenen mit Bildern, Haken, Eselsbrücke) – jederzeit wieder abspielbar (`app/ui/adventure/IntroScreen.kt`).
 - **Abenteuerpfad**: Jedes Beet ist ein Weg mit Stationen à 5 Karten; jede dritte Station hat eine Schatztruhe.
 - **Gartenfreunde**: 24 Sammelfiguren (normal, selten, legendär) – nur durch Lernfortschritt, feste Reihenfolge,
@@ -91,7 +91,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 - **Einrichtung**: Wer lernt (selbst / Kind), Name + Tier-Avatar, Klassenstufe, dann **beliebige Beete** wählen –
   die Stufe hebt nur passende Pakete hervor. Eigene Beete jederzeit möglich.
 - **Interaktive Anleitung** mit Zeitraffer: Man sieht, wie Wissen welkt und Gießen hilft.
-- **43 Wissenspakete, ~1500 Karten** von Grundschule bis Erwachsene (Mathe, Deutsch, Englisch, Französisch, Latein,
+- **47 Wissenspakete, ~1600 Karten** von Grundschule bis Erwachsene (Mathe, Deutsch, Englisch, Französisch, Latein,
   Spanisch, Bio, Chemie, Physik, Informatik, Geschichte, Erdkunde, Politik, Wirtschaft, Musik, Allgemeinwissen, Erste Hilfe).
 - **Auswahl-Aufgaben** (automatisch bewertet) und klassische Karten mit Selbsteinschätzung; Grundschüler bekommen nur
   „Wusste ich / Wusste ich nicht“.

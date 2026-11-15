@@ -46,6 +46,13 @@ fun SettingsScreen(
     onMusic: (Boolean) -> Unit = {},
     onPrivacy: () -> Unit = {},
     onWipeAll: () -> Unit = {},
+    typing: Boolean = true,
+    onTyping: (Boolean) -> Unit = {},
+    dailyLimit: Int = 0,
+    onDailyLimit: (Int) -> Unit = {},
+    holiday: Boolean = false,
+    onHoliday: (Boolean) -> Unit = {},
+    onWeekReport: () -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
     var wipeStep by remember { mutableIntStateOf(0) }
@@ -84,6 +91,39 @@ fun SettingsScreen(
                 "Weniger neue Samen = weniger Gießarbeit an den Folgetagen.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
+        }
+
+        Section("Für Eltern") {
+            OutlinedButton(onClick = onWeekReport, modifier = Modifier.fillMaxWidth()) { Text("📊 Wochenbericht ansehen") }
+            Text("Gesunde Lernzeit pro Tag", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                listOf(0, 10, 15, 20, 30, 45, 60).forEach { m ->
+                    FilterChip(selected = dailyLimit == m, onClick = { onDailyLimit(m) }, label = { Text(if (m == 0) "frei" else "$m Min.") })
+                }
+            }
+            Text(
+                "Ist die Zeit um, verabschiedet sich Brummi freundlich: „Der Garten ruht sich aus 🌙“. Eine laufende Runde darf noch zu Ende gespielt werden.",
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(top = 8.dp)) {
+                Column(Modifier.weight(1f)) {
+                    Text("🏖️ Ferien-Modus")
+                    Text("Die Pflanzen welken viermal langsamer, Erinnerungen pausieren. Lernen geht trotzdem – nichts geht verloren.",
+                        style = MaterialTheme.typography.bodySmall)
+                }
+                Switch(checked = holiday, onCheckedChange = onHoliday)
+            }
+        }
+
+        Section("Spielarten") {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text("Antwort selbst eintippen")
+                    Text("Ab Klasse 5 manchmal: die Antwort ganz aus dem Kopf schreiben. Kleine Tippfehler zählen als „fast“ (außer in Deutsch).",
+                        style = MaterialTheme.typography.bodySmall)
+                }
+                Switch(checked = typing, onCheckedChange = onTyping)
+            }
         }
 
         Section("Erinnerung") {

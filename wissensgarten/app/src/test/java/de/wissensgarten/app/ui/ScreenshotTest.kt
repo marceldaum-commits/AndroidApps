@@ -550,6 +550,37 @@ open class ScreenshotTest {
     @Test fun storePlusSoon() = shot("53_plus_kommt_bald") {
         StoreScreen(profile, emptyList(), garden, packs.filter { it.isPlus }, { _, _ -> }, { _, _ -> }, { _, _ -> }, {}, initialTab = 3)
     }
+
+    @Test fun typeAnswer() = shot("54_antwort_tippen", prepare = { r ->
+        r.onNode(hasSetTextAction()).performTextInput("Pariss")
+        r.onNodeWithText("Prüfen ✓").performClick()
+    }) {
+        val c = StudyCard("cap", "b", "Hauptstadt von Frankreich?", "Paris", null, null, Memory(3.0, 5.0, 0, 2, 0), "🗼🥐")
+        Column(Modifier.padding(16.dp)) { de.wissensgarten.app.ui.play.TypeGame(c, strictSpelling = false) {} }
+    }
+
+    @Test fun weekReport() = shot("55_wochenbericht") {
+        val day = de.wissensgarten.core.model.Scheduler.DAY_MS
+        val now = System.currentTimeMillis()
+        val cards = mapOf(
+            "a" to de.wissensgarten.core.model.WeekReport.CardInfo("7 × 8", "mathe", 3.0, 2),
+            "b" to de.wissensgarten.core.model.WeekReport.CardInfo("Hauptstadt von Frankreich?", "erdkunde", 30.0, 0),
+            "c" to de.wissensgarten.core.model.WeekReport.CardInfo("the dog – der …?", "englisch", 12.0, 0),
+            "d" to de.wissensgarten.core.model.WeekReport.CardInfo("Wie viele Beine hat eine Spinne?", "sachunterricht", 8.0, 1),
+        )
+        val e = (0..40).map { i -> de.wissensgarten.core.model.WeekReport.Entry(listOf("a", "b", "c", "d", "c", "b")[i % 6],
+            now - (listOf(0, 1, 3, 4, 6)[i % 5]) * day, if (i % 7 == 0 && i % 6 == 0) 0 else if (i % 6 == 0 || i % 9 == 3) 0 else 2) }
+        val r = de.wissensgarten.core.model.WeekReport.build(e, cards, now)
+        de.wissensgarten.app.ui.parents.WeekReportScreen(listOf(profile, profile.copy(id = "p2", name = "Ben", avatar = "🐻")), "p1", { r }) {}
+    }
+
+    @Test fun restTime() = shot("56_garten_ruht") { de.wissensgarten.app.ui.parents.RestOverlay("Lena") {} }
+
+    @Test fun parentSettings() = shot("57_eltern_einstellungen") {
+        de.wissensgarten.app.ui.settings.SettingsScreen(profile, true, ThemeMode.LIGHT, true, {}, packCount = 47, cardCount = 1607,
+            version = "0.17.0", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {},
+            dailyLimit = 20, holiday = true)
+    }
 }
 
 /** Play-Store-Fotos Handy: 1080 × 1920 (9:16, Store verlangt höchstens 2:1). */

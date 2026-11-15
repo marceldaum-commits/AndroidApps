@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.17.0 – Mehr für Grundschule und Eltern
+- **⌨️ Antwort selbst eintippen (ab Klasse 5):** Manchmal fragt Brummi „ganz aus dem Kopf“. Kleine Tippfehler zählen als „fast richtig“ – in Deutsch zählt die genaue Schreibweise. Abschaltbar unter Einstellungen → Spielarten.
+- **🧒 Vier neue Grundschul-Pakete:** Die Uhr und die Zeit, Rechnen mit Geld, Lesestart, Wetter und Jahreszeiten – zusammen 128 neue Karten mit Merkbildern.
+- **📊 Wochenbericht für Eltern:** An welchen Tagen gelernt wurde, welche Fächer, was richtig gut sitzt, was noch schwerfällt – und ein Tipp von Brummi. Wird nur auf dem Gerät berechnet.
+- **🌙 Gesunde Lernzeit:** Eltern legen ein Tageslimit fest (10–60 Minuten). Ist die Zeit um, verabschiedet sich Brummi freundlich: „Der Garten ruht sich aus“. Eine laufende Runde darf zu Ende gespielt werden; Eltern können 15 Minuten dazugeben.
+- **🏖️ Ferien-Modus:** In den Ferien welken die Pflanzen viermal langsamer und Erinnerungen pausieren. Lernen geht trotzdem, nichts geht verloren.
+
 ## 0.16.2 – Wissensgarten Plus kommt bald
 - **⭐ Plus-Vorschau im Laden:** „Kommt bald“ – zusätzliche Pakete für Prüfungen, Abitur und mehr Fächer. Bis zum Start sind alle Plus-Pakete gratis, alle Grundpakete bleiben dauerhaft kostenlos.
 - **Für Eltern:** hinter der Eltern-Aufgabe steht, wie Plus funktionieren wird – Kauf nur durch Eltern über Google Play, ein Kauf für die ganze Familie, kein Kaufdruck auf Kinder.

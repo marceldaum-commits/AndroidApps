@@ -51,9 +51,18 @@ object Scheduler {
     fun localDay(ms: Long, zone: java.util.TimeZone = java.util.TimeZone.getDefault()): Long = Math.floorDiv(ms + zone.getOffset(ms), DAY_MS)
     const val TARGET = 0.9
 
+    /**
+     * Ferien-Zeiten (von Eltern eingeschaltet): Darin vergeht die Garten-Zeit nur zu [Holidays.SPEED] –
+     * die Pflanzen welken viermal langsamer. Wird von der App beim Start und beim Umschalten gesetzt.
+     */
+    @Volatile var holidays: List<LongRange> = emptyList()
+
+    /** Garten-Zeit zwischen zwei Zeitpunkten (ms) – Ferien zählen nur zu einem Viertel. */
+    fun elapsed(from: Long, to: Long): Long = Holidays.elapsed(from, to, holidays)
+
     fun retrievability(m: Memory, now: Long): Double {
         if (m.isSeed) return 1.0
-        val days = max(0.0, (now - m.lastReview).toDouble() / DAY_MS)
+        val days = max(0.0, elapsed(m.lastReview, now).toDouble() / DAY_MS)
         return 1.0 / (1.0 + days / (9.0 * m.stability))
     }
 
@@ -65,7 +74,7 @@ object Scheduler {
         return ((0.95 - retrievability(m, now)) / 0.35).coerceIn(0.0, 1.0).toFloat()
     }
 
-    fun dueAt(m: Memory): Long = m.lastReview + (m.stability * DAY_MS).toLong()
+    fun dueAt(m: Memory): Long = Holidays.after(m.lastReview, (m.stability * DAY_MS).toLong(), holidays)
 
     fun review(m: Memory, rating: Rating, now: Long): Memory {
         if (m.isSeed) {
@@ -87,4 +96,53 @@ object Scheduler {
     }
 
     fun previewDays(m: Memory, rating: Rating, now: Long): Double = review(m, rating, now).stability
+}
+
+/**
+ * Ferien-Modus: Zeiträume, in denen der Garten „schläft“. Lernen ist weiter möglich, aber nichts welkt
+ * schnell und es gibt keine Erinnerungen. Der Lernstand bleibt unverändert – nur die Uhr läuft langsamer.
+ */
+object Holidays {
+    const val SPEED = 0.25
+
+    /** Garten-Zeit von [from] bis [to]: normale Zeit voll, Ferien-Zeit zu [SPEED]. */
+    fun elapsed(from: Long, to: Long, periods: List<LongRange>): Long {
+        if (to <= from) return to - from
+        var off = 0L
+        for (p in periods) {
+            val a = maxOf(from, p.first); val b = minOf(to, p.last)
+            if (b > a) off += b - a
+        }
+        return (to - from) - (off * (1 - SPEED)).toLong()
+    }
+
+    /** Erster Zeitpunkt nach [from], an dem [gardenMs] Garten-Zeit vergangen sind. */
+    fun after(from: Long, gardenMs: Long, periods: List<LongRange>): Long {
+        var t = from; var left = gardenMs
+        for (p in periods.filter { it.last > from }.sortedBy { it.first }) {
+            val start = maxOf(t, p.first)
+            if (start - t >= left) return t + left
+            left -= start - t; t = start
+            val span = p.last - start
+            val inside = (span * SPEED).toLong()
+            if (p.last == Long.MAX_VALUE || inside >= left) return t + (left / SPEED).toLong().coerceAtLeast(0)
+            left -= inside; t = p.last
+        }
+        return t + left
+    }
+
+    /** Speicherform „start-ende;start-ende“ (offene Ferien: ende = Long.MAX_VALUE). */
+    fun encode(periods: List<LongRange>): String = periods.joinToString(";") { "${it.first}-${it.last}" }
+    fun decode(s: String?): List<LongRange> = s.orEmpty().split(';').mapNotNull { part ->
+        val (a, b) = part.split('-').takeIf { it.size == 2 } ?: return@mapNotNull null
+        val x = a.toLongOrNull() ?: return@mapNotNull null; val y = b.toLongOrNull() ?: return@mapNotNull null
+        if (y > x) x..y else null
+    }
+    fun isActive(periods: List<LongRange>) = periods.any { it.last == Long.MAX_VALUE }
+    /** Ferien beginnen (offen) oder beenden; ältere als 1 Jahr fallen weg. */
+    fun toggle(periods: List<LongRange>, on: Boolean, now: Long): List<LongRange> {
+        val kept = periods.filter { it.last > now - 365 * Scheduler.DAY_MS }
+        return if (on) { if (isActive(kept)) kept else kept + listOf(now..Long.MAX_VALUE) }
+        else kept.map { r -> if (r.last == Long.MAX_VALUE) r.first..maxOf(now, r.first + 1) else r }
+    }
 }
