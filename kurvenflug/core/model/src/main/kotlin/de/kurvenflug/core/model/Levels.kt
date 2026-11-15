@@ -143,6 +143,8 @@ object Levels {
     private const val PI = Math.PI
     private fun planet(x: Double, y: Double, r: Double) = Body(x, y, r)
     private val pk = p("k", "k", -20.0, 20.0, 0.25, 1.0)
+    /** Hyperbel: k ist hier immer ganzzahlig – feinere Schritte würden Raten belohnen */
+    private val pkAnti = p("k", "k", -20.0, 20.0, 1.0, 1.0)
     private val pr = p("r", "Radius r", 0.5, 15.0, 0.1, 1.0)
     private val lb = p("b", "b", 0.5, 10.0, 0.5, 10.0)
     private val ld = p("d", "d", -8.0, 8.0, 1.0, 0.0)
@@ -475,13 +477,13 @@ object Levels {
                     listOf(t(6.0, -3.0)), listOf(pk), mapOf("k" to -0.5), asteroids = listOf(rock(4.0, 4.0)), tip = "k = −3 : 6."),
                 Level("8-3", 8, 3, "Prozent-Schub", Kind.PROP, "Bei x = 8 soll y genau 25 % von 8 sein. Wie groß ist k?",
                     listOf(t(8.0, 2.0)), listOf(pk), mapOf("k" to 0.25), cells = listOf(cell(4.0, 1.0)), tip = "25 % = 25/100 = 0,25."),
-                Level("8-4", 8, 4, "Hyperbel", Kind.ANTI, "Antiproportional: y = k : x. Die Station liegt bei (2 | 6).",
-                    listOf(t(2.0, 6.0)), listOf(pk), mapOf("k" to 12.0), cells = listOf(cell(1.5, 8.0)), tip = "k = x · y = 2 · 6."),
-                Level("8-5", 8, 5, "Zwei Stationen", Kind.ANTI, "y = k : x durch (3 | 4) und (6 | 2).",
-                    listOf(t(3.0, 4.0), t(6.0, 2.0)), listOf(pk), mapOf("k" to 12.0), asteroids = listOf(rock(6.0, 6.0)),
+                Level("8-4", 8, 4, "Hyperbel", Kind.ANTI, "Antiproportional: y = k : x. Die Station liegt bei (2 | 4).",
+                    listOf(t(2.0, 4.0)), listOf(pkAnti), mapOf("k" to 8.0), cells = listOf(cell(1.0, 8.0)), tip = "k = x · y = 2 · 4."),
+                Level("8-5", 8, 5, "Zwei Stationen", Kind.ANTI, "y = k : x durch (2 | 6) und (6 | 2).",
+                    listOf(t(2.0, 6.0), t(6.0, 2.0)), listOf(pkAnti), mapOf("k" to 12.0), asteroids = listOf(rock(6.0, 6.0)),
                     tip = "Bei beiden ist x · y gleich – genau das ist k."),
-                Level("8-6", 8, 6, "Kopfüber", Kind.ANTI, "y = k : x durch (4 | −2).",
-                    listOf(t(4.0, -2.0)), listOf(pk), mapOf("k" to -8.0), tip = "k = 4 · (−2)."),
+                Level("8-6", 8, 6, "Kopfüber", Kind.ANTI, "y = k : x durch (2 | −4).",
+                    listOf(t(2.0, -4.0)), listOf(pkAnti), mapOf("k" to -8.0), tip = "k = 2 · (−4)."),
             ),
         ),
         Chapter(
@@ -599,7 +601,7 @@ object Levels {
                     listOf(t(8.0, 3.0)), listOf(lb), mapOf("b" to 2.0), fixed = mapOf("d" to 0.0), cells = listOf(cell(4.0, 2.0)),
                     tip = "b³ = 8. Welche Zahl hoch 3 ist 8?"),
                 Level("10-2", 10, 2, "Dreierpotenz", Kind.LOG, "y = log_b(x) durch (9 | 2).",
-                    listOf(t(9.0, 2.0)), listOf(lb), mapOf("b" to 3.0), fixed = mapOf("d" to 0.0), tip = "b² = 9."),
+                    listOf(t(9.0, 2.0, 0.35)), listOf(lb), mapOf("b" to 3.0), fixed = mapOf("d" to 0.0), tip = "b² = 9."),
                 Level("10-3", 10, 3, "Höhenschub", Kind.LOG, "y = log₂(x) + d durch (4 | 5).",
                     listOf(t(4.0, 5.0)), listOf(ld), mapOf("d" to 3.0), fixed = mapOf("b" to 2.0), tip = "log₂(4) = 2, also 2 + d = 5."),
                 Level("10-4", 10, 4, "Abwärts", Kind.LOG, "y = log_b(x) durch (4 | −2). Die Kurve fällt!",

@@ -138,4 +138,21 @@ class FlightTest {
         assertTrue(Flight.fly(l, mapOf("r" to 7.1)).success)
         assertNotNull(Flight.fly(l, mapOf("r" to 7.6)).crash)
     }
+
+    /** Raten soll nicht reichen: Eine steile Kurve, die den Stationskreis nur seitlich streift, zählt nicht. */
+    @Test fun steepCurveGrazingTheStationDoesNotCount() {
+        val l = Levels.byId("3-1")!! // y = x² + e durch (2 | 1), Lösung e = −3
+        assertTrue(Flight.fly(l, mapOf("e" to -3.0)).success)
+        for (e in listOf(-6.0, -5.0, -4.0, -2.0, -1.0)) assertFalse("e = $e", Flight.fly(l, mapOf("e" to e)).success)
+    }
+
+    /** Für jedes Funktions-Level treffen nur wenige Reglerstellungen – wer rechnet, trifft; wer rät, kaum. */
+    @Test fun oneParameterFunctionLevelsHaveNarrowWindows() {
+        Levels.chapters.flatMap { it.levels }.filter { it.kind in Flight.functionKinds && it.params.size == 1 }.forEach { l ->
+            val p = l.params.single()
+            val wins = generateSequence(p.min) { it + p.step }.takeWhile { it <= p.max + 1e-9 }
+                .count { Flight.fly(l, mapOf(p.key to it)).success }
+            assertTrue("${l.id}: $wins Stellungen treffen", wins in 1..4)
+        }
+    }
 }

@@ -3,6 +3,13 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.5.2 – Rechnen lohnt sich
+- **Treffer zählen jetzt nur, wenn die Rechnung stimmt**: Bisher reichte es manchmal, wenn eine steile Kurve die Station nur
+  am Rand streifte – dann klappte es auch mit geratenen Zahlen. Jetzt muss die Kurve an der Stelle der Station die richtige
+  Höhe haben. Wer rechnet, trifft beim ersten Versuch – und Volt sagt bei einem Fehlversuch genau, wie weit es noch ist.
+- **Hyperbel-Level (Zuordnungen)**: k geht jetzt in ganzen Schritten, und die Stationen liegen so, dass man k sicher ausrechnen kann.
+- Schon gesammelte Sterne bleiben natürlich erhalten.
+
 ## 0.5.1 – Formeln wie im Schulbuch
 - **Formeln lesen sich jetzt wie im Heft**: statt „y = log₃(x) + (−2)“ steht da „y = log₃(x) − 2“. Bei der Parabel wird aus
   „(x − (−3))“ einfach „(x + 3)“. Das gilt für alle Kurven – Geraden, Parabeln, Sinus, Wachstum, Logarithmus und Weg & Zeit.

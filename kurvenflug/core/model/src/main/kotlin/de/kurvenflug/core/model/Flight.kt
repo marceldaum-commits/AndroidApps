@@ -282,6 +282,9 @@ object Flight {
         return out
     }
 
+    /** Bahnen der Form y = f(x) */
+    val functionKinds = setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION)
+
     /** Fliegt die Bahn ab: Ziele, Energiezellen, Asteroiden. */
     fun fly(level: Level, values: Map<String, Double>): FlightResult {
         if (level.kind == Kind.RENDEZVOUS) return rendezvous(level, values)
@@ -289,11 +292,17 @@ object Flight {
         val hits = linkedSetOf<Int>(); val cells = linkedSetOf<Int>()
         var crash: Int? = null
         val flown = ArrayList<Vec>()
+        // Funktionskurven: Die Station zählt nur, wenn y an ihrer Stelle x stimmt (bis auf ihren Radius).
+        // Sonst streift eine steile Kurve den Kreis seitlich, obwohl falsch gerechnet wurde – Raten soll nicht reichen.
+        val aligned = level.targets.indices.filter { i ->
+            val t = level.targets[i]
+            level.kind !in functionKinds || abs(f(level, values, t.x) - t.y) <= t.r
+        }.toSet()
         for (p in full) {
             flown += p
             val a = level.asteroids.indexOfFirst { it.contains(p) }
             if (a >= 0) { crash = a; break }
-            if (level.kind != Kind.POINT) level.targets.forEachIndexed { i, t -> if (t.contains(p)) hits += i }
+            if (level.kind != Kind.POINT) level.targets.forEachIndexed { i, t -> if (i in aligned && t.contains(p)) hits += i }
             level.cells.forEachIndexed { i, c -> if (c.contains(p, 0.15)) cells += i }
             // Alle Stationen erreicht → andocken, nicht weiterfliegen
             if (level.kind != Kind.POINT && level.kind != Kind.RADIUS && hits.size == level.targets.size) break
