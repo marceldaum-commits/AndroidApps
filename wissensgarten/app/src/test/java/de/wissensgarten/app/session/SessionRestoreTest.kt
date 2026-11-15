@@ -24,7 +24,7 @@ class SessionRestoreTest {
     @Test fun roundComesBackInSameOrderWithFreshProgress() {
         // So legt die laufende Runde ihren Zustand ab (Reihenfolge c3, c1 – c2 war nicht dabei)
         val saved = SavedStateHandle(mapOf("session_ids" to arrayListOf("c3", "c1"), "session_calm" to true, "session_mix" to "MATHE,ENGLISCH"))
-        val vm = AppViewModel(app, saved)
+        val vm = AppViewModel(app.container, null, saved)
         assertTrue(vm.hasSavedSession())
 
         val restored = vm.restoreSession(beds)
@@ -37,10 +37,10 @@ class SessionRestoreTest {
 
     @Test fun deletedCardsAreSkippedAndFinishedRoundIsForgotten() {
         val saved = SavedStateHandle(mapOf("session_ids" to arrayListOf("weg", "c2")))
-        val vm = AppViewModel(app, saved)
+        val vm = AppViewModel(app.container, null, saved)
         assertEquals(listOf("c2"), vm.restoreSession(beds).map { it.id })
         vm.endSession()
         assertEquals(emptyList<String>(), saved.get<ArrayList<String>>("session_ids"))
-        assertFalse(AppViewModel(app, saved).hasSavedSession())
+        assertFalse(AppViewModel(app.container, null, saved).hasSavedSession())
     }
 }

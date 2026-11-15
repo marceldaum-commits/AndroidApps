@@ -174,7 +174,6 @@ class GardenWidgetReceiver : GlanceAppWidgetReceiver() {
     override val glanceAppWidget: GlanceAppWidget = GardenWidget()
 }
 
-data class Flower(val hue: Float, val health: Float, val grown: Boolean)
 
 /** Malt den Mini-Garten als Bild (Widgets können keine Compose-Zeichnungen). */
 object GardenBitmap {
