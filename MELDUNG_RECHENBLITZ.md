@@ -2,8 +2,18 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.10.0** (Rechen-Reise komplett), siehe Meldung (28). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
+> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.10.1** (Rechen-Reise komplett + Knopf „Nach Updates suchen“), siehe Meldungen (28) und (29). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
 > - **Bitte testen und live freigeben.** Seit heute läuft die Advents-Vorschau (ab 15.11.), ihre Texte sind jetzt auch auf EN/UK vollständig.
+## 15.11.2026 (29) – Knopf „Nach Updates suchen“ (3.10.1)
+
+- **Marcel 15.11.:** „Bitte einen Button zum Prüfen der Aktualisierung einfügen.“
+- **Neu:** Im Menü steht unter „Was ist neu?“ der Punkt **🔄 Nach Updates suchen** mit der installierten Version. Er steht auch in den Einstellungen, für Web und APK.
+  - **Web-App:** liest die aktuelle Version frisch vom Server (`js/changelog.js`, ohne Cache). Ist sie neuer, wird der Service Worker aktualisiert und die Seite neu geladen. Sonst erscheint „Du hast die neueste Version ✓“.
+  - **Android-App:** fragt die neueste GitHub-Release-Seite ab. Ist sie neuer, erscheint die Karte „⬆️ Neue Version … – Jetzt aktualisieren“.
+  - Ohne Netz erscheint ein freundlicher Hinweis, und ein Doppel-Tipp wird abgefangen.
+- Getestet (DE/EN/UK, Web und APK-Modus): gleiche Version, neuere Version (Neuladen bzw. Karte), keine Fehler, 320 px, offline, Regression.
+- **Neue APK: 3.10.1** (GitHub baut sie selbst).
+
 ## 15.11.2026 (28) – Entwicklungstag: Rechen-Reise komplett (Kapitel 4–6), Übersetzungen vervollständigt (3.10.0)
 
 - **Rechen-Reise, Roadmap Tag 4:**

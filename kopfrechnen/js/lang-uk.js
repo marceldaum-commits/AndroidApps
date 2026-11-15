@@ -1293,4 +1293,7 @@ I18N.add('uk', {"% sind":"% — це",
 "Die ganze Rechen-Reise geschafft":"Усю математичну подорож пройдено",
 "Ab {}. Dezember":"З {} грудня",
 "jeden Tag ein Türchen mit Rechen-Rätseln":"щодня віконце з математичними загадками",
-"Ab {}. Dezember: jeden Tag ein Türchen mit Rechen-Rätseln":"З {} грудня: щодня віконце з математичними загадками"});
+"Ab {}. Dezember: jeden Tag ein Türchen mit Rechen-Rätseln":"З {} грудня: щодня віконце з математичними загадками",
+"Nach Updates suchen":"Перевірити оновлення",
+"Neue Version {} wird geladen …":"Завантажується нова версія {} …",
+"Neu im Menü: „Nach Updates suchen“ – holt die neueste Version mit einem Tipp":"Нове в меню: «Перевірити оновлення» – найновіша версія одним дотиком"});

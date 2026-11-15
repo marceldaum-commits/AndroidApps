@@ -1293,4 +1293,7 @@ I18N.add('en', {"% sind":"% are",
 "Die ganze Rechen-Reise geschafft":"The whole maths journey completed",
 "Ab {}. Dezember":"From {} December",
 "jeden Tag ein Türchen mit Rechen-Rätseln":"a door with maths puzzles every day",
-"Ab {}. Dezember: jeden Tag ein Türchen mit Rechen-Rätseln":"From {} December: a door with maths puzzles every day"});
+"Ab {}. Dezember: jeden Tag ein Türchen mit Rechen-Rätseln":"From {} December: a door with maths puzzles every day",
+"Nach Updates suchen":"Check for updates",
+"Neue Version {} wird geladen …":"Loading new version {} …",
+"Neu im Menü: „Nach Updates suchen“ – holt die neueste Version mit einem Tipp":"New in the menu: \"Check for updates\" – gets the latest version with one tap"});

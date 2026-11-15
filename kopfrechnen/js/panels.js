@@ -32,6 +32,7 @@ const PANELS = {
       ${miLink(siteLink(CONFIG.trialUrl, 'menu-probestunde'), '🎓', 'Kostenlose Probestunde', 'Unverbindlich ausprobieren')}
       ${CONFIG.lernraumUrl ? `<a class="mi" href="${esc(siteLink(CONFIG.lernraumUrl, 'menu-lernraum'))}"><div class="ico">📚</div><div><b>Zurück zum Lernraum</b><span>Weitere Lernspiele und Übungen</span></div><span class="chev">←</span></a>` : ''}
       ${mi('news', '🆕', 'Was ist neu?', `Version ${versionLabel()}`)}
+      <button class="mi" data-upd><div class="ico">🔄</div><div><b>Nach Updates suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span></div><span class="chev">›</span></button>
       ${mi('invite', '💌', 'Freunde einladen', 'Rechenblitz ist kostenlos – teile es!')}
       ${adventPhase() !== 'off' ? mi('advent', '🎄', 'Rechen-Adventskalender', 'Jeden Tag ein Türchen') : ''}
       ${CONFIG.classApi ? mi('klasse', '🏫', 'Klassen-Challenge', S.klasse ? 'Rangliste deiner Klasse' : 'Mit Klassencode beitreten') : ''}
@@ -101,7 +102,7 @@ const PANELS = {
         <div class="chips" id="langSeg"><button data-v="auto" class="${(ROOT.lang || 'auto') === 'auto' ? 'sel' : ''}">Automatisch</button>${Object.entries(I18N.langs).map(([k, n]) => `<button data-v="${k}" translate="no" class="${ROOT.lang === k ? 'sel' : ''}">${n}</button>`).join('')}</div></div>
       <div class="setrow col"><div><b>Design</b><span>Hell, dunkel oder wie das Gerät</span></div>
         <div class="seg" id="themeSeg">${[['auto', 'Automatisch'], ['light', 'Hell'], ['dark', 'Dunkel']].map(([v, l]) => `<button data-v="${v}" class="${S.settings.theme === v ? 'sel' : ''}">${l}</button>`).join('')}</div></div>
-      ${IS_NATIVE && CONFIG.apkUpdates ? `<button class="mi" id="btnUpd"><div class="ico">⬆️</div><div><b>Nach Update suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span></div></button>` : ''}
+      ${!IS_NATIVE || CONFIG.apkUpdates ? `<button class="mi" id="btnUpd"><div class="ico">⬆️</div><div><b>Nach Update suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span></div></button>` : ''}
       <button class="mi" id="btnReset"><div class="ico">↺</div><div><b>Fortschritt zurücksetzen</b><span>Punkte, Rekorde, Abzeichen und Fehlerkiste dieses Profils löschen</span></div></button>
       </div>`, init: initSettings };
   },
@@ -252,13 +253,7 @@ function initSettings() {
   $('klSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.klasse = +b.dataset.v; homeShowAll = false; save(); $('klSeg').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); renderHome(); };
   $('langSeg').onclick = e => { const b = e.target.closest('button'); if (b) setLanguage(b.dataset.v); };
   $('themeSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.theme = b.dataset.v; save(); applyTheme(); $('themeSeg').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); };
-  $('btnUpd') && ($('btnUpd').onclick = async () => {
-    toast('Suche nach Updates …', 1200);
-    const st = await apkUpdateCheck(true);
-    if (!st) toast('Gerade keine Verbindung – bitte später nochmal');
-    else if (apkNewer(st.ver) && st.url) { closeSheet(); toast(`Neue Version ${esc(st.ver)} gefunden`); }
-    else toast('Du hast die neueste Version ✓');
-  });
+  $('btnUpd') && ($('btnUpd').onclick = checkForUpdate);
   $('btnReset').onclick = () => {
     if (!confirm(tr(`Wirklich den gesamten Fortschritt von „${profile().name}“ löschen? Das kann nicht rückgängig gemacht werden.`))) return;
     if (G && !G.over) quitGame();
@@ -523,3 +518,32 @@ function init() {
   if (IS_NATIVE) { Reminder.startup().catch(() => {}); apkUpdateCheck(); }   // APK: alle Dateien liegen im Paket, kein Service Worker nötig
   else if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').then(() => Reminder.startup()).catch(() => {});
 }
+
+/* ---------- Nach Updates suchen (Menü + Einstellungen; Marcel 15.11.) ----------
+   Android-App: neueste GitHub-Release-Seite abfragen → Karte „Jetzt aktualisieren“.
+   Web-App: aktuelle Version vom Server lesen; ist sie neuer, Service Worker aktualisieren und neu laden. */
+let updChecking = false;
+async function checkForUpdate() {
+  if (updChecking) return;
+  if (!navigator.onLine) { toast('Gerade keine Verbindung – bitte später nochmal'); return; }
+  updChecking = true; toast('Suche nach Updates …', 1200);
+  try {
+    if (IS_NATIVE) {
+      const st = await apkUpdateCheck(true);
+      if (!st) toast('Gerade keine Verbindung – bitte später nochmal');
+      else if (apkNewer(st.ver) && st.url) { closeSheet(); goHome(); toast(`Neue Version ${esc(st.ver)} gefunden`); }
+      else toast('Du hast die neueste Version ✓');
+      return;
+    }
+    const r = await fetch('js/changelog.js?u=' + Date.now(), { cache: 'no-store' });
+    const v = r.ok ? ((await r.text()).match(/APP_VERSION = '([\d.]+)'/) || [])[1] : null;
+    if (!v) { toast('Gerade keine Verbindung – bitte später nochmal'); return; }
+    if (verNum(v) > verNum(APP_VERSION)) {
+      toast(`Neue Version ${esc(v)} wird geladen …`, 2500);
+      try { const reg = await navigator.serviceWorker?.getRegistration(); await reg?.update(); } catch {}
+      setTimeout(() => location.reload(), 1400);
+    } else toast('Du hast die neueste Version ✓');
+  } catch { toast('Gerade keine Verbindung – bitte später nochmal'); }
+  finally { updChecking = false; }
+}
+document.addEventListener('click', e => { if (e.target.closest('[data-upd]')) { Sound.click(); checkForUpdate(); } });
