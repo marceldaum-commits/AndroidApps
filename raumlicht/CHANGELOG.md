@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.7.2 – Eigene Funktion leichter eingeben (15.11.2026)
+- Bei „Eigene Funktion“ steht die Funktion jetzt als gut sichtbare Zeile über der Bühne: antippen („✏️ Funktion eingeben“) öffnet die Eingabe.
+  Vorher war sie nur über den kleinen Knopf „ändern“ erreichbar.
+- **Sichtbaren Abschnitt frei wählen:** „von“ und „bis“ lassen sich jetzt direkt eintippen (auch negativ und weit weg), zusätzlich zu − und +.
+  Der gewählte Abschnitt steht in der Zeile über der Bühne.
+
 ## 0.7.1 – Ableitungen am richtigen Achsenkreuz (15.11.2026)
 - **Fehler behoben:** Beim Einschalten von f′ rutschte die Kurve auf eine neue Höhe, das Achsenkreuz blieb aber stehen – Kurve, Ableitung und Zahlen passten nicht zusammen.
   Jetzt wandert das Achsenkreuz mit.

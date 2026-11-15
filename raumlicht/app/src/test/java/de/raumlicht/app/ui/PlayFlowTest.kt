@@ -157,21 +157,31 @@ class PlayFlowTest {
         rule.onNodeWithTag("von-plus").performClick(); rule.onNodeWithTag("bis-plus").performClick(); rule.onNodeWithTag("bis-plus").performClick()   // Abschnitt −1 bis 4
         rule.onNodeWithTag("eigene-bauen").performClick(); rule.mainClock.advanceTimeBy(600)
         assertEquals("x^2-x|-1|4", stored)
-        rule.onNodeWithTag("term").assertTextEquals("f(x) = x²−x  ·  −1 bis 4"); rule.onNodeWithTag("eigene-eingabe").assertDoesNotExist()
+        rule.onNodeWithTag("term", useUnmergedTree = true).assertTextEquals("f(x) = x²−x"); rule.onNodeWithTag("abschnitt", useUnmergedTree = true).assertTextEquals("x: −1 bis 4"); rule.onNodeWithTag("eigene-eingabe").assertDoesNotExist()
         assertTrue(stage.lastState!!.contains("\"type\":\"axes2d\"") && stage.lastState!!.contains("\"label\":\"N\"") && stage.lastState!!.contains("\"label\":\"T\""))
         slide("fahrt-regler", 0.3f)                                                                                      // x = 0,5: Tiefpunkt
         rule.onNodeWithText("Tiefpunkt bei x = 0,5").assertExists(); rule.onNodeWithText("→ 0").assertExists()
         rule.onNodeWithTag("weiter-abschnitt").performClick(); rule.mainClock.advanceTimeBy(600)                         // nahtlos weiter: 4 bis 9
-        assertEquals("x^2-x|4|9", stored); rule.onNodeWithTag("term").assertTextEquals("f(x) = x²−x  ·  4 bis 9")
+        assertEquals("x^2-x|4|9", stored); rule.onNodeWithTag("term", useUnmergedTree = true).assertTextEquals("f(x) = x²−x"); rule.onNodeWithTag("abschnitt", useUnmergedTree = true).assertTextEquals("x: 4 bis 9")
         rule.onNodeWithText("12").assertExists()                                                                         // Start des neuen Abschnitts: f(4) = 12
         rule.onNodeWithTag("eigene-aendern").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("eigene-eingabe").assertExists()
+        // die Zeile über der Bühne öffnet die Eingabe ebenfalls
+        rule.onNodeWithTag("eigene-bauen").performClick(); rule.mainClock.advanceTimeBy(500); rule.onNodeWithTag("eigene-eingabe").assertDoesNotExist()
+        rule.onNodeWithTag("eigene-zeile").performClick(); rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithTag("eigene-eingabe").assertExists()
     }
 
     @Test fun ownFunctionIsRememberedAndPolesAreFlagged() {
         show { RideScreen({}, de.raumlicht.core.model.Coaster.CUSTOM, controller = stage, custom = "1/x|-2|2") }
-        rule.onNodeWithTag("abgeschnitten").assertExists(); rule.onNodeWithTag("term").assertTextEquals("f(x) = 1/x  ·  −2 bis 2")       // steht sofort wieder da
+        rule.onNodeWithTag("abgeschnitten").assertExists(); rule.onNodeWithTag("term", useUnmergedTree = true).assertTextEquals("f(x) = 1/x"); rule.onNodeWithTag("abschnitt", useUnmergedTree = true).assertTextEquals("x: −2 bis 2")       // steht sofort wieder da
         rule.onNodeWithTag("eigene-aendern").performClick(); rule.mainClock.advanceTimeBy(300)
-        rule.onNodeWithTag("von").assertTextEquals("−2"); rule.onNodeWithTag("bis").assertTextEquals("2")
+        rule.onNodeWithTag("von").assertTextEquals("-2"); rule.onNodeWithTag("bis").assertTextEquals("2")
+        // den sichtbaren Abschnitt direkt eintippen – auch weit weg und negativ
+        rule.onNodeWithTag("von").performTextReplacement("-40"); rule.onNodeWithTag("bis").performTextReplacement("-10"); rule.onNodeWithTag("eigene-bauen").performClick(); rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithTag("term", useUnmergedTree = true).assertTextEquals("f(x) = 1/x"); rule.onNodeWithTag("abschnitt", useUnmergedTree = true).assertTextEquals("x: −40 bis −10")
+        rule.onNodeWithTag("eigene-zeile").performClick(); rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithTag("bis").performTextReplacement("-50"); rule.onNodeWithTag("eigene-bauen").performClick(); rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithTag("eigene-fehler").assertTextEquals("„von“ muss kleiner sein als „bis“.")
     }
 
     @Test fun rideSpeedCanBeChanged() {

@@ -58,9 +58,16 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     // „Term|von|bis“ der fertigen Bahn – eine gespeicherte, gültige Funktion steht sofort wieder da
     var built by rememberSaveable { mutableStateOf(custom.takeIf { c -> c.split('|').let { p -> p.size == 3 && p[1].toDoubleOrNull() != null && p[2].toDoubleOrNull() != null && Expr.parse(p[0]).getOrNull()?.let { Coaster.custom(it, p[1].toDouble(), p[2].toDouble()) } != null } } ?: "") }
     var error by remember { mutableStateOf<String?>(null) }
+    // „von“ und „bis“ lassen sich auch direkt eintippen; der Text folgt den Knöpfen und dem Weiterfahren
+    var fromText by rememberSaveable { mutableStateOf(from.toString()) }; var toText by rememberSaveable { mutableStateOf(to.toString()) }
+    LaunchedEffect(from) { if (fromText.toIntOrNull() != from) fromText = from.toString() }
+    LaunchedEffect(to) { if (toText.toIntOrNull() != to) toText = to.toString() }
     var editing by rememberSaveable { mutableStateOf(built.isEmpty()) }
     val own: Ride? = remember(built) { built.split('|').takeIf { it.size == 3 }?.let { p -> Expr.parse(p[0]).getOrNull()?.let { Coaster.custom(it, p[1].toDouble(), p[2].toDouble()) } } }
     fun build(): Boolean {
+        if (fromText.toIntOrNull() == null || toText.toIntOrNull() == null) { error = "„von“ und „bis“ brauchen ganze Zahlen, zum Beispiel −3 und 5."; return false }
+        if (from >= to) { error = "„von“ muss kleiner sein als „bis“."; return false }
+        if (to - from > 1000) { error = "Der Abschnitt ist zu lang – höchstens 1000 Einheiten auf einmal."; return false }
         val e = Expr.parse(term).getOrElse { error = it.message; return false }
         if (Coaster.custom(e, from.toDouble(), to.toDouble()) == null) { error = "Zwischen $from und $to ist die Funktion nicht definiert. Wähl einen anderen Abschnitt."; return false }
         error = null; built = "$term|$from|$to"; onCustom(built); return true
@@ -106,7 +113,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     }
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar("Kurve abfahren", onBack) { Text("f(x) = ${ride.text}" + if (isOwn && own != null) "  ·  ${Geo.num(ride.from)} bis ${Geo.num(ride.to)}" else "", Modifier.testTag("term"), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1) }
+        Bar("Kurve abfahren", onBack) { if (!isOwn) Text("f(x) = ${ride.text}", Modifier.testTag("term"), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1) }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 10.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Pick("✏️ Eigene Funktion", isOwn, Q.Yellow, "bahn-eigene") { rideId = Coaster.CUSTOM; editing = own == null }
             Coaster.rides.forEach { r ->
@@ -127,12 +134,21 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 Text("von", color = Q.Muted, fontSize = 13.sp)
-                Pick("−", false, Q.Violet, "von-minus") { from -= 1 }; Text(Geo.num(from), Modifier.testTag("von"), fontWeight = FontWeight.Black, color = Q.Text); Pick("+", false, Q.Violet, "von-plus") { if (from < to - 1) from += 1 }
-                Text("bis", Modifier.padding(start = 8.dp), color = Q.Muted, fontSize = 13.sp)
-                Pick("−", false, Q.Violet, "bis-minus") { if (to > from + 1) to -= 1 }; Text(Geo.num(to), Modifier.testTag("bis"), fontWeight = FontWeight.Black, color = Q.Text); Pick("+", false, Q.Violet, "bis-plus") { to += 1 }
-                Spacer(Modifier.weight(1f))
+                Pick("−", false, Q.Violet, "von-minus") { from -= 1 }; Bound(fromText, "von") { fromText = it; it.toIntOrNull()?.let { v -> from = v }; error = null }; Pick("+", false, Q.Violet, "von-plus") { if (from < to - 1) from += 1 }
+                Text("bis", Modifier.padding(start = 4.dp), color = Q.Muted, fontSize = 13.sp)
+                Pick("−", false, Q.Violet, "bis-minus") { if (to > from + 1) to -= 1 }; Bound(toText, "bis") { toText = it; it.toIntOrNull()?.let { v -> to = v }; error = null }; Pick("+", false, Q.Violet, "bis-plus") { to += 1 }
+            }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Abschnitt der x-Achse, den du sehen willst – Zahlen antippen zum Eintippen.", Modifier.weight(1f), color = Q.Muted, fontSize = 11.sp)
                 NeonButton({ if (build()) { editing = false; sfx?.play(Sound.CELL) } }, Modifier.testTag("eigene-bauen"), color = Q.Yellow) { Text("Bahn bauen", fontWeight = FontWeight.Black) }
             }
+        }
+        // Fertige eigene Bahn: die Funktion steht als antippbare Zeile über der Bühne – dort gibt man eine neue ein
+        if (isOwn && !editing) Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 2.dp).clip(RoundedCornerShape(12.dp)).background(Q.Deep).border(1.5.dp, Q.Yellow, RoundedCornerShape(12.dp))
+            .clickable { editing = true }.padding(horizontal = 12.dp, vertical = 9.dp).testTag("eigene-zeile"), verticalAlignment = Alignment.CenterVertically) {
+            Text("f(x) = ${ride.text}", Modifier.weight(1f).testTag("term"), color = Q.Text, fontWeight = FontWeight.Bold, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+            Text("x: ${Geo.num(ride.from)} bis ${Geo.num(ride.to)}", Modifier.padding(horizontal = 10.dp).testTag("abschnitt"), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
+            Text("✏️ ändern", color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 13.sp)
         }
         if (isOwn && !editing && ride.clipped) Text("Die Kurve ist am Rand abgeschnitten (Polstelle oder Lücke).", Modifier.padding(horizontal = 12.dp).testTag("abgeschnitten"), color = Q.Orange, fontSize = 12.sp)
         Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) {
@@ -179,6 +195,16 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
             }
         }
     }
+}
+
+/** Kleines Zahlenfeld für „von“ / „bis“: antippen und eintippen (auch negative Zahlen) */
+@Composable
+private fun Bound(text: String, tag: String, onChange: (String) -> Unit) {
+    androidx.compose.foundation.text.BasicTextField(text, { v -> onChange(v.replace('−', '-').filterIndexed { i, c -> c.isDigit() || (c == '-' && i == 0) }.take(6)) },
+        Modifier.width(58.dp).background(Q.Panel, RoundedCornerShape(10.dp)).border(1.dp, Q.Violet.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).padding(vertical = 8.dp).testTag(tag), singleLine = true,
+        textStyle = androidx.compose.ui.text.TextStyle(color = Q.Text, fontWeight = FontWeight.Black, fontSize = 16.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
+        cursorBrush = androidx.compose.ui.graphics.SolidColor(Q.Yellow),
+        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Text, imeAction = androidx.compose.ui.text.input.ImeAction.Done))
 }
 
 /** Tempo-Stufen für die automatische Fahrt */
