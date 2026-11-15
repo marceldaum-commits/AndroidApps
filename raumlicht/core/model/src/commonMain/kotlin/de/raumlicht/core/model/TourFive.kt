@@ -7,7 +7,8 @@ import kotlin.math.pow
 
 /** Typische Fehler, die Lux beim Namen nennt – daraus entsteht das Fehler-Tagebuch. */
 object MistakeBook {
-    private val known = java.util.Collections.synchronizedSet(HashSet<String>())
+    // wird nur beim Aufbau der Aufgaben gefüllt (ein Faden), danach nur gelesen
+    private val known = HashSet<String>()
     private val builtIn = listOf("Du hast A − B gerechnet", "Das ist der Ortsvektor von B", "Die Richtung stimmt – aber der Strahl läuft rückwärts", "Das ist die Richtung vom Ursprung")
     fun add(messages: Collection<String>) { known += messages }
     fun isNamed(message: String) = message in known || builtIn.any { message.startsWith(it) }

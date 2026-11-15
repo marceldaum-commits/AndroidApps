@@ -89,7 +89,7 @@ object Stage {
     fun circle(id: String, m: V3, n: V3, radius: Double, color: String = "yellow"): Obj {
         val k = n * (1 / n.length); val h = if (kotlin.math.abs(k.x) < 0.9) V3(1, 0, 0) else V3(0, 1, 0)
         val u = (k cross h).let { it * (1 / it.length) }; val w = k cross u
-        val pts = (0..40).map { val t = 2 * Math.PI * it / 40; m + (u * kotlin.math.cos(t) + w * kotlin.math.sin(t)) * radius }
+        val pts = (0..40).map { val t = 2 * kotlin.math.PI * it / 40; m + (u * kotlin.math.cos(t) + w * kotlin.math.sin(t)) * radius }
         return edges(id, pts.zipWithNext(), color)
     }
     /** Rotationskörper: Profil (x, Radius) dreht sich um eine Achse parallel zur x₂-Achse durch [origin] */

@@ -135,7 +135,7 @@ object Calendar {
     fun solved(stars: Map<String, Int>): Set<Long> = stars.keys.filter { Daily.isDaily(it) }.mapNotNull { it.removePrefix(Daily.PREFIX).toLongOrNull() }.toSet()
     /** Die letzten [weeks] Wochen bis einschließlich der laufenden, Montag zuerst; künftige Tage als null */
     fun grid(today: Long, weeks: Int = 5): List<List<Long?>> {
-        val monday = today - Math.floorMod(today + 3, 7L)          // Tag 0 (1.1.1970) war ein Donnerstag
+        val monday = today - (today + 3).mod(7L)          // Tag 0 (1.1.1970) war ein Donnerstag
         return (weeks - 1 downTo 0).map { w -> (0..6).map { d -> (monday - 7L * w + d).takeIf { it <= today } } }
     }
     /** Längste Folge aufeinanderfolgender gelöster Tage – nur zum Freuen */

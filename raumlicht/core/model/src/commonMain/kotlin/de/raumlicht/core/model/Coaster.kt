@@ -8,7 +8,7 @@ import kotlin.math.sin
 /** Was man an einer Stelle der Bahn „erlebt“: Höhe, Steigung, Krümmung. */
 data class RideData(val x: Double, val height: Double, val slope: Double, val bend: Double) {
     /** Steigungswinkel in Grad (positiv = bergauf) */
-    val angle get() = Math.toDegrees(atan(slope))
+    val angle get() = Geo.deg(atan(slope))
     val percent get() = slope * 100
     val slopeWord get() = when { abs(slope) < 0.05 -> "waagerecht"; slope > 0 -> "bergauf"; else -> "bergab" }
     val bendWord get() = when { abs(bend) < 0.05 -> "kein Krümmen (Wendestelle)"; bend > 0 -> "Linkskurve (f″ > 0)"; else -> "Rechtskurve (f″ < 0)" }
@@ -47,7 +47,7 @@ class Ride(val id: String, val title: String, val text: String, val from: Double
                 else if (prev * cur < 0) { var a = from + (to - from) * (i - 1) / n; var b = x1; repeat(40) { val m = (a + b) / 2; if (g(a) * g(m) <= 0) b = m else a = m }; out += (a + b) / 2 }
                 prev = cur
             }
-            return out.filter { it > from + 1e-6 && it < to - 1e-6 }.map { Math.round(it * 100) / 100.0 }.distinct()
+            return out.filter { it > from + 1e-6 && it < to - 1e-6 }.map { kotlin.math.round(it * 100) / 100.0 }.distinct()
         }
         (roots(df).map { Spot(if (ddf(it) < 0) SpotKind.HIGH else SpotKind.LOW, it) } + roots(ddf).map { Spot(SpotKind.TURN, it) } + roots(f).map { Spot(SpotKind.ZERO, it) }).sortedBy { it.x }
     }
@@ -162,7 +162,7 @@ object Coaster {
                 val r = (a + b) / 2
                 if (abs(g(r)) < maxOf(abs(a0), abs(b0)) * 0.5 + eps) out += r                // an Polstellen springt das Vorzeichen, ohne dass g klein wird
             }
-            return out.filter { it > from + 1e-9 && it < to - 1e-9 }.map { Math.round(it * 100) / 100.0 }.distinct()
+            return out.filter { it > from + 1e-9 && it < to - 1e-9 }.map { kotlin.math.round(it * 100) / 100.0 }.distinct()
         }
         val spots = (roots(d1).map { Spot(if (d2(it) < 0) SpotKind.HIGH else SpotKind.LOW, it) } + roots(d2).map { Spot(SpotKind.TURN, it) } + roots(e::at, touch = true).map { Spot(SpotKind.ZERO, it) })
             .sortedBy { it.x }.take(60)

@@ -43,9 +43,11 @@ object Geo {
         return if (r < 0) "−$s" else s
     }
     fun num(v: Int) = num(v.toDouble())
+    /** Bogenmaß → Grad */
+    fun deg(rad: Double) = rad * 180.0 / kotlin.math.PI
 
     /** Winkel zwischen zwei Vektoren in Grad */
-    fun angle(a: V3, b: V3) = Math.toDegrees(kotlin.math.acos(((a dot b) / (a.length * b.length)).coerceIn(-1.0, 1.0)))
+    fun angle(a: V3, b: V3) = deg(kotlin.math.acos(((a dot b) / (a.length * b.length)).coerceIn(-1.0, 1.0)))
     /** „x₁ + 2x₂ − x₃ = 6“ */
     fun planeText(n: V3, rhs: Int): String {
         val names = listOf("x₁", "x₂", "x₃"); val sb = StringBuilder()

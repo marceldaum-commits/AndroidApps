@@ -101,7 +101,7 @@ jobs:
           cat notes.md
 
       - name: Logik-Tests (Level lösbar, Geometrie stimmt)
-        run: ./gradlew --no-daemon :core:model:test
+        run: ./gradlew --no-daemon :core:model:jvmTest
 
       - name: APK bauen
         run: |
