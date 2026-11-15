@@ -299,6 +299,7 @@ class MainActivity : ComponentActivity() {
                     installed = BuildConfig.VERSION_NAME,
                     update = upd?.let { UpdateState.Available(it) } ?: UpdateState.Idle,
                     onBack = { nav.popSafe() },
+                    onReset = vm::resetAll,
                 )
             }
         }

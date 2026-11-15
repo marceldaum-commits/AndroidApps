@@ -93,6 +93,21 @@ class Settings(ctx: Context) {
         get() = prefs.getInt("detectiveBest", 0)
         set(v) = prefs.edit().putInt("detectiveBest", v).apply()
 
+    /**
+     * Neu anfangen: Rekorde, Klasse, Abzeichen, Erklärungen, Aussehen auf Anfang.
+     * Bleiben: Ton/Musik/Vibration, Update-Einstellung und die selbst gebauten Level.
+     */
+    fun resetGame() {
+        val e = prefs.edit()
+        prefs.all.keys.filter { it.startsWith("intro_") || it.startsWith("walk_") }.forEach { e.remove(it) }
+        listOf("grade", "gradeAsked", "shape", "trail", "hat", "skin", "stormBest", "duelWins", "duelsPlayed", "badgesSeen", "detectiveBest")
+            .forEach { e.remove(it) }
+        e.apply()
+        _grade.value = null; _gradeAsked.value = false
+        _look.value = Triple(0, 0, 0)
+        _stormBest.value = 0; _duelWins.value = 0; _duelsPlayed.value = 0
+    }
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

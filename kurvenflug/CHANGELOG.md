@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.9.1 – Neu anfangen
+- **🔄 Fortschritt zurücksetzen**: In den Einstellungen ganz unten unter „Neu anfangen“. Löscht Sterne, Energiezellen,
+  Tagesmissionen, Rekorde, Abzeichen und die gewählte Klasse – praktisch, wenn ein Geschwisterkind von vorn beginnt.
+  Ton-Einstellungen und selbst gebaute Level bleiben erhalten.
+- Gegen Versehen: Der Knopf muss 2 Sekunden gedrückt gehalten werden, ein Balken läuft dabei voll.
+
 ## 0.9.0 – Widget für den Startbildschirm
 - **📱 Kurvenflug-Widget**: Lange auf den Startbildschirm drücken → Widgets → Kurvenflug. Volt zeigt dort, was heute dran ist:
   die Tagesmission, „Weiter geht's“ mit deinem nächsten Level und – wenn fällig – ein Thema zum Auffrischen.

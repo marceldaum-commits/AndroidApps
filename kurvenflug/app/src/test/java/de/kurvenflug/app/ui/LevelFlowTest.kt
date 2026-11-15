@@ -83,6 +83,29 @@ class LevelFlowTest {
         assertEquals(1, solvedStars)
     }
 
+    /** Zurücksetzen nur nach 2 s Gedrückthalten – kurzes Tippen oder früh loslassen löscht nichts. */
+    @Test fun resetNeedsALongPress() {
+        var resets = 0
+        rule.setContent { KurvenflugTheme { Surface(color = Q.Space) {
+            de.kurvenflug.app.ui.settings.SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true,
+                onAutoUpdate = {}, installed = "0.9.0", update = de.kurvenflug.app.ui.settings.UpdateState.Idle, onBack = {}, onReset = { resets++ })
+        } } }
+        rule.mainClock.autoAdvance = false
+        val button = rule.onNodeWithText("Zum Löschen 2 Sekunden gedrückt halten").performScrollTo()
+        button.performClick()
+        rule.mainClock.advanceTimeBy(3000)
+        assertEquals(0, resets)
+        button.performTouchInput { down(center) }
+        rule.mainClock.advanceTimeBy(1000)
+        rule.onNodeWithText("Festhalten", substring = true).performTouchInput { up() }
+        rule.mainClock.advanceTimeBy(3000)
+        assertEquals(0, resets)
+        rule.onNodeWithText("Zum Löschen 2 Sekunden gedrückt halten").performTouchInput { down(center) }
+        rule.mainClock.advanceTimeBy(2300)
+        assertEquals(1, resets)
+        rule.onNodeWithText("Alles zurückgesetzt", substring = true).assertExists()
+    }
+
     @Test fun stormEndsOnFirstMissAndReportsWaves() {
         var reported = -1
         rule.setContent { KurvenflugTheme { Surface(color = Q.Space) {

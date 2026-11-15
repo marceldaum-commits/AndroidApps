@@ -101,7 +101,7 @@ class ScreenshotTest {
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
     @Test fun settings() = shot("11_einstellungen") {
-        SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "0.2.0", update = UpdateState.Idle, onBack = {})
+        SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "0.9.0", update = UpdateState.Idle, onBack = {}, onReset = {})
     }
 
     @Test fun sine() = level("5-4", name = "12_sinus", values = mapOf("a" to 2.0, "b" to 1.0, "d" to -1.0), settle = 3500,

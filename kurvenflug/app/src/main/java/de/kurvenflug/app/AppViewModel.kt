@@ -76,6 +76,16 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /** Neu anfangen: Spielstand und Spiel-Einstellungen löschen (Ton & eigene Level bleiben), Widget nachziehen. */
+    fun resetAll() {
+        viewModelScope.launch {
+            c.progress.clear()
+            settings.resetGame()
+            _skin.value = 0
+            de.kurvenflug.app.widget.KurvenflugWidget.refresh(getApplication())
+        }
+    }
+
     // ------------------------------------------------------------ App-Update
     private val _update = MutableStateFlow<AppRelease?>(null)
     private companion object { const val CHECK_EVERY_MS = 30 * 60_000L }
