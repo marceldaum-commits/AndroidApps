@@ -5,6 +5,8 @@ Android-Apps, gebaut mit Kotlin und Jetpack Compose.
 | App | Ordner | Idee |
 | --- | --- | --- |
 | Wissensgarten | [`wissensgarten/`](wissensgarten/) | Lernkarten als Garten: Wissen wächst, welkt beim Vergessen und wird durch Wiederholen gegossen. |
+| Kurvenflug | [`kurvenflug/`](kurvenflug/) | Mathe & Physik im All (Klasse 5–10): Die Flugbahn einer Sonde ist eine Formel, die man selbst einstellt. |
+| Raumlicht | [`raumlicht/`](raumlicht/) | Analytische Geometrie der Oberstufe als Lichtshow in echtem 3D: Laser sind Geraden, Glasscheiben Ebenen. |
 
 ## Grundsatz
 
