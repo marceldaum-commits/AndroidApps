@@ -3,6 +3,13 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.5.3 – Laser-Zielhilfe & passendere Aufgaben
+- **🔦 Laser-Zielhilfe**: Beim Zielen siehst du den Strahl jetzt bis zum ersten Spiegel. Wohin er abprallt, findest du selbst
+  heraus – Einfallswinkel = Ausfallswinkel. So kommt man mit Überlegen zum Ziel statt mit Raten.
+- **📍 Koordinaten (Klasse 5–6)**: Die Funksprüche passen jetzt zur Klassenstufe – „2 − 4“ statt Teilen mit Minuszahlen,
+  und die Mitte zwischen zwei Punkten findet man durch Kästchenzählen.
+- **🌙 Gipfelstation**: Eine zweite Station sorgt dafür, dass wirklich der Gipfel (Scheitel) getroffen werden muss.
+
 ## 0.5.2 – Rechnen lohnt sich
 - **Treffer zählen jetzt nur, wenn die Rechnung stimmt**: Bisher reichte es manchmal, wenn eine steile Kurve die Station nur
   am Rand streifte – dann klappte es auch mit geratenen Zahlen. Jetzt muss die Kurve an der Stelle der Station die richtige

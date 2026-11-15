@@ -282,6 +282,22 @@ object Flight {
         return out
     }
 
+    /** Der gerade Anfang einer Bahn bis zum ersten Knick (Laser: bis zum ersten Spiegel). */
+    fun firstLeg(path: List<Vec>): List<Vec> {
+        if (path.size < 3) return path
+        var dir: Vec? = null
+        for (i in 1 until path.size) {
+            val dx = path[i].x - path[i - 1].x; val dy = path[i].y - path[i - 1].y
+            val len = hypot(dx, dy)
+            if (len < 1e-9) continue
+            val d = Vec(dx / len, dy / len)
+            val first = dir
+            if (first == null) dir = d
+            else if (abs(first.x * d.y - first.y * d.x) > 1e-3 || first.x * d.x + first.y * d.y < 0) return path.take(i)
+        }
+        return path
+    }
+
     /** Bahnen der Form y = f(x) */
     val functionKinds = setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION)
 

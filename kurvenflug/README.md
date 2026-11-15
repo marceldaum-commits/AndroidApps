@@ -30,7 +30,7 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/27_klassen_challenge.png) | ![](screenshots/28_formel_detektiv.png) | ![](screenshots/29_antiproportional.png) |
 | ![](screenshots/30_pythagoras.png) | ![](screenshots/31_laser.png) | ![](screenshots/32_energie_rampe.png) |
 | ![](screenshots/33_logarithmus.png) | ![](screenshots/34_weg_zeit.png) | ![](screenshots/35_lexikon.png) |
-| ![](screenshots/36_werkstatt.png) | ![](screenshots/11_einstellungen.png) | |
+| ![](screenshots/36_werkstatt.png) | ![](screenshots/37_laser_zielen.png) | ![](screenshots/11_einstellungen.png) |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

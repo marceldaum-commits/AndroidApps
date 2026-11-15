@@ -153,6 +153,9 @@ class ScreenshotTest {
     @Test fun laser() = level("11-2", name = "31_laser", values = mapOf("angle" to 4.0), settle = 1500,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
+    /** Zielhilfe: Der Strahl ist bis zum ersten Spiegel zu sehen – den Abprall konstruiert man selbst. */
+    @Test fun laserAim() = level("11-1", name = "37_laser_zielen", values = mapOf("angle" to -35.0))
+
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 

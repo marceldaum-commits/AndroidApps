@@ -113,7 +113,8 @@ fun LevelScreen(
         if (level.kind == Kind.POINT || level.kind == Kind.RADIUS && !help) emptyList()
         else Flight.path(level, values).let { p ->
             if (help) p else when (level.kind) {
-                Kind.THROW, Kind.ORBIT, Kind.LASER -> p.take(min(p.size, 70))     // die ersten ~1,5 Kästchen: Abschussrichtung
+                Kind.THROW, Kind.ORBIT -> p.take(min(p.size, 70))                 // die ersten ~1,5 Kästchen: Abschussrichtung
+                Kind.LASER -> Flight.firstLeg(p)                                  // bis zum ersten Spiegel – den Abprall konstruierst du selbst
                 Kind.RAMP -> p.take(1)                                            // nur die Kugel am Start
                 else -> p.take(min(p.size, 100))          // die ersten 2 Kästchen am Rand
             }

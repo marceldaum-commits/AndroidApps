@@ -155,4 +155,17 @@ class FlightTest {
             assertTrue("${l.id}: $wins Stellungen treffen", wins in 1..4)
         }
     }
+
+    /** Laser-Zielhilfe: Die Vorschau endet genau am ersten Spiegel. */
+    @Test fun laserFirstLegEndsAtFirstMirror() {
+        val l = Levels.byId("11-1")!! // Boden-Spiegel von (−6 | −6) bis (3 | −6), Abschuss bei (−9 | 0)
+        val path = Flight.path(l, mapOf("angle" to -45.0))
+        val leg = Flight.firstLeg(path)
+        assertTrue(leg.size in 2 until path.size)
+        assertEquals(-6.0, leg.last().y, 0.1)
+        assertEquals(-3.0, leg.last().x, 0.1)
+        // ohne Spiegel im Weg: die ganze Bahn ist gerade
+        val straight = Flight.path(l, mapOf("angle" to 30.0))
+        assertEquals(straight.size, Flight.firstLeg(straight).size)
+    }
 }
