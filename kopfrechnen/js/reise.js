@@ -146,6 +146,7 @@ PANELS.reise = (o = {}) => {
     <div class="mlabel">Sticker-Album</div>
     <div class="rr-album small">${REISE_CH.map((x, i) => `<span class="${reiseChapterDone(i) ? '' : 'lock'}" title="${esc(x.name)}">${reiseChapterDone(i) ? x.sticker : '❔'}</span>`).join('')}</div>
     <p class="small muted" style="margin:0;text-align:center">⭐ ${reiseTotalStars()} Sterne gesammelt · Klasse ${reiseKlasse()} <button class="linkbtn" id="rkChange">ändern</button></p>
+    ${reiseTotalStars() ? '<button class="linkbtn" id="rkReset" style="align-self:center">↺ Reise neu starten</button>' : ''}
     ${REISE_CH.slice(3).some(x => x.soon) ? '<p class="small muted" style="margin:0;text-align:center">Kapitel 4–6 kommen bald: Wolkenstadt, Feuerberg und Sternenschloss.</p>' : ''}</div>`,
     init() {
       $('sheetBody').querySelectorAll('.rt:not([disabled])').forEach(b => b.onclick = () => showPanel('reise', { c: +b.dataset.ch }));
@@ -153,6 +154,7 @@ PANELS.reise = (o = {}) => {
         const go = () => showPanel('reiseStation', { c, s: +g.dataset.st }, true);
         g.onclick = go; g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
       });
+      $('rkReset') && ($('rkReset').onclick = () => resetPart('reise', () => showPanel('reise')));
       $('rkChange').onclick = () => { if (confirm(tr('Klassenstufe ändern? Deine Sterne bleiben erhalten, die Aufgaben passen sich an.'))) { st.k = 0; save(); showPanel('reise'); } };
     } };
 };

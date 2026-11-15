@@ -103,7 +103,12 @@ const PANELS = {
       <div class="setrow col"><div><b>Design</b><span>Hell, dunkel oder wie das Gerät</span></div>
         <div class="seg" id="themeSeg">${[['auto', 'Automatisch'], ['light', 'Hell'], ['dark', 'Dunkel']].map(([v, l]) => `<button data-v="${v}" class="${S.settings.theme === v ? 'sel' : ''}">${l}</button>`).join('')}</div></div>
       ${!IS_NATIVE || CONFIG.apkUpdates ? `<button class="mi" id="btnUpd"><div class="ico">⬆️</div><div><b>Nach Update suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span></div></button>` : ''}
-      <button class="mi" id="btnReset"><div class="ico">↺</div><div><b>Fortschritt zurücksetzen</b><span>Punkte, Rekorde, Abzeichen und Fehlerkiste dieses Profils löschen</span></div></button>
+      <div class="mlabel">Zurücksetzen</div>
+      <button class="mi" data-reset="reise"><div class="ico">🗺️</div><div><b>Rechen-Reise neu starten</b><span>Sterne, Sticker und Klassenwahl der Reise löschen</span></div></button>
+      <button class="mi" data-reset="merk"><div class="ico">🧠</div><div><b>Merk-Training zurücksetzen</b><span>Merkstärken, Sternenhimmel und Sternbilder löschen</span></div></button>
+      <button class="mi" data-reset="badges"><div class="ico">🏅</div><div><b>Abzeichen zurücksetzen</b><span>Alle Abzeichen dieses Profils löschen</span></div></button>
+      <button class="mi" data-reset="box"><div class="ico">📦</div><div><b>Fehlerkiste leeren</b><span>Gesammelte Fehler-Aufgaben löschen</span></div></button>
+      <button class="mi" id="btnReset"><div class="ico">↺</div><div><b>Alles zurücksetzen</b><span>Punkte, Rekorde, Abzeichen, Fehlerkiste, Merk-Training und Reise dieses Profils löschen</span></div></button>
       </div>`, init: initSettings };
   },
 
@@ -254,6 +259,7 @@ function initSettings() {
   $('langSeg').onclick = e => { const b = e.target.closest('button'); if (b) setLanguage(b.dataset.v); };
   $('themeSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.theme = b.dataset.v; save(); applyTheme(); $('themeSeg').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); };
   $('btnUpd') && ($('btnUpd').onclick = checkForUpdate);
+  $('sheetBody').querySelectorAll('[data-reset]').forEach(b => b.onclick = () => resetPart(b.dataset.reset));
   $('btnReset').onclick = () => {
     if (!confirm(tr(`Wirklich den gesamten Fortschritt von „${profile().name}“ löschen? Das kann nicht rückgängig gemacht werden.`))) return;
     if (G && !G.over) quitGame();
@@ -547,3 +553,22 @@ async function checkForUpdate() {
   finally { updChecking = false; }
 }
 document.addEventListener('click', e => { if (e.target.closest('[data-upd]')) { Sound.click(); checkForUpdate(); } });
+
+/* ---------- Einzelne Bereiche zurücksetzen (Marcel 15.11.) ---------- */
+const RESET_ASK = {
+  reise: 'Rechen-Reise wirklich neu starten? Alle Sterne und Sticker der Reise werden gelöscht.',
+  merk: 'Merk-Training wirklich zurücksetzen? Merkstärken, Sternenhimmel und Sternbilder werden gelöscht.',
+  badges: 'Wirklich alle Abzeichen dieses Profils löschen?',
+  box: 'Fehlerkiste wirklich leeren?',
+};
+function resetPart(what, after) {
+  if (!RESET_ASK[what] || !confirm(tr(RESET_ASK[what]))) return;
+  if (G && !G.over) quitGame();
+  if (what === 'reise') { S.reise = null; G_REISE = null; }
+  if (what === 'merk') { S.merk = null; G_MERK = null; }
+  if (what === 'badges') S.badges = {};
+  if (what === 'box') S.box = {};
+  save(); renderHome();
+  toast({ reise: '🗺️ Rechen-Reise neu gestartet', merk: '🧠 Merk-Training zurückgesetzt', badges: '🏅 Abzeichen zurückgesetzt', box: '📦 Fehlerkiste geleert' }[what]);
+  if (after) after(); else closeSheet();
+}

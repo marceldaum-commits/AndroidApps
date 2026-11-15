@@ -183,9 +183,11 @@ PANELS.merk = () => {
       return `<div class="const-card ${done ? 'done' : ''}"><span class="ci">${done ? c.icon : '❔'}</span><b>${done ? esc(c.name) : '???'}</b><small>${n}/${c.keys.length}</small></div>`; }).join('')}</div>
     <div class="mlabel">Was willst du dir merken?${!merkState().decks && k ? ` <span class="muted">(passend zu Klasse ${k})</span>` : ''}</div>
     ${rows}
-    <p class="small muted" style="margin:0">Fehler aus anderen Runden zählen mit: Was du dort falsch hattest, kommt hier wieder dran.</p></div>`,
+    <p class="small muted" style="margin:0">Fehler aus anderen Runden zählen mit: Was du dort falsch hattest, kommt hier wieder dran.</p>
+    ${Object.keys(merkState().c).length ? '<button class="linkbtn" id="merkReset" style="align-self:center">↺ Merk-Training zurücksetzen</button>' : ''}</div>`,
     init() {
       $('merkStart').onclick = () => { closeSheet(); startMerk(); };
+      $('merkReset') && ($('merkReset').onclick = () => resetPart('merk', () => showPanel('merk')));
       $('sheetBody').querySelectorAll('[data-deck]').forEach(b => b.onclick = () => {
         const st = merkState(), cur = merkDecks(), id = b.dataset.deck;
         let next = cur.includes(id) ? cur.filter(x => x !== id) : [...cur, id];

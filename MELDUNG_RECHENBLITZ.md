@@ -2,8 +2,15 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.11.0** (Rechen-Reise komplett, Knopf „Nach Updates suchen“, Android-Widget), siehe Meldungen (28)–(30). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
+> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.11.1** (Rechen-Reise komplett, „Nach Updates suchen“, Android-Widget, einzelnes Zurücksetzen), siehe Meldungen (28)–(31). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
 > - **Bitte testen und live freigeben.** Seit heute läuft die Advents-Vorschau (ab 15.11.), ihre Texte sind jetzt auch auf EN/UK vollständig.
+## 15.11.2026 (31) – Einzelne Bereiche zurücksetzen (3.11.1)
+
+- **Marcel 15.11.:** „Bitte einfügen, dass man es zurücksetzen kann.“
+- **Neu in den Einstellungen unter „Zurücksetzen“:** Rechen-Reise neu starten, Merk-Training zurücksetzen, Abzeichen zurücksetzen, Fehlerkiste leeren und, wie bisher, „Alles zurücksetzen“ (jetzt inklusive Merk-Training und Reise). Reise- und Merk-Übersicht haben zusätzlich einen eigenen Link „↺ … neu starten/zurücksetzen“.
+- Jedes Zurücksetzen fragt vorher nach und beendet eine laufende Runde. Der übrige Fortschritt bleibt erhalten, und das Android-Widget zeigt sofort den neuen Stand.
+- Getestet: alle Wege in DE/EN/UK, 320 px, Regression. **Neue APK: 3.11.1** (GitHub baut sie selbst).
+
 ## 15.11.2026 (30) – Android-Widget für den Startbildschirm (3.11.0)
 
 - **Marcel 15.11.:** „Kannst du ein Widget machen auch?“ Das geht nur in der Android-App, denn der Browser kennt keine Startbildschirm-Widgets.
