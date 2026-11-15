@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-zelle-mensch",
-  "version": 2,
+  "version": 3,
   "title": "Zelle & Mensch",
   "subject": "biologie",
   "grades": [
@@ -51,7 +51,7 @@
       "q": "Welcher Zellbestandteil enthält die Erbinformation (DNA)?",
       "a": "Zellkern",
       "choices": [
-        "Mitochondrium",
+        "Ribosom",
         "Zellmembran",
         "Vakuole"
       ],

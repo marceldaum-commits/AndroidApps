@@ -1,6 +1,6 @@
 {
   "id": "s1-politik-grundgesetz",
-  "version": 2,
+  "version": 3,
   "title": "Grundgesetz und Staat",
   "subject": "politik",
   "grades": [
@@ -40,7 +40,7 @@
   "cards": [
     {
       "id": "001",
-      "q": "Wann trat das Grundgesetz in Kraft?",
+      "q": "Wann wurde das Grundgesetz verkündet?",
       "a": "23. Mai 1949",
       "choices": [
         "8. Mai 1945",

@@ -1,6 +1,6 @@
 {
   "id": "aw-allgemeinwissen-mix",
-  "version": 2,
+  "version": 3,
   "title": "Allgemeinwissen-Quiz",
   "subject": "allgemeinwissen",
   "grades": [
@@ -202,7 +202,7 @@
         "Hygrometer",
         "Tachometer"
       ],
-      "img": "🌡️🌬️📏"
+      "img": "🌬️⏲️"
     },
     {
       "id": "018",
@@ -350,7 +350,7 @@
       "q": "In welcher Stadt steht das Brandenburger Tor?",
       "a": "Berlin",
       "choices": [
-        "Potsdam",
+        "München",
         "Brandenburg an der Havel",
         "Hamburg"
       ],
@@ -371,7 +371,7 @@
       "id": "036",
       "q": "Wie viele Ecken hat ein Sechseck?",
       "a": "6",
-      "img": "🐝🔷"
+      "img": "🐝🍯"
     }
   ]
 }

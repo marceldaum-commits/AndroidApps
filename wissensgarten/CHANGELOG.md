@@ -3,6 +3,17 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.16.0 – Bereit für den Play Store
+- **👨‍👩‍👧 Eltern-Bereich:** Einstellungen, Teilen nach außen (Duelle, Postkarten, Klassen-Links), QR-Scanner und Updates
+  öffnen sich erst nach einer kleinen Rechenaufgabe für Erwachsene – danach 10 Minuten frei.
+- **🔒 Datenschutz:** Datenschutzerklärung direkt in der App (Einstellungen → Datenschutz & Daten), verständlich für Eltern.
+- **🗑️ Alle Daten löschen:** Ein Knopf entfernt Profile, Lernstand und Einstellungen – auch die Sync-Kopie im Google Drive.
+- **✅ Inhalte geprüft:** Alle 1 475 Karten fachlich durchgesehen, 20 Korrekturen (z. B. doppelt richtige Antworten,
+  Datum des Grundgesetzes, irreführende Merkbilder).
+- **🚀 Schneller Start:** Nach der Klassenwahl sind zwei passende Pakete schon ausgewählt.
+- **📱 Tablets:** angenehme Breite statt über den ganzen Bildschirm gezogen.
+- Vorlese-Knopf für den Bildschirmleser beschriftet.
+
 ## 0.15.1 – Updates kommen schneller
 - Die App schaut jetzt bei **jedem Öffnen** nach einer neuen Version (höchstens alle 30 Minuten) – auch wenn sie nur aus dem Hintergrund zurückkommt. Vorher nur einmal am Tag.
 - Ist eine neue Version da, erscheint oben auf der Startseite ein 🎁-Hinweis. Antippen → laden → installieren. Dein Fortschritt bleibt erhalten.

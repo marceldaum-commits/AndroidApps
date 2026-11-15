@@ -1,6 +1,6 @@
 {
   "id": "gs-plus-minus-20",
-  "version": 2,
+  "version": 3,
   "title": "Plus und Minus bis 20",
   "subject": "mathe",
   "grades": [
@@ -143,7 +143,7 @@
         "19",
         "16"
       ],
-      "img": "🎱➕☘️"
+      "img": "1️⃣5️⃣➕☘️"
     },
     {
       "id": "011",
@@ -199,7 +199,7 @@
         "9",
         "6"
       ],
-      "img": "🎱➖🌈"
+      "img": "1️⃣5️⃣➖🌈"
     },
     {
       "id": "016",

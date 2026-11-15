@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-europa",
-  "version": 2,
+  "version": 3,
   "title": "Europa entdecken",
   "subject": "erdkunde",
   "grades": [
@@ -360,7 +360,7 @@
       "q": "Welche Meerenge trennt Spanien von Afrika?",
       "a": "Straße von Gibraltar",
       "info": "An der engsten Stelle ist sie nur etwa 14 km breit.",
-      "img": "🐒🌉"
+      "img": "🐒⛴️"
     },
     {
       "id": "037",

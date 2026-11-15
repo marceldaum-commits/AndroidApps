@@ -82,6 +82,7 @@ fun QrBloom(text: String, modifier: Modifier = Modifier) {
 @Composable
 fun ClassShareDialog(set: ClassSet, onDismiss: () -> Unit) {
     val ctx = LocalContext.current
+    val gate = de.wissensgarten.app.ui.common.LocalParentGate.current
     val sfx = LocalSfx.current
     val link = remember(set) { ClassCodes.link(set) }
     val fits = link.length <= ClassCodes.MAX_LENGTH
@@ -102,10 +103,10 @@ fun ClassShareDialog(set: ClassSet, onDismiss: () -> Unit) {
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                     OutlinedButton(onClick = onDismiss) { Text("Schließen") }
-                    if (set.cards.isNotEmpty()) JuicyButton(onClick = {
+                    if (set.cards.isNotEmpty()) JuicyButton(onClick = { gate("Der Link wird an eine andere App geschickt.") {
                         ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain")
                             .putExtra(Intent.EXTRA_TEXT, "🌱 Lernbeet „${set.title}“ für den Wissensgarten (${set.cards.size} Karten):\n$link"), "Klassen-Code teilen"))
-                    }) { Text("📤 Link teilen") }
+                    } }) { Text("📤 Link teilen") }
                 }
             }
         }
@@ -135,6 +136,7 @@ private fun PoppingCard(i: Int, emoji: String?, front: String, back: String, tra
 @Composable
 fun ClassImportScreen(initial: ClassSet?, onDecode: (String) -> ClassSet?, onPlant: (ClassSet) -> Unit, onBack: () -> Unit) {
     val ctx = LocalContext.current
+    val gate = de.wissensgarten.app.ui.common.LocalParentGate.current
     val sfx = LocalSfx.current
     var set by remember { mutableStateOf(initial) }
     var text by remember { mutableStateOf("") }
@@ -154,7 +156,7 @@ fun ClassImportScreen(initial: ClassSet?, onDecode: (String) -> ClassSet?, onPla
                 Brummi(if (error != null) Mood.THINK else Mood.HAPPY, size = 110.dp,
                     speech = error ?: "Deine Lehrerin oder dein Lehrer hat einen QR-Code? Scann ihn – dann wächst das Beet bei dir!")
                 Spacer(Modifier.height(20.dp))
-                JuicyButton(onClick = {
+                JuicyButton(onClick = { gate("Zum Scannen öffnet sich die Kamera.") {
                     runCatching {
                         val opts = com.google.mlkit.vision.codescanner.GmsBarcodeScannerOptions.Builder()
                             .setBarcodeFormats(com.google.mlkit.vision.barcode.common.Barcode.FORMAT_QR_CODE).build()
@@ -162,7 +164,7 @@ fun ClassImportScreen(initial: ClassSet?, onDecode: (String) -> ClassSet?, onPla
                             .addOnSuccessListener { b -> b.rawValue?.let { accept(it) } }
                             .addOnFailureListener { error = "Der Scanner ist gerade nicht verfügbar – füge den Link unten ein." }
                     }.onFailure { error = "Der Scanner ist gerade nicht verfügbar – füge den Link unten ein." }
-                }, modifier = Modifier.fillMaxWidth().height(60.dp)) { Text("📷 QR-Code scannen", style = MaterialTheme.typography.titleMedium) }
+                } }, modifier = Modifier.fillMaxWidth().height(60.dp)) { Text("📷 QR-Code scannen", style = MaterialTheme.typography.titleMedium) }
                 Spacer(Modifier.height(20.dp))
                 Text("… oder Link / Code einfügen:", style = MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(text, { text = it; error = null }, Modifier.fillMaxWidth(), placeholder = { Text("https://…/klasse/#WGK1-…") }, maxLines = 3)

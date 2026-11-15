@@ -75,6 +75,7 @@ object Routes {
     const val KLASSE = "klasse"
     const val RADIO = "radio"
     const val SAFARI = "safari"
+    const val PRIVACY = "datenschutz"
     const val LOCAL_DUEL = "zu-zweit"
     const val CHAPTER = "kapitel/{n}"
     fun chapter(n: Int) = "kapitel/$n"
@@ -155,6 +156,10 @@ class MainActivity : ComponentActivity() {
               ) {
                 // imePadding: Eingabefelder rutschen über die Tastatur (bei Randlos-Darstellung nötig)
                 Surface(Modifier.fillMaxSize().imePadding(), color = MaterialTheme.colorScheme.background) {
+                  // Tablets: Inhalt mittig in angenehmer Breite statt über den ganzen Bildschirm gezogen
+                  Box(Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.TopCenter) {
+                  Box(Modifier.fillMaxHeight().widthIn(max = 720.dp)) {
+                  de.wissensgarten.app.ui.common.ParentGateHost {
                     val nav = rememberNavController()
                     AppNav(nav, startRoute)
                     // Widget-Tipp: direkt in die Gieß-Runde
@@ -175,6 +180,9 @@ class MainActivity : ComponentActivity() {
                             if (vm.startSession()) nav.navigate(Routes.REVIEW)
                         }
                     }
+                  }
+                  }
+                  }
                 }
               }
             }
@@ -197,6 +205,7 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         // Bei jedem Öffnen (auch aus dem Hintergrund) nach neuen Versionen schauen
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
+        de.wissensgarten.app.update.StoreUpdates.check(this)
         (application as WissensgartenApp).music.onForeground(true)
     }
 
@@ -219,6 +228,7 @@ class MainActivity : ComponentActivity() {
         val route = backStack?.destination?.route
         val showBar = TABS.any { it.route == route }
 
+        val gate = de.wissensgarten.app.ui.common.LocalParentGate.current
         fun goTab(r: String) = nav.navigate(r) {
             popUpTo(nav.graph.findStartDestination().id) { saveState = true }
             launchSingleTop = true
@@ -251,7 +261,12 @@ class MainActivity : ComponentActivity() {
                     TABS.forEach { t ->
                         NavigationBarItem(
                             selected = route == t.route,
-                            onClick = { sfx?.play(de.wissensgarten.app.ui.fx.Sound.TAP, volume = 0.5f); goTab(t.route) },
+                            onClick = {
+                                sfx?.play(de.wissensgarten.app.ui.fx.Sound.TAP, volume = 0.5f)
+                                // „Mehr“ enthält Konto, Updates, Löschen → nur für Eltern
+                                if (t.route == Routes.SETTINGS) gate("Die Einstellungen sind für Eltern: Sync mit Google, Updates, Daten löschen.") { goTab(t.route) }
+                                else goTab(t.route)
+                            },
                             icon = { Icon(t.icon, null) },
                             label = { Text(t.label) },
                         )
@@ -323,7 +338,7 @@ class MainActivity : ComponentActivity() {
                                 val newCh = remember(rev, beds) { vm.newChapter() }
                                 Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                                     val upd by vm.availableUpdate.collectAsStateWithLifecycle()
-                                    upd?.let { de.wissensgarten.app.ui.settings.UpdateBanner(it.version) { goTab(Routes.SETTINGS) } }
+                                    upd?.let { de.wissensgarten.app.ui.settings.UpdateBanner(it.version) { gate("Ein Update installieren dürfen nur Eltern.") { goTab(Routes.SETTINGS) } } }
                                     // Klassenarbeiten: Countdown-Karten oder Einladung zum Eintragen
                                     val plans = remember(rev, beds, now) { vm.examPlans() }
                                     var addExam by remember { mutableStateOf(false) }
@@ -353,7 +368,7 @@ class MainActivity : ComponentActivity() {
                                             "Eintragen – Brummi plant, damit am Tag X alles sitzt.", Color(0xFFFFF8E1)) { addExam = true })
                                         if (beds.isNotEmpty()) add(de.wissensgarten.app.ui.garden.DiscoverItem("🎧", "Brummi-Radio",
                                             "Lernen ohne Bildschirm – zuhören und laut antworten.", Color(0xFFE8EAF6)) { nav.navigate(Routes.RADIO) })
-                                        add(de.wissensgarten.app.ui.garden.DiscoverItem("🔭", "Wissens-Safari",
+                                        if (BuildConfig.SAFARI) add(de.wissensgarten.app.ui.garden.DiscoverItem("🔭", "Wissens-Safari",
                                             "Dinge fotografieren und benennen.", Color(0xFFE8F5E9)) { nav.navigate(Routes.SAFARI) })
                                     })
                                 }
@@ -533,7 +548,7 @@ class MainActivity : ComponentActivity() {
                         familyReward = remember(fRev) { vm.settings.familyReward() },
                         onFamilyReward = { vm.settings.setFamilyReward(it) },
                         onLocalDuel = { nav.navigate(Routes.LOCAL_DUEL) },
-                        onPostcard = { id ->
+                        onPostcard = { id -> gate("Die Postkarte wird an eine andere App (z. B. WhatsApp) geschickt.") {
                             scope.launch {
                                 runCatching {
                                     val d = vm.keepsakeData(id)
@@ -544,8 +559,8 @@ class MainActivity : ComponentActivity() {
                                     de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "image/png", "💌 Grüße aus ${d.name}s Wissensgarten! 🌻")
                                 }.onFailure { android.widget.Toast.makeText(this@MainActivity, "Die Postkarte konnte nicht erstellt werden.", android.widget.Toast.LENGTH_SHORT).show() }
                             }
-                        },
-                        onCertificate = { id ->
+                        } },
+                        onCertificate = { id -> gate("Die Urkunde wird an eine andere App geschickt.") {
                             scope.launch {
                                 runCatching {
                                     val d = vm.keepsakeData(id)
@@ -555,10 +570,12 @@ class MainActivity : ComponentActivity() {
                                     de.wissensgarten.app.ui.share.Keepsakes.share(this@MainActivity, f, "application/pdf", "🏅 Urkunde für ${d.name} aus dem Wissensgarten")
                                 }.onFailure { android.widget.Toast.makeText(this@MainActivity, "Die Urkunde konnte nicht erstellt werden.", android.widget.Toast.LENGTH_SHORT).show() }
                             }
-                        },
+                        } },
                     )
                 }
+                composable(Routes.PRIVACY) { de.wissensgarten.app.ui.settings.PrivacyScreen { nav.popSafe() } }
                 composable(Routes.SETTINGS) {
+                    val scope = rememberCoroutineScope()
                     val theme by vm.theme.collectAsStateWithLifecycle()
                     val sound by vm.settings.sound.collectAsStateWithLifecycle()
                     val reminderOn by vm.settings.reminderOn.collectAsStateWithLifecycle()
@@ -581,6 +598,15 @@ class MainActivity : ComponentActivity() {
                             syllables = vm.settings.syllables.collectAsStateWithLifecycle().value, onSyllables = { vm.settings.setSyllables(it) },
                             vibration = vm.settings.vibration.collectAsStateWithLifecycle().value, onVibration = { vm.settings.setVibration(it) },
                             syncCard = { de.wissensgarten.app.ui.settings.SyncSectionLive((application as WissensgartenApp).sync) },
+                            onPrivacy = { nav.navigate(Routes.PRIVACY) },
+                            onWipeAll = {
+                                scope.launch {
+                                    val msg = DataWipe.wipeAll(application as WissensgartenApp)
+                                    android.widget.Toast.makeText(this@MainActivity, msg ?: "Alles gelöscht. Der Wissensgarten startet neu.", android.widget.Toast.LENGTH_LONG).show()
+                                    kotlinx.coroutines.delay(if (msg != null) 3500 else 1200)
+                                    DataWipe.restart(this@MainActivity)
+                                }
+                            },
                         )
                     }
                 }

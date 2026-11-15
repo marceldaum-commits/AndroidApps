@@ -33,7 +33,13 @@ import de.wissensgarten.core.model.Pack
 val DuelOrange = Color(0xFFFF7043)
 private val DuelRed = Color(0xFFE53935)
 
-/** Text per WhatsApp & Co. teilen. */
+/** Text per WhatsApp & Co. teilen – nur nach dem Eltern-Tor (Familienrichtlinie). */
+@androidx.compose.runtime.Composable
+fun rememberShareDuel(): (Context, String) -> Unit {
+    val gate = de.wissensgarten.app.ui.common.LocalParentGate.current
+    return { c, t -> gate("Die Duell-Einladung wird an eine andere App (z. B. WhatsApp) geschickt.") { shareDuel(c, t) } }
+}
+
 fun shareDuel(context: Context, text: String) {
     val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
     context.startActivity(Intent.createChooser(send, "Duell teilen").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
@@ -57,6 +63,7 @@ fun DuelHubScreen(
     onShowDuel: (Duel) -> Unit,
 ) {
     val clipboard = LocalClipboardManager.current
+    val share = rememberShareDuel()
     val context = LocalContext.current
     val sfx = LocalSfx.current
     var code by remember { mutableStateOf("") }
@@ -134,7 +141,7 @@ fun DuelHubScreen(
                     onPlay = { onShowDuel(d) },
                     onShare = {
                         val me = d.results.firstOrNull { it.name.equals(myName, true) } ?: d.results.first()
-                        shareDuel(context, Duels.shareText(d, title(d), me))
+                        share(context, Duels.shareText(d, title(d), me))
                     },
                 )
             }

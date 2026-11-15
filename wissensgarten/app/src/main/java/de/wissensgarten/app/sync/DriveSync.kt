@@ -76,6 +76,14 @@ class DriveSync(private val context: Context, private val container: AppContaine
         _status.value = SyncStatus()
     }
 
+    /** „Alle Daten löschen“: auch die Kopie im versteckten Drive-Ordner entfernen, dann trennen. */
+    suspend fun deleteRemote(): Result<Unit> = mutex.withLock {
+        runCatching {
+            if (!_status.value.connected) return@runCatching
+            withContext(Dispatchers.IO) { val t = token(); listFiles(t).forEach { (id, _) -> delete(t, id) } }
+        }.also { disconnect() }
+    }
+
     /** Im Hintergrund abgleichen, höchstens alle [minGapMs]. Ohne Verbindung passiert nichts. */
     fun syncSoon(minGapMs: Long = 60_000) {
         val s = _status.value

@@ -20,11 +20,28 @@ android {
         applicationId = "de.wissensgarten.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 25
-        versionName = "0.15.1"
-        // Update-Knopf (lädt neue Versionen aus GitHub Releases). Für den Play Store auf false setzen –
-        // dort kommen Updates über den Store, und die Installations-Berechtigung ist nicht erlaubt.
-        buildConfigField("boolean", "SELF_UPDATE", "true")
+        versionCode = 26
+        versionName = "0.16.0"
+    }
+
+    // Zwei Varianten aus demselben Code:
+    //  github – APK für GitHub-Releases mit eingebautem Updater (🎁-Hinweis)
+    //  play   – AAB für den Google Play Store: kein eigener Updater (Play-Richtlinie), Updates über Play,
+    //           Wissens-Safari (Bilderkennung) aus, weil die Familien-Richtlinie nur freigegebene SDKs erlaubt
+    flavorDimensions += "store"
+    productFlavors {
+        create("github") {
+            dimension = "store"
+            buildConfigField("boolean", "SELF_UPDATE", "true")
+            buildConfigField("boolean", "SAFARI", "true")
+            manifestPlaceholders["mlkitDeps"] = "ica,barcode_ui"
+        }
+        create("play") {
+            dimension = "store"
+            buildConfigField("boolean", "SELF_UPDATE", "false")
+            buildConfigField("boolean", "SAFARI", "false")
+            manifestPlaceholders["mlkitDeps"] = "barcode_ui"
+        }
     }
 
     signingConfigs {
@@ -97,6 +114,8 @@ dependencies {
     // Geräte-Sync: Google-Anmeldung nur für den versteckten App-Ordner im Drive
     implementation("com.google.android.gms:play-services-auth:21.5.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
+    // Play-Store-Variante: Updates über Google Play (In-App-Updates)
+    "playImplementation"("com.google.android.play:app-update-ktx:2.1.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.17")
@@ -108,5 +127,6 @@ dependencies {
 
 // Bildschirmfoto-Tests brauchen das Debug-Test-Manifest – in der Release-Variante überspringen.
 tasks.withType<Test>().configureEach {
-    if (name.contains("Release")) enabled = false
+    // Tests laufen einmal (GitHub-Debug) – die Play-Variante teilt denselben Code
+    if (name.contains("Release") || name.contains("Play")) enabled = false
 }

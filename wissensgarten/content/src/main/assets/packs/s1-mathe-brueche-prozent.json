@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-brueche-prozent",
-  "version": 2,
+  "version": 3,
   "title": "Brüche & Prozent",
   "subject": "mathe",
   "grades": [
@@ -369,7 +369,7 @@
       "q": "Was bedeutet Promille (‰)?",
       "a": "Tausendstel",
       "info": "1 ‰ = 1/1000 = 0,1 %",
-      "img": "🍺"
+      "img": "🔢➗"
     }
   ]
 }

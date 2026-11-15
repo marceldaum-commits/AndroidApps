@@ -1,0 +1,43 @@
+package de.wissensgarten.app.ui
+
+import de.wissensgarten.app.ui.common.ParentGate
+import de.wissensgarten.app.ui.onboarding.recommendedPacks
+import de.wissensgarten.core.model.PackJson
+import org.junit.Assert.*
+import org.junit.Test
+import java.io.File
+import kotlin.random.Random
+
+class ParentGateTest {
+    @Test fun tasksAreForAdultsAndHaveExactlyOneRightAnswer() {
+        val r = Random(1)
+        repeat(200) {
+            val t = ParentGate.task(r)
+            assertTrue("zu leicht: ${t.a}×${t.b}", t.answer >= 78)
+            val o = ParentGate.options(t, r)
+            assertEquals(4, o.toSet().size)
+            assertEquals(1, o.count { it == t.answer })
+            assertTrue(o.all { it > 0 })
+        }
+    }
+
+    @Test fun gateStaysOpenTenMinutes() {
+        ParentGate.close()
+        assertFalse(ParentGate.isOpen(1000))
+        ParentGate.open(1000)
+        assertTrue(ParentGate.isOpen(1000 + 9 * 60_000))
+        assertFalse(ParentGate.isOpen(1000 + 11 * 60_000))
+        ParentGate.close()
+    }
+
+    @Test fun quickStartPicksTwoFittingPacksFromDifferentSubjects() {
+        val packs = File("../content/src/main/assets/packs").listFiles()!!.filter { it.extension == "json" }.map { PackJson.parse(it.readText()) }
+        for (level in 1..13) {
+            val ids = recommendedPacks(packs, level)
+            assertTrue("Klasse $level: ${ids.size}", ids.size in 1..2)
+            val chosen = packs.filter { it.id in ids }
+            assertTrue(chosen.all { level in it.grades })
+            assertEquals(chosen.size, chosen.map { it.subject }.toSet().size)
+        }
+    }
+}

@@ -1,6 +1,6 @@
 {
   "id": "s1-latein-grundwortschatz",
-  "version": 2,
+  "version": 3,
   "title": "Latein Grundwortschatz",
   "subject": "latein",
   "grades": [
@@ -432,7 +432,7 @@
       "choices": [
         "klein",
         "viel",
-        "mächtig"
+        "schnell"
       ],
       "img": "🐘"
     },

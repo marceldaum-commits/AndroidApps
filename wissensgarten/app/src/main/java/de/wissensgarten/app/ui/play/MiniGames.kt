@@ -57,7 +57,8 @@ fun QuestionText(text: String, modifier: Modifier = Modifier) {
     LaunchedEffect(text) { if (auto) { delay(250); voice?.speak(text, Voice.localeFor(subject, text)) } }
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
         SilbenText(text, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
-        if (voice != null) IconButton(onClick = { voice.speak(text, Voice.localeFor(subject, text)) }) { Text("🔊", fontSize = 20.sp) }
+        if (voice != null) IconButton(onClick = { voice.speak(text, Voice.localeFor(subject, text)) },
+            modifier = Modifier.semantics { contentDescription = "Vorlesen" }) { Text("🔊", fontSize = 20.sp) }
     }
 }
 

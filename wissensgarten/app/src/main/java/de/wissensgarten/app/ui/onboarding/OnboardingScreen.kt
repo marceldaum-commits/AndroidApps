@@ -88,7 +88,12 @@ fun OnboardingScreen(
                     onClick = {
                         // Tastatur vor dem Seitenwechsel schließen – sonst springt das Layout mitten in der Animation
                         keyboard?.hide(); focus.clearFocus()
-                        if (step == Step.BEDS) onFinish(name, avatar, level, chosen, ownBeds) else index++
+                        if (step == Step.BEDS) onFinish(name, avatar, level, chosen, ownBeds)
+                        else {
+                            // Schneller Start: zwei passende Pakete vorauswählen (abwählbar) – ein Tipp bis zum Garten
+                            if (step == Step.LEVEL && chosen.isEmpty()) chosen = recommendedPacks(packs, level)
+                            index++
+                        }
                     },
                     enabled = enabled,
                     modifier = Modifier.fillMaxWidth().navigationBarsPadding().padding(16.dp).height(58.dp),
@@ -238,4 +243,16 @@ private fun ChoiceCard(emoji: String, title: String, text: String, selected: Boo
             }
         }
     }
+}
+
+/** Zwei passende kostenlose Pakete für die Klassenstufe, möglichst aus verschiedenen Fächern (Mathe zuerst). */
+internal fun recommendedPacks(packs: List<Pack>, level: Int): Set<String> {
+    val fit = packs.filter { level in it.grades && !it.isPlus }
+        .sortedWith(compareBy<Pack>({ if (it.subject == "mathe") 0 else 1 }, { it.grades.size }))
+    val out = LinkedHashSet<String>()
+    for (p in fit) {
+        if (out.size >= 2) break
+        if (out.none { id -> packs.first { it.id == id }.subject == p.subject }) out += p.id
+    }
+    return out
 }

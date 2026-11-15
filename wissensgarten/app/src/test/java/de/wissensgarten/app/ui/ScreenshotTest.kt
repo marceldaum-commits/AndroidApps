@@ -42,8 +42,19 @@ import java.io.File
 @RunWith(RobolectricTestRunner::class)
 @GraphicsMode(GraphicsMode.Mode.NATIVE)
 @Config(sdk = [35], qualifiers = "w400dp-h860dp-xxhdpi")
-class ScreenshotTest {
+open class ScreenshotTest {
     @get:Rule val rule = createComposeRule()
+    @get:Rule val testName = org.junit.rules.TestName()
+
+    /** Zielordner – die Store-Varianten (Unterklassen unten) schreiben woanders hin */
+    protected open val outDir = "../screenshots"
+
+    /** Store-Fotos: nur diese Bildschirme (die schönsten 8) */
+    private val storeSet = setOf("gardenHome", "reviewKids", "adventurePath", "chest", "album", "shop", "family", "duelHub")
+
+    @org.junit.Before fun onlyStoreShots() {
+        if (outDir != "../screenshots") org.junit.Assume.assumeTrue(testName.methodName in storeSet)
+    }
 
     private val now = 1_763_031_600_000L // 11:00 UTC – Tageshimmel
     private val night = 1_763_071_200_000L // 22:00 UTC
@@ -84,7 +95,8 @@ class ScreenshotTest {
         rule.mainClock.advanceTimeBy(1500)
         prepare(rule)
         rule.mainClock.advanceTimeBy(settle)
-        rule.onRoot().captureRoboImage("../screenshots/$name.png")
+        val n = if (outDir == "../screenshots") name else "${storeSet.indexOf(testName.methodName) + 1}_$name"
+        rule.onRoot().captureRoboImage("$outDir/$n.png")
     }
 
     @Test fun onboardingWelcome() = shot("01_willkommen") {
@@ -528,4 +540,18 @@ class ScreenshotTest {
             ))
         })
     }
+
+    @Test fun parentGate() = shot("51_eltern_tor") {
+        de.wissensgarten.app.ui.common.ParentGateDialog("Die Einstellungen sind für Eltern: Sync mit Google, Updates, Daten löschen.", {}, {}, kotlin.random.Random(4))
+    }
+
+    @Test fun privacy() = shot("52_datenschutz") { de.wissensgarten.app.ui.settings.PrivacyScreen {} }
 }
+
+/** Play-Store-Fotos Handy: 1080 × 1920 (9:16, Store verlangt höchstens 2:1). */
+@Config(sdk = [35], qualifiers = "w360dp-h640dp-xxhdpi")
+class StorePhoneShots : ScreenshotTest() { override val outDir = "../store/handy" }
+
+/** Play-Store-Fotos Tablet: 1600 × 2560. */
+@Config(sdk = [35], qualifiers = "w800dp-h1280dp-xhdpi")
+class StoreTabletShots : ScreenshotTest() { override val outDir = "../store/tablet" }

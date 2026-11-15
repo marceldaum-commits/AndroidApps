@@ -1,6 +1,6 @@
 {
   "id": "s1-franzoesisch-verben",
-  "version": 2,
+  "version": 3,
   "title": "être, avoir, aller, faire",
   "subject": "franzoesisch",
   "grades": [
@@ -40,7 +40,7 @@
       "a": "je suis",
       "choices": [
         "je es",
-        "je sois",
+        "je sommes",
         "j'est"
       ],
       "img": "🙋🌟"
@@ -49,7 +49,7 @@
       "id": "002",
       "q": "tu – être",
       "a": "tu es",
-      "info": "Gleiche Aussprache wie il est.",
+      "info": "„es“ klingt genauso wie „est“ in il est.",
       "img": "👉🌟"
     },
     {
@@ -204,7 +204,7 @@
       "choices": [
         "je fait",
         "je fai",
-        "je fasse"
+        "je faites"
       ],
       "img": "🙋🔨"
     },
@@ -221,7 +221,7 @@
       "choices": [
         "il fais",
         "il fai",
-        "il fit"
+        "il faites"
       ],
       "img": "👨🔨"
     },

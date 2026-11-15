@@ -48,6 +48,7 @@ fun DuelPlayScreen(
     val scope = rememberCoroutineScope()
     val particles = rememberParticles()
     val shake = rememberShake()
+    val share = rememberShareDuel()
     val context = LocalContext.current
     var countdown by remember { mutableIntStateOf(3) }
     var index by remember { mutableIntStateOf(0) }
@@ -102,7 +103,7 @@ fun DuelPlayScreen(
         when {
             result != null -> DuelResultView(result!!.first, pack, myName, result!!.second, onClose) {
                 val me = result!!.first.results.first { it.name.equals(myName, true) }
-                shareDuel(context, Duels.shareText(result!!.first, pack.title, me))
+                share(context, Duels.shareText(result!!.first, pack.title, me))
             }
             countdown > 0 -> Countdown(countdown, pack, toBeat)
             else -> Scaffold(

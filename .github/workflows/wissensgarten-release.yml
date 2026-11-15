@@ -99,10 +99,11 @@ jobs:
       - name: Logik-Tests
         run: ./gradlew --no-daemon :core:model:test
 
-      - name: APK bauen
+      - name: APK (GitHub) und AAB (Play Store) bauen
         run: |
-          ./gradlew --no-daemon assembleRelease
-          cp app/build/outputs/apk/release/app-release.apk "Wissensgarten-${{ steps.version.outputs.name }}.apk"
+          ./gradlew --no-daemon assembleGithubRelease bundlePlayRelease
+          cp app/build/outputs/apk/github/release/app-github-release.apk "Wissensgarten-${{ steps.version.outputs.name }}.apk"
+          cp app/build/outputs/bundle/playRelease/app-play-release.aab "Wissensgarten-${{ steps.version.outputs.name }}-PlayStore.aab"
 
       - name: Signatur prüfen
         run: |
@@ -119,7 +120,9 @@ jobs:
           target_commitish: ${{ github.sha }}
           name: Wissensgarten ${{ steps.version.outputs.name }}
           body_path: wissensgarten/notes.md
-          files: wissensgarten/Wissensgarten-${{ steps.version.outputs.name }}.apk
+          files: |
+            wissensgarten/Wissensgarten-${{ steps.version.outputs.name }}.apk
+            wissensgarten/Wissensgarten-${{ steps.version.outputs.name }}-PlayStore.aab
 
       - name: In Google Drive hochladen
         if: steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.WG_DRIVE_FOLDER != ''

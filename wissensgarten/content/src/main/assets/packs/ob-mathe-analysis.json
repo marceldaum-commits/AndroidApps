@@ -1,6 +1,6 @@
 {
   "id": "ob-mathe-analysis",
-  "version": 2,
+  "version": 3,
   "title": "Analysis kompakt",
   "subject": "mathe",
   "grades": [
@@ -26,7 +26,7 @@
     },
     {
       "img": "📈🔍",
-      "text": "Bei f'(x) = 0 ist die Piste flach – dort liegen Hoch- und Tiefpunkte. Die Stammfunktion geht den Weg rückwärts und hilft, Flächen zu berechnen."
+      "text": "Bei f'(x) = 0 ist die Piste flach – dort können Hoch- und Tiefpunkte liegen. Die Stammfunktion geht den Weg rückwärts und hilft, Flächen zu berechnen."
     },
     {
       "img": "🐝💪",

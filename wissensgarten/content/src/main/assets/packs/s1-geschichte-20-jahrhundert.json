@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-20-jahrhundert",
-  "version": 2,
+  "version": 3,
   "title": "Das 20. Jahrhundert",
   "subject": "geschichte",
   "grades": [
@@ -230,7 +230,7 @@
     },
     {
       "id": "022",
-      "q": "Wann trat das Grundgesetz in Kraft und wurde die Bundesrepublik gegründet?",
+      "q": "Wann wurde das Grundgesetz verkündet und damit die Bundesrepublik gegründet?",
       "a": "23. Mai 1949",
       "choices": [
         "7. Oktober 1949",
@@ -309,7 +309,7 @@
       "q": "In welcher Stadt fanden 1989 die großen Montagsdemonstrationen statt?",
       "a": "Leipzig",
       "choices": [
-        "Dresden",
+        "Bonn",
         "Ost-Berlin",
         "Rostock"
       ],

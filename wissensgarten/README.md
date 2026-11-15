@@ -174,3 +174,16 @@ Benötigt JDK 17+ und Android SDK (Plattform 36).
 - Pakete aus dem Internet nachladen; CSV-Import
 - Dungeon-Modus: gewachsene Pflanzen werden Kampfkarten
 - Play Store: eigener Upload-Schlüssel, Datenschutzerklärung, Billing für „Plus“
+
+
+## Play Store
+Zwei Varianten aus demselben Code (`app/build.gradle.kts`, `productFlavors`):
+- **github** – APK für GitHub-Releases mit eingebautem Updater
+- **play** – AAB für Google Play: kein eigener Updater (Updates über Play In-App-Updates), keine Installations-Berechtigung,
+  Wissens-Safari aus (Familien-Richtlinie)
+
+Eltern-Tor (`ui/common/ParentGate.kt`) vor Einstellungen, Teilen, QR-Scan und Updates · Datenschutzerklärung in der App,
+Webseite `web/datenschutz/` wird aus derselben Quelle erzeugt · „Alle Daten löschen“ (`DataWipe.kt`).
+Store-Texte, Icon, Titelbild, Handy- und Tablet-Fotos und die Schritt-für-Schritt-Anleitung: `store/` (siehe `store/PLAY-STORE.md`).
+
+![](screenshots/51_eltern_tor.png) ![](screenshots/52_datenschutz.png)

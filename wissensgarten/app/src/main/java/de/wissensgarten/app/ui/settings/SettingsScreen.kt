@@ -44,8 +44,11 @@ fun SettingsScreen(
     onVibration: (Boolean) -> Unit = {},
     music: Boolean = true,
     onMusic: (Boolean) -> Unit = {},
+    onPrivacy: () -> Unit = {},
+    onWipeAll: () -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
+    var wipeStep by remember { mutableIntStateOf(0) }
     var confirmDelete by remember { mutableStateOf(false) }
 
     Column(
@@ -160,10 +163,17 @@ fun SettingsScreen(
             )
         }
 
+        Section("Datenschutz & Daten") {
+            Text("Keine Werbung, kein Tracking, kein Konto nötig. Ohne Sync bleibt alles auf diesem Gerät.", style = MaterialTheme.typography.bodySmall)
+            OutlinedButton(onClick = onPrivacy, modifier = Modifier.fillMaxWidth()) { Text("🔒 Datenschutzerklärung") }
+            OutlinedButton(onClick = { wipeStep = 1 }, modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("🗑️ Alle Daten löschen") }
+            TextButton(onClick = { de.wissensgarten.app.ui.common.ParentGate.close() }) { Text("Eltern-Bereich wieder sperren") }
+        }
+
         Section("Über") {
             Text("Wissensgarten $version")
             Text("$packCount Wissenspakete · $cardCount Karten", style = MaterialTheme.typography.bodySmall)
-            Text("Alle Daten bleiben auf diesem Gerät.", style = MaterialTheme.typography.bodySmall)
         }
 
         if (canDeleteProfile) TextButton(onClick = { confirmDelete = true }) {
@@ -171,6 +181,17 @@ fun SettingsScreen(
         }
     }
 
+    if (wipeStep > 0) AlertDialog(
+        onDismissRequest = { wipeStep = 0 },
+        title = { Text(if (wipeStep == 1) "Alle Daten löschen?" else "Wirklich alles?") },
+        text = { Text(if (wipeStep == 1) "Alle Profile, Gärten, der gesamte Lernstand und die Einstellungen werden gelöscht – auf diesem Gerät " +
+            "und, falls der Sync verbunden ist, auch die Kopie im Google Drive. Das lässt sich nicht rückgängig machen."
+            else "Letzte Rückfrage: Danach startet der Wissensgarten wie frisch installiert.") },
+        confirmButton = { TextButton(onClick = { if (wipeStep == 1) wipeStep = 2 else { wipeStep = 0; onWipeAll() } }) {
+            Text(if (wipeStep == 1) "Weiter" else "Endgültig löschen", color = MaterialTheme.colorScheme.error)
+        } },
+        dismissButton = { TextButton(onClick = { wipeStep = 0 }) { Text("Abbrechen") } },
+    )
     if (editing) EditProfileDialog(profile, onDismiss = { editing = false }) { onUpdateProfile(it); editing = false }
     if (confirmDelete) AlertDialog(
         onDismissRequest = { confirmDelete = false },
