@@ -102,3 +102,13 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
 - Dazu passend: Serie nur für Treffer beim ersten Versuch (Rechnen statt Raten), ohne Zeitdruck und ohne Strafe; Abzeichen für Können, nicht fürs Wiederkommen.
 - Quellen: https://ies.ed.gov/ncee/wwc/Study/88770 · https://zendy.io/pdf-viewer/10.1037/edu0000367 ·
   https://ies.ed.gov/use-work/awards/systematic-replication-study-interleaved-mathematics-practice
+
+## Raumlicht 0.3.0 (15.11.2026): worauf die neuen Bereiche aufbauen
+
+Keine neue Suche, sondern Anwendung der Befunde oben:
+- **Abi-Simulation** und **Zweite Chance**: Rechnen muss die Spielhandlung sein und sich lohnen (DragonBox/„From Here to There“, Vector Unknown) –
+  volle Punkte nur beim ersten Versuch, Wackelkandidaten gezielt noch einmal.
+- **Lage-Check** und **Jam gemischt**: erst erkennen, welches Verfahren gefragt ist (verschachteltes Üben, Rohrer u. a.).
+- **Show-Baukasten** und **Duell**: Teenager wollen etwas bauen und sich messen (Minecraft-/Graphwar-Befund, JIM) – ohne Konto, ohne Server, per Code.
+- **Rotationskörper/Bewegung**: Raumvorstellung ist die Hürde (Friedrich Verlag, NiBiS) – Körper und Flugbahnen entstehen sichtbar, die Zeit ist ein Regler.
+- Offen bleibt: Belastbare Lernzuwachs-Zahlen für genau diese Spielarten in der Oberstufe haben wir nicht.

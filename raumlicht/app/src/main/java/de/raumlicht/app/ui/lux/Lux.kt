@@ -26,6 +26,7 @@ fun Lux(mood: LuxMood = LuxMood.IDLE, modifier: Modifier = Modifier, size: Dp = 
     val inf = rememberInfiniteTransition(label = "lux")
     val t by inf.animateFloat(0f, 6.283f, infiniteRepeatable(tween(2400, easing = LinearEasing)), label = "t")
     val blink by inf.animateFloat(0f, 1f, infiniteRepeatable(tween(3700, easing = LinearEasing)), label = "b")
+    val band = de.raumlicht.app.ui.level.stageColor(de.raumlicht.app.ui.stage.LocalLuxSkin.current)
     Canvas(modifier.size(size)) {
         val w = this.size.width; val bob = sin(t) * w * 0.03f + if (mood == LuxMood.HAPPY) sin(t * 4) * w * 0.03f else 0f
         val c = Offset(w / 2, w * 0.54f + bob)
@@ -41,7 +42,7 @@ fun Lux(mood: LuxMood = LuxMood.IDLE, modifier: Modifier = Modifier, size: Dp = 
         }
         // Körper
         drawOval(Brush.verticalGradient(listOf(Color(0xFFF2F5FF), Color(0xFF9AA6C4)), c.y - w * 0.22f, c.y + w * 0.22f), Offset(c.x - w * 0.28f, c.y - w * 0.21f), Size(w * 0.56f, w * 0.42f))
-        drawArc(Q.Pink, 20f, 140f, false, Offset(c.x - w * 0.28f, c.y - w * 0.2f), Size(w * 0.56f, w * 0.42f), style = Stroke(w * 0.035f))
+        drawArc(band, 20f, 140f, false, Offset(c.x - w * 0.28f, c.y - w * 0.2f), Size(w * 0.56f, w * 0.42f), style = Stroke(w * 0.035f))
         // Visier
         drawRoundRect(Color(0xFF0A0E1E), Offset(c.x - w * 0.2f, c.y - w * 0.12f), Size(w * 0.4f, w * 0.2f), CornerRadius(w * 0.1f))
         // Augen

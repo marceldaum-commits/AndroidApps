@@ -304,7 +304,7 @@ object Levels {
             "Die große Bühne. Hier zählt jeder Winkel.",
             "Skalarprodukt null heißt senkrecht. Damit findest du Lote, Abstände und Spiegelbilder.",
             "Das ist Abi-Niveau – und du bist bereit."), ch6),
-    ) + MoreLevels.chapters
+    ) + MoreLevels.chapters + TourThree.chapters
     val all = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }
     fun next(id: String): Level? = all.getOrNull(all.indexOfFirst { it.id == id } + 1)

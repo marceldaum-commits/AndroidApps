@@ -40,6 +40,8 @@ Lernforschung) und die Erkenntnisse in den Entwurf einfließen lassen.
   Signieren mit denselben Secrets `WG_KEYSTORE_BASE64` / `WG_KEYSTORE_PROPERTIES` (gleicher Schlüssel für alle Apps),
   Keystore und `keystore.properties` nie committen.
 - **Ausliefern** = versionCode/versionName erhöhen + CHANGELOG-Abschnitt (kindgerecht, für Eltern verständlich) + pushen.
+- **Immer das Datum zur Version**: in der CHANGELOG-Überschrift (`## 0.3.0 – Titel (15.11.2026)`), im Release-Namen und in der App
+  (Einstellungen: „Version 0.3.0 vom 15.11.2026“, Vorbild `raumlicht/`: `VERSION_DATE` in `app/build.gradle.kts`). Auch in Antworten an den Nutzer Version und Datum nennen.
 - **Update in der App**: Updater wie im Wissensgarten (GitHub-Releases prüfen, beim Start höchstens alle 20 h,
   Banner + Knopf in den Einstellungen, abschaltbar, `SELF_UPDATE`-Schalter für eine spätere Play-Store-Version).
 - **Google Drive**: APK zusätzlich in den gemeinsamen Drive-Ordner, Unterordner je App (sobald `GDRIVE_SA_JSON` eingerichtet ist).

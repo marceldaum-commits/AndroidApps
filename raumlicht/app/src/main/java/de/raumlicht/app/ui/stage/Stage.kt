@@ -54,6 +54,7 @@ class StageController {
     fun setState(json: String) { state = json; if (ready) run("RL.setState($json)") }
     fun fire(b: Beam, ms: Int) = send("RL.fire({from:${js(b.from)},to:${js(b.to)},color:'${b.color}',ms:$ms,hit:${b.hit}})")
     fun burst(p: V3, color: String) = send("RL.burst(${js(p)},'$color')")
+    fun skin(color: String) = send("RL.skin('$color')")
     fun party(seconds: Double = 4.0) = send("RL.party($seconds)")
     fun camera(az: Double? = null, el: Double? = null, dist: Double? = null) =
         send("RL.setCamera({${listOfNotNull(az?.let { "az:$it" }, el?.let { "el:$it" }, dist?.let { "dist:$it" }).joinToString(",")}})")
@@ -80,8 +81,15 @@ class StageController {
 /** Wie die Bühne gezeichnet wird – in Tests durch ein Standbild ersetzt (Robolectric hat kein WebGL). */
 val LocalStageRenderer = staticCompositionLocalOf<@Composable (StageController, Modifier) -> Unit> { { c, m -> WebStage(c, m) } }
 
+/** Farbe von Lux' Leuchtband (Werkstatt) */
+val LocalLuxSkin = staticCompositionLocalOf { "pink" }
+
 @Composable
-fun Stage(controller: StageController, modifier: Modifier = Modifier) = LocalStageRenderer.current(controller, modifier)
+fun Stage(controller: StageController, modifier: Modifier = Modifier) {
+    val skin = LocalLuxSkin.current
+    androidx.compose.runtime.LaunchedEffect(controller, skin) { controller.skin(skin) }
+    LocalStageRenderer.current(controller, modifier)
+}
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable

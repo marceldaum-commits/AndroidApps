@@ -9,6 +9,7 @@ enum class JamTopic(val title: String, val emoji: String, val color: String, val
     GERADEN("Geraden", "🔦", "green", listOf(Gen.Kind.AIM, Gen.Kind.PARAM, Gen.Kind.TRACE)),
     SCHNITT("Schnittpunkte", "✨", "yellow", listOf(Gen.Kind.CROSS)),
     EBENEN("Ebenen", "🔷", "violet", listOf(Gen.Kind.PIERCE_FLAT, Gen.Kind.PIERCE_SKEW)),
+    WINKEL("Winkel, Abstände, Kugeln", "📐", "orange", listOf(Gen.Kind.ANGLE, Gen.Kind.DIST_PLANE, Gen.Kind.FOOT, Gen.Kind.RADIUS)),
     MIX("Alles gemischt", "🎧", "pink", Gen.Kind.entries),
 }
 
@@ -17,7 +18,7 @@ enum class JamTopic(val title: String, val emoji: String, val color: String, val
  * Grundlage für Jam-Session (endlos üben) und Tagesgig (jeden Tag eine neue Aufgabe für alle).
  */
 object Gen {
-    enum class Kind { MIDPOINT, VECTOR, AIM, PARAM, TRACE, CROSS, PIERCE_FLAT, PIERCE_SKEW }
+    enum class Kind { MIDPOINT, VECTOR, AIM, PARAM, TRACE, CROSS, PIERCE_FLAT, PIERCE_SKEW, ANGLE, DIST_PLANE, FOOT, RADIUS }
 
     private val B = Bounds()
     private fun inRoom(v: V3) = (0..2).all { v.list[it] >= B.min[it] && v.list[it] <= B.max[it] }
@@ -86,6 +87,7 @@ object Gen {
                 tip = "Jede Koordinate der Geraden in E einsetzen, nach t auflösen.",
                 way = listOf("einsetzen → ${Geo.num((n dot a).toInt())} + ${Geo.num((n dot d).toInt())} · t = $rhs", "t = $t", "S = A + $t · d⃗ = ${s.fmt()}"))
         }
+        Kind.ANGLE, Kind.DIST_PLANE, Kind.FOOT, Kind.RADIUS -> buildMore(kind, r, id, ch)
         Kind.CROSS -> {
             val s = r.point(0, 1); val d1 = r.dir(2); val d2 = r.dir(2)
             val u = listOf(-3, -2, -1, 1, 2, 3).random(r); val w = listOf(-3, -2, -1, 1, 2, 3).random(r)
@@ -95,6 +97,50 @@ object Gen {
                 tip = "Gleichsetzen und aus zwei Zeilen s und t bestimmen. Die dritte Zeile ist die Probe.",
                 way = listOf("gleichsetzen → s = $u, t = $w", "S = A + $u · d⃗ = ${s.fmt()}"))
         }
+    }
+
+    // Vektorpaare mit „schönen“ Winkeln und Normalen/Versätze mit ganzzahliger Länge
+    private val anglePairs = listOf(Triple(V3(1, 0, 0), V3(1, 1, 0), 45), Triple(V3(1, 1, 0), V3(0, 1, 1), 60), Triple(V3(1, 0, 0), V3(0, 1, 0), 90),
+        Triple(V3(1, 1, 0), V3(1, -1, 0), 90), Triple(V3(1, 1, 0), V3(0, -1, -1), 120), Triple(V3(1, 0, 0), V3(-1, 1, 0), 135))
+    private val wholeNormals = listOf(V3(1, 2, 2), V3(2, 1, 2), V3(2, 2, 1), V3(0, 0, 1), V3(0, 1, 0), V3(1, 0, 0))
+    private fun V3.perm(k: Int) = when (k % 3) { 0 -> this; 1 -> V3(z, x, y); else -> V3(y, z, x) }
+
+    private fun buildMore(kind: Kind, r: Random, id: String, ch: Int): Level? = when (kind) {
+        Kind.ANGLE -> {
+            val (u0, v0, deg) = anglePairs.random(r); val k = r.nextInt(3); val u = u0.perm(k) * r.nextInt(2, 5); val v = v0.perm(k) * r.nextInt(2, 5); val o = r.point(0, 1)
+            if (!inRoom(o + u) || !inRoom(o + v)) null else Families.scalar(id, ch, "Winkel", "Wie groß ist der Winkel zwischen a⃗ und b⃗?", "α", 0..12, deg / 15, 0,
+                tip = "cos α = (a⃗ · b⃗) : (|a⃗| · |b⃗|). Ist das Skalarprodukt negativ, ist der Winkel größer als 90°.",
+                way = listOf("a⃗ · b⃗ = ${Geo.num(u dot v)}", "|a⃗| · |b⃗| = ${Geo.num(u.length * v.length)}", "α = $deg°"), color = "yellow", step = 15, suffix = "°",
+                formula = { a -> listOf(listOf(Txt("a⃗ = "), Families.col(u), Txt("   b⃗ = "), Families.col(v)), listOf(Txt("α = "), Part.Num("${a * 15}°", "a"))) },
+                objects = { _, _ -> listOf(Stage.point("O", o, "white"), Stage.vector("a", o, o + u, "cyan", "a⃗"), Stage.vector("b", o, o + v, "pink", "b⃗"), Stage.arc("bogen", o, u, v, 1.5)) },
+                check = { a -> Families.compare(a * 15, deg, "Der Winkel", "Genau $deg°!") })
+        }
+        Kind.DIST_PLANE, Kind.FOOT -> {
+            val n = wholeNormals.random(r); val f = r.point(0, 1); val k = r.nextInt(1, if (n.length > 1.5) 3 else 5); val q = f + n * k; val rhs = (n dot f).toInt()
+            val dist = (k * n.length).toInt(); val text = Geo.planeText(n, rhs)
+            if (!inRoom(q) || dist > 8) null else if (kind == Kind.FOOT) Families.point(id, ch, "Lotfußpunkt", "Wo trifft der kürzeste Weg von P die Scheibe E?", f, hidden = true, name = "F",
+                given = listOf(listOf(Txt("P${q.fmt()}   E: $text"))),
+                tip = "Lotgerade durch P mit dem Normalenvektor als Richtung, in E einsetzen.",
+                way = listOf("Lotgerade: x⃗ = P + t · ${n.fmt()}", "in E einsetzen → t = ${Geo.num(-k)}", "F${f.fmt()}"),
+                extras = { listOf(Stage.plane("E", n, rhs.toDouble(), "violet", "E"), Stage.point("P", q, "cyan", "P${q.fmt()}")) })
+            else Families.scalar(id, ch, "Abstand Punkt–Ebene", "Wie weit ist P von der Scheibe E entfernt?", "d", 0..8, dist, if (dist == 1) 2 else 1,
+                tip = "d = |n⃗ · p⃗ − c| : |n⃗|.",
+                way = listOf("n⃗ · p⃗ = ${Geo.num(n dot q)}, |n⃗| = ${Geo.num(n.length)}", "d = |${Geo.num(n dot q)} − ${Geo.num(rhs)}| : ${Geo.num(n.length)} = $dist"),
+                formula = { a -> listOf(listOf(Txt("P${q.fmt()}   E: $text")), listOf(Txt("d(P, E) = "), Part.Num(Geo.num(a), "a"))) },
+                objects = { _, ph -> listOf(Stage.plane("E", n, rhs.toDouble(), "violet", "E"), Stage.point("P", q, "cyan", "P${q.fmt()}")) +
+                    if (ph == Phase.DONE) listOf(Stage.line("lot", q, f - q, 0.0, 1.0, "pink")) else listOf(Stage.stub("richtung", q, f - q, "pink", length = 0.9)) },
+                check = { a -> Families.compare(a, dist, "Der Abstand", "Genau $dist – der Strahl endet auf dem Glas.") { ok -> listOf(Beam(q, q + (f - q) * (a.toDouble() / dist), "pink", ok)) } })
+        }
+        Kind.RADIUS -> {
+            val off = (wholeNormals.filter { it.length > 1.5 } + listOf(V3(2, 0, 0), V3(0, 2, 0), V3(0, 0, 2), V3(3, 0, 0), V3(0, 0, 3))).random(r) * (if (r.nextBoolean()) 1 else -1)
+            val m = r.point(0, 2); val rad = off.length.toInt(); val q = m + off
+            if (!inRoom(q) || m.z - rad < 0 || m.z + rad > 6) null else Families.scalar(id, ch, "Kugelradius", "Stell den Radius so ein, dass P auf der Kugel um M liegt.", "r", 1..5, rad, if (rad == 1) 2 else 1,
+                tip = "Der Radius ist die Länge von MP⃗.", way = listOf("MP⃗ = ${off.fmt()}", "r = ${Geo.num(rad)}"), color = "cyan",
+                formula = { a -> listOf(listOf(Txt("M${m.fmt()}   P${q.fmt()}")), listOf(Txt("r = "), Part.Num(Geo.num(a), "a"))) },
+                objects = { a, _ -> listOf(Stage.sphere("K", m, a.toDouble(), "cyan"), Stage.point("M", m, "white", "M", drop = false), Stage.point("P", q, "yellow", "P${q.fmt()}")) },
+                check = { a -> Families.compare(a, rad, "Der Radius", "r = $rad – P liegt auf der Kugel.") })
+        }
+        else -> null
     }
 
     /** Aufgabe Nr. [n] einer Jam-Session zum Thema (für jede Sitzung andere Aufgaben über [session]). */
@@ -130,7 +176,7 @@ object Badges {
             Badge("perfekt20", "💎", "Präzisionsarbeit", "20 Level mit drei Sternen", tour.values.count { it == 3 } >= 20),
             Badge("geraden", "🔦", "Laser-Profi", "Kapitel 3 und 4 gespielt", chapterDone(3) && chapterDone(4)),
             Badge("ebenen", "🔷", "Glasklar", "Kapitel 5 gespielt", chapterDone(5)),
-            Badge("kugel", "🪩", "Discokönig:in", "Kapitel 9 gespielt", chapterDone(9)),
+            Badge("kugel", "🔮", "Discokönig:in", "Kapitel 9 gespielt", chapterDone(9)),
             Badge("abi3", "🎓", "Abi-Luft", "3 Abi-Checks bestanden", abi.count { (tour[it.id] ?: 0) > 0 } >= 3),
             Badge("abi", "🏆", "Abi-ready", "Alle Abi-Checks bestanden", abi.all { (tour[it.id] ?: 0) > 0 }),
             Badge("halb", "🚐", "Halbe Tour", "Die Hälfte aller Gigs gespielt", tour.size * 2 >= Levels.all.size),
@@ -144,7 +190,8 @@ object Badges {
 }
 
 /** Spickzettel: die wichtigsten Formeln zum Nachschlagen, nach Kapiteln sortiert. */
-data class SheetCard(val emoji: String, val title: String, val color: String, val lines: List<String>)
+/** [chapters]: Kapitel der Tour, in denen genau das geübt wird; [jam]: passendes Thema der Jam-Session */
+data class SheetCard(val emoji: String, val title: String, val color: String, val lines: List<String>, val chapters: List<Int> = emptyList(), val jam: JamTopic? = null)
 
 object Sheet {
     val cards = listOf(
@@ -152,41 +199,49 @@ object Sheet {
             "Verbindungsvektor: AB⃗ = B − A (Spitze minus Fuß)",
             "Mittelpunkt: M = ½ · (A + B)",
             "Schwerpunkt Dreieck: S = ⅓ · (A + B + C)",
-            "Länge: |a⃗| = √(a₁² + a₂² + a₃²)")),
+            "Länge: |a⃗| = √(a₁² + a₂² + a₃²)"), listOf(1, 2, 11), JamTopic.PUNKTE),
         SheetCard("🔦", "Geraden", "green", listOf(
             "Parameterform: g: x⃗ = A + t · d⃗",
             "Richtungsvektor durch A und B: d⃗ = B − A",
             "Punktprobe: Punkt einsetzen – alle drei Zeilen müssen dasselbe t liefern",
-            "Spurpunkt: eine Koordinate null setzen, t ausrechnen")),
+            "Spurpunkt: eine Koordinate null setzen, t ausrechnen"), listOf(3), JamTopic.GERADEN),
         SheetCard("✨", "Lage zweier Geraden", "yellow", listOf(
             "Richtungsvektoren Vielfache? → parallel oder identisch",
             "Sonst gleichsetzen: Lösung → Schnittpunkt, Widerspruch → windschief",
-            "Abstand windschief: d = |(B − A) · n⃗| : |n⃗| mit n⃗ = d⃗₁ × d⃗₂")),
+            "Abstand windschief: d = |(B − A) · n⃗| : |n⃗| mit n⃗ = d⃗₁ × d⃗₂"), listOf(4, 8), JamTopic.SCHNITT),
         SheetCard("🔷", "Ebenen", "violet", listOf(
             "Koordinatenform: E: n₁x₁ + n₂x₂ + n₃x₃ = c",
             "Normalenvektor aus Spannvektoren: n⃗ = u⃗ × v⃗",
             "c bestimmen: einen Punkt der Ebene einsetzen",
             "Durchstoßpunkt: Gerade in E einsetzen, t ausrechnen",
-            "Schnittgerade zweier Ebenen: Richtung n⃗₁ × n⃗₂")),
+            "Schnittgerade zweier Ebenen: Richtung n⃗₁ × n⃗₂"), listOf(5), JamTopic.EBENEN),
         SheetCard("📐", "Skalarprodukt & Winkel", "orange", listOf(
             "a⃗ · b⃗ = a₁b₁ + a₂b₂ + a₃b₃",
             "senkrecht ⇔ a⃗ · b⃗ = 0",
             "Vektoren / Ebenen: cos α = |a⃗ · b⃗| : (|a⃗| · |b⃗|)",
-            "Gerade und Ebene: sin α = |n⃗ · d⃗| : (|n⃗| · |d⃗|)")),
+            "Gerade und Ebene: sin α = |n⃗ · d⃗| : (|n⃗| · |d⃗|)"), listOf(6, 7), JamTopic.WINKEL),
         SheetCard("📏", "Abstände & Spiegeln", "pink", listOf(
             "Punkt–Ebene: d = |n⃗ · p⃗ − c| : |n⃗|",
             "Lotfußpunkt auf Ebene: Lotgerade P + t · n⃗ in E einsetzen",
             "Lotfußpunkt auf Gerade: (P − A − t · d⃗) · d⃗ = 0",
-            "Spiegelpunkt: P′ = P + 2 · PF⃗")),
-        SheetCard("🪩", "Kugeln", "cyan", listOf(
+            "Spiegelpunkt: P′ = P + 2 · PF⃗"), listOf(6, 8), JamTopic.WINKEL),
+        SheetCard("🔮", "Kugeln", "cyan", listOf(
             "K: (x₁ − m₁)² + (x₂ − m₂)² + (x₃ − m₃)² = r²",
             "Gerade trifft Kugel: einsetzen → quadratische Gleichung (0, 1 oder 2 Treffer)",
             "Tangentialebene in B: n⃗ = MB⃗, dann B einsetzen",
-            "Schnittkreis: r′² = r² − d² (d = Abstand der Ebene von M)")),
+            "Schnittkreis: r′² = r² − d² (d = Abstand der Ebene von M)"), listOf(9), JamTopic.WINKEL),
         SheetCard("🎆", "Kreuzprodukt", "green", listOf(
             "a⃗ × b⃗ = (a₂b₃ − a₃b₂ | a₃b₁ − a₁b₃ | a₁b₂ − a₂b₁)",
             "steht senkrecht auf a⃗ und b⃗",
             "Parallelogramm: A = |a⃗ × b⃗|, Dreieck: die Hälfte",
-            "Pyramide (Parallelogramm-Grundfläche): V = ⅓ · |(a⃗ × b⃗) · c⃗|, Tetraeder: ⅙")),
+            "Pyramide (Parallelogramm-Grundfläche): V = ⅓ · |(a⃗ × b⃗) · c⃗|, Tetraeder: ⅙"), listOf(10)),
+        SheetCard("🛫", "Bewegung", "orange", listOf(
+            "Ort zur Zeit t: x⃗(t) = A + t · v⃗",
+            "Geschwindigkeit: |v⃗|",
+            "Treffen: beide Orte mit demselben t gleichsetzen",
+            "Kleinster Abstand: d⃗(t) · (w⃗ − v⃗) = 0"), listOf(11)),
+        SheetCard("🏺", "Rotationskörper", "violet", listOf(
+            "V = π · ∫ f(x)² dx (Rotation um die x-Achse)",
+            "Zylinder: πr²h · Kegel: ⅓πr²h · Kugel: ⁴⁄₃πr³"), listOf(12)),
     )
 }

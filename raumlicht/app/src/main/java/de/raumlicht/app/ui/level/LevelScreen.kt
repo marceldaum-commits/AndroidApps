@@ -198,7 +198,7 @@ fun StarRow(n: Int, lit: Boolean, size: Int = 20) {
 }
 
 @Composable
-private fun Stepper(label: String?, value: Int, text: String, color: Color, tag: String, modifier: Modifier, canDown: Boolean, canUp: Boolean, onStep: (Int) -> Unit) {
+internal fun Stepper(label: String?, value: Int, text: String, color: Color, tag: String, modifier: Modifier, canDown: Boolean, canUp: Boolean, onStep: (Int) -> Unit) {
     Row(modifier.height(46.dp).background(Q.Deep, RoundedCornerShape(14.dp)).border(1.dp, color.copy(alpha = 0.5f), RoundedCornerShape(14.dp)), verticalAlignment = Alignment.CenterVertically) {
         StepButton("−", color, canDown, "minus-$tag") { onStep(-1) }
         Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {

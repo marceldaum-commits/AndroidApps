@@ -216,7 +216,7 @@ internal object MoreLevels {
             "Sicherheitsabstände sind Pflicht. Kürzester Weg heißt immer: senkrecht.",
             "Punkt–Gerade: Lotfußpunkt suchen. Parallele Ebenen und windschiefe Geraden: Normalenvektor nutzen.",
             "Der Strahl zeigt dir, ob deine Länge passt."), ch8),
-        Chapter(9, "Discokugel", "Kugeln", "Großraumdisco", "🪩", "cyan", listOf(
+        Chapter(9, "Discokugel", "Kugeln", "Großraumdisco", "🔮", "cyan", listOf(
             "Eine Kugel ist alles, was vom Mittelpunkt gleich weit entfernt ist.",
             "Kugelgleichung: (x₁ − m₁)² + (x₂ − m₂)² + (x₃ − m₃)² = r².",
             "Trifft ein Laser die Kugel, gibt das eine quadratische Gleichung – mit Ein- und Austritt."), ch9),
@@ -224,5 +224,95 @@ internal object MoreLevels {
             "Das Kreuzprodukt kann mehr als Normalenvektoren.",
             "Seine Länge ist eine Fläche. Mit einem dritten Vektor wird daraus ein Volumen.",
             "Letzter Gig der Tour. Zeig, was du kannst."), ch10),
+    )
+}
+
+/** Kapitel 11–12: Bewegung mit Zeit und Analysis in 3D (Rotationskörper). */
+internal object TourThree {
+    private fun p(x: Int, y: Int, z: Int) = V3(x, y, z)
+    private fun lineText(name: String, a: V3, d: V3, param: String = "t") = listOf(Txt("$name: x⃗ = "), col(a), Txt(" + $param · "), col(d))
+
+    // ───────────────────────── 11 · Bewegung ─────────────────────────
+    private val ch11 = run {
+        val a1 = p(1, 1, 0); val v1 = p(1, 2, 1)
+        val v2 = p(2, 2, 1); val a2 = p(1, 1, 1)
+        val m1 = p(0, 0, 2); val mv = p(2, 1, 0); val m2 = p(6, 6, 5); val mw = p(0, -1, -1)
+        val ga = p(0, 2, 4); val gv = p(2, 0, -1); val hb = p(6, 2, 1); val hw = p(0, 1, 1)
+        fun two(t: Int, a: V3, v: V3, b: V3, w: V3, link: Boolean) = listOf(
+            Stage.fullLine("g", a, v, Bounds(), "cyan", "g"), Stage.fullLine("h", b, w, Bounds(), "yellow", "h"),
+            Stage.point("d1", a + v * t, "cyan", "D₁", "target"), Stage.point("d2", b + w * t, "yellow", "D₂", "target"),
+        ) + if (link) listOf(Stage.line("abstand", a + v * t, (b + w * t) - (a + v * t), 0.0, 1.0, "pink", dashed = true)) else emptyList()
+        listOf(
+            Families.point("11-1", 11, "Flugplan", "Ich starte in A und fliege jede Sekunde um v⃗ weiter. Wo bin ich nach 3 Sekunden?",
+                a1 + v1 * 3, hidden = true, home = a1,
+                given = listOf(listOf(Txt("A(1|1|0),  v⃗ = "), col(v1), Txt("  pro Sekunde"))),
+                tip = "Ort zur Zeit t: x⃗ = A + t · v⃗. Hier t = 3.",
+                way = listOf("x⃗(t) = A + t · v⃗", "x⃗(3) = (1|1|0) + 3 · (1|2|1)", "P(4|7|3)"),
+                extras = { listOf(Stage.point("A", a1, "cyan", "A"), Stage.vector("v", a1, a1 + v1, "pink", "v⃗")) }),
+            Families.scalar("11-2", 11, "Tempo", "Der Vektor v⃗ sagt, wie weit ich pro Sekunde komme. Wie schnell bin ich (Einheiten pro Sekunde)?", "v", 0..8, 3, 1,
+                tip = "Die Geschwindigkeit ist die Länge des Vektors: |v⃗| = √(v₁² + v₂² + v₃²).",
+                way = listOf("|v⃗| = √(4 + 4 + 1)", "= √9", "= 3 Einheiten pro Sekunde"),
+                formula = { a -> listOf(listOf(Txt("v⃗ = "), col(v2)), listOf(Txt("|v⃗| = "), Num(Geo.num(a), "a"))) },
+                objects = { _, _ -> listOf(Stage.point("A", a2, "cyan", "A"), Stage.vector("v", a2, a2 + v2, "pink", "v⃗"), Stage.fullLine("bahn", a2, v2, Bounds(), "cyan")) },
+                check = { a -> Families.compare(a, 3, "Die Geschwindigkeit", "3 Einheiten pro Sekunde – stimmt.") }),
+            Families.param("11-3", 11, "Flughöhe", "Die Show beginnt, wenn ich die Scheibe in Höhe 4 erreiche. Nach wie vielen Sekunden ist das?",
+                p(0, 1, 1), p(2, 1, 1), 3, 0..5, hidden = true,
+                tip = "Höhe ist die x₃-Koordinate: 1 + t · 1 = 4.",
+                way = listOf("x₃(t) = 1 + t", "1 + t = 4", "t = 3 → Ort (6|4|4)"),
+                extras = { listOf(Stage.plane("E", p(0, 0, 1), 4.0, "violet", "x₃ = 4")) }),
+            Families.scalar("11-4", 11, "Treffpunkt", "Zwei Show-Drohnen fliegen gleichzeitig los. Dreh an der Zeit: Wann sind beide am selben Ort?", "t", 0..5, 3, 0,
+                tip = "Beide Orte gleichsetzen – mit demselben t in beiden Gleichungen: 2t = 6.",
+                way = listOf("x₁: 0 + 2t = 6 → t = 3", "Probe x₂: 3 = 6 − 3 ✓, x₃: 2 = 5 − 3 ✓", "Treffpunkt (6|3|2)"), color = "yellow",
+                formula = { a -> listOf(lineText("D₁", m1, mv), lineText("D₂", m2, mw), listOf(Txt("t = "), Num(Geo.num(a), "a"))) },
+                objects = { a, _ -> two(a, m1, mv, m2, mw, false) },
+                check = { a -> val d = ((m1 + mv * a) - (m2 + mw * a)).length
+                    if (a == 3) Outcome(true, "Nach 3 Sekunden treffen sie sich in (6|3|2).") else Outcome(false, "Bei t = $a sind die Drohnen noch ${Geo.num(d)} Einheiten auseinander.") }),
+            Families.scalar("11-5", 11, "Abi-Check: Beinahe-Kollision", "Zwei Drohnen fliegen gleichzeitig. Zu welchem Zeitpunkt kommen sie sich am nächsten?", "t", 0..4, 2, 0,
+                tip = "Abstandsvektor zur Zeit t: (6|0|−3) + t · (−2|1|2). Sein Betrag ist minimal, wenn er senkrecht auf (−2|1|2) steht.", abi = true,
+                way = listOf("d⃗(t) = (6|0|−3) + t · (−2|1|2)", "d⃗(t) · (−2|1|2) = 0: −18 + 9t = 0 → t = 2", "Abstand dann |(2|2|1)| = 3"), color = "yellow",
+                formula = { a -> listOf(lineText("D₁", ga, gv), lineText("D₂", hb, hw), listOf(Txt("t = "), Num(Geo.num(a), "a"))) },
+                objects = { a, _ -> two(a, ga, gv, hb, hw, true) },
+                check = { a -> val d = ((ga + gv * a) - (hb + hw * a)).length
+                    if (a == 2) Outcome(true, "Bei t = 2 sind es nur 3 Einheiten – näher kommen sie sich nie.") else Outcome(false, "Bei t = $a beträgt der Abstand ${Geo.num(d)}. Es geht noch näher.") }),
+        )
+    }
+
+    // ───────────────────────── 12 · Rotationskörper ─────────────────────────
+    private val axis = V3(4.0, 1.0, 3.0)
+    private fun profile(from: Double, to: Double, f: (Double) -> Double) = (0..28).map { val x = from + (to - from) * it / 28; x to f(x) }
+    /** V = π · ∫ f(x)² dx. Eingestellt wird das Vielfache von π. */
+    private fun volume(id: String, title: String, mission: String, text: String, from: Int, to: Int, piTimes: Int, step: Int, tip: String, way: List<String>, abi: Boolean = false,
+                       shift: Double = 0.0, f: (Double) -> Double) =
+        Families.scalar(id, 12, title, mission, "V", 0..(piTimes / step + 4), piTimes / step, 0, tip, way, "violet", step = step, suffix = "π", abi = abi,
+            formula = { a -> listOf(listOf(Txt("f(x) = $text,  x von $from bis $to")), listOf(Txt("V = π · ∫ f(x)² dx = "), Num("${a * step}π", "a"))) },
+            objects = { _, _ -> listOf(Stage.lathe("körper", axis + V3(0.0, shift, 0.0), profile(from.toDouble(), to.toDouble(), f))) },
+            check = { a -> Families.compare(a * step, piTimes, "Das Volumen", "V = ${piTimes}π – genau so viel Licht passt hinein.") })
+
+    private val ch12 = listOf(
+        volume("12-1", "Lichtsäule", "Dreht sich die Strecke f(x) = 2 um die x-Achse, entsteht ein Zylinder. Wie groß ist sein Volumen?", "2", 0, 4, 16, 4,
+            tip = "f(x)² = 4. Das Integral von 4 über [0; 4] ist 16.", way = listOf("f(x)² = 4", "∫₀⁴ 4 dx = 16", "V = 16π")) { 2.0 },
+        volume("12-2", "Lichtkegel", "Jetzt dreht sich die Gerade f(x) = x. Es entsteht ein Kegel.", "x", 0, 3, 9, 3,
+            tip = "f(x)² = x², Stammfunktion ⅓x³. Grenzen 0 und 3 einsetzen.", way = listOf("∫₀³ x² dx = [⅓x³]₀³", "= 9", "V = 9π")) { it },
+        Families.scalar("12-3", 12, "Vase füllen", "Die Kurve f(x) = √x dreht sich zur Vase. Bis zu welcher Stelle b muss sie reichen, damit genau 8π hineinpassen?", "b", 1..6, 4, 1,
+            tip = "f(x)² = x. V(b) = π · ∫₀ᵇ x dx = π · ½b². Das soll 8π sein.",
+            way = listOf("V(b) = π · [½x²]₀ᵇ = ½b² · π", "½b² = 8 → b² = 16", "b = 4"), color = "violet",
+            formula = { a -> listOf(listOf(Txt("f(x) = √x,  x von 0 bis b")), listOf(Txt("V = π · ∫ f(x)² dx = 8π,   b = "), Num(Geo.num(a), "a"))) },
+            objects = { a, _ -> listOf(Stage.lathe("körper", axis, profile(0.0, a.toDouble()) { kotlin.math.sqrt(it) })) },
+            check = { a -> Families.compare(a, 4, "Die Grenze b", "Bei b = 4 fasst die Vase genau 8π.") }),
+        volume("12-4", "Discokugel, berechnet", "Der Halbkreis f(x) = √(9 − x²) dreht sich zur Kugel. Rechne ihr Volumen mit dem Integral aus.", "√(9 − x²)", -3, 3, 36, 6,
+            tip = "f(x)² = 9 − x². Stammfunktion 9x − ⅓x³, Grenzen −3 und 3.", way = listOf("∫ (9 − x²) dx = [9x − ⅓x³] von −3 bis 3", "= 18 − (−18) = 36", "V = 36π (passt zu ⁴⁄₃ · π · 3³)"), shift = 3.0) { kotlin.math.sqrt(maxOf(0.0, 9 - it * it)) },
+        volume("12-5", "Abi-Check: Lichttrichter", "Die Kurve f(x) = √(x + 1) rotiert um die x-Achse. Welches Volumen hat der Trichter zwischen 0 und 4?", "√(x + 1)", 0, 4, 12, 2,
+            tip = "f(x)² = x + 1. Stammfunktion ½x² + x.", way = listOf("∫₀⁴ (x + 1) dx = [½x² + x]₀⁴", "= 8 + 4 = 12", "V = 12π"), abi = true) { kotlin.math.sqrt(it + 1) },
+    )
+
+    val chapters = listOf(
+        Chapter(11, "Flugplan", "Bewegung mit Zeit", "Flugfeld", "🛫", "orange", listOf(
+            "Jetzt kommt die Zeit dazu: Der Parameter t sind Sekunden.",
+            "Der Richtungsvektor ist die Geschwindigkeit – seine Länge das Tempo.",
+            "Achtung, Abi-Klassiker: Bahnen können sich kreuzen, ohne dass die Drohnen sich treffen."), ch11),
+        Chapter(12, "Lichtskulpturen", "Analysis in 3D: Rotationskörper", "Lichtkunst-Museum", "🏺", "violet", listOf(
+            "Bonus-Tour: Analysis zum Anfassen.",
+            "Dreht sich eine Kurve um die x-Achse, entsteht ein Körper. Sein Volumen: V = π · ∫ f(x)² dx.",
+            "Du stellst das Vielfache von π ein."), ch12),
     )
 }

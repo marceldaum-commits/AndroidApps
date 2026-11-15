@@ -70,6 +70,9 @@ object Stage {
         val pts = (0..40).map { val t = 2 * Math.PI * it / 40; m + (u * kotlin.math.cos(t) + w * kotlin.math.sin(t)) * radius }
         return edges(id, pts.zipWithNext(), color)
     }
+    /** Rotationskörper: Profil (x, Radius) dreht sich um eine Achse parallel zur x₂-Achse durch [origin] */
+    fun lathe(id: String, origin: V3, profile: List<Pair<Double, Double>>, color: String = "violet") =
+        Obj(id, "lathe", p = origin.list, corners = profile.map { listOf(it.first, it.second, 0.0) }, color = color)
     fun drone(p: V3, mood: String = "idle") = Obj("lux", "drone", p = p.list, mood = mood)
     fun handle(id: String, p: V3, color: String) = Obj(id, "handle", p = p.list, color = color)
 }

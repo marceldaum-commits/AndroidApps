@@ -10,7 +10,7 @@ class LevelsTest {
     @Test fun idsAreUniqueAndOrdered() {
         assertEquals(Levels.all.size, Levels.all.map { it.id }.toSet().size)
         Levels.chapters.forEach { c -> c.levels.forEachIndexed { i, l -> assertEquals("${c.number}-${i + 1}", l.id); assertEquals(c.number, l.chapter) } }
-        assertEquals(55, Levels.all.size)
+        assertEquals(65, Levels.all.size)
     }
 
     @Test fun everyLevelIsSolvableWithItsSolution() = Levels.all.forEach { l ->

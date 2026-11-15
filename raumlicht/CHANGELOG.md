@@ -1,15 +1,33 @@
 # Änderungen
 
-## 0.2.1 – Aufgeräumt
+Jede Version steht hier mit ihrem Datum.
+
+## 0.3.0 – Backstage (15.11.2026)
+- **🎓 Abi-Simulation:** drei zusammenhängende Aufgaben wie im Abitur (Festivalzelt, Laser & Leinwand, Drohnen-Show), je vier Teilaufgaben
+  mit Bewertungseinheiten. Volle Punkte gibt es nur beim ersten Versuch, am Ende steht eine Auswertung.
+- **2 neue Kapitel, 10 neue Gigs** (jetzt 65 in 12 Kapiteln):
+  - 🛫 **Bewegung** – der Parameter wird zur Zeit: Ort nach t Sekunden, Tempo, Treffpunkt, Beinahe-Kollision. Die Drohnen wandern mit, wenn man an der Zeit dreht.
+  - 🏺 **Rotationskörper** – Analysis in 3D: Eine Kurve dreht sich zur Vase, zum Kegel, zur Kugel. Volumen mit dem Integral.
+- **🧭 Lage-Check:** acht schnelle Runden „parallel, identisch, schneidend oder windschief?“ – erst entscheiden, dann zeigt die Bühne die Geraden.
+- **⚔️ Duell:** fünf Aufgaben als kurzer Code zum Verschicken. Wer den Code eingibt, bekommt genau dieselben Aufgaben.
+- **🔁 Zweite Chance:** spielt noch einmal die Gigs, die nicht beim ersten Versuch geklappt haben.
+- **🎇 Show-Baukasten:** eigene Lichtshow aus Lasern, Scheiben und Kugeln bauen – mit Formeln statt mit dem Finger – starten und als Code teilen.
+- **🎨 Lux-Werkstatt:** sechs Leuchtfarben für Lux, freigeschaltet durch Sterne.
+- **🎧 Jam-Session** kann jetzt auch Winkel, Abstände, Lotfußpunkte und Kugelradien.
+- **📓 Spickzettel:** Von jeder Formelkarte geht es direkt in das passende Kapitel oder in die Jam-Session. Neue Karten für Bewegung und Rotationskörper.
+- Die Startseite bleibt aufgeräumt: Alles Weitere liegt hinter „Backstage“.
+- In den Einstellungen steht jetzt das Datum der Version.
+
+## 0.2.1 – Aufgeräumt (15.11.2026)
 - **Startseite übersichtlicher:** Die Kapitel sind jetzt eine kompakte Liste mit Fortschrittsbalken. Aufgeklappt ist nur das Kapitel, in dem es weitergeht –
   die anderen öffnen sich beim Antippen.
 - Tagesgig, Jam-Session, Spickzettel und Abzeichen stehen als schmale Leiste direkt unter der Bühne.
 
-## 0.2.0 – Die große Tour
+## 0.2.0 – Die große Tour (15.11.2026)
 - **4 neue Kapitel, 21 neue Gigs** (jetzt 55 in 10 Kapiteln):
   - 📐 **Winkel** – zwischen Vektoren, Gerade und Ebene, zwei Ebenen. Der Winkelbogen leuchtet in der Bühne.
   - 📏 **Abstände** – Lot auf eine Gerade, parallele Ebenen, windschiefe Geraden, nächster Punkt einer Flugbahn.
-  - 🪩 **Kugeln** – eine Discokugel aus Glas in 3D: Radius, Mittelpunkt, Laser trifft Kugel, Tangentialebene, Schnittkreis.
+  - 🔮 **Kugeln** – eine Discokugel aus Glas in 3D: Radius, Mittelpunkt, Laser trifft Kugel, Tangentialebene, Schnittkreis.
   - 🎆 **Kreuzprodukt** – Flächen von Lichtsegeln, Volumen von Zelten, Schnittgerade zweier Ebenen.
 - **🎧 Jam-Session:** endlos neue Aufgaben mit immer anderen Zahlen – nach Thema oder bunt gemischt wie in der Klausur.
   Wer beim ersten Versuch trifft, baut eine Serie auf.
@@ -18,21 +36,21 @@
 - **🏅 Abzeichen:** 14 Auszeichnungen für Können – nicht fürs bloße Wiederkommen.
 - Zahlen-Aufgaben (Winkel, Abstand, Fläche, Volumen) sagen nach einem Fehlversuch, ob das Ergebnis größer oder kleiner ist.
 
-## 0.1.3 – Bühne sichtbar
+## 0.1.3 – Bühne sichtbar (15.11.2026)
 - **Behoben:** Die 3D-Bühne blieb dunkel, weil sie intern keine Höhe bekam. Jetzt füllt sie ihre Fläche.
 - Hat die Bühne trotzdem einmal keine Größe, meldet sie das.
 
-## 0.1.2 – Fehlersuche Bühne
+## 0.1.2 – Fehlersuche Bühne (15.11.2026)
 - Die 3D-Bühne wird im Level nicht mehr mit runden Ecken beschnitten – auf manchen Handys blieb sie dadurch leer.
 - Die Bühne prüft sich selbst: Bleibt das Bild einfarbig, schaltet sie auf einfaches Zeichnen um und meldet sonst die Ursache.
 - Dreimal oben rechts auf „drehen · zoomen“ tippen zeigt technische Angaben zur Bühne (für die Fehlersuche).
 
-## 0.1.1 – Bühne an
+## 0.1.1 – Bühne an (15.11.2026)
 - **Behoben:** Auf manchen Handys blieb die 3D-Bühne schwarz. Ursache war ein Fehler in der Licht-Berechnung, den nur echte Handy-Grafikchips zeigen.
 - Kann ein Gerät den Leucht-Effekt nicht darstellen, zeichnet die Bühne jetzt automatisch ohne ihn – sichtbar bleibt sie immer.
 - Falls die Bühne doch einmal nicht startet, steht jetzt eine Meldung da statt einer schwarzen Fläche.
 
-## 0.1.0 – Erste Tour
+## 0.1.0 – Erste Tour (15.11.2026)
 - **Neu: Raumlicht** – analytische Geometrie der Oberstufe als Lichtshow in echtem 3D. Du bist Lichtdesigner:in:
   Laser sind Geraden, Glasscheiben sind Ebenen, die Drohne Lux fliegt deine Vektoren.
 - 34 Gigs in 6 Kapiteln: Punkte im Raum, Vektoren, Geraden, Lagebeziehungen, Ebenen, Skalarprodukt/Abstand/Spiegelung.

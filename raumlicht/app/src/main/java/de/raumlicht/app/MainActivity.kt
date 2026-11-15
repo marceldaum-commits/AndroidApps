@@ -31,7 +31,8 @@ import de.raumlicht.core.model.Daily
 import de.raumlicht.core.model.Gen
 import de.raumlicht.core.model.JamTopic
 import de.raumlicht.core.model.Sheet
-import de.raumlicht.app.ui.home.BadgesScreen
+import de.raumlicht.app.ui.home.*
+import de.raumlicht.core.model.*
 import de.raumlicht.app.ui.home.JamPicker
 import de.raumlicht.app.ui.home.SheetScreen
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -46,6 +47,15 @@ object Routes {
     const val JAM = "jam/{topic}"
     const val SHEET = "spickzettel"
     const val BADGES = "abzeichen"
+    const val BACKSTAGE = "backstage"
+    const val EXAMS = "abi"
+    const val EXAM = "abi/{id}"
+    const val LAGE = "lage"
+    const val DUEL = "duell"
+    const val TRAINING = "zweite-chance"
+    const val WORKSHOP = "werkstatt"
+    const val BUILDER = "baukasten"
+    fun exam(id: String) = "abi/$id"
     fun jam(topic: String) = "jam/$topic"
     fun level(id: String) = "level/$id"
 }
@@ -94,18 +104,23 @@ class MainActivity : ComponentActivity() {
         // Musik passend zum Bildschirm: ruhig im Tourplan, treibend auf der Bühne
         val entry by nav.currentBackStackEntryAsState()
         val route = entry?.destination?.route
-        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route == Routes.LEVEL || route == Routes.JAM || route == Routes.DAILY) MusicMood.FLIGHT else MusicMood.MENU) }
+        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route in setOf(Routes.LEVEL, Routes.JAM, Routes.DAILY, Routes.EXAM, Routes.TRAINING, Routes.DUEL, Routes.LAGE)) MusicMood.FLIGHT else MusicMood.MENU) }
+        val skin by vm.settings.skin.collectAsStateWithLifecycle()
+        val exams by vm.settings.exams.collectAsStateWithLifecycle()
+        val lageBest by vm.settings.lageBest.collectAsStateWithLifecycle()
         val stars by vm.stars.collectAsStateWithLifecycle()
         val update by vm.availableUpdate.collectAsStateWithLifecycle()
         val jamBest by vm.settings.jamBest.collectAsStateWithLifecycle()
         val badges = remember(stars, jamBest) { Badges.all(stars, jamBest) }
+        val tourStars = remember(stars) { Levels.all.sumOf { stars[it.id] ?: 0 } }
 
+        CompositionLocalProvider(de.raumlicht.app.ui.stage.LocalLuxSkin provides skin) {
         NavHost(nav, Routes.HOME) {
             composable(Routes.HOME) {
                 HomeScreen(Levels.chapters, stars, { nav.goOnce(Routes.level(it)) }, { nav.goOnce(Routes.SETTINGS) },
                     updateVersion = update?.version, onUpdate = { nav.goOnce(Routes.SETTINGS) },
-                    dailyDone = (stars[Daily.id(vm.today())] ?: 0) > 0, jamBest = jamBest, badges = badges.count { it.earned }, badgeCount = badges.size,
-                    onDaily = { nav.goOnce(Routes.DAILY) }, onJam = { nav.goOnce(Routes.JAM_HOME) }, onSheet = { nav.goOnce(Routes.SHEET) }, onBadges = { nav.goOnce(Routes.BADGES) })
+                    dailyDone = (stars[Daily.id(vm.today())] ?: 0) > 0, jamBest = jamBest,
+                    onDaily = { nav.goOnce(Routes.DAILY) }, onJam = { nav.goOnce(Routes.JAM_HOME) }, onExam = { nav.goOnce(Routes.EXAMS) }, onMore = { nav.goOnce(Routes.BACKSTAGE) })
             }
             composable(Routes.LEVEL) { e ->
                 val level = Levels.byId(e.arguments?.getString("id").orEmpty())
@@ -139,7 +154,40 @@ class MainActivity : ComponentActivity() {
                     onNext = { n++ }, onBack = { nav.popSafe() },
                     caption = "${topic.emoji} Jam · ${level.title} · Nr. ${n + 1}", badge = if (streak > 0) "🔥 $streak" else null)
             }
-            composable(Routes.SHEET) { SheetScreen(Sheet.cards) { nav.popSafe() } }
+            composable(Routes.SHEET) {
+                SheetScreen(Sheet.cards,
+                    // direkt in den ersten noch offenen Gig des Kapitels
+                    onChapter = { n -> Levels.chapters.firstOrNull { it.number == n }?.let { c -> nav.goOnce(Routes.level((c.levels.firstOrNull { (stars[it.id] ?: 0) == 0 } ?: c.levels.first()).id)) } },
+                    onJam = { nav.goOnce(Routes.jam(it.name)) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.BACKSTAGE) {
+                val weak = remember(stars) { Training.levels(stars).size }
+                BackstageScreen(listOf(
+                    BackstageEntry("🧭", "Lage-Check", "parallel, identisch, schneidend, windschief? · Rekord $lageBest/${LageCheck.ROUNDS}", Q.Yellow) { nav.goOnce(Routes.LAGE) },
+                    BackstageEntry("⚔️", "Duell", "5 Aufgaben per Code an Freunde schicken", Q.Pink) { nav.goOnce(Routes.DUEL) },
+                    BackstageEntry("🔁", "Zweite Chance", if (weak == 0) "nichts offen" else "$weak Gigs, die nicht beim ersten Versuch saßen", Q.Orange) { nav.goOnce(Routes.TRAINING) },
+                    BackstageEntry("🎇", "Show-Baukasten", "eigene Lichtshow aus Formeln bauen und teilen", Q.Violet) { nav.goOnce(Routes.BUILDER) },
+                    BackstageEntry("🎨", "Lux-Werkstatt", "${Skins.unlocked(tourStars).size} von ${Skins.all.size} Farben frei", Q.Cyan) { nav.goOnce(Routes.WORKSHOP) },
+                    BackstageEntry("📓", "Spickzettel", "alle Formeln – mit Sprung zu den Aufgaben", Q.Green) { nav.goOnce(Routes.SHEET) },
+                    BackstageEntry("🏅", "Abzeichen", "${badges.count { it.earned }} von ${badges.size} verdient", Q.Yellow) { nav.goOnce(Routes.BADGES) },
+                )) { nav.popSafe() }
+            }
+            composable(Routes.EXAMS) { ExamPicker(Exams.all, exams, { nav.goOnce(Routes.exam(it.id)) }) { nav.popSafe() } }
+            composable(Routes.EXAM) { e ->
+                val exam = Exams.byId(e.arguments?.getString("id").orEmpty())
+                if (exam == null) { LaunchedEffect(Unit) { nav.popSafe() }; return@composable }
+                ExamPlay(exam, onFinished = { vm.settings.recordExam(exam.id, it) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.LAGE) { LageScreen(lageBest, vm.settings::recordLage, { nav.popSafe() }) }
+            composable(Routes.DUEL) { DuelScreen({ nav.popSafe() }) }
+            composable(Routes.TRAINING) {
+                val list = remember { Training.levels(vm.stars.value) }
+                TrainingPlay(list, { l, s, a -> vm.record(l.id, s, a) }) { nav.popSafe() }
+            }
+            composable(Routes.WORKSHOP) { WorkshopScreen(tourStars, skin, vm.settings::setSkin) { nav.popSafe() } }
+            composable(Routes.BUILDER) {
+                BuilderScreen(remember { Show.decode(vm.settings.show) ?: Show.demo }, { vm.settings.show = Show.encode(it) }, { nav.popSafe() })
+            }
             composable(Routes.BADGES) { BadgesScreen(badges) { nav.popSafe() } }
             composable(Routes.SETTINGS) {
                 val sound by vm.settings.sound.collectAsStateWithLifecycle()
@@ -149,6 +197,7 @@ class MainActivity : ComponentActivity() {
                 SettingsScreen(music, vm.settings::setMusic, sound, vm.settings::setSound, vibration, vm.settings::setVibration, auto, vm.settings::setAutoUpdate,
                     BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, { nav.popSafe() })
             }
+        }
         }
     }
 }

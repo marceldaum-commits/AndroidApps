@@ -219,6 +219,7 @@ function dashed(c, opacity = 0.7) {
 }
 
 const makers = {};
+let luxSkin = 'pink';   // Farbe von Lux' Leuchtband (Werkstatt)
 
 // Punkt: leuchtende Kugel, Lot auf den Boden, optional Koordinaten-Quader
 makers.point = (s) => {
@@ -411,6 +412,49 @@ makers.sphere = (s) => {
   };
 };
 
+// Rotationskörper: ein Profil (x, Radius) dreht sich um eine Achse parallel zur x₂-Achse
+makers.lathe = (s) => {
+  const g = new THREE.Group(), c = s.color ?? 'violet';
+  const mat = new THREE.ShaderMaterial({
+    transparent: true, depthWrite: false, side: THREE.DoubleSide,
+    uniforms: { c: { value: col(c) }, t: { value: 0 } },
+    vertexShader: 'varying vec3 n, v, lp; void main(){ lp = position; vec4 w = modelMatrix*vec4(position,1.); n = normalize(mat3(modelMatrix)*normal); v = normalize(cameraPosition-w.xyz); gl_Position = projectionMatrix*viewMatrix*w; }',
+    fragmentShader: `varying vec3 n, v, lp; uniform vec3 c; uniform float t;
+      void main(){ float fr = pow(clamp(1.-abs(dot(normalize(n), normalize(v))), 0., 1.), 2.0);
+        float ring = 1.0 - smoothstep(.03, .08, abs(fract(lp.x*2. - t*0.15) - .5));
+        float rib = 1.0 - smoothstep(.02, .06, abs(fract(atan(lp.z, lp.y)*1.9099) - .5));
+        gl_FragColor = vec4(c*(0.16 + fr*1.5 + ring*0.5 + rib*0.25), 0.14 + fr*0.5 + ring*0.18 + rib*0.08); }`,
+  });
+  const body = new THREE.Mesh(new THREE.BufferGeometry(), mat); body.renderOrder = 4;
+  const curve = glowRodChain(c);
+  const axis = dashed('white', 0.5);
+  g.add(body, curve.g, axis);
+  let key = '';
+  return {
+    g,
+    update(n) {
+      const k = JSON.stringify(n.corners) + n.p; if (k === key) return; key = k;
+      const pts = n.corners.map((q) => new THREE.Vector2(Math.max(q[1], 0.001), q[0]));
+      const geo = new THREE.LatheGeometry(pts, 56); geo.rotateZ(-Math.PI / 2);
+      body.geometry.dispose(); body.geometry = geo;
+      const o = V(n.p); body.position.copy(o);
+      // leuchtende Kurve f(x) über der Achse und die Drehachse
+      curve.set(n.corners.map((q) => o.clone().add(new THREE.Vector3(q[0], q[1], 0))));
+      const x0 = n.corners[0][0], x1 = n.corners[n.corners.length - 1][0];
+      axis.set(o.clone().add(new THREE.Vector3(x0 - 0.8, 0, 0)), o.clone().add(new THREE.Vector3(x1 + 0.8, 0, 0)));
+    },
+    tick(dt, t) { mat.uniforms.t.value = t; },
+  };
+};
+// Leuchtender Linienzug (für Kurven)
+function glowRodChain(c) {
+  const g = new THREE.Group(); let rods = [];
+  return { g, set(points) {
+    while (rods.length < points.length - 1) { const r = glowRod(c, 0.028, 2.6); rods.push(r); g.add(r); }
+    rods.forEach((r, i) => { r.visible = i < points.length - 1; if (r.visible) r.set(points[i], points[i + 1]); });
+  } };
+}
+
 // Lux, die Lichtdrohne
 makers.drone = (s) => {
   const g = new THREE.Group(), body = new THREE.Group(); g.add(body); body.scale.setScalar(1.75);
@@ -421,7 +465,7 @@ makers.drone = (s) => {
   visor.rotation.x = Math.PI / 2; visor.position.set(0, 0.015, 0.105); visor.scale.set(1.02, 1, 0.9);
   const eyeM = new THREE.MeshBasicMaterial({ color: hdr('cyan', 3.2) });
   const eyes = [-1, 1].map((k) => { const e = new THREE.Mesh(new THREE.SphereGeometry(0.036, 16, 12), eyeM); e.position.set(k * 0.07, 0.035, 0.292); e.scale.set(1, 1.5, 0.45); return e; });
-  const band = new THREE.Mesh(new THREE.TorusGeometry(0.262, 0.016, 12, 64), new THREE.MeshBasicMaterial({ color: hdr('pink', 2.4) })); band.rotation.x = Math.PI / 2; band.position.y = -0.03;
+  const band = new THREE.Mesh(new THREE.TorusGeometry(0.262, 0.016, 12, 64), new THREE.MeshBasicMaterial({ color: hdr(luxSkin, 2.4) })); band.rotation.x = Math.PI / 2; band.position.y = -0.03;
   body.add(hull, visor, ...eyes, band);
   const rotors = [];
   for (let i = 0; i < 4; i++) {
@@ -439,7 +483,7 @@ makers.drone = (s) => {
   const drop = dashed('cyan', 0.35), foot = glowSprite('cyan', 1.2, 0.3); foot.material.depthTest = false; g.add(drop, foot);
   const cur = V(s.p), vel = new THREE.Vector3(); let tgt = cur.clone(), mood = 'idle', lab = null, labText = null;
   return {
-    g, pos: cur,
+    g, pos: cur, skin(c) { band.material.color.copy(hdr(c, 2.4)); },
     update(n) { tgt = V(n.p); mood = n.mood ?? 'idle'; eyeM.color.copy(hdr(mood === 'sad' ? 'orange' : mood === 'happy' ? 'green' : 'cyan', 3.2));
       if (n.label !== labText) { if (lab) g.remove(lab); lab = n.label ? label(n.label, hex('cyan')) : null; if (lab) g.add(lab); labText = n.label; } },
     tick(dt, t) {
@@ -706,6 +750,7 @@ window.RL = {
   setState: (s) => setState(typeof s === 'string' ? JSON.parse(s) : s),
   fire: (s) => fire(typeof s === 'string' ? JSON.parse(s) : s),
   burst: (p, c) => burst(p, c), party, setCamera,
+  skin: (c) => { luxSkin = c; for (const o of objects.values()) if (o.skin) o.skin(c); },
   pause: () => { paused = true; }, resume: () => { if (paused) { paused = false; clock.getDelta(); frame(); } },
   // Für Bildschirmfotos: Zeit von Hand vorspulen
   snapshot: () => { step(0); return canvas.toDataURL('image/png'); },

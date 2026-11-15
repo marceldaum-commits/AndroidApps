@@ -38,6 +38,33 @@ class Settings(ctx: Context) {
         return true
     }
 
+    /** Lage-Check: beste Runde (richtige von 8) */
+    private val _lageBest = MutableStateFlow(prefs.getInt("lageBest", 0))
+    val lageBest: StateFlow<Int> = _lageBest.asStateFlow()
+    fun recordLage(score: Int): Boolean {
+        if (score <= _lageBest.value) return false
+        prefs.edit().putInt("lageBest", score).apply(); _lageBest.value = score
+        return true
+    }
+
+    /** Abi-Simulation: beste Punktzahl je Aufgabe */
+    private val _exams = MutableStateFlow(prefs.all.filterKeys { it.startsWith("exam_") }.mapKeys { it.key.removePrefix("exam_") }.mapValues { (it.value as? Int) ?: 0 })
+    val exams: StateFlow<Map<String, Int>> = _exams.asStateFlow()
+    fun recordExam(id: String, points: Int) {
+        if (points <= (_exams.value[id] ?: 0)) return
+        prefs.edit().putInt("exam_$id", points).apply(); _exams.value = _exams.value + (id to points)
+    }
+
+    /** Werkstatt: Farbe von Lux */
+    private val _skin = MutableStateFlow(prefs.getString("skin", "pink") ?: "pink")
+    val skin: StateFlow<String> = _skin.asStateFlow()
+    fun setSkin(c: String) { prefs.edit().putString("skin", c).apply(); _skin.value = c }
+
+    /** Baukasten: die zuletzt gebaute Show als Code */
+    var show: String
+        get() = prefs.getString("show", "") ?: ""
+        set(v) = prefs.edit().putString("show", v).apply()
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

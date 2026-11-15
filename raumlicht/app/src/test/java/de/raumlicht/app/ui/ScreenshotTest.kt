@@ -64,7 +64,7 @@ class ScreenshotTest {
 
     private val someStars = Levels.all.take(8).mapIndexed { i, l -> l.id to (3 - i % 3 % 2) }.toMap()
 
-    @Test fun home() = shot("01_start", "start") { HomeScreen(Levels.chapters, someStars, {}, {}, jamBest = 7, badges = 3, badgeCount = 14) }
+    @Test fun home() = shot("01_start", "start") { HomeScreen(Levels.chapters, someStars, {}, {}, jamBest = 7) }
     @Test fun intro() = shot("02_lux_erklaert", "start", prepare = { it.onNodeWithText("Weiter ›").performClick() }) { IntroOverlay(Levels.chapters[0]) {} }
     @Test fun point() = level("03_punkt", "1-2", values = mapOf("P" to listOf(2, 3, 0)))
     @Test fun pointMiss() = level("04_daneben", "1-2", values = mapOf("P" to listOf(2, 3, 0)), go = true)
@@ -96,7 +96,31 @@ class ScreenshotTest {
         LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Tagesgig", l.title, "Tagesgig", "📅", "orange", emptyList(), emptyList()), false, {}, { _, _ -> }, null, {},
             caption = "📅 Tagesgig · ${l.title}", doneLabel = "Fertig für heute ✓")
     }
-    @Test fun sheet() = shot("26_spickzettel", "start") { de.raumlicht.app.ui.home.SheetScreen(de.raumlicht.core.model.Sheet.cards) {} }
+    @Test fun sheet() = shot("26_spickzettel", "start") { de.raumlicht.app.ui.home.SheetScreen(de.raumlicht.core.model.Sheet.cards, onBack = {}) }
+    @Test fun motion() = level("28_bewegung", "11-5", values = mapOf("a" to listOf(1)))
+    @Test fun vase() = level("29_rotationskoerper", "12-3", values = mapOf("a" to listOf(3)))
+    @Test fun backstage() = shot("30_backstage", "start") {
+        de.raumlicht.app.ui.home.BackstageScreen(listOf(
+            de.raumlicht.app.ui.home.BackstageEntry("🧭", "Lage-Check", "parallel, identisch, schneidend, windschief? · Rekord 6/8", Q.Yellow) {},
+            de.raumlicht.app.ui.home.BackstageEntry("⚔️", "Duell", "5 Aufgaben per Code an Freunde schicken", Q.Pink) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🔁", "Zweite Chance", "4 Gigs, die nicht beim ersten Versuch saßen", Q.Orange) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🎇", "Show-Baukasten", "eigene Lichtshow aus Formeln bauen und teilen", Q.Violet) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🎨", "Lux-Werkstatt", "3 von 6 Farben frei", Q.Cyan) {},
+            de.raumlicht.app.ui.home.BackstageEntry("📓", "Spickzettel", "alle Formeln – mit Sprung zu den Aufgaben", Q.Green) {},
+            de.raumlicht.app.ui.home.BackstageEntry("🏅", "Abzeichen", "9 von 14 verdient", Q.Yellow) {})) {}
+    }
+    @Test fun examPicker() = shot("31_abi_simulation", "start") { de.raumlicht.app.ui.home.ExamPicker(de.raumlicht.core.model.Exams.all, mapOf("zelt" to 10), {}) {} }
+    @Test fun examPart() = shot("32_abi_teilaufgabe", "abi") {
+        val e = de.raumlicht.core.model.Exams.all[0]; val part = e.parts[1]
+        LevelScreen(part.level, de.raumlicht.core.model.Chapter(0, e.title, e.title, "Abi-Simulation", "🎓", "orange", emptyList(), emptyList()), false, {}, { _, _ -> }, {}, {},
+            mapOf("n" to listOf(0, 3, -2), "c" to listOf(3)), caption = "🎓 ${e.title} · Teil b) · 4 BE", badge = "2 BE")
+    }
+    @Test fun lage() = shot("33_lage_check", "lage", prepare = { it.onNodeWithTag("lage-SKEW").performClick() }) {
+        de.raumlicht.app.ui.home.LageScreen(5, { false }, {}, session = 0)
+    }
+    @Test fun duel() = shot("34_duell", "start") { de.raumlicht.app.ui.home.DuelScreen({}, incoming = de.raumlicht.core.model.Duel(de.raumlicht.core.model.JamTopic.MIX, 4711).code) }
+    @Test fun workshop() = shot("35_lux_werkstatt", "start") { de.raumlicht.app.ui.home.WorkshopScreen(42, "green", {}) {} }
+    @Test fun builder() = shot("36_show_baukasten", "baukasten") { de.raumlicht.app.ui.home.BuilderScreen(de.raumlicht.core.model.Show.demo, {}, {}) }
     @Test fun badges() = shot("27_abzeichen", "start") {
         de.raumlicht.app.ui.home.BadgesScreen(de.raumlicht.core.model.Badges.all(Levels.all.take(30).associate { it.id to 3 } + mapOf("tag-1" to 3, "tag-2" to 2, "tag-3" to 3), 6)) {}
     }

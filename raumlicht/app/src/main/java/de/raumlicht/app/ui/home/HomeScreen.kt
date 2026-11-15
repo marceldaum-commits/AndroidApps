@@ -41,8 +41,8 @@ import kotlinx.coroutines.delay
 fun HomeScreen(
     chapters: List<Chapter>, stars: Map<String, Int>, onLevel: (String) -> Unit, onSettings: () -> Unit,
     updateVersion: String? = null, onUpdate: () -> Unit = {},
-    dailyDone: Boolean = false, jamBest: Int = 0, badges: Int = 0, badgeCount: Int = 0,
-    onDaily: () -> Unit = {}, onJam: () -> Unit = {}, onSheet: () -> Unit = {}, onBadges: () -> Unit = {},
+    dailyDone: Boolean = false, jamBest: Int = 0,
+    onDaily: () -> Unit = {}, onJam: () -> Unit = {}, onExam: () -> Unit = {}, onMore: () -> Unit = {},
     controller: StageController = remember { StageController() },
 ) {
     val total = chapters.sumOf { c -> c.levels.sumOf { stars[it.id] ?: 0 } }; val max = chapters.sumOf { it.levels.size } * 3
@@ -71,7 +71,7 @@ fun HomeScreen(
             }
         }
         if (updateVersion != null) item { de.raumlicht.app.ui.settings.UpdateBanner(updateVersion, onUpdate) }
-        item { ModeTiles(dailyDone, jamBest, badges, badgeCount, onDaily, onJam, onSheet, onBadges) }
+        item { ModeTiles(dailyDone, jamBest, onDaily, onJam, onExam, onMore) }
         item { Text("TOUR", Modifier.padding(start = 18.dp, top = 12.dp, bottom = 2.dp), color = Q.Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 2.sp) }
         itemsIndexed(chapters) { _, c -> ChapterCard(c, stars, next?.id, open == c.number, { open = if (open == c.number) -1 else c.number }, onLevel) }
         item {

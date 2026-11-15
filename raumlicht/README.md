@@ -4,7 +4,8 @@ Du bist Lichtdesigner:in. Laser sind Geraden, Glasscheiben und Leinwände sind E
 Die Bühne ist echtes 3D: drehen, zoomen, Punkte und Vektoren direkt im Raum ziehen. Das Rechnen ist die Spielhandlung selbst –
 man sieht nur den Anfang eines Strahls, den Rest verrät die Rechnung (Recherche: `../docs/RECHERCHE.md`).
 
-**55 Gigs in 10 Kapiteln**, jedes endet mit einem Abi-Check. Dazu Jam-Session (endlos erzeugte Aufgaben), Tagesgig, Spickzettel und Abzeichen:
+**65 Gigs in 12 Kapiteln**, jedes endet mit einem Abi-Check. Dazu Abi-Simulation, Jam-Session (endlos erzeugte Aufgaben), Tagesgig, Lage-Check, Duell,
+Zweite Chance, Show-Baukasten, Lux-Werkstatt, Spickzettel und Abzeichen:
 
 | Kapitel | Thema | Spielarten |
 |---|---|---|
@@ -18,8 +19,15 @@ man sieht nur den Anfang eines Strahls, den Rest verrät die Rechnung (Recherche
 | 8 Auf Abstand | Abstände | Lotfußpunkt auf Gerade, Punkt–Gerade, parallele Ebenen, windschiefe Geraden |
 | 9 Discokugel | Kugeln | Radius, Mittelpunkt, Gerade trifft Kugel, Tangentialebene, Schnittkreis, Berührung |
 | 10 Zugabe | Kreuzprodukt | Parallelogramm- und Dreiecksfläche, Pyramidenvolumen, Schnittgerade |
+| 11 Flugplan | Bewegung mit Zeit | Ort nach t Sekunden, Tempo, Treffpunkt, kleinster Abstand zweier Drohnen |
+| 12 Lichtskulpturen | Analysis in 3D | Rotationskörper: Zylinder, Kegel, Vase, Kugel, Trichter (V = π·∫f²) |
 
 **Weitere Spielarten**
+- 🎓 **Abi-Simulation** – drei zusammenhängende Aufgaben mit je vier Teilaufgaben und Bewertungseinheiten (`Exams`).
+- 🧭 **Lage-Check** – acht Runden Lagebeziehung zweier Geraden erkennen; die Bühne zeigt die Geraden erst nach der Antwort.
+- ⚔️ **Duell** – Code wie `RL-4A1B2X` (Thema + Seed + Prüfziffer) steht für dieselben fünf Aufgaben, ohne Server.
+- 🔁 **Zweite Chance** – alle Gigs mit 1–2 Sternen noch einmal. 🎨 **Lux-Werkstatt** – Leuchtfarben durch Sterne.
+- 🎇 **Show-Baukasten** – Laser (Stütz- und Richtungsvektor), Scheiben (Koordinatenform) und Kugeln frei setzen; Code `RLS-…` zum Teilen.
 - 🎧 **Jam-Session** – `Gen` erzeugt aus einem Seed Aufgaben mit ganzzahliger Lösung (Mittelpunkt, Vektor, Zielen, Parameter, Spurpunkt,
   Schnittpunkt, Durchstoßpunkt). Nach Thema oder gemischt; eine Serie zählt Treffer beim ersten Versuch.
 - 📅 **Tagesgig** – jeden Tag eine Aufgabe (Themen wechseln reihum), für drei Jahre im Test auf Lösbarkeit geprüft.
@@ -43,11 +51,14 @@ man sieht nur den Anfang eines Strahls, den Rest verrät die Rechnung (Recherche
 | ![](screenshots/17_abstand_windschief.png) | ![](screenshots/18_discokugel.png) | ![](screenshots/19_kugel_treffer.png) |
 | ![](screenshots/20_lichtkuppel.png) | ![](screenshots/21_lichtsegel.png) | ![](screenshots/22_zeltvolumen.png) |
 | ![](screenshots/23_jam_session.png) | ![](screenshots/24_jam_aufgabe.png) | ![](screenshots/25_tagesgig.png) |
-| ![](screenshots/26_spickzettel.png) | ![](screenshots/27_abzeichen.png) | ![](screenshots/15_einstellungen.png) |
+| ![](screenshots/26_spickzettel.png) | ![](screenshots/27_abzeichen.png) | ![](screenshots/28_bewegung.png) |
+| ![](screenshots/29_rotationskoerper.png) | ![](screenshots/30_backstage.png) | ![](screenshots/31_abi_simulation.png) |
+| ![](screenshots/32_abi_teilaufgabe.png) | ![](screenshots/33_lage_check.png) | ![](screenshots/34_duell.png) |
+| ![](screenshots/35_lux_werkstatt.png) | ![](screenshots/36_show_baukasten.png) | ![](screenshots/15_einstellungen.png) |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Vektorrechnung (`Geo`), Spielarten (`Families`), alle Level (`Levels`, `MoreLevels`), Aufgaben-Generator,
-  Tagesgig, Abzeichen und Spickzettel (`Gen.kt`), Bühnen-Beschreibung (`Stage`),
+  Tagesgig, Abzeichen und Spickzettel (`Gen.kt`), Abi-Simulation, Lage-Check, Duell- und Show-Codes (`Modes.kt`), Bühnen-Beschreibung (`Stage`),
   Musik, Update-Prüfung. Tests spielen jedes Level mit seiner Lösung durch und rechnen die Mathematik unabhängig nach.
 - `core/data` – Fortschritt (Room, Sterne sinken nie), Einstellungen
 - `app` – Compose-Oberfläche, Lux, im Code erzeugte Geräusche, Updater. Die 3D-Bühne läuft in einem WebView
@@ -69,6 +80,6 @@ node test/shot.mjs ../core/model/build/scenes.json ../app/src/test/resources/sta
 ```
 Der letzte Schritt rendert die 3D-Bilder, die in den Bildschirmfoto-Tests an Stelle der Bühne stehen (Robolectric kann kein WebGL).
 
-Ausliefern: `versionCode`/`versionName` in `app/build.gradle.kts` erhöhen, Abschnitt in `CHANGELOG.md`, pushen.
+Ausliefern: `versionCode`/`versionName` und `VERSION_DATE` in `app/build.gradle.kts` setzen, Abschnitt mit Datum in `CHANGELOG.md`, pushen.
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `raumlicht-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).

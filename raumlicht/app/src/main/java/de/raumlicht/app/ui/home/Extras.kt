@@ -76,9 +76,10 @@ fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit) {
     }
 }
 
-/** Spickzettel: alle Formeln zum Nachschlagen. */
+/** Spickzettel: alle Formeln zum Nachschlagen – mit direktem Sprung in die passenden Gigs und in die Jam-Session. */
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun SheetScreen(cards: List<SheetCard>, onBack: () -> Unit) {
+fun SheetScreen(cards: List<SheetCard>, onChapter: (Int) -> Unit = {}, onJam: (JamTopic) -> Unit = {}, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         TopBar("Spickzettel", onBack)
         LazyColumn(contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -93,10 +94,21 @@ fun SheetScreen(cards: List<SheetCard>, onBack: () -> Unit) {
                             Text(line, style = MaterialTheme.typography.bodyMedium)
                         }
                     }
+                    FlowRow(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        card.chapters.forEach { n -> Jump("▶ Kapitel $n", c) { onChapter(n) } }
+                        card.jam?.let { t -> Jump("🎧 Jam", Q.Pink) { onJam(t) } }
+                    }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun Jump(text: String, color: androidx.compose.ui.graphics.Color, onClick: () -> Unit) {
+    val interaction = remember { MutableInteractionSource() }
+    Text(text, Modifier.pressBounce(interaction).clip(RoundedCornerShape(12.dp)).background(color.copy(alpha = 0.18f)).border(1.dp, color.copy(alpha = 0.8f), RoundedCornerShape(12.dp))
+        .clickable(interaction, null, onClick = onClick).padding(horizontal = 12.dp, vertical = 7.dp), color = Q.Text, fontWeight = FontWeight.Bold, fontSize = 13.sp)
 }
 
 /** Abzeichen: verdient durch Können, nie durch bloßes Wiederkommen. */
@@ -123,14 +135,14 @@ fun BadgesScreen(badges: List<Badge>, onBack: () -> Unit) {
     }
 }
 
-/** Schmale Leiste auf der Startseite: Tagesgig, Jam-Session, Spickzettel, Abzeichen. */
+/** Schmale Leiste auf der Startseite: Tagesgig, Jam-Session, Abi-Simulation und der Eingang zu allem Weiteren. */
 @Composable
-fun ModeTiles(dailyDone: Boolean, jamBest: Int, badges: Int, badgeCount: Int, onDaily: () -> Unit, onJam: () -> Unit, onSheet: () -> Unit, onBadges: () -> Unit) {
+fun ModeTiles(dailyDone: Boolean, jamBest: Int, onDaily: () -> Unit, onJam: () -> Unit, onExam: () -> Unit, onMore: () -> Unit) {
     Row(Modifier.padding(horizontal = 14.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Tile("📅", "Tagesgig", if (dailyDone) "✓" else "neu", Q.Orange, !dailyDone, Modifier.weight(1f), onDaily)
         Tile("🎧", "Jam", if (jamBest > 0) "🔥 $jamBest" else "endlos", Q.Pink, false, Modifier.weight(1f), onJam)
-        Tile("📓", "Formeln", "Spickzettel", Q.Violet, false, Modifier.weight(1f), onSheet)
-        Tile("🏅", "Abzeichen", "$badges/$badgeCount", Q.Yellow, false, Modifier.weight(1f), onBadges)
+        Tile("🎓", "Abi-Sim", "3 Aufgaben", Q.Yellow, false, Modifier.weight(1f), onExam)
+        Tile("🎛️", "Backstage", "mehr", Q.Violet, false, Modifier.weight(1f), onMore)
     }
 }
 

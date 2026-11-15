@@ -75,7 +75,10 @@ jobs:
 
       - name: Version lesen
         id: version
-        run: echo "name=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "name=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)" >> "$GITHUB_OUTPUT"
+          # Datum der Version (steht neben versionName in app/build.gradle.kts)
+          echo "date=$(grep -oP 'VERSION_DATE.*?\K[0-9]{2}\.[0-9]{2}\.[0-9]{4}' app/build.gradle.kts)" >> "$GITHUB_OUTPUT"
 
       - name: Schon veröffentlicht?
         id: check
@@ -118,7 +121,7 @@ jobs:
         with:
           tag_name: raumlicht-v${{ steps.version.outputs.name }}
           target_commitish: ${{ github.sha }}
-          name: Raumlicht ${{ steps.version.outputs.name }}
+          name: Raumlicht ${{ steps.version.outputs.name }} (${{ steps.version.outputs.date }})
           body_path: raumlicht/notes.md
           files: raumlicht/Raumlicht-${{ steps.version.outputs.name }}.apk
 

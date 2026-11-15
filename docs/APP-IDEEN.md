@@ -18,9 +18,9 @@ Reihenfolge: eine App fertig optimieren, dann die nächste. Das Rechnen ist jewe
 
 | App | Spielprinzip | Inhalte | Status |
 |---|---|---|---|
-| 💡 **Raumlicht** (`raumlicht/`) | Lichtshow in echtem 3D: Laser = Geraden, Glas = Ebenen, Drohne Lux fliegt Vektoren. Man sieht nur den Anfang des Strahls – der Rest ist Rechnung. Jedes Kapitel endet mit einem Abi-Check | Analytische Geometrie: Punkte, Vektoren, Geraden, Lagebeziehungen, Ebenen, Skalarprodukt, Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt (55 Level), Jam-Session, Tagesgig, Spickzettel, Abzeichen | ✅ 0.2.0 |
+| 💡 **Raumlicht** (`raumlicht/`) | Lichtshow in echtem 3D: Laser = Geraden, Glas = Ebenen, Drohne Lux fliegt Vektoren. Man sieht nur den Anfang des Strahls – der Rest ist Rechnung. Jedes Kapitel endet mit einem Abi-Check | Analytische Geometrie komplett + Bewegung + Rotationskörper (65 Level, 12 Kapitel), Abi-Simulation, Jam-Session, Tagesgig, Lage-Check, Duell, Zweite Chance, Show-Baukasten, Lux-Werkstatt, Spickzettel, Abzeichen | ✅ 0.3.0 (15.11.2026) |
 
-Ideen für später: Abi-Simulation auf Zeit, eigene Shows bauen und als Code teilen, Duell mit Aufgaben-Code, Bewegungsaufgaben mit Zeit, Analysis in 3D (Rotationskörper), Lux-Werkstatt (Farben, Spuren).
+Ideen für später: weitere Abi-Simulationen (auch auf Zeit), Jam für Bewegung und Kugeln, mehr Analysis in 3D (Flächen, Extremwerte), Stochastik, Klassen-Modus für Lehrkräfte.
 
 ## Grundschule 💡
 
