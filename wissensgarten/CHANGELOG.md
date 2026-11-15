@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.16.1 – Zwei fachliche Verbesserungen
+- **Erste Hilfe:** Verbrennungen jetzt etwa 20 Minuten mit kühlem (nicht eiskaltem) Wasser kühlen – so empfehlen es die europäischen Leitlinien.
+- **Merkbild für die 9:** Statt der Katze (die hat auf Deutsch ja „sieben Leben“) jetzt 🎳 – beim Kegeln heißt es „Alle Neune!“.
+  Brummi erklärt das neue Bild in der Einführung zum Einmaleins und zu Plus & Minus.
+
 ## 0.16.0 – Bereit für den Play Store
 - **👨‍👩‍👧 Eltern-Bereich:** Einstellungen, Teilen nach außen (Duelle, Postkarten, Klassen-Links), QR-Scanner und Updates
   öffnen sich erst nach einer kleinen Rechenaufgabe für Erwachsene – danach 10 Minuten frei.

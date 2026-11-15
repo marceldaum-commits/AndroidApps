@@ -1,6 +1,6 @@
 {
   "id": "gs-einmaleins",
-  "version": 2,
+  "version": 3,
   "title": "Das kleine Einmaleins",
   "subject": "mathe",
   "grades": [
@@ -26,6 +26,10 @@
     {
       "img": "🍪➗🍽️",
       "text": "Geteilt heißt gerecht verteilen: 12 Kekse auf 3 Teller – auf jedem liegen 4. Also 12 : 3 = 4."
+    },
+    {
+      "img": "🎳9️⃣",
+      "text": "Merkbild für die 9: Beim Kegeln stehen 9 Kegel – wer alle umwirft, ruft „Alle Neune!“. Siehst du 🎳, denk an die 9."
     },
     {
       "img": "🌱🚀",
@@ -75,7 +79,7 @@
         "50",
         "54"
       ],
-      "img": "🖐️🐈"
+      "img": "🖐️🎳"
     },
     {
       "id": "005",
@@ -120,7 +124,7 @@
         "48",
         "63"
       ],
-      "img": "🐈🐜"
+      "img": "🎳🐜"
     },
     {
       "id": "009",
@@ -153,7 +157,7 @@
         "99",
         "89"
       ],
-      "img": "🐈🐈"
+      "img": "🎳🎳"
     },
     {
       "id": "012",
@@ -186,7 +190,7 @@
         "36",
         "21"
       ],
-      "img": "☘️🐈"
+      "img": "☘️🎳"
     },
     {
       "id": "015",
@@ -208,7 +212,7 @@
         "81",
         "63"
       ],
-      "img": "🐈🐙"
+      "img": "🎳🐙"
     },
     {
       "id": "017",
@@ -279,7 +283,7 @@
         "8"
       ],
       "info": "Umkehraufgabe: 6 × 9 = 54",
-      "img": "🐈🐜"
+      "img": "🎳🐜"
     },
     {
       "id": "023",
@@ -291,7 +295,7 @@
         "6"
       ],
       "info": "Umkehraufgabe: 9 × 7 = 63",
-      "img": "🌈🐈"
+      "img": "🌈🎳"
     },
     {
       "id": "024",
@@ -315,7 +319,7 @@
         "6"
       ],
       "info": "Umkehraufgabe: 9 × 4 = 36",
-      "img": "🍀🐈"
+      "img": "🍀🎳"
     },
     {
       "id": "026",
@@ -327,7 +331,7 @@
         "6"
       ],
       "info": "Umkehraufgabe: 9 × 8 = 72",
-      "img": "🐙🐈"
+      "img": "🐙🎳"
     },
     {
       "id": "027",
@@ -351,7 +355,7 @@
         "1"
       ],
       "info": "Umkehraufgabe: 9 × 9 = 81",
-      "img": "🐈➗🐈"
+      "img": "🎳➗🎳"
     },
     {
       "id": "029",

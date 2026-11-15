@@ -1,6 +1,6 @@
 {
   "id": "aw-erste-hilfe",
-  "version": 2,
+  "version": 3,
   "title": "Erste Hilfe",
   "subject": "allgemeinwissen",
   "grades": [
@@ -215,13 +215,13 @@
     {
       "id": "018",
       "q": "Was tust du bei einer kleinen Verbrennung an der Hand?",
-      "a": "Etwa 10 Minuten mit handwarmem Wasser kühlen",
+      "a": "Etwa 20 Minuten mit kühlem (nicht eiskaltem) Wasser kühlen",
       "choices": [
         "Sofort mit Eiswürfeln kühlen",
         "Mit Butter oder Mehl bestreichen",
         "Die Blasen aufstechen"
       ],
-      "info": "Eis kann das Gewebe zusätzlich schädigen.",
+      "info": "So empfehlen es die europäischen Erste-Hilfe-Leitlinien. Kein Eis – das schädigt die Haut zusätzlich. Bei großen Verbrennungen sofort 112.",
       "img": "🤚💧⏲️"
     },
     {

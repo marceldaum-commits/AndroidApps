@@ -1,6 +1,6 @@
 {
   "id": "gs-plus-minus-20",
-  "version": 3,
+  "version": 4,
   "title": "Plus und Minus bis 20",
   "subject": "mathe",
   "grades": [
@@ -25,6 +25,10 @@
     {
       "img": "🎈➖",
       "text": "Minus heißt: weg. 15 − 7: Erst 5 weg, dann bist du bei 10. Dann noch 2 weg – das ist 8."
+    },
+    {
+      "img": "🎳9️⃣",
+      "text": "Merkbild für die 9: Beim Kegeln stehen 9 Kegel – wer alle umwirft, ruft „Alle Neune!“. Siehst du 🎳, denk an die 9."
     },
     {
       "img": "🌱🎉",
@@ -65,7 +69,7 @@
         "13"
       ],
       "info": "Tipp: 9 + 1 = 10, dann noch 5 dazu.",
-      "img": "🐈➕🐜"
+      "img": "🎳➕🐜"
     },
     {
       "id": "004",
@@ -110,7 +114,7 @@
         "20",
         "17"
       ],
-      "img": "👐➕🐈"
+      "img": "👐➕🎳"
     },
     {
       "id": "008",
@@ -132,7 +136,7 @@
         "14",
         "11"
       ],
-      "img": "🍀➕🐈"
+      "img": "🍀➕🎳"
     },
     {
       "id": "010",
@@ -154,7 +158,7 @@
         "6",
         "3"
       ],
-      "img": "🐈➖🍀"
+      "img": "🎳➖🍀"
     },
     {
       "id": "012",
@@ -326,7 +330,7 @@
         "19"
       ],
       "info": "9 + 9 = 18",
-      "img": "🐈🐈"
+      "img": "🎳🎳"
     },
     {
       "id": "027",
