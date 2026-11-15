@@ -409,7 +409,7 @@ class MainActivity : ComponentActivity() {
                                             "Tippe die richtige Antwort im Takt!", Color(0xFFF3E5F5)) { nav.navigate(Routes.RHYTHM) })
                                         add(de.wissensgarten.app.ui.garden.DiscoverItem("🍯", "Bienenstock",
                                             "Brummis Zuhause – mit Honig Räume freischalten.", Color(0xFFFFF8E1)) { nav.navigate(Routes.HIVE) })
-                                        if (known >= 3) add(de.wissensgarten.app.ui.garden.DiscoverItem("🚶", "Gedächtnis-Spaziergang",
+                                        if (known >= 3) add(de.wissensgarten.app.ui.garden.DiscoverItem("🚶", "Spaziergang",
                                             "Schwierige Karten an Orte im Garten legen.", Color(0xFFE0F2F1)) { nav.navigate(Routes.LOCI) })
                                         if (known >= 1) add(de.wissensgarten.app.ui.garden.DiscoverItem("🎬", "Garten-Film",
                                             "Zeitraffer: So ist dein Garten gewachsen.", Color(0xFFFCE4EC)) { nav.navigate(Routes.FILM) })

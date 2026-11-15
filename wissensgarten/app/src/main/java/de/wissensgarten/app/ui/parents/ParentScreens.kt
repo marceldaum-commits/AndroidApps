@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -132,7 +133,7 @@ fun RestOverlay(name: String, onMore: () -> Unit) {
     val glow by rememberInfiniteTransition(label = "nacht").animateFloat(0.4f, 1f, infiniteRepeatable(tween(2200), RepeatMode.Reverse), label = "g")
     Box(
         Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF1B2547), Color(0xFF3B3F7A), Color(0xFF5B4E8C))))
-            .clickable(enabled = false) {},
+            .pointerInput(Unit) { awaitPointerEventScope { while (true) awaitPointerEvent().changes.forEach { it.consume() } } },
         contentAlignment = Alignment.Center,
     ) {
         // Sterne

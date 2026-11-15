@@ -58,6 +58,8 @@ fun HiveScreen(totalReps: Int, furniture: (String) -> Int, onFurnish: (String, I
     val fill by animateFloatAsState(Hive.combProgress(totalReps), tween(1400, easing = FastOutSlowInEasing), label = "f")
     val t by rememberInfiniteTransition(label = "h").animateFloat(0f, 1f, infiniteRepeatable(tween(3000, easing = LinearEasing)), label = "t")
     val next = Hive.next(totalReps)
+    // Auswahl lokal halten – reagiert sofort, gespeichert wird über onFurnish
+    val chosenMap = remember { mutableStateMapOf<String, Int>().apply { Hive.rooms.forEach { put(it.id, furniture(it.id)) } } }
     Column(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFFFFF8E1), Color(0xFFFFECB3))))) {
         Top("🍯 Brummis Bienenstock", onBack)
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
@@ -99,7 +101,7 @@ fun HiveScreen(totalReps: Int, furniture: (String) -> Int, onFurnish: (String, I
             Brummi(Mood.HAPPY, size = 72.dp, speech = "Willkommen in meinem Zuhause! Richte die Räume ein, wie du magst. 🐝")
             Hive.rooms.forEach { room ->
                 val open = combs >= room.needCombs
-                val chosen = furniture(room.id)
+                val chosen = chosenMap[room.id] ?: -1
                 ElevatedCard(Modifier.fillMaxWidth().graphicsLayer { alpha = if (open) 1f else 0.55f }) {
                     Column(Modifier.padding(14.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -115,7 +117,7 @@ fun HiveScreen(totalReps: Int, furniture: (String) -> Int, onFurnish: (String, I
                         }
                         if (open) FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             room.furniture.forEachIndexed { i, (e, n) ->
-                                FilterChip(selected = chosen == i, onClick = { onFurnish(room.id, i); sfx?.play(Sound.PLOP) }, label = { Text("$e $n") })
+                                FilterChip(selected = chosen == i, onClick = { chosenMap[room.id] = i; onFurnish(room.id, i); sfx?.play(Sound.PLOP) }, label = { Text("$e $n") })
                             }
                         }
                     }
@@ -255,6 +257,7 @@ fun LociScreen(suggest: List<StudyCard>, all: Map<String, StudyCard>, placed: Ma
                                     map = map.filterValues { it != c.id } + (i to c.id); onPlace(map)
                                     story = Loci.story(i, c); pick = null; sfx?.play(Sound.PLOP)
                                 } else if (cardId != null) { all[cardId]?.let { story = Loci.story(i, it) } }
+                                else story = "Erst unten eine Karte antippen – dann den Ort hier. 👇"
                             }, horizontalAlignment = Alignment.CenterHorizontally) {
                             Text(p.emoji, fontSize = 30.sp)
                             Text(cardId?.let { all[it]?.img?.take(4) ?: "📌" } ?: p.name, fontSize = 10.sp, maxLines = 1,
@@ -269,7 +272,7 @@ fun LociScreen(suggest: List<StudyCard>, all: Map<String, StudyCard>, placed: Ma
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (!walking) {
                     story?.let { Surface(color = MaterialTheme.colorScheme.secondaryContainer, shape = RoundedCornerShape(16.dp)) {
-                        Text("🧠 $it\nMach die Augen zu und stell es dir ganz verrückt vor!", Modifier.padding(12.dp))
+                        Text(if (it.startsWith("Stell")) "🧠 $it\nMach die Augen zu und stell es dir ganz verrückt vor!" else it, Modifier.padding(12.dp))
                     } }
                     Text(if (pick == null) "1. Tippe eine Karte an – 2. dann einen Ort im Garten." else "Wohin mit „${pick!!.back}“? Tippe auf einen Ort!",
                         style = MaterialTheme.typography.titleMedium)

@@ -36,8 +36,10 @@ object Rhythm {
     enum class Hit(val label: String, val points: Int) { PERFECT("Perfekt! 🎵", 3), GOOD("Gut! 🎶", 2), MISS("Fast! 🎼", 0) }
     /** Welche Antwort leuchtet nach [elapsedMs]? */
     fun lit(elapsedMs: Long, options: Int) = ((elapsedMs / BEAT_MS) % options).toInt()
+    /** Richtige Antwort zählt immer („Gut“); im Takt getippt, während sie leuchtet: „Perfekt“. Falsche: „Fast“. */
     fun judge(elapsedMs: Long, chosen: Int, correct: Int, options: Int): Hit {
-        if (chosen != correct || lit(elapsedMs, options) != correct) return Hit.MISS
+        if (chosen != correct) return Hit.MISS
+        if (lit(elapsedMs, options) != correct) return Hit.GOOD
         val inBeat = elapsedMs % BEAT_MS
         return if (inBeat < BEAT_MS * 0.6) Hit.PERFECT else Hit.GOOD
     }

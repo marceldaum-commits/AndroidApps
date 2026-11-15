@@ -5,6 +5,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -57,7 +58,7 @@ private fun OptionButtons(options: List<String>, enabled: Boolean, highlight: In
         options.forEachIndexed { i, o ->
             var shown by remember(options) { mutableStateOf(false) }
             LaunchedEffect(options) { delay(60L * i); shown = true }
-            val s by animateFloatAsState(if (shown) (if (highlight == i) 1.08f else 1f) else 0.6f, spring(0.45f, 400f), label = "s")
+            val s by animateFloatAsState(if (shown) (if (highlight == i) 1.03f else 1f) else 0.6f, spring(0.45f, 400f), label = "s")
             val bg = when {
                 reveal != null && o == reveal -> Color(0xFF81C784)
                 highlight == i -> Color(0xFFFFD54F)
@@ -140,24 +141,33 @@ fun WeedScreen(cards: List<StudyCard>, peers: Map<String, List<String>>, total: 
             val card = list[index]
             val options = remember(card.id) { Games.options(card, peers[card.bedId].orEmpty()) ?: listOf(card.back) }
             LinearProgressIndicator(progress = { index / list.size.toFloat() }, modifier = Modifier.fillMaxWidth().padding(vertical = 6.dp))
-            Box(Modifier.fillMaxWidth().height(220.dp).pointerInput(phase) {
+            fun pulledOut() {
+                sfx?.play(Sound.PLOP); sfx?.play(Sound.CORRECT, volume = 0.6f)
+                if (vib) haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                particles.burst(Burst.LEAVES, 0.5f, 0.4f, 40)
+                pulled++
+                onRight(card)
+                scope.launch { delay(900); pull = 0f; phase = 0; index++ }
+            }
+            Box(Modifier.fillMaxWidth().height(220.dp).pointerInput(phase, index) {
+                // Auch Antippen zieht – dreimal tippen reicht (für kleine Finger und Bildschirmleser)
+                if (phase == 1) detectTapGestures {
+                    if (pull >= 1f) return@detectTapGestures
+                    sfx?.play(Sound.TAP)
+                    pull = (pull + 0.34f).coerceAtMost(1f)
+                    if (pull >= 1f) pulledOut()
+                }
+            }.pointerInput(phase, index) {
                 if (phase == 1) detectVerticalDragGestures(onDragEnd = {
                     if (pull < 0.85f) scope.launch { animate(pull, 0f, animationSpec = spring(0.5f)) { v, _ -> pull = v } }
                 }) { _, dy ->
                     if (pull >= 1f) return@detectVerticalDragGestures
-                    pull = (pull - dy / 500f).coerceIn(0f, 1f)
-                    if (pull >= 1f) {
-                        sfx?.play(Sound.PLOP); sfx?.play(Sound.CORRECT, volume = 0.6f)
-                        if (vib) haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                        particles.burst(Burst.LEAVES, 0.5f, 0.4f, 40)
-                        pulled++
-                        onRight(card)
-                        scope.launch { delay(900); pull = 0f; phase = 0; index++ }
-                    }
+                    pull = (pull - dy / 400f).coerceIn(0f, 1f)
+                    if (pull >= 1f) pulledOut()
                 }
             }) {
                 Canvas(Modifier.fillMaxSize().graphicsLayer { alpha = if (pull >= 1f) 0.3f else 1f }) { drawWeed(t, pull, phase == 1) }
-                if (phase == 1 && pull < 1f) Text("👆 Nach oben ziehen!", Modifier.align(Alignment.TopCenter).padding(top = 4.dp)
+                if (phase == 1 && pull < 1f) Text("👆 Nach oben ziehen (oder 3× tippen)!", Modifier.align(Alignment.TopCenter).padding(top = 4.dp)
                     .graphicsLayer { translationY = -sin(t * 2 * PI.toFloat()) * 8f }, fontWeight = FontWeight.Bold, fontSize = 18.sp, color = Color(0xFF33691E))
                 if (pull >= 1f) Text("🌸 Weg damit!", Modifier.align(Alignment.Center), fontSize = 28.sp, fontWeight = FontWeight.Bold, color = Color(0xFFD81B60))
             }
@@ -322,7 +332,7 @@ fun RhythmScreen(pool: List<StudyCard>, peers: Map<String, List<String>>, onDone
                 deck.isEmpty() -> Text("Noch keine gelernten Karten – erst ein bisschen gießen!", color = Color.White)
                 !started -> Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)) {
                     Text("🥁", fontSize = 80.sp)
-                    Text("Die Antworten leuchten nacheinander im Takt auf. Tippe, wenn die richtige leuchtet – je genauer im Beat, desto mehr Punkte!",
+                    Text("Die Antworten leuchten nacheinander im Takt auf. Richtig ist richtig – aber wer die Antwort genau dann antippt, wenn sie leuchtet, bekommt „Perfekt!“ 🎵",
                         color = Color.White, textAlign = TextAlign.Center)
                     Button(onClick = { started = true }, modifier = Modifier.height(56.dp)) { Text("Musik ab! 🎶", fontSize = 20.sp) }
                 }
