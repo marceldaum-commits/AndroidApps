@@ -123,31 +123,25 @@ fun BadgesScreen(badges: List<Badge>, onBack: () -> Unit) {
     }
 }
 
-/** Vier Kacheln auf der Startseite: Tagesgig, Jam-Session, Spickzettel, Abzeichen. */
+/** Schmale Leiste auf der Startseite: Tagesgig, Jam-Session, Spickzettel, Abzeichen. */
 @Composable
 fun ModeTiles(dailyDone: Boolean, jamBest: Int, badges: Int, badgeCount: Int, onDaily: () -> Unit, onJam: () -> Unit, onSheet: () -> Unit, onBadges: () -> Unit) {
-    Column(Modifier.padding(horizontal = 14.dp, vertical = 4.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Tile("📅", "Tagesgig", if (dailyDone) "heute geschafft ✓" else "heute neu", Q.Orange, !dailyDone, Modifier.weight(1f), onDaily)
-            Tile("🎧", "Jam-Session", if (jamBest > 0) "Rekord: $jamBest 🔥" else "endlos üben", Q.Pink, false, Modifier.weight(1f), onJam)
-        }
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Tile("📓", "Spickzettel", "alle Formeln", Q.Violet, false, Modifier.weight(1f), onSheet)
-            Tile("🏅", "Abzeichen", "$badges von $badgeCount", Q.Yellow, false, Modifier.weight(1f), onBadges)
-        }
+    Row(Modifier.padding(horizontal = 14.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Tile("📅", "Tagesgig", if (dailyDone) "✓" else "neu", Q.Orange, !dailyDone, Modifier.weight(1f), onDaily)
+        Tile("🎧", "Jam", if (jamBest > 0) "🔥 $jamBest" else "endlos", Q.Pink, false, Modifier.weight(1f), onJam)
+        Tile("📓", "Formeln", "Spickzettel", Q.Violet, false, Modifier.weight(1f), onSheet)
+        Tile("🏅", "Abzeichen", "$badges/$badgeCount", Q.Yellow, false, Modifier.weight(1f), onBadges)
     }
 }
 
 @Composable
 private fun Tile(emoji: String, title: String, sub: String, color: androidx.compose.ui.graphics.Color, highlight: Boolean, modifier: Modifier, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
-    Row(modifier.pressBounce(interaction).clip(RoundedCornerShape(18.dp)).background(Brush.verticalGradient(listOf(color.copy(alpha = if (highlight) 0.32f else 0.16f), Q.Deep)))
-        .border(if (highlight) 2.dp else 1.dp, color.copy(alpha = if (highlight) 1f else 0.5f), RoundedCornerShape(18.dp)).clickable(interaction, null, onClick = onClick).padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically) {
-        Text(emoji, fontSize = 26.sp)
-        Column(Modifier.padding(start = 10.dp)) {
-            Text(title, fontWeight = FontWeight.Bold, color = Q.Text)
-            Text(sub, color = if (highlight) color else Q.Muted, fontSize = 12.sp)
-        }
+    Column(modifier.pressBounce(interaction).clip(RoundedCornerShape(16.dp)).background(Brush.verticalGradient(listOf(color.copy(alpha = if (highlight) 0.32f else 0.14f), Q.Deep)))
+        .border(if (highlight) 2.dp else 1.dp, color.copy(alpha = if (highlight) 1f else 0.4f), RoundedCornerShape(16.dp)).clickable(interaction, null, onClick = onClick).padding(vertical = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(emoji, fontSize = 22.sp)
+        Text(title, fontWeight = FontWeight.Bold, color = Q.Text, fontSize = 12.sp, maxLines = 1)
+        Text(sub, color = if (highlight) color else Q.Muted, fontSize = 10.sp, maxLines = 1)
     }
 }

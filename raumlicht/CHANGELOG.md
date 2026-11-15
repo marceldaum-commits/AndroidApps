@@ -1,5 +1,10 @@
 # Änderungen
 
+## 0.2.1 – Aufgeräumt
+- **Startseite übersichtlicher:** Die Kapitel sind jetzt eine kompakte Liste mit Fortschrittsbalken. Aufgeklappt ist nur das Kapitel, in dem es weitergeht –
+  die anderen öffnen sich beim Antippen.
+- Tagesgig, Jam-Session, Spickzettel und Abzeichen stehen als schmale Leiste direkt unter der Bühne.
+
 ## 0.2.0 – Die große Tour
 - **4 neue Kapitel, 21 neue Gigs** (jetzt 55 in 10 Kapiteln):
   - 📐 **Winkel** – zwischen Vektoren, Gerade und Ebene, zwei Ebenen. Der Winkelbogen leuchtet in der Bühne.
