@@ -12,6 +12,7 @@ Neueste Meldung oben.
   - Einen neu geladenen Stand spielt die App von selbst ein, sobald man auf der Startseite ist, nie mitten in einer Runde oder bei offenem Menü. Höchstens ein Versuch pro Version und Sitzung.
   - Spätestens beim nächsten Start ist er ohnehin aktiv.
 - **Bleibt:** Nur wenn eine neue App-Hülle nötig ist, erscheint die Karte „Neue App-Version nötig · Herunterladen“, weil Android die Installation selbst bestätigen lässt.
+- **Am echten Gerät bestätigt (Marcel 15.11.):** 3.13.3 ist auf seinem Handy von selbst angekommen, ohne neue APK. Die Selbst-Aktualisierung über GitHub funktioniert.
 - **Test (nachgebildete App-Schnittstelle):**
   - Ein Stand, der auf der Startseite ankommt, wird sofort eingespielt.
   - Kommt er während einer Runde an, wird er dort nicht eingespielt, sondern erst nach der Rückkehr zur Startseite.
