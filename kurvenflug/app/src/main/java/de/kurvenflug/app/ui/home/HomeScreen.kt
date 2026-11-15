@@ -105,6 +105,8 @@ fun HomeScreen(
     var tab by rememberSaveable { mutableIntStateOf(initialTab) }
     var picking by rememberSaveable { mutableStateOf(false) }
     val sfx = LocalSfx.current
+    // Zurück-Taste: erst zum Reiter „Heute“ (bzw. Klassen-Auswahl schließen), nicht gleich die App verlassen
+    androidx.activity.compose.BackHandler(enabled = tab != 0 || picking) { if (picking) picking = false else tab = 0 }
     Box(Modifier.fillMaxSize()) {
         Starfield()
         Column(Modifier.fillMaxSize().systemBarsPadding()) {

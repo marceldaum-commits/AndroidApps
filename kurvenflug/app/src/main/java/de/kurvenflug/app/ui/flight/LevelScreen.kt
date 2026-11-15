@@ -118,6 +118,9 @@ fun LevelScreen(
     val clock = clockF.toLong()
 
     BackHandler { onBack() }
+    // Offene Fenster zuerst schließen, statt gleich das Level zu verlassen
+    BackHandler(enabled = walkOpen) { walkOpen = false }
+    BackHandler(enabled = intro) { intro = false; onIntroSeen() }
 
     val preview2 = remember(values, help, level.id) {
         Flight.path2(level, values).let { p -> if (help) p else p.take(min(p.size, 100)) }
