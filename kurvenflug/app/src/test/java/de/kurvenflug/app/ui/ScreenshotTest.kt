@@ -115,7 +115,8 @@ class ScreenshotTest {
     @Test fun duelMenu() = shot("21_duell") { de.kurvenflug.app.ui.modes.DuelScreen(Q.Cyan, null, {}, {}) }
 
     @Test fun duelHandover() = shot("22_duell_zu_zweit", prepare = { it.onNodeWithText("Zu zweit an diesem Handy").performClick() }) {
-        de.kurvenflug.app.ui.modes.DuelScreen(Q.Cyan, null, {}, {})
+        // fester Startwert, damit das Bild bei jedem Lauf gleich bleibt
+        de.kurvenflug.app.ui.modes.DuelScreen(Q.Cyan, null, {}, {}, localSeed = 1_234_567L)
     }
 
     @Test fun badges() = shot("23_abzeichen") {

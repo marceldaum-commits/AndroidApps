@@ -186,7 +186,8 @@ private fun DrawScope.drawThrowScene(l: Level, px: (Vec) -> Offset, unit: Float,
         if (x > Flight.R) break
         val o = px(Vec(x, l.ground))
         drawLine(Color.White.copy(alpha = 0.5f), o, o + Offset(0f, unit * 0.35f), 2f)
-        label(tm, "$m m", o + Offset(0f, unit * 0.75f), Color.White.copy(alpha = 0.8f))
+        // Beschriftung nur, wenn sie ganz ins Bild passt (sonst „1…“ am Rand)
+        if (x <= Flight.R - 1) label(tm, "$m m", o + Offset(0f, unit * 0.75f), Color.White.copy(alpha = 0.8f))
     }
     // Höhen-Hilfslinien
     for (h in 2..18 step 2) {
@@ -231,7 +232,8 @@ private fun DrawScope.drawRampScene(l: Level, px: (Vec) -> Offset, unit: Float, 
         if (x > Flight.R) break
         val o = px(Vec(x, l.ground))
         drawLine(Color.White.copy(alpha = 0.5f), o, o + Offset(0f, unit * 0.35f), 2f)
-        label(tm, "$m m", o + Offset(0f, unit * 0.75f), Color.White.copy(alpha = 0.8f))
+        // Beschriftung nur, wenn sie ganz ins Bild passt (sonst „1…“ am Rand)
+        if (x <= Flight.R - 1) label(tm, "$m m", o + Offset(0f, unit * 0.75f), Color.White.copy(alpha = 0.8f))
     }
     label(tm, "${l.planet.emoji} ${l.planet.label} · g = ${num(l.planet.g)} m/s²", Offset(size.width / 2, unit * 0.8f), Q.Text, 12)
 }

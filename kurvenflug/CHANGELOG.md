@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.5.1 – Formeln wie im Schulbuch
+- **Formeln lesen sich jetzt wie im Heft**: statt „y = log₃(x) + (−2)“ steht da „y = log₃(x) − 2“. Bei der Parabel wird aus
+  „(x − (−3))“ einfach „(x + 3)“. Das gilt für alle Kurven – Geraden, Parabeln, Sinus, Wachstum, Logarithmus und Weg & Zeit.
+- **Rampe und Wurf**: Die Meter-Angabe ganz rechts am Boden wird nicht mehr abgeschnitten.
+
 ## 0.5.0 – Sechs neue Kapitel, Lexikon & Werkstatt
 - **⚖️ Zuordnungen (Kl. 6–7)**: proportional y = k · x (auch Prozent) und antiproportional y = k : x – die Hyperbel.
 - **⏱️ Weg & Zeit (Physik Kl. 7)**: gleichförmige Bewegung im s-t-Diagramm, s = v · t + s₀.

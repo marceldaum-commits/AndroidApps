@@ -154,7 +154,7 @@ private enum class DuelMode { MENU, LOCAL, CHALLENGE, ACCEPT }
  * Wer weniger Versuche braucht, gewinnt.
  */
 @Composable
-fun DuelScreen(probeColor: Color, incomingCode: String?, onResult: (won: Boolean) -> Unit, onBack: () -> Unit) {
+fun DuelScreen(probeColor: Color, incomingCode: String?, onResult: (won: Boolean) -> Unit, onBack: () -> Unit, localSeed: Long? = null) {
     val decoded = remember(incomingCode) { incomingCode?.let { DuelCode.decode(it) } }
     var mode by rememberSaveable { mutableStateOf(if (decoded != null) DuelMode.ACCEPT else DuelMode.MENU) }
     var accept by rememberSaveable { mutableStateOf(decoded?.let { DuelCode.encode(it.seed, it.attempts) }) }
@@ -162,7 +162,7 @@ fun DuelScreen(probeColor: Color, incomingCode: String?, onResult: (won: Boolean
     when (mode) {
         DuelMode.MENU -> DuelMenu(onLocal = { mode = DuelMode.LOCAL }, onChallenge = { mode = DuelMode.CHALLENGE },
             onCode = { accept = it; mode = DuelMode.ACCEPT }, onBack = onBack)
-        DuelMode.LOCAL -> LocalDuel(probeColor, onResult, onDone = { mode = DuelMode.MENU })
+        DuelMode.LOCAL -> LocalDuel(probeColor, onResult, onDone = { mode = DuelMode.MENU }, seed = localSeed)
         DuelMode.CHALLENGE -> Challenge(probeColor, onResult = { onResult(false) }, onDone = { mode = DuelMode.MENU })
         DuelMode.ACCEPT -> {
             val c = accept?.let { DuelCode.decode(it) }
@@ -221,8 +221,8 @@ fun ModeCard(emoji: String, title: String, text: String, color: Color, onClick: 
 
 /** Zu zweit: 3 Runden, je Runde spielen beide dieselbe Mission. */
 @Composable
-private fun LocalDuel(probeColor: Color, onResult: (Boolean) -> Unit, onDone: () -> Unit) {
-    val base = rememberSaveable { DuelCode.newSeed() }
+private fun LocalDuel(probeColor: Color, onResult: (Boolean) -> Unit, onDone: () -> Unit, seed: Long? = null) {
+    val base = rememberSaveable { seed ?: DuelCode.newSeed() }
     var round by rememberSaveable { mutableIntStateOf(0) }
     var player by rememberSaveable { mutableIntStateOf(0) }
     var handover by rememberSaveable { mutableStateOf(true) }

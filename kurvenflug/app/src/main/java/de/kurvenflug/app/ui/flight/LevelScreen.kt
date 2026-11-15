@@ -301,17 +301,24 @@ private fun Formula(level: Level, values: Map<String, Double>) {
     val v = level.values(values)
     val colorOf = level.params.mapIndexed { i, p -> p.key to paramColors[i % paramColors.size] }.toMap()
     val text = buildAnnotatedString {
-        fun n(key: String, unit: String = "") {
-            val s = num(v.getValue(key)) + unit
+        fun colored(key: String, s: String) {
             val c = colorOf[key]
             if (c != null) withStyle(SpanStyle(color = c, fontWeight = FontWeight.Black)) { append(s) } else append(s)
         }
+        fun n(key: String, unit: String = "") = colored(key, num(v.getValue(key)) + unit)
         // Negative Zahlen in Klammern, damit „· (−2)“ eindeutig ist
         fun factor(key: String) { if (v.getValue(key) < 0) { append("("); n(key); append(")") } else n(key) }
+        // Summand wie im Schulbuch: „+ 3“ bzw. „− 2“ statt „+ (−2)“; das Vorzeichen gehört zur Reglerfarbe
+        fun term(key: String, sign: Int = 1) {
+            val raw = v.getValue(key)
+            // Bei „x − d“ bleibt für d = 0 das Minus der Scheitelform stehen
+            val minus = if (sign < 0) raw >= 0 else raw < 0
+            append(" "); colored(key, (if (minus) "− " else "+ ") + num(kotlin.math.abs(raw)))
+        }
         when (level.kind) {
             Kind.POINT -> { append("Ziel  ( "); n("x"); append(" | "); n("y"); append(" )") }
-            Kind.LINE -> { append("y = "); factor("m"); append(" · x + "); factor("b") }
-            Kind.PARABOLA -> { append("y = "); factor("a"); append(" · (x − "); factor("d"); append(")² + "); factor("e") }
+            Kind.LINE -> { append("y = "); factor("m"); append(" · x"); term("b") }
+            Kind.PARABOLA -> { append("y = "); factor("a"); append(" · (x"); term("d", -1); append(")²"); term("e") }
             Kind.THROW -> { append("α = "); n("angle", "°"); append("   v = "); n("v", " m/s") }
             Kind.ORBIT -> { append("α = "); n("angle", "°"); append("   v = "); n("v") }
             Kind.PROP -> { append("y = "); factor("k"); append(" · x") }
@@ -320,7 +327,7 @@ private fun Formula(level: Level, values: Map<String, Double>) {
                 append("y = log")
                 withStyle(SpanStyle(baselineShift = androidx.compose.ui.text.style.BaselineShift.Subscript, fontSize = 14.sp)) { n("b") }
                 append("(x)")
-                if (v.getValue("d") != 0.0 || "d" in colorOf) { append(" + "); factor("d") }
+                if (v.getValue("d") != 0.0 || "d" in colorOf) term("d")
             }
             Kind.RADIUS -> { append("r = "); n("r"); append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("r² = Δx² + Δy²") } }
             Kind.LASER -> { append("α = "); n("angle", "°") }
@@ -328,7 +335,7 @@ private fun Formula(level: Level, values: Map<String, Double>) {
                 append("h = "); n("h", " m"); append("   Kante h₀ = "); append(num(v.getValue("h0")) + " m")
                 append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("m·g·h = ½·m·v²") }
             }
-            Kind.MOTION -> { append("s = "); factor("v"); append(" · t + "); factor("s0") }
+            Kind.MOTION -> { append("s = "); factor("v"); append(" · t"); term("s0") }
             Kind.RENDEZVOUS -> {
                 val eq = level.equations ?: listOf("A:  " + lin(v.getValue("m1"), v.getValue("b1")), "B:  " + lin(v.getValue("m2"), v.getValue("b2")))
                 withStyle(SpanStyle(color = Q.Cyan)) { append(eq[0]) }; append("\n")
@@ -337,11 +344,11 @@ private fun Formula(level: Level, values: Map<String, Double>) {
             }
             Kind.SINE -> {
                 append("y = "); factor("a"); append(" · sin("); factor("b"); append(" · x)")
-                if (v.getValue("d") != 0.0 || "d" in colorOf) { append(" + "); factor("d") }
+                if (v.getValue("d") != 0.0 || "d" in colorOf) term("d")
             }
             Kind.EXP -> {
                 append("y = "); factor("a"); append(" · "); factor("b"); append("ˣ")
-                if (v.getValue("d") != 0.0 || "d" in colorOf) { append(" + "); factor("d") }
+                if (v.getValue("d") != 0.0 || "d" in colorOf) term("d")
             }
         }
     }
