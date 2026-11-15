@@ -1,5 +1,9 @@
 # Änderungen
 
+## 0.1.3 – Bühne sichtbar
+- **Behoben:** Die 3D-Bühne blieb dunkel, weil sie intern keine Höhe bekam. Jetzt füllt sie ihre Fläche.
+- Hat die Bühne trotzdem einmal keine Größe, meldet sie das.
+
 ## 0.1.2 – Fehlersuche Bühne
 - Die 3D-Bühne wird im Level nicht mehr mit runden Ecken beschnitten – auf manchen Handys blieb sie dadurch leer.
 - Die Bühne prüft sich selbst: Bleibt das Bild einfarbig, schaltet sie auf einfaches Zeichnen um und meldet sonst die Ursache.

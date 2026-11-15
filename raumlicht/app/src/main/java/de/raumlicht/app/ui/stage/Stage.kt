@@ -92,6 +92,9 @@ private fun WebStage(controller: StageController, modifier: Modifier) {
         modifier = modifier,
         factory = { ctx ->
             WebView(ctx).apply {
+                // Wichtig: feste Größe ansagen. Ohne das rechnet die Web-Ansicht mit „so hoch wie der Inhalt“,
+                // die Seite hat dann intern die Höhe 0 und die Bühne bleibt unsichtbar.
+                layoutParams = android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT)
                 setBackgroundColor(0xFF05071A.toInt())
                 settings.javaScriptEnabled = true
                 settings.allowContentAccess = false

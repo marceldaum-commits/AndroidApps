@@ -617,7 +617,7 @@ function resize() {
 addEventListener('resize', resize);
 
 // Selbstdiagnose: Was sieht die Bühne wirklich? Meldet Gerät, Größe und ob das Bild einfarbig ist.
-let diagnosed = false;
+let diagnosed = false, sizeWarned = false;
 function diagnose() {
   const W = gl.drawingBufferWidth, H = gl.drawingBufferHeight, px = new Uint8Array(4), seen = new Set();
   for (let i = 1; i < 8; i++) for (let j = 1; j < 8; j++) { gl.readPixels(Math.floor(W * i / 8), Math.floor(H * j / 8), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); seen.add(px[0] >> 2 << 16 | px[1] >> 2 << 8 | px[2] >> 2); }
@@ -666,6 +666,7 @@ function step(dt) {
   for (let i = effects.length - 1; i >= 0; i--) if (!effects[i](dt)) effects.splice(i, 1);
   draw(dt);
   if (!diagnosed && fixedTime == null && clock.elapsedTime > 2.5 && gl.drawingBufferHeight > 16) { diagnosed = true; diagnose(); }
+  if (!sizeWarned && clock.elapsedTime > 3 && (!innerWidth || !innerHeight)) { sizeWarned = true; emit('error', { msg: 'Bühne hat keine Größe: ' + innerWidth + 'x' + innerHeight }); }
 
   // Bei schwachen Geräten automatisch sparen
   if (fixedTime == null) { frames++; if (dt > 0.03) slow++; if (frames === 90) { if (slow > 45 && pixelRatio > 1) { pixelRatio = Math.max(1, pixelRatio * 0.75); resize(); } else if (slow > 45 && quality > 0) quality = 0; frames = slow = 0; } }
