@@ -164,4 +164,32 @@ class ModesFlowTest {
         go(); rule.onNodeWithText("Weiter ▸").performClick(); rule.mainClock.advanceTimeBy(800)
         rule.onNodeWithText("Geschafft!").assertExists()
     }
+
+    @Test fun rideCockpitShowsSlopeAndCurvatureLive() {
+        show { RideScreen({}, "huegel", controller = stage) }
+        fun slide(u: Float) { rule.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { it(u) }; rule.mainClock.advanceTimeBy(300) }
+        assertTrue(stage.lastState!!.contains("\"type\":\"track\""))
+        rule.onNodeWithText("↗ 4").assertExists(); rule.onNodeWithText("bergauf · 75,96°").assertExists()        // Start: f′(0) = 4
+        rule.onNodeWithText("Rechtskurve (f″ < 0)").assertExists()
+        assertTrue(stage.lastRide!!.contains("view:'fp'"))
+        slide(0.5f)                                                                                                 // Gipfel bei x = 2
+        rule.onNodeWithText("→ 0").assertExists(); rule.onNodeWithText("waagerecht · 0°").assertExists()
+        rule.onNodeWithText("Hochpunkt bei x = 2").assertExists(); rule.onNodeWithText("f′ = 0 und f″ < 0").assertExists()
+        slide(0.75f)
+        rule.onNodeWithText("↘ −2").assertExists()
+        rule.onNodeWithTag("sicht").performClick(); rule.mainClock.advanceTimeBy(300)
+        assertTrue(stage.lastRide!!.contains("view:'out'"))
+    }
+
+    @Test fun rideDrivesByItselfAndStopsAtTheEnd() {
+        show { RideScreen({}, "huegel", controller = stage) }
+        rule.mainClock.autoAdvance = false        // sonst spult die Test-Uhr die laufende Fahrt von selbst bis zum Ende vor
+        rule.onNodeWithTag("fahren").performClick(); rule.mainClock.advanceTimeBy(1000)
+        rule.onNodeWithText("⏸ Anhalten").assertExists()
+        rule.mainClock.advanceTimeBy(60_000)
+        rule.onNodeWithText("↻ Noch einmal").assertExists()
+        rule.mainClock.autoAdvance = true
+        rule.onNodeWithTag("bahn-welle").performClick(); rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithText("f(x) = 2 · sin(x)").assertExists(); rule.onNodeWithText("▶ Losfahren").assertExists()
+    }
 }

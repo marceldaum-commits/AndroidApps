@@ -28,6 +28,7 @@ Lage-Check, Duell, Zu zweit, Klasse, Klausur-Planer, Lernstand, Zweite Chance, B
 - 🔎 **Fehler-Analyse** – typische Fehler (A − B statt B − A, nicht gemittelt, Kosinus statt Sinus, ⅓ vergessen …) werden gezielt benannt (`mistakes` in `Families`).
 - 🧩 **Schritt für Schritt** – vier Verfahren in Teilschritten (`Guides`). 📊 **Lernstand** (`Learn`). 🗓️ **Klausur-Planer** (`Planner`, auch im Widget).
 - 🏫 **Klasse** – Paket-Code `RLK-…` (`ClassCode`). 👥 **Zu zweit** (`Match`). 🧮 **3D-Rechner** im Baukasten (`Show.facts`).
+- 🎢 **Achterbahn fahren** – Fahrersicht auf dem Graphen mit Live-Cockpit für f, f′ und f″ (`Coaster`, `RideScreen`, Szenen-Objekt `track`, `RL.ride`).
 - 📐 **Querformat/Tablet** – Bühne links, Regler rechts (`LevelScreen`, ab Breite > 1,15 × Höhe).
 - 🎓 **Abi-Simulation** – drei zusammenhängende Aufgaben mit je vier Teilaufgaben und Bewertungseinheiten (`Exams`); freiwillig auf Zeit (45 s je BE).
 - 🧭 **Lage-Check** – acht Runden Lagebeziehung zweier Geraden erkennen; die Bühne zeigt die Geraden erst nach der Antwort.
@@ -66,6 +67,8 @@ Lage-Check, Duell, Zu zweit, Klasse, Klausur-Planer, Lernstand, Zweite Chance, B
 | ![](screenshots/41_schritt_fuer_schritt.png) | ![](screenshots/42_schritt.png) | ![](screenshots/43_lernstand.png) |
 | ![](screenshots/44_klausur_planer.png) | ![](screenshots/45_klasse.png) | ![](screenshots/46_zu_zweit.png) |
 | ![](screenshots/47_rechner.png) | ![](screenshots/15_einstellungen.png) | |
+
+| ![](screenshots/49_achterbahn_fahrersicht.png) | ![](screenshots/50_achterbahn_aussen.png) | |
 
 Querformat: ![](screenshots/48_querformat.png)
 

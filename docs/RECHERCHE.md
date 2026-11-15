@@ -122,3 +122,10 @@ Keine neue Suche, sondern Anwendung der Befunde oben:
   → „Schritt für Schritt“: erst t, dann der Punkt – mit sichtbarer Marke in der Bühne.
 - Verteiltes Lernen auf einen Termin hin (Cepeda u. a. 2008, siehe oben) → Klausur-Planer mit Tagespaketen statt Pauken am Vorabend.
 - Diese Punkte stammen aus bekannter Lernforschung, nicht aus einer neuen Suche; für die Oberstufe und für diese App gibt es keine eigenen Wirksamkeitsdaten.
+
+## Raumlicht 0.4.1 (15.11.2026): Ableitungen erleben statt ablesen
+
+- Idee des Nutzers: die Kurve aus der Fahrersicht abfahren, mit Steigung und Krümmung als Live-Daten. Passt zu den Befunden oben
+  (direkte Manipulation, sofort sichtbares Ergebnis, Raumvorstellung): f′ wird zur gefühlten Neigung, f″ zur Kurve nach links oder rechts.
+- Verkörperte Zugänge zu Graphen („Walk the graph“ mit Bewegungssensoren) gelten in der Mathematikdidaktik als hilfreich für das Verständnis von Steigung;
+  eigene Wirksamkeitsdaten für diese Umsetzung haben wir nicht.

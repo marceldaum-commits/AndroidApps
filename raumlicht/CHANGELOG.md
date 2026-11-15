@@ -2,6 +2,15 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.4.1 – Einsteigen bitte (15.11.2026)
+- **🎢 Achterbahn aus der Fahrersicht:** Der Graph ist die Bahn – du sitzt im Wagen. Schienen und Schwellen laufen auf dich zu,
+  bergab wird es schneller, bergauf langsamer.
+- **Cockpit mit Live-Daten:** Stelle x, Höhe f(x), Steigung f′(x) mit Pfeil, Wort und Winkel in Grad, Krümmung f″(x) als Links- oder Rechtskurve.
+- **Besondere Stellen melden sich:** An Hoch-, Tief- und Wendepunkten und an Nullstellen erscheint Lux mit der passenden Regel („f′ = 0 und f″ < 0“).
+- Selbst fahren lassen oder mit dem Regler vor- und zurückschieben; jederzeit zwischen Fahrersicht und Blick von außen wechseln.
+- Fünf Bahnen: Sanfter Hügel, Berg und Tal, Doppelkurve, Schüssel, Welle (Sinus).
+- Zu finden unter Backstage → „Achterbahn fahren“ und in Kapitel 14 über den Knopf „🎢 Mitfahren“ in der Bühne.
+
 ## 0.4.0 – Mehr als Geometrie (15.11.2026)
 - **Lux erkennt typische Fehler:** falsch herum abgezogen, nur addiert statt gemittelt, Kosinus statt Sinus, das Drittel vergessen …
   Statt „daneben“ sagt Lux jetzt genau, was passiert ist.

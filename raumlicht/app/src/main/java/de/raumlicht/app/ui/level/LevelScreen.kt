@@ -58,6 +58,8 @@ fun LevelScreen(
     /** Kleine Anzeige rechts oben, z. B. die Serie in der Jam-Session */
     badge: String? = null,
     doneLabel: String = "Tour geschafft! 🏆",
+    /** Zusatzknopf oben links in der Bühne, z. B. „🎢 Mitfahren“ im Achterbahn-Kapitel */
+    extra: Pair<String, () -> Unit>? = null,
 ) {
     var values by remember(level.id) { mutableStateOf(initial ?: level.start) }
     var phase by remember(level.id) { mutableStateOf(Phase.AIM) }
@@ -135,6 +137,8 @@ fun LevelScreen(
                 Box(m.padding(horizontal = 8.dp)) {
                     Stage(controller, Modifier.fillMaxSize())
                     StageFrame(accent)
+                    if (extra != null) Text(extra.first, Modifier.align(Alignment.TopStart).padding(10.dp).clip(RoundedCornerShape(12.dp)).background(Q.Space.copy(alpha = 0.8f)).border(1.5.dp, Q.Yellow, RoundedCornerShape(12.dp))
+                        .clickable(remember { MutableInteractionSource() }, null) { extra.second() }.padding(horizontal = 12.dp, vertical = 7.dp), color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     Text("☝ drehen · ✌ zoomen", Modifier.align(Alignment.TopEnd).padding(10.dp), color = Q.Muted.copy(alpha = 0.8f), fontSize = 11.sp)
                     // Dreimal auf den Hinweis tippen zeigt die Selbstauskunft der Bühne (für Fehlersuche)
                     if (showInfo) Text(controller.info ?: "Bühne hat sich noch nicht gemeldet", Modifier.align(Alignment.BottomStart).background(Q.Space.copy(alpha = 0.85f)).padding(8.dp), color = Q.Yellow, fontSize = 10.sp, lineHeight = 12.sp)

@@ -55,12 +55,21 @@ class StageController {
     fun fire(b: Beam, ms: Int) = send("RL.fire({from:${js(b.from)},to:${js(b.to)},color:'${b.color}',ms:$ms,hit:${b.hit}})")
     fun burst(p: V3, color: String) = send("RL.burst(${js(p)},'$color')")
     fun skin(color: String) = send("RL.skin('$color')")
+    /** Mitfahren auf der Bahn „bahn“: u in 0..1; inside = Fahrersicht, sonst Blick von außen mit Wagen */
+    fun ride(u: Double, inside: Boolean) { val cmd = "RL.ride({id:'bahn',u:$u,view:'${if (inside) "fp" else "out"}'})"; lastRide = cmd; send(cmd) }
+    fun rideOff() { lastRide = null; send("RL.ride(null)") }
+    var lastRide: String? = null
+        private set
     fun party(seconds: Double = 4.0) = send("RL.party($seconds)")
     fun camera(az: Double? = null, el: Double? = null, dist: Double? = null) =
         send("RL.setCamera({${listOfNotNull(az?.let { "az:$it" }, el?.let { "el:$it" }, dist?.let { "dist:$it" }).joinToString(",")}})")
 
     private fun js(v: V3) = "[${v.x},${v.y},${v.z}]"
-    private fun send(cmd: String) { log += cmd; if (ready) run(cmd) else queue += cmd }
+    private fun send(cmd: String) {
+        // Fahrbefehle kommen in jedem Bild – nur der letzte zählt, sie werden nicht protokolliert oder gestapelt
+        if (cmd.startsWith("RL.ride({")) { if (ready) run(cmd) else { queue.removeAll { it.startsWith("RL.ride({") }; queue += cmd }; return }
+        log += cmd; if (ready) run(cmd) else queue += cmd
+    }
     private fun run(cmd: String) { web?.evaluateJavascript(cmd, null) }
 
     internal fun attach(w: WebView) { web = w; ready = false }

@@ -146,6 +146,12 @@ class ScreenshotTest {
     @Test fun calculator() = shot("47_rechner", "baukasten", prepare = { it.onNodeWithTag("rechner").performClick() }) {
         de.raumlicht.app.ui.home.BuilderScreen(de.raumlicht.core.model.Show.demo, {}, {})
     }
+    @Test fun rideInside() = shot("49_achterbahn_fahrersicht", "fahrt-gipfel", prepare = { it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.2f) } }) {
+        de.raumlicht.app.ui.home.RideScreen({}, "bergtal")
+    }
+    @Test fun rideOutside() = shot("50_achterbahn_aussen", "fahrt-aussen", prepare = {
+        it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.5f) }
+    }) { de.raumlicht.app.ui.home.RideScreen({}, "doppel") }
     @Test fun settings() = shot("15_einstellungen", "start") {
         SettingsScreen(true, {}, true, {}, true, {}, true, {}, "0.1.0", UpdateState.Idle, {})
     }

@@ -12,7 +12,7 @@ const url = pathToFileURL(path.resolve('../app/src/main/assets/scene/index.html'
 for (const s of states) {
   await page.goto(url); await page.waitForFunction(() => window.RL);
   await page.evaluate((s) => { RL.pause(); if (s.camera) RL.setCamera(s.camera); RL.setState(s.state); RL.advance(s.settle ?? 2.5);
-    for (const a of s.actions ?? []) { if (a.fire) RL.fire(a.fire); if (a.party) RL.party(a.party); if (a.state) RL.setState(a.state); RL.advance(a.wait ?? 1); } return RL.snapshot(); }, s).then((d) => fs.writeFileSync(path.join(outDir, s.name + '.png'), Buffer.from(d.split(',')[1], 'base64')));
+    for (const a of s.actions ?? []) { if (a.fire) RL.fire(a.fire); if (a.party) RL.party(a.party); if (a.ride) RL.ride(a.ride); if (a.state) RL.setState(a.state); RL.advance(a.wait ?? 1); } return RL.snapshot(); }, s).then((d) => fs.writeFileSync(path.join(outDir, s.name + '.png'), Buffer.from(d.split(',')[1], 'base64')));
   console.log('ok', s.name);
 }
 await browser.close();

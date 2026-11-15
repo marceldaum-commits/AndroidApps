@@ -61,6 +61,8 @@ object Routes {
     const val PLANNER = "klausur"
     const val CLASS = "klasse"
     const val MATCH = "zu-zweit"
+    const val RIDE = "achterbahn/{id}"
+    fun ride(id: String) = "achterbahn/$id"
     fun guide(id: String) = "schritte/$id"
     fun exam(id: String, timed: Boolean) = "abi/$id/${if (timed) 1 else 0}"
     fun jam(topic: String) = "jam/$topic"
@@ -120,7 +122,7 @@ class MainActivity : ComponentActivity() {
         // Musik passend zum Bildschirm: ruhig im Tourplan, treibend auf der Bühne
         val entry by nav.currentBackStackEntryAsState()
         val route = entry?.destination?.route
-        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route in setOf(Routes.LEVEL, Routes.JAM, Routes.DAILY, Routes.EXAM, Routes.TRAINING, Routes.DUEL, Routes.LAGE, Routes.GUIDE, Routes.CLASS, Routes.MATCH, Routes.PLANNER)) MusicMood.FLIGHT else MusicMood.MENU) }
+        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route in setOf(Routes.LEVEL, Routes.JAM, Routes.DAILY, Routes.EXAM, Routes.TRAINING, Routes.DUEL, Routes.LAGE, Routes.GUIDE, Routes.CLASS, Routes.MATCH, Routes.PLANNER, Routes.RIDE)) MusicMood.FLIGHT else MusicMood.MENU) }
         val skin by vm.settings.skin.collectAsStateWithLifecycle()
         val exams by vm.settings.exams.collectAsStateWithLifecycle()
         val lageBest by vm.settings.lageBest.collectAsStateWithLifecycle()
@@ -137,6 +139,7 @@ class MainActivity : ComponentActivity() {
         val tourStars = remember(stars) { Levels.all.sumOf { stars[it.id] ?: 0 } }
 
         CompositionLocalProvider(de.raumlicht.app.ui.stage.LocalLuxSkin provides skin) {
+        val rideFor = remember { mapOf("14-1" to "schuessel", "14-2" to "huegel", "14-3" to "bergtal", "14-4" to "doppel") }
         NavHost(nav, Routes.HOME) {
             composable(Routes.HOME) {
                 HomeScreen(Levels.chapters, stars, { nav.goOnce(Routes.level(it)) }, { nav.goOnce(Routes.SETTINGS) },
@@ -154,7 +157,9 @@ class MainActivity : ComponentActivity() {
                     onIntroSeen = { vm.settings.markIntroSeen(level.chapter) },
                     onSolved = { s, a -> vm.record(level.id, s, a) },
                     onNext = next?.let { n -> { nav.navigate(Routes.level(n.id)) { popUpTo(Routes.HOME); launchSingleTop = true } } },
-                    onBack = { nav.popSafe() })
+                    onBack = { nav.popSafe() },
+                    // Im Achterbahn-Kapitel: dieselbe Kurve aus der Fahrersicht abfahren
+                    extra = rideFor[level.id]?.let { id -> "🎢 Mitfahren" to { nav.goOnce(Routes.ride(id)) } })
             }
             composable(Routes.DAILY) {
                 val day = remember { vm.today() }
@@ -185,6 +190,7 @@ class MainActivity : ComponentActivity() {
             composable(Routes.BACKSTAGE) {
                 val weak = remember(stars) { Training.levels(stars).size }
                 BackstageScreen(listOf(
+                    BackstageEntry("🎢", "Achterbahn fahren", "die Kurve aus der Fahrersicht erleben – mit Höhe, Steigung und Krümmung live", Q.Cyan) { nav.goOnce(Routes.ride(Coaster.rides.first().id)) },
                     BackstageEntry("🧩", "Schritt für Schritt", "schwere Verfahren in kleinen Schritten – mit Rückmeldung nach jedem", Q.Green) { nav.goOnce(Routes.GUIDES) },
                     BackstageEntry("📊", "Lernstand", Learn.summary(Learn.topics(stars)), Q.Cyan) { nav.goOnce(Routes.LEARN) },
                     BackstageEntry("🗓️", "Klausur-Planer", plan?.let { Planner.headline(it, vm.today(), stars) } ?: "Termin eintragen, Tagespakete bekommen", Q.Orange) { nav.goOnce(Routes.PLANNER) },
@@ -217,6 +223,7 @@ class MainActivity : ComponentActivity() {
             }
             composable(Routes.CLASS) { ClassScreen({ l, s, a -> vm.record(l.id, s, a) }) { nav.popSafe() } }
             composable(Routes.MATCH) { MatchScreen({ nav.popSafe() }) }
+            composable(Routes.RIDE) { e -> RideScreen({ nav.popSafe() }, e.arguments?.getString("id") ?: Coaster.rides.first().id) }
             composable(Routes.LAGE) { LageScreen(lageBest, vm.settings::recordLage, { nav.popSafe() }) }
             composable(Routes.DUEL) { DuelScreen({ nav.popSafe() }) }
             composable(Routes.TRAINING) {

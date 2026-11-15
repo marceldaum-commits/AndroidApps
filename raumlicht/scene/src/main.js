@@ -186,7 +186,7 @@ const dust = (() => {
   const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('s', new THREE.BufferAttribute(s, 1));
   const m = new THREE.ShaderMaterial({
     transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: { t: { value: 0 }, pr: { value: pixelRatio } },
-    vertexShader: 'attribute float s; uniform float t, pr; varying float a; void main(){ vec3 p = position; p.y = mod(p.y + t*(0.08+s*0.12), 11.); p.x += sin(t*0.2+s*30.)*0.6; vec4 mv = modelViewMatrix*vec4(p,1.); a = 0.18+0.16*sin(t+s*20.); gl_PointSize = pr*(1.+s*2.)*7./-mv.z; gl_Position = projectionMatrix*mv; }',
+    vertexShader: 'attribute float s; uniform float t, pr; varying float a; void main(){ vec3 p = position; p.y = mod(p.y + t*(0.08+s*0.12), 11.); p.x += sin(t*0.2+s*30.)*0.6; vec4 mv = modelViewMatrix*vec4(p,1.); a = 0.18+0.16*sin(t+s*20.); gl_PointSize = min(pr*(1.+s*2.)*7./-mv.z, 5.*pr); gl_Position = projectionMatrix*mv; }',
     fragmentShader: 'varying float a; void main(){ float d = length(gl_PointCoord-.5); gl_FragColor = vec4(vec3(0.6,0.7,1.)*a, 1.0 - smoothstep(.1,.5,d)); }',
   });
   const p = new THREE.Points(g, m); p.frustumCulled = false; decor.add(p); return m;
@@ -202,12 +202,13 @@ function placeRod(mesh, a, b, r) {
   if (len > 1e-6) mesh.quaternion.setFromUnitVectors(UP, d.multiplyScalar(1 / len));
 }
 // Leuchtender Stab: heißer Kern + weicher Schein (Bloom macht den Rest)
-function glowRod(c, r = 0.03, power = 2.6) {
+function glowRod(c, r = 0.03, power = 2.6, haloScale = 4.2) {
   const g = new THREE.Group();
   const core = new THREE.Mesh(cylGeo, new THREE.MeshBasicMaterial({ color: hdr(c, power).lerp(new THREE.Color(power, power, power), 0.35), transparent: true }));
   const halo = new THREE.Mesh(cylGeo, new THREE.MeshBasicMaterial({ color: col(c), transparent: true, opacity: 0.16, blending: THREE.AdditiveBlending, depthWrite: false }));
   g.add(core, halo); g.userData = { core, halo, r };
-  g.set = (a, b) => { placeRod(core, a, b, r); placeRod(halo, a, b, r * 4.2); };
+  halo.visible = haloScale > 0;
+  g.set = (a, b) => { placeRod(core, a, b, r); if (haloScale > 0) placeRod(halo, a, b, r * haloScale); };
   g.fade = (o) => { core.material.opacity = o; halo.material.opacity = 0.16 * o; };
   return g;
 }
@@ -447,13 +448,44 @@ makers.lathe = (s) => {
   };
 };
 // Leuchtender Linienzug (für Kurven)
-function glowRodChain(c) {
+function glowRodChain(c, radius = 0.028, power = 2.6, haloScale = 4.2) {
   const g = new THREE.Group(); let rods = [];
   return { g, set(points) {
-    while (rods.length < points.length - 1) { const r = glowRod(c, 0.028, 2.6); rods.push(r); g.add(r); }
+    while (rods.length < points.length - 1) { const r = glowRod(c, radius, power, haloScale); rods.push(r); g.add(r); }
     rods.forEach((r, i) => { r.visible = i < points.length - 1; if (r.visible) r.set(points[i], points[i + 1]); });
   } };
 }
+
+// Achterbahn: zwei Schienen mit Schwellen und Stützen entlang einer Kurve – zum Mitfahren aus der Fahrersicht
+makers.track = (s) => {
+  const g = new THREE.Group(), c = s.color ?? 'cyan';
+  const railL = glowRodChain(c, 0.022, 2.0, 0), railR = glowRodChain(c, 0.022, 2.0, 0), ties = new THREE.Group(), posts = new THREE.Group();
+  const cart = new THREE.Group();
+  cart.add(new THREE.Mesh(new THREE.SphereGeometry(0.2, 20, 16), new THREE.MeshBasicMaterial({ color: hdr('yellow', 3) })), glowSprite('yellow', 1.6, 0.8));
+  cart.visible = false;
+  g.add(railL.g, railR.g, ties, posts, cart);
+  const side = new THREE.Vector3(0, 0, 1), tieGeo = new THREE.BoxGeometry(0.06, 0.03, 0.5), tieMat = new THREE.MeshBasicMaterial({ color: hdr(c, 0.55), transparent: true, opacity: 0.8 });
+  let pts = [], key = '';
+  return {
+    g, isTrack: true,
+    update(n) {
+      const k = JSON.stringify(n.corners); if (k === key) return; key = k;
+      pts = n.corners.map((q) => V(q));
+      railL.set(pts.map((q) => q.clone().addScaledVector(side, 0.2))); railR.set(pts.map((q) => q.clone().addScaledVector(side, -0.2)));
+      ties.clear(); posts.clear();
+      pts.forEach((q, i) => {
+        const next = pts[Math.min(i + 1, pts.length - 1)], prev = pts[Math.max(i - 1, 0)];
+        const tie = new THREE.Mesh(tieGeo, tieMat); tie.position.copy(q).add(new THREE.Vector3(0, -0.03, 0));
+        tie.rotation.z = Math.atan2(next.y - prev.y, next.x - prev.x); ties.add(tie);
+        if (i % 6 === 0 && q.y > 0.3) { const post = dashed(c, 0.35); post.set(q.clone().add(new THREE.Vector3(0, -0.05, 0)), new THREE.Vector3(q.x, 0.01, q.z)); posts.add(post); }
+      });
+    },
+    // Ort auf der Bahn für u in 0..1
+    at(u) { if (pts.length < 2) return new THREE.Vector3(); const f = THREE.MathUtils.clamp(u, 0, 1) * (pts.length - 1), i = Math.min(Math.floor(f), pts.length - 2); return pts[i].clone().lerp(pts[i + 1], f - i); },
+    showCart(p) { cart.visible = !!p; if (p) cart.position.copy(p).add(new THREE.Vector3(0, 0.22, 0)); },
+    tick() {},
+  };
+};
 
 // Lux, die Lichtdrohne
 makers.drone = (s) => {
@@ -587,6 +619,9 @@ function party(sec = 4) {
 // ───────── Kamera: mit dem Finger drehen, mit zwei Fingern zoomen ─────────
 const cam = { target: new THREE.Vector3(4, 2, 4), az: 0.62, el: 0.42, dist: 19, tAz: 0.62, tEl: 0.42, tDist: 19, tTarget: new THREE.Vector3(4, 2, 4) };
 let shake = 0, lastTouch = 0;
+// Mitfahrt auf einer Bahn: { id, u (Ziel 0..1), cu (aktuell), view: 'fp' (Fahrersicht) | 'out' (von außen) }
+let ride = null;
+function setFov(f) { if (camera.fov !== f) { camera.fov = f; camera.updateProjectionMatrix(); } }
 function frameBounds(instant) {
   const { min, max } = bounds, c = [(min[0] + max[0]) / 2, (min[1] + max[1]) / 2, max[2] * 0.36];
   cam.tTarget.copy(V(c));
@@ -720,6 +755,21 @@ function step(dt) {
   const sh = new THREE.Vector3((Math.random() - 0.5), (Math.random() - 0.5), (Math.random() - 0.5)).multiplyScalar(shake * 0.35);
   camera.position.set(cam.target.x + Math.sin(cam.az) * Math.cos(cam.el) * cam.dist, cam.target.y + Math.sin(cam.el) * cam.dist, cam.target.z + Math.cos(cam.az) * Math.cos(cam.el) * cam.dist).add(sh);
   camera.lookAt(cam.target);
+  const track = ride && objects.get(ride.id);
+  if (track && track.at) {
+    ride.cu += (ride.u - ride.cu) * (1 - Math.exp(-12 * dt));
+    const here = track.at(ride.cu);
+    if (ride.view === 'fp') {
+      // Fahrersicht: knapp über den Schienen, Blick entlang der Bahn
+      const a = track.at(ride.cu - 0.02), b = track.at(ride.cu + 0.04), dir = b.sub(a); if (dir.lengthSq() < 1e-8) dir.set(1, 0, 0); dir.normalize();
+      const up = new THREE.Vector3(-dir.y, dir.x, 0).normalize();
+      // Sitzhöhe über der Schiene; der Blick geht ein Stück die Strecke entlang, damit man sieht, was kommt
+      camera.position.copy(here).addScaledVector(up, 0.75).addScaledVector(dir, -0.35).add(sh);
+      const ahead = track.at(ride.cu + 0.09);
+      camera.up.copy(up); camera.lookAt(ahead.lengthSq() > 0 && ride.cu < 0.9 ? ahead.addScaledVector(up, 0.25) : here.clone().addScaledVector(dir, 2.5)); camera.up.set(0, 1, 0);
+      setFov(68); track.showCart(null); bloom.strength = 0.3;
+    } else { setFov(42); track.showCart(here); bloom.strength = 0.62; }
+  } else { setFov(42); bloom.strength = 0.62; }
   key.target.position.copy(cam.tTarget); key.position.copy(cam.tTarget).add(new THREE.Vector3(5, 16, 7));
 
   sky.userData.mat.uniforms.t.value = t; sky.userData.stars.uniforms.t.value = t; dust.uniforms.t.value = t;
@@ -750,6 +800,9 @@ window.RL = {
   setState: (s) => setState(typeof s === 'string' ? JSON.parse(s) : s),
   fire: (s) => fire(typeof s === 'string' ? JSON.parse(s) : s),
   burst: (p, c) => burst(p, c), party, setCamera,
+  // Mitfahren: ride({id, u, view}) setzt die Stelle auf der Bahn, ride(null) beendet die Fahrt
+  ride: (r) => { if (!r) { const t = ride && objects.get(ride.id); if (t && t.showCart) t.showCart(null); ride = null; return; }
+    ride = { id: r.id ?? 'bahn', u: r.u ?? 0, cu: ride && ride.id === (r.id ?? 'bahn') ? ride.cu : (r.u ?? 0), view: r.view ?? 'fp' }; },
   skin: (c) => { luxSkin = c; for (const o of objects.values()) if (o.skin) o.skin(c); },
   pause: () => { paused = true; }, resume: () => { if (paused) { paused = false; clock.getDelta(); frame(); } },
   // Für Bildschirmfotos: Zeit von Hand vorspulen
