@@ -2,9 +2,6 @@ package de.wissensgarten.core.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import java.io.ByteArrayOutputStream
-import java.util.zip.GZIPInputStream
-import java.util.zip.GZIPOutputStream
 
 /*
  * Geräte-Sync über den versteckten App-Ordner im Google Drive der Familie.
@@ -81,13 +78,11 @@ object Sync {
     private val json = Json { ignoreUnknownKeys = true; encodeDefaults = false }
 
     fun encode(s: SyncSnapshot): ByteArray {
-        val out = ByteArrayOutputStream()
-        GZIPOutputStream(out).use { it.write(json.encodeToString(SyncSnapshot.serializer(), s).toByteArray()) }
-        return out.toByteArray()
+        return Platform.gzip(json.encodeToString(SyncSnapshot.serializer(), s).encodeToByteArray())
     }
 
     fun decode(bytes: ByteArray): SyncSnapshot =
-        json.decodeFromString(SyncSnapshot.serializer(), String(GZIPInputStream(bytes.inputStream()).use { it.readBytes() }))
+        json.decodeFromString(SyncSnapshot.serializer(), Platform.gunzip(bytes).decodeToString())
 
     fun encodeText(s: SyncSnapshot) = json.encodeToString(SyncSnapshot.serializer(), s)
     fun decodeText(t: String) = json.decodeFromString(SyncSnapshot.serializer(), t)

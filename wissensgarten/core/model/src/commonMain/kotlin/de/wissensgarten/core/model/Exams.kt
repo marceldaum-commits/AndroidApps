@@ -38,7 +38,7 @@ object ExamPlanner {
     const val READY = 0.9
 
     /** Kalendertag nach Ortszeit (wie im Kalender gewählt) */
-    fun day(ms: Long, zone: java.util.TimeZone = java.util.TimeZone.getDefault()) = Scheduler.localDay(ms, zone)
+    fun day(ms: Long) = Scheduler.localDay(ms)
 
     /** Wird diese Karte am Prüfungstag sitzen? (Mitte des Prüfungstags) */
     fun ready(c: StudyCard, exam: Exam): Boolean =

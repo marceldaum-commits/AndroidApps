@@ -1,5 +1,6 @@
 package de.wissensgarten.core.model
 
+import kotlin.math.pow
 import kotlin.random.Random
 
 /** Ein Ton: Beginn und Länge in Schlägen, MIDI-Tonhöhe, Lautstärke 0..1. */
@@ -131,8 +132,8 @@ object Composer {
     }
 
     fun scale(key: Int, degree: Int, steps: IntArray = MAJOR): Int {
-        val oct = Math.floorDiv(degree, 7)
-        return key + 12 * oct + steps[Math.floorMod(degree, 7)]
+        val oct = degree.floorDiv(7)
+        return key + 12 * oct + steps[degree.mod(7)]
     }
 
     private fun nearest(candidates: List<Int>, target: Int): Int {
@@ -141,5 +142,5 @@ object Composer {
         return all.minBy { kotlin.math.abs(it - target) }
     }
 
-    fun frequency(midi: Int) = 440.0 * Math.pow(2.0, (midi - 69) / 12.0)
+    fun frequency(midi: Int) = 440.0 * 2.0.pow((midi - 69) / 12.0)
 }

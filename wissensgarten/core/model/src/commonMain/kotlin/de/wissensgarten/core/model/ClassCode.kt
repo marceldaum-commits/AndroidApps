@@ -2,11 +2,6 @@ package de.wissensgarten.core.model
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import java.io.ByteArrayOutputStream
-import java.util.Base64
-import java.util.zip.CRC32
-import java.util.zip.Deflater
-import java.util.zip.Inflater
 
 /**
  * Klassen-Code: Eine Lehrkraft (oder ein Elternteil) teilt ein eigenes Beet als QR-Code oder Link.
@@ -28,13 +23,9 @@ object ClassCodes {
 
     fun encode(set: ClassSet): String {
         val trimmed = set.copy(cards = set.cards.take(MAX_CARDS))
-        val raw = json.encodeToString(ClassSet.serializer(), trimmed).toByteArray()
-        val crc = CRC32().apply { update(raw) }.value.toString(36)
-        val d = Deflater(Deflater.BEST_COMPRESSION, true).apply { setInput(raw); finish() }
-        val out = ByteArrayOutputStream(); val buf = ByteArray(1024)
-        while (!d.finished()) out.write(buf, 0, d.deflate(buf))
-        d.end()
-        return PREFIX + Base64.getUrlEncoder().withoutPadding().encodeToString(out.toByteArray()) + "." + crc
+        val raw = json.encodeToString(ClassSet.serializer(), trimmed).encodeToByteArray()
+        val crc = Codes.crc32(raw).toString(36)
+        return PREFIX + Codes.encode(Platform.deflateRaw(raw)) + "." + crc
     }
 
     fun link(set: ClassSet) = LINK_BASE + encode(set)
@@ -46,19 +37,10 @@ object ClassCodes {
     fun decode(text: String): ClassSet? {
         val m = Regex("""WGK1-([A-Za-z0-9_-]+)\.([0-9a-z]+)""").find(text) ?: return null
         return runCatching {
-            val packed = Base64.getUrlDecoder().decode(m.groupValues[1])
-            val inf = Inflater(true).apply { setInput(packed) }
-            val out = ByteArrayOutputStream(); val buf = ByteArray(1024)
-            while (!inf.finished()) {
-                val n = inf.inflate(buf)
-                if (n == 0 && (inf.needsInput() || inf.needsDictionary())) break
-                out.write(buf, 0, n)
-                if (out.size() > 200_000) return null
-            }
-            inf.end()
-            val raw = out.toByteArray()
-            if (CRC32().apply { update(raw) }.value.toString(36) != m.groupValues[2]) return null
-            json.decodeFromString(ClassSet.serializer(), String(raw)).let { s ->
+            val raw = Platform.inflateRaw(Codes.decode(m.groupValues[1]))
+            if (raw.size > 200_000) return null
+            if (Codes.crc32(raw).toString(36) != m.groupValues[2]) return null
+            json.decodeFromString(ClassSet.serializer(), raw.decodeToString()).let { s ->
                 s.copy(title = s.title.take(60), cards = s.cards.take(MAX_CARDS).filter { it.q.isNotBlank() && it.a.isNotBlank() })
             }
         }.getOrNull()

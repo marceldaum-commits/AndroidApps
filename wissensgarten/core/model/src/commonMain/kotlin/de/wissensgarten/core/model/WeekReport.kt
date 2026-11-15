@@ -23,10 +23,10 @@ object WeekReport {
     /** Grobe Schätzung: eine Karte dauert etwa 12 Sekunden. */
     const val SECONDS_PER_CARD = 12
 
-    fun build(entries: List<Entry>, cards: Map<String, CardInfo>, now: Long, zone: java.util.TimeZone = java.util.TimeZone.getDefault()): Report {
-        val today = Scheduler.localDay(now, zone)
-        val week = entries.filter { today - Scheduler.localDay(it.time, zone) in 0..6 }
-        val dayset = week.map { Scheduler.localDay(it.time, zone) }.toSet()
+    fun build(entries: List<Entry>, cards: Map<String, CardInfo>, now: Long, offset: (Long) -> Int = Platform::tzOffsetMs): Report {
+        val today = Scheduler.localDay(now, offset)
+        val week = entries.filter { today - Scheduler.localDay(it.time, offset) in 0..6 }
+        val dayset = week.map { Scheduler.localDay(it.time, offset) }.toSet()
         val days = (6 downTo 0).map { (today - it) in dayset }
         fun ok(e: Entry) = e.rating != Rating.AGAIN.ordinal
         val pct = { l: List<Entry> -> if (l.isEmpty()) 0 else l.count(::ok) * 100 / l.size }

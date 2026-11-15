@@ -1,10 +1,27 @@
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
+// Reine Lern-Logik – gemeinsam für Android-App (jvm) und WebApp (wasmJs)
 plugins {
-    id("org.jetbrains.kotlin.jvm")
+    id("org.jetbrains.kotlin.multiplatform")
     id("org.jetbrains.kotlin.plugin.serialization")
 }
-java { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
-kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
-dependencies {
-    api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
-    testImplementation("junit:junit:4.13.2")
+kotlin {
+    jvm { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
+    @OptIn(ExperimentalWasmDsl::class)
+    wasmJs { browser() }
+    compilerOptions {
+        optIn.add("kotlin.io.encoding.ExperimentalEncodingApi")
+        freeCompilerArgs.add("-Xexpect-actual-classes")
+    }
+    sourceSets {
+        commonMain.dependencies {
+            api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+            api("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+        }
+        jvmTest.dependencies { implementation("junit:junit:4.13.2") }
+        wasmJsMain.dependencies {
+            implementation(npm("pako", "2.1.0"))
+            implementation("org.jetbrains.kotlinx:kotlinx-browser:0.5.0")
+        }
+    }
 }

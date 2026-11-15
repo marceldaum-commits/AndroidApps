@@ -267,7 +267,7 @@ class MainActivity : ComponentActivity() {
                 route == Routes.REVIEW || route == Routes.DUEL_PLAY || route == Routes.BLITZ || route == Routes.WEEDS -> de.wissensgarten.core.model.MusicMood.PLAY
                 evening || route == Routes.STORY || route == Routes.CHAPTER -> de.wissensgarten.core.model.MusicMood.NIGHT
                 // Festzeit: eigene Musik im Garten
-                else -> when (de.wissensgarten.core.model.Seasons.festival(java.time.LocalDate.now())?.id) {
+                else -> when (de.wissensgarten.core.model.Seasons.festival(de.wissensgarten.core.model.Seasons.today())?.id) {
                     "advent" -> de.wissensgarten.core.model.MusicMood.ADVENT
                     "halloween" -> de.wissensgarten.core.model.MusicMood.HALLOWEEN
                     "ostern" -> de.wissensgarten.core.model.MusicMood.OSTERN

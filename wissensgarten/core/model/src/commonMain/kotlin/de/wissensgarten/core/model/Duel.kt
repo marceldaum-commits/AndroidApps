@@ -3,8 +3,6 @@ package de.wissensgarten.core.model
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import java.util.Base64
-import java.util.zip.CRC32
 import kotlin.math.roundToInt
 import kotlin.random.Random
 
@@ -75,19 +73,19 @@ object Duels {
     }
 
     fun encode(d: Duel): String {
-        val bytes = json.encodeToString(Duel.serializer(), d.copy(results = d.results.takeLast(MAX_PLAYERS))).toByteArray()
-        val crc = CRC32().apply { update(bytes) }.value.toString(36)
-        return PREFIX + Base64.getUrlEncoder().withoutPadding().encodeToString(bytes) + "." + crc
+        val bytes = json.encodeToString(Duel.serializer(), d.copy(results = d.results.takeLast(MAX_PLAYERS))).encodeToByteArray()
+        val crc = Codes.crc32(bytes).toString(36)
+        return PREFIX + Codes.encode(bytes) + "." + crc
     }
 
     /** Findet einen Duell-Code auch mitten in einer weitergeleiteten Nachricht. Null, wenn kaputt. */
     fun decode(text: String): Duel? {
         val m = Regex("""WG1-([A-Za-z0-9_-]+)\.([0-9a-z]+)""").find(text) ?: return null
         return runCatching {
-            val bytes = Base64.getUrlDecoder().decode(m.groupValues[1])
-            val crc = CRC32().apply { update(bytes) }.value.toString(36)
+            val bytes = Codes.decode(m.groupValues[1])
+            val crc = Codes.crc32(bytes).toString(36)
             if (crc != m.groupValues[2]) return null
-            json.decodeFromString(Duel.serializer(), String(bytes))
+            json.decodeFromString(Duel.serializer(), bytes.decodeToString())
         }.getOrNull()
     }
 

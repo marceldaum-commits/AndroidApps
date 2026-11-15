@@ -48,14 +48,14 @@ object Scheduler {
     const val DAY_MS = 24L * 60 * 60 * 1000
 
     /** Kalendertag nach Ortszeit – damit „heute“ um Mitternacht wechselt, nicht um 1 oder 2 Uhr (UTC). */
-    fun localDay(ms: Long, zone: java.util.TimeZone = java.util.TimeZone.getDefault()): Long = Math.floorDiv(ms + zone.getOffset(ms), DAY_MS)
+    fun localDay(ms: Long, offset: (Long) -> Int = Platform::tzOffsetMs): Long = (ms + offset(ms)).floorDiv(DAY_MS)
     const val TARGET = 0.9
 
     /**
      * Ferien-Zeiten (von Eltern eingeschaltet): Darin vergeht die Garten-Zeit nur zu [Holidays.SPEED] –
      * die Pflanzen welken viermal langsamer. Wird von der App beim Start und beim Umschalten gesetzt.
      */
-    @Volatile var holidays: List<LongRange> = emptyList()
+    var holidays: List<LongRange> = emptyList()
 
     /** Garten-Zeit zwischen zwei Zeitpunkten (ms) – Ferien zählen nur zu einem Viertel. */
     fun elapsed(from: Long, to: Long): Long = Holidays.elapsed(from, to, holidays)

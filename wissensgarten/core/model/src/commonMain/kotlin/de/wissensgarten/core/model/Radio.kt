@@ -52,7 +52,7 @@ object Radio {
     /** Nach der Denkpause bei SELF */
     fun selfReveal(q: Question) = "Die Antwort ist: ${q.card.back}. Wusstest du es? Ja oder nein?"
 
-    fun praise(n: Int) = listOf("Richtig!", "Super!", "Genau!", "Klasse!", "Stimmt!", "Bravo!")[Math.floorMod(n, 6)]
+    fun praise(n: Int) = listOf("Richtig!", "Super!", "Genau!", "Klasse!", "Stimmt!", "Bravo!")[n.mod(6)]
 
     fun correction(q: Question) = "Fast! Die Antwort ist: ${q.card.back}."
 

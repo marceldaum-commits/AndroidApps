@@ -138,7 +138,7 @@ object Quests {
         return (listOf(Kind.WATER) + pool.take(PER_DAY - 1)).map { Quest(it, it.amounts.random(r)) }
     }
     fun done(q: Quest, progress: Map<String, Int>) = (progress[q.kind.name] ?: 0) >= q.amount
-    fun week(day: Long) = Math.floorDiv(day + 3, 7)
+    fun week(day: Long) = (day + 3).floorDiv(7L)
     fun encode(m: Map<String, Int>) = m.entries.joinToString(";") { "${it.key}=${it.value}" }
     fun decode(s: String?): Map<String, Int> = s.orEmpty().split(';').mapNotNull { e ->
         val i = e.indexOf('='); if (i <= 0) null else e.substring(i + 1).toIntOrNull()?.let { e.substring(0, i) to it }

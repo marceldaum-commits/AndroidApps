@@ -79,7 +79,7 @@ object Games {
             // Tippen erst, wenn die Karte schon ein paarmal dran war – dann ist freies Erinnern machbar
             if (canType && card.memory.reps >= 2 && typePossible(card.back)) { add(GameMode.TYPE); add(GameMode.TYPE) }
         }
-        val pick = Math.floorMod(card.id.hashCode() * 31 + card.memory.reps * 7, pool.size)
+        val pick = (card.id.hashCode() * 31 + card.memory.reps * 7).mod(pool.size)
         return pool[pick]
     }
 
