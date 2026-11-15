@@ -12,7 +12,7 @@ Neueste Meldung oben.
   - **Anzeige:** in der Statusleiste und im Ergebnis („+20 💫“).
 - **🎩 Blitz-Garderobe:**
   - 16 selbst gezeichnete Teile in 5 Bereichen: Hüte (Basecap, Zylinder, Zauberhut, Astronauten-Helm, Königskrone …), Brillen, Hals (Fliege, Schal), Anzug (Fußball-Trikot) und Umhang. Sie kosten 30–400 Funken.
-  - Blitz trägt sein Outfit überall: Startseite, Spiel, Ergebnis, Merk-Karten, Reise-Karte und Widget-Bild beim nächsten Neubau.
+  - Blitz trägt sein Outfit überall in der App: Startseite, Spiel, Ergebnis, Merk-Karten, Reise-Karte. Das Bild im Android-Widget bleibt der Standard-Blitz.
   - Bereits gekaufte Teile kann man an- und ausziehen.
 - **🏠 Blitz' Zimmer:**
   - Fenster mit Tag- und Nachthimmel (Merk-Sterne nachts), Regal mit den Reise-Stickern, Pokale für Abzeichen, Teleskop, sobald Merk-Aufgaben fest sitzen.
