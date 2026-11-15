@@ -196,6 +196,14 @@ class WebHost : AppHost {
     }
     override fun restart() = jsReload()
     override fun keepScreenOn(on: Boolean) = jsKeepAwake(on)
+    @androidx.compose.runtime.Composable
+    override fun WelcomeRestore(onRestored: (Boolean) -> Unit) {
+        androidx.compose.foundation.layout.Column(horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+            androidx.compose.material3.Text("Dein Fortschritt bleibt nur in diesem Browser – kein Konto, keine Werbung.",
+                style = androidx.compose.material3.MaterialTheme.typography.bodySmall, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            de.wissensgarten.app.ui.settings.LegalLinks()
+        }
+    }
     override fun tilt(): Flow<Float> = flow {
         jsStartTilt()
         while (true) { emit(jsTiltX().toFloat()); delay(16) }

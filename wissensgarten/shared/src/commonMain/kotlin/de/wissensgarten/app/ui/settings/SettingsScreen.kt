@@ -215,6 +215,7 @@ fun SettingsScreen(
         Section("Über") {
             Text("Wissensgarten · Version $version vom ${de.wissensgarten.app.AppInfo.DATE}")
             Text("$packCount Wissenspakete · $cardCount Karten", style = MaterialTheme.typography.bodySmall)
+            LegalLinks()
         }
 
         if (canDeleteProfile) TextButton(onClick = { confirmDelete = true }) {
