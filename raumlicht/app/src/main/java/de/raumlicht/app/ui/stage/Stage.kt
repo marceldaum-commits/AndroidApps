@@ -54,6 +54,7 @@ class StageController {
     fun setState(json: String) { state = json; if (ready) run("RL.setState($json)") }
     fun fire(b: Beam, ms: Int) = send("RL.fire({from:${js(b.from)},to:${js(b.to)},color:'${b.color}',ms:$ms,hit:${b.hit}})")
     fun burst(p: V3, color: String) = send("RL.burst(${js(p)},'$color')")
+    fun look(trail: String, hat: String) = send("RL.look({trail:'$trail',hat:'$hat'})")
     fun skin(color: String) = send("RL.skin('$color')")
     /** Mitfahren auf der Bahn „bahn“: u in 0..1; inside = Fahrersicht, sonst Blick von außen mit Wagen */
     fun ride(u: Double, inside: Boolean) { val cmd = "RL.ride({id:'bahn',u:$u,view:'${if (inside) "fp" else "out"}'})"; lastRide = cmd; send(cmd) }
@@ -90,13 +91,16 @@ class StageController {
 /** Wie die Bühne gezeichnet wird – in Tests durch ein Standbild ersetzt (Robolectric hat kein WebGL). */
 val LocalStageRenderer = staticCompositionLocalOf<@Composable (StageController, Modifier) -> Unit> { { c, m -> WebStage(c, m) } }
 
+/** Leuchtspur und Aufsatz von Lux (Werkstatt) */
+val LocalLuxLook = staticCompositionLocalOf { "none" to "none" }
+
 /** Farbe von Lux' Leuchtband (Werkstatt) */
 val LocalLuxSkin = staticCompositionLocalOf { "pink" }
 
 @Composable
 fun Stage(controller: StageController, modifier: Modifier = Modifier) {
-    val skin = LocalLuxSkin.current
-    androidx.compose.runtime.LaunchedEffect(controller, skin) { controller.skin(skin) }
+    val skin = LocalLuxSkin.current; val look = LocalLuxLook.current
+    androidx.compose.runtime.LaunchedEffect(controller, skin, look) { controller.skin(skin); controller.look(look.first, look.second) }
     LocalStageRenderer.current(controller, modifier)
 }
 

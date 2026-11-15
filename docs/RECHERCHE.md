@@ -129,3 +129,13 @@ Keine neue Suche, sondern Anwendung der Befunde oben:
   (direkte Manipulation, sofort sichtbares Ergebnis, Raumvorstellung): f′ wird zur gefühlten Neigung, f″ zur Kurve nach links oder rechts.
 - Verkörperte Zugänge zu Graphen („Walk the graph“ mit Bewegungssensoren) gelten in der Mathematikdidaktik als hilfreich für das Verständnis von Steigung;
   eigene Wirksamkeitsdaten für diese Umsetzung haben wir nicht.
+
+## Raumlicht 0.5.0 (15.11.2026): Erleben in allen drei Gebieten
+
+Keine neue Suche; Anwendung der Befunde oben und bekannter Didaktik:
+- **Galton-Brett** und Simulationen sind ein Standardzugang zur Binomialverteilung im Stochastikunterricht (empirisches Gesetz der großen Zahlen sichtbar machen).
+- **Ableitung als zweite Bahn / Integral als wachsende Fläche**: Zusammenhang zwischen f, f′ und Flächeninhalt sichtbar koppeln statt getrennt rechnen
+  (grafisches Ableiten ist Teil der Bildungsstandards).
+- **Fehler-Tagebuch**: Rückmeldung auf den Fehler statt auf das Ergebnis (siehe 0.4.0); ausdrücklich ohne Strafe formuliert.
+- **Kalender ohne Druck**, Zubehör nur für Können – passend zu „Belohnung ohne Druck“ in den Leitlinien.
+- Eigene Wirksamkeitsdaten gibt es für keinen dieser Bausteine.

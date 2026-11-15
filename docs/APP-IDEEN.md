@@ -18,7 +18,7 @@ Reihenfolge: eine App fertig optimieren, dann die nächste. Das Rechnen ist jewe
 
 | App | Spielprinzip | Inhalte | Status |
 |---|---|---|---|
-| 💡 **Raumlicht** (`raumlicht/`) | Lichtshow in echtem 3D: Laser = Geraden, Glas = Ebenen, Drohne Lux fliegt Vektoren. Man sieht nur den Anfang des Strahls – der Rest ist Rechnung. Jedes Kapitel endet mit einem Abi-Check | Analytische Geometrie komplett, Bewegung, Rotationskörper, Stochastik- und Analysis-Einstieg (75 Level, 14 Kapitel); Abi-Simulation, Schritt für Schritt, Jam, Tagesgig, Lage-Check, Duell, Zu zweit, Klasse, Klausur-Planer, Lernstand, 3D-Rechner, Werkstatt, Widget | ✅ 0.4.0 (15.11.2026) |
+| 💡 **Raumlicht** (`raumlicht/`) | Mathe-Abi in echtem 3D: Laser = Geraden, Glas = Ebenen, Drohne Lux fliegt Vektoren; Kurven fährt man als Achterbahn ab, Zufall fällt durchs Galton-Brett | Geometrie, Analysis und Stochastik (89 Aufgaben, 17 Kapitel); Fahrersicht für Kurven und Geraden, Galton-Brett, Abi-Aufgaben, Rechenweg in Schritten, Endlos üben, Ohne Hilfsmittel, Fehler-Tagebuch, Klausur-Planer, Duell, Klasse, 3D-Rechner, 2 Widgets | ✅ 0.5.0 (15.11.2026) |
 
 Ideen für später: weitere Abi-Simulationen (auch auf Zeit), Jam für Bewegung und Kugeln, mehr Analysis in 3D (Flächen, Extremwerte), Stochastik, Klassen-Modus für Lehrkräfte.
 

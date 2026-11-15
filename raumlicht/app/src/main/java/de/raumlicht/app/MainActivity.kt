@@ -62,6 +62,11 @@ object Routes {
     const val CLASS = "klasse"
     const val MATCH = "zu-zweit"
     const val RIDE = "achterbahn/{id}"
+    const val FLIGHT = "raumflug"
+    const val GALTON = "galton"
+    const val QUICK = "pflichtteil"
+    const val DIARY = "fehler-tagebuch"
+    const val CALENDAR = "kalender"
     fun ride(id: String) = "achterbahn/$id"
     fun guide(id: String) = "schritte/$id"
     fun exam(id: String, timed: Boolean) = "abi/$id/${if (timed) 1 else 0}"
@@ -122,11 +127,14 @@ class MainActivity : ComponentActivity() {
         // Musik passend zum Bildschirm: ruhig im Tourplan, treibend auf der Bühne
         val entry by nav.currentBackStackEntryAsState()
         val route = entry?.destination?.route
-        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route in setOf(Routes.LEVEL, Routes.JAM, Routes.DAILY, Routes.EXAM, Routes.TRAINING, Routes.DUEL, Routes.LAGE, Routes.GUIDE, Routes.CLASS, Routes.MATCH, Routes.PLANNER, Routes.RIDE)) MusicMood.FLIGHT else MusicMood.MENU) }
+        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route in setOf(Routes.LEVEL, Routes.JAM, Routes.DAILY, Routes.EXAM, Routes.TRAINING, Routes.DUEL, Routes.LAGE, Routes.GUIDE, Routes.CLASS, Routes.MATCH, Routes.PLANNER, Routes.RIDE, Routes.FLIGHT, Routes.GALTON, Routes.QUICK)) MusicMood.FLIGHT else MusicMood.MENU) }
         val skin by vm.settings.skin.collectAsStateWithLifecycle()
         val exams by vm.settings.exams.collectAsStateWithLifecycle()
         val lageBest by vm.settings.lageBest.collectAsStateWithLifecycle()
         val planText by vm.settings.plan.collectAsStateWithLifecycle()
+        val look by vm.settings.look.collectAsStateWithLifecycle()
+        val diaryText by vm.settings.diary.collectAsStateWithLifecycle()
+        val diary = remember(diaryText) { DiaryEntry.parse(diaryText) }
         val plan = remember(planText) { Plan.decode(planText) }
         // In den ersten noch offenen Aufgabe eines Kapitels springen
         fun openChapter(n: Int) { Levels.chapters.firstOrNull { it.number == n }?.let { c -> nav.goOnce(Routes.level((c.levels.firstOrNull { (vm.stars.value[it.id] ?: 0) == 0 } ?: c.levels.first()).id)) } }
@@ -138,7 +146,8 @@ class MainActivity : ComponentActivity() {
         val badges = remember(stars, jamBest) { Badges.all(stars, jamBest) }
         val tourStars = remember(stars) { Levels.all.sumOf { stars[it.id] ?: 0 } }
 
-        CompositionLocalProvider(de.raumlicht.app.ui.stage.LocalLuxSkin provides skin) {
+        CompositionLocalProvider(de.raumlicht.app.ui.stage.LocalLuxSkin provides skin, de.raumlicht.app.ui.stage.LocalLuxLook provides look,
+            de.raumlicht.app.ui.level.LocalMistakeSink provides { id, msg -> vm.settings.setDiary(DiaryEntry.add(vm.settings.diary.value, id, msg)) }) {
         val rideFor = remember { mapOf("14-1" to "schuessel", "14-2" to "huegel", "14-3" to "bergtal", "14-4" to "doppel") }
         NavHost(nav, Routes.HOME) {
             composable(Routes.HOME) {
@@ -190,19 +199,24 @@ class MainActivity : ComponentActivity() {
             composable(Routes.BACKSTAGE) {
                 val weak = remember(stars) { Training.levels(stars).size }
                 BackstageScreen(listOf(
-                    BackstageEntry("🎢", "Kurve abfahren (Fahrersicht)", "Analysis erleben: Höhe, Steigung und Krümmung live im Cockpit", Q.Cyan) { nav.goOnce(Routes.ride(Coaster.rides.first().id)) },
-                    BackstageEntry("🧩", "Rechenweg in Schritten", "Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand – Schritt für Schritt", Q.Green) { nav.goOnce(Routes.GUIDES) },
-                    BackstageEntry("📊", "Lernstand", Learn.summary(Learn.topics(stars)), Q.Cyan) { nav.goOnce(Routes.LEARN) },
-                    BackstageEntry("🗓️", "Klausur-Planer", plan?.let { Planner.headline(it, vm.today(), stars) } ?: "Termin eintragen, Tagespakete bekommen", Q.Orange) { nav.goOnce(Routes.PLANNER) },
-                    BackstageEntry("🧭", "Lage von Geraden erkennen", "parallel, identisch, schneidend, windschief? · Rekord $lageBest/${LageCheck.ROUNDS}", Q.Yellow) { nav.goOnce(Routes.LAGE) },
-                    BackstageEntry("⚔️", "Duell per Code", "5 Aufgaben an Freunde schicken – wer trifft öfter?", Q.Pink) { nav.goOnce(Routes.DUEL) },
-                    BackstageEntry("👥", "Zu zweit an einem Gerät", "abwechselnd spielen – wer rechnet besser?", Q.Cyan) { nav.goOnce(Routes.MATCH) },
-                    BackstageEntry("🏫", "Klassen-Paket (für Lehrkräfte)", "Aufgaben auswählen und als Code an die Klasse geben", Q.Green) { nav.goOnce(Routes.CLASS) },
-                    BackstageEntry("🔁", "Fehler wiederholen", if (weak == 0) "nichts offen" else "$weak Aufgaben, die nicht beim ersten Versuch saßen", Q.Orange) { nav.goOnce(Routes.TRAINING) },
-                    BackstageEntry("🧮", "3D-Rechner & Baukasten", "Schulbuch-Aufgabe eingeben und nachrechnen – oder eigene Lichtshow bauen", Q.Violet) { nav.goOnce(Routes.BUILDER) },
-                    BackstageEntry("🎨", "Farbe für Lux", "${Skins.unlocked(tourStars).size} von ${Skins.all.size} Farben frei", Q.Cyan) { nav.goOnce(Routes.WORKSHOP) },
-                    BackstageEntry("📓", "Formelsammlung", "alle Formeln – mit Sprung zu den passenden Aufgaben", Q.Green) { nav.goOnce(Routes.SHEET) },
-                    BackstageEntry("🏅", "Erfolge", "${badges.count { it.earned }} von ${badges.size} verdient", Q.Yellow) { nav.goOnce(Routes.BADGES) },
+                    BackstageEntry("🎢", "Kurve abfahren (Fahrersicht)", "Analysis erleben: Höhe, Steigung, Krümmung, Ableitungsbahn und Fläche live", Q.Cyan, "Erleben") { nav.goOnce(Routes.ride(Coaster.rides.first().id)) },
+                    BackstageEntry("🚀", "Flug durch den Raum", "Geometrie erleben: eine Gerade entlangfliegen, durch Ebenen und Kugeln", Q.Cyan, "Erleben") { nav.goOnce(Routes.FLIGHT) },
+                    BackstageEntry("🎰", "Galton-Brett", "Stochastik erleben: Kugeln fallen, die Binomialverteilung wächst", Q.Pink, "Erleben") { nav.goOnce(Routes.GALTON) },
+                    BackstageEntry("🧩", "Rechenweg in Schritten", "Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand – Schritt für Schritt", Q.Green, "Üben") { nav.goOnce(Routes.GUIDES) },
+                    BackstageEntry("✍️", "Ohne Hilfsmittel", "6 kurze Aufgaben wie im Pflichtteil – ohne Tipp", Q.Yellow, "Üben") { nav.goOnce(Routes.QUICK) },
+                    BackstageEntry("🧭", "Lage von Geraden erkennen", "parallel, identisch, schneidend, windschief? · Rekord $lageBest/${LageCheck.ROUNDS}", Q.Yellow, "Üben") { nav.goOnce(Routes.LAGE) },
+                    BackstageEntry("🔁", "Fehler wiederholen", if (weak == 0) "nichts offen" else "$weak Aufgaben, die nicht beim ersten Versuch saßen", Q.Orange, "Üben") { nav.goOnce(Routes.TRAINING) },
+                    BackstageEntry("📔", "Fehler-Tagebuch", if (diary.isEmpty()) "deine typischen Fehler – noch leer" else "${diary.size} typische Fehler notiert", Q.Orange, "Üben") { nav.goOnce(Routes.DIARY) },
+                    BackstageEntry("📊", "Lernstand", Learn.summary(Learn.topics(stars)), Q.Cyan, "Planen") { nav.goOnce(Routes.LEARN) },
+                    BackstageEntry("🗓️", "Klausur-Planer", plan?.let { Planner.headline(it, vm.today(), stars) } ?: "Termin eintragen, Tagespakete bekommen", Q.Orange, "Planen") { nav.goOnce(Routes.PLANNER) },
+                    BackstageEntry("🎟️", "Kalender der Tagesaufgaben", "${Calendar.solved(stars).size} gelöst – verpasste Tage kosten nichts", Q.Orange, "Planen") { nav.goOnce(Routes.CALENDAR) },
+                    BackstageEntry("⚔️", "Duell per Code", "5 Aufgaben an Freunde schicken – wer trifft öfter?", Q.Pink, "Gemeinsam") { nav.goOnce(Routes.DUEL) },
+                    BackstageEntry("👥", "Zu zweit an einem Gerät", "abwechselnd spielen – wer rechnet besser?", Q.Cyan, "Gemeinsam") { nav.goOnce(Routes.MATCH) },
+                    BackstageEntry("🏫", "Klassen-Paket (für Lehrkräfte)", "Aufgaben auswählen und als Code an die Klasse geben", Q.Green, "Gemeinsam") { nav.goOnce(Routes.CLASS) },
+                    BackstageEntry("🧮", "3D-Rechner & Baukasten", "Schulbuch-Aufgabe eingeben und nachrechnen – oder Lichtshow im Takt bauen", Q.Violet, "Werkzeuge") { nav.goOnce(Routes.BUILDER) },
+                    BackstageEntry("📓", "Formelsammlung", "alle Formeln – mit Sprung zu den passenden Aufgaben", Q.Green, "Werkzeuge") { nav.goOnce(Routes.SHEET) },
+                    BackstageEntry("🎨", "Lux gestalten", "${Skins.unlocked(tourStars).size} von ${Skins.all.size} Farben frei · Leuchtspur und Aufsatz", Q.Cyan, "Für dich") { nav.goOnce(Routes.WORKSHOP) },
+                    BackstageEntry("🏅", "Erfolge", "${badges.count { it.earned }} von ${badges.size} verdient", Q.Yellow, "Für dich") { nav.goOnce(Routes.BADGES) },
                 )) { nav.popSafe() }
             }
             composable(Routes.EXAMS) { ExamPicker(Exams.all, exams, { e, timed -> nav.goOnce(Routes.exam(e.id, timed)) }) { nav.popSafe() } }
@@ -230,7 +244,14 @@ class MainActivity : ComponentActivity() {
                 val list = remember { Training.levels(vm.stars.value) }
                 TrainingPlay(list, { l, s, a -> vm.record(l.id, s, a) }) { nav.popSafe() }
             }
-            composable(Routes.WORKSHOP) { WorkshopScreen(tourStars, skin, vm.settings::setSkin) { nav.popSafe() } }
+            composable(Routes.WORKSHOP) {
+                WorkshopScreen(tourStars, skin, vm.settings::setSkin, badges.count { it.earned }, look, { t, h -> vm.settings.setLook(t, h) }) { nav.popSafe() }
+            }
+            composable(Routes.FLIGHT) { FlightScreen({ nav.popSafe() }) }
+            composable(Routes.GALTON) { GaltonScreen({ nav.popSafe() }) }
+            composable(Routes.QUICK) { QuickScreen({ l, s, a -> vm.record(l.id, s, a) }, { nav.popSafe() }) }
+            composable(Routes.DIARY) { DiaryScreen(diary, { nav.goOnce(Routes.level(it)) }, { vm.settings.setDiary("") }) { nav.popSafe() } }
+            composable(Routes.CALENDAR) { CalendarScreen(vm.today(), remember(stars) { Calendar.solved(stars) }, { nav.goOnce(Routes.DAILY) }) { nav.popSafe() } }
             composable(Routes.BUILDER) {
                 BuilderScreen(remember { Show.decode(vm.settings.show) ?: Show.demo }, { vm.settings.show = Show.encode(it) }, { nav.popSafe() })
             }

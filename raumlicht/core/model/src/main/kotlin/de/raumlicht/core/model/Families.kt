@@ -54,7 +54,7 @@ object Families {
         evaluate = { v ->
             val p = v.vec("P")
             if (p.near(target)) Outcome(true, "Punktlandung bei ${target.fmt()}!", flyTo = p)
-            else Outcome(false, mistakes.firstOrNull { p.near(it.first) }?.second ?: matchMessage(p, target), flyTo = p)
+            else { MistakeBook.add(mistakes.map { it.second }); Outcome(false, mistakes.firstOrNull { p.near(it.first) }?.second ?: matchMessage(p, target), flyTo = p) }
         },
     )
 
@@ -197,6 +197,7 @@ object Families {
             if (ok) Outcome(true, "Der Sensor leuchtet – genau bei ${answer.fmt()}!", beams)
             else {
                 val (good, bad) = checks.partition { it.ok(p) }
+                MistakeBook.add(mistakes.map { it.second })
                 val msg = mistakes.firstOrNull { p.near(it.first) }?.second ?: when {
                     bad.isEmpty() || checks.isEmpty() -> matchMessage(p, answer)
                     good.isEmpty() -> "Dein Punkt ${bad.joinToString(" und ") { it.text }} noch nicht ✗."
@@ -288,7 +289,7 @@ object Families {
     /** Rückmeldung für Zahlen-Level: zu klein / zu groß, ohne die Lösung zu verraten. */
     fun compare(value: Int, solution: Int, what: String, ok: String, mistakes: Map<Int, String> = emptyMap(), beams: (Boolean) -> List<Beam> = { emptyList() }) = when {
         value == solution -> Outcome(true, ok, beams(true))
-        value in mistakes -> Outcome(false, mistakes.getValue(value), beams(false))
+        value in mistakes -> { MistakeBook.add(mistakes.values); Outcome(false, mistakes.getValue(value), beams(false)) }
         value < solution -> Outcome(false, "$what ist größer. Rechne noch einmal nach.", beams(false))
         else -> Outcome(false, "$what ist kleiner. Rechne noch einmal nach.", beams(false))
     }

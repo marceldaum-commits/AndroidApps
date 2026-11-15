@@ -125,7 +125,7 @@ class ScreenshotTest {
         de.raumlicht.app.ui.home.LageScreen(5, { false }, {}, session = 0)
     }
     @Test fun duel() = shot("34_duell", "start") { de.raumlicht.app.ui.home.DuelScreen({}, incoming = de.raumlicht.core.model.Duel(de.raumlicht.core.model.JamTopic.MIX, 4711).code) }
-    @Test fun workshop() = shot("35_lux_werkstatt", "start") { de.raumlicht.app.ui.home.WorkshopScreen(42, "green", {}) {} }
+    @Test fun workshop() = shot("35_lux_werkstatt", "start") { de.raumlicht.app.ui.home.WorkshopScreen(42, "green", {}, badges = 5, look = "rainbow" to "antenna") {} }
     @Test fun builder() = shot("36_show_baukasten", "baukasten") { de.raumlicht.app.ui.home.BuilderScreen(de.raumlicht.core.model.Show.demo, {}, {}) }
     @Test fun badges() = shot("27_abzeichen", "start") {
         de.raumlicht.app.ui.home.BadgesScreen(de.raumlicht.core.model.Badges.all(Levels.all.take(30).associate { it.id to 3 } + mapOf("tag-1" to 3, "tag-2" to 2, "tag-3" to 3), 6)) {}
@@ -158,6 +158,28 @@ class ScreenshotTest {
     @Test fun rideOutside() = shot("50_achterbahn_aussen", "fahrt-aussen", prepare = {
         it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.5f) }
     }) { de.raumlicht.app.ui.home.RideScreen({}, "doppel") }
+    @Test fun buildCurve() = level("52_funktion_bauen", "15-3", values = mapOf("a" to listOf(-1), "d" to listOf(1), "e" to listOf(4)))
+    @Test fun treeDiagram() = level("53_baumdiagramm", "16-1")
+    @Test fun fourFields() = level("54_vierfeldertafel", "16-3")
+    @Test fun biggestScreen() = level("55_extremwert", "17-4", values = mapOf("a" to listOf(3)))
+    @Test fun galton() = shot("56_galton_brett", "galton") { de.raumlicht.app.ui.home.GaltonScreen({}) }
+    @Test fun flight() = shot("57_raumflug", "raumflug", prepare = { it.onNodeWithTag("flug-kugel").performClick() }) { de.raumlicht.app.ui.home.FlightScreen({}) }
+    @Test fun rideExtras() = shot("58_ableitung_und_flaeche", "fahrt-extra", prepare = {
+        it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("zeige-ableitung").performClick(); it.onNodeWithTag("zeige-flaeche").performClick()
+        it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.65f) }
+    }) { de.raumlicht.app.ui.home.RideScreen({}, "doppel") }
+    @Test fun diary() = shot("59_fehler_tagebuch", "start") {
+        de.raumlicht.app.ui.home.DiaryScreen(listOf(
+            de.raumlicht.app.ui.home.DiaryEntry(4, "2-1", "Du hast A − B gerechnet. Es heißt Spitze minus Fuß: B − A – alle Vorzeichen drehen sich um."),
+            de.raumlicht.app.ui.home.DiaryEntry(2, "7-5", "60° ist der Winkel zum Normalenvektor (Kosinus). Zwischen Gerade und Ebene brauchst du den Sinus: 90° − 60°."),
+            de.raumlicht.app.ui.home.DiaryEntry(1, "10-3", "18 ist das Spatprodukt selbst. Für die Pyramide fehlt noch der Faktor ⅓.")), {}, {}) {}
+    }
+    @Test fun calendar() = shot("60_kalender", "start") { de.raumlicht.app.ui.home.CalendarScreen(20_772, setOf(20_750L, 20_751L, 20_752L, 20_760L, 20_766L, 20_767L, 20_770L, 20_771L), {}) {} }
+    @Test fun quick() = shot("61_ohne_hilfsmittel", "start") { de.raumlicht.app.ui.home.QuickScreen({ _, _, _ -> }, {}) }
+    @Test fun introClip() = shot("62_lux_fuehrt_vor", "1-6-fertig", prepare = { it.onNodeWithText("Weiter ›").performClick(); it.mainClock.advanceTimeBy(400); it.onNodeWithText("Weiter ›").performClick() }) {
+        val l = Levels.byId("1-1")!!
+        LevelScreen(l, Levels.chapters[0], true, {}, { _, _ -> }, {}, {})
+    }
     @Test fun settings() = shot("15_einstellungen", "start") {
         SettingsScreen(true, {}, true, {}, true, {}, true, {}, "0.1.0", UpdateState.Idle, {})
     }

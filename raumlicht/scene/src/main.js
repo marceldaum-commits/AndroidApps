@@ -220,6 +220,7 @@ function dashed(c, opacity = 0.7) {
 }
 
 const makers = {};
+let luxTrail = 'none', luxHat = 'none';   // Zubehör aus der Werkstatt
 let luxSkin = 'pink';   // Farbe von Lux' Leuchtband (Werkstatt)
 
 // Punkt: leuchtende Kugel, Lot auf den Boden, optional Koordinaten-Quader
@@ -471,6 +472,7 @@ makers.track = (s) => {
     update(n) {
       const k = JSON.stringify(n.corners); if (k === key) return; key = k;
       pts = n.corners.map((q) => V(q));
+      if (n.style === 'line') { railL.set(pts); railR.g.visible = false; ties.clear(); posts.clear(); return; }
       railL.set(pts.map((q) => q.clone().addScaledVector(side, 0.2))); railR.set(pts.map((q) => q.clone().addScaledVector(side, -0.2)));
       ties.clear(); posts.clear();
       pts.forEach((q, i) => {
@@ -511,6 +513,20 @@ makers.drone = (s) => {
     hub.add(ring, motor, disc, blade); body.add(arm, hub); rotors.push(blade);
   }
   const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.05, 16, 12), new THREE.MeshBasicMaterial({ color: hdr('yellow', 3) })); lamp.position.y = -0.19; body.add(lamp);
+  // Aufsätze: Antenne, Lichtring, Krone
+  const hats = {
+    antenna: (() => { const h = new THREE.Group(); const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, 0.26, 6), dark); rod.position.y = 0.3;
+      const tip = new THREE.Mesh(new THREE.SphereGeometry(0.035, 12, 10), new THREE.MeshBasicMaterial({ color: hdr('red', 3) })); tip.position.y = 0.44; h.add(rod, tip); return h; })(),
+    halo: (() => { const h = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.018, 10, 40), new THREE.MeshBasicMaterial({ color: hdr('yellow', 3) })); h.rotation.x = Math.PI / 2; h.position.y = 0.36; return h; })(),
+    crown: (() => { const h = new THREE.Group(); for (let i = 0; i < 6; i++) { const a = i / 6 * Math.PI * 2, c = new THREE.Mesh(new THREE.ConeGeometry(0.045, 0.14, 8), new THREE.MeshBasicMaterial({ color: hdr('yellow', 2.6) }));
+      c.position.set(Math.cos(a) * 0.13, 0.26, Math.sin(a) * 0.13); h.add(c); } return h; })(),
+  };
+  Object.values(hats).forEach((h) => { h.visible = false; body.add(h); });
+  // Leuchtspur: eine Kette kleiner Lichter, die hinter Lux verblassen
+  const trailN = 40, trailPos = new Float32Array(trailN * 3), trailCol = new Float32Array(trailN * 3);
+  const trailGeo = new THREE.BufferGeometry(); trailGeo.setAttribute('position', new THREE.BufferAttribute(trailPos, 3)); trailGeo.setAttribute('color', new THREE.BufferAttribute(trailCol, 3));
+  const trail = new THREE.Points(trailGeo, new THREE.PointsMaterial({ size: 0.55, map: glowTex, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+  trail.frustumCulled = false; g.add(trail); let trailAt = 0, trailHead = 0, trailFilled = false;
   const halo = glowSprite('cyan', 1.1, 0.35); body.add(halo);
   const drop = dashed('cyan', 0.35), foot = glowSprite('cyan', 1.2, 0.3); foot.material.depthTest = false; g.add(drop, foot);
   const cur = V(s.p), vel = new THREE.Vector3(); let tgt = cur.clone(), mood = 'idle', moodAt = -99, lab = null, labText = null;
@@ -537,6 +553,15 @@ makers.drone = (s) => {
       const blink = (t % 3.7) < 0.12 ? 0.15 : 1; eyes.forEach((e) => (e.scale.y = (mood === 'happy' ? 0.8 : 1.5) * blink));
       const f = new THREE.Vector3(cur.x, 0.02, cur.z); drop.set(body.position, f); foot.position.copy(f);
       if (lab) lab.position.copy(body.position).add(new THREE.Vector3(0, 0.6, 0));
+      Object.entries(hats).forEach(([k, h]) => { h.visible = k === luxHat; }); if (luxHat === 'halo') hats.halo.rotation.z = t * 2;
+      trail.visible = luxTrail !== 'none';
+      if (trail.visible && t - trailAt > 0.022) {
+        trailAt = t; if (!trailFilled) { for (let i = 0; i < trailN; i++) trailPos.set([body.position.x, body.position.y, body.position.z], i * 3); trailFilled = true; }
+        trailHead = (trailHead + 1) % trailN; trailPos.set([body.position.x, body.position.y - 0.1, body.position.z], trailHead * 3);
+        for (let i = 0; i < trailN; i++) { const age = ((trailHead - i + trailN) % trailN) / trailN, k = (1 - age) * (1 - age) * 3.2;
+          const c = luxTrail === 'rainbow' ? new THREE.Color().setHSL((t * 0.4 + age) % 1, 1, 0.6) : col(luxSkin); trailCol.set([c.r * k, c.g * k, c.b * k], i * 3); }
+        trailGeo.attributes.position.needsUpdate = true; trailGeo.attributes.color.needsUpdate = true;
+      }
     },
   };
 };
@@ -772,7 +797,8 @@ function step(dt) {
     if (ride.view === 'fp') {
       // Fahrersicht: knapp über den Schienen, Blick entlang der Bahn
       const a = track.at(ride.cu - 0.02), b = track.at(ride.cu + 0.04), dir = b.sub(a); if (dir.lengthSq() < 1e-8) dir.set(1, 0, 0); dir.normalize();
-      const up = new THREE.Vector3(-dir.y, dir.x, 0).normalize();
+      // „Oben“ ist die Senkrechte zur Flugrichtung, die möglichst nach oben zeigt – so klappt es auf der Achterbahn und im freien Raum
+      const up = UP.clone().addScaledVector(dir, -UP.dot(dir)); if (up.lengthSq() < 1e-6) up.set(0, 0, -1); up.normalize();
       // Sitzhöhe über der Schiene; der Blick geht ein Stück die Strecke entlang, damit man sieht, was kommt
       camera.position.copy(here).addScaledVector(up, 0.75).addScaledVector(dir, -0.35).add(sh);
       const ahead = track.at(ride.cu + 0.09);
@@ -813,6 +839,8 @@ window.RL = {
   // Mitfahren: ride({id, u, view}) setzt die Stelle auf der Bahn, ride(null) beendet die Fahrt
   ride: (r) => { if (!r) { const t = ride && objects.get(ride.id); if (t && t.showCart) t.showCart(null); ride = null; return; }
     ride = { id: r.id ?? 'bahn', u: r.u ?? 0, cu: ride && ride.id === (r.id ?? 'bahn') ? ride.cu : (r.u ?? 0), view: r.view ?? 'fp' }; },
+  // Zubehör für Lux: Leuchtspur ('none' | 'sparks' | 'rainbow') und Aufsatz ('none' | 'antenna' | 'halo' | 'crown')
+  look: (l) => { if (l.trail) luxTrail = l.trail; if (l.hat) luxHat = l.hat; },
   skin: (c) => { luxSkin = c; for (const o of objects.values()) if (o.skin) o.skin(c); },
   pause: () => { paused = true; }, resume: () => { if (paused) { paused = false; clock.getDelta(); frame(); } },
   // Für Bildschirmfotos: Zeit von Hand vorspulen

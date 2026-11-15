@@ -34,6 +34,14 @@
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_daily_info" />
         </receiver>
 
+        <!-- Startbildschirm-Widget „Lernstand“ -->
+        <receiver android:name=".widget.LearnWidget" android:exported="false" android:label="Raumlicht Lernstand">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget_learn_info" />
+        </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.updates"

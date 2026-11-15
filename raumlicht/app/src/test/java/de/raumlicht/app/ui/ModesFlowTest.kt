@@ -204,6 +204,6 @@ class ModesFlowTest {
         rule.onNodeWithTag("gebiet-STOCHASTIK").performClick(); rule.mainClock.advanceTimeBy(600)
         rule.onNodeWithTag("kapitel-13").assertExists(); rule.onNodeWithText("Laplace, Pfadregel, Erwartungswert").assertExists()
         assertEquals(Area.entries.toSet(), Levels.chapters.map { it.area }.toSet())
-        assertEquals(listOf(12, 14), Levels.chapters.filter { it.area == Area.ANALYSIS }.map { it.number })
+        assertEquals(listOf(12, 14, 15, 17), Levels.chapters.filter { it.area == Area.ANALYSIS }.map { it.number })
     }
 }

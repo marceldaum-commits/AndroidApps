@@ -381,7 +381,7 @@ internal object TourFour {
             finale = { Finale(path = track.lap(solution.toDouble())) },
             formula = { a -> listOf(listOf(Txt("f(x) = $text")), listOf(Txt("$name = "), Num(Geo.num(a), "a"))) },
             objects = { a, _ -> listOf(track.curve(), track.axis(), Stage.point("stelle", track.at(a.toDouble()), "yellow", drop = false)) + if (tangent) listOf(track.tangent(a.toDouble())) else emptyList() },
-            check = { a -> if (a == solution) Outcome(true, ok) else Outcome(false, mistakes[a] ?: hint(a)) })
+            check = { a -> MistakeBook.add(mistakes.values); if (a == solution) Outcome(true, ok) else Outcome(false, mistakes[a] ?: hint(a)) })
 
     private val ch14 = run {
         val t1 = Track(-1.0, 4.0, 1.4, 1.5, 0.5, 2.5, { it * it - 2 * it - 3 }, { 2 * it - 2 })

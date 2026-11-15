@@ -60,6 +60,8 @@ fun LevelScreen(
     doneLabel: String = "Tour geschafft! 🏆",
     /** Zusatzknopf oben links in der Bühne, z. B. „🎢 Mitfahren“ im Achterbahn-Kapitel */
     extra: Pair<String, () -> Unit>? = null,
+    /** Ohne Hilfsmittel: kein Tipp-Knopf (Pflichtteil) */
+    strict: Boolean = false,
 ) {
     var values by remember(level.id) { mutableStateOf(initial ?: level.start) }
     var phase by remember(level.id) { mutableStateOf(Phase.AIM) }
@@ -70,6 +72,8 @@ fun LevelScreen(
     var override by remember(level.id) { mutableStateOf<String?>(null) }
     var stars by remember(level.id) { mutableIntStateOf(0) }
     var intro by remember(level.id) { mutableStateOf(showIntro) }
+    var introStep by remember(level.id) { mutableIntStateOf(0) }
+    val sink = LocalMistakeSink.current
     var taps by remember { mutableIntStateOf(0) }
     var showInfo by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
@@ -81,7 +85,16 @@ fun LevelScreen(
         val n = level.set(values, key, v)
         if (n != values) { values = n; override = null; sfx?.play(Sound.TICK); view.buzz(Buzz.TICK, vib) }
     }
-    LaunchedEffect(values, phase, override) { controller.setState(override ?: level.scene(values, phase)) }
+    // Während Lux das Kapitel erklärt, führt die Bühne die erste Aufgabe vor: Ausgangslage → eingestellt → gelöst
+    LaunchedEffect(values, phase, override, intro, introStep) {
+        controller.setState(when {
+            !intro -> override ?: level.scene(values, phase)
+            introStep == 0 -> level.scene(level.start, Phase.AIM)
+            introStep >= chapter.intro.lastIndex -> level.scene(level.solution, Phase.DONE)
+            else -> level.scene(level.solution, Phase.AIM)
+        })
+        if (intro && introStep >= chapter.intro.lastIndex && introStep > 0) controller.party(1.5)
+    }
     DisposableEffect(controller, level.id) {
         controller.onDrag = { _, p -> level.handle?.let { h -> change(h.control, p.mapIndexed { i, x -> x - h.anchor.ints[i] }) } }
         onDispose { controller.onDrag = null }
@@ -118,7 +131,8 @@ fun LevelScreen(
             } else {
                 sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib)
                 out.flyTo?.let { to -> override = Stage.encode(level.bounds, level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list, mood = "sad") else it }) }
-                says = (out.message + if (attempts == 2 && !usedTip) " Tipp gefällig? 💡" else "") to LuxMood.SAD
+                if (MistakeBook.isNamed(out.message)) sink(level.id, out.message)      // typischer Fehler → ins Fehler-Tagebuch
+                says = (out.message + if (attempts == 2 && !usedTip && !strict) " Tipp gefällig? 💡" else "") to LuxMood.SAD
             }
             busy = false
         }
@@ -184,7 +198,7 @@ fun LevelScreen(
                         }
                     }
                     Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        NeonButton({ usedTip = true; says = level.tip to LuxMood.THINK }, Modifier.weight(1f), color = Q.Yellow, enabled = !busy) { Text("💡 Tipp", fontWeight = FontWeight.Bold) }
+                        if (!strict) NeonButton({ usedTip = true; says = level.tip to LuxMood.THINK }, Modifier.weight(1f), color = Q.Yellow, enabled = !busy) { Text("💡 Tipp", fontWeight = FontWeight.Bold) }
                         NeonButton(::go, Modifier.weight(2f).pulse(!busy && attempts == 0, 0.025f), color = accent, enabled = !busy) { Text("▶ Los", fontWeight = FontWeight.Black, fontSize = 18.sp) }
                     }
                 } else {
@@ -210,7 +224,7 @@ fun LevelScreen(
                 }
             }
         }
-        if (intro) IntroOverlay(chapter) { intro = false; onIntroSeen() }
+        if (intro) IntroOverlay(chapter, onStep = { introStep = it }) { intro = false; onIntroSeen() }
     }
 }
 
@@ -253,18 +267,25 @@ private fun StepButton(sign: String, color: Color, enabled: Boolean, tag: String
     }
 }
 
-/** Lux erklärt das Kapitel – einmal, Schritt für Schritt. */
+/** Typische Fehler gehen an das Fehler-Tagebuch: (Aufgaben-ID, Meldung) */
+val LocalMistakeSink = staticCompositionLocalOf<(String, String) -> Unit> { { _, _ -> } }
+
+/**
+ * Lux erklärt das Kapitel – einmal, Schritt für Schritt. Die Karte sitzt unten, damit man oben in der Bühne sieht,
+ * wie die erste Aufgabe vorgeführt wird ([onStep] meldet den aktuellen Schritt).
+ */
 @Composable
-fun IntroOverlay(chapter: Chapter, onDone: () -> Unit) {
+fun IntroOverlay(chapter: Chapter, onStep: (Int) -> Unit = {}, onDone: () -> Unit) {
     var step by remember { mutableIntStateOf(0) }
+    LaunchedEffect(step) { onStep(step) }
     val accent = stageColor(chapter.color)
-    Box(Modifier.fillMaxSize().background(Q.Space.copy(alpha = 0.88f)).clickable(remember { MutableInteractionSource() }, null) {}, contentAlignment = Alignment.Center) {
-        Column(Modifier.padding(24.dp).background(Q.Deep, RoundedCornerShape(24.dp)).border(2.dp, accent, RoundedCornerShape(24.dp)).padding(20.dp).verticalScroll(rememberScrollState()),
+    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0f to Color.Transparent, 0.45f to Q.Space.copy(alpha = 0.55f), 1f to Q.Space)).clickable(remember { MutableInteractionSource() }, null) {}, contentAlignment = Alignment.BottomCenter) {
+        Column(Modifier.systemBarsPadding().padding(12.dp).background(Q.Deep, RoundedCornerShape(24.dp)).border(2.dp, accent, RoundedCornerShape(24.dp)).padding(20.dp).verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text("${chapter.emoji}  ${chapter.venue}", color = accent, style = MaterialTheme.typography.labelLarge)
             Text(chapter.title, style = MaterialTheme.typography.headlineMedium)
             Text(chapter.topic, color = Q.Muted)
-            Lux(if (step == chapter.intro.lastIndex) LuxMood.HAPPY else LuxMood.IDLE, size = 110.dp)
+            Lux(if (step == chapter.intro.lastIndex) LuxMood.HAPPY else LuxMood.IDLE, size = 64.dp)
             AnimatedContent(step, transitionSpec = { (slideInVertically { it / 2 } + fadeIn()) togetherWith fadeOut() }, label = "intro") { i ->
                 Text(chapter.intro[i], style = MaterialTheme.typography.bodyLarge, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().heightIn(min = 76.dp))
             }

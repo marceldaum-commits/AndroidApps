@@ -2,6 +2,32 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.5.0 – Das große Erlebnis-Paket (15.11.2026)
+**Erleben**
+- **🚀 Flug durch den Raum:** Geometrie aus der Fahrersicht – du fliegst eine Gerade entlang, durch Ebenen und die Discokugel. Das Cockpit zeigt Ort, Parameter t
+  und den Abstand zur nächsten Ebene; an jedem Durchstoßpunkt meldet sich Lux.
+- **🎢 Kurve abfahren – jetzt mit Ableitung und Fläche:** f′ läuft als zweite Bahn mit (Gipfel oben = Nulldurchgang unten), und die Fläche unter der Kurve
+  füllt sich während der Fahrt mit Licht; unter der Achse wird abgezogen.
+- **🎰 Galton-Brett:** Kugeln fallen durch das Nagelbrett, in den Fächern wächst die Binomialverteilung. Die Wahrscheinlichkeit p lässt sich verstellen.
+- **🛠️ Funktionen bauen (neues Kapitel):** Gerade und Parabel mit Reglern so formen, dass die Bahn durch alle Tore führt – bis zur Steckbriefaufgabe.
+- **Lichtshow im Takt:** Im Baukasten feuern die Laser jetzt im Rhythmus.
+- **Lux führt vor:** Beim ersten Öffnen eines Kapitels zeigt Lux in der Bühne, wie die erste Aufgabe gelöst wird.
+
+**Abi-Vorbereitung** (jetzt 89 Aufgaben in 17 Kapiteln)
+- **🌳 Mehr Stochastik (neues Kapitel):** Baumdiagramm, Pfade zählen, Vierfeldertafel, bedingte Wahrscheinlichkeit, Standardabweichung.
+- **🧰 Ableiten & Anwenden (neues Kapitel):** Steigung im Punkt, Kettenregel, Tangentengleichung, größte Leinwand (Extremwert), Wachstum.
+- **🎓 Zwei neue Abi-Aufgaben:** „Lichtbogen“ (Analysis) und „Lostrommel“ (Stochastik).
+- **✍️ Ohne Hilfsmittel:** sechs kurze Aufgaben quer durch alle Gebiete, ohne Tipp – wie im Pflichtteil.
+- **📔 Fehler-Tagebuch:** Lux notiert deine typischen Fehler und zeigt, welche am häufigsten vorkommen – mit Knopf zum gezielten Üben.
+
+**Drumherum**
+- **🎟️ Kalender:** zeigt, an welchen Tagen du die Tagesaufgabe gelöst hast. Verpasste Tage kosten nichts.
+- **🎨 Lux gestalten:** Leuchtspur (Funken, Regenbogen) und Aufsätze (Antenne, Lichtring, Krone), freigeschaltet durch Erfolge.
+- **Zweites Widget „Lernstand“:** drei Balken für Geometrie, Analysis und Stochastik.
+- **📤 Ergebnis-Karte:** nach einer Abi-Aufgabe ein Bild mit deinen Punkten zum Teilen.
+- **Seite „Mehr“ in Gruppen:** Erleben, Üben, Planen, Gemeinsam, Werkzeuge, Für dich.
+- Formelsammlung mit neuen Karten für Ableitung und Wahrscheinlichkeit.
+
 ## 0.4.3 – Mehr Action (15.11.2026)
 - **Lux feiert richtig:** Stimmt die Lösung, tut Lux etwas Passendes zur Aufgabe.
   - Stochastik: Lux schießt die gezogenen Kugeln ab – sie zerplatzen in Funken.

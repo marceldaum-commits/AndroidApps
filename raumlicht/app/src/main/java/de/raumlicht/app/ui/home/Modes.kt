@@ -82,7 +82,8 @@ fun shareText(ctx: Context, text: String) {
 
 // ───────────────────────── Backstage: alle weiteren Bereiche ─────────────────────────
 
-data class BackstageEntry(val emoji: String, val title: String, val sub: String, val color: Color, val onClick: () -> Unit)
+/** [group]: Überschrift, unter der der Eintrag auf der Seite „Mehr“ steht */
+data class BackstageEntry(val emoji: String, val title: String, val sub: String, val color: Color, val group: String = "", val onClick: () -> Unit)
 
 @Composable
 fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
@@ -90,6 +91,8 @@ fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
         Bar("Mehr", onBack)
         LazyColumn(contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             itemsIndexed(entries) { i, e ->
+                // Überschrift, sobald eine neue Gruppe beginnt
+                if (e.group.isNotEmpty() && (i == 0 || entries[i - 1].group != e.group)) Text(e.group.uppercase(), Modifier.padding(start = 4.dp, top = if (i == 0) 0.dp else 8.dp, bottom = 6.dp), color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Black, letterSpacing = 1.5.sp)
                 val interaction = remember { MutableInteractionSource() }
                 var shown by remember { mutableStateOf(false) }
                 LaunchedEffect(Unit) { delay(45L * i); shown = true }
@@ -162,7 +165,7 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, 
             caption = if (guided) "🧩 ${exam.title} · Schritt ${part.label} von ${exam.parts.size}" else "🎓 ${exam.title} · Teil ${part.label}) · ${part.points} BE",
             badge = if (guided) null else (if (timed) "⏱ ${Exam.clock(left)}  " else "") + "${got.sum()} BE")
     } else {
-        val total = got.sum()
+        val total = got.sum(); val ctx = LocalContext.current
         Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
             Bar(if (guided) exam.title else "Auswertung", onBack)
             Lux(if (total * 100 >= exam.maxPoints * 60) LuxMood.HAPPY else LuxMood.THINK, size = 120.dp)
@@ -177,6 +180,7 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, 
             }
             Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 NeonButton({ idx = 0; got = emptyList(); left = Exam.seconds(exam); timeUp = false }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Nochmal") }
+                if (!guided) NeonButton({ ShareCard.share(ctx, exam.emoji + " " + exam.title, "$total von ${exam.maxPoints} BE", Exam.verdict(total, exam.maxPoints)) }, Modifier.testTag("karte"), color = Q.Pink) { Text("📤") }
                 NeonButton(onBack, Modifier.weight(1f), color = Q.Green) { Text("Fertig ✓", fontWeight = FontWeight.Black) }
             }
         }
@@ -319,11 +323,22 @@ fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title
 // ───────────────────────── Lux-Werkstatt ─────────────────────────
 
 @Composable
-fun WorkshopScreen(tourStars: Int, selected: String, onSelect: (String) -> Unit, onBack: () -> Unit) {
+fun WorkshopScreen(tourStars: Int, selected: String, onSelect: (String) -> Unit, badges: Int = 0, look: Pair<String, String> = "none" to "none",
+                   onLook: (trail: String, hat: String) -> Unit = { _, _ -> }, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Bar("Farbe für Lux", onBack) { Text("★ $tourStars", color = Q.Yellow, fontWeight = FontWeight.Bold) }
+        Bar("Lux gestalten", onBack) { Text("★ $tourStars · 🏅 $badges", color = Q.Yellow, fontWeight = FontWeight.Bold) }
         CompositionLocalProvider(LocalLuxSkin provides selected) { Lux(LuxMood.HAPPY, size = 150.dp) }
         Text("Such dir Lux' Leuchtfarbe aus. Neue Farben schaltest du mit Sternen aus der Tour frei.", Modifier.padding(horizontal = 24.dp, vertical = 8.dp), textAlign = TextAlign.Center, color = Q.Muted)
+        // Zubehör: Leuchtspur und Aufsatz, freigeschaltet durch Erfolge (in der 3D-Bühne zu sehen)
+        listOf("Leuchtspur" to Looks.trails, "Aufsatz" to Looks.hats).forEachIndexed { row, (title, list) ->
+            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 14.dp, vertical = 3.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(title, Modifier.width(78.dp), color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                list.forEach { x ->
+                    val open = badges >= x.badges; val on = (if (row == 0) look.first else look.second) == x.id
+                    Pick(if (open) "${x.emoji} ${x.name}" else "🔒 ${x.name} · ${x.badges} Erfolge", on, Q.Cyan, "zubehoer-${x.id}-$row") { if (open) { if (row == 0) onLook(x.id, look.second) else onLook(look.first, x.id) } }
+                }
+            }
+        }
         LazyVerticalGrid(GridCells.Fixed(2), contentPadding = PaddingValues(14.dp), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(Skins.all) { _, s ->
                 val open = tourStars >= s.stars; val c = stageColor(s.color); val interaction = remember { MutableInteractionSource() }
@@ -391,8 +406,14 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
             NeonButton({
                 scope.launch {
                     sfx?.play(Sound.LAUNCH)
-                    items.forEachIndexed { i, it -> it.beam(i)?.let { b -> controller.fire(b, 700); delay(250) } }
-                    delay(500); controller.party(5.0); sfx?.play(Sound.WIN)
+                    // Im Takt der Musik (104 Schläge pro Minute): auf jeden Schlag ein Laser, auf jeden vierten ein Lichtgewitter
+                    val lasers = items.mapIndexedNotNull { i, it -> it.beam(i) }
+                    repeat(12) { beat ->
+                        if (lasers.isNotEmpty()) controller.fire(lasers[beat % lasers.size], 260)
+                        if (beat % 4 == 3) controller.party(1.2)
+                        sfx?.play(Sound.TICK, 1f + (beat % 4) * 0.1f); delay(577)
+                    }
+                    controller.party(5.0); sfx?.play(Sound.WIN)
                 }
             }, Modifier.weight(1f), color = Q.Green, enabled = items.isNotEmpty()) { Text("▶ Show", fontWeight = FontWeight.Black) }
         }

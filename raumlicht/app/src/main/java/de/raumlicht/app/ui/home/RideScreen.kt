@@ -51,11 +51,16 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     var u by rememberSaveable(rideId) { mutableFloatStateOf(0f) }
     var driving by remember(rideId) { mutableStateOf(false) }
     var inside by rememberSaveable { mutableStateOf(true) }
+    var showD by rememberSaveable { mutableStateOf(false) }
+    var showFill by rememberSaveable { mutableStateOf(false) }
     var seen by remember(rideId) { mutableStateOf<Spot?>(null) }
     val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current
     val d = ride.data(u.toDouble())
 
-    LaunchedEffect(rideId) { controller.setState(ride.scene()) }
+    // Mit Zusätzen wird die Bühne in kleinen Schritten nachgeführt (Punkt auf f′ wandert mit, die Fläche wächst)
+    LaunchedEffect(rideId, showD, showFill, if (showD || showFill) (u * 100).toInt() else -1) {
+        controller.setState(if (showD || showFill) ride.scene(ride.x(u.toDouble()), showD, showFill) else ride.scene())
+    }
     LaunchedEffect(rideId, u, inside) { controller.ride(u.toDouble(), inside) }
     DisposableEffect(controller) { onDispose { controller.rideOff() } }
     // Automatische Fahrt: bergab schneller, bergauf langsamer – wie eine echte Achterbahn
@@ -109,6 +114,11 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Gauge("Krümmung f″(x)", Geo.num(d.bend), d.bendWord, if (abs(d.bend) < 0.05) Q.Pink else Q.Violet, Modifier.weight(1f).testTag("kruemmung"))
+            if (showFill) Gauge("Fläche ∫ f(x) dx", Geo.num(ride.integral(d.x)), "vom Start bis x", Q.Yellow, Modifier.weight(1f).testTag("flaeche"))
+        }
+        Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp, top = 6.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Pick("f′ als zweite Bahn", showD, Q.Pink, "zeige-ableitung") { showD = !showD }
+            Pick("∫ Fläche füllen", showFill, Q.Yellow, "zeige-flaeche") { showFill = !showFill }
         }
         Slider(u, { u = it; driving = false }, Modifier.fillMaxWidth().padding(horizontal = 16.dp).testTag("fahrt-regler"),
             colors = SliderDefaults.colors(thumbColor = Q.Yellow, activeTrackColor = Q.Cyan, inactiveTrackColor = Q.Panel))

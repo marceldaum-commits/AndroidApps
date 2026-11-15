@@ -41,7 +41,9 @@ Lage-Check, Duell, Zu zweit, Klasse, Klausur-Planer, Lernstand, Zweite Chance, B
 - 📅 **Tagesgig** – jeden Tag eine Aufgabe (Themen wechseln reihum), für drei Jahre im Test auf Lösbarkeit geprüft.
 - 📓 **Spickzettel** – Formelsammlung. 🏅 **Abzeichen** – 14 Auszeichnungen für Fortschritt.
 
-**Aufbau für Nutzer (seit 0.4.2):** drei Gebiete – Geometrie (Kapitel 1–11), Analysis (12, 14), Stochastik (13). Kapitel heißen nach ihrem Thema;
+**Aufbau für Nutzer (seit 0.4.2):** drei Gebiete – Geometrie (Kapitel 1–11), Analysis (12, 14, 15, 17), Stochastik (13, 16). Seit 0.5.0: 89 Aufgaben in 17 Kapiteln,
+Flug durch den Raum (`Flights`), Galton-Brett (`Galton`), Ableitungsbahn und Flächenfüllung (`Ride.scene`), Ohne Hilfsmittel (`Quick`), Fehler-Tagebuch (`MistakeBook`, `DiaryEntry`),
+Kalender (`Calendar`), Zubehör für Lux (`Looks`, `RL.look`), zweites Widget (`LearnWidget`), Ergebnis-Karte (`ShareCard`). Kapitel heißen nach ihrem Thema;
 in älteren Abschnitten dieses READMEs stehen teils noch die früheren Namen (Gig = Aufgabe, Jam-Session = Endlos üben, Backstage = Mehr, Spickzettel = Formelsammlung).
 
 ## So funktioniert Raumlicht
@@ -72,6 +74,11 @@ in älteren Abschnitten dieses READMEs stehen teils noch die früheren Namen (Gi
 | ![](screenshots/47_rechner.png) | ![](screenshots/15_einstellungen.png) | |
 
 | ![](screenshots/49_achterbahn_fahrersicht.png) | ![](screenshots/50_achterbahn_aussen.png) | |
+
+| ![](screenshots/52_funktion_bauen.png) | ![](screenshots/53_baumdiagramm.png) | ![](screenshots/54_vierfeldertafel.png) |
+| ![](screenshots/55_extremwert.png) | ![](screenshots/56_galton_brett.png) | ![](screenshots/57_raumflug.png) |
+| ![](screenshots/58_ableitung_und_flaeche.png) | ![](screenshots/59_fehler_tagebuch.png) | ![](screenshots/60_kalender.png) |
+| ![](screenshots/61_ohne_hilfsmittel.png) | ![](screenshots/62_lux_fuehrt_vor.png) | ![](screenshots/63_widget_lernstand.png) |
 
 Querformat: ![](screenshots/48_querformat.png)
 

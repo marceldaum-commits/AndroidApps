@@ -52,7 +52,32 @@ class Ride(val id: String, val title: String, val text: String, val from: Double
     fun spotNear(x: Double, eps: Double = 0.06) = spots.firstOrNull { abs(it.x - x) < eps }
     fun u(x: Double) = (x - from) / (to - from)
 
-    fun scene(): String = Stage.encode(Bounds(), listOf(
+    /** Fläche zwischen Bahn und Nulllinie vom Start bis x (unter der Achse wird abgezogen) – numerisch */
+    fun integral(x: Double): Double { val n = 400; val h = (x - from) / n; return (0 until n).sumOf { f(from + h * (it + 0.5)) } * h }
+    /** f′ als zweite Bahn: so gestaucht, dass sie in den Raum passt, mit derselben Nulllinie */
+    private val dScale: Double by lazy { val m = (0..60).maxOf { abs(df(from + (to - from) * it / 60)) }; if (m < 1e-9) 1.0 else minOf(sy, 2.2 / m) }
+    /** Nulllinie von f′: die von f – nur wenn f′ sonst im Boden verschwände, liegt sie höher (dann eigene gestrichelte Linie) */
+    private val dZero: Double by lazy { val low = (0..60).minOf { df(from + (to - from) * it / 60) }; maxOf(oz, 0.15 - low * dScale) }
+    private fun dAt(x: Double) = V3(4.0, ox + x * sx, (dZero + df(x) * dScale).coerceIn(0.05, 6.8))
+    /**
+     * Bühne mit Zusätzen: [derivative] zeigt f′ als pinke Bahn samt Punkt an der Stelle x,
+     * [fill] füllt die Fläche vom Start bis x mit Licht (gelb über, orange unter der Nulllinie).
+     */
+    fun scene(x: Double, derivative: Boolean, fill: Boolean): String {
+        val extra = ArrayList<Obj>()
+        if (derivative) { extra += Stage.edges("ableitung", (0..48).map { dAt(from + (to - from) * it / 48) }.zipWithNext(), "pink"); extra += Stage.point("dpunkt", dAt(x), "pink", "f′", drop = false)
+            if (dZero > oz + 1e-6) extra += Stage.line("dnull", V3(4.0, ox + from * sx, dZero), V3(0.0, (to - from) * sx, 0.0), 0.0, 1.0, "pink", dashed = true) }
+        if (fill && x > from + 1e-6) {
+            val n = maxOf(2, ((x - from) / (to - from) * 36).toInt()); val xs = (0..n).map { from + (x - from) * it / n }
+            fun quads(sign: Int) = xs.zipWithNext().filter { (a, b) -> f((a + b) / 2) * sign > 0 }.map { (a, b) -> listOf(V3(4.0, ox + a * sx, oz), V3(4.0, ox + b * sx, oz), at(b), at(a)) }
+            quads(1).takeIf { it.isNotEmpty() }?.let { q -> extra += Stage.edges("plus${q.size}", listOf(q.first()[0] to q.first()[3]), "yellow", faces = q) }
+            quads(-1).takeIf { it.isNotEmpty() }?.let { q -> extra += Stage.edges("minus${q.size}", listOf(q.first()[0] to q.first()[3]), "orange", faces = q) }
+        }
+        return Stage.encode(Bounds(), base() + extra)
+    }
+
+    fun scene(): String = Stage.encode(Bounds(), base())
+    private fun base(): List<Obj> = (listOf(
         Obj("bahn", "track", corners = points.map { it.list }, color = "cyan"),
         Stage.line("null", V3(4.0, ox + from * sx, oz), V3(0.0, (to - from) * sx, 0.0), 0.0, 1.0, "white", dashed = true),
     // Markierungen stehen wie Schilder neben der Strecke (nach hinten versetzt), nicht mitten auf der Bahn

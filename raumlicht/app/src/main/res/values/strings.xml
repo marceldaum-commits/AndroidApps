@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Raumlicht</string>
     <string name="widget_description">Tagesaufgabe: jeden Tag eine neue Aufgabe – direkt vom Startbildschirm.</string>
+    <string name="widget_learn_description">Lernstand: wie weit du in Geometrie, Analysis und Stochastik bist.</string>
 </resources>

@@ -20,7 +20,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     fun today(): Long = java.time.LocalDate.now().toEpochDay()
 
     fun record(levelId: String, stars: Int, attempts: Int) {
-        viewModelScope.launch { c.progress.record(levelId, stars, attempts); de.raumlicht.app.widget.DailyWidget.refresh(getApplication()) }
+        viewModelScope.launch { c.progress.record(levelId, stars, attempts); de.raumlicht.app.widget.DailyWidget.refresh(getApplication()); de.raumlicht.app.widget.LearnWidget.refresh(getApplication()) }
     }
 
     // ------------------------------------------------------------ App-Update

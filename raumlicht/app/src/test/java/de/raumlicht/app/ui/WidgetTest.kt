@@ -44,4 +44,15 @@ class WidgetTest {
         org.robolectric.shadows.ShadowLooper.idleMainLooper()
         root.captureRoboImage("../screenshots/37_widget.png")
     }
+
+    @Test fun learnWidgetPicture() {
+        val ctx = ApplicationProvider.getApplicationContext<android.content.Context>()
+        val root = FrameLayout(ctx)
+        val v = de.raumlicht.app.widget.LearnWidget.views(ctx, listOf(64, 38, 21)).apply(ctx, root)
+        root.setBackgroundColor(0xFF20242E.toInt()); root.setPadding(36, 36, 36, 36); root.addView(v)
+        val activity = org.robolectric.Robolectric.buildActivity(androidx.activity.ComponentActivity::class.java).setup().get()
+        activity.setContentView(root, android.view.ViewGroup.LayoutParams(1080, 420))
+        org.robolectric.shadows.ShadowLooper.idleMainLooper()
+        root.captureRoboImage("../screenshots/63_widget_lernstand.png")
+    }
 }

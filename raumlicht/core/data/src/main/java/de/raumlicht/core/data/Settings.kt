@@ -60,6 +60,16 @@ class Settings(ctx: Context) {
     val skin: StateFlow<String> = _skin.asStateFlow()
     fun setSkin(c: String) { prefs.edit().putString("skin", c).apply(); _skin.value = c }
 
+    /** Werkstatt: Leuchtspur und Aufsatz */
+    private val _look = MutableStateFlow((prefs.getString("trail", "none") ?: "none") to (prefs.getString("hat", "none") ?: "none"))
+    val look: StateFlow<Pair<String, String>> = _look.asStateFlow()
+    fun setLook(trail: String = _look.value.first, hat: String = _look.value.second) { prefs.edit().putString("trail", trail).putString("hat", hat).apply(); _look.value = trail to hat }
+
+    /** Fehler-Tagebuch: Zeilen „Anzahl⇥Aufgabe⇥Meldung“ */
+    private val _diary = MutableStateFlow(prefs.getString("diary", "") ?: "")
+    val diary: StateFlow<String> = _diary.asStateFlow()
+    fun setDiary(s: String) { prefs.edit().putString("diary", s).apply(); _diary.value = s }
+
     /** Klausur-Planer: Termin und Kapitel (leer = kein Plan) */
     private val _plan = MutableStateFlow(prefs.getString("plan", "") ?: "")
     val plan: StateFlow<String> = _plan.asStateFlow()

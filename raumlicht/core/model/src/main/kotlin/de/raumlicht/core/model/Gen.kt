@@ -292,6 +292,18 @@ object Sheet {
             "Geschwindigkeit: |v⃗|",
             "Treffen: beide Orte mit demselben t gleichsetzen",
             "Kleinster Abstand: d⃗(t) · (w⃗ − v⃗) = 0"), listOf(11), JamTopic.BEWEGUNG),
+        SheetCard("🎢", "Funktionen & Ableitung", "yellow", listOf(
+            "Gerade: f(x) = mx + b · Scheitelform: f(x) = a(x − d)² + e",
+            "Potenzregel: (xⁿ)′ = n · xⁿ⁻¹ · Kettenregel: äußere mal innere Ableitung",
+            "Tangente in x₀: t(x) = f′(x₀) · (x − x₀) + f(x₀)",
+            "Hochpunkt: f′ = 0 und f″ < 0 · Tiefpunkt: f′ = 0 und f″ > 0 · Wendestelle: f″ = 0",
+            "Fläche: A = ∫ f(x) dx (unter der Achse negativ)"), listOf(14, 15, 17)),
+        SheetCard("🎲", "Wahrscheinlichkeit", "pink", listOf(
+            "Laplace: P = günstige : mögliche",
+            "Pfadregel: entlang eines Pfades multiplizieren, Pfade addieren",
+            "Gegenereignis: P(mindestens eins) = 1 − P(keins)",
+            "Bedingt: P(B | A) = P(A und B) : P(A)",
+            "Binomial: μ = n · p, σ = √(n · p · (1 − p))"), listOf(13, 16)),
         SheetCard("🏺", "Rotationskörper", "violet", listOf(
             "V = π · ∫ f(x)² dx (Rotation um die x-Achse)",
             "Zylinder: πr²h · Kegel: ⅓πr²h · Kugel: ⁴⁄₃πr³"), listOf(12), JamTopic.BEWEGUNG),
