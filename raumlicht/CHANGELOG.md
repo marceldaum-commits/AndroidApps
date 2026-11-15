@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.3.1 – Widget (15.11.2026)
+- **Neu: Widget für den Startbildschirm.** Es zeigt den Tagesgig, ob er heute schon geschafft ist, und deine Sterne. Ein Tipp öffnet die Aufgabe.
+  Hinzufügen: lange auf den Startbildschirm drücken → Widgets → Raumlicht.
+- Das Widget braucht kein Internet und liest nur den Spielstand auf dem Gerät.
+
 ## 0.3.0 – Backstage (15.11.2026)
 - **🎓 Abi-Simulation:** drei zusammenhängende Aufgaben wie im Abitur (Festivalzelt, Laser & Leinwand, Drohnen-Show), je vier Teilaufgaben
   mit Bewertungseinheiten. Volle Punkte gibt es nur beim ersten Versuch, am Ende steht eine Auswertung.

@@ -26,6 +26,7 @@ Zweite Chance, Show-Baukasten, Lux-Werkstatt, Spickzettel und Abzeichen:
 - 🎓 **Abi-Simulation** – drei zusammenhängende Aufgaben mit je vier Teilaufgaben und Bewertungseinheiten (`Exams`).
 - 🧭 **Lage-Check** – acht Runden Lagebeziehung zweier Geraden erkennen; die Bühne zeigt die Geraden erst nach der Antwort.
 - ⚔️ **Duell** – Code wie `RL-4A1B2X` (Thema + Seed + Prüfziffer) steht für dieselben fünf Aufgaben, ohne Server.
+- 📱 **Widget** – Tagesgig auf dem Startbildschirm (`app/widget/DailyWidget`), ein Tipp öffnet die Aufgabe.
 - 🔁 **Zweite Chance** – alle Gigs mit 1–2 Sternen noch einmal. 🎨 **Lux-Werkstatt** – Leuchtfarben durch Sterne.
 - 🎇 **Show-Baukasten** – Laser (Stütz- und Richtungsvektor), Scheiben (Koordinatenform) und Kugeln frei setzen; Code `RLS-…` zum Teilen.
 - 🎧 **Jam-Session** – `Gen` erzeugt aus einem Seed Aufgaben mit ganzzahliger Lösung (Mittelpunkt, Vektor, Zielen, Parameter, Spurpunkt,
@@ -54,7 +55,8 @@ Zweite Chance, Show-Baukasten, Lux-Werkstatt, Spickzettel und Abzeichen:
 | ![](screenshots/26_spickzettel.png) | ![](screenshots/27_abzeichen.png) | ![](screenshots/28_bewegung.png) |
 | ![](screenshots/29_rotationskoerper.png) | ![](screenshots/30_backstage.png) | ![](screenshots/31_abi_simulation.png) |
 | ![](screenshots/32_abi_teilaufgabe.png) | ![](screenshots/33_lage_check.png) | ![](screenshots/34_duell.png) |
-| ![](screenshots/35_lux_werkstatt.png) | ![](screenshots/36_show_baukasten.png) | ![](screenshots/15_einstellungen.png) |
+| ![](screenshots/35_lux_werkstatt.png) | ![](screenshots/36_show_baukasten.png) | ![](screenshots/37_widget.png) |
+| ![](screenshots/15_einstellungen.png) | | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Vektorrechnung (`Geo`), Spielarten (`Families`), alle Level (`Levels`, `MoreLevels`), Aufgaben-Generator,

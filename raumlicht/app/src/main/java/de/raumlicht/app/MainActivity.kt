@@ -71,12 +71,20 @@ fun NavController.goOnce(route: String) {
 
 class MainActivity : ComponentActivity() {
     private val vm: AppViewModel by viewModels()
+    /** Wunsch-Ziel von außen (Widget): wird einmal angesteuert und dann gelöscht */
+    private val openRoute = mutableStateOf<String?>(null)
+
+    private fun readIntent(intent: android.content.Intent?) {
+        if (intent?.getStringExtra(de.raumlicht.app.widget.DailyWidget.EXTRA_OPEN) == de.raumlicht.app.widget.DailyWidget.OPEN_DAILY) openRoute.value = Routes.DAILY
+    }
+    override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); readIntent(intent) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val app = application as RaumlichtApp
         app.music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
+        if (savedInstanceState == null) readIntent(intent)
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
             val vibration by vm.settings.vibration.collectAsStateWithLifecycle()
@@ -94,6 +102,7 @@ class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         (application as RaumlichtApp).music.onForeground(true)
+        de.raumlicht.app.widget.DailyWidget.refresh(this)   // z. B. nach Mitternacht: neuer Tagesgig
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
     }
     override fun onStop() { (application as RaumlichtApp).music.onForeground(false); super.onStop() }
@@ -110,6 +119,8 @@ class MainActivity : ComponentActivity() {
         val lageBest by vm.settings.lageBest.collectAsStateWithLifecycle()
         val stars by vm.stars.collectAsStateWithLifecycle()
         val update by vm.availableUpdate.collectAsStateWithLifecycle()
+        val wanted by openRoute
+        LaunchedEffect(wanted) { wanted?.let { r -> nav.navigate(r) { popUpTo(Routes.HOME); launchSingleTop = true }; openRoute.value = null } }
         val jamBest by vm.settings.jamBest.collectAsStateWithLifecycle()
         val badges = remember(stars, jamBest) { Badges.all(stars, jamBest) }
         val tourStars = remember(stars) { Levels.all.sumOf { stars[it.id] ?: 0 } }
