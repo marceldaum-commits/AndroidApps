@@ -14,11 +14,11 @@ internal object MoreLevels {
     // ───────────────────────── 7 · Winkel ─────────────────────────
     /** Winkel in 15°-Schritten einstellen. [u], [v] sind die Richtungen, zwischen denen der Bogen gezeichnet wird. */
     private fun angle(id: String, title: String, mission: String, o: V3, u: V3, v: V3, degrees: Int, formula: List<List<Part>>, tip: String, way: List<String>,
-                      abi: Boolean = false, objects: (Phase) -> List<Obj>) =
+                      abi: Boolean = false, mistakes: Map<Int, String> = emptyMap(), objects: (Phase) -> List<Obj>) =
         Families.scalar(id, 7, title, mission, "α", 0..12, degrees / 15, 0, tip, way, "yellow", step = 15, suffix = "°", abi = abi,
             formula = { a -> formula + listOf(listOf(Txt("α = "), Num("${a * 15}°", "a"))) },
             objects = { _, ph -> objects(ph) + Stage.arc("bogen", o, u, v, 1.8) },
-            check = { a -> Families.compare(a * 15, degrees, "Der Winkel", "Genau $degrees° – perfekt ausgerichtet!") })
+            check = { a -> Families.compare(a * 15, degrees, "Der Winkel", "Genau $degrees° – perfekt ausgerichtet!", mistakes) })
 
     private val ch7 = run {
         val o1 = p(1, 1, 2); val a1 = p(5, 0, 0); val b1 = p(5, 5, 0)
@@ -53,6 +53,7 @@ internal object MoreLevels {
             },
             angle("7-5", "Abi-Check: Einfallswinkel", "Ein Laser trifft das Sonnensegel E. Unter welchem Winkel trifft er auf?", s5, -d5, -pr5, 30,
                 listOf(lineText("g", a5, d5), listOf(Txt("E: x₁ + x₂ = 8    sin α = |n⃗ · d⃗| : (|n⃗| · |d⃗|)"))), abi = true,
+                mistakes = mapOf(60 to "60° ist der Winkel zum Normalenvektor (Kosinus). Zwischen Gerade und Ebene brauchst du den Sinus: 90° − 60°."),
                 tip = "n⃗ = (1|1|0), d⃗ = (0|1|1): n⃗ · d⃗ = 1, beide Längen √2. Achtung: Sinus, nicht Kosinus.",
                 way = listOf("n⃗ = (1|1|0), n⃗ · d⃗ = 1", "|n⃗| = |d⃗| = √2", "sin α = 1 : 2 → α = 30°")) {
                 listOf(Stage.plane("E", p(1, 1, 0), 8.0, "violet", "E"), Stage.point("A", a5, "cyan", "A"), Stage.line("g", a5, s5 - a5, 0.0, 1.0, "cyan", "g"),
@@ -83,13 +84,13 @@ internal object MoreLevels {
                 objects = { _, ph -> listOf(Stage.fullLine("g", a2, d2, Bounds(), "cyan", "g"), Stage.point("P", q2, "cyan", "P(5|3|4)")) +
                     if (ph == Phase.DONE) listOf(Stage.line("lot", q2, f2 - q2, 0.0, 1.0, "pink"), Stage.point("F", f2, "pink", "F(4|5|2)")) else listOf(Stage.stub("richtung", q2, f2 - q2, "pink", length = 0.9)) },
                 check = { a -> Families.compare(a, 3, "Der Abstand", "Genau 3 – das Seil reicht bis zum Strahl.") { ok -> listOf(Beam(q2, q2 + (f2 - q2) * (a / 3.0), "pink", ok)) } }),
-            Families.scalar("8-3", 8, "Parallele Scheiben", "Zwei Glasscheiben hängen parallel. Wie groß ist ihr Abstand?", "d", 0..8, 3, 1,
+            Families.scalar("8-3", 8, "Parallele Scheiben", "Zwei Glasscheiben hängen parallel. Wie groß ist ihr Abstand?", "d", 0..9, 3, 1,
                 tip = "Gleicher Normalenvektor (1|2|2) mit Länge 3. Abstand = |c₂ − c₁| : |n⃗|.",
                 way = listOf("n⃗ = (1|2|2), |n⃗| = 3", "|18 − 9| = 9", "d = 9 : 3 = 3"),
                 formula = { a -> listOf(listOf(Txt("E₁: x₁ + 2x₂ + 2x₃ = 9")), listOf(Txt("E₂: x₁ + 2x₂ + 2x₃ = 18")), listOf(Txt("d = "), Num(Geo.num(a), "a"))) },
                 objects = { _, ph -> listOf(Stage.plane("E1", n3, 9.0, "violet", "E₁"), Stage.plane("E2", n3, 18.0, "cyan", "E₂"), Stage.point("Q", q3, "pink")) +
                     if (ph == Phase.DONE) listOf(Stage.line("lot", q3, n3, 0.0, 1.0, "pink")) else listOf(Stage.stub("richtung", q3, n3, "pink", length = 0.9)) },
-                check = { a -> Families.compare(a, 3, "Der Abstand", "3 Einheiten – der Strahl endet genau auf der zweiten Scheibe.") { ok -> listOf(Beam(q3, q3 + n3 * (a / 3.0), "pink", ok)) } }),
+                check = { a -> Families.compare(a, 3, "Der Abstand", "3 Einheiten – der Strahl endet genau auf der zweiten Scheibe.", mapOf(9 to "9 ist |c₂ − c₁|. Teile noch durch die Länge des Normalenvektors: |n⃗| = 3.")) { ok -> listOf(Beam(q3, q3 + n3 * (a / 3.0), "pink", ok)) } }),
             Families.scalar("8-4", 8, "Knapp vorbei", "Die Strahlen g und h sind windschief. Wie nah kommen sie sich?", "d", 0..8, 3, 1,
                 tip = "n⃗ = d⃗₁ × d⃗₂ steht auf beiden senkrecht. Abstand = |(B − A) · n⃗| : |n⃗|.",
                 way = listOf("d⃗₁ × d⃗₂ = (−4|4|−2), gekürzt n⃗ = (2|−2|1), |n⃗| = 3", "(B − A) · n⃗ = (3|−2|−1) · (2|−2|1) = 9", "d = 9 : 3 = 3"),
@@ -129,6 +130,7 @@ internal object MoreLevels {
                 listOf(Ray("g", a3, d3, "cyan", s3)), s3,
                 listOf(Check("liegt auf g") { Geo.onLine(it, a3, d3) }, Check("liegt auf der Kugel") { kotlin.math.abs((it - m).length - 3) < Geo.EPS }),
                 given = listOf(lineText("g", a3, d3), listOf(Txt(ball))),
+                mistakes = listOf(p(2, 6, 4) to "Das ist der Austrittspunkt (t = 3). Gesucht ist der erste Treffer – die kleinere Lösung."),
                 tip = "g in die Kugelgleichung einsetzen: (4 − 2t)² + (−4 + 2t)² + (−2 + t)² = 9. Die kleinere Lösung ist der erste Treffer.",
                 way = listOf("9t² − 36t + 36 = 9 → t² − 4t + 3 = 0", "t = 1 oder t = 3 (Ein- und Austritt)", "erster Treffer: S = (8|0|1) + 1 · (−2|2|1) = (6|2|2)"),
                 extras = { listOf(Stage.sphere("K", m, 3.0, "violet"), Stage.point("M", m, "white", "M", drop = false)) }),
@@ -175,13 +177,13 @@ internal object MoreLevels {
                     Stage.vector("a", o1, o1 + a1, "cyan", "a⃗"), Stage.vector("b", o1, o1 + b1, "pink", "b⃗")) +
                     if (ph == Phase.DONE) listOf(Stage.vector("n", o1, o1 + p(-1, 2, -2) * 0.9, "green", "a⃗×b⃗")) else emptyList() },
                 check = { a -> Families.compare(a, 9, "Die Fläche", "9 Flächeneinheiten – so groß ist das Segel.") }),
-            Families.scalar("10-2", 10, "Dreieckssegel", "Drei Drohnen halten ein dreieckiges Segel ABC. Wie groß ist es?", "A", 0..16, 9, 0,
+            Families.scalar("10-2", 10, "Dreieckssegel", "Drei Drohnen halten ein dreieckiges Segel ABC. Wie groß ist es?", "A", 0..18, 9, 0,
                 tip = "Ein Dreieck ist ein halbes Parallelogramm: A = ½ · |AB⃗ × AC⃗|.",
                 way = listOf("AB⃗ = (4|4|2), AC⃗ = (4|1|−1)", "AB⃗ × AC⃗ = (−6|12|−12), Länge √324 = 18", "A = ½ · 18 = 9"), color = "yellow",
                 formula = { a -> listOf(listOf(Txt("A(1|1|2)   B(5|5|4)   C(5|2|1)")), listOf(Txt("A = ½ · |AB⃗ × AC⃗| = "), Num(Geo.num(a), "a"))) },
                 objects = { _, _ -> listOf(Stage.edges("segel", loop(ta, tb, tc), "yellow", faces = listOf(listOf(ta, tb, tc))), Stage.point("A", ta, "cyan", "A"), Stage.point("B", tb, "cyan", "B"), Stage.point("C", tc, "cyan", "C")) },
-                check = { a -> Families.compare(a, 9, "Die Fläche", "9 Flächeneinheiten – halb so viel wie das Parallelogramm.") }),
-            Families.scalar("10-3", 10, "Zeltvolumen", "Ein schiefes Zelt: Grundfläche von a⃗ und b⃗ aufgespannt, c⃗ führt zur Spitze. Wie viel Raum ist darin?", "V", 0..12, 6, 0,
+                check = { a -> Families.compare(a, 9, "Die Fläche", "9 Flächeneinheiten – halb so viel wie das Parallelogramm.", mapOf(18 to "18 ist die Fläche des Parallelogramms. Ein Dreieck ist die Hälfte davon.")) }),
+            Families.scalar("10-3", 10, "Zeltvolumen", "Ein schiefes Zelt: Grundfläche von a⃗ und b⃗ aufgespannt, c⃗ führt zur Spitze. Wie viel Raum ist darin?", "V", 0..18, 6, 0,
                 tip = "Pyramide mit Parallelogramm als Grundfläche: V = ⅓ · |(a⃗ × b⃗) · c⃗|.",
                 way = listOf("a⃗ × b⃗ = (0|0|6)", "(a⃗ × b⃗) · c⃗ = 6 · 3 = 18", "V = ⅓ · 18 = 6"), color = "yellow",
                 formula = { a -> listOf(listOf(Txt("a⃗ = "), col(a3), Txt(" b⃗ = "), col(b3), Txt(" c⃗ = "), col(c3)), listOf(Txt("V = ⅓ · |(a⃗ × b⃗) · c⃗| = "), Num(Geo.num(a), "a"))) },
@@ -190,7 +192,7 @@ internal object MoreLevels {
                     listOf(Stage.edges("zelt", loop(*q.toTypedArray()) + q.map { it to s }, "yellow", faces = q.indices.map { listOf(q[it], q[(it + 1) % 4], s) }),
                         Stage.vector("a", o3, o3 + a3, "cyan", "a⃗"), Stage.vector("b", o3, o3 + b3, "pink", "b⃗"), Stage.vector("c", o3, s, "green", "c⃗"))
                 },
-                check = { a -> Families.compare(a, 6, "Das Volumen", "6 Volumeneinheiten passen ins Zelt.") }),
+                check = { a -> Families.compare(a, 6, "Das Volumen", "6 Volumeneinheiten passen ins Zelt.", mapOf(18 to "18 ist das Spatprodukt selbst. Für die Pyramide fehlt noch der Faktor ⅓.")) }),
             Families.aim("10-4", 10, "Schnittgerade", "Zwei Scheiben schneiden sich in einer Geraden. Der Laser in A liegt auf beiden – schick den Strahl genau die Schnittkante entlang.",
                 p(4, 0, 2), listOf(p(0, 4, 2)), hidden = true, solution = p(-1, 1, 0), line = "s",
                 given = listOf(listOf(Txt("E₁: x₁ + x₂ + x₃ = 6    E₂: x₃ = 2"))),
@@ -314,5 +316,102 @@ internal object TourThree {
             "Bonus-Tour: Analysis zum Anfassen.",
             "Dreht sich eine Kurve um die x-Achse, entsteht ein Körper. Sein Volumen: V = π · ∫ f(x)² dx.",
             "Du stellst das Vielfache von π ein."), ch12),
+    )
+}
+
+/** Kapitel 13–14: Stochastik (Lichtlotterie) und Analysis (Achterbahn). */
+internal object TourFour {
+    private fun p(x: Int, y: Int, z: Int) = V3(x, y, z)
+
+    // ───────────────────────── 13 · Stochastik ─────────────────────────
+    /** Leuchtkugeln in einer Reihe (oder in mehreren Reihen): die ersten [pink] sind pink, der Rest blau. */
+    private fun balls(total: Int, pink: Int, perRow: Int = 5): List<Obj> = (0 until total).map { i ->
+        Stage.sphere("k$i", V3(4.0, 1.6 + (i % perRow) * 1.2, 1.2 + (i / perRow) * 1.2), 0.45, if (i < pink) "pink" else "cyan")
+    }
+    private fun chance(id: String, title: String, mission: String, percent: Int, step: Int, formula: String, tip: String, way: List<String>, objects: List<Obj>,
+                       abi: Boolean = false, mistakes: Map<Int, String> = emptyMap()) =
+        Families.scalar(id, 13, title, mission, "P", 0..(100 / step), percent / step, 0, tip, way, "pink", step = step, suffix = " %", abi = abi,
+            formula = { a -> listOf(listOf(Txt(formula)), listOf(Txt("P = "), Num("${a * step} %", "a"))) },
+            objects = { _, _ -> objects },
+            check = { a -> Families.compare(a * step, percent, "Die Wahrscheinlichkeit", "Genau $percent %.", mistakes) })
+
+    private val ch13 = listOf(
+        chance("13-1", "Lichtlotterie", "Zehn Leuchtkugeln, drei davon pink. Ich greife blind eine heraus. Wie wahrscheinlich ist sie pink?", 30, 10,
+            "10 Kugeln, 3 pink", tip = "Laplace: günstige durch mögliche Ergebnisse.", way = listOf("P = günstige : mögliche", "= 3 : 10", "= 30 %"), objects = balls(10, 3)),
+        chance("13-2", "Zweimal ziehen", "Fünf von zehn Kugeln sind pink. Ich ziehe zweimal und lege die erste zurück. Wie wahrscheinlich sind beide pink?", 25, 5,
+            "10 Kugeln, 5 pink · zweimal ziehen mit Zurücklegen", tip = "Pfadregel: entlang des Pfades multiplizieren. Mit Zurücklegen bleibt die Wahrscheinlichkeit gleich.",
+            way = listOf("P(pink) = 5 : 10 = ½", "P(pink, pink) = ½ · ½", "= ¼ = 25 %"), objects = balls(10, 5),
+            mistakes = mapOf(100 to "Wahrscheinlichkeiten entlang eines Pfades werden multipliziert, nicht addiert.", 50 to "50 % gilt für eine Kugel. Für zwei hintereinander: ½ · ½.")),
+        chance("13-3", "Ohne Zurücklegen", "Jetzt sind nur zwei von fünf Kugeln pink – und die erste bleibt draußen. Wie wahrscheinlich ziehe ich beide pinken?", 10, 5,
+            "5 Kugeln, 2 pink · zweimal ziehen ohne Zurücklegen", tip = "Nach dem ersten Zug ist eine pinke Kugel weniger da – und insgesamt eine weniger.",
+            way = listOf("erster Zug: 2 : 5", "zweiter Zug: 1 : 4", "P = ⅖ · ¼ = 2 : 20 = 10 %"), objects = balls(5, 2),
+            mistakes = mapOf(15 to "Fast: ⅖ · ⅖ = 16 % wäre mit Zurücklegen. Hier fehlt beim zweiten Zug eine Kugel.")),
+        Families.scalar("13-4", 13, "Ausfälle einplanen", "In der Show hängen 20 Scheinwerfer. Jeder fällt unabhängig mit 10 % aus. Mit wie vielen Ausfällen muss ich im Schnitt rechnen?", "μ", 0..10, 2, 0,
+            tip = "Erwartungswert der Binomialverteilung: μ = n · p.", way = listOf("n = 20, p = 0,1", "μ = n · p = 20 · 0,1", "= 2 Ausfälle"), color = "pink",
+            formula = { a -> listOf(listOf(Txt("n = 20, p = 10 %  (binomialverteilt)")), listOf(Txt("μ = n · p = "), Num(Geo.num(a), "a"))) },
+            objects = { _, _ -> balls(20, 2, 5) },
+            check = { a -> Families.compare(a, 2, "Der Erwartungswert", "Im Schnitt 2 Ausfälle – also zwei Ersatzlampen einpacken.") }),
+        chance("13-5", "Abi-Check: Mindestens einer", "Ein Blitzlicht zündet mit 50 %. Ich habe zwei davon. Wie wahrscheinlich zündet mindestens eines?", 75, 5,
+            "2 Blitzlichter, jedes zündet mit 50 %", tip = "„Mindestens eins“ rechnet man über das Gegenereignis: 1 − P(keins).",
+            way = listOf("P(keins zündet) = ½ · ½ = ¼", "P(mindestens eins) = 1 − ¼", "= 75 %"), objects = balls(2, 1, 2), abi = true,
+            mistakes = mapOf(100 to "Einfach addieren geht nicht – sonst wären es bei drei Blitzlichtern 150 %. Nimm das Gegenereignis.", 25 to "25 % ist die Wahrscheinlichkeit, dass beide zünden. Gesucht ist: mindestens eines.")),
+    )
+
+    // ───────────────────────── 14 · Analysis: Achterbahn ─────────────────────────
+    /** Bildet den Graphen in die Ebene x₁ = 4 ab: x läuft nach rechts (x₂), f(x) nach oben (x₃). */
+    private class Track(val from: Double, val to: Double, val sx: Double, val ox: Double, val sy: Double, val oz: Double, val f: (Double) -> Double, val df: (Double) -> Double) {
+        fun at(x: Double) = V3(4.0, ox + x * sx, oz + f(x) * sy)
+        fun curve(id: String = "bahn", color: String = "cyan") = Stage.edges(id, (0..48).map { at(from + (to - from) * it / 48) }.zipWithNext(), color)
+        fun axis() = Stage.line("achse", V3(4.0, ox + from * sx, oz), V3(0.0, (to - from) * sx, 0.0), 0.0, 1.0, "white", dashed = true)
+        fun tangent(x: Double) = Stage.line("tangente", at(x), V3(0.0, sx, df(x) * sy), -1.0, 1.0, "yellow", thin = true)
+    }
+    private fun ride(id: String, title: String, mission: String, track: Track, text: String, name: String, range: IntRange, solution: Int, start: Int, ok: String,
+                     tip: String, way: List<String>, abi: Boolean = false, tangent: Boolean = true, mistakes: Map<Int, String> = emptyMap(), hint: (Int) -> String) =
+        Families.scalar(id, 14, title, mission, name, range, solution, start, tip, way, "yellow", abi = abi,
+            lux = { a, _ -> track.at(a.toDouble()) + V3(0.0, 0.0, 0.45) },
+            formula = { a -> listOf(listOf(Txt("f(x) = $text")), listOf(Txt("$name = "), Num(Geo.num(a), "a"))) },
+            objects = { a, _ -> listOf(track.curve(), track.axis(), Stage.point("stelle", track.at(a.toDouble()), "yellow", drop = false)) + if (tangent) listOf(track.tangent(a.toDouble())) else emptyList() },
+            check = { a -> if (a == solution) Outcome(true, ok) else Outcome(false, mistakes[a] ?: hint(a)) })
+
+    private val ch14 = run {
+        val t1 = Track(-1.0, 4.0, 1.4, 1.5, 0.5, 2.5, { it * it - 2 * it - 3 }, { 2 * it - 2 })
+        val t2 = Track(0.0, 4.0, 1.5, 1.0, 1.0, 1.0, { -it * it + 4 * it }, { -2 * it + 4 })
+        val t3 = Track(-2.0, 2.0, 1.5, 4.0, 1.0, 3.0, { it * it * it - 3 * it }, { 3 * it * it - 3 })
+        val t4 = Track(0.0, 4.0, 1.5, 1.0, 1.0, 1.0, { it * it * it - 6 * it * it + 9 * it }, { 3 * it * it - 12 * it + 9 })
+        val t5 = Track(0.0, 2.0, 2.5, 1.5, 1.2, 1.0, { -3 * it * it + 6 * it }, { -6 * it + 6 })
+        listOf(
+            ride("14-1", "Nulldurchgang", "Ich fahre die Achterbahn f entlang. An welcher positiven Stelle kreuzt sie die x-Achse?", t1, "x² − 2x − 3", "x", -1..4, 3, 0,
+                "Bei x = 3 ist f(x) = 0 – Nullstelle gefunden.", tip = "f(x) = 0 lösen: x² − 2x − 3 = (x − 3)(x + 1).",
+                way = listOf("x² − 2x − 3 = 0", "(x − 3)(x + 1) = 0", "positive Nullstelle: x = 3"), tangent = false,
+                mistakes = mapOf(-1 to "x = −1 ist auch eine Nullstelle – aber die negative. Gesucht ist die positive.")) { "f($it) = ${Geo.num(it * it - 2 * it - 3)}. An einer Nullstelle muss 0 herauskommen." },
+            ride("14-2", "Höchster Punkt", "Wo ist die Bahn am höchsten? Am Hochpunkt liegt die Tangente waagerecht.", t2, "−x² + 4x", "x", 0..4, 2, 0,
+                "Hochpunkt bei x = 2: Die Tangente liegt waagerecht.", tip = "Erste Ableitung null setzen: f′(x) = −2x + 4.",
+                way = listOf("f′(x) = −2x + 4", "f′(x) = 0 → x = 2", "f″(2) = −2 < 0 → Hochpunkt H(2|4)")) { "Hier hat die Tangente die Steigung ${Geo.num(-2 * it + 4)}. Am Hochpunkt ist sie 0." },
+            ride("14-3", "Tal der Bahn", "Diese Bahn hat einen Berg und ein Tal. Bei welchem x liegt der Tiefpunkt?", t3, "x³ − 3x", "x", -2..2, 1, 0,
+                "Tiefpunkt bei x = 1.", tip = "f′(x) = 3x² − 3 = 0 hat zwei Lösungen. Die zweite Ableitung entscheidet: f″(x) = 6x.",
+                way = listOf("f′(x) = 3x² − 3 = 0 → x = −1 oder x = 1", "f″(1) = 6 > 0 → Tiefpunkt", "T(1|−2)"),
+                mistakes = mapOf(-1 to "Bei x = −1 liegt die Tangente auch waagerecht – aber f″(−1) = −6 < 0: Das ist der Hochpunkt.")) { "Hier hat die Tangente die Steigung ${Geo.num(3 * it * it - 3)}. Am Tiefpunkt ist sie 0." },
+            ride("14-4", "Wendestelle", "Erst krümmt sich die Bahn nach rechts, dann nach links. An welcher Stelle wechselt sie?", t4, "x³ − 6x² + 9x", "x", 0..4, 2, 0,
+                "Wendepunkt bei x = 2: Hier ist das Gefälle am stärksten.", tip = "Zweite Ableitung null setzen: f″(x) = 6x − 12.",
+                way = listOf("f′(x) = 3x² − 12x + 9, f″(x) = 6x − 12", "f″(x) = 0 → x = 2", "W(2|2)"),
+                mistakes = mapOf(1 to "Bei x = 1 ist f′ = 0 – das ist der Hochpunkt. Für die Wendestelle brauchst du f″ = 0.", 3 to "Bei x = 3 ist f′ = 0 – das ist der Tiefpunkt. Für die Wendestelle brauchst du f″ = 0.")) { "f″($it) = ${Geo.num(6 * it - 12)}. An der Wendestelle muss 0 herauskommen." },
+            Families.scalar("14-5", 14, "Abi-Check: Leuchtfläche", "Der Bogen der Bahn soll mit Licht gefüllt werden. Wie groß ist die Fläche zwischen Bahn und x-Achse?", "A", 0..10, 4, 0,
+                tip = "Integral von 0 bis 2. Stammfunktion: F(x) = −x³ + 3x².", way = listOf("A = ∫₀² (−3x² + 6x) dx", "= [−x³ + 3x²]₀²", "= −8 + 12 = 4"), color = "yellow", abi = true,
+                formula = { a -> listOf(listOf(Txt("f(x) = −3x² + 6x,  x von 0 bis 2")), listOf(Txt("A = ∫ f(x) dx = "), Num(Geo.num(a), "a"))) },
+                objects = { _, _ -> val pts = (0..32).map { t5.at(2.0 * it / 32) }
+                    listOf(Stage.edges("fläche", pts.zipWithNext() + listOf(pts.last() to pts.first()), "yellow", faces = listOf(pts)), t5.axis()) },
+                check = { a -> Families.compare(a, 4, "Die Fläche", "4 Flächeneinheiten leuchten unter dem Bogen.", mapOf(6 to "6 wäre Grundseite mal Höhe – der Bogen ist aber kein Rechteck. Nimm das Integral.")) }),
+        )
+    }
+
+    val chapters = listOf(
+        Chapter(13, "Lichtlotterie", "Stochastik: Wahrscheinlichkeit", "Lostrommel", "🎲", "pink", listOf(
+            "Zweites Abi-Gebiet: Zufall. Die Leuchtkugeln zeigen dir, was möglich ist.",
+            "Günstige durch mögliche Ergebnisse. Entlang eines Pfades multiplizieren, Pfade addieren.",
+            "„Mindestens eins“? Immer über das Gegenereignis."), ch13),
+        Chapter(14, "Achterbahn", "Analysis: Kurvendiskussion", "Freizeitpark", "🎢", "cyan", listOf(
+            "Drittes Abi-Gebiet: Analysis. Ich fahre die Kurve ab – du sagst, wo ich halten soll.",
+            "Die gelbe Linie ist die Tangente. Waagerecht heißt: f′(x) = 0.",
+            "Hoch- oder Tiefpunkt entscheidet f″. Wendestelle: f″(x) = 0."), ch14),
     )
 }

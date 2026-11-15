@@ -112,3 +112,13 @@ Keine neue Suche, sondern Anwendung der Befunde oben:
 - **Show-Baukasten** und **Duell**: Teenager wollen etwas bauen und sich messen (Minecraft-/Graphwar-Befund, JIM) – ohne Konto, ohne Server, per Code.
 - **Rotationskörper/Bewegung**: Raumvorstellung ist die Hürde (Friedrich Verlag, NiBiS) – Körper und Flugbahnen entstehen sichtbar, die Zeit ist ein Regler.
 - Offen bleibt: Belastbare Lernzuwachs-Zahlen für genau diese Spielarten in der Oberstufe haben wir nicht.
+
+## Raumlicht 0.4.0 (15.11.2026): Rückmeldung auf den Fehler statt auf das Ergebnis
+
+- Lernwirksame Rückmeldung sagt nicht nur „falsch“, sondern benennt den Fehler und den nächsten Schritt (Hattie & Timperley 2007, „The Power of Feedback“:
+  Rückmeldung zur Aufgabe und zum Lösungsweg wirkt stärker als bloßes Richtig/Falsch; Zahlen dazu sind Meta-Analysen entnommen und schwanken stark je nach Studie).
+  → Fehler-Analyse: typische Fehlvorstellungen der Vektorrechnung werden erkannt und benannt.
+- Ausgearbeitete Lösungsschritte, die man selbst vervollständigt, entlasten Anfänger (Worked-Example-Effekt, Sweller; Renkl zu „fading“).
+  → „Schritt für Schritt“: erst t, dann der Punkt – mit sichtbarer Marke in der Bühne.
+- Verteiltes Lernen auf einen Termin hin (Cepeda u. a. 2008, siehe oben) → Klausur-Planer mit Tagespaketen statt Pauken am Vorabend.
+- Diese Punkte stammen aus bekannter Lernforschung, nicht aus einer neuen Suche; für die Oberstufe und für diese App gibt es keine eigenen Wirksamkeitsdaten.

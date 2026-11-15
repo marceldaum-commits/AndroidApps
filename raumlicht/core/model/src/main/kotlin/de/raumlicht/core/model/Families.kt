@@ -35,6 +35,8 @@ object Families {
         tip: String, way: List<String>, bounds: Bounds = Bounds(), abi: Boolean = false,
         home: V3 = V3(bounds.max[0].toDouble(), bounds.min[1].toDouble(), 1.0), name: String = "P",
         start: V3 = V3.ZERO, given: List<List<Part>> = emptyList(),
+        /** Typische Fehler: falsche Antwort → gezielter Hinweis, was schiefgelaufen ist */
+        mistakes: List<Pair<V3, String>> = emptyList(),
         extras: (Phase) -> List<Obj> = { emptyList() },
     ) = Level(
         id, chapter, title, mission, bounds,
@@ -52,7 +54,7 @@ object Families {
         evaluate = { v ->
             val p = v.vec("P")
             if (p.near(target)) Outcome(true, "Punktlandung bei ${target.fmt()}!", flyTo = p)
-            else Outcome(false, matchMessage(p, target), flyTo = p)
+            else Outcome(false, mistakes.firstOrNull { p.near(it.first) }?.second ?: matchMessage(p, target), flyTo = p)
         },
     )
 
@@ -80,7 +82,11 @@ object Families {
         evaluate = { v ->
             val p = a + v.vec("v")
             if (p.near(b)) Outcome(true, "Genau der richtige Vektor!", flyTo = p)
-            else Outcome(false, matchMessage(p, b, "Komponente"), flyTo = p)
+            else Outcome(false, when {
+                v.vec("v").near(a - b) -> "Du hast A − B gerechnet. Es heißt Spitze minus Fuß: B − A – alle Vorzeichen drehen sich um."
+                !a.isZero && v.vec("v").near(b) -> "Das ist der Ortsvektor von B. Für den Weg von A nach B musst du A noch abziehen."
+                else -> matchMessage(p, b, "Komponente")
+            }, flyTo = p)
         },
     )
 
@@ -116,6 +122,7 @@ object Families {
                     else -> {
                         val end = a + d * Geo.exit(a, d, bounds.outerLo, bounds.outerHi)
                         val msg = if (Geo.parallel(d, far - a) && targets.size == 1) "Die Richtung stimmt – aber der Strahl läuft rückwärts. Vorzeichen umdrehen!"
+                        else if (!a.isZero && Geo.parallel(d, far)) "Das ist die Richtung vom Ursprung zum Ziel. Der Laser steht aber in A – zieh A ab: Z − A."
                         else "Der Strahl geht ${Geo.num(Geo.distPointLine(far, a, d))} Einheiten am Ziel vorbei."
                         Outcome(false, msg, listOf(Beam(a, end, "cyan", false)))
                     }
@@ -163,7 +170,7 @@ object Families {
     fun sensor(
         id: String, chapter: Int, title: String, mission: String, rays: List<Ray>, answer: V3, checks: List<Check>,
         given: List<List<Part>>, tip: String, way: List<String>, bounds: Bounds = Bounds(), abi: Boolean = false,
-        start: V3 = V3.ZERO, name: String = "S",
+        start: V3 = V3.ZERO, name: String = "S", mistakes: List<Pair<V3, String>> = emptyList(),
         shots: ((V3, Boolean) -> List<Beam>)? = null,
         extras: (Phase) -> List<Obj> = { emptyList() },
     ) = Level(
@@ -190,7 +197,7 @@ object Families {
             if (ok) Outcome(true, "Der Sensor leuchtet – genau bei ${answer.fmt()}!", beams)
             else {
                 val (good, bad) = checks.partition { it.ok(p) }
-                val msg = when {
+                val msg = mistakes.firstOrNull { p.near(it.first) }?.second ?: when {
                     bad.isEmpty() || checks.isEmpty() -> matchMessage(p, answer)
                     good.isEmpty() -> "Dein Punkt ${bad.joinToString(" und ") { it.text }} noch nicht ✗."
                     else -> "Dein Punkt ${good.joinToString(" und ") { it.text }} ✓, aber ${bad.joinToString(" und ") { it.text }} nicht ✗."
@@ -268,16 +275,19 @@ object Families {
     fun scalar(
         id: String, chapter: Int, title: String, mission: String, name: String, range: IntRange, solution: Int, start: Int,
         tip: String, way: List<String>, color: String = "pink", step: Int = 1, suffix: String = "", bounds: Bounds = Bounds(), abi: Boolean = false,
+        /** Wo Lux steht (z. B. auf einer Kurve); sonst parkt sie am Rand */
+        lux: ((Int, Phase) -> V3)? = null,
         formula: (Int) -> List<List<Part>>, objects: (Int, Phase) -> List<Obj>, check: (Int) -> Outcome,
     ) = Level(id, chapter, title, mission, bounds,
         listOf(Control("a", name, ControlKind.SCALAR, listOf(start), listOf(range.first), listOf(range.last), color, step, suffix)), mapOf("a" to listOf(solution)),
         tip, way, abi, formula = { formula(it.int("a")) },
-        objects = { v, ph -> objects(v.int("a"), ph) + Stage.drone(V3(bounds.max[0].toDouble(), bounds.min[1].toDouble(), 1.0), if (ph == Phase.DONE) "happy" else "idle") },
+        objects = { v, ph -> objects(v.int("a"), ph) + Stage.drone(lux?.invoke(v.int("a"), ph) ?: V3(bounds.max[0].toDouble(), bounds.min[1].toDouble(), 1.0), if (ph == Phase.DONE) "happy" else "idle") },
         evaluate = { check(it.int("a")) })
 
     /** Rückmeldung für Zahlen-Level: zu klein / zu groß, ohne die Lösung zu verraten. */
-    fun compare(value: Int, solution: Int, what: String, ok: String, beams: (Boolean) -> List<Beam> = { emptyList() }) = when {
+    fun compare(value: Int, solution: Int, what: String, ok: String, mistakes: Map<Int, String> = emptyMap(), beams: (Boolean) -> List<Beam> = { emptyList() }) = when {
         value == solution -> Outcome(true, ok, beams(true))
+        value in mistakes -> Outcome(false, mistakes.getValue(value), beams(false))
         value < solution -> Outcome(false, "$what ist größer. Rechne noch einmal nach.", beams(false))
         else -> Outcome(false, "$what ist kleiner. Rechne noch einmal nach.", beams(false))
     }

@@ -41,6 +41,7 @@ object Gen {
         Kind.MIDPOINT -> {
             val m = r.point(1, 1); val h = r.dir(3); val a = m - h; val b = m + h
             if (!inRoom(a) || !inRoom(b)) null else Families.point(id, ch, "Mittelpunkt", "Zwischen A und B hängt ein Kabel. Flieg mich genau in die Mitte.", m, hidden = true, name = "M",
+                mistakes = listOf(a + b to "Du hast A und B addiert – jetzt noch durch 2 teilen."),
                 given = listOf(listOf(Txt("A${a.fmt()}   B${b.fmt()}"))),
                 tip = "Jede Koordinate einzeln mitteln: (a + b) : 2.",
                 way = listOf("M = ½ · (A + B)", "M${m.fmt()}"),

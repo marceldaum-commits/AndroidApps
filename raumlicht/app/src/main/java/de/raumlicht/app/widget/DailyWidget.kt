@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /** Was das Widget zeigt – getrennt vom Android-Teil, damit es sich testen lässt. */
-data class WidgetText(val title: String, val status: String, val stars: String, val done: Boolean)
+data class WidgetText(val title: String, val status: String, val stars: String, val done: Boolean, val caption: String = "RAUMLICHT · TAGESGIG")
 
 /**
  * Startbildschirm-Widget „Tagesgig“: heutige Aufgabe, ob sie schon geschafft ist, und die Sterne der Tour.
@@ -30,7 +30,7 @@ class DailyWidget : AppWidgetProvider() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val stars = (context.applicationContext as RaumlichtApp).container.progress.all.first().associate { it.levelId to it.stars }
-                val text = texts(java.time.LocalDate.now().toEpochDay(), stars)
+                val text = texts(java.time.LocalDate.now().toEpochDay(), stars, de.raumlicht.core.model.Plan.decode((context.applicationContext as RaumlichtApp).container.settings.plan.value))
                 ids.forEach { manager.updateAppWidget(it, views(context, text)) }
             } finally { pending.finish() }
         }
@@ -40,14 +40,16 @@ class DailyWidget : AppWidgetProvider() {
         const val EXTRA_OPEN = "raumlicht.open"
         const val OPEN_DAILY = "tagesgig"
 
-        fun texts(day: Long, stars: Map<String, Int>): WidgetText {
+        fun texts(day: Long, stars: Map<String, Int>, plan: de.raumlicht.core.model.Plan? = null): WidgetText {
             val level = Daily.forDay(day); val got = stars[level.id] ?: 0
             val tour = Levels.all.sumOf { stars[it.id] ?: 0 }
-            return WidgetText(level.title, if (got > 0) "heute geschafft ✓  " + "★".repeat(got) else "heute neu – antippen ▶", "★ $tour", got > 0)
+            return WidgetText(level.title, if (got > 0) "heute geschafft ✓  " + "★".repeat(got) else "heute neu – antippen ▶", "★ $tour", got > 0,
+                plan?.let { de.raumlicht.core.model.Planner.headline(it, day, stars) }?.uppercase() ?: "RAUMLICHT · TAGESGIG")
         }
 
         fun views(context: Context, t: WidgetText): RemoteViews = RemoteViews(context.packageName, R.layout.widget_daily).apply {
             setTextViewText(R.id.widget_title, t.title)
+            setTextViewText(R.id.widget_caption, t.caption)
             setTextViewText(R.id.widget_status, t.status)
             setTextColor(R.id.widget_status, if (t.done) 0xFF5CFFA1.toInt() else 0xFFFF8A3D.toInt())
             setTextViewText(R.id.widget_emoji, if (t.done) "✅" else "🔦")

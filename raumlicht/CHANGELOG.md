@@ -2,6 +2,22 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.4.0 – Mehr als Geometrie (15.11.2026)
+- **Lux erkennt typische Fehler:** falsch herum abgezogen, nur addiert statt gemittelt, Kosinus statt Sinus, das Drittel vergessen …
+  Statt „daneben“ sagt Lux jetzt genau, was passiert ist.
+- **🧩 Schritt für Schritt:** vier schwere Verfahren (Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand windschiefer Geraden) in kleinen Schritten,
+  mit Rückmeldung nach jedem Schritt.
+- **2 neue Touren, 10 neue Gigs** (jetzt 75 in 14 Kapiteln):
+  - 🎲 **Stochastik** – Leuchtkugeln ziehen: Laplace, Pfadregel mit und ohne Zurücklegen, Erwartungswert, Gegenereignis.
+  - 🎢 **Analysis** – Lux fährt die Achterbahn ab: Nullstelle, Hoch- und Tiefpunkt, Wendestelle, Fläche. Die Tangente kippt live mit.
+- **🧮 3D-Rechner im Baukasten:** Punkte, Geraden, Ebenen und Kugeln aus dem Schulbuch eingeben – die App rechnet Lagebeziehung, Schnitt- und Durchstoßpunkte,
+  Abstände und Winkel aus.
+- **📊 Lernstand:** pro Thema ein Balken – sicher, wackelig oder offen.
+- **🗓️ Klausur-Planer:** Termin und Kapitel eintragen, die App teilt den Stoff in Tagespakete auf. Das Widget zeigt „Klausur in 4 Tagen · heute 3 Gigs“.
+- **🏫 Klasse:** Aufgabenpaket als Code für den Unterricht – ohne Konto, ohne Namen.
+- **👥 Zu zweit:** abwechselnd an einem Gerät, Punkte nur für Treffer beim ersten Versuch.
+- **Querformat und Tablet:** Die Bühne steht links groß, Formel und Regler rechts. Die App dreht sich jetzt mit.
+
 ## 0.3.3 – Alles auf einen Blick (15.11.2026)
 - **Startseite ohne lange Liste:** Die zwölf Kapitel sind jetzt eine schmale Leiste zum seitlichen Wischen. Darunter steht nur das gewählte Kapitel
   mit seinen Gigs. Die ganze Startseite passt auf einen Bildschirm.

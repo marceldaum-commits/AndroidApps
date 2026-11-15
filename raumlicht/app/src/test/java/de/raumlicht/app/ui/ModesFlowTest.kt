@@ -117,4 +117,51 @@ class ModesFlowTest {
         rule.onNodeWithText("Festivalzelt").performClick()
         assertEquals(listOf("zelt" to false, "zelt" to true), picked)
     }
+
+    @Test fun plannerSavesAndPlaysTodaysPackage() {
+        val saved = ArrayList<Plan?>()
+        show { PlannerScreen(null, 100, emptyMap(), { saved += it }, { _, _, _ -> }) {} }
+        rule.onNodeWithTag("kapitel-3").performClick(); rule.mainClock.advanceTimeBy(300)
+        assertEquals(Plan(107, setOf(3)), saved.last())
+        rule.onNodeWithText("Klausur in 7 Tagen · heute 1 Gig").assertExists()
+        rule.onNodeWithTag("minus-tage").performClick(); rule.mainClock.advanceTimeBy(300)
+        assertEquals(Plan(106, setOf(3)), saved.last())
+        rule.onNodeWithText("▶ Heutiges Paket spielen").performClick(); rule.mainClock.advanceTimeBy(800)
+        rule.onNodeWithText("🗓️ Klausur-Paket · 1/1 · Gig 3-1").assertExists()
+    }
+
+    @Test fun classPackageCodeIsBuiltAndPlayable() {
+        show { ClassScreen({ _, _, _ -> }) {} }
+        rule.onNodeWithTag("wahl-1-1").performClick(); rule.onNodeWithTag("wahl-1-2").performClick(); rule.mainClock.advanceTimeBy(300)
+        val code = ClassCode.encode(listOf(Levels.byId("1-1")!!, Levels.byId("1-2")!!))
+        rule.onNodeWithTag("paket-code").assertTextEquals(code)
+        rule.onNodeWithTag("klassen-code").performTextInput(code); rule.onNodeWithText("Los").performClick(); rule.mainClock.advanceTimeBy(800)
+        rule.onNodeWithText("🏫 Klassenpaket · 1/2 · Gig 1-1").assertExists()
+    }
+
+    @Test fun twoPlayersTakeTurns() {
+        show { MatchScreen({}, session = 4) }
+        rule.onNodeWithText("▶ Blau fängt an").performClick(); rule.mainClock.advanceTimeBy(800)
+        rule.onNodeWithText("👥 Blau ist dran", substring = true).assertExists()
+        rule.onNodeWithText("0 : 0").assertExists()
+    }
+
+    @Test fun calculatorShowsFactsForTheBuiltScene() {
+        show { BuilderScreen(listOf(ShowItem(ShowType.LASER, listOf(1, 1, 0, 1, 2, 2)), ShowItem(ShowType.PLANE, listOf(0, 0, 1, 4))), {}, {}) }
+        rule.onNodeWithTag("rechner").performClick(); rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithText("Durchstoßpunkt (3|5|4)", substring = true).assertExists()
+    }
+
+    @Test fun guidedStepsGiveFeedbackAndFinish() {
+        val g = Guides.byId("weg-schnitt")!!
+        show { ExamPlay(g, {}, {}, guided = true) }
+        rule.onNodeWithText("🧩 Schnittpunkt · Schritt 1 von 2").assertExists()
+        rule.onNodeWithTag("plus-a-0").performClick(); go()
+        rule.onNodeWithText("Mit s = t = 1 liegen die Marken noch 3 auseinander.").assertExists()
+        rule.onNodeWithTag("plus-a-0").performClick(); go()
+        rule.onNodeWithText("Weiter ▸").performClick(); rule.mainClock.advanceTimeBy(800)
+        repeat(5) { rule.onNodeWithTag("plus-P-0").performClick() }; repeat(3) { rule.onNodeWithTag("plus-P-1").performClick() }; repeat(3) { rule.onNodeWithTag("plus-P-2").performClick() }
+        go(); rule.onNodeWithText("Weiter ▸").performClick(); rule.mainClock.advanceTimeBy(800)
+        rule.onNodeWithText("Geschafft!").assertExists()
+    }
 }

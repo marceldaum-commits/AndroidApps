@@ -130,53 +130,67 @@ fun LevelScreen(
                 if (badge != null) Text(badge, Modifier.padding(end = 8.dp), color = Q.Orange, fontWeight = FontWeight.Black, fontSize = 15.sp)
                 StarRow(if (phase == Phase.DONE) stars else Level.stars(attempts + 1, usedTip), lit = phase == Phase.DONE)
             }
-            // Bühne
-            // Runde Ecken kommen als Rahmen ÜBER der Bühne (StageFrame) – die Web-Ansicht selbst wird nicht beschnitten.
-            Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) {
-                Stage(controller, Modifier.fillMaxSize())
-                StageFrame(accent)
-                Text("☝ drehen · ✌ zoomen", Modifier.align(Alignment.TopEnd).padding(10.dp), color = Q.Muted.copy(alpha = 0.8f), fontSize = 11.sp)
-                // Dreimal auf den Hinweis tippen zeigt die Selbstauskunft der Bühne (für Fehlersuche)
-                if (showInfo) Text(controller.info ?: "Bühne hat sich noch nicht gemeldet", Modifier.align(Alignment.BottomStart).background(Q.Space.copy(alpha = 0.85f)).padding(8.dp), color = Q.Yellow, fontSize = 10.sp, lineHeight = 12.sp)
-                Box(Modifier.align(Alignment.TopEnd).size(150.dp, 40.dp).clickable(remember { MutableInteractionSource() }, null) { taps++; if (taps >= 3) { showInfo = !showInfo; taps = 0 } })
-            }
-            // Lux spricht
-            Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp, top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Lux(says.second, size = 50.dp)
-                AnimatedContent(says.first, Modifier.weight(1f), transitionSpec = { (slideInVertically { it / 3 } + fadeIn()) togetherWith fadeOut() }, label = "lux") { text ->
-                    Text(text, Modifier.fillMaxWidth().background(Q.Panel, RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).padding(horizontal = 12.dp, vertical = 8.dp),
-                        style = MaterialTheme.typography.bodyMedium, color = Q.Text)
+            // Bühne – runde Ecken kommen als Rahmen ÜBER der Bühne (StageFrame); die Web-Ansicht selbst wird nicht beschnitten.
+            val stageBox: @Composable (Modifier) -> Unit = { m ->
+                Box(m.padding(horizontal = 8.dp)) {
+                    Stage(controller, Modifier.fillMaxSize())
+                    StageFrame(accent)
+                    Text("☝ drehen · ✌ zoomen", Modifier.align(Alignment.TopEnd).padding(10.dp), color = Q.Muted.copy(alpha = 0.8f), fontSize = 11.sp)
+                    // Dreimal auf den Hinweis tippen zeigt die Selbstauskunft der Bühne (für Fehlersuche)
+                    if (showInfo) Text(controller.info ?: "Bühne hat sich noch nicht gemeldet", Modifier.align(Alignment.BottomStart).background(Q.Space.copy(alpha = 0.85f)).padding(8.dp), color = Q.Yellow, fontSize = 10.sp, lineHeight = 12.sp)
+                    Box(Modifier.align(Alignment.TopEnd).size(150.dp, 40.dp).clickable(remember { MutableInteractionSource() }, null) { taps++; if (taps >= 3) { showInfo = !showInfo; taps = 0 } })
                 }
             }
-            // Formel
-            FormulaView(level.formula(if (phase == Phase.DONE) level.solutionShown(values) else values), { stageColor(level.control(it).color) },
-                Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp).background(Q.Deep, RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 8.dp))
+            // Auftrag, Formel, Regler und Knöpfe
+            val panel: @Composable ColumnScope.() -> Unit = {
+                // Lux spricht
+                Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 12.dp, top = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Lux(says.second, size = 50.dp)
+                    AnimatedContent(says.first, Modifier.weight(1f), transitionSpec = { (slideInVertically { it / 3 } + fadeIn()) togetherWith fadeOut() }, label = "lux") { text ->
+                        Text(text, Modifier.fillMaxWidth().background(Q.Panel, RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).padding(horizontal = 12.dp, vertical = 8.dp),
+                            style = MaterialTheme.typography.bodyMedium, color = Q.Text)
+                    }
+                }
+                // Formel
+                FormulaView(level.formula(if (phase == Phase.DONE) level.solutionShown(values) else values), { stageColor(level.control(it).color) },
+                    Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp).background(Q.Deep, RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 8.dp))
 
-            if (phase == Phase.AIM) {
-                level.controls.forEach { c ->
-                    Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 3.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        Text(c.name, Modifier.width(30.dp), color = stageColor(c.color), fontWeight = FontWeight.Black, fontSize = 18.sp, textAlign = TextAlign.Center)
-                        repeat(c.size) { i ->
-                            Stepper(if (c.kind == ControlKind.SCALAR) null else X[i], values.getValue(c.key)[i], Geo.num(values.getValue(c.key)[i] * c.step) + c.suffix, stageColor(c.color), "${c.key}-$i", Modifier.weight(1f),
-                                canDown = values.getValue(c.key)[i] > c.min[i], canUp = values.getValue(c.key)[i] < c.max[i]) { d ->
-                                change(c.key, values.getValue(c.key).toMutableList().also { it[i] += d })
+                if (phase == Phase.AIM) {
+                    level.controls.forEach { c ->
+                        Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 3.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            Text(c.name, Modifier.width(30.dp), color = stageColor(c.color), fontWeight = FontWeight.Black, fontSize = 18.sp, textAlign = TextAlign.Center)
+                            repeat(c.size) { i ->
+                                Stepper(if (c.kind == ControlKind.SCALAR) null else X[i], values.getValue(c.key)[i], Geo.num(values.getValue(c.key)[i] * c.step) + c.suffix, stageColor(c.color), "${c.key}-$i", Modifier.weight(1f),
+                                    canDown = values.getValue(c.key)[i] > c.min[i], canUp = values.getValue(c.key)[i] < c.max[i]) { d ->
+                                    change(c.key, values.getValue(c.key).toMutableList().also { it[i] += d })
+                                }
                             }
                         }
                     }
+                    Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        NeonButton({ usedTip = true; says = level.tip to LuxMood.THINK }, Modifier.weight(1f), color = Q.Yellow, enabled = !busy) { Text("💡 Tipp", fontWeight = FontWeight.Bold) }
+                        NeonButton(::go, Modifier.weight(2f).pulse(!busy && attempts == 0, 0.025f), color = accent, enabled = !busy) { Text("▶ Los", fontWeight = FontWeight.Black, fontSize = 18.sp) }
+                    }
+                } else {
+                    Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp).background(Brush.verticalGradient(listOf(Q.Green.copy(alpha = 0.18f), Q.Deep)), RoundedCornerShape(16.dp))
+                        .border(1.5.dp, Q.Green.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).padding(12.dp)) {
+                        Text("So rechnet man's", color = Q.Green, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge)
+                        level.way.forEachIndexed { i, s -> Text("${i + 1}.  $s", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 2.dp)) }
+                    }
+                    Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        NeonButton({ values = level.start; attempts = 0; usedTip = false; phase = Phase.AIM; says = level.mission to LuxMood.IDLE }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Neu") }
+                        NeonButton(onNext ?: onBack, Modifier.weight(2f).pulse(true, 0.025f), color = Q.Green) { Text(if (onNext != null) "Weiter ▸" else doneLabel, fontWeight = FontWeight.Black, fontSize = 18.sp) }
+                    }
                 }
-                Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    NeonButton({ usedTip = true; says = level.tip to LuxMood.THINK }, Modifier.weight(1f), color = Q.Yellow, enabled = !busy) { Text("💡 Tipp", fontWeight = FontWeight.Bold) }
-                    NeonButton(::go, Modifier.weight(2f).pulse(!busy && attempts == 0, 0.025f), color = accent, enabled = !busy) { Text("▶ Los", fontWeight = FontWeight.Black, fontSize = 18.sp) }
-                }
-            } else {
-                Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp).background(Brush.verticalGradient(listOf(Q.Green.copy(alpha = 0.18f), Q.Deep)), RoundedCornerShape(16.dp))
-                    .border(1.5.dp, Q.Green.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).padding(12.dp)) {
-                    Text("So rechnet man's", color = Q.Green, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge)
-                    level.way.forEachIndexed { i, s -> Text("${i + 1}.  $s", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 2.dp)) }
-                }
-                Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                    NeonButton({ values = level.start; attempts = 0; usedTip = false; phase = Phase.AIM; says = level.mission to LuxMood.IDLE }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Neu") }
-                    NeonButton(onNext ?: onBack, Modifier.weight(2f).pulse(true, 0.025f), color = Q.Green) { Text(if (onNext != null) "Weiter ▸" else doneLabel, fontWeight = FontWeight.Black, fontSize = 18.sp) }
+            }
+            // Hochformat: Bühne oben, Regler darunter. Querformat und Tablet quer: Bühne links groß, Regler rechts.
+            BoxWithConstraints(Modifier.fillMaxWidth().weight(1f)) {
+                if (maxWidth > maxHeight * 1.15f) Row(Modifier.fillMaxSize()) {
+                    stageBox(Modifier.weight(1.25f).fillMaxHeight().padding(bottom = 8.dp))
+                    Column(Modifier.weight(1f).fillMaxHeight().verticalScroll(rememberScrollState())) { panel() }
+                } else Column(Modifier.fillMaxSize()) {
+                    stageBox(Modifier.fillMaxWidth().weight(1f))
+                    panel()
                 }
             }
         }

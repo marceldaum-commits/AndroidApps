@@ -4,8 +4,8 @@ Du bist Lichtdesigner:in. Laser sind Geraden, Glasscheiben und Leinwände sind E
 Die Bühne ist echtes 3D: drehen, zoomen, Punkte und Vektoren direkt im Raum ziehen. Das Rechnen ist die Spielhandlung selbst –
 man sieht nur den Anfang eines Strahls, den Rest verrät die Rechnung (Recherche: `../docs/RECHERCHE.md`).
 
-**65 Gigs in 12 Kapiteln**, jedes endet mit einem Abi-Check. Dazu Abi-Simulation, Jam-Session (endlos erzeugte Aufgaben), Tagesgig, Lage-Check, Duell,
-Zweite Chance, Show-Baukasten, Lux-Werkstatt, Spickzettel und Abzeichen:
+**75 Gigs in 14 Kapiteln**, jedes endet mit einem Abi-Check. Dazu Abi-Simulation, Schritt für Schritt, Jam-Session (endlos erzeugte Aufgaben), Tagesgig,
+Lage-Check, Duell, Zu zweit, Klasse, Klausur-Planer, Lernstand, Zweite Chance, Baukasten mit 3D-Rechner, Lux-Werkstatt, Spickzettel und Abzeichen:
 
 | Kapitel | Thema | Spielarten |
 |---|---|---|
@@ -21,8 +21,14 @@ Zweite Chance, Show-Baukasten, Lux-Werkstatt, Spickzettel und Abzeichen:
 | 10 Zugabe | Kreuzprodukt | Parallelogramm- und Dreiecksfläche, Pyramidenvolumen, Schnittgerade |
 | 11 Flugplan | Bewegung mit Zeit | Ort nach t Sekunden, Tempo, Treffpunkt, kleinster Abstand zweier Drohnen |
 | 12 Lichtskulpturen | Analysis in 3D | Rotationskörper: Zylinder, Kegel, Vase, Kugel, Trichter (V = π·∫f²) |
+| 13 Lichtlotterie | Stochastik | Laplace, Pfadregel mit/ohne Zurücklegen, Erwartungswert, Gegenereignis |
+| 14 Achterbahn | Analysis | Nullstelle, Hoch-/Tiefpunkt, Wendestelle, Fläche unter der Kurve (Lux fährt mit, Tangente live) |
 
 **Weitere Spielarten**
+- 🔎 **Fehler-Analyse** – typische Fehler (A − B statt B − A, nicht gemittelt, Kosinus statt Sinus, ⅓ vergessen …) werden gezielt benannt (`mistakes` in `Families`).
+- 🧩 **Schritt für Schritt** – vier Verfahren in Teilschritten (`Guides`). 📊 **Lernstand** (`Learn`). 🗓️ **Klausur-Planer** (`Planner`, auch im Widget).
+- 🏫 **Klasse** – Paket-Code `RLK-…` (`ClassCode`). 👥 **Zu zweit** (`Match`). 🧮 **3D-Rechner** im Baukasten (`Show.facts`).
+- 📐 **Querformat/Tablet** – Bühne links, Regler rechts (`LevelScreen`, ab Breite > 1,15 × Höhe).
 - 🎓 **Abi-Simulation** – drei zusammenhängende Aufgaben mit je vier Teilaufgaben und Bewertungseinheiten (`Exams`); freiwillig auf Zeit (45 s je BE).
 - 🧭 **Lage-Check** – acht Runden Lagebeziehung zweier Geraden erkennen; die Bühne zeigt die Geraden erst nach der Antwort.
 - ⚔️ **Duell** – Code wie `RL-4A1B2X` (Thema + Seed + Prüfziffer) steht für dieselben fünf Aufgaben, ohne Server.
@@ -56,7 +62,12 @@ Zweite Chance, Show-Baukasten, Lux-Werkstatt, Spickzettel und Abzeichen:
 | ![](screenshots/29_rotationskoerper.png) | ![](screenshots/30_backstage.png) | ![](screenshots/31_abi_simulation.png) |
 | ![](screenshots/32_abi_teilaufgabe.png) | ![](screenshots/33_lage_check.png) | ![](screenshots/34_duell.png) |
 | ![](screenshots/35_lux_werkstatt.png) | ![](screenshots/36_show_baukasten.png) | ![](screenshots/37_widget.png) |
-| ![](screenshots/15_einstellungen.png) | | |
+| ![](screenshots/38_stochastik.png) | ![](screenshots/39_achterbahn.png) | ![](screenshots/40_leuchtflaeche.png) |
+| ![](screenshots/41_schritt_fuer_schritt.png) | ![](screenshots/42_schritt.png) | ![](screenshots/43_lernstand.png) |
+| ![](screenshots/44_klausur_planer.png) | ![](screenshots/45_klasse.png) | ![](screenshots/46_zu_zweit.png) |
+| ![](screenshots/47_rechner.png) | ![](screenshots/15_einstellungen.png) | |
+
+Querformat: ![](screenshots/48_querformat.png)
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Vektorrechnung (`Geo`), Spielarten (`Families`), alle Level (`Levels`, `MoreLevels`), Aufgaben-Generator,

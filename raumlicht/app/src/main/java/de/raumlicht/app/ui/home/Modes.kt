@@ -112,12 +112,12 @@ fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
 // ───────────────────────── Abi-Simulation ─────────────────────────
 
 @Composable
-fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam, Boolean) -> Unit, onBack: () -> Unit) {
+fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam, Boolean) -> Unit, guided: Boolean = false, onBack: () -> Unit) {
     var timed by rememberSaveable { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar("Abi-Simulation", onBack)
-        Speech("Eine Aufgabe, mehrere Teile – wie im Abitur. Volle Punkte gibt es nur beim ersten Versuch.")
-        Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+        Bar(if (guided) "Schritt für Schritt" else "Abi-Simulation", onBack)
+        Speech(if (guided) "Schwere Verfahren, in kleine Schritte zerlegt. Nach jedem Schritt sage ich dir, ob du auf Kurs bist." else "Eine Aufgabe, mehrere Teile – wie im Abitur. Volle Punkte gibt es nur beim ersten Versuch.")
+        if (!guided) Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text("⏱ Auf Zeit spielen", fontWeight = FontWeight.Bold)
                 Text("Freiwillig: ${Exam.clock(Exam.seconds(exams.first()))} Minuten je Aufgabe. Läuft die Zeit ab, zählt, was bis dahin gelöst ist.", color = Q.Muted, fontSize = 12.sp)
@@ -132,7 +132,7 @@ fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam, Boolean
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(e.emoji, fontSize = 28.sp)
                         Text(e.title, Modifier.weight(1f).padding(start = 10.dp), style = MaterialTheme.typography.titleMedium)
-                        Text(best[e.id]?.let { "$it / ${e.maxPoints} BE" } ?: "${e.maxPoints} BE", color = if (best[e.id] != null) Q.Yellow else Q.Muted, fontWeight = FontWeight.Bold)
+                        Text(if (guided) "${e.parts.size} Schritte" else best[e.id]?.let { "$it / ${e.maxPoints} BE" } ?: "${e.maxPoints} BE", color = if (best[e.id] != null) Q.Yellow else Q.Muted, fontWeight = FontWeight.Bold)
                     }
                     Text(e.intro, Modifier.padding(top = 6.dp), color = Q.Muted, style = MaterialTheme.typography.bodySmall)
                     Text(e.parts.joinToString("   ") { "${it.label}) ${it.level.title}" }, Modifier.padding(top = 6.dp), color = Q.Orange, fontSize = 12.sp)
@@ -144,7 +144,7 @@ fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam, Boolean
 
 /** Spielt die Teilaufgaben nacheinander und wertet am Ende in Bewertungseinheiten aus. */
 @Composable
-fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, timed: Boolean = false) {
+fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, timed: Boolean = false, guided: Boolean = false) {
     var idx by rememberSaveable(exam.id) { mutableIntStateOf(0) }
     var got by rememberSaveable(exam.id) { mutableStateOf(listOf<Int>()) }
     var left by rememberSaveable(exam.id) { mutableIntStateOf(Exam.seconds(exam)) }
@@ -159,19 +159,20 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, 
         LevelScreen(part.level, Chapter(0, exam.title, exam.title, "Abi-Simulation", "🎓", "orange", emptyList(), emptyList()), false, {},
             onSolved = { s, _ -> got = got + Exam.points(part, s); if (idx == exam.parts.lastIndex) onFinished(got.sum()) },
             onNext = { idx++ }, onBack = onBack,
-            caption = "🎓 ${exam.title} · Teil ${part.label}) · ${part.points} BE", badge = (if (timed) "⏱ ${Exam.clock(left)}  " else "") + "${got.sum()} BE")
+            caption = if (guided) "🧩 ${exam.title} · Schritt ${part.label} von ${exam.parts.size}" else "🎓 ${exam.title} · Teil ${part.label}) · ${part.points} BE",
+            badge = if (guided) null else (if (timed) "⏱ ${Exam.clock(left)}  " else "") + "${got.sum()} BE")
     } else {
         val total = got.sum()
         Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
-            Bar("Auswertung", onBack)
+            Bar(if (guided) exam.title else "Auswertung", onBack)
             Lux(if (total * 100 >= exam.maxPoints * 60) LuxMood.HAPPY else LuxMood.THINK, size = 120.dp)
-            Text("$total von ${exam.maxPoints} BE", fontSize = 34.sp, fontWeight = FontWeight.Black, color = Q.Yellow)
+            Text(if (guided) "Geschafft!" else "$total von ${exam.maxPoints} BE", fontSize = 34.sp, fontWeight = FontWeight.Black, color = Q.Yellow)
             if (timed) Text(if (timeUp) "⏱ Die Zeit ist abgelaufen" else "⏱ geschafft mit ${Exam.clock(left)} Restzeit", color = if (timeUp) Q.Orange else Q.Green, fontWeight = FontWeight.Bold)
-            Text(Exam.verdict(total, exam.maxPoints), Modifier.padding(horizontal = 24.dp, vertical = 8.dp), textAlign = TextAlign.Center)
+            Text(if (guided) "Du hast das Verfahren Schritt für Schritt durchgerechnet. Jetzt klappt es auch am Stück." else Exam.verdict(total, exam.maxPoints), Modifier.padding(horizontal = 24.dp, vertical = 8.dp), textAlign = TextAlign.Center)
             exam.parts.forEachIndexed { i, p ->
                 Row(Modifier.fillMaxWidth().padding(horizontal = 24.dp, vertical = 4.dp).background(Q.Deep, RoundedCornerShape(12.dp)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text("${p.label})  ${p.level.title}", Modifier.weight(1f))
-                    Text("${got.getOrElse(i) { 0 }} / ${p.points} BE", color = if (got.getOrElse(i) { 0 } == p.points) Q.Green else Q.Orange, fontWeight = FontWeight.Bold)
+                    Text(if (guided) "✓" else "${got.getOrElse(i) { 0 }} / ${p.points} BE", color = if (got.getOrElse(i) { 0 } == p.points) Q.Green else Q.Orange, fontWeight = FontWeight.Bold)
                 }
             }
             Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -295,12 +296,12 @@ fun DuelScreen(onBack: () -> Unit, incoming: String? = null) {
 
 /** Spielt noch einmal die Gigs, die nicht beim ersten Versuch geklappt haben. */
 @Composable
-fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
+fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title: String = "Zweite Chance", emoji: String = "🔁", onBack: () -> Unit) {
     var idx by rememberSaveable { mutableIntStateOf(0) }
     val level = levels.getOrNull(idx)
     if (level == null) {
         Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Bar("Zweite Chance", onBack)
+            Bar(title, onBack)
             Spacer(Modifier.height(40.dp))
             Lux(LuxMood.HAPPY, size = 130.dp)
             Text(if (levels.isEmpty()) "Nichts offen!" else "Runde geschafft!", fontSize = 26.sp, fontWeight = FontWeight.Black, modifier = Modifier.padding(top = 12.dp))
@@ -312,7 +313,7 @@ fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, onBac
     }
     val chapter = Levels.chapters.first { it.number == level.chapter }
     LevelScreen(level, chapter, false, {}, onSolved = { s, a -> onSolved(level, s, a) }, onNext = { idx++ }, onBack = onBack,
-        caption = "🔁 Zweite Chance · ${idx + 1}/${levels.size} · Gig ${level.id}")
+        caption = "$emoji $title · ${idx + 1}/${levels.size} · Gig ${level.id}")
 }
 
 // ───────────────────────── Lux-Werkstatt ─────────────────────────
@@ -349,6 +350,7 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
     var items by remember { mutableStateOf(initial) }
     var sel by rememberSaveable { mutableIntStateOf(0) }
     var load by remember { mutableStateOf(false) }
+    var calc by remember { mutableStateOf(false) }
     var code by remember { mutableStateOf("") }
     var bad by remember { mutableStateOf(false) }
     val ctx = LocalContext.current; val scope = rememberCoroutineScope(); val sfx = LocalSfx.current
@@ -384,6 +386,7 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
         Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             NeonButton({ if (item != null) { change(items.filterIndexed { i, _ -> i != sel }); sel = (sel - 1).coerceAtLeast(0) } }, color = Q.Orange, enabled = item != null) { Text("🗑") }
             NeonButton({ load = true; code = ""; bad = false }, color = Q.Muted) { Text("Code") }
+            NeonButton({ calc = true }, Modifier.testTag("rechner"), color = Q.Yellow, enabled = items.size >= 2) { Text("🧮") }
             NeonButton({ shareText(ctx, "Meine Raumlicht-Show: ${Show.encode(items)}") }, color = Q.Pink, enabled = items.isNotEmpty()) { Text("📤") }
             NeonButton({
                 scope.launch {
@@ -394,6 +397,14 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
             }, Modifier.weight(1f), color = Q.Green, enabled = items.isNotEmpty()) { Text("▶ Show", fontWeight = FontWeight.Black) }
         }
     }
+    // 3D-Rechner: was sich aus den Bausteinen ausrechnen lässt (zum Nachprüfen von Schulbuch-Aufgaben)
+    if (calc) AlertDialog(onDismissRequest = { calc = false }, confirmButton = { TextButton({ calc = false }) { Text("Schließen") } }, title = { Text("🧮 3D-Rechner") }, text = {
+        Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            val facts = Show.facts(items)
+            if (facts.isEmpty()) Text("Dazu kann ich nichts ausrechnen. Probier Laser, Scheibe, Kugel und Punkt in Kombination.")
+            facts.forEach { Text("› $it", style = MaterialTheme.typography.bodyMedium) }
+        }
+    })
     if (load) AlertDialog(onDismissRequest = { load = false }, confirmButton = {
         TextButton({ Show.decode(code)?.let { change(it); sel = 0; load = false } ?: run { bad = true } }) { Text("Laden") }
     }, dismissButton = { TextButton({ load = false }) { Text("Abbrechen") } }, title = { Text("Show-Code laden") }, text = {

@@ -60,6 +60,11 @@ class Settings(ctx: Context) {
     val skin: StateFlow<String> = _skin.asStateFlow()
     fun setSkin(c: String) { prefs.edit().putString("skin", c).apply(); _skin.value = c }
 
+    /** Klausur-Planer: Termin und Kapitel (leer = kein Plan) */
+    private val _plan = MutableStateFlow(prefs.getString("plan", "") ?: "")
+    val plan: StateFlow<String> = _plan.asStateFlow()
+    fun setPlan(s: String) { prefs.edit().putString("plan", s).apply(); _plan.value = s }
+
     /** Baukasten: die zuletzt gebaute Show als Code */
     var show: String
         get() = prefs.getString("show", "") ?: ""

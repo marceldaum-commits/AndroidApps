@@ -27,6 +27,7 @@ object Levels {
             way = listOf("x₁ = −3 (3 Schritte nach hinten)", "x₂ = 4, x₃ = 2 → P(−3|4|2)")),
         Families.point("1-4", 1, "Halbe Strecke", "Zwischen A und B hängt ein Kabel. Ich soll genau in die Mitte – die Marke siehst du diesmal nicht. Rechne!",
             p(4, 2, 2), hidden = true, name = "M",
+            mistakes = listOf(p(8, 4, 4) to "Du hast A und B addiert – jetzt noch durch 2 teilen.", p(4, 4, -4) to "Das ist der Verbindungsvektor B − A. Für die Mitte brauchst du ½ · (A + B)."),
             given = listOf(listOf(Txt("A(2|0|4)   B(6|4|0)"))),
             tip = "Mittelpunkt: jede Koordinate einzeln mitteln, z. B. x₁ = (2 + 6) : 2.",
             way = listOf("M = ½ · (A + B)", "x₁ = (2+6):2 = 4, x₂ = (0+4):2 = 2, x₃ = (4+0):2 = 2", "M(4|2|2)"),
@@ -231,6 +232,7 @@ object Levels {
                 }),
             Families.point("6-2", 6, "Kürzester Weg", "Von P soll ein Lichtstrahl auf kürzestem Weg zur Scheibe E. Wo trifft er auf? Das ist der Lotfußpunkt.",
                 p(2, 2, 2), hidden = true, name = "F",
+                mistakes = listOf(p(0, 0, 0) to "Das wäre der Spiegelpunkt. Gesucht ist der Lotfußpunkt – also nur der halbe Weg."),
                 given = listOf(listOf(Txt("P(4|4|4)   E: x₁ + x₂ + x₃ = 6"))),
                 tip = "Lotgerade durch P mit dem Normalenvektor (1|1|1) als Richtung, dann in E einsetzen.",
                 way = listOf("Lotgerade: x⃗ = (4|4|4) + t · (1|1|1)", "in E: (4+t) + (4+t) + (4+t) = 6 → t = −2", "F(2|2|2)"),
@@ -238,6 +240,7 @@ object Levels {
                     if (ph == Phase.DONE) listOf(Stage.line("lot", p(4, 4, 4), p(-2, -2, -2), 0.0, 1.0, "yellow")) else emptyList() }),
             Families.point("6-3", 6, "Hinter dem Spiegel", "E ist jetzt ein Spiegel. Wo erscheint das Spiegelbild P′ von P?",
                 p(6, 6, 3), hidden = true, name = "P′",
+                mistakes = listOf(p(4, 4, 3) to "Das ist der Lotfußpunkt F. Für das Spiegelbild denselben Weg noch einmal gehen: P′ = P + 2 · PF⃗."),
                 given = listOf(listOf(Txt("P(2|2|3)   E: x₁ + x₂ = 8"))),
                 tip = "Erst den Lotfußpunkt F bestimmen, dann denselben Weg noch einmal gehen: P′ = P + 2 · PF⃗.",
                 way = listOf("Lotgerade: (2|2|3) + t · (1|1|0), in E: (2+t) + (2+t) = 8 → t = 2", "F(4|4|3)", "P′ = P + 2 · PF⃗ = (6|6|3)"),
@@ -304,7 +307,7 @@ object Levels {
             "Die große Bühne. Hier zählt jeder Winkel.",
             "Skalarprodukt null heißt senkrecht. Damit findest du Lote, Abstände und Spiegelbilder.",
             "Das ist Abi-Niveau – und du bist bereit."), ch6),
-    ) + MoreLevels.chapters + TourThree.chapters
+    ) + MoreLevels.chapters + TourThree.chapters + TourFour.chapters
     val all = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }
     fun next(id: String): Level? = all.getOrNull(all.indexOfFirst { it.id == id } + 1)

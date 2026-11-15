@@ -176,6 +176,7 @@ enum class ShowType(val title: String, val emoji: String, val labels: List<Strin
     LASER("Laser", "🔦", listOf("p₁", "p₂", "p₃", "d₁", "d₂", "d₃"), listOf(0, 0, 0, -4, -4, -4), listOf(8, 8, 6, 4, 4, 4), listOf(0, 0, 0, 2, 2, 1)),
     PLANE("Scheibe", "🔷", listOf("n₁", "n₂", "n₃", "c"), listOf(-3, -3, -3, -10), listOf(3, 3, 3, 25), listOf(0, 0, 1, 4)),
     BALL("Kugel", "🔮", listOf("m₁", "m₂", "m₃", "r"), listOf(0, 0, 0, 1), listOf(8, 8, 6, 4), listOf(4, 4, 3, 2)),
+    DOT("Punkt", "📍", listOf("x₁", "x₂", "x₃"), listOf(0, 0, 0), listOf(8, 8, 6), listOf(2, 2, 2)),
 }
 
 data class ShowItem(val type: ShowType, val v: List<Int>) {
@@ -184,12 +185,14 @@ data class ShowItem(val type: ShowType, val v: List<Int>) {
         ShowType.LASER -> "x⃗ = (${v[0]}|${v[1]}|${v[2]}) + t · (${Geo.num(v[3])}|${Geo.num(v[4])}|${Geo.num(v[5])})"
         ShowType.PLANE -> if (v.take(3).all { it == 0 }) "n⃗ = (0|0|0) – keine Ebene" else Geo.planeText(V3(v[0], v[1], v[2]), v[3])
         ShowType.BALL -> "M(${v[0]}|${v[1]}|${v[2]}), r = ${v[3]}"
+        ShowType.DOT -> "(${v[0]}|${v[1]}|${v[2]})"
     }
     fun set(i: Int, x: Int) = copy(v = v.toMutableList().also { it[i] = x.coerceIn(type.min[i], type.max[i]) })
     fun obj(i: Int): Obj? = when (type) {
         ShowType.LASER -> V3(v[3], v[4], v[5]).takeIf { !it.isZero }?.let { d -> val a = V3(v[0], v[1], v[2]); Stage.line("s$i", a, d, 0.0, Geo.exit(a, d, Bounds().outerLo, Bounds().outerHi), colors[i % colors.size]) }
         ShowType.PLANE -> V3(v[0], v[1], v[2]).takeIf { !it.isZero }?.let { Stage.plane("s$i", it, v[3].toDouble(), colors[(i + 5) % colors.size]) }
         ShowType.BALL -> Stage.sphere("s$i", V3(v[0], v[1], v[2]), v[3].toDouble(), colors[i % colors.size])
+        ShowType.DOT -> Stage.point("s$i", V3(v[0], v[1], v[2]), colors[i % colors.size], "P${i + 1}")
     }
     /** Strahl für „Show starten“ (nur Laser) */
     fun beam(i: Int): Beam? = if (type != ShowType.LASER) null else V3(v[3], v[4], v[5]).takeIf { !it.isZero }?.let { d ->
@@ -201,6 +204,57 @@ object Show {
     const val MAX = 8
     private const val ALPHA = "0123456789abcdefghijklmnopqrstuvwxyz"
     val demo = listOf(ShowItem(ShowType.BALL, listOf(4, 4, 3, 2)), ShowItem(ShowType.LASER, listOf(0, 0, 0, 2, 2, 1)), ShowItem(ShowType.LASER, listOf(8, 0, 5, -2, 2, -1)), ShowItem(ShowType.PLANE, listOf(0, 1, 0, 8)))
+
+    /**
+     * 3D-Rechner: was sich aus den Bausteinen ausrechnen lässt – Lagebeziehungen, Schnitt- und Durchstoßpunkte, Abstände, Winkel.
+     * So lässt sich eine Aufgabe aus dem Schulbuch eingeben und nachprüfen.
+     */
+    fun facts(items: List<ShowItem>): List<String> {
+        val out = ArrayList<String>()
+        fun name(i: Int) = "${items[i].type.title} ${i + 1}"
+        fun pt(i: Int) = V3(items[i].v[0], items[i].v[1], items[i].v[2])
+        fun dir(i: Int) = V3(items[i].v[3], items[i].v[4], items[i].v[5])
+        for (i in items.indices) for (j in i + 1 until items.size) {
+            val (a, b) = if (items[i].type.ordinal <= items[j].type.ordinal) i to j else j to i
+            val ta = items[a].type; val tb = items[b].type; val head = "${name(a)} & ${name(b)}: "
+            when {
+                ta == ShowType.LASER && tb == ShowType.LASER -> if (!dir(a).isZero && !dir(b).isZero) {
+                    val r = Geo.lineLine(pt(a), dir(a), pt(b), dir(b))
+                    out += head + when (r.relation) {
+                        Relation.INTERSECT -> "schneiden sich in ${r.point!!.fmt()}, Winkel ${Geo.num(Geo.angle(dir(a), dir(b)).let { minOf(it, 180 - it) })}°"
+                        Relation.SKEW -> "windschief, Abstand ${Geo.num(r.distance)}"
+                        Relation.PARALLEL -> "parallel, Abstand ${Geo.num(r.distance)}"
+                        Relation.IDENTICAL -> "identisch"
+                    }
+                }
+                ta == ShowType.LASER && tb == ShowType.PLANE -> if (!dir(a).isZero && !pt(b).isZero) {
+                    val n = pt(b); val c = items[b].v[3].toDouble(); val t = Geo.linePlane(pt(a), dir(a), n, c)
+                    out += head + if (t == null) (if (Geo.onPlane(pt(a), n, c)) "Gerade liegt in der Ebene" else "parallel, Abstand ${Geo.num(Geo.distPointPlane(pt(a), n, c))}")
+                    else "Durchstoßpunkt ${(pt(a) + dir(a) * t).fmt()}, Winkel ${Geo.num(90 - Geo.angle(dir(a), n).let { minOf(it, 180 - it) })}°"
+                }
+                ta == ShowType.LASER && tb == ShowType.BALL -> if (!dir(a).isZero) {
+                    val d = Geo.distPointLine(pt(b), pt(a), dir(a)); val r = items[b].v[3]
+                    out += head + when { d < r - Geo.EPS -> "zwei Treffer (Abstand zum Mittelpunkt ${Geo.num(d)})"; d < r + Geo.EPS -> "Tangente (berührt)"; else -> "kein Treffer (Abstand zum Mittelpunkt ${Geo.num(d)})" }
+                }
+                ta == ShowType.LASER && tb == ShowType.DOT -> if (!dir(a).isZero) out += head + (if (Geo.onLine(pt(b), pt(a), dir(a))) "Punkt liegt auf der Geraden" else "Abstand ${Geo.num(Geo.distPointLine(pt(b), pt(a), dir(a)))}")
+                ta == ShowType.PLANE && tb == ShowType.PLANE -> if (!pt(a).isZero && !pt(b).isZero) out += head +
+                    (if (Geo.parallel(pt(a), pt(b))) "parallel" else "schneiden sich, Winkel ${Geo.num(Geo.angle(pt(a), pt(b)).let { minOf(it, 180 - it) })}°, Schnittgerade in Richtung ${(pt(a) cross pt(b)).fmt()}")
+                ta == ShowType.PLANE && tb == ShowType.BALL -> if (!pt(a).isZero) {
+                    val d = Geo.distPointPlane(pt(b), pt(a), items[a].v[3].toDouble()); val r = items[b].v[3]
+                    out += head + when { d < r - Geo.EPS -> "Schnittkreis mit Radius ${Geo.num(kotlin.math.sqrt(r * r - d * d))}"; d < r + Geo.EPS -> "Tangentialebene (berührt)"; else -> "kein Schnitt (Abstand ${Geo.num(d)})" }
+                }
+                ta == ShowType.PLANE && tb == ShowType.DOT -> if (!pt(a).isZero) {
+                    val n = pt(a); val c = items[a].v[3].toDouble()
+                    out += head + (if (Geo.onPlane(pt(b), n, c)) "Punkt liegt in der Ebene" else "Abstand ${Geo.num(Geo.distPointPlane(pt(b), n, c))}, Lotfußpunkt ${Geo.footOnPlane(pt(b), n, c).fmt()}")
+                }
+                ta == ShowType.BALL && tb == ShowType.DOT -> { val d = (pt(a) - pt(b)).length; val r = items[a].v[3]
+                    out += head + when { d < r - Geo.EPS -> "Punkt liegt in der Kugel"; d < r + Geo.EPS -> "Punkt liegt auf der Kugel"; else -> "Punkt liegt außerhalb (Abstand zum Mittelpunkt ${Geo.num(d)})" } }
+                ta == ShowType.DOT && tb == ShowType.DOT -> out += head + "Abstand ${Geo.num((pt(a) - pt(b)).length)}, Mittelpunkt ${((pt(a) + pt(b)) * 0.5).fmt()}, Verbindungsvektor ${(pt(b) - pt(a)).fmt()}"
+                else -> {}
+            }
+        }
+        return out
+    }
 
     fun scene(items: List<ShowItem>): String = Stage.encode(Bounds(), listOf(Stage.drone(V3(8, 0, 1))) + items.mapIndexedNotNull { i, it -> it.obj(i) })
 

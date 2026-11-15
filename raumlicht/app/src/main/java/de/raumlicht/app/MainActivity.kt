@@ -55,6 +55,13 @@ object Routes {
     const val TRAINING = "zweite-chance"
     const val WORKSHOP = "werkstatt"
     const val BUILDER = "baukasten"
+    const val GUIDES = "schritte"
+    const val GUIDE = "schritte/{id}"
+    const val LEARN = "lernstand"
+    const val PLANNER = "klausur"
+    const val CLASS = "klasse"
+    const val MATCH = "zu-zweit"
+    fun guide(id: String) = "schritte/$id"
     fun exam(id: String, timed: Boolean) = "abi/$id/${if (timed) 1 else 0}"
     fun jam(topic: String) = "jam/$topic"
     fun level(id: String) = "level/$id"
@@ -113,10 +120,14 @@ class MainActivity : ComponentActivity() {
         // Musik passend zum Bildschirm: ruhig im Tourplan, treibend auf der Bühne
         val entry by nav.currentBackStackEntryAsState()
         val route = entry?.destination?.route
-        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route in setOf(Routes.LEVEL, Routes.JAM, Routes.DAILY, Routes.EXAM, Routes.TRAINING, Routes.DUEL, Routes.LAGE)) MusicMood.FLIGHT else MusicMood.MENU) }
+        LaunchedEffect(route) { (application as RaumlichtApp).music.setMood(if (route in setOf(Routes.LEVEL, Routes.JAM, Routes.DAILY, Routes.EXAM, Routes.TRAINING, Routes.DUEL, Routes.LAGE, Routes.GUIDE, Routes.CLASS, Routes.MATCH, Routes.PLANNER)) MusicMood.FLIGHT else MusicMood.MENU) }
         val skin by vm.settings.skin.collectAsStateWithLifecycle()
         val exams by vm.settings.exams.collectAsStateWithLifecycle()
         val lageBest by vm.settings.lageBest.collectAsStateWithLifecycle()
+        val planText by vm.settings.plan.collectAsStateWithLifecycle()
+        val plan = remember(planText) { Plan.decode(planText) }
+        // In den ersten noch offenen Gig eines Kapitels springen
+        fun openChapter(n: Int) { Levels.chapters.firstOrNull { it.number == n }?.let { c -> nav.goOnce(Routes.level((c.levels.firstOrNull { (vm.stars.value[it.id] ?: 0) == 0 } ?: c.levels.first()).id)) } }
         val stars by vm.stars.collectAsStateWithLifecycle()
         val update by vm.availableUpdate.collectAsStateWithLifecycle()
         val wanted by openRoute
@@ -168,16 +179,21 @@ class MainActivity : ComponentActivity() {
             composable(Routes.SHEET) {
                 SheetScreen(Sheet.cards,
                     // direkt in den ersten noch offenen Gig des Kapitels
-                    onChapter = { n -> Levels.chapters.firstOrNull { it.number == n }?.let { c -> nav.goOnce(Routes.level((c.levels.firstOrNull { (stars[it.id] ?: 0) == 0 } ?: c.levels.first()).id)) } },
+                    onChapter = ::openChapter,
                     onJam = { nav.goOnce(Routes.jam(it.name)) }, onBack = { nav.popSafe() })
             }
             composable(Routes.BACKSTAGE) {
                 val weak = remember(stars) { Training.levels(stars).size }
                 BackstageScreen(listOf(
+                    BackstageEntry("🧩", "Schritt für Schritt", "schwere Verfahren in kleinen Schritten – mit Rückmeldung nach jedem", Q.Green) { nav.goOnce(Routes.GUIDES) },
+                    BackstageEntry("📊", "Lernstand", Learn.summary(Learn.topics(stars)), Q.Cyan) { nav.goOnce(Routes.LEARN) },
+                    BackstageEntry("🗓️", "Klausur-Planer", plan?.let { Planner.headline(it, vm.today(), stars) } ?: "Termin eintragen, Tagespakete bekommen", Q.Orange) { nav.goOnce(Routes.PLANNER) },
                     BackstageEntry("🧭", "Lage-Check", "parallel, identisch, schneidend, windschief? · Rekord $lageBest/${LageCheck.ROUNDS}", Q.Yellow) { nav.goOnce(Routes.LAGE) },
                     BackstageEntry("⚔️", "Duell", "5 Aufgaben per Code an Freunde schicken", Q.Pink) { nav.goOnce(Routes.DUEL) },
+                    BackstageEntry("👥", "Zu zweit", "abwechselnd an einem Gerät – wer rechnet besser?", Q.Cyan) { nav.goOnce(Routes.MATCH) },
+                    BackstageEntry("🏫", "Klasse", "Aufgabenpaket als Code für den Unterricht", Q.Green) { nav.goOnce(Routes.CLASS) },
                     BackstageEntry("🔁", "Zweite Chance", if (weak == 0) "nichts offen" else "$weak Gigs, die nicht beim ersten Versuch saßen", Q.Orange) { nav.goOnce(Routes.TRAINING) },
-                    BackstageEntry("🎇", "Show-Baukasten", "eigene Lichtshow aus Formeln bauen und teilen", Q.Violet) { nav.goOnce(Routes.BUILDER) },
+                    BackstageEntry("🎇", "Baukasten & 3D-Rechner", "eigene Show bauen oder eine Schulbuch-Aufgabe eingeben und nachrechnen", Q.Violet) { nav.goOnce(Routes.BUILDER) },
                     BackstageEntry("🎨", "Lux-Werkstatt", "${Skins.unlocked(tourStars).size} von ${Skins.all.size} Farben frei", Q.Cyan) { nav.goOnce(Routes.WORKSHOP) },
                     BackstageEntry("📓", "Spickzettel", "alle Formeln – mit Sprung zu den Aufgaben", Q.Green) { nav.goOnce(Routes.SHEET) },
                     BackstageEntry("🏅", "Abzeichen", "${badges.count { it.earned }} von ${badges.size} verdient", Q.Yellow) { nav.goOnce(Routes.BADGES) },
@@ -189,6 +205,18 @@ class MainActivity : ComponentActivity() {
                 if (exam == null) { LaunchedEffect(Unit) { nav.popSafe() }; return@composable }
                 ExamPlay(exam, onFinished = { vm.settings.recordExam(exam.id, it) }, onBack = { nav.popSafe() }, timed = e.arguments?.getString("zeit") == "1")
             }
+            composable(Routes.GUIDES) { ExamPicker(Guides.all, emptyMap(), { e, _ -> nav.goOnce(Routes.guide(e.id)) }, guided = true) { nav.popSafe() } }
+            composable(Routes.GUIDE) { e ->
+                val guide = Guides.byId(e.arguments?.getString("id").orEmpty())
+                if (guide == null) { LaunchedEffect(Unit) { nav.popSafe() }; return@composable }
+                ExamPlay(guide, onFinished = {}, onBack = { nav.popSafe() }, guided = true)
+            }
+            composable(Routes.LEARN) { LearnScreen(remember(stars) { Learn.topics(stars) }, ::openChapter) { nav.popSafe() } }
+            composable(Routes.PLANNER) {
+                PlannerScreen(plan, vm.today(), stars, { vm.settings.setPlan(it?.encode() ?: ""); de.raumlicht.app.widget.DailyWidget.refresh(this@MainActivity) }, { l, s, a -> vm.record(l.id, s, a) }) { nav.popSafe() }
+            }
+            composable(Routes.CLASS) { ClassScreen({ l, s, a -> vm.record(l.id, s, a) }) { nav.popSafe() } }
+            composable(Routes.MATCH) { MatchScreen({ nav.popSafe() }) }
             composable(Routes.LAGE) { LageScreen(lageBest, vm.settings::recordLage, { nav.popSafe() }) }
             composable(Routes.DUEL) { DuelScreen({ nav.popSafe() }) }
             composable(Routes.TRAINING) {

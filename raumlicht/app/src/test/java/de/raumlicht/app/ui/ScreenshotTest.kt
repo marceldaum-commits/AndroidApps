@@ -124,6 +124,28 @@ class ScreenshotTest {
     @Test fun badges() = shot("27_abzeichen", "start") {
         de.raumlicht.app.ui.home.BadgesScreen(de.raumlicht.core.model.Badges.all(Levels.all.take(30).associate { it.id to 3 } + mapOf("tag-1" to 3, "tag-2" to 2, "tag-3" to 3), 6)) {}
     }
+    @Test fun lottery() = level("38_stochastik", "13-2")
+    @Test fun coaster() = level("39_achterbahn", "14-2", values = mapOf("a" to listOf(1)))
+    @Test fun area() = level("40_leuchtflaeche", "14-5")
+    @Test fun guides() = shot("41_schritt_fuer_schritt", "start") { de.raumlicht.app.ui.home.ExamPicker(de.raumlicht.core.model.Guides.all, emptyMap(), { _, _ -> }, guided = true) {} }
+    @Test fun guideStep() = shot("42_schritt", "schritt") {
+        val g = de.raumlicht.core.model.Guides.all[0]
+        LevelScreen(g.parts[0].level, de.raumlicht.core.model.Chapter(0, g.title, g.title, "Schritt für Schritt", "🧩", "green", emptyList(), emptyList()), false, {}, { _, _ -> }, {}, {},
+            mapOf("a" to listOf(1)), caption = "🧩 ${g.title} · Schritt 1 von 2")
+    }
+    @Test fun learn() = shot("43_lernstand", "start") {
+        de.raumlicht.app.ui.home.LearnScreen(de.raumlicht.core.model.Learn.topics(Levels.all.take(9).associate { it.id to 3 } + Levels.all.drop(12).take(8).associate { it.id to 1 }), {}) {}
+    }
+    @Test fun planner() = shot("44_klausur_planer", "start") {
+        de.raumlicht.app.ui.home.PlannerScreen(de.raumlicht.core.model.Plan(20_776, setOf(3, 4, 5)), 20_772, mapOf("3-1" to 3, "3-2" to 2), {}, { _, _, _ -> }) {}
+    }
+    @Test fun classroom() = shot("45_klasse", "start", prepare = { it.onNodeWithTag("wahl-1-4").performClick(); it.onNodeWithTag("wahl-1-6").performClick() }) {
+        de.raumlicht.app.ui.home.ClassScreen({ _, _, _ -> }) {}
+    }
+    @Test fun match() = shot("46_zu_zweit", "start") { de.raumlicht.app.ui.home.MatchScreen({}) }
+    @Test fun calculator() = shot("47_rechner", "baukasten", prepare = { it.onNodeWithTag("rechner").performClick() }) {
+        de.raumlicht.app.ui.home.BuilderScreen(de.raumlicht.core.model.Show.demo, {}, {})
+    }
     @Test fun settings() = shot("15_einstellungen", "start") {
         SettingsScreen(true, {}, true, {}, true, {}, true, {}, "0.1.0", UpdateState.Idle, {})
     }
