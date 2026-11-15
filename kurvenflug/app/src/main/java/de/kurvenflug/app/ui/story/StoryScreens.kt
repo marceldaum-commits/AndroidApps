@@ -149,7 +149,7 @@ fun AuroraCard(found: Int, total: Int, onClick: () -> Unit) {
 
 /** Hangar: die Aurora wächst mit jedem gefundenen Bauteil zusammen. */
 @Composable
-fun HangarScreen(found: List<Part>, onBack: () -> Unit, gold: List<Part> = emptyList(), onCrew: (() -> Unit)? = null) {
+fun HangarScreen(found: List<Part>, onBack: () -> Unit, gold: List<Part> = emptyList(), onCrew: (() -> Unit)? = null, onAndromeda: (() -> Unit)? = null) {
     val time by rememberInfiniteTransition(label = "hangar").animateFloat(0f, 1000f, infiniteRepeatable(tween(1_000_000, easing = LinearEasing)), label = "t")
     val complete = found.size == Story.parts.size
     Box(Modifier.fillMaxSize()) {
@@ -174,6 +174,9 @@ fun HangarScreen(found: List<Part>, onBack: () -> Unit, gold: List<Part> = empty
                 if (complete) Text("✨ Gold-Teile: ${gold.size}/${Story.parts.size}", color = Q.Yellow, fontWeight = FontWeight.Black)
                 if (onCrew != null) NeonButton(onClick = onCrew, color = Q.Pink, modifier = Modifier.fillMaxWidth()) {
                     Text("🆘 Notrufe & Crew", fontWeight = FontWeight.Bold)
+                }
+                if (complete && onAndromeda != null) NeonButton(onClick = onAndromeda, color = Q.Violet, modifier = Modifier.fillMaxWidth()) {
+                    Text("🌌 Auf nach Andromeda!", fontWeight = FontWeight.Bold)
                 }
                 Story.parts.forEach { p ->
                     val got = found.any { it.chapter == p.chapter }
@@ -201,7 +204,7 @@ fun HangarScreen(found: List<Part>, onBack: () -> Unit, gold: List<Part> = empty
  * Gefundene Teile leuchten in Farbe, fehlende sind nur als gestrichelter Umriss zu sehen.
  */
 @Composable
-fun ShipCanvas(found: Set<Int>, modifier: Modifier, time: Float, flames: Boolean = false, gold: Set<Int> = emptySet()) {
+fun ShipCanvas(found: Set<Int>, modifier: Modifier, time: Float, flames: Boolean = false, gold: Set<Int> = emptySet(), palette: List<Color> = planetColors) {
     Canvas(modifier) {
         val w = size.width; val h = size.height
         fun o(x: Float, y: Float) = Offset(x * w, y * h)
@@ -233,7 +236,7 @@ fun ShipCanvas(found: Set<Int>, modifier: Modifier, time: Float, flames: Boolean
         }
         Story.parts.forEachIndexed { i, p ->
             val g = p.chapter in gold
-            val color = if (g) Color(0xFFFFD54F) else planetColors[i % planetColors.size]
+            val color = if (g) Color(0xFFFFD54F) else palette[i % palette.size]
             shapes.getOrNull(i)?.invoke(this, color, p.chapter in found)
             // Gold funkelt
             if (g && sin(time * 3f + i * 1.3f) > 0.85f) drawCircle(Color.White, 0.012f * w, Offset(w * (0.2f + (i * 0.37f) % 0.6f), h * (0.1f + (i * 0.53f) % 0.8f)))

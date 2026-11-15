@@ -25,6 +25,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
   Bestenliste mit Prüfcode – alles ohne Server. Datenbank v2 (Profil-Spalte, Tabelle `plays`) mit Migration und Migrationstest.
 - Staffel 2: Gold-Teile (Kapitel komplett mit 3 ⭐, Goldglanz + Warp-Antrieb) und 8 Rettungsmissionen mit je 5 gemischten
   Etappen (gemischtes Üben); gerettete Freunde bilden die Crew und sprechen täglich wechselnd auf der Startseite.
+- Andromeda (nach fertiger Aurora): endlose, aus der Planetennummer erzeugte Galaxie, je Planet 3 schwere Level;
+  die ersten 18 Planeten bauen das zweite Schiff „Nova“.
 - Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
@@ -66,6 +68,7 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/59_sticker_gewonnen.png) | ![](screenshots/60_foto.png) | ![](screenshots/61_spieler.png) |
 | ![](screenshots/62_eltern.png) | ![](screenshots/63_bestenliste.png) | ![](screenshots/64_hangar_gold.png) |
 | ![](screenshots/65_crew.png) | ![](screenshots/66_notruf.png) | ![](screenshots/67_start_crew.png) |
+| ![](screenshots/68_andromeda.png) | | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

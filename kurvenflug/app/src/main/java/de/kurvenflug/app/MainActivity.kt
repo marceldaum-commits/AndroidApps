@@ -65,6 +65,7 @@ object Routes {
     const val CREW = "crew"
     const val RESCUE = "rettung/{n}"
     fun rescue(n: Int) = "rettung/$n"
+    const val ANDROMEDA = "andromeda"
     fun level(id: String) = "level/$id"
 }
 
@@ -163,6 +164,7 @@ class MainActivity : ComponentActivity() {
             fromWidget?.let { id -> nav.navigate(Routes.level(id)) { launchSingleTop = true }; widgetLevel.value = null }
         }
         val allProgress by vm.progress.collectAsStateWithLifecycle()
+        val allStars = remember(allProgress) { allProgress.mapValues { it.value.stars } }
         val rescued = remember(allProgress) { allProgress.keys.filter { de.kurvenflug.core.model.Season2.isRescue(it) }.mapNotNull { it.removePrefix(de.kurvenflug.core.model.Season2.PREFIX).toIntOrNull() }.toSet() }
         val stats by vm.stats.collectAsStateWithLifecycle()
         var celebrate by remember { mutableStateOf<List<de.kurvenflug.core.model.Badge>>(emptyList()) }
@@ -222,6 +224,11 @@ class MainActivity : ComponentActivity() {
                         de.kurvenflug.core.model.Season2.crew.firstOrNull { it.n !in rescued && de.kurvenflug.core.model.Season2.lock(it.n, parts, gold) == null }
                     },
                     crewCount = rescued.size,
+                    andromeda = remember(allStars, stars) {
+                        if (!de.kurvenflug.core.model.Andromeda.unlocked(de.kurvenflug.core.model.Story.found(Levels.chapters, stars).size)) null
+                        else (de.kurvenflug.core.model.Andromeda.completed(allStars) + 1) to de.kurvenflug.core.model.Andromeda.novaParts(allStars)
+                    },
+                    onAndromeda = { nav.goOnce(Routes.ANDROMEDA) },
                     onCrew = { nav.goOnce(Routes.CREW) },
                     learning = {
                         val now = remember(progress) { System.currentTimeMillis() }
@@ -238,11 +245,14 @@ class MainActivity : ComponentActivity() {
                 val level = remember(id) {
                     if (Daily.isDaily(id)) id.removePrefix(Daily.PREFIX).toLongOrNull()?.let { Daily.forDay(it) }
                     else if (de.kurvenflug.core.model.Learning.isReview(id)) de.kurvenflug.core.model.Learning.levelFor(id)
+                    else if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.levelFor(id)
                     else Levels.byId(id)
                 } ?: return@composable
-                val chapter = Levels.chapters.firstOrNull { it.number == level.chapter }
+                val chapter = (if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.chapter(id.removePrefix(de.kurvenflug.core.model.Andromeda.PREFIX).substringBefore('-').toInt()) else null)
+                    ?: Levels.chapters.firstOrNull { it.number == level.chapter }
                     ?: Chapter(0, "Tagesmission", "Jeden Tag neu", "🛰️", emptyList(), listOf(level))
-                val next = Levels.next(level.id)?.takeIf { it.chapter == level.chapter }
+                val next = if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.next(id)
+                    else Levels.next(level.id)?.takeIf { it.chapter == level.chapter }
                 val opened = remember(id) { System.currentTimeMillis() }
                 LevelScreen(
                     level = level, chapter = chapter, probeColor = probeColor,
@@ -297,7 +307,11 @@ class MainActivity : ComponentActivity() {
             }
             composable(Routes.HANGAR) {
                 de.kurvenflug.app.ui.story.HangarScreen(remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars) }, { nav.popSafe() },
-                    gold = remember(stars) { de.kurvenflug.core.model.Season2.gold(Levels.chapters, stars) }, onCrew = { nav.goOnce(Routes.CREW) })
+                    gold = remember(stars) { de.kurvenflug.core.model.Season2.gold(Levels.chapters, stars) }, onCrew = { nav.goOnce(Routes.CREW) },
+                    onAndromeda = { nav.goOnce(Routes.ANDROMEDA) })
+            }
+            composable(Routes.ANDROMEDA) {
+                de.kurvenflug.app.ui.story.AndromedaScreen(allStars, onLevel = { nav.goOnce(Routes.level(it.id)) }, onBack = { nav.popSafe() })
             }
             composable(Routes.CREW) {
                 de.kurvenflug.app.ui.story.CrewScreen(rescued, remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars).size },

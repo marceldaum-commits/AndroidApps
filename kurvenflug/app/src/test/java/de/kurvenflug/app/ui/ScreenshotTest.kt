@@ -302,6 +302,10 @@ class ScreenshotTest {
             rescueCall = de.kurvenflug.core.model.Season2.crew[3], crewCount = 3, onCrew = {}, partsFound = 18, onHangar = {})
     }
 
+    @Test fun andromeda() = shot("68_andromeda", settle = 1500) {
+        de.kurvenflug.app.ui.story.AndromedaScreen((1..5).flatMap { n -> (1..3).map { "andro-$n-$it" to 3 } }.toMap() + ("andro-6-1" to 2), {}, {})
+    }
+
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 

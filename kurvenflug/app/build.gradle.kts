@@ -20,8 +20,8 @@ android {
         applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 19
-        versionName = "0.14.0"
+        versionCode = 20
+        versionName = "0.15.0"
         // Update-Knopf (lädt neue Versionen aus GitHub Releases). Für den Play Store auf false setzen –
         // dort kommen Updates über den Store, und die Installations-Berechtigung ist nicht erlaubt.
         buildConfigField("boolean", "SELF_UPDATE", "true")

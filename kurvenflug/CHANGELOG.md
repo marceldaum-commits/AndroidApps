@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.15.0 – Andromeda
+- **🌌 Eine zweite Galaxie**: Ist die Aurora fertig, fliegt Volt mit dir nach Andromeda. Jeder Planet dort hat
+  3 schwerere Etappen – mehr Asteroiden, kniffligere Zahlen.
+- **🚀 Die Nova**: Jeder geschaffte Andromeda-Planet bringt ein Teil für das zweite Schiff. 18 Teile, dann fliegt sie!
+- **Endlos**: Andromeda hört nicht auf – hinter jedem Planeten wartet ein neuer. Wie weit kommst du?
+
 ## 0.14.0 – Staffel 2: Gold & Crew
 - **✨ Gold-Teile**: Die Aurora ist fertig? Jetzt wird sie golden! Schaffst du alle Level eines Kapitels mit 3 ⭐, glänzt
   sein Bauteil golden. Mit allen 18 Gold-Teilen zündet der Warp-Antrieb.

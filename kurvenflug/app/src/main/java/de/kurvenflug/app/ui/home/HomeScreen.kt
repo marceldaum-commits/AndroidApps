@@ -94,6 +94,9 @@ fun HomeScreen(
     rescueCall: de.kurvenflug.core.model.CrewMember? = null,
     crewCount: Int = 0,
     onCrew: (() -> Unit)? = null,
+    /** Andromeda: aktueller Planet und Nova-Teile (null = noch nicht freigeschaltet) */
+    andromeda: Pair<Int, Int>? = null,
+    onAndromeda: (() -> Unit)? = null,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(initialTab) }
     var picking by rememberSaveable { mutableStateOf(false) }
@@ -131,6 +134,7 @@ fun HomeScreen(
                             daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
                             learning?.invoke()
                             if (onHangar != null) de.kurvenflug.app.ui.story.AuroraCard(partsFound, de.kurvenflug.core.model.Story.parts.size, onHangar)
+                            andromeda?.let { (planet, nova) -> de.kurvenflug.app.ui.story.AndromedaCard(planet, nova) { onAndromeda?.invoke() } }
                             Text("Alle Kapitel findest du in der 🗺️ Galaxie.", color = Q.Muted, style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.clickable { sfx?.play(Sound.TAP); tab = 1 })
                         }
