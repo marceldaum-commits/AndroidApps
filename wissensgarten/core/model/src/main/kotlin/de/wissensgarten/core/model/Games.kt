@@ -22,6 +22,8 @@ enum class GameMode {
     TILT,
     /** Antwort laut sagen (Spracherkennung) */
     SPEAK,
+    /** Antwort selbst eintippen – freies Erinnern wirkt am stärksten (ab Klasse 5) */
+    TYPE,
 }
 
 /** Ergebnis eines Mini-Spiels – wird in eine Bewertung für die Vergessenskurve übersetzt. */
@@ -61,7 +63,7 @@ object Games {
      * @param canSpeak Spracherkennung auf dem Gerät verfügbar
      * @param calm Gute-Nacht-Runde: nur ruhige Spielarten
      */
-    fun choose(card: StudyCard, peers: List<String>, simple: Boolean, canSpeak: Boolean = false, calm: Boolean = false): GameMode {
+    fun choose(card: StudyCard, peers: List<String>, simple: Boolean, canSpeak: Boolean = false, calm: Boolean = false, canType: Boolean = false): GameMode {
         val opts = options(card, peers)
         if (card.memory.isSeed) return GameMode.DISCOVER
         if (opts == null) return GameMode.FLIP
@@ -74,6 +76,8 @@ object Games {
             if (lettersPossible(card.back, simple)) { add(GameMode.LETTERS); add(GameMode.LETTERS) }
             if (tiltPossible(opts)) add(GameMode.TILT)
             if (canSpeak && speakPossible(card.back)) add(GameMode.SPEAK)
+            // Tippen erst, wenn die Karte schon ein paarmal dran war – dann ist freies Erinnern machbar
+            if (canType && card.memory.reps >= 2 && typePossible(card.back)) { add(GameMode.TYPE); add(GameMode.TYPE) }
         }
         val pick = Math.floorMod(card.id.hashCode() * 31 + card.memory.reps * 7, pool.size)
         return pool[pick]
@@ -108,6 +112,35 @@ object Games {
 
 
 /** Vergleich für gesprochene Antworten: Groß/klein, Satzzeichen und Artikel egal, kleine Tippfehler erlaubt. */
+/** Lässt sich die Antwort gut tippen? (kurz, keine Formelzeichen wie π, ², ·) */
+fun typePossible(answer: String): Boolean =
+    answer.length in 1..30 && answer.all { it.isLetterOrDigit() || it in " -–,.'’/()€%" }
+
+/** Getippte Antwort prüfen – verzeiht Kleinigkeiten, ohne zu schludern. */
+object TypedAnswer {
+    enum class Verdict { RIGHT, ALMOST, WRONG }
+
+    private fun clean(s: String) = s.trim().replace('–', '-').replace(Regex("\\s+"), " ")
+
+    /**
+     * RIGHT: genau so (Leerzeichen egal). ALMOST: kleiner Tippfehler, andere Groß-/Kleinschreibung oder Artikel weggelassen.
+     * @param strictSpelling Deutsch/Rechtschreibung: Dort zählt „fast“ nicht – die Schreibweise ist ja der Lernstoff.
+     */
+    fun check(typed: String, answer: String, strictSpelling: Boolean = false): Verdict {
+        val t = clean(typed); val a = clean(answer)
+        if (t.isEmpty()) return Verdict.WRONG
+        if (t == a) return Verdict.RIGHT
+        val nt = SpokenAnswer.normalize(t); val na = SpokenAnswer.normalize(a)
+        if (na.isEmpty()) return Verdict.WRONG
+        val close = nt == na || SpokenAnswer.levenshtein(nt, na) <= maxOf(1, na.length / 6) && na.length >= 5
+        return when {
+            !close -> Verdict.WRONG
+            strictSpelling -> Verdict.WRONG
+            else -> Verdict.ALMOST
+        }
+    }
+}
+
 object SpokenAnswer {
     private val articles = setOf("der", "die", "das", "the", "a", "an", "le", "la", "les", "l", "un", "une", "el", "los", "las")
 

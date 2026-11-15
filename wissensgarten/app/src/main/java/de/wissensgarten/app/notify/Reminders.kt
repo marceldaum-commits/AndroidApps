@@ -108,6 +108,8 @@ class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWork
     override suspend fun doWork(): Result {
         val c = (applicationContext as WissensgartenApp).container
         if (!c.settings.reminderOn.value) return Result.success()
+        // Ferien: Der Garten schläft – keine Erinnerungen
+        if (de.wissensgarten.core.model.Holidays.isActive(c.settings.holidays.value)) return Result.success()
         val now = System.currentTimeMillis()
         val dao = c.database.dao()
         val entries = c.repository.profiles.first().map { p ->

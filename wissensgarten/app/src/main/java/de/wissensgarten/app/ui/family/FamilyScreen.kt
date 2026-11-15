@@ -44,6 +44,7 @@ fun FamilyScreen(
     onPostcard: (String) -> Unit = {},
     onLocalDuel: () -> Unit = {},
     onCertificate: (String) -> Unit = {},
+    onWeekReport: () -> Unit = {},
 ) {
     LazyColumn(
         Modifier.fillMaxSize().statusBarsPadding(),
@@ -56,6 +57,7 @@ fun FamilyScreen(
                 "Jeder hat seinen eigenen Garten. Tippe auf ein Profil, um zu wechseln.",
                 style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp),
             )
+            OutlinedButton(onClick = onWeekReport, modifier = Modifier.padding(top = 8.dp)) { Text("📊 Wochenbericht für Eltern") }
         }
         item { FamilyTree(profiles, logs, familyClaimed, onClaimFamily, familyReward, onFamilyReward) }
         item { de.wissensgarten.app.ui.duel.DuelEntryCard(onDuel) }

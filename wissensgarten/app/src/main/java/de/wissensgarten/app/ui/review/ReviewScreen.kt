@@ -64,6 +64,8 @@ fun ReviewScreen(
     calm: Boolean = false,
     subjects: Map<String, String?> = emptyMap(),
     onComplete: (correct: Int, total: Int) -> Unit = { _, _ -> },
+    /** Antworten selbst eintippen (ab Klasse 5) */
+    canType: Boolean = false,
 ) {
     val context = androidx.compose.ui.platform.LocalContext.current
     val canSpeak = remember { runCatching { speechAvailable(context) }.getOrDefault(false) }
@@ -113,7 +115,7 @@ fun ReviewScreen(
     val now = remember(index) { System.currentTimeMillis() }
     val cardPeers = peers[card.bedId].orEmpty()
     // Deutsch (Rechtschreibung, Grammatik): Sprechen kann Schreibweise nicht prüfen → dort kein Sprech-Spiel
-    val mode = remember(card.id) { Games.choose(card, cardPeers, simpleRating, canSpeak && subjects[card.bedId] != "deutsch", calm) }
+    val mode = remember(card.id) { Games.choose(card, cardPeers, simpleRating, canSpeak && subjects[card.bedId] != "deutsch", calm, canType) }
     val subject = subjects[card.bedId]
     val options = remember(card.id) { Games.options(card, cardPeers) }
     val shownMemory = if (phase == Phase.REVEAL) grownMemory ?: card.memory else card.memory
@@ -128,6 +130,7 @@ fun ReviewScreen(
             GameMode.SWIPE -> "Stimmt das wirklich? 🤔"
             GameMode.TILT -> "Kipp das Handy! 📱"
             GameMode.SPEAK -> "Ich höre zu! 👂"
+            GameMode.TYPE -> "Ganz aus dem Kopf – du schaffst das! 🧠"
             GameMode.TEACH -> null
             else -> null
         }
@@ -311,6 +314,7 @@ fun ReviewScreen(
                                 GameMode.TEACH -> TeachGame(card, options!!) { finish(it.rating) }
                                 GameMode.TILT -> TiltGame(card, options!!) { finish(it.rating) }
                                 GameMode.SPEAK -> SpeakGame(card, options, Voice.localeFor(subject, card.back)) { finish(it.rating) }
+                                GameMode.TYPE -> TypeGame(card, strictSpelling = subject == "deutsch") { finish(it.rating) }
                             } }
                         }
                     }

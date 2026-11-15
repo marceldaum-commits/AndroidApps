@@ -76,6 +76,7 @@ object Routes {
     const val RADIO = "radio"
     const val SAFARI = "safari"
     const val PRIVACY = "datenschutz"
+    const val WEEK_REPORT = "wochenbericht"
     const val LOCAL_DUEL = "zu-zweit"
     const val CHAPTER = "kapitel/{n}"
     fun chapter(n: Int) = "kapitel/$n"
@@ -201,8 +202,17 @@ class MainActivity : ComponentActivity() {
         (application as WissensgartenApp).sync.syncSoon()
     }
 
+    /** Gesunde Lernzeit: Vordergrund-Zeit pro Kalendertag mitzählen (nur lokal). */
+    private var fgSince = 0L
+    private fun flushUsage() {
+        val t = System.currentTimeMillis()
+        if (fgSince > 0 && t > fgSince) vm.settings.addUsage(de.wissensgarten.core.model.Scheduler.localDay(t), minOf(t - fgSince, 5 * 60_000L))
+        fgSince = if (fgSince > 0) t else 0
+    }
+
     override fun onStart() {
         super.onStart()
+        fgSince = System.currentTimeMillis()
         // Bei jedem Öffnen (auch aus dem Hintergrund) nach neuen Versionen schauen
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         de.wissensgarten.app.update.StoreUpdates.check(this)
@@ -211,6 +221,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStop() {
         super.onStop()
+        flushUsage(); fgSince = 0
         (application as WissensgartenApp).music.onForeground(false)
         vm.refreshWidget()
         // Beim Verlassen der App gleich abgleichen, damit das andere Gerät den neuesten Stand bekommt
@@ -255,6 +266,17 @@ class MainActivity : ComponentActivity() {
                 }
             })
         }
+        // Gesunde Lernzeit: nach Ablauf ruht der Garten – laufende Runden dürfen zu Ende gespielt werden
+        val limit by vm.settings.dailyLimit.collectAsStateWithLifecycle()
+        var restRev by remember { mutableIntStateOf(0) }
+        var resting by remember { mutableStateOf(false) }
+        LaunchedEffect(now, limit, restRev) {
+            flushUsage()
+            val (used, extra) = vm.settings.usage(de.wissensgarten.core.model.Scheduler.localDay(System.currentTimeMillis()))
+            resting = de.wissensgarten.core.model.StudyTime.isOver(used, limit, extra)
+        }
+        val playing = route in setOf(Routes.REVIEW, Routes.DUEL_PLAY, Routes.LOCAL_DUEL, Routes.ONBOARDING, Routes.TUTORIAL, Routes.ADD_PROFILE, Routes.PRIVACY)
+        Box(Modifier.fillMaxSize()) {
         Scaffold(
             bottomBar = {
                 if (showBar) NavigationBar {
@@ -548,6 +570,7 @@ class MainActivity : ComponentActivity() {
                         familyReward = remember(fRev) { vm.settings.familyReward() },
                         onFamilyReward = { vm.settings.setFamilyReward(it) },
                         onLocalDuel = { nav.navigate(Routes.LOCAL_DUEL) },
+                        onWeekReport = { gate("Der Wochenbericht ist für Eltern.") { nav.navigate(Routes.WEEK_REPORT) } },
                         onPostcard = { id -> gate("Die Postkarte wird an eine andere App (z. B. WhatsApp) geschickt.") {
                             scope.launch {
                                 runCatching {
@@ -599,6 +622,11 @@ class MainActivity : ComponentActivity() {
                             vibration = vm.settings.vibration.collectAsStateWithLifecycle().value, onVibration = { vm.settings.setVibration(it) },
                             syncCard = { de.wissensgarten.app.ui.settings.SyncSectionLive((application as WissensgartenApp).sync) },
                             onPrivacy = { nav.navigate(Routes.PRIVACY) },
+                            typing = vm.settings.typing.collectAsStateWithLifecycle().value, onTyping = { vm.settings.setTyping(it) },
+                            dailyLimit = vm.settings.dailyLimit.collectAsStateWithLifecycle().value, onDailyLimit = { vm.settings.setDailyLimit(it) },
+                            holiday = de.wissensgarten.core.model.Holidays.isActive(vm.settings.holidays.collectAsStateWithLifecycle().value),
+                            onHoliday = { vm.settings.setHoliday(it); vm.tick(); vm.refreshWidget() },
+                            onWeekReport = { nav.navigate(Routes.WEEK_REPORT) },
                             onWipeAll = {
                                 scope.launch {
                                     val msg = DataWipe.wipeAll(application as WissensgartenApp)
@@ -654,6 +682,7 @@ class MainActivity : ComponentActivity() {
                         items = items,
                         beds = beds.associate { it.bed.id to it.bed },
                         simpleRating = profile?.simpleRating == true,
+                        canType = (profile?.level ?: 0) >= 5 && vm.settings.typing.collectAsStateWithLifecycle().value,
                         onRate = { c, r, dew -> vm.review(c, r, dew) },
                         peers = beds.associate { b -> b.bed.id to b.cards.map { it.back } },
                         calm = vm.sessionCalm,
@@ -672,7 +701,26 @@ class MainActivity : ComponentActivity() {
                         },
                     )
                 }
+                composable(Routes.WEEK_REPORT) {
+                    val allBeds by vm.allBeds.collectAsStateWithLifecycle()
+                    val logs by vm.weekLogs.collectAsStateWithLifecycle()
+                    de.wissensgarten.app.ui.parents.WeekReportScreen(profiles, profile?.id, report = { pid ->
+                        val subj = packs.associate { it.id to it.subject }
+                        val cards = allBeds.filter { it.bed.profileId == pid }.flatMap { b -> b.cards.map { c ->
+                            c.id to de.wissensgarten.core.model.WeekReport.CardInfo(c.front, b.bed.packId?.let(subj::get) ?: "eigene", c.stability, c.lapses) } }.toMap()
+                        de.wissensgarten.core.model.WeekReport.build(
+                            logs.filter { it.profileId == pid }.map { de.wissensgarten.core.model.WeekReport.Entry(it.cardId, it.time, it.rating) }, cards, now)
+                    }) { nav.popSafe() }
+                }
             }
+        }
+        if (resting && !playing && vm.onboarded.collectAsStateWithLifecycle().value) {
+            de.wissensgarten.app.ui.parents.RestOverlay(profile?.name ?: "") {
+                gate("Eltern können heute noch 15 Minuten Lernzeit dazugeben.") {
+                    vm.settings.addExtraMinutes(de.wissensgarten.core.model.Scheduler.localDay(System.currentTimeMillis()), 15); restRev++
+                }
+            }
+        }
         }
     }
 

@@ -41,6 +41,38 @@ class Settings(context: Context) {
     private val _autoUpdate = MutableStateFlow(prefs.getBoolean("auto_update", true))
     val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("auto_update", v).apply(); _autoUpdate.value = v }
+    /** Eingabe-Spiel (Antwort tippen) ab Klasse 5 – abschaltbar */
+    private val _typing = MutableStateFlow(prefs.getBoolean("typing", true))
+    val typing: StateFlow<Boolean> = _typing.asStateFlow()
+    fun setTyping(v: Boolean) { prefs.edit().putBoolean("typing", v).apply(); _typing.value = v }
+
+    /** Ferien-Modus (Eltern): Zeiträume, in denen der Garten langsamer welkt. */
+    private val _holidays = MutableStateFlow(de.wissensgarten.core.model.Holidays.decode(prefs.getString("ferien", ""))
+        .also { de.wissensgarten.core.model.Scheduler.holidays = it })
+    val holidays: StateFlow<List<LongRange>> = _holidays.asStateFlow()
+    fun setHoliday(on: Boolean, now: Long = System.currentTimeMillis()) {
+        val p = de.wissensgarten.core.model.Holidays.toggle(_holidays.value, on, now)
+        prefs.edit().putString("ferien", de.wissensgarten.core.model.Holidays.encode(p)).apply()
+        _holidays.value = p
+        de.wissensgarten.core.model.Scheduler.holidays = p
+    }
+
+    /** Gesunde Lernzeit (Eltern): Minuten pro Tag, 0 = ohne Grenze. */
+    private val _dailyLimit = MutableStateFlow(prefs.getInt("tageslimit", 0))
+    val dailyLimit: StateFlow<Int> = _dailyLimit.asStateFlow()
+    fun setDailyLimit(min: Int) { prefs.edit().putInt("tageslimit", min).apply(); _dailyLimit.value = min }
+    /** Heute genutzte Zeit (ms) und Extra-Minuten, die Eltern heute freigegeben haben. */
+    fun usage(day: Long): Pair<Long, Int> =
+        if (prefs.getLong("zeit_tag", -1) == day) prefs.getLong("zeit_ms", 0) to prefs.getInt("zeit_extra", 0) else 0L to 0
+    fun addUsage(day: Long, ms: Long) {
+        val (used, extra) = usage(day)
+        prefs.edit().putLong("zeit_tag", day).putLong("zeit_ms", used + ms).putInt("zeit_extra", extra).apply()
+    }
+    fun addExtraMinutes(day: Long, min: Int) {
+        val (used, extra) = usage(day)
+        prefs.edit().putLong("zeit_tag", day).putLong("zeit_ms", used).putInt("zeit_extra", extra + min).apply()
+    }
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("update_check", 0)
         set(v) { prefs.edit().putLong("update_check", v).apply() }

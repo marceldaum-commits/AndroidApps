@@ -1,5 +1,6 @@
 package de.wissensgarten.app.ui.play
 
+import androidx.compose.ui.focus.focusRequester
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -272,5 +273,76 @@ fun SpeakGame(card: StudyCard, options: List<String>?, locale: Locale, onResult:
             )
         }
         if (options != null) TextButton(onClick = { typing = true }, modifier = Modifier.padding(top = 8.dp)) { Text("Lieber antippen") }
+    }
+}
+
+/**
+ * Antwort selbst eintippen (ab Klasse 5): Freies Erinnern ist die stärkste Form des Wiederholens.
+ * Kleine Tippfehler zählen als „fast“ (Brummi zeigt die richtige Schreibweise) – außer bei Deutsch, wo die Schreibweise Lernstoff ist.
+ * Zwei Versuche; „Weiß nicht“ deckt auf, ohne zu beschämen.
+ */
+@Composable
+fun TypeGame(card: StudyCard, strictSpelling: Boolean, onResult: (GameResult) -> Unit) {
+    val sfx = LocalSfx.current
+    val scope = rememberCoroutineScope()
+    var text by remember(card.id) { mutableStateOf("") }
+    var tries by remember(card.id) { mutableIntStateOf(0) }
+    var verdict by remember(card.id) { mutableStateOf<de.wissensgarten.core.model.TypedAnswer.Verdict?>(null) }
+    var done by remember(card.id) { mutableStateOf(false) }
+    val focus = remember { androidx.compose.ui.focus.FocusRequester() }
+    val keyboard = androidx.compose.ui.platform.LocalSoftwareKeyboardController.current
+    val shake = remember(card.id) { androidx.compose.animation.core.Animatable(0f) }
+    LaunchedEffect(card.id) { delay(350); runCatching { focus.requestFocus() } }
+
+    fun finish(r: GameResult) { if (done) return; done = true; keyboard?.hide(); scope.launch { delay(if (r == GameResult.WRONG) 1600 else 900); onResult(r) } }
+    fun check() {
+        if (done || text.isBlank()) return
+        tries++
+        val v = de.wissensgarten.core.model.TypedAnswer.check(text, card.back, strictSpelling)
+        verdict = v
+        when (v) {
+            de.wissensgarten.core.model.TypedAnswer.Verdict.RIGHT -> { sfx?.play(Sound.CORRECT); finish(if (tries == 1) GameResult.PERFECT else GameResult.SHAKY) }
+            de.wissensgarten.core.model.TypedAnswer.Verdict.ALMOST -> { sfx?.play(Sound.CORRECT, volume = 0.6f); finish(GameResult.SHAKY) }
+            de.wissensgarten.core.model.TypedAnswer.Verdict.WRONG -> {
+                sfx?.play(Sound.WRONG, volume = 0.6f)
+                scope.launch { for (x in listOf(14f, -12f, 8f, -4f, 0f)) shake.animateTo(x, androidx.compose.animation.core.tween(45)) }
+                if (tries >= 2) finish(GameResult.WRONG)
+            }
+        }
+    }
+
+    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        QuestionText(card.front)
+        Text("⌨️ Tipp die Antwort ein – ganz aus dem Kopf!", style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp))
+        Spacer(Modifier.height(16.dp))
+        OutlinedTextField(
+            value = text, onValueChange = { if (!done) text = it.take(40) },
+            modifier = Modifier.fillMaxWidth().focusRequester(focus).graphicsLayer { translationX = shake.value },
+            singleLine = true, enabled = !done, textStyle = MaterialTheme.typography.titleLarge,
+            label = { Text(if (tries == 0) "Deine Antwort" else "Noch ein Versuch") },
+            keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
+                imeAction = androidx.compose.ui.text.input.ImeAction.Done, autoCorrectEnabled = false),
+            keyboardActions = androidx.compose.foundation.text.KeyboardActions(onDone = { check() }),
+        )
+        verdict?.let { v ->
+            val msg = when {
+                v == de.wissensgarten.core.model.TypedAnswer.Verdict.RIGHT -> "Genau richtig! 🎉"
+                v == de.wissensgarten.core.model.TypedAnswer.Verdict.ALMOST -> "Fast! Ganz genau: ${card.back}"
+                done -> "Richtig ist: ${card.back}"
+                strictSpelling && de.wissensgarten.core.model.TypedAnswer.check(text, card.back) != de.wissensgarten.core.model.TypedAnswer.Verdict.WRONG ->
+                    "Ganz knapp – achte auf die Schreibweise!"
+                else -> "Noch nicht – versuch's noch mal!"
+            }
+            Text(msg, textAlign = TextAlign.Center, fontWeight = FontWeight.Bold,
+                color = if (v == de.wissensgarten.core.model.TypedAnswer.Verdict.WRONG) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(top = 12.dp))
+        }
+        Row(Modifier.padding(top = 12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            TextButton(onClick = { if (!done) { verdict = de.wissensgarten.core.model.TypedAnswer.Verdict.WRONG; tries = 2; finish(GameResult.WRONG) } }, enabled = !done) {
+                Text("Weiß ich nicht")
+            }
+            JuicyButton(onClick = { check() }, enabled = !done && text.isNotBlank()) { Text("Prüfen ✓") }
+        }
     }
 }

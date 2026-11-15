@@ -83,4 +83,30 @@ class GamesTest {
         assertTrue(Games.speakPossible("Hund"))
         assertEquals(setOf('V', 'o', 'g', 'e', 'l'), Games.letterTiles("Vogel", 1).toSet())
     }
+
+    @Test fun typedAnswersForgiveSmallThingsButNotSpelling() {
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("  went  ", "went"))
+        assertEquals(TypedAnswer.Verdict.ALMOST, TypedAnswer.check("Kopenhagn", "Kopenhagen"))
+        assertEquals(TypedAnswer.Verdict.ALMOST, TypedAnswer.check("apple", "the apple"))
+        assertEquals(TypedAnswer.Verdict.ALMOST, TypedAnswer.check("paris", "Paris"))
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("Rom", "Paris"))
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("", "Paris"))
+        // Rechtschreibung: „fast“ reicht nicht
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("vogel", "Vogel", strictSpelling = true))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Vogel", "Vogel", strictSpelling = true))
+        // kurze Antworten: kein Tippfehler-Bonus (sonst wäre „ist“ = „isst“)
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("ist", "isst"))
+    }
+
+    @Test fun typingOnlyWhenAllowedAndTypeable() {
+        assertFalse(typePossible("A = π · r²"))
+        assertTrue(typePossible("went – gone"))
+        assertTrue(typePossible("3,50 €"))
+        val c = card("x", "Italien", "Rom", reps = 3)
+        val with = (1..60).map { Games.choose(c.copy(id = "t$it"), peers, false, canType = true) }
+        val without = (1..60).map { Games.choose(c.copy(id = "t$it"), peers, false, canType = false) }
+        assertTrue(GameMode.TYPE in with)
+        assertFalse(GameMode.TYPE in without)
+        assertFalse(GameMode.TYPE in (1..60).map { Games.choose(card("n$it", "Italien", "Rom", reps = 1), peers, false, canType = true) })
+    }
 }
