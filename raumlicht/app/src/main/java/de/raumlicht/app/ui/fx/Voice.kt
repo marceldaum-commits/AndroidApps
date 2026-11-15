@@ -11,7 +11,11 @@ import de.raumlicht.core.model.Speech
 import java.util.Locale
 
 /** Wer Lux' Sprechblasen laut vorliest. */
-fun interface Speaker { fun say(text: String) }
+fun interface Speaker {
+    fun say(text: String)
+    /** Nur sprechen, wenn Lux gerade nichts sagt – für Meldungen, die dicht aufeinander folgen können (sonst würde jede die vorige abschneiden) */
+    fun sayIfQuiet(text: String) = say(text)
+}
 val LocalSpeaker = staticCompositionLocalOf<Speaker?> { null }
 
 /**
@@ -83,6 +87,7 @@ class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {})
         val clean = Speech.clean(text); if (clean.isEmpty()) return
         runCatching { tts.speak(clean, TextToSpeech.QUEUE_FLUSH, Bundle().apply { putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume.coerceIn(0f, 1f)) }, "lux") }
     }
+    override fun sayIfQuiet(text: String) { if (ready && runCatching { tts.isSpeaking }.getOrDefault(false)) return; say(text) }
     fun stop() { pending = null; runCatching { tts.stop() }; onSpeaking(false) }
     fun shutdown() { runCatching { tts.shutdown() } }
 }

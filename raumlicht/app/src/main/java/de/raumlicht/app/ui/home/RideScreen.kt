@@ -48,7 +48,9 @@ import kotlin.math.abs
 @Composable
 fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, controller: StageController = remember { StageController() },
                /** Zuletzt gebaute eigene Funktion als „Term|von|bis“ – wird beim nächsten Mal wieder vorgeschlagen */
-               custom: String = "", onCustom: (String) -> Unit = {}) {
+               custom: String = "", onCustom: (String) -> Unit = {},
+               /** Uhr in Millisekunden – im Test austauschbar */
+               now: () -> Long = android.os.SystemClock::uptimeMillis) {
     var rideId by rememberSaveable { mutableStateOf(startId) }
     // Eigene Funktion: Term und Abschnitt; gebaut wird erst auf Knopfdruck (oder beim Weiterfahren)
     val saved = remember { custom.split('|') }
@@ -84,6 +86,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     // Tempo der automatischen Fahrt: Index in TEMPO (½×, 1×, 2×, 4×)
     var tempo by rememberSaveable { mutableIntStateOf(1) }
     var seen by remember(key) { mutableStateOf<Spot?>(null) }
+    var lastSpot by remember(key) { mutableLongStateOf(-10_000L) }
     val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
     val d = ride.data(u.toDouble())
 
@@ -108,7 +111,15 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     // An Hoch-, Tief-, Wendepunkten und Nullstellen: Lux meldet sich, es vibriert kurz
     LaunchedEffect(d.x) {
         val s = ride.spotNear(d.x, if (driving) 0.05 else 0.04)
-        if (s != null && s != seen) { seen = s; sfx?.play(Sound.HIT); view.buzz(Buzz.HIT, vib); controller.party(1.0); speaker?.say("${s.kind.title} bei x = ${Geo.num(s.x)}") }
+        if (s != null && s != seen) {
+            seen = s
+            // Kommen die Stellen dicht hintereinander (schnelle Fahrt, enge Kurve), würde es hektisch: dann nur ein leiser Tick und das Schild.
+            // Mit Ruhe dazwischen gibt es Treffer-Ton, Lichtblitz und die Ansage – bei hohem Tempo in Kurzform, und Lux fällt sich nie selbst ins Wort.
+            val t = now(); val calm = t - lastSpot >= CALM_MS; lastSpot = t
+            if (calm) { sfx?.play(Sound.HIT); view.buzz(Buzz.HIT, vib); controller.party(1.0)
+                speaker?.sayIfQuiet(if (driving && TEMPO[tempo].second > 1f) s.kind.title else "${s.kind.title} bei x = ${Geo.num(s.x)}") }
+            else sfx?.play(Sound.TICK, 1.2f, 0.5f)
+        }
         else if (s == null && seen != null && abs(seen!!.x - d.x) > 0.25) seen = null
     }
 
@@ -206,6 +217,9 @@ internal fun Bound(text: String, tag: String, onChange: (String) -> Unit) {
         cursorBrush = androidx.compose.ui.graphics.SolidColor(Q.Yellow),
         keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Text, imeAction = androidx.compose.ui.text.input.ImeAction.Done))
 }
+
+/** So viel Ruhe muss seit der letzten besonderen Stelle sein, damit die nächste wieder mit Ton, Licht und Ansage gefeiert wird */
+private const val CALM_MS = 1800L
 
 /** Tempo-Stufen für die automatische Fahrt */
 private val TEMPO = listOf("🐢 ½×" to 0.5f, "Tempo 1×" to 1f, "🚀 2×" to 2f, "⚡ 4×" to 4f)

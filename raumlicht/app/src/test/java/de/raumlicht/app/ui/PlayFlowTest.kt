@@ -393,4 +393,21 @@ class PlayFlowTest {
         rule.onNodeWithText("Andere Stimme (2 von 3)").performClick(); assertEquals(1, next)
         rule.onNodeWithText("Lage: natürlich").performClick(); assertEquals(true, bright); rule.onNodeWithText("Lage: hell").assertExists()
     }
+
+    @Test fun rideStaysCalmWhenSpecialPointsComeFast() {
+        val heard = ArrayList<String>(); var clock = 0L
+        show { CompositionLocalProvider(de.raumlicht.app.ui.fx.LocalSpeaker provides de.raumlicht.app.ui.fx.Speaker { heard += it }) { RideScreen({}, "doppel", controller = stage, now = { clock }) } }
+        // nach jedem Schieben abwarten, bis die Meldung dazu wirklich verarbeitet ist – erst dann läuft die Uhr weiter
+        fun go(u: Float) { slide("fahrt-regler", u); rule.waitForIdle(); rule.mainClock.advanceTimeBy(400); rule.waitForIdle() }
+        fun parties() = stage.log.count { it.startsWith("RL.party") }
+        go(0.25f)                                                    // x = 1: Hochpunkt – in Ruhe erreicht
+        rule.onNodeWithText("Hochpunkt bei x = 1").assertExists(); assertEquals("ride=" + stage.lastRide, 1, parties())
+        assertEquals(listOf("Hochpunkt bei x = 1"), heard)
+        clock += 400; go(0.5f)                                        // 0,4 s später schon der Wendepunkt: Schild ja, aber keine Ansage und keine Lichtshow
+        rule.onNodeWithText("Wendepunkt bei x = 2").assertExists(); assertEquals(1, heard.size); assertEquals(1, parties())
+        clock += 400; go(0.75f)                                       // und gleich der Tiefpunkt: weiter ruhig
+        assertEquals(1, heard.size); assertEquals(1, parties())
+        clock += 3000; go(0.5f)                                       // nach einer Pause wird wieder angesagt
+        assertEquals(listOf("Hochpunkt bei x = 1", "Wendepunkt bei x = 2"), heard); assertEquals(2, parties())
+    }
 }

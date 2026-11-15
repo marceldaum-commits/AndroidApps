@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.3.3 – Ruhe bei schneller Fahrt (15.11.2026)
+- **Kurve abfahren:** Kommen Hochpunkte, Nullstellen und Wendepunkte dicht hintereinander (hohes Tempo, enge Kurve), wird es nicht mehr hektisch:
+  Dann gibt es nur einen leisen Tick und das Schild. Treffer-Ton, Lichtblitz und Ansage kommen erst wieder, wenn knapp zwei Sekunden Ruhe war.
+- Lux fällt sich bei diesen Ansagen nicht mehr selbst ins Wort, und bei Tempo 2× und 4× sagt sie nur noch kurz „Hochpunkt“ statt den ganzen Satz.
+
 ## 2.3.2 – Lux klingt angenehmer (15.11.2026)
 - **Natürlichere Stimme:** Lux spricht jetzt in natürlicher Tonlage und etwas ruhiger. Die stark erhöhte „Drohnen“-Lage ließ die Stimme blechern klingen.
 - **Beste Stimme des Geräts:** Unter den deutschen Stimmen, die ohne Internet auskommen, wird die hochwertigste gewählt.
