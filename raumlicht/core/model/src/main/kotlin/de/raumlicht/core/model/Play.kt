@@ -41,6 +41,7 @@ class Galton(val rows: Int = 8) {
             if (total > 0) Stage.edges("erwartung", curve.zipWithNext(), "yellow") else null,
             ball?.let { Stage.point("kugel", it, "pink", drop = false) },
             Stage.drone(V3(8, 0, 1), if (total >= 200) "happy" else "idle"),
+            Stage.podium(),
         ))
     }
     companion object { const val STEP = 0.8; const val DROP = 0.48; const val TOP = 5.9 }

@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.5.2 – Jedes Gebiet mit passender Bühne (15.11.2026)
+- **Raumachsen nur noch bei Vektoren:** Das dreidimensionale Koordinatensystem x₁/x₂/x₃ gibt es nur noch in der Geometrie.
+- **Analysis überall eben:** Auch die Rotationskörper haben jetzt das x-y-Achsenkreuz ihrer Kurve.
+- **Stochastik auf der Showbühne:** Kugeln, Baumdiagramm, Vierfeldertafel und Galton-Brett stehen auf einer Bühne mit Leuchtringen und Lauflicht –
+  ganz ohne Koordinatensystem.
+- **Kurve abfahren:** In der Fahrersicht ist das Achsenkreuz ausgeblendet (es stand als Strich mitten im Blick); von außen bleibt es sichtbar.
+
 ## 0.5.1 – Funktionen mit echtem Achsenkreuz (15.11.2026)
 - **Analysis lässt sich jetzt richtig ablesen:** Funktionsgraphen bekommen ein eigenes x-y-Achsenkreuz mit Zahlen in den Einheiten der Funktion
   (vorher standen dort die Raumachsen x₁/x₂/x₃ – Nullstellen und Schnittpunkte passten nicht zur Aufgabe).

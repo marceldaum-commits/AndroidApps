@@ -75,7 +75,7 @@ class Level(
         val c = control(key)
         return values + (key to v.mapIndexed { i, x -> x.coerceIn(c.min[i], c.max[i]) })
     }
-    fun scene(values: Values, phase: Phase): String = Stage.encode(bounds, objects(values, phase))
+    fun scene(values: Values, phase: Phase): String = objects(values, phase).let { o -> Stage.encode(bounds, if (chapter in STOCHASTICS && o.none { it.type == "podium" }) o + Stage.podium() else o) }
 
     companion object {
         /** Sterne: beim ersten Versuch 3, beim zweiten 2, danach 1. Mit Rechentipp höchstens 2. */
@@ -84,6 +84,9 @@ class Level(
 }
 
 /** Die drei Gebiete des Mathe-Abiturs – danach ist die Tour auf der Startseite geordnet. */
+/** Kapitel der Stochastik: ihre Bühnen haben kein Koordinatensystem */
+internal val STOCHASTICS = setOf(13, 16)
+
 enum class Area(val title: String, val emoji: String, val color: String) { GEOMETRIE("Geometrie", "📐", "cyan"), ANALYSIS("Analysis", "📈", "yellow"), STOCHASTIK("Stochastik", "🎲", "pink") }
 
 /** [title] sagt, worum es geht (z. B. „Geraden“); [topic] zählt die Inhalte auf; [venue] ist nur die Kulisse. */

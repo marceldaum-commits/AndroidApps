@@ -129,7 +129,7 @@ const hex = (c) => '#' + col(c).getHexString();
 // ───────── Raster und Achsen ─────────
 const gridGroup = new THREE.Group(); decor.add(gridGroup);
 let bounds = { min: [0, 0, 0], max: [8, 8, 6] };
-let axesGroup = null, flat = false;   // flat: ebenes x-y-Koordinatensystem (Analysis) statt Raumachsen
+let axesGroup = null, flat = false, plain = false;   // flat: ebenes x-y-Koordinatensystem (Analysis) statt Raumachsen
 function buildGrid() {
   gridGroup.clear();
   const { min, max } = bounds, pts = [], strong = [];
@@ -158,7 +158,7 @@ function buildGrid() {
     }
     return g;
   };
-  axesGroup = new THREE.Group(); axesGroup.visible = !flat;
+  axesGroup = new THREE.Group(); axesGroup.visible = !flat && !plain; gridGroup.visible = !plain;
   axesGroup.add(axis([1, 0, 0], max[0], -min[0], 'pink', 'x₁'), axis([0, 1, 0], max[1], -min[1], 'green', 'x₂'), axis([0, 0, 1], max[2], 0, 'cyan', 'x₃'));
   gridGroup.add(axesGroup);
 }
@@ -324,6 +324,23 @@ makers.axes2d = (s) => {
   const seg = (pts, c, op) => new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts), new THREE.LineBasicMaterial({ color: c, transparent: true, opacity: op, depthWrite: false }));
   g.add(seg(grid, 0x8f9dff, 0.2), seg(main, 0xffffff, 0.95));
   return { g, update() {}, tick() {} };
+};
+
+// Showbühne (Stochastik): Leuchtringe und ein Lauflicht statt Gitter und Achsen
+makers.podium = (s) => {
+  const g = new THREE.Group(), o = V(s.p); g.position.copy(o);
+  const ring = (r, w, c, op) => { const m = new THREE.Mesh(new THREE.RingGeometry(r - w, r, 96), new THREE.MeshBasicMaterial({ color: hdr(c, 1.6), transparent: true, opacity: op, side: THREE.DoubleSide, depthWrite: false, blending: THREE.AdditiveBlending })); m.rotation.x = -Math.PI / 2; m.position.y = 0.012; g.add(m); return m; };
+  ring(5.2, 0.07, 'pink', 0.9); ring(4.4, 0.03, 'violet', 0.6); ring(3.3, 0.05, 'cyan', 0.75); ring(2.0, 0.03, 'violet', 0.5);
+  const disc = new THREE.Mesh(new THREE.CircleGeometry(5.2, 96), new THREE.MeshBasicMaterial({ color: col('violet'), transparent: true, opacity: 0.07, depthWrite: false })); disc.rotation.x = -Math.PI / 2; disc.position.y = 0.008; g.add(disc);
+  const N = 36, pos = new Float32Array(N * 3), colr = new Float32Array(N * 3);
+  for (let i = 0; i < N; i++) { const a = (i / N) * Math.PI * 2; pos[i * 3] = Math.cos(a) * 4.8; pos[i * 3 + 1] = 0.05; pos[i * 3 + 2] = Math.sin(a) * 4.8; }
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3)); geo.setAttribute('color', new THREE.BufferAttribute(colr, 3));
+  const bulbs = new THREE.Points(geo, new THREE.PointsMaterial({ size: 0.5, map: glowTex, vertexColors: true, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending })); g.add(bulbs);
+  const pal = [col('pink'), col('yellow'), col('cyan')];
+  return { g, update() {}, tick(dt, t) {
+    for (let i = 0; i < N; i++) { const k = 0.35 + 0.65 * Math.pow(0.5 + 0.5 * Math.sin(t * 2.2 - i * 0.52), 3), c = pal[i % 3]; colr[i * 3] = c.r * k * 1.6; colr[i * 3 + 1] = c.g * k * 1.6; colr[i * 3 + 2] = c.b * k * 1.6; }
+    geo.attributes.color.needsUpdate = true;
+  } };
 };
 
 makers.line = (s) => {
@@ -625,11 +642,13 @@ makers.handle = (s) => {
 const objects = new Map();
 function setState(state) {
   if (state.bounds && JSON.stringify(state.bounds) !== JSON.stringify(bounds)) { bounds = state.bounds; buildGrid(); frameBounds(false); }
-  if (!!state.flat !== flat) {
-    flat = !!state.flat; if (axesGroup) axesGroup.visible = !flat;
-    // Funktionsgraphen schaut man von vorn an – sonst täuscht die Perspektive beim Ablesen
-    if (flat) { cam.tAz = 0; cam.tEl = 0.1; frameBounds(false); cam.tTarget.copy(V([4, (bounds.min[1] + bounds.max[1]) / 2, 3.0])); cam.tDist *= 0.8; }
-    else { cam.tAz = 0.62; cam.tEl = 0.42; frameBounds(false); }
+  if (!!state.flat !== flat || !!state.plain !== plain) {
+    flat = !!state.flat; plain = !!state.plain; if (axesGroup) axesGroup.visible = !flat && !plain; gridGroup.visible = !plain;
+    // Funktionsgraphen schaut man von vorn an – sonst täuscht die Perspektive beim Ablesen; die Showbühne der Stochastik leicht von oben
+    frameBounds(false);
+    if (flat) { cam.tAz = 0; cam.tEl = 0.1; cam.tTarget.copy(V([4, (bounds.min[1] + bounds.max[1]) / 2, 3.0])); cam.tDist *= 0.8; }
+    else if (plain) { cam.tAz = 0.16; cam.tEl = 0.2; cam.tTarget.copy(V([4, (bounds.min[1] + bounds.max[1]) / 2, 2.7])); cam.tDist *= 0.8; }
+    else { cam.tAz = 0.62; cam.tEl = 0.42; }
   }
   const seen = new Set();
   for (const s of state.objects ?? []) {
@@ -830,6 +849,8 @@ function step(dt) {
   camera.position.set(cam.target.x + Math.sin(cam.az) * Math.cos(cam.el) * cam.dist, cam.target.y + Math.sin(cam.el) * cam.dist, cam.target.z + Math.cos(cam.az) * Math.cos(cam.el) * cam.dist).add(sh);
   camera.lookAt(cam.target);
   const track = ride && objects.get(ride.id);
+  // In der Fahrersicht stünde die y-Achse als Strich direkt vor der Nase und die x-Achse läge im Gleis – dort ausblenden
+  const ax2 = objects.get('achsen'); if (ax2) ax2.g.visible = !(ride && ride.view === 'fp');
   if (track && track.at) {
     ride.cu += (ride.u - ride.cu) * (1 - Math.exp(-12 * dt));
     const here = track.at(ride.cu);

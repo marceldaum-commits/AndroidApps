@@ -209,7 +209,7 @@ internal object MoreExams {
             listOf(Stage.edges("fläche", pts.zipWithNext() + listOf(pts.last() to pts.first()), "yellow", faces = listOf(pts)), g.axis()) }),
     ))
 
-    private fun urn() = (0 until 5).map { Stage.sphere("k$it", V3(4.0, 1.6 + it * 1.2, 2.2), 0.5, if (it < 2) "pink" else "cyan") }
+    private fun urn() = (0 until 5).map { Stage.sphere("k$it", V3(4.0, 1.6 + it * 1.2, 2.2), 0.5, if (it < 2) "pink" else "cyan") } + Stage.podium()
     private val drum = Exam("trommel", "Lostrommel", "🎰", "In einer Lostrommel liegen 5 Kugeln, 2 davon sind pink (Gewinn).", listOf(
         part("a", 2, num("abi-trommel-a", "Ein Zug", "Wie wahrscheinlich ist ein Gewinn bei einem Zug?", "P", 0..10, 40, 0, listOf("P = 2 : 5", "= 40 %"), "Günstige durch mögliche.", "Die Wahrscheinlichkeit", step = 10, suffix = " %") { urn() }),
         part("b", 3, num("abi-trommel-b", "Zweimal mit Zurücklegen", "Zwei Züge mit Zurücklegen: Wie wahrscheinlich sind zwei Gewinne?", "P", 0..25, 16, 0, listOf("0,4 · 0,4", "= 0,16 = 16 %"), "Pfadregel: multiplizieren.", "Die Wahrscheinlichkeit",
