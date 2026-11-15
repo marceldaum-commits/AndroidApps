@@ -20,8 +20,8 @@ android {
         applicationId = "de.wissensgarten.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 29
-        versionName = "0.17.0"
+        versionCode = 30
+        versionName = "0.17.1"
     }
 
     // Zwei Varianten aus demselben Code:
