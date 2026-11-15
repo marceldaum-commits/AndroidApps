@@ -15,6 +15,8 @@ name: Kurvenflug APK
 on:
   workflow_dispatch:
   push:
+    # Die WebApp-Zweige (vom Leitstand ausgeliefert) brauchen keinen APK-Bau
+    branches-ignore: ["kurvenflug-test", "kurvenflug-live"]
     paths: ["kurvenflug/**", ".github/workflows/kurvenflug-release.yml", ".github/scripts/**"]
 
 permissions:
@@ -97,13 +99,19 @@ jobs:
           printf '\nInstallieren: APK herunterladen, öffnen, „Aus dieser Quelle installieren“ erlauben. Oder in der App: Einstellungen → App-Update.\n' >> notes.md
           cat notes.md
 
-      - name: Logik-Tests (Level lösbar, Physik stimmt)
-        run: ./gradlew --no-daemon :core:model:test
+      - name: Logik-Tests (Level lösbar, Physik stimmt, Android und Browser rechnen gleich)
+        run: ./gradlew --no-daemon :core:model:allTests
 
       - name: APK bauen
         run: |
           ./gradlew --no-daemon assembleRelease
           cp app/build/outputs/apk/release/app-release.apk "Kurvenflug-${{ steps.version.outputs.name }}.apk"
+
+      - name: WebApp bauen (gleiche Version wie die APK)
+        run: |
+          ./gradlew --no-daemon :web:webapp
+          grep -q '"version": "${{ steps.version.outputs.name }}"' webapp/version.json
+          (cd webapp && zip -qr "../Kurvenflug-${{ steps.version.outputs.name }}-web.zip" .)
 
       - name: Signatur prüfen
         run: |
@@ -120,7 +128,9 @@ jobs:
           target_commitish: ${{ github.sha }}
           name: Kurvenflug ${{ steps.version.outputs.name }}
           body_path: kurvenflug/notes.md
-          files: kurvenflug/Kurvenflug-${{ steps.version.outputs.name }}.apk
+          files: |
+            kurvenflug/Kurvenflug-${{ steps.version.outputs.name }}.apk
+            kurvenflug/Kurvenflug-${{ steps.version.outputs.name }}-web.zip
 
       - name: In Google Drive hochladen
         if: steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.KURVENFLUG_DRIVE_FOLDER != ''

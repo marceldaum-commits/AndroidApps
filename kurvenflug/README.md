@@ -74,17 +74,33 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/71_start_gastplanet.png) | | |
 
 ## Aufbau
-- `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,
-  Musik-Komposition, Rückmeldungen, Update-Prüfung (Unit-Tests; Tagesmission für 3 Jahre auf Lösbarkeit geprüft)
-- `core/data` – Fortschritt (Room, Bestwerte bleiben), Einstellungen
-- `app` – Compose-Oberfläche, Volt, im Code erzeugte Geräusche, Updater
+Eine Codebasis für Android **und** Browser (Kotlin Multiplatform + Compose Multiplatform):
+- `core/model` – reine Kotlin-Logik für JVM und Kotlin/Wasm: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level,
+  Tagesmission-Generator, Musik-Komposition, Rückmeldungen, Einstellungen, Codes (Unit-Tests; Tagesmission für 3 Jahre auf
+  Lösbarkeit geprüft). `ParityTest` läuft auf JVM **und** Wasm und vergleicht einen Fingerabdruck aller Level, Bahnen und Codes.
+- `core/data` – Android-Speicher: Fortschritt (Room, Bestwerte bleiben), Einstellungen (SharedPreferences)
+- `shared` – alle Bildschirme (Compose), Volt, im Code erzeugte Geräusche; je Plattform: Teilen, Ton, Vibration, Zurück, Updater
+- `app` – Android-Hülle: Activity, Widget, App-Update
+- `web` – WebApp (Kotlin/Wasm): Startseite, `kf.js` (Web Audio, Teilen, Zurück), Manifest, Service Worker (offline),
+  zugeschnittene Schriften für Emojis und Mathe-Zeichen (`web/fonts/make_fonts.py`, Noto Color Emoji / DejaVu, freie Lizenzen)
+
+## Im Browser (WebApp)
+Gleiche Version, gleiche Bildschirme. Spielstand im lokalen Speicher des Browsers, keine Server-Daten, offline spielbar,
+installierbar. Am PC als Handy-Spalte in der Mitte. Test: https://kurvenflug-test.mathenachhilfe-online.com
+
+| Handy | Level | PC |
+|---|---|---|
+| ![Web Start](screenshots/web-01-start.png) | ![Web Level](screenshots/web-02-level.png) | ![Web PC](screenshots/web-03-pc.png) |
 
 ## Bauen & Ausliefern
 ```
 export ANDROID_HOME=/opt/android-sdk
-./gradlew test            # Tests + Bildschirmfotos (screenshots/)
+./gradlew :core:model:allTests :core:data:testDebugUnitTest :app:testDebugUnitTest   # Logik (JVM + Wasm), Daten, Bildschirmfotos
 ./gradlew assembleRelease
+./gradlew :web:webapp     # fertige WebApp nach webapp/ (index.html oben, sw.js, version.json)
 ```
-Ausliefern: `versionCode`/`versionName` in `app/build.gradle.kts` erhöhen, Abschnitt in `CHANGELOG.md`, pushen.
+Ausliefern: `versionCode`/`versionName` in `app/build.gradle.kts` erhöhen (gilt auch für die WebApp), Abschnitt in `CHANGELOG.md`, pushen.
+WebApp: `:web:webapp` bauen, im Browser prüfen und auf den Zweig `kurvenflug-test` legen (Server holt alle 5 Minuten),
+Meldung in `MELDUNG_AN_LEITSTAND.md`. Den Zweig `kurvenflug-live` setzt nur der Leitstand.
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `kurvenflug-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).

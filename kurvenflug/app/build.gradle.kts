@@ -20,8 +20,8 @@ android {
         applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 22
-        versionName = "0.16.1"
+        versionCode = 23
+        versionName = "0.17.0"
         // Update-Knopf (lädt neue Versionen aus GitHub Releases). Für den Play Store auf false setzen –
         // dort kommen Updates über den Store, und die Installations-Berechtigung ist nicht erlaubt.
         buildConfigField("boolean", "SELF_UPDATE", "true")
@@ -83,6 +83,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
     implementation(project(":core:data"))
+    implementation(project(":shared"))
     implementation("androidx.navigation:navigation-compose:2.9.6")
     // Startbildschirm-Widget
     implementation("androidx.glance:glance-appwidget:1.1.1")

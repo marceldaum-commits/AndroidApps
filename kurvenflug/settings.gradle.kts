@@ -19,4 +19,6 @@ rootProject.name = "Kurvenflug"
 
 include(":app")            // Oberfläche: Weltenkarte, Spiele, Einstellungen
 include(":core:model")     // reine Kotlin-Logik: Flugbahnen, Physik, Level (ohne Android)
-include(":core:data")      // Fortschritt (Room), Einstellungen
+include(":core:data")      // Fortschritt (Room) und Einstellungen auf Android
+include(":shared")          // gemeinsame Oberfläche für Android und Browser
+include(":web")             // WebApp (Kotlin/Wasm)

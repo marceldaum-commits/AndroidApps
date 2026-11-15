@@ -1,0 +1,19 @@
+{
+  "name": "Kurvenflug – Mathe im Weltall",
+  "short_name": "Kurvenflug",
+  "description": "Formeln steuern das Raumschiff: Mathe und Physik für Klasse 5–10. Ohne Werbung, ohne Anmeldung.",
+  "lang": "de",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0B1026",
+  "theme_color": "#0B1026",
+  "categories": ["education", "games", "kids"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

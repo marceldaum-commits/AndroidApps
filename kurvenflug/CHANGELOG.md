@@ -3,6 +3,16 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.17.0 – Kurvenflug im Browser
+- **🌐 Jetzt auch als WebApp**: Kurvenflug läuft im Browser – am Handy, Tablet und PC, ganz ohne Installation.
+  Gleiche Level, gleiche Geschichte, gleiche Version wie die App. Auf dem Handy lässt sie sich wie eine App auf den
+  Startbildschirm legen und funktioniert danach auch ohne Internet.
+- **Datensparsam**: Auch im Browser gibt es keine Anmeldung und keine Werbung. Der Spielstand bleibt nur in diesem Browser
+  gespeichert, nichts geht an einen Server.
+- **Unter der Haube**: App und WebApp teilen sich jetzt dieselbe Spiellogik und dieselben Bildschirme. Ein Test prüft bei
+  jeder Version, dass beide jede Aufgabe genau gleich rechnen. Geteilte Codes (Level, Challenges, Ergebnisse)
+  funktionieren zwischen Handy und Browser.
+
 ## 0.16.1 – Reagiert schneller
 - **Tippen wirkt sofort**: Nach dem Zurückgehen hat die App fast eine Sekunde lang Tipps verschluckt (wegen einer langen
   Überblend-Animation). Jetzt reagiert jeder Knopf gleich.

@@ -77,3 +77,12 @@ fun floorModK(a: Long, b: Long): Long = a.mod(b)
 fun floorModK(a: Long, b: Int): Int = a.mod(b.toLong()).toInt()
 fun powK(a: Double, b: Double): Double = a.pow(b)
 fun countBits(v: Int) = v.countOneBits()
+
+/** „15.11.2026 14:05“ in Ortszeit */
+fun formatDateTime(millis: Long): String {
+    val d = CalDate.at(millis)
+    val local = millis + utcOffsetMinutes(millis) * 60_000L
+    val min = (local.mod(CalDate.DAY_MS) / 60_000L).toInt()
+    fun p(v: Int) = v.toString().padStart(2, '0')
+    return "${p(d.dayOfMonth)}.${p(d.monthValue)}.${d.year} ${p(min / 60)}:${p(min % 60)}"
+}

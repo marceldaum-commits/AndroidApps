@@ -34,7 +34,7 @@ class ProgressTest {
 
     /** Neu anfangen: Spielstand-Einstellungen weg, Ton und eigene Level bleiben. */
     @Test fun resetGameKeepsSoundAndOwnLevels() {
-        val s = Settings(ApplicationProvider.getApplicationContext())
+        val s = Settings(ApplicationProvider.getApplicationContext<android.content.Context>())
         s.setSound(false); s.saveMyLevel("KFL1-test"); s.setGrade(7); s.markIntroSeen(3); s.markWalkthrough("LINE")
         s.recordStorm(9); s.recordDuel(true); s.badgesSeen = setOf("boss"); s.setLook(1, 2, 1); s.skin = 2; s.detectiveBest = 6
         s.resetGame()
@@ -45,7 +45,7 @@ class ProgressTest {
         // bleibt
         assertFalse(s.sound.value); assertEquals(listOf("KFL1-test"), s.myLevels.value)
         // auch nach Neustart (neu aus den Einstellungen gelesen)
-        val again = Settings(ApplicationProvider.getApplicationContext())
+        val again = Settings(ApplicationProvider.getApplicationContext<android.content.Context>())
         assertNull(again.grade.value); assertFalse(again.sound.value)
     }
 
@@ -64,7 +64,7 @@ class ProgressTest {
     }
 
     @Test fun settingsArePerProfileButSoundIsShared() {
-        val s = Settings(ApplicationProvider.getApplicationContext())
+        val s = Settings(ApplicationProvider.getApplicationContext<android.content.Context>())
         s.setGrade(6); s.recordStorm(5); s.addSticker("rocket"); s.setSound(false)
         val lena = s.addProfile("Lena", Settings.AVATARS[2])!!
         s.switchProfile(lena.id)
@@ -79,7 +79,7 @@ class ProgressTest {
         assertEquals(1, s.profiles.value.size)
         assertFalse(s.deleteProfile(0))                              // das letzte bleibt
         // nach Neustart: alles noch da
-        val again = Settings(ApplicationProvider.getApplicationContext())
+        val again = Settings(ApplicationProvider.getApplicationContext<android.content.Context>())
         assertEquals(6, again.grade.value); assertEquals(0, again.profile.value)
     }
 }

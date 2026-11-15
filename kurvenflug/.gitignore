@@ -8,3 +8,5 @@ local.properties
 *.jks
 *.p12
 keystore.properties
+# Fertig gebaute WebApp – liegt nur auf dem Zweig kurvenflug-test (./gradlew :web:webapp)
+webapp/
