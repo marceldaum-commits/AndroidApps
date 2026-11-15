@@ -12,6 +12,8 @@ data class Balloon(val id: Int, val kind: BalloonKind, val born: Double, val x: 
 /** Punktestand: Treffer in Folge bauen eine Serie auf, alle fünf Treffer zählt jeder Ballon einen Punkt mehr. */
 data class BalloonScore(val points: Int = 0, val combo: Int = 0, val bestCombo: Int = 0, val hits: Int = 0) {
     val bonus get() = combo / 5
+    /** Fehlschuss ins Leere: kostet keine Punkte, aber die Serie */
+    fun miss() = copy(combo = 0)
     fun hit(kind: BalloonKind): BalloonScore =
         if (kind == BalloonKind.DUD) copy(points = maxOf(0, points + kind.points), combo = 0)
         else (combo + 1).let { c -> copy(points = points + kind.points + bonus, combo = c, bestCombo = maxOf(bestCombo, c), hits = hits + 1) }

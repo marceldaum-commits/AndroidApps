@@ -67,7 +67,14 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
                 }
             }
         }
-        onDispose { controller.onTap = null }
+        // Daneben getippt: Lux ballert genau dorthin ins Leere – und die Serie ist weg
+        controller.onMiss = { p ->
+            if (running) {
+                controller.fire(Beam(BalloonGame.LUX, p, "white", false), 140); sfx?.play(Sound.TICK, 0.7f); view.buzz(Buzz.TICK, vib)
+                flash = if (score.combo >= 2) "Daneben! Serie weg" else "Daneben!"; score = score.miss()
+            }
+        }
+        onDispose { controller.onTap = null; controller.onMiss = null }
     }
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
@@ -91,7 +98,7 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
                     Text("${score.points} Punkte · ${score.hits} Treffer · längste Serie ${score.bestCombo}", Modifier.testTag("ergebnis"), color = Q.Text, textAlign = TextAlign.Center)
                 } else {
                     Text("Nur zum Spaß 🎈", color = Q.Yellow, fontWeight = FontWeight.Black, fontSize = 22.sp)
-                    Text("45 Sekunden. Tipp die Ballons an – ich baller sie ab!\nGold bringt 5 Punkte, kleine grüne 2.\nDen dicken orangen lieber nicht: −2 und die Serie ist weg.", color = Q.Text, textAlign = TextAlign.Center, fontSize = 14.sp)
+                    Text("45 Sekunden. Tipp die Ballons an – ich baller sie ab!\nGold bringt 5 Punkte, kleine grüne 2.\nDen dicken orangen lieber nicht: −2 und die Serie ist weg.\nDaneben getippt? Dann ballere ich daneben.", color = Q.Text, textAlign = TextAlign.Center, fontSize = 14.sp)
                 }
                 NeonButton({ round++; running = true; sfx?.play(Sound.LAUNCH) }, Modifier.testTag("ballern"), color = Q.Green) { Text(if (over) "↻ Noch eine Runde" else "▶ Los geht's", fontWeight = FontWeight.Black) }
             }

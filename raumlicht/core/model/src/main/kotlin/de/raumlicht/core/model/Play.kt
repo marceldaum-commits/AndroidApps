@@ -90,6 +90,31 @@ object Flights {
         Flight("schraeg", "Schräg durch den Raum", p(1, 7, 5), p(1, -1, -1), 5.0, listOf(Triple("E₁: x₂ = 4", p(0, 1, 0), 4), Triple("E₂: x₁ + 2x₃ = 9", p(1, 0, 2), 9), Triple("Boden: x₃ = 1", p(0, 0, 1), 1))),
     )
     fun byId(id: String) = all.firstOrNull { it.id == id }
+
+    const val CUSTOM = "eigener"
+    /** Eigener Flug als Text: „A;Richtung;Ebene 1;Ebene 2;Kugel“, jeweils Zahlen mit Komma getrennt; Ebene = n₁,n₂,n₃,c; Kugel = m₁,m₂,m₃,r; leer = nicht dabei */
+    const val EXAMPLE = "0,0,1;2,2,1;1,0,0,4;;4,4,3,2"
+    /**
+     * Baut einen eigenen Flug: Start, Richtung, bis zu zwei Ebenen (Normalenvektor und rechte Seite) und eine Kugel.
+     * Der Flug endet, wo die Gerade den Raum (0…8 | 0…8 | 0…6) verlässt.
+     * @return der Flug oder eine Meldung, was nicht passt
+     */
+    fun custom(code: String): Result<Flight> = runCatching {
+        fun bad(msg: String): Nothing = throw IllegalArgumentException(msg)
+        val parts = code.split(';').map { p -> p.split(',').map { it.trim() }.filter { it.isNotEmpty() } }
+        fun ints(i: Int, n: Int, what: String): List<Int>? { val p = parts.getOrNull(i).orEmpty(); if (p.isEmpty()) return null
+            if (p.size != n || p.any { it.toIntOrNull() == null }) bad("$what braucht $n ganze Zahlen."); return p.map { it.toInt() } }
+        val a = ints(0, 3, "Der Startpunkt")?.let { V3(it[0], it[1], it[2]) } ?: bad("Der Startpunkt fehlt.")
+        val d = ints(1, 3, "Die Richtung")?.let { V3(it[0], it[1], it[2]) } ?: bad("Die Richtung fehlt.")
+        if (d.isZero) bad("Die Richtung darf nicht (0|0|0) sein – sonst fliegt Lux nirgendwohin.")
+        val b = Bounds(); if (a.x !in 0.0..8.0 || a.y !in 0.0..8.0 || a.z !in 0.0..6.0) bad("Der Start muss im Raum liegen: x₁ und x₂ von 0 bis 8, x₃ von 0 bis 6.")
+        val tMax = Geo.exit(a, d, b.lo, b.hi); if (tMax < 0.25) bad("Mit dieser Richtung fliegt Lux sofort aus dem Raum. Dreh die Richtung nach innen.")
+        val sub = listOf("₁", "₂")
+        val planes = listOfNotNull(ints(2, 4, "Ebene 1"), ints(3, 4, "Ebene 2")).mapIndexed { i, p -> val n = V3(p[0], p[1], p[2])
+            if (n.isZero) bad("Der Normalenvektor von Ebene ${i + 1} darf nicht (0|0|0) sein."); Triple("E${sub[i]}: ${Geo.planeText(n, p[3])}", n, p[3]) }
+        val ball = ints(4, 4, "Die Kugel")?.let { if (it[3] < 1 || it[3] > 4) bad("Der Radius der Kugel muss zwischen 1 und 4 liegen."); Triple("K", V3(it[0], it[1], it[2]), it[3]) }
+        Flight(CUSTOM, "Eigener Flug", a, d, tMax, planes, listOfNotNull(ball))
+    }
 }
 
 // ───────────────────────── Pflichtteil, Kalender, Lux-Zubehör ─────────────────────────

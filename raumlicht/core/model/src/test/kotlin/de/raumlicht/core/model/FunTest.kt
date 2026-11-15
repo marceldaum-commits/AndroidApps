@@ -22,6 +22,7 @@ class FunTest {
         assertEquals(5, s.points); assertEquals(5, s.combo); assertEquals(1, s.bonus)
         s = s.hit(BalloonKind.GOLD); assertEquals(11, s.points)                                             // 5 + 1 Serienbonus
         s = s.hit(BalloonKind.DUD); assertEquals(9, s.points); assertEquals(0, s.combo); assertEquals(6, s.bestCombo); assertEquals(6, s.hits)
+        assertEquals(BalloonScore(points = 9, combo = 0, bestCombo = 6, hits = 6), s.hit(BalloonKind.PINK).miss().copy(points = 9, hits = 6))   // Fehlschuss: nur die Serie ist weg
         assertEquals(0, BalloonScore().hit(BalloonKind.DUD).points)                                          // nie unter null
     }
 
@@ -49,5 +50,18 @@ class FunTest {
         }
         // ohne Zusätze bleibt die Bühne wie sie war
         val h = Coaster.byId("huegel")!!; assertEquals(h.scene(), h.scene(1.0, derivative = false, fill = false))
+    }
+
+    @Test fun ownFlightFromOwnLinePlanesAndSphere() {
+        val f = Flights.custom("0,0,1;2,2,1;1,0,0,4;1,1,1,16;4,4,3,2").getOrThrow()
+        assertEquals("x⃗ = (0|0|1) + t · (2|2|1)", f.text); assertEquals(4.0, f.tMax, 1e-9)                       // verlässt den Raum bei (8|8|5)
+        assertEquals(listOf("Durchstoßpunkt mit E₁: x₁ = 4", "Durchstoßpunkt mit E₂: x₁ + x₂ + x₃ = 16"), f.events.filter { it.title.startsWith("Durch") }.map { it.title })
+        assertEquals(2.0, f.events.first { it.title.contains("E₁") }.t, 1e-9); assertEquals(3.0, f.events.first { it.title.contains("E₂") }.t, 1e-9)
+        assertEquals(2, f.events.count { it.title.contains("K") }); assertTrue(f.scene().contains("\"type\":\"sphere\""))
+        assertEquals(Flights.EXAMPLE.let { Flights.custom(it).getOrThrow().planes.size }, 1)
+        val bare = Flights.custom("1,1,1;1,0,0;;;").getOrThrow(); assertTrue(bare.planes.isEmpty() && bare.events.isEmpty()); assertEquals(7.0, bare.tMax, 1e-9)
+        fun err(c: String) = Flights.custom(c).exceptionOrNull()!!.message!!
+        assertTrue(err("0,0,1;0,0,0;;;").contains("Richtung darf nicht")); assertTrue(err("9,0,1;1,0,0;;;").contains("im Raum liegen")); assertTrue(err("0,0,1;-1,0,0;;;").contains("sofort aus dem Raum"))
+        assertTrue(err("0,0,1;1,1,0;0,0,0,3;;").contains("Normalenvektor")); assertTrue(err("0,0,1;1,1;;;").contains("3 ganze Zahlen")); assertTrue(err("0,0,1;1,1,0;;;4,4,3,9").contains("Radius"))
     }
 }

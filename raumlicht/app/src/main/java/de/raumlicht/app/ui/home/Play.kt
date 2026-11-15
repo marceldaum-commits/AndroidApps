@@ -68,9 +68,28 @@ internal fun Pick(text: String, on: Boolean, color: Color, tag: String, onClick:
  * Das Cockpit zeigt Ort, Parameter t und den Abstand zur nächsten Ebene; an Durchstoßpunkten meldet sich Lux.
  */
 @Composable
-fun FlightScreen(onBack: () -> Unit, controller: StageController = remember { StageController() }) {
-    var id by rememberSaveable { mutableStateOf(Flights.all.first().id) }
-    val flight = Flights.byId(id) ?: Flights.all.first()
+fun FlightScreen(onBack: () -> Unit, controller: StageController = remember { StageController() },
+                 /** Zuletzt gebauter eigener Flug (siehe [Flights.custom]) – steht beim nächsten Mal wieder da */
+                 custom: String = "", onCustom: (String) -> Unit = {}) {
+    var chosen by rememberSaveable { mutableStateOf(Flights.all.first().id) }
+    // Eigener Flug: fünf Zeilen mit Zahlenfeldern (Start, Richtung, zwei Ebenen, Kugel); gebaut wird auf Knopfdruck
+    val first = remember { (custom.takeIf { Flights.custom(it).isSuccess } ?: Flights.EXAMPLE).split(';') }
+    fun cells(i: Int, n: Int, fallback: List<String>) = first.getOrNull(i).orEmpty().split(',').map { it.trim() }.filter { it.isNotEmpty() }.takeIf { it.size == n } ?: fallback
+    val fields = rememberSaveable(saver = androidx.compose.runtime.saveable.listSaver(save = { it.toList() }, restore = { it.toMutableStateList() })) {
+        (cells(0, 3, listOf("0", "0", "1")) + cells(1, 3, listOf("2", "2", "1")) + cells(2, 4, listOf("1", "0", "0", "4")) + cells(3, 4, listOf("1", "1", "1", "16")) + cells(4, 4, listOf("4", "4", "3", "2"))).toMutableStateList() }
+    var useE1 by rememberSaveable { mutableStateOf(first.getOrNull(2).orEmpty().isNotBlank()) }
+    var useE2 by rememberSaveable { mutableStateOf(first.getOrNull(3).orEmpty().isNotBlank()) }
+    var useBall by rememberSaveable { mutableStateOf(first.getOrNull(4).orEmpty().isNotBlank()) }
+    var built by rememberSaveable { mutableStateOf(custom.takeIf { Flights.custom(it).isSuccess } ?: "") }
+    var error by remember { mutableStateOf<String?>(null) }
+    var editing by rememberSaveable { mutableStateOf(built.isEmpty()) }
+    val own = remember(built) { Flights.custom(built).getOrNull() }
+    fun code() = listOf(fields.subList(0, 3), fields.subList(3, 6), if (useE1) fields.subList(6, 10) else emptyList(), if (useE2) fields.subList(10, 14) else emptyList(), if (useBall) fields.subList(14, 18) else emptyList())
+        .joinToString(";") { it.joinToString(",") }
+    fun build(): Boolean { val c = code(); Flights.custom(c).onFailure { error = it.message; return false }; error = null; built = c; onCustom(c); return true }
+    val isOwn = chosen == Flights.CUSTOM
+    val flight = (if (isOwn) own else Flights.byId(chosen)) ?: Flights.all.first()
+    val id = if (isOwn) "eigener:$built" else chosen
     var u by rememberSaveable(id) { mutableFloatStateOf(0f) }
     var driving by remember(id) { mutableStateOf(false) }
     var inside by rememberSaveable { mutableStateOf(true) }
@@ -97,9 +116,31 @@ fun FlightScreen(onBack: () -> Unit, controller: StageController = remember { St
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Flug durch den Raum", onBack)
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 10.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            Flights.all.forEach { f -> Pick(f.title, f.id == id, Q.Cyan, "flug-${f.id}") { id = f.id } }
+            Pick("✏️ Eigener Flug", isOwn, Q.Yellow, "flug-eigener") { chosen = Flights.CUSTOM; editing = own == null }
+            Flights.all.forEach { f -> Pick(f.title, f.id == chosen, Q.Cyan, "flug-${f.id}") { chosen = f.id } }
         }
-        Text("g: ${flight.text}", Modifier.padding(horizontal = 14.dp, vertical = 2.dp), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+        if (isOwn && editing) Column(Modifier.fillMaxWidth().heightIn(max = 330.dp).verticalScroll(rememberScrollState()).padding(horizontal = 10.dp), verticalArrangement = Arrangement.spacedBy(5.dp)) {
+            @Composable fun line(label: String, from: Int, n: Int, tag: String, on: Boolean? = null, toggle: () -> Unit = {}, last: String = "") = Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                if (on == null) Text(label, Modifier.width(84.dp), color = Q.Muted, fontSize = 13.sp) else Box(Modifier.width(84.dp)) { Pick(label, on, Q.Violet, "$tag-an", toggle) }
+                if (on != false) (0 until n).forEach { k ->
+                    if (k == 3) Text(last, color = Q.Muted, fontSize = 13.sp)
+                    Bound(fields[from + k], "$tag-$k") { fields[from + k] = it; error = null }
+                }
+            }
+            line("Start A", 0, 3, "start"); line("Richtung", 3, 3, "richtung")
+            line("Ebene 1", 6, 4, "e1", useE1, { useE1 = !useE1 }, "="); line("Ebene 2", 10, 4, "e2", useE2, { useE2 = !useE2 }, "="); line("Kugel M", 14, 4, "kugel", useBall, { useBall = !useBall }, "r")
+            error?.let { Text(it, Modifier.testTag("flug-fehler"), color = Q.Orange, fontSize = 12.sp) }
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Ebene: Normalenvektor und rechte Seite, z. B. 1 | 1 | 1 = 16 für x₁ + x₂ + x₃ = 16.", Modifier.weight(1f), color = Q.Muted, fontSize = 11.sp)
+                NeonButton({ if (build()) { editing = false; sfx?.play(Sound.CELL) } }, Modifier.testTag("flug-bauen"), color = Q.Yellow) { Text("Flug bauen", fontWeight = FontWeight.Black) }
+            }
+        }
+        if (isOwn && !editing) Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 2.dp).clip(RoundedCornerShape(12.dp)).background(Q.Deep).border(1.5.dp, Q.Yellow, RoundedCornerShape(12.dp))
+            .clickable { editing = true }.padding(horizontal = 12.dp, vertical = 9.dp).testTag("flug-zeile"), verticalAlignment = Alignment.CenterVertically) {
+            Text("g: ${flight.text}", Modifier.weight(1f).testTag("flug-term"), color = Q.Text, fontWeight = FontWeight.Bold, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+            Text("✏️ ändern", color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+        }
+        if (!isOwn) Text("g: ${flight.text}", Modifier.padding(horizontal = 14.dp, vertical = 2.dp), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
         Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) {
             Stage(controller, Modifier.fillMaxSize())
             StageFrame(Q.Cyan)

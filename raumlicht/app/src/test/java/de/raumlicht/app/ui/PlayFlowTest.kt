@@ -210,6 +210,11 @@ class PlayFlowTest {
         assertTrue(stage.log.any { it.startsWith("RL.fire") } && stage.log.any { it.startsWith("RL.burst") })    // Lux ballert
         assertFalse(stage.lastState!!.contains("\"id\":\"b${up[0].id}\""))
         stage.onTap?.invoke("b${up[0].id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("${up[0].kind.points}")   // weg ist weg
+        // daneben getippt: Lux schießt genau dorthin, Punkte bleiben, Serie weg
+        val shots = stage.log.count { it.startsWith("RL.fire") }
+        stage.onMiss?.invoke(V3(4.0, 6.5, 5.0)); rule.mainClock.advanceTimeBy(100)
+        assertEquals(shots + 1, stage.log.count { it.startsWith("RL.fire") }); assertTrue(stage.log.last { it.startsWith("RL.fire") }.contains("to:[4.0,6.5,5.0]") )
+        rule.onNodeWithTag("meldung").assertTextEquals("Daneben!"); rule.onNodeWithTag("punkte").assertTextEquals("${up[0].kind.points}")
         rule.mainClock.advanceTimeBy(45_000)
         rule.onNodeWithTag("ergebnis").assertExists(); rule.onNodeWithText("↻ Noch eine Runde").assertExists()
         assertEquals(listOf(up[0].kind.points), scores)
@@ -235,5 +240,25 @@ class PlayFlowTest {
         val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
         val s = de.raumlicht.core.data.Settings(ctx); assertTrue(s.voice.value); s.setVoice(false); assertFalse(de.raumlicht.core.data.Settings(ctx).voice.value)
         val v = de.raumlicht.app.ui.fx.LuxVoice(ctx); v.enabled = false; v.say("still"); v.stop(); v.shutdown()      // ohne Stimme oder ausgeschaltet: kein Absturz
+    }
+
+    @Test fun ownFlightCanBeDefined() {
+        var stored = ""
+        show { FlightScreen({}, controller = stage, onCustom = { stored = it }) }
+        rule.onNodeWithTag("flug-eigener").performClick(); rule.mainClock.advanceTimeBy(400)
+        rule.onNodeWithTag("richtung-0").performTextReplacement("0"); rule.onNodeWithTag("richtung-1").performTextReplacement("0"); rule.onNodeWithTag("richtung-2").performTextReplacement("0")
+        rule.onNodeWithTag("flug-bauen").performClick(); rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithTag("flug-fehler").assertTextEquals("Die Richtung darf nicht (0|0|0) sein – sonst fliegt Lux nirgendwohin."); assertEquals("", stored)
+        rule.onNodeWithTag("richtung-0").performTextReplacement("1"); rule.onNodeWithTag("richtung-1").performTextReplacement("1")           // g: (0|0|1) + t·(1|1|0)
+        rule.onNodeWithTag("e2-an").performClick()                                                                                         // zweite Ebene dazu: x₁ + x₂ + x₃ = 16 → hier 1,1,1 = 16
+        rule.onNodeWithTag("e2-3").performTextReplacement("9")                                                                             // x₁ + x₂ + x₃ = 9 → t = 4
+        rule.onNodeWithTag("kugel-an").performClick()                                                                                      // Kugel weg
+        rule.onNodeWithTag("flug-bauen").performClick(); rule.mainClock.advanceTimeBy(600)
+        assertEquals("0,0,1;1,1,0;1,0,0,4;1,1,1,9;", stored)
+        rule.onNodeWithTag("flug-term", useUnmergedTree = true).assertTextEquals("g: x⃗ = (0|0|1) + t · (1|1|0)")
+        assertTrue(stage.lastState!!.contains("E₂: x₁ + x₂ + x₃ = 9") && !stage.lastState!!.contains("\"type\":\"sphere\""))
+        slide("flug-regler", 0.5f)                                                                                                          // t = 4 von 8: beide Ebenen liegen bei t = 4
+        rule.onNodeWithText("du bist genau in der Ebene").assertExists()
+        rule.onNodeWithTag("flug-zeile").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("start-0").assertExists()
     }
 }

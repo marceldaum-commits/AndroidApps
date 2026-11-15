@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.1.0 – Eigener Flug und Fehlschüsse (15.11.2026)
+- **✏️ Eigener Flug:** In „Flug durch den Raum“ legst du jetzt selbst fest, wohin es geht – Startpunkt und Richtung der Geraden,
+  bis zu zwei Ebenen (Normalenvektor und rechte Seite) und eine Kugel. Durchstoßpunkte, Ein- und Austritt werden berechnet und unterwegs gemeldet.
+  Unpassende Eingaben werden erklärt; der letzte eigene Flug bleibt gespeichert.
+- **Ballerbude:** Tippst du daneben, ballert Lux genau dorthin ins Leere – das kostet keine Punkte, aber die Serie.
+
 ## 2.0.0 – Lux spricht (15.11.2026)
 - **🗣️ Lux kann sprechen:** Lux liest ihre Sprechblasen laut vor – den Auftrag, Rückmeldungen, Tipps, die Kapitel-Erklärung, jeden Schritt ihrer Aktionen
   („1. Zug: pink, 2 von 5 …“) und beim Kurvenfahren die besonderen Stellen („Hochpunkt bei x = 2“). Formelzeichen werden dabei als Wörter gesprochen.

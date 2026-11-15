@@ -17,6 +17,8 @@ und **auch für jedes Zusatz- oder Bezahl-Angebot** (z. B. Plus-Wissenspakete) �
 - **Ton und Haptik**: kurze, freundliche Sounds (im Code erzeugt, keine Lizenzprobleme) und Vibration – abschaltbar.
 - **Belohnung ohne Druck**: Fortschritt sichtbar machen, Serien und Boni feiern, aber keine Strafen, keine Angst vor
   verlorenen Serien.
+- **Vorgefertigtes ist flexibel**: Wo es fertige Beispiele gibt (Kurven, Flüge, Bahnen …), muss man auch eigene Werte eingeben können –
+  gut sichtbar, mit verständlicher Rückmeldung bei unpassender Eingabe.
 - **Kurze Einheiten**: eine Runde in wenigen Minuten schaffbar.
 - **Kinderfreundlich & datensparsam**: keine Werbung, keine unnötigen Daten, Eltern verstehen sofort, was passiert.
 

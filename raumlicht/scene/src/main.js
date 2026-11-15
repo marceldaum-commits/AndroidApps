@@ -783,7 +783,14 @@ function tapped(e) {
 const up = (e) => {
   pointers.delete(e.pointerId);
   if (drag && !drag.orbit) emit('drop', { id: drag.id, p: drag.last });
-  else if (drag && e.type === 'pointerup' && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 14 && performance.now() - drag.t0 < 450) { const h = tapped(e); if (h) emit('tap', { id: h.id }); }
+  else if (drag && e.type === 'pointerup' && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 14 && performance.now() - drag.t0 < 450) {
+    const h = tapped(e);
+    if (h) emit('tap', { id: h.id });
+    else { // daneben getippt: die Stelle in der Ebene x₁ = 4 melden (dort schweben die Kugeln)
+      const hit = new THREE.Vector3(); ray.setFromCamera(ndc(e), camera);
+      if (ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 0, 1), -4), hit)) emit('miss', { p: fromV(hit).map((v) => Math.round(v * 100) / 100) });
+    }
+  }
   drag = null; pinch = 0;
 };
 canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);

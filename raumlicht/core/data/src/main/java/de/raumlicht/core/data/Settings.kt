@@ -115,6 +115,11 @@ class Settings(ctx: Context) {
         get() = prefs.getString("ride", "") ?: ""
         set(v) = prefs.edit().putString("ride", v).apply()
 
+    /** Flug durch den Raum: der zuletzt gebaute eigene Flug */
+    var flight: String
+        get() = prefs.getString("flight", "") ?: ""
+        set(v) = prefs.edit().putString("flight", v).apply()
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

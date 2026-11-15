@@ -199,7 +199,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
 
 /** Kleines Zahlenfeld für „von“ / „bis“: antippen und eintippen (auch negative Zahlen) */
 @Composable
-private fun Bound(text: String, tag: String, onChange: (String) -> Unit) {
+internal fun Bound(text: String, tag: String, onChange: (String) -> Unit) {
     androidx.compose.foundation.text.BasicTextField(text, { v -> onChange(v.replace('−', '-').filterIndexed { i, c -> c.isDigit() || (c == '-' && i == 0) }.take(6)) },
         Modifier.width(58.dp).background(Q.Panel, RoundedCornerShape(10.dp)).border(1.dp, Q.Violet.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).padding(vertical = 8.dp).testTag(tag), singleLine = true,
         textStyle = androidx.compose.ui.text.TextStyle(color = Q.Text, fontWeight = FontWeight.Black, fontSize = 16.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center),

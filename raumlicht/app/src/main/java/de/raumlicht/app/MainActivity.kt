@@ -253,7 +253,7 @@ class MainActivity : ComponentActivity() {
             composable(Routes.WORKSHOP) {
                 WorkshopScreen(tourStars, skin, vm.settings::setSkin, badges.count { it.earned }, look, { t, h -> vm.settings.setLook(t, h) }) { nav.popSafe() }
             }
-            composable(Routes.FLIGHT) { FlightScreen({ nav.popSafe() }) }
+            composable(Routes.FLIGHT) { FlightScreen({ nav.popSafe() }, custom = vm.settings.flight, onCustom = { vm.settings.flight = it }) }
             composable(Routes.GALTON) { GaltonScreen({ nav.popSafe() }) }
             composable(Routes.BALLOONS) { val best by vm.settings.balloonBest.collectAsStateWithLifecycle(); de.raumlicht.app.ui.home.BalloonScreen(best, { vm.settings.recordBalloons(it) }, { nav.popSafe() }) }
             composable(Routes.QUICK) { QuickScreen({ l, s, a -> vm.record(l.id, s, a) }, { nav.popSafe() }) }

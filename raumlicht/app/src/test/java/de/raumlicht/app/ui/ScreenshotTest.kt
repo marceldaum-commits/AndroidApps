@@ -179,6 +179,7 @@ class ScreenshotTest {
         it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("zeige-ableitung").performClick(); it.onNodeWithTag("zeige-zweite").performClick()
         it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.65f) }
     }) { de.raumlicht.app.ui.home.RideScreen({}, "huegel") }
+    @Test fun ownFlight() = shot("68_eigener_flug", "raumflug", prepare = { it.onNodeWithTag("flug-eigener").performClick() }) { de.raumlicht.app.ui.home.FlightScreen({}) }
     @Test fun diary() = shot("59_fehler_tagebuch", "start") {
         de.raumlicht.app.ui.home.DiaryScreen(listOf(
             de.raumlicht.app.ui.home.DiaryEntry(4, "2-1", "Du hast A − B gerechnet. Es heißt Spitze minus Fuß: B − A – alle Vorzeichen drehen sich um."),
