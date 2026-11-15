@@ -71,6 +71,10 @@ fun LevelScreen(
     onMiss: ((attempt: Int) -> Unit)? = null,
     /** eigene Zeile über dem Titel (z. B. „Duell · Spieler 2“) */
     header: String? = null,
+    /** Rechenweg: so viele Schritte rechnet Volt vor (beim ersten Rechenweg einer Bahnart 1, danach 0) */
+    voltSolves: Int = 0,
+    /** Rechenweg geöffnet (für das Ausblenden beim nächsten Mal) */
+    onWalkthrough: () -> Unit = {},
 ) {
     val sfx = LocalSfx.current
     val view = LocalView.current
@@ -95,6 +99,9 @@ fun LevelScreen(
     var mood by remember(level.id) { mutableStateOf(VoltMood.IDLE) }
     var speech by remember(level.id) { mutableStateOf(level.task) }
     var gap by remember(level.id) { mutableStateOf<Gap?>(null) }
+    val steps = remember(level.id) { Walkthrough.of(level) }
+    var walkOpen by rememberSaveable(level.id) { mutableStateOf(false) }
+    var walkVoltSolves by rememberSaveable(level.id) { mutableIntStateOf(voltSolves) }
     var canvasSize by remember { mutableStateOf(IntSize.Zero) }
     // Wird ein abgeschlossenes Level nach dem Drehen wiederhergestellt, fehlt der Flug → Ergebnis direkt zeigen
     LaunchedEffect(Unit) { if (phase == Phase.FLYING) phase = Phase.AIM }
@@ -255,6 +262,14 @@ fun LevelScreen(
             Spacer(Modifier.height(8.dp))
             // Steuerung
             Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                // Ab dem 3. Fehlversuch: Rechenweg zum Mitrechnen (nicht in Duell, Sturm, Boss)
+                AnimatedVisibility(steps != null && allowRetry && attempt >= 3 && phase == Phase.AIM,
+                    enter = fadeIn() + expandVertically() + scaleIn(initialScale = 0.8f)) {
+                    NeonButton(onClick = { sfx?.play(Sound.TAP); walkVoltSolves = voltSolves; walkOpen = true; onWalkthrough() },
+                        color = Q.Violet, modifier = Modifier.fillMaxWidth().pulse(true, 0.02f)) {
+                        Text("🧮 Rechenweg mit Volt", fontWeight = FontWeight.Black)
+                    }
+                }
                 Formula(level, values)
                 level.params.forEachIndexed { i, p ->
                     ParamRow(p, values.getValue(p.key), paramColors[i % paramColors.size], enabled = phase == Phase.AIM) { nv ->
@@ -293,6 +308,7 @@ fun LevelScreen(
                 onNext = onNext, onBack = onBack)
         }
 
+        if (walkOpen && steps != null) WalkthroughOverlay(level, steps, walkVoltSolves) { walkOpen = false }
         if (intro) IntroOverlay(chapter) { intro = false; onIntroSeen() }
     }
 }

@@ -191,6 +191,8 @@ class MainActivity : ComponentActivity() {
                     } },
                     onBack = { nav.popSafe() },
                     header = if (de.kurvenflug.core.model.Learning.isReview(level.id)) "🔁 Auffrischen · ${chapter.emoji} ${chapter.title}" else null,
+                    voltSolves = if (vm.settings.walkthroughsSeen(level.kind.name) == 0) 1 else 0,
+                    onWalkthrough = { vm.settings.markWalkthrough(level.kind.name) },
                 )
             }
             composable(Routes.BOSS, arguments = listOf(navArgument("chapter") { type = NavType.IntType })) { e ->

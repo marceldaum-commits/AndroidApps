@@ -15,6 +15,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 - Volt gibt nach Fehlversuchen konkrete Rückmeldung mit Zahlen, ab dem zweiten Fehlversuch einen Rechentipp.
 - Treffer zählen bei Funktionskurven nur, wenn y an der Stelle der Station stimmt; nach einem Fehlversuch zeigt ein
   gelber Pfeil den Abstand („2 zu tief“). Ein Test stellt sicher, dass nur wenige Reglerstellungen treffen (Raten reicht nicht).
+- Ab dem 3. Fehlversuch: Rechenweg mit Volt – jedes Zwischenergebnis antippen (42 Level, jeder Rechenweg wird gegen
+  die Lösung geprüft). Beim ersten Mal je Bahnart rechnet Volt den ersten Schritt vor, danach das Kind allein.
 - Lernstand: je Thema „Neu“, „Übt noch“, „Sicher“; geschaffte Themen kommen nach 2 bzw. 7 Tagen als „Auffrischen“ zurück.
 - Alle Level werden in Tests mit ihrer Lösung durchgeflogen (lösbar, Lösung liegt auf dem Regler-Raster, Startwerte lösen nicht,
   alle Energiezellen erreichbar). Die Wurfweite wird gegen `v²·sin(2α)/g` geprüft.
@@ -35,7 +37,7 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/33_logarithmus.png) | ![](screenshots/34_weg_zeit.png) | ![](screenshots/35_lexikon.png) |
 | ![](screenshots/36_werkstatt.png) | ![](screenshots/37_laser_zielen.png) | ![](screenshots/38_abstand_pfeil.png) |
 | ![](screenshots/39_trig_laser.png) | ![](screenshots/40_trig_funk.png) | ![](screenshots/41_lernstand.png) |
-| ![](screenshots/11_einstellungen.png) | | |
+| ![](screenshots/42_rechenweg.png) | ![](screenshots/11_einstellungen.png) | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

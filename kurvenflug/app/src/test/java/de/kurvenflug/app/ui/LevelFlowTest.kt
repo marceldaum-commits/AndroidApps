@@ -46,6 +46,43 @@ class LevelFlowTest {
         assertEquals(1, solved.size)
     }
 
+    /** Rechenweg erst nach dem 3. Fehlversuch; durchrechnen, Regler stellen, Treffer. Volt rechnet beim ersten Mal vor. */
+    @Test fun walkthroughAppearsAfterThirdMissAndLeadsToTheSolution() {
+        val l = Levels.byId("3-1")!! // y = x² + e durch (2 | 1), Start e = 0
+        var opened = 0; var solvedStars = 0
+        rule.setContent { KurvenflugTheme { Surface(color = Q.Space) {
+            LevelScreen(l, Levels.chapters.first { it.number == 3 }, Q.Cyan, false, {}, { s, _, _ -> solvedStars = s }, null, {},
+                voltSolves = 1, onWalkthrough = { opened++ })
+        } } }
+        rule.mainClock.advanceTimeBy(1000)
+        repeat(3) { n ->
+            rule.onNodeWithText("🧮 Rechenweg mit Volt").assertDoesNotExist()
+            rule.onNodeWithText("🚀 Start").performClick()
+            rule.mainClock.advanceTimeBy(4000)
+        }
+        rule.onNodeWithText("🧮 Rechenweg mit Volt").performClick()
+        rule.mainClock.advanceTimeBy(800)
+        assertEquals(1, opened)
+        // Schritt 1 hat Volt vorgerechnet; falsch tippen → bleibt stehen, richtig → weiter
+        rule.onNodeWithText("Schritt 2 von 3").assertExists()
+        rule.onNodeWithText("5").performClick()
+        rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithText("Schritt 2 von 3").assertExists()
+        rule.onAllNodesWithText("4").filterToOne(hasClickAction()).performClick()
+        rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithText("Schritt 3 von 3").assertExists()
+        rule.onNodeWithText("−3").performClick()
+        rule.mainClock.advanceTimeBy(800)
+        rule.onNodeWithText("e = −3", substring = true).assertExists()
+        rule.onNodeWithText("🚀 Los geht's – Regler einstellen").performClick()
+        rule.mainClock.advanceTimeBy(500)
+        // Regler selbst einstellen: e von 0 auf −3
+        repeat(3) { rule.onAllNodesWithText("−")[0].performClick() }
+        rule.onNodeWithText("🚀 Start").performClick()
+        rule.mainClock.advanceTimeBy(4000)
+        assertEquals(1, solvedStars)
+    }
+
     @Test fun stormEndsOnFirstMissAndReportsWaves() {
         var reported = -1
         rule.setContent { KurvenflugTheme { Surface(color = Q.Space) {

@@ -27,6 +27,9 @@ class Settings(ctx: Context) {
     /** Kapitel-Erklärung schon gesehen? */
     fun introSeen(chapter: Int) = prefs.getBoolean("intro_$chapter", false)
     fun markIntroSeen(chapter: Int) = prefs.edit().putBoolean("intro_$chapter", true).apply()
+    /** Wie oft der Rechenweg für eine Bahnart schon geöffnet wurde (beim ersten Mal rechnet Volt einen Schritt vor) */
+    fun walkthroughsSeen(kind: String) = prefs.getInt("walk_$kind", 0)
+    fun markWalkthrough(kind: String) = prefs.edit().putInt("walk_$kind", walkthroughsSeen(kind) + 1).apply()
 
     /** Werkstatt: Form, Spur, Volts Hut (Indizes in Workshop.*) */
     private val _look = MutableStateFlow(Triple(prefs.getInt("shape", 0), prefs.getInt("trail", 0), prefs.getInt("hat", 0)))

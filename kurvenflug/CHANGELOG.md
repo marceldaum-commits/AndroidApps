@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.7.0 – Rechenweg mit Volt
+- **🧮 Rechenweg zum Mitrechnen**: Klappt es dreimal nicht, rechnet Volt mit dir Schritt für Schritt – du tippst jedes
+  Zwischenergebnis selbst an. Beim ersten Mal rechnet Volt einen Schritt vor, danach rechnest du allein.
+  Den Regler stellst du am Ende selbst ein. Für 42 Level, von Geraden über Pythagoras bis Trigonometrie.
+- Im Duell, im Sturm und beim Boss gibt es keinen Rechenweg – da zählt dein eigener Kopf.
+
 ## 0.6.0 – Trigonometrie, Lernstand & Auffrischen
 - **📐 Neues Kapitel „Trigonometrie“ (Klasse 9–10)**: Mit tan⁻¹ den Laserwinkel ausrechnen, mit sin und cos den Funkradius.
   Volt zeichnet das rechtwinklige Dreieck mit allen Seiten ins Spielfeld. Taschenrechner erlaubt! 7 neue Level.

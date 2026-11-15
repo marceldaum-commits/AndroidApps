@@ -183,6 +183,12 @@ class ScreenshotTest {
         }
     }
 
+    /** Rechenweg: Volt hat den ersten Schritt vorgerechnet, das Kind ist beim zweiten. */
+    @Test fun walkthrough() = shot("42_rechenweg") {
+        val l = Levels.byId("3-1")!!
+        de.kurvenflug.app.ui.flight.WalkthroughOverlay(l, de.kurvenflug.core.model.Walkthrough.of(l)!!, voltSolves = 1) {}
+    }
+
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 

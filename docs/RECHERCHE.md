@@ -78,4 +78,5 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
 - Folgerung für Kurvenflug: geschaffte Themen kommen nach 2 (wackelig) bzw. 7 Tagen (sicher) als kurzes
   „Auffrischen“-Level zurück, ohne Druck; nach einem Fehlversuch zeigt ein Pfeil an der Station genau den Abstand
   („2 zu tief“) – Rückmeldung macht Üben erst wirksam; Lernstand-Seite erklärt Eltern in drei Sätzen, was passiert.
-  Nächster Schritt: Volts Tipp nach dem 3. Fehlversuch als Lösungsweg zum Mitrechnen (ausgeblendete Schritte).
+  Umgesetzt in 0.7.0: Rechenweg nach dem 3. Fehlversuch, Zwischenergebnisse antippen, beim ersten Mal je Bahnart
+  rechnet Volt einen Schritt vor (Ausblenden); falsche Auswahlen sind typische Fehler (Vorzeichen, ±1, verdoppelt).
