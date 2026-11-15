@@ -301,21 +301,23 @@ makers.axes2d = (s) => {
   const g = new THREE.Group(), o = V(s.p), [sx, sy] = s.d, [[x0, x1], [y0, y1]] = s.corners;
   const P = (x, y) => new THREE.Vector3(o.x + x * sx, o.y + y * sy, o.z);
   const yx = Math.min(Math.max(0, x0), x1);                       // die y-Achse steht bei x = 0, sonst am Rand
-  const step = (k) => [1, 2, 5, 10, 20, 50].find((n) => n * k >= 0.55) ?? 100;
+  // Schrittweite der Beschriftung: 1, 2 oder 5 mal Zehnerpotenz – so passt jeder Maßstab (auch 0,1 oder 500)
+  const step = (k, gap) => { for (let p = -4; p <= 8; p++) for (const m of [1, 2, 5]) { const n = m * 10 ** p; if (n * k >= gap) return n; } return 1e9; };
+  const fmt = (v) => String(Number(v.toPrecision(6))).replace('-', '−').replace('.', ',');
   const main = [], grid = [], ex = 0.45 / sx, ey = 0.45 / sy;
   main.push(P(x0 - ex * 0.5, 0), P(x1 + ex, 0), P(yx, y0 - ey * 0.5), P(yx, y1 + ey));
   const mkTip = (p, up) => { const t = new THREE.Mesh(new THREE.ConeGeometry(0.08, 0.26, 12), new THREE.MeshBasicMaterial({ color: hdr('white', 1.2) })); t.position.copy(p); if (!up) t.rotation.z = -Math.PI / 2; g.add(t); };
   mkTip(P(x1 + ex, 0), false); mkTip(P(yx, y1 + ey), true);
   const name = (t, p) => { const l = label(t, '#ffffff', 0.95, false); l.position.copy(p); g.add(l); };
   name('x', P(x1 + ex, 0).add(new THREE.Vector3(0.1, -0.38, 0))); name('y', P(yx, y1 + ey).add(new THREE.Vector3(-0.38, 0.05, 0)));
-  const num = (v, p) => { const l = label(String(v).replace('-', '−'), '#dfe6ff', 0.62, false); l.material.opacity = 0.9; l.position.copy(p); g.add(l); };
-  const dx = step(sx), dy = step(sy);
-  for (let x = Math.ceil(x0 / dx) * dx; x <= x1; x += dx) {
+  const num = (v, p) => { const l = label(fmt(v), '#dfe6ff', 0.62, false); l.material.opacity = 0.9; l.position.copy(p); g.add(l); };
+  const dx = step(sx, 0.9), dy = step(sy, 0.55);   // Zahlen an der x-Achse sind breiter und brauchen mehr Abstand
+  for (let i = Math.ceil(x0 / dx - 1e-9); i * dx <= x1 + 1e-9; i++) { const x = i * dx;
     if (x !== yx) grid.push(P(x, y0), P(x, y1));
     main.push(P(x, 0).add(new THREE.Vector3(0, -0.09, 0)), P(x, 0).add(new THREE.Vector3(0, 0.09, 0)));
     if (x !== 0) num(x, P(x, 0).add(new THREE.Vector3(0, -0.34, 0)));
   }
-  for (let y = Math.ceil(y0 / dy) * dy; y <= y1; y += dy) {
+  for (let i = Math.ceil(y0 / dy - 1e-9); i * dy <= y1 + 1e-9; i++) { const y = i * dy;
     if (y !== 0) grid.push(P(x0, y), P(x1, y));
     main.push(P(yx, y).add(new THREE.Vector3(-0.09, 0, 0)), P(yx, y).add(new THREE.Vector3(0.09, 0, 0)));
     if (y !== 0) num(y, P(yx, y).add(new THREE.Vector3(-0.36, 0, 0)));

@@ -97,6 +97,11 @@ class Settings(ctx: Context) {
         get() = prefs.getString("show", "") ?: ""
         set(v) = prefs.edit().putString("show", v).apply()
 
+    /** Kurve abfahren: die zuletzt gebaute eigene Funktion („Term|von|bis“) */
+    var ride: String
+        get() = prefs.getString("ride", "") ?: ""
+        set(v) = prefs.edit().putString("ride", v).apply()
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

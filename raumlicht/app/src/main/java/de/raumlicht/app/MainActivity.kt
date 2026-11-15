@@ -239,7 +239,7 @@ class MainActivity : ComponentActivity() {
             }
             composable(Routes.CLASS) { ClassScreen({ l, s, a -> vm.record(l.id, s, a) }) { nav.popSafe() } }
             composable(Routes.MATCH) { MatchScreen({ nav.popSafe() }) }
-            composable(Routes.RIDE) { e -> RideScreen({ nav.popSafe() }, e.arguments?.getString("id") ?: Coaster.rides.first().id) }
+            composable(Routes.RIDE) { e -> RideScreen({ nav.popSafe() }, e.arguments?.getString("id") ?: Coaster.rides.first().id, custom = vm.settings.ride, onCustom = { vm.settings.ride = it }) }
             composable(Routes.LAGE) { LageScreen(lageBest, vm.settings::recordLage, { nav.popSafe() }) }
             composable(Routes.DUEL) { DuelScreen({ nav.popSafe() }) }
             composable(Routes.TRAINING) {

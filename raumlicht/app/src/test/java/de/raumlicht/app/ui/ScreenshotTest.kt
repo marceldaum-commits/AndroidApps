@@ -168,6 +168,10 @@ class ScreenshotTest {
         it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("zeige-ableitung").performClick(); it.onNodeWithTag("zeige-flaeche").performClick()
         it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.65f) }
     }) { de.raumlicht.app.ui.home.RideScreen({}, "doppel") }
+    @Test fun ownRide() = shot("64_eigene_funktion", "eigene", prepare = {
+        it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.35f) }
+    }) { de.raumlicht.app.ui.home.RideScreen({}, de.raumlicht.core.model.Coaster.CUSTOM, custom = "e^(-0,3x)*sin(3x)|0|8") }
+    @Test fun ownRideEditor() = shot("65_eigene_funktion_eingabe", "eigene-pol", prepare = { it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("eigene-aendern").performClick() }) { de.raumlicht.app.ui.home.RideScreen({}, de.raumlicht.core.model.Coaster.CUSTOM, custom = "1/x|-2|2") }
     @Test fun diary() = shot("59_fehler_tagebuch", "start") {
         de.raumlicht.app.ui.home.DiaryScreen(listOf(
             de.raumlicht.app.ui.home.DiaryEntry(4, "2-1", "Du hast A − B gerechnet. Es heißt Spitze minus Fuß: B − A – alle Vorzeichen drehen sich um."),

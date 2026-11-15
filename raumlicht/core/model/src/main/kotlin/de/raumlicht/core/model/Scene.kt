@@ -51,7 +51,7 @@ object Stage {
      * eine Einheit ist [sx] breit und [sy] hoch. Beschriftet wird in Einheiten der Funktion – so stimmt, was man abliest.
      */
     fun axes2d(ox: Double, oz: Double, sx: Double, sy: Double, from: Double, to: Double) = Obj("achsen", "axes2d", p = listOf(4.0, ox, oz), d = listOf(sx, sy, 0.0),
-        corners = listOf(listOf(kotlin.math.floor(from), kotlin.math.ceil(to)), listOf(-kotlin.math.floor((oz - 0.15) / sy), kotlin.math.floor((6.4 - oz) / sy))))
+        corners = listOf(listOf(kotlin.math.floor(from), kotlin.math.ceil(to)), listOf(-(oz - 0.15) / sy, (6.4 - oz) / sy)))
 
     fun point(id: String, p: V3, color: String = "yellow", label: String? = null, style: String = "orb", guides: Boolean = false, drop: Boolean = true) =
         Obj(id, "point", p = p.list, color = color, label = label, style = style, guides = guides, drop = drop)

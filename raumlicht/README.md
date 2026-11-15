@@ -80,6 +80,11 @@ in älteren Abschnitten dieses READMEs stehen teils noch die früheren Namen (Gi
 | ![](screenshots/58_ableitung_und_flaeche.png) | ![](screenshots/59_fehler_tagebuch.png) | ![](screenshots/60_kalender.png) |
 | ![](screenshots/61_ohne_hilfsmittel.png) | ![](screenshots/62_lux_fuehrt_vor.png) | ![](screenshots/63_widget_lernstand.png) |
 
+Seit 0.6.0: eigene Funktionen in „Kurve abfahren“ (`Expr` liest den Term, `Coaster.custom` baut Bahn, Maßstab und besondere Stellen).
+
+| ![](screenshots/64_eigene_funktion.png) | ![](screenshots/65_eigene_funktion_eingabe.png) |
+|---|---|
+
 Querformat: ![](screenshots/48_querformat.png)
 
 ## Aufbau

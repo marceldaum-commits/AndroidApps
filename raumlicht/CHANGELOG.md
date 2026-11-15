@@ -2,6 +2,16 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 0.6.0 – Eigene Funktionen abfahren (15.11.2026)
+- **✏️ Eigene Funktion:** In „Kurve abfahren“ kannst du jetzt einen beliebigen Term eintippen – z. B. `x^3-3x`, `2sin(x)`, `e^(-x)*cos(3x)`, `√(x+1)` –
+  und den Abschnitt von–bis wählen. Die App baut daraus die Bahn; der Maßstab passt sich an, das Achsenkreuz zeigt die echten Werte.
+- **Wichtige Stellen automatisch:** Nullstellen, Hoch- und Tiefpunkte und Wendepunkte werden gesucht, beschildert und beim Vorbeifahren gemeldet.
+  Höhe, Steigung, Krümmung, f′ als zweite Bahn und die Fläche funktionieren wie bei den fertigen Bahnen.
+- **Tempo einstellen:** 🐢 ½×, 1×, 🚀 2× oder ⚡ 4× – für alle Bahnen.
+- **Beliebig weit fahren:** „⏩ nächster Abschnitt“ hängt den nächsten gleich langen Abschnitt nahtlos an.
+- Tasten für x, ^, ², Klammern, sin, cos, √, e^, ln, π. Tippfehler werden erklärt; Polstellen werden abgeschnitten und angezeigt.
+  Die zuletzt gebaute Funktion bleibt gespeichert.
+
 ## 0.5.4 – Lux tut, wonach gefragt ist (15.11.2026)
 - **Stochastik: Aktion passt zur Frage.** Nach der Lösung spielt Lux genau das nach, worum es ging, und sagt dazu, was passiert:
   - *mit Zurücklegen:* ziehen – zurücklegen – noch einmal ziehen; es bleiben immer alle Kugeln da.

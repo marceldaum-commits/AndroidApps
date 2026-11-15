@@ -142,4 +142,44 @@ class PlayFlowTest {
         val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
         val s = de.raumlicht.core.data.Settings(ctx); assertEquals(100, s.volume.value); s.setVolume(130); assertEquals(100, s.volume.value); s.setVolume(35); assertEquals(35, de.raumlicht.core.data.Settings(ctx).volume.value)
     }
+
+    @Test fun ownFunctionCanBeTypedBuiltAndContinued() {
+        var stored = ""
+        show { RideScreen({}, controller = stage, onCustom = { stored = it }) }
+        rule.onNodeWithTag("bahn-eigene").performClick(); rule.mainClock.advanceTimeBy(400)
+        rule.onNodeWithTag("eigene-eingabe").performTextReplacement("2*(x+1"); rule.onNodeWithTag("eigene-bauen").performClick(); rule.mainClock.advanceTimeBy(400)
+        rule.onNodeWithTag("eigene-fehler").assertTextEquals("Hier fehlt eine schließende Klammer.")                 // Fehler wird erklärt, nichts gebaut
+        assertEquals("", stored)
+        rule.onNodeWithTag("eigene-eingabe").performTextReplacement("x^2-"); rule.onNodeWithTag("taste-x").performClick()   // Tasten für schwer zu findende Zeichen
+        rule.onNodeWithTag("von-plus").performClick(); rule.onNodeWithTag("bis-plus").performClick(); rule.onNodeWithTag("bis-plus").performClick()   // Abschnitt −1 bis 4
+        rule.onNodeWithTag("eigene-bauen").performClick(); rule.mainClock.advanceTimeBy(600)
+        assertEquals("x^2-x|-1|4", stored)
+        rule.onNodeWithTag("term").assertTextEquals("f(x) = x²−x  ·  −1 bis 4"); rule.onNodeWithTag("eigene-eingabe").assertDoesNotExist()
+        assertTrue(stage.lastState!!.contains("\"type\":\"axes2d\"") && stage.lastState!!.contains("\"label\":\"N\"") && stage.lastState!!.contains("\"label\":\"T\""))
+        slide("fahrt-regler", 0.3f)                                                                                      // x = 0,5: Tiefpunkt
+        rule.onNodeWithText("Tiefpunkt bei x = 0,5").assertExists(); rule.onNodeWithText("→ 0").assertExists()
+        rule.onNodeWithTag("weiter-abschnitt").performClick(); rule.mainClock.advanceTimeBy(600)                         // nahtlos weiter: 4 bis 9
+        assertEquals("x^2-x|4|9", stored); rule.onNodeWithTag("term").assertTextEquals("f(x) = x²−x  ·  4 bis 9")
+        rule.onNodeWithText("12").assertExists()                                                                         // Start des neuen Abschnitts: f(4) = 12
+        rule.onNodeWithTag("eigene-aendern").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("eigene-eingabe").assertExists()
+    }
+
+    @Test fun ownFunctionIsRememberedAndPolesAreFlagged() {
+        show { RideScreen({}, de.raumlicht.core.model.Coaster.CUSTOM, controller = stage, custom = "1/x|-2|2") }
+        rule.onNodeWithTag("abgeschnitten").assertExists(); rule.onNodeWithTag("term").assertTextEquals("f(x) = 1/x  ·  −2 bis 2")       // steht sofort wieder da
+        rule.onNodeWithTag("eigene-aendern").performClick(); rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithTag("von").assertTextEquals("−2"); rule.onNodeWithTag("bis").assertTextEquals("2")
+    }
+
+    @Test fun rideSpeedCanBeChanged() {
+        show { RideScreen({}, "huegel", controller = stage) }
+        fun runFor(ms: Long): Double { rule.mainClock.autoAdvance = false; rule.onNodeWithTag("fahren").performClick(); rule.mainClock.advanceTimeBy(ms); rule.onNodeWithTag("fahren").performClick(); rule.mainClock.advanceTimeBy(100)
+            rule.mainClock.autoAdvance = true; return Regex("u:([0-9.E-]+)").find(stage.lastRide!!)!!.groupValues[1].toDouble() }
+        val normal = runFor(1000)
+        slide("fahrt-regler", 0f)
+        rule.onNodeWithText("Tempo 1×").assertExists(); rule.onNodeWithTag("tempo").performClick(); rule.onNodeWithTag("tempo").performClick(); rule.onNodeWithText("⚡ 4×").assertExists()
+        val fast = runFor(1000)
+        assertTrue("$normal $fast", fast > normal * 2.5)
+        rule.onNodeWithTag("tempo").performClick(); rule.onNodeWithText("🐢 ½×").assertExists()
+    }
 }
