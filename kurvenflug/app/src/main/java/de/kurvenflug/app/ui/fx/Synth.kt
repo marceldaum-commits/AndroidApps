@@ -10,7 +10,7 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 /** Alle Geräusche – im Code erzeugt, keine Audiodateien, keine Lizenzen. Elektronisch, passend zum All. */
-enum class Sound { TAP, TICK, LAUNCH, HIT, CELL, CRASH, WIN, WRONG, BEEP }
+enum class Sound { TAP, TICK, LAUNCH, HIT, CELL, CRASH, WIN, WRONG, BEEP, VOICE }
 
 object Synth {
     const val SR = 44100
@@ -39,6 +39,8 @@ object Synth {
         Sound.WRONG -> buf(0.35).also {
             sweep(it, 0.0, 330.0, 160.0, 0.28, 0.5, square = true)
         }
+        // Eine Silbe von Volts Plapper-Stimme (Tonhöhe wird beim Abspielen pro Silbe verändert)
+        Sound.VOICE -> buf(0.09).also { sweep(it, 0.0, 520.0, 610.0, 0.07, 0.3, square = true); sweep(it, 0.0, 1040.0, 1220.0, 0.06, 0.12) }
         // Volt „spricht“: kurze Roboter-Piepser
         Sound.BEEP -> buf(0.3).also {
             val r = Random(5)

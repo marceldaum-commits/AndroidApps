@@ -3,6 +3,14 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.12.0 – Volt wird lebendig
+- **🤖 Volt spricht**: Er plappert jetzt in Roboter-Sprache, wenn er etwas sagt. (Einstellungen → „Volt-Stimme“ zum Abschalten.)
+- **😴 Volt hat Launen**: Abends ist er müde und schlägt vor, bald ins Bett zu gehen. Nach ein paar Tagen Pause freut er sich
+  riesig, dass du wieder da bist. Und bei 3 ⭐ macht er einen Freudentanz!
+- **📒 Sticker sammeln**: Nach geschafften Leveln gibt es manchmal einen Überraschungs-Sticker – 24 Stück, manche selten oder
+  super-selten, und ganz selten mit Glitzer ✨. Mit 3 ⭐ öfter. Das Album findest du unter 🎒 Ich.
+- **📸 Fotomodus**: Deine schönste Flugbahn als Bild teilen – direkt nach dem Treffer.
+
 ## 0.11.0 – Die Reise der Aurora
 - **🛸 Eine Geschichte für die ganze Galaxie**: Volts Mutterschiff, die Aurora, ist in einem Meteoritensturm zerbrochen.
   Auf jedem der 18 Planeten treibt ein Bauteil – schaffst du ein Kapitel ganz, bringst du es zurück!

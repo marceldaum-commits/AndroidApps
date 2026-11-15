@@ -81,6 +81,10 @@ fun HomeScreen(
     /** Story: gefundene Bauteile der Aurora, Hangar öffnen */
     partsFound: Int = 0,
     onHangar: (() -> Unit)? = null,
+    /** Volts Begrüßung (Laune + Satz) – sonst die Standard-Begrüßung */
+    greeting: Pair<VoltMood, String>? = null,
+    stickers: Int = 0,
+    onStickers: (() -> Unit)? = null,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(initialTab) }
     var picking by rememberSaveable { mutableStateOf(false) }
@@ -104,8 +108,8 @@ fun HomeScreen(
                                 IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Einstellungen", tint = Q.Muted) }
                             }
                             banner?.invoke()
-                            Volt(if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = 64.dp,
-                                speech = if (stars == 0) "Hey! Ich bin Volt. Bereit für deine erste Mission? 🚀" else "Schon $stars ⭐ gesammelt. Weiter so, Commander!")
+                            Volt(greeting?.first ?: if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = 64.dp,
+                                speech = greeting?.second ?: if (stars == 0) "Hey! Ich bin Volt. Bereit für deine erste Mission? 🚀" else "Schon $stars ⭐ gesammelt. Weiter so, Commander!")
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 Stat("⭐", "$stars / $maxStars", Q.Yellow, Modifier.weight(1f))
                                 Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
@@ -138,7 +142,7 @@ fun HomeScreen(
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("🛸", "Hangar", "$partsFound/${de.kurvenflug.core.model.Story.parts.size} Bauteile", Q.Orange, Modifier.weight(1f)) { onHangar?.invoke() }
-                                Spacer(Modifier.weight(1f))
+                                ModeTile("📒", "Sticker", "$stickers/${de.kurvenflug.core.model.Stickers.all.size}", Q.Pink, Modifier.weight(1f)) { onStickers?.invoke() }
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, Modifier.weight(1f)) { onCodex?.invoke() }

@@ -14,6 +14,21 @@ class Settings(ctx: Context) {
     private val _music = flag("music", true)
     private val _vibration = flag("vibration", true)
     private val _autoUpdate = flag("autoUpdate", true)
+    private val _voltVoice = flag("voltVoice", true)
+    val voltVoice: StateFlow<Boolean> = _voltVoice.asStateFlow()
+    fun setVoltVoice(v: Boolean) { prefs.edit().putBoolean("voltVoice", v).apply(); _voltVoice.value = v }
+
+    /** Tage seit dem letzten Öffnen (für Volts „Da bist du ja wieder!“) – merkt sich gleich das heutige Öffnen. */
+    fun daysSinceLastOpen(now: Long = System.currentTimeMillis()): Int {
+        val last = prefs.getLong("lastOpen", 0L)
+        prefs.edit().putLong("lastOpen", now).apply()
+        return if (last == 0L) 0 else ((now - last) / 86_400_000L).toInt()
+    }
+
+    /** Sticker-Album: Schlüssel „rocket“ bzw. „rocket*“ (Glitzer) */
+    private val _stickers = MutableStateFlow(prefs.getStringSet("stickers", emptySet()).orEmpty().toSet())
+    val stickers: StateFlow<Set<String>> = _stickers.asStateFlow()
+    fun addSticker(key: String) { _stickers.value = _stickers.value + key; prefs.edit().putStringSet("stickers", _stickers.value).apply() }
     val sound: StateFlow<Boolean> = _sound.asStateFlow()
     val music: StateFlow<Boolean> = _music.asStateFlow()
     val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
@@ -108,13 +123,13 @@ class Settings(ctx: Context) {
     fun resetGame() {
         val e = prefs.edit()
         prefs.all.keys.filter { it.startsWith("intro_") || it.startsWith("walk_") }.forEach { e.remove(it) }
-        listOf("grade", "gradeAsked", "shape", "trail", "hat", "skin", "stormBest", "duelWins", "duelsPlayed", "badgesSeen", "detectiveBest", "partsSeen", "storySeen")
+        listOf("grade", "gradeAsked", "shape", "trail", "hat", "skin", "stormBest", "duelWins", "duelsPlayed", "badgesSeen", "detectiveBest", "partsSeen", "storySeen", "stickers")
             .forEach { e.remove(it) }
         e.apply()
         _grade.value = null; _gradeAsked.value = false
         _look.value = Triple(0, 0, 0)
         _stormBest.value = 0; _duelWins.value = 0; _duelsPlayed.value = 0
-        _storySeen.value = false
+        _storySeen.value = false; _stickers.value = emptySet()
     }
 
     var lastUpdateCheck: Long

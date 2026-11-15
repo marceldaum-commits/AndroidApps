@@ -16,6 +16,9 @@ import de.kurvenflug.app.ui.theme.KurvenflugTheme
 import de.kurvenflug.core.model.Levels
 import de.kurvenflug.core.model.Learning
 import de.kurvenflug.core.model.Played
+import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -41,10 +44,11 @@ class ScreenshotTest {
     private val someStars = Levels.all.take(9).mapIndexed { i, l -> l.id to (3 - i % 3) }.toMap() +
         Levels.chapters[1].levels.take(3).associate { it.id to 3 }
 
-    private fun level(id: String, values: Map<String, Double>? = null, prepare: (ComposeContentTestRule) -> Unit = {}, name: String, settle: Long = 1500) {
+    private fun level(id: String, values: Map<String, Double>? = null, prepare: (ComposeContentTestRule) -> Unit = {}, name: String, settle: Long = 1500,
+                      reward: ((Int) -> de.kurvenflug.core.model.StickerDrop?)? = null) {
         val l = Levels.byId(id)!!
         shot(name, settle, prepare) {
-            LevelScreen(l, Levels.chapters.first { it.number == l.chapter }, Q.Cyan, false, {}, { _, _, _ -> }, {}, {}, values)
+            LevelScreen(l, Levels.chapters.first { it.number == l.chapter }, Q.Cyan, false, {}, { _, _, _ -> }, {}, {}, values, onReward = reward)
         }
     }
 
@@ -231,6 +235,23 @@ class ScreenshotTest {
     }
 
     @Test fun storyIntro() = shot("56_geschichte") { de.kurvenflug.app.ui.story.StoryIntroOverlay {} }
+
+    @Test fun stickerAlbum() = shot("57_sticker") {
+        de.kurvenflug.app.ui.collection.StickerAlbum(setOf("rocket", "star", "moon", "comet*", "planet", "alien", "robot", "unicorn*", "sat")) {}
+    }
+
+    /** Volt schläft abends und tanzt bei 3 ⭐; Ergebnis mit Sticker und Foto-Knopf */
+    @Test fun voltMoods() = shot("58_volt_launen") {
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.fillMaxSize().padding(16.dp), verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(24.dp)) {
+            de.kurvenflug.app.ui.volt.Volt(de.kurvenflug.app.ui.volt.VoltMood.SLEEP, size = 96.dp,
+                speech = de.kurvenflug.core.model.Greeting.home(22, 0, 12).second)
+            de.kurvenflug.app.ui.volt.Volt(de.kurvenflug.app.ui.volt.VoltMood.HAPPY, size = 96.dp,
+                speech = de.kurvenflug.core.model.Greeting.home(12, 5, 12).second)
+        }
+    }
+
+    @Test fun rewardCard() = level("2-1", name = "59_sticker_gewonnen", values = mapOf("b" to 4.0), settle = 5000,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() }, reward = { de.kurvenflug.core.model.StickerDrop(de.kurvenflug.core.model.Stickers.byId("unicorn")!!, true, true) })
 
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })

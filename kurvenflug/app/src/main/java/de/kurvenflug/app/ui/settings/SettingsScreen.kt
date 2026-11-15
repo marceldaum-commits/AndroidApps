@@ -31,6 +31,7 @@ fun SettingsScreen(
     onBack: () -> Unit,
     /** Neu anfangen: Spielstand löschen (nach 2 s Gedrückthalten) */
     onReset: (() -> Unit)? = null,
+    voltVoice: Boolean = true, onVoltVoice: (Boolean) -> Unit = {},
 ) {
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -45,6 +46,7 @@ fun SettingsScreen(
                     Toggle("🎵 Musik", "Leise Weltraum-Klänge im Hintergrund", music, onMusic)
                     Toggle("🔊 Geräusche", "Start, Treffer, Volts Piepsen", sound, onSound)
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
+                    Toggle("🤖 Volt-Stimme", "Volt plappert in Roboter-Sprache, wenn er spricht", voltVoice, onVoltVoice)
                 }
             }
             ElevatedCard(Modifier.fillMaxWidth()) {

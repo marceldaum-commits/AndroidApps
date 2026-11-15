@@ -17,6 +17,9 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 - Story „Die Reise der Aurora“: Volts Mutterschiff ist zerbrochen, auf jedem Planeten (Kapitel) treibt ein Bauteil. Ein ganz
   geschafftes Kapitel bringt es zurück (Feier + Hangar, in dem das Schiff aus 18 Teilen zusammenwächst). Die Galaxie ist eine
   Sternenkarte mit Pfad, Volts Rakete schwebt beim aktuellen Planeten; Umschalten auf Liste möglich.
+- Volt lebt: plappert in Roboter-Sprache (im Code erzeugt, abschaltbar), schläft abends, freut sich nach einer Pause,
+  tanzt bei 3 ⭐. Überraschungs-Sticker (24, drei Seltenheiten, 10 % Glitzer) nach geschafften Leveln; Fotomodus teilt die
+  Flugbahn als Bild (nur das Bild, keine Daten).
 - Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
@@ -54,7 +57,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/47_widget.png) | ![](screenshots/48_widget_klein.png) | ![](screenshots/49_brueche.png) |
 | ![](screenshots/50_winkel.png) | ![](screenshots/51_lichtbrechung.png) | ![](screenshots/52_nullstellen.png) |
 | ![](screenshots/53_sternenkarte.png) | ![](screenshots/54_hangar.png) | ![](screenshots/55_bauteil_gefunden.png) |
-| ![](screenshots/56_geschichte.png) | | |
+| ![](screenshots/56_geschichte.png) | ![](screenshots/57_sticker.png) | ![](screenshots/58_volt_launen.png) |
+| ![](screenshots/59_sticker_gewonnen.png) | ![](screenshots/60_foto.png) | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

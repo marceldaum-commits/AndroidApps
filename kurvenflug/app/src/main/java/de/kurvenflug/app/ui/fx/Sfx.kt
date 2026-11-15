@@ -45,6 +45,20 @@ class Sfx(context: Context) {
         pool.play(id, volume, volume, 1, 0, pitch.coerceIn(0.5f, 2f))
     }
 
+    /**
+     * Volts Plapper-Stimme: eine kurze Silbe je Wortteil, die Tonhöhe folgt den Vokalen im Text.
+     * Höchstens 14 Silben, damit es niedlich bleibt und nicht nervt.
+     */
+    suspend fun babble(text: String) {
+        if (!enabled) return
+        val vowels = text.lowercase().filter { it in "aeiouäöü" }.take(14)
+        for (c in vowels) {
+            val pitch = when (c) { 'i' -> 1.45f; 'e' -> 1.25f; 'a' -> 1.0f; 'ä' -> 1.15f; 'o' -> 0.85f; 'ö' -> 0.95f; else -> 0.75f }
+            play(Sound.VOICE, pitch, 0.35f)
+            kotlinx.coroutines.delay(75)
+        }
+    }
+
     private companion object { const val VERSION_ = "v1" }
 }
 

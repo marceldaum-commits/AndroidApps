@@ -58,6 +58,7 @@ object Routes {
     const val WORKSHOP = "werkstatt"
     const val LEARN = "lernstand"
     const val HANGAR = "hangar"
+    const val STICKERS = "sticker"
     fun level(id: String) = "level/$id"
 }
 
@@ -106,8 +107,10 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(music) { app.music.setEnabled(music) }
             KurvenflugTheme {
                 val look by vm.settings.look.collectAsStateWithLifecycle()
+                val voltVoice by vm.settings.voltVoice.collectAsStateWithLifecycle()
                 CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration,
-                    de.kurvenflug.app.ui.flight.LocalLook provides look, de.kurvenflug.app.ui.volt.LocalVoltHat provides look.third) {
+                    de.kurvenflug.app.ui.flight.LocalLook provides look, de.kurvenflug.app.ui.volt.LocalVoltHat provides look.third,
+                    de.kurvenflug.app.ui.volt.LocalVoltVoice provides voltVoice) {
                     Surface(Modifier.fillMaxSize(), color = Q.Space) { Nav() }
                 }
             }
@@ -184,6 +187,17 @@ class MainActivity : ComponentActivity() {
                     onLearn = { nav.goOnce(Routes.LEARN) },
                     partsFound = remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars).size },
                     onHangar = { nav.goOnce(Routes.HANGAR) },
+                    greeting = remember(stars) {
+                        val (f, text) = de.kurvenflug.core.model.Greeting.home(java.time.LocalTime.now().hour, vm.daysAway, stars.values.sum())
+                        when (f) {
+                            de.kurvenflug.core.model.Feeling.SLEEPY -> de.kurvenflug.app.ui.volt.VoltMood.SLEEP
+                            de.kurvenflug.core.model.Feeling.MISSED_YOU -> de.kurvenflug.app.ui.volt.VoltMood.DANCE
+                            de.kurvenflug.core.model.Feeling.IDLE -> de.kurvenflug.app.ui.volt.VoltMood.IDLE
+                            else -> de.kurvenflug.app.ui.volt.VoltMood.HAPPY
+                        } to text
+                    },
+                    stickers = vm.settings.stickers.collectAsStateWithLifecycle().value.map { it.removeSuffix("*") }.toSet().size,
+                    onStickers = { nav.goOnce(Routes.STICKERS) },
                     learning = {
                         val now = remember(progress) { System.currentTimeMillis() }
                         val played = remember(progress) { vm.played(progress) }
@@ -216,6 +230,7 @@ class MainActivity : ComponentActivity() {
                     header = if (de.kurvenflug.core.model.Learning.isReview(level.id)) "🔁 Auffrischen · ${chapter.emoji} ${chapter.title}" else null,
                     voltSolves = if (vm.settings.walkthroughsSeen(level.kind.name) == 0) 1 else 0,
                     onWalkthrough = { vm.settings.markWalkthrough(level.kind.name) },
+                    onReward = { s -> vm.rollSticker(s) },
                 )
             }
             composable(Routes.BOSS, arguments = listOf(navArgument("chapter") { type = NavType.IntType })) { e ->
@@ -228,6 +243,10 @@ class MainActivity : ComponentActivity() {
             composable(Routes.DUEL) {
                 val code = remember { incomingDuel.value.also { incomingDuel.value = null } }
                 DuelScreen(probeColor, code, onResult = { vm.settings.recordDuel(it) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.STICKERS) {
+                val owned by vm.settings.stickers.collectAsStateWithLifecycle()
+                de.kurvenflug.app.ui.collection.StickerAlbum(owned) { nav.popSafe() }
             }
             composable(Routes.HANGAR) {
                 de.kurvenflug.app.ui.story.HangarScreen(remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars) }) { nav.popSafe() }
@@ -306,6 +325,7 @@ class MainActivity : ComponentActivity() {
                     update = upd?.let { UpdateState.Available(it) } ?: UpdateState.Idle,
                     onBack = { nav.popSafe() },
                     onReset = vm::resetAll,
+                    voltVoice = vm.settings.voltVoice.collectAsStateWithLifecycle().value, onVoltVoice = vm.settings::setVoltVoice,
                 )
             }
         }

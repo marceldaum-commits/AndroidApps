@@ -76,6 +76,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    /** Tage seit dem letzten Öffnen – einmal beim Start gelesen */
+    val daysAway: Int = settings.daysSinceLastOpen()
+
+    /** Nach einem geschafften Level vielleicht ein Sticker (kommt sofort ins Album) */
+    fun rollSticker(stars: Int): de.kurvenflug.core.model.StickerDrop? =
+        de.kurvenflug.core.model.Stickers.roll(kotlin.random.Random.Default, stars, settings.stickers.value)
+            ?.also { settings.addSticker(de.kurvenflug.core.model.Stickers.key(it.sticker, it.glitter)) }
+
     /** Neu anfangen: Spielstand und Spiel-Einstellungen löschen (Ton & eigene Level bleiben), Widget nachziehen. */
     fun resetAll() {
         viewModelScope.launch {

@@ -75,6 +75,8 @@ fun LevelScreen(
     voltSolves: Int = 0,
     /** Rechenweg geöffnet (für das Ausblenden beim nächsten Mal) */
     onWalkthrough: () -> Unit = {},
+    /** Belohnung nach dem Schaffen: vielleicht ein Sticker (null = in diesem Modus keine) */
+    onReward: ((stars: Int) -> StickerDrop?)? = null,
 ) {
     val sfx = LocalSfx.current
     val view = LocalView.current
@@ -99,6 +101,9 @@ fun LevelScreen(
     var mood by remember(level.id) { mutableStateOf(VoltMood.IDLE) }
     var speech by remember(level.id) { mutableStateOf(level.task) }
     var gap by remember(level.id) { mutableStateOf<Gap?>(null) }
+    var reward by remember(level.id) { mutableStateOf<StickerDrop?>(null) }
+    var winPath by remember(level.id) { mutableStateOf<List<Vec>>(emptyList()) }
+    val ctx = androidx.compose.ui.platform.LocalContext.current
     val steps = remember(level.id) { Walkthrough.of(level) }
     var walkOpen by rememberSaveable(level.id) { mutableStateOf(false) }
     var walkVoltSolves by rememberSaveable(level.id) { mutableIntStateOf(voltSolves) }
@@ -180,8 +185,10 @@ fun LevelScreen(
         if (r.success) {
             stars = Flight.stars(attempt, usedHelp)
             sfx?.play(Sound.WIN)
-            mood = VoltMood.WOW
+            mood = if (stars == 3) VoltMood.DANCE else VoltMood.WOW
             speech = when (stars) { 3 -> "Volltreffer beim ersten Versuch! Genial berechnet! 🤯"; 2 -> "Treffer! Stark! 💪"; else -> "Geschafft! Dranbleiben zahlt sich aus. 🙌" }
+            winPath = r.path
+            reward = onReward?.invoke(stars)
             bursts = bursts + (Burst(Offset(canvasSize.width / 2f, canvasSize.height / 3f), listOf(Q.Pink, Q.Yellow, Q.Cyan, Q.Green), count = 70, speed = 320f, seed = 99, gravity = 400f) to clockF.toLong())
             onSolved(stars, r.cells, attempt)
             phase = Phase.DONE
@@ -300,7 +307,8 @@ fun LevelScreen(
         // Ergebnis
         AnimatedVisibility(phase == Phase.DONE, enter = fadeIn() + scaleIn(initialScale = 0.8f, animationSpec = spring(dampingRatio = 0.6f)), exit = fadeOut(),
             modifier = Modifier.align(Alignment.BottomCenter)) {
-            ResultCard(stars, taken.size + 0, level.cells.size, usedHelp, nextLabel, allowRetry,
+            ResultCard(stars, taken.size + 0, level.cells.size, usedHelp, nextLabel, allowRetry, reward,
+                onPhoto = { runCatching { de.kurvenflug.app.ui.fx.Photo.share(ctx, level, winPath, stars, values) } },
                 onRetry = {
                     phase = Phase.AIM; attempt = 0; usedHelp = false; ghosts = emptyList(); result = null; hits = emptySet(); taken = emptySet()
                     values = HashMap(level.start); mood = VoltMood.IDLE; speech = level.task; gap = null
@@ -436,6 +444,7 @@ private fun Modifier.clickableNoRipple(i: androidx.compose.foundation.interactio
 
 @Composable
 private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean, nextLabel: String, allowRetry: Boolean,
+                       reward: StickerDrop?, onPhoto: () -> Unit,
                        onRetry: () -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit) {
     Card(
         Modifier.padding(16.dp).fillMaxWidth().navigationBarsPadding(),
@@ -453,7 +462,23 @@ private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean,
             }
             if (totalCells > 0) Text("⚡ $cells von $totalCells Energiezellen", color = Q.Yellow, style = MaterialTheme.typography.bodyMedium)
             if (helped && stars == 2) Text("Ohne Zielhilfe gibt's 3 ⭐ – traust du dich?", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
-            Spacer(Modifier.height(12.dp))
+            reward?.let { d ->
+                // Überraschungs-Sticker: ploppt nach den Sternen herein
+                val pop = remember { Animatable(0f) }
+                LaunchedEffect(d) { delay(900); pop.animateTo(1f, spring(dampingRatio = 0.4f)) }
+                Row(Modifier.padding(top = 10.dp).graphicsLayer { scaleX = pop.value; scaleY = pop.value; alpha = pop.value.coerceIn(0f, 1f) },
+                    verticalAlignment = Alignment.CenterVertically) {
+                    de.kurvenflug.app.ui.collection.StickerTile(d.sticker, true, d.glitter, Modifier.width(84.dp))
+                    Spacer(Modifier.width(10.dp))
+                    Column {
+                        Text(if (d.new) "🎁 Neuer Sticker!" else "🎁 Sticker (schon im Album)", color = Q.Yellow, fontWeight = FontWeight.Black)
+                        Text("${d.sticker.name}${if (d.glitter) " ✨ Glitzer!" else ""} · ${d.sticker.rarity.label}", color = Q.Muted,
+                            style = MaterialTheme.typography.bodySmall)
+                    }
+                }
+            }
+            TextButton(onClick = onPhoto) { Text("📸 Flugbahn als Bild teilen", color = Q.Cyan) }
+            Spacer(Modifier.height(4.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (allowRetry) NeonButton(onClick = onRetry, color = Q.Violet) { Text("↻ Nochmal", color = Q.Text) }
                 if (onNext != null) NeonButton(onClick = onNext, color = Q.Green, modifier = Modifier.pulse(true, 0.03f)) { Text(nextLabel, color = Q.Text, fontWeight = FontWeight.Black) }
