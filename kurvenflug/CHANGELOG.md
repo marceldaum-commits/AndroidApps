@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.17.1 – WebApp bleibt von selbst aktuell
+- **🔄 Automatische Updates im Browser**: Die WebApp holt neue Versionen selbst – ohne Knopf. Wer sie gerade öffnet,
+  bekommt sofort die neue Version. Wer mitten im Spiel ist, wird nicht unterbrochen: Gewechselt wird erst, wenn die App
+  kurz im Hintergrund war. Der Spielstand bleibt dabei erhalten.
+
 ## 0.17.0 – Kurvenflug im Browser
 - **🌐 Jetzt auch als WebApp**: Kurvenflug läuft im Browser – am Handy, Tablet und PC, ganz ohne Installation.
   Gleiche Level, gleiche Geschichte, gleiche Version wie die App. Auf dem Handy lässt sie sich wie eine App auf den

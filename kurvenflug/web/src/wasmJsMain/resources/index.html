@@ -50,9 +50,28 @@
       var l = document.getElementById('kf-loader');
       if (l && !l.classList.contains('weg')) l.querySelector('.s').textContent = 'Dauert etwas … Kurvenflug braucht einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).';
     }, 15000);
-    if ('serviceWorker' in navigator) window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js').then(function (r) { r.update(); }).catch(function () {});
-    });
+    // Automatische Updates ohne Knopf: Der Service Worker lädt neue Versionen im Hintergrund.
+    // Übernommen wird sofort, wenn die Seite gerade erst geöffnet wurde – sonst im nächsten ruhigen
+    // Moment (Tab war im Hintergrund), damit niemand mitten im Level unterbrochen wird.
+    // Der Spielstand liegt im Browser-Speicher und bleibt beim Neuladen erhalten.
+    if ('serviceWorker' in navigator) {
+      var kfStart = Date.now(), kfHadController = !!navigator.serviceWorker.controller, kfPending = false, kfReloading = false;
+      function kfReload() { if (!kfReloading) { kfReloading = true; location.reload(); } }
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (!kfHadController) { kfHadController = true; return; }   // allererster Start: nichts neu laden
+        if (document.hidden || Date.now() - kfStart < 15000) kfReload(); else kfPending = true;
+      });
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').then(function (r) {
+          r.update();
+          setInterval(function () { r.update().catch(function () {}); }, 30 * 60 * 1000);
+          document.addEventListener('visibilitychange', function () {
+            if (document.hidden) { if (kfPending) kfReload(); }
+            else r.update().catch(function () {});
+          });
+        }).catch(function () {});
+      });
+    }
   </script>
   <script src="kf.js"></script>
   <script src="kurvenflug.js"></script>
