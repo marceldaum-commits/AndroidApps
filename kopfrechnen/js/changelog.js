@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.13.0';
+const APP_VERSION = '3.13.1';
 const APP_DATE = '2026-11-15';
 const CHANGELOG = [
+  ['3.13.1', '2026-11-15', ['Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde']],
   ['3.13.0', '2026-11-15', ['Android-App: neue Versionen kommen jetzt von selbst – ohne Neuinstallation, der Lernstand bleibt', 'Ohne Internet läuft immer der zuletzt geladene Stand']],
   ['3.12.1', '2026-11-15', ['Abbrechen führt zurück zur Reise-Karte, zum Adventskalender oder zum Merk-Training', 'Zurück-Taste am Handy schließt Fenster und beendet Runden, statt die App zu verlassen', 'Tageschallenge: ein abgebrochener Start zählt nicht mehr als Versuch', 'Viele kleine Verbesserungen: Funken-Anzeige, Rätsel, Garderobe, Zurücksetzen']],
   ['3.12.0', '2026-11-15', ['Neu: Blitz-Welt 💫 – sammle Funken und kauf damit Outfits für Blitz und Deko für sein Zimmer', 'Rätsel des Tages: finde die geheime Blitz-Zahl in 6 Versuchen – mit Mathe-Hinweisen', 'Jahreszeiten-Events mit Sonder-Outfits – jetzt: Pilzhut zur Herbstzeit']],

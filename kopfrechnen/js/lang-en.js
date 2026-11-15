@@ -1441,4 +1441,9 @@ I18N.add('en', {"% sind":"% are",
 "Herunterladen":"Download",
 "Für das nächste Update bitte die App neu installieren":"Please reinstall the app for the next update",
 "Android-App: neue Versionen kommen jetzt von selbst – ohne Neuinstallation, der Lernstand bleibt":"Android app: new versions now arrive by themselves – no reinstall, your progress stays",
-"Ohne Internet läuft immer der zuletzt geladene Stand":"Without internet, the last downloaded version runs"});
+"Ohne Internet läuft immer der zuletzt geladene Stand":"Without internet, the last downloaded version runs",
+"Geladen von:":"Loaded from:",
+"App-Paket":"App package",
+"Kanal":"Channel",
+"Hülle":"Shell",
+"Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde":"Android app: settings now show where the running version was loaded from"});

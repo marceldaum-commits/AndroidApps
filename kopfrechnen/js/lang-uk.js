@@ -1441,4 +1441,9 @@ I18N.add('uk', {"% sind":"% — це",
 "Herunterladen":"Завантажити",
 "Für das nächste Update bitte die App neu installieren":"Для наступного оновлення перевстанови застосунок",
 "Android-App: neue Versionen kommen jetzt von selbst – ohne Neuinstallation, der Lernstand bleibt":"Android-застосунок: нові версії тепер приходять самі – без перевстановлення, прогрес зберігається",
-"Ohne Internet läuft immer der zuletzt geladene Stand":"Без інтернету працює остання завантажена версія"});
+"Ohne Internet läuft immer der zuletzt geladene Stand":"Без інтернету працює остання завантажена версія",
+"Geladen von:":"Завантажено з:",
+"App-Paket":"Пакет застосунку",
+"Kanal":"Канал",
+"Hülle":"Оболонка",
+"Android-App: In den Einstellungen steht jetzt, woher die laufende Version geladen wurde":"Android-застосунок: у налаштуваннях тепер видно, звідки завантажено поточну версію"});

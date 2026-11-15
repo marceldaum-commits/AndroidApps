@@ -4,6 +4,12 @@ Neueste Meldung oben.
 
 > **AKTUELLER STAND (15.11.2026, abends) – für den Leitstand:** Live ist 3.12.1 (b83bcaa, freigegeben). Auf `rechenblitz-test` liegt **3.13.0**: Die Android-App aktualisiert ihre Inhalte selbst (GitHub, Ersatz eigener Server), siehe Meldung (34). Bitte testen und freigeben. Mit der Freigabe auf `rechenblitz-live` bekommt der Live-Kanal neue Stände automatisch.
 
+## 15.11.2026 (35) – Erster Selbst-Update-Test: 3.13.1 (keine neue APK nötig)
+
+- Marcel hat 3.13.0 (Hülle 2) installiert. 3.13.1 ist der erste Stand, den die App **von selbst** von `rechenblitz-test` holen soll.
+- **Inhalt:** In den Einstellungen steht unter „Nach Update suchen“ jetzt „Geladen von: GitHub/Server/App-Paket · Kanal Test/Live · Hülle 2“. So lässt sich die Selbst-Aktualisierung am Gerät kontrollieren.
+- Die Hülle ist unverändert (2), **es braucht keine neue APK**.
+
 ## 15.11.2026 (34) – Android-App aktualisiert ihre Inhalte selbst (3.13.0 · Hülle 2) · NEUE APK INSTALLIEREN (einmalig)
 
 - **Auftrag:** Leitstand, von Marcel am 15.11. bestätigt: „der Updateserver soll der Git sein“.

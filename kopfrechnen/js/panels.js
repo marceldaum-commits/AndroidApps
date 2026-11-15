@@ -102,7 +102,7 @@ const PANELS = {
         <div class="chips" id="langSeg"><button data-v="auto" class="${(ROOT.lang || 'auto') === 'auto' ? 'sel' : ''}">Automatisch</button>${Object.entries(I18N.langs).map(([k, n]) => `<button data-v="${k}" translate="no" class="${ROOT.lang === k ? 'sel' : ''}">${n}</button>`).join('')}</div></div>
       <div class="setrow col"><div><b>Design</b><span>Hell, dunkel oder wie das Gerät</span></div>
         <div class="seg" id="themeSeg">${[['auto', 'Automatisch'], ['light', 'Hell'], ['dark', 'Dunkel']].map(([v, l]) => `<button data-v="${v}" class="${S.settings.theme === v ? 'sel' : ''}">${l}</button>`).join('')}</div></div>
-      ${!IS_NATIVE || CONFIG.apkUpdates ? `<button class="mi" id="btnUpd"><div class="ico">⬆️</div><div><b>Nach Update suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span></div></button>` : ''}
+      ${!IS_NATIVE || CONFIG.apkUpdates ? `<button class="mi" id="btnUpd"><div class="ico">⬆️</div><div><b>Nach Update suchen</b><span>Installiert: Version <span translate="no">${versionLabel()}</span></span><span id="updInfo" style="display:block;font-size:12px"></span></div></button>` : ''}
       <div class="mlabel">Zurücksetzen</div>
       <button class="mi" data-reset="reise"><div class="ico">🗺️</div><div><b>Rechen-Reise neu starten</b><span>Sterne, Sticker und Klassenwahl der Reise löschen</span></div></button>
       <button class="mi" data-reset="merk"><div class="ico">🧠</div><div><b>Merk-Training zurücksetzen</b><span>Merkstärken, Sternenhimmel und Sternbilder löschen</span></div></button>
@@ -273,6 +273,11 @@ function initSettings() {
   $('langSeg').onclick = e => { const b = e.target.closest('button'); if (b) setLanguage(b.dataset.v); };
   $('themeSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.theme = b.dataset.v; save(); applyTheme(); $('themeSeg').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); };
   $('btnUpd') && ($('btnUpd').onclick = checkForUpdate);
+  if (RbUpd()) RbUpd().status().then(u => {   // App: woher der laufende Stand kommt (zur Kontrolle der Selbst-Aktualisierung)
+    const el = $('updInfo'); if (!el || !u) return;
+    const src = u.version && u.version !== u.bundled ? (u.source === 'server' ? 'Server' : 'GitHub') : 'App-Paket';
+    el.innerHTML = `<span>Geladen von:</span> <span translate="no">${esc(src)}</span> · <span>Kanal</span> <span translate="no">${esc(u.channel === 'live' ? 'Live' : 'Test')}</span> · <span>Hülle</span> <span translate="no">${esc(String(u.shell))}</span>`;
+  }).catch(() => {});
   $('sheetBody').querySelectorAll('[data-reset]').forEach(b => b.onclick = () => resetPart(b.dataset.reset));
   $('btnReset').onclick = () => {
     if (!confirm(tr(`Wirklich den gesamten Fortschritt von „${profile().name}“ löschen? Das kann nicht rückgängig gemacht werden.`))) return;
