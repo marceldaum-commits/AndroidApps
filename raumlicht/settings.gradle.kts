@@ -12,6 +12,8 @@ dependencyResolutionManagement {
         google()
         maven("https://maven-central.storage-download.googleapis.com/maven2/")
         mavenCentral()
+        // nur für die Sprach-Bibliothek sherpa-onnx (natürliche Stimme für Lux)
+        maven("https://jitpack.io") { content { includeGroup("com.github.k2-fsa.sherpa-onnx") } }
     }
 }
 rootProject.name = "Raumlicht"

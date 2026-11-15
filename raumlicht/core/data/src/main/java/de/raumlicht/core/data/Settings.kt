@@ -32,6 +32,10 @@ class Settings(ctx: Context) {
     var voiceName: String
         get() = prefs.getString("voiceName", "") ?: ""
         set(v) = prefs.edit().putString("voiceName", v).apply()
+    /** Natürliche Stimme (geladenes Stimm-Paket) statt der Handy-Stimme benutzen */
+    var voiceNatural: Boolean
+        get() = prefs.getBoolean("voiceNatural", false)
+        set(v) = prefs.edit().putBoolean("voiceNatural", v).apply()
     var voiceBright: Boolean
         get() = prefs.getBoolean("voiceBright", false)
         set(v) = prefs.edit().putBoolean("voiceBright", v).apply()

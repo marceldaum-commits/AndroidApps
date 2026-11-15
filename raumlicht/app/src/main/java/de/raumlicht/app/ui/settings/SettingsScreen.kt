@@ -57,7 +57,7 @@ fun SettingsScreen(
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Datenschutz & Inhalte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     Text("Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
-                        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar). Lux spricht mit der Sprachausgabe deines Geräts.", style = MaterialTheme.typography.bodySmall)
+                        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und einmalig, wenn du die natürliche Stimme lädst. Gesprochen wird immer auf dem Gerät.", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Mathematik der Oberstufe. Analytische Geometrie – Punkte und Vektoren im Raum, Geraden in Parameterform, " +
                         "Lagebeziehungen, Ebenen in Koordinatenform, Durchstoßpunkte, Normalenvektor, Skalarprodukt, Lotfußpunkt, " +
                         "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen, Bewegungsaufgaben; dazu Analysis (Funktionen, Ableitung, Kurvendiskussion, Integral, Rotationskörper) und Stochastik (Laplace, Pfadregel, Vierfeldertafel, Binomialverteilung). Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)
@@ -105,5 +105,34 @@ fun VoiceControls(position: Pair<Int, Int>, bright: Boolean, onNext: () -> Unit,
         }
         Text("Klingt es noch nach Automat? Dann liegt es an der Stimme des Handys. Bessere gibt es in den Android-Einstellungen unter " +
             "„Sprachausgabe“ → Einstellungen der Sprachausgabe → „Sprachdaten installieren“ → Deutsch.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+    }
+}
+
+/** Natürliche Stimme: einmal laden (freiwillig), danach ein- und ausschalten oder wieder entfernen. */
+@Composable
+fun NaturalVoiceCard(state: de.raumlicht.app.ui.fx.PackState, active: Boolean, problem: String?, onLoad: () -> Unit, onCancel: () -> Unit, onRemove: () -> Unit, onUse: (Boolean) -> Unit) {
+    Column(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text("✨ Natürliche Stimme „Thorsten“", style = MaterialTheme.typography.bodyLarge)
+        when (state) {
+            de.raumlicht.app.ui.fx.PackState.Ready -> {
+                Text(problem ?: if (active) "Lux spricht mit der natürlichen Stimme – ganz ohne Internet." else "Geladen. Schalte sie ein, damit Lux so spricht.", Modifier.testTag("stimme-status"),
+                    style = MaterialTheme.typography.bodySmall, color = if (problem != null) Q.Orange else if (active) Q.Green else Q.Muted)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    OutlinedButton({ onUse(!active) }, Modifier.testTag("stimme-nutzen")) { Text(if (active) "Handy-Stimme nehmen" else "Einschalten") }
+                    OutlinedButton(onRemove, Modifier.testTag("stimme-entfernen")) { Text("Entfernen (${de.raumlicht.app.ui.fx.VoicePack.MB} MB frei)") }
+                }
+            }
+            is de.raumlicht.app.ui.fx.PackState.Loading -> {
+                Text("Lädt … ${state.percent} %", Modifier.testTag("stimme-status"), style = MaterialTheme.typography.bodySmall, color = Q.Cyan)
+                LinearProgressIndicator({ state.percent / 100f }, Modifier.fillMaxWidth())
+                OutlinedButton(onCancel, Modifier.testTag("stimme-abbrechen")) { Text("Abbrechen") }
+            }
+            else -> {
+                Text((state as? de.raumlicht.app.ui.fx.PackState.Failed)?.let { "Das hat nicht geklappt: ${it.why}" }
+                    ?: "Klingt viel weniger nach Automat und rechnet auf dem Handy. Einmaliger Download von ${de.raumlicht.app.ui.fx.VoicePack.MB} MB (am besten im WLAN), danach ohne Internet.",
+                    Modifier.testTag("stimme-status"), style = MaterialTheme.typography.bodySmall, color = if (state is de.raumlicht.app.ui.fx.PackState.Failed) Q.Orange else Q.Muted)
+                OutlinedButton(onLoad, Modifier.testTag("stimme-laden")) { Text("Stimme laden (${de.raumlicht.app.ui.fx.VoicePack.MB} MB)") }
+            }
+        }
     }
 }

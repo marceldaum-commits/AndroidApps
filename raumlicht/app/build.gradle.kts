@@ -17,11 +17,13 @@ android {
     compileSdk = 36
 
     defaultConfig {
+        // Die Sprach-Bibliothek bringt Maschinencode mit – nur für die Prozessoren echter Handys einpacken (sonst wird die App unnötig groß)
+        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
         applicationId = "de.raumlicht.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 30
-        versionName = "2.3.3"
+        versionCode = 31
+        versionName = "2.4.0"
         // Update-Knopf (lädt neue Versionen aus GitHub Releases). Für den Play Store auf false setzen –
         // dort kommen Updates über den Store, und die Installations-Berechtigung ist nicht erlaubt.
         buildConfigField("boolean", "SELF_UPDATE", "true")
@@ -73,7 +75,12 @@ kotlin {
     }
 }
 
+android.packaging.jniLibs.excludes += listOf("**/libsherpa-onnx-c-api.so", "**/libsherpa-onnx-cxx-api.so")   // andere Sprach-Anbindungen, hier ungenutzt
+android.packaging.jniLibs.useLegacyPackaging = true   // Maschinencode komprimiert einpacken: der Download wird damit weniger als halb so groß
+
 dependencies {
+    // Natürliche Stimme für Lux: Sprachsynthese auf dem Gerät (Apache 2.0; enthält espeak-ng unter GPL-3, siehe LIZENZEN.md)
+    implementation("com.github.k2-fsa.sherpa-onnx:sherpa-onnx:v1.13.8@aar")
     val composeBom = platform("androidx.compose:compose-bom:2025.10.01")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")

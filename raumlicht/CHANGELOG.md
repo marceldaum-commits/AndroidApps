@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.4.0 – Natürliche Stimme für Lux (15.11.2026)
+- **✨ Natürliche Stimme „Thorsten“:** Auf Wunsch spricht Lux mit einer deutlich natürlicheren Stimme, die ganz auf dem Handy rechnet – ohne Internet,
+  nichts wird verschickt. In den Einstellungen unter „Lux spricht“ einmalig laden (63 MB, am besten im WLAN), danach ein- und ausschalten oder wieder entfernen.
+- Ohne Download bleibt alles wie bisher: Dann spricht die Stimme des Handys.
+- Der Download wird per Prüfsumme kontrolliert; ein abgebrochener oder beschädigter Download hinterlässt nichts.
+- Die App selbst ist durch die Sprach-Bibliothek größer geworden.
+- Für Eltern und Weitergabe: Die Sprach-Bibliothek enthält einen Baustein unter GPL-3 (siehe `LIZENZEN.md`).
+
 ## 2.3.3 – Ruhe bei schneller Fahrt (15.11.2026)
 - **Kurve abfahren:** Kommen Hochpunkte, Nullstellen und Wendepunkte dicht hintereinander (hohes Tempo, enge Kurve), wird es nicht mehr hektisch:
   Dann gibt es nur einen leisen Tick und das Schild. Treffer-Ton, Lichtblitz und Ansage kommen erst wieder, wenn knapp zwei Sekunden Ruhe war.
