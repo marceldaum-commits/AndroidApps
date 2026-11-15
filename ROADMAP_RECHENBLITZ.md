@@ -66,3 +66,4 @@ Jeden Tag ein vollständiges, getestetes Paket. Status: `[ ]` offen · `[x]` erl
 - 14.11. – 3.8.0: Maskottchen Blitz, Merksätze zu allen 185 Merk-Aufgaben, 21 Sternbilder mit Album, „Was ist neu?“-Karte, roter Punkt am Menü-Knopf entfernt (Tag 2 vorgezogen; morgen weiter mit Tag 3 Rechen-Reise)
 - 14.11. – 3.9.0: Rechen-Reise Kapitel 1–3 (Zahlenwald, Rechenfluss, Funkenhöhle) + Fehler-Check mit 20 Korrekturen (Sicherheit der Links, Timing, Fortschritt, Postausgang, Offline-Cache, Sommerzeit, Barrierefreiheit). Nächster Tag: Rechen-Reise Kapitel 4–6.
 - 15.11. – 3.10.0: Rechen-Reise Kapitel 4–6 + Finale, Sticker-Album, große Urkunde; alle Aufgabentexte und Advents-Vorschau in EN/UK vervollständigt. Nächster Tag: Rechengarten.
+- 15.11. – 3.10.1: Knopf „Nach Updates suchen“; 3.11.0: Android-Widget für den Startbildschirm (aus Tag 20 vorgezogen, Marcel).

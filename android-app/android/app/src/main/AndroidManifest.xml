@@ -24,6 +24,14 @@
 
         </activity>
 
+        <!-- Rechenblitz-Widget für den Startbildschirm -->
+        <receiver android:name=".RbWidget" android:exported="false" android:label="@string/rb_w_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/rb_widget_info" />
+        </receiver>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

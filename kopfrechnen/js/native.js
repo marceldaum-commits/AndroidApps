@@ -50,3 +50,26 @@ function renderApkUpdate() {
   el.innerHTML = `<div class="ch-ico">⬆️</div><div class="ch-txt"><b>Neue Version ${esc(st.ver)} ist da</b><span>Lernstand bleibt erhalten</span></div><button class="btn small primary" id="apkGo">Jetzt aktualisieren</button>`;
   $('apkGo').onclick = () => { toast('Download startet – danach „Installieren“ antippen', 3000); setTimeout(() => { location.href = st.url; }, 400); };
 }
+
+/* ---------- APK: Startbildschirm-Widget mit aktuellen Zahlen füttern (Marcel 15.11.) ----------
+   Merk-Training, Tagesziel, Serie und „Heute dran“ – fertig übersetzt; das Widget zeigt sie an.
+   Ist der Stand nicht von heute, zeigt das Widget stattdessen eine Einladung zum Üben. */
+let widgetT = 0;
+function widgetUpdate() {
+  const W = IS_NATIVE && window.Capacitor && Capacitor.Plugins && Capacitor.Plugins.RbWidget;
+  if (!W || typeof S === 'undefined' || !S) return;
+  clearTimeout(widgetT);
+  widgetT = setTimeout(() => {
+    try {
+      const today = todayStr(), m = typeof merkStats === 'function' ? merkStats() : null;
+      const solved = S.today.date === today ? S.today.solved : 0;
+      const streak = S.days.last === today || S.days.last === dayStr(1) ? S.days.streak : 0;
+      const next = m && m.todo ? merkQueue()[0] : null;
+      const line1 = m && m.todo ? tr(`🧠 ${m.todo} Aufgaben warten · ca. 3 Min.`)
+        : m && merkSolidAll() ? tr(`🧠 Alles wiederholt ✓ · ${merkSolidAll()} sitzen fest`) : tr('🧠 Zeit für 3 Minuten Kopfrechnen!');
+      const line2 = [tr(`🎯 ${solved}/${DAILY_GOAL} heute`), tr(streak === 1 ? '🔥 1 Tag' : `🔥 ${streak} Tage`), next ? `${tr('Heute dran:')} ${i18nNumbers(taskText(merkTask(next)))}` : ''].filter(Boolean).join(' · ');
+      W.update({ title: 'Rechenblitz', line1, line2, button: tr('Los'), idle1: tr('🧠 Zeit für 3 Minuten Kopfrechnen!'), idle2: tr('Tippe hier – Blitz wartet schon'), day: today }).catch(() => {});
+    } catch {}
+  }, 300);
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) widgetUpdate(); });

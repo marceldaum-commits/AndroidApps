@@ -2,8 +2,27 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.10.1** (Rechen-Reise komplett + Knopf „Nach Updates suchen“), siehe Meldungen (28) und (29). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
+> **AKTUELLER STAND (15.11.2026, 07:00) – für den Leitstand:** Auf `rechenblitz-test` liegt **3.11.0** (Rechen-Reise komplett, Knopf „Nach Updates suchen“, Android-Widget), siehe Meldungen (28)–(30). 3.9.0 enthält Sicherheitskorrekturen, siehe (27).
 > - **Bitte testen und live freigeben.** Seit heute läuft die Advents-Vorschau (ab 15.11.), ihre Texte sind jetzt auch auf EN/UK vollständig.
+## 15.11.2026 (30) – Android-Widget für den Startbildschirm (3.11.0)
+
+- **Marcel 15.11.:** „Kannst du ein Widget machen auch?“ Das geht nur in der Android-App, denn der Browser kennt keine Startbildschirm-Widgets.
+- **Neu – Rechenblitz-Widget (4×1, frei in der Größe änderbar):**
+  - Blitz, dazu „🧠 6 Aufgaben warten · ca. 3 Min.“ bzw. „Alles wiederholt ✓ · 48 sitzen fest“.
+  - Darunter „🎯 12/50 heute · 🔥 3 Tage · Heute dran: 7 · 8“ und der Knopf „Los“. Ein Tipp öffnet die App.
+  - Die Texte kommen fertig übersetzt aus der App (DE/EN/UK, Sprache des Handys).
+  - Ist der Stand nicht von heute, zeigt das Widget stattdessen „🧠 Zeit für 3 Minuten Kopfrechnen! – Tippe hier, Blitz wartet schon“.
+  - Aktualisierung bei jedem Start der App, nach jeder Runde und beim Verlassen der App.
+- **Technik:**
+  - **App-Seite** (`android-app/android/…`): `RbWidget.java` (AppWidgetProvider), `RbWidgetPlugin.java` (Capacitor-Brücke `RbWidget.update`, speichert nur auf dem Gerät), Layout und Hintergrund, Blitz-Bild und Vorschaubild, Texte in 3 Sprachen, Eintrag im Manifest.
+  - **Web-Seite:** `widgetUpdate()` in `js/native.js`, nur in der APK aktiv. In der Web-App ändert sich nichts.
+- **Getestet:**
+  - Datenweitergabe in DE/EN/UK, auch nach einer Runde.
+  - APK baut. Android erkennt das Widget (`provides-component: app-widget`), alle Klassen bleiben nach dem Verkleinern erhalten.
+  - Regression ist grün.
+  - **Auf einem echten Handy noch nicht getestet** – bitte Marcel: Startbildschirm lange drücken → Widgets → Rechenblitz.
+- **Neue APK: 3.11.0** – die Hülle ändert sich (Widget), GitHub baut sie selbst. Das Update erscheint in der App bzw. über „Nach Updates suchen“.
+
 ## 15.11.2026 (29) – Knopf „Nach Updates suchen“ (3.10.1)
 
 - **Marcel 15.11.:** „Bitte einen Button zum Prüfen der Aktualisierung einfügen.“

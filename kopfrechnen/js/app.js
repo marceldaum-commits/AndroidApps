@@ -259,6 +259,7 @@ function renderHome() {
   renderSoundIcons();
   renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard();
   if ($('bzHome')) $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting(), 54) : '';
+  if (typeof widgetUpdate === 'function') widgetUpdate();   // APK: Startbildschirm-Widget aktualisieren
 
   // Themen: die wichtigsten 9 + „Mehr“; im Klassenmodus nur passende
   const k = S.settings.klasse, vis = k && !homeShowAll ? classTopicSet(k) : null;
