@@ -273,7 +273,11 @@ class PlayFlowTest {
         stage.onTap?.invoke("b${good.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("1")
         stage.onTap?.invoke("b${bad.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("0")
         rule.onNodeWithTag("meldung").assertTextEquals("${g.numbers[bad.id]} passt nicht! −1")
-        rule.mainClock.advanceTimeBy(12_000); rule.onNodeWithTag("regel").assertTextEquals("Schieß ab: ${g.rules[1].text}")     // nach 15 s die nächste Regel
+        rule.mainClock.advanceTimeBy(13_000); rule.onNodeWithTag("regel").assertTextEquals("Schieß ab: ${g.rules[1].text}")     // nach 15 s die nächste Regel
+        // gewertet wird nach der Regel, die JETZT gilt – nicht nach der vom Rundenbeginn
+        val later = g.alive(18.0, setOf(good.id, bad.id)); val fits2 = later.first { g.rules[1].ok(g.numbers[it.id]) }; val not2 = later.first { !g.rules[1].ok(g.numbers[it.id]) }
+        stage.onTap?.invoke("b${fits2.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("1")
+        stage.onTap?.invoke("b${not2.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("meldung").assertTextEquals("${g.numbers[not2.id]} passt nicht! −1")
         rule.mainClock.advanceTimeBy(40_000); rule.onNodeWithTag("ergebnis").assertExists(); assertEquals(emptyList<Int>(), scores)   // Bestwert gibt es nur im Spaß-Modus
         rule.mainClock.autoAdvance = true
     }
@@ -295,7 +299,11 @@ class PlayFlowTest {
     @Test fun chanceMachineBetAndRun() {
         show { ChanceScreen({}, seed = 6) }
         rule.onNodeWithTag("p").assertTextEquals("p = 50 %"); rule.onNodeWithTag("versuch-wuerfel").performClick(); rule.onNodeWithTag("p").assertTextEquals("p = 16,67 %")
-        rule.onNodeWithTag("versuch-eigene").performClick(); rule.onNodeWithTag("p-eingabe").performTextReplacement("80"); rule.onNodeWithTag("p").assertTextEquals("p = 80 %")   // eigene Chance
+        rule.onNodeWithTag("versuch-eigene").performClick()
+        rule.onNodeWithTag("p-eingabe").performTextReplacement(""); rule.onNodeWithTag("p-eingabe").assertTextEquals(""); rule.onNodeWithTag("p").assertTextEquals("p = 30 %")       // Feld darf leer sein, der Wert bleibt
+        rule.onNodeWithTag("p-eingabe").performTextReplacement("8"); rule.onNodeWithTag("p").assertTextEquals("p = 8 %")
+        rule.onNodeWithTag("p-plus").performClick(); rule.onNodeWithTag("p-eingabe").assertTextEquals("13")
+        rule.onNodeWithTag("p-eingabe").performTextReplacement("80"); rule.onNodeWithTag("p").assertTextEquals("p = 80 %")   // eigene Chance
         rule.onNodeWithTag("n-1000").performClick(); slide("wett-regler", 0.8f)
         rule.onNodeWithTag("wette").assertTextEquals("Deine Wette: Bei 1000 Versuchen kommt 800-mal ein Treffer.")
         rule.onNodeWithText("800").assertExists()                                                                 // erwartet n · p
@@ -327,9 +335,12 @@ class PlayFlowTest {
         stage.onDrag?.invoke("h2", listOf(4, 4, 3)); rule.mainClock.advanceTimeBy(200)
         assertEquals(listOf("5", "4", "3", "2", "1"), (0..4).map { i -> rule.onNodeWithTag("hoehe-$i").fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.Text].first().text })
         rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("bau-sicht").performClick()                                                                    // einsteigen
         rule.onNodeWithTag("probefahrt").performClick(); rule.mainClock.advanceTimeBy(1000)
+        assertTrue(stage.lastRide!!.contains("view:'fp'"))
         assertFalse(stage.lastState!!.contains("\"type\":\"handle\"")); assertTrue(stage.lastRide!!.contains("id:'bahn'"))                 // während der Fahrt keine Griffe
         rule.mainClock.advanceTimeBy(14_000); rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(300)
+        assertTrue(stage.lastRide!!.contains("view:'out'"))                                                                 // nach der Fahrt wieder von außen
         rule.onNodeWithTag("bau-meldung").assertTextContains("Geschafft!", substring = true); rule.onNodeWithText("1/5 ✓").assertExists(); rule.onNodeWithText("✓ Erste Fahrt").assertExists()
         rule.onNodeWithTag("auftrag-frei").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("bau-meldung").assertTextContains("Bau, was du willst", substring = true)
     }

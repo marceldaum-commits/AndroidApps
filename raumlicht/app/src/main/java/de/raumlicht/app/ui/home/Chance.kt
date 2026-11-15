@@ -39,6 +39,8 @@ import kotlin.math.roundToInt
 fun ChanceScreen(onBack: () -> Unit, seed: Long = remember { System.nanoTime() }) {
     var preset by rememberSaveable { mutableStateOf(ChanceLab.presets.first().id) }       // "eigene" = eigene Prozentzahl
     var percent by rememberSaveable { mutableIntStateOf(30) }
+    // Text im Eingabefeld: darf zwischendurch leer sein, übernommen wird jede gültige Zahl von 1 bis 99
+    var percentText by rememberSaveable { mutableStateOf("30") }
     var n by rememberSaveable { mutableIntStateOf(100) }
     var bet by rememberSaveable { mutableFloatStateOf(0.5f) }
     var runNo by remember { mutableIntStateOf(0) }
@@ -67,10 +69,10 @@ fun ChanceScreen(onBack: () -> Unit, seed: Long = remember { System.nanoTime() }
         }
         if (chosen == null) Row(Modifier.padding(horizontal = 12.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Text("Trefferchance", color = Q.Muted, fontSize = 13.sp)
-            Pick("−5", false, Q.Violet, "p-minus") { percent = (percent - 5).coerceAtLeast(1); runNo = 0 }
-            Bound(percent.toString(), "p-eingabe") { it.toIntOrNull()?.let { v -> percent = v.coerceIn(1, 99); runNo = 0 } }
+            Pick("−5", false, Q.Violet, "p-minus") { percent = (percent - 5).coerceAtLeast(1); percentText = percent.toString(); runNo = 0 }
+            Bound(percentText, "p-eingabe") { percentText = it.removePrefix("-").take(2); percentText.toIntOrNull()?.takeIf { v -> v in 1..99 }?.let { v -> percent = v; runNo = 0 } }
             Text("%", color = Q.Text, fontWeight = FontWeight.Bold)
-            Pick("+5", false, Q.Violet, "p-plus") { percent = (percent + 5).coerceAtMost(99); runNo = 0 }
+            Pick("+5", false, Q.Violet, "p-plus") { percent = (percent + 5).coerceAtMost(99); percentText = percent.toString(); runNo = 0 }
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 4.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Text("Versuche", color = Q.Muted, fontSize = 13.sp)

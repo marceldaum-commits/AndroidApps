@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.3.1 – Fehlerkorrekturen nach dem Durchprüfen (15.11.2026)
+- **Ballerbude mit Aufgabe:** Nach dem Regelwechsel wurde weiter nach der ersten Regel gewertet – jetzt zählt immer die Regel, die gerade gilt.
+- **Ballerbude zu zweit:** Tippen beide gleichzeitig, zählen jetzt beide Treffer (vorher ging beides verloren).
+- **Ballerbude und Baumeister:** Die Bühne dreht sich dort nicht mehr mit, wenn man danebengreift. Tippen mit leicht wackelndem Finger wird sicherer erkannt.
+- **Baumeister:** Nach einer Fahrt in der Innenansicht geht der Blick wieder nach außen, damit man die Stützpunkte sieht.
+- **Zufallsmaschine:** Das Feld für die eigene Chance lässt sich leeren und neu beschreiben.
+- **Lux' Stimme:** startet auf allen Geräten zuverlässig; die Einstellungen melden „keine deutsche Stimme“ erst, wenn das wirklich feststeht.
+
 ## 2.3.0 – Baumeister, Geisterfahrt, Ringflug (15.11.2026)
 - **🏗️ Achterbahn-Baumeister (neu):** Fünf Stützpunkte hoch- und runterziehen, die App legt eine glatte Bahn hindurch – dann Probefahrt mit echter Physik.
   Bergab wird der Wagen schneller, bergauf langsamer; ist ein Hügel höher, als der Schwung reicht, rollt er zurück. Fünf Aufträge (Sterne einsammeln,

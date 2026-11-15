@@ -63,7 +63,7 @@ class BuiltTrack(val heights: List<Int>) {
         Stage.axes2d(0.0, 0.0, 1.0, 1.0, 0.0, length),
         Stage.point("ziel", at(length) + V3(0.0, 0.0, 0.6), "green", "Ziel", style = "ghost", drop = false),
     ) + (if (handles) heights.indices.map { i -> Obj("h$i", "handle", p = listOf(4.0, i * DX, heights[i].toDouble()), color = "yellow", axes = listOf(2)) } else emptyList()) +
-        goal?.stars.orEmpty().mapIndexed { i, (sx, sy) -> Stage.point("stern$i", V3(4.0, sx, sy), "yellow", "★", style = "target", drop = false) })
+        goal?.stars.orEmpty().mapIndexed { i, (sx, sy) -> Stage.point("stern$i", V3(4.0, sx, sy), "yellow", "★", style = "target", drop = false) }, lock = true)
 
     companion object {
         const val DX = 2.0; const val G = 5.0; const val FRICTION = 0.03; const val PUSH = 0.8

@@ -32,16 +32,18 @@ data class Obj(
  * Raumachsen gibt es nur in der Geometrie. [flat]: ebenes x-y-Achsenkreuz (Analysis), Blick von vorn.
  * [plain]: gar kein Koordinatensystem (Stochastik) – die Dinge stehen auf einer Showbühne.
  */
-@Serializable data class SceneState(val bounds: Bounds, val objects: List<Obj>, val flat: Boolean = false, val plain: Boolean = false)
+@Serializable data class SceneState(val bounds: Bounds, val objects: List<Obj>, val flat: Boolean = false, val plain: Boolean = false,
+    /** Kamera fest: kein Drehen und Zoomen (Spiele, in denen man tippt oder Punkte zieht – sonst verrutscht bei jedem Fehlgriff das Bild) */
+    val lock: Boolean = false)
 
 object Stage {
     private val json = Json { explicitNulls = false; encodeDefaults = true }
-    fun encode(bounds: Bounds, objects: List<Obj>): String {
+    fun encode(bounds: Bounds, objects: List<Obj>, lock: Boolean = false): String {
         // Rotationskörper sind Analysis: Sie bekommen das Achsenkreuz ihrer Kurve statt der Raumachsen
         val lathe = objects.firstOrNull { it.type == "lathe" }
         val all = if (lathe != null && objects.none { it.type == "axes2d" }) { val xs = lathe.corners!!.map { it[0] }; objects + axes2d(lathe.p!![1], lathe.p[2], 1.0, 1.0, xs.min(), xs.max()) } else objects
         val plain = all.any { it.type == "podium" }
-        return json.encodeToString(SceneState(bounds, all, !plain && all.any { it.type == "axes2d" }, plain))
+        return json.encodeToString(SceneState(bounds, all, !plain && all.any { it.type == "axes2d" }, plain, lock))
     }
     /** Showbühne für die Stochastik: Leuchtringe statt Gitter und Achsen */
     fun podium() = Obj("podium", "podium", p = listOf(4.0, 4.0, 0.0))

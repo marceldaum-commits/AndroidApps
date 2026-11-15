@@ -281,7 +281,7 @@ class MainActivity : ComponentActivity() {
                 val music by vm.settings.music.collectAsStateWithLifecycle()
                 val auto by vm.settings.autoUpdate.collectAsStateWithLifecycle()
                 SettingsScreen(music, vm.settings::setMusic, sound, vm.settings::setSound, vibration, vm.settings::setVibration, auto, vm.settings::setAutoUpdate,
-                    BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, { nav.popSafe() }, onReset = vm::resetAll, voice = vm.settings.voice.collectAsStateWithLifecycle().value, onVoice = vm.settings::setVoice, voiceAvailable = (application as RaumlichtApp).voice.available, volume = vm.settings.volume.collectAsStateWithLifecycle().value, onVolume = vm.settings::setVolume)
+                    BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, { nav.popSafe() }, onReset = vm::resetAll, voice = vm.settings.voice.collectAsStateWithLifecycle().value, onVoice = vm.settings::setVoice, voiceAvailable = (application as RaumlichtApp).voice.let { !it.checked || it.available }, volume = vm.settings.volume.collectAsStateWithLifecycle().value, onVolume = vm.settings::setVolume)
             }
         }
         }

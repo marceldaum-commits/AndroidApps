@@ -71,8 +71,9 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
             val b = game.byId(id)
             if (running && b != null && b.id !in popped && game.alive(t, popped).any { it.id == b.id }) {
                 val p = game.pos(b, t); popped = popped + b.id
-                val who = if (duel) game.side(p) else 0; val old = scores[who]
-                val fits = !quiz || rule.ok(game.numbers[b.id])
+                val who = if (game.mode == BalloonMode.DUEL) game.side(p) else 0; val old = scores[who]
+                // die Regel gilt im Moment des Tippens (sie wechselt während der Runde – nicht den Stand vom Rundenbeginn nehmen)
+                val fits = game.mode != BalloonMode.QUIZ || game.ruleAt(t).ok(game.numbers[b.id])
                 val now = if (fits) old.hit(b.kind) else old.wrong()
                 scores = scores.toMutableList().also { it[who] = now }
                 controller.fire(Beam(BalloonGame.LUX, p, b.kind.color, true), 140); controller.burst(p, b.kind.color)
@@ -88,7 +89,7 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
         controller.onMiss = { p ->
             if (running) {
                 controller.fire(Beam(BalloonGame.LUX, p, "white", false), 140); sfx?.play(Sound.TICK, 0.7f); view.buzz(Buzz.TICK, vib)
-                val who = if (duel) game.side(p) else 0
+                val who = if (game.mode == BalloonMode.DUEL) game.side(p) else 0
                 flash = if (scores[who].combo >= 2) "Daneben! Serie weg" else "Daneben!"; scores = scores.toMutableList().also { it[who] = it[who].miss() }
             }
         }

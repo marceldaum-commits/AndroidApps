@@ -68,7 +68,8 @@ fun CoasterBuildScreen(onBack: () -> Unit, controller: StageController = remembe
     }
 
     LaunchedEffect(heights, goalIdx, playing) { controller.setState(track.scene(goal, handles = !playing)) }
-    LaunchedEffect(x, inside, r) { if (r != null) controller.ride(x / track.length, inside) else controller.rideOff() }
+    // Mitfahren nur während der Fahrt – danach wieder der Blick von außen, sonst sieht man die Stützpunkte nicht
+    LaunchedEffect(x, inside, r, playing) { if (r != null) controller.ride(x / track.length, inside && playing) else controller.rideOff() }
     DisposableEffect(controller, playing) {
         controller.onDrag = { id, p -> id.removePrefix("h").toIntOrNull()?.let { i -> if (i in heights.indices) set(i, p[2]) } }
         onDispose { controller.onDrag = null; controller.rideOff() }

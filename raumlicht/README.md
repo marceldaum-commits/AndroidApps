@@ -85,6 +85,10 @@ Seit 0.6.0: eigene Funktionen in „Kurve abfahren“ (`Expr` liest den Term, `C
 | ![](screenshots/64_eigene_funktion.png) | ![](screenshots/65_eigene_funktion_eingabe.png) |
 |---|---|
 
+**Bedien-Test der echten Bühne** (seit 2.3.1): `cd scene && node test/interact.mjs ../core/model/build/scenes.json` spielt Antippen, Ziehen und Wischen mit echten
+Zeiger-Ereignissen im Browser durch und prüft, was die Bühne meldet. Vor jeder Auslieferung laufen lassen, wenn sich an der Bedienung der Bühne etwas ändert –
+die Robolectric-Tests ersetzen die Bühne durch eine Attrappe und sehen solche Fehler nicht.
+
 Querformat: ![](screenshots/48_querformat.png)
 
 ## Aufbau

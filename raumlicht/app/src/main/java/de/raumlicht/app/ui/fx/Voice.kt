@@ -4,6 +4,8 @@ import android.content.Context
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import de.raumlicht.core.model.Speech
 import java.util.Locale
@@ -20,13 +22,17 @@ val LocalSpeaker = staticCompositionLocalOf<Speaker?> { null }
 class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {}) : Speaker {
     @Volatile var enabled = true
     @Volatile var volume = 1f
-    @Volatile var available = false
+    /** Gibt es eine deutsche Stimme? Steht erst kurz nach dem Start fest – deshalb beobachtbar. */
+    var available by androidx.compose.runtime.mutableStateOf(false)
+        private set
+    /** Wird wahr, sobald die Sprachausgabe geantwortet hat (vorher weiß man nicht, ob es eine Stimme gibt) */
+    var checked by androidx.compose.runtime.mutableStateOf(false)
         private set
     private var ready = false
     private var pending: String? = null
-    private val tts: TextToSpeech = TextToSpeech(context.applicationContext) { status ->
-        if (status == TextToSpeech.SUCCESS) setUp()
-    }
+    private val main = android.os.Handler(android.os.Looper.getMainLooper())
+    // Manche Geräte melden sich schon, während die Sprachausgabe noch angelegt wird – deshalb erst im nächsten Schritt einrichten
+    private val tts: TextToSpeech = TextToSpeech(context.applicationContext) { status -> main.post { if (status == TextToSpeech.SUCCESS) setUp(); checked = true } }
 
     private fun setUp() {
         val ok = runCatching { tts.setLanguage(Locale.GERMANY) }.getOrDefault(TextToSpeech.LANG_NOT_SUPPORTED)
@@ -48,7 +54,7 @@ class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {})
     /** Liest den Text vor; ein neuer Satz unterbricht den alten (Lux redet nie durcheinander). */
     override fun say(text: String) {
         if (!enabled || volume <= 0f) return
-        if (!ready) { pending = text; return }
+        if (!ready) { if (!checked) pending = text; return }
         val clean = Speech.clean(text); if (clean.isEmpty()) return
         runCatching { tts.speak(clean, TextToSpeech.QUEUE_FLUSH, Bundle().apply { putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, volume.coerceIn(0f, 1f)) }, "lux") }
     }

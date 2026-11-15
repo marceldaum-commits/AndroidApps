@@ -60,7 +60,7 @@ class BalloonGame(seed: Long, val duration: Double = 45.0, val mode: BalloonMode
     fun side(p: V3) = if (p.y < 4.0) 0 else 1
     fun scene(t: Double, popped: Set<Int>, mood: String = "idle"): String = Stage.encode(Bounds(),
         alive(t, popped).map { Stage.sphere("b${it.id}", pos(it, t), it.kind.radius, it.kind.color, if (mode == BalloonMode.QUIZ) Geo.num(numbers[it.id]) else null) } +
-            (if (mode == BalloonMode.DUEL) listOf(Stage.line("mitte", V3(4.0, 4.0, 0.05), V3(0.0, 0.0, 1.0), 0.0, 6.6, "white", dashed = true)) else emptyList()) + Stage.drone(LUX, mood) + Stage.podium())
+            (if (mode == BalloonMode.DUEL) listOf(Stage.line("mitte", V3(4.0, 4.0, 0.05), V3(0.0, 0.0, 1.0), 0.0, 6.6, "white", dashed = true)) else emptyList()) + Stage.drone(LUX, mood) + Stage.podium(), lock = true)
 
     companion object {
         const val TOP = 7.2; const val RULE_TIME = 15.0; val LUX = V3(8, 0, 1)

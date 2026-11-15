@@ -129,7 +129,7 @@ const hex = (c) => '#' + col(c).getHexString();
 // ───────── Raster und Achsen ─────────
 const gridGroup = new THREE.Group(); decor.add(gridGroup);
 let bounds = { min: [0, 0, 0], max: [8, 8, 6] };
-let axesGroup = null, flat = false, plain = false;   // flat: ebenes x-y-Koordinatensystem (Analysis) statt Raumachsen
+let axesGroup = null, flat = false, plain = false, locked = false;   // locked: Kamera fest (Spiele, in denen man tippt oder zieht)   // flat: ebenes x-y-Koordinatensystem (Analysis) statt Raumachsen
 function buildGrid() {
   gridGroup.clear();
   const { min, max } = bounds, pts = [], strong = [];
@@ -644,6 +644,7 @@ makers.handle = (s) => {
 const objects = new Map();
 function setState(state) {
   if (state.bounds && JSON.stringify(state.bounds) !== JSON.stringify(bounds)) { bounds = state.bounds; buildGrid(); frameBounds(false); }
+  locked = !!state.lock;
   if (!!state.flat !== flat || !!state.plain !== plain) {
     flat = !!state.flat; plain = !!state.plain; if (axesGroup) axesGroup.visible = !flat && !plain; gridGroup.visible = !plain;
     // Funktionsgraphen schaut man von vorn an – sonst täuscht die Perspektive beim Ablesen; die Showbühne der Stochastik leicht von oben
@@ -727,7 +728,7 @@ function frameBounds(instant) {
 }
 function setCamera({ az, el, dist, target }) { if (az != null) cam.tAz = az; if (el != null) cam.tEl = el; if (dist != null) cam.tDist = dist; if (target) cam.tTarget.copy(V(target)); }
 
-const ray = new THREE.Raycaster(), pointers = new Map();
+const ray = new THREE.Raycaster(), pointers = new Map(), touches = new Map();
 let drag = null, pinch = 0;
 const ndc = (e) => new THREE.Vector2((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
 const toScreen = (v) => { const p = v.clone().project(camera); return new THREE.Vector2((p.x + 1) / 2 * innerWidth, (1 - p.y) / 2 * innerHeight); };
@@ -752,7 +753,11 @@ function axisValue(origin, dir, e) {
   return Math.abs(den) < 1e-5 ? 0 : (b * e2 - d) / den;
 }
 canvas.addEventListener('pointerdown', (e) => {
-  canvas.setPointerCapture(e.pointerId); pointers.set(e.pointerId, e); lastTouch = clock.elapsedTime;
+  try { canvas.setPointerCapture(e.pointerId); } catch (_) { /* nachgestellte Zeiger im Test haben keinen echten Zeiger dahinter */ }
+  pointers.set(e.pointerId, e); lastTouch = clock.elapsedTime;
+  // Jeder Finger kann für sich tippen (zu zweit tippen oft beide gleichzeitig); bei frei drehbarer Bühne zählt ein Tipp nur mit einem Finger
+  touches.set(e.pointerId, { x0: e.clientX, y0: e.clientY, t0: performance.now(), alone: pointers.size === 1 });
+  if (pointers.size > 1) for (const c of touches.values()) c.alone = false;
   if (pointers.size === 1) {
     const h = pickHandle(e);
     if (h) {
@@ -762,14 +767,15 @@ canvas.addEventListener('pointerdown', (e) => {
       if (h.axis < 0) { const free = h.o.arrows.map((a, i) => (a.visible ? i : -1)).filter((i) => i >= 0); if (free.length === 1) h.axis = free[0]; }
       drag = { id: h.o.id, axis: h.axis, start, last: start.slice(), origin: h.o.pos.clone(), v0: h.axis >= 0 ? axisValue(h.o.pos, V([[1, 0, 0], [0, 1, 0], [0, 0, 1]][h.axis]), e) : 0 };
       emit('grab', { id: drag.id });
-    } else drag = { orbit: true, x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now() };
+      touches.delete(e.pointerId);
+    } else drag = { orbit: true, x: e.clientX, y: e.clientY };
   } else { drag = null; const [a, b] = [...pointers.values()]; pinch = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
 });
 canvas.addEventListener('pointermove', (e) => {
   if (!pointers.has(e.pointerId)) return; pointers.set(e.pointerId, e); lastTouch = clock.elapsedTime;
-  if (pointers.size === 2) { const [a, b] = [...pointers.values()], d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); if (pinch > 0) cam.tDist = THREE.MathUtils.clamp(cam.tDist * pinch / d, 7, 46); pinch = d; return; }
+  if (pointers.size === 2) { if (locked) return; const [a, b] = [...pointers.values()], d = Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); if (pinch > 0) cam.tDist = THREE.MathUtils.clamp(cam.tDist * pinch / d, 7, 46); pinch = d; return; }
   if (!drag) return;
-  if (drag.orbit) { cam.tAz -= (e.clientX - drag.x) * 0.008; cam.tEl = THREE.MathUtils.clamp(cam.tEl + (e.clientY - drag.y) * 0.006, 0.06, 1.45); drag.x = e.clientX; drag.y = e.clientY; return; }
+  if (drag.orbit) { if (locked) return; cam.tAz -= (e.clientX - drag.x) * 0.008; cam.tEl = THREE.MathUtils.clamp(cam.tEl + (e.clientY - drag.y) * 0.006, 0.06, 1.45); drag.x = e.clientX; drag.y = e.clientY; return; }
   const p = drag.start.slice();
   if (drag.axis >= 0) p[drag.axis] = Math.round(drag.start[drag.axis] + axisValue(drag.origin, V([[1, 0, 0], [0, 1, 0], [0, 0, 1]][drag.axis]), e) - drag.v0);
   else { ray.setFromCamera(ndc(e), camera); const hit = new THREE.Vector3(); if (ray.ray.intersectPlane(new THREE.Plane(UP, -drag.origin.y), hit)) { const m = fromV(hit); p[0] = Math.round(m[0]); p[1] = Math.round(m[1]); } }
@@ -784,8 +790,9 @@ function tapped(e) {
 }
 const up = (e) => {
   pointers.delete(e.pointerId);
+  const c = touches.get(e.pointerId); touches.delete(e.pointerId);
   if (drag && !drag.orbit) emit('drop', { id: drag.id, p: drag.last });
-  else if (drag && e.type === 'pointerup' && Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) < 14 && performance.now() - drag.t0 < 450) {
+  else if (c && (c.alone || locked) && e.type === 'pointerup' && Math.hypot(e.clientX - c.x0, e.clientY - c.y0) < 22 && performance.now() - c.t0 < 600) {
     const h = tapped(e);
     if (h) emit('tap', { id: h.id });
     else { // daneben getippt: die Stelle in der Ebene x₁ = 4 melden (dort schweben die Kugeln)
@@ -793,7 +800,8 @@ const up = (e) => {
       if (ray.ray.intersectPlane(new THREE.Plane(new THREE.Vector3(0, 0, 1), -4), hit)) emit('miss', { p: fromV(hit).map((v) => Math.round(v * 100) / 100) });
     }
   }
-  drag = null; pinch = 0;
+  if (pointers.size === 0 || !locked) drag = null;
+  pinch = 0;
 };
 canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
 
@@ -916,6 +924,8 @@ function step(dt) {
 
 buildGrid(); resize(); frameBounds(true); frame();
 window.RL = {
+  // Wo ein Punkt (Mathe-Koordinaten) gerade auf dem Bildschirm liegt – für Bedien-Tests
+  project: (p) => { const s = toScreen(V(p)); return [s.x, s.y]; },
   setState: (s) => setState(typeof s === 'string' ? JSON.parse(s) : s),
   fire: (s) => fire(typeof s === 'string' ? JSON.parse(s) : s),
   burst: (p, c) => burst(p, c), party, setCamera,
