@@ -94,6 +94,7 @@ fun LevelScreen(
     var bursts by remember(level.id) { mutableStateOf(listOf<Pair<Burst, Long>>()) }
     var mood by remember(level.id) { mutableStateOf(VoltMood.IDLE) }
     var speech by remember(level.id) { mutableStateOf(level.task) }
+    var gap by remember(level.id) { mutableStateOf<Gap?>(null) }
     var canvasSize by remember { mutableStateOf(IntSize.Zero) }
     // Wird ein abgeschlossenes Level nach dem Drehen wiederhergestellt, fehlt der Flug → Ergebnis direkt zeigen
     LaunchedEffect(Unit) { if (phase == Phase.FLYING) phase = Phase.AIM }
@@ -128,7 +129,7 @@ fun LevelScreen(
         attempt++
         if (help) usedHelp = true
         val r = Flight.fly(level, values)
-        result = r; shown = 0; hits = emptySet(); taken = emptySet()
+        result = r; shown = 0; hits = emptySet(); taken = emptySet(); gap = null
         phase = Phase.FLYING
         mood = VoltMood.THINK; speech = "3 … 2 … 1 … 🚀"
         sfx?.play(Sound.LAUNCH)
@@ -181,6 +182,7 @@ fun LevelScreen(
             ghosts = (ghosts + listOf(r.path)).takeLast(3)
             result = null; shown = 0; hits = emptySet(); taken = emptySet()
             mood = VoltMood.OOPS
+            gap = Feedback.gap(level, values, r)
             val fb = Feedback.after(level, values, r)
             speech = if (attempt >= 2) "$fb\n💡 ${level.tip}" else fb
             if (r.crash == null) sfx?.play(Sound.WRONG)
@@ -195,6 +197,7 @@ fun LevelScreen(
         preview = if (phase == Phase.AIM) preview else emptyList(),
         crosshair = if (phase == Phase.AIM && (level.kind == Kind.POINT && help || level.kind == Kind.RENDEZVOUS)) Vec(values.getValue("x"), values.getValue("y")) else null,
         preview2 = if (phase == Phase.AIM) preview2 else emptyList(),
+        gap = if (phase == Phase.AIM) gap else null,
         handles = if (phase == Phase.AIM && drag) handlesFor(level, values).mapIndexed { i, h -> Triple(h.pos, h.color, i == grabbed) } else emptyList(),
         trail2 = r?.path2?.let { p2 -> p2.take(((shown + 1).toDouble() / r.path.size * p2.size).toInt().coerceIn(0, p2.size)) }.orEmpty(),
         probe2 = if (phase == Phase.FLYING && r != null && r.path2.isNotEmpty()) r.path2[((shown.toDouble() / r.path.size) * r.path2.size).toInt().coerceIn(0, r.path2.size - 1)] else null,
@@ -285,7 +288,7 @@ fun LevelScreen(
             ResultCard(stars, taken.size + 0, level.cells.size, usedHelp, nextLabel, allowRetry,
                 onRetry = {
                     phase = Phase.AIM; attempt = 0; usedHelp = false; ghosts = emptyList(); result = null; hits = emptySet(); taken = emptySet()
-                    values = HashMap(level.start); mood = VoltMood.IDLE; speech = level.task
+                    values = HashMap(level.start); mood = VoltMood.IDLE; speech = level.task; gap = null
                 },
                 onNext = onNext, onBack = onBack)
         }
@@ -330,8 +333,16 @@ private fun Formula(level: Level, values: Map<String, Double>) {
                 append("(x)")
                 if (v.getValue("d") != 0.0 || "d" in colorOf) term("d")
             }
-            Kind.RADIUS -> { append("r = "); n("r"); append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("r² = Δx² + Δy²") } }
-            Kind.LASER -> { append("α = "); n("angle", "°") }
+            Kind.RADIUS -> {
+                append("r = "); n("r"); append("\n")
+                withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) {
+                    append(if (level.triangle != null) "sin α = GK : r    cos α = AK : r" else "r² = Δx² + Δy²")
+                }
+            }
+            Kind.LASER -> {
+                append("α = "); n("angle", "°")
+                if (level.triangle != null) { append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("tan α = Höhe : Weite") } }
+            }
             Kind.RAMP -> {
                 append("h = "); n("h", " m"); append("   Kante h₀ = "); append(num(v.getValue("h0")) + " m")
                 append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) { append("m·g·h = ½·m·v²") }

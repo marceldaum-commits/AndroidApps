@@ -54,6 +54,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     var playLevel: de.kurvenflug.core.model.Level? = null
     var openCode: String? = null
 
+    /** Spielstand für den Lernstand: beste Sterne und Zeitpunkt je Level bzw. Auffrischung */
+    fun played(m: Map<String, LevelProgress>) = m.mapValues { de.kurvenflug.core.model.Played(it.value.stars, it.value.solvedAt) }
+
     /** Heutiger Tag (Ortszeit) – daraus wird die Tagesmission gebaut */
     fun today(): Long = java.time.LocalDate.now().toEpochDay()
     fun daily() = Daily.forDay(today())

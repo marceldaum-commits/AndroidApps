@@ -66,3 +66,16 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
 - Folgerung für Kurvenflug & Co.: direkte Manipulation (Griffe am Graphen ziehen, Formel ändert sich live), sofortiges
   sichtbares Ergebnis (Flug), wenige Versuche = mehr Sterne, eigene Levels/Duelle für soziale Motivation, Look für
   Jugendliche (Weltraum, Neon), Maskottchen frech statt niedlich.
+
+## Kurvenflug 0.6: Wiederholen, Lösungshilfe, Trigonometrie (Nov. 2026)
+
+- Verteiltes Üben schlägt Pauken am Stück: Meta-Analyse g ≈ 0,74 (spaced vs. massed); gemischtes Üben in einer
+  randomisierten Studie mit 787 Siebtklässlern d ≈ 0,83 (Rohrer u. a.). Abruf-Üben (Quiz) g ≈ 0,50 – aber nur mit
+  Rückmeldung, sonst verpufft es. Quellen: ies.ed.gov (Efficacy Study of Interleaved Mathematics Practice),
+  research.ou.nl (Review „Retrieval, distributed and interleaved practice in the classroom“).
+- Ausgearbeitete Beispiele, die schrittweise ausgeblendet werden („faded worked examples“), verbesserten in einem
+  Mathe-Spiel zu Proportionen das Lernen von 12- bis 15-Jährigen (ter Vrugte u. a. 2017, Universität Utrecht).
+- Folgerung für Kurvenflug: geschaffte Themen kommen nach 2 (wackelig) bzw. 7 Tagen (sicher) als kurzes
+  „Auffrischen“-Level zurück, ohne Druck; nach einem Fehlversuch zeigt ein Pfeil an der Station genau den Abstand
+  („2 zu tief“) – Rückmeldung macht Üben erst wirksam; Lernstand-Seite erklärt Eltern in drei Sätzen, was passiert.
+  Nächster Schritt: Volts Tipp nach dem 3. Fehlversuch als Lösungsweg zum Mitrechnen (ausgeblendete Schritte).

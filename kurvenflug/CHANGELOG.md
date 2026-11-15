@@ -3,6 +3,16 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.6.0 – Trigonometrie, Lernstand & Auffrischen
+- **📐 Neues Kapitel „Trigonometrie“ (Klasse 9–10)**: Mit tan⁻¹ den Laserwinkel ausrechnen, mit sin und cos den Funkradius.
+  Volt zeichnet das rechtwinklige Dreieck mit allen Seiten ins Spielfeld. Taschenrechner erlaubt! 7 neue Level.
+- **📊 Mein Lernstand**: Für jedes Thema siehst du, ob es „Neu“, „Übt noch“ oder „Sicher“ ist und wann du es zuletzt
+  geübt hast. Mit einer kurzen Erklärung für Eltern.
+- **🔁 Auffrischen**: Geschaffte Themen kommen nach ein paar Tagen als kurzes Level zurück – wackelige nach 2 Tagen,
+  sichere nach 7. So bleibt das Gelernte im Kopf. Verpasste Tage verfallen einfach, kein Druck.
+- **🎯 Abstands-Pfeil**: Nach einem Fehlversuch zeigt ein gelber Pfeil an der Station, wie weit du daneben warst
+  („2 zu tief“) – dann weißt du sofort, in welche Richtung du nachrechnen musst.
+
 ## 0.5.3 – Laser-Zielhilfe & passendere Aufgaben
 - **🔦 Laser-Zielhilfe**: Beim Zielen siehst du den Strahl jetzt bis zum ersten Spiegel. Wohin er abprallt, findest du selbst
   heraus – Einfallswinkel = Ausfallswinkel. So kommt man mit Überlegen zum Ziel statt mit Raten.

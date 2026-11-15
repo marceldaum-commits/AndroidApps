@@ -3,6 +3,7 @@ package de.kurvenflug.app.ui.flight
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
@@ -46,6 +47,8 @@ data class SpaceView(
     val probe2: Vec? = null,
     /** Griffe zum Ziehen: Position, Farbe, gerade gegriffen */
     val handles: List<Triple<Vec, Color, Boolean>> = emptyList(),
+    /** nach einem Fehlversuch: Pfeil von der Bahn zur Station („2 zu tief“) */
+    val gap: Gap? = null,
 )
 
 /** Aussehen aus der Werkstatt (Form der Sonde, Spur, Volts Hut) – gilt für alle Spielfelder. */
@@ -85,6 +88,8 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             }
         }
 
+        // Merkbild Trigonometrie: rechtwinkliges Dreieck Start → Station
+        l.triangle?.let { tri -> l.targets.firstOrNull()?.let { t -> drawTriangle(tri, l.launch, Vec(t.x, t.y), ::px, unit, tm) } }
         // Asteroiden und Planeten
         l.asteroids.forEachIndexed { i, a ->
             val mass = l.masses.getOrElse(i) { 0.0 }
@@ -145,8 +150,69 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
         if (v.handles.isNotEmpty() && (l.kind == Kind.THROW || l.kind == Kind.ORBIT)) {
             drawLine(Q.Yellow.copy(alpha = 0.7f), px(l.launch), px(v.handles[0].first), unit * 0.12f, cap = StrokeCap.Round)
         }
+        v.gap?.let { drawGap(it, ::px, unit, tm, v.time) }
         v.bursts.forEach { (b, s) -> drawBurst(b, s) }
     }
+}
+
+/** Rechtwinkliges Dreieck mit beschrifteten Seiten und Winkelbogen – das Merkbild der Trigonometrie. */
+private fun DrawScope.drawTriangle(tri: Triangle, a: Vec, c: Vec, px: (Vec) -> Offset, unit: Float, tm: TextMeasurer) {
+    val b = Vec(c.x, a.y)
+    val pa = px(a); val pb = px(b); val pc = px(c)
+    val legColor = Q.Pink.copy(alpha = 0.8f)
+    val dash = PathEffect.dashPathEffect(floatArrayOf(unit * 0.3f, unit * 0.2f))
+    drawLine(legColor, pa, pb, unit * 0.07f, pathEffect = dash)
+    drawLine(legColor, pb, pc, unit * 0.07f, pathEffect = dash)
+    drawLine(Q.Yellow.copy(alpha = 0.45f), pa, pc, unit * 0.05f, pathEffect = dash)
+    // rechter Winkel bei B
+    val sx = if (a.x < b.x) -1f else 1f; val sy = if (c.y > b.y) -1f else 1f
+    val q = unit * 0.6f
+    drawPath(Path().apply { moveTo(pb.x + sx * q, pb.y); lineTo(pb.x + sx * q, pb.y + sy * q); lineTo(pb.x, pb.y + sy * q) }, legColor, style = Stroke(unit * 0.06f))
+    // Winkelbogen bei A
+    val ang = Math.toDegrees(kotlin.math.atan2(c.y - a.y, c.x - a.x)).toFloat()
+    val rad = unit * 2.2f
+    drawArc(Q.Yellow, startAngle = 0f, sweepAngle = -ang, useCenter = false, topLeft = pa - Offset(rad, rad), size = Size(2 * rad, 2 * rad), style = Stroke(unit * 0.1f))
+    fun tag(text: String, at: Offset, color: Color) {
+        val r = tm.measure(text, TextStyle(color = Color(0xFF1A1440), fontSize = 11.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold))
+        val w = r.size.width + unit * 0.4f; val h = r.size.height + unit * 0.15f
+        val tl = Offset((at.x - w / 2).coerceIn(0f, size.width - w), (at.y - h / 2).coerceIn(0f, size.height - h))
+        drawRoundRect(color, tl, Size(w, h), CornerRadius(unit * 0.3f))
+        drawText(r, topLeft = tl + Offset(unit * 0.2f, unit * 0.075f))
+    }
+    val mid = ang / 2f * (Math.PI.toFloat() / 180f)
+    tag(tri.angle, pa + Offset(cos(mid) * rad * 1.6f, -sin(mid) * rad * 1.6f), Q.Yellow)
+    tri.width?.let { tag(it, Offset((pa.x + pb.x) / 2, pb.y - sy * unit * 0.8f), Q.Pink) }
+    tri.height?.let { tag(it, Offset(pb.x + sx * unit * 1.1f, (pb.y + pc.y) / 2), Q.Pink) }  // innen – außen läuft oft die Funkwelle
+    tri.hyp?.let { tag(it, Offset((pa.x + pc.x) / 2 + sy * unit * 1.2f, (pa.y + pc.y) / 2 + unit * 0.2f), Q.Yellow) }
+}
+
+/** Gelber Pfeil von der Bahn zur verfehlten Station, mit „2 zu tief“ – pulsiert leicht, damit das Auge hinschaut. */
+private fun DrawScope.drawGap(g: Gap, px: (Vec) -> Offset, unit: Float, tm: TextMeasurer, time: Float) {
+    val from = px(Vec(g.x, g.from)); val to = px(Vec(g.x, g.to))
+    val pulse = 0.75f + 0.25f * sin(time * 5f)
+    val c = Q.Yellow.copy(alpha = pulse)
+    drawCircle(c, unit * 0.22f, from)
+    val dir = if (to.y < from.y) -1f else 1f
+    // Linie endet kurz vor der Station, Spitze zeigt auf sie
+    val tip = to - Offset(0f, dir * unit * 0.75f)
+    if (kotlin.math.abs(tip.y - from.y) > unit * 0.3f) {
+        drawLine(c, from, tip, unit * 0.12f, cap = StrokeCap.Round,
+            pathEffect = androidx.compose.ui.graphics.PathEffect.dashPathEffect(floatArrayOf(unit * 0.35f, unit * 0.2f)))
+        val head = Path().apply {
+            moveTo(tip.x, tip.y + dir * unit * 0.1f)
+            lineTo(tip.x - unit * 0.35f, tip.y - dir * unit * 0.45f)
+            lineTo(tip.x + unit * 0.35f, tip.y - dir * unit * 0.45f)
+            close()
+        }
+        drawPath(head, c)
+    }
+    val r = tm.measure(g.label, TextStyle(color = Color(0xFF1A1440), fontSize = 12.sp, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold))
+    val mid = Offset(from.x, (from.y + to.y) / 2f)
+    // Beschriftung rechts vom Pfeil – am rechten Rand links davon
+    val left = if (mid.x + unit * 0.5f + r.size.width + unit * 0.4f > size.width) mid.x - unit * 0.5f - r.size.width - unit * 0.4f else mid.x + unit * 0.5f
+    val box = Offset(left, mid.y - r.size.height / 2f - unit * 0.1f)
+    drawRoundRect(Q.Yellow, box, Size(r.size.width + unit * 0.4f, r.size.height + unit * 0.2f), CornerRadius(unit * 0.3f))
+    drawText(r, topLeft = box + Offset(unit * 0.2f, unit * 0.1f))
 }
 
 private fun DrawScope.label(tm: TextMeasurer, text: String, at: Offset, color: Color = Q.Muted, sizeSp: Int = 10) {

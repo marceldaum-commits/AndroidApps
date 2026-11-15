@@ -168,4 +168,18 @@ class FlightTest {
         val straight = Flight.path(l, mapOf("angle" to 30.0))
         assertEquals(straight.size, Flight.firstLeg(straight).size)
     }
+
+    /** Abstands-Pfeil: zeigt an der Station, wie weit die Kurve daneben lag. */
+    @Test fun gapShowsHowFarOffTheCurveWas() {
+        val l = Levels.byId("3-1")!! // y = x² + e durch (2 | 1)
+        val v = mapOf("e" to -5.0)   // bei x = 2: 4 − 5 = −1 → 2 zu tief
+        val g = Feedback.gap(l, v, Flight.fly(l, v))!!
+        assertEquals(2.0, g.x, 1e-9); assertEquals(-1.0, g.from, 1e-9); assertEquals(1.0, g.to, 1e-9)
+        assertTrue(g.tooLow); assertEquals("2 zu tief", g.label)
+        assertEquals("1 zu hoch", Feedback.gap(l, mapOf("e" to -2.0), Flight.fly(l, mapOf("e" to -2.0)))!!.label)
+        // getroffen → kein Pfeil; getarnte Station → kein Pfeil
+        assertNull(Feedback.gap(l, mapOf("e" to -3.0), Flight.fly(l, mapOf("e" to -3.0))))
+        val hidden = l.copy(hidden = true)
+        assertNull(Feedback.gap(hidden, v, Flight.fly(hidden, v)))
+    }
 }

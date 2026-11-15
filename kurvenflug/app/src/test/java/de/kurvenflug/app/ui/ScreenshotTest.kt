@@ -14,6 +14,8 @@ import de.kurvenflug.app.ui.settings.UpdateState
 import de.kurvenflug.app.ui.theme.Q
 import de.kurvenflug.app.ui.theme.KurvenflugTheme
 import de.kurvenflug.core.model.Levels
+import de.kurvenflug.core.model.Learning
+import de.kurvenflug.core.model.Played
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -49,7 +51,12 @@ class ScreenshotTest {
     @Test fun home() = shot("01_start") {
         HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {},
             daily = de.kurvenflug.core.model.Daily.forDay(20_500), dailiesDone = 4,
-            bossStars = mapOf(1 to 2), onBoss = {}, badges = 3, stormBest = 7, onDuel = {}, onStorm = {}, onBadges = {})
+            bossStars = mapOf(1 to 2), onBoss = {}, badges = 3, stormBest = 7, onDuel = {}, onStorm = {}, onBadges = {},
+            learning = {
+                val now = 20_500L * Learning.DAY_MS
+                val played = someStars.mapValues { Played(it.value, now - 3 * Learning.DAY_MS) }
+                de.kurvenflug.app.ui.learning.LearningCard(Learning.status(played, now), Learning.review(played, now, 20_500L)) {}
+            })
     }
 
     @Test fun intro() = shot("03_volt_erklaert", prepare = { it.onNodeWithText("Weiter ›").performClick() }) {
@@ -155,6 +162,26 @@ class ScreenshotTest {
 
     /** Zielhilfe: Der Strahl ist bis zum ersten Spiegel zu sehen – den Abprall konstruiert man selbst. */
     @Test fun laserAim() = level("11-1", name = "37_laser_zielen", values = mapOf("angle" to -35.0))
+
+    /** Nach einem Fehlversuch: gelber Pfeil von der Bahn zur Station mit „2 zu tief“. */
+    @Test fun gapArrow() = level("3-1", name = "38_abstand_pfeil", values = mapOf("e" to -5.0), settle = 4000,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun trigLaser() = level("14-1", name = "39_trig_laser", values = mapOf("angle" to 20.0))
+    @Test fun trigRadio() = level("14-5", name = "40_trig_funk", values = mapOf("r" to 10.0), settle = 3500,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    /** Lernstand: einige Themen sicher, eins wackelig und fällig zum Auffrischen. */
+    @Test fun learning() {
+        val day = 20_500L; val now = day * Learning.DAY_MS + 43_200_000L
+        fun all(n: Int, stars: Int, daysAgo: Int) = Levels.chapters.first { it.number == n }.levels
+            .associate { it.id to Played(stars, now - daysAgo * Learning.DAY_MS) }
+        val played = all(1, 3, 1) + all(8, 3, 4) + all(2, 2, 3) + mapOf("3-1" to Played(1, now - Learning.DAY_MS))
+        shot("41_lernstand", settle = 2500) {
+            de.kurvenflug.app.ui.learning.LearningScreen(Learning.status(played, now), Learning.review(played, now, day),
+                false, now, {}, {})
+        }
+    }
 
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })

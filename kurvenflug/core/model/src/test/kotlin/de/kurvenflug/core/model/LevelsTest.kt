@@ -36,4 +36,15 @@ class LevelsTest {
         assertEquals(Levels.all.size, Levels.all.map { it.id }.toSet().size)
         Levels.chapters.forEach { c -> c.levels.forEachIndexed { i, l -> assertEquals("${c.number}-${i + 1}", l.id) } }
     }
+
+    /** Trigonometrie: nur wer rechnet, trifft – Laser höchstens 4 Winkel, Funk höchstens 5 Radien. */
+    @Test fun trigonometryNeedsCalculation() {
+        val c = Levels.chapters.first { it.number == 14 }
+        assertEquals(7, c.levels.size)
+        for (l in c.levels) {
+            val p = l.params.single()
+            val wins = generateSequence(p.min) { it + p.step }.takeWhile { it <= p.max + 1e-9 }.count { Flight.fly(l, mapOf(p.key to it)).success }
+            assertTrue("${l.id}: $wins Stellungen treffen", wins in 1..(if (l.kind == Kind.LASER) 4 else 5))
+        }
+    }
 }

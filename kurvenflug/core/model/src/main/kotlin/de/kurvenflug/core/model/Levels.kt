@@ -32,11 +32,19 @@ data class Level(
     val equations: List<String>? = null,
     /** Spiegel für den Laser: je Spiegel [x1, y1, x2, y2] */
     val mirrors: List<List<Double>> = emptyList(),
+    /** Merkbild: rechtwinkliges Dreieck vom Start zur ersten Station mit beschrifteten Seiten (Trigonometrie) */
+    val triangle: Triangle? = null,
 ) {
     /** Startwerte + feste Werte + aktuelle Einstellung */
     fun values(v: Map<String, Double>): Map<String, Double> = params.associate { it.key to it.start } + fixed + v
     val start: Map<String, Double> get() = params.associate { it.key to it.start }
 }
+
+/**
+ * Rechtwinkliges Dreieck als Merkbild: Ecke A = Start, B = (Station.x | Start.y) mit rechtem Winkel, C = Station.
+ * Beschriftungen sind frei („12“, „r = ?“, „30°“); null = Seite ohne Beschriftung.
+ */
+data class Triangle(val angle: String, val width: String? = null, val height: String? = null, val hyp: String? = null)
 
 /** Ein Kapitel = ein Schulthema. */
 data class Chapter(
@@ -49,8 +57,30 @@ data class Chapter(
     val levels: List<Level>,
 )
 
+/** Abstand an der Station nach einem Fehlversuch: Bahn bei x war auf Höhe [from], die Station liegt auf [to]. */
+data class Gap(val x: Double, val from: Double, val to: Double) {
+    val distance get() = kotlin.math.abs(to - from)
+    val tooLow get() = from < to
+    /** „3 zu tief“ – kurz genug für das Spielfeld */
+    val label get() = "${num(distance, 1)} zu ${if (tooLow) "tief" else "hoch"}"
+}
+
 /** Volts Rückmeldung nach einem Fehlversuch: konkret, mit Zahlen, ohne Schimpfen. */
 object Feedback {
+    /**
+     * Für den Pfeil im Spielfeld: Wie weit lag die Kurve an der Stelle der verfehlten Station daneben?
+     * Nur bei Funktionskurven, ohne Absturz und nicht bei getarnten Stationen (der Pfeil würde sie verraten).
+     */
+    fun gap(level: Level, values: Map<String, Double>, r: FlightResult): Gap? {
+        if (r.success || r.crash != null || level.hidden || level.kind !in Flight.functionKinds) return null
+        val i = level.targets.indices.firstOrNull { it !in r.hitTargets } ?: return null
+        val t = level.targets[i]
+        val y = Flight.f(level, values, t.x)
+        if (y.isNaN()) return null
+        val lim = Flight.R + 0.5
+        return Gap(t.x, y.coerceIn(-lim, lim), t.y)
+    }
+
     fun after(level: Level, values: Map<String, Double>, r: FlightResult): String {
         if (r.success) return ""
         if (r.crash != null && level.kind == Kind.RADIUS) return "Störsender gestreift! 📡 Deine Welle ist zu groß – genau ausrechnen, nicht aufrunden."
@@ -72,6 +102,11 @@ object Feedback {
             }
             Kind.RADIUS -> {
                 val dx = t.x - level.launch.x; val dy = t.y - level.launch.y
+                if (level.triangle != null) {
+                    val r0 = v.getValue("r")
+                    return "Deine Welle hatte r = ${num(r0)} – ${if (r0 < kotlin.math.hypot(dx, dy)) "zu kurz" else "zu weit"}. " +
+                        "r ist die Hypotenuse: Rechne mit sin oder cos!"
+                }
                 "Deine Welle hatte r = ${num(v.getValue("r"))}. Zur Station: ${num(kotlin.math.abs(dx))} nach ${if (dx >= 0) "rechts" else "links"}, " +
                     "${num(kotlin.math.abs(dy))} nach ${if (dy >= 0) "oben" else "unten"} – Pythagoras: r² = Δx² + Δy²."
             }
@@ -612,10 +647,52 @@ object Levels {
                     tip = "Bei x = 1 ist log = 0 – das verrät d. Dann: log_b(8) = 3."),
             ),
         ),
+        Chapter(
+            14, "Trigonometrie", "Klasse 9–10", "📐",
+            listOf(
+                "Im rechtwinkligen Dreieck hängen Winkel und Seiten fest zusammen – damit zielen echte Raumsonden!",
+                "tan α = Gegenkathete : Ankathete – beim Laser also Höhe : Weite. Den Winkel holst du mit tan⁻¹ (Taschenrechner: SHIFT + tan).",
+                "sin α = Gegenkathete : Hypotenuse (GK : r), cos α = Ankathete : Hypotenuse (AK : r). Beim Funk ist die Hypotenuse der Radius r.",
+                "Ich zeichne dir das Dreieck ein. Taschenrechner ist erlaubt – rechnen musst du trotzdem selbst! 🧮",
+            ),
+            listOf(
+                Level("14-1", 14, 1, "Steigflug", Kind.LASER, "Die Station liegt 12 weiter rechts und 9 höher. Unter welchem Winkel feuern?",
+                    listOf(t(4.0, 3.0, 0.5)), listOf(la), mapOf("angle" to 37.0), launch = Vec(-8.0, -6.0),
+                    triangle = Triangle("α = ?", width = "12", height = "9"),
+                    tip = "tan α = 9 : 12 = 0,75 → α = tan⁻¹(0,75) ≈ 37°."),
+                Level("14-2", 14, 2, "Flacher Schuss", Kind.LASER, "Weite 17, Höhe 4 – ein ganz flacher Winkel.",
+                    listOf(t(8.0, 2.0, 0.5)), listOf(la), mapOf("angle" to 13.0), launch = Vec(-9.0, -2.0),
+                    asteroids = listOf(rock(0.0, 5.0, 1.2)),
+                    triangle = Triangle("α = ?", width = "17", height = "4"),
+                    tip = "tan α = 4 : 17 ≈ 0,235 → α ≈ 13°."),
+                Level("14-3", 14, 3, "Sinkflug", Kind.LASER, "Diesmal abwärts: 14 nach rechts, 10 nach unten. Ein Winkel nach unten ist negativ.",
+                    listOf(t(6.0, -4.0, 0.5)), listOf(la), mapOf("angle" to -36.0), launch = Vec(-8.0, 6.0),
+                    triangle = Triangle("α = ?", width = "14", height = "10"),
+                    tip = "tan α = 10 : 14 ≈ 0,714 → 35,5°, gerundet 36° – nach unten, also −36°."),
+                Level("14-4", 14, 4, "Berechnete Bande", Kind.LASER,
+                    "Der Felsen versperrt den direkten Weg. Spiegel die Station am Boden-Spiegel und rechne den Winkel aus!",
+                    listOf(t(7.0, 3.0, 0.5)), listOf(la), mapOf("angle" to -48.0), launch = Vec(-9.0, 3.0),
+                    mirrors = listOf(mirror(-6.0, -6.0, 6.0, -6.0)), asteroids = listOf(rock(-1.0, 3.0, 1.2)),
+                    tip = "Spiegelbild der Station: (7 | −15). Weite 16, Tiefe 18 → tan α = 18 : 16 = 1,125 → α ≈ −48°."),
+                Level("14-5", 14, 5, "Funkmast", Kind.RADIUS, "Die Station liegt unter 30° und 5 Kästchen höher als der Sender. Wie weit muss die Welle reichen?",
+                    listOf(t(0.66, -3.0, 0.25)), listOf(pr), mapOf("r" to 10.0), launch = Vec(-8.0, -8.0),
+                    triangle = Triangle("30°", height = "5", hyp = "r = ?"),
+                    tip = "sin 30° = 5 : r. Weil sin 30° = 0,5 ist: r = 5 : 0,5 = 10."),
+                Level("14-6", 14, 6, "Weitfunk", Kind.RADIUS, "Unter 40°, 10 Kästchen weiter rechts. Wie groß ist r?",
+                    listOf(t(2.0, 0.39, 0.25)), listOf(pr), mapOf("r" to 13.1), launch = Vec(-8.0, -8.0),
+                    triangle = Triangle("40°", width = "10", hyp = "r = ?"),
+                    tip = "cos 40° = 10 : r → r = 10 : cos 40° ≈ 10 : 0,766 ≈ 13,1."),
+                Level("14-7", 14, 7, "Steilfunk", Kind.RADIUS, "Steil nach oben: 60° und 9 Kästchen Höhe. Achtung, Störsender!",
+                    listOf(t(-0.8, 1.0, 0.25)), listOf(pr), mapOf("r" to 10.4), launch = Vec(-6.0, -8.0),
+                    asteroids = listOf(rock(5.3, -8.0, 0.5)),
+                    triangle = Triangle("60°", height = "9", hyp = "r = ?"),
+                    tip = "sin 60° = 9 : r → r = 9 : sin 60° ≈ 9 : 0,866 ≈ 10,4. Nicht aufrunden – der Störsender wartet bei 11!"),
+            ),
+        ),
     )
 
     /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand) */
-    private val order = listOf(1, 8, 13, 11, 2, 7, 9, 3, 12, 4, 5, 10, 6)
+    private val order = listOf(1, 8, 13, 11, 2, 7, 9, 3, 12, 4, 14, 5, 10, 6)
     val chapters: List<Chapter> = (baseChapters + extraChapters).sortedBy { order.indexOf(it.number) }
 
     val all: List<Level> = chapters.flatMap { it.levels }

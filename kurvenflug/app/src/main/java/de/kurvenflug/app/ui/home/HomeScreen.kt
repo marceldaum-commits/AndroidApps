@@ -64,6 +64,8 @@ fun HomeScreen(
     onCodex: (() -> Unit)? = null,
     onWorkshop: (() -> Unit)? = null,
     banner: (@Composable () -> Unit)? = null,
+    /** Lernstand-Karte (mit Auffrisch-Hinweis) */
+    learning: (@Composable () -> Unit)? = null,
 ) {
     Box(Modifier.fillMaxSize()) {
         Starfield()
@@ -83,6 +85,7 @@ fun HomeScreen(
                 Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
             }
             daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
+            learning?.invoke()
             if (onDuel != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 ModeTile("⚔️", "Duell", "zu zweit", Q.Cyan, Modifier.weight(1f), onDuel)
                 ModeTile("☄️", "Sturm", if (stormBest > 0) "Rekord $stormBest" else "endlos", Q.Orange, Modifier.weight(1f)) { onStorm?.invoke() }

@@ -56,6 +56,7 @@ object Routes {
     const val DETECTIVE = "detektiv"
     const val CODEX = "lexikon"
     const val WORKSHOP = "werkstatt"
+    const val LEARN = "lernstand"
     fun level(id: String) = "level/$id"
 }
 
@@ -160,12 +161,22 @@ class MainActivity : ComponentActivity() {
                     onBuild = { nav.goOnce(Routes.BUILD_HOME) }, onDetective = { nav.goOnce(Routes.DETECTIVE) },
                     onCodex = { nav.goOnce(Routes.CODEX) }, onWorkshop = { nav.goOnce(Routes.WORKSHOP) },
                     banner = upd?.let { u -> { UpdateBanner(u.version) { nav.goOnce(Routes.SETTINGS) } } },
+                    learning = {
+                        val now = remember(progress) { System.currentTimeMillis() }
+                        val played = remember(progress) { vm.played(progress) }
+                        de.kurvenflug.app.ui.learning.LearningCard(
+                            remember(played) { de.kurvenflug.core.model.Learning.status(played, now) },
+                            remember(played) { de.kurvenflug.core.model.Learning.review(played, now, vm.today()) },
+                        ) { nav.goOnce(Routes.LEARN) }
+                    },
                 )
             }
             composable(Routes.LEVEL, arguments = listOf(navArgument("id") { type = NavType.StringType })) { e ->
                 val id = e.arguments?.getString("id").orEmpty()
                 val level = remember(id) {
-                    if (Daily.isDaily(id)) id.removePrefix(Daily.PREFIX).toLongOrNull()?.let { Daily.forDay(it) } else Levels.byId(id)
+                    if (Daily.isDaily(id)) id.removePrefix(Daily.PREFIX).toLongOrNull()?.let { Daily.forDay(it) }
+                    else if (de.kurvenflug.core.model.Learning.isReview(id)) de.kurvenflug.core.model.Learning.levelFor(id)
+                    else Levels.byId(id)
                 } ?: return@composable
                 val chapter = Levels.chapters.firstOrNull { it.number == level.chapter }
                     ?: Chapter(0, "Tagesmission", "Jeden Tag neu", "🛰️", emptyList(), listOf(level))
@@ -179,6 +190,7 @@ class MainActivity : ComponentActivity() {
                         nav.navigate(Routes.level(n.id)) { popUpTo(Routes.LEVEL) { inclusive = true } }
                     } },
                     onBack = { nav.popSafe() },
+                    header = if (de.kurvenflug.core.model.Learning.isReview(level.id)) "🔁 Auffrischen · ${chapter.emoji} ${chapter.title}" else null,
                 )
             }
             composable(Routes.BOSS, arguments = listOf(navArgument("chapter") { type = NavType.IntType })) { e ->
@@ -191,6 +203,19 @@ class MainActivity : ComponentActivity() {
             composable(Routes.DUEL) {
                 val code = remember { incomingDuel.value.also { incomingDuel.value = null } }
                 DuelScreen(probeColor, code, onResult = { vm.settings.recordDuel(it) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.LEARN) {
+                val progress by vm.progress.collectAsStateWithLifecycle()
+                val now = remember(progress) { System.currentTimeMillis() }
+                val played = remember(progress) { vm.played(progress) }
+                de.kurvenflug.app.ui.learning.LearningScreen(
+                    status = remember(played) { de.kurvenflug.core.model.Learning.status(played, now) },
+                    review = remember(played) { de.kurvenflug.core.model.Learning.review(played, now, vm.today()) },
+                    doneToday = de.kurvenflug.core.model.Learning.doneToday(played, vm.today()),
+                    now = now,
+                    onReview = { nav.goOnce(Routes.level(it.id)) },
+                    onBack = { nav.popSafe() },
+                )
             }
             composable(Routes.BADGES) { BadgesScreen(stats) { nav.popSafe() } }
             composable(Routes.CODEX) { de.kurvenflug.app.ui.collection.CodexScreen(stats.stars) { nav.popSafe() } }
