@@ -32,6 +32,7 @@ import de.kurvenflug.app.ui.fx.*
 import de.kurvenflug.app.ui.theme.Q
 import de.kurvenflug.app.ui.volt.Volt
 import de.kurvenflug.app.ui.volt.VoltMood
+import de.kurvenflug.core.model.subject
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -77,6 +78,9 @@ fun HomeScreen(
     continueLevel: de.kurvenflug.core.model.Level? = null,
     onLearn: (() -> Unit)? = null,
     initialTab: Int = 0,
+    /** Story: gefundene Bauteile der Aurora, Hangar öffnen */
+    partsFound: Int = 0,
+    onHangar: (() -> Unit)? = null,
 ) {
     var tab by rememberSaveable { mutableIntStateOf(initialTab) }
     var picking by rememberSaveable { mutableStateOf(false) }
@@ -109,6 +113,7 @@ fun HomeScreen(
                             continueLevel?.let { l -> ContinueCard(l, chapters.firstOrNull { it.number == l.chapter }) { onLevel(l) } }
                             daily?.let { DailyCard(it, dailyStars, dailiesDone) { onLevel(it) } }
                             learning?.invoke()
+                            if (onHangar != null) de.kurvenflug.app.ui.story.AuroraCard(partsFound, de.kurvenflug.core.model.Story.parts.size, onHangar)
                             Text("Alle Kapitel findest du in der 🗺️ Galaxie.", color = Q.Muted, style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.clickable { sfx?.play(Sound.TAP); tab = 1 })
                         }
@@ -130,6 +135,10 @@ fun HomeScreen(
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("📊", "Lernstand", "Was sitzt schon?", Q.Green, Modifier.weight(1f)) { onLearn?.invoke() }
                                 ModeTile("🏅", "Abzeichen", "$badges/${de.kurvenflug.core.model.Badges.all.size}", Q.Yellow, Modifier.weight(1f)) { onBadges?.invoke() }
+                            }
+                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                                ModeTile("🛸", "Hangar", "$partsFound/${de.kurvenflug.core.model.Story.parts.size} Bauteile", Q.Orange, Modifier.weight(1f)) { onHangar?.invoke() }
+                                Spacer(Modifier.weight(1f))
                             }
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, Modifier.weight(1f)) { onCodex?.invoke() }
@@ -204,7 +213,14 @@ private fun Galaxy(
     var subject by rememberSaveable { mutableStateOf<de.kurvenflug.core.model.Subject?>(null) }
     var open by rememberSaveable { mutableStateOf(listOfNotNull(continueLevel?.chapter)) }
     val sfx = LocalSfx.current
-    TabTitle("🗺️ Galaxie", "${chapters.size} Kapitel · alle offen, Level für Level")
+    var asMap by rememberSaveable { mutableStateOf(true) }
+    TabTitle("🗺️ Galaxie", "${chapters.size} Planeten · alle offen, Level für Level")
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        FilterChip(selected = asMap, onClick = { sfx?.play(Sound.TICK); asMap = true }, label = { Text("🪐 Karte") },
+            colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Violet.copy(alpha = 0.35f), labelColor = Q.Muted, selectedLabelColor = Q.Text))
+        FilterChip(selected = !asMap, onClick = { sfx?.play(Sound.TICK); asMap = false }, label = { Text("📋 Liste") },
+            colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Violet.copy(alpha = 0.35f), labelColor = Q.Muted, selectedLabelColor = Q.Text))
+    }
     AssistChip(onClick = { sfx?.play(Sound.TAP); onPickGrade() }, label = { Text("🎓 ${grade?.let { "Klasse $it · ändern" } ?: "Klasse wählen"}") },
         colors = AssistChipDefaults.assistChipColors(labelColor = Q.Text))
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -213,6 +229,11 @@ private fun Galaxy(
                 label = { Text(s?.let { "${it.emoji} ${it.label}" } ?: "Alle") },
                 colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Cyan.copy(alpha = 0.25f), labelColor = Q.Muted, selectedLabelColor = Q.Text))
         }
+    }
+    if (asMap) {
+        de.kurvenflug.app.ui.story.GalaxyMap(chapters.filter { subject == null || it.subject == subject }, chapters, stars, grade,
+            continueLevel?.chapter, onLevel, bossStars, onBoss)
+        return
     }
     de.kurvenflug.core.model.Plan.sections(chapters, grade, subject).forEach { sec ->
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {

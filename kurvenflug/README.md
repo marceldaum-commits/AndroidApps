@@ -14,6 +14,9 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
   (Lernstand, Abzeichen, Lexikon, Werkstatt, Klasse, Einstellungen).
 - Startbildschirm-Widget (Jetpack Glance): Tagesmission, „Weiter“ und fälliges Auffrischen, jeder Knopf springt direkt ins
   Level (`kurvenflug://level/<id>`). Klein (2×2) nur Sterne und „Weiter“. Aktualisiert sich nach jedem Level und alle 30 Minuten.
+- Story „Die Reise der Aurora“: Volts Mutterschiff ist zerbrochen, auf jedem Planeten (Kapitel) treibt ein Bauteil. Ein ganz
+  geschafftes Kapitel bringt es zurück (Feier + Hangar, in dem das Schiff aus 18 Teilen zusammenwächst). Die Galaxie ist eine
+  Sternenkarte mit Pfad, Volts Rakete schwebt beim aktuellen Planeten; Umschalten auf Liste möglich.
 - Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
@@ -50,6 +53,8 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
 | ![](screenshots/46_ich.png) | ![](screenshots/45_klasse_waehlen.png) | ![](screenshots/11_einstellungen.png) |
 | ![](screenshots/47_widget.png) | ![](screenshots/48_widget_klein.png) | ![](screenshots/49_brueche.png) |
 | ![](screenshots/50_winkel.png) | ![](screenshots/51_lichtbrechung.png) | ![](screenshots/52_nullstellen.png) |
+| ![](screenshots/53_sternenkarte.png) | ![](screenshots/54_hangar.png) | ![](screenshots/55_bauteil_gefunden.png) |
+| ![](screenshots/56_geschichte.png) | | |
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Flugbahnen, Wurfphysik, Gravitation (Leapfrog), Kollisionen, Level, Tagesmission-Generator,

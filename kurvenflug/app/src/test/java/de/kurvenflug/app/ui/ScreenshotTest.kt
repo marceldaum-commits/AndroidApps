@@ -214,6 +214,24 @@ class ScreenshotTest {
     @Test fun zeros() = level("18-3", name = "52_nullstellen", values = mapOf("d" to 2.0, "e" to -5.0),
         prepare = { it.onNodeWithText("👁 Bahn").performClick() })
 
+    private val storyStars = Levels.chapters.filter { it.number in setOf(1, 15, 8, 2) }.flatMap { it.levels }.associate { it.id to 3 } + someStars
+
+    @Test fun galaxyMap() = shot("53_sternenkarte", settle = 1500) {
+        HomeScreen(storyStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, storyStars, {}, {},
+            grade = 7, continueLevel = Levels.byId("13-1"), initialTab = 1, partsFound = 4, onHangar = {})
+    }
+
+    @Test fun hangar() = shot("54_hangar") {
+        de.kurvenflug.app.ui.story.HangarScreen(de.kurvenflug.core.model.Story.found(Levels.chapters, storyStars)) {}
+    }
+
+    @Test fun partFound() = shot("55_bauteil_gefunden", settle = 1200) {
+        val found = de.kurvenflug.core.model.Story.found(Levels.chapters, storyStars)
+        de.kurvenflug.app.ui.story.PartFoundOverlay(found.take(1), found.map { it.chapter }.toSet()) {}
+    }
+
+    @Test fun storyIntro() = shot("56_geschichte") { de.kurvenflug.app.ui.story.StoryIntroOverlay {} }
+
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 

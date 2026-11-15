@@ -78,6 +78,14 @@ class Settings(ctx: Context) {
         get() = prefs.getStringSet("badgesSeen", emptySet()).orEmpty()
         set(v) = prefs.edit().putStringSet("badgesSeen", v).apply()
 
+    /** Schon gefeierte Bauteile der Aurora (Kapitelnummern) und ob die Geschichte erzählt wurde */
+    var partsSeen: Set<String>
+        get() = prefs.getStringSet("partsSeen", emptySet()).orEmpty()
+        set(v) = prefs.edit().putStringSet("partsSeen", v).apply()
+    private val _storySeen = flag("storySeen", false)
+    val storySeen: StateFlow<Boolean> = _storySeen.asStateFlow()
+    fun markStorySeen() { prefs.edit().putBoolean("storySeen", true).apply(); _storySeen.value = true }
+
     /** Eigene Level aus dem Baukasten (als Teil-Codes, neueste zuerst) */
     private val _myLevels = MutableStateFlow(prefs.getString("myLevels", "").orEmpty().lines().filter { it.isNotBlank() })
     val myLevels: StateFlow<List<String>> = _myLevels.asStateFlow()
@@ -100,12 +108,13 @@ class Settings(ctx: Context) {
     fun resetGame() {
         val e = prefs.edit()
         prefs.all.keys.filter { it.startsWith("intro_") || it.startsWith("walk_") }.forEach { e.remove(it) }
-        listOf("grade", "gradeAsked", "shape", "trail", "hat", "skin", "stormBest", "duelWins", "duelsPlayed", "badgesSeen", "detectiveBest")
+        listOf("grade", "gradeAsked", "shape", "trail", "hat", "skin", "stormBest", "duelWins", "duelsPlayed", "badgesSeen", "detectiveBest", "partsSeen", "storySeen")
             .forEach { e.remove(it) }
         e.apply()
         _grade.value = null; _gradeAsked.value = false
         _look.value = Triple(0, 0, 0)
         _stormBest.value = 0; _duelWins.value = 0; _duelsPlayed.value = 0
+        _storySeen.value = false
     }
 
     var lastUpdateCheck: Long

@@ -3,6 +3,14 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.11.0 – Die Reise der Aurora
+- **🛸 Eine Geschichte für die ganze Galaxie**: Volts Mutterschiff, die Aurora, ist in einem Meteoritensturm zerbrochen.
+  Auf jedem der 18 Planeten treibt ein Bauteil – schaffst du ein Kapitel ganz, bringst du es zurück!
+- **🪐 Sternenkarte**: Die Galaxie ist jetzt eine echte Karte mit Planeten auf einem leuchtenden Pfad. Deine Rakete schwebt
+  dort, wo du gerade bist. Planeten deiner Klasse strahlen. (Die Liste gibt es weiter über „📋 Liste“.)
+- **🔧 Hangar**: Hier wächst die Aurora Teil für Teil zusammen. Mit allen 18 Teilen zünden die Triebwerke!
+- Beim ersten Besuch eines Planeten verrät Volt, welches Bauteil dort liegt.
+
 ## 0.10.0 – Vier neue Kapitel
 - **🍕 Brüche & Kommazahlen (Klasse 5–6)**: Lande auf dem Zahlenstrahl bei 2½, ¾, 7/4 oder 3,7 – mit Vierteln und Zehnteln
   zum Ablesen. Die App zeigt dir, dass 2,75 dasselbe ist wie 2¾. 8 Level.

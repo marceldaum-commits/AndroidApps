@@ -466,6 +466,8 @@ private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean,
 /** Volt erklärt das Kapitel in wenigen kurzen Schritten. */
 @Composable
 fun IntroOverlay(chapter: Chapter, onDone: () -> Unit) {
+    // Story: Volt begrüßt den Planeten, dann die Erklärung
+    val pages = remember(chapter.number) { listOfNotNull(Story.arrival(chapter.number)) + chapter.intro }
     var page by rememberSaveable { mutableIntStateOf(0) }
     val sfx = LocalSfx.current
     LaunchedEffect(page) { sfx?.play(Sound.BEEP, volume = 0.5f) }
@@ -474,15 +476,15 @@ fun IntroOverlay(chapter: Chapter, onDone: () -> Unit) {
             Text("${chapter.emoji} ${chapter.title}", style = MaterialTheme.typography.headlineMedium, color = Q.Cyan)
             Text(chapter.grades, color = Q.Muted)
             AnimatedContent(page, transitionSpec = { (slideInHorizontally { it / 2 } + fadeIn()) togetherWith (slideOutHorizontally { -it / 2 } + fadeOut()) }, label = "intro") { p ->
-                Volt(if (p == chapter.intro.lastIndex) VoltMood.HAPPY else VoltMood.IDLE, size = 84.dp, speech = chapter.intro[p])
+                Volt(if (p == pages.lastIndex) VoltMood.HAPPY else VoltMood.IDLE, size = 84.dp, speech = pages[p])
             }
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                chapter.intro.indices.forEach { i -> Box(Modifier.size(if (i == page) 10.dp else 7.dp).clip(RoundedCornerShape(50)).background(if (i == page) Q.Cyan else Q.Muted)) }
+                pages.indices.forEach { i -> Box(Modifier.size(if (i == page) 10.dp else 7.dp).clip(RoundedCornerShape(50)).background(if (i == page) Q.Cyan else Q.Muted)) }
             }
-            NeonButton(onClick = { if (page < chapter.intro.lastIndex) page++ else onDone() }, color = Q.Cyan) {
-                Text(if (page < chapter.intro.lastIndex) "Weiter ›" else "Los geht's! 🚀", color = Q.Text, fontWeight = FontWeight.Bold)
+            NeonButton(onClick = { if (page < pages.lastIndex) page++ else onDone() }, color = Q.Cyan) {
+                Text(if (page < pages.lastIndex) "Weiter ›" else "Los geht's! 🚀", color = Q.Text, fontWeight = FontWeight.Bold)
             }
-            if (page < chapter.intro.lastIndex) TextButton(onClick = onDone) { Text("Überspringen", color = Q.Muted) }
+            if (page < pages.lastIndex) TextButton(onClick = onDone) { Text("Überspringen", color = Q.Muted) }
         }
     }
 }

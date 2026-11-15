@@ -57,6 +57,7 @@ object Routes {
     const val CODEX = "lexikon"
     const val WORKSHOP = "werkstatt"
     const val LEARN = "lernstand"
+    const val HANGAR = "hangar"
     fun level(id: String) = "level/$id"
 }
 
@@ -181,6 +182,8 @@ class MainActivity : ComponentActivity() {
                     grade = grade, onGrade = vm.settings::setGrade, askGrade = !gradeAsked,
                     continueLevel = remember(progress, grade) { de.kurvenflug.core.model.Plan.next(Levels.chapters, grade, vm.played(progress)) },
                     onLearn = { nav.goOnce(Routes.LEARN) },
+                    partsFound = remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars).size },
+                    onHangar = { nav.goOnce(Routes.HANGAR) },
                     learning = {
                         val now = remember(progress) { System.currentTimeMillis() }
                         val played = remember(progress) { vm.played(progress) }
@@ -225,6 +228,9 @@ class MainActivity : ComponentActivity() {
             composable(Routes.DUEL) {
                 val code = remember { incomingDuel.value.also { incomingDuel.value = null } }
                 DuelScreen(probeColor, code, onResult = { vm.settings.recordDuel(it) }, onBack = { nav.popSafe() })
+            }
+            composable(Routes.HANGAR) {
+                de.kurvenflug.app.ui.story.HangarScreen(remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars) }) { nav.popSafe() }
             }
             composable(Routes.LEARN) {
                 val progress by vm.progress.collectAsStateWithLifecycle()
@@ -306,6 +312,20 @@ class MainActivity : ComponentActivity() {
         // Neue Abzeichen auf der Startseite feiern (nicht mitten im Level)
         if (celebrate.isNotEmpty() && route == Routes.HOME) NewBadgesOverlay(celebrate) {
             vm.markBadgesSeen(celebrate.map { it.id }); celebrate = emptyList()
+        }
+        // Story: einmal erzählen (nach der Klassen-Wahl), dann jedes neu gefundene Bauteil feiern
+        val storySeen by vm.settings.storySeen.collectAsStateWithLifecycle()
+        val gradeAskedNow by vm.settings.gradeAsked.collectAsStateWithLifecycle()
+        val foundParts = remember(stars) { de.kurvenflug.core.model.Story.found(Levels.chapters, stars) }
+        var newParts by remember { mutableStateOf(emptyList<de.kurvenflug.core.model.Part>()) }
+        LaunchedEffect(foundParts) { newParts = foundParts.filter { it.chapter.toString() !in vm.settings.partsSeen } }
+        if (route == Routes.HOME && celebrate.isEmpty()) {
+            if (gradeAskedNow && !storySeen) de.kurvenflug.app.ui.story.StoryIntroOverlay { vm.settings.markStorySeen() }
+            else if (storySeen && newParts.isNotEmpty()) de.kurvenflug.app.ui.story.PartFoundOverlay(newParts, foundParts.map { it.chapter }.toSet()) {
+                vm.settings.partsSeen = vm.settings.partsSeen + newParts.map { it.chapter.toString() }
+                newParts = emptyList()
+                nav.goOnce(Routes.HANGAR)
+            }
         }
     }
 }
