@@ -240,7 +240,7 @@ private fun PlusTab(plusPacks: List<Pack>, onOpenPacks: () -> Unit) {
                 Text("Bald gibt es hier zusätzliche Wissenspakete – für Prüfungen, Abitur und noch mehr Fächer. " +
                     "Bis dahin sind alle Plus-Pakete gratis. Probier sie aus! 🎁",
                     style = MaterialTheme.typography.bodyMedium, color = Color(0xFF4E3B00))
-                Text("Alles, was es heute gibt, bleibt kostenlos – versprochen.", style = MaterialTheme.typography.bodySmall, color = Color(0xFF4E3B00))
+                Text("Alle Grundpakete bleiben kostenlos – versprochen.", style = MaterialTheme.typography.bodySmall, color = Color(0xFF4E3B00))
             }
         }
         Text("Plus-Pakete (gerade gratis)", style = MaterialTheme.typography.titleMedium)
@@ -270,7 +270,7 @@ private fun PlusTab(plusPacks: List<Pack>, onOpenPacks: () -> Unit) {
         title = { Text("Wissensgarten Plus – für Eltern") },
         text = {
             Text("• Plus wird ein freiwilliger Zusatz mit weiteren Wissenspaketen.\n" +
-                "• Alles, was es heute gibt, bleibt kostenlos.\n" +
+                "• Alle Grundpakete bleiben kostenlos. Die Plus-Pakete (heute 6) sind bis zum Start gratis.\n" +
                 "• Kaufen geht nur hinter der Eltern-Aufgabe und über Google Play mit eurem Google-Konto – wir sehen keine Zahlungsdaten.\n" +
                 "• Keine Werbung, keine Lockangebote, kein Kaufdruck auf Kinder. Brummi bettelt nie.\n" +
                 "• Ein Kauf gilt für die ganze Familie auf allen Geräten mit demselben Google-Konto.")
