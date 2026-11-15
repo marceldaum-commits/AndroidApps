@@ -96,8 +96,9 @@ function reiseFinish(acc) {
   } else if (chDone) html += `<div class="rr-sticker">${ch.sticker}</div>` + blitzSay('cheer', `<b>${esc(ch.name)}</b> <span>geschafft!</span> <span>${esc(ch.done)}</span>`, 60)
     + '<button class="btn block" id="rrCert">🏅 Urkunde</button>';
   else html += blitzSay(first ? 'cheer' : 'happy', `<span>${first ? 'Etappe geschafft! Weiter geht’s.' : 'Stark – noch besser als vorher?'}</span>`, 56);
-  html += `<button class="btn primary block" id="rrNext">${stars === 0 ? '↻ Nochmal versuchen' : nx.soon || nx.all ? '🗺️ Zur Karte' : '▶ Nächste Etappe'}</button></div>`;
+  html += `<button class="btn primary block" id="rrNext">${stars === 0 ? '↻ Nochmal versuchen' : nx.soon || nx.all ? '🗺️ Zur Karte' : '▶ Nächste Etappe'}</button>${stars && !(nx.soon || nx.all) || !stars ? '<button class="btn block" id="rrMap">🗺️ Zur Karte</button>' : ''}</div>`;
   setTimeout(() => {
+    $('rrMap') && ($('rrMap').onclick = () => { goHome(); openSheet('reise', { c: r.c }); });
     $('rrNext') && ($('rrNext').onclick = () => { if (stars === 0) startReise(r.c, r.s); else if (nx.soon || nx.all) { goHome(); openSheet('reise'); } else startReise(nx.c, nx.s); });
     const fin = chDone && r.c === REISE_CH.length - 1;
     $('rrCert') && ($('rrCert').onclick = () => openSheet('cert', fin ? { line1: 'Die ganze Rechen-Reise geschafft – alle 6 Kapitel!', line2: `Alle Funken für Blitz gesammelt · Klasse ${reiseKlasse() || '–'}`, icon: '👑' }
@@ -138,23 +139,31 @@ PANELS.reise = (o = {}) => {
       init() { $('rkK').onclick = e => { const b = e.target.closest('button'); if (!b) return; st.k = +b.dataset.v; save(); showPanel('reise'); renderHome(); }; } };
   }
   const cur = reiseCurrent(), c = Math.min(o.c ?? (cur.soon ? Math.max(0, cur.c - 1) : cur.c), REISE_CH.length - 1), ch = REISE_CH[c];
-  const tabs = REISE_CH.map((x, i) => `<button class="rt ${i === c ? 'sel' : ''}" data-ch="${i}" ${x.soon || (i > 0 && !reiseChapterDone(i - 1)) ? 'disabled' : ''}><span>${x.icon}</span><small>${i + 1}</small></button>`).join('');
+  const tabs = REISE_CH.map((x, i) => `<button class="rt ${i === c ? 'sel' : ''}${x.soon || (i > 0 && !reiseChapterDone(i - 1)) ? ' locked' : ''}" data-ch="${i}" aria-disabled="${!!(x.soon || (i > 0 && !reiseChapterDone(i - 1)))}"><span>${x.icon}</span><small>${i + 1}</small></button>`).join('');
   return { title: '<span>🗺️</span> <span>Rechen-Reise</span>', html: `<div class="reise">
     <div class="reise-tabs">${tabs}</div>
     <h3 class="reise-h">${esc(ch.name)} <span class="muted">· Kapitel ${c + 1}</span></h3>
     ${blitzSay(reiseChapterDone(c) ? 'cheer' : 'wave', `<span>${esc(reiseChapterDone(c) ? ch.done : ch.intro)}</span>`, 52)}
     <div class="reise-wrap">${reiseMap(c)}</div>
+    ${!cur.soon && !cur.all && cur.c === c ? `<button class="btn primary block" id="rkGo">▶ ${cur.s === REISE.N - 1 ? 'Boss-Etappe spielen' : `Etappe ${cur.s + 1} spielen`}</button>` : ''}
     <div class="mlabel">Sticker-Album</div>
-    <div class="rr-album small">${REISE_CH.map((x, i) => `<span class="${reiseChapterDone(i) ? '' : 'lock'}" title="${esc(x.name)}">${reiseChapterDone(i) ? x.sticker : '❔'}</span>`).join('')}</div>
+    <div class="rr-album small">${REISE_CH.map((x, i) => `<span class="${reiseChapterDone(i) ? '' : 'lock'}" title="${esc(x.name)}" data-stk="${i}" role="button" tabindex="0">${reiseChapterDone(i) ? x.sticker : '❔'}</span>`).join('')}</div>
     <p class="small muted" style="margin:0;text-align:center">⭐ ${reiseTotalStars()} Sterne gesammelt · Klasse ${reiseKlasse()} <button class="linkbtn" id="rkChange">ändern</button></p>
     ${reiseTotalStars() ? '<button class="linkbtn" id="rkReset" style="align-self:center">↺ Reise neu starten</button>' : ''}
     ${REISE_CH.slice(3).some(x => x.soon) ? '<p class="small muted" style="margin:0;text-align:center">Kapitel 4–6 kommen bald: Wolkenstadt, Feuerberg und Sternenschloss.</p>' : ''}</div>`,
     init() {
-      $('sheetBody').querySelectorAll('.rt:not([disabled])').forEach(b => b.onclick = () => showPanel('reise', { c: +b.dataset.ch }));
+      $('sheetBody').querySelectorAll('.rt').forEach(b => b.onclick = () => {
+        const i = +b.dataset.ch;
+        if (!b.classList.contains('locked')) return showPanel('reise', { c: i });
+        toast(REISE_CH[i].soon ? 'Dieses Kapitel kommt bald!' : `🔒 Schaff zuerst Kapitel ${i}: ${tr(REISE_CH[i - 1].name)}`, 2200);
+      });
+      $('sheetBody').querySelectorAll('.rn.lock').forEach(g => g.onclick = () => toast(`🔒 Schaff zuerst Etappe ${+g.dataset.st}`, 1800));
+      $('sheetBody').querySelectorAll('[data-stk]').forEach(x => x.onclick = () => { const i = +x.dataset.stk; toast(reiseChapterDone(i) ? `${REISE_CH[i].sticker} ${tr(REISE_CH[i].name)}` : `❔ ${tr('Sticker für')} ${tr(REISE_CH[i].name)}`, 1800); });
       $('sheetBody').querySelectorAll('.rn.open').forEach(g => {
         const go = () => showPanel('reiseStation', { c, s: +g.dataset.st }, true);
         g.onclick = go; g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
       });
+      $('rkGo') && ($('rkGo').onclick = () => showPanel('reiseStation', { c: cur.c, s: cur.s }, true));
       $('rkReset') && ($('rkReset').onclick = () => resetPart('reise', () => showPanel('reise')));
       $('rkChange').onclick = () => { if (confirm(tr('Klassenstufe ändern? Deine Sterne bleiben erhalten, die Aufgaben passen sich an.'))) { st.k = 0; save(); showPanel('reise'); } };
     } };
@@ -178,5 +187,5 @@ function renderReiseCard() {
   const line = !reiseKlasse() ? 'Hilf Blitz, seine Funken einzusammeln!' : cur.all ? 'Alle Funken gesammelt! 👑' : cur.soon ? 'Kapitel 1–3 geschafft! Bald geht’s weiter.' : `${ch.name} · Etappe ${cur.s + 1}/${REISE.N}`;
   el.innerHTML = `<div class="ch-ico reise-ico" aria-hidden="true">${ch.icon}</div><div class="ch-txt"><b>Rechen-Reise</b><span>${esc(line)}${reiseTotalStars() ? ` · ⭐ ${reiseTotalStars()}` : ''}</span></div>
     <button class="btn small primary" id="reiseGo">${cur.soon || cur.all ? 'Karte' : 'Weiter'}</button>`;
-  $('reiseGo').onclick = () => { if (!reiseKlasse() || cur.soon || cur.all) openSheet('reise'); else openSheet('reiseStation', { c: cur.c, s: cur.s }); };
+  $('reiseGo').onclick = () => openSheet('reise');   // immer zuerst die Karte mit Weg und Blitz zeigen (Marcel 15.11.)
 }

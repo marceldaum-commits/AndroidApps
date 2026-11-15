@@ -124,7 +124,7 @@ PANELS.welt = (o = {}) => {
       body.querySelectorAll('[data-item]').forEach(b => b.onclick = () => {
         const id = b.dataset.item, kind = b.dataset.kind, it = kind === 'deco' ? DECO_BY[id] : OUTFIT_BY[id], sc = keep();
         if (kind === 'outfit' && w.own[id]) { w.wear[it.slot] = w.wear[it.slot] === id ? null : id; save(); Sound.click(); renderHome(); return re(tab, sc); }
-        if (kind === 'deco' && w.deco[id]) return;
+        if (kind === 'deco' && w.deco[id]) { toast(`${it.icon || '✨'} ${tr('Steht schon in Blitz\' Zimmer')}`); return; }
         if (S.funken < it.price) { toast(`Dir fehlen noch 💫 ${it.price - S.funken} Funken`); Sound.wrong && Sound.wrong(); return; }
         if (!confirm(`${tr(it.name)} – ${tr(`Für ${it.price} Funken kaufen?`)}`)) return;
         S.funken -= it.price;

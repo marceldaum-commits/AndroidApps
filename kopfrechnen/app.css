@@ -838,3 +838,7 @@ button.badge{font:inherit;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.rz-c,.rz-hints li{animation:none!important}}
 .welt-funken-line{align-self:center;background:var(--navy);color:#fff;border-radius:99px;padding:5px 14px;font-size:14px}.welt-funken-line b{color:#ffc83d}
 @media (max-width:360px){.statusbar .sb-stat:last-child{display:none}}
+.reise-tabs .rt.locked{opacity:.4;filter:grayscale(1)}
+.const-card{border:0;font:inherit;cursor:pointer}
+.rr-album span{cursor:pointer}
+#bzHome{cursor:pointer}#bzHome:active .bz-bubble{transform:scale(.98)}

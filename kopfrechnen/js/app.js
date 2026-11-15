@@ -261,7 +261,14 @@ function renderHome() {
   renderSoundIcons();
   renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); renderWeltCard();
   if ($('sFunken')) $('sFunken').textContent = S.funken ?? 0;
-  if ($('bzHome')) $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting(), 54) : '';
+  if ($('bzHome')) {
+    $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting(), 54) : '';
+    $('bzHome').onclick = () => {   // Blitz' Vorschlag direkt starten
+      const m = typeof merkStats === 'function' ? merkStats() : null;
+      if (m && m.todo) startMerk(); else if (S.challenge.date !== todayStr()) $('chStart')?.click(); else $('btnStart').click();
+    };
+    $('bzHome').setAttribute('role', bzOn() ? 'button' : 'none'); $('bzHome').tabIndex = bzOn() ? 0 : -1;
+  }
   if (typeof widgetUpdate === 'function') widgetUpdate();   // APK: Startbildschirm-Widget aktualisieren
 
   // Themen: die wichtigsten 9 + „Mehr“; im Klassenmodus nur passende

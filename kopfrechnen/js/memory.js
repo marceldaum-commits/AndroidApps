@@ -181,13 +181,17 @@ PANELS.merk = () => {
     <button class="btn primary block" id="merkStart" ${s.todo ? '' : 'disabled'}>${s.todo ? `▶ Heute wiederholen (${s.todo})` : 'Für heute alles geschafft ✓'}</button>
     <div class="mlabel">Sternbilder-Album <span class="muted">(${MERK_CONSTS.filter(c => merkState().consts?.[c.id]).length}/${MERK_CONSTS.length})</span></div>
     <div class="const-album">${MERK_CONSTS.filter(c => act.includes(c.deck)).map(c => { const done = !!merkState().consts?.[c.id], n = merkConstCount(c);
-      return `<div class="const-card ${done ? 'done' : ''}"><span class="ci">${done ? c.icon : '❔'}</span><b>${done ? esc(c.name) : '???'}</b><small>${n}/${c.keys.length}</small></div>`; }).join('')}</div>
+      return `<button class="const-card ${done ? 'done' : ''}" data-const="${c.id}"><span class="ci">${done ? c.icon : '❔'}</span><b>${done ? esc(c.name) : '???'}</b><small>${n}/${c.keys.length}</small></button>`; }).join('')}</div>
     <div class="mlabel">Was willst du dir merken?${!merkState().decks && k ? ` <span class="muted">(passend zu Klasse ${k})</span>` : ''}</div>
     ${rows}
     <p class="small muted" style="margin:0">Fehler aus anderen Runden zählen mit: Was du dort falsch hattest, kommt hier wieder dran.</p>
     ${Object.keys(merkState().c).length ? '<button class="linkbtn" id="merkReset" style="align-self:center">↺ Merk-Training zurücksetzen</button>' : ''}</div>`,
     init() {
       $('merkStart').onclick = () => { closeSheet(); startMerk(); };
+      $('sheetBody').querySelectorAll('[data-const]').forEach(b => b.onclick = () => {
+        const c = MERK_CONSTS.find(x => x.id === b.dataset.const), n = merkConstCount(c);
+        toast(merkState().consts?.[c.id] ? `${c.icon} ${tr(c.name)} ✓` : `❔ ${n}/${c.keys.length} – ${tr('noch')} ${c.keys.length - n} ${tr('Aufgaben, bis das Sternbild leuchtet')}`, 2400);
+      });
       $('merkReset') && ($('merkReset').onclick = () => resetPart('merk', () => showPanel('merk')));
       $('sheetBody').querySelectorAll('[data-deck]').forEach(b => b.onclick = () => {
         const st = merkState(), cur = merkDecks(), id = b.dataset.deck;
