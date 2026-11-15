@@ -5,6 +5,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import de.raumlicht.app.ui.home.*
@@ -312,5 +313,60 @@ class PlayFlowTest {
         rule.onNodeWithTag("plus-n").performClick(); rule.onNodeWithTag("plus-n").performClick(); rule.mainClock.advanceTimeBy(400)
         rule.onNodeWithText("10 Reihen").assertExists(); rule.onNodeWithText("5").assertExists(); assertTrue(stage.lastState!!.contains("nägel10"))     // μ = 10 · 0,5
         repeat(8) { rule.onNodeWithTag("minus-n").performClick() }; rule.mainClock.advanceTimeBy(400); rule.onNodeWithText("4 Reihen").assertExists()   // unten ist bei 4 Schluss
+    }
+
+    @Test fun coasterBuilderNeedsEnoughEnergy() {
+        show { CoasterBuildScreen({}, controller = stage) }
+        assertTrue(stage.lastState!!.contains("\"type\":\"handle\"") && stage.lastState!!.contains("\"flat\":true"))
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("probefahrt").performClick(); rule.mainClock.advanceTimeBy(15_000)                // eben: rollt aus
+        rule.onNodeWithTag("bau-meldung").assertTextContains("geht dem Wagen der Schwung aus", substring = true)
+        rule.mainClock.autoAdvance = true
+        repeat(2) { rule.onNodeWithTag("hoch-0").performClick() }; rule.onNodeWithTag("hoch-1").performClick(); rule.onNodeWithTag("runter-3").performClick(); repeat(2) { rule.onNodeWithTag("runter-4").performClick() }
+        stage.onDrag?.invoke("h2", listOf(4, 4, 6)); rule.mainClock.advanceTimeBy(200); rule.onNodeWithTag("hoehe-2").assertTextEquals("6")      // Ziehen in der Bühne
+        stage.onDrag?.invoke("h2", listOf(4, 4, 3)); rule.mainClock.advanceTimeBy(200)
+        assertEquals(listOf("5", "4", "3", "2", "1"), (0..4).map { i -> rule.onNodeWithTag("hoehe-$i").fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.Text].first().text })
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("probefahrt").performClick(); rule.mainClock.advanceTimeBy(1000)
+        assertFalse(stage.lastState!!.contains("\"type\":\"handle\"")); assertTrue(stage.lastRide!!.contains("id:'bahn'"))                 // während der Fahrt keine Griffe
+        rule.mainClock.advanceTimeBy(14_000); rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithTag("bau-meldung").assertTextContains("Geschafft!", substring = true); rule.onNodeWithText("1/5 ✓").assertExists(); rule.onNodeWithText("✓ Erste Fahrt").assertExists()
+        rule.onNodeWithTag("auftrag-frei").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("bau-meldung").assertTextContains("Bau, was du willst", substring = true)
+    }
+
+    @Test fun ghostDrawingIsScoredAgainstTheRealDerivative() {
+        show { GhostScreen({}) }
+        val r = Coaster.byId("huegel")!!; val (lo, hi) = Ghost.window(r)                                      // f′ = −2x + 4: Gerade von 4 nach −4
+        rule.onNodeWithTag("aufloesen").assertIsNotEnabled()
+        rule.onNodeWithTag("zeichnen").performTouchInput {
+            fun y(v: Double) = (height * (hi - v) / (hi - lo)).toFloat()
+            down(Offset(2f, y(4.0))); for (k in 1..40) moveTo(Offset(width * k / 40f - 2f, y(4.0 - 8.0 * k / 40))); up() }
+        rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithTag("aufloesen").assertIsEnabled().performClick(); rule.mainClock.advanceTimeBy(300)
+        rule.onNodeWithTag("geist-meldung").assertTextContains("Wie abgepaust!", substring = true)
+        rule.onNodeWithTag("geist-neu").performClick(); rule.mainClock.advanceTimeBy(200); rule.onNodeWithTag("geist-meldung").assertTextContains("Zeichne die ganze Breite", substring = true)
+        // waagerechter Strich bei 0 statt der fallenden Geraden: deutlich schlechter
+        rule.onNodeWithTag("zeichnen").performTouchInput { val y0 = (height * hi / (hi - lo)).toFloat(); down(Offset(2f, y0)); for (k in 1..40) moveTo(Offset(width * k / 40f - 2f, y0)); up() }
+        rule.onNodeWithTag("aufloesen").performClick(); rule.mainClock.advanceTimeBy(300)
+        val flat = Ghost.score(r, List(Ghost.COLUMNS) { 0.0 }); assertTrue(flat < 75)
+        val said = rule.onNodeWithTag("geist-meldung").fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.Text].first().text
+        assertTrue(said, !said.startsWith("Wie abgepaust") && !said.startsWith("Stark") && said.contains(" %"))
+    }
+
+    @Test fun ringFlightNeedsTheRightDirection() {
+        val run = RingRun(5)
+        show { RingScreen({}, controller = stage, seed = 5) }
+        rule.onNodeWithTag("ring-daten").assertTextContains("A${run.a.fmt()}", substring = true)
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("ring-flug").performClick(); rule.mainClock.advanceTimeBy(5000); rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(200)     // (1|0|0) – daneben
+        if (run.d != V3(1, 0, 0)) rule.onNodeWithTag("ring-meldung").assertTextContains("Tipp: Richtung = R₁ − A", substring = true)
+        val want = listOf(run.d.x.toInt(), run.d.y.toInt(), run.d.z.toInt()); val have = listOf(1, 0, 0)
+        (0..2).forEach { i -> repeat(kotlin.math.abs(want[i] - have[i])) { rule.onNodeWithTag(if (want[i] > have[i]) "plus-d$i" else "minus-d$i").performClick() } }
+        rule.mainClock.advanceTimeBy(300); assertTrue(stage.lastState!!.contains("\"color\":\"green\""))
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("ring-flug").performClick(); rule.mainClock.advanceTimeBy(5000); rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(200)
+        rule.onNodeWithTag("ring-meldung").assertTextEquals("Alle drei Ringe! Richtung = Ring minus Start.")
+        rule.onNodeWithTag("ring-weiter").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("ring-runde").assertTextEquals("Runde 2")
+        rule.onNodeWithTag("ring-daten").assertTextContains("A${RingRun(6).a.fmt()}", substring = true)
     }
 }

@@ -66,6 +66,9 @@ object Routes {
     const val GALTON = "galton"
     const val BALLOONS = "ballerbude"
     const val CHANCE = "zufall"
+    const val BUILD = "baumeister"
+    const val GHOST = "geisterfahrt"
+    const val RINGS = "ringflug"
     const val QUICK = "pflichtteil"
     const val DIARY = "fehler-tagebuch"
     const val CALENDAR = "kalender"
@@ -208,6 +211,9 @@ class MainActivity : ComponentActivity() {
                     BackstageEntry("🎢", "Kurve abfahren (Fahrersicht)", "Analysis erleben: Höhe, Steigung, Krümmung, Ableitungsbahn und Fläche live", Q.Cyan, "Erleben") { nav.goOnce(Routes.ride(Coaster.rides.first().id)) },
                     BackstageEntry("🚀", "Flug durch den Raum", "Geometrie erleben: eine Gerade entlangfliegen, durch Ebenen und Kugeln", Q.Cyan, "Erleben") { nav.goOnce(Routes.FLIGHT) },
                     BackstageEntry("🎈", "Ballerbude", "Ballons antippen, Lux ballert sie ab – zum Spaß, mit Aufgabe oder zu zweit", Q.Pink, "Erleben") { nav.goOnce(Routes.BALLOONS) },
+                    BackstageEntry("🏗️", "Achterbahn-Baumeister", "Bahn selbst bauen, Probefahrt mit echter Physik – reicht der Schwung?", Q.Cyan, "Erleben") { nav.goOnce(Routes.BUILD) },
+                    BackstageEntry("👻", "Geisterfahrt gegen f′", "Zeichne die Ableitung mit dem Finger – wie nah kommst du?", Q.Pink, "Erleben") { nav.goOnce(Routes.GHOST) },
+                    BackstageEntry("⭕", "Ringflug", "Stell den Richtungsvektor ein und flieg durch drei Ringe", Q.Green, "Erleben") { nav.goOnce(Routes.RINGS) },
                     BackstageEntry("🎲", "Zufallsmaschine", "Münze, Würfel oder eigene Chance: erst wetten, dann tausendmal werfen", Q.Pink, "Erleben") { nav.goOnce(Routes.CHANCE) },
                     BackstageEntry("🎰", "Galton-Brett", "Stochastik erleben: Kugeln fallen, die Binomialverteilung wächst", Q.Pink, "Erleben") { nav.goOnce(Routes.GALTON) },
                     BackstageEntry("🧩", "Rechenweg in Schritten", "Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand – Schritt für Schritt", Q.Green, "Üben") { nav.goOnce(Routes.GUIDES) },
@@ -257,6 +263,9 @@ class MainActivity : ComponentActivity() {
             }
             composable(Routes.FLIGHT) { FlightScreen({ nav.popSafe() }, custom = vm.settings.flight, onCustom = { vm.settings.flight = it }) }
             composable(Routes.GALTON) { GaltonScreen({ nav.popSafe() }) }
+            composable(Routes.BUILD) { de.raumlicht.app.ui.home.CoasterBuildScreen({ nav.popSafe() }) }
+            composable(Routes.GHOST) { de.raumlicht.app.ui.home.GhostScreen({ nav.popSafe() }) }
+            composable(Routes.RINGS) { de.raumlicht.app.ui.home.RingScreen({ nav.popSafe() }) }
             composable(Routes.CHANCE) { de.raumlicht.app.ui.home.ChanceScreen({ nav.popSafe() }) }
             composable(Routes.BALLOONS) { val best by vm.settings.balloonBest.collectAsStateWithLifecycle(); de.raumlicht.app.ui.home.BalloonScreen(best, { vm.settings.recordBalloons(it) }, { nav.popSafe() }) }
             composable(Routes.QUICK) { QuickScreen({ l, s, a -> vm.record(l.id, s, a) }, { nav.popSafe() }) }

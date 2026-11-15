@@ -2,6 +2,15 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.3.0 – Baumeister, Geisterfahrt, Ringflug (15.11.2026)
+- **🏗️ Achterbahn-Baumeister (neu):** Fünf Stützpunkte hoch- und runterziehen, die App legt eine glatte Bahn hindurch – dann Probefahrt mit echter Physik.
+  Bergab wird der Wagen schneller, bergauf langsamer; ist ein Hügel höher, als der Schwung reicht, rollt er zurück. Fünf Aufträge (Sterne einsammeln,
+  mit Tempo ins Ziel) und freies Bauen.
+- **👻 Geisterfahrt gegen f′ (neu):** Oben die Kurve, unten zeichnest du mit dem Finger die Ableitung. „Auflösen“ blendet die echte f′ ein und zeigt
+  deine Trefferquote – grafisches Ableiten wie im Abi, nur als Zeichenspiel. Geht auch mit eigener Funktion.
+- **⭕ Ringflug (neu):** Start und drei Ringe sind gegeben, du stellst den Richtungsvektor ein. Stimmt er nicht, fliegt Lux sichtbar vorbei
+  und sagt, um wie viel. Jede Runde ist neu.
+
 ## 2.2.0 – Zufallsmaschine, Ballerbude mit Aufgabe und zu zweit (15.11.2026)
 - **🎲 Zufallsmaschine (neu):** Münze, Würfel, Glücksrad oder eine eigene Trefferchance – 10 bis 10 000 Versuche in Sekunden.
   Erst wetten („Wie oft klappt es?“), dann zusehen, wie sich die relative Häufigkeit der Wahrscheinlichkeit nähert. Dazu Erwartungswert und Streuung.

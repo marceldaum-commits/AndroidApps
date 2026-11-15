@@ -1,0 +1,67 @@
+package de.raumlicht.core.model
+
+import org.junit.Assert.*
+import org.junit.Test
+import kotlin.math.abs
+
+class WorkshopTest {
+    @Test fun splineGoesSmoothlyThroughTheSupports() {
+        val t = BuiltTrack(listOf(6, 2, 5, 2, 1))
+        (0..4).forEach { assertEquals(t.heights[it].toDouble(), t.y(it * 2.0), 1e-9) }
+        // an den Stützstellen kein Knick: Steigung von links und rechts gleich
+        (1..3).forEach { assertEquals(t.slope(it * 2.0 - 1e-7), t.slope(it * 2.0 + 1e-7), 1e-4) }
+        assertEquals((t.y(3.001) - t.y(2.999)) / 0.002, t.slope(3.0), 1e-4)
+        assertEquals(3.0, BuiltTrack(listOf(3, 3, 3, 3, 3)).y(5.3), 1e-9); assertEquals(0.0, BuiltTrack(listOf(3, 3, 3, 3, 3)).slope(5.3), 1e-9)
+    }
+
+    @Test fun cartObeysEnergy() {
+        // eben: der Schubs reicht nicht – ausgerollt
+        val flat = BuiltTrack(listOf(3, 3, 3, 3, 3)).run(); assertFalse(flat.finished); assertTrue(flat.stuckAt!! in 0.5..4.0)
+        // bergab kommt er an und wird schneller
+        val down = BuiltTrack(listOf(6, 4, 3, 2, 1)).run(); assertTrue(down.finished); assertTrue(down.endSpeed > 6.0); assertEquals(8.0, down.xs.last(), 1e-9)
+        // ohne Reibung wäre v² = v0² + 2·g·Δh; mit Reibung etwas weniger
+        val ideal = kotlin.math.sqrt(BuiltTrack.PUSH * BuiltTrack.PUSH + 2 * BuiltTrack.G * 5); assertTrue(down.endSpeed < ideal && down.endSpeed > ideal * 0.85)
+        // ein Hügel höher als der Start: der Wagen kehrt vorher um und rollt zurück
+        val wall = BuiltTrack(listOf(4, 1, 6, 1, 1)).run(); assertFalse(wall.finished); assertTrue(wall.stuckAt!! > 2.0 && wall.stuckAt!! < 4.0)
+        assertTrue(wall.xs.zipWithNext().any { (a, b) -> b < a })
+        assertTrue(BuiltTrack(listOf(6, 1, 5, 1, 1)).run().finished)                                   // knapp niedriger als der Start: reicht
+        assertTrue(listOf(flat, down, wall).all { r -> r.xs.all { it in 0.0..8.0 } && r.seconds <= 14.1 })
+    }
+
+    @Test fun everyGoalIsSolvableButNotFromTheStart() {
+        BuiltTrack.goals.forEach { g ->
+            assertTrue(g.title, BuiltTrack(g.solution).solves(g)); assertFalse(g.title, BuiltTrack(g.start).solves(g))
+            assertTrue(g.title, (g.solution + g.start).all { it in BuiltTrack.HEIGHTS })
+            val s = BuiltTrack(g.start).scene(g); assertTrue(s.contains("\"flat\":true") && s.contains("\"type\":\"handle\"") && s.contains("\"axes\":[2]"))
+        }
+        // Stern verfehlt: Bahn führt zu tief am Stern vorbei
+        val g = BuiltTrack.goals[1]; val r = BuiltTrack(listOf(6, 4, 2, 1, 1)).run(g); assertTrue(r.finished); assertEquals(0, r.stars)
+        // Tempo-Auftrag: ankommen allein reicht nicht
+        assertFalse(BuiltTrack(listOf(2, 2, 2, 1, 1)).solves(BuiltTrack.goals[3]))
+    }
+
+    @Test fun ghostScoreRewardsTheTrueDerivative() {
+        Coaster.rides.forEach { r ->
+            val exact = (0 until Ghost.COLUMNS).map { r.df(Ghost.x(r, it)) }
+            assertEquals(r.id, 100, Ghost.score(r, exact))
+            val (lo, hi) = Ghost.window(r); assertTrue(lo < 0 && hi > 0 && exact.all { it in lo..hi })
+            assertTrue(r.id, Ghost.score(r, exact.map { -it }) < 60)                                    // gespiegelt: klar schlechter
+            assertEquals(0, Ghost.score(r, List(Ghost.COLUMNS) { null }))
+            val near = exact.map { it + (hi - lo) * 0.03 }; assertTrue(r.id, Ghost.score(r, near) in 88..99)   // leicht daneben: fast voll
+        }
+        assertTrue(Ghost.verdict(95).startsWith("Wie abgepaust")); assertTrue(Ghost.verdict(20).contains("steigt"))
+    }
+
+    @Test fun ringRunsAreSolvedByRingMinusStart() {
+        (1L..40L).forEach { seed -> val r = RingRun(seed)
+            assertEquals(3, r.hits(r.d)); assertEquals(r.d, r.rings[0] - r.a); assertEquals("Alle drei Ringe! Richtung = Ring minus Start.", r.verdict(r.d))
+            assertTrue(r.rings.all { it.x in 0.0..8.0 && it.y in 0.0..8.0 && it.z in 1.0..6.0 })
+            assertEquals(0, r.hits(r.d * -1.0)); assertEquals(0, r.hits(V3(0, 0, 0)))                    // rückwärts oder gar nicht: nichts
+            assertEquals(3, r.hits(r.d * 2.0))                                                            // doppelt so schnell, gleiche Bahn
+            assertTrue(r.scene(r.d).contains("\"color\":\"green\"")); assertTrue(r.tMax(r.d) >= 3.0)
+        }
+        val r = RingRun(5); val off = r.d + V3(0, 0, 1)
+        assertTrue(r.hits(off) < 3); assertTrue(r.verdict(off).contains("verfehlt um"))
+        assertNotEquals(RingRun(1).rings, RingRun(2).rings)
+    }
+}

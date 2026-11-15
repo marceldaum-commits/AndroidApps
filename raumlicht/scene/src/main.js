@@ -758,6 +758,8 @@ canvas.addEventListener('pointerdown', (e) => {
     if (h) {
       const start = fromV(h.o.pos).map(Math.round);
       // Tippen auf die Kugel: in der Bodenebene ziehen (x1, x2); auf einen Pfeil: entlang dieser Achse
+      // Griff, der sich nur entlang einer Achse bewegen darf: auch ein Griff an der Kugel selbst zieht entlang dieser Achse
+      if (h.axis < 0) { const free = h.o.arrows.map((a, i) => (a.visible ? i : -1)).filter((i) => i >= 0); if (free.length === 1) h.axis = free[0]; }
       drag = { id: h.o.id, axis: h.axis, start, last: start.slice(), origin: h.o.pos.clone(), v0: h.axis >= 0 ? axisValue(h.o.pos, V([[1, 0, 0], [0, 1, 0], [0, 0, 1]][h.axis]), e) : 0 };
       emit('grab', { id: drag.id });
     } else drag = { orbit: true, x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY, t0: performance.now() };

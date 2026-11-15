@@ -184,6 +184,15 @@ class ScreenshotTest {
         de.raumlicht.app.ui.home.ChanceScreen({}, seed = 3) }
     @Test fun balloonQuiz() = shot("70_ballerbude_aufgabe", "ballerbude-aufgabe", prepare = { it.mainClock.autoAdvance = false; it.onNodeWithTag("ballern-aufgabe").performClick(); it.mainClock.advanceTimeBy(9000) }) {
         de.raumlicht.app.ui.home.BalloonScreen(24, {}, {}, seed = 10) }
+    @Test fun coasterBuilder() = shot("71_achterbahn_baumeister", "baumeister", prepare = { it.onNodeWithTag("auftrag-4").performScrollTo().performClick() }) { de.raumlicht.app.ui.home.CoasterBuildScreen({}) }
+    @Test fun ghost() = shot("72_geisterfahrt", "start", prepare = {
+        val r = de.raumlicht.core.model.Coaster.byId("doppel")!!; val (lo, hi) = de.raumlicht.core.model.Ghost.window(r)
+        it.onNodeWithTag("geist-doppel").performClick()
+        it.onNodeWithTag("zeichnen").performTouchInput { fun y(v: Double) = (height * (hi - v) / (hi - lo)).toFloat()
+            down(androidx.compose.ui.geometry.Offset(2f, y(7.0))); for (k in 1..40) { val x = 4.0 * k / 40; moveTo(androidx.compose.ui.geometry.Offset(width * k / 40f - 2f, y(2.4 * (x - 1.2) * (x - 3.1) + 0.6))) }; up() }
+        it.onNodeWithTag("aufloesen").performClick()
+    }) { de.raumlicht.app.ui.home.GhostScreen({}) }
+    @Test fun rings() = shot("73_ringflug", "ringflug") { de.raumlicht.app.ui.home.RingScreen({}, seed = 5) }
     @Test fun diary() = shot("59_fehler_tagebuch", "start") {
         de.raumlicht.app.ui.home.DiaryScreen(listOf(
             de.raumlicht.app.ui.home.DiaryEntry(4, "2-1", "Du hast A − B gerechnet. Es heißt Spitze minus Fuß: B − A – alle Vorzeichen drehen sich um."),
