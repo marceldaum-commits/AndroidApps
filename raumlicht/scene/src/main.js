@@ -459,7 +459,7 @@ makers.sphere = (s) => {
   g.add(ball, ring);
   const cur = V(s.p); let tgt = cur.clone(), r = s.rhs, tr = s.rhs, lab = null, labText = null;
   return {
-    g, pop: () => ({ p: cur, c }), ball: () => ({ p: cur, r }),
+    g, pop: () => ({ p: cur, c }), ball: () => ({ p: cur, r }), dispose() { if (lab) world.remove(lab); },
     update(n) { tgt = V(n.p); tr = n.rhs; if (n.label !== labText) { if (lab) g.parent && g.remove(lab); lab = n.label ? label(n.label, hex(c)) : null; labText = n.label; if (lab) world.add(lab); } },
     tick(dt, t) { damp(cur, tgt, dt); r += (tr - r) * (1 - Math.exp(-10 * dt)); ball.position.copy(cur); ball.scale.setScalar(r); ring.position.copy(cur); ring.scale.setScalar(r); mat.uniforms.t.value = t;
       if (lab) lab.position.copy(cur).add(new THREE.Vector3(0, r + 0.4, 0)); },
@@ -656,12 +656,12 @@ function setState(state) {
   for (const s of state.objects ?? []) {
     seen.add(s.id);
     let o = objects.get(s.id);
-    if (o && o.sig !== sig(s)) { world.remove(o.g); objects.delete(s.id); o = null; }
+    if (o && o.sig !== sig(s)) { world.remove(o.g); o.dispose?.(); objects.delete(s.id); o = null; }
     if (!o) { o = makers[s.type](s); o.sig = sig(s); o.id = s.id; objects.set(s.id, o); world.add(o.g); o.g.scale.setScalar(0.001); o.born = clock.elapsedTime; }
     o.update(s);
   }
   // Was verschwindet, zerplatzt in Funken (z. B. abgeschossene Kugeln)
-  for (const [id, o] of objects) if (!seen.has(id)) { if (o.pop && clock.elapsedTime - o.born > 0.5) { const q = o.pop(); burst(fromV(q.p), q.c, 70, 0.9); shake = Math.max(shake, 0.18); } world.remove(o.g); objects.delete(id); }
+  for (const [id, o] of objects) if (!seen.has(id)) { if (o.pop && clock.elapsedTime - o.born > 0.5) { const q = o.pop(); burst(fromV(q.p), q.c, 70, 0.9); shake = Math.max(shake, 0.18); } world.remove(o.g); o.dispose?.(); objects.delete(id); }
 }
 // Woran man erkennt, dass ein Ding neu gebaut werden muss. Das Achsenkreuz ist starr gebaut: Ändert sich sein Ort oder Maßstab, entsteht es neu.
 const sig = (s) => [s.type, s.color, s.style, s.dashed, s.thin, s.segments?.length, !!s.faces, s.type === 'axes2d' ? JSON.stringify([s.p, s.d, s.corners]) : ''].join('|');

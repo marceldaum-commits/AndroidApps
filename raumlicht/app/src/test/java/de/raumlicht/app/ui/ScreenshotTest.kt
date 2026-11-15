@@ -180,6 +180,10 @@ class ScreenshotTest {
         it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.65f) }
     }) { de.raumlicht.app.ui.home.RideScreen({}, "huegel") }
     @Test fun ownFlight() = shot("68_eigener_flug", "raumflug", prepare = { it.onNodeWithTag("flug-eigener").performClick() }) { de.raumlicht.app.ui.home.FlightScreen({}) }
+    @Test fun chance() = shot("69_zufallsmaschine", "start", prepare = { it.onNodeWithTag("n-1000").performClick(); it.onNodeWithTag("werfen").performClick(); it.mainClock.advanceTimeBy(5000) }) {
+        de.raumlicht.app.ui.home.ChanceScreen({}, seed = 3) }
+    @Test fun balloonQuiz() = shot("70_ballerbude_aufgabe", "ballerbude-aufgabe", prepare = { it.mainClock.autoAdvance = false; it.onNodeWithTag("ballern-aufgabe").performClick(); it.mainClock.advanceTimeBy(9000) }) {
+        de.raumlicht.app.ui.home.BalloonScreen(24, {}, {}, seed = 10) }
     @Test fun diary() = shot("59_fehler_tagebuch", "start") {
         de.raumlicht.app.ui.home.DiaryScreen(listOf(
             de.raumlicht.app.ui.home.DiaryEntry(4, "2-1", "Du hast A − B gerechnet. Es heißt Spitze minus Fuß: B − A – alle Vorzeichen drehen sich um."),

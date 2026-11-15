@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.2.0 – Zufallsmaschine, Ballerbude mit Aufgabe und zu zweit (15.11.2026)
+- **🎲 Zufallsmaschine (neu):** Münze, Würfel, Glücksrad oder eine eigene Trefferchance – 10 bis 10 000 Versuche in Sekunden.
+  Erst wetten („Wie oft klappt es?“), dann zusehen, wie sich die relative Häufigkeit der Wahrscheinlichkeit nähert. Dazu Erwartungswert und Streuung.
+- **🧮 Ballerbude mit Aufgabe:** Die Ballons tragen Zahlen, und nur was zur Regel passt, soll platzen – Primzahlen, Quadratzahlen,
+  „Nullstellen von x² − 5x + 6“ … Alle 15 Sekunden kommt eine neue Regel. Falsche Zahl: −1 und die Serie ist weg.
+- **👥 Ballerbude zu zweit:** Links gegen rechts am selben Handy – jedem gehört eine Hälfte.
+- **Galton-Brett flexibel:** Die Zahl der Reihen lässt sich jetzt wählen (4 bis 12).
+
 ## 2.1.0 – Eigener Flug und Fehlschüsse (15.11.2026)
 - **✏️ Eigener Flug:** In „Flug durch den Raum“ legst du jetzt selbst fest, wohin es geht – Startpunkt und Richtung der Geraden,
   bis zu zwei Ebenen (Normalenvektor und rechte Seite) und eine Kugel. Durchstoßpunkte, Ein- und Austritt werden berechnet und unterwegs gemeldet.

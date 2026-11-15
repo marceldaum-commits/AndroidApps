@@ -261,4 +261,56 @@ class PlayFlowTest {
         rule.onNodeWithText("du bist genau in der Ebene").assertExists()
         rule.onNodeWithTag("flug-zeile").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("start-0").assertExists()
     }
+
+    @Test fun balloonQuizCountsOnlyFittingNumbers() {
+        val scores = ArrayList<Int>(); val g = BalloonGame(8 + 1, mode = BalloonMode.QUIZ)
+        show { BalloonScreen(0, { scores += it }, {}, controller = stage, seed = 8) }
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("ballern-aufgabe").performClick(); rule.mainClock.advanceTimeBy(5000)
+        rule.onNodeWithTag("regel").assertTextEquals("Schieß ab: ${g.rules[0].text}")
+        val up = g.alive(4.8, emptySet()); val good = up.first { g.rules[0].ok(g.numbers[it.id]) }; val bad = up.first { !g.rules[0].ok(g.numbers[it.id]) }
+        stage.onTap?.invoke("b${good.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("1")
+        stage.onTap?.invoke("b${bad.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("0")
+        rule.onNodeWithTag("meldung").assertTextEquals("${g.numbers[bad.id]} passt nicht! −1")
+        rule.mainClock.advanceTimeBy(12_000); rule.onNodeWithTag("regel").assertTextEquals("Schieß ab: ${g.rules[1].text}")     // nach 15 s die nächste Regel
+        rule.mainClock.advanceTimeBy(40_000); rule.onNodeWithTag("ergebnis").assertExists(); assertEquals(emptyList<Int>(), scores)   // Bestwert gibt es nur im Spaß-Modus
+        rule.mainClock.autoAdvance = true
+    }
+
+    @Test fun balloonDuelLeftAgainstRight() {
+        val g = BalloonGame(2 + 1, mode = BalloonMode.DUEL)
+        show { BalloonScreen(0, {}, {}, controller = stage, seed = 2) }
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("ballern-duell").performClick(); rule.mainClock.advanceTimeBy(6000)
+        val up = g.alive(5.8, emptySet()).filter { it.kind != BalloonKind.DUD }
+        val right = up.first { g.side(g.pos(it, 6.0)) == 1 && g.side(g.pos(it, 5.6)) == 1 }
+        stage.onTap?.invoke("b${right.id}"); rule.mainClock.advanceTimeBy(100)
+        rule.onNodeWithTag("punkte").assertTextEquals("0"); rule.onNodeWithTag("punkte-rechts").assertTextEquals("${right.kind.points}")
+        assertTrue(stage.lastState!!.contains("\"id\":\"mitte\""))
+        rule.mainClock.advanceTimeBy(45_000); rule.onNodeWithTag("ausgang").assertTextEquals("Rechts gewinnt!")
+        rule.mainClock.autoAdvance = true
+    }
+
+    @Test fun chanceMachineBetAndRun() {
+        show { ChanceScreen({}, seed = 6) }
+        rule.onNodeWithTag("p").assertTextEquals("p = 50 %"); rule.onNodeWithTag("versuch-wuerfel").performClick(); rule.onNodeWithTag("p").assertTextEquals("p = 16,67 %")
+        rule.onNodeWithTag("versuch-eigene").performClick(); rule.onNodeWithTag("p-eingabe").performTextReplacement("80"); rule.onNodeWithTag("p").assertTextEquals("p = 80 %")   // eigene Chance
+        rule.onNodeWithTag("n-1000").performClick(); slide("wett-regler", 0.8f)
+        rule.onNodeWithTag("wette").assertTextEquals("Deine Wette: Bei 1000 Versuchen kommt 800-mal ein Treffer.")
+        rule.onNodeWithText("800").assertExists()                                                                 // erwartet n · p
+        rule.mainClock.autoAdvance = false
+        rule.onNodeWithTag("werfen").performClick(); rule.mainClock.advanceTimeBy(1500)
+        rule.onNodeWithText("läuft …").assertExists()
+        rule.mainClock.advanceTimeBy(3000); rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(300)
+        val run = ChanceRun(0.8, 1000, 6 + 1)
+        rule.onNodeWithText("${run.total} von 1000").assertExists(); rule.onNodeWithTag("wette").assertTextEquals(run.verdict(800)); rule.onNodeWithText("↻ Noch einmal").assertExists()
+    }
+
+    @Test fun galtonRowsCanBeChosen() {
+        show { GaltonScreen({}, controller = stage, random = Random(3)) }
+        rule.onNodeWithText("8 Reihen").assertExists(); assertTrue(stage.lastState!!.contains("nägel8"))
+        rule.onNodeWithTag("plus-n").performClick(); rule.onNodeWithTag("plus-n").performClick(); rule.mainClock.advanceTimeBy(400)
+        rule.onNodeWithText("10 Reihen").assertExists(); rule.onNodeWithText("5").assertExists(); assertTrue(stage.lastState!!.contains("nägel10"))     // μ = 10 · 0,5
+        repeat(8) { rule.onNodeWithTag("minus-n").performClick() }; rule.mainClock.advanceTimeBy(400); rule.onNodeWithText("4 Reihen").assertExists()   // unten ist bei 4 Schluss
+    }
 }

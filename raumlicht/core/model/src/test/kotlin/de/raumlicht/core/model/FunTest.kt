@@ -64,4 +64,36 @@ class FunTest {
         assertTrue(err("0,0,1;0,0,0;;;").contains("Richtung darf nicht")); assertTrue(err("9,0,1;1,0,0;;;").contains("im Raum liegen")); assertTrue(err("0,0,1;-1,0,0;;;").contains("sofort aus dem Raum"))
         assertTrue(err("0,0,1;1,1,0;0,0,0,3;;").contains("Normalenvektor")); assertTrue(err("0,0,1;1,1;;;").contains("3 ganze Zahlen")); assertTrue(err("0,0,1;1,1,0;;;4,4,3,9").contains("Radius"))
     }
+
+    @Test fun galtonFitsTheStageForAnyRowCount() {
+        Galton.ROWS.forEach { n -> val g = Galton(n); assertEquals(n + 1, g.pmf(0.3).size); assertEquals(1.0, g.pmf(0.3).sum(), 1e-9); assertEquals(n * 0.3, g.mean(0.3), 1e-9)
+            val (bin, path) = g.drop(1.0, kotlin.random.Random(1)); assertEquals(n, bin)                                  // immer rechts: letztes Fach
+            path.forEach { assertTrue("$n $it", it.y in 0.5..7.6 && it.z in 0.2..6.6) }
+            assertTrue(g.scene(List(n + 1) { it }, 0.5).contains("nägel$n")) }
+    }
+
+    @Test fun chanceRunsFollowTheLawOfLargeNumbers() {
+        val r = ChanceRun(1.0 / 6, 10_000, 4); assertEquals(r.total, ChanceRun(1.0 / 6, 10_000, 4).total)
+        assertEquals(1.0 / 6, r.freq(10_000), 0.012); assertTrue(abs(r.total - r.mean) < 4 * r.sigma)                     // viele Versuche: nah an p
+        assertTrue((1..10_000).all { r.hits[it] - r.hits[it - 1] in 0..1 }); assertEquals(0.0, r.freq(0), 0.0)
+        assertTrue(r.verdict(r.total).startsWith("Volltreffer")); assertTrue(r.verdict(r.total + 5000).contains("näher an n · p"))
+        assertEquals(0, ChanceRun(0.0, 50, 1).total); assertEquals(50, ChanceRun(1.0, 50, 1).total)
+        assertEquals(listOf(0.5, 1.0 / 6, 0.25), ChanceLab.presets.map { it.p })
+    }
+
+    @Test fun quizBalloonsCarryNumbersAndDuelHasTwoHalves() {
+        val q = BalloonGame(3, mode = BalloonMode.QUIZ)
+        assertEquals(3, q.rules.size); assertEquals(3, q.rules.map { it.text }.toSet().size); assertEquals(q.rules[1], q.ruleAt(20.0)); assertEquals(q.rules[2], q.ruleAt(99.0))
+        assertTrue(q.balloons.none { it.kind == BalloonKind.GOLD || it.kind == BalloonKind.DUD })
+        // in jedem Abschnitt gibt es passende und unpassende Zahlen – sonst wäre nichts zu entscheiden
+        (0..2).forEach { k -> val rule = q.rules[k]; val ns = q.balloons.filter { ((it.born + 2.0) / 15).toInt().coerceAtMost(2) == k }.map { q.numbers[it.id] }
+            assertTrue(rule.text, ns.any(rule.ok) && ns.any { !rule.ok(it) } && ns.all { it in rule.pool }) }
+        val b = q.balloons[5]; assertTrue(q.scene(b.born + 0.5, emptySet()).contains("\"label\":\"${Geo.num(q.numbers[5])}\""))
+        BalloonGame.RULES.forEach { r -> assertTrue(r.text, r.pool.any(r.ok) && r.pool.any { !r.ok(it) }) }
+        assertEquals(listOf(2, 3), (0..6).filter(BalloonGame.RULES.first { it.text.startsWith("Nullstellen") }.ok)); assertEquals(listOf(2, 3, 5, 7, 11, 13), (1..14).filter(BalloonGame.RULES.first { it.text == "Primzahlen" }.ok))
+        assertEquals(BalloonScore(points = 0, combo = 0), BalloonScore().wrong()); assertEquals(2, BalloonScore(points = 3, combo = 4).wrong().points)
+        val d = BalloonGame(3, mode = BalloonMode.DUEL); assertEquals(0, d.side(V3(4.0, 3.9, 2.0))); assertEquals(1, d.side(V3(4.0, 4.0, 2.0)))
+        assertTrue(d.scene(5.0, emptySet()).contains("\"id\":\"mitte\"") && !BalloonGame(3).scene(5.0, emptySet()).contains("mitte"))
+        assertEquals(BalloonGame(3).balloons, BalloonGame(3, mode = BalloonMode.SOLO).balloons)
+    }
 }

@@ -57,6 +57,8 @@ class SceneDumpTest {
             shot("eigene", Coaster.custom(Expr.parse("e^(-0,3x)*sin(3x)").getOrThrow(), 0.0, 8.0)!!.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.35,"view":"out"},"wait":1.0}]"""),
             shot("eigene-pol", Coaster.custom(Expr.parse("1/x").getOrThrow(), -2.0, 2.0)!!.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.2,"view":"out"},"wait":1.0}]"""),
             shot("ballerbude", BalloonGame(11).scene(9.0, emptySet())),
+            shot("ballerbude-aufgabe", BalloonGame(11, mode = BalloonMode.QUIZ).scene(9.0, emptySet())),
+            shot("galton12", Galton(12).let { g -> val r = kotlin.random.Random(5); val c = IntArray(13); repeat(200) { c[g.drop(0.4, r).first]++ }; g.scene(c.toList(), 0.4) }),
 // wie auf dem Gerät: erst die normale Bühne, dann f′ und f″ dazuschalten – das Achsenkreuz muss mitwandern
             Coaster.byId("huegel")!!.let { r -> shot("ableitung", r.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.65,"view":"out"},"wait":1.0},{"state":${r.scene(2.6, derivative = true, fill = false, second = true)},"wait":2.0}]""") },
             Coaster.byId("doppel")!!.let { r -> shot("ableitung-doppel", r.scene(), ""","actions":[{"ride":{"id":"bahn","u":0.3,"view":"out"},"wait":1.0},{"state":${r.scene(1.2, derivative = true, fill = true, second = true)},"wait":2.0}]""") },

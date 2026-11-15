@@ -174,14 +174,15 @@ fun FlightScreen(onBack: () -> Unit, controller: StageController = remember { St
 /** Zufall zum Anfassen: Kugeln fallen durch das Nagelbrett, in den Fächern wächst die Binomialverteilung. */
 @Composable
 fun GaltonScreen(onBack: () -> Unit, controller: StageController = remember { StageController() }, random: Random = remember { Random(System.nanoTime()) }) {
-    val board = remember { Galton() }
+    var rows by rememberSaveable { mutableIntStateOf(8) }
+    val board = remember(rows) { Galton(rows) }
     var tenths by rememberSaveable { mutableIntStateOf(5) }
-    var counts by remember { mutableStateOf(List(board.rows + 1) { 0 }) }
+    var counts by remember(rows) { mutableStateOf(List(board.rows + 1) { 0 }) }
     var ball by remember { mutableStateOf<V3?>(null) }
     var running by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope(); val sfx = LocalSfx.current
     val p = tenths / 10.0; val total = counts.sum()
-    LaunchedEffect(counts, ball, tenths) { controller.setState(board.scene(counts, p, ball)) }
+    LaunchedEffect(counts, ball, tenths, rows) { controller.setState(board.scene(counts, p, ball)) }
 
     fun run(n: Int) {
         if (running) return
@@ -210,8 +211,10 @@ fun GaltonScreen(onBack: () -> Unit, controller: StageController = remember { St
             else "Blau: was gefallen ist. Gelb: was die Binomialverteilung vorhersagt. Je mehr Kugeln, desto besser passt es.",
             Modifier.padding(horizontal = 14.dp), color = Q.Muted, fontSize = 12.sp)
         Row(Modifier.padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("n", color = Q.Text, fontWeight = FontWeight.Black, fontSize = 18.sp)
+            Stepper(null, rows, "$rows Reihen", Q.Text, "n", Modifier.weight(0.8f), canDown = rows > Galton.ROWS.first && !running, canUp = rows < Galton.ROWS.last && !running) { d -> rows += d }
             Text("p", color = Q.Pink, fontWeight = FontWeight.Black, fontSize = 18.sp)
-            Stepper(null, tenths, "${tenths * 10} % nach rechts", Q.Pink, "p", Modifier.weight(1f), canDown = tenths > 1 && !running, canUp = tenths < 9 && !running) { d ->
+            Stepper(null, tenths, "${tenths * 10} % rechts", Q.Pink, "p", Modifier.weight(1f), canDown = tenths > 1 && !running, canUp = tenths < 9 && !running) { d ->
                 tenths += d; counts = List(board.rows + 1) { 0 }       // neue Wahrscheinlichkeit, neues Experiment
             }
         }

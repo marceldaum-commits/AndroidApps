@@ -18,7 +18,9 @@ class Galton(val rows: Int = 8) {
     fun mean(p: Double) = rows * p
     fun sigma(p: Double) = sqrt(rows * p * (1 - p))
 
-    private fun peg(row: Int, rights: Int) = V3(4.0, 4.0 + (rights - row / 2.0) * STEP, TOP - row * DROP)
+    // Abstände passen sich der Reihenzahl an, damit auch 12 Reihen auf die Bühne passen
+    private val step = minOf(STEP, 6.4 / rows); private val fall = minOf(DROP, 4.4 / rows)
+    private fun peg(row: Int, rights: Int) = V3(4.0, 4.0 + (rights - row / 2.0) * step, TOP - row * fall)
     /** Weg einer Kugel: von oben bis ins Fach. Rückgabe: Fach und Wegpunkte. */
     fun drop(p: Double, random: Random): Pair<Int, List<V3>> {
         var rights = 0; val path = ArrayList<V3>(); path += peg(0, 0) + V3(0.0, 0.0, 0.4)
@@ -33,10 +35,10 @@ class Galton(val rows: Int = 8) {
         val scale = minOf(0.22, 1.9 / peak)
         val pegs = (0 until rows).flatMap { r -> (0..r).map { i -> peg(r, i) + V3(0.0, 0.0, -0.06) to peg(r, i) + V3(0.0, 0.0, 0.06) } }
         val bars = (0..rows).filter { counts[it] > 0 }.map { k -> val x = peg(rows, k).y; val h = 0.1 + counts[k] * scale
-            listOf(V3(4.0, x - 0.3, 0.08), V3(4.0, x + 0.3, 0.08), V3(4.0, x + 0.3, h), V3(4.0, x - 0.3, h)) }
+            val w = step * 0.38; listOf(V3(4.0, x - w, 0.08), V3(4.0, x + w, 0.08), V3(4.0, x + w, h), V3(4.0, x - w, h)) }
         val curve = (0..rows).map { k -> V3(4.0, peg(rows, k).y, 0.1 + expected[k] * maxOf(total, 1) * scale) }
         return Stage.encode(Bounds(), listOfNotNull(
-            Stage.edges("nägel", pegs, "white"),
+            Stage.edges("nägel$rows", pegs, "white"),
             if (bars.isNotEmpty()) Stage.edges("balken${bars.size}", bars.flatMap { q -> q.indices.map { q[it] to q[(it + 1) % 4] } }, "cyan", faces = bars) else null,
             if (total > 0) Stage.edges("erwartung", curve.zipWithNext(), "yellow") else null,
             ball?.let { Stage.point("kugel", it, "pink", drop = false) },
@@ -44,7 +46,7 @@ class Galton(val rows: Int = 8) {
             Stage.podium(),
         ))
     }
-    companion object { const val STEP = 0.8; const val DROP = 0.48; const val TOP = 5.9 }
+    companion object { const val STEP = 0.8; const val DROP = 0.48; const val TOP = 5.9; val ROWS = 4..12 }
 }
 
 // ───────────────────────── Flug durch den Raum ─────────────────────────
@@ -145,4 +147,24 @@ data class Extra(val id: String, val name: String, val emoji: String, val badges
 object Looks {
     val trails = listOf(Extra("none", "ohne Spur", "▫️", 0), Extra("sparks", "Funkenspur", "✨", 2), Extra("rainbow", "Regenbogen", "🌈", 5))
     val hats = listOf(Extra("none", "ohne", "▫️", 0), Extra("antenna", "Antenne", "📡", 1), Extra("halo", "Lichtring", "😇", 4), Extra("crown", "Krone", "👑", 8))
+}
+
+// ───────────────────────── Zufallsmaschine ─────────────────────────
+
+/** Ein Zufallsversuch mit Trefferwahrscheinlichkeit [p] (Zähler/Nenner oder Prozent), [n]-mal wiederholt. Der Ablauf steht mit [seed] fest. */
+class ChanceRun(val p: Double, val n: Int, seed: Long) {
+    /** hits[i] = Treffer nach i Versuchen */
+    val hits: IntArray = IntArray(n + 1).also { h -> val r = Random(seed); for (i in 1..n) h[i] = h[i - 1] + if (r.nextDouble() < p) 1 else 0 }
+    val total get() = hits[n]
+    fun freq(i: Int) = if (i == 0) 0.0 else hits[i].toDouble() / i
+    val mean get() = n * p
+    val sigma get() = sqrt(n * p * (1 - p))
+    /** Wie gut war die Wette? */
+    fun verdict(bet: Int): String { val d = abs(bet - total)
+        return when { d == 0 -> "Volltreffer – genau $total!"; d <= maxOf(1.0, sigma) -> "Stark getippt: nur $d daneben."; d <= 2 * sigma -> "Nicht schlecht: $d daneben."; else -> "$d daneben – der Zufall hält sich näher an n · p, als man denkt." } }
+}
+data class ChancePreset(val id: String, val title: String, val event: String, val num: Int, val den: Int) { val p get() = num.toDouble() / den }
+object ChanceLab {
+    val presets = listOf(ChancePreset("muenze", "💰 Münze", "Kopf", 1, 2), ChancePreset("wuerfel", "🎲 Würfel", "eine Sechs", 1, 6), ChancePreset("rad", "🎡 Glücksrad", "das Gewinnfeld (1 von 4)", 1, 4))
+    val counts = listOf(10, 100, 1000, 10_000)
 }
