@@ -430,3 +430,12 @@ Geprüft: jede neue Art mit 250 Zufallsaufgaben (lösbar, Start löst nicht, all
 ### Preis
 Entschieden hat Marcel: Grenze frei/Pro wie im Konzept, Gründer-Code, Tutor-Start mit Claude Haiku 5.5. **Nicht entschieden:** der Zeitraum und der Preis der Tutor-Verlängerung –
 die „4,99 € pro Jahr“ waren mein Vorschlag, Marcel hat darauf mit „4,99 im Jahr?????“ reagiert. Bitte nicht als beschlossen führen.
+
+---
+
+## 16.11.2026 – Konzept Pro: Stand Preis der Tutor-Verlängerung
+
+Marcel fand meinen geänderten Vorschlag gut („das ist nice“): Tutor-Verlängerung eher **9,99 € pro Jahr** statt 4,99 € (bei 4,99 € brutto kommen rund 3,60 € an; ein Vielnutzer an der Tagesgrenze kostet mit Claude Haiku 5.5 rund 5 $ im Jahr),
+alternativ eine niedrigere Tagesgrenze. Das ist eine Tendenz, **noch keine ausdrückliche Entscheidung** – ich habe ihn um ein klares Ja gebeten.
+Vorschlag im Ganzen: Abi-Pass 14,99 € einmalig (Einführung 9,99 €), Inhalte dauerhaft, Tutor 12 Monate inklusive, Verlängerung 9,99 € pro Jahr; alle Preise inkl. 19 % USt.
+Bei 9,99 € brutto: 8,39 € netto, über Play rund 7,14 €, über die Website rund 7,76 € (Annahmen wie im USt-Nachtrag).
