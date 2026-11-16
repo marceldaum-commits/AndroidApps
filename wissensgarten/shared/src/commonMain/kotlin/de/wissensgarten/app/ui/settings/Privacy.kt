@@ -51,8 +51,12 @@ object PrivacyText {
         "Erinnerungen" to
             "Die tägliche Gieß-Erinnerung ist eine Benachrichtigung, die das Gerät selbst plant. Es werden dafür keine Daten gesendet.",
         "Updates" to
-            "Im Google Play Store kommen Updates über Google Play. In der GitHub-Version fragt die App bei GitHub nach, ob es eine neue Version gibt " +
-            "(dabei sieht GitHub wie bei jedem Webseitenaufruf die IP-Adresse). Das lässt sich in den Einstellungen abschalten.",
+            "App-Updates: In der Play-Store-Version kommen neue Versionen über Google Play – die App lädt sie im Hintergrund und spielt sie ein, " +
+            "ohne dass der Store geöffnet werden muss. In der GitHub-Version fragt die App bei GitHub nach, ob es eine neue Version gibt. " +
+            "Neue Wissenspakete: Höchstens einmal am Tag schaut die App bei GitHub (raw.githubusercontent.com, betrieben von GitHub Inc.) nach neuen oder " +
+            "verbesserten Wissenspaketen und lädt sie herunter. Das sind nur Inhalte (Fragen, Texte, Merkbilder) – kein Programmcode. " +
+            "Dabei wird nichts über euch oder euer Kind gesendet; GitHub sieht nur, wie bei jedem Webseitenaufruf, die IP-Adresse und den Zeitpunkt. " +
+            "Das Nachladen der Pakete und (in der GitHub-Version) die Update-Suche lassen sich in den Einstellungen abschalten.",
         "Löschen" to
             "Einstellungen → „Alle Daten löschen“ entfernt alle Profile, den Lernstand, die Einstellungen und – falls verbunden – die Sync-Datei im Google Drive. " +
             "Auch das Deinstallieren der App löscht alle Daten auf dem Gerät.",

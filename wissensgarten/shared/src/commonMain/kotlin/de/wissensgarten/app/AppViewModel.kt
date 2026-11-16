@@ -392,6 +392,25 @@ class AppViewModel(
         }
     }
 
+    /** Höchstens alle 20 Stunden neue Wissenspakete (nur Daten) nachladen – abschaltbar in den Einstellungen. */
+    fun refreshPacksIfDue(force: Boolean = false) {
+        val h = host ?: return
+        if (!h.features.packUpdates || (!force && !settings.packUpdates.value)) return
+        val now = de.wissensgarten.core.model.Platform.nowMs()
+        if (!force && now - settings.lastPackCheck < 20 * 3_600_000L) return
+        viewModelScope.launch {
+            val known = c.catalog.all().associate { it.id to it.version }
+            val n = runCatching { h.fetchPackUpdates(known) }.getOrNull() ?: return@launch
+            settings.lastPackCheck = now
+            if (n > 0) {
+                val all = c.catalog.reload()
+                _packs.value = all
+                repo.syncPacks(all)
+                h.toast(if (n == 1) "🐝 Brummi hat ein neues Wissenspaket mitgebracht!" else "🐝 Brummi hat $n neue Wissenspakete mitgebracht!")
+            } else if (force) h.toast("Alle Wissenspakete sind aktuell 🌼")
+        }
+    }
+
     fun seedsLeft(p: ProfileEntity? = profile.value): Int =
         p?.let { SessionBuilder.seedsLeft(it.seedsPerDay, it.seedDay, it.seedsToday, de.wissensgarten.core.model.Platform.nowMs()) } ?: 0
 

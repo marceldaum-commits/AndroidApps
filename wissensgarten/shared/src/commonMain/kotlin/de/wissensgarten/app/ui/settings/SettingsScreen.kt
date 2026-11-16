@@ -53,6 +53,9 @@ fun SettingsScreen(
     holiday: Boolean = false,
     onHoliday: (Boolean) -> Unit = {},
     onWeekReport: () -> Unit = {},
+    packUpdates: Boolean = true,
+    onPackUpdates: (Boolean) -> Unit = {},
+    onCheckPacks: () -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
     var wipeStep by remember { mutableIntStateOf(0) }
@@ -125,6 +128,18 @@ fun SettingsScreen(
                 }
                 Switch(checked = typing, onCheckedChange = onTyping)
             }
+        }
+
+        if (host?.features?.packUpdates == true) Section("Neue Wissenspakete") {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(Modifier.weight(1f)) {
+                    Text("Automatisch nachladen")
+                    Text("Brummi holt neue und verbesserte Pakete (nur Fragen und Texte) – ohne App-Update. Dein Fortschritt bleibt erhalten.",
+                        style = MaterialTheme.typography.bodySmall)
+                }
+                Switch(checked = packUpdates, onCheckedChange = onPackUpdates)
+            }
+            OutlinedButton(onClick = onCheckPacks, modifier = Modifier.fillMaxWidth()) { Text("🐝 Jetzt nach neuen Paketen schauen") }
         }
 
         if (host?.features?.reminders == true) Section("Erinnerung") {

@@ -31,7 +31,7 @@ jobs:
         working-directory: wissensgarten
         run: |
           set -euo pipefail
-          for f in index.html sw.js wissensgarten.js wg-platform.js manifest.webmanifest version.json packs/index.json; do
+          for f in index.html sw.js wissensgarten.js wg-platform.js manifest.webmanifest version.json packs/index.json packs/versions.json; do
             [ -s "webapp/$f" ] || { echo "::error::webapp/$f fehlt"; exit 1; }
           done
           node --check webapp/sw.js
@@ -44,7 +44,7 @@ jobs:
           app=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
           web=$(grep -oP '"version": "\K[^"]+' webapp/version.json)
           [ "$app" = "$web" ] || { echo "::error::WebApp ist Version $web, Android-App ist $app – bitte ./gradlew :webApp:exportWebApp neu bauen"; exit 1; }
-          diff -rq content/src/main/assets/packs webapp/packs --exclude=index.json || { echo "::error::Wissenspakete von App und WebApp unterscheiden sich"; exit 1; }
+          diff -rq content/src/main/assets/packs webapp/packs --exclude=index.json --exclude=versions.json || { echo "::error::Wissenspakete von App und WebApp unterscheiden sich"; exit 1; }
           echo "WebApp $web, $size MB – in Ordnung"
 
       - name: Branch wissensgarten-test vorspulen

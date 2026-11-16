@@ -568,6 +568,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
                             onTutorial = { nav.navigate(Routes.tutorial(false)) },
                             update = upd, autoUpdate = autoUpd, onAutoUpdate = { vm.settings.setAutoUpdate(it) },
+                            packUpdates = vm.settings.packUpdates.collectAsStateWithLifecycle().value, onPackUpdates = { vm.settings.setPackUpdates(it) },
+                            onCheckPacks = { vm.refreshPacksIfDue(force = true) },
                             music = vm.settings.music.collectAsStateWithLifecycle().value, onMusic = { vm.settings.setMusic(it) },
                             syllables = vm.settings.syllables.collectAsStateWithLifecycle().value, onSyllables = { vm.settings.setSyllables(it) },
                             vibration = vm.settings.vibration.collectAsStateWithLifecycle().value, onVibration = { vm.settings.setVibration(it) },
