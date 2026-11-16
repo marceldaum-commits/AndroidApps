@@ -17,6 +17,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.foundation.clickable
 import de.kurvenflug.app.ui.theme.Q
 
 @Composable
@@ -30,6 +32,8 @@ fun SettingsScreen(
     onBack: () -> Unit,
     /** Neu anfangen: Spielstand löschen (nach 2 s Gedrückthalten) */
     onReset: (() -> Unit)? = null,
+    /** Kurvenflug Pro öffnen (null = kein Kaufweg auf dieser Plattform) */
+    onPro: (() -> Unit)? = null,
     voltVoice: Boolean = true, onVoltVoice: (Boolean) -> Unit = {},
 ) {
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -40,6 +44,7 @@ fun SettingsScreen(
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             val platform = de.kurvenflug.app.LocalPlatform.current
             if (platform.selfUpdate) PlatformUpdateSection(installed, update, autoUpdate, onAutoUpdate)
+            if (onPro != null) ProCard(de.kurvenflug.app.LocalPro.current, onPro)
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -52,6 +57,9 @@ fun SettingsScreen(
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    val shop = de.kurvenflug.app.LocalPro.current.locking
+                    if (shop) Text("Kurvenflug ist kostenlos bis Klasse 10. Optional gibt es „Kurvenflug Pro“ als Einmalkauf ohne Abo " +
+                        "(Oberstufe, Extrem-Stufen, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
                         "keine Käufe, nichts wird an einen Server geschickt. Neue Versionen lädt die Seite von selbst."
                         else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, " +
@@ -70,6 +78,22 @@ fun SettingsScreen(
             }
             LicenseCard(platform.isWeb)
             if (onReset != null) ResetCard(onReset)
+        }
+    }
+}
+
+@Composable
+private fun ProCard(state: de.kurvenflug.app.ProState, onPro: () -> Unit) {
+    ElevatedCard(Modifier.fillMaxWidth()) {
+        Row(Modifier.clickable { onPro() }.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text("⭐", fontSize = 28.sp)
+            Spacer(Modifier.width(12.dp))
+            Column(Modifier.weight(1f)) {
+                Text("Kurvenflug Pro", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                Text(if (state.pro) "Freigeschaltet – danke! 💛" else "Oberstufe, Extrem-Stufen, mehr Spieler · Code einlösen",
+                    style = MaterialTheme.typography.bodySmall)
+            }
+            Text("›", fontSize = 24.sp, color = Q.Muted)
         }
     }
 }

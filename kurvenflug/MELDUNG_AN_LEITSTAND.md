@@ -1,5 +1,28 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 0.23.0 – Kurvenflug Pro gebaut (Freigabe Marcel: „ja, bau es so“; nicht USt.-befreit)
+
+- **Version:** 0.23.0 · **Commit:** eae218c (Zweig claude/gifted-shannon-657gpr)
+- **Noch sperrt nichts:** Pro-Sperren greifen erst, wenn ein Kaufweg angeboten wird – Play: Produkt `kurvenflug_pro`
+  in der Play Console aktiv; Web/GitHub: `kurvenflug/pro/pro.properties` mit `publicKey` (Lizenz-Dienst) und
+  `checkoutUrl` (Woo-Kasse). Bis dahin zeigt die Pro-Seite „Pro kommt bald – bis dahin ist alles frei“.
+- **Gebaut:** Pro-Regeln mit Bestandsschutz (Pro.kt), Pro-Seite mit Vorteilen, Preis (Web: „7,99 € einmalig, inkl. 19 % MwSt.“,
+  Play: Preis von Google), **Frage für Erwachsene** (Geburtsjahr, ≥ 18) vor jedem Kauf, Code-Eingabe, Freischalt-Link
+  `…/?pro=KF…` (Web) bzw. „Teilen → Kurvenflug“ / Einfügen (GitHub-APK), Play Billing 8.3 (Kauf, Bestätigung,
+  Wiederherstellen), Sperren an Kapitelkarten, Extrem-Prüfungen, Sturm (ohne Pro bis „Schwer“), Andromeda, Spieler-Profilen,
+  Werkstatt; Einstellungen → „⭐ Kurvenflug Pro“; Eltern-Text angepasst.
+- **Play-Fassung bleibt ohne Internet-Berechtigung** (die Billing-Bibliothek bringt INTERNET mit, ist entfernt – der Kauf
+  läuft über die Play-Store-App). **Pflicht vor Freigabe:** Testkauf im internen Test (Anleitung `store/PLAY_CONSOLE_ANLEITUNG.md` §6a).
+- **Für den Lizenz-Dienst (Leitstand):** Code-Format und Prüfung in `core/model/.../License.kt`, Erzeuger
+  `kurvenflug/pro/pro_code.py` (`keygen`, `pro <Nr>`, `school <Nr> <bis-Datum>`; braucht `cryptography`). Ed25519, der Code
+  enthält App-Nummer (Kurvenflug = 1) – **ein Schlüsselpaar kann für alle Apps dienen**. Geheimer Schlüssel nur in
+  Bitwarden/beim Dienst. Codes sind 117 Zeichen lang (Signatur) → in der E-Mail als Link + zum Kopieren, nicht zum Abtippen.
+  Freischalt-Link angenommen als `https://kurvenflug.mathenachhilfe-online.com/?pro=<Code>` (Live-Adresse bitte bestätigen).
+- **Tests:** Ed25519/SHA-512 gegen die Java-Krypto (Zufallsschlüssel), feste Code-Beispiele auf JVM **und** im Browser (Wasm),
+  gefälscht/fremde App/abgelaufene Schullizenz werden abgelehnt, Code mitten in E-Mail/Link wird gefunden; Pro-Regeln
+  (ohne Kaufweg alles frei, 24 freie Kapitel, 35 Pro-Level, Bestandsschutz, Sturm-Grenze).
+- **Bitte prüfen (kurvenflug-test):** Einstellungen → „⭐ Kurvenflug Pro“ (zeigt „kommt bald“); sonst alles wie bisher frei.
+
 ## Konzept Pro für KurvenFlug (Auftrag Marcel vom 16.11. – nur Konzept, noch nicht gebaut)
 
 ### 1. Was bleibt frei, was wird Pro?
@@ -19,8 +42,8 @@ Empfehlung von Schulen und Eltern. Pro ist für **Oberstufe, Könner und Fans**.
 **Bestandsschutz:** Wer ein Pro-Level schon geschafft hat, behält Sterne und kann es weiter spielen. Kein Fortschritt geht verloren.
 
 **Preis:** **Einmalkauf statt Abo** – für Eltern ehrlich und ohne Abo-Falle, passend zu einer Kinder-App.
-- **Kurvenflug Pro: 7,99 € einmalig** (Familie, alle Profile auf dem Gerät/Browser), zum Start 4,99 €.
-- **Schullizenz: 29 € pro Lehrkraft und Schuljahr**: Codes für eine Klasse (bis 35 Schüler) für Pro-Inhalte in Challenges.
+- **Kurvenflug Pro: 7,99 € einmalig, brutto inkl. 19 % USt.** (Familie, alle Profile auf dem Gerät/Browser), zum Start 4,99 €.
+- **Schullizenz: 29 € brutto pro Lehrkraft und Schuljahr**: Codes für eine Klasse (bis 35 Schüler) für Pro-Inhalte in Challenges.
 - Vergleich (Recherche 16.11., Preise schwanken je Land/Aktion):
   - DragonBox Algebra (Kahoot!): Einmalkauf ca. 7–8 €.
   - Photomath Plus: ca. 55–65 € im Jahr bzw. ca. 10 € im Monat.
@@ -41,6 +64,9 @@ Empfehlung von Schulen und Eltern. Pro ist für **Oberstufe, Könner und Fans**.
   E-Mail an Kunde und Marcel, Bestellung bleibt in WooCommerce als Nachweis → Code in der App eingeben (oder Link
   `…/kurvenflug/?pro=CODE` öffnet die App und schaltet frei). **Kein Konto**, Code gilt für Web und GitHub-APK.
   An der Kasse: Häkchen zum sofortigen Beginn der Leistung (Widerrufsrecht bei digitalen Inhalten).
+- **Umsatzsteuer (Marcel ist nicht USt.-befreit)**: Preise sind Bruttopreise inkl. 19 % USt.; Woo-Rechnung mit
+  ausgewiesener USt. Digitale Leistungen an Verbraucher in anderen EU-Ländern: Steuersatz des Kundenlandes (OSS) –
+  in WooCommerce einstellen bzw. mit dem Steuerberater klären. Bei Google Play führt Google die USt. selbst ab.
 - Play-Käufer, die auch im Browser spielen wollen: Code per E-Mail-Anfrage mit Play-Bestellnummer (später automatisch,
   s. Punkt 3).
 

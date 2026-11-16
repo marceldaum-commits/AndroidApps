@@ -1,3 +1,4 @@
+import java.util.Properties
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
@@ -11,13 +12,23 @@ val appVersion: String = Regex("""versionName\s*=\s*"([^"]+)"""")
     .find(rootProject.file("app/build.gradle.kts").readText())?.groupValues?.get(1) ?: error("versionName nicht gefunden")
 
 val buildInfoDir = layout.buildDirectory.dir("generated/buildinfo/kotlin")
+val proProps = Properties().also { p ->
+    val f = rootProject.file("pro/pro.properties")
+    if (f.exists()) f.inputStream().use { p.load(it) }
+}
+val proKey = proProps.getProperty("publicKey", "").trim()
+val proCheckout = proProps.getProperty("checkoutUrl", "").trim()
+
 val genBuildInfo by tasks.registering {
     inputs.property("version", appVersion)
+    inputs.property("proKey", proKey)
+    inputs.property("proCheckout", proCheckout)
     outputs.dir(buildInfoDir)
     doLast {
         val f = buildInfoDir.get().file("BuildInfo.kt").asFile
         f.parentFile.mkdirs()
-        f.writeText("/** Automatisch erzeugt aus app/build.gradle.kts */\nobject BuildInfo { const val VERSION = \"$appVersion\" }\n")
+        f.writeText("/** Automatisch erzeugt aus app/build.gradle.kts */\nobject BuildInfo {\n    const val VERSION = \"$appVersion\"\n" +
+            "    const val PRO_KEY = \"$proKey\"\n    const val PRO_CHECKOUT = \"$proCheckout\"\n}\n")
     }
 }
 

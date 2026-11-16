@@ -53,8 +53,11 @@ object WebPlatform : Platform {
     }
 
     /** Beim Start aufrufen: sobald der Browser Ton erlaubt, Geräusche und Musik vorbereiten */
-    fun init(version: String) {
+    override var proShop: ProShop? = null
+
+    fun init(version: String, proKey: String = "", checkoutUrl: String = "") {
         versionName = version
+        proShop = CodeShop(proKey, checkoutUrl) { jsOpen(it) }
         jsOnUnlock { WebSfx.ready = true; WebSfx.prepare(); refresh() }
     }
 

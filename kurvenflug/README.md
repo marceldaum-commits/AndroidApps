@@ -112,6 +112,16 @@ Nachweis per Test: `DifficultyTest` (jede Stufe strikt schwerer) und `ChapterExt
 |---|---|---|
 | ![](screenshots/91_extrem_pruefung_kachel.png) | ![](screenshots/92_extrem_pruefung_geraden.png) | ![](screenshots/93_sturm_extrem.png) |
 
+## Kurvenflug Pro (`core/model/Pro.kt`, `License.kt`, `shared/ProShop.kt`, `pro/`)
+Frei bis Klasse 10; Pro: Oberstufe, Extrem-Prüfungen, Sturm Profi/Extrem, Andromeda ab Planet 7, > 2 Spieler, Pro-Werkstatt.
+Gesperrt wird nur, wenn ein Kaufweg angeboten wird; Bestandsschutz für Begonnenes. Play-Fassung: Google Play Billing
+(Produkt `kurvenflug_pro`). Web/GitHub: Website-Kasse → signierter Code (Ed25519, offline geprüft) per E-Mail/Link.
+Schlüssel und Kasse in `pro/pro.properties` (nur der öffentliche Schlüssel!), Codes erzeugt `pro/pro_code.py`.
+
+| Pro-Seite | Pro-Kapitel gesperrt | Freigeschaltet |
+|---|---|---|
+| ![](screenshots/94_pro.png) | ![](screenshots/95_pro_kapitel_gesperrt.png) | ![](screenshots/96_pro_freigeschaltet.png) |
+
 ## Google Play
 Zwei Varianten aus demselben Code: `github` (APK, eigener Updater, Internet + Installations-Recht) und `play`
 (AAB, keine Internet-/Installations-Rechte, Play In-App Updates). Store-Eintrag, Grafiken, Screenshots (1080 × 2160),

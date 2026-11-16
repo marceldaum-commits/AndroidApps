@@ -69,6 +69,7 @@ object Routes {
     const val STATION = "station"
     const val SEASON = "gastplanet"
     fun level(id: String) = "level/$id"
+    const val PRO = "pro"
 }
 
 /** Nur zurück, wenn der Bildschirm noch aktiv ist – verhindert, dass ein Doppeltipp zwei Ebenen schließt. */
@@ -96,12 +97,13 @@ fun KurvenflugRoot(
     val music by vm.settings.music.collectAsStateWithLifecycle()
     LaunchedEffect(sound) { platform.sfx?.enabled = sound }
     LaunchedEffect(music) { platform.setMusicEnabled(music) }
+    val proState = rememberProState(vm, platform.proShop)
     KurvenflugTheme {
         val look by vm.settings.look.collectAsStateWithLifecycle()
         val voltVoice by vm.settings.voltVoice.collectAsStateWithLifecycle()
         CompositionLocalProvider(de.kurvenflug.app.LocalPlatform provides platform, LocalSfx provides platform.sfx, LocalVibration provides vibration,
             de.kurvenflug.app.ui.flight.LocalLook provides look, de.kurvenflug.app.ui.volt.LocalVoltHat provides look.third,
-            de.kurvenflug.app.ui.volt.LocalVoltVoice provides voltVoice) {
+            de.kurvenflug.app.ui.volt.LocalVoltVoice provides voltVoice, LocalPro provides proState) {
             Surface(Modifier.fillMaxSize(), color = Q.Space) {
                 if (!platform.isWeb) Nav(vm, platform, incomingDuel, widgetLevel)
                 // Browser am PC: Kurvenflug als Handy-Spalte in der Mitte – das Spielfeld ist quadratisch, Regler bleiben sichtbar
@@ -247,6 +249,12 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 else if (de.kurvenflug.core.model.ChapterExtreme.isExtreme(id)) de.kurvenflug.core.model.ChapterExtreme.levelFor(id)
                 else Levels.byId(id)
             } ?: return@composable
+            // Pro-Inhalt ohne Pro (nur wenn ein Kaufweg angeboten wird): stattdessen die Pro-Seite
+            val ps = LocalPro.current
+            if (!de.kurvenflug.core.model.Pro.open(id, ps.pro, ps.locking, allStars)) {
+                de.kurvenflug.app.ui.pro.ProScreen(ps, platform.proShop, onCode = vm.settings::setProCode, onBack = { nav.popSafe() }, locked = true)
+                return@composable
+            }
             val chapter = (if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.chapter(id.removePrefix(de.kurvenflug.core.model.Andromeda.PREFIX).substringBefore('-').toInt()) else null)
                 ?: (if (de.kurvenflug.core.model.Seasons.isSeason(id)) id.removePrefix(de.kurvenflug.core.model.Seasons.PREFIX).split('-').let { p ->
                     de.kurvenflug.core.model.SeasonEvent.entries.firstOrNull { it.key == p[0] }?.let { e -> de.kurvenflug.core.model.Seasons.chapter(e, p[1].toInt()) } } else null)
@@ -410,6 +418,9 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
             de.kurvenflug.app.ui.maker.DetectiveScreen(vm.settings.detectiveBest, probeColor,
                 onFinished = { if (it > vm.settings.detectiveBest) vm.settings.detectiveBest = it }, onBack = { nav.popSafe() })
         }
+        composable(Routes.PRO) {
+            de.kurvenflug.app.ui.pro.ProScreen(LocalPro.current, platform.proShop, onCode = vm.settings::setProCode, onBack = { nav.popSafe() })
+        }
         composable(Routes.SETTINGS) {
             val upd by vm.availableUpdate.collectAsStateWithLifecycle()
             val autoUpd by vm.settings.autoUpdate.collectAsStateWithLifecycle()
@@ -425,6 +436,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 update = upd?.let { UpdateState.Available(it) } ?: UpdateState.Idle,
                 onBack = { nav.popSafe() },
                 onReset = vm::resetAll,
+                onPro = if (platform.proShop != null) ({ nav.goOnce(Routes.PRO) }) else null,
                 voltVoice = vm.settings.voltVoice.collectAsStateWithLifecycle().value, onVoltVoice = vm.settings::setVoltVoice,
             )
         }

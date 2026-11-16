@@ -23,6 +23,8 @@ interface Platform {
     fun openUrl(url: String)
     fun setMusicMood(m: MusicMood) {}
     fun setMusicEnabled(on: Boolean) {}
+    /** Kaufweg für Kurvenflug Pro (null = keiner, z. B. in Bildschirmfoto-Tests) */
+    val proShop: ProShop? get() = null
 }
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */

@@ -86,6 +86,18 @@ Kontakt-E-Mail: deine Support-Adresse · Website: `https://www.mathenachhilfe-on
 2. Denselben AAB-Release in diesen Track übernehmen („Release aus Bibliothek hinzufügen“) → veröffentlichen.
 3. Nach 14 Tagen erscheint im Dashboard **„Zugriff auf die Produktion beantragen“** → Fragen zum Test beantworten → Prüfung abwarten.
 
+## 6a. Kurvenflug Pro (In-App-Produkt) – erst wenn Pro starten soll
+Solange das Produkt nicht angelegt ist, bleibt in der App alles frei. Ab dem Anlegen erscheinen die Pro-Sperren.
+1. **Monetarisieren → Produkte → In-App-Produkte** (ggf. erst Händlerkonto/Zahlungsprofil einrichten).
+2. **Produkt erstellen**: Produkt-ID genau `kurvenflug_pro` · Name „Kurvenflug Pro“ · Beschreibung: „Oberstufe,
+   Extrem-Prüfungen, Sturm Profi & Extrem, Andromeda ab Planet 7, bis 6 Spieler. Einmalkauf, kein Abo.“
+3. **Preis**: 7,99 € (Google zeigt Endpreise inkl. USt. und führt die USt. selbst ab) → für andere Länder umrechnen lassen → **Aktivieren**.
+4. **Lizenztester** (Einstellungen → Lizenztests): eigene Google-Konten eintragen → Testkäufe kosten nichts.
+5. **Pflicht vor der Freigabe:** Im internen Test einmal kaufen und „Käufe wiederherstellen“ probieren (die Play-Fassung
+   hat keine Internet-Berechtigung – der Kauf läuft über die Play-Store-App; das muss einmal auf echtem Gerät klappen).
+6. Formulare nachziehen: IARC-Fragebogen → „Digitale Käufe: **Ja**“. Datensicherheit bleibt „keine Daten erhoben“
+   (den Kauf wickelt Google ab, die App speichert nur „Pro: ja“). Store-Eintrag zeigt „In-App-Käufe“ automatisch.
+
 ## 7. Updates später
 Jede neue Version baut GitHub automatisch: `Kurvenflug-<Version>-play.aab` im Release → in der Play Console beim gewünschten
 Track „Neuen Release erstellen“ → hochladen. In der App erscheint das Update dann von selbst (Play In-App Updates):
@@ -101,3 +113,6 @@ Play Developer API) sofort beim Start.
 > Die Version aus Google Play hat keinen Internetzugriff; Updates werden über Google Play bereitgestellt. Die Version aus GitHub
 > fragt nur auf GitHub nach neuen Versionen (dabei wird technisch bedingt die IP-Adresse an GitHub übertragen). Die Web-Version
 > speichert den Spielstand nur im Browser (localStorage) und sendet keine Spieldaten an den Server.
+> **Kurvenflug Pro (optional, Einmalkauf):** In der Play-Version wickelt Google Play den Kauf ab. In der Web- und GitHub-Version
+> erfolgt der Kauf über unseren Shop auf mathenachhilfe-online.com (Bestelldaten nach unserer allgemeinen Datenschutzerklärung);
+> die App speichert nur den Freischalt-Code bzw. „Pro: ja“ auf dem Gerät, ohne Bezug zu Namen oder E-Mail.

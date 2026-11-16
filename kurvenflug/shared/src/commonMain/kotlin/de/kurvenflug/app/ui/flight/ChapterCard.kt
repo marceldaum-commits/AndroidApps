@@ -49,6 +49,9 @@ fun ChapterCard(c: Chapter, index: Int, stars: Map<String, Int>, onLevel: (Level
             }
             Text("$got / ${c.levels.size * 3} ⭐", color = Q.Yellow, fontWeight = FontWeight.Bold)
         }
+        val ps = de.kurvenflug.app.LocalPro.current
+        if (de.kurvenflug.core.model.Pro.chapterLocked(c.number, ps.pro, ps.locking, stars))
+            Text("⭐ Teil von Kurvenflug Pro – antippen für mehr", color = Q.Yellow, style = MaterialTheme.typography.labelMedium)
         c.levels.chunked(4).forEach { row ->
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.forEach { l ->
@@ -62,7 +65,8 @@ fun ChapterCard(c: Chapter, index: Int, stars: Map<String, Int>, onLevel: (Level
         val extreme = remember(c.number) { de.kurvenflug.core.model.ChapterExtreme.forChapter(c.number) }
         if (extreme != null) {
             val open = c.levels.all { (stars[it.id] ?: 0) > 0 }
-            ExtremeTile(stars[extreme.id] ?: 0, open) { onLevel(extreme) }
+            val proOk = de.kurvenflug.core.model.Pro.open(extreme.id, ps.pro, ps.locking, stars)
+            ExtremeTile(stars[extreme.id] ?: 0, open, proOk) { onLevel(extreme) }
         }
         // Boss am Ende: offen, wenn alle Level geschafft sind
         if (onBoss != null) {
@@ -96,7 +100,7 @@ private fun BossTile(emoji: String, name: String, stars: Int, open: Boolean, col
 }
 
 @Composable
-private fun ExtremeTile(stars: Int, open: Boolean, onClick: () -> Unit) {
+private fun ExtremeTile(stars: Int, open: Boolean, proOk: Boolean = true, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
     val sfx = LocalSfx.current
     Row(
@@ -111,7 +115,7 @@ private fun ExtremeTile(stars: Int, open: Boolean, onClick: () -> Unit) {
         Spacer(Modifier.width(10.dp))
         Column(Modifier.weight(1f)) {
             Text("Extrem-Prüfung", fontWeight = FontWeight.Bold, color = if (open) Q.Text else Q.Muted)
-            Text(if (open) "Für Profis: winzige Ziele, feine Regler, Asteroiden" else "Erst alle Level schaffen",
+            Text(if (!open) "Erst alle Level schaffen" else if (!proOk) "⭐ Mit Kurvenflug Pro" else "Für Profis: winzige Ziele, feine Regler, Asteroiden",
                 style = MaterialTheme.typography.labelSmall, color = Q.Muted)
         }
         if (stars > 0) Text("★".repeat(stars) + "☆".repeat(3 - stars), color = Q.Yellow)

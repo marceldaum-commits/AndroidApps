@@ -144,7 +144,8 @@ private fun Section(title: String, have: String, items: List<Cosmetic>, selected
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.forEach { c ->
                     val i = items.indexOf(c)
-                    val open = budget >= c.needCells
+                    val proLocked = c.pro && !de.kurvenflug.app.LocalPro.current.pro
+                    val open = budget >= c.needCells && !proLocked
                     Column(
                         Modifier.weight(1f).clip(RoundedCornerShape(14.dp)).background(if (i == selected) Q.Cyan.copy(alpha = 0.2f) else Color(0x22000000))
                             .border(2.dp, if (i == selected) Q.Cyan else Color.Transparent, RoundedCornerShape(14.dp))
@@ -153,7 +154,7 @@ private fun Section(title: String, have: String, items: List<Cosmetic>, selected
                     ) {
                         if (colorOf != null) Box(Modifier.size(22.dp).clip(CircleShape).background(if (open) colorOf(i) else Q.Muted.copy(alpha = 0.3f)))
                         else Text(if (open) c.emoji else "🔒", fontSize = 22.sp)
-                        Text(if (open) c.name else "${c.needCells}${if (colorOf != null) "⭐" else "⚡"}", style = MaterialTheme.typography.labelSmall,
+                        Text(if (open) c.name else if (proLocked) "⭐ Pro" else "${c.needCells}${if (colorOf != null) "⭐" else "⚡"}", style = MaterialTheme.typography.labelSmall,
                             color = if (open) Q.Text else Q.Muted, maxLines = 1)
                     }
                 }

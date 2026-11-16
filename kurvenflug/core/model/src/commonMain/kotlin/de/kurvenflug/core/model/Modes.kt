@@ -85,7 +85,8 @@ object Storm {
     /** Stufe der Welle: je 4 Wellen eine Stufe höher – ab Welle 17 „Extrem“. */
     fun tier(index: Int) = minOf(Tier.MAX, index / 4)
 
-    fun level(runSeed: Long, index: Int): Level = tier(index).let { t ->
+    /** [maxTier]: ohne Pro höchstens „Schwer“ */
+    fun level(runSeed: Long, index: Int, maxTier: Int = Tier.MAX): Level = minOf(tier(index), maxTier).let { t ->
         Gen.any(runSeed * 101 + index, difficulty = t, id = "storm-$runSeed-$index").copy(title = "Welle ${index + 1} · ${Tier.label(t)}")
     }
 }

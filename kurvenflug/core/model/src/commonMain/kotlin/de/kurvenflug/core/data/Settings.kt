@@ -45,6 +45,16 @@ class Settings(private val prefs: Prefs) {
     }
 
     /** Eigene Level aus dem Baukasten (als Teil-Codes, neueste zuerst) – für alle Spieler gemeinsam */
+    // ------------------------------------------------------------ Kurvenflug Pro (für das ganze Gerät, nicht je Spieler)
+    private val _proCode = MutableStateFlow(prefs.getString("proCode", "").orEmpty())
+    /** Freischalt-Code von der Website (leer = keiner) */
+    val proCode: StateFlow<String> = _proCode.asStateFlow()
+    fun setProCode(code: String) { prefs.edit().putString("proCode", code).apply(); _proCode.value = code }
+    private val _proOffered = flag("proOffered", false)
+    /** Ein Kaufweg wurde schon einmal angeboten (Play: Produkt vorhanden) – dann gelten die Pro-Sperren auch offline */
+    val proOffered: StateFlow<Boolean> = _proOffered.asStateFlow()
+    fun markProOffered() { if (!_proOffered.value) { prefs.edit().putBoolean("proOffered", true).apply(); _proOffered.value = true } }
+
     private val _myLevels = MutableStateFlow(prefs.getString("myLevels", "").orEmpty().lines().filter { it.isNotBlank() })
     val myLevels: StateFlow<List<String>> = _myLevels.asStateFlow()
     fun saveMyLevel(code: String, replace: String? = null) {

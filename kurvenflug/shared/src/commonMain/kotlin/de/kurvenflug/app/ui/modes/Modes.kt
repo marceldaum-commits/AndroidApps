@@ -108,7 +108,9 @@ fun StormScreen(best: Int, probeColor: Color, onFinished: (waves: Int) -> Boolea
     var over by rememberSaveable { mutableStateOf(false) }
     var record by rememberSaveable { mutableStateOf(false) }
     var intro by rememberSaveable { mutableStateOf(true) }
-    val level = remember(runSeed, index) { Storm.level(runSeed, index) }
+    val ps = de.kurvenflug.app.LocalPro.current
+    val maxTier = de.kurvenflug.core.model.Pro.maxStormTier(ps.pro, ps.locking)
+    val level = remember(runSeed, index, maxTier) { Storm.level(runSeed, index, maxTier) }
     Box(Modifier.fillMaxSize()) {
         key(runSeed, index) {
             LevelScreen(
