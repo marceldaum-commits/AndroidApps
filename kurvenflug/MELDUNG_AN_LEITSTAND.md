@@ -6,7 +6,7 @@ Neueste Meldung oben. Zweig `kurvenflug-test`, Ordner `kurvenflug/webapp/` (inde
 
 ## 0.19.0 – Oberstufe Klasse 11–13 (Gleichstand mit APK 0.19.0)
 
-- **Version:** 0.19.0 · **Commit:** {{COMMIT}}
+- **Version:** 0.19.0 · **Commit:** 021eca8 (Zweig claude/gifted-shannon-657gpr)
 - **Neu:** Klassenwahl 5–13; vier neue Kapitel: Ableitung & Tangente, Extrempunkte, Integral (Treibstoff = Fläche),
   Vektoren (X = P + t · v) – je mit Live-Rechnung, Rechen-Stern und Lösungsweg. Aurora-Geschichte (Kl. 5–10) unverändert.
 - **Prüfen:** Klasse 12 wählen → „Weiter geht's!“ führt zu „Vektoren · Erster Pfeil“: v = (8 | 6) → Treffer.
