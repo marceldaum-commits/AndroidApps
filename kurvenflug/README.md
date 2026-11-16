@@ -3,10 +3,10 @@
 Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
 selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).
 
-Inhalte (131 Level in 22 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
+Inhalte (169 Level in 29 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
 Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv, Planeten-Lexikon, Werkstatt): Koordinaten, Brüche & Kommazahlen am Zahlenstrahl, Winkel mit Geodreieck (Kl. 5–6), Zuordnungen/Prozent (Kl. 6–7), Geraden (Kl. 7–8), Pythagoras (Kl. 8–9), Parabeln (Kl. 9), Logarithmus (Kl. 10),
 Weg-Zeit und Laser-Optik (Physik 7), Energieerhaltung (Physik 8–9),
-Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren (Kl. 11–13).
+Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren (Kl. 11–13); dazu Maßstab (Kl. 5–6), Prozent & Zinseszins (Kl. 7–8), beschleunigte Bewegung (Physik 9–10), Potenzfunktionen, verschobene Wellen, waagerechter Wurf (Kl. 10–11), e-Funktion (Kl. 11–12).
 
 ## Aufbau der Startseite
 - Vier Reiter unten: 🚀 **Heute** („Weiter, wo du warst“, Tagesmission, Auffrischen), 🗺️ **Galaxie** (Kapitel nach Klasse,
@@ -83,6 +83,11 @@ Eine Codebasis für Android **und** Browser (Kotlin Multiplatform + Compose Mult
 - `app` – Android-Hülle: Activity, Widget, App-Update
 - `web` – WebApp (Kotlin/Wasm): Startseite, `kf.js` (Web Audio, Teilen, Zurück), Manifest, Service Worker (offline),
   zugeschnittene Schriften für Emojis und Mathe-Zeichen (`web/fonts/make_fonts.py`, Noto Color Emoji / DejaVu, freie Lizenzen)
+
+## Inhaltspaket 0.20 (`core/model/More.kt`)
+| Maßstab | Prozent | Beschleunigung | Wurzel | Welle | Waagerechter Wurf | e-Funktion |
+|---|---|---|---|---|---|---|
+| ![](screenshots/82_massstab.png) | ![](screenshots/83_prozent.png) | ![](screenshots/84_beschleunigung.png) | ![](screenshots/85_wurzel.png) | ![](screenshots/86_verschobene_welle.png) | ![](screenshots/87_waagerechter_wurf.png) | ![](screenshots/88_e_funktion.png) |
 
 ## Oberstufe (Klasse 11–13)
 Ableitung & Tangente, Extrempunkte, Integral (Treibstoff = Fläche), Vektoren in Parameterform – Kapitel 19–22 (`core/model/Upper.kt`).

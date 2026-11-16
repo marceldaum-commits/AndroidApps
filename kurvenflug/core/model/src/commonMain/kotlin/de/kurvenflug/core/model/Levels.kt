@@ -40,6 +40,10 @@ data class Level(
     val protractor: Boolean = false,
     /** gegebene Gleichung, die umgeformt werden soll (z. B. „y = x² − 6x + 5“) */
     val given: String? = null,
+    /** eigene Rechen-Frage: erste = richtig, dann zwei typische Fehler (sonst automatisch je Bahnart) */
+    val quiz: List<String>? = null,
+    /** eigener Rechenweg (sonst automatisch je Bahnart) */
+    val walk: List<Step>? = null,
 ) {
     /** Startwerte + feste Werte + aktuelle Einstellung */
     fun values(v: Map<String, Double>): Map<String, Double> = params.associate { it.key to it.start } + fixed + v
@@ -140,7 +144,7 @@ object Feedback {
                 if (v.getValue("h") <= h0) "Die Kugel kommt nicht über die Kante (${num(h0)} m) – sie braucht mehr Lageenergie!"
                 else { val dx = land.x - t.x; "${num(kotlin.math.abs(dx), 1)} m ${if (dx < 0) "zu kurz – höher starten!" else "zu weit – tiefer starten!"}" }
             }
-            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION -> {
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE -> {
                 val y = Flight.f(level, values, t.x)
                 if (abs(y) > Flight.R) "Bei x = ${num(t.x)} ist deine Kurve ganz aus dem Bild (y = ${num(y)}). Ziel: y = ${num(t.y)}."
                 else "Bei x = ${num(t.x)} war die Sonde bei y = ${num(y)} – das Ziel liegt bei y = ${num(t.y)}. " +
@@ -859,8 +863,8 @@ object Levels {
     )
 
     /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand) */
-    private val order = listOf(1, 15, 16, 8, 13, 11, 2, 7, 9, 3, 18, 12, 17, 4, 14, 5, 10, 6, 19, 20, 22, 21)
-    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + Upper.chapters).sortedBy { order.indexOf(it.number) }
+    private val order = listOf(1, 15, 16, 29, 8, 13, 11, 2, 23, 7, 9, 3, 18, 12, 17, 4, 24, 14, 5, 25, 27, 26, 10, 6, 19, 20, 22, 21, 28)
+    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + Upper.chapters + More.chapters).sortedBy { order.indexOf(it.number) }
 
     val all: List<Level> = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }

@@ -310,22 +310,26 @@ fun LevelScreen(
                         values = HashMap(values).apply { put(p.key, nv) }
                     }
                 }
+                // Schmale Handys (320 dp): Knöpfe nur mit Symbol, ohne „3 ⭐ möglich“ – sonst wird „Start“ zerquetscht
+                BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val narrow = maxWidth < 360.dp
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     FilterChip(
                         selected = help, onClick = { help = !help; if (!help) drag = false; sfx?.play(Sound.TICK) }, enabled = phase == Phase.AIM,
-                        label = { Text(if (level.kind == Kind.POINT) "👁 Hilfe" else "👁 Bahn") },
+                        label = { Text(if (narrow) "👁" else if (level.kind == Kind.POINT) "👁 Hilfe" else "👁 Bahn") },
                         colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Violet.copy(alpha = 0.35f), labelColor = Q.Text, selectedLabelColor = Q.Text),
                     )
                     FilterChip(
                         selected = drag, onClick = { drag = !drag; if (drag) help = true; sfx?.play(Sound.TICK) }, enabled = phase == Phase.AIM,
-                        label = { Text("✋ Ziehen") },
+                        label = { Text(if (narrow) "✋" else "✋ Ziehen") },
                         colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Yellow.copy(alpha = 0.3f), labelColor = Q.Text, selectedLabelColor = Q.Text),
                     )
                     Spacer(Modifier.weight(1f))
-                    Text(if (help) "max.\n2 ⭐" else "3 ⭐\nmöglich", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+                    if (!narrow) Text(if (help) "max.\n2 ⭐" else "3 ⭐\nmöglich", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                     NeonButton(onClick = { launch() }, color = Q.Green, enabled = phase == Phase.AIM, modifier = Modifier.pulse(phase == Phase.AIM && attempt == 0, 0.03f)) {
-                        Text("🚀 Start", fontWeight = FontWeight.Black, color = Q.Text, fontSize = 18.sp)
+                        Text("🚀 Start", fontWeight = FontWeight.Black, color = Q.Text, fontSize = 18.sp, maxLines = 1, softWrap = false)
                     }
+                }
                 }
                 Spacer(Modifier.height(8.dp))
             }
@@ -450,8 +454,19 @@ private fun Formula(level: Level, values: Map<String, Double>) {
                 append("Treffpunkt  ( "); n("x"); append(" | "); n("y"); append(" )")
             }
             Kind.SINE -> {
-                append("y = "); factor("a"); append(" · sin("); factor("b"); append(" · x)")
+                append("y = "); factor("a"); append(" · sin("); factor("b")
+                if ("c" in v) { append(" · (x"); term("c", -1); append("))") } else append(" · x)")
                 if (v.getValue("d") != 0.0 || "d" in colorOf) term("d")
+            }
+            Kind.ACCEL -> { append("s = ½ · "); factor("a"); append(" · t² + "); factor("v0"); append(" · t") }
+            Kind.POWER -> {
+                append("y = "); factor("a"); append(" · x")
+                if ("n" in colorOf) { append("^"); n("n") } else append(when (v.getValue("n")) { 2.0 -> "²"; 3.0 -> "³"; 4.0 -> "⁴"; 5.0 -> "⁵"; 0.5 -> "^½  (√x)"; else -> "^" + num(v.getValue("n")) })
+                if ((v["d"] ?: 0.0) != 0.0 || "d" in colorOf) term("d")
+            }
+            Kind.EXPE -> {
+                append("y = "); factor("a"); append(" · e^("); factor("k"); append(" · x)")
+                if ((v["d"] ?: 0.0) != 0.0) term("d")
             }
             Kind.EXP -> {
                 append("y = "); factor("a"); append(" · "); factor("b"); append("ˣ")

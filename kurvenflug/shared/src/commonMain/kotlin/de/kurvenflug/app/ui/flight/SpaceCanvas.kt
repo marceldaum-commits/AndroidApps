@@ -78,7 +78,7 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
                 }
             }
             else -> {
-                drawGrid(::px, unit, tm, if (l.kind == Kind.MOTION) "t" to "s" else "x" to "y")
+                drawGrid(::px, unit, tm, if (l.kind == Kind.MOTION || l.kind == Kind.ACCEL) "t" to "s" else "x" to "y")
                 if (l.kind == Kind.SINE) drawPiMarks(::px, unit, tm)
                 if (l.kind == Kind.POINT && l.params.none { it.key == "y" }) drawNumberLine(::px, unit, l.params.first().step)
                 if (l.kind == Kind.RADIUS) {
@@ -91,6 +91,13 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             }
         }
 
+        // Waagerechter Wurf: Klippe unter dem Startpunkt, mit Höhe
+        if (l.kind == Kind.THROW && l.launch.y > l.ground + 1.5) {
+            val top = px(Vec(l.launch.x + 0.3, l.launch.y)); val foot = px(Vec(l.launch.x - 1.2, l.ground))
+            drawRect(Color(0xFF5D4037), topLeft = Offset(foot.x, top.y + unit * 0.2f), size = androidx.compose.ui.geometry.Size(top.x - foot.x, foot.y - top.y))
+            drawLine(Color(0xFF8D6E63), Offset(foot.x, top.y + unit * 0.2f), Offset(top.x, top.y + unit * 0.2f), unit * 0.15f)
+            label(tm, "h = ${de.kurvenflug.core.model.num(l.launch.y - (l.targets.firstOrNull()?.y ?: l.ground))} m", Offset(top.x + unit * 0.3f, (top.y + foot.y) / 2), Q.Text, 12)
+        }
         // Oberstufe: Kurve f, Absprungpunkt, Fläche, Startpunkt P
         if (l.kind in Upper.kinds) drawUpperScene(l, v.trail, ::px, unit, tm, v.time)
         // Merkbild Trigonometrie: rechtwinkliges Dreieck Start → Station
@@ -310,9 +317,10 @@ private fun DrawScope.drawThrowScene(l: Level, px: (Vec) -> Offset, unit: Float,
         // Beschriftung nur, wenn sie ganz ins Bild passt (sonst „1…“ am Rand)
         if (x <= Flight.R - 1) label(tm, "$m m", o + Offset(0f, unit * 0.75f), Color.White.copy(alpha = 0.8f))
     }
-    // Höhen-Hilfslinien
+    // Höhen-Hilfslinien ab dem Boden (bei der Klippe: Höhe der Station, nicht des Abschusses)
+    val base = minOf(l.launch.y, l.targets.firstOrNull()?.y ?: l.launch.y)
     for (h in 2..18 step 2) {
-        val y = l.launch.y + h
+        val y = base + h
         if (y > Flight.R) break
         drawLine(Q.Grid, px(Vec(-Flight.R, y)), px(Vec(Flight.R, y)), 1f)
         label(tm, "$h m", px(Vec(9.0, y)) + Offset(0f, -unit * 0.3f))

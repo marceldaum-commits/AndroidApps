@@ -49,7 +49,7 @@ val checkWebFonts by tasks.registering {
     inputs.file("fonts/chars.txt")
     doLast {
         val known = file("fonts/chars.txt").readText().toSet()
-        val used = sources.files.flatMap { f -> f.readText().filter { it.code > 0x2000 }.toList() }.toSet()
+        val used = sources.files.flatMap { f -> f.readText().filter { it.code > 0xFF }.toList() }.toSet()
         val missing = used - known
         if (missing.isNotEmpty()) throw GradleException("Neue Zeichen ohne Web-Schrift: ${missing.joinToString("")} – bitte `python3 web/fonts/make_fonts.py` ausführen.")
     }

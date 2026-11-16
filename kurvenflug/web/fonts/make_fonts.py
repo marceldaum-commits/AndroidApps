@@ -26,7 +26,7 @@ def used_chars():
     cps = set()
     for f in glob.glob(os.path.join(ROOT, '**/src/*Main/**/*.kt'), recursive=True) + glob.glob(os.path.join(ROOT, 'app/src/main/**/*.kt'), recursive=True):
         for ch in open(f, encoding='utf-8').read():
-            if ord(ch) > 0x2000: cps.add(ord(ch))
+            if ord(ch) > 0xFF: cps.add(ord(ch))
     return sorted(cps)
 
 def cut(font, cps, out):
@@ -36,16 +36,21 @@ def cut(font, cps, out):
     print(out, os.path.getsize(out), 'Bytes')
 
 cps = used_chars()
+def texty(c):
+    return (0x2B0 <= c <= 0x2FF or 0x2070 <= c <= 0x209F or 0x2190 <= c <= 0x22FF or c in (0x2713, 0x2717, 0x2605, 0x2606, 0x25CF, 0x221A))
+dejavu_tar = npm('dejavu-fonts-ttf')
+dv = TTFont(dejavu_tar.extractfile('package/ttf/DejaVuSans.ttf'))
+dcm = dv.getBestCmap()
 emoji_tar = npm('@fontsource/noto-color-emoji')
 emoji = TTFont(emoji_tar.extractfile('package/files/noto-color-emoji-emoji-400-normal.woff2'))
 ecm = emoji.getBestCmap()
 in_emoji = [c for c in cps if c in ecm]
-cut(emoji, in_emoji + [0xFE0F, 0x200D, 0x20], os.path.join(OUT, 'emoji.ttf'))
+cut(emoji, [c for c in in_emoji if not (texty(c) and c in dcm)] + [0xFE0F, 0x200D, 0x20], os.path.join(OUT, 'emoji.ttf'))
 
-dejavu_tar = npm('dejavu-fonts-ttf')
-dv = TTFont(dejavu_tar.extractfile('package/ttf/DejaVuSans.ttf'))
-dcm = dv.getBestCmap()
-rest = [c for c in cps if c not in ecm and c in dcm]
+# Schlichte Zeichen (Pfeile, Mathe, Haken, Sterne, Hochzahlen) als Text – sonst zeigt die Emoji-Schrift bunte Kästchen
+def texty(c):
+    return (0x2B0 <= c <= 0x2FF or 0x2070 <= c <= 0x209F or 0x2190 <= c <= 0x22FF or c in (0x2713, 0x2717, 0x2605, 0x2606, 0x25CF, 0x221A))
+rest = [c for c in cps if c in dcm and (c not in ecm or texty(c))]
 cut(dv, rest + [0x20], os.path.join(OUT, 'symbols.ttf'))
 missing = [c for c in cps if c not in ecm and c not in dcm]
 if missing: print('Ohne Schrift (bitte im Code ersetzen):', ''.join(map(chr, missing)), file=sys.stderr)

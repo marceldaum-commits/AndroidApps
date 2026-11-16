@@ -10,7 +10,7 @@ class UpperTest {
     @Test fun fourChaptersForGrades11To13() {
         assertEquals(listOf(19, 20, 21, 22), Levels.chapters.filter { c -> c.levels.any { it.kind in Upper.kinds } }.map { it.number }.sorted())
         assertTrue(upper.size >= 20)
-        assertTrue(Levels.chapters.filter { it.number >= 19 }.all { it.gradeRange.first >= 11 })
+        assertTrue(Upper.chapters.all { it.gradeRange.first >= 11 })
     }
 
     @Test fun polynomialHelpers() {
