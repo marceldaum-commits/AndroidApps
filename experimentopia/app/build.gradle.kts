@@ -20,8 +20,8 @@ android {
         applicationId = "de.experimentopia.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
         buildConfigField("String", "VERSION_DATE", "\"16.11.2026\"")
     }
@@ -91,7 +91,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
     implementation(project(":core:data"))
-    implementation("androidx.navigation:navigation-compose:2.9.6")
+    implementation(project(":shared"))   // alle Bildschirme – derselbe Code wie die WebApp
+    // Nur Play-Fassung: Updates über den Store anbieten (Play In-App Updates)
+    "playImplementation"("com.google.android.play:app-update:2.1.0")
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.17")

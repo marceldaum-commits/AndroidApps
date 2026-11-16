@@ -18,10 +18,8 @@ import de.experimentopia.app.ui.journal.JournalScreen
 import de.experimentopia.app.ui.journal.JournalTab
 import de.experimentopia.app.ui.settings.ProScreen
 import de.experimentopia.app.ui.settings.SettingsScreen
-import de.experimentopia.app.ui.settings.UpdateState
 import de.experimentopia.app.ui.theme.E
 import de.experimentopia.app.ui.theme.ExperimentopiaTheme
-import de.experimentopia.core.data.JournalEntry
 import de.experimentopia.core.model.*
 import org.junit.Rule
 import org.junit.Test
@@ -99,17 +97,17 @@ class ScreenshotTest {
     @Test fun freeCircuit() = shot("32_freier_stromkreis") { FreeLabRun(Lab.STROM) {} }
 
     private val entries = listOf(
-        JournalEntry(1, "w5", 1_763_300_000_000, "sinkt", "schwimmt", false, 2, true),
-        JournalEntry(2, "k1", 1_763_200_000_000, "rechts runter", "rechts runter", true, 1, true),
-        JournalEntry(3, "f1", 1_763_100_000_000, "Kugel", "Kugel", true, 2, false, daily = true),
-        JournalEntry(4, "c1", 1_763_000_000_000, "rot", "rot", true, 0, true),
-        JournalEntry(5, "l1", 1_762_900_000_000, "Braun", "Gelb", false, 2, true),
+        NoteRow(1, "w5", 1_763_300_000_000, "sinkt", "schwimmt", false, 2, true),
+        NoteRow(2, "k1", 1_763_200_000_000, "rechts runter", "rechts runter", true, 1, true),
+        NoteRow(3, "f1", 1_763_100_000_000, "Kugel", "Kugel", true, 2, false, daily = true),
+        NoteRow(4, "c1", 1_763_000_000_000, "rot", "rot", true, 0, true),
+        NoteRow(5, "l1", 1_762_900_000_000, "Braun", "Gelb", false, 2, true),
     )
     @Test fun journal() = shot("33_forscherbuch") { JournalScreen(entries, {}) }
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
-        SettingsScreen(true, {}, true, {}, true, {}, 5, {}, "0.1.0", "16.11.2026", UpdateState.Idle, {}, {}, {})
+        SettingsScreen(true, {}, true, {}, 5, {}, "0.1.0", "16.11.2026", {}, {}, {})
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
 }

@@ -1,0 +1,60 @@
+# Hält den Branch „experimentopia-test“ aktuell. Von dort holt sich der Server alle 5 Minuten die fertige WebApp (Ordner experimentopia/webapp/)
+# und liefert sie unter https://experimentopia-test.mathenachhilfe-online.com aus.
+#
+# Läuft automatisch, sobald auf dem Standard-Branch die WebApp oder die Meldung an den Leitstand geändert wurde. Von Hand: Actions → „Run workflow“.
+# Der Branch wird nur vorgespult (kein Überschreiben): Hat jemand anderes dort etwas geändert, bricht der Lauf ab, statt es zu zerstören.
+# „experimentopia-live“ fasst dieser Workflow nicht an – den setzt nur der Leitstand nach dem Test.
+name: Experimentopia WebApp → Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["ccr-2ccbaa44-nkkmyu"]
+    paths: ["experimentopia/webapp/**", "experimentopia/MELDUNG_AN_LEITSTAND.md", ".github/workflows/experimentopia-web-test.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: experimentopia-web-test
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ccr-2ccbaa44-nkkmyu
+          fetch-depth: 0
+
+      - name: WebApp prüfen (vollständig, nur erlaubte Dateien, Version passt zur Android-App)
+        working-directory: experimentopia
+        run: |
+          set -euo pipefail
+          for f in index.html sw.js experimentopia.js manifest.webmanifest version.json fonts/dejavu_sans.ttf fonts/noto_color_emoji.ttf; do
+            [ -s "webapp/$f" ] || { echo "::error::webapp/$f fehlt"; exit 1; }
+          done
+          node --check webapp/sw.js
+          # nur Dateitypen, die der Server ausliefert; keine Symlinks
+          bad=$(find webapp -type f ! -regex '.*\.\(html\|css\|js\|mjs\|json\|webmanifest\|svg\|png\|jpg\|webp\|ico\|woff2\|ttf\|otf\|txt\|wasm\|map\|mp3\|ogg\|wav\)$' || true)
+          [ -z "$bad" ] || { echo "::error::Nicht erlaubte Dateien: $bad"; exit 1; }
+          [ -z "$(find webapp -type l)" ] || { echo "::error::Symlinks in webapp/"; exit 1; }
+          size=$(du -sm webapp | cut -f1); [ "$size" -le 120 ] || { echo "::error::webapp ist $size MB groß (erlaubt: 120)"; exit 1; }
+          # Gleichstand: Die WebApp trägt dieselbe Versionsnummer wie die Android-App
+          app=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
+          web=$(grep -oP '"version": "\K[^"]+' webapp/version.json)
+          [ "$app" = "$web" ] || { echo "::error::WebApp ist Version $web, Android-App ist $app – bitte ./gradlew :web:webapp neu bauen"; exit 1; }
+          echo "WebApp $web, $size MB – in Ordnung"
+
+      - name: Schriften vollständig? (jedes benutzte Emoji und Sonderzeichen steckt in den gekürzten Schriften)
+        working-directory: experimentopia
+        run: |
+          pip install --quiet fonttools
+          python tools/schrift/schriften.py --pruefen
+          # die ausgelieferten Schriften müssen die geprüften sein
+          cmp web/src/wasmJsMain/resources/fonts/noto_color_emoji.ttf webapp/fonts/noto_color_emoji.ttf
+          cmp web/src/wasmJsMain/resources/fonts/dejavu_sans.ttf webapp/fonts/dejavu_sans.ttf
+
+      - name: Branch experimentopia-test vorspulen
+        run: git push origin HEAD:refs/heads/experimentopia-test

@@ -100,7 +100,7 @@ jobs:
           cat notes.md
 
       - name: Logik-Tests (Antworten aus den Modellen, Physik und Chemie stimmen)
-        run: ./gradlew --no-daemon :core:model:test :core:data:testDebugUnitTest
+        run: ./gradlew --no-daemon :core:model:jvmTest :core:data:testDebugUnitTest
 
       - name: APK bauen
         run: |

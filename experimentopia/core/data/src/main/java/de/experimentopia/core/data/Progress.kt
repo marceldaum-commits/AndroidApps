@@ -2,7 +2,9 @@ package de.experimentopia.core.data
 
 import android.content.Context
 import androidx.room.*
+import de.experimentopia.core.model.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 /** Bestes Ergebnis je Versuch. Sterne sinken nie. */
 @Entity(tableName = "results")
@@ -54,24 +56,19 @@ abstract class LabDatabase : RoomDatabase() {
     }
 }
 
-class ProgressRepository(private val dao: ResultDao, private val clock: () -> Long = System::currentTimeMillis) {
-    val results: Flow<List<ExperimentResult>> = dao.all()
-    val journal: Flow<List<JournalEntry>> = dao.journal()
+/** Android-Speicher (Room) hinter der gemeinsamen Schnittstelle – die Regeln stehen in [Progress]. */
+class ProgressRepository(private val dao: ResultDao, private val clock: () -> Long = System::currentTimeMillis) : LabStore {
+    override val results: Flow<List<ResultRow>> = dao.all().map { l -> l.map { ResultRow(it.experimentId, it.stars, it.firstGuessRight, it.plays, it.firstAt, it.lastAt) } }
+    override val journal: Flow<List<NoteRow>> = dao.journal().map { l -> l.map { NoteRow(it.id, it.experimentId, it.at, it.guess, it.result, it.right, it.sure, it.explainedFirstTry, it.daily) } }
 
-    /** Einen fertigen Versuch speichern: bestes Ergebnis behalten, erste Vermutung merken, Forscherbuch ergänzen. */
-    suspend fun record(id: String, stars: Int, guess: String, result: String, right: Boolean, sure: Int, explainedFirstTry: Boolean, daily: Boolean = false) {
+    override suspend fun record(f: Finished) {
         val now = clock()
-        val old = dao.get(id)
-        dao.put(ExperimentResult(
-            experimentId = id,
-            stars = maxOf(stars, old?.stars ?: 0),
-            firstGuessRight = old?.firstGuessRight ?: right,
-            plays = (old?.plays ?: 0) + 1,
-            firstAt = old?.firstAt ?: now,
-            lastAt = now,
-        ))
-        dao.add(JournalEntry(experimentId = id, at = now, guess = guess, result = result, right = right, sure = sure, explainedFirstTry = explainedFirstTry, daily = daily))
+        val old = dao.get(f.id)?.let { ResultRow(it.experimentId, it.stars, it.firstGuessRight, it.plays, it.firstAt, it.lastAt) }
+        val r = Progress.merge(old, f, now)
+        dao.put(ExperimentResult(r.experimentId, r.stars, r.firstGuessRight, r.plays, r.firstAt, r.lastAt))
+        val n = Progress.note(f, now)
+        dao.add(JournalEntry(experimentId = n.experimentId, at = n.at, guess = n.guess, result = n.result, right = n.right, sure = n.sure, explainedFirstTry = n.explainedFirstTry, daily = n.daily))
     }
 
-    suspend fun reset() { dao.clearResults(); dao.clearJournal() }
+    override suspend fun reset() { dao.clearResults(); dao.clearJournal() }
 }

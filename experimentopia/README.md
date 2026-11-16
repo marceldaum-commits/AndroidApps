@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf sieben Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 0.1.0 vom 16.11.2026** · 68 Versuche · 20 Geräte im Freien Labor · 12 Reaktionsgleichungen · 13 Abzeichen
+**Version 0.2.0 vom 16.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 67 Versuche · 20 Geräte im Freien Labor · 12 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -68,12 +68,26 @@ Eingeschaltet wird erst, wenn es einen Bezahlweg gibt.
 | Selbsteinschätzung | Abzeichen | Einstellungen | Forscher-Pass (vorbereitet) |
 | ![](screenshots/34_selbsteinschaetzung.png) | ![](screenshots/35_abzeichen.png) | ![](screenshots/36_einstellungen.png) | ![](screenshots/37_forscher_pass.png) |
 
+## Android und Web
+
+Wie Raumlicht: eine gemeinsame Codebasis (Compose Multiplatform).
+- `core/model` – Physik- und Chemie-Modelle, Versuche, Regeln (für Android und Web)
+- `shared` – alle Bildschirme und Labore; Plattform-Teile stecken hinter Schnittstellen (Ton, Vibration, Speicher)
+- `app` – Android: Room-Speicher, Ton über SoundPool, Updates (GitHub-APK: eigener Updater; Play-Fassung: Play In-App Updates)
+- `web` – WebApp (Kotlin/Wasm): Speicher im Browser, Ton über WebAudio, Ladebild mit echtem Balken, Service Worker
+- `webapp/` – fertig gebaute WebApp. Der Workflow `experimentopia-web-test.yml` prüft sie und spult den Branch `experimentopia-test` vor;
+  der Server zeigt sie unter https://experimentopia-test.mathenachhilfe-online.com (live: https://experimentopia.mathenachhilfe-online.com, setzt der Leitstand).
+
+**Automatische Updates:** WebApp über den Service Worker (lädt neue Versionen im Hintergrund, wechselt auf der Startseite oder im Hintergrund).
+GitHub-APK: beim Start höchstens alle 20 Stunden, Banner + Knopf in den Einstellungen (abschaltbar). Play-Fassung: über den Play Store.
+
 ## Bauen
 
 ```
-./gradlew :core:model:test :core:data:testDebugUnitTest      # Modelle und Speicher
+./gradlew :core:model:jvmTest :core:data:testDebugUnitTest   # Modelle und Speicher
+./gradlew :web:webapp                                        # WebApp nach webapp/ (braucht python3 + fonttools für die Schriften)
 ./gradlew :app:testGithubDebugUnitTest --tests '*ScreenshotTest*'   # Bildschirmfotos nach screenshots/
-./gradlew assembleGithubRelease                              # APK (Fassung mit eigenem Update-Knopf)
+./gradlew assembleGithubRelease assemblePlayRelease          # APK mit eigenem Updater / Play-Fassung
 ```
 
 Releases baut `.github/workflows/experimentopia-release.yml` (Tag `experimentopia-v<Version>`), Text aus `CHANGELOG.md`.

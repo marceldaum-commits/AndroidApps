@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="de" data-version="0.2.0">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Experimentopia – das Versuchslabor für die Hosentasche</title>
+<meta name="description" content="Experimentopia: Physik und Chemie zum Ausprobieren für Klasse 3 bis 10 – vermuten, experimentieren, erklären.">
+<meta name="theme-color" content="#160F2E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  html, body { margin: 0; height: 100%; background: #160F2E; overflow: hidden; font-family: system-ui, sans-serif; color: #F3EEFF; }
+  #app { position: fixed; top: 0; right: 0; bottom: 0; left: 0; }
+  /* Ladebild: steht sofort da (reines HTML und CSS) – Nachtlabor, Blubb, Name und ein Balken, der den echten Download zeigt */
+  #start { position: fixed; top: 0; right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 5;
+    background: #160F2E; background: radial-gradient(ellipse at 50% 38%, #2E2260 0%, #160F2E 62%); transition: opacity .35s ease; }
+  #start svg { width: 132px; height: 132px; animation: blubb 2.4s ease-in-out infinite; }
+  @keyframes blubb { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-7px) rotate(2deg); } }
+  #start b { font-size: 28px; letter-spacing: 2px; font-weight: 800; background: linear-gradient(90deg, #3DF5C8, #7CC8FF, #FF5FA2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  #start span { color: #A99BD6; font-size: 14px; text-align: center; padding: 0 16px; }
+  #balken { width: 220px; max-width: 62vw; height: 8px; border-radius: 4px; background: #2E2260; overflow: hidden; }
+  #balken i { display: block; height: 100%; width: 3%; border-radius: 4px; background: linear-gradient(90deg, #3DF5C8, #FF5FA2); transition: width .25s ease; }
+  .bl { animation: auf 2s ease-in infinite; } .bl.b2 { animation-delay: .7s; } .bl.b3 { animation-delay: 1.3s; }
+  @keyframes auf { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-26px); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { #start svg, .bl { animation: none; } }
+  #start .fehler { color: #FFA23D; max-width: 30em; }
+</style>
+</head>
+<body>
+<div id="start">
+  <svg viewBox="0 0 132 132" aria-hidden="true">
+    <defs><radialGradient id="glut"><stop offset="0" stop-color="#3DF5C8" stop-opacity=".45"/><stop offset="1" stop-color="#3DF5C8" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="66" cy="80" r="56" fill="url(#glut)"/>
+    <path d="M46 78 L86 78 L101 106 Q103 112 96 112 L36 112 Q29 112 31 106 Z" fill="#3DF5C8"/>
+    <path d="M56 26 L56 56 L31 104 Q29 112 36 112 L96 112 Q103 112 101 104 L76 56 L76 26" fill="none" stroke="#F3EEFF" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M50 26 L82 26" stroke="#F3EEFF" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="56" cy="94" r="6" fill="#fff"/><circle cx="76" cy="94" r="6" fill="#fff"/><circle cx="57" cy="95" r="3.2" fill="#160F2E"/><circle cx="77" cy="95" r="3.2" fill="#160F2E"/>
+    <path d="M60 104 Q66 109 72 104" stroke="#160F2E" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <circle class="bl" cx="62" cy="70" r="4" fill="#FF5FA2"/><circle class="bl b2" cx="70" cy="66" r="3" fill="#FFD84D"/><circle class="bl b3" cx="66" cy="72" r="2.5" fill="#7CC8FF"/>
+  </svg>
+  <b>EXPERIMENTOPIA</b>
+  <div id="balken"><i></i></div>
+  <span id="start-text">lädt … Version 0.2.0 vom 16.11.2026</span>
+</div>
+<div id="app"></div>
+<script>
+  // Startet die App nicht, sagen wir warum – statt einen leeren Bildschirm zu zeigen.
+  function startFailed(why) {
+    var st = document.getElementById('start'); if (!st || st.style.display === 'none' || st.dataset.fertig === '1') return;
+    var t = document.getElementById('start-text'); t.className = 'fehler';
+    t.innerHTML = 'Das hat nicht geklappt. Experimentopia braucht einen aktuellen Browser – auf iPhone und iPad mindestens iOS 18.2, sonst Chrome, Edge oder Firefox ab 2024.';
+  }
+  window.addEventListener('error', function (e) { startFailed(e.message); });
+  window.addEventListener('unhandledrejection', function (e) { startFailed(e.reason); });
+  // WebAssembly mit „GC“ fehlt älteren Browsern: gleich prüfen, nicht erst alles laden
+  try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
+  // ── Laden mit echtem Fortschritt: App-Kern (.wasm) und Schriften werden sofort angefordert, jedes ankommende Byte bewegt den Balken.
+  var PLAN = { "045313693739641752b8.wasm": 4493305, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 116144, "fonts/noto_color_emoji.ttf": 358920, "experimentopia.js": 590397 }, got = {}, total = 0, early = {};
+  for (var k in PLAN) total += PLAN[k];
+  function progress() {
+    var sum = 0; for (var k in PLAN) sum += Math.min(got[k] || 0, PLAN[k]);
+    var p = total ? Math.min(100, Math.round(100 * sum / total)) : 0; var st = document.getElementById('start'); if (!st || st.style.display === 'none') return;
+    document.querySelector('#balken i').style.width = Math.max(3, p) + '%';
+    var t = document.getElementById('start-text'); if (t.className !== 'fehler') t.textContent = p >= 100 ? 'startet …' : 'lädt … ' + p + ' %';
+  }
+  function keyOf(u) { u = String(u).split('?')[0]; for (var k in PLAN) if (u === k || u.slice(-k.length - 1) === '/' + k) return k; return null; }
+  var realFetch = window.fetch;
+  function tracked(key, input, init) {
+    return realFetch.call(window, input, init).then(function (r) {
+      if (!r.ok || !r.body || typeof ReadableStream !== 'function') { if (r.ok) { got[key] = PLAN[key]; progress(); } return r; }
+      var reader = r.body.getReader();
+      var stream = new ReadableStream({
+        start: function (c) { (function next() { reader.read().then(function (x) { if (x.done) { got[key] = PLAN[key]; progress(); c.close(); } else { got[key] = (got[key] || 0) + x.value.byteLength; progress(); c.enqueue(x.value); next(); } }, function (e) { c.error(e); }); })(); },
+        cancel: function (why) { return reader.cancel(why); } }, { highWaterMark: Infinity });
+      return new Response(stream, { status: r.status, statusText: r.statusText, headers: r.headers });
+    });
+  }
+  if (realFetch) {
+    try { for (var k in PLAN) if (/\.(wasm|ttf)$/.test(k)) early[k] = tracked(k, k); } catch (e) { early = {}; }
+    window.fetch = function (input, init) {
+      var key = keyOf(typeof input === 'string' ? input : (input && input.url) || '');
+      if (key && early[key]) { var p = early[key]; delete early[key]; return p; }
+      return key ? tracked(key, input, init) : realFetch.call(window, input, init);
+    };
+  }
+  // Automatisches Update – ohne Knopf: Die Seite fragt beim Öffnen, beim Zurückkehren und alle 30 Minuten nach einer neuen Version.
+  // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
+  // (Startseite oder App im Hintergrund), nie mitten in einem Versuch.
+  window.__exHome = true; var updateWaiting = false;
+  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; location.reload(); } };
+  if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+    var hadWorker = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function () { if (hadWorker) { updateWaiting = true; window.__exTry(); } hadWorker = true; });
+    var startSW = function () {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
+        var check = function () { reg.update().catch(function () {}); };
+        document.addEventListener('visibilitychange', function () { if (document.hidden) window.__exTry(); else check(); });
+        setInterval(check, 30 * 60 * 1000);
+      });
+    };
+    // erst wenn die App läuft – beim Start gehört die Leitung dem App-Kern
+    var waitSW = setInterval(function () { var st = document.getElementById('start'); if (!st || st.dataset.fertig === '1' || document.getElementById('start-text').className === 'fehler') { clearInterval(waitSW); startSW(); } }, 400);
+  }
+</script>
+<script src="experimentopia.js" onload="got['experimentopia.js'] = PLAN['experimentopia.js']; progress();"></script>
+</body>
+</html>

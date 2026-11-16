@@ -1,12 +1,13 @@
 package de.experimentopia.core.data
 
 import android.content.Context
+import de.experimentopia.core.model.Prefs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /** Einstellungen – nur auf dem Gerät, keine persönlichen Daten. */
-class Settings(ctx: Context) {
+class Settings(ctx: Context) : Prefs {
     private val prefs = ctx.getSharedPreferences("experimentopia", Context.MODE_PRIVATE)
 
     private fun flag(key: String, default: Boolean) = MutableStateFlow(prefs.getBoolean(key, default))
@@ -14,32 +15,32 @@ class Settings(ctx: Context) {
     private val _vibration = flag("vibration", true)
     private val _autoUpdate = flag("autoUpdate", true)
     private val _pro = flag("pro", false)
-    val sound: StateFlow<Boolean> = _sound.asStateFlow()
-    val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
+    override val sound: StateFlow<Boolean> = _sound.asStateFlow()
+    override val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
     val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
     /** Forscher-Pass gekauft? Wirkt erst, wenn Pro eingeschaltet ist (Pro.ENABLED). */
-    val pro: StateFlow<Boolean> = _pro.asStateFlow()
+    override val pro: StateFlow<Boolean> = _pro.asStateFlow()
 
-    fun setSound(v: Boolean) { prefs.edit().putBoolean("sound", v).apply(); _sound.value = v }
-    fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
+    override fun setSound(v: Boolean) { prefs.edit().putBoolean("sound", v).apply(); _sound.value = v }
+    override fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("autoUpdate", v).apply(); _autoUpdate.value = v }
-    fun setPro(v: Boolean) { prefs.edit().putBoolean("pro", v).apply(); _pro.value = v }
+    override fun setPro(v: Boolean) { prefs.edit().putBoolean("pro", v).apply(); _pro.value = v }
 
     /** Klassenstufe für den Filter (0 = alle) */
     private val _grade = MutableStateFlow(prefs.getInt("grade", 0))
-    val grade: StateFlow<Int> = _grade.asStateFlow()
-    fun setGrade(g: Int) { prefs.edit().putInt("grade", g).apply(); _grade.value = g }
+    override val grade: StateFlow<Int> = _grade.asStateFlow()
+    override fun setGrade(g: Int) { prefs.edit().putInt("grade", g).apply(); _grade.value = g }
 
     /** Blubbs Begrüßung schon gesehen? */
-    var welcomed: Boolean
+    override var welcomed: Boolean
         get() = prefs.getBoolean("welcomed", false)
         set(v) = prefs.edit().putBoolean("welcomed", v).apply()
 
     private val _freeLabRuns = MutableStateFlow(prefs.getInt("freeLabRuns", 0))
-    val freeLabRuns: StateFlow<Int> = _freeLabRuns.asStateFlow()
-    fun countFreeLab() { _freeLabRuns.value += 1; prefs.edit().putInt("freeLabRuns", _freeLabRuns.value).apply() }
+    override val freeLabRuns: StateFlow<Int> = _freeLabRuns.asStateFlow()
+    override fun countFreeLab() { _freeLabRuns.value += 1; prefs.edit().putInt("freeLabRuns", _freeLabRuns.value).apply() }
 
-    var badgesSeen: Set<String>
+    override var badgesSeen: Set<String>
         get() = prefs.getStringSet("badgesSeen", emptySet()).orEmpty()
         set(v) = prefs.edit().putStringSet("badgesSeen", v).apply()
 
@@ -47,7 +48,7 @@ class Settings(ctx: Context) {
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()
 
-    fun resetProgress() { prefs.edit().remove("freeLabRuns").remove("badgesSeen").apply(); _freeLabRuns.value = 0 }
+    override fun resetProgress() { prefs.edit().remove("freeLabRuns").remove("badgesSeen").apply(); _freeLabRuns.value = 0 }
 }
 
 /** Alles, was die App braucht, an einer Stelle. */
