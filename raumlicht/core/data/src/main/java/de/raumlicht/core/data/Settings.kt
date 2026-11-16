@@ -132,6 +132,11 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
         get() = prefs.getString("flight", "") ?: ""
         set(v) = prefs.edit().putString("flight", v).apply()
 
+    /** Endlos üben: die zuletzt gewählte Schwierigkeit (leer = alle Stufen) */
+    override var jamLevel: String
+        get() = prefs.getString("jamLevel", "") ?: ""
+        set(v) = prefs.edit().putString("jamLevel", v).apply()
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

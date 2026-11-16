@@ -427,4 +427,17 @@ class PlayFlowTest {
         rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≥ 0) = 100,00 %")
         rule.onNodeWithTag("n-100").performClick(); rule.onNodeWithTag("frage-at_most").performClick(); rule.onNodeWithTag("ergebnis").assertTextContains("P(X ≤ 0)", substring = true)
     }
+
+    /** Endlos üben: Stufe wählen – es bleiben nur Themen mit Aufgaben dieser Stufe, und die Wahl kommt beim Antippen mit */
+    @Test fun jamLevelPicker() {
+        val picked = ArrayList<Pair<de.raumlicht.core.model.JamTopic, de.raumlicht.core.model.JamLevel?>>(); var saved = "?"
+        show { de.raumlicht.app.ui.home.JamPicker(0, {}, {}, onLevel = { saved = it }, onPick = { t, l -> picked += t to l }) }
+        rule.onNodeWithTag("stufe-text").assertTextEquals("Alle Stufen gemischt"); rule.onNodeWithTag("thema-SCHNITT").assertExists()
+        rule.onNodeWithTag("stufe-profi").performClick(); assertEquals("PROFI", saved)
+        rule.onNodeWithTag("thema-SCHNITT").assertDoesNotExist(); rule.onNodeWithTag("thema-PUNKTE").assertDoesNotExist()
+        rule.onNodeWithTag("thema-WINKEL").performClick(); rule.onNodeWithTag("thema-MIX").performScrollTo().performClick()
+        assertEquals(listOf(de.raumlicht.core.model.JamTopic.WINKEL to de.raumlicht.core.model.JamLevel.PROFI, de.raumlicht.core.model.JamTopic.MIX to de.raumlicht.core.model.JamLevel.PROFI), picked)
+        rule.onNodeWithTag("stufe-einstieg").performClick(); rule.onNodeWithTag("thema-PUNKTE").assertExists(); rule.onNodeWithTag("thema-SCHNITT").assertDoesNotExist()
+        rule.onNodeWithTag("stufe-alle").performClick(); assertEquals("", saved); rule.onNodeWithTag("thema-SCHNITT").assertExists()
+    }
 }

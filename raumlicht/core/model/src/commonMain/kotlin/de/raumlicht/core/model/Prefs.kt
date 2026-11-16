@@ -39,5 +39,7 @@ interface Prefs {
     var flight: String
 
     /** Neu anfangen: Rekorde, Abi-Punkte, Tagebuch, gesehene Erklärungen und Lux' Aussehen zurücksetzen (Ton-Einstellungen und Plan bleiben) */
+    /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */
+    var jamLevel: String
     fun resetProgress()
 }
