@@ -247,3 +247,32 @@ Neuer Befund von Marcel: **iPhone läuft, iPad bleibt weiß** (sein Handy ist An
 2.9.3 begrenzt deshalb auf iPads die Schärfe der Oberfläche so, dass höchstens rund 3 Millionen Bildpunkte gezeichnet werden (`window.devicePixelRatio` wird vor dem Start überschrieben;
 erkannt über „iPad“ im User-Agent bzw. „Macintosh“ mit Touch). Schalter zum Prüfen: `?ohne=schaerfe` (Faktor 1), `?mit=schaerfe` (unbegrenzt) – als Test 5 und 6 auf `diagnose.html`.
 Andere Geräte sind nicht betroffen. Bitte Live-Freigabe erst, wenn Marcel das iPad-Ergebnis gemeldet hat.
+
+---
+
+## 16.11.2026 – Version 2.10.0: Schwierigkeit, nachweislich steigend (Vorgabe von Marcel – er hat Weg 1 gewählt: nur das endlose Üben)
+
+**Umfang (von Marcel so entschieden):** Raumlicht hatte keine Schwierigkeits-Auswahl. Neu ist sie im **endlosen Üben**: „Einstieg“, „Abi“, „Profi“ (oder „Alle“ wie bisher).
+Die 136 festen Kapitel-Aufgaben, die Abi-Aufgaben und die Spiele bleiben unverändert – das war ausdrücklich nicht gewünscht.
+
+**Stufen:** Einstieg = Aufgaben ohne Parameter-Gleichung (6 Arten). Abi = Gleichungen mit Parameter, Winkel, Abstände, Lotfußpunkt (10 Arten).
+Profi = fünf neue mehrstufige Arten: Spiegelbild an der Ebene (Abstand + Lotfußpunkt + Spiegelung), Abstand windschiefer Geraden, Schnittkreis Kugel–Ebene,
+Spiegeln an einer Geraden, Parallelität mit Parameter a. Zwischenwerte sind dort oft krumm (Lotfußpunkte mit Dritteln); das Ergebnis bleibt einstellbar (ganze Zahl bzw. Gitterpunkt),
+weil die App nur ganze Zahlen als Eingabe kennt.
+
+**Nachweis** (`DifficultyTest`, läuft in `:core:model:jvmTest`; Mittelwerte über 60 Zufallsaufgaben je Aufgabenart):
+
+| Stufe | Aufgabenarten | Rechenschritte | Länge des Rechenwegs (Zeichen) | beteiligte Objekte | Parameter | Anteil krummer Werte | Gesamtwert |
+|---|---|---|---|---|---|---|---|
+| Einstieg | 6 | 1,84 | 24,46 | 3,67 | 0,67 | 0,00 % | 35,22 |
+| Abi | 10 | 2,40 | 47,73 | 3,40 | 0,70 | 3,28 % | 43,13 |
+| Profi | 5 | 4,00 | 124,48 | 5,00 | 1,20 | 10,38 % | 75,52 |
+
+Der Test schlägt fehl, wenn von einer Stufe zur nächsten **Rechenschritte, Länge des Rechenwegs, Parameter, Anteil krummer Werte** oder der **Gesamtwert** (mindestens +20 %) nicht steigen,
+wenn Profi nicht die meisten beteiligten Objekte hat, oder wenn die leichteste Profi-Aufgabe nicht über dem Abi-Durchschnitt liegt.
+Ehrlich dazu: „beteiligte Objekte“ steigt von Einstieg zu Abi **nicht** (3,67 → 3,40) und wird dort deshalb nicht geprüft; „Parameter“ steigt von Einstieg zu Abi nur knapp (0,67 → 0,70).
+Die Kennzahlen werden aus Rechenweg, Tipp, Angaben und Bühne gelesen – sie messen Aufwand, nicht, wie schwer sich eine Aufgabe für Schüler anfühlt.
+Zusätzlich: jede Profi-Lösung unabhängig aus den angezeigten Angaben nachgerechnet (120 Zufallsaufgaben je Art), genau eine richtige Antwort, alles Sichtbare im Raum.
+
+**Nicht umgesetzt (bewusst):** Brüche als Eingabe, Stufen für Kapitel/Abi/Spiele, mehrstufige Stochastik im Üben. Web = Android (gleicher Code), WebApp 2.10.0 gebaut und getestet.
+Das iPad-Ergebnis zu 2.9.3 steht noch aus.

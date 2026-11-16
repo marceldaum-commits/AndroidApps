@@ -23,6 +23,8 @@ class SpeechDumpTest {
         }
         Levels.chapters.forEach { c -> fixed += c.intro; more += c.title; more += c.topic; c.levels.forEach { collect(it, true) } }
         Exams.all.forEach { e -> fixed += e.intro; more += e.title; e.parts.forEach { collect(it.level, true) }; for (g in 0..e.maxPoints) more += Exam.verdict(g, e.maxPoints) }
+        ProGen.Kind.entries.forEach { k -> for (seed in 1L..60L) collect(ProGen.level(k, seed), false) }
+        JamLevel.entries.forEach { more += it.title; more += it.hint }
         Gen.Kind.entries.forEach { k -> for (seed in 1L..40L) runCatching { collect(Gen.level(k, seed), false) } }
         fixed += listOf("Hallo, ich bin Lux!", "Hallo, ich bin Lux. So klinge ich jetzt.", "Geschafft!", "Der Schwung reicht nicht.", "Im Ziel, aber der Auftrag fehlt noch.")
         SpotKind.entries.forEach { fixed += it.title; more += it.rule }

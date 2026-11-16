@@ -2,6 +2,15 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.10.0 – Drei Schwierigkeits-Stufen im endlosen Üben (16.11.2026)
+- **Stufe wählbar:** Unter „Üben“ gibt es jetzt „Einstieg“, „Abi“ und „Profi“ (oder wie bisher „Alle“ gemischt). Die Wahl wird gemerkt.
+  - **Einstieg:** ein, zwei Rechenschritte mit glatten Zahlen – ablesen, mitteln, abziehen, einsetzen.
+  - **Abi:** mehrere Schritte wie in der Prüfung – Gleichungen mit Parameter lösen, Winkel, Abstände, Lotfußpunkte.
+  - **Profi (neu):** fünf mehrstufige Aufgabenarten – Spiegelbild an der Ebene, Abstand windschiefer Geraden, Schnittkreis von Kugel und Ebene,
+    Spiegeln an einer Geraden, Parallelität mit Parameter. Die Zwischenwerte sind oft krumm, das Ergebnis lässt sich trotzdem genau einstellen.
+- **Nachweislich steigend:** Ein Test misst je Stufe Rechenschritte, Länge des Rechenwegs, Parameter und den Anteil krummer Werte – und schlägt fehl, wenn eine Stufe nicht schwerer ist als die vorige.
+- Die festen Aufgaben der Kapitel bleiben unverändert.
+
 ## 2.9.3 – Versuch gegen das weiße Bild auf dem iPad (16.11.2026)
 - **WebApp auf dem iPad:** Auf dem iPhone läuft Raumlicht, auf dem iPad blieb das Bild weiß. Der Unterschied ist die viel größere Zeichenfläche.
   Auf iPads zeichnet die Oberfläche deshalb jetzt mit höchstens so vielen Bildpunkten wie auf einem iPhone – etwas weniger scharf.

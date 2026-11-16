@@ -193,6 +193,7 @@ class ScreenshotTest {
         it.onNodeWithTag("aufloesen").performClick()
     }) { de.raumlicht.app.ui.home.GhostScreen({}) }
     @Test fun binomial() = shot("74_binomial_labor", "start", prepare = { it.onNodeWithTag("plus-k").performClick() }) { de.raumlicht.app.ui.home.BinomialScreen({}) }
+    @Test fun jamLevels() = shot("75_ueben_stufen", "start", prepare = { it.onNodeWithTag("stufe-profi").performClick() }) { de.raumlicht.app.ui.home.JamPicker(7, {}, {}) }
     @Test fun rings() = shot("73_ringflug", "ringflug") { de.raumlicht.app.ui.home.RingScreen({}, seed = 5) }
     @Test fun diary() = shot("59_fehler_tagebuch", "start") {
         de.raumlicht.app.ui.home.DiaryScreen(listOf(

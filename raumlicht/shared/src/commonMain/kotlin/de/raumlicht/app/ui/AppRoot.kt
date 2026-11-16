@@ -137,17 +137,19 @@ fun AppRoot(
                         onSolved = { s, a -> record(level.id, s, a) }, onNext = null, onBack = back,
                         caption = "🎟️ Tagesaufgabe · ${level.title}", doneLabel = "Fertig für heute ✓")
                 }
-                Routes.JAM_HOME -> if (parts.size == 1) JamPicker(jamBest, { nav.go(Routes.jam(it.name)) }, back) else {
+                Routes.JAM_HOME -> if (parts.size == 1) JamPicker(jamBest, { nav.go(Routes.jam(it.name)) }, back, startLevel = prefs.jamLevel, onLevel = { prefs.jamLevel = it },
+                    onPick = { t, l -> nav.go(Routes.jam(t.name) + (l?.let { "/${it.name}" } ?: "")) }) else {
                     val topic = JamTopic.entries.firstOrNull { it.name == parts[1] } ?: JamTopic.MIX
                     val session = rememberSaveable { nowMillis() % 1_000_000 }
                     var n by rememberSaveable { mutableIntStateOf(0) }
                     var streak by rememberSaveable { mutableIntStateOf(0) }
-                    val level = remember(session, n) { Gen.jam(topic, session, n) }
+                    val stufe = JamLevel.entries.firstOrNull { it.name == parts.getOrNull(2) }
+                    val level = remember(session, n) { Practice.level(topic, stufe, session, n) }
                     LevelScreen(level, Chapter(0, topic.title, topic.title, "Jam-Session", topic.emoji, topic.color, emptyList(), emptyList()), false, {},
                         // Serie: nur Treffer beim ersten Versuch zählen
                         onSolved = { s, _ -> streak = if (s == 3) streak + 1 else 0; prefs.recordJam(streak) },
                         onNext = { n++ }, onBack = back,
-                        caption = "${topic.emoji} Üben · ${level.title} · Nr. ${n + 1}", badge = if (streak > 0) "🔥 $streak" else null)
+                        caption = "${topic.emoji} Üben${stufe?.let { " ${it.emoji} ${it.title}" } ?: ""} · ${level.title} · Nr. ${n + 1}", badge = if (streak > 0) "🔥 $streak" else null)
                 }
                 Routes.SHEET -> SheetScreen(Sheet.cards, onChapter = ::openChapter, onJam = { nav.go(Routes.jam(it.name)) }, onBack = back)
                 Routes.BACKSTAGE -> {

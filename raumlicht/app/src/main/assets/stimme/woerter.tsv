@@ -412,6 +412,7 @@ einsetzen	ˈaɪnzˌɛtsən
 einsteigen	ˈaɪnʃtˌaɪɡən
 einstellen	ˈaɪnʃtˌɛlən
 einstellungen	ˈaɪnʃtˌɛlʊŋən
+einstieg	ˈaɪnʃtˌiːk
 eintausend	ˈaɪntˌaʊzənt
 eintippen	ˈaɪntˌɪpən
 eintragen	ˈaɪntrˌɑːɡən
@@ -658,6 +659,7 @@ glasscheibe	ɡlˈasçaɪbə
 glasscheiben	ɡlˈasçaɪbən
 glaswand	ɡlˈasvant
 glaswände	ɡlˈasvɛndə
+glatte	ɡlˈatə
 glaube	ɡlˈaʊbə
 gleich	ɡlˈaɪç
 gleiche	ɡlˈaɪçə
@@ -740,6 +742,7 @@ hinaus	hɪnˈaʊs
 hindurch	hˈɪndʊɐç
 hinein	hɪnˈaɪn
 hineinpassen	hɪnˈaɪnpˌasən
+hint	hˈɪnt
 hinten	hˈɪntən
 hinter	hˈɪntɜ
 hintereinander	hˌɪntɜaɪnˈandɜ
@@ -791,6 +794,7 @@ innere	ˈɪnərə
 ins	ɪns
 insgesamt	ˈɪnsɡeːzˌamt
 inside	ɪnzˈiːdə
+int	ˈɪnt
 integral	ˌɪntɛɡrˈɑːl
 integrale	ˌɪntɛɡrˈɑːlə
 integriere	ˌɪntɛɡrˈiːrə
@@ -808,6 +812,7 @@ items	iːtˈeːms
 j	jˈɔt
 ja	jˈɑː
 jambest	jˈambəst
+jamlevel	jˈamleːvəl
 je	jeː
 jede	jˈeːdə
 jedem	jˈeːdəm
@@ -882,6 +887,7 @@ kosinus	kˈoːziːnˌʊs
 kosten	kˈɔstən
 kotlin	kɔtlˈiːn
 kreis	krˈaɪs
+kreismittelpunkt	krˈaɪsmɪtˌɛlpʊŋkt
 kreuz	krˈɔøts
 kreuzen	krˈɔøtsən
 kreuzprodukt	krˈɔøtsproːdˌʊkt
@@ -889,6 +895,7 @@ kreuzprodukts	krˈɔøtsproːdˌʊkts
 kreuzt	krˈɔøtst
 kreuzung	krˈɔøtsʊŋ
 krone	krˈoːnə
+krummen	krˈʊmən
 krummeren	krˈʊmərən
 krümmen	krˈʏmən
 krümmt	krˈʏmt
@@ -953,6 +960,7 @@ lehrkraft	lˈeːɾkrˌaft
 lehrkräfte	lˈeːɾkrˌɛftə
 leinwand	lˈaɪnvant
 leinwände	lˈaɪnvɛndə
+len	lˈeːn
 length	lˈɛŋt
 lernstand	lˈɛɾnstant
 lesen	lˈeːzən
@@ -1017,6 +1025,7 @@ lot	lˈoːt
 lote	lˈoːtə
 lotfußpunkt	lˈɔtfʊspˌʊŋkt
 lotgerade	lˈɔtɡeːrˌɑːdə
+lowercase	lˈoːvɜkˌɑːzə
 luft	lˈʊft
 lux	lˈʊks
 lädst	lˈɛːtst
@@ -1053,6 +1062,7 @@ mb	ˌɛmbˈeː
 mean	meːˈɑːn
 mehr	mˈeːɾ
 mehrere	mˈeːrərə
+mehrstufig	mˈeːɾʃtuːfˌɪç
 meine	mˌaɪnə
 meist	mˈaɪst
 meisten	mˈaɪstən
@@ -1136,6 +1146,7 @@ nimm	nˈɪm
 nimmt	nˈɪmt
 nirgendwohin	nˈɪɾɡəndvˌoːɪn
 niveau	niːvˈoː
+nn	ˌɛnˈɛn
 noch	nɔx
 nochmal	nˈɔxmɑːl
 normalen	nɔɾmˈɑːlən
@@ -1197,6 +1208,7 @@ parallelogramms	pˌaralˌeːlɔɡrˈams
 param	pˈɑrɑːm
 parameter	pˌaramˈeːtɜ
 parameterform	pˌaramˈeːtɜfˌɔɾm
+parametern	pˌaramˈeːtɜn
 part	pˈaɾt
 parts	pˈaɾts
 passen	pˈasən
@@ -1241,6 +1253,7 @@ positive	pˌoːziːtˈiːvə
 positiven	pˌoːziːtˈiːvən
 potenzregel	poːtˈɛntsreːɡəl
 pp	pˌeːpˈeː
+practice	prˈaktiːkə
 praktisch	prˈaktɪʃ
 primzahlen	prˈɪmtsɑːlən
 pro	proː
@@ -1249,6 +1262,7 @@ probefahrt	prˈoːbəfˌɑːɾt
 probier	proːbˈiːɾ
 produkt	proːdˈʊkt
 produktregel	proːdˈʊktreːɡəl
+profi	proːfˈiː
 prozent	proːtsˈɛnt
 präzisionsarbeit	prˈɛːtsiːzˌɪʲoːnzˌaɾbaɪt
 prüfe	prˈyːfə
@@ -1284,6 +1298,7 @@ raumlicht	rˈaʊmlɪçt
 raus	rˈaʊs
 rausch	rˈaʊʃ
 rechengrenze	rˌɛçənɡrˈɛntsə
+rechenschritte	rˈɛçənʃrˌɪtə
 rechenweg	rˈɛçənvˌeːk
 rechenwege	rˈɛçənvˌeːɡə
 rechne	rˈɛçnə
@@ -1326,6 +1341,7 @@ richtig	rˈɪçtɪç
 richtige	rˈɪçtɪɡə
 richtigen	rˈɪçtɪɡən
 richtung	rˈɪçtʊŋ
+richtungen	rˈɪçtʊŋən
 richtungsvektor	rˌɪçtʊŋsvˈɛktoːɾ
 richtungsvektoren	rˌɪçtʊŋsvɛktˈoːrən
 ride	rˈiːdə
@@ -1341,6 +1357,7 @@ rotiert	roːtˈiːɾt
 round	rˈuːnt
 rounds	rˈuːnts
 rows	rˈoːfs
+rp	ˌɛɾpˈeː
 ruckeln	rˈʊkəln
 rule	rˈuːlə
 run	ɹˈʌn
@@ -1451,6 +1468,7 @@ setcamera	zˈɛtkamˌeːrɑː
 setz	zˈɛts
 setzen	zˈɛtsən
 setzt	zˈɛtst
+sg	ˌɛsɡˈeː
 sgn	ˌɛsɡˌeːˈɛn
 shl	ˌɛshˌɑːˈɛl
 show	ʃˈəʊ
@@ -1481,6 +1499,7 @@ slope	slˈoːpə
 slopeword	slˈoːpeːvˌɔɾt
 so	zoː
 sofort	zoːfˈɔɾt
+sol	zˈoːl
 solide	zoːlˈiːdə
 soll	zˌɔl
 sollen	zˌɔlən
@@ -1577,6 +1596,7 @@ streuung	ʃtrˈɔøʊŋ
 strich	ʃtrˈɪç
 strom	ʃtrˈoːm
 stuckat	ʃtʊkˈɑːt
+stufe	ʃtˈuːfə
 stufen	ʃtˈuːfən
 stumm	ʃtˈʊm
 stunde	ʃtˈʊndə
@@ -1586,6 +1606,7 @@ stößt	ʃtˈœst
 stück	ʃtˈʏk
 stützpunkt	ʃtˈʏtspʊŋkt
 stützpunkte	ʃtˈʏtspʊŋktə
+stützpunkten	ʃtˈʏtspʊŋktən
 stützvektor	ʃtʏtsvˈɛktoːɾ
 sub	zˈuːp
 substring	zˈʊpstrɪŋ
@@ -1640,6 +1661,7 @@ themen	tˈeːmən
 ticket	tˈɪkət
 tiefpunkt	tˈiːfpˌʊŋkt
 tiefpunkte	tˈiːfpˌʊŋktə
+tier	tˈiːɾ
 timed	tˈiːmeːt
 tipp	tˈɪp
 tippe	tˈɪpə
@@ -1814,6 +1836,7 @@ werte	vˈɛɾtə
 wette	vˈɛtə
 wetten	vˈɛtən
 what	vˈɑːt
+when	vˈeːn
 widerspruch	vˈiːdɜʃprˌʊx
 wie	viː
 wieder	vˈiːdɜ
@@ -1828,6 +1851,7 @@ winkel	vˈɪnkəl
 winner	vˈɪnɜ
 wird	vˌɪɾt
 wirklich	vˈɪɾklɪç
+wischen	vˈɪʃən
 wo	vˌoː
 wohin	voːhˈiːn
 worauf	voːrˈaʊf
@@ -1893,6 +1917,7 @@ zweiten	tsvˈaɪtən
 zweiter	tsvˈaɪtɜ
 zweites	tsvˈaɪtəs
 zwischen	tsvˈɪʃən
+zwischenwerten	tsvˈɪʃənvˌeːɾtən
 zylinder	tsiːlˈɪndɜ
 zählen	tsˈɛːlən
 zähler	tsˈɛːlɜ

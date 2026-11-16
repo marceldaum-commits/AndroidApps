@@ -1,5 +1,7 @@
 package de.raumlicht.app.ui.home
 
+import androidx.compose.ui.platform.testTag
+import androidx.compose.runtime.saveable.rememberSaveable
 import de.raumlicht.app.ui.fx.BackArrow
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -32,7 +34,9 @@ import de.raumlicht.app.ui.lux.Lux
 import de.raumlicht.app.ui.lux.LuxMood
 import de.raumlicht.app.ui.theme.Q
 import de.raumlicht.core.model.Badge
+import de.raumlicht.core.model.JamLevel
 import de.raumlicht.core.model.JamTopic
+import de.raumlicht.core.model.Practice
 import de.raumlicht.core.model.SheetCard
 import kotlinx.coroutines.delay
 
@@ -46,7 +50,11 @@ private fun TopBar(title: String, onBack: () -> Unit) {
 
 /** Endlos üben: Thema wählen, dann endlos neue Aufgaben. Eine Serie zählt Treffer beim ersten Versuch. */
 @Composable
-fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit) {
+fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit, startLevel: String = "", onLevel: (String) -> Unit = {},
+              onPick: (JamTopic, JamLevel?) -> Unit = { t, _ -> onTopic(t) }) {
+    // Schwierigkeit: „Alle“ mischt wie bisher; sonst kommen nur Aufgaben der gewählten Stufe (jede nachweislich schwerer als die vorige)
+    var levelName by rememberSaveable { mutableStateOf(startLevel) }
+    val level = JamLevel.entries.firstOrNull { it.name == levelName }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         TopBar("Endlos üben", onBack)
         Row(Modifier.padding(horizontal = 16.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -54,19 +62,30 @@ fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit) {
             Text("Endlos neue Aufgaben, jedes Mal andere Zahlen. Triffst du beim ersten Versuch, wächst deine Serie." + if (best > 0) " Dein Rekord: $best 🔥" else "",
                 Modifier.padding(start = 8.dp).background(Q.Panel, RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).padding(12.dp), style = MaterialTheme.typography.bodyMedium)
         }
+        Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            (listOf<JamLevel?>(null) + JamLevel.entries).forEach { l ->
+                val on = l == level; val c = when (l) { null -> Q.Muted; JamLevel.EINSTIEG -> Q.Green; JamLevel.ABI -> Q.Yellow; JamLevel.PROFI -> Q.Pink }; val interaction = remember { MutableInteractionSource() }
+                Column(Modifier.weight(1f).testTag("stufe-${l?.name?.lowercase() ?: "alle"}").pressBounce(interaction).clip(RoundedCornerShape(14.dp)).background(if (on) c.copy(alpha = 0.28f) else Q.Deep)
+                    .border(if (on) 2.dp else 1.dp, if (on) c else Q.Muted.copy(alpha = 0.35f), RoundedCornerShape(14.dp)).clickable(interaction, null) { levelName = l?.name ?: ""; onLevel(levelName) }.padding(vertical = 7.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(l?.emoji ?: "🎧", fontSize = 16.sp); Text(l?.title ?: "Alle", fontWeight = FontWeight.Black, fontSize = 13.sp, color = if (on) Q.Text else Q.Muted)
+                }
+            }
+        }
+        Text(level?.let { "${it.title}: ${it.hint}" } ?: "Alle Stufen gemischt", Modifier.padding(horizontal = 18.dp, vertical = 4.dp).testTag("stufe-text"), color = Q.Muted, style = MaterialTheme.typography.bodySmall)
         LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-            itemsIndexed(JamTopic.entries) { i, t ->
+            itemsIndexed(JamTopic.entries.filter { Practice.available(it, level) }, key = { _, t -> t.name }) { i, t ->
                 val c = stageColor(t.color); val interaction = remember { MutableInteractionSource() }
                 var shown by remember { mutableStateOf(false) }
                 LaunchedEffect(Unit) { delay(60L * i); shown = true }
                 val s by animateFloatAsState(if (shown) 1f else 0.6f, spring(dampingRatio = 0.5f, stiffness = 300f), label = "karte")
                 Row(Modifier.fillMaxWidth().graphicsLayer { scaleX = s; scaleY = s; alpha = if (shown) 1f else 0f }.pressBounce(interaction).clip(RoundedCornerShape(20.dp))
                     .background(Brush.horizontalGradient(listOf(c.copy(alpha = 0.25f), Q.Deep))).border(1.5.dp, c.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
-                    .clickable(interaction, null) { onTopic(t) }.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+                    .clickable(interaction, null) { onPick(t, level) }.padding(16.dp).testTag("thema-${t.name}"), verticalAlignment = Alignment.CenterVertically) {
                     Text(t.emoji, fontSize = 30.sp)
                     Column(Modifier.weight(1f).padding(start = 12.dp)) {
                         Text(t.title, style = MaterialTheme.typography.titleMedium)
-                        Text(if (t == JamTopic.MIX) "Themen bunt gemischt – wie in der Klausur" else "${t.kinds.size} Aufgabenarten", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+                        Text(if (t == JamTopic.MIX) "Themen bunt gemischt – wie in der Klausur" else "${when (level) { null -> t.kinds.size; JamLevel.PROFI -> Practice.pro(t).size; else -> t.kinds.count { k -> Practice.tier(k) == level } }} Aufgabenarten", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
                     }
                     Text("▶", color = c, fontSize = 22.sp, fontWeight = FontWeight.Black)
                 }
