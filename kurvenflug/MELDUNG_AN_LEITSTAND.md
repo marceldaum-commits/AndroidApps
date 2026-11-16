@@ -2,7 +2,7 @@
 
 ## 0.23.0 – Kurvenflug Pro gebaut (Freigabe Marcel: „ja, bau es so“; nicht USt.-befreit)
 
-- **Version:** 0.23.0 · **Commit:** {{COMMIT}} (Zweig claude/gifted-shannon-657gpr)
+- **Version:** 0.23.0 · **Commit:** eae218c (Zweig claude/gifted-shannon-657gpr)
 - **Noch sperrt nichts:** Pro-Sperren greifen erst, wenn ein Kaufweg angeboten wird – Play: Produkt `kurvenflug_pro`
   in der Play Console aktiv; Web/GitHub: `kurvenflug/pro/pro.properties` mit `publicKey` (Lizenz-Dienst) und
   `checkoutUrl` (Woo-Kasse). Bis dahin zeigt die Pro-Seite „Pro kommt bald – bis dahin ist alles frei“.
