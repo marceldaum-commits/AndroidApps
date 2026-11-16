@@ -117,7 +117,7 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
             if (shop?.acceptsCodes == true && !(state.pro && state.license?.until == null)) {
                 Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(Q.Panel).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Code aus der E-Mail", fontWeight = FontWeight.Bold, color = Q.Text)
-                    Text("Am einfachsten: den Link aus der E-Mail antippen. Oder den Code hier einfügen – auch den Schul-Code von deiner Lehrkraft.",
+                    Text("Am einfachsten: den Link aus der E-Mail antippen. Oder den Code hier einfügen.",
                         style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                     OutlinedTextField(code, { code = it; codeMsg = null }, Modifier.fillMaxWidth(), placeholder = { Text("KF-…") },
                         minLines = 2, maxLines = 5, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii))
@@ -130,9 +130,6 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
                     codeMsg?.let { Text(it, color = if (it.startsWith("Super")) Q.Green else Q.Pink) }
                 }
             }
-            if (shop?.acceptsCodes == true) Text("Für Schulen: Schullizenz 29 € (inkl. 19 % MwSt.) bis zum 31. Juli – Pro für eine Lehrkraft und alle " +
-                "Schülerinnen und Schüler ihrer Klassen, im Unterricht und zu Hause, auf beliebig vielen Geräten.",
-                style = MaterialTheme.typography.labelSmall, color = Q.Muted, textAlign = TextAlign.Center)
             Text("Für Eltern: Einmalkauf ohne Abo. Der Kauf gilt für dieses Gerät bzw. diesen Browser, ohne Konto. " +
                 "Es werden keine Daten über dein Kind gespeichert – nur „Pro: ja“.",
                 style = MaterialTheme.typography.labelSmall, color = Q.Muted, textAlign = TextAlign.Center)
