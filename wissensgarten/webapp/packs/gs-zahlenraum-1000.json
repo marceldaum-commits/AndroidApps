@@ -1,0 +1,444 @@
+{
+  "id": "gs-zahlenraum-1000",
+  "version": 1,
+  "title": "Zahlen bis 1000",
+  "subject": "mathe",
+  "grades": [
+    3
+  ],
+  "emoji": "🔢",
+  "tier": "free",
+  "description": "Hunderter, Zehner und Einer, Runden, Rechnen mit Hundertern, Verdoppeln und Halbieren bis 1000.",
+  "intro": [
+    {
+      "img": "💯🔟",
+      "text": "Wusstest du? 10 Zehner sind 1 Hunderter, und 10 Hunderter sind 1000. Das ist ein Tausender!"
+    },
+    {
+      "img": "🏠🏠🏠",
+      "text": "Jede Ziffer hat ihr Haus: H für Hunderter, Z für Zehner, E für Einer. Bei 352 wohnt die 3 im H-Haus."
+    },
+    {
+      "img": "🎯⬆️",
+      "text": "Runden: Schau auf die Ziffer rechts daneben. Bei 0 bis 4 rundest du ab, bei 5 bis 9 rundest du auf."
+    },
+    {
+      "img": "✌️✂️",
+      "text": "Verdoppeln heißt: zweimal so viel. Halbieren heißt: gerecht in zwei Teile teilen. 400 verdoppelt ist 800."
+    },
+    {
+      "img": "🚀🎉",
+      "text": "Los geht's, Zahlenforscher! Wir fliegen bis zur 1000!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele Hunderter hat die Zahl 482?",
+      "a": "4",
+      "choices": [
+        "8",
+        "2",
+        "48"
+      ],
+      "info": "482 = 4 H, 8 Z, 2 E. Die Hunderter stehen ganz vorne.",
+      "img": "💯💯💯"
+    },
+    {
+      "id": "002",
+      "q": "Welche Ziffer steht bei 735 an der Zehnerstelle?",
+      "a": "3",
+      "choices": [
+        "7",
+        "5",
+        "30"
+      ],
+      "info": "735 = 7 H, 3 Z, 5 E. Die Zehner stehen in der Mitte.",
+      "img": "🏠🔟"
+    },
+    {
+      "id": "003",
+      "q": "3 H, 6 Z, 2 E sind …",
+      "a": "362",
+      "choices": [
+        "263",
+        "632",
+        "326"
+      ],
+      "info": "300 + 60 + 2 = 362.",
+      "img": "🏠🏠🏠"
+    },
+    {
+      "id": "004",
+      "q": "5 H, 0 Z, 7 E sind …",
+      "a": "507",
+      "choices": [
+        "570",
+        "57",
+        "750"
+      ],
+      "info": "Keine Zehner: Dann steht in der Mitte eine 0. 500 + 7 = 507.",
+      "img": "🕳️🔢"
+    },
+    {
+      "id": "005",
+      "q": "Wie schreibt man „vierhundertachtzehn“?",
+      "a": "418",
+      "choices": [
+        "481",
+        "408",
+        "4018"
+      ],
+      "info": "Vierhundert = 400, achtzehn = 18. Zusammen 418.",
+      "img": "✏️🔢"
+    },
+    {
+      "id": "006",
+      "q": "Wie viele Zehner sind 100?",
+      "a": "10",
+      "choices": [
+        "1",
+        "100",
+        "20"
+      ],
+      "info": "10 Zehner ergeben 1 Hunderter: 10 × 10 = 100.",
+      "img": "🔟💯"
+    },
+    {
+      "id": "007",
+      "q": "Wie viele Hunderter sind 1000?",
+      "a": "10",
+      "choices": [
+        "100",
+        "1",
+        "20"
+      ],
+      "info": "10 Hunderter ergeben 1 Tausender: 10 × 100 = 1000.",
+      "img": "💯🏰"
+    },
+    {
+      "id": "008",
+      "q": "Welche Zahl ist der Nachfolger von 399?",
+      "a": "400",
+      "choices": [
+        "398",
+        "409",
+        "390"
+      ],
+      "info": "Der Nachfolger ist 1 mehr: 399 + 1 = 400.",
+      "img": "➡️🔢"
+    },
+    {
+      "id": "009",
+      "q": "Welche Zahl ist der Vorgänger von 700?",
+      "a": "699",
+      "choices": [
+        "701",
+        "690",
+        "600"
+      ],
+      "info": "Der Vorgänger ist 1 weniger: 700 − 1 = 699.",
+      "img": "⬅️🔢"
+    },
+    {
+      "id": "010",
+      "q": "Welche Zahl liegt genau in der Mitte zwischen 400 und 500?",
+      "a": "450",
+      "choices": [
+        "405",
+        "440",
+        "455"
+      ],
+      "info": "Von 400 bis 500 sind es 100. Die Hälfte ist 50, also 450.",
+      "img": "⚖️🔢"
+    },
+    {
+      "id": "011",
+      "q": "Zähle in 100er-Schritten: 150, 250, 350, …",
+      "a": "450",
+      "choices": [
+        "360",
+        "400",
+        "550"
+      ],
+      "info": "Bei 100er-Schritten ändert sich nur der Hunderter.",
+      "img": "🦘💯"
+    },
+    {
+      "id": "012",
+      "q": "Welche Zahl ist die größte?",
+      "a": "806",
+      "choices": [
+        "680",
+        "608",
+        "799"
+      ],
+      "info": "Vergleiche zuerst die Hunderter: 8 H ist am meisten, und 806 > 680.",
+      "img": "🏆🔢"
+    },
+    {
+      "id": "013",
+      "q": "Welcher Vergleich stimmt?",
+      "a": "539 < 593",
+      "choices": [
+        "539 > 593",
+        "593 < 539",
+        "539 = 593"
+      ],
+      "info": "Gleiche Hunderter, dann die Zehner vergleichen: 3 Z ist weniger als 9 Z.",
+      "img": "🐊🔢"
+    },
+    {
+      "id": "014",
+      "q": "Runde 347 auf Zehner.",
+      "a": "350",
+      "choices": [
+        "340",
+        "300",
+        "400"
+      ],
+      "info": "Rechts von den Zehnern steht eine 7. Bei 5 bis 9 rundest du auf.",
+      "img": "🎯⬆️"
+    },
+    {
+      "id": "015",
+      "q": "Runde 682 auf Hunderter.",
+      "a": "700",
+      "choices": [
+        "600",
+        "680",
+        "690"
+      ],
+      "info": "Rechts von den Hundertern steht eine 8. Also aufrunden auf 700.",
+      "img": "🎯💯"
+    },
+    {
+      "id": "016",
+      "q": "Runde 445 auf Zehner.",
+      "a": "450",
+      "choices": [
+        "440",
+        "400",
+        "500"
+      ],
+      "info": "Bei einer 5 wird aufgerundet. Aus 445 wird 450.",
+      "img": "🎯⬆️"
+    },
+    {
+      "id": "017",
+      "q": "Runde 249 auf Hunderter.",
+      "a": "200",
+      "choices": [
+        "250",
+        "300",
+        "240"
+      ],
+      "info": "Rechts von den Hundertern steht eine 4. Bei 0 bis 4 rundest du ab.",
+      "img": "🎯⬇️"
+    },
+    {
+      "id": "018",
+      "q": "300 + 400",
+      "a": "700",
+      "choices": [
+        "600",
+        "800",
+        "340"
+      ],
+      "info": "3 Hunderter + 4 Hunderter = 7 Hunderter.",
+      "img": "💯➕"
+    },
+    {
+      "id": "019",
+      "q": "900 − 600",
+      "a": "300",
+      "choices": [
+        "200",
+        "400",
+        "1500"
+      ],
+      "info": "9 Hunderter − 6 Hunderter = 3 Hunderter.",
+      "img": "💯➖"
+    },
+    {
+      "id": "020",
+      "q": "450 + 300",
+      "a": "750",
+      "choices": [
+        "480",
+        "780",
+        "650"
+      ],
+      "info": "Nur die Hunderter ändern sich: 4 H + 3 H = 7 H.",
+      "img": "🚂➕"
+    },
+    {
+      "id": "021",
+      "q": "820 − 500",
+      "a": "320",
+      "choices": [
+        "220",
+        "420",
+        "815"
+      ],
+      "info": "Nur die Hunderter ändern sich: 8 H − 5 H = 3 H.",
+      "img": "🚂➖"
+    },
+    {
+      "id": "022",
+      "q": "380 + 40",
+      "a": "420",
+      "choices": [
+        "410",
+        "340",
+        "780"
+      ],
+      "info": "380 + 20 = 400, dann 400 + 20 = 420.",
+      "img": "🦘➕"
+    },
+    {
+      "id": "023",
+      "q": "530 − 60",
+      "a": "470",
+      "choices": [
+        "570",
+        "480",
+        "370"
+      ],
+      "info": "530 − 30 = 500, dann 500 − 30 = 470.",
+      "img": "🦘➖"
+    },
+    {
+      "id": "024",
+      "q": "Wie viel fehlt von 650 bis 1000?",
+      "a": "350",
+      "choices": [
+        "450",
+        "250",
+        "340"
+      ],
+      "info": "650 + 50 = 700, dann 700 + 300 = 1000. Zusammen 350.",
+      "img": "🧩🏰"
+    },
+    {
+      "id": "025",
+      "q": "Verdopple 240.",
+      "a": "480",
+      "choices": [
+        "440",
+        "280",
+        "420"
+      ],
+      "info": "200 + 200 = 400 und 40 + 40 = 80. Zusammen 480.",
+      "img": "✌️🔢"
+    },
+    {
+      "id": "026",
+      "q": "Verdopple 350.",
+      "a": "700",
+      "choices": [
+        "600",
+        "650",
+        "750"
+      ],
+      "info": "300 + 300 = 600 und 50 + 50 = 100. Zusammen 700.",
+      "img": "✌️🔢"
+    },
+    {
+      "id": "027",
+      "q": "Halbiere 600.",
+      "a": "300",
+      "choices": [
+        "200",
+        "350",
+        "250"
+      ],
+      "info": "300 + 300 = 600. Also ist die Hälfte 300.",
+      "img": "✂️🍕"
+    },
+    {
+      "id": "028",
+      "q": "Halbiere 860.",
+      "a": "430",
+      "choices": [
+        "420",
+        "480",
+        "403"
+      ],
+      "info": "Halbiere 800 → 400 und 60 → 30. Zusammen 430.",
+      "img": "✂️🍰"
+    },
+    {
+      "id": "029",
+      "q": "Halbiere 500.",
+      "a": "250",
+      "choices": [
+        "200",
+        "300",
+        "225"
+      ],
+      "info": "250 + 250 = 500. Also ist die Hälfte 250.",
+      "img": "✂️🎂"
+    },
+    {
+      "id": "030",
+      "q": "Ein Zug hat 600 Plätze. 250 sind besetzt. Wie viele sind frei?",
+      "a": "350",
+      "choices": [
+        "450",
+        "850",
+        "300"
+      ],
+      "info": "600 − 200 = 400, dann 400 − 50 = 350.",
+      "img": "🚆💺"
+    },
+    {
+      "id": "031",
+      "q": "Am Montag werden 400 Äpfel geerntet, am Dienstag 350. Wie viele zusammen?",
+      "a": "750",
+      "choices": [
+        "650",
+        "50",
+        "700"
+      ],
+      "info": "400 + 350 = 750.",
+      "img": "🍎🧺"
+    },
+    {
+      "id": "032",
+      "q": "Ich habe 7 Hunderter, keine Zehner und 2 Einer. Wer bin ich?",
+      "a": "702",
+      "choices": [
+        "720",
+        "72",
+        "270"
+      ],
+      "info": "7 H, 0 Z, 2 E ergibt 702. Die 0 hält den Platz frei.",
+      "img": "🕵️🔢"
+    },
+    {
+      "id": "033",
+      "q": "Welche ist die größte dreistellige Zahl?",
+      "a": "999",
+      "choices": [
+        "990",
+        "900",
+        "1000"
+      ],
+      "info": "999 hat drei Stellen. 1000 hat schon vier Stellen!",
+      "img": "🏔️🔢"
+    },
+    {
+      "id": "034",
+      "q": "Welche ist die kleinste dreistellige Zahl?",
+      "a": "100",
+      "choices": [
+        "99",
+        "101",
+        "111"
+      ],
+      "info": "99 hat nur zwei Stellen. Die erste Zahl mit drei Stellen ist 100.",
+      "img": "🐣🔢"
+    }
+  ]
+}

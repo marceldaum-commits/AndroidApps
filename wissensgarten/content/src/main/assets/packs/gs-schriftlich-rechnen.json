@@ -1,0 +1,457 @@
+{
+  "id": "gs-schriftlich-rechnen",
+  "version": 1,
+  "title": "Schriftlich rechnen",
+  "subject": "mathe",
+  "grades": [
+    3,
+    4
+  ],
+  "emoji": "✏️",
+  "tier": "free",
+  "description": "Schriftlich plus, minus und mal rechnen, Überschlagen, Fachwörter und Teilen mit Rest.",
+  "intro": [
+    {
+      "img": "✏️📏",
+      "text": "Wusstest du? Beim schriftlichen Rechnen stehen die Zahlen genau untereinander: Einer unter Einer, Zehner unter Zehner."
+    },
+    {
+      "img": "⬅️➕",
+      "text": "Man rechnet immer von rechts nach links. Wird eine Spalte 10 oder mehr, wandert die 1 als Übertrag in die nächste Spalte."
+    },
+    {
+      "img": "🔍💡",
+      "text": "Erst überschlagen, dann rechnen! 398 + 203 ist ungefähr 400 + 200 = 600. So merkst du schnell, ob dein Ergebnis passt."
+    },
+    {
+      "img": "📚🧠",
+      "text": "Fachwörter: Plus gibt die Summe, Minus die Differenz, Mal das Produkt und Geteilt den Quotienten."
+    },
+    {
+      "img": "🐝🏅",
+      "text": "Los geht's, Rechenmeister! Brummi hält den Bleistift bereit!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie heißt das Ergebnis einer Plusaufgabe?",
+      "a": "Summe",
+      "choices": [
+        "Differenz",
+        "Produkt",
+        "Quotient"
+      ],
+      "info": "Summe: Alles wird zusammengezählt. 3 + 4 = 7, die Summe ist 7.",
+      "img": "➕🧺"
+    },
+    {
+      "id": "002",
+      "q": "Wie heißt das Ergebnis einer Minusaufgabe?",
+      "a": "Differenz",
+      "choices": [
+        "Summe",
+        "Produkt",
+        "Quotient"
+      ],
+      "info": "Differenz heißt Unterschied. 9 − 4 = 5, die Differenz ist 5.",
+      "img": "➖↔️"
+    },
+    {
+      "id": "003",
+      "q": "Wie heißt das Ergebnis einer Malaufgabe?",
+      "a": "Produkt",
+      "choices": [
+        "Summe",
+        "Differenz",
+        "Quotient"
+      ],
+      "info": "3 × 5 = 15, das Produkt ist 15.",
+      "img": "✖️🏭"
+    },
+    {
+      "id": "004",
+      "q": "Wie heißt das Ergebnis einer Geteiltaufgabe?",
+      "a": "Quotient",
+      "choices": [
+        "Produkt",
+        "Summe",
+        "Differenz"
+      ],
+      "info": "12 : 3 = 4, der Quotient ist 4.",
+      "img": "➗🍰"
+    },
+    {
+      "id": "005",
+      "q": "Wie heißt das Plusrechnen mit Fachwort?",
+      "a": "Addition",
+      "choices": [
+        "Subtraktion",
+        "Multiplikation",
+        "Division"
+      ],
+      "info": "Addition = Plus, Subtraktion = Minus, Multiplikation = Mal, Division = Geteilt.",
+      "img": "➕📚"
+    },
+    {
+      "id": "006",
+      "q": "Was ist eine Subtraktion?",
+      "a": "eine Minusaufgabe",
+      "choices": [
+        "eine Plusaufgabe",
+        "eine Malaufgabe",
+        "eine Geteiltaufgabe"
+      ],
+      "info": "Subtrahieren heißt abziehen, also minus rechnen.",
+      "img": "➖📚"
+    },
+    {
+      "id": "007",
+      "q": "Wie groß ist die Summe von 25 und 15?",
+      "a": "40",
+      "choices": [
+        "10",
+        "375",
+        "30"
+      ],
+      "info": "Summe heißt plus: 25 + 15 = 40.",
+      "img": "➕🧺"
+    },
+    {
+      "id": "008",
+      "q": "Wie groß ist die Differenz von 50 und 20?",
+      "a": "30",
+      "choices": [
+        "70",
+        "1000",
+        "25"
+      ],
+      "info": "Differenz heißt minus: 50 − 20 = 30.",
+      "img": "➖↔️"
+    },
+    {
+      "id": "009",
+      "q": "Wie groß ist das Produkt von 6 und 7?",
+      "a": "42",
+      "choices": [
+        "13",
+        "48",
+        "36"
+      ],
+      "info": "Produkt heißt mal: 6 × 7 = 42.",
+      "img": "✖️🏭"
+    },
+    {
+      "id": "010",
+      "q": "Schriftlich: 234 + 152",
+      "a": "386",
+      "choices": [
+        "382",
+        "396",
+        "486"
+      ],
+      "info": "Einer: 4 + 2 = 6. Zehner: 3 + 5 = 8. Hunderter: 2 + 1 = 3.",
+      "img": "✏️➕"
+    },
+    {
+      "id": "011",
+      "q": "In der Einerspalte ergibt sich 13. Was machst du?",
+      "a": "3 hinschreiben, 1 übertragen",
+      "choices": [
+        "13 hinschreiben",
+        "1 hinschreiben, 3 übertragen",
+        "3 hinschreiben, nichts übertragen"
+      ],
+      "info": "Die 3 bleibt bei den Einern, der Zehner wandert als kleine 1 in die Zehnerspalte.",
+      "img": "🎒➡️"
+    },
+    {
+      "id": "012",
+      "q": "Schriftlich: 467 + 285",
+      "a": "752",
+      "choices": [
+        "652",
+        "742",
+        "762"
+      ],
+      "info": "7 + 5 = 12, schreibe 2, Übertrag 1. 6 + 8 + 1 = 15, schreibe 5, Übertrag 1. 4 + 2 + 1 = 7.",
+      "img": "✏️🎒"
+    },
+    {
+      "id": "013",
+      "q": "Schriftlich: 586 − 243",
+      "a": "343",
+      "choices": [
+        "333",
+        "353",
+        "829"
+      ],
+      "info": "Einer: 6 − 3 = 3. Zehner: 8 − 4 = 4. Hunderter: 5 − 2 = 3.",
+      "img": "✏️➖"
+    },
+    {
+      "id": "014",
+      "q": "Schriftlich: 724 − 358",
+      "a": "366",
+      "choices": [
+        "434",
+        "376",
+        "466"
+      ],
+      "info": "Achtung: Oben ist 4 kleiner als 8. Dann brauchst du einen Übertrag! Die Probe: 366 + 358 = 724.",
+      "img": "✏️🔄"
+    },
+    {
+      "id": "015",
+      "q": "Wie machst du die Probe für 724 − 358 = 366?",
+      "a": "366 + 358 rechnen",
+      "choices": [
+        "366 − 358 rechnen",
+        "724 + 358 rechnen",
+        "366 + 724 rechnen"
+      ],
+      "info": "Probe mit der Umkehraufgabe: Ergebnis plus abgezogene Zahl muss die obere Zahl geben.",
+      "img": "🔍✅"
+    },
+    {
+      "id": "016",
+      "q": "Schriftlich: 1000 − 457",
+      "a": "543",
+      "choices": [
+        "643",
+        "553",
+        "653"
+      ],
+      "info": "Probe: 543 + 457 = 1000. Passt!",
+      "img": "✏️🏰"
+    },
+    {
+      "id": "017",
+      "q": "Schriftlich: 1358 + 2647",
+      "a": "4005",
+      "choices": [
+        "3995",
+        "4015",
+        "3905"
+      ],
+      "info": "Dreimal Übertrag! 8 + 7 = 15, 5 + 4 + 1 = 10, 3 + 6 + 1 = 10, 1 + 2 + 1 = 4.",
+      "img": "🎒🎒🎒"
+    },
+    {
+      "id": "018",
+      "q": "Schriftlich: 3456 + 2789",
+      "a": "6245",
+      "choices": [
+        "6345",
+        "6235",
+        "5245"
+      ],
+      "info": "Überschlag: 3500 + 2800 = 6300. Das Ergebnis 6245 liegt nah dran.",
+      "img": "✏️🚀"
+    },
+    {
+      "id": "019",
+      "q": "Schriftlich: 5003 − 1248",
+      "a": "3755",
+      "choices": [
+        "3765",
+        "4255",
+        "3855"
+      ],
+      "info": "Probe: 3755 + 1248 = 5003. Stimmt!",
+      "img": "✏️🔍"
+    },
+    {
+      "id": "020",
+      "q": "Schriftlich: 123 × 3",
+      "a": "369",
+      "choices": [
+        "366",
+        "396",
+        "126"
+      ],
+      "info": "Jede Ziffer mal 3: 3 × 3 = 9, 2 × 3 = 6, 1 × 3 = 3.",
+      "img": "✖️✏️"
+    },
+    {
+      "id": "021",
+      "q": "Schriftlich: 245 × 4",
+      "a": "980",
+      "choices": [
+        "960",
+        "880",
+        "990"
+      ],
+      "info": "5 × 4 = 20, schreibe 0, merke 2. 4 × 4 + 2 = 18, schreibe 8, merke 1. 2 × 4 + 1 = 9.",
+      "img": "✖️🎒"
+    },
+    {
+      "id": "022",
+      "q": "Schriftlich: 316 × 5",
+      "a": "1580",
+      "choices": [
+        "1550",
+        "1530",
+        "1680"
+      ],
+      "info": "Überschlag: 300 × 5 = 1500. 1580 passt gut dazu.",
+      "img": "✖️🖐️"
+    },
+    {
+      "id": "023",
+      "q": "Schriftlich: 1207 × 6",
+      "a": "7242",
+      "choices": [
+        "7212",
+        "6242",
+        "7042"
+      ],
+      "info": "7 × 6 = 42, 0 × 6 + 4 = 4, 2 × 6 = 12, 1 × 6 + 1 = 7.",
+      "img": "✖️🎲"
+    },
+    {
+      "id": "024",
+      "q": "Schriftlich: 24 × 13",
+      "a": "312",
+      "choices": [
+        "302",
+        "322",
+        "288"
+      ],
+      "info": "24 × 10 = 240 und 24 × 3 = 72. Zusammen 240 + 72 = 312.",
+      "img": "✖️🧱"
+    },
+    {
+      "id": "025",
+      "q": "Was ist ein Überschlag?",
+      "a": "eine ungefähre Rechnung",
+      "choices": [
+        "eine genaue Rechnung",
+        "eine Probe mit Plus",
+        "eine Rechnung mit Rest"
+      ],
+      "info": "Beim Überschlag rundest du die Zahlen und rechnest grob. So erkennst du Fehler.",
+      "img": "🔍💡"
+    },
+    {
+      "id": "026",
+      "q": "Überschlag: 398 + 203 ist ungefähr …",
+      "a": "600",
+      "choices": [
+        "500",
+        "700",
+        "800"
+      ],
+      "info": "Runde: 398 ≈ 400 und 203 ≈ 200. 400 + 200 = 600.",
+      "img": "🔍➕"
+    },
+    {
+      "id": "027",
+      "q": "Überschlag: 812 − 289 ist ungefähr …",
+      "a": "500",
+      "choices": [
+        "600",
+        "400",
+        "1100"
+      ],
+      "info": "Runde: 812 ≈ 800 und 289 ≈ 300. 800 − 300 = 500.",
+      "img": "🔍➖"
+    },
+    {
+      "id": "028",
+      "q": "Überschlag: 49 × 6 ist ungefähr …",
+      "a": "300",
+      "choices": [
+        "240",
+        "360",
+        "250"
+      ],
+      "info": "Runde: 49 ≈ 50. 50 × 6 = 300.",
+      "img": "🔍✖️"
+    },
+    {
+      "id": "029",
+      "q": "Überschlag: 2980 + 1010 ist ungefähr …",
+      "a": "4000",
+      "choices": [
+        "2000",
+        "3000",
+        "5000"
+      ],
+      "info": "Runde auf Tausender: 3000 + 1000 = 4000.",
+      "img": "🔍🏰"
+    },
+    {
+      "id": "030",
+      "q": "17 : 5",
+      "a": "3 Rest 2",
+      "choices": [
+        "3 Rest 1",
+        "4 Rest 2",
+        "2 Rest 2"
+      ],
+      "info": "3 × 5 = 15. Bis 17 fehlen noch 2. Das ist der Rest.",
+      "img": "🍬🎁"
+    },
+    {
+      "id": "031",
+      "q": "29 : 4",
+      "a": "7 Rest 1",
+      "choices": [
+        "7 Rest 2",
+        "6 Rest 1",
+        "8 Rest 1"
+      ],
+      "info": "7 × 4 = 28. Bis 29 bleibt 1 übrig.",
+      "img": "🍪🎁"
+    },
+    {
+      "id": "032",
+      "q": "50 : 8",
+      "a": "6 Rest 2",
+      "choices": [
+        "6 Rest 4",
+        "7 Rest 2",
+        "5 Rest 2"
+      ],
+      "info": "6 × 8 = 48. Bis 50 bleiben 2 übrig.",
+      "img": "🍓🎁"
+    },
+    {
+      "id": "033",
+      "q": "38 : 7",
+      "a": "5 Rest 3",
+      "choices": [
+        "5 Rest 2",
+        "6 Rest 3",
+        "4 Rest 3"
+      ],
+      "info": "5 × 7 = 35. Bis 38 bleiben 3 übrig.",
+      "img": "🍒🎁"
+    },
+    {
+      "id": "034",
+      "q": "Was stimmt beim Teilen durch 5 immer?",
+      "a": "Der Rest ist kleiner als 5.",
+      "choices": [
+        "Der Rest ist größer als 5.",
+        "Der Rest ist immer 0.",
+        "Der Rest ist genau 5."
+      ],
+      "info": "Ist der Rest 5 oder mehr, passt noch einmal 5 hinein. Also ist er immer kleiner.",
+      "img": "🖐️🎁"
+    },
+    {
+      "id": "035",
+      "q": "23 Kinder setzen sich zu viert an Tische. Wie viele Tische sind ganz voll?",
+      "a": "5",
+      "choices": [
+        "6",
+        "4",
+        "3"
+      ],
+      "info": "23 : 4 = 5 Rest 3. 5 Tische sind voll, 3 Kinder sitzen am sechsten Tisch.",
+      "img": "👫🍽️"
+    }
+  ]
+}

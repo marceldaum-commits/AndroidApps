@@ -1,0 +1,457 @@
+{
+  "id": "s1-mathe-negative-zahlen",
+  "version": 1,
+  "title": "Negative Zahlen",
+  "subject": "mathe",
+  "grades": [
+    6,
+    7
+  ],
+  "emoji": "🌡️",
+  "tier": "free",
+  "description": "Zahlengerade, Betrag und Rechnen mit negativen Zahlen – mit Beispielen aus Wetter, Konto und Tauchen.",
+  "intro": [
+    {
+      "img": "🌡️❄️",
+      "text": "Wusstest du? Im Winter zeigt das Thermometer oft Zahlen unter null, zum Beispiel −5 °C. Das sind negative Zahlen!"
+    },
+    {
+      "img": "📏⬅️",
+      "text": "Auf der Zahlengerade stehen die negativen Zahlen links von der 0. Je weiter links, desto kleiner: −8 ist kleiner als −2."
+    },
+    {
+      "img": "📏💯",
+      "text": "Der Betrag ist der Abstand zur 0 – ohne Vorzeichen: |−7| = 7. Ein Abstand ist nie negativ!"
+    },
+    {
+      "img": "✖️😊",
+      "text": "Malregel: Gleiche Vorzeichen ergeben Plus, verschiedene ergeben Minus. (−3) · (−4) = 12, aber (−3) · 4 = −12."
+    },
+    {
+      "img": "🚀🏆",
+      "text": "Los geht's! Tauch ab unter die Null und zeig, was du kannst!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welche Zahl ist kleiner: −8 oder −3?",
+      "a": "−8",
+      "choices": [
+        "−3",
+        "Beide sind gleich groß",
+        "Das kann man nicht sagen"
+      ],
+      "info": "Auf der Zahlengerade liegt −8 weiter links als −3 – also ist −8 kleiner.",
+      "img": "📏⬅️"
+    },
+    {
+      "id": "002",
+      "q": "Welche Aussage stimmt?",
+      "a": "−10 < −1",
+      "choices": [
+        "−10 > −1",
+        "−1 < −10",
+        "−10 > 0"
+      ],
+      "info": "Das Krokodil-Maul öffnet sich zur größeren Zahl. −1 liegt weiter rechts, also ist −1 größer.",
+      "img": "🐊"
+    },
+    {
+      "id": "003",
+      "q": "Ordne aufsteigend: 3, −5, 0, −1",
+      "a": "−5 < −1 < 0 < 3",
+      "choices": [
+        "−1 < −5 < 0 < 3",
+        "0 < −1 < 3 < −5",
+        "−5 < 3 < −1 < 0"
+      ],
+      "info": "Von links nach rechts auf der Zahlengerade: −5, −1, 0, 3.",
+      "img": "📶"
+    },
+    {
+      "id": "004",
+      "q": "Welche Zahl liegt auf der Zahlengerade 4 Schritte links von −3?",
+      "a": "−7",
+      "choices": [
+        "1",
+        "−1",
+        "7"
+      ],
+      "info": "Nach links wird es kleiner: −3 − 4 = −7.",
+      "img": "👣⬅️"
+    },
+    {
+      "id": "005",
+      "q": "Welche Zahl liegt genau in der Mitte zwischen −6 und 2?",
+      "a": "−2",
+      "choices": [
+        "−4",
+        "0",
+        "−3"
+      ],
+      "info": "Der Abstand von −6 bis 2 ist 8. Die Hälfte ist 4: −6 + 4 = −2.",
+      "img": "↔️"
+    },
+    {
+      "id": "006",
+      "q": "Zwischen welchen ganzen Zahlen liegt −3,7?",
+      "a": "−4 und −3",
+      "choices": [
+        "−3 und −2",
+        "3 und 4",
+        "−5 und −4"
+      ],
+      "info": "−3,7 liegt etwas links von −3, aber noch rechts von −4.",
+      "img": "🔍"
+    },
+    {
+      "id": "007",
+      "q": "Was ist die Gegenzahl von −9?",
+      "a": "9",
+      "choices": [
+        "−9",
+        "0",
+        "−1/9"
+      ],
+      "info": "Gegenzahlen haben den gleichen Abstand zur 0, aber verschiedene Vorzeichen.",
+      "img": "🔄"
+    },
+    {
+      "id": "008",
+      "q": "Wie heißen die Zahlen …, −2, −1, 0, 1, 2, …?",
+      "a": "Ganze Zahlen",
+      "choices": [
+        "Natürliche Zahlen",
+        "Bruchzahlen",
+        "Primzahlen"
+      ],
+      "info": "Die ganzen Zahlen sind die natürlichen Zahlen, die 0 und alle ihre Gegenzahlen.",
+      "img": "📏🔢"
+    },
+    {
+      "id": "009",
+      "q": "|−12| = ?",
+      "a": "12",
+      "choices": [
+        "−12",
+        "0",
+        "1/12"
+      ],
+      "info": "Der Betrag ist der Abstand zur 0 und damit nie negativ.",
+      "img": "📏"
+    },
+    {
+      "id": "010",
+      "q": "Welche Zahlen haben den Betrag 5?",
+      "a": "5 und −5",
+      "choices": [
+        "Nur 5",
+        "Nur −5",
+        "0 und 5"
+      ],
+      "info": "Sowohl 5 als auch −5 sind genau 5 Schritte von der 0 entfernt.",
+      "img": "👯"
+    },
+    {
+      "id": "011",
+      "q": "−3 + 8 = ?",
+      "a": "5",
+      "choices": [
+        "−11",
+        "11",
+        "−5"
+      ],
+      "info": "Starte bei −3 und gehe 8 Schritte nach rechts: Du landest bei 5.",
+      "img": "🌡️⬆️"
+    },
+    {
+      "id": "012",
+      "q": "4 − 10 = ?",
+      "a": "−6",
+      "choices": [
+        "6",
+        "−14",
+        "14"
+      ],
+      "info": "Starte bei 4 und gehe 10 Schritte nach links: Du landest bei −6.",
+      "img": "⬇️"
+    },
+    {
+      "id": "013",
+      "q": "−7 − 5 = ?",
+      "a": "−12",
+      "choices": [
+        "−2",
+        "12",
+        "2"
+      ],
+      "info": "Schon im Minus und noch weiter nach unten: −7 − 5 = −12.",
+      "img": "🏊⬇️"
+    },
+    {
+      "id": "014",
+      "q": "−15 + 15 = ?",
+      "a": "0",
+      "choices": [
+        "−30",
+        "30",
+        "−15"
+      ],
+      "info": "Eine Zahl plus ihre Gegenzahl ergibt immer 0.",
+      "img": "⚖️"
+    },
+    {
+      "id": "015",
+      "q": "−2,5 + 4 = ?",
+      "a": "1,5",
+      "choices": [
+        "−6,5",
+        "6,5",
+        "−1,5"
+      ],
+      "info": "Von −2,5 aus 4 Schritte nach rechts: Bei 0 sind 2,5 verbraucht, dann noch 1,5 weiter.",
+      "img": "🌡️"
+    },
+    {
+      "id": "016",
+      "q": "6 + (−11) = ?",
+      "a": "−5",
+      "choices": [
+        "17",
+        "5",
+        "−17"
+      ],
+      "info": "Plus eine negative Zahl heißt minus: 6 + (−11) = 6 − 11 = −5.",
+      "img": "➕➖"
+    },
+    {
+      "id": "017",
+      "q": "−4 − (−9) = ?",
+      "a": "5",
+      "choices": [
+        "−13",
+        "−5",
+        "13"
+      ],
+      "info": "Minus eine negative Zahl heißt plus: −4 − (−9) = −4 + 9 = 5.",
+      "img": "➖➖"
+    },
+    {
+      "id": "018",
+      "q": "(−6) · 7 = ?",
+      "a": "−42",
+      "choices": [
+        "42",
+        "−13",
+        "13"
+      ],
+      "info": "Verschiedene Vorzeichen ergeben Minus: 6 · 7 = 42, also −42.",
+      "img": "✖️"
+    },
+    {
+      "id": "019",
+      "q": "(−5) · (−8) = ?",
+      "a": "40",
+      "choices": [
+        "−40",
+        "−13",
+        "13"
+      ],
+      "info": "Gleiche Vorzeichen ergeben Plus: (−5) · (−8) = 40.",
+      "img": "😊"
+    },
+    {
+      "id": "020",
+      "q": "Was ergibt „Minus mal Minus“?",
+      "a": "Plus",
+      "choices": [
+        "Minus",
+        "Immer 0",
+        "Das hängt von den Zahlen ab"
+      ],
+      "info": "Merke: Zwei Minuszeichen beim Malnehmen heben sich auf.",
+      "img": "😊😊"
+    },
+    {
+      "id": "021",
+      "q": "(−36) : 9 = ?",
+      "a": "−4",
+      "choices": [
+        "4",
+        "−3",
+        "−5"
+      ],
+      "info": "Beim Teilen gilt dieselbe Regel wie beim Malnehmen: verschiedene Vorzeichen → Minus.",
+      "img": "➗"
+    },
+    {
+      "id": "022",
+      "q": "(−48) : (−6) = ?",
+      "a": "8",
+      "choices": [
+        "−8",
+        "−42",
+        "9"
+      ],
+      "info": "Gleiche Vorzeichen ergeben Plus: 48 : 6 = 8.",
+      "img": "🍕"
+    },
+    {
+      "id": "023",
+      "q": "(−2) · (−3) · (−5) = ?",
+      "a": "−30",
+      "choices": [
+        "30",
+        "−10",
+        "10"
+      ],
+      "info": "Zähle die Minuszeichen: drei, also ungerade Anzahl → Ergebnis negativ.",
+      "img": "➖✖️"
+    },
+    {
+      "id": "024",
+      "q": "(−3)² = ?",
+      "a": "9",
+      "choices": [
+        "−9",
+        "−6",
+        "6"
+      ],
+      "info": "(−3)² = (−3) · (−3) = 9. Achtung: −3² ohne Klammer bedeutet −9!",
+      "img": "🔲"
+    },
+    {
+      "id": "025",
+      "q": "(−1)¹⁰⁰ = ?",
+      "a": "1",
+      "choices": [
+        "−1",
+        "−100",
+        "100"
+      ],
+      "info": "Gerade Hochzahl: Die Minuszeichen heben sich paarweise auf.",
+      "img": "🔁"
+    },
+    {
+      "id": "026",
+      "q": "Berechne: (−20) : 4 + 3",
+      "a": "−2",
+      "choices": [
+        "−8",
+        "2",
+        "−5"
+      ],
+      "info": "Punkt vor Strich: Erst (−20) : 4 = −5, dann −5 + 3 = −2.",
+      "img": "🎯"
+    },
+    {
+      "id": "027",
+      "q": "Berechne: 3 · (−4) − (−5)",
+      "a": "−7",
+      "choices": [
+        "−17",
+        "7",
+        "17"
+      ],
+      "info": "3 · (−4) = −12, dann −12 + 5 = −7.",
+      "img": "🧩"
+    },
+    {
+      "id": "028",
+      "q": "Morgens −4 °C, mittags 3 °C. Um wie viel Grad wurde es wärmer?",
+      "a": "Um 7 Grad",
+      "choices": [
+        "Um 1 Grad",
+        "Um 4 Grad",
+        "Um 3 Grad"
+      ],
+      "info": "Von −4 bis 0 sind es 4 Grad, von 0 bis 3 noch 3 Grad: zusammen 7 Grad.",
+      "img": "🌡️☀️"
+    },
+    {
+      "id": "029",
+      "q": "Es ist 2 °C. Die Temperatur fällt um 9 Grad. Wie kalt ist es jetzt?",
+      "a": "−7 °C",
+      "choices": [
+        "7 °C",
+        "−11 °C",
+        "11 °C"
+      ],
+      "info": "2 − 9 = −7. Jetzt friert es!",
+      "img": "❄️"
+    },
+    {
+      "id": "030",
+      "q": "Nachts −12 °C, tagsüber −5 °C. Wie groß ist der Unterschied?",
+      "a": "7 Grad",
+      "choices": [
+        "17 Grad",
+        "5 Grad",
+        "12 Grad"
+      ],
+      "info": "−5 − (−12) = −5 + 12 = 7.",
+      "img": "🌙☀️"
+    },
+    {
+      "id": "031",
+      "q": "Kontostand 50 €. Du bezahlst 70 €. Wie ist der neue Kontostand?",
+      "a": "−20 €",
+      "choices": [
+        "20 €",
+        "−120 €",
+        "120 €"
+      ],
+      "info": "50 − 70 = −20. Ein Minus auf dem Konto heißt: Man schuldet der Bank 20 €.",
+      "img": "🏦"
+    },
+    {
+      "id": "032",
+      "q": "Kontostand −30 €. Es kommen 45 € dazu. Wie ist der neue Kontostand?",
+      "a": "15 €",
+      "choices": [
+        "−15 €",
+        "75 €",
+        "−75 €"
+      ],
+      "info": "−30 + 45 = 15. Die Schulden sind weg und es bleiben 15 € übrig.",
+      "img": "💶"
+    },
+    {
+      "id": "033",
+      "q": "Ein Taucher ist bei −12 m und steigt 5 m auf. Wo ist er jetzt?",
+      "a": "−7 m",
+      "choices": [
+        "−17 m",
+        "7 m",
+        "−5 m"
+      ],
+      "info": "Aufsteigen heißt plus: −12 + 5 = −7. Er ist noch 7 m unter Wasser.",
+      "img": "🐠🌊"
+    },
+    {
+      "id": "034",
+      "q": "Ein Aufzug fährt vom 3. Stock 5 Stockwerke nach unten. Wo hält er?",
+      "a": "Stockwerk −2",
+      "choices": [
+        "Stockwerk 2",
+        "Stockwerk −8",
+        "Stockwerk 8"
+      ],
+      "info": "Das Erdgeschoss ist 0: 3 − 5 = −2, also das 2. Untergeschoss.",
+      "img": "🏢⬇️"
+    },
+    {
+      "id": "035",
+      "q": "Ein Gipfel liegt 2 000 m hoch, ein See bei −400 m. Wie groß ist der Höhenunterschied?",
+      "a": "2 400 m",
+      "choices": [
+        "1 600 m",
+        "2 000 m",
+        "−2 400 m"
+      ],
+      "info": "2 000 − (−400) = 2 000 + 400 = 2 400 m.",
+      "img": "⛰️🌊"
+    }
+  ]
+}

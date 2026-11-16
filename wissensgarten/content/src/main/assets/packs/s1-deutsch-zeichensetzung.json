@@ -1,0 +1,447 @@
+{
+  "id": "s1-deutsch-zeichensetzung",
+  "version": 1,
+  "title": "Komma & Co.",
+  "subject": "deutsch",
+  "grades": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "emoji": "✏️",
+  "tier": "free",
+  "description": "Kommaregeln, das oder dass und wörtliche Rede – mit vielen Beispielsätzen zum Ausprobieren.",
+  "intro": [
+    {
+      "img": "👵🍽️",
+      "text": "Wusstest du? „Komm, wir essen, Oma!“ und „Komm, wir essen Oma!“ – ein einziges Komma kann Oma das Leben retten!"
+    },
+    {
+      "img": "🚦✋",
+      "text": "Das Komma ist wie eine kleine Ampel im Satz: Es zeigt dir, wo ein Gedanke endet und ein neuer beginnt."
+    },
+    {
+      "img": "🔗📝",
+      "text": "Merke: Nebensätze mit „weil“, „dass“ oder „wenn“ trennt man mit Komma ab, ebenso vor „aber“. Vor dem „und“ einer Aufzählung steht keins."
+    },
+    {
+      "img": "💬🎤",
+      "text": "Wörtliche Rede steht in Anführungszeichen. Steht der Begleitsatz hinten, kommt nach dem Schlusszeichen ein Komma: „Hallo“, sagt Lea."
+    },
+    {
+      "img": "🕵️✨",
+      "text": "Los geht's, Komma-Detektiv! Finde heraus, wohin die kleinen Striche gehören."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wohin gehört das Komma? „Ich mag Hunde Katzen und Pferde.“",
+      "a": "nach „Hunde“",
+      "choices": [
+        "nach „Katzen“",
+        "nach „mag“",
+        "nach „Ich“"
+      ],
+      "info": "Aufzählung: Komma zwischen den Gliedern – aber nicht vor dem „und“.",
+      "img": "🐶🐱🐴"
+    },
+    {
+      "id": "002",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Lena, Paul und Mia spielen Ball.",
+      "choices": [
+        "Lena, Paul, und Mia spielen Ball.",
+        "Lena Paul und Mia spielen Ball.",
+        "Lena, Paul und Mia, spielen Ball."
+      ],
+      "info": "Das „und“ ersetzt in einer Aufzählung das letzte Komma.",
+      "img": "👧👦⚽"
+    },
+    {
+      "id": "003",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Möchtest du Tee oder Kakao?",
+      "choices": [
+        "Möchtest du Tee, oder Kakao?",
+        "Möchtest du, Tee oder Kakao?",
+        "Möchtest du Tee oder, Kakao?"
+      ],
+      "info": "Wie „und“ steht auch „oder“ zwischen zwei Wörtern ohne Komma.",
+      "img": "🍵☕"
+    },
+    {
+      "id": "004",
+      "q": "Wohin gehört das Komma? „Lisa kommst du mit?“",
+      "a": "nach „Lisa“",
+      "choices": [
+        "nach „kommst“",
+        "nach „du“",
+        "vor „Lisa“"
+      ],
+      "info": "Eine Anrede wird mit Komma abgetrennt: Lisa, kommst du mit?",
+      "img": "👧📣"
+    },
+    {
+      "id": "005",
+      "q": "Wohin gehört das Komma? „Die Sonne scheint die Vögel singen.“",
+      "a": "nach „scheint“",
+      "choices": [
+        "nach „Sonne“",
+        "nach „Vögel“",
+        "nach „die“"
+      ],
+      "info": "Zwei Hauptsätze ohne „und“ werden durch ein Komma getrennt.",
+      "img": "☀️🐦🎶"
+    },
+    {
+      "id": "006",
+      "q": "Wohin gehört das Komma? „Ich bleibe drinnen weil es regnet.“",
+      "a": "vor „weil“",
+      "choices": [
+        "nach „weil“",
+        "nach „bleibe“",
+        "nach „es“"
+      ],
+      "info": "Der Nebensatz mit „weil“ wird durch ein Komma abgetrennt.",
+      "img": "🏠🌧️"
+    },
+    {
+      "id": "007",
+      "q": "Woran erkennst du meistens einen Nebensatz?",
+      "a": "Das gebeugte Verb steht am Ende.",
+      "choices": [
+        "Er beginnt immer mit „und“.",
+        "Er hat gar kein Verb.",
+        "Er steht immer am Satzanfang."
+      ],
+      "info": "… weil es regnet. … dass du kommst. Das Verb rutscht ans Ende.",
+      "img": "🔚🔍"
+    },
+    {
+      "id": "008",
+      "q": "Wohin gehört das Komma? „Als der Wecker klingelte sprang Ben aus dem Bett.“",
+      "a": "nach „klingelte“",
+      "choices": [
+        "nach „Wecker“",
+        "nach „sprang“",
+        "nach „Ben“"
+      ],
+      "info": "Steht der Nebensatz vorn, kommt das Komma nach seinem Verb.",
+      "img": "⏰🛏️"
+    },
+    {
+      "id": "009",
+      "q": "Wohin gehört das Komma? „Wenn du Zeit hast komm vorbei!“",
+      "a": "nach „hast“",
+      "choices": [
+        "nach „du“",
+        "nach „Zeit“",
+        "nach „komm“"
+      ],
+      "info": "Nebensatz (Wenn …) und Hauptsatz treffen sich: Dort steht das Komma.",
+      "img": "⌛🚪"
+    },
+    {
+      "id": "010",
+      "q": "Wohin gehört das Komma? „Ich weiß dass du das kannst.“",
+      "a": "vor „dass“",
+      "choices": [
+        "nach „dass“",
+        "nach „Ich“",
+        "nach „das“"
+      ],
+      "info": "Der Nebensatz mit „dass“ wird durch ein Komma abgetrennt.",
+      "img": "💪🌟"
+    },
+    {
+      "id": "011",
+      "q": "Wohin gehört das Komma? „Weißt du ob Oma heute kommt?“",
+      "a": "vor „ob“",
+      "choices": [
+        "nach „ob“",
+        "nach „Oma“",
+        "nach „heute“"
+      ],
+      "info": "Auch „ob“ leitet einen Nebensatz ein – davor steht ein Komma.",
+      "img": "👵❓"
+    },
+    {
+      "id": "012",
+      "q": "Wohin gehört das Komma? „Ich lese ein Buch das sehr spannend ist.“",
+      "a": "vor „das“",
+      "choices": [
+        "nach „das“",
+        "nach „lese“",
+        "nach „sehr“"
+      ],
+      "info": "„das“ bezieht sich hier auf „Buch“ (= welches). Relativsätze trennt man mit Komma ab.",
+      "img": "📖😮"
+    },
+    {
+      "id": "013",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Der Hund, der dort bellt, heißt Bello.",
+      "choices": [
+        "Der Hund der dort bellt, heißt Bello.",
+        "Der Hund, der dort bellt heißt Bello.",
+        "Der Hund der dort bellt heißt Bello."
+      ],
+      "info": "Ein eingeschobener Nebensatz bekommt zwei Kommas – eins davor, eins danach.",
+      "img": "🐕🔊"
+    },
+    {
+      "id": "014",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Er ist klein, aber sehr schnell.",
+      "choices": [
+        "Er ist klein aber, sehr schnell.",
+        "Er ist, klein aber sehr schnell.",
+        "Er ist klein aber sehr schnell."
+      ],
+      "info": "Vor „aber“, „sondern“ und „doch“ steht ein Komma.",
+      "img": "🐭💨"
+    },
+    {
+      "id": "015",
+      "q": "Wohin gehört das Komma? „Nicht Tom sondern Lea hat gewonnen.“",
+      "a": "vor „sondern“",
+      "choices": [
+        "nach „sondern“",
+        "nach „Nicht“",
+        "nach „Lea“"
+      ],
+      "info": "„sondern“ stellt etwas gegenüber – davor steht ein Komma.",
+      "img": "🏆👧"
+    },
+    {
+      "id": "016",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Tim ist so groß wie sein Vater.",
+      "choices": [
+        "Tim ist so groß, wie sein Vater.",
+        "Tim ist, so groß wie sein Vater.",
+        "Tim, ist so groß wie sein Vater."
+      ],
+      "info": "Bei einem einfachen Vergleich mit „wie“ oder „als“ ohne eigenes Verb steht kein Komma.",
+      "img": "👦📏👨"
+    },
+    {
+      "id": "017",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Es ist kälter, als ich dachte.",
+      "choices": [
+        "Es ist kälter als, ich dachte.",
+        "Es ist, kälter als ich dachte.",
+        "Es ist kälter als ich, dachte."
+      ],
+      "info": "Hier folgt nach „als“ ein ganzer Nebensatz mit Verb (dachte) – also Komma!",
+      "img": "🥶❄️"
+    },
+    {
+      "id": "018",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Herr Kaya, unser Hausmeister, ist nett.",
+      "choices": [
+        "Herr Kaya unser Hausmeister, ist nett.",
+        "Herr Kaya, unser, Hausmeister ist nett.",
+        "Herr, Kaya unser Hausmeister ist nett."
+      ],
+      "info": "Ein Einschub, der jemanden näher erklärt, steht zwischen zwei Kommas.",
+      "img": "🧹🙂"
+    },
+    {
+      "id": "019",
+      "q": "Wohin gehört das Komma? „Sie übt jeden Tag um besser zu werden.“",
+      "a": "vor „um“",
+      "choices": [
+        "nach „um“",
+        "nach „Sie“",
+        "nach „besser“"
+      ],
+      "info": "Bei „um … zu“ steht immer ein Komma.",
+      "img": "🎹📈"
+    },
+    {
+      "id": "020",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Er ging los, ohne sich zu verabschieden.",
+      "choices": [
+        "Er ging los ohne, sich zu verabschieden.",
+        "Er ging, los ohne sich zu verabschieden.",
+        "Er ging los ohne sich, zu verabschieden."
+      ],
+      "info": "Wie bei „um … zu“: Vor „ohne … zu“ und „statt … zu“ steht immer ein Komma.",
+      "img": "🚶👋"
+    },
+    {
+      "id": "021",
+      "q": "Welche Wörter leiten eine „zu“-Gruppe ein, vor der immer ein Komma steht?",
+      "a": "um, ohne, statt",
+      "choices": [
+        "und, oder, sowie",
+        "aber, doch, sondern",
+        "mit, von, bei"
+      ],
+      "info": "um … zu, ohne … zu, statt … zu → Komma ist Pflicht.",
+      "img": "🧩✅"
+    },
+    {
+      "id": "022",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Ich freue mich darauf, dich zu sehen.",
+      "choices": [
+        "Ich freue mich darauf dich, zu sehen.",
+        "Ich freue, mich darauf dich zu sehen.",
+        "Ich freue mich, darauf dich zu sehen."
+      ],
+      "info": "Kündigt ein Wort wie „darauf“ die „zu“-Gruppe an, steht ein Komma.",
+      "img": "🤗🎈"
+    },
+    {
+      "id": "023",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Wir hatten die Idee, ein Baumhaus zu bauen.",
+      "choices": [
+        "Wir hatten die Idee ein Baumhaus, zu bauen.",
+        "Wir hatten, die Idee ein Baumhaus zu bauen.",
+        "Wir hatten die, Idee ein Baumhaus zu bauen."
+      ],
+      "info": "Erklärt die „zu“-Gruppe ein Nomen (die Idee), steht ein Komma.",
+      "img": "🌳🏠🔨"
+    },
+    {
+      "id": "024",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Ich weiß, dass er kommt, und freue mich.",
+      "choices": [
+        "Ich weiß, dass er kommt und, freue mich.",
+        "Ich weiß dass er kommt, und freue mich.",
+        "Ich weiß, dass, er kommt und freue mich."
+      ],
+      "info": "Der Nebensatz „dass er kommt“ wird vorn und hinten abgetrennt – auch vor „und“.",
+      "img": "🎉🚪"
+    },
+    {
+      "id": "025",
+      "q": "Ergänze: „Mama sagt, ___ wir gleich essen.“",
+      "a": "dass",
+      "choices": [
+        "das",
+        "daß",
+        "des"
+      ],
+      "info": "Hier kannst du nicht „dieses“ oder „welches“ einsetzen → dass. „daß“ ist alte Schreibung.",
+      "img": "🍲⏰"
+    },
+    {
+      "id": "026",
+      "q": "Ergänze: „Das Spiel, ___ wir gespielt haben, war super.“",
+      "a": "das",
+      "choices": [
+        "dass",
+        "daß",
+        "der"
+      ],
+      "info": "Probe: „Das Spiel, welches wir gespielt haben“ – passt! Also „das“.",
+      "img": "🎲😄"
+    },
+    {
+      "id": "027",
+      "q": "Ergänze: „Ich finde es toll, ___ du mir hilfst.“",
+      "a": "dass",
+      "choices": [
+        "das",
+        "daß",
+        "des"
+      ],
+      "info": "„dass“ verbindet hier zwei Sätze. „welches“ passt nicht.",
+      "img": "🤝💛"
+    },
+    {
+      "id": "028",
+      "q": "Ergänze: „Siehst du das Pferd? ___ ist schnell!“",
+      "a": "Das",
+      "choices": [
+        "Dass",
+        "Daß",
+        "Des"
+      ],
+      "info": "Probe: „Dieses ist schnell!“ – passt. Also „Das“ mit einem s.",
+      "img": "🐎💨"
+    },
+    {
+      "id": "029",
+      "q": "Welches Zeichen fehlt nach „ruft“? Tim ruft „Tor!“",
+      "a": "ein Doppelpunkt",
+      "choices": [
+        "ein Komma",
+        "ein Punkt",
+        "ein Fragezeichen"
+      ],
+      "info": "Steht der Begleitsatz vorn, folgt ein Doppelpunkt: Tim ruft: „Tor!“",
+      "img": "⚽🥅"
+    },
+    {
+      "id": "030",
+      "q": "Welcher Satz ist richtig?",
+      "a": "„Ich habe Hunger“, sagt Ben.",
+      "choices": [
+        "„Ich habe Hunger.“, sagt Ben.",
+        "„Ich habe Hunger“ sagt Ben.",
+        "„Ich habe Hunger,“ sagt Ben."
+      ],
+      "info": "Begleitsatz hinten: Der Punkt fällt weg, das Komma steht nach dem Anführungszeichen.",
+      "img": "😋💬"
+    },
+    {
+      "id": "031",
+      "q": "Welcher Satz ist richtig?",
+      "a": "„Kommst du mit?“, fragt Lea.",
+      "choices": [
+        "„Kommst du mit“, fragt Lea?",
+        "„Kommst du mit?“ fragt Lea.",
+        "„Kommst du mit.“, fragt Lea."
+      ],
+      "info": "Frage- und Ausrufezeichen bleiben stehen – und danach kommt trotzdem ein Komma.",
+      "img": "👧❓"
+    },
+    {
+      "id": "032",
+      "q": "Welcher Satz ist richtig?",
+      "a": "„Pass auf!“, ruft Mama.",
+      "choices": [
+        "„Pass auf“! ruft Mama.",
+        "„Pass auf!“ ruft Mama.",
+        "„Pass auf,“ ruft Mama!"
+      ],
+      "info": "Das Ausrufezeichen bleibt in der Rede, danach Komma, dann der Begleitsatz.",
+      "img": "⚠️📣"
+    },
+    {
+      "id": "033",
+      "q": "Welcher Satz ist richtig?",
+      "a": "„Morgen“, sagt Opa, „wird es heiß.“",
+      "choices": [
+        "„Morgen“ sagt Opa, „wird es heiß.“",
+        "„Morgen, sagt Opa, wird es heiß.“",
+        "„Morgen“, sagt Opa „wird es heiß.“"
+      ],
+      "info": "Begleitsatz in der Mitte: Er steht zwischen zwei Kommas.",
+      "img": "👴☀️"
+    },
+    {
+      "id": "034",
+      "q": "Welches Zeichen gehört ans Ende? „Wie spät ist es___“",
+      "a": "ein Fragezeichen",
+      "choices": [
+        "ein Punkt",
+        "ein Komma",
+        "ein Doppelpunkt"
+      ],
+      "info": "Eine Frage mit Fragewort (wie, wo, wann …) endet mit einem Fragezeichen.",
+      "img": "⏰❓"
+    }
+  ]
+}

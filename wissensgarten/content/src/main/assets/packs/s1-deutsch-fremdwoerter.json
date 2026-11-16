@@ -1,0 +1,459 @@
+{
+  "id": "s1-deutsch-fremdwoerter",
+  "version": 1,
+  "title": "Fremdwörter verstehen",
+  "subject": "deutsch",
+  "grades": [
+    7,
+    8,
+    9,
+    10
+  ],
+  "emoji": "🎓",
+  "tier": "free",
+  "description": "Was bedeuten Prognose, ambivalent oder Kompromiss? Häufige Fremdwörter verstehen und richtig schreiben.",
+  "intro": [
+    {
+      "img": "🌍📚",
+      "text": "Wusstest du? Viele deutsche Wörter sind Weltenbummler: Sie kommen aus dem Griechischen, Lateinischen, Französischen oder Englischen."
+    },
+    {
+      "img": "🔮🌦️",
+      "text": "Bausteine helfen: „pro“ heißt vorher, „gnosis“ heißt Wissen. Eine Prognose ist also ein Vorher-Wissen – eine Vorhersage!"
+    },
+    {
+      "img": "⚖️🤝",
+      "text": "Gegensätze merken: subjektiv – objektiv, Monolog – Dialog, explizit – implizit. Kennst du eins, kennst du das andere gleich mit."
+    },
+    {
+      "img": "⚠️✍️",
+      "text": "Achtung, Schreibfallen: Rhythmus hat zwei h, Standard endet auf d, und die Reparatur kommt von „parat“ – nicht „Reperatur“."
+    },
+    {
+      "img": "🚀💬",
+      "text": "Mit Fremdwörtern klingst du in Referaten richtig schlau – wenn du weißt, was sie heißen. Los geht's!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was bedeutet „Prognose“?",
+      "a": "Vorhersage",
+      "choices": [
+        "Rückblick",
+        "Behauptung",
+        "Untersuchung"
+      ],
+      "info": "Griechisch „pro“ = vorher, „gnosis“ = Wissen. Wetterprognose = Wettervorhersage.",
+      "img": "🔮🌦️"
+    },
+    {
+      "id": "002",
+      "q": "Was bedeutet „Konsequenz“?",
+      "a": "Folge",
+      "choices": [
+        "Ursache",
+        "Ausrede",
+        "Zufall"
+      ],
+      "info": "„Das hat Konsequenzen!“ – Das hat Folgen.",
+      "img": "🎳➡️"
+    },
+    {
+      "id": "003",
+      "q": "Was bedeutet „Argument“?",
+      "a": "Begründung",
+      "choices": [
+        "Streit",
+        "Frage",
+        "Beleidigung"
+      ],
+      "info": "Im Englischen heißt „argument“ auch Streit – im Deutschen ist es eine Begründung!",
+      "img": "💡🗣️"
+    },
+    {
+      "id": "004",
+      "q": "Was bedeutet „Motivation“?",
+      "a": "Antrieb, etwas zu tun",
+      "choices": [
+        "Bewegung",
+        "Müdigkeit",
+        "Hindernis"
+      ],
+      "info": "Lateinisch „movere“ = bewegen: Motivation bewegt dich innerlich.",
+      "img": "🚀🔥"
+    },
+    {
+      "id": "005",
+      "q": "Was bedeutet „chronologisch“?",
+      "a": "in zeitlicher Reihenfolge",
+      "choices": [
+        "nach Wichtigkeit geordnet",
+        "alphabetisch",
+        "zufällig verteilt"
+      ],
+      "info": "Chronos war der griechische Gott der Zeit – denk an die Chronik.",
+      "img": "⏳📜"
+    },
+    {
+      "id": "006",
+      "q": "Was bedeutet „subjektiv“?",
+      "a": "aus persönlicher Sicht",
+      "choices": [
+        "sachlich und neutral",
+        "unterwürfig",
+        "sehr genau"
+      ],
+      "info": "Subjektiv = so wie ICH es sehe. „Pizza ist das beste Essen“ ist subjektiv.",
+      "img": "👤💭"
+    },
+    {
+      "id": "007",
+      "q": "Was ist das Gegenteil von „subjektiv“?",
+      "a": "objektiv",
+      "choices": [
+        "subversiv",
+        "kollektiv",
+        "subtil"
+      ],
+      "info": "Objektiv = sachlich, unabhängig von der eigenen Meinung.",
+      "img": "⚖️📏"
+    },
+    {
+      "id": "008",
+      "q": "Was bedeutet „Monolog“?",
+      "a": "Rede einer einzelnen Person",
+      "choices": [
+        "Gespräch zwischen zwei Personen",
+        "eintöniges Lied",
+        "Einzelzimmer"
+      ],
+      "info": "Griechisch „monos“ = allein. Das Gegenteil ist der Dialog.",
+      "img": "🎭🎤"
+    },
+    {
+      "id": "009",
+      "q": "Was bedeutet „Kompromiss“?",
+      "a": "Einigung, bei der jeder etwas nachgibt",
+      "choices": [
+        "vollständiger Sieg einer Seite",
+        "heftiger Streit",
+        "feierliches Versprechen"
+      ],
+      "info": "Halbe Pizza für jeden statt Streit um die ganze – das ist ein Kompromiss.",
+      "img": "🍕🤝"
+    },
+    {
+      "id": "010",
+      "q": "Welches Fremdwort passt? „Nach langem Streit fanden sie einen ___.“",
+      "a": "Kompromiss",
+      "choices": [
+        "Komplex",
+        "Kommentar",
+        "Kompass"
+      ],
+      "info": "Einen Kompromiss findet man, wenn beide Seiten nachgeben.",
+      "img": "🤝✨"
+    },
+    {
+      "id": "011",
+      "q": "Was bedeutet „ambivalent“?",
+      "a": "zwiespältig, hin- und hergerissen",
+      "choices": [
+        "eindeutig",
+        "begeistert",
+        "gleichgültig"
+      ],
+      "info": "Lateinisch „ambo“ = beide. Man fühlt zwei Dinge gleichzeitig.",
+      "img": "😊😟"
+    },
+    {
+      "id": "012",
+      "q": "Was bedeutet „Dilemma“?",
+      "a": "Zwickmühle zwischen zwei schlechten Möglichkeiten",
+      "choices": [
+        "einfache Lösung",
+        "Zweikampf",
+        "Doppelgänger"
+      ],
+      "info": "Griechisch „di“ = zwei: Egal wie du dich entscheidest, ein Haken bleibt.",
+      "img": "🔀😬"
+    },
+    {
+      "id": "013",
+      "q": "Was bedeutet „Hypothese“?",
+      "a": "begründete Vermutung",
+      "choices": [
+        "bewiesene Tatsache",
+        "Übertreibung",
+        "Gegenteil"
+      ],
+      "info": "In Naturwissenschaften prüft man eine Hypothese mit Experimenten.",
+      "img": "🧪🤔"
+    },
+    {
+      "id": "014",
+      "q": "Was bedeutet „Fazit“?",
+      "a": "Ergebnis, Schlussfolgerung",
+      "choices": [
+        "Einleitung",
+        "offene Frage",
+        "Vermutung"
+      ],
+      "info": "Das Fazit steht am Ende eines Referats oder Aufsatzes.",
+      "img": "🏁📝"
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „Resümee“?",
+      "a": "Zusammenfassung",
+      "choices": [
+        "Lebenslauf",
+        "Einleitung",
+        "Bewerbung"
+      ],
+      "info": "Achtung: Im amerikanischen Englisch heißt „résumé“ Lebenslauf – im Deutschen nicht!",
+      "img": "📄🔁"
+    },
+    {
+      "id": "016",
+      "q": "Was bedeutet „relevant“?",
+      "a": "wichtig, bedeutsam",
+      "choices": [
+        "nebensächlich",
+        "verwandt",
+        "entspannt"
+      ],
+      "info": "Das Gegenteil ist „irrelevant“ – unwichtig für die Sache.",
+      "img": "🎯❗"
+    },
+    {
+      "id": "017",
+      "q": "Was bedeutet „Kriterium“?",
+      "a": "Merkmal, nach dem man etwas beurteilt",
+      "choices": [
+        "Verbrechen",
+        "Krise",
+        "Beschwerde"
+      ],
+      "info": "Mehrzahl: die Kriterien. Z. B. Preis und Größe beim Handykauf.",
+      "img": "✅📋"
+    },
+    {
+      "id": "018",
+      "q": "Was bedeutet „Empathie“?",
+      "a": "Einfühlungsvermögen",
+      "choices": [
+        "Abneigung",
+        "Selbstbewusstsein",
+        "Gleichgültigkeit"
+      ],
+      "info": "Wer Empathie hat, kann sich gut in andere hineinversetzen.",
+      "img": "🤗💞"
+    },
+    {
+      "id": "019",
+      "q": "Was bedeutet „tolerant“?",
+      "a": "duldsam, andere Meinungen gelten lassend",
+      "choices": [
+        "streng und unnachgiebig",
+        "neugierig",
+        "ängstlich"
+      ],
+      "info": "Lateinisch „tolerare“ = ertragen, aushalten.",
+      "img": "🌈🤝"
+    },
+    {
+      "id": "020",
+      "q": "Was bedeutet „Diskriminierung“?",
+      "a": "Benachteiligung",
+      "choices": [
+        "Bevorzugung",
+        "Ermutigung",
+        "Entschuldigung"
+      ],
+      "info": "Niemand darf wegen Herkunft, Geschlecht oder Glauben benachteiligt werden.",
+      "img": "🚫⚖️"
+    },
+    {
+      "id": "021",
+      "q": "Was bedeutet „Intention“?",
+      "a": "Absicht",
+      "choices": [
+        "Aufmerksamkeit",
+        "Erfindung",
+        "Anspannung"
+      ],
+      "info": "„Meine Intention war es, zu helfen“ = Ich wollte helfen.",
+      "img": "🎯💭"
+    },
+    {
+      "id": "022",
+      "q": "Was bedeutet „plausibel“?",
+      "a": "einleuchtend, nachvollziehbar",
+      "choices": [
+        "unverständlich",
+        "sehr teuer",
+        "lautstark"
+      ],
+      "info": "Eine plausible Erklärung klingt logisch und glaubwürdig.",
+      "img": "💡👍"
+    },
+    {
+      "id": "023",
+      "q": "Was bedeutet „Defizit“?",
+      "a": "Mangel, Fehlbetrag",
+      "choices": [
+        "Überschuss",
+        "Vorrat",
+        "Gewinn"
+      ],
+      "info": "Ein Schlafdefizit hast du, wenn du zu wenig geschlafen hast.",
+      "img": "📉🔋"
+    },
+    {
+      "id": "024",
+      "q": "Was bedeutet „Konsens“?",
+      "a": "Übereinstimmung, Einigkeit",
+      "choices": [
+        "Uneinigkeit",
+        "Abstimmung",
+        "Ablehnung"
+      ],
+      "info": "Wenn alle einverstanden sind, herrscht Konsens.",
+      "img": "👍👍👍"
+    },
+    {
+      "id": "025",
+      "q": "Was bedeutet „explizit“?",
+      "a": "ausdrücklich",
+      "choices": [
+        "nur angedeutet",
+        "explosiv",
+        "versteckt"
+      ],
+      "info": "Das Gegenteil ist „implizit“ – mitgemeint, aber nicht ausgesprochen.",
+      "img": "📢❗"
+    },
+    {
+      "id": "026",
+      "q": "Was ist das Gegenteil von „explizit“?",
+      "a": "implizit",
+      "choices": [
+        "explosiv",
+        "exklusiv",
+        "präzise"
+      ],
+      "info": "Implizit = indirekt mitgemeint, ohne es auszusprechen.",
+      "img": "🤫💭"
+    },
+    {
+      "id": "027",
+      "q": "Was bedeutet „Phänomen“?",
+      "a": "auffällige Erscheinung",
+      "choices": [
+        "Erfindung",
+        "Fehler",
+        "Gerücht"
+      ],
+      "info": "Ein Regenbogen ist ein Naturphänomen.",
+      "img": "🌈✨"
+    },
+    {
+      "id": "028",
+      "q": "Was bedeutet „effizient“?",
+      "a": "wirksam, ohne viel Aufwand",
+      "choices": [
+        "umständlich",
+        "auffällig",
+        "gefühlvoll"
+      ],
+      "info": "Effizient lernen = mit wenig Zeit viel schaffen.",
+      "img": "⚡✅"
+    },
+    {
+      "id": "029",
+      "q": "Welche Schreibweise ist richtig?",
+      "a": "Rhythmus",
+      "choices": [
+        "Rythmus",
+        "Rhytmus",
+        "Rhythmuss"
+      ],
+      "info": "Zwei h: Rh am Anfang, th in der Mitte. Kommt aus dem Griechischen.",
+      "img": "🥁🎵"
+    },
+    {
+      "id": "030",
+      "q": "Welche Schreibweise ist richtig?",
+      "a": "Standard",
+      "choices": [
+        "Standart",
+        "Stanndard",
+        "Standdart"
+      ],
+      "info": "Standard endet auf -d, nicht auf -t. Es kommt aus dem Englischen (standard).",
+      "img": "📏✅"
+    },
+    {
+      "id": "031",
+      "q": "Welche Schreibweise ist richtig?",
+      "a": "Reparatur",
+      "choices": [
+        "Reperatur",
+        "Reparratur",
+        "Repparatur"
+      ],
+      "info": "Von lateinisch „reparare“ (wiederherstellen) – denk an „parat“.",
+      "img": "🔧🚲"
+    },
+    {
+      "id": "032",
+      "q": "Welche Schreibweise ist richtig?",
+      "a": "sympathisch",
+      "choices": [
+        "sympatisch",
+        "symphatisch",
+        "simpathisch"
+      ],
+      "info": "Mit y und th: sym-pa-thisch. Griechisch „sympatheia“ = Mitgefühl.",
+      "img": "😊🤝"
+    },
+    {
+      "id": "033",
+      "q": "Welche Schreibweise ist richtig?",
+      "a": "Atmosphäre",
+      "choices": [
+        "Athmosphäre",
+        "Atmossphäre",
+        "Atmosfäre"
+      ],
+      "info": "„Atmos“ = Dampf, „sphaira“ = Kugel: die Lufthülle um die Erde.",
+      "img": "🌍☁️"
+    },
+    {
+      "id": "034",
+      "q": "Welche Schreibweise ist richtig?",
+      "a": "Maschine",
+      "choices": [
+        "Maschiene",
+        "Machine",
+        "Maschinne"
+      ],
+      "info": "Kein ie, obwohl man ein langes i hört – wie bei Kino und Kilo.",
+      "img": "⚙️🤖"
+    },
+    {
+      "id": "035",
+      "q": "Welche Schreibweise ist richtig?",
+      "a": "Diskussion",
+      "choices": [
+        "Diskusion",
+        "Disskusion",
+        "Diskussiohn"
+      ],
+      "info": "Diskussion mit Doppel-s, aber „diskutieren“ mit t!",
+      "img": "🗣️💬"
+    }
+  ]
+}
