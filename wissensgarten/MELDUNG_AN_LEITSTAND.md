@@ -1,5 +1,144 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 16.11.2026 – Konzept „Wissensgarten Plus“ (noch nicht gebaut)
+
+### 1. Frei und Plus
+
+Leitgedanke wie bei ANTON: **Das Lernen für Schulkinder bleibt vollständig frei.** Plus richtet sich an Abi, Erwachsene, Familien mit
+mehreren Kindern und alle, die KI-Hilfe wollen. Werbung gibt es nie. Plus ist bewusst kein „Weiterlernen nur gegen Geld“.
+
+| Frei (für immer) | Plus |
+|---|---|
+| Alle Grundschul- und Klasse-5–10-Pakete (75 Pakete, ca. 2.580 Karten) | **Abi- und Experten-Stufe:** die 6 Oberstufen-Pakete (bisher schon `plus`), die 8 neuen Abi-/Experten-Pakete und `s1-geschichte-20-jahrhundert` (heute `plus`) |
+| Garten, alle Spielarten, Brummi, Profi-Stufe, Abenteuer, Sammelfiguren, Duelle, Widget, Erinnerung | **Neue Plus-Pakete jeden Monat** (Nachladen wie heute) |
+| Eigene Karten/Beete (von Hand), Klassen-Code, Klassenarbeits-Countdown | **KI-Brummi** (siehe 4): erklärt falsche Antworten, macht Karten aus Text oder Foto, wertet freie Antworten nach Sinn |
+| 2 Profile | **Familie:** bis 6 Profile, Wochenbericht je Kind als PDF, Geräte-Sync für die ganze Familie |
+| Sync über das eigene Google Drive | Kosmetik: Plus-Gartenmotive (z. B. Nachtgarten, Unterwasser), nicht spielentscheidend |
+
+**Preise** (Vergleich, Stand Nov. 2026; Preise je Land und Store unterschiedlich):
+
+| App | Modell | Preis |
+|---|---|---|
+| ANTON Plus Familie | Kern gratis, Plus freiwillig | Stufen 19,99 / 24,99 / 49,99 € im App Store |
+| Quizlet Plus | Abo | ca. 35,99 $/Jahr bzw. 7,99 $/Monat (EU-Angaben teils 19,99 €/Jahr) |
+| Brainscape Pro | Abo | ca. 95,99 $/Jahr, lebenslang 199,99 $ |
+| AnkiMobile (iOS) | einmalig | 24,99 $ (Android/Desktop gratis) |
+
+**Vorschlag:**
+- **Plus Familie – Jahr:** 19,99 €. Bis 6 Profile, alle Geräte der Familie, KI mit fairer Grenze. Das liegt auf ANTON-Plus-Niveau und unter Quizlet.
+- **Plus Familie – für immer:** 49,99 € einmalig. Für Eltern, die kein Abo wollen. Die KI ist dann fürs erste Jahr enthalten, danach 9,99 €/Jahr optional.
+- **Kein Monatsabo:** Für eine Kinder-App ist es zu kleinteilig, Eltern wollen eine klare Summe. Kein Testabo mit Kündigungsfalle.
+  Stattdessen 7 Tage Plus gratis per Knopf, ohne Zahlungsdaten, endet von allein.
+
+### 2. Kauf: Eltern-Tor, Play Billing, Website
+
+- **Vor jedem Kauf das Eltern-Tor** (gibt es schon: Rechenaufgabe für Erwachsene). Kaufknöpfe stehen nur im Eltern-Bereich, nie mitten im Spiel. Kein Druck („nur heute“) und keine Countdown-Angebote.
+- **Play-Fassung:** Google Play Billing (Pflicht). Produkte: `plus_familie_jahr` (Abo, 1 Jahr) und `plus_familie_immer` (einmaliger In-App-Kauf).
+  Im Play-Build **keine** Hinweise oder Links auf den günstigeren Web-Kauf, sonst gibt es Ärger mit Play- und Familien-Richtlinien.
+- **Web- und GitHub-Fassung:** Kauf über die Woo-Kasse auf mathenachhilfe-online.com. Danach geht der **Freischalt-Code** per E-Mail an den Käufer,
+  die Rechnung geht an Käufer und Marcel, und der Beleg liegt in WooCommerce. Der Code wird in der App eingegeben (Eltern-Tor), **ohne Konto**.
+  - **Format:** `WGP1-…`, von uns **digital signiert** (Ed25519). Die App prüft die Unterschrift offline mit dem öffentlichen Schlüssel; der geheime Schlüssel liegt nur auf dem Server.
+  - **Inhalt:** Produkt, Ablaufdatum (bzw. „immer“), Bestell-Nr. als Hash. Es steht kein Name und keine E-Mail im Code.
+  - **Übertragen:** Derselbe Code darf auf allen Familiengeräten eingegeben werden (Familie = bis 6 Profile). Missbrauch begrenzen wir bewusst nicht hart (keine Gerätebindung, keine Datensammlung).
+- **Bestehende Plus-Käufer anderer Wege:** Ein Web-Code wirkt auch in der GitHub-APK. Ein Play-Kauf wirkt in der Play-Fassung. Gemeinsam nutzen über den Familien-Sync wäre möglich, ist aber nicht nötig.
+
+### 3. Schutz der Plus-Pakete
+
+**Heute:** Alle Pakete, auch `tier: plus`, liegen offen in der APK, in der WebApp (`webapp/packs/`) und über raw.githubusercontent.com.
+Das muss sich vor dem Start ändern:
+1. **Plus-Pakete raus aus Repo, APK und WebApp.** Sie kommen in ein privates Repo bzw. auf den Server (außerhalb des Web-Roots).
+   Im öffentlichen Katalog bleiben nur Titel, Beschreibung, Kartenzahl und 3 Beispielkarten, damit die Samenhandlung sie zeigen kann.
+   Achtung: Die bisherigen 6 Plus-Pakete liegen schon in der öffentlichen Git-Historie. Das nehmen wir hin (alter Stand), neue Plus-Inhalte kommen nie ins öffentliche Repo.
+2. **Ausgabe nur gegen Nachweis:** Ein Server-Endpunkt `…/wg-api/plus/<paket>` (PHP, beim WordPress) liefert das Paket nur
+   - für einen gültigen, signierten Web-Code (Prüfung der Signatur und des Ablaufdatums), oder
+   - für ein Play-Kaufbeleg-Token. Der Server prüft es über die Google Play Developer API (Dienstkonto, Rechte nur für Käufe).
+3. **Auf dem Gerät** speichern wir das Paket im privaten App-Speicher (Web: IndexedDB). Echtes DRM gibt es nicht, und für Lernkarten wäre es übertrieben.
+   Ziel ist: nicht frei im Netz, nicht ohne Kauf ladbar.
+4. **Datensparsam:** Der Endpunkt sieht nur Code bzw. Token und IP, ohne Konto und ohne Tracking. Diese Datenschutz-Ergänzung kommt in Abschnitt 10c.
+
+### 4. KI (Claude-API) – sinnvoll, günstig, aber nur mit Bedacht
+
+Sinnvoll, in dieser Reihenfolge:
+1. **„Brummi, warum?“** Nach einer falschen Antwort erklärt Brummi kurz und altersgerecht, warum die richtige Antwort stimmt.
+   Hoher Lernwert. Die Antwort bezieht sich nur auf die Karte (Frage, Antwort, `info`), sodass wenig erfunden werden kann.
+2. **Freie Antworten nach Sinn werten** (Abi/Experte): „Strukturisomere“ statt „Konstitutionsisomere“ zählt dann als richtig, mit Begründung.
+3. **Karten aus Text oder Foto machen** (Lernzettel, Arbeitsblatt): Die KI schlägt 10–30 Karten mit Ablenkern und Merkbild vor, Eltern bzw. Kind bestätigen.
+
+**Kosten** (Anthropic-Listenpreise, Nov. 2026): Claude Haiku 5.5 kostet 0,10 $ pro 1 Mio. Eingabe-Tokens und 0,50 $ pro 1 Mio. Ausgabe-Tokens.
+Claude Sonnet 5.5 kostet 2 $ bzw. 10 $ pro 1 Mio. Tokens.
+
+| Aufgabe | Modell | Tokens (ca.) | Kosten je Aufruf |
+|---|---|---|---|
+| Brummi erklärt | Haiku 5.5 | 600 ein / 150 aus | ca. 0,014 ct |
+| Freie Antwort werten | Haiku 5.5 | 400 / 60 | ca. 0,007 ct |
+| 30 Karten aus Text | Sonnet 5.5 | 2.000 / 3.000 | ca. 3,4 ct |
+
+**Vielnutzer-Familie** (50 Erklärungen/Tag + 4 Kartensätze/Monat): ca. 2,50 $ + 1,60 $ ≈ **4 $ pro Jahr**. Das passt gut in 19,99 €.
+Faire Grenze in Plus: 100 Erklärungen pro Tag und 20 Kartensätze pro Monat.
+
+**Technik und Schutz:**
+- Die App ruft **nie direkt** die API auf, der Schlüssel bleibt auf dem Server. Der Weg ist: App → unser Endpunkt (prüft Plus-Code bzw. -Kauf, Grenze) → Claude-API.
+- Gesendet wird **nur der Karteninhalt**, bei der Wertung zusätzlich die getippte Antwort. Es geht kein Name, kein Profil und keine Geräte-ID hinaus. Bei Anthropic sollte Zero Data Retention beantragt werden.
+- **Kinderschutz:** Die KI antwortet nur zur Karte, mit festem System-Prompt (kindgerecht, keine Links, keine persönlichen Fragen). Jede KI-Antwort bekommt einen Knopf „Das stimmt nicht / unpassend melden“ (Pflicht nach den Play-Richtlinien für KI-Inhalte).
+  KI-Funktionen sind nur hinter dem Eltern-Tor einschaltbar und standardmäßig **aus**.
+- **Datenschutz:** neuer Abschnitt „KI-Hilfe (optional)“ mit Anthropic als Auftragsverarbeiter. In der Play-Data-Safety wird „App-Aktivität: Inhalte werden an Dienst übermittelt, nicht gespeichert“ ergänzt.
+- **Ohne Plus:** Freie Antworten werden weiter wie heute ohne KI geprüft (Zahlen nach Wert, Schreibvarianten).
+
+**Empfehlung zur Reihenfolge:**
+1. Plus-Pakete schützen.
+2. Web-Code und Play Billing anbinden.
+3. Erst danach KI-Brummi (Punkt 1), als Testballon mit Messung der Kosten.
+
+## 0.23.0 vom 16.11.2026 – Schwierigkeit steigt nachweislich bis zur Experten-Stufe
+
+**Stufen im Wissensgarten:**
+- **Beim Spielen:** das Wachstum jeder Karte, Samen → Baum = „Profi“. Es steuert jetzt die Schwierigkeit:
+  - Zahl der Antworten (3 → 4 → keine Auswahl)
+  - Ähnlichkeit der Ablenker (unähnlichste → ähnlichste)
+  - Anteil freier Eingabe (0 % → 100 %)
+  - Rate-Chance; „Stimmt's?“ (50 %) gibt es nur noch auf der leichtesten Stufe
+  - Wiederholungsabstand
+  In der Runde zeigt ein Abzeichen die Stufe (🌱 Leicht … 🏆 Profi).
+- **Bei den Inhalten:** die Klassen-Bänder Grundschule → Kl. 5–7 → Kl. 8–10 → Abi → **Experte (neu)**.
+
+**Neu (Profi/Experte):** 8 Pakete mit 270 Karten, unabhängig fachlich geprüft (Abi: 3 Korrekturen, Experte: 13 Korrekturen).
+- **Abi:** ob-abi-stochastik, ob-abi-biologie, ob-abi-chemie, ob-abi-geschichte
+- **Experte:** aw-experte-naturwissenschaft, aw-experte-geschichte-kultur, aw-experte-sprache, aw-experte-mathe-logik
+- **Eigenschaften:** überwiegend freie Eingabe, sehr ähnliche Ablenker
+- **Zeitdruck:** keiner. Er passt nicht zum Lernen mit Wiederholung; die Blitzrunde bleibt ein freiwilliges Extra.
+
+**Nachweis:** `content/src/test/java/de/wissensgarten/content/DifficultyTest.kt`
+- **Was er misst:** alle 85 Pakete und 2.923 Karten werden je Stufe gespielt und gemessen.
+- **Wann er fehlschlägt:**
+  - Beim Spielen: wenn die Rate-Chance nicht strikt sinkt, der Abstand nicht strikt wächst oder freie Eingabe, Antwortzahl oder Ablenker-Ähnlichkeit fallen. Außerdem, wenn Profi unter 90 % freie Eingabe hat.
+  - Bei den Inhalten: wenn Klasse, freie Eingabe, Ablenker-Ähnlichkeit oder Antwortlänge nicht strikt steigen.
+- **Wo er läuft:** im Release-Workflow (`:content:test`).
+- **Bericht:** `wissensgarten/SCHWIERIGKEIT.md`. Ähnlichkeit ist die normierte Levenshtein-Ähnlichkeit (0 = ganz anders, 1 = gleich).
+
+| Stufe | Pflanze | freie Eingabe | Ø Antwortmöglichkeiten | Ablenker-Ähnlichkeit | Rate-Chance | Wiederholungsabstand |
+|---|---|---|---|---|---|---|
+| Entdecken | Samen | 0 % | 3,0 | 0,34 | 100 % | neu |
+| Leicht | Keimling | 0 % | 3,0 | 0,34 | 39 % | ≈ 1 Tag |
+| Mittel | Spross | 27 % | 4,0 | 0,53 | 17 % | ≈ 4 Tage |
+| Knifflig | Busch | 43 % | 4,0 | 0,55 | 13 % | ≈ 14 Tage |
+| Schwer | Blüte | 63 % | 4,0 | 0,58 | 9 % | ≈ 40 Tage |
+| Profi | Baum | 100 % | keine Auswahl | – | 0 % | ≈ 90 Tage |
+
+| Stufe | Pakete | Karten | Ø Klasse | freie Eingabe | Ablenker-Ähnlichkeit | Ø Antwortlänge |
+|---|---|---|---|---|---|---|
+| Grundschule | 24 | 786 | 2,9 | 1 % | 0,46 | 8,1 Zeichen |
+| Klasse 5–7 | 38 | 1342 | 7,3 | 16 % | 0,54 | 14,5 Zeichen |
+| Klasse 8–10 | 13 | 452 | 10,3 | 34 % | 0,57 | 16,0 Zeichen |
+| Oberstufe/Abi | 6 | 207 | 12,0 | 54 % | 0,75 | 19,4 Zeichen |
+| Experte | 4 | 136 | Erw. | 76 % | 0,90 | 21,5 Zeichen |
+
+**Dabei verbessert:**
+- **Zahlen:** Getippte Zahlen werden nach Wert verglichen (0,5 = 0,50; kein „fast richtig“ mehr für 0,2462 statt 0,2461; Vorzeichen zählt).
+- **Bindestriche:** Varianten wie „Marshall-Plan“ und „Marshallplan“ zählen beide als richtig, außer im Fach Deutsch.
+
+**Tests:** 384 Tests grün, Lint ohne Fehler, Web = Android gleich (85 Pakete), WebApp im Browser ohne Fehler.
+**Bitte prüfen und `wissensgarten-live` auf 0.23.0 schalten.** Danach bekommen auch installierte Apps die 8 neuen Pakete per Nachladen.
+
 ## 16.11.2026 – Nachmessung nach der gzip-Korrektur
 
 Gemessen mit echtem GET und `Accept-Encoding: gzip`:

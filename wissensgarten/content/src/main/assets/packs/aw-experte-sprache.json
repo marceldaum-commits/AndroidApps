@@ -1,0 +1,314 @@
+{
+  "id": "aw-experte-sprache",
+  "version": 1,
+  "title": "Experte: Sprache & Wörter",
+  "subject": "deutsch",
+  "grades": [
+    14
+  ],
+  "emoji": "✒️",
+  "tier": "free",
+  "description": "Seltene Fremdwörter, Wortherkunft, rhetorische Figuren, Grammatik-Fachbegriffe und knifflige Rechtschreibung für Sprachprofis.",
+  "intro": [
+    {
+      "img": "✒️🐝",
+      "text": "Expertenstufe Sprache! Die meisten Antworten tippst du selbst – und hier zählt jeder Buchstabe, auch Groß- und Kleinschreibung."
+    },
+    {
+      "img": "🎭🗣️",
+      "text": "Zeugma, Hendiadyoin, Katachrese: Die Rhetorik hat für jeden Kniff einen Namen. Wer die Namen kennt, durchschaut gute Reden schneller."
+    },
+    {
+      "img": "🌍📜",
+      "text": "Wörter wandern: Alkohol kommt aus dem Arabischen, Tohuwabohu aus dem Hebräischen. Etymologie erzählt Geschichte in einem einzigen Wort."
+    },
+    {
+      "img": "🔍📏",
+      "text": "Fachbegriffe der Grammatik und der Verslehre helfen dir, Texte präzise zu beschreiben – im Studium, im Beruf und beim Rätseln."
+    },
+    {
+      "img": "💪🐝",
+      "text": "Brummi hat den Duden unter dem Flügel. Lies die Klammer in der Frage genau, sie verrät die gesuchte Form. Los geht's!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "„Er nahm den Hut und Abschied.“ – Wie heißt diese Stilfigur? (Fachbegriff)",
+      "a": "Zeugma",
+      "info": "Ein Verb wird auf zwei Wörter bezogen, die nicht zusammenpassen – einmal wörtlich, einmal übertragen.",
+      "img": "🎩👋"
+    },
+    {
+      "id": "002",
+      "q": "„Er sah den Fluss. Den Fluss, der alles nahm.“ – Wie heißt diese Wiederholung? (Fachbegriff)",
+      "a": "Anadiplose",
+      "info": "Das letzte Wort einer Einheit wird zum ersten der nächsten – wie eine Kette.",
+      "img": "🔗🔁"
+    },
+    {
+      "id": "003",
+      "q": "„Wenn ich dich erwische, dann …!“ – Wie heißt der bewusste Satzabbruch? (Fachbegriff)",
+      "a": "Aposiopese",
+      "info": "Der Rest bleibt unausgesprochen und wirkt dadurch oft umso drohender oder gefühlvoller.",
+      "img": "🤐✂️"
+    },
+    {
+      "id": "004",
+      "q": "„weißer Schimmel“, „runde Kugel“ – Wie heißt diese überflüssige Doppelung? (Fachbegriff, endet auf -mus)",
+      "a": "Pleonasmus",
+      "info": "Das Beiwort sagt nur, was das Hauptwort schon enthält. Mal Stilfehler, mal bewusste Verstärkung.",
+      "img": "🐴⚪"
+    },
+    {
+      "id": "005",
+      "q": "„Sie liest gerade Kafka.“ (Autor statt Werk) – Wie heißt diese Stilfigur? (Fachbegriff)",
+      "a": "Metonymie",
+      "info": "Ein Wort ersetzt ein anderes aus einem realen Zusammenhang: Autor für Werk, Ort für Menschen.",
+      "img": "📖🔄"
+    },
+    {
+      "id": "006",
+      "q": "„Hab und Gut“, „Feuer und Flamme“ – ein Begriff, zwei Wörter. Fachbegriff? (endet auf -oin)",
+      "a": "Hendiadyoin",
+      "info": "Griechisch „eins durch zwei“. Zwei gleichgeordnete Wörter drücken gemeinsam eine Sache aus.",
+      "img": "🔥🕯️"
+    },
+    {
+      "id": "007",
+      "q": "„Der Mensch ist dem Menschen ein Wolf.“ – dasselbe Wort in mehreren Fällen. Fachbegriff?",
+      "a": "Polyptoton",
+      "info": "Das Wort kehrt in verschiedenen Flexionsformen wieder. Der Satz geht auf Plautus zurück.",
+      "img": "🐺👥"
+    },
+    {
+      "id": "008",
+      "q": "„Wer rastet, der rostet.“ – Wortspiel mit ähnlich klingenden Wörtern. Fachbegriff?",
+      "a": "Paronomasie",
+      "info": "Die Wörter klingen fast gleich, bedeuten aber Verschiedenes – beliebt in Sprichwörtern und Werbung.",
+      "img": "🛋️🔩"
+    },
+    {
+      "id": "009",
+      "q": "„Der Zahn der Zeit, der schon so manche Träne getrocknet hat“ – Fachbegriff für den Bildbruch?",
+      "a": "Katachrese",
+      "info": "Zwei Bilder passen nicht zusammen: Ein Zahn trocknet keine Tränen. Oft unfreiwillig komisch.",
+      "img": "🦷💧"
+    },
+    {
+      "id": "010",
+      "q": "„O Tod, wo ist dein Stachel?“ – feierliche Hinwendung an ein Ding. Fachbegriff? (nicht das Satzzeichen)",
+      "a": "Apostrophe",
+      "info": "Der Sprecher wendet sich an Abwesende, Tote, Götter oder Dinge – typisch für Oden und Hymnen.",
+      "img": "💀📣"
+    },
+    {
+      "id": "011",
+      "q": "„Alles rennet, rettet, flüchtet“ (Schiller) – Reihung ohne Bindewörter. Fachbegriff?",
+      "a": "Asyndeton",
+      "info": "Das Gegenstück ist das Polysyndeton mit vielen „und“. Das Asyndeton wirkt gehetzt und dramatisch.",
+      "img": "🏃🔔"
+    },
+    {
+      "id": "012",
+      "q": "„… welche, wenn man sie gelesen hat, ist man satt.“ (Morgenstern) – Fachbegriff für den Satzbruch?",
+      "a": "Anakoluth",
+      "info": "Der Satz beginnt mit einer Konstruktion und endet mit einer anderen – grammatisch falsch, oft gewollt.",
+      "img": "📰🍽️"
+    },
+    {
+      "id": "013",
+      "q": "„Sie sagte, sie sei müde.“ – Welcher Modus ist „sei“? (mit römischer Zahl)",
+      "a": "Konjunktiv I",
+      "info": "Der Konjunktiv I ist die Form der indirekten Rede. Er wird vom Präsensstamm gebildet.",
+      "img": "💬😴"
+    },
+    {
+      "id": "014",
+      "q": "„Das Fenster ist geöffnet.“ – Wie heißt das Passiv mit „sein“? (ein Wort)",
+      "a": "Zustandspassiv",
+      "info": "Es beschreibt ein Ergebnis. Das Vorgangspassiv mit „werden“ beschreibt den Ablauf: „Es wird geöffnet.“",
+      "img": "🚪🔓"
+    },
+    {
+      "id": "015",
+      "q": "„Ich hab“ statt „ich habe“ – Wie heißt der Wegfall eines Lauts am Wortende? (Fachbegriff)",
+      "a": "Apokope",
+      "info": "Griechisch „Abschneiden“. Fällt ein Laut im Wortinneren weg, spricht man von Synkope.",
+      "img": "✂️🔚"
+    },
+    {
+      "id": "016",
+      "q": "„andre“ statt „andere“ – Wie heißt der Ausfall eines Lauts im Wortinneren? (Fachbegriff)",
+      "a": "Synkope",
+      "info": "Denselben Namen trägt in der Musik die Verschiebung der Betonung auf eine leichte Zählzeit.",
+      "img": "✂️🎵"
+    },
+    {
+      "id": "017",
+      "q": "Wie heißt die Lehre von der Bedeutung sprachlicher Zeichen? (ein Wort)",
+      "a": "Semantik",
+      "info": "Sie fragt, was Wörter und Sätze bedeuten. Die Syntax untersucht dagegen den Satzbau.",
+      "img": "🔤💡"
+    },
+    {
+      "id": "018",
+      "q": "Wie heißt die kleinste bedeutungstragende Einheit der Sprache? (Fachbegriff)",
+      "a": "Morphem",
+      "info": "„Un-glück-lich“ hat drei Morpheme. Das Phonem unterscheidet dagegen nur Bedeutungen.",
+      "img": "🧩🔤"
+    },
+    {
+      "id": "019",
+      "q": "Aus welcher Sprache stammen „Alkohol“, „Algebra“ und „Ziffer“? (Sprache)",
+      "a": "Arabisch",
+      "info": "Viele Wörter aus Mathematik und Chemie kamen im Mittelalter über das arabische Spanien nach Europa.",
+      "img": "🔢⚗️"
+    },
+    {
+      "id": "020",
+      "q": "Aus welcher Sprache stammt „Tohuwabohu“? (Sprache)",
+      "a": "Hebräisch",
+      "info": "Vom Anfang der Bibel (1. Mose 1,2): Die Erde war „wüst und leer“ – auf Hebräisch tohu wa-bohu.",
+      "img": "🌪️📜"
+    },
+    {
+      "id": "021",
+      "q": "Aus welcher Sprache stammt „Ombudsmann“? (Sprache)",
+      "a": "Schwedisch",
+      "info": "Schweden schuf 1809 das Amt des Ombudsmanns, der Bürgerbeschwerden gegen Behörden prüft.",
+      "img": "⚖️📮"
+    },
+    {
+      "id": "022",
+      "q": "„Hängematte“ entstand aus „hamaca“ – angelehnt an bekannte Wörter. Wie heißt das? (ein Wort)",
+      "a": "Volksetymologie",
+      "info": "Ein fremdes Wort wird so umgedeutet, dass es vertraut klingt: aus „hamaca“ wurde eine Matte zum Hängen.",
+      "img": "🏝️😴"
+    },
+    {
+      "id": "023",
+      "q": "„Lampe“ wird zu „Palme“ – Wie heißt ein Wort aus umgestellten Buchstaben? (Fachbegriff)",
+      "a": "Anagramm",
+      "info": "Anagramme dienten oft als Deckname: „Alcofribas Nasier“ war François Rabelais.",
+      "img": "💡🌴"
+    },
+    {
+      "id": "024",
+      "q": "Wie heißt das Fremdwort für das ständige Aufschieben von Aufgaben? (Nomen)",
+      "a": "Prokrastination",
+      "info": "Von lateinisch „cras“ (morgen). Kleine Schritte und feste Zeiten helfen dagegen.",
+      "img": "⏰🛋️"
+    },
+    {
+      "id": "025",
+      "q": "Wie heißt das Fremdwort für „unverbesserlich“? (Adjektiv)",
+      "a": "inkorrigibel",
+      "info": "Von lateinisch „corrigere“ (berichtigen). Als Adjektiv wird es kleingeschrieben.",
+      "img": "🙈✏️"
+    },
+    {
+      "id": "026",
+      "q": "Sechshebiger Jambus mit Zäsur nach der dritten Hebung, Lieblingsvers des Barock? (Fachbegriff)",
+      "a": "Alexandriner",
+      "info": "Benannt nach einem altfranzösischen Alexanderroman. Gryphius schrieb seine Sonette darin.",
+      "img": "📜🎭"
+    },
+    {
+      "id": "027",
+      "q": "Welche Reihe ist komplett richtig geschrieben?",
+      "a": "Reminiszenz, Satellit, Silhouette, Rhododendron, Exzerpt",
+      "choices": [
+        "Reminiszens, Satellit, Silhouette, Rhododendron, Exzerpt",
+        "Reminiszenz, Sattelit, Silhouette, Rhododendron, Exzerpt",
+        "Reminiszenz, Satellit, Silhouette, Rododendron, Exzerpt"
+      ],
+      "info": "Satellit: einfaches t, doppeltes l – wie im lateinischen „satelles“ (Leibwächter).",
+      "img": "🛰️🌺"
+    },
+    {
+      "id": "028",
+      "q": "Welche Reihe ist komplett richtig geschrieben?",
+      "a": "Dilettant, Labyrinth, Lapislazuli, Kautschuk, Szenario",
+      "choices": [
+        "Dilletant, Labyrinth, Lapislazuli, Kautschuk, Szenario",
+        "Dilettant, Labyrinth, Lapislazzuli, Kautschuk, Szenario",
+        "Dilettant, Labyrinth, Lapislazuli, Kautschuck, Szenario"
+      ],
+      "info": "Dilettant kommt von italienisch „dilettare“ (erfreuen): ein „l“, zwei „t“.",
+      "img": "🌀💎"
+    },
+    {
+      "id": "029",
+      "q": "Welche Reihe ist komplett richtig geschrieben?",
+      "a": "Apokalypse, Hypochonder, Lappalie, Pseudonym, Algorithmus",
+      "choices": [
+        "Apokalypse, Hypochonder, Lapalie, Pseudonym, Algorithmus",
+        "Apokalypse, Hypokonder, Lappalie, Pseudonym, Algorithmus",
+        "Apokalypse, Hypochonder, Lappalie, Pseudonym, Algorythmus"
+      ],
+      "info": "Algorithmus kommt vom Gelehrten al-Chwarizmi, nicht vom Rhythmus – darum „i“ statt „y“.",
+      "img": "📜🤖"
+    },
+    {
+      "id": "030",
+      "q": "„water – Wasser“, „apple – Apfel“: Welcher Lautwandel trennt Hochdeutsch vom Englischen?",
+      "a": "zweite (hochdeutsche) Lautverschiebung: t zu ss, p zu pf",
+      "choices": [
+        "erste (germanische) Lautverschiebung: t zu ss, p zu pf",
+        "zweite (hochdeutsche) Lautverschiebung: ss zu t, pf zu p",
+        "dritte (niederdeutsche) Lautverschiebung: t zu ss, p zu pf"
+      ],
+      "info": "Sie fand etwa ab dem 6. Jahrhundert im Süden statt. Das Niederdeutsche machte sie nicht mit: „Water“.",
+      "img": "💧🍎"
+    },
+    {
+      "id": "031",
+      "q": "Woher stammt das Wort „Roboter“?",
+      "a": "vom tschechischen „robota“ (Fronarbeit), aus Čapeks „R.U.R.“",
+      "choices": [
+        "vom polnischen „robota“ (Fronarbeit), aus Čapeks „R.U.R.“",
+        "vom tschechischen „robota“ (Maschine), aus Čapeks „R.U.R.“",
+        "vom russischen „rabota“ (Fronarbeit), aus Čapeks „R.U.R.“"
+      ],
+      "info": "Josef Čapek schlug das Wort seinem Bruder Karel vor, der es 1920 im Drama „R.U.R.“ verwendete.",
+      "img": "🤖🏭"
+    },
+    {
+      "id": "032",
+      "q": "Welche Zuordnung Fremdwort – Bedeutung stimmt?",
+      "a": "Petitesse – Kleinigkeit, unwichtige Angelegenheit, Bagatelle",
+      "choices": [
+        "Petitesse – Kleinlichkeit, übertriebene Genauigkeit, Akribie",
+        "Prätention – Kleinigkeit, unwichtige Angelegenheit, Bagatelle",
+        "Pedanterie – Kleinigkeit, unwichtige Angelegenheit, Bagatelle"
+      ],
+      "info": "Von französisch „petit“ (klein). Prätention heißt Anspruch, Pedanterie übertriebene Genauigkeit.",
+      "img": "🐜🔍"
+    },
+    {
+      "id": "033",
+      "q": "„Freude, schöner Götterfunken, / Tochter aus Elysium“ – welches Versmaß und welcher Reim?",
+      "a": "vierhebiger Trochäus (betont – unbetont) mit Kreuzreim abab",
+      "choices": [
+        "vierhebiger Jambus (unbetont – betont) mit Kreuzreim abab",
+        "vierhebiger Trochäus (unbetont – betont) mit Kreuzreim abab",
+        "fünfhebiger Trochäus (betont – unbetont) mit Kreuzreim abab"
+      ],
+      "info": "FREU-de SCHÖ-ner GÖT-ter-FUN-ken: vier Hebungen, jede vorn. „-funken“ reimt sich auf „feuertrunken“.",
+      "img": "🎶✨"
+    },
+    {
+      "id": "034",
+      "q": "Was ist ein Blankvers?",
+      "a": "fünfhebiger reimloser Jambus, z. B. in Lessings „Nathan“",
+      "choices": [
+        "fünfhebiger gereimter Jambus, z. B. in Lessings „Nathan“",
+        "sechshebiger reimloser Jambus, z. B. in Lessings „Nathan“",
+        "fünfhebiger reimloser Trochäus, z. B. in Lessings „Nathan“"
+      ],
+      "info": "Aus dem englischen Drama übernommen – Shakespeares Stücke sind großteils im Blankvers geschrieben.",
+      "img": "📜💍"
+    }
+  ]
+}

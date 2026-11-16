@@ -1,0 +1,322 @@
+{
+  "id": "ob-abi-geschichte",
+  "version": 1,
+  "title": "Abi: Geschichte & Politik",
+  "subject": "geschichte",
+  "grades": [
+    11,
+    12,
+    13
+  ],
+  "emoji": "🏛️",
+  "tier": "free",
+  "description": "Kaiserreich, Weimar, NS-Zeit, Kalter Krieg, europäische Integration und Grundgesetz auf Abiturniveau.",
+  "intro": [
+    {
+      "img": "👑⚔️",
+      "text": "Von der Kaiserkrone bis zum Grundgesetz: In nur 80 Jahren erlebte Deutschland Monarchie, Republik, Diktatur und Neuanfang."
+    },
+    {
+      "img": "📜⚖️",
+      "text": "Weimar zeigt, wie verletzlich eine Demokratie ist. Das Grundgesetz zog daraus Lehren – darum lohnt der genaue Vergleich."
+    },
+    {
+      "img": "🧱🌍",
+      "text": "Im Kalten Krieg standen sich zwei Blöcke gegenüber. Mitten durch Deutschland verlief die Grenze zwischen ihnen."
+    },
+    {
+      "img": "🤝⭐",
+      "text": "Aus Kohle und Stahl wurde die Europäische Union: Zusammenarbeit statt Krieg ist die Idee der europäischen Integration."
+    },
+    {
+      "img": "🐝📅",
+      "text": "Hier tippst du Jahreszahlen, Namen und Fachbegriffe selbst ein. Präzise Begriffe sind im Abi Gold wert. Los geht's!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "In welchem Jahr wurde das Deutsche Kaiserreich in Versailles proklamiert?",
+      "a": "1871",
+      "info": "Am 18. Januar 1871 wurde Wilhelm I. im Spiegelsaal zum Deutschen Kaiser ausgerufen.",
+      "img": "👑🏰"
+    },
+    {
+      "id": "002",
+      "q": "Wie hieß Bismarcks Konflikt mit der katholischen Kirche in den 1870er-Jahren? (ein Wort)",
+      "a": "Kulturkampf",
+      "info": "Dazu gehörten Kanzelparagraf, Jesuitengesetz und die Einführung der Zivilehe.",
+      "img": "⛪⚔️"
+    },
+    {
+      "id": "003",
+      "q": "Wie hieß das Gesetz von 1878, mit dem Bismarck die Sozialdemokratie bekämpfte? (ein Wort)",
+      "a": "Sozialistengesetz",
+      "info": "Es verbot sozialdemokratische Vereine und Schriften bis 1890 – die SPD wurde trotzdem stärker.",
+      "img": "🚫🌹"
+    },
+    {
+      "id": "004",
+      "q": "In welchem Jahr wurde im Kaiserreich die gesetzliche Krankenversicherung eingeführt?",
+      "a": "1883",
+      "info": "Es folgten Unfallversicherung (1884) sowie Invaliditäts- und Altersversicherung (1889).",
+      "img": "🏥📜"
+    },
+    {
+      "id": "005",
+      "q": "Wie hieß Bismarcks geheimer Neutralitätsvertrag mit Russland von 1887? (ein Wort)",
+      "a": "Rückversicherungsvertrag",
+      "info": "Wilhelm II. ließ ihn 1890 nicht verlängern – Russland näherte sich daraufhin Frankreich an.",
+      "img": "🤝🐻"
+    },
+    {
+      "id": "006",
+      "q": "Welcher Artikel der Weimarer Verfassung gab dem Reichspräsidenten das Notverordnungsrecht? (Zahl)",
+      "a": "48",
+      "info": "Ab 1930 wurde er zum Dauerinstrument und höhlte die parlamentarische Demokratie aus.",
+      "img": "📜⚠️"
+    },
+    {
+      "id": "007",
+      "q": "Wie hieß der rechte Putschversuch vom März 1920 in Berlin? (nach Wolfgang Kapp)",
+      "a": "Kapp-Putsch",
+      "info": "Ein Generalstreik der Gewerkschaften und die Weigerung der Beamten ließen ihn scheitern.",
+      "img": "✊🏭"
+    },
+    {
+      "id": "008",
+      "q": "Welcher nach einem US-Bankier benannte Plan regelte 1924 die Reparationen neu? (Name-Plan)",
+      "a": "Dawes-Plan",
+      "info": "Er koppelte die Zahlungen an die Wirtschaftskraft und brachte US-Kredite nach Deutschland.",
+      "img": "💵📈"
+    },
+    {
+      "id": "009",
+      "q": "Welcher Außenminister erhielt 1926 den Friedensnobelpreis? (Vor- und Nachname)",
+      "a": "Gustav Stresemann",
+      "info": "Gemeinsam mit Aristide Briand – für die Verständigungspolitik von Locarno.",
+      "img": "🕊️🏅"
+    },
+    {
+      "id": "010",
+      "q": "Wie nennt man die Regierungen ab 1930, die sich auf Notverordnungen des Reichspräsidenten stützten? (ein Wort)",
+      "a": "Präsidialkabinette",
+      "info": "Brüning, Papen und Schleicher regierten gestützt auf Hindenburgs Vertrauen statt auf eine Reichstagsmehrheit.",
+      "img": "🎩📜"
+    },
+    {
+      "id": "011",
+      "q": "Wie heißt die Verordnung vom 28. Februar 1933, die zentrale Grundrechte außer Kraft setzte? (ein Wort)",
+      "a": "Reichstagsbrandverordnung",
+      "info": "Offiziell „zum Schutz von Volk und Staat“ – sie blieb bis 1945 in Kraft.",
+      "img": "🔥🏛️"
+    },
+    {
+      "id": "012",
+      "q": "Wie nennt man die Ausrichtung von Ländern, Parteien und Verbänden auf die NS-Diktatur 1933/34? (ein Wort)",
+      "a": "Gleichschaltung",
+      "info": "Gewerkschaften wurden zerschlagen, Parteien verboten oder lösten sich auf.",
+      "img": "📢🔒"
+    },
+    {
+      "id": "013",
+      "q": "Wie heißt die US-Strategie zur Eindämmung des Kommunismus ab 1947? (englischer Begriff)",
+      "a": "Containment",
+      "info": "Der Diplomat George F. Kennan prägte das Konzept, die Truman-Doktrin setzte es um.",
+      "img": "🛡️🌍"
+    },
+    {
+      "id": "014",
+      "q": "Wie hieß das 1947 angekündigte US-Wiederaufbauprogramm für Europa? (Name-Plan)",
+      "a": "Marshall-Plan",
+      "info": "Offiziell European Recovery Program (ERP). Die Sowjetunion lehnte die Teilnahme ab.",
+      "img": "🏗️💵"
+    },
+    {
+      "id": "015",
+      "q": "Wie hieß die Entspannungspolitik der Regierung Brandt gegenüber dem Osten? (zwei Wörter)",
+      "a": "Neue Ostpolitik",
+      "info": "Leitidee von Egon Bahr: „Wandel durch Annäherung“.",
+      "img": "🤝🧱"
+    },
+    {
+      "id": "016",
+      "q": "Welcher Vertrag regelte 1972 die Beziehungen zwischen Bundesrepublik und DDR? (ein Wort)",
+      "a": "Grundlagenvertrag",
+      "info": "Statt Botschaften gab es „Ständige Vertretungen“ – die DDR galt nicht als Ausland.",
+      "img": "📜🤝"
+    },
+    {
+      "id": "017",
+      "q": "Wie hieß die Doktrin, nach der die Bundesrepublik Staaten mit Beziehungen zur DDR isolierte? (Name-Doktrin)",
+      "a": "Hallstein-Doktrin",
+      "info": "Ausdruck des Alleinvertretungsanspruchs der Bundesrepublik; ab 1969 aufgegeben.",
+      "img": "🚪🔒"
+    },
+    {
+      "id": "018",
+      "q": "In welcher niederländischen Stadt wurde 1992 der Vertrag über die Europäische Union unterzeichnet?",
+      "a": "Maastricht",
+      "info": "Er trat 1993 in Kraft und schuf die Grundlage für die gemeinsame Währung.",
+      "img": "✍️⭐"
+    },
+    {
+      "id": "019",
+      "q": "Welches Gericht entscheidet allein über das Verbot einer Partei? (ein Wort)",
+      "a": "Bundesverfassungsgericht",
+      "info": "Artikel 21 GG: Nur Karlsruhe darf eine Partei für verfassungswidrig erklären.",
+      "img": "⚖️🏛️"
+    },
+    {
+      "id": "020",
+      "q": "Wie hieß der Plan von 1950, Kohle und Stahl Frankreichs und Deutschlands gemeinsam zu verwalten? (Name-Plan)",
+      "a": "Schuman-Plan",
+      "info": "Daraus entstand 1951 die Europäische Gemeinschaft für Kohle und Stahl (Montanunion).",
+      "img": "⛏️🤝"
+    },
+    {
+      "id": "021",
+      "q": "Welches Wahlrecht galt im Kaiserreich für den Reichstag?",
+      "a": "allgemeines, gleiches, geheimes Männerwahlrecht",
+      "choices": [
+        "allgemeines, ungleiches, geheimes Männerwahlrecht",
+        "allgemeines, gleiches, öffentliches Männerwahlrecht",
+        "allgemeines, gleiches, geheimes Frauen- und Männerwahlrecht"
+      ],
+      "info": "In Preußen galt dagegen bis 1918 das ungleiche Dreiklassenwahlrecht.",
+      "img": "🗳️👑"
+    },
+    {
+      "id": "022",
+      "q": "Wie wurde der Reichspräsident nach der Weimarer Verfassung bestimmt?",
+      "a": "Direktwahl durch das Volk für sieben Jahre",
+      "choices": [
+        "Direktwahl durch das Volk für fünf Jahre",
+        "Wahl durch den Reichstag für sieben Jahre",
+        "Wahl durch die Bundesversammlung für fünf Jahre"
+      ],
+      "info": "Seine starke Stellung nannte man auch „Ersatzkaiser“.",
+      "img": "🗳️🎩"
+    },
+    {
+      "id": "023",
+      "q": "Was war der Ruhrkampf 1923?",
+      "a": "passiver Widerstand gegen die Besetzung des Ruhrgebiets",
+      "choices": [
+        "bewaffneter Widerstand gegen die Besetzung des Ruhrgebiets",
+        "passiver Widerstand gegen die Räumung des Ruhrgebiets",
+        "passiver Widerstand gegen die Besetzung des Saargebiets"
+      ],
+      "info": "Frankreich und Belgien besetzten das Ruhrgebiet wegen ausstehender Reparationen.",
+      "img": "🏭✊"
+    },
+    {
+      "id": "024",
+      "q": "Was regelte das Münchner Abkommen 1938?",
+      "a": "Abtretung des Sudetenlands an das Deutsche Reich",
+      "choices": [
+        "Abtretung des Memellands an das Deutsche Reich",
+        "Abtretung des Saarlands an das Deutsche Reich",
+        "Abtretung des Sudetenlands an die Republik Polen"
+      ],
+      "info": "Höhepunkt der britischen und französischen Appeasement-Politik.",
+      "img": "☂️🗺️"
+    },
+    {
+      "id": "025",
+      "q": "Welcher Vertrag vom 23. August 1939 enthielt ein geheimes Zusatzprotokoll über Osteuropa?",
+      "a": "deutsch-sowjetischer Nichtangriffspakt",
+      "choices": [
+        "deutsch-polnischer Nichtangriffspakt",
+        "deutsch-sowjetischer Handelsvertrag",
+        "deutsch-japanischer Antikominternpakt"
+      ],
+      "info": "Auch Hitler-Stalin-Pakt genannt. Er teilte Polen und das Baltikum in Interessensphären auf.",
+      "img": "🗺️✂️"
+    },
+    {
+      "id": "026",
+      "q": "Welche Linie wurde 1945 in Potsdam vorläufig zur Westgrenze Polens?",
+      "a": "Oder-Neiße-Linie",
+      "choices": [
+        "Oder-Weichsel-Linie",
+        "Elbe-Neiße-Linie",
+        "Oder-Memel-Linie"
+      ],
+      "info": "Die endgültige Anerkennung durch das vereinte Deutschland erfolgte 1990.",
+      "img": "🏞️📏"
+    },
+    {
+      "id": "027",
+      "q": "Was bot die Stalin-Note 1952 an?",
+      "a": "ein neutrales, wiedervereinigtes Deutschland",
+      "choices": [
+        "ein westgebundenes, wiedervereinigtes Deutschland",
+        "ein neutrales, geteiltes Deutschland",
+        "ein entmilitarisiertes, geteiltes Deutschland"
+      ],
+      "info": "Adenauer lehnte ab und setzte auf die Westbindung. Ob Stalin es ernst meinte, ist umstritten.",
+      "img": "✉️🕊️"
+    },
+    {
+      "id": "028",
+      "q": "Was wurde mit den Römischen Verträgen 1957 gegründet?",
+      "a": "Europäische Wirtschaftsgemeinschaft und Euratom",
+      "choices": [
+        "Europäische Verteidigungsgemeinschaft und Euratom",
+        "Europäische Wirtschaftsgemeinschaft und Montanunion",
+        "Europäische Union und Euratom"
+      ],
+      "info": "Zusammen mit der EGKS bildeten sie die Europäischen Gemeinschaften.",
+      "img": "🏛️⭐"
+    },
+    {
+      "id": "029",
+      "q": "Welche Obergrenze setzen die Maastricht-Kriterien für das jährliche Haushaltsdefizit?",
+      "a": "höchstens 3 % des Bruttoinlandsprodukts",
+      "choices": [
+        "höchstens 60 % des Bruttoinlandsprodukts",
+        "höchstens 3 % des Staatshaushalts",
+        "mindestens 3 % des Bruttoinlandsprodukts"
+      ],
+      "info": "Die 60 % gelten für den gesamten Schuldenstand eines Staates.",
+      "img": "💶📏"
+    },
+    {
+      "id": "030",
+      "q": "Was vereinbarte die KSZE-Schlussakte von Helsinki 1975 unter anderem?",
+      "a": "Unverletzlichkeit der Grenzen und Achtung der Menschenrechte",
+      "choices": [
+        "Veränderbarkeit der Grenzen und Achtung der Menschenrechte",
+        "Unverletzlichkeit der Grenzen und Abbau aller Atomwaffen",
+        "Auflösung der Militärbündnisse und Achtung der Menschenrechte"
+      ],
+      "info": "Bürgerrechtler im Ostblock beriefen sich später auf die Menschenrechtsklauseln.",
+      "img": "🕊️📜"
+    },
+    {
+      "id": "031",
+      "q": "Woran zeigt sich die „wehrhafte Demokratie“ des Grundgesetzes?",
+      "a": "Parteiverbote und Grundrechtsverwirkung sind möglich",
+      "choices": [
+        "Parteiverbote und Grundrechtsverwirkung sind ausgeschlossen",
+        "Parteiverbote durch den Bundestag allein sind möglich",
+        "Grundrechtsverwirkung durch die Bundesregierung ist möglich"
+      ],
+      "info": "Lehre aus Weimar: Über beides entscheidet nur das Bundesverfassungsgericht (Art. 18 und 21 GG).",
+      "img": "🛡️⚖️"
+    },
+    {
+      "id": "032",
+      "q": "Wie unterscheidet sich der Bundespräsident vom Weimarer Reichspräsidenten?",
+      "a": "Er hat vor allem repräsentative Aufgaben",
+      "choices": [
+        "Er hat vor allem exekutive Aufgaben",
+        "Er hat ein weitreichendes Notverordnungsrecht",
+        "Er hat den Oberbefehl über die Streitkräfte"
+      ],
+      "info": "Er wird von der Bundesversammlung gewählt, nicht vom Volk, und kann den Kanzler nicht einfach entlassen.",
+      "img": "🎩📜"
+    }
+  ]
+}

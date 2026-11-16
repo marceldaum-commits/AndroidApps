@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.23.0 – Vom Keimling zum Profi (16.11.2026)
+- **Es wird nachweislich immer schwerer:** Je besser eine Karte sitzt, desto kniffliger wird sie abgefragt – erst wenige, leicht unterscheidbare Antworten, dann mehr und sehr ähnliche, dann immer öfter frei eintippen. Auf der **Profi-Stufe 🏆** gibt es gar keine Auswahl mehr: ganz aus dem Kopf.
+- Oben in der Gieß-Runde zeigt ein Abzeichen die Stufe der Karte: 🌱 Leicht · 🌿 Mittel · 🌳 Knifflig · 🌸 Schwer · 🏆 Profi.
+- **8 neue Pakete für die höchste Stufe:** Abi (Stochastik, Stoffwechsel & Neuro, Organische Chemie, Geschichte & Politik) und Experte (Naturwissenschaft, Geschichte & Kultur, Sprache & Wörter, Mathe & Logik) – überwiegend freie Eingabe, sehr ähnliche Ablenker, fachlich geprüft.
+- Getippte Zahlen werden genau geprüft (0,5 = 0,50; 0,2462 ist nicht 0,2461), „Marshallplan“ und „Marshall-Plan“ zählen beide.
+- Für Eltern: In `SCHWIERIGKEIT.md` steht die Messung, dass jede Stufe schwerer ist als die vorige.
+
 ## 0.22.0 – Schneller Start mit Ladebalken (16.11.2026)
 - **WebApp:** Ab der ersten Sekunde ist Brummis Startbild mit einem echten Ladebalken (in Prozent) zu sehen – nie mehr ein weißer Bildschirm. Danach blendet der Garten sanft über.
 - **WebApp lädt beim ersten Mal rund 40 % weniger** (7 statt 12 MB) und ist bei langsamem Netz deutlich schneller bereit. Danach speichert sie alles auf dem Gerät: Der zweite Start braucht kein Internet mehr.

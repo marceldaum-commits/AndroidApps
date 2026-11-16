@@ -1,0 +1,346 @@
+{
+  "id": "ob-abi-biologie",
+  "version": 1,
+  "title": "Abi: Stoffwechsel & Neuro",
+  "subject": "biologie",
+  "grades": [
+    11,
+    12,
+    13
+  ],
+  "emoji": "🧬",
+  "tier": "free",
+  "description": "Zellatmung, Fotosynthese, Enzyme, Nervenzellen, Proteinbiosynthese und Evolution auf Abiturniveau.",
+  "intro": [
+    {
+      "img": "🔋🌿",
+      "text": "Jede Zelle braucht Energie: Pflanzen fangen sie mit der Fotosynthese ein, und alle Lebewesen setzen sie in der Zellatmung als ATP frei."
+    },
+    {
+      "img": "⚙️🧪",
+      "text": "Enzyme sind die Werkzeuge des Stoffwechsels: Sie senken die Aktivierungsenergie und lassen sich gezielt hemmen."
+    },
+    {
+      "img": "⚡🧠",
+      "text": "Nervenzellen rechnen mit Ionen: Na⁺ und K⁺ erzeugen Aktionspotenziale, an Synapsen übernehmen Transmitter die Botschaft."
+    },
+    {
+      "img": "🦎🌍",
+      "text": "Evolution verbindet alles: Mutation, Selektion und Gendrift verändern Populationen über Generationen hinweg."
+    },
+    {
+      "img": "🐝📝",
+      "text": "Hier tippst du die Fachbegriffe selbst ein – genau wie in der Klausur. Kleine Tippfehler verzeihe ich dir. Los geht's!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie heißt der erste Abschnitt des Glucoseabbaus, der im Cytoplasma abläuft? (ein Wort)",
+      "a": "Glykolyse",
+      "info": "Aus einem Glucosemolekül entstehen zwei Pyruvat, netto 2 ATP und 2 NADH + H⁺.",
+      "img": "🍬✂️"
+    },
+    {
+      "id": "002",
+      "q": "Wie heißt das Enzym der inneren Mitochondrienmembran, das ATP aus ADP und Phosphat bildet? (Fachbegriff)",
+      "a": "ATP-Synthase",
+      "info": "Protonen strömen durch die ATP-Synthase zurück in die Matrix und treiben sie wie eine Turbine an.",
+      "img": "⚙️🔋"
+    },
+    {
+      "id": "003",
+      "q": "Wie heißt die ATP-Bildung, die von einem Protonengradienten über eine Membran angetrieben wird? (ein Wort)",
+      "a": "Chemiosmose",
+      "info": "Peter Mitchell erhielt dafür 1978 den Nobelpreis. Sie läuft in Mitochondrien und Chloroplasten ab.",
+      "img": "🌊⚙️"
+    },
+    {
+      "id": "004",
+      "q": "Wie heißt die Gärung, bei der Muskelzellen bei Sauerstoffmangel Lactat bilden? (ein Wort)",
+      "a": "Milchsäuregärung",
+      "info": "Pyruvat wird zu Lactat reduziert, dabei wird NAD⁺ für die Glykolyse zurückgewonnen.",
+      "img": "🏃🥛"
+    },
+    {
+      "id": "005",
+      "q": "Wie heißt die Membran im Chloroplasten, an der die lichtabhängigen Reaktionen ablaufen? (ein Wort)",
+      "a": "Thylakoidmembran",
+      "info": "Dort sitzen Fotosystem I und II, die Elektronentransportkette und die ATP-Synthase.",
+      "img": "☀️🌿"
+    },
+    {
+      "id": "006",
+      "q": "Wie heißt das Enzym, das im Calvin-Zyklus CO₂ an Ribulose-1,5-bisphosphat bindet? (Kurzname)",
+      "a": "Rubisco",
+      "info": "Rubisco gilt als das häufigste Protein der Erde.",
+      "img": "🌿🔗"
+    },
+    {
+      "id": "007",
+      "q": "Wie heißt die Theorie, nach der Mitochondrien und Chloroplasten von Bakterien abstammen? (ein Wort)",
+      "a": "Endosymbiontentheorie",
+      "info": "Belege: eigene ringförmige DNA, 70S-Ribosomen und eine Doppelmembran.",
+      "img": "🦠🏠"
+    },
+    {
+      "id": "008",
+      "q": "Wie heißt die Hemmung, bei der ein Hemmstoff mit dem Substrat um das aktive Zentrum konkurriert? (zwei Wörter)",
+      "a": "kompetitive Hemmung",
+      "info": "Eine hohe Substratkonzentration kann den Hemmstoff verdrängen; vmax bleibt gleich.",
+      "img": "🔑🥊"
+    },
+    {
+      "id": "009",
+      "q": "Wie heißt der Bereich eines Enzyms, an dem das Substrat gebunden und umgesetzt wird? (zwei Wörter)",
+      "a": "aktives Zentrum",
+      "info": "Substrat und aktives Zentrum passen zusammen wie Schlüssel und Schloss.",
+      "img": "🔑🔒"
+    },
+    {
+      "id": "010",
+      "q": "Wie nennt man die Zerstörung der Raumstruktur eines Enzyms, z. B. durch Hitze? (ein Wort)",
+      "a": "Denaturierung",
+      "info": "Ab etwa 40–50 °C verlieren viele Enzyme des Menschen ihre Raumstruktur und Wirkung.",
+      "img": "🔥🥚"
+    },
+    {
+      "id": "011",
+      "q": "Wie heißt die Erregungsleitung, bei der das Aktionspotenzial von Schnürring zu Schnürring springt? (Adjektiv)",
+      "a": "saltatorisch",
+      "info": "Saltatorische Leitung an markhaltigen Axonen ist viel schneller als kontinuierliche Leitung.",
+      "img": "🦘⚡"
+    },
+    {
+      "id": "012",
+      "q": "Welcher Neurotransmitter wird an der motorischen Endplatte ausgeschüttet? (ein Wort)",
+      "a": "Acetylcholin",
+      "info": "Acetylcholin öffnet ligandengesteuerte Na⁺-Kanäle der Muskelfasermembran.",
+      "img": "💪📨"
+    },
+    {
+      "id": "013",
+      "q": "Wie heißt das Enzym, das Acetylcholin im synaptischen Spalt spaltet? (ein Wort)",
+      "a": "Acetylcholinesterase",
+      "info": "Es spaltet in Acetat und Cholin. Manche Nervengifte hemmen dieses Enzym.",
+      "img": "✂️📨"
+    },
+    {
+      "id": "014",
+      "q": "Wie heißt das Herausschneiden der Introns aus der prä-mRNA? (ein Wort)",
+      "a": "Spleißen",
+      "info": "Danach liegen nur noch die Exons in der reifen mRNA vor.",
+      "img": "✂️🧬"
+    },
+    {
+      "id": "015",
+      "q": "Wie heißt die DNA-Region, an die die RNA-Polymerase zu Beginn der Transkription bindet? (ein Wort)",
+      "a": "Promotor",
+      "info": "Der Promotor legt Startpunkt und Ableserichtung der Transkription fest.",
+      "img": "🚦🧬"
+    },
+    {
+      "id": "016",
+      "q": "Wie heißt die zufällige Änderung von Allelfrequenzen, besonders in kleinen Populationen? (ein Wort)",
+      "a": "Gendrift",
+      "info": "Beispiele sind der Gründer- und der Flaschenhalseffekt.",
+      "img": "🎲🐁"
+    },
+    {
+      "id": "017",
+      "q": "Wie heißt die Artbildung nach geografischer Trennung von Populationen? (zwei Wörter)",
+      "a": "allopatrische Artbildung",
+      "info": "Eine Barriere wie ein Gebirge unterbricht den Genfluss, die Gruppen entwickeln sich getrennt.",
+      "img": "⛰️🦎"
+    },
+    {
+      "id": "018",
+      "q": "Wie heißen Organe mit gleichem Grundbauplan, aber unterschiedlicher Funktion? (zwei Wörter)",
+      "a": "homologe Organe",
+      "info": "Beispiel: Vorderbeine von Wal, Fledermaus und Mensch – gemeinsame Abstammung.",
+      "img": "🦇🐋"
+    },
+    {
+      "id": "019",
+      "q": "Wie heißt die Auffächerung einer Stammart in viele an Nischen angepasste Arten? (zwei Wörter)",
+      "a": "adaptive Radiation",
+      "info": "Klassisch: die Darwinfinken auf den Galapagosinseln.",
+      "img": "🐦🏝️"
+    },
+    {
+      "id": "020",
+      "q": "Hardy-Weinberg: Das rezessive Allel hat die Häufigkeit q = 0,2. Anteil Heterozygoter in Prozent?",
+      "a": "32",
+      "info": "p = 0,8; 2pq = 2 · 0,8 · 0,2 = 0,32 = 32 %",
+      "img": "🧮🧬"
+    },
+    {
+      "id": "021",
+      "q": "Bruttogleichung der Zellatmung?",
+      "a": "C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O",
+      "choices": [
+        "C₆H₁₂O₆ + 6 CO₂ → 6 O₂ + 6 H₂O",
+        "C₆H₁₂O₆ + 6 H₂O → 6 CO₂ + 6 O₂",
+        "C₆H₁₂O₆ + 3 O₂ → 3 CO₂ + 3 H₂O"
+      ],
+      "info": "Die Energie der Glucose wird schrittweise in ATP gespeichert.",
+      "img": "🍬🔥"
+    },
+    {
+      "id": "022",
+      "q": "Bruttogleichung der Fotosynthese (mit Herkunft des Sauerstoffs)?",
+      "a": "6 CO₂ + 12 H₂O → C₆H₁₂O₆ + 6 O₂ + 6 H₂O",
+      "choices": [
+        "6 CO₂ + 12 H₂O → C₆H₁₂O₆ + 12 O₂ + 6 H₂O",
+        "6 O₂ + 12 H₂O → C₆H₁₂O₆ + 6 CO₂ + 6 H₂O",
+        "6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂ + 6 H₂O"
+      ],
+      "info": "Der freigesetzte Sauerstoff stammt aus dem Wasser (Fotolyse), nicht aus dem CO₂.",
+      "img": "☀️🌿"
+    },
+    {
+      "id": "023",
+      "q": "Welche Produkte der Lichtreaktion nutzt der Calvin-Zyklus?",
+      "a": "ATP und NADPH + H⁺",
+      "choices": [
+        "ATP und NADH + H⁺",
+        "ADP und NADP⁺ + H⁺",
+        "ATP und FADH₂ + H⁺"
+      ],
+      "info": "Mit ATP und NADPH + H⁺ wird CO₂ zu Kohlenhydraten reduziert.",
+      "img": "🔋➡️"
+    },
+    {
+      "id": "024",
+      "q": "Wo liegt die Atmungskette (Elektronentransportkette) der Zellatmung?",
+      "a": "in der inneren Mitochondrienmembran",
+      "choices": [
+        "in der äußeren Mitochondrienmembran",
+        "in der inneren Chloroplastenmembran",
+        "im Intermembranraum der Mitochondrien"
+      ],
+      "info": "Die Einstülpungen (Cristae) vergrößern ihre Oberfläche.",
+      "img": "🏭🔋"
+    },
+    {
+      "id": "025",
+      "q": "Wie heißt der Kreisprozess, in dem Acetyl-CoA in der Mitochondrienmatrix zu CO₂ abgebaut wird?",
+      "a": "Citratzyklus",
+      "choices": [
+        "Calvin-Zyklus",
+        "Citrullinzyklus",
+        "Cori-Zyklus"
+      ],
+      "info": "Auch Zitronensäurezyklus oder Krebs-Zyklus genannt. Er liefert vor allem NADH + H⁺ und FADH₂.",
+      "img": "🍋🔄"
+    },
+    {
+      "id": "026",
+      "q": "Was geschieht in der Depolarisationsphase eines Aktionspotenzials?",
+      "a": "spannungsgesteuerte Na⁺-Kanäle öffnen sich, Na⁺ strömt ein",
+      "choices": [
+        "spannungsgesteuerte K⁺-Kanäle öffnen sich, K⁺ strömt ein",
+        "spannungsgesteuerte Na⁺-Kanäle öffnen sich, Na⁺ strömt aus",
+        "spannungsgesteuerte K⁺-Kanäle öffnen sich, K⁺ strömt aus"
+      ],
+      "info": "Der K⁺-Ausstrom gehört zur Repolarisation, die danach folgt.",
+      "img": "⚡🚪"
+    },
+    {
+      "id": "027",
+      "q": "Was transportiert die Natrium-Kalium-Pumpe pro gespaltenem ATP?",
+      "a": "3 Na⁺ nach außen und 2 K⁺ nach innen",
+      "choices": [
+        "2 Na⁺ nach außen und 3 K⁺ nach innen",
+        "3 Na⁺ nach innen und 2 K⁺ nach außen",
+        "3 K⁺ nach außen und 2 Na⁺ nach innen"
+      ],
+      "info": "Sie hält die Ionengradienten aufrecht, auf denen das Ruhepotenzial beruht.",
+      "img": "⛽🔄"
+    },
+    {
+      "id": "028",
+      "q": "Wie wird die Reizstärke im Axon codiert?",
+      "a": "über die Frequenz der Aktionspotenziale",
+      "choices": [
+        "über die Amplitude der Aktionspotenziale",
+        "über die Richtung der Aktionspotenziale",
+        "über die Frequenz der Ruhepotenziale"
+      ],
+      "info": "Alles-oder-nichts-Prinzip: Jedes Aktionspotenzial ist gleich hoch.",
+      "img": "📶⚡"
+    },
+    {
+      "id": "029",
+      "q": "Was bewirkt ein erregendes postsynaptisches Potenzial (EPSP)?",
+      "a": "Es depolarisiert die postsynaptische Membran",
+      "choices": [
+        "Es hyperpolarisiert die postsynaptische Membran",
+        "Es depolarisiert die präsynaptische Membran",
+        "Es repolarisiert die postsynaptische Membran"
+      ],
+      "info": "Mehrere EPSPs können sich am Axonhügel zeitlich und räumlich summieren.",
+      "img": "➕⚡"
+    },
+    {
+      "id": "030",
+      "q": "Absolute Refraktärzeit – was gilt in dieser Phase?",
+      "a": "Es ist kein neues Aktionspotenzial auslösbar",
+      "choices": [
+        "Es ist nur durch starke Reize ein Aktionspotenzial auslösbar",
+        "Es ist jedes Aktionspotenzial doppelt so hoch",
+        "Es ist kein neues Ruhepotenzial herstellbar"
+      ],
+      "info": "Grund: Die Na⁺-Kanäle sind inaktiviert. So läuft die Erregung nur in eine Richtung.",
+      "img": "⛔⏱️"
+    },
+    {
+      "id": "031",
+      "q": "Reine nichtkompetitive Hemmung – wie ändern sich vmax und KM?",
+      "a": "vmax sinkt, KM bleibt gleich",
+      "choices": [
+        "vmax bleibt gleich, KM steigt",
+        "vmax steigt, KM bleibt gleich",
+        "vmax sinkt, KM steigt"
+      ],
+      "info": "Der Hemmstoff bindet außerhalb des aktiven Zentrums; mehr Substrat hilft nicht.",
+      "img": "🔒📉"
+    },
+    {
+      "id": "032",
+      "q": "Welche Basenpaarung erfolgt bei der Translation am Ribosom?",
+      "a": "Anticodon der tRNA mit dem Codon der mRNA",
+      "choices": [
+        "Codon der tRNA mit dem Anticodon der mRNA",
+        "Anticodon der mRNA mit dem Codon der DNA",
+        "Anticodon der tRNA mit dem Codon der DNA"
+      ],
+      "info": "Jede tRNA trägt die zu ihrem Anticodon passende Aminosäure.",
+      "img": "🧩🧬"
+    },
+    {
+      "id": "033",
+      "q": "Transkription: In welche Richtung wird gelesen und synthetisiert?",
+      "a": "Matrize 3' nach 5', mRNA wächst 5' nach 3'",
+      "choices": [
+        "Matrize 5' nach 3', mRNA wächst 3' nach 5'",
+        "Matrize 3' nach 5', mRNA wächst 3' nach 5'",
+        "Matrize 5' nach 3', mRNA wächst 5' nach 3'"
+      ],
+      "info": "Nukleotide werden immer am 3'-Ende angehängt.",
+      "img": "➡️🧬"
+    },
+    {
+      "id": "034",
+      "q": "Was besagt das Hardy-Weinberg-Gesetz?",
+      "a": "Allelfrequenzen bleiben in einer idealen Population konstant",
+      "choices": [
+        "Allelfrequenzen ändern sich in einer idealen Population stetig",
+        "Allelfrequenzen bleiben in jeder realen Population konstant",
+        "Allelfrequenzen bleiben in einer kleinen Population konstant"
+      ],
+      "info": "Ideal heißt: sehr groß, keine Mutation, Selektion, Migration oder Gendrift, zufällige Paarung.",
+      "img": "⚖️🧬"
+    }
+  ]
+}
