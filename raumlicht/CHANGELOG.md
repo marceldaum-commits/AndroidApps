@@ -2,6 +2,15 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.11.0 – Acht neue Aufgaben-Arten zum Üben (16.11.2026)
+- **Neu im endlosen Üben** (Themen „Punkte & Vektoren“ und „Geraden“), jedes Mal mit anderen Zahlen:
+  - **Einstieg:** Punkte mit Bedingungen finden (zum Beispiel einen Punkt, der in zwei Koordinatenebenen zugleich liegt – hier gibt es viele richtige Antworten), Spiegeln an einer Koordinatenebene.
+  - **Abi:** Spiegeln an einer Koordinatenachse, Parallelogramm prüfen und den Schnittpunkt der Diagonalen finden, „Liegen drei Punkte auf einer Geraden?“, dieselbe Gerade in anderer Schreibweise.
+  - **Profi:** zwei Spiegelungen hintereinander, Raute mit Parameter.
+- **„Alle“ mischt jetzt wirklich alle Aufgaben-Arten** aus allen Stufen.
+- Die Schwierigkeit steigt weiterhin nachweislich von Stufe zu Stufe; alle neuen Lösungen sind unabhängig nachgerechnet.
+- Im Hintergrund vorbereitet, aber ausgeschaltet: der spätere „Abi-Pass“. Für dich ändert sich nichts – alles bleibt frei.
+
 ## 2.10.1 – Direkter Weg zur Diagnose auf dem iPad (16.11.2026)
 - **WebApp auf dem iPad:** Das Bild bleibt dort weiterhin weiß (auf dem iPhone läuft es); die Ursache ist noch offen. Nach dem Start erscheint auf iPads jetzt 20 Sekunden lang
   unten der Knopf „Kein Bild zu sehen? Hier tippen“ – er führt direkt zur Diagnose-Seite mit den Tests.

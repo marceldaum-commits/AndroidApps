@@ -57,6 +57,8 @@ class WebPrefs : Prefs {
     override var show: String get() = storeGet(P + "show") ?: ""; set(v) = storeSet(P + "show", v)
     override var ride: String get() = storeGet(P + "ride") ?: ""; set(v) = storeSet(P + "ride", v)
     override var flight: String get() = storeGet(P + "flight") ?: ""; set(v) = storeSet(P + "flight", v)
+    private val _pro = flag("pro", false)
+    override val pro: StateFlow<Boolean> = _pro; override fun setPro(active: Boolean) { put("pro", active); _pro.value = active }
     override var jamLevel: String get() = storeGet(P + "jamLevel") ?: ""; set(v) = storeSet(P + "jamLevel", v)
 
     override fun resetProgress() {

@@ -153,7 +153,7 @@ class NewScenesDump {
     @Test fun dump() {
         val shots = (TourSix.chapters + TourSeven.chapters + TourEight.chapters).flatMap { it.levels }.flatMap { l ->
             listOf("""{"name":"${l.id}-a","settle":1.2,"state":${l.scene(l.start, Phase.AIM)}}""", """{"name":"${l.id}-z","settle":1.2,"state":${l.scene(l.solution, Phase.DONE)}}""") }
-        val profi = ProGen.Kind.entries.flatMap { k -> listOf(3L, 8L).map { ProGen.level(k, it) } }.flatMap { l ->
+        val profi = (ProGen.Kind.entries.flatMap { k -> listOf(3L, 8L).map { ProGen.level(k, it) } } + MoreGen.Kind.entries.flatMap { k -> listOf(2L, 7L).map { MoreGen.level(k, it) } }).flatMap { l ->
             listOf("""{"name":"${l.id}-a","settle":1.2,"state":${l.scene(l.start, Phase.AIM)}}""", """{"name":"${l.id}-z","settle":1.2,"state":${l.scene(l.solution, Phase.DONE)}}""") }
         java.io.File("build").mkdirs(); java.io.File("build/neu.json").writeText("[" + (shots + profi).joinToString(",") + "]")
     }

@@ -24,24 +24,23 @@ object Practice {
     // Einstieg: Aufgaben ohne Gleichung mit Parameter – ablesen, mitteln, abziehen, einsetzen. Alles mit „nach t auflösen“ gehört schon zur Abi-Stufe.
     private val easy = setOf(Gen.Kind.MIDPOINT, Gen.Kind.VECTOR, Gen.Kind.AIM, Gen.Kind.RADIUS, Gen.Kind.MOTION_POS, Gen.Kind.MOTION_TIME)
     fun tier(k: Gen.Kind) = if (k in easy) JamLevel.EINSTIEG else JamLevel.ABI
-    /** Profi-Aufgaben je Thema */
-    fun pro(topic: JamTopic): List<ProGen.Kind> = when (topic) {
-        JamTopic.EBENEN -> listOf(ProGen.Kind.MIRROR_DIST, ProGen.Kind.PARALLEL_PARAM)
-        JamTopic.WINKEL -> listOf(ProGen.Kind.SKEW_DIST, ProGen.Kind.CUT_CIRCLE, ProGen.Kind.MIRROR_LINE)
-        JamTopic.MIX -> ProGen.Kind.entries
-        else -> emptyList()
-    }
-    private fun classic(topic: JamTopic, level: JamLevel) = topic.kinds.filter { tier(it) == level }
-    /** Gibt es zu diesem Thema Aufgaben in dieser Stufe? ([level] null = alle Stufen gemischt, wie bisher) */
-    fun available(topic: JamTopic, level: JamLevel?) = when (level) { null -> true; JamLevel.PROFI -> pro(topic).isNotEmpty(); else -> classic(topic, level).isNotEmpty() }
+    private fun proTopics(k: ProGen.Kind) = when (k) { ProGen.Kind.MIRROR_DIST, ProGen.Kind.PARALLEL_PARAM -> setOf(JamTopic.EBENEN); else -> setOf(JamTopic.WINKEL) }
+
+    /** Eine Aufgabenart mit Stufe und Themen – egal, aus welchem Baukasten sie kommt */
+    class Source(val id: String, val tier: JamLevel, val topics: Set<JamTopic>, val make: (Long) -> Level)
+    /** Alle Aufgabenarten des endlosen Übens */
+    val sources: List<Source> =
+        Gen.Kind.entries.map { k -> Source(k.name, tier(k), JamTopic.entries.filter { it != JamTopic.MIX && k in it.kinds }.toSet()) { seed -> Gen.level(k, seed) } } +
+        MoreGen.Kind.entries.map { k -> Source(k.name, k.tier, setOf(k.topic)) { seed -> MoreGen.level(k, seed) } } +
+        ProGen.Kind.entries.map { k -> Source(k.name, JamLevel.PROFI, proTopics(k)) { seed -> ProGen.level(k, seed) } }
+    /** Aufgabenarten zu Thema und Stufe ([level] null = alle Stufen) */
+    fun sources(topic: JamTopic, level: JamLevel?) = sources.filter { (level == null || it.tier == level) && (topic == JamTopic.MIX || topic in it.topics) }
+    fun count(topic: JamTopic, level: JamLevel?) = sources(topic, level).size
+    fun available(topic: JamTopic, level: JamLevel?) = count(topic, level) > 0
     /** Aufgabe Nr. [n] einer Übungsrunde zum Thema in der gewählten Stufe */
     fun level(topic: JamTopic, level: JamLevel?, session: Long, n: Int): Level {
-        val pick = Random(session * 131 + n); val seed = session * 1000 + n
-        return when {
-            level == null || !available(topic, level) -> Gen.jam(topic, session, n)
-            level == JamLevel.PROFI -> pro(topic).let { ProGen.level(it[pick.nextInt(it.size)], seed) }
-            else -> classic(topic, level).let { Gen.level(it[pick.nextInt(it.size)], seed) }
-        }
+        val pool = sources(topic, level).ifEmpty { sources(topic, null) }
+        return pool[Random(session * 131 + n).nextInt(pool.size)].make(session * 1000 + n)
     }
 
     private val NUMBER = Regex("""\d+(,\d+)?"""); private val PARAMETER = Regex("""(?<![A-Za-zÄÖÜäöüß₀-₉])[tsa](?![A-Za-zÄÖÜäöüß′⃗])""")
@@ -55,10 +54,7 @@ object Practice {
     /** Die Angaben der Aufgabe als Text (Geraden- und Ebenengleichungen) – dort stehen die Parameter */
     private fun given(l: Level) = l.formula(l.start).joinToString(" ") { line -> line.joinToString("") { p -> when (p) { is Part.Txt -> p.s; is Part.Num -> ""; is Part.Col -> " " } } }
     /** Stichprobe einer Stufe: jede Aufgabenart mit [perKind] verschiedenen Zahlen */
-    fun sample(level: JamLevel, perKind: Int = 40): List<Level> = when (level) {
-        JamLevel.PROFI -> ProGen.Kind.entries.flatMap { k -> (1L..perKind).map { ProGen.level(k, it) } }
-        else -> Gen.Kind.entries.filter { tier(it) == level }.flatMap { k -> (1L..perKind).map { Gen.level(k, it) } }
-    }
+    fun sample(level: JamLevel, perKind: Int = 40): List<Level> = sources.filter { it.tier == level }.flatMap { src -> (1L..perKind).map { src.make(it) } }
     fun average(levels: List<Level>): Metrics { val m = levels.map(::metrics)
         return Metrics(m.map { it.steps }.average(), m.map { it.wayLength }.average(), m.map { it.objects }.average(), m.map { it.parameters }.average(), m.map { it.nonInteger }.average()) }
 }
