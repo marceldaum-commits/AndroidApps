@@ -4,6 +4,45 @@
   'use strict';
   var KF = window.KF = {};
 
+  // ------------------------------------------------------------ Schnellstart: große Dateien sofort parallel laden
+  // window.KF_FILES (vom Build in index.html eingesetzt): [{u: Pfad, s: Bytes, t: Typ}]. Wir laden alles gleich los,
+  // zählen die Bytes für den Fortschrittsbalken und reichen die Daten an die App weiter, sobald sie danach fragt.
+  var files = window.KF_FILES || [], total = files.reduce(function (a, f) { return a + f.s; }, 0), loaded = 0, pending = {};
+  function progress() {
+    var bar = document.getElementById('kf-bar'), txt = document.getElementById('kf-pct');
+    if (!bar || !total) return;
+    var p = Math.min(1, loaded / total);
+    bar.style.width = (4 + 96 * p) + '%';
+    if (txt) txt.textContent = p < 1 ? 'Lade … ' + Math.round(p * 100) + ' %' : 'Starte die Triebwerke …';
+  }
+  // Jede Datei wird sofort angefragt; die Daten fließen als Strom weiter, damit der Browser das Wasm schon
+  // während des Ladens übersetzen kann (instantiateStreaming). Wir zählen nur mit.
+  files.forEach(function (f) {
+    pending[f.u] = fetch(f.u).then(function (r) {
+      if (!r.ok || !r.body) return r;
+      var reader = r.body.getReader();
+      var body = new ReadableStream({
+        start: function (ctrl) {   // gleich alles abholen (nicht auf die App warten), die App liest später mit
+          (function pump() {
+            reader.read().then(function (x) {
+              if (x.done) { ctrl.close(); return; }
+              loaded += x.value.length; progress(); ctrl.enqueue(x.value); pump();
+            }, function (e) { ctrl.error(e); });
+          })();
+        }
+      });
+      return new Response(body, { status: 200, headers: { 'Content-Type': f.t } });
+    });
+  });
+  var origFetch = window.fetch.bind(window);
+  window.fetch = function (input, init) {
+    var url = typeof input === 'string' ? input : (input && input.url) || '';
+    var path = url.replace(location.origin + location.pathname.replace(/[^/]*$/, ''), '').replace(/^\.\//, '').split('?')[0];
+    var hit = pending[path];
+    if (hit) { delete pending[path]; return hit; }
+    return origFetch(input, init);
+  };
+
   // ------------------------------------------------------------ Ton (Web Audio, erst nach dem ersten Tippen)
   var ctx = null, unlocked = false, unlockCbs = [];
   KF.bufData = []; var buffers = [];

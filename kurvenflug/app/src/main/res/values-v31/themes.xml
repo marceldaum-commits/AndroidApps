@@ -1,0 +1,11 @@
+<resources>
+    <!-- Android 12+: Start-Bildschirm des Systems in App-Farbe (sonst je nach Gerät weiß) -->
+    <style name="Theme.Kurvenflug" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/space</item>
+        <item name="android:statusBarColor">@color/space</item>
+        <item name="android:navigationBarColor">@color/space</item>
+        <item name="android:windowSplashScreenBackground">@color/space</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">@color/space</item>
+    </style>
+</resources>

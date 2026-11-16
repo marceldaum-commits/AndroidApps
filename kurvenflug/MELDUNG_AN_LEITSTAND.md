@@ -1,5 +1,34 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 0.21.1 – Schneller Start, Ladebalken, kein weißer Bildschirm (Auftrag Marcel vom 16.11.)
+
+- **Version:** 0.21.1 · **Commit:** {{COMMIT}} (Zweig claude/gifted-shannon-657gpr)
+- **Hauptursache gefunden:** Beim ersten Start lud der Service Worker (Offline-Speicher) **alle Dateien ein zweites Mal**,
+  parallel zur App – auf dem Handy also ~9,9 MB statt 5,2 MB über dieselbe Leitung. Jetzt registriert er sich erst,
+  wenn die App läuft, und fragt nur „geändert?“ (der Testserver antwortet korrekt mit 304, geprüft).
+- **Schneller:** Wasm-Dateien und Mathe-Schrift werden sofort beim Seitenaufruf parallel angefragt (nicht erst nach
+  kurvenflug.js) und als Strom an die App gereicht – das Übersetzen des Wasm läuft weiter schon während des Ladens.
+- **Echter Ladebalken:** „Lade … 54 %“ nach geladenen Bytes (Gesamtgrößen setzt der Build ein), danach
+  „Starte die Triebwerke …“ und sanftes Überblenden in die App. Ladebild erscheint sofort (inline, kein weißer Moment).
+- **Android:** Android-12+-Startbildschirm in App-Farbe (`values-v31`, `windowSplashScreenBackground` #0B1026),
+  darunter war das Fenster schon dunkel – kein weißes Aufblitzen.
+- **Messung** (Chromium, Drosselung **am Server**, damit auch Service-Worker-Downloads zählen; 412 px; gzip wie Testserver):
+
+  | Netz | Start | vorher (0.21.0) bedienbar | nachher (0.21.1) bedienbar | Download vorher → nachher | erster Inhalt |
+  |---|---|---|---|---|---|
+  | Fast 4G (9 Mbit/s, 60 ms) | 1. Start | 10,5 s | **6,0 s** | 9,9 MB → **5,2 MB** | ~0,1 s (beide) |
+  | Fast 4G | 2. Start | 0,85 s | 0,84 s | 0 MB | ~0,06 s |
+  | Slow 4G (1,6 Mbit/s, 150 ms) | 1. Start | 52,5 s | **28,2 s** | 9,9 MB → **5,2 MB** | ~0,2 s (beide) |
+  | Slow 4G | 2. Start | 0,9 s | 0,84 s | 0 MB | ~0,07 s |
+
+  Größen (gzip): Skiko-Wasm 3,26 MB, App-Wasm 1,55 MB, Emoji-Schrift 0,52 MB, kurvenflug.js 0,11 MB, Rest < 20 kB.
+- **Geprüft:** Auto-Update (0.21.1 → Testversion 0.99.0 wird nach wenigen Sekunden übernommen), Offline-Start ohne
+  Netz, 320 px ohne Konsolenfehler, alle Unit-/Oberflächentests, Lint beider Varianten, APK + AAB gebaut.
+- **Bitte prüfen:** Ladebalken beim ersten Öffnen (am besten im privaten Fenster), zweiter Start < 1 s, Android-Start dunkel.
+- **Zu Marcels Frage „bündeln und verkleinern“:** Ist bereits so (webpack-Produktionsbuild + Binaryen-optimiertes Wasm).
+  Mehr bringt nur noch **Brotli am Server** (5,2 → ca. 4,0 MB, ~25 % weniger) – das ist Server-Konfiguration,
+  die Dateien selbst bleiben gleich. Der große Brocken ist die Grafik-Engine (Skia), die jede Compose-Web-App braucht.
+
 ## 0.21.0 – Play Store vorbereitet + Binomialverteilung (Auftrag vom 16.11., vorgezogen)
 
 - **Version:** 0.21.0 · **Commit:** 3d4f3e6 (Zweig claude/gifted-shannon-657gpr)
