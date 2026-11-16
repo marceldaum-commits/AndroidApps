@@ -40,7 +40,26 @@
   </div>
   <script>
     if (!('WebAssembly' in window)) document.querySelector('#splash p').textContent = 'Dieser Browser ist leider zu alt. Bitte Chrome, Edge, Firefox oder Safari aktualisieren.';
-    if ('serviceWorker' in navigator) window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+    // Automatische Updates ohne Knopf: neue Version wird im Hintergrund geladen und eingespielt –
+    // gleich beim Öffnen, sonst sobald die Seite kurz verlassen wird (keine Lernrunde wird unterbrochen).
+    if ('serviceWorker' in navigator) {
+      const started = Date.now();
+      let waiting = false;
+      const hadController = !!navigator.serviceWorker.controller;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!hadController) return;                      // erste Installation: nichts neu laden
+        if (Date.now() - started < 15000 || document.visibilityState === 'hidden') location.reload();
+        else waiting = true;
+      });
+      document.addEventListener('visibilitychange', () => { if (waiting && document.visibilityState === 'hidden') location.reload(); });
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+          const check = () => reg.update().catch(() => {});
+          setInterval(check, 30 * 60 * 1000);
+          document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+        }).catch(() => {});
+      });
+    }
   </script>
   <script src="wissensgarten.js"></script>
 </body>

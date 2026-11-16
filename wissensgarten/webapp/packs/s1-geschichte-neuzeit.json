@@ -1,0 +1,323 @@
+{
+  "id": "s1-geschichte-neuzeit",
+  "version": 2,
+  "title": "Die Neuzeit",
+  "subject": "geschichte",
+  "grades": [
+    8,
+    9
+  ],
+  "emoji": "⚓",
+  "tier": "free",
+  "description": "Entdeckungsfahrten, Reformation, Französische Revolution, Industrialisierung und Kaiserreich.",
+  "intro": [
+    {
+      "img": "⛵🌍",
+      "text": "1492 wollte Kolumbus nach Indien segeln – und landete in Amerika. Bis zu seinem Tod glaubte er, Asien erreicht zu haben!"
+    },
+    {
+      "img": "📅",
+      "text": "Zeitstrahl der Neuzeit: 1492 Kolumbus · 1517 Luthers Thesen · 1618–1648 Dreißigjähriger Krieg · 1789 Französische Revolution · 1871 Kaiserreich."
+    },
+    {
+      "img": "🧠⚖️",
+      "text": "Merktrick: „Freiheit, Gleichheit, Brüderlichkeit“ – die drei Ideale von 1789 stecken bis heute in unseren Grundrechten."
+    },
+    {
+      "img": "🏭🚂",
+      "text": "Dann kam die Dampfmaschine: Fabriken und Eisenbahnen entstanden, Städte wuchsen rasant – die Industrialisierung veränderte das Leben der Menschen."
+    },
+    {
+      "img": "🐝⚓",
+      "text": "Anker lichten – auf geht’s in die Neuzeit!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "In welchem Jahr erreichte Kolumbus Amerika?",
+      "a": "1492",
+      "choices": [
+        "1517",
+        "1453",
+        "1498"
+      ],
+      "info": "Er glaubte, einen Seeweg nach Indien gefunden zu haben.",
+      "img": "⛵🌎"
+    },
+    {
+      "id": "002",
+      "q": "Wer fand 1498 den Seeweg nach Indien um Afrika herum?",
+      "a": "Vasco da Gama",
+      "choices": [
+        "Christoph Kolumbus",
+        "Ferdinand Magellan",
+        "Bartolomeu Dias"
+      ],
+      "img": "⛵🐘🌶️"
+    },
+    {
+      "id": "003",
+      "q": "Wessen Expedition umsegelte 1519–1522 erstmals die Erde?",
+      "a": "Ferdinand Magellan",
+      "info": "Magellan starb unterwegs, Juan Sebastián Elcano führte die Fahrt zu Ende.",
+      "img": "⛵🌍🔄"
+    },
+    {
+      "id": "004",
+      "q": "Nach wem wurde Amerika benannt?",
+      "a": "Amerigo Vespucci",
+      "choices": [
+        "Christoph Kolumbus",
+        "Hernán Cortés"
+      ],
+      "img": "🗺️✒️"
+    },
+    {
+      "id": "005",
+      "q": "Welches Reich eroberte Hernán Cortés?",
+      "a": "Das Aztekenreich",
+      "choices": [
+        "Das Inkareich",
+        "Das Mayareich"
+      ],
+      "info": "Das Inkareich wurde von Francisco Pizarro erobert.",
+      "img": "🐍🦅🏛️"
+    },
+    {
+      "id": "006",
+      "q": "Wann veröffentlichte Martin Luther seine 95 Thesen?",
+      "a": "1517",
+      "choices": [
+        "1492",
+        "1521",
+        "1555"
+      ],
+      "info": "Sie richteten sich vor allem gegen den Ablasshandel.",
+      "img": "📜🔨🚪"
+    },
+    {
+      "id": "007",
+      "q": "In welcher Stadt veröffentlichte Luther seine Thesen?",
+      "a": "Wittenberg",
+      "choices": [
+        "Worms",
+        "Erfurt",
+        "Augsburg"
+      ],
+      "img": "🚪⛪"
+    },
+    {
+      "id": "008",
+      "q": "Wo übersetzte Luther das Neue Testament ins Deutsche?",
+      "a": "Auf der Wartburg",
+      "info": "Dort lebte er 1521/22 versteckt als „Junker Jörg“.",
+      "img": "🏰✒️📖"
+    },
+    {
+      "id": "009",
+      "q": "Was regelte der Augsburger Religionsfrieden von 1555?",
+      "a": "Der Landesherr bestimmt die Konfession",
+      "info": "Lateinisch: cuius regio, eius religio.",
+      "img": "🤝⛪"
+    },
+    {
+      "id": "010",
+      "q": "Von wann bis wann dauerte der Dreißigjährige Krieg?",
+      "a": "1618–1648",
+      "choices": [
+        "1517–1547",
+        "1756–1786",
+        "1648–1678"
+      ],
+      "info": "Er endete mit dem Westfälischen Frieden.",
+      "img": "⚔️3️⃣0️⃣"
+    },
+    {
+      "id": "011",
+      "q": "Welcher König wurde „Sonnenkönig“ genannt?",
+      "a": "Ludwig XIV.",
+      "choices": [
+        "Ludwig XVI.",
+        "Friedrich II.",
+        "Napoleon"
+      ],
+      "info": "Er ließ das Schloss Versailles ausbauen.",
+      "img": "☀️👑"
+    },
+    {
+      "id": "012",
+      "q": "Wie nennt man eine Herrschaftsform, in der der König uneingeschränkt regiert?",
+      "a": "Absolutismus",
+      "img": "👑🔒"
+    },
+    {
+      "id": "013",
+      "q": "Welcher Philosoph forderte die Teilung der Staatsgewalt in drei Gewalten?",
+      "a": "Montesquieu",
+      "choices": [
+        "Rousseau",
+        "Voltaire",
+        "Kant"
+      ],
+      "img": "⚖️3️⃣"
+    },
+    {
+      "id": "014",
+      "q": "Wer beschrieb Aufklärung als „Ausgang aus der selbstverschuldeten Unmündigkeit“?",
+      "a": "Immanuel Kant",
+      "img": "💡🧠"
+    },
+    {
+      "id": "015",
+      "q": "In welchem Jahr erklärten die USA ihre Unabhängigkeit?",
+      "a": "1776",
+      "choices": [
+        "1789",
+        "1783",
+        "1812"
+      ],
+      "img": "🗽🎆"
+    },
+    {
+      "id": "016",
+      "q": "Welches Ereignis am 14. Juli 1789 gilt als Beginn der Französischen Revolution?",
+      "a": "Sturm auf die Bastille",
+      "info": "Der 14. Juli ist heute Nationalfeiertag in Frankreich.",
+      "img": "🏰🔓🔥"
+    },
+    {
+      "id": "017",
+      "q": "Wie lautet der Wahlspruch der Französischen Revolution?",
+      "a": "Freiheit, Gleichheit, Brüderlichkeit",
+      "img": "🤝⚖️🕊️"
+    },
+    {
+      "id": "018",
+      "q": "In welchem Jahr krönte sich Napoleon zum Kaiser der Franzosen?",
+      "a": "1804",
+      "choices": [
+        "1789",
+        "1799",
+        "1815"
+      ],
+      "img": "👑🗡️"
+    },
+    {
+      "id": "019",
+      "q": "Wo wurde Napoleon 1815 endgültig besiegt?",
+      "a": "Bei Waterloo",
+      "choices": [
+        "Bei Leipzig",
+        "Bei Austerlitz",
+        "Bei Jena"
+      ],
+      "img": "⚔️🏁"
+    },
+    {
+      "id": "020",
+      "q": "Welche Versammlung ordnete Europa 1814/15 nach Napoleon neu?",
+      "a": "Wiener Kongress",
+      "img": "💃🎻🗺️"
+    },
+    {
+      "id": "021",
+      "q": "Wo tagte 1848/49 die erste deutsche Nationalversammlung?",
+      "a": "In der Paulskirche in Frankfurt",
+      "choices": [
+        "Im Reichstag in Berlin",
+        "In der Wartburg",
+        "Im Hambacher Schloss"
+      ],
+      "img": "⛪🗳️"
+    },
+    {
+      "id": "022",
+      "q": "Wer verbesserte die Dampfmaschine entscheidend (Patent 1769)?",
+      "a": "James Watt",
+      "img": "🚂💨⚙️"
+    },
+    {
+      "id": "023",
+      "q": "In welchem Land begann die Industrialisierung?",
+      "a": "England (Großbritannien)",
+      "choices": [
+        "Deutschland",
+        "Frankreich",
+        "USA"
+      ],
+      "img": "🏭⚙️☕"
+    },
+    {
+      "id": "024",
+      "q": "Zwischen welchen Städten fuhr 1835 die erste deutsche Eisenbahn?",
+      "a": "Nürnberg und Fürth",
+      "choices": [
+        "Leipzig und Dresden",
+        "Berlin und Potsdam",
+        "Köln und Bonn"
+      ],
+      "info": "Die Lokomotive hieß „Adler“.",
+      "img": "🚂🌭"
+    },
+    {
+      "id": "025",
+      "q": "Wie nennt man die Not der Arbeiterschaft im 19. Jahrhundert?",
+      "a": "Soziale Frage",
+      "img": "🏭😞"
+    },
+    {
+      "id": "026",
+      "q": "Wer schrieb 1848 das „Kommunistische Manifest“?",
+      "a": "Karl Marx und Friedrich Engels",
+      "img": "📕✊"
+    },
+    {
+      "id": "027",
+      "q": "Wann wurde das Deutsche Kaiserreich gegründet?",
+      "a": "18. Januar 1871",
+      "choices": [
+        "3. Oktober 1871",
+        "18. März 1848",
+        "9. November 1918"
+      ],
+      "info": "Die Kaiserproklamation fand im Spiegelsaal von Versailles statt.",
+      "img": "👑🏰"
+    },
+    {
+      "id": "028",
+      "q": "Wer war der erste Reichskanzler des Kaiserreichs?",
+      "a": "Otto von Bismarck",
+      "img": "🎩🧐"
+    },
+    {
+      "id": "029",
+      "q": "Wer wurde 1871 erster Deutscher Kaiser?",
+      "a": "Wilhelm I.",
+      "choices": [
+        "Wilhelm II.",
+        "Friedrich III.",
+        "Friedrich II."
+      ],
+      "img": "👑👴"
+    },
+    {
+      "id": "030",
+      "q": "Welche Versicherung führte Bismarck 1883 als erste ein?",
+      "a": "Krankenversicherung",
+      "choices": [
+        "Arbeitslosenversicherung",
+        "Pflegeversicherung",
+        "Rentenversicherung"
+      ],
+      "info": "Es folgten Unfall- (1884) sowie Invaliditäts- und Altersversicherung (1889).",
+      "img": "🏥💶"
+    },
+    {
+      "id": "031",
+      "q": "Welcher Kaiser entließ Bismarck im Jahr 1890?",
+      "a": "Wilhelm II.",
+      "img": "👑⚓"
+    }
+  ]
+}

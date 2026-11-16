@@ -17,6 +17,8 @@ data class Features(
     val selfUpdate: Boolean = false,
     /** Wissens-Safari (Kamera + Bilderkennung) */
     val safari: Boolean = false,
+    /** Wissenspakete ohne App-Update nachladen (nur Daten) */
+    val packUpdates: Boolean = false,
     /** Tägliche Gieß-Erinnerung als Benachrichtigung */
     val reminders: Boolean = false,
     /** Geräte-Sync über Google Drive */
@@ -61,6 +63,8 @@ interface AppHost {
     /** Gesunde Lernzeit: bisherige Vordergrund-Zeit speichern */
     fun flushUsage() {}
     suspend fun checkUpdate(installed: String): AppRelease? = null
+    /** Neue Wissenspakete (nur Daten) nachladen; liefert die Zahl neuer/aktualisierter Pakete. Web: kommt mit der WebApp. */
+    suspend fun fetchPackUpdates(known: Map<String, Int>): Int = 0
     /** QR-Code mit der Kamera scannen (nur wenn features.qrScan) */
     fun scanQr(onResult: (String?) -> Unit) { onResult(null) }
     /** Spracherkennung vorhanden? (Sprech-Spiel) */

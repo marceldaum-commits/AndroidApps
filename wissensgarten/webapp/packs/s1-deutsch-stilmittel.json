@@ -1,0 +1,326 @@
+{
+  "id": "s1-deutsch-stilmittel",
+  "version": 2,
+  "title": "Stilmittel erkennen",
+  "subject": "deutsch",
+  "grades": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "🎭",
+  "tier": "free",
+  "description": "Rhetorische Stilmittel an eigenen Beispielsätzen erkennen und benennen.",
+  "intro": [
+    {
+      "img": "🥛📺",
+      "text": "„Milch macht müde Männer munter“ – ein alter Werbespruch. Warum bleibt er im Kopf? Weil ein Stilmittel drinsteckt: die Alliteration!"
+    },
+    {
+      "img": "🎭✨",
+      "text": "Stilmittel sind die Werkzeuge der Sprache. Man findet sie in Gedichten, aber auch in Songs, Reden und Werbung. Sie machen Texte lebendig und wirkungsvoll."
+    },
+    {
+      "img": "🔍🐻",
+      "text": "Lerntrick: Achte auf Signalwörter. Steht „wie“ oder „als ob“ da, ist es ein Vergleich. Fehlt das „wie“, ist es oft eine Metapher."
+    },
+    {
+      "img": "📝💡",
+      "text": "Wichtig für die Analyse: Benenne nicht nur das Stilmittel, sondern sag auch, wie es wirkt. Und: Denk dir zu jedem Stilmittel einen eigenen Beispielsatz aus!"
+    },
+    {
+      "img": "🚀🏆",
+      "text": "Bald erkennst du Stilmittel überall – sogar in der Werbung. Auf geht’s!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "„Sie hat ein Herz aus Stein.“",
+      "a": "Metapher",
+      "choices": [
+        "Vergleich",
+        "Personifikation",
+        "Alliteration"
+      ],
+      "info": "Bildhafter Ausdruck ohne „wie“.",
+      "img": "❤️🗿"
+    },
+    {
+      "id": "002",
+      "q": "„Er ist stark wie ein Bär.“",
+      "a": "Vergleich",
+      "choices": [
+        "Metapher",
+        "Personifikation",
+        "Ellipse"
+      ],
+      "info": "Erkennbar an „wie“ oder „als ob“.",
+      "img": "🐻💪"
+    },
+    {
+      "id": "003",
+      "q": "„Milch macht müde Männer munter.“",
+      "a": "Alliteration",
+      "choices": [
+        "Anapher",
+        "Epipher",
+        "Ellipse"
+      ],
+      "info": "Gleicher Anfangslaut aufeinanderfolgender Wörter.",
+      "img": "🥛Ⓜ️Ⓜ️"
+    },
+    {
+      "id": "004",
+      "q": "„Die Sonne lacht vom Himmel.“",
+      "a": "Personifikation",
+      "choices": [
+        "Vergleich",
+        "Alliteration",
+        "Ironie"
+      ],
+      "info": "Unbelebtes erhält menschliche Eigenschaften.",
+      "img": "🌞😂"
+    },
+    {
+      "id": "005",
+      "q": "„Ich habe es dir schon tausendmal gesagt.“",
+      "a": "Hyperbel",
+      "choices": [
+        "Litotes",
+        "Euphemismus",
+        "Ellipse"
+      ],
+      "info": "Starke Übertreibung.",
+      "img": "🔊💯"
+    },
+    {
+      "id": "006",
+      "q": "„Wir wollen Frieden. Wir wollen Freiheit. Wir wollen Gerechtigkeit.“",
+      "a": "Anapher",
+      "choices": [
+        "Epipher",
+        "Oxymoron",
+        "Chiasmus"
+      ],
+      "info": "Wiederholung am Anfang aufeinanderfolgender Sätze.",
+      "img": "🚦🔁"
+    },
+    {
+      "id": "007",
+      "q": "„Ich bin dafür, du bist dafür, alle sind dafür.“",
+      "a": "Epipher",
+      "choices": [
+        "Anapher",
+        "Chiasmus",
+        "Hyperbel"
+      ],
+      "info": "Wiederholung am Ende aufeinanderfolgender Sätze.",
+      "img": "🔁🔚"
+    },
+    {
+      "id": "008",
+      "q": "„Wer hat schon Lust auf Montag?“ (Antwort ist klar)",
+      "a": "rhetorische Frage",
+      "img": "❓🙄"
+    },
+    {
+      "id": "009",
+      "q": "„bittersüß“, „ein alter Jüngling“",
+      "a": "Oxymoron",
+      "choices": [
+        "Antithese",
+        "Hyperbel",
+        "Vergleich"
+      ],
+      "info": "Zwei widersprüchliche Begriffe in einem Ausdruck.",
+      "img": "🍬🍋"
+    },
+    {
+      "id": "010",
+      "q": "„Die Kunst ist lang, und kurz ist unser Leben.“ (Goethe)",
+      "a": "Chiasmus",
+      "choices": [
+        "Anapher",
+        "Parallelismus",
+        "Klimax"
+      ],
+      "info": "Überkreuzstellung: lang – kurz / Kunst – Leben.",
+      "img": "✖️🔀"
+    },
+    {
+      "id": "011",
+      "q": "„Heute rot, morgen tot.“",
+      "a": "Antithese",
+      "choices": [
+        "Klimax",
+        "Anapher",
+        "Euphemismus"
+      ],
+      "info": "Gegenüberstellung von Gegensätzen.",
+      "img": "🌹⚰️"
+    },
+    {
+      "id": "012",
+      "q": "„Er kam, sah und siegte.“",
+      "a": "Klimax",
+      "choices": [
+        "Antiklimax",
+        "Euphemismus",
+        "Oxymoron"
+      ],
+      "info": "Steigerung vom schwächeren zum stärkeren Ausdruck.",
+      "img": "📈🏆"
+    },
+    {
+      "id": "013",
+      "q": "„Opa ist von uns gegangen.“ (für „gestorben“)",
+      "a": "Euphemismus",
+      "choices": [
+        "Hyperbel",
+        "Ironie",
+        "Metapher"
+      ],
+      "info": "Beschönigende Umschreibung.",
+      "img": "🌸☁️"
+    },
+    {
+      "id": "014",
+      "q": "„Na toll, schon wieder Regen!“",
+      "a": "Ironie",
+      "img": "🌧️👍"
+    },
+    {
+      "id": "015",
+      "q": "„Je früher, desto besser.“",
+      "a": "Ellipse",
+      "choices": [
+        "Inversion",
+        "Antithese",
+        "Litotes"
+      ],
+      "info": "Unvollständiger Satz – Teile werden weggelassen.",
+      "img": "✂️💬"
+    },
+    {
+      "id": "016",
+      "q": "„Die Bienen summen, es brummt und zischt.“",
+      "a": "Onomatopoesie (Lautmalerei)",
+      "img": "🐝🔊"
+    },
+    {
+      "id": "017",
+      "q": "„Der Himmel ist blau, die Wiese ist grün.“",
+      "a": "Parallelismus",
+      "choices": [
+        "Chiasmus",
+        "Anapher",
+        "Klimax"
+      ],
+      "info": "Gleicher Satzbau in aufeinanderfolgenden Sätzen.",
+      "img": "🛤️"
+    },
+    {
+      "id": "018",
+      "q": "Wie heißt eine sprachliche Neuschöpfung, z. B. „Handyverbotszone“?",
+      "a": "Neologismus",
+      "img": "🆕🔤"
+    },
+    {
+      "id": "019",
+      "q": "„Wir brauchen ein Dach über dem Kopf.“ (Dach für Haus)",
+      "a": "Pars pro toto",
+      "info": "Ein Teil steht für das Ganze.",
+      "img": "🧩➡️🏠"
+    },
+    {
+      "id": "020",
+      "q": "„Der Wind flüstert in den Bäumen.“",
+      "a": "Personifikation",
+      "choices": [
+        "Vergleich",
+        "Alliteration",
+        "Hyperbel"
+      ],
+      "img": "🌬️🤫"
+    },
+    {
+      "id": "021",
+      "q": "„Das war gar nicht mal so schlecht.“ (= ziemlich gut)",
+      "a": "Litotes",
+      "info": "Untertreibung durch Verneinung des Gegenteils.",
+      "img": "👎❌"
+    },
+    {
+      "id": "022",
+      "q": "Die Taube steht für Frieden, das Herz für Liebe.",
+      "a": "Symbol",
+      "img": "🕊️❤️"
+    },
+    {
+      "id": "023",
+      "q": "„Groß war die Freude.“",
+      "a": "Inversion",
+      "info": "Umstellung der gewohnten Wortstellung.",
+      "img": "🙃🔀"
+    },
+    {
+      "id": "024",
+      "q": "„Ich warte hier schon eine Ewigkeit!“",
+      "a": "Hyperbel",
+      "img": "♾️⏳"
+    },
+    {
+      "id": "025",
+      "q": "„Das Leben ist eine Reise.“",
+      "a": "Metapher",
+      "choices": [
+        "Vergleich",
+        "Ironie",
+        "Euphemismus"
+      ],
+      "img": "🌍🎒"
+    },
+    {
+      "id": "026",
+      "q": "„mit Kind und Kegel“",
+      "a": "Alliteration",
+      "choices": [
+        "Anapher",
+        "Epipher",
+        "Ellipse"
+      ],
+      "img": "🧒🎳"
+    },
+    {
+      "id": "027",
+      "q": "„ein schreiendes Rot“",
+      "a": "Synästhesie",
+      "info": "Vermischung von Sinneseindrücken (Hören und Sehen).",
+      "img": "🔴📢"
+    },
+    {
+      "id": "028",
+      "q": "„Und es wallet und siedet und brauset und zischt“ (Schiller)",
+      "a": "Polysyndeton",
+      "info": "Häufung von Konjunktionen, hier „und“.",
+      "img": "➕➕➕"
+    },
+    {
+      "id": "029",
+      "q": "„Äpfel, Birnen, Pflaumen, Kirschen – das ganze Obst lag am Boden.“",
+      "a": "Akkumulation",
+      "info": "Aufzählung von Unterbegriffen zu einem Oberbegriff.",
+      "img": "🍎🍐🍒"
+    },
+    {
+      "id": "030",
+      "q": "Ein Stilmittel, das etwas Gemeintes durch sein Gegenteil ausdrückt",
+      "a": "Ironie",
+      "img": "😏🔄"
+    }
+  ]
+}

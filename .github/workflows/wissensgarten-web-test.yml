@@ -1,0 +1,51 @@
+# Hält den Branch „wissensgarten-test“ aktuell. Von dort holt sich der Server alle 5 Minuten die fertige WebApp
+# (Ordner wissensgarten/webapp/) und liefert sie unter https://wissensgarten-test.mathenachhilfe-online.com aus.
+#
+# Läuft automatisch, sobald auf dem Entwicklungs-Branch die WebApp oder die Meldung an den Leitstand geändert wurde.
+# Der Branch wird nur vorgespult (kein Überschreiben). „wissensgarten-live“ setzt nur der Leitstand nach dem Test.
+name: Wissensgarten WebApp → Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["ccr-0e3accf3-cdxlc8"]
+    paths: ["wissensgarten/webapp/**", "wissensgarten/MELDUNG_AN_LEITSTAND.md", ".github/workflows/wissensgarten-web-test.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: wissensgarten-web-test
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ccr-0e3accf3-cdxlc8
+          fetch-depth: 0
+
+      - name: WebApp prüfen (vollständig, nur erlaubte Dateien, gleiche Version wie die Android-App)
+        working-directory: wissensgarten
+        run: |
+          set -euo pipefail
+          for f in index.html sw.js wissensgarten.js wg-platform.js manifest.webmanifest version.json packs/index.json packs/versions.json; do
+            [ -s "webapp/$f" ] || { echo "::error::webapp/$f fehlt"; exit 1; }
+          done
+          node --check webapp/sw.js
+          node --check webapp/wg-platform.js
+          bad=$(find webapp -type f ! -regex '.*\.\(html\|css\|js\|mjs\|json\|webmanifest\|svg\|png\|jpg\|webp\|ico\|woff2\|ttf\|otf\|txt\|wasm\|map\|mp3\|ogg\|wav\)$' || true)
+          [ -z "$bad" ] || { echo "::error::Nicht erlaubte Dateien: $bad"; exit 1; }
+          [ -z "$(find webapp -type l)" ] || { echo "::error::Symlinks in webapp/"; exit 1; }
+          size=$(du -sm webapp | cut -f1); [ "$size" -le 120 ] || { echo "::error::webapp ist $size MB groß (erlaubt: 120)"; exit 1; }
+          # Gleichstand: gleiche Versionsnummer und gleiche Wissenspakete wie die Android-App
+          app=$(grep -oP 'versionName = "\K[^"]+' app/build.gradle.kts)
+          web=$(grep -oP '"version": "\K[^"]+' webapp/version.json)
+          [ "$app" = "$web" ] || { echo "::error::WebApp ist Version $web, Android-App ist $app – bitte ./gradlew :webApp:exportWebApp neu bauen"; exit 1; }
+          diff -rq content/src/main/assets/packs webapp/packs --exclude=index.json --exclude=versions.json || { echo "::error::Wissenspakete von App und WebApp unterscheiden sich"; exit 1; }
+          echo "WebApp $web, $size MB – in Ordnung"
+
+      - name: Branch wissensgarten-test vorspulen
+        run: git push origin HEAD:refs/heads/wissensgarten-test

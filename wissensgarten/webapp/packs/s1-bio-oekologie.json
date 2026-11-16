@@ -1,0 +1,325 @@
+{
+  "id": "s1-bio-oekologie",
+  "version": 2,
+  "title": "Ökologie",
+  "subject": "biologie",
+  "grades": [
+    7,
+    8,
+    9,
+    10
+  ],
+  "emoji": "🌱",
+  "tier": "free",
+  "description": "Nahrungsketten, Fotosynthese und wichtige Begriffe rund ums Ökosystem.",
+  "intro": [
+    {
+      "img": "🌊🦠",
+      "text": "Winzige Algen im Meer, das Phytoplankton, produzieren etwa die Hälfte des Sauerstoffs auf der Erde – jeder zweite Atemzug kommt aus dem Ozean!"
+    },
+    {
+      "img": "🍃🏭",
+      "text": "Ein Blatt ist wie eine Solarfabrik: Mit Sonnenlicht baut es aus Kohlenstoffdioxid und Wasser Traubenzucker – und Sauerstoff fällt dabei ab."
+    },
+    {
+      "img": "🔄🔥",
+      "text": "Eselsbrücke: Die Zellatmung ist die Fotosynthese rückwärts. Was die Pflanze aufbaut, verbrennen Lebewesen wieder zu CO₂ und Wasser."
+    },
+    {
+      "img": "🌾🐇🦊",
+      "text": "Nahrungskette: Pflanze → Pflanzenfresser → Fleischfresser. Die Destruenten sind die Müllabfuhr der Natur: Sie machen aus Resten wieder Nährstoffe."
+    },
+    {
+      "img": "🐝🌱",
+      "text": "Ich als Hummel weiß: In der Natur hängt alles zusammen. Finde heraus, wie – los geht's!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wortgleichung der Fotosynthese?",
+      "a": "Kohlenstoffdioxid + Wasser → Traubenzucker + Sauerstoff",
+      "choices": [
+        "Traubenzucker + Sauerstoff → Kohlenstoffdioxid + Wasser",
+        "Sauerstoff + Wasser → Traubenzucker + Kohlenstoffdioxid",
+        "Kohlenstoffdioxid + Sauerstoff → Traubenzucker + Wasser"
+      ],
+      "info": "Energiequelle ist das Sonnenlicht.",
+      "img": "☀️🌿"
+    },
+    {
+      "id": "002",
+      "q": "Summenformel-Gleichung der Fotosynthese?",
+      "a": "6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂",
+      "choices": [
+        "C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O",
+        "6 CO₂ + 6 O₂ → C₆H₁₂O₆ + 6 H₂O",
+        "3 CO₂ + 3 H₂O → C₆H₁₂O₆ + 3 O₂"
+      ],
+      "img": "🧪🌿"
+    },
+    {
+      "id": "003",
+      "q": "Gleichung der Zellatmung?",
+      "a": "C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O",
+      "info": "Dabei wird Energie freigesetzt – die Umkehrung der Fotosynthese.",
+      "img": "🔥🍬"
+    },
+    {
+      "id": "004",
+      "q": "In welchen Zellbestandteilen läuft die Fotosynthese ab?",
+      "a": "Chloroplasten",
+      "img": "🍃🏭"
+    },
+    {
+      "id": "005",
+      "q": "Wie heißt der grüne Blattfarbstoff?",
+      "a": "Chlorophyll",
+      "choices": [
+        "Hämoglobin",
+        "Carotin",
+        "Melanin"
+      ],
+      "img": "💚"
+    },
+    {
+      "id": "006",
+      "q": "Welches Gas geben Pflanzen bei der Fotosynthese ab?",
+      "a": "Sauerstoff",
+      "choices": [
+        "Kohlenstoffdioxid",
+        "Stickstoff",
+        "Methan"
+      ],
+      "img": "🌳💨"
+    },
+    {
+      "id": "007",
+      "q": "Öffnungen an der Blattunterseite für den Gasaustausch?",
+      "a": "Spaltöffnungen (Stomata)",
+      "img": "👄🍃"
+    },
+    {
+      "id": "008",
+      "q": "Lebewesen, die aus anorganischen Stoffen energiereiche organische Stoffe aufbauen?",
+      "a": "Produzenten",
+      "choices": [
+        "Konsumenten",
+        "Destruenten",
+        "Parasiten"
+      ],
+      "info": "Vor allem grüne Pflanzen und Algen.",
+      "img": "🌾"
+    },
+    {
+      "id": "009",
+      "q": "Wie heißen Lebewesen, die tote organische Stoffe zersetzen?",
+      "a": "Destruenten",
+      "choices": [
+        "Produzenten",
+        "Konsumenten",
+        "Symbionten"
+      ],
+      "info": "Zum Beispiel Bakterien und Pilze.",
+      "img": "🍄"
+    },
+    {
+      "id": "010",
+      "q": "Wie nennt man Pflanzenfresser in einer Nahrungskette?",
+      "a": "Primärkonsumenten (Konsumenten 1. Ordnung)",
+      "img": "🐄"
+    },
+    {
+      "id": "011",
+      "q": "Letztes Glied einer Nahrungskette ohne natürliche Fressfeinde?",
+      "a": "Endkonsument",
+      "choices": [
+        "Produzent",
+        "Primärkonsument",
+        "Destruent"
+      ],
+      "img": "🦅"
+    },
+    {
+      "id": "012",
+      "q": "Welche Nahrungskette ist richtig geordnet?",
+      "a": "Gras → Heuschrecke → Frosch → Storch",
+      "choices": [
+        "Heuschrecke → Gras → Frosch → Storch",
+        "Gras → Frosch → Heuschrecke → Storch",
+        "Storch → Frosch → Heuschrecke → Gras"
+      ],
+      "info": "Der Pfeil zeigt: „wird gefressen von“.",
+      "img": "🌾🦗🐸"
+    },
+    {
+      "id": "013",
+      "q": "Was ist ein Nahrungsnetz?",
+      "a": "Mehrere miteinander verknüpfte Nahrungsketten",
+      "img": "🕸️"
+    },
+    {
+      "id": "014",
+      "q": "Wie viel Energie wird etwa an die nächste Stufe der Nahrungskette weitergegeben?",
+      "a": "Etwa 10 %",
+      "choices": [
+        "Etwa 50 %",
+        "Etwa 90 %",
+        "100 %"
+      ],
+      "info": "Der Rest wird vor allem als Wärme abgegeben.",
+      "img": "🔟"
+    },
+    {
+      "id": "015",
+      "q": "Was ist ein Biotop?",
+      "a": "Der Lebensraum mit seinen unbelebten Bedingungen",
+      "img": "🏞️"
+    },
+    {
+      "id": "016",
+      "q": "Was ist eine Biozönose?",
+      "a": "Die Lebensgemeinschaft aller Lebewesen in einem Biotop",
+      "img": "🐾"
+    },
+    {
+      "id": "017",
+      "q": "Ökosystem = ?",
+      "a": "Biotop + Biozönose",
+      "choices": [
+        "Population + Art",
+        "Produzenten + Konsumenten",
+        "Biotop + Population"
+      ],
+      "img": "🏞️➕🐾"
+    },
+    {
+      "id": "018",
+      "q": "Was ist eine Population?",
+      "a": "Alle Individuen einer Art in einem Gebiet zur gleichen Zeit",
+      "img": "🐟🐟🐟"
+    },
+    {
+      "id": "019",
+      "q": "Welcher Faktor ist ein abiotischer Umweltfaktor?",
+      "a": "Temperatur",
+      "choices": [
+        "Fressfeinde",
+        "Parasiten",
+        "Konkurrenten"
+      ],
+      "img": "🌡️"
+    },
+    {
+      "id": "020",
+      "q": "Was sind biotische Umweltfaktoren?",
+      "a": "Einflüsse, die von Lebewesen ausgehen",
+      "img": "🐺"
+    },
+    {
+      "id": "021",
+      "q": "Zusammenleben zweier Arten zum gegenseitigen Vorteil?",
+      "a": "Symbiose",
+      "choices": [
+        "Parasitismus",
+        "Konkurrenz",
+        "Räuber-Beute-Beziehung"
+      ],
+      "img": "🤝"
+    },
+    {
+      "id": "022",
+      "q": "Was ist Parasitismus?",
+      "a": "Ein Lebewesen nutzt ein anderes und schadet ihm dabei",
+      "img": "🦟"
+    },
+    {
+      "id": "023",
+      "q": "Flechten sind eine Symbiose aus …",
+      "a": "Pilz und Alge",
+      "choices": [
+        "Moos und Pilz",
+        "Farn und Alge",
+        "Moos und Alge"
+      ],
+      "img": "🍄🌿"
+    },
+    {
+      "id": "024",
+      "q": "Was versteht man unter der ökologischen Nische?",
+      "a": "Alle Ansprüche und Beziehungen einer Art zu ihrer Umwelt",
+      "info": "Man sagt auch: der „Beruf“ einer Art.",
+      "img": "🏠"
+    },
+    {
+      "id": "025",
+      "q": "Konkurrenzausschlussprinzip?",
+      "a": "Gleiche Nische: keine dauerhafte Koexistenz zweier Arten",
+      "img": "🥊"
+    },
+    {
+      "id": "026",
+      "q": "Bereich, in dem eine Art am besten gedeiht?",
+      "a": "Optimum",
+      "choices": [
+        "Pessimum",
+        "Minimum",
+        "Maximum"
+      ],
+      "img": "👌"
+    },
+    {
+      "id": "027",
+      "q": "Was ist ein Bioindikator?",
+      "a": "Ein Lebewesen, das Umweltbedingungen anzeigt",
+      "info": "Beispiel: Flechten zeigen die Luftqualität an.",
+      "img": "🚦🌱"
+    },
+    {
+      "id": "028",
+      "q": "Was ist Eutrophierung?",
+      "a": "Überdüngung eines Gewässers mit Nährstoffen",
+      "info": "Folge: Algenblüte und Sauerstoffmangel.",
+      "img": "🌊🧪"
+    },
+    {
+      "id": "029",
+      "q": "Welcher Vorgang bindet CO₂ aus der Luft?",
+      "a": "Fotosynthese",
+      "choices": [
+        "Zellatmung",
+        "Verbrennung",
+        "Zersetzung"
+      ],
+      "img": "🌳☁️"
+    },
+    {
+      "id": "030",
+      "q": "Wichtigstes vom Menschen freigesetztes Treibhausgas?",
+      "a": "Kohlenstoffdioxid (CO₂)",
+      "choices": [
+        "Sauerstoff (O₂)",
+        "Stickstoff (N₂)",
+        "Argon (Ar)"
+      ],
+      "img": "🏭🌡️"
+    },
+    {
+      "id": "031",
+      "q": "Stockwerke des Waldes von unten nach oben?",
+      "a": "Wurzel-, Moos-, Kraut-, Strauch-, Baumschicht",
+      "img": "🏢🌲"
+    },
+    {
+      "id": "032",
+      "q": "Vom Menschen eingeschleppte, gebietsfremde Pflanzenarten heißen …",
+      "a": "Neophyten",
+      "choices": [
+        "Endemiten",
+        "Epiphyten",
+        "Saprophyten"
+      ],
+      "img": "🚢🌺"
+    }
+  ]
+}

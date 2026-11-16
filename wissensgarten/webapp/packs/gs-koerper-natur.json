@@ -1,0 +1,393 @@
+{
+  "id": "gs-koerper-natur",
+  "version": 2,
+  "title": "Körper und Natur",
+  "subject": "sachunterricht",
+  "grades": [
+    3,
+    4
+  ],
+  "emoji": "🌻",
+  "tier": "free",
+  "description": "Körper und Sinne, Jahreszeiten, Wetter und Pflanzen kennenlernen.",
+  "intro": [
+    {
+      "img": "✋🤔",
+      "text": "Rate mal: Was ist dein größtes Sinnesorgan? Deine Haut! Sie spürt warm, kalt und jedes Kitzeln."
+    },
+    {
+      "img": "👀👂👃👅",
+      "text": "Du hast 5 Sinne: sehen mit den Augen, hören mit den Ohren, riechen mit der Nase, schmecken mit der Zunge und fühlen mit der Haut."
+    },
+    {
+      "img": "❤️💨",
+      "text": "Dein Herz ist eine Pumpe, die das Blut durch den Körper schickt. Die Lunge holt Luft. Die Rippen schützen beide."
+    },
+    {
+      "img": "🌻💧☀️",
+      "text": "Pflanzen sind schlau: Die Wurzel trinkt Wasser, der Stängel ist wie ein Strohhalm, und die Blätter brauchen Sonnenlicht."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's, kleiner Forscher! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Von wie vielen Sinnen spricht man meistens?",
+      "a": "5",
+      "choices": [
+        "3",
+        "7",
+        "4"
+      ],
+      "info": "Sehen, Hören, Riechen, Schmecken, Fühlen",
+      "img": "👀👂👃"
+    },
+    {
+      "id": "002",
+      "q": "Mit welchem Sinnesorgan riechst du?",
+      "a": "Nase",
+      "choices": [
+        "Zunge",
+        "Ohr",
+        "Haut"
+      ],
+      "img": "👃🌹"
+    },
+    {
+      "id": "003",
+      "q": "Mit welchem Sinnesorgan schmeckst du?",
+      "a": "Zunge",
+      "choices": [
+        "Ohr",
+        "Auge",
+        "Haut"
+      ],
+      "img": "👅🍭"
+    },
+    {
+      "id": "004",
+      "q": "Mit welchem Sinnesorgan hörst du?",
+      "a": "Ohr",
+      "choices": [
+        "Nase",
+        "Zunge",
+        "Auge"
+      ],
+      "img": "👂🎵"
+    },
+    {
+      "id": "005",
+      "q": "Welches ist unser größtes Sinnesorgan?",
+      "a": "Haut",
+      "choices": [
+        "Auge",
+        "Ohr",
+        "Nase"
+      ],
+      "info": "Mit der Haut fühlen wir Wärme, Kälte und Schmerz.",
+      "img": "✋🧤"
+    },
+    {
+      "id": "006",
+      "q": "Was regelt die Pupille im Auge?",
+      "a": "Wie viel Licht ins Auge fällt",
+      "choices": [
+        "Die Farbe der Augen",
+        "Wie laut wir hören",
+        "Wie gut wir riechen"
+      ],
+      "img": "👁️💡"
+    },
+    {
+      "id": "007",
+      "q": "Welches Organ pumpt das Blut durch den Körper?",
+      "a": "Herz",
+      "choices": [
+        "Lunge",
+        "Magen",
+        "Leber"
+      ],
+      "img": "💓"
+    },
+    {
+      "id": "008",
+      "q": "Mit welchem Organ atmen wir?",
+      "a": "Lunge",
+      "choices": [
+        "Herz",
+        "Magen",
+        "Niere"
+      ],
+      "img": "😤🌬️"
+    },
+    {
+      "id": "009",
+      "q": "Was schützt unser Gehirn?",
+      "a": "Der Schädel",
+      "choices": [
+        "Die Rippen",
+        "Die Wirbelsäule",
+        "Das Becken"
+      ],
+      "img": "💀🧠"
+    },
+    {
+      "id": "010",
+      "q": "Was schützt Herz und Lunge?",
+      "a": "Die Rippen",
+      "choices": [
+        "Der Schädel",
+        "Das Becken",
+        "Die Kniescheibe"
+      ],
+      "img": "🦴❤️"
+    },
+    {
+      "id": "011",
+      "q": "Wie viele Knochen hat ein Erwachsener ungefähr?",
+      "a": "etwa 200",
+      "choices": [
+        "etwa 20",
+        "etwa 50",
+        "etwa 1000"
+      ],
+      "info": "Genau sind es meist 206 Knochen.",
+      "img": "🦴💀"
+    },
+    {
+      "id": "012",
+      "q": "Wie viele Milchzähne hat ein Kind?",
+      "a": "20",
+      "choices": [
+        "32",
+        "10",
+        "28"
+      ],
+      "img": "🥛🦷"
+    },
+    {
+      "id": "013",
+      "q": "Wie viele Zähne hat ein Erwachsener mit Weisheitszähnen?",
+      "a": "32",
+      "choices": [
+        "20",
+        "24",
+        "40"
+      ],
+      "img": "🦷😁"
+    },
+    {
+      "id": "014",
+      "q": "Welches Getränk ist der beste Durstlöscher?",
+      "a": "Wasser",
+      "choices": [
+        "Cola",
+        "Limonade",
+        "Kakao"
+      ],
+      "img": "💧🥤"
+    },
+    {
+      "id": "015",
+      "q": "Wie viele Jahreszeiten gibt es bei uns?",
+      "a": "4",
+      "choices": [
+        "2",
+        "3",
+        "12"
+      ],
+      "img": "🌸🍂❄️"
+    },
+    {
+      "id": "016",
+      "q": "In welcher Jahreszeit fallen viele Blätter von den Bäumen?",
+      "a": "Herbst",
+      "choices": [
+        "Frühling",
+        "Sommer",
+        "Winter"
+      ],
+      "img": "🍂🍁"
+    },
+    {
+      "id": "017",
+      "q": "In welchem Monat beginnt der Frühling?",
+      "a": "März",
+      "choices": [
+        "Februar",
+        "April",
+        "Mai"
+      ],
+      "img": "🌷🐣"
+    },
+    {
+      "id": "018",
+      "q": "Welcher Monat gehört zum Sommer?",
+      "a": "Juli",
+      "choices": [
+        "März",
+        "Oktober",
+        "Januar"
+      ],
+      "img": "☀️🏖️"
+    },
+    {
+      "id": "019",
+      "q": "In welcher Jahreszeit sind die Tage am längsten?",
+      "a": "Sommer",
+      "choices": [
+        "Winter",
+        "Herbst",
+        "Frühling"
+      ],
+      "img": "🌞🌅"
+    },
+    {
+      "id": "020",
+      "q": "Bei wie viel Grad Celsius gefriert Wasser?",
+      "a": "0 °C",
+      "choices": [
+        "10 °C",
+        "100 °C",
+        "−10 °C"
+      ],
+      "img": "❄️⛸️"
+    },
+    {
+      "id": "021",
+      "q": "Bei wie viel Grad Celsius kocht Wasser?",
+      "a": "100 °C",
+      "choices": [
+        "50 °C",
+        "1000 °C",
+        "0 °C"
+      ],
+      "info": "Das gilt auf Meereshöhe.",
+      "img": "♨️💯"
+    },
+    {
+      "id": "022",
+      "q": "Womit misst man die Temperatur?",
+      "a": "Thermometer",
+      "choices": [
+        "Lineal",
+        "Waage",
+        "Barometer"
+      ],
+      "img": "🌡️"
+    },
+    {
+      "id": "023",
+      "q": "Was kann entstehen, wenn die Sonne in den Regen scheint?",
+      "a": "Ein Regenbogen",
+      "choices": [
+        "Ein Gewitter",
+        "Nebel",
+        "Hagel"
+      ],
+      "img": "🌦️🌈"
+    },
+    {
+      "id": "024",
+      "q": "Was ist Hagel?",
+      "a": "Eiskörner, die vom Himmel fallen",
+      "choices": [
+        "Weiche Schneeflocken",
+        "Nebeltröpfchen",
+        "Tau am Morgen"
+      ],
+      "img": "🌨️⚪"
+    },
+    {
+      "id": "025",
+      "q": "Was bemerkt man bei einem Gewitter zuerst?",
+      "a": "Den Blitz",
+      "choices": [
+        "Den Donner",
+        "Beides genau gleichzeitig"
+      ],
+      "info": "Licht ist viel schneller als Schall.",
+      "img": "⚡🌩️"
+    },
+    {
+      "id": "026",
+      "q": "Welcher Pflanzenteil nimmt Wasser aus dem Boden auf?",
+      "a": "Wurzel",
+      "choices": [
+        "Blüte",
+        "Blatt",
+        "Frucht"
+      ],
+      "img": "🌱💧"
+    },
+    {
+      "id": "027",
+      "q": "Welcher Pflanzenteil lockt Insekten an?",
+      "a": "Blüte",
+      "choices": [
+        "Wurzel",
+        "Stängel",
+        "Samen"
+      ],
+      "img": "🌸🐝"
+    },
+    {
+      "id": "028",
+      "q": "Welcher Pflanzenteil leitet das Wasser nach oben?",
+      "a": "Stängel",
+      "choices": [
+        "Blüte",
+        "Samen",
+        "Frucht"
+      ],
+      "img": "🌷⬆️💧"
+    },
+    {
+      "id": "029",
+      "q": "Was brauchen grüne Pflanzen, um Nahrung herzustellen?",
+      "a": "Sonnenlicht",
+      "choices": [
+        "Dunkelheit",
+        "Schnee",
+        "Lärm"
+      ],
+      "img": "🌿☀️"
+    },
+    {
+      "id": "030",
+      "q": "Was steckt man in die Erde, um eine Sonnenblume zu säen?",
+      "a": "Samen",
+      "choices": [
+        "Blätter",
+        "Blüten",
+        "Stängel"
+      ],
+      "img": "🌻🌱"
+    },
+    {
+      "id": "031",
+      "q": "Welcher Baum hat Nadeln?",
+      "a": "Tanne",
+      "choices": [
+        "Eiche",
+        "Buche",
+        "Ahorn"
+      ],
+      "img": "🌲"
+    },
+    {
+      "id": "032",
+      "q": "Welcher Baum trägt Eicheln?",
+      "a": "Eiche",
+      "choices": [
+        "Buche",
+        "Tanne",
+        "Kastanie"
+      ],
+      "img": "🌳🐿️"
+    }
+  ]
+}

@@ -29,3 +29,16 @@ s.populate(unicodes=sorted(cps))
 s.subset(font)
 font.save(out)
 print(f"{len(cps)} Zeichen → {out} ({os.path.getsize(out) // 1024} KB)")
+
+# Zweite Schrift: Pfeile, Mathe- und Sonderzeichen (DejaVu Sans, freie Lizenz) für alles, was keine Emoji ist
+sym_src = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+sym_out = "webApp/src/wasmJsMain/composeResources/font/dejavu_symbols.ttf"
+sym_cmap = TTFont(sym_src)["cmap"].getBestCmap()
+sym = {ord(c) for c in text if ord(c) > 0x7F and ord(c) in sym_cmap and ord(c) not in cps}
+sym |= {c for r in [(0x2190, 0x21FF), (0x2200, 0x22FF), (0x2070, 0x209F), (0x2150, 0x218F), (0x0370, 0x03FF), (0x00A0, 0x017F), (0x2010, 0x205E), (0x25A0, 0x25FF)] for c in range(r[0], r[1] + 1) if c in sym_cmap}
+f2 = TTFont(sym_src)
+s2 = subset.Subsetter(opts)
+s2.populate(unicodes=sorted(sym))
+s2.subset(f2)
+f2.save(sym_out)
+print(f"{len(sym)} Sonderzeichen → {sym_out} ({os.path.getsize(sym_out) // 1024} KB)")

@@ -39,6 +39,14 @@ class Settings(private val prefs: KeyValueStore) {
     private val _autoUpdate = MutableStateFlow(prefs.getBoolean("auto_update", true))
     val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("auto_update", v).apply(); _autoUpdate.value = v }
+
+    /** Neue Wissenspakete automatisch nachladen (nur Daten) */
+    private val _packUpdates = MutableStateFlow(prefs.getBoolean("pack_updates", true))
+    val packUpdates: StateFlow<Boolean> = _packUpdates.asStateFlow()
+    fun setPackUpdates(v: Boolean) { prefs.edit().putBoolean("pack_updates", v).apply(); _packUpdates.value = v }
+    var lastPackCheck: Long
+        get() = prefs.getLong("pack_check", 0)
+        set(v) { prefs.edit().putLong("pack_check", v).apply() }
     /** Eingabe-Spiel (Antwort tippen) ab Klasse 5 – abschaltbar */
     private val _typing = MutableStateFlow(prefs.getBoolean("typing", true))
     val typing: StateFlow<Boolean> = _typing.asStateFlow()

@@ -1,0 +1,449 @@
+{
+  "id": "s1-englisch-grundwortschatz",
+  "version": 2,
+  "title": "Englisch Grundwortschatz",
+  "subject": "englisch",
+  "grades": [
+    5,
+    6,
+    7
+  ],
+  "emoji": "💬",
+  "tier": "free",
+  "description": "Wichtige englische Wörter und Sätze aus Schule und Alltag: Deutsch → Englisch.",
+  "intro": [
+    {
+      "img": "🏠🐭📖",
+      "text": "Wusstest du, dass Englisch und Deutsch verwandt sind? Haus – house, Maus – mouse, Buch – book: Viele Wörter klingen fast gleich!"
+    },
+    {
+      "img": "🏫🍎",
+      "text": "In diesem Paket lernst du wichtige Wörter aus Schule und Alltag. Mit ihnen kannst du schon richtig viel sagen."
+    },
+    {
+      "img": "⚠️🎭",
+      "text": "Aber Vorsicht vor „falschen Freunden“: „become“ heißt nicht bekommen, sondern werden! Und „pen“ ist kein Bleistift, sondern ein Kuli oder Füller."
+    },
+    {
+      "img": "🗣️🔁",
+      "text": "Lerntrick: Sprich jedes Wort laut aus – Englisch schreibt man oft anders, als man es spricht. Und wiederhol es lieber oft kurz als einmal lang."
+    },
+    {
+      "img": "🌟🚀",
+      "text": "Every word counts! Lass uns loslegen."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "die Schule",
+      "a": "school",
+      "choices": [
+        "shool",
+        "class",
+        "lesson"
+      ],
+      "img": "🏫"
+    },
+    {
+      "id": "002",
+      "q": "der Lehrer / die Lehrerin",
+      "a": "teacher",
+      "choices": [
+        "student",
+        "pupil",
+        "teatcher"
+      ],
+      "img": "📚🍎"
+    },
+    {
+      "id": "003",
+      "q": "das Buch",
+      "a": "book",
+      "choices": [
+        "boot",
+        "box",
+        "bag"
+      ],
+      "img": "📖"
+    },
+    {
+      "id": "004",
+      "q": "der Bleistift",
+      "a": "pencil",
+      "choices": [
+        "pen",
+        "ruler",
+        "pencel"
+      ],
+      "info": "pen = Kugelschreiber / Füller",
+      "img": "✏️"
+    },
+    {
+      "id": "005",
+      "q": "das Lineal",
+      "a": "ruler",
+      "choices": [
+        "rubber",
+        "pencil",
+        "rule"
+      ],
+      "img": "📏"
+    },
+    {
+      "id": "006",
+      "q": "die Hausaufgaben",
+      "a": "homework",
+      "choices": [
+        "housework",
+        "homeworks",
+        "housejob"
+      ],
+      "info": "„homework“ hat keine Mehrzahl mit -s.",
+      "img": "📝🏠"
+    },
+    {
+      "id": "007",
+      "q": "der Freund (Kumpel)",
+      "a": "friend",
+      "choices": [
+        "frend",
+        "fried",
+        "family"
+      ],
+      "img": "🤝"
+    },
+    {
+      "id": "008",
+      "q": "die Familie",
+      "a": "family",
+      "choices": [
+        "familie",
+        "famly",
+        "friend"
+      ],
+      "img": "👪"
+    },
+    {
+      "id": "009",
+      "q": "die Mutter",
+      "a": "mother",
+      "choices": [
+        "mather",
+        "father",
+        "brother"
+      ],
+      "img": "🤱"
+    },
+    {
+      "id": "010",
+      "q": "der Bruder",
+      "a": "brother",
+      "choices": [
+        "bruther",
+        "sister",
+        "brader"
+      ],
+      "img": "👦"
+    },
+    {
+      "id": "011",
+      "q": "die Schwester",
+      "a": "sister",
+      "choices": [
+        "sista",
+        "brother",
+        "sisster"
+      ],
+      "img": "👧"
+    },
+    {
+      "id": "012",
+      "q": "der Hund",
+      "a": "dog",
+      "choices": [
+        "cat",
+        "dock",
+        "hound"
+      ],
+      "img": "🐕"
+    },
+    {
+      "id": "013",
+      "q": "die Katze",
+      "a": "cat",
+      "choices": [
+        "dog",
+        "kat",
+        "cut"
+      ],
+      "img": "🐈"
+    },
+    {
+      "id": "014",
+      "q": "das Haus",
+      "a": "house",
+      "choices": [
+        "horse",
+        "hous",
+        "mouse"
+      ],
+      "img": "🏠"
+    },
+    {
+      "id": "015",
+      "q": "die Küche",
+      "a": "kitchen",
+      "choices": [
+        "chicken",
+        "kitten",
+        "bathroom"
+      ],
+      "info": "Achtung: chicken = Huhn, kitten = Kätzchen.",
+      "img": "🍳🔪"
+    },
+    {
+      "id": "016",
+      "q": "das Schlafzimmer",
+      "a": "bedroom",
+      "choices": [
+        "bathroom",
+        "living room",
+        "bed"
+      ],
+      "img": "🛏️"
+    },
+    {
+      "id": "017",
+      "q": "der Tisch",
+      "a": "table",
+      "choices": [
+        "chair",
+        "tabel",
+        "desk lamp"
+      ],
+      "img": "🍽️"
+    },
+    {
+      "id": "018",
+      "q": "der Stuhl",
+      "a": "chair",
+      "choices": [
+        "table",
+        "char",
+        "cheer"
+      ],
+      "img": "💺"
+    },
+    {
+      "id": "019",
+      "q": "das Fenster",
+      "a": "window",
+      "choices": [
+        "door",
+        "windo",
+        "wall"
+      ],
+      "img": "🖼️🌤️"
+    },
+    {
+      "id": "020",
+      "q": "die Tür",
+      "a": "door",
+      "choices": [
+        "window",
+        "dor",
+        "floor"
+      ],
+      "img": "🚪"
+    },
+    {
+      "id": "021",
+      "q": "das Frühstück",
+      "a": "breakfast",
+      "choices": [
+        "lunch",
+        "dinner",
+        "breakfest"
+      ],
+      "img": "🥞☕"
+    },
+    {
+      "id": "022",
+      "q": "das Brot",
+      "a": "bread",
+      "choices": [
+        "bred",
+        "butter",
+        "brown"
+      ],
+      "img": "🍞"
+    },
+    {
+      "id": "023",
+      "q": "der Apfel",
+      "a": "apple",
+      "choices": [
+        "apel",
+        "pear",
+        "orange"
+      ],
+      "img": "🍎"
+    },
+    {
+      "id": "024",
+      "q": "das Wasser",
+      "a": "water",
+      "choices": [
+        "wather",
+        "waiter",
+        "winter"
+      ],
+      "img": "💧"
+    },
+    {
+      "id": "025",
+      "q": "Montag",
+      "a": "Monday",
+      "choices": [
+        "Sunday",
+        "Mondey",
+        "Tuesday"
+      ],
+      "img": "😩📅"
+    },
+    {
+      "id": "026",
+      "q": "Mittwoch",
+      "a": "Wednesday",
+      "choices": [
+        "Tuesday",
+        "Thursday",
+        "Wensday"
+      ],
+      "img": "🐫📅"
+    },
+    {
+      "id": "027",
+      "q": "Donnerstag",
+      "a": "Thursday",
+      "choices": [
+        "Tuesday",
+        "Thirsday",
+        "Wednesday"
+      ],
+      "img": "⚡📅"
+    },
+    {
+      "id": "028",
+      "q": "der Geburtstag",
+      "a": "birthday",
+      "choices": [
+        "birthdate",
+        "berthday",
+        "party"
+      ],
+      "img": "🎂🎈"
+    },
+    {
+      "id": "029",
+      "q": "Wie alt bist du?",
+      "a": "How old are you?",
+      "choices": [
+        "How are you old?",
+        "What old are you?",
+        "How old you are?"
+      ],
+      "img": "🎂❓"
+    },
+    {
+      "id": "030",
+      "q": "Ich heiße Tom.",
+      "a": "My name is Tom.",
+      "choices": [
+        "I hot Tom.",
+        "My name has Tom.",
+        "Me name is Tom."
+      ],
+      "img": "👋🏷️"
+    },
+    {
+      "id": "031",
+      "q": "gestern",
+      "a": "yesterday",
+      "choices": [
+        "today",
+        "tomorrow",
+        "yesterdey"
+      ],
+      "img": "⬅️📅"
+    },
+    {
+      "id": "032",
+      "q": "morgen (am nächsten Tag)",
+      "a": "tomorrow",
+      "choices": [
+        "morning",
+        "today",
+        "yesterday"
+      ],
+      "info": "morning = der Morgen (Tageszeit)",
+      "img": "➡️📅"
+    },
+    {
+      "id": "033",
+      "q": "der Bahnhof",
+      "a": "station",
+      "choices": [
+        "stadium",
+        "airport",
+        "bus stop"
+      ],
+      "img": "🚉"
+    },
+    {
+      "id": "034",
+      "q": "grün",
+      "a": "green",
+      "choices": [
+        "grey",
+        "grin",
+        "brown"
+      ],
+      "img": "🍀"
+    },
+    {
+      "id": "035",
+      "q": "lesen",
+      "a": "to read",
+      "choices": [
+        "to write",
+        "to red",
+        "to learn"
+      ],
+      "img": "📖👀"
+    },
+    {
+      "id": "036",
+      "q": "schreiben",
+      "a": "to write",
+      "choices": [
+        "to read",
+        "to right",
+        "to wright"
+      ],
+      "img": "✍️📄"
+    },
+    {
+      "id": "037",
+      "q": "rot",
+      "a": "red",
+      "choices": [
+        "read",
+        "rat",
+        "rod"
+      ],
+      "img": "🔴🍓"
+    }
+  ]
+}

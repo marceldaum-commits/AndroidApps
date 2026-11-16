@@ -1,0 +1,377 @@
+{
+  "id": "ob-deutsch-epochen",
+  "version": 2,
+  "title": "Literaturepochen",
+  "subject": "deutsch",
+  "grades": [
+    11,
+    12,
+    13
+  ],
+  "emoji": "📜",
+  "tier": "plus",
+  "description": "Deutsche Literaturepochen vom Barock bis zur Nachkriegszeit: Zeiträume, Autoren, Werke.",
+  "intro": [
+    {
+      "img": "📘💔🧥",
+      "text": "1774 erschien Goethes „Werther“ – und junge Männer trugen plötzlich blauen Frack und gelbe Weste wie ihr Romanheld. Literatur konnte schon damals Trends setzen!"
+    },
+    {
+      "img": "🕰️📚",
+      "text": "Epochen sind wie Kapitel der Literaturgeschichte: Jede hat ihr Lebensgefühl, ihre Themen und typische Autoren – vom Barock bis zur Nachkriegszeit."
+    },
+    {
+      "img": "💀💡🔥🏛️",
+      "text": "Trick: Gib jeder Epoche ein Schlagwort. Barock = memento mori, Aufklärung = Vernunft, Sturm und Drang = Gefühl & Genie, Klassik = Humanität."
+    },
+    {
+      "img": "⚖️🔄",
+      "text": "Noch ein Trick: Epochen reagieren oft aufeinander – wie ein Pendel. Auf Vernunft folgt Gefühl, auf Ideal folgt Wirklichkeit. Frag dich immer: Wogegen richtet sie sich?"
+    },
+    {
+      "img": "🎓🚀",
+      "text": "Mit diesem Überblick ordnest du jeden Text im Abi sicher ein. Los geht’s mit der Zeitreise durch die Literatur!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Zeitraum des Barock",
+      "a": "ca. 1600–1720",
+      "choices": [
+        "ca. 1720–1800",
+        "ca. 1767–1785",
+        "ca. 1848–1890"
+      ],
+      "img": "💀🕯️⏳"
+    },
+    {
+      "id": "002",
+      "q": "Barockmotiv: „Bedenke, dass du sterben musst“",
+      "a": "memento mori",
+      "choices": [
+        "sapere aude",
+        "l'art pour l'art",
+        "in dubio pro reo"
+      ],
+      "img": "💀⏳"
+    },
+    {
+      "id": "003",
+      "q": "Autor des Sonetts „Es ist alles eitel“",
+      "a": "Andreas Gryphius",
+      "choices": [
+        "Friedrich Schiller",
+        "Joseph von Eichendorff",
+        "Gotthold Ephraim Lessing"
+      ],
+      "img": "🥀🍂"
+    },
+    {
+      "id": "004",
+      "q": "Autor des Barockromans „Der abenteuerliche Simplicissimus“",
+      "a": "Grimmelshausen",
+      "img": "🗡️🧭"
+    },
+    {
+      "id": "005",
+      "q": "Zeitraum der Aufklärung",
+      "a": "ca. 1720–1800",
+      "img": "💡📖"
+    },
+    {
+      "id": "006",
+      "q": "Wer nannte Aufklärung „Ausgang des Menschen aus seiner selbstverschuldeten Unmündigkeit“?",
+      "a": "Immanuel Kant",
+      "choices": [
+        "Gotthold Ephraim Lessing",
+        "Johann Gottfried Herder",
+        "Friedrich Schiller"
+      ],
+      "info": "Kant, „Beantwortung der Frage: Was ist Aufklärung?“ (1784)",
+      "img": "🧠🔓"
+    },
+    {
+      "id": "007",
+      "q": "Autor von „Nathan der Weise“ (mit der Ringparabel)",
+      "a": "Gotthold Ephraim Lessing",
+      "choices": [
+        "Friedrich Schiller",
+        "Johann Wolfgang von Goethe",
+        "Heinrich von Kleist"
+      ],
+      "img": "💍💍💍"
+    },
+    {
+      "id": "008",
+      "q": "Epoche von Lessings „Emilia Galotti“",
+      "a": "Aufklärung",
+      "info": "Bürgerliches Trauerspiel, 1772",
+      "img": "💡🗡️"
+    },
+    {
+      "id": "009",
+      "q": "Zeitraum des Sturm und Drang",
+      "a": "ca. 1767–1785",
+      "choices": [
+        "ca. 1600–1720",
+        "ca. 1786–1805",
+        "ca. 1880–1900"
+      ],
+      "img": "🌪️⚡"
+    },
+    {
+      "id": "010",
+      "q": "Zentrales Leitbild des Sturm und Drang",
+      "a": "das Genie (Originalgenie)",
+      "choices": [
+        "die Vernunft",
+        "die Frömmigkeit",
+        "die Sachlichkeit"
+      ],
+      "img": "🧞✨"
+    },
+    {
+      "id": "011",
+      "q": "Goethes Briefroman aus dem Sturm und Drang (1774)",
+      "a": "Die Leiden des jungen Werthers",
+      "choices": [
+        "Wilhelm Meisters Lehrjahre",
+        "Faust",
+        "Die Wahlverwandtschaften"
+      ],
+      "img": "💌💔"
+    },
+    {
+      "id": "012",
+      "q": "Epoche von Schillers Drama „Die Räuber“ (1781)",
+      "a": "Sturm und Drang",
+      "img": "🌲🗡️⚡"
+    },
+    {
+      "id": "013",
+      "q": "Zeitraum der Weimarer Klassik",
+      "a": "ca. 1786–1805",
+      "choices": [
+        "ca. 1720–1800",
+        "ca. 1830–1848",
+        "ca. 1910–1925"
+      ],
+      "info": "Von Goethes Italienreise bis zu Schillers Tod",
+      "img": "🏛️⚖️"
+    },
+    {
+      "id": "014",
+      "q": "Hauptvertreter der Weimarer Klassik",
+      "a": "Goethe und Schiller",
+      "choices": [
+        "Lessing und Kant",
+        "Novalis und Tieck",
+        "Büchner und Heine"
+      ],
+      "img": "👬✍️"
+    },
+    {
+      "id": "015",
+      "q": "Leitideal der Weimarer Klassik",
+      "a": "Humanität",
+      "info": "Harmonie von Vernunft und Gefühl; das Wahre, Gute und Schöne",
+      "img": "🤝❤️"
+    },
+    {
+      "id": "016",
+      "q": "Goethes Drama der „reinen Menschlichkeit“, Weimarer Klassik",
+      "a": "Iphigenie auf Tauris",
+      "choices": [
+        "Götz von Berlichingen",
+        "Kabale und Liebe",
+        "Woyzeck"
+      ],
+      "img": "🏛️🕊️"
+    },
+    {
+      "id": "017",
+      "q": "Zeitraum der Romantik",
+      "a": "ca. 1795–1835",
+      "img": "🌙🌲"
+    },
+    {
+      "id": "018",
+      "q": "Sehnsuchtssymbol der Romantik (Novalis)",
+      "a": "die blaue Blume",
+      "choices": [
+        "die rote Rose",
+        "der weiße Schwan",
+        "die goldene Kugel"
+      ],
+      "img": "💙🌷"
+    },
+    {
+      "id": "019",
+      "q": "Romantiker: „Mondnacht“, „Aus dem Leben eines Taugenichts“",
+      "a": "Joseph von Eichendorff",
+      "choices": [
+        "Heinrich Heine",
+        "Theodor Fontane",
+        "Friedrich Schiller"
+      ],
+      "img": "🌙🎻"
+    },
+    {
+      "id": "020",
+      "q": "Epoche von E. T. A. Hoffmanns „Der Sandmann“",
+      "a": "Romantik",
+      "info": "Gehört zur sogenannten Schwarzen Romantik.",
+      "img": "👀🔭"
+    },
+    {
+      "id": "021",
+      "q": "Wer veröffentlichte ab 1812 die „Kinder- und Hausmärchen“?",
+      "a": "Jacob und Wilhelm Grimm",
+      "img": "🏰🐺"
+    },
+    {
+      "id": "022",
+      "q": "Zeitraum des Vormärz",
+      "a": "ca. 1830–1848",
+      "choices": [
+        "ca. 1786–1805",
+        "ca. 1880–1900",
+        "ca. 1920–1933"
+      ],
+      "info": "Endet mit der Märzrevolution 1848.",
+      "img": "✊📰"
+    },
+    {
+      "id": "023",
+      "q": "Epoche von Georg Büchners „Woyzeck“",
+      "a": "Vormärz",
+      "choices": [
+        "Romantik",
+        "Weimarer Klassik",
+        "Expressionismus"
+      ],
+      "img": "🔪🌕"
+    },
+    {
+      "id": "024",
+      "q": "Heines „Deutschland. Ein Wintermärchen“ (1844) – Epoche",
+      "a": "Vormärz",
+      "img": "❄️✊"
+    },
+    {
+      "id": "025",
+      "q": "Zeitraum des (poetischen) Realismus",
+      "a": "ca. 1848–1890",
+      "choices": [
+        "ca. 1795–1835",
+        "ca. 1910–1925",
+        "ca. 1600–1720"
+      ],
+      "img": "🔍🏘️"
+    },
+    {
+      "id": "026",
+      "q": "Fontanes Roman über eine junge Frau, die an Konventionen zerbricht (1895)",
+      "a": "Effi Briest",
+      "choices": [
+        "Der Schimmelreiter",
+        "Buddenbrooks",
+        "Die Marquise von O…."
+      ],
+      "img": "👒💔"
+    },
+    {
+      "id": "027",
+      "q": "Theodor Storms Novelle über einen Deichgrafen (1888)",
+      "a": "Der Schimmelreiter",
+      "img": "🐴🌊"
+    },
+    {
+      "id": "028",
+      "q": "Zeitraum des Naturalismus",
+      "a": "ca. 1880–1900",
+      "img": "🏭🔬"
+    },
+    {
+      "id": "029",
+      "q": "Epoche von Gerhart Hauptmanns „Die Weber“",
+      "a": "Naturalismus",
+      "choices": [
+        "Realismus",
+        "Expressionismus",
+        "Romantik"
+      ],
+      "img": "🧵✊"
+    },
+    {
+      "id": "030",
+      "q": "Arno Holz' Formel des konsequenten Naturalismus",
+      "a": "Kunst = Natur – x",
+      "info": "x steht für die Mittel und ihre Handhabung durch den Künstler.",
+      "img": "🎨🌳➖"
+    },
+    {
+      "id": "031",
+      "q": "Zeitraum des Expressionismus",
+      "a": "ca. 1910–1925",
+      "choices": [
+        "ca. 1848–1890",
+        "ca. 1945–1950",
+        "ca. 1767–1785"
+      ],
+      "img": "😱🌆"
+    },
+    {
+      "id": "032",
+      "q": "Epoche von Jakob van Hoddis' Gedicht „Weltende“ (1911)",
+      "a": "Expressionismus",
+      "img": "🌍💥"
+    },
+    {
+      "id": "033",
+      "q": "Autor der Erzählung „Die Verwandlung“ (1915)",
+      "a": "Franz Kafka",
+      "choices": [
+        "Thomas Mann",
+        "Georg Heym",
+        "Alfred Döblin"
+      ],
+      "img": "🛏️🐛"
+    },
+    {
+      "id": "034",
+      "q": "Epoche von Irmgard Keuns „Das kunstseidene Mädchen“ (1932)",
+      "a": "Neue Sachlichkeit",
+      "choices": [
+        "Expressionismus",
+        "Naturalismus",
+        "Trümmerliteratur"
+      ],
+      "img": "📸🏙️"
+    },
+    {
+      "id": "035",
+      "q": "Anna Seghers' „Das siebte Kreuz“ entstand in der …",
+      "a": "Exilliteratur",
+      "img": "🧳✒️"
+    },
+    {
+      "id": "036",
+      "q": "Wolfgang Borcherts „Draußen vor der Tür“ (1947) gehört zur …",
+      "a": "Trümmerliteratur",
+      "choices": [
+        "Exilliteratur",
+        "Neuen Sachlichkeit",
+        "Romantik"
+      ],
+      "img": "🏚️🧱"
+    },
+    {
+      "id": "037",
+      "q": "Von Hans Werner Richter 1947 gegründete Schriftstellervereinigung",
+      "a": "Gruppe 47",
+      "img": "4️⃣7️⃣👥"
+    }
+  ]
+}

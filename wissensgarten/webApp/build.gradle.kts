@@ -34,6 +34,12 @@ val copyPacks by tasks.registering {
         val files = packsDir.listFiles()!!.filter { it.extension == "json" }.sortedBy { it.name }
         files.forEach { it.copyTo(out.resolve(it.name), overwrite = true) }
         out.resolve("index.json").writeText(files.joinToString(",", "[", "]") { "\"${it.name}\"" })
+        // Für das Nachladen in der App: Datei → Paket-Version (nur Daten, kein Code)
+        val slurper = groovy.json.JsonSlurper()
+        out.resolve("versions.json").writeText(files.joinToString(",", "{", "}") { f ->
+            val v = (slurper.parse(f) as Map<*, *>)["version"] as Number
+            "\"${f.name}\":${v.toInt()}"
+        })
     }
 }
 kotlin.sourceSets["wasmJsMain"].resources.srcDir(genPacks)
@@ -48,4 +54,6 @@ tasks.register<Sync>("exportWebApp") {
     into(rootProject.file("webapp"))
     exclude("**/*.map")
     filesMatching(listOf("index.html", "sw.js", "manifest.webmanifest")) { filter { it.replace("@VERSION@", versionName) } }
+    val versionDate = Regex("""VERSION_DATE", "\\"([0-9.]+)\\""""").find(appGradle)!!.groupValues[1]
+    doLast { rootProject.file("webapp/version.json").writeText("{\n  \"version\": \"$versionName\",\n  \"date\": \"$versionDate\"\n}\n") }
 }

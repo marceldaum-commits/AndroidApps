@@ -1,0 +1,322 @@
+{
+  "id": "s1-franzoesisch-verben",
+  "version": 3,
+  "title": "être, avoir, aller, faire",
+  "subject": "franzoesisch",
+  "grades": [
+    7,
+    8,
+    9
+  ],
+  "emoji": "🗣️",
+  "tier": "free",
+  "description": "Die vier wichtigsten unregelmäßigen französischen Verben im Präsens konjugieren.",
+  "intro": [
+    {
+      "img": "🗣️⭐",
+      "text": "Wusstest du, dass „aller“ (gehen) aus mehreren lateinischen Verben zusammengesetzt ist? Deshalb heißt es „je vais“, aber „nous allons“."
+    },
+    {
+      "img": "🔑4️⃣",
+      "text": "être, avoir, aller und faire sind die wichtigsten Verben: Mit avoir und être bildest du das passé composé, mit aller das futur composé."
+    },
+    {
+      "img": "🎵🔁",
+      "text": "Lerntrick: Die ils-Formen reimen sich: ils sont, ils ont, ils vont, ils font. Sprich sie wie einen Reim – so vergisst du sie nie!"
+    },
+    {
+      "img": "🧠💡",
+      "text": "Noch ein Trick: Nur drei Verben enden bei vous auf -tes statt -ez: vous êtes, vous faites, vous dites. Merk dir diese Ausnahmen!"
+    },
+    {
+      "img": "💪🚀",
+      "text": "Wenn du diese vier Verben kannst, kannst du fast alles sagen. Allez, c’est parti!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "je – être",
+      "a": "je suis",
+      "choices": [
+        "je es",
+        "je sommes",
+        "j'est"
+      ],
+      "img": "🙋🌟"
+    },
+    {
+      "id": "002",
+      "q": "tu – être",
+      "a": "tu es",
+      "info": "„es“ klingt genauso wie „est“ in il est.",
+      "img": "👉🌟"
+    },
+    {
+      "id": "003",
+      "q": "il – être",
+      "a": "il est",
+      "choices": [
+        "il es",
+        "il et",
+        "il sont"
+      ],
+      "img": "👨🌟"
+    },
+    {
+      "id": "004",
+      "q": "nous – être",
+      "a": "nous sommes",
+      "choices": [
+        "nous êtes",
+        "nous étons",
+        "nous sont"
+      ],
+      "img": "👫☀️"
+    },
+    {
+      "id": "005",
+      "q": "vous – être",
+      "a": "vous êtes",
+      "info": "Merke: vous êtes, vous faites, vous dites – ohne -ez!",
+      "img": "👥🌟"
+    },
+    {
+      "id": "006",
+      "q": "ils – être",
+      "a": "ils sont",
+      "choices": [
+        "ils ont",
+        "ils sommes",
+        "ils étent"
+      ],
+      "info": "ils ont kommt von avoir.",
+      "img": "👬🌟"
+    },
+    {
+      "id": "007",
+      "q": "je – avoir",
+      "a": "j'ai",
+      "choices": [
+        "je ai",
+        "j'as",
+        "j'a"
+      ],
+      "info": "Vor Vokal wird je zu j'.",
+      "img": "🙋🎒"
+    },
+    {
+      "id": "008",
+      "q": "tu – avoir",
+      "a": "tu as",
+      "img": "👉🎒"
+    },
+    {
+      "id": "009",
+      "q": "il – avoir",
+      "a": "il a",
+      "choices": [
+        "il as",
+        "il à",
+        "il ai"
+      ],
+      "info": "à mit Akzent ist die Präposition „nach/zu“.",
+      "img": "👨🎒"
+    },
+    {
+      "id": "010",
+      "q": "nous – avoir",
+      "a": "nous avons",
+      "img": "👫🎒"
+    },
+    {
+      "id": "011",
+      "q": "vous – avoir",
+      "a": "vous avez",
+      "choices": [
+        "vous avons",
+        "vous êtes",
+        "vous avoir"
+      ],
+      "img": "👥🎒"
+    },
+    {
+      "id": "012",
+      "q": "ils – avoir",
+      "a": "ils ont",
+      "img": "👬🎒"
+    },
+    {
+      "id": "013",
+      "q": "je – aller",
+      "a": "je vais",
+      "choices": [
+        "je va",
+        "je vas",
+        "j'alle"
+      ],
+      "img": "🙋🚶"
+    },
+    {
+      "id": "014",
+      "q": "tu – aller",
+      "a": "tu vas",
+      "img": "👉🚶"
+    },
+    {
+      "id": "015",
+      "q": "il – aller",
+      "a": "il va",
+      "choices": [
+        "il vas",
+        "il vait",
+        "il alle"
+      ],
+      "img": "👨🚶"
+    },
+    {
+      "id": "016",
+      "q": "nous – aller",
+      "a": "nous allons",
+      "img": "👫🚶"
+    },
+    {
+      "id": "017",
+      "q": "vous – aller",
+      "a": "vous allez",
+      "choices": [
+        "vous allons",
+        "vous vaites",
+        "vous allés"
+      ],
+      "img": "👥🚶"
+    },
+    {
+      "id": "018",
+      "q": "ils – aller",
+      "a": "ils vont",
+      "img": "👬🚶"
+    },
+    {
+      "id": "019",
+      "q": "je – faire",
+      "a": "je fais",
+      "choices": [
+        "je fait",
+        "je fai",
+        "je faites"
+      ],
+      "img": "🙋🔨"
+    },
+    {
+      "id": "020",
+      "q": "tu – faire",
+      "a": "tu fais",
+      "img": "👉🔨"
+    },
+    {
+      "id": "021",
+      "q": "il – faire",
+      "a": "il fait",
+      "choices": [
+        "il fais",
+        "il fai",
+        "il faites"
+      ],
+      "img": "👨🔨"
+    },
+    {
+      "id": "022",
+      "q": "nous – faire",
+      "a": "nous faisons",
+      "info": "Gesprochen wie „fe-son“.",
+      "img": "👫🔨"
+    },
+    {
+      "id": "023",
+      "q": "vous – faire",
+      "a": "vous faites",
+      "choices": [
+        "vous faisez",
+        "vous fais",
+        "vous faisons"
+      ],
+      "img": "👥🔨"
+    },
+    {
+      "id": "024",
+      "q": "ils – faire",
+      "a": "ils font",
+      "img": "👬🔨"
+    },
+    {
+      "id": "025",
+      "q": "elles – avoir",
+      "a": "elles ont",
+      "choices": [
+        "elles sont",
+        "elles avent",
+        "elles a"
+      ],
+      "img": "👭🎒"
+    },
+    {
+      "id": "026",
+      "q": "on – aller",
+      "a": "on va",
+      "info": "on wird wie il/elle konjugiert.",
+      "img": "👤🚶"
+    },
+    {
+      "id": "027",
+      "q": "elle – faire",
+      "a": "elle fait",
+      "choices": [
+        "elle fais",
+        "elle font",
+        "elle faite"
+      ],
+      "img": "👩🔨"
+    },
+    {
+      "id": "028",
+      "q": "on – être",
+      "a": "on est",
+      "img": "👤🌟"
+    },
+    {
+      "id": "029",
+      "q": "Zu welchem Verb gehört „ils font“?",
+      "a": "faire",
+      "choices": [
+        "être",
+        "avoir",
+        "aller"
+      ],
+      "img": "🔨🔧"
+    },
+    {
+      "id": "030",
+      "q": "Zu welchem Verb gehört „ils vont“?",
+      "a": "aller",
+      "img": "🚶🛣️"
+    },
+    {
+      "id": "031",
+      "q": "Zu welchem Verb gehört „ils sont“?",
+      "a": "être",
+      "choices": [
+        "avoir",
+        "aller",
+        "faire"
+      ],
+      "img": "🌟😊"
+    },
+    {
+      "id": "032",
+      "q": "Zu welchem Verb gehört „ils ont“?",
+      "a": "avoir",
+      "img": "🎒🎁"
+    }
+  ]
+}

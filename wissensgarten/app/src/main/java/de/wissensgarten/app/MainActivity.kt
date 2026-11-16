@@ -63,6 +63,7 @@ class MainActivity : ComponentActivity() {
         fgSince = System.currentTimeMillis()
         // Bei jedem Öffnen (auch aus dem Hintergrund) nach neuen Versionen schauen
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
+        vm.refreshPacksIfDue()
         de.wissensgarten.app.update.StoreUpdates.check(this)
         (application as WissensgartenApp).music.onForeground(true)
     }
@@ -70,6 +71,7 @@ class MainActivity : ComponentActivity() {
     override fun onStop() {
         super.onStop()
         flushUsage(); fgSince = 0
+        de.wissensgarten.app.update.StoreUpdates.onBackground()
         (application as WissensgartenApp).music.onForeground(false)
         vm.refreshWidget()
         // Beim Verlassen der App gleich abgleichen, damit das andere Gerät den neuesten Stand bekommt

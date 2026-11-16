@@ -1,0 +1,421 @@
+{
+  "id": "gs-einmaleins",
+  "version": 3,
+  "title": "Das kleine Einmaleins",
+  "subject": "mathe",
+  "grades": [
+    2,
+    3
+  ],
+  "emoji": "🔢",
+  "tier": "free",
+  "description": "Mal- und Geteiltaufgaben bis 10 × 10 – gemischt geübt.",
+  "intro": [
+    {
+      "img": "🐝🐝🐝",
+      "text": "Summ! Wie viele Beine haben 3 Hummeln zusammen? Jede hat 6. Mit dem Einmaleins weißt du es blitzschnell: 3 × 6 = 18!"
+    },
+    {
+      "img": "🍽️🍪",
+      "text": "3 × 4 heißt: 3 Teller mit je 4 Keksen. Zähl alle Kekse zusammen – es sind 12!"
+    },
+    {
+      "img": "🔄🍪",
+      "text": "Trick: Tauschen ist erlaubt! 4 × 3 ist genauso viel wie 3 × 4. So musst du dir nur halb so viel merken."
+    },
+    {
+      "img": "🍪➗🍽️",
+      "text": "Geteilt heißt gerecht verteilen: 12 Kekse auf 3 Teller – auf jedem liegen 4. Also 12 : 3 = 4."
+    },
+    {
+      "img": "🎳9️⃣",
+      "text": "Merkbild für die 9: Beim Kegeln stehen 9 Kegel – wer alle umwirft, ruft „Alle Neune!“. Siehst du 🎳, denk an die 9."
+    },
+    {
+      "img": "🌱🚀",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze in deinem Garten wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "2 × 6",
+      "a": "12",
+      "choices": [
+        "10",
+        "14",
+        "8"
+      ],
+      "img": "🥚🥚"
+    },
+    {
+      "id": "002",
+      "q": "3 × 7",
+      "a": "21",
+      "choices": [
+        "24",
+        "18",
+        "27"
+      ],
+      "img": "📅📅📅"
+    },
+    {
+      "id": "003",
+      "q": "4 × 8",
+      "a": "32",
+      "choices": [
+        "36",
+        "28",
+        "24"
+      ],
+      "img": "🍀🕷️"
+    },
+    {
+      "id": "004",
+      "q": "5 × 9",
+      "a": "45",
+      "choices": [
+        "40",
+        "50",
+        "54"
+      ],
+      "img": "🖐️🎳"
+    },
+    {
+      "id": "005",
+      "q": "6 × 6",
+      "a": "36",
+      "choices": [
+        "32",
+        "42",
+        "30"
+      ],
+      "img": "🎲🎲"
+    },
+    {
+      "id": "006",
+      "q": "7 × 8",
+      "a": "56",
+      "choices": [
+        "54",
+        "63",
+        "48"
+      ],
+      "info": "Merkhilfe: 5, 6, 7, 8 → 56 = 7 × 8",
+      "img": "🌈🐙"
+    },
+    {
+      "id": "007",
+      "q": "8 × 8",
+      "a": "64",
+      "choices": [
+        "56",
+        "72",
+        "48"
+      ],
+      "img": "♟️👑"
+    },
+    {
+      "id": "008",
+      "q": "9 × 6",
+      "a": "54",
+      "choices": [
+        "56",
+        "48",
+        "63"
+      ],
+      "img": "🎳🐜"
+    },
+    {
+      "id": "009",
+      "q": "7 × 7",
+      "a": "49",
+      "choices": [
+        "42",
+        "56",
+        "47"
+      ],
+      "img": "🌈🌈"
+    },
+    {
+      "id": "010",
+      "q": "6 × 8",
+      "a": "48",
+      "choices": [
+        "42",
+        "56",
+        "46"
+      ],
+      "img": "🐜🕷️"
+    },
+    {
+      "id": "011",
+      "q": "9 × 9",
+      "a": "81",
+      "choices": [
+        "72",
+        "99",
+        "89"
+      ],
+      "img": "🎳🎳"
+    },
+    {
+      "id": "012",
+      "q": "4 × 7",
+      "a": "28",
+      "choices": [
+        "24",
+        "32",
+        "21"
+      ],
+      "img": "🗓️❄️"
+    },
+    {
+      "id": "013",
+      "q": "10 × 7",
+      "a": "70",
+      "choices": [
+        "17",
+        "60",
+        "77"
+      ],
+      "img": "👐🌈"
+    },
+    {
+      "id": "014",
+      "q": "3 × 9",
+      "a": "27",
+      "choices": [
+        "24",
+        "36",
+        "21"
+      ],
+      "img": "☘️🎳"
+    },
+    {
+      "id": "015",
+      "q": "6 × 7",
+      "a": "42",
+      "choices": [
+        "36",
+        "48",
+        "49"
+      ],
+      "img": "🎲🌈"
+    },
+    {
+      "id": "016",
+      "q": "9 × 8",
+      "a": "72",
+      "choices": [
+        "64",
+        "81",
+        "63"
+      ],
+      "img": "🎳🐙"
+    },
+    {
+      "id": "017",
+      "q": "0 × 5",
+      "a": "0",
+      "choices": [
+        "5",
+        "1",
+        "50"
+      ],
+      "info": "Alles mal 0 ergibt 0.",
+      "img": "🍩"
+    },
+    {
+      "id": "018",
+      "q": "1 × 8",
+      "a": "8",
+      "choices": [
+        "9",
+        "1",
+        "18"
+      ],
+      "img": "☝️🐙"
+    },
+    {
+      "id": "019",
+      "q": "28 : 4",
+      "a": "7",
+      "choices": [
+        "6",
+        "8",
+        "24"
+      ],
+      "info": "Umkehraufgabe: 7 × 4 = 28",
+      "img": "📅➗🌈"
+    },
+    {
+      "id": "020",
+      "q": "35 : 5",
+      "a": "7",
+      "choices": [
+        "6",
+        "8",
+        "5"
+      ],
+      "info": "Umkehraufgabe: 7 × 5 = 35",
+      "img": "🖐️🌈"
+    },
+    {
+      "id": "021",
+      "q": "42 : 7",
+      "a": "6",
+      "choices": [
+        "7",
+        "8",
+        "5"
+      ],
+      "info": "Umkehraufgabe: 6 × 7 = 42",
+      "img": "🌈🎲"
+    },
+    {
+      "id": "022",
+      "q": "54 : 9",
+      "a": "6",
+      "choices": [
+        "7",
+        "5",
+        "8"
+      ],
+      "info": "Umkehraufgabe: 6 × 9 = 54",
+      "img": "🎳🐜"
+    },
+    {
+      "id": "023",
+      "q": "63 : 7",
+      "a": "9",
+      "choices": [
+        "8",
+        "7",
+        "6"
+      ],
+      "info": "Umkehraufgabe: 9 × 7 = 63",
+      "img": "🌈🎳"
+    },
+    {
+      "id": "024",
+      "q": "48 : 8",
+      "a": "6",
+      "choices": [
+        "7",
+        "8",
+        "4"
+      ],
+      "info": "Umkehraufgabe: 6 × 8 = 48",
+      "img": "🕷️🎲"
+    },
+    {
+      "id": "025",
+      "q": "36 : 4",
+      "a": "9",
+      "choices": [
+        "8",
+        "7",
+        "6"
+      ],
+      "info": "Umkehraufgabe: 9 × 4 = 36",
+      "img": "🍀🎳"
+    },
+    {
+      "id": "026",
+      "q": "72 : 8",
+      "a": "9",
+      "choices": [
+        "8",
+        "7",
+        "6"
+      ],
+      "info": "Umkehraufgabe: 9 × 8 = 72",
+      "img": "🐙🎳"
+    },
+    {
+      "id": "027",
+      "q": "24 : 3",
+      "a": "8",
+      "choices": [
+        "6",
+        "7",
+        "9"
+      ],
+      "info": "Umkehraufgabe: 8 × 3 = 24",
+      "img": "☘️🐙"
+    },
+    {
+      "id": "028",
+      "q": "81 : 9",
+      "a": "9",
+      "choices": [
+        "8",
+        "7",
+        "1"
+      ],
+      "info": "Umkehraufgabe: 9 × 9 = 81",
+      "img": "🎳➗🎳"
+    },
+    {
+      "id": "029",
+      "q": "56 : 7",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "6"
+      ],
+      "info": "Umkehraufgabe: 8 × 7 = 56",
+      "img": "🌈🐙"
+    },
+    {
+      "id": "030",
+      "q": "40 : 10",
+      "a": "4",
+      "choices": [
+        "5",
+        "30",
+        "10"
+      ],
+      "info": "Umkehraufgabe: 4 × 10 = 40",
+      "img": "👐🍀"
+    },
+    {
+      "id": "031",
+      "q": "? × 6 = 30",
+      "a": "5",
+      "choices": [
+        "6",
+        "4",
+        "24"
+      ],
+      "info": "5 × 6 = 30",
+      "img": "🖐️🎲"
+    },
+    {
+      "id": "032",
+      "q": "Ein Auto hat 4 Räder. Wie viele Räder haben 6 Autos?",
+      "a": "24",
+      "choices": [
+        "20",
+        "28",
+        "10"
+      ],
+      "info": "6 × 4 = 24",
+      "img": "🚗🚗🚗"
+    },
+    {
+      "id": "033",
+      "q": "20 Bonbons werden gerecht an 5 Kinder verteilt. Wie viele bekommt jedes Kind?",
+      "a": "4",
+      "choices": [
+        "5",
+        "15",
+        "3"
+      ],
+      "info": "20 : 5 = 4",
+      "img": "🍬👧👦"
+    }
+  ]
+}

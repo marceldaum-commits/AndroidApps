@@ -10,6 +10,12 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  // Seitenaufruf: erst Netz (frische Version), ohne Internet aus dem Zwischenspeicher
+  if (req.mode === 'navigate') {
+    e.respondWith(fetch(req).then((res) => { if (res.ok) caches.open(CACHE).then((c) => c.put('index.html', res.clone())); return res; })
+      .catch(() => caches.open(CACHE).then((c) => c.match('index.html'))));
+    return;
+  }
   e.respondWith(caches.open(CACHE).then((c) => c.match(req).then((hit) => hit || fetch(req).then((res) => {
     if (res.ok) c.put(req, res.clone());
     return res;

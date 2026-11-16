@@ -1,0 +1,377 @@
+{
+  "id": "aw-allgemeinwissen-mix",
+  "version": 3,
+  "title": "Allgemeinwissen-Quiz",
+  "subject": "allgemeinwissen",
+  "grades": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+  ],
+  "emoji": "💡",
+  "tier": "free",
+  "description": "Bunter Quiz-Mix aus Literatur, Wissenschaft, Natur, Sport und Alltag – ideal auch für Eltern.",
+  "intro": [
+    {
+      "img": "💥🏅",
+      "text": "Verblüffend: Alfred Nobel wurde mit Dynamit reich – und stiftete von seinem Vermögen die Nobelpreise. Wissen geht oft überraschende Wege!"
+    },
+    {
+      "img": "📚🔬⚽",
+      "text": "Hier geht’s quer durch Literatur, Wissenschaft, Natur, Sport und Alltag. Jede Frage ist ein Puzzleteil für dein Weltwissen."
+    },
+    {
+      "img": "🧠🔗",
+      "text": "Lerntrick: Verknüpfe Namen mit Bildern! Goethe → Faust, Schiller → Die Räuber. Je verrückter dein inneres Bild, desto fester sitzt es."
+    },
+    {
+      "img": "🥇⚗️",
+      "text": "Eselsbrücke: Gold heißt auf Latein „aurum“ – darum Au. Und Wasserstoff (H) ist das leichteste Element und steht ganz vorn im Periodensystem."
+    },
+    {
+      "img": "🐝🚀",
+      "text": "Rate ruhig mutig – auch Fehler helfen beim Merken. Los geht’s mit dem großen Mix!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wer schrieb „Faust“?",
+      "a": "Johann Wolfgang von Goethe",
+      "choices": [
+        "Friedrich Schiller",
+        "Heinrich Heine",
+        "Thomas Mann"
+      ],
+      "img": "📖😈🎭"
+    },
+    {
+      "id": "002",
+      "q": "Wer schrieb das Drama „Die Räuber“?",
+      "a": "Friedrich Schiller",
+      "choices": [
+        "Johann Wolfgang von Goethe",
+        "Gotthold Ephraim Lessing",
+        "Bertolt Brecht"
+      ],
+      "img": "🌲🔫📜"
+    },
+    {
+      "id": "003",
+      "q": "Wer schrieb „Romeo und Julia“?",
+      "a": "William Shakespeare",
+      "img": "💑🌹☠️"
+    },
+    {
+      "id": "004",
+      "q": "Wer schrieb „Der kleine Prinz“?",
+      "a": "Antoine de Saint-Exupéry",
+      "choices": [
+        "Jules Verne",
+        "Victor Hugo",
+        "Albert Camus"
+      ],
+      "img": "👦🌹⭐"
+    },
+    {
+      "id": "005",
+      "q": "Welche Brüder sammelten Märchen wie „Hänsel und Gretel“?",
+      "a": "Jacob und Wilhelm Grimm",
+      "img": "🍬🏠🧙"
+    },
+    {
+      "id": "006",
+      "q": "Wer entwickelte die Relativitätstheorie?",
+      "a": "Albert Einstein",
+      "choices": [
+        "Isaac Newton",
+        "Max Planck",
+        "Niels Bohr"
+      ],
+      "img": "🧠⚡⏳"
+    },
+    {
+      "id": "007",
+      "q": "Wer entdeckte 1928 das Penicillin?",
+      "a": "Alexander Fleming",
+      "choices": [
+        "Robert Koch",
+        "Louis Pasteur",
+        "Marie Curie"
+      ],
+      "img": "🍞🦠💊"
+    },
+    {
+      "id": "008",
+      "q": "Wer beschrieb 1953 die Doppelhelix-Struktur der DNA?",
+      "a": "James Watson und Francis Crick",
+      "info": "Wichtige Röntgenbilder dafür stammten von Rosalind Franklin.",
+      "img": "🧬🌀"
+    },
+    {
+      "id": "009",
+      "q": "Wer erhielt 1886 das Patent auf das erste Automobil mit Benzinmotor?",
+      "a": "Carl Benz",
+      "choices": [
+        "Gottlieb Daimler",
+        "Rudolf Diesel",
+        "Henry Ford"
+      ],
+      "img": "🚗⛽📜"
+    },
+    {
+      "id": "010",
+      "q": "Welche Erfindung machte Alfred Nobel reich?",
+      "a": "Das Dynamit",
+      "info": "Mit seinem Vermögen stiftete er die Nobelpreise.",
+      "img": "💥🧨💰"
+    },
+    {
+      "id": "011",
+      "q": "Wie lautet das chemische Symbol für Gold?",
+      "a": "Au",
+      "choices": [
+        "Go",
+        "Ag",
+        "Gd"
+      ],
+      "info": "Von lateinisch aurum. Ag ist Silber.",
+      "img": "🥇✨"
+    },
+    {
+      "id": "012",
+      "q": "Welches Element steht an erster Stelle im Periodensystem?",
+      "a": "Wasserstoff",
+      "choices": [
+        "Helium",
+        "Sauerstoff",
+        "Kohlenstoff"
+      ],
+      "img": "💧🎈"
+    },
+    {
+      "id": "013",
+      "q": "Welches Gas ist der Hauptbestandteil der Luft?",
+      "a": "Stickstoff",
+      "choices": [
+        "Sauerstoff",
+        "Kohlenstoffdioxid",
+        "Argon"
+      ],
+      "info": "Luft besteht zu etwa 78 % aus Stickstoff und 21 % aus Sauerstoff.",
+      "img": "🌬️🌍"
+    },
+    {
+      "id": "014",
+      "q": "Bei welcher Temperatur siedet Wasser bei normalem Luftdruck?",
+      "a": "100 °C",
+      "img": "💧♨️🔥"
+    },
+    {
+      "id": "015",
+      "q": "Wie schnell ist das Licht im Vakuum ungefähr?",
+      "a": "300 000 km pro Sekunde",
+      "choices": [
+        "300 000 km pro Stunde",
+        "3000 km pro Sekunde",
+        "30 000 km pro Sekunde"
+      ],
+      "img": "💡⚡💨"
+    },
+    {
+      "id": "016",
+      "q": "In welcher Einheit misst man Kraft?",
+      "a": "Newton",
+      "choices": [
+        "Watt",
+        "Joule",
+        "Pascal"
+      ],
+      "img": "🍎⬇️💪"
+    },
+    {
+      "id": "017",
+      "q": "Mit welchem Gerät misst man den Luftdruck?",
+      "a": "Barometer",
+      "choices": [
+        "Thermometer",
+        "Hygrometer",
+        "Tachometer"
+      ],
+      "img": "🌬️⏲️"
+    },
+    {
+      "id": "018",
+      "q": "Welches ist das größte Organ des Menschen?",
+      "a": "Die Haut",
+      "choices": [
+        "Die Leber",
+        "Die Lunge",
+        "Das Gehirn"
+      ],
+      "img": "🖐️🧴"
+    },
+    {
+      "id": "019",
+      "q": "Wie viele Knochen hat ein erwachsener Mensch ungefähr?",
+      "a": "206",
+      "info": "Babys haben mehr Knochen, einige wachsen später zusammen.",
+      "img": "🦴💀"
+    },
+    {
+      "id": "020",
+      "q": "Welches ist der längste Knochen des Menschen?",
+      "a": "Der Oberschenkelknochen",
+      "img": "🦵🦴"
+    },
+    {
+      "id": "021",
+      "q": "Welches ist das größte Tier der Erde?",
+      "a": "Der Blauwal",
+      "img": "🐋🌊"
+    },
+    {
+      "id": "022",
+      "q": "Welches ist das schnellste Landtier?",
+      "a": "Der Gepard",
+      "choices": [
+        "Der Löwe",
+        "Die Gazelle",
+        "Das Pferd"
+      ],
+      "img": "🐆💨"
+    },
+    {
+      "id": "023",
+      "q": "Wie viele Beine hat ein Insekt?",
+      "a": "6",
+      "choices": [
+        "4",
+        "8",
+        "10"
+      ],
+      "info": "Spinnen haben 8 Beine und sind keine Insekten.",
+      "img": "🐜6️⃣"
+    },
+    {
+      "id": "024",
+      "q": "Welche Sprache hat weltweit die meisten Muttersprachler?",
+      "a": "Chinesisch (Mandarin)",
+      "choices": [
+        "Englisch",
+        "Spanisch",
+        "Hindi"
+      ],
+      "img": "🐉🗣️"
+    },
+    {
+      "id": "025",
+      "q": "Wie viele Tage hat ein Schaltjahr?",
+      "a": "366",
+      "img": "📅➕1️⃣"
+    },
+    {
+      "id": "026",
+      "q": "Wie viele Minuten hat ein Tag?",
+      "a": "1440",
+      "choices": [
+        "1200",
+        "1340",
+        "1600"
+      ],
+      "info": "24 × 60 = 1440",
+      "img": "🕐🔄"
+    },
+    {
+      "id": "027",
+      "q": "Welche Zahl bedeutet das römische Zahlzeichen L?",
+      "a": "50",
+      "choices": [
+        "100",
+        "500",
+        "1000"
+      ],
+      "img": "🔤5️⃣0️⃣"
+    },
+    {
+      "id": "028",
+      "q": "Welche Zahl bedeutet das römische Zahlzeichen M?",
+      "a": "1000",
+      "img": "👑🔢"
+    },
+    {
+      "id": "029",
+      "q": "Seit wann gibt es Euro-Bargeld in Deutschland?",
+      "a": "1. Januar 2002",
+      "choices": [
+        "1. Januar 1999",
+        "1. Januar 2000",
+        "3. Oktober 1990"
+      ],
+      "info": "Als Buchgeld gab es den Euro schon seit 1999.",
+      "img": "💶🎆"
+    },
+    {
+      "id": "030",
+      "q": "Wie viele Ringe hat das olympische Symbol?",
+      "a": "5",
+      "img": "⭕🏅"
+    },
+    {
+      "id": "031",
+      "q": "In welchem Land gewann Deutschland 2014 die Fußball-Weltmeisterschaft?",
+      "a": "Brasilien",
+      "choices": [
+        "Südafrika",
+        "Russland",
+        "Katar"
+      ],
+      "img": "⚽🏆☀️"
+    },
+    {
+      "id": "032",
+      "q": "Wie viele Spieler einer Fußballmannschaft stehen gleichzeitig auf dem Feld?",
+      "a": "11",
+      "img": "⚽👕"
+    },
+    {
+      "id": "033",
+      "q": "Welches ist das höchste Gebäude der Welt (Stand 2026)?",
+      "a": "Burj Khalifa in Dubai",
+      "info": "Es ist rund 828 m hoch.",
+      "img": "🏙️🌴🏜️"
+    },
+    {
+      "id": "034",
+      "q": "In welcher Stadt steht das Brandenburger Tor?",
+      "a": "Berlin",
+      "choices": [
+        "München",
+        "Brandenburg an der Havel",
+        "Hamburg"
+      ],
+      "img": "🐻🏛️"
+    },
+    {
+      "id": "035",
+      "q": "Welches Gas nehmen Pflanzen für die Fotosynthese auf?",
+      "a": "Kohlenstoffdioxid",
+      "choices": [
+        "Sauerstoff",
+        "Stickstoff",
+        "Wasserstoff"
+      ],
+      "img": "🌿💨"
+    },
+    {
+      "id": "036",
+      "q": "Wie viele Ecken hat ein Sechseck?",
+      "a": "6",
+      "img": "🐝🍯"
+    }
+  ]
+}

@@ -3,8 +3,9 @@
 # (versionName in app/build.gradle.kts) neu ist – jede Version genau einmal. Von Hand: Actions → „Run workflow“.
 #
 # Secrets (Settings → Secrets and variables → Actions):
-#   WG_KEYSTORE_BASE64     = Inhalt von „wissensgarten-upload.jks.base64.txt“ (Drive, Ordner „Schlüssel (geheim)“)
-#   WG_KEYSTORE_PROPERTIES = Inhalt von „keystore.properties“ (gleicher Ordner)
+#   WG_KEYSTORE_BASE64     = Upload-Schlüssel (.jks) als Base64 – Original nur in Bitwarden
+#   WG_KEYSTORE_PROPERTIES = Inhalt von „keystore.properties“ – nur in Bitwarden
+# Geheimnisse liegen ausschließlich in Bitwarden und in den Repo-Secrets – nie in Git oder Google Drive.
 # Optional für den Drive-Upload:
 #   GDRIVE_SA_JSON         = JSON-Schlüssel eines Google-Dienstkontos
 #   GDRIVE_IMPERSONATE     = E-Mail, in deren Namen hochgeladen wird (nur mit domainweiter Delegierung)
@@ -99,7 +100,7 @@ jobs:
           cat notes.md
 
       - name: Logik-Tests
-        run: ./gradlew --no-daemon :core:model:test
+        run: ./gradlew --no-daemon :core:model:jvmTest :core:data:testDebugUnitTest
 
       - name: APK (GitHub) und AAB (Play Store) bauen
         run: |

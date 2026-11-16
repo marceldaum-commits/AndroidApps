@@ -17,8 +17,18 @@ class AppContainer private constructor(context: Context, val database: GardenDat
             }
         }
     },
+    downloadedPacks = {
+        withContext(Dispatchers.IO) {
+            remotePackDir(context).listFiles { f -> f.name.endsWith(".json") }.orEmpty().mapNotNull { runCatching { it.readText() }.getOrNull() }
+        }
+    },
 ) {
     constructor(context: Context) : this(context.applicationContext, GardenDatabase.create(context.applicationContext))
     val syncStore: SyncStore by lazy { SyncStore(appContext, store, settings, tombstones) }
     private val appContext = context.applicationContext
+
+    companion object {
+        /** Nachgeladene Wissenspakete (nur JSON-Daten) – liegen im privaten App-Speicher. */
+        fun remotePackDir(context: Context): java.io.File = java.io.File(context.applicationContext.filesDir, "packs_nachgeladen").apply { mkdirs() }
+    }
 }
