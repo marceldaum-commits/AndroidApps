@@ -1,5 +1,5 @@
-// Service Worker: WebApp offline nutzbar. Bei neuer Version (0.21.0) wird der Zwischenspeicher erneuert.
-const CACHE = 'wissensgarten-0.21.0';
+// Service Worker: WebApp offline nutzbar. Bei neuer Version (0.21.1) wird der Zwischenspeicher erneuert.
+const CACHE = 'wissensgarten-0.21.1';
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', 'index.html', 'wg-platform.js', 'wissensgarten.js', 'manifest.webmanifest', 'packs/index.json'])).then(() => self.skipWaiting()));
 });

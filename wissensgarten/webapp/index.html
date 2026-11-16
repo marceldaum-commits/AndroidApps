@@ -6,20 +6,25 @@
   <title>Wissensgarten – Lernen & Gießen</title>
   <meta name="description" content="Wissensgarten: Lernen wie Gärtnern – jede Karte eine Pflanze, die wächst, wenn du sie gießt. Ohne Werbung, ohne Konto, Fortschritt bleibt im Browser.">
   <meta name="theme-color" content="#3f6b3a">
-  <meta name="wg-version" content="0.21.0">
+  <meta name="wg-version" content="0.21.1">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <style>
     html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #fbf6ec; overscroll-behavior: none; }
     body { touch-action: manipulation; }
-    #splash { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    #splash { position: fixed; inset: 0; z-index: 30; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
       font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #3f6b3a; background: linear-gradient(#e1f5fe, #fbf6ec 55%, #c5e1a5);
       z-index: 10; transition: opacity .5s; text-align: center; padding: 16px; box-sizing: border-box; }
     #splash.weg { opacity: 0; pointer-events: none; }
     #splash .b { font-size: 72px; animation: hop 1.2s ease-in-out infinite; }
     #splash h1 { margin: 0; font-size: 26px; }
     #splash p { margin: 0; color: #5a6b55; }
+    #splash .hint { font-size: 14px; max-width: 300px; text-align: center; min-height: 40px; }
+    #splash .bar { width: 200px; height: 8px; border-radius: 4px; background: #e6eedd; overflow: hidden; }
+    #splash .bar i { display: block; height: 100%; width: 30%; border-radius: 4px; background: #7cb342; animation: lauf 1.4s ease-in-out infinite; }
+    @keyframes lauf { 0% { transform: translateX(-100%); } 100% { transform: translateX(340%); } }
+    #splash button { font: 600 15px system-ui, sans-serif; color: #fff; background: #3f6b3a; border: 0; border-radius: 20px; padding: 10px 18px; }
     #splash .links { position: absolute; bottom: 14px; font-size: 13px; }
     #splash a { color: #3f6b3a; }
     @keyframes hop { 0%, 100% { transform: translateY(0) } 50% { transform: translateY(-12px) } }
@@ -34,11 +39,21 @@
     <div class="b">🐝</div>
     <h1>Wissensgarten</h1>
     <p>Brummi gießt gerade die Blumen … 🌱</p>
+    <div class="bar"><i></i></div>
+    <p class="hint" id="hint"></p>
     <noscript><p>Bitte JavaScript einschalten, dann wächst der Garten.</p></noscript>
-    <div class="links">Version 0.21.0 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
+    <div class="links">Version 0.21.1 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" rel="noopener">Datenschutz</a></div>
   </div>
   <script>
+    // Beim ersten Öffnen lädt der Garten einmal ca. 10 MB (App + Emoji-Bilder) – danach kommt alles aus dem Zwischenspeicher.
+    (function () {
+      const hint = document.getElementById('hint');
+      const say = (t) => { if (document.getElementById('splash') && hint) hint.innerHTML = t; };
+      setTimeout(() => say('Beim ersten Mal holt Brummi alle Merkbilder (ca. 10&nbsp;MB). Danach startet der Garten blitzschnell – auch ohne Internet.'), 6000);
+      setTimeout(() => say('Das Netz ist gerade langsam … Brummi fliegt weiter. 🐝'), 30000);
+      setTimeout(() => say('Das dauert ungewöhnlich lange.<br><br><button onclick="location.reload()">Nochmal versuchen</button>'), 90000);
+    })();
     if (!('WebAssembly' in window)) document.querySelector('#splash p').textContent = 'Dieser Browser ist leider zu alt. Bitte Chrome, Edge, Firefox oder Safari aktualisieren.';
     // Automatische Updates ohne Knopf: neue Version wird im Hintergrund geladen und eingespielt –
     // gleich beim Öffnen, sonst sobald die Seite kurz verlassen wird (keine Lernrunde wird unterbrochen).

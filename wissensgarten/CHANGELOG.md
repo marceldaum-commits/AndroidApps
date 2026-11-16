@@ -3,6 +3,10 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.21.1 – Schneller Überblick beim ersten Start (16.11.2026)
+- **WebApp:** Beim ersten Öffnen bleibt jetzt Brummis Startbild mit Ladebalken sichtbar, statt nur eines weißen Bildschirms mit Ladekreis. Ein Hinweis erklärt, dass der Garten einmalig ca. 10 MB lädt – danach startet er blitzschnell, auch ohne Internet.
+- Bei sehr langsamem Netz erscheint nach einer Weile ein Knopf „Nochmal versuchen“.
+
 ## 0.21.0 – 30 neue Wissenspakete (16.11.2026)
 - **🌱 Der Garten wächst kräftig:** 30 neue Wissenspakete mit über 1.000 neuen Karten – jetzt sind es 77 Pakete mit rund 2.650 Karten, von Klasse 1 bis zum Erwachsenen.
 - **Grundschule:** Rechnen bis 100 und bis 1000, schriftlich rechnen, Formen und Körper, Satzzeichen, Englisch (Farben, Zahlen, Familie, Körper), Pflanzen und Wald, Gesund und fit, Ritter und Burgen.

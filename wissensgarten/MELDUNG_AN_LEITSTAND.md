@@ -1,5 +1,20 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 0.21.1 vom 16.11.2026 – WebApp: Startbild bleibt beim ersten Laden sichtbar
+
+**Problem (von Marcel am Handy gemeldet):** Beim ersten Öffnen über mobiles Netz war nur ein weißer Bildschirm mit lila Ladekreis zu sehen.
+Ursache: Die Zeichenfläche der App lag über Brummis Startbild, während einmalig ca. 10 MB geladen werden (App + Emoji-Schrift).
+Das ist bei schwachem Netz entsprechend langsam.
+
+**Lösung:**
+- Das Startbild liegt jetzt sicher oben und zeigt einen Ladebalken.
+- Nach 6 s erscheint ein Hinweis, dass der erste Start einmalig ca. 10 MB lädt, nach 30 s „Netz langsam“, nach 90 s ein Knopf „Nochmal versuchen“.
+- Ab dem zweiten Start kommt alles aus dem Zwischenspeicher.
+
+**Getestet:** Mit gedrosseltem 4G-Profil (Pixel 7): Startbild und Hinweis sind sichtbar, danach erscheint die App, ohne Fehler.
+Nur die WebApp hat sich geändert; die APK hat aus Gründen des Gleichstands die gleiche Versionsnummer.
+**Bitte `wissensgarten-live` auf 0.21.1 schalten.**
+
 ## 0.21.0 vom 16.11.2026 – Inhalte stark erweitert (30 neue Pakete)
 
 **Umfang:** 30 neue Wissenspakete mit 1.046 neuen Karten. Jetzt sind es **77 Pakete mit 2.653 Karten** (vorher 47 Pakete).
