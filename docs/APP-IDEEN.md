@@ -11,7 +11,7 @@ Reihenfolge: eine App fertig optimieren, dann die nächste. Das Rechnen ist jewe
 | App | Spielprinzip | Inhalte | Status |
 |---|---|---|---|
 | 🚀 **Kurvenflug** (`kurvenflug/`) | Die Flugbahn einer Sonde ist eine Funktion, die man selbst formt. Ziele treffen, Asteroiden ausweichen, Energiezellen sammeln. Maskottchen Volt (Roboter) | 13 Kapitel / 75 Level von Klasse 5 bis 10 (Mathe + Physik), Bosse, Tagesmission, Duell, Asteroidensturm, Baukasten, Klassen-Challenge, Formel-Detektiv, Lexikon, Werkstatt | ✅ 0.5.0 |
-| ⚙️ **Werkstatt der Maschinen** | Kettenreaktionen bauen: Hebel, Rollen, Rampen, Federn, Spiegel, Stromkreise. Rechnen, wo Probieren nicht reicht | Hebelgesetz, Energieerhaltung, Reflexion/Brechung, Ohmsches Gesetz, Winkel | 💡 |
+| 🧪 **Experimentopia** (`experimentopia/`, früher Idee „Werkstatt der Maschinen“) | Virtuelles Labor für Klasse 3–10: Vermuten → Ausprobieren → Blubb erklären → Knobeln. Maskottchen Blubb (Laborkolben) | 7 Inseln, 68 Versuche, 20 Geräte im Freien Labor: Dichte, Hebel, Rollen, Strom, Magnet, pH, Reaktionsgleichungen, Wärme, Licht, Klang, Fall, Pendel; Forscherbuch mit Selbsteinschätzung; Free/Pro vorbereitet | ✅ 0.1.0 (16.11.2026) |
 | 🗡️ **Formel-Dungeon** | Roguelike-Kartenspiel: Karten sind Rechenoperationen. Gegner-Zahlen und Gleichungen umformen, bis sie zerfallen. Bosse = Gleichungssysteme | Bruchrechnen, Terme, Gleichungen, Potenzen, Wurzeln, Gleichungssysteme | 💡 |
 
 ## Oberstufe (ab Klasse 11)

@@ -1,0 +1,115 @@
+package de.experimentopia.app.ui
+
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.test.*
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.junit4.createComposeRule
+import com.github.takahirom.roborazzi.captureRoboImage
+import de.experimentopia.app.ui.experiment.ExperimentScreen
+import de.experimentopia.app.ui.experiment.Phase
+import de.experimentopia.app.ui.free.FreeLabRun
+import de.experimentopia.app.ui.free.FreeLabScreen
+import de.experimentopia.app.ui.home.HomeScreen
+import de.experimentopia.app.ui.home.IslandScreen
+import de.experimentopia.app.ui.journal.BadgesScreen
+import de.experimentopia.app.ui.journal.JournalScreen
+import de.experimentopia.app.ui.journal.JournalTab
+import de.experimentopia.app.ui.settings.ProScreen
+import de.experimentopia.app.ui.settings.SettingsScreen
+import de.experimentopia.app.ui.settings.UpdateState
+import de.experimentopia.app.ui.theme.E
+import de.experimentopia.app.ui.theme.ExperimentopiaTheme
+import de.experimentopia.core.data.JournalEntry
+import de.experimentopia.core.model.*
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
+
+/** Rendert die Bildschirme ohne Gerät – für das README und zum Prüfen vor jeder Auslieferung. */
+@RunWith(RobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [35], qualifiers = "w400dp-h860dp-xxhdpi")
+class ScreenshotTest {
+    @get:Rule val rule = createComposeRule()
+
+    private fun shot(name: String, settle: Long = 1500, prepare: (ComposeContentTestRule) -> Unit = {}, content: @Composable () -> Unit) {
+        // Endlose Animationen (Bläschen, Wellen) würden sonst nie „ruhig“ – die Zeit läuft nur, wenn der Test sie vorstellt
+        rule.mainClock.autoAdvance = false
+        rule.setContent { ExperimentopiaTheme { Surface(color = E.Night) { content() } } }
+        rule.mainClock.advanceTimeBy(1500)
+        prepare(rule)
+        rule.mainClock.advanceTimeBy(settle)
+        rule.onRoot().captureRoboImage("../screenshots/$name.png")
+    }
+
+    private val someStars = Catalog.all.take(14).mapIndexed { i, e -> e.id to (3 - i % 3) }.toMap() + Catalog.of(Island.STROM).take(3).associate { it.id to 3 }
+    private val stats = Stats(done = 17, stars = 38, hits = 9, ahas = 8, explained = 12)
+
+    private fun lab(id: String, name: String, settle: Long = 1500, prepare: (ComposeContentTestRule) -> Unit = {}) {
+        val e = Catalog.byId(id)!!
+        shot(name, settle, prepare) { ExperimentScreen(e, {}, null, {}, startPhase = Phase.LAB, startGuess = 0) }
+    }
+    private fun ComposeContentTestRule.tap(text: String, times: Int = 1) = repeat(times) { onAllNodes(hasText(text, substring = true) and hasClickAction()).onFirst().performScrollTo().performClick(); mainClock.advanceTimeBy(250) }
+    private fun ComposeContentTestRule.slide(label: String, v: Float) { onNodeWithTag("regler:$label").performScrollTo().performSemanticsAction(SemanticsActions.SetProgress) { it(v) }; mainClock.advanceTimeBy(200) }
+
+    @Test fun home() = shot("01_start", settle = 4000) {
+        HomeScreen(someStars, stats, Daily.forDay(20_600), false, 0, true, {}, {}, {}, {}, {}, {}, {}, {})
+    }
+    @Test fun island() = shot("02_insel") { IslandScreen(Island.WASSER, someStars, 4, { false }, {}, {}) }
+
+    @Test fun story() = shot("03_raetsel", settle = 4000) { ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}) }
+    @Test fun predict() = shot("04_vermuten", prepare = { it.onNodeWithTag("wahl1").performClick(); it.mainClock.advanceTimeBy(300); it.onNodeWithTag("sicher2").performClick() }) {
+        ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.PREDICT)
+    }
+    @Test fun water() = lab("w5", "05_ei_im_salzwasser", settle = 3000, prepare = { it.tap("frisches Ei"); it.tap("🧂 Salzwasser"); it.tap("frisches Ei") })
+    @Test fun reveal() = shot("06_aha_moment", settle = 4000) { ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.REVEAL, startGuess = 1) }
+    @Test fun explain() = shot("07_blubb_erklaeren", settle = 2500, prepare = { it.onNodeWithTag("grund1").performScrollTo().performClick() }) {
+        ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.EXPLAIN, startGuess = 1)
+    }
+    @Test fun done() = shot("08_geschafft", settle = 2500) { ExperimentScreen(Catalog.byId("w5")!!, {}, {}, {}, startPhase = Phase.DONE, startGuess = 0) }
+
+    @Test fun tower() = lab("w8", "10_dichteturm", settle = 4000, prepare = { it.tap("Spiritus"); it.tap("🍯 Honig"); it.tap("Speiseöl"); it.tap("💧 Wasser"); it.tap("Spülmittel"); it.mainClock.advanceTimeBy(2000); it.tap("Weintraube"); it.tap("Eiswürfel") })
+    @Test fun lever() = lab("k1", "11_wippe", settle = 2500, prepare = { it.tap("Loslassen") })
+    @Test fun pulley() = lab("k8", "12_flaschenzug")
+    @Test fun circuitSeries() = lab("s5", "13_lampen_in_reihe")
+    @Test fun circuitTester() = lab("s1", "14_leitertest", prepare = { it.tap("Bleistift", 0); it.tap("📌 Eisennagel") })
+    @Test fun circuitOhm() = lab("s8", "15_ohmsches_gesetz", prepare = { it.slide("Widerstand einstellen", 22.5f) })
+    @Test fun magnet() = lab("s10", "16_magnet")
+    @Test fun ph() = lab("c2", "17_rotkohl", settle = 2500, prepare = { listOf("Essig", "Cola", "Natron-Lösung", "Waschsoda").forEach { t -> it.tap(t) } })
+    @Test fun titration() = lab("c4", "18_ph_sprung", prepare = { it.tap("+1 mL Lauge", 11) })
+    @Test fun reaction() = lab("c7", "19_knallgas", settle = 300, prepare = { r -> r.onAllNodesWithText("+")[0].performClick(); r.mainClock.advanceTimeBy(200); r.onAllNodesWithText("+")[2].performClick() })
+    @Test fun fizz() = lab("c6", "20_natron_ballon", settle = 2500, prepare = { it.tap("+1 Löffel Natron", 2) })
+    @Test fun melt() = lab("h1", "21_heizplatte", settle = 2000, prepare = { it.slide("Heizplatte", 33f) })
+    @Test fun curve() = lab("h3", "22_teilchen", settle = 7000, prepare = { it.tap("Heizen") })
+    @Test fun mix() = lab("h6", "23_eisen_ins_wasser", settle = 2000, prepare = { it.tap("Hineinwerfen") })
+    @Test fun light() = lab("l1", "24_licht_mischen", prepare = { it.slide("💡 Lampe Rot", 1f); it.slide("💡 Lampe Grün", 1f) })
+    @Test fun prism() = lab("l5", "25_prisma", prepare = { it.slide("Prisma drehen", 10f) })
+    @Test fun tubes() = lab("l9", "26_lied_spielen")
+    @Test fun tuner() = lab("l8", "27_stimmen", prepare = { it.slide("Wasserhöhe in der 25-cm-Röhre", 15.3f) })
+    @Test fun fall() = lab("f1", "28_kugel_gegen_feder", settle = 1200, prepare = { it.tap("Loslassen") })
+    @Test fun pendulum() = lab("f7", "29_pendel", settle = 1300, prepare = { it.tap("Anstoßen") })
+
+    @Test fun freeLab() = shot("30_freies_labor") { FreeLabScreen({ false }, {}, {}) }
+    @Test fun freeFloat() = shot("31_eigene_werte", prepare = { it.tap("Mein Ding") }) { FreeLabRun(Lab.SCHWIMMEN) {} }
+    @Test fun freeCircuit() = shot("32_freier_stromkreis") { FreeLabRun(Lab.STROM) {} }
+
+    private val entries = listOf(
+        JournalEntry(1, "w5", 1_763_300_000_000, "sinkt", "schwimmt", false, 2, true),
+        JournalEntry(2, "k1", 1_763_200_000_000, "rechts runter", "rechts runter", true, 1, true),
+        JournalEntry(3, "f1", 1_763_100_000_000, "Kugel", "Kugel", true, 2, false, daily = true),
+        JournalEntry(4, "c1", 1_763_000_000_000, "rot", "rot", true, 0, true),
+        JournalEntry(5, "l1", 1_762_900_000_000, "Braun", "Gelb", false, 2, true),
+    )
+    @Test fun journal() = shot("33_forscherbuch") { JournalScreen(entries, {}) }
+    @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
+    @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
+    @Test fun settings() = shot("36_einstellungen") {
+        SettingsScreen(true, {}, true, {}, true, {}, 5, {}, "0.1.0", "16.11.2026", UpdateState.Idle, {}, {}, {})
+    }
+    @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
+}

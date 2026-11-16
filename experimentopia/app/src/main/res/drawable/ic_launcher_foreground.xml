@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- Erlenmeyerkolben mit leuchtender Flüssigkeit -->
+    <path android:fillColor="#3DF5C8" android:pathData="M37,66 L71,66 L77,78 Q78,82 74,82 L34,82 Q30,82 31,78 Z"/>
+    <path android:strokeColor="#F3EEFF" android:strokeWidth="3" android:strokeLineJoin="round"
+        android:pathData="M47,30 L47,50 L31,78 Q30,82 34,82 L74,82 Q78,82 77,78 L61,50 L61,30"/>
+    <path android:strokeColor="#F3EEFF" android:strokeWidth="3" android:strokeLineCap="round" android:pathData="M43,30 L65,30"/>
+    <!-- Augen -->
+    <path android:fillColor="#160F2E" android:pathData="M47,73 m-2.5,0 a2.5,2.5 0 1,0 5,0 a2.5,2.5 0 1,0 -5,0"/>
+    <path android:fillColor="#160F2E" android:pathData="M61,73 m-2.5,0 a2.5,2.5 0 1,0 5,0 a2.5,2.5 0 1,0 -5,0"/>
+    <!-- Blasen und Funken -->
+    <path android:fillColor="#FF5FA2" android:pathData="M54,22 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0"/>
+    <path android:fillColor="#FFD84D" android:pathData="M63,14 m-2.5,0 a2.5,2.5 0 1,0 5,0 a2.5,2.5 0 1,0 -5,0"/>
+    <path android:fillColor="#7CC8FF" android:pathData="M46,15 m-2,0 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0"/>
+</vector>

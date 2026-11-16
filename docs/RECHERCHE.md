@@ -158,3 +158,24 @@ Keine neue Suche; Anwendung der Befunde oben und bekannter Didaktik:
 - **Serien-Tiere**: Serien motivieren, aber Verlust-Angst nicht (Leitlinie „Belohnung ohne Druck“) → verdiente Tiere bleiben
   für immer, bei Pause schlafen sie nur.
 - Eigene Wirksamkeitsdaten gibt es für keinen dieser Bausteine.
+
+## Experimentopia 0.1.0 (16.11.2026): virtuelles Labor für Klasse 3–10
+
+| Erkenntnis | Umsetzung in Experimentopia |
+| --- | --- |
+| **Vermuten – Beobachten – Erklären** (Predict-Observe-Explain) gehört zu den am häufigsten eingesetzten Methoden im naturwissenschaftlichen Grundschulunterricht, um Fehlvorstellungen sichtbar zu machen und zu ändern (systematisches Review 2026). Für Versuche mit dem Handy wird die Methode ausdrücklich empfohlen. | Jeder Versuch folgt dem Kreislauf Rätsel → Vermuten → Ausprobieren → Auflösung → Erklären. |
+| **Protégé-Effekt**: Wer glaubt, einer Figur etwas beizubringen, strengt sich mehr an und lernt mehr – am stärksten profitieren schwächere Kinder (Betty's Brain, Stanford/Vanderbilt; Roboter-Studie mit Grundschulkindern 2025, Vorabdruck). | „Blubb fragt: Warum?“ – das Kind erklärt Blubb den Versuch. Blubb freut sich sichtbar, wenn er es versteht. |
+| **Selbsteinschätzung** (Hattie: „self-reported grades“, d ≈ 1,3; Zahl umstritten, Richtung belastbar) und metakognitive Pausen fördern Selbstregulation (Reviews 2025). | Vor jedem Versuch: „Wie sicher bist du?“ Das Forscherbuch zeigt, wie oft man bei „ganz sicher“ richtig lag, und Blubb gibt einen Tipp. |
+| **Neugierlücke** (Loewenstein): Spiele mit gezielt ausgelösten Neugier-Momenten verbesserten Lernen und Motivation (zwei Experimente). | Jeder Versuch beginnt mit einem Rätsel, die Antwort kommt erst nach dem Ausprobieren. Überraschende Versuche (Bleistiftmine leitet, Eis sinkt in Spiritus, Gelb + Blau = Weiß beim Licht). |
+| **Wahlfreiheit** stärkt die eigene Motivation (Meta-Analyse Patall u. a. 2008), noch stärker wirkt das Gefühl „Ich kann das“ (Meta-Analyse 2021). | Inseln frei wählbar, Klassenfilter statt Sperre, Freies Labor ohne Aufgaben mit eigenen Werten; Sterne nur für Tun, Erklären und Knobeln – nie für die Vermutung. |
+| Für Teenager soll ein Spiel ein **Werkzeug zum Bauen** sein, nicht Belohnung fürs Lernen (siehe Klasse 5–10 oben). | Freies Labor: 20 Geräte, eigene Werte, eigene Fragen. |
+| Smartphone-Versuche (z. B. phyphox) steigern Interesse und Forscherfähigkeiten, wenn die Messwerte nicht vom Verständnis ablenken. | Wenige, große Messanzeigen statt Rohdaten; Kurven nur dort, wo sie die Idee zeigen (pH-Sprung, Heizkurve). |
+
+### Quellen
+- [Systematisches Review 2026: Predict-Observe-Explain in der Grundschule](https://jurnalfkip.unram.ac.id/index.php/JPFT/article/download/9328/5705/58272)
+- [E-Teaching Physik: POE mit Smartphone-Versuchen (arXiv)](https://arxiv.org/pdf/2008.07441) · [phyphox (arXiv)](https://arxiv.org/pdf/1804.06239) · [Guided Inquiry mit phyphox 2025](https://journal.unnes.ac.id/journals/jpii/article/view/47007)
+- [Teachable Agents and the Protégé Effect (Stanford)](https://purl.stanford.edu/zm369yx3532) · [Kinder und Roboter lernen gemeinsam (arXiv 2025)](https://arxiv.org/html/2506.18365v1)
+- [Frontiers in Education 2025: Videospiele und Metakognition](https://www.frontiersin.org/articles/10.3389/feduc.2024.1485098/full) · [Frontiers in Psychology 2026](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1692949/full)
+- [Visible Learning (Hattie)](https://en.wikipedia.org/wiki/Visible_learning) · [Corwin-Effektstärken](https://resources.corwin.com/sites/default/files/appendix_4.pdf)
+- [Patall u. a. 2008: Wahlfreiheit und Motivation](https://selfdeterminationtheory.org/wp-content/uploads/2019/10/2008_PatallCooperRobinson_PsychBulletin.pdf) · [Bureau u. a. 2021](https://selfdeterminationtheory.org/wp-content/uploads/2021/09/2021_PathwaystoStudentMotiv_BureaHowardEtal.pdf)
+- [Escape Games in der Schule – Review](https://library.kab.ac.ug/Record/doaj-art-d5fd09cb69a448d9b5bc92fd39f0db1c/Description)

@@ -1,0 +1,218 @@
+package de.experimentopia.core.model
+
+import de.experimentopia.core.model.Pick.index
+import de.experimentopia.core.model.Pick.nearest
+
+internal fun c(text: String, emoji: String = "", color: Long? = null) = Choice(text, emoji, color)
+internal fun quiz(q: String, choices: List<Choice>, answer: Int, explain: String = "") = Quiz(q, choices, answer, explain)
+private val SWIM = listOf(c("schwimmt", "🏊"), c("sinkt", "⚓"))
+private fun swimIdx(s: FloatState) = if (s == FloatState.SINKT) 1 else 0
+
+/** Wasserinsel und Kraftwerk-Insel */
+internal object CatalogA {
+    private val W = Island.WASSER
+    private val K = Island.KRAFT
+
+    val water = listOf(
+        Experiment("w1", W, "Schwimmt oder sinkt?", "🌲", 3..4,
+            "Blubb hat einen dicken Holzklotz und einen winzigen Nagel gefunden. Was davon geht wohl unter?",
+            quiz("Was geht unter?", listOf(c("der dicke Holzklotz", "🌲"), c("der kleine Nagel", "📌"), c("beide", "🤷")),
+                when { Buoyancy.state(Thing.HOLZ, Liquid.WASSER) == FloatState.SINKT && Buoyancy.state(Thing.NAGEL, Liquid.WASSER) == FloatState.SINKT -> 2
+                    Buoyancy.state(Thing.NAGEL, Liquid.WASSER) == FloatState.SINKT -> 1; else -> 0 }),
+            FloatSetup(listOf(Liquid.WASSER), listOf(Thing.HOLZ, Thing.NAGEL, Thing.KORK, Thing.STEIN, Thing.STYROPOR)),
+            "Zieh alle Dinge ins Wasserbecken.",
+            "Der winzige Nagel sinkt – der viel schwerere Holzklotz schwimmt!",
+            listOf("Es kommt nicht aufs Gewicht an, sondern darauf, wie dicht das Material ist.", "Schwere Dinge sinken immer.", "Der Nagel ist spitz und schneidet ins Wasser."),
+            "Ob etwas schwimmt, hängt von der Dichte ab – nicht von Größe oder Gewicht.",
+            quiz("Ein riesiger Baumstamm fällt in einen See. Was passiert?", SWIM, swimIdx(Buoyancy.state(Thing.HOLZ, Liquid.WASSER)), "Holz ist weniger dicht als Wasser – egal wie groß.")),
+
+        Experiment("w2", W, "Die Riesenkerze", "🕯️", 3..4,
+            "Eine Kerze, fast ein Kilo schwer! Und daneben eine kleine Münze. Blubb will beide baden lassen.",
+            quiz("Was geht unter?", listOf(c("die schwere Kerze", "🕯️"), c("die kleine Münze", "🥉"), c("beide", "🤷")),
+                if (Buoyancy.state(Thing.KERZE, Liquid.WASSER) == FloatState.SINKT) 2 else 1),
+            FloatSetup(listOf(Liquid.WASSER), listOf(Thing.KERZE, Thing.MUENZE, Thing.EIS, Thing.GUMMIENTE)),
+            "Probier alle Dinge im Wasser aus.",
+            "Die Riesenkerze schwimmt, die kleine Münze geht sofort unter.",
+            listOf("Wachs ist ein bisschen weniger dicht als Wasser, Metall viel dichter.", "Die Kerze ist so groß, dass sie nicht untergehen kann.", "Münzen sind magnetisch und werden nach unten gezogen."),
+            "Auch ein riesiges Ding schwimmt, wenn sein Material weniger dicht ist als Wasser.",
+            quiz("Und ein Eiswürfel?", SWIM, swimIdx(Buoyancy.state(Thing.EIS, Liquid.WASSER)), "Eis ist weniger dicht als Wasser.")),
+
+        Experiment("w3", W, "Obst-Bad", "🍎", 3..4,
+            "Obstsalat im Wasserbecken! Blubb fragt sich: Welches Obst kann schwimmen?",
+            quiz("Was davon schwimmt?", listOf(c("Apfel", "🍎"), c("Weintraube", "🍇"), c("Kartoffel", "🥔")),
+                listOf(Thing.APFEL, Thing.TRAUBE, Thing.KARTOFFEL).indexOfFirst { Buoyancy.state(it, Liquid.WASSER) == FloatState.SCHWIMMT }),
+            FloatSetup(listOf(Liquid.WASSER), listOf(Thing.APFEL, Thing.TRAUBE, Thing.KARTOFFEL, Thing.ORANGE)),
+            "Leg alles Obst und Gemüse ins Wasser.",
+            "Der Apfel schwimmt, Traube und Kartoffel sinken.",
+            listOf("Im Apfel steckt viel Luft, Traube und Kartoffel sind dichter als Wasser.", "Runde Dinge schwimmen immer.", "Rote Dinge sind leichter."),
+            "Luft im Inneren macht Dinge im Mittel weniger dicht.",
+            quiz("Schwimmt eine Orange mit Schale?", SWIM, swimIdx(Buoyancy.state(Thing.ORANGE, Liquid.WASSER)))),
+
+        Experiment("w4", W, "Die nackte Orange", "🍊", 3..5,
+            "Die Orange schwimmt fröhlich. Blubb schält sie. Und jetzt?",
+            quiz("Was macht die geschälte Orange?", listOf(c("schwimmt weiter", "🏊"), c("geht unter", "⚓"), c("hüpft heraus", "🦘")),
+                if (Buoyancy.state(Thing.ORANGE_OHNE, Liquid.WASSER) == FloatState.SINKT) 1 else 0),
+            FloatSetup(listOf(Liquid.WASSER), listOf(Thing.ORANGE, Thing.ORANGE_OHNE)),
+            "Leg beide Orangen ins Wasser.",
+            "Mit Schale schwimmt sie – ohne Schale geht sie unter!",
+            listOf("Die Schale ist voller Luftbläschen – eine eingebaute Schwimmweste.", "Die Schale ist schwer und zieht nach oben.", "Geschältes Obst saugt sich mit Wasser voll."),
+            "Die Schale wirkt wie eine Schwimmweste: Luft macht die Orange insgesamt weniger dicht.",
+            quiz("Warum trägt man beim Segeln eine Schwimmweste?", listOf(c("Die Luft darin macht mich im Mittel weniger dicht"), c("Sie ist schwer und hält mich fest"), c("Sie macht das Wasser dichter")), 0)),
+
+        Experiment("w5", W, "Das Ei-Wunder", "🥚", 4..6,
+            "Ein frisches Ei sinkt im Wasser. Blubb rührt viel Salz in ein zweites Becken …",
+            quiz("Was macht das Ei im Salzwasser?", SWIM, swimIdx(Buoyancy.state(Thing.EI, Liquid.SALZWASSER))),
+            FloatSetup(listOf(Liquid.WASSER, Liquid.SALZWASSER), listOf(Thing.EI), eachLiquid = true),
+            "Leg das Ei erst ins Wasser, dann ins Salzwasser.",
+            "Im Leitungswasser sinkt das Ei, im Salzwasser schwimmt es.",
+            listOf("Salz macht das Wasser dichter – jetzt ist das Wasser dichter als das Ei.", "Salz macht das Ei leichter.", "Das Salz klebt am Ei und trägt es."),
+            "Je dichter die Flüssigkeit, desto besser trägt sie.",
+            quiz("Im Toten Meer ist sehr viel Salz. Was können Menschen dort?", listOf(c("Auf dem Wasser liegen und Zeitung lesen", "📰"), c("Gar nicht schwimmen", "🚫"), c("Unter Wasser atmen", "💨")), 0)),
+
+        Experiment("w6", W, "Kann Knete schwimmen?", "🛶", 4..6,
+            "Blubbs Knetkugel ist untergegangen. Blubb ist traurig. Gibt es einen Trick?",
+            quiz("Kann dieselbe Knete schwimmen?", listOf(c("Nein, niemals", "🙅"), c("Ja, als Boot geformt", "🛶"), c("Nur in Speiseöl", "🌻")),
+                when { Buoyancy.state(Thing.KNETBOOT, Liquid.WASSER) == FloatState.SCHWIMMT -> 1; Buoyancy.state(Thing.KNETE, Liquid.OEL) == FloatState.SCHWIMMT -> 2; else -> 0 }),
+            FloatSetup(listOf(Liquid.WASSER), listOf(Thing.KNETE, Thing.KNETBOOT)),
+            "Probier Kugel und Boot aus.",
+            "Die Kugel sinkt – das Boot aus genau derselben Knete schwimmt!",
+            listOf("Das Boot schließt Luft ein und verdrängt viel mehr Wasser – im Mittel ist es weniger dicht.", "Boote sind leichter als Kugeln aus dem gleichen Material.", "Die Kugel ist zu rund zum Schwimmen."),
+            "Form macht's: Ein hohles Boot verdrängt viel Wasser und schwimmt.",
+            quiz("Warum schwimmen riesige Schiffe aus Stahl?", listOf(c("Der Rumpf ist voll Luft – im Mittel weniger dicht als Wasser"), c("Stahl schwimmt"), c("Die Motoren halten sie oben")), 0)),
+
+        Experiment("w7", W, "Eis in Spiritus", "🧊", 5..7,
+            "Eiswürfel schwimmen im Wasser – klar. Aber Blubb hat Spiritus in sein Glas gefüllt.",
+            quiz("Was macht der Eiswürfel im Spiritus?", SWIM, swimIdx(Buoyancy.state(Thing.EIS, Liquid.SPIRITUS))),
+            FloatSetup(listOf(Liquid.WASSER, Liquid.SPIRITUS, Liquid.OEL), listOf(Thing.EIS), eachLiquid = true),
+            "Leg den Eiswürfel in alle drei Flüssigkeiten.",
+            "Im Spiritus geht das Eis unter!",
+            listOf("Spiritus ist weniger dicht als Eis – er kann es nicht tragen.", "Spiritus schmilzt das Eis sofort.", "Eis ist im Spiritus schwerer geworden."),
+            "Ob etwas schwimmt, hängt von beiden ab: Dichte des Gegenstands und Dichte der Flüssigkeit.",
+            quiz("Eis (0,92 g/cm³) in Speiseöl (0,92 g/cm³)?", listOf(c("schwimmt oben"), c("schwebt mittendrin"), c("sinkt schnell")),
+                Buoyancy.state(Thing.EIS, Liquid.OEL).ordinal)),
+
+        Experiment("w8", W, "Der Dichteturm", "🌈", 5..7,
+            "Fünf bunte Flüssigkeiten, ein hohes Glas. Blubb gießt vorsichtig alles hinein.",
+            quiz("Welche Flüssigkeit landet ganz oben?", listOf(c("Honig", "🍯"), c("Wasser", "💧"), c("Speiseöl", "🌻"), c("Spiritus", "🔥")),
+                listOf(Liquid.HONIG, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS).indexOf(DensityTower.top(listOf(Liquid.HONIG, Liquid.SPUELI, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS)).liquids.single())),
+            TowerSetup(listOf(Liquid.HONIG, Liquid.SPUELI, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS)),
+            "Gieß alle fünf Flüssigkeiten ins Glas – in beliebiger Reihenfolge.",
+            "Egal in welcher Reihenfolge: Unten Honig, oben Spiritus.",
+            listOf("Die dichteste Flüssigkeit sinkt nach unten, die am wenigsten dichte steigt nach oben.", "Was zuerst eingefüllt wird, bleibt unten.", "Bunte Flüssigkeiten mischen sich nie."),
+            "Flüssigkeiten, die sich nicht mischen, schichten sich nach ihrer Dichte.",
+            quiz("Spiritus direkt auf Wasser, ohne Öl dazwischen?", listOf(c("liegt oben"), c("mischt sich mit dem Wasser"), c("sinkt nach unten")),
+                if (DensityTower.layers(listOf(Liquid.WASSER, Liquid.SPIRITUS)).size == 1) 1 else 0, "Wasser und Alkohol mischen sich – das Öl war die Trennwand.")),
+
+        Experiment("w9", W, "Archimedes taucht ein", "🛁", 6..7,
+            "Archimedes rief in der Badewanne „Heureka!“. Blubb will wissen: Wie tief taucht schwimmendes Holz ein?",
+            quiz("Holz (0,55 g/cm³) schwimmt. Wie viel liegt unter Wasser?", listOf(c("etwa ein Viertel"), c("etwa die Hälfte"), c("etwa drei Viertel")),
+                nearest(listOf(0.25, 0.5, 0.75), Buoyancy.submerged(Thing.HOLZ.rho, Liquid.WASSER.rho))),
+            FloatSetup(listOf(Liquid.WASSER, Liquid.SALZWASSER), listOf(Thing.HOLZ, Thing.EIS, Thing.APFEL, Thing.KORK)),
+            "Lass die Dinge schwimmen und lies ab, wie viel Prozent eintauchen.",
+            "Holz taucht zu 55 % ein, Eis zu 92 %, Kork nur zu 24 %.",
+            listOf("Der eingetauchte Anteil ist Dichte des Körpers geteilt durch Dichte der Flüssigkeit.", "Alles taucht immer zur Hälfte ein.", "Schwere Dinge tauchen weniger tief ein."),
+            "Schwimmt ein Körper, verdrängt er genau so viel Flüssigkeit, wie er selbst wiegt.",
+            quiz("Ein Eisberg (0,92 g/cm³) im Meer (1,03 g/cm³). Wie viel ist unter Wasser?", listOf(c("die Hälfte"), c("drei Viertel"), c("fast neun Zehntel")),
+                nearest(listOf(0.5, 0.75, 0.9), Buoyancy.submerged(0.92, 1.03)), "Darum ist „die Spitze des Eisbergs“ nur ein kleiner Teil.")),
+    )
+
+    private fun l(m: Double, p: Int, e: String, label: String) = Load(m, p, e, label)
+    private val TILT = listOf(c("links runter", "⬅️"), c("rechts runter", "➡️"), c("bleibt gerade", "⚖️"))
+    private fun tiltIdx(loads: List<Load>) = when (Lever.tilt(loads)) { -1 -> 0; 1 -> 1; else -> 2 }
+
+    val force = listOf(
+        Experiment("k1", K, "Kind gegen Papa", "👧", 3..4,
+            "Papa (80 kg) setzt sich auf die Wippe, ganz nah an die Mitte. Mia (30 kg) setzt sich ganz nach außen.",
+            quiz("Welche Seite geht runter? (Papa links, Mia rechts)", TILT, tiltIdx(listOf(l(80.0, -1, "👨", "Papa"), l(30.0, 4, "👧", "Mia")))),
+            LeverSetup(listOf(l(80.0, -1, "👨", "Papa 80 kg"), l(30.0, 4, "👧", "Mia 30 kg")), emptyList(), LeverGoal.RELEASE),
+            "Lass die Wippe los.",
+            "Mias Seite geht runter – obwohl Papa viel schwerer ist!",
+            listOf("Es zählt Masse mal Abstand: 30 · 4 = 120 ist mehr als 80 · 1 = 80.", "Kinder sind auf der Wippe immer stärker.", "Papa hat nicht richtig gesessen."),
+            "Auf der Wippe zählt Masse × Abstand zur Mitte.",
+            quiz("Papa rutscht auf Feld 2. Welche Seite geht jetzt runter?", TILT, tiltIdx(listOf(l(80.0, -2, "", ""), l(30.0, 4, "", ""))), "80 · 2 = 160 gegen 30 · 4 = 120.")),
+
+        Experiment("k2", K, "Ins Gleichgewicht!", "⚖️", 3..5,
+            "Links liegt ein 2-kg-Gewicht auf Feld 3. Blubb hat ein 3-kg-Gewicht und will die Wippe gerade bekommen.",
+            quiz("Auf welches Feld rechts muss das 3-kg-Gewicht?", listOf(c("Feld 1"), c("Feld 2"), c("Feld 3")), (Lever.balancePos(listOf(Load(2.0, -3)), 3.0) ?: 0) - 1),
+            LeverSetup(listOf(Load(2.0, -3)), listOf(Load(3.0, 0)), LeverGoal.BALANCE),
+            "Setz das 3-kg-Gewicht so, dass die Wippe gerade ist.",
+            "Auf Feld 2 ist Gleichgewicht: 2 · 3 = 3 · 2.",
+            listOf("Links 2 kg · 3 Felder = 6, rechts 3 kg · 2 Felder = 6.", "Das schwerere Gewicht muss immer weiter nach außen.", "Gleichgewicht gibt es nur bei gleichen Gewichten."),
+            "Gleichgewicht: Masse × Abstand ist links und rechts gleich.",
+            quiz("Und ein 6-kg-Gewicht?", listOf(c("Feld 1"), c("Feld 2"), c("Feld 3")), (Lever.balancePos(listOf(Load(2.0, -3)), 6.0) ?: 0) - 1)),
+
+        Experiment("k3", K, "Halb so schwer, doppelt so weit", "🍃", 4..6,
+            "Links: 4 kg auf Feld 2. Rechts hat Blubb nur ein 2-kg-Gewicht.",
+            quiz("Wohin mit den 2 kg?", listOf(c("Feld 2"), c("Feld 4"), c("Feld 5")), listOf(2, 4, 5).indexOf(Lever.balancePos(listOf(Load(4.0, -2)), 2.0))),
+            LeverSetup(listOf(Load(4.0, -2)), listOf(Load(2.0, 0)), LeverGoal.BALANCE),
+            "Bring die Wippe ins Gleichgewicht.",
+            "Halbe Masse braucht doppelten Abstand.",
+            listOf("4 · 2 = 8 und 2 · 4 = 8 – halbe Masse, doppelter Abstand.", "Leichte Gewichte gehören immer ganz nach außen.", "Man muss nur gleich viele Gewichte haben."),
+            "Halbe Masse mal doppelter Abstand ergibt dasselbe.",
+            quiz("Und mit nur 1 kg (die Wippe hat 5 Felder)?", listOf(c("Feld 4"), c("Feld 5"), c("Geht nicht – Feld 8 gibt es nicht")),
+                Lever.balancePos(listOf(Load(4.0, -2)), 1.0)?.let { listOf(4, 5).indexOf(it) } ?: 2)),
+
+        Experiment("k4", K, "Zwei auf einer Seite", "🧮", 5..6,
+            "Links: 3 kg auf Feld 4 und 2 kg auf Feld 1. Rechts wartet ein 7-kg-Gewicht.",
+            quiz("Wohin mit den 7 kg?", listOf(c("Feld 1"), c("Feld 2"), c("Feld 3")), (Lever.balancePos(listOf(Load(3.0, -4), Load(2.0, -1)), 7.0) ?: 0) - 1),
+            LeverSetup(listOf(Load(3.0, -4), Load(2.0, -1)), listOf(Load(7.0, 0)), LeverGoal.BALANCE),
+            "Gleichgewicht herstellen!",
+            "Links 3·4 + 2·1 = 14, rechts 7·2 = 14.",
+            listOf("Alle Drehwirkungen einer Seite werden addiert: 12 + 2 = 14.", "Man zählt nur das schwerste Gewicht.", "Man addiert die Felder: 4 + 1 = 5."),
+            "Mehrere Gewichte auf einer Seite: Masse × Abstand addieren.",
+            quiz("Welches Gewicht passt rechts auf Feld 1?", listOf(c("7 kg"), c("14 kg"), c("21 kg")), nearest(listOf(7.0, 14.0, 21.0), Lever.leftTorque(listOf(Load(3.0, -4), Load(2.0, -1))) / 1))),
+
+        Experiment("k5", K, "Der Hebel-Trick", "🌑", 6..8,
+            "Ein Stein (60 kg) liegt ein Feld neben dem Drehpunkt einer Brechstange. Du drückst ganz außen auf Feld 5.",
+            quiz("Wie viel Kraft brauchst du? (g = 9,81 N/kg)", listOf(c("${Fmt.num(Lever.effortN(60.0, 1.0, 5.0), 0)} N"), c("${Fmt.num(Lever.effortN(60.0, 1.0, 2.0), 0)} N"), c("${Fmt.num(60 * Planet.ERDE.g, 0)} N")), 0),
+            LeverSetup(listOf(l(60.0, -1, "🌑", "Stein 60 kg")), listOf(l(12.0, 0, "💪", "12 kg")), LeverGoal.BALANCE),
+            "Halte den Stein mit 12 kg im Gleichgewicht.",
+            "Auf Feld 5 reichen 12 kg – das sind nur 118 N statt 589 N.",
+            listOf("Fünffacher Abstand bedeutet ein Fünftel der Kraft: F₁ · a₁ = F₂ · a₂.", "Die Brechstange macht den Stein leichter.", "Metall verstärkt die Kraft."),
+            "Hebelgesetz: Kraft × Kraftarm = Last × Lastarm.",
+            quiz("Du drückst nur auf Feld 2. Welche Kraft jetzt?", listOf(c("${Fmt.num(Lever.effortN(60.0, 1.0, 5.0), 0)} N"), c("${Fmt.num(Lever.effortN(60.0, 1.0, 2.0), 0)} N"), c("${Fmt.num(60 * Planet.ERDE.g, 0)} N")), 1)),
+
+        Experiment("k6", K, "Die feste Rolle", "⚙️", 6..7,
+            "Blubb hängt eine 20-kg-Kiste an ein Seil, das über eine feste Rolle an der Decke läuft.",
+            quiz("Spart die feste Rolle Kraft?", listOf(c("Ja, die Hälfte"), c("Nein, sie ändert nur die Richtung"), c("Ja, drei Viertel")),
+                if (Fmt.close(Pulley.forceN(20.0, 1), 20 * Planet.ERDE.g, 1e-9)) 1 else 0),
+            PulleySetup(20.0, listOf(1)),
+            "Zieh am Seil, bis die Kiste 1 m hoch ist.",
+            "Du brauchst 196 N – genau so viel wie ohne Rolle.",
+            listOf("Ein Seilstück trägt die ganze Last – die Rolle lenkt die Kraft nur um.", "Rollen machen Dinge immer leichter.", "Die Kiste wird auf dem Weg leichter."),
+            "Feste Rolle: gleiche Kraft, aber bequemere Richtung.",
+            quiz("Wofür ist eine feste Rolle trotzdem praktisch?", listOf(c("Man kann nach unten ziehen statt nach oben zu heben"), c("Die Last wird leichter"), c("Es geht schneller")), 0)),
+
+        Experiment("k7", K, "Die lose Rolle", "🏋️", 7..8,
+            "Jetzt hängt die 40-kg-Kiste an einer losen Rolle – zwei Seilstücke tragen sie.",
+            quiz("Welche Kraft brauchst du?", listOf(c("98 N"), c("196 N"), c("392 N")), nearest(listOf(98.0, 196.0, 392.0), Pulley.forceN(40.0, 2))),
+            PulleySetup(40.0, listOf(2)),
+            "Heb die Kiste 1 m hoch.",
+            "Nur noch 196 N – aber du musst 2 m Seil ziehen.",
+            listOf("Zwei Seilstücke tragen je die Hälfte; dafür ist der Weg doppelt so lang.", "Die Rolle hat einen Motor.", "Die Kiste ist hohl."),
+            "Goldene Regel der Mechanik: Was man an Kraft spart, muss man an Weg zulegen.",
+            quiz("Wie viel Seil musst du für 1 m Höhe ziehen?", listOf(c("0,5 m"), c("1 m"), c("2 m")), nearest(listOf(0.5, 1.0, 2.0), Pulley.ropeM(1.0, 2)))),
+
+        Experiment("k8", K, "Das Klavier muss hoch", "🎹", 7..8,
+            "Ein Klavier (200 kg) soll in den ersten Stock. Blubbs Freund schafft höchstens 500 N.",
+            quiz("Wie viele tragende Seilstücke braucht der Flaschenzug mindestens?", listOf(c("2"), c("4"), c("6")),
+                listOf(2, 4, 6).indexOf(Pulley.minRopes(200.0, 500.0, listOf(2, 4, 6)))),
+            PulleySetup(200.0, listOf(1, 2, 4, 6), maxN = 500.0),
+            "Wähl den Flaschenzug und heb das Klavier, ohne über 500 N zu kommen.",
+            "Mit 4 Seilstücken sind es 491 N – das klappt.",
+            listOf("1962 N geteilt durch 4 Seile = 491 N, das ist unter 500 N.", "Mehr Rollen machen das Klavier leichter.", "Mit 2 Seilen reicht es, wenn man schnell zieht."),
+            "Flaschenzug: Kraft = Gewichtskraft ÷ Zahl der tragenden Seile.",
+            quiz("Mit 4 Seilen 3 m hoch heben: Wie viel Seil ziehst du?", listOf(c("3 m"), c("7 m"), c("12 m")), nearest(listOf(3.0, 7.0, 12.0), Pulley.ropeM(3.0, 4)))),
+
+        Experiment("k9", K, "Die schiefe Ebene", "📐", 7..8,
+            "Ein Fass (50 kg) soll auf einen 1 m hohen Wagen. Es gibt eine kurze (2 m) und eine lange Rampe (4 m).",
+            quiz("Wo brauchst du weniger Kraft?", listOf(c("kurze Rampe"), c("lange Rampe"), c("gleich")),
+                if (Ramp.forceN(50.0, 1.0, 4.0) < Ramp.forceN(50.0, 1.0, 2.0)) 1 else 0),
+            RampSetup(50.0, 1.0, listOf(2.0, 4.0)),
+            "Schieb das Fass einmal über jede Rampe.",
+            "Kurz: 245 N, lang: 123 N. Dafür ist der Weg doppelt so lang.",
+            listOf("Doppelt so lange Rampe – halbe Kraft, doppelter Weg. Die Arbeit bleibt gleich.", "Lange Rampen sind glatter.", "Auf der langen Rampe wird das Fass leichter."),
+            "Schiefe Ebene: F = G · h / l.",
+            quiz("Wie groß ist die Kraft auf der 4-m-Rampe?", listOf(c("123 N"), c("245 N"), c("491 N")), nearest(listOf(123.0, 245.0, 491.0), Ramp.forceN(50.0, 1.0, 4.0)))),
+    )
+}

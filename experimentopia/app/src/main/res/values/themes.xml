@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.Experimentopia" parent="android:Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/night</item>
+        <item name="android:statusBarColor">@color/night</item>
+        <item name="android:navigationBarColor">@color/night</item>
+    </style>
+    <color name="night">#160F2E</color>
+</resources>

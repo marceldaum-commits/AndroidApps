@@ -1,0 +1,96 @@
+package de.experimentopia.core.model
+
+/** Die Labore – jedes ist ein eigenes, frei bespielbares Versuchsgerät. */
+enum class Lab(val title: String, val emoji: String, val island: Island, val blurb: String) {
+    SCHWIMMEN("Wasserbecken", "🛁", Island.WASSER, "Schwimmt es oder sinkt es? Auch mit eigener Masse und eigenem Volumen."),
+    DICHTETURM("Dichteturm", "🌈", Island.WASSER, "Flüssigkeiten schichten sich nach ihrer Dichte."),
+    WIPPE("Wippe", "⚖️", Island.KRAFT, "Hebelgesetz: Masse mal Abstand."),
+    FLASCHENZUG("Flaschenzug", "🏗️", Island.KRAFT, "Mit mehr Seilen weniger Kraft."),
+    RAMPE("Rampe", "📐", Island.KRAFT, "Schiefe Ebene: lange Rampe, wenig Kraft."),
+    STROM("Stromkreis", "⚡", Island.STROM, "Lampen, Schalter, Leitertest, Widerstände."),
+    MAGNET("Magnet", "🧲", Island.STROM, "Was zieht ein Magnet an?"),
+    ROTKOHL("Rotkohl-Labor", "🟣", Island.CHEMIE, "Sauer oder basisch? Der Saft verrät es mit Farben."),
+    TITRATION("Säure & Lauge", "🧪", Island.CHEMIE, "Neutralisieren und verdünnen, Tropfen für Tropfen."),
+    REAKTION("Atom-Baukasten", "⚛️", Island.CHEMIE, "Reaktionsgleichungen ausgleichen – dann knallt's."),
+    BALLON("Natron-Ballon", "🎈", Island.CHEMIE, "Gas aus der Flasche."),
+    SCHMELZEN("Heizplatte", "🍫", Island.WAERME, "Was schmilzt wann?"),
+    ERHITZEN("Eis erhitzen", "🌡️", Island.WAERME, "Vom Eis zum Dampf – mit Teilchenblick."),
+    MISCHEN("Mischbecken", "🛀", Island.WAERME, "Heiß + kalt = ?"),
+    LICHT("Lichtbühne", "🔦", Island.LICHTKLANG, "Farbiges Licht mischen."),
+    FILTER("Farbfilter", "🎞️", Island.LICHTKLANG, "Folien schlucken Farben."),
+    PRISMA("Prisma", "🔺", Island.LICHTKLANG, "Weißes Licht wird zum Regenbogen."),
+    KLANG("Klangröhren", "🎵", Island.LICHTKLANG, "Gläser, Röhren und Saiten."),
+    FALLTURM("Fallturm", "🗼", Island.FALL, "Was fällt schneller – auf Erde, Mond und im Vakuum?"),
+    PENDEL("Pendel", "🕰️", Island.FALL, "Schwingungsdauer messen."),
+}
+
+/** Was im Versuch zu tun ist und was im Labor steht. Jede Art gehört zu einem Labor. */
+sealed interface Setup { val lab: Lab }
+
+data class FloatSetup(val liquids: List<Liquid>, val things: List<Thing>, val eachLiquid: Boolean = false) : Setup { override val lab get() = Lab.SCHWIMMEN }
+data class TowerSetup(val liquids: List<Liquid>) : Setup { override val lab get() = Lab.DICHTETURM }
+
+enum class LeverGoal { BALANCE, RELEASE }
+data class LeverSetup(val fixed: List<Load>, val tray: List<Load>, val goal: LeverGoal) : Setup { override val lab get() = Lab.WIPPE }
+data class PulleySetup(val massKg: Double, val ropes: List<Int>, val maxN: Double? = null, val heightM: Double = 1.0) : Setup { override val lab get() = Lab.FLASCHENZUG }
+data class RampSetup(val massKg: Double, val heightM: Double, val lengths: List<Double>) : Setup { override val lab get() = Lab.RAMPE }
+
+enum class CircuitGoal { LIGHT, TEST_ALL, REMOVE_ONE, SHORT, AMPS, MEASURE, BOTH_WAYS }
+data class CircuitSetup(
+    val layout: Layout, val start: List<Slot>, val tray: List<Part>, val locked: Set<Int>, val volts: Double, val goal: CircuitGoal,
+    /** Für AMPS: gewünschte Stromstärke */
+    val targetA: Double? = null,
+    /** Platz, dessen Widerstand man einstellen kann */
+    val adjustable: Int? = null,
+) : Setup { override val lab get() = Lab.STROM }
+
+data class MagnetSetup(val items: List<MagnetItem>, val poles: Boolean = false) : Setup { override val lab get() = Lab.MAGNET }
+
+data class PhSetup(val substances: List<Household>) : Setup { override val lab get() = Lab.ROTKOHL }
+/** Titration (Lauge zutropfen) oder Verdünnen (Wasser zugeben, [baseC] = null) */
+data class TitrationSetup(val acidC: Double, val acidMl: Double, val baseC: Double?, val stepMl: Double, val targetPh: Double = 7.0, val tolPh: Double = 0.5) : Setup { override val lab get() = Lab.TITRATION }
+data class ReactionSetup(val reactionId: String) : Setup { override val lab get() = Lab.REAKTION }
+data class FizzSetup(val vinegarMl: Double, val maxSpoons: Int, val targetL: Double) : Setup { override val lab get() = Lab.BALLON }
+
+data class MeltSetup(val things: List<Meltable>, val maxC: Double) : Setup { override val lab get() = Lab.SCHMELZEN }
+data class HeatCurveSetup(val massG: Double, val startC: Double, val powerW: Double, val untilSteam: Boolean) : Setup { override val lab get() = Lab.ERHITZEN }
+data class MixSetup(val a: Stuff, val massA: Double, val tA: Double, val b: Stuff, val massB: Double, val tB: Double,
+                    /** einstellbare Masse von A (Schritt in g) und Zieltemperatur */
+                    val adjustA: Double? = null, val targetC: Double? = null) : Setup { override val lab get() = Lab.MISCHEN }
+
+enum class LightMode { ADD, SUB }
+data class LightSetup(val mode: LightMode, val target: Rgb?) : Setup { override val lab get() = if (mode == LightMode.ADD) Lab.LICHT else Lab.FILTER }
+data class PrismSetup(val dummy: Int = 0) : Setup { override val lab get() = Lab.PRISMA }
+
+enum class SoundMode { STRIKE, BLOW, TUNE, MELODY, STRING }
+data class SoundSetup(val mode: SoundMode, val target: Note? = null, val melody: List<Note> = emptyList()) : Setup { override val lab get() = Lab.KLANG }
+
+data class FallSetup(val a: Faller, val b: Faller?, val planets: List<Planet>, val heightM: Double) : Setup { override val lab get() = Lab.FALLTURM }
+data class PendulumSetup(val lengths: List<Double>, val massesKg: List<Double>, val amplitudeDeg: Double = 10.0, val targetT: Double? = null) : Setup { override val lab get() = Lab.PENDEL }
+
+/** Freies Labor: so startet jedes Gerät, wenn man ohne Auftrag forscht. */
+object FreeLab {
+    fun setup(l: Lab): Setup = when (l) {
+        Lab.SCHWIMMEN -> FloatSetup(Liquid.entries.filter { it != Liquid.SPUELI }, Thing.entries)
+        Lab.DICHTETURM -> TowerSetup(Liquid.entries)
+        Lab.WIPPE -> LeverSetup(emptyList(), listOf(1.0, 2.0, 3.0, 5.0).map { Load(it, 0) }, LeverGoal.BALANCE)
+        Lab.FLASCHENZUG -> PulleySetup(50.0, listOf(1, 2, 3, 4, 6))
+        Lab.RAMPE -> RampSetup(50.0, 1.0, listOf(1.5, 2.0, 3.0, 4.0))
+        Lab.STROM -> CircuitSetup(Layout.ladder(1, listOf(1, 1), 1), listOf(Slot(Part.SCHALTER_ZU), Slot(Part.LAMPE), Slot(Part.LAMPE), Slot(Part.KABEL)),
+            Part.entries.filter { it != Part.LEER }, emptySet(), 4.5, CircuitGoal.MEASURE, adjustable = null)
+        Lab.MAGNET -> MagnetSetup(MagnetItem.entries, poles = true)
+        Lab.ROTKOHL -> PhSetup(Household.entries)
+        Lab.TITRATION -> TitrationSetup(0.1, 10.0, 0.1, 1.0)
+        Lab.REAKTION -> ReactionSetup(Reactions.all.first().id)
+        Lab.BALLON -> FizzSetup(100.0, 6, 0.0)
+        Lab.SCHMELZEN -> MeltSetup(Meltable.entries, 200.0)
+        Lab.ERHITZEN -> HeatCurveSetup(100.0, -20.0, 500.0, true)
+        Lab.MISCHEN -> MixSetup(Stuff.WASSER, 100.0, 80.0, Stuff.WASSER, 100.0, 20.0, adjustA = 10.0)
+        Lab.LICHT -> LightSetup(LightMode.ADD, null)
+        Lab.FILTER -> LightSetup(LightMode.SUB, null)
+        Lab.PRISMA -> PrismSetup()
+        Lab.KLANG -> SoundSetup(SoundMode.BLOW)
+        Lab.FALLTURM -> FallSetup(Faller.KUGEL, Faller.FEDER, Planet.entries, 10.0)
+        Lab.PENDEL -> PendulumSetup(listOf(1.0), listOf(0.2, 1.0))
+    }
+}
