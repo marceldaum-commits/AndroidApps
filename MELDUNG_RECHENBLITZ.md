@@ -2,7 +2,23 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, morgens) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 (Selbst-Update ohne Knopf, Logo statt „Zur Website“) und neu **3.14.0 Rechengarten**, siehe Meldungen (35)–(39). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen**, siehe Meldungen (35)–(40). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+
+## 16.11.2026 (40) – Profile einzeln löschen (3.14.1) · keine neue APK nötig
+
+- **Marcel 16.11.:** „Man muss Spielnamen / Accounts auch löschen können.“
+- **Vorher:** Nur das gerade aktive Profil ließ sich löschen, über einen kleinen Link, und nur wenn es mehrere gab.
+- **Jetzt:**
+  - Unter „Wer übt?“ steht neben **jedem** Profil ein 🗑️-Knopf.
+  - Es gibt eine Sicherheitsabfrage mit dem Namen: „Alle Punkte, Abzeichen, Reise und Garten dieses Profils werden gelöscht.“
+  - Wird das aktive Profil gelöscht, wechselt die App zum nächsten. Eine laufende Runde wird beendet.
+  - Auch das **letzte** Profil lässt sich löschen. Dann gibt es ein frisches Profil „Ich 🦊“.
+  - War das Profil in einer **Klassen-Challenge**, wird sein Ranglisten-Eintrag auf dem Server gleich mit gelöscht (`POST /api/klasse/verlassen`). Ohne Netz bleibt nur der lokale Teil gelöscht.
+  - Unverändert gibt es „Klasse verlassen“ in der Klassen-Challenge (löscht den Spitznamen aus der Rangliste) und „Alles zurücksetzen“ in den Einstellungen.
+- **Tests:**
+  - DE/EN, 320 px ohne Überlauf;
+  - Löschen von fremdem, aktivem und letztem Profil, Löschen während einer Runde, Server-Aufruf beim Klassenprofil;
+  - keine JS-Fehler, keine fehlenden Übersetzungen.
 
 ## 16.11.2026 (39) – Entwicklungstag: Rechengarten 🌻 (3.14.0) · keine neue APK nötig
 

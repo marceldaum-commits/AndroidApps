@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.14.0';
+const APP_VERSION = '3.14.1';
 const APP_DATE = '2026-11-16';
 const CHANGELOG = [
+  ['3.14.1', '2026-11-16', ['Profile lassen sich jetzt einzeln löschen – mit 🗑️ neben jedem Namen']],
   ['3.14.0', '2026-11-16', ['Neu: dein Rechengarten 🌻 – jede richtige Antwort ist ein Wassertropfen, deine Pflanzen wachsen', 'Ernten, neue Samen und Beete freischalten – von der Karotte bis zum Apfelbaum', 'Gemütlich: Nichts welkt, Pausen sind okay. Oben zählen jetzt die Tage diese Woche']],
   ['3.13.4', '2026-11-15', ['Aufgeräumter Kopfbereich: das Logo führt zur Website']],
   ['3.13.3', '2026-11-15', ['Android-App: neue Versionen spielen sich von selbst ein – ganz ohne Knopf, nie mitten in einer Runde']],

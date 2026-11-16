@@ -115,13 +115,12 @@ const PANELS = {
   profiles() {
     const list = Object.values(ROOT.profiles);
     return { title: 'Wer übt?', html: `<div class="menu">
-      ${list.map(p => `<button class="mi ${p.id === ROOT.cur ? 'cur' : ''}" data-prof="${p.id}"><div class="ico big">${p.emoji}</div><div><b translate="no">${esc(p.name)}</b><span>Stufe ${levelFromXp(p.data.xp || 0)} · ${p.data.total || 0} gelöst</span></div><span class="chev">${p.id === ROOT.cur ? '✓' : '›'}</span></button>`).join('')}
+      ${list.map(p => `<div class="prof-row"><button class="mi ${p.id === ROOT.cur ? 'cur' : ''}" data-prof="${p.id}"><div class="ico big">${p.emoji}</div><div><b translate="no">${esc(p.name)}</b><span>Stufe ${levelFromXp(p.data.xp || 0)} · ${p.data.total || 0} gelöst</span></div><span class="chev">${p.id === ROOT.cur ? '✓' : '›'}</span></button><button class="prof-del" type="button" data-del="${p.id}" aria-label="Profil löschen" title="Profil löschen">🗑️</button></div>`).join('')}
       <form class="card form" id="profForm" style="box-shadow:none">
         <b id="profFormTitle">Neues Profil</b>
         <label class="field"><span>Name</span><input id="profName" maxlength="20" required placeholder="z. B. Lena"></label>
         <div class="emojis" id="profEmoji">${EMOJIS.map((e, i) => `<button type="button" data-e="${e}" class="${i === 1 ? 'sel' : ''}">${e}</button>`).join('')}</div>
         <div class="row2"><button class="btn primary" type="submit" id="profSave">Anlegen</button><button class="btn" type="button" id="profEdit">Aktuelles bearbeiten</button></div>
-        ${list.length > 1 ? '<button class="linkbtn danger" type="button" id="profDel">Aktuelles Profil löschen</button>' : ''}
       </form></div>`, init: initProfiles };
   },
 
@@ -301,10 +300,21 @@ function initProfiles() {
     else { if (G && !G.over) quitGame(true); const id = 'p' + Date.now().toString(36); ROOT.profiles[id] = { id, name, emoji, data: PROFILE_DEFAULT() }; useProfile(id); }
     save(); applyTheme(); renderHome(); closeSheet(); toast(`${emoji} ${esc(name)}`);
   };
-  $('profDel') && ($('profDel').onclick = () => {
-    if (!confirm(tr(`Profil „${profile().name}“ mit allen Daten löschen?`))) return;
-    delete ROOT.profiles[ROOT.cur]; useProfile(Object.keys(ROOT.profiles)[0]); save(); applyTheme(); renderHome(); showPanel('profiles');
-  });
+  $('sheetBody').querySelectorAll('[data-del]').forEach(b => b.onclick = () => deleteProfile(b.dataset.del));
+}
+/** Spielprofil löschen (Marcel 16.11.): jedes Profil, auch das letzte (dann gibt es ein frisches „Ich“).
+    War das Profil in einer Klassen-Challenge, wird sein Eintrag in der Rangliste mit gelöscht. */
+function deleteProfile(id) {
+  const p = ROOT.profiles[id]; if (!p) return;
+  if (!confirm(`${tr('Profil wirklich löschen?')}\n„${p.name}“\n${tr('Alle Punkte, Abzeichen, Reise und Garten dieses Profils werden gelöscht. Das kann nicht rückgängig gemacht werden.')}`)) return;
+  if (id === ROOT.cur && G && !G.over) quitGame(true);
+  const kl = p.data && p.data.klasse;
+  if (kl && kl.code && kl.spieler && CONFIG.classApi) classApi('/klasse/verlassen', { code: kl.code, spieler: kl.spieler }).catch(() => {});   // Ranglisten-Eintrag mit löschen
+  delete ROOT.profiles[id];
+  if (!Object.keys(ROOT.profiles).length) { const nid = 'p' + Date.now().toString(36); ROOT.profiles[nid] = { id: nid, name: 'Ich', emoji: EMOJIS[0], data: PROFILE_DEFAULT() }; }
+  if (!ROOT.profiles[ROOT.cur]) useProfile(Object.keys(ROOT.profiles)[0]);
+  save(); applyTheme(); renderHome(); showPanel('profiles');
+  toast(`<span>🗑️</span> <span>Profil gelöscht</span>`);
 }
 
 /* ---------- Einmaleins ---------- */

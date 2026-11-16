@@ -1499,4 +1499,9 @@ I18N.add('en', {"% sind":"% are",
 "Neu: dein Rechengarten 🌻 – jede richtige Antwort ist ein Wassertropfen, deine Pflanzen wachsen":"New: your Maths Garden 🌻 – every correct answer is a water drop, your plants grow",
 "Ernten, neue Samen und Beete freischalten – von der Karotte bis zum Apfelbaum":"Harvest and unlock new seeds and beds – from carrot to apple tree",
 "Gemütlich: Nichts welkt, Pausen sind okay. Oben zählen jetzt die Tage diese Woche":"Relaxed: nothing wilts, breaks are fine. At the top you now see the days this week",
-"🌱 {} diese Woche":"🌱 {} this week"});
+"🌱 {} diese Woche":"🌱 {} this week",
+"Profil löschen":"Delete profile",
+"Profil wirklich löschen?":"Really delete this profile?",
+"Alle Punkte, Abzeichen, Reise und Garten dieses Profils werden gelöscht. Das kann nicht rückgängig gemacht werden.":"All points, badges, journey and garden of this profile will be deleted. This cannot be undone.",
+"Profil gelöscht":"Profile deleted",
+"Profile lassen sich jetzt einzeln löschen – mit 🗑️ neben jedem Namen":"Profiles can now be deleted one by one – with 🗑️ next to each name"});

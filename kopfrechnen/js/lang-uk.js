@@ -1499,4 +1499,9 @@ I18N.add('uk', {"% sind":"% — це",
 "Neu: dein Rechengarten 🌻 – jede richtige Antwort ist ein Wassertropfen, deine Pflanzen wachsen":"Нове: твій Математичний сад 🌻 – кожна правильна відповідь – це крапля води, твої рослини ростуть",
 "Ernten, neue Samen und Beete freischalten – von der Karotte bis zum Apfelbaum":"Збирай урожай і відкривай нове насіння та грядки – від моркви до яблуні",
 "Gemütlich: Nichts welkt, Pausen sind okay. Oben zählen jetzt die Tage diese Woche":"Спокійно: нічого не в'яне, перерви – це нормально. Угорі тепер видно дні цього тижня",
-"🌱 {} diese Woche":"🌱 {} цього тижня"});
+"🌱 {} diese Woche":"🌱 {} цього тижня",
+"Profil löschen":"Видалити профіль",
+"Profil wirklich löschen?":"Справді видалити профіль?",
+"Alle Punkte, Abzeichen, Reise und Garten dieses Profils werden gelöscht. Das kann nicht rückgängig gemacht werden.":"Усі бали, значки, подорож і сад цього профілю буде видалено. Це не можна скасувати.",
+"Profil gelöscht":"Профіль видалено",
+"Profile lassen sich jetzt einzeln löschen – mit 🗑️ neben jedem Namen":"Профілі тепер можна видаляти окремо – кнопкою 🗑️ біля кожного імені"});

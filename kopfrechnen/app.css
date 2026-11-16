@@ -893,3 +893,9 @@ button.badge{font:inherit;cursor:pointer}
 .statusbar .sb-stat[data-open]{cursor:pointer}
 @media (prefers-reduced-motion:reduce){.garten-svg *{animation:none!important}}
 .garten-svg .gp-drops,.garten-svg .gp-spark{pointer-events:none}
+
+/* 3.14.1 – Profile löschen */
+.prof-row{display:flex;align-items:stretch;gap:6px}
+.prof-row .mi{flex:1;min-width:0}
+.prof-del{flex:none;width:48px;border:1px solid var(--line, transparent);border-radius:16px;background:var(--chip);font-size:18px;cursor:pointer}
+.prof-del:active{transform:scale(.95)}
