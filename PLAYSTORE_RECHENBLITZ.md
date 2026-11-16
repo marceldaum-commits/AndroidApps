@@ -138,10 +138,11 @@ Beides legt GitHub **dauerhaft** auf die Release-Seite `rechenblitz-X.Y.Z` (Tite
    - `RECHENBLITZ_UPLOAD_KEYSTORE` = der Base64-Text
    - `RECHENBLITZ_UPLOAD_STORE_PASSWORD` = Keystore-Passwort
    - `RECHENBLITZ_UPLOAD_KEY_ALIAS` = Alias des Schlüssels
-   - `RECHENBLITZ_UPLOAD_KEY_PASSWORD` = Schlüssel-Passwort (falls gleich wie Keystore-Passwort: leer lassen)
+   - `RECHENBLITZ_UPLOAD_KEY_PASSWORD` = Schlüssel-Passwort. Bei einem mit `keytool` erzeugten Schlüssel ist es meist **dasselbe** wie das Keystore-Passwort, dann denselben Wert eintragen. Alle vier sind Pflicht.
+   - Fehlt ein Geheimnis oder ist es vertauscht, bricht „Rechenblitz Play“ mit einer klaren Meldung ab. Die Meldung sagt, welches Geheimnis betroffen ist. Läuft alles, zeigt das Protokoll Alias und SHA-256 des Schlüssels.
 3. GitHub → Actions → **Rechenblitz Play** → „Run workflow“, Branch **rechenblitz-live** wählen. Nach ca. 5 Minuten unter „Artifacts“ die Datei `Rechenblitz-play-X.Y.Z.aab` herunterladen.
-   - **OFFEN (Marcel 16.11.: „klär mit den anderen“):** Klärt der Leitstand mit den anderen Räumen, ob es schon einen gemeinsamen Upload-Schlüssel gibt (z. B. vom Mathe-Trainer) oder ob Rechenblitz einen eigenen bekommt. Empfehlung: **je App ein eigener Upload-Schlüssel**. Dann bleibt ein verlorener oder kompromittierter Schlüssel auf eine App begrenzt.
-   - Gibt es noch keinen Upload-Schlüssel: In der Play Console beim ersten Hochladen „Play App Signing“ wählen und einen Upload-Schlüssel erzeugen, z. B. mit `keytool -genkeypair -v -keystore upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000`. Danach in Bitwarden ablegen.
+   - **Geklärt (Leitstand 16.11.):** Rechenblitz bekommt einen **eigenen** Upload-Schlüssel. Er ist getrennt vom gemeinsamen Schlüssel von Wissensgarten, KurvenFlug und Raumlicht (`WG_KEYSTORE`). Marcel erzeugt ihn selbst (Befehl unten), legt ihn in Bitwarden ab und trägt die 4 Werte bei GitHub ein.
+   - Schlüssel erzeugen: In der Play Console beim ersten Hochladen „Play App Signing“ wählen und einen Upload-Schlüssel erzeugen, z. B. mit `keytool -genkeypair -v -keystore upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000`. Danach in Bitwarden ablegen.
 
 **B. Play Console: App anlegen**
 

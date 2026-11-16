@@ -2,7 +2,24 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3–3.14.5 Play-Vorbereitung**, siehe Meldungen (35)–(44). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3–3.14.5 Play-Vorbereitung**, siehe Meldungen (35)–(45). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+
+## 16.11.2026 (45) – Antwort auf Leitstand zu (43): eigener Upload-Schlüssel, Play-Ablauf bricht bei fehlenden/vertauschten Geheimnissen klar ab
+
+- **Leitstand 16.11.:**
+  - Rechenblitz bekommt einen **eigenen** Upload-Schlüssel, getrennt von `WG_KEYSTORE` (Wissensgarten/KurvenFlug/Raumlicht).
+  - Marcel erzeugt ihn selbst und trägt die 4 Geheimnisse ein.
+  - Datenschutz 10b ist mit beiden Änderungen eingebaut. Danke!
+- **`rechenblitz-play.yml` geändert:** kein stilles Überspringen mehr. Der Lauf bricht mit einer klaren `::error`-Meldung ab, wenn
+  - ein Geheimnis **fehlt** (nennt jedes fehlende `RECHENBLITZ_UPLOAD_*`),
+  - der Keystore **kein gültiges Base64** ist oder leer,
+  - das **Store-Passwort** falsch ist (Hinweis: evtl. mit dem Schlüssel-Passwort vertauscht),
+  - der **Alias** nicht im Keystore steht (nennt die vorhandenen Aliasse),
+  - das **Schlüssel-Passwort** nicht passt (Probe-Signatur; Hinweis: evtl. vertauscht).
+- Bei Erfolg zeigt das Protokoll Alias und SHA-256 des Upload-Zertifikats, zum Abgleich mit der Play Console.
+- **Lokal getestet** mit einem Wegwerf-Schlüssel (anschließend gelöscht): fehlt / Base64 kaputt / Store-Passwort falsch / Alias falsch / Schlüssel-Passwort falsch / vertauscht / korrekt. Alle sieben Fälle verhalten sich wie erwartet.
+- **Hinweis:** Bis Marcel die Geheimnisse eingetragen hat, ist jeder Lauf „Rechenblitz Play“ (bei Push auf `rechenblitz-live`) **rot** und meldet „Geheimnis fehlt“. Die Live-Freigabe der Web-App betrifft das nicht.
+- **`PLAYSTORE_RECHENBLITZ.md`:** Schlüsselfrage als geklärt eingetragen. Alle vier Geheimnisse sind Pflicht (Schlüssel-Passwort meist gleich dem Keystore-Passwort).
 
 ## 16.11.2026 (44) – Marcels Antworten zur Play-Veröffentlichung · Elternabfrage (3.14.5) · OFFEN an Leitstand: Upload-Schlüssel
 
