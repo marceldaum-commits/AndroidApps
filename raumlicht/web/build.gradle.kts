@@ -51,4 +51,13 @@ tasks.register<Sync>("webapp") {
     from(tasks.named("wasmJsBrowserDistribution"))
     into(rootProject.file("webapp"))
     exclude("**/*.LICENSE.txt")
+    // Ladeplan eintragen: Größen der großen Dateien für den Fortschrittsbalken und die Namen der .wasm-Dateien für den Service Worker
+    doLast {
+        val out = rootProject.file("webapp")
+        val wasm = out.listFiles { f -> f.name.endsWith(".wasm") }!!.sortedBy { it.name }
+        val files = wasm.map { it.name to it.length() } + listOf("fonts/dejavu_sans.ttf", "fonts/noto_color_emoji.ttf", "raumlicht.js").map { it to out.resolve(it).length() }
+        val plan = files.joinToString(", ", "{ ", " }") { (n, s) -> "\"$n\": $s" }
+        out.resolve("index.html").let { it.writeText(it.readText().replace("@LADEPLAN@", plan)) }
+        out.resolve("sw.js").let { it.writeText(it.readText().replace("@WASM@", wasm.joinToString(", ", "[", "]") { "'${it.name}'" })) }
+    }
 }

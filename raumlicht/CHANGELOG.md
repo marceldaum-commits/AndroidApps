@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.9.0 – Schneller Start mit Ladebild (16.11.2026)
+- **WebApp startet viel schneller:** Beim ersten Öffnen werden nur noch rund 7,7 MB statt 30 MB übertragen. Gemessen im schnellen Mobilfunknetz: 5,8 statt 27,9 Sekunden,
+  im langsamen: 29 statt 153 Sekunden. Jeder weitere Start dauert gut 2 Sekunden und braucht kein Netz.
+- **Ladebild statt leerem Bildschirm:** Sofort erscheinen Nachtblau, Lux und der Name – dazu ein Balken, der den echten Download zeigt. Danach blendet die App weich ein.
+- **Wie:** Die Emoji-Schrift enthält nur noch die Emojis, die Raumlicht benutzt (0,2 MB statt 10,8 MB), der App-Kern wird sofort angefordert,
+  die 3D-Bühne erst danach, und der Zwischenspeicher lädt nichts mehr doppelt.
+- **Android:** Startbild in App-Farbe mit dem Raumlicht-Symbol, bis der erste Bildschirm steht.
+
 ## 2.8.0 – Binomialverteilung, e-Funktion und Logarithmus (16.11.2026)
 - **📊 Binomial-Labor (unter „Mehr“):** n, p und k frei einstellen und sofort sehen, wie die Verteilung aussieht. Drei Fragen: genau, höchstens, mindestens k Treffer.
   Die Säulen zeigen wahlweise die einzelnen Wahrscheinlichkeiten P(X = k) oder die aufsummierten (kumulierten) P(X ≤ k). Säule antippen wählt k;

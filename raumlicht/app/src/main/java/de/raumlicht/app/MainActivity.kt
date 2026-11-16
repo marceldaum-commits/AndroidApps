@@ -1,5 +1,6 @@
 package de.raumlicht.app
 
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); readIntent(intent) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()     // Startbild in App-Farbe, bis der erste Bildschirm gezeichnet ist
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val app = application as RaumlichtApp

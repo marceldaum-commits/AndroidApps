@@ -145,3 +145,12 @@ Die Stimme „Thorsten“ braucht Lautschrift. Die erzeugt `tools/stimme/lautsch
 
 `github` (APK, eigener Updater) und `play` (AAB, Updates über den Store, keine Installations-Berechtigung) – siehe `STORE-RELEASE.md`.
 Tests: `./gradlew :core:model:jvmTest :app:testGithubDebugUnitTest`.
+
+## WebApp: Start, Schriften, Messen (seit 2.9.0)
+
+- **Ladebild und Ladeplan:** `web/src/wasmJsMain/resources/index.html` zeigt sofort ein Ladebild (reines HTML/CSS) und fordert App-Kern (.wasm) und Schriften gleich an;
+  der Bau (`:web:webapp`) trägt Dateigrößen (`@LADEPLAN@`) und .wasm-Namen (`@WASM@` in `sw.js`) ein. Die 3D-Bühne wird erst danach geladen.
+- **Schriften kürzen:** `python tools/schrift/schriften.py` (braucht `pip install fonttools`) schreibt die Schriften der WebApp mit nur den benutzten Zeichen neu.
+  **Nach jedem neuen Emoji oder Sonderzeichen neu laufen lassen**; `python tools/schrift/schriften.py --pruefen` meldet fehlende Zeichen.
+- **Start messen:** `cd scene && node test/web-speed.mjs ../webapp` – erster und zweiter Start bei „Fast 4G“ und „Slow 4G“ (der Testserver bremst selbst und zählt die Bytes).
+  Mit `alles-komprimiert` als zweitem Wort zeigt es, was volle Komprimierung am Server bringen würde.

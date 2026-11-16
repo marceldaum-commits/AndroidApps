@@ -4,5 +4,11 @@
         <item name="android:statusBarColor">@color/space</item>
         <item name="android:navigationBarColor">@color/space</item>
     </style>
+    <!-- Startbild: sofort Nachtblau mit dem Raumlicht-Symbol, kein weißes Aufblitzen; danach übernimmt das App-Design -->
+    <style name="Theme.Raumlicht.Start" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/space</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.Raumlicht</item>
+    </style>
     <color name="space">#05071A</color>
 </resources>
