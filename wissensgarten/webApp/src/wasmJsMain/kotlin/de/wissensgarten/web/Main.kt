@@ -2,6 +2,7 @@
 package de.wissensgarten.web
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -48,7 +49,7 @@ private suspend fun packTexts(): List<String> = coroutineScope {
     names.map { n -> async { runCatching { fetchText("packs/$n") }.getOrNull() } }.awaitAll().filterNotNull()
 }
 
-private fun hideSplash(): Unit = js("(() => { const s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(() => s.remove(), 600); } })()")
+private fun hideSplash(): Unit = js("(() => { const s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(() => s.remove(), 600); } window.dispatchEvent(new Event('wg-ready')); })()")
 private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', () => cb(document.visibilityState === 'visible'))")
 private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', () => cb())")
 
@@ -105,6 +106,9 @@ fun main() {
         if (ready) {
             val start = remember { if (vm.onboarded.value) Routes.GARDEN else Routes.ONBOARDING }
             WissensgartenApp(vm, hostWithUsage, start)
-        } else Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { CircularProgressIndicator() }
+        } else Box(
+            // Gleiche Farben wie das HTML-Startbild – nie ein weißer Bildschirm
+            Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Color(0xFFFBF6EC)), contentAlignment = Alignment.Center,
+        ) { CircularProgressIndicator(color = androidx.compose.ui.graphics.Color(0xFF3F6B3A), trackColor = androidx.compose.ui.graphics.Color(0xFFE6EEDD)) }
     }
 }

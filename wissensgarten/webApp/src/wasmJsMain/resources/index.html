@@ -17,7 +17,7 @@
     body { touch-action: manipulation; }
     #splash { position: fixed; inset: 0; z-index: 30; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
       font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #3f6b3a; background: linear-gradient(#e1f5fe, #fbf6ec 55%, #c5e1a5);
-      z-index: 10; transition: opacity .5s; text-align: center; padding: 16px; box-sizing: border-box; }
+      transition: opacity .5s; text-align: center; padding: 16px; box-sizing: border-box; }
     #splash.weg { opacity: 0; pointer-events: none; }
     #splash .b { font-size: 72px; animation: hop 1.2s ease-in-out infinite; }
     #splash h1 { margin: 0; font-size: 26px; }
@@ -25,6 +25,8 @@
     #splash .hint { font-size: 14px; max-width: 300px; text-align: center; min-height: 40px; }
     #splash .bar { width: 200px; height: 8px; border-radius: 4px; background: #e6eedd; overflow: hidden; }
     #splash .bar i { display: block; height: 100%; width: 30%; border-radius: 4px; background: #7cb342; animation: lauf 1.4s ease-in-out infinite; }
+    #splash .bar.echt i { animation: none; transform: none; transition: width .25s ease-out; }
+    #splash .pct { font-size: 13px; color: #5a6b55; min-height: 16px; margin-top: -6px; }
     @keyframes lauf { 0% { transform: translateX(-100%); } 100% { transform: translateX(340%); } }
     #splash button { font: 600 15px system-ui, sans-serif; color: #fff; background: #3f6b3a; border: 0; border-radius: 20px; padding: 10px 18px; }
     #splash .links { position: absolute; bottom: 14px; font-size: 13px; }
@@ -41,13 +43,49 @@
     <div class="b">🐝</div>
     <h1>Wissensgarten</h1>
     <p>Brummi gießt gerade die Blumen … 🌱</p>
-    <div class="bar"><i></i></div>
+    <div class="bar" id="bar"><i id="barI"></i></div>
+    <div class="pct" id="pct"></div>
     <p class="hint" id="hint"></p>
     <noscript><p>Bitte JavaScript einschalten, dann wächst der Garten.</p></noscript>
     <div class="links">Version @VERSION@ · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" rel="noopener">Datenschutz</a></div>
   </div>
   <script>
+    // Echter Ladebalken: zählt die geladenen Bytes der großen Startdateien (App, Grafik-Engine, Emoji-Schrift).
+    (function () {
+      const sizes = @SIZES@;
+      const total = Object.values(sizes).reduce((a, b) => a + b, 0);
+      const got = {};
+      const bar = document.getElementById('bar'), barI = document.getElementById('barI'), pct = document.getElementById('pct');
+      const show = () => {
+        if (!total || !document.getElementById('splash')) return;
+        const done = Object.values(got).reduce((a, b) => a + b, 0);
+        const p = Math.min(99, Math.round(done * 100 / total));
+        bar.classList.add('echt'); barI.style.width = p + '%';
+        pct.textContent = p + ' %';
+      };
+      if (!total || !window.ReadableStream || !window.Response) return;
+      const orig = window.fetch.bind(window);
+      window.fetch = async function (input, init) {
+        const res = await orig(input, init);
+        try {
+          const url = typeof input === 'string' ? input : (input && input.url) || String(input);
+          const name = url.split('?')[0].split('/').pop();
+          if (!(name in sizes) || !res.ok || !res.body || !document.getElementById('splash')) return res;
+          const reader = res.body.getReader();
+          got[name] = 0;
+          const body = new ReadableStream({
+            async pull(c) {
+              const r = await reader.read();
+              if (r.done) { got[name] = sizes[name]; show(); c.close(); return; }
+              got[name] += r.value.byteLength; show(); c.enqueue(r.value);
+            },
+            cancel(reason) { reader.cancel(reason); },
+          });
+          return new Response(body, { status: res.status, statusText: res.statusText, headers: res.headers });
+        } catch (e) { return res; }
+      };
+    })();
     // Beim ersten Öffnen lädt der Garten einmal ca. 10 MB (App + Emoji-Bilder) – danach kommt alles aus dem Zwischenspeicher.
     (function () {
       const hint = document.getElementById('hint');
@@ -69,13 +107,18 @@
         else waiting = true;
       });
       document.addEventListener('visibilitychange', () => { if (waiting && document.visibilityState === 'hidden') location.reload(); });
-      window.addEventListener('load', () => {
+      // Erst wenn der Garten steht: Service Worker anmelden (speichert dann alles für den nächsten Start),
+      // damit er beim ersten Laden nicht mit der App um die Leitung konkurriert.
+      let registered = false;
+      const register = () => { if (registered) return; registered = true;
         navigator.serviceWorker.register('sw.js').then((reg) => {
           const check = () => reg.update().catch(() => {});
           setInterval(check, 30 * 60 * 1000);
           document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
         }).catch(() => {});
-      });
+      };
+      if (hadController) window.addEventListener('load', register);
+      else { window.addEventListener('wg-ready', register); setTimeout(register, 120000); }
     }
   </script>
   <script src="wissensgarten.js"></script>

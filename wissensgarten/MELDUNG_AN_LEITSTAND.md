@@ -1,5 +1,78 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 16.11.2026 – Server-Einstellung: Komprimierung für die WebApp (nginx)
+
+**Befund (live geprüft):** nginx komprimiert `.wasm` bereits, `wissensgarten.js` (647 KB, gepackt 127 KB) und `.ttf` aber nicht.
+Mit der Einstellung unten lädt jedes neue Gerät beim ersten Start ca. 0,6 MB weniger. Die App muss dafür nicht geändert werden.
+
+In den `server { … }`-Block von **wissensgarten.mathenachhilfe-online.com** und **wissensgarten-test.mathenachhilfe-online.com**
+(oder einmal in den `http { … }`-Block) eintragen:
+
+```nginx
+gzip on;
+gzip_comp_level 6;
+gzip_min_length 1024;
+gzip_vary on;
+gzip_types text/javascript application/javascript application/json application/manifest+json application/wasm font/ttf text/css image/svg+xml;
+```
+
+`text/html` komprimiert nginx immer, das muss nicht in die Liste. `application/wasm` steht drin, damit die heutige Komprimierung erhalten bleibt.
+
+**Testen** (nach `nginx -t` und `systemctl reload nginx`):
+```bash
+curl -sI -H "Accept-Encoding: gzip" https://wissensgarten.mathenachhilfe-online.com/wissensgarten.js | grep -i content-encoding
+curl -sI -H "Accept-Encoding: gzip" https://wissensgarten.mathenachhilfe-online.com/composeResources/de.wissensgarten.web.res/font/noto_color_emoji.ttf | grep -i content-encoding
+```
+Beide Befehle sollen `content-encoding: gzip` zeigen.
+
+## 0.22.0 vom 16.11.2026 – Start optimiert (Web + Android)
+
+**1. Kein weißer Bildschirm**
+- **Ladebild:** Das Ladebild (Brummi, Name, App-Farben) steht inline in HTML/CSS und ist ab dem ersten Byte ohne JS sichtbar. Erstes Bild nach 0,4 s (Fast 4G) bzw. 1,2 s (Slow 4G).
+- **Fortschrittsbalken:** Der Balken ist echt und zeigt Prozent. Ein `fetch`-Wrapper zählt per ReadableStream die Bytes von App-JS, beiden `.wasm` und den Schriften. Die Gesamtgröße schreibt das Build in die Seite.
+- **Übergang:** Danach blendet die Seite in 0,5 s in die App über.
+- **Ursache des weißen Bildschirms:** Eine zweite CSS-Regel hatte die Ebene des Startbilds wieder heruntergesetzt (z-index 10), daher sah Marcel nur den Ladekreis der App auf Weiß. Beides ist behoben: Das Startbild liegt oben, und auch der Lade-Zwischenschritt der App hat jetzt die Garten-Farben statt Weiß/Lila.
+
+**2. Schneller**
+- **Komprimierung geprüft:** Auf dem Live-Server kommen `.wasm` gzip-komprimiert an, `wissensgarten.js` aber **nicht** (647 KB statt 127 KB gzip) und `.ttf` ebenfalls nicht.
+  Empfehlung für nginx: `gzip_types text/javascript application/javascript font/ttf application/json;`
+- **Emoji-Schrift:** Sie enthält nur die genutzten Emojis, 2,0 statt 6,0 MB (seit 0.21.2). Sie wird per `<link rel="preload">` parallel geladen.
+- **Service Worker:** Er speichert beim Installieren alle Dateien (App, wasm, Schriften, 77 Pakete). Angemeldet wird er erst, wenn die App steht, damit er beim ersten Laden nicht um die Leitung konkurriert. Der zweite Start lädt 0 Byte und läuft offline.
+- **Code-Splitting:** Kotlin/Wasm (Compose Multiplatform) unterstützt kein Aufteilen des Programmcodes in nachladbare Teile. Die zwei wasm-Dateien (App und Grafik-Engine Skia) werden gebraucht, bevor überhaupt etwas gezeichnet wird. Nachgeladen wird daher nur, was Daten sind (Pakete, Schriften).
+
+**3. Messungen**
+- **Aufbau:** Pixel 7 (Playwright). Beide Versionen kommen vom selben lokalen Server mit fester Bandbreite, gzip wie nginx und ETag.
+  Grund: Die Drosselung von Chrome erfasste nicht alle Downloads.
+- **Profile:** Fast 4G = 9 Mbit/s, 165 ms; Slow 4G = 1,6 Mbit/s, 562 ms.
+- **Erster vs. zweiter Start:** Der zweite Start folgt, nachdem der Service Worker fertig gespeichert hat.
+
+| Version | Netz | 1. Start: erstes Bild | 1. Start: bedienbar | 2. Start: erstes Bild | 2. Start: bedienbar |
+| --- | --- | --- | --- | --- | --- |
+| vorher 0.21.0 | Fast 4G | 0,4 s | 16,9 s | 0,2 s | 4,0 s |
+| **nachher 0.22.0** | Fast 4G | 0,4 s | **13,0 s** | 0,2 s | 4,2 s |
+| vorher 0.21.0 | Slow 4G | 1,2 s | 67,3 s | 0,6 s | 5,0 s |
+| **nachher 0.22.0** | Slow 4G | 1,2 s | **39,8 s** | 0,6 s | 4,4 s |
+
+**Downloads beim 1. Start** (gemessen pro Datei):
+
+| Datei | vorher (live) | nachher |
+| --- | --- | --- |
+| Emoji-Schrift | 6.055 KB | 2.045 KB |
+| wasm (App) | 3.550 KB | 3.187 KB |
+| wasm (Skia) | 2.240 KB | 1.968 KB |
+| JS | 647 KB (live ohne gzip) | 127 KB (mit gzip) |
+| Symbolschrift | 120 KB | 120 KB |
+| **Summe** | **ca. 12,3 MB** | **ca. 7,3 MB (−41 %)** |
+
+- **Restzeit:** Etwa 4 s des zweiten Starts sind reine Rechenzeit: Übersetzen des wasm-Codes auf der langsamen Test-Maschine. Auf einem aktuellen Handy ist das weniger.
+
+**4. Android**
+- **Startbild:** Android-12-Splash-API (`core-splashscreen`, rückwärtskompatibel), hell in Creme `#FBF6EC` und dunkel in `#15190F`, mit dem Garten-Logo. Danach `postSplashScreenTheme` mit gleichem Fensterhintergrund, also kein weißes Aufblitzen.
+- **Nicht auf Gerät geprüft:** Das Startbild konnte ich nicht auf einem echten Gerät ansehen (kein Emulator hier). Kompiliert und Lint sind sauber.
+
+**Tests:** 379 Tests grün, Lint ohne Fehler, Play-Variante kompiliert. Im Browser keine Fehler.
+**Bitte prüfen und `wissensgarten-live` auf 0.22.0 schalten.**
+
 ## 0.21.2 vom 16.11.2026 – WebApp: erster Start deutlich schneller
 
 Marcel meldete: „Lädt recht lange“. Beim ersten Öffnen wurden ca. 11 MB übertragen. Mehr als die Hälfte davon war die Emoji-Schrift (6 MB),

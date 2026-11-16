@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.22.0 – Schneller Start mit Ladebalken (16.11.2026)
+- **WebApp:** Ab der ersten Sekunde ist Brummis Startbild mit einem echten Ladebalken (in Prozent) zu sehen – nie mehr ein weißer Bildschirm. Danach blendet der Garten sanft über.
+- **WebApp lädt beim ersten Mal rund 40 % weniger** (7 statt 12 MB) und ist bei langsamem Netz deutlich schneller bereit. Danach speichert sie alles auf dem Gerät: Der zweite Start braucht kein Internet mehr.
+- **Android:** Beim Öffnen erscheint sofort das Gartenlogo auf cremefarbenem Grund (im Dunkelmodus dunkel) – ohne weißes Aufblitzen.
+
 ## 0.21.2 – WebApp startet viel schneller (16.11.2026)
 - **WebApp lädt beim ersten Mal rund ein Drittel weniger:** Die Merkbild-Schrift enthält jetzt nur noch die Emojis, die im Wissensgarten wirklich vorkommen (2 statt 6 MB), und wird gleichzeitig mit der App geladen statt danach.
 - Alle Merkbilder sehen genauso aus wie vorher.
