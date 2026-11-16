@@ -49,14 +49,16 @@ Dazu kommt ein Abschnitt in der Datenschutzerklärung.
 | Ergebnisse je Kind (gelernt / sicher / Fehler) | Klassenarbeits-Planung, Klassensicht „häufigste Fehler“, CSV-Export |
 | – | **Alle Kinder der Klassen haben Plus** (zu Hause, auch KI-Brummi mit Schulgrenze) für die Laufzeit |
 
-**Preisvorschlag:** Zum Vergleich ANTON: Schullizenz ca. 250/400 € pro Jahr, mit Plus ca. 450/700 € pro Jahr, je nach Schulgröße bis bzw. über 500 Kinder.
+**Preise – entschieden von Marcel am 16.11.2026** (inkl. 19 % USt, je Schuljahr bis 31.07.; ersetzt den Vorschlag 49/299/449 €):
 
-| Lizenz | Brutto inkl. 19 % USt | Netto |
+| Lizenz | Brutto | Netto |
 |---|---|---|
-| Klassenlizenz (1 Klasse, 1 Jahr) | 49 € | 41,18 € |
-| Schullizenz bis 500 Kinder (1 Jahr) | 299 € | 251,26 € |
-| Schullizenz über 500 Kinder (1 Jahr) | 449 € | 377,31 € |
+| Lehrkraft-Lizenz Wissensgarten (eine Lehrkraft, ihre Klassen) | 29 € | 24,37 € |
+| Schul-Lizenz Wissensgarten (alle Lehrkräfte, egal wie viele Kinder) | 199 € | 167,23 € |
+| Paket alle Apps – je Lehrkraft | 79 € | 66,39 € |
+| Paket alle Apps – je Schule | 499 € | 419,33 € |
 
+Verkauf und Verwaltung laufen über den zentralen Lehrerzugang (baut der Leitstand). **In der App wird nichts gebaut, bis die Schnittstelle steht.**
 Verkauf über die Woo-Kasse mit Rechnung (auch auf Rechnung bzw. Bestellnummer des Schulträgers). Keine Abo-Automatik, die Lizenz läuft zum Schuljahresende aus, mit Erinnerung.
 
 ## 16.11.2026 – Konzept „Wissensgarten Plus“ (noch nicht gebaut)
