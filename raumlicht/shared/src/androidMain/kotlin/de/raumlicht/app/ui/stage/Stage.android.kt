@@ -79,3 +79,5 @@ actual fun PlatformStage(controller: StageController, modifier: Modifier) {
     }
 }
 
+
+actual val orbitHint: String = "☝ drehen · ✌ zoomen"

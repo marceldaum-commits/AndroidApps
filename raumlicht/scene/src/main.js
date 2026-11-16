@@ -804,6 +804,8 @@ const up = (e) => {
   pinch = 0;
 };
 canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
+// Mausrad (PC/Browser): zoomen – wie zwei Finger auf dem Handy
+canvas.addEventListener('wheel', (e) => { e.preventDefault(); if (locked) return; lastTouch = clock.elapsedTime; cam.tDist = THREE.MathUtils.clamp(cam.tDist * Math.exp(Math.sign(e.deltaY) * 0.12), 7, 46); }, { passive: false });
 
 // ───────── Zeichnen: Himmel → gespiegelte Welt → Boden und Welt ─────────
 function drawStage(r, target) {

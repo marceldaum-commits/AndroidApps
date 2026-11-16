@@ -131,3 +131,6 @@ fun androidx.compose.foundation.layout.BoxScope.StageFrame(accent: androidx.comp
         drawRoundRect(accent.copy(alpha = 0.5f), cornerRadius = androidx.compose.ui.geometry.CornerRadius(r), style = androidx.compose.ui.graphics.drawscope.Stroke(1.5.dp.toPx()))
     }
 }
+
+/** Kurzer Hinweis über der Bühne, wie man sie dreht und zoomt (Finger oder Maus) */
+expect val orbitHint: String

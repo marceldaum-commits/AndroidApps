@@ -2,6 +2,17 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.5.0 – Raumlicht im Browser (16.11.2026)
+- **🌐 Die ganze App läuft jetzt auch im Browser:** Startseite, alle Kapitel mit Erklärungen und Rechenweg, Tagesaufgabe, Üben, Abi-Aufgaben,
+  Kurve abfahren, Flug durch den Raum, Ballerbude, Baumeister, Geisterfahrt, Ringflug, Zufallsmaschine, Galton-Brett, Planer, Einstellungen –
+  dieselben Bildschirme wie auf dem Handy, weil beide aus demselben Code entstehen. Testadresse: https://raumlicht-test.mathenachhilfe-online.com
+- **Im Browser:** Sterne und Einstellungen bleiben im Browser auf dem Gerät gespeichert (keine Anmeldung, nichts geht an einen Server).
+  Lux spricht mit der Sprachausgabe des Browsers, kurze Klänge kommen aus dem Browser. Die Zurück-Taste des Browsers schließt eine Ebene.
+  Die WebApp aktualisiert sich von selbst.
+- **Am PC:** Bühne mit der Maus ziehen zum Drehen, Mausrad zum Zoomen.
+- **Noch nur in der Android-App:** Hintergrundmusik, natürliche Stimme „Thorsten“, Widgets für den Startbildschirm, Erfolgskarte als Bild teilen.
+- **Android:** keine sichtbaren Änderungen – die App nutzt jetzt denselben gemeinsamen Code wie die WebApp.
+
 ## 2.4.1 – App bleibt offen (15.11.2026)
 - **Kein „Wegklappen“ mehr durch die 3D-Bühne:** Wenn Android die Darstellung der Bühne beendet (meist bei knappem Speicher), ging bisher die ganze App zu.
   Jetzt bleibt die App offen und die Bühne baut sich an derselben Stelle neu auf.

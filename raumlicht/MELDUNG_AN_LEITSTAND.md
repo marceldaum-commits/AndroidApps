@@ -61,3 +61,32 @@ Safari/Firefox, echtes Handy, Installation und Offline-Betrieb über die echte A
 
 **Hinweise:** Die Android-App enthält seit 2.4.0 espeak-ng (GPL-3, siehe `LIZENZEN.md`) – vor Shop/Play Store klären. Die WebApp enthält das nicht.
 Bitte noch nichts ankündigen: Das ist eine Vorschau, kein fertiges Produkt. `raumlicht-live` fasse ich nicht an.
+
+
+---
+
+## 16.11.2026 – WebApp 2.5.0: jetzt die ganze App (Auftrag von Marcel: „Bau die webapp“)
+
+**Stand:** Die WebApp zeigt jetzt dieselben Bildschirme wie die Android-App – aus demselben Code (Modul `shared`). Drin sind: Startseite mit Lux und Bühne,
+alle Kapitel mit Einführung, Rechenweg und Formelanzeige, Tagesaufgabe, Üben, Abi, „Mehr“ mit allen Extras (Kurve abfahren, Flug, Ballerbude, Baumeister,
+Geisterfahrt, Ringflug, Zufallsmaschine, Galton-Brett …), Planer, Einstellungen (mit Links zu Impressum und Datenschutz, „Fortschritt zurücksetzen“).
+Emojis und Mathe-Zeichen kommen aus mitgelieferten Schriften (DejaVu Sans, Noto Color Emoji – beide frei, siehe `LIZENZEN.md`).
+
+**Technik, die ihr wissen solltet:** `webapp/` ist jetzt rund 27 MB (vorher 15 MB; die Emoji-Schrift hat 10,8 MB, wird wie alles andere vom Service Worker
+einmal gespeichert). Dateitypen unverändert (`.wasm`, `.ttf`, `.js`, `.html`, `.json`, `.webmanifest`, `.png`, `.map`). Gespeichert wird nur im Browser
+(localStorage, Schlüssel `raumlicht.*`); keine Anfragen an fremde Server, keine Cookies. Sprachausgabe: `speechSynthesis` des Browsers –
+je nach Browser/System rechnet die auf dem Gerät oder beim Browser-Hersteller; das steht so auch in den Einstellungen der WebApp. Bitte für die Datenschutzseite bedenken.
+
+**Noch nicht gleich mit Android (ehrlich):** Hintergrundmusik, natürliche Stimme „Thorsten“, Widgets, Erfolgskarte als Bild teilen (im Web wird nur Text geteilt).
+Der In-App-Updater entfällt im Web (aktualisiert sich selbst).
+
+**Von hier geprüft (Chromium ohne echte Grafikkarte, Handy- und PC-Größe, lokal ausgeliefert):** `scene/test/web.mjs` – Start, Aufgabe 1-1 mit Einführung öffnen,
+Bühne drehen und zoomen, Aufgabe lösen, Sterne gespeichert, Browser-Zurück, „Mehr“, Neuladen; keine Konsolenfehler. `scene/test/web-update.mjs` – automatisches Update und Offline-Start.
+**Nicht geprüft:** Safari und Firefox, echtes Handy (Fingerbedienung der Bühne, Zwei-Finger-Zoom), Ton und Stimme (im Test nicht hörbar),
+die Extras einzeln im Browser (sie sind derselbe Code wie unter Android und dort getestet, aber im Browser nicht einzeln durchgeklickt).
+
+**Bitte auf der Testadresse prüfen:** 1. „Version 2.5.0 vom 16.11.2026“ in den Einstellungen (Startseite → Mehr → Einstellungen). 2. Aufgabe 1-1 lösen, neu laden, Sterne noch da.
+3. Auf einem echten Handy: Bühne mit einem Finger drehen, mit zwei zoomen; Punkt in einer Zieh-Aufgabe ziehen. 4. Safari (iPhone) und Firefox starten überhaupt.
+5. Je ein Extra aus „Mehr“ öffnen (Kurve abfahren, Ballerbude, Galton-Brett). 6. Ton/Stimme nach dem ersten Antippen hörbar.
+
+**Freigabe:** `raumlicht-live` beantrage ich noch **nicht** – erst wenn Punkte 3 und 4 auf echten Geräten bestätigt sind. `raumlicht-live` fasse ich nicht an.

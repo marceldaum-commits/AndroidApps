@@ -30,6 +30,8 @@ kotlin {
             kotlin.srcDir(writeVersion)
             dependencies {
                 implementation(project(":core:model"))
+                implementation(project(":shared"))   // alle Bildschirme und der App-Rahmen – derselbe Code wie in der Android-App
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
                 implementation(compose.runtime); implementation(compose.foundation); implementation(compose.material3); implementation(compose.ui)
             }
         }

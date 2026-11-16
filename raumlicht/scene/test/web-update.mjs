@@ -26,13 +26,13 @@ check('Startseite: neue Version erscheint ohne Zutun', await shown() === '9.9.1'
 check('alter Speicher ist weggeräumt', (await cached()) === 'raumlicht-9.9.1', await cached());
 check('die App startet nach dem Update', await page.evaluate(() => document.getElementById('start').style.display === 'none'));
 
-// 2 · neue Version, Nutzer steckt in einer Aufgabe → kein Neuladen mittendrin, erst beim Zurückgehen
-await page.mouse.click(42, 250); await page.waitForTimeout(2000);
-check('Aufgabe ist offen', await page.evaluate(() => document.getElementById('stage').style.display === 'block'));
+// 2 · neue Version, Nutzer ist nicht auf der Startseite → kein Neuladen mittendrin, erst beim Zurückgehen
+await page.mouse.click(1112, 290); await page.waitForTimeout(2000);                    // „Mehr“ öffnen – weg von der Startseite
+check('ein anderer Bildschirm ist offen', await page.evaluate(() => window.__rlHome === false));
 fs.writeFileSync(path.join(dir, 'version.json'), '{ "version": "9.9.2" }'); for (const f of ['index.html', 'sw.js']) fs.writeFileSync(path.join(dir, f), fs.readFileSync(path.join(dir, f), 'utf8').split('9.9.1').join('9.9.2'));
 await ask(); await page.waitForFunction(() => caches.keys().then((k) => k.includes('raumlicht-9.9.2')), null, { timeout: 60000 }).catch(() => {}); await page.waitForTimeout(3000);
-check('in der Aufgabe wird nicht neu geladen', await shown() === '9.9.1' && await page.evaluate(() => document.getElementById('stage').style.display === 'block'), await shown());
-await page.mouse.click(50, 32);                                                           // „‹ zurück“
+check('mittendrin wird nicht neu geladen', await shown() === '9.9.1' && await page.evaluate(() => window.__rlHome === false), await shown());
+await page.mouse.click(24, 24);                                                           // Pfeil zurück
 await page.waitForFunction(() => document.documentElement.dataset.version === '9.9.2', null, { timeout: 60000 }).catch(() => {}); await page.waitForTimeout(1500);
 check('zurück auf der Startseite: Update kommt von selbst', await shown() === '9.9.2', await shown());
 

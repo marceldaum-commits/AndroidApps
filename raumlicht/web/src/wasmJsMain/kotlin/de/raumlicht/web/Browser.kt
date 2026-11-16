@@ -1,29 +1,42 @@
 package de.raumlicht.web
 
-// Brücke zum Browser: 3D-Bühne (iframe mit derselben scene.js wie in der Android-App), Speicher und Links.
-
-/** Bühne an die Stelle legen, an der die Oberfläche Platz für sie lässt (CSS-Pixel) – oder verstecken */
-fun placeStage(x: Double, y: Double, w: Double, h: Double, show: Boolean): Unit = js(
-    "{ const f = document.getElementById('stage'); f.style.display = show ? 'block' : 'none'; f.style.left = x + 'px'; f.style.top = y + 'px'; f.style.width = w + 'px'; f.style.height = h + 'px'; }")
-
-/** Befehl an die Bühne (RL.setState …). Ist sie noch nicht geladen, wartet der Befehl. */
-fun stageRun(code: String): Unit = js(
-    "{ const w = document.getElementById('stage').contentWindow; const go = () => { if (w && w.RL) { w.eval(code); return true; } return false; }; if (!go()) { window.__rlq = window.__rlq || []; window.__rlq.push(code); if (!window.__rlt) window.__rlt = setInterval(() => { const w2 = document.getElementById('stage').contentWindow; if (w2 && w2.RL) { clearInterval(window.__rlt); window.__rlt = null; window.__rlq.splice(0).forEach((c) => w2.eval(c)); } }, 100); } }")
+// Brücke zum Browser: Speicher, Links, Ton, Stimme, Teilen, Verlauf. Die 3D-Bühne bindet das gemeinsame Modul selbst ein (Stage.wasmJs.kt).
 
 fun storeGet(key: String): String? = js("localStorage.getItem(key)")
 fun storeSet(key: String, value: String): Unit = js("localStorage.setItem(key, value)")
+fun storeRemove(key: String): Unit = js("localStorage.removeItem(key)")
+/** Alle Schlüssel mit diesem Anfang, durch Zeilenumbruch getrennt */
+fun storeKeys(prefix: String): String = js("Object.keys(localStorage).filter((k) => k.startsWith(prefix)).join('\\n')")
 fun openLink(url: String): Unit = js("window.open(url, '_blank', 'noopener')")
 fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s) s.style.display = 'none'; }")
 /** Der Seite sagen, ob gerade die Startseite offen ist – nur dort (oder im Hintergrund) lädt sie sich nach einem Update selbst neu */
 fun atHome(on: Boolean): Unit = js("{ window.__rlHome = on; if (on && window.__rlTry) window.__rlTry(); }")
-fun pixelRatio(): Double = js("window.devicePixelRatio || 1")
+/** Heutiger Tag in Ortszeit, gezählt seit dem 1.1.1970 */
+fun todayLocal(): Double = js("Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 86400000)")
 
-// Schrift laden: zwei Dateien aus fonts/ holen und als Bytes an die Oberfläche geben
-private fun fetchBytes(url: String, done: (JsAny?) -> Unit): Unit = js("{ fetch(url).then((r) => r.arrayBuffer()).then((b) => done(new Int8Array(b))).catch(() => done(null)); }")
+// ── Schrift: Dateien aus fonts/ holen und als Bytes an die Oberfläche geben
+private fun fetchBytes(url: String, done: (JsAny?) -> Unit): Unit = js("{ fetch(url).then((r) => r.ok ? r.arrayBuffer() : Promise.reject()).then((b) => done(new Int8Array(b))).catch(() => done(null)); }")
 private fun size(a: JsAny): Int = js("a.length")
 private fun byteAt(a: JsAny, i: Int): Byte = js("a[i]")
-private fun bytes(a: JsAny) = ByteArray(size(a)) { byteAt(a, it) }
-/** Ruft [ready] auf, sobald beide Schnitte da sind. Klappt das Laden nicht, bleibt die Standardschrift – die App startet trotzdem. */
-fun loadFonts(ready: (ByteArray, ByteArray) -> Unit) {
-    fetchBytes("fonts/dejavu_sans.ttf") { a -> fetchBytes("fonts/dejavu_sans_bold.ttf") { b -> if (a != null && b != null) ready(bytes(a), bytes(b)) else hideStartScreen() } }
-}
+/** Ruft [ready] mit dem Inhalt der Datei auf – oder mit null, wenn sie nicht zu laden war (die App läuft dann mit der Standardschrift weiter) */
+fun loadFile(url: String, ready: (ByteArray?) -> Unit) = fetchBytes(url) { a -> ready(a?.let { arr -> ByteArray(size(arr)) { byteAt(arr, it) } }) }
+
+// ── Ton: kurze Klänge aus dem Browser-Synthesizer (keine Dateien). Erst nach der ersten Berührung erlaubt der Browser Ton.
+fun beep(type: String, f0: Double, f1: Double, seconds: Double, gain: Double): Unit = js(
+    "{ try { const A = window.__rlAudio || (window.__rlAudio = new (window.AudioContext || window.webkitAudioContext)()); if (A.state === 'suspended') A.resume(); const o = A.createOscillator(), g = A.createGain(), t = A.currentTime; o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t + seconds); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, gain), t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + seconds); o.connect(g); g.connect(A.destination); o.start(t); o.stop(t + seconds + 0.02); } catch (e) {} }")
+fun vibrate(ms: Int): Unit = js("{ if (navigator.vibrate) navigator.vibrate(ms); }")
+
+// ── Stimme: Sprachausgabe des Browsers (rechnet auf dem Gerät bzw. im Browser, je nach System)
+fun canSpeak(): Boolean = js("('speechSynthesis' in window)")
+fun speak(text: String, volume: Double): Unit = js(
+    "{ try { const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.volume = volume; u.rate = 0.96; const v = speechSynthesis.getVoices().filter((x) => x.lang && x.lang.startsWith('de')); const pick = v.find((x) => x.localService) || v[0]; if (pick) u.voice = pick; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }")
+fun speaking(): Boolean = js("('speechSynthesis' in window) && speechSynthesis.speaking")
+fun stopSpeaking(): Unit = js("{ if ('speechSynthesis' in window) speechSynthesis.cancel(); }")
+
+// ── Teilen: Teilen-Dialog des Systems, sonst Zwischenablage
+fun shareText(text: String): Unit = js("{ if (navigator.share) navigator.share({ text: text }).catch(() => {}); else if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => alert('In die Zwischenablage kopiert.')).catch(() => {}); }")
+
+// ── Zurück-Taste des Browsers: Jede geöffnete Ebene bekommt einen Eintrag im Verlauf; „zurück“ schließt eine Ebene.
+/** [depth] = Anzahl offener Ebenen; [onBack] wird gerufen, wenn der Nutzer im Browser zurückgeht */
+fun syncHistory(depth: Int, onBack: () -> Unit): Unit = js(
+    "{ window.__rlBack = onBack; if (window.__rlDepth === undefined) { window.__rlDepth = 1; window.addEventListener('popstate', () => { if (window.__rlSkip > 0) { window.__rlSkip--; return; } if (window.__rlDepth > 1) { window.__rlDepth--; window.__rlBack(); } }); window.__rlSkip = 0; } while (window.__rlDepth < depth) { history.pushState({ rl: window.__rlDepth }, ''); window.__rlDepth++; } if (window.__rlDepth > depth) { const n = window.__rlDepth - depth; window.__rlDepth = depth; window.__rlSkip += 1; history.go(-n); } }")

@@ -28,6 +28,11 @@ fun SettingsPage(
     voiceControls: @Composable () -> Unit = {},
     /** Bericht über den letzten unerwarteten Abbruch (null = keiner) */
     lastProblem: String? = null, onProblemSeen: () -> Unit = {},
+    /** Gibt es Hintergrundmusik? (im Browser noch nicht) */
+    hasMusic: Boolean = true,
+    /** Was die App speichert und wann sie ins Internet geht – je Plattform verschieden */
+    privacy: String = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
+        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und einmalig, wenn du die natürliche Stimme lädst. Gesprochen wird immer auf dem Gerät.",
 ) {
     val speaker = de.raumlicht.app.ui.fx.LocalSpeaker.current
     val sfx = de.raumlicht.app.ui.fx.LocalSfx.current
@@ -42,7 +47,7 @@ fun SettingsPage(
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                    Toggle("🎵 Musik", "Elektronische Klänge im Hintergrund", music, onMusic)
+                    if (hasMusic) Toggle("🎵 Musik", "Elektronische Klänge im Hintergrund", music, onMusic)
                     Toggle("🔊 Geräusche", "Laser, Treffer, Lux’ Piepsen", sound, onSound)
                     Toggle("🗣️ Lux spricht", if (voiceAvailable) "Lux liest ihre Sprechblasen laut vor (Sprachausgabe des Geräts)" else "Auf diesem Gerät ist keine deutsche Stimme eingerichtet – Lux bleibt stumm.", voice) {
                         onVoice(it); if (it) speaker?.say("Hallo, ich bin Lux!") }
@@ -56,8 +61,7 @@ fun SettingsPage(
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Datenschutz & Inhalte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                    Text("Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
-                        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und einmalig, wenn du die natürliche Stimme lädst. Gesprochen wird immer auf dem Gerät.", style = MaterialTheme.typography.bodySmall)
+                    Text(privacy, style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Mathematik der Oberstufe. Analytische Geometrie – Punkte und Vektoren im Raum, Geraden in Parameterform, " +
                         "Lagebeziehungen, Ebenen in Koordinatenform, Durchstoßpunkte, Normalenvektor, Skalarprodukt, Lotfußpunkt, " +
                         "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen, Bewegungsaufgaben; dazu Analysis (Funktionen, Ableitung, Kurvendiskussion, Integral, Rotationskörper) und Stochastik (Laplace, Pfadregel, Vierfeldertafel, Binomialverteilung). Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)
