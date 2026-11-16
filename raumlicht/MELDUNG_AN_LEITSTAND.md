@@ -519,3 +519,11 @@ Ein Kurs mit 25 Schülern zahlt bei 49 € knapp 2 € pro Kopf statt 14,99 € 
 - Texte „keine Daten an einen Server“ in App, Store-Eintrag und Datensicherheit müssen dann geändert werden.
 - Spitznamen können missbraucht werden (Beleidigungen) – die Lehrkraft muss umbenennen/entfernen können.
 - Preise und die Grenze frei/Lizenz sind Vorschläge; Marcels Entscheidung steht aus.
+
+---
+
+## 16.11.2026 – Klärungsliste Recht und Datenschutz
+
+Auf Marcels Wunsch („Benenne es, das kläre ich dann“) stehen alle offenen Rechts- und Datenschutzpunkte zu Lehrerzugang, Abi-Pass und KI-Tutor in `raumlicht/KLAERUNGSLISTE-RECHT.md`
+(A1–A14 Schule, B1–B8 Bezahlen, C1–C6 KI). Vieles davon gilt für alle Apps gleich und betrifft euren zentralen Dienst (Serverstandort, Unterauftragnehmer, Löschkonzept, technische Maßnahmen, AVV-Muster).
+Keine Rechtsberatung. Gebaut wird erst, wenn Marcel die Punkte geklärt hat.
