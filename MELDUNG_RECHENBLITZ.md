@@ -4,7 +4,7 @@ Neueste Meldung oben.
 
 > **AKTUELLER STAND (16.11.2026, nachmittags) – für den Leitstand:** Live ist 3.15.0 (7c423d5). Auf `rechenblitz-test` liegen **3.16.0** (Inhalt Klasse 5–10, Meldung 47) und **3.17.0** (schneller Start ohne weißen Bildschirm, Meldung 48). Bitte prüfen und freigeben. Inhalte laufen weiter in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
 
-## 16.11.2026 (48) – Schneller Start ohne weißen Bildschirm (3.17.0) · gemessen vorher/nachher
+## 16.11.2026 (48) – Schneller Start ohne weißen Bildschirm, Skripte gebündelt (3.17.0) · gemessen vorher/nachher
 
 - **Auftrag (Leitstand 16.11., Marcel):** „Den Start optimieren, vielleicht mit Ladebalken oder schneller machen. Weißer Screen ist nicht gut.“
 - **Ursache vorher:**
@@ -22,19 +22,24 @@ Neueste Meldung oben.
   - **Neu: `MIN_SHELL`** (Mindest-Hülle der Inhalte) getrennt von `SHELL` (Hülle der APK). Der 3.17.0-Inhalt braucht weiter nur Hülle 2: Alle bisherigen Apps laden ihn von selbst, die neue APK ist **optional**, nur fürs dunkelblaue Startbild. Regel 9 der Roadmap ist angepasst.
 - **Messung** mit Playwright, Handy 390 px, lokaler Server wie Live (gzip, ETag, no-cache). „Slow 4G“ ist im Server nachgebildet (562 ms Latenz, ca. 180 KB/s), damit es auch für den Service Worker gilt. Angaben: erstes sichtbares Bild / bedienbar:
 
-  | | vorher | nachher |
+  | | vorher (3.16.0) | nachher (3.17.0, gebündelt) |
   |---|---|---|
-  | Slow 4G, 1. Start (DE) | 1,26 s / 3,23 s | **0,73 s** (Startbild mit Balken) / 3,12 s |
-  | Slow 4G, 2. Start (DE) | 1,18 s / 2,91 s | **0,04 s / 0,06 s** |
-  | Slow 4G, 1. Start (EN) | 1,26 s / 3,23 s | **0,73 s** / 3,20 s |
-  | Slow 4G, 2. Start (EN) | 1,18 s / 2,87 s | **0,05 s / 0,08 s** |
-  | WLAN, 1. Start (DE) | 0,10 s / 0,20 s | 0,06 s / 0,15 s |
-  | WLAN, 2. Start (DE) | 0,08 s / 0,11 s | 0,04 s / 0,07 s |
+  | Slow 4G, 1. Start (DE) | 1,26 s / 3,23 s | **0,73 s** (Startbild mit Balken) / **1,94 s** |
+  | Slow 4G, 2. Start (DE) | 1,18 s / 2,91 s | **0,05 s / 0,06 s** |
+  | Slow 4G, 1. Start (EN) | 1,26 s / 3,23 s | **0,72 s / 1,97 s** |
+  | Slow 4G, 2. Start (EN) | 1,18 s / 2,87 s | **0,06 s / 0,07 s** |
+  | WLAN, 1. Start (DE) | 0,10 s / 0,20 s | 0,04 s / 0,15 s |
+  | WLAN, 2. Start (DE) | 0,08 s / 0,11 s | 0,02 s / 0,08 s |
 
   - Hell- und Dunkelmodus liefern dieselben Werte (±40 ms).
   - Weiße Leerbilder nach dem Seitenaufbau: vorher wie nachher keine. Vorher war aber bis 1,26 s gar nichts zu sehen; nachher ist ab 0,73 s das dunkelblaue Startbild da.
   - Die Zeit bis zum ersten Byte (Latenz) lässt sich in der Web-App nicht vermeiden. Danach ist sofort das Startbild sichtbar.
-  - Der **erste** Start bei Slow 4G bleibt etwa 3 s, weil er von der Datenmenge begrenzt wird. Dafür sieht man jetzt sofort Startbild und Fortschritt. Weitere Verkürzung wäre nur mit einem Build-Schritt möglich (Skripte bündeln und verkleinern), das ist ein Vorschlag für später.
+- **Bündeln und Verkleinern (Marcel: „wieso machst du das nicht?“, also gleich mit umgesetzt):**
+  - `android-app/bundle.js` (esbuild 0.24.2, fest eingestellt) fasst die 17 Skripte zu **`js/rechenblitz.min.js`** zusammen (gzip 119 statt 142 KB, **1 statt 17 Anfragen**) und verkleinert das CSS zu **`app.min.css`**.
+  - Erzeugt wird beides automatisch mit `node android-app/stand.js`. `stand.js --check` (GitHub-Abläufe, `build.sh`) bricht ab, wenn das Bündel nicht zu den Quellen passt.
+  - Die lesbaren Quelldateien bleiben im Repo (`js/*.js`, `app.css`). `config.js` bleibt eigene Datei (vom Leitstand bearbeitbar), die Übersetzungen werden weiter bei Bedarf geladen.
+  - Namen auf oberster Ebene bleiben erhalten (klassisches Skript, kein Modul), alles verhält sich wie vorher.
+  - Ein Ergebnis: Der erste Start bei Slow 4G ist von 3,1 s (ungebündelt) auf **1,9 s** gesunken.
 - **Gefunden und behoben beim Testen:** Zwei Texte werden in `init()` direkt übersetzt („Version“, Standardname „Ich“). Das Wörterbuch wird deshalb vor `init()` geladen. Die Sprache wird erst umgeschaltet, wenn das Wörterbuch da ist.
 - **Tests:**
   - komplette Regression: 320 px, offline (neuer Service Worker), APK-Modus, Merk, Reise, Welt, Abzeichen, Widget, Garten, Elternabfrage, Profile, Selbst-Update App/Web, Urkunde, Zufallsaktionen; keine JS-Fehler, keine fehlenden Übersetzungen;

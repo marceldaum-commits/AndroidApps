@@ -3,6 +3,14 @@
 // Aufruf im Repo-Stamm oder hier:  node android-app/stand.js          (schreibt die Datei)
 //                                  node android-app/stand.js --check  (Fehler, wenn stand.json veraltet ist)
 const fs = require('fs'), path = require('path'), crypto = require('crypto');
+// Zuerst das Auslieferungs-Bündel erzeugen (bzw. bei --check prüfen, ob es zu den Quellen passt)
+const { build } = require('./bundle.js'), bundled = build(), rootDir = path.join(__dirname, '..', 'kopfrechnen');
+for (const [f, txt] of Object.entries(bundled)) {
+  const p = path.join(rootDir, f), cur = fs.existsSync(p) ? fs.readFileSync(p, 'utf8') : '';
+  if (cur === txt) continue;
+  if (process.argv.includes('--check')) { console.error(`kopfrechnen/${f} passt nicht zu den Quelldateien – bitte „node android-app/stand.js“ ausführen und mit committen.`); process.exit(1); }
+  fs.writeFileSync(p, txt); console.log(`Bündel geschrieben: kopfrechnen/${f} (${Math.round(txt.length / 1024)} KB)`);
+}
 const root = path.join(__dirname, '..', 'kopfrechnen'), out = path.join(root, 'stand.json');
 const SKIP = new Set(['stand.json', 'sw.js']);   // sw.js braucht die App nicht
 const files = {};

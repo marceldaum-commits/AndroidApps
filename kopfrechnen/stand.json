@@ -1,7 +1,8 @@
-{"app":"rechenblitz","version":"3.17.0","shell":2,"id":"eef1c496296a4662","files":{
+{"app":"rechenblitz","version":"3.17.0","shell":2,"id":"5720ed7c2ad1b640","files":{
 "LICENSE-fonts-OFL.txt":"7ccbf925128fa58dd9db15a952de2cb1388bada8bceddb13b90302c63c517ef8",
 "LICENSE-qrcode-generator.txt":"cbb4dd65aafcbc67fdd469b12042464153219bc26f238b2f19858c7980e5b01a",
 "app.css":"d59330c220ca08c8e35a24917bbcd8afbab1d35fabfd9ba81b6ed6cbd5890436",
+"app.min.css":"2792a566649e23b3b5a5f226804cbf3fea2750448c7c2227136c34dff20b93ed",
 "config.js":"f655cd280e300e7ed126bdbfdb20424523f0c693aba8387c8af0598ae50f7c71",
 "fonts/Caveat.woff2":"891951df5e8b5b0f0bc760d31375405e795c666b5add70437de12d4a6482b33f",
 "fonts/Inter.woff2":"3100e775e8616cd2611beecfa23a4263d7037586789b43f035236a2e6fbd4c62",
@@ -11,7 +12,7 @@
 "icons/icon-512.png":"c07340d01fb23ef91fa0fced7decbc2698600fd9f2208c8ea5b9fb3ecd409038",
 "icons/icon-maskable-512.png":"2a2be78406b5d33c20d5be8090ce1dac23d33f7580d9f6d17216f344a07355ae",
 "icons/logo.svg":"975aeb4a6195273f495a994a3f71943376e0d5c975cf945a06f63b6dc0754b28",
-"index.html":"1e9e693583fc69688b5885179c02ad33c124bd5ae1a2eb4761b5fd580517efcd",
+"index.html":"be87be6172ef500f3017917d3f6e5afc9f305335a63da7dff14b1c1a345edeee",
 "js/app.js":"4e3a714493c03ff97770bc10fa342ba30fe08ddce3021348e477197ce75af83e",
 "js/blitz.js":"4844d1bd604004dc0e1449b20192c0974e86f2cc05894a3ace4c02e134715425",
 "js/changelog.js":"14a317013595674d3907b4f15842ed6587f61edd613567559c444ec3f2e78f6e",
@@ -27,6 +28,7 @@
 "js/native.js":"7500e7e8a0196405b705f2c1ce3be2c388273b44939648b754f0135e4169c32f",
 "js/panels.js":"940e53e926ac8fa513014054abeeaba700d9eed5eb6e19b016730991decc11c2",
 "js/raetsel.js":"150ff6ff85bf552d1060c2a25dac9a8304b36308545b4f842df77a9c00507d1e",
+"js/rechenblitz.min.js":"027cda083ebd842b2b30da7863f9155bdf72f2ea7b926915d4a6be6ba3977340",
 "js/reise.js":"ceb5363fb08aa837ca95c02e65cbd2395984590e88ab61c69cabc9f1b6e38728",
 "js/reminder.js":"dc1c8158558f6cf41c8239a4a80d05738891e6e39a368b93ee72bd264fc952f7",
 "js/vendor/qrcode.js":"18ae399f81182bc9de916e9c77b195df20cc58d6f2d55a62b085a299f1bf1780",
