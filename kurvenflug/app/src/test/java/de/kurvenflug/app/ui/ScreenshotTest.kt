@@ -335,4 +335,27 @@ class ScreenshotTest {
     @Test fun workshop() = shot("36_werkstatt") {
         de.kurvenflug.app.ui.collection.WorkshopScreen(30, 22, 1, Triple(1, 2, 2), {}, { _, _, _ -> }, {})
     }
+
+    // Verstehen statt nur schieben: Live-Rechnung, Rechen-Stern, Lösungsweg
+    @Test fun liveCalc() = level("14-2", name = "72_live_rechnung", values = mapOf("angle" to 10.0))
+
+    @Test fun calcCheckQuestion() = level("14-2", name = "73_rechenstern_frage", values = mapOf("angle" to 13.0), settle = 4500,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    @Test fun calcCheckSolved() = level("14-2", name = "74_rechenstern_geschafft", values = mapOf("angle" to 13.0), settle = 6000,
+        prepare = {
+            it.onNodeWithText("🚀 Start").performClick(); it.mainClock.advanceTimeBy(5000)
+            it.onNodeWithText("tan α = 4 : 17").performClick()
+            it.mainClock.advanceTimeBy(3000)
+            it.onNodeWithText("2. α = tan⁻¹", substring = true).assertIsDisplayed()
+        })
+
+    @Test fun calcCheckWrong() = level("14-2", name = "75_rechenstern_daneben", values = mapOf("angle" to 13.0), settle = 3000,
+        prepare = {
+            it.onNodeWithText("🚀 Start").performClick(); it.mainClock.advanceTimeBy(5000)
+            it.onNodeWithText("sin α = 4 : 17").performClick()
+        })
+
+    @Test fun taskStaysAfterMiss() = level("1-7", name = "76_aufgabe_nach_fehlversuch", values = mapOf("x" to -3.0, "y" to 2.0), settle = 3500,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
 }

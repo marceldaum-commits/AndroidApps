@@ -1,6 +1,8 @@
 package de.kurvenflug.app.ui
 
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import de.kurvenflug.app.ui.flight.LevelScreen
@@ -38,6 +40,10 @@ class LevelFlowTest {
         repeat(3) { rule.onAllNodesWithText("+")[1].performClick() }
         rule.onNodeWithText("🚀 Start").performClick()
         rule.mainClock.advanceTimeBy(4000)
+        // Gleich gespeichert; die Rechen-Frage ändert bei 2 Versuchen nichts mehr an den Sternen
+        assertEquals(listOf(Triple(2, emptySet<Int>(), 2)), solved)
+        rule.onNodeWithText("Erst x: 4 nach rechts, dann y: 3 nach oben", substring = true).performScrollTo().performClick()
+        rule.mainClock.advanceTimeBy(1000)
         assertEquals(listOf(Triple(2, emptySet<Int>(), 2)), solved)
         rule.onNodeWithText("Fertig! 🏆").assertExists()
         // Start ist gesperrt – kein zweites Speichern durch Doppeltipp
@@ -80,7 +86,35 @@ class LevelFlowTest {
         repeat(3) { rule.onAllNodesWithText("−")[0].performClick() }
         rule.onNodeWithText("🚀 Start").performClick()
         rule.mainClock.advanceTimeBy(4000)
+        // Weiter ohne Rechen-Frage → trotzdem gespeichert
+        rule.onNodeWithText("Fertig! 🏆").performScrollTo().performClick()
         assertEquals(1, solvedStars)
+    }
+
+    /** Rechen-Stern: Volltreffer gibt erst 2 Sterne, die richtige Rechnung den dritten; falsche Rechnung → 2. */
+    @Test fun calcStarRight() = calcStar("tan α = 4 : 17", 3)
+    @Test fun calcStarWrong() = calcStar("sin α = 4 : 17", 2)
+
+    private fun calcStar(pick: String, expected: Int) {
+        val l = Levels.byId("14-2")!!
+        val solved = mutableListOf<Int>(); val upgraded = mutableListOf<Int>()
+        rule.setContent { KurvenflugTheme { Surface(color = Q.Space) {
+            LevelScreen(l, Levels.chapters.first { it.number == 14 }, Q.Cyan, false, {}, { s, _, _ -> solved += s }, null, {},
+                initialValues = mapOf("angle" to 13.0), onCheckStar = { upgraded += it })
+        } } }
+        rule.mainClock.advanceTimeBy(1000)
+        rule.onNodeWithText("🚀 Start").performClick()
+        rule.mainClock.advanceTimeBy(5000)
+        rule.onNodeWithText("Rechen-Stern", substring = true).assertExists()
+        // sofort mit 2 Sternen gespeichert – auch wenn das Kind jetzt die App schließt
+        assertEquals(listOf(2), solved)
+        rule.onNodeWithText(pick).performScrollTo().performClick()
+        rule.mainClock.advanceTimeBy(1500)
+        rule.onNodeWithText("So rechnet man's", substring = true).assertExists()
+        rule.mainClock.advanceTimeBy(2000)
+        rule.onNodeWithText("2. α = tan⁻¹", substring = true).assertIsDisplayed()
+        assertEquals("kein zweiter Durchgang im Protokoll", listOf(2), solved)
+        assertEquals(if (expected == 3) listOf(3) else emptyList<Int>(), upgraded)
     }
 
     /** Zurücksetzen nur nach 2 s Gedrückthalten – kurzes Tippen oder früh loslassen löscht nichts. */

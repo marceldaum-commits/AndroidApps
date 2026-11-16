@@ -80,3 +80,19 @@ Laufend ergänzen – vor größeren Neuerungen kurz nachsehen (siehe CLAUDE.md)
   („2 zu tief“) – Rückmeldung macht Üben erst wirksam; Lernstand-Seite erklärt Eltern in drei Sätzen, was passiert.
   Umgesetzt in 0.7.0: Rechenweg nach dem 3. Fehlversuch, Zwischenergebnisse antippen, beim ersten Mal je Bahnart
   rechnet Volt einen Schritt vor (Ausblenden); falsche Auswahlen sind typische Fehler (Vorzeichen, ±1, verdoppelt).
+
+## Kurvenflug 0.18: Verstehen statt nur Schieben (Nov. 2026)
+
+Anlass (Marcel): Mit Reglern kommt man auch durch Probieren ans Ziel – die Rechnung bleibt dann unsichtbar.
+- „Productive success“ vs. Raten: Lernspiele wirken nur, wenn die Spielhandlung an das Fachwissen gekoppelt ist
+  (Habgood & Ainsworth 2011, „intrinsic integration“). Reines Schieben bis zum Treffer ist Versuch und Irrtum.
+- Selbsterklärung („Wie hast du's gerechnet?“) verbessert Verstehen und Übertragung deutlich, besonders mit
+  Auswahl-Antworten statt freiem Text bei Jüngeren (Chi u. a.; Meta-Analyse Bisra u. a. 2018, g ≈ 0,55).
+- Ausgearbeitete Lösungsbeispiele direkt nach eigenem Versuch wirken stärker als davor (Kalyuga; „worked example
+  effect“) – das Kind hat dann eine Frage im Kopf, die das Beispiel beantwortet.
+- Verbindung Darstellung ↔ Formel: Wer sieht, wie sich der eingesetzte Wert in der Rechnung ändert, verknüpft Graph und
+  Term (Multiple-Representations-Forschung, Ainsworth 2006).
+- Umsetzung 0.18.0: (1) Live-Rechnung unter der Formel mit den eingestellten Zahlen („17 · tan 13° ≈ 3,9 · Station 4 ↑“),
+  (2) Rechen-Stern: nach dem Treffer die passende Rechnung aus drei wählen (Ablenker = typische Verwechslungen),
+  nur so gibt es den 3. Stern, (3) danach der Lösungsweg mit den Zahlen des Levels Schritt für Schritt.
+  Keine Strafe: falsche Wahl kostet nur den Bonus-Stern, „Nochmal“ geht immer.
