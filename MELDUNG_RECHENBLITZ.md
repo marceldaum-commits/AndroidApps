@@ -26,6 +26,7 @@ Neueste Meldung oben.
   - In der Statusleiste steht statt 🔥 „Tage in Folge“ jetzt **🌱 Tage diese Woche (x/7)**. Ein Tipp darauf öffnet den Garten. Das Widget zeigt dasselbe.
   - Im Garten gibt es eine Wochenleiste Mo–So und den Satz: „Pausen sind okay – in deinem Garten welkt nichts.“
   - Die Serien-Abzeichen bleiben bestehen.
+  - **Marcel 16.11. bestätigt:** „Tage diese Woche“ statt „Tage in Folge“ bleibt so.
 - **Startseite:**
   - neue Karte „Rechengarten“ mit Mini-Beeten (Tropfen heute / reif → „Ernten“);
   - Blitz' Begrüßung weist auf reife Pflanzen hin, „Los →“ öffnet dann den Garten;
