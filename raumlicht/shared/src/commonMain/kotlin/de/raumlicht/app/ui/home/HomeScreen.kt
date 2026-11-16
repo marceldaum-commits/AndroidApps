@@ -1,5 +1,10 @@
 package de.raumlicht.app.ui.home
 
+import androidx.compose.runtime.withFrameNanos
+import androidx.compose.ui.layout.positionInParent
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -97,9 +102,18 @@ fun HomeScreen(
             }
         }
         // Alle Kapitel des Gebiets mit Namen auf einen Blick – darunter das gewählte Kapitel mit seinen Aufgaben
+        // Aufgeräumt (seit 2.9.2): eine einzige Zeile zum Wischen statt einer Wand aus Knöpfen. Das gewählte Kapitel rutscht von selbst ins Bild.
         item {
-            FlowRow(Modifier.fillMaxWidth().padding(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                chapters.filter { it.area.name == area }.forEach { c -> ChapterChip(c, stars, open == c.number, c.levels.any { it.id == next?.id }) { open = c.number } }
+            val list = chapters.filter { it.area.name == area }
+            val scroll = rememberScrollState(); val places = remember(area) { HashMap<Int, Int>() }
+            LaunchedEffect(open, area) { withFrameNanos { }; places[open]?.let { x -> scroll.animateScrollTo((x - 60).coerceAtLeast(0)) } }
+            Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text("${list.size} Kapitel", Modifier.weight(1f).testTag("kapitel-anzahl"), color = Q.Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+                if (scroll.maxValue > 0) Text(if (scroll.value < scroll.maxValue) "wischen ›" else "‹ wischen", color = Q.Muted, fontSize = 11.sp)
+            }
+            Row(Modifier.fillMaxWidth().horizontalScroll(scroll).padding(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                list.forEach { c -> Box(Modifier.onGloballyPositioned { places[c.number] = it.positionInParent().x.toInt() }) {
+                    ChapterChip(c, stars, open == c.number, c.levels.any { it.id == next?.id }) { open = c.number } } }
             }
         }
         item {

@@ -3,6 +3,7 @@ package de.raumlicht.app.ui.stage
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.BlendMode
@@ -21,6 +22,9 @@ import androidx.compose.ui.layout.positionInWindow
 
 private fun place(x: Double, y: Double, w: Double, h: Double, show: Boolean): Unit = js(
     "{ const f = document.getElementById('stage'); if (!f) return; f.style.display = show ? 'block' : 'none'; f.style.left = x + 'px'; f.style.top = y + 'px'; f.style.width = w + 'px'; f.style.height = h + 'px'; }")
+/** Fehlersuche (siehe Diagnose-Seite): „?ohne=fenster“ legt die Bühne wie früher ÜBER die Oberfläche (kein durchsichtiges Fenster), „?ohne=buehne“ lässt sie ganz weg */
+private fun without(part: String): Boolean = js("(new URLSearchParams(location.search).get('ohne') || '').split(',').indexOf(part) >= 0")
+private fun stageOnTop(): Unit = js("{ const f = document.getElementById('stage'); if (f) { f.style.zIndex = '3'; f.style.pointerEvents = 'auto'; f.style.borderRadius = '18px'; } }")
 private fun stageReady(): Boolean = js("(() => { const f = document.getElementById('stage'); return !!(f && f.contentWindow && f.contentWindow.RL); })()")
 private fun stageEval(code: String): Unit = js("{ const w = document.getElementById('stage').contentWindow; if (w && w.RL) w.eval(code); }")
 /** Meldungen der Bühne (bereit, gezogen, getippt …) an [handler] weiterreichen; null hängt wieder ab */
@@ -37,8 +41,9 @@ private fun wheel(dy: Double): Unit = js("{ const w = document.getElementById('s
 
 @Composable
 actual fun PlatformStage(controller: StageController, modifier: Modifier) {
+    val window = remember { !without("fenster") && !without("buehne") }; val hidden = remember { without("buehne") }
     DisposableEffect(controller) {
-        var alive = true
+        var alive = true; if (!window) stageOnTop()
         listen { json -> if (alive) controller.onEvent(json) }
         controller.attach { cmd -> stageEval(cmd) }
         // Die Bühne ist meist schon geladen und meldet „bereit“ dann nicht noch einmal – wir fragen nach und geben Bescheid
@@ -46,8 +51,8 @@ actual fun PlatformStage(controller: StageController, modifier: Modifier) {
         probe(100)
         onDispose { alive = false; controller.detach(); listen(null); place(0.0, 0.0, 0.0, 0.0, false) }
     }
-    Box(modifier.onGloballyPositioned { c -> val o = c.positionInWindow(); val d = pixelRatio(); place(o.x / d, o.y / d, c.size.width / d, c.size.height / d, true) }
-        .drawBehind { drawRect(Color.Black, blendMode = BlendMode.Clear) }      // Fenster zur Bühne darunter
+    Box(modifier.onGloballyPositioned { c -> val o = c.positionInWindow(); val d = pixelRatio(); place(o.x / d, o.y / d, c.size.width / d, c.size.height / d, !hidden) }
+        .drawBehind { if (window) drawRect(Color.Black, blendMode = BlendMode.Clear) }      // Fenster zur Bühne darunter
         .pointerInput(Unit) {
             val down = HashMap<Long, Pair<Double, Double>>()       // gedrückte Zeiger mit letzter Stelle – damit keiner „hängen bleibt“
             awaitPointerEventScope { while (true) {

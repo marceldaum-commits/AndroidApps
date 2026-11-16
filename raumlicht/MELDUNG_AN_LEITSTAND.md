@@ -209,3 +209,41 @@ Bitte auf iPad/iPhone prüfen und `diagnose.html` ansehen.
 - **Zu „gebündelt und verkleinert“:** Das ist bei Raumlicht schon so – `raumlicht.js` (Webpack, minimiert, eine Datei) und `scene/scene.js` (esbuild `--bundle --minify`, eine Datei).
   Was fehlt, ist allein die **Komprimierung beim Ausliefern**: `raumlicht.js` 594 KB → 107 KB und `scene.js` 570 KB → 148 KB mit gzip. Das ist eine Server-Einstellung
   (gzip/Brotli auch für `.js`, `.json`, `.ttf`), kein Umbau der App. Bitte einschalten; geprüft habe ich es so: `curl -H "Accept-Encoding: br, gzip" -D - -o /dev/null <Adresse>/raumlicht.js` zeigt kein `content-encoding`.
+
+---
+
+## 16.11.2026 – Nachgemessen: Komprimierung am Server ist aktiv (danke)
+
+Geprüft auf raumlicht-test (2.9.1) mit `Accept-Encoding: br, gzip`: alle großen Dateien kommen mit `content-encoding: gzip` an –
+raumlicht.js 107 KB, scene.js 148 KB, Emoji-Schrift 169 KB, DejaVu 64 KB, die beiden .wasm 3,24 MB + 1,49 MB, index.html 4 KB. **Zusammen rund 5,2 MB** für den ersten Besuch
+(2.8.0 ohne die Änderungen: 30,2 MB).
+
+**Startzeiten** dazu aus der Simulation mit voller Komprimierung (`web-speed.mjs … alles-komprimiert`, Chromium am Rechner, kein echtes Handy):
+erster Start 5,3 s („Fast 4G“) bzw. 26,5 s („Slow 4G“), zweiter Start 2,3–2,6 s ohne Netz. Gegen die echte Adresse kann ich die Zeiten nicht gebremst messen;
+die übertragenen Bytes oben sind echt.
+
+Noch möglich (klein): `.wasm` trägt den Inhalt im Namen und kommt ohne `cache-control` – `max-age=31536000, immutable` würde dem Browser die Rückfrage ersparen.
+Live steht noch auf 2.5.1; 2.9.1 wartet auf eure Prüfung. Der weiße Bildschirm auf Marcels iPad ist weiter offen (er testet selbst).
+
+---
+
+## 16.11.2026 – Version 2.9.2: iPad-Befund, Fehlersuche, aufgeräumte Startseite
+
+**Befund von Marcels iPad (Testadresse, 2.9.1):** Ladebild erscheint, danach kommt der Ton – aber das Bild bleibt **weiß**. Die App läuft also (Wasm, Logik, Ton), nur die Darstellung der Oberfläche in Safari fehlt.
+Ursache noch offen; hier gibt es kein Safari. Verdächtig sind: das durchsichtige Fenster zur 3D-Bühne (die Bühne liegt als iframe unter der Compose-Zeichenfläche), zwei WebGL-Kontexte gleichzeitig, die Schriften.
+
+**Eingebaut zum Eingrenzen:** (1) Mitschrift – Fehler/Warnungen der App landen in `localStorage` (`raumlicht.mitschrift`, letzte 40 Zeilen, nur auf dem Gerät) und stehen auf `diagnose.html`;
+(2) Schalter `?ohne=fenster|buehne|emoji|ton` (kombinierbar) und dazu vier Test-Knöpfe auf `diagnose.html`; (3) echter WebGL-2-Zeichentest auf der Diagnose-Seite.
+**Wenn ihr ein iPad/iPhone habt:** bitte `diagnose.html` öffnen, Tests 1–4 antippen und melden, ab welchem das Bild erscheint, plus Mitschrift. Bis dahin Raumlicht bitte nicht als „läuft auf iPad/iPhone“ bewerben.
+
+**Außerdem:** Startseite aufgeräumt (Kapitel als eine wischbare Zeile statt Knopf-Wand) – Wunsch von Marcel nach einem Bildschirmfoto vom Android-Handy, wo die WebApp läuft.
+
+---
+
+## 16.11.2026 – Version 2.9.3: iPad, nächster Schritt
+
+Neuer Befund von Marcel: **iPhone läuft, iPad bleibt weiß** (sein Handy ist Android, dort läuft es auch). Gleiche Browser-Technik, also liegt es vermutlich an der Größe der Zeichenfläche
+(iPad bei doppelter Schärfe bis rund 5,6 Millionen Bildpunkte, iPhone rund 3). **Vermutung, nicht bestätigt.**
+2.9.3 begrenzt deshalb auf iPads die Schärfe der Oberfläche so, dass höchstens rund 3 Millionen Bildpunkte gezeichnet werden (`window.devicePixelRatio` wird vor dem Start überschrieben;
+erkannt über „iPad“ im User-Agent bzw. „Macintosh“ mit Touch). Schalter zum Prüfen: `?ohne=schaerfe` (Faktor 1), `?mit=schaerfe` (unbegrenzt) – als Test 5 und 6 auf `diagnose.html`.
+Andere Geräte sind nicht betroffen. Bitte Live-Freigabe erst, wenn Marcel das iPad-Ergebnis gemeldet hat.

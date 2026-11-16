@@ -44,6 +44,28 @@
 <!-- Die 3D-Bühne wird erst geholt, wenn der App-Kern geladen ist (data-src → src) – der Kern hat Vorrang -->
 <iframe id="stage" title="3D-Bühne" data-src="scene/index.html"></iframe>
 <script>
+  // Mitschrift für die Diagnose-Seite: Fehler und Warnungen der App bleiben auf dem Gerät gespeichert (die letzten 40 Zeilen), verschickt wird nichts
+  (function () {
+    var lines = []; try { localStorage.removeItem('raumlicht.mitschrift'); } catch (e) {}
+    function note(kind, args) { try { var t = Array.prototype.map.call(args, function (a) { return a && a.stack ? String(a.stack) : (typeof a === 'object' ? JSON.stringify(a) : String(a)); }).join(' ');
+      lines.push(new Date().toISOString().slice(11, 19) + ' ' + kind + ' ' + t.slice(0, 600)); if (lines.length > 40) lines.shift(); localStorage.setItem('raumlicht.mitschrift', lines.join('\n')); } catch (e) {} }
+    ['error', 'warn'].forEach(function (k) { var old = console[k]; console[k] = function () { note(k, arguments); return old.apply(console, arguments); }; });
+    window.addEventListener('error', function (e) { note('fehler', [e.message + ' @' + (e.filename || '').split('/').pop() + ':' + e.lineno, e.error]); });
+    window.addEventListener('unhandledrejection', function (e) { note('abgelehnt', [e.reason]); });
+    window.addEventListener('webglcontextlost', function (e) { note('grafik', ['Grafik-Kontext verloren']); }, true);
+    window.__rlNote = function (text) { note('info', [text]); };
+    note('info', ['Start ' + document.documentElement.dataset.version + ' ' + location.search + ' ' + innerWidth + 'x' + innerHeight + ' @' + devicePixelRatio]);
+  })();
+  // iPad: Dort blieb das Bild weiß, während es auf dem iPhone (gleiche Browser-Technik, kleinere Zeichenfläche) läuft. Darum zeichnet die Oberfläche auf iPads
+  // mit höchstens so vielen Bildpunkten wie auf einem iPhone (rund 3 Millionen) – etwas weniger scharf, dafür sichtbar. Zum Prüfen: ?ohne=schaerfe (einfache Schärfe), ?mit=schaerfe (unbegrenzt).
+  (function () {
+    var q = location.search, real = window.devicePixelRatio || 1, use = real;
+    var ipad = /iPad/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+    if (/[?&,=]schaerfe/.test(q) && /ohne=/.test(q)) use = 1;
+    else if (ipad && !/mit=schaerfe/.test(q)) use = Math.max(1, Math.min(real, Math.sqrt(3.0e6 / (Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight)))));
+    if (use !== real) { try { Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true }); } catch (e) {} }
+    window.__rlNote('Schärfe: Gerät ' + real + ', benutzt ' + (window.devicePixelRatio || 1).toFixed(2) + (ipad ? ' (iPad erkannt)' : ''));
+  })();
   // Startet die App nicht, sagen wir warum – statt einen leeren Bildschirm zu zeigen. Fehler werden gesammelt und auf der Diagnose-Seite gezeigt.
   var startProblems = [];
   function startFailed(why) {

@@ -2,6 +2,20 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.9.3 – Versuch gegen das weiße Bild auf dem iPad (16.11.2026)
+- **WebApp auf dem iPad:** Auf dem iPhone läuft Raumlicht, auf dem iPad blieb das Bild weiß. Der Unterschied ist die viel größere Zeichenfläche.
+  Auf iPads zeichnet die Oberfläche deshalb jetzt mit höchstens so vielen Bildpunkten wie auf einem iPhone – etwas weniger scharf.
+  Ob das die Ursache trifft, ist noch nicht bestätigt; die Diagnose-Seite hat dafür zwei neue Tests (einfache und volle Schärfe).
+- Sonst keine Änderungen.
+
+## 2.9.2 – Aufgeräumte Startseite und Fehlersuche für das iPad (16.11.2026)
+- **Startseite aufgeräumt:** Die Kapitel stehen jetzt in einer einzigen Zeile zum Wischen statt in sechs Reihen. Das gewählte Kapitel rutscht von selbst ins Bild,
+  darüber steht, wie viele Kapitel das Gebiet hat. Die Aufgaben des Kapitels sind damit ohne Scrollen zu sehen.
+- **WebApp:** Auf einem iPad bleibt das Bild nach dem Laden weiß, obwohl die App läuft (Ton kommt). Die Ursache ist noch nicht gefunden.
+  Diese Version hilft beim Suchen: Die Diagnose-Seite zeigt jetzt, was die App beim letzten Start gemeldet hat, und bietet Test-Knöpfe,
+  die Raumlicht ohne einzelne Teile starten (3D-Bühne, Schriften). Alles bleibt auf dem Gerät.
+- Sonst keine Änderungen.
+
 ## 2.9.1 – Emojis bleiben von selbst vollständig (16.11.2026)
 - **WebApp:** Kommt ein neues Emoji oder Sonderzeichen in die Texte, landet es beim nächsten Bau automatisch in der Schrift. Zusätzlich prüft GitHub vor jeder Auslieferung,
   dass kein benutztes Zeichen fehlt – sonst geht die WebApp nicht auf die Testadresse.
