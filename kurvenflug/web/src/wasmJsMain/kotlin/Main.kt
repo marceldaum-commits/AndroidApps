@@ -23,7 +23,9 @@ fun main() {
     WebPlatform.init(BuildInfo.VERSION)
     val settings = Settings(WebPrefs())
     val state = AppState(settings, WebProgressStore(settings.profile), MainScope())
-    ComposeViewport(document.body!!) {
+    // Bildschirmleser-Spiegel aus: Er meldete bei Levelende gelegentlich „Node … not found“ (Compose 1.9) –
+    // das grafische Flugbahn-Spiel ist mit Screenreader ohnehin kaum spielbar.
+    ComposeViewport(document.body!!, configure = { isA11YEnabled = false }) {
         val fonts = LocalFontFamilyResolver.current
         var ready by remember { mutableStateOf(false) }
         LaunchedEffect(Unit) {

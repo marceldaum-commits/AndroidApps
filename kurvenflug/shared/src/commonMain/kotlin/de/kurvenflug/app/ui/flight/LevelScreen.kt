@@ -77,6 +77,8 @@ fun LevelScreen(
     onWalkthrough: () -> Unit = {},
     /** Belohnung nach dem Schaffen: vielleicht ein Sticker (null = in diesem Modus keine) */
     onReward: ((stars: Int) -> StickerDrop?)? = null,
+    /** Rechen-Stern verdient: Sterne nachträglich erhöhen */
+    onCheckStar: (stars: Int) -> Unit = {},
 ) {
     val sfx = LocalSfx.current
     val view = rememberBuzzer()
@@ -106,6 +108,11 @@ fun LevelScreen(
     val ctx = de.kurvenflug.app.LocalPlatform.current
     val steps = remember(level.id) { Walkthrough.of(level) }
     var walkOpen by rememberSaveable(level.id) { mutableStateOf(false) }
+    // Rechen-Stern: nach dem Treffer die passende Rechnung erkennen (nur in normalen Leveln)
+    val check = remember(level.id) { if (allowRetry) Understand.check(level) else null }
+    var answer by rememberSaveable(level.id) { mutableIntStateOf(-1) }
+    var flightStars by rememberSaveable(level.id) { mutableIntStateOf(0) }
+
     var walkVoltSolves by rememberSaveable(level.id) { mutableIntStateOf(voltSolves) }
     var canvasSize by remember { mutableStateOf(IntSize.Zero) }
     // Wird ein abgeschlossenes Level nach dem Drehen wiederhergestellt, fehlt der Flug → Ergebnis direkt zeigen
@@ -186,13 +193,22 @@ fun LevelScreen(
         }
         delay(450)
         if (r.success) {
-            stars = Flight.stars(attempt, usedHelp)
+            flightStars = Flight.stars(attempt, usedHelp)
+            answer = -1
+            stars = starsWithCheck(flightStars, check != null, null)
             sfx?.play(Sound.WIN)
-            mood = if (stars == 3) VoltMood.DANCE else VoltMood.WOW
-            speech = when (stars) { 3 -> "Volltreffer beim ersten Versuch! Genial berechnet! 🤯"; 2 -> "Treffer! Stark! 💪"; else -> "Geschafft! Dranbleiben zahlt sich aus. 🙌" }
+            mood = if (flightStars == 3) VoltMood.DANCE else VoltMood.WOW
+            speech = when {
+                check != null && flightStars == 3 -> "Volltreffer! Und wie hast du's gerechnet? Dafür gibt's den 3. Stern 🧠"
+                check != null -> "Treffer! 💪 Weißt du auch, wie man's rechnet? 🧠"
+                flightStars == 3 -> "Volltreffer beim ersten Versuch! Genial berechnet! 🤯"
+                flightStars == 2 -> "Treffer! Stark! 💪"
+                else -> "Geschafft! Dranbleiben zahlt sich aus. 🙌"
+            }
             winPath = r.path
             reward = onReward?.invoke(stars)
             bursts = bursts + (Burst(Offset(canvasSize.width / 2f, canvasSize.height / 3f), listOf(Q.Pink, Q.Yellow, Q.Cyan, Q.Green), count = 70, speed = 320f, seed = 99, gravity = 400f) to clockF.toLong())
+            // Sofort speichern (2 Sterne, wenn die Rechen-Frage noch offen ist) – der Rechen-Stern kommt per [onCheckStar] dazu
             onSolved(stars, r.cells, attempt)
             phase = Phase.DONE
         } else {
@@ -242,6 +258,12 @@ fun LevelScreen(
                 Text(if (attempt == 0) "" else "Versuch $attempt", style = MaterialTheme.typography.labelMedium, color = Q.Muted, modifier = Modifier.padding(end = 12.dp))
             }
             Volt(mood, Modifier.padding(horizontal = 12.dp).heightIn(min = 64.dp), size = 60.dp, speech = speech)
+            // Sagt Volt gerade etwas anderes (Rückmeldung nach einem Fehlversuch), bleibt die Aufgabe trotzdem sichtbar
+            AnimatedVisibility(speech != level.task && phase == Phase.AIM, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
+                Text("📋 Aufgabe: ${level.task}", color = Q.Muted, style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 2.dp).fillMaxWidth().clip(RoundedCornerShape(10.dp))
+                        .background(Q.Panel.copy(alpha = 0.6f)).clickable { speech = level.task }.padding(horizontal = 10.dp, vertical = 5.dp))
+            }
             Spacer(Modifier.height(6.dp))
             // Spielfeld
             Box(
@@ -281,6 +303,7 @@ fun LevelScreen(
                     }
                 }
                 Formula(level, values)
+                if (allowRetry && !level.hidden) LiveCalc(level, values, visible = phase == Phase.AIM)
                 level.params.forEachIndexed { i, p ->
                     ParamRow(p, values.getValue(p.key), paramColors[i % paramColors.size], enabled = phase == Phase.AIM) { nv ->
                         values = HashMap(values).apply { put(p.key, nv) }
@@ -311,8 +334,20 @@ fun LevelScreen(
         AnimatedVisibility(phase == Phase.DONE, enter = fadeIn() + scaleIn(initialScale = 0.8f, animationSpec = spring(dampingRatio = 0.6f)), exit = fadeOut(),
             modifier = Modifier.align(Alignment.BottomCenter)) {
             ResultCard(stars, taken.size + 0, level.cells.size, usedHelp, nextLabel, allowRetry, reward,
+                check = check, answer = answer, worked = steps,
+                onAnswer = { i ->
+                    answer = i
+                    val ok = i == check?.correct
+                    val before = stars
+                    stars = starsWithCheck(flightStars, true, ok)
+                    if (ok) { sfx?.play(if (stars > before) Sound.WIN else Sound.CELL); view.buzz(Buzz.HIT, vib); mood = VoltMood.DANCE
+                        speech = if (stars > before) "Rechen-Stern! Du hast's verstanden! ⭐🧠" else "Genau so rechnet man's! 🧠" }
+                    else { sfx?.play(Sound.WRONG); mood = VoltMood.IDLE; speech = "Fast! Schau dir den Rechenweg an – beim nächsten Mal klappt's. 💡" }
+                    if (stars > before) onCheckStar(stars)
+                },
                 onPhoto = { ctx.sharePhoto(level, winPath, stars, values) },
                 onRetry = {
+                    answer = -1
                     phase = Phase.AIM; attempt = 0; usedHelp = false; ghosts = emptyList(); result = null; hits = emptySet(); taken = emptySet()
                     values = HashMap(level.start); mood = VoltMood.IDLE; speech = level.task; gap = null
                 },
@@ -448,23 +483,26 @@ private fun Modifier.clickableNoRipple(i: androidx.compose.foundation.interactio
 @Composable
 private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean, nextLabel: String, allowRetry: Boolean,
                        reward: StickerDrop?, onPhoto: () -> Unit,
+                       check: CalcCheck? = null, answer: Int = -1, worked: List<Step>? = null, onAnswer: (Int) -> Unit = {},
                        onRetry: () -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit) {
     Card(
         Modifier.padding(16.dp).fillMaxWidth().navigationBarsPadding(),
         colors = CardDefaults.cardColors(containerColor = Q.Panel),
         shape = RoundedCornerShape(24.dp),
     ) {
-        Column(Modifier.padding(20.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(Modifier.heightIn(max = 560.dp).verticalScroll(rememberScrollState()).padding(20.dp).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Row {
                 for (i in 1..3) {
                     val s = remember { Animatable(0f) }
-                    LaunchedEffect(Unit) { delay(200L * i); s.animateTo(1f, spring(dampingRatio = 0.4f)) }
+                    val earned = i <= stars
+                    LaunchedEffect(earned) { if (s.value > 0f) s.snapTo(0f); delay(if (s.value == 0f && earned && i == 3) 0L else 200L * i); s.animateTo(1f, spring(dampingRatio = 0.4f)) }
                     Text(if (i <= stars) "⭐" else "☆", fontSize = 44.sp, color = if (i <= stars) Color.Unspecified else Q.Muted,
                         modifier = Modifier.graphicsLayer { scaleX = s.value; scaleY = s.value; rotationZ = (1 - s.value) * -90f })
                 }
             }
             if (totalCells > 0) Text("⚡ $cells von $totalCells Energiezellen", color = Q.Yellow, style = MaterialTheme.typography.bodyMedium)
-            if (helped && stars == 2) Text("Ohne Zielhilfe gibt's 3 ⭐ – traust du dich?", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+            if (helped && stars == 2 && check == null) Text("Ohne Zielhilfe gibt's 3 ⭐ – traust du dich?", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+            if (check != null) CalcCheckCard(check, answer, worked, onAnswer)
             reward?.let { d ->
                 // Überraschungs-Sticker: ploppt nach den Sternen herein
                 val pop = remember { Animatable(0f) }
@@ -513,6 +551,59 @@ fun IntroOverlay(chapter: Chapter, onDone: () -> Unit) {
                 Text(if (page < pages.lastIndex) "Weiter ›" else "Los geht's! 🚀", color = Q.Text, fontWeight = FontWeight.Bold)
             }
             if (page < pages.lastIndex) TextButton(onClick = onDone) { Text("Überspringen", color = Q.Muted) }
+        }
+    }
+}
+
+
+/** Die Rechnung läuft beim Schieben mit: „17 · tan 13° ≈ 3,9 · Station: 4 ↑“ */
+@Composable
+private fun LiveCalc(level: Level, values: Map<String, Double>, visible: Boolean) {
+    val line = remember(level.id, values) { Understand.live(level, values) } ?: return
+    val ok = line.endsWith("✓")
+    // Bleibt beim Flug im Bild (nur unsichtbar) – wegfallende Knoten verwirren die Barrierefreiheit im Browser
+    Text(line, color = if (ok) Q.Green else Q.Cyan, style = MaterialTheme.typography.bodySmall, fontFamily = FontFamily.Monospace,
+        modifier = Modifier.fillMaxWidth().graphicsLayer { alpha = if (visible) 1f else 0f }.clip(RoundedCornerShape(10.dp)).background(Q.Panel.copy(alpha = 0.6f))
+            .border(1.dp, (if (ok) Q.Green else Q.Cyan).copy(alpha = 0.35f), RoundedCornerShape(10.dp)).padding(horizontal = 12.dp, vertical = 6.dp))
+}
+
+/**
+ * Rechen-Stern: drei Rechnungen, eine stimmt. Danach der ganze Lösungsweg mit den Zahlen des Levels
+ * (ausgearbeitetes Beispiel), Schritt für Schritt eingeblendet.
+ */
+@Composable
+private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, onAnswer: (Int) -> Unit) {
+    Column(Modifier.padding(top = 10.dp).fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Space.copy(alpha = 0.6f))
+        .border(1.dp, Q.Violet.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text("🧠 Rechen-Stern: ${check.question}", color = Q.Text, fontWeight = FontWeight.Bold)
+        check.options.forEachIndexed { i, o ->
+            val right = i == check.correct
+            val col = when {
+                answer < 0 -> Q.Cyan
+                right -> Q.Green
+                i == answer -> Q.Orange
+                else -> Q.Muted
+            }
+            val wiggle = remember { Animatable(0f) }
+            LaunchedEffect(answer) { if (answer == i && !right) { repeat(3) { wiggle.animateTo(8f, tween(50)); wiggle.animateTo(-8f, tween(50)) }; wiggle.animateTo(0f) } }
+            val pop = remember { Animatable(1f) }
+            LaunchedEffect(answer) { if (answer >= 0 && right) { pop.animateTo(1.08f, tween(120)); pop.animateTo(1f, spring(dampingRatio = 0.4f)) } }
+            Text((if (answer >= 0 && right) "✓ " else if (answer == i) "✗ " else "") + o,
+                color = if (answer < 0) Q.Text else col, fontFamily = FontFamily.Monospace, style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.fillMaxWidth().graphicsLayer { translationX = wiggle.value; scaleX = pop.value; scaleY = pop.value }
+                    .clip(RoundedCornerShape(12.dp)).border(2.dp, col.copy(alpha = if (answer < 0) 0.6f else 1f), RoundedCornerShape(12.dp))
+                    .background(col.copy(alpha = if (answer >= 0 && right) 0.18f else 0.06f))
+                    .clickable { if (answer < 0) onAnswer(i) }.padding(horizontal = 12.dp, vertical = 10.dp))
+        }
+        if (answer >= 0 && worked != null) {
+            Text("📝 So rechnet man's", color = Q.Yellow, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 4.dp))
+            // Schritt für Schritt einblenden, wie an der Tafel
+            val reveal = remember(worked) { Animatable(0f) }
+            LaunchedEffect(worked) { reveal.animateTo(worked.size.toFloat(), tween(400 * worked.size, easing = LinearEasing)) }
+            worked.forEachIndexed { i, st ->
+                Text("${i + 1}. ${st.solved()}", color = Q.Text, fontFamily = FontFamily.Monospace, style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.graphicsLayer { val a = (reveal.value - i).coerceIn(0f, 1f); alpha = a; translationX = (1 - a) * 40f })
+            }
         }
     }
 }

@@ -3,6 +3,14 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.18.0 – Verstehen statt nur Schieben
+- **🧮 Die Rechnung läuft mit**: Unter der Formel steht jetzt die Rechnung mit deinen Zahlen – z. B.
+  „17 · tan 13° ≈ 3,9 · Station: 4 ↑“. So siehst du beim Schieben, was die Zahl bedeutet und warum sie passt.
+- **🧠 Rechen-Stern**: Nach dem Treffer fragt Volt: „Wie hast du's gerechnet?“ Wer die richtige Rechnung erkennt,
+  bekommt den 3. Stern. Danach zeigt Volt den ganzen Rechenweg mit den Zahlen des Levels. Daneben getippt? Kein
+  Problem – der Stern wartet beim nächsten Mal.
+- **📋 Aufgabe bleibt sichtbar**: Nach einem Fehlversuch steht die Aufgabe weiter unter Volts Tipp.
+
 ## 0.17.1 – WebApp bleibt von selbst aktuell
 - **🔄 Automatische Updates im Browser**: Die WebApp holt neue Versionen selbst – ohne Knopf. Wer sie gerade öffnet,
   bekommt sofort die neue Version. Wer mitten im Spiel ist, wird nicht unterbrochen: Gewechselt wird erst, wenn die App

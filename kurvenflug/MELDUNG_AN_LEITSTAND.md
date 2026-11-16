@@ -4,6 +4,19 @@ Neueste Meldung oben. Zweig `kurvenflug-test`, Ordner `kurvenflug/webapp/` (inde
 
 ---
 
+## 0.18.0 – Verstehen statt nur Schieben (Gleichstand mit APK 0.18.0)
+
+- **Version:** 0.18.0 · **Commit:** {{COMMIT}}
+- **Neu:** Live-Rechnung unter der Formel, „Rechen-Stern“ (3. Stern nur mit der richtigen Rechnung aus drei), danach
+  der Lösungsweg mit den Zahlen des Levels; die Aufgabe bleibt nach einem Fehlversuch sichtbar.
+- **Prüfen:** Level „Erster Kontakt“ gewinnen → 2 Sterne + Frage „Wie liest du (4 | 3)?“ → richtige Antwort → 3. Stern,
+  „So rechnet man's“. Seite neu laden: 3 Sterne gespeichert.
+- **Technik-Hinweis:** Der Bildschirmleser-Spiegel von Compose (unsichtbare Textkopie für Screenreader) ist abgeschaltet –
+  er schrieb bei Levelende gelegentlich „IllegalStateException: Node … not found“ in die Konsole (Fehler der Bibliothek,
+  auch in 0.17.x). Danach in 10 Durchläufen keine Konsolenfehler.
+
+---
+
 ## 0.17.1 – WebApp aktualisiert sich selbst (Gleichstand mit APK 0.17.1)
 
 - **Version:** 0.17.1 (Ladebildschirm, `version.json`, Einstellungen)

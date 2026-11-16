@@ -104,6 +104,11 @@ class ProgressRepository(private val dao: ProgressDao, private val profile: Stat
         dao.log(PlayRow(profileId = p, levelId = levelId, stars = stars, attempts = attempts, seconds = seconds, at = clock()))
     }
 
+    override suspend fun upgrade(levelId: String, stars: Int) {
+        val old = dao.get(profile.value, levelId) ?: return
+        if (stars > old.stars) dao.put(old.copy(stars = stars))
+    }
+
     /** Hängen geblieben (mehrere Fehlversuche, noch nicht geschafft) – damit Eltern sehen, wo Hilfe gut täte. */
     override suspend fun stuck(levelId: String, attempts: Int, seconds: Int) =
         dao.log(PlayRow(profileId = profile.value, levelId = levelId, stars = 0, attempts = attempts, seconds = seconds, at = clock()))

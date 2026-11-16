@@ -82,6 +82,9 @@ class AppState(
         }
     }
 
+    /** Rechen-Stern: Sterne eines geschafften Levels nachträglich erhöhen */
+    fun upgradeStars(levelId: String, stars: Int) { scope.launch { store.upgrade(levelId, stars); onChanged() } }
+
     /** Nach 3 Fehlversuchen: fürs Eltern-Protokoll merken, wo es hakt */
     fun stuck(levelId: String, attempts: Int, seconds: Int) { scope.launch { store.stuck(levelId, attempts, seconds) } }
 

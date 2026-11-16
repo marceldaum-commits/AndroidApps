@@ -26,6 +26,16 @@ class ProgressTest {
         assertEquals(1000L, p.solvedAt)
     }
 
+    /** Rechen-Stern: Sterne steigen, aber kein zweiter Eintrag im Eltern-Protokoll; ungespielte Level bleiben leer */
+    @Test fun upgradeRaisesStarsWithoutNewPlay() = runTest {
+        repo.record("14-2", 2, emptySet(), 1, 30)
+        repo.upgrade("14-2", 3)
+        repo.upgrade("14-2", 1)
+        repo.upgrade("9-9", 3)
+        assertEquals(3, repo.all.first().single().stars)
+        assertEquals(1, repo.plays(0).first().size)
+    }
+
     @Test fun clearRemovesEverything() = runTest {
         repo.record("2-1", 3, setOf(0), 1); repo.record("daily-5", 2, emptySet(), 2)
         repo.clear()

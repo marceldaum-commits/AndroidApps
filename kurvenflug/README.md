@@ -84,6 +84,13 @@ Eine Codebasis für Android **und** Browser (Kotlin Multiplatform + Compose Mult
 - `web` – WebApp (Kotlin/Wasm): Startseite, `kf.js` (Web Audio, Teilen, Zurück), Manifest, Service Worker (offline),
   zugeschnittene Schriften für Emojis und Mathe-Zeichen (`web/fonts/make_fonts.py`, Noto Color Emoji / DejaVu, freie Lizenzen)
 
+## Verstehen statt nur Schieben
+Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsweg; die Aufgabe bleibt nach Fehlversuchen sichtbar.
+
+| Live-Rechnung | Rechen-Stern | Richtig + Lösungsweg | Aufgabe bleibt |
+|---|---|---|---|
+| ![Live](screenshots/72_live_rechnung.png) | ![Frage](screenshots/73_rechenstern_frage.png) | ![Richtig](screenshots/74_rechenstern_geschafft.png) | ![Aufgabe](screenshots/76_aufgabe_nach_fehlversuch.png) |
+
 ## Im Browser (WebApp)
 Gleiche Version, gleiche Bildschirme. Spielstand im lokalen Speicher des Browsers, keine Server-Daten, offline spielbar,
 installierbar. Am PC als Handy-Spalte in der Mitte. Test: https://kurvenflug-test.mathenachhilfe-online.com

@@ -278,6 +278,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 voltSolves = if (vm.settings.walkthroughsSeen(level.kind.name) == 0) 1 else 0,
                 onWalkthrough = { vm.settings.markWalkthrough(level.kind.name) },
                 onReward = { s -> vm.rollSticker(s) },
+                onCheckStar = { s -> vm.upgradeStars(level.id, s) },
             )
         }
         composable(Routes.BOSS, arguments = listOf(navArgument("chapter") { type = NavType.IntType })) { e ->

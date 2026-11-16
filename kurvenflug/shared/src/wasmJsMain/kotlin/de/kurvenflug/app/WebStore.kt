@@ -75,6 +75,15 @@ class WebProgressStore(private val profile: StateFlow<Int>, private val prefix: 
         save(p)
     }
 
+    override suspend fun upgrade(levelId: String, stars: Int) {
+        val p = profile.value
+        val list = progressOf(p).value
+        val old = list.firstOrNull { it.levelId == levelId } ?: return
+        if (stars <= old.stars) return
+        progressOf(p).value = list.map { if (it.levelId == levelId) it.copy(stars = stars) else it }
+        save(p)
+    }
+
     override suspend fun stuck(levelId: String, attempts: Int, seconds: Int) {
         val p = profile.value
         log(p, Play(0, p, levelId, 0, attempts, seconds, nowMillis())); save(p)

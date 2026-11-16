@@ -33,6 +33,8 @@ interface ProgressStore {
     fun plays(since: Long): Flow<List<Play>>
     suspend fun record(levelId: String, stars: Int, cells: Set<Int>, attempts: Int, seconds: Int = 0)
     suspend fun stuck(levelId: String, attempts: Int, seconds: Int)
+    /** Sterne nachträglich erhöhen (Rechen-Stern) – ohne neuen Eintrag im Eltern-Protokoll */
+    suspend fun upgrade(levelId: String, stars: Int)
     suspend fun clear()
     suspend fun clear(profileId: Int)
 }
