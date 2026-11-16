@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.11.1 – Weißer Bildschirm auf dem iPad: Ursache gefunden (16.11.2026)
+- **iPad:** Die WebApp lief dort, zeigte aber nur Weiß. Die Mitschrift der Diagnose-Seite hat die Stelle gezeigt: Das iPad konnte einen **Farbverlauf** nicht anlegen, und daran brach jedes Bild ab.
+  Alle Farbverläufe der App sind jetzt so gebaut, dass sie nie mehr ein Bild kosten – klappt ein Verlauf nicht, nimmt die App eine einfachere Füllung.
+- Auf Android, iPhone und am PC sieht alles aus wie vorher.
+- Die Mitschrift der Diagnose-Seite zählt gleiche Meldungen jetzt zusammen, statt die Liste zu füllen, und hält fest, ob die Verläufe geklappt haben.
+
 ## 2.11.0 – Acht neue Aufgaben-Arten zum Üben (16.11.2026)
 - **Neu im endlosen Üben** (Themen „Punkte & Vektoren“ und „Geraden“), jedes Mal mit anderen Zahlen:
   - **Einstieg:** Punkte mit Bedingungen finden (zum Beispiel einen Punkt, der in zwei Koordinatenebenen zugleich liegt – hier gibt es viele richtige Antworten), Spiegeln an einer Koordinatenebene.

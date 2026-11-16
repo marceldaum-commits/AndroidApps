@@ -527,3 +527,61 @@ Ein Kurs mit 25 Schülern zahlt bei 49 € knapp 2 € pro Kopf statt 14,99 € 
 Auf Marcels Wunsch („Benenne es, das kläre ich dann“) stehen alle offenen Rechts- und Datenschutzpunkte zu Lehrerzugang, Abi-Pass und KI-Tutor in `raumlicht/KLAERUNGSLISTE-RECHT.md`
 (A1–A14 Schule, B1–B8 Bezahlen, C1–C6 KI). Vieles davon gilt für alle Apps gleich und betrifft euren zentralen Dienst (Serverstandort, Unterauftragnehmer, Löschkonzept, technische Maßnahmen, AVV-Muster).
 Keine Rechtsberatung. Gebaut wird erst, wenn Marcel die Punkte geklärt hat.
+
+---
+
+## 16.11.2026 – Schulpreise von Marcel direkt bestätigt (ersetzt meinen Vorschlag im Konzept Lehrerzugang)
+
+Mein früherer Vorschlag (Kurslizenz 49 €, Schullizenz 199 €) ist damit **überholt**. Es gilt, inkl. 19 % USt, je Schuljahr bis 31.07., ohne KI-Tutor:
+
+| Lizenz | Preis | netto |
+|---|---|---|
+| Lehrkraft-Lizenz (eine Lehrkraft und ihre Kurse), je App | 29 € | 24,37 € |
+| Schul-Lizenz (alle Lehrkräfte einer Schule), je App | 199 € | 167,23 € |
+| Paket alle Apps, je Lehrkraft | 79 € | 66,39 € |
+| Paket alle Apps, je Schule | 499 € | 419,33 € |
+
+Folgen für Raumlicht: Die Lizenz hängt an der **Lehrkraft** (nicht am einzelnen Kurs) und endet am **31.07.** – der Schein „Pro über Kurs“ braucht also ein festes Enddatum statt „12 Monate ab Beitritt“.
+Verkauf und Verwaltung über den zentralen Lehrerzugang; in der App wird nichts dazu gebaut, bis die Schnittstelle steht. Die Klärungsliste (`KLAERUNGSLISTE-RECHT.md`) gilt weiter.
+Noch offen von Marcel: A9 (sieht die Lehrkraft nur Aufträge oder den ganzen Fortschritt?).
+
+---
+
+## 16.11.2026 – Lehrerzugang: Marcel hat A9 entschieden – gesamter Fortschritt
+
+Die Lehrkraft sieht den **gesamten Fortschritt** der Schüler im Kurs, nicht nur die Aufträge. Das ersetzt meine Voreinstellung „nur Aufträge“ im Konzept.
+Für die Schnittstelle: Die App sendet nach dem Beitritt das Ergebnis jeder gelösten Aufgabe (Tour-Aufgaben mit Kennung; Übungs- und Tagesaufgaben mit Art/Stufe statt Einzelkennung) – beim Beitritt einmal auch den bisherigen Stand,
+sonst wäre der Fortschritt lückenhaft. Die Beitritts-Seite muss das klar sagen. In der Klärungsliste ist A9 entsprechend geändert (mehr Daten → ausdrücklich in Einwilligung und AVV).
+Weiterhin nichts gebaut.
+
+---
+
+## 16.11.2026 – Zur Nachricht „Web = Android: Ja“ – das ist schon erledigt
+
+Die Android-Oberfläche mit allen Extras läuft **seit 2.5.0 (16.11.2026)** aus gemeinsamem Code in der WebApp (Modul `shared`, `AppRoot`); auf raumlicht-test liegt aktuell **2.11.0**.
+Nur Android haben weiterhin: natürliche Stimme „Thorsten“, Widgets, Erfolgskarte als Bild, In-App-Updater. Musik läuft seit 2.5.1 auch im Web.
+Auch das Play-Store-Paket ist seit 2.6.0 fertig (auf Marcels Wunsch vorgezogen): `STORE-RELEASE.md`, `store/`, AAB am GitHub-Release.
+
+**Was der Freigabe für raumlicht-live noch im Weg steht:** der offene Fehler „iPad zeigt nach dem Laden ein weißes Bild“ (iPhone und Android laufen). Der besteht auch in der Live-Version 2.5.1.
+Ob ihr 2.11.0 trotzdem live schaltet, entscheidet ihr bzw. Marcel – aus meiner Sicht spricht nichts dagegen, weil sich für iPads nichts verschlechtert und es dort jetzt den Diagnose-Knopf gibt.
+
+Zu den Punkten 2 und 3 (ein Kurs frei nur mit Rangliste; KI-Tutor nicht in Schullizenzen): zur Kenntnis genommen, in der App wird dazu nichts gebaut, bis eure Schnittstelle steht.
+Marcel hat mir die Lizenzpreise (29 € / 199 € / Pakete 79 € / 499 €) und „gesamter Fortschritt“ direkt bestätigt; „ein Kurs frei, nur Rangliste“ hat er mir gegenüber noch nicht bestätigt.
+
+---
+
+## 16.11.2026 – Von Marcel direkt bestätigt
+
+„Ein Kurs frei, nur mit Rangliste; mehr Kurse, Aufträge, Auswertung und Pro für alle nur mit Lizenz“ und „KI-Tutor vorerst nicht in Schullizenzen“ – beides hat Marcel mir bestätigt.
+Damit ist für den Lehrerzugang aus Raumlicht-Sicht alles entschieden; gebaut wird, sobald eure Schnittstelle steht.
+
+---
+
+## 16.11.2026 – Version 2.11.1: iPad-Fehler eingegrenzt und umgangen (noch nicht auf einem iPad bestätigt)
+
+Marcel hat die Diagnose-Ausgabe seines iPads geschickt (Safari 27.2, Desktop-Modus, WebGL 2 und WebAssembly-GC vorhanden). In der Mitschrift stand in jedem Bild
+`RuntimeException: Can't wrap nullptr`; aufgelöst: `Shader.<init>` ← `LinearGradient.createShader` ← `BackgroundNode.draw`. Das Anlegen eines linearen Farbverlaufs liefert dort nichts zurück,
+die Ausnahme bricht jedes Bild ab, übrig bleibt die weiße Grundfläche. Warum Safari dort nichts liefert, ist noch offen.
+
+Geändert: alle 17 Verläufe laufen über `shared/.../ui/fx/Verlauf.kt` (feste, endliche Punkte; bei Fehler stufenweise einfacher bis einfarbig; Ergebnis steht einmal in der Mitschrift).
+Auf raumlicht-test liegt 2.11.1. **Bestätigt ist die Behebung erst, wenn Marcel es auf dem iPad gesehen hat** – hier gibt es kein Safari zum Nachprüfen.

@@ -49,9 +49,10 @@
 <script>
   // Mitschrift für die Diagnose-Seite: Fehler und Warnungen der App bleiben auf dem Gerät gespeichert (die letzten 40 Zeilen), verschickt wird nichts
   (function () {
-    var lines = []; try { localStorage.removeItem('raumlicht.mitschrift'); } catch (e) {}
+    var lines = [], last = '', count = 0, stamp = ''; try { localStorage.removeItem('raumlicht.mitschrift'); } catch (e) {}
     function note(kind, args) { try { var t = Array.prototype.map.call(args, function (a) { return a && a.stack ? String(a.stack) : (typeof a === 'object' ? JSON.stringify(a) : String(a)); }).join(' ');
-      lines.push(new Date().toISOString().slice(11, 19) + ' ' + kind + ' ' + t.slice(0, 600)); if (lines.length > 40) lines.shift(); localStorage.setItem('raumlicht.mitschrift', lines.join('\n')); } catch (e) {} }
+      t = kind + ' ' + t.slice(0, 600); if (t === last) { count++; lines[lines.length - 1] = stamp + ' ' + t + '  (×' + count + ')'; } else { last = t; count = 1; stamp = new Date().toISOString().slice(11, 19); lines.push(stamp + ' ' + t); if (lines.length > 40) lines.splice(2, 1); }
+      localStorage.setItem('raumlicht.mitschrift', lines.join('\n')); } catch (e) {} }
     ['error', 'warn'].forEach(function (k) { var old = console[k]; console[k] = function () { note(k, arguments); return old.apply(console, arguments); }; });
     window.addEventListener('error', function (e) { note('fehler', [e.message + ' @' + (e.filename || '').split('/').pop() + ':' + e.lineno, e.error]); });
     window.addEventListener('unhandledrejection', function (e) { note('abgelehnt', [e.reason]); });
