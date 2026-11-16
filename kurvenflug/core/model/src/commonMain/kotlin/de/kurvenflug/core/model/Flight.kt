@@ -32,8 +32,9 @@ data class Body(val x: Double, val y: Double, val r: Double) {
  * - [LASER]: Laserstrahl über Spiegel – Einfallswinkel = Ausfallswinkel (Physik Kl. 7)
  * - [RAMP]: Kugel rollt von Höhe h die Rampe hinab – Energieerhaltung (Physik Kl. 8/9)
  * - [MOTION]: gleichförmige Bewegung im s-t-Diagramm s = v·t + s₀ (Physik Kl. 7)
+ * - [TANGENT], [PEAK], [AREA], [VECTOR]: Oberstufe (Ableitung, Extrempunkte, Integral, Vektoren), siehe [Upper]
  */
-enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS, PROP, ANTI, LOG, RADIUS, LASER, RAMP, MOTION }
+enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS, PROP, ANTI, LOG, RADIUS, LASER, RAMP, MOTION, TANGENT, PEAK, AREA, VECTOR }
 
 /** Hat diese Spielart eine Funktionsgleichung y = f(x)? */
 val Kind.isFunction get() = this in setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION)
@@ -142,6 +143,7 @@ object Flight {
             }
             Kind.LASER -> laser(level, v.getValue("angle"))
             Kind.RAMP -> ramp(level, v.getValue("h"))
+            Kind.TANGENT, Kind.PEAK, Kind.AREA, Kind.VECTOR -> Upper.path(level, values)
         }
     }
 
@@ -333,20 +335,29 @@ object Flight {
         // Sonst streift eine steile Kurve den Kreis seitlich, obwohl falsch gerechnet wurde – Raten soll nicht reichen.
         val aligned = level.targets.indices.filter { i ->
             val t = level.targets[i]
-            level.kind !in functionKinds || abs(f(level, values, t.x) - t.y) <= t.r
+            when (level.kind) {
+                in functionKinds -> abs(f(level, values, t.x) - t.y) <= t.r
+                // Tangente: Höhe der Geraden an der Station muss stimmen (nicht nur seitlich streifen)
+                Kind.TANGENT -> { val v = level.values(values); val c = Upper.c(v); val x0 = v.getValue("x0")
+                    abs(Upper.f(c, x0) + v.getValue("m") * (t.x - x0) - t.y) <= t.r }
+                else -> true
+            }
         }.toSet()
         for (p in full) {
             flown += p
             val a = level.asteroids.indexOfFirst { it.contains(p) }
             if (a >= 0) { crash = a; break }
-            if (level.kind != Kind.POINT) level.targets.forEachIndexed { i, t -> if (i in aligned && t.contains(p)) hits += i }
+            // Ankommen zählt (Koordinaten, Oberstufe); beim Vektor dürfen frühere Stationen unterwegs gestreift werden
+            val endOnly = level.kind in Upper.endOnly
+            if (!endOnly || level.kind == Kind.VECTOR) level.targets.forEachIndexed { i, t ->
+                if (i in aligned && t.contains(p) && !(endOnly && i == level.targets.lastIndex)) hits += i }
             level.cells.forEachIndexed { i, c -> if (c.contains(p, 0.15)) cells += i }
             // Alle Stationen erreicht → andocken, nicht weiterfliegen
-            if (level.kind != Kind.POINT && level.kind != Kind.RADIUS && hits.size == level.targets.size) break
+            if (!endOnly && level.kind != Kind.RADIUS && hits.size == level.targets.size) break
         }
         // Koordinaten: zählt nur, wo die Sonde ankommt
-        if (level.kind == Kind.POINT && crash == null) full.lastOrNull()?.let { end ->
-            level.targets.forEachIndexed { i, t -> if (t.contains(end)) hits += i }
+        if (level.kind in Upper.endOnly && crash == null) full.lastOrNull()?.let { end ->
+            level.targets.forEachIndexed { i, t -> if (t.contains(end) && (level.kind != Kind.VECTOR || i == level.targets.lastIndex)) hits += i }
         }
         return FlightResult(flown, hits, cells, crash, crash == null && hits.size == level.targets.size)
     }

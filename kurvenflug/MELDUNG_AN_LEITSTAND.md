@@ -4,6 +4,17 @@ Neueste Meldung oben. Zweig `kurvenflug-test`, Ordner `kurvenflug/webapp/` (inde
 
 ---
 
+## 0.19.0 – Oberstufe Klasse 11–13 (Gleichstand mit APK 0.19.0)
+
+- **Version:** 0.19.0 · **Commit:** {{COMMIT}}
+- **Neu:** Klassenwahl 5–13; vier neue Kapitel: Ableitung & Tangente, Extrempunkte, Integral (Treibstoff = Fläche),
+  Vektoren (X = P + t · v) – je mit Live-Rechnung, Rechen-Stern und Lösungsweg. Aurora-Geschichte (Kl. 5–10) unverändert.
+- **Prüfen:** Klasse 12 wählen → „Weiter geht's!“ führt zu „Vektoren · Erster Pfeil“: v = (8 | 6) → Treffer.
+  Galaxie → Liste: Kapitel „Integral“ – beim Flug füllt sich die Fläche unter der Kurve.
+- Gleichstands-Test (JVM ↔ Wasm) deckt die neuen Kapitel mit ab. Browser: keine Konsolenfehler.
+
+---
+
 ## 0.18.0 – Verstehen statt nur Schieben (Gleichstand mit APK 0.18.0)
 
 - **Version:** 0.18.0 · **Commit:** fefa4b4 (Zweig claude/gifted-shannon-657gpr)

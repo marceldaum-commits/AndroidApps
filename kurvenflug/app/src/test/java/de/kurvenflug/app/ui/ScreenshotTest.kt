@@ -358,4 +358,13 @@ class ScreenshotTest {
 
     @Test fun taskStaysAfterMiss() = level("1-7", name = "76_aufgabe_nach_fehlversuch", values = mapOf("x" to -3.0, "y" to 2.0), settle = 3500,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    // Oberstufe (Klasse 11–13)
+    @Test fun upperTangent() = level("19-1", name = "77_oberstufe_tangente", values = mapOf("m" to 1.0), settle = 1500)
+    @Test fun upperTangentWin() = level("19-5", name = "78_oberstufe_tangente_geschafft", values = mapOf("m" to 1.5), settle = 5000,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+    @Test fun upperPeak() = level("20-3", name = "79_oberstufe_hochpunkt", values = mapOf("x" to -1.0))
+    @Test fun upperArea() = level("21-4", name = "80_oberstufe_integral", values = mapOf("A" to 10.0), settle = 5000,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+    @Test fun upperVector() = level("22-4", name = "81_oberstufe_vektor", values = mapOf("v1" to 2.0, "v2" to 2.0))
 }

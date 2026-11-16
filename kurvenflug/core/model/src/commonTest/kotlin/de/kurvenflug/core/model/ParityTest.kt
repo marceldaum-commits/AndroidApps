@@ -50,7 +50,7 @@ class ParityTest {
     }
 
     companion object {
-        const val EXPECTED = "-ff0cc52/244367"
+        const val EXPECTED = "6974dd78/260204"
         const val ANDROID_CODE = "KFC1:q1YqySzJSVWyUvJILC1OLE1LT0xKVdJRKkpNK1ayilYy0jUD8ox1DZVidZTyi1JSi0CiRQYgJUCxWgA"
         const val CHECK = "2523"
     }
