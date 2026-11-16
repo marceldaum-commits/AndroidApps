@@ -139,6 +139,7 @@ fun LevelScreen(
                 Kind.THROW, Kind.ORBIT -> p.take(min(p.size, 70))                 // die ersten ~1,5 Kästchen: Abschussrichtung
                 Kind.LASER -> Flight.firstLeg(p)                                  // bis zum ersten Spiegel – den Abprall konstruierst du selbst
                 Kind.RAMP -> p.take(1)                                            // nur die Kugel am Start
+                Kind.BINOM -> p                                                  // das ganze Histogramm – die Säulen sind die Verteilung
                 Kind.TANGENT -> { val x0 = level.fixed.getValue("x0"); p.dropWhile { it.x < x0 - 1e-9 }.take(100) }   // ab dem Absprung
                 else -> p.take(min(p.size, 100))          // die ersten 2 Kästchen am Rand
             }
@@ -459,6 +460,11 @@ private fun Formula(level: Level, values: Map<String, Double>) {
                 if (v.getValue("d") != 0.0 || "d" in colorOf) term("d")
             }
             Kind.ACCEL -> { append("s = ½ · "); factor("a"); append(" · t² + "); factor("v0"); append(" · t") }
+            Kind.BINOM -> {
+                append("B( n = "); n("n"); append(" ; p = "); n("p"); append(" )")
+                append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) {
+                    append(if ((v["cum"] ?: 0.0) > 0.5) "kumuliert: P(X ≤ k) – Säulen" else "Dichte: P(X = k) – Säulen"); append(" · 1 Kästchen = 10 %") }
+            }
             Kind.POWER -> {
                 append("y = "); factor("a"); append(" · x")
                 if ("n" in colorOf) { append("^"); n("n") } else append(when (v.getValue("n")) { 2.0 -> "²"; 3.0 -> "³"; 4.0 -> "⁴"; 5.0 -> "⁵"; 0.5 -> "^½  (√x)"; else -> "^" + num(v.getValue("n")) })

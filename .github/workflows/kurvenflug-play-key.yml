@@ -1,0 +1,56 @@
+# Einmalig beim Anlegen von Kurvenflug in der Play Console: den bestehenden Signaturschlüssel (Secrets WG_…)
+# mit Googles PEPK-Werkzeug verschlüsselt exportieren. So signiert Google Play mit demselben Schlüssel wie die
+# GitHub-APK – Wechsel zwischen beiden geht ohne Deinstallieren, der Spielstand bleibt.
+#
+# Ablauf: Play Console → App-Signatur → „Schlüssel aus Java-Schlüsselspeicher exportieren und hochladen“
+#   → „Öffentlichen Verschlüsselungsschlüssel herunterladen“ (encryption_public_key.pem), Inhalt kopieren
+#   → hier Actions → „Kurvenflug: Signaturschlüssel für Google Play“ → Run workflow → Inhalt einfügen
+#   → Ergebnis-Datei (Artefakt „kurvenflug-play-signaturschluessel“) herunterladen, entpacken, die ZIP in der Play Console hochladen.
+# Die ZIP ist mit Googles öffentlichem Schlüssel verschlüsselt – nur Google kann sie öffnen. Artefakt wird nach 1 Tag gelöscht.
+name: "Kurvenflug: Signaturschlüssel für Google Play"
+
+on:
+  workflow_dispatch:
+    inputs:
+      encryption_key:
+        description: "Inhalt von encryption_public_key.pem aus der Play Console (beginnt mit -----BEGIN PUBLIC KEY-----)"
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Schlüssel exportieren (PEPK)
+        env:
+          KEYSTORE_BASE64: ${{ secrets.WG_KEYSTORE_BASE64 }}
+          KEYSTORE_PROPERTIES: ${{ secrets.WG_KEYSTORE_PROPERTIES }}
+          ENCRYPTION_KEY: ${{ inputs.encryption_key }}
+        run: |
+          set -e
+          printf '%s' "$KEYSTORE_BASE64" | tr -d ' \r\n\t' | base64 -d > key.jks
+          printf '%s\n' "$KEYSTORE_PROPERTIES" | tr -d '\r' > key.properties
+          STORE_PASS=$(grep '^storePassword=' key.properties | cut -d= -f2-)
+          KEY_PASS=$(grep '^keyPassword=' key.properties | cut -d= -f2-)
+          ALIAS=$(grep '^keyAlias=' key.properties | cut -d= -f2-)
+          printf '%s\n' "$ENCRYPTION_KEY" | tr -d '\r' > encryption_public_key.pem
+          grep -q "BEGIN PUBLIC KEY" encryption_public_key.pem || { echo "::error::Das ist kein öffentlicher Schlüssel aus der Play Console."; exit 1; }
+          curl -fsSL -o pepk.jar https://www.gstatic.com/play-apps-publisher-rapid/signing-tool/prod/pepk.jar
+          java -jar pepk.jar --keystore=key.jks --alias="$ALIAS" --output=kurvenflug-signaturschluessel.zip \
+            --include-cert --rsa-aes-encryption --encryption-key-path=encryption_public_key.pem \
+            --keystore-pass="$STORE_PASS" --key-pass="$KEY_PASS"
+          ls -la kurvenflug-signaturschluessel.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kurvenflug-play-signaturschluessel
+          path: kurvenflug-signaturschluessel.zip
+          retention-days: 1
+      - name: Aufräumen
+        if: always()
+        run: rm -f key.jks key.properties

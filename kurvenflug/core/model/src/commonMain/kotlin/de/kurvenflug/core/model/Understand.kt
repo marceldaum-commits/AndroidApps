@@ -31,6 +31,13 @@ object Understand {
         val t = l.targets.firstOrNull() ?: return null
         val v = l.values(values)
         return when (l.kind) {
+            Kind.BINOM -> {
+                val n = kotlin.math.round(v.getValue("n")).toInt(); val p = v.getValue("p"); val k = kotlin.math.round(t.x + 9).toInt()
+                val cum = (v["cum"] ?: 0.0) > 0.5
+                val y = Flight.f(l, values, t.x)
+                (if (cum) "P(X ≤ $k) bei B(${n}; ${num(p)})" else "P(X = $k) = ${num(Stochastik.choose(n, k), 0)} · ${num(p)}^$k · ${num(1 - p)}^${n - k}") +
+                    " ≈ ${Stochastik.percent(y / 10)}  ·  Station: ${Stochastik.percent(t.y / 10)} ${mark(y, t.y, t.r)}"
+            }
             Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE -> {
                 if (l.kind == Kind.LOG && t.x <= 0 || l.kind == Kind.ANTI && t.x == 0.0) return null
                 val y = Flight.f(l, values, t.x)

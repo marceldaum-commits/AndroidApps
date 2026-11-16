@@ -11,6 +11,8 @@ import de.kurvenflug.core.model.MusicMood
 
 class MainActivity : ComponentActivity() {
     private val vm: AppViewModel by viewModels()
+    /** Play-Variante: In-App Updates von Google Play; GitHub-Variante: nichts (dort gibt es den Update-Knopf) */
+    private val storeUpdates by lazy { StoreUpdates(this) }
     /** Duell-Code, der per „Teilen“ (z. B. aus WhatsApp) hereinkam */
     private val incomingDuel = androidx.compose.runtime.mutableStateOf<String?>(null)
 
@@ -37,6 +39,7 @@ class MainActivity : ComponentActivity() {
         val app = application as KurvenflugApp
         if (savedInstanceState == null) { readShared(intent); readWidget(intent) }
         (application as KurvenflugApp).music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
+        storeUpdates // registriert sich vor onStart
         val platform = AndroidPlatform(this, BuildConfig.VERSION_NAME, BuildConfig.SELF_UPDATE, app.sfx, app.music)
         setContent { KurvenflugRoot(vm.state, platform, incomingDuel, widgetLevel) }
     }
@@ -46,6 +49,7 @@ class MainActivity : ComponentActivity() {
         (application as KurvenflugApp).music.onForeground(true)
         // Auch beim Zurückkehren aus dem Hintergrund nach neuen Versionen schauen
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
+        storeUpdates.onStart()
     }
-    override fun onStop() { (application as KurvenflugApp).music.onForeground(false); super.onStop() }
+    override fun onStop() { storeUpdates.onStop(); (application as KurvenflugApp).music.onForeground(false); super.onStop() }
 }

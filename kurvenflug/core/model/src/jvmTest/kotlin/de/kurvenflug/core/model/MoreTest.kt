@@ -48,3 +48,32 @@ class MoreTest {
         assertEquals(l.solution.getValue("a") * kotlin.math.sin(l.solution.getValue("b") * 1.3) + l.solution.getValue("d"), Flight.f(l, l.solution, 1.3), 0.0)
     }
 }
+
+/** Binomialverteilung: Formeln stimmen, alle Level lösbar, erklärt, Raten reicht nicht */
+class StochastikTest {
+    private val levels = Stochastik.chapter.levels
+
+    @Test fun formulas() {
+        assertEquals(120.0, Stochastik.choose(10, 3), 1e-9)
+        assertEquals(0.375, Stochastik.pmf(4, 0.5, 2), 1e-12)
+        assertEquals(1.0, Stochastik.cdf(7, 0.3, 7), 1e-12)
+        assertEquals(22.0 / 64, Stochastik.cdf(6, 0.5, 2), 1e-12)
+        assertEquals((0..5).sumOf { Stochastik.pmf(10, 0.5, it) }, Stochastik.cdf(10, 0.5, 5), 1e-12)
+    }
+
+    @Test fun levelsAreSolvableExplainedAndNotGuessable() {
+        assertTrue(levels.size >= 6)
+        assertTrue("Dichte und kumuliert", levels.any { (it.fixed["cum"] ?: 0.0) > 0.5 } && levels.any { (it.fixed["cum"] ?: 0.0) < 0.5 })
+        for (l in levels) {
+            assertTrue("${l.id} lösbar", Flight.fly(l, l.solution).success)
+            assertFalse("${l.id} Start", Flight.fly(l, l.start).success)
+            assertNotNull("${l.id} Rechenweg", Walkthrough.of(l))
+            assertNotNull("${l.id} Frage", Understand.check(l))
+            assertTrue("${l.id} Live", Understand.live(l, l.solution)!!.endsWith("✓"))
+            for (p in l.params) for (d in listOf(-1, 1)) {
+                val v = l.solution + (p.key to p.snap(l.solution.getValue(p.key) + d * p.step))
+                if (v != l.solution) assertFalse("${l.id}: ${p.key} ±1 trifft auch", Flight.fly(l, v).success)
+            }
+        }
+    }
+}

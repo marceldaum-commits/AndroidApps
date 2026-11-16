@@ -3,10 +3,10 @@
 Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
 selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).
 
-Inhalte (169 Level in 29 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
+Inhalte (175 Level in 30 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
 Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv, Planeten-Lexikon, Werkstatt): Koordinaten, Brüche & Kommazahlen am Zahlenstrahl, Winkel mit Geodreieck (Kl. 5–6), Zuordnungen/Prozent (Kl. 6–7), Geraden (Kl. 7–8), Pythagoras (Kl. 8–9), Parabeln (Kl. 9), Logarithmus (Kl. 10),
 Weg-Zeit und Laser-Optik (Physik 7), Energieerhaltung (Physik 8–9),
-Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren (Kl. 11–13); dazu Maßstab (Kl. 5–6), Prozent & Zinseszins (Kl. 7–8), beschleunigte Bewegung (Physik 9–10), Potenzfunktionen, verschobene Wellen, waagerechter Wurf (Kl. 10–11), e-Funktion (Kl. 11–12).
+Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren (Kl. 11–13); dazu Maßstab (Kl. 5–6), Prozent & Zinseszins (Kl. 7–8), beschleunigte Bewegung (Physik 9–10), Potenzfunktionen, verschobene Wellen, waagerechter Wurf (Kl. 10–11), e-Funktion (Kl. 11–12), Binomialverteilung – Dichte und kumuliert (Kl. 10–13).
 
 ## Aufbau der Startseite
 - Vier Reiter unten: 🚀 **Heute** („Weiter, wo du warst“, Tagesmission, Auffrischen), 🗺️ **Galaxie** (Kapitel nach Klasse,
@@ -103,6 +103,11 @@ Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsw
 |---|---|---|---|
 | ![Live](screenshots/72_live_rechnung.png) | ![Frage](screenshots/73_rechenstern_frage.png) | ![Richtig](screenshots/74_rechenstern_geschafft.png) | ![Aufgabe](screenshots/76_aufgabe_nach_fehlversuch.png) |
 
+## Google Play
+Zwei Varianten aus demselben Code: `github` (APK, eigener Updater, Internet + Installations-Recht) und `play`
+(AAB, keine Internet-/Installations-Rechte, Play In-App Updates). Store-Eintrag, Grafiken, Screenshots (1080 × 2160),
+Formular-Antworten und die Klick-Liste für die Play Console: `store/` (`store/PLAY_CONSOLE_ANLEITUNG.md`).
+
 ## Im Browser (WebApp)
 Gleiche Version, gleiche Bildschirme. Spielstand im lokalen Speicher des Browsers, keine Server-Daten, offline spielbar,
 installierbar. Am PC als Handy-Spalte in der Mitte. Test: https://kurvenflug-test.mathenachhilfe-online.com
@@ -114,8 +119,9 @@ installierbar. Am PC als Handy-Spalte in der Mitte. Test: https://kurvenflug-tes
 ## Bauen & Ausliefern
 ```
 export ANDROID_HOME=/opt/android-sdk
-./gradlew :core:model:allTests :core:data:testDebugUnitTest :app:testDebugUnitTest   # Logik (JVM + Wasm), Daten, Bildschirmfotos
-./gradlew assembleRelease
+./gradlew :core:model:allTests :core:data:testDebugUnitTest :app:testGithubDebugUnitTest   # Logik (JVM + Wasm), Daten, Bildschirmfotos
+./gradlew :app:assembleGithubRelease   # APK mit eigenem Update-Knopf (GitHub-Releases)
+./gradlew :app:bundlePlayRelease       # AAB für Google Play (ohne Internet, Play In-App Updates)
 ./gradlew :web:webapp     # fertige WebApp nach webapp/ (index.html oben, sw.js, version.json)
 ```
 Ausliefern: `versionCode`/`versionName` in `app/build.gradle.kts` erhöhen (gilt auch für die WebApp), Abschnitt in `CHANGELOG.md`, pushen.

@@ -377,4 +377,8 @@ class ScreenshotTest {
     @Test fun moreHorizontal() = level("27-3", name = "87_waagerechter_wurf", values = mapOf("v" to 3.0), settle = 7000,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
     @Test fun moreExpe() = level("28-5", name = "88_e_funktion", values = mapOf("k" to -0.3))
+
+    @Test fun binomDensity() = level("30-3", name = "89_binomial_dichte", values = mapOf("p" to 0.5))
+    @Test fun binomCumulative() = level("30-6", name = "90_binomial_kumuliert", values = mapOf("n" to 6.0), settle = 6000,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
 }

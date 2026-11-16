@@ -1,5 +1,35 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 0.21.0 – Play Store vorbereitet + Binomialverteilung (Auftrag vom 16.11., vorgezogen)
+
+- **Version:** 0.21.0 · **Commit:** {{COMMIT}}
+- **Play Store (alles erledigt, was ohne Marcels Konto geht):**
+  - Zwei Varianten aus einem Code: `github` (APK, eigener Updater) und `play` (AAB). Die Play-Variante hat **kein Internet,
+    keine Installations-Berechtigung, keinen eigenen Updater**; Updates über die **Play In-App Updates API** (flexibel,
+    Installation im Hintergrund; „sofort“ bei Priorität ≥ 4 oder > 30 Tage alt). Kein Nachladen von Code.
+  - **Signiertes AAB** baut der Release-Workflow (`Kurvenflug-<V>-play.aab` am GitHub-Release), Signatur wird geprüft.
+  - **App-Signaturschlüssel:** neuer Workflow „Kurvenflug: Signaturschlüssel für Google Play“ exportiert den bestehenden
+    Schlüssel mit Googles PEPK verschlüsselt – Marcel muss nichts installieren. Damit Wechsel APK ↔ Play ohne Deinstallieren.
+  - **Store-Eintrag:** `kurvenflug/store/` – Titel, Kurz-/Langbeschreibung, Release-Text, 8 Screenshots 1080 × 2160,
+    Feature-Grafik 1024 × 500, Icon 512.
+  - **Formulare:** Datensicherheit (keine Datenerhebung), IARC-Einstufung (alles Nein → USK 0/PEGI 3), Zielgruppe 9–17
+    mit Familienprogramm, Werbung Nein, Datenschutz-URL + Textvorschlag – alles in `store/PLAY_CONSOLE_ANLEITUNG.md`.
+  - **Lizenzen:** geprüft, alles Apache 2.0 bzw. Play-Core-Bedingungen (nur Play-Build); Hinweis in der App
+    (Einstellungen → Open-Source-Lizenzen), Übersicht `store/LIZENZEN.md`.
+  - **Klick-Liste für Marcel:** `store/PLAY_CONSOLE_ANLEITUNG.md` (App anlegen → Schlüssel hochladen → Store-Eintrag →
+    App-Inhalte → interner Test → geschlossener Test 12 Tester / 14 Tage → Produktion).
+- **Neu: Binomialverteilung** (Kapitel 30, Kl. 10–13): Histogramm mit Dichte P(X = k) und kumuliert P(X ≤ k), 6 Level,
+  jede mit Rechenweg und Rechen-Frage. Jetzt **175 Level in 30 Kapiteln**.
+- **Prüfung:** Gleichstand JVM = Wasm (neuer Fingerabdruck), alle Level lösbar, Nachbarwerte treffen nicht, Regression,
+  Lint beider Varianten; Browser bei 320 px und PC ohne Konsolenfehler (siehe unten).
+- **Ladezeit (Bitte an den Server):** Die WebApp ist bereits gebündelt und verkleinert (webpack-Produktionsbuild,
+  Wasm mit Binaryen optimiert). Den größten Gewinn bringt jetzt **Komprimierung durch den Webserver** für `.wasm`, `.js`,
+  `.ttf`, `.json`: gemessen 14,6 MB → **3,8 MB mit Brotli** (gzip: 4,9 MB). Bitte Brotli/gzip für diese Typen aktivieren
+  (vorkomprimierte .br/.gz-Dateien sind laut Dateityp-Liste nicht erlaubt). Ab dem zweiten Besuch lädt ohnehin alles aus dem Service Worker.
+- **Standard-Branch:** Bitwarden-Hinweis in `.github/workflows/kurvenflug-release.yml` auch auf `ccr-0e3accf3-cdxlc8` (fa5687c).
+
+---
+
 ## 0.20.0 – großer Inhaltsausbau (Auftrag vom 16.11.)
 
 - **Version:** 0.20.0 · **Commit:** ae5831d (Zweig claude/gifted-shannon-657gpr)

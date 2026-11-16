@@ -20,11 +20,25 @@ android {
         applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 27
-        versionName = "0.20.0"
-        // Update-Knopf (lädt neue Versionen aus GitHub Releases). Für den Play Store auf false setzen –
-        // dort kommen Updates über den Store, und die Installations-Berechtigung ist nicht erlaubt.
-        buildConfigField("boolean", "SELF_UPDATE", "true")
+        versionCode = 28
+        versionName = "0.21.0"
+    }
+
+    // Zwei Varianten aus demselben Code:
+    // - github: APK aus GitHub-Releases mit eigenem Update-Knopf (Internet + Installations-Berechtigung)
+    // - play:   AAB für Google Play – kein eigener Updater, keine Installations-Berechtigung, kein Internet;
+    //           Updates über die Play In-App Updates API
+    flavorDimensions += "store"
+    productFlavors {
+        create("github") {
+            dimension = "store"
+            isDefault = true
+            buildConfigField("boolean", "SELF_UPDATE", "true")
+        }
+        create("play") {
+            dimension = "store"
+            buildConfigField("boolean", "SELF_UPDATE", "false")
+        }
     }
 
     signingConfigs {
@@ -87,6 +101,9 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.9.6")
     // Startbildschirm-Widget
     implementation("androidx.glance:glance-appwidget:1.1.1")
+    // Nur im Play-Store-Build: Updates direkt in der App über Google Play
+    "playImplementation"("com.google.android.play:app-update-ktx:2.1.0")
+    "playImplementation"("androidx.fragment:fragment-ktx:1.8.9")   // Play Core bringt sonst eine zu alte Version mit
 
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.17")

@@ -54,6 +54,8 @@ fun SettingsScreen(
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
                         "keine Käufe, nichts wird an einen Server geschickt. Neue Versionen lädt die Seite von selbst."
+                        else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, " +
+                        "keine Käufe, kein Internet. Neue Versionen kommen über Google Play."
                         else "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
                         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel (Kl. 5/6), Zuordnungen und Prozent (Kl. 6/7), lineare Funktionen und Gleichungssysteme (Kl. 7/8), " +
@@ -66,10 +68,34 @@ fun SettingsScreen(
                     }
                 }
             }
+            LicenseCard(platform.isWeb)
             if (onReset != null) ResetCard(onReset)
         }
     }
 }
+
+/** Open-Source-Lizenzen (Apache 2.0 verlangt den Hinweis) – aufklappbar, damit es Kinder nicht stört. */
+@Composable
+private fun LicenseCard(web: Boolean) {
+    var open by remember { mutableStateOf(false) }
+    ElevatedCard(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            TextButton(onClick = { open = !open }, contentPadding = PaddingValues(0.dp)) {
+                Text((if (open) "▾ " else "▸ ") + "Open-Source-Lizenzen", style = MaterialTheme.typography.titleSmall)
+            }
+            if (open) Text(LICENSES + if (web) LICENSES_WEB else "", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+        }
+    }
+}
+
+private const val LICENSES = "Kurvenflug nutzt freie Software. Danke an alle, die sie bauen!\n\n" +
+    "Apache License 2.0 (apache.org/licenses/LICENSE-2.0): Kotlin, kotlinx.coroutines, kotlinx.serialization, " +
+    "Jetpack Compose und Compose Multiplatform, AndroidX (Activity, Core, Lifecycle, Navigation, Room, Glance, WorkManager, " +
+    "Fragment, SavedState, Startup, DataStore), Guava, JSpecify, JetBrains Annotations.\n\n" +
+    "Nur in der Google-Play-Version: Play In-App Updates (Play Core SDK, Nutzungsbedingungen von Google)."
+
+private const val LICENSES_WEB = "\n\nIm Browser zusätzlich: Skia/Skiko (BSD-3-Clause), Noto Color Emoji (SIL Open Font License 1.1), " +
+    "DejaVu Sans (freie Bitstream-Vera-Lizenz). Volltexte in fonts-lizenzen.txt."
 
 @Composable
 private fun Toggle(title: String, sub: String, on: Boolean, onChange: (Boolean) -> Unit) {
