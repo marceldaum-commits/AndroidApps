@@ -6,9 +6,10 @@
 | sherpa-onnx 2.0.1 | Sprachsynthese auf dem Gerät (natürliche Stimme); ohne espeak-ng | Apache 2.0 | Bibliothek über JitPack |
 | ONNX Runtime | rechnet das Stimm-Modell | MIT | Teil von sherpa-onnx |
 | Lautschrift-Daten | Laute für Lux' Texte, vorab erzeugt | eigene Daten (erzeugt mit espeak-ng, das **nicht** in der App steckt) | `app/src/main/assets/stimme/*.tsv` |
+| AndroidX Core SplashScreen | Startbild der Android-App | Apache 2.0 | Bibliothek |
 | Play In-App Updates | Updates über den Store (nur Play-Fassung) | Play Core Software Development Kit Terms of Service (Google) | Bibliothek |
-| DejaVu Sans | Schrift der WebApp (kann Mathe-Zeichen wie x₃, ✓, √) | frei (Bitstream Vera / DejaVu-Lizenz) | `web/src/wasmJsMain/resources/fonts` |
-| Noto Color Emoji | Emojis in der WebApp | SIL Open Font License 1.1 (Google) | `web/src/wasmJsMain/resources/fonts` |
+| DejaVu Sans (gekürzt auf die benutzten Zeichen) | Schrift der WebApp (kann Mathe-Zeichen wie x₃, ✓, √) | frei (Bitstream Vera / DejaVu-Lizenz) | `web/src/wasmJsMain/resources/fonts` |
+| Noto Color Emoji (gekürzt auf die benutzten Zeichen) | Emojis in der WebApp | SIL Open Font License 1.1 (Google) | `web/src/wasmJsMain/resources/fonts` |
 | Compose Multiplatform, Skiko | Oberfläche der WebApp | Apache 2.0 | Bibliotheken |
 | Piper-Stimme „Thorsten“ (de_DE-thorsten-medium) | natürliche deutsche Stimme | Aufnahmen CC0 (Thorsten Müller) | **nicht** in der App enthalten – wird auf Wunsch von Hugging Face geladen |
 

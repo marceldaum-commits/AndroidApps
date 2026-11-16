@@ -163,3 +163,40 @@ Die Server liefern korrekt aus (geprüft: Dateien, Dateitypen, auch `.wasm`). Be
 Eingebaut in 2.8.0: (1) sichtbare Meldung statt leerem Bildschirm, wenn der Start scheitert (auch bei fehlendem WebAssembly-GC, sofort geprüft),
 (2) `diagnose.html` – zeigt Browser, WebAssembly-GC, WebGL 2, letzten Startfehler, Zwischenspeicher; nichts wird verschickt, (3) kleinere Bildpuffer der 3D-Bühne auf großen Bildschirmen.
 **Bitte prüft auf einem iPad/iPhone** (Safari, und als Startbildschirm-App): Startet es? Was zeigt `/diagnose.html`? Bis das geklärt ist, bitte nicht mit „läuft auf iPad“ werben.
+
+---
+
+## 16.11.2026 – Version 2.9.0: Start optimiert (Auftrag „Start optimieren, kein weißer Bildschirm“, von Marcel bestätigt)
+
+**1. Kein leerer Bildschirm:** Ladebild direkt im HTML/CSS (Nachtblau, Lux-Logo als inline-SVG, Name) – steht ohne Skript ab dem ersten Byte.
+Fortschrittsbalken mit echten Bytes für App-Kern (.wasm) und Schriften (entpackte Bytes gegen im Bau eingetragene Größen), danach 0,35 s Überblenden.
+Scheitert der Start, steht dort eine Meldung mit Link zu `diagnose.html`.
+
+**2. Schneller:** Emoji-Schrift 10,8 MB → 0,18 MB und DejaVu 0,76 MB → 0,12 MB (nur benutzte Zeichen, `tools/schrift/schriften.py`); .wasm und Schriften werden sofort angefordert
+(nicht erst, wenn `raumlicht.js` sie verlangt); die 3D-Bühne (iframe) lädt erst danach; der Service Worker meldet sich erst nach dem Start an, lädt nichts mehr doppelt
+und speichert jetzt auch die .wasm-Dateien schon beim ersten Besuch (zweiter Start ohne Netz).
+
+**3. Messung** (`scene/test/web-speed.mjs`, Chromium, Handy-Größe; der Testserver bremst wie „Fast 4G“ 9 Mbit/s/60 ms und „Slow 4G“ 1,6 Mbit/s/150 ms und liefert wie euer Server aus:
+gzip nur für .html und .wasm):
+
+| | 2.8.0 vorher | 2.9.0 nachher | 2.9.0, wenn der Server auch .js/.ttf/.json komprimiert |
+|---|---|---|---|
+| Fast 4G, erster Start: erster Inhalt / bedienbar | 0,1 s / 27,9 s | 0,2 s / 5,8 s | 0,2 s / 5,3 s |
+| Fast 4G, zweiter Start: bedienbar | 2,4 s | 2,3 s | 2,3 s |
+| Slow 4G, erster Start: erster Inhalt / bedienbar | 0,2 s / 153,2 s | 0,2 s / 29,2 s | 0,2 s / 26,5 s |
+| Slow 4G, zweiter Start: bedienbar | 2,5 s | 2,6 s | 2,6 s |
+| übertragen beim ersten Besuch (mit Speichern) | 30,2 MB | 7,7 MB | 5,8 MB |
+| Ordner `webapp/` | 28 MB | 17 MB | – |
+
+Ehrlich dazu: gemessen auf einem Rechner ohne echte Grafikkarte, nicht auf einem Handy; die 2,3–2,6 s beim zweiten Start sind Rechenzeit (App-Kern übersetzen, Schriften, erste Zeichnung), kein Netz.
+
+**Bitte am Server (liegt nicht in meiner Hand):**
+- Heute kommen nur `.html` und `.wasm` komprimiert an (geprüft mit `Accept-Encoding: br, gzip`): **`.js`, `.json`, `.ttf` bitte ebenfalls komprimieren** – spart rund 1,9 MB beim ersten Besuch.
+- **Brotli** statt gzip für `.wasm` brächte nochmal etwa ein Viertel weniger (die beiden .wasm sind zusammen 5,3 MB mit gzip).
+- `.wasm`-Dateien haben den Inhalt im Namen: gern **lange Cache-Dauer** (`max-age=31536000, immutable`). `index.html`, `sw.js`, `version.json` weiter ohne Cache.
+
+**4. Android:** Startbild über AndroidX SplashScreen (Nachtblau `#05071A`, Raumlicht-Symbol), danach App-Design. Das Fenster war schon vorher dunkel, weiß blitzte dort nichts.
+
+**Weiterhin offen:** der weiße Bildschirm auf Marcels iPad. Das Ladebild hilft nur, wenn die Seite überhaupt lädt; die Ursache ist nicht gefunden (kein Safari hier).
+Bitte auf iPad/iPhone prüfen und `diagnose.html` ansehen.
+**Geprüft:** `web.mjs`, `web-update.mjs` (Update, Offline), `web-speed.mjs`; App-Tests und Lint. Nicht geprüft: echtes Gerät, Safari, Firefox.

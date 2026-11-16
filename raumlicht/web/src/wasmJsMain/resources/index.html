@@ -14,16 +14,35 @@
   /* Die 3D-Bühne liegt UNTER der Oberfläche. Die Oberfläche lässt dort ein durchsichtiges Fenster und reicht Berührungen weiter –
      so liegen Einblendungen, Konfetti und Hinweise über der Bühne, genau wie in der Android-App. */
   #stage { position: fixed; border: 0; display: none; background: #05071a; z-index: 1; pointer-events: none; }
-  #app { position: fixed; inset: 0; z-index: 2; }
-  #start { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; z-index: 5; background: #0A0E27; }
-  #start b { font-size: 28px; letter-spacing: 1px; } #start span { color: #9AA4D6; font-size: 14px; }
+  #app { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 2; }
+  /* Ladebild: steht sofort da (reines HTML und CSS, kein Skript nötig) – Nachtblau, Logo, Name und ein Balken, der den echten Download zeigt */
+  #start { position: fixed; top: 0; right: 0; bottom: 0; left: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; z-index: 5;
+    background: #0A0E27; background: radial-gradient(ellipse at 50% 38%, #1B2360 0%, #0A0E27 62%); transition: opacity .35s ease; }
+  #start svg { width: 132px; height: 132px; animation: schweben 2.6s ease-in-out infinite; }
+  @keyframes schweben { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+  #start b { font-size: 30px; letter-spacing: 3px; font-weight: 800; } #start span { color: #9AA4D6; font-size: 14px; text-align: center; }
+  #balken { width: 220px; max-width: 62vw; height: 8px; border-radius: 4px; background: #1E2550; overflow: hidden; }
+  #balken i { display: block; height: 100%; width: 3%; border-radius: 4px; background: linear-gradient(90deg, #46E1FF, #FF5FA8); transition: width .25s ease; }
+  @media (prefers-reduced-motion: reduce) { #start svg { animation: none; } }
   #start .fehler { color: #FFB45A; max-width: 30em; text-align: center; padding: 0 16px; }
 </style>
 </head>
 <body>
-<div id="start"><b>Raumlicht</b><span id="start-text">lädt … Version @VERSION@ vom @DATUM@</span></div>
+<div id="start">
+  <svg viewBox="0 0 132 132" aria-hidden="true">
+    <defs><radialGradient id="glut"><stop offset="0" stop-color="#46E1FF" stop-opacity=".55"/><stop offset="1" stop-color="#46E1FF" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="66" cy="66" r="62" fill="url(#glut)"/>
+    <path d="M14 104 L118 34" stroke="#46E1FF" stroke-width="5" stroke-linecap="round"/><path d="M34 22 L96 112" stroke="#FF5FA8" stroke-width="5" stroke-linecap="round"/><path d="M12 52 L120 84" stroke="#FFD84A" stroke-width="4" stroke-linecap="round" opacity=".9"/>
+    <ellipse cx="66" cy="68" rx="22" ry="15" fill="#E8ECFF"/><rect x="50" y="61" width="32" height="13" rx="6.5" fill="#0A0E27"/><circle cx="59" cy="67.5" r="3.4" fill="#46E1FF"/><circle cx="73" cy="67.5" r="3.4" fill="#46E1FF"/>
+    <path d="M38 52 h18 M76 52 h18" stroke="#E8ECFF" stroke-width="3.5" stroke-linecap="round"/><path d="M47 52 v7 M85 52 v7" stroke="#E8ECFF" stroke-width="2.5"/>
+  </svg>
+  <b>RAUMLICHT</b>
+  <div id="balken"><i></i></div>
+  <span id="start-text">lädt … Version @VERSION@ vom @DATUM@</span>
+</div>
 <div id="app"></div>
-<iframe id="stage" title="3D-Bühne" src="scene/index.html"></iframe>
+<!-- Die 3D-Bühne wird erst geholt, wenn der App-Kern geladen ist (data-src → src) – der Kern hat Vorrang -->
+<iframe id="stage" title="3D-Bühne" data-src="scene/index.html"></iframe>
 <script>
   // Startet die App nicht, sagen wir warum – statt einen leeren Bildschirm zu zeigen. Fehler werden gesammelt und auf der Diagnose-Seite gezeigt.
   var startProblems = [];
@@ -37,7 +56,40 @@
   window.addEventListener('unhandledrejection', function (e) { startFailed(e.reason && (e.reason.message || e.reason)); });
   // WebAssembly mit „GC“ fehlt älteren Browsern (Safari vor 18.2): gleich prüfen, nicht erst 13 MB laden
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed('WebAssembly-Prüfung: ' + e); }
-  setTimeout(function () { var t = document.getElementById('start-text'); if (document.getElementById('start').style.display !== 'none' && t.className !== 'fehler') t.innerHTML = 'lädt noch … Das erste Öffnen holt etwa 27 MB.<br><a href="diagnose.html" style="color:#46E1FF">Dauert es zu lange? Diagnose öffnen</a>'; }, 25000);
+  // ── Laden mit echtem Fortschritt: Der App-Kern (.wasm) und die Schriften werden sofort angefordert – nicht erst, wenn raumlicht.js sie verlangt –
+  //    und jedes ankommende Byte bewegt den Balken. Die Größen (entpackt) trägt der Bau hier ein.
+  var PLAN = @LADEPLAN@, got = {}, total = 0, early = {}, slow = false;
+  for (var k in PLAN) total += PLAN[k];
+  window.__rlStage = function () { var f = document.getElementById('stage'); if (f && !f.getAttribute('src')) f.src = f.getAttribute('data-src'); };
+  function progress() {
+    var sum = 0, core = true; for (var k in PLAN) { sum += Math.min(got[k] || 0, PLAN[k]); if (/\.(wasm|ttf)$/.test(k) && (got[k] || 0) < PLAN[k]) core = false; }
+    var p = total ? Math.min(100, Math.round(100 * sum / total)) : 0; var st = document.getElementById('start'); if (!st || st.style.display === 'none') return;
+    document.querySelector('#balken i').style.width = Math.max(3, p) + '%';
+    var t = document.getElementById('start-text'); if (t.className !== 'fehler') t.innerHTML = (p >= 100 ? 'startet …' : 'lädt … ' + p + ' %') + (slow && p < 100 ? '<br><a href="diagnose.html" style="color:#46E1FF">Dauert es zu lange? Diagnose öffnen</a>' : '');
+    if (core) window.__rlStage();
+  }
+  function keyOf(u) { u = String(u).split('?')[0]; for (var k in PLAN) if (u === k || u.slice(-k.length - 1) === '/' + k) return k; return null; }
+  var realFetch = window.fetch;
+  function tracked(key, input, init) {
+    return realFetch.call(window, input, init).then(function (r) {
+      if (!r.ok || !r.body || typeof ReadableStream !== 'function') { if (r.ok) { got[key] = PLAN[key]; progress(); } return r; }
+      var reader = r.body.getReader();
+      // sofort und ohne Pause lesen (nicht erst, wenn die App die Datei abholt) – so läuft der Download durch und der Balken stimmt
+      var stream = new ReadableStream({
+        start: function (c) { (function next() { reader.read().then(function (x) { if (x.done) { got[key] = PLAN[key]; progress(); c.close(); } else { got[key] = (got[key] || 0) + x.value.byteLength; progress(); c.enqueue(x.value); next(); } }, function (e) { c.error(e); }); })(); },
+        cancel: function (why) { return reader.cancel(why); } }, { highWaterMark: Infinity });
+      return new Response(stream, { status: r.status, statusText: r.statusText, headers: r.headers });
+    });
+  }
+  if (realFetch) {
+    try { for (var k in PLAN) if (/\.(wasm|ttf)$/.test(k)) early[k] = tracked(k, k); } catch (e) { early = {}; }
+    window.fetch = function (input, init) {
+      var key = keyOf(typeof input === 'string' ? input : (input && input.url) || '');
+      if (key && early[key]) { var p = early[key]; delete early[key]; return p; }
+      return key ? tracked(key, input, init) : realFetch.call(window, input, init);
+    };
+  }
+  setTimeout(function () { slow = true; progress(); }, 25000);
   // Automatisches Update – ohne Knopf: Die Seite fragt beim Öffnen, beim Zurückkehren und alle 30 Minuten nach einer neuen Version.
   // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
   // (Startseite oder App im Hintergrund), nie mitten in einer Aufgabe.
@@ -46,13 +98,17 @@
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     var hadWorker = !!navigator.serviceWorker.controller;      // beim allerersten Besuch gibt es nichts zu aktualisieren
     navigator.serviceWorker.addEventListener('controllerchange', function () { if (hadWorker) { updateWaiting = true; window.__rlTry(); } hadWorker = true; });
-    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
-      var check = function () { reg.update().catch(function () {}); };
-      document.addEventListener('visibilitychange', function () { if (document.hidden) window.__rlTry(); else check(); });
-      setInterval(check, 30 * 60 * 1000);
-    });
+    // Der Service Worker speichert alles für später – aber erst, wenn die App läuft: Beim Start gehört die Leitung dem App-Kern.
+    var startSW = function () {
+      navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
+        var check = function () { reg.update().catch(function () {}); };
+        document.addEventListener('visibilitychange', function () { if (document.hidden) window.__rlTry(); else check(); });
+        setInterval(check, 30 * 60 * 1000);
+      });
+    };
+    var waitSW = setInterval(function () { var st = document.getElementById('start'); if (!st || st.dataset.fertig === '1' || document.getElementById('start-text').className === 'fehler') { clearInterval(waitSW); startSW(); } }, 400);
   }
 </script>
-<script src="raumlicht.js"></script>
+<script src="raumlicht.js" onload="got['raumlicht.js'] = PLAN['raumlicht.js']; progress();"></script>
 </body>
 </html>

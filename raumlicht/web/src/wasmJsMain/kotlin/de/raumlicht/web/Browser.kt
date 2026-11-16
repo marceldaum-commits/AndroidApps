@@ -8,7 +8,8 @@ fun storeRemove(key: String): Unit = js("localStorage.removeItem(key)")
 /** Alle Schlüssel mit diesem Anfang, durch Zeilenumbruch getrennt */
 fun storeKeys(prefix: String): String = js("Object.keys(localStorage).filter((k) => k.startsWith(prefix)).join('\\n')")
 fun openLink(url: String): Unit = js("window.open(url, '_blank', 'noopener')")
-fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s) s.style.display = 'none'; }")
+/** Ladebild sanft ausblenden; spätestens jetzt wird auch die 3D-Bühne angefordert */
+fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; s.style.opacity = '0'; s.style.pointerEvents = 'none'; setTimeout(() => { s.style.display = 'none'; }, 380); } if (window.__rlStage) window.__rlStage(); }")
 /** Der Seite sagen, ob gerade die Startseite offen ist – nur dort (oder im Hintergrund) lädt sie sich nach einem Update selbst neu */
 fun atHome(on: Boolean): Unit = js("{ window.__rlHome = on; if (on && window.__rlTry) window.__rlTry(); }")
 /** Heutiger Tag in Ortszeit, gezählt seit dem 1.1.1970 */
