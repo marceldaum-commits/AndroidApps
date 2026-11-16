@@ -55,6 +55,28 @@ Quellen: bastis-lernwelt.de, App-Store-Einträge, netzwelt.de, zahlenzorro.weste
 - **Pro Lehrkraft: 24,99 € pro Schuljahr.** Das liegt unter Zahlenzorro für eine ganze Klasse und weit unter den Schullizenzen.
 - **Schullizenz: 149 € pro Jahr** für alle Lehrkräfte einer Schule. Später, auf Anfrage über die Website, nicht in der App.
 
+### 1b. Umsatzsteuer und was bei Marcel ankommt (Nachtrag Marcel: „Da muss USt drauf.“)
+
+- **Alle Preise sind Endpreise inkl. 19 % USt.** In App und Shop steht „inkl. MwSt.“.
+- **Web-Kauf (Woo-Kasse):**
+  - Steuerklasse Standard 19 %, die Rechnung weist die USt aus.
+  - Privatkunden in anderen EU-Ländern zahlen den Satz ihres Landes (OSS). Der Bruttopreis bleibt gleich, deshalb ändert sich dort der Nettobetrag etwas.
+  - Vom Netto gehen noch die Gebühren des Zahlungsanbieters ab. In der Tabelle sind als Annahme Standardsätze angesetzt: PayPal 2,99 % + 0,39 €, Stripe (Karte EU) 1,5 % + 0,25 €. **Bitte Marcels tatsächliche Sätze einsetzen.**
+- **Play Billing:**
+  - Google führt die USt selbst ab.
+  - Vom Bruttopreis geht erst die USt ab, dann 15 % Google-Gebühr vom Netto.
+
+| Produkt | Brutto | Netto (ohne 19 % USt) | USt | Web: ankommend nach PayPal | Web: ankommend nach Stripe | Play: Google-Gebühr 15 % | Play: ankommend |
+|---|---|---|---|---|---|---|---|
+| Pro Familie (einmalig) | 7,99 € | 6,71 € | 1,28 € | 6,09 € | 6,34 € | 1,01 € | **5,71 €** |
+| Pro Lehrkraft (Schuljahr) | 24,99 € | 21,00 € | 3,99 € | 19,86 € | 20,38 € | 3,15 € | **17,85 €** |
+| Schullizenz (Jahr, nur Web) | 149,00 € | 125,21 € | 23,79 € | 120,36 € | 122,73 € | – (nicht über Play) | – |
+
+- **Ergebnis:**
+  - Ein Web-Kauf bringt je Familie rund 0,40–0,60 € mehr als ein Play-Kauf, je Lehrkraft rund 2,00–2,50 €.
+  - Die Preise sind in beiden Kanälen trotzdem gleich. Unterschiedliche Preise würden verwirren und dürfen in der Play-App nicht beworben werden.
+- **Einschränkung:** Die Rechnung oben ist vereinfacht. Ob Play-Erlöse für die Steuer als Provision von Google oder als Umsatz mit dem Kunden gelten, entscheidet der Steuerberater.
+
 ### 2. Android und Google Play
 
 - **Play-Fassung (`RB_STORE=play`):** Freischaltung über **Google Play Billing**.
@@ -113,7 +135,7 @@ Vorbild Mathe-Trainer Pro: Woo-Produkt → Code → Freischaltung ohne Konto.
 ### Was der Leitstand bitte entscheidet
 
 1. Aufteilung kostenlos und Pro wie oben?
-2. Preise: Familie 7,99 € einmalig, Lehrkraft 24,99 €/Schuljahr, Schule 149 €/Jahr?
+2. Preise (brutto inkl. 19 % USt): Familie 7,99 € einmalig, Lehrkraft 24,99 €/Schuljahr, Schule 149 €/Jahr?
 3. Bekommt Rechenblitz einen Anteil am gemeinsamen Lizenz-Dienst, oder baut ihn eine App für alle?
 4. KI: vorerst nicht?
 
