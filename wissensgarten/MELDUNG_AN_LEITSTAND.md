@@ -1,5 +1,30 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 16.11.2026 – Server-Einstellung: Komprimierung für die WebApp (nginx)
+
+**Befund (live geprüft):** nginx komprimiert `.wasm` bereits, `wissensgarten.js` (647 KB, gepackt 127 KB) und `.ttf` aber nicht.
+Mit der Einstellung unten lädt jedes neue Gerät beim ersten Start ca. 0,6 MB weniger. Die App muss dafür nicht geändert werden.
+
+In den `server { … }`-Block von **wissensgarten.mathenachhilfe-online.com** und **wissensgarten-test.mathenachhilfe-online.com**
+(oder einmal in den `http { … }`-Block) eintragen:
+
+```nginx
+gzip on;
+gzip_comp_level 6;
+gzip_min_length 1024;
+gzip_vary on;
+gzip_types text/javascript application/javascript application/json application/manifest+json application/wasm font/ttf text/css image/svg+xml;
+```
+
+`text/html` komprimiert nginx immer, das muss nicht in die Liste. `application/wasm` steht drin, damit die heutige Komprimierung erhalten bleibt.
+
+**Testen** (nach `nginx -t` und `systemctl reload nginx`):
+```bash
+curl -sI -H "Accept-Encoding: gzip" https://wissensgarten.mathenachhilfe-online.com/wissensgarten.js | grep -i content-encoding
+curl -sI -H "Accept-Encoding: gzip" https://wissensgarten.mathenachhilfe-online.com/composeResources/de.wissensgarten.web.res/font/noto_color_emoji.ttf | grep -i content-encoding
+```
+Beide Befehle sollen `content-encoding: gzip` zeigen.
+
 ## 0.22.0 vom 16.11.2026 – Start optimiert (Web + Android)
 
 **1. Kein weißer Bildschirm**
