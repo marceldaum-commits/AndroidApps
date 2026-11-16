@@ -2,7 +2,7 @@
 
 ## 0.21.0 – Play Store vorbereitet + Binomialverteilung (Auftrag vom 16.11., vorgezogen)
 
-- **Version:** 0.21.0 · **Commit:** {{COMMIT}}
+- **Version:** 0.21.0 · **Commit:** 3d4f3e6 (Zweig claude/gifted-shannon-657gpr)
 - **Play Store (alles erledigt, was ohne Marcels Konto geht):**
   - Zwei Varianten aus einem Code: `github` (APK, eigener Updater) und `play` (AAB). Die Play-Variante hat **kein Internet,
     keine Installations-Berechtigung, keinen eigenen Updater**; Updates über die **Play In-App Updates API** (flexibel,
