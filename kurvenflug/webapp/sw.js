@@ -1,11 +1,11 @@
-// Kurvenflug 0.19.0 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
-const CACHE = "kurvenflug-0.19.0";
+// Kurvenflug 0.20.0 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
+const CACHE = "kurvenflug-0.20.0";
 const FILES = [
   "./",
-  "190dbb4f263e9ef94e5f.wasm",
   "bccfa839aa4b38489c76.wasm",
   "composeResources/de.kurvenflug.web.resources/files/emoji.ttf",
   "composeResources/de.kurvenflug.web.resources/files/symbols.ttf",
+  "e6b87703886faf0f9935.wasm",
   "fonts-lizenzen.txt",
   "icons/apple-touch-icon.png",
   "icons/favicon-32.png",
