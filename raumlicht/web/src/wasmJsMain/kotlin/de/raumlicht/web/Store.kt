@@ -25,11 +25,11 @@ class WebPrefs : Prefs {
     private fun text(key: String, default: String = "") = MutableStateFlow(storeGet(P + key) ?: default)
     private fun put(key: String, v: Boolean) = storeSet(P + key, if (v) "1" else "0")
 
-    private val _sound = flag("ton", true); private val _music = flag("musik", true); private val _vibration = flag("vibration", true); private val _voice = flag("stimme", true)
+    private val _sound = flag("ton", true); private val _music = flag("musik", true); private val _vibration = flag("vibration", true); private val _voice = flag("stimmeAn", false)
     override val sound: StateFlow<Boolean> = _sound; override fun setSound(v: Boolean) { put("ton", v); _sound.value = v }
     override val music: StateFlow<Boolean> = _music; override fun setMusic(v: Boolean) { put("musik", v); _music.value = v }
     override val vibration: StateFlow<Boolean> = _vibration; override fun setVibration(v: Boolean) { put("vibration", v); _vibration.value = v }
-    override val voice: StateFlow<Boolean> = _voice; override fun setVoice(v: Boolean) { put("stimme", v); _voice.value = v }
+    override val voice: StateFlow<Boolean> = _voice; override fun setVoice(v: Boolean) { put("stimmeAn", v); _voice.value = v }
     private val _volume = int("lautstaerke", 100)
     override val volume: StateFlow<Int> = _volume; override fun setVolume(v: Int) { val c = v.coerceIn(0, 100); storeSet(P + "lautstaerke", c.toString()); _volume.value = c }
 

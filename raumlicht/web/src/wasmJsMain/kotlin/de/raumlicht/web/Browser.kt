@@ -40,3 +40,27 @@ fun shareText(text: String): Unit = js("{ if (navigator.share) navigator.share({
 /** [depth] = Anzahl offener Ebenen; [onBack] wird gerufen, wenn der Nutzer im Browser zurückgeht */
 fun syncHistory(depth: Int, onBack: () -> Unit): Unit = js(
     "{ window.__rlBack = onBack; if (window.__rlDepth === undefined) { window.__rlDepth = 1; window.addEventListener('popstate', () => { if (window.__rlSkip > 0) { window.__rlSkip--; return; } if (window.__rlDepth > 1) { window.__rlDepth--; window.__rlBack(); } }); window.__rlSkip = 0; } while (window.__rlDepth < depth) { history.pushState({ rl: window.__rlDepth }, ''); window.__rlDepth++; } if (window.__rlDepth > depth) { const n = window.__rlDepth - depth; window.__rlDepth = depth; window.__rlSkip += 1; history.go(-n); } }")
+
+// ── Musik: dasselbe im Code erzeugte Stück wie in der Android-App, als Schleife über den Browser-Ton.
+// Browser erlauben Ton erst nach der ersten Berührung – dann wird das Stück einmal berechnet und sanft eingeblendet. Im Hintergrund ist Ruhe.
+fun newSamples(n: Int): JsAny = js("new Float32Array(n)")
+fun putSample(b: JsAny, i: Int, v: Float): Unit = js("{ b[i] = v; }")
+fun musicStore(mood: String, b: JsAny): Unit = js("{ window.__rlMusic.bufs[mood] = b; }")
+/** Einmal beim Start: [render] berechnet ein Stück und legt es mit [musicStore] ab */
+fun musicSetup(render: (String) -> Unit): Unit = js("""{
+  const M = window.__rlMusic = { bufs: {}, want: null, vol: 0, cur: null, busy: false, render: render };
+  M.apply = () => { const A = window.__rlAudio; if (!A || A.state !== 'running') return;
+    if (M.cur && (M.cur.mood !== M.want || M.vol <= 0)) { const c = M.cur; M.cur = null; c.gain.gain.setTargetAtTime(0, A.currentTime, 0.25); setTimeout(() => { try { c.src.stop(); } catch (e) {} }, 1500); }
+    if (!M.want || M.vol <= 0) return;
+    if (M.cur) { M.cur.gain.gain.setTargetAtTime(M.vol, A.currentTime, 0.2); return; }
+    const data = M.bufs[M.want];
+    if (!data) { if (!M.busy) { M.busy = true; const w = M.want; setTimeout(() => { try { M.render(w); } catch (e) {} M.busy = false; if (M.bufs[w]) M.apply(); }, 30); } return; }
+    const buf = A.createBuffer(1, data.length, 22050); buf.copyToChannel(data, 0);
+    const src = A.createBufferSource(); src.buffer = buf; src.loop = true; const gain = A.createGain(); gain.gain.value = 0; gain.gain.setTargetAtTime(M.vol, A.currentTime, 0.6);
+    src.connect(gain); gain.connect(A.destination); src.start(); M.cur = { mood: M.want, src: src, gain: gain }; };
+  const wake = () => { try { const A = window.__rlAudio || (window.__rlAudio = new (window.AudioContext || window.webkitAudioContext)()); if (A.state !== 'running') A.resume().then(M.apply); else M.apply(); } catch (e) {} };
+  window.addEventListener('pointerdown', wake, true); window.addEventListener('keydown', wake, true);
+  document.addEventListener('visibilitychange', () => { const A = window.__rlAudio; if (!A) return; if (document.hidden) A.suspend(); else A.resume().then(M.apply); });
+}""")
+/** Welches Stück laufen soll (null = keins) und wie laut (0..1) */
+fun musicWant(mood: String?, vol: Double): Unit = js("{ const M = window.__rlMusic; if (!M) return; M.want = mood; M.vol = vol; M.apply(); }")

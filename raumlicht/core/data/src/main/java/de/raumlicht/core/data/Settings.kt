@@ -14,10 +14,10 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     private val _music = flag("music", true)
     private val _vibration = flag("vibration", true)
     private val _autoUpdate = flag("autoUpdate", true)
-    private val _voice = flag("voice", true)
+    private val _voice = flag("voiceOn", false)   // Lux spricht nur, wenn man es einschaltet (seit 2.5.1; der alte Schlüssel „voice“ zählt nicht mehr)
     /** Lux liest ihre Sprechblasen laut vor */
     override val voice: StateFlow<Boolean> = _voice.asStateFlow()
-    override fun setVoice(v: Boolean) { prefs.edit().putBoolean("voice", v).apply(); _voice.value = v }
+    override fun setVoice(v: Boolean) { prefs.edit().putBoolean("voiceOn", v).apply(); _voice.value = v }
     override val sound: StateFlow<Boolean> = _sound.asStateFlow()
     override val music: StateFlow<Boolean> = _music.asStateFlow()
     override val vibration: StateFlow<Boolean> = _vibration.asStateFlow()

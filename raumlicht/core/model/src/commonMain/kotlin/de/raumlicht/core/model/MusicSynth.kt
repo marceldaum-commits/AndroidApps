@@ -1,8 +1,5 @@
-package de.raumlicht.app.ui.fx
+package de.raumlicht.core.model
 
-import de.raumlicht.core.model.Instrument
-import de.raumlicht.core.model.Song
-import de.raumlicht.core.model.SpaceMusic
 import kotlin.math.*
 
 /**

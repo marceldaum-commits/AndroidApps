@@ -17,6 +17,9 @@ import de.raumlicht.app.ui.fx.*
 import de.raumlicht.app.ui.settings.SettingsPage
 import de.raumlicht.app.ui.theme.Q
 import de.raumlicht.app.ui.theme.RaumlichtTheme
+import de.raumlicht.core.model.MusicMood
+import de.raumlicht.core.model.MusicSynth
+import de.raumlicht.core.model.SpaceMusic
 import de.raumlicht.core.model.Speech
 import kotlinx.browser.document
 
@@ -62,6 +65,11 @@ private fun WebApp() {
         ready = true; hideStartScreen()
     }
     if (!ready) return
+    // Musik wie in der Android-App: ruhig im Menü, flotter bei Fahrt und Flug
+    var mood by remember { mutableStateOf(MusicMood.MENU) }
+    val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()
+    LaunchedEffect(Unit) { musicSetup { name -> val pcm = MusicSynth.render(SpaceMusic.compose(MusicMood.valueOf(name))); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i] / 32768f); musicStore(name, b) } }
+    LaunchedEffect(musicOn, loud, mood) { musicWant(if (musicOn) mood.name else null, 0.5 * loud / 100.0) }
     // Zurück-Taste des Browsers schließt eine Ebene
     LaunchedEffect(nav.stack.size) { syncHistory(nav.stack.size) { nav.back() } }
 
@@ -75,7 +83,7 @@ private fun WebApp() {
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
             AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
-                onRoute = { atHome(it == Routes.HOME) },
+                onRoute = { atHome(it == Routes.HOME); mood = if (Routes.isAction(it)) MusicMood.FLIGHT else MusicMood.MENU },
                 settings = { onBack ->
                     val music by prefs.music.collectAsState(); val sound by prefs.sound.collectAsState(); val volume by prefs.volume.collectAsState(); val voice by prefs.voice.collectAsState()
                     SettingsPage(music, prefs::setMusic, sound, prefs::setSound, vibration, prefs::setVibration, "Version ${Version.NAME} vom ${Version.DATE} · WebApp", onBack,
@@ -86,9 +94,9 @@ private fun WebApp() {
                             } }
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
-                        voice = voice, onVoice = { prefs.setVoice(it); if (!it) stopSpeaking() }, voiceAvailable = canSpeak(), hasMusic = false,
+                        voice = voice, onVoice = { prefs.setVoice(it); if (!it) stopSpeaking() }, voiceAvailable = canSpeak(),
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe, keine Daten an einen Server. " +
-                            "Die App aktualisiert sich von selbst; gesprochen wird mit der Sprachausgabe deines Browsers.")
+                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest die Sprachausgabe deines Browsers vor.")
                 })
         } }
     }

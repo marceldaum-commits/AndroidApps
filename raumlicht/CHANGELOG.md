@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.5.1 – Musik im Browser, Lux erst einmal still (16.11.2026)
+- **🎵 Musik auch im Browser:** Die WebApp spielt jetzt dieselbe im Code erzeugte Hintergrundmusik wie die Android-App – ruhig im Menü, flotter bei Fahrt und Flug.
+  Sie beginnt nach der ersten Berührung (das verlangen Browser), ist in den Einstellungen abschaltbar und folgt dem Lautstärke-Regler.
+- **🗣️ Lux spricht nur noch auf Wunsch:** Das Vorlesen ist überall ausgeschaltet – in der Android-App und im Browser.
+  Wer es mag, schaltet es in den Einstellungen unter „Lux spricht“ wieder ein. Die Sprechblasen zum Lesen bleiben wie gewohnt.
+
 ## 2.5.0 – Raumlicht im Browser (16.11.2026)
 - **🌐 Die ganze App läuft jetzt auch im Browser:** Startseite, alle Kapitel mit Erklärungen und Rechenweg, Tagesaufgabe, Üben, Abi-Aufgaben,
   Kurve abfahren, Flug durch den Raum, Ballerbude, Baumeister, Geisterfahrt, Ringflug, Zufallsmaschine, Galton-Brett, Planer, Einstellungen –

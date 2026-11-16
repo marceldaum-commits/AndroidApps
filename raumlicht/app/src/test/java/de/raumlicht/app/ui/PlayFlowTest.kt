@@ -239,7 +239,7 @@ class PlayFlowTest {
             de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.0.0", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, voice = on, onVoice = { on = it }) } }
         rule.onNodeWithText("🗣️ Lux spricht").assertExists()
         val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
-        val s = de.raumlicht.core.data.Settings(ctx); assertTrue(s.voice.value); s.setVoice(false); assertFalse(de.raumlicht.core.data.Settings(ctx).voice.value)
+        val s = de.raumlicht.core.data.Settings(ctx); assertFalse(s.voice.value) /* aus, bis man es einschaltet */; s.setVoice(true); assertTrue(de.raumlicht.core.data.Settings(ctx).voice.value)
         val v = de.raumlicht.app.ui.fx.LuxVoice(ctx); v.enabled = false; v.say("still"); v.stop(); v.shutdown()      // ohne Stimme oder ausgeschaltet: kein Absturz
     }
 

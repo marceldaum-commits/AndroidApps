@@ -90,3 +90,12 @@ die Extras einzeln im Browser (sie sind derselbe Code wie unter Android und dort
 5. Je ein Extra aus „Mehr“ öffnen (Kurve abfahren, Ballerbude, Galton-Brett). 6. Ton/Stimme nach dem ersten Antippen hörbar.
 
 **Freigabe:** `raumlicht-live` beantrage ich noch **nicht** – erst wenn Punkte 3 und 4 auf echten Geräten bestätigt sind. `raumlicht-live` fasse ich nicht an.
+
+---
+
+## 16.11.2026 – WebApp 2.5.1 (Wunsch von Marcel)
+
+Hintergrundmusik läuft jetzt auch in der WebApp (im Browser erzeugt, keine Audiodateien, startet nach der ersten Berührung, abschaltbar).
+Das Vorlesen („Lux spricht“) ist in Android und Web ab jetzt **aus**, bis man es in den Einstellungen einschaltet – die Sprachausgabe des Browsers
+wird also ohne Zutun gar nicht mehr benutzt. Noch nur Android: natürliche Stimme, Widgets, Erfolgskarte als Bild. Im Test nicht hörbar geprüft (kein Lautsprecher) –
+bitte auf der Testadresse einmal anhören. `raumlicht-live` weiterhin nicht beantragt.

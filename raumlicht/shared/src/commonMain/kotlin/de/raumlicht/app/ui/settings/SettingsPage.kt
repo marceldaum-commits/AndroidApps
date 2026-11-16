@@ -49,7 +49,7 @@ fun SettingsPage(
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     if (hasMusic) Toggle("🎵 Musik", "Elektronische Klänge im Hintergrund", music, onMusic)
                     Toggle("🔊 Geräusche", "Laser, Treffer, Lux’ Piepsen", sound, onSound)
-                    Toggle("🗣️ Lux spricht", if (voiceAvailable) "Lux liest ihre Sprechblasen laut vor (Sprachausgabe des Geräts)" else "Auf diesem Gerät ist keine deutsche Stimme eingerichtet – Lux bleibt stumm.", voice) {
+                    Toggle("🗣️ Lux spricht", if (voiceAvailable) "Aus, bis du es einschaltest: Lux liest ihre Sprechblasen laut vor (Sprachausgabe des Geräts)" else "Auf diesem Gerät ist keine deutsche Stimme eingerichtet – Lux bleibt stumm.", voice) {
                         onVoice(it); if (it) speaker?.say("Hallo, ich bin Lux!") }
                     if (voice && voiceAvailable) voiceControls()
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)

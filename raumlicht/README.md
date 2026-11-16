@@ -100,7 +100,7 @@ Raumlicht entsteht für Android und Web aus einer Codebasis (Compose Multiplatfo
   `raumlicht-live` setzt nur der Leitstand. Meldungen: `MELDUNG_AN_LEITSTAND.md`.
 - 3D-Bühne im Browser: Das iframe liegt **unter** der Oberfläche; `Stage.wasmJs.kt` lässt dort ein durchsichtiges Fenster und reicht Zeiger und Mausrad
   an die Bühne weiter. So liegen Einblendungen und Konfetti wie unter Android über der Bühne.
-- Stand: Web = Android bis auf Hintergrundmusik, natürliche Stimme, Widgets, Erfolgskarte als Bild und den In-App-Updater (im Web unnötig).
+- Stand: Web = Android bis auf natürliche Stimme, Widgets, Erfolgskarte als Bild und den In-App-Updater (im Web unnötig).
 
 **Bedien-Test der echten Bühne** (seit 2.3.1): `cd scene && node test/interact.mjs ../core/model/build/scenes.json` spielt Antippen, Ziehen und Wischen mit echten
 Zeiger-Ereignissen im Browser durch und prüft, was die Bühne meldet. Vor jeder Auslieferung laufen lassen, wenn sich an der Bedienung der Bühne etwas ändert –
