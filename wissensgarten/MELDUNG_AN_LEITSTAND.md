@@ -1,5 +1,33 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 0.21.2 vom 16.11.2026 – WebApp: erster Start deutlich schneller
+
+Marcel meldete: „Lädt recht lange“. Beim ersten Öffnen wurden ca. 11 MB übertragen. Mehr als die Hälfte davon war die Emoji-Schrift (6 MB),
+weil sie alle Flaggen- und Hautfarben-Varianten enthielt.
+- Die Schrift enthält jetzt nur die tatsächlich genutzten Emojis (+ Smileys): **2 MB statt 6 MB**. Damit werden beim ersten Start insgesamt ca. 7 statt 11 MB geladen.
+  Alle Glyphen aus Paketen und Code sind enthalten; geprüft per Skript, dazu ein Sichttest im Browser.
+- Die Schrift wird per `<link rel="preload">` gleich parallel zur App geladen statt erst danach.
+- Die 379 Android-Tests sind grün, Lint ohne Fehler.
+- Im Browser (Pixel 7) startet die WebApp ohne Fehler, die Emojis sind korrekt dargestellt.
+
+Tipp für den Server (nginx): `gzip_types` um `font/ttf` ergänzen. Das spart bei der Schrift nur ca. 7 %, kostet aber nichts. WASM wird schon gzip-komprimiert.
+**Bitte nach Prüfung `wissensgarten-live` auf 0.21.2 schalten.**
+
+## 0.21.1 vom 16.11.2026 – WebApp: Startbild bleibt beim ersten Laden sichtbar
+
+**Problem (von Marcel am Handy gemeldet):** Beim ersten Öffnen über mobiles Netz war nur ein weißer Bildschirm mit lila Ladekreis zu sehen.
+Ursache: Die Zeichenfläche der App lag über Brummis Startbild, während einmalig ca. 10 MB geladen werden (App + Emoji-Schrift).
+Das ist bei schwachem Netz entsprechend langsam.
+
+**Lösung:**
+- Das Startbild liegt jetzt sicher oben und zeigt einen Ladebalken.
+- Nach 6 s erscheint ein Hinweis, dass der erste Start einmalig ca. 10 MB lädt, nach 30 s „Netz langsam“, nach 90 s ein Knopf „Nochmal versuchen“.
+- Ab dem zweiten Start kommt alles aus dem Zwischenspeicher.
+
+**Getestet:** Mit gedrosseltem 4G-Profil (Pixel 7): Startbild und Hinweis sind sichtbar, danach erscheint die App, ohne Fehler.
+Nur die WebApp hat sich geändert; die APK hat aus Gründen des Gleichstands die gleiche Versionsnummer.
+**Bitte `wissensgarten-live` auf 0.21.1 schalten.**
+
 ## 0.21.0 vom 16.11.2026 – Inhalte stark erweitert (30 neue Pakete)
 
 **Umfang:** 30 neue Wissenspakete mit 1.046 neuen Karten. Jetzt sind es **77 Pakete mit 2.653 Karten** (vorher 47 Pakete).
