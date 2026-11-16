@@ -23,6 +23,21 @@ object Daily {
 }
 
 /**
+ * Schwierigkeitsstufen des Generators. Jede Stufe ist messbar schwerer als die vorige (Nachweis: DifficultyTest):
+ * kleinere Zielzonen, mehr Hindernisse, mehr Stationen und Rechenschritte, feinere Regler, ab „Extrem“ ein
+ * zusätzlicher Funktionsparameter bzw. beim Wurf eine Klippe (Winkel, Tempo, Schwerkraft und Höhe zugleich).
+ */
+object Tier {
+    const val EASY = 0; const val NORMAL = 1; const val HARD = 2; const val PRO = 3; const val EXTREME = 4
+    const val MAX = EXTREME
+    val names = listOf("Leicht", "Normal", "Schwer", "Profi", "Extrem")
+    val emojis = listOf("🟢", "🔵", "🟠", "🔴", "🔥")
+    fun label(t: Int) = t.coerceIn(0, MAX).let { "${emojis[it]} ${names[it]}" }
+    /** Faktor für die Größe der Zielzonen */
+    val radius = listOf(1.3, 1.0, 0.85, 0.6, 0.4)
+}
+
+/**
  * Level-Generator für Tagesmission, Duell, Asteroidensturm und Boss-Kämpfe.
  * Erst wird eine Lösung auf dem Regler-Raster gewürfelt, dann die Stationen *auf* diese Bahn gelegt –
  * so ist jedes Level garantiert lösbar. Danach wird geprüft, dass die Startwerte nicht schon treffen.
@@ -32,21 +47,26 @@ object Gen {
     const val FALLBACK = "Ersatz-Mission"
     val kinds = listOf(Kind.POINT, Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.THROW, Kind.RENDEZVOUS)
 
-    /** @param difficulty 0 = leicht, 1 = normal (ein, zwei Asteroiden), 2 = schwer (mehr Asteroiden, krumme Zahlen) */
+    /**
+     * @param difficulty siehe [Tier]: 0 leicht (große Ziele, keine Asteroiden), 1 normal, 2 schwer (mehr Asteroiden,
+     *   krumme Zahlen), 3 Profi (enge Ziele, 3 Stationen, feine Regler), 4 Extrem (sehr enge Ziele, 4 Stationen,
+     *   viele Asteroiden dicht an der Bahn, zusätzlicher Parameter)
+     */
     fun level(kind: Kind, seed: Long, difficulty: Int = 1, id: String = "gen-$seed"): Level {
         val r = Random(seed)
         val day = seed
+        val d = difficulty.coerceIn(0, Tier.MAX)
         repeat(300) {
             val l = when (kind) {
-                Kind.POINT -> point(day, r, difficulty)
+                Kind.POINT -> point(day, r, d)
                 Kind.LINE -> line(day, r)
                 Kind.PARABOLA -> parabola(day, r)
                 Kind.SINE -> sine(day, r)
                 Kind.EXP -> exp(day, r)
-                Kind.THROW -> throwLevel(day, r)
-                Kind.RENDEZVOUS -> rendezvous(day, r, difficulty)
+                Kind.THROW -> throwLevel(day, r, d)
+                Kind.RENDEZVOUS -> rendezvous(day, r, d)
                 else -> null
-            }?.let { harder(it, r, difficulty) }
+            }?.let { harder(it, r, d) }
             if (l != null && valid(l)) return l.copy(id = id)
         }
         // Notfall (sollte nie passieren – im Test geprüft)
@@ -57,12 +77,67 @@ object Gen {
     fun any(seed: Long, difficulty: Int = 1, id: String = "gen-$seed"): Level =
         level(kinds[floorModK(seed, kinds.size.toLong()).toInt()], seed, difficulty, id)
 
-    /** Schwer: zusätzliche Asteroiden nahe (aber nicht auf) der Lösungsbahn. */
-    private fun harder(l: Level, r: Random, difficulty: Int): Level {
-        if (difficulty < 2 || l.kind == Kind.POINT || l.kind == Kind.RENDEZVOUS) return l
+    private val functions = setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP)
+
+    /** Stufe anwenden: leicht = große Ziele ohne Asteroiden; schwer = zusätzliche Asteroiden nahe (aber nicht auf) der Bahn. */
+    private fun harder(l: Level, r: Random, difficulty: Int): Level? = when (difficulty) {
+        Tier.EASY -> l.copy(asteroids = emptyList(), targets = l.targets.map { it.copy(r = it.r * Tier.radius[0]) })
+        Tier.NORMAL -> l
+        Tier.HARD -> l.copy(targets = l.targets.map { it.copy(r = it.r * Tier.radius[Tier.HARD]) }).let { h ->
+            if (l.kind == Kind.POINT || l.kind == Kind.RENDEZVOUS) h
+            else h.copy(asteroids = h.asteroids + rocks(r, Flight.path(h, h.solution), h.targets + h.asteroids, 2, gap = 0.35))
+        }
+        else -> extreme(l, r, difficulty)
+    }
+
+    /**
+     * Profi und Extrem: Zielzonen auf 60 % bzw. 40 %, eine bzw. zwei Stationen mehr, Regler doppelt so fein,
+     * 4 bzw. 6 Asteroiden dicht an der Bahn. Extrem zusätzlich: Sinus mit Verschiebung c, Wachstum mit Verschiebung d.
+     */
+    private fun extreme(l0: Level, r: Random, d: Int): Level? {
+        var l = l0
+        val k = l.kind
+        if (d == Tier.EXTREME && k == Kind.SINE) {
+            val c = r.pick(-2.0, 2.0, 0.5).takeIf { it != 0.0 } ?: return null
+            l = l.copy(targets = l.targets.map { it.copy(x = it.x + c) }, cells = l.cells.map { it.copy(x = it.x + c) },
+                params = l.params + Param("c", "c", -3.0, 3.0, 0.25, 0.0), solution = l.solution + ("c" to c))
+        }
+        if (d == Tier.EXTREME && k == Kind.EXP) {
+            val dd = r.pick(-4.0, 4.0, 1.0).takeIf { it != 0.0 } ?: return null
+            l = l.copy(targets = l.targets.map { it.copy(y = it.y + dd) }, cells = l.cells.map { it.copy(y = it.y + dd) },
+                params = l.params + Param("d", "d", -6.0, 6.0, 0.5, 0.0), solution = l.solution + ("d" to dd), fixed = l.fixed - "d")
+        }
+        if (k in functions && l.targets.any { kotlin.math.abs(it.x) > 8.5 || kotlin.math.abs(it.y) > 8.5 }) return null
+        val more = d - Tier.HARD
         val path = Flight.path(l, l.solution)
-        val extra = rocks(r, path, l.targets + l.asteroids, 2, gap = 0.35)
-        return l.copy(asteroids = l.asteroids + extra)
+        var targets = l.targets
+        if (k in functions) {
+            repeat(more) {
+                val x = r.pick(-8.0, 8.0, 0.5)
+                val y = Flight.f(l, l.solution, x)
+                if (targets.any { kotlin.math.abs(it.x - x) < 1.5 } || kotlin.math.abs(y) > 8.5) return null
+                targets = targets + Body(x, y, 0.7)
+            }
+            targets = targets.sortedBy { it.x }
+        } else if (k == Kind.THROW) {
+            val flying = path.filter { it.y > l.ground + 2 && it.x > l.launch.x + 2 }
+            if (flying.size < 10) return null
+            targets = (1..more).map { i -> flying[flying.size * i / (more + 1)].let { p -> Body(p.x, p.y, 0.7) } } + targets
+        }
+        val rm = Tier.radius[d]
+        targets = targets.map { it.copy(r = it.r * rm) }
+        val params = l.params.map { it.copy(step = it.step / 2) }
+        val rocks = if (k == Kind.RENDEZVOUS) emptyList() else
+            rocks(r, path, targets + l.cells, if (d == Tier.PRO) 4 else 6, gap = if (d == Tier.PRO) 0.3 else 0.2, near = 1.2)
+        val label = Tier.label(d)
+        val keys = params.joinToString(", ") { it.label }
+        val task = when (k) {
+            in functions -> "$label: ${targets.size} Stationen – " + targets.joinToString(", ") { "(${num(it.x)} | ${num(it.y)})" } + ". Finde $keys!"
+            Kind.THROW -> "$label: " + l.task + " Unterwegs " + (if (more == 1) "ein Ring" else "$more Ringe") + ": " +
+                targets.dropLast(1).joinToString(", ") { "(${num(it.x, 1)} | ${num(it.y, 1)})" } + "."
+            else -> "$label: " + l.task
+        }
+        return l.copy(targets = targets, params = params, asteroids = rocks, task = task)
     }
 
     private fun valid(l: Level): Boolean {
@@ -81,11 +156,13 @@ object Gen {
         Level("gen", 0, 0, "Mission", kind, task, targets, params, sol, fixed, rocks, cells, planet = planet, tip = tip)
 
     /** Asteroiden, die nicht auf der Lösungsbahn liegen. */
-    private fun rocks(r: Random, path: List<Vec>, avoid: List<Body>, n: Int, gap: Double = 1.0): List<Body> {
+    private fun rocks(r: Random, path: List<Vec>, avoid: List<Body>, n: Int, gap: Double = 1.0, near: Double? = null): List<Body> {
         val out = ArrayList<Body>()
         var tries = 0
-        while (out.size < n && tries++ < 200) {
+        while (out.size < n && tries++ < (if (near != null) 800 else 200)) {
             val b = Body(r.pick(-8.0, 8.0, 1.0), r.pick(-8.0, 8.0, 1.0), 0.9)
+            // near: höchstens so weit neben der Bahn – dann engt der Asteroid den Weg wirklich ein
+            if (near != null && path.none { hypot(it.x - b.x, it.y - b.y) <= b.r + gap + near }) continue
             val clear = path.all { hypot(it.x - b.x, it.y - b.y) > b.r + gap } &&
                 avoid.all { hypot(it.x - b.x, it.y - b.y) > 2.5 } && out.all { hypot(it.x - b.x, it.y - b.y) > 3 }
             if (clear) out += b
@@ -132,36 +209,52 @@ object Gen {
         return l.copy(asteroids = rocks(r, Flight.path(l, l.solution), t, 1))
     }
 
-    private fun throwLevel(day: Long, r: Random): Level? {
+    private fun throwLevel(day: Long, r: Random, difficulty: Int): Level? {
         val planet = Planet.entries[r.nextInt(3)]
+        // Ab Profi: Abschuss von einer Klippe – Winkel, Tempo, Schwerkraft und Höhe spielen zusammen
+        val h = if (difficulty >= Tier.PRO) r.pick(2.0, 6.0, 1.0) else 0.0
         val angle = r.pick(30.0, 65.0, 5.0)
         val vMax = if (planet == Planet.EARTH) 14.0 else 7.0
         val v = r.pick(4.0, vMax, 0.5)
         val params = listOf(Param("angle", "Winkel", 5.0, 85.0, 1.0, 45.0, "°"), Param("v", "Tempo", 1.0, 20.0, 0.5, if (planet == Planet.EARTH) 8.0 else 3.0, "m/s"))
         var l = mk(day, Kind.THROW, "", emptyList(), params, mapOf("angle" to angle, "v" to v), planet = planet,
-            tip = "Wurfweite auf ebenem Boden: w = v² · sin(2α) : g.")
+            tip = if (h == 0.0) "Wurfweite auf ebenem Boden: w = v² · sin(2α) : g."
+                else "Von der Klippe fliegt die Sonde weiter als auf ebenem Boden: Zerleg das Tempo in vx = v · cos α und vy = v · sin α.")
+            .let { if (h == 0.0) it else it.copy(launch = Vec(-9.0, -9.0 + h)) }
         val path = Flight.path(l, l.solution)
-        val land = path.last { it.y >= l.launch.y }
+        val land = path.last { it.y >= -9.0 }
         val dist = land.x - l.launch.x
         if (land.x > 9.0 || dist < 6) return null
-        val t = listOf(Body(land.x, l.launch.y, 0.8))
-        l = l.copy(targets = t, task = "${planet.emoji} ${planet.label}: Ziel ${num(dist, 1)} m entfernt. Winkel und Tempo – du entscheidest!")
+        val t = listOf(Body(land.x, -9.0, 0.8))
+        l = l.copy(targets = t, task = "${planet.emoji} ${planet.label}: Ziel ${num(dist, 1)} m entfernt" +
+            (if (h == 0.0) "." else ", Abschuss von einer ${num(h)} m hohen Klippe.") + " Winkel und Tempo – du entscheidest!")
         return l
     }
 
     private fun point(day: Long, r: Random, difficulty: Int): Level? {
-        val x = r.pick(-8.0, 8.0, 1.0); val y = r.pick(-8.0, 8.0, 1.0)
+        // Raster: ganze Kästchen, ab Profi halbe, bei Extrem Viertel
+        val step = when { difficulty >= Tier.EXTREME -> 0.25; difficulty >= Tier.PRO -> 0.5; else -> 1.0 }
+        val x = r.pick(-8.0, 8.0, step); val y = r.pick(-8.0, 8.0, step)
         if (x == 0.0 || y == 0.0) return null
-        val px = Param("x", "x", -9.0, 9.0, 1.0, 0.0); val py = Param("y", "y", -9.0, 9.0, 1.0, 0.0)
-        // Ab „normal“: getarnt, nur ein Rechen-Funkspruch verrät die Koordinaten
+        val px = Param("x", "x", -9.0, 9.0, step, 0.0); val py = Param("y", "y", -9.0, 9.0, step, 0.0)
+        // Ab „normal“: getarnt, nur ein Rechen-Funkspruch verrät die Koordinaten – je Stufe mit mehr Rechenschritten
         val hidden = difficulty >= 1
-        val task = if (!hidden) "Flieg zur Station bei (${num(x)} | ${num(y)})." else {
-            val k = r.nextInt(2, 5)
-            val a = r.nextInt(1, 9)
-            "Getarnt! Funkspruch: x = ${num(x * k)} : $k,  y = ${num(y - a)} + $a"
+        val k = r.nextInt(2, 5) * (if (difficulty >= Tier.EXTREME) 4 else if (difficulty >= Tier.PRO) 2 else 1)
+        val a = r.nextInt(1, 9)
+        val c = r.nextInt(1, 9)
+        val task = when {
+            !hidden -> "Flieg zur Station bei (${num(x)} | ${num(y)})."
+            difficulty == Tier.NORMAL -> "Getarnt! Funkspruch: x = ${num(x * k)} : $k,  y = ${num(y - a)} + $a"
+            difficulty == Tier.HARD -> "Getarnt! Funkspruch: x = (${num(x * k + a)} − $a) : $k,  y = ${num(y + c)} − $c"
+            difficulty == Tier.PRO -> "${Tier.label(difficulty)} – getarnt! x = (${num(x * k + a)} − $a) : $k,  y = ${num((y - c) * k)} : $k + $c"
+            else -> {
+                val s = x + c   // x = √(s²) − c, nur mit s ≥ 0
+                if (s < 0) return null
+                "${Tier.label(difficulty)} – getarnt! x = √${num(s * s, 4)} − $c,  y = (${num(y * k + a)} − $a) : $k"
+            }
         }
         return mk(day, Kind.POINT, task, listOf(Body(x, y, 0.7)), listOf(px, py), mapOf("x" to x, "y" to y),
-            tip = "Erst x (rechts/links), dann y (oben/unten). Minus heißt links bzw. unten.").copy(hidden = hidden)
+            tip = "Erst x (rechts/links), dann y (oben/unten). Minus heißt links bzw. unten. Klammern zuerst ausrechnen!").copy(hidden = hidden)
     }
 
     private fun sine(day: Long, r: Random): Level? {
@@ -178,12 +271,16 @@ object Gen {
     }
 
     private fun rendezvous(day: Long, r: Random, difficulty: Int): Level? {
-        val step = if (difficulty >= 2) 0.5 else 1.0
+        // Raster des Treffpunkts und der Steigungen: je Stufe feiner
+        val step = when { difficulty >= Tier.EXTREME -> 0.25; difficulty >= Tier.HARD -> 0.5; else -> 1.0 }
+        val mStep = if (difficulty >= Tier.PRO) 0.25 else 0.5
         val x = r.pick(-6.0, 6.0, step); val y = r.pick(-6.0, 6.0, step)
-        val m1 = r.pick(-3.0, 3.0, 0.5); val m2 = r.pick(-3.0, 3.0, 0.5)
+        val m1 = r.pick(-3.0, 3.0, mStep); val m2 = r.pick(-3.0, 3.0, mStep)
         if (m1 == m2 || (x == 0.0 && y == 0.0)) return null
         val b1 = y - m1 * x; val b2 = y - m2 * x
-        if (b1 != roundHalfUp(b1 * 2) / 2.0 || b2 != roundHalfUp(b2 * 2) / 2.0 || kotlin.math.abs(b1) > 9 || kotlin.math.abs(b2) > 9) return null
+        val grid = if (difficulty >= Tier.PRO) 4.0 else 2.0
+        if (b1 != roundHalfUp(b1 * grid) / grid || b2 != roundHalfUp(b2 * grid) / grid || kotlin.math.abs(b1) > 9 || kotlin.math.abs(b2) > 9) return null
+        // Regler in halben Kästchen (ab Profi macht extreme() sie doppelt so fein)
         val params = listOf(Param("x", "x", -9.0, 9.0, 0.5, 0.0), Param("y", "y", -9.0, 9.0, 0.5, 0.0))
         fun lin(m: Double, b: Double) = "y = ${when (m) { 1.0 -> ""; -1.0 -> "−"; else -> num(m) }}x ${if (b < 0) "−" else "+"} ${num(kotlin.math.abs(b))}"
         return mk(day, Kind.RENDEZVOUS, "A: ${lin(m1, b1)} und B: ${lin(m2, b2)}. Wo treffen sie sich?",

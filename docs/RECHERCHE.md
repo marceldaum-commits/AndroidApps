@@ -139,3 +139,12 @@ Auftrag (Marcel über den Leitstand): „sehr viel Inhalt“, jede Aufgabe mit E
 - Wasm parallel und sofort anfragen, aber als Strom weiterreichen – so bleibt `instantiateStreaming`
   (Übersetzen während des Ladens) erhalten. Puffern hätte ~2 s gekostet.
 - Android 12+: eigener System-Startbildschirm (`windowSplashScreenBackground`) in App-Farbe, sonst je nach Gerät weiß.
+
+## Kurvenflug 0.22: messbar steigende Schwierigkeit (Nov. 2026)
+- Vorgabe Marcel: Schwierigkeit muss nachweislich steigen und am Ende extrem anspruchsvoll sein.
+- Flow-Theorie (Csíkszentmihályi) und „Desirable Difficulties“ (Bjork): Herausforderung muss mit dem Können wachsen;
+  zu leicht langweilt, zu schwer frustriert. Deshalb gestufte Steigerung statt Sprung – und die Extrem-Stufe freiwillig.
+- Spiele-Praxis: Bonus- bzw. „Meister“-Level nach dem Kapitelabschluss (optional, eigene Sterne) motivieren Könner,
+  ohne schwächere Kinder auszubremsen; Stufen-Namen mit Farbe/Emoji (🟢🔵🟠🔴🔥) machen Fortschritt sichtbar.
+- Messbar gemacht über: Unbekannte, Zielzonen-Radius, Hindernisse, Rechenschritte, Lösungsbereich (Anteil treffender
+  Reglerstellungen) – Test DifficultyTest/ChapterExtremeTest schlägt fehl, wenn eine Stufe nicht strikt schwerer ist.

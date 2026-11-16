@@ -171,7 +171,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
             HomeScreen(
                 stars = stars.values.sum(), maxStars = vm.maxStars, cells = cells, skin = skin,
                 onSkin = vm::setSkin,
-                chapters = Levels.chapters, levelStars = stars,
+                chapters = Levels.chapters, levelStars = stars + vm.extremeStars.collectAsStateWithLifecycle().value,
                 onLevel = { nav.goOnce(Routes.level(it.id)) },
                 onSettings = { nav.goOnce(Routes.SETTINGS) },
                 daily = daily, dailyStars = progress[daily.id]?.stars ?: 0, dailiesDone = dailiesDone,
@@ -244,6 +244,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 else if (de.kurvenflug.core.model.Learning.isReview(id)) de.kurvenflug.core.model.Learning.levelFor(id)
                 else if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.levelFor(id)
                 else if (de.kurvenflug.core.model.Seasons.isSeason(id)) de.kurvenflug.core.model.Seasons.levelFor(id)
+                else if (de.kurvenflug.core.model.ChapterExtreme.isExtreme(id)) de.kurvenflug.core.model.ChapterExtreme.levelFor(id)
                 else Levels.byId(id)
             } ?: return@composable
             val chapter = (if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.chapter(id.removePrefix(de.kurvenflug.core.model.Andromeda.PREFIX).substringBefore('-').toInt()) else null)
@@ -253,6 +254,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 ?: Chapter(0, "Tagesmission", "Jeden Tag neu", "🛰️", emptyList(), listOf(level))
             val next = if (de.kurvenflug.core.model.Andromeda.isAndromeda(id)) de.kurvenflug.core.model.Andromeda.next(id)
                 else if (de.kurvenflug.core.model.Seasons.isSeason(id)) de.kurvenflug.core.model.Seasons.next(id)
+                else if (de.kurvenflug.core.model.ChapterExtreme.isExtreme(id)) null
                 else Levels.next(level.id)?.takeIf { it.chapter == level.chapter }
             val opened = remember(id) { de.kurvenflug.core.model.nowMillis() }
             LevelScreen(

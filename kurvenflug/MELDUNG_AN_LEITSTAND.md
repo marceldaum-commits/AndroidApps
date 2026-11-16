@@ -1,5 +1,80 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 0.22.0 – Schwierigkeit steigt nachweislich bis „Extrem“ (Vorgabe Marcel vom 16.11.)
+
+- **Version:** 0.22.0 · **Commit:** a5fec15 (Zweig claude/gifted-shannon-657gpr)
+- **Wo es in Kurvenflug Schwierigkeit gibt:** der Level-Generator (Asteroidensturm, Andromeda, Rettungsmissionen,
+  Bosse, Gastplaneten, Tagesmission, Duell) und die 30 Kapitel. Werkstatt (nur Aussehen) und Klassen-Challenge
+  (Lehrkraft wählt Level) haben keine eigene Schwierigkeit.
+- **Generator: 5 Stufen** 🟢 Leicht · 🔵 Normal · 🟠 Schwer · 🔴 **Profi** (neu) · 🔥 **Extrem** (neu).
+  - Profi: Zielzonen 60 %, 3 Stationen, Regler doppelt so fein, 4 Asteroiden dicht an der Bahn, Wurf von einer Klippe
+    (Winkel, Tempo, Schwerkraft und Höhe zugleich), getarnte Koordinaten mit 3 Rechenschritten in halben Kästchen.
+  - Extrem: Zielzonen 40 %, 4 Stationen, 6 Asteroiden 0,2 Kästchen neben der Bahn, **zusätzlicher Parameter**
+    (Sinus mit Verschiebung c → 4 Unbekannte, Wachstum mit Verschiebung d), Wurf mit 2 Ringen unterwegs,
+    Koordinaten in Viertel-Kästchen mit Wurzel im Funkspruch, Rendezvous mit Viertel-Steigungen.
+  - Einsatz: Asteroidensturm alle 4 Wellen eine Stufe höher (ab Welle 17 Extrem, Stufe steht im Titel),
+    Andromeda Planet 1–6 Schwer, 7–12 Profi, ab 13 Extrem; Rettungsmission ab Nr. 8 mit Profi-Schluss-Etappe.
+    Tagesmission und Duell bleiben unverändert (Duell-Codes funktionieren weiter).
+- **Kapitel:** Die Kapitel steigern sich inhaltlich (neue Rechenarten), messbar war die letzte Aufgabe aber oft nicht
+  schwerer als die erste. Deshalb neu: **🔥 Extrem-Prüfung in jedem der 30 Kapitel** (öffnet nach allen Leveln,
+  freiwillig, zählt nicht zum Kapitel-Abschluss → niemand verliert Fortschritt; eigene Sterne).
+- **Nachweis (automatische Tests, schlagen fehl, wenn eine Stufe nicht strikt schwerer ist):**
+  `core/model/src/jvmTest/.../DifficultyTest.kt` (je Bahnart und gesamt: Gesamtwert strikt steigend, Lösungsbereich
+  kleiner, Zielzone kleiner, Hindernisse/Rechenschritte/Parameter nicht weniger; Extrem: Zielzone ≤ 0,35,
+  ≥ 4,5 Hindernisse, Lösungsbereich ≤ 5 %, jedes Level lösbar und nur auf dem Raster) und `ChapterExtremeTest.kt`
+  (Prüfung schwerer als jedes Level ihres Kapitels).
+  Kennzahlen: Parameter = Unbekannte; Zielzone = mittlerer Radius; Rechenschritte = Unbekannte + Stationen +
+  Rechenzeichen im Funkspruch + Klippe; Lösungsbereich = Anteil der Reglerstellungen, die noch treffen, wenn man
+  einen Regler allein bewegt (Löser prüft jede Stellung); Gesamtwert = Parameter + Rechenschritte + ½·Hindernisse +
+  1/Zielzone + 20·(1 − Lösungsbereich). Mittel über alle 7 Bahnarten × 12 Startwerte:
+
+| Stufe | Parameter | Zielzone (Radius, Kästchen) | Hindernisse | Rechenschritte | Lösungsbereich | Gesamtwert |
+|---|---|---|---|---|---|---|
+| 🟢 Leicht | 2,3 | 0,86 | 0,0 | 4,1 | 11,0 % | 25,5 |
+| 🔵 Normal | 2,3 | 0,66 | 1,0 | 4,4 | 9,9 % | 26,8 |
+| 🟠 Schwer | 2,3 | 0,56 | 2,4 | 4,7 | 9,1 % | 28,3 |
+| 🔴 Profi | 2,3 | 0,39 | 3,4 | 5,7 | 4,6 % | 31,5 |
+| 🔥 Extrem | 2,6 | 0,26 | 4,6 | 6,7 | 3,8 % | 34,9 |
+
+  Extrem-Prüfung je Kapitel (Gesamtwert gegenüber dem schwersten Level des Kapitels):
+
+| Kapitel | schwerstes Level (Gesamtwert) | Extrem-Prüfung | Zielzone | Hindernisse | Lösungsbereich Vorlage → Extrem |
+|---|---|---|---|---|---|
+| 📍 Koordinaten | 27,4 | **31,3** | 0,70 → 0,35 | 4 | 5,3 % → 2,7 % |
+| 🍕 Brüche & Kommazahlen | 40,6 | **59,3** | 0,06 → 0,03 | 4 | 0,6 % → 0,3 % |
+| 📐 Winkel | 26,0 | **31,5** | 0,30 → 0,15 | 4 | 1,7 % → 0,8 % |
+| 🗺️ Maßstab & Karten | 25,9 | **30,5** | 0,50 → 0,25 | 4 | 5,3 % → 2,7 % |
+| ⚖️ Zuordnungen | 24,8 | **28,6** | 0,70 → 0,35 | 5 | 7,3 % → 3,7 % |
+| ⏱️ Weg & Zeit | 26,5 | **30,4** | 0,70 → 0,35 | 4 | 4,6 % → 2,4 % |
+| 🔦 Laser-Optik | 25,4 | **28,1** | 0,60 → 0,36 | 5 | 1,1 % → 0,8 % |
+| 📈 Geraden | 28,4 | **32,3** | 0,70 → 0,35 | 8 | 5,0 % → 2,6 % |
+| 💶 Prozent & Zinseszins | 26,4 | **32,7** | 0,25 → 0,13 | 4 | 2,9 % → 1,4 % |
+| 🤝 Rendezvous | 30,3 | **35,4** | 0,35 → 0,18 | 6 | 2,7 % → 1,4 % |
+| 📡 Pythagoras | 27,8 | **34,2** | 0,25 → 0,13 | 5 | 3,4 % → 1,7 % |
+| 🌙 Parabeln | 29,9 | **33,8** | 0,70 → 0,35 | 5 | 5,0 % → 2,6 % |
+| 🎯 Nullstellen | 28,3 | **32,3** | 0,70 → 0,35 | 4 | 5,6 % → 2,9 % |
+| 🎢 Energie | 22,0 | **26,1** | 0,80 → 0,40 | 4 | 14,3 % → 7,2 % |
+| 💎 Lichtbrechung | 24,7 | **29,3** | 0,50 → 0,25 | 5 | 6,7 % → 1,1 % |
+| 🎯 Wurf & Schwerkraft | 25,9 | **29,1** | 0,80 → 0,40 | 5 | 11,8 % → 4,4 % |
+| 🚗 Beschleunigte Bewegung | 27,4 | **32,5** | 0,40 → 0,20 | 4 | 5,3 % → 2,7 % |
+| 📐 Trigonometrie | 26,8 | **33,2** | 0,25 → 0,13 | 5 | 3,4 % → 1,7 % |
+| 🌊 Wellen & Wachstum | 27,4 | **32,6** | 0,70 → 0,35 | 6 | 15,1 % → 6,3 % |
+| 📊 Potenzfunktionen | 24,3 | **29,2** | 0,40 → 0,20 | 4 | 7,7 % → 4,0 % |
+| 🏃 Waagerechter Wurf | 25,8 | **30,6** | 0,40 → 0,20 | 4 | 3,4 % → 1,8 % |
+| 🌊 Verschobene Wellen | 28,3 | **34,1** | 0,30 → 0,15 | 4 | 5,3 % → 2,7 % |
+| 🔢 Logarithmus | 26,3 | **30,4** | 0,35 → 0,33 | 4 | 5,4 % → 2,8 % |
+| 🪐 Schwerkraft-Schleuder | 27,0 | **29,7** | 0,80 → 0,48 | 6 | 3,9 % → 2,1 % |
+| 🏂 Ableitung & Tangente | 24,6 | **28,5** | 0,60 → 0,30 | 5 | 3,0 % → 1,5 % |
+| ⛰️ Extrempunkte | 25,3 | **30,4** | 0,35 → 0,18 | 4 | 2,7 % → 1,4 % |
+| 🧭 Vektoren | 27,7 | **32,2** | 0,45 → 0,23 | 4 | 2,7 % → 1,4 % |
+| ⛽ Integral | 56,2 | **91,6** | 0,03 → 0,02 | 4 | 0,6 % → 0,3 % |
+| 📈 e-Funktion | 28,5 | **34,3** | 0,30 → 0,15 | 4 | 4,0 % → 2,0 % |
+| 🎲 Binomialverteilung | 32,9 | **45,5** | 0,10 → 0,05 | 4 | 5,3 % → 2,7 % |
+
+- **Geprüft:** alle Unit-/Oberflächentests (Gleichstand JVM = Wasm), Lint beider Varianten, APK + AAB, WebApp bei 320 px
+  ohne Konsolenfehler, Bildschirmfotos 91–93 angesehen.
+- **Bitte prüfen:** Galaxie → ein fertiges Kapitel → „🔥 Extrem-Prüfung“; Spiele → Asteroidensturm (Stufe im Titel).
+
 ## 0.21.1 – Schneller Start, Ladebalken, kein weißer Bildschirm (Auftrag Marcel vom 16.11.)
 
 - **Version:** 0.21.1 · **Commit:** d6d0962 (Zweig claude/gifted-shannon-657gpr)

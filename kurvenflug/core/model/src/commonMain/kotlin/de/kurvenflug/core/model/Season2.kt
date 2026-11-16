@@ -70,7 +70,8 @@ object Season2 {
             return c.levels[floorModK(n + k, c.levels.size)]
         }
         val hard = if (n >= 5) 2 else 1
-        return listOf(gen(0, 1), fixed(1), gen(2, hard), fixed(3), gen(4, 2))
+        // Ab der 8. Rettung ist die letzte Etappe eine Profi-Etappe
+        return listOf(gen(0, 1), fixed(1), gen(2, hard), fixed(3), gen(4, if (n >= 8) Tier.PRO else Tier.HARD))
             .mapIndexed { i, l -> l.copy(id = "$PREFIX$n-${i + 1}", number = i + 1, title = "Etappe ${i + 1} von 5") }
     }
 }

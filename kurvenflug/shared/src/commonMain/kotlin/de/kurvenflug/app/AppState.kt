@@ -28,6 +28,10 @@ class AppState(
     val stars: StateFlow<Map<String, Int>> = progress.map { m -> m.filterKeys { Levels.byId(it) != null }.mapValues { it.value.stars } }
         .stateIn(scope, SharingStarted.Eagerly, emptyMap())
 
+    /** Sterne der freiwilligen Extrem-Prüfungen (zählen nicht zu den Kapitel-Sternen) */
+    val extremeStars: StateFlow<Map<String, Int>> = progress.map { m -> m.filterKeys { de.kurvenflug.core.model.ChapterExtreme.isExtreme(it) }.mapValues { it.value.stars } }
+        .stateIn(scope, SharingStarted.Eagerly, emptyMap())
+
     /** Boss-Sterne je Kapitel */
     val bossStars: StateFlow<Map<Int, Int>> = progress.map { m ->
         de.kurvenflug.core.model.Bosses.all.associate { b -> b.chapter to (m[b.id]?.stars ?: 0) }

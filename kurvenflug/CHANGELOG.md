@@ -3,6 +3,18 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.22.0 – Bis ganz nach oben: Profi und Extrem
+- **🔥 Extrem-Prüfung in jedem Kapitel**: Wer alle Level eines Kapitels geschafft hat, kann sich an der Extrem-Prüfung
+  versuchen – Ziele halb so groß, Regler doppelt so fein, Asteroiden dicht an der Bahn. Freiwillig: Das Kapitel gilt
+  auch ohne sie als geschafft, es geht kein Fortschritt verloren.
+- **🔴 Profi und 🔥 Extrem** im Asteroidensturm: Alle 4 Wellen wird es eine Stufe schwerer – Leicht, Normal, Schwer,
+  Profi, Extrem. Ab Welle 17 heißt es: 4 Stationen, winzige Ziele, 6 Asteroiden und ein Extra-Regler
+  (Sinus mit Verschiebung, Wachstum mit Verschiebung, Wurf von der Klippe).
+- **🪐 Andromeda wird härter**, je weiter man fliegt: Planet 7–12 Profi, ab Planet 13 Extrem. Ab der 8. Rettungsmission
+  ist die letzte Etappe eine Profi-Etappe.
+- Nachgemessen: Jede Stufe ist in einem automatischen Test messbar schwerer als die vorige (engere Ziele, mehr Hindernisse,
+  mehr Rechenschritte, kleinerer Lösungsbereich).
+
 ## 0.21.1 – Schneller Start
 - **🚀 Startet fast doppelt so schnell**: Die Web-Version lädt beim ersten Öffnen nur noch gut 5 MB statt knapp 10 MB –
   vorher wurde für das Offline-Spielen alles ein zweites Mal geladen. Mit schnellem Handy-Netz ist Kurvenflug nach

@@ -46,7 +46,7 @@ class ScreenshotTest {
 
     private fun level(id: String, values: Map<String, Double>? = null, prepare: (ComposeContentTestRule) -> Unit = {}, name: String, settle: Long = 1500,
                       reward: ((Int) -> de.kurvenflug.core.model.StickerDrop?)? = null) {
-        val l = Levels.byId(id)!!
+        val l = Levels.byId(id) ?: de.kurvenflug.core.model.ChapterExtreme.levelFor(id)!!
         shot(name, settle, prepare) {
             LevelScreen(l, Levels.chapters.first { it.number == l.chapter }, Q.Cyan, false, {}, { _, _, _ -> }, {}, {}, values, onReward = reward)
         }
@@ -381,4 +381,17 @@ class ScreenshotTest {
     @Test fun binomDensity() = level("30-3", name = "89_binomial_dichte", values = mapOf("p" to 0.5))
     @Test fun binomCumulative() = level("30-6", name = "90_binomial_kumuliert", values = mapOf("n" to 6.0), settle = 6000,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
+
+    // ------------------------------------------------------------ Schwierigkeit: Extrem-Prüfung und Sturm-Stufen
+    @Test fun extremeTile() = shot("91_extrem_pruefung_kachel") {
+        val c = Levels.chapters.first { it.number == 2 }
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(12.dp)) {
+            de.kurvenflug.app.ui.flight.ChapterCard(c, 7, c.levels.associate { it.id to 3 }, {}, 0, {})
+        }
+    }
+    @Test fun extremeLevel() = level("x-2", name = "92_extrem_pruefung_geraden", settle = 1500)
+    @Test fun stormExtreme() = shot("93_sturm_extrem", 1500) {
+        val l = de.kurvenflug.core.model.Storm.level(7, 18)
+        LevelScreen(l, de.kurvenflug.core.model.Chapter(0, "Asteroidensturm", "", "☄️", emptyList(), listOf(l)), Q.Cyan, false, {}, { _, _, _ -> }, {}, {})
+    }
 }
