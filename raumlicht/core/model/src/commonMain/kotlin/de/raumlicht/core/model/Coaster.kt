@@ -121,6 +121,8 @@ object Coaster {
         Ride("doppel", "Doppelkurve", "x³ − 6x² + 9x", 0.0, 4.0, 1.5, 1.0, 1.0, 1.0, { it * it * it - 6 * it * it + 9 * it }, { 3 * it * it - 12 * it + 9 }, { 6 * it - 12 }),
         Ride("schuessel", "Schüssel", "x² − 2x − 3", -1.0, 4.0, 1.4, 1.5, 0.5, 2.5, { it * it - 2 * it - 3 }, { 2 * it - 2 }, { 2.0 }),
         Ride("welle", "Welle", "2 · sin(x)", 0.0, 7.0, 1.0, 0.5, 1.0, 3.0, { 2 * sin(it) }, { 2 * cos(it) }, { -2 * sin(it) }),
+        Ride("ebuckel", "e-Buckel", "4x · e^(−x)", 0.0, 6.0, 1.1, 0.7, 2.5, 1.0, { 4 * it * kotlin.math.exp(-it) }, { 4 * (1 - it) * kotlin.math.exp(-it) }, { 4 * (it - 2) * kotlin.math.exp(-it) }),
+        Ride("ln", "Logarithmus", "ln(x)", 0.3, 6.0, 1.2, 0.4, 1.2, 2.2, { kotlin.math.ln(it) }, { 1 / it }, { -1 / (it * it) }),
     )
     fun byId(id: String) = rides.firstOrNull { it.id == id }
 

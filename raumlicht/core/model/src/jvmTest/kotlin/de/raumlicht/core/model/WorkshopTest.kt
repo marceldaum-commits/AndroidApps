@@ -41,7 +41,8 @@ class WorkshopTest {
     }
 
     @Test fun ghostScoreRewardsTheTrueDerivative() {
-        Coaster.rides.forEach { r ->
+        assertEquals(5, Ghost.rides.size)
+        Ghost.rides.forEach { r ->
             val exact = (0 until Ghost.COLUMNS).map { r.df(Ghost.x(r, it)) }
             assertEquals(r.id, 100, Ghost.score(r, exact))
             val (lo, hi) = Ghost.window(r); assertTrue(lo < 0 && hi > 0 && exact.all { it in lo..hi })

@@ -39,6 +39,7 @@ object Routes {
     const val GALTON = "galton"
     const val BALLOONS = "ballerbude"
     const val CHANCE = "zufall"
+    const val BINOMIAL = "binomial"
     const val BUILD = "baumeister"
     const val GHOST = "geisterfahrt"
     const val RINGS = "ringflug"
@@ -160,6 +161,7 @@ fun AppRoot(
                         BackstageEntry("⭕", "Ringflug", "Stell den Richtungsvektor ein und flieg durch drei Ringe", Q.Green, "Erleben") { nav.go(Routes.RINGS) },
                         BackstageEntry("🎲", "Zufallsmaschine", "Münze, Würfel oder eigene Chance: erst wetten, dann tausendmal werfen", Q.Pink, "Erleben") { nav.go(Routes.CHANCE) },
                         BackstageEntry("🎰", "Galton-Brett", "Stochastik erleben: Kugeln fallen, die Binomialverteilung wächst", Q.Pink, "Erleben") { nav.go(Routes.GALTON) },
+                        BackstageEntry("📊", "Binomial-Labor", "n, p und k frei einstellen: genau, höchstens, mindestens – einzeln und aufsummiert", Q.Pink, "Erleben") { nav.go(Routes.BINOMIAL) },
                         BackstageEntry("🧩", "Rechenweg in Schritten", "Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand – Schritt für Schritt", Q.Green, "Üben") { nav.go(Routes.GUIDES) },
                         BackstageEntry("✍️", "Ohne Hilfsmittel", "6 kurze Aufgaben wie im Pflichtteil – ohne Tipp", Q.Yellow, "Üben") { nav.go(Routes.QUICK) },
                         BackstageEntry("🧭", "Lage von Geraden erkennen", "parallel, identisch, schneidend, windschief? · Rekord $lageBest/${LageCheck.ROUNDS}", Q.Yellow, "Üben") { nav.go(Routes.LAGE) },
@@ -201,6 +203,7 @@ fun AppRoot(
                 Routes.GHOST -> GhostScreen(back)
                 Routes.RINGS -> RingScreen(back)
                 Routes.CHANCE -> ChanceScreen(back)
+                Routes.BINOMIAL -> BinomialScreen(back)
                 Routes.BALLOONS -> { val best by prefs.balloonBest.collectAsState(); BalloonScreen(best, { prefs.recordBalloons(it) }, back) }
                 Routes.QUICK -> QuickScreen({ l, s, a -> record(l.id, s, a) }, back)
                 Routes.DIARY -> DiaryScreen(diary, { nav.go(Routes.level(it)) }, { prefs.setDiary("") }, back)

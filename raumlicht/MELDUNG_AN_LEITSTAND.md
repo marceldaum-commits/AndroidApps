@@ -134,3 +134,32 @@ Hinweis: Musik und Klänge entstehen im Browser (keine Audiodateien, kein Abruf)
 
 Veröffentlicht ist nichts; hochladen muss Marcel selbst. WebApp 2.6.0 ist inhaltlich gleich 2.5.1 (nur neue Versionsnummer).
 Nicht geprüft: echtes Gerät, Play In-App Updates (geht erst mit einer über den Store installierten Version). Der Inhaltsausbau folgt als nächste Version.
+
+---
+
+## 16.11.2026 – Version 2.7.0: Inhaltsausbau (Auftrag „sehr viel Inhalt, alles prüfen“, von Marcel bestätigt)
+
+**Neu:** 35 Aufgaben in sechs Kapiteln (18 Ebenen in allen Formen, 19 Schnitte & Schnittwinkel, 20 Spiegeln & Lote, 21 Kugel & Ebene, 22 Integrale & Flächen,
+23 Erwartung/Sigma/Testen) und zwei Prüfungsaufgaben im Abi-Stil („Planetarium“, „Einlass“). Gesamt: 124 Aufgaben in 23 Kapiteln, 7 Prüfungsaufgaben.
+Jede Aufgabe hat Tipp, Rechenweg, gezielte Hinweise bei typischen Fehlern und eine 3D-Bühne (Analysis im 2D-Koordinatensystem, Stochastik ohne Achsen).
+
+**Prüfung (automatisch, `:core:model:jvmTest`, 84 Tests):** Lösung wird anerkannt, Startwerte lösen nicht, Werte im erlaubten Bereich, Bühne in beiden Phasen gültig,
+alles Sichtbare im Raum; zusätzlich `TourSixTest`: jede Lösung unabhängig nachgerechnet (Kreuzprodukte, Abstände, Spiegelpunkte, numerische Integrale,
+Binomialverteilung exakt – Hypothesentest P(X ≥ 59) ≈ 4,4 %), jede Zahlen-Aufgabe hat genau eine richtige Antwort. App-Tests (132) grün.
+**Web = Android:** derselbe Code; WebApp 2.7.0 gebaut, `scene/test/web.mjs` (Handy- und PC-Größe) und `web-update.mjs` ohne Fehler.
+**Angesehen:** alle 35 neuen Bühnen gerendert (vorher/gelöst), drei Darstellungen nachgebessert.
+**Nicht geprüft:** echtes Gerät; die neuen Aufgaben im Browser einzeln durchgespielt (sie nutzen dieselben Bausteine wie die alten); fachliche Gegenprüfung durch einen Menschen.
+
+---
+
+## 16.11.2026 – Version 2.8.0 (Wünsche von Marcel) und ein offener Fehler: iPad zeigt weißen Bildschirm
+
+**Neu:** Binomial-Labor unter „Mehr“ (n, p, k frei; genau/höchstens/mindestens; einzeln und kumuliert), Kapitel 24 „Binomialverteilung“ (5 Aufgaben),
+Kapitel 25 „e-Funktion & Logarithmus“ (7 Aufgaben), zwei neue Bahnen in „Kurve abfahren“. 136 Aufgaben in 25 Kapiteln; alles unabhängig nachgerechnet
+(`TourSixTest`: Binomial-Rechenkern gegen die Formel, abgedruckte Tabellenwerte, Ableitungen und Integrale numerisch).
+
+**Offener Fehler (von Marcel gemeldet):** Auf seinem iPad blieb der Bildschirm beim Start weiß. Ursache noch **nicht** gefunden – hier gibt es kein Safari/WebKit zum Testen.
+Die Server liefern korrekt aus (geprüft: Dateien, Dateitypen, auch `.wasm`). Bekannt ist: Die WebApp braucht WebAssembly-GC, das Safari erst ab iOS/iPadOS 18.2 kann.
+Eingebaut in 2.8.0: (1) sichtbare Meldung statt leerem Bildschirm, wenn der Start scheitert (auch bei fehlendem WebAssembly-GC, sofort geprüft),
+(2) `diagnose.html` – zeigt Browser, WebAssembly-GC, WebGL 2, letzten Startfehler, Zwischenspeicher; nichts wird verschickt, (3) kleinere Bildpuffer der 3D-Bühne auf großen Bildschirmen.
+**Bitte prüft auf einem iPad/iPhone** (Safari, und als Startbildschirm-App): Startet es? Was zeigt `/diagnose.html`? Bis das geklärt ist, bitte nicht mit „läuft auf iPad“ werben.

@@ -2,6 +2,31 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.8.0 – Binomialverteilung, e-Funktion und Logarithmus (16.11.2026)
+- **📊 Binomial-Labor (unter „Mehr“):** n, p und k frei einstellen und sofort sehen, wie die Verteilung aussieht. Drei Fragen: genau, höchstens, mindestens k Treffer.
+  Die Säulen zeigen wahlweise die einzelnen Wahrscheinlichkeiten P(X = k) oder die aufsummierten (kumulierten) P(X ≤ k). Säule antippen wählt k;
+  dazu stehen der Ansatz wie in der Klausur, Erwartungswert und Streuung – und Lux übersetzt die Zahl in Alltagssprache.
+- **Neues Kapitel „Binomialverteilung“** (5 Aufgaben): genau, höchstens, mindestens, „von … bis“ mit der kumulierten Tabelle, kleinstes k für 90 % Sicherheit.
+- **Neues Kapitel „e-Funktion & Logarithmus“** (7 Aufgaben): Gleichungen mit e und ln, Kurvendiskussion mit Produkt- und Kettenregel (Tiefpunkt, Wendestelle),
+  Tiefpunkt mit ln, Integrale mit e^x und 1 : x.
+- **Kurve abfahren:** zwei neue fertige Bahnen – „e-Buckel“ (4x · e^(−x)) und „Logarithmus“ (ln x). Eigene Funktionen mit e^x, exp und ln gingen schon vorher.
+- **WebApp:** Startet sie auf einem Gerät nicht, steht jetzt eine verständliche Meldung da, mit Link zu einer Diagnose-Seite. Auf großen Bildschirmen braucht die 3D-Bühne weniger Grafikspeicher.
+- Behoben: Leuchtflächen unter nach oben gewölbten Kurven füllten über die Kurve hinaus.
+- Jetzt 136 Aufgaben in 25 Kapiteln. Alle neuen Lösungen sind unabhängig nachgerechnet.
+
+## 2.7.0 – Sechs neue Kapitel und zwei Abi-Aufgaben (16.11.2026)
+- **35 neue Aufgaben in sechs Kapiteln** – jede mit Tipp, Rechenweg zum Nachlesen und eigener 3D-Bühne:
+  - **Ebenen in allen Formen:** Parameterform umwandeln, Normalenform lesen, Spurpunkte, Achsenabschnittsform, Punktprobe, Ebene aus Gerade und Punkt
+  - **Schnitte & Schnittwinkel:** Winkel zwischen Ebenen und zwischen Gerade und Ebene, Schnittgerade, parallele Gerade, Abstand Gerade–Ebene
+  - **Spiegeln & Lote:** Spiegeln an Punkt, Gerade und Ebene, Abstand windschiefer Geraden
+  - **Kugel & Ebene:** Berühren, Berührpunkt, Schnittkreis (Mittelpunkt und Radius), zwei Kugeln, Flug durch die Kugel
+  - **Integrale & Flächen:** Fläche unter Kurven, zwischen zwei Kurven, Vorzeichen, obere Grenze gesucht, Bestand aus Änderungsrate
+  - **Erwartung, Sigma, Testen:** fairer Einsatz, „höchstens einmal“, Mindestanzahl an Versuchen, Sigma-Regel, Hypothesentest
+- **Zwei neue Prüfungsaufgaben im Abi-Stil** (je vier Teilaufgaben, 12 Bewertungseinheiten): „Planetarium“ (Geometrie) und „Einlass“ (Analysis).
+- Damit hat Raumlicht jetzt 124 Aufgaben in 23 Kapiteln und 7 Prüfungsaufgaben.
+- **Geprüft:** Jede Lösung ist unabhängig nachgerechnet (auch Integrale und der Hypothesentest), jede Zahlen-Aufgabe hat genau eine richtige Antwort.
+- Lux kann alle neuen Texte auch mit der natürlichen Stimme sprechen. Gilt für Android und die WebApp.
+
 ## 2.6.0 – Bereit für den Play Store (16.11.2026)
 - **Natürliche Stimme ohne fremden Sprach-Baustein:** Die Stimme „Thorsten“ klingt wie bisher, aber die App bringt die nötige Lautschrift jetzt selbst als Daten mit.
   Der bisher enthaltene Baustein espeak-ng (mit strenger GPL-Lizenz) ist damit entfernt. Kennt Lux ein Wort einmal nicht, liest diesen einen Satz die Handy-Stimme.

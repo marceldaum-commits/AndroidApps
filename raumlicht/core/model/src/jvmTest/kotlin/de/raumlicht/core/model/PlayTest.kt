@@ -30,7 +30,7 @@ class PlayTest {
         assertTrue(MistakeBook.isNamed(Levels.byId("2-1")!!.evaluate(mapOf("v" to listOf(-3, -4, 0))).message))
         assertFalse(MistakeBook.isNamed(Levels.byId("1-1")!!.evaluate(mapOf("P" to listOf(4, 0, 0))).message))
         // Die neuen Abi-Aufgaben
-        assertEquals(listOf("Festivalzelt", "Laser & Leinwand", "Drohnen-Show", "Lichtbogen", "Lostrommel"), Exams.all.map { it.title })
+        assertEquals(listOf("Festivalzelt", "Laser & Leinwand", "Drohnen-Show", "Lichtbogen", "Lostrommel", "Planetarium", "Einlass"), Exams.all.map { it.title })
     }
 
     @Test fun galtonBoardFollowsTheBinomialDistribution() {

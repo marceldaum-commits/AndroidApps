@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-version="2.6.0">
+<html lang="de" data-version="2.8.0">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -21,12 +21,23 @@
 </style>
 </head>
 <body>
-<div id="start"><b>Raumlicht</b><span id="start-text">lädt … Version 2.6.0 vom 16.11.2026</span></div>
+<div id="start"><b>Raumlicht</b><span id="start-text">lädt … Version 2.8.0 vom 16.11.2026</span></div>
 <div id="app"></div>
 <iframe id="stage" title="3D-Bühne" src="scene/index.html"></iframe>
 <script>
-  // Ohne WebAssembly-GC (sehr alte Browser) startet die App nicht – das sagen wir, statt eine leere Seite zu zeigen
-  window.addEventListener('error', function (e) { var t = document.getElementById('start-text'); if (t && document.getElementById('start').style.display !== 'none') { t.className = 'fehler'; t.textContent = 'Das hat nicht geklappt. Raumlicht braucht einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).'; } });
+  // Startet die App nicht, sagen wir warum – statt einen leeren Bildschirm zu zeigen. Fehler werden gesammelt und auf der Diagnose-Seite gezeigt.
+  var startProblems = [];
+  function startFailed(why) {
+    var st = document.getElementById('start'); if (!st || st.style.display === 'none') return;
+    var t = document.getElementById('start-text'); t.className = 'fehler';
+    t.innerHTML = 'Das hat nicht geklappt. Raumlicht braucht einen aktuellen Browser – auf iPhone und iPad mindestens iOS 18.2, sonst Chrome, Edge oder Firefox ab 2024.<br><br><a href="diagnose.html" style="color:#46E1FF">Diagnose öffnen</a>';
+    if (why) { startProblems.push(String(why).slice(0, 300)); try { sessionStorage.setItem('raumlicht.startfehler', startProblems.join(' | ')); } catch (e) {} }
+  }
+  window.addEventListener('error', function (e) { startFailed(e.message || 'Fehler beim Laden'); });
+  window.addEventListener('unhandledrejection', function (e) { startFailed(e.reason && (e.reason.message || e.reason)); });
+  // WebAssembly mit „GC“ fehlt älteren Browsern (Safari vor 18.2): gleich prüfen, nicht erst 13 MB laden
+  try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed('WebAssembly-Prüfung: ' + e); }
+  setTimeout(function () { var t = document.getElementById('start-text'); if (document.getElementById('start').style.display !== 'none' && t.className !== 'fehler') t.innerHTML = 'lädt noch … Das erste Öffnen holt etwa 27 MB.<br><a href="diagnose.html" style="color:#46E1FF">Dauert es zu lange? Diagnose öffnen</a>'; }, 25000);
   // Automatisches Update – ohne Knopf: Die Seite fragt beim Öffnen, beim Zurückkehren und alle 30 Minuten nach einer neuen Version.
   // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
   // (Startseite oder App im Hintergrund), nie mitten in einer Aufgabe.

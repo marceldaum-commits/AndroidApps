@@ -128,13 +128,13 @@ private fun DrawScope.zeroLine(lo: Double, hi: Double) { val y = (size.height * 
  */
 @Composable
 fun GhostScreen(onBack: () -> Unit) {
-    var rideId by rememberSaveable { mutableStateOf(Coaster.rides.first().id) }
+    var rideId by rememberSaveable { mutableStateOf(Ghost.rides.first().id) }
     var term by rememberSaveable { mutableStateOf("x^3-3x") }
     var built by rememberSaveable { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
     val own = remember(built) { Expr.parse(built).getOrNull()?.let { Coaster.custom(it, -2.0, 2.0) } }
     val isOwn = rideId == Coaster.CUSTOM
-    val ride = (if (isOwn) own else Coaster.byId(rideId)) ?: Coaster.rides.first()
+    val ride = (if (isOwn) own else Coaster.byId(rideId)) ?: Ghost.rides.first()
     val key = if (isOwn) "eigene:$built" else rideId
     var guess by remember(key) { mutableStateOf(List<Double?>(Ghost.COLUMNS) { null }) }
     var shown by remember(key) { mutableStateOf(false) }
@@ -156,7 +156,7 @@ fun GhostScreen(onBack: () -> Unit) {
         Bar("Geisterfahrt gegen f′", onBack) { Text("f(x) = ${ride.text}", color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1) }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 10.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Pick("✏️ Eigene Funktion", isOwn, Q.Yellow, "geist-eigene") { rideId = Coaster.CUSTOM }
-            Coaster.rides.forEach { c -> Pick(c.title, rideId == c.id, Q.Cyan, "geist-${c.id}") { rideId = c.id } }
+            Ghost.rides.forEach { c -> Pick(c.title, rideId == c.id, Q.Cyan, "geist-${c.id}") { rideId = c.id } }
         }
         if (isOwn) Row(Modifier.padding(horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             OutlinedTextField(term, { term = it; error = null }, Modifier.weight(1f).testTag("geist-eingabe"), singleLine = true, label = { Text(error ?: "f(x) =  (von −2 bis 2)") }, isError = error != null)
