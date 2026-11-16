@@ -2,7 +2,43 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3–3.14.5 Play-Vorbereitung**, + **3.15.0 viele neue Aufgaben**, siehe Meldungen (35)–(46). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+> **AKTUELLER STAND (16.11.2026, mittags) – für den Leitstand:** Live ist 3.15.0 (7c423d5). Auf `rechenblitz-test` liegt **3.16.0**: viel Inhalt für Klasse 5–10 und ein Fehler-Fix für Live, siehe Meldung (47). Bitte prüfen und freigeben. Keine neue APK nötig (Hülle 2). Für die Play-Fassung fehlen nur Marcels Upload-Schlüssel und die 4 Geheimnisse.
+
+## 16.11.2026 (47) – Viel Inhalt für Klasse 5–10 (3.16.0) · Fehler-Fix für Live · keine neue APK nötig
+
+- **Auftrag (Leitstand 16.11., Marcel):** „Erweitere alle bisherigen WebApps um sehr viel Inhalt … und lass alles prüfen.“ Schwerpunkt Klasse 5–10.
+- **8 neue Themen** mit je 5 Stufen, jede Aufgabe mit Lösungsweg:
+
+  | Thema | Stufen | Klassen |
+  |---|---|---|
+  | **3x Terme** | Termwert · gleichartige Glieder · Klammern ausmultiplizieren · Termwert mit x² und negativen Zahlen · binomische Formeln | 7–9 |
+  | **f(x) Funktionen** | Funktionswert · y-Achsenabschnitt · Steigung aus zwei Punkten · Nullstelle · Schnittpunkt zweier Geraden | 8–10 |
+  | **10ⁿ Zehnerpotenzen** | ausrechnen · Zahl mal 10ⁿ · Kommazahl mal 10ⁿ · Exponent gesucht · negativer Exponent | 9–10 |
+  | **⇄ Dreisatz** | Preise · Verbrauch · antiproportional (Pumpen) · Preise mit Komma · antiproportional (Vorräte) | 5–8 |
+  | **🏦 Zinsen** | Jahreszinsen · Zinssatz · Kapital · Monatszinsen · Zinseszins | 7–10 |
+  | **🎲 Wahrscheinlichkeit** | Würfel/Münze · Kugeln ziehen · Gegenereignis, %, Erwartung · zweistufig mit Zurücklegen · ohne Zurücklegen, mindestens einmal | 6–10 |
+  | **Ø Statistik** | Mittelwert · Median (ungerade) · Spannweite · Median (gerade) · fehlender Wert für einen Durchschnitt | 5–9 |
+  | **π Kreis** | Umfang aus d · Umfang aus r · Kreisfläche · Fläche aus d · Zylindervolumen (π ≈ 3,14) | 8–10 |
+
+  Sie sind in den Klassenstufen eingetragen und erscheinen daher auf der Startseite (Klassenmodus), in der Rechen-Reise und im Einstufungstest. Brüche, Prozent, Gleichungen, Potenzen/Wurzeln, Einheiten und Runden gab es schon (je 5 Stufen).
+- **15 weitere Textaufgaben für Klasse 5–10:**
+  - Teppichpreis, Bruchteil vom Ersparten, Zugfahrt, „3/4 kommen zu Fuß“, Holzwürfel in Kiste;
+  - Rabatt rückwärts, Prozent Haustiere, Mischungsverhältnis, Preissteigerung in %, Schwimmbecken-Volumen;
+  - Handytarif (lineare Gleichung), Leiter (Pythagoras), Bakterienwachstum, Wertverlust Auto, „Ich denke mir eine Zahl“.
+  - Insgesamt gibt es damit 50 neue Textaufgaben seit 3.15.0.
+- **Fehler-Fix (betrifft Live 3.15.0):**
+  - Die Textaufgabe „Handy kostet … Preis steigt um 5 %“ konnte eine halbe Zahl als Lösung haben (z. B. 472,5 €), obwohl eine ganze Zahl verlangt war. Die Eingabe „472,5“ wurde dann nicht als richtig erkannt.
+  - Behoben, ebenso zwei ähnliche Fälle in neuen Aufgaben (Glücksrad mit 8 Feldern, Median bei gerader Anzahl).
+- **Prüfung verschärft:** Der Engine-Test erkennt jetzt auch halbe Zahlen bei Ganzzahl-Lösungen und Dezimalpunkte statt Komma in Aufgaben und Lösungswegen.
+- **Übersetzung:**
+  - Formeln stehen jetzt ohne Wörter da (z. B. „3x + 4 (x = 5)“, „f(x) = 2x + 5; g(x) = …“). Die Frage steht als Hinweis darunter, damit die Übersetzung nicht für jede Formel einen eigenen Eintrag braucht.
+  - Etwa 200 neue Einträge, insgesamt 1938. Bei Sätzen mit anderer Wortstellung stehen nummerierte Platzhalter.
+- **Tests:**
+  - Engine: 435000 Aufgaben (alle 30 Themen × 5 Stufen) ohne Fehler, mit den neuen Prüfungen. Leiter-Aufgabe gegen Pythagoras geprüft (13591 Fälle, 0 Abweichungen).
+  - Übersetzungs-Durchlauf über alle Generatoren: 0 Lücken (EN/UK).
+  - Browser DE/EN/UK bei 320 px: jede neue Stufe gespielt (richtig und falsch, Lösungsweg). Keine JS-Fehler, keine fehlenden Übersetzungen, kein Überlauf. Die Steigungsaufgabe ragte auf Ukrainisch hinaus und ist jetzt umgestellt. „Zinsen“ hieß auf Ukrainisch wie „Prozent“ und heißt jetzt „Банківські відсотки“.
+  - Regression: offline, APK-Modus, Reise, Welt, Widget, Garten, Elternabfrage, Zufallsaktionen.
+- **APK:** nur Web-Dateien geändert, Hülle bleibt 2. Test- und Live-Apps holen 3.16.0 nach der Freigabe von selbst.
 
 ## 16.11.2026 (46) – Viele neue Aufgaben: 5 neue Themen + 30 neue Textaufgaben (3.15.0) · keine neue APK nötig
 

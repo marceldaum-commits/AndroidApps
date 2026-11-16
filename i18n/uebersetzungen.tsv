@@ -1747,3 +1747,204 @@ In einer Klasse sind {} Kinder. {} davon sind Mädchen. Wie viele Jungen sind in
 Fläche	Area	Площа
 Ein Fünftel	One fifth	Одна п'ята
 Jungen	Boys	Хлопці
+(a + b)² = a² + {}ab + b²	(a + b)² = a² + {}ab + b²	(a + b)² = a² + {}ab + b²
+(a − b)² = a² − {}ab + b²	(a − b)² = a² − {}ab + b²	(a − b)² = a² − {}ab + b²
+Alle Kugeln	All balls	Усі кульки
+Also x	So x	Отже, x
+Also {}x	So {}x	Отже, {}x
+Also {}⁴	So {}⁴	Отже, {}⁴
+Also {}⁵	So {}⁵	Отже, {}⁵
+Also {}⁶	So {}⁶	Отже, {}⁶
+Also {}⁷	So {}⁷	Отже, {}⁷
+Also −x	So −x	Отже, −x
+An einer Schule sind {} Kinder. {} davon kommen zu Fuß. Wie viele Kinder sind das?	There are {} children at a school. {} of them walk to school. How many children is that?	У школі {} дітей. {} з них ходять пішки. Скільки це дітей?
+Auf der y-Achse ist x = {}.	On the y-axis x = {}.	На осі y x = {}.
+Augensumme {}	Sum of the dice {}	Сума очок {}
+Bei {} % Zinsen gibt es in einem Jahr {} € Zinsen. Wie groß ist das Kapital?	At {} % interest, one year's interest is €{}. How big is the capital?	При {} % річних за рік нараховано {} € відсотків. Який капітал?
+Bisher	So far	Досі
+Dann sind noch {} rote von {} übrig	Then {} red ones out of {} are left	Тоді залишається {} червоних із {}
+Das Komma wandert von {} bis {} um {} Stellen nach links	From {} to {} the decimal point moves {} places to the left	Від {} до {} кома зсувається на {} позиції вліво
+Das Komma wandert von {} bis {} um {} Stellen nach rechts	From {} to {} the decimal point moves {} places to the right	Від {} до {} кома зсувається на {} позиції вправо
+Der Größe nach ordnen	Sort by size	Упорядкувати за величиною
+Der Preis steigt von {} € auf {} €. Um wie viel Prozent ist er gestiegen?	The price rises from €{} to €{}. By what percentage has it risen?	Ціна зростає з {} € до {} €. На скільки відсотків вона зросла?
+Der mittlere Wert ist {}.	The middle value is {}.	Середнє значення в ряду – {}.
+Die Noten-Punkte von vier Tests sind {}. Wie viele Punkte braucht man im fünften Test für einen Durchschnitt von {}?	The scores of four tests are {}. How many points are needed in the fifth test for an average of {}?	Бали за чотири тести: {}. Скільки балів потрібно в п'ятому тесті для середнього {}?
+Die Wahrscheinlichkeit für Regen ist {} %. Wie groß ist die Wahrscheinlichkeit, dass es nicht regnet (in %)?	The probability of rain is {} %. What is the probability that it does not rain (in %)?	Імовірність дощу {} %. Яка ймовірність, що дощу не буде (у %)?
+Du wirfst eine Münze. Wie groß ist die Wahrscheinlichkeit für Kopf?	You toss a coin. What is the probability of heads?	Ти підкидаєш монету. Яка ймовірність випадіння герба?
+Du wirfst zwei Münzen. Wie groß ist die Wahrscheinlichkeit, dass beide Kopf zeigen?	You toss two coins. What is the probability that both show heads?	Ти підкидаєш дві монети. Яка ймовірність, що обидві покажуть герб?
+Du würfelst einmal mit einem normalen Würfel. Wie groß ist die Wahrscheinlichkeit für eine {}?	You roll a normal dice once. What is the probability of a {}?	Ти один раз кидаєш звичайний кубик. Яка ймовірність випадіння {}?
+Du würfelst einmal. Wie groß ist die Wahrscheinlichkeit für eine gerade Zahl?	You roll a dice once. What is the probability of an even number?	Ти один раз кидаєш кубик. Яка ймовірність парного числа?
+Du würfelst mit zwei Würfeln. Wie groß ist die Wahrscheinlichkeit für die Augensumme {}?	You roll two dice. What is the probability of a total of {}?	Ти кидаєш два кубики. Яка ймовірність суми очок {}?
+Du würfelst zweimal. Wie groß ist die Wahrscheinlichkeit für zwei Sechsen?	You roll a dice twice. What is the probability of two sixes?	Ти кидаєш кубик двічі. Яка ймовірність двох шісток?
+Du würfelst {}-mal. Wie oft erwartest du ungefähr eine Sechs?	You roll a dice {} times. About how often do you expect a six?	Ти кидаєш кубик {} разів. Приблизно скільки разів ти очікуєш шістку?
+Ein Auto fährt mit {} Litern Benzin {} km. Wie weit kommt es mit {} Litern?	A car travels {1} km on {0} litres of petrol. How far does it get on {2} litres?	Автомобіль на {} літрах бензину проїжджає {} км. Скільки він проїде на {} літрах?
+Ein Futtervorrat reicht für {} Pferde {} Tage. Wie lange reicht er für {} Pferde?	A supply of feed lasts {1} days for {0} horses. How long does it last for {2} horses?	Запасу корму вистачає для {} коней на {} днів. На скільки днів його вистачить для {} коней?
+Ein Glücksrad hat {} gleich große Felder, {} davon sind Gewinne. Wie groß ist die Gewinnchance in Prozent?	A prize wheel has {} equal sections, {} of them are wins. What is the chance of winning in percent?	Колесо фортуни має {} однакових секторів, {} з них виграшні. Який шанс виграти у відсотках?
+Ein Handytarif kostet {} € im Monat plus {} Cent pro Minute. {} bezahlt in einem Monat {} €. Wie viele Minuten hat {} telefoniert?	A phone plan costs €{} a month plus {} cents per minute. {} pays €{} in one month. How many minutes did {} talk?	Мобільний тариф коштує {} € на місяць плюс {} центів за хвилину. {} платить за місяць {} €. Скільки хвилин {} розмовляв(-ла)?
+Ein Kreis hat den Durchmesser {} cm. Wie groß ist sein Umfang?	A circle has a diameter of {} cm. What is its circumference?	Діаметр кола {} см. Яка довжина кола?
+Ein Kreis hat den Durchmesser {} m. Wie groß ist seine Fläche?	A circle has a diameter of {} m. What is its area?	Діаметр круга {} м. Яка його площа?
+Ein Kreis hat den Radius {} cm. Wie groß ist sein Umfang?	A circle has a radius of {} cm. What is its circumference?	Радіус кола {} см. Яка довжина кола?
+Ein Kreis hat den Radius {} cm. Wie groß ist seine Fläche?	A circle has a radius of {} cm. What is its area?	Радіус круга {} см. Яка його площа?
+Ein Schwimmbecken ist {} m lang, {} m breit und {} m tief. Wie viele Kubikmeter Wasser passen hinein?	A swimming pool is {} m long, {} m wide and {} m deep. How many cubic metres of water fit in it?	Басейн має довжину {} м, ширину {} м і глибину {} м. Скільки кубічних метрів води в нього вміщується?
+Ein T-Shirt kostet nach {} % Rabatt noch {} €. Was hat es vorher gekostet?	After a {} % discount a T-shirt costs €{}. What did it cost before?	Після знижки {} % футболка коштує {} €. Скільки вона коштувала раніше?
+Ein Würfel hat {} gleich wahrscheinliche Zahlen.	A dice has {} equally likely numbers.	Кубик має {} однаково ймовірних чисел.
+Ein Zimmer ist {} m lang und {} m breit. Ein Quadratmeter Teppich kostet {} €. Was kostet der Teppich für das ganze Zimmer?	A room is {} m long and {} m wide. One square metre of carpet costs €{}. What does carpet for the whole room cost?	Кімната має довжину {} м і ширину {} м. Квадратний метр килима коштує {} €. Скільки коштує килим на всю кімнату?
+Ein Zug fährt um {} Uhr ab und kommt um {} Uhr an. Wie viele Minuten dauert die Fahrt?	A train leaves at {} and arrives at {}. How many minutes does the journey take?	Потяг відправляється о {} і прибуває о {}. Скільки хвилин триває поїздка?
+Ein Zylinder hat den Radius {} cm und die Höhe {} cm. Wie groß ist sein Volumen?	A cylinder has a radius of {} cm and a height of {} cm. What is its volume?	Циліндр має радіус {} см і висоту {} см. Який його об'єм?
+Ein neues Auto kostet {} €. Nach einem Jahr ist es {} % weniger wert. Wie viel ist es dann noch wert?	A new car costs €{}. After one year it is worth {} % less. How much is it worth then?	Новий автомобіль коштує {} €. Через рік він дешевшає на {} %. Скільки він тоді коштує?
+Eine Bakterienkultur verdoppelt sich jede Stunde. Am Anfang sind es {} Bakterien. Wie viele sind es nach {} Stunden?	A bacteria culture doubles every hour. At the start there are {} bacteria. How many are there after {} hours?	Колонія бактерій подвоюється щогодини. На початку {} бактерій. Скільки їх буде через {} годин?
+Eine Leiter ist {} m lang. Ihr Fuß steht {} m von der Wand entfernt. Wie hoch reicht die Leiter an der Wand?	A ladder is {} m long. Its foot stands {} m from the wall. How high up the wall does it reach?	Драбина має довжину {} м. Її основа стоїть на відстані {} м від стіни. На яку висоту вона сягає по стіні?
+Eine Saftschorle wird aus {} Teilen Saft und {} Teil Wasser gemischt. Wie viele Liter Saft braucht man für {} Liter Schorle?	A juice spritzer is mixed from {} parts juice and {} part water. How many litres of juice are needed for {} litres of spritzer?	Сік із водою змішують із {} частин соку та {} частини води. Скільки літрів соку потрібно на {} літрів напою?
+Einmal Rot	Red once	Один раз червона
+Erhöhung	Increase	Збільшення
+Erste Kugel rot	First ball red	Перша кулька червона
+Es gibt {}	There are {}	Є {}
+Fasse zusammen	Combine like terms	Зведи подібні
+Fläche = {}	Area = {}	Площа = {}
+Fläche = π	Area = π	Площа = π
+Für {} Monate	For {} months	За {} місяців
+Für {} Pferd	For {} horse	Для {} коня
+Für {} Pferde	For {} horses	Для {} коней
+Gegenereignis	Complementary event	Протилежна подія
+Gerade Anzahl	Even number of values	Парна кількість
+Gerade Zahlen	Even numbers	Парні числа
+Gerade durch P({}|{}) und Q({}|{})	Line through P({}|{}) and Q({}|{})	Пряма через P({}|{}) і Q({}|{})
+Gleichartige Glieder	Like terms	Подібні доданки
+Gleichsetzen	Set equal	Прирівняти
+Günstig	Favourable	Сприятливі
+Holzwürfel haben {} cm Kantenlänge. Wie viele passen in eine Kiste, die {} cm lang, {} cm breit und {} cm hoch ist?	Wooden cubes have an edge length of {} cm. How many fit into a box that is {} cm long, {} cm wide and {} cm high?	Дерев'яні кубики мають ребро {} см. Скільки їх уміститься в коробку довжиною {} см, шириною {} см і висотою {} см?
+Höhe² = Leiter² − Abstand²	height² = ladder² − distance²	висота² = драбина² − відстань²
+In einer Klasse mit {} Kindern haben {} ein Haustier. Wie viel Prozent sind das?	In a class of {} children, {} have a pet. What percentage is that?	У класі з {} дітей {} мають домашню тварину. Скільки це відсотків?
+In einer Tüte sind {} rote und {} blaue Kugeln. Du ziehst blind eine Kugel. Wie groß ist die Wahrscheinlichkeit für Rot?	A bag contains {} red and {} blue balls. You draw one ball without looking. What is the probability of red?	У торбинці {} червоних і {} синіх кульок. Ти навмання витягуєш одну. Яка ймовірність червоної?
+In einer Tüte sind {} rote, {} blaue und {} grüne Kugeln. Du ziehst blind eine Kugel. Wie groß ist die Wahrscheinlichkeit für Rot?	A bag contains {} red, {} blue and {} green balls. You draw one ball without looking. What is the probability of red?	У торбинці {} червоних, {} синіх і {} зелених кульок. Ти навмання витягуєш одну. Яка ймовірність червоної?
+In einer Urne sind {} rote und {} blaue Kugeln. Du ziehst zwei Kugeln ohne Zurücklegen. Wie groß ist die Wahrscheinlichkeit für zweimal Rot?	An urn contains {} red and {} blue balls. You draw two balls without replacement. What is the probability of red twice?	В урні {} червоних і {} синіх кульок. Ти витягуєш дві кульки без повернення. Яка ймовірність двох червоних?
+In einer Urne sind {} rote und {} blaue Kugeln. Du ziehst zweimal mit Zurücklegen. Wie groß ist die Wahrscheinlichkeit für mindestens einmal Blau?	An urn contains {} red and {} blue balls. You draw twice with replacement. What is the probability of blue at least once?	В урні {} червоних і {} синіх кульок. Ти витягуєш двічі з поверненням. Яка ймовірність хоча б однієї синьої?
+In einer Urne sind {} rote und {} blaue Kugeln. Du ziehst zweimal mit Zurücklegen. Wie groß ist die Wahrscheinlichkeit für zweimal Rot?	An urn contains {} red and {} blue balls. You draw twice with replacement. What is the probability of red twice?	В урні {} червоних і {} синіх кульок. Ти витягуєш двічі з поверненням. Яка ймовірність двох червоних?
+Jahreszinsen	Yearly interest	Річні відсотки
+Jedes Glied in der Klammer mal {}:	Multiply each term in the bracket by {}:	Кожен доданок у дужках помнож на {}:
+Kapital	Capital	Капітал
+Kapital = Zinsen	Capital = interest	Капітал = відсотки
+Klammer ausmultiplizieren	Expand the bracket	Розкрий дужки
+Kleine Zahl → negativer Exponent	Small number → negative exponent	Мале число → від'ємний показник
+Komma um {} Stellen nach rechts	Move the decimal point {} places to the right	Кома на {} позиції вправо
+Kopf oder Zahl	Heads or tails	Герб або число
+Median von	Median of	Медіана чисел
+Median von {}	Median of {}	Медіана чисел {}
+Mehr Pferde – kürzere Zeit (antiproportional)	More horses – shorter time (inversely proportional)	Більше коней – менше часу (обернена пропорційність)
+Mehr Pumpen – weniger Zeit (antiproportional)	More pumps – less time (inversely proportional)	Більше насосів – менше часу (обернена пропорційність)
+Mit {} Liter	With {} litre	З {} літром
+Mit {} Litern	With {} litres	З {} літрами
+Mittelwert = Summe	Mean = sum	Середнє = сума
+Mittelwert der beiden mittleren Werte	Mean of the two middle values	Середнє двох середніх значень
+Mittelwert von	Mean of	Середнє значення чисел
+Mittelwert von {}	Mean of {}	Середнє значення чисел {}
+Nach {} % Rabatt bleiben {} % übrig.	After a {} % discount, {} % remain.	Після знижки {} % залишається {} %.
+Nach {} Jahr	After {} year	Через {} рік
+Nach {} Jahren	After {} years	Через {} роки
+Nach {} Stunden	After {} hours	Через {} годин
+Nullstelle	Zero	Нуль функції
+Ohne Grundgebühr	Without the basic fee	Без абонплати
+Ordnen	Sort	Упорядкувати
+P(zweimal Rot) = {}	P(red twice) = {}	P(двічі червона) = {}
+Pfadregel	Path rule	Правило шляху
+Pro Kante	Per edge	На ребро
+Radius = Durchmesser	Radius = diameter	Радіус = діаметр
+Rechne mit π ≈ {}	Use π ≈ {}	Обчислюй з π ≈ {}
+Saft	Juice	Сік
+Setze die Zahl für x ein	Substitute the number for x	Підстав число замість x
+Spannweite = größter − kleinster Wert	Range = largest − smallest value	Розмах = найбільше − найменше значення
+Spannweite von	Range of	Розмах чисел
+Spannweite von {}	Range of {}	Розмах чисел {}
+Steigung m	Gradient m	Кутовий коефіцієнт m
+Summe für Durchschnitt {} bei {} Tests	Total for an average of {} over {} tests	Сума для середнього {} за {} тестів
+Tiefe	depth	глибина
+Umfang = π	Circumference = π	Довжина кола = π
+Volumen = π	Volume = π	Об'єм = π
+Wahrscheinlichkeit für eine {}	Probability of a {}	Імовірність випадіння {}
+Wahrscheinlichkeiten entlang des Pfades multiplizieren	multiply the probabilities along the path	перемножити ймовірності вздовж шляху
+Wie viele Euro Zinsen bringen {} € in einem Jahr bei {} % Zinsen?	How many euros of interest does €{} earn in one year at {} % interest?	Скільки євро відсотків принесуть {} € за рік при {} % річних?
+Wo ist die Nullstelle?	Where is the zero?	Де нуль функції?
+Wo schneiden sich die Geraden?	Where do the lines intersect?	Де перетинаються прямі?
+Wo schneidet der Graph die y-Achse?	Where does the graph cross the y-axis?	Де графік перетинає вісь y?
+Wurzel	Square root	Корінь
+Zinsen = Kapital	Interest = capital	Відсотки = капітал
+Zusammen {} Teile	{} parts altogether	Разом {} частини
+Zwei Seiten	Two sides	Дві сторони
+Zweimal (Pfadregel)	Twice (path rule)	Двічі (правило шляху)
+als Bruch	as a fraction	у вигляді дробу
+eine {} mit {} Nullen	a {} with {} zeros	{} з {} нулями
+nur die Zahlen vor x rechnen	only calculate with the numbers in front of x	рахуй лише числа перед x
+p = Zinsen	p = interest	p = відсотки
+x = {} einsetzen	substitute x = {}	підстав x = {}
+x durch {} ersetzen	replace x with {}	заміни x на {}
+zweimal Rot	red twice	двічі червона
+{} Heft	{} exercise book	{} зошит
+{} Hefte	{} exercise books	{} зошити
+{} Paare → {}	{} pairs → {}	{} пар → {}
+{} Pumpe	{} pump	{} насос
+{} Pumpen	{} pumps	{} насоси
+{} Pumpen leeren ein Becken in {} Stunden. Wie lange brauchen {} Pumpen?	{} pumps empty a pool in {} hours. How long do {} pumps take?	{} насоси спорожнюють басейн за {} годин. Скільки часу потрібно {} насосам?
+{} ct = {} min	{} ct = {} min	{} ц = {} хв
+{} denkt sich eine Zahl, nimmt sie mal {} und addiert {}. Das Ergebnis ist {}. Welche Zahl hat sich {} gedacht?	{} thinks of a number, multiplies it by {} and adds {}. The result is {}. Which number did {} think of?	{} задумує число, множить його на {} і додає {}. Результат – {}. Яке число задумав(-ла) {}?
+{} gleich wahrscheinliche Paare.	{} equally likely pairs.	{} однаково ймовірних пар.
+{} hat {} € gespart und gibt {} davon für ein Spiel aus. Wie viel kostet das Spiel?	{} has saved €{} and spends {} of it on a game. How much does the game cost?	{} заощадив(-ла) {} € і витрачає {} з них на гру. Скільки коштує гра?
+{} hoch {}	{} to the power of {}	{} у степені {}
+{} kg Äpfel kosten {} €. Wie viel kosten {} kg?	{} kg of apples cost €{}. How much do {} kg cost?	{} кг яблук коштують {} €. Скільки коштують {} кг?
+{} mit {} Nullen	{} with {} zeros	{} з {} нулями
+{} rote → {}	{} red → {}	{} червоних → {}
+{} von {} %	{} of {} %	{} від {} %
+{} von {} € = {}	{} of €{} = {}	{} від {} € = {}
+{} € bringen in einem Jahr {} € Zinsen. Wie hoch ist der Zinssatz in Prozent?	€{} earns €{} interest in one year. What is the interest rate in percent?	{} € за рік приносять {} € відсотків. Яка відсоткова ставка?
+{} € liegen {} Monate zu {} % Jahreszins auf dem Konto. Wie viele Euro Zinsen gibt es?	€{} stays in the account for {} months at {} % annual interest. How many euros of interest are paid?	{} € лежать на рахунку {} місяців під {} % річних. Скільки євро відсотків нараховано?
+{} € werden {} Jahre lang mit {} % verzinst, die Zinsen bleiben auf dem Konto (Zinseszins). Wie viel Geld ist es nach {} Jahren?	€{} is invested for {} years at {} %; the interest stays in the account (compound interest). How much money is there after {} years?	{} € {} роки нараховують {} %, відсотки залишаються на рахунку (складні відсотки). Скільки грошей буде через {} роки?
+{}. binomische Formel	binomial formula {}	{}-га формула скороченого множення
+Terme	Terms	Вирази
+Funktionen	Functions	Функції
+Zehnerpotenzen	Powers of ten	Степені десяти
+Dreisatz	Rule of three	Пропорція
+Zinsen	Interest	Банківські відсотки
+Wahrscheinlichkeit	Probability	Імовірність
+Statistik	Statistics	Статистика
+Kreis	Circle	Коло
+Termwert berechnen	Evaluate a term	Обчислити значення виразу
+Gleichartige Glieder zusammenfassen	Combine like terms	Звести подібні доданки
+Klammern ausmultiplizieren	Expanding brackets	Розкриття дужок
+Termwert mit x² und negativen Zahlen	Evaluate with x² and negative numbers	Значення виразу з x² і від'ємними числами
+Binomische Formeln	Binomial formulas	Формули скороченого множення
+Funktionswert berechnen	Calculate a function value	Обчислити значення функції
+Funktionswert & y-Achsenabschnitt	Function value & y-intercept	Значення функції й перетин з віссю y
+Steigung aus zwei Punkten	Gradient from two points	Кутовий коефіцієнт за двома точками
+Schnittpunkt zweier Geraden	Intersection of two lines	Точка перетину двох прямих
+Zehnerpotenzen ausrechnen	Evaluating powers of ten	Обчислення степенів десяти
+Zahl mal Zehnerpotenz	Number times a power of ten	Число на степінь десяти
+Kommazahl mal Zehnerpotenz	Decimal times a power of ten	Десятковий дріб на степінь десяти
+Große Zahlen: Exponent gesucht	Large numbers: find the exponent	Великі числа: знайди показник
+Kleine Zahlen: negativer Exponent	Small numbers: negative exponent	Малі числа: від'ємний показник
+Preise (proportional)	Prices (proportional)	Ціни (пряма пропорційність)
+Verbrauch und Strecke	Consumption and distance	Витрата й відстань
+Antiproportional: Pumpen	Inversely proportional: pumps	Обернена пропорційність: насоси
+Preise mit Komma	Prices with decimals	Ціни з десятковими
+Antiproportional: Vorräte	Inversely proportional: supplies	Обернена пропорційність: запаси
+Zinssatz gesucht	Find the interest rate	Знайти відсоткову ставку
+Kapital gesucht	Find the capital	Знайти капітал
+Zinsen für Monate	Interest for months	Відсотки за місяці
+Zinseszins	Compound interest	Складні відсотки
+Würfel und Münze	Dice and coin	Кубик і монета
+Kugeln ziehen	Drawing balls	Витягування кульок
+Gegenereignis, Prozent, Erwartung	Complement, percent, expectation	Протилежна подія, відсотки, очікування
+Zweistufig mit Zurücklegen	Two stages with replacement	Два етапи з поверненням
+Ohne Zurücklegen, mindestens einmal	Without replacement, at least once	Без повернення, хоча б один раз
+Mittelwert	Mean	Середнє значення
+Median (ungerade Anzahl)	Median (odd number of values)	Медіана (непарна кількість)
+Spannweite	Range	Розмах
+Median (gerade Anzahl)	Median (even number of values)	Медіана (парна кількість)
+Fehlender Wert für einen Durchschnitt	Missing value for an average	Пропущене значення для середнього
+Umfang aus dem Durchmesser	Circumference from the diameter	Довжина кола за діаметром
+Umfang aus dem Radius	Circumference from the radius	Довжина кола за радіусом
+Kreisfläche	Area of a circle	Площа круга
+Kreisfläche aus dem Durchmesser	Area of a circle from the diameter	Площа круга за діаметром
+Volumen eines Zylinders	Volume of a cylinder	Об'єм циліндра
+Viel Neues für Klasse 5–10: Terme, Funktionen, Zehnerpotenzen, Dreisatz, Zinsen, Wahrscheinlichkeit, Statistik und Kreis	Lots of new content for grades {}–{}: terms, functions, powers of ten, rule of three, interest, probability, statistics and circles	Багато нового для {}–{} класів: вирази, функції, степені десяти, пропорції, відсотки, ймовірність, статистика й коло
+15 neue Textaufgaben – von der Leiter am Haus bis zum Handytarif	{} new word problems – from a ladder against a house to a phone plan	{} нових текстових задач – від драбини біля будинку до мобільного тарифу
+Fehler behoben: Einige Prozent-Aufgaben hatten eine halbe Zahl als Lösung	Fixed: some percentage problems had a half number as the answer	Виправлено: деякі задачі на відсотки мали в розв'язку половинне число
+Wie groß ist die Steigung der Geraden durch P und Q?	What is the gradient of the line through P and Q?	Який кутовий коефіцієнт прямої через P і Q?
