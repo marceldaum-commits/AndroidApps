@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.9.3 – Versuch gegen das weiße Bild auf dem iPad (16.11.2026)
+- **WebApp auf dem iPad:** Auf dem iPhone läuft Raumlicht, auf dem iPad blieb das Bild weiß. Der Unterschied ist die viel größere Zeichenfläche.
+  Auf iPads zeichnet die Oberfläche deshalb jetzt mit höchstens so vielen Bildpunkten wie auf einem iPhone – etwas weniger scharf.
+  Ob das die Ursache trifft, ist noch nicht bestätigt; die Diagnose-Seite hat dafür zwei neue Tests (einfache und volle Schärfe).
+- Sonst keine Änderungen.
+
 ## 2.9.2 – Aufgeräumte Startseite und Fehlersuche für das iPad (16.11.2026)
 - **Startseite aufgeräumt:** Die Kapitel stehen jetzt in einer einzigen Zeile zum Wischen statt in sechs Reihen. Das gewählte Kapitel rutscht von selbst ins Bild,
   darüber steht, wie viele Kapitel das Gebiet hat. Die Aufgaben des Kapitels sind damit ohne Scrollen zu sehen.

@@ -56,6 +56,16 @@
     window.__rlNote = function (text) { note('info', [text]); };
     note('info', ['Start ' + document.documentElement.dataset.version + ' ' + location.search + ' ' + innerWidth + 'x' + innerHeight + ' @' + devicePixelRatio]);
   })();
+  // iPad: Dort blieb das Bild weiß, während es auf dem iPhone (gleiche Browser-Technik, kleinere Zeichenfläche) läuft. Darum zeichnet die Oberfläche auf iPads
+  // mit höchstens so vielen Bildpunkten wie auf einem iPhone (rund 3 Millionen) – etwas weniger scharf, dafür sichtbar. Zum Prüfen: ?ohne=schaerfe (einfache Schärfe), ?mit=schaerfe (unbegrenzt).
+  (function () {
+    var q = location.search, real = window.devicePixelRatio || 1, use = real;
+    var ipad = /iPad/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+    if (/[?&,=]schaerfe/.test(q) && /ohne=/.test(q)) use = 1;
+    else if (ipad && !/mit=schaerfe/.test(q)) use = Math.max(1, Math.min(real, Math.sqrt(3.0e6 / (Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight)))));
+    if (use !== real) { try { Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true }); } catch (e) {} }
+    window.__rlNote('Schärfe: Gerät ' + real + ', benutzt ' + (window.devicePixelRatio || 1).toFixed(2) + (ipad ? ' (iPad erkannt)' : ''));
+  })();
   // Startet die App nicht, sagen wir warum – statt einen leeren Bildschirm zu zeigen. Fehler werden gesammelt und auf der Diagnose-Seite gezeigt.
   var startProblems = [];
   function startFailed(why) {

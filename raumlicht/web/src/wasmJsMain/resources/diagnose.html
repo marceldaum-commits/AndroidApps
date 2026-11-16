@@ -12,6 +12,8 @@
 <a href="./?ohne=buehne"><button>Test 2: ganz ohne 3D-Bühne</button></a>
 <a href="./?ohne=emoji"><button>Test 3: ohne Emoji-Schrift</button></a>
 <a href="./?ohne=buehne,emoji,ton"><button>Test 4: ohne alles davon</button></a>
+<a href="./?ohne=schaerfe"><button>Test 5: einfache Schärfe (kleine Zeichenfläche)</button></a>
+<a href="./?mit=schaerfe"><button>Test 6: volle Schärfe wie bisher</button></a>
 <h2 style="font-size:17px;margin:18px 0 4px">Mitschrift des letzten Starts</h2>
 <pre id="log" style="white-space:pre-wrap;word-break:break-word;background:#141A3C;border-radius:10px;padding:10px;max-width:720px;font-size:12px"></pre>
 <button id="copy">Kopieren</button><button id="reset">App-Speicher leeren und neu laden</button>
@@ -25,6 +27,8 @@
   row('Version der WebApp', '@VERSION@ vom @DATUM@');
   row('Browser', navigator.userAgent);
   row('Bildschirm', innerWidth + ' × ' + innerHeight + ', Schärfe ' + (window.devicePixelRatio || 1) + ', als App gestartet: ' + ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone ? 'ja' : 'nein'));
+  var ipad = /iPad/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+  row('Zeichenfläche bei voller Schärfe', Math.round(innerWidth * (window.devicePixelRatio || 1)) + ' × ' + Math.round(innerHeight * (window.devicePixelRatio || 1)) + ' Bildpunkte' + (ipad ? ' · iPad erkannt: Raumlicht begrenzt hier auf rund 3 Millionen' : ''));
   var gc = wasm(head.concat([1, 5, 1, 95, 1, 120, 0]));
   row('WebAssembly', typeof WebAssembly === 'object' ? 'vorhanden' : 'fehlt', typeof WebAssembly === 'object');
   row('WebAssembly-GC (nötig)', gc ? 'vorhanden' : 'fehlt – der Browser ist zu alt (iPhone/iPad: iOS 18.2 oder neuer nötig)', gc);

@@ -237,3 +237,13 @@ Ursache noch offen; hier gibt es kein Safari. Verdächtig sind: das durchsichtig
 **Wenn ihr ein iPad/iPhone habt:** bitte `diagnose.html` öffnen, Tests 1–4 antippen und melden, ab welchem das Bild erscheint, plus Mitschrift. Bis dahin Raumlicht bitte nicht als „läuft auf iPad/iPhone“ bewerben.
 
 **Außerdem:** Startseite aufgeräumt (Kapitel als eine wischbare Zeile statt Knopf-Wand) – Wunsch von Marcel nach einem Bildschirmfoto vom Android-Handy, wo die WebApp läuft.
+
+---
+
+## 16.11.2026 – Version 2.9.3: iPad, nächster Schritt
+
+Neuer Befund von Marcel: **iPhone läuft, iPad bleibt weiß** (sein Handy ist Android, dort läuft es auch). Gleiche Browser-Technik, also liegt es vermutlich an der Größe der Zeichenfläche
+(iPad bei doppelter Schärfe bis rund 5,6 Millionen Bildpunkte, iPhone rund 3). **Vermutung, nicht bestätigt.**
+2.9.3 begrenzt deshalb auf iPads die Schärfe der Oberfläche so, dass höchstens rund 3 Millionen Bildpunkte gezeichnet werden (`window.devicePixelRatio` wird vor dem Start überschrieben;
+erkannt über „iPad“ im User-Agent bzw. „Macintosh“ mit Touch). Schalter zum Prüfen: `?ohne=schaerfe` (Faktor 1), `?mit=schaerfe` (unbegrenzt) – als Test 5 und 6 auf `diagnose.html`.
+Andere Geräte sind nicht betroffen. Bitte Live-Freigabe erst, wenn Marcel das iPad-Ergebnis gemeldet hat.
