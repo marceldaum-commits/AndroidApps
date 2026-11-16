@@ -26,6 +26,7 @@
   var head = [0, 97, 115, 109, 1, 0, 0, 0];
   row('Version der WebApp', '@VERSION@ vom @DATUM@');
   row('Browser', navigator.userAgent);
+  row('Gerät laut Browser', (navigator.platform || '?') + ' · Berührungspunkte ' + (navigator.maxTouchPoints || 0) + ' · ' + (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1 ? 'iPad im Desktop-Modus (gibt sich als Mac aus)' : /iPad/.test(navigator.userAgent) ? 'iPad im Mobil-Modus' : /iPhone/.test(navigator.userAgent) ? 'iPhone' : 'anderes Gerät'));
   row('Bildschirm', innerWidth + ' × ' + innerHeight + ', Schärfe ' + (window.devicePixelRatio || 1) + ', als App gestartet: ' + ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone ? 'ja' : 'nein'));
   var ipad = /iPad/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
   row('Zeichenfläche bei voller Schärfe', Math.round(innerWidth * (window.devicePixelRatio || 1)) + ' × ' + Math.round(innerHeight * (window.devicePixelRatio || 1)) + ' Bildpunkte' + (ipad ? ' · iPad erkannt: Raumlicht begrenzt hier auf rund 3 Millionen' : ''));
