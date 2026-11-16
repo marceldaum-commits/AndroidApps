@@ -1,0 +1,469 @@
+{
+  "id": "s1-bio-pflanzen",
+  "version": 1,
+  "title": "Pflanzen verstehen",
+  "subject": "biologie",
+  "grades": [
+    5,
+    6
+  ],
+  "emoji": "🌻",
+  "tier": "free",
+  "description": "Wie Pflanzen sich ernähren, blühen, bestäubt werden, Samen verbreiten und keimen – plus die wichtigsten Pflanzenfamilien.",
+  "intro": [
+    {
+      "img": "🌱☀️",
+      "text": "Wusstest du? Pflanzen müssen nicht einkaufen: Aus Licht, Wasser und Luft bauen sie sich ihre Nahrung selbst. Das heißt Fotosynthese."
+    },
+    {
+      "img": "🌸🐝",
+      "text": "Blüten sind wie bunte Werbeschilder: Farbe, Duft und süßer Nektar locken Insekten an – und die tragen den Blütenstaub weiter."
+    },
+    {
+      "img": "🌰💨",
+      "text": "Samen gehen auf Reisen! Manche segeln mit dem Wind, andere kleben im Fell oder reisen im Bauch eines Vogels mit."
+    },
+    {
+      "img": "🌼🔍",
+      "text": "Pflanzen haben Familien. Du erkennst sie an der Blüte: Kreuzblütler haben 4 Kronblätter, Rosengewächse meist 5."
+    },
+    {
+      "img": "🐝💪",
+      "text": "Los geht's, Pflanzenforscher! Brummi kennt jede Blüte persönlich und summt dir bei kniffligen Fragen einen Tipp zu."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was braucht eine grüne Pflanze für die Fotosynthese?",
+      "a": "Licht, Wasser und Kohlenstoffdioxid",
+      "choices": [
+        "Licht, Sauerstoff und Zucker",
+        "Erde, Dünger und Sauerstoff",
+        "Wärme, Stickstoff und Zucker"
+      ],
+      "info": "Licht liefert die Energie, das Wasser kommt über die Wurzeln, das Kohlenstoffdioxid aus der Luft.",
+      "img": "☀️💧🌿"
+    },
+    {
+      "id": "002",
+      "q": "Welchen Nährstoff stellt die Pflanze bei der Fotosynthese her?",
+      "a": "Traubenzucker",
+      "choices": [
+        "Mineralsalze",
+        "Kalk",
+        "Kohlenstoffdioxid"
+      ],
+      "info": "Traubenzucker ist Energie und Baustoff zugleich. Als Abfall entsteht Sauerstoff – zum Glück für uns!",
+      "img": "🍬🌿"
+    },
+    {
+      "id": "003",
+      "q": "Welche Aufgabe hat die Wurzel – neben der Wasseraufnahme?",
+      "a": "Sie verankert die Pflanze im Boden",
+      "choices": [
+        "Sie bildet den Blütenstaub",
+        "Sie lockt Insekten an",
+        "Sie verbreitet die Samen"
+      ],
+      "info": "Wurzeln halten die Pflanze fest wie ein Anker. Manche, wie die Möhre, speichern auch Nährstoffe.",
+      "img": "⚓🌱"
+    },
+    {
+      "id": "004",
+      "q": "Wie heißen die drei Grundorgane einer Blütenpflanze?",
+      "a": "Wurzel, Sprossachse, Blatt",
+      "choices": [
+        "Wurzel, Blüte, Frucht",
+        "Stängel, Samen, Knospe",
+        "Blatt, Rinde, Dorn"
+      ],
+      "info": "Sprossachse ist der Fachbegriff für Stängel oder Stamm. Die Blüte ist ein umgewandelter Spross.",
+      "img": "🌱🌿🍃"
+    },
+    {
+      "id": "005",
+      "q": "Was zieht das Wasser vor allem von der Wurzel bis in die Blätter?",
+      "a": "Die Verdunstung an den Blättern",
+      "choices": [
+        "Ein kleines Herz im Stängel",
+        "Der Wind, der am Stängel rüttelt",
+        "Die Blüte, die es ansaugt"
+      ],
+      "info": "Verdunstet Wasser aus den Blättern, wird von unten Wasser nachgezogen – wie beim Trinken mit dem Strohhalm.",
+      "img": "💧🥤🍃"
+    },
+    {
+      "id": "006",
+      "q": "Welches Gas brauchen Pflanzen auch nachts, wenn es dunkel ist?",
+      "a": "Sauerstoff",
+      "choices": [
+        "Kohlenstoffdioxid",
+        "Stickstoff",
+        "Helium"
+      ],
+      "info": "Pflanzen atmen Tag und Nacht. Tagsüber erzeugt die Fotosynthese aber mehr Sauerstoff, als sie verbraucht.",
+      "img": "🌙🌿"
+    },
+    {
+      "id": "007",
+      "q": "Wie heißen die männlichen Teile der Blüte?",
+      "a": "Staubblätter",
+      "choices": [
+        "Fruchtblätter",
+        "Kelchblätter",
+        "Kronblätter"
+      ],
+      "info": "Oben am Staubblatt sitzt der Staubbeutel. Darin reift der Blütenstaub, der Pollen.",
+      "img": "🌼✨"
+    },
+    {
+      "id": "008",
+      "q": "Wie heißt der weibliche Teil in der Mitte der Blüte?",
+      "a": "Stempel",
+      "choices": [
+        "Staubbeutel",
+        "Kelchblatt",
+        "Kronblatt"
+      ],
+      "info": "Der Stempel besteht aus Narbe, Griffel und Fruchtknoten. Er wird aus einem oder mehreren Fruchtblättern gebildet.",
+      "img": "🌷🎯"
+    },
+    {
+      "id": "009",
+      "q": "Welcher Teil des Stempels fängt den Pollen auf?",
+      "a": "Die Narbe",
+      "choices": [
+        "Der Griffel",
+        "Der Fruchtknoten",
+        "Der Staubfaden"
+      ],
+      "info": "Die Narbe ist oft klebrig oder fedrig – so bleibt der Pollen wie an einem Klebezettel haften.",
+      "img": "🍯🌼"
+    },
+    {
+      "id": "010",
+      "q": "In welchem Teil der Blüte liegen die Samenanlagen?",
+      "a": "Im Fruchtknoten",
+      "choices": [
+        "In der Narbe",
+        "Im Staubbeutel",
+        "Im Kelchblatt"
+      ],
+      "info": "Der Fruchtknoten ist die Schatzkammer der Blüte: Hier liegen die Samenanlagen mit den Eizellen.",
+      "img": "💎🌸"
+    },
+    {
+      "id": "011",
+      "q": "Welche meist grünen Blätter schützen die Blütenknospe?",
+      "a": "Die Kelchblätter",
+      "choices": [
+        "Die Kronblätter",
+        "Die Staubblätter",
+        "Die Fruchtblätter"
+      ],
+      "info": "Kelchblätter umhüllen die Knospe wie eine Jacke. Bei der Erdbeere sieht man sie noch an der Frucht.",
+      "img": "🧥🌱"
+    },
+    {
+      "id": "012",
+      "q": "Wozu dienen die bunten Kronblätter vieler Blüten?",
+      "a": "Sie locken Insekten an",
+      "choices": [
+        "Sie bilden den Pollen",
+        "Sie nehmen Wasser auf",
+        "Sie verankern die Blüte"
+      ],
+      "info": "Leuchtende Farben, Muster und Duft zeigen Insekten den Weg zum Nektar – wie eine Landebahn.",
+      "img": "🎨🐝"
+    },
+    {
+      "id": "013",
+      "q": "Was versteht man unter Bestäubung?",
+      "a": "Pollen gelangt auf die Narbe",
+      "choices": [
+        "Pollen gelangt in die Wurzel",
+        "Ein Samen fällt auf die Erde",
+        "Eizelle und Spermazelle verschmelzen"
+      ],
+      "info": "Bestäubung ist nur der Transport des Pollens. Das Verschmelzen der Zellen kommt erst danach: die Befruchtung.",
+      "img": "🐝🌼➡️"
+    },
+    {
+      "id": "014",
+      "q": "Was geschieht bei der Befruchtung einer Blüte?",
+      "a": "Eine Spermazelle verschmilzt mit der Eizelle",
+      "choices": [
+        "Pollen landet auf der Narbe",
+        "Der Samen keimt im Boden",
+        "Die Blüte öffnet sich"
+      ],
+      "info": "Der Pollen bildet einen Pollenschlauch, der durch den Griffel bis zur Samenanlage wächst.",
+      "img": "💞🌸"
+    },
+    {
+      "id": "015",
+      "q": "Wie gelangt der Pollen von Gräsern meist auf die Narbe?",
+      "a": "Mit dem Wind",
+      "choices": [
+        "Mit Insekten",
+        "Mit Vögeln",
+        "Mit dem Regen"
+      ],
+      "info": "Windblütler wie Gräser und Hasel bilden riesige Pollenmengen – das merken Menschen mit Heuschnupfen.",
+      "img": "🌾💨🤧"
+    },
+    {
+      "id": "016",
+      "q": "Woran erkennt man Windblütler oft?",
+      "a": "Unscheinbare Blüten ohne Duft und Nektar",
+      "choices": [
+        "Große, bunte, duftende Blüten",
+        "Blüten mit besonders viel Nektar",
+        "Blüten, die wie Schmetterlinge aussehen"
+      ],
+      "info": "Wer den Wind als Boten hat, muss keine Insekten anlocken. Darum sparen Windblütler an Farbe und Duft.",
+      "img": "🌾🍃"
+    },
+    {
+      "id": "017",
+      "q": "Was ist Fremdbestäubung?",
+      "a": "Pollen einer anderen Pflanze derselben Art",
+      "choices": [
+        "Pollen einer ganz anderen Pflanzenart",
+        "Pollen aus derselben Blüte",
+        "Samen, die ein Mensch aussät"
+      ],
+      "info": "Apfelblüten brauchen zum Beispiel Pollen von einem anderen Apfelbaum. Das mischt die Erbanlagen gut durch.",
+      "img": "🍎🐝🍎"
+    },
+    {
+      "id": "018",
+      "q": "Warum besuchen Bienen Blüten?",
+      "a": "Um Nektar und Pollen zu sammeln",
+      "choices": [
+        "Um die Blätter zu fressen",
+        "Um dort zu überwintern",
+        "Um Wasser aus der Wurzel zu trinken"
+      ],
+      "info": "Aus Nektar machen Bienen Honig, Pollen ist ihr Eiweißfutter. Ganz nebenbei bestäuben sie die Blüten.",
+      "img": "🐝🍯"
+    },
+    {
+      "id": "019",
+      "q": "Woraus entwickelt sich nach der Befruchtung die Frucht?",
+      "a": "Aus dem Fruchtknoten",
+      "choices": [
+        "Aus den Kronblättern",
+        "Aus dem Staubbeutel",
+        "Aus der Wurzel"
+      ],
+      "info": "Aus dem Fruchtknoten wird die Frucht, aus den Samenanlagen werden die Samen. Die Kronblätter welken.",
+      "img": "🌸➡️🍒"
+    },
+    {
+      "id": "020",
+      "q": "Wie werden die Früchte des Löwenzahns verbreitet?",
+      "a": "Mit dem Wind",
+      "choices": [
+        "Im Fell von Tieren",
+        "Durch Schleudern",
+        "Mit dem Wasser"
+      ],
+      "info": "Die Pusteblume ist ein Schirmchenflieger: Jede Frucht hat einen kleinen Fallschirm aus feinen Haaren.",
+      "img": "🌬️🌼☂️"
+    },
+    {
+      "id": "021",
+      "q": "Welche Pflanze verbreitet Früchte mit Häkchen im Fell von Tieren?",
+      "a": "Die Klette",
+      "choices": [
+        "Der Löwenzahn",
+        "Der Ahorn",
+        "Die Kirsche"
+      ],
+      "info": "Die Häkchen der Klette brachten einen Erfinder auf eine Idee: den Klettverschluss!",
+      "img": "🐕🌰"
+    },
+    {
+      "id": "022",
+      "q": "Wie nennt man Flugfrüchte wie die vom Ahorn?",
+      "a": "Schraubenflieger",
+      "choices": [
+        "Schirmchenflieger",
+        "Klettfrüchte",
+        "Schleuderfrüchte"
+      ],
+      "info": "Ahornfrüchte drehen sich beim Fallen wie ein Hubschrauber-Rotor. So bleiben sie länger in der Luft.",
+      "img": "🍁🚁"
+    },
+    {
+      "id": "023",
+      "q": "Wie helfen Amseln bei der Verbreitung von Kirschkernen?",
+      "a": "Sie fressen Kirschen und scheiden die Kerne aus",
+      "choices": [
+        "Sie pflanzen die Kerne mit dem Schnabel ein",
+        "Sie bestäuben die Kirschblüten",
+        "Sie tragen ganze Äste ins Nest"
+      ],
+      "info": "Der harte Kern übersteht die Reise durch den Vogeldarm und landet weit weg vom Mutterbaum – mit Dünger.",
+      "img": "🐦🍒"
+    },
+    {
+      "id": "024",
+      "q": "Eichhörnchen vergraben Nüsse. Warum hilft das dem Baum?",
+      "a": "Vergessene Nüsse können keimen",
+      "choices": [
+        "Die Nüsse werden so gedüngt",
+        "Der Baum blüht dadurch früher",
+        "Die Nüsse werden größer"
+      ],
+      "info": "Eichhörnchen finden längst nicht alle Verstecke wieder. Aus manchen vergessenen Nüssen wächst ein neuer Baum.",
+      "img": "🐿️🌰🌱"
+    },
+    {
+      "id": "025",
+      "q": "Wie verbreitet das Springkraut seine Samen?",
+      "a": "Die Frucht platzt auf und schleudert sie weg",
+      "choices": [
+        "Mit Schirmchen im Wind",
+        "Mit Haken im Fell",
+        "Mit Meeresströmungen"
+      ],
+      "info": "Berührst du eine reife Kapsel, springt sie blitzschnell auf – daher der Name Springkraut.",
+      "img": "💥🌱"
+    },
+    {
+      "id": "026",
+      "q": "Wie kann eine Kokosnuss zu einer fernen Insel gelangen?",
+      "a": "Sie schwimmt mit der Meeresströmung",
+      "choices": [
+        "Sie fliegt mit dem Wind",
+        "Sie hakt sich in Vogelfedern",
+        "Sie wird vom Baum geschleudert"
+      ],
+      "info": "Die Kokosnuss ist eine Schwimmfrucht: Ihre luftige Faserhülle trägt sie oft wochenlang über das Meer.",
+      "img": "🥥🌊🌴"
+    },
+    {
+      "id": "027",
+      "q": "Was braucht ein Samen auf jeden Fall zum Keimen?",
+      "a": "Wasser, Wärme und Sauerstoff",
+      "choices": [
+        "Licht, Dünger und Erde",
+        "Erde, Licht und Kälte",
+        "Dünger, Kälte und Wasser"
+      ],
+      "info": "Darum keimt Kresse sogar auf feuchter Watte. Erde und Dünger braucht erst die junge Pflanze.",
+      "img": "💧🌡️🌱"
+    },
+    {
+      "id": "028",
+      "q": "Woher bekommt der Keimling seine erste Energie?",
+      "a": "Aus den Nährstoffen im Samen",
+      "choices": [
+        "Aus Sonnenlicht über die Wurzel",
+        "Aus dem Dünger im Boden",
+        "Aus dem Regenwasser"
+      ],
+      "info": "Bei der Bohne stecken die Vorräte in den dicken Keimblättern – wie ein Lunchpaket für den Start.",
+      "img": "🌰🎒"
+    },
+    {
+      "id": "029",
+      "q": "Was wächst bei einer keimenden Bohne als Erstes aus dem Samen?",
+      "a": "Die Keimwurzel",
+      "choices": [
+        "Das erste Laubblatt",
+        "Die Blüte",
+        "Die Frucht"
+      ],
+      "info": "Erst sichert die Wurzel Halt und Wasser, dann streckt sich der Spross zum Licht.",
+      "img": "🌰⬇️🌱"
+    },
+    {
+      "id": "030",
+      "q": "Wie viele Keimblätter haben Gräser wie Mais oder Weizen?",
+      "a": "1",
+      "choices": [
+        "2",
+        "3",
+        "4"
+      ],
+      "info": "Gräser sind einkeimblättrig. Bohne, Erbse und Sonnenblume sind zweikeimblättrig.",
+      "img": "🌽☝️"
+    },
+    {
+      "id": "031",
+      "q": "Woran erkennt man Kreuzblütler?",
+      "a": "4 Kronblätter, über Kreuz angeordnet",
+      "choices": [
+        "5 Kronblätter und viele Staubblätter",
+        "Blüten wie kleine Schmetterlinge",
+        "Viele kleine Blüten in einem Korb"
+      ],
+      "info": "Zu den Kreuzblütlern gehören Raps, Kohl, Radieschen und Senf.",
+      "img": "✖️🌼"
+    },
+    {
+      "id": "032",
+      "q": "Welche Pflanze gehört zu den Kreuzblütlern?",
+      "a": "Raps",
+      "choices": [
+        "Erbse",
+        "Apfelbaum",
+        "Sonnenblume"
+      ],
+      "info": "Die leuchtend gelben Rapsfelder im Frühling bestehen aus lauter kleinen Kreuzblüten.",
+      "img": "💛🌼✖️"
+    },
+    {
+      "id": "033",
+      "q": "Welche Pflanze gehört zu den Rosengewächsen?",
+      "a": "Apfelbaum",
+      "choices": [
+        "Raps",
+        "Bohne",
+        "Gänseblümchen"
+      ],
+      "info": "Auch Kirsche, Birne, Erdbeere und Heckenrose sind Rosengewächse. Ihre Blüten haben meist 5 Kronblätter.",
+      "img": "🍎🌹"
+    },
+    {
+      "id": "034",
+      "q": "Welche Pflanzenfamilie hat Blüten wie kleine Schmetterlinge?",
+      "a": "Schmetterlingsblütler",
+      "choices": [
+        "Kreuzblütler",
+        "Korbblütler",
+        "Rosengewächse"
+      ],
+      "info": "Erbse, Bohne und Klee gehören dazu. Ihre Blütenteile heißen Fahne, Flügel und Schiffchen.",
+      "img": "🦋🌸"
+    },
+    {
+      "id": "035",
+      "q": "Eine Sonnenblume ist eigentlich …",
+      "a": "ein Korb aus vielen kleinen Blüten",
+      "choices": [
+        "eine einzige riesige Blüte",
+        "eine Frucht mit bunten Blättern",
+        "ein Blatt, das gelb geworden ist"
+      ],
+      "info": "Sonnenblume, Gänseblümchen und Löwenzahn sind Korbblütler. Jedes Kernchen in der Mitte war eine eigene Blüte.",
+      "img": "🌻🧺"
+    },
+    {
+      "id": "036",
+      "q": "Welche Pflanze ist ein Lippenblütler mit vierkantigem Stängel?",
+      "a": "Pfefferminze",
+      "choices": [
+        "Raps",
+        "Kirsche",
+        "Erbse"
+      ],
+      "info": "Lippenblütler wie Minze, Salbei und Taubnessel haben Blüten mit Ober- und Unterlippe und duften oft stark.",
+      "img": "🌿👄"
+    }
+  ]
+}

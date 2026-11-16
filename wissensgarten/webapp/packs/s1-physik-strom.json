@@ -1,0 +1,470 @@
+{
+  "id": "s1-physik-strom",
+  "version": 1,
+  "title": "Strom und Magnetismus",
+  "subject": "physik",
+  "grades": [
+    7,
+    8,
+    9
+  ],
+  "emoji": "⚡",
+  "tier": "free",
+  "description": "Stromkreise, Leiter und Isolatoren, Reihen- und Parallelschaltung, Ohmsches Gesetz, Magnete, Elektromagnete und sicherer Umgang mit Strom.",
+  "intro": [
+    {
+      "img": "⚡🔁",
+      "text": "Wusstest du? Strom fließt nur, wenn der Kreis geschlossen ist – wie auf einer Rennbahn ohne Lücke. Ein Schalter öffnet oder schließt sie."
+    },
+    {
+      "img": "💧🔋",
+      "text": "Stell dir Strom wie Wasser vor: Die Spannung U ist der Antrieb, die Stromstärke I die Menge pro Sekunde, der Widerstand R eine Engstelle."
+    },
+    {
+      "img": "🧲🧭",
+      "text": "Magnete haben einen Nord- und einen Südpol. Gleiche Pole stoßen sich ab, ungleiche ziehen sich an – das nutzt auch der Kompass."
+    },
+    {
+      "img": "🌀🔩",
+      "text": "Strom macht Magnetismus: Wickle isolierten Draht um einen Eisennagel, schließe eine Batterie an – fertig ist der Elektromagnet!"
+    },
+    {
+      "img": "🐝💪",
+      "text": "Los geht's, Strom-Profi! Brummi summt mit und erinnert dich: Experimente nur mit Batterien, niemals mit der Steckdose."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was braucht ein einfacher Stromkreis mindestens?",
+      "a": "Quelle, Leitungen und Verbraucher",
+      "choices": [
+        "Nur eine Batterie",
+        "Schalter, Lampe und Magnet",
+        "Batterie und ein offenes Kabelende"
+      ],
+      "info": "Zum Beispiel Batterie, zwei Kabel und ein Lämpchen. Ein Schalter ist praktisch, aber nicht nötig.",
+      "img": "🔋➰💡"
+    },
+    {
+      "id": "002",
+      "q": "Warum leuchtet die Lampe nicht, wenn der Schalter offen ist?",
+      "a": "Der Stromkreis ist unterbrochen",
+      "choices": [
+        "Der Strom ist zu stark",
+        "Die Lampe ist zu kalt",
+        "Die Kabel sind zu lang"
+      ],
+      "info": "Ein offener Schalter ist wie eine hochgezogene Brücke: Die Elektronen kommen nicht mehr ringsum.",
+      "img": "🌉💡"
+    },
+    {
+      "id": "003",
+      "q": "Welcher Stoff leitet den elektrischen Strom gut?",
+      "a": "Kupfer",
+      "choices": [
+        "Gummi",
+        "Glas",
+        "Trockenes Holz"
+      ],
+      "info": "Metalle sind gute Leiter. Darum bestehen die Adern in Kabeln meist aus Kupfer.",
+      "img": "🔶➰"
+    },
+    {
+      "id": "004",
+      "q": "Welcher dieser Stoffe ist ein Isolator?",
+      "a": "Kunststoff",
+      "choices": [
+        "Eisen",
+        "Aluminium",
+        "Graphit"
+      ],
+      "info": "Vorsicht, Falle: Graphit aus der Bleistiftmine ist kein Metall, leitet aber trotzdem Strom.",
+      "img": "🧤🚫"
+    },
+    {
+      "id": "005",
+      "q": "Warum sind Kabel mit Kunststoff ummantelt?",
+      "a": "Damit man beim Anfassen keinen Schlag bekommt",
+      "choices": [
+        "Damit der Strom schneller fließt",
+        "Damit das Kupfer leuchtet",
+        "Damit die Spannung steigt"
+      ],
+      "info": "Die Isolierung trennt dich vom Strom. Kaputte Kabel deshalb nie benutzen!",
+      "img": "🧥➰"
+    },
+    {
+      "id": "006",
+      "q": "Leitet Leitungswasser den elektrischen Strom?",
+      "a": "Ja, wegen der gelösten Salze",
+      "choices": [
+        "Nein, Wasser isoliert immer",
+        "Nur wenn es sehr kalt ist",
+        "Nur wenn es kocht"
+      ],
+      "info": "Ganz reines Wasser leitet kaum, Leitungswasser schon. Darum: Elektrogeräte und Badewanne nie zusammen!",
+      "img": "🚿⚡"
+    },
+    {
+      "id": "007",
+      "q": "Zwei Lampen in Reihe: Eine wird herausgedreht. Was passiert?",
+      "a": "Die andere geht auch aus",
+      "choices": [
+        "Die andere leuchtet heller",
+        "Die andere leuchtet gleich weiter",
+        "Die Batterie lädt sich auf"
+      ],
+      "info": "In der Reihenschaltung gibt es nur einen Weg. Fehlt eine Lampe, ist der ganze Kreis unterbrochen.",
+      "img": "💡💡❌"
+    },
+    {
+      "id": "008",
+      "q": "Zwei Lampen parallel: Eine wird herausgedreht. Was passiert?",
+      "a": "Die andere leuchtet unverändert weiter",
+      "choices": [
+        "Die andere geht auch aus",
+        "Die andere flackert und erlischt",
+        "Es entsteht ein Kurzschluss"
+      ],
+      "info": "Parallel hat jede Lampe ihren eigenen Weg zur Quelle. Fällt einer aus, bleibt der andere geschlossen.",
+      "img": "💡🔀💡"
+    },
+    {
+      "id": "009",
+      "q": "Wie sind die Steckdosen in einer Wohnung geschaltet?",
+      "a": "Parallel",
+      "choices": [
+        "In Reihe",
+        "Abwechselnd in Reihe und parallel",
+        "Gar nicht miteinander verbunden"
+      ],
+      "info": "So bekommt jedes Gerät die volle Spannung von 230 V und läuft, egal ob die anderen an sind.",
+      "img": "🔌🔀"
+    },
+    {
+      "id": "010",
+      "q": "In einer Reihenschaltung ist die Stromstärke …",
+      "a": "an jeder Stelle gleich groß",
+      "choices": [
+        "in jeder Lampe verschieden",
+        "hinter der letzten Lampe null",
+        "an der Batterie doppelt so groß"
+      ],
+      "info": "Es gibt nur einen Weg. Die Elektronen werden nicht verbraucht – nur ihre Energie wird umgewandelt.",
+      "img": "➰🔁"
+    },
+    {
+      "id": "011",
+      "q": "Was ist bei einer Parallelschaltung an allen Zweigen gleich?",
+      "a": "Die Spannung",
+      "choices": [
+        "Die Stromstärke",
+        "Der Widerstand",
+        "Die Leistung"
+      ],
+      "info": "Jeder Zweig hängt direkt an der Quelle. Die Ströme teilen sich je nach Widerstand auf.",
+      "img": "🔀⚖️"
+    },
+    {
+      "id": "012",
+      "q": "Wie misst man die Stromstärke?",
+      "a": "Mit einem Amperemeter, in Reihe geschaltet",
+      "choices": [
+        "Mit einem Voltmeter, in Reihe geschaltet",
+        "Mit einem Amperemeter, parallel geschaltet",
+        "Mit einem Thermometer am Kabel"
+      ],
+      "info": "Der Strom muss durch das Messgerät hindurchfließen – deshalb wird es in den Kreis eingefügt.",
+      "img": "📟➰"
+    },
+    {
+      "id": "013",
+      "q": "Wie schließt man ein Voltmeter an?",
+      "a": "Parallel zum Bauteil",
+      "choices": [
+        "In Reihe zum Bauteil",
+        "Direkt an die Steckdose",
+        "Gar nicht, es misst ohne Kabel"
+      ],
+      "info": "Spannung ist ein Unterschied zwischen zwei Punkten. Darum greift das Voltmeter vor und hinter dem Bauteil ab.",
+      "img": "📟🔀"
+    },
+    {
+      "id": "014",
+      "q": "Wie berechnet man die Stromstärke I aus U und R?",
+      "a": "I = U / R",
+      "choices": [
+        "I = U · R",
+        "I = R / U",
+        "I = U + R"
+      ],
+      "info": "Aus U = R · I folgt durch Umstellen I = U / R. Mehr Spannung heißt mehr Strom, mehr Widerstand weniger.",
+      "img": "➗⚡"
+    },
+    {
+      "id": "015",
+      "q": "U = 12 V, R = 4 Ω. Wie groß ist die Stromstärke?",
+      "a": "3 A",
+      "choices": [
+        "48 A",
+        "8 A",
+        "0,33 A"
+      ],
+      "info": "I = U / R = 12 V : 4 Ω = 3 A",
+      "img": "🔋➗"
+    },
+    {
+      "id": "016",
+      "q": "Eine Lampe zieht bei 6 V einen Strom von 0,5 A. Wie groß ist ihr Widerstand?",
+      "a": "12 Ω",
+      "choices": [
+        "3 Ω",
+        "5,5 Ω",
+        "24 Ω"
+      ],
+      "info": "R = U / I = 6 V : 0,5 A = 12 Ω",
+      "img": "💡🧮"
+    },
+    {
+      "id": "017",
+      "q": "R = 100 Ω, I = 0,2 A. Welche Spannung liegt an?",
+      "a": "20 V",
+      "choices": [
+        "500 V",
+        "100,2 V",
+        "0,002 V"
+      ],
+      "info": "U = R · I = 100 Ω · 0,2 A = 20 V",
+      "img": "✖️⚡"
+    },
+    {
+      "id": "018",
+      "q": "Reihenschaltung mit 30 Ω und 60 Ω. Wie groß ist der Gesamtwiderstand?",
+      "a": "90 Ω",
+      "choices": [
+        "20 Ω",
+        "30 Ω",
+        "1800 Ω"
+      ],
+      "info": "In Reihe addieren sich die Widerstände: 30 Ω + 60 Ω = 90 Ω. 20 Ω wäre die Parallelschaltung.",
+      "img": "➕🧮"
+    },
+    {
+      "id": "019",
+      "q": "Zwei gleiche Widerstände von je 10 Ω parallel. Gesamtwiderstand?",
+      "a": "5 Ω",
+      "choices": [
+        "20 Ω",
+        "10 Ω",
+        "100 Ω"
+      ],
+      "info": "1/R = 1/10 Ω + 1/10 Ω = 2/10 Ω, also R = 5 Ω. Zwei Wege nebeneinander lassen mehr Strom durch.",
+      "img": "🔀🧮"
+    },
+    {
+      "id": "020",
+      "q": "Der Widerstand wird größer, die Spannung bleibt gleich. Was passiert mit I?",
+      "a": "Die Stromstärke sinkt",
+      "choices": [
+        "Die Stromstärke steigt",
+        "Die Stromstärke bleibt gleich",
+        "Die Spannung verdoppelt sich"
+      ],
+      "info": "I = U / R: Wird der Nenner größer, wird der Bruch kleiner – wie Wasser durch einen dünneren Schlauch.",
+      "img": "🚰⬇️"
+    },
+    {
+      "id": "021",
+      "q": "Drei 1,5-V-Batterien werden in Reihe geschaltet. Welche Spannung ergibt das?",
+      "a": "4,5 V",
+      "choices": [
+        "1,5 V",
+        "3 V",
+        "0,5 V"
+      ],
+      "info": "In Reihe addieren sich die Spannungen: 1,5 V + 1,5 V + 1,5 V = 4,5 V.",
+      "img": "🔋🔋🔋"
+    },
+    {
+      "id": "022",
+      "q": "Was ist ein Kurzschluss?",
+      "a": "Strom fließt fast ohne Widerstand am Gerät vorbei",
+      "choices": [
+        "Ein besonders kurzes Kabel",
+        "Ein Stromkreis ohne Batterie",
+        "Eine Lampe mit kurzem Glühdraht"
+      ],
+      "info": "Dabei wird die Stromstärke riesig, Kabel werden heiß und können brennen. Batterien nie kurzschließen!",
+      "img": "🔥➰"
+    },
+    {
+      "id": "023",
+      "q": "Wozu dient eine Sicherung?",
+      "a": "Sie unterbricht den Kreis bei zu großem Strom",
+      "choices": [
+        "Sie verstärkt den Strom",
+        "Sie speichert Strom für Notfälle",
+        "Sie misst die Spannung"
+      ],
+      "info": "Sicherungen schützen Leitungen vor Überhitzung und Brand. Der Sicherungskasten hängt oft im Flur oder Keller.",
+      "img": "🛡️⚡"
+    },
+    {
+      "id": "024",
+      "q": "Warum experimentiert man nie mit der Steckdose?",
+      "a": "230 V können lebensgefährlich sein",
+      "choices": [
+        "Dort fließt nur Gleichstrom",
+        "230 V sind für Versuche zu schwach",
+        "Der Stromzähler läuft sonst rückwärts"
+      ],
+      "info": "Schon ab etwa 50 V Wechselspannung kann Strom durch den Körper gefährlich werden. Steckdose = tabu!",
+      "img": "🔌⛔"
+    },
+    {
+      "id": "025",
+      "q": "Jemand hängt an einem defekten Gerät fest. Was tust du zuerst?",
+      "a": "Strom abschalten, dann helfen",
+      "choices": [
+        "Die Person sofort wegziehen",
+        "Mit Wasser übergießen",
+        "Mit einer Metallstange wegschieben"
+      ],
+      "info": "Wer die Person berührt, solange Strom fließt, wird selbst Teil des Stromkreises. Danach Notruf 112.",
+      "img": "🔌✋"
+    },
+    {
+      "id": "026",
+      "q": "Warum bekommt ein Vogel auf einer Stromleitung keinen Schlag?",
+      "a": "Er berührt nur ein Seil, kaum Strom fließt durch ihn",
+      "choices": [
+        "Vögel sind gegen Strom immun",
+        "Die Leitung ist tagsüber aus",
+        "Seine Krallen sind aus Gummi"
+      ],
+      "info": "Zwischen seinen Füßen ist fast keine Spannung. Gefährlich wird es, wenn er zwei Seile oder den Mast berührt.",
+      "img": "🐦➖"
+    },
+    {
+      "id": "027",
+      "q": "Welche Magnetpole ziehen sich an?",
+      "a": "Nordpol und Südpol",
+      "choices": [
+        "Nordpol und Nordpol",
+        "Südpol und Südpol",
+        "Alle Pole gleich stark"
+      ],
+      "info": "Merke: Gleiche Pole stoßen sich ab, ungleiche ziehen sich an.",
+      "img": "🧲❤️🧲"
+    },
+    {
+      "id": "028",
+      "q": "Welches Metall wird von einem Magneten angezogen?",
+      "a": "Eisen",
+      "choices": [
+        "Kupfer",
+        "Aluminium",
+        "Messing"
+      ],
+      "info": "Neben Eisen sind auch Nickel und Cobalt magnetisch. Eine Cola-Dose aus Aluminium bleibt liegen.",
+      "img": "🧲🔩"
+    },
+    {
+      "id": "029",
+      "q": "Das Ende der Kompassnadel, das nach Norden zeigt, ist ein …",
+      "a": "Nordpol",
+      "choices": [
+        "Südpol",
+        "Pluspol",
+        "Minuspol"
+      ],
+      "info": "Ungleiche Pole ziehen sich an. Also liegt in der Nähe des geografischen Nordpols ein magnetischer Südpol!",
+      "img": "🧭⬆️"
+    },
+    {
+      "id": "030",
+      "q": "Ein Stabmagnet bricht in der Mitte durch. Was entsteht?",
+      "a": "Zwei Magnete mit je Nord- und Südpol",
+      "choices": [
+        "Ein reiner Nord- und ein reiner Südmagnet",
+        "Zwei unmagnetische Stücke",
+        "Ein Magnet und ein Stück Eisen"
+      ],
+      "info": "Einzelne Pole gibt es nicht. Jedes noch so kleine Stück hat wieder Nord- und Südpol.",
+      "img": "🧲✂️🧲"
+    },
+    {
+      "id": "031",
+      "q": "Wie macht man das Magnetfeld eines Magneten sichtbar?",
+      "a": "Mit Eisenfeilspänen",
+      "choices": [
+        "Mit Kupferpulver",
+        "Mit Salzkörnern",
+        "Mit Wassertropfen"
+      ],
+      "info": "Die Späne richten sich wie kleine Kompassnadeln aus und zeigen die Feldlinien von Pol zu Pol.",
+      "img": "🧲✨"
+    },
+    {
+      "id": "032",
+      "q": "Was entsteht um einen Draht, durch den Strom fließt?",
+      "a": "Ein Magnetfeld",
+      "choices": [
+        "Ein Schwerefeld",
+        "Ein Schallfeld",
+        "Ein Kältefeld"
+      ],
+      "info": "Das entdeckte Hans Christian Ørsted 1820: Eine Kompassnadel neben dem Draht schlug plötzlich aus.",
+      "img": "➰🧭"
+    },
+    {
+      "id": "033",
+      "q": "Wie wird ein Elektromagnet stärker?",
+      "a": "Mehr Windungen und ein Eisenkern",
+      "choices": [
+        "Ein Kupferkern statt Eisen",
+        "Weniger Windungen",
+        "Ein dickerer Kunststoffmantel"
+      ],
+      "info": "Auch eine höhere Stromstärke macht ihn stärker. Der Eisenkern bündelt das Magnetfeld.",
+      "img": "🌀🔩💪"
+    },
+    {
+      "id": "034",
+      "q": "Was ist der große Vorteil eines Elektromagneten?",
+      "a": "Man kann ihn ein- und ausschalten",
+      "choices": [
+        "Er braucht nie Strom",
+        "Er zieht auch Holz an",
+        "Er hat keine Pole"
+      ],
+      "info": "Darum heben Kräne auf dem Schrottplatz Autos an und lassen sie per Knopfdruck wieder fallen.",
+      "img": "🏗️🧲"
+    },
+    {
+      "id": "035",
+      "q": "In welchem Gerät arbeitet ein Elektromagnet?",
+      "a": "In der Türklingel",
+      "choices": [
+        "Im Flüssigkeitsthermometer",
+        "In der Taschenlampenbatterie",
+        "Im Glühdraht der Lampe"
+      ],
+      "info": "Der Elektromagnet zieht einen Klöppel an die Glocke. Auch Lautsprecher und Elektromotoren nutzen ihn.",
+      "img": "🔔🧲"
+    },
+    {
+      "id": "036",
+      "q": "Die Stromrichtung im Elektromagneten wird umgedreht. Was passiert?",
+      "a": "Nord- und Südpol tauschen die Plätze",
+      "choices": [
+        "Er verliert seinen Magnetismus",
+        "Er wird doppelt so stark",
+        "Er zieht nur noch Kupfer an"
+      ],
+      "info": "Die Richtung des Stroms bestimmt die Lage der Pole. Das nutzen Elektromotoren beim Drehen.",
+      "img": "🔄🧲"
+    }
+  ]
+}

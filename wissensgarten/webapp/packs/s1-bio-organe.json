@@ -1,0 +1,470 @@
+{
+  "id": "s1-bio-organe",
+  "version": 1,
+  "title": "Organe und Gesundheit",
+  "subject": "biologie",
+  "grades": [
+    7,
+    8,
+    9
+  ],
+  "emoji": "❤️",
+  "tier": "free",
+  "description": "Herz und Kreislauf, Atmung, Verdauung, Nerven, Sinne und Immunsystem – und was uns gesund hält oder süchtig macht.",
+  "intro": [
+    {
+      "img": "❤️🔁",
+      "text": "Wusstest du? Dein Herz schlägt an einem Tag rund 100 000-mal – ohne Pause und ohne dass du daran denken musst."
+    },
+    {
+      "img": "🌬️🔴",
+      "text": "Mit jedem Atemzug holst du Sauerstoff. Das Blut bringt ihn zu jeder Zelle und nimmt Kohlenstoffdioxid wieder mit."
+    },
+    {
+      "img": "🧠⚡",
+      "text": "Deine Nerven sind superschnell: Signale rasen mit bis zu 120 m pro Sekunde. So ziehst du die Hand vom heißen Herd, bevor du nachdenkst."
+    },
+    {
+      "img": "🛡️🦠",
+      "text": "Dein Immunsystem ist eine Abwehrtruppe: Fresszellen, Antikörper und Gedächtniszellen schützen dich jeden Tag vor Erregern."
+    },
+    {
+      "img": "🐝💪",
+      "text": "Los geht's! Brummi zeigt dir, wie dein Körper funktioniert – und wie du ihn gesund und stark hältst."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welche Herzhälfte pumpt das Blut in den Körperkreislauf?",
+      "a": "Die linke",
+      "choices": [
+        "Die rechte",
+        "Beide abwechselnd",
+        "Keine, das macht die Lunge"
+      ],
+      "info": "Die linke Kammer hat die dickere Muskelwand – sie muss das Blut bis in die Zehenspitzen drücken.",
+      "img": "❤️⬅️"
+    },
+    {
+      "id": "002",
+      "q": "Wohin pumpt die rechte Herzkammer das Blut?",
+      "a": "In die Lunge",
+      "choices": [
+        "In den Kopf",
+        "In die Beine",
+        "In die Leber"
+      ],
+      "info": "Im Lungenkreislauf gibt das Blut Kohlenstoffdioxid ab und holt frischen Sauerstoff.",
+      "img": "❤️➡️🌬️"
+    },
+    {
+      "id": "003",
+      "q": "Wozu haben das Herz und die Venen Klappen?",
+      "a": "Damit das Blut nur in eine Richtung fließt",
+      "choices": [
+        "Damit das Blut schneller gerinnt",
+        "Damit dort Sauerstoff gespeichert wird",
+        "Damit das Herz Pausen macht"
+      ],
+      "info": "Klappen wirken wie Ventile: Sie öffnen sich in Flussrichtung und schließen sich, wenn Blut zurückfließen will.",
+      "img": "🚪➡️"
+    },
+    {
+      "id": "004",
+      "q": "Was zählst du, wenn du deinen Puls fühlst?",
+      "a": "Die Herzschläge pro Minute",
+      "choices": [
+        "Die Liter Blut im Körper",
+        "Die Atemzüge pro Minute",
+        "Den Sauerstoff im Blut"
+      ],
+      "info": "Bei jedem Herzschlag dehnt eine Druckwelle die Arterien. Am Handgelenk oder Hals kannst du sie fühlen.",
+      "img": "⌚💓"
+    },
+    {
+      "id": "005",
+      "q": "Wie hoch ist der Ruhepuls eines gesunden Jugendlichen ungefähr?",
+      "a": "Etwa 60 bis 100 Schläge pro Minute",
+      "choices": [
+        "Etwa 10 bis 20 Schläge pro Minute",
+        "Etwa 150 bis 200 Schläge pro Minute",
+        "Etwa 300 Schläge pro Minute"
+      ],
+      "info": "Gut trainierte Sportler haben oft einen niedrigeren Ruhepuls – ihr Herz schafft mehr Blut pro Schlag.",
+      "img": "💓🛋️"
+    },
+    {
+      "id": "006",
+      "q": "Warum schlägt dein Herz beim Sport schneller?",
+      "a": "Die Muskeln brauchen mehr Sauerstoff",
+      "choices": [
+        "Das Blut wird dicker",
+        "Der Magen verdaut schneller",
+        "Die Lunge wird kleiner"
+      ],
+      "info": "Arbeitende Muskeln verbrauchen viel Sauerstoff. Herz und Atmung legen einen Gang zu, um ihn zu liefern.",
+      "img": "🏃💓"
+    },
+    {
+      "id": "007",
+      "q": "Blutdruck 120/80: Was gibt die erste, größere Zahl an?",
+      "a": "Den Druck, wenn sich das Herz zusammenzieht",
+      "choices": [
+        "Den Druck, wenn das Herz erschlafft",
+        "Die Herzschläge pro Minute",
+        "Den Sauerstoff im Blut in Prozent"
+      ],
+      "info": "Die erste Zahl heißt systolischer Wert, die zweite diastolischer Wert (Herz entspannt). Einheit: mmHg.",
+      "img": "❤️📈"
+    },
+    {
+      "id": "008",
+      "q": "Welcher Muskel ist beim ruhigen Einatmen am wichtigsten?",
+      "a": "Das Zwerchfell",
+      "choices": [
+        "Der Bizeps",
+        "Der Herzmuskel",
+        "Der Kaumuskel"
+      ],
+      "info": "Das Zwerchfell trennt Brust- und Bauchraum. Zieht es sich zusammen, flacht es ab und der Brustraum wird größer.",
+      "img": "🎈⬇️"
+    },
+    {
+      "id": "009",
+      "q": "Was passiert beim Einatmen mit dem Brustraum?",
+      "a": "Er wird größer und Luft strömt ein",
+      "choices": [
+        "Er wird kleiner und Luft strömt ein",
+        "Er bleibt gleich groß",
+        "Er wird größer und Luft strömt aus"
+      ],
+      "info": "Wird der Raum größer, sinkt der Druck in der Lunge – die Luft wird hineingesogen wie in eine Spritze.",
+      "img": "🎈⬆️"
+    },
+    {
+      "id": "010",
+      "q": "Welchen Weg nimmt die Luft beim Einatmen?",
+      "a": "Nase – Luftröhre – Bronchien – Lungenbläschen",
+      "choices": [
+        "Nase – Bronchien – Luftröhre – Lungenbläschen",
+        "Nase – Speiseröhre – Bronchien – Lungenbläschen",
+        "Nase – Lungenbläschen – Bronchien – Luftröhre"
+      ],
+      "info": "Die Bronchien verzweigen sich wie die Äste eines umgedrehten Baumes bis zu den winzigen Lungenbläschen.",
+      "img": "👃🌳"
+    },
+    {
+      "id": "011",
+      "q": "Wie viel Sauerstoff enthält ausgeatmete Luft ungefähr?",
+      "a": "Etwa 16 %",
+      "choices": [
+        "Etwa 0 %",
+        "Etwa 21 %",
+        "Etwa 50 %"
+      ],
+      "info": "Eingeatmet 21 %, ausgeatmet noch etwa 16 %. Darum funktioniert auch die Atemspende bei der Ersten Hilfe.",
+      "img": "🌬️💯"
+    },
+    {
+      "id": "012",
+      "q": "Was macht die Nase mit der Atemluft – außer riechen?",
+      "a": "Sie wärmt, befeuchtet und reinigt sie",
+      "choices": [
+        "Sie kühlt und trocknet sie",
+        "Sie entzieht ihr den Sauerstoff",
+        "Sie verwandelt sie in Kohlenstoffdioxid"
+      ],
+      "info": "Härchen und Schleim fangen Staub ab. Darum ist Atmen durch die Nase besser als durch den Mund.",
+      "img": "👃🧹"
+    },
+    {
+      "id": "013",
+      "q": "Was richtet Zigarettenrauch in den Bronchien an?",
+      "a": "Er schädigt die Flimmerhärchen",
+      "choices": [
+        "Er reinigt die Bronchien",
+        "Er vergrößert die Lunge",
+        "Er stärkt die Abwehr"
+      ],
+      "info": "Ohne funktionierende Flimmerhärchen bleiben Schleim und Teer liegen – der typische Raucherhusten entsteht.",
+      "img": "🚬😷"
+    },
+    {
+      "id": "014",
+      "q": "Welches Organ verbindet Mund und Magen?",
+      "a": "Die Speiseröhre",
+      "choices": [
+        "Die Luftröhre",
+        "Der Dünndarm",
+        "Die Bauchspeicheldrüse"
+      ],
+      "info": "Beim Schlucken verschließt der Kehldeckel die Luftröhre, damit nichts „in den falschen Hals“ gerät.",
+      "img": "👄⬇️"
+    },
+    {
+      "id": "015",
+      "q": "Wie wird der Bissen durch die Speiseröhre befördert?",
+      "a": "Durch wellenartige Muskelbewegungen",
+      "choices": [
+        "Nur durch die Schwerkraft",
+        "Durch Luftdruck aus der Lunge",
+        "Durch kleine Härchen"
+      ],
+      "info": "Ringmuskeln schieben den Bissen voran. Darum kannst du sogar im Handstand schlucken.",
+      "img": "🌊🤸"
+    },
+    {
+      "id": "016",
+      "q": "Was vergrößert die Oberfläche der Dünndarmwand gewaltig?",
+      "a": "Die Darmzotten",
+      "choices": [
+        "Die Flimmerhärchen",
+        "Die Lungenbläschen",
+        "Die Zahnwurzeln"
+      ],
+      "info": "Millionen fingerförmiger Zotten machen die Darmwand riesig – so gelangen viele Nährstoffe schnell ins Blut.",
+      "img": "🖐️🖐️"
+    },
+    {
+      "id": "017",
+      "q": "Welche Nährstoffe braucht der Körper vor allem als Baustoff für Muskeln?",
+      "a": "Eiweiße",
+      "choices": [
+        "Kohlenhydrate",
+        "Ballaststoffe",
+        "Mineralwasser"
+      ],
+      "info": "Eiweiß steckt zum Beispiel in Hülsenfrüchten, Milchprodukten, Eiern, Fisch und Fleisch.",
+      "img": "🥚💪"
+    },
+    {
+      "id": "018",
+      "q": "Welche Nährstoffe liefern dem Körper besonders schnell Energie?",
+      "a": "Kohlenhydrate",
+      "choices": [
+        "Eiweiße",
+        "Ballaststoffe",
+        "Vitamine"
+      ],
+      "info": "Zucker und Stärke aus Brot, Nudeln oder Obst werden zu Traubenzucker – Treibstoff für Muskeln und Gehirn.",
+      "img": "🍝⚡"
+    },
+    {
+      "id": "019",
+      "q": "Wozu sind Ballaststoffe gut?",
+      "a": "Sie halten die Verdauung in Schwung",
+      "choices": [
+        "Sie liefern die meiste Energie",
+        "Sie bauen Muskeln auf",
+        "Sie transportieren Sauerstoff"
+      ],
+      "info": "Ballaststoffe aus Vollkorn, Gemüse und Obst machen lange satt und helfen dem Darm bei der Arbeit.",
+      "img": "🥦🚂"
+    },
+    {
+      "id": "020",
+      "q": "Welches Organ bildet Verdauungssaft und das Hormon Insulin?",
+      "a": "Die Bauchspeicheldrüse",
+      "choices": [
+        "Die Leber",
+        "Die Milz",
+        "Die Gallenblase"
+      ],
+      "info": "Insulin sorgt dafür, dass Zucker aus dem Blut in die Zellen gelangt. Fehlt es, entsteht Diabetes.",
+      "img": "🍬🔑"
+    },
+    {
+      "id": "021",
+      "q": "Was gehört zum zentralen Nervensystem?",
+      "a": "Gehirn und Rückenmark",
+      "choices": [
+        "Gehirn und Augen",
+        "Rückenmark und Herz",
+        "Die Nerven in Armen und Beinen"
+      ],
+      "info": "Die Nerven im übrigen Körper bilden das periphere Nervensystem. Sie melden alles an die Zentrale.",
+      "img": "🧠🦴"
+    },
+    {
+      "id": "022",
+      "q": "Was ist ein Reflex?",
+      "a": "Eine schnelle, unwillkürliche Reaktion",
+      "choices": [
+        "Eine bewusst geplante Bewegung",
+        "Ein Gedanke im Großhirn",
+        "Eine Erinnerung an früher"
+      ],
+      "info": "Beim Kniesehnenreflex wird das Signal schon im Rückenmark umgeschaltet – das Gehirn erfährt es erst danach.",
+      "img": "🦵⚡"
+    },
+    {
+      "id": "023",
+      "q": "Wie nennt man Nervenzellen?",
+      "a": "Neuronen",
+      "choices": [
+        "Nephrone",
+        "Alveolen",
+        "Leukozyten"
+      ],
+      "info": "Nephrone sind Filtereinheiten der Niere, Alveolen Lungenbläschen, Leukozyten weiße Blutkörperchen.",
+      "img": "🧠🔌"
+    },
+    {
+      "id": "024",
+      "q": "Welcher Hirnteil steuert Gleichgewicht und Bewegungsabläufe?",
+      "a": "Das Kleinhirn",
+      "choices": [
+        "Das Großhirn",
+        "Die Hirnanhangdrüse",
+        "Das Rückenmark"
+      ],
+      "info": "Ob Radfahren oder Balancieren: Das Kleinhirn stimmt die Bewegungen fein ab, damit du nicht umkippst.",
+      "img": "🚲⚖️"
+    },
+    {
+      "id": "025",
+      "q": "Welcher Hirnteil steuert lebenswichtige Vorgänge wie die Atmung?",
+      "a": "Der Hirnstamm",
+      "choices": [
+        "Das Kleinhirn",
+        "Die Großhirnrinde",
+        "Der Riechkolben"
+      ],
+      "info": "Der Hirnstamm arbeitet auch im Schlaf: Atmung, Herzschlag und Schluckreflex laufen automatisch.",
+      "img": "🧠🌙"
+    },
+    {
+      "id": "026",
+      "q": "Warum sehen wir mit zwei Augen räumlich?",
+      "a": "Jedes Auge sieht ein etwas anderes Bild",
+      "choices": [
+        "Ein Auge sieht nur Farben",
+        "Die Augen wechseln sich ab",
+        "Ein Auge sieht nur in die Nähe"
+      ],
+      "info": "Das Gehirn verrechnet beide Bilder zu einem 3-D-Eindruck. Test: Daumen abwechselnd mit einem Auge anschauen!",
+      "img": "👀👍"
+    },
+    {
+      "id": "027",
+      "q": "Wer kurzsichtig ist, sieht … unscharf.",
+      "a": "weit Entferntes",
+      "choices": [
+        "Nahes",
+        "nur Farben",
+        "nur im Dunkeln"
+      ],
+      "info": "Bei Kurzsichtigkeit entsteht das scharfe Bild vor der Netzhaut. Eine Brille mit Zerstreuungslinse hilft.",
+      "img": "👓🏔️"
+    },
+    {
+      "id": "028",
+      "q": "Ab welchem Schallpegel kann Dauerlärm das Gehör schädigen?",
+      "a": "Ab etwa 85 dB",
+      "choices": [
+        "Ab etwa 20 dB",
+        "Ab etwa 40 dB",
+        "Erst ab etwa 200 dB"
+      ],
+      "info": "85 dB sind etwa so laut wie starker Straßenverkehr. Kopfhörer leiser stellen und Ohrpausen machen!",
+      "img": "🎧🔉"
+    },
+    {
+      "id": "029",
+      "q": "Was sind Antikörper?",
+      "a": "Eiweiße, die Erreger erkennen und markieren",
+      "choices": [
+        "Medikamente gegen Viren",
+        "Rote Blutkörperchen",
+        "Nützliche Bakterien im Darm"
+      ],
+      "info": "Antikörper passen zu einem Erreger wie ein Schlüssel ins Schloss. Markierte Erreger werden dann unschädlich gemacht.",
+      "img": "🔑🦠"
+    },
+    {
+      "id": "030",
+      "q": "Wie schützt eine Impfung?",
+      "a": "Der Körper lernt einen Erreger gefahrlos kennen",
+      "choices": [
+        "Sie tötet alle Bakterien im Körper",
+        "Sie ersetzt die weißen Blutkörperchen",
+        "Sie wirkt nur am Tag der Impfung"
+      ],
+      "info": "Nach der Impfung bleiben Gedächtniszellen. Kommt der echte Erreger, wehrt der Körper ihn schnell ab.",
+      "img": "💉🧠"
+    },
+    {
+      "id": "031",
+      "q": "Wogegen helfen Antibiotika?",
+      "a": "Gegen Bakterien",
+      "choices": [
+        "Gegen Viren",
+        "Gegen jede Art von Erreger",
+        "Gegen Allergien"
+      ],
+      "info": "Gegen Erkältungsviren sind Antibiotika wirkungslos. Wer sie unnötig nimmt, fördert resistente Bakterien.",
+      "img": "💊🦠"
+    },
+    {
+      "id": "032",
+      "q": "Was ist Fieber?",
+      "a": "Eine Abwehrreaktion des Körpers",
+      "choices": [
+        "Ein Krankheitserreger",
+        "Ein Zeichen für Vitaminmangel",
+        "Eine Allergie gegen Wärme"
+      ],
+      "info": "Die höhere Temperatur bremst viele Erreger und macht die Abwehr aktiver. Bei hohem Fieber: zum Arzt!",
+      "img": "🌡️🛡️"
+    },
+    {
+      "id": "033",
+      "q": "Was ist eine Allergie?",
+      "a": "Eine Abwehrreaktion gegen eigentlich harmlose Stoffe",
+      "choices": [
+        "Eine Infektion mit Bakterien",
+        "Eine Vergiftung durch verdorbenes Essen",
+        "Ein Mangel an Abwehrzellen"
+      ],
+      "info": "Bei Heuschnupfen hält das Immunsystem Pollen für gefährlich und schlägt Alarm: Niesen, tränende Augen.",
+      "img": "🤧🌼"
+    },
+    {
+      "id": "034",
+      "q": "Welcher Stoff im Tabak macht abhängig?",
+      "a": "Nikotin",
+      "choices": [
+        "Teer",
+        "Kohlenstoffmonoxid",
+        "Feinstaub"
+      ],
+      "info": "Nikotin wirkt nach Sekunden im Gehirn. Teer und Feinstaub schädigen vor allem die Lunge.",
+      "img": "🚬🔗"
+    },
+    {
+      "id": "035",
+      "q": "Welches giftige Gas im Zigarettenrauch behindert den Sauerstofftransport?",
+      "a": "Kohlenstoffmonoxid",
+      "choices": [
+        "Kohlenstoffdioxid",
+        "Stickstoff",
+        "Helium"
+      ],
+      "info": "Kohlenstoffmonoxid (CO) bindet viel fester an den roten Blutfarbstoff als Sauerstoff und verdrängt ihn.",
+      "img": "🚬☠️"
+    },
+    {
+      "id": "036",
+      "q": "Woran erkennt man eine Sucht?",
+      "a": "Man kann trotz Schaden nicht aufhören",
+      "choices": [
+        "Man tut etwas sehr gern",
+        "Man macht etwas jeden Tag",
+        "Man probiert etwas einmal aus"
+      ],
+      "info": "Süchtig machen nicht nur Stoffe, sondern auch Handy oder Spiele. Sich Hilfe zu holen ist mutig und klug.",
+      "img": "⛓️🆘"
+    }
+  ]
+}

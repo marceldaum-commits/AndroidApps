@@ -1,0 +1,470 @@
+{
+  "id": "s1-chemie-saeuren-basen",
+  "version": 1,
+  "title": "Säuren, Basen, Salze",
+  "subject": "chemie",
+  "grades": [
+    8,
+    9,
+    10
+  ],
+  "emoji": "🧪",
+  "tier": "free",
+  "description": "pH-Wert, Indikatoren, Neutralisation, Säuren und Laugen im Alltag, wichtige Formeln und die Namen der Salze.",
+  "intro": [
+    {
+      "img": "🍋👅",
+      "text": "Wusstest du? Zitronensaft, Essig und Cola schmecken sauer, weil sie Säuren enthalten. Aber Vorsicht: Im Labor wird nie probiert!"
+    },
+    {
+      "img": "🌈📏",
+      "text": "Der pH-Wert zeigt, wie sauer oder basisch etwas ist: unter 7 sauer, 7 neutral, über 7 basisch. Ein Schritt bedeutet zehnmal so viel!"
+    },
+    {
+      "img": "🥬🎨",
+      "text": "Indikatoren sind Farb-Detektive: Rotkohlsaft wird in Säure rot und in Lauge grün bis gelb. So erkennst du den pH-Bereich."
+    },
+    {
+      "img": "🤝💧",
+      "text": "Treffen Säure und Lauge aufeinander, neutralisieren sie sich: Es entstehen Wasser und ein Salz. Kochsalz ist nur eins von vielen!"
+    },
+    {
+      "img": "🐝🥽",
+      "text": "Los geht's, Chemie-Detektiv! Schutzbrille auf – Brummi drückt dir alle sechs Beinchen."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welcher pH-Wert zeigt die am stärksten saure Lösung an?",
+      "a": "pH 1",
+      "choices": [
+        "pH 5",
+        "pH 7",
+        "pH 13"
+      ],
+      "info": "Je kleiner der pH-Wert, desto saurer. pH 13 wäre stark basisch.",
+      "img": "🍋📉"
+    },
+    {
+      "id": "002",
+      "q": "Eine Lösung hat pH 12. Sie ist …",
+      "a": "stark basisch",
+      "choices": [
+        "stark sauer",
+        "neutral",
+        "schwach sauer"
+      ],
+      "info": "Basische Lösungen nennt man auch alkalisch. Sie fühlen sich oft seifig an – trotzdem nie anfassen!",
+      "img": "🧼📈"
+    },
+    {
+      "id": "003",
+      "q": "Lösung A hat pH 3, Lösung B pH 4. Wie viel mehr H₃O⁺-Ionen hat A?",
+      "a": "10-mal so viele",
+      "choices": [
+        "1 Ion mehr",
+        "Doppelt so viele",
+        "100-mal so viele"
+      ],
+      "info": "Ein pH-Schritt bedeutet den Faktor 10. Die pH-Skala ist eine Zehnerpotenz-Skala.",
+      "img": "🔟✖️"
+    },
+    {
+      "id": "004",
+      "q": "Wie viel mehr H₃O⁺-Ionen hat eine Lösung mit pH 2 als eine mit pH 5?",
+      "a": "1000-mal so viele",
+      "choices": [
+        "3-mal so viele",
+        "30-mal so viele",
+        "100-mal so viele"
+      ],
+      "info": "Drei pH-Schritte: 10 · 10 · 10 = 1000.",
+      "img": "🔟🔟🔟"
+    },
+    {
+      "id": "005",
+      "q": "Welchen pH-Wert hat Zitronensaft ungefähr?",
+      "a": "Etwa 2",
+      "choices": [
+        "Etwa 7",
+        "Etwa 9",
+        "Etwa 12"
+      ],
+      "info": "Zitronensaft ist ziemlich sauer. Die Zitronensäure darin ist aber eine schwache Säure.",
+      "img": "🍋2️⃣"
+    },
+    {
+      "id": "006",
+      "q": "Welcher Alltagsstoff ist basisch?",
+      "a": "Seifenlauge",
+      "choices": [
+        "Essig",
+        "Zitronensaft",
+        "Cola"
+      ],
+      "info": "Seifenlauge hat meist einen pH-Wert um 9 bis 10. Essig, Zitronensaft und Cola sind sauer.",
+      "img": "🧼🛁"
+    },
+    {
+      "id": "007",
+      "q": "Welchen pH-Wert hat Magensaft ungefähr?",
+      "a": "Etwa 1 bis 2",
+      "choices": [
+        "Etwa 5 bis 6",
+        "Etwa 7",
+        "Etwa 10 bis 11"
+      ],
+      "info": "Die Salzsäure im Magen tötet viele Keime ab. Eine Schleimschicht schützt die Magenwand.",
+      "img": "🍔🧪"
+    },
+    {
+      "id": "008",
+      "q": "Welche Säure ist im Essig enthalten?",
+      "a": "Essigsäure",
+      "choices": [
+        "Zitronensäure",
+        "Salzsäure",
+        "Kohlensäure"
+      ],
+      "info": "Haushaltsessig enthält meist etwa 5 % Essigsäure, Essigessenz deutlich mehr.",
+      "img": "🥗🧪"
+    },
+    {
+      "id": "009",
+      "q": "Welche Säure entsteht, wenn Kohlenstoffdioxid in Wasser gelöst wird?",
+      "a": "Kohlensäure",
+      "choices": [
+        "Essigsäure",
+        "Schwefelsäure",
+        "Ameisensäure"
+      ],
+      "info": "Im Sprudel ist vor allem gelöstes CO₂, ein kleiner Teil bildet Kohlensäure. Darum ist Sprudel leicht sauer.",
+      "img": "🥤💨"
+    },
+    {
+      "id": "010",
+      "q": "Welche Säure spritzen Ameisen zur Verteidigung?",
+      "a": "Ameisensäure",
+      "choices": [
+        "Milchsäure",
+        "Zitronensäure",
+        "Salpetersäure"
+      ],
+      "info": "Viele Waldameisen spritzen Ameisensäure. Ihr Name ist also wörtlich gemeint.",
+      "img": "🐜💦"
+    },
+    {
+      "id": "011",
+      "q": "Welche Säure entsteht, wenn aus Milch Joghurt wird?",
+      "a": "Milchsäure",
+      "choices": [
+        "Zitronensäure",
+        "Essigsäure",
+        "Salpetersäure"
+      ],
+      "info": "Milchsäurebakterien wandeln Milchzucker in Milchsäure um. Die macht Joghurt säuerlich und haltbarer.",
+      "img": "🥛🦠"
+    },
+    {
+      "id": "012",
+      "q": "Wie lautet die Formel der Salpetersäure?",
+      "a": "HNO₃",
+      "choices": [
+        "H₂SO₄",
+        "H₃PO₄",
+        "NH₃"
+      ],
+      "info": "H-N-O-3: ein Wasserstoff, ein Stickstoff, drei Sauerstoff. NH₃ ist Ammoniak.",
+      "img": "🧪3️⃣"
+    },
+    {
+      "id": "013",
+      "q": "Wie lautet die Formel der Kohlensäure?",
+      "a": "H₂CO₃",
+      "choices": [
+        "HCO₃",
+        "H₂C₂O₄",
+        "CH₄"
+      ],
+      "info": "Kohlensäure entsteht aus CO₂ + H₂O → H₂CO₃. CH₄ ist Methan, H₂C₂O₄ Oxalsäure.",
+      "img": "💨💧🧪"
+    },
+    {
+      "id": "014",
+      "q": "Wie lautet die Formel der Phosphorsäure?",
+      "a": "H₃PO₄",
+      "choices": [
+        "H₂PO₄",
+        "HPO₄",
+        "H₂SO₄"
+      ],
+      "info": "Phosphorsäure steckt zum Beispiel in Cola und sorgt mit für den sauren Geschmack.",
+      "img": "🥤🧪"
+    },
+    {
+      "id": "015",
+      "q": "Wie lautet die Formel der Essigsäure?",
+      "a": "CH₃COOH",
+      "choices": [
+        "HCOOH",
+        "C₂H₅OH",
+        "CH₃OH"
+      ],
+      "info": "Das H in der COOH-Gruppe wird abgegeben. HCOOH ist Ameisensäure, C₂H₅OH ist Ethanol.",
+      "img": "🥗🔬"
+    },
+    {
+      "id": "016",
+      "q": "Wie lautet die Formel von Kaliumhydroxid?",
+      "a": "KOH",
+      "choices": [
+        "KO",
+        "K(OH)₂",
+        "KH"
+      ],
+      "info": "Kalium bildet K⁺-Ionen, also passt genau ein OH⁻. Gelöst in Wasser ergibt KOH die Kalilauge.",
+      "img": "🧪🧼"
+    },
+    {
+      "id": "017",
+      "q": "Wie lautet die Formel von Calciumhydroxid?",
+      "a": "Ca(OH)₂",
+      "choices": [
+        "CaOH",
+        "CaO",
+        "CaCO₃"
+      ],
+      "info": "Calcium bildet Ca²⁺-Ionen, darum zwei OH⁻. Die Lösung heißt Kalkwasser. CaO ist Branntkalk.",
+      "img": "🧪2️⃣"
+    },
+    {
+      "id": "018",
+      "q": "Wie heißen die Salze der Salzsäure?",
+      "a": "Chloride",
+      "choices": [
+        "Sulfate",
+        "Nitrate",
+        "Carbonate"
+      ],
+      "info": "Natriumchlorid (NaCl) ist unser Kochsalz – ein Salz der Salzsäure.",
+      "img": "🧂🧪"
+    },
+    {
+      "id": "019",
+      "q": "Wie heißen die Salze der Schwefelsäure?",
+      "a": "Sulfate",
+      "choices": [
+        "Sulfide",
+        "Sulfite",
+        "Phosphate"
+      ],
+      "info": "Achtung, Verwechslungsgefahr: Sulfide stammen vom Schwefelwasserstoff, Sulfite von der schwefligen Säure.",
+      "img": "💛🧪"
+    },
+    {
+      "id": "020",
+      "q": "Wie heißen die Salze der Salpetersäure?",
+      "a": "Nitrate",
+      "choices": [
+        "Nitrite",
+        "Chloride",
+        "Carbonate"
+      ],
+      "info": "Nitrate sind wichtige Pflanzendünger. Nitrite stammen von der salpetrigen Säure.",
+      "img": "🌱🧪"
+    },
+    {
+      "id": "021",
+      "q": "Wie heißen die Salze der Kohlensäure?",
+      "a": "Carbonate",
+      "choices": [
+        "Carbide",
+        "Chloride",
+        "Citrate"
+      ],
+      "info": "Kalk ist Calciumcarbonat (CaCO₃). Citrate sind Salze der Zitronensäure.",
+      "img": "🐚🧪"
+    },
+    {
+      "id": "022",
+      "q": "Was entsteht bei HCl + NaOH?",
+      "a": "NaCl + H₂O",
+      "choices": [
+        "NaCl + H₂",
+        "NaH + HClO",
+        "Na + Cl₂ + H₂O"
+      ],
+      "info": "Salzsäure + Natronlauge → Kochsalz + Wasser. Die Atome auf beiden Seiten stimmen überein.",
+      "img": "🧂💧"
+    },
+    {
+      "id": "023",
+      "q": "Welches Salz entsteht aus Kalilauge und Salpetersäure?",
+      "a": "Kaliumnitrat",
+      "choices": [
+        "Kaliumchlorid",
+        "Natriumnitrat",
+        "Kaliumsulfat"
+      ],
+      "info": "KOH + HNO₃ → KNO₃ + H₂O. Das Metall kommt aus der Lauge, der Säurerest aus der Säure.",
+      "img": "🤝🧪"
+    },
+    {
+      "id": "024",
+      "q": "Welches Salz entsteht aus Natronlauge und Schwefelsäure?",
+      "a": "Natriumsulfat",
+      "choices": [
+        "Natriumsulfid",
+        "Natriumchlorid",
+        "Natriumnitrat"
+      ],
+      "info": "2 NaOH + H₂SO₄ → Na₂SO₄ + 2 H₂O. Schwefelsäure kann zwei H abgeben, darum braucht sie zwei NaOH.",
+      "img": "🤝💛"
+    },
+    {
+      "id": "025",
+      "q": "Wie lautet die Formel von Natriumsulfat?",
+      "a": "Na₂SO₄",
+      "choices": [
+        "NaSO₄",
+        "Na₂SO₃",
+        "Na(SO₄)₂"
+      ],
+      "info": "Das Sulfat-Ion SO₄²⁻ ist zweifach negativ, Na⁺ einfach positiv. Also braucht es zwei Na⁺.",
+      "img": "⚖️🧪"
+    },
+    {
+      "id": "026",
+      "q": "Welche Reaktion steckt hinter jeder Neutralisation?",
+      "a": "H₃O⁺ + OH⁻ → 2 H₂O",
+      "choices": [
+        "Na⁺ + Cl⁻ → NaCl",
+        "2 H₂O → H₃O⁺ + OH⁻",
+        "H₂ + O₂ → H₂O₂"
+      ],
+      "info": "Die sauren Oxonium-Ionen und die basischen Hydroxid-Ionen fangen sich gegenseitig ab – es bleibt Wasser.",
+      "img": "🤝💧"
+    },
+    {
+      "id": "027",
+      "q": "Welche Farbe zeigt Rotkohlsaft in Essig?",
+      "a": "Rot",
+      "choices": [
+        "Grün",
+        "Gelb",
+        "Blau"
+      ],
+      "info": "Rotkohlsaft ist ein natürlicher Indikator: in Säure rot, neutral violett, in Lauge grün bis gelb.",
+      "img": "🥬🔴"
+    },
+    {
+      "id": "028",
+      "q": "Welche Farbe zeigt Phenolphthalein in verdünnter Natronlauge?",
+      "a": "Pink",
+      "choices": [
+        "Farblos",
+        "Gelb",
+        "Blau"
+      ],
+      "info": "In saurer und neutraler Lösung bleibt Phenolphthalein farblos, im Basischen wird es pink bis rotviolett.",
+      "img": "🧪🌸"
+    },
+    {
+      "id": "029",
+      "q": "Welche Farbe zeigt Universalindikator bei pH 7?",
+      "a": "Grün",
+      "choices": [
+        "Rot",
+        "Orange",
+        "Violett"
+      ],
+      "info": "Typisch: sauer rot bis gelb, neutral grün, basisch blau bis violett. Die Farbskala liegt der Packung bei.",
+      "img": "🌈💚"
+    },
+    {
+      "id": "030",
+      "q": "Blaues Lackmuspapier färbt sich rot. Die Lösung ist …",
+      "a": "sauer",
+      "choices": [
+        "basisch",
+        "neutral",
+        "ein Salz"
+      ],
+      "info": "Lackmus: in Säure rot, in Lauge blau. Merke: Rot wie die saure Erdbeere.",
+      "img": "📄🔴"
+    },
+    {
+      "id": "031",
+      "q": "Womit entfernt man Kalk aus dem Wasserkocher?",
+      "a": "Mit Essig oder Zitronensäure",
+      "choices": [
+        "Mit Seifenlauge",
+        "Mit Kochsalzlösung",
+        "Mit Rohrreiniger"
+      ],
+      "info": "Säure löst Kalk (Calciumcarbonat) auf – dabei sprudelt Kohlenstoffdioxid.",
+      "img": "☕🍋"
+    },
+    {
+      "id": "032",
+      "q": "Was hilft gegen Sodbrennen durch zu viel Magensäure?",
+      "a": "Ein Mittel, das die Säure neutralisiert",
+      "choices": [
+        "Ein Glas Essig",
+        "Ein Löffel Zitronensaft",
+        "Ein Mittel, das mehr Säure bildet"
+      ],
+      "info": "Säurebinder aus der Apotheke enthalten schwach basische Stoffe. Sie fangen überschüssige Säure ab.",
+      "img": "🔥🤝"
+    },
+    {
+      "id": "033",
+      "q": "Du verdünnst konzentrierte Säure. Was gießt du in was?",
+      "a": "Die Säure langsam ins Wasser",
+      "choices": [
+        "Das Wasser in die Säure",
+        "Beides gleichzeitig ruckartig",
+        "Ganz egal"
+      ],
+      "info": "Merkspruch: Erst das Wasser, dann die Säure, sonst geschieht das Ungeheure – es kann heftig spritzen.",
+      "img": "💧➡️🧪"
+    },
+    {
+      "id": "034",
+      "q": "Gefahrensymbol mit Tropfen, die auf eine Hand fallen. Was bedeutet es?",
+      "a": "Ätzend",
+      "choices": [
+        "Giftig",
+        "Entzündbar",
+        "Explosiv"
+      ],
+      "info": "Ätzende Stoffe wie starke Säuren und Laugen zerstören Haut und Augen. Darum: Schutzbrille und Handschuhe!",
+      "img": "⚠️✋"
+    },
+    {
+      "id": "035",
+      "q": "Welcher Stoff im Backpulver setzt mit Säure Kohlenstoffdioxid frei?",
+      "a": "Natron (Natriumhydrogencarbonat)",
+      "choices": [
+        "Kochsalz (Natriumchlorid)",
+        "Zucker (Saccharose)",
+        "Speisestärke"
+      ],
+      "info": "Das entstehende CO₂ bildet Bläschen im Teig – so geht der Kuchen auf.",
+      "img": "🎂💨"
+    },
+    {
+      "id": "036",
+      "q": "Wie reagiert die gesunde Haut: sauer, neutral oder basisch?",
+      "a": "Leicht sauer",
+      "choices": [
+        "Neutral",
+        "Leicht basisch",
+        "Stark sauer"
+      ],
+      "info": "Der Säureschutzmantel mit einem pH-Wert um 5 erschwert vielen Keimen das Leben.",
+      "img": "✋🛡️"
+    }
+  ]
+}
