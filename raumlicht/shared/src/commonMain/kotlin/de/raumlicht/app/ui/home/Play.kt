@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -45,7 +44,7 @@ import kotlin.math.abs
 import kotlin.random.Random
 
 @Composable
-internal fun Dial(label: String, value: String, sub: String, color: Color, modifier: Modifier) {
+fun Dial(label: String, value: String, sub: String, color: Color, modifier: Modifier) {
     Column(modifier.background(Q.Deep, RoundedCornerShape(14.dp)).border(1.dp, color.copy(alpha = 0.6f), RoundedCornerShape(14.dp)).padding(horizontal = 10.dp, vertical = 6.dp)) {
         Text(label, color = Q.Muted, fontSize = 11.sp, maxLines = 1)
         Text(value, color = color, fontWeight = FontWeight.Black, fontSize = 18.sp, maxLines = 1)
@@ -54,7 +53,7 @@ internal fun Dial(label: String, value: String, sub: String, color: Color, modif
 }
 
 @Composable
-internal fun Pick(text: String, on: Boolean, color: Color, tag: String, onClick: () -> Unit) {
+fun Pick(text: String, on: Boolean, color: Color, tag: String, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
     Text(text, Modifier.testTag(tag).pressBounce(interaction).clip(RoundedCornerShape(12.dp)).background(if (on) color.copy(alpha = 0.3f) else Q.Deep)
         .border(if (on) 2.dp else 1.dp, if (on) color else Q.Muted.copy(alpha = 0.4f), RoundedCornerShape(12.dp)).clickable(interaction, null, onClick = onClick)
@@ -94,7 +93,7 @@ fun FlightScreen(onBack: () -> Unit, controller: StageController = remember { St
     var driving by remember(id) { mutableStateOf(false) }
     var inside by rememberSaveable { mutableStateOf(true) }
     var seen by remember(id) { mutableStateOf<FlightEvent?>(null) }
-    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current
+    val sfx = LocalSfx.current; val view = LocalBuzzer.current; val vib = LocalVibration.current
     val d = flight.data(u.toDouble())
 
     LaunchedEffect(id) { controller.setState(flight.scene()) }
@@ -173,7 +172,7 @@ fun FlightScreen(onBack: () -> Unit, controller: StageController = remember { St
 
 /** Zufall zum Anfassen: Kugeln fallen durch das Nagelbrett, in den Fächern wächst die Binomialverteilung. */
 @Composable
-fun GaltonScreen(onBack: () -> Unit, controller: StageController = remember { StageController() }, random: Random = remember { Random(System.nanoTime()) }) {
+fun GaltonScreen(onBack: () -> Unit, controller: StageController = remember { StageController() }, random: Random = remember { Random(nowNanos()) }) {
     var rows by rememberSaveable { mutableIntStateOf(8) }
     val board = remember(rows) { Galton(rows) }
     var tenths by rememberSaveable { mutableIntStateOf(5) }
@@ -230,7 +229,7 @@ fun GaltonScreen(onBack: () -> Unit, controller: StageController = remember { St
 
 /** Sechs kurze Aufgaben quer durch Geometrie, Analysis und Stochastik – ohne Tipp, wie im Pflichtteil. */
 @Composable
-fun QuickScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit, seed: Long = remember { System.currentTimeMillis() % 1_000_000 }) {
+fun QuickScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit, seed: Long = remember { nowMillis() % 1_000_000 }) {
     val pack = remember(seed) { Quick.pick(seed) }
     var idx by rememberSaveable { mutableIntStateOf(-1) }
     var hits by rememberSaveable { mutableIntStateOf(0) }
@@ -325,7 +324,7 @@ fun CalendarScreen(today: Long, days: Set<Long>, onToday: () -> Unit, onBack: ()
                         .background(when { day == null -> Color.Transparent; done -> Q.Orange.copy(alpha = 0.45f); else -> Q.Deep })
                         .border(if (day == today) 2.dp else 1.dp, when { day == null -> Color.Transparent; day == today -> Q.Text; done -> Q.Orange; else -> Q.Muted.copy(alpha = 0.3f) }, RoundedCornerShape(12.dp)),
                         contentAlignment = Alignment.Center) {
-                        if (day != null) Text(if (done) "🎟️" else "${java.time.LocalDate.ofEpochDay(day).dayOfMonth}", fontSize = if (done) 18.sp else 13.sp, color = if (day == today) Q.Text else Q.Muted)
+                        if (day != null) Text(if (done) "🎟️" else "${Calendar.dayOfMonth(day)}", fontSize = if (done) 18.sp else 13.sp, color = if (day == today) Q.Text else Q.Muted)
                     }
                 }
             }

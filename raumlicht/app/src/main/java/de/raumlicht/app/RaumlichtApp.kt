@@ -18,6 +18,7 @@ class RaumlichtApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Diagnose.install(this)
+        de.raumlicht.app.ui.stage.stageNote = { Diagnose.note(this, it) }
         container = AppContainer(this)
     }
 }

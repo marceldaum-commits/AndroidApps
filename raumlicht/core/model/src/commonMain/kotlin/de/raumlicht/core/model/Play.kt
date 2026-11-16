@@ -132,6 +132,13 @@ object Quick {
 
 /** Kalender der Tagesaufgaben – zeigt, was geschafft ist. Verpasste Tage kosten nichts. */
 object Calendar {
+    /** Tag im Monat (1–31) zu einem Tag seit dem 1.1.1970 – ohne Kalender-Bibliothek, damit es überall läuft */
+    fun dayOfMonth(epochDay: Long): Int {
+        val z = epochDay + 719_468; val era = (if (z >= 0) z else z - 146_096) / 146_097
+        val doe = z - era * 146_097; val yoe = (doe - doe / 1460 + doe / 36_524 - doe / 146_096) / 365
+        val doy = doe - (365 * yoe + yoe / 4 - yoe / 100); val mp = (5 * doy + 2) / 153
+        return (doy - (153 * mp + 2) / 5 + 1).toInt()
+    }
     fun solved(stars: Map<String, Int>): Set<Long> = stars.keys.filter { Daily.isDaily(it) }.mapNotNull { it.removePrefix(Daily.PREFIX).toLongOrNull() }.toSet()
     /** Die letzten [weeks] Wochen bis einschließlich der laufenden, Montag zuerst; künftige Tage als null */
     fun grid(today: Long, weeks: Int = 5): List<List<Long?>> {

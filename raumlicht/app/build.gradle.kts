@@ -92,6 +92,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.9.4")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
     implementation(project(":core:data"))
+    implementation(project(":shared"))
     implementation("androidx.navigation:navigation-compose:2.9.6")
 
     testImplementation("junit:junit:4.13.2")

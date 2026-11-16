@@ -36,7 +36,7 @@ import kotlin.math.roundToInt
  * Erst wetten („Wie oft klappt es?“), dann zusehen, wie sich die relative Häufigkeit der Wahrscheinlichkeit nähert.
  */
 @Composable
-fun ChanceScreen(onBack: () -> Unit, seed: Long = remember { System.nanoTime() }) {
+fun ChanceScreen(onBack: () -> Unit, seed: Long = remember { nowNanos() }) {
     var preset by rememberSaveable { mutableStateOf(ChanceLab.presets.first().id) }       // "eigene" = eigene Prozentzahl
     var percent by rememberSaveable { mutableIntStateOf(30) }
     // Text im Eingabefeld: darf zwischendurch leer sein, übernommen wird jede gültige Zahl von 1 bis 99

@@ -3,13 +3,12 @@ package de.raumlicht.app.ui.fx
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.SoundPool
-import androidx.compose.runtime.staticCompositionLocalOf
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.concurrent.thread
 
 /** Spielt die Spiel-Geräusche. Erzeugt die WAV-Dateien beim ersten Start im Cache. */
-class Sfx(context: Context) {
+class Sfx(context: Context) : SoundPlayer {
     private val pool = SoundPool.Builder()
         .setMaxStreams(6)
         .setAudioAttributes(
@@ -40,7 +39,7 @@ class Sfx(context: Context) {
     }
 
     /** @param pitch 1 = normal, >1 höher (z. B. bei Serien) */
-    fun play(s: Sound, pitch: Float = 1f, volume: Float = 1f) {
+    override fun play(s: Sound, pitch: Float, volume: Float) {
         if (!enabled) return
         val id = ids[s] ?: return
         if (id !in ready) return
@@ -51,4 +50,3 @@ class Sfx(context: Context) {
     private companion object { const val VERSION_ = "v2" }
 }
 
-val LocalSfx = staticCompositionLocalOf<Sfx?> { null }

@@ -35,4 +35,5 @@ rootProject.name = "Raumlicht"
 include(":app")            // Oberfläche: Tourplan, 3D-Bühne, Einstellungen
 include(":core:model")     // reine Kotlin-Logik: analytische Geometrie, Level (ohne Android)
 include(":core:data")
+include(":shared")         // gemeinsame Oberfläche für Android und Web
 include(":web")            // WebApp (Compose Multiplatform, Kotlin/Wasm) – nutzt dieselbe Rechenlogik und dieselbe 3D-Bühne      // Fortschritt (Room), Einstellungen

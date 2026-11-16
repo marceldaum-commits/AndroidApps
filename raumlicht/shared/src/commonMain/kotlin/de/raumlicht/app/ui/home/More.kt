@@ -1,5 +1,7 @@
 package de.raumlicht.app.ui.home
 
+import de.raumlicht.app.ui.fx.nowMillis
+import de.raumlicht.app.ui.fx.nowNanos
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -21,13 +23,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.raumlicht.app.ui.fx.NeonButton
+import de.raumlicht.app.ui.fx.LocalShareText
+import de.raumlicht.app.ui.fx.LocalShareCard
 import de.raumlicht.app.ui.fx.pressBounce
 import de.raumlicht.app.ui.level.LevelScreen
 import de.raumlicht.app.ui.level.Stepper
@@ -141,7 +144,7 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
     var pack by remember { mutableStateOf<List<Level>?>(null) }
     var idx by rememberSaveable { mutableIntStateOf(0) }
     var hits by rememberSaveable { mutableIntStateOf(0) }
-    val ctx = LocalContext.current
+    val share = LocalShareText.current; val shareCard = LocalShareCard.current
     val run = pack
     if (run != null && idx < run.size) {
         val level = run[idx]
@@ -156,7 +159,7 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
                 Lux(if (hits * 2 >= run.size) LuxMood.HAPPY else LuxMood.THINK, size = 120.dp)
                 Text("$hits von ${run.size}", fontSize = 34.sp, fontWeight = FontWeight.Black, color = Q.Yellow)
                 Text("beim ersten Versuch gelöst", color = Q.Muted)
-                NeonButton({ shareText(ctx, ClassCode.resultText(run, hits)) }, Modifier.fillMaxWidth().padding(top = 16.dp), color = Q.Pink) { Text("📤 Ergebnis an die Lehrkraft schicken", fontWeight = FontWeight.Bold) }
+                NeonButton({ share(ClassCode.resultText(run, hits)) }, Modifier.fillMaxWidth().padding(top = 16.dp), color = Q.Pink) { Text("📤 Ergebnis an die Lehrkraft schicken", fontWeight = FontWeight.Bold) }
                 NeonButton({ pack = null }, Modifier.fillMaxWidth().padding(top = 8.dp), color = Q.Green) { Text("Fertig ✓", fontWeight = FontWeight.Bold) }
             }
             return@Column
@@ -186,7 +189,7 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
             Column(Modifier.fillMaxWidth().padding(14.dp).background(Q.Deep, RoundedCornerShape(18.dp)).border(1.5.dp, Q.Pink.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 Text("${levels.size} Aufgaben: ${levels.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
                 Text(c, Modifier.padding(vertical = 8.dp).testTag("paket-code"), fontSize = 20.sp, fontWeight = FontWeight.Black, letterSpacing = 2.sp, color = Q.Pink)
-                NeonButton({ shareText(ctx, ClassCode.shareText(levels)) }, Modifier.fillMaxWidth(), color = Q.Pink) { Text("📤 Code an die Klasse schicken", fontWeight = FontWeight.Bold) }
+                NeonButton({ share(ClassCode.shareText(levels)) }, Modifier.fillMaxWidth(), color = Q.Pink) { Text("📤 Code an die Klasse schicken", fontWeight = FontWeight.Bold) }
             }
         }
         Spacer(Modifier.height(24.dp))
@@ -197,7 +200,7 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
 
 /** Abwechselnd rechnen und schießen: Einen Punkt gibt es nur für einen Treffer beim ersten Versuch. */
 @Composable
-fun MatchScreen(onBack: () -> Unit, session: Long = remember { System.currentTimeMillis() % 1_000_000 }) {
+fun MatchScreen(onBack: () -> Unit, session: Long = remember { nowMillis() % 1_000_000 }) {
     var match by remember { mutableStateOf(Match()) }
     var n by rememberSaveable { mutableIntStateOf(0) }
     var hit by remember { mutableStateOf(false) }

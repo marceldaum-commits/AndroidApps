@@ -6,17 +6,8 @@ import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.staticCompositionLocalOf
 import de.raumlicht.core.model.Speech
 import java.util.Locale
-
-/** Wer Lux' Sprechblasen laut vorliest. */
-fun interface Speaker {
-    fun say(text: String)
-    /** Nur sprechen, wenn Lux gerade nichts sagt – für Meldungen, die dicht aufeinander folgen können (sonst würde jede die vorige abschneiden) */
-    fun sayIfQuiet(text: String) = say(text)
-}
-val LocalSpeaker = staticCompositionLocalOf<Speaker?> { null }
 
 /**
  * Lux spricht: die Sprachausgabe des Geräts liest die Sprechblasen vor – höher und etwas flotter gestellt, damit es nach kleiner Drohne klingt.

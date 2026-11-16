@@ -22,7 +22,6 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -55,7 +54,7 @@ fun CoasterBuildScreen(onBack: () -> Unit, controller: StageController = remembe
     var playing by remember(goalIdx) { mutableStateOf(false) }
     var inside by rememberSaveable { mutableStateOf(false) }
     var done by rememberSaveable { mutableStateOf(setOf<Int>()) }
-    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
+    val sfx = LocalSfx.current; val view = LocalBuzzer.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
     fun set(i: Int, h: Int) { val c = h.coerceIn(BuiltTrack.HEIGHTS.first, BuiltTrack.HEIGHTS.last); if (!playing && c != heights[i]) { heights = heights.toMutableList().also { it[i] = c }; run = null; frame = 0; sfx?.play(Sound.TICK, 0.8f + c * 0.08f) } }
     val r = run; val x = r?.xs?.getOrNull(frame.coerceAtMost((r.xs.size - 1).coerceAtLeast(0))) ?: 0.0
     val finishedShow = r != null && !playing && frame >= r.xs.size - 1
@@ -198,7 +197,7 @@ fun GhostScreen(onBack: () -> Unit) {
 
 /** Ringflug: Start und drei Ringe sind gegeben, gesucht ist der Richtungsvektor. Stimmt er nicht, fliegt Lux sichtbar vorbei. Jede Runde ist neu. */
 @Composable
-fun RingScreen(onBack: () -> Unit, controller: StageController = remember { StageController() }, seed: Long = remember { System.nanoTime() % 1_000_000 }) {
+fun RingScreen(onBack: () -> Unit, controller: StageController = remember { StageController() }, seed: Long = remember { nowNanos() % 1_000_000 }) {
     var round by rememberSaveable { mutableIntStateOf(0) }
     var streak by rememberSaveable { mutableIntStateOf(0) }
     val run = remember(round) { RingRun(seed + round) }
@@ -208,7 +207,7 @@ fun RingScreen(onBack: () -> Unit, controller: StageController = remember { Stag
     var flying by remember(round) { mutableStateOf(false) }
     var flown by remember(round) { mutableStateOf(false) }
     var inside by rememberSaveable { mutableStateOf(false) }
-    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
+    val sfx = LocalSfx.current; val view = LocalBuzzer.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
     val hits = run.hits(guess)
 
     LaunchedEffect(round, d) { controller.setState(run.scene(guess)) }

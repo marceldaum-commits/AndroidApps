@@ -1,7 +1,5 @@
 package de.raumlicht.app.ui.home
 
-import android.content.Context
-import android.content.Intent
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
@@ -24,8 +22,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -36,8 +32,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -60,9 +54,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
-internal fun Bar(title: String, onBack: () -> Unit, trailing: @Composable RowScope.() -> Unit = {}) {
+fun Bar(title: String, onBack: () -> Unit, trailing: @Composable RowScope.() -> Unit = {}) {
     Row(Modifier.fillMaxWidth().padding(end = 14.dp), verticalAlignment = Alignment.CenterVertically) {
-        IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
+        IconButton(onClick = onBack) { BackArrow() }
         Text(title, Modifier.weight(1f), style = MaterialTheme.typography.titleLarge, maxLines = 1)
         trailing()
     }
@@ -76,9 +70,6 @@ private fun Speech(text: String, mood: LuxMood = LuxMood.IDLE) {
     }
 }
 
-fun shareText(ctx: Context, text: String) {
-    runCatching { ctx.startActivity(Intent.createChooser(Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text), "Teilen")) }
-}
 
 // ───────────────────────── Backstage: alle weiteren Bereiche ─────────────────────────
 
@@ -165,7 +156,7 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, 
             caption = if (guided) "🧩 ${exam.title} · Schritt ${part.label} von ${exam.parts.size}" else "🎓 ${exam.title} · Teil ${part.label}) · ${part.points} BE",
             badge = if (guided) null else (if (timed) "⏱ ${Exam.clock(left)}  " else "") + "${got.sum()} BE")
     } else {
-        val total = got.sum(); val ctx = LocalContext.current
+        val total = got.sum(); val share = LocalShareText.current; val shareCard = LocalShareCard.current
         Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
             Bar(if (guided) exam.title else "Auswertung", onBack)
             Lux(if (total * 100 >= exam.maxPoints * 60) LuxMood.HAPPY else LuxMood.THINK, size = 120.dp)
@@ -180,7 +171,7 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, 
             }
             Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 NeonButton({ idx = 0; got = emptyList(); left = Exam.seconds(exam); timeUp = false }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Nochmal") }
-                if (!guided) NeonButton({ ShareCard.share(ctx, exam.emoji + " " + exam.title, "$total von ${exam.maxPoints} BE", Exam.verdict(total, exam.maxPoints)) }, Modifier.testTag("karte"), color = Q.Pink) { Text("📤") }
+                if (!guided) NeonButton({ shareCard(exam.emoji + " " + exam.title, "$total von ${exam.maxPoints} BE", Exam.verdict(total, exam.maxPoints)) }, Modifier.testTag("karte"), color = Q.Pink) { Text("📤") }
                 NeonButton(onBack, Modifier.weight(1f), color = Q.Green) { Text("Fertig ✓", fontWeight = FontWeight.Black) }
             }
         }
@@ -191,12 +182,12 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, 
 
 /** Acht schnelle Runden: Wie liegen g und h zueinander? Erst entscheiden – dann zeigt die Bühne die Geraden. */
 @Composable
-fun LageScreen(best: Int, onScore: (Int) -> Boolean, onBack: () -> Unit, session: Long = remember { System.currentTimeMillis() % 100_000 }, controller: StageController = remember { StageController() }) {
+fun LageScreen(best: Int, onScore: (Int) -> Boolean, onBack: () -> Unit, session: Long = remember { nowMillis() % 100_000 }, controller: StageController = remember { StageController() }) {
     var n by rememberSaveable { mutableIntStateOf(0) }
     var score by rememberSaveable { mutableIntStateOf(0) }
     var answer by remember(n) { mutableStateOf<Relation?>(null) }
     var record by remember { mutableStateOf(false) }
-    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current
+    val sfx = LocalSfx.current; val view = LocalBuzzer.current; val vib = LocalVibration.current
     val done = n >= LageCheck.ROUNDS
     val round = remember(session, n) { LageCheck.round(session * 100 + n.coerceAtMost(LageCheck.ROUNDS - 1)) }
     LaunchedEffect(round, answer) { controller.setState(round.scene(answer != null)) }
@@ -254,7 +245,7 @@ fun DuelScreen(onBack: () -> Unit, incoming: String? = null) {
     var hits by rememberSaveable { mutableIntStateOf(0) }
     var code by rememberSaveable { mutableStateOf("") }
     var error by remember { mutableStateOf(false) }
-    val ctx = LocalContext.current
+    val share = LocalShareText.current; val shareCard = LocalShareCard.current
     val d = duel
     when {
         d != null && playing && n < DuelCode.TASKS -> {
@@ -271,7 +262,7 @@ fun DuelScreen(onBack: () -> Unit, incoming: String? = null) {
             Text("beim ersten Versuch getroffen", color = Q.Muted)
             Text(d.code, Modifier.padding(16.dp).background(Q.Deep, RoundedCornerShape(12.dp)).border(1.dp, Q.Pink, RoundedCornerShape(12.dp)).padding(horizontal = 18.dp, vertical = 10.dp), fontSize = 24.sp, fontWeight = FontWeight.Black, letterSpacing = 3.sp, color = Q.Pink)
             Text("Schick den Code weiter. Wer ihn eingibt, bekommt genau dieselben Aufgaben.", Modifier.padding(horizontal = 28.dp), textAlign = TextAlign.Center, style = MaterialTheme.typography.bodyMedium)
-            NeonButton({ shareText(ctx, DuelCode.shareText(d, hits)) }, Modifier.fillMaxWidth().padding(16.dp), color = Q.Pink) { Text("📤 Herausfordern", fontWeight = FontWeight.Black) }
+            NeonButton({ share(DuelCode.shareText(d, hits)) }, Modifier.fillMaxWidth().padding(16.dp), color = Q.Pink) { Text("📤 Herausfordern", fontWeight = FontWeight.Black) }
             NeonButton(onBack, Modifier.fillMaxWidth().padding(horizontal = 16.dp), color = Q.Green) { Text("Fertig ✓", fontWeight = FontWeight.Bold) }
         }
         else -> Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState())) {
@@ -368,7 +359,7 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
     var calc by remember { mutableStateOf(false) }
     var code by remember { mutableStateOf("") }
     var bad by remember { mutableStateOf(false) }
-    val ctx = LocalContext.current; val scope = rememberCoroutineScope(); val sfx = LocalSfx.current
+    val share = LocalShareText.current; val shareCard = LocalShareCard.current; val scope = rememberCoroutineScope(); val sfx = LocalSfx.current
     fun change(l: List<ShowItem>) { items = l; onSave(l) }
     LaunchedEffect(items) { controller.setState(Show.scene(items)) }
 
@@ -402,7 +393,7 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
             NeonButton({ if (item != null) { change(items.filterIndexed { i, _ -> i != sel }); sel = (sel - 1).coerceAtLeast(0) } }, color = Q.Orange, enabled = item != null) { Text("🗑") }
             NeonButton({ load = true; code = ""; bad = false }, color = Q.Muted) { Text("Code") }
             NeonButton({ calc = true }, Modifier.testTag("rechner"), color = Q.Yellow, enabled = items.size >= 2) { Text("🧮") }
-            NeonButton({ shareText(ctx, "Meine Raumlicht-Show: ${Show.encode(items)}") }, color = Q.Pink, enabled = items.isNotEmpty()) { Text("📤") }
+            NeonButton({ share("Meine Raumlicht-Show: ${Show.encode(items)}") }, color = Q.Pink, enabled = items.isNotEmpty()) { Text("📤") }
             NeonButton({
                 scope.launch {
                     sfx?.play(Sound.LAUNCH)

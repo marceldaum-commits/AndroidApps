@@ -15,8 +15,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,7 +23,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -77,7 +74,7 @@ fun LevelScreen(
     var taps by remember { mutableIntStateOf(0) }
     var showInfo by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
-    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current
+    val sfx = LocalSfx.current; val view = LocalBuzzer.current; val vib = LocalVibration.current
     val accent = stageColor(chapter.color)
 
     fun change(key: String, v: List<Int>) {
@@ -152,7 +149,7 @@ fun LevelScreen(
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
             // Kopfzeile
             Row(Modifier.fillMaxWidth().padding(end = 12.dp), verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
+                IconButton(onClick = onBack) { BackArrow() }
                 Column(Modifier.weight(1f)) {
                     Text(caption ?: "${chapter.emoji} ${chapter.title} · Aufgabe ${level.id}", style = MaterialTheme.typography.labelMedium, color = accent)
                     Text(level.title, style = MaterialTheme.typography.titleMedium, maxLines = 1)
@@ -254,7 +251,7 @@ fun StarRow(n: Int, lit: Boolean, size: Int = 20) {
 }
 
 @Composable
-internal fun Stepper(label: String?, value: Int, text: String, color: Color, tag: String, modifier: Modifier, canDown: Boolean, canUp: Boolean, onStep: (Int) -> Unit) {
+fun Stepper(label: String?, value: Int, text: String, color: Color, tag: String, modifier: Modifier, canDown: Boolean, canUp: Boolean, onStep: (Int) -> Unit) {
     Row(modifier.height(46.dp).background(Q.Deep, RoundedCornerShape(14.dp)).border(1.dp, color.copy(alpha = 0.5f), RoundedCornerShape(14.dp)), verticalAlignment = Alignment.CenterVertically) {
         StepButton("−", color, canDown, "minus-$tag") { onStep(-1) }
         Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {

@@ -15,8 +15,6 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.testTag
@@ -73,7 +71,7 @@ fun HomeScreen(
                         Text("RAUMLICHT", fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 4.sp, color = Q.Text)
                         Text("★ $total / $max", color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     }
-                    IconButton(onClick = onSettings) { Icon(Icons.Default.Settings, "Einstellungen", tint = Q.Text) }
+                    IconButton(onClick = onSettings) { Text("⚙", fontSize = 22.sp, color = Q.Text) }
                 }
                 if (next != null) NeonButton({ onLevel(next.id) }, Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp).pulse(true, 0.02f), color = Q.Green) {
                     Text(if (total == 0) "▶ Tour starten" else "▶ Weiter: ${next.id} ${next.title}", fontWeight = FontWeight.Black, maxLines = 1)

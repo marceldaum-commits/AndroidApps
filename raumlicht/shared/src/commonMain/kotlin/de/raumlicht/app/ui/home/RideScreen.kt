@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -50,7 +49,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
                /** Zuletzt gebaute eigene Funktion als „Term|von|bis“ – wird beim nächsten Mal wieder vorgeschlagen */
                custom: String = "", onCustom: (String) -> Unit = {},
                /** Uhr in Millisekunden – im Test austauschbar */
-               now: () -> Long = android.os.SystemClock::uptimeMillis) {
+               now: () -> Long = ::nowMillis) {
     var rideId by rememberSaveable { mutableStateOf(startId) }
     // Eigene Funktion: Term und Abschnitt; gebaut wird erst auf Knopfdruck (oder beim Weiterfahren)
     val saved = remember { custom.split('|') }
@@ -87,7 +86,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     var tempo by rememberSaveable { mutableIntStateOf(1) }
     var seen by remember(key) { mutableStateOf<Spot?>(null) }
     var lastSpot by remember(key) { mutableLongStateOf(-10_000L) }
-    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
+    val sfx = LocalSfx.current; val view = LocalBuzzer.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
     val d = ride.data(u.toDouble())
 
     // Mit Zusätzen wird die Bühne in kleinen Schritten nachgeführt (Punkt auf f′ wandert mit, die Fläche wächst)
@@ -210,7 +209,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
 
 /** Kleines Zahlenfeld für „von“ / „bis“: antippen und eintippen (auch negative Zahlen) */
 @Composable
-internal fun Bound(text: String, tag: String, onChange: (String) -> Unit) {
+fun Bound(text: String, tag: String, onChange: (String) -> Unit) {
     androidx.compose.foundation.text.BasicTextField(text, { v -> onChange(v.replace('−', '-').filterIndexed { i, c -> c.isDigit() || (c == '-' && i == 0) }.take(6)) },
         Modifier.width(58.dp).background(Q.Panel, RoundedCornerShape(10.dp)).border(1.dp, Q.Violet.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).padding(vertical = 8.dp).testTag(tag), singleLine = true,
         textStyle = androidx.compose.ui.text.TextStyle(color = Q.Text, fontWeight = FontWeight.Black, fontSize = 16.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center),

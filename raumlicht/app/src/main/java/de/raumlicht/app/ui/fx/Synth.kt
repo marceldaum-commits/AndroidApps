@@ -10,7 +10,6 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 /** Alle Geräusche – im Code erzeugt, keine Audiodateien, keine Lizenzen. Elektronisch, passend zum All. */
-enum class Sound { TAP, TICK, LAUNCH, HIT, CELL, CRASH, WIN, WRONG, BEEP }
 
 object Synth {
     const val SR = 44100

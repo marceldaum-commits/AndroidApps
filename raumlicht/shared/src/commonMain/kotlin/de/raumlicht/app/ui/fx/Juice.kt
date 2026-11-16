@@ -18,7 +18,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import de.raumlicht.app.ui.theme.Q
 import kotlin.math.sin
@@ -50,7 +49,7 @@ fun NeonButton(
 ) {
     val interaction = remember { MutableInteractionSource() }
     val sfx = LocalSfx.current
-    val view = LocalView.current
+    val view = LocalBuzzer.current
     val vib = LocalVibration.current
     val c = if (enabled) color else Q.Muted.copy(alpha = 0.5f)
     Row(
@@ -78,5 +77,16 @@ fun Starfield(modifier: Modifier = Modifier, count: Int = 90, seed: Int = 1) {
             val a = 0.45f + 0.4f * sin(t * 1.3f + phase)
             drawCircle(Color.White.copy(alpha = a.coerceIn(0.1f, 1f)), size * density / 2, Offset(p.x * this.size.width, p.y * this.size.height))
         }
+    }
+}
+
+/** Zurück-Pfeil – selbst gezeichnet, damit er auf Android und im Web gleich aussieht */
+@Composable
+fun BackArrow(color: Color = Q.Text) {
+    Canvas(Modifier.size(22.dp)) {
+        val w = size.width; val h = size.height; val sw = w * 0.11f
+        drawLine(color, Offset(w * 0.9f, h / 2), Offset(w * 0.12f, h / 2), sw, cap = androidx.compose.ui.graphics.StrokeCap.Round)
+        drawLine(color, Offset(w * 0.12f, h / 2), Offset(w * 0.45f, h * 0.18f), sw, cap = androidx.compose.ui.graphics.StrokeCap.Round)
+        drawLine(color, Offset(w * 0.12f, h / 2), Offset(w * 0.45f, h * 0.82f), sw, cap = androidx.compose.ui.graphics.StrokeCap.Round)
     }
 }

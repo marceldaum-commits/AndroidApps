@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,7 +29,7 @@ import de.raumlicht.core.model.*
  * und zu zweit (jedem gehört eine Hälfte). Verpasste Ballons kosten nichts; daneben getippt heißt: Lux ballert daneben.
  */
 @Composable
-fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, controller: StageController = remember { StageController() }, seed: Long = remember { System.nanoTime() }) {
+fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, controller: StageController = remember { StageController() }, seed: Long = remember { nowNanos() }) {
     var round by remember { mutableIntStateOf(0) }                     // 0 = noch nicht gestartet
     var mode by remember { mutableStateOf(BalloonMode.SOLO) }
     val game = remember(round, mode) { BalloonGame(seed + round, mode = mode) }
@@ -41,7 +40,7 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
     var scores by remember(round) { mutableStateOf(listOf(BalloonScore(), BalloonScore())) }
     var flash by remember(round) { mutableStateOf<String?>(null) }
     var record by remember(round) { mutableStateOf(false) }
-    val sfx = LocalSfx.current; val view = LocalView.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
+    val sfx = LocalSfx.current; val view = LocalBuzzer.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
     val over = round > 0 && !running && t >= game.duration
     val duel = mode == BalloonMode.DUEL; val quiz = mode == BalloonMode.QUIZ
     val score = scores[0]

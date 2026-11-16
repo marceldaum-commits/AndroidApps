@@ -1,12 +1,5 @@
 package de.raumlicht.app.ui.stage
 
-import android.annotation.SuppressLint
-import android.os.Handler
-import android.os.Looper
-import android.webkit.JavascriptInterface
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.staticCompositionLocalOf
@@ -16,10 +9,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import de.raumlicht.core.model.Beam
 import de.raumlicht.core.model.V3
 import kotlinx.serialization.json.Json
@@ -33,7 +22,8 @@ import kotlinx.serialization.json.jsonPrimitive
  * Befehle, die vor dem Laden ankommen, werden gesammelt und danach ausgeführt.
  */
 class StageController {
-    private var web: WebView? = null
+    /** Führt einen Befehl in der Bühne aus – Android: Web-Ansicht, Browser: eingebettetes Fenster. null = gerade keine Bühne da. */
+    private var runner: ((String) -> Unit)? = null
     private var ready = false
     private var state: String? = null
     private val queue = ArrayList<String>()
@@ -49,11 +39,11 @@ class StageController {
     val log = ArrayList<String>()
     /** Fehlermeldung der Bühne (JavaScript/WebGL) – wird über der Bühne angezeigt, damit man sie melden kann */
     var problem by androidx.compose.runtime.mutableStateOf<String?>(null)
-        internal set
-    internal val isReady get() = ready
+        private set
+    val isReady get() = ready
     /** Selbstauskunft der Bühne (Gerät, Größe, Farben) */
     var info by androidx.compose.runtime.mutableStateOf<String?>(null)
-        internal set
+        private set
 
     fun setState(json: String) { state = json; if (ready) run("RL.setState($json)") }
     fun fire(b: Beam, ms: Int) = send("RL.fire({from:${js(b.from)},to:${js(b.to)},color:'${b.color}',ms:$ms,hit:${b.hit}})")
@@ -75,17 +65,18 @@ class StageController {
         if (cmd.startsWith("RL.ride({")) { if (ready) run(cmd) else { queue.removeAll { it.startsWith("RL.ride({") }; queue += cmd }; return }
         log += cmd; if (ready) run(cmd) else queue += cmd
     }
-    private fun run(cmd: String) { web?.evaluateJavascript(cmd, null) }
+    private fun run(cmd: String) { runner?.invoke(cmd) }
 
-    internal fun attach(w: WebView) { web = w; ready = false }
-    internal fun detach() { web = null; ready = false }
+    fun attach(run: (String) -> Unit) { runner = run; ready = false }
+    fun detach() { runner = null; ready = false }
     /** Zählt hoch, wenn die Bühne neu aufgebaut werden muss */
     var generation by androidx.compose.runtime.mutableIntStateOf(0)
         private set
     /** Der Darstellungsprozess ist weg: alte Ansicht loslassen, neue anfordern. Der letzte Bühnen-Zustand wird nach dem Start wieder gezeigt. */
-    internal fun rendererGone() { web = null; ready = false; queue.clear(); generation++ }
-    internal fun report(msg: String) { if (problem == null) problem = msg }
-    internal fun onEvent(json: String) {
+    fun rendererGone() { runner = null; ready = false; queue.clear(); generation++ }
+    fun report(msg: String) { if (problem == null) problem = msg }
+    fun tell(json: String) { info = json }
+    fun onEvent(json: String) {
         val o = runCatching { Json.parseToJsonElement(json).jsonObject }.getOrNull() ?: return
         when (o["type"]?.jsonPrimitive?.content) {
             "ready" -> { ready = true; state?.let { run("RL.setState($it)") }; queue.forEach(::run); queue.clear() }
@@ -96,11 +87,11 @@ class StageController {
             "drag" -> onDrag?.invoke(o.getValue("id").jsonPrimitive.content, o.getValue("p").jsonArray.map { it.jsonPrimitive.int })
         }
     }
-    internal fun pause(on: Boolean) { if (ready) run(if (on) "RL.pause()" else "RL.resume()") }
+    fun pause(on: Boolean) { if (ready) run(if (on) "RL.pause()" else "RL.resume()") }
 }
 
 /** Wie die Bühne gezeichnet wird – in Tests durch ein Standbild ersetzt (Robolectric hat kein WebGL). */
-val LocalStageRenderer = staticCompositionLocalOf<@Composable (StageController, Modifier) -> Unit> { { c, m -> WebStage(c, m) } }
+val LocalStageRenderer = staticCompositionLocalOf<@Composable (StageController, Modifier) -> Unit> { { c, m -> PlatformStage(c, m) } }
 
 /** Leuchtspur und Aufsatz von Lux (Werkstatt) */
 val LocalLuxLook = staticCompositionLocalOf { "none" to "none" }
@@ -115,65 +106,12 @@ fun Stage(controller: StageController, modifier: Modifier = Modifier) {
     LocalStageRenderer.current(controller, modifier)
 }
 
-@SuppressLint("SetJavaScriptEnabled")
+/** Die echte Bühne der jeweiligen Plattform: Android bettet eine Web-Ansicht ein, der Browser ein eigenes Fenster-Element. */
 @Composable
-private fun WebStage(controller: StageController, modifier: Modifier) {
-    val owner = LocalLifecycleOwner.current
-    val main = Handler(Looper.getMainLooper())
-    // Nach einem Verlust des Darstellungsprozesses entsteht die Web-Ansicht neu (die alte ist unbrauchbar)
-    androidx.compose.runtime.key(controller.generation) { AndroidView(
-        modifier = modifier,
-        factory = { ctx ->
-            WebView(ctx).apply {
-                // Wichtig: feste Größe ansagen. Ohne das rechnet die Web-Ansicht mit „so hoch wie der Inhalt“,
-                // die Seite hat dann intern die Höhe 0 und die Bühne bleibt unsichtbar.
-                layoutParams = android.view.ViewGroup.LayoutParams(android.view.ViewGroup.LayoutParams.MATCH_PARENT, android.view.ViewGroup.LayoutParams.MATCH_PARENT)
-                setBackgroundColor(0xFF05071A.toInt())
-                settings.javaScriptEnabled = true
-                settings.allowContentAccess = false
-                settings.setSupportZoom(false)
-                isVerticalScrollBarEnabled = false; isHorizontalScrollBarEnabled = false
-                overScrollMode = WebView.OVER_SCROLL_NEVER
-                // Nur die mitgelieferte Szene – keine Navigation ins Netz
-                webViewClient = object : WebViewClient() {
-                    override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest) = true
-                    // Beendet Android den Darstellungsprozess der Bühne (zu wenig Speicher oder ein Fehler darin), würde ohne diese Antwort
-                    // die ganze App geschlossen. So bleibt die App offen und die Bühne wird frisch aufgebaut.
-                    override fun onRenderProcessGone(view: WebView, detail: android.webkit.RenderProcessGoneDetail): Boolean {
-                        de.raumlicht.app.Diagnose.note(view.context, "3D-Bühne vom System beendet (${if (detail.didCrash()) "Fehler in der Darstellung" else "zu wenig Speicher"}) – wurde neu gestartet")
-                        main.post { controller.rendererGone() }
-                        return true
-                    }
-                }
-                webChromeClient = object : android.webkit.WebChromeClient() {
-                    override fun onConsoleMessage(m: android.webkit.ConsoleMessage): Boolean {
-                        if (m.messageLevel() == android.webkit.ConsoleMessage.MessageLevel.ERROR) controller.report("${m.message()} (Zeile ${m.lineNumber()})")
-                        return true
-                    }
-                }
-                addJavascriptInterface(object { @JavascriptInterface fun event(json: String) { main.post { controller.onEvent(json) } } }, "Android")
-                controller.attach(this)
-                loadUrl("file:///android_asset/scene/index.html")
-            }
-        },
-        onRelease = { controller.detach(); it.destroy() },
-    ) }
-    // Meldet sich die Bühne nicht, sagen wir das – statt nur schwarz zu bleiben
-    androidx.compose.runtime.LaunchedEffect(controller) {
-        kotlinx.coroutines.delay(6000)
-        if (!controller.isReady) controller.report("Die 3D-Bühne startet nicht. Bitte „Android System WebView“ im Play Store aktualisieren.")
-    }
-    controller.problem?.let { msg ->
-        androidx.compose.material3.Text("⚠ $msg", modifier.then(Modifier.padding(16.dp)), color = androidx.compose.ui.graphics.Color(0xFFFF8A3D), fontSize = 12.sp)
-    }
-    DisposableEffect(owner, controller) {
-        val obs = LifecycleEventObserver { _, e ->
-            if (e == Lifecycle.Event.ON_STOP) controller.pause(true) else if (e == Lifecycle.Event.ON_START) controller.pause(false)
-        }
-        owner.lifecycle.addObserver(obs)
-        onDispose { owner.lifecycle.removeObserver(obs) }
-    }
-}
+expect fun PlatformStage(controller: StageController, modifier: Modifier)
+
+/** Bemerkenswertes aus der Bühne (z. B. „neu gestartet“) – die App kann es für den Abbruch-Bericht festhalten */
+var stageNote: (String) -> Unit = {}
 
 /**
  * Runde Ecken für die Bühne, ohne die Web-Ansicht zu beschneiden: Die vier Ecken werden in der Hintergrundfarbe
