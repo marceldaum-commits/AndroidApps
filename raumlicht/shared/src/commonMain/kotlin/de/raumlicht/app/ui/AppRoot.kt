@@ -85,7 +85,12 @@ fun AppRoot(
     nav: Navigator, prefs: Prefs, stars: StateFlow<Map<String, Int>>, record: (levelId: String, stars: Int, attempts: Int) -> Unit, today: () -> Long,
     settings: @Composable (onBack: () -> Unit) -> Unit,
     updateVersion: String? = null, onRoute: (String) -> Unit = {}, onPlanChanged: () -> Unit = {},
+    /** Pro-Sperren aktiv? Im Auslieferungsstand aus ([Pro.ENABLED]); Tests schalten es ein. */
+    proEnabled: Boolean = Pro.ENABLED,
 ) {
+    val proActive by prefs.pro.collectAsState()
+    // Was zu Pro gehört und (noch) nicht freigeschaltet ist
+    fun needsPro(route: String) = proEnabled && !proActive && Pro.locked(route)
     val starMap by stars.collectAsState()
     val skin by prefs.skin.collectAsState(); val look by prefs.look.collectAsState()
     val exams by prefs.exams.collectAsState(); val lageBest by prefs.lageBest.collectAsState(); val jamBest by prefs.jamBest.collectAsState()
@@ -110,8 +115,9 @@ fun AppRoot(
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
         Crossfade(keys.last(), animationSpec = tween(180), label = "ziel") { key -> holder.SaveableStateProvider(key) {
             val route = key.substringAfter(':'); val parts = route.split('/')
+            if (needsPro(route)) de.raumlicht.app.ui.settings.ProScreen(Pro.what(route), back) else
             when (parts[0]) {
-                Routes.HOME -> HomeScreen(Levels.chapters, starMap, { nav.go(Routes.level(it)) }, { nav.go(Routes.SETTINGS) },
+                Routes.HOME -> HomeScreen(Levels.chapters, starMap, { nav.go(Routes.level(it)) }, { nav.go(Routes.SETTINGS) }, locked = { needsPro(Routes.level(it)) },
                     updateVersion = updateVersion, onUpdate = { nav.go(Routes.SETTINGS) },
                     dailyDone = (starMap[Daily.id(today())] ?: 0) > 0, jamBest = jamBest,
                     onDaily = { nav.go(Routes.DAILY) }, onJam = { nav.go(Routes.JAM_HOME) }, onExam = { nav.go(Routes.EXAMS) }, onMore = { nav.go(Routes.BACKSTAGE) })
@@ -137,7 +143,7 @@ fun AppRoot(
                         onSolved = { s, a -> record(level.id, s, a) }, onNext = null, onBack = back,
                         caption = "🎟️ Tagesaufgabe · ${level.title}", doneLabel = "Fertig für heute ✓")
                 }
-                Routes.JAM_HOME -> if (parts.size == 1) JamPicker(jamBest, { nav.go(Routes.jam(it.name)) }, back, startLevel = prefs.jamLevel, onLevel = { prefs.jamLevel = it },
+                Routes.JAM_HOME -> if (parts.size == 1) JamPicker(jamBest, { nav.go(Routes.jam(it.name)) }, back, startLevel = prefs.jamLevel, onLevel = { prefs.jamLevel = it }, lockedLevel = { needsPro(Routes.jam("MIX") + (it?.let { l -> "/${l.name}" } ?: "")) },
                     onPick = { t, l -> nav.go(Routes.jam(t.name) + (l?.let { "/${it.name}" } ?: "")) }) else {
                     val topic = JamTopic.entries.firstOrNull { it.name == parts[1] } ?: JamTopic.MIX
                     val session = rememberSaveable { nowMillis() % 1_000_000 }

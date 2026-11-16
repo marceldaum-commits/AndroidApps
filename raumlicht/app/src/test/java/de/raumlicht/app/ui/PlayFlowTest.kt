@@ -434,7 +434,7 @@ class PlayFlowTest {
         show { de.raumlicht.app.ui.home.JamPicker(0, {}, {}, onLevel = { saved = it }, onPick = { t, l -> picked += t to l }) }
         rule.onNodeWithTag("stufe-text").assertTextEquals("Alle Stufen gemischt"); rule.onNodeWithTag("thema-SCHNITT").assertExists()
         rule.onNodeWithTag("stufe-profi").performClick(); assertEquals("PROFI", saved)
-        rule.onNodeWithTag("thema-SCHNITT").assertDoesNotExist(); rule.onNodeWithTag("thema-PUNKTE").assertDoesNotExist()
+        rule.onNodeWithTag("thema-SCHNITT").assertDoesNotExist(); rule.onNodeWithTag("thema-BEWEGUNG").assertDoesNotExist(); rule.onNodeWithTag("thema-PUNKTE").assertExists()
         rule.onNodeWithTag("thema-WINKEL").performClick(); rule.onNodeWithTag("thema-MIX").performScrollTo().performClick()
         assertEquals(listOf(de.raumlicht.core.model.JamTopic.WINKEL to de.raumlicht.core.model.JamLevel.PROFI, de.raumlicht.core.model.JamTopic.MIX to de.raumlicht.core.model.JamLevel.PROFI), picked)
         rule.onNodeWithTag("stufe-einstieg").performClick(); rule.onNodeWithTag("thema-PUNKTE").assertExists(); rule.onNodeWithTag("thema-SCHNITT").assertDoesNotExist()

@@ -39,6 +39,9 @@ interface Prefs {
     var flight: String
 
     /** Neu anfangen: Rekorde, Abi-Punkte, Tagebuch, gesehene Erklärungen und Lux' Aussehen zurücksetzen (Ton-Einstellungen und Plan bleiben) */
+    /** Abi-Pass freigeschaltet? Wirkt erst, wenn Pro eingeschaltet ist ([Pro.ENABLED]); gesetzt wird es später vom Kauf bzw. vom Freischalt-Code. */
+    val pro: StateFlow<Boolean>
+    fun setPro(active: Boolean)
     /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */
     var jamLevel: String
     fun resetProgress()

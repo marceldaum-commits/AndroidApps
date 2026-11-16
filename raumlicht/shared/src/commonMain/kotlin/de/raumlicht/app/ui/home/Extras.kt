@@ -51,7 +51,9 @@ private fun TopBar(title: String, onBack: () -> Unit) {
 /** Endlos üben: Thema wählen, dann endlos neue Aufgaben. Eine Serie zählt Treffer beim ersten Versuch. */
 @Composable
 fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit, startLevel: String = "", onLevel: (String) -> Unit = {},
-              onPick: (JamTopic, JamLevel?) -> Unit = { t, _ -> onTopic(t) }) {
+              onPick: (JamTopic, JamLevel?) -> Unit = { t, _ -> onTopic(t) },
+              /** Stufen, die zum Abi-Pass gehören und noch gesperrt sind (zeigen ein Schloss) */
+              lockedLevel: (JamLevel?) -> Boolean = { false }) {
     // Schwierigkeit: „Alle“ mischt wie bisher; sonst kommen nur Aufgaben der gewählten Stufe (jede nachweislich schwerer als die vorige)
     var levelName by rememberSaveable { mutableStateOf(startLevel) }
     val level = JamLevel.entries.firstOrNull { it.name == levelName }
@@ -68,7 +70,7 @@ fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit, startL
                 Column(Modifier.weight(1f).testTag("stufe-${l?.name?.lowercase() ?: "alle"}").pressBounce(interaction).clip(RoundedCornerShape(14.dp)).background(if (on) c.copy(alpha = 0.28f) else Q.Deep)
                     .border(if (on) 2.dp else 1.dp, if (on) c else Q.Muted.copy(alpha = 0.35f), RoundedCornerShape(14.dp)).clickable(interaction, null) { levelName = l?.name ?: ""; onLevel(levelName) }.padding(vertical = 7.dp),
                     horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(l?.emoji ?: "🎧", fontSize = 16.sp); Text(l?.title ?: "Alle", fontWeight = FontWeight.Black, fontSize = 13.sp, color = if (on) Q.Text else Q.Muted)
+                    Text(l?.emoji ?: "🎧", fontSize = 16.sp); Text((l?.title ?: "Alle") + if (lockedLevel(l)) " 🔒" else "", fontWeight = FontWeight.Black, fontSize = 13.sp, color = if (on) Q.Text else Q.Muted)
                 }
             }
         }
@@ -85,7 +87,7 @@ fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit, startL
                     Text(t.emoji, fontSize = 30.sp)
                     Column(Modifier.weight(1f).padding(start = 12.dp)) {
                         Text(t.title, style = MaterialTheme.typography.titleMedium)
-                        Text(if (t == JamTopic.MIX) "Themen bunt gemischt – wie in der Klausur" else "${when (level) { null -> t.kinds.size; JamLevel.PROFI -> Practice.pro(t).size; else -> t.kinds.count { k -> Practice.tier(k) == level } }} Aufgabenarten", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+                        Text(if (t == JamTopic.MIX) "Themen bunt gemischt – wie in der Klausur" else "${Practice.count(t, level)} Aufgabenarten", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
                     }
                     Text("▶", color = c, fontSize = 22.sp, fontWeight = FontWeight.Black)
                 }

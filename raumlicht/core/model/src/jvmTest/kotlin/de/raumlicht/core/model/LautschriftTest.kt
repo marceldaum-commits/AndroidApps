@@ -19,6 +19,7 @@ class LautschriftTest {
         fun check(t: String) { n++; gaps += l.missing(Speech.clean(t)) }
         (Levels.all + Exams.all.flatMap { e -> e.parts.map { it.level } }).forEach { lv -> repeat(25) { runCatching { check(lv.evaluate(lv.controls.associate { c -> c.key to c.start.indices.map { i -> r.nextInt(c.min[i], c.max[i] + 1) } }).message) } } }
         Gen.Kind.entries.forEach { k -> for (seed in 100L..130L) runCatching { val g = Gen.level(k, seed); check(g.mission); check(g.tip); check(g.evaluate(g.solution).message) } }
+        MoreGen.Kind.entries.forEach { k -> for (seed in 200L..260L) { val g = MoreGen.level(k, seed); check(g.mission); check(g.tip); check(g.evaluate(g.solution).message); check(g.evaluate(g.start).message) } }
         ProGen.Kind.entries.forEach { k -> for (seed in 200L..260L) { val g = ProGen.level(k, seed); check(g.mission); check(g.tip); check(g.evaluate(g.solution).message); check(g.evaluate(g.start).message) } }
         for (s in 0..100) check(Ghost.verdict(s))
         SpotKind.entries.forEach { check("${it.title} bei x = ${Geo.num(-2.5)}"); check(it.title) }

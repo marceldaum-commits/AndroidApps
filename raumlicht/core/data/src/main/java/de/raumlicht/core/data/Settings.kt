@@ -132,6 +132,10 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
         get() = prefs.getString("flight", "") ?: ""
         set(v) = prefs.edit().putString("flight", v).apply()
 
+    private val _pro = flag("pro", false)
+    override val pro: StateFlow<Boolean> = _pro.asStateFlow()
+    override fun setPro(active: Boolean) { prefs.edit().putBoolean("pro", active).apply(); _pro.value = active }
+
     /** Endlos üben: die zuletzt gewählte Schwierigkeit (leer = alle Stufen) */
     override var jamLevel: String
         get() = prefs.getString("jamLevel", "") ?: ""

@@ -56,6 +56,8 @@ fun HomeScreen(
     dailyDone: Boolean = false, jamBest: Int = 0,
     onDaily: () -> Unit = {}, onJam: () -> Unit = {}, onExam: () -> Unit = {}, onMore: () -> Unit = {},
     controller: StageController = remember { StageController() },
+    /** Aufgaben, die zum Abi-Pass gehören und noch gesperrt sind (zeigen ein Schloss) */
+    locked: (String) -> Boolean = { false },
 ) {
     val total = chapters.sumOf { c -> c.levels.sumOf { stars[it.id] ?: 0 } }; val max = chapters.sumOf { it.levels.size } * 3
     val next = chapters.flatMap { it.levels }.firstOrNull { (stars[it.id] ?: 0) == 0 }
@@ -119,7 +121,7 @@ fun HomeScreen(
         item {
             val c = chapters.firstOrNull { it.number == open } ?: chapters.first()
             AnimatedContent(c, transitionSpec = { (slideInHorizontally { if (targetState.number > initialState.number) it / 3 else -it / 3 } + fadeIn()) togetherWith fadeOut() }, label = "kapitel") { ch ->
-                ChapterDetail(ch, stars, next?.id, onLevel)
+                ChapterDetail(ch, stars, next?.id, onLevel, locked)
             }
         }
     }
@@ -141,7 +143,7 @@ private fun ChapterChip(c: Chapter, stars: Map<String, Int>, selected: Boolean, 
 
 /** Das gewählte Kapitel mit seinen Aufgaben. */
 @Composable
-private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, onLevel: (String) -> Unit) {
+private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, onLevel: (String) -> Unit, locked: (String) -> Boolean = { false }) {
     val accent = stageColor(c.color)
     val got = c.levels.sumOf { stars[it.id] ?: 0 }
     Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp).clip(RoundedCornerShape(20.dp))
@@ -163,7 +165,7 @@ private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, 
                     .border(if (l.id == nextId) 2.dp else 1.dp, if (l.id == nextId) Q.Green else accent.copy(alpha = 0.5f), RoundedCornerShape(14.dp))
                     .clickable(interaction, null) { onLevel(l.id) }.padding(vertical = 6.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(if (l.abi) "🎓" else l.id.substringAfter('-'), fontWeight = FontWeight.Black, fontSize = 17.sp, color = Q.Text)
-                    Box(Modifier.graphicsLayer { scaleX = 0.62f; scaleY = 0.62f }) { StarRow(s, lit = true, size = 16) }
+                    if (locked(l.id)) Text("🔒", Modifier.testTag("schloss-${l.id}"), fontSize = 11.sp) else Box(Modifier.graphicsLayer { scaleX = 0.62f; scaleY = 0.62f }) { StarRow(s, lit = true, size = 16) }
                 }
             }
         }

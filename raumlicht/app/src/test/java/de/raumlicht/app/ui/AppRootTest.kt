@@ -28,11 +28,12 @@ import org.robolectric.annotation.GraphicsMode
 class AppRootTest {
     @get:Rule val rule = createComposeRule()
     private val nav = Navigator(); private val stars = MutableStateFlow(mapOf<String, Int>()); private val routes = ArrayList<String>()
-    private fun start() {
-        val prefs = Settings(ApplicationProvider.getApplicationContext())
+    private lateinit var prefs: Settings
+    private fun start(pro: Boolean = false) {
+        prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
             AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")) },
-                onRoute = { routes += it })
+                onRoute = { routes += it }, proEnabled = pro)
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -62,5 +63,33 @@ class AppRootTest {
         all.forEach { r -> nav.restart(r); settle(); assertEquals(r, listOf(Routes.HOME, r), nav.stack); rule.onNodeWithTag("gebiet-GEOMETRIE").assertDoesNotExist() }
         nav.restart("gibt/es/nicht"); settle(); settle(); assertEquals(listOf(Routes.HOME), nav.stack)       // unbekanntes Ziel: zurück zur Startseite
         assertTrue(Routes.isAction("level/3-2") && Routes.isAction("jam/MIX") && Routes.isAction("abi/zelt/1") && !Routes.isAction(Routes.HOME) && !Routes.isAction(Routes.EXAMS) && !Routes.isAction(Routes.BACKSTAGE))
+    }
+
+    /** Abi-Pass (vorbereitet): eingeschaltet sperrt er genau die Pro-Teile und zeigt die Hinweis-Seite; freigeschaltet oder ausgeschaltet ist alles offen. */
+    @Test fun proGate() {
+        Settings(ApplicationProvider.getApplicationContext()).setPro(false)
+        start(pro = true)
+        rule.onNodeWithTag("kapitel-7").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("schloss-7-3", useUnmergedTree = true).assertExists(); rule.onNodeWithTag("schloss-7-2", useUnmergedTree = true).assertDoesNotExist()
+        nav.go(Routes.level("7-2")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist(); nav.back(); settle()
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        nav.go(Routes.level("7-3")); settle(); rule.onNodeWithTag("pro-grund").assertTextContains("Aufgabe 7-3", substring = true); rule.onNodeWithTag("pro-status").assertExists()
+        rule.onNodeWithTag("pro-zurueck").performScrollTo().performClick(); settle(); assertEquals(listOf(Routes.HOME), nav.stack)
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        nav.go(Routes.BINOMIAL); settle(); rule.onNodeWithTag("pro-grund").assertTextContains("Binomial-Labor", substring = true); nav.back(); settle()
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        nav.go(Routes.CHANCE); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist(); nav.back(); settle()            // Zufallsmaschine bleibt frei
+        // freigeschaltet: alles offen, Schlösser weg
+        rule.runOnUiThread { prefs.setPro(true) }; settle()
+        rule.onNodeWithTag("schloss-7-3", useUnmergedTree = true).assertDoesNotExist()
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        nav.go(Routes.level("7-3")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist()
+        rule.runOnUiThread { prefs.setPro(false) }
+    }
+
+    @Test fun proOffMeansEverythingOpen() {
+        start()                                                                                                             // Auslieferungsstand
+        nav.go(Routes.level("25-7")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist()
+        rule.onNodeWithText(Levels.byId("25-7")!!.title, substring = true).assertExists()
     }
 }

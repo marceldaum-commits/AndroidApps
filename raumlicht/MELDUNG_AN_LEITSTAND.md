@@ -387,3 +387,71 @@ Alle Preise sind **Endpreise inkl. 19 % USt** und werden in App und Shop so ange
 Annahmen: Play-Gebühr 15 % (nicht nachgeprüft); Zahlungsgebühr der Woo-Kasse beispielhaft 2,9 % + 0,35 € vom Bruttobetrag – bitte durch den echten Tarif des Zahlungsanbieters ersetzen.
 Web-Kauf: Steuerklasse Standard 19 %, Rechnung weist die USt aus; bei Privatkunden in anderen EU-Ländern gilt deren Satz (OSS) – dann weicht der Nettobetrag ab. Play: Google führt die USt selbst ab.
 Keine Steuerberatung.
+
+---
+
+## 16.11.2026 – Version 2.11.0: neue Aufgaben-Arten, Pro-Schalter vorbereitet (beides von Marcel direkt bestätigt)
+
+### Aufgaben-Arten zur Analytischen Geometrie
+Nur die Arten übernommen – Texte und Zahlen sind eigene, die Zahlen entstehen je Aufgabe neu.
+
+| Art aus der Anregung | schon vorhanden? | neu im endlosen Üben | Stufe |
+|---|---|---|---|
+| Punkt in zwei Koordinatenebenen / gleich weit von zwei Achsen (offene Antwort) | nein | „Punkt mit Bedingungen“ in drei Varianten, Prüfung über Bedingungen statt fester Lösung, der Ursprung zählt nie | Einstieg |
+| Spiegeln an einer Koordinatenebene | als feste Aufgabe 1-5 | zusätzlich als Übungsaufgabe | Einstieg |
+| Spiegeln an einer Koordinatenachse | nein | neu, mit Original- und Bildpunkt in der Bühne | Abi |
+| zwei Ebenen-Spiegelungen hintereinander | nein | neu (mit dem Hinweis: wirkt wie Spiegelung an einer Achse) | Profi |
+| Parallelogramm nachweisen, Diagonalen-Schnittpunkt | vierte Ecke als feste Aufgabe 2-5 | neu: Nachweis über gleiche Vektoren + Schnittpunkt als Mittelpunkt | Abi |
+| Raute prüfen | nein | neu als „Raute mit Parameter“ (gleiche Seitenlängen über Quadrate) | Profi |
+| zweite Parameterdarstellung / dieselbe Gerade | nein | neu: „Für welches k beschreibt h dieselbe Gerade?“ (Richtungen kollinear, Stützpunkt liegt auf g) | Abi |
+| drei Punkte auf einer Geraden | Richtung zu zwei Ringen (3-5) | neu: „Für welches k liegt C auf der Geraden durch A und B?“ | Abi |
+
+Raum mit negativen Koordinaten fürs Spiegeln. „Alle“ mischt jetzt alle Arten aller Stufen.
+
+**Schwierigkeit weiter nachweislich steigend** (`DifficultyTest`, jetzt 29 Aufgabenarten):
+
+| Stufe | Aufgabenarten | Rechenschritte | Länge des Rechenwegs (Zeichen) | beteiligte Objekte | Parameter | Anteil krummer Werte | Gesamtwert |
+|---|---|---|---|---|---|---|---|
+| Einstieg | 8 | 1,88 | 33,76 | 3,59 | 0,50 | 1,33 % | 35,75 |
+| Abi | 14 | 2,57 | 67,52 | 3,79 | 0,64 | 4,34 % | 47,91 |
+| Profi | 7 | 4,00 | 149,93 | 5,57 | 0,86 | 12,18 % | 78,43 |
+
+Geprüft: jede neue Art mit 250 Zufallsaufgaben (lösbar, Start löst nicht, alles im Raum, genau eine richtige Zahl) und unabhängig nachgerechnet
+(offene Punkte: alle Gitterpunkte durchprobiert, Bedingungen geometrisch über den Achsenabstand bestätigt). 94 Logik-Tests, 138 App-Tests.
+
+### Pro-Schalter und Sperren – vorbereitet, **ausgeschaltet**
+- `Pro.ENABLED = false`: Im ausgelieferten Stand ist nichts gesperrt, es gibt keinen Kauf und keinen neuen Text für Nutzer. Ein Test (`ProTest`) hält das fest.
+- Regeln nach Konzept: Kapitel 1–6 frei (das sind **34** Aufgaben – im Konzept stand irrtümlich 36), ab Kapitel 7 je die ersten zwei; Tagesaufgabe frei; Üben nur „Einstieg“ frei;
+  die erste Prüfungsaufgabe frei; Baumeister, Geisterfahrt, Ringflug, Binomial-Labor, Klausur-Planer, Fehler-Tagebuch, Lernstand gehören zu Pro.
+- Eine zentrale Sperre im App-Rahmen (`AppRoot`, für Android und Web gleich) zeigt bei gesperrten Zielen die Hinweis-Seite „Abi-Pass“; Schlösser an Aufgaben und Übungsstufen.
+- Freigeschaltet wird später über `Prefs.pro` – **die Stelle, an der euer Lizenz-Dienst bzw. Play Billing andockt**. Kein Bezahlvorgang, kein Code-Feld, kein Tutor, kein Lizenz-Dienst gebaut.
+- Noch offen für den echten Start: eigene Funktionen in „Kurve abfahren“/„Flug“ sperren, Texte „keine Käufe“, Store-Angaben.
+
+### Preis
+Entschieden hat Marcel: Grenze frei/Pro wie im Konzept, Gründer-Code, Tutor-Start mit Claude Haiku 5.5. **Nicht entschieden:** der Zeitraum und der Preis der Tutor-Verlängerung –
+die „4,99 € pro Jahr“ waren mein Vorschlag, Marcel hat darauf mit „4,99 im Jahr?????“ reagiert. Bitte nicht als beschlossen führen.
+
+---
+
+## 16.11.2026 – Konzept Pro: Stand Preis der Tutor-Verlängerung
+
+Marcel fand meinen geänderten Vorschlag gut („das ist nice“): Tutor-Verlängerung eher **9,99 € pro Jahr** statt 4,99 € (bei 4,99 € brutto kommen rund 3,60 € an; ein Vielnutzer an der Tagesgrenze kostet mit Claude Haiku 5.5 rund 5 $ im Jahr),
+alternativ eine niedrigere Tagesgrenze. Das ist eine Tendenz, **noch keine ausdrückliche Entscheidung** – ich habe ihn um ein klares Ja gebeten.
+Vorschlag im Ganzen: Abi-Pass 14,99 € einmalig (Einführung 9,99 €), Inhalte dauerhaft, Tutor 12 Monate inklusive, Verlängerung 9,99 € pro Jahr; alle Preise inkl. 19 % USt.
+Bei 9,99 € brutto: 8,39 € netto, über Play rund 7,14 €, über die Website rund 7,76 € (Annahmen wie im USt-Nachtrag).
+
+---
+
+## 16.11.2026 – Konzept Pro: Preise von Marcel beschlossen
+
+Marcel hat direkt bestätigt („ja“), alle Preise inkl. 19 % USt:
+
+| Produkt | Preis | Zeitraum | kommt an über Play / Website (Annahmen wie im USt-Nachtrag) |
+|---|---|---|---|
+| Abi-Pass | 14,99 € einmalig (Einführung 9,99 €) | Inhalte **dauerhaft** | 10,71 € / 11,81 € (Einführung 7,14 € / 7,76 €) |
+| KI-Tutor | im Abi-Pass enthalten | **12 Monate ab Kauf** | – |
+| Tutor-Verlängerung | 9,99 € | je weiteres Jahr | 7,14 € / 7,76 € |
+
+Für den Lizenz-Dienst: Der Freischalt-Schein braucht zwei Angaben – „Pro dauerhaft“ und „Tutor gültig bis“; die Verlängerung ist ein eigenes Produkt, das nur das Tutor-Datum verschiebt.
+Ebenfalls beschlossen: Grenze frei/Pro wie im Konzept, Gründer-Code für bisherige Tester, Tutor-Start mit Claude Haiku 5.5 (an echten Aufgaben testen).
+Gebaut ist davon weiterhin nur der ausgeschaltete Pro-Schalter mit den Sperren (2.11.0).
