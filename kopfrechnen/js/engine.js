@@ -40,7 +40,9 @@ const fr = (n, d) => `${fi(n)}/${d}`;                       // Bruch ungekürzt 
 // Lösung → so, wie man sie eintippt
 function canon(a) {
   const { n, d } = a.q;
-  return (a.kind === 'dec' ? decOfQ(a.q) : d === 1 ? String(n) : `${n}/${d}`).replace('−', '-').replace(/\./g, '');
+  let s = a.kind === 'dec' ? decOfQ(a.q) : d === 1 ? String(n) : `${n}/${d}`;
+  if (a.money && s.includes(',')) s = s.replace(/,(\d)$/, ',$10');   // 38,7 → 38,70
+  return s.replace('−', '-').replace(/\./g, '');
 }
 const showAns = a => canon(a).replace('-', '−');
 function parseInput(s) {
@@ -75,6 +77,7 @@ const Story = v => ({ t: 't', v });                   // Textaufgabe
 const I = v => ({ q: Q(v), kind: 'int' });
 const Fr = (n, d) => ({ q: Q(n, d), kind: 'frac' });
 const De = (n, d) => ({ q: Q(n, d), kind: 'dec' });
+const Mo = c => ({ q: Q(c, 100), kind: 'dec', money: true });   // Geldbetrag: Lösung mit 2 Nachkommastellen
 const SUPS = '⁰¹²³⁴⁵⁶⁷⁸⁹';
 const coefTxt = c => c === 1 ? '' : c === -1 ? '−' : fi(c);
 
@@ -136,10 +139,12 @@ const GROUPS = ['Grundrechnen', 'Brüche & Co.', 'Anwenden', 'Gemischt'];
 const TOPICS = {
   add: { g: '+', name: 'Plus', grp: 0 }, sub: { g: '−', name: 'Minus', grp: 0 }, mul: { g: '·', name: 'Mal', grp: 0 },
   div: { g: ':', name: 'Geteilt', grp: 0 }, gap: { g: '□', name: 'Lücke', grp: 0 },
+  doppel: { g: '×2', name: 'Verdoppeln', grp: 0 }, geld: { g: '€', name: 'Geld', grp: 0 },
   frac: { g: '½', name: 'Brüche', grp: 1 }, dec: { g: '0,5', name: 'Dezimal', grp: 1 }, pct: { g: '%', name: 'Prozent', grp: 1 },
   neg: { g: '−3', name: 'Negativ', grp: 1 }, pow: { g: 'x²', name: 'Potenzen', grp: 1 },
   order: { g: '( )', name: 'Klammern', grp: 2 }, round: { g: '≈', name: 'Runden', grp: 2 }, unit: { g: 'cm', name: 'Einheiten', grp: 2 },
   divis: { g: 'ggT', name: 'Teiler', grp: 2 }, eq: { g: 'x=', name: 'Gleichung', grp: 2 },
+  zeit: { g: '🕐', name: 'Uhr & Zeit', grp: 2 }, geo: { g: '📐', name: 'Geometrie', grp: 2 }, folge: { g: '🔢', name: 'Zahlenfolgen', grp: 2 },
   word: { g: '📖', name: 'Textaufgaben', grp: 3, wide: true }, mix: { g: '★', name: 'Alles gemischt', grp: 3, wide: true },
 };
 const LEVEL_DESC = {
@@ -158,21 +163,26 @@ const LEVEL_DESC = {
   unit: ['m, cm, kg, g, € und ct', 'km, Liter, Stunden, Minuten', 'Mit Kommazahlen umrechnen', 'Flächen und Rauminhalte', 'Gemischte Angaben (1 h 15 min …)'],
   divis: ['Division mit Rest', 'Quersumme', 'Größter gemeinsamer Teiler', 'Kleinstes gemeinsames Vielfaches', 'Primfaktoren & Anzahl der Teiler'],
   eq: ['x + a = b', 'a · x = b und x : a = b', 'Zwei Schritte: a · x + b = c', 'Mit negativen Zahlen & Klammern', 'x auf beiden Seiten'],
+  doppel: ['Verdoppeln & halbieren bis 20', 'Verdoppeln & halbieren bis 100', 'Verdoppeln & halbieren bis 1000', 'Halbieren mit Komma', 'Vierfach, Viertel, dreimal verdoppeln'],
+  geld: ['Cent plus & minus', 'Euro und Cent umrechnen, Rückgeld', 'Euro-Beträge plus & minus', 'Rückgeld und Mal mit Komma', 'Preise vergleichen (Dreisatz)'],
+  zeit: ['Viertelstunden, Stunden, Wochen', 'Minuten zwischen zwei Uhrzeiten', 'Über die volle Stunde, Filmende', 'Kalender, Tage und Sekunden', 'Kommastunden, Tempo und Laufzeiten'],
+  geo: ['Umfang von Quadrat und Rechteck', 'Fläche von Quadrat und Rechteck', 'Winkel im Dreieck, Seite aus Fläche', 'Dreieck, Quader, Viereck, Würfel', 'Pythagoras, Vielecke, Trapez, Volumen'],
+  folge: ['Plus und minus in kleinen Schritten', 'Größere Schritte und Verdoppeln', 'Abwechselnd, wachsende Abstände, mal 3', 'Quadratzahlen, Halbieren, Fibonacci, Lücke', 'Negative Zahlen und knifflige Regeln'],
   word: ['Klasse 1–2: plus & minus', 'Klasse 3–4: mal, geteilt, Geld', 'Klasse 5–6: Komma, Brüche, Flächen', 'Klasse 7–8: Prozent, Dreisatz, Tempo', 'Mehrere Schritte'],
   mix: [1, 2, 3, 4, 5].map(n => `Alle Themen zufällig gemischt – Stufe ${n}`),
 };
 // Welche Themen (und Stufen) zu welcher Klassenstufe passen
 const CLASS_TOPICS = {
-  1: [['add', 0], ['sub', 0], ['gap', 0]],
-  2: [['add', 1], ['sub', 1], ['mul', 0], ['div', 0], ['gap', 0], ['word', 0]],
-  3: [['add', 2], ['sub', 2], ['mul', 1], ['div', 1], ['gap', 1], ['order', 0], ['unit', 0], ['word', 0]],
-  4: [['add', 3], ['sub', 3], ['mul', 2], ['div', 2], ['gap', 2], ['round', 0], ['unit', 1], ['order', 1], ['word', 1]],
-  5: [['add', 4], ['sub', 4], ['mul', 3], ['div', 3], ['gap', 3], ['round', 1], ['frac', 0], ['dec', 0], ['divis', 0], ['order', 2], ['word', 1]],
-  6: [['mul', 4], ['frac', 1], ['frac', 2], ['dec', 1], ['dec', 2], ['divis', 2], ['unit', 2], ['round', 2], ['neg', 0], ['word', 2]],
-  7: [['frac', 3], ['dec', 3], ['pct', 0], ['pct', 1], ['neg', 2], ['eq', 0], ['order', 3], ['unit', 3], ['divis', 3], ['word', 2]],
-  8: [['frac', 4], ['dec', 4], ['pct', 2], ['neg', 3], ['eq', 1], ['eq', 2], ['pow', 0], ['round', 3], ['order', 4], ['word', 3]],
-  9: [['pct', 3], ['pow', 1], ['pow', 2], ['eq', 3], ['neg', 4], ['unit', 4], ['round', 4], ['word', 3]],
-  10: [['pct', 4], ['pow', 3], ['pow', 4], ['eq', 4], ['divis', 4], ['word', 4]],
+  1: [['add', 0], ['sub', 0], ['gap', 0], ['doppel', 0], ['geld', 0], ['folge', 0]],
+  2: [['add', 1], ['sub', 1], ['mul', 0], ['div', 0], ['gap', 0], ['word', 0], ['doppel', 1], ['geld', 1], ['zeit', 0], ['folge', 0]],
+  3: [['add', 2], ['sub', 2], ['mul', 1], ['div', 1], ['gap', 1], ['order', 0], ['unit', 0], ['word', 0], ['doppel', 2], ['geld', 1], ['zeit', 1], ['geo', 0], ['folge', 1]],
+  4: [['add', 3], ['sub', 3], ['mul', 2], ['div', 2], ['gap', 2], ['round', 0], ['unit', 1], ['order', 1], ['word', 1], ['doppel', 2], ['geld', 2], ['zeit', 2], ['geo', 1], ['folge', 1]],
+  5: [['add', 4], ['sub', 4], ['mul', 3], ['div', 3], ['gap', 3], ['round', 1], ['frac', 0], ['dec', 0], ['divis', 0], ['order', 2], ['word', 1], ['doppel', 3], ['geld', 3], ['zeit', 3], ['geo', 2], ['folge', 2]],
+  6: [['mul', 4], ['frac', 1], ['frac', 2], ['dec', 1], ['dec', 2], ['divis', 2], ['unit', 2], ['round', 2], ['neg', 0], ['word', 2], ['doppel', 4], ['geld', 4], ['zeit', 4], ['geo', 3], ['folge', 3]],
+  7: [['frac', 3], ['dec', 3], ['pct', 0], ['pct', 1], ['neg', 2], ['eq', 0], ['order', 3], ['unit', 3], ['divis', 3], ['word', 2], ['geo', 3], ['folge', 3]],
+  8: [['frac', 4], ['dec', 4], ['pct', 2], ['neg', 3], ['eq', 1], ['eq', 2], ['pow', 0], ['round', 3], ['order', 4], ['word', 3], ['geo', 4], ['folge', 4]],
+  9: [['pct', 3], ['pow', 1], ['pow', 2], ['eq', 3], ['neg', 4], ['unit', 4], ['round', 4], ['word', 3], ['geo', 4], ['folge', 4]],
+  10: [['pct', 4], ['pow', 3], ['pow', 4], ['eq', 4], ['divis', 4], ['word', 4], ['folge', 4]],
 };
 function classLevel(k, topic) { // empfohlene Stufe einer Klassenstufe (höchste genannte)
   for (let c = k; c >= 1; c--) { const hits = CLASS_TOPICS[c].filter(([t]) => t === topic); if (hits.length) return Math.max(...hits.map(h => h[1])); }
@@ -282,6 +292,51 @@ function tablePair(l) {      // im kleinen Einmaleins schwache Aufgaben bevorzug
 }
 const NAMES = ['Lena', 'Tim', 'Mia', 'Ben', 'Emma', 'Noah', 'Sofia', 'Elias', 'Hannah', 'Luca', 'Mila', 'Paul', 'Ella', 'Finn', 'Leonie', 'Jonas', 'Aylin', 'Mats', 'Zoe', 'Can'];
 
+function dblW(x) { const p = places(x); return p.length > 1 ? [`Zerlege ${x} in ${p.join(' + ')}:`, `Doppelt: ${p.map(v => 2 * v).join(' + ')} = ${2 * x}`] : [`${x} + ${x} = ${2 * x}`]; }
+function hlfW(x) { const t = Math.floor(x / 10) * 10, e = x - t; return x <= 20 ? [`${x / 2} + ${x / 2} = ${x}`] : t && e && t % 20 === 0 ? [`Zerlege ${x} in ${t} + ${e}:`, `Hälfte: ${t / 2} + ${e / 2} = ${x / 2}`] : t && e ? [`Zerlege ${x} in ${t - 10} + ${e + 10}:`, `Hälfte: ${(t - 10) / 2} + ${(e + 10) / 2} = ${x / 2}`] : [`${x / 2} + ${x / 2} = ${x}`]; }
+/* weitere Textaufgaben (16.11.2026) – je Stufe eine Liste, word() wählt sie etwa zur Hälfte */
+const WORD_MORE = [
+  [
+    (n, n2, W_) => { const a = rnd(6, 15), b = rnd(2, a - 1); return W_(`Auf dem Baum sitzen ${a} Vögel. ${b} fliegen weg. Wie viele Vögel sitzen noch auf dem Baum?`, I(a - b), '', [`Wegfliegen heißt minus: ${a} − ${b} = ${a - b}`]); },
+    (n, n2, W_) => { const a = rnd(3, 10), b = rnd(2, 9); return W_(`${n} hat ${a} rote und ${b} blaue Perlen. Wie viele Perlen sind das zusammen?`, I(a + b), '', [`Zusammen heißt plus: ${a} + ${b} = ${a + b}`]); },
+    (n, n2, W_) => { const a = rnd(6, 14), b = rnd(2, 5); return W_(`Auf einem Teller liegen ${a} Kekse. ${n} isst ${b} davon. Wie viele Kekse liegen noch auf dem Teller?`, I(a - b), '', [`${a} − ${b} = ${a - b}`]); },
+    (n, n2, W_) => { const a = rnd(3, 9), b = rnd(2, 9); return W_(`Im Stall stehen ${a} Pferde und ${b} Kühe. Wie viele Tiere sind es zusammen?`, I(a + b), '', [`${a} + ${b} = ${a + b}`]); },
+    (n, n2, W_) => { const a = rnd(5, 9), b = rnd(1, 4); return W_(`${n} ist ${a} Jahre alt. ${n2} ist ${b} Jahre älter. Wie alt ist ${n2}?`, I(a + b), 'Jahre', [`Älter heißt plus: ${a} + ${b} = ${a + b}`]); },
+    (n, n2, W_) => { const k = rnd(2, 4); return W_(`Ein Hase hat 4 Beine. Wie viele Beine haben ${k} Hasen zusammen?`, I(4 * k), '', [`${Array(k).fill(4).join(' + ')} = ${4 * k}`]); },
+  ],
+  [
+    (n, n2, W_) => { const r = rnd(6, 12); return W_(`Ein Bus hat ${r} Sitzreihen mit je 4 Plätzen. Wie viele Kinder können sitzen?`, I(4 * r), '', [`${r} · 4 = ${4 * r}`]); },
+    (n, n2, W_) => { const p = rnd(2, 5), w = rnd(3, 9); return W_(`${n} spart jede Woche ${p} €. Wie viel Geld hat ${n} nach ${w} Wochen?`, I(p * w), '€', [`${w} Wochen mit je ${p} €: ${w} · ${p} = ${w * p}`]); },
+    (n, n2, W_) => { const c = pick([6, 8, 10, 12]), k = rnd(3, 9); return W_(`In einer Packung sind ${c} Stifte. Wie viele Stifte sind in ${k} Packungen?`, I(c * k), '', [`${k} · ${c} = ${k * c}`]); },
+    (n, n2, W_) => { const c = pick([4, 5, 6]); let t; do t = rnd(13, 40); while (t % c === 0); const b = Math.ceil(t / c); return W_(`${t} Kinder fahren Boot. In ein Boot passen ${c} Kinder. Wie viele Boote braucht man mindestens?`, I(b), '', [`${t} : ${c} = ${Math.floor(t / c)} Rest ${t % c}`, `Die ${t % c} übrigen Kinder brauchen noch ein Boot: ${Math.floor(t / c)} + 1 = ${b}`]); },
+    (n, n2, W_) => { const p = rnd(4, 8), k = rnd(2, 5), q = p + rnd(2, 4); return W_(`Ein Kinoticket für Kinder kostet ${p} €, für Erwachsene ${q} €. Was zahlen ${k} Kinder und ein Erwachsener zusammen?`, I(k * p + q), '€', [`Kinder: ${k} · ${p} = ${k * p}`, `${k * p} + ${q} = ${k * p + q}`]); },
+    (n, n2, W_) => { const b = rnd(6, 15), c = rnd(2, 5), a = b + c + rnd(3, 20); return W_(`${n} hat ${a} €. Ein Buch kostet ${b} €, ein Stift ${c} €. Wie viel Geld bleibt übrig?`, I(a - b - c), '€', [`Ausgaben: ${b} + ${c} = ${b + c}`, `${a} − ${b + c} = ${a - b - c}`]); },
+  ],
+  [
+    (n, n2, W_) => { const g = 4 * rnd(25, 100), p = pick([2, 3, 6, 8]); return W_(`Ein Rezept für 4 Personen braucht ${g} g Mehl. Wie viel Mehl braucht man für ${p} Personen?`, I(g / 4 * p), 'g', [`Für 1 Person: ${g} : 4 = ${g / 4} g`, `Für ${p} Personen: ${p} · ${g / 4} = ${g / 4 * p} g`]); },
+    (n, n2, W_) => { const m = pick([200, 250, 400]), a = rnd(3, 12); return W_(`${n} läuft ${a} Runden. Eine Runde ist ${m} m lang. Wie viele Meter läuft ${n}?`, I(a * m), 'm', [`${a} · ${m} = ${fi(a * m)}`]); },
+    (n, n2, W_) => { const d = pick([8, 10, 12, 16]), e = rnd(2, d - 2); return W_(`Ein Kuchen wird in ${d} gleich große Stücke geteilt. ${n} und ${n2} essen zusammen ${e} Stücke. Welcher Bruchteil des Kuchens wurde gegessen?`, Fr(e, d), '', [`${e} von ${d} Stücken: ${fr(e, d)}`, ...redW(e, d)], 'als gekürzter Bruch'); },
+    (n, n2, W_) => { const [f, g, k] = pick([[15, 25, 6], [10, 2, 5], [20, 25, 8], [15, 3, 5], [10, 25, 4], [20, 4, 5]]); return W_(`Eine Flasche enthält ${fmtDec(f, 1)} l Saft. Wie viele Gläser mit ${fmtDec(g, g < 10 ? 1 : 2)} l kann man damit füllen?`, I(k), '', [`${fmtDec(f, 1)} l : ${fmtDec(g, g < 10 ? 1 : 2)} l = ${k}`, `Probe: ${k} · ${fmtDec(g, g < 10 ? 1 : 2)} l = ${fmtDec(f, 1)} l`]); },
+    (n, n2, W_) => { const a = rnd(3, 12), b = rnd(2, 8), k = pick([2, 3, 4]); return W_(`Ein Beet ist ${a} m lang und ${b} m breit. Auf jeden Quadratmeter kommen ${k} Blumen. Wie viele Blumen braucht man?`, I(a * b * k), '', [`Fläche: ${a} · ${b} = ${a * b} m²`, `${a * b} · ${k} = ${a * b * k}`]); },
+    (n, n2, W_) => { const m = rnd(7, 18), a = m + rnd(-3, 3), b = m + rnd(-3, 3), c = 3 * m - a - b; return W_(`${n} hat in drei Tests ${a}, ${b} und ${c} Punkte. Wie viele Punkte sind das im Durchschnitt?`, I(m), '', ['Durchschnitt = Summe : Anzahl', `${a} + ${b} + ${c} = ${3 * m}`, `${3 * m} : 3 = ${m}`]); },
+  ],
+  [
+    (n, n2, W_) => { const p = 50 * rnd(4, 20), q = pick([10, 20, 5]); return W_(`Ein Handy kostet ${p} €. Der Preis steigt um ${q} %. Was kostet es jetzt?`, I(p + p * q / 100), '€', [`${q} % von ${p} € = ${p * q / 100} €`, `${p} + ${p * q / 100} = ${p + p * q / 100} €`]); },
+    (n, n2, W_) => { const v = pick([12, 15, 20]), d = v / pick([4, 2, 1]) * rnd(1, 3); return W_(`${n} fährt mit dem Fahrrad ${v} km pro Stunde. Wie viele Minuten braucht ${n} für ${d} km?`, I(d / v * 60), 'min', [`In 60 Minuten: ${v} km`, `${d} km = ${fq(d, v)} von ${v} km`, `${fq(d, v)} · 60 = ${d / v * 60} min`]); },
+    (n, n2, W_) => { const r = rnd(4, 12), h = rnd(2, 7); let h2; do h2 = rnd(2, 9); while (h2 === h); return W_(`Ein Maler streicht in ${h} Stunden ${r * h} m². Wie viele m² schafft er in ${h2} Stunden?`, I(r * h2), 'm²', [`In 1 Stunde: ${r * h} : ${h} = ${r} m²`, `In ${h2} Stunden: ${h2} · ${r} = ${r * h2} m²`]); },
+    (n, n2, W_) => { const k = 100 * rnd(2, 30), z = pick([1, 2, 3, 5]); return W_(`Auf einem Sparkonto liegen ${k} €. Im Jahr gibt es ${z} % Zinsen. Wie viele Euro Zinsen sind das nach einem Jahr?`, I(k * z / 100), '€', [`1 % von ${k} € = ${k / 100} €`, `${z} % = ${z} · ${k / 100} = ${k * z / 100} €`]); },
+    (n, n2, W_) => { const v = 5 * rnd(10, 26), h = rnd(2, 4); return W_(`Ein Auto fährt in ${h} Stunden ${v * h} km. Wie viele Kilometer fährt es im Durchschnitt pro Stunde?`, I(v), 'km', [`${v * h} : ${h} = ${v}`]); },
+    (n, n2, W_) => { const c = rnd(2, 12); return W_(`Eine Wanderkarte hat den Maßstab 1 : 25000. Auf der Karte ist ein Weg ${c} cm lang. Wie viele Meter ist er in Wirklichkeit?`, I(c * 250), 'm', ['1 cm auf der Karte = 25000 cm = 250 m', `${c} · 250 = ${fi(c * 250)} m`]); },
+  ],
+  [
+    (n, n2, W_) => { const k = pick([20, 24, 25, 30]), bus = k * rnd(8, 20), e = rnd(3, 9); return W_(`Eine Klasse mit ${k} Kindern macht einen Ausflug. Der Bus kostet ${bus} € für alle, der Eintritt ${e} € pro Kind. Wie viel muss jedes Kind bezahlen?`, I(bus / k + e), '€', [`Bus pro Kind: ${bus} : ${k} = ${bus / k} €`, `${bus / k} + ${e} = ${bus / k + e} €`]); },
+    (n, n2, W_) => { const x = rnd(5, 30); return W_(`${n} hat 3-mal so viele Murmeln wie ${n2}. Zusammen haben sie ${4 * x} Murmeln. Wie viele Murmeln hat ${n}?`, I(3 * x), '', [`Zusammen sind es 3 + 1 = 4 gleiche Teile.`, `1 Teil: ${4 * x} : 4 = ${x}`, `${n}: 3 · ${x} = ${3 * x}`]); },
+    (n, n2, W_) => { const r = pick([20, 25, 40, 50]), t = rnd(5, 30), v = 2 * r * t; return W_(`Ein Becken fasst ${fi(v)} Liter. Pro Minute fließen ${r} Liter hinein. Nach wie vielen Minuten ist es halb voll?`, I(t), 'min', [`Halb voll: ${fi(v)} : 2 = ${fi(v / 2)} Liter`, `${fi(v / 2)} : ${r} = ${t} min`]); },
+    (n, n2, W_) => { const t = 5 * rnd(4, 6), g = pick([2, 3]); return W_(`In einer Klasse sind ${t} Kinder. ${g}/5 davon sind Mädchen. Wie viele Jungen sind in der Klasse?`, I(t * (5 - g) / 5), '', [`Ein Fünftel: ${t} : 5 = ${t / 5}`, `Jungen: ${5 - g}/5 = ${5 - g} · ${t / 5} = ${t * (5 - g) / 5}`]); },
+    (n, n2, W_) => { const b = rnd(3, 20); return W_(`Ein Rechteck ist doppelt so lang wie breit. Sein Umfang ist ${6 * b} cm. Wie lang ist es?`, I(2 * b), 'cm', ['Umfang = 2 · (Länge + Breite) = 2 · (2 · Breite + Breite) = 6 · Breite', `Breite: ${6 * b} : 6 = ${b} cm`, `Länge: 2 · ${b} = ${2 * b} cm`]); },
+    (n, n2, W_) => { const a = rnd(6, 12), b = rnd(6, 12), y = rnd(2, 10); return W_(`${n} ist ${a} Jahre alt, ${n2} ist ${b}. In wie vielen Jahren sind beide zusammen ${a + b + 2 * y} Jahre alt?`, I(y), 'Jahre', [`Heute zusammen: ${a} + ${b} = ${a + b}`, `Pro Jahr kommen 2 Jahre dazu.`, `(${a + b + 2 * y} − ${a + b}) : 2 = ${y}`]); },
+  ],
+];
 const GEN = {
   add(l) { const [a, b] = ADD[l](); return { e: [N(a), O('+'), N(b)], a: I(a + b), w: addW(a, b) }; },
   sub(l) { const [x, y] = ADD[l](); return { e: [N(x + y), O('−'), N(x)], a: I(y), w: subW(x + y, x) }; },
@@ -580,6 +635,7 @@ const GEN = {
   word(l) {
     const n = pick(NAMES); let n2; do n2 = pick(NAMES); while (n2 === n);
     const W_ = (story, a, unit, w, hint) => ({ e: [Story(story)], a, unit, w, noEq: true, story: true, hint });
+    if (rand() < .5) return pick(WORD_MORE[l])(n, n2, W_);   // neue Geschichten
     if (l === 0) {
       switch (rnd(0, 3)) {
         case 0: { const a = rnd(3, 12), b = rnd(2, 8); return W_(`${n} hat ${a} Murmeln und bekommt ${b} geschenkt. Wie viele Murmeln hat ${n} jetzt?`, I(a + b), '', [`Dazubekommen heißt plus: ${a} + ${b} = ${a + b}`]); }
@@ -599,7 +655,7 @@ const GEN = {
     }
     if (l === 2) {
       switch (rnd(0, 3)) {
-        case 0: { const c = rnd(69, 199), k = rnd(2, 5); return W_(`Ein Liter Milch kostet ${fmtMoney(c)} €. Wie viel kosten ${k} Liter?`, De(c * k, 100), '€', [`In Cent rechnen: ${k} · ${c} ct = ${c * k} ct`, `${c * k} ct = ${fmtMoney(c * k)} €`]); }
+        case 0: { const c = rnd(69, 199), k = rnd(2, 5); return W_(`Ein Liter Milch kostet ${fmtMoney(c)} €. Wie viel kosten ${k} Liter?`, Mo(c * k), '€', [`In Cent rechnen: ${k} · ${c} ct = ${c * k} ct`, `${c * k} ct = ${fmtMoney(c * k)} €`]); }
         case 1: { const d = pick([6, 8, 10, 12]), e = rnd(1, d - 1); return W_(`Eine Pizza wird in ${d} gleich große Stücke geschnitten. ${n} isst ${e} Stücke. Welcher Bruchteil der Pizza ist übrig?`, Fr(d - e, d), '', [`Übrig sind ${d - e} von ${d} Stücken: ${fr(d - e, d)}`, ...redW(d - e, d)], 'als gekürzter Bruch'); }
         case 2: { const a = rnd(3, 15), b = rnd(2, 12); return W_(`Ein Rechteck ist ${a} cm lang und ${b} cm breit. Wie groß ist seine Fläche?`, I(a * b), 'cm²', ['Fläche = Länge · Breite', `${a} · ${b} = ${a * b}`]); }
         default: { const a = rnd(5, 40), b = rnd(3, 25); return W_(`Ein Garten ist ${a} m lang und ${b} m breit. Wie lang wird ein Zaun rundherum?`, I(2 * (a + b)), 'm', ['Umfang = 2 · (Länge + Breite)', `2 · (${a} + ${b}) = 2 · ${a + b} = ${2 * (a + b)}`]); }
@@ -610,7 +666,7 @@ const GEN = {
         case 0: { const q = pick([10, 20, 25, 50]), p = 20 * rnd(2, 12), d = p * q / 100; return W_(`Eine Jacke kostet ${p} € und wird um ${q} % reduziert. Was kostet sie jetzt?`, I(p - d), '€', [...pctW(q, p).slice(0, -1), `${q} % von ${p} € = ${d} €`, `${p} € − ${d} € = ${p - d} €`]); }
         case 1: { const tot = pick([20, 25, 50]), k = rnd(1, tot - 1), pc = k * 100 / tot; return W_(`Von ${tot} Schülerinnen und Schülern kommen ${k} mit dem Fahrrad. Wie viel Prozent sind das?`, I(pc), '%', [`Anteil: ${fr(k, tot)}`, `Erweitern auf 100: ${fr(k, tot)} = ${fr(pc, 100)} = ${pc} %`]); }
         case 2: { const v = 10 * rnd(6, 16), h = rnd(2, 5); return W_(`Ein Zug fährt ${v} km pro Stunde. Wie weit kommt er in ${h} Stunden?`, I(v * h), 'km', [`Weg = Tempo · Zeit`, `${v} · ${h} = ${v * h}`]); }
-        default: { const c = 5 * rnd(10, 30), a = rnd(2, 5); let b; do b = rnd(3, 9); while (b === a); return W_(`${a} Hefte kosten ${fmtMoney(a * c)} €. Wie viel kosten ${b} Hefte?`, De(b * c, 100), '€', [`Dreisatz: erst den Preis für 1 Heft`, `${fmtMoney(a * c)} € : ${a} = ${fmtMoney(c)} €`, `${b} · ${fmtMoney(c)} € = ${fmtMoney(b * c)} €`]); }
+        default: { const c = 5 * rnd(10, 30), a = rnd(2, 5); let b; do b = rnd(3, 9); while (b === a); return W_(`${a} Hefte kosten ${fmtMoney(a * c)} €. Wie viel kosten ${b} Hefte?`, Mo(b * c), '€', [`Dreisatz: erst den Preis für 1 Heft`, `${fmtMoney(a * c)} € : ${a} = ${fmtMoney(c)} €`, `${b} · ${fmtMoney(c)} € = ${fmtMoney(b * c)} €`]); }
       }
     }
     switch (rnd(0, 4)) {
@@ -619,6 +675,168 @@ const GEN = {
       case 2: { const v = rnd(5, 9), d = 50 * rnd(3, 12); return W_(`Ein Auto verbraucht ${v} Liter auf 100 km. Wie viele Liter braucht es für ${d} km?`, De(v * d, 100), 'l', [`Für 1 km: ${v} : 100 Liter`, `Für ${d} km: ${v} · ${d} : 100 = ${decOfQ(Q(v * d, 100))}`]); }
       case 3: { const p = 20 * rnd(5, 20), q = pick([10, 20, 25]), r = 5 * rnd(1, 8), up = p * q / 100; return W_(`Ein Fahrrad kostet ${p} €. Zuerst wird es um ${q} % teurer, dann um ${r} € billiger. Was kostet es am Ende?`, I(p + up - r), '€', [`${q} % von ${p} € = ${up} €`, `${p} + ${up} = ${p + up} €`, `${p + up} − ${r} = ${p + up - r} €`]); }
       default: { const b = rnd(2, 8), a = rnd(2, 6), t = b * rnd(1, 4); return W_(`${a} Personen brauchen ${t} Tage, um einen Zaun zu streichen. Wie viele Tage brauchen ${b} Personen?`, I(a * t / b), 'Tage', [`Mehr Personen – weniger Tage (antiproportional).`, `Arbeit insgesamt: ${a} · ${t} = ${a * t} Personentage`, `${a * t} : ${b} = ${fq(a * t, b)}`]); }
+    }
+  },
+
+  /* ---------- neue Themen (16.11.2026, Marcel: „sehr erweitern mit vielen neuen Aufgaben“) ---------- */
+  doppel(l) {
+    const dbl = x => ({ e: [T('das Doppelte von'), N(x)], a: I(2 * x), w: dblW(x) });
+    const hlf = x => ({ e: [T('die Hälfte von'), N(x)], a: I(x / 2), w: hlfW(x) });
+    if (l === 0) return coin() ? dbl(rnd(1, 10)) : hlf(2 * rnd(1, 10));
+    if (l === 1) return coin() ? dbl(rnd(11, 50)) : hlf(2 * rnd(6, 50));
+    if (l === 2) return coin() ? dbl(rnd(51, 499)) : hlf(pick([2 * rnd(51, 499), 10 * rnd(11, 99)]));
+    if (l === 3) {
+      if (coin()) { const x = 2 * rnd(5, 49) + 1; return { e: [T('die Hälfte von'), N(x)], a: De(x, 2), w: [`${x} = ${x - 1} + 1`, `Hälfte von ${x - 1} = ${(x - 1) / 2}, Hälfte von 1 = 0,5`, `${(x - 1) / 2} + 0,5 = ${fmtDec(x * 5, 1)}`] }; }
+      const i = noTrail(11, 99); return { e: [T('das Doppelte von'), D(i, 1)], a: De(2 * i, 10), w: [`Doppelt so viel: ${fmtDec(i, 1)} + ${fmtDec(i, 1)} = ${fmtDec(2 * i, 1)}`] };
+    }
+    switch (rnd(0, 3)) {
+      case 0: { const x = rnd(12, 99); return { e: [T('das Vierfache von'), N(x)], a: I(4 * x), w: ['Vierfach = zweimal verdoppeln', `${x} → ${2 * x} → ${4 * x}`] }; }
+      case 1: { const x = 4 * rnd(15, 99); return { e: [T('ein Viertel von'), N(x)], a: I(x / 4), w: ['Ein Viertel = zweimal halbieren', `${x} → ${x / 2} → ${x / 4}`] }; }
+      case 2: { const x = rnd(6, 40); return { e: [T('dreimal verdoppeln:'), N(x)], a: I(8 * x), w: [`${x} → ${2 * x} → ${4 * x} → ${8 * x}`, `Dreimal verdoppeln heißt mal 8.`] }; }
+      default: { const x = 8 * rnd(13, 99); return { e: [T('dreimal halbieren:'), N(x)], a: I(x / 8), w: [`${x} → ${x / 2} → ${x / 4} → ${x / 8}`, `Dreimal halbieren heißt geteilt durch 8.`] }; }
+    }
+  },
+
+  geld(l) {
+    const ct = c => [M(c), U('€')];
+    if (l === 0) {
+      const a = 5 * rnd(2, 12), b = 5 * rnd(2, 10);
+      return coin() ? { e: [N(a), U('ct'), O('+'), N(b), U('ct')], a: I(a + b), unit: 'ct', w: addW(a, b) }
+        : { e: [N(a + b), U('ct'), O('−'), N(a), U('ct')], a: I(b), unit: 'ct', w: subW(a + b, a) };
+    }
+    if (l === 1) {
+      switch (rnd(0, 2)) {
+        case 0: { const e = rnd(1, 9), c = 10 * rnd(1, 9); return { e: [N(e), U('€'), N(c), U('ct')], a: I(e * 100 + c), unit: 'ct', w: [`${e} € = ${e * 100} ct`, `${e * 100} + ${c} = ${e * 100 + c} ct`] }; }
+        case 1: { const c = 10 * rnd(11, 99); return { e: [N(c), U('ct')], a: Mo(c), unit: '€', w: ['100 ct = 1 €', `${c} ct = ${fmtMoney(c)} €`] }; }
+        default: { const p = rnd(2, 18), z = p < 10 ? 10 : 20; return { e: [Story(`Du kaufst etwas für ${p} € und bezahlst mit einem ${z}-€-Schein. Wie viel Rückgeld bekommst du?`)], a: I(z - p), unit: '€', noEq: true, story: true, w: [`Rückgeld = bezahlt − Preis`, `${z} − ${p} = ${z - p}`] }; }
+      }
+    }
+    if (l === 2) {
+      const a = rnd(105, 899), b = rnd(105, 899);
+      if (coin()) return { e: [...ct(a), O('+'), ...ct(b)], a: Mo(a + b), unit: '€', w: [`In Cent rechnen: ${a} ct + ${b} ct = ${a + b} ct`, `${a + b} ct = ${fmtMoney(a + b)} €`] };
+      const [x, y] = a > b ? [a, b] : [b, a];
+      return { e: [...ct(x), O('−'), ...ct(y)], a: Mo(x - y), unit: '€', w: [`In Cent rechnen: ${x} ct − ${y} ct = ${x - y} ct`, `${x - y} ct = ${fmtMoney(x - y)} €`] };
+    }
+    if (l === 3) {
+      switch (rnd(0, 2)) {
+        case 0: { const p = rnd(111, 1899), z = p < 500 ? 5 : p < 1000 ? 10 : 20; return { e: [Story(`Du kaufst für ${fmtMoney(p)} € ein und bezahlst mit ${z} €. Wie viel Rückgeld bekommst du?`)], a: Mo(z * 100 - p), unit: '€', noEq: true, story: true, w: [`Ergänze von ${fmtMoney(p)} € bis ${z} €:`, `${z * 100} ct − ${p} ct = ${z * 100 - p} ct = ${fmtMoney(z * 100 - p)} €`] }; }
+        case 1: { const c = 5 * rnd(20, 180), k = rnd(2, 6); return { e: [N(k), O('·'), ...ct(c)], a: Mo(k * c), unit: '€', w: [`In Cent: ${k} · ${c} ct = ${k * c} ct`, `${k * c} ct = ${fmtMoney(k * c)} €`] }; }
+        default: { const a = rnd(99, 599), b = rnd(99, 599), c = rnd(99, 599); return { e: [...ct(a), O('+'), ...ct(b), O('+'), ...ct(c)], a: Mo(a + b + c), unit: '€', w: [`${a} + ${b} + ${c} = ${a + b + c} ct`, `= ${fmtMoney(a + b + c)} €`] }; }
+      }
+    }
+    switch (rnd(0, 2)) {
+      case 0: { const p = 10 * rnd(8, 45); return { e: [Story(`500 g kosten ${fmtMoney(p)} €. Wie viel kostet 1 kg?`)], a: Mo(2 * p), unit: '€', noEq: true, story: true, w: ['1 kg = 2 · 500 g', `2 · ${fmtMoney(p)} € = ${fmtMoney(2 * p)} €`] }; }
+      case 1: { const u = 5 * rnd(8, 60), k = 3, m = rnd(4, 9); return { e: [Story(`${k} Stück kosten ${fmtMoney(k * u)} €. Wie viel kosten ${m} Stück?`)], a: Mo(m * u), unit: '€', noEq: true, story: true, w: [`1 Stück: ${fmtMoney(k * u)} € : ${k} = ${fmtMoney(u)} €`, `${m} Stück: ${m} · ${fmtMoney(u)} € = ${fmtMoney(m * u)} €`] }; }
+      default: { const g = pick([250, 200, 125]), p = 5 * rnd(10, 60), f = 1000 / g; return { e: [Story(`${g} g Käse kosten ${fmtMoney(p)} €. Wie viel kostet 1 kg?`)], a: Mo(f * p), unit: '€', noEq: true, story: true, w: [`1 kg = 1000 g = ${f} · ${g} g`, `${f} · ${fmtMoney(p)} € = ${fmtMoney(f * p)} €`] }; }
+    }
+  },
+
+  zeit(l) {
+    const hm = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;
+    const S2 = (story, a, unit, w) => ({ e: [Story(story)], a: I(a), unit, w, noEq: true, story: true });
+    if (l === 0) {
+      switch (rnd(0, 3)) {
+        case 0: { const [n, m] = pick([['eine halbe Stunde', 30], ['eine Viertelstunde', 15], ['eine Dreiviertelstunde', 45], ['eine ganze Stunde', 60]]); return S2(`Wie viele Minuten sind ${n}?`, m, 'min', [`1 Stunde = 60 Minuten`, `${n[0].toUpperCase() + n.slice(1)} = ${m} Minuten`]); }
+        case 1: { const a = rnd(1, 8), b = a + rnd(1, 4); return S2(`Von ${a} Uhr bis ${b} Uhr: Wie viele Stunden sind das?`, b - a, 'h', [`${b} − ${a} = ${b - a}`]); }
+        case 2: { const w = rnd(2, 4); return S2(`Wie viele Tage haben ${w} Wochen?`, 7 * w, 'Tage', ['1 Woche = 7 Tage', `${w} · 7 = ${7 * w}`]); }
+        default: { const a = rnd(6, 10), d = rnd(1, 3); return S2(`Es ist ${a} Uhr. Wie spät ist es in ${d} Stunden?`, a + d, 'Uhr', [`${a} + ${d} = ${a + d}`]); }
+      }
+    }
+    if (l === 1) {
+      const h = rnd(7, 17), m1 = 5 * rnd(0, 8), d = 5 * rnd(3, 11), s = h * 60 + m1;
+      return S2(`Von ${hm(s)} Uhr bis ${hm(s + d)} Uhr: Wie viele Minuten sind das?`, d, 'min', s % 60 + d > 60 ? [`Bis ${h + 1}:00 Uhr: ${60 - m1} Minuten`, `Dann noch ${(s + d) % 60} Minuten`, `${60 - m1} + ${(s + d) % 60} = ${d}`] : [`${(s + d) % 60 || 60} − ${m1} = ${d}`]);
+    }
+    if (l === 2) {
+      if (coin()) {
+        const s = 60 * rnd(7, 18) + 5 * rnd(1, 11), d = 5 * rnd(13, 30), e = s + d;
+        return S2(`Von ${hm(s)} Uhr bis ${hm(e)} Uhr: Wie viele Minuten sind das?`, d, 'min', [`Bis zur vollen Stunde ${Math.ceil(s / 60)}:00 Uhr: ${60 - s % 60} min`, `Dann bis ${hm(e)} Uhr: ${e - Math.ceil(s / 60) * 60} min`, `${60 - s % 60} + ${e - Math.ceil(s / 60) * 60} = ${d} min`]);
+      }
+      const s = 60 * rnd(14, 19) + 5 * rnd(0, 11), d = 5 * rnd(15, 30), e = s + d;
+      return S2(`Ein Film beginnt um ${hm(s)} Uhr und dauert ${d} Minuten. Wie viele Minuten nach ${Math.floor(e / 60)} Uhr ist er zu Ende?`, e % 60, 'min', [`${d} min = ${Math.floor(d / 60)} h ${d % 60} min`, `${hm(s)} Uhr + ${d} min = ${hm(e)} Uhr`]);
+    }
+    if (l === 3) {
+      switch (rnd(0, 2)) {
+        case 0: { const [mn, len] = pick([['März', 31], ['Mai', 31], ['April', 30], ['Juni', 30], ['Oktober', 31], ['November', 30]]), a = rnd(len - 10, len - 1), b = rnd(2, 12), nx = { März: 'April', Mai: 'Juni', April: 'Mai', Juni: 'Juli', Oktober: 'November', November: 'Dezember' }[mn];
+          return S2(`Wie viele Tage sind es vom ${a}. ${mn} bis zum ${b}. ${nx}?`, len - a + b, 'Tage', [`Der ${mn} hat ${len} Tage.`, `Bis zum Monatsende: ${len} − ${a} = ${len - a}`, `${len - a} + ${b} = ${len - a + b}`]); }
+        case 1: { const d = rnd(2, 6), h = rnd(1, 23); return S2(`Wie viele Stunden sind ${d} Tage und ${h} Stunden?`, 24 * d + h, 'h', ['1 Tag = 24 Stunden', `${d} · 24 = ${24 * d}`, `${24 * d} + ${h} = ${24 * d + h}`]); }
+        default: { const m = rnd(1, 9), s = 5 * rnd(1, 11); return S2(`Wie viele Sekunden sind ${m} Minuten und ${s} Sekunden?`, 60 * m + s, 's', ['1 Minute = 60 Sekunden', `${m} · 60 = ${60 * m}`, `${60 * m} + ${s} = ${60 * m + s}`]); }
+      }
+    }
+    switch (rnd(0, 2)) {
+      case 0: { const [i, k, m] = pick([[225, 2, 135], [175, 2, 105], [35, 1, 210], [15, 1, 90], [45, 1, 270], [125, 2, 75]]); return { e: [D(i, k), U('h')], a: I(m), unit: 'min', w: ['1 h = 60 min', `${fmtDec(i, k)} · 60 = ${m}`] }; }
+      case 1: { const p = pick([[4, 30], [5, 15], [6, 0], [4, 45], [5, 30]]), km = pick([4, 6, 8, 10]), sec = (p[0] * 60 + p[1]) * km;
+        return { ...S2(`Eine Läuferin braucht für 1 km ${p[0]} min ${p[1]} s. Wie viele Minuten braucht sie für ${km} km?`, 0, 'min', [`1 km: ${p[0] * 60 + p[1]} s`, `${km} km: ${km} · ${p[0] * 60 + p[1]} s = ${sec} s`, `${sec} s : 60 = ${decOfQ(Q(sec, 60))} min`]), a: De(sec, 60) }; }
+      default: { const v = pick([40, 60, 80, 90, 120]), d = v * pick([1, 2, 3]) / 2 + (v / 4) * rnd(0, 1) * 2; const mins = d / v * 60; return S2(`Ein Zug fährt ${v} km pro Stunde. Wie viele Minuten braucht er für ${d} km?`, mins, 'min', [`In 60 Minuten: ${v} km`, `${d} km sind ${fq(d, v)} von ${v} km`, `${fq(d, v)} · 60 min = ${mins} min`]); }
+    }
+  },
+
+  geo(l) {
+    const S2 = (story, a, unit, w) => ({ e: [Story(story)], a: I(a), unit, w, noEq: true, story: true });
+    if (l === 0) {
+      if (coin()) { const s = rnd(2, 12); return S2(`Ein Quadrat hat die Seitenlänge ${s} cm. Wie groß ist sein Umfang?`, 4 * s, 'cm', ['Umfang Quadrat = 4 · Seite', `4 · ${s} = ${4 * s}`]); }
+      const a = rnd(3, 12), b = rnd(2, 9); return S2(`Ein Rechteck ist ${a} cm lang und ${b} cm breit. Wie groß ist sein Umfang?`, 2 * (a + b), 'cm', ['Umfang = 2 · (Länge + Breite)', `2 · (${a} + ${b}) = ${2 * (a + b)}`]);
+    }
+    if (l === 1) {
+      switch (rnd(0, 2)) {
+        case 0: { const s = rnd(2, 12); return S2(`Ein Quadrat hat die Seitenlänge ${s} cm. Wie groß ist seine Fläche?`, s * s, 'cm²', ['Fläche Quadrat = Seite · Seite', `${s} · ${s} = ${s * s}`]); }
+        case 1: { const a = rnd(3, 15), b = rnd(2, 10); return S2(`Ein Rechteck ist ${a} m lang und ${b} m breit. Wie groß ist seine Fläche?`, a * b, 'm²', ['Fläche = Länge · Breite', `${a} · ${b} = ${a * b}`]); }
+        default: { const s = rnd(3, 15); return S2(`Ein Quadrat hat den Umfang ${4 * s} cm. Wie lang ist eine Seite?`, s, 'cm', ['Ein Quadrat hat 4 gleich lange Seiten.', `${4 * s} : 4 = ${s}`]); }
+      }
+    }
+    if (l === 2) {
+      switch (rnd(0, 2)) {
+        case 0: { const a = 5 * rnd(6, 16), b = 5 * rnd(4, Math.min(20, 34 - a / 5)); return S2(`In einem Dreieck sind zwei Winkel ${a}° und ${b}° groß. Wie groß ist der dritte Winkel?`, 180 - a - b, '°', ['Alle Winkel im Dreieck zusammen: 180°', `180 − ${a} − ${b} = ${180 - a - b}`]); }
+        case 1: { const a = 5 * rnd(4, 32); return S2(`Zwei Nebenwinkel ergeben zusammen 180°. Einer ist ${a}° groß. Wie groß ist der andere?`, 180 - a, '°', [`180 − ${a} = ${180 - a}`]); }
+        default: { const b = rnd(3, 12), a = rnd(3, 15); return S2(`Ein Rechteck hat die Fläche ${a * b} cm² und ist ${b} cm breit. Wie lang ist es?`, a, 'cm', ['Länge = Fläche : Breite', `${a * b} : ${b} = ${a}`]); }
+      }
+    }
+    if (l === 3) {
+      switch (rnd(0, 3)) {
+        case 0: { const g = 2 * rnd(2, 10), h = rnd(3, 12); return S2(`Ein Dreieck hat die Grundseite ${g} cm und die Höhe ${h} cm. Wie groß ist seine Fläche?`, g * h / 2, 'cm²', ['Fläche Dreieck = Grundseite · Höhe : 2', `${g} · ${h} : 2 = ${g * h / 2}`]); }
+        case 1: { const a = rnd(2, 8), b = rnd(2, 6), c = rnd(2, 5); return S2(`Ein Quader ist ${a} cm lang, ${b} cm breit und ${c} cm hoch. Wie groß ist sein Volumen?`, a * b * c, 'cm³', ['Volumen = Länge · Breite · Höhe', `${a} · ${b} · ${c} = ${a * b * c}`]); }
+        case 2: { const a = 5 * rnd(14, 24), b = 5 * rnd(14, 24), c = 5 * rnd(12, Math.min(26, (360 - a - b - 60) / 5)); return S2(`In einem Viereck sind drei Winkel ${a}°, ${b}° und ${c}° groß. Wie groß ist der vierte Winkel?`, 360 - a - b - c, '°', ['Alle Winkel im Viereck zusammen: 360°', `360 − ${a} − ${b} − ${c} = ${360 - a - b - c}`]); }
+        default: { const s = rnd(2, 9); return S2(`Ein Würfel hat die Kantenlänge ${s} cm. Wie groß ist seine Oberfläche?`, 6 * s * s, 'cm²', ['Ein Würfel hat 6 gleiche Quadrate.', `Ein Quadrat: ${s} · ${s} = ${s * s}`, `6 · ${s * s} = ${6 * s * s}`]); }
+      }
+    }
+    switch (rnd(0, 3)) {
+      case 0: { const [x, y, z] = pick([[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17], [9, 12, 15], [12, 16, 20]]); return S2(`Ein rechtwinkliges Dreieck hat die Katheten ${x} cm und ${y} cm. Wie lang ist die Hypotenuse?`, z, 'cm', ['Satz des Pythagoras: a² + b² = c²', `${x}² + ${y}² = ${x * x} + ${y * y} = ${z * z}`, `√${z * z} = ${z}`]); }
+      case 1: { const n = rnd(5, 10); return S2(`Wie groß ist die Summe aller Innenwinkel in einem ${n}-Eck?`, (n - 2) * 180, '°', ['Innenwinkelsumme = (Ecken − 2) · 180°', `(${n} − 2) · 180 = ${(n - 2) * 180}`]); }
+      case 2: { const a = rnd(4, 12), c = a + 2 * rnd(1, 4), h = rnd(2, 9); return S2(`Ein Trapez hat die parallelen Seiten ${a} cm und ${c} cm und die Höhe ${h} cm. Wie groß ist seine Fläche?`, (a + c) / 2 * h, 'cm²', ['Fläche Trapez = (a + c) : 2 · h', `(${a} + ${c}) : 2 = ${(a + c) / 2}`, `${(a + c) / 2} · ${h} = ${(a + c) / 2 * h}`]); }
+      default: { const s = rnd(2, 10); return S2(`Ein Würfel hat die Kantenlänge ${s} cm. Wie groß ist sein Volumen?`, s ** 3, 'cm³', ['Volumen Würfel = Kante · Kante · Kante', `${s} · ${s} · ${s} = ${s ** 3}`]); }
+    }
+  },
+
+  folge(l) {
+    const mk = (seq, ans, w, gapAt) => {
+      const shown = seq.map((v, i) => i === gapAt ? '?' : fi(v)).join(', ') + (gapAt == null ? ', ?' : '');
+      return { e: [S_(shown)], a: I(ans), noEq: true, hint: gapAt == null ? 'Welche Zahl kommt als Nächstes?' : 'Welche Zahl fehlt?', w };
+    };
+    const ar = (s, d, n = 5) => Array.from({ length: n }, (_, i) => s + i * d);
+    if (l === 0) { const d = pick([1, 2, 2, 3, 5, 10]), down = coin() && d < 5, s = down ? rnd(4 * d + 1, 20 + 4 * d) : rnd(0, 15), dd = down ? -d : d, q = ar(s, dd, 4); return mk(q, s + 4 * dd, [`Immer ${down ? '−' : '+'} ${d}`, `${q[3]} ${down ? '−' : '+'} ${d} = ${s + 4 * dd}`]); }
+    if (l === 1) {
+      if (coin()) { const d = rnd(3, 12) * (coin() ? 1 : -1), s = d > 0 ? rnd(1, 50) : rnd(60, 100), q = ar(s, d, 4); return mk(q, s + 4 * d, [`Immer ${d > 0 ? '+' : '−'} ${Math.abs(d)}`, `${q[3]} ${d > 0 ? '+' : '−'} ${Math.abs(d)} = ${s + 4 * d}`]); }
+      const s = rnd(1, 6), q = [s, 2 * s, 4 * s, 8 * s]; return mk(q, 16 * s, ['Immer verdoppeln (· 2)', `${8 * s} · 2 = ${16 * s}`]);
+    }
+    if (l === 2) {
+      switch (rnd(0, 2)) {
+        case 0: { const a = rnd(3, 9), b = rnd(1, a - 1), s = rnd(1, 20), q = [s, s + a, s + a - b, s + 2 * a - b, s + 2 * a - 2 * b]; return mk(q, s + 3 * a - 2 * b, [`Abwechselnd + ${a} und − ${b}`, `${q[4]} + ${a} = ${s + 3 * a - 2 * b}`]); }
+        case 1: { const s = rnd(1, 10), q = [s, s + 1, s + 3, s + 6, s + 10]; return mk(q, s + 15, ['Die Abstände wachsen: + 1, + 2, + 3, + 4, …', `${s + 10} + 5 = ${s + 15}`]); }
+        default: { const s = rnd(1, 4), q = [s, 3 * s, 9 * s, 27 * s]; return mk(q, 81 * s, ['Immer mal 3', `${27 * s} · 3 = ${81 * s}`]); }
+      }
+    }
+    if (l === 3) {
+      switch (rnd(0, 3)) {
+        case 0: { const s = rnd(1, 5), q = [s, s + 1, s + 2, s + 3].map(x => x * x); return mk(q, (s + 4) ** 2, ['Quadratzahlen', `${s + 4} · ${s + 4} = ${(s + 4) ** 2}`]); }
+        case 1: { const e = rnd(4, 7), q = [e, e - 1, e - 2, e - 3].map(k => 2 ** k * 3); return mk(q, 3 * 2 ** (e - 4), ['Immer halbieren (: 2)', `${q[3]} : 2 = ${3 * 2 ** (e - 4)}`]); }
+        case 2: { let a = rnd(1, 4), b = rnd(a, 6); const q = [a, b]; while (q.length < 6) q.push(q[q.length - 1] + q[q.length - 2]); return mk(q, q[4] + q[5], ['Jede Zahl ist die Summe der beiden davor', `${q[4]} + ${q[5]} = ${q[4] + q[5]}`]); }
+        default: { const d = rnd(4, 15), s = rnd(10, 60), q = ar(s, d, 5), g = rnd(1, 3); return mk(q, q[g], [`Immer + ${d}`, `${q[g - 1]} + ${d} = ${q[g]}`], g); }
+      }
+    }
+    switch (rnd(0, 3)) {
+      case 0: { const s = rnd(1, 5) * (coin() ? 1 : -1), q = [s, -2 * s, 4 * s, -8 * s]; return mk(q, 16 * s, ['Immer mal (−2)', `${fi(-8 * s)} · (−2) = ${fi(16 * s)}`]); }
+      case 1: { const s = rnd(1, 5), q = [s]; while (q.length < 5) q.push(q[q.length - 1] * 2 + 1); return mk(q, q[4] * 2 + 1, ['Immer · 2, dann + 1', `${q[4]} · 2 + 1 = ${q[4] * 2 + 1}`]); }
+      case 2: { const d = rnd(3, 9), s = rnd(5, 20), q = ar(s, -d, 6); return mk(q, s - 6 * d, [`Immer − ${d} (auch unter null)`, `${fi(q[5])} − ${d} = ${fi(s - 6 * d)}`]); }
+      default: { const a = rnd(2, 4), s = rnd(1, 9), q = [s, s + a, s + 3 * a, s + 6 * a, s + 10 * a]; return mk(q, s + 15 * a, [`Die Abstände wachsen: + ${a}, + ${2 * a}, + ${3 * a}, + ${4 * a}, …`, `${s + 10 * a} + ${5 * a} = ${s + 15 * a}`]); }
     }
   },
 };

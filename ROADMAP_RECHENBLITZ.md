@@ -55,7 +55,9 @@ Jeden Tag ein vollständiges, getestetes Paket. Status: `[ ]` offen · `[x]` erl
 
 ⭐ = Alleinstellungsmerkmal (Marcel 14.11.: „Was kann man machen als Alleinstellungsmerkmal?“ → „übernimm es step by step“). Kern: **Hinter Rechenblitz steht echte Nachhilfe** – Diagnose, Verbindung zur Lehrkraft, Marcels Erklärungen.
 
-**Ideen-Speicher (wenn Zeit bleibt):** Uhr & Zeit, Geometrie im Kopf, Autofahrt-Modus (Aufgaben vorlesen, Antwort sprechen), Türkisch/Arabisch für die Sprachbrücke, Schätz-Blitz, Hör-Rechnen, Fehler-Detektiv (typische Fehlermuster), Gleichungs-Waage, Einkaufsspiel, Wochenziele mit Kalender-Erinnerung.
+**Erledigt aus dem Ideen-Speicher (3.15.0, 16.11.):** Uhr & Zeit, Geometrie im Kopf, Einkaufen/Geld, Verdoppeln & Halbieren, Zahlenfolgen, 30 neue Textaufgaben.
+
+**Ideen-Speicher (wenn Zeit bleibt):** Autofahrt-Modus (Aufgaben vorlesen, Antwort sprechen), Türkisch/Arabisch für die Sprachbrücke, Schätz-Blitz, Hör-Rechnen, Fehler-Detektiv (typische Fehlermuster), Gleichungs-Waage, Einkaufsspiel, Wochenziele mit Kalender-Erinnerung.
 
 ## Erledigt
 

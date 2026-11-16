@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.14.5';
+const APP_VERSION = '3.15.0';
 const APP_DATE = '2026-11-16';
 const CHANGELOG = [
+  ['3.15.0', '2026-11-16', ['Viele neue Aufgaben: 5 neue Themen – Verdoppeln, Geld, Uhr & Zeit, Geometrie und Zahlenfolgen', '30 neue Textaufgaben – von Vögeln im Baum bis zur Wanderkarte', 'Geldbeträge mit zwei Nachkommastellen, z. B. 4,80 €']],
   ['3.14.5', '2026-11-16', ['Android-App: Links zur Website nur nach kurzer Elternabfrage']],
   ['3.14.4', '2026-11-16', ['Vorbereitung für Google Play: Updates direkt in der App']],
   ['3.14.3', '2026-11-16', ['Vorbereitung für Google Play']],

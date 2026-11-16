@@ -2,7 +2,35 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3–3.14.5 Play-Vorbereitung**, siehe Meldungen (35)–(45). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3–3.14.5 Play-Vorbereitung**, + **3.15.0 viele neue Aufgaben**, siehe Meldungen (35)–(46). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+
+## 16.11.2026 (46) – Viele neue Aufgaben: 5 neue Themen + 30 neue Textaufgaben (3.15.0) · keine neue APK nötig
+
+- **Marcel 16.11.:** „Bitte sehr erweitern mit vielen neuen Aufgaben.“
+- **5 neue Themen** mit je 5 Stufen und Lösungsweg, Ideen aus dem Ideen-Speicher der Roadmap:
+
+  | Thema | Stufen (kurz) | Klassen |
+  |---|---|---|
+  | **×2 Verdoppeln** | bis 20 · bis 100 · bis 1000 · Halbieren mit Komma · Vierfach/Viertel/dreimal verdoppeln | 1–6 |
+  | **€ Geld** | Cent ± · Euro↔Cent, Rückgeld · Euro-Beträge ± · Rückgeld/Mal mit Komma · Preisvergleich (Dreisatz) | 1–6 |
+  | **🕐 Uhr & Zeit** | Viertelstunden/Wochen · Minuten zwischen Uhrzeiten · über die volle Stunde, Filmende · Kalender/Sekunden · Kommastunden, Tempo, Laufzeiten | 2–6 |
+  | **📐 Geometrie** | Umfang · Fläche · Winkel im Dreieck, Seite aus Fläche · Dreieck, Quader, Viereck, Würfel · Pythagoras, n-Eck, Trapez, Volumen | 3–9 |
+  | **🔢 Zahlenfolgen** | ± kleine Schritte · größere Schritte, Verdoppeln · abwechselnd, wachsende Abstände, ·3 · Quadratzahlen, Halbieren, Fibonacci, Lücke · negative Zahlen, knifflige Regeln | 1–10 |
+
+- Die Themen sind in den Klassenstufen eingetragen. Damit tauchen sie automatisch auf der Startseite (Klassenmodus), in der Rechen-Reise, im Einstufungstest und in der Tageschallenge auf (Grundschule: Verdoppeln/Geld/Zeit/Folgen; ab Klasse 5: Geld/Zeit/Geometrie/Folgen).
+- **30 neue Textaufgaben** (je Stufe 6), etwa die Hälfte aller Textaufgaben kommt jetzt aus dem neuen Vorrat:
+  - Vögel im Baum, Perlen, Kekse, Stall, Hasenbeine;
+  - Sitzreihen, Taschengeld, Boote (Rest aufrunden!), Kino, Einkauf;
+  - Rezept, Laufrunden, Kuchen-Bruch, Saftgläser, Durchschnitt, Blumenbeet;
+  - Preiserhöhung, Fahrradzeit, Maler-Dreisatz, Zinsen, Maßstab, Durchschnittstempo;
+  - Klassenausflug, „3-mal so viele“, Becken, Rechteck mit Umfang, Altersrätsel, Bruchteil der Klasse.
+- **Geldbeträge** werden als Lösung mit zwei Nachkommastellen gezeigt (4,80 € statt 4,8 €). Eingaben wie „4,8“ zählen weiterhin als richtig.
+- **Übersetzungen:** etwa 220 neue Einträge (EN/UK), insgesamt 1738. Bei Sätzen mit anderer Wortstellung stehen nummerierte Platzhalter, damit Zahlen nicht vertauscht werden.
+- **Tests:**
+  - Engine: 315000 erzeugte Aufgaben (alle Themen × Stufen); jede Lösung lässt sich eintippen, keine ungültigen Werte, keine negativen Ergebnisse bei Geld/Zeit/Geometrie.
+  - Übersetzungs-Durchlauf über alle Generatoren ohne Lücken.
+  - Browser DE/EN/UK, 320 px: jede neue Stufe gespielt (richtig und falsch, Lösungsweg). Keine JS-Fehler, keine fehlenden Übersetzungen, kein Überlauf. Regression (offline, APK-Modus, Reise, Welt, Widget, Garten, Elternabfrage, Zufallsaktionen) ohne Fehler.
+- **Hinweis Tageschallenge:** Die Themenliste der Challenge ist erweitert. Am Tag der Live-Freigabe können die Challenge-Aufgaben vor und nach dem Update verschieden sein. Ab dem Folgetag sind sie wieder für alle gleich.
 
 ## 16.11.2026 (45) – Antwort auf Leitstand zu (43): eigener Upload-Schlüssel, Play-Ablauf bricht bei fehlenden/vertauschten Geheimnissen klar ab
 

@@ -374,7 +374,7 @@ async function shareText(text, title, url) {
 const challengeTier = () => S.settings.klasse && S.settings.klasse <= 4 ? 'A' : 'B';
 function challengeTasks(date = todayStr(), tier = challengeTier()) {
   return withSeed(hashStr(`rechenblitz-${date}-${tier}`), () => {
-    const topics = tier === 'A' ? ['add', 'sub', 'mul', 'div', 'gap', 'order', 'unit', 'word'] : ['add', 'sub', 'mul', 'div', 'gap', 'frac', 'dec', 'pct', 'neg', 'pow', 'order', 'round', 'unit', 'divis', 'eq', 'word'];
+    const topics = tier === 'A' ? ['add', 'sub', 'mul', 'div', 'gap', 'order', 'unit', 'word', 'doppel', 'geld', 'zeit', 'folge'] : ['add', 'sub', 'mul', 'div', 'gap', 'frac', 'dec', 'pct', 'neg', 'pow', 'order', 'round', 'unit', 'divis', 'eq', 'word', 'geld', 'zeit', 'geo', 'folge'];
     const lv = tier === 'A' ? [0, 0, 1, 1, 1, 1, 2, 2, 2, 2] : [1, 1, 1, 2, 2, 2, 2, 3, 3, 3];
     return lv.map(l => makeTask(pick(topics), l));
   });
