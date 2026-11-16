@@ -43,7 +43,9 @@ Empfehlung von Schulen und Eltern. Pro ist für **Oberstufe, Könner und Fans**.
 
 **Preis:** **Einmalkauf statt Abo** – für Eltern ehrlich und ohne Abo-Falle, passend zu einer Kinder-App.
 - **Kurvenflug Pro: 7,99 € einmalig, brutto inkl. 19 % USt.** (Familie, alle Profile auf dem Gerät/Browser), zum Start 4,99 €.
-- **Schullizenz: 29 € brutto pro Lehrkraft und Schuljahr**: Codes für eine Klasse (bis 35 Schüler) für Pro-Inhalte in Challenges.
+- **Schullizenz: 29 € brutto pro Lehrkraft, gültig bis 31.07.** (festgelegt von Marcel): Pro für eine Lehrkraft und alle
+  Schülerinnen und Schüler ihrer Klassen, im Unterricht und zu Hause, auf beliebig vielen Geräten. Umsetzung: ein Schul-Code
+  (Produkt 2, Ablaufdatum 31.07.), den die Lehrkraft an ihre Klassen weitergibt – kein Geräte- oder Schülerlimit in der App.
 - Vergleich (Recherche 16.11., Preise schwanken je Land/Aktion):
   - DragonBox Algebra (Kahoot!): Einmalkauf ca. 7–8 €.
   - Photomath Plus: ca. 55–65 € im Jahr bzw. ca. 10 € im Monat.
@@ -89,7 +91,7 @@ Empfehlung von Schulen und Eltern. Pro ist für **Oberstufe, Könner und Fans**.
   Kunde + Marcel (Rechnung aus WooCommerce). Ein Produkt je App plus optional ein **Bundle** über alle Apps.
 - **Sperrliste** für Erstattungen/Missbrauch: kleine JSON-Datei (`/lizenz/sperrliste.json`), Web und GitHub-APK lesen
   sie gelegentlich; die Play-Fassung braucht sie nicht (Google erstattet selbst).
-- **Schullizenz**: ein Code erzeugt 35 Unter-Codes (oder ein Klassen-Code mit Ablaufdatum Schuljahresende).
+- **Schullizenz**: ein einziger Code mit Ablaufdatum 31.07. (Produkt 2) für Lehrkraft und alle ihre Klassen, beliebig viele Geräte.
 - **Später, optional**: Prüfung von Play-Kaufbelegen über die Google Play Developer API → Web-Code für Play-Käufer
   automatisch.
 - Für die Apps: eine gemeinsame kleine Bibliothek „Lizenz“ (Code prüfen, speichern, Play-Billing-Adapter, Eltern-Frage),

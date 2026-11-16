@@ -4,7 +4,8 @@ Kurvenflug Pro – Codes erzeugen (für den Lizenz-Dienst / WooCommerce-Anbindun
 
   python3 pro_code.py keygen GEHEIM.key           # neues Schlüsselpaar; GEHEIM.key NIE ins Repo, ab nach Bitwarden
   python3 pro_code.py pro    GEHEIM.key 1001      # Pro-Code Nr. 1001 (Einmalkauf)
-  python3 pro_code.py school GEHEIM.key 2001 2027-07-31   # Schullizenz, gültig bis einschließlich 31.7.2027
+  python3 pro_code.py school GEHEIM.key 2001 2027-07-31   # Schullizenz bis einschließlich 31.7.2027: eine Lehrkraft +
+                                                          # alle Schüler ihrer Klassen, Unterricht und zu Hause, beliebig viele Geräte
 
 Ausgabe: der Code und der Freischalt-Link für die E-Mail. Den öffentlichen Schlüssel (64 Hex-Zeichen) trägt man in
 kurvenflug/pro/pro.properties ein. Format siehe core/model/.../License.kt. Braucht: pip install cryptography

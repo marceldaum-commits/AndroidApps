@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.23.1 – Schullizenz erklärt
+- **🏫 Schullizenz**: Für Schulen gibt es Kurvenflug Pro als Schullizenz – für eine Lehrkraft und alle Schülerinnen und
+  Schüler ihrer Klassen, im Unterricht und zu Hause, auf beliebig vielen Geräten, jeweils bis zum 31. Juli.
+  Den Schul-Code einfach in Einstellungen → Kurvenflug Pro einfügen.
+
 ## 0.23.0 – Kurvenflug Pro (vorbereitet)
 - **⭐ Kurvenflug Pro**: Alles bis Klasse 10 bleibt kostenlos. Mit Pro kommen Oberstufe, Extrem-Prüfungen,
   Asteroidensturm Profi & Extrem, Andromeda ab Planet 7, bis zu 6 Spieler und besondere Teile in der Werkstatt dazu –
