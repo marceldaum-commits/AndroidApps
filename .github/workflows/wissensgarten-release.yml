@@ -100,7 +100,7 @@ jobs:
           cat notes.md
 
       - name: Logik-Tests
-        run: ./gradlew --no-daemon :core:model:jvmTest :core:data:testDebugUnitTest
+        run: ./gradlew --no-daemon :core:model:jvmTest :core:data:testDebugUnitTest :content:test
 
       - name: APK (GitHub) und AAB (Play Store) bauen
         run: |
