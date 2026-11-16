@@ -54,7 +54,7 @@ fun NeonButton(
     val c = if (enabled) color else Q.Muted.copy(alpha = 0.5f)
     Row(
         modifier.pressBounce(interaction).clip(RoundedCornerShape(16.dp))
-            .background(Brush.verticalGradient(listOf(c.copy(alpha = 0.35f), c.copy(alpha = 0.15f))))
+            .background(verticalFade(listOf(c.copy(alpha = 0.35f), c.copy(alpha = 0.15f))))
             .border(2.dp, c, RoundedCornerShape(16.dp))
             .clickable(interaction, null, enabled = enabled) { sfx?.play(Sound.TAP); view.buzz(Buzz.TICK, vib); onClick() }
             .padding(horizontal = 18.dp, vertical = 12.dp),
@@ -72,7 +72,7 @@ fun Starfield(modifier: Modifier = Modifier, count: Int = 90, seed: Int = 1) {
         val r = Random(seed)
         List(count) { Triple(Offset(r.nextFloat(), r.nextFloat()), r.nextFloat() * 1.6f + 0.6f, r.nextFloat() * 6f) }
     }
-    Canvas(modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Q.Space, Color(0xFF141A44), Q.Space)))) {
+    Canvas(modifier.fillMaxSize().background(verticalFade(listOf(Q.Space, Color(0xFF141A44), Q.Space)))) {
         stars.forEach { (p, size, phase) ->
             val a = 0.45f + 0.4f * sin(t * 1.3f + phase)
             drawCircle(Color.White.copy(alpha = a.coerceIn(0.1f, 1f)), size * density / 2, Offset(p.x * this.size.width, p.y * this.size.height))

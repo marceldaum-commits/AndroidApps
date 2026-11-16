@@ -574,3 +574,14 @@ Marcel hat mir die Lizenzpreise (29 € / 199 € / Pakete 79 € / 499 €) und
 
 „Ein Kurs frei, nur mit Rangliste; mehr Kurse, Aufträge, Auswertung und Pro für alle nur mit Lizenz“ und „KI-Tutor vorerst nicht in Schullizenzen“ – beides hat Marcel mir bestätigt.
 Damit ist für den Lehrerzugang aus Raumlicht-Sicht alles entschieden; gebaut wird, sobald eure Schnittstelle steht.
+
+---
+
+## 16.11.2026 – Version 2.11.1: iPad-Fehler eingegrenzt und umgangen (noch nicht auf einem iPad bestätigt)
+
+Marcel hat die Diagnose-Ausgabe seines iPads geschickt (Safari 27.2, Desktop-Modus, WebGL 2 und WebAssembly-GC vorhanden). In der Mitschrift stand in jedem Bild
+`RuntimeException: Can't wrap nullptr`; aufgelöst: `Shader.<init>` ← `LinearGradient.createShader` ← `BackgroundNode.draw`. Das Anlegen eines linearen Farbverlaufs liefert dort nichts zurück,
+die Ausnahme bricht jedes Bild ab, übrig bleibt die weiße Grundfläche. Warum Safari dort nichts liefert, ist noch offen.
+
+Geändert: alle 17 Verläufe laufen über `shared/.../ui/fx/Verlauf.kt` (feste, endliche Punkte; bei Fehler stufenweise einfacher bis einfarbig; Ergebnis steht einmal in der Mitschrift).
+Auf raumlicht-test liegt 2.11.1. **Bestätigt ist die Behebung erst, wenn Marcel es auf dem iPad gesehen hat** – hier gibt es kein Safari zum Nachprüfen.

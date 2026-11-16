@@ -89,7 +89,7 @@ fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
                 LaunchedEffect(Unit) { delay(45L * i); shown = true }
                 val s by animateFloatAsState(if (shown) 1f else 0.7f, spring(dampingRatio = 0.5f, stiffness = 300f), label = "eintrag")
                 Row(Modifier.fillMaxWidth().graphicsLayer { scaleX = s; scaleY = s; alpha = if (shown) 1f else 0f }.pressBounce(interaction).clip(RoundedCornerShape(18.dp))
-                    .background(Brush.horizontalGradient(listOf(e.color.copy(alpha = 0.2f), Q.Deep))).border(1.dp, e.color.copy(alpha = 0.55f), RoundedCornerShape(18.dp))
+                    .background(horizontalFade(listOf(e.color.copy(alpha = 0.2f), Q.Deep))).border(1.dp, e.color.copy(alpha = 0.55f), RoundedCornerShape(18.dp))
                     .clickable(interaction, null, onClick = e.onClick).padding(horizontal = 14.dp, vertical = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Text(e.emoji, fontSize = 26.sp)
                     Column(Modifier.weight(1f).padding(start = 12.dp)) {
@@ -121,7 +121,7 @@ fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam, Boolean
         LazyColumn(contentPadding = PaddingValues(14.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(exams) { _, e ->
                 val interaction = remember { MutableInteractionSource() }
-                Column(Modifier.fillMaxWidth().pressBounce(interaction).clip(RoundedCornerShape(20.dp)).background(Brush.horizontalGradient(listOf(Q.Orange.copy(alpha = 0.22f), Q.Deep)))
+                Column(Modifier.fillMaxWidth().pressBounce(interaction).clip(RoundedCornerShape(20.dp)).background(horizontalFade(listOf(Q.Orange.copy(alpha = 0.22f), Q.Deep)))
                     .border(1.5.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(20.dp)).clickable(interaction, null) { onExam(e, timed) }.padding(14.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(e.emoji, fontSize = 28.sp)
@@ -333,7 +333,7 @@ fun WorkshopScreen(tourStars: Int, selected: String, onSelect: (String) -> Unit,
         LazyVerticalGrid(GridCells.Fixed(2), contentPadding = PaddingValues(14.dp), horizontalArrangement = Arrangement.spacedBy(10.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(Skins.all) { _, s ->
                 val open = tourStars >= s.stars; val c = stageColor(s.color); val interaction = remember { MutableInteractionSource() }
-                Row(Modifier.pressBounce(interaction).alpha(if (open) 1f else 0.5f).clip(RoundedCornerShape(18.dp)).background(Brush.horizontalGradient(listOf(c.copy(alpha = 0.25f), Q.Deep)))
+                Row(Modifier.pressBounce(interaction).alpha(if (open) 1f else 0.5f).clip(RoundedCornerShape(18.dp)).background(horizontalFade(listOf(c.copy(alpha = 0.25f), Q.Deep)))
                     .border(if (s.color == selected) 2.5.dp else 1.dp, if (s.color == selected) Q.Text else c.copy(alpha = 0.6f), RoundedCornerShape(18.dp))
                     .clickable(interaction, null, enabled = open) { onSelect(s.color) }.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Box(Modifier.size(30.dp).background(c, CircleShape))

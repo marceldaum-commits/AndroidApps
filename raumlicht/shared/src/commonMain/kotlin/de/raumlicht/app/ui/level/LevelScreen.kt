@@ -209,7 +209,7 @@ fun LevelScreen(
                         NeonButton(::go, Modifier.weight(2f).pulse(!busy && attempts == 0, 0.025f), color = accent, enabled = !busy) { Text("▶ Los", fontWeight = FontWeight.Black, fontSize = 18.sp) }
                     }
                 } else {
-                    Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp).background(Brush.verticalGradient(listOf(Q.Green.copy(alpha = 0.18f), Q.Deep)), RoundedCornerShape(16.dp))
+                    Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp).background(verticalFade(listOf(Q.Green.copy(alpha = 0.18f), Q.Deep)), RoundedCornerShape(16.dp))
                         .border(1.5.dp, Q.Green.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).padding(12.dp)) {
                         Text("So rechnet man's", color = Q.Green, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge)
                         level.way.forEachIndexed { i, s -> Text("${i + 1}.  $s", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 2.dp)) }
@@ -286,7 +286,7 @@ fun IntroOverlay(chapter: Chapter, onStep: (Int) -> Unit = {}, onDone: () -> Uni
     var step by remember { mutableIntStateOf(0) }
     LaunchedEffect(step) { onStep(step) }
     val accent = stageColor(chapter.color)
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0f to Color.Transparent, 0.45f to Q.Space.copy(alpha = 0.55f), 1f to Q.Space)).clickable(remember { MutableInteractionSource() }, null) {}, contentAlignment = Alignment.BottomCenter) {
+    Box(Modifier.fillMaxSize().background(verticalFade(0f to Color.Transparent, 0.45f to Q.Space.copy(alpha = 0.55f), 1f to Q.Space)).clickable(remember { MutableInteractionSource() }, null) {}, contentAlignment = Alignment.BottomCenter) {
         Column(Modifier.systemBarsPadding().padding(12.dp).background(Q.Deep, RoundedCornerShape(24.dp)).border(2.dp, accent, RoundedCornerShape(24.dp)).padding(20.dp).verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(10.dp)) {
             Text("${chapter.emoji}  ${chapter.venue}", color = accent, style = MaterialTheme.typography.labelLarge)

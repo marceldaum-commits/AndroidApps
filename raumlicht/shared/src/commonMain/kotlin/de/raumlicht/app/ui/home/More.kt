@@ -1,5 +1,6 @@
 package de.raumlicht.app.ui.home
 
+import de.raumlicht.app.ui.fx.verticalFade
 import de.raumlicht.app.ui.fx.nowMillis
 import de.raumlicht.app.ui.fx.nowNanos
 import androidx.compose.animation.core.animateFloatAsState
@@ -120,7 +121,7 @@ fun PlannerScreen(plan: Plan?, today: Long, stars: Map<String, Int>, onSave: (Pl
         }
         if (current != null) {
             val pack = Planner.today(current, today, stars); val rest = Planner.open(current, stars).size
-            Column(Modifier.fillMaxWidth().padding(14.dp).background(Brush.verticalGradient(listOf(Q.Orange.copy(alpha = 0.2f), Q.Deep)), RoundedCornerShape(18.dp)).border(1.5.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(14.dp)) {
+            Column(Modifier.fillMaxWidth().padding(14.dp).background(verticalFade(listOf(Q.Orange.copy(alpha = 0.2f), Q.Deep)), RoundedCornerShape(18.dp)).border(1.5.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(14.dp)) {
                 Text(Planner.headline(current, today, stars) ?: "", fontWeight = FontWeight.Black, fontSize = 17.sp)
                 Text(if (rest == 0) "In diesen Kapiteln hast du alles mit drei Sternen. Mehr geht nicht!" else "Insgesamt noch $rest Aufgaben ohne drei Sterne. Heute: ${pack.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
                 if (pack.isNotEmpty()) NeonButton({ playing = pack }, Modifier.fillMaxWidth().padding(top = 10.dp), color = Q.Green) { Text("▶ Heutiges Paket spielen", fontWeight = FontWeight.Black) }

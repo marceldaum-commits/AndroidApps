@@ -1,5 +1,7 @@
 package de.raumlicht.app.ui.home
 
+import de.raumlicht.app.ui.fx.horizontalFade
+import de.raumlicht.app.ui.fx.verticalFade
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -72,7 +74,7 @@ fun HomeScreen(
         item {
             Box(Modifier.fillMaxWidth().height(240.dp)) {
                 Stage(controller, Modifier.fillMaxSize())
-                Box(Modifier.fillMaxSize().background(Brush.verticalGradient(0f to Q.Space.copy(alpha = 0.55f), 0.3f to Color.Transparent, 0.75f to Color.Transparent, 1f to Q.Space)))
+                Box(Modifier.fillMaxSize().background(verticalFade(0f to Q.Space.copy(alpha = 0.55f), 0.3f to Color.Transparent, 0.75f to Color.Transparent, 1f to Q.Space)))
                 Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start = 18.dp, end = 6.dp, top = 6.dp), verticalAlignment = Alignment.Top) {
                     Column(Modifier.weight(1f)) {
                         Text("RAUMLICHT", fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 4.sp, color = Q.Text)
@@ -147,7 +149,7 @@ private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, 
     val accent = stageColor(c.color)
     val got = c.levels.sumOf { stars[it.id] ?: 0 }
     Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp).clip(RoundedCornerShape(20.dp))
-        .background(Brush.horizontalGradient(listOf(accent.copy(alpha = 0.2f), Q.Deep))).border(1.5.dp, accent.copy(alpha = 0.7f), RoundedCornerShape(20.dp)).padding(bottom = 12.dp)) {
+        .background(horizontalFade(listOf(accent.copy(alpha = 0.2f), Q.Deep))).border(1.5.dp, accent.copy(alpha = 0.7f), RoundedCornerShape(20.dp)).padding(bottom = 12.dp)) {
         Row(Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text("KAPITEL ${c.number} · ${c.levels.size} AUFGABEN", color = accent, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)

@@ -1,5 +1,7 @@
 package de.raumlicht.app.ui.home
 
+import de.raumlicht.app.ui.fx.horizontalFade
+import de.raumlicht.app.ui.fx.verticalFade
 import androidx.compose.ui.platform.testTag
 import androidx.compose.runtime.saveable.rememberSaveable
 import de.raumlicht.app.ui.fx.BackArrow
@@ -82,7 +84,7 @@ fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit, startL
                 LaunchedEffect(Unit) { delay(60L * i); shown = true }
                 val s by animateFloatAsState(if (shown) 1f else 0.6f, spring(dampingRatio = 0.5f, stiffness = 300f), label = "karte")
                 Row(Modifier.fillMaxWidth().graphicsLayer { scaleX = s; scaleY = s; alpha = if (shown) 1f else 0f }.pressBounce(interaction).clip(RoundedCornerShape(20.dp))
-                    .background(Brush.horizontalGradient(listOf(c.copy(alpha = 0.25f), Q.Deep))).border(1.5.dp, c.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
+                    .background(horizontalFade(listOf(c.copy(alpha = 0.25f), Q.Deep))).border(1.5.dp, c.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
                     .clickable(interaction, null) { onPick(t, level) }.padding(16.dp).testTag("thema-${t.name}"), verticalAlignment = Alignment.CenterVertically) {
                     Text(t.emoji, fontSize = 30.sp)
                     Column(Modifier.weight(1f).padding(start = 12.dp)) {
@@ -105,7 +107,7 @@ fun SheetScreen(cards: List<SheetCard>, onChapter: (Int) -> Unit = {}, onJam: (J
         LazyColumn(contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             itemsIndexed(cards) { _, card ->
                 val c = stageColor(card.color)
-                Column(Modifier.fillMaxWidth().background(Brush.horizontalGradient(listOf(c.copy(alpha = 0.14f), Q.Deep)), RoundedCornerShape(18.dp))
+                Column(Modifier.fillMaxWidth().background(horizontalFade(listOf(c.copy(alpha = 0.14f), Q.Deep)), RoundedCornerShape(18.dp))
                     .border(1.dp, c.copy(alpha = 0.5f), RoundedCornerShape(18.dp)).padding(14.dp)) {
                     Text("${card.emoji}  ${card.title}", color = c, style = MaterialTheme.typography.titleMedium)
                     card.lines.forEach { line ->
@@ -143,7 +145,7 @@ fun BadgesScreen(badges: List<Badge>, onBack: () -> Unit) {
                 LaunchedEffect(Unit) { delay(40L * i); shown = true }
                 val s by animateFloatAsState(if (shown) 1f else 0.5f, spring(dampingRatio = 0.45f, stiffness = 300f), label = "abzeichen")
                 Column(Modifier.graphicsLayer { scaleX = s; scaleY = s }.alpha(if (b.earned) 1f else 0.45f)
-                    .background(if (b.earned) Brush.verticalGradient(listOf(Q.Yellow.copy(alpha = 0.22f), Q.Deep)) else Brush.verticalGradient(listOf(Q.Panel, Q.Deep)), RoundedCornerShape(18.dp))
+                    .background(if (b.earned) verticalFade(listOf(Q.Yellow.copy(alpha = 0.22f), Q.Deep)) else verticalFade(listOf(Q.Panel, Q.Deep)), RoundedCornerShape(18.dp))
                     .border(1.5.dp, if (b.earned) Q.Yellow else Q.Muted.copy(alpha = 0.4f), RoundedCornerShape(18.dp)).padding(12.dp).height(112.dp),
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(if (b.earned) b.emoji else "🔒", fontSize = 32.sp)
@@ -169,7 +171,7 @@ fun ModeTiles(dailyDone: Boolean, jamBest: Int, onDaily: () -> Unit, onJam: () -
 @Composable
 private fun Tile(emoji: String, title: String, sub: String, color: androidx.compose.ui.graphics.Color, highlight: Boolean, modifier: Modifier, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
-    Column(modifier.pressBounce(interaction).clip(RoundedCornerShape(16.dp)).background(Brush.verticalGradient(listOf(color.copy(alpha = if (highlight) 0.32f else 0.14f), Q.Deep)))
+    Column(modifier.pressBounce(interaction).clip(RoundedCornerShape(16.dp)).background(verticalFade(listOf(color.copy(alpha = if (highlight) 0.32f else 0.14f), Q.Deep)))
         .border(if (highlight) 2.dp else 1.dp, color.copy(alpha = if (highlight) 1f else 0.4f), RoundedCornerShape(16.dp)).clickable(interaction, null, onClick = onClick).padding(vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text(emoji, fontSize = 22.sp)
