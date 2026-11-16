@@ -1,5 +1,64 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 16.11.2026 – Konzept Lehrerzugang (noch nicht gebaut)
+
+**Heute:** Es gibt den Klassen-Code `WGK1-…`. Die Lehrkraft teilt ein eigenes Beet als QR-Code bzw. Link, alles steckt im Code, ohne Server und ohne Rückmeldung.
+Künftig wird er zum **Beitritts-Code des gemeinsamen Klassen-Dienstes**. Das alte Format bleibt für „nur Karten teilen“ ohne Konto erhalten.
+
+### 1. Was die Lehrkraft sieht und steuert (im zentralen Lehrerzugang)
+
+| Funktion | Inhalt |
+|---|---|
+| Klassen | Anlegen und löschen; je Klasse Name, Klassenstufe, Fach |
+| Beitritt | Code/QR, z. B. `WG-7B-4K9P`; neu erzeugen; Beitritt sperren |
+| Schülerliste | Nur Spitzname und Tier-Avatar; einzelne Kinder entfernen |
+| Aufträge | Pakete aus dem Katalog (auch Plus bei Schullizenz) **oder eigene Karten der Lehrkraft** mit Frist und optional Mindestanzahl Karten „sicher“ |
+| Klassenarbeit | Datum und Pakete vorgeben. Bei jedem Kind läuft dann der vorhandene Klassenarbeits-Countdown, der die Wiederholung bis zum Termin verteilt |
+| Ergebnisse je Kind × Auftrag | Karten gelernt, sicher (Busch und höher), Wackelkandidaten, letzte Aktivität (Tag), Auftrag erledigt ja/nein |
+| Klassensicht | „Diese 5 Karten machen der Klasse Mühe“ (häufigste Fehler), Fortschritt aller Kinder als Balken |
+| Export / Löschen | CSV je Klasse; Klasse samt aller Daten löschen; Daten werden 30 Tage nach Schuljahresende automatisch gelöscht |
+| Schullizenz | Laufzeit, Anzahl Klassen und Kinder, Lehrkräfte der Schule einladen (Schul-Admin) |
+
+### 2. Daten, die die App schickt (nur im Klassenmodus, sonst nichts)
+
+| Gesendet | Nicht gesendet |
+|---|---|
+| Zufällige Kind-ID (UUID, nur für diese Klasse), Spitzname aus Auswahl, Avatar | Echter Name, E-Mail, Alter, Gerät, Standort, Werbe-ID |
+| Je Auftrag und Karte: Stufe (Samen … Baum), Anzahl richtig/falsch, Tag der letzten Wiederholung | Getippte Antworten, Fotos, Sprache, Zeichnungen |
+| Einmal am Tag ein kleines Paket (ca. 1–5 KB), nur wenn ein Auftrag aktiv ist | Lernzeit pro Minute, Nutzung außerhalb der Aufträge, eigene private Beete |
+
+Die Daten liegen auf dem Server der Website (DE). Die Lehrkraft bzw. Schule ist verantwortlich, wir sind Auftragsverarbeiter (AV-Vertrag als Vorlage).
+Dazu kommt ein Abschnitt in der Datenschutzerklärung.
+
+### 3. Beitritt und was das Kind sieht
+
+| Schritt | Ablauf |
+|---|---|
+| Beitreten | Einstellungen → **Eltern-Tor** → „Klasse beitreten“ → QR scannen oder Code tippen |
+| Spitzname | Aus einer Liste (z. B. „Flinker Fuchs“ und Tier) wählen; kein Freitext, kein Chat, keine Sicht auf andere Kinder |
+| Im Garten | Ein eigenes **Klassen-Beet mit Schul-Schild 🏫**. Aufträge erscheinen als Beet mit Frist („noch 5 Tage“) und Brummi-Hinweis |
+| Belohnung | Normal wie immer (Tautropfen, Figuren). Es gibt **keine Rangliste**, nur „Die Klasse hat zusammen 1.240 Karten gegossen 🌻“ |
+| Austreten | Eltern-Tor → „Klasse verlassen“. Die Daten des Kindes beim Server werden sofort gelöscht, der eigene Lernstand bleibt |
+
+### 4. Frei und Schullizenz
+
+| Frei für Lehrkräfte | Schullizenz |
+|---|---|
+| 1 Klasse, bis 30 Kinder | Unbegrenzt Klassen und Lehrkräfte der Schule |
+| Aufträge mit freien Paketen und eigenen Karten | Alle Plus-Pakete (Abi/Experte) für die Klasse |
+| Ergebnisse je Kind (gelernt / sicher / Fehler) | Klassenarbeits-Planung, Klassensicht „häufigste Fehler“, CSV-Export |
+| – | **Alle Kinder der Klassen haben Plus** (zu Hause, auch KI-Brummi mit Schulgrenze) für die Laufzeit |
+
+**Preisvorschlag:** Zum Vergleich ANTON: Schullizenz ca. 250/400 € pro Jahr, mit Plus ca. 450/700 € pro Jahr, je nach Schulgröße bis bzw. über 500 Kinder.
+
+| Lizenz | Brutto inkl. 19 % USt | Netto |
+|---|---|---|
+| Klassenlizenz (1 Klasse, 1 Jahr) | 49 € | 41,18 € |
+| Schullizenz bis 500 Kinder (1 Jahr) | 299 € | 251,26 € |
+| Schullizenz über 500 Kinder (1 Jahr) | 449 € | 377,31 € |
+
+Verkauf über die Woo-Kasse mit Rechnung (auch auf Rechnung bzw. Bestellnummer des Schulträgers). Keine Abo-Automatik, die Lizenz läuft zum Schuljahresende aus, mit Erinnerung.
+
 ## 16.11.2026 – Konzept „Wissensgarten Plus“ (noch nicht gebaut)
 
 ### 1. Frei und Plus
