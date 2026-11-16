@@ -28,7 +28,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - uses: actions/setup-java@v5
-        with: { distribution: temurin, java-version: '21' }
+        with: { distribution: temurin, java-version: '21', cache: gradle }   # Gradle-Bausteine zwischenspeichern (Maven Central drosselte am 16.11. mit 429)
 
       - name: Upload-Schlüssel prüfen und einrichten
         id: key

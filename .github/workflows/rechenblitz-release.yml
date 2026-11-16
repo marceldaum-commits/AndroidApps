@@ -40,7 +40,7 @@ jobs:
 
       - if: steps.key.outputs.ok == 'true'
         uses: actions/setup-java@v5
-        with: { distribution: temurin, java-version: '21' }
+        with: { distribution: temurin, java-version: '21', cache: gradle }   # Gradle-Bausteine zwischenspeichern (Maven Central drosselte am 16.11. mit 429)
       - if: steps.key.outputs.ok == 'true'
         uses: actions/setup-node@v5
         with: { node-version: '22' }
