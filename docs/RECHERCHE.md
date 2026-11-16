@@ -129,3 +129,13 @@ Auftrag (Marcel über den Leitstand): „sehr viel Inhalt“, jede Aufgabe mit E
 - Darstellung als Histogramm (Säulen), damit Dichte und Treppenform der kumulierten Verteilung sichtbar werden –
   Visualisierung hilft gegen typische Fehlvorstellungen (Verwechslung „genau“ / „höchstens“, Batanero u. a.).
 - Spielmechanik: n oder p so wählen, dass Säulen bestimmte Höhen treffen; Rechen-Frage prüft die richtige Gleichung.
+
+## Kurvenflug 0.21.1: schneller Start (Nov. 2026)
+- Wartezeit fühlt sich kürzer an, wenn Fortschritt sichtbar ist (determinierte Balken statt Endlos-Animation,
+  Nielsen/Myers): deshalb echter Byte-Balken „Lade … %“ mit Volt-Text.
+- Messung mit Drosselung am Server (gilt auch für den Service Worker – die Browser-Drosselung zählt dessen
+  Downloads nicht!): Der Offline-Cache lud beim ersten Start alle Dateien ein zweites Mal (9,9 statt 5,2 MB).
+  Lösung: Service Worker erst nach dem Start registrieren, Cache-Abgleich mit `cache: "no-cache"` (Server antwortet 304).
+- Wasm parallel und sofort anfragen, aber als Strom weiterreichen – so bleibt `instantiateStreaming`
+  (Übersetzen während des Ladens) erhalten. Puffern hätte ~2 s gekostet.
+- Android 12+: eigener System-Startbildschirm (`windowSplashScreenBackground`) in App-Farbe, sonst je nach Gerät weiß.

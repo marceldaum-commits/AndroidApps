@@ -67,6 +67,16 @@ val webapp by tasks.registering(Sync::class) {
     exclude("**/*.map")
     filesMatching("index.html") { filter { it.replace("{{VERSION}}", appVersion) } }
     doLast {
+        // Große Dateien für das Schnell-Laden mit Fortschrittsbalken (kf.js) – Pfad, Größe, Typ
+        val dir = rootProject.file("webapp")
+        val big = dir.walkTopDown().filter { it.isFile && (it.extension == "wasm" || it.name == "symbols.ttf") }   // Emoji-Schrift kommt erst nach dem Start.sortedByDescending { it.length() }
+        val json = big.joinToString(",", "[", "]") { f ->
+            "{\"u\":\"${f.relativeTo(dir).invariantSeparatorsPath}\",\"s\":${f.length()},\"t\":\"${if (f.extension == "wasm") "application/wasm" else "font/ttf"}\"}"
+        }
+        val index = dir.resolve("index.html")
+        index.writeText(index.readText().replace("{{FILES}}", json))
+    }
+    doLast {
         val dir = rootProject.file("webapp")
         val files = dir.walkTopDown().filter { it.isFile }.map { it.relativeTo(dir).invariantSeparatorsPath }.sorted().toList()
         val list = (listOf("./") + files).joinToString(",\n  ") { "\"$it\"" }
@@ -77,7 +87,7 @@ val webapp by tasks.registering(Sync::class) {
             |  $list
             |];
             |self.addEventListener("install", e => {
-            |  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: "reload" })))).then(() => self.skipWaiting()));
+            |  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: "no-cache" })))).then(() => self.skipWaiting()));
             |});
             |self.addEventListener("activate", e => {
             |  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("kurvenflug-") && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));

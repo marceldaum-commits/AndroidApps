@@ -3,6 +3,14 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.21.1 – Schneller Start
+- **🚀 Startet fast doppelt so schnell**: Die Web-Version lädt beim ersten Öffnen nur noch gut 5 MB statt knapp 10 MB –
+  vorher wurde für das Offline-Spielen alles ein zweites Mal geladen. Mit schnellem Handy-Netz ist Kurvenflug nach
+  etwa 6 Sekunden spielbereit (vorher gut 10), bei langsamem Netz nach knapp 30 statt über 50 Sekunden.
+  Ab dem zweiten Öffnen startet es in unter einer Sekunde – auch ganz ohne Internet.
+- **📊 Echter Ladebalken**: Beim ersten Öffnen zeigt Volt, wie viel schon geladen ist („Lade … 54 %“).
+- **🌌 Kein weißes Aufblitzen mehr**: Auf Android 12 und neuer startet die App direkt im dunklen Weltall-Blau.
+
 ## 0.21.0 – Bereit für Google Play
 - **📦 Kurvenflug kommt in den Play Store**: Es gibt jetzt eine eigene Play-Store-Version – ohne Internet, ohne eigenen
   Update-Knopf. Updates kommen dort von Google Play direkt in der App und werden im Hintergrund installiert.

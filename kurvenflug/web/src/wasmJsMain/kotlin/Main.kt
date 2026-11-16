@@ -15,7 +15,7 @@ import kotlinx.coroutines.MainScope
 import de.kurvenflug.web.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-private fun hideLoader(): Unit = js("{ var l = document.getElementById('kf-loader'); if (l) { l.classList.add('weg'); setTimeout(function () { l.remove(); }, 400); } }")
+private fun hideLoader(): Unit = js("{ var l = document.getElementById('kf-loader'); if (l) { l.classList.add('weg'); setTimeout(function () { l.remove(); }, 400); } if (window.kfReady) window.kfReady(); }")
 
 /** Kurvenflug im Browser: dieselbe Oberfläche wie auf Android, Spielstand im lokalen Speicher des Browsers. */
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
