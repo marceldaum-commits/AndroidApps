@@ -1,8 +1,8 @@
-// Kurvenflug 0.21.0 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
-const CACHE = "kurvenflug-0.21.0";
+// Kurvenflug 0.21.1 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
+const CACHE = "kurvenflug-0.21.1";
 const FILES = [
   "./",
-  "36742e53e2c80aae224a.wasm",
+  "57ce716c6346d4a859e5.wasm",
   "bccfa839aa4b38489c76.wasm",
   "composeResources/de.kurvenflug.web.resources/files/emoji.ttf",
   "composeResources/de.kurvenflug.web.resources/files/symbols.ttf",
@@ -20,7 +20,7 @@ const FILES = [
   "manifest.webmanifest"
 ];
 self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: "reload" })))).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: "no-cache" })))).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("kurvenflug-") && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));

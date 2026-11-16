@@ -2,7 +2,7 @@
 
 ## 0.21.1 – Schneller Start, Ladebalken, kein weißer Bildschirm (Auftrag Marcel vom 16.11.)
 
-- **Version:** 0.21.1 · **Commit:** {{COMMIT}} (Zweig claude/gifted-shannon-657gpr)
+- **Version:** 0.21.1 · **Commit:** d6d0962 (Zweig claude/gifted-shannon-657gpr)
 - **Hauptursache gefunden:** Beim ersten Start lud der Service Worker (Offline-Speicher) **alle Dateien ein zweites Mal**,
   parallel zur App – auf dem Handy also ~9,9 MB statt 5,2 MB über dieselbe Leitung. Jetzt registriert er sich erst,
   wenn die App läuft, und fragt nur „geändert?“ (der Testserver antwortet korrekt mit 304, geprüft).
