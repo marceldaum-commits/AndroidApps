@@ -1,5 +1,32 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 16.11.2026 – Plus: Schnittstelle für den Paket-Endpunkt (bitte so bauen)
+
+Basis: `https://wissensgarten.mathenachhilfe-online.com/wg-api/plus/`. Dieselbe Adresse gilt für die Test-WebApp (`wissensgarten-test.…`), die Android-App nutzt die Live-Adresse.
+
+| Aufruf | Lizenz nötig | Antwort |
+|---|---|---|
+| `GET /wg-api/plus/versions.json` | nein | `200`, `{"ob-abi-xyz.json": 2, …}` – Dateiname → Paket-Version (wie `packs/versions.json`), `Cache-Control: no-cache` |
+| `GET /wg-api/plus/<datei>.json` mit Header `X-Lizenz: <Code>` | ja | `200` Paket-JSON (Format wie `content/PACK_FORMAT.md`), `Content-Type: application/json`, `Cache-Control: private, no-store` |
+| … ohne/mit ungültigem Code | – | `403` `{"fehler": "lizenz"}` |
+| … Jahres-Plus abgelaufen | – | `403` `{"fehler": "abgelaufen"}` |
+| … unbekannte Datei | – | `404` |
+
+Prüfung auf dem Server, gleich wie in der App:
+- **Code:** Format `WG-…` (Version 1, App-Byte 3), Ed25519 mit dem bekannten Schlüsselpaar.
+- **Produkt 1 (Plus Jahr):** Gültig ab dem Tag im Code (Tage seit 1.1.2020) für 365 Tage, letzter gültiger Tag = Tag + 364.
+- **Produkt 3 (Plus für immer):** Kein Ablaufdatum.
+
+Weitere Regeln:
+- Bindestriche und Klein-/Großschreibung im Header ignorieren, wie `License.extract`.
+- Dateinamen nur nach `^[a-z0-9][a-z0-9-]{0,60}\.json$` annehmen.
+- **CORS:** Die WebApp ruft von derselben Domain auf, also nichts nötig. Android ruft direkt auf.
+- **Kein Logging des Codes** im Klartext (höchstens Hash), keine Cookies.
+- **Rate-Limit:** z. B. 300 Abrufe je Code und Tag.
+
+Die App lädt neue oder aktualisierte Plus-Pakete höchstens alle 20 h und nur bei aktivem Plus. Sie speichert sie lokal (Android: privater App-Speicher, Web: Browser-Speicher).
+Ohne gültigen Code wird nichts abgerufen.
+
 ## 16.11.2026 – Konzept Lehrerzugang (noch nicht gebaut)
 
 **Heute:** Es gibt den Klassen-Code `WGK1-…`. Die Lehrkraft teilt ein eigenes Beet als QR-Code bzw. Link, alles steckt im Code, ohne Server und ohne Rückmeldung.
