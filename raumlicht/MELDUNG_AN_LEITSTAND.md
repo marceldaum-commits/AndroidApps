@@ -439,3 +439,19 @@ Marcel fand meinen geänderten Vorschlag gut („das ist nice“): Tutor-Verlän
 alternativ eine niedrigere Tagesgrenze. Das ist eine Tendenz, **noch keine ausdrückliche Entscheidung** – ich habe ihn um ein klares Ja gebeten.
 Vorschlag im Ganzen: Abi-Pass 14,99 € einmalig (Einführung 9,99 €), Inhalte dauerhaft, Tutor 12 Monate inklusive, Verlängerung 9,99 € pro Jahr; alle Preise inkl. 19 % USt.
 Bei 9,99 € brutto: 8,39 € netto, über Play rund 7,14 €, über die Website rund 7,76 € (Annahmen wie im USt-Nachtrag).
+
+---
+
+## 16.11.2026 – Konzept Pro: Preise von Marcel beschlossen
+
+Marcel hat direkt bestätigt („ja“), alle Preise inkl. 19 % USt:
+
+| Produkt | Preis | Zeitraum | kommt an über Play / Website (Annahmen wie im USt-Nachtrag) |
+|---|---|---|---|
+| Abi-Pass | 14,99 € einmalig (Einführung 9,99 €) | Inhalte **dauerhaft** | 10,71 € / 11,81 € (Einführung 7,14 € / 7,76 €) |
+| KI-Tutor | im Abi-Pass enthalten | **12 Monate ab Kauf** | – |
+| Tutor-Verlängerung | 9,99 € | je weiteres Jahr | 7,14 € / 7,76 € |
+
+Für den Lizenz-Dienst: Der Freischalt-Schein braucht zwei Angaben – „Pro dauerhaft“ und „Tutor gültig bis“; die Verlängerung ist ein eigenes Produkt, das nur das Tutor-Datum verschiebt.
+Ebenfalls beschlossen: Grenze frei/Pro wie im Konzept, Gründer-Code für bisherige Tester, Tutor-Start mit Claude Haiku 5.5 (an echten Aufgaben testen).
+Gebaut ist davon weiterhin nur der ausgeschaltete Pro-Schalter mit den Sperren (2.11.0).
