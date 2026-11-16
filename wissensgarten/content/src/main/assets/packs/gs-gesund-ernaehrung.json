@@ -1,0 +1,423 @@
+{
+  "id": "gs-gesund-ernaehrung",
+  "version": 1,
+  "title": "Gesund und fit",
+  "subject": "sachunterricht",
+  "grades": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "emoji": "🍎",
+  "tier": "free",
+  "description": "Gesund essen, Zähne putzen, gut schlafen, viel bewegen und Hände waschen – so bleibt dein Körper fit.",
+  "intro": [
+    {
+      "img": "🔺🥕",
+      "text": "Wusstest du? Die Ernährungspyramide zeigt, wovon du viel essen darfst: unten Getränke, Obst und Gemüse, ganz oben nur ein bisschen Süßes."
+    },
+    {
+      "img": "🦷✨",
+      "text": "Deine Zähne mögen es sauber: zweimal am Tag putzen, morgens und abends. Zucker mögen nur die Kariesbakterien."
+    },
+    {
+      "img": "😴🧠",
+      "text": "Im Schlaf ruht sich dein Körper aus, und dein Gehirn sortiert, was du am Tag gelernt hast."
+    },
+    {
+      "img": "🏃🧼",
+      "text": "Toben macht Herz und Muskeln stark. Und danach: Hände waschen mit Seife – so haben Keime keine Chance!"
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's, Fitness-Profi! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welches davon ist ein Gemüse?",
+      "a": "Möhre",
+      "choices": [
+        "Apfel",
+        "Banane",
+        "Kirsche"
+      ],
+      "info": "Möhren, Gurken und Brokkoli sind Gemüse. Äpfel und Kirschen sind Obst.",
+      "img": "🥕🐰"
+    },
+    {
+      "id": "002",
+      "q": "Welches davon ist Obst?",
+      "a": "Birne",
+      "choices": [
+        "Brokkoli",
+        "Möhre",
+        "Kartoffel"
+      ],
+      "info": "Obst wächst meist an Bäumen oder Sträuchern und schmeckt oft süß.",
+      "img": "🍐🌳"
+    },
+    {
+      "id": "003",
+      "q": "Was steht in der Ernährungspyramide ganz unten – davon brauchst du am meisten?",
+      "a": "Getränke wie Wasser",
+      "choices": [
+        "Süßigkeiten",
+        "Fleisch und Wurst",
+        "Butter und Öl"
+      ],
+      "info": "Trink über den Tag verteilt Wasser oder ungesüßten Tee.",
+      "img": "💧🔺"
+    },
+    {
+      "id": "004",
+      "q": "Was steht ganz oben in der Spitze der Pyramide – davon nur wenig?",
+      "a": "Süßigkeiten und Knabberzeug",
+      "choices": [
+        "Gemüse",
+        "Brot",
+        "Wasser"
+      ],
+      "info": "Süßes ist ein kleines Extra. Davon reicht eine kleine Portion am Tag.",
+      "img": "🍬🔺"
+    },
+    {
+      "id": "005",
+      "q": "Wie viele Portionen Obst und Gemüse am Tag werden empfohlen?",
+      "a": "5",
+      "choices": [
+        "1",
+        "2",
+        "10"
+      ],
+      "info": "Merke: „5 am Tag“ – zum Beispiel 3 Portionen Gemüse und 2 Portionen Obst.",
+      "img": "🖐️🍎"
+    },
+    {
+      "id": "006",
+      "q": "Wie groß ist ungefähr eine Portion Obst?",
+      "a": "Eine Handvoll",
+      "choices": [
+        "Ein Eimer voll",
+        "Ein Teelöffel",
+        "Ein Kochtopf voll"
+      ],
+      "info": "Deine eigene Hand ist das Maß – kleine Hand, kleine Portion.",
+      "img": "✋🍓"
+    },
+    {
+      "id": "007",
+      "q": "Welches Getränk hat viel versteckten Zucker?",
+      "a": "Limonade",
+      "choices": [
+        "Leitungswasser",
+        "Ungesüßter Kräutertee",
+        "Mineralwasser"
+      ],
+      "info": "In einem Glas Limo stecken oft mehrere Stück Würfelzucker.",
+      "img": "🥤🍬"
+    },
+    {
+      "id": "008",
+      "q": "Welches Frühstück macht lange satt?",
+      "a": "Vollkornbrot mit Käse und Gurke",
+      "choices": [
+        "Ein Schokoriegel",
+        "Ein Glas Limo",
+        "Ein Bonbon"
+      ],
+      "info": "Vollkorn gibt lange Kraft. Süßes macht nur kurz satt.",
+      "img": "🍞🧀🥒"
+    },
+    {
+      "id": "009",
+      "q": "Was steckt reichlich in Milch und Käse und macht Knochen stark?",
+      "a": "Kalzium",
+      "choices": [
+        "Zucker",
+        "Koffein",
+        "Salz"
+      ],
+      "info": "Kalzium ist ein Baustein für Knochen und Zähne.",
+      "img": "🥛🦴"
+    },
+    {
+      "id": "010",
+      "q": "Brot, Nudeln und Kartoffeln liefern vor allem …?",
+      "a": "Kohlenhydrate",
+      "choices": [
+        "Kalzium",
+        "Fett",
+        "Eisen"
+      ],
+      "info": "Kohlenhydrate sind Treibstoff für Körper und Gehirn.",
+      "img": "🍝⛽"
+    },
+    {
+      "id": "011",
+      "q": "Welches Vitamin steckt besonders viel in Orangen und Kiwis?",
+      "a": "Vitamin C",
+      "choices": [
+        "Vitamin D",
+        "Vitamin B12",
+        "Vitamin A"
+      ],
+      "info": "Auch Paprika und Brokkoli haben viel Vitamin C.",
+      "img": "🍊🥝"
+    },
+    {
+      "id": "012",
+      "q": "Wie oft am Tag solltest du die Zähne putzen?",
+      "a": "Mindestens zweimal",
+      "choices": [
+        "Einmal pro Woche",
+        "Nur wenn sie wehtun",
+        "Einmal im Monat"
+      ],
+      "info": "Morgens nach dem Frühstück und abends vor dem Schlafen.",
+      "img": "🦷🌅🌙"
+    },
+    {
+      "id": "013",
+      "q": "Wie lange solltest du die Zähne putzen?",
+      "a": "Etwa 2 bis 3 Minuten",
+      "choices": [
+        "10 Sekunden",
+        "30 Minuten",
+        "Eine Stunde"
+      ],
+      "info": "Tipp: Eine Sanduhr oder ein Lied hilft dir beim Durchhalten.",
+      "img": "⏳🦷"
+    },
+    {
+      "id": "014",
+      "q": "Wofür steht KAI beim Zähneputzen?",
+      "a": "Kauflächen, Außenflächen, Innenflächen",
+      "choices": [
+        "Kopf, Arme, Innenohr",
+        "Kaugummi, Apfel, Ingwer",
+        "Kalt, Abends, Immer"
+      ],
+      "info": "Mit KAI vergisst du keine Seite deiner Zähne.",
+      "img": "🦷🔤"
+    },
+    {
+      "id": "015",
+      "q": "Was macht Löcher in die Zähne?",
+      "a": "Bakterien, die aus Zucker Säure machen",
+      "choices": [
+        "Viel Wasser trinken",
+        "Kaltes Wetter",
+        "Langes Schlafen"
+      ],
+      "info": "Die Löcher heißen Karies. Zähneputzen nimmt den Bakterien das Futter weg.",
+      "img": "🦠🍬"
+    },
+    {
+      "id": "016",
+      "q": "Wie oft solltest du zur Kontrolle zur Zahnarztpraxis?",
+      "a": "Etwa zweimal im Jahr",
+      "choices": [
+        "Alle zehn Jahre",
+        "Nur bei Schmerzen",
+        "Jeden Tag"
+      ],
+      "info": "Bei der Kontrolle findet man kleine Probleme, bevor sie wehtun.",
+      "img": "🦷🔍"
+    },
+    {
+      "id": "017",
+      "q": "Wie viele Stunden Schlaf brauchen Grundschulkinder ungefähr?",
+      "a": "Etwa 10 Stunden",
+      "choices": [
+        "Etwa 4 Stunden",
+        "Etwa 6 Stunden",
+        "Etwa 16 Stunden"
+      ],
+      "info": "Kinder brauchen mehr Schlaf als Erwachsene. Ausgeschlafen lernt es sich leichter.",
+      "img": "😴🛏️"
+    },
+    {
+      "id": "018",
+      "q": "Was hilft dir beim Einschlafen?",
+      "a": "Handy und Tablet früh weglegen",
+      "choices": [
+        "Noch ein Gruselspiel spielen",
+        "Eine Cola trinken",
+        "Helles Licht anlassen"
+      ],
+      "info": "Bildschirmlicht hält wach. Lies lieber ein Buch oder hör eine Geschichte.",
+      "img": "📵📖"
+    },
+    {
+      "id": "019",
+      "q": "Was macht dein Gehirn, während du schläfst?",
+      "a": "Es speichert Gelerntes",
+      "choices": [
+        "Es schaltet sich ganz aus",
+        "Es schrumpft",
+        "Es löscht alles"
+      ],
+      "info": "Im Schlaf werden die Erlebnisse vom Tag sortiert und gespeichert.",
+      "img": "🧠💾"
+    },
+    {
+      "id": "020",
+      "q": "Wie lange sollten sich Kinder jeden Tag bewegen?",
+      "a": "Mindestens eine Stunde",
+      "choices": [
+        "5 Minuten",
+        "Nur am Wochenende",
+        "Gar nicht"
+      ],
+      "info": "Rennen, Radeln, Klettern, Tanzen – alles zählt!",
+      "img": "🚲⏰"
+    },
+    {
+      "id": "021",
+      "q": "Was macht dein Herz, wenn du schnell rennst?",
+      "a": "Es schlägt schneller",
+      "choices": [
+        "Es bleibt stehen",
+        "Es schlägt langsamer",
+        "Es wird kalt"
+      ],
+      "info": "Deine Muskeln brauchen dann mehr Sauerstoff. Das Herz pumpt schneller.",
+      "img": "🏃💓"
+    },
+    {
+      "id": "022",
+      "q": "Warum schwitzt du beim Sport?",
+      "a": "Damit der Körper abkühlt",
+      "choices": [
+        "Damit du schneller wirst",
+        "Weil du durstig bist",
+        "Damit die Haare wachsen"
+      ],
+      "info": "Schweiß verdunstet auf der Haut und kühlt dich ab.",
+      "img": "💦🌡️"
+    },
+    {
+      "id": "023",
+      "q": "Welcher Muskel arbeitet immer, auch wenn du schläfst?",
+      "a": "Das Herz",
+      "choices": [
+        "Der Bizeps",
+        "Der Wadenmuskel",
+        "Der Bauchmuskel"
+      ],
+      "info": "Dein Herz schlägt jeden Tag über 100.000 Mal.",
+      "img": "❤️😴"
+    },
+    {
+      "id": "024",
+      "q": "Wann solltest du die Hände waschen?",
+      "a": "Nach dem Klo und vor dem Essen",
+      "choices": [
+        "Nur am Sonntag",
+        "Nur nach dem Baden",
+        "Nur wenn sie schwarz sind"
+      ],
+      "info": "Auch nach dem Spielen draußen und nach dem Naseputzen.",
+      "img": "🧼🍽️"
+    },
+    {
+      "id": "025",
+      "q": "Wie lange solltest du die Hände mit Seife einschäumen?",
+      "a": "20 bis 30 Sekunden",
+      "choices": [
+        "2 Sekunden",
+        "Gar nicht, Wasser reicht",
+        "10 Minuten"
+      ],
+      "info": "Tipp: Zweimal „Happy Birthday“ summen – dann ist es lang genug.",
+      "img": "🧼⏱️"
+    },
+    {
+      "id": "026",
+      "q": "Wohin niest du, wenn kein Taschentuch da ist?",
+      "a": "In die Armbeuge",
+      "choices": [
+        "In die Hand",
+        "Auf den Tisch",
+        "In die Luft vor dir"
+      ],
+      "info": "So landen die Keime nicht an deinen Händen und nicht bei anderen.",
+      "img": "🤧💪"
+    },
+    {
+      "id": "027",
+      "q": "Warum wäschst du die Hände mit Seife und nicht nur mit Wasser?",
+      "a": "Seife löst Schmutz und Keime besser",
+      "choices": [
+        "Seife riecht nur gut",
+        "Wasser macht Hände schmutzig",
+        "Seife macht die Hände warm"
+      ],
+      "info": "Seife macht Fett und Schmutz locker. Dann spült das Wasser die Keime weg.",
+      "img": "🧼🦠"
+    },
+    {
+      "id": "028",
+      "q": "Wie schmeckt eine Zitrone?",
+      "a": "Sauer",
+      "choices": [
+        "Süß",
+        "Salzig",
+        "Scharf"
+      ],
+      "info": "Deine Zunge schmeckt süß, sauer, salzig, bitter und herzhaft.",
+      "img": "🍋😖"
+    },
+    {
+      "id": "029",
+      "q": "Warum schmeckt Essen bei Schnupfen nach fast nichts?",
+      "a": "Die Nase hilft beim Schmecken",
+      "choices": [
+        "Die Zunge schläft",
+        "Die Zähne sind müde",
+        "Das Essen ist kälter"
+      ],
+      "info": "Viel vom Geschmack ist eigentlich Geruch. Bei verstopfter Nase fehlt der.",
+      "img": "🤧👃"
+    },
+    {
+      "id": "030",
+      "q": "Mit welchem Sinn erkennst du im Dunkeln, ob etwas weich oder hart ist?",
+      "a": "Tastsinn",
+      "choices": [
+        "Hörsinn",
+        "Sehsinn",
+        "Geruchssinn"
+      ],
+      "info": "Mit Haut und Fingerspitzen fühlst du weich, hart, warm und kalt.",
+      "img": "✋🧸"
+    },
+    {
+      "id": "031",
+      "q": "Wo sitzt dein Gleichgewichtssinn?",
+      "a": "Im Innenohr",
+      "choices": [
+        "Im Bauch",
+        "In den Füßen",
+        "In der Nase"
+      ],
+      "info": "Im Ohr sitzt ein kleines Organ. Es merkt, ob du gerade stehst oder kippst.",
+      "img": "👂⚖️"
+    },
+    {
+      "id": "032",
+      "q": "Was schützt deine Augen vor Staub und Schweiß?",
+      "a": "Wimpern und Augenbrauen",
+      "choices": [
+        "Die Ohren",
+        "Die Lippen",
+        "Die Fingernägel"
+      ],
+      "info": "Augenbrauen leiten Schweiß zur Seite, Wimpern halten Staub fern.",
+      "img": "👁️🛡️"
+    }
+  ]
+}
