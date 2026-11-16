@@ -14,6 +14,7 @@ import de.wissensgarten.core.model.MusicMood
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.await
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.*
@@ -176,7 +177,7 @@ object WebImages : ImageStore {
 /** Web-Seite der Plattform-Brücke. */
 class WebHost : AppHost {
     override val features = Features(selfUpdate = false, safari = false, reminders = false, sync = false, qrScan = false,
-        tilt = true, keepsakes = false, widget = false, label = "WebApp")
+        tilt = true, keepsakes = false, widget = false, label = "WebApp", plusPurchase = true)
     override val sfx = WebSfx()
     override val music = WebMusic()
     override val voice = WebVoice().also { v -> v.onSpeaking = { music.duck(it) } }
@@ -184,6 +185,22 @@ class WebHost : AppHost {
     override val images = WebImages
 
     override fun toast(message: String) = jsToast(message)
+
+    // Plus-Pakete: gleicher Server wie die WebApp (relativ), Code im Header – nichts landet in Adresse oder Protokoll
+    override suspend fun fetchPlusPacks(code: String, known: Map<String, Int>): Int {
+        val store = runCatching {
+            (kotlinx.serialization.json.Json.parseToJsonElement(kotlinx.browser.localStorage.getItem(PLUS_PACKS_KEY) ?: "{}") as kotlinx.serialization.json.JsonObject)
+                .mapValues { (it.value as kotlinx.serialization.json.JsonPrimitive).content }.toMutableMap()
+        }.getOrDefault(mutableMapOf())
+        val n = de.wissensgarten.core.data.PackUpdates(
+            get = { name -> fetchLicensed("wg-api/plus/$name", code).await<JsString?>()?.toString() },
+            save = { name, text -> store[name] = text },
+        ).fetch(known)
+        if (n > 0) runCatching {
+            kotlinx.browser.localStorage.setItem(PLUS_PACKS_KEY, kotlinx.serialization.json.JsonObject(store.mapValues { kotlinx.serialization.json.JsonPrimitive(it.value) }).toString())
+        }.onFailure { jsToast("Der Browser-Speicher ist voll – Plus-Pakete konnten nicht gespeichert werden.") }
+        return n
+    }
     override fun shareText(text: String) = jsShareText(text)
     override fun shareImage(image: ImageBitmap, fileName: String, text: String) = jsSharePng(fileName, Base64.encode(image.encodePng()), text)
     override fun printCraftSheet(bedName: String, emoji: String, items: List<CraftItem>) = jsPrintHtml(CraftHtml.page(bedName, emoji, items))
@@ -228,3 +245,7 @@ object CraftHtml {
         append("</table></body></html>")
     }
 }
+
+/** GET mit Lizenz-Header; null bei Fehler (403/404/offline). */
+private fun fetchLicensed(url: String, code: String): kotlin.js.Promise<JsString?> =
+    js("fetch(url, { headers: { 'X-Lizenz': code }, cache: 'no-store' }).then(r => r.ok ? r.text() : null).catch(() => null)")

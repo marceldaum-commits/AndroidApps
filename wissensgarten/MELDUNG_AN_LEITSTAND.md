@@ -1,5 +1,49 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 0.24.0 vom 16.11.2026 – Wissensgarten Plus gebaut (Sperren noch aus)
+
+**Gebaut (Web und GitHub-APK; Play ohne Kauf):**
+- **Plus-Bereich** im Eltern-Bereich, hinter dem Eltern-Tor (Einstellungen → „Für Eltern“ → 🌟 Wissensgarten Plus).
+- **7-Tage-Test:** einmal je Gerät, ohne Zahlungsdaten, endet von allein.
+- **Kauf-Knöpfe:** „1 Jahr 19,99 €“ und „Für immer 49,99 €“, jeweils inkl. MwSt.
+- **Code-Eingabe** im Eltern-Bereich.
+- **Freischalt-Link** `https://wissensgarten.mathenachhilfe-online.com/?pro=<Code ohne Bindestriche>`. Der Code wird danach aus der Adresszeile entfernt.
+- **Code-Format:** das gemeinsame Format, 1:1 wie KurvenFlug: Version 1, App 3, Präfix „WG-“, Ed25519, Crockford-Base32.
+  - Produkt 1 = Plus Jahr, gültig ab Tag im Code für 365 Tage.
+  - Produkt 3 = für immer.
+  - Öffentlicher Schlüssel: `979eb515…b812`. Prüfung offline in `core/model/License.kt`; Generator für den Lizenz-Dienst: `wissensgarten/pro/plus_code.py`.
+- **Sperren, sobald aktiv:**
+  - Plus-Pakete: in der Samenhandlung „🌟 Plus“ statt „Pflanzen“.
+  - Mehr als 2 Profile.
+  - Wochenbericht.
+  - Schon gepflanzte Beete bleiben immer lernbar, der Lernstand geht nie verloren.
+- **Plus-Pakete:** alle `ob-…` (Abi, 11–13) und `aw-experte-…` (14 Pakete, je Version +1). `s1-geschichte-20-jahrhundert` (ab Kl. 9) ist jetzt frei, passend zu „frei bis Kl. 10“.
+
+**Sperren greifen erst mit Kassen-URL:**
+- Bitte in `wissensgarten/pro/plus.properties` die Werte `checkoutUrlYear=` (WG-PLUS-JAHR) und `checkoutUrlForever=` (WG-PLUS-IMMER) eintragen. Danach baut der nächste Release mit Sperren.
+- Bis dahin ist alles frei, und die Kauf-Knöpfe sind ausgeblendet.
+- Die Play-Fassung bleibt ganz ohne Kauf und ohne Sperren, bis Play Billing kommt.
+
+**Plus-Pakete und Endpunkt:**
+- Die App ruft bei aktivem Plus mit Code `wg-api/plus/versions.json` und `wg-api/plus/<datei>.json` mit Header `X-Lizenz` ab, genau nach der Schnittstelle oben.
+  - Android: über die Live-Adresse.
+  - WebApp: relativ zur eigenen Domain.
+- Mit dem 7-Tage-Test wird nichts abgerufen, weil es keinen Code gibt. Er schaltet nur die mitgelieferten Plus-Pakete frei.
+- **Ehrlicher Hinweis zu den 14 Plus-Paketen in der App:** Die 14 vorhandenen Plus-Pakete liegen schon in der öffentlichen Git-Historie, im APK und in `webapp/packs`.
+  Sie sind in der App gesperrt, aber technisch nicht geheim. **Neue Plus-Pakete** lege ich nicht mehr ins öffentliche Repo, sondern liefere sie an euch für den Endpunkt. Den Ablageort bitte nennen.
+  Sollen auch die 14 vorhandenen aus APK und WebApp raus (dann nur noch über den Endpunkt)? Das geht, sobald der Endpunkt läuft.
+
+**Datenschutz-Ergänzung** (in App und Vorlage schon drin, Abschnitt „Käufe (Wissensgarten Plus)“):
+
+> Alle Pakete bis Klasse 10 und alle Spielarten sind frei. „Wissensgarten Plus“ ist freiwillig und wird nur im Eltern-Bereich nach der Eltern-Aufgabe gekauft. WebApp und GitHub-Version: Der Kauf läuft über den Shop auf mathenachhilfe-online.com (WooCommerce). Dort gebt ihr die für Kauf und Rechnung nötigen Daten an; Rechnung und Freischalt-Code kommen per E-Mail. In der App wird kein Konto angelegt. Der Code wird nur auf diesem Gerät gespeichert und offline geprüft (digitale Unterschrift) – er enthält keinen Namen und keine E-Mail-Adresse. Der 7-Tage-Test wird ebenfalls nur auf dem Gerät vermerkt. Mit aktivem Plus lädt die App höchstens einmal am Tag neue Plus-Pakete von unserem Server (wissensgarten.mathenachhilfe-online.com) und schickt dabei den Code mit, damit der Server prüfen kann, ob Plus gültig ist. Der Server sieht dabei den Code, die IP-Adresse und den Zeitpunkt; daraus wird kein Profil gebildet, Lernstand und Profile werden nie übertragen. In der Play-Store-Version gibt es noch keine Käufe – dort ist im Moment alles frei.
+
+**Tests:**
+- 397 Tests grün, darunter neue Tests für Code-Prüfung, Ablauf, Link, Test-Zeitraum und Sperren mit und ohne Kassen-URL.
+- Lint ohne Fehler, Play-Fassung kompiliert.
+- Bildschirmfoto `screenshots/65_plus.png` angesehen.
+- **Browser:** Ein `?pro=`-Link mit fremdem Code zeigt „ungültig“, der Parameter verschwindet aus der Adresse, keine Fehler.
+- **Bitte 0.24.0 auf wissensgarten-test prüfen.**
+
 ## 16.11.2026 – Plus: Schnittstelle für den Paket-Endpunkt (bitte so bauen)
 
 Basis: `https://wissensgarten.mathenachhilfe-online.com/wg-api/plus/`. Dieselbe Adresse gilt für die Test-WebApp (`wissensgarten-test.…`), die Android-App nutzt die Live-Adresse.

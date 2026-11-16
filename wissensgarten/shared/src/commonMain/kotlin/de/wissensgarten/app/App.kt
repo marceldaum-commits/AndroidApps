@@ -72,6 +72,7 @@ object Routes {
     const val SAFARI = "safari"
     const val PRIVACY = "datenschutz"
     const val WEEK_REPORT = "wochenbericht"
+    const val PLUS = "plus"
     const val WEEDS = "unkraut"
     const val BLITZ = "blitz"
     const val RHYTHM = "rhythmus"
@@ -375,6 +376,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     WithProfile(profile) { p ->
                         ShopScreen(
                             profile = p, packs = packs, beds = beds, canUse = vm.entitlements::canUse,
+                            onLocked = { gate("Dieses Paket gehört zu Wissensgarten Plus.") { nav.navigate(Routes.PLUS) } },
                             onPlant = vm::plantPack,
                             onOpenBed = { nav.navigate(Routes.bed(it)) },
                             onOwnBed = { n, e -> vm.addOwnBed(n, e) { id -> nav.navigate(Routes.bed(id)) } },
@@ -531,14 +533,17 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     FamilyScreen(
                         profiles, profile?.id, allBeds, logs, now,
                         onSwitch = { vm.switchProfile(it); goTab(Routes.GARDEN) },
-                        onAdd = { nav.navigate(Routes.ADD_PROFILE) },
+                        onAdd = {
+                            if (profiles.size < vm.entitlements.maxProfiles()) nav.navigate(Routes.ADD_PROFILE)
+                            else gate("Mehr als ${de.wissensgarten.core.data.PlusEntitlements.FREE_PROFILES} Profile gibt es mit Wissensgarten Plus.") { nav.navigate(Routes.PLUS) }
+                        },
                         onDuel = { nav.navigate(Routes.DUEL) },
                         familyClaimed = remember(fRev) { vm.familyClaimed() },
                         onClaimFamily = { vm.claimFamilyTree() },
                         familyReward = remember(fRev) { vm.settings.familyReward() },
                         onFamilyReward = { vm.settings.setFamilyReward(it) },
                         onLocalDuel = { nav.navigate(Routes.LOCAL_DUEL) },
-                        onWeekReport = { gate("Der Wochenbericht ist für Eltern.") { nav.navigate(Routes.WEEK_REPORT) } },
+                        onWeekReport = { gate("Der Wochenbericht ist für Eltern.") { nav.navigate(if (vm.entitlements.canUseWeekReport()) Routes.WEEK_REPORT else Routes.PLUS) } },
                         onPostcard = { id -> gate("Die Postkarte wird an eine andere App (z. B. WhatsApp) geschickt.") {
                             scope.launch { runCatching { host.sharePostcard(vm.keepsakeData(id)) }.onFailure { host.toast("Die Postkarte konnte nicht erstellt werden.") } }
                         } },
@@ -579,7 +584,9 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             dailyLimit = vm.settings.dailyLimit.collectAsStateWithLifecycle().value, onDailyLimit = { vm.settings.setDailyLimit(it) },
                             holiday = de.wissensgarten.core.model.Holidays.isActive(vm.settings.holidays.collectAsStateWithLifecycle().value),
                             onHoliday = { vm.settings.setHoliday(it); vm.tick(); vm.refreshWidget() },
-                            onWeekReport = { nav.navigate(Routes.WEEK_REPORT) },
+                            onWeekReport = { nav.navigate(if (vm.entitlements.canUseWeekReport()) Routes.WEEK_REPORT else Routes.PLUS) },
+                            onPlus = if (host.features.plusPurchase) ({ nav.navigate(Routes.PLUS) }) else null,
+                            plusActive = vm.plusStatus.collectAsStateWithLifecycle().value.active,
                             onWipeAll = {
                                 scope.launch {
                                     val msg = host.wipeAll()
@@ -701,6 +708,15 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             }.onFailure { host.toast("Der Film konnte nicht erstellt werden.") }
                         }
                     }) { nav.popSafe() }
+                }
+                composable(Routes.PLUS) {
+                    val st by vm.plusStatus.collectAsStateWithLifecycle()
+                    de.wissensgarten.app.ui.plus.PlusScreen(
+                        status = st, today = de.wissensgarten.core.model.Scheduler.localDay(now),
+                        purchaseAllowed = host.features.plusPurchase,
+                        checkoutYear = vm.entitlements.config.checkoutYear, checkoutForever = vm.entitlements.config.checkoutForever,
+                        onTrial = { vm.startPlusTrial() }, onRedeem = { vm.redeemPlus(it) }, onBack = { nav.popSafe() },
+                    )
                 }
                 composable(Routes.WEEK_REPORT) {
                     val allBeds by vm.allBeds.collectAsStateWithLifecycle()

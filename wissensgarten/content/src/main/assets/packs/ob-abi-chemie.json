@@ -1,6 +1,6 @@
 {
   "id": "ob-abi-chemie",
-  "version": 1,
+  "version": 2,
   "title": "Abi: Organische Chemie",
   "subject": "chemie",
   "grades": [
@@ -9,7 +9,7 @@
     13
   ],
   "emoji": "⚗️",
-  "tier": "free",
+  "tier": "plus",
   "description": "Stoffklassen, Nomenklatur, Reaktionsmechanismen, Ester und Kunststoffe auf Abiturniveau.",
   "intro": [
     {

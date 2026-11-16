@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /** Android: Room-Datenbank, SharedPreferences, Pakete aus den App-Assets; dazu der Geräte-Sync. */
-class AppContainer private constructor(context: Context, val database: GardenDatabase) : DataContainer(
+class AppContainer private constructor(context: Context, val database: GardenDatabase, plus: PlusConfig) : DataContainer(
     store = RoomGardenStore(database),
     prefs = { name -> AndroidKeyValueStore(context.getSharedPreferences(name, Context.MODE_PRIVATE)) },
     packTexts = {
@@ -22,8 +22,9 @@ class AppContainer private constructor(context: Context, val database: GardenDat
             remotePackDir(context).listFiles { f -> f.name.endsWith(".json") }.orEmpty().mapNotNull { runCatching { it.readText() }.getOrNull() }
         }
     },
+    plus = plus,
 ) {
-    constructor(context: Context) : this(context.applicationContext, GardenDatabase.create(context.applicationContext))
+    constructor(context: Context, plus: PlusConfig = PlusConfig()) : this(context.applicationContext, GardenDatabase.create(context.applicationContext), plus)
     val syncStore: SyncStore by lazy { SyncStore(appContext, store, settings, tombstones) }
     private val appContext = context.applicationContext
 

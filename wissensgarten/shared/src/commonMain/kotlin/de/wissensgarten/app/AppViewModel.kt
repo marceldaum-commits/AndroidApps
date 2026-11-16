@@ -368,7 +368,7 @@ class AppViewModel(
         viewModelScope.launch { while (true) { delay(60_000); _now.value = de.wissensgarten.core.model.Platform.nowMs() } }
     }
 
-    fun tick() { _now.value = de.wissensgarten.core.model.Platform.nowMs() }
+    fun tick() { _now.value = de.wissensgarten.core.model.Platform.nowMs(); c.entitlements.refresh() }
 
     // ------------------------------------------------------------ App-Update
 
@@ -388,6 +388,38 @@ class AppViewModel(
                 // Nur „nichts Neues“ merken – ein gefundenes Update soll beim nächsten Start wieder angezeigt werden
                 if (newer == null) settings.lastUpdateCheck = now
                 _update.value = newer
+            }
+        }
+    }
+
+    // ------------------------------------------------------------ Wissensgarten Plus
+
+    val plusStatus = c.entitlements.status
+
+    /** Code aus Eingabe, E-Mail oder Link übernehmen. */
+    fun redeemPlus(text: String): de.wissensgarten.core.data.PlusEntitlements.Redeem {
+        val r = c.entitlements.redeem(text)
+        if (r == de.wissensgarten.core.data.PlusEntitlements.Redeem.OK) refreshPlusPacksIfDue(force = true)
+        return r
+    }
+
+    fun startPlusTrial(): Boolean = c.entitlements.startTrial()
+
+    /** Plus-Pakete vom Plus-Endpunkt holen (nur mit gültigem Code, höchstens alle 20 h). */
+    fun refreshPlusPacksIfDue(force: Boolean = false) {
+        val h = host ?: return
+        val code = c.entitlements.code ?: return
+        val now = de.wissensgarten.core.model.Platform.nowMs()
+        if (!force && now - settings.lastPlusPackCheck < 20 * 3_600_000L) return
+        viewModelScope.launch {
+            val known = c.catalog.all().associate { it.id to it.version }
+            val n = runCatching { h.fetchPlusPacks(code, known) }.getOrNull() ?: return@launch
+            settings.lastPlusPackCheck = now
+            if (n > 0) {
+                val all = c.catalog.reload()
+                _packs.value = all
+                repo.syncPacks(all)
+                h.toast(if (n == 1) "🌟 Ein neues Plus-Paket ist da!" else "🌟 $n neue Plus-Pakete sind da!")
             }
         }
     }

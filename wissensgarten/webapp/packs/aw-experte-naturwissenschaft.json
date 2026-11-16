@@ -1,13 +1,13 @@
 {
   "id": "aw-experte-naturwissenschaft",
-  "version": 1,
+  "version": 2,
   "title": "Experte: Naturwissenschaft",
   "subject": "allgemeinwissen",
   "grades": [
     14
   ],
   "emoji": "🔬",
-  "tier": "free",
+  "tier": "plus",
   "description": "Naturkonstanten, Elementarteilchen, Nobelpreis-Entdeckungen und Fachbegriffe aus Physik, Chemie und Biologie auf Studienniveau.",
   "intro": [
     {

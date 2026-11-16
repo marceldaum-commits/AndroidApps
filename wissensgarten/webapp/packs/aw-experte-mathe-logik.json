@@ -1,13 +1,13 @@
 {
   "id": "aw-experte-mathe-logik",
-  "version": 1,
+  "version": 2,
   "title": "Experte: Mathe & Logik",
   "subject": "mathe",
   "grades": [
     14
   ],
   "emoji": "♾️",
-  "tier": "free",
+  "tier": "plus",
   "description": "Zahlentheorie, Kombinatorik, berühmte Sätze und Vermutungen, Logik-Begriffe und knifflige Rechnungen für Mathe-Fans.",
   "intro": [
     {

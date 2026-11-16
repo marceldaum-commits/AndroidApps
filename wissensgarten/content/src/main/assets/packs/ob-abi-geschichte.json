@@ -1,6 +1,6 @@
 {
   "id": "ob-abi-geschichte",
-  "version": 1,
+  "version": 2,
   "title": "Abi: Geschichte & Politik",
   "subject": "geschichte",
   "grades": [
@@ -9,7 +9,7 @@
     13
   ],
   "emoji": "🏛️",
-  "tier": "free",
+  "tier": "plus",
   "description": "Kaiserreich, Weimar, NS-Zeit, Kalter Krieg, europäische Integration und Grundgesetz auf Abiturniveau.",
   "intro": [
     {

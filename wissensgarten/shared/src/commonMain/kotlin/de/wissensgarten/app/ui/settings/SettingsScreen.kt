@@ -56,6 +56,8 @@ fun SettingsScreen(
     packUpdates: Boolean = true,
     onPackUpdates: (Boolean) -> Unit = {},
     onCheckPacks: () -> Unit = {},
+    onPlus: (() -> Unit)? = null,
+    plusActive: Boolean = false,
 ) {
     var editing by remember { mutableStateOf(false) }
     var wipeStep by remember { mutableIntStateOf(0) }
@@ -98,6 +100,10 @@ fun SettingsScreen(
         }
 
         Section("Für Eltern") {
+            if (onPlus != null) Button(onClick = onPlus, modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = androidx.compose.ui.graphics.Color(0xFFB8860B))) {
+                Text(if (plusActive) "🌟 Wissensgarten Plus ist aktiv" else "🌟 Wissensgarten Plus – 7 Tage gratis testen")
+            }
             OutlinedButton(onClick = onWeekReport, modifier = Modifier.fillMaxWidth()) { Text("📊 Wochenbericht ansehen") }
             Text("Gesunde Lernzeit pro Tag", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

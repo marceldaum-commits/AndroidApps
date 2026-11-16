@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.24.0 – Wissensgarten Plus (16.11.2026)
+- **Alles Wichtige bleibt frei:** alle Wissenspakete von Klasse 1 bis 10 und alle Spielarten – ohne Werbung, für immer.
+- **Neu: Wissensgarten Plus 🌟** (freiwillig, nur im Eltern-Bereich hinter dem Eltern-Tor): Abi- und Experten-Pakete, jeden Monat neue Plus-Pakete, bis zu 6 Profile und der Wochenbericht.
+- **7 Tage gratis testen** – ohne Zahlungsdaten, endet von allein. Danach 19,99 € für ein Jahr oder 49,99 € für immer (inkl. MwSt.) – kein Abo, nichts verlängert sich.
+- **Freischalten ohne Konto:** Nach dem Kauf kommt ein Code per E-Mail – Link antippen oder Code im Eltern-Bereich einfügen. Er gilt auf allen Geräten der Familie.
+- Solange der Kauf noch nicht eingerichtet ist, bleibt alles frei. In der Play-Store-Version gibt es vorerst keine Käufe.
+
 ## 0.23.0 – Vom Keimling zum Profi (16.11.2026)
 - **Es wird nachweislich immer schwerer:** Je besser eine Karte sitzt, desto kniffliger wird sie abgefragt – erst wenige, leicht unterscheidbare Antworten, dann mehr und sehr ähnliche, dann immer öfter frei eintippen. Auf der **Profi-Stufe 🏆** gibt es gar keine Auswahl mehr: ganz aus dem Kopf.
 - Oben in der Gieß-Runde zeigt ein Abzeichen die Stufe der Karte: 🌱 Leicht · 🌿 Mittel · 🌳 Knifflig · 🌸 Schwer · 🏆 Profi.

@@ -1,13 +1,13 @@
 {
   "id": "aw-experte-sprache",
-  "version": 1,
+  "version": 2,
   "title": "Experte: Sprache & Wörter",
   "subject": "deutsch",
   "grades": [
     14
   ],
   "emoji": "✒️",
-  "tier": "free",
+  "tier": "plus",
   "description": "Seltene Fremdwörter, Wortherkunft, rhetorische Figuren, Grammatik-Fachbegriffe und knifflige Rechtschreibung für Sprachprofis.",
   "intro": [
     {

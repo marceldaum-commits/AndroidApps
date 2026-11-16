@@ -100,6 +100,7 @@ fun PackBrowser(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     header: LazyListScope.() -> Unit = {},
+    isLocked: (Pack) -> Boolean = { false },
 ) {
     var filter by remember { mutableStateOf(if (level == 0) PackFilter.ALL else PackFilter.RECOMMENDED) }
     var subject by remember { mutableStateOf<Subject?>(null) }
@@ -128,7 +129,7 @@ fun PackBrowser(
         if (shown.isEmpty()) item {
             Text("Hier gibt es noch keine Pakete. Wähle oben einen anderen Filter.", Modifier.padding(8.dp))
         }
-        items(shown, key = { it.id }) { p -> PackRow(p, isChosen(p), chosenLabel, chooseLabel) { onToggle(p) } }
+        items(shown, key = { it.id }) { p -> PackRow(p, isChosen(p), chosenLabel, if (isLocked(p)) "🌟 Plus" else chooseLabel) { onToggle(p) } }
     }
 }
 

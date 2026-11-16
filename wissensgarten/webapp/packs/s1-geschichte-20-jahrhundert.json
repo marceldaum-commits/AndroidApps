@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-20-jahrhundert",
-  "version": 3,
+  "version": 4,
   "title": "Das 20. Jahrhundert",
   "subject": "geschichte",
   "grades": [
@@ -11,7 +11,7 @@
     13
   ],
   "emoji": "🕊️",
-  "tier": "plus",
+  "tier": "free",
   "description": "Weltkriege, Weimarer Republik, NS-Diktatur, deutsche Teilung und Wiedervereinigung – sachlich erklärt.",
   "intro": [
     {

@@ -67,6 +67,7 @@ class MainActivity : ComponentActivity() {
         // Bei jedem Öffnen (auch aus dem Hintergrund) nach neuen Versionen schauen
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         vm.refreshPacksIfDue()
+        vm.refreshPlusPacksIfDue()
         de.wissensgarten.app.update.StoreUpdates.check(this)
         (application as WissensgartenApp).music.onForeground(true)
     }

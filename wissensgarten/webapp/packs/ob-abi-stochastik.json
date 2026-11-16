@@ -1,6 +1,6 @@
 {
   "id": "ob-abi-stochastik",
-  "version": 1,
+  "version": 2,
   "title": "Abi: Stochastik",
   "subject": "mathe",
   "grades": [
@@ -9,7 +9,7 @@
     13
   ],
   "emoji": "🎲",
-  "tier": "free",
+  "tier": "plus",
   "description": "Binomial- und Normalverteilung, bedingte Wahrscheinlichkeit und Hypothesentests auf Abiturniveau.",
   "intro": [
     {

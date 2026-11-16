@@ -17,6 +17,8 @@ data class Features(
     val selfUpdate: Boolean = false,
     /** Wissens-Safari (Kamera + Bilderkennung) */
     val safari: Boolean = false,
+    /** Wissensgarten Plus über die Website kaufen (Web/GitHub-APK; in der Play-Fassung nein) */
+    val plusPurchase: Boolean = false,
     /** Wissenspakete ohne App-Update nachladen (nur Daten) */
     val packUpdates: Boolean = false,
     /** Tägliche Gieß-Erinnerung als Benachrichtigung */
@@ -65,6 +67,8 @@ interface AppHost {
     suspend fun checkUpdate(installed: String): AppRelease? = null
     /** Neue Wissenspakete (nur Daten) nachladen; liefert die Zahl neuer/aktualisierter Pakete. Web: kommt mit der WebApp. */
     suspend fun fetchPackUpdates(known: Map<String, Int>): Int = 0
+    /** Plus-Pakete vom Plus-Endpunkt laden (nur mit gültigem Code); liefert die Zahl neuer/aktualisierter Pakete. */
+    suspend fun fetchPlusPacks(code: String, known: Map<String, Int>): Int = 0
     /** QR-Code mit der Kamera scannen (nur wenn features.qrScan) */
     fun scanQr(onResult: (String?) -> Unit) { onResult(null) }
     /** Spracherkennung vorhanden? (Sprech-Spiel) */
