@@ -2,7 +2,7 @@
 
 ## 0.22.0 – Schwierigkeit steigt nachweislich bis „Extrem“ (Vorgabe Marcel vom 16.11.)
 
-- **Version:** 0.22.0 · **Commit:** {{COMMIT}} (Zweig claude/gifted-shannon-657gpr)
+- **Version:** 0.22.0 · **Commit:** a5fec15 (Zweig claude/gifted-shannon-657gpr)
 - **Wo es in Kurvenflug Schwierigkeit gibt:** der Level-Generator (Asteroidensturm, Andromeda, Rettungsmissionen,
   Bosse, Gastplaneten, Tagesmission, Duell) und die 30 Kapitel. Werkstatt (nur Aussehen) und Klassen-Challenge
   (Lehrkraft wählt Level) haben keine eigene Schwierigkeit.
