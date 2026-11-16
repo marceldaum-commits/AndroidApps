@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.16.0';
+const APP_VERSION = '3.17.0';
 const APP_DATE = '2026-11-16';
 const CHANGELOG = [
+  ['3.17.0', '2026-11-16', ['Schnellerer Start mit Ladebalken – kein weißer Bildschirm mehr', 'Ab dem zweiten Start öffnet Rechenblitz sofort, auch bei schlechtem Netz']],
   ['3.16.0', '2026-11-16', ['Viel Neues für Klasse 5–10: Terme, Funktionen, Zehnerpotenzen, Dreisatz, Zinsen, Wahrscheinlichkeit, Statistik und Kreis', '15 neue Textaufgaben – von der Leiter am Haus bis zum Handytarif', 'Fehler behoben: Einige Prozent-Aufgaben hatten eine halbe Zahl als Lösung']],
   ['3.15.0', '2026-11-16', ['Viele neue Aufgaben: 5 neue Themen – Verdoppeln, Geld, Uhr & Zeit, Geometrie und Zahlenfolgen', '30 neue Textaufgaben – von Vögeln im Baum bis zur Wanderkarte', 'Geldbeträge mit zwei Nachkommastellen, z. B. 4,80 €']],
   ['3.14.5', '2026-11-16', ['Android-App: Links zur Website nur nach kurzer Elternabfrage']],

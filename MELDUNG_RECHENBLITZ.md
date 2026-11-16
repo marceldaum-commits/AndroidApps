@@ -2,7 +2,44 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, mittags) – für den Leitstand:** Live ist 3.15.0 (7c423d5). Auf `rechenblitz-test` liegt **3.16.0**: viel Inhalt für Klasse 5–10 und ein Fehler-Fix für Live, siehe Meldung (47). Bitte prüfen und freigeben. Keine neue APK nötig (Hülle 2). Für die Play-Fassung fehlen nur Marcels Upload-Schlüssel und die 4 Geheimnisse.
+> **AKTUELLER STAND (16.11.2026, nachmittags) – für den Leitstand:** Live ist 3.15.0 (7c423d5). Auf `rechenblitz-test` liegen **3.16.0** (Inhalt Klasse 5–10, Meldung 47) und **3.17.0** (schneller Start ohne weißen Bildschirm, Meldung 48). Bitte prüfen und freigeben. Inhalte laufen weiter in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
+
+## 16.11.2026 (48) – Schneller Start ohne weißen Bildschirm (3.17.0) · gemessen vorher/nachher
+
+- **Auftrag (Leitstand 16.11., Marcel):** „Den Start optimieren, vielleicht mit Ladebalken oder schneller machen. Weißer Screen ist nicht gut.“
+- **Ursache vorher:**
+  - Das CSS (73 KB) blockierte jede Anzeige. Bis es da war, blieb der Bildschirm leer bzw. weiß, bei „Slow 4G“ etwa 1,3 s.
+  - Danach liefen 20 Skripte nacheinander, darunter 300 KB Übersetzungen auch für Deutschsprachige.
+  - Der Service Worker fragte bei jedem Start zuerst das Netz (bis zu 3 s Wartezeit bei schlechtem Netz).
+  - Android: Startbild und WebView-Hintergrund waren hell (#f7f9fd), im Dunkelmodus blitzte es hell auf.
+- **Umgesetzt (Web-App und APK-Inhalt):**
+  - **Startbild direkt im HTML** (inline CSS, kein Warten auf Dateien): dunkelblau (#101b43) mit ⚡, „Rechenblitz“, Untertitel in DE/EN/UK und **Ladebalken**. Der Balken wächst mit jedem geladenen Skript und blendet weich aus, sobald die App bedienbar ist. Sicherheitsnetz: Nach spätestens 12 s verschwindet das Startbild immer.
+  - **Paralleles Laden:** alle Skripte mit `defer` im Kopf, CSS nicht mehr blockierend (das Startbild deckt ab), Schrift Inter per `preload`.
+  - **Übersetzungen nur bei Bedarf:** `lang-en.js`/`lang-uk.js` werden nur für Englisch/Ukrainisch geladen, gleich zu Beginn parallel vorgeladen. Deutschsprachige sparen ca. 300 KB.
+  - **Zweiter Start sofort:** Der Service Worker liefert die App-Dateien der aktuellen Version direkt aus dem Speicher (Cache-first). Neue Versionen kommen weiter von selbst: neuer Service Worker → die App wartet, bis er aktiv ist → lädt auf der Startseite neu. Die Versionsprüfung (`?u=…`) geht immer ans Netz.
+- **Android (Hülle 3, optional):**
+  - Startbildschirm in Dunkelblau mit App-Symbol, Fenster- und WebView-Hintergrund ebenfalls dunkelblau (`rb_start`, `capacitor.config` `backgroundColor`). Startbild → WebView → HTML-Startbild → App ohne weißes Aufblitzen.
+  - **Neu: `MIN_SHELL`** (Mindest-Hülle der Inhalte) getrennt von `SHELL` (Hülle der APK). Der 3.17.0-Inhalt braucht weiter nur Hülle 2: Alle bisherigen Apps laden ihn von selbst, die neue APK ist **optional**, nur fürs dunkelblaue Startbild. Regel 9 der Roadmap ist angepasst.
+- **Messung** mit Playwright, Handy 390 px, lokaler Server wie Live (gzip, ETag, no-cache). „Slow 4G“ ist im Server nachgebildet (562 ms Latenz, ca. 180 KB/s), damit es auch für den Service Worker gilt. Angaben: erstes sichtbares Bild / bedienbar:
+
+  | | vorher | nachher |
+  |---|---|---|
+  | Slow 4G, 1. Start (DE) | 1,26 s / 3,23 s | **0,73 s** (Startbild mit Balken) / 3,12 s |
+  | Slow 4G, 2. Start (DE) | 1,18 s / 2,91 s | **0,04 s / 0,06 s** |
+  | Slow 4G, 1. Start (EN) | 1,26 s / 3,23 s | **0,73 s** / 3,20 s |
+  | Slow 4G, 2. Start (EN) | 1,18 s / 2,87 s | **0,05 s / 0,08 s** |
+  | WLAN, 1. Start (DE) | 0,10 s / 0,20 s | 0,06 s / 0,15 s |
+  | WLAN, 2. Start (DE) | 0,08 s / 0,11 s | 0,04 s / 0,07 s |
+
+  - Hell- und Dunkelmodus liefern dieselben Werte (±40 ms).
+  - Weiße Leerbilder nach dem Seitenaufbau: vorher wie nachher keine. Vorher war aber bis 1,26 s gar nichts zu sehen; nachher ist ab 0,73 s das dunkelblaue Startbild da.
+  - Die Zeit bis zum ersten Byte (Latenz) lässt sich in der Web-App nicht vermeiden. Danach ist sofort das Startbild sichtbar.
+  - Der **erste** Start bei Slow 4G bleibt etwa 3 s, weil er von der Datenmenge begrenzt wird. Dafür sieht man jetzt sofort Startbild und Fortschritt. Weitere Verkürzung wäre nur mit einem Build-Schritt möglich (Skripte bündeln und verkleinern), das ist ein Vorschlag für später.
+- **Gefunden und behoben beim Testen:** Zwei Texte werden in `init()` direkt übersetzt („Version“, Standardname „Ich“). Das Wörterbuch wird deshalb vor `init()` geladen. Die Sprache wird erst umgeschaltet, wenn das Wörterbuch da ist.
+- **Tests:**
+  - komplette Regression: 320 px, offline (neuer Service Worker), APK-Modus, Merk, Reise, Welt, Abzeichen, Widget, Garten, Elternabfrage, Profile, Selbst-Update App/Web, Urkunde, Zufallsaktionen; keine JS-Fehler, keine fehlenden Übersetzungen;
+  - APK (Hülle 3) gebaut.
+  - Der alte Test zum Update-Knopf der Web-App ist entfallen, weil es den Knopf seit 3.13.2 bewusst nicht mehr gibt.
 
 ## 16.11.2026 (47) – Viel Inhalt für Klasse 5–10 (3.16.0) · Fehler-Fix für Live · keine neue APK nötig
 

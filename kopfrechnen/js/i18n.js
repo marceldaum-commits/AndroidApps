@@ -107,11 +107,21 @@ function i18nTree(root) {
   const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
   let n; while ((n = w.nextNode())) n.nodeType === 3 ? i18nText(n) : i18nAttrs(n);
 }
+/** Wörterbuch nur bei Bedarf laden (spart Deutschsprachigen ca. 300 KB beim Start) */
+function i18nLoad(lang) {
+  if (lang === 'de' || Object.keys(I18N.dict[lang] || {}).length) return Promise.resolve();
+  return new Promise(res => {
+    const sc = document.createElement('script'); sc.src = `js/lang-${lang}.js`;
+    sc.onload = sc.onerror = () => res(); document.head.appendChild(sc);
+  });
+}
 function i18nStart() {
-  I18N.lang = detectLang();
-  document.documentElement.lang = I18N.lang;
+  const lang = detectLang();
   if (I18N.observer) { I18N.observer.disconnect(); I18N.observer = null; }
-  if (I18N.lang === 'de') return;
+  // Sprache erst umschalten, wenn das Wörterbuch da ist – bis dahin bleibt alles sauber deutsch (Startbild deckt ab)
+  return i18nLoad(lang).then(() => { I18N.lang = lang; document.documentElement.lang = lang; if (lang !== 'de') i18nApply(); });
+}
+function i18nApply() {
   document.title = tr(document.title);
   i18nTree(document.body);
   I18N.observer = new MutationObserver(ms => {

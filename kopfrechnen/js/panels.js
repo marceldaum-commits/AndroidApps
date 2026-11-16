@@ -604,7 +604,11 @@ async function webAutoUpdate() {
     if (!v || verNum(v) <= verNum(APP_VERSION)) return;
     let tried = null; try { tried = sessionStorage.getItem('rbAutoUpd'); } catch {}
     if (tried === v) return;   // schon einmal versucht (z. B. Cache hängt) → keine Neulade-Schleife
-    try { const reg = await navigator.serviceWorker?.getRegistration(); await reg?.update(); } catch {}
+    try {   // neuen Service Worker holen und abwarten, bis er aktiv ist – sonst käme beim Neuladen noch die alte Fassung aus dem Speicher
+      const reg = await navigator.serviceWorker?.getRegistration(); await reg?.update();
+      const sw = reg && (reg.installing || reg.waiting);
+      if (sw) await new Promise(res => { const t = setTimeout(res, 15000); sw.addEventListener('statechange', () => { if (sw.state === 'activated' || sw.state === 'redundant') { clearTimeout(t); res(); } }); });
+    } catch {}
     webUpd.ver = v; webUpdReload();
   } catch {}
 }

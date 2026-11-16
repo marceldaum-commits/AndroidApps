@@ -1938,4 +1938,6 @@ I18N.add('uk', {"% sind":"% — це",
 "Viel Neues für Klasse {}–{}: Terme, Funktionen, Zehnerpotenzen, Dreisatz, Zinsen, Wahrscheinlichkeit, Statistik und Kreis":"Багато нового для {}–{} класів: вирази, функції, степені десяти, пропорції, відсотки, ймовірність, статистика й коло",
 "{} neue Textaufgaben – von der Leiter am Haus bis zum Handytarif":"{} нових текстових задач – від драбини біля будинку до мобільного тарифу",
 "Fehler behoben: Einige Prozent-Aufgaben hatten eine halbe Zahl als Lösung":"Виправлено: деякі задачі на відсотки мали в розв'язку половинне число",
-"Wie groß ist die Steigung der Geraden durch P und Q?":"Який кутовий коефіцієнт прямої через P і Q?"});
+"Wie groß ist die Steigung der Geraden durch P und Q?":"Який кутовий коефіцієнт прямої через P і Q?",
+"Schnellerer Start mit Ladebalken – kein weißer Bildschirm mehr":"Швидший запуск зі смугою завантаження – більше жодного білого екрана",
+"Ab dem zweiten Start öffnet Rechenblitz sofort, auch bei schlechtem Netz":"Починаючи з другого запуску Rechenblitz відкривається миттєво, навіть за поганого зв'язку"});

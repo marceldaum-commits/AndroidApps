@@ -12,9 +12,66 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="stylesheet" href="app.css">
+<!-- Startbild (Marcel 16.11.: kein weißer Bildschirm) – sichtbar ab dem ersten Byte, ohne auf CSS/JS zu warten -->
+<style>
+html{background:#101b43}body{margin:0}
+#boot{position:fixed;inset:0;z-index:9999;background:#101b43;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#fff;font:700 26px/1.2 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;transition:opacity .35s ease}
+#boot.out{opacity:0;pointer-events:none}
+#boot svg{width:76px;height:76px;animation:bootbz 1.1s ease-in-out infinite}
+#boot small{font:500 13px/1 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;opacity:.7;margin-top:-10px}
+#boot .bar{width:168px;height:6px;border-radius:9px;background:rgba(255,255,255,.16);overflow:hidden}
+#boot .bar i{display:block;height:100%;width:6%;background:#ff7418;border-radius:9px;transition:width .2s ease}
+@keyframes bootbz{50%{transform:scale(1.08) rotate(-5deg)}}
+@media (prefers-reduced-motion:reduce){#boot svg{animation:none}#boot{transition:none}}
+</style>
+<script>
+(function () {
+  var n = 0, T = 18, done = false;
+  window.__bp = function () { n++; var b = document.getElementById('bootBar'); if (b) b.style.width = Math.min(92, 6 + 86 * n / T) + '%'; };
+  window.__bootDone = function () {
+    if (done) return; done = true;
+    var b = document.getElementById('boot'), bar = document.getElementById('bootBar');
+    if (bar) bar.style.width = '100%';
+    document.documentElement.style.background = '';
+    if (b) { b.classList.add('out'); setTimeout(function () { b.remove(); }, 380); }
+  };
+  window.__cssReady = new Promise(function (res) { window.__cssLoaded = res; setTimeout(res, 8000); });
+  setTimeout(window.__bootDone, 12000);   // Sicherheitsnetz: Startbild nie dauerhaft
+  // Übersetzung für Englisch/Ukrainisch sofort parallel vorladen (gleiche Erkennung wie js/i18n.js)
+  try {
+    var pref = (JSON.parse(localStorage.getItem('rechenblitz') || '{}') || {}).lang || 'auto', lang = 'de';
+    if (pref === 'en' || pref === 'uk' || pref === 'de') lang = pref;
+    else { var ls = navigator.languages || [navigator.language || 'de']; for (var i = 0; i < ls.length; i++) { var c = String(ls[i]).slice(0, 2).toLowerCase(); if (c === 'de' || c === 'en' || c === 'uk') { lang = c; break; } } }
+    window.__bootLang = lang;
+    if (lang !== 'de') { var l = document.createElement('link'); l.rel = 'preload'; l.as = 'script'; l.href = 'js/lang-' + lang + '.js'; document.head.appendChild(l); }
+  } catch (e) {}
+})();
+</script>
+<link rel="preload" href="fonts/Inter.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css" id="appCss" media="print" onload="this.media='all';window.__cssLoaded()">
+<noscript><link rel="stylesheet" href="app.css"></noscript>
+<script defer src="config.js" onload="__bp()"></script>
+<script defer src="js/native.js" onload="__bp()"></script>
+<script defer src="js/i18n.js" onload="__bp()"></script>
+<script defer src="js/changelog.js" onload="__bp()"></script>
+<script defer src="js/engine.js" onload="__bp()"></script>
+<script defer src="js/app.js" onload="__bp()"></script>
+<script defer src="js/panels.js" onload="__bp()"></script>
+<script defer src="js/vendor/qrcode.js" onload="__bp()"></script>
+<script defer src="js/extras.js" onload="__bp()"></script>
+<script defer src="js/memory.js" onload="__bp()"></script>
+<script defer src="js/merkvis.js" onload="__bp()"></script>
+<script defer src="js/blitz.js" onload="__bp()"></script>
+<script defer src="js/reise.js" onload="__bp()"></script>
+<script defer src="js/welt.js" onload="__bp()"></script>
+<script defer src="js/raetsel.js" onload="__bp()"></script>
+<script defer src="js/garten.js" onload="__bp()"></script>
+<script defer src="js/elterntor.js" onload="__bp()"></script>
+<script defer src="js/reminder.js" onload="__bp()"></script>
 </head>
 <body>
+<div id="boot" aria-hidden="true" translate="no"><svg viewBox="0 0 24 24"><path d="M13.5 2 4.5 13.5h6.5l-1.5 8.5 9-11.5H12z" fill="#ffc83d" stroke="#ff7418" stroke-width="1.4" stroke-linejoin="round"/></svg><div>Rechenblitz</div><small>Kopfrechnen üben</small><div class="bar"><i id="bootBar"></i></div></div>
+<script>(function () { var t = { en: 'Practise mental maths', uk: 'Тренуй усний рахунок' }[window.__bootLang]; if (t) document.querySelector('#boot small').textContent = t; })();</script>
 <div class="app">
 
 <!-- ===== Startseite ===== -->
@@ -118,26 +175,14 @@
 <canvas id="confetti"></canvas>
 <div id="print"></div>
 
-<script src="config.js"></script>
-<script src="js/native.js"></script>
-<script src="js/i18n.js"></script>
-<script src="js/lang-en.js"></script>
-<script src="js/lang-uk.js"></script>
-<script src="js/changelog.js"></script>
-<script src="js/engine.js"></script>
-<script src="js/app.js"></script>
-<script src="js/panels.js"></script>
-<script src="js/vendor/qrcode.js"></script>
-<script src="js/extras.js"></script>
-<script src="js/memory.js"></script>
-<script src="js/merkvis.js"></script>
-<script src="js/blitz.js"></script>
-<script src="js/reise.js"></script>
-<script src="js/welt.js"></script>
-<script src="js/raetsel.js"></script>
-<script src="js/garten.js"></script>
-<script src="js/elterntor.js"></script>
-<script src="js/reminder.js"></script>
-<script>init(); i18nStart();</script>
+<script>
+/* Start erst, wenn DOM, Skripte (defer) und CSS bereit sind – das Startbild deckt solange alles ab */
+document.addEventListener('DOMContentLoaded', function () {
+  window.__cssReady.then(function () { return i18nLoad(detectLang()); }).then(function () {   // Wörterbuch vor init(): manche Texte werden direkt übersetzt
+    try { init(); } catch (e) { window.__bootDone(); throw e; }
+    Promise.resolve(i18nStart()).then(window.__bootDone, window.__bootDone);
+  });
+});
+</script>
 </body>
 </html>

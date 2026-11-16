@@ -18,13 +18,14 @@ for d, f in dens.items():
     # Vordergrund für adaptive Symbole: maskierbares Symbol randlos (Logo liegt im sicheren Bereich)
     mask.resize((fg, fg), Image.LANCZOS).save(f'{R}/mipmap-{d}/ic_launcher_foreground.png')
 open(f'{R}/values/ic_launcher_background.xml', 'w').write(f'<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">{hexbg}</color>\n</resources>\n')
-# Startbildschirm: heller App-Hintergrund mit Symbol in der Mitte
+# Startbildschirm: Dunkelblau der Marke mit hellem Logo in der Mitte (wie das Startbild der Web-App, kein weißes Aufblitzen)
 for root, _, files in os.walk(R):
     for fn in files:
         if fn == 'splash.png':
             p = os.path.join(root, fn); w, h = Image.open(p).size
-            sp = Image.new('RGB', (w, h), (0xf7, 0xf9, 0xfd)); k = round(min(w, h) * 0.28)
-            sp.paste(icon.resize((k, k), Image.LANCZOS), ((w - k) // 2, (h - k) // 2), icon.resize((k, k), Image.LANCZOS))
+            sp = Image.new('RGB', (w, h), (0x10, 0x1b, 0x43)); k = round(min(w, h) * 0.42)
+            k = round(min(w, h) * 0.3); m = icon.resize((k, k), Image.LANCZOS)   # abgerundetes App-Symbol
+            sp.paste(m, ((w - k) // 2, (h - k) // 2), m)
             sp.save(p)
 # Alle erzeugten PNGs verlustarm verkleinern (Palette), damit die APK klein bleibt
 for root, _, files in os.walk(R):

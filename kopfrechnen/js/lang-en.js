@@ -1938,4 +1938,6 @@ I18N.add('en', {"% sind":"% are",
 "Viel Neues für Klasse {}–{}: Terme, Funktionen, Zehnerpotenzen, Dreisatz, Zinsen, Wahrscheinlichkeit, Statistik und Kreis":"Lots of new content for grades {}–{}: terms, functions, powers of ten, rule of three, interest, probability, statistics and circles",
 "{} neue Textaufgaben – von der Leiter am Haus bis zum Handytarif":"{} new word problems – from a ladder against a house to a phone plan",
 "Fehler behoben: Einige Prozent-Aufgaben hatten eine halbe Zahl als Lösung":"Fixed: some percentage problems had a half number as the answer",
-"Wie groß ist die Steigung der Geraden durch P und Q?":"What is the gradient of the line through P and Q?"});
+"Wie groß ist die Steigung der Geraden durch P und Q?":"What is the gradient of the line through P and Q?",
+"Schnellerer Start mit Ladebalken – kein weißer Bildschirm mehr":"Faster start with a loading bar – no more white screen",
+"Ab dem zweiten Start öffnet Rechenblitz sofort, auch bei schlechtem Netz":"From the second start on, Rechenblitz opens instantly, even with a poor connection"});
