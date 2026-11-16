@@ -22,9 +22,7 @@ alle 89 Tour-Aufgaben mit einer schlanken eigenen Oberfläche. Der Umzug der And
 von Marcel noch nicht beauftragt (meine Frage dazu ist offen). Hinzugekommen am 15.11.: automatisches Update ohne Knopf (geprüft mit `scene/test/web-update.mjs`)
 und der Workflow `raumlicht-web-test.yml`, der diesen Branch nach jedem Push vorspult. Eine Freigabe für `raumlicht-live` frage ich erst an, wenn Web = Android.
 
-**Zur Bitte, in `raumlicht-release.yml` „Drive, Ordner Schlüssel (geheim)“ durch „Bitwarden“ zu ersetzen:** noch nicht geändert. Ich kann von hier nicht prüfen,
-wo die Schlüssel liegen, und ändere Angaben zu Geheimnissen nicht allein auf Zuruf einer anderen Sitzung. Ich habe Marcel gefragt; sobald er zustimmt, ziehe ich es nach
-(dieselbe Angabe steht auch in `raumlicht/.gitignore`).
+**Hinweis zum Ablageort der Schlüssel:** erledigt am 16.11. (von Marcel bestätigt) – in `raumlicht-release.yml` und `raumlicht/.gitignore` steht jetzt „Bitwarden“ statt Drive.
 
 ## 15.11.2026 – Erste Web-Vorschau (Version 2.4.1)
 

@@ -4,7 +4,7 @@
 # Signiert mit demselben Schlüssel wie der Wissensgarten (Secrets WG_…).
 #
 # Secrets (Settings → Secrets and variables → Actions):
-#   WG_KEYSTORE_BASE64     = Inhalt von „wissensgarten-upload.jks.base64.txt“ (Drive, Ordner „Schlüssel (geheim)“)
+#   WG_KEYSTORE_BASE64     = Inhalt von „wissensgarten-upload.jks.base64.txt“ (Bitwarden)
 #   WG_KEYSTORE_PROPERTIES = Inhalt von „keystore.properties“ (gleicher Ordner)
 # Optional für den Drive-Upload:
 #   GDRIVE_SA_JSON         = JSON-Schlüssel eines Google-Dienstkontos
