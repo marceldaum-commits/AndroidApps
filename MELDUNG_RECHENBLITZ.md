@@ -2,7 +2,77 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).**
+
+## 16.11.2026 (53) – Konzept Lehrerzugang für Rechenblitz (noch nicht gebaut)
+
+Auftrag vom Leitstand: Ein zentraler Lehrerzugang auf der Website, und der Klassen-Dienst entsteht aus `KLASSEN-API.md`. **Noch nichts gebaut.** Vorhanden ist heute Folgendes, und darauf baut das Konzept auf:
+- Klassen-Challenge mit Spitznamen und Wochenpunkten
+- Aufträge und Ergebnisse als Link (`#auftrag`, Ergebnis-Link, nicht fälschungssicher)
+- Arbeitsblätter
+- Vorlagen „Üben nach Wunsch“ als Link oder QR
+
+### 1. Was die Lehrkraft für Rechenblitz sieht und steuert
+
+| Bereich | Was die Lehrkraft tut |
+|---|---|
+| **Auftrag aus Thema** | Thema (30) und Stufe 1–5/Profi wählen, Modus Training oder Blitzrunde, Anzahl Runden, Mindest-Trefferquote, Frist. Dieselben Felder hat der Auftrags-Link heute schon (`op, l, m, r, min, due`). |
+| **Auftrag aus „Üben nach Wunsch“** | Vorlage mit Rechenarten, Zahlenraum, Übergang ja/nein, Einmaleins-Reihen, Lücken/Quadrat/Rest, Anzahl oder Zeit, große Tasten, Frist. Die Vorlage hat dasselbe Format wie der vorhandene `#wunsch`-Link. |
+| **Ergebnisse je Kind** | Je Auftrag: erledigt ja/nein, richtig/falsch, Zeit, Datum. Dazu die **3 häufigsten Fehler** (Aufgabe, Eingabe, richtige Lösung). |
+| **Fortschritt je Kind und Thema** | Aktuelle Auto-Stufe je Thema, Trefferquote der letzten 4 Wochen, Übungszeit pro Woche. Die Ampel zeigt sicher / fast sicher / üben. |
+| **Klassenübersicht** | Welche Themen der Klasse schwerfallen (Trefferquote je Thema), wer seit 14 Tagen nicht geübt hat. |
+| **Stufen freigeben** | Je Klasse die höchste Stufe festlegen, z. B. „bis Stufe 3“. Profi lässt sich ein- und ausschalten. Die Auto-Stufe der Kinder bleibt darunter. |
+| **Arbeitsblätter** | Aus jedem Auftrag als PDF, mit Lösungsblatt. Das Arbeitsblatt hat denselben Zufalls-Startwert wie der Auftrag, deshalb sind die Aufgaben gleich. |
+| **Klassen-Challenge** | Rangliste ein/aus. Heute ist sie immer an. |
+
+### 2. Daten, die die App schickt (so knapp wie möglich)
+
+| Wann | Felder | Wie oft |
+|---|---|---|
+| Beitritt | `code, spitzname, geraet` (zufällige ID) | einmal |
+| Klasse abrufen | `code, spieler` → zurück: Aufträge, Stufen-Freigabe, Rangliste an/aus, Lizenz bis | beim Öffnen der App, höchstens 1× pro Stunde |
+| Nach jeder Runde | `spieler, id` (UUID), `auftrag?` (ID oder leer), `thema, stufe, modus, aufgaben, richtig, sekunden, datum`, `fehler`: höchstens 3 × [Aufgabe, Eingabe] | je Runde, offline gesammelt und nachgereicht (wie heute `klassePending`) |
+| Wochenstand | `thema → autoStufe` (nur Themen mit Übung) | höchstens 1× am Tag |
+| Austritt | `code, spieler` | einmal; der Server löscht alles zu diesem Spieler |
+
+Nicht gesendet werden echte Namen, E-Mail, Alter, Standort und einzelne Aufgaben außer den 3 Fehlern. Die heutigen Punkte-Meldungen (`/klasse/punkte`) bleiben gültig; die Runden-Meldung ist ihre Erweiterung.
+
+### 3. So tritt ein Kind bei, und das sieht es
+
+| Schritt | Ablauf |
+|---|---|
+| Beitreten | Code eintippen oder QR scannen (Link `…/#klasse=CODE`), dann einen Spitznamen wählen. Kein Konto, keine E-Mail. |
+| Startseite | Karte „Meine Klasse 4b“ mit offenen Aufträgen und Frist. Ein Tipp startet den Auftrag mit den Vorgaben der Lehrkraft. |
+| Ergebnisse | Das Kind sieht nur seine **eigenen** Ergebnisse. Die Rangliste sieht es nur, wenn die Lehrkraft sie eingeschaltet hat, und dann nur mit Spitznamen und Punkten. |
+| Austreten | „Klasse verlassen“ in den Einstellungen löscht die Daten auf dem Server. |
+| Pro durch Schule | Solange die Klasse eine aktive Schullizenz hat, sind die Pro-Funktionen frei (Prüfung beim Beitritt und bei jedem Abruf). Offline gelten sie bis zum Ablaufdatum der Lizenz. |
+
+### 4. Kostenlos oder Schullizenz
+
+| Funktion | Kostenlos | Schullizenz |
+|---|---|---|
+| Klasse anlegen, Code/QR, Schülerliste, Schüler entfernen | ✓ (1 Klasse, bis 35 Kinder) | ✓ unbegrenzt Klassen |
+| Klassen-Challenge mit Rangliste | ✓ | ✓ |
+| Aufträge aus Thema/Stufe mit Frist | ✓ (bis 3 offene Aufträge) | ✓ unbegrenzt |
+| Aufträge aus „Üben nach Wunsch“ | – | ✓ |
+| Ergebnisse je Kind und Auftrag (richtig/falsch, Zeit) | ✓ | ✓ |
+| Typische Fehler, Fortschritt je Thema, Klassenübersicht | – | ✓ |
+| Stufen freigeben / Profi sperren | – | ✓ |
+| Arbeitsblätter mit Lösungsblatt | ✓ (wie heute) | ✓ |
+| Export (CSV/PDF) und Löschen der Klassendaten | Löschen ✓, Export – | ✓ |
+| Pro für alle Kinder der Klasse (Profi-Stufe usw.) | – | ✓ |
+
+Abgleich mit Meldung 52: Statt „Pro Lehrkraft 24,99 €“ in der App wird der Lehrerzugang über die Website verkauft (Lehrkraft- bzw. Schullizenz). Der Preisvorschlag bleibt: 24,99 € pro Lehrkraft und Schuljahr, 149 € pro Schule und Jahr, inkl. USt. Die Lizenz gehört dem Lehrkraft-Konto auf der Website. Die Kinder bekommen sie über die Klasse und brauchen keinen Code.
+
+**Was Rechenblitz nach der Freigabe baut:**
+- Abruf der Klasse (Aufträge, Freigaben, Lizenz)
+- Runden-Meldung mit Fehlern
+- Auftragskarte auf der Startseite
+- Stufen-Sperre
+- Beitritt per QR
+- Datenschutztext ergänzen
+
+Server und Lehrerbereich baut der Leitstand.
 
 ## 16.11.2026 (52) – Konzept „Pro“ für Rechenblitz (noch nicht gebaut)
 
