@@ -1,5 +1,55 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 0.23.0 vom 16.11.2026 – Schwierigkeit steigt nachweislich bis zur Experten-Stufe
+
+**Stufen im Wissensgarten:**
+- **Beim Spielen:** das Wachstum jeder Karte, Samen → Baum = „Profi“. Es steuert jetzt die Schwierigkeit:
+  - Zahl der Antworten (3 → 4 → keine Auswahl)
+  - Ähnlichkeit der Ablenker (unähnlichste → ähnlichste)
+  - Anteil freier Eingabe (0 % → 100 %)
+  - Rate-Chance; „Stimmt's?“ (50 %) gibt es nur noch auf der leichtesten Stufe
+  - Wiederholungsabstand
+  In der Runde zeigt ein Abzeichen die Stufe (🌱 Leicht … 🏆 Profi).
+- **Bei den Inhalten:** die Klassen-Bänder Grundschule → Kl. 5–7 → Kl. 8–10 → Abi → **Experte (neu)**.
+
+**Neu (Profi/Experte):** 8 Pakete mit 270 Karten, unabhängig fachlich geprüft (Abi: 3 Korrekturen, Experte: 13 Korrekturen).
+- **Abi:** ob-abi-stochastik, ob-abi-biologie, ob-abi-chemie, ob-abi-geschichte
+- **Experte:** aw-experte-naturwissenschaft, aw-experte-geschichte-kultur, aw-experte-sprache, aw-experte-mathe-logik
+- **Eigenschaften:** überwiegend freie Eingabe, sehr ähnliche Ablenker
+- **Zeitdruck:** keiner. Er passt nicht zum Lernen mit Wiederholung; die Blitzrunde bleibt ein freiwilliges Extra.
+
+**Nachweis:** `content/src/test/java/de/wissensgarten/content/DifficultyTest.kt`
+- **Was er misst:** alle 85 Pakete und 2.923 Karten werden je Stufe gespielt und gemessen.
+- **Wann er fehlschlägt:**
+  - Beim Spielen: wenn die Rate-Chance nicht strikt sinkt, der Abstand nicht strikt wächst oder freie Eingabe, Antwortzahl oder Ablenker-Ähnlichkeit fallen. Außerdem, wenn Profi unter 90 % freie Eingabe hat.
+  - Bei den Inhalten: wenn Klasse, freie Eingabe, Ablenker-Ähnlichkeit oder Antwortlänge nicht strikt steigen.
+- **Wo er läuft:** im Release-Workflow (`:content:test`).
+- **Bericht:** `wissensgarten/SCHWIERIGKEIT.md`. Ähnlichkeit ist die normierte Levenshtein-Ähnlichkeit (0 = ganz anders, 1 = gleich).
+
+| Stufe | Pflanze | freie Eingabe | Ø Antwortmöglichkeiten | Ablenker-Ähnlichkeit | Rate-Chance | Wiederholungsabstand |
+|---|---|---|---|---|---|---|
+| Entdecken | Samen | 0 % | 3,0 | 0,34 | 100 % | neu |
+| Leicht | Keimling | 0 % | 3,0 | 0,34 | 39 % | ≈ 1 Tag |
+| Mittel | Spross | 27 % | 4,0 | 0,53 | 17 % | ≈ 4 Tage |
+| Knifflig | Busch | 43 % | 4,0 | 0,55 | 13 % | ≈ 14 Tage |
+| Schwer | Blüte | 63 % | 4,0 | 0,58 | 9 % | ≈ 40 Tage |
+| Profi | Baum | 100 % | keine Auswahl | – | 0 % | ≈ 90 Tage |
+
+| Stufe | Pakete | Karten | Ø Klasse | freie Eingabe | Ablenker-Ähnlichkeit | Ø Antwortlänge |
+|---|---|---|---|---|---|---|
+| Grundschule | 24 | 786 | 2,9 | 1 % | 0,46 | 8,1 Zeichen |
+| Klasse 5–7 | 38 | 1342 | 7,3 | 16 % | 0,54 | 14,5 Zeichen |
+| Klasse 8–10 | 13 | 452 | 10,3 | 34 % | 0,57 | 16,0 Zeichen |
+| Oberstufe/Abi | 6 | 207 | 12,0 | 54 % | 0,75 | 19,4 Zeichen |
+| Experte | 4 | 136 | Erw. | 76 % | 0,90 | 21,5 Zeichen |
+
+**Dabei verbessert:**
+- **Zahlen:** Getippte Zahlen werden nach Wert verglichen (0,5 = 0,50; kein „fast richtig“ mehr für 0,2462 statt 0,2461; Vorzeichen zählt).
+- **Bindestriche:** Varianten wie „Marshall-Plan“ und „Marshallplan“ zählen beide als richtig, außer im Fach Deutsch.
+
+**Tests:** 384 Tests grün, Lint ohne Fehler, Web = Android gleich (85 Pakete), WebApp im Browser ohne Fehler.
+**Bitte prüfen und `wissensgarten-live` auf 0.23.0 schalten.** Danach bekommen auch installierte Apps die 8 neuen Pakete per Nachladen.
+
 ## 16.11.2026 – Nachmessung nach der gzip-Korrektur
 
 Gemessen mit echtem GET und `Accept-Encoding: gzip`:

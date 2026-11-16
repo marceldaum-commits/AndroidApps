@@ -1,0 +1,314 @@
+{
+  "id": "aw-experte-naturwissenschaft",
+  "version": 1,
+  "title": "Experte: Naturwissenschaft",
+  "subject": "allgemeinwissen",
+  "grades": [
+    14
+  ],
+  "emoji": "🔬",
+  "tier": "free",
+  "description": "Naturkonstanten, Elementarteilchen, Nobelpreis-Entdeckungen und Fachbegriffe aus Physik, Chemie und Biologie auf Studienniveau.",
+  "intro": [
+    {
+      "img": "🔬🐝",
+      "text": "Willkommen in der Expertenstufe! Hier tippst du die Antworten meist selbst ein – kein Raten, nur echtes Wissen. Brummi ist gespannt."
+    },
+    {
+      "img": "⚛️📏",
+      "text": "Seit 2019 sind sieben Naturkonstanten exakt festgelegt. Aus ihnen leitet man Kilogramm, Kelvin, Mol und Co. ab – Physik als Fundament."
+    },
+    {
+      "img": "🎆🔍",
+      "text": "Quarks, Leptonen, Bosonen: Das Standardmodell sortiert die kleinsten Bausteine der Welt. Das Higgs-Boson war 2012 sein letztes fehlendes Teil."
+    },
+    {
+      "img": "🏅🧬",
+      "text": "Viele Fragen drehen sich um Nobelpreise – von Rutherford bis zur Genschere. Achte bei Namen auf die genaue Schreibweise."
+    },
+    {
+      "img": "💪🐝",
+      "text": "Tipp: Lies die Klammer in der Frage, sie verrät die gesuchte Form. Los geht's – Brummi drückt dir alle sechs Daumen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welche …-Konstante hat den exakten Wert 6,62607015 · 10⁻³⁴ J·s?",
+      "a": "Planck-Konstante",
+      "info": "Max Planck führte sie 1900 ein. Seit 2019 ist ihr Wert exakt festgelegt und definiert das Kilogramm.",
+      "img": "⚛️⚖️"
+    },
+    {
+      "id": "002",
+      "q": "Welche …-Konstante hat den exakten Wert 1,380649 · 10⁻²³ J/K?",
+      "a": "Boltzmann-Konstante",
+      "info": "Sie verknüpft Temperatur mit der Energie einzelner Teilchen und definiert seit 2019 das Kelvin.",
+      "img": "🌡️🎲"
+    },
+    {
+      "id": "003",
+      "q": "Welche …-Konstante hat den exakten Wert 6,02214076 · 10²³ 1/mol?",
+      "a": "Avogadro-Konstante",
+      "info": "So viele Teilchen stecken in einem Mol – seit 2019 exakt festgelegt.",
+      "img": "🧪🔢"
+    },
+    {
+      "id": "004",
+      "q": "Welche …-Konstante hat ungefähr den Wert 96 485 C/mol?",
+      "a": "Faraday-Konstante",
+      "info": "Die Ladung von einem Mol Elektronen: F = Avogadro-Konstante mal Elementarladung. Wichtig für die Elektrolyse.",
+      "img": "🔋⚡"
+    },
+    {
+      "id": "005",
+      "q": "Welche …-Konstante (≈ 1,097 · 10⁷ 1/m) bestimmt die Spektrallinien des Wasserstoffs?",
+      "a": "Rydberg-Konstante",
+      "info": "Johannes Rydberg fand 1888 die Formel für die Wellenlängen der Wasserstofflinien.",
+      "img": "🌈📏"
+    },
+    {
+      "id": "006",
+      "q": "Welche dimensionslose Konstante beträgt etwa 1/137? (ein Wort)",
+      "a": "Feinstrukturkonstante",
+      "info": "Sie gibt an, wie stark die elektromagnetische Wechselwirkung ist – unabhängig von jeder Einheit.",
+      "img": "🔍✨"
+    },
+    {
+      "id": "007",
+      "q": "Welche …-Konstante hat ungefähr den Wert 5,670 · 10⁻⁸ W/(m²·K⁴)?",
+      "a": "Stefan-Boltzmann-Konstante",
+      "info": "Ein schwarzer Körper strahlt die Leistung P = σ · A · T⁴ ab – doppelte Temperatur, 16-fache Leistung.",
+      "img": "☀️🔥"
+    },
+    {
+      "id": "008",
+      "q": "Welche Konstante hat ungefähr den Wert 6,674 · 10⁻¹¹ m³/(kg·s²)? (ein Wort)",
+      "a": "Gravitationskonstante",
+      "info": "Aus Henry Cavendishs Drehwaagen-Versuch von 1798 ließ sie sich erstmals bestimmen. Sie ist bis heute vergleichsweise ungenau bekannt.",
+      "img": "🍎🌍"
+    },
+    {
+      "id": "009",
+      "q": "Welches negativ geladene Teilchen hat die Ruheenergie ≈ 0,511 MeV?",
+      "a": "Elektron",
+      "info": "J. J. Thomson entdeckte das Elektron 1897 – das erste bekannte Elementarteilchen.",
+      "img": "⚡🔵"
+    },
+    {
+      "id": "010",
+      "q": "Welches Lepton ist rund 207-mal so schwer wie das Elektron und zerfällt nach etwa 2 µs?",
+      "a": "Myon",
+      "info": "Myonen entstehen in der Höhenstrahlung. Dass sie den Erdboden erreichen, bestätigt die Zeitdilatation.",
+      "img": "🌌⏱️"
+    },
+    {
+      "id": "011",
+      "q": "Welches 2012 am CERN nachgewiesene Teilchen hat etwa 125 GeV/c²? (mit Bindestrich)",
+      "a": "Higgs-Boson",
+      "info": "Peter Higgs und François Englert erhielten dafür 2013 den Physik-Nobelpreis.",
+      "img": "🎆🔬"
+    },
+    {
+      "id": "012",
+      "q": "Wie heißt das schwerste bekannte Elementarteilchen (≈ 173 GeV/c²)? (…-Quark)",
+      "a": "Top-Quark",
+      "info": "1995 am Fermilab entdeckt – fast so schwer wie ein ganzes Goldatom.",
+      "img": "🔝⚖️"
+    },
+    {
+      "id": "013",
+      "q": "Wie heißen die Austauschteilchen der starken Wechselwirkung? (Plural)",
+      "a": "Gluonen",
+      "info": "Es gibt acht Gluonen. Sie tragen selbst Farbladung und halten Quarks fest zusammen.",
+      "img": "🍯🔗"
+    },
+    {
+      "id": "014",
+      "q": "Wie heißen Teilchen mit halbzahligem Spin? (Plural)",
+      "a": "Fermionen",
+      "info": "Quarks und Leptonen sind Fermionen. Teilchen mit ganzzahligem Spin heißen Bosonen.",
+      "img": "🌀🧱"
+    },
+    {
+      "id": "015",
+      "q": "Zwei Fermionen können nie im selben Quantenzustand sein. Wie heißt dieses Prinzip? (…-Prinzip)",
+      "a": "Pauli-Prinzip",
+      "info": "Wolfgang Pauli formulierte es 1925. Es erklärt den Schalenaufbau der Atome.",
+      "img": "🚫👯"
+    },
+    {
+      "id": "016",
+      "q": "Wer schloss 1911 aus der Streuung von Alphateilchen an Goldfolie auf den Atomkern? (Vor- und Nachname)",
+      "a": "Ernest Rutherford",
+      "info": "Einige Alphateilchen prallten zurück – die Masse sitzt in einem winzigen Kern.",
+      "img": "🥇💥"
+    },
+    {
+      "id": "017",
+      "q": "Wer deutete 1938/39 mit Otto Frisch die Kernspaltung physikalisch? (Vor- und Nachname)",
+      "a": "Lise Meitner",
+      "info": "Den Chemie-Nobelpreis 1944 bekam nur Otto Hahn. Element 109 heißt heute Meitnerium.",
+      "img": "⚛️✂️"
+    },
+    {
+      "id": "018",
+      "q": "Wer erhielt 2020 mit Jennifer Doudna den Chemie-Nobelpreis für die Genschere CRISPR/Cas9? (Vor- und Nachname)",
+      "a": "Emmanuelle Charpentier",
+      "info": "Erstmals teilten sich zwei Frauen einen Chemie-Nobelpreis ganz allein.",
+      "img": "🧬✂️"
+    },
+    {
+      "id": "019",
+      "q": "Wer erhielt 2022 den Medizin-Nobelpreis für die Entschlüsselung des Neandertaler-Erbguts? (Vor- und Nachname)",
+      "a": "Svante Pääbo",
+      "info": "Er zeigte: In unserem Erbgut stecken ein bis zwei Prozent Neandertaler-DNA.",
+      "img": "🦴🧬"
+    },
+    {
+      "id": "020",
+      "q": "Spektrallinien spalten sich im Magnetfeld auf. Wie heißt der Effekt? (…-Effekt)",
+      "a": "Zeeman-Effekt",
+      "info": "Pieter Zeeman beobachtete ihn 1896; Nobelpreis 1902 zusammen mit Hendrik Lorentz.",
+      "img": "🧲🌈"
+    },
+    {
+      "id": "021",
+      "q": "Röntgenlicht wird an Elektronen gestreut und dabei langwelliger. Wie heißt der Effekt? (…-Effekt)",
+      "a": "Compton-Effekt",
+      "info": "Arthur Compton zeigte 1923: Licht verhält sich wie Teilchen mit Impuls. Nobelpreis 1927.",
+      "img": "🎱💡"
+    },
+    {
+      "id": "022",
+      "q": "Welche Zustandsgröße nimmt in einem abgeschlossenen System nie ab? (ein Wort)",
+      "a": "Entropie",
+      "info": "Das sagt der 2. Hauptsatz der Thermodynamik. Rudolf Clausius prägte den Begriff 1865.",
+      "img": "❄️🔥"
+    },
+    {
+      "id": "023",
+      "q": "Wie heißen Moleküle, die sich wie Bild und Spiegelbild verhalten, aber nicht deckungsgleich sind? (Plural)",
+      "a": "Enantiomere",
+      "info": "Wie linke und rechte Hand: Sie drehen polarisiertes Licht in entgegengesetzte Richtungen.",
+      "img": "🤲🔄"
+    },
+    {
+      "id": "024",
+      "q": "Wie heißt das Element mit der Ordnungszahl 118?",
+      "a": "Oganesson",
+      "info": "Benannt nach dem russischen Kernphysiker Juri Oganessjan – einer von ganz wenigen, die zu Lebzeiten geehrt wurden.",
+      "img": "🧪🏁"
+    },
+    {
+      "id": "025",
+      "q": "Wie heißt der programmierte, geordnete Zelltod? (ein Wort)",
+      "a": "Apoptose",
+      "info": "Ohne Apoptose hätten wir Schwimmhäute zwischen den Fingern. Nobelpreis 2002 für ihre Erforschung.",
+      "img": "🍂🦠"
+    },
+    {
+      "id": "026",
+      "q": "Welches Enzym in der inneren Mitochondrienmembran bildet ATP? (mit Bindestrich)",
+      "a": "ATP-Synthase",
+      "info": "Ein winziger Rotor, angetrieben vom Protonenstrom – Nobelpreis 1997 für Boyer und Walker.",
+      "img": "⚙️🔋"
+    },
+    {
+      "id": "027",
+      "q": "Welche Quarks bilden ein Neutron?",
+      "a": "ein Up-Quark und zwei Down-Quarks (udd)",
+      "choices": [
+        "zwei Up-Quarks und ein Down-Quark (uud)",
+        "ein Up-Quark und zwei Strange-Quarks (uss)",
+        "ein Down-Quark und zwei Charm-Quarks (dcc)"
+      ],
+      "info": "Ladung: +2/3 − 1/3 − 1/3 = 0. Das Proton ist uud und damit +1.",
+      "img": "⚛️🔺"
+    },
+    {
+      "id": "028",
+      "q": "Wofür erhielt Albert Einstein den Physik-Nobelpreis 1921?",
+      "a": "für die Deutung des photoelektrischen Effekts",
+      "choices": [
+        "für die Deutung des thermoelektrischen Effekts",
+        "für die Deutung der Brownschen Molekularbewegung",
+        "für die Deutung des piezoelektrischen Effekts"
+      ],
+      "info": "Nicht für die Relativitätstheorie! Er erklärte den Fotoeffekt mit Lichtquanten.",
+      "img": "💡🏅"
+    },
+    {
+      "id": "029",
+      "q": "Wie ordnen sich die vier Grundkräfte nach ihrer Stärke (stärkste zuerst)?",
+      "a": "stark > elektromagnetisch > schwach > Gravitation",
+      "choices": [
+        "stark > schwach > elektromagnetisch > Gravitation",
+        "elektromagnetisch > stark > schwach > Gravitation",
+        "stark > elektromagnetisch > Gravitation > schwach"
+      ],
+      "info": "Die Gravitation ist mit Abstand die schwächste Kraft – sie wirkt nur bei riesigen Massen spürbar.",
+      "img": "💪🌍"
+    },
+    {
+      "id": "030",
+      "q": "Wie lautet der 2. Hauptsatz der Thermodynamik nach Clausius?",
+      "a": "Wärme fließt nie von selbst vom kälteren zum wärmeren Körper",
+      "choices": [
+        "Wärme fließt nie von selbst vom wärmeren zum kälteren Körper",
+        "Wärme fließt stets von selbst vom kälteren zum wärmeren Körper",
+        "Arbeit fließt nie von selbst vom kälteren zum wärmeren Körper"
+      ],
+      "info": "Ein Kühlschrank schafft das nur, weil er Arbeit hineinsteckt.",
+      "img": "❄️☕"
+    },
+    {
+      "id": "031",
+      "q": "Wofür gab es den Medizin-Nobelpreis 2023 (Karikó, Weissman)?",
+      "a": "für Nukleosid-Modifikationen für wirksame mRNA-Impfstoffe",
+      "choices": [
+        "für Nukleotid-Modifikationen für wirksame DNA-Impfstoffe",
+        "für Nukleosid-Modifikationen für wirksame Vektor-Impfstoffe",
+        "für Aminosäure-Modifikationen für wirksame mRNA-Impfstoffe"
+      ],
+      "info": "Veränderte Bausteine verhindern, dass das Immunsystem die mRNA selbst angreift.",
+      "img": "💉🧬"
+    },
+    {
+      "id": "032",
+      "q": "Wofür gab es den Chemie-Nobelpreis 2024 (Baker, Hassabis, Jumper)?",
+      "a": "für Proteindesign und Vorhersage von Proteinstrukturen",
+      "choices": [
+        "für Genomdesign und Vorhersage von Proteinstrukturen",
+        "für Proteindesign und Vorhersage von RNA-Strukturen",
+        "für Enzymdesign und Vorhersage von Kristallstrukturen"
+      ],
+      "info": "Das KI-Programm AlphaFold sagt die 3D-Form von Proteinen aus ihrer Aminosäurefolge voraus.",
+      "img": "🤖🧬"
+    },
+    {
+      "id": "033",
+      "q": "Wofür gab es den Physik-Nobelpreis 2023 (Agostini, Krausz, L'Huillier)?",
+      "a": "für Attosekunden-Lichtpulse zur Erforschung von Elektronen",
+      "choices": [
+        "für Femtosekunden-Lichtpulse zur Erforschung von Elektronen",
+        "für Attosekunden-Röntgenpulse zur Erforschung von Atomkernen",
+        "für Zeptosekunden-Lichtpulse zur Erforschung von Elektronen"
+      ],
+      "info": "Eine Attosekunde ist ein Milliardstel einer Milliardstelsekunde – schnell genug, um Elektronen zu „filmen“.",
+      "img": "⏱️💡"
+    },
+    {
+      "id": "034",
+      "q": "Von welchen Vorfahren stammen Mitochondrien laut Endosymbiontentheorie ab?",
+      "a": "von aerob lebenden Alpha-Proteobakterien",
+      "choices": [
+        "von anaerob lebenden Alpha-Proteobakterien",
+        "von aerob lebenden Cyanobakterien",
+        "von aerob lebenden Archaeen"
+      ],
+      "info": "Chloroplasten dagegen stammen von Cyanobakterien ab. Beide haben eigene DNA und Doppelmembran.",
+      "img": "🦠🏠"
+    }
+  ]
+}
