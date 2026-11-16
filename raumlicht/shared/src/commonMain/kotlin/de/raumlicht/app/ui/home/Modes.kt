@@ -374,7 +374,7 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
             }
             if (items.size < Show.MAX) ShowType.entries.forEach { t ->
                 val interaction = remember { MutableInteractionSource() }
-                Text("＋${t.emoji}", Modifier.testTag("neu-${t.name}").pressBounce(interaction).clip(RoundedCornerShape(12.dp)).border(1.dp, Q.Green.copy(alpha = 0.7f), RoundedCornerShape(12.dp))
+                Text("+${t.emoji}", Modifier.testTag("neu-${t.name}").pressBounce(interaction).clip(RoundedCornerShape(12.dp)).border(1.dp, Q.Green.copy(alpha = 0.7f), RoundedCornerShape(12.dp))
                     .clickable(interaction, null) { val at = items.size; change(items + ShowItem(t, t.start)); sel = at; sfx?.play(Sound.TAP) }.padding(horizontal = 12.dp, vertical = 8.dp), color = Q.Green, fontWeight = FontWeight.Bold)
             }
         }
@@ -388,7 +388,7 @@ fun BuilderScreen(initial: List<ShowItem>, onSave: (List<ShowItem>) -> Unit, onB
                     }
                 }
             }
-        } else Speech("Füg mit ＋ einen Laser, eine Scheibe oder eine Kugel hinzu.")
+        } else Speech("Füg mit + einen Laser, eine Scheibe oder eine Kugel hinzu.")
         Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             NeonButton({ if (item != null) { change(items.filterIndexed { i, _ -> i != sel }); sel = (sel - 1).coerceAtLeast(0) } }, color = Q.Orange, enabled = item != null) { Text("🗑") }
             NeonButton({ load = true; code = ""; bad = false }, color = Q.Muted) { Text("Code") }

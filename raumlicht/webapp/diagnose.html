@@ -14,7 +14,7 @@
   function row(name, value, good) { rows.push(name + ': ' + value); var tr = t.insertRow(); tr.insertCell().textContent = name; var c = tr.insertCell(); c.textContent = value; if (good !== undefined) c.className = good ? 'ok' : 'bad'; }
   function wasm(bytes) { try { return typeof WebAssembly === 'object' && WebAssembly.validate(new Uint8Array(bytes)); } catch (e) { return false; } }
   var head = [0, 97, 115, 109, 1, 0, 0, 0];
-  row('Version der WebApp', '2.9.0 vom 16.11.2026');
+  row('Version der WebApp', '2.9.1 vom 16.11.2026');
   row('Browser', navigator.userAgent);
   row('Bildschirm', innerWidth + ' × ' + innerHeight + ', Schärfe ' + (window.devicePixelRatio || 1) + ', als App gestartet: ' + ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone ? 'ja' : 'nein'));
   var gc = wasm(head.concat([1, 5, 1, 95, 1, 120, 0]));
