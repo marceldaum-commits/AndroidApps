@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /** Einstellungen – nur auf dem Gerät, keine persönlichen Daten. */
-class Settings(ctx: Context) {
+class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     private val prefs = ctx.getSharedPreferences("raumlicht", Context.MODE_PRIVATE)
 
     private fun flag(key: String, default: Boolean) = MutableStateFlow(prefs.getBoolean(key, default))
@@ -16,16 +16,16 @@ class Settings(ctx: Context) {
     private val _autoUpdate = flag("autoUpdate", true)
     private val _voice = flag("voice", true)
     /** Lux liest ihre Sprechblasen laut vor */
-    val voice: StateFlow<Boolean> = _voice.asStateFlow()
-    fun setVoice(v: Boolean) { prefs.edit().putBoolean("voice", v).apply(); _voice.value = v }
-    val sound: StateFlow<Boolean> = _sound.asStateFlow()
-    val music: StateFlow<Boolean> = _music.asStateFlow()
-    val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
+    override val voice: StateFlow<Boolean> = _voice.asStateFlow()
+    override fun setVoice(v: Boolean) { prefs.edit().putBoolean("voice", v).apply(); _voice.value = v }
+    override val sound: StateFlow<Boolean> = _sound.asStateFlow()
+    override val music: StateFlow<Boolean> = _music.asStateFlow()
+    override val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
     val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
 
-    fun setSound(v: Boolean) { prefs.edit().putBoolean("sound", v).apply(); _sound.value = v }
-    fun setMusic(v: Boolean) { prefs.edit().putBoolean("music", v).apply(); _music.value = v }
-    fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
+    override fun setSound(v: Boolean) { prefs.edit().putBoolean("sound", v).apply(); _sound.value = v }
+    override fun setMusic(v: Boolean) { prefs.edit().putBoolean("music", v).apply(); _music.value = v }
+    override fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("autoUpdate", v).apply(); _autoUpdate.value = v }
 
     /** Lux' Stimme: gemerkter Name der Gerätestimme (leer = die beste) und ob sie heller klingen soll */
@@ -42,18 +42,18 @@ class Settings(ctx: Context) {
 
     /** Lautstärke von Musik und Geräuschen in Prozent (Standard: voll) */
     private val _volume = MutableStateFlow(prefs.getInt("volume", 100))
-    val volume: StateFlow<Int> = _volume.asStateFlow()
-    fun setVolume(v: Int) { val c = v.coerceIn(0, 100); prefs.edit().putInt("volume", c).apply(); _volume.value = c }
+    override val volume: StateFlow<Int> = _volume.asStateFlow()
+    override fun setVolume(v: Int) { val c = v.coerceIn(0, 100); prefs.edit().putInt("volume", c).apply(); _volume.value = c }
 
     /** Kapitel-Erklärung schon gesehen? */
-    fun introSeen(chapter: Int) = prefs.getBoolean("intro_$chapter", false)
-    fun markIntroSeen(chapter: Int) = prefs.edit().putBoolean("intro_$chapter", true).apply()
+    override fun introSeen(chapter: Int) = prefs.getBoolean("intro_$chapter", false)
+    override fun markIntroSeen(chapter: Int) { prefs.edit().putBoolean("intro_$chapter", true).apply() }
 
     /** Endlos üben: längste Serie von Treffern beim ersten Versuch */
     private val _jamBest = MutableStateFlow(prefs.getInt("jamBest", 0))
-    val jamBest: StateFlow<Int> = _jamBest.asStateFlow()
+    override val jamBest: StateFlow<Int> = _jamBest.asStateFlow()
     /** @return true bei neuem Rekord */
-    fun recordJam(streak: Int): Boolean {
+    override fun recordJam(streak: Int): Boolean {
         if (streak <= _jamBest.value) return false
         prefs.edit().putInt("jamBest", streak).apply(); _jamBest.value = streak
         return true
@@ -61,8 +61,8 @@ class Settings(ctx: Context) {
 
     /** Ballerbude: bester Punktestand */
     private val _balloonBest = MutableStateFlow(prefs.getInt("balloonBest", 0))
-    val balloonBest: StateFlow<Int> = _balloonBest.asStateFlow()
-    fun recordBalloons(points: Int): Boolean {
+    override val balloonBest: StateFlow<Int> = _balloonBest.asStateFlow()
+    override fun recordBalloons(points: Int): Boolean {
         if (points <= _balloonBest.value) return false
         prefs.edit().putInt("balloonBest", points).apply(); _balloonBest.value = points
         return true
@@ -70,8 +70,8 @@ class Settings(ctx: Context) {
 
     /** Lage-Check: beste Runde (richtige von 8) */
     private val _lageBest = MutableStateFlow(prefs.getInt("lageBest", 0))
-    val lageBest: StateFlow<Int> = _lageBest.asStateFlow()
-    fun recordLage(score: Int): Boolean {
+    override val lageBest: StateFlow<Int> = _lageBest.asStateFlow()
+    override fun recordLage(score: Int): Boolean {
         if (score <= _lageBest.value) return false
         prefs.edit().putInt("lageBest", score).apply(); _lageBest.value = score
         return true
@@ -79,32 +79,32 @@ class Settings(ctx: Context) {
 
     /** Abi-Simulation: beste Punktzahl je Aufgabe */
     private val _exams = MutableStateFlow(prefs.all.filterKeys { it.startsWith("exam_") }.mapKeys { it.key.removePrefix("exam_") }.mapValues { (it.value as? Int) ?: 0 })
-    val exams: StateFlow<Map<String, Int>> = _exams.asStateFlow()
-    fun recordExam(id: String, points: Int) {
+    override val exams: StateFlow<Map<String, Int>> = _exams.asStateFlow()
+    override fun recordExam(id: String, points: Int) {
         if (points <= (_exams.value[id] ?: 0)) return
         prefs.edit().putInt("exam_$id", points).apply(); _exams.value = _exams.value + (id to points)
     }
 
     /** Werkstatt: Farbe von Lux */
     private val _skin = MutableStateFlow(prefs.getString("skin", "pink") ?: "pink")
-    val skin: StateFlow<String> = _skin.asStateFlow()
-    fun setSkin(c: String) { prefs.edit().putString("skin", c).apply(); _skin.value = c }
+    override val skin: StateFlow<String> = _skin.asStateFlow()
+    override fun setSkin(c: String) { prefs.edit().putString("skin", c).apply(); _skin.value = c }
 
     /** Werkstatt: Leuchtspur und Aufsatz */
     private val _look = MutableStateFlow((prefs.getString("trail", "none") ?: "none") to (prefs.getString("hat", "none") ?: "none"))
-    val look: StateFlow<Pair<String, String>> = _look.asStateFlow()
-    fun setLook(trail: String = _look.value.first, hat: String = _look.value.second) { prefs.edit().putString("trail", trail).putString("hat", hat).apply(); _look.value = trail to hat }
+    override val look: StateFlow<Pair<String, String>> = _look.asStateFlow()
+    override fun setLook(trail: String, hat: String) { prefs.edit().putString("trail", trail).putString("hat", hat).apply(); _look.value = trail to hat }
 
     /** Fehler-Tagebuch: Zeilen „Anzahl⇥Aufgabe⇥Meldung“ */
     private val _diary = MutableStateFlow(prefs.getString("diary", "") ?: "")
-    val diary: StateFlow<String> = _diary.asStateFlow()
-    fun setDiary(s: String) { prefs.edit().putString("diary", s).apply(); _diary.value = s }
+    override val diary: StateFlow<String> = _diary.asStateFlow()
+    override fun setDiary(s: String) { prefs.edit().putString("diary", s).apply(); _diary.value = s }
 
     /**
      * Neu anfangen: Rekorde, Abi-Punkte, Fehler-Tagebuch, gesehene Erklärungen und das freigespielte Aussehen von Lux zurücksetzen.
      * Ton-, Update-Einstellungen, Klausur-Plan und die gebaute Show bleiben.
      */
-    fun resetProgress() {
+    override fun resetProgress() {
         val e = prefs.edit()
         prefs.all.keys.filter { it.startsWith("intro_") || it.startsWith("exam_") }.forEach { e.remove(it) }
         listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat").forEach { e.remove(it) }
@@ -114,21 +114,21 @@ class Settings(ctx: Context) {
 
     /** Klausur-Planer: Termin und Kapitel (leer = kein Plan) */
     private val _plan = MutableStateFlow(prefs.getString("plan", "") ?: "")
-    val plan: StateFlow<String> = _plan.asStateFlow()
-    fun setPlan(s: String) { prefs.edit().putString("plan", s).apply(); _plan.value = s }
+    override val plan: StateFlow<String> = _plan.asStateFlow()
+    override fun setPlan(s: String) { prefs.edit().putString("plan", s).apply(); _plan.value = s }
 
     /** Baukasten: die zuletzt gebaute Show als Code */
-    var show: String
+    override var show: String
         get() = prefs.getString("show", "") ?: ""
         set(v) = prefs.edit().putString("show", v).apply()
 
     /** Kurve abfahren: die zuletzt gebaute eigene Funktion („Term|von|bis“) */
-    var ride: String
+    override var ride: String
         get() = prefs.getString("ride", "") ?: ""
         set(v) = prefs.edit().putString("ride", v).apply()
 
     /** Flug durch den Raum: der zuletzt gebaute eigene Flug */
-    var flight: String
+    override var flight: String
         get() = prefs.getString("flight", "") ?: ""
         set(v) = prefs.edit().putString("flight", v).apply()
 
