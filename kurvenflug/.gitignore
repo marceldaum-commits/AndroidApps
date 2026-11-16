@@ -4,7 +4,7 @@ local.properties
 .idea/
 *.iml
 .kotlin/
-# Signatur-Schlüssel – NIE ins Repo (liegt im Drive unter Wissensgarten/Schlüssel (geheim))
+# Signatur-Schlüssel – NIE ins Repo (liegt in Bitwarden und in den Repo-Secrets)
 *.jks
 *.p12
 keystore.properties
