@@ -160,8 +160,8 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
 ## Signieren
 
 Release-APKs werden mit dem Upload-Schlüssel signiert, wenn `keystore.properties` + `wissensgarten-upload.jks` im
-Ordner `wissensgarten/` liegen (beides per `.gitignore` ausgeschlossen, Ablage: Google Drive → Wissensgarten →
-„Schlüssel (geheim)“). Ohne die Dateien wird mit dem Test-Schlüssel gebaut.
+Ordner `wissensgarten/` liegen (beides per `.gitignore` ausgeschlossen; Ablage nur in Bitwarden, für
+GitHub zusätzlich in den Repo-Secrets – nie in Git oder Google Drive). Ohne die Dateien wird mit dem Test-Schlüssel gebaut.
 
 ## Download (automatisch)
 

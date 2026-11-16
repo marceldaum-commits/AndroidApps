@@ -1,5 +1,12 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 16.11.2026 – Schlüssel-Ablage: Bitwarden statt Drive
+
+Im Wissensgarten stehen jetzt nur noch Bitwarden und die Repo-Secrets als Ablage. Geändert sind die Kopfzeile von `wissensgarten-release.yml`,
+`wissensgarten/README.md` (Abschnitt „Signieren“) und der Kommentar in `wissensgarten/.gitignore`.
+`kurvenflug-release.yml` und `raumlicht-release.yml` haben wir **nicht** geändert: Laut unserer Vorgabe dürfen wir KurvenFlug und
+Raumlicht nicht anfassen. Dort steht in Zeile 7 noch „Drive, Ordner „Schlüssel (geheim)““ – bitte an die zuständigen Sitzungen geben.
+
 ## 0.20.0 vom 16.11.2026 – Updates ohne Store-Besuch + Wissenspakete nachladen
 
 1. **Play In-App Updates:** Standard ist „Flexible“. Die neue Version lädt im Hintergrund und wird eingespielt, sobald die App
