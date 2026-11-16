@@ -553,3 +553,17 @@ Die Lehrkraft sieht den **gesamten Fortschritt** der Schüler im Kurs, nicht nur
 Für die Schnittstelle: Die App sendet nach dem Beitritt das Ergebnis jeder gelösten Aufgabe (Tour-Aufgaben mit Kennung; Übungs- und Tagesaufgaben mit Art/Stufe statt Einzelkennung) – beim Beitritt einmal auch den bisherigen Stand,
 sonst wäre der Fortschritt lückenhaft. Die Beitritts-Seite muss das klar sagen. In der Klärungsliste ist A9 entsprechend geändert (mehr Daten → ausdrücklich in Einwilligung und AVV).
 Weiterhin nichts gebaut.
+
+---
+
+## 16.11.2026 – Zur Nachricht „Web = Android: Ja“ – das ist schon erledigt
+
+Die Android-Oberfläche mit allen Extras läuft **seit 2.5.0 (16.11.2026)** aus gemeinsamem Code in der WebApp (Modul `shared`, `AppRoot`); auf raumlicht-test liegt aktuell **2.11.0**.
+Nur Android haben weiterhin: natürliche Stimme „Thorsten“, Widgets, Erfolgskarte als Bild, In-App-Updater. Musik läuft seit 2.5.1 auch im Web.
+Auch das Play-Store-Paket ist seit 2.6.0 fertig (auf Marcels Wunsch vorgezogen): `STORE-RELEASE.md`, `store/`, AAB am GitHub-Release.
+
+**Was der Freigabe für raumlicht-live noch im Weg steht:** der offene Fehler „iPad zeigt nach dem Laden ein weißes Bild“ (iPhone und Android laufen). Der besteht auch in der Live-Version 2.5.1.
+Ob ihr 2.11.0 trotzdem live schaltet, entscheidet ihr bzw. Marcel – aus meiner Sicht spricht nichts dagegen, weil sich für iPads nichts verschlechtert und es dort jetzt den Diagnose-Knopf gibt.
+
+Zu den Punkten 2 und 3 (ein Kurs frei nur mit Rangliste; KI-Tutor nicht in Schullizenzen): zur Kenntnis genommen, in der App wird dazu nichts gebaut, bis eure Schnittstelle steht.
+Marcel hat mir die Lizenzpreise (29 € / 199 € / Pakete 79 € / 499 €) und „gesamter Fortschritt“ direkt bestätigt; „ein Kurs frei, nur Rangliste“ hat er mir gegenüber noch nicht bestätigt.
