@@ -64,8 +64,19 @@ Empfehlung von Schulen und Eltern. Pro ist für **Oberstufe, Könner und Fans**.
   E-Mail an Kunde und Marcel, Bestellung bleibt in WooCommerce als Nachweis → Code in der App eingeben (oder Link
   `…/kurvenflug/?pro=CODE` öffnet die App und schaltet frei). **Kein Konto**, Code gilt für Web und GitHub-APK.
   An der Kasse: Häkchen zum sofortigen Beginn der Leistung (Widerrufsrecht bei digitalen Inhalten).
+- **Was bei Marcel ankommt (je Kauf, gerundet; Zahlungsgebühren Web geschätzt: Stripe 1,5 % + 0,25 €, PayPal 2,99 % + 0,39 €):**
+
+  | Produkt | Brutto (inkl. 19 % USt.) | Netto | USt. | Web: Stripe | Web: PayPal | Google Play (netto − 15 %) |
+  |---|---|---|---|---|---|---|
+  | Kurvenflug Pro | 7,99 € | 6,71 € | 1,28 € | ca. 6,34 € | ca. 6,09 € | 5,71 € |
+  | Pro Startpreis | 4,99 € | 4,19 € | 0,80 € | ca. 3,87 € | ca. 3,65 € | 3,56 € |
+  | Schullizenz (Jahr) | 29,00 € | 24,37 € | 4,63 € | ca. 23,68 € | ca. 23,11 € | 20,71 € (falls über Play) |
+
+  Bei Google Play: Google führt die USt. ab, vom Netto gehen 15 % Gebühr ab (Abo- und Einmalkäufe für kleine
+  Entwickler). Web: die eigene Zahlungsgebühr des gewählten Anbieters (Werte oben nur Richtwerte, bitte mit eurem
+  Woo-Zahlungsanbieter abgleichen). Anzeige in der App: Web „7,99 € einmalig · inkl. 19 % MwSt.“, Play zeigt Googles Endpreis.
 - **Umsatzsteuer (Marcel ist nicht USt.-befreit)**: Preise sind Bruttopreise inkl. 19 % USt.; Woo-Rechnung mit
-  ausgewiesener USt. Digitale Leistungen an Verbraucher in anderen EU-Ländern: Steuersatz des Kundenlandes (OSS) –
+  ausgewiesener USt., Woo-Steuerklasse Standard 19 %. Digitale Leistungen an Verbraucher in anderen EU-Ländern: Steuersatz des Kundenlandes (OSS) –
   in WooCommerce einstellen bzw. mit dem Steuerberater klären. Bei Google Play führt Google die USt. selbst ab.
 - Play-Käufer, die auch im Browser spielen wollen: Code per E-Mail-Anfrage mit Play-Bestellnummer (später automatisch,
   s. Punkt 3).
