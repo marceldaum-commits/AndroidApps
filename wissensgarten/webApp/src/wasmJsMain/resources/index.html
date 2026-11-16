@@ -8,6 +8,8 @@
   <meta name="theme-color" content="#3f6b3a">
   <meta name="wg-version" content="@VERSION@">
   <link rel="manifest" href="manifest.webmanifest">
+  <!-- Emoji-Schrift gleich parallel zur App laden (statt erst danach) -->
+  <link rel="preload" href="composeResources/de.wissensgarten.web.res/font/noto_color_emoji.ttf" as="fetch" crossorigin>
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <style>
@@ -50,7 +52,7 @@
     (function () {
       const hint = document.getElementById('hint');
       const say = (t) => { if (document.getElementById('splash') && hint) hint.innerHTML = t; };
-      setTimeout(() => say('Beim ersten Mal holt Brummi alle Merkbilder (ca. 10&nbsp;MB). Danach startet der Garten blitzschnell – auch ohne Internet.'), 6000);
+      setTimeout(() => say('Beim ersten Mal holt Brummi alle Merkbilder (ca. 7&nbsp;MB). Danach startet der Garten blitzschnell – auch ohne Internet.'), 6000);
       setTimeout(() => say('Das Netz ist gerade langsam … Brummi fliegt weiter. 🐝'), 30000);
       setTimeout(() => say('Das dauert ungewöhnlich lange.<br><br><button onclick="location.reload()">Nochmal versuchen</button>'), 90000);
     })();

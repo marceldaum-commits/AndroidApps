@@ -1,5 +1,18 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 0.21.2 vom 16.11.2026 – WebApp: erster Start deutlich schneller
+
+Marcel meldete: „Lädt recht lange“. Beim ersten Öffnen wurden ca. 11 MB übertragen. Mehr als die Hälfte davon war die Emoji-Schrift (6 MB),
+weil sie alle Flaggen- und Hautfarben-Varianten enthielt.
+- Die Schrift enthält jetzt nur die tatsächlich genutzten Emojis (+ Smileys): **2 MB statt 6 MB**. Damit werden beim ersten Start insgesamt ca. 7 statt 11 MB geladen.
+  Alle Glyphen aus Paketen und Code sind enthalten; geprüft per Skript, dazu ein Sichttest im Browser.
+- Die Schrift wird per `<link rel="preload">` gleich parallel zur App geladen statt erst danach.
+- Die 379 Android-Tests sind grün, Lint ohne Fehler.
+- Im Browser (Pixel 7) startet die WebApp ohne Fehler, die Emojis sind korrekt dargestellt.
+
+Tipp für den Server (nginx): `gzip_types` um `font/ttf` ergänzen. Das spart bei der Schrift nur ca. 7 %, kostet aber nichts. WASM wird schon gzip-komprimiert.
+**Bitte nach Prüfung `wissensgarten-live` auf 0.21.2 schalten.**
+
 ## 0.21.1 vom 16.11.2026 – WebApp: Startbild bleibt beim ersten Laden sichtbar
 
 **Problem (von Marcel am Handy gemeldet):** Beim ersten Öffnen über mobiles Netz war nur ein weißer Bildschirm mit lila Ladekreis zu sehen.
