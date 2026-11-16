@@ -276,3 +276,12 @@ Zusätzlich: jede Profi-Lösung unabhängig aus den angezeigten Angaben nachgere
 
 **Nicht umgesetzt (bewusst):** Brüche als Eingabe, Stufen für Kapitel/Abi/Spiele, mehrstufige Stochastik im Üben. Web = Android (gleicher Code), WebApp 2.10.0 gebaut und getestet.
 Das iPad-Ergebnis zu 2.9.3 steht noch aus.
+
+---
+
+## 16.11.2026 – Version 2.10.1: iPad weiter weiß, Vermutung „Zeichenfläche zu groß“ widerlegt
+
+Marcel hat mit der Begrenzung aus 2.9.3 erneut getestet: **iPhone läuft, iPad bleibt weiß.** Die Größe der Zeichenfläche ist es also nicht.
+Bleibende Unterschiede iPhone ↔ iPad: (a) das iPad gibt sich standardmäßig als Mac aus („Desktop-Website“), (b) möglicherweise eine ältere iPadOS-/Safari-Version als auf dem iPhone.
+Beides unbestätigt. 2.10.1 zeigt auf iPads nach dem Start 20 s lang einen HTML-Knopf „Kein Bild zu sehen? Hier tippen“ → `diagnose.html` (liegt über der Zeichenfläche, ist also auch bei weißem Bild sichtbar).
+Dort stehen Mitschrift, Geräte-Modus und die Tests. **Raumlicht bitte weiterhin nicht als iPad-tauglich bewerben und 2.10.x erst live schalten, wenn ihr wollt – der iPad-Fehler besteht auch in der Live-Version 2.5.1.**

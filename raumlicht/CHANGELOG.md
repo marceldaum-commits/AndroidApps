@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.10.1 – Direkter Weg zur Diagnose auf dem iPad (16.11.2026)
+- **WebApp auf dem iPad:** Das Bild bleibt dort weiterhin weiß (auf dem iPhone läuft es); die Ursache ist noch offen. Nach dem Start erscheint auf iPads jetzt 20 Sekunden lang
+  unten der Knopf „Kein Bild zu sehen? Hier tippen“ – er führt direkt zur Diagnose-Seite mit den Tests.
+- Sonst keine Änderungen.
+
 ## 2.10.0 – Drei Schwierigkeits-Stufen im endlosen Üben (16.11.2026)
 - **Stufe wählbar:** Unter „Üben“ gibt es jetzt „Einstieg“, „Abi“ und „Profi“ (oder wie bisher „Alle“ gemischt). Die Wahl wird gemerkt.
   - **Einstieg:** ein, zwei Rechenschritte mit glatten Zahlen – ablesen, mitteln, abziehen, einsetzen.
