@@ -91,6 +91,8 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             }
         }
 
+        // Oberstufe: Kurve f, Absprungpunkt, Fläche, Startpunkt P
+        if (l.kind in Upper.kinds) drawUpperScene(l, v.trail, ::px, unit, tm, v.time)
         // Merkbild Trigonometrie: rechtwinkliges Dreieck Start → Station
         l.triangle?.let { tri -> l.targets.firstOrNull()?.let { t -> drawTriangle(tri, l.launch, Vec(t.x, t.y), ::px, unit, tm) } }
         // Asteroiden und Planeten
@@ -504,5 +506,60 @@ private fun DrawScope.drawProbe(o: Offset, unit: Float, deg: Float, color: Color
                 drawCircle(Color.White, unit * 0.1f, o + Offset(unit * 0.12f, 0f))
             }
         }
+    }
+}
+
+
+/**
+ * Oberstufe: die Kurve f (blass), bei der Tangente der Absprungpunkt x₀, beim Integral die Ziel-Fläche (zart)
+ * und die schon „verbrauchte“ Fläche unter dem Flug, beim Vektor der Startpunkt P.
+ */
+private fun DrawScope.drawUpperScene(l: Level, trail: List<Vec>, px: (Vec) -> Offset, unit: Float, tm: TextMeasurer, time: Float) {
+    val c = Upper.c(l.values(l.solution))
+    if (l.kind != Kind.VECTOR) {
+        val pts = ArrayList<Vec>()
+        var x = -Flight.R
+        while (x <= Flight.R) { val y = Upper.f(c, x); if (kotlin.math.abs(y) <= Flight.R) pts += Vec(x, y); x += 0.05 }
+        // Lücken (Kurve verlässt das Bild) nicht verbinden
+        var seg = ArrayList<Vec>()
+        for (i in pts.indices) {
+            if (seg.isNotEmpty() && pts[i].x - seg.last().x > 0.06) { drawPathLine(seg, px, Q.Pink.copy(alpha = 0.35f), unit * 0.07f, dashed = false); seg = ArrayList() }
+            seg += pts[i]
+        }
+        drawPathLine(seg, px, Q.Pink.copy(alpha = 0.35f), unit * 0.07f, dashed = false)
+        pts.lastOrNull()?.let { label(tm, "f", px(it) + Offset(-unit * 0.6f, -unit * 0.4f), Q.Pink, 12) }
+    }
+    when (l.kind) {
+        Kind.TANGENT -> {
+            val x0 = l.fixed.getValue("x0"); val o = px(Vec(x0, Upper.f(c, x0)))
+            drawCircle(Q.Yellow.copy(alpha = 0.3f + 0.2f * sin(time * 4)), unit * 0.55f, o)
+            drawCircle(Q.Yellow, unit * 0.2f, o)
+            label(tm, "x₀", o + Offset(unit * 0.3f, unit * 0.3f), Q.Yellow, 12)
+        }
+        Kind.AREA -> {
+            val xs = l.targets.first().x
+            fun fill(from: Double, to: Double, color: Color) {
+                if (to <= from) return
+                val path = androidx.compose.ui.graphics.Path()
+                path.moveTo(px(Vec(from, 0.0)).x, px(Vec(from, 0.0)).y)
+                var x = from
+                while (x <= to) { val o = px(Vec(x, Upper.f(c, x))); path.lineTo(o.x, o.y); x += 0.05 }
+                val e = px(Vec(to, Upper.f(c, to))); path.lineTo(e.x, e.y)
+                path.lineTo(px(Vec(to, 0.0)).x, px(Vec(to, 0.0)).y); path.close()
+                drawPath(path, color)
+            }
+            // Ziel-Fläche zart, verbrauchter Treibstoff kräftig
+            fill(0.0, xs, Q.Cyan.copy(alpha = 0.10f))
+            trail.lastOrNull()?.let { fill(0.0, it.x, Q.Yellow.copy(alpha = 0.35f)) }
+            val top = px(Vec(xs, Upper.f(c, xs))); val bottom = px(Vec(xs, 0.0))
+            drawLine(Q.Cyan.copy(alpha = 0.5f), top, bottom, unit * 0.06f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(unit * 0.3f, unit * 0.2f)))
+            label(tm, "A = ?", px(Vec(xs / 2, Upper.f(c, xs / 2) / 2)), Q.Cyan, 13)
+        }
+        Kind.VECTOR -> {
+            val p = Vec(l.fixed.getValue("px"), l.fixed.getValue("py")); val o = px(p)
+            drawCircle(Q.Yellow, unit * 0.25f, o)
+            label(tm, "P", o + Offset(-unit * 0.8f, unit * 0.1f), Q.Yellow, 13)
+        }
+        else -> {}
     }
 }

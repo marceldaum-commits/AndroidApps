@@ -4,8 +4,9 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class StoryTest {
+    /** Klasse 5–10: je Kapitel ein Aurora-Bauteil. Die Oberstufe (Kapitel 19+) ist ein Zusatz – fertige Schiffe bleiben fertig. */
     @Test fun everyChapterHasExactlyOnePart() {
-        assertEquals(Levels.chapters.map { it.number }.sorted(), Story.parts.map { it.chapter }.sorted())
+        assertEquals(Levels.chapters.map { it.number }.filter { it < 19 }.sorted(), Story.parts.map { it.chapter }.sorted())
         assertEquals(Story.parts.size, Story.parts.map { it.name }.toSet().size)
         assertTrue(Story.intro.any { it.contains("${Story.parts.size}") })
     }

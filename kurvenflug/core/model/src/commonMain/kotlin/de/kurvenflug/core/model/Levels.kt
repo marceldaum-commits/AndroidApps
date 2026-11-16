@@ -167,6 +167,28 @@ object Feedback {
                     else -> "${num(abs(dx), 1)} m zu weit."
                 }
             }
+            Kind.TANGENT -> {
+                val m = v.getValue("m"); val c = Upper.c(v); val x0 = v.getValue("x0")
+                val y = Upper.f(c, x0) + m * (t.x - x0)
+                "Mit m = ${num(m)} warst du bei x = ${num(t.x)} auf y = ${num(y, 1)} – die Station liegt bei y = ${num(t.y)}. " +
+                    "Die Tangente hat die Steigung der Kurve an der Absprungstelle: f'(${num(x0)})."
+            }
+            Kind.PEAK -> {
+                val x = v.getValue("x"); val c = Upper.c(v)
+                val slope = Upper.df(c, x)
+                "Bei x = ${num(x)} ist die Steigung f'(${num(x)}) = ${num(slope, 2)} – noch nicht 0. " +
+                    (if (level.tip.contains("f''(x) = ")) "Beim Wendepunkt ist f''(x) = 0." else "Am Extrempunkt ist die Kurve waagrecht: f'(x) = 0.")
+            }
+            Kind.AREA -> {
+                val end = r.path.lastOrNull() ?: return "Nochmal!"
+                if (end.x < t.x) "Der Treibstoff reicht nur bis x = ${num(end.x, 1)}. Mehr tanken – die Fläche bis ${num(t.x)} ist größer!"
+                else "Zu viel getankt: Die Sonde flog bis x = ${num(end.x, 1)}. Die Fläche bis ${num(t.x)} ist kleiner."
+            }
+            Kind.VECTOR -> {
+                val end = r.path.lastOrNull() ?: return "Nochmal!"
+                "Nach t = ${num(v.getValue("T"))} warst du bei (${num(end.x, 1)} | ${num(end.y, 1)}) – die Station ist bei (${num(t.x)} | ${num(t.y)}). " +
+                    "Rechne v = (Q − P) : t."
+            }
         }
     }
 }
@@ -837,8 +859,8 @@ object Levels {
     )
 
     /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand) */
-    private val order = listOf(1, 15, 16, 8, 13, 11, 2, 7, 9, 3, 18, 12, 17, 4, 14, 5, 10, 6)
-    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters).sortedBy { order.indexOf(it.number) }
+    private val order = listOf(1, 15, 16, 8, 13, 11, 2, 7, 9, 3, 18, 12, 17, 4, 14, 5, 10, 6, 19, 20, 22, 21)
+    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + Upper.chapters).sortedBy { order.indexOf(it.number) }
 
     val all: List<Level> = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }

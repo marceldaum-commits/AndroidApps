@@ -121,7 +121,7 @@ fun HomeScreen(
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Text("KURVENFLUG", fontSize = 30.sp, fontWeight = FontWeight.Black, color = Q.Cyan, letterSpacing = 4.sp)
-                                    Text("${player?.let { "$it · " } ?: ""}Mathe & Physik im All · ${grade?.let { "Klasse $it" } ?: "Klasse 5–10"}",
+                                    Text("${player?.let { "$it · " } ?: ""}Mathe & Physik im All · ${grade?.let { "Klasse $it" } ?: "Klasse 5–13"}",
                                         color = Q.Muted, style = MaterialTheme.typography.bodySmall,
                                         modifier = Modifier.clickable(enabled = onProfiles != null) { onProfiles?.invoke() })
                                 }

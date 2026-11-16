@@ -173,6 +173,21 @@ object Walkthrough {
                     step("x = ${p(b2 - b1)} : ${p(m1 - m2)} = ?", x, "x"),
                     step("y = ${p(m1)} · ${p(x)} + ${p(b1)} = ?", m1 * x + b1, "y"))
             }
+            Kind.TANGENT -> { val c = Upper.c(l.values(l.solution)); val x0 = fixed.getValue("x0")
+                listOf(step("f(${f(x0)}) = ?   (Absprungpunkt)", Upper.f(c, x0)),
+                    step("f'(x) = ${Upper.derivText(c)}  →  m = f'(${f(x0)}) = ?", Upper.df(c, x0), "m", extra = listOf(Upper.f(c, x0)))) }
+            Kind.PEAK -> { val c = Upper.c(l.values(l.solution)); val x = l.solution.getValue("x")
+                if (l.title == "Wendepunkt") listOf(step("f''(x) = ${Upper.deriv2Text(c)} = 0  →  x = ?", x, "x"))
+                else {
+                    val other = if (c[3] != 0.0) { val d = 4 * c[2] * c[2] - 12 * c[3] * c[1]; if (d >= 0) listOf((-2 * c[2] + sqrt(d)) / (6 * c[3]), (-2 * c[2] - sqrt(d)) / (6 * c[3])).firstOrNull { abs(it - x) > 0.1 } else null } else null
+                    listOf(step("f'(x) = ${Upper.derivText(c)} = 0  →  x = ?" + if (other != null) "   (die richtige der beiden Lösungen!)" else "", x, "x",
+                        extra = listOfNotNull(other)))
+                } }
+            Kind.AREA -> { val c = Upper.c(l.values(l.solution)); val xs = t[0].x
+                listOf(step("F(x) = ${Upper.integralText(c)}.  F(${f(xs)}) = ?", Upper.F(c, xs) - Upper.F(c, 0.0), "A", extra = listOf(Upper.f(c, xs)))) }
+            Kind.VECTOR -> { val px = fixed.getValue("px"); val py = fixed.getValue("py"); val tt = fixed.getValue("T"); val q = t.last()
+                listOf(step("v₁ = (${p(q.x)} − ${p(px)}) : ${f(tt)} = ?", (q.x - px) / tt, "v1", extra = listOf(q.x - px)),
+                    step("v₂ = (${p(q.y)} − ${p(py)}) : ${f(tt)} = ?", (q.y - py) / tt, "v2", extra = listOf(q.y - py))) }
             else -> null
         }
     }

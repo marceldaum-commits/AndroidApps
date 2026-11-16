@@ -20,7 +20,7 @@ data class Section(val title: String, val hint: String, val chapters: List<Chapt
  * Nichts wird gesperrt – alle Kapitel bleiben spielbar, sie stehen nur an der richtigen Stelle.
  */
 object Plan {
-    val grades = 5..10
+    val grades = 5..13
 
     fun sections(chapters: List<Chapter>, grade: Int?, subject: Subject? = null): List<Section> {
         val list = chapters.filter { subject == null || it.subject == subject }

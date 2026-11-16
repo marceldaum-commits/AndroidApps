@@ -57,7 +57,7 @@ fun SettingsScreen(
                         else "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
                         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel (Kl. 5/6), Zuordnungen und Prozent (Kl. 6/7), lineare Funktionen und Gleichungssysteme (Kl. 7/8), " +
-                        "Pythagoras (Kl. 8/9), quadratische Funktionen und Nullstellen (Kl. 9), Trigonometrie (Kl. 9/10), Sinus, Exponential- und Logarithmusfunktionen (Kl. 10). " +
+                        "Pythagoras (Kl. 8/9), quadratische Funktionen und Nullstellen (Kl. 9), Trigonometrie (Kl. 9/10), Sinus, Exponential- und Logarithmusfunktionen (Kl. 10); Oberstufe: Ableitung, Extrempunkte, Integral, Vektoren (Kl. 11–13). " +
                         "Physik: gleichförmige Bewegung, Reflexion, Lichtbrechung, Energieerhaltung, schräger Wurf, Gravitation.", style = MaterialTheme.typography.bodySmall)
                     Text("Version $installed" + if (platform.isWeb) " · WebApp" else "", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                     if (platform.isWeb) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

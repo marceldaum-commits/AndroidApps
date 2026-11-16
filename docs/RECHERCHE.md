@@ -96,3 +96,17 @@ Anlass (Marcel): Mit Reglern kommt man auch durch Probieren ans Ziel – die Rec
   (2) Rechen-Stern: nach dem Treffer die passende Rechnung aus drei wählen (Ablenker = typische Verwechslungen),
   nur so gibt es den 3. Stern, (3) danach der Lösungsweg mit den Zahlen des Levels Schritt für Schritt.
   Keine Strafe: falsche Wahl kostet nur den Bonus-Stern, „Nochmal“ geht immer.
+
+## Kurvenflug 0.19: Oberstufe Klasse 11–13 (Nov. 2026)
+
+- Bildungsstandards Allgemeine Hochschulreife (KMK): Leitideen Analysis (Ableitung als lokale Änderungsrate/Tangentensteigung,
+  Extrem- und Wendepunkte, Integral als rekonstruierter Bestand/Fläche), Analytische Geometrie (Vektoren, Geraden in
+  Parameterform) und Stochastik. Für ein Flugbahn-Spiel passen Analysis und Vektoren unmittelbar.
+- Grundvorstellungen statt Kalkül (vom Hofe; Greefrath u. a. „Didaktik der Analysis“): Ableitung als Steigung der
+  Tangente (die Sonde „springt“ tangential ab), Integral als Bestand (Treibstoff = Fläche). Kalkül-Regeln (Potenzregel,
+  Stammfunktion) werden im Rechenweg geübt, die Vorstellung im Spiel.
+- Umsetzung 0.19.0: Kapitel 19 Ableitung & Tangente, 20 Extrempunkte (Hoch-, Tief-, Wendepunkt, Station versteckt),
+  21 Integral (Fläche wird beim Flug sichtbar „verbraucht“), 22 Vektoren (x⃗ = P + t·v⃗). Alles mit Live-Rechnung,
+  Rechen-Stern und Lösungsweg. Die Oberstufe ist ein Zusatz – die Aurora-Geschichte (Kl. 5–10) bleibt unverändert.
+- Später möglich: e-Funktion/ln, Physik-Oberstufe (Elektron im Kondensator → Parabel, Lorentzkraft → Kreisbahn
+  r = m·v/(q·B), harmonische Schwingung), Stochastik (Treffer-Wahrscheinlichkeit bei vielen Flügen).

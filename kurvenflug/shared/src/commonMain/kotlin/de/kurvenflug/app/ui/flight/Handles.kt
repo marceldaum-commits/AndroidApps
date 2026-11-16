@@ -92,6 +92,16 @@ fun handlesFor(level: Level, values: Map<String, Double>): List<Handle> {
             val y = level.ground + v.getValue("h")
             out += Handle(Vec(-8.0, y), Q.Yellow) { p -> snap("h", p.y - level.ground) }
         }
+        // Oberstufe: Tangente am Ende greifen, Vektor-Spitze ziehen; Extrempunkt und Fläche: nur Regler (rechnen!)
+        Kind.TANGENT -> {
+            val x0 = v.getValue("x0"); val c = de.kurvenflug.core.model.Upper.c(v); val y0 = de.kurvenflug.core.model.Upper.f(c, x0)
+            out += Handle(Vec(x0 + 2, y0 + 2 * v.getValue("m")), Q.Cyan) { p -> snap("m", (p.y - y0) / 2) }
+        }
+        Kind.VECTOR -> {
+            val px = v.getValue("px"); val py = v.getValue("py")
+            out += Handle(Vec(px + v.getValue("v1"), py + v.getValue("v2")), Q.Yellow) { p -> snap("v1", p.x - px) + snap("v2", p.y - py) }
+        }
+        Kind.PEAK, Kind.AREA -> {}
     }
     return out
 }

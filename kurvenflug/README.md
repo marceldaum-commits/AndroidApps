@@ -1,12 +1,12 @@
-# Kurvenflug – Mathe & Physik im All (Klasse 5–10)
+# Kurvenflug – Mathe & Physik im All (Klasse 5–13)
 
 Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
 selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).
 
-Inhalte (107 Level in 18 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
+Inhalte (131 Level in 22 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
 Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv, Planeten-Lexikon, Werkstatt): Koordinaten, Brüche & Kommazahlen am Zahlenstrahl, Winkel mit Geodreieck (Kl. 5–6), Zuordnungen/Prozent (Kl. 6–7), Geraden (Kl. 7–8), Pythagoras (Kl. 8–9), Parabeln (Kl. 9), Logarithmus (Kl. 10),
 Weg-Zeit und Laser-Optik (Physik 7), Energieerhaltung (Physik 8–9),
-Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9).
+Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren (Kl. 11–13).
 
 ## Aufbau der Startseite
 - Vier Reiter unten: 🚀 **Heute** („Weiter, wo du warst“, Tagesmission, Auffrischen), 🗺️ **Galaxie** (Kapitel nach Klasse,
@@ -83,6 +83,13 @@ Eine Codebasis für Android **und** Browser (Kotlin Multiplatform + Compose Mult
 - `app` – Android-Hülle: Activity, Widget, App-Update
 - `web` – WebApp (Kotlin/Wasm): Startseite, `kf.js` (Web Audio, Teilen, Zurück), Manifest, Service Worker (offline),
   zugeschnittene Schriften für Emojis und Mathe-Zeichen (`web/fonts/make_fonts.py`, Noto Color Emoji / DejaVu, freie Lizenzen)
+
+## Oberstufe (Klasse 11–13)
+Ableitung & Tangente, Extrempunkte, Integral (Treibstoff = Fläche), Vektoren in Parameterform – Kapitel 19–22 (`core/model/Upper.kt`).
+
+| Tangente | Hochpunkt | Integral | Vektoren |
+|---|---|---|---|
+| ![Tangente](screenshots/77_oberstufe_tangente.png) | ![Hochpunkt](screenshots/79_oberstufe_hochpunkt.png) | ![Integral](screenshots/80_oberstufe_integral.png) | ![Vektor](screenshots/81_oberstufe_vektor.png) |
 
 ## Verstehen statt nur Schieben
 Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsweg; die Aufgabe bleibt nach Fehlversuchen sichtbar.

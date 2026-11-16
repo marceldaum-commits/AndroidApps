@@ -139,6 +139,7 @@ fun LevelScreen(
                 Kind.THROW, Kind.ORBIT -> p.take(min(p.size, 70))                 // die ersten ~1,5 Kästchen: Abschussrichtung
                 Kind.LASER -> Flight.firstLeg(p)                                  // bis zum ersten Spiegel – den Abprall konstruierst du selbst
                 Kind.RAMP -> p.take(1)                                            // nur die Kugel am Start
+                Kind.TANGENT -> { val x0 = level.fixed.getValue("x0"); p.dropWhile { it.x < x0 - 1e-9 }.take(100) }   // ab dem Absprung
                 else -> p.take(min(p.size, 100))          // die ersten 2 Kästchen am Rand
             }
         }
@@ -390,6 +391,24 @@ private fun Formula(level: Level, values: Map<String, Double>) {
             append(" "); colored(key, (if (minus) "− " else "+ ") + num(kotlin.math.abs(raw)))
         }
         when (level.kind) {
+            Kind.TANGENT -> {
+                val x0 = v.getValue("x0"); val y0 = Upper.f(Upper.c(v), x0)
+                append("t(x) = "); factor("m"); append(" · (x ${if (x0 < 0) "+" else "−"} ${num(kotlin.math.abs(x0))}) + ${num(y0)}")
+                append("\n"); withStyle(SpanStyle(color = Q.Pink, fontSize = 14.sp)) { append("f(x) = ${Upper.text(Upper.c(v))}") }
+            }
+            Kind.PEAK -> {
+                append("Halt bei x = "); n("x")
+                append("\n"); withStyle(SpanStyle(color = Q.Pink, fontSize = 14.sp)) { append("f(x) = ${Upper.text(Upper.c(v))}") }
+            }
+            Kind.AREA -> {
+                append("∫ f dx = "); n("A")
+                append("\n"); withStyle(SpanStyle(color = Q.Pink, fontSize = 14.sp)) { append("f(x) = ${Upper.text(Upper.c(v))}, ab x = 0") }
+            }
+            Kind.VECTOR -> {
+                append("v = ( "); n("v1"); append(" | "); n("v2"); append(" )")
+                append("\n"); withStyle(SpanStyle(color = Q.Muted, fontSize = 14.sp)) {
+                    append("X = P + t · v,  P = (${num(v.getValue("px"))} | ${num(v.getValue("py"))}),  t = ${num(v.getValue("T"))}") }
+            }
             Kind.POINT -> if (level.params.none { it.key == "y" }) {
                 // Zahlenstrahl: Kommazahl und – bei Vierteln – auch als Bruch
                 append("x = "); n("x"); frac(v.getValue("x"))?.let { withStyle(SpanStyle(color = Q.Muted)) { append("  = $it") } }

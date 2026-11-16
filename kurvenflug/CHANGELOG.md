@@ -3,6 +3,15 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.19.0 – Oberstufe (Klasse 11–13)
+- **🎓 Jetzt bis Klasse 13**: Bei der Klassenwahl gibt es 11, 12 und 13 – mit vier neuen Planeten:
+  - **🏂 Ableitung & Tangente**: Die Sonde gleitet auf der Kurve und springt tangential ab. Die Steigung ist f'(x₀).
+  - **⛰️ Extrempunkte**: Hoch-, Tief- und Wendepunkt – die Station ist versteckt, also: f'(x) = 0 rechnen!
+  - **⛽ Integral**: Treibstoff = Fläche unter der Kurve. Beim Flug sieht man, wie die Fläche „verbraucht“ wird.
+  - **🧭 Vektoren**: Mit dem Richtungsvektor in Parameterform x⃗ = P + t · v⃗ zur Station.
+- Überall mit Live-Rechnung, Rechen-Stern und Lösungsweg. Brüche stehen exakt da (x³/3 statt 0,333x³).
+- Die Aurora-Geschichte (Klasse 5–10) bleibt unverändert – fertige Schiffe bleiben fertig.
+
 ## 0.18.0 – Verstehen statt nur Schieben
 - **🧮 Die Rechnung läuft mit**: Unter der Formel steht jetzt die Rechnung mit deinen Zahlen – z. B.
   „17 · tan 13° ≈ 3,9 · Station: 4 ↑“. So siehst du beim Schieben, was die Zahl bedeutet und warum sie passt.

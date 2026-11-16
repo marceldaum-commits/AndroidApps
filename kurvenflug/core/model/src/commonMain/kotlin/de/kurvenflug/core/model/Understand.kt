@@ -73,6 +73,26 @@ object Understand {
                 val w = s * s * sin(toRadians(2 * a)) / g
                 "Weite: v² · sin(2α) : g = ${num(s)}² · sin ${num(2 * a)}° : ${num(g)} ≈ ${num(w, 1)}  ·  Ziel: ${num(t.x - l.launch.x, 1)} ${mark(w, t.x - l.launch.x, t.r)}"
             }
+            Kind.TANGENT -> {
+                val c = Upper.c(v); val x0 = v.getValue("x0"); val y0 = Upper.f(c, x0); val m = v.getValue("m")
+                val y = y0 + m * (t.x - x0)
+                "Tangente bei x = ${num(t.x)}: ${num(y0)} + ${num(m)} · ${num(t.x - x0)} ≈ ${num(y, 1)}  ·  Station: ${num(t.y)} ${mark(y, t.y, t.r)}"
+            }
+            Kind.PEAK -> {
+                val c = Upper.c(v); val x = v.getValue("x")
+                if (l.title == "Wendepunkt") { val d2 = Upper.ddf(c, x); "f''(${num(x)}) = ${num(d2, 2)}" + if (abs(d2) < 0.05) "  ✓" else "  ≠ 0" }
+                else { val d = Upper.df(c, x); "Steigung f'(${num(x)}) = ${num(d, 2)}" + if (abs(d) < 0.05) "  ✓" else "  ≠ 0" }
+            }
+            Kind.AREA -> {
+                val end = Upper.path(l, values).lastOrNull() ?: return null
+                "Treibstoff ${num(v.getValue("A"))} reicht bis x ≈ ${num(end.x, 2)}  ·  Station: x = ${num(t.x)} ${mark(end.x, t.x, t.r)}"
+            }
+            Kind.VECTOR -> {
+                val px = v.getValue("px"); val py = v.getValue("py"); val tt = v.getValue("T"); val v1 = v.getValue("v1"); val v2 = v.getValue("v2")
+                val q = l.targets.last(); val ex = px + tt * v1; val ey = py + tt * v2
+                val ok = abs(ex - q.x) <= q.r && abs(ey - q.y) <= q.r
+                "P + ${num(tt)} · v = (${num(ex)} | ${num(ey)})  ·  Station: (${num(q.x)} | ${num(q.y)}) ${if (ok) "✓" else "↔"}"
+            }
             else -> null
         }
     }
@@ -201,6 +221,15 @@ object Understand {
                 else -> make("Was macht b?", "Pro Kästchen nach rechts wird y mal b genommen", "Pro Kästchen nach rechts kommt b dazu", "b ist der Startwert bei x = 0", l.id)
             }
             Kind.ORBIT -> make("Was macht ein Planet mit der Sonde?", "Er zieht sie an – je näher, desto stärker die Kurve", "Er stößt sie ab", "Je näher, desto schwächer die Kurve", l.id)
+            Kind.TANGENT -> { val x0 = num(fx.getValue("x0"))
+                make(q, "m = f'($x0) – die Steigung der Kurve dort", "m = f($x0) – die Höhe der Kurve dort", "m = f($x0) : $x0", l.id) }
+            Kind.PEAK -> if (l.title == "Wendepunkt") make("Woran erkennst du den Wendepunkt?", "f''(x) = 0", "f'(x) = 0", "f(x) = 0", l.id)
+                else make("Woran erkennst du den Extrempunkt?", "f'(x) = 0 – die Kurve ist dort waagrecht", "f(x) = 0 – die Kurve schneidet die x-Achse", "f''(x) = 0 – die Kurve wechselt die Krümmung", l.id)
+            Kind.AREA -> { val xs = num(t[0].x)
+                make("Wie viel Treibstoff?", "A = ∫₀^$xs f(x) dx = F($xs) − F(0)", "A = f($xs)", "A = f'($xs)", l.id) }
+            Kind.VECTOR -> { val tt = fx.getValue("T")
+                if (tt == 1.0) make(q, "v = Q − P", "v = P − Q", "v = Q + P", l.id)
+                else make(q, "v = (Q − P) : ${num(tt)}", "v = Q − P", "v = (P − Q) : ${num(tt)}", l.id) }
             Kind.RENDEZVOUS -> make("Wie findest du den Treffpunkt?", "Beide Gleichungen gleichsetzen", "Beide b addieren", "x = b₁ : m₁ ausrechnen", l.id)
             Kind.THROW -> make("Welche Formel steckt im Wurf?", "Weite = v² · sin(2α) : g", "Weite = v · sin(α) : g", "Weite = v² : g · α", l.id)
             Kind.RAMP -> make("Welche Formel steckt in der Rampe?", "m · g · h = ½ · m · v²", "m · g · h = m · v", "g · h = 2 · v²", l.id)
