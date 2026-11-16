@@ -371,3 +371,19 @@ Texte „keine Käufe“ in den Einstellungen (Android und Web), Store-Eintrag (
   Für den Lizenz-Dienst heißt das: Ein Freischalt-Schein braucht **zwei Angaben** – „Pro dauerhaft“ und „Tutor gültig bis“. Entscheidung von Marcel steht noch aus.
 
 Weiterhin nichts gebaut; ich warte auf die gemeinsame Abstimmung des Leitstands und Marcels Freigabe.
+
+---
+
+## 16.11.2026 – Konzept Pro, Nachtrag Umsatzsteuer
+
+Alle Preise sind **Endpreise inkl. 19 % USt** und werden in App und Shop so angezeigt („inkl. MwSt.“).
+
+| Produkt | brutto | netto (ohne 19 % USt) | kommt an über Play (netto minus 15 % Gebühr) | kommt an über die Website (netto minus Zahlungsgebühr) |
+|---|---|---|---|---|
+| Abi-Pass | 14,99 € | 12,60 € | 10,71 € | 11,81 € |
+| Abi-Pass, Einführungspreis | 9,99 € | 8,39 € | 7,14 € | 7,76 € |
+| Tutor-Verlängerung (Vorschlag) | 4,99 € | 4,19 € | 3,56 € | 3,70 € |
+
+Annahmen: Play-Gebühr 15 % (nicht nachgeprüft); Zahlungsgebühr der Woo-Kasse beispielhaft 2,9 % + 0,35 € vom Bruttobetrag – bitte durch den echten Tarif des Zahlungsanbieters ersetzen.
+Web-Kauf: Steuerklasse Standard 19 %, Rechnung weist die USt aus; bei Privatkunden in anderen EU-Ländern gilt deren Satz (OSS) – dann weicht der Nettobetrag ab. Play: Google führt die USt selbst ab.
+Keine Steuerberatung.
