@@ -12,3 +12,6 @@ kotlin {
         jvmTest.dependencies { implementation("junit:junit:4.13.2") }
     }
 }
+
+// Die Logik-Tests lesen die mitgelieferte Lautschrift – ändert sie sich, müssen die Tests neu laufen
+tasks.withType<Test>().configureEach { inputs.dir(rootProject.file("app/src/main/assets/stimme")) }

@@ -10,7 +10,7 @@ class ModesTest {
         Phase.entries.forEach { ph -> val o = l.objects(if (ph == Phase.DONE) l.solution else l.start, ph); assertEquals(l.id, o.size, o.map { it.id }.toSet().size) } }
 
     @Test fun examsAreSolvableAndScored() {
-        assertEquals(5, Exams.all.size)
+        assertEquals(7, Exams.all.size)
         Exams.all.forEach { e -> e.parts.forEach { solvable(it.level) }; assertEquals(12, e.maxPoints); assertEquals(listOf("a", "b", "c", "d"), e.parts.map { it.label }) }
         val part = Exams.all[0].parts[1]                       // 4 BE
         assertEquals(4, Exam.points(part, 3)); assertEquals(2, Exam.points(part, 2)); assertEquals(1, Exam.points(part, 1))

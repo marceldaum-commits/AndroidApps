@@ -13,9 +13,10 @@ Raumlicht macht aus Oberstufen-Mathe eine Lichtshow. Statt Formeln nur zu lesen,
 Dein Begleiter ist Lux, eine kleine Lichtdrohne. Lux stellt die Aufgaben, fiebert mit, gibt Tipps und zeigt nach jeder Aufgabe den Rechenweg Schritt für Schritt.
 
 WAS DU LERNST (ab Klasse 11 bis zum Abitur)
-• Geometrie: Punkte und Vektoren, Geraden, Lagebeziehungen, Ebenen, Skalarprodukt, Winkel, Abstände, Spiegelungen, Kugeln, Kreuzprodukt
-• Analysis: Ableitung, Extrem- und Wendepunkte, Flächen und Integrale, Funktionen untersuchen
-• Stochastik: Baumdiagramm, Vierfeldertafel, Binomialverteilung, Erwartungswert und Streuung
+• Geometrie: Punkte und Vektoren, Geraden, Lagebeziehungen, Ebenen in allen Formen, Skalarprodukt, Schnittwinkel, Abstände, Spiegelungen, Kugeln, Kreuzprodukt
+• Analysis: Ableitung, Extrem- und Wendepunkte, Integrale und Flächen, Funktionen untersuchen
+• Stochastik: Baumdiagramm, Vierfeldertafel, Binomialverteilung, Erwartungswert, Sigma-Regel, Hypothesentest
+• 124 Aufgaben in 23 Kapiteln und 7 Prüfungsaufgaben im Abi-Stil – jede mit Tipp und Rechenweg
 
 SO MACHT ES SPASS
 • Kurve abfahren: Fahr deine Funktion als Achterbahn ab – auch eigene Funktionen. Hoch-, Tief- und Wendepunkte werden angesagt.

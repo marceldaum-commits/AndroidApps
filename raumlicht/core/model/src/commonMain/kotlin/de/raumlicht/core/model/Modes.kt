@@ -98,7 +98,7 @@ object Exams {
         ))
     }
 
-    val all = listOf(tent, screen, flight) + MoreExams.all
+    val all = listOf(tent, screen, flight) + MoreExams.all + TourSeven.exams
     fun byId(id: String) = all.firstOrNull { it.id == id }
 }
 

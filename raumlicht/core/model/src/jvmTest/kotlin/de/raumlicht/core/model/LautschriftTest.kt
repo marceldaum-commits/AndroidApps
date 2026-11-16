@@ -10,13 +10,14 @@ class LautschriftTest {
     private val l = Lautschrift(File(dir, "saetze.tsv").readLines().asSequence(), File(dir, "woerter.tsv").readLines().asSequence())
 
     @Test fun festeTexteStehenAlsGanzeSaetzeDrin() {
-        Levels.chapters.forEach { c -> (c.intro + c.levels.flatMap { listOf(it.mission, it.tip, it.evaluate(it.solution).message) }).forEach { t ->
+        val exams = Exams.all.flatMap { e -> listOf(e.intro) + e.parts.map { it.level }.flatMap { listOf(it.mission, it.tip, it.evaluate(it.solution).message) } }
+        (exams.map { listOf(it) } + Levels.chapters.map { c -> c.intro + c.levels.flatMap { listOf(it.mission, it.tip, it.evaluate(it.solution).message) } }).forEach { texts -> texts.forEach { t ->
             val clean = Speech.clean(t); if (clean.isNotBlank()) assertNotNull("Lautschrift fehlt (tools/stimme/lautschrift.py neu laufen lassen): $clean", l.of(clean)) } }
     }
     @Test fun veraenderlicheTexteSindSprechbar() {
         val r = kotlin.random.Random(99); val gaps = LinkedHashSet<String>(); var n = 0
         fun check(t: String) { n++; gaps += l.missing(Speech.clean(t)) }
-        Levels.all.forEach { lv -> repeat(25) { runCatching { check(lv.evaluate(lv.controls.associate { c -> c.key to c.start.indices.map { i -> r.nextInt(c.min[i], c.max[i] + 1) } }).message) } } }
+        (Levels.all + Exams.all.flatMap { e -> e.parts.map { it.level } }).forEach { lv -> repeat(25) { runCatching { check(lv.evaluate(lv.controls.associate { c -> c.key to c.start.indices.map { i -> r.nextInt(c.min[i], c.max[i] + 1) } }).message) } } }
         Gen.Kind.entries.forEach { k -> for (seed in 100L..130L) runCatching { val g = Gen.level(k, seed); check(g.mission); check(g.tip); check(g.evaluate(g.solution).message) } }
         for (s in 0..100) check(Ghost.verdict(s))
         SpotKind.entries.forEach { check("${it.title} bei x = ${Geo.num(-2.5)}"); check(it.title) }
