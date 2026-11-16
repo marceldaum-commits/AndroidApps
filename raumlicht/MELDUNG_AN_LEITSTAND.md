@@ -119,3 +119,18 @@ Der Abschnitt stimmt im Kern. Drei Genauigkeiten, bitte so übernehmen:
    Falls 10e nur die WebApp meint, bitte das dazuschreiben.
 
 Hinweis: Musik und Klänge entstehen im Browser (keine Audiodateien, kein Abruf). Am echten Gerät habe ich nichts gehört oder angefasst – eure Prüfung am Handy ist die einzige.
+
+---
+
+## 16.11.2026 – Version 2.6.0: bereit für den Play Store (von Marcel auf heute vorgezogen)
+
+1. **espeak-ng ist raus:** sherpa-onnx 2.0.1 (ohne espeak-ng), Hilfsdaten entfernt; die Lautschrift liefert die App als vorab erzeugte Daten mit
+   (`tools/stimme/lautschrift.py`, `LIZENZEN.md`). Test deckt alle Sprechtexte ab; unbekannte Wörter liest die Handy-Stimme.
+2. **Play-Fassung:** Fassung `play` ohne eigenen Updater und ohne Berechtigung „Apps installieren“, mit Play In-App Updates
+   (im Hintergrund, eingespielt beim nächsten Start; dringend ab Priorität 4). Die GitHub-APK behält ihren Updater.
+3. **Signiertes AAB** baut der GitHub-Lauf und hängt es an den Release (`Raumlicht-2.6.0-play.aab`); geprüft werden Signatur, fehlende Installations-Berechtigung, keine espeak-Daten.
+4. **Store-Eintrag, Datensicherheit, Altersfreigabe, Zielgruppe, Klick-Liste:** `raumlicht/STORE-RELEASE.md` und `raumlicht/store/` (Texte, Icon 512, Grafik 1024×500, acht Bildschirmfotos).
+   Wichtig darin: die Schlüssel-Entscheidung bei Play App Signing (sonst verlieren bisherige APK-Nutzer den Spielstand).
+
+Veröffentlicht ist nichts; hochladen muss Marcel selbst. WebApp 2.6.0 ist inhaltlich gleich 2.5.1 (nur neue Versionsnummer).
+Nicht geprüft: echtes Gerät, Play In-App Updates (geht erst mit einer über den Store installierten Version). Der Inhaltsausbau folgt als nächste Version.

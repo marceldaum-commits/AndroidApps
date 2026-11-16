@@ -1,4 +1,6 @@
 # Baut Raumlicht, signiert ihn mit dem Upload-Schlüssel und stellt die APK unter „Releases“ bereit.
+# Zusätzlich entsteht das Paket für den Play Store (AAB, Fassung „play“: ohne eigenen Updater, ohne Installations-Berechtigung).
+# Es liegt beim Release als „Raumlicht-<Version>-play.aab“ – hochgeladen in die Play Console wird es von Hand (siehe raumlicht/STORE-RELEASE.md).
 # Läuft automatisch bei jedem Push, der Raumlicht ändert. Veröffentlicht wird nur, wenn die Version
 # (versionName in app/build.gradle.kts) neu ist – jede Version genau einmal. Von Hand: Actions → „Run workflow“.
 # Signiert mit demselben Schlüssel wie der Wissensgarten (Secrets WG_…).
@@ -103,10 +105,11 @@ jobs:
       - name: Logik-Tests (Level lösbar, Geometrie stimmt)
         run: ./gradlew --no-daemon :core:model:jvmTest
 
-      - name: APK bauen
+      - name: APK (GitHub-Fassung) und AAB (Play-Fassung) bauen
         run: |
-          ./gradlew --no-daemon assembleRelease
-          cp app/build/outputs/apk/release/app-release.apk "Raumlicht-${{ steps.version.outputs.name }}.apk"
+          ./gradlew --no-daemon assembleGithubRelease bundlePlayRelease
+          cp app/build/outputs/apk/github/release/app-github-release.apk "Raumlicht-${{ steps.version.outputs.name }}.apk"
+          cp app/build/outputs/bundle/playRelease/app-play-release.aab "Raumlicht-${{ steps.version.outputs.name }}-play.aab"
 
       - name: Signatur prüfen
         run: |
@@ -114,6 +117,14 @@ jobs:
             "Raumlicht-${{ steps.version.outputs.name }}.apk" | tee cert.txt
           grep -qi "9ece481266794bba5ace46e73a8df5a4aec51183d1685fae10438537f5a4d8eb" cert.txt \
             || { echo "::error::APK ist nicht mit dem Upload-Schlüssel signiert."; exit 1; }
+          # Das Store-Paket muss mit demselben Schlüssel signiert sein und darf die Installations-Berechtigung nicht enthalten
+          keytool -printcert -jarfile "Raumlicht-${{ steps.version.outputs.name }}-play.aab" | tr -d ':' | tee aab-cert.txt
+          grep -qi "9ece481266794bba5ace46e73a8df5a4aec51183d1685fae10438537f5a4d8eb" aab-cert.txt \
+            || { echo "::error::AAB ist nicht mit dem Upload-Schlüssel signiert."; exit 1; }
+          unzip -p "Raumlicht-${{ steps.version.outputs.name }}-play.aab" base/manifest/AndroidManifest.xml | strings | grep -q "REQUEST_INSTALL_PACKAGES" \
+            && { echo "::error::Das Store-Paket enthält die Installations-Berechtigung."; exit 1; } || true
+          unzip -l "Raumlicht-${{ steps.version.outputs.name }}-play.aab" | grep -qi "espeak" \
+            && { echo "::error::Das Store-Paket enthält espeak-ng-Daten."; exit 1; } || true
 
       - name: Release veröffentlichen
         if: steps.check.outputs.new == 'true'
@@ -123,7 +134,9 @@ jobs:
           target_commitish: ${{ github.sha }}
           name: Raumlicht ${{ steps.version.outputs.name }} (${{ steps.version.outputs.date }})
           body_path: raumlicht/notes.md
-          files: raumlicht/Raumlicht-${{ steps.version.outputs.name }}.apk
+          files: |
+            raumlicht/Raumlicht-${{ steps.version.outputs.name }}.apk
+            raumlicht/Raumlicht-${{ steps.version.outputs.name }}-play.aab
 
       - name: In Google Drive hochladen
         if: steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.RAUMLICHT_DRIVE_FOLDER != ''
