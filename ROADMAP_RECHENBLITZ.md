@@ -35,7 +35,7 @@ Jeden Tag ein vollständiges, getestetes Paket. Status: `[ ]` offen · `[x]` erl
 | 2 ✅ | So 15.11. (vorgezogen 14.11.) | **Maskottchen „Blitz“** (3.8.0) + Merksätze, Sternbilder, Was-ist-neu | Eigenes, gezeichnetes SVG-Maskottchen (Fuchs/Blitz) mit Stimmungen (freut sich, denkt nach, tröstet); Standard-Runde 3–5 Minuten; Texte kürzen, mehr Symbole |
 | 3 ✅ | Mo 16.11. (vorgezogen 14.11.) | **Rechen-Reise (Kapitel 1–3)** (3.9.0) | Story-Karte statt Liste: Etappen à 3–5 Min., kleine Geschichte je Kapitel, passend zur Klassenstufe |
 | 4 ✅ | Di 17.11. (vorgezogen 15.11.) | **Rechen-Reise (Kapitel 4–6)** (3.10.0) | Weitere Kapitel, Belohnungsbilder, Urkunde je Kapitel |
-| 5 | Mi 18.11. | **Rechengarten (gemütlich)** | Gelöste Aufgaben lassen Pflanzen wachsen; keine Serien-Strafe: „Tage diese Woche“ statt Tage in Folge, Pausen ohne Verlust |
+| 5 ✅ | Mi 18.11. (vorgezogen 16.11.) | **Rechengarten (gemütlich)** (3.14.0) | Gelöste Aufgaben lassen Pflanzen wachsen; keine Serien-Strafe: „Tage diese Woche“ statt Tage in Folge, Pausen ohne Verlust |
 | 6 | Do 19.11. | **Zahlen-Dungeon 1** | Roguelike: Räume, Gegner = Aufgaben, Lebenspunkte, kurze Läufe (3–5 Min.) |
 | 7 | Fr 20.11. | **Zahlen-Dungeon 2** | Deckbuilding: Rechen-Karten = echte Strategien (Zehnerfreund, Verdoppeln, Halbieren, Kommaschieber …) |
 | 8 | Sa 21.11. | **Zahlen-Dungeon 3** | Bosse, Freischaltungen, Balance je Klassenstufe |

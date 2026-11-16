@@ -850,3 +850,46 @@ button.badge{font:inherit;cursor:pointer}
 .merk-ov-card{position:relative}
 #home{padding-bottom:84px}
 @media (prefers-reduced-motion:reduce){#bzHome .blitz.bz-hop{animation:none}}
+
+/* 3.14.0 – Rechengarten */
+.garten{display:flex;flex-direction:column;gap:12px}
+.garten-wrap{border-radius:20px;overflow:hidden;box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--text) 8%,transparent)}
+.garten-svg{display:block;width:100%;height:auto}
+.garten-svg .gp{cursor:pointer;outline:none}
+.garten-svg .gp:focus-visible ellipse:first-child{stroke:var(--orange);stroke-width:3}
+.garten-svg .gp-plant{transform-box:fill-box;transform-origin:50% 100%;animation:gsway 4s ease-in-out infinite}
+.garten-svg .gp:nth-child(2n) .gp-plant{animation-delay:-1.6s}
+.garten-svg .gp-plant.grew{animation:ggrow .9s cubic-bezier(.34,1.56,.64,1) .5s both, gsway 4s ease-in-out 1.4s infinite}
+.garten-svg .gp-drops path{animation:gdrop .8s ease-in calc(var(--k) * .15s) 2 both}
+.garten-svg .gp.ready .gp-spark{animation:gspark 1.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.garten-svg .gp.lock{cursor:default}
+.garten-svg .g-sun{animation:gsun 6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes gsway{0%,100%{rotate:-2deg}50%{rotate:2deg}}
+@keyframes ggrow{0%{scale:.55;opacity:.4}100%{scale:1;opacity:1}}
+@keyframes gdrop{0%{translate:0 -10px;opacity:0}30%{opacity:1}100%{translate:0 52px;opacity:0}}
+@keyframes gspark{0%,100%{scale:.7;opacity:.6}50%{scale:1.2;opacity:1}}
+@keyframes gsun{0%,100%{scale:1}50%{scale:1.08}}
+.g-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.g-stats div{display:flex;flex-direction:column;align-items:center;padding:8px 4px;border-radius:14px;background:var(--chip);text-align:center;min-width:0}
+.g-stats b{font-size:16px;color:var(--head)}.g-stats span{font-size:11.5px;color:var(--muted)}
+.g-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.g-week div{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;border-radius:12px;background:var(--chip);min-width:0}
+.g-week div.on{background:color-mix(in srgb,#56c46a 22%,var(--surface))}
+.g-week div.today{box-shadow:inset 0 0 0 2px var(--orange)}
+.g-week i{font-style:normal;font-size:18px;line-height:1.2;min-height:22px;color:var(--muted)}
+.g-week small{font-size:11px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.g-basket{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.g-basket span{display:inline-flex;align-items:center;gap:4px;padding:6px 10px;border-radius:99px;background:var(--chip);font-size:20px}
+.g-basket b{font-size:14px;color:var(--head)}
+.g-seeds{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px}
+.g-seed{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px;border:0;border-radius:16px;background:var(--chip);font:inherit;color:var(--head);cursor:pointer;min-width:0}
+.g-seed b{font-size:13.5px}.g-seed small{font-size:12px;color:var(--muted)}
+.g-seed.lock{opacity:.5;filter:grayscale(.7)}
+.g-seed:not(.lock):active{transform:scale(.96)}
+.garten-card{align-items:center}
+.garten-card .g-mini{display:flex;align-items:flex-end;gap:0;flex:none;padding:4px 6px;border-radius:14px;background:linear-gradient(#bfe6ff,#9ad98a)}
+.g-res{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;color:var(--text);cursor:pointer;border:0}
+.g-res-i{font-size:24px}.g-res .chev{margin-left:auto;color:var(--muted)}
+.statusbar .sb-stat[data-open]{cursor:pointer}
+@media (prefers-reduced-motion:reduce){.garten-svg *{animation:none!important}}
+.garten-svg .gp-drops,.garten-svg .gp-spark{pointer-events:none}

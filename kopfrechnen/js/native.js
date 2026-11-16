@@ -119,7 +119,7 @@ function widgetUpdate() {
       const next = m && m.todo ? merkQueue()[0] : null;
       const line1 = m && m.todo ? tr(`🧠 ${m.todo} Aufgaben warten · ca. 3 Min.`)
         : m && merkSolidAll() ? tr(`🧠 Alles wiederholt ✓ · ${merkSolidAll()} sitzen fest`) : tr('🧠 Zeit für 3 Minuten Kopfrechnen!');
-      const line2 = [tr(`🎯 ${solved}/${DAILY_GOAL} heute`), tr(streak === 1 ? '🔥 1 Tag' : `🔥 ${streak} Tage`), next ? `${tr('Heute dran:')} ${i18nNumbers(taskText(merkTask(next)))}` : ''].filter(Boolean).join(' · ');
+      const line2 = [tr(`🎯 ${solved}/${DAILY_GOAL} heute`), tr(`🌱 ${typeof weekCount === 'function' ? weekCount() : 0}/7 diese Woche`), next ? `${tr('Heute dran:')} ${i18nNumbers(taskText(merkTask(next)))}` : ''].filter(Boolean).join(' · ');
       W.update({ title: 'Rechenblitz', line1, line2, button: tr('Los'), idle1: tr('🧠 Zeit für 3 Minuten Kopfrechnen!'), idle2: tr('Tippe hier – Blitz wartet schon'), day: today }).catch(() => {});
     } catch {}
   }, 300);

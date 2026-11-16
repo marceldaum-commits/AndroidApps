@@ -2,7 +2,40 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (15.11.2026, abends) – für den Leitstand:** Live ist 3.12.1 (b83bcaa, freigegeben). Auf `rechenblitz-test` liegt **3.13.0**: Die Android-App aktualisiert ihre Inhalte selbst (GitHub, Ersatz eigener Server), siehe Meldung (34). Bitte testen und freigeben. Mit der Freigabe auf `rechenblitz-live` bekommt der Live-Kanal neue Stände automatisch.
+> **AKTUELLER STAND (16.11.2026, morgens) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 (Selbst-Update ohne Knopf, Logo statt „Zur Website“) und neu **3.14.0 Rechengarten**, siehe Meldungen (35)–(39). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+
+## 16.11.2026 (39) – Entwicklungstag: Rechengarten 🌻 (3.14.0) · keine neue APK nötig
+
+- **Roadmap Tag 5** („gemütlich statt Druck“), vorgezogen vom 18.11.
+- **💧 Wasser:**
+  - Jede richtige Antwort ist ein Wassertropfen, egal in welchem Modus.
+  - Die Tropfen gehen reihum an alle wachsenden Pflanzen.
+  - Wer das Tagesziel schafft, bekommt Regen: einmal am Tag +10 Tropfen.
+  - Wächst gerade nichts, sammelt eine Regentonne die Tropfen (max. 60). Sie gießt den nächsten Samen.
+- **🌱 Pflanzen:**
+  - 7 eigene SVG-Pflanzen, je 5 Stufen (Samen → Keim → Pflanze → Knospe → reif), mit Wiege-Animation. Was gewachsen ist, „wächst“ beim Öffnen sichtbar, mit fallenden Tropfen.
+  - Karotte (20 Tropfen), Tulpe (30), Sonnenblume (40), Erdbeere (35, ab 1 Ernte), Tomate (50, ab 3), Kürbis (70, ab 6), Apfelbaum (100, ab 10).
+- **Ernten:**
+  - Eine reife Pflanze antippen: +15 💫 Funken, Konfetti, Erntekorb, dann Samen wählen.
+  - Beete 4–6 werden nach 2, 5 und 9 Ernten frei.
+  - Neue Abzeichen: „Erste Ernte“ und „Gärtner-Profi“ (10 Ernten).
+- **Garten-Bild:**
+  - Tag/Nacht passend zur Uhrzeit, Zaun, Wolken bzw. Mond und Sterne.
+  - Blitz sitzt auf dem Zaun, reife Pflanzen funkeln.
+- **Gemütlich statt Serie:**
+  - In der Statusleiste steht statt 🔥 „Tage in Folge“ jetzt **🌱 Tage diese Woche (x/7)**. Ein Tipp darauf öffnet den Garten. Das Widget zeigt dasselbe.
+  - Im Garten gibt es eine Wochenleiste Mo–So und den Satz: „Pausen sind okay – in deinem Garten welkt nichts.“
+  - Die Serien-Abzeichen bleiben bestehen.
+- **Startseite:**
+  - neue Karte „Rechengarten“ mit Mini-Beeten (Tropfen heute / reif → „Ernten“);
+  - Blitz' Begrüßung weist auf reife Pflanzen hin, „Los →“ öffnet dann den Garten;
+  - im Ergebnis die Zeile „💧 +N Tropfen für deinen Garten ›“.
+- **Daten:** nur auf dem Gerät (`S.garten`). Die Wochenzählung nutzt den vorhandenen Tagesverlauf (`S.hist`).
+- **Tests:**
+  - Rundenablauf mit Tropfen, Wachsen, Ernte, Samenwahl mit Zurück, gesperrte Beete, Regentonne;
+  - DE/EN/UK ohne fehlende Übersetzungen (1500 Einträge), 320 px ohne Überlauf, keine JS-Fehler, keine fremden Abrufe;
+  - vollständige Regression (offline, APK-Modus, Merk, Reise, Welt, Widget, Selbst-Update, installierte Ansicht, 400+ Zufallsaktionen).
+- **APK:** nur JS/CSS geändert, Hülle bleibt 2. Die App holt 3.14.0 von selbst, **keine neue APK nötig**.
 
 ## 15.11.2026 (38) – Knopf „Zur Website“ entfernt (3.13.4, keine neue APK nötig)
 

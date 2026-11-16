@@ -215,6 +215,8 @@ const BADGES = [
   ['reise6', '👑', 'Sternenkönig', 'Kapitel 6 der Rechen-Reise geschafft'],
   ['reiseAll', '⚡', 'Echter Rechenblitz', 'Die ganze Rechen-Reise geschafft'],
   ['raetsel', '🧩', 'Rätselprofi', 'Das Rätsel des Tages gelöst'],
+  ['garten1', '🌱', 'Erste Ernte', 'Im Rechengarten zum ersten Mal geerntet'],
+  ['garten10', '🧺', 'Gärtner-Profi', '10-mal im Rechengarten geerntet'],
   ['shop', '🎩', 'Modefuchs', 'Blitz das erste Outfit oder Deko gekauft'],
 ].map(([id, icon, name, desc]) => ({ id, icon, name, desc }));
 let newBadges = [];
@@ -256,16 +258,17 @@ function renderHome() {
   $('pLevel').textContent = lv;
   $('pRank').textContent = RANKS[Math.min(RANKS.length - 1, Math.floor((lv - 1) / 3))];
   $('pXpBar').style.width = ((S.xp - cur) / (nxt - cur) * 100) + '%';
-  $('sDays').textContent = streakDays();
+  $('sDays').textContent = typeof weekCount === 'function' ? `${weekCount()}/7` : streakDays();   // gemütlich: Tage diese Woche statt Serie
   $('sToday').textContent = `${S.today.date === todayStr() ? S.today.solved : 0}/${DAILY_GOAL}`;
   renderSoundIcons();
-  renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); renderWeltCard();
+  renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); renderWeltCard(); if (typeof renderGartenCard === 'function') renderGartenCard();
   if ($('sFunken')) $('sFunken').textContent = S.funken ?? 0;
   if ($('bzHome')) {
     $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting() + ' <button class="bz-go" id="bzGo">Los →</button>', 54) : '';
     $('bzGo') && ($('bzGo').onclick = () => {   // Blitz' Vorschlag starten – nur über den eigenen Knopf, nicht beim Antippen des Fuchses
       const m = typeof merkStats === 'function' ? merkStats() : null;
-      if (m && m.todo) startMerk(); else if (S.challenge.date !== todayStr() && chVisible()) $('chStart')?.click(); else $('btnStart').click();
+      const ripe = typeof gartenState === 'function' && gartenState().plots.some(p => p && plantStage(p) === 4);
+      if (ripe) openSheet('garten'); else if (m && m.todo) startMerk(); else if (S.challenge.date !== todayStr() && chVisible()) $('chStart')?.click(); else $('btnStart').click();
     });
     $('bzHome').onclick = e => { if (!e.target.closest('#bzGo')) { const f = $('bzHome').querySelector('.blitz'); f?.classList.remove('bz-hop'); void f?.getBoundingClientRect(); f?.classList.add('bz-hop'); } };
     $('bzHome').removeAttribute('role'); $('bzHome').tabIndex = -1;
@@ -515,6 +518,7 @@ function creditCorrect() {
   if (S.today.date !== today) S.today = { date: today, solved: 0 };
   S.today.solved++; S.total++;
   addFunken(FUNKEN.correct + (S.today.solved === DAILY_GOAL ? FUNKEN.goal : 0));   // 💫 je richtige Antwort, Bonus fürs Tagesziel
+  if (typeof gartenWater === 'function') { gartenWater(1); if (S.today.solved === DAILY_GOAL) gartenRain(); }   // 💧 Rechengarten, Regen fürs Tagesziel
   if (S.days.last !== today) { S.days.streak = S.days.last === dayStr(1) ? S.days.streak + 1 : 1; S.days.last = today; }
 }
 function submit() {
@@ -724,6 +728,7 @@ function renderResult(r) {
     ${G.mode !== 'test' ? `<div class="rgrid"><div class="stat card"><b>${G.correct}</b><span>richtig</span></div><div class="stat card"><b>${Math.round(r.acc * 100)}%</b><span>Treffer</span></div><div class="stat card"><b>${avg ? fmtSec(avg) : '–'}</b><span>pro Aufgabe</span></div></div>` : ''}
     ${r.badges.length ? `<div class="card newbadges">${r.badges.map(id => { const b = BADGES.find(x => x.id === id); return `<div class="nb"><span>${b.icon}</span><div><b>${esc(b.name)}</b><small>${esc(b.desc)}</small></div></div>`; }).join('')}</div>` : ''}
     ${G.mistakes.length && G.mode !== 'test' ? `<div class="card mistakes"><b>Das üben wir nochmal:</b><ul>${G.mistakes.slice(0, 10).map((m, i) => `<li><details><summary><span class="m">${esc(m.task.replace(/ [=≈] \?$/, ''))} = <b>${esc(m.expected)}</b> <span class="muted">(du: <s>${esc(m.given)}</s>)</span></span></summary><ol class="steps">${(m._task.w || []).map(s => `<li>${esc(s)}</li>`).join('')}</ol><button class="linkbtn" data-i="${i}">Glaubst du, die Lösung ist falsch? Melden</button></details></li>`).join('')}</ul></div>` : ''}
+    ${typeof gartenResultHtml === 'function' ? gartenResultHtml() : ''}
     <div class="muted small">${xpText}</div>
     ${resultExtrasHtml(r)}
     ${resultPromo()}

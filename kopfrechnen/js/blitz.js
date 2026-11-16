@@ -75,7 +75,9 @@ function blitzGreeting() {
   let line = 'Lust auf eine Runde?';
   try {
     const m = typeof merkStats === 'function' ? merkStats() : null;
-    if (m && m.todo) line = `Im Merk-Training warten ${m.todo} Aufgaben auf dich.`;
+    const ripe = typeof gartenState === 'function' ? gartenState().plots.filter(p => p && plantStage(p) === 4).length : 0;
+    if (ripe) line = 'In deinem Garten ist etwas reif – Zeit zum Ernten!';
+    else if (m && m.todo) line = `Im Merk-Training warten ${m.todo} Aufgaben auf dich.`;
     else if (S.challenge.date !== todayStr() && chVisible()) line = 'Die Tageschallenge wartet auf dich!';
   } catch {}
   return `<b>${hi}</b> ${line}`;
