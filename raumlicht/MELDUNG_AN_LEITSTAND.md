@@ -527,3 +527,20 @@ Ein Kurs mit 25 Schülern zahlt bei 49 € knapp 2 € pro Kopf statt 14,99 € 
 Auf Marcels Wunsch („Benenne es, das kläre ich dann“) stehen alle offenen Rechts- und Datenschutzpunkte zu Lehrerzugang, Abi-Pass und KI-Tutor in `raumlicht/KLAERUNGSLISTE-RECHT.md`
 (A1–A14 Schule, B1–B8 Bezahlen, C1–C6 KI). Vieles davon gilt für alle Apps gleich und betrifft euren zentralen Dienst (Serverstandort, Unterauftragnehmer, Löschkonzept, technische Maßnahmen, AVV-Muster).
 Keine Rechtsberatung. Gebaut wird erst, wenn Marcel die Punkte geklärt hat.
+
+---
+
+## 16.11.2026 – Schulpreise von Marcel direkt bestätigt (ersetzt meinen Vorschlag im Konzept Lehrerzugang)
+
+Mein früherer Vorschlag (Kurslizenz 49 €, Schullizenz 199 €) ist damit **überholt**. Es gilt, inkl. 19 % USt, je Schuljahr bis 31.07., ohne KI-Tutor:
+
+| Lizenz | Preis | netto |
+|---|---|---|
+| Lehrkraft-Lizenz (eine Lehrkraft und ihre Kurse), je App | 29 € | 24,37 € |
+| Schul-Lizenz (alle Lehrkräfte einer Schule), je App | 199 € | 167,23 € |
+| Paket alle Apps, je Lehrkraft | 79 € | 66,39 € |
+| Paket alle Apps, je Schule | 499 € | 419,33 € |
+
+Folgen für Raumlicht: Die Lizenz hängt an der **Lehrkraft** (nicht am einzelnen Kurs) und endet am **31.07.** – der Schein „Pro über Kurs“ braucht also ein festes Enddatum statt „12 Monate ab Beitritt“.
+Verkauf und Verwaltung über den zentralen Lehrerzugang; in der App wird nichts dazu gebaut, bis die Schnittstelle steht. Die Klärungsliste (`KLAERUNGSLISTE-RECHT.md`) gilt weiter.
+Noch offen von Marcel: A9 (sieht die Lehrkraft nur Aufträge oder den ganzen Fortschritt?).
