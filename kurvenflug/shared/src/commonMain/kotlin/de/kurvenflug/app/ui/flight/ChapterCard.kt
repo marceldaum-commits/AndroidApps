@@ -58,6 +58,12 @@ fun ChapterCard(c: Chapter, index: Int, stars: Map<String, Int>, onLevel: (Level
                 repeat(4 - row.size) { Spacer(Modifier.weight(1f)) }
             }
         }
+        // 🔥 Extrem-Prüfung: freiwillig, offen wenn alle Level geschafft sind
+        val extreme = remember(c.number) { de.kurvenflug.core.model.ChapterExtreme.forChapter(c.number) }
+        if (extreme != null) {
+            val open = c.levels.all { (stars[it.id] ?: 0) > 0 }
+            ExtremeTile(stars[extreme.id] ?: 0, open) { onLevel(extreme) }
+        }
         // Boss am Ende: offen, wenn alle Level geschafft sind
         if (onBoss != null) {
             val open = c.levels.all { (stars[it.id] ?: 0) > 0 }
@@ -84,6 +90,29 @@ private fun BossTile(emoji: String, name: String, stars: Int, open: Boolean, col
         Column(Modifier.weight(1f)) {
             Text(if (open) "Boss: $name" else "Boss-Kampf", fontWeight = FontWeight.Bold, color = if (open) Q.Text else Q.Muted)
             Text(if (open) "3 Etappen, kein Zurück!" else "Erst alle Level schaffen", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+        }
+        if (stars > 0) Text("★".repeat(stars) + "☆".repeat(3 - stars), color = Q.Yellow)
+    }
+}
+
+@Composable
+private fun ExtremeTile(stars: Int, open: Boolean, onClick: () -> Unit) {
+    val interaction = remember { MutableInteractionSource() }
+    val sfx = LocalSfx.current
+    Row(
+        Modifier.fillMaxWidth().pressBounce(interaction).pulse(open && stars == 0, 0.02f).clip(RoundedCornerShape(14.dp))
+            .background(if (open) Q.Orange.copy(alpha = 0.18f) else Color(0x22000000))
+            .border(2.dp, if (open) Q.Orange else Q.Orange.copy(alpha = 0.15f), RoundedCornerShape(14.dp))
+            .clickable(interaction, null) { if (open) { sfx?.play(Sound.TAP); onClick() } else sfx?.play(Sound.WRONG, volume = 0.3f) }
+            .padding(horizontal = 14.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(if (open) "🔥" else "🔒", fontSize = 26.sp)
+        Spacer(Modifier.width(10.dp))
+        Column(Modifier.weight(1f)) {
+            Text("Extrem-Prüfung", fontWeight = FontWeight.Bold, color = if (open) Q.Text else Q.Muted)
+            Text(if (open) "Für Profis: winzige Ziele, feine Regler, Asteroiden" else "Erst alle Level schaffen",
+                style = MaterialTheme.typography.labelSmall, color = Q.Muted)
         }
         if (stars > 0) Text("★".repeat(stars) + "☆".repeat(3 - stars), color = Q.Yellow)
     }

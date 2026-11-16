@@ -1,6 +1,6 @@
 package de.kurvenflug.core.model
 
-/** Ein Planet in Andromeda: Name, Bild und 3 Level der schweren Stufe. */
+/** Ein Planet in Andromeda: Name, Bild und 3 Level, je weiter draußen desto schwerer. */
 data class AndroPlanet(val n: Int, val name: String, val emoji: String, val levels: List<Level>)
 
 /**
@@ -20,11 +20,16 @@ object Andromeda {
     fun isAndromeda(id: String) = id.startsWith(PREFIX)
     fun unlocked(partsFound: Int) = partsFound >= Story.parts.size
 
+    /** Je weiter draußen, desto schwerer: Planet 1–6 schwer, 7–12 Profi, ab 13 Extrem. */
+    fun tier(n: Int) = minOf(Tier.MAX, Tier.HARD + (n - 1) / 6)
+
     fun planet(n: Int): AndroPlanet {
         val name = first[floorModK(n * 5 + 3, first.size)] + second[floorModK(n * 7 + 1, second.size)]
         val levels = (1..3).map { k ->
             val kind = Gen.kinds[floorModK(n * 3 + k * 2, Gen.kinds.size)]
-            Gen.level(kind, 900_000L + n * 31_337L + k * 7_717L, 2).copy(id = "$PREFIX$n-$k", chapter = 0, number = k, title = "$name · Etappe $k")
+            val t = tier(n)
+            Gen.level(kind, 900_000L + n * 31_337L + k * 7_717L, t)
+                .copy(id = "$PREFIX$n-$k", chapter = 0, number = k, title = "$name · Etappe $k" + if (t > Tier.HARD) " · ${Tier.label(t)}" else "")
         }
         return AndroPlanet(n, name, emojis[floorModK(n * 5, emojis.size)], levels)
     }

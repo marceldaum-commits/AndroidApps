@@ -82,8 +82,12 @@ object DuelCode {
  * Kein Zeitdruck – nur der Rekord zählt. Es wird schrittweise schwerer.
  */
 object Storm {
-    fun level(runSeed: Long, index: Int): Level =
-        Gen.any(runSeed * 101 + index, difficulty = minOf(2, index / 4), id = "storm-$runSeed-$index").copy(title = "Welle ${index + 1}")
+    /** Stufe der Welle: je 4 Wellen eine Stufe höher – ab Welle 17 „Extrem“. */
+    fun tier(index: Int) = minOf(Tier.MAX, index / 4)
+
+    fun level(runSeed: Long, index: Int): Level = tier(index).let { t ->
+        Gen.any(runSeed * 101 + index, difficulty = t, id = "storm-$runSeed-$index").copy(title = "Welle ${index + 1} · ${Tier.label(t)}")
+    }
 }
 
 /** Zahlen, aus denen sich die Abzeichen ergeben. */

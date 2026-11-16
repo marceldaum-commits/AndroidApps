@@ -103,6 +103,15 @@ Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsw
 |---|---|---|---|
 | ![Live](screenshots/72_live_rechnung.png) | ![Frage](screenshots/73_rechenstern_frage.png) | ![Richtig](screenshots/74_rechenstern_geschafft.png) | ![Aufgabe](screenshots/76_aufgabe_nach_fehlversuch.png) |
 
+## Schwierigkeit: Leicht bis Extrem (`core/model/Daily.kt`, `ChapterExtreme.kt`, `Difficulty.kt`)
+Generator-Stufen 🟢 Leicht · 🔵 Normal · 🟠 Schwer · 🔴 Profi · 🔥 Extrem (Asteroidensturm alle 4 Wellen eine Stufe höher,
+Andromeda ab Planet 7 Profi, ab 13 Extrem). Jedes Kapitel hat eine freiwillige 🔥 Extrem-Prüfung (zählt nicht zum Abschluss).
+Nachweis per Test: `DifficultyTest` (jede Stufe strikt schwerer) und `ChapterExtremeTest` (Prüfung schwerer als jedes Level).
+
+| Extrem-Prüfung | Prüfung „Geraden“ | Sturm-Welle Extrem |
+|---|---|---|
+| ![](screenshots/91_extrem_pruefung_kachel.png) | ![](screenshots/92_extrem_pruefung_geraden.png) | ![](screenshots/93_sturm_extrem.png) |
+
 ## Google Play
 Zwei Varianten aus demselben Code: `github` (APK, eigener Updater, Internet + Installations-Recht) und `play`
 (AAB, keine Internet-/Installations-Rechte, Play In-App Updates). Store-Eintrag, Grafiken, Screenshots (1080 × 2160),
