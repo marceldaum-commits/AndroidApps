@@ -2,7 +2,72 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).**
+
+## 16.11.2026 (54) – Rechenblitz Pro gebaut, Sperren noch aus (3.20.0 auf `rechenblitz-test`)
+
+Freigabe Marcel über den Leitstand: Pro für 7,99 € einmalig (inkl. USt), wie in Meldung 52 vorgeschlagen.
+
+**Was eingebaut ist (`kopfrechnen/js/pro.js`):**
+- **Frei:** alle 30 Themen Stufe 1–5, alle Spiele, 2 Profile.
+- **Pro:**
+  - Profi-Stufe
+  - unbegrenzt Profile
+  - **neuer Elternbericht:** 10 Wochen Verlauf, Ampel je Thema, Stufe, Entwicklung, Fehlerkiste, Drucken/PDF
+  - Vorlagen in „Üben nach Wunsch“ speichern und teilen
+- **Sperren greifen erst, wenn `proCheckout` in `kopfrechnen/config.js` eingetragen ist** (Kassen-URL des Woo-Produkts RB-PRO). Bis dahin:
+  - ist alles frei,
+  - zeigt die App kein Pro-Menü, keinen Preis und keinen Kauf-Knopf,
+  - bleibt der Text „keine In-App-Käufe“ also noch richtig.
+- **Freischalten:**
+  - per Link `https://rechenblitz.mathenachhilfe-online.com/?pro=<Code ohne Bindestriche>`. Der Code wird aus der Adresse entfernt.
+  - unter Einstellungen → Rechenblitz Pro → „Code einlösen“. Erlaubt sind „RB-“, Bindestriche, Leerzeichen, Kleinbuchstaben und O/I/L als 0/1.
+  - Die Freischaltung gilt für alle Profile auf dem Gerät und wird bei jedem Start erneut geprüft.
+- **Kauf:**
+  - Der Knopf „Pro kaufen – 7,99 € einmalig, inkl. MwSt.“ öffnet die Kasse **nur über die Eltern-Abfrage** (ausgeschriebene Zahl), auch im Browser.
+  - **In der Play-Fassung gibt es keinen Kauf-Knopf**, nur „Code einlösen“. Play Billing kommt später.
+- **Bestandsschutz:**
+  - Wer schon mehr als 2 Profile hat, behält sie und kann nur keine neuen anlegen.
+  - Gespeicherte Vorlagen bleiben nutzbar.
+  - Geteilte Vorlagen-Links öffnen bleibt frei.
+  - Die Profi-Stufe hat keinen Bestandsschutz, weil sie erst mit 3.19.0 kam, die noch nicht live ist.
+  - Ohne Pro läuft ein Auftrag oder Link mit Profi-Stufe als Stufe 5, mit Hinweis.
+- **Aufträge und Arbeitsblätter:** Profi ist dort ohne Pro gesperrt (🔒).
+
+**⚠️ Bitte bestätigen – Code-Format:**
+- Den KurvenFlug-Code (AndroidApps, `kurvenflug/pro/`) konnte ich nicht ansehen. Das Repository liegt außerhalb dieser Sitzung, und das Einbinden wurde nicht erlaubt.
+- Ich habe deshalb genau nach eurer Beschreibung gebaut:
+  - Präfix „RB-“, Crockford-Base32 `0123456789ABCDEFGHJKMNPQRSTVWXYZ`, Bits von vorn (MSB zuerst).
+  - Dekodiert: `[Version=1, App=2, Produkt=1, … weitere Bytes beliebig]` + **64 Byte Ed25519-Signatur über alle Bytes davor**.
+  - Geprüft wird nur Version, App und Produkt; weitere Felder (Seriennummer, Datum) werden angenommen, wie sie kommen.
+  - Öffentlicher Schlüssel `979eb515…b812`.
+- Weicht KurvenFlug davon ab, z. B. mit Signatur vorn, anderer Reihenfolge oder Base32 von hinten, ist nur `proDecode`/`proVerify` in `pro.js` anzupassen.
+- **Bitte einen echten Test-Code für Rechenblitz schicken** (oder den Aufbau aus `kurvenflug/pro/` in die Meldung kopieren), dann prüfe ich das Zusammenspiel. Bis dahin ist es nicht nachgewiesen.
+
+**Tests:**
+- `node tests/pro-code.js` (im Repo) arbeitet mit einem eigenen Test-Schlüsselpaar. Gültiger Code, Kleinschreibung, Leerzeichen und längere Daten werden angenommen. Falsche App, falsches Produkt, andere Version, ein verändertes Zeichen, Unsinn und ein fremder Schlüssel werden abgelehnt. **11/11 ✓**
+- Browser bei 320 px Breite in DE/EN/UK:
+  - ohne Kassen-URL alles frei und kein Pro-Menü,
+  - mit Kassen-URL: Profi 🔒 öffnet das Pro-Fenster, ebenso das dritte Profil, der Elternbericht und „Vorlage speichern“,
+  - Kauf-Knopf führt zur Eltern-Abfrage,
+  - Freischalt-Link `?pro=` wird eingelöst und die Adresse bereinigt,
+  - danach ist alles offen, ein falscher Code wird abgelehnt,
+  - keine JS-Fehler, keine fehlenden Übersetzungen.
+- Schwierigkeitstest 174/174 ✓, „Üben nach Wunsch“-Test ✓. Rund 55 neue Texte sind auf EN/UK übersetzt.
+- Hinweis: Die Prüfung nutzt Ed25519 aus Web Crypto des Browsers. Aktuelle Browser und Android-WebViews können das. Auf sehr alten Geräten erscheint „Bitte Browser bzw. App aktualisieren“.
+
+**Zum Start (wenn das Woo-Produkt RB-PRO steht):**
+1. `proCheckout` in `kopfrechnen/config.js` eintragen. Dann eine neue Version bauen, das mache ich, sobald ihr die URL schickt.
+2. Texte „keine In-App-Käufe“ in App (Begrüßung/Info), Website und Store anpassen, siehe unten.
+3. Datenschutz-Ergänzung auf der Website einbauen (Text unten).
+
+**Datenschutz-Ergänzung (für `datenschutz/#rechenblitz`, bitte so übernehmen):**
+
+> **Rechenblitz Pro.** Rechenblitz Pro wird auf unserer Website gekauft. Dabei gelten die Hinweise zu Bestellungen und Zahlungen in unserem Shop. Nach dem Kauf erhältst du per E-Mail einen Freischalt-Code. Den Code gibst du in der App ein oder öffnest den Freischalt-Link. Die App prüft den Code ausschließlich auf deinem Gerät mit einer digitalen Signatur. Dabei werden keine Daten an uns oder an Dritte übertragen. Der Code wird nur lokal im Speicher deines Browsers bzw. der App gespeichert und gilt für alle Profile auf diesem Gerät. Ein Konto ist nicht nötig. Wenn du die App-Daten löschst, kannst du den Code einfach erneut eingeben.
+>
+> **Elternbericht.** Der Elternbericht wird aus dem Übungsverlauf der letzten 70 Tage erstellt, der ohnehin nur auf dem Gerät gespeichert ist. Er wird nicht übertragen. Beim Drucken oder Speichern als PDF entscheidest du selbst, was mit der Datei geschieht.
+
+**Store- und Website-Text zum Start (Vorschlag):** „Kein Konto, keine Werbung, kein Tracking. Alle 30 Themen bis Stufe 5 kostenlos – optional Rechenblitz Pro für 7,99 € einmalig (Profi-Stufe, mehr Profile, Elternbericht).“
 
 ## 16.11.2026 (53) – Konzept Lehrerzugang für Rechenblitz (noch nicht gebaut)
 

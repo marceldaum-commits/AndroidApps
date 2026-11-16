@@ -2241,3 +2241,58 @@ Viele neue Aufgabenarten, z. B. Zinseszins, Kreisring, Klammern auf beiden Seite
 {} km {} m	{} km {} m	{} км {} м
 größter Primfaktor von {}	largest prime factor of {}	найбільший простий множник числа {}
 Einmaleins {} und {}	Times tables {} and {}	Таблиця множення на {} і {}
+# 16.11.2026 – Rechenblitz Pro und Elternbericht (3.20.0)
+Elternbericht	Parent report	Звіт для батьків
+Verlauf über {} Wochen, Stärken und Schwächen je Thema	Progress over {} weeks, strengths and weaknesses per topic	Прогрес за {} тижнів, сильні та слабкі сторони за темами
+Die letzten {} Wochen ({} bis {})	The last {} weeks ({} to {})	Останні {} тижнів ({} – {})
+Aufgaben je Woche	Tasks per week	Завдань на тиждень
+{} Aufgaben, {} % richtig	{} tasks, {} % correct	{} завдань, {} % правильно
+jetzt	now	зараз
+– {} % richtig	– {} % correct	– {} % правильно
+Alle Themen	All topics	Усі теми
+Entwicklung	Trend	Динаміка
+Einschätzung	Assessment	Оцінка
+↗ besser	↗ better	↗ краще
+↘ schwächer	↘ weaker	↘ слабше
+→ gleich	→ same	→ без змін
+fast sicher	almost secure	майже впевнено
+sitzt sicher	secure	впевнено
+{} in der Fehlerkiste	{} in the mistake box	{} у скриньці помилок
+„Entwicklung“ vergleicht die ersten und die letzten {} Wochen (ab {} Aufgaben je Hälfte). Die Daten bleiben auf diesem Gerät.	“Trend” compares the first and the last {} weeks (from {} tasks per half). The data stays on this device.	«Динаміка» порівнює перші й останні {} тижнів (від {} завдань на половину). Дані залишаються на цьому пристрої.
+In den letzten {} Wochen wurde noch nicht geübt.	No practice in the last {} weeks yet.	За останні {} тижнів ще не тренувалися.
+Drucken / PDF	Print / PDF	Друк / PDF
+🔒 Profi	🔒 Pro	🔒 Профі
+Profi 🔒	Pro 🔒	Профі 🔒
+Pro	Pro	Pro
+Rechenblitz Pro	Rechenblitz Pro	Rechenblitz Pro
+Profi-Stufe, mehr Profile, Elternbericht	Pro level, more profiles, parent report	Рівень Профі, більше профілів, звіт для батьків
+Freischalten oder Code einlösen	Unlock or redeem a code	Розблокувати або ввести код
+Freigeschaltet – danke!	Unlocked – thank you!	Розблоковано – дякуємо!
+Die Profi-Stufe gehört zu Rechenblitz Pro.	The Pro level is part of Rechenblitz Pro.	Рівень Профі входить до Rechenblitz Pro.
+Profi-Stufe in allen {} Themen	Pro level in all {} topics	Рівень Профі в усіх {} темах
+Für richtig gute Rechner – große Zahlen, viele Schritte	For really strong calculators – big numbers, many steps	Для дуже сильних рахівників – великі числа, багато кроків
+Unbegrenzt Profile	Unlimited profiles	Необмежено профілів
+Frei sind {} Profile – mit Pro für alle Geschwister	{} profiles are free – with Pro for all siblings	{} профілі безкоштовно – з Pro для всіх братів і сестер
+Verlauf über {} Wochen, Stärken und Schwächen je Thema, zum Ausdrucken	Progress over {} weeks, strengths and weaknesses per topic, printable	Прогрес за {} тижнів, сильні та слабкі сторони за темами, для друку
+Vorlagen speichern und teilen	Save and share templates	Зберігати й поширювати шаблони
+„Üben nach Wunsch“ als Vorlage, Link oder QR-Code	“Custom practice” as a template, link or QR code	«Вправи на вибір» як шаблон, посилання або QR-код
+Kostenlos bleiben alle {} Themen in Stufe {}–{}, alle Spiele, Lösungswege, Reise und Garten – ohne Werbung.	All {} topics at levels {}–{}, all games, worked solutions, the journey and the garden stay free – without ads.	Безкоштовними залишаються всі {} тем на рівнях {}–{}, усі ігри, розв’язання, подорож і сад – без реклами.
+Pro kaufen – {} € einmalig	Buy Pro – €{} one-off	Купити Pro – {} € одноразово
+inkl. MwSt.	incl. VAT	з ПДВ
+kein Abo	no subscription	без підписки
+Kauf auf unserer Website, der Code kommt per E-Mail	Purchase on our website, the code arrives by email	Покупка на нашому сайті, код надійде електронною поштою
+Code schon gekauft? Hier einfügen:	Already bought a code? Paste it here:	Уже купили код? Вставте його тут:
+Einlösen	Redeem	Активувати
+Mehr als {} Profile gibt es mit Rechenblitz Pro.	More than {} profiles are available with Rechenblitz Pro.	Понад {} профілі доступні з Rechenblitz Pro.
+Der Elternbericht gehört zu Rechenblitz Pro.	The parent report is part of Rechenblitz Pro.	Звіт для батьків входить до Rechenblitz Pro.
+Vorlagen speichern und teilen gehört zu Rechenblitz Pro.	Saving and sharing templates is part of Rechenblitz Pro.	Збереження й поширення шаблонів входить до Rechenblitz Pro.
+Zurzeit sind alle Pro-Funktionen kostenlos freigeschaltet.	All Pro features are currently unlocked for free.	Зараз усі функції Pro безкоштовні.
+Das sieht nicht wie ein Rechenblitz-Code aus. Bitte genau so eingeben, wie er in der E-Mail steht.	That doesn’t look like a Rechenblitz code. Please enter it exactly as in the email.	Це не схоже на код Rechenblitz. Введіть його точно так, як у листі.
+Dieser Code gehört zu einer anderen App.	This code belongs to a different app.	Цей код належить іншому застосунку.
+Dieser Code schaltet etwas anderes frei.	This code unlocks something else.	Цей код розблоковує щось інше.
+Dieser Code ist nicht gültig. Bitte noch einmal genau abschreiben.	This code is not valid. Please copy it again carefully.	Цей код недійсний. Перепишіть його ще раз уважно.
+Dieses Gerät kann den Code nicht prüfen. Bitte Browser bzw. App aktualisieren.	This device can’t check the code. Please update your browser or the app.	Цей пристрій не може перевірити код. Оновіть браузер або застосунок.
+Rechenblitz Pro ist freigeschaltet – danke!	Rechenblitz Pro is unlocked – thank you!	Rechenblitz Pro розблоковано – дякуємо!
+✓ Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!	✓ Rechenblitz Pro is unlocked on this device – for all profiles. Thanks for your support!	✓ Rechenblitz Pro розблоковано на цьому пристрої – для всіх профілів. Дякуємо за підтримку!
+Die Profi-Stufe gehört zu Rechenblitz Pro – jetzt Stufe {}	The Pro level is part of Rechenblitz Pro – level {} for now	Рівень Профі входить до Rechenblitz Pro – зараз рівень {}
+Neu für Eltern: der Elternbericht 📈 – Verlauf über {} Wochen, Stärken und Schwächen je Thema, zum Ausdrucken	New for parents: the parent report 📈 – progress over {} weeks, strengths and weaknesses per topic, printable	Нове для батьків: звіт 📈 – прогрес за {} тижнів, сильні та слабкі сторони за темами, для друку

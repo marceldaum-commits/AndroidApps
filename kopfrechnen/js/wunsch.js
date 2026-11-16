@@ -208,13 +208,14 @@ PANELS.wunsch = (o = {}) => {
     $('wMaxIn').oninput = () => { $('wCarryNote').hidden = read().m > 10; example(); }; $('wSq').onchange = example; $('wRest').onchange = example;
     $('wGo').onclick = () => { const c = read(); if (/[md]/.test(c.o) && !body().querySelector('#wRows .sel')) { toast('Mindestens eine Reihe wählen', 1600); return; } startWunsch(c); };
     $('wSave').onclick = () => {
+      if (!needPro('vorlage')) return;   // gespeicherte Vorlagen bleiben nutzbar (Bestandsschutz)
       const c = read(), name = prompt(tr('Name der Vorlage (z. B. „Einmaleins 3 und 4“)'), c.k || '');
       if (name === null) return;
       c.k = String(name).replace(/[<>"]/g, '').trim().slice(0, 40) || tr('Meine Übung');
       const st = wunschState(); st.tpl = [c, ...st.tpl.filter(t => t.k !== c.k)].slice(0, 12); save();
       toast('<span>💾</span> <span>Vorlage gespeichert</span>'); C = c; redraw();
     };
-    $('wShare').onclick = () => { const c = read(); Sheet.stack[Sheet.stack.length - 1][1] = { ...o, cfg: c }; showPanel('wunschShare', { cfg: c }, true); };   // „Zurück“ behält die Auswahl
+    $('wShare').onclick = () => { if (!needPro('vorlage')) return; const c = read(); Sheet.stack[Sheet.stack.length - 1][1] = { ...o, cfg: c }; showPanel('wunschShare', { cfg: c }, true); };   // „Zurück“ behält die Auswahl
     body().querySelectorAll('[data-tpl]').forEach(b => b.onclick = () => startWunsch(wunschState().tpl[+b.dataset.tpl]));
     body().querySelectorAll('.wtpl-del').forEach(b => b.onclick = () => { const st = wunschState(), t = st.tpl[+b.dataset.del]; if (!t || !confirm(`${tr('Vorlage löschen?')}\n${t.k}`)) return; st.tpl.splice(+b.dataset.del, 1); save(); C = read(); redraw(); });
     example();

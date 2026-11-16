@@ -944,3 +944,18 @@ button.badge{font:inherit;cursor:pointer}
 .wun .wpre button{padding:6px 2px;font-weight:700}
 .wun .wpre button[data-v="neu"]{grid-column:span 2;font-weight:600}
 .wun .wpre button[data-mine]:not(.sel){border-color:var(--orange);border-style:dashed}
+
+/* Rechenblitz Pro (3.20.0) */
+.probadge{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--orange);color:#fff;font-size:11px;font-weight:800;vertical-align:2px}
+.pro .menu{margin:10px 0}
+.pro .mi.static{cursor:default}.pro .mi.static:hover{transform:none;box-shadow:none;border-color:var(--border)}
+.pro-own{background:var(--chip);border-radius:14px;padding:10px 12px;font-weight:700;margin:0}
+.pro-what{font-weight:700;margin:0 0 4px}
+.pro .btn.big{width:100%;margin-top:6px}
+.pro-code{display:flex;gap:8px;align-items:flex-end;margin-top:14px}.pro-code .field{flex:1;margin:0}.pro-code input{text-transform:uppercase;font-family:ui-monospace,monospace}
+.ebars{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;height:90px;align-items:end;margin:8px 0 6px}
+.ebar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:3px}
+.ebar i{display:block;width:100%;background:var(--orange);border-radius:6px 6px 2px 2px}.ebar span{font-size:10px;color:var(--muted)}
+.etable{overflow-x:auto;margin:0 -4px}.etable table{border-collapse:collapse;width:100%;font-size:13px}
+.etable th,.etable td{text-align:left;padding:5px 4px;border-bottom:1px solid var(--border);white-space:nowrap}
+.amp{padding:1px 6px;border-radius:999px;font-weight:700}.amp.ok{background:#d6f5df;color:#11602b}.amp.mid{background:#fff0c7;color:#7a5200}.amp.bad{background:#ffdcd6;color:#8a1f0e}

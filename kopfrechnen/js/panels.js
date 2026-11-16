@@ -14,7 +14,7 @@ const siteLink = (url, place) => { if (!CONFIG.utm) return url; try { const u = 
 const mi = (go, icon, title, sub, extra = '') => `<button class="mi ${extra}" data-go="${go}"><div class="ico">${icon}</div><div><b>${title}</b><span>${sub}</span></div><span class="chev">›</span></button>`;
 const miLink = (href, icon, title, sub, extra = '') => `<a class="mi ${extra}" href="${esc(href)}" target="_blank" rel="noopener"><div class="ico">${icon}</div><div><b>${title}</b><span>${sub}</span></div><span class="chev">↗</span></a>`;
 const topicOptions = sel => Object.entries(TOPICS).map(([k, o]) => `<option value="${k}" ${k === sel ? 'selected' : ''}>${o.name}</option>`).join('');
-const levelOptions = sel => [0, 1, 2, 3, 4, 5].map(i => `<option value="${i}" ${i === sel ? 'selected' : ''}>${lvlName(i)}</option>`).join('');
+const levelOptions = sel => [0, 1, 2, 3, 4, 5].map(i => `<option value="${i}" ${i === sel ? 'selected' : ''} ${i === 5 && !hasPro() ? 'disabled' : ''}>${lvlName(i)}${i === 5 && !hasPro() ? ' 🔒' : ''}</option>`).join('');
 
 function contextNow() {
   if (G && currentScreen() === 'game' && G.task && !G.locked)
@@ -41,9 +41,11 @@ const PANELS = {
       ${mi('badges', '🏅', 'Abzeichen', `${Object.keys(S.badges).length} von ${BADGES.length} gesammelt`)}
       ${mi('facts', '✖️', 'Einmaleins-Übersicht', 'Welche Reihen sitzen – und welche noch nicht')}
       ${mi('week', '📊', 'Wochenbericht', 'Für Eltern: was geübt wurde, wo es hakt')}
+      ${mi('elternbericht', '📈', 'Elternbericht' + proBadge(), 'Verlauf über 10 Wochen, Stärken und Schwächen je Thema')}
       <div class="mlabel">Mehr</div>
       ${mi('profiles', profile().emoji, 'Wer übt?', 'Profile für Geschwister & Freunde')}
       ${mi('teacher', '👩‍🏫', 'Für Lehrkräfte', 'Aufträge verschicken, Arbeitsblätter drucken')}
+      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', 'Rechenblitz Pro', RBPRO.ok ? 'Freigeschaltet – danke!' : 'Profi-Stufe, mehr Profile, Elternbericht') : ''}
       ${mi('settings', '⚙️', 'Einstellungen', 'Ton, Erinnerung, Klassenstufe, Design')}
       ${!isStandalone() && (installPrompt || isIOS()) ? mi('install', '📱', 'Als App installieren', 'Auf den Startbildschirm – läuft auch offline') : ''}
       </div><p class="small muted" style="text-align:center;margin:14px 0 0">Rechenblitz ${versionLabel()}${n ? ` · ${n} Meldung${n > 1 ? 'en' : ''} wartet auf Versand` : ''}</p>` };
@@ -90,6 +92,7 @@ const PANELS = {
   settings() {
     const sw = (id, on, t, d) => `<button class="setrow" data-set="${id}" role="switch" aria-checked="${on}"><div><b>${t}</b><span>${d}</span></div><span class="switch ${on ? 'on' : ''}"></span></button>`;
     return { title: 'Einstellungen', html: `<div class="menu">
+      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', 'Rechenblitz Pro', RBPRO.ok ? 'Freigeschaltet – danke!' : 'Freischalten oder Code einlösen') : ''}
       ${sw('sound', S.settings.sound, 'Ton', 'Klänge bei richtig, falsch und Serien')}
       ${sw('speech', S.settings.speech, 'Aufgaben vorlesen', 'Der Browser liest jede Aufgabe vor')}
       ${sw('auto', S.settings.auto, 'Automatisch prüfen', 'Prüfen, sobald genug Stellen eingegeben sind')}
@@ -297,7 +300,8 @@ function initProfiles() {
   $('profForm').onsubmit = e => {
     e.preventDefault(); const name = $('profName').value.trim(); if (!name) return $('profName').focus();
     if (editing) Object.assign(profile(), { name, emoji });
-    else { if (G && !G.over) quitGame(true); const id = 'p' + Date.now().toString(36); ROOT.profiles[id] = { id, name, emoji, data: PROFILE_DEFAULT() }; useProfile(id); }
+    else { if (Object.keys(ROOT.profiles).length >= RBPRO.freeProfiles && !needPro('profile')) return;   // vorhandene Profile bleiben (Bestandsschutz)
+      if (G && !G.over) quitGame(true); const id = 'p' + Date.now().toString(36); ROOT.profiles[id] = { id, name, emoji, data: PROFILE_DEFAULT() }; useProfile(id); }
     save(); applyTheme(); renderHome(); closeSheet(); toast(`${emoji} ${esc(name)}`);
   };
   $('sheetBody').querySelectorAll('[data-del]').forEach(b => b.onclick = () => deleteProfile(b.dataset.del));
@@ -549,7 +553,7 @@ function init() {
   if (seen && verNum(seen) < verNum(APP_VERSION)) setTimeout(() => onHome() && openSheet('whatsnew', { since: seen }), 900);
   else if (!seen && !S.total) setTimeout(() => onHome() && openSheet('welcome'), 900);
   ROOT.seenVersion = APP_VERSION; save();
-  renderPromo(); renderHome(); handleHash(); handleParams(); flushOutbox(); submitClassPoints(); if (S.advent && S.advent.voucherPending) fetchVoucher();
+  renderPromo(); renderHome(); handleHash(); handleParams(); proStartup(); flushOutbox(); submitClassPoints(); if (S.advent && S.advent.voucherPending) fetchVoucher();
   if (IS_NATIVE) { Reminder.startup().catch(() => {}); apkUpdateCheck(); }   // APK: alle Dateien liegen im Paket, kein Service Worker nötig
   else if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').then(() => Reminder.startup()).catch(() => {});
 }

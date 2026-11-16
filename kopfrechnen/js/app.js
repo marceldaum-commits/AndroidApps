@@ -17,6 +17,7 @@ const CONFIG = Object.assign({
   referralUrl: 'https://www.mathenachhilfe-online.com/freunde-werben/',
   apkUpdates: null,                                     // APK: { repo: 'owner/name' } → Updates über GitHub-Releases; null = aus
   push: null,                                           // Erinnerung aufs Handy: { endpoint: '/api/push', time: '17:00' }; null = ausgeblendet
+  proCheckout: '',                                      // Kassen-URL für Rechenblitz Pro; leer = keine Sperren, alles frei (pro.js)
   classApi: '',                                         // Server für die Klassen-Challenge (z. B. '/api'); leer = ausgeblendet
   advent: true, adventPreview: 'auto', adventRaffleUrl: '', adventRaffleMin: 12,
   adventVoucher: null,                                  // { code, percent, text, until, url } – Gutschein für alle 24 Türchen
@@ -247,7 +248,7 @@ const ICON_SOUND_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColo
 function applyTheme() { document.documentElement.dataset.theme = S.settings.theme; }
 const isDark = () => S.settings.theme === 'dark' || (S.settings.theme === 'auto' && matchMedia('(prefers-color-scheme: dark)').matches);
 const defaultLevel = op => (S.settings.klasse && classLevel(S.settings.klasse, op)) ?? 1;
-const currentLevel = op => S.sel.lvl === 'auto' ? (S.autoLvl[op] ?? defaultLevel(op)) : S.sel.lvl;
+const currentLevel = op => S.sel.lvl === 'auto' ? (S.autoLvl[op] ?? defaultLevel(op)) : S.sel.lvl === 5 && !hasPro() ? 4 : S.sel.lvl;
 const streakDays = () => (S.days.last === todayStr() || S.days.last === dayStr(1)) ? S.days.streak : 0;
 
 const MAIN_TOPICS = ['add', 'sub', 'mul', 'div', 'frac', 'dec', 'pct', 'word', 'mix'];
@@ -287,7 +288,7 @@ function renderHome() {
   // Schwierigkeit: standardmäßig automatisch, aufklappbar
   const L = currentLevel(S.sel.op);
   $('lvlLine').innerHTML = S.sel.lvl === 'auto' ? `Schwierigkeit: <b>Automatisch</b> <span class="muted">(gerade Stufe ${L + 1})</span>` : `Schwierigkeit: <b>${lvlName(S.sel.lvl)}</b>`;
-  $('levels').innerHTML = `<button class="lvl auto ${S.sel.lvl === 'auto' ? 'sel' : ''}" data-lvl="auto">Auto</button>` + [0, 1, 2, 3, 4, 5].map(i => `<button class="lvl ${i === 5 ? 'pro' : ''} ${S.sel.lvl === i ? 'sel' : ''}" data-lvl="${i}" ${i === 5 ? 'title="Profi: für richtig gute Rechner"' : ''}>${i === 5 ? 'Profi' : i + 1}</button>`).join('');
+  $('levels').innerHTML = `<button class="lvl auto ${S.sel.lvl === 'auto' ? 'sel' : ''}" data-lvl="auto">Auto</button>` + [0, 1, 2, 3, 4, 5].map(i => `<button class="lvl ${i === 5 ? 'pro' : ''} ${S.sel.lvl === i ? 'sel' : ''}" data-lvl="${i}" ${i === 5 ? 'title="Profi: für richtig gute Rechner"' : ''}>${i === 5 ? (hasPro() ? 'Profi' : '🔒 Profi') : i + 1}</button>`).join('');
   $('lvlDesc').textContent = LEVEL_DESC[S.sel.op][L];
   const best = S.best[`training|${S.sel.op}|${S.sel.lvl === 'auto' ? 'A' : S.sel.lvl}`];
   $('bestLine').textContent = best ? `Rekord: ${best} Punkte` : '';
@@ -307,7 +308,7 @@ $('topics').addEventListener('click', e => {
   save(); renderHome();
 });
 $('classNote').addEventListener('click', e => { if (e.target.id === 'toggleAll') { homeShowAll = !homeShowAll; renderHome(); } });
-$('levels').addEventListener('click', e => { const b = e.target.closest('.lvl'); if (!b) return; Sound.init(); Sound.click(); S.sel.lvl = b.dataset.lvl === 'auto' ? 'auto' : +b.dataset.lvl; save(); renderHome(); });
+$('levels').addEventListener('click', e => { const b = e.target.closest('.lvl'); if (!b) return; Sound.init(); Sound.click(); if (b.dataset.lvl === '5' && !needPro('profi')) return; S.sel.lvl = b.dataset.lvl === 'auto' ? 'auto' : +b.dataset.lvl; save(); renderHome(); });
 function renderSoundIcons() { for (const id of ['btnSound', 'btnSoundG']) { $(id).innerHTML = S.settings.sound ? ICON_SOUND_ON : ICON_SOUND_OFF; $(id).title = S.settings.sound ? 'Ton aus' : 'Ton an'; } }
 const toggleSound = () => { S.settings.sound = !S.settings.sound; save(); Sound.init(); Sound.click(); renderSoundIcons(); toast(S.settings.sound ? '🔊 Ton an' : '🔇 Ton aus', 1100); };
 const toggleTheme = () => { S.settings.theme = isDark() ? 'light' : 'dark'; save(); applyTheme(); };
@@ -420,7 +421,8 @@ function startGame(mode, opts = {}) {
   const cfg = opts.cfg ? { ...MODE_CFG[mode], ...opts.cfg } : MODE_CFG[mode], op = opts.op ?? S.sel.op;
   document.body.classList.toggle('bigpad', !!opts.big);   // große Ziffern und Tasten (Üben nach Wunsch)
   const adapt = !opts.queue && !opts.gen && opts.lvl == null && S.sel.lvl === 'auto' && ['training', 'blitz', 'zen'].includes(mode);
-  const lvl = opts.lvl ?? currentLevel(op);
+  let lvl = opts.lvl ?? currentLevel(op);
+  if (lvl >= 5 && !hasPro()) { lvl = 4; setTimeout(() => toast('Die Profi-Stufe gehört zu Rechenblitz Pro – jetzt Stufe 5', 2400), 300); }
   G = { mode, cfg, op, lvl, adapt, win: [], idx: 0, correct: 0, wrong: 0, streak: 0, bestStreak: 0, score: 0, input: '', task: null, locked: true,
     mistakes: [], results: [], times: [], recent: [], queue: opts.queue || null, gen: opts.gen || null, title: opts.title, assign: !!opts.assign,
     testPlan: opts.testPlan, klasse: opts.klasse, door: opts.door, wunsch: opts.wunsch, endAt: 0, lastTick: 99, over: false, paused: false, waiting: false, started: Date.now() };
