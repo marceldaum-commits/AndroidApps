@@ -8,6 +8,13 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.appupdate.AppUpdateOptions;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,6 +70,46 @@ public class RbUpdatePlugin extends Plugin {
 
     @PluginMethod
     public void check(PluginCall call) { POOL.submit(() -> call.resolve(runCheck())); }
+
+    /* ---------------- Play-Fassung: In-App-Updates von Google Play (Leitstand 16.11.) ----------------
+       Neue App-Hüllen kommen nur über Google Play. Die App zeigt das Update selbst an:
+       flexibel (lädt im Hintergrund, Neustart später) oder sofort (wenn der neue Inhalt eine neuere Hülle braucht). */
+    private AppUpdateManager playMgr;
+    private InstallStateUpdatedListener playListener;
+
+    @PluginMethod
+    public void playUpdate(PluginCall call) {
+        JSObject r = new JSObject();
+        if (!"play".equals(BuildConfig.RB_STORE)) { r.put("result", "notplay"); call.resolve(r); return; }
+        final boolean immediate = Boolean.TRUE.equals(call.getBoolean("immediate", false));
+        try {
+            if (playMgr == null) playMgr = AppUpdateManagerFactory.create(getContext());
+            playMgr.getAppUpdateInfo().addOnSuccessListener(info -> {
+                JSObject o = new JSObject();
+                o.put("versionCode", info.availableVersionCode());
+                if (info.installStatus() == InstallStatus.DOWNLOADED) { o.put("result", "downloaded"); call.resolve(o); return; }
+                int avail = info.updateAvailability();
+                boolean running = avail == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS;
+                int type = immediate || running ? AppUpdateType.IMMEDIATE : AppUpdateType.FLEXIBLE;
+                if ((avail == UpdateAvailability.UPDATE_AVAILABLE || running) && info.isUpdateTypeAllowed(type)) {
+                    if (type == AppUpdateType.FLEXIBLE && playListener == null) {
+                        playListener = state -> { if (state.installStatus() == InstallStatus.DOWNLOADED) notifyListeners("playReady", new JSObject(), true); };
+                        playMgr.registerListener(playListener);
+                    }
+                    playMgr.startUpdateFlow(info, getActivity(), AppUpdateOptions.newBuilder(type).build());
+                    o.put("result", type == AppUpdateType.IMMEDIATE ? "immediate" : "flexible");
+                } else o.put("result", avail == UpdateAvailability.UPDATE_NOT_AVAILABLE ? "none" : "unavailable");
+                call.resolve(o);
+            }).addOnFailureListener(e -> { JSObject o = new JSObject(); o.put("result", "error"); call.resolve(o); });
+        } catch (Exception e) { r.put("result", "error"); call.resolve(r); }
+    }
+
+    /** heruntergeladenes Play-Update installieren (App startet neu) */
+    @PluginMethod
+    public void playComplete(PluginCall call) {
+        try { if (playMgr == null) playMgr = AppUpdateManagerFactory.create(getContext()); playMgr.completeUpdate(); } catch (Exception ignored) {}
+        call.resolve();
+    }
 
     /** geladenen Stand sofort aktivieren (lädt die Web-App neu) */
     @PluginMethod

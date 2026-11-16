@@ -38,8 +38,24 @@ async function liveUpdateCheck(force) {
   try { liveUpd = force ? await U.check() : await U.status(); } catch { return null; }
   renderLiveUpdate();
   if (liveUpd.needShell) shellApkFetch();
+  if (liveUpd.store === 'play') playUpdateCheck(!!liveUpd.needShell);
   return liveUpd;
 }
+/** Play-Fassung: neue App-Hülle über die In-App-Updates von Google Play – flexibel im Hintergrund,
+    sofort, wenn der geladene Inhalt eine neuere Hülle braucht. Einspielen von selbst auf der Startseite. */
+let playChecked = false, playReadyT = 0;
+async function playUpdateCheck(immediate) {
+  const U = RbUpd(); if (!U || !U.playUpdate || (playChecked && !immediate)) return;
+  playChecked = true;
+  try { const r = await U.playUpdate({ immediate }); if (r && r.result === 'downloaded') playAutoComplete(); } catch {}
+}
+function playAutoComplete() {
+  clearTimeout(playReadyT);
+  if (typeof currentScreen !== 'function' || currentScreen() !== 'home' || (typeof Sheet !== 'undefined' && Sheet.open) || document.hidden) { playReadyT = setTimeout(playAutoComplete, 4000); return; }
+  try { save(); } catch {}
+  RbUpd()?.playComplete().catch(() => {});
+}
+if (RbUpd() && RbUpd().addListener) RbUpd().addListener('playReady', () => playAutoComplete()).catch?.(() => {});
 const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.mathenachhilfeonline.rechenblitz';
 async function shellApkFetch() {   // Download-Adresse der neuen APK (GitHub-Release) für die Karte
   if (liveUpd && liveUpd.store === 'play') { liveUpd.apkUrl = PLAY_URL; renderLiveUpdate(); return; }   // Play-Fassung: neue App nur über Google Play

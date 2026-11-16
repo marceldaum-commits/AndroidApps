@@ -1511,4 +1511,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Urkunden drucken: neu „A{} quer – ganze Seite“":"Друк грамот: нове «A{} альбомна – на всю сторінку»",
 "Vorbereitung für Google Play":"Підготовка до Google Play",
 "Für Version {} bitte Rechenblitz im Play Store aktualisieren – der Lernstand bleibt":"Для версії {} онови Rechenblitz у Play Store – прогрес збережеться",
-"Play Store":"Play Store"});
+"Play Store":"Play Store",
+"Vorbereitung für Google Play: Updates direkt in der App":"Підготовка до Google Play: оновлення прямо в застосунку"});

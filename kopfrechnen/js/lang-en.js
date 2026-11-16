@@ -1511,4 +1511,5 @@ I18N.add('en', {"% sind":"% are",
 "Urkunden drucken: neu „A{} quer – ganze Seite“":"Printing certificates: new “A{} landscape – full page”",
 "Vorbereitung für Google Play":"Getting ready for Google Play",
 "Für Version {} bitte Rechenblitz im Play Store aktualisieren – der Lernstand bleibt":"For version {} please update Rechenblitz in the Play Store – your progress stays",
-"Play Store":"Play Store"});
+"Play Store":"Play Store",
+"Vorbereitung für Google Play: Updates direkt in der App":"Getting ready for Google Play: updates right inside the app"});

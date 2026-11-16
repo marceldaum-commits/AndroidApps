@@ -105,13 +105,14 @@ Beides legt GitHub **dauerhaft** auf die Release-Seite `rechenblitz-X.Y.Z` (Tite
 | Schalter | `RB_STORE=github`, `RB_CHANNEL=test` | `RB_STORE=play`, `RB_CHANNEL=live` |
 | Signatur | Test-Schlüssel (`RECHENBLITZ_TEST_KEYSTORE`) | **Upload-Schlüssel** (`RECHENBLITZ_UPLOAD_*`), Google signiert danach selbst (Play App Signing) |
 | Neue Inhalte (HTML/JS/CSS) | von selbst vom Branch `rechenblitz-test` | von selbst vom Branch `rechenblitz-live`, also nur, was der Leitstand freigibt |
-| Neue App-Hülle | Karte „Herunterladen“ (APK von GitHub) | Karte „Play Store“, die App lädt **nie selbst eine APK** |
+| Neue App-Hülle | Karte „Herunterladen“ (APK von GitHub) | **In-App-Update von Google Play**: flexibel im Hintergrund, eingespielt auf der Startseite; „sofort“, wenn der neue Inhalt eine neuere Hülle braucht. Ersatz: Karte „Play Store“. Die App lädt **nie selbst eine APK**, kein `REQUEST_INSTALL_PACKAGES` |
 
 **Richtlinie:**
 - Google Play verbietet Apps, die sich außerhalb von Play selbst aktualisieren oder ausführbaren Code (dex/JAR/.so) nachladen.
 - **Ausdrücklich ausgenommen** ist Code, der in einer WebView läuft (JavaScript).
 - Die Play-Fassung lädt deshalb weiterhin neue Web-Inhalte selbst. So bleibt sie automatisch aktuell, wie Marcel es wollte.
 - Der APK-Download ist in der Play-Fassung abgeschaltet.
+- Die geladenen Dateien sind dieselbe Web-App wie im Browser: Inhalte und Fehlerkorrekturen. Neue Berechtigungen oder versteckte Funktionen kommen so nicht dazu, denn neue Berechtigungen gehen nur über eine neue Hülle bei Google Play.
 
 ### Was ich vorbereitet habe
 

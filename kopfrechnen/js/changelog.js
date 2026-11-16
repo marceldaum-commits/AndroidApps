@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.14.3';
+const APP_VERSION = '3.14.4';
 const APP_DATE = '2026-11-16';
 const CHANGELOG = [
+  ['3.14.4', '2026-11-16', ['Vorbereitung für Google Play: Updates direkt in der App']],
   ['3.14.3', '2026-11-16', ['Vorbereitung für Google Play']],
   ['3.14.2', '2026-11-16', ['Urkunden drucken: neu „A4 quer – ganze Seite“']],
   ['3.14.1', '2026-11-16', ['Profile lassen sich jetzt einzeln löschen – mit 🗑️ neben jedem Namen']],

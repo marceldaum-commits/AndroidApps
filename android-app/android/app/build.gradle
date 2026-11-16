@@ -7,8 +7,8 @@ android {
         applicationId "com.mathenachhilfeonline.rechenblitz"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 31402
-        versionName "3.14.2"
+        versionCode 31403
+        versionName "3.14.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         // Hüllen-Nummer (android-app/SHELL) und Kanal: test = Branch rechenblitz-test, live = rechenblitz-live (RB_CHANNEL=live für Store)
         buildConfigField "int", "RB_SHELL", file('../../SHELL').text.trim()
@@ -70,6 +70,8 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
     implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
     implementation project(':capacitor-android')
+    // Play-Fassung: neue App-Hüllen über die In-App-Updates von Google Play (wird in der GitHub-Fassung nicht aufgerufen)
+    implementation 'com.google.android.play:app-update:2.1.0'
     testImplementation "junit:junit:$junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"

@@ -2,7 +2,35 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3 Play-Vorbereitung**, siehe Meldungen (35)–(42). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3/3.14.4 Play-Vorbereitung**, siehe Meldungen (35)–(43). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+
+## 16.11.2026 (43) – Play-Fassung nach Leitstand-Korrektur: In-App-Updates von Google Play (3.14.4) · Datenschutz 10b: Textvorschlag
+
+- **Leitstand 16.11. (Korrektur):**
+  - Der Datei-Update bleibt.
+  - APK-Download und Installation fallen weg.
+  - Neue native Versionen kommen über die Play In-App Updates API.
+  - Geladene Dateien ändern das Verhalten nicht grundlegend.
+- **Stand:**
+  1. **Datei-Update bleibt:** HTML/JS/CSS/JSON über `raw.githubusercontent.com` (Branch `rechenblitz-live`), Ersatz eigener Server. Schon so umgesetzt in (42).
+  2. **APK-Download raus:** In der Play-Fassung (`RB_STORE=play`) gibt es keinen Abruf von `api.github.com`, keinen „Herunterladen“-Knopf und kein `REQUEST_INSTALL_PACKAGES` (war nie im Manifest). Geprüft: Im Play-Modus geht kein Abruf an GitHub-Releases.
+  3. **Play In-App Updates eingebaut** (`com.google.android.play:app-update:2.1.0`, Plugin-Methoden `playUpdate`/`playComplete`):
+     - einmal je Start **flexibel**: lädt im Hintergrund, die App installiert es von selbst, sobald man auf der Startseite ist (nie mitten in einer Runde);
+     - **sofort** (Immediate), wenn der neue Inhalt eine neuere Hülle verlangt (`stand.json` → `shell`);
+     - Ersatz, falls Play kein Update anbietet (z. B. nicht über Play installiert): Karte „Bitte im Play Store aktualisieren“;
+     - in der GitHub-Test-APK wird die Methode nie aufgerufen.
+  4. **Geladene Dateien:** dieselbe Web-App wie im Browser (Inhalte, Fehlerkorrekturen). Neue Berechtigungen gehen technisch nur über eine neue Hülle bei Play. In `PLAYSTORE_RECHENBLITZ.md` festgehalten.
+- **Tests:**
+  - Play-AAB mit In-App-Updates gebaut (2,4 MB);
+  - im nachgebildeten Play-Modus: Update-Abfrage beim Start, Einspielen erst auf der Startseite, kein GitHub-Releases-Abruf; GitHub-Modus unverändert;
+  - Regression ohne Fehler.
+- **Datenschutz 10b – nötige Textänderungen:**
+  1. Im Absatz **„Android-App Rechenblitz: automatische Aktualisierung“** den Satz „Nur wenn eine neue App-Version installiert werden muss, ruft sie zusätzlich die Versionsangaben bei api.github.com ab und lädt – erst nach deinem Tipp auf „Herunterladen“ – die App-Datei von github.com bzw. objects.githubusercontent.com.“ ersetzen durch:
+     > „Nur in der Test-Fassung, die wir direkt über GitHub verteilen, ruft sie zusätzlich die Versionsangaben bei api.github.com ab, wenn eine neue App-Version installiert werden muss, und lädt – erst nach deinem Tipp auf „Herunterladen“ – die App-Datei von github.com bzw. objects.githubusercontent.com. In der Fassung aus Google Play entfällt das: Neue App-Versionen kommen dort ausschließlich über Google Play, auch wenn die App ein Update selbst anzeigt (Google-Play-Schnittstelle „In-App-Updates“); dabei verarbeitet Google die Daten in eigener Verantwortung.“
+  2. Im Absatz **„Android-App.“** ist der Satz „Verbindungen zu unserem Server entstehen nur, wenn du selbst einen Fehler meldest oder den Advents-Gutschein abholst“ veraltet. Ersetzen durch:
+     > „Verbindungen zu unserem Server entstehen nur, wenn du selbst einen Fehler meldest, an der Klassen-Challenge teilnimmst, den Advents-Gutschein abholst oder wenn GitHub für die automatische Aktualisierung nicht erreichbar ist; dabei gelten die Angaben oben.“
+  - Alles andere in 10b stimmt: kein Konto, keine Cookies, lokaler Lernstand, GitHub-Abruf mit IP und Kennung „Rechenblitz-App“, Fehlermeldung, Klassen-Challenge, Erinnerung lokal in der App.
+  - Der Satz „Die Web-App Rechenblitz lädt keine Inhalte von fremden Servern“ gilt weiterhin für die Web-App im Browser.
 
 ## 16.11.2026 (42) – Google Play: Rechenblitz ist store-fertig vorbereitet (3.14.3) · Antwort auf Leitstand 16.11.
 
