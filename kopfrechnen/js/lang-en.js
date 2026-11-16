@@ -1504,4 +1504,8 @@ I18N.add('en', {"% sind":"% are",
 "Profil wirklich löschen?":"Really delete this profile?",
 "Alle Punkte, Abzeichen, Reise und Garten dieses Profils werden gelöscht. Das kann nicht rückgängig gemacht werden.":"All points, badges, journey and garden of this profile will be deleted. This cannot be undone.",
 "Profil gelöscht":"Profile deleted",
-"Profile lassen sich jetzt einzeln löschen – mit 🗑️ neben jedem Namen":"Profiles can now be deleted one by one – with 🗑️ next to each name"});
+"Profile lassen sich jetzt einzeln löschen – mit 🗑️ neben jedem Namen":"Profiles can now be deleted one by one – with 🗑️ next to each name",
+"Wie drucken?":"How to print?",
+"A{} quer – ganze Seite":"A{} landscape – full page",
+"Halbe Seite":"Half page",
+"Urkunden drucken: neu „A{} quer – ganze Seite“":"Printing certificates: new “A{} landscape – full page”"});

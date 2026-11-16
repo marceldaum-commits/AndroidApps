@@ -1504,4 +1504,8 @@ I18N.add('uk', {"% sind":"% — це",
 "Profil wirklich löschen?":"Справді видалити профіль?",
 "Alle Punkte, Abzeichen, Reise und Garten dieses Profils werden gelöscht. Das kann nicht rückgängig gemacht werden.":"Усі бали, значки, подорож і сад цього профілю буде видалено. Це не можна скасувати.",
 "Profil gelöscht":"Профіль видалено",
-"Profile lassen sich jetzt einzeln löschen – mit 🗑️ neben jedem Namen":"Профілі тепер можна видаляти окремо – кнопкою 🗑️ біля кожного імені"});
+"Profile lassen sich jetzt einzeln löschen – mit 🗑️ neben jedem Namen":"Профілі тепер можна видаляти окремо – кнопкою 🗑️ біля кожного імені",
+"Wie drucken?":"Як друкувати?",
+"A{} quer – ganze Seite":"A{} альбомна – на всю сторінку",
+"Halbe Seite":"Пів сторінки",
+"Urkunden drucken: neu „A{} quer – ganze Seite“":"Друк грамот: нове «A{} альбомна – на всю сторінку»"});

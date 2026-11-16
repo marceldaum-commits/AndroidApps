@@ -20,6 +20,15 @@ function qrDraw(ctx, text, x, y, size) {
   ctx.fillStyle = '#fff'; ctx.fillRect(x, y, size, size); ctx.fillStyle = '#101b43';
   for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (dark(r, c)) ctx.fillRect(x + (c + m) * cell, y + (r + m) * cell, Math.ceil(cell), Math.ceil(cell));
 }
+/** Urkunde drucken (Marcel 16.11.): „full“ = quer über das ganze A4-Blatt. Das Bild wird gedreht und auf eine
+    Hochformat-Seite gelegt, so füllt es die Seite unabhängig von der Ausrichtung im Druckdialog. „half“ = wie bisher. */
+function printCert(mode) {
+  if (!certCanvas) return;
+  if (mode === 'half') return printRaw(`<img class="certprint" src="${certCanvas.toDataURL('image/png')}" alt="Urkunde">`, 'landscape');
+  const r = document.createElement('canvas'); r.width = certCanvas.height; r.height = certCanvas.width;
+  const x = r.getContext('2d'); x.translate(r.width, 0); x.rotate(Math.PI / 2); x.drawImage(certCanvas, 0, 0);
+  printRaw(`<style>@page{size:A4 portrait;margin:6mm}</style><img class="certprint full" src="${r.toDataURL('image/png')}" alt="Urkunde">`, 'certfull');
+}
 function printRaw(html, cls) {
   $('print').className = cls || ''; $('print').innerHTML = html;
   document.body.classList.add('printing');
@@ -163,7 +172,7 @@ async function drawCertificate(o) {
     const w = Math.min(760, x.measureText(o.name).width + 120); x.strokeStyle = '#dbe4ef'; x.lineWidth = 3; x.beginPath(); x.moveTo(W / 2 - w / 2, 556); x.lineTo(W / 2 + w / 2, 556); x.stroke();
   }
   x.fillStyle = '#101b43'; x.font = '800 50px Inter, Arial, sans-serif';
-  const n1 = wrapText(x, tr(o.line1), W / 2, o.name ? 650 : 560, 1150, 60);
+  const n1 = wrapText(x, o.noTr ? o.line1 : tr(o.line1), W / 2, o.name ? 650 : 560, 1150, 60);
   x.fillStyle = '#61718a'; x.font = '500 32px Inter, Arial, sans-serif';
   wrapText(x, tr(o.line2 || ''), W / 2, (o.name ? 650 : 560) + n1 * 60 + 14, 1100, 42);
   x.font = '96px "Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif'; x.fillText(o.icon || '🏅', W / 2, 850);
@@ -176,7 +185,7 @@ async function drawCertificate(o) {
   return c;
 }
 function certFor(kind) {
-  if (kind.badge) { const b = BADGES.find(x => x.id === kind.badge); return { line1: `Abzeichen „${b.name}“`, line2: b.desc, icon: b.icon }; }
+  if (kind.badge) { const b = BADGES.find(x => x.id === kind.badge); return { line1: `${tr('Abzeichen')} „${tr(b.name)}“`, line2: b.desc, icon: b.icon, noTr: true }; }
   return kind;
 }
 let certCanvas = null;
@@ -276,7 +285,8 @@ Object.assign(PANELS, {
     const nm = profile().name === 'Ich' ? '' : profile().name;
     return { title: 'Urkunde', html: `<label class="field"><span>Name auf der Urkunde (Spitzname reicht, oder leer lassen)</span><input id="certName" maxlength="24" value="${esc(nm)}"></label>
       <div class="certprev"><img id="certImg" alt="Urkunde"></div>
-      <div class="row3"><button class="btn primary" id="certShare">Teilen</button><a class="btn" id="certSave" download="rechenblitz-urkunde.png">Speichern</a><button class="btn" id="certPrint">Drucken</button></div>`,
+      <div class="row3"><button class="btn primary" id="certShare">Teilen</button><a class="btn" id="certSave" download="rechenblitz-urkunde.png">Speichern</a><button class="btn" id="certPrint">Drucken</button></div>
+      <div class="cert-print" id="certPrintOpts" hidden><b>Wie drucken?</b><div class="row2"><button class="btn primary" data-pr="full"><span>📄</span> <span>A4 quer – ganze Seite</span></button><button class="btn" data-pr="half"><span>📃</span> <span>Halbe Seite</span></button></div></div>`,
       async init() {
         const data = certFor(o);
         const render = async () => { certCanvas = await drawCertificate({ ...data, name: $('certName').value.trim() }); const u = certCanvas.toDataURL('image/png'); $('certImg').src = u; $('certSave').href = u; };
@@ -287,7 +297,8 @@ Object.assign(PANELS, {
           if (navigator.canShare && navigator.canShare({ files: [file] })) { try { await navigator.share({ files: [file], title: 'Meine Rechenblitz-Urkunde', text: `Geschafft! ${publicUrl()}` }); } catch {} }
           else { $('certSave').click(); toast('Bild gespeichert – jetzt z. B. per WhatsApp schicken'); }
         };
-        $('certPrint').onclick = () => printRaw(`<img class="certprint" src="${certCanvas.toDataURL('image/png')}" alt="Urkunde">`, 'landscape');
+        $('certPrint').onclick = () => { const o = $('certPrintOpts'); o.hidden = !o.hidden; if (!o.hidden) o.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); };
+        $('certPrintOpts').onclick = e => { const b = e.target.closest('[data-pr]'); if (b) printCert(b.dataset.pr); };
       } };
   },
   invite() {

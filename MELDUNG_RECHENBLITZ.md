@@ -2,7 +2,18 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen**, siehe Meldungen (35)–(40). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer**, siehe Meldungen (35)–(41). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+
+## 16.11.2026 (41) – Urkunde: „A4 quer – ganze Seite“ (3.14.2) · keine neue APK nötig
+
+- **Marcel 16.11. (Bild vom Druckdialog):** Die Urkunde füllte nur das obere Drittel des A4-Blatts. Er wünscht die Option „quer, die das ganze A4 ausfüllt“.
+- **Ablauf:** „Drucken“ zeigt jetzt zwei Wege:
+  - **„📄 A4 quer – ganze Seite“:** Die Urkunde wird um 90° gedreht auf ein Hochformat-Blatt gelegt (`@page A4 portrait`, 6 mm Rand). Sie füllt dann das ganze Blatt im Querformat. Das funktioniert unabhängig von der Ausrichtung im Druckdialog, auch beim Android-Dialog „Als PDF speichern“.
+  - **„📃 Halbe Seite“:** wie bisher.
+- **Nebenbei behoben:**
+  - Auf 320 px ragte im Ukrainischen der Knopf „Drucken“ hinaus.
+  - Die Abzeichen-Zeile auf der Urkunde wird jetzt auch übersetzt.
+- **Test:** PDF-Ausgabe beider Varianten mit je einer Seite; die ganze Seite ist gefüllt; keine JS-Fehler.
 
 ## 16.11.2026 (40) – Profile einzeln löschen (3.14.1) · keine neue APK nötig
 

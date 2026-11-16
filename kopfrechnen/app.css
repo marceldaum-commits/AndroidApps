@@ -517,8 +517,8 @@ select{font:inherit;color:inherit;width:100%;border:1px solid var(--border);back
 .doorview{text-align:center}.doorview .dicon{font-size:64px;line-height:1.1}.doorview .fact{font-size:17px;font-weight:600;color:var(--head);margin:8px 0 14px}
 .certprev{margin:12px 0;border-radius:14px;overflow:hidden;border:1px solid var(--border);background:#fff}
 .certprev img{display:block;width:100%;height:auto}
-.row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.row3 .btn{padding:0 8px}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.row3 .btn{padding:0 6px;min-width:0;overflow:hidden;text-overflow:ellipsis}
 .sharerow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
 .sharerow .btn{flex:1 1 140px}
 .qrbox{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0 14px}
@@ -899,3 +899,8 @@ button.badge{font:inherit;cursor:pointer}
 .prof-row .mi{flex:1;min-width:0}
 .prof-del{flex:none;width:48px;border:1px solid var(--line, transparent);border-radius:16px;background:var(--chip);font-size:18px;cursor:pointer}
 .prof-del:active{transform:scale(.95)}
+
+/* 3.14.2 – Urkunde: A4 quer über die ganze Seite */
+.cert-print{display:flex;flex-direction:column;gap:8px;margin-top:10px;padding:12px;border-radius:16px;background:var(--chip)}
+.cert-print .btn{white-space:normal;line-height:1.2}
+@media print{#print.certfull .certprint.full{display:block;width:100%;height:auto;max-height:285mm;object-fit:contain;margin:0 auto;page-break-inside:avoid;break-inside:avoid}}
