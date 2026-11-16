@@ -2,7 +2,25 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3/3.14.4 Play-Vorbereitung**, siehe Meldungen (35)–(43). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3–3.14.5 Play-Vorbereitung**, siehe Meldungen (35)–(44). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+
+## 16.11.2026 (44) – Marcels Antworten zur Play-Veröffentlichung · Elternabfrage (3.14.5) · OFFEN an Leitstand: Upload-Schlüssel
+
+- **Marcel 16.11.:**
+  - **Firmenkonto:** Die 12-Tester-/14-Tage-Pflicht gilt nicht. Nach dem internen Test kann direkt Produktionszugriff beantragt werden.
+  - **Upload-Schlüssel:** „klär mit den anderen“, siehe OFFEN unten.
+  - **Elternabfrage vor Links:** ja.
+- **Elternabfrage (nur Android-App, `js/elterntor.js`):**
+  - Vor jedem Link, der die App verlässt (Logo, Menü-Links, Probestunde, Stundenpakete, Lernraum, Gutschein- und Verlosungs-Links), erscheint „🔒 Nur für Erwachsene“: eine ausgeschriebene Zahl (z. B. „dreihundertvierundsechzig“ / „three hundred and sixty-four“ / „триста шістдесят чотири“) in Ziffern eintippen.
+  - Bei einem Fehler kommt eine neue Zahl und der Hinweis „bitte einen Erwachsenen fragen“. Einmal bestanden, gilt die Abfrage 10 Minuten.
+  - Impressum und Datenschutz bleiben frei.
+  - Die Web-App im Browser ist unverändert, ohne Abfrage.
+  - Getestet in DE/EN/UK, 320 px, falsch/richtig/10-Minuten-Fenster/Impressum, Web ohne Abfrage. Keine JS-Fehler, keine fehlenden Übersetzungen.
+- **OFFEN an Leitstand (Upload-Schlüssel):**
+  - Marcel bittet, mit den anderen Räumen zu klären, ob es schon einen Upload-Schlüssel gibt (Mathe-Trainer?) und welcher für Rechenblitz gilt.
+  - Empfehlung: ein eigener Upload-Schlüssel je App (Play App Signing; Schaden bei Verlust begrenzt).
+  - Für Rechenblitz braucht es im Repo School vier GitHub-Geheimnisse: `RECHENBLITZ_UPLOAD_KEYSTORE` (Base64), `RECHENBLITZ_UPLOAD_STORE_PASSWORD`, `RECHENBLITZ_UPLOAD_KEY_ALIAS`, `RECHENBLITZ_UPLOAD_KEY_PASSWORD`. Danach „Rechenblitz Play“ auf `rechenblitz-live` starten, das AAB liegt dann unter Artifacts.
+  - Gibt es noch keinen Schlüssel, entsteht er beim ersten Hochladen (Anleitung in `PLAYSTORE_RECHENBLITZ.md`).
 
 ## 16.11.2026 (43) – Play-Fassung nach Leitstand-Korrektur: In-App-Updates von Google Play (3.14.4) · Datenschutz 10b: Textvorschlag
 

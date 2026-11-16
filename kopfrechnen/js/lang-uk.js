@@ -1512,4 +1512,10 @@ I18N.add('uk', {"% sind":"% — це",
 "Vorbereitung für Google Play":"Підготовка до Google Play",
 "Für Version {} bitte Rechenblitz im Play Store aktualisieren – der Lernstand bleibt":"Для версії {} онови Rechenblitz у Play Store – прогрес збережеться",
 "Play Store":"Play Store",
-"Vorbereitung für Google Play: Updates direkt in der App":"Підготовка до Google Play: оновлення прямо в застосунку"});
+"Vorbereitung für Google Play: Updates direkt in der App":"Підготовка до Google Play: оновлення прямо в застосунку",
+"Nur für Erwachsene":"Лише для дорослих",
+"Dieser Link führt aus der App zur Website von Nachhilfe – online.":"Це посилання веде з застосунку на вебсайт Nachhilfe – online.",
+"Bitte gib die Zahl in Ziffern ein:":"Введи, будь ласка, число цифрами:",
+"Zahl in Ziffern":"Число цифрами",
+"Das war nicht richtig – bitte einen Erwachsenen fragen.":"Неправильно – попроси, будь ласка, дорослого.",
+"Android-App: Links zur Website nur nach kurzer Elternabfrage":"Android-застосунок: посилання на вебсайт лише після короткої перевірки батьків"});

@@ -1512,4 +1512,10 @@ I18N.add('en', {"% sind":"% are",
 "Vorbereitung für Google Play":"Getting ready for Google Play",
 "Für Version {} bitte Rechenblitz im Play Store aktualisieren – der Lernstand bleibt":"For version {} please update Rechenblitz in the Play Store – your progress stays",
 "Play Store":"Play Store",
-"Vorbereitung für Google Play: Updates direkt in der App":"Getting ready for Google Play: updates right inside the app"});
+"Vorbereitung für Google Play: Updates direkt in der App":"Getting ready for Google Play: updates right inside the app",
+"Nur für Erwachsene":"Adults only",
+"Dieser Link führt aus der App zur Website von Nachhilfe – online.":"This link leaves the app and opens the Nachhilfe – online website.",
+"Bitte gib die Zahl in Ziffern ein:":"Please enter the number in digits:",
+"Zahl in Ziffern":"Number in digits",
+"Das war nicht richtig – bitte einen Erwachsenen fragen.":"That was not right – please ask an adult.",
+"Android-App: Links zur Website nur nach kurzer Elternabfrage":"Android app: links to the website only after a quick parent check"});

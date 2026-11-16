@@ -140,6 +140,7 @@ Beides legt GitHub **dauerhaft** auf die Release-Seite `rechenblitz-X.Y.Z` (Tite
    - `RECHENBLITZ_UPLOAD_KEY_ALIAS` = Alias des Schlüssels
    - `RECHENBLITZ_UPLOAD_KEY_PASSWORD` = Schlüssel-Passwort (falls gleich wie Keystore-Passwort: leer lassen)
 3. GitHub → Actions → **Rechenblitz Play** → „Run workflow“, Branch **rechenblitz-live** wählen. Nach ca. 5 Minuten unter „Artifacts“ die Datei `Rechenblitz-play-X.Y.Z.aab` herunterladen.
+   - **OFFEN (Marcel 16.11.: „klär mit den anderen“):** Klärt der Leitstand mit den anderen Räumen, ob es schon einen gemeinsamen Upload-Schlüssel gibt (z. B. vom Mathe-Trainer) oder ob Rechenblitz einen eigenen bekommt. Empfehlung: **je App ein eigener Upload-Schlüssel**. Dann bleibt ein verlorener oder kompromittierter Schlüssel auf eine App begrenzt.
    - Gibt es noch keinen Upload-Schlüssel: In der Play Console beim ersten Hochladen „Play App Signing“ wählen und einen Upload-Schlüssel erzeugen, z. B. mit `keytool -genkeypair -v -keystore upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000`. Danach in Bitwarden ablegen.
 
 **B. Play Console: App anlegen**
@@ -173,7 +174,7 @@ Beides legt GitHub **dauerhaft** auf die Release-Seite `rechenblitz-X.Y.Z` (Tite
     - Altersgruppen **6–8, 9–12, 13–15** (und 16–17 möglich);
     - Frage „Spricht die App versehentlich Kinder an?“ entfällt, weil sie Kinder ausdrücklich anspricht;
     - dadurch gilt die **Familienrichtlinie**: keine Werbung ✅, keine Werbe-ID ✅, kein Standort ✅, Datenschutzerklärung ✅;
-    - **Bitte prüfen:** Die App verlinkt auf die Nachhilfe-Website (Logo, Menü, Probestunde), dort kann man buchen. Ob Google dafür bei einer Kinder-App eine Elternabfrage vor dem Link erwartet, kann ich nicht sicher sagen. Die Prüfung durch Google zeigt es. Eine einfache Elternabfrage („Bitte einen Erwachsenen fragen: Wie viel ist 7 · 8?“) kann ich schnell einbauen.
+    - **Elternabfrage eingebaut (Marcel 16.11.):** In der Android-App muss vor jedem Link nach außen (Website, Probestunde, Stundenpakete, Lernraum) ein Erwachsener eine ausgeschriebene Zahl in Ziffern eintippen. Danach ist 10 Minuten Ruhe. Impressum und Datenschutz bleiben frei erreichbar. Die Web-App im Browser hat keine Abfrage.
 14. **Datensicherheit** (Antworten):
     - Werden Daten erhoben oder geteilt? **Ja** (nur freiwillige Funktionen).
     - Alle Daten **verschlüsselt übertragen**: Ja (HTTPS).
@@ -201,11 +202,8 @@ Beides legt GitHub **dauerhaft** auf die Release-Seite `rechenblitz-X.Y.Z` (Tite
     - Release-Name = Version;
     - Notizen aus dem Changelog;
     - Tester-Liste mit eigenen Google-Konten anlegen, Link öffnen, installieren.
-17. **12-Tester-Pflicht prüfen:**
-    - Gilt für **private Entwicklerkonten, die nach dem 13.11.2023 erstellt wurden**. Vor dem Produktionszugang braucht es dann einen **geschlossenen Test mit mindestens 12 Testern, die 14 Tage am Stück dabei sind**.
-    - Für **Organisationskonten** (mit D-U-N-S-Nummer) gilt das nicht.
-    - Ob die Pflicht greift, zeigt die Play Console im Dashboard unter „Produktionszugriff beantragen“.
-18. Danach: Geschlossener Test → Produktionszugriff beantragen → **Produktion** (Länder: Deutschland, Österreich, Schweiz, …).
+17. **Keine 12-Tester-Pflicht:** Marcels Konto ist ein **Firmenkonto** (Marcel 16.11.). Nach dem internen Test kann direkt Produktionszugriff beantragt werden. Ein geschlossener Test bleibt freiwillig.
+18. Danach: optional geschlossener Test → Produktionszugriff beantragen → **Produktion** (Länder: Deutschland, Österreich, Schweiz, …).
 
 ### Nach dem Start
 
