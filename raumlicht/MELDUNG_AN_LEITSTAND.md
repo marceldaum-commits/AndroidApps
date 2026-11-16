@@ -544,3 +544,12 @@ Mein früherer Vorschlag (Kurslizenz 49 €, Schullizenz 199 €) ist damit **ü
 Folgen für Raumlicht: Die Lizenz hängt an der **Lehrkraft** (nicht am einzelnen Kurs) und endet am **31.07.** – der Schein „Pro über Kurs“ braucht also ein festes Enddatum statt „12 Monate ab Beitritt“.
 Verkauf und Verwaltung über den zentralen Lehrerzugang; in der App wird nichts dazu gebaut, bis die Schnittstelle steht. Die Klärungsliste (`KLAERUNGSLISTE-RECHT.md`) gilt weiter.
 Noch offen von Marcel: A9 (sieht die Lehrkraft nur Aufträge oder den ganzen Fortschritt?).
+
+---
+
+## 16.11.2026 – Lehrerzugang: Marcel hat A9 entschieden – gesamter Fortschritt
+
+Die Lehrkraft sieht den **gesamten Fortschritt** der Schüler im Kurs, nicht nur die Aufträge. Das ersetzt meine Voreinstellung „nur Aufträge“ im Konzept.
+Für die Schnittstelle: Die App sendet nach dem Beitritt das Ergebnis jeder gelösten Aufgabe (Tour-Aufgaben mit Kennung; Übungs- und Tagesaufgaben mit Art/Stufe statt Einzelkennung) – beim Beitritt einmal auch den bisherigen Stand,
+sonst wäre der Fortschritt lückenhaft. Die Beitritts-Seite muss das klar sagen. In der Klärungsliste ist A9 entsprechend geändert (mehr Daten → ausdrücklich in Einwilligung und AVV).
+Weiterhin nichts gebaut.
