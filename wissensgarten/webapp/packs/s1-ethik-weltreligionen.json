@@ -1,0 +1,459 @@
+{
+  "id": "s1-ethik-weltreligionen",
+  "version": 1,
+  "title": "Weltreligionen",
+  "subject": "ethik",
+  "grades": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "emoji": "🕊️",
+  "tier": "free",
+  "description": "Judentum, Christentum, Islam, Hinduismus und Buddhismus – heilige Schriften, Gotteshäuser, Feste und Symbole respektvoll kennenlernen.",
+  "intro": [
+    {
+      "img": "🌍🕊️",
+      "text": "Wusstest du? Die meisten Menschen auf der Erde gehören einer Religion an. Wer andere Religionen kennt, versteht seine Mitmenschen besser."
+    },
+    {
+      "img": "🕍⛪🕌",
+      "text": "Judentum, Christentum und Islam sind miteinander verwandt: Alle drei glauben an einen Gott und sehen Abraham als Stammvater."
+    },
+    {
+      "img": "🕉️☸️",
+      "text": "Hinduismus und Buddhismus stammen aus dem alten Indien. Beide lehren, dass das Leben ein Kreislauf ist – mit Wiedergeburt nach dem Tod."
+    },
+    {
+      "img": "🕯️🎉",
+      "text": "Jede Religion hat ihre Lichter, Lieder und Feste: Chanukka, Weihnachten, das Fest des Fastenbrechens, Diwali und Vesakh."
+    },
+    {
+      "img": "🤝🚀",
+      "text": "Los geht's! Entdecke mit mir, was Menschen glauben und feiern – mit Neugier und Respekt."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welche drei Religionen sehen Abraham als ihren Stammvater?",
+      "a": "Judentum, Christentum, Islam",
+      "choices": [
+        "Hinduismus, Buddhismus, Islam",
+        "Judentum, Hinduismus, Buddhismus",
+        "Christentum, Buddhismus, Hinduismus"
+      ],
+      "info": "Man nennt sie darum auch „abrahamitische Religionen“. Alle drei glauben an einen einzigen Gott.",
+      "img": "👴⭐"
+    },
+    {
+      "id": "002",
+      "q": "Wie nennt man den Glauben an nur einen einzigen Gott?",
+      "a": "Monotheismus",
+      "choices": [
+        "Polytheismus",
+        "Atheismus",
+        "Pantheismus"
+      ],
+      "info": "„Mono“ heißt „eins“, „theos“ heißt „Gott“. „Poly“ bedeutet „viele“.",
+      "img": "☝️✨"
+    },
+    {
+      "id": "003",
+      "q": "Wie heißt das Gotteshaus im Judentum?",
+      "a": "Synagoge",
+      "choices": [
+        "Moschee",
+        "Kirche",
+        "Pagode"
+      ],
+      "info": "„Synagoge“ kommt aus dem Griechischen und bedeutet „Versammlung“.",
+      "img": "🕍✡️"
+    },
+    {
+      "id": "004",
+      "q": "Wie heißt der wichtigste Teil der jüdischen Heiligen Schrift?",
+      "a": "Die Tora",
+      "choices": [
+        "Der Koran",
+        "Die Veden",
+        "Das Neue Testament"
+      ],
+      "info": "Die Tora umfasst die fünf Bücher Mose. Im Gottesdienst wird aus einer handgeschriebenen Schriftrolle gelesen.",
+      "img": "📜✡️"
+    },
+    {
+      "id": "005",
+      "q": "Wie heißt der jüdische Ruhetag?",
+      "a": "Schabbat (Sabbat)",
+      "choices": [
+        "Sonntag",
+        "Ramadan",
+        "Pessach"
+      ],
+      "info": "Er beginnt am Freitagabend und endet am Samstagabend. Am Schabbat soll nicht gearbeitet werden.",
+      "img": "🕯️🕯️"
+    },
+    {
+      "id": "006",
+      "q": "Woran erinnert das jüdische Pessach-Fest?",
+      "a": "An den Auszug der Israeliten aus Ägypten",
+      "choices": [
+        "An die Geburt von Jesus",
+        "An die Erleuchtung Buddhas",
+        "An die erste Offenbarung des Korans"
+      ],
+      "info": "Man isst ungesäuertes Brot (Mazzen), weil für das Gehenlassen des Teigs keine Zeit blieb.",
+      "img": "🚶🌊"
+    },
+    {
+      "id": "007",
+      "q": "Wie lange dauert das jüdische Lichterfest Chanukka?",
+      "a": "8 Tage",
+      "choices": [
+        "1 Tag",
+        "3 Tage",
+        "40 Tage"
+      ],
+      "info": "Jeden Abend wird ein Licht mehr am Chanukka-Leuchter angezündet, bis alle acht brennen.",
+      "img": "🕎🔥"
+    },
+    {
+      "id": "008",
+      "q": "Wie viele Arme hat die Menora, der Leuchter aus dem Tempel in Jerusalem?",
+      "a": "7",
+      "choices": [
+        "5",
+        "9",
+        "12"
+      ],
+      "info": "Die Menora ist eines der ältesten Symbole des Judentums. Sie ist auch im Wappen Israels zu sehen.",
+      "img": "🕯️7️⃣"
+    },
+    {
+      "id": "009",
+      "q": "Mit wie vielen Jahren feiern jüdische Jungen ihre Bar Mizwa?",
+      "a": "Mit 13 Jahren",
+      "choices": [
+        "Mit 7 Jahren",
+        "Mit 16 Jahren",
+        "Mit 18 Jahren"
+      ],
+      "info": "Ab dann gelten sie als religiös mündig. Mädchen feiern Bat Mizwa, meist mit 12 Jahren.",
+      "img": "📜🎉"
+    },
+    {
+      "id": "010",
+      "q": "Wie nennt man Speisen, die nach jüdischen Speisegesetzen erlaubt sind?",
+      "a": "Koscher",
+      "choices": [
+        "Halal",
+        "Vegan",
+        "Fair"
+      ],
+      "info": "Zum Beispiel werden Milch und Fleisch nicht zusammen gegessen. Halal ist das Gegenstück im Islam.",
+      "img": "🍽️✅"
+    },
+    {
+      "id": "011",
+      "q": "Woraus besteht die christliche Bibel?",
+      "a": "Aus Altem und Neuem Testament",
+      "choices": [
+        "Nur aus den Evangelien",
+        "Aus Tora und Koran",
+        "Aus den Veden und Upanischaden"
+      ],
+      "info": "Das Alte Testament teilen Christen in großen Teilen mit dem Judentum. Das Neue erzählt von Jesus.",
+      "img": "📖✝️"
+    },
+    {
+      "id": "012",
+      "q": "Wie heißen die vier Evangelisten?",
+      "a": "Matthäus, Markus, Lukas, Johannes",
+      "choices": [
+        "Petrus, Paulus, Jakobus, Johannes",
+        "Matthäus, Markus, Paulus, Petrus",
+        "Abraham, Mose, David, Salomo"
+      ],
+      "info": "Ihre Bücher erzählen vom Leben Jesu. „Evangelium“ bedeutet „gute Nachricht“.",
+      "img": "📖4️⃣"
+    },
+    {
+      "id": "013",
+      "q": "Was feiern Christen an Ostern?",
+      "a": "Die Auferstehung von Jesus",
+      "choices": [
+        "Die Geburt von Jesus",
+        "Die Taufe von Jesus",
+        "Die Ankunft des Heiligen Geistes"
+      ],
+      "info": "Ostern ist das wichtigste christliche Fest. Am Karfreitag davor wird an den Tod Jesu am Kreuz erinnert.",
+      "img": "✝️🌅"
+    },
+    {
+      "id": "014",
+      "q": "Was feiern Christen an Pfingsten?",
+      "a": "Die Sendung des Heiligen Geistes",
+      "choices": [
+        "Die Geburt von Jesus",
+        "Die Auferstehung von Jesus",
+        "Den Auszug aus Ägypten"
+      ],
+      "info": "Pfingsten ist 50 Tage nach Ostern. Es gilt als „Geburtstag der Kirche“.",
+      "img": "🕊️🔥"
+    },
+    {
+      "id": "015",
+      "q": "Mit welchem Ritual wird man in die christliche Gemeinschaft aufgenommen?",
+      "a": "Mit der Taufe",
+      "choices": [
+        "Mit der Beschneidung",
+        "Mit der Pilgerfahrt",
+        "Mit dem Fasten"
+      ],
+      "info": "Der Täufling wird mit Wasser übergossen oder untergetaucht. Wasser steht für Reinigung und neues Leben.",
+      "img": "💧👶"
+    },
+    {
+      "id": "016",
+      "q": "Welche ist die Religion mit den meisten Anhängern weltweit?",
+      "a": "Das Christentum",
+      "choices": [
+        "Der Islam",
+        "Der Hinduismus",
+        "Der Buddhismus"
+      ],
+      "info": "Mehr als zwei Milliarden Menschen sind Christen. Der Islam ist die zweitgrößte Religion.",
+      "img": "🌍✝️"
+    },
+    {
+      "id": "017",
+      "q": "Welches geheime Erkennungszeichen nutzten die frühen Christen?",
+      "a": "Einen Fisch",
+      "choices": [
+        "Einen Halbmond",
+        "Ein Rad",
+        "Einen Davidstern"
+      ],
+      "info": "Das griechische Wort für Fisch, „Ichthys“, war eine Abkürzung für „Jesus Christus, Gottes Sohn, Retter“.",
+      "img": "🐟✝️"
+    },
+    {
+      "id": "018",
+      "q": "Wie heißt die Heilige Schrift des Islam?",
+      "a": "Der Koran",
+      "choices": [
+        "Die Tora",
+        "Die Bibel",
+        "Die Bhagavad Gita"
+      ],
+      "info": "Nach muslimischem Glauben hat Gott ihn dem Propheten Mohammed offenbart. Er ist in 114 Suren eingeteilt.",
+      "img": "📗☪️"
+    },
+    {
+      "id": "019",
+      "q": "In welcher Sprache wurde der Koran ursprünglich überliefert?",
+      "a": "Arabisch",
+      "choices": [
+        "Hebräisch",
+        "Türkisch",
+        "Persisch"
+      ],
+      "info": "Darum lernen Muslime auf der ganzen Welt, den Koran auf Arabisch zu rezitieren.",
+      "img": "📗🗣️"
+    },
+    {
+      "id": "020",
+      "q": "Wie heißt der Turm einer Moschee, von dem zum Gebet gerufen wird?",
+      "a": "Minarett",
+      "choices": [
+        "Kuppel",
+        "Glockenturm",
+        "Stupa"
+      ],
+      "info": "Der Gebetsrufer heißt Muezzin. Das Gebet leitet der Imam.",
+      "img": "🕌📣"
+    },
+    {
+      "id": "021",
+      "q": "Wie oft am Tag beten gläubige Muslime?",
+      "a": "Fünfmal",
+      "choices": [
+        "Einmal",
+        "Dreimal",
+        "Siebenmal"
+      ],
+      "info": "Das Gebet ist eine der fünf Säulen des Islam. Die Zeiten richten sich nach dem Stand der Sonne.",
+      "img": "🕌🕐"
+    },
+    {
+      "id": "022",
+      "q": "In welche Richtung beten Muslime?",
+      "a": "Nach Mekka, zur Kaaba",
+      "choices": [
+        "Nach Jerusalem, zur Klagemauer",
+        "Nach Rom, zum Petersdom",
+        "Nach Osten, zur Sonne"
+      ],
+      "info": "Die Kaaba ist ein würfelförmiges Gebäude in Mekka im heutigen Saudi-Arabien.",
+      "img": "🕋🧭"
+    },
+    {
+      "id": "023",
+      "q": "Wie heißt der Fastenmonat der Muslime?",
+      "a": "Ramadan",
+      "choices": [
+        "Pessach",
+        "Advent",
+        "Diwali"
+      ],
+      "info": "Von der Morgendämmerung bis zum Sonnenuntergang wird nicht gegessen und getrunken. Kinder und Kranke müssen nicht fasten.",
+      "img": "🌙🍽️"
+    },
+    {
+      "id": "024",
+      "q": "Welches Fest feiern Muslime am Ende des Ramadan?",
+      "a": "Das Fest des Fastenbrechens",
+      "choices": [
+        "Das Laubhüttenfest",
+        "Das Erntedankfest",
+        "Das Lichterfest Diwali"
+      ],
+      "info": "Es wird oft auch „Zuckerfest“ genannt, weil Kinder Süßigkeiten geschenkt bekommen.",
+      "img": "🍬🎉"
+    },
+    {
+      "id": "025",
+      "q": "Wie heißt die Pilgerfahrt nach Mekka?",
+      "a": "Haddsch",
+      "choices": [
+        "Ramadan",
+        "Zakat",
+        "Schahada"
+      ],
+      "info": "Wer gesund ist und es sich leisten kann, soll sie einmal im Leben machen.",
+      "img": "🕋🚶"
+    },
+    {
+      "id": "026",
+      "q": "Wie heißt der Gott mit Elefantenkopf, der im Hinduismus Hindernisse beseitigt?",
+      "a": "Ganesha",
+      "choices": [
+        "Shiva",
+        "Vishnu",
+        "Brahma"
+      ],
+      "info": "Viele Hindus bitten Ganesha um Glück, bevor sie etwas Neues beginnen, z. B. eine Reise.",
+      "img": "🐘✨"
+    },
+    {
+      "id": "027",
+      "q": "Wie heißt das große Lichterfest der Hindus?",
+      "a": "Diwali",
+      "choices": [
+        "Holi",
+        "Chanukka",
+        "Vesakh"
+      ],
+      "info": "Häuser werden mit Öllämpchen geschmückt. Das Licht steht für den Sieg des Guten über das Böse.",
+      "img": "🕯️🎆"
+    },
+    {
+      "id": "028",
+      "q": "Bei welchem hinduistischen Fest bewerfen sich Menschen mit buntem Farbpulver?",
+      "a": "Holi",
+      "choices": [
+        "Diwali",
+        "Pessach",
+        "Pfingsten"
+      ],
+      "info": "Holi feiert den Frühling. Arm und Reich, Jung und Alt feiern bunt gemischt zusammen.",
+      "img": "🎨🌈"
+    },
+    {
+      "id": "029",
+      "q": "Welcher Fluss gilt im Hinduismus als heilig?",
+      "a": "Der Ganges",
+      "choices": [
+        "Der Nil",
+        "Der Jordan",
+        "Der Euphrat"
+      ],
+      "info": "Viele Hindus baden im Ganges, etwa in der Stadt Varanasi, um sich innerlich zu reinigen.",
+      "img": "🌊🙏"
+    },
+    {
+      "id": "030",
+      "q": "Welche zwei Religionen lehren einen Kreislauf der Wiedergeburten?",
+      "a": "Hinduismus und Buddhismus",
+      "choices": [
+        "Judentum und Islam",
+        "Christentum und Islam",
+        "Judentum und Christentum"
+      ],
+      "info": "Gute und schlechte Taten (Karma) beeinflussen nach dieser Lehre das nächste Leben.",
+      "img": "🔄🌱"
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet der Name „Buddha“?",
+      "a": "Der Erwachte",
+      "choices": [
+        "Der König",
+        "Der Prophet",
+        "Der Gesalbte"
+      ],
+      "info": "Buddha ist ein Ehrentitel für Siddhartha Gautama. „Christus“ bedeutet übrigens „der Gesalbte“.",
+      "img": "🧘✨"
+    },
+    {
+      "id": "032",
+      "q": "In welchem heutigen Land wurde Siddhartha Gautama geboren?",
+      "a": "In Nepal",
+      "choices": [
+        "In China",
+        "In Japan",
+        "In Thailand"
+      ],
+      "info": "Er kam in Lumbini zur Welt, als Sohn eines Fürsten. Er verließ den Palast, um das Leid der Menschen zu verstehen.",
+      "img": "🏔️👶"
+    },
+    {
+      "id": "033",
+      "q": "Welches Symbol steht im Buddhismus für die Lehre Buddhas?",
+      "a": "Ein Rad mit acht Speichen",
+      "choices": [
+        "Ein Kreuz mit vier Armen",
+        "Ein Stern mit sechs Zacken",
+        "Ein Leuchter mit sieben Armen"
+      ],
+      "info": "Die acht Speichen stehen für den Achtfachen Pfad: Wege zu gutem Denken, Reden und Handeln.",
+      "img": "☸️📖"
+    },
+    {
+      "id": "034",
+      "q": "Wie heißt im Buddhismus das Ziel, frei von Leid und Wiedergeburt zu sein?",
+      "a": "Nirwana",
+      "choices": [
+        "Paradies",
+        "Karma",
+        "Mantra"
+      ],
+      "info": "Der Weg dorthin führt über Meditation, Mitgefühl und den Achtfachen Pfad.",
+      "img": "🧘🕊️"
+    },
+    {
+      "id": "035",
+      "q": "Welches buddhistische Fest erinnert an Geburt, Erleuchtung und Tod Buddhas?",
+      "a": "Vesakh",
+      "choices": [
+        "Holi",
+        "Ostern",
+        "Jom Kippur"
+      ],
+      "info": "Es wird bei Vollmond im Mai oder Juni gefeiert – mit Lichtern, Blumen und guten Taten.",
+      "img": "🌕🌸"
+    }
+  ]
+}
