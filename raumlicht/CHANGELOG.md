@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.6.0 – Bereit für den Play Store (16.11.2026)
+- **Natürliche Stimme ohne fremden Sprach-Baustein:** Die Stimme „Thorsten“ klingt wie bisher, aber die App bringt die nötige Lautschrift jetzt selbst als Daten mit.
+  Der bisher enthaltene Baustein espeak-ng (mit strenger GPL-Lizenz) ist damit entfernt. Kennt Lux ein Wort einmal nicht, liest diesen einen Satz die Handy-Stimme.
+- **Zwei Fassungen der App:** Die APK von GitHub bleibt wie sie ist (mit eigenem Update-Knopf). Neu ist eine Fassung für den Play Store:
+  ohne Berechtigung „Apps installieren“, Updates kommen dort über den Store – im Hintergrund, eingespielt beim nächsten App-Start.
+- **Store-Unterlagen:** Texte, Grafiken, Bildschirmfotos und eine Klick-Liste liegen in `STORE-RELEASE.md` und `store/`. Veröffentlicht ist noch nichts.
+- Für alle, die die natürliche Stimme schon geladen haben: Sie bleibt, es muss nichts neu geladen werden.
+
 ## 2.5.1 – Musik im Browser, Lux erst einmal still (16.11.2026)
 - **🎵 Musik auch im Browser:** Die WebApp spielt jetzt dieselbe im Code erzeugte Hintergrundmusik wie die Android-App – ruhig im Menü, flotter bei Fahrt und Flug.
   Sie beginnt nach der ersten Berührung (das verlangen Browser), ist in den Einstellungen abschaltbar und folgt dem Lautstärke-Regler.

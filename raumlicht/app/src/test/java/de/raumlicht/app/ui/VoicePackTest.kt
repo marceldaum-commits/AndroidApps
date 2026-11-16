@@ -43,8 +43,7 @@ class VoicePackTest {
         l.start(); wait(l)
         assertEquals(PackState.Ready, l.state); assertEquals(1, ready); assertTrue(VoicePack.installed(ctx, data.size.toLong()))
         // die mitgelieferten Hilfsdaten liegen daneben: Zeichenliste und deutsches Lautschrift-Wörterbuch
-        val dir = VoicePack.dir(ctx); assertTrue(java.io.File(dir, "tokens.txt").length() > 500); assertTrue(java.io.File(dir, "espeak-ng-data/de_dict").length() > 10_000)
-        assertTrue(VoicePack.matches(VoicePack.model(ctx), data.size.toLong(), sum)); assertFalse(VoicePack.matches(VoicePack.model(ctx), data.size.toLong(), "00"))
+        val dir = VoicePack.dir(ctx); assertTrue(java.io.File(dir, "tokens.txt").length() > 500); assertTrue(java.io.File(dir, "saetze.tsv").length() > 10_000); assertTrue(java.io.File(dir, "woerter.tsv").length() > 10_000); assertFalse("kein espeak-ng mehr", java.io.File(dir, "espeak-ng-data").exists()); assertFalse(VoicePack.matches(VoicePack.model(ctx), data.size.toLong(), "00"))
         assertEquals(PackState.Ready, VoicePackLoader(ctx, server(data), size = data.size.toLong(), sha256 = sum).state)     // beim nächsten Start gleich da
         l.remove(); assertEquals(PackState.Missing, l.state); assertFalse(dir.exists())
     }

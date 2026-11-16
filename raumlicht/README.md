@@ -122,7 +122,7 @@ Querformat: ![](screenshots/48_querformat.png)
 ```
 export ANDROID_HOME=/opt/android-sdk
 ./gradlew test            # Tests + Bildschirmfotos (screenshots/)
-./gradlew assembleRelease
+./gradlew assembleGithubRelease   # APK für GitHub; Store-Paket: ./gradlew bundlePlayRelease (siehe STORE-RELEASE.md)
 ```
 Nach Änderungen an der 3D-Bühne (`scene/src/main.js`):
 ```
@@ -135,3 +135,13 @@ Der letzte Schritt rendert die 3D-Bilder, die in den Bildschirmfoto-Tests an Ste
 Ausliefern: `versionCode`/`versionName` und `VERSION_DATE` in `app/build.gradle.kts` setzen, Abschnitt mit Datum in `CHANGELOG.md`, pushen.
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `raumlicht-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).
+
+## Natürliche Stimme und Lautschrift (seit 2.6.0 ohne espeak-ng in der App)
+
+Die Stimme „Thorsten“ braucht Lautschrift. Die erzeugt `tools/stimme/lautschrift.py` vorab (Anleitung im Kopf der Datei) und legt sie nach
+`app/src/main/assets/stimme/`. **Nach jeder Änderung an Aufgaben- oder Sprechtexten neu laufen lassen** – `LautschriftTest` schlägt sonst fehl und nennt die fehlenden Wörter.
+
+## Zwei Fassungen: GitHub und Play Store
+
+`github` (APK, eigener Updater) und `play` (AAB, Updates über den Store, keine Installations-Berechtigung) – siehe `STORE-RELEASE.md`.
+Tests: `./gradlew :core:model:jvmTest :app:testGithubDebugUnitTest`.

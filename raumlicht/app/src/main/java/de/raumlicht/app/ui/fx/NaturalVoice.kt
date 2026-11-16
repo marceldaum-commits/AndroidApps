@@ -7,10 +7,12 @@ import android.media.AudioTrack
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.k2fsa.sherpa.onnx.GenerationConfig
 import com.k2fsa.sherpa.onnx.OfflineTts
 import com.k2fsa.sherpa.onnx.OfflineTtsConfig
 import com.k2fsa.sherpa.onnx.OfflineTtsModelConfig
 import com.k2fsa.sherpa.onnx.OfflineTtsVitsModelConfig
+import de.raumlicht.core.model.Lautschrift
 import de.raumlicht.core.model.Speech
 import java.io.File
 import java.net.HttpURLConnection
@@ -21,7 +23,8 @@ import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * Das Stimm-Paket „Thorsten“: eine natürlich klingende deutsche Stimme, die ganz auf dem Gerät rechnet.
- * Die große Stimmdatei wird nur auf Wunsch einmal geladen (und per Prüfsumme kontrolliert); die kleinen Hilfsdaten liegen der App bei.
+ * Die große Stimmdatei wird nur auf Wunsch einmal geladen (und per Prüfsumme kontrolliert). Der App liegen nur kleine Daten bei:
+ * die Zeichenliste der Stimme und die vorab erzeugte Lautschrift ([Lautschrift]) – kein Sprach-Baustein wie espeak-ng (seit 2.6.0).
  */
 object VoicePack {
     const val MODEL = "de_DE-thorsten-medium.onnx"
@@ -31,7 +34,7 @@ object VoicePack {
     const val MB = 63
     fun dir(ctx: Context) = File(ctx.filesDir, "stimme")
     fun model(ctx: Context) = File(dir(ctx), MODEL)
-    fun installed(ctx: Context, size: Long = SIZE) = model(ctx).let { it.isFile && it.length() == size } && File(dir(ctx), "tokens.txt").isFile && File(dir(ctx), "espeak-ng-data/phontab").isFile
+    fun installed(ctx: Context, size: Long = SIZE) = model(ctx).let { it.isFile && it.length() == size } && File(dir(ctx), "tokens.txt").isFile
 
     /** Prüft eine geladene Datei: richtige Größe und richtige Prüfsumme */
     fun matches(f: File, size: Long = SIZE, sha256: String = SHA256): Boolean {
@@ -39,8 +42,9 @@ object VoicePack {
         val md = MessageDigest.getInstance("SHA-256"); f.inputStream().use { i -> val b = ByteArray(1 shl 16); while (true) { val n = i.read(b); if (n < 0) break; md.update(b, 0, n) } }
         return md.digest().joinToString("") { "%02x".format(it) } == sha256
     }
-    /** Hilfsdaten (Lautschrift-Tabellen, Zeichenliste) aus der App ins Stimm-Verzeichnis legen */
+    /** Hilfsdaten (Zeichenliste, Lautschrift) aus der App ins Stimm-Verzeichnis legen; Reste früherer Versionen (espeak-ng-Daten) wegräumen */
     fun unpackHelpers(ctx: Context) {
+        File(dir(ctx), "espeak-ng-data").deleteRecursively()
         fun copy(path: String, to: File) { val kids = ctx.assets.list(path).orEmpty()
             if (kids.isEmpty()) { to.parentFile?.mkdirs(); ctx.assets.open(path).use { i -> to.outputStream().use { i.copyTo(it) } } } else kids.forEach { copy("$path/$it", File(to, it)) } }
         copy("stimme", dir(ctx))
@@ -91,8 +95,9 @@ class VoicePackLoader(private val ctx: Context, private val fetch: (String) -> H
 /**
  * Lux mit natürlicher Stimme: rechnet die Sprache auf dem Gerät (sherpa-onnx mit der Piper-Stimme „Thorsten“) und spielt sie ab, während sie entsteht.
  * Ein neuer Satz unterbricht den alten. Ist das Stimm-Paket nicht da oder lässt es sich nicht starten, bleibt [ready] falsch – dann spricht die Handy-Stimme.
+ * Die Laute kommen aus der mitgelieferten [Lautschrift]; kennt sie ein Wort nicht, liest diesen einen Text die Handy-Stimme ([fallback]).
  */
-class NaturalVoice(private val ctx: Context, private val onSpeaking: (Boolean) -> Unit = {}) : Speaker {
+class NaturalVoice(private val ctx: Context, private val fallback: Speaker? = null, private val onSpeaking: (Boolean) -> Unit = {}) : Speaker {
     @Volatile var enabled = true
     @Volatile var volume = 1f
     var ready by mutableStateOf(false)
@@ -104,6 +109,7 @@ class NaturalVoice(private val ctx: Context, private val onSpeaking: (Boolean) -
     private val turn = AtomicInteger(0)
     @Volatile private var speaking = false
     private var tts: OfflineTts? = null
+    @Volatile private var sounds: Lautschrift? = null
     private var track: AudioTrack? = null
 
     /** Stimme im Hintergrund starten (dauert einen Moment) – nur wenn das Paket vollständig da ist */
@@ -112,8 +118,10 @@ class NaturalVoice(private val ctx: Context, private val onSpeaking: (Boolean) -
         worker.execute {
             runCatching {
                 val dir = VoicePack.dir(ctx)
+                VoicePack.unpackHelpers(ctx)                              // nach einem App-Update: neue Lautschrift übernehmen, Altes wegräumen
+                sounds = Lautschrift(File(dir, "saetze.tsv").readLines().asSequence(), File(dir, "woerter.tsv").readLines().asSequence())
                 val engine = OfflineTts(null, OfflineTtsConfig(model = OfflineTtsModelConfig(
-                    vits = OfflineTtsVitsModelConfig(model = VoicePack.model(ctx).path, tokens = File(dir, "tokens.txt").path, dataDir = File(dir, "espeak-ng-data").path),
+                    vits = OfflineTtsVitsModelConfig(model = VoicePack.model(ctx).path, tokens = File(dir, "tokens.txt").path),
                     numThreads = 2, provider = "cpu")))
                 val rate = engine.sampleRate()
                 val min = AudioTrack.getMinBufferSize(rate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_FLOAT)
@@ -130,6 +138,8 @@ class NaturalVoice(private val ctx: Context, private val onSpeaking: (Boolean) -
     override fun say(text: String) {
         if (!enabled || volume <= 0f || !ready) return
         val clean = Speech.clean(text); if (clean.isEmpty()) return
+        val laute = sounds?.of(clean)
+        if (laute == null) { stop(); fallback?.say(text); return }           // unbekanntes Wort: diesen Text liest die Handy-Stimme
         val mine = turn.incrementAndGet()                                   // alles Ältere ist damit überholt
         runCatching { track?.pause(); track?.flush() }
         worker.execute {
@@ -138,7 +148,7 @@ class NaturalVoice(private val ctx: Context, private val onSpeaking: (Boolean) -
             runCatching {
                 speaking = true; onSpeaking(true)
                 out.setVolume(volume.coerceIn(0f, 1f)); out.play()
-                engine.generateWithCallback(clean, 0, 1.0f) { samples ->
+                engine.generateWithConfigAndCallback(clean, GenerationConfig(speed = 1.0f, phonemeCodepoints = laute.map { Lautschrift.codepoints(it) }.toTypedArray())) { samples ->
                     if (mine != turn.get()) 0 else { out.write(samples, 0, samples.size, AudioTrack.WRITE_BLOCKING); 1 }
                 }
                 if (mine == turn.get()) out.stop()                           // spielt den Rest aus dem Puffer noch zu Ende

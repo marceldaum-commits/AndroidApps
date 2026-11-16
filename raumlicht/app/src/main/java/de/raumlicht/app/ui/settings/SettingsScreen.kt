@@ -30,7 +30,10 @@ fun SettingsScreen(
 ) = SettingsPage(music, onMusic, sound, onSound, vibration, onVibration, "Version $installed vom ${BuildConfig.VERSION_DATE}", onBack,
     top = { if (BuildConfig.SELF_UPDATE) UpdateSection(installed, update, autoUpdate, onAutoUpdate) },
     onReset = onReset, volume = volume, onVolume = onVolume, voice = voice, onVoice = onVoice, voiceAvailable = voiceAvailable, voiceControls = voiceControls,
-    lastProblem = lastProblem, onProblemSeen = onProblemSeen)
+    lastProblem = lastProblem, onProblemSeen = onProblemSeen,
+    privacy = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. Ins Internet geht die App nur, " +
+        (if (BuildConfig.SELF_UPDATE) "um nach Updates zu schauen (abschaltbar)" else "wenn der Play Store nach Updates schaut") +
+        " – und einmalig, wenn du die natürliche Stimme lädst. Gesprochen wird immer auf dem Gerät.")
 
 /** Stimme aussuchen: durch die deutschen Stimmen des Geräts schalten (jede stellt sich vor) und die Stimmlage wählen. */
 @Composable

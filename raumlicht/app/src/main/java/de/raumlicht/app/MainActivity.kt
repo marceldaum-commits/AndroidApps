@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val app = application as RaumlichtApp
         app.music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
-        if (savedInstanceState == null) readIntent(intent)
+        if (savedInstanceState == null) { readIntent(intent); de.raumlicht.app.update.StoreUpdate.onStart(this) }
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
             val vibration by vm.settings.vibration.collectAsStateWithLifecycle()

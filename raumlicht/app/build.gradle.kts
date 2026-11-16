@@ -22,13 +22,19 @@ android {
         applicationId = "de.raumlicht.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 34
-        versionName = "2.5.1"
-        // Update-Knopf (lädt neue Versionen aus GitHub Releases). Für den Play Store auf false setzen –
-        // dort kommen Updates über den Store, und die Installations-Berechtigung ist nicht erlaubt.
-        buildConfigField("boolean", "SELF_UPDATE", "true")
+        versionCode = 35
+        versionName = "2.6.0"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
         buildConfigField("String", "VERSION_DATE", "\"16.11.2026\"")
+    }
+
+    // Zwei Fassungen derselben App (gleicher Paketname, gleicher Schlüssel):
+    //   github – APK zum direkten Installieren; bringt den eigenen Update-Knopf mit (lädt neue Versionen aus GitHub Releases)
+    //   play   – für den Play Store (AAB); Updates kommen über den Store (Play In-App Updates), keine Installations-Berechtigung
+    flavorDimensions += "vertrieb"
+    productFlavors {
+        create("github") { dimension = "vertrieb"; isDefault = true; buildConfigField("boolean", "SELF_UPDATE", "true") }
+        create("play") { dimension = "vertrieb"; buildConfigField("boolean", "SELF_UPDATE", "false") }
     }
 
     signingConfigs {
@@ -79,8 +85,10 @@ android.packaging.jniLibs.excludes += listOf("**/libsherpa-onnx-c-api.so", "**/l
 android.packaging.jniLibs.useLegacyPackaging = true   // Maschinencode komprimiert einpacken: der Download wird damit weniger als halb so groß
 
 dependencies {
-    // Natürliche Stimme für Lux: Sprachsynthese auf dem Gerät (Apache 2.0; enthält espeak-ng unter GPL-3, siehe LIZENZEN.md)
-    implementation("com.github.k2-fsa.sherpa-onnx:sherpa-onnx:v1.13.8@aar")
+    // Natürliche Stimme für Lux: Sprachsynthese auf dem Gerät (Apache 2.0; ab 2.0 ohne espeak-ng – die Lautschrift liefert die App als Daten mit, siehe LIZENZEN.md)
+    implementation("com.github.k2-fsa.sherpa-onnx:sherpa-onnx:v2.0.1@aar")
+    // Nur Play-Fassung: Updates über den Store anbieten (Play In-App Updates)
+    "playImplementation"("com.google.android.play:app-update:2.1.0")
     val composeBom = platform("androidx.compose:compose-bom:2025.10.01")
     implementation(composeBom)
     implementation("androidx.compose.ui:ui")
