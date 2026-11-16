@@ -39,7 +39,7 @@ fun ShopScreen(
             item {
                 Text("Samenhandlung", style = MaterialTheme.typography.headlineMedium)
                 Text(
-                    "${packs.size} Wissenspakete mit ${packs.sumOf { it.cards.size }} Karten. Alles, was dich interessiert – egal welche Klasse.",
+                    "${packs.size} Wissenspakete mit ${packs.sumOf { it.cardCount }} Karten. Alles, was dich interessiert – egal welche Klasse.",
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(top = 4.dp),
                 )

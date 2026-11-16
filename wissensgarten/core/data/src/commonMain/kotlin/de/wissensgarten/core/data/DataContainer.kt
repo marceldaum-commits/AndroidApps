@@ -10,10 +10,11 @@ open class DataContainer(
     packTexts: suspend () -> List<String>,
     downloadedPacks: suspend () -> List<String> = { emptyList() },
     plus: PlusConfig = PlusConfig(),
+    plusPreviews: suspend () -> String? = { null },
 ) {
     val tombstones: Tombstones = Tombstones(prefs("sync_geloescht"))
     val repository: GardenRepository = GardenRepository(store, tombstones = tombstones)
-    val catalog: PackCatalog = PackCatalog(packTexts, downloadedPacks)
+    val catalog: PackCatalog = PackCatalog(packTexts, downloadedPacks, plusPreviews)
     val settings: Settings = Settings(prefs("einstellungen"))
     val entitlements: PlusEntitlements = PlusEntitlements(settings, plus) {
         de.wissensgarten.core.model.Scheduler.localDay(de.wissensgarten.core.model.Platform.nowMs())

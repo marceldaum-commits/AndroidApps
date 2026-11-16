@@ -92,7 +92,8 @@ class PlusEntitlements(
 
     fun forgetCode() { settings.plusCode = null; refresh() }
 
-    override fun canUse(pack: Pack): Boolean = !config.enforced || !pack.isPlus || _active.value
+    /** Vorschauen (Plus-Paket noch nicht geladen) sind nie pflanzbar – das volle Paket kommt mit Code vom Server. */
+    override fun canUse(pack: Pack): Boolean = !pack.preview && (!config.enforced || !pack.isPlus || _active.value)
 
     /** Profile: frei 2, mit Plus bis 6. Ohne Sperre (kein Kaufweg) unbegrenzt wie bisher. */
     fun maxProfiles(): Int = when { !config.enforced -> Int.MAX_VALUE; _active.value -> PLUS_PROFILES; else -> FREE_PROFILES }

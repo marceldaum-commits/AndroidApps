@@ -17,9 +17,15 @@ data class Pack(
     /** Erklär-Geschichte, die Brummi vor dem Start erzählt (3–5 Szenen) */
     val intro: List<IntroScene> = emptyList(),
     val cards: List<PackCard>,
+    /** Nur Vorschau (Plus-Paket, noch nicht geladen): Titel, Erklärung und ein paar Beispielkarten */
+    val preview: Boolean = false,
+    /** Kartenzahl des vollen Pakets (bei Vorschauen) */
+    val cardTotal: Int = 0,
 ) {
     val subjectInfo: Subject get() = Subject.of(subject)
     val isPlus: Boolean get() = tier == Tier.PLUS
+    /** Kartenzahl für die Anzeige – bei Vorschauen die des vollen Pakets */
+    val cardCount: Int get() = if (cardTotal > 0) cardTotal else cards.size
 }
 
 @Serializable
@@ -45,6 +51,8 @@ object Tier {
 object PackJson {
     val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
     fun parse(text: String): Pack = json.decodeFromString(Pack.serializer(), text)
+    /** Vorschau-Katalog der Plus-Pakete (Liste) */
+    fun parseList(text: String): List<Pack> = json.decodeFromString(kotlinx.serialization.builtins.ListSerializer(Pack.serializer()), text)
 }
 
 /** Fächer mit Anzeigename, Symbol und Blütenfarbe. Neue Fächer einfach ergänzen. */

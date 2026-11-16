@@ -79,9 +79,9 @@ fun PlusScreen(
             ).forEach { (e, t) -> Row(verticalAlignment = Alignment.Top) { Text(e, fontSize = 22.sp); Spacer(Modifier.width(10.dp)); Text(t, style = MaterialTheme.typography.bodyMedium) } }
 
             if (!status.active && !status.trialUsed) OutlinedButton(
-                onClick = { message = if (onTrial()) "🎉 Plus ist 7 Tage freigeschaltet – viel Spaß! Danach endet der Test von allein." else null },
+                onClick = { message = if (onTrial()) "🎉 7 Tage Plus: bis zu 6 Profile und der Wochenbericht sind frei. Die Abi- und Experten-Pakete kommen nach dem Kauf mit dem Code. Der Test endet von allein." else null },
                 modifier = Modifier.fillMaxWidth(),
-            ) { Text("🎁 7 Tage gratis testen – ohne Zahlungsdaten") }
+            ) { Text("🎁 7 Tage gratis testen (Profile + Wochenbericht)") }
 
             if (purchaseAllowed && status.product != License.PRODUCT_FOREVER) {
                 if (checkoutYear.isNotBlank()) Button(onClick = { uri.openUri(checkoutYear) }, modifier = Modifier.fillMaxWidth()) {

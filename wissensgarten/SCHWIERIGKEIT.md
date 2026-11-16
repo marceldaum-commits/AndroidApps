@@ -1,6 +1,6 @@
 # Schwierigkeit im Wissensgarten – Nachweis
 
-Automatisch erzeugt von `content/src/test/java/de/wissensgarten/content/DifficultyTest.kt` aus allen 85 Paketen (2923 Karten).
+Automatisch erzeugt von `content/src/test/java/de/wissensgarten/content/DifficultyTest.kt` aus allen 85 Paketen (2923 Karten, davon die Plus-Pakete aus der privaten Ablage).
 Der Test schlägt fehl, sobald eine Stufe nicht strikt schwerer ist als die vorige.
 
 ## 1. Beim Spielen: Je größer die Pflanze, desto schwerer die Frage

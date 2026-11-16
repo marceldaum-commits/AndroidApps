@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.25.0 – Plus kann jetzt gekauft werden (16.11.2026)
+- **Wissensgarten Plus ist da:** im Eltern-Bereich für 19,99 € pro Jahr oder 49,99 € für immer (inkl. MwSt.) – kein Abo. Der Code kommt per E-Mail und gilt auf allen Geräten der Familie.
+- **Frei bleibt:** alle 72 Pakete von Klasse 1 bis 10 und alle Spielarten. Schon gepflanzte Beete bleiben immer lernbar.
+- **Plus-Pakete** (Abi und Experte) zeigt die Samenhandlung mit „🌟 Plus“ und Beispielkarten; nach dem Kauf lädt Brummi sie automatisch.
+- **7 Tage gratis testen:** mehr Profile und der Wochenbericht – ohne Zahlungsdaten, endet von allein.
+
 ## 0.24.0 – Wissensgarten Plus (16.11.2026)
 - **Alles Wichtige bleibt frei:** alle Wissenspakete von Klasse 1 bis 10 und alle Spielarten – ohne Werbung, für immer.
 - **Neu: Wissensgarten Plus 🌟** (freiwillig, nur im Eltern-Bereich hinter dem Eltern-Tor): Abi- und Experten-Pakete, jeden Monat neue Plus-Pakete, bis zu 6 Profile und der Wochenbericht.

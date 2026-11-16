@@ -84,7 +84,8 @@ fun main() {
         saveJob?.cancel()
         saveJob = scope.launch { delay(400); saveNow() }
     }
-    val container = DataContainer(store, ::localStorageStore, ::packTexts, ::plusPackTexts, de.wissensgarten.app.plusConfig(purchaseAllowed = true))
+    val container = DataContainer(store, ::localStorageStore, ::packTexts, ::plusPackTexts, de.wissensgarten.app.plusConfig(purchaseAllowed = true),
+        plusPreviews = { runCatching { fetchText("plus_katalog.json") }.getOrNull() })
     val host = WebHost()
     de.wissensgarten.app.ui.play.Drawings.store = host.images
     val vm = AppViewModel(container, host)

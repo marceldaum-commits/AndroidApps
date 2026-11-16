@@ -23,6 +23,7 @@ class AppContainer private constructor(context: Context, val database: GardenDat
         }
     },
     plus = plus,
+    plusPreviews = { withContext(Dispatchers.IO) { runCatching { context.assets.open("plus_katalog.json").bufferedReader().use { it.readText() } }.getOrNull() } },
 ) {
     constructor(context: Context, plus: PlusConfig = PlusConfig()) : this(context.applicationContext, GardenDatabase.create(context.applicationContext), plus)
     val syncStore: SyncStore by lazy { SyncStore(appContext, store, settings, tombstones) }

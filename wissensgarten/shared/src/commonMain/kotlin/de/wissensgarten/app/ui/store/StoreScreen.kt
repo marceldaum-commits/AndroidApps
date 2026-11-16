@@ -254,7 +254,7 @@ private fun PlusTab(plusPacks: List<Pack>, onOpenPacks: () -> Unit) {
                 Spacer(Modifier.width(10.dp))
                 Column(Modifier.weight(1f)) {
                     Text(p.title, style = MaterialTheme.typography.titleSmall)
-                    Text("${p.cards.size} Karten", style = MaterialTheme.typography.bodySmall)
+                    Text("${p.cardCount} Karten", style = MaterialTheme.typography.bodySmall)
                 }
                 Box(Modifier.clip(CircleShape).background(Color(0xFFFFD54F)).padding(horizontal = 8.dp, vertical = 2.dp)) {
                     Text("PLUS", fontWeight = FontWeight.Black, fontSize = 11.sp, color = Color(0xFF4E3B00))

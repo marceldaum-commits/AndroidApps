@@ -37,6 +37,17 @@ class AppViewModel(
 
     private val _packs = MutableStateFlow<List<Pack>>(emptyList())
     val packs: StateFlow<List<Pack>> = _packs.asStateFlow()
+    private val _plusPreviews = MutableStateFlow<List<Pack>>(emptyList())
+    /** Plus-Pakete, die noch nicht geladen sind (nur Vorschau für die Samenhandlung) */
+    val plusPreviews: StateFlow<List<Pack>> = _plusPreviews.asStateFlow()
+
+    /** Vorschauen nie ins Lernen geben und nie Beete damit „aktualisieren“ – nur volle Pakete. */
+    private suspend fun setPacks(all: List<Pack>) {
+        val full = all.filter { !it.preview }
+        _packs.value = full
+        _plusPreviews.value = all.filter { it.preview }
+        repo.syncPacks(full)
+    }
 
     /** Aktuelle Zeit, minütlich aktualisiert – damit Pflanzen auch bei offener App welken. */
     private val _now = MutableStateFlow(de.wissensgarten.core.model.Platform.nowMs())
@@ -362,8 +373,7 @@ class AppViewModel(
     init {
         viewModelScope.launch {
             val all = c.catalog.all()
-            _packs.value = all
-            repo.syncPacks(all)
+            setPacks(all)
         }
         viewModelScope.launch { while (true) { delay(60_000); _now.value = de.wissensgarten.core.model.Platform.nowMs() } }
     }
@@ -417,8 +427,7 @@ class AppViewModel(
             settings.lastPlusPackCheck = now
             if (n > 0) {
                 val all = c.catalog.reload()
-                _packs.value = all
-                repo.syncPacks(all)
+                setPacks(all)
                 h.toast(if (n == 1) "🌟 Ein neues Plus-Paket ist da!" else "🌟 $n neue Plus-Pakete sind da!")
             }
         }
@@ -436,8 +445,7 @@ class AppViewModel(
             settings.lastPackCheck = now
             if (n > 0) {
                 val all = c.catalog.reload()
-                _packs.value = all
-                repo.syncPacks(all)
+                setPacks(all)
                 h.toast(if (n == 1) "🐝 Brummi hat ein neues Wissenspaket mitgebracht!" else "🐝 Brummi hat $n neue Wissenspakete mitgebracht!")
             } else if (force) h.toast("Alle Wissenspakete sind aktuell 🌼")
         }

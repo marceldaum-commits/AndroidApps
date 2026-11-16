@@ -1,5 +1,24 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 0.25.0 vom 16.11.2026 – Plus aktiv, Plus-Pakete nur noch über den Endpunkt
+
+- **Sperren aktiv:** Die Kassen-URLs 4139 (Jahr) und 4140 (für immer) stehen in `pro/plus.properties`. In Web und GitHub-APK sind damit die Kauf-Knöpfe sichtbar und die Sperren aktiv:
+  Plus-Pakete, mehr als 2 Profile, Wochenbericht. Die Play-Fassung bleibt weiter ohne Kauf und ohne Sperren.
+- **13 Plus-Pakete raus** aus APK und WebApp (`content/…/packs` und `webapp/packs`): Es bleiben 72 freie Pakete.
+  Die vollen Pakete gibt es nur noch über `/wg-api/plus/` (Stand Website_Backup `53afb08`).
+- **Vorschau statt Paket:** `plus_katalog.json` (APK-Asset und `webapp/plus_katalog.json`) enthält je Plus-Paket nur Titel, Beschreibung, Erklär-Szenen, Kartenzahl und 3 Beispielkarten.
+  - In der Samenhandlung stehen sie mit „🌟 Plus“; Antippen führt (Eltern-Tor) zur Plus-Seite.
+  - Mit gültigem Code lädt die App die vollen Pakete vom Endpunkt; Antippen stößt das Laden sofort an.
+  - Vorschauen gehen nie ins Lernen und verändern nie bestehende Beete.
+- **Bestehende Beete** mit früheren Plus-Paketen bleiben vollständig lernbar, die Karten liegen ja schon im Lernstand.
+- **7-Tage-Test:** Er schaltet Profile und Wochenbericht frei, die Plus-Pakete aber nicht, weil der Endpunkt ohne Kaufcode nichts ausliefert.
+  Falls der Test auch Pakete öffnen soll: Der Lizenz-Dienst könnte 7-Tage-Test-Codes ausgeben, z. B. als neues Produkt.
+- **Nachweis Schwierigkeit:** Der `DifficultyTest` liest die Plus-Pakete jetzt aus der privaten Ablage, lokal `website_backup/wissensgarten-plus` oder über `WG_PLUS_DIR`.
+  Im CI ohne Zugriff prüft er die freien Stufen; `SCHWIERIGKEIT.md` wird nur mit allen Paketen neu geschrieben.
+- **Tests:** alle grün, Lint ohne Fehler. WebApp ohne Fehler; der Endpunkt antwortet mit 200 (versions.json) bzw. 403 ohne Code.
+  **Kauf mit echtem Code konnte ich nicht testen** (kein Kaufcode vorhanden). Bitte beim Prüfen einmal über die Kasse kaufen und den Link aus der E-Mail öffnen.
+- **Bitte 0.25.0 auf wissensgarten-test prüfen (inkl. Kasse) und dann live schalten.**
+
 ## 0.24.0 vom 16.11.2026 – Wissensgarten Plus gebaut (Sperren noch aus)
 
 **Gebaut (Web und GitHub-APK; Play ohne Kauf):**

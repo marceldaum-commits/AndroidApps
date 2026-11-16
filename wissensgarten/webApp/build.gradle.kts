@@ -33,6 +33,8 @@ val copyPacks by tasks.registering {
         val out = genPacks.get().dir("packs").asFile.apply { deleteRecursively(); mkdirs() }
         val files = packsDir.listFiles()!!.filter { it.extension == "json" }.sortedBy { it.name }
         files.forEach { it.copyTo(out.resolve(it.name), overwrite = true) }
+        // Vorschau-Katalog der Plus-Pakete (nur Titel, Erklärung, 3 Beispielkarten) – die vollen Pakete kommen vom Plus-Endpunkt
+        rootProject.file("content/src/main/assets/plus_katalog.json").takeIf { it.exists() }?.copyTo(genPacks.get().file("plus_katalog.json").asFile, overwrite = true)
         out.resolve("index.json").writeText(files.joinToString(",", "[", "]") { "\"${it.name}\"" })
         // Für das Nachladen in der App: Datei → Paket-Version (nur Daten, kein Code)
         val slurper = groovy.json.JsonSlurper()

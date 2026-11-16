@@ -375,8 +375,11 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                 composable(Routes.SHOP) {
                     WithProfile(profile) { p ->
                         ShopScreen(
-                            profile = p, packs = packs, beds = beds, canUse = vm.entitlements::canUse,
-                            onLocked = { gate("Dieses Paket gehört zu Wissensgarten Plus.") { nav.navigate(Routes.PLUS) } },
+                            profile = p, packs = packs + vm.plusPreviews.collectAsStateWithLifecycle().value, beds = beds, canUse = vm.entitlements::canUse,
+                            onLocked = {
+                                if (vm.entitlements.code != null) { host.toast("🐝 Brummi holt die Plus-Pakete … gleich noch einmal antippen."); vm.refreshPlusPacksIfDue(force = true) }
+                                else gate("Dieses Paket gehört zu Wissensgarten Plus.") { nav.navigate(Routes.PLUS) }
+                            },
                             onPlant = vm::plantPack,
                             onOpenBed = { nav.navigate(Routes.bed(it)) },
                             onOwnBed = { n, e -> vm.addOwnBed(n, e) { id -> nav.navigate(Routes.bed(id)) } },
@@ -568,7 +571,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             sound = sound, onSound = { vm.settings.setSound(it) },
                             reminderOn = reminderOn, reminderHour = reminderHour, onReminder = { on, h -> vm.setReminder(on, h) },
                             readAloud = readMode2, onReadAloud = { vm.settings.setReadAloud(it) },
-                            packCount = packs.size, cardCount = packs.sumOf { it.cards.size }, version = AppInfo.VERSION,
+                            packCount = packs.size, cardCount = packs.sumOf { it.cardCount }, version = AppInfo.VERSION,
                             onTheme = { vm.setTheme(it) }, onUpdateProfile = { vm.updateProfile(it) },
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
                             onTutorial = { nav.navigate(Routes.tutorial(false)) },
