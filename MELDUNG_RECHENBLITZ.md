@@ -6,6 +6,13 @@ Neueste Meldung oben.
 
 ## 16.11.2026 (53) – Konzept Lehrerzugang für Rechenblitz (noch nicht gebaut)
 
+> **Entscheidung Marcel (16.11., über den Leitstand, gilt für alle Apps):** Schulpreise inkl. USt, je Schuljahr bis 31.07., ohne KI:
+> - **Lehrkraft-Lizenz 29 € je App** (netto 24,37 €)
+> - **Schul-Lizenz 199 € je App** (netto 167,23 €)
+> - **Paket alle Apps:** 79 € je Lehrkraft (netto 66,39 €), 499 € je Schule (netto 419,33 €)
+>
+> Das ersetzt die Vorschläge 24,99 € und 149 €. Verkauf und Verwaltung laufen über den zentralen Lehrerzugang auf der Website, den der Leitstand baut. **In der App wird dazu nichts gebaut, bis die Schnittstelle des Klassen-Dienstes steht.** Pro Familie (7,99 € einmalig) ist davon nicht berührt und noch offen.
+
 Auftrag vom Leitstand: Ein zentraler Lehrerzugang auf der Website, und der Klassen-Dienst entsteht aus `KLASSEN-API.md`. **Noch nichts gebaut.** Vorhanden ist heute Folgendes, und darauf baut das Konzept auf:
 - Klassen-Challenge mit Spitznamen und Wochenpunkten
 - Aufträge und Ergebnisse als Link (`#auftrag`, Ergebnis-Link, nicht fälschungssicher)
@@ -75,6 +82,13 @@ Abgleich mit Meldung 52: Statt „Pro Lehrkraft 24,99 €“ in der App wird der
 Server und Lehrerbereich baut der Leitstand.
 
 ## 16.11.2026 (52) – Konzept „Pro“ für Rechenblitz (noch nicht gebaut)
+
+> **Entscheidung Marcel (16.11., über den Leitstand, gilt für alle Apps):** Schulpreise inkl. USt, je Schuljahr bis 31.07., ohne KI:
+> - **Lehrkraft-Lizenz 29 € je App** (netto 24,37 €)
+> - **Schul-Lizenz 199 € je App** (netto 167,23 €)
+> - **Paket alle Apps:** 79 € je Lehrkraft (netto 66,39 €), 499 € je Schule (netto 419,33 €)
+>
+> Das ersetzt die Vorschläge 24,99 € und 149 €. Verkauf und Verwaltung laufen über den zentralen Lehrerzugang auf der Website, den der Leitstand baut. **In der App wird dazu nichts gebaut, bis die Schnittstelle des Klassen-Dienstes steht.** Pro Familie (7,99 € einmalig) ist davon nicht berührt und noch offen.
 
 Auftrag vom Leitstand (16.11.) nach Marcels Grundsatz für alle Apps: Bezahlfunktionen in der App, Web und Android, Rechnung per E-Mail und als Nachweis in WooCommerce. Bitte zuerst nur ein Konzept. **Es ist noch nichts gebaut.** Die Preise sind ein Vorschlag zur Abstimmung über alle Apps.
 
