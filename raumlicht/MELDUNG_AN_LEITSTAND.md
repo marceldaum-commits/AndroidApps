@@ -455,3 +455,67 @@ Marcel hat direkt bestätigt („ja“), alle Preise inkl. 19 % USt:
 Für den Lizenz-Dienst: Der Freischalt-Schein braucht zwei Angaben – „Pro dauerhaft“ und „Tutor gültig bis“; die Verlängerung ist ein eigenes Produkt, das nur das Tutor-Datum verschiebt.
 Ebenfalls beschlossen: Grenze frei/Pro wie im Konzept, Gründer-Code für bisherige Tester, Tutor-Start mit Claude Haiku 5.5 (an echten Aufgaben testen).
 Gebaut ist davon weiterhin nur der ausgeschaltete Pro-Schalter mit den Sperren (2.11.0).
+
+---
+
+## 16.11.2026 – Konzept Lehrerzugang für Raumlicht (Auftrag von Marcel direkt bestätigt; **nur Konzept, nichts gebaut**)
+
+**Was es heute schon gibt:** „Klassen-Paket“ (Mehr → Gemeinsam): Die Lehrkraft wählt Aufgaben, die App macht daraus einen Code; die Klasse gibt ihn ein, spielt das Paket und kann das Ergebnis als Text teilen.
+Alles ohne Server und ohne Konto – das bleibt frei und ist der natürliche Baustein für Aufträge (das Code-Format kann der Lehrerzugang übernehmen).
+
+### 1. Was die Lehrkraft sieht und steuert
+
+| Funktion | Inhalt | wo |
+|---|---|---|
+| Auftrag „Kapitel/Aufgaben“ | feste Aufgaben auswählen (wie Klassen-Paket), Frist | Lehrerzugang → erscheint in der App unter „Mein Kurs“ |
+| Auftrag „Üben“ | Thema + Stufe (Einstieg/Abi/Profi) + Anzahl, z. B. „10 Aufgaben Geraden, Stufe Abi“, Frist | wie oben |
+| Klausur-Probe | eine Prüfungsaufgabe im Abi-Stil, auf Zeit, Punkte in Bewertungseinheiten | wie oben; Ergebnis je Teilaufgabe |
+| Ergebnisse | je Schüler (Spitzname) und Kapitel: gelöst, Sterne, Versuche, zuletzt aktiv; je Auftrag: erledigt/offen | Lehrerzugang |
+| „Wo hakt es?“ | je Aufgabe: Anteil beim ersten Versuch richtig – ohne Namen, für die Stundenplanung | Lehrerzugang |
+| Beamer-Modus | Aufgabe groß mit 3D-Bühne, Lösung und Rechenweg schrittweise aufdeckbar, keine Schülerdaten sichtbar | in der App/WebApp selbst, braucht keinen Server |
+| Kurs verwalten, Export, Löschen | zentral beim Leitstand | Lehrerzugang |
+
+### 2. Welche Daten die App schickt (nur solange jemand in einem Kurs ist)
+
+| Datum | wozu |
+|---|---|
+| Kurs-Code | Zuordnung |
+| zufällige Installations-Kennung | Wiedererkennen desselben Geräts, kein Gerätename, keine Werbe-ID |
+| Spitzname (selbst gewählt, Vorschlag wie „Lux-417“) | Anzeige bei der Lehrkraft |
+| je gelöster Aufgabe: Aufgaben-Kennung bzw. Auftrag, Sterne (1–3), Zahl der Versuche, Datum | Ergebnisse |
+| bei Klausur-Probe: Punkte je Teilaufgabe, benötigte Zeit | Auswertung |
+
+**Nicht** gesendet: Klarname, E-Mail, Eingaben/Rechenwege, Standort, Geräte-Infos, Nutzung außerhalb der Aufträge (einstellbar: „nur Aufträge“ als Voreinstellung, „gesamter Fortschritt“ nur, wenn die Lehrkraft es für den Kurs einschaltet und die App es beim Beitritt anzeigt).
+Ohne Netz wird gesammelt und später gesendet. „Kurs verlassen“ in den Einstellungen stoppt alles und bittet den Dienst um Löschung.
+
+### 3. Wie ein Schüler beitritt
+Einstellungen bzw. „Mehr“ → „Kurs beitreten“ → **Code eintippen oder QR/Link** (`…/?kurs=ABC123`, in der WebApp direkt) → Spitznamen wählen → eine Seite zeigt klar, was die Lehrkraft sehen kann → beitreten. Kein Konto, kein Passwort.
+Der Dienst antwortet mit Kursname, Aufträgen und einem **signierten Schein „Pro über Kurs gültig bis …“** – dieselbe Mechanik wie beim Abi-Pass; in der App dockt er an `Prefs.pro` an (zweite Quelle „Kurs“).
+
+### 4. Frei oder Schullizenz – mit Preisvorschlag (alle Preise inkl. 19 % USt)
+
+| | frei | Kurs-/Schullizenz |
+|---|---|---|
+| Klassen-Paket per Code (ohne Server), Beamer-Modus | ✓ | ✓ |
+| Kurs beitreten, Aufträge sehen | ✓ (ein Kurs zum Ausprobieren, bis 5 Schüler, 30 Tage) | ✓ |
+| Ergebnisse je Schüler/Kapitel, „Wo hakt es?“, Export | – | ✓ |
+| Pro-Inhalte (Abi-Pass) für alle im Kurs | – | ✓ für die Dauer der Lizenz |
+| Klausur-Probe mit Auswertung | – | ✓ |
+| KI-Tutor | – | vorerst nicht; später mit Kursgrenze (z. B. 300 Erklärungen pro Kurs und Monat) |
+
+| Lizenz | Vorschlag | netto |
+|---|---|---|
+| Kurslizenz (ein Kurs, bis 35 Schüler, 12 Monate) | 49 € | 41,18 € |
+| Schullizenz (alle Oberstufen-Kurse einer Schule, 12 Monate) | 199 € | 167,23 € |
+
+Einordnung: Mathegym nennt für Schullizenzen 219 € (bis 50 Nutzer) bis 989 € (unbegrenzt) pro Jahr (Recherche vom 16.11.2026, kann abweichen) – für alle Klassenstufen; Raumlicht deckt nur die Oberstufe ab.
+Ein Kurs mit 25 Schülern zahlt bei 49 € knapp 2 € pro Kopf statt 14,99 € für den Einzelkauf.
+
+### Was ich vom zentralen Dienst brauche
+`beitreten(code, spitzname, kennung)` → Kurs, Aufträge, Schein; `auftraege(kurs)`; `ergebnis(…)` (auch gesammelt); `verlassen(kennung)` mit Löschung. Aufträge am besten im Format des vorhandenen Klassen-Pakets plus „Üben: Thema, Stufe, Anzahl“ und „Prüfungsaufgabe: Kennung, auf Zeit“.
+
+### Offen bzw. Risiken (ehrlich)
+- **Datenschutz Schule:** Erstmals verlassen Schülerdaten das Gerät. Auch Spitzname + Kennung sind personenbezogen, sobald die Lehrkraft weiß, wer dahintersteckt. Nötig: Vertrag zur Auftragsverarbeitung mit der Schule, Einwilligung bzw. Rechtsgrundlage (Minderjährige), Löschfristen, Serverstandort. Das ist rechtlich zu klären, nicht von mir.
+- Texte „keine Daten an einen Server“ in App, Store-Eintrag und Datensicherheit müssen dann geändert werden.
+- Spitznamen können missbraucht werden (Beleidigungen) – die Lehrkraft muss umbenennen/entfernen können.
+- Preise und die Grenze frei/Lizenz sind Vorschläge; Marcels Entscheidung steht aus.
