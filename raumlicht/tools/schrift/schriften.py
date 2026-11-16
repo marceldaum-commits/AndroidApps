@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Kürzt die Schriften der WebApp auf die Zeichen, die Raumlicht wirklich benutzt – ein Werkzeug für den Entwicklungsrechner.
 
-Die volle Emoji-Schrift hat 10,8 MB; gebraucht werden gut 150 Emojis. Aufruf (aus raumlicht/):
-    pip install fonttools
+Die volle Emoji-Schrift hat 10,8 MB; gebraucht werden rund 100 Emojis. Läuft automatisch vor jedem Bau der WebApp (Gradle-Aufgabe :web:schriften,
+nur wenn sich Quelltexte geändert haben) – ein neues Emoji im Text landet so von selbst in der Schrift. Braucht: pip install fonttools.
+Von Hand (aus raumlicht/):
     python tools/schrift/schriften.py            # schreibt web/src/wasmJsMain/resources/fonts/*.ttf neu
-    python tools/schrift/schriften.py --pruefen  # ändert nichts; schlägt fehl, wenn ein benutztes Zeichen in den Schriften fehlt
-Nach jedem neuen Emoji oder Sonderzeichen in den Texten neu laufen lassen. Quellen: Noto Color Emoji (SIL OFL 1.1), DejaVu Sans (frei).
+    python tools/schrift/schriften.py --pruefen  # ändert nichts; schlägt fehl, wenn ein benutztes Zeichen in den Schriften fehlt (läuft auch auf GitHub) Quellen: Noto Color Emoji (SIL OFL 1.1), DejaVu Sans (frei).
 """
 import glob, os, re, sys
 from fontTools.ttLib import TTFont
@@ -13,8 +13,9 @@ from fontTools import subset
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT = os.path.join(ROOT, 'web/src/wasmJsMain/resources/fonts')
-EMOJI_SRC = os.environ.get('NOTO_EMOJI', '/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf')
-TEXT_SRC = os.environ.get('DEJAVU', '/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
+# die vollständigen Schriften liegen im Repo (tools/schrift/quelle) – so entsteht überall dasselbe Ergebnis
+EMOJI_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'quelle/NotoColorEmoji.ttf')
+TEXT_SRC = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'quelle/DejaVuSans.ttf')
 
 # alle Zeichen aus den Texten im Quellcode (Kotlin der gemeinsamen Module und der WebApp)
 used = set()

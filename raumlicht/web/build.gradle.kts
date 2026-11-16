@@ -38,8 +38,21 @@ kotlin {
     }
 }
 
+// Schriften der WebApp automatisch auf die benutzten Zeichen kürzen: läuft vor jedem Bau, aber nur, wenn sich Texte im Quellcode geändert haben.
+// Ein neues Emoji oder Sonderzeichen landet so von selbst in der Schrift (sonst erschiene im Browser ein Kästchen).
+val schriften = tasks.register<Exec>("schriften") {
+    val root = rootProject.projectDir
+    inputs.files(fileTree(root) { include("core/model/src/commonMain/**/*.kt", "shared/src/commonMain/**/*.kt", "shared/src/wasmJsMain/**/*.kt", "web/src/wasmJsMain/**/*.kt", "tools/schrift/**") })
+    outputs.files(file("src/wasmJsMain/resources/fonts/noto_color_emoji.ttf"), file("src/wasmJsMain/resources/fonts/dejavu_sans.ttf"))
+    workingDir = root
+    commandLine("python3", "tools/schrift/schriften.py")
+    isIgnoreExitValue = true
+    doLast { if (executionResult.get().exitValue != 0) throw GradleException("Die Schriften der WebApp ließen sich nicht erzeugen. Nötig: python3 und „pip install fonttools“ (siehe tools/schrift/schriften.py).") }
+}
+
 // Die 3D-Bühne der Android-App unverändert mitliefern (eine Datei, zwei Welten)
 tasks.named<Copy>("wasmJsProcessResources") {
+    dependsOn(schriften)
     from(rootProject.file("app/src/main/assets/scene")) { into("scene") }
     // Versionsnummer in Seite, Manifest und Service Worker eintragen (der Service Worker lädt bei neuer Version alles frisch)
     filesMatching(listOf("index.html", "sw.js", "version.json", "diagnose.html")) { filter { it.replace("@VERSION@", versionName).replace("@DATUM@", versionDate) } }

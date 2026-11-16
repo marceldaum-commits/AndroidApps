@@ -200,3 +200,12 @@ Ehrlich dazu: gemessen auf einem Rechner ohne echte Grafikkarte, nicht auf einem
 **Weiterhin offen:** der weiße Bildschirm auf Marcels iPad. Das Ladebild hilft nur, wenn die Seite überhaupt lädt; die Ursache ist nicht gefunden (kein Safari hier).
 Bitte auf iPad/iPhone prüfen und `diagnose.html` ansehen.
 **Geprüft:** `web.mjs`, `web-update.mjs` (Update, Offline), `web-speed.mjs`; App-Tests und Lint. Nicht geprüft: echtes Gerät, Safari, Firefox.
+
+---
+
+## 16.11.2026 – Version 2.9.1 und Antwort zu „Skripte bündeln und verkleinern“
+
+- **2.9.1:** Die gekürzten Schriften entstehen jetzt automatisch vor jedem Bau (`:web:schriften`); der Lauf „Raumlicht WebApp → Test“ prüft vor dem Vorspulen, dass kein benutztes Zeichen fehlt.
+- **Zu „gebündelt und verkleinert“:** Das ist bei Raumlicht schon so – `raumlicht.js` (Webpack, minimiert, eine Datei) und `scene/scene.js` (esbuild `--bundle --minify`, eine Datei).
+  Was fehlt, ist allein die **Komprimierung beim Ausliefern**: `raumlicht.js` 594 KB → 107 KB und `scene.js` 570 KB → 148 KB mit gzip. Das ist eine Server-Einstellung
+  (gzip/Brotli auch für `.js`, `.json`, `.ttf`), kein Umbau der App. Bitte einschalten; geprüft habe ich es so: `curl -H "Accept-Encoding: br, gzip" -D - -o /dev/null <Adresse>/raumlicht.js` zeigt kein `content-encoding`.

@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.9.1 – Emojis bleiben von selbst vollständig (16.11.2026)
+- **WebApp:** Kommt ein neues Emoji oder Sonderzeichen in die Texte, landet es beim nächsten Bau automatisch in der Schrift. Zusätzlich prüft GitHub vor jeder Auslieferung,
+  dass kein benutztes Zeichen fehlt – sonst geht die WebApp nicht auf die Testadresse.
+- Behoben: Im Show-Baukasten stand im Browser ein Kästchen statt des Pluszeichens.
+
 ## 2.9.0 – Schneller Start mit Ladebild (16.11.2026)
 - **WebApp startet viel schneller:** Beim ersten Öffnen werden nur noch rund 7,7 MB statt 30 MB übertragen. Gemessen im schnellen Mobilfunknetz: 5,8 statt 27,9 Sekunden,
   im langsamen: 29 statt 153 Sekunden. Jeder weitere Start dauert gut 2 Sekunden und braucht kein Netz.

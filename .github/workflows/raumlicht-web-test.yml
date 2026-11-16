@@ -47,5 +47,14 @@ jobs:
           [ "$app" = "$web" ] || { echo "::error::WebApp ist Version $web, Android-App ist $app – bitte ./gradlew :web:webapp neu bauen"; exit 1; }
           echo "WebApp $web, $size MB – in Ordnung"
 
+      - name: Schriften vollständig? (jedes benutzte Emoji und Sonderzeichen steckt in den gekürzten Schriften)
+        working-directory: raumlicht
+        run: |
+          pip install --quiet fonttools
+          python tools/schrift/schriften.py --pruefen
+          # die ausgelieferten Schriften müssen die geprüften sein
+          cmp web/src/wasmJsMain/resources/fonts/noto_color_emoji.ttf webapp/fonts/noto_color_emoji.ttf
+          cmp web/src/wasmJsMain/resources/fonts/dejavu_sans.ttf webapp/fonts/dejavu_sans.ttf
+
       - name: Branch raumlicht-test vorspulen
         run: git push origin HEAD:refs/heads/raumlicht-test

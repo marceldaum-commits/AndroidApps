@@ -100,6 +100,7 @@ Raumlicht entsteht für Android und Web aus einer Codebasis (Compose Multiplatfo
   `raumlicht-live` setzt nur der Leitstand. Meldungen: `MELDUNG_AN_LEITSTAND.md`.
 - 3D-Bühne im Browser: Das iframe liegt **unter** der Oberfläche; `Stage.wasmJs.kt` lässt dort ein durchsichtiges Fenster und reicht Zeiger und Mausrad
   an die Bühne weiter. So liegen Einblendungen und Konfetti wie unter Android über der Bühne.
+- Hinweis Schriften: siehe unten „WebApp: Start, Schriften, Messen“.
 - Stand: Web = Android bis auf natürliche Stimme, Widgets, Erfolgskarte als Bild und den In-App-Updater (im Web unnötig).
 
 **Bedien-Test der echten Bühne** (seit 2.3.1): `cd scene && node test/interact.mjs ../core/model/build/scenes.json` spielt Antippen, Ziehen und Wischen mit echten
@@ -150,7 +151,8 @@ Tests: `./gradlew :core:model:jvmTest :app:testGithubDebugUnitTest`.
 
 - **Ladebild und Ladeplan:** `web/src/wasmJsMain/resources/index.html` zeigt sofort ein Ladebild (reines HTML/CSS) und fordert App-Kern (.wasm) und Schriften gleich an;
   der Bau (`:web:webapp`) trägt Dateigrößen (`@LADEPLAN@`) und .wasm-Namen (`@WASM@` in `sw.js`) ein. Die 3D-Bühne wird erst danach geladen.
-- **Schriften kürzen:** `python tools/schrift/schriften.py` (braucht `pip install fonttools`) schreibt die Schriften der WebApp mit nur den benutzten Zeichen neu.
-  **Nach jedem neuen Emoji oder Sonderzeichen neu laufen lassen**; `python tools/schrift/schriften.py --pruefen` meldet fehlende Zeichen.
+- **Schriften kürzen – automatisch:** Vor jedem `:web:webapp` läuft `:web:schriften` (`tools/schrift/schriften.py`, braucht `pip install fonttools`) und schreibt die Schriften
+  mit genau den benutzten Zeichen neu. Ein neues Emoji im Text ist damit beim nächsten Bau dabei. Zusätzlich prüft der GitHub-Lauf „Raumlicht WebApp → Test“
+  mit `--pruefen`, dass nichts fehlt – sonst geht die WebApp nicht auf die Testadresse. Die vollständigen Schriften liegen in `tools/schrift/quelle/`.
 - **Start messen:** `cd scene && node test/web-speed.mjs ../webapp` – erster und zweiter Start bei „Fast 4G“ und „Slow 4G“ (der Testserver bremst selbst und zählt die Bytes).
   Mit `alles-komprimiert` als zweitem Wort zeigt es, was volle Komprimierung am Server bringen würde.
