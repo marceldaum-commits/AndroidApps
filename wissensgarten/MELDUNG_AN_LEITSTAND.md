@@ -30,6 +30,22 @@ mehreren Kindern und alle, die KI-Hilfe wollen. Werbung gibt es nie. Plus ist be
 - **Kein Monatsabo:** Für eine Kinder-App ist es zu kleinteilig, Eltern wollen eine klare Summe. Kein Testabo mit Kündigungsfalle.
   Stattdessen 7 Tage Plus gratis per Knopf, ohne Zahlungsdaten, endet von allein.
 
+**Umsatzsteuer (Nachtrag 16.11.):**
+- Alle Preise sind **Endpreise inkl. 19 % USt** und werden in App und Shop mit „inkl. MwSt.“ angezeigt.
+- **Web:** Das Woo-Produkt bekommt die Steuerklasse Standard 19 %, die Rechnung weist die USt aus. Für Privatkunden in anderen EU-Ländern rechnet die Kasse den dortigen Satz ab (OSS).
+  Empfehlung: Der **Bruttopreis bleibt in der ganzen EU gleich** (19,99 €), nur der Netto-Anteil schwankt etwas, z. B. bei 20 % USt in AT netto 16,66 €.
+- **Play:** Google führt die USt selbst ab. Vom Bruttopreis gehen erst die USt und dann 15 % Servicegebühr ab (Abos und Umsätze unter 1 Mio. $ pro Jahr).
+
+| Angebot | Brutto | darin USt 19 % | Netto | **Web:** Zahlungsgebühr* | **Web: kommt an** | **Play:** 15 % vom Netto | **Play: kommt an** |
+|---|---|---|---|---|---|---|---|
+| Plus Familie – Jahr | 19,99 € | 3,19 € | **16,80 €** | 0,85 € | **15,95 €** | 2,52 € | **14,28 €** |
+| Plus Familie – für immer | 49,99 € | 7,98 € | **42,01 €** | 1,60 € | **40,41 €** | 6,30 € | **35,71 €** |
+| KI-Verlängerung – Jahr (für „für immer“) | 9,99 € | 1,60 € | **8,39 €** | 0,60 € | **7,79 €** | 1,26 € | **7,13 €** |
+
+\* Annahme für die Woo-Kasse (PayPal/Stripe): ca. 2,5 % + 0,35 € je Zahlung vom Bruttobetrag. Bitte mit Marcels tatsächlichem Tarif ersetzen.
+Davon gehen noch die KI-Kosten ab: im Schnitt deutlich unter 1 €, bei einer sehr aktiven Familie bis ca. 3,70 € (4 $) im Jahr.
+Ergebnis: Ein Web-Kauf bringt je Jahres-Plus ca. **1,67 € mehr** als Play. Im Play-Build darf darauf aber nicht hingewiesen werden (siehe unten).
+
 ### 2. Kauf: Eltern-Tor, Play Billing, Website
 
 - **Vor jedem Kauf das Eltern-Tor** (gibt es schon: Rechenaufgabe für Erwachsene). Kaufknöpfe stehen nur im Eltern-Bereich, nie mitten im Spiel. Kein Druck („nur heute“) und keine Countdown-Angebote.
