@@ -94,6 +94,8 @@ class MainActivity : ComponentActivity() {
         LaunchedEffect(wanted) { wanted?.let { r -> nav.restart(r); openRoute.value = null } }
         AppRoot(nav, vm.settings, vm.stars, vm::record, vm::today,
             updateVersion = update?.version,
+            // Abi-Pass über die Website gibt es nur in der GitHub-Fassung; im Play Store wäre Google Play Billing Pflicht – dort bleibt vorerst alles frei
+            proEnabled = de.raumlicht.core.model.Pro.ENABLED && BuildConfig.SELF_UPDATE,
             // Musik passend zum Bildschirm: ruhig im Tourplan, treibend auf der Bühne
             onRoute = { route -> (application as RaumlichtApp).music.setMood(if (Routes.isAction(route)) MusicMood.FLIGHT else MusicMood.MENU) },
             onPlanChanged = { de.raumlicht.app.widget.DailyWidget.refresh(this@MainActivity) },

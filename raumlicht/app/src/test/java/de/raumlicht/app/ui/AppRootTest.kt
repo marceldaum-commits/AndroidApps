@@ -13,6 +13,7 @@ import de.raumlicht.app.ui.theme.RaumlichtTheme
 import de.raumlicht.core.data.Settings
 import de.raumlicht.core.model.Levels
 import kotlinx.coroutines.flow.MutableStateFlow
+import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -29,11 +30,14 @@ class AppRootTest {
     @get:Rule val rule = createComposeRule()
     private val nav = Navigator(); private val stars = MutableStateFlow(mapOf<String, Int>()); private val routes = ArrayList<String>()
     private lateinit var prefs: Settings
+    // Schlüssel und Code nur für Tests (Seed 0…31)
+    private val PK = "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
+    private val PASS = "RL-04202-0000F-MGKKT-CDRGB-BYPG5-8XEVQ-M0F02-94P76-M1MXZ-28QYX-86PN1-NEY0T-JNXA5-8S0GJ-HA3X2-C0GQW-AW2K1-BQN3M-4PV5F-ZHQBG-ZKMPE-KJSDT-6VARJ-0W"
     private fun start(pro: Boolean = false) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
-            AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")) },
-                onRoute = { routes += it }, proEnabled = pro)
+            AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry() } },
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK)
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -65,9 +69,9 @@ class AppRootTest {
         assertTrue(Routes.isAction("level/3-2") && Routes.isAction("jam/MIX") && Routes.isAction("abi/zelt/1") && !Routes.isAction(Routes.HOME) && !Routes.isAction(Routes.EXAMS) && !Routes.isAction(Routes.BACKSTAGE))
     }
 
-    /** Abi-Pass (vorbereitet): eingeschaltet sperrt er genau die Pro-Teile und zeigt die Hinweis-Seite; freigeschaltet oder ausgeschaltet ist alles offen. */
+    /** Abi-Pass: eingeschaltet sperrt er genau die Pro-Teile und zeigt die Abi-Pass-Seite; ein gültiger Code öffnet alles, ein falscher nichts. */
     @Test fun proGate() {
-        Settings(ApplicationProvider.getApplicationContext()).setPro(false)
+        Settings(ApplicationProvider.getApplicationContext()).setProCode("")
         start(pro = true)
         rule.onNodeWithTag("kapitel-7").performScrollTo().performClick(); settle()
         rule.onNodeWithTag("schloss-7-3", useUnmergedTree = true).assertExists(); rule.onNodeWithTag("schloss-7-2", useUnmergedTree = true).assertDoesNotExist()
@@ -79,17 +83,41 @@ class AppRootTest {
         nav.go(Routes.BINOMIAL); settle(); rule.onNodeWithTag("pro-grund").assertTextContains("Binomial-Labor", substring = true); nav.back(); settle()
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.CHANCE); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist(); nav.back(); settle()            // Zufallsmaschine bleibt frei
-        // freigeschaltet: alles offen, Schlösser weg
-        rule.runOnUiThread { prefs.setPro(true) }; settle()
-        rule.onNodeWithTag("schloss-7-3", useUnmergedTree = true).assertDoesNotExist()
+        // über die Einstellungen zur Abi-Pass-Seite: Kauf-Knopf und Code-Eingabe
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("pro-eintrag").assertTextContains("Alles freischalten", substring = true).performClick(); settle()
+        assertEquals(Routes.PRO, nav.top); rule.onNodeWithTag("pro-kaufen").assertExists()
+        // falscher Code: freundlicher Hinweis, nichts geht auf
+        rule.onNodeWithTag("pro-code").performScrollTo().performTextInput("RL-12345-ABCDE"); rule.onNodeWithTag("pro-freischalten").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("pro-grund").assertTextContains("erkenne ich nicht", substring = true); rule.onNodeWithTag("pro-aktiv").assertDoesNotExist(); assertEquals("", prefs.proCode.value)
+        rule.onRoot().captureRoboImage("../screenshots/76_abi_pass.png")
+        // richtiger Code, mitten aus einer E-Mail kopiert
+        rule.onNodeWithTag("pro-code").performTextClearance(); rule.onNodeWithTag("pro-code").performTextInput("Hallo! Dein Code:\n$PASS\nViel Erfolg!")
+        rule.onNodeWithTag("pro-freischalten").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("pro-aktiv").assertExists(); rule.onNodeWithTag("pro-kaufen").assertDoesNotExist(); assertEquals(PASS, prefs.proCode.value)
+        rule.onRoot().captureRoboImage("../screenshots/77_abi_pass_frei.png")
+        rule.onNodeWithTag("pro-zurueck").performScrollTo().performClick(); settle(); rule.onNodeWithTag("pro-eintrag").assertTextContains("Freigeschaltet", substring = true)
+        // freigeschaltet: alles offen, Schlösser weg – auch nach einem Neustart (der Code wird neu geprüft)
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.level("7-3")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist()
-        rule.runOnUiThread { prefs.setPro(false) }
+        assertEquals(PASS, Settings(ApplicationProvider.getApplicationContext()).proCode.value)
+        rule.runOnUiThread { prefs.setProCode("") }
+    }
+
+    /** Ein gespeicherter Code, der nicht (mehr) zum Schlüssel passt, schaltet nichts frei */
+    @Test fun fremderCodeSchaltetNichtsFrei() {
+        Settings(ApplicationProvider.getApplicationContext()).setProCode(PASS.replace("MGKKT", "MGKKV"))
+        start(pro = true)
+        nav.go(Routes.level("7-3")); settle(); rule.onNodeWithTag("pro-grund").assertExists()
+        rule.runOnUiThread { prefs.setProCode("") }
     }
 
     @Test fun proOffMeansEverythingOpen() {
         start()                                                                                                             // Auslieferungsstand
         nav.go(Routes.level("25-7")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist()
         rule.onNodeWithText(Levels.byId("25-7")!!.title, substring = true).assertExists()
+        // kein Eintrag in den Einstellungen, kein Wort von einem Kauf
+        nav.back(); settle(); org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("einst").assertExists(); rule.onNodeWithTag("pro-eintrag").assertDoesNotExist()
     }
 }

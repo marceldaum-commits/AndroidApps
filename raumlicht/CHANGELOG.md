@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.12.0 – Abi-Pass eingebaut, aber noch nicht eingeschaltet (16.11.2026)
+- **Für dich ändert sich nichts:** Alles bleibt frei, nirgends steht etwas von einem Kauf. Der Abi-Pass wird erst sichtbar, wenn es ihn auf der Website wirklich gibt.
+- Im Hintergrund fertig: die Abi-Pass-Seite mit Lux (was dazugehört, was immer frei bleibt), der Knopf zur Kasse auf der Website und die **Freischaltung per Code** –
+  eintippen, die ganze E-Mail einfügen oder in der WebApp einfach auf den Link aus der E-Mail tippen. Geprüft wird der Code auf dem Gerät, ohne Konto und ohne Server.
+- Einmal freigeschaltet bleibt freigeschaltet – auch ohne Internet.
+- Die Play-Store-Fassung bekommt vorerst keinen Kauf und keine Sperren.
+
 ## 2.11.1 – Weißer Bildschirm auf dem iPad: Ursache gefunden (16.11.2026)
 - **iPad:** Die WebApp lief dort, zeigte aber nur Weiß. Die Mitschrift der Diagnose-Seite hat die Stelle gezeigt: Das iPad konnte einen **Farbverlauf** nicht anlegen, und daran brach jedes Bild ab.
   Alle Farbverläufe der App sind jetzt so gebaut, dass sie nie mehr ein Bild kosten – klappt ein Verlauf nicht, nimmt die App eine einfachere Füllung.
