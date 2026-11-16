@@ -3,6 +3,15 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.21.0 – Bereit für Google Play
+- **📦 Kurvenflug kommt in den Play Store**: Es gibt jetzt eine eigene Play-Store-Version – ohne Internet, ohne eigenen
+  Update-Knopf. Updates kommen dort von Google Play direkt in der App und werden im Hintergrund installiert.
+- **🎲 Neues Kapitel Binomialverteilung** (Kl. 10–13): Die Sonde fliegt über die Säulen eines Histogramms – Dichte P(X = k)
+  und kumuliert P(X ≤ k). n und p so einstellen, dass die Säulen die Stationen treffen: Münzwurf, Glücksrad,
+  Erwartungswert, „mindestens einer“, Treppe bis 100 %.
+- **📜 Open-Source-Lizenzen**: In den Einstellungen steht jetzt, welche freie Software in Kurvenflug steckt.
+- Die Version aus GitHub (APK) bleibt wie sie ist, mit dem bekannten Update-Knopf.
+
 ## 0.20.0 – Viel Neues zum Rechnen
 - **38 neue Level in 7 neuen Kapiteln** – jede Aufgabe mit Tipp, Rechenweg, Rechen-Frage und Live-Rechnung:
   - **🗺️ Maßstab & Karten** (Kl. 5–6): echte Entfernungen in Kästchen umrechnen – bis zur Sternenkarte in Lichtjahren.

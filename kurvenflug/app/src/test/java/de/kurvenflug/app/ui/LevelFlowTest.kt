@@ -124,8 +124,10 @@ class LevelFlowTest {
             de.kurvenflug.app.ui.settings.SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true,
                 onAutoUpdate = {}, installed = "0.9.0", update = de.kurvenflug.app.ui.settings.UpdateState.Idle, onBack = {}, onReset = { resets++ })
         } } }
-        rule.mainClock.autoAdvance = false
+        // Erst hinscrollen (braucht laufende Uhr), dann die Uhr anhalten
         val button = rule.onNodeWithText("Zum Löschen 2 Sekunden gedrückt halten").performScrollTo()
+        rule.waitForIdle()
+        rule.mainClock.autoAdvance = false
         button.performClick()
         rule.mainClock.advanceTimeBy(3000)
         assertEquals(0, resets)

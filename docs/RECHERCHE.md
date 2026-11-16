@@ -122,3 +122,10 @@ Auftrag (Marcel über den Leitstand): „sehr viel Inhalt“, jede Aufgabe mit E
   Relevanz – ein zentraler Motivationsfaktor bei Jugendlichen (Erwartungs-Wert-Theorie, Eccles).
 - „Raten reicht nicht“: automatischer Test, dass ein Reglerschritt neben der Lösung nicht trifft; jede Aufgabe mit
   eigenem Rechenweg und eigener Rechen-Frage (typische Fehler als Ablenker, z. B. 25 : 100 statt 1 + 25 : 100).
+
+## Kurvenflug 0.21: Binomialverteilung (Nov. 2026)
+- Wunsch Marcel: Stochastik mit Binomialverteilung, Dichte und kumuliert. KMK-Leitidee „Daten und Zufall“ (Sek. I/II):
+  Bernoulli-Ketten, P(X = k), P(X ≤ k), Erwartungswert μ = n·p, „mindestens einer“-Aufgaben (1 − (1 − p)ⁿ).
+- Darstellung als Histogramm (Säulen), damit Dichte und Treppenform der kumulierten Verteilung sichtbar werden –
+  Visualisierung hilft gegen typische Fehlvorstellungen (Verwechslung „genau“ / „höchstens“, Batanero u. a.).
+- Spielmechanik: n oder p so wählen, dass Säulen bestimmte Höhen treffen; Rechen-Frage prüft die richtige Gleichung.

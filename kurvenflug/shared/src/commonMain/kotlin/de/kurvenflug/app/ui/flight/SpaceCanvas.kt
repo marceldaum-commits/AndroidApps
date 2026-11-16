@@ -78,7 +78,7 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
                 }
             }
             else -> {
-                drawGrid(::px, unit, tm, if (l.kind == Kind.MOTION || l.kind == Kind.ACCEL) "t" to "s" else "x" to "y")
+                drawGrid(::px, unit, tm, if (l.kind == Kind.MOTION || l.kind == Kind.ACCEL) "t" to "s" else "x" to "y", numbers = l.kind != Kind.BINOM)
                 if (l.kind == Kind.SINE) drawPiMarks(::px, unit, tm)
                 if (l.kind == Kind.POINT && l.params.none { it.key == "y" }) drawNumberLine(::px, unit, l.params.first().step)
                 if (l.kind == Kind.RADIUS) {
@@ -91,6 +91,18 @@ fun SpaceCanvas(v: SpaceView, modifier: Modifier = Modifier) {
             }
         }
 
+        // Binomialverteilung: Beschriftung k unter den Säulen, Prozent an der Seite; Säulen aus der Vorschau
+        if (l.kind == Kind.BINOM) {
+            for (k in 0..18) { if (k - 9.0 > Flight.R - 0.5) break; label(tm, "$k", px(Vec(k - 9.0, -0.6)), Q.Muted, 10) }
+            for (pc in listOf(20, 50, 80)) label(tm, "$pc %", px(Vec(9.2, pc / 10.0)), Q.Muted, 9)
+            val bars = v.preview.ifEmpty { v.trail }
+            bars.groupBy { kotlin.math.round(it.x + 9).toInt() }.forEach { (k, pts) ->
+                val h = pts.first().y
+                val a = px(Vec(k - 9.0 - 0.42, h)); val b = px(Vec(k - 9.0 + 0.42, 0.0))
+                drawRect(Q.Violet.copy(alpha = 0.35f), topLeft = a, size = androidx.compose.ui.geometry.Size(b.x - a.x, b.y - a.y))
+            }
+            label(tm, "k", px(Vec(9.5, -1.4)), Q.Cyan, 12)
+        }
         // Waagerechter Wurf: Klippe unter dem Startpunkt, mit Höhe
         if (l.kind == Kind.THROW && l.launch.y > l.ground + 1.5) {
             val top = px(Vec(l.launch.x + 0.3, l.launch.y)); val foot = px(Vec(l.launch.x - 1.2, l.ground))
@@ -282,7 +294,7 @@ private fun DrawScope.label(tm: TextMeasurer, text: String, at: Offset, color: C
     drawText(r, topLeft = Offset(at.x - r.size.width / 2f, at.y - r.size.height / 2f))
 }
 
-private fun DrawScope.drawGrid(px: (Vec) -> Offset, unit: Float, tm: TextMeasurer, axes: Pair<String, String> = "x" to "y") {
+private fun DrawScope.drawGrid(px: (Vec) -> Offset, unit: Float, tm: TextMeasurer, axes: Pair<String, String> = "x" to "y", numbers: Boolean = true) {
     val r = Flight.R.toInt()
     for (i in -r..r) {
         val major = i % 5 == 0
@@ -290,14 +302,16 @@ private fun DrawScope.drawGrid(px: (Vec) -> Offset, unit: Float, tm: TextMeasure
         drawLine(c, px(Vec(i.toDouble(), -Flight.R)), px(Vec(i.toDouble(), Flight.R)), if (i == 0) 2f else 1f)
         drawLine(c, px(Vec(-Flight.R, i.toDouble())), px(Vec(Flight.R, i.toDouble())), if (i == 0) 2f else 1f)
     }
-    // Beschriftung jede zweite Linie
-    for (i in -8..8 step 2) {
+    // Beschriftung jede zweite Linie (beim Histogramm eigene Beschriftung)
+    if (numbers) for (i in -8..8 step 2) {
         if (i == 0) continue
         label(tm, i.toString().replace("-", "−"), px(Vec(i.toDouble(), 0.0)) + Offset(0f, unit * 0.55f))
         label(tm, i.toString().replace("-", "−"), px(Vec(0.0, i.toDouble())) + Offset(-unit * 0.6f, 0f))
     }
-    label(tm, axes.first, px(Vec(9.6, 0.0)) + Offset(0f, -unit * 0.5f), Q.Cyan, 12)
-    label(tm, axes.second, px(Vec(0.0, 9.6)) + Offset(unit * 0.5f, 0f), Q.Cyan, 12)
+    if (numbers) {
+        label(tm, axes.first, px(Vec(9.6, 0.0)) + Offset(0f, -unit * 0.5f), Q.Cyan, 12)
+        label(tm, axes.second, px(Vec(0.0, 9.6)) + Offset(unit * 0.5f, 0f), Q.Cyan, 12)
+    }
 }
 
 private fun DrawScope.drawThrowScene(l: Level, px: (Vec) -> Offset, unit: Float, tm: TextMeasurer) {

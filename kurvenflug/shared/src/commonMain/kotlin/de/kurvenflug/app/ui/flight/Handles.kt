@@ -114,6 +114,7 @@ fun handlesFor(level: Level, values: Map<String, Double>): List<Handle> {
             if (has("d")) out += Handle(Vec(0.0, d), Q.Pink) { p -> snap("d", p.y) }
             if (has("a")) out += Handle(Vec(2.0, a * de.kurvenflug.core.model.powK(2.0, n) + d), Q.Cyan) { p -> snap("a", (p.y - d) / de.kurvenflug.core.model.powK(2.0, n)) }
         }
+        Kind.BINOM -> {}
         Kind.EXPE -> {
             val a = v.getValue("a"); val d = v["d"] ?: 0.0
             if (has("a")) out += Handle(Vec(0.0, a + d), Q.Cyan) { p -> snap("a", p.y - d) }

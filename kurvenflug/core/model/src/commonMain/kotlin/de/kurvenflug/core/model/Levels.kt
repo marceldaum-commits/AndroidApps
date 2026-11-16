@@ -144,6 +144,12 @@ object Feedback {
                 if (v.getValue("h") <= h0) "Die Kugel kommt nicht über die Kante (${num(h0)} m) – sie braucht mehr Lageenergie!"
                 else { val dx = land.x - t.x; "${num(kotlin.math.abs(dx), 1)} m ${if (dx < 0) "zu kurz – höher starten!" else "zu weit – tiefer starten!"}" }
             }
+            Kind.BINOM -> {
+                val k = kotlin.math.round(t.x + 9).toInt(); val y = Flight.f(level, values, t.x)
+                val sym = if ((v["cum"] ?: 0.0) > 0.5) "≤" else "="
+                "Deine Säule P(X $sym $k) war ${Stochastik.percent(y / 10)}, die Station liegt bei ${Stochastik.percent(t.y / 10)}. " +
+                    if (y < t.y) "Die Säule muss höher werden." else "Die Säule muss niedriger werden."
+            }
             Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE -> {
                 val y = Flight.f(level, values, t.x)
                 if (abs(y) > Flight.R) "Bei x = ${num(t.x)} ist deine Kurve ganz aus dem Bild (y = ${num(y)}). Ziel: y = ${num(t.y)}."
@@ -863,8 +869,8 @@ object Levels {
     )
 
     /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand) */
-    private val order = listOf(1, 15, 16, 29, 8, 13, 11, 2, 23, 7, 9, 3, 18, 12, 17, 4, 24, 14, 5, 25, 27, 26, 10, 6, 19, 20, 22, 21, 28)
-    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + Upper.chapters + More.chapters).sortedBy { order.indexOf(it.number) }
+    private val order = listOf(1, 15, 16, 29, 8, 13, 11, 2, 23, 7, 9, 3, 18, 12, 17, 4, 24, 14, 5, 25, 27, 26, 10, 6, 19, 20, 22, 21, 28, 30)
+    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + Upper.chapters + More.chapters + Stochastik.chapter).sortedBy { order.indexOf(it.number) }
 
     val all: List<Level> = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }

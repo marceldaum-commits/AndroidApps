@@ -1,4 +1,4 @@
-# Baut Kurvenflug, signiert ihn mit dem Upload-Schlüssel und stellt die APK unter „Releases“ bereit.
+# Baut Kurvenflug, signiert ihn mit dem Upload-Schlüssel und stellt APK (GitHub), AAB (Google Play) und WebApp unter „Releases“ bereit.
 # Läuft automatisch bei jedem Push, der Kurvenflug ändert. Veröffentlicht wird nur, wenn die Version
 # (versionName in app/build.gradle.kts) neu ist – jede Version genau einmal. Von Hand: Actions → „Run workflow“.
 # Signiert mit demselben Schlüssel wie der Wissensgarten (Secrets WG_…).
@@ -102,10 +102,11 @@ jobs:
       - name: Logik-Tests (Level lösbar, Physik stimmt, Android und Browser rechnen gleich)
         run: ./gradlew --no-daemon :core:model:allTests
 
-      - name: APK bauen
+      - name: APK (GitHub) und AAB (Google Play) bauen
         run: |
-          ./gradlew --no-daemon assembleRelease
-          cp app/build/outputs/apk/release/app-release.apk "Kurvenflug-${{ steps.version.outputs.name }}.apk"
+          ./gradlew --no-daemon :app:assembleGithubRelease :app:bundlePlayRelease
+          cp app/build/outputs/apk/github/release/app-github-release.apk "Kurvenflug-${{ steps.version.outputs.name }}.apk"
+          cp app/build/outputs/bundle/playRelease/app-play-release.aab "Kurvenflug-${{ steps.version.outputs.name }}-play.aab"
 
       - name: WebApp bauen (gleiche Version wie die APK)
         run: |
@@ -119,6 +120,10 @@ jobs:
             "Kurvenflug-${{ steps.version.outputs.name }}.apk" | tee cert.txt
           grep -qi "9ece481266794bba5ace46e73a8df5a4aec51183d1685fae10438537f5a4d8eb" cert.txt \
             || { echo "::error::APK ist nicht mit dem Upload-Schlüssel signiert."; exit 1; }
+          # AAB für Google Play: gleicher Schlüssel (wird beim Anlegen der App als App-Signaturschlüssel hinterlegt)
+          keytool -printcert -jarfile "Kurvenflug-${{ steps.version.outputs.name }}-play.aab" | tr -d ':' | tr 'A-F' 'a-f' | tee aabcert.txt
+          grep -q "9ece481266794bba5ace46e73a8df5a4aec51183d1685fae10438537f5a4d8eb" aabcert.txt \
+            || { echo "::error::AAB ist nicht mit dem Upload-Schlüssel signiert."; exit 1; }
 
       - name: Release veröffentlichen
         if: steps.check.outputs.new == 'true'
@@ -131,6 +136,7 @@ jobs:
           files: |
             kurvenflug/Kurvenflug-${{ steps.version.outputs.name }}.apk
             kurvenflug/Kurvenflug-${{ steps.version.outputs.name }}-web.zip
+            kurvenflug/Kurvenflug-${{ steps.version.outputs.name }}-play.aab
 
       - name: In Google Drive hochladen
         if: steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.KURVENFLUG_DRIVE_FOLDER != ''

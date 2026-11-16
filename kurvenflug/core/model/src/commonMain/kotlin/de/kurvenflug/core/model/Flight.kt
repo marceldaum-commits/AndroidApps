@@ -34,10 +34,10 @@ data class Body(val x: Double, val y: Double, val r: Double) {
  * - [MOTION]: gleichförmige Bewegung im s-t-Diagramm s = v·t + s₀ (Physik Kl. 7)
  * - [TANGENT], [PEAK], [AREA], [VECTOR]: Oberstufe (Ableitung, Extrempunkte, Integral, Vektoren), siehe [Upper]
  */
-enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS, PROP, ANTI, LOG, RADIUS, LASER, RAMP, MOTION, TANGENT, PEAK, AREA, VECTOR, ACCEL, POWER, EXPE }
+enum class Kind { POINT, LINE, PARABOLA, THROW, SINE, EXP, ORBIT, RENDEZVOUS, PROP, ANTI, LOG, RADIUS, LASER, RAMP, MOTION, TANGENT, PEAK, AREA, VECTOR, ACCEL, POWER, EXPE, BINOM }
 
 /** Hat diese Spielart eine Funktionsgleichung y = f(x)? */
-val Kind.isFunction get() = this in setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE)
+val Kind.isFunction get() = this in setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM)
 
 /** Funktionen, die erst rechts von x = 0 definiert/sinnvoll sind (Zeit, Logarithmus, k : x). */
 val Kind.startsAtZero get() = this == Kind.ANTI || this == Kind.LOG || this == Kind.MOTION || this == Kind.ACCEL
@@ -99,6 +99,8 @@ object Flight {
             // Potenz: bei gebrochener Hochzahl (Wurzel) nur für x ≥ 0
             Kind.POWER -> { val n = p.getValue("n"); if (x < 0 && n != kotlin.math.round(n)) Double.NaN else p.getValue("a") * powK(x, n) + (p["d"] ?: 0.0) }
             Kind.EXPE -> p.getValue("a") * kotlin.math.exp(p.getValue("k") * x) + (p["d"] ?: 0.0)
+            // Histogramm: Säule k steht bei x = k − 9 (Breite 1), Höhe 10 = 100 %
+            Kind.BINOM -> Stochastik.height(p, x)
             else -> error("keine Funktion")
         }
     }
@@ -112,7 +114,7 @@ object Flight {
                 val x = v.getValue("x"); val y = v.getValue("y")
                 line(Vec(0.0, 0.0), Vec(x, 0.0)) + line(Vec(x, 0.0), Vec(x, y)).drop(1)
             }
-            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE -> {
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM -> {
                 // Sichtbarer Teil des Graphen von links nach rechts – die Sonde „springt“ am Rand ins Bild
                 val out = ArrayList<Vec>()
                 var x = if (level.kind.startsAtZero) STEP else -R
@@ -327,7 +329,7 @@ object Flight {
     }
 
     /** Bahnen der Form y = f(x) */
-    val functionKinds = setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE)
+    val functionKinds = setOf(Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE, Kind.BINOM)
 
     /** Fliegt die Bahn ab: Ziele, Energiezellen, Asteroiden. */
     fun fly(level: Level, values: Map<String, Double>): FlightResult {
