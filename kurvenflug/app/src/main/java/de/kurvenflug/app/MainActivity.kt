@@ -31,16 +31,28 @@ class MainActivity : ComponentActivity() {
         if (known) widgetLevel.value = id
     }
 
-    override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); readShared(intent); readWidget(intent) }
+    /** Kurvenflug Pro: Google Play (Play-Fassung) bzw. Website-Code (GitHub-APK) */
+    private val proShop by lazy { ProShops.create(this) }
+
+    /** Freischalt-Link aus der E-Mail (https://…/?pro=KF…) – nur GitHub-APK, die Play-Fassung nimmt keine Codes an */
+    private fun readProLink(intent: android.content.Intent?) {
+        val text = intent?.dataString ?: intent?.takeIf { it.action == android.content.Intent.ACTION_SEND }?.getStringExtra(android.content.Intent.EXTRA_TEXT) ?: return
+        if (!proShop.acceptsCodes) return
+        val code = de.kurvenflug.core.model.License.extract(text) ?: return
+        if (de.kurvenflug.core.model.License.check(code, proShop.publicKey, de.kurvenflug.core.model.CalDate.today().toEpochDay()) != null)
+            vm.state.settings.setProCode(code)
+    }
+
+    override fun onNewIntent(intent: android.content.Intent) { super.onNewIntent(intent); readShared(intent); readWidget(intent); readProLink(intent) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val app = application as KurvenflugApp
-        if (savedInstanceState == null) { readShared(intent); readWidget(intent) }
+        if (savedInstanceState == null) { readShared(intent); readWidget(intent); readProLink(intent) }
         (application as KurvenflugApp).music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
         storeUpdates // registriert sich vor onStart
-        val platform = AndroidPlatform(this, BuildConfig.VERSION_NAME, BuildConfig.SELF_UPDATE, app.sfx, app.music)
+        val platform = AndroidPlatform(this, BuildConfig.VERSION_NAME, BuildConfig.SELF_UPDATE, app.sfx, app.music, proShop)
         setContent { KurvenflugRoot(vm.state, platform, incomingDuel, widgetLevel) }
     }
 

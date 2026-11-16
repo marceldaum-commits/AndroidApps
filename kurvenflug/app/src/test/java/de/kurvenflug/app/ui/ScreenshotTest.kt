@@ -394,4 +394,27 @@ class ScreenshotTest {
         val l = de.kurvenflug.core.model.Storm.level(7, 18)
         LevelScreen(l, de.kurvenflug.core.model.Chapter(0, "Asteroidensturm", "", "☄️", emptyList(), listOf(l)), Q.Cyan, false, {}, { _, _, _ -> }, {}, {})
     }
+
+    // ------------------------------------------------------------ Kurvenflug Pro
+    private class FakeShop(avail: Boolean, override val acceptsCodes: Boolean = true) : de.kurvenflug.app.ProShop {
+        override val available = kotlinx.coroutines.flow.MutableStateFlow(avail)
+        override val price = kotlinx.coroutines.flow.MutableStateFlow<String?>("7,99 €")
+        override val purchased = kotlinx.coroutines.flow.MutableStateFlow(false)
+        override val publicKey = ""
+        override fun buy() {}
+    }
+    @Test fun proScreen() = shot("94_pro", 2000) {
+        de.kurvenflug.app.ui.pro.ProScreen(de.kurvenflug.app.ProState(pro = false, locking = true), FakeShop(true), {}, {})
+    }
+    @Test fun proLockedChapter() = shot("95_pro_kapitel_gesperrt") {
+        androidx.compose.runtime.CompositionLocalProvider(de.kurvenflug.app.LocalPro provides de.kurvenflug.app.ProState(pro = false, locking = true)) {
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(12.dp)) {
+                val c = Levels.chapters.first { it.number == 19 }
+                de.kurvenflug.app.ui.flight.ChapterCard(c, 3, emptyMap(), {})
+            }
+        }
+    }
+    @Test fun proUnlocked() = shot("96_pro_freigeschaltet", 2000) {
+        de.kurvenflug.app.ui.pro.ProScreen(de.kurvenflug.app.ProState(pro = true, locking = true, viaPlay = true), FakeShop(true, acceptsCodes = false), {}, {})
+    }
 }

@@ -3,6 +3,15 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.23.0 – Kurvenflug Pro (vorbereitet)
+- **⭐ Kurvenflug Pro**: Alles bis Klasse 10 bleibt kostenlos. Mit Pro kommen Oberstufe, Extrem-Prüfungen,
+  Asteroidensturm Profi & Extrem, Andromeda ab Planet 7, bis zu 6 Spieler und besondere Teile in der Werkstatt dazu –
+  als **Einmalkauf ohne Abo**. Kaufen geht nur nach einer Frage für Erwachsene.
+- **Noch ist alles frei**: Gesperrt wird erst, wenn der Kauf wirklich angeboten wird. Was ihr schon gespielt habt,
+  bleibt immer offen – auch Oberstufen-Kapitel, in denen ihr schon einen Stern habt.
+- Google-Play-Version: Kauf über Google Play. Web- und GitHub-Version: Kauf auf mathenachhilfe-online.com, Freischalten
+  mit dem Code oder Link aus der E-Mail – ohne Konto.
+
 ## 0.22.0 – Bis ganz nach oben: Profi und Extrem
 - **🔥 Extrem-Prüfung in jedem Kapitel**: Wer alle Level eines Kapitels geschafft hat, kann sich an der Extrem-Prüfung
   versuchen – Ziele halb so groß, Regler doppelt so fein, Asteroiden dicht an der Bahn. Freiwillig: Das Kapitel gilt

@@ -148,3 +148,10 @@ Auftrag (Marcel über den Leitstand): „sehr viel Inhalt“, jede Aufgabe mit E
   ohne schwächere Kinder auszubremsen; Stufen-Namen mit Farbe/Emoji (🟢🔵🟠🔴🔥) machen Fortschritt sichtbar.
 - Messbar gemacht über: Unbekannte, Zielzonen-Radius, Hindernisse, Rechenschritte, Lösungsbereich (Anteil treffender
   Reglerstellungen) – Test DifficultyTest/ChapterExtremeTest schlägt fehl, wenn eine Stufe nicht strikt schwerer ist.
+
+## Kurvenflug 0.23: Pro (Nov. 2026)
+- Vergleich: DragonBox Algebra ca. 7–8 € einmalig; Photomath Plus ca. 55–65 €/Jahr; Prodigy 59–119 $/Jahr;
+  Brilliant ca. 150 $/Jahr. Für eine Kinder-App ohne Serverkosten: Einmalkauf 7,99 € (inkl. 19 % USt.), kein Abo.
+- Google-Play-Familienrichtlinie: Käufe nicht aufdringlich, keine Täuschung → Kauf nur hinter einer Frage für
+  Erwachsene, keine Kaufhinweise mitten im Level; Family-Link-Freigabe greift bei Google Play Billing automatisch.
+- „Frei bis Klasse 10“: Empfehlung durch Schulen/Eltern bleibt möglich (Freemium mit großem Gratis-Kern).

@@ -67,10 +67,13 @@ object Codex {
 }
 
 /** Werkstatt: Aussehen von Sonde, Spur und Volt – rein kosmetisch, freigeschaltet über Energiezellen. */
-data class Cosmetic(val name: String, val emoji: String, val needCells: Int)
+data class Cosmetic(val name: String, val emoji: String, val needCells: Int, val pro: Boolean = false)
 
 object Workshop {
-    val shapes = listOf(Cosmetic("Pfeil", "➤", 0), Cosmetic("Rakete", "🚀", 5), Cosmetic("UFO", "🛸", 15), Cosmetic("Komet", "☄️", 30))
-    val trails = listOf(Cosmetic("Neon", "〰️", 0), Cosmetic("Funken", "✨", 8), Cosmetic("Regenbogen", "🌈", 20), Cosmetic("Doppel", "⚌", 35))
-    val hats = listOf(Cosmetic("Ohne", "🤖", 0), Cosmetic("Helm", "⛑️", 3), Cosmetic("Partyhut", "🎉", 12), Cosmetic("Kopfhörer", "🎧", 25), Cosmetic("Krone", "👑", 45))
+    val shapes = listOf(Cosmetic("Pfeil", "➤", 0), Cosmetic("Rakete", "🚀", 5), Cosmetic("UFO", "🛸", 15), Cosmetic("Komet", "☄️", 30),
+        Cosmetic("Sternschnuppe", "🌠", 0, pro = true))
+    val trails = listOf(Cosmetic("Neon", "〰️", 0), Cosmetic("Funken", "✨", 8), Cosmetic("Regenbogen", "🌈", 20), Cosmetic("Doppel", "⚌", 35),
+        Cosmetic("Galaxie", "🌌", 0, pro = true))
+    val hats = listOf(Cosmetic("Ohne", "🤖", 0), Cosmetic("Helm", "⛑️", 3), Cosmetic("Partyhut", "🎉", 12), Cosmetic("Kopfhörer", "🎧", 25), Cosmetic("Krone", "👑", 45),
+        Cosmetic("Zauberhut", "🎩", 0, pro = true), Cosmetic("Saturnring", "🪐", 0, pro = true))
 }

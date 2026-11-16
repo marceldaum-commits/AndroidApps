@@ -7,6 +7,12 @@ plugins {
 }
 
 // Signatur-Schlüssel aus keystore.properties (nicht im Repo). Fehlt die Datei, wird mit dem Test-Schlüssel gebaut.
+// Kurvenflug Pro: GitHub-APK kauft über die Website (Code), Play-Fassung über Google Play Billing
+val proProps = Properties().apply {
+    val f = rootProject.file("pro/pro.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
+}
+
 val keystoreProps = Properties().apply {
     val f = rootProject.file("keystore.properties")
     if (f.exists()) f.inputStream().use { load(it) }
@@ -20,8 +26,8 @@ android {
         applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 30
-        versionName = "0.22.0"
+        versionCode = 31
+        versionName = "0.23.0"
     }
 
     // Zwei Varianten aus demselben Code:
@@ -34,6 +40,8 @@ android {
             dimension = "store"
             isDefault = true
             buildConfigField("boolean", "SELF_UPDATE", "true")
+            buildConfigField("String", "PRO_KEY", "\"${proProps.getProperty("publicKey", "").trim()}\"")
+            buildConfigField("String", "PRO_CHECKOUT", "\"${proProps.getProperty("checkoutUrl", "").trim()}\"")
         }
         create("play") {
             dimension = "store"
@@ -103,6 +111,7 @@ dependencies {
     implementation("androidx.glance:glance-appwidget:1.1.1")
     // Nur im Play-Store-Build: Updates direkt in der App über Google Play
     "playImplementation"("com.google.android.play:app-update-ktx:2.1.0")
+    "playImplementation"("com.android.billingclient:billing-ktx:8.3.0")   // Kurvenflug Pro über Google Play
     "playImplementation"("androidx.fragment:fragment-ktx:1.8.9")   // Play Core bringt sonst eine zu alte Version mit
 
     testImplementation("junit:junit:4.13.2")

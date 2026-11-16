@@ -5,4 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove" />
+    <!-- Die Billing-Bibliothek bringt INTERNET mit. Der Kauf selbst läuft über die Play-Store-App (Verbindung zwischen
+         den Apps auf dem Gerät), Kurvenflug braucht kein Internet. Vor jeder Freigabe: Testkauf im internen Test. -->
+    <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
 </manifest>
