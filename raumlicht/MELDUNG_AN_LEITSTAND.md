@@ -359,3 +359,15 @@ Folgerung: Mit Haiku 5.5 ist der Tutor im Einmalpreis tragbar, wenn es eine Tage
 Texte „keine Käufe“ in den Einstellungen (Android und Web), Store-Eintrag (`store/texte.md`), Antworten zur Datensicherheit (`STORE-RELEASE.md`), Datenschutzerklärung der Website. Die Repo-Leitlinie verlangt, dass Bezahl-Angebote nie „nackter“ sind als der Rest – Pro-Inhalte bekommen dieselbe Ausstattung.
 
 **Reihenfolge, wenn freigegeben:** 1) Lizenz-Dienst abstimmen, 2) Pro-Schalter und Sperren in der App samt Code-Eingabe, 3) Play Billing, 4) Tutor. Bis dahin baue ich nichts davon.
+
+---
+
+## 16.11.2026 – Konzept Pro: Marcels Entscheidungen
+
+- **Grenze frei/Pro:** wie im Konzept – **ja**.
+- **Bisherige Nutzer:** kostenloser „Gründer-Code“ für bisherige Tester – **ja**. Der Lizenz-Dienst braucht dafür Codes mit Preis 0.
+- **KI-Tutor:** mit **Claude Haiku 5.5** starten und an echten Aufgaben testen – **ja**.
+- **Preis/Zeitraum:** Einmalkauf; den Zeitraum hat Marcel offen gefragt. Mein Vorschlag an ihn: Inhalte **dauerhaft**, der KI-Tutor **12 Monate ab Kauf** (laufende Kosten), danach günstig verlängerbar.
+  Für den Lizenz-Dienst heißt das: Ein Freischalt-Schein braucht **zwei Angaben** – „Pro dauerhaft“ und „Tutor gültig bis“. Entscheidung von Marcel steht noch aus.
+
+Weiterhin nichts gebaut; ich warte auf die gemeinsame Abstimmung des Leitstands und Marcels Freigabe.
