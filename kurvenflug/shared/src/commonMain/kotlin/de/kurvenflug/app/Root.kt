@@ -369,6 +369,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 now = now,
                 onReview = { nav.goOnce(Routes.level(it.id)) },
                 onBack = { nav.popSafe() },
+                stars = stars + vm.extremeStars.collectAsStateWithLifecycle().value,
             )
         }
         composable(Routes.BADGES) { BadgesScreen(stats) { nav.popSafe() } }

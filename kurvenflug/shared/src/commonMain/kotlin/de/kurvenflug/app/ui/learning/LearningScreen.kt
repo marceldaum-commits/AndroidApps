@@ -72,7 +72,10 @@ fun LearningCard(status: List<TopicStatus>, review: Level?, onClick: () -> Unit)
  * Oben das heutige Auffrisch-Level (verteiltes Wiederholen), unten eine kurze Erklärung für Eltern.
  */
 @Composable
-fun LearningScreen(status: List<TopicStatus>, review: Level?, doneToday: Boolean, now: Long, onReview: (Level) -> Unit, onBack: () -> Unit) {
+fun LearningScreen(status: List<TopicStatus>, review: Level?, doneToday: Boolean, now: Long, onReview: (Level) -> Unit, onBack: () -> Unit,
+                   stars: Map<String, Int> = emptyMap(), onLevel: (Level) -> Unit = onReview, initialOpen: Int? = null) {
+    // Antippen eines Themas klappt seine Level auf – mit Sternen, zum gezielten Nochmal-Spielen
+    var open by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(initialOpen) }
     val topic = review?.let { r -> status.firstOrNull { it.chapter.number == r.chapter } }
     val secure = status.count { it.mastery == Mastery.SECURE }
     val started = status.count { it.mastery != Mastery.NEW }
@@ -103,7 +106,15 @@ fun LearningScreen(status: List<TopicStatus>, review: Level?, doneToday: Boolean
                 if (review != null && topic != null) NeonButton(onClick = { onReview(review) }, color = Q.Green, modifier = Modifier.fillMaxWidth()) {
                     Text("🔁 Jetzt auffrischen: ${topic.chapter.title}", fontWeight = FontWeight.Bold)
                 }
-                status.forEachIndexed { i, s -> TopicRow(s, now, i) }
+                status.forEachIndexed { i, s ->
+                    val expanded = open == s.chapter.number
+                    TopicRow(s, now, i, expanded) { open = if (expanded) null else s.chapter.number }
+                    androidx.compose.animation.AnimatedVisibility(expanded,
+                        enter = androidx.compose.animation.expandVertically(spring(dampingRatio = 0.8f)) + androidx.compose.animation.fadeIn(),
+                        exit = androidx.compose.animation.shrinkVertically() + androidx.compose.animation.fadeOut()) {
+                        de.kurvenflug.app.ui.flight.ChapterCard(s.chapter, i, stars, onLevel, header = false)
+                    }
+                }
                 ParentNote()
                 Spacer(Modifier.height(12.dp))
             }
@@ -112,7 +123,9 @@ fun LearningScreen(status: List<TopicStatus>, review: Level?, doneToday: Boolean
 }
 
 @Composable
-private fun TopicRow(s: TopicStatus, now: Long, index: Int) {
+private fun TopicRow(s: TopicStatus, now: Long, index: Int, expanded: Boolean = false, onClick: () -> Unit = {}) {
+    val sfx = LocalSfx.current
+    val interaction = remember { MutableInteractionSource() }
     // Balken wachsen nacheinander – Fortschritt soll man sehen
     val bar = remember { Animatable(0f) }
     val pop = remember { Animatable(0.6f) }
@@ -125,7 +138,8 @@ private fun TopicRow(s: TopicStatus, now: Long, index: Int) {
     Column(
         Modifier.fillMaxWidth().graphicsLayer { scaleX = pop.value; scaleY = pop.value; alpha = pop.value.coerceIn(0f, 1f) }
             .clip(RoundedCornerShape(16.dp)).background(Q.Panel)
-            .border(1.5.dp, if (s.reviewDue) Q.Green else color.copy(alpha = 0.35f), RoundedCornerShape(16.dp)).padding(12.dp),
+            .border(1.5.dp, if (s.reviewDue) Q.Green else color.copy(alpha = 0.35f), RoundedCornerShape(16.dp))
+            .pressBounce(interaction).clickable(interaction, null) { sfx?.play(Sound.TAP); onClick() }.padding(12.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -147,6 +161,7 @@ private fun TopicRow(s: TopicStatus, now: Long, index: Int) {
             Text("${s.stars}/${s.maxStars} ⭐", style = MaterialTheme.typography.labelMedium, color = Q.Yellow)
         }
         if (s.reviewDue) Text("🔁 Mal wieder dran – kurz auffrischen hilft dem Gedächtnis", style = MaterialTheme.typography.labelSmall, color = Q.Green)
+        Text(if (expanded) "▲ Level zuklappen" else "▼ Level anzeigen und nochmal spielen", style = MaterialTheme.typography.labelSmall, color = Q.Cyan)
     }
 }
 
