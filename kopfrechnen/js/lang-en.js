@@ -1996,4 +1996,11 @@ I18N.add('en', {"% sind":"% are",
 "Neu: Üben nach Wunsch 🎯 – Zahlenraum, Zehnerübergang, einzelne Mal-Reihen und Lückenaufgaben selbst einstellen":"New: custom practice 🎯 – set the number range, crossing ten, single times tables and gap problems yourself",
 "Als Vorlage speichern und per Link oder QR-Code teilen – ideal für Hausaufgaben":"Save as a template and share by link or QR code – ideal for homework",
 "Große Ziffern und Tasten zum Einschalten":"Large digits and keys you can switch on",
-"Umfang der Übung":"Length of the practice"});
+"Umfang der Übung":"Length of the practice",
+"Schnellwahl für Klasse":"Quick choice for grade",
+"Neustart":"Fresh start",
+"Neustart:":"Fresh start:",
+"alles von Grund auf – bis {}, ohne Zeitdruck, große Tasten.":"everything from scratch – up to {}, no time pressure, large keys.",
+"Vorschlag für Klasse {}":"Suggestion for grade {}",
+"jede Einstellung lässt sich unten noch ändern.":"you can still change every setting below.",
+"Schnellwahl je Klasse {}–{} und „Neustart“ in Üben nach Wunsch":"Quick choice per grade {}–{} and “fresh start” in custom practice"});

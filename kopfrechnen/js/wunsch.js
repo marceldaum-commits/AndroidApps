@@ -6,6 +6,21 @@
    Anzahl, Zeit, große Tasten. Vorlagen speichern und teilen – alles steht im Link (#wunsch=…), ohne Server.
    ===================================================================== */
 const WUNSCH_DEFAULT = { o: 'as', m: 20, c: 'a', r: [2, 5, 10], q: 0, d: 0, f: 'r', n: 20, t: 0, b: 0, k: '' };
+const R10 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], R1120 = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+/** Schnellwahl je Klasse (Marcel 16.11.) – danach lässt sich alles einzeln ändern */
+const WUNSCH_PRESETS = {
+  1: { o: 'as', m: 20, c: 'o', f: 'r', n: 10 },
+  2: { o: 'asm', m: 100, c: 'a', r: [1, 2, 5, 10], f: 'x', n: 20 },
+  3: { o: 'asmd', m: 1000, c: 'o', r: R10, f: 'x', n: 20 },
+  4: { o: 'asmd', m: 1000, c: 'w', r: R10, d: 1, f: 'x', n: 20 },
+  5: { o: 'asmd', m: 10000, c: 'w', r: [11, 12, 13, 14, 15], d: 1, f: 'x', n: 20 },
+  6: { o: 'md', m: 100000, r: R1120, d: 1, f: 'x', n: 20 },
+  7: { o: 'm', r: R1120, q: 1, f: 'x', n: 20 },
+  8: { o: 'asmd', m: 100000, c: 'w', r: [...R10, ...R1120], d: 1, f: 'x', t: 120 },
+  9: { o: 'asmd', m: 100000, c: 'w', r: R1120, d: 1, f: 'g', t: 120 },
+  10: { o: 'asmd', m: 100000, c: 'w', r: [...R10, ...R1120], d: 1, f: 'x', t: 180 },
+  neu: { o: 'as', m: 10, c: 'a', f: 'r', n: 10, b: 1 },
+};
 const W_OPS = [['a', '+', 'Plus'], ['s', '−', 'Minus'], ['m', '·', 'Mal'], ['d', ':', 'Geteilt']];
 
 /** Einstellungen prüfen (auch aus fremden Links): nur erlaubte Werte, sonst Standard */
@@ -113,9 +128,14 @@ function wunschSummary(C) {
 /* ---------- Einstellen ---------- */
 PANELS.wunsch = (o = {}) => {
   const st = wunschState();
-  let C = cleanWunsch(o.cfg || st.last || WUNSCH_DEFAULT), more = C.r.some(v => v > 10);
+  const k0 = S.settings.klasse;   // erstes Öffnen: Vorschlag passend zur eingestellten Klasse
+  let C = o.cfg || st.last ? cleanWunsch(o.cfg || st.last) : k0 && WUNSCH_PRESETS[k0] ? { ...cleanWunsch({ ...WUNSCH_DEFAULT, r: R10, ...WUNSCH_PRESETS[k0] }), p: String(k0) } : cleanWunsch(WUNSCH_DEFAULT), more = C.r.some(v => v > 10);
   const chip = (v, label, sel, extra = '') => `<button type="button" data-v="${v}" class="${sel ? 'sel' : ''}" aria-pressed="${!!sel}" ${extra}>${label}</button>`;
+  const kl = S.settings.klasse;
   const html = () => `<div class="wun">
+    <div class="mlabel">Schnellwahl für Klasse</div>
+    <div class="chips wpre" id="wPre">${[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(k => chip(k, String(k), C.p === String(k), kl === k ? 'data-mine="1"' : '')).join('')}${chip('neu', '🌱 <span>Neustart</span>', C.p === 'neu')}</div>
+    ${C.p ? `<p class="small muted wpre-note" style="margin:0">${C.p === 'neu' ? '<span>Neustart:</span> <span>alles von Grund auf – bis 10, ohne Zeitdruck, große Tasten.</span>' : `<span>Vorschlag für Klasse ${C.p}</span> – <span>jede Einstellung lässt sich unten noch ändern.</span>`}</p>` : ''}
     ${o.fromLink ? `<div class="wun-link"><b><span>📝</span> <span>Übung aus einem Link</span></b>${C.k ? `<span translate="no">${esc(C.k)}</span>` : ''}</div>` : '<p class="small muted" style="margin:0">Stell dir deine Übung selbst zusammen – genau den Zahlenraum und die Reihen, die du üben möchtest.</p>'}
     <div class="mlabel">Rechenarten</div>
     <div class="chips" id="wOps">${W_OPS.map(([k, s, n]) => chip(k, `<b>${s}</b> <span>${n}</span>`, C.o.includes(k))).join('')}</div>
@@ -152,7 +172,7 @@ PANELS.wunsch = (o = {}) => {
     return cleanWunsch({ ...C, o: val('wOps').join(''), m: mx === 'x' ? +$('wMaxIn').value : +mx, c: val('wCarry')[0], r: val('wRows').map(Number),
       q: $('wSq').checked, d: $('wRest').checked, f: val('wForm')[0], n: +(val('wN')[0] || C.n), t: +(val('wT')[0] || 0), b: $('wBig').checked });
   };
-  const example = () => { try { const t = withSeed(7, () => wunschTask(read())); $('wEx').textContent = taskText(t) + (t.noEq ? '' : ' = ?'); } catch {} };
+  const example = () => { try { const t = withSeed(7, () => wunschTask(read())); $('wEx').textContent = i18nNumbers(taskText(t) + (t.noEq ? '' : ' = ?')); } catch {} };
   const init = () => {
     const single = id => body().querySelector('#' + id).onclick = e => { const b = e.target.closest('button'); if (!b) return; body().querySelectorAll(`#${id} button`).forEach(x => { x.classList.toggle('sel', x === b); x.setAttribute('aria-pressed', x === b); }); after(id, b); };
     const multi = id => body().querySelector('#' + id).onclick = e => { const b = e.target.closest('button'); if (!b) return; const on = !b.classList.contains('sel'); b.classList.toggle('sel', on); b.setAttribute('aria-pressed', on); after(id, b); };
@@ -171,6 +191,11 @@ PANELS.wunsch = (o = {}) => {
       example();
     };
     ['wMax', 'wCarry', 'wForm', 'wN', 'wT'].forEach(single); ['wOps', 'wRows'].forEach(multi);
+    $('wPre').onclick = e => {
+      const b = e.target.closest('button'); if (!b) return; Sound.click && Sound.click();
+      const pr = WUNSCH_PRESETS[b.dataset.v];
+      C = { ...cleanWunsch({ ...WUNSCH_DEFAULT, r: R10, ...pr }), p: b.dataset.v }; more = C.r.some(v => v > 10); redraw();
+    };
     $('wQuick').onclick = e => {
       const b = e.target.closest('button'); if (!b) return;
       const cur = read();

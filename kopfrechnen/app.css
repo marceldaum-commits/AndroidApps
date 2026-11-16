@@ -938,3 +938,8 @@ button.badge{font:inherit;cursor:pointer}
 .ingame.bigpad #expr{font-size:clamp(46px,13vw,76px)}
 .ingame.bigpad .answer{font-size:clamp(40px,11vw,62px);min-height:1.4em}
 .ingame.bigpad #pad .key{font-size:30px;min-height:64px}
+
+.wun .wpre{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.wun .wpre button{padding:6px 2px;font-weight:700}
+.wun .wpre button[data-v="neu"]{grid-column:span 2;font-weight:600}
+.wun .wpre button[data-mine]:not(.sel){border-color:var(--orange);border-style:dashed}

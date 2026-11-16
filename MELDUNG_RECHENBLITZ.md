@@ -2,7 +2,35 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.15.0 (7c423d5). Auf `rechenblitz-test` liegen **3.16.0** (Inhalt Klasse 5–10, Meldung 47), **3.17.0** (schneller Start, gebündelt, Meldung 48) und **3.18.0** (Üben nach Wunsch, Meldung 49). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, gebündelt, Meldung 48) und **3.18.0/3.18.1** (Üben nach Wunsch mit Schnellwahl je Klasse, Meldungen 49/50). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
+
+## 16.11.2026 (50) – Üben nach Wunsch: Schnellwahl je Klasse 1–10 und „Neustart“ (3.18.1)
+
+- **Marcel 16.11.:** Ob man anfangs die Schulform abfragen sollte – Vorschlag: lieber die Klasse, als Schnellwahl statt Pflichtfrage. Marcel: „Ja, aber wieso nur bis 4?“ Deshalb gibt es jetzt Klasse 1–10.
+- Oben im Fenster „Üben nach Wunsch“ steht die Zeile **„Schnellwahl für Klasse“: 1 … 10 und 🌱 Neustart**.
+  - Ein Tipp setzt alle Einstellungen, danach lässt sich alles einzeln ändern.
+  - Ist in den Einstellungen eine Klasse gewählt, ist sie gestrichelt markiert. Beim allerersten Öffnen ist ihr Vorschlag vorausgewählt.
+
+  | Klasse | Vorschlag |
+  |---|---|
+  | 1 | + − bis 20 ohne Zehnerübergang, 10 Aufgaben |
+  | 2 | + − · bis 100, Kernaufgaben (1, 2, 5, 10), gemischt mit Lücken |
+  | 3 | alle vier bis 1000 ohne Übertrag, ganzes Einmaleins |
+  | 4 | bis 1000 mit Übertrag, Einmaleins, Geteilt mit Rest |
+  | 5 | bis 10000 mit Übertrag, Reihen 11–15, Rest |
+  | 6 | · : großes Einmaleins 11–20 mit Rest |
+  | 7 | Quadratzahlen 11² bis 20² |
+  | 8 | alle vier bis 100000, Reihen 1–20, Rest, 2 Minuten |
+  | 9 | wie 8 nur als Lückenaufgaben, Reihen 11–20, 2 Minuten |
+  | 10 | alles gemischt, 3 Minuten |
+  | 🌱 Neustart | + − bis 10, 10 Aufgaben, ohne Zeitdruck, große Tasten (alles von Grund auf wiederholen) |
+
+  Die Fachthemen der oberen Klassen (Terme, Funktionen, Zinsen …) bleiben eigene Themen auf der Startseite.
+- **Tests:**
+  - Engine: zusätzlich alle 11 Vorschläge mit je 3000 Aufgaben, insgesamt 297600 ohne Fehler.
+  - Browser DE/EN/UK bei 320 px: Vorauswahl nach Klasse, jeder Vorschlag setzt die Felder richtig, Start mit großen Tasten.
+  - Regression ohne Fehler.
+  - Die Beispielaufgabe zeigt Zahlen jetzt in der Schreibweise der Sprache (97,690 statt 97.690 auf Englisch).
 
 ## 16.11.2026 (49) – Üben nach Wunsch 🎯 (3.18.0) · keine neue APK nötig
 

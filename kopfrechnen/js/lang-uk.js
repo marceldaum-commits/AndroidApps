@@ -1996,4 +1996,11 @@ I18N.add('uk', {"% sind":"% — це",
 "Neu: Üben nach Wunsch 🎯 – Zahlenraum, Zehnerübergang, einzelne Mal-Reihen und Lückenaufgaben selbst einstellen":"Нове: вправи на вибір 🎯 – сам налаштуй діапазон чисел, перехід через десяток, окремі ряди множення й завдання з пропусками",
 "Als Vorlage speichern und per Link oder QR-Code teilen – ideal für Hausaufgaben":"Збережи як шаблон і поділися посиланням або QR-кодом – ідеально для домашніх завдань",
 "Große Ziffern und Tasten zum Einschalten":"Великі цифри й кнопки, які можна ввімкнути",
-"Umfang der Übung":"Тривалість вправи"});
+"Umfang der Übung":"Тривалість вправи",
+"Schnellwahl für Klasse":"Швидкий вибір для класу",
+"Neustart":"З нуля",
+"Neustart:":"З нуля:",
+"alles von Grund auf – bis {}, ohne Zeitdruck, große Tasten.":"усе з самого початку – до {}, без поспіху, великі кнопки.",
+"Vorschlag für Klasse {}":"Пропозиція для {} класу",
+"jede Einstellung lässt sich unten noch ändern.":"кожне налаштування можна змінити нижче.",
+"Schnellwahl je Klasse {}–{} und „Neustart“ in Üben nach Wunsch":"Швидкий вибір для {}–{} класів і «З нуля» у вправах на вибір"});
