@@ -1,0 +1,457 @@
+{
+  "id": "s1-geschichte-steinzeit-aegypten",
+  "version": 1,
+  "title": "Steinzeit und Ägypten",
+  "subject": "geschichte",
+  "grades": [
+    5,
+    6
+  ],
+  "emoji": "🏺",
+  "tier": "free",
+  "description": "Von Faustkeil und Ötzi bis zu Pyramiden, Pharaonen und Mumien – eine Zeitreise in die frühe Geschichte.",
+  "intro": [
+    {
+      "img": "🦴🔥",
+      "text": "Wusstest du? Über 99 % der Menschheitsgeschichte lebten Menschen als Jäger und Sammler – ganz ohne Häuser, Felder oder Schrift."
+    },
+    {
+      "img": "🌾🐑",
+      "text": "In der Jungsteinzeit wurden Menschen sesshaft: Sie bauten Getreide an, hielten Tiere und wohnten in Dörfern. Forscher nennen das eine Revolution!"
+    },
+    {
+      "img": "❄️🏔️",
+      "text": "1991 fanden Wanderer in den Alpen eine Leiche im Eis – Ötzi! Er lebte vor etwa 5300 Jahren und hatte sogar ein Beil aus Kupfer dabei."
+    },
+    {
+      "img": "🐫🌊",
+      "text": "Am Nil entstand eines der ersten großen Reiche: Ägypten. Pharaonen herrschten, Schreiber malten Hieroglyphen, und Tausende bauten Pyramiden."
+    },
+    {
+      "img": "🔍🏺",
+      "text": "Los geht's, kleiner Archäologe! Grab mit mir nach Wissen – ich summe dir Tipps zu."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie lebten die Menschen in der Altsteinzeit?",
+      "a": "Als Jäger und Sammler",
+      "choices": [
+        "Als Bauern in festen Dörfern",
+        "Als Händler in Städten",
+        "Als Hirten in Burgen"
+      ],
+      "info": "Sie zogen den Tieren und den reifen Früchten hinterher – als Nomaden ohne festen Wohnort.",
+      "img": "🏹🍄"
+    },
+    {
+      "id": "002",
+      "q": "Welches Werkzeug ist typisch für die Altsteinzeit?",
+      "a": "Der Faustkeil",
+      "choices": [
+        "Der Pflug",
+        "Das Schwert aus Eisen",
+        "Die Töpferscheibe"
+      ],
+      "info": "Ein Stein, der so lange behauen wurde, bis er scharfe Kanten hatte – das „Taschenmesser“ der Steinzeit.",
+      "img": "✊🔪"
+    },
+    {
+      "id": "003",
+      "q": "Was veränderte sich in der Jungsteinzeit grundlegend?",
+      "a": "Die Menschen wurden sesshaft",
+      "choices": [
+        "Die Menschen erfanden die Schrift",
+        "Die Menschen bauten Pyramiden",
+        "Die Menschen nutzten Eisen"
+      ],
+      "info": "Mit Ackerbau und Viehzucht blieben die Menschen an einem Ort. Man spricht von der „Neolithischen Revolution“.",
+      "img": "🏠🌾"
+    },
+    {
+      "id": "004",
+      "q": "Wo begannen Menschen zuerst mit Ackerbau und Viehzucht?",
+      "a": "Im Fruchtbaren Halbmond (Vorderer Orient)",
+      "choices": [
+        "In Mitteleuropa",
+        "In Australien",
+        "In Nordamerika"
+      ],
+      "info": "Vor über 11 000 Jahren, im Gebiet des heutigen Irak, Syrien, der Türkei und Israel. Später kam der Ackerbau nach Europa.",
+      "img": "🌙🌾"
+    },
+    {
+      "id": "005",
+      "q": "Welches Tier hielten Menschen schon in der Altsteinzeit als Begleiter?",
+      "a": "Den Hund",
+      "choices": [
+        "Das Pferd",
+        "Die Katze",
+        "Das Huhn"
+      ],
+      "info": "Der Hund stammt vom Wolf ab und ist das älteste Haustier des Menschen.",
+      "img": "🐺🐕"
+    },
+    {
+      "id": "006",
+      "q": "In welchem Land liegt die berühmte Bilderhöhle von Lascaux?",
+      "a": "Frankreich",
+      "choices": [
+        "Ägypten",
+        "Italien",
+        "Norwegen"
+      ],
+      "info": "Die Malereien von Pferden, Hirschen und Stieren sind rund 17 000 Jahre alt.",
+      "img": "🐎🖌️"
+    },
+    {
+      "id": "007",
+      "q": "Wie nennt man Häuser der Jungsteinzeit, die an Seeufern auf Pfählen standen?",
+      "a": "Pfahlbauten",
+      "choices": [
+        "Langhäuser",
+        "Iglus",
+        "Fachwerkhäuser"
+      ],
+      "info": "Reste davon findet man z. B. am Bodensee. Sie gehören heute zum UNESCO-Welterbe.",
+      "img": "🏠🌊"
+    },
+    {
+      "id": "008",
+      "q": "Wann fand man im Neandertal bei Düsseldorf die berühmten Urmenschen-Knochen?",
+      "a": "1856",
+      "choices": [
+        "1756",
+        "1956",
+        "1656"
+      ],
+      "info": "Arbeiter fanden sie im Neandertal. Seitdem heißt diese Menschenart „Neandertaler“.",
+      "img": "🦴⛏️"
+    },
+    {
+      "id": "009",
+      "q": "Wann wurde der „Mann aus dem Eis“, Ötzi, gefunden?",
+      "a": "1991",
+      "choices": [
+        "1891",
+        "1951",
+        "2011"
+      ],
+      "info": "Zwei Wanderer entdeckten ihn im September 1991 in den Ötztaler Alpen – daher sein Spitzname.",
+      "img": "❄️🚶"
+    },
+    {
+      "id": "010",
+      "q": "Vor wie vielen Jahren lebte Ötzi ungefähr?",
+      "a": "Vor etwa 5300 Jahren",
+      "choices": [
+        "Vor etwa 530 Jahren",
+        "Vor etwa 53 000 Jahren",
+        "Vor etwa 2000 Jahren"
+      ],
+      "info": "Er lebte also schon, bevor die großen Pyramiden in Ägypten gebaut wurden.",
+      "img": "⏳❄️"
+    },
+    {
+      "id": "011",
+      "q": "Aus welchem Metall war die Klinge von Ötzis Beil?",
+      "a": "Kupfer",
+      "choices": [
+        "Eisen",
+        "Gold",
+        "Stahl"
+      ],
+      "info": "Kupfer war damals ganz neu und wertvoll. Das Beil zeigt, dass Ötzi wohl ein angesehener Mann war.",
+      "img": "🔨✨"
+    },
+    {
+      "id": "012",
+      "q": "Woran erkannten Forscher, dass Ötzi angegriffen wurde?",
+      "a": "An einer Pfeilspitze in seiner Schulter",
+      "choices": [
+        "An einem Schwert neben ihm",
+        "An einer Kugel im Rücken",
+        "An Bissspuren eines Bären"
+      ],
+      "info": "Die Pfeilspitze wurde erst 2001 im Röntgenbild entdeckt – zehn Jahre nach dem Fund.",
+      "img": "🏹🔍"
+    },
+    {
+      "id": "013",
+      "q": "In welcher Stadt kann man Ötzi heute im Museum sehen?",
+      "a": "In Bozen (Südtirol)",
+      "choices": [
+        "In Wien",
+        "In München",
+        "In Innsbruck"
+      ],
+      "info": "Im Archäologiemuseum liegt er in einer Kühlkammer. Sein Fundort liegt knapp auf der italienischen Seite der Grenze.",
+      "img": "🏛️❄️"
+    },
+    {
+      "id": "014",
+      "q": "Bronze ist eine Mischung aus Kupfer und …?",
+      "a": "Zinn",
+      "choices": [
+        "Eisen",
+        "Silber",
+        "Blei"
+      ],
+      "info": "Bronze ist härter als Kupfer. Nach der Steinzeit folgte deshalb die Bronzezeit.",
+      "img": "🥉🔥"
+    },
+    {
+      "id": "015",
+      "q": "Was brachte die jährliche Nilüberschwemmung auf die Felder?",
+      "a": "Fruchtbaren Schlamm",
+      "choices": [
+        "Salz aus dem Meer",
+        "Sand aus der Wüste",
+        "Steine aus den Bergen"
+      ],
+      "info": "Der schwarze Schlamm war ein natürlicher Dünger. Ohne die Nilflut gäbe es keine Ernte.",
+      "img": "🌊🌾"
+    },
+    {
+      "id": "016",
+      "q": "Wie nannten die alten Ägypter ihr Land?",
+      "a": "Kemet – „schwarzes Land“",
+      "choices": [
+        "Sahara – „gelbes Land“",
+        "Gizeh – „goldenes Land“",
+        "Nubien – „grünes Land“"
+      ],
+      "info": "Schwarz wie der fruchtbare Nilschlamm. Die Wüste nannten sie dagegen „rotes Land“.",
+      "img": "⚫🌾"
+    },
+    {
+      "id": "017",
+      "q": "In welches Meer mündet der Nil?",
+      "a": "Ins Mittelmeer",
+      "choices": [
+        "Ins Rote Meer",
+        "In den Indischen Ozean",
+        "Ins Schwarze Meer"
+      ],
+      "info": "Der Nil fließt von Süden nach Norden und fächert sich vor der Mündung zu einem großen Delta auf.",
+      "img": "🌊⬆️"
+    },
+    {
+      "id": "018",
+      "q": "Wo lag Unterägypten?",
+      "a": "Im Norden, am Nildelta",
+      "choices": [
+        "Im Süden, an der Quelle",
+        "Im Westen, in der Wüste",
+        "Auf einer Insel im Nil"
+      ],
+      "info": "Klingt verdreht, ist aber logisch: „Unten“ ist flussabwärts – und der Nil fließt nach Norden.",
+      "img": "🧭🔺"
+    },
+    {
+      "id": "019",
+      "q": "Was zeigte die Doppelkrone des Pharaos?",
+      "a": "Die Herrschaft über Ober- und Unterägypten",
+      "choices": [
+        "Die Herrschaft über Erde und Himmel",
+        "Die Hochzeit mit der Königin",
+        "Den Sieg über Rom"
+      ],
+      "info": "Um 3000 v. Chr. wurden beide Landesteile vereint. Die Doppelkrone setzte beide Kronen zusammen.",
+      "img": "👑👑"
+    },
+    {
+      "id": "020",
+      "q": "Welche zwei Zeichen der Macht hält der Pharao oft in den Händen?",
+      "a": "Krummstab und Geißel",
+      "choices": [
+        "Schwert und Schild",
+        "Zepter und Reichsapfel",
+        "Speer und Bogen"
+      ],
+      "info": "Der Krummstab erinnert an einen Hirten, der sein Volk führt. Beide gehören auch zum Gott Osiris.",
+      "img": "👑🐑"
+    },
+    {
+      "id": "021",
+      "q": "Worauf schrieben die Ägypter meistens?",
+      "a": "Auf Papyrus",
+      "choices": [
+        "Auf Pergament",
+        "Auf Holzpapier",
+        "Auf Seide"
+      ],
+      "info": "Papyrus wurde aus den Stängeln einer Sumpfpflanze am Nil gemacht. Unser Wort „Papier“ kommt davon.",
+      "img": "📜🌿"
+    },
+    {
+      "id": "022",
+      "q": "Welcher Fund half entscheidend, die Hieroglyphen zu entschlüsseln?",
+      "a": "Der Stein von Rosetta",
+      "choices": [
+        "Die Maske des Tutanchamun",
+        "Die Sphinx von Gizeh",
+        "Die Büste der Nofretete"
+      ],
+      "info": "Auf ihm steht derselbe Text in drei Schriften – darunter Altgriechisch, das man lesen konnte.",
+      "img": "🔍📝"
+    },
+    {
+      "id": "023",
+      "q": "Was bedeutet ein Oval (Kartusche) um Hieroglyphen?",
+      "a": "Darin steht der Name eines Herrschers",
+      "choices": [
+        "Darin steht eine Zahl",
+        "Darin steht ein Fluch",
+        "Darin steht ein Rezept"
+      ],
+      "info": "So erkannte man die Königsnamen – ein wichtiger Schlüssel beim Entziffern.",
+      "img": "⭕👑"
+    },
+    {
+      "id": "024",
+      "q": "Wofür wurden die großen Pyramiden gebaut?",
+      "a": "Als Grabmäler für Pharaonen",
+      "choices": [
+        "Als Wohnhäuser für Pharaonen",
+        "Als Lagerhäuser für Getreide",
+        "Als Sternwarten für Priester"
+      ],
+      "info": "Die Pyramide sollte den toten König schützen und ihm den Weg ins Jenseits ebnen.",
+      "img": "🔺⚱️"
+    },
+    {
+      "id": "025",
+      "q": "Wie hieß der Baumeister der ersten Pyramide, der Stufenpyramide des Djoser?",
+      "a": "Imhotep",
+      "choices": [
+        "Ramses",
+        "Echnaton",
+        "Cheops"
+      ],
+      "info": "Sie entstand um 2650 v. Chr. in Sakkara – sechs riesige Stufen aus Stein.",
+      "img": "📐🔺"
+    },
+    {
+      "id": "026",
+      "q": "Wie hoch war die Cheops-Pyramide ursprünglich ungefähr?",
+      "a": "Etwa 146 Meter",
+      "choices": [
+        "Etwa 46 Meter",
+        "Etwa 246 Meter",
+        "Etwa 346 Meter"
+      ],
+      "info": "Fast 4000 Jahre lang war sie das höchste Bauwerk der Welt. Heute ist sie etwas niedriger, weil die Spitze fehlt.",
+      "img": "🔺📏"
+    },
+    {
+      "id": "027",
+      "q": "Welches der sieben Weltwunder der Antike steht heute noch?",
+      "a": "Die Cheops-Pyramide",
+      "choices": [
+        "Der Koloss von Rhodos",
+        "Der Leuchtturm von Alexandria",
+        "Die Hängenden Gärten von Babylon"
+      ],
+      "info": "Sie ist das älteste der sieben Weltwunder – und das einzige, das man noch besuchen kann.",
+      "img": "🏆🔺"
+    },
+    {
+      "id": "028",
+      "q": "Wie sieht die Große Sphinx von Gizeh aus?",
+      "a": "Löwenkörper mit Menschenkopf",
+      "choices": [
+        "Menschenkörper mit Falkenkopf",
+        "Pferdekörper mit Adlerflügeln",
+        "Krokodilkörper mit Löwenkopf"
+      ],
+      "info": "Die Sphinx bewacht die Pyramiden. Ihr Gesicht soll einen Pharao darstellen.",
+      "img": "🦁🗿"
+    },
+    {
+      "id": "029",
+      "q": "Wo wurden viele Pharaonen des Neuen Reichs in Felsgräbern bestattet?",
+      "a": "Im Tal der Könige",
+      "choices": [
+        "In der Cheops-Pyramide",
+        "Im Nildelta",
+        "Auf der Insel Kreta"
+      ],
+      "info": "Das Tal liegt beim heutigen Luxor. Die Gräber waren gut versteckt – trotzdem wurden fast alle ausgeraubt.",
+      "img": "⛰️👑"
+    },
+    {
+      "id": "030",
+      "q": "Mit welchem Salz trockneten die Ägypter Verstorbene aus?",
+      "a": "Mit Natron",
+      "choices": [
+        "Mit Kochsalz",
+        "Mit Zucker",
+        "Mit Kalk"
+      ],
+      "info": "Der Körper lag rund 40 Tage in Natron. Danach wurde er gesalbt und in Leinenbinden gewickelt.",
+      "img": "🧂🧻"
+    },
+    {
+      "id": "031",
+      "q": "Welches Organ ließen die Ägypter bei der Mumifizierung meist im Körper?",
+      "a": "Das Herz",
+      "choices": [
+        "Das Gehirn",
+        "Die Leber",
+        "Die Lunge"
+      ],
+      "info": "Das Herz galt als Sitz von Verstand und Gefühl. Man brauchte es für das Totengericht.",
+      "img": "❤️🧟"
+    },
+    {
+      "id": "032",
+      "q": "Wie heißen die Krüge, in denen die Ägypter entnommene Organe aufbewahrten?",
+      "a": "Kanopen",
+      "choices": [
+        "Amphoren",
+        "Sarkophage",
+        "Obelisken"
+      ],
+      "info": "Vier Kanopen für Magen, Darm, Lunge und Leber – ihre Deckel zeigten oft Tierköpfe.",
+      "img": "🏺🏺"
+    },
+    {
+      "id": "033",
+      "q": "Womit wurde beim Totengericht das Herz eines Verstorbenen aufgewogen?",
+      "a": "Mit einer Feder",
+      "choices": [
+        "Mit einem Goldstück",
+        "Mit einem Stein",
+        "Mit einem Ei"
+      ],
+      "info": "War das Herz nicht schwerer als die Feder der Wahrheit, durfte der Tote ins Jenseits.",
+      "img": "⚖️❤️"
+    },
+    {
+      "id": "034",
+      "q": "Welcher ägyptische Gott mit Schakalkopf wachte über die Mumifizierung?",
+      "a": "Anubis",
+      "choices": [
+        "Re",
+        "Horus",
+        "Osiris"
+      ],
+      "info": "Schakale streiften oft um Friedhöfe. Darum bekam der Gott der Mumifizierung einen Schakalkopf.",
+      "img": "🐺⚱️"
+    },
+    {
+      "id": "035",
+      "q": "In welcher Stadt kann man heute die berühmte Büste der Nofretete sehen?",
+      "a": "In Berlin",
+      "choices": [
+        "In Kairo",
+        "In Paris",
+        "In London"
+      ],
+      "info": "Sie wurde 1912 bei Ausgrabungen gefunden und steht im Neuen Museum auf der Museumsinsel.",
+      "img": "👸🏛️"
+    }
+  ]
+}

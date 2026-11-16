@@ -3,6 +3,14 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.21.0 – 30 neue Wissenspakete (16.11.2026)
+- **🌱 Der Garten wächst kräftig:** 30 neue Wissenspakete mit über 1.000 neuen Karten – jetzt sind es 77 Pakete mit rund 2.650 Karten, von Klasse 1 bis zum Erwachsenen.
+- **Grundschule:** Rechnen bis 100 und bis 1000, schriftlich rechnen, Formen und Körper, Satzzeichen, Englisch (Farben, Zahlen, Familie, Körper), Pflanzen und Wald, Gesund und fit, Ritter und Burgen.
+- **Klasse 5–10:** Kopfrechen-Tricks, negative Zahlen, Gleichungen, Zufall und Statistik, Pythagoras und Trigonometrie, englische Zeitformen, Englisch im Alltag, Kommaregeln, Fremdwörter, Pflanzen, Wirbeltiere, Organe, Strom und Magnetismus, Säuren und Basen, Steinzeit und Ägypten, DDR und Deutsche Einheit, Klima und Naturgefahren, Flüsse, Berge, Meere und – ganz neu – Weltreligionen.
+- **Für alle:** Redewendungen mit witzigen Merkbildern („Tomaten auf den Augen haben“ 🍅👀).
+- Jedes Paket hat Brummis Erklär-Szenen und zu jeder Karte ein Merkbild – und wurde von einer zweiten Stelle fachlich geprüft.
+- Die neuen Pakete kommen automatisch auch in bereits installierte Apps (ohne App-Update) und in die WebApp.
+
 ## 0.20.0 – Neues kommt von ganz allein (16.11.2026)
 - **🐝 Brummi bringt neue Wissenspakete mit:** Neue und verbesserte Pakete kommen jetzt direkt in die App – ohne App-Update. Dein Fortschritt in den Beeten bleibt dabei erhalten.
 - **Nur Inhalte, kein Programmcode:** Nachgeladen werden ausschließlich Fragen, Texte und Merkbilder. Höchstens einmal am Tag wird nachgesehen; es werden keine Daten über dein Kind gesendet.

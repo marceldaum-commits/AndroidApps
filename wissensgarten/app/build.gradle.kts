@@ -20,8 +20,8 @@ android {
         applicationId = "de.wissensgarten.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 34
-        versionName = "0.20.0"
+        versionCode = 35
+        versionName = "0.21.0"
         buildConfigField("String", "VERSION_DATE", "\"16.11.2026\"")
         // Nachladbare Wissenspakete (nur JSON-Daten) aus der freigegebenen WebApp-Fassung
         buildConfigField("String", "PACKS_URL", "\"https://raw.githubusercontent.com/marceldaum-commits/AndroidApps/wissensgarten-live/wissensgarten/webapp/packs/\"")

@@ -1,0 +1,470 @@
+{
+  "id": "s1-erdkunde-klima",
+  "version": 1,
+  "title": "Klima und Naturgefahren",
+  "subject": "erdkunde",
+  "grades": [
+    7,
+    8,
+    9
+  ],
+  "emoji": "🌋",
+  "tier": "free",
+  "description": "Klimazonen, Treibhauseffekt, Vulkane, Erdbeben, Tsunamis und Wirbelstürme – verstehen, wie unsere Erde tickt.",
+  "intro": [
+    {
+      "img": "☀️🌧️",
+      "text": "Wusstest du? Wetter ist das, was heute vor deiner Tür passiert. Klima ist das Wetter im Durchschnitt über viele Jahrzehnte."
+    },
+    {
+      "img": "🌍🌡️",
+      "text": "Ohne den natürlichen Treibhauseffekt wäre die Erde eine Eiskugel. Doch zu viele Treibhausgase heizen sie immer weiter auf."
+    },
+    {
+      "img": "🧩🌋",
+      "text": "Die Erdkruste ist wie ein riesiges Puzzle aus Platten. Wo sie sich treffen oder auseinanderdriften, gibt es Vulkane und Erdbeben."
+    },
+    {
+      "img": "🌀🌊",
+      "text": "Über warmen Meeren wachsen Wirbelstürme heran, Seebeben können Tsunamis auslösen. Wer die Warnzeichen kennt, kann sich schützen."
+    },
+    {
+      "img": "🔍🚀",
+      "text": "Los geht's, Naturforscher! Ich summe mit dir durch Stürme, Glut und Wellen."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie nennt man den Zustand der Luft an einem Ort zu einem bestimmten Zeitpunkt?",
+      "a": "Wetter",
+      "choices": [
+        "Klima",
+        "Klimazone",
+        "Jahreszeit"
+      ],
+      "info": "Sonne, Regen, Wind, Temperatur – genau jetzt, genau hier. Das Wetter kann sich stündlich ändern.",
+      "img": "☀️🌦️"
+    },
+    {
+      "id": "002",
+      "q": "Über welchen Zeitraum betrachtet man das Wetter, um das Klima zu beschreiben?",
+      "a": "Mindestens 30 Jahre",
+      "choices": [
+        "Eine Woche",
+        "Ein Jahr",
+        "Drei Jahre"
+      ],
+      "info": "Klima ist der lange Durchschnitt. Ein kalter Winter allein sagt noch nichts über den Klimawandel.",
+      "img": "📅📊"
+    },
+    {
+      "id": "003",
+      "q": "In welcher Klimazone liegt Deutschland?",
+      "a": "In der gemäßigten Zone",
+      "choices": [
+        "In den Tropen",
+        "In den Subtropen",
+        "In der Polarzone"
+      ],
+      "info": "Typisch sind vier deutliche Jahreszeiten und Niederschlag über das ganze Jahr verteilt.",
+      "img": "🍂🌸"
+    },
+    {
+      "id": "004",
+      "q": "Welche Klimazone liegt beiderseits des Äquators?",
+      "a": "Die Tropen",
+      "choices": [
+        "Die gemäßigte Zone",
+        "Die Subtropen",
+        "Die Polarzone"
+      ],
+      "info": "Hier ist es das ganze Jahr warm. Statt Sommer und Winter gibt es oft Regen- und Trockenzeiten.",
+      "img": "🌴☀️"
+    },
+    {
+      "id": "005",
+      "q": "Zwischen welchen Linien liegen die Tropen?",
+      "a": "Zwischen den beiden Wendekreisen",
+      "choices": [
+        "Zwischen den beiden Polarkreisen",
+        "Zwischen Äquator und Nordpol",
+        "Zwischen zwei Längengraden"
+      ],
+      "info": "Die Wendekreise liegen bei etwa 23,5° nördlicher und südlicher Breite. Nur dazwischen steht die Sonne mal senkrecht.",
+      "img": "🌍↔️"
+    },
+    {
+      "id": "006",
+      "q": "In welcher Klimazone liegen große heiße Wüsten wie die Sahara?",
+      "a": "In den Subtropen",
+      "choices": [
+        "In den inneren Tropen",
+        "In der gemäßigten Zone",
+        "In der Polarzone"
+      ],
+      "info": "Rund um die Wendekreise sinkt trockene Luft ab. Wolken lösen sich auf – es regnet kaum.",
+      "img": "🏜️🐫"
+    },
+    {
+      "id": "007",
+      "q": "Was zeigen die blauen Säulen in einem Klimadiagramm?",
+      "a": "Den Niederschlag in jedem Monat",
+      "choices": [
+        "Die Temperatur in jedem Monat",
+        "Die Windstärke in jedem Monat",
+        "Die Sonnenstunden pro Tag"
+      ],
+      "info": "Die rote Linie zeigt die Temperatur. Blau wie Wasser, rot wie Wärme – so merkst du es dir.",
+      "img": "📊💧"
+    },
+    {
+      "id": "008",
+      "q": "Um wie viel Grad wird es pro 100 Höhenmeter im Durchschnitt kälter?",
+      "a": "Um etwa 0,6 °C",
+      "choices": [
+        "Um etwa 6 °C",
+        "Um etwa 0,06 °C",
+        "Um etwa 3 °C"
+      ],
+      "info": "Auf einem 3000 m hohen Berg ist es darum rund 18 °C kälter als am Meer.",
+      "img": "🏔️🌡️"
+    },
+    {
+      "id": "009",
+      "q": "Welche Meeresströmung sorgt für milde Winter in West- und Nordeuropa?",
+      "a": "Der Golfstrom",
+      "choices": [
+        "Der Humboldtstrom",
+        "Der Labradorstrom",
+        "Der Monsunstrom"
+      ],
+      "info": "Er bringt warmes Wasser aus dem Golf von Mexiko über den Atlantik – als Nordatlantikstrom bis nach Norwegen.",
+      "img": "🌊🔥"
+    },
+    {
+      "id": "010",
+      "q": "Wie nennt man den jahreszeitlich wechselnden Wind, der Indien große Regenmengen bringt?",
+      "a": "Monsun",
+      "choices": [
+        "Föhn",
+        "Mistral",
+        "Passat"
+      ],
+      "info": "Im Sommer weht er vom Meer und bringt heftigen Regen, im Winter vom Land und bringt Trockenheit.",
+      "img": "🌧️🐘"
+    },
+    {
+      "id": "011",
+      "q": "Wie kalt wäre es auf der Erde im Mittel ohne natürlichen Treibhauseffekt?",
+      "a": "Etwa −18 °C",
+      "choices": [
+        "Etwa +15 °C",
+        "Etwa −80 °C",
+        "Etwa 0 °C"
+      ],
+      "info": "Mit Treibhauseffekt sind es etwa +15 °C. Die Gase in der Luft wirken wie die Glasscheiben eines Gewächshauses.",
+      "img": "🥶🌍"
+    },
+    {
+      "id": "012",
+      "q": "Welches Treibhausgas entsteht in großen Mengen im Magen von Rindern?",
+      "a": "Methan",
+      "choices": [
+        "Sauerstoff",
+        "Stickstoff",
+        "Helium"
+      ],
+      "info": "Methan wirkt viel stärker als CO₂, bleibt aber kürzer in der Luft. Auch Reisfelder setzen es frei.",
+      "img": "🐄💨"
+    },
+    {
+      "id": "013",
+      "q": "Wodurch gelangt besonders viel CO₂ zusätzlich in die Luft?",
+      "a": "Durch das Verbrennen von Kohle, Öl und Gas",
+      "choices": [
+        "Durch das Atmen der Fische",
+        "Durch Sonnenlicht auf dem Meer",
+        "Durch Windräder"
+      ],
+      "info": "Diese fossilen Brennstoffe stecken in Kraftwerken, Heizungen, Autos und Flugzeugen.",
+      "img": "🏭🚗"
+    },
+    {
+      "id": "014",
+      "q": "Welches Ziel setzt das Pariser Klimaabkommen von 2015?",
+      "a": "Erwärmung deutlich unter 2 °C, möglichst 1,5 °C",
+      "choices": [
+        "Erwärmung genau auf 3 °C begrenzen",
+        "Erwärmung erst ab 2100 messen",
+        "Erwärmung um 5 °C senken"
+      ],
+      "info": "Gemeint ist die Erwärmung gegenüber der Zeit vor der Industrialisierung.",
+      "img": "🤝🌍"
+    },
+    {
+      "id": "015",
+      "q": "Warum steigt der Meeresspiegel durch die Erderwärmung?",
+      "a": "Landeis schmilzt und warmes Wasser dehnt sich aus",
+      "choices": [
+        "Es regnet weltweit mehr",
+        "Flüsse tragen mehr Sand ins Meer",
+        "Der Mond kommt der Erde näher"
+      ],
+      "info": "Schmelzendes Meereis hebt den Spiegel kaum – es schwimmt ja schon. Gletscher an Land dagegen schon.",
+      "img": "🏔️🌊"
+    },
+    {
+      "id": "016",
+      "q": "Wie heißen die drei Schalen der Erde von außen nach innen?",
+      "a": "Kruste, Mantel, Kern",
+      "choices": [
+        "Kern, Mantel, Kruste",
+        "Mantel, Kruste, Kern",
+        "Kruste, Kern, Mantel"
+      ],
+      "info": "Wie bei einem Pfirsich: dünne Haut, dickes Fruchtfleisch, harter Kern in der Mitte.",
+      "img": "🍑🌍"
+    },
+    {
+      "id": "017",
+      "q": "Wer entwickelte die Theorie der Kontinentalverschiebung?",
+      "a": "Alfred Wegener",
+      "choices": [
+        "Alexander von Humboldt",
+        "Charles Darwin",
+        "Albert Einstein"
+      ],
+      "info": "Ihm fiel auf, dass Südamerika und Afrika wie Puzzleteile zusammenpassen. Lange glaubte ihm kaum jemand.",
+      "img": "🧩🗺️"
+    },
+    {
+      "id": "018",
+      "q": "Wie heißt der Urkontinent, in dem einst alle Landmassen vereint waren?",
+      "a": "Pangäa",
+      "choices": [
+        "Atlantis",
+        "Gondwana",
+        "Eurasien"
+      ],
+      "info": "Pangäa heißt „ganze Erde“. Vor etwa 200 Millionen Jahren begann er auseinanderzubrechen.",
+      "img": "🌍🧩"
+    },
+    {
+      "id": "019",
+      "q": "Welche Insel liegt genau auf dem Mittelatlantischen Rücken?",
+      "a": "Island",
+      "choices": [
+        "Irland",
+        "Grönland",
+        "Sizilien"
+      ],
+      "info": "Dort driften Nordamerikanische und Eurasische Platte auseinander – um rund 2 cm pro Jahr.",
+      "img": "↔️🌋"
+    },
+    {
+      "id": "020",
+      "q": "Wie nennt man es, wenn eine Erdplatte unter eine andere abtaucht?",
+      "a": "Subduktion",
+      "choices": [
+        "Erosion",
+        "Sedimentation",
+        "Verwitterung"
+      ],
+      "info": "In der Tiefe entsteht dabei Magma. Es steigt auf und speist oft Vulkane, z. B. in den Anden.",
+      "img": "⬇️🔥"
+    },
+    {
+      "id": "021",
+      "q": "Wie entstand der Himalaya?",
+      "a": "Die Indische Platte stieß gegen die Eurasische",
+      "choices": [
+        "Ein riesiger Vulkan brach aus",
+        "Ein Meteorit schlug ein",
+        "Gletscher schoben Gestein zusammen"
+      ],
+      "info": "Die Platten drücken noch immer gegeneinander – der Himalaya wächst weiter.",
+      "img": "🏔️💥"
+    },
+    {
+      "id": "022",
+      "q": "Wie heißt die Verwerfung in Kalifornien, an der zwei Platten aneinander vorbeigleiten?",
+      "a": "San-Andreas-Verwerfung",
+      "choices": [
+        "Großer Afrikanischer Graben",
+        "Marianengraben",
+        "Oberrheingraben"
+      ],
+      "info": "Darum gibt es in San Francisco und Los Angeles immer wieder Erdbeben.",
+      "img": "↕️🏙️"
+    },
+    {
+      "id": "023",
+      "q": "Wie nennt man den Gürtel aus Vulkanen und Erdbebengebieten rund um den Pazifik?",
+      "a": "Pazifischer Feuerring",
+      "choices": [
+        "Atlantischer Glutgürtel",
+        "Äquatorialer Vulkanbogen",
+        "Polarer Feuerkreis"
+      ],
+      "info": "Er zieht sich von Neuseeland über Japan und Alaska bis nach Chile.",
+      "img": "🔥⭕"
+    },
+    {
+      "id": "024",
+      "q": "Wie heißt Magma, sobald es an der Erdoberfläche austritt?",
+      "a": "Lava",
+      "choices": [
+        "Asche",
+        "Basalt",
+        "Bims"
+      ],
+      "info": "Unter der Erde Magma, an der Luft Lava – sie kann über 1000 °C heiß sein.",
+      "img": "🌋🔥"
+    },
+    {
+      "id": "025",
+      "q": "Welcher Vulkantyp hat flache Hänge aus dünnflüssiger Lava, wie auf Hawaii?",
+      "a": "Schildvulkan",
+      "choices": [
+        "Schichtvulkan",
+        "Aschekegel",
+        "Maar"
+      ],
+      "info": "Er sieht aus wie ein flach liegender Schild. Schichtvulkane wie der Vesuv sind steiler und explosiver.",
+      "img": "🛡️🌋"
+    },
+    {
+      "id": "026",
+      "q": "Wie entstanden die Inseln von Hawaii?",
+      "a": "Über einem Hotspot im Erdmantel",
+      "choices": [
+        "An einer Subduktionszone",
+        "Durch Korallen ohne Vulkane",
+        "Durch einen Meteoriteneinschlag"
+      ],
+      "info": "Die Platte wandert über die heiße Stelle hinweg. So entstand eine Insel nach der anderen wie an einer Perlenkette.",
+      "img": "🏝️🔥"
+    },
+    {
+      "id": "027",
+      "q": "Wie heißen die runden Seen in alten Vulkankratern der Eifel?",
+      "a": "Maare",
+      "choices": [
+        "Fjorde",
+        "Lagunen",
+        "Bodden"
+      ],
+      "info": "Sie entstanden durch Explosionen, als Magma auf Grundwasser traf.",
+      "img": "💥💧"
+    },
+    {
+      "id": "028",
+      "q": "Wie heißt der Punkt an der Erdoberfläche direkt über dem Erdbebenherd?",
+      "a": "Epizentrum",
+      "choices": [
+        "Hypozentrum",
+        "Krater",
+        "Seismograf"
+      ],
+      "info": "Der Herd in der Tiefe heißt Hypozentrum. „Epi“ bedeutet „darüber“.",
+      "img": "🎯🌍"
+    },
+    {
+      "id": "029",
+      "q": "Mit welchem Gerät zeichnet man Erdbebenwellen auf?",
+      "a": "Seismograf",
+      "choices": [
+        "Barometer",
+        "Thermometer",
+        "Anemometer"
+      ],
+      "info": "„Seismos“ ist Griechisch für Erschütterung. Selbst weit entfernte Beben werden aufgezeichnet.",
+      "img": "📈〰️"
+    },
+    {
+      "id": "030",
+      "q": "Wie viel mehr Energie setzt ein Beben der Magnitude 7 frei als eins der Magnitude 6?",
+      "a": "Etwa 32-mal so viel",
+      "choices": [
+        "Doppelt so viel",
+        "Etwa 7-mal so viel",
+        "Etwa 1000-mal so viel"
+      ],
+      "info": "Die Skala ist nicht linear: Schon eine Stufe mehr bedeutet ein Vielfaches an Kraft.",
+      "img": "📶💥"
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet das japanische Wort „Tsunami“?",
+      "a": "Hafenwelle",
+      "choices": [
+        "Sturmflut",
+        "Bergwind",
+        "Feuermeer"
+      ],
+      "info": "Fischer kehrten heim und fanden ihren Hafen zerstört, obwohl sie draußen kaum eine Welle bemerkt hatten.",
+      "img": "🌊⚓"
+    },
+    {
+      "id": "032",
+      "q": "Wodurch werden die meisten Tsunamis ausgelöst?",
+      "a": "Durch Seebeben",
+      "choices": [
+        "Durch Stürme",
+        "Durch Ebbe und Flut",
+        "Durch große Schiffe"
+      ],
+      "info": "Der Meeresboden hebt sich ruckartig und schiebt die ganze Wassersäule darüber an.",
+      "img": "🌍🌊"
+    },
+    {
+      "id": "033",
+      "q": "Was ist ein Warnzeichen für einen Tsunami am Strand?",
+      "a": "Das Meer zieht sich plötzlich weit zurück",
+      "choices": [
+        "Die Wellen werden ganz klein und ruhig",
+        "Das Wasser wird plötzlich warm",
+        "Möwen fliegen aufs Meer"
+      ],
+      "info": "Dann sofort weg vom Strand und auf eine Anhöhe! Nicht stehen bleiben und schauen.",
+      "img": "🏃⛰️"
+    },
+    {
+      "id": "034",
+      "q": "Wie heißt ein tropischer Wirbelsturm im Nordwestpazifik, z. B. vor Japan?",
+      "a": "Taifun",
+      "choices": [
+        "Hurrikan",
+        "Tornado",
+        "Blizzard"
+      ],
+      "info": "Im Atlantik heißt er Hurrikan, im Indischen Ozean Zyklon – gemeint ist dieselbe Art Sturm.",
+      "img": "🌀🗾"
+    },
+    {
+      "id": "035",
+      "q": "Ab welcher Wassertemperatur können tropische Wirbelstürme entstehen?",
+      "a": "Ab etwa 26 °C",
+      "choices": [
+        "Ab etwa 6 °C",
+        "Ab etwa 16 °C",
+        "Ab etwa 46 °C"
+      ],
+      "info": "Warmes Meerwasser verdunstet und liefert dem Sturm Energie. Über Land wird er deshalb schwächer.",
+      "img": "🌡️🌀"
+    },
+    {
+      "id": "036",
+      "q": "Wie heißt das fast windstille Zentrum eines Hurrikans?",
+      "a": "Auge",
+      "choices": [
+        "Herz",
+        "Nase",
+        "Schweif"
+      ],
+      "info": "Rund um das Auge toben in der „Augenwand“ die stärksten Winde.",
+      "img": "👁️🌀"
+    }
+  ]
+}

@@ -1,0 +1,459 @@
+{
+  "id": "s1-erdkunde-gebirge-fluesse",
+  "version": 1,
+  "title": "Flüsse, Berge, Meere",
+  "subject": "erdkunde",
+  "grades": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "emoji": "🏔️",
+  "tier": "free",
+  "description": "Die höchsten Berge, längsten Flüsse, tiefsten Meere und größten Wüsten – Rekorde unserer Erde zum Staunen.",
+  "intro": [
+    {
+      "img": "🌊🌍",
+      "text": "Wusstest du? Etwa 71 % der Erde sind mit Wasser bedeckt. Vom Weltall aus sieht sie darum aus wie ein blauer Planet."
+    },
+    {
+      "img": "🏔️🧗",
+      "text": "Der Mount Everest ist knapp 8849 m hoch – das ist rund 24-mal so hoch wie der Berliner Fernsehturm!"
+    },
+    {
+      "img": "🏜️🐧",
+      "text": "Wüsten sind nicht immer heiß: Die größte Wüste der Erde ist die eiskalte Antarktis. Wüste heißt nämlich: Es fällt kaum Niederschlag."
+    },
+    {
+      "img": "🚣🗺️",
+      "text": "Flüsse erzählen Geschichten: Die Donau fließt durch zehn Länder – so viele wie kein anderer Fluss der Erde."
+    },
+    {
+      "img": "🧭🚀",
+      "text": "Los geht's, Weltentdecker! Pack deinen Rucksack, wir jagen gemeinsam nach den Rekorden der Erde."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viel Prozent der Erdoberfläche sind ungefähr von Wasser bedeckt?",
+      "a": "Etwa 71 %",
+      "choices": [
+        "Etwa 29 %",
+        "Etwa 50 %",
+        "Etwa 91 %"
+      ],
+      "info": "Fast drei Viertel! Nur etwa 29 % sind Land. Der größte Teil des Wassers ist salziges Meerwasser.",
+      "img": "🌍💧"
+    },
+    {
+      "id": "002",
+      "q": "Welcher Ozean ist größer als alle Landflächen der Erde zusammen?",
+      "a": "Der Pazifik",
+      "choices": [
+        "Der Atlantik",
+        "Der Indische Ozean",
+        "Der Arktische Ozean"
+      ],
+      "info": "Der Pazifik bedeckt etwa ein Drittel der ganzen Erdoberfläche. „Pazifik“ heißt übrigens „der Friedliche“.",
+      "img": "🌊🏆"
+    },
+    {
+      "id": "003",
+      "q": "Welcher Ozean liegt zwischen Afrika, Asien und Australien?",
+      "a": "Der Indische Ozean",
+      "choices": [
+        "Der Atlantik",
+        "Der Pazifik",
+        "Der Arktische Ozean"
+      ],
+      "info": "Er ist der wärmste Ozean der Erde. Viele Urlaubsinseln wie die Malediven liegen in ihm.",
+      "img": "🏝️🌊"
+    },
+    {
+      "id": "004",
+      "q": "Welcher Ozean ist der kleinste?",
+      "a": "Der Arktische Ozean (Nordpolarmeer)",
+      "choices": [
+        "Der Indische Ozean",
+        "Der Atlantik",
+        "Der Pazifik"
+      ],
+      "info": "Er liegt rund um den Nordpol und ist einen großen Teil des Jahres von Meereis bedeckt.",
+      "img": "🐻❄️"
+    },
+    {
+      "id": "005",
+      "q": "Wie tief ist das Challengertief im Marianengraben ungefähr?",
+      "a": "Knapp 11 000 m",
+      "choices": [
+        "Etwa 3000 m",
+        "Etwa 5500 m",
+        "Etwa 20 000 m"
+      ],
+      "info": "Würde man den Mount Everest hineinstellen, wären über seinem Gipfel noch mehr als 2 km Wasser.",
+      "img": "🌊⬇️"
+    },
+    {
+      "id": "006",
+      "q": "Welcher ist der zweitgrößte Kontinent?",
+      "a": "Afrika",
+      "choices": [
+        "Nordamerika",
+        "Südamerika",
+        "Europa"
+      ],
+      "info": "Nur Asien ist größer. Afrika ist so groß, dass die USA, China und Indien zusammen hineinpassen würden.",
+      "img": "🦒🌍"
+    },
+    {
+      "id": "007",
+      "q": "Auf welchem Kontinent liegen die meisten Staaten?",
+      "a": "Afrika",
+      "choices": [
+        "Asien",
+        "Europa",
+        "Südamerika"
+      ],
+      "info": "Afrika hat 54 Staaten, die von den Vereinten Nationen anerkannt sind.",
+      "img": "🦁🗺️"
+    },
+    {
+      "id": "008",
+      "q": "Welcher Kontinent hat keine dauerhaften Einwohner?",
+      "a": "Die Antarktis",
+      "choices": [
+        "Australien",
+        "Südamerika",
+        "Nordamerika"
+      ],
+      "info": "Dort leben nur Forscherinnen und Forscher auf Zeit in Stationen – und natürlich die Pinguine.",
+      "img": "🐧❄️"
+    },
+    {
+      "id": "009",
+      "q": "Welches Gebirge gilt als Grenze zwischen Europa und Asien?",
+      "a": "Der Ural",
+      "choices": [
+        "Die Alpen",
+        "Die Pyrenäen",
+        "Der Himalaya"
+      ],
+      "info": "Europa und Asien bilden zusammen eine Landmasse: Eurasien. Der Ural verläuft von Nord nach Süd durch Russland.",
+      "img": "⛰️↔️"
+    },
+    {
+      "id": "010",
+      "q": "Welche ist die größte Insel Europas?",
+      "a": "Großbritannien",
+      "choices": [
+        "Island",
+        "Irland",
+        "Sizilien"
+      ],
+      "info": "Auf ihr liegen England, Schottland und Wales. Grönland zählt man zu Nordamerika.",
+      "img": "🏝️☕"
+    },
+    {
+      "id": "011",
+      "q": "Wie hoch ist der Mount Everest nach der Messung von 2020?",
+      "a": "Etwa 8849 m",
+      "choices": [
+        "Etwa 6849 m",
+        "Etwa 7849 m",
+        "Etwa 9849 m"
+      ],
+      "info": "Genau 8848,86 m – gemessen von Nepal und China gemeinsam. Er liegt im Himalaya.",
+      "img": "🏔️📏"
+    },
+    {
+      "id": "012",
+      "q": "Wie viele Berge der Erde sind höher als 8000 m?",
+      "a": "14",
+      "choices": [
+        "4",
+        "8",
+        "40"
+      ],
+      "info": "Alle 14 „Achttausender“ liegen in Asien, im Himalaya und im Karakorum.",
+      "img": "🏔️🔢"
+    },
+    {
+      "id": "013",
+      "q": "Welcher ist der zweithöchste Berg der Erde?",
+      "a": "Der K2",
+      "choices": [
+        "Der Mont Blanc",
+        "Der Kilimandscharo",
+        "Der Mount Kenya"
+      ],
+      "info": "Der K2 ist 8611 m hoch und liegt im Karakorum. Er gilt als schwieriger zu besteigen als der Everest.",
+      "img": "🥈🏔️"
+    },
+    {
+      "id": "014",
+      "q": "Welcher Berg ist vom Meeresboden aus gemessen höher als der Mount Everest?",
+      "a": "Mauna Kea auf Hawaii",
+      "choices": [
+        "Der Ätna auf Sizilien",
+        "Die Zugspitze in Bayern",
+        "Der Fuji in Japan"
+      ],
+      "info": "Über dem Meer ragt er nur 4207 m auf, vom Meeresboden aus misst er aber über 10 000 m.",
+      "img": "🌋🌊"
+    },
+    {
+      "id": "015",
+      "q": "Welcher Berg im Kaukasus gilt als höchster Berg Europas?",
+      "a": "Der Elbrus",
+      "choices": [
+        "Das Matterhorn",
+        "Der Großglockner",
+        "Die Zugspitze"
+      ],
+      "info": "Er ist 5642 m hoch. Zählt man den Kaukasus nicht zu Europa, ist der Mont Blanc der höchste.",
+      "img": "🏔️👑"
+    },
+    {
+      "id": "016",
+      "q": "Welcher ist der höchste Berg Österreichs?",
+      "a": "Der Großglockner",
+      "choices": [
+        "Die Zugspitze",
+        "Das Matterhorn",
+        "Der Watzmann"
+      ],
+      "info": "Er ist 3798 m hoch. An seinem Fuß liegt die Pasterze, der größte Gletscher Österreichs.",
+      "img": "🔔🏔️"
+    },
+    {
+      "id": "017",
+      "q": "An welches Nachbarland grenzt die Zugspitze?",
+      "a": "Österreich",
+      "choices": [
+        "Schweiz",
+        "Tschechien",
+        "Italien"
+      ],
+      "info": "Über den Gipfel verläuft die Grenze zwischen Bayern und Tirol.",
+      "img": "🏔️🚧"
+    },
+    {
+      "id": "018",
+      "q": "Durch wie viele Staaten ziehen sich die Alpen?",
+      "a": "8",
+      "choices": [
+        "3",
+        "5",
+        "12"
+      ],
+      "info": "Frankreich, Monaco, Italien, Schweiz, Liechtenstein, Deutschland, Österreich und Slowenien.",
+      "img": "⛰️🔢"
+    },
+    {
+      "id": "019",
+      "q": "Welche beiden Flüsse streiten um den Titel „längster Fluss der Erde“?",
+      "a": "Nil und Amazonas",
+      "choices": [
+        "Rhein und Donau",
+        "Mississippi und Wolga",
+        "Jangtse und Ganges"
+      ],
+      "info": "Meist gilt der Nil mit rund 6650 km als Sieger. Je nach Messung der Quelle ist aber der Amazonas länger.",
+      "img": "🐊🐒"
+    },
+    {
+      "id": "020",
+      "q": "Welcher ist der längste Fluss Asiens?",
+      "a": "Der Jangtse",
+      "choices": [
+        "Der Ganges",
+        "Der Mekong",
+        "Der Euphrat"
+      ],
+      "info": "Er fließt etwa 6300 km quer durch China. An ihm steht das größte Wasserkraftwerk der Welt.",
+      "img": "🐉🌊"
+    },
+    {
+      "id": "021",
+      "q": "Welcher Fluss, der durch Deutschland fließt, ist insgesamt am längsten?",
+      "a": "Die Donau",
+      "choices": [
+        "Der Rhein",
+        "Die Elbe",
+        "Die Weser"
+      ],
+      "info": "Die Donau ist rund 2850 km lang. Innerhalb Deutschlands hat aber der Rhein die längste Strecke.",
+      "img": "🚢🌊"
+    },
+    {
+      "id": "022",
+      "q": "Welche zwei Quellflüsse bilden die Donau?",
+      "a": "Brigach und Breg",
+      "choices": [
+        "Iller und Lech",
+        "Isar und Inn",
+        "Main und Neckar"
+      ],
+      "info": "Merkspruch: „Brigach und Breg bringen die Donau zuweg.“ Sie fließen bei Donaueschingen zusammen.",
+      "img": "💧💧"
+    },
+    {
+      "id": "023",
+      "q": "Durch wie viele Länder fließt die Donau?",
+      "a": "10",
+      "choices": [
+        "4",
+        "7",
+        "15"
+      ],
+      "info": "Rekord! Von Deutschland bis Rumänien und der Ukraine – sie mündet ins Schwarze Meer.",
+      "img": "🔟🚢"
+    },
+    {
+      "id": "024",
+      "q": "In welchem Land entspringt der Rhein?",
+      "a": "In der Schweiz",
+      "choices": [
+        "In Österreich",
+        "In Frankreich",
+        "In Deutschland"
+      ],
+      "info": "Er kommt aus den Schweizer Alpen, fließt durch den Bodensee und mündet in den Niederlanden.",
+      "img": "🏔️💧"
+    },
+    {
+      "id": "025",
+      "q": "In welchem Land entspringt die Elbe?",
+      "a": "In Tschechien",
+      "choices": [
+        "In Polen",
+        "In Österreich",
+        "In Deutschland"
+      ],
+      "info": "Sie entspringt im Riesengebirge und mündet bei Cuxhaven in die Nordsee.",
+      "img": "⛰️💧"
+    },
+    {
+      "id": "026",
+      "q": "Welcher Wasserfall gilt als der höchste der Erde?",
+      "a": "Salto Ángel in Venezuela",
+      "choices": [
+        "Niagarafälle in Nordamerika",
+        "Rheinfall in der Schweiz",
+        "Victoriafälle in Afrika"
+      ],
+      "info": "Das Wasser stürzt 979 m in die Tiefe. Die Niagarafälle sind viel breiter, aber nur etwa 50 m hoch.",
+      "img": "💦⬇️"
+    },
+    {
+      "id": "027",
+      "q": "Welcher ist der größte See der Erde?",
+      "a": "Das Kaspische Meer",
+      "choices": [
+        "Der Baikalsee",
+        "Der Bodensee",
+        "Der Victoriasee"
+      ],
+      "info": "Trotz seines Namens ist es ein See ohne Verbindung zum Ozean. Sein Wasser ist leicht salzig.",
+      "img": "🏞️🏆"
+    },
+    {
+      "id": "028",
+      "q": "Wo liegt die tiefste Landstelle der Erde?",
+      "a": "Am Ufer des Toten Meeres",
+      "choices": [
+        "Am Fuß des Mount Everest",
+        "In der Sahara",
+        "An der Nordseeküste"
+      ],
+      "info": "Das Ufer liegt über 400 m unter dem Meeresspiegel – und sinkt jedes Jahr weiter.",
+      "img": "⬇️🏜️"
+    },
+    {
+      "id": "029",
+      "q": "Warum kann man im Toten Meer nicht untergehen?",
+      "a": "Weil das Wasser extrem salzig ist",
+      "choices": [
+        "Weil das Wasser sehr warm ist",
+        "Weil das Meer sehr flach ist",
+        "Weil es dort keine Wellen gibt"
+      ],
+      "info": "Salzwasser trägt besser als Süßwasser. Im Toten Meer ist rund zehnmal so viel Salz wie im Ozean.",
+      "img": "🧂🏊"
+    },
+    {
+      "id": "030",
+      "q": "Welche ist die größte Wüste der Erde, wenn man Kältewüsten mitzählt?",
+      "a": "Die Antarktis",
+      "choices": [
+        "Die Sahara",
+        "Die Gobi",
+        "Die Kalahari"
+      ],
+      "info": "In der Antarktis fällt kaum Niederschlag. Darum zählt sie als Wüste – aus Eis statt aus Sand.",
+      "img": "🏜️🐧"
+    },
+    {
+      "id": "031",
+      "q": "Woraus besteht der größte Teil der Sahara?",
+      "a": "Aus Fels, Steinen und Geröll",
+      "choices": [
+        "Aus Sanddünen",
+        "Aus Salzseen",
+        "Aus Grasland"
+      ],
+      "info": "Nur etwa ein Fünftel der Sahara sind Sanddünen. Die Steinwüste heißt Hamada, die Geröllwüste Serir.",
+      "img": "🗿🏜️"
+    },
+    {
+      "id": "032",
+      "q": "Welche ist die trockenste Wüste außerhalb der Polargebiete?",
+      "a": "Die Atacama in Chile",
+      "choices": [
+        "Die Sahara in Nordafrika",
+        "Die Gobi in Asien",
+        "Die Namib in Afrika"
+      ],
+      "info": "An manchen Messstellen hat es jahrelang nicht geregnet. Forscher testen dort Mars-Fahrzeuge.",
+      "img": "🌵☀️"
+    },
+    {
+      "id": "033",
+      "q": "Welche Wüste liegt in der Mongolei und in China?",
+      "a": "Die Gobi",
+      "choices": [
+        "Die Atacama",
+        "Die Kalahari",
+        "Die Namib"
+      ],
+      "info": "Die Gobi ist eine kalte Wüste: Im Winter kann es dort unter −30 °C kalt werden.",
+      "img": "🐫❄️"
+    },
+    {
+      "id": "034",
+      "q": "Wie nennt man den Meeresboden, der an der Nordsee bei Ebbe trocken fällt?",
+      "a": "Watt",
+      "choices": [
+        "Fjord",
+        "Riff",
+        "Delta"
+      ],
+      "info": "Das Wattenmeer ist UNESCO-Weltnaturerbe. Dort leben Wattwürmer, Krebse und Seehunde.",
+      "img": "🦀🌊"
+    },
+    {
+      "id": "035",
+      "q": "Warum ist die Ostsee weniger salzig als die Nordsee?",
+      "a": "Viel Süßwasser aus Flüssen, wenig Austausch mit dem Ozean",
+      "choices": [
+        "Die Sonne lässt dort mehr Salz verdunsten",
+        "Fische und Muscheln fressen das Salz",
+        "Die Ostsee ist viel tiefer"
+      ],
+      "info": "Die Ostsee ist mit der Nordsee nur durch schmale Meeresstraßen verbunden. Man nennt ihr Wasser Brackwasser.",
+      "img": "🐟💧"
+    }
+  ]
+}

@@ -1,0 +1,469 @@
+{
+  "id": "s1-geschichte-ddr-einheit",
+  "version": 1,
+  "title": "DDR und Deutsche Einheit",
+  "subject": "geschichte",
+  "grades": [
+    9,
+    10
+  ],
+  "emoji": "🧱",
+  "tier": "free",
+  "description": "Teilung, Mauer, Alltag in der DDR, Friedliche Revolution und Wiedervereinigung – sachlich und verständlich.",
+  "intro": [
+    {
+      "img": "🌍✂️",
+      "text": "Wusstest du? Von 1949 bis 1990 gab es zwei deutsche Staaten: im Westen die Bundesrepublik, im Osten die DDR."
+    },
+    {
+      "img": "🧱🚧",
+      "text": "Weil Millionen Menschen in den Westen gingen, ließ die DDR-Führung 1961 die Mauer bauen. Familien und Freunde wurden für Jahrzehnte getrennt."
+    },
+    {
+      "img": "👂📁",
+      "text": "Die Staatssicherheit (Stasi) überwachte viele Menschen. Wer offen Kritik übte, musste mit Nachteilen oder Haft rechnen."
+    },
+    {
+      "img": "🕯️📣",
+      "text": "1989 gingen Hunderttausende friedlich auf die Straße. Am 9. November fiel die Mauer – ohne dass ein Schuss fiel."
+    },
+    {
+      "img": "🤝🚀",
+      "text": "Los geht's! Entdecke, wie aus zwei Staaten wieder einer wurde – ich bin gespannt, was du schon weißt."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele deutsche Staaten gab es von 1949 bis 1990?",
+      "a": "Zwei",
+      "choices": [
+        "Einen",
+        "Drei",
+        "Vier"
+      ],
+      "info": "Die Bundesrepublik Deutschland im Westen und die Deutsche Demokratische Republik (DDR) im Osten.",
+      "img": "✌️🌍"
+    },
+    {
+      "id": "002",
+      "q": "Aus welcher Besatzungszone ging die DDR hervor?",
+      "a": "Aus der sowjetischen Zone",
+      "choices": [
+        "Aus der amerikanischen Zone",
+        "Aus der britischen Zone",
+        "Aus der französischen Zone"
+      ],
+      "info": "Nach 1945 war Deutschland in vier Zonen geteilt. Aus den drei Westzonen wurde die Bundesrepublik.",
+      "img": "🗺️4️⃣"
+    },
+    {
+      "id": "003",
+      "q": "Aus welchen zwei Parteien entstand 1946 durch eine Zwangsvereinigung die SED?",
+      "a": "KPD und SPD",
+      "choices": [
+        "CDU und SPD",
+        "KPD und FDP",
+        "SPD und CSU"
+      ],
+      "info": "In der sowjetischen Zone wurden Kommunisten und Sozialdemokraten zusammengelegt – viele SPD-Mitglieder wollten das nicht.",
+      "img": "🔗🌹"
+    },
+    {
+      "id": "004",
+      "q": "Welche Stadt war die Hauptstadt der DDR?",
+      "a": "Ost-Berlin",
+      "choices": [
+        "Leipzig",
+        "Dresden",
+        "Bonn"
+      ],
+      "info": "Die DDR nannte sie „Berlin, Hauptstadt der DDR“. Bonn war die vorläufige Hauptstadt der Bundesrepublik.",
+      "img": "🏙️⭐"
+    },
+    {
+      "id": "005",
+      "q": "Welche Wirtschaftsform hatte die DDR?",
+      "a": "Zentrale Planwirtschaft",
+      "choices": [
+        "Soziale Marktwirtschaft",
+        "Freie Marktwirtschaft",
+        "Tauschwirtschaft"
+      ],
+      "info": "Der Staat legte in Fünfjahrplänen fest, was Betriebe herstellen sollten und was es kostete.",
+      "img": "📋🏭"
+    },
+    {
+      "id": "006",
+      "q": "Welchem Militärbündnis gehörte die DDR an?",
+      "a": "Dem Warschauer Pakt",
+      "choices": [
+        "Der NATO",
+        "Der Westeuropäischen Union",
+        "Der Europäischen Gemeinschaft"
+      ],
+      "info": "Der Warschauer Pakt war das Bündnis der Ostblockstaaten unter Führung der Sowjetunion.",
+      "img": "🛡️⭐"
+    },
+    {
+      "id": "007",
+      "q": "Wie nannte die DDR das Verlassen des Landes ohne Erlaubnis?",
+      "a": "Republikflucht",
+      "choices": [
+        "Grenzurlaub",
+        "Westreise",
+        "Staatsausflug"
+      ],
+      "info": "Bis 1961 gingen Millionen Menschen in den Westen, darunter viele junge Fachkräfte. Flucht wurde bestraft.",
+      "img": "🏃➡️"
+    },
+    {
+      "id": "008",
+      "q": "Wie bezeichnete die DDR-Führung die Berliner Mauer offiziell?",
+      "a": "Antifaschistischer Schutzwall",
+      "choices": [
+        "Friedensgrenze West",
+        "Eiserne Mauer",
+        "Volksschutzzaun"
+      ],
+      "info": "Die Mauer sollte angeblich vor dem Westen schützen. Tatsächlich hinderte sie die eigenen Bürger an der Flucht.",
+      "img": "🧱🗣️"
+    },
+    {
+      "id": "009",
+      "q": "Wie lang war die Grenzanlage rund um West-Berlin ungefähr?",
+      "a": "Etwa 155 km",
+      "choices": [
+        "Etwa 15 km",
+        "Etwa 55 km",
+        "Etwa 555 km"
+      ],
+      "info": "Rund 43 km davon verliefen mitten durch die Stadt zwischen Ost- und West-Berlin.",
+      "img": "🧱📏"
+    },
+    {
+      "id": "010",
+      "q": "Wie nannte man den bewachten Streifen zwischen den Grenzmauern?",
+      "a": "Todesstreifen",
+      "choices": [
+        "Grünstreifen",
+        "Sicherheitsweg",
+        "Niemandsgarten"
+      ],
+      "info": "Mit Wachtürmen, Scheinwerfern, Hundelaufanlagen und Grenzsoldaten, die auf Flüchtende schießen sollten.",
+      "img": "🚧🔦"
+    },
+    {
+      "id": "011",
+      "q": "Wie hieß der bekannte Grenzübergang in der Friedrichstraße für Ausländer und Alliierte?",
+      "a": "Checkpoint Charlie",
+      "choices": [
+        "Checkpoint Alpha",
+        "Glienicker Brücke",
+        "Tor der Einheit"
+      ],
+      "info": "1961 standen sich dort amerikanische und sowjetische Panzer gegenüber. Heute ist er ein Erinnerungsort.",
+      "img": "🚧🛂"
+    },
+    {
+      "id": "012",
+      "q": "Welcher 18-Jährige verblutete 1962 an der Mauer vor den Augen vieler Menschen?",
+      "a": "Peter Fechter",
+      "choices": [
+        "Chris Gueffroy",
+        "Günter Litfin",
+        "Ida Siekmann"
+      ],
+      "info": "Er wurde bei der Flucht angeschossen und erhielt keine Hilfe. Sein Tod löste weltweit Entsetzen aus.",
+      "img": "🕯️🧱"
+    },
+    {
+      "id": "013",
+      "q": "Wie viele Menschen kamen an der Berliner Mauer nach Forschungen mindestens ums Leben?",
+      "a": "Mindestens 140",
+      "choices": [
+        "Mindestens 14",
+        "Mindestens 1400",
+        "Mindestens 14 000"
+      ],
+      "info": "Die meisten wurden bei Fluchtversuchen erschossen. Die Gedenkstätte Bernauer Straße erinnert an sie.",
+      "img": "🕯️🕯️"
+    },
+    {
+      "id": "014",
+      "q": "Welcher US-Präsident sagte 1963 in West-Berlin „Ich bin ein Berliner“?",
+      "a": "John F. Kennedy",
+      "choices": [
+        "Ronald Reagan",
+        "Richard Nixon",
+        "Dwight D. Eisenhower"
+      ],
+      "info": "Mit dem Satz zeigte er: Die USA stehen zu West-Berlin. Reagan sprach 1987 am Brandenburger Tor.",
+      "img": "🎤🗽"
+    },
+    {
+      "id": "015",
+      "q": "Wie nannte die Stasi Menschen, die heimlich Freunde oder Kollegen ausspionierten?",
+      "a": "Inoffizielle Mitarbeiter (IM)",
+      "choices": [
+        "Freie Berichterstatter (FB)",
+        "Geheime Bürger (GB)",
+        "Stille Helfer (SH)"
+      ],
+      "info": "Zuletzt gab es rund 189 000 IM. Manche wurden unter Druck angeworben.",
+      "img": "👂🕵️"
+    },
+    {
+      "id": "016",
+      "q": "Wer war von 1957 bis 1989 Minister für Staatssicherheit?",
+      "a": "Erich Mielke",
+      "choices": [
+        "Erich Honecker",
+        "Walter Ulbricht",
+        "Egon Krenz"
+      ],
+      "info": "Die Stasi nannte sich selbst „Schild und Schwert der Partei“.",
+      "img": "🛡️🗡️"
+    },
+    {
+      "id": "017",
+      "q": "Wo können Menschen heute ihre Stasi-Akte einsehen?",
+      "a": "Im Stasi-Unterlagen-Archiv (Bundesarchiv)",
+      "choices": [
+        "Beim Bundesverfassungsgericht",
+        "Bei der Polizei vor Ort",
+        "Im Bundestag"
+      ],
+      "info": "Seit 1992 ist das möglich. Viele erfuhren so, wer sie bespitzelt hatte.",
+      "img": "📁🔍"
+    },
+    {
+      "id": "018",
+      "q": "Wer stand von 1971 bis 1989 an der Spitze der SED?",
+      "a": "Erich Honecker",
+      "choices": [
+        "Walter Ulbricht",
+        "Erich Mielke",
+        "Lothar de Maizière"
+      ],
+      "info": "Er löste Walter Ulbricht ab und wurde im Oktober 1989 von Egon Krenz abgelöst.",
+      "img": "👔🏛️"
+    },
+    {
+      "id": "019",
+      "q": "Wie hieß die staatliche Jugendorganisation der DDR?",
+      "a": "FDJ (Freie Deutsche Jugend)",
+      "choices": [
+        "HJ (Hitlerjugend)",
+        "DPJ (Deutsche Pfadfinderjugend)",
+        "JU (Junge Union)"
+      ],
+      "info": "Die meisten Jugendlichen waren Mitglied – wer nicht mitmachte, hatte es z. B. bei der Studienplatzwahl schwerer.",
+      "img": "👕💙"
+    },
+    {
+      "id": "020",
+      "q": "Welche Feier ersetzte in der DDR für die meisten Jugendlichen die Konfirmation?",
+      "a": "Die Jugendweihe",
+      "choices": [
+        "Die Erstkommunion",
+        "Die Bar Mizwa",
+        "Das Schulfest"
+      ],
+      "info": "Mit etwa 14 Jahren gelobten die Jugendlichen Treue zum Staat. Die Feier gibt es auch heute noch.",
+      "img": "💐🎉"
+    },
+    {
+      "id": "021",
+      "q": "Woraus bestand die Karosserie des Trabant („Trabi“)?",
+      "a": "Aus Kunststoff (Duroplast)",
+      "choices": [
+        "Aus Holz",
+        "Aus Aluminium",
+        "Aus Pappe"
+      ],
+      "info": "Der Spitzname „Rennpappe“ ist nur ein Scherz. Auf einen neuen Trabi wartete man oft über zehn Jahre.",
+      "img": "🚗💨"
+    },
+    {
+      "id": "022",
+      "q": "Wo konnte man in der DDR mit West-Geld begehrte Westwaren kaufen?",
+      "a": "Im Intershop",
+      "choices": [
+        "Im Konsum",
+        "In der HO-Gaststätte",
+        "Im Kaufhaus des Westens"
+      ],
+      "info": "Die DDR brauchte D-Mark für den Handel mit dem Westen. Für Ost-Mark gab es dort nichts.",
+      "img": "🛍️💰"
+    },
+    {
+      "id": "023",
+      "q": "Welches Land begann im Mai 1989, seine Grenzanlagen zu Österreich abzubauen?",
+      "a": "Ungarn",
+      "choices": [
+        "Polen",
+        "Tschechoslowakei",
+        "Rumänien"
+      ],
+      "info": "Tausende DDR-Bürger flohen über Ungarn in den Westen. Im September öffnete Ungarn die Grenze ganz.",
+      "img": "✂️🚧"
+    },
+    {
+      "id": "024",
+      "q": "Welcher Außenminister verkündete 1989 auf dem Balkon der Prager Botschaft die Ausreise?",
+      "a": "Hans-Dietrich Genscher",
+      "choices": [
+        "Helmut Kohl",
+        "Willy Brandt",
+        "Helmut Schmidt"
+      ],
+      "info": "Tausende DDR-Flüchtlinge hatten sich in die Botschaft geflüchtet. Sie durften mit Zügen in den Westen fahren.",
+      "img": "🏛️🚆"
+    },
+    {
+      "id": "025",
+      "q": "Mit welchen Begriffen leitete Michail Gorbatschow Reformen in der Sowjetunion ein?",
+      "a": "Glasnost und Perestroika",
+      "choices": [
+        "Sputnik und Wostok",
+        "Prawda und Iswestija",
+        "Kolchos und Sowchos"
+      ],
+      "info": "Glasnost heißt Offenheit, Perestroika Umbau. Das ermutigte auch Menschen in der DDR.",
+      "img": "🔓🔧"
+    },
+    {
+      "id": "026",
+      "q": "In welcher Leipziger Kirche fanden die Friedensgebete vor den Montagsdemos statt?",
+      "a": "In der Nikolaikirche",
+      "choices": [
+        "In der Frauenkirche",
+        "Im Kölner Dom",
+        "In der Gedächtniskirche"
+      ],
+      "info": "Nach dem Gebet gingen die Menschen auf die Straße – mit Kerzen statt Gewalt.",
+      "img": "⛪🕯️"
+    },
+    {
+      "id": "027",
+      "q": "Was riefen die Demonstrierenden im Herbst 1989, um Mitsprache zu fordern?",
+      "a": "„Wir sind das Volk!“",
+      "choices": [
+        "„Wir sind die Partei!“",
+        "„Wir sind der Staat!“",
+        "„Wir sind die Mauer!“"
+      ],
+      "info": "Später hieß es auch „Wir sind ein Volk!“ – ein Ruf nach der Einheit.",
+      "img": "📣👥"
+    },
+    {
+      "id": "028",
+      "q": "Was machte den 9. Oktober 1989 in Leipzig so bedeutend?",
+      "a": "Rund 70 000 Menschen demonstrierten, und niemand schoss",
+      "choices": [
+        "Die Mauer wurde in Leipzig geöffnet",
+        "Honecker trat in Leipzig zurück",
+        "Die DDR wurde aufgelöst"
+      ],
+      "info": "Viele hatten Gewalt befürchtet. Danach war klar: Die Friedliche Revolution war nicht mehr aufzuhalten.",
+      "img": "🕯️👥"
+    },
+    {
+      "id": "029",
+      "q": "Welcher SED-Politiker verkündete am 9.11.1989 die sofortige Reisefreiheit?",
+      "a": "Günter Schabowski",
+      "choices": [
+        "Egon Krenz",
+        "Erich Honecker",
+        "Hans Modrow"
+      ],
+      "info": "Auf die Frage, ab wann das gelte, sagte er: „sofort, unverzüglich“. Eigentlich sollte die Regel erst am nächsten Tag gelten.",
+      "img": "🎤📄"
+    },
+    {
+      "id": "030",
+      "q": "An welchem Berliner Grenzübergang öffnete sich am 9.11.1989 zuerst der Schlagbaum?",
+      "a": "Bornholmer Straße",
+      "choices": [
+        "Checkpoint Charlie",
+        "Brandenburger Tor",
+        "Glienicker Brücke"
+      ],
+      "info": "Der Andrang wurde so groß, dass der Leiter der Wache gegen 23:30 Uhr die Grenze öffnete.",
+      "img": "🚧🎉"
+    },
+    {
+      "id": "031",
+      "q": "Wann fand die erste freie Wahl zur Volkskammer der DDR statt?",
+      "a": "Am 18. März 1990",
+      "choices": [
+        "Am 9. November 1989",
+        "Am 3. Oktober 1990",
+        "Am 7. Oktober 1989"
+      ],
+      "info": "Danach wurde Lothar de Maizière (CDU) der erste und letzte frei gewählte Ministerpräsident der DDR.",
+      "img": "🗳️✅"
+    },
+    {
+      "id": "032",
+      "q": "Seit wann galt die D-Mark auch in der DDR?",
+      "a": "Seit dem 1. Juli 1990",
+      "choices": [
+        "Seit dem 9. November 1989",
+        "Seit dem 1. Januar 1991",
+        "Seit dem 1. Januar 2002"
+      ],
+      "info": "Mit der Währungs-, Wirtschafts- und Sozialunion – drei Monate vor der Einheit.",
+      "img": "💰🤝"
+    },
+    {
+      "id": "033",
+      "q": "Nach welchem Grundgesetz-Artikel trat die DDR 1990 der Bundesrepublik bei?",
+      "a": "Artikel 23 (alte Fassung)",
+      "choices": [
+        "Artikel 1",
+        "Artikel 20",
+        "Artikel 146"
+      ],
+      "info": "Der Artikel erlaubte anderen Teilen Deutschlands den Beitritt. Art. 146 hätte eine neue Verfassung vorgesehen.",
+      "img": "📘✍️"
+    },
+    {
+      "id": "034",
+      "q": "Welches dieser Bundesländer gehörte NICHT zur ehemaligen DDR?",
+      "a": "Niedersachsen",
+      "choices": [
+        "Sachsen",
+        "Thüringen",
+        "Brandenburg"
+      ],
+      "info": "Neu dazu kamen fünf Länder: Brandenburg, Mecklenburg-Vorpommern, Sachsen, Sachsen-Anhalt und Thüringen.",
+      "img": "🗺️🔍"
+    },
+    {
+      "id": "035",
+      "q": "Welcher Bundeskanzler gilt als „Kanzler der Einheit“?",
+      "a": "Helmut Kohl",
+      "choices": [
+        "Helmut Schmidt",
+        "Gerhard Schröder",
+        "Konrad Adenauer"
+      ],
+      "info": "Er war von 1982 bis 1998 Bundeskanzler und trieb die Einheit 1990 schnell voran.",
+      "img": "🤝👔"
+    },
+    {
+      "id": "036",
+      "q": "Welche Behörde privatisierte oder schloss nach 1990 die DDR-Staatsbetriebe?",
+      "a": "Die Treuhandanstalt",
+      "choices": [
+        "Die Bundesbank",
+        "Das Kartellamt",
+        "Die Stasi"
+      ],
+      "info": "Viele Betriebe waren nicht konkurrenzfähig. Sehr viele Menschen in Ostdeutschland verloren ihre Arbeit.",
+      "img": "🏭📉"
+    }
+  ]
+}
