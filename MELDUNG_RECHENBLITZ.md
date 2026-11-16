@@ -2,7 +2,45 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, nachmittags) – für den Leitstand:** Live ist 3.15.0 (7c423d5). Auf `rechenblitz-test` liegen **3.16.0** (Inhalt Klasse 5–10, Meldung 47) und **3.17.0** (schneller Start ohne weißen Bildschirm, Meldung 48). Bitte prüfen und freigeben. Inhalte laufen weiter in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.15.0 (7c423d5). Auf `rechenblitz-test` liegen **3.16.0** (Inhalt Klasse 5–10, Meldung 47), **3.17.0** (schneller Start, gebündelt, Meldung 48) und **3.18.0** (Üben nach Wunsch, Meldung 49). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
+
+## 16.11.2026 (49) – Üben nach Wunsch 🎯 (3.18.0) · keine neue APK nötig
+
+- **Wunsch von Marcel (über Leitstand):** mehr Einstellungen für Grundschüler – Zahlenraum begrenzen, bestimmte Mal-Reihen, Lücken. Teilbar für Lehrkräfte und Eltern.
+- **Erreichbar:** neue Karte „🎯 Üben nach Wunsch“ auf der Startseite. „Einstellen“ öffnet das Fenster, „▶“ startet die zuletzt gespielte Übung sofort.
+- **Einstellungen:**
+  1. **Rechenarten:** Plus, Minus, Mal, Geteilt, beliebig kombinierbar (mindestens eine).
+  2. **Zahlenraum** für Plus/Minus: bis 10, 20, 100, 1000 oder eigene Grenze (5–100000).
+     - **Zehnerübergang/Übertrag:** egal, ohne oder mit. Bis 10 gibt es keinen Übergang, darauf weist ein Hinweis hin.
+     - Es gibt nie negative Ergebnisse, und keine Zahl liegt über der Grenze.
+  3. **Einmaleins:**
+     - Einzelne Reihen 1er–10er anhaken, optional bis 20er.
+     - Schnellwahl „alle“, „Kernaufgaben“ (1, 2, 5, 10), „keine“; „nur Quadratzahlen“.
+     - Geteilt kommt aus denselben Reihen (Umkehraufgaben). **„Geteilt mit Rest“** nur, wenn angehakt: Gefragt wird dann abwechselnd der Quotient oder der Rest.
+  4. **Aufgabenform:** Ergebnis gesucht (3 + 5 = ?), Lücke (3 + ? = 8 bzw. ? + 5 = 8) oder gemischt. Mal-Aufgaben kommen als Tauschaufgaben in beiden Reihenfolgen.
+  5. **Umfang:**
+     - 10/20/30/50 Aufgaben **ohne Zeitdruck (Standard)** oder ⏱️ 1/2/3 Minuten;
+     - **große Ziffern und Tasten**;
+     - eine Beispielaufgabe zeigt live, wie die Übung aussieht.
+  6. **Vorlagen:**
+     - Mit Namen speichern (bis 12), starten und löschen.
+     - **Teilen** per Link und QR-Code: Alle Einstellungen stehen im Link (`#wunsch=…`, Base64-JSON), ohne Server.
+     - Wer den Link öffnet, sieht die Einstellungen mit dem Hinweis „Übung aus einem Link“ und tippt auf „Los“.
+     - Werte aus fremden Links werden geprüft und begrenzt (`cleanWunsch`).
+  7. **Lösungsweg und Fehlerkiste** wie bei den anderen Themen: Zerlegen, Umkehraufgabe, Rest-Rechnung. Falsche Aufgaben landen in der Fehlerkiste, das Einmaleins zählt fürs Merk-Training.
+  - „Nochmal“ im Ergebnis wiederholt genau dieselbe Einstellung.
+- **Tests:**
+  - **Engine über alle Kombinationen:** 264600 Aufgaben – 7 Rechenart-Kombinationen × 7 Zahlenräume × 3 Übergangs-Einstellungen × 6 Reihenauswahlen × Quadrat/Rest an/aus × 3 Aufgabenformen. Es gab **0 Fehler**:
+    - keine negativen Ergebnisse;
+    - nichts über der Grenze;
+    - „ohne/mit Übergang“ eingehalten;
+    - nur gewählte Reihen und Rechenarten;
+    - Reste nur, wenn gewählt;
+    - jede Lösung eintippbar.
+  - **Browser DE/EN/UK bei 320 px:** einstellen, Vorlage speichern/löschen, Link kopieren und in neuem Tab öffnen, spielen (richtig/falsch, Fehlerkiste), „Nochmal“, Schnellstart von der Karte, große Tasten. Kein Überlauf, keine JS-Fehler.
+  - **Gefunden und behoben:** „Teilen“ → „Zurück“ verlor die gerade gewählten Einstellungen.
+  - **Übersetzungen:** etwa 55 neue Einträge, insgesamt 1997. Selbst vergebene Vorlagen-Namen werden bewusst nicht übersetzt.
+  - Komplette Regression ohne Fehler, der Engine-Test über alle 30 Themen bleibt bei 0 Fehlern.
 
 ## 16.11.2026 (48) – Schneller Start ohne weißen Bildschirm, Skripte gebündelt (3.17.0) · gemessen vorher/nachher
 

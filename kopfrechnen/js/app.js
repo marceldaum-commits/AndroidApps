@@ -261,7 +261,7 @@ function renderHome() {
   $('sDays').textContent = typeof weekCount === 'function' ? `${weekCount()}/7` : streakDays();   // gemütlich: Tage diese Woche statt Serie
   $('sToday').textContent = `${S.today.date === todayStr() ? S.today.solved : 0}/${DAILY_GOAL}`;
   renderSoundIcons();
-  renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); renderWeltCard(); if (typeof renderGartenCard === 'function') renderGartenCard();
+  renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); renderWeltCard(); if (typeof renderGartenCard === 'function') renderGartenCard(); if (typeof renderWunschCard === 'function') renderWunschCard();
   if ($('sFunken')) $('sFunken').textContent = S.funken ?? 0;
   if ($('bzHome')) {
     $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting() + ' <button class="bz-go" id="bzGo">Los →</button>', 54) : '';
@@ -403,6 +403,7 @@ const MODE_CFG = {
   advent: { title: 'Adventskalender', count: 5, steps: true, points: true },
   merk: { title: 'Merk-Training', count: 20, steps: true, points: true },
   reise: { title: 'Rechen-Reise', count: 8, steps: true, points: true },
+  wunsch: { title: 'Üben nach Wunsch', count: 20, steps: true, points: true },
 };
 let G = null, timerRaf = 0, lastAnswered = null;
 
@@ -416,12 +417,13 @@ $('pad').addEventListener('click', e => { if (e.detail === 0) { const b = e.targ
 
 function startGame(mode, opts = {}) {
   Sound.init();
-  const cfg = MODE_CFG[mode], op = opts.op ?? S.sel.op;
+  const cfg = opts.cfg ? { ...MODE_CFG[mode], ...opts.cfg } : MODE_CFG[mode], op = opts.op ?? S.sel.op;
+  document.body.classList.toggle('bigpad', !!opts.big);   // große Ziffern und Tasten (Üben nach Wunsch)
   const adapt = !opts.queue && !opts.gen && opts.lvl == null && S.sel.lvl === 'auto' && ['training', 'blitz', 'zen'].includes(mode);
   const lvl = opts.lvl ?? currentLevel(op);
   G = { mode, cfg, op, lvl, adapt, win: [], idx: 0, correct: 0, wrong: 0, streak: 0, bestStreak: 0, score: 0, input: '', task: null, locked: true,
     mistakes: [], results: [], times: [], recent: [], queue: opts.queue || null, gen: opts.gen || null, title: opts.title, assign: !!opts.assign,
-    testPlan: opts.testPlan, klasse: opts.klasse, door: opts.door, endAt: 0, lastTick: 99, over: false, paused: false, waiting: false, started: Date.now() };
+    testPlan: opts.testPlan, klasse: opts.klasse, door: opts.door, wunsch: opts.wunsch, endAt: 0, lastTick: 99, over: false, paused: false, waiting: false, started: Date.now() };
   if (mode === 'fehler') G.queue = shuffle(Object.values(S.box)).slice(0, 15).map(x => ({ ...x, form: x.form || (x.a && x.a.kind === 'dec' && x.e && x.e.length === 1 && x.e[0].t === 'f' ? 'dec' : undefined) }));   // ältere Einträge ohne Antwortform
   G.total = G.queue ? (cfg.timed ? Infinity : G.queue.length) : cfg.timed ? Infinity : cfg.count;
   $('game').classList.toggle('calm', !!(cfg.calm || cfg.quiet));
@@ -479,7 +481,7 @@ function nextTask() {
   $('unit').textContent = t.unit || '';
   $('pre').textContent = t.pre || '';
   if (G.op === 'mix' || G.queue) $('winTitle').textContent = G.mode === 'merk' ? `🧠 ${TOPICS[t.topic].name}` : `${G.mode === 'training' || G.mode === 'blitz' ? '' : G.cfg.title + ' · '}${TOPICS[t.topic].name}`;
-  $('winTag').textContent = G.mode === 'merk' ? merkTag(t.card) : ['challenge', 'test', 'advent'].includes(G.mode) ? `Aufgabe ${G.idx + 1}/${G.total}` : `Stufe ${t.lvl + 1}${G.adapt ? ' · Auto' : ''}`;
+  $('winTag').textContent = G.mode === 'merk' ? merkTag(t.card) : G.mode === 'wunsch' ? (G.total === Infinity ? '' : `Aufgabe ${G.idx + 1}/${G.total}`) : ['challenge', 'test', 'advent'].includes(G.mode) ? `Aufgabe ${G.idx + 1}/${G.total}` : `Stufe ${t.lvl + 1}${G.adapt ? ' · Auto' : ''}`;
   $('feedback').textContent = ''; $('feedback').className = 'feedback';
   renderAnswer(); updateHud(); fitExpr();
   if (t.card) merkBeforeTask(t);
@@ -742,6 +744,7 @@ function renderResult(r) {
     if (G.mode === 'challenge') return startGame('challenge', { queue: challengeTasks(), op: 'mix', lvl: 0 });
     if (G.mode === 'merk') return merkStats().todo ? startMerk() : (goHome(), openSheet('merk'));
     if (G.mode === 'reise' && G_REISE) return startReise(G_REISE.c, G_REISE.s);
+    if (G.mode === 'wunsch' && G.wunsch) return startWunsch(G.wunsch);
     if (G.assign && S.assign) return S.assign.runs.filter(x => x.ok).length >= S.assign.r ? goHome() : startAssignment();
     if (G.gen) return startGame(G.mode, { gen: G.gen, op: G.op, lvl: G.lvl, title: G.title });
     startGame(G.mode);

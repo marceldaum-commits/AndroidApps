@@ -516,6 +516,8 @@ function cleanResult(d) { const a = cleanAssign(d); if (!a) return null; a.n = c
 
 function handleHash() {
   const h = location.hash;
+  const w = h.match(/^#wunsch=([\w-]+)/);
+  if (w) { history.replaceState(null, '', location.pathname + location.search); if (typeof wunschFromHash === 'function') wunschFromHash(w[1]); return; }
   const m = h.match(/^#(auftrag|ergebnis)=([\w-]+)/);
   if (!m) return;
   history.replaceState(null, '', location.pathname + location.search);

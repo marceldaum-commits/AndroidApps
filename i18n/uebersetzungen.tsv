@@ -1950,3 +1950,62 @@ Fehler behoben: Einige Prozent-Aufgaben hatten eine halbe Zahl als Lösung	Fixed
 Wie groß ist die Steigung der Geraden durch P und Q?	What is the gradient of the line through P and Q?	Який кутовий коефіцієнт прямої через P і Q?
 Schnellerer Start mit Ladebalken – kein weißer Bildschirm mehr	Faster start with a loading bar – no more white screen	Швидший запуск зі смугою завантаження – більше жодного білого екрана
 Ab dem zweiten Start öffnet Rechenblitz sofort, auch bei schlechtem Netz	From the second start on, Rechenblitz opens instantly, even with a poor connection	Починаючи з другого запуску Rechenblitz відкривається миттєво, навіть за поганого зв'язку
+Üben nach Wunsch	Custom practice	Вправи на вибір
+Zahlenraum, Mal-Reihen, Lücken – selbst einstellen	Number range, times tables, gaps – set it up yourself	Діапазон чисел, таблиця множення, пропуски – налаштуй сам
+Einstellen	Set up	Налаштувати
+Stell dir deine Übung selbst zusammen – genau den Zahlenraum und die Reihen, die du üben möchtest.	Put together your own practice – exactly the number range and times tables you want to practise.	Склади власну вправу – саме той діапазон чисел і ті ряди множення, які хочеш тренувати.
+Rechenarten	Operations	Дії
+Zahlenraum (Plus und Minus)	Number range (plus and minus)	Діапазон чисел (плюс і мінус)
+bis	up to	до
+eigene	custom	свій
+Eigene Grenze ({} bis {})	Custom limit ({} to {})	Власна межа (від {} до {})
+Zehnerübergang / Übertrag	Crossing ten / carrying	Перехід через десяток
+ohne	without	без
+mit	with	з
+Bis {} gibt es noch keinen Zehnerübergang.	Up to {} there is no crossing of ten yet.	До {} ще немає переходу через десяток.
+Einmaleins-Reihen (Mal und Geteilt)	Times tables (times and divide)	Ряди множення (множення й ділення)
+alle	all	усі
+Kernaufgaben	Core facts	Основні приклади
+keine	none	жодного
+{}–{} zeigen	show {}–{}	показати {}–{}
+nur {}–{}	only {}–{}	лише {}–{}
+Nur Quadratzahlen	Square numbers only	Лише квадрати чисел
+Geteilt mit Rest	Division with remainder	Ділення з остачею
+Aufgabenform	Problem type	Вид завдання
+gemischt	mixed	змішано
+{} Aufgaben	{} problems	{} завдань
+ohne Zeitdruck	no time pressure	без поспіху
+{} Min.	{} min	{} хв
+Große Ziffern und Tasten	Large digits and keys	Великі цифри й кнопки
+Zum Beispiel:	For example:	Наприклад:
+💾 Als Vorlage speichern	💾 Save as template	💾 Зберегти як шаблон
+🔗 Teilen	🔗 Share	🔗 Поділитися
+Mindestens eine Rechenart wählen	Choose at least one operation	Обери принаймні одну дію
+Mindestens eine Reihe wählen	Choose at least one times table	Обери принаймні один ряд
+Tippe die Reihen an, die du üben möchtest	Tap the times tables you want to practise	Торкнися рядів, які хочеш тренувати
+Name der Vorlage (z. B. „Einmaleins {} und {}“)	Template name (e.g. “Times tables {} and {}”)	Назва шаблону (напр. «Множення на {} і {}»)
+Meine Übung	My practice	Моя вправа
+Vorlage gespeichert	Template saved	Шаблон збережено
+Meine Vorlagen	My templates	Мої шаблони
+Vorlage	Template	Шаблон
+bis {}, ohne Übergang	up to {}, without crossing ten	до {}, без переходу
+bis {}, mit Übergang	up to {}, crossing ten	до {}, з переходом
+Reihen {}	Tables {}	Ряди {}
+Lücken	Gaps	Пропуски
+mit Lücken	with gaps	з пропусками
+Vorlage löschen	Delete template	Видалити шаблон
+Vorlage löschen?	Delete template?	Видалити шаблон?
+Übung teilen	Share practice	Поділитися вправою
+Mit diesem Link oder QR-Code bekommen Kinder genau diese Übung – zum Beispiel als Hausaufgabe. Alles steht im Link, es wird nichts gespeichert.	With this link or QR code, children get exactly this practice – for example as homework. Everything is in the link; nothing is stored.	За цим посиланням або QR-кодом діти отримають саме цю вправу – наприклад, як домашнє завдання. Усе міститься в посиланні, нічого не зберігається.
+Link teilen	Share link	Поділитися посиланням
+Link kopieren	Copy link	Копіювати посилання
+Link kopiert ✓	Link copied ✓	Посилання скопійовано ✓
+Letzte Übung starten	Start last practice	Почати останню вправу
+Übung aus einem Link	Practice from a link	Вправа з посилання
+Übung für dich	Practice for you	Вправа для тебе
+Wie oft passt es hinein?	How many times does it fit?	Скільки разів уміщується?
+Neu: Üben nach Wunsch 🎯 – Zahlenraum, Zehnerübergang, einzelne Mal-Reihen und Lückenaufgaben selbst einstellen	New: custom practice 🎯 – set the number range, crossing ten, single times tables and gap problems yourself	Нове: вправи на вибір 🎯 – сам налаштуй діапазон чисел, перехід через десяток, окремі ряди множення й завдання з пропусками
+Als Vorlage speichern und per Link oder QR-Code teilen – ideal für Hausaufgaben	Save as a template and share by link or QR code – ideal for homework	Збережи як шаблон і поділися посиланням або QR-кодом – ідеально для домашніх завдань
+Große Ziffern und Tasten zum Einschalten	Large digits and keys you can switch on	Великі цифри й кнопки, які можна ввімкнути
+
+Umfang der Übung	Length of the practice	Тривалість вправи

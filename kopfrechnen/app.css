@@ -910,3 +910,31 @@ button.badge{font:inherit;cursor:pointer}
 .gate-word{font-size:24px;font-weight:800;color:var(--head);padding:14px 10px;border-radius:16px;background:var(--chip);overflow-wrap:anywhere}
 .gate input{font:inherit;font-size:28px;font-weight:800;text-align:center;letter-spacing:.2em;padding:10px;border-radius:14px;border:2px solid var(--border);background:var(--surface);color:var(--text);width:100%;box-sizing:border-box}
 .gate input:focus{outline:none;border-color:var(--orange)}
+
+/* 3.18.0 – Üben nach Wunsch */
+.wun{display:flex;flex-direction:column;gap:10px}
+.wun .chips{display:flex;flex-wrap:wrap;gap:6px}
+.wun .chips button{min-height:40px;padding:6px 12px;border-radius:12px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font:inherit;font-size:14.5px;cursor:pointer}
+.wun .chips button.sel{background:var(--orange);border-color:var(--orange);color:#fff}
+.wun .chips button b{font-size:17px}
+.wun .wrows{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.wun .wrows button{padding:6px 2px}
+.wun .wquick button{min-height:34px;font-size:13px;padding:4px 10px}
+.wchk{display:flex;align-items:center;gap:8px;font-size:14.5px;cursor:pointer}
+.wchk input{width:20px;height:20px;accent-color:var(--orange)}
+.wun-ex{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:14px;background:var(--chip);font-size:13px;color:var(--muted)}
+.wun-ex b{font-size:18px;color:var(--head)}
+.wun-link{display:flex;flex-direction:column;padding:10px 12px;border-radius:14px;background:color-mix(in srgb,var(--orange) 14%,var(--surface))}
+.wun-link span{font-size:14px}
+.wtpl{display:flex;flex-direction:column;gap:6px}
+.wtpl-row{display:flex;gap:6px}
+.wtpl-go{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:8px 12px;border-radius:14px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);font:inherit;cursor:pointer}
+.wtpl-go small{color:var(--muted);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.wtpl-del{flex:none;width:44px;border:0;border-radius:14px;background:var(--chip);font-size:16px;cursor:pointer}
+.wunsch-card .wun-ico{background:linear-gradient(135deg,#ff7418,#ffc83d);color:#fff}
+.wunsch-card .btn+.btn{margin-left:6px}
+.wunsch-card .ch-txt span{overflow:hidden;text-overflow:ellipsis}
+/* große Ziffern und Tasten */
+.ingame.bigpad #expr{font-size:clamp(46px,13vw,76px)}
+.ingame.bigpad .answer{font-size:clamp(40px,11vw,62px);min-height:1.4em}
+.ingame.bigpad #pad .key{font-size:30px;min-height:64px}
