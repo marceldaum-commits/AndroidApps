@@ -1,11 +1,41 @@
 # Wissensgarten im Google Play Store veröffentlichen
 
-Alles, was die Play Console abfragt – in der Reihenfolge, in der sie es abfragt. Firmenkonto: Die Pflicht
-„12 Tester × 14 Tage“ gilt nur für private Konten, ihr könnt direkt in die Produktion.
+Stand: **Version 0.19.0 vom 16.11.2026** (versionCode 33). Alles, was die Play Console abfragt – zuerst als Klick-Liste,
+darunter die Antworten im Detail.
+
+## Schritt für Schritt (Klick-Liste für die Play Console)
+
+1. **Datei holen:** GitHub → Releases → *Wissensgarten 0.19.0* → `Wissensgarten-0.19.0-PlayStore.aab` herunterladen.
+   Das AAB ist schon mit dem Upload-Schlüssel signiert (der Workflow nimmt ihn aus den GitHub-Secrets `WG_KEYSTORE_…`;
+   das Original liegt nur in Bitwarden, nie in Git).
+2. Play Console → **App erstellen** → Name „Wissensgarten“, Standardsprache **Deutsch (Deutschland)**, *App*, *Kostenlos*,
+   Erklärungen bestätigen → *App erstellen*.
+3. **Dashboard → „App einrichten“** – die Aufgaben der Reihe nach abhaken (Antworten: Abschnitt 4 und 5 unten):
+   - *Datenschutzerklärung* → `https://www.mathenachhilfe-online.com/datenschutz/`
+   - *App-Zugriff* → „Alle Funktionen ohne Einschränkungen verfügbar“ + Hinweis zum Eltern-Tor (Tabelle unten)
+   - *Anzeigen* → **Nein**
+   - *Einstufung des Inhalts* → E-Mail angeben, Kategorie **Referenz, Nachrichten oder Bildung**, Fragebogen (unten) → *Speichern* → *Einstufung einreichen*
+   - *Zielgruppe und Inhalte* → Altersgruppen **6–8, 9–12, 13–15, 16–17, 18+**; „Kinder als Zielgruppe“ → Familienprogramm-Richtlinien bestätigen
+   - *Nachrichten-App* Nein · *COVID/Gesundheit* Nein · *Finanzfunktionen* keine · *Regierungs-App* Nein
+   - *Datensicherheit* → Formular nach Abschnitt 5
+   - *Kategorie und Kontaktdaten* → **Bildung**, Kontakt-E-Mail, Website `https://www.mathenachhilfe-online.com`
+   - *Store-Eintrag* → Texte, Symbol, Titelbild, Screenshots aus diesem Ordner (Abschnitt 6)
+4. **Testen → Interner Test** → *Neuen Release erstellen* → bei der ersten Frage **Play App Signing: „Von Google verwalteten Schlüssel verwenden“**
+   → AAB hochladen → Release-Name „0.19.0“ → Versionshinweise (Text aus `CHANGELOG.md`, Abschnitt 0.19.0) → *Speichern* → *Überprüfen* → *Einführung starten*.
+   *Tester*: E-Mail-Liste anlegen (z. B. eigene Familie), Link „Im Web teilen“ an die Tester schicken → App über Play installieren und ausprobieren.
+5. **Produktion:**
+   - *Firmen-/Organisationskonto* (so wurde das Konto beantragt): **Produktion → Neuen Release erstellen** → dasselbe AAB aus der
+     App-Bundle-Bibliothek übernehmen → *Einführung starten*. Die erste Prüfung durch Google dauert meist einige Tage.
+   - *Falls die Play Console doch „Private Konto“-Regeln anzeigt* (Hinweis „Geschlossener Test erforderlich“): zuerst
+     **Testen → Geschlossener Test** mit mindestens **12 Testern**, die **14 Tage** dabeibleiben; danach „Produktionszugriff beantragen“.
+6. **Updates später:** neue Version auf GitHub (passiert automatisch beim Ausliefern) → das neue `…-PlayStore.aab` unter
+   *Produktion → Neuen Release erstellen* hochladen. versionCode steigt bei jeder Version, das passt automatisch.
 
 ## 1. Vorher einmalig
-- **Datenschutz-Seite hochladen:** `web/datenschutz/index.html` nach `https://www.mathenachhilfe-online.com/datenschutz/`
-  (wie damals `web/duell` und `web/klasse`). Diese Adresse kommt in die Play Console.
+- **Datenschutz-URL:** `https://www.mathenachhilfe-online.com/datenschutz/` – diese Adresse steht bereits in der App (Einstellungen → Über,
+  Datenschutz-Bildschirm) und in der WebApp. Vorschlag: Der Leitstand ergänzt die **Haupt-Datenschutzerklärung** um einen Abschnitt
+  „Wissensgarten (App und WebApp)“; der vollständige, für Eltern geschriebene Text liegt als Vorlage in `web/datenschutz/index.html`
+  (wird aus derselben Quelle erzeugt wie der Datenschutz-Bildschirm der App). Eine eigene Seite ist nicht nötig.
 - **Impressum** auf mathenachhilfe-online.com muss Name/Anschrift/E-Mail enthalten (die Datenschutzerklärung verweist darauf).
 
 ## 2. App anlegen
@@ -33,6 +63,8 @@ Play Console → *App erstellen* → Name **Wissensgarten**, Sprache **Deutsch**
 - **Werden Nutzerdaten erhoben oder geteilt?** → **Ja** (nur wegen des freiwilligen Geräte-Syncs)
 - **Verschlüsselt bei der Übertragung?** → **Ja** (HTTPS)
 - **Können Nutzer das Löschen beantragen?** → **Ja** (Einstellungen → „Alle Daten löschen“, löscht auch die Sync-Datei)
+- Die Spracherkennung (Brummi-Radio, Sprech-Spiel) läuft über die Android-Spracherkennung; die App erhält nur Text, keine Aufnahmen
+  → bei „Audio“ **nicht erhoben** angeben.
 - **Erhobene Daten** (alle: *optional*, Zweck *App-Funktionen*, **nicht geteilt**, nicht verarbeitet für Werbung):
   - *Personenbezogene Daten → Name*: Vorname/Spitzname des Profils – nur bei eingeschaltetem Sync, liegt im **eigenen** Google Drive der Familie
   - *App-Aktivitäten → Sonstige nutzergenerierte Inhalte*: Lernstand, eigene Karten – nur bei Sync
