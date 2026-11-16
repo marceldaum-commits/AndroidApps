@@ -1508,4 +1508,7 @@ I18N.add('en', {"% sind":"% are",
 "Wie drucken?":"How to print?",
 "A{} quer – ganze Seite":"A{} landscape – full page",
 "Halbe Seite":"Half page",
-"Urkunden drucken: neu „A{} quer – ganze Seite“":"Printing certificates: new “A{} landscape – full page”"});
+"Urkunden drucken: neu „A{} quer – ganze Seite“":"Printing certificates: new “A{} landscape – full page”",
+"Vorbereitung für Google Play":"Getting ready for Google Play",
+"Für Version {} bitte Rechenblitz im Play Store aktualisieren – der Lernstand bleibt":"For version {} please update Rechenblitz in the Play Store – your progress stays",
+"Play Store":"Play Store"});

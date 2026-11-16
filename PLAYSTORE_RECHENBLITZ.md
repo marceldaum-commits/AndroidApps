@@ -1,6 +1,6 @@
 # Rechenblitz als Android-App (APK) und im Google Play Store
 
-Stand 14.11.2026, App 3.5.2. Veröffentlichung laut Marcel **ab 2027**. Bis dahin wird die APK mit jeder Version mitgebaut und getestet.
+Stand 16.11.2026, App 3.14.x. Marcels Google-Play-Konto ist bestätigt („Nun können wir veröffentlichen“). Die Play-Fassung ist vorbereitet, siehe unten.
 
 ## Entscheidung (Marcel 13.11.2026)
 
@@ -95,14 +95,121 @@ Beides legt GitHub **dauerhaft** auf die Release-Seite `rechenblitz-X.Y.Z` (Tite
 3. `bash build.sh` → APK bauen, Inhalt prüfen (`aapt2 dump badging`).
 4. **Auf einem echten Android-Handy:** APK installieren, Flugmodus an, App starten und spielen; Erinnerung an, 2 Minuten später einstellen und warten.
 
-## Store-Eintrag (03.12., Roadmap Tag 20)
+## Veröffentlichung bei Google Play (Leitstand/Marcel 16.11.2026: „Nun können wir veröffentlichen“)
 
-- Kurz- und Langbeschreibung (DE, EN, UK), Symbol 512 px, Vorschaubild 1024×500, Bildschirmfotos Handy und Tablet.
-- **Datensicherheit:**
-  - Freiwillig an den Server: Fehlermeldungen (Text, optional Name/E-Mail) und der Gutschein-Abruf (Klassenstufe).
-  - Sonst bleibt alles auf dem Gerät. Kein Konto, keine Werbe-ID, keine Weitergabe, kein Tracking.
-- Zielgruppe Kinder und Eltern/Lehrkräfte: Familien-Richtlinien von Google (keine Werbung Dritter ✅, kein Tracking ✅).
-- Ablauf: interner Test → geschlossener Test → Produktion (2027). Organisationskonto mit D-U-N-S, daher keine 12-Tester-Pflicht.
+### Zwei Fassungen aus derselben Quelle
+
+| | Test-APK (GitHub) | Play-Fassung |
+|---|---|---|
+| Bauen | GitHub-Ablauf `rechenblitz-release.yml` bei Push auf `rechenblitz-test` | GitHub-Ablauf `rechenblitz-play.yml` bei Push auf `rechenblitz-live` (oder von Hand starten) |
+| Schalter | `RB_STORE=github`, `RB_CHANNEL=test` | `RB_STORE=play`, `RB_CHANNEL=live` |
+| Signatur | Test-Schlüssel (`RECHENBLITZ_TEST_KEYSTORE`) | **Upload-Schlüssel** (`RECHENBLITZ_UPLOAD_*`), Google signiert danach selbst (Play App Signing) |
+| Neue Inhalte (HTML/JS/CSS) | von selbst vom Branch `rechenblitz-test` | von selbst vom Branch `rechenblitz-live`, also nur, was der Leitstand freigibt |
+| Neue App-Hülle | Karte „Herunterladen“ (APK von GitHub) | Karte „Play Store“, die App lädt **nie selbst eine APK** |
+
+**Richtlinie:**
+- Google Play verbietet Apps, die sich außerhalb von Play selbst aktualisieren oder ausführbaren Code (dex/JAR/.so) nachladen.
+- **Ausdrücklich ausgenommen** ist Code, der in einer WebView läuft (JavaScript).
+- Die Play-Fassung lädt deshalb weiterhin neue Web-Inhalte selbst. So bleibt sie automatisch aktuell, wie Marcel es wollte.
+- Der APK-Download ist in der Play-Fassung abgeschaltet.
+
+### Was ich vorbereitet habe
+
+- **Signiertes App-Bundle (AAB):**
+  - `rechenblitz-play.yml` baut es bei jeder Live-Freigabe und legt es unter **Actions → Rechenblitz Play → Artifacts** ab (90 Tage).
+  - Das Signieren ist mit einem Wegwerf-Schlüssel getestet.
+  - Ohne die Geheimnisse wird der Lauf übersprungen und zeigt nur einen Hinweis.
+- **Versionscode:** wird automatisch aus der Version erzeugt, z. B. 3.14.2 → 31402, und steigt mit jeder Version. Neue Inhalte allein brauchen kein neues Bundle. Ein neues Bundle ist nur nötig, wenn sich die Hülle ändert, sonst etwa einmal im Monat für die Store-Seite.
+- **Store-Texte (Deutsch):** `android-app/store/eintrag-de.txt` (Name, Kurz- und Langbeschreibung, Kategorie).
+- **Grafiken:** `android-app/store/`
+  - Symbol 512×512, Vorschaubild 1024×500;
+  - 7 Handy-Bilder 1080×1920;
+  - je 6 Tablet-Bilder für 7 Zoll (1200×1920) und 10 Zoll (2560×1600).
+
+### Schritt für Schritt: Was Marcel selbst klickt
+
+**A. Einmalig: Upload-Schlüssel nach GitHub** (der Schlüssel liegt in Bitwarden)
+
+1. Die Keystore-Datei (`.jks`/`.keystore`) in Base64 umwandeln:
+   - Mac/Linux: `base64 -i upload.jks | pbcopy`
+   - Windows PowerShell: `[Convert]::ToBase64String([IO.File]::ReadAllBytes("upload.jks")) | Set-Clipboard`
+2. GitHub → Repo **School** → Settings → Secrets and variables → Actions → **New repository secret**. Vier Geheimnisse anlegen:
+   - `RECHENBLITZ_UPLOAD_KEYSTORE` = der Base64-Text
+   - `RECHENBLITZ_UPLOAD_STORE_PASSWORD` = Keystore-Passwort
+   - `RECHENBLITZ_UPLOAD_KEY_ALIAS` = Alias des Schlüssels
+   - `RECHENBLITZ_UPLOAD_KEY_PASSWORD` = Schlüssel-Passwort (falls gleich wie Keystore-Passwort: leer lassen)
+3. GitHub → Actions → **Rechenblitz Play** → „Run workflow“, Branch **rechenblitz-live** wählen. Nach ca. 5 Minuten unter „Artifacts“ die Datei `Rechenblitz-play-X.Y.Z.aab` herunterladen.
+   - Gibt es noch keinen Upload-Schlüssel: In der Play Console beim ersten Hochladen „Play App Signing“ wählen und einen Upload-Schlüssel erzeugen, z. B. mit `keytool -genkeypair -v -keystore upload.jks -alias upload -keyalg RSA -keysize 2048 -validity 10000`. Danach in Bitwarden ablegen.
+
+**B. Play Console: App anlegen**
+
+4. Alle Apps → **App erstellen**:
+   - Name „Rechenblitz: Kopfrechnen üben“, Standardsprache Deutsch, **App**, **Kostenlos**;
+   - Erklärungen (Richtlinien, US-Exportgesetze) bestätigen.
+5. **App-Integrität → App-Signatur:** „Play App Signing“ verwenden (Standard).
+
+**C. Store-Eintrag** (Wachstum → Store-Präsenz → Haupteintrag)
+
+6. Name, Kurz- und Langbeschreibung aus `eintrag-de.txt` einfügen.
+7. App-Symbol, Vorschaubild, Handy-Screenshots (2–8) und Tablet-Screenshots (7 und 10 Zoll) aus `android-app/store/` hochladen.
+8. **Store-Einstellungen:**
+   - Kategorie **Lernen**;
+   - Kontakt-E-Mail;
+   - Website `https://rechenblitz.mathenachhilfe-online.com`.
+
+**D. App-Inhalte** (Richtlinie → App-Inhalte). Alle Punkte ausfüllen:
+
+9. **Datenschutzerklärung:** `https://www.mathenachhilfe-online.com/datenschutz/`
+10. **App-Zugriff:** „Alle Funktionen ohne besondere Zugriffsrechte verfügbar“ (kein Login).
+11. **Werbung:** „Nein, meine App enthält keine Werbung“.
+12. **Altersfreigabe (IARC-Fragebogen):**
+    - Kategorie „Lern-/Bildungs-App“ bzw. „Referenz, Nachrichten oder Bildung“, E-Mail angeben;
+    - Gewalt, Angst, Sexualität, Sprache, Drogen, Glücksspiel: überall **Nein**;
+    - **Interaktion von Nutzern:** **Ja, eingeschränkt.** In der Klassen-Challenge sehen Kinder einer Klasse die Spitznamen und Punkte der anderen, ein Wortfilter läuft auf dem Server. Sonst gibt es keinen Chat und keinen Austausch;
+    - persönliche Daten teilen: Nein; digitale Käufe: Nein; Standort: Nein;
+    - erwartetes Ergebnis: USK 0 / PEGI 3.
+13. **Zielgruppe und Inhalte:**
+    - Altersgruppen **6–8, 9–12, 13–15** (und 16–17 möglich);
+    - Frage „Spricht die App versehentlich Kinder an?“ entfällt, weil sie Kinder ausdrücklich anspricht;
+    - dadurch gilt die **Familienrichtlinie**: keine Werbung ✅, keine Werbe-ID ✅, kein Standort ✅, Datenschutzerklärung ✅;
+    - **Bitte prüfen:** Die App verlinkt auf die Nachhilfe-Website (Logo, Menü, Probestunde), dort kann man buchen. Ob Google dafür bei einer Kinder-App eine Elternabfrage vor dem Link erwartet, kann ich nicht sicher sagen. Die Prüfung durch Google zeigt es. Eine einfache Elternabfrage („Bitte einen Erwachsenen fragen: Wie viel ist 7 · 8?“) kann ich schnell einbauen.
+14. **Datensicherheit** (Antworten):
+    - Werden Daten erhoben oder geteilt? **Ja** (nur freiwillige Funktionen).
+    - Alle Daten **verschlüsselt übertragen**: Ja (HTTPS).
+    - Kann man die Löschung beantragen? **Ja**: Klasse verlassen bzw. Profil löschen löscht den Ranglisten-Eintrag; Fehlermeldungen auf Anfrage per E-Mail.
+    - **Erhobene Daten** (alle *optional*, *nicht geteilt*, nicht für Werbung):
+      - *Persönliche Daten → Name:* Spitzname in der Klassen-Challenge; optionaler Name beim Fehler-Melden. Zweck: App-Funktionen, Kommunikation des Entwicklers.
+      - *Persönliche Daten → E-Mail-Adresse:* optional beim Fehler-Melden, für Rückfragen. Zweck: Kommunikation des Entwicklers.
+      - *App-Aktivitäten → Andere nutzergenerierte Inhalte:* Text von Fehlermeldungen und Ideen. Zweck: App-Funktionen.
+      - *App-Aktivitäten → Andere Aktionen:* Punkte und gelöste Aufgaben je Runde für die Klassen-Rangliste. Zweck: App-Funktionen.
+      - *App-Informationen und -Leistung → Diagnosedaten:* App-Version, Bildschirm, Sprache, Gerätekennung des Browsers bei Fehlermeldungen. Zweck: Analysen zur Fehlerbehebung.
+      - *Geräte- oder andere IDs:* zufällige Spieler-Kennung der Klassen-Challenge. Zweck: App-Funktionen.
+    - Nicht erhoben: Standort, Kontakte, Fotos, Werbe-ID, Finanzdaten, Gesundheit, Suchverlauf.
+    - Der Update-Abruf (stand.json/Dateien von GitHub bzw. eigenem Server) sendet keine Nutzerdaten, das ist nur technische Verarbeitung.
+15. **Weitere Formulare:**
+    - Nachrichten-App: Nein;
+    - Finanzfunktionen: keine;
+    - Gesundheit: Nein;
+    - Behörden-App: Nein;
+    - Berechtigungen: nur Internet, Mitteilungen, Neustart-Empfang. Kein genauer Wecker, deshalb keine Sonder-Erklärung nötig.
+
+**E. Test und Veröffentlichung**
+
+16. **Testen → Interner Test** → „Neuen Release erstellen“:
+    - AAB hochladen;
+    - Release-Name = Version;
+    - Notizen aus dem Changelog;
+    - Tester-Liste mit eigenen Google-Konten anlegen, Link öffnen, installieren.
+17. **12-Tester-Pflicht prüfen:**
+    - Gilt für **private Entwicklerkonten, die nach dem 13.11.2023 erstellt wurden**. Vor dem Produktionszugang braucht es dann einen **geschlossenen Test mit mindestens 12 Testern, die 14 Tage am Stück dabei sind**.
+    - Für **Organisationskonten** (mit D-U-N-S-Nummer) gilt das nicht.
+    - Ob die Pflicht greift, zeigt die Play Console im Dashboard unter „Produktionszugriff beantragen“.
+18. Danach: Geschlossener Test → Produktionszugriff beantragen → **Produktion** (Länder: Deutschland, Österreich, Schweiz, …).
+
+### Nach dem Start
+
+- **Neue Inhalte** gehen nach der Freigabe auf `rechenblitz-live` automatisch an alle Play-Nutzer. Ein Play-Release ist dafür nicht nötig.
+- **Neues Bundle** nur bei Hüllen-Änderung (die Meldung sagt dann „NEUE APK/AAB“). Sonst etwa monatlich, damit die Versionsnummer im Store aktuell bleibt. Jeweils das Artefakt aus „Rechenblitz Play“ hochladen.
 
 ## Offen
 

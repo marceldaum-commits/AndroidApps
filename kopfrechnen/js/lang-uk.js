@@ -1508,4 +1508,7 @@ I18N.add('uk', {"% sind":"% — це",
 "Wie drucken?":"Як друкувати?",
 "A{} quer – ganze Seite":"A{} альбомна – на всю сторінку",
 "Halbe Seite":"Пів сторінки",
-"Urkunden drucken: neu „A{} quer – ganze Seite“":"Друк грамот: нове «A{} альбомна – на всю сторінку»"});
+"Urkunden drucken: neu „A{} quer – ganze Seite“":"Друк грамот: нове «A{} альбомна – на всю сторінку»",
+"Vorbereitung für Google Play":"Підготовка до Google Play",
+"Für Version {} bitte Rechenblitz im Play Store aktualisieren – der Lernstand bleibt":"Для версії {} онови Rechenblitz у Play Store – прогрес збережеться",
+"Play Store":"Play Store"});

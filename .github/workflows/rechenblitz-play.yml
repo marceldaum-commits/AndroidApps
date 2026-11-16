@@ -1,0 +1,79 @@
+# Rechenblitz für Google Play: baut bei jeder Freigabe auf rechenblitz-live das signierte App-Bundle (AAB).
+# Play-Fassung (RB_STORE=play): lädt neue Inhalte selbst vom Live-Kanal (erlaubt: JavaScript in der WebView),
+# lädt aber nie selbst eine APK – neue App-Hüllen kommen nur über Google Play.
+# Signiert mit dem Upload-Schlüssel aus den Repo-Geheimnissen (Marcel trägt sie ein, siehe PLAYSTORE_RECHENBLITZ.md):
+#   RECHENBLITZ_UPLOAD_KEYSTORE (Datei als Base64), RECHENBLITZ_UPLOAD_STORE_PASSWORD,
+#   RECHENBLITZ_UPLOAD_KEY_ALIAS, RECHENBLITZ_UPLOAD_KEY_PASSWORD (falls leer: wie Store-Passwort)
+# Ergebnis: Download unter „Actions → Rechenblitz Play → Artifacts“ (90 Tage), dann in der Play Console hochladen.
+name: Rechenblitz Play
+
+on:
+  push:
+    branches: [rechenblitz-live]
+    paths: ['kopfrechnen/**', 'android-app/**', '.github/workflows/rechenblitz-play.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rechenblitz-play
+  cancel-in-progress: false
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Upload-Schlüssel einrichten
+        id: key
+        env:
+          KEYSTORE: ${{ secrets.RECHENBLITZ_UPLOAD_KEYSTORE }}
+          STORE_PW: ${{ secrets.RECHENBLITZ_UPLOAD_STORE_PASSWORD }}
+          ALIAS: ${{ secrets.RECHENBLITZ_UPLOAD_KEY_ALIAS }}
+          KEY_PW: ${{ secrets.RECHENBLITZ_UPLOAD_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE" ] || [ -z "$STORE_PW" ] || [ -z "$ALIAS" ]; then
+            echo "::warning::Upload-Schlüssel fehlt (RECHENBLITZ_UPLOAD_*) – Play-Bundle übersprungen. Siehe PLAYSTORE_RECHENBLITZ.md."
+            echo "ok=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "ok=true" >> "$GITHUB_OUTPUT"
+          echo "$KEYSTORE" | base64 -d > "$RUNNER_TEMP/upload.keystore"
+          {
+            echo "RB_UPLOAD_KEYSTORE=$RUNNER_TEMP/upload.keystore"
+            echo "RB_UPLOAD_STORE_PASSWORD=$STORE_PW"
+            echo "RB_UPLOAD_KEY_ALIAS=$ALIAS"
+            echo "RB_UPLOAD_KEY_PASSWORD=${KEY_PW:-$STORE_PW}"
+          } >> "$GITHUB_ENV"
+
+      - if: steps.key.outputs.ok == 'true'
+        uses: actions/setup-java@v5
+        with: { distribution: temurin, java-version: '21' }
+      - if: steps.key.outputs.ok == 'true'
+        uses: actions/setup-node@v5
+        with: { node-version: '22' }
+
+      - if: steps.key.outputs.ok == 'true'
+        name: Version lesen
+        id: v
+        run: echo "version=$(grep -oP "APP_VERSION = '\K[0-9.]+" kopfrechnen/js/changelog.js)" >> "$GITHUB_OUTPUT"
+
+      - if: steps.key.outputs.ok == 'true'
+        name: Play-Bundle bauen (Live-Kanal, ohne APK-Selbst-Update)
+        working-directory: android-app
+        run: |
+          npm ci --no-audit --no-fund
+          RB_STORE=play RB_CHANNEL=live bash build.sh release
+          AAB=android/app/build/outputs/bundle/release/app-release.aab
+          jarsigner -verify "$AAB" | grep -q "jar verified" || { echo "::error::Bundle ist nicht signiert."; exit 1; }
+          cp "$AAB" "$RUNNER_TEMP/Rechenblitz-play-${{ steps.v.outputs.version }}.aab"
+          rm -f "$RB_UPLOAD_KEYSTORE"
+
+      - if: steps.key.outputs.ok == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Rechenblitz-play-${{ steps.v.outputs.version }}
+          path: ${{ runner.temp }}/Rechenblitz-play-${{ steps.v.outputs.version }}.aab
+          retention-days: 90

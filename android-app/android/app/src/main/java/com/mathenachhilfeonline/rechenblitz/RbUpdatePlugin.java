@@ -103,6 +103,7 @@ public class RbUpdatePlugin extends Plugin {
         JSObject o = new JSObject();
         if (result != null) o.put("result", result);
         o.put("channel", BuildConfig.RB_CHANNEL);
+        o.put("store", BuildConfig.RB_STORE);
         o.put("shell", BuildConfig.RB_SHELL);
         o.put("version", run.optString("version", ""));
         o.put("id", run.optString("id", ""));

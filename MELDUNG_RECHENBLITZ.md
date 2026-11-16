@@ -2,7 +2,48 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer**, siehe Meldungen (35)–(41). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+> **AKTUELLER STAND (16.11.2026) – für den Leitstand:** Live ist 3.13.0 (41e7203). Auf `rechenblitz-test` liegen 3.13.1–3.13.4 und neu **3.14.0 Rechengarten** + **3.14.1 Profile löschen** + **3.14.2 Urkunde A4 quer** + **3.14.3 Play-Vorbereitung**, siehe Meldungen (35)–(42). Bitte testen und freigeben. Keine neue APK nötig (Hülle 2).
+
+## 16.11.2026 (42) – Google Play: Rechenblitz ist store-fertig vorbereitet (3.14.3) · Antwort auf Leitstand 16.11.
+
+- **Auftrag (Leitstand 16.11.):** Signiertes AAB, Versionscode, Store-Eintrag DE, Grafiken, Datensicherheit, Altersfreigabe/Zielgruppe, interner Test, Play-Variante ohne Self-Update, Klick-Liste für Marcel.
+- **Richtigstellung zum Self-Update:**
+  - Die Play-Richtlinie verbietet Selbst-Updates außerhalb von Play und das Nachladen von **ausführbarem Code (dex/JAR/.so)**.
+  - **Ausdrücklich erlaubt** ist Code, der in einer WebView läuft (JavaScript). Darauf beruhen auch Capacitor-Live-Updates.
+  - Die Play-Fassung lädt deshalb **weiterhin neue Web-Inhalte** selbst, aus `rechenblitz-live`, also nur Freigegebenes. So bleibt Marcels Wunsch „App immer aktuell“ erfüllt.
+  - Abgeschaltet ist nur der **APK-Download**. Braucht ein Stand eine neue Hülle, zeigt die Play-Fassung „Bitte im Play Store aktualisieren“ und fragt GitHub-Releases nicht ab.
+- **Umgesetzt:**
+  - **Play-Variante** über Build-Schalter `RB_STORE=play` + `RB_CHANNEL=live` (BuildConfig, wie der Kanal; keine Gradle-Flavors nötig). Die Test-APK bleibt unverändert (`github`/`test`).
+  - **Signieren mit dem Upload-Schlüssel** nur über Umgebungsvariablen bzw. GitHub-Geheimnisse `RECHENBLITZ_UPLOAD_KEYSTORE` (Base64), `…_STORE_PASSWORD`, `…_KEY_ALIAS`, `…_KEY_PASSWORD`. Mit einem Wegwerf-Schlüssel getestet, der anschließend gelöscht wurde. Nichts davon ist im Repo.
+  - **GitHub-Ablauf `rechenblitz-play.yml`:**
+    - baut bei jedem Push auf `rechenblitz-live` (oder von Hand) das signierte AAB und legt es als Artefakt ab (90 Tage, nicht öffentlich als Release);
+    - ohne Geheimnisse: Hinweis statt Fehler.
+  - **Versionscode** automatisch aus der Version (3.14.3 → 31403), steigt mit jeder Version.
+  - **Store-Eintrag DE:** `android-app/store/eintrag-de.txt`. Name „Rechenblitz: Kopfrechnen üben“ (29 Zeichen), Kurzbeschreibung (79), Langbeschreibung (ca. 2100).
+  - **Grafiken in `android-app/store/`:**
+    - Symbol 512, Vorschaubild 1024×500;
+    - 7 Handy-Bilder 1080×1920;
+    - 6 Tablet-Bilder 7″ (1200×1920) und 6 Tablet-Bilder 10″ (2560×1600).
+  - **Klick-Liste für Marcel:** in `PLAYSTORE_RECHENBLITZ.md`, Abschnitt „Veröffentlichung bei Google Play“. Sie enthält:
+    - Geheimnisse anlegen;
+    - App erstellen;
+    - Store-Eintrag;
+    - App-Inhalte mit fertigen Antworten für **Datensicherheit**, **IARC** (erwartet USK 0/PEGI 3) und **Zielgruppe** (6–15, Familienrichtlinie);
+    - interner Test → geschlossener Test → Produktion.
+- **12-Tester-Pflicht:**
+  - Sie gilt für **private** Entwicklerkonten, die nach dem 13.11.2023 angelegt wurden: geschlossener Test mit mindestens 12 Testern über 14 Tage vor der Produktion.
+  - **Organisationskonten** (D-U-N-S) sind ausgenommen. Unser Plan vom 14.11. ging von einem Organisationskonto aus.
+  - **OFFEN (Marcel):** Ist das Konto privat oder eine Organisation? Die Play Console zeigt es unter „Produktionszugriff beantragen“.
+- **OFFEN:**
+  - Soll vor den Links zur Nachhilfe-Website (Buchung möglich) eine Elternabfrage stehen? Das ist für die Familienrichtlinie nicht sicher geklärt und schnell einbaubar.
+  - Gibt es den Upload-Schlüssel schon? Wenn nicht, erzeugt Marcel ihn beim ersten Hochladen (Anleitung in der Klick-Liste).
+- **Datenschutz:**
+  - 10b deckt den GitHub-Abruf ab.
+  - Für die Datensicherheit sind deklariert: Spitzname/Spieler-Kennung/Punkte der Klassen-Challenge sowie Name/E-Mail (optional)/Text/Diagnose der Fehlermeldung.
+- **Tests:**
+  - Play-AAB und signiertes AAB lokal gebaut, BuildConfig `play`/`live` im Bundle geprüft;
+  - Play-Karte „Im Play Store aktualisieren“ ohne GitHub-Abruf;
+  - Regression ohne Fehler.
 
 ## 16.11.2026 (41) – Urkunde: „A4 quer – ganze Seite“ (3.14.2) · keine neue APK nötig
 

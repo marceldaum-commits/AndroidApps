@@ -40,7 +40,9 @@ async function liveUpdateCheck(force) {
   if (liveUpd.needShell) shellApkFetch();
   return liveUpd;
 }
+const PLAY_URL = 'https://play.google.com/store/apps/details?id=com.mathenachhilfeonline.rechenblitz';
 async function shellApkFetch() {   // Download-Adresse der neuen APK (GitHub-Release) für die Karte
+  if (liveUpd && liveUpd.store === 'play') { liveUpd.apkUrl = PLAY_URL; renderLiveUpdate(); return; }   // Play-Fassung: neue App nur über Google Play
   const cfg = CONFIG.apkUpdates; if (!cfg || !cfg.repo || !navigator.onLine) return;
   try {
     const r = await fetch(`https://api.github.com/repos/${cfg.repo}/releases/latest`, { headers: { Accept: 'application/vnd.github+json' } });
@@ -70,9 +72,12 @@ function renderLiveUpdate() {
   if (!el) { home.querySelector('.col-left').insertAdjacentHTML('afterbegin', '<div class="card apk-upd" id="apkUpd"></div>'); el = $('apkUpd'); }
   el.innerHTML = kind === 'ready'
     ? `<div class="ch-ico">✨</div><div class="ch-txt"><b>Version ${esc(u.pending)} ist geladen</b><span>Lernstand bleibt erhalten</span></div><button class="btn small primary" id="apkGo">Jetzt neu starten</button>`
-    : `<div class="ch-ico">⬆️</div><div class="ch-txt"><b>Neue App-Version nötig</b><span>Für Version ${esc(u.needVersion || '')} bitte die App einmal neu installieren – der Lernstand bleibt</span></div>${u.apkUrl ? '<button class="btn small primary" id="apkGo">Herunterladen</button>' : ''}`;
+    : u.store === 'play'
+      ? `<div class="ch-ico">⬆️</div><div class="ch-txt"><b>Neue App-Version nötig</b><span>Für Version ${esc(u.needVersion || '')} bitte Rechenblitz im Play Store aktualisieren – der Lernstand bleibt</span></div><button class="btn small primary" id="apkGo">Play Store</button>`
+      : `<div class="ch-ico">⬆️</div><div class="ch-txt"><b>Neue App-Version nötig</b><span>Für Version ${esc(u.needVersion || '')} bitte die App einmal neu installieren – der Lernstand bleibt</span></div>${u.apkUrl ? '<button class="btn small primary" id="apkGo">Herunterladen</button>' : ''}`;
   $('apkGo') && ($('apkGo').onclick = () => {
     if (kind === 'ready') { save(); RbUpd()?.apply().catch(() => {}); return; }
+    if (u.store === 'play') { location.href = PLAY_URL; return; }
     toast('Download startet – danach „Installieren“ antippen', 3000); setTimeout(() => { location.href = u.apkUrl; }, 400);
   });
 }
