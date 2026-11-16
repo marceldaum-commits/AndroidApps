@@ -3,6 +3,18 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.20.0 – Viel Neues zum Rechnen
+- **38 neue Level in 7 neuen Kapiteln** – jede Aufgabe mit Tipp, Rechenweg, Rechen-Frage und Live-Rechnung:
+  - **🗺️ Maßstab & Karten** (Kl. 5–6): echte Entfernungen in Kästchen umrechnen – bis zur Sternenkarte in Lichtjahren.
+  - **💶 Prozent & Zinseszins** (Kl. 7–8): + 25 % heißt mal 1,25. Sparschwein, Rabatte, Algen, Zinsen.
+  - **🚗 Beschleunigte Bewegung** (Physik 9–10): s = ½ · a · t² + v₀ · t – losdüsen, bremsen, Notbremsung.
+  - **📊 Potenzfunktionen** (Kl. 10): S-Kurve, Hochzahl erkennen, Wurzelbogen.
+  - **🌊 Verschobene Wellen** (Kl. 10–11): y = a · sin(b · (x − c)) + d – die Welle wandert.
+  - **🏃 Waagerechter Wurf** (Physik 10): von der Klippe – auf Erde, Mond und Mars. Mit Klippe und Höhe im Bild.
+  - **📈 e-Funktion** (Kl. 11–12): Wachstum, Zerfall, Abkühlen und Medikamente – mit ln umkehren.
+- Geprüft: alle Level automatisch lösbar, ein Reglerschritt daneben trifft nicht (Raten reicht nicht), App und WebApp
+  rechnen genau gleich.
+
 ## 0.19.0 – Oberstufe (Klasse 11–13)
 - **🎓 Jetzt bis Klasse 13**: Bei der Klassenwahl gibt es 11, 12 und 13 – mit vier neuen Planeten:
   - **🏂 Ableitung & Tangente**: Die Sonde gleitet auf der Kurve und springt tangential ab. Die Steigung ist f'(x₀).

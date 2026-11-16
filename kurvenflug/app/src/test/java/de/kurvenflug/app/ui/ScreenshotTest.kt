@@ -367,4 +367,14 @@ class ScreenshotTest {
     @Test fun upperArea() = level("21-4", name = "80_oberstufe_integral", values = mapOf("A" to 10.0), settle = 5000,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
     @Test fun upperVector() = level("22-4", name = "81_oberstufe_vektor", values = mapOf("v1" to 2.0, "v2" to 2.0))
+
+    // Inhaltspaket 0.20
+    @Test fun moreMap() = level("29-2", name = "82_massstab", values = mapOf("x" to -2.0, "y" to 3.0))
+    @Test fun morePercent() = level("23-1", name = "83_prozent", values = mapOf("b" to 1.15))
+    @Test fun moreAccel() = level("24-5", name = "84_beschleunigung", values = mapOf("a" to 0.5, "v0" to 1.5))
+    @Test fun morePower() = level("25-5", name = "85_wurzel", values = mapOf("a" to 2.0))
+    @Test fun moreWave() = level("26-3", name = "86_verschobene_welle", values = mapOf("c" to 1.0, "d" to 0.5))
+    @Test fun moreHorizontal() = level("27-3", name = "87_waagerechter_wurf", values = mapOf("v" to 3.0), settle = 7000,
+        prepare = { it.onNodeWithText("🚀 Start").performClick() })
+    @Test fun moreExpe() = level("28-5", name = "88_e_funktion", values = mapOf("k" to -0.3))
 }

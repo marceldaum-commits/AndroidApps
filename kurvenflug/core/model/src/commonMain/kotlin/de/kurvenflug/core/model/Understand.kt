@@ -31,17 +31,18 @@ object Understand {
         val t = l.targets.firstOrNull() ?: return null
         val v = l.values(values)
         return when (l.kind) {
-            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION -> {
+            Kind.LINE, Kind.PARABOLA, Kind.SINE, Kind.EXP, Kind.PROP, Kind.ANTI, Kind.LOG, Kind.MOTION, Kind.ACCEL, Kind.POWER, Kind.EXPE -> {
                 if (l.kind == Kind.LOG && t.x <= 0 || l.kind == Kind.ANTI && t.x == 0.0) return null
                 val y = Flight.f(l, values, t.x)
                 if (!y.isFinite()) return null
-                val (xs, ys) = if (l.kind == Kind.MOTION) "t" to "s" else "x" to "y"
+                val (xs, ys) = if (l.kind == Kind.MOTION || l.kind == Kind.ACCEL) "t" to "s" else "x" to "y"
                 "Bei $xs = ${num(t.x)}: $ys = ${substituted(l, v, t.x)} ≈ ${num(y, 1)}  ·  Station: ${num(t.y)} ${mark(y, t.y, t.r)}"
             }
             Kind.POINT -> {
                 if (l.params.size < 2) return null   // Zahlenstrahl (Brüche): Wert selbst finden, nicht vorsagen
                 val x = v.getValue("x"); val y = v.getValue("y")
-                "(${num(x)} | ${num(y)}): ${steps(x, "rechts", "links")}, ${steps(y, "oben", "unten")}"
+                "(${num(x)} | ${num(y)}): ${steps(x, "rechts", "links")}, ${steps(y, "oben", "unten")} " +
+                    if (t.contains(Vec(x, y))) "✓" else "↔"
             }
             Kind.RENDEZVOUS -> {
                 val x = v.getValue("x"); val y = v.getValue("y")
@@ -67,6 +68,12 @@ object Understand {
                 }
             }
             Kind.THROW -> {
+                // Waagerechter Wurf von der Klippe: x = v · √(2h : g)
+                if (v.getValue("angle") == 0.0 && l.params.none { it.key == "angle" }) {
+                    val h = l.launch.y - t.y; val g = l.planet.g; val sp = v.getValue("v")
+                    val w = sp * sqrt(2 * h / g)
+                    return "Weite: v · √(2h : g) = ${num(sp)} · √(2 · ${num(h)} : ${num(g)}) ≈ ${num(w, 1)}  ·  Ziel: ${num(t.x - l.launch.x, 1)} ${mark(w, t.x - l.launch.x, t.r)}"
+                }
                 // Nur auf ebenem Boden: Wurfweite-Formel gilt, wenn Start und Ziel gleich hoch sind
                 if (abs(t.y - l.launch.y) > 0.6) return null
                 val a = v.getValue("angle"); val s = v.getValue("v"); val g = l.planet.g
@@ -119,7 +126,11 @@ object Understand {
             Kind.LINE -> "${p(g("m"))} · $xs + ${p(g("b"))}"
             Kind.MOTION -> "${p(g("v"))} · $xs + ${p(g("s0"))}"
             Kind.PARABOLA -> "${p(g("a"))} · ($xs − ${p(g("d"))})² + ${p(g("e"))}"
-            Kind.SINE -> "${p(g("a"))} · sin(${p(g("b"))} · $xs) + ${p(g("d"))}"
+            Kind.SINE -> if ((v["c"] ?: 0.0) != 0.0 || l.params.any { it.key == "c" }) "${p(g("a"))} · sin(${p(g("b"))} · ($xs − ${p(g("c"))})) + ${p(g("d"))}"
+                else "${p(g("a"))} · sin(${p(g("b"))} · $xs) + ${p(g("d"))}"
+            Kind.ACCEL -> "½ · ${p(g("a"))} · $xs² + ${p(g("v0"))} · $xs"
+            Kind.POWER -> "${p(g("a"))} · $xs^${num(g("n"))}" + if ((v["d"] ?: 0.0) != 0.0 || l.params.any { it.key == "d" }) " + ${p(g("d"))}" else ""
+            Kind.EXPE -> "${p(g("a"))} · e^(${p(g("k"))} · $xs)" + if ((v["d"] ?: 0.0) != 0.0) " + ${p(g("d"))}" else ""
             Kind.EXP -> "${p(g("a"))} · ${p(g("b"))}^$xs" + if (g("d") != 0.0) " + ${p(g("d"))}" else ""
             Kind.PROP -> "${p(g("k"))} · $xs"
             Kind.ANTI -> "${p(g("k"))} : $xs"
@@ -134,6 +145,7 @@ object Understand {
     fun check(l: Level): CalcCheck? = runCatching { checkOrNull(l) }.getOrNull()
 
     private fun checkOrNull(l: Level): CalcCheck? {
+        l.quiz?.let { q -> return make(if (q.size > 3) q[3] else "Wie hast du's gerechnet?", q[0], q[1], q[2], l.id) }
         val t = l.targets
         val keys = l.params.map { it.key }.toSet()
         val fx = l.fixed

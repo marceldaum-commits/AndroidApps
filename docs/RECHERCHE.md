@@ -110,3 +110,15 @@ Anlass (Marcel): Mit Reglern kommt man auch durch Probieren ans Ziel – die Rec
   Rechen-Stern und Lösungsweg. Die Oberstufe ist ein Zusatz – die Aurora-Geschichte (Kl. 5–10) bleibt unverändert.
 - Später möglich: e-Funktion/ln, Physik-Oberstufe (Elektron im Kondensator → Parabel, Lorentzkraft → Kreisbahn
   r = m·v/(q·B), harmonische Schwingung), Stochastik (Treffer-Wahrscheinlichkeit bei vielen Flügen).
+
+## Kurvenflug 0.20: großer Inhaltsausbau (Nov. 2026)
+
+Auftrag (Marcel über den Leitstand): „sehr viel Inhalt“, jede Aufgabe mit Erklärung, alles prüfen.
+- Lehrplan-Lücken gegenüber KMK/Kerncurricula: Maßstab (Kl. 5–6), Prozent- und Zinsrechnung/exponentielles Wachstum
+  (Kl. 7–8), beschleunigte Bewegung s = ½at² + v₀t (Physik Kl. 9–10), Potenzfunktionen und Wurzel (Kl. 10),
+  allgemeine Sinusfunktion mit Phasenverschiebung (Kl. 10/11), waagerechter Wurf (Physik Kl. 10), natürliche
+  Exponentialfunktion und ln (Kl. 11/12).
+- Alltags- und Weltraumkontexte (Sparschwein, Rabatt, Tee, Medikament, Mondklippe) erhöhen die wahrgenommene
+  Relevanz – ein zentraler Motivationsfaktor bei Jugendlichen (Erwartungs-Wert-Theorie, Eccles).
+- „Raten reicht nicht“: automatischer Test, dass ein Reglerschritt neben der Lösung nicht trifft; jede Aufgabe mit
+  eigenem Rechenweg und eigener Rechen-Frage (typische Fehler als Ablenker, z. B. 25 : 100 statt 1 + 25 : 100).

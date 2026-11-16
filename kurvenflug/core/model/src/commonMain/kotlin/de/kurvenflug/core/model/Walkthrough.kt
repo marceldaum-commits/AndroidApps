@@ -27,7 +27,7 @@ data class Step(val text: String, val answer: Double, val choices: List<Double>,
  */
 object Walkthrough {
     fun of(level: Level): List<Step>? {
-        val steps = runCatching { build(level) }.getOrNull() ?: return null
+        val steps = level.walk ?: runCatching { build(level) }.getOrNull() ?: return null
         if (steps.isEmpty()) return null
         // Probe: Jeder Regler-Schritt muss die Lösung treffen (bis auf eine halbe Regler-Stufe), jeder Regler vorkommen
         val keys = level.params.map { it.key }.toSet()
@@ -55,7 +55,8 @@ object Walkthrough {
         return List(3) { all[(it + rot) % all.size] }
     }
 
-    private fun step(text: String, answer: Double, sets: String? = null, extra: List<Double> = emptyList()) =
+    /** Ein Rechenweg-Schritt: Antwort plus zwei typische Fehler als Auswahl (für eigene Rechenwege in Leveln) */
+    fun step(text: String, answer: Double, sets: String? = null, extra: List<Double> = emptyList()) =
         Step(text, answer.r(), choices(answer, text, extra), sets)
 
     private fun build(l: Level): List<Step>? {

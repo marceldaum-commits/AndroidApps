@@ -15,6 +15,7 @@ object Templates {
         Kind.PROP -> "⚖️ Proportional"; Kind.ANTI -> "⚖️ Antiproportional"; Kind.LOG -> "🔢 Logarithmus"; Kind.RADIUS -> "📡 Pythagoras"
         Kind.LASER -> "🔦 Laser"; Kind.RAMP -> "🎢 Rampe"; Kind.MOTION -> "⏱️ Weg & Zeit"
         Kind.TANGENT -> "🏂 Tangente"; Kind.PEAK -> "⛰️ Extrempunkt"; Kind.AREA -> "⛽ Integral"; Kind.VECTOR -> "🧭 Vektor"
+        Kind.ACCEL -> "🚗 Beschleunigung"; Kind.POWER -> "📊 Potenz"; Kind.EXPE -> "📈 e-Funktion"
     }
 
     fun params(k: Kind): List<Param> = when (k) {
@@ -36,6 +37,9 @@ object Templates {
         Kind.PEAK -> listOf(Param("x", "x", -9.0, 9.0, 0.5, 0.0))
         Kind.AREA -> listOf(Param("A", "Treibstoff A", 0.0, 40.0, 0.25, 1.0))
         Kind.VECTOR -> listOf(Param("v1", "v₁", -9.0, 9.0, 0.5, 1.0), Param("v2", "v₂", -9.0, 9.0, 0.5, 1.0))
+        Kind.ACCEL -> listOf(Param("a", "a", -4.0, 4.0, 0.5, 0.5, " m/s²"), Param("v0", "v₀", -2.0, 8.0, 0.5, 1.0, " m/s"))
+        Kind.POWER -> listOf(Param("a", "a", -3.0, 3.0, 0.5, 1.0))
+        Kind.EXPE -> listOf(Param("a", "a", 0.5, 9.0, 0.5, 1.0), Param("k", "k", -2.0, 2.0, 0.1, 0.0))
     }
 
     fun fixed(k: Kind): Map<String, Double> = if (k == Kind.EXP) mapOf("d" to 0.0) else emptyMap()
@@ -62,6 +66,9 @@ object Templates {
         Kind.PEAK -> "Extrempunkt: f'(x) = 0."
         Kind.AREA -> "Fläche = F(b) − F(0)."
         Kind.VECTOR -> "v = (Q − P) : t."
+        Kind.ACCEL -> "s = ½ · a · t² + v₀ · t."
+        Kind.POWER -> "y = a · xⁿ."
+        Kind.EXPE -> "y = a · e^(k·x), umkehren mit ln."
     }
 }
 

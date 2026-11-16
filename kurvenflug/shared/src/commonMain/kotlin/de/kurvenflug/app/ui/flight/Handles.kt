@@ -40,7 +40,9 @@ fun handlesFor(level: Level, values: Map<String, Double>): List<Handle> {
         Kind.SINE -> {
             val a = v.getValue("a"); val b = v.getValue("b"); val d = v.getValue("d")
             if (has("d")) out += Handle(Vec(0.0, d), Q.Yellow) { p -> snap("d", p.y) }
-            if (has("a", "b")) out += Handle(Vec(PI / 2 / b, a + d), Q.Cyan) { p ->
+            val c = v["c"] ?: 0.0
+            if (has("c")) out += Handle(Vec(c, d), Q.Pink) { p -> snap("c", p.x) }
+            if (has("a", "b")) out += Handle(Vec(c + PI / 2 / b, a + d), Q.Cyan) { p ->
                 (if (p.x > 0.3) snap("b", PI / 2 / p.x) else emptyMap()) + snap("a", p.y - d)
             }
         }
@@ -102,6 +104,20 @@ fun handlesFor(level: Level, values: Map<String, Double>): List<Handle> {
             out += Handle(Vec(px + v.getValue("v1"), py + v.getValue("v2")), Q.Yellow) { p -> snap("v1", p.x - px) + snap("v2", p.y - py) }
         }
         Kind.PEAK, Kind.AREA -> {}
+        Kind.ACCEL -> {
+            val a = v.getValue("a"); val v0 = v.getValue("v0")
+            if (has("v0")) out += Handle(Vec(1.0, 0.5 * a + v0), Q.Pink) { p -> snap("v0", p.y - 0.5 * a) }
+            if (has("a")) out += Handle(Vec(3.0, 4.5 * a + 3 * v0), Q.Cyan) { p -> snap("a", (p.y - 3 * v0) / 4.5) }
+        }
+        Kind.POWER -> {
+            val a = v.getValue("a"); val n = v.getValue("n"); val d = v["d"] ?: 0.0
+            if (has("d")) out += Handle(Vec(0.0, d), Q.Pink) { p -> snap("d", p.y) }
+            if (has("a")) out += Handle(Vec(2.0, a * de.kurvenflug.core.model.powK(2.0, n) + d), Q.Cyan) { p -> snap("a", (p.y - d) / de.kurvenflug.core.model.powK(2.0, n)) }
+        }
+        Kind.EXPE -> {
+            val a = v.getValue("a"); val d = v["d"] ?: 0.0
+            if (has("a")) out += Handle(Vec(0.0, a + d), Q.Cyan) { p -> snap("a", p.y - d) }
+        }
     }
     return out
 }
