@@ -224,3 +224,16 @@ die übertragenen Bytes oben sind echt.
 
 Noch möglich (klein): `.wasm` trägt den Inhalt im Namen und kommt ohne `cache-control` – `max-age=31536000, immutable` würde dem Browser die Rückfrage ersparen.
 Live steht noch auf 2.5.1; 2.9.1 wartet auf eure Prüfung. Der weiße Bildschirm auf Marcels iPad ist weiter offen (er testet selbst).
+
+---
+
+## 16.11.2026 – Version 2.9.2: iPad-Befund, Fehlersuche, aufgeräumte Startseite
+
+**Befund von Marcels iPad (Testadresse, 2.9.1):** Ladebild erscheint, danach kommt der Ton – aber das Bild bleibt **weiß**. Die App läuft also (Wasm, Logik, Ton), nur die Darstellung der Oberfläche in Safari fehlt.
+Ursache noch offen; hier gibt es kein Safari. Verdächtig sind: das durchsichtige Fenster zur 3D-Bühne (die Bühne liegt als iframe unter der Compose-Zeichenfläche), zwei WebGL-Kontexte gleichzeitig, die Schriften.
+
+**Eingebaut zum Eingrenzen:** (1) Mitschrift – Fehler/Warnungen der App landen in `localStorage` (`raumlicht.mitschrift`, letzte 40 Zeilen, nur auf dem Gerät) und stehen auf `diagnose.html`;
+(2) Schalter `?ohne=fenster|buehne|emoji|ton` (kombinierbar) und dazu vier Test-Knöpfe auf `diagnose.html`; (3) echter WebGL-2-Zeichentest auf der Diagnose-Seite.
+**Wenn ihr ein iPad/iPhone habt:** bitte `diagnose.html` öffnen, Tests 1–4 antippen und melden, ab welchem das Bild erscheint, plus Mitschrift. Bis dahin Raumlicht bitte nicht als „läuft auf iPad/iPhone“ bewerben.
+
+**Außerdem:** Startseite aufgeräumt (Kapitel als eine wischbare Zeile statt Knopf-Wand) – Wunsch von Marcel nach einem Bildschirmfoto vom Android-Handy, wo die WebApp läuft.

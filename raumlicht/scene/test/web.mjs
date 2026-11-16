@@ -5,7 +5,7 @@ const [,, url, out] = process.argv;
 const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const problems = []; const ok = (name, good, info = '') => { console.log((good ? 'ok   ' : 'FAIL ') + name + (info ? '  ' + info : '')); if (!good) problems.push(name + ' ' + info); };
 // Klickstellen je Bildschirmgröße
-const at = { handy: { level1: [200, 208] /* Knopf „Tour starten“ – bleibt oben, auch wenn Kapitel dazukommen */, weiter: [200, 800] }, pc: { level1: [123, 625], weiter: [640, 745], plus1: [902, 245], plus2: [1074, 245], los: [1090, 306], mehr: [1112, 290], zurueck: [24, 24] } };
+const at = { handy: { level1: [200, 208] /* Knopf „Tour starten“ – bleibt oben, auch wenn Kapitel dazukommen */, weiter: [200, 800] }, pc: { level1: [640, 208], weiter: [640, 745], plus1: [902, 245], plus2: [1074, 245], los: [1090, 306], mehr: [1112, 290], zurueck: [24, 24] } };
 for (const [name, vp] of [['handy', { width: 400, height: 860 }], ['pc', { width: 1280, height: 800 }]]) {
   const page = await browser.newPage({ viewport: vp, deviceScaleFactor: name === 'handy' ? 2 : 1 }); const p = at[name];
   page.on('console', (m) => { if (m.type() === 'error') problems.push(`${name}: ${m.text()}`); }); page.on('pageerror', (e) => problems.push(`${name}: ${e.message}`));

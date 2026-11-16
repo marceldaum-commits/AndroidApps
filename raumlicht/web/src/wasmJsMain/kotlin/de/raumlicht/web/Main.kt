@@ -56,19 +56,21 @@ private fun WebApp() {
     // Schriften als Ergänzung zur Standardschrift: Mathe-Zeichen (x₃, ✓, √ …) und Emojis. Die Oberfläche startet erst, wenn beide da sind –
     // schon gezeichneter Text würde sie sonst nicht mehr übernehmen. Fehlt eine Datei, läuft die App trotzdem (dann mit Kästchen statt Zeichen).
     val resolver = LocalFontFamilyResolver.current
-    var pending by remember { mutableStateOf(2) }; var fonts by remember { mutableStateOf(listOf<Pair<String, ByteArray>>()) }
-    LaunchedEffect(Unit) { listOf("DejaVuSans" to "fonts/dejavu_sans.ttf", "NotoColorEmoji" to "fonts/noto_color_emoji.ttf").forEach { (name, url) -> loadFile(url) { b -> if (b != null) fonts = fonts + (name to b) else pending-- } } }
     var ready by remember { mutableStateOf(false) }
+    var pending by remember { mutableStateOf(2) }; var fonts by remember { mutableStateOf(listOf<Pair<String, ByteArray>>()) }
+    LaunchedEffect(Unit) { listOf("DejaVuSans" to "fonts/dejavu_sans.ttf", "NotoColorEmoji" to "fonts/noto_color_emoji.ttf").filter { (name, _) -> !(name == "NotoColorEmoji" && without("emoji")) }.also { pending = it.size }.forEach { (name, url) -> loadFile(url) { b -> if (b != null) fonts = fonts + (name to b) else pending-- } } }
     LaunchedEffect(fonts.size, pending) {
         if (fonts.size < pending) return@LaunchedEffect
-        fonts.forEach { (name, bytes) -> runCatching { resolver.preload(FontFamily(Font(name, bytes))) } }
+        fonts.forEach { (name, bytes) -> runCatching { resolver.preload(FontFamily(Font(name, bytes))) }.onFailure { note("Schrift $name: $it") } }
+        note("Schriften geladen: ${fonts.map { it.first }}")
         ready = true; hideStartScreen()
     }
     if (!ready) return
+    LaunchedEffect(Unit) { note("Oberfläche gestartet") }
     // Musik wie in der Android-App: ruhig im Menü, flotter bei Fahrt und Flug
     var mood by remember { mutableStateOf(MusicMood.MENU) }
     val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()
-    LaunchedEffect(Unit) { musicSetup { name -> val pcm = MusicSynth.render(SpaceMusic.compose(MusicMood.valueOf(name))); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i] / 32768f); musicStore(name, b) } }
+    LaunchedEffect(Unit) { if (!without("ton")) musicSetup { name -> val pcm = MusicSynth.render(SpaceMusic.compose(MusicMood.valueOf(name))); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i] / 32768f); musicStore(name, b) } }
     LaunchedEffect(musicOn, loud, mood) { musicWant(if (musicOn) mood.name else null, 0.5 * loud / 100.0) }
     // Zurück-Taste des Browsers schließt eine Ebene
     LaunchedEffect(nav.stack.size) { syncHistory(nav.stack.size) { nav.back() } }

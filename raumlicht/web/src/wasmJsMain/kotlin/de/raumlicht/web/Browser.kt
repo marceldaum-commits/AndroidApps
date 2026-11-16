@@ -2,6 +2,10 @@ package de.raumlicht.web
 
 // Brücke zum Browser: Speicher, Links, Ton, Stimme, Teilen, Verlauf. Die 3D-Bühne bindet das gemeinsame Modul selbst ein (Stage.wasmJs.kt).
 
+/** Fehlersuche: Mit „?ohne=emoji,fenster,…“ in der Adresse lassen sich einzelne Teile abschalten (Knöpfe dafür auf der Diagnose-Seite) */
+fun without(part: String): Boolean = js("(new URLSearchParams(location.search).get('ohne') || '').split(',').indexOf(part) >= 0")
+/** Zeile in die Mitschrift für die Diagnose-Seite */
+fun note(text: String): Unit = js("{ if (window.__rlNote) window.__rlNote(text); }")
 fun storeGet(key: String): String? = js("localStorage.getItem(key)")
 fun storeSet(key: String, value: String): Unit = js("localStorage.setItem(key, value)")
 fun storeRemove(key: String): Unit = js("localStorage.removeItem(key)")
