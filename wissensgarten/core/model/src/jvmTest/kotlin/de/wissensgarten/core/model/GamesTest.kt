@@ -134,6 +134,8 @@ class GamesTest {
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("5", "-5"))
         assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("1250", "1.250"))
         assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("1.5", "1,5"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Marshallplan", "Marshall-Plan"))
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("Marshallplan", "Marshall-Plan", strictSpelling = true))
         assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("25", "25 %"))
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("25 €", "25 %"))
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("Paris", "12"))

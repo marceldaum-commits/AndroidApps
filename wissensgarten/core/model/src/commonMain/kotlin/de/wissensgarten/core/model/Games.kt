@@ -178,6 +178,12 @@ object TypedAnswer {
 
     private val NUMBER = Regex("^(-?)\\s*(\\d{1,3}(?:\\.\\d{3})+|\\d+)(?:,(\\d+))?\\s*(€|%|°C|[A-Za-zµΩ]{1,4})?$")
 
+    /** „Marshall-Plan“ → „Marshallplan“: Bindestriche/Leerzeichen weg, der Buchstabe danach klein. */
+    private fun joined(s: String): String = buildString {
+        var cut = false
+        for (c in s) { if (c == '-' || c == ' ') { cut = true; continue }; append(if (cut) c.lowercaseChar() else c); cut = false }
+    }
+
     /** „1.250,5 €“ → (1250.5, „€“); null, wenn keine reine Zahl (ggf. mit Einheit). */
     fun number(s: String): Pair<Double, String>? {
         val m = NUMBER.matchEntire(s.trim())
@@ -203,6 +209,8 @@ object TypedAnswer {
             val unitOk = tu.isEmpty() || au.isEmpty() || tu.equals(au, ignoreCase = true)
             return if (kotlin.math.abs(av - tv) < 1e-9 && unitOk) Verdict.RIGHT else Verdict.WRONG
         }
+        // „Marshallplan“ = „Marshall-Plan“: Bindestriche/Leerzeichen sind keine Fehler (außer in Rechtschreibung)
+        if (!strictSpelling && joined(t) == joined(a)) return Verdict.RIGHT
         val nt = SpokenAnswer.normalize(t); val na = SpokenAnswer.normalize(a)
         if (na.isEmpty()) return Verdict.WRONG
         val close = nt == na || SpokenAnswer.levenshtein(nt, na) <= maxOf(1, na.length / 6) && na.length >= 5
