@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.18.1';
+const APP_VERSION = '3.19.0';
 const APP_DATE = '2026-11-16';
 const CHANGELOG = [
+  ['3.19.0', '2026-11-16', ['Neu: Stufe „Profi“ in allen 30 Themen – für richtig gute Rechner, auch Erwachsene', 'Jede Stufe ist jetzt nachweislich schwerer als die davor: größere Zahlen, mehr Rechenschritte', 'Viele neue Aufgabenarten, z. B. Zinseszins, Kreisring, Klammern auf beiden Seiten']],
   ['3.18.1', '2026-11-16', ['Schnellwahl je Klasse 1–10 und „Neustart“ in Üben nach Wunsch']],
   ['3.18.0', '2026-11-16', ['Neu: Üben nach Wunsch 🎯 – Zahlenraum, Zehnerübergang, einzelne Mal-Reihen und Lückenaufgaben selbst einstellen', 'Als Vorlage speichern und per Link oder QR-Code teilen – ideal für Hausaufgaben', 'Große Ziffern und Tasten zum Einschalten']],
   ['3.17.0', '2026-11-16', ['Schnellerer Start mit Ladebalken – kein weißer Bildschirm mehr', 'Ab dem zweiten Start öffnet Rechenblitz sofort, auch bei schlechtem Netz']],

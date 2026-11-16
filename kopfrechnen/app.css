@@ -286,6 +286,7 @@ body.ingame .app{height:100dvh;min-height:0;padding-bottom:calc(84px + env(safe-
 #classNote{font-size:13px;color:var(--muted);margin:-6px 0 -4px 2px}
 #classNote:empty{display:none}
 .lvl.auto{flex:1.4;font-size:14px}
+.lvl.pro{flex:1.4;font-size:14px}
 .modes .mode .ico{background:var(--chip)}
 
 /* Spiel: neue Aufgabentypen */

@@ -286,8 +286,8 @@ function renderHome() {
 
   // Schwierigkeit: standardmäßig automatisch, aufklappbar
   const L = currentLevel(S.sel.op);
-  $('lvlLine').innerHTML = S.sel.lvl === 'auto' ? `Schwierigkeit: <b>Automatisch</b> <span class="muted">(gerade Stufe ${L + 1})</span>` : `Schwierigkeit: <b>Stufe ${S.sel.lvl + 1}</b>`;
-  $('levels').innerHTML = `<button class="lvl auto ${S.sel.lvl === 'auto' ? 'sel' : ''}" data-lvl="auto">Auto</button>` + [0, 1, 2, 3, 4].map(i => `<button class="lvl ${S.sel.lvl === i ? 'sel' : ''}" data-lvl="${i}">${i + 1}</button>`).join('');
+  $('lvlLine').innerHTML = S.sel.lvl === 'auto' ? `Schwierigkeit: <b>Automatisch</b> <span class="muted">(gerade Stufe ${L + 1})</span>` : `Schwierigkeit: <b>${lvlName(S.sel.lvl)}</b>`;
+  $('levels').innerHTML = `<button class="lvl auto ${S.sel.lvl === 'auto' ? 'sel' : ''}" data-lvl="auto">Auto</button>` + [0, 1, 2, 3, 4, 5].map(i => `<button class="lvl ${i === 5 ? 'pro' : ''} ${S.sel.lvl === i ? 'sel' : ''}" data-lvl="${i}" ${i === 5 ? 'title="Profi: für richtig gute Rechner"' : ''}>${i === 5 ? 'Profi' : i + 1}</button>`).join('');
   $('lvlDesc').textContent = LEVEL_DESC[S.sel.op][L];
   const best = S.best[`training|${S.sel.op}|${S.sel.lvl === 'auto' ? 'A' : S.sel.lvl}`];
   $('bestLine').textContent = best ? `Rekord: ${best} Punkte` : '';
@@ -340,7 +340,7 @@ function renderAssignCard() {
   if (!a) { el.hidden = true; return; }
   el.hidden = false;
   const done = a.runs.filter(r => r.ok).length, finished = done >= a.r;
-  const what = `${TOPICS[a.op].name} · Stufe ${a.l + 1} · ${a.r}× ${a.m === 'blitz' ? 'Blitzrunde' : 'Training'}${a.min ? ` (mind. ${a.min} %)` : ''}`;
+  const what = `${TOPICS[a.op].name} · ${lvlName(a.l)} · ${a.r}× ${a.m === 'blitz' ? 'Blitzrunde' : 'Training'}${a.min ? ` (mind. ${a.min} %)` : ''}`;
   el.innerHTML = `<div class="ac-top"><div class="ac-ico">📝</div><div><div class="eyebrow">Auftrag${a.by ? ` von <span translate="no">${esc(a.by)}</span>` : ''}</div><b>${esc(a.t || what)}</b>${a.t ? `<div class="muted small">${esc(what)}</div>` : ''}</div></div>
     <div class="dots">${Array.from({ length: a.r }, (_, i) => `<i class="${i < done ? 'on' : ''}"></i>`).join('')}<span class="muted small">${done}/${a.r} erledigt${a.due ? ` · bis ${fmtDay(a.due)}` : ''}</span></div>
     ${finished ? `<p class="small" style="margin:6px 0 10px">Geschafft! Schick deiner Lehrkraft jetzt dein Ergebnis.</p><div class="row2"><button class="btn primary" id="acSend">Ergebnis senden</button><button class="btn" id="acRemove">Entfernen</button></div>`
@@ -666,7 +666,7 @@ function finish() {
   const cfg = G.cfg, answered = G.correct + G.wrong, acc = answered ? G.correct / answered : 0, today = todayStr();
   let stars = null;
   if (cfg.timed) {
-    const f = [1, .8, .6, .45, .3][G.lvl] * (['add', 'sub', 'mul', 'div', 'gap'].includes(G.op) ? 1 : G.op === 'word' ? .35 : .7);
+    const f = [1, .8, .6, .45, .3, .2][G.lvl] * (['add', 'sub', 'mul', 'div', 'gap'].includes(G.op) ? 1 : G.op === 'word' ? .35 : .7);
     stars = acc < .7 ? (G.correct >= 8 * f ? 1 : 0) : G.correct >= 26 * f ? 3 : G.correct >= 17 * f ? 2 : G.correct >= 8 * f ? 1 : 0;
   } else if (!cfg.calm && !cfg.quiet && answered) stars = acc >= .95 ? 3 : acc >= .8 ? 2 : acc >= .6 ? 1 : 0;
 

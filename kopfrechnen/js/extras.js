@@ -458,7 +458,7 @@ function handleParams() {
   let used = false;
   const th = p.get('thema'), st = p.get('stufe'), mo = p.get('modus');
   if (th && TOPICS[th]) { S.sel.op = th; used = true; }
-  if (st) { if (st === 'auto') S.sel.lvl = 'auto'; else if (/^[1-5]$/.test(st)) S.sel.lvl = +st - 1; used = true; }
+  if (st) { if (st === 'auto') S.sel.lvl = 'auto'; else if (/^[1-6]$/.test(st)) S.sel.lvl = +st - 1; else if (/^profi$/i.test(st)) S.sel.lvl = 5; used = true; }
   if (used) { save(); renderHome(); }
   if (p.has('advent')) { used = true; setTimeout(() => openSheet('advent'), 300); }
   if (used) history.replaceState(null, '', location.pathname + location.hash);

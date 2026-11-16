@@ -2,7 +2,258 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, gebündelt, Meldung 48) und **3.18.0/3.18.1** (Üben nach Wunsch mit Schnellwahl je Klasse, Meldungen 49/50). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
+
+## 16.11.2026 (51) – Schwierigkeit steigt nachweislich, neue Stufe „Profi“ (3.19.0)
+
+- **Regel von Marcel (über den Leitstand):** „Wenn die eine Option für Schwierigkeit haben, dann sollte es auch steigen und am Ende extrem kompliziert sein, also nachweislich.“
+- **Ausgangslage:** Ein Messtest zeigte, dass **41 von 145 Stufen** nicht schwerer waren als die Stufe davor. Beispiel Plus: Stufe 3 (zweistellig + einstellig) brauchte oft keinen Zehnerübergang und war damit leichter als Stufe 2 (bis 20 mit Übergang).
+- **Was geändert ist:**
+  - Alle betroffenen Stufen in 25 Themen sind überarbeitet. Plus und Minus haben ab Stufe 3 immer einen Übergang, die höheren Stufen haben größere Zahlen und mehr Rechenschritte, und die Lösungswege zeigen jeden Schritt.
+  - Neu ist **Stufe 6 „Profi“ in allen 29 Themen und im Mix**, für richtig gute Schülerinnen und Schüler und auch für Erwachsene. Beispiele:
+    - 3,4 · 4,7 − 2,58
+    - 7/12 : (1/2 − 2/5)
+    - 3 (x + 6) − 41 = 8 (x + 4)
+    - √(20² + 21²)
+    - Zinseszins über 3 Jahre und Tageszinsen
+    - Wahrscheinlichkeit für genau eine rote Kugel ohne Zurücklegen
+    - 15.000.000 · 45.000.000 = 6,75 · 10ˣ
+    - zusammengesetzter Dreisatz
+    - lange Textaufgaben (Handytarif übers Jahr, zwei Rohre und ein Abfluss)
+    - Busfahrt von Montag bis Mittwoch in Minuten
+  - In der App gibt es neben 1–5 den Knopf **„Profi“**. Er ist auch in Aufträgen, Arbeitsblättern und per Link (`stufe=6` oder `stufe=profi`) wählbar.
+  - Die automatische Stufe geht weiterhin nur bis 5, Profi wählt man bewusst. In Profi-Blitzrunden reichen weniger richtige Aufgaben für Sterne.
+- **Nachweis (automatischer Test `tests/schwierigkeit.js`, im Repo):**
+  - Der Test erzeugt je Thema und Stufe 3000 Aufgaben und misst daran:
+    - Stellen der größten Zahl,
+    - Ziffern insgesamt,
+    - Anzahl der Zahlen,
+    - Länge des Lösungswegs,
+    - Anteil an Übergängen, Brüchen, Kommazahlen, negativen Zahlen und Klammern.
+  - Aus diesen Werten bildet er eine Schwierigkeitszahl. Die Gewichte sind für alle Themen gleich und werden nicht je Thema angepasst.
+  - Ist eine Stufe nicht strikt schwerer als die vorige, schlägt der Test fehl (Exit-Code 1).
+  - **Ergebnis: alle 174 Stufen (29 Themen × 6) sind strikt schwerer als die vorige ✓**
+  - Die Messung hat Grenzen: Sie misst Zahlengröße und Rechenaufwand, nicht jede inhaltliche Hürde (z. B. ein neues Verfahren). Mit einer anderen Gewichtung können die Abstände zwischen den Stufen anders aussehen.
+- **Richtigkeit geprüft:**
+  - 522 000 erzeugte Aufgaben über alle 6 Stufen: Lösung lesbar, ganzzahlig wo nötig, kein NaN.
+  - 106 000 reine Rechenaufgaben unabhängig nachgerechnet: 0 Fehler.
+  - Browser bei 320 px Breite (Deutsch, Englisch, Ukrainisch): keine JS-Fehler, keine fehlenden Übersetzungen.
+  - Rund 220 neue Texte sind auf Englisch und Ukrainisch übersetzt.
+- **Üben nach Wunsch:** Dort gibt es keinen Schwierigkeitsregler. Man stellt Zahlenraum, Übergang, Reihen usw. selbst ein, und die Klassen-Schnellwahl 1–10 steigt schon mit der Klasse. Deshalb ist dort nichts geändert.
+- **Kurzübersicht (Schwierigkeitszahl je Stufe):**
+
+| Thema | Schwierigkeit Stufe 1 → 2 → 3 → 4 → 5 → **Profi** | größte Zahl Stufe 1 / Profi (Stellen) | Ø Schritte Stufe 1 / Profi |
+|---|---|---|---|
+| Plus | 4.81 → 6.80 → 6.93 → 7.37 → 9.82 → **12.73** | 2 / 4 | 2.0 / 4.8 |
+| Minus | 4.79 → 6.80 → 7.05 → 7.39 → 9.82 → **12.72** | 2 / 4 | 2.0 / 4.8 |
+| Mal | 4.71 → 5.75 → 7.65 → 8.14 → 8.66 → **10.72** | 3 / 5 | 1.2 / 4.0 |
+| Geteilt | 5.97 → 6.27 → 7.65 → 8.21 → 8.65 → **10.59** | 3 / 5 | 3.0 / 3.8 |
+| Lücke | 5.46 → 6.21 → 7.98 → 8.59 → 9.90 → **12.26** | 2 / 4 | 1.3 / 5.8 |
+| Brüche | 8.03 → 8.54 → 10.36 → 11.29 → 11.36 → **13.40** | 2 / 4 | 2.3 / 3.6 |
+| Dezimal | 7.60 → 9.87 → 10.68 → 10.98 → 11.49 → **11.96** | 3 / 5 | 2.0 / 3.0 |
+| Prozent | 6.71 → 7.12 → 7.61 → 8.06 → 8.77 → **10.87** | 3 / 6 | 2.0 / 3.0 |
+| Negativ | 6.64 → 7.04 → 8.14 → 8.31 → 8.89 → **10.96** | 2 / 3 | 2.0 / 3.3 |
+| Potenzen | 3.99 → 4.53 → 6.02 → 7.27 → 7.49 → **9.75** | 3 / 6 | 1.0 / 3.3 |
+| Klammern | 6.66 → 7.10 → 7.64 → 9.42 → 10.23 → **11.34** | 3 / 3 | 2.0 / 3.3 |
+| Runden | 7.07 → 8.57 → 9.78 → 10.81 → 12.10 → **14.37** | 4 / 8 | 3.0 / 3.0 |
+| Einheiten | 6.61 → 6.71 → 8.06 → 8.71 → 8.97 → **10.19** | 5 / 5 | 2.0 / 2.9 |
+| Teiler | 7.10 → 8.07 → 8.18 → 8.61 → 10.19 → **10.87** | 2 / 4 | 3.0 / 5.3 |
+| Gleichung | 6.81 → 7.10 → 7.53 → 8.65 → 9.09 → **12.64** | 2 / 2 | 2.0 / 4.0 |
+| Textaufgaben | 4.65 → 5.41 → 7.30 → 7.70 → 8.11 → **10.63** | 2 / 6 | 1.1 / 3.2 |
+| Verdoppeln | 3.59 → 4.88 → 6.26 → 7.07 → 7.30 → **10.20** | 2 / 7 | 1.0 / 2.2 |
+| Geld | 6.64 → 6.83 → 9.31 → 9.95 → 10.55 → **12.26** | 3 / 4 | 2.5 / 3.5 |
+| Uhr & Zeit | 4.24 → 7.70 → 9.79 → 10.28 → 10.52 → **11.63** | 2 / 6 | 1.5 / 3.7 |
+| Geometrie | 5.19 → 5.90 → 6.42 → 6.86 → 7.66 → **8.87** | 2 / 4 | 2.0 / 3.2 |
+| Zahlenfolgen | 7.89 → 8.02 → 8.87 → 10.46 → 10.61 → **12.57** | 2 / 4 | 2.0 / 2.8 |
+| Terme | 6.51 → 6.97 → 8.78 → 9.37 → 10.49 → **11.20** | 3 / 3 | 2.0 / 3.5 |
+| Funktionen | 6.00 → 6.47 → 8.04 → 9.85 → 11.01 → **12.13** | 2 / 4 | 2.0 / 5.0 |
+| Wahrscheinlichkeit | 4.67 → 6.99 → 8.38 → 8.86 → 9.47 → **9.63** | 1 / 4 | 2.0 / 3.5 |
+| Zinsen | 8.20 → 8.30 → 8.43 → 9.48 → 13.69 → **14.11** | 4 / 7 | 2.0 / 3.0 |
+| Statistik | 8.39 → 10.05 → 10.32 → 11.20 → 13.98 → **15.29** | 2 / 3 | 3.0 / 4.0 |
+| Kreis | 8.05 → 8.84 → 9.20 → 10.08 → 11.09 → **11.50** | 4 / 6 | 2.0 / 3.0 |
+| Zehnerpotenzen | 9.56 → 10.31 → 13.24 → 15.27 → 16.26 → **19.38** | 7 / 10 | 2.0 / 4.0 |
+| Dreisatz | 6.60 → 6.86 → 7.29 → 9.75 → 9.84 → **10.36** | 2 / 4 | 2.0 / 3.5 |
+
+<details><summary>Vollständige Messtabelle (174 Zeilen, erzeugt mit <code>node tests/schwierigkeit.js --md</code>)</summary>
+
+| Thema | Stufe | Schwierigkeit | Ø Stellen (max) | Ø Zahlen | Ø Schritte Lösungsweg | Übertrag Ø | Brüche | Komma | negativ | Klammern |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Plus | 1 | **4.81** | 1.3 (2) | 2.0 | 2.0 | 0.2 | 0 % | 0 % | 0 % | 0 % |
+| Plus | 2 | **6.80** | 2.0 (2) | 2.0 | 3.0 | 1.0 | 0 % | 0 % | 0 % | 0 % |
+| Plus | 3 | **6.93** | 2.0 (2) | 2.0 | 2.8 | 1.0 | 0 % | 0 % | 0 % | 0 % |
+| Plus | 4 | **7.37** | 2.0 (3) | 2.0 | 3.0 | 1.0 | 0 % | 0 % | 0 % | 0 % |
+| Plus | 5 | **9.82** | 3.0 (3) | 2.0 | 3.9 | 1.3 | 0 % | 0 % | 0 % | 0 % |
+| Plus | Profi | **12.73** | 4.0 (4) | 2.0 | 4.8 | 2.3 | 0 % | 0 % | 0 % | 0 % |
+| Minus | 1 | **4.79** | 1.3 (2) | 2.0 | 2.0 | 0.2 | 0 % | 0 % | 0 % | 0 % |
+| Minus | 2 | **6.80** | 2.0 (2) | 2.0 | 3.0 | 1.0 | 0 % | 0 % | 0 % | 0 % |
+| Minus | 3 | **7.05** | 2.0 (2) | 2.0 | 3.0 | 1.0 | 0 % | 0 % | 0 % | 0 % |
+| Minus | 4 | **7.39** | 2.1 (3) | 2.0 | 3.0 | 1.0 | 0 % | 0 % | 0 % | 0 % |
+| Minus | 5 | **9.82** | 3.0 (3) | 2.0 | 3.9 | 1.3 | 0 % | 0 % | 0 % | 0 % |
+| Minus | Profi | **12.72** | 4.0 (4) | 2.0 | 4.8 | 2.3 | 0 % | 0 % | 0 % | 0 % |
+| Mal | 1 | **4.71** | 1.7 (3) | 2.0 | 1.2 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Mal | 2 | **5.75** | 1.9 (3) | 2.0 | 2.3 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Mal | 3 | **7.65** | 2.3 (3) | 2.0 | 4.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Mal | 4 | **8.14** | 2.9 (3) | 2.0 | 3.7 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Mal | 5 | **8.66** | 3.0 (3) | 2.0 | 3.9 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Mal | Profi | **10.72** | 4.4 (5) | 2.0 | 4.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geteilt | 1 | **5.97** | 1.7 (3) | 2.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geteilt | 2 | **6.27** | 1.9 (3) | 2.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geteilt | 3 | **7.65** | 2.3 (3) | 2.0 | 4.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geteilt | 4 | **8.21** | 2.9 (3) | 2.0 | 3.8 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geteilt | 5 | **8.65** | 3.0 (3) | 2.0 | 3.9 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geteilt | Profi | **10.59** | 4.4 (5) | 2.0 | 3.8 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Lücke | 1 | **5.46** | 2.0 (2) | 2.0 | 1.3 | 0.7 | 0 % | 0 % | 0 % | 0 % |
+| Lücke | 2 | **6.21** | 2.1 (3) | 2.0 | 1.3 | 1.0 | 0 % | 0 % | 0 % | 0 % |
+| Lücke | 3 | **7.98** | 2.3 (3) | 2.0 | 4.5 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Lücke | 4 | **8.59** | 2.9 (3) | 2.0 | 4.4 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Lücke | 5 | **9.90** | 3.0 (3) | 2.0 | 4.9 | 0.6 | 0 % | 0 % | 0 % | 0 % |
+| Lücke | Profi | **12.26** | 3.6 (4) | 2.5 | 5.8 | 0.9 | 0 % | 0 % | 0 % | 0 % |
+| Brüche | 1 | **8.03** | 1.0 (2) | 4.0 | 2.3 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Brüche | 2 | **8.54** | 2.0 (3) | 2.5 | 2.8 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Brüche | 3 | **10.36** | 1.8 (2) | 4.0 | 3.9 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Brüche | 4 | **11.29** | 2.0 (4) | 5.2 | 3.3 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Brüche | 5 | **11.36** | 2.3 (4) | 4.8 | 3.3 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Brüche | Profi | **13.40** | 2.1 (4) | 6.0 | 3.6 | 0.0 | 100 % | 0 % | 0 % | 100 % |
+| Dezimal | 1 | **7.60** | 2.3 (3) | 2.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Dezimal | 2 | **9.87** | 3.3 (4) | 2.0 | 3.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Dezimal | 3 | **10.68** | 4.2 (6) | 2.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Dezimal | 4 | **10.98** | 4.3 (5) | 2.0 | 3.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Dezimal | 5 | **11.49** | 4.4 (5) | 2.0 | 2.7 | 0.0 | 34 % | 100 % | 0 % | 0 % |
+| Dezimal | Profi | **11.96** | 4.1 (5) | 2.7 | 3.0 | 0.0 | 0 % | 100 % | 0 % | 33 % |
+| Prozent | 1 | **6.71** | 2.5 (3) | 2.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Prozent | 2 | **7.12** | 2.8 (3) | 2.0 | 2.1 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Prozent | 3 | **7.61** | 2.7 (3) | 2.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Prozent | 4 | **8.06** | 2.9 (4) | 2.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Prozent | 5 | **8.77** | 3.2 (4) | 2.0 | 3.0 | 0.6 | 0 % | 0 % | 0 % | 0 % |
+| Prozent | Profi | **10.87** | 4.1 (6) | 2.5 | 3.0 | 0.0 | 0 % | 49 % | 0 % | 0 % |
+| Negativ | 1 | **6.64** | 1.3 (2) | 2.0 | 2.0 | 0.4 | 0 % | 0 % | 100 % | 65 % |
+| Negativ | 2 | **7.04** | 2.0 (2) | 2.0 | 2.0 | 0.4 | 0 % | 0 % | 87 % | 0 % |
+| Negativ | 3 | **8.14** | 2.0 (3) | 2.0 | 2.0 | 0.4 | 0 % | 0 % | 100 % | 100 % |
+| Negativ | 4 | **8.31** | 2.1 (3) | 2.0 | 3.0 | 0.0 | 0 % | 0 % | 100 % | 67 % |
+| Negativ | 5 | **8.89** | 2.3 (3) | 2.3 | 2.7 | 0.1 | 0 % | 0 % | 87 % | 73 % |
+| Negativ | Profi | **10.96** | 2.4 (3) | 3.7 | 3.3 | 0.0 | 0 % | 0 % | 97 % | 91 % |
+| Potenzen | 1 | **3.99** | 1.8 (3) | 1.0 | 1.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Potenzen | 2 | **4.53** | 2.0 (3) | 1.0 | 1.5 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Potenzen | 3 | **6.02** | 3.0 (3) | 1.0 | 1.5 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Potenzen | 4 | **7.27** | 3.6 (10) | 1.0 | 1.8 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Potenzen | 5 | **7.49** | 3.0 (3) | 2.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Potenzen | Profi | **9.75** | 3.3 (6) | 2.3 | 3.3 | 0.0 | 0 % | 0 % | 14 % | 33 % |
+| Klammern | 1 | **6.66** | 2.0 (3) | 3.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Klammern | 2 | **7.10** | 2.0 (3) | 3.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 50 % |
+| Klammern | 3 | **7.64** | 2.1 (3) | 3.3 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 34 % |
+| Klammern | 4 | **9.42** | 2.0 (3) | 4.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 100 % |
+| Klammern | 5 | **10.23** | 2.6 (3) | 4.3 | 2.7 | 0.0 | 0 % | 0 % | 0 % | 67 % |
+| Klammern | Profi | **11.34** | 2.4 (3) | 5.3 | 3.3 | 0.0 | 0 % | 0 % | 0 % | 68 % |
+| Runden | 1 | **7.07** | 2.9 (4) | 1.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Runden | 2 | **8.57** | 3.9 (5) | 1.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Runden | 3 | **9.78** | 4.4 (6) | 1.0 | 3.0 | 0.0 | 0 % | 50 % | 0 % | 0 % |
+| Runden | 4 | **10.81** | 4.3 (5) | 2.0 | 2.0 | 1.7 | 0 % | 0 % | 0 % | 0 % |
+| Runden | 5 | **12.10** | 5.8 (6) | 2.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Runden | Profi | **14.37** | 7.3 (8) | 1.5 | 3.0 | 0.0 | 0 % | 51 % | 0 % | 0 % |
+| Einheiten | 1 | **6.61** | 3.4 (5) | 1.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Einheiten | 2 | **6.71** | 3.5 (5) | 1.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Einheiten | 3 | **8.06** | 3.4 (4) | 1.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Einheiten | 4 | **8.71** | 4.5 (6) | 1.0 | 2.0 | 0.0 | 0 % | 51 % | 0 % | 0 % |
+| Einheiten | 5 | **8.97** | 3.9 (5) | 1.8 | 2.2 | 0.0 | 0 % | 39 % | 0 % | 0 % |
+| Einheiten | Profi | **10.19** | 3.9 (5) | 1.8 | 2.9 | 0.1 | 0 % | 76 % | 0 % | 0 % |
+| Teiler | 1 | **7.10** | 1.9 (2) | 3.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Teiler | 2 | **8.07** | 3.9 (4) | 1.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Teiler | 3 | **8.18** | 3.0 (3) | 2.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Teiler | 4 | **8.61** | 2.9 (3) | 2.0 | 4.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Teiler | 5 | **10.19** | 3.5 (5) | 1.0 | 6.7 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Teiler | Profi | **10.87** | 3.5 (4) | 2.5 | 5.3 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Gleichung | 1 | **6.81** | 1.9 (2) | 3.0 | 2.0 | 0.4 | 0 % | 0 % | 0 % | 0 % |
+| Gleichung | 2 | **7.10** | 2.6 (3) | 2.5 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Gleichung | 3 | **7.53** | 2.2 (3) | 3.0 | 2.0 | 0.6 | 0 % | 0 % | 9 % | 0 % |
+| Gleichung | 4 | **8.65** | 2.3 (3) | 3.5 | 2.0 | 0.3 | 0 % | 0 % | 50 % | 50 % |
+| Gleichung | 5 | **9.09** | 2.0 (3) | 4.0 | 3.0 | 0.5 | 0 % | 0 % | 45 % | 0 % |
+| Gleichung | Profi | **12.64** | 1.9 (2) | 7.0 | 4.0 | 0.0 | 0 % | 0 % | 52 % | 100 % |
+| Textaufgaben | 1 | **4.65** | 1.7 (2) | 2.0 | 1.1 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Textaufgaben | 2 | **5.41** | 2.1 (3) | 2.2 | 1.2 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Textaufgaben | 3 | **7.30** | 2.4 (4) | 2.4 | 1.9 | 0.0 | 26 % | 18 % | 0 % | 0 % |
+| Textaufgaben | 4 | **7.70** | 2.8 (5) | 2.3 | 2.3 | 0.0 | 0 % | 13 % | 0 % | 0 % |
+| Textaufgaben | 5 | **8.11** | 2.7 (5) | 2.7 | 2.5 | 0.0 | 4 % | 19 % | 0 % | 0 % |
+| Textaufgaben | Profi | **10.63** | 3.4 (6) | 3.6 | 3.2 | 0.0 | 0 % | 33 % | 0 % | 0 % |
+| Verdoppeln | 1 | **3.59** | 1.6 (2) | 1.0 | 1.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Verdoppeln | 2 | **4.88** | 2.0 (3) | 1.0 | 1.8 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Verdoppeln | 3 | **6.26** | 3.0 (3) | 1.0 | 1.7 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Verdoppeln | 4 | **7.07** | 2.7 (3) | 1.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Verdoppeln | 5 | **7.30** | 3.7 (4) | 1.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Verdoppeln | Profi | **10.20** | 4.7 (7) | 1.0 | 2.2 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Geld | 1 | **6.64** | 2.1 (3) | 2.0 | 2.5 | 0.3 | 0 % | 0 % | 0 % | 0 % |
+| Geld | 2 | **6.83** | 2.7 (3) | 1.7 | 2.0 | 0.0 | 0 % | 33 % | 0 % | 0 % |
+| Geld | 3 | **9.31** | 3.2 (4) | 2.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Geld | 4 | **9.95** | 3.6 (4) | 2.3 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Geld | 5 | **10.55** | 3.6 (4) | 3.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Geld | Profi | **12.26** | 3.4 (4) | 4.0 | 3.5 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Uhr & Zeit | 1 | **4.24** | 1.7 (2) | 1.3 | 1.5 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Uhr & Zeit | 2 | **7.70** | 3.0 (4) | 2.0 | 2.3 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Uhr & Zeit | 3 | **9.79** | 3.9 (4) | 2.5 | 2.5 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Uhr & Zeit | 4 | **10.28** | 4.1 (5) | 2.3 | 3.5 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Uhr & Zeit | 5 | **10.52** | 3.5 (5) | 2.8 | 3.0 | 0.0 | 0 % | 76 % | 0 % | 0 % |
+| Uhr & Zeit | Profi | **11.63** | 4.3 (6) | 3.3 | 3.7 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geometrie | 1 | **5.19** | 2.0 (2) | 1.5 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geometrie | 2 | **5.90** | 2.5 (3) | 1.3 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geometrie | 3 | **6.42** | 2.5 (3) | 2.0 | 1.7 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geometrie | 4 | **6.86** | 2.5 (3) | 2.3 | 2.2 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geometrie | 5 | **7.66** | 3.2 (5) | 1.8 | 2.5 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Geometrie | Profi | **8.87** | 2.9 (4) | 3.0 | 3.2 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zahlenfolgen | 1 | **7.89** | 1.9 (2) | 4.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zahlenfolgen | 2 | **8.02** | 2.0 (3) | 4.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zahlenfolgen | 3 | **8.87** | 2.2 (3) | 4.7 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zahlenfolgen | 4 | **10.46** | 3.0 (4) | 4.5 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zahlenfolgen | 5 | **10.61** | 2.6 (3) | 5.0 | 2.0 | 0.0 | 0 % | 0 % | 50 % | 0 % |
+| Zahlenfolgen | Profi | **12.57** | 3.4 (4) | 5.3 | 2.8 | 0.0 | 0 % | 0 % | 24 % | 0 % |
+| Terme | 1 | **6.51** | 2.0 (3) | 3.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Terme | 2 | **6.97** | 1.7 (2) | 2.9 | 3.0 | 0.0 | 0 % | 0 % | 26 % | 0 % |
+| Terme | 3 | **8.78** | 1.9 (3) | 3.0 | 3.0 | 0.0 | 0 % | 0 % | 75 % | 100 % |
+| Terme | 4 | **9.37** | 2.5 (3) | 4.0 | 3.0 | 0.0 | 0 % | 0 % | 53 % | 0 % |
+| Terme | 5 | **10.49** | 2.5 (3) | 4.3 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 100 % |
+| Terme | Profi | **11.20** | 2.3 (3) | 5.5 | 3.5 | 0.0 | 0 % | 0 % | 28 % | 51 % |
+| Funktionen | 1 | **6.00** | 1.7 (2) | 2.9 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Funktionen | 2 | **6.47** | 1.7 (2) | 2.5 | 2.0 | 0.0 | 0 % | 0 % | 75 % | 0 % |
+| Funktionen | 3 | **8.04** | 1.8 (2) | 4.0 | 2.0 | 0.0 | 0 % | 0 % | 89 % | 0 % |
+| Funktionen | 4 | **9.85** | 2.5 (5) | 2.0 | 4.0 | 0.0 | 0 % | 100 % | 76 % | 0 % |
+| Funktionen | 5 | **11.01** | 2.3 (3) | 4.0 | 5.0 | 0.0 | 0 % | 0 % | 100 % | 0 % |
+| Funktionen | Profi | **12.13** | 2.5 (4) | 4.0 | 5.0 | 0.0 | 0 % | 49 % | 95 % | 0 % |
+| Wahrscheinlichkeit | 1 | **4.67** | 1.0 (1) | 0.3 | 2.0 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Wahrscheinlichkeit | 2 | **6.99** | 1.4 (2) | 2.2 | 2.3 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Wahrscheinlichkeit | 3 | **8.38** | 2.7 (4) | 1.8 | 3.0 | 0.0 | 33 % | 35 % | 0 % | 0 % |
+| Wahrscheinlichkeit | 4 | **8.86** | 2.5 (3) | 2.3 | 2.4 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Wahrscheinlichkeit | 5 | **9.47** | 2.4 (3) | 2.0 | 3.7 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Wahrscheinlichkeit | Profi | **9.63** | 2.6 (4) | 2.0 | 3.5 | 0.0 | 100 % | 0 % | 0 % | 0 % |
+| Zinsen | 1 | **8.20** | 3.8 (4) | 2.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zinsen | 2 | **8.30** | 3.9 (4) | 2.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zinsen | 3 | **8.43** | 3.9 (4) | 2.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zinsen | 4 | **9.48** | 4.2 (5) | 3.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zinsen | 5 | **13.69** | 4.6 (6) | 4.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 100 % |
+| Zinsen | Profi | **14.11** | 5.1 (7) | 4.0 | 3.0 | 0.0 | 0 % | 68 % | 0 % | 35 % |
+| Statistik | 1 | **8.39** | 1.9 (2) | 4.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Statistik | 2 | **10.05** | 2.0 (2) | 6.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Statistik | 3 | **10.32** | 2.0 (2) | 6.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Statistik | 4 | **11.20** | 2.0 (2) | 6.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Statistik | 5 | **13.98** | 2.0 (2) | 9.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Statistik | Profi | **15.29** | 2.4 (3) | 8.0 | 4.0 | 0.0 | 0 % | 51 % | 0 % | 0 % |
+| Kreis | 1 | **8.05** | 3.6 (4) | 1.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Kreis | 2 | **8.84** | 4.2 (5) | 1.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Kreis | 3 | **9.20** | 4.5 (5) | 1.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Kreis | 4 | **10.08** | 5.1 (6) | 1.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Kreis | 5 | **11.09** | 5.2 (7) | 2.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Kreis | Profi | **11.50** | 4.9 (6) | 1.7 | 3.0 | 0.0 | 0 % | 100 % | 0 % | 32 % |
+| Zehnerpotenzen | 1 | **9.56** | 5.0 (7) | 1.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zehnerpotenzen | 2 | **10.31** | 5.0 (7) | 2.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Zehnerpotenzen | 3 | **13.24** | 6.0 (8) | 2.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Zehnerpotenzen | 4 | **15.27** | 7.5 (10) | 3.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Zehnerpotenzen | 5 | **16.26** | 7.5 (10) | 3.0 | 2.0 | 0.0 | 0 % | 100 % | 100 % | 0 % |
+| Zehnerpotenzen | Profi | **19.38** | 7.8 (10) | 4.0 | 4.0 | 0.0 | 0 % | 99 % | 32 % | 0 % |
+| Dreisatz | 1 | **6.60** | 2.0 (2) | 3.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Dreisatz | 2 | **6.86** | 2.1 (3) | 3.0 | 2.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Dreisatz | 3 | **7.29** | 1.9 (2) | 3.0 | 3.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Dreisatz | 4 | **9.75** | 3.3 (4) | 3.0 | 2.0 | 0.0 | 0 % | 100 % | 0 % | 0 % |
+| Dreisatz | 5 | **9.84** | 2.2 (3) | 4.0 | 4.0 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+| Dreisatz | Profi | **10.36** | 2.9 (4) | 4.5 | 3.5 | 0.0 | 0 % | 0 % | 0 % | 0 % |
+
+</details>
 
 ## 16.11.2026 (50) – Üben nach Wunsch: Schnellwahl je Klasse 1–10 und „Neustart“ (3.18.1)
 

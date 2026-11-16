@@ -2016,3 +2016,228 @@ alles von Grund auf – bis 10, ohne Zeitdruck, große Tasten.	everything from s
 Vorschlag für Klasse {}	Suggestion for grade {}	Пропозиція для {} класу
 jede Einstellung lässt sich unten noch ändern.	you can still change every setting below.	кожне налаштування можна змінити нижче.
 Schnellwahl je Klasse 1–10 und „Neustart“ in Üben nach Wunsch	Quick choice per grade {}–{} and “fresh start” in custom practice	Швидкий вибір для {}–{} класів і «З нуля» у вправах на вибір
+# 16.11.2026 – Profi-Stufe und schwerere Stufen (Marcel: „am Ende extrem kompliziert, nachweislich“)
+Profi	Pro	Профі
+für richtig gute Rechner	for really strong calculators	для дуже сильних рахівників
+vierstellig mit mehreren Übergängen	four digits with several carries	чотирицифрові з кількома переходами
+dreistellig	three-digit	тризначне
+bis {} {}	up to {} {}	до {} {}
+Mal-Lücken im großen Einmaleins	Multiplication gaps, bigger tables	Пропуски в множенні, велика таблиця
+Geteilt-Lücken bis {}	Division gaps up to {}	Пропуски в діленні до {}
+vierstellige und zweistufige Lücken	four-digit and two-step gaps	чотирицифрові та двокрокові пропуски
+drei Brüche mit Klammern	three fractions with brackets	три дроби з дужками
+Rechenketten mit Dezimalzahlen	calculation chains with decimals	ланцюжки обчислень з десятковими дробами
+mehrere Änderungen, Grundwert rückwärts	several changes, original value backwards	кілька змін, початкове значення у зворотному напрямку
+Klammern und Punkt vor Strich mit Vorzeichen	brackets and order of operations with signs	дужки та порядок дій зі знаками
+Potenzregeln und Wurzeln aus Summen	power rules and roots of sums	правила степенів і корені із сум
+verschachtelte Klammern	nested brackets	вкладені дужки
+Überschlag mit großen Zahlen, Hundertstel	estimating with big numbers, hundredths	прикидка з великими числами, сотні частки
+Tempo, Kommazahlen, gemischte Einheiten	speed, decimals, mixed units	швидкість, десяткові дроби, змішані одиниці
+Euklid und kgV von drei Zahlen	Euclid and LCM of three numbers	Евклід і НСК трьох чисел
+Klammern auf beiden Seiten	brackets on both sides	дужки з обох боків
+Kommazahlen halbieren und vervielfachen	halving and multiplying decimals	ділення навпіл і множення десяткових дробів
+Kilopreise und Einkauf mit Rückgeld	price per kilo and shopping with change	ціна за кілограм і покупки з решткою
+Uhrzeiten, Kalender, Tage und Stunden	Clock times, calendar, days and hours	Час на годиннику, календар, дні й години
+Lange Zeitspannen und Sekunden	Long time spans and seconds	Довгі проміжки часу та секунди
+Nachtfahrt, Kommastunden, Tempo	Night journeys, decimal hours, speed	Нічна поїздка, години з комою, швидкість
+Etappen, Mehrtagesfahrten, Sekunden	stages, multi-day journeys, seconds	етапи, багатоденні поїздки, секунди
+Oberflächen, L-Formen, Prismen	surface areas, L-shapes, prisms	площі поверхні, L-подібні фігури, призми
+verschachtelte Regeln	nested rules	вкладені правила
+Klammer mal Klammer, x³	bracket times bracket, x³	дужка на дужку, x³
+Nullstelle aus zwei Punkten, Schnittpunkt	zero from two points, intersection	нуль за двома точками, точка перетину
+mit Zehnerpotenzen rechnen	calculating with powers of ten	обчислення зі степенями десяти
+zusammengesetzter Dreisatz	compound rule of three	складене пропорційне правило
+Zinseszins über {} Jahre, Tageszinsen	compound interest over {} years, daily interest	складні відсотки за {} роки, денні відсотки
+genau eine, mindestens eine, dreimal	exactly one, at least one, three times	рівно одна, хоча б одна, тричі
+gewichteter Durchschnitt	weighted average	зважене середнє
+Kreisring, Zylinder-Oberfläche, Halbkreis	annulus, cylinder surface, semicircle	кільце, поверхня циліндра, півколо
+lange Aufgaben mit vielen Schritten	long problems with many steps	довгі задачі з багатьма кроками
+Alle Themen zufällig gemischt – Profi	All topics mixed at random – Pro	Усі теми впереміш – Профі
+Erst rückwärts minus	First subtract backwards	Спочатку віднімання у зворотному напрямку
+Dann rückwärts geteilt	Then divide backwards	Потім ділення у зворотному напрямку
+Größter gemeinsamer Teiler von {} und {}	Greatest common divisor of {} and {}	Найбільший спільний дільник {} і {}
+Gekürzt	Simplified	Скорочено
+Gemeinsamer Nenner {}	Common denominator {}	Спільний знаменник {}
+Von links nach rechts	From left to right	Зліва направо
+Klammer zuerst, gemeinsamer Nenner {}:	Brackets first, common denominator {}:	Спочатку дужки, спільний знаменник {}:
+Mit dem Kehrwert malnehmen	Multiply by the reciprocal	Множимо на обернений дріб
+Nachkommastellen zählen	Count the decimal places	Рахуємо знаки після коми
+In Hundertsteln rechnen	Calculate in hundredths	Рахуємо в сотих
+{} Hundertstel	{} hundredths	{} сотих
+Erweitern mit {}	Expand by {}	Розширюємо на {}
+Ohne Komma	Without the decimal point	Без коми
+Drei Nachkommastellen	Three decimal places	Три знаки після коми
+{}, also {}	{}, so {}	{}, отже {}
+Punkt vor Strich – ohne Komma	× and ÷ first – without the decimal point	Спочатку множення – без коми
+Zwei Nachkommastellen	Two decimal places	Два знаки після коми
+Nicht einfach {} % − {} %	Not simply {} % − {} %	Не просто {} % − {} %
+Die zweite Änderung bezieht sich auf den neuen Preis.	The second change refers to the new price.	Друга зміна стосується нової ціни.
+Ein Preis von {} € steigt erst um {} % und sinkt dann um {} %. Wie hoch ist er am Ende?	A price of €{} first rises by {} % and then falls by {} %. What is it at the end?	Ціна {} € спочатку зростає на {} %, а потім знижується на {} %. Якою вона буде в кінці?
+{} € sind {} % des alten Preises	€{} is {} % of the old price	{} € – це {} % старої ціни
+Nach {} % Rabatt kostet etwas {} €. Was hat es vorher gekostet?	After a {} % discount something costs €{}. What did it cost before?	Після знижки {} % річ коштує {} €. Скільки вона коштувала раніше?
+Nach einer Erhöhung um {} % kostet etwas {} €. Was hat es vorher gekostet?	After an increase of {} % something costs €{}. What did it cost before?	Після підвищення на {} % річ коштує {} €. Скільки вона коштувала раніше?
+Von links nach rechts:	From left to right:	Зліва направо:
+plus mal minus ergibt minus	plus times minus gives minus	плюс на мінус дає мінус
+minus mal minus ergibt plus	minus times minus gives plus	мінус на мінус дає плюс
+minus mal plus ergibt minus	minus times plus gives minus	мінус на плюс дає мінус
+plus mal plus ergibt plus	plus times plus gives plus	плюс на плюс дає плюс
+{}, also	{}, so	{}, отже
+Innere Klammer	Inner brackets	Внутрішні дужки
+{}, dann drei Nullen anhängen	{}, then add three zeros	{}, потім дописати три нулі
+Runde auf Hunderter und Zehner	Round to hundreds and tens	Округли до сотень і десятків
+Entscheidend ist die Tausendstelstelle	The thousandths digit decides	Вирішує цифра тисячних
+auf Hundertstel	to hundredths	до сотих
+{}, dann fünf Nullen anhängen	{}, then add five zeros	{}, потім дописати п’ять нулів
+Runde auf Tausender und Hunderter	Round to thousands and hundreds	Округли до тисяч і сотень
+{} km {} m = {} m	{} km {} m = {} m	{} км {} м = {} м
+{} m/s = {} m pro Stunde = {} km/h	{} m/s = {} m per hour = {} km/h	{} м/с = {} м за годину = {} км/год
+{} km/h	{} km/h	{} км/год
+km/h	km/h	км/год
+{} km² = {} ha	{} km² = {} ha	{} км² = {} га
+{} km/h = {} m in {} s	{} km/h = {} m in {} s	{} км/год = {} м за {} с
+{} km/h = {} m	{} km/h = {} m	{} км/год = {} м
+{} ist nicht durch {} teilbar – also auch {} nicht.	{} is not divisible by {} – so {} isn’t either.	{} не ділиться на {} – отже, {} теж ні.
+{} ist sogar durch {} teilbar – also auch {}.	{} is even divisible by {} – so {} is too.	{} ділиться навіть на {} – отже, {} теж.
+Jeden Primfaktor so oft nehmen, wie er höchstens vorkommt:	Take each prime factor as often as it appears at most:	Беремо кожен простий множник стільки разів, скільки він найбільше трапляється:
+kgV = {}	LCM = {}	НСК = {}
+Der größte Primfaktor ist {}.	The largest prime factor is {}.	Найбільший простий множник – {}.
+größter Primfaktor von	largest prime factor of	найбільший простий множник числа
+Anzahl der Teiler	Number of divisors	Кількість дільників
+jeden Exponenten um {} erhöhen und malnehmen	increase each exponent by {} and multiply	збільшити кожен показник на {} і перемножити
+Euklid	Euclid	Евклід
+immer mit Rest teilen	always divide with remainder	ділимо з остачею
+Der letzte Teiler ohne Rest ist der ggT	The last divisor without remainder is the GCD	Останній дільник без остачі – це НСД
+Ausmultiplizieren	Expand	Розкриваємо дужки
+Zusammenfassen	Combine	Зводимо подібні
+− {}x und + {} auf beiden Seiten	− {}x and + {} on both sides	− {}x і + {} з обох боків
+− {}x und − {} auf beiden Seiten	− {}x and − {} on both sides	− {}x і − {} з обох боків
+Fruchtsaft	Fruit juice	Фруктовий сік
+{} % von {} l = {} l	{} % of {} l = {} l	{} % від {} л = {} л
+Mischung	Mixture	Суміш
+{} Liter Saft mit {} % Fruchtanteil werden mit {} Litern Wasser gemischt. Wie viel Prozent Fruchtanteil hat die Mischung?	{} litres of juice with {} % fruit content are mixed with {} litres of water. What percentage of fruit does the mixture contain?	{} л соку з вмістом фруктів {} % змішують з {} л води. Який відсоток фруктів у суміші?
+Eintritt	Entry	Вхід
+Gesamt	Total	Разом
+Pro Kind	Per child	На дитину
+{} Kinder und {} Lehrkräfte machen einen Ausflug. Der Bus kostet {} € für alle, der Eintritt {} € pro Kind, Lehrkräfte zahlen keinen Eintritt. Alle Kosten werden auf die Kinder verteilt. Wie viel zahlt jedes Kind?	{} children and {} teachers go on a trip. The bus costs €{} for everyone, entry is €{} per child, teachers pay no entry. All costs are shared among the children. How much does each child pay?	{} дітей і {} вчителі їдуть на екскурсію. Автобус коштує {} € для всіх, вхід – {} € за дитину, вчителі за вхід не платять. Усі витрати ділять між дітьми. Скільки платить кожна дитина?
+In y Jahren	In y years	Через y років
+Die Mutter von {} ist heute {} Jahre alt, {} ist {}. In wie vielen Jahren ist die Mutter genau doppelt so alt wie {}?	{}’s mother is {} years old today, {} is {}. In how many years will the mother be exactly twice as old as {}?	Мамі {0} сьогодні {1} років, {2} – {3}. Через скільки років мама буде рівно вдвічі старша за {4}?
+Zufluss	Inflow	Приплив
+{} Liter pro Minute	{} litres per minute	{} л за хвилину
+Abfluss abziehen	Subtract the outflow	Віднімаємо витік
+Ein Becken fasst {} Liter. Rohr A füllt {} Liter pro Minute, Rohr B {} Liter pro Minute. Gleichzeitig laufen {} Liter pro Minute ab. Nach wie vielen Minuten ist das Becken voll?	A pool holds {} litres. Pipe A fills {} litres per minute, pipe B {} litres per minute. At the same time {} litres per minute drain away. After how many minutes is the pool full?	Басейн вміщує {} л. Труба A наливає {} л за хвилину, труба B – {} л за хвилину. Одночасно витікає {} л за хвилину. Через скільки хвилин басейн буде повний?
+Abheben	Withdraw	Зняття
+{} legt {} € zu {} % Zinsen an. Nach einem Jahr hebt {} {} € ab, der Rest wird ein weiteres Jahr mit {} % verzinst. Wie viel Geld ist es am Ende?	{} invests €{} at {} % interest. After one year {} withdraws €{}, the rest earns {} % for another year. How much money is there at the end?	{} кладе {} € під {} %. Через рік {} знімає {} €, решта ще рік дає {} %. Скільки грошей буде в кінці?
+Minuten	Minutes	Хвилини
+{} ct = {} ct = {} €	{} ct = {} ct = €{}	{} ц = {} ц = {} €
+Daten	Data	Дані
+Ein Monat	One month	Один місяць
+Ein Jahr	One year	Один рік
+Ein Handytarif kostet {} € im Monat, jede Minute {} Cent und jedes Gigabyte Daten {} €. {} telefoniert jeden Monat {} Minuten und braucht {} Gigabyte. Wie viel kostet das in einem Jahr?	A phone plan costs €{} a month, each minute {} cents and each gigabyte of data €{}. {} talks for {} minutes every month and uses {} gigabytes. How much does that cost in a year?	Мобільний тариф коштує {} € на місяць, кожна хвилина – {} центів, кожен гігабайт даних – {} €. {} щомісяця розмовляє {} хвилин і використовує {} гігабайт. Скільки це коштує за рік?
+Ein Achtel = dreimal halbieren	One eighth = halve three times	Одна восьма = тричі поділити навпіл
+ein Achtel von	one eighth of	одна восьма від
+Hefte	Exercise books	Зошити
+Stifte	Pens	Ручки
+Zusammen	Together	Разом
+Du kaufst {} Hefte zu je {} € und {} Stifte zu je {} € und bezahlst mit {} €. Wie viel Rückgeld bekommst du?	You buy {} exercise books at €{} each and {} pens at €{} each and pay with €{}. How much change do you get?	Ти купуєш {} зошити по {} € і {} ручки по {} € і платиш {} €. Скільки решти ти отримаєш?
+= {} ct = {} €	= {} ct = €{}	= {} ц = {} €
+Von {} bis {} Uhr	From {} to {}	Від {} до {}
+Dann noch {} min	Then another {} min	Потім ще {} хв
+{} h = {} s, {} min = {} s	{} h = {} s, {} min = {} s	{} год = {} с, {} хв = {} с
+Wie viele Sekunden sind {} h {} min {} s?	How many seconds are {} h {} min {} s?	Скільки секунд у {} год {} хв {} с?
+{} h = {} min und {} h = {}	{} h = {} min and {} h = {}	{} год = {} хв і {} год = {}
+Der Film dauert {} min = {} h {} min	The film lasts {} min = {} h {} min	Фільм триває {} хв = {} год {} хв
+{} Uhr + {} h {} min = {} Uhr	{} + {} h {} min = {}	{} + {} год {} хв = {}
+Ein Film beginnt um {} Uhr und dauert {} Stunden. Wie viele Minuten nach {} Uhr ist er zu Ende?	A film starts at {} and lasts {} hours. How many minutes after {} o’clock does it end?	Фільм починається о {} і триває {} год. Через скільки хвилин після {}:00 він закінчиться?
+Bis Mitternacht	Until midnight	До півночі
+Nach Mitternacht	After midnight	Після півночі
+Ein Nachtzug fährt um {} Uhr ab und kommt am nächsten Morgen um {} Uhr an. Wie viele Minuten dauert die Fahrt?	A night train leaves at {} and arrives the next morning at {}. How many minutes does the journey take?	Нічний потяг відправляється о {} і прибуває наступного ранку о {}. Скільки хвилин триває поїздка?
+Ein Radfahrer fährt {} Stunden lang mit {} km pro Stunde. Wie viele Kilometer schafft er?	A cyclist rides for {} hours at {} km per hour. How many kilometres does he cover?	Велосипедист їде {} год зі швидкістю {} км/год. Скільки кілометрів він проїде?
+Stunden	Hours	Години
+Eine Radtour hat drei Etappen	A bike tour has three stages	Велотур має три етапи
+{} h {} min, {} h {} min und {} min. Wie viele Minuten dauert sie insgesamt?	{} h {} min, {} h {} min and {} min. How many minutes does it take in total?	{} год {} хв, {} год {} хв і {} хв. Скільки хвилин він триває загалом?
+Montag bis Mitternacht	Monday until midnight	Понеділок до півночі
+Dienstag ganz	All of Tuesday	Увесь вівторок
+Mittwoch bis {} Uhr	Wednesday until {}	Середа до {}
+Ein Bus fährt am Montag um {} Uhr ab und kommt am Mittwoch um {} Uhr an. Wie viele Minuten ist er unterwegs?	A bus leaves on Monday at {} and arrives on Wednesday at {}. How many minutes is it on the road?	Автобус відправляється в понеділок о {} і прибуває в середу о {}. Скільки хвилин він у дорозі?
+{} Tag = {} s, {} h = {} s, {} min = {} s	{} day = {} s, {} h = {} s, {} min = {} s	{} доба = {} с, {} год = {} с, {} хв = {} с
+Wie viele Sekunden sind {} Tage {} h {} min?	How many seconds are {} days {} h {} min?	Скільки секунд у {} днях {} год {} хв?
+Oberfläche = {}	Surface area = {}	Площа поверхні = {}
+Ein Quader ist {} cm lang, {} cm breit und {} cm hoch. Wie groß ist seine Oberfläche?	A cuboid is {} cm long, {} cm wide and {} cm high. What is its surface area?	Прямокутний паралелепіпед має довжину {} см, ширину {} см і висоту {} см. Яка площа його поверхні?
+Pythagoras umgestellt	Pythagoras rearranged	Теорема Піфагора, перетворена
+Ein rechtwinkliges Dreieck hat die Hypotenuse {} cm und eine Kathete {} cm. Wie lang ist die andere Kathete?	A right-angled triangle has a hypotenuse of {} cm and one leg of {} cm. How long is the other leg?	Прямокутний трикутник має гіпотенузу {} см і катет {} см. Яка довжина іншого катета?
+Grundfläche	Base area	Площа основи
+Volumen = Grundfläche	Volume = base area	Об’єм = площа основи
+Ein Prisma hat als Grundfläche ein Dreieck mit Grundseite {} cm und Höhe {} cm. Das Prisma ist {} cm lang. Wie groß ist sein Volumen?	A prism has a triangle as its base with base side {} cm and height {} cm. The prism is {} cm long. What is its volume?	Основа призми – трикутник з основою {} см і висотою {} см. Довжина призми {} см. Який її об’єм?
+Großes Rechteck	Large rectangle	Великий прямокутник
+Ausschnitt	Cut-out	Вирізана частина
+Ein Grundstück ist ein Rechteck von {} m mal {} m, aus dem in einer Ecke ein Rechteck von {} m mal {} m herausgeschnitten ist. Wie groß ist die Fläche?	A plot of land is a rectangle of {} m by {} m with a {} m by {} m rectangle cut out of one corner. What is its area?	Ділянка – прямокутник {} м на {} м, з кута якого вирізано прямокутник {} м на {} м. Яка її площа?
+{}, dann − {}	{}, then − {}	{}, потім − {}
+Die Abstände verdoppeln sich	The gaps double	Різниці подвоюються
+Nächster Abstand	Next gap	Наступна різниця
+Kubikzahlen (hoch {})	Cube numbers (to the power {})	Куби чисел (у степені {})
+x² = {} und x³ = {}	x² = {} and x³ = {}	x² = {} і x³ = {}
+{}x und {}	{}x and {}	{}x і {}
+Jedes Glied mit jedem Glied malnehmen	Multiply every term by every term	Множимо кожен член на кожен член
+x-Terme nach links, Zahlen nach rechts	x terms to the left, numbers to the right	Члени з x – ліворуч, числа – праворуч
+Wie groß ist die y-Koordinate des Schnittpunkts?	What is the y-coordinate of the intersection point?	Яка y-координата точки перетину?
+Wo hat die Gerade durch P und Q ihre Nullstelle?	Where is the zero of the line through P and Q?	Де нуль прямої, що проходить через P і Q?
+Die Wahrscheinlichkeit für Regen ist {}. Wie groß ist die Wahrscheinlichkeit, dass es nicht regnet?	The probability of rain is {}. What is the probability that it does not rain?	Імовірність дощу – {}. Яка ймовірність, що дощу не буде?
+{} von {} Zahlen → {}	{} of {} numbers → {}	{} з {} чисел → {}
+Du würfelst {}-mal. Wie oft erwartest du ungefähr eine Zahl größer als {}?	You roll a die {} times. About how often do you expect a number greater than {}?	Ти кидаєш кубик {} разів. Скільки приблизно разів ти очікуєш число, більше за {}?
+Du würfelst {}-mal. Wie oft erwartest du ungefähr eine gerade Zahl?	You roll a die {} times. About how often do you expect an even number?	Ти кидаєш кубик {} разів. Скільки приблизно разів ти очікуєш парне число?
+Du würfelst {}-mal. Wie oft erwartest du ungefähr eine Zahl kleiner als {}?	You roll a die {} times. About how often do you expect a number less than {}?	Ти кидаєш кубик {} разів. Скільки приблизно разів ти очікуєш число, менше за {}?
+Ein Glücksrad hat {} gleich große Felder, {} davon sind rot. Du drehst zweimal. Wie groß ist die Wahrscheinlichkeit für zweimal Rot?	A wheel of fortune has {} equal sections, {} of them red. You spin twice. What is the probability of red twice?	Колесо фортуни має {} однакових секторів, {} з них червоні. Ти крутиш двічі. Яка ймовірність двічі червоного?
+In einer Urne sind {} rote, {} blaue und {} grüne Kugeln. Du ziehst zweimal mit Zurücklegen. Wie groß ist die Wahrscheinlichkeit für erst Rot, dann Blau?	An urn contains {} red, {} blue and {} green balls. You draw twice with replacement. What is the probability of first red, then blue?	В урні {} червоних, {} синіх і {} зелених кульок. Ти тягнеш двічі з поверненням. Яка ймовірність спочатку червоної, потім синьої?
+In einer Urne sind {} rote und {} blaue Kugeln. Du ziehst drei Kugeln ohne Zurücklegen. Wie groß ist die Wahrscheinlichkeit für dreimal Rot?	An urn contains {} red and {} blue balls. You draw three balls without replacement. What is the probability of red three times?	В урні {} червоних і {} синіх кульок. Ти тягнеш три кульки без повернення. Яка ймовірність тричі червоної?
+Pfad Rot–Blau	Path red–blue	Шлях червона–синя
+Pfad Blau–Rot	Path blue–red	Шлях синя–червона
+Summe	Sum	Сума
+In einer Urne sind {} rote und {} blaue Kugeln. Du ziehst zwei Kugeln ohne Zurücklegen. Wie groß ist die Wahrscheinlichkeit für genau eine rote Kugel?	An urn contains {} red and {} blue balls. You draw two balls without replacement. What is the probability of exactly one red ball?	В урні {} червоних і {} синіх кульок. Ти тягнеш дві кульки без повернення. Яка ймовірність рівно однієї червоної кульки?
+keine einzige rote Kugel	not a single red ball	жодної червоної кульки
+P(dreimal Blau) = {}	P(blue three times) = {}	P(тричі синя) = {}
+In einer Urne sind {} rote und {} blaue Kugeln. Du ziehst dreimal mit Zurücklegen. Wie groß ist die Wahrscheinlichkeit für mindestens eine rote Kugel?	An urn contains {} red and {} blue balls. You draw three times with replacement. What is the probability of at least one red ball?	В урні {} червоних і {} синіх кульок. Ти тягнеш тричі з поверненням. Яка ймовірність хоча б однієї червоної кульки?
+Pro Tag	Per day	За день
+Für {} Tage	For {} days	За {} днів
+{} € liegen {} Tage zu {} % Jahreszins auf dem Konto ({} Jahr = {} Tage). Wie viele Euro Zinsen gibt es?	€{} stays in the account for {} days at {} % annual interest ({} year = {} days). How many euros of interest are there?	{} € лежать на рахунку {} днів під {} % річних ({} рік = {} днів). Скільки євро відсотків буде?
+{} € werden {} Jahre lang mit {} % verzinst, die Zinsen bleiben auf dem Konto. Wie viel Geld ist es nach {} Jahren?	€{} is invested for {} years at {} %, the interest stays in the account. How much money is there after {} years?	{} € лежать {} роки під {} %, відсотки залишаються на рахунку. Скільки грошей буде через {} роки?
+Zinsen für {} Monate	Interest for {} months	Відсотки за {} місяців
+p = Jahreszinsen	p = yearly interest	p = річні відсотки
+{} € bringen in {} Monaten {} € Zinsen. Wie hoch ist der Jahreszinssatz?	€{0} earns €{2} interest in {1} months. What is the annual interest rate?	{} € за {} місяців приносять {} € відсотків. Яка річна ставка?
+Summe aller {} Zahlen	Sum of all {} numbers	Сума всіх {} чисел
+Bekannte Summe	Known sum	Відома сума
+Der Durchschnitt von {} Zahlen ist {}. {} davon sind {}. Wie heißt die fehlende Zahl?	The average of {} numbers is {}. {} of them are {}. What is the missing number?	Середнє {} чисел дорівнює {}. {} з них: {}. Яке число пропущене?
+Punkte A	Points A	Бали A
+Punkte B	Points B	Бали B
+Punkte C	Points C	Бали C
+{} Punkte für {} Kinder	{} points for {} children	{} балів на {} дітей
+Klasse A hat {} Kinder mit durchschnittlich {} Punkten, Klasse B {} Kinder mit durchschnittlich {} Punkten und Klasse C {} Kinder mit durchschnittlich {} Punkten. Wie groß ist der Durchschnitt aller Kinder?	Class A has {} children averaging {} points, class B {} children averaging {} points and class C {} children averaging {} points. What is the average of all the children?	У класі A {} дітей із середнім балом {}, у класі B – {} дітей із середнім балом {}, у класі C – {} дітей із середнім балом {}. Який середній бал усіх дітей?
+Ein Kreisring hat den Außenradius {} cm und den Innenradius {} cm. Wie groß ist seine Fläche?	An annulus has an outer radius of {} cm and an inner radius of {} cm. What is its area?	Кільце має зовнішній радіус {} см і внутрішній радіус {} см. Яка його площа?
+Ein Zylinder hat den Radius {} cm und die Höhe {} cm. Wie groß ist seine Oberfläche?	A cylinder has a radius of {} cm and a height of {} cm. What is its surface area?	Циліндр має радіус {} см і висоту {} см. Яка площа його поверхні?
+Bogen = π	Arc = π	Дуга = π
+Ein Halbkreis hat den Durchmesser {} m. Wie lang ist sein Rand (Bogen und Durchmesser)?	A semicircle has a diameter of {} m. How long is its boundary (arc and diameter)?	Півколо має діаметр {} м. Яка довжина його межі (дуга й діаметр)?
+Also {}⁸	So {}⁸	Отже, {}⁸
+Also {}⁹	So {}⁹	Отже, {}⁹
+Erst beide Zahlen als Zehnerpotenz schreiben	First write both numbers with powers of ten	Спочатку запиши обидва числа через степені десяти
+Vorrat insgesamt	Total supply	Запас загалом
+{} Pferdetage	{} horse-days	{} коне-днів
+Nach {} Tagen verbraucht	Used after {} days	Витрачено за {} днів
+Jetzt {} Pferde	Now {} horses	Тепер {} коней
+Ein Futtervorrat reicht für {} Pferde {} Tage. Nach {} Tagen werden {} Pferde verkauft. Wie viele Tage reicht der Rest?	A supply of feed lasts {} horses {} days. After {} days, {} horses are sold. How many days does the rest last?	Запасу корму вистачає {} коням на {} днів. Через {} днів продають {} коней. На скільки днів вистачить решти?
+Ein Futtervorrat reicht für {} Pferde {} Tage. Nach {} Tagen werden {} Pferde dazugekauft. Wie viele Tage reicht der Rest?	A supply of feed lasts {} horses {} days. After {} days, {} more horses are bought. How many days does the rest last?	Запасу корму вистачає {} коням на {} днів. Через {} днів докуповують {} коней. На скільки днів вистачить решти?
+Arbeit für {} Platz	Work for {} square	Робота на {} майданчик
+{} Arbeitstage	{} working days	{} робочих днів
+Für {} Plätze	For {} squares	На {} майданчики
+{} Arbeiter	{} workers	{} робітників
+{} Arbeiter pflastern einen Platz in {} Tagen. Wie viele Tage brauchen {} Arbeiter für {} gleich große Plätze?	{} workers pave a square in {} days. How many days do {} workers need for {} squares of the same size?	{} робітників мостять майданчик за {} днів. Скільки днів потрібно {} робітникам на {} однакові майданчики?
+{} Maschine in {} Stunden	{} machine in {} hours	{} машина за {} год
+{} Maschine in {} Stunde	{} machine in {} hour	{} машина за {} год
+{} Maschinen in {} Stunde	{} machines in {} hour	{} машин за {} год
+Teile	parts	деталей
+{} Maschinen stellen in {} Stunden {} Teile her. Wie viele Teile stellen {} Maschinen in {} Stunden her?	{0} machines make {2} parts in {1} hours. How many parts do {3} machines make in {4} hours?	{} машини виготовляють за {} год {} деталей. Скільки деталей виготовлять {} машин за {} год?
+Neu: Stufe „Profi“ in allen {} Themen – für richtig gute Rechner, auch Erwachsene	New: “Pro” level in all {} topics – for really strong calculators, adults included	Нове: рівень «Профі» в усіх {} темах – для дуже сильних рахівників, і для дорослих
+Jede Stufe ist jetzt nachweislich schwerer als die davor: größere Zahlen, mehr Rechenschritte	Every level is now provably harder than the one before: bigger numbers, more steps	Кожен рівень тепер доведено складніший за попередній: більші числа, більше кроків
+Viele neue Aufgabenarten, z. B. Zinseszins, Kreisring, Klammern auf beiden Seiten	Many new task types, e.g. compound interest, annulus, brackets on both sides	Багато нових типів задач, напр. складні відсотки, кільце, дужки з обох боків
+{} h {} min {} s	{} h {} min {} s	{} год {} хв {} с
+{} km {} m	{} km {} m	{} км {} м
+größter Primfaktor von {}	largest prime factor of {}	найбільший простий множник числа {}
+Einmaleins {} und {}	Times tables {} and {}	Таблиця множення на {} і {}

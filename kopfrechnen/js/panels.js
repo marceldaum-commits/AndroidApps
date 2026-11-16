@@ -14,7 +14,7 @@ const siteLink = (url, place) => { if (!CONFIG.utm) return url; try { const u = 
 const mi = (go, icon, title, sub, extra = '') => `<button class="mi ${extra}" data-go="${go}"><div class="ico">${icon}</div><div><b>${title}</b><span>${sub}</span></div><span class="chev">›</span></button>`;
 const miLink = (href, icon, title, sub, extra = '') => `<a class="mi ${extra}" href="${esc(href)}" target="_blank" rel="noopener"><div class="ico">${icon}</div><div><b>${title}</b><span>${sub}</span></div><span class="chev">↗</span></a>`;
 const topicOptions = sel => Object.entries(TOPICS).map(([k, o]) => `<option value="${k}" ${k === sel ? 'selected' : ''}>${o.name}</option>`).join('');
-const levelOptions = sel => [0, 1, 2, 3, 4].map(i => `<option value="${i}" ${i === sel ? 'selected' : ''}>Stufe ${i + 1}</option>`).join('');
+const levelOptions = sel => [0, 1, 2, 3, 4, 5].map(i => `<option value="${i}" ${i === sel ? 'selected' : ''}>${lvlName(i)}</option>`).join('');
 
 function contextNow() {
   if (G && currentScreen() === 'game' && G.task && !G.locked)
@@ -505,7 +505,7 @@ const cleanDate = v => typeof v === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(v) ? 
 function cleanAssign(d) {
   if (!d || typeof d !== 'object' || typeof d.op !== 'string' || !TOPICS[d.op]) return null;
   const s = Math.round(+d.s);
-  return { i: cleanStr(d.i, 40), t: cleanStr(d.t, 80), by: cleanStr(d.by, 60), op: d.op, l: clampInt(d.l, 0, 4, 0), m: d.m === 'blitz' ? 'blitz' : 'training',
+  return { i: cleanStr(d.i, 40), t: cleanStr(d.t, 80), by: cleanStr(d.by, 60), op: d.op, l: clampInt(d.l, 0, 5, 0), m: d.m === 'blitz' ? 'blitz' : 'training',
     r: clampInt(d.r, 1, 10, 1), min: clampInt(d.min, 0, 100, 0), due: cleanDate(d.due), s: Number.isFinite(s) ? s : 0 };
 }
 function cleanRuns(runs) {
