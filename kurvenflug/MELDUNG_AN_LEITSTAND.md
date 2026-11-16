@@ -1,5 +1,54 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## Konzept Lehrerzugang für KurvenFlug (Auftrag Marcel vom 16.11. – nur Konzept, noch nicht gebaut)
+
+**Heute schon da (ohne Konto, ohne Server):** Klassen-Challenge – die Lehrkraft stellt Level zusammen, die App gibt
+einen Code; Schüler spielen und schicken einen Ergebnis-Code zurück, die App der Lehrkraft sammelt ihn ein
+(Ergebnis-Tafel). Das bleibt als Offline-Weg erhalten, der Lehrerzugang macht es bequem und automatisch.
+
+**1. Was die Lehrkraft sieht und steuert**
+
+| Bereich | Inhalt |
+|---|---|
+| Auftrag | Kapitel (z. B. „Geraden“) **oder** eigene Level-Auswahl (wie Klassen-Challenge); Stufe Normal/Schwer/Profi/Extrem (Extrem-Prüfung optional); Anzahl Level; Frist; „Rechen-Stern Pflicht“ (Rechenweg-Frage muss stimmen) |
+| Ergebnisse je Schüler | erledigte Level des Auftrags, Sterne, Fehlversuche, Rechen-Stern richtig/falsch, Zielhilfe benutzt ja/nein, Zeit pro Level, zuletzt aktiv |
+| Ergebnisse je Thema (Klasse) | Anteil gelöst, Ø Sterne, Ø Fehlversuche, häufigste falsche Rechen-Antwort (zeigt typischen Denkfehler, z. B. „25 : 100 statt 1 + 25 : 100“), schwierigstes Level |
+| Freischalten | Kapitel bzw. Stufen für die Klasse öffnen/sperren (z. B. Oberstufe nur ab Kl. 11, Extrem erst nach Kapitelende) |
+| Prüfungsmodus | für einen Auftrag: keine Zielhilfe, kein Rechenweg, kein Lösungs-Vorführen durch Volt, ein Versuch je Level, Zeitfenster |
+| Rangliste | Sterne/Sturm-Rekord der Klasse (Spitznamen), abschaltbar |
+
+**2. Daten an den Klassen-Dienst (so knapp wie möglich)**
+
+| Wann | Felder |
+|---|---|
+| Beitritt | Klassen-Code, Spitzname, zufällige Geräte-Kennung (UUID, nur für diese Klasse), App-Version |
+| Nach jedem Level eines Auftrags (gesammelt, max. 1× pro Minute; offline in Warteschlange) | Auftrag-ID, Level-ID, Sterne 0–3, Fehlversuche, Rechen-Stern ja/nein, gewählte Rechen-Antwort (Index 0–3), Zielhilfe ja/nein, Sekunden, Zeitpunkt |
+| Rangliste (wenn an) | Summe Sterne, Sturm-Rekord – höchstens 1× täglich |
+| Abruf (beim Start, dann alle 7 Tage bzw. bei „Aktualisieren“) | neue Aufträge, Freischaltungen, Prüfungsmodus, Lizenzstatus der Klasse (aktiv bis …) |
+
+Keine Klarnamen, keine E-Mail, kein Freitext, keine Standortdaten, keine Werbe-Kennung. Spielstand außerhalb von
+Aufträgen bleibt auf dem Gerät. Austreten löscht die Klassendaten des Geräts beim Dienst.
+
+**3. Beitritt und was der Schüler sieht**
+- Beitritt per **Klassen-Code** (6 Zeichen), **QR-Code** (Kamera der Handy-App bzw. Link) oder **Link**
+  `https://kurvenflug.mathenachhilfe-online.com/?klasse=<Code>`. Spitzname aus Vorschlagsliste (Tier + Farbe, z. B. „Blauer Fuchs“) – kein Freitext.
+- Neuer Bereich „🏫 Meine Klasse“ (pro Spieler-Profil): Klassenname, offene Aufträge mit Frist und Fortschritt, Rangliste
+  (falls an), „Pro durch Schullizenz bis 31.07.“. Andere Schüler sieht er nur in der Rangliste (Spitzname + Sterne).
+- Eltern sehen in den Einstellungen: welche Klasse, welche Daten geschickt werden, „Klasse verlassen“.
+- Play-Fassung: braucht dann eine Internet-Berechtigung (nur für den Klassen-Dienst) – Formulare (Datensicherheit:
+  „App-Aktivitäten“, an Lehrkraft übermittelt) und Datenschutztext anpassen. Ohne Klasse bleibt die App offline.
+
+**4. Frei oder Schullizenz**
+
+| Frei | Schullizenz (Lehrkraft) |
+|---|---|
+| Klasse anlegen, Beitritt, Rangliste | Aufträge mit Frist und Auswertung je Schüler/Thema |
+| Klassen-Challenge per Code (wie heute, offline) | Freischalten/Sperren von Kapiteln und Stufen, Prüfungsmodus |
+| | Pro für alle Schüler der Klasse (solange in der Klasse und Lizenz gültig), Export (CSV) |
+
+Vorschlag Ablauf in der App: Lizenzstatus kommt beim Beitritt vom Dienst, gilt offline bis zum Ablaufdatum, Prüfung
+alle 7 Tage; wer die Klasse verlässt, behält nur Einzelkauf/eigenen Code.
+
 ## 0.23.0 – Kurvenflug Pro gebaut (Freigabe Marcel: „ja, bau es so“; nicht USt.-befreit)
 
 - **Version:** 0.23.0 · **Commit:** eae218c (Zweig claude/gifted-shannon-657gpr)
