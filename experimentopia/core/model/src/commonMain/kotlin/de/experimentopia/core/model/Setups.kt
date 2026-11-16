@@ -7,6 +7,7 @@ enum class Lab(val title: String, val emoji: String, val island: Island, val blu
     WIPPE("Wippe", "⚖️", Island.KRAFT, "Hebelgesetz: Masse mal Abstand."),
     FLASCHENZUG("Flaschenzug", "🏗️", Island.KRAFT, "Mit mehr Seilen weniger Kraft."),
     RAMPE("Rampe", "📐", Island.KRAFT, "Schiefe Ebene: lange Rampe, wenig Kraft."),
+    NEWTON("Wagen & Skateboards", "🛹", Island.KRAFT, "Newton: Kraft, Masse, Beschleunigung – und Rückstoß."),
     STROM("Stromkreis", "⚡", Island.STROM, "Lampen, Schalter, Leitertest, Widerstände."),
     MAGNET("Magnet", "🧲", Island.STROM, "Was zieht ein Magnet an?"),
     ROTKOHL("Rotkohl-Labor", "🟣", Island.CHEMIE, "Sauer oder basisch? Der Saft verrät es mit Farben."),
@@ -63,10 +64,13 @@ data class LightSetup(val mode: LightMode, val target: Rgb?) : Setup { override 
 data class PrismSetup(val dummy: Int = 0) : Setup { override val lab get() = Lab.PRISMA }
 
 enum class SoundMode { STRIKE, BLOW, TUNE, MELODY, STRING }
-data class SoundSetup(val mode: SoundMode, val target: Note? = null, val melody: List<Note> = emptyList()) : Setup { override val lab get() = Lab.KLANG }
+data class SoundSetup(val mode: SoundMode, val target: Note? = null, val melody: List<Note> = emptyList(), val stringFrac: Double = 0.5) : Setup { override val lab get() = Lab.KLANG }
 
+enum class NewtonMode { CART, PUSH }
+/** CART: Wagen wird mit Kraft F gezogen (Massen- und Kraft-Auswahl). PUSH: zwei Skateboarder stoßen sich ab (Massenpaare). */
+data class NewtonSetup(val mode: NewtonMode, val masses: List<Double> = emptyList(), val forces: List<Double> = emptyList(), val pairs: List<Pair<Double, Double>> = emptyList()) : Setup { override val lab get() = Lab.NEWTON }
 data class FallSetup(val a: Faller, val b: Faller?, val planets: List<Planet>, val heightM: Double) : Setup { override val lab get() = Lab.FALLTURM }
-data class PendulumSetup(val lengths: List<Double>, val massesKg: List<Double>, val amplitudeDeg: Double = 10.0, val targetT: Double? = null) : Setup { override val lab get() = Lab.PENDEL }
+data class PendulumSetup(val lengths: List<Double>, val massesKg: List<Double>, val amplitudeDeg: Double = 10.0, val targetT: Double? = null, val g: Double = Planet.ERDE.g) : Setup { override val lab get() = Lab.PENDEL }
 
 /** Freies Labor: so startet jedes Gerät, wenn man ohne Auftrag forscht. */
 object FreeLab {
@@ -90,6 +94,7 @@ object FreeLab {
         Lab.FILTER -> LightSetup(LightMode.SUB, null)
         Lab.PRISMA -> PrismSetup()
         Lab.KLANG -> SoundSetup(SoundMode.BLOW)
+        Lab.NEWTON -> NewtonSetup(NewtonMode.CART, listOf(1.0, 2.0, 4.0), listOf(5.0, 10.0, 20.0), listOf(30.0 to 30.0, 30.0 to 90.0))
         Lab.FALLTURM -> FallSetup(Faller.KUGEL, Faller.FEDER, Planet.entries, 10.0)
         Lab.PENDEL -> PendulumSetup(listOf(1.0), listOf(0.2, 1.0))
     }

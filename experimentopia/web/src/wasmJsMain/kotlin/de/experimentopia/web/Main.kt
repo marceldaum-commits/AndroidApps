@@ -77,8 +77,8 @@ private fun WebApp() {
                         }
                     }
                 },
-                privacy = "Experimentopia speichert den Spielstand und das Forscherbuch nur in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe, " +
-                    "keine Daten an einen Server. Die App aktualisiert sich von selbst. Alle Klänge entstehen im Browser.",
+                privacy = "Experimentopia speichert den Spielstand und das Forscherbuch nur in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, " +
+                    "keine Daten an einen Server. " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge entstehen im Browser.",
                 onRoute = { atHome(it == Route.Home) })
         } }
     }

@@ -4,7 +4,7 @@ package de.experimentopia.core.model
 enum class Element(val symbol: String, val title: String, val color: Long) {
     H("H", "Wasserstoff", 0xFFF2F2F2), C("C", "Kohlenstoff", 0xFF4A4A4A), N("N", "Stickstoff", 0xFF3F6BFF), O("O", "Sauerstoff", 0xFFFF3B3B),
     Na("Na", "Natrium", 0xFFAB5CF2), Cl("Cl", "Chlor", 0xFF3DDC3D), Mg("Mg", "Magnesium", 0xFF8AFF00), Fe("Fe", "Eisen", 0xFFE06633),
-    Ca("Ca", "Calcium", 0xFF3DFF00), S("S", "Schwefel", 0xFFFFE135), Cu("Cu", "Kupfer", 0xFFC88033);
+    Ca("Ca", "Calcium", 0xFF3DFF00), S("S", "Schwefel", 0xFFFFE135), Cu("Cu", "Kupfer", 0xFFC88033), Al("Al", "Aluminium", 0xFFBFA6A6);
     companion object { fun of(s: String) = entries.firstOrNull { it.symbol == s } ?: error("Unbekanntes Element $s") }
 }
 
@@ -81,6 +81,20 @@ object Reactions {
             "Aus Luft-Stickstoff wird Dünger – das ernährt heute Milliarden Menschen."),
         Reaction("fotosynthese", "Fotosynthese", "🌿", listOf(m("CO2", "Kohlenstoffdioxid"), m("H2O", "Wasser")), listOf(m("C6H12O6", "Traubenzucker"), m("O2", "Sauerstoff")), listOf(6, 6, 1, 6), Effect.BLATT,
             "Pflanzen bauen mit Sonnenlicht Zucker – und schenken uns Sauerstoff."),
+        Reaction("elektrolyse", "Wasser zerlegen", "🔋", listOf(m("H2O", "Wasser")), listOf(m("H2", "Wasserstoff"), m("O2", "Sauerstoff")), listOf(2, 2, 1), Effect.SPRUDEL,
+            "Mit Strom wird Wasser in zwei Gase zerlegt: doppelt so viel Wasserstoff wie Sauerstoff."),
+        Reaction("spiritus", "Spiritusbrenner", "🕯️", listOf(m("C2H5OH", "Ethanol"), m("O2", "Sauerstoff")), listOf(m("CO2", "Kohlenstoffdioxid"), m("H2O", "Wasser")), listOf(1, 3, 2, 3), Effect.FLAMME,
+            "Alkohol brennt mit fast unsichtbarer blauer Flamme."),
+        Reaction("butan", "Feuerzeug (Butan)", "🔥", listOf(m("C4H10", "Butan"), m("O2", "Sauerstoff")), listOf(m("CO2", "Kohlenstoffdioxid"), m("H2O", "Wasser")), listOf(2, 13, 8, 10), Effect.FLAMME,
+            "Das Gas im Feuerzeug ist Butan – eine knifflige Gleichung!"),
+        Reaction("thermit", "Thermit", "🌋", listOf(m("Fe2O3", "Rost"), m("Al", "Aluminium")), listOf(m("Fe", "Eisen"), m("Al2O3", "Aluminiumoxid")), listOf(1, 2, 2, 1), Effect.BLITZ,
+            "So heiß, dass flüssiges Eisen entsteht – damit schweißt man Schienen."),
+        Reaction("atmung", "Zellatmung", "🏃", listOf(m("C6H12O6", "Traubenzucker"), m("O2", "Sauerstoff")), listOf(m("CO2", "Kohlenstoffdioxid"), m("H2O", "Wasser")), listOf(1, 6, 6, 6), Effect.NEBEL,
+            "In deinen Zellen „verbrennt“ Zucker ganz langsam – das gibt dir Energie."),
+        Reaction("mgsaeure", "Magnesium in Säure", "🧪", listOf(m("Mg", "Magnesium"), m("HCl", "Salzsäure")), listOf(m("MgCl2", "Magnesiumchlorid"), m("H2", "Wasserstoff")), listOf(1, 2, 1, 1), Effect.SPRUDEL,
+            "Unedle Metalle lösen sich in Säure – dabei sprudelt Wasserstoff."),
+        Reaction("kupfer", "Kupfer wird schwarz", "🟫", listOf(m("Cu", "Kupfer"), m("O2", "Sauerstoff")), listOf(m("CuO", "Kupferoxid")), listOf(2, 1, 2), Effect.ROST,
+            "Ein Kupferblech in der Flamme wird schwarz: Kupferoxid."),
     )
     fun byId(id: String) = all.first { it.id == id }
 }

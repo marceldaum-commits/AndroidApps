@@ -36,6 +36,7 @@ sealed interface Route {
     data class IslandR(val island: Island) : Route
     data class Exp(val id: String, val daily: Boolean = false) : Route
     data object Free : Route
+    data object Topics : Route
     data class FreeRun(val lab: Lab) : Route
     data object Journal : Route
     data object Badges : Route
@@ -119,7 +120,7 @@ fun AppRoot(
                     HomeScreen(
                         results = stars, stats = stats, daily = state.daily(), dailyDone = state.dailyDoneToday(journal), grade = grade, welcome = welcome,
                         onIsland = { nav.go(Route.IslandR(it)) }, onDaily = { open(state.daily(), daily = true) },
-                        onFreeLab = { nav.go(Route.Free) }, onJournal = { nav.go(Route.Journal) }, onBadges = { nav.go(Route.Badges) },
+                        onFreeLab = { nav.go(Route.Free) }, onTopics = { nav.go(Route.Topics) }, onJournal = { nav.go(Route.Journal) }, onBadges = { nav.go(Route.Badges) },
                         onSettings = { nav.go(Route.Settings) }, onGrade = state.prefs::setGrade,
                         onWelcomed = { state.prefs.welcomed = true; welcome = false },
                         banner = banner?.let { b -> { b { nav.go(Route.Settings) } } },
@@ -135,9 +136,10 @@ fun AppRoot(
                             onBack = { nav.back() }, daily = r.daily)
                     }
                 }
+                Route.Topics -> de.experimentopia.app.ui.home.TopicScreen(stars, grade, state::locked, { open(it) }, { nav.back() })
                 Route.Free -> FreeLabScreen(state::locked, { l -> if (state.locked(l)) nav.go(Route.ProR(l.title)) else { state.prefs.countFreeLab(); nav.go(Route.FreeRun(l)) } }, { nav.back() })
                 is Route.FreeRun -> FreeLabRun(r.lab) { nav.back() }
-                Route.Journal -> JournalScreen(journal, { nav.back() })
+                Route.Journal -> JournalScreen(journal, { nav.back() }, onOpen = { open(it) })
                 Route.Badges -> BadgesScreen(stats) { nav.back() }
                 is Route.ProR -> ProScreen(r.what) { nav.back() }
                 Route.Settings -> {

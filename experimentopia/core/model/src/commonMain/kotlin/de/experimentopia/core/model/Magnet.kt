@@ -13,6 +13,9 @@ enum class MagnetItem(val title: String, val emoji: String, val magnetic: Boolea
     HOLZ("Holzklotz", "🌲", false, "Holz ist kein Metall."),
     RADIERER("Radiergummi", "🧽", false, "Gummi wird nicht angezogen."),
     GLAS("Glasmurmel", "🔮", false, "Glas wird nicht angezogen."),
+    NAEHNADEL("Nähnadel", "🧷", true, "Nähnadeln sind aus Stahl."),
+    KRONKORKEN("Kronkorken", "🍾", true, "Kronkorken sind aus Stahlblech – darum sammelt man sie mit Magneten."),
+    SCHLUESSEL("Messingschlüssel", "🔑", false, "Messing ist Kupfer und Zink – nicht magnetisch."),
     PAPIER("Papier", "📄", false, "Papier wird nicht angezogen – aber Magnetkraft geht durch Papier hindurch!"),
     ;
 }

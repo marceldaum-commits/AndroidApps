@@ -50,6 +50,20 @@ object Pulley {
     fun minRopes(massKg: Double, maxN: Double, options: List<Int>) = options.sorted().firstOrNull { forceN(massKg, it) <= maxN + 1e-9 }
 }
 
+/** Newtons Gesetze (ohne Reibung): F = m·a und actio = reactio */
+object Newton {
+    const val TRACK_M = 2.0
+    /** 2. Gesetz: a = F / m */
+    fun accel(forceN: Double, massKg: Double) = forceN / massKg
+    /** Zeit für die Strecke s aus der Ruhe: s = ½·a·t² */
+    fun timeFor(s: Double, a: Double) = kotlin.math.sqrt(2 * s / a)
+    /** Geschwindigkeit am Ende der Strecke: v = a·t */
+    fun speedAt(s: Double, a: Double) = a * timeFor(s, a)
+    /** 3. Gesetz beim Abstoßen: Beide bekommen denselben Kraftstoß p, also v = p / m – der Leichtere wird schneller */
+    const val PUSH_NS = 60.0
+    fun pushSpeeds(m1: Double, m2: Double, p: Double = PUSH_NS) = (p / m1) to (p / m2)
+}
+
 /** Schiefe Ebene ohne Reibung: F = G · h / l */
 object Ramp {
     fun forceN(massKg: Double, heightM: Double, lengthM: Double, g: Double = Planet.ERDE.g) = massKg * g * heightM / lengthM

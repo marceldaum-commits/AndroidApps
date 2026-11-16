@@ -1,5 +1,20 @@
 # Changelog – Experimentopia
 
+## 0.3.0 – Doppelt so viel Labor und Themensuche (16.11.2026)
+
+- 🧪 **Doppelt so viele Versuche: 142 statt 71.** Neu u. a.: Eisen schwimmt auf Quecksilber, Holz, das sinkt, Plastik sortieren, das U-Boot,
+  Schubkarre und Nussknacker, Wasser mit Strom zerlegen, Thermit, Zellatmung, Karamell, Pendeluhr auf dem Mond, Fallschirm, Quinte auf der Saite.
+- 🛹 **Neu: Newtons Gesetze** – Wagen mit Motor (Kraft, Masse, Beschleunigung) und Skateboards, die sich abstoßen (actio = reactio, Trägheit).
+- 🔎 **Themensuche**: nach Fach (Physik, Chemie), nach 13 Fachbereichen (z. B. Schwimmen & Verdrängung, Hebel, Newton, Stromkreise,
+  Säuren & Laugen) oder mit einem Stichwort. Auf den Inseln stehen die Versuche jetzt nach Thema geordnet mit Überschriften.
+- 📒 **Forscherbuch mit Erklärungen**: Eintrag antippen – dann stehen dort Frage, was passiert ist, warum, Merksatz und Knobelfrage mit Lösung.
+  Und ein Knopf „Nochmal ausprobieren“.
+- 👆 **Einfacher zu bedienen**: Im Wasserbecken holt nochmal Antippen ein Ding wieder heraus, „Leeren“ steht direkt am Becken.
+  Flaschenzug und Rampe gehen auch mit Knöpfen statt Wischen, den Magneten kann man auch antippen, Strom misst ein eigener Knopf.
+  Im Versuch bleibt die Frage mit der eigenen Vermutung sichtbar.
+- ✅ Richtiger gerechnet: Mars und Jupiter haben jetzt ihre eigene (dünne) Luft statt der Erdluft. Einige Fragen sind klarer formuliert.
+- Klarer für Eltern: „Zurzeit ist alles kostenlos – es gibt nichts zu kaufen.“
+
 ## 0.2.0 – Jetzt auch im Browser (16.11.2026)
 
 - 🌐 **Experimentopia gibt es jetzt auch als WebApp** – auf jedem Handy, Tablet oder Computer im Browser, ohne Installation.

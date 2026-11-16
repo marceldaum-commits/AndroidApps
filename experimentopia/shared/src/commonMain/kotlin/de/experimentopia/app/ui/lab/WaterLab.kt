@@ -46,20 +46,28 @@ fun FloatLab(s: FloatSetup, free: Boolean, onGoal: () -> Unit) {
     val bursts = rememberBursts()
     var custom by remember { mutableStateOf(Floaty("EIGEN", "Mein Ding", "🎁", 0.8, "Deine eigenen Werte")) }
     var mass by remember { mutableDoubleStateOf(80.0) }; var vol by remember { mutableDoubleStateOf(100.0) }
-    val tested = dropped.map { it.f.key to it.liquid }.toSet()
-    val goal = if (s.eachLiquid) s.things.all { t -> s.liquids.all { (t.name to it) in tested } } else s.things.all { t -> dropped.any { it.f.key == t.name } }
+    // was schon einmal ausprobiert wurde, zählt für den Auftrag – auch wenn es wieder herausgenommen wird
+    val tested = remember { mutableStateListOf<Pair<String, Liquid>>() }
+    val goal = if (s.eachLiquid) s.things.all { t -> s.liquids.all { (t.name to it) in tested } } else s.things.all { t -> tested.any { it.first == t.name } }
     GoalWhen(!free && goal, onGoal)
 
-    fun drop(f: Floaty) {
+    /** Antippen: hinein – nochmal antippen: wieder heraus */
+    fun toggle(f: Floaty) {
         val here = dropped.filter { it.liquid == liquid }
-        if (here.any { it.f.key == f.key }) return
-        val d = Dropped(f, liquid, now, here.size)
+        here.firstOrNull { it.f.key == f.key }?.let { old -> dropped.remove(old); if (last == old) last = null; sfx?.play(Sound.POP); return }
+        val slot = (0..9).first { k -> here.none { it.slot == k } }
+        val d = Dropped(f, liquid, now, slot)
         dropped += d; last = d
+        if ((f.key to liquid) !in tested) tested += f.key to liquid
         sfx?.play(Sound.SPLASH)
     }
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        if (s.liquids.size > 1) ChipRow(s.liquids, liquid, { "${it.emoji} ${it.title}" }, { liquid = it }, color = liquid.color.color())
+        Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+            if (s.liquids.size > 1) ChipRow(s.liquids, liquid, { "${it.emoji} ${it.title}" }, { liquid = it }, Modifier.weight(1f), color = liquid.color.color())
+            else Text("Becken mit ${liquid.title}", color = E.Muted, fontSize = 13.sp, modifier = Modifier.weight(1f))
+            GlowButton({ dropped.removeAll { it.liquid == liquid }; last = null; sfx?.play(Sound.WHOOSH) }, color = E.Sky) { Text("🧽 Leeren", fontSize = 13.sp) }
+        }
         Canvas(Modifier.fillMaxWidth().height(270.dp).testTag("becken")) {
             val w = size.width; val h = size.height
             val left = w * 0.06f; val right = w * 0.94f; val top = h * 0.12f; val bottom = h * 0.96f
@@ -85,6 +93,7 @@ fun FloatLab(s: FloatSetup, free: Boolean, onGoal: () -> Unit) {
                     else -> target + (start - target) * exp(-2.6f * t) * cos(6f * t)
                 }
                 label(tm, d.f.emoji, Offset(x, y), 30.sp)
+                label(tm, d.f.title.substringBefore(' ').take(11), Offset(x, y + obj * 0.62f), 9.sp, Color.White)
             }
             // Flüssigkeit mit Welle (halbdurchsichtig, damit man Eingetauchtes sieht)
             val wave = Path().apply {
@@ -109,10 +118,10 @@ fun FloatLab(s: FloatSetup, free: Boolean, onGoal: () -> Unit) {
                 Text(d.f.note, color = E.Muted, fontSize = 13.sp)
             }
         }
-        Text("Antippen zum Hineinwerfen:", color = E.Muted, fontSize = 13.sp)
+        Text("Antippen = hineinwerfen · nochmal antippen = wieder herausholen", color = E.Muted, fontSize = 13.sp)
         val items = s.things.map { it.f() } + if (free) listOf(custom) else emptyList()
-        ChipRow(items, null, { "${it.emoji} ${it.title}" + if (dropped.any { d -> d.f.key == it.key && d.liquid == liquid }) " ✓" else "" }, { drop(it) })
-        GlowButton({ dropped.removeAll { it.liquid == liquid }; last = null; sfx?.play(Sound.WHOOSH) }, color = E.Sky) { Text("🧽 Becken leeren") }
+        ChipRow(items, null, { "${it.emoji} ${it.title}" + if (dropped.any { d -> d.f.key == it.key && d.liquid == liquid }) " ✓" else "" }, { toggle(it) },
+            selectedIf = { dropped.any { d -> d.f.key == it.key && d.liquid == liquid } })
         if (free) Panel(border = E.Sun) {
             Text("🎁 Eigenes Ding: Masse und Volumen eingeben", fontWeight = FontWeight.Bold, color = E.Sun)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -131,14 +140,16 @@ fun TowerLab(s: TowerSetup, free: Boolean, onGoal: () -> Unit) {
     val tm = rememberTextMeasurer()
     val poured = remember { mutableStateListOf<Liquid>() }
     val things = remember { mutableStateListOf<Thing>() }
+    val everPoured = remember { mutableStateListOf<Liquid>() }
     val layers = DensityTower.layers(poured)
-    GoalWhen(!free && poured.size == s.liquids.size, onGoal)
+    GoalWhen(!free && everPoured.size == s.liquids.size, onGoal)
     // Jede Flüssigkeit bekommt eine animierte Höhe (Index der Schicht) – neu Eingegossenes sinkt an seinen Platz
     val pos = Liquid.entries.associateWith { l ->
         val target = layers.indexOfFirst { l in it.liquids }.let { if (it < 0) layers.size.toFloat() else it.toFloat() }
         animateFloatAsState(target, spring(dampingRatio = 0.7f, stiffness = 40f), label = l.name).value
     }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) { GlowButton({ poured.clear(); things.clear(); sfx?.play(Sound.WHOOSH) }, color = E.Sky) { Text("🧽 Glas leeren", fontSize = 13.sp) } }
         Canvas(Modifier.fillMaxWidth().height(300.dp).testTag("turm")) {
             val w = size.width; val h = size.height
             val left = w * 0.3f; val right = w * 0.7f; val bottom = h * 0.95f; val top = h * 0.06f
@@ -166,13 +177,14 @@ fun TowerLab(s: TowerSetup, free: Boolean, onGoal: () -> Unit) {
             label(tm, "unten = dicht", Offset(left / 2, bottom - 12), 11.sp, E.Muted)
             label(tm, "oben = wenig dicht", Offset(left / 2, top + 12), 11.sp, E.Muted)
         }
-        Text("Eingießen (beliebige Reihenfolge):", color = E.Muted, fontSize = 13.sp)
-        ChipRow(s.liquids, null, { "${it.emoji} ${it.title}" + if (it in poured) " ✓" else "" }, { l -> if (l !in poured) { poured += l; sfx?.play(Sound.BUBBLE) } })
+        Text("Antippen = eingießen (beliebige Reihenfolge) · nochmal antippen = wieder abschöpfen", color = E.Muted, fontSize = 13.sp)
+        ChipRow(s.liquids, null, { "${it.emoji} ${it.title}" + if (it in poured) " ✓" else "" }, { l -> if (l !in poured) { poured += l; if (l !in everPoured) everPoured += l; sfx?.play(Sound.BUBBLE) } else { poured -= l; sfx?.play(Sound.POP) } },
+            selectedIf = { it in poured })
         if (layers.any { it.mixed }) Text("🌀 Wasser und Spiritus mischen sich – ohne Öl dazwischen gibt es keine Schicht.", color = E.Sun, fontSize = 13.sp)
         if (poured.size >= 2) {
             Text("Etwas hineinwerfen:", color = E.Muted, fontSize = 13.sp)
-            ChipRow(listOf(Thing.TRAUBE, Thing.EIS, Thing.KORK, Thing.KARTOFFEL), null, { "${it.emoji} ${it.title} (${Fmt.num(it.rho)})" }, { if (it !in things) { things += it; sfx?.play(Sound.SPLASH) } })
+            ChipRow(listOf(Thing.TRAUBE, Thing.EIS, Thing.KORK, Thing.KARTOFFEL), null, { "${it.emoji} ${it.title} (${Fmt.num(it.rho)})" }, { if (it !in things) { things += it; sfx?.play(Sound.SPLASH) } else { things -= it; sfx?.play(Sound.POP) } },
+                selectedIf = { it in things })
         }
-        GlowButton({ poured.clear(); things.clear(); sfx?.play(Sound.WHOOSH) }, color = E.Sky) { Text("🧽 Glas ausleeren") }
     }
 }

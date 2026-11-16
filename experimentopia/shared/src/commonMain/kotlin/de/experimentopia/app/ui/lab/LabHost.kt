@@ -41,6 +41,7 @@ fun LabView(setup: Setup, free: Boolean, onGoal: () -> Unit, modifier: Modifier 
             is SoundSetup -> SoundLab(setup, free) { goal() }
             is FallSetup -> FallLab(setup, free) { goal() }
             is PendulumSetup -> PendulumLab(setup, free) { goal() }
+            is NewtonSetup -> NewtonLab(setup, free) { goal() }
         }
     }
 }

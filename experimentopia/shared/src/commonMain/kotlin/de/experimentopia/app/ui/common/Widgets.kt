@@ -97,12 +97,13 @@ fun Readout(label: String, value: String, color: Color = E.Mint, modifier: Modif
 /** Auswahl-Chips in einer Reihe (umbrechend) */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun <T> ChipRow(items: List<T>, selected: T?, label: (T) -> String, onPick: (T) -> Unit, modifier: Modifier = Modifier, color: Color = E.Mint, enabled: (T) -> Boolean = { true }) {
+fun <T> ChipRow(items: List<T>, selected: T?, label: (T) -> String, onPick: (T) -> Unit, modifier: Modifier = Modifier, color: Color = E.Mint, enabled: (T) -> Boolean = { true },
+                selectedIf: (T) -> Boolean = { it == selected }) {
     val sfx = LocalSfx.current
     val view = LocalBuzzer.current; val vib = LocalVibration.current
     FlowRow(modifier, horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         items.forEach { it ->
-            val sel = it == selected
+            val sel = selectedIf(it)
             val ok = enabled(it)
             Text(label(it), Modifier.clip(CircleShape).background(if (sel) color.copy(alpha = 0.3f) else E.Panel)
                 .border(1.5.dp, if (sel) color else E.Line, CircleShape)

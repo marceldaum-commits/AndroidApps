@@ -18,7 +18,7 @@ import de.experimentopia.core.model.Catalog
 import de.experimentopia.core.model.Island
 import de.experimentopia.core.model.Pro
 
-const val DEFAULT_PRIVACY = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe, keine Kamera, kein Mikrofon. Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)."
+val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + Pro.purchaseNote + " Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)."
 
 @Composable
 fun SettingsScreen(
@@ -57,7 +57,7 @@ fun SettingsScreen(
                 Text(privacy, fontSize = 13.sp, color = E.Text)
                 Text("So lernt Ihr Kind: Erst vermuten (mit Selbsteinschätzung), dann ausprobieren, dann Blubb erklären (Lernen durch Lehren), dann eine Knobelfrage. " +
                     "Falsche Vermutungen kosten nichts – sie werden als Aha-Moment gefeiert.", fontSize = 13.sp, color = E.Text)
-                Text("${Catalog.all.size} Versuche auf ${Island.entries.size} Inseln (Klasse 3–10): Dichte und Auftrieb, Hebel, Rollen, schiefe Ebene, Stromkreise, Ohmsches Gesetz, Magnetismus, " +
+                Text("${Catalog.all.size} Versuche auf ${Island.entries.size} Inseln (Klasse 3–10): Dichte und Auftrieb, Hebel, Rollen, schiefe Ebene, Newtonsche Gesetze, Stromkreise, Ohmsches Gesetz, Magnetismus, " +
                     "pH-Wert und Neutralisation, Reaktionsgleichungen, Schmelzen und Sieden, Teilchenmodell, Mischtemperatur, Farbmischung, Prisma, Akustik, freier Fall, Pendel.", fontSize = 13.sp, color = E.Muted)
                 Text("Alle Ergebnisse werden in Tests mit physikalischen Modellen nachgerechnet. Versuche mit Säuren, Laugen, Feuer und Strom bitte nur hier in der App – oder mit Erwachsenen.", fontSize = 12.sp, color = E.Muted)
                 Text("Version $installed vom $versionDate", style = MaterialTheme.typography.labelMedium, color = E.Muted, modifier = Modifier.testTag("version"))

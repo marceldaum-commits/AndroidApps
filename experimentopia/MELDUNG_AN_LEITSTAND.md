@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 16.11.2026 – Version 0.3.0 vom 16.11.2026: doppelt so viele Versuche, Themensuche
+
+- **142 Versuche** (vorher 71) in 13 Fachbereichen, neu: Newtonsche Gesetze (Wagen mit Motor, Skateboards). 7 neue Reaktionsgleichungen, neue Stoffe.
+- **Themensuche** (Fach, Fachbereich, Stichwort); Inseln nach Thema gegliedert. Forscherbuch mit ausführlicher Erklärung je Versuch.
+- Bedienung nach einem Durchgang „als Kind“ vereinfacht (Antippen schaltet um, Knöpfe statt nur Wischen, Frage + Vermutung im Versuch sichtbar).
+- Fachlich korrigiert: Luftdichte von Mars und Jupiter (vorher fälschlich die der Erde).
+- **Pro-Konzept angepasst:** frei bleiben jetzt die ganze Wasserinsel und von jeder anderen Insel die ersten 5 Versuche (zusammen etwa ein Drittel),
+  dazu Themensuche, Rätsel des Tages, Forscherbuch. Preisvorschlag unverändert (7,99 € einmalig). Elterntext jetzt: „Zurzeit ist alles kostenlos.“
+- Für die App-Karte: Zielgruppe weiter „Klasse 3–10 · Physik & Chemie“, Beschreibung gern ergänzen: „142 Versuche, von Schwimmen und Sinken bis zu Newton und Reaktionsgleichungen.“
+
 ## 16.11.2026 – Vorstellung und erster Web-Stand: Version 0.2.0 vom 16.11.2026
 
 **Was liegt wo**
@@ -12,7 +22,7 @@ Neueste oben.
 ### 1. Was ist Experimentopia?
 Ein virtuelles Versuchslabor für **Klasse 3 bis 10**, Fächer **Physik und Chemie** (Sachunterricht in Klasse 3/4).
 Versuche, die zu Hause nicht gehen (Säure und Lauge, Knallgas, Fallen auf dem Mond, Flaschenzug mit Klavier), werden in der App ausprobiert.
-7 Inseln, 67 Versuche, 20 Geräte im „Freien Labor“ mit eigenen Werten. Maskottchen: Blubb, ein Laborkolben.
+7 Inseln, 67 Versuche (Stand 0.2.0), 20 Geräte im „Freien Labor“ mit eigenen Werten. Maskottchen: Blubb, ein Laborkolben.
 Jeder Versuch folgt dem Forscher-Kreislauf: Vermuten (mit Selbsteinschätzung) → Ausprobieren → Auflösung → Blubb erklären (Lernen durch Lehren) → Merksatz → Knobelfrage.
 Falsche Vermutungen kosten nichts, sie werden als „Aha-Moment“ gefeiert. Forscherbuch mit Auswertung der Selbsteinschätzung.
 

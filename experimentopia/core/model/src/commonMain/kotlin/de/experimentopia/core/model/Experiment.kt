@@ -4,11 +4,11 @@ import kotlin.math.abs
 
 /** Die sieben Inseln von Experimentopia. */
 enum class Island(val title: String, val emoji: String, val color: Long, val subtitle: String, val grades: String) {
-    WASSER("Wasserinsel", "🌊", 0xFF3DB8FF, "Schwimmen, Sinken, Dichte", "Kl. 3–7"),
-    KRAFT("Kraftwerk-Insel", "⚖️", 0xFFFFA23D, "Hebel, Rollen, Rampen", "Kl. 3–8"),
-    STROM("Blitzinsel", "⚡", 0xFFFFE04D, "Strom und Magnete", "Kl. 3–9"),
+    WASSER("Wasserinsel", "🌊", 0xFF3DB8FF, "Schwimmen, Sinken, Dichte", "Kl. 3–8"),
+    KRAFT("Kraftwerk-Insel", "⚖️", 0xFFFFA23D, "Hebel, Rollen, Newton", "Kl. 3–10"),
+    STROM("Blitzinsel", "⚡", 0xFFFFE04D, "Strom und Magnete", "Kl. 3–10"),
     CHEMIE("Chemie-Vulkan", "🌋", 0xFFFF5FA2, "Säuren, Laugen, Reaktionen", "Kl. 3–10"),
-    WAERME("Feuer & Eis", "🔥", 0xFFFF6B4A, "Schmelzen, Kochen, Mischen", "Kl. 3–8"),
+    WAERME("Feuer & Eis", "🔥", 0xFFFF6B4A, "Schmelzen, Kochen, Mischen", "Kl. 3–10"),
     LICHTKLANG("Licht & Klang", "🌈", 0xFFB98CFF, "Farben, Prisma, Töne", "Kl. 3–8"),
     FALL("Fallturm-Insel", "🚀", 0xFF3DF5C8, "Fallen, Mond, Pendel", "Kl. 3–10"),
 }
@@ -46,6 +46,8 @@ data class Experiment(
     /** Knobelfrage: Wissen auf eine neue Lage übertragen */
     val transfer: Quiz,
 ) {
+    /** Fachbereich (aus der Tabelle in [Catalog]) */
+    val topic: Topic get() = Catalog.topicOf(id)
     val gradeText get() = if (grades.first == grades.last) "Kl. ${grades.first}" else "Kl. ${grades.first}–${grades.last}"
 }
 

@@ -3,6 +3,9 @@ package de.experimentopia.app.ui.lab
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -47,17 +50,21 @@ private fun ItemsLab(items: List<MagnetItem>, free: Boolean, onGoal: () -> Unit)
     GoalWhen(!free && items.all { it in tested }, onGoal)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Canvas(Modifier.fillMaxWidth().height(280.dp).testTag("magnettisch").pointerInput(items) {
-            detectDragGestures(onDragStart = { magnet = it }) { ch, d ->
-                ch.consume(); magnet += d
+            fun test(at: Offset) {
+                magnet = at
                 val cols = 4
                 items.forEachIndexed { i, it ->
                     val home = Offset(size.width * (0.14f + 0.24f * (i % cols)), size.height * (0.3f + 0.36f * (i / cols)))
                     if (it !in stuck && (home - magnet).getDistance() < 44.dp.toPx()) {
                         if (it !in tested) tested += it
-                        last = it
-                        if (it.magnetic) { stuck += it; sfx?.play(Sound.CLANK); view.buzz(Buzz.HIT, vib) }
+                        val first = last != it; last = it
+                        if (it.magnetic) { stuck += it; sfx?.play(Sound.CLANK); view.buzz(Buzz.HIT, vib) } else if (first) sfx?.play(Sound.SOFT, volume = 0.4f)
                     }
                 }
+            }
+            awaitEachGesture {
+                val down = awaitFirstDown(); test(down.position)
+                drag(down.id) { ch -> ch.consume(); test(ch.position) }
             }
         }) {
             drawRoundRect(Color(0xFF2A1F55), Offset.Zero, size, CornerRadius((24f * density)))
@@ -82,7 +89,7 @@ private fun ItemsLab(items: List<MagnetItem>, free: Boolean, onGoal: () -> Unit)
                 drawLine(Color.White, Offset(m.x - (28f * density), m.y + (8f * density)), Offset(m.x - (28f * density), m.y + (18f * density)), (16f * density))
                 drawLine(Color.White, Offset(m.x + (28f * density), m.y + (8f * density)), Offset(m.x + (28f * density), m.y + (18f * density)), (16f * density))
                 repeat(3) { k -> drawCircle(E.Sun.copy(alpha = 0.25f * (1 - ((now * 1.5f + k / 3f) % 1f))), (30f * density) + (50f * density) * ((now * 1.5f + k / 3f) % 1f), m + Offset(0f, (14f * density)), style = Stroke((2f * density))) }
-            } else label(tm, "👆 Hier wischen: der Magnet folgt deinem Finger", Offset(size.width / 2, size.height * 0.92f), 12.sp, E.Muted)
+            } else label(tm, "👆 Ein Ding antippen oder mit dem Finger darüberwischen", Offset(size.width / 2, size.height * 0.92f), 12.sp, E.Muted)
         }
         last?.let { Panel(border = if (it.magnetic) E.Mint else E.Muted) {
             Text("${it.emoji} ${it.title}: ${if (it.magnetic) "wird angezogen!" else "wird nicht angezogen"}", fontWeight = FontWeight.Bold, color = E.Text)

@@ -179,7 +179,7 @@ internal object CatalogC {
             "Du hast „Alle meine Entchen“ gespielt!",
             listOf("Jede Röhre hat eine andere Luftsäule und damit einen eigenen Ton.", "Die Röhren spielen das Lied von allein.", "Die Farbe der Röhre macht den Ton."),
             "Kürzere Luftsäule – höherer Ton.",
-            quiz("Was passiert mit dem Ton, wenn Wasser verdunstet?", HL, 1, "Die Luftsäule wird länger, also tiefer.")),
+            quiz("Aus einer Röhre verdunstet Wasser. Du pustest wieder darüber. Der Ton wird …", HL, 1, "Die Luftsäule wird länger, also tiefer.")),
 
         Experiment("l10", L, "Die halbe Saite", "🎸", 5..7,
             "Blubb zupft eine gespannte Saite. Dann drückt er sie genau in der Mitte auf das Brett.",
@@ -252,8 +252,8 @@ internal object CatalogC {
             "Auf dem Mond ist g = 1,62 m/s² – sechsmal weniger als auf der Erde.",
             quiz("Wie viel länger fällt ein Hammer dort 20 m?", listOf(c("sechsmal so lang"), c("etwa 2,5-mal so lang"), c("gleich lang")),
                 nearest(listOf(6.0, 2.5, 1.0), Fall.timeNoAir(20.0, Planet.MOND.g) / Fall.timeNoAir(20.0, Planet.ERDE.g))),
-            FallSetup(Faller.HAMMER, null, listOf(Planet.VAKUUM, Planet.MOND, Planet.MARS, Planet.JUPITER), 20.0),
-            "Lass den Hammer auf Erde (ohne Luft) und Mond fallen.",
+            FallSetup(Faller.HAMMER, null, listOf(Planet.VAKUUM, Planet.MOND, Planet.JUPITER), 20.0),
+            "Lass den Hammer auf der Erde (ohne Luft), auf dem Mond und auf dem Jupiter fallen.",
             "Erde: 2,0 s, Mond: 5,0 s – 2,46-mal so lang.",
             listOf("t hängt von der Wurzel aus g ab: √6 ≈ 2,46.", "Auf dem Mond gibt es keine Schwerkraft.", "Sechsfach schwächer heißt sechsfach länger."),
             "Fallzeit ∼ 1/√g.",
@@ -295,9 +295,25 @@ internal object CatalogC {
 
 /** Alle Versuche */
 object Catalog {
+    // muss vor [all] stehen (Reihenfolge beim Anlegen des Objekts)
+    /** Fachbereich je Versuch */
+    private val topics: Map<String, Topic> = buildMap {
+        (1..17).forEach { put("w$it", Topic.AUFTRIEB) }
+        ((1..5) + (10..14) + 19).forEach { put("k$it", Topic.HEBEL) }; ((6..9) + (15..18)).forEach { put("k$it", Topic.MASCHINEN) }
+        (1..9).forEach { put("n$it", Topic.NEWTON) }
+        ((1..9) + (12..18)).forEach { put("s$it", Topic.STROM) }; listOf(10, 11, 19, 20).forEach { put("s$it", Topic.MAGNET) }
+        ((1..5) + (14..18)).forEach { put("c$it", Topic.SAEURE) }; ((6..13) + (19..26)).forEach { put("c$it", Topic.REAKTION) }
+        (1..14).forEach { put("h$it", Topic.WAERME) }
+        ((1..5) + (11..15)).forEach { put("l$it", Topic.LICHT) }; ((6..10) + (16..20)).forEach { put("l$it", Topic.SCHALL) }
+        ((1..6) + (10..13) + 17).forEach { put("f$it", Topic.FALL) }; ((7..9) + (14..16)).forEach { put("f$it", Topic.SCHWINGUNG) }
+    }
+    fun topicOf(id: String): Topic = topics[id] ?: error("Versuch $id hat kein Thema")
+
     /** Je Insel nach Klassenstufe sortiert (stabil: gleiche Stufe bleibt in der geschriebenen Reihenfolge) */
-    val all: List<Experiment> = (CatalogA.water + CatalogA.force + CatalogB.power + CatalogB.chem + CatalogC.heat + CatalogC.lightSound + CatalogC.fall)
-        .let { all -> Island.entries.flatMap { i -> all.filter { it.island == i }.sortedBy { it.grades.first } } }
+    val all: List<Experiment> = (CatalogA.water + CatalogD.water + CatalogA.force + CatalogD.force + CatalogB.power + CatalogD.power + CatalogB.chem + CatalogE.chem +
+        CatalogC.heat + CatalogE.heat + CatalogC.lightSound + CatalogE.lightSound + CatalogC.fall + CatalogE.fall)
+        .let { all -> Island.entries.flatMap { i -> all.filter { it.island == i }.sortedWith(compareBy({ topicOf(it.id).ordinal }, { it.grades.first })) } }
+
     fun byId(id: String) = all.firstOrNull { it.id == id }
     fun of(island: Island) = all.filter { it.island == island }
     /** Nächster Versuch derselben Insel */

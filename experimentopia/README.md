@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf sieben Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 0.2.0 vom 16.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 67 Versuche · 20 Geräte im Freien Labor · 12 Reaktionsgleichungen · 13 Abzeichen
+**Version 0.3.0 vom 16.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 142 Versuche in 13 Fachbereichen · 21 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -20,12 +20,18 @@ Jeder Versuch folgt dem Forscher-Kreislauf (Predict – Observe – Explain):
 Sterne: ⭐ Versuch gemacht · ⭐ Blubb gleich richtig erklärt · ⭐ Knobelfrage gelöst. Das **Forscherbuch** sammelt Vermutungen, Ergebnisse und Merksätze
 und zeigt, wie gut man sich selbst einschätzt („Wenn du dir ganz sicher warst, lagst du in 4 von 5 Fällen richtig“).
 
+## Themen und Suche
+
+13 Fachbereiche: Schwimmen, Dichte & Verdrängung · Hebel & Drehmoment · Rollen & schiefe Ebene · Kraft & Bewegung (Newton) · Fallen & Schwerkraft ·
+Pendel & Schwingungen · Stromkreise · Magnetismus · Wärme & Teilchen · Licht & Farben · Schall & Töne (Physik) · Säuren & Laugen · Chemische Reaktionen (Chemie).
+Die Themensuche filtert nach Fach und Fachbereich und sucht Stichwörter in Titeln, Fragen, Merksätzen und Fachwörtern.
+
 ## Die Inseln
 
 | Insel | Versuche (Auswahl) | Klasse |
 |---|---|---|
 | 🌊 Wasserinsel | Holz vs. Nagel, Riesenkerze, nackte Orange, Ei im Salzwasser, Knetboot, Eis in Spiritus, Dichteturm, Archimedes | 3–7 |
-| ⚖️ Kraftwerk-Insel | Kind gegen Papa auf der Wippe, Gleichgewicht, Hebelgesetz, feste/lose Rolle, Klavier mit Flaschenzug, schiefe Ebene | 3–8 |
+| ⚖️ Kraftwerk-Insel | Wippe, Schubkarre, Nussknacker, Flaschenzug, schiefe Ebene, Newton: Wagen und Skateboards (F = m·a, actio = reactio, Trägheit) | 3–10 |
 | ⚡ Blitzinsel | Leitertest, Bleistiftmine, UND/ODER-Schalter, Reihe/Parallel, Kurzschluss, Ohmsches Gesetz, Magnete, Pole | 3–9 |
 | 🌋 Chemie-Vulkan | Rotkohl-Zaubersaft, pH-Wert, Neutralisation, pH-Sprung, Verdünnen, Natron-Ballon, Knallgas, Magnesium, Rost, Fotosynthese … | 3–10 |
 | 🔥 Feuer & Eis | Was schmilzt zuerst, Heizkurve mit Teilchenblick, Mischtemperatur, Badewasser, glühendes Eisen | 3–8 |
@@ -67,6 +73,10 @@ Eingeschaltet wird erst, wenn es einen Bezahlweg gibt.
 | ![](screenshots/30_freies_labor.png) | ![](screenshots/31_eigene_werte.png) | ![](screenshots/32_freier_stromkreis.png) | ![](screenshots/33_forscherbuch.png) |
 | Selbsteinschätzung | Abzeichen | Einstellungen | Forscher-Pass (vorbereitet) |
 | ![](screenshots/34_selbsteinschaetzung.png) | ![](screenshots/35_abzeichen.png) | ![](screenshots/36_einstellungen.png) | ![](screenshots/37_forscher_pass.png) |
+| Forscherbuch mit Erklärung | Themensuche | Thema Newton | Newton-Wagen |
+| ![](screenshots/38_forscherbuch_erklaerung.png) | ![](screenshots/39_themensuche.png) | ![](screenshots/40_thema_newton.png) | ![](screenshots/41_newton_wagen.png) |
+| Skateboards | Eisen auf Quecksilber | | |
+| ![](screenshots/42_skateboards.png) | ![](screenshots/43_quecksilber.png) | | |
 
 ## Android und Web
 

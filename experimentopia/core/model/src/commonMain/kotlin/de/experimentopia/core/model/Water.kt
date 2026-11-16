@@ -11,6 +11,7 @@ enum class Liquid(val title: String, val rho: Double, val color: Long, val emoji
     HONIG("Honig", 1.42, 0xFFE89A1C, "🍯"),
     SPUELI("Spülmittel", 1.06, 0xFF7CF29A, "🧴"),
     SPIRITUS("Spiritus", 0.79, 0xFFB98CFF, "🔥"),
+    QUECKSILBER("Quecksilber (giftig!)", 13.53, 0xFFC8CCD6, "🥄"),
     ;
     companion object {
         /** Mischen sich sofort, wenn sie sich berühren (Wasser und Alkohol) */
@@ -40,6 +41,15 @@ enum class Thing(val title: String, val emoji: String, val rho: Double, val mass
     GUMMIENTE("Gummiente", "🦆", 0.30, 30.0, "Die Ente ist innen hohl."),
     MUENZE("Münze", "🥉", 7.8, 4.0, "Metall ist viel dichter als Wasser."),
     TRAUBE("Weintraube", "🍇", 1.08, 5.0, "Trauben sind voller Zuckersaft – dichter als Wasser."),
+    EBENHOLZ("Ebenholz", "🟫", 1.2, 60.0, "Ebenholz ist so dicht, dass es untergeht – ein Holz, das sinkt!"),
+    EICHE("Eichenholz", "🌳", 0.75, 75.0, "Eiche ist schwer, aber immer noch weniger dicht als Wasser."),
+    BALSA("Balsaholz", "🍂", 0.16, 8.0, "Balsa ist das leichteste Holz – daraus baut man Modellflugzeuge."),
+    PE("Flaschendeckel (PE)", "🔵", 0.95, 2.0, "Polyethylen ist leichter als Wasser – so trennt man Kunststoffe im Recycling."),
+    PVC("Rohrstück (PVC)", "⚪", 1.4, 20.0, "PVC ist dichter als Wasser und sinkt."),
+    ALUWUERFEL("Metallwürfel (54 g, 20 cm³)", "🧊", 2.7, 54.0, "54 g ÷ 20 cm³ = 2,7 g/cm³ – das ist Aluminium."),
+    GOLD("Goldbarren", "🥇", 19.3, 1000.0, "Gold ist eines der dichtesten Metalle."),
+    MENSCH("Mensch (eingeatmet)", "🏊", 0.985, 60000.0, "Mit Luft in der Lunge ist der Körper knapp weniger dicht als Wasser."),
+    UBOOT("U-Boot (Tanks halb voll)", "🚢", 1.0, 2000000.0, "Mit Wasser in den Tanks hat das U-Boot genau die Dichte von Wasser – es schwebt."),
     ;
     val volumeCm3 get() = massG / rho
 }

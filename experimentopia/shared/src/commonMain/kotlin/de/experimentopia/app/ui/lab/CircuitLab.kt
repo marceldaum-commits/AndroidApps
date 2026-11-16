@@ -148,10 +148,13 @@ fun CircuitLab(s: CircuitSetup, free: Boolean, onGoal: () -> Unit) {
             drawBursts(bursts, now)
         }
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            Readout("Stromstärke", if (res.short) "⚠️ sehr groß" else "${Fmt.num(res.totalA, 3)} A", if (res.short) E.Red else E.Mint,
+            Readout("Stromstärke", if (s.goal == CircuitGoal.MEASURE && !measured && !free) "?" else if (res.short) "⚠️ sehr groß" else "${Fmt.num(res.totalA, 3)} A", if (res.short) E.Red else E.Mint,
                 Modifier.weight(1f).let { m -> if (s.goal == CircuitGoal.MEASURE) m.pulse(!measured, 0.03f) else m }.pointerInput(Unit) { detectTapGestures { measured = true; sfx?.play(Sound.DING) } }.testTag("messgeraet"))
             Readout("Spannung", "${Fmt.num(volts)} V", E.Sun, Modifier.weight(1f))
             Readout("Widerstand gesamt", if (res.totalOhm.isInfinite()) "∞ (offen)" else "${Fmt.num(res.totalOhm, 1)} Ω", E.Sky, Modifier.weight(1f))
+        }
+        if (s.goal == CircuitGoal.MEASURE && !free) GlowButton({ measured = true; sfx?.play(Sound.DING) }, Modifier.fillMaxWidth().pulse(!measured, 0.03f), color = E.Mint) {
+            Text(if (measured) "📏 Gemessen: ${Fmt.num(res.totalA, 3)} A" else "📏 Strom messen", fontWeight = FontWeight.Bold)
         }
         if (res.short) Text("⚠️ Kurzschluss! Der Strom nimmt den Weg ohne Widerstand. Die Batterie wird heiß.", color = E.Red, fontSize = 14.sp, fontWeight = FontWeight.Bold)
         val anyTest = slots.firstOrNull { it.part.isMaterial }

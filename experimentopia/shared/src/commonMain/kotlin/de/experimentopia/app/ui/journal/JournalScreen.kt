@@ -1,6 +1,7 @@
 package de.experimentopia.app.ui.journal
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -19,6 +20,7 @@ import de.experimentopia.app.ui.blubb.BlubbSays
 import de.experimentopia.app.ui.blubb.Mood
 import de.experimentopia.app.ui.common.*
 import de.experimentopia.app.ui.fx.BubbleBackground
+import de.experimentopia.app.ui.fx.GlowButton
 import de.experimentopia.app.ui.fx.dateText
 import de.experimentopia.app.ui.fx.popIn
 import de.experimentopia.app.ui.theme.E
@@ -28,8 +30,9 @@ import de.experimentopia.core.model.*
 enum class JournalTab(val title: String) { VERSUCHE("🧪 Versuche"), WISSEN("📒 Merksätze"), ICH("🧭 Selbsteinschätzung") }
 
 @Composable
-fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab = JournalTab.VERSUCHE) {
+fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab = JournalTab.VERSUCHE, onOpen: (Experiment) -> Unit = {}, openFirst: Boolean = false) {
     var tab by remember { mutableStateOf(start) }
+    var open by remember { mutableStateOf(if (openFirst) entries.firstOrNull()?.id else null) }
     Box(Modifier.fillMaxSize()) {
         BubbleBackground(tint = E.Sun)
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -38,19 +41,24 @@ fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab 
             Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 if (entries.isEmpty()) BlubbSays("Dein Forscherbuch ist noch leer. Mach deinen ersten Versuch – ich schreibe alles mit!", Mood.THINK, speak = false)
                 when (tab) {
-                    JournalTab.VERSUCHE -> entries.forEachIndexed { i, j ->
-                        val e = Catalog.byId(j.experimentId) ?: return@forEachIndexed
-                        Panel(Modifier.fillMaxWidth().popIn((i * 40).coerceAtMost(400)), border = if (j.right) E.Mint else E.Sun) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                Text(e.emoji, fontSize = 26.sp)
-                                Column(Modifier.weight(1f).padding(start = 8.dp)) {
-                                    Text(e.title, color = E.Text, fontWeight = FontWeight.Bold)
-                                    Text("${dateText(j.at)} · ${e.island.title}" + if (j.daily) " · 📅" else "", color = E.Muted, fontSize = 11.sp)
+                    JournalTab.VERSUCHE -> {
+                        if (entries.isNotEmpty()) Text("Tipp einen Eintrag an – dann steht dort die ganze Erklärung.", color = E.Muted, fontSize = 13.sp)
+                        entries.forEachIndexed { i, j ->
+                            val e = Catalog.byId(j.experimentId) ?: return@forEachIndexed
+                            val expanded = open == j.id
+                            Panel(Modifier.fillMaxWidth().popIn((i * 40).coerceAtMost(400)).clickable { open = if (expanded) null else j.id }.testTag("eintrag_${j.id}"), border = if (j.right) E.Mint else E.Sun) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text(e.emoji, fontSize = 26.sp)
+                                    Column(Modifier.weight(1f).padding(start = 8.dp)) {
+                                        Text(e.title, color = E.Text, fontWeight = FontWeight.Bold)
+                                        Text("${dateText(j.at)} · ${e.topic.emoji} ${e.topic.title}" + if (j.daily) " · 📅" else "", color = E.Muted, fontSize = 11.sp)
+                                    }
+                                    Text(if (j.right) "🎯" else "💡", fontSize = 24.sp)
                                 }
-                                Text(if (j.right) "🎯" else "💡", fontSize = 24.sp)
+                                Text("Ich dachte: ${j.guess}  ${Sure.entries.getOrNull(j.sure)?.let { "${it.emoji} (${it.title})" } ?: ""}", color = E.Text, fontSize = 14.sp)
+                                Text("Es war: ${j.result}", color = if (j.right) E.Mint else E.Sun, fontSize = 14.sp)
+                                if (expanded) Explanation(e, onOpen) else Text("▾ Erklärung anzeigen", color = E.Sky, fontSize = 13.sp)
                             }
-                            Text("Ich dachte: ${j.guess}  ${Sure.entries.getOrNull(j.sure)?.emoji ?: ""}", color = E.Text, fontSize = 14.sp)
-                            Text("Es war: ${j.result}", color = if (j.right) E.Mint else E.Sun, fontSize = 14.sp)
                         }
                     }
                     JournalTab.WISSEN -> {
@@ -59,7 +67,13 @@ fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab 
                             val facts = Catalog.of(island).filter { it.id in done }
                             if (facts.isNotEmpty()) {
                                 Text("${island.emoji} ${island.title}", color = island.color.color(), fontWeight = FontWeight.Black)
-                                facts.forEach { e -> Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(E.Deep).padding(10.dp)) { Text(e.emoji, fontSize = 18.sp); Text("  ${e.fact}", color = E.Text, fontSize = 14.sp) } }
+                                facts.forEach { e ->
+                                    var more by remember { mutableStateOf(false) }
+                                    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(E.Deep).clickable { more = !more }.padding(10.dp)) {
+                                        Row { Text(e.emoji, fontSize = 18.sp); Text("  ${e.fact}", color = E.Text, fontSize = 14.sp) }
+                                        if (more) Explanation(e, onOpen)
+                                    }
+                                }
                             }
                         }
                     }
@@ -108,5 +122,26 @@ fun BadgesScreen(stats: Stats, onBack: () -> Unit) {
                 }
             }
         }
+    }
+}
+
+/** Ausführliche Erklärung zu einem Versuch – für das Forscherbuch */
+@Composable
+fun Explanation(e: Experiment, onOpen: (Experiment) -> Unit) {
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(top = 4.dp)) {
+        Section("❓ Die Frage", e.predict.question + "\n" + e.story)
+        Section("👀 Was passiert ist", e.reveal)
+        Section("🧠 Warum?", e.why.first())
+        Section("📒 Merksatz", e.fact)
+        Section("🧩 Knobelfrage", e.transfer.question + "\nLösung: " + e.transfer.choices[e.transfer.answer].text + (if (e.transfer.explain.isNotBlank()) " – " + e.transfer.explain else ""))
+        GlowButton({ onOpen(e) }, Modifier.fillMaxWidth(), color = E.Pink) { Text("🔁 Nochmal ausprobieren", fontWeight = FontWeight.Bold) }
+    }
+}
+
+@Composable
+private fun Section(title: String, text: String) {
+    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(E.Panel).padding(10.dp)) {
+        Text(title, color = E.Sun, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+        Text(text, color = E.Text, fontSize = 14.sp)
     }
 }

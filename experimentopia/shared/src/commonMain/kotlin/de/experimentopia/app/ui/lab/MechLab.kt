@@ -111,7 +111,7 @@ fun LeverLab(s: LeverSetup, free: Boolean, onGoal: () -> Unit) {
         }
         if (s.goal == LeverGoal.RELEASE && held) GlowButton({ held = false; sfx?.play(Sound.WHOOSH) }, Modifier.fillMaxWidth().pulse(true), color = E.Pink) { Text("🙌 Loslassen!", fontWeight = FontWeight.Bold) }
         if (tray.isNotEmpty()) {
-            Text("Gewicht wählen, dann auf ein Feld der Wippe tippen (nochmal tippen nimmt es weg):", color = E.Muted, fontSize = 13.sp)
+            Text("1. Gewicht wählen  2. auf eine Zahl auf der Wippe tippen  (nochmal tippen = wegnehmen)", color = E.Sun, fontSize = 14.sp)
             ChipRow(tray.indices.toList(), picked, { i -> "${if (tray[i].emoji == "🧱") "🧱" else tray[i].emoji} ${tray[i].label}" }, { picked = it }, color = E.Sky)
         }
         if (free) Panel(border = E.Sun) {
@@ -191,7 +191,13 @@ fun PulleyLab(s: PulleySetup, free: Boolean, onGoal: () -> Unit) {
             label(tm, "Ziel ${Fmt.num(s.heightM)} m", Offset(crateX - (100f * density), h - (70f * density) - s.heightM.toFloat() * unit), 11.sp, E.Mint)
             if (tooHeavy && strain > 0) label(tm, "😣💦", Offset(pullX + (40f * density), h * 0.5f + sin(now * 30f) * (3f * density)), 24.sp)
         }
-        Text("👇 Am Seil nach unten wischen, um zu ziehen", color = E.Muted, fontSize = 13.sp)
+        Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("👇 Am Seil nach unten wischen – oder:", color = E.Muted, fontSize = 13.sp, modifier = Modifier.weight(1f))
+            GlowButton({
+                if (tooHeavy) { strain++; sfx?.play(Sound.SOFT) }
+                else if (lift < s.heightM.toFloat()) { lift = (lift + 0.1f / 1f).coerceAtMost(s.heightM.toFloat()); sfx?.play(Sound.TAP, pitch = 0.8f + lift * 0.4f) }
+            }, color = E.Pink) { Text("✊ Ziehen", fontWeight = FontWeight.Bold) }
+        }
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Readout("Zugkraft", "${Fmt.num(f, 0)} N", if (tooHeavy) E.Red else E.Mint, Modifier.weight(1f))
             Readout("Seil gezogen", "${Fmt.num(lift * ropes.toDouble(), 2)} m", E.Sky, Modifier.weight(1f))
@@ -242,7 +248,11 @@ fun RampLab(s: RampSetup, free: Boolean, onGoal: () -> Unit) {
             rotate(-ang, Offset(bx, by)) { rotate(roll, Offset(bx, by - (26f * density))) { label(tm, "🛢️", Offset(bx, by - (26f * density)), 34.sp) } }
             label(tm, "💪", Offset(bx - (40f * density), by - (22f * density)), 24.sp)
         }
-        Text("👉 Nach rechts wischen, um das Fass hochzuschieben", color = E.Muted, fontSize = 13.sp)
+        Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("👉 Nach rechts wischen – oder:", color = E.Muted, fontSize = 13.sp, modifier = Modifier.weight(1f))
+            GlowButton({ if (pos < 1f) { pos = (pos + 0.125f).coerceAtMost(1f); sfx?.play(Sound.TAP); if (pos >= 1f && len !in done) { done += len; sfx?.play(Sound.DING) } } }, color = E.Pink) { Text("💪 Schieben", fontWeight = FontWeight.Bold) }
+            GlowButton({ pos = 0f }, color = E.Muted) { Text("↺") }
+        }
         Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Readout("Schiebekraft", "${Fmt.num(f, 0)} N", E.Mint, Modifier.weight(1f))
             Readout("ohne Rampe", "${Fmt.num(mass * Planet.ERDE.g, 0)} N", E.Muted, Modifier.weight(1f))

@@ -41,7 +41,7 @@ fun SoundLab(s: SoundSetup, free: Boolean, onGoal: () -> Unit) {
             SoundMode.STRIKE, SoundMode.BLOW -> Tubes(mode == SoundMode.BLOW, free, onGoal)
             SoundMode.TUNE -> Tuner(s.target ?: Note.A5, free, onGoal)
             SoundMode.MELODY -> Melody(s.melody.ifEmpty { listOf(Note.C5, Note.D5, Note.E5, Note.F5, Note.G5, Note.G5) }, free, onGoal)
-            SoundMode.STRING -> Monochord(free, onGoal)
+            SoundMode.STRING -> Monochord(s.stringFrac, free, onGoal)
         }
     }
 }
@@ -184,7 +184,7 @@ private fun Melody(melody: List<Note>, free: Boolean, onGoal: () -> Unit) {
 }
 
 @Composable
-private fun Monochord(free: Boolean, onGoal: () -> Unit) {
+private fun Monochord(target: Double, free: Boolean, onGoal: () -> Unit) {
     val sfx = LocalSfx.current
     val tm = rememberTextMeasurer()
     val now by rememberSeconds()
@@ -194,7 +194,7 @@ private fun Monochord(free: Boolean, onGoal: () -> Unit) {
     val hz = Klang.stringHz(frac.toDouble())
     GoalWhen(!free && octave, onGoal)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Canvas(Modifier.fillMaxWidth().height(170.dp).testTag("saite").pointerInput(frac) { detectTapGestures { pluckAt = now; sfx?.tone(hz, Timbre.PLUCK); if (abs(frac - 0.5f) <= 0.01f) octave = true } }) {
+        Canvas(Modifier.fillMaxWidth().height(170.dp).testTag("saite").pointerInput(frac) { detectTapGestures { pluckAt = now; sfx?.tone(hz, Timbre.PLUCK); if (abs(frac - target.toFloat()) <= 0.011f) octave = true } }) {
             val w = size.width; val h = size.height
             val x0 = w * 0.06f; val x1 = w * 0.94f; val y = h * 0.45f
             drawRoundRect(Color(0xFF8C6239), Offset(x0 - (12f * density), y + (22f * density)), Size(x1 - x0 + (24f * density), (40f * density)), CornerRadius((10f * density)))
@@ -214,6 +214,6 @@ private fun Monochord(free: Boolean, onGoal: () -> Unit) {
             Readout("Frequenz", "${Klang.round(hz)} Hz", E.Sun, Modifier.weight(1f))
             Readout("im Vergleich zur ganzen Saite", "× ${Fmt.num(1 / frac.toDouble(), 2)}", E.Mint, Modifier.weight(1.4f))
         }
-        Text("Ganze Saite: 262 Hz (c′). Halbe Länge → doppelte Frequenz = eine Oktave höher.", color = E.Muted, fontSize = 12.sp)
+        Text("Ganze Saite: 262 Hz (c′). Halbe Länge → doppelte Frequenz = eine Oktave höher." + if (!free) " Ziel: ${roundI(target * 100.0)} % der Länge." else "", color = E.Muted, fontSize = 12.sp)
     }
 }

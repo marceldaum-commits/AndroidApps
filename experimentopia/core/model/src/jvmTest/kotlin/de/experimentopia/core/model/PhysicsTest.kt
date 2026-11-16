@@ -79,7 +79,7 @@ class PhysicsTest {
             assertEquals("${r.id} kleinste Zahlen", 1, r.coeffs.reduce(Reaction::gcd))
             assertFalse("${r.id}: Start mit lauter Einsen darf nicht schon stimmen, sonst gibt es nichts zu tun", r.balanced(List(r.coeffs.size) { 1 }) && r.id !in setOf("kohle", "neutral", "natron"))
             assertTrue(r.notSmallest(r.coeffs.map { it * 2 }))
-            assertTrue("${r.id}: Zahlen bis 9 reichen", r.coeffs.all { it in 1..9 })
+            assertTrue("${r.id}: Zahlen bis 15 reichen (so weit geht der Zähler)", r.coeffs.all { it in 1..15 })
         }
     }
 

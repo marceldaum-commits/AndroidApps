@@ -8,7 +8,7 @@ class CatalogTest {
     private val all = Catalog.all
 
     @Test fun grundsaetzliches() {
-        assertTrue("umfangreich", all.size >= 60)
+        assertTrue("umfangreich: mindestens doppelt so viele wie in 0.2.0 (71)", all.size >= 142)
         assertEquals("IDs eindeutig", all.size, all.map { it.id }.toSet().size)
         Island.entries.forEach { assertTrue("$it hat Versuche", Catalog.of(it).size >= 6) }
         all.forEach { e ->
@@ -20,8 +20,8 @@ class CatalogTest {
         }
         // Für Grundschüler gibt es auf jeder Insel etwas
         Island.entries.forEach { i -> assertTrue("$i für Klasse 3", Catalog.of(i).any { 3 in it.grades }) }
-        // Inseln sind nach Klassenstufe sortiert
-        Island.entries.forEach { i -> val f = Catalog.of(i).map { it.grades.first }; assertEquals("$i sortiert", f.sorted(), f) }
+        // Inseln sind nach Thema, innerhalb des Themas nach Klassenstufe sortiert
+        Island.entries.forEach { i -> val l = Catalog.of(i); assertEquals("$i sortiert", l.sortedWith(compareBy({ it.topic.ordinal }, { it.grades.first })), l) }
     }
 
     /** Die erwarteten richtigen Antworten – so steht es in jedem Physik-/Chemiebuch. Berechnet werden sie aus den Modellen. */
@@ -32,7 +32,7 @@ class CatalogTest {
         assertEquals("geht unter", ans("w4")); assertEquals("schwimmt", ans("w5")); assertEquals("Ja, als Boot geformt", ans("w6"))
         assertEquals("sinkt", ans("w7")); assertEquals("schwebt mittendrin", tr("w7")); assertEquals("Spiritus", ans("w8"))
         assertEquals("mischt sich mit dem Wasser", tr("w8")); assertEquals("etwa die Hälfte", ans("w9")); assertEquals("fast neun Zehntel", tr("w9"))
-        assertEquals("rechts runter", ans("k1")); assertEquals("links runter", tr("k1")); assertEquals("Feld 2", ans("k2")); assertEquals("Feld 1", tr("k2"))
+        assertEquals("Mias Seite geht runter", ans("k1")); assertEquals("Papas Seite geht runter", tr("k1")); assertEquals("Feld 2", ans("k2")); assertEquals("Feld 1", tr("k2"))
         assertEquals("Feld 4", ans("k3")); assertEquals("Geht nicht – Feld 8 gibt es nicht", tr("k3")); assertEquals("Feld 2", ans("k4")); assertEquals("14 kg", tr("k4"))
         assertEquals("118 N", ans("k5")); assertEquals("294 N", tr("k5"))
         assertEquals("Nein, sie ändert nur die Richtung", ans("k6")); assertEquals("196 N", ans("k7")); assertEquals("2 m", tr("k7"))
@@ -58,6 +58,8 @@ class CatalogTest {
         assertEquals("gleichzeitig", tr("f3")); assertEquals("gleichzeitig", ans("f4")); assertEquals("Hammer", tr("f4"))
         assertEquals("etwa 2 s", ans("f5")); assertEquals("etwa 4 s", tr("f5")); assertEquals("etwa 2,5-mal so lang", ans("f6")); assertEquals("schneller unten", tr("f6"))
         assertEquals("beide gleich", ans("f7")); assertEquals("schneller", tr("f7")); assertEquals("doppelt so lang", ans("f8")); assertEquals("dreifache Dauer", tr("f8"))
+        assertEquals("beide gleich schnell", ans("n1")); assertEquals("Mia", ans("n2")); assertEquals("dreimal so schnell", tr("n2"))
+        assertEquals("nur halb so schnell", ans("n3")); assertEquals("ein Drittel der Beschleunigung", tr("n3")); assertEquals("sie verdoppelt sich", ans("n4")); assertEquals("10 m/s²", tr("n4"))
         assertEquals("etwa 1 m", ans("f9")); assertEquals("geht langsamer", tr("f9"))
     }
 
@@ -97,6 +99,15 @@ class CatalogTest {
         }
     }
 
+    @Test fun themenUndSuche() {
+        Topic.entries.forEach { assertTrue("$it hat Versuche", it.experiments().isNotEmpty()) }
+        all.forEach { it.topic }   // jeder Versuch hat ein Thema
+        assertTrue(Search.find("Newton").containsAll(Topic.NEWTON.experiments()))
+        assertTrue(Search.find("magnet").any { it.id == "s10" })
+        assertTrue(Search.find("", Subject.CHEMIE).all { it.topic.subject == Subject.CHEMIE })
+        assertEquals(Topic.REAKTION.experiments().size, Search.find("", topic = Topic.REAKTION).size)
+    }
+
     @Test fun freiesLaborHatJedesGeraet() { Lab.entries.forEach { assertEquals(it, FreeLab.setup(it).lab) } }
 
     @Test fun proIstAusgeschaltetUndFair() {
@@ -120,5 +131,12 @@ class CatalogTest {
         val rows = Calibration.rows(List(4) { Sure.SICHER to true } + (Sure.UNSICHER to false))
         assertTrue(Calibration.advice(rows).contains("meistens richtig"))
         assertTrue(Badges.earned(Stats(done = 1, ahas = 1)).map { it.id }.containsAll(listOf("erster", "aha1")))
+    }
+}
+
+class IslandGradeTest {
+    @Test fun klassenangabeStimmt() = Island.entries.forEach { i ->
+        val l = Catalog.of(i); val text = "Kl. ${l.minOf { it.grades.first }}–${l.maxOf { it.grades.last }}"
+        org.junit.Assert.assertEquals("$i", text, i.grades)
     }
 }

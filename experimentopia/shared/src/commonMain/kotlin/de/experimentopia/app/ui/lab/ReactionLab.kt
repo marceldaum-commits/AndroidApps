@@ -77,7 +77,7 @@ fun ReactionLab(s: ReactionSetup, free: Boolean, onGoal: () -> Unit) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Stepper("−") { if (coeffs[k] > 1) { coeffs[k]--; sfx?.play(Sound.TAP, pitch = 0.9f) } }
                             Text("${coeffs[k]}", color = E.Sun, fontSize = 22.sp, fontWeight = FontWeight.Black, modifier = Modifier.padding(horizontal = 6.dp))
-                            Stepper("+") { if (coeffs[k] < 9) { coeffs[k]++; sfx?.play(Sound.POP, pitch = 1f + coeffs[k] * 0.05f) } }
+                            Stepper("+") { if (coeffs[k] < 15) { coeffs[k]++; sfx?.play(Sound.POP, pitch = 1f + coeffs[k] * 0.05f) } }
                         }
                         Canvas(Modifier.size(84.dp, 84.dp)) {
                             val n = coeffs[k]; val shown = n.coerceAtMost(4)

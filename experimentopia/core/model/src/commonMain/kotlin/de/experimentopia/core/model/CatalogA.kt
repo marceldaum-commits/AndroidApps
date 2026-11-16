@@ -117,19 +117,20 @@ internal object CatalogA {
     )
 
     private fun l(m: Double, p: Int, e: String, label: String) = Load(m, p, e, label)
-    private val TILT = listOf(c("links runter", "⬅️"), c("rechts runter", "➡️"), c("bleibt gerade", "⚖️"))
+    private val TILT = listOf(c("die linke Seite geht runter", "⬅️"), c("die rechte Seite geht runter", "➡️"), c("die Wippe bleibt gerade", "⚖️"))
+    private val PAPA_MIA = listOf(c("Papas Seite geht runter", "👨"), c("Mias Seite geht runter", "👧"), c("die Wippe bleibt gerade", "⚖️"))
     private fun tiltIdx(loads: List<Load>) = when (Lever.tilt(loads)) { -1 -> 0; 1 -> 1; else -> 2 }
 
     val force = listOf(
         Experiment("k1", K, "Kind gegen Papa", "👧", 3..4,
             "Papa (80 kg) setzt sich auf die Wippe, ganz nah an die Mitte. Mia (30 kg) setzt sich ganz nach außen.",
-            quiz("Welche Seite geht runter? (Papa links, Mia rechts)", TILT, tiltIdx(listOf(l(80.0, -1, "👨", "Papa"), l(30.0, 4, "👧", "Mia")))),
+            quiz("Welche Seite der Wippe geht runter?", PAPA_MIA, tiltIdx(listOf(l(80.0, -1, "👨", "Papa"), l(30.0, 4, "👧", "Mia")))),
             LeverSetup(listOf(l(80.0, -1, "👨", "Papa 80 kg"), l(30.0, 4, "👧", "Mia 30 kg")), emptyList(), LeverGoal.RELEASE),
             "Lass die Wippe los.",
             "Mias Seite geht runter – obwohl Papa viel schwerer ist!",
             listOf("Es zählt Masse mal Abstand: 30 · 4 = 120 ist mehr als 80 · 1 = 80.", "Kinder sind auf der Wippe immer stärker.", "Papa hat nicht richtig gesessen."),
             "Auf der Wippe zählt Masse × Abstand zur Mitte.",
-            quiz("Papa rutscht auf Feld 2. Welche Seite geht jetzt runter?", TILT, tiltIdx(listOf(l(80.0, -2, "", ""), l(30.0, 4, "", ""))), "80 · 2 = 160 gegen 30 · 4 = 120.")),
+            quiz("Papa rutscht ein Feld weiter nach außen (Feld 2). Welche Seite geht jetzt runter?", PAPA_MIA, tiltIdx(listOf(l(80.0, -2, "", ""), l(30.0, 4, "", ""))), "80 · 2 = 160 gegen 30 · 4 = 120.")),
 
         Experiment("k2", K, "Ins Gleichgewicht!", "⚖️", 3..5,
             "Links liegt ein 2-kg-Gewicht auf Feld 3. Blubb hat ein 3-kg-Gewicht und will die Wippe gerade bekommen.",
@@ -214,5 +215,52 @@ internal object CatalogA {
             listOf("Doppelt so lange Rampe – halbe Kraft, doppelter Weg. Die Arbeit bleibt gleich.", "Lange Rampen sind glatter.", "Auf der langen Rampe wird das Fass leichter."),
             "Schiefe Ebene: F = G · h / l.",
             quiz("Wie groß ist die Kraft auf der 4-m-Rampe?", listOf(c("123 N"), c("245 N"), c("491 N")), nearest(listOf(123.0, 245.0, 491.0), Ramp.forceN(50.0, 1.0, 4.0)))),
+
+        Experiment("n1", K, "Skateboard-Schubs", "🛹", 5..7,
+            "Zwei gleich schwere Kinder stehen auf Skateboards und schubsen sich gegenseitig weg.",
+            quiz("Wer rollt schneller weg?", listOf(c("das Kind, das schubst"), c("das geschubste Kind"), c("beide gleich schnell", "🤝")),
+                Newton.pushSpeeds(30.0, 30.0).let { (a, b) -> if (Fmt.close(a, b, 1e-9)) 2 else if (a > b) 0 else 1 }),
+            NewtonSetup(NewtonMode.PUSH, pairs = listOf(30.0 to 30.0)),
+            "Lass die beiden abstoßen.",
+            "Beide rollen gleich schnell auseinander – auch das Kind, das geschubst hat, rollt zurück!",
+            listOf("Kraft und Gegenkraft sind gleich groß: Wer schubst, wird selbst genauso zurückgeschubst (actio = reactio).", "Nur wer geschubst wird, bewegt sich.", "Skateboards rollen immer gleich schnell."),
+            "3. Newtonsches Gesetz: Jede Kraft hat eine gleich große Gegenkraft (actio = reactio).",
+            quiz("Du springst von einem kleinen Boot ans Ufer. Was macht das Boot?", listOf(c("Es fährt nach hinten weg"), c("Es bleibt stehen"), c("Es fährt mit dir zum Ufer")), 0,
+                "Du drückst das Boot nach hinten – darum landen manche im Wasser.")),
+
+        Experiment("n2", K, "Kind gegen Papa auf Rollen", "🤸", 6..8,
+            "Mia (30 kg) und Papa (90 kg) stehen auf Skateboards und drücken sich mit den Händen voneinander weg.",
+            quiz("Wer rollt schneller?", listOf(c("Mia", "👧"), c("Papa", "👨"), c("beide gleich schnell", "🤝")),
+                Newton.pushSpeeds(30.0, 90.0).let { (a, b) -> if (Fmt.close(a, b, 1e-9)) 2 else if (a > b) 0 else 1 }),
+            NewtonSetup(NewtonMode.PUSH, pairs = listOf(30.0 to 90.0)),
+            "Lass die beiden abstoßen.",
+            "Beide bekommen denselben Schubs – aber Mia ist dreimal leichter und rollt dreimal so schnell.",
+            listOf("Beide spüren dieselbe Kraft, aber die leichtere Masse wird stärker beschleunigt.", "Papa schubst stärker, weil er größer ist.", "Kinder rollen immer schneller."),
+            "Gleiche Kraft, kleinere Masse – größere Geschwindigkeit.",
+            quiz("Wie viel schneller rollt Mia?", listOf(c("gleich schnell"), c("doppelt so schnell"), c("dreimal so schnell")),
+                nearest(listOf(1.0, 2.0, 3.0), Newton.pushSpeeds(30.0, 90.0).let { it.first / it.second }))),
+
+        Experiment("n3", K, "Leerer und voller Wagen", "🛒", 7..9,
+            "Ein Motor zieht einen Wagen immer mit 20 N. Einmal ist der Wagen leer (2 kg), einmal beladen (4 kg).",
+            quiz("Der Wagen ist doppelt so schwer. Wie schnell kommt er in Fahrt (Beschleunigung)?", listOf(c("doppelt so schnell"), c("genauso schnell"), c("nur halb so schnell")),
+                nearest(listOf(2.0, 1.0, 0.5), Newton.accel(20.0, 4.0) / Newton.accel(20.0, 2.0))),
+            NewtonSetup(NewtonMode.CART, masses = listOf(2.0, 4.0), forces = listOf(20.0)),
+            "Fahr einmal mit leerem und einmal mit vollem Wagen.",
+            "Leer: 10 m/s², voll: 5 m/s². Doppelte Masse – halbe Beschleunigung.",
+            listOf("a = F / m: Die gleiche Kraft muss doppelt so viel Masse bewegen.", "Schwere Dinge fahren immer schneller.", "Der Motor wird bei Last stärker."),
+            "2. Newtonsches Gesetz: F = m · a.",
+            quiz("Und dreimal so schwer (6 kg)?", listOf(c("ein Drittel der Beschleunigung"), c("dreimal so viel"), c("gleich viel")),
+                nearest(listOf(1 / 3.0, 3.0, 1.0), Newton.accel(20.0, 6.0) / Newton.accel(20.0, 2.0)))),
+
+        Experiment("n4", K, "Doppelte Kraft", "🚀", 7..9,
+            "Jetzt bleibt der Wagen gleich (2 kg). Blubb dreht den Motor von 10 N auf 20 N.",
+            quiz("Was passiert mit der Beschleunigung?", listOf(c("sie verdoppelt sich"), c("sie bleibt gleich"), c("sie halbiert sich")),
+                nearest(listOf(2.0, 1.0, 0.5), Newton.accel(20.0, 2.0) / Newton.accel(10.0, 2.0))),
+            NewtonSetup(NewtonMode.CART, masses = listOf(2.0), forces = listOf(10.0, 20.0)),
+            "Fahr einmal mit 10 N und einmal mit 20 N.",
+            "10 N: 5 m/s², 20 N: 10 m/s² – doppelte Kraft, doppelte Beschleunigung.",
+            listOf("a = F / m: Doppelte Kraft bei gleicher Masse gibt doppelte Beschleunigung.", "Mehr Kraft macht den Wagen leichter.", "Die Kraft hat keinen Einfluss."),
+            "Je größer die Kraft, desto stärker die Beschleunigung.",
+            quiz("Welche Beschleunigung hat ein 2-kg-Wagen bei 20 N?", listOf(c("5 m/s²"), c("10 m/s²"), c("40 m/s²")), nearest(listOf(5.0, 10.0, 40.0), Newton.accel(20.0, 2.0)))),
     )
 }

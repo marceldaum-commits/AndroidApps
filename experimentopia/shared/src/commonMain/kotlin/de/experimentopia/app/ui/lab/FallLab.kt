@@ -46,9 +46,9 @@ fun FallLab(s: FallSetup, free: Boolean, onGoal: () -> Unit) {
     var dropAt by remember { mutableFloatStateOf(-1f) }
     val tried = remember { mutableStateListOf<Planet>() }
     val g = ownG ?: planet.g
-    val air = if (ownG != null) true else planet.air
-    val simA = remember(a, planet, height, ownG) { Fall.simulate(a, height, g, air) }
-    val simB = remember(b, planet, height, ownG) { b?.let { Fall.simulate(it, height, g, air) } }
+    val rho = if (ownG != null) Fall.AIR_RHO else planet.airRho; val air = rho > 0
+    val simA = remember(a, planet, height, ownG) { Fall.simulate(a, height, g, rho) }
+    val simB = remember(b, planet, height, ownG) { b?.let { Fall.simulate(it, height, g, rho) } }
     val tA = simA.last().t; val tB = simB?.last()?.t
     val maxT = maxOf(tA, tB ?: 0.0)
     // Zeitlupe bei kurzen Stürzen, damit man etwas sieht
@@ -99,7 +99,7 @@ fun FallLab(s: FallSetup, free: Boolean, onGoal: () -> Unit) {
             Readout("ohne Luft gerechnet", "${Fmt.num(Fall.timeNoAir(height, g), 2)} s", E.Sun, Modifier.weight(1f))
         }
         if (s.planets.size > 1 || free) ChipRow(if (free) Planet.entries else s.planets, if (ownG == null) planet else null, { "${it.emoji} ${it.title}" + if (it in tried) " ✓" else "" }, { planet = it; ownG = null; dropAt = -1f })
-        Text("g = ${Fmt.num(g)} m/s² · ${if (air) "mit Luft" else "ohne Luft"} · Höhe ${Fmt.num(height)} m", color = E.Muted, fontSize = 12.sp)
+        Text("g = ${Fmt.num(g)} m/s² · ${if (!air) "ohne Luft" else if (rho < 0.5) "sehr dünne Luft" else "mit Luft"} · Höhe ${Fmt.num(height)} m", color = E.Muted, fontSize = 12.sp)
         if (free) Panel(border = E.Sun) {
             Text("Eigene Werte", fontWeight = FontWeight.Bold, color = E.Sun)
             Text("Links:", color = E.Muted, fontSize = 12.sp)
@@ -122,7 +122,7 @@ fun PendulumLab(s: PendulumSetup, free: Boolean, onGoal: () -> Unit) {
     val masses = if (s.lengths.size == 1 && s.massesKg.size >= 2) s.massesKg.take(2) else listOf(s.massesKg.first())
     val pends = if (lengths.size == 2) lengths.map { it to masses.first() } else if (masses.size == 2) masses.map { lengths.first() to it } else listOf(lengths.first() to masses.first())
     var amp by remember { mutableFloatStateOf(s.amplitudeDeg.toFloat()) }
-    var g by remember { mutableDoubleStateOf(Planet.ERDE.g) }
+    var g by remember { mutableDoubleStateOf(s.g) }
     // Zustand je Pendel: Winkel und Winkelgeschwindigkeit
     val theta = remember { mutableStateListOf(0.0, 0.0) }
     val omega = remember { mutableStateListOf(0.0, 0.0) }
@@ -176,6 +176,7 @@ fun PendulumLab(s: PendulumSetup, free: Boolean, onGoal: () -> Unit) {
         if (target != null || free) ValueSlider("Pendellänge", lengths.first().toFloat(), 0.1f..2f, "${Fmt.num(lengths.first() * 100, 0)} cm",
             { lengths = listOf(roundI(it * 100) / 100.0) + lengths.drop(1); running = false }, color = E.Pink)
         if (target != null) Text(if (tuned) "🎯 ${Fmt.num(periods.first(), 3)} s – passt!" else "Jetzt: ${Fmt.num(periods.first(), 3)} s – ${if (periods.first() < target) "zu schnell, länger machen" else "zu langsam, kürzer machen"}", color = E.Text, fontSize = 14.sp)
+        if (s.g != Planet.ERDE.g) Text("🌕 Hier gilt g = ${Fmt.num(s.g)} m/s²", color = E.Sun, fontSize = 13.sp)
         Text("Eine Schwingung = einmal hin und zurück. Formel für kleine Ausschläge: T = 2π·√(l/g)", color = E.Muted, fontSize = 12.sp)
         if (free) Panel(border = E.Sun) {
             Text("Eigene Werte", fontWeight = FontWeight.Bold, color = E.Sun)

@@ -66,6 +66,7 @@ fun HomeScreen(
     onIsland: (Island) -> Unit,
     onDaily: () -> Unit,
     onFreeLab: () -> Unit,
+    onTopics: () -> Unit = {},
     onJournal: () -> Unit,
     onBadges: () -> Unit,
     onSettings: () -> Unit,
@@ -106,7 +107,17 @@ fun HomeScreen(
                 }
                 Text(if (dailyDone) "✅" else "›", fontSize = 28.sp, color = E.Sun)
             }
-            Text("Wähle eine Insel", color = E.Text, fontWeight = FontWeight.Black, fontSize = 20.sp)
+            // gezielt suchen: Fachbereiche (Mechanik, Newton, Strom, Säuren …) und Stichwörter
+            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(E.Deep).border(2.dp, E.Sky, RoundedCornerShape(20.dp))
+                .clickable(onClick = onTopics).padding(14.dp).testTag("themen"), verticalAlignment = Alignment.CenterVertically) {
+                Text("🔎", fontSize = 28.sp)
+                Column(Modifier.weight(1f).padding(start = 10.dp)) {
+                    Text("Nach Thema suchen", color = E.Sky, fontWeight = FontWeight.Black)
+                    Text(Topic.entries.joinToString(" · ") { it.emoji + " " + it.title.substringBefore(" (").substringBefore(",").substringBefore(" &") }, color = E.Muted, fontSize = 12.sp, maxLines = 2)
+                }
+                Text("›", fontSize = 28.sp, color = E.Sky)
+            }
+            Text("…oder wähle eine Insel", color = E.Text, fontWeight = FontWeight.Black, fontSize = 20.sp)
             Island.entries.forEachIndexed { i, island ->
                 val list = Catalog.of(island)
                 val done = list.count { it.id in results }
@@ -152,6 +163,8 @@ fun IslandScreen(island: Island, results: Map<String, Int>, grade: Int, locked: 
                 BlubbSays(islandIntro(island), Mood.HAPPY, size = 56.dp, speak = false)
                 Spacer(Modifier.height(8.dp))
                 list.forEachIndexed { i, e ->
+                    if (i == 0 || list[i - 1].topic != e.topic) Text("${e.topic.emoji} ${e.topic.title}", color = island.color.color(), fontWeight = FontWeight.Black, fontSize = 17.sp,
+                        modifier = Modifier.padding(top = if (i == 0) 0.dp else 12.dp))
                     val done = e.id in results
                     val lock = locked(e)
                     val fits = grade == 0 || grade in e.grades

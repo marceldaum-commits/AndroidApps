@@ -118,6 +118,14 @@ fun ExperimentScreen(
                             }
                         }
                         Phase.LAB -> {
+                            // die Frage und die eigene Vermutung bleiben sichtbar
+                            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(E.Deep).padding(horizontal = 12.dp, vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
+                                Text("❓", fontSize = 18.sp)
+                                Column(Modifier.padding(start = 8.dp)) {
+                                    Text(e.predict.question, color = E.Text, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                                    Text("Deine Vermutung: " + e.predict.choices[guess ?: 0].let { "${it.emoji} ${it.text}" } + "  ${sure?.emoji ?: ""}", color = E.Sun, fontSize = 13.sp)
+                                }
+                            }
                             TaskBanner(e.task, goal)
                             LabView(e.setup, free = false, onGoal = { if (!goal) { goal = true; sfx?.play(Sound.STAR) } })
                             GlowButton({ phase = Phase.REVEAL }, Modifier.fillMaxWidth().pulse(goal, 0.03f).testTag("aufloesung"), enabled = goal, color = E.Sun) {
@@ -131,6 +139,7 @@ fun ExperimentScreen(
                             Text(if (right) "Treffer! Gut vermutet!" else "Aha-Moment!", style = MaterialTheme.typography.headlineMedium, color = if (right) E.Mint else E.Sun,
                                 textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().testTag("ergebnis"))
                             Panel(Modifier.fillMaxWidth(), border = E.Line) {
+                                Text(e.predict.question, color = E.Text, fontWeight = FontWeight.Bold)
                                 Text("Du hast vermutet:", color = E.Muted, fontSize = 13.sp)
                                 Text(e.predict.choices[guess ?: 0].let { "${it.emoji} ${it.text}" }, color = E.Text, fontWeight = FontWeight.Bold)
                                 Text("Herausgekommen ist:", color = E.Muted, fontSize = 13.sp)

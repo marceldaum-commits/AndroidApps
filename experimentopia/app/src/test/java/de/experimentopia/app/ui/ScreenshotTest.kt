@@ -56,7 +56,7 @@ class ScreenshotTest {
     private fun ComposeContentTestRule.slide(label: String, v: Float) { onNodeWithTag("regler:$label").performScrollTo().performSemanticsAction(SemanticsActions.SetProgress) { it(v) }; mainClock.advanceTimeBy(200) }
 
     @Test fun home() = shot("01_start", settle = 4000) {
-        HomeScreen(someStars, stats, Daily.forDay(20_600), false, 0, true, {}, {}, {}, {}, {}, {}, {}, {})
+        HomeScreen(someStars, stats, Daily.forDay(20_600), false, 0, true, onIsland = {}, onDaily = {}, onFreeLab = {}, onJournal = {}, onBadges = {}, onSettings = {}, onGrade = {}, onWelcomed = {})
     }
     @Test fun island() = shot("02_insel") { IslandScreen(Island.WASSER, someStars, 4, { false }, {}, {}) }
 
@@ -93,7 +93,7 @@ class ScreenshotTest {
     @Test fun pendulum() = lab("f7", "29_pendel", settle = 1300, prepare = { it.tap("Anstoßen") })
 
     @Test fun freeLab() = shot("30_freies_labor") { FreeLabScreen({ false }, {}, {}) }
-    @Test fun freeFloat() = shot("31_eigene_werte", prepare = { it.tap("Mein Ding") }) { FreeLabRun(Lab.SCHWIMMEN) {} }
+    @Test fun freeFloat() = shot("31_eigene_werte") { FreeLabRun(Lab.SCHWIMMEN) {} }
     @Test fun freeCircuit() = shot("32_freier_stromkreis") { FreeLabRun(Lab.STROM) {} }
 
     private val entries = listOf(
@@ -104,6 +104,12 @@ class ScreenshotTest {
         NoteRow(5, "l1", 1_762_900_000_000, "Braun", "Gelb", false, 2, true),
     )
     @Test fun journal() = shot("33_forscherbuch") { JournalScreen(entries, {}) }
+    @Test fun journalExplained() = shot("38_forscherbuch_erklaerung") { JournalScreen(entries, {}, openFirst = true) }
+    @Test fun topics() = shot("39_themensuche") { de.experimentopia.app.ui.home.TopicScreen(someStars, 0, { false }, {}, {}) }
+    @Test fun topicNewton() = shot("40_thema_newton", prepare = { it.onNodeWithTag("thema_NEWTON").performClick() }) { de.experimentopia.app.ui.home.TopicScreen(someStars, 0, { false }, {}, {}) }
+    @Test fun cart() = lab("n3", "41_newton_wagen", settle = 3000, prepare = { it.tap("Los!") })
+    @Test fun skate() = lab("n2", "42_skateboards", settle = 1500, prepare = { it.tap("Abstoßen") })
+    @Test fun mercury() = lab("w10", "43_quecksilber", settle = 2500, prepare = { it.tap("kleiner Nagel"); it.tap("Goldbarren") })
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
