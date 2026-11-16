@@ -13,6 +13,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -123,7 +124,9 @@ fun ReviewScreen(
     // Brummi begrüßt jede Karte passend
     LaunchedEffect(card.id) {
         mood = if (calm) Mood.IDLE else if (mode == GameMode.DISCOVER) Mood.HAPPY else Mood.THINK
-        speech = if (calm) "Psst … ganz ruhig 🌙" else when (mode) {
+        val profi = Stage.of(card.memory) == Stage.TREE
+        speech = if (calm) "Psst … ganz ruhig 🌙" else if (profi && mode == GameMode.FLIP) "Profi-Frage! Erst selbst überlegen, dann aufdecken 🌳"
+        else if (profi && mode == GameMode.TYPE) "Profi-Frage! Ganz ohne Hilfe 🌳" else when (mode) {
             GameMode.DISCOVER -> "Neu! Schau dir das Bild gut an 👀"
             GameMode.BALLOONS -> "Fang den richtigen Ballon!"
             GameMode.LETTERS -> "Bau das Wort zusammen!"
@@ -252,6 +255,7 @@ fun ReviewScreen(
                         style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1, modifier = Modifier.weight(1f, fill = false),
                     )
+                    if (!calm) LevelBadge(Stage.of(card.memory))
                     StreakBadge(streak)
                 }
                 // Pflanze links, Brummi mit Sprechblase rechts
@@ -575,4 +579,18 @@ private fun GoodNightDone(count: Int, correct: Int, onClose: () -> Unit) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF5C6BC0))) { Text("Schlaf gut 💤") }
         }
     }
+}
+
+/** Schwierigkeitsstufe der Karte – wächst mit der Pflanze (Samen → Baum/Profi). */
+@Composable
+private fun LevelBadge(stage: Stage) {
+    val tier = de.wissensgarten.core.model.Difficulty.tier(stage)
+    val icon = when (stage) { Stage.SEED -> "🌰"; Stage.SPROUT -> "🌱"; Stage.SHOOT -> "🌿"; Stage.BUSH -> "🌳"; Stage.BLOOM -> "🌸"; Stage.TREE -> "🏆" }
+    val pulse = rememberInfiniteTransition(label = "stufe")
+    val glow by pulse.animateFloat(1f, if (stage == Stage.TREE) 1.08f else 1f, infiniteRepeatable(tween(700), RepeatMode.Reverse), label = "glow")
+    Surface(
+        shape = RoundedCornerShape(50),
+        color = if (stage == Stage.TREE) Color(0xFFFFE082) else MaterialTheme.colorScheme.surfaceVariant,
+        modifier = Modifier.padding(horizontal = 6.dp).graphicsLayer { scaleX = glow; scaleY = glow },
+    ) { Text("$icon ${tier.label}", style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(horizontal = 10.dp, vertical = 3.dp), maxLines = 1) }
 }

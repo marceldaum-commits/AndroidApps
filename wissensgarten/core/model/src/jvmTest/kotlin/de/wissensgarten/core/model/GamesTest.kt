@@ -107,6 +107,35 @@ class GamesTest {
         val without = (1..60).map { Games.choose(c.copy(id = "t$it"), peers, false, canType = false) }
         assertTrue(GameMode.TYPE in with)
         assertFalse(GameMode.TYPE in without)
-        assertFalse(GameMode.TYPE in (1..60).map { Games.choose(card("n$it", "Italien", "Rom", reps = 1), peers, false, canType = true) })
+        // Keimling (leichteste Stufe): noch keine freie Eingabe
+        val sprout = StudyCard("n", "b", "Italien", "Rom", null, null, Memory(1.0, 5.0, 0, 1, 0))
+        assertFalse(GameMode.TYPE in (1..60).map { Games.choose(sprout.copy(id = "n$it"), peers, false, canType = true) })
+    }
+
+    @Test fun higherStagesGetMoreSimilarDistractorsAndMoreOptions() {
+        val pool = listOf("Rom", "Bonn", "Born", "Bern", "Oslo", "Lima", "Kairo")
+        fun opts(stab: Double) = Games.options(StudyCard("x", "b", "Hauptstadt der Schweiz?", "Berns", null, null, Memory(stab, 5.0, 0, 3, 0)), pool)!!
+        val easy = opts(1.0); val hard = opts(90.0)
+        assertEquals(3, easy.size); assertEquals(4, hard.size)
+        val simEasy = easy.filter { it != "Berns" }.maxOf { Difficulty.similarity(it, "Berns") }
+        val simHard = hard.filter { it != "Berns" }.minOf { Difficulty.similarity(it, "Berns") }
+        assertTrue("schwer muss ähnlicher sein: $easy vs $hard", simHard > simEasy)
+    }
+
+    @Test fun profiStageMeansFreeRecall() {
+        val tree = StudyCard("p", "b", "Italien", "Rom", null, null, Memory(90.0, 5.0, 0, 8, 0))
+        val modes = (1..40).map { Games.choose(tree.copy(id = "p$it"), peers, false, canType = true) }.toSet()
+        assertEquals(setOf(GameMode.TYPE), modes)
+    }
+
+    @Test fun numbersAreComparedByValueWithoutTypoBonus() {
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("0,5", "0,50"))
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("0,2462", "0,2461"))
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("5", "-5"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("1250", "1.250"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("1.5", "1,5"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("25", "25 %"))
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("25 €", "25 %"))
+        assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("Paris", "12"))
     }
 }
