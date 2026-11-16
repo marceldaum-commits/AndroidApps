@@ -93,7 +93,7 @@ class Level(
 
 /** Die drei Gebiete des Mathe-Abiturs – danach ist die Tour auf der Startseite geordnet. */
 /** Kapitel der Stochastik: ihre Bühnen haben kein Koordinatensystem */
-internal val STOCHASTICS = setOf(13, 16, 23)
+internal val STOCHASTICS = setOf(13, 16, 23, 24)
 
 enum class Area(val title: String, val emoji: String, val color: String) { GEOMETRIE("Geometrie", "📐", "cyan"), ANALYSIS("Analysis", "📈", "yellow"), STOCHASTIK("Stochastik", "🎲", "pink") }
 

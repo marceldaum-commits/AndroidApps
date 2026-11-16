@@ -42,7 +42,7 @@ kotlin {
 tasks.named<Copy>("wasmJsProcessResources") {
     from(rootProject.file("app/src/main/assets/scene")) { into("scene") }
     // Versionsnummer in Seite, Manifest und Service Worker eintragen (der Service Worker lädt bei neuer Version alles frisch)
-    filesMatching(listOf("index.html", "sw.js", "version.json")) { filter { it.replace("@VERSION@", versionName).replace("@DATUM@", versionDate) } }
+    filesMatching(listOf("index.html", "sw.js", "version.json", "diagnose.html")) { filter { it.replace("@VERSION@", versionName).replace("@DATUM@", versionDate) } }
     inputs.property("v", versionName); inputs.property("d", versionDate)
 }
 

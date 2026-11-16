@@ -14,14 +14,14 @@ Dein Begleiter ist Lux, eine kleine Lichtdrohne. Lux stellt die Aufgaben, fieber
 
 WAS DU LERNST (ab Klasse 11 bis zum Abitur)
 • Geometrie: Punkte und Vektoren, Geraden, Lagebeziehungen, Ebenen in allen Formen, Skalarprodukt, Schnittwinkel, Abstände, Spiegelungen, Kugeln, Kreuzprodukt
-• Analysis: Ableitung, Extrem- und Wendepunkte, Integrale und Flächen, Funktionen untersuchen
-• Stochastik: Baumdiagramm, Vierfeldertafel, Binomialverteilung, Erwartungswert, Sigma-Regel, Hypothesentest
-• 124 Aufgaben in 23 Kapiteln und 7 Prüfungsaufgaben im Abi-Stil – jede mit Tipp und Rechenweg
+• Analysis: Ableitung, Extrem- und Wendepunkte, Integrale und Flächen, e-Funktion und Logarithmus
+• Stochastik: Baumdiagramm, Vierfeldertafel, Binomialverteilung (einzeln und kumuliert), Erwartungswert, Sigma-Regel, Hypothesentest
+• 136 Aufgaben in 25 Kapiteln und 7 Prüfungsaufgaben im Abi-Stil – jede mit Tipp und Rechenweg
 
 SO MACHT ES SPASS
 • Kurve abfahren: Fahr deine Funktion als Achterbahn ab – auch eigene Funktionen. Hoch-, Tief- und Wendepunkte werden angesagt.
 • Achterbahn-Baumeister, Geisterfahrt gegen die Ableitung, Ringflug mit Richtungsvektor
-• Ballerbude, Zufallsmaschine und Galton-Brett für die Stochastik
+• Ballerbude, Zufallsmaschine, Galton-Brett und Binomial-Labor für die Stochastik
 • Tagesaufgabe, endloses Üben und Abi-Aufgaben im Prüfungsstil
 • Klausur-Planer, Fehler-Tagebuch und Spickzettel
 

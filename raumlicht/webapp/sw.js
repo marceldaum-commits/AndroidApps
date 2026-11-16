@@ -1,8 +1,8 @@
 // Service Worker: macht Raumlicht offline nutzbar und hält es aktuell. Jede Version hat ihren eigenen Speicher: Ändert sich diese Datei
 // (neue Versionsnummer), lädt der Browser alles frisch, räumt den alten Speicher weg und übernimmt sofort – die Seite lädt sich dann selbst neu.
-const CACHE = 'raumlicht-2.7.0';
+const CACHE = 'raumlicht-2.8.0';
 // Beim Installieren am Zwischenspeicher des Browsers vorbei laden ('reload'): wirklich die neue Fassung
-self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', 'index.html', 'raumlicht.js', 'scene/index.html', 'scene/scene.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf'].map((u) => new Request(u, { cache: 'reload' }))))); });
+self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', 'index.html', 'raumlicht.js', 'scene/index.html', 'scene/scene.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf', 'diagnose.html'].map((u) => new Request(u, { cache: 'reload' }))))); });
 self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', (e) => {
   const u = new URL(e.request.url);

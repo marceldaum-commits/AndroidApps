@@ -7,15 +7,17 @@ import de.raumlicht.core.model.Part.Txt
 internal object TourSeven {
     // ───────────────────────── 22 · Integrale und Flächen ─────────────────────────
     /** Bildet den Graphen in die Ebene x₁ = 4 ab: x läuft nach rechts (x₂), f(x) nach oben (x₃). */
-    private class Graph(val from: Double, val to: Double, val sx: Double, val ox: Double, val sy: Double, val oz: Double, val f: (Double) -> Double) {
+    class Graph(val from: Double, val to: Double, val sx: Double, val ox: Double, val sy: Double, val oz: Double, val f: (Double) -> Double) {
         fun at(x: Double, y: Double = f(x)) = V3(4.0, ox + x * sx, oz + y * sy)
         fun curve(id: String = "bahn", color: String = "cyan", g: (Double) -> Double = f) = Stage.edges(id, (0..48).map { val x = from + (to - from) * it / 48; at(x, g(x)) }.zipWithNext(), color)
         fun axis() = Stage.axes2d(ox, oz, sx, sy, from, to)
         /** Leuchtfläche zwischen der Kurve und [base] (Standard: x-Achse) über [a, b] */
         fun area(id: String, a: Double, b: Double, color: String = "yellow", base: (Double) -> Double = { 0.0 }): Obj {
-            val n = 24; val top = (0..n).map { val x = a + (b - a) * it / n; at(x) }; val bottom = (n downTo 0).map { val x = a + (b - a) * it / n; at(x, base(x)) }
-            val pts = top + bottom
-            return Stage.edges(id, pts.zipWithNext() + listOf(pts.last() to pts.first()), color, faces = listOf(pts))
+            val n = 24; val xs = (0..n).map { a + (b - a) * it / n }
+            val top = xs.map { at(it) }; val bottom = xs.map { at(it, base(it)) }; val outline = top + bottom.reversed()
+            // schmale Streifen statt einer großen Fläche: so folgt die Füllung auch gewölbten Kurven genau
+            val strips = (0 until n).map { listOf(bottom[it], bottom[it + 1], top[it + 1], top[it]) }
+            return Stage.edges(id, outline.zipWithNext() + listOf(outline.last() to outline.first()), color, faces = strips)
         }
     }
     private fun integral(id: String, title: String, mission: String, name: String, range: IntRange, solution: Int, start: Int, what: String, ok: String, lines: (Int) -> List<List<Part>>,

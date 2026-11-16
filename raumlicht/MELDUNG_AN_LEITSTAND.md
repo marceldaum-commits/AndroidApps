@@ -149,3 +149,17 @@ Binomialverteilung exakt – Hypothesentest P(X ≥ 59) ≈ 4,4 %), jede Zahlen-
 **Web = Android:** derselbe Code; WebApp 2.7.0 gebaut, `scene/test/web.mjs` (Handy- und PC-Größe) und `web-update.mjs` ohne Fehler.
 **Angesehen:** alle 35 neuen Bühnen gerendert (vorher/gelöst), drei Darstellungen nachgebessert.
 **Nicht geprüft:** echtes Gerät; die neuen Aufgaben im Browser einzeln durchgespielt (sie nutzen dieselben Bausteine wie die alten); fachliche Gegenprüfung durch einen Menschen.
+
+---
+
+## 16.11.2026 – Version 2.8.0 (Wünsche von Marcel) und ein offener Fehler: iPad zeigt weißen Bildschirm
+
+**Neu:** Binomial-Labor unter „Mehr“ (n, p, k frei; genau/höchstens/mindestens; einzeln und kumuliert), Kapitel 24 „Binomialverteilung“ (5 Aufgaben),
+Kapitel 25 „e-Funktion & Logarithmus“ (7 Aufgaben), zwei neue Bahnen in „Kurve abfahren“. 136 Aufgaben in 25 Kapiteln; alles unabhängig nachgerechnet
+(`TourSixTest`: Binomial-Rechenkern gegen die Formel, abgedruckte Tabellenwerte, Ableitungen und Integrale numerisch).
+
+**Offener Fehler (von Marcel gemeldet):** Auf seinem iPad blieb der Bildschirm beim Start weiß. Ursache noch **nicht** gefunden – hier gibt es kein Safari/WebKit zum Testen.
+Die Server liefern korrekt aus (geprüft: Dateien, Dateitypen, auch `.wasm`). Bekannt ist: Die WebApp braucht WebAssembly-GC, das Safari erst ab iOS/iPadOS 18.2 kann.
+Eingebaut in 2.8.0: (1) sichtbare Meldung statt leerem Bildschirm, wenn der Start scheitert (auch bei fehlendem WebAssembly-GC, sofort geprüft),
+(2) `diagnose.html` – zeigt Browser, WebAssembly-GC, WebGL 2, letzten Startfehler, Zwischenspeicher; nichts wird verschickt, (3) kleinere Bildpuffer der 3D-Bühne auf großen Bildschirmen.
+**Bitte prüft auf einem iPad/iPhone** (Safari, und als Startbildschirm-App): Startet es? Was zeigt `/diagnose.html`? Bis das geklärt ist, bitte nicht mit „läuft auf iPad“ werben.

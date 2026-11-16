@@ -845,7 +845,9 @@ function draw(dt) {
 
 function resize() {
   const w = innerWidth, h = innerHeight; if (!w || !h) return;
-  renderer.setPixelRatio(pixelRatio); renderer.setSize(w, h, false); composer.setPixelRatio(pixelRatio); composer.setSize(w, h);
+  // Große Bildschirme (Tablet, PC): Schärfe so begrenzen, dass die Bildpuffer nicht riesig werden – das schont den Grafikspeicher
+  const pr = Math.min(pixelRatio, Math.max(1, Math.sqrt(2.4e6 / (w * h))));
+  renderer.setPixelRatio(pr); renderer.setSize(w, h, false); composer.setPixelRatio(pr); composer.setSize(w, h);
   camera.aspect = w / h; camera.updateProjectionMatrix(); frameBounds(false);
 }
 addEventListener('resize', resize);

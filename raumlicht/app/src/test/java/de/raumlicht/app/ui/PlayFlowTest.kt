@@ -410,4 +410,21 @@ class PlayFlowTest {
         clock += 3000; go(0.5f)                                       // nach einer Pause wird wieder angesagt
         assertEquals(listOf("Hochpunkt bei x = 1", "Wendepunkt bei x = 2"), heard); assertEquals(2, parties())
     }
+
+    /** Binomial-Labor: n, p, k und die Frage frei einstellbar; das Ergebnis stimmt mit der Formel überein */
+    @Test fun binomialLab() {
+        show { de.raumlicht.app.ui.home.BinomialScreen({}) }
+        rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≤ 3) = 17,19 %")                      // B(10; 0,5), höchstens 3
+        rule.onNodeWithTag("frage-exact").performClick(); rule.onNodeWithTag("ergebnis").assertTextEquals("P(X = 3) = 11,72 %")
+        rule.onNodeWithTag("ansatz").assertTextEquals("P(X = 3) = (10 über 3) · 0,5^3 · 0,5^7")
+        rule.onNodeWithTag("frage-at_least").performClick(); rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≥ 3) = 94,53 %")
+        rule.onNodeWithTag("plus-k").performClick(); rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≥ 4) = 82,81 %")
+        rule.onNodeWithTag("n-20").performClick(); rule.onNodeWithTag("p-minus10").performClick(); rule.onNodeWithTag("verteilung").assertTextEquals("B(20; 0,4)")
+        rule.onNodeWithTag("mu", useUnmergedTree = true).onChildren().assertAny(hasText("8"))
+        rule.onNodeWithTag("saeulen").performClick(); rule.onNodeWithText("P(X ≤ k) aufsummiert").assertExists()
+        // Säule antippen wählt k: ganz links ist k = 0
+        rule.onNodeWithTag("saeulenbild").performTouchInput { click(androidx.compose.ui.geometry.Offset(3f, height / 2f)) }
+        rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≥ 0) = 100,00 %")
+        rule.onNodeWithTag("n-100").performClick(); rule.onNodeWithTag("frage-at_most").performClick(); rule.onNodeWithTag("ergebnis").assertTextContains("P(X ≤ 0)", substring = true)
+    }
 }

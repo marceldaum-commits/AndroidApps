@@ -88,6 +88,7 @@ arme	ˈaɾmə
 arrow	ˈaroːf
 arten	ˈaɾtən
 as	ˈɑːs
+atmost	ˈatmɔst
 auch	ˌaʊx
 auf	aʊf
 aufgabe	ˈaʊfɡˌɑːbə
@@ -100,6 +101,8 @@ aufhängepunkt	ˈaʊfhˌɛŋeːpˌʊŋkt
 auflösen	ˈaʊflˌøːzən
 aufrunden	ˈaʊfrˌʊndən
 aufsatz	ˈaʊfzˌats
+aufsummieren	ˈaʊfzʊmˌiːrən
+aufsummiert	ˈaʊfzʊmˌiːɾt
 auftrag	ˈaʊftrˌɑːk
 auftreffwinkel	ˈaʊftrˌɛfvɪnkəl
 aus	ˌaʊs
@@ -126,6 +129,7 @@ auswahl	ˈaʊsvˌɑːl
 auswertung	ˈaʊsvˌɛɾtʊŋ
 auswählen	ˈaʊsvˌɛːlən
 außen	ˈaʊsən
+außer	ˈaʊsɜ
 außerhalb	ˈaʊsɜhˌalp
 ax	ˈɑːks
 axis	ˈaksɪs
@@ -166,6 +170,7 @@ beinahe	bˈaɪnɑːə
 beispiel	bˈaɪʃpiːl
 bekommen	bəkˈɔmən
 bekommt	bəkˈɔmt
+beleuchtet	bəlˈɔøçtət
 berechne	bərˈɛçnə
 berechnen	bərˈɛçnən
 berechnet	bərˈɛçnət
@@ -225,6 +230,7 @@ breite	brˈaɪtə
 bring	brˈɪŋ
 bringen	brˈɪŋən
 bringt	brˈɪŋt
+bruch	brˈʊx
 builttrack	bˈuːɪltrˌak
 bunt	bˈʊnt
 bx	bˌeːˈɪks
@@ -277,6 +283,7 @@ days	dˈaɪs
 dazu	dɑːtsˈuː
 decke	dˈɛkə
 definiert	dˌeːfiːnˈiːɾt
+definitionsbereich	dˈeːfiːniːtsjˌoːnsbərˌaɪç
 deg	dˈeːk
 degrees	dˈɛɡreːs
 dein	daɪn
@@ -286,11 +293,13 @@ demselben	deːmzˈɛlbən
 den	deːn
 denen	deːnən
 denkt	dˈɛŋkt
+denn	dɛn
 denselben	deːnzˈɛlbən
 der	dɛɾ
 derselbe	dɛɾzˈɛlbə
 derselben	dɛɾzˈɛlbən
 des	dɛs
+deshalb	dɛshˈalp
 dessen	dˈɛsən
 desto	dˈɛstoː
 deutsche	dˈɔøtʃə
@@ -353,6 +362,7 @@ duration	dˌuːratsjˈoːn
 durch	dʊɐç
 durchflug	dʊɐçflˈuːk
 durchgerechnet	dˈʊɐçɡərˌɛçnət
+durchgängen	dˈʊɐçɡˌɛŋən
 durchmesser	dˈʊɐçmˌɛsɜ
 durchs	dˈʊɐks
 durchstoßpunkt	dʊɐçstˈɔspʊŋkt
@@ -396,9 +406,11 @@ einplanen	ˈaɪnplˌɑːnən
 eins	aɪns
 einsatz	ˈaɪnzˌats
 einschaltest	ˈaɪnʃˌaltəst
+einschließlich	ˈaɪnʃlˌiːslɪç
 einseitig	ˈaɪnzˌaɪtɪç
 einsetzen	ˈaɪnzˌɛtsən
 einsteigen	ˈaɪnʃtˌaɪɡən
+einstellen	ˈaɪnʃtˌɛlən
 einstellungen	ˈaɪnʃtˌɛlʊŋən
 eintausend	ˈaɪntˌaʊzənt
 eintippen	ˈaɪntˌɪpən
@@ -406,6 +418,7 @@ eintragen	ˈaɪntrˌɑːɡən
 eintritt	ˈaɪntrˌɪt
 einträge	ˈaɪntrˌɛːɡə
 einzeln	ˈaɪntsˌɛln
+einzelne	ˈaɪntsˌɛlnə
 eisblau	ˈaɪsblaʊ
 el	ˈeːl
 elektronische	eːlˈɛktroːnˌiːʃə
@@ -456,6 +469,7 @@ exakt	ˈɛksakt
 exam	ˈɛksɑːm
 exams	ˈɛksɑːms
 exp	ˈɛksp
+exponent	ˌɛkspoːnˈɛnt
 extrema	ˈɛkstreːmˌɑː
 extremwert	ˈɛkstrɛmvˌeːɾt
 f	ˈɛf
@@ -466,6 +480,7 @@ fair	fˈɛːɾ
 faire	fˈɛːrə
 fairer	fˈɛːrɜ
 faktor	fˈaktoːɾ
+fall	fˈal
 fallen	fˈalən
 falsch	fˈalʃ
 far	fˈɑːɾ
@@ -489,6 +504,7 @@ findest	fˈɪndəst
 finger	fˈɪŋɜ
 first	fˈiːɾst
 firsttry	fˈɪɾstriː
+flach	flˈax
 flacher	flˈaxɜ
 flieg	flˈiːk
 fliege	flˈiːɡə
@@ -572,6 +588,7 @@ gegen	ɡˌeːɡən
 gegenereignis	ɡeːɡənɛɾˈaɪɡnɪs
 gegenlicht	ɡeːɡənlˈɪçt
 gegenstück	ɡeːɡənʃtˈʏk
+gegenteil	ɡeːɡəntˈaɪl
 gegenüber	ɡˌeːɡənˈyːbɜ
 geh	ɡˈeː
 gehen	ɡˈeːən
@@ -679,6 +696,7 @@ größte	ɡrˈœstə
 größten	ɡrˈœstən
 größter	ɡrˈœstɜ
 grüne	ɡrˈyːnə
+gut	ɡˈuːt
 gute	ɡˈuːtə
 gv	ɡˌeːfˈaʊ
 gäste	ɡˈɛstə
@@ -818,6 +836,7 @@ kette	kˈɛtə
 kettenregel	kˈɛtənrˌeːɡəl
 kind	kˈɪnt
 kinds	kˈɪnts
+kk	kˌɑːkˈɑː
 klammer	klˈamɜ
 klappt	klˈapt
 klar	klˈɑːɾ
@@ -826,13 +845,16 @@ klassen	klˈasən
 klassenpaket	klˈasənpakˌeːt
 klassiker	klasˈiːkɜ
 klausur	klaʊzˈuːɾ
+klein	klˈaɪn
 kleine	klˈaɪnə
 kleiner	klˈaɪnɜ
 kleinere	klˈaɪnərə
+kleineren	klˈaɪnərən
 kleineres	klˈaɪnərəs
 kleinste	klˈaɪnstə
 kleinsten	klˈaɪnstən
 kleinster	klˈaɪnstɜ
+kleinstes	klˈaɪnstəs
 klinge	klˈɪŋə
 klänge	klˈɛŋə
 knapp	knˈap
@@ -876,6 +898,8 @@ kugelgleichung	kˈuːɡəlɡlˌaɪçʊŋ
 kugelmittelpunkts	kˈuːɡəlmˌɪtəlpˌʊŋkts
 kugeln	kˈuːɡəln
 kugelradius	kˈuːɡəlrˌɑdiːˌʊs
+kumuliert	kˌuːmuːlˈiːɾt
+kumulierten	kˌuːmuːlˈiːɾtən
 kuppel	kˈʊpəl
 kurs	kˈuːɾs
 kurve	kˈʊɐvə
@@ -894,6 +918,7 @@ kürzestem	kˈʏɾtsəstəm
 kürzester	kˈʏɾtsəstɜ
 l	ˈɛl
 label	lˈɑbəl
+labor	lˈɑboːɾ
 laden	lˈɑːdən
 lage	lˈɑːɡə
 lagebest	lˈɑɡeːbəst
@@ -982,6 +1007,8 @@ listofnotnull	lˈɪstɔfnˌɔtnʊl
 live	lˈiːvə
 ln	ˌɛlˈɛn
 log	lˈoːk
+logarithmieren	lˌoːɡarɪtmˈiːrən
+logarithmus	lˈoːɡarˌɪtmʊs
 los	lˈoːs
 losfahren	lˈɔsfɑːrən
 losfliegen	lˈɔsfliːɡən
@@ -1023,6 +1050,7 @@ maximum	mˈaksiːmˌʊm
 maxof	mˈaksoːf
 maxpoints	mˈakspoːˌɪnts
 mb	ˌɛmbˈeː
+mean	meːˈɑːn
 mehr	mˈeːɾ
 mehrere	mˈeːrərə
 meine	mˌaɪnə
@@ -1056,8 +1084,11 @@ mittelpunkts	mˈɪtəlpˌʊŋkts
 mittelwert	mˈɪtəlvˌeːɾt
 mittendrin	mˈɪtəndrˌɪn
 mittig	mˈɪtɪç
+mittlere	mˈɪtlərə
+mittleren	mˈɪtlərən
 mm	ˌɛmˈɛm
 mo	mˈoː
+mode	mˈoːdə
 moment	moːmˈɛnt
 mp	ˌɛmpˈeː
 multiplizieren	mˌʊltɪpliːtsˈiːrən
@@ -1100,6 +1131,7 @@ nicht	nˈɪçt
 nichts	nˈɪçts
 nie	nˈiː
 niemand	nˈiːmant
+niete	nˈiːtə
 nimm	nˈɪm
 nimmt	nˈɪmt
 nirgendwohin	nˈɪɾɡəndvˌoːɪn
@@ -1134,6 +1166,7 @@ oa	ˈoːɑː
 ob	ˌɔp
 oben	ˈoːbən
 obere	ˈoːbərə
+oberen	ˈoːbərən
 oberstufe	ˌoːbɜʃtˈuːfə
 oc	ˈoːk
 oder	ˌoːdɜ
@@ -1208,11 +1241,14 @@ positive	pˌoːziːtˈiːvə
 positiven	pˌoːziːtˈiːvən
 potenzregel	poːtˈɛntsreːɡəl
 pp	pˌeːpˈeː
+praktisch	prˈaktɪʃ
 primzahlen	prˈɪmtsɑːlən
 pro	proː
 probe	prˈoːbə
 probefahrt	prˈoːbəfˌɑːɾt
 probier	proːbˈiːɾ
+produkt	proːdˈʊkt
+produktregel	proːdˈʊktreːɡəl
 prozent	proːtsˈɛnt
 präzisionsarbeit	prˈɛːtsiːzˌɪʲoːnzˌaɾbaɪt
 prüfe	prˈyːfə
@@ -1283,6 +1319,7 @@ relation	rˌeːlatsjˈoːn
 residency	rˈeːziːdˌɛnsiː
 rest	rˈɛst
 restzeit	rˈɛstsaɪt
+result	rˈeːzʊlt
 revanche	rˈeːvançə
 rhs	ˌɛɾhˌɑːˈɛs
 richtig	rˈɪçtɪç
@@ -1319,6 +1356,7 @@ s	ˈɛs
 sa	zˈɑː
 sag	zˈɑːk
 sage	zˈɑːɡə
+sagen	zˈɑːɡən
 sagst	zˈɑːkst
 sagt	zˈɑːkt
 sammelt	zˈaməlt
@@ -1399,6 +1437,7 @@ sein	zaɪn
 seine	zˌaɪnə
 seiner	zˌaɪnɜ
 seite	zˈaɪtə
+seiten	zˈaɪtən
 seitenfläche	zˈaɪtənflˌɛçə
 seitenlänge	zˈaɪtənlˌɛŋə
 sekunde	zeːkˈʊndə
@@ -1427,6 +1466,7 @@ sieh	zˈiː
 siehst	zˈiːst
 sieht	zˈiːt
 sigma	zˈɪɡmɑː
+sign	zˈɪɡn
 signifikanzniveau	zˌɪɡniːfˌiːkantsniːvˈoː
 sin	zˈiːn
 sind	zɪnt
@@ -1501,12 +1541,14 @@ statt	ʃtˈat
 steckbrief	ʃtˈɛkbriːf
 steckbriefaufgabe	ʃtˈɛkbriːfˌaʊfɡɑːbə
 stecken	ʃtˈɛkən
+steckt	ʃtˈɛkt
 stehen	ʃtˈeːən
 steht	ʃtˈeːt
 steigt	ʃtˈaɪkt
 steigung	ʃtˈaɪɡʊŋ
 steigungswinkel	ʃtˈaɪɡʊŋsvˌɪnkəl
 steil	ʃtˈaɪl
+steilsten	ʃtˈaɪlstən
 stell	ʃtˈɛl
 stelle	ʃtˈɛlə
 stellen	ʃtˈɛlən
@@ -1554,7 +1596,10 @@ sum	zˈʊm
 summe	zˈʊmə
 sumof	zˈuːmoːf
 symbol	zʏmbˈoːl
+säule	zˈɔølə
+säulen	zˈɔølən
 t	tˈeː
+tabelle	tabˈɛlə
 tafeln	tˈɑfəln
 tag	tˈɑːk
 tage	tˈɑːɡə
@@ -1580,6 +1625,7 @@ teilen	tˈaɪlən
 teiler	tˈaɪlɜ
 teilst	tˈaɪlst
 tempo	tˈɛmpoː
+ten	tˈeːn
 tenths	tˈɛnts
 term	tˈɛɾm
 termin	tɛɾmˈiːn
@@ -1649,6 +1695,8 @@ unlocked	ˈʊnlˌɔkeːt
 unten	ˈʊntən
 unter	ˌʊntɜ
 untere	ˈʊntərə
+unteren	ˈʊntərən
+unterhalb	ˌʊntɜhˈalp
 unterricht	ˌʊntɜrˈɪçt
 updates	ˈʌpdeɪts
 ursprung	ˈʊɐʃprʊŋ
@@ -1718,6 +1766,7 @@ vorzeichen	fˈoːɾtsˌaɪçən
 w	vˈeː
 waagerecht	vˈɑːɡeːrˌɛçt
 wachstum	vˈakstuːm
+wachstumslabor	vˈakstuːmslˌɑboːɾ
 wackelig	vˈakəlˌɪç
 wackelkandidaten	vˌakəlkˌandiːdˈɑːtən
 wagen	vˈɑːɡən
@@ -1769,6 +1818,7 @@ widerspruch	vˈiːdɜʃprˌʊx
 wie	viː
 wieder	vˈiːdɜ
 wiederholen	viːdɜhˈoːlən
+will	vɪl
 willst	vɪlst
 windschief	vˈɪntʃiːf
 windschiefe	vˈɪntʃiːfə

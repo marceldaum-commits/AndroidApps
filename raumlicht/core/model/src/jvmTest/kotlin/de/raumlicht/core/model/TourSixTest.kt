@@ -113,8 +113,36 @@ class TourSixTest {
         (dome + gate).forEach { lv -> assertTrue(lv.id, lv.evaluate(lv.solution).success); assertFalse(lv.id, lv.evaluate(lv.start).success) }
     }
 
+    @Test fun binomialverteilung() {
+        // Rechenkern gegen die Formel mit Binomialkoeffizienten
+        for ((n, pr) in listOf(2 to 0.4, 10 to 0.5, 37 to 0.13, 100 to 0.5, 100 to 0.02, 100 to 0.97)) { val b = Binomial(n, pr)
+            assertEquals(1.0, b.single.sum(), 1e-12)
+            for (k in 0..n) { assertEquals(binom(n, k) * Math.pow(pr, k.toDouble()) * Math.pow(1 - pr, (n - k).toDouble()), b.exactly(k), 1e-10)
+                assertEquals(atLeast(n, k, pr), b.atLeast(k), 1e-9); assertEquals(1.0, b.atMost(k) + b.atLeast(k + 1), 1e-12) }
+            assertEquals(b.atMost(n / 2) - b.atMost(n / 4), b.between(n / 4 + 1, n / 2), 1e-12) }
+        assertEquals(0.0, Binomial(10, 0.5).atMost(-1), 0.0); assertEquals(1.0, Binomial(10, 0.5).atLeast(0), 0.0); assertEquals(0.0, Binomial(10, 0.5).atLeast(11), 0.0)
+        assertEquals("94,53 %", Binomial.percent(Binomial(10, 0.5).atMost(7))); assertEquals("P(X ≥ 3) = 1 − P(X ≤ 2)  (Gegenereignis)", Binomial(10, 0.5).approach(BinomialMode.AT_LEAST, 3))
+        // Aufgaben
+        assertEquals(Binomial(2, 0.4).exactly(1), int("24-1") * 4 / 100.0, 1e-9); assertEquals(Binomial(2, 0.4).atMost(1), int("24-2") * 4 / 100.0, 1e-9)
+        assertEquals(Binomial(2, 0.3).atLeast(1), int("24-3") * 3 / 100.0, 1e-9)
+        val ten = Binomial(10, 0.5); assertEquals(Math.round(ten.between(4, 6) * 100).toInt(), int("24-4")); assertEquals(45, Math.round((ten.atMost(6) - ten.atMost(4)) * 100).toInt())
+        listOf(3 to 0.172, 4 to 0.377, 6 to 0.828, 7 to 0.945).forEach { (k, v) -> assertEquals(v, ten.atMost(k), 0.0005) }        // die abgedruckte Tabelle stimmt
+        assertEquals((0..10).first { ten.atMost(it) >= 0.9 }, int("24-5"))
+    }
+
+    @Test fun eFunktionUndLogarithmus() {
+        fun d(f: (Double) -> Double, x: Double) = (f(x + 1e-5) - f(x - 1e-5)) / 2e-5
+        fun dd(f: (Double) -> Double, x: Double) = (f(x + 1e-4) - 2 * f(x) + f(x - 1e-4)) / 1e-8
+        assertEquals(0.0, Math.exp(2.0 * int("25-1") - 4) - 1, 1e-12); assertEquals(0.0, Math.log(int("25-2") - 2.0), 1e-12)
+        val f3 = { x: Double -> (x - 2) * Math.exp(x) }; assertEquals(0.0, d(f3, int("25-3").toDouble()), 1e-6); assertTrue(dd(f3, int("25-3").toDouble()) > 0)
+        val f4 = { x: Double -> x * Math.exp(-x) }; assertEquals(0.0, dd(f4, int("25-4").toDouble()), 1e-5); assertEquals(0.0, d(f4, 1.0), 1e-6)
+        val f5 = { x: Double -> x - 4 * Math.log(x) }; assertEquals(0.0, d(f5, int("25-5").toDouble()), 1e-6); assertTrue(dd(f5, int("25-5").toDouble()) > 0)
+        assertEquals(integrate(0.0, Math.log(3.0)) { Math.exp(it) }, int("25-6").toDouble(), 1e-6)
+        assertEquals(integrate(1.0, Math.E * Math.E) { 2 / it }, int("25-7").toDouble(), 1e-5)
+    }
+
     /** Jede Zahlen-Aufgabe hat genau eine richtige Antwort im einstellbaren Bereich. */
-    @Test fun genauEineLoesung() = (TourSix.chapters + TourSeven.chapters).flatMap { it.levels }.filter { it.controls.size == 1 && it.controls[0].kind == ControlKind.SCALAR }.forEach { lv ->
+    @Test fun genauEineLoesung() = (TourSix.chapters + TourSeven.chapters + TourEight.chapters).flatMap { it.levels }.filter { it.controls.size == 1 && it.controls[0].kind == ControlKind.SCALAR }.forEach { lv ->
         val c = lv.controls[0]; val ok = (c.min[0]..c.max[0]).filter { lv.evaluate(mapOf(c.key to listOf(it))).success }
         assertEquals("${lv.id}: richtige Antworten $ok", 1, ok.size)
     }
@@ -123,7 +151,7 @@ class TourSixTest {
 /** Schreibt die Bühnen aller neuen Aufgaben (vorher und gelöst) nach build/neu.json – zum Ansehen mit scene/test/shot.mjs. */
 class NewScenesDump {
     @Test fun dump() {
-        val shots = (TourSix.chapters + TourSeven.chapters).flatMap { it.levels }.flatMap { l ->
+        val shots = (TourSix.chapters + TourSeven.chapters + TourEight.chapters).flatMap { it.levels }.flatMap { l ->
             listOf("""{"name":"${l.id}-a","settle":1.2,"state":${l.scene(l.start, Phase.AIM)}}""", """{"name":"${l.id}-z","settle":1.2,"state":${l.scene(l.solution, Phase.DONE)}}""") }
         java.io.File("build").mkdirs(); java.io.File("build/neu.json").writeText("[" + shots.joinToString(",") + "]")
     }

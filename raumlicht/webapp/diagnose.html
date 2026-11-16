@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raumlicht – Diagnose</title>
+<style>body{margin:0;padding:18px;background:#0A0E27;color:#E8ECFF;font:15px/1.5 system-ui,sans-serif}h1{font-size:22px}table{border-collapse:collapse;width:100%;max-width:720px}td{padding:6px 8px;border-bottom:1px solid #2a3166;vertical-align:top}td:first-child{color:#9AA4D6;white-space:nowrap}.ok{color:#5CF2A0}.bad{color:#FFB45A;font-weight:bold}a,button{color:#46E1FF}button{background:#1E2550;border:1px solid #46E1FF;border-radius:10px;padding:10px 14px;font-size:15px;margin:12px 8px 0 0}p{max-width:720px}</style></head>
+<body>
+<h1>Raumlicht – Diagnose</h1>
+<p>Diese Seite prüft, ob dein Gerät alles hat, was Raumlicht braucht. Es wird nichts verschickt – mach bitte ein Bildschirmfoto oder tippe auf „Kopieren“ und gib den Text weiter.</p>
+<table id="t"></table>
+<button id="copy">Kopieren</button><button id="reset">App-Speicher leeren und neu laden</button>
+<p><a href="./">zurück zu Raumlicht</a></p>
+<script>
+(function () {
+  var rows = [], t = document.getElementById('t');
+  function row(name, value, good) { rows.push(name + ': ' + value); var tr = t.insertRow(); tr.insertCell().textContent = name; var c = tr.insertCell(); c.textContent = value; if (good !== undefined) c.className = good ? 'ok' : 'bad'; }
+  function wasm(bytes) { try { return typeof WebAssembly === 'object' && WebAssembly.validate(new Uint8Array(bytes)); } catch (e) { return false; } }
+  var head = [0, 97, 115, 109, 1, 0, 0, 0];
+  row('Version der WebApp', '2.8.0 vom 16.11.2026');
+  row('Browser', navigator.userAgent);
+  row('Bildschirm', innerWidth + ' × ' + innerHeight + ', Schärfe ' + (window.devicePixelRatio || 1) + ', als App gestartet: ' + ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone ? 'ja' : 'nein'));
+  var gc = wasm(head.concat([1, 5, 1, 95, 1, 120, 0]));
+  row('WebAssembly', typeof WebAssembly === 'object' ? 'vorhanden' : 'fehlt', typeof WebAssembly === 'object');
+  row('WebAssembly-GC (nötig)', gc ? 'vorhanden' : 'fehlt – der Browser ist zu alt (iPhone/iPad: iOS 18.2 oder neuer nötig)', gc);
+  var eh = wasm(head.concat([1, 4, 1, 96, 0, 0, 3, 2, 1, 0, 10, 8, 1, 6, 0, 6, 64, 25, 11, 11]));
+  row('WebAssembly-Ausnahmen (nötig)', eh ? 'vorhanden' : 'fehlt', eh);
+  var gl2 = null, info = '';
+  try { var c = document.createElement('canvas'); gl2 = c.getContext('webgl2'); if (gl2) { var d = gl2.getExtension('WEBGL_debug_renderer_info'); info = (d ? gl2.getParameter(d.UNMASKED_RENDERER_WEBGL) : '') + ', größte Textur ' + gl2.getParameter(gl2.MAX_TEXTURE_SIZE); } } catch (e) { info = String(e); }
+  row('3D-Grafik (WebGL 2, nötig)', gl2 ? 'vorhanden – ' + info : 'fehlt ' + info, !!gl2);
+  row('Arbeitsspeicher (laut Browser)', navigator.deviceMemory ? navigator.deviceMemory + ' GB' : 'keine Angabe');
+  var ls = false; try { localStorage.setItem('raumlicht.test', '1'); localStorage.removeItem('raumlicht.test'); ls = true; } catch (e) {}
+  row('Speichern im Browser', ls ? 'möglich' : 'gesperrt (privater Modus?) – Sterne gehen dann verloren', ls);
+  var last = ''; try { last = sessionStorage.getItem('raumlicht.startfehler') || ''; } catch (e) {}
+  row('Letzter Startfehler', last || 'keiner gemeldet', !last);
+  row('Service Worker', 'serviceWorker' in navigator ? (navigator.serviceWorker.controller ? 'aktiv' : 'vorhanden, noch nicht aktiv') : 'nicht verfügbar');
+  if (window.caches) caches.keys().then(function (k) { row('Zwischenspeicher', k.join(', ') || 'leer'); });
+  function probe(url, name) { var t0 = Date.now(); fetch(url, { cache: 'no-store' }).then(function (r) { return r.arrayBuffer().then(function (b) { row(name, r.status + ', ' + (r.headers.get('content-type') || '?') + ', ' + Math.round(b.byteLength / 1024) + ' KB in ' + (Date.now() - t0) + ' ms', r.ok); }); }).catch(function (e) { row(name, 'nicht ladbar: ' + e, false); }); }
+  probe('version.json', 'Datei version.json'); probe('raumlicht.js', 'Datei raumlicht.js'); probe('scene/scene.js', 'Datei 3D-Bühne');
+  document.getElementById('copy').onclick = function () { var s = rows.join('\n'); if (navigator.clipboard) navigator.clipboard.writeText(s).then(function () { alert('Kopiert.'); }, function () { prompt('Bitte kopieren:', s); }); else prompt('Bitte kopieren:', s); };
+  document.getElementById('reset').onclick = function () {
+    var jobs = []; if (window.caches) jobs.push(caches.keys().then(function (k) { return Promise.all(k.map(function (n) { return caches.delete(n); })); }));
+    if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (r) { return Promise.all(r.map(function (x) { return x.unregister(); })); }));
+    Promise.all(jobs).then(function () { location.href = './'; }, function () { location.href = './'; });   // der Spielstand (Sterne) bleibt erhalten
+  };
+})();
+</script>
+</body></html>

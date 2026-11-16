@@ -192,6 +192,7 @@ class ScreenshotTest {
             down(androidx.compose.ui.geometry.Offset(2f, y(7.0))); for (k in 1..40) { val x = 4.0 * k / 40; moveTo(androidx.compose.ui.geometry.Offset(width * k / 40f - 2f, y(2.4 * (x - 1.2) * (x - 3.1) + 0.6))) }; up() }
         it.onNodeWithTag("aufloesen").performClick()
     }) { de.raumlicht.app.ui.home.GhostScreen({}) }
+    @Test fun binomial() = shot("74_binomial_labor", "start", prepare = { it.onNodeWithTag("plus-k").performClick() }) { de.raumlicht.app.ui.home.BinomialScreen({}) }
     @Test fun rings() = shot("73_ringflug", "ringflug") { de.raumlicht.app.ui.home.RingScreen({}, seed = 5) }
     @Test fun diary() = shot("59_fehler_tagebuch", "start") {
         de.raumlicht.app.ui.home.DiaryScreen(listOf(

@@ -84,6 +84,8 @@ class BuiltTrack(val heights: List<Int>) {
 object Ghost {
     const val COLUMNS = 48
     /** Zeichenfenster für f′: alle Werte von f′ im Abschnitt, mit etwas Luft, die Nulllinie immer dabei */
+    /** Bahnen für die Geisterfahrt: nur solche, deren Ableitung deutlich über und unter der Achse verläuft – sonst wäre Raten zu leicht */
+    val rides get() = Coaster.rides.filter { it.id !in setOf("ebuckel", "ln") }
     fun window(r: Ride): Pair<Double, Double> {
         val v = (0..COLUMNS).map { r.df(r.from + (r.to - r.from) * it / COLUMNS) }
         val lo = minOf(v.min(), 0.0); val hi = maxOf(v.max(), 0.0); val pad = maxOf((hi - lo) * 0.2, 0.5)
