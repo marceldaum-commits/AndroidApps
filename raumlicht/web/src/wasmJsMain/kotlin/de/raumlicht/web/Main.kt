@@ -67,6 +67,11 @@ private fun WebApp() {
     }
     if (!ready) return
     LaunchedEffect(Unit) { note("Oberfläche gestartet") }
+    // Freischalt-Link aus der E-Mail: Code prüfen, merken und die Abi-Pass-Seite zeigen (bei einem falschen Code steht dort die Eingabe bereit)
+    LaunchedEffect(Unit) { takeProParam()?.let { raw ->
+        val code = de.raumlicht.core.model.License.extract("RL$raw") ?: de.raumlicht.core.model.License.extract(raw)
+        if (de.raumlicht.core.model.Pro.active(code)) prefs.setProCode(code!!)
+        note("Freischalt-Link: " + if (de.raumlicht.core.model.Pro.active(code)) "Code angenommen" else "Code nicht erkannt"); nav.restart(Routes.PRO) } }
     // Musik wie in der Android-App: ruhig im Menü, flotter bei Fahrt und Flug
     var mood by remember { mutableStateOf(MusicMood.MENU) }
     val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()

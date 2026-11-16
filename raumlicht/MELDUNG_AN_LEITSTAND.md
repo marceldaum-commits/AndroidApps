@@ -585,3 +585,26 @@ die Ausnahme bricht jedes Bild ab, übrig bleibt die weiße Grundfläche. Warum 
 
 Geändert: alle 17 Verläufe laufen über `shared/.../ui/fx/Verlauf.kt` (feste, endliche Punkte; bei Fehler stufenweise einfacher bis einfarbig; Ergebnis steht einmal in der Mitschrift).
 Auf raumlicht-test liegt 2.11.1. **Bestätigt ist die Behebung erst, wenn Marcel es auf dem iPad gesehen hat** – hier gibt es kein Safari zum Nachprüfen.
+
+---
+
+## 16.11.2026 – Version 2.12.0: Abi-Pass gebaut (von Marcel direkt bestätigt), Sperren aus bis zur Kassen-Adresse
+
+Gebaut nach eurer Nachricht vom 16.11. und dem Vorbild KurvenFlug:
+
+- **Code-Format:** Version 1, App 4, Produkt 1, Vorsilbe „RL-“, Ed25519, euer Base32-Alphabet; 9 Byte Inhalt + 64 Byte Signatur = 117 Zeichen (`core/model/.../License.kt`, `Ed25519.kt`, `Sha512.kt`).
+  Andere App-Nummern und andere Produkte werden abgelehnt (also auch Schullizenz-Codes – die kommen erst mit dem Lehrerzugang).
+- **Öffentlicher Schlüssel:** in `Pro.PUBLIC_KEY` eingetragen (979e…b812).
+- **Freischalt-Link:** `https://raumlicht.mathenachhilfe-online.com/?pro=<Code ohne Bindestriche>` – mit oder ohne „RL“ am Anfang. Die WebApp prüft, speichert, nimmt den Code aus der Adresszeile
+  und zeigt die Abi-Pass-Seite. Auf der Testadresse funktioniert derselbe Link.
+- **Code-Eingabe:** Einstellungen → „Abi-Pass“ (WebApp und GitHub-APK); man kann die ganze E-Mail einfügen.
+- **Sperren und Kauf-Knopf greifen erst, wenn `Pro.CHECKOUT_URL` gesetzt ist** (`core/model/.../Pro.kt`, derzeit leer). Bis dahin: kein Eintrag in den Einstellungen, keine Sperre, kein Wort von einem Kauf.
+  Mit der Kassen-Adresse wechselt der Datenschutz-Satz in der App von „keine Käufe“ automatisch auf „kein Abo – nur der einmalige Abi-Pass, bezahlt auf unserer Website“.
+  **Store-Texte und Datenschutzerklärung müsst ihr im selben Schritt ändern.** `ProTest.ohneKasseIstAllesFrei` schlägt dann absichtlich an, damit das niemand vergisst.
+- **Preise in der App:** „zum Start 9,99 €, danach 14,99 € (inkl. MwSt.)“ (`Pro.INTRO_PRICE`, `Pro.PRICE`). Wenn der Startpreis endet, bitte Bescheid geben – der Text steht fest im Code.
+- **Play-Fassung:** keine Sperren, kein Kauf-Knopf, kein Eintrag (dort wäre Play Billing Pflicht).
+- **Android (GitHub-APK):** kein Link-Abfangen, nur Code-Eingabe. Der Link öffnet die WebApp.
+- **Bestandsschutz:** nichts in der App – kostenlose Codes für Tester erzeugt ihr.
+
+**Was ich brauche:** die Kassen-Adresse für RL-ABIPASS – und vorher einen echten Test-Code (Produkt 1, App 4), damit Marcel die Freischaltung einmal mit dem richtigen Schlüssel sieht.
+Geprüft ist sie bisher nur mit einem Test-Schlüssel in den automatischen Tests.

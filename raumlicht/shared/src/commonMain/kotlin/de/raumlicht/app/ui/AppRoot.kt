@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.StateFlow
 object Routes {
     const val HOME = "start"
     const val SETTINGS = "einstellungen"
+    const val PRO = "abi-pass"
     const val DAILY = "tagesaufgabe"
     const val JAM_HOME = "jam"
     const val SHEET = "spickzettel"
@@ -85,12 +86,18 @@ fun AppRoot(
     nav: Navigator, prefs: Prefs, stars: StateFlow<Map<String, Int>>, record: (levelId: String, stars: Int, attempts: Int) -> Unit, today: () -> Long,
     settings: @Composable (onBack: () -> Unit) -> Unit,
     updateVersion: String? = null, onRoute: (String) -> Unit = {}, onPlanChanged: () -> Unit = {},
-    /** Pro-Sperren aktiv? Im Auslieferungsstand aus ([Pro.ENABLED]); Tests schalten es ein. */
+    /** Abi-Pass erhältlich und Pro-Teile gesperrt? Erst wenn die Kasse eingetragen ist ([Pro.ENABLED]); die Play-Fassung schaltet es aus, Tests schalten es ein. */
     proEnabled: Boolean = Pro.ENABLED,
+    /** Öffentlicher Schlüssel zum Prüfen der Freischalt-Codes (Tests nehmen einen eigenen) */
+    proKey: String = Pro.PUBLIC_KEY,
 ) {
-    val proActive by prefs.pro.collectAsState()
+    val proCode by prefs.proCode.collectAsState()
+    val proActive = remember(proCode, proKey) { Pro.active(proCode, proKey) }
     // Was zu Pro gehört und (noch) nicht freigeschaltet ist
     fun needsPro(route: String) = proEnabled && !proActive && Pro.locked(route)
+    // Code prüfen und merken – auch wenn er mitten in einer kopierten E-Mail steht
+    val enterCode: (String) -> Boolean = { text -> val code = de.raumlicht.core.model.License.extract(text) ?: text.trim()
+        Pro.active(code, proKey).also { if (it) prefs.setProCode(code) } }
     val starMap by stars.collectAsState()
     val skin by prefs.skin.collectAsState(); val look by prefs.look.collectAsState()
     val exams by prefs.exams.collectAsState(); val lageBest by prefs.lageBest.collectAsState(); val jamBest by prefs.jamBest.collectAsState()
@@ -112,10 +119,11 @@ fun AppRoot(
     LaunchedEffect(keys) { (known - keys.toSet()).forEach { holder.removeState(it) }; known = keys.toSet() }
 
     CompositionLocalProvider(LocalLuxSkin provides skin, LocalLuxLook provides look,
+        de.raumlicht.app.ui.settings.LocalProEntry provides (if (proEnabled) ({ nav.go(Routes.PRO) }) else null), de.raumlicht.app.ui.settings.LocalProActive provides proActive,
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
         Crossfade(keys.last(), animationSpec = tween(180), label = "ziel") { key -> holder.SaveableStateProvider(key) {
             val route = key.substringAfter(':'); val parts = route.split('/')
-            if (needsPro(route)) de.raumlicht.app.ui.settings.ProScreen(Pro.what(route), back) else
+            if (needsPro(route)) de.raumlicht.app.ui.settings.ProScreen(Pro.what(route), false, true, enterCode, back) else
             when (parts[0]) {
                 Routes.HOME -> HomeScreen(Levels.chapters, starMap, { nav.go(Routes.level(it)) }, { nav.go(Routes.SETTINGS) }, locked = { needsPro(Routes.level(it)) },
                     updateVersion = updateVersion, onUpdate = { nav.go(Routes.SETTINGS) },
@@ -219,6 +227,7 @@ fun AppRoot(
                 Routes.BUILDER -> BuilderScreen(remember { Show.decode(prefs.show) ?: Show.demo }, { prefs.show = Show.encode(it) }, back)
                 Routes.BADGES -> BadgesScreen(badges, back)
                 Routes.SETTINGS -> settings(back)
+                Routes.PRO -> de.raumlicht.app.ui.settings.ProScreen(null, proActive, proEnabled, enterCode, back)
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }
             }
         } }

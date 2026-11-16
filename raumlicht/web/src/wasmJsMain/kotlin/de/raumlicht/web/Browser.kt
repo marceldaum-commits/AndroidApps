@@ -69,3 +69,6 @@ fun musicSetup(render: (String) -> Unit): Unit = js("""{
 }""")
 /** Welches Stück laufen soll (null = keins) und wie laut (0..1) */
 fun musicWant(mood: String?, vol: Double): Unit = js("{ const M = window.__rlMusic; if (!M) return; M.want = mood; M.vol = vol; M.apply(); }")
+
+/** Freischalt-Link „?pro=<Code>“: liefert den Code (oder null) und nimmt ihn gleich wieder aus der Adresszeile, damit er nicht versehentlich geteilt wird */
+fun takeProParam(): String? = js("(function () { try { var u = new URL(location.href); var c = u.searchParams.get('pro'); if (c === null) return null; u.searchParams.delete('pro'); history.replaceState(history.state, '', u.pathname + u.search + u.hash); return c; } catch (e) { return null; } })()")

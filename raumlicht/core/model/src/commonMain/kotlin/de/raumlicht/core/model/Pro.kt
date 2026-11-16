@@ -1,13 +1,23 @@
 package de.raumlicht.core.model
 
 /**
- * Pro („Abi-Pass“): was frei bleibt und was dazugehört. **Vorbereitet, aber ausgeschaltet** ([ENABLED] = false) – solange ist alles frei,
- * es gibt keinen Kauf und keine Sperre. Eingeschaltet wird erst, wenn Bezahlwege und Lizenz-Dienst stehen (siehe MELDUNG_AN_LEITSTAND.md, „Konzept Pro“).
- * Hier stehen nur die Regeln; freigeschaltet wird später über [Prefs.pro].
+ * Pro („Abi-Pass“): was frei bleibt und was dazugehört. Freigeschaltet wird mit einem Code von der Website ([License]) – ohne Konto, ohne Server.
+ * **Gesperrt wird erst, wenn man den Abi-Pass auch kaufen kann**, also wenn die Kassen-Adresse eingetragen ist ([CHECKOUT_URL], [ENABLED]).
+ * Bis dahin ist alles frei und nirgends ist von einem Kauf die Rede. Die Play-Fassung sperrt vorerst nie (dort wäre Google Play Billing Pflicht).
  */
 object Pro {
-    /** Hauptschalter. Erst auf true setzen, wenn man Pro auch wirklich kaufen kann – und dann die Texte „keine Käufe“ anpassen. */
-    const val ENABLED = false
+    /** Öffentlicher Ed25519-Schlüssel des Lizenz-Dienstes (64 Hex-Zeichen). Der geheime Schlüssel gehört nie ins Repo. */
+    const val PUBLIC_KEY = "979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812"
+    /** Kasse auf der Website. **Leer = Abi-Pass noch nicht erhältlich, nichts ist gesperrt.** Trägt der Leitstand ein, sobald das Produkt RL-ABIPASS angelegt ist –
+     *  im selben Schritt die Texte „keine Käufe“ in App, Store und Datenschutz ändern. */
+    const val CHECKOUT_URL = ""
+    /** Preise auf der Website (brutto, inkl. 19 % USt.) */
+    const val PRICE = "14,99 €"
+    const val INTRO_PRICE = "9,99 €"
+    /** Hauptschalter: Sperren und Kauf-Hinweise gibt es nur, wenn die Kasse eingetragen ist */
+    val ENABLED: Boolean get() = CHECKOUT_URL.isNotBlank() && PUBLIC_KEY.length == 64
+    /** Schaltet dieser Code den Abi-Pass frei? */
+    fun active(code: String?, key: String = PUBLIC_KEY) = License.check(code, key) != null
     /** Die ersten Kapitel sind ganz frei … */
     const val FREE_CHAPTERS = 6
     /** … von jedem weiteren die ersten Aufgaben zum Reinschnuppern */
