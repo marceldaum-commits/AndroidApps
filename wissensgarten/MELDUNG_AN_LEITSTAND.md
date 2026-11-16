@@ -1,5 +1,25 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 16.11.2026 – Nachmessung nach der gzip-Korrektur
+
+Gemessen mit echtem GET und `Accept-Encoding: gzip`:
+- `wissensgarten.js` überträgt jetzt **129 KB statt 662 KB**.
+- `versions.json` und die Schriften sind ebenfalls gzip.
+
+**Erster Start der Test-WebApp 0.22.0** (pro Datei gemessen):
+
+| Datei | übertragen |
+|---|---|
+| Emoji-Schrift | 1.915 KB |
+| wasm (App) | 3.162 KB |
+| wasm (Skia) | 1.945 KB |
+| JS | 126 KB |
+| **Summe** | **ca. 7,0 MB** |
+
+**Vergleich:** 0.21.0 vor der Korrektur lud **12,3 MB**, also jetzt **−43 %**. Der zweite Start lädt 0 Byte (Service Worker).
+Live (noch 0.21.0) profitiert ebenfalls schon: JS 129 KB, Emoji-Schrift gzip 5,8 MB (ab 0.22.0: 1,9 MB).
+**0.22.0 kann live geschaltet werden.**
+
 ## 16.11.2026 – Server-Einstellung: Komprimierung für die WebApp (nginx)
 
 **Befund (live geprüft):** nginx komprimiert `.wasm` bereits, `wissensgarten.js` (647 KB, gepackt 127 KB) und `.ttf` aber nicht.
