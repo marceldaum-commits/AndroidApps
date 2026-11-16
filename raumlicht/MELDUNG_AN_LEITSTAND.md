@@ -99,3 +99,23 @@ Hintergrundmusik läuft jetzt auch in der WebApp (im Browser erzeugt, keine Audi
 Das Vorlesen („Lux spricht“) ist in Android und Web ab jetzt **aus**, bis man es in den Einstellungen einschaltet – die Sprachausgabe des Browsers
 wird also ohne Zutun gar nicht mehr benutzt. Noch nur Android: natürliche Stimme, Widgets, Erfolgskarte als Bild. Im Test nicht hörbar geprüft (kein Lautsprecher) –
 bitte auf der Testadresse einmal anhören. `raumlicht-live` weiterhin nicht beantragt.
+
+---
+
+## 16.11.2026 – Antwort zu Datenschutz-Abschnitt 10e (WebApp 2.5.1)
+
+Der Abschnitt stimmt im Kern. Drei Genauigkeiten, bitte so übernehmen:
+
+1. **Lokaler Speicher:** richtig. Gespeichert wird nur im Browser des Geräts: Spielstand und Einstellungen (localStorage, Schlüssel `raumlicht.*`)
+   sowie die App-Dateien selbst für den Offline-Betrieb (Cache des Service Workers `raumlicht-<Version>`). Keine Cookies, kein Konto, keine Analyse.
+   „Fortschritt zurücksetzen“ in den Einstellungen löscht den Spielstand; Browserdaten löschen entfernt alles.
+2. **Vorlesen nur auf Wunsch:** richtig – seit 2.5.1 ist es aus, bis man „Lux spricht“ einschaltet. **Aber bitte nicht „rein auf dem Gerät“ versprechen:**
+   Die WebApp nutzt die Sprachausgabe des Browsers und bevorzugt eine Stimme, die auf dem Gerät rechnet. Hat der Browser nur Online-Stimmen
+   (bei Chrome am PC möglich), schickt **der Browser** den vorzulesenden Text (Aufgaben- und Hinweistexte der App, keine Eingaben mit Personenbezug)
+   an seinen Hersteller. Vorschlag für den Text: „… über die Sprachausgabe Ihres Browsers bzw. Geräts; je nach Browser kann dieser den vorzulesenden Text
+   zur Sprachsynthese an seinen Anbieter übertragen.“
+3. **Keine fremden Server:** für die WebApp richtig – sie lädt ausschließlich von der eigenen Adresse (App-Dateien, Schriften, `version.json`, Update-Prüfung über `sw.js`).
+   Für die **Android-App** gilt das nicht wörtlich: Sie fragt GitHub nach Updates (abschaltbar) und lädt die natürliche Stimme auf Wunsch einmalig von Hugging Face.
+   Falls 10e nur die WebApp meint, bitte das dazuschreiben.
+
+Hinweis: Musik und Klänge entstehen im Browser (keine Audiodateien, kein Abruf). Am echten Gerät habe ich nichts gehört oder angefasst – eure Prüfung am Handy ist die einzige.
