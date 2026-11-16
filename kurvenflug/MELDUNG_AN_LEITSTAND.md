@@ -1,5 +1,82 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## Konzept Pro für KurvenFlug (Auftrag Marcel vom 16.11. – nur Konzept, noch nicht gebaut)
+
+### 1. Was bleibt frei, was wird Pro?
+Leitgedanke: Kinder sollen **den ganzen Schulstoff bis Klasse 10 kostenlos** üben können – sonst verlieren wir die
+Empfehlung von Schulen und Eltern. Pro ist für **Oberstufe, Könner und Fans**.
+
+| Frei (wie heute) | Pro |
+|---|---|
+| Alle Kapitel Klasse 5–10 (24 Kapitel, ca. 140 Level) mit Rechenweg, Rechen-Stern, Live-Rechnung | **Oberstufe**: Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung (6 Kapitel, 35 Level) |
+| Tagesmission, Duell, Formel-Detektiv, Lernstand, Wiederholen | **🔥 Extrem-Prüfungen** aller 30 Kapitel |
+| Asteroidensturm Leicht bis Schwer (Welle 1–12) | **Sturm Profi und Extrem** (ab Welle 13), eigene Rekordliste |
+| Bosse, Aurora-Geschichte, Andromeda Planet 1–6 | **Andromeda ab Planet 7** (Profi/Extrem) und das Schiff Nova |
+| Werkstatt: Grund-Aussehen | Werkstatt: zusätzliche Sonden, Spuren, Volt-Kostüme (rein kosmetisch) |
+| Bis 2 Spieler-Profile | Bis 6 Profile (Familie, Geschwister) |
+| Klassen-Challenge mit freien Leveln – **bleibt für Lehrkräfte kostenlos** (bringt die App in Klassen) | Klassen-Challenge mit Oberstufen-/Extrem-Leveln; Schullizenz (s. u.) |
+
+**Bestandsschutz:** Wer ein Pro-Level schon geschafft hat, behält Sterne und kann es weiter spielen. Kein Fortschritt geht verloren.
+
+**Preis:** **Einmalkauf statt Abo** – für Eltern ehrlich und ohne Abo-Falle, passend zu einer Kinder-App.
+- **Kurvenflug Pro: 7,99 € einmalig** (Familie, alle Profile auf dem Gerät/Browser), zum Start 4,99 €.
+- **Schullizenz: 29 € pro Lehrkraft und Schuljahr**: Codes für eine Klasse (bis 35 Schüler) für Pro-Inhalte in Challenges.
+- Vergleich (Recherche 16.11., Preise schwanken je Land/Aktion):
+  - DragonBox Algebra (Kahoot!): Einmalkauf ca. 7–8 €.
+  - Photomath Plus: ca. 55–65 € im Jahr bzw. ca. 10 € im Monat.
+  - Prodigy Math: 59–119 $ im Jahr.
+  - Brilliant Premium: ca. 150 $ im Jahr (teils mehr).
+
+  Mit 7,99 € einmalig liegt Kurvenflug am unteren Ende, nah an DragonBox. Ein Abo wäre bei einem Spiel ohne laufende
+  Serverkosten schwer zu begründen.
+
+### 2. Kaufwege
+- **Play-Fassung: Google Play Billing (Pflicht)**: ein Einmal-Produkt „pro“ (nicht verbrauchbar), Kauf bestätigen (acknowledge).
+  Kauf läuft über die Play-Store-App, die Play-Fassung braucht dafür **keine Internet-Berechtigung**. Google behält
+  15 %. Familienrichtlinie: Kauf nur hinter einer **Eltern-Frage** (z. B. „Gib dein Geburtsjahr ein“ / Rechenaufgabe für
+  Erwachsene). Keine Lockangebote, keine Kauf-Hinweise mitten im Level, klarer Preis. Family-Link-Freigabe greift automatisch.
+  Formulare anpassen: IARC „Digitale Käufe: Ja“, Store-Text „In-App-Käufe“.
+- **Web- und GitHub-Fassung: über unsere Website** (wie Mathe-Trainer Pro): Knopf „Pro freischalten“ (hinter
+  Eltern-Frage) → öffnet die Woo-Kasse auf mathenachhilfe-online.com → nach Zahlung Code auf der Danke-Seite und per
+  E-Mail an Kunde und Marcel, Bestellung bleibt in WooCommerce als Nachweis → Code in der App eingeben (oder Link
+  `…/kurvenflug/?pro=CODE` öffnet die App und schaltet frei). **Kein Konto**, Code gilt für Web und GitHub-APK.
+  An der Kasse: Häkchen zum sofortigen Beginn der Leistung (Widerrufsrecht bei digitalen Inhalten).
+- Play-Käufer, die auch im Browser spielen wollen: Code per E-Mail-Anfrage mit Play-Bestellnummer (später automatisch,
+  s. Punkt 3).
+
+### 3. Was der gemeinsame Lizenz-Dienst können muss
+- **Signierte Codes, offline prüfbar**: Der Dienst signiert `{App, Produkt, Bestell-Kennung (gehasht), Datum}` mit einem
+  privaten Ed25519-Schlüssel; die App enthält nur den öffentlichen Schlüssel und prüft ohne Internet. Privater Schlüssel
+  nur auf dem Server / in Bitwarden, nie im Repo. Code-Format kurz zum Abtippen, z. B. `KF-PRO-7Q4M-2XH9-…` (Base32 + Prüfsumme).
+- **Woo-Anbindung**: Webhook „Bestellung abgeschlossen“ → Code erzeugen → in der Bestellung speichern → E-Mail an
+  Kunde + Marcel (Rechnung aus WooCommerce). Ein Produkt je App plus optional ein **Bundle** über alle Apps.
+- **Sperrliste** für Erstattungen/Missbrauch: kleine JSON-Datei (`/lizenz/sperrliste.json`), Web und GitHub-APK lesen
+  sie gelegentlich; die Play-Fassung braucht sie nicht (Google erstattet selbst).
+- **Schullizenz**: ein Code erzeugt 35 Unter-Codes (oder ein Klassen-Code mit Ablaufdatum Schuljahresende).
+- **Später, optional**: Prüfung von Play-Kaufbelegen über die Google Play Developer API → Web-Code für Play-Käufer
+  automatisch.
+- Für die Apps: eine gemeinsame kleine Bibliothek „Lizenz“ (Code prüfen, speichern, Play-Billing-Adapter, Eltern-Frage),
+  damit alle Apps gleich funktionieren. In Kurvenflug: Schalter `PRO_PLAY` / `PRO_WEB` je Variante wie `SELF_UPDATE`.
+- Datenschutz: Die App speichert nur „Pro: ja + Code“. Keine E-Mail, kein Name in der App.
+
+### 4. KI über die Claude-API – sinnvoll?
+- **Kosten wären gering**: Claude Haiku 5.5 kostet 0,10 $ je Mio. Eingabe- und 0,50 $ je Mio. Ausgabe-Token. Eine
+  Erklärung („Warum hat meine Bahn die Station verfehlt?“, ca. 1.500 Token rein, 300 raus) kostet etwa **0,03 Cent**;
+  100 Erklärungen pro Kind und Monat ≈ 3 Cent.
+- **Aber jetzt nicht empfohlen**:
+  1. Die Play-Fassung hat bewusst kein Internet. Das ist ein Pluspunkt bei Eltern und in den Datenschutz-Formularen.
+  2. Kinder-Daten: Wir bräuchten einen eigenen Server als Zwischenstation (kein Schlüssel in der App), Mengenbegrenzung,
+     Filter, Datenschutz-Folgenabschätzung und eine Prüfung der Anbieter-Regeln für Minderjährige.
+  3. Kurvenflug erklärt schon heute ohne KI: Rechenweg, Rechen-Frage, Live-Rechnung und Volts Tipps sind für jede Aufgabe fest hinterlegt.
+- **Wenn später gewünscht**: „Frag Volt“ nur in Web/GitHub-Pro, freiwillig, ohne Freitext-Eingabe (Kind tippt auf
+  „Erklär's mir anders“, wir senden nur Level-Daten und die falschen Reglerwerte, nie persönliche Daten), über einen
+  Server-Proxy mit Tageslimit.
+
+### Nächste Schritte (nach Freigabe durch den Leitstand/Marcel)
+1. Gemeinsamer Lizenz-Dienst + Woo-Produkt (Leitstand). 2. Lizenz-Bibliothek + Eltern-Frage in Kurvenflug,
+Pro-Sperren mit Bestandsschutz, Play-Billing in der Play-Variante (parallel zur Play-Store-Arbeit). 3. Datenschutz-Text und
+Play-Formulare anpassen.
+
 ## 0.22.0 – Schwierigkeit steigt nachweislich bis „Extrem“ (Vorgabe Marcel vom 16.11.)
 
 - **Version:** 0.22.0 · **Commit:** a5fec15 (Zweig claude/gifted-shannon-657gpr)
