@@ -285,3 +285,77 @@ Marcel hat mit der Begrenzung aus 2.9.3 erneut getestet: **iPhone läuft, iPad b
 Bleibende Unterschiede iPhone ↔ iPad: (a) das iPad gibt sich standardmäßig als Mac aus („Desktop-Website“), (b) möglicherweise eine ältere iPadOS-/Safari-Version als auf dem iPhone.
 Beides unbestätigt. 2.10.1 zeigt auf iPads nach dem Start 20 s lang einen HTML-Knopf „Kein Bild zu sehen? Hier tippen“ → `diagnose.html` (liegt über der Zeichenfläche, ist also auch bei weißem Bild sichtbar).
 Dort stehen Mitschrift, Geräte-Modus und die Tests. **Raumlicht bitte weiterhin nicht als iPad-tauglich bewerben und 2.10.x erst live schalten, wenn ihr wollt – der iPad-Fehler besteht auch in der Live-Version 2.5.1.**
+
+---
+
+## 16.11.2026 – Konzept Pro für Raumlicht (Auftrag von Marcel bestätigt; **nur Konzept, nichts gebaut**)
+
+Marcels Vorgaben dazu: Die bisherigen Aussagen „keine Käufe“ werden angepasst, sobald Pro gebaut wird; ein KI-Tutor ist als Bezahlfunktion in Ordnung.
+
+### 1. Was ist frei, was Pro – und der Preis
+
+**Grundsatz:** Frei muss für sich überzeugen (Empfehlungen, Schule, Eltern), Pro ist „alles bis zum Abi“. Keine Werbung, kein Druck, kein Abo, das sich verlängert.
+
+| | Frei | Pro („Abi-Pass“) |
+|---|---|---|
+| Kapitel 1–6 (Punkte, Vektoren, Geraden, Lage, Ebenen, Skalarprodukt) | komplett, 36 Aufgaben | ✓ |
+| Kapitel 7–25 | je Kapitel die ersten zwei Aufgaben zum Reinschnuppern | komplett (alle 136 Aufgaben) |
+| Tagesaufgabe | ✓ | ✓ |
+| Endlos üben | Stufe „Einstieg“ | zusätzlich „Abi“ und „Profi“ |
+| Prüfungsaufgaben im Abi-Stil (7) | die erste („Festivalzelt“) | alle, mit Zeit-Modus |
+| Kurve abfahren, Flug, Ballerbude, Zufallsmaschine, Galton-Brett | ✓ (fertige Bahnen) | zusätzlich eigene Funktionen, Baumeister, Geisterfahrt, Ringflug, Binomial-Labor |
+| Spickzettel, Einstellungen, Musik, Vorlesen | ✓ | ✓ |
+| Klausur-Planer, Fehler-Tagebuch, Lernstand | – | ✓ |
+| „Lux erklärt“ (KI-Tutor, siehe 4) | – | ✓ mit Tagesgrenze |
+
+**Preisvorschlag:** **Abi-Pass als Einmalkauf 14,99 €** (Einführung 9,99 €), gilt dauerhaft, kein Abo. Begründung im Vergleich (Preise aus der Recherche vom 16.11.2026, können abweichen):
+
+| App | Modell | Preis |
+|---|---|---|
+| simpleclub unlimited | Abo | 16,49 €/Monat oder 89,99 €/Jahr |
+| StudySmarter Premium | Abo | 9,99 €/Monat oder 89,99 €/Jahr |
+| Mathegym (Privatlizenz) | Abo | 16 €/Monat oder 65 €/Jahr |
+| sofatutor | Abo | je nach Laufzeit rund 20–35 €/Monat |
+| Photomath Plus | Abo | 7,99 €/Monat oder 49,99 €/Jahr |
+
+Diese Angebote decken alle Fächer oder alle Klassen ab; Raumlicht ist ein Spezialist (Oberstufen-Mathe, 136 Aufgaben). Ein Einmalpreis deutlich unter einem Jahresabo der Großen ist für Eltern leicht zu entscheiden und passt zum Versprechen „keine Abo-Falle“.
+Von 14,99 € bleiben nach 19 % Umsatzsteuer rund 12,60 €; im Play Store gehen davon nach meinem Kenntnisstand 15 % Gebühr ab (bitte prüfen), über die Website nur die Zahlungsgebühren.
+
+**Offen für Marcel:** (a) Preis, (b) wo genau die Grenze liegt, (c) Umgang mit heutigen Nutzern – bisher ist alles frei; wer die App schon hat, verliert Funktionen. Vorschlag: zum Start ein kostenloser „Gründer-Code“ für bisherige Tester.
+
+### 2. Bezahlwege
+
+- **Play-Fassung:** Google Play Billing, ein dauerhaftes Einmalprodukt (`raumlicht_pro`). Wiederherstellen über die Kaufabfrage beim Start – kein Code, kein Konto. In dieser Fassung kein Hinweis auf den Kauf über die Website (Play-Regeln; für die EU gibt es Sonderregeln, bitte prüfen).
+- **Web- und GitHub-Fassung:** Woo-Kasse → Code per E-Mail → in den Einstellungen eingeben → freigeschaltet, ohne Konto. Rechnung und Nachweis über WooCommerce.
+- In der App derselbe Schalter „Pro aktiv“ für beide Wege; die Fassungen `play`/`github` gibt es seit 2.6.0.
+
+### 3. Was ich vom gemeinsamen Lizenz-Dienst brauche
+
+1. **Aktivieren:** `POST /aktivieren {code, app: "raumlicht", geraet: <zufällige Installations-Kennung>}` → **signierter Freischalt-Schein** (z. B. Ed25519; Inhalt: App, Produkt, ausgestellt am, gültig bis oder „dauerhaft“, Kennung). Die App prüft die Signatur **ohne Netz** mit einem eingebauten öffentlichen Schlüssel – Pro funktioniert offline.
+2. **Geräte:** z. B. bis zu 5 Aktivierungen je Code, selbst wieder freigebbar. Im Browser liegt der Schein im Browser-Speicher; wer den löscht, gibt den Code neu ein.
+3. **Auffrischen:** gelegentlich (z. B. alle 30 Tage, mit Kulanz ohne Netz), damit Erstattungen wirken; Sperrliste.
+4. **Play-Käufe:** optional Kaufbeleg serverseitig bei Google prüfen und denselben Schein ausstellen – nötig, sobald der KI-Tutor auch in der Play-Fassung laufen soll.
+5. **KI-Zwischenstation:** `POST /tutor` nimmt Schein + Aufgabe, prüft, begrenzt (pro Tag), ruft die Claude-API auf. **Der API-Schlüssel liegt nur auf dem Server**, nie in App oder WebApp.
+6. **Drumherum:** CORS für die App-Adressen, Testcodes, Webhook von Woo zum Erzeugen der Codes, Schlüsselwechsel möglich. Gespeichert werden nur Code, zufällige Kennung und Zeitpunkte – keine Namen in der App.
+
+### 4. KI-Tutor „Lux erklärt“ – sinnvoll? Kosten?
+
+**Sinnvoll, aber als zweite Stufe und eng geführt.** Idee: Nach einer falschen Antwort ein Knopf „Lux, erklär mir meinen Fehler“. Gesendet werden nur die Aufgabe, die eingestellten Werte und der richtige Rechenweg der App – **kein freier Text, keine persönlichen Daten**. Das Modell erklärt die bekannte Lösung, es rechnet nicht selbst (so bleiben Rechenfehler der KI draußen).
+
+Kosten je Erklärung (rund 1.500 Zeichen-Einheiten hinein, 700 heraus; Preise der Claude-API in US-Dollar, Stand der Preisliste 03.11.2026):
+
+| Modell | Preis je Million (rein / raus) | je Erklärung | 30 Erklärungen am Tag, ein Monat |
+|---|---|---|---|
+| Claude Haiku 5.5 | 0,10 $ / 0,50 $ | rund 0,05 Cent | rund 0,45 $ |
+| Claude Sonnet 5.5 | 2 $ / 10 $ | rund 1 Cent | rund 9 $ |
+| Claude Opus 5.5 | 4 $ / 20 $ | rund 2 Cent | rund 18 $ |
+
+Folgerung: Mit Haiku 5.5 ist der Tutor im Einmalpreis tragbar, wenn es eine Tagesgrenze gibt (z. B. 30). Mit Sonnet oder Opus trägt ein Einmalkauf einen Vielnutzer nicht – dann bräuchte es ein Zeit-Paket. Welches Modell gut genug erklärt, müsste man an echten Aufgaben ausprobieren; das ist Marcels Entscheidung.
+
+**Risiken, ehrlich:** (1) Daten verlassen das Gerät – Datenschutzerklärung, Play-Angaben „Datensicherheit“, Auftragsverarbeitung und das Alter der Nutzer (Schüler) müssen vorher geklärt sein; (2) laufende Kosten ohne Obergrenze, wenn die Tagesgrenze fehlt; (3) braucht Internet; (4) Erklärungen können trotz Vorgabe daneben liegen – deshalb nur die Lösung der App erklären lassen und „Stimmt nicht?“-Rückmeldung einbauen.
+
+### Was beim Bau angepasst werden muss (noch nicht geschehen)
+
+Texte „keine Käufe“ in den Einstellungen (Android und Web), Store-Eintrag (`store/texte.md`), Antworten zur Datensicherheit (`STORE-RELEASE.md`), Datenschutzerklärung der Website. Die Repo-Leitlinie verlangt, dass Bezahl-Angebote nie „nackter“ sind als der Rest – Pro-Inhalte bekommen dieselbe Ausstattung.
+
+**Reihenfolge, wenn freigegeben:** 1) Lizenz-Dienst abstimmen, 2) Pro-Schalter und Sperren in der App samt Code-Eingabe, 3) Play Billing, 4) Tutor. Bis dahin baue ich nichts davon.
