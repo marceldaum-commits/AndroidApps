@@ -2,7 +2,7 @@
 
 ## 0.24.0 – Pro über die Website freigeschaltet (Web + GitHub-APK)
 
-- **Version:** 0.24.0 · **Commit:** {{COMMIT}}
+- **Version:** 0.24.0 · **Commit:** bfa1fe2
 - `pro/pro.properties`: publicKey `979eb515…b812` (vom Lizenz-Dienst), checkoutUrl `…/kasse/?bestellweg=aendern&add-to-cart=4135`
   (KF-PRO 7,99 €). Kasse geprüft (HTTP 200), Schlüssel gültig. **Ab dieser Version gelten in Web und GitHub-APK die
   Pro-Sperren** (Bestandsschutz für Begonnenes). Play-Fassung unverändert frei (Produkt in der Play Console fehlt noch, Marcel macht das später).
