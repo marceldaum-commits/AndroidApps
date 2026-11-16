@@ -5,7 +5,7 @@
 #
 # Secrets (Settings → Secrets and variables → Actions):
 #   WG_KEYSTORE_BASE64     = Inhalt von „wissensgarten-upload.jks.base64.txt“ (Bitwarden)
-#   WG_KEYSTORE_PROPERTIES = Inhalt von „keystore.properties“ (gleicher Ordner)
+#   WG_KEYSTORE_PROPERTIES = Inhalt von „keystore.properties“ (ebenfalls Bitwarden)
 # Optional für den Drive-Upload:
 #   GDRIVE_SA_JSON         = JSON-Schlüssel eines Google-Dienstkontos
 #   GDRIVE_IMPERSONATE     = E-Mail, in deren Namen hochgeladen wird (nur mit domainweiter Delegierung)
