@@ -2,7 +2,122 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional.
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).**
+
+## 16.11.2026 (52) – Konzept „Pro“ für Rechenblitz (noch nicht gebaut)
+
+Auftrag vom Leitstand (16.11.) nach Marcels Grundsatz für alle Apps: Bezahlfunktionen in der App, Web und Android, Rechnung per E-Mail und als Nachweis in WooCommerce. Bitte zuerst nur ein Konzept. **Es ist noch nichts gebaut.** Die Preise sind ein Vorschlag zur Abstimmung über alle Apps.
+
+### 1. Was bleibt kostenlos, was wird Pro?
+
+Grundsatz: Rechenblitz ist auch Werbung für Nachhilfe – online und gut bewertet, weil Kinder alles Wichtige kostenlos üben können. Deshalb bleibt **das Üben für Kinder kostenlos**. Pro gibt es für zwei Gruppen: ehrgeizige Familien und Lehrkräfte.
+
+**Kostenlos (wie heute):**
+- alle 30 Themen in Stufe 1–5 und Auto
+- Blitzrunde, ruhiges Üben, Duell, Rätsel des Tages
+- Rechen-Reise, Rechengarten, Merk-Training, Blitz' Welt
+- Fehlerkiste, Urkunden, Einstufungstest
+- Üben nach Wunsch zum Selbst-Einstellen
+- bis zu **2 Profile**
+- eine Klasse mit Code **beitreten**
+
+**Rechenblitz Pro – Familie:**
+- **Profi-Stufe** in allen Themen (Stufe 6, siehe Meldung 51)
+- **unbegrenzt Profile** (Geschwister)
+- **Elternbericht:** Verlauf über Wochen und Monate, Schwächen je Thema, als PDF zum Ausdrucken. Der heutige einfache Wochenbericht bleibt kostenlos.
+- Üben nach Wunsch: **Vorlagen speichern** und per Link oder QR teilen
+
+**Rechenblitz Pro – Lehrkraft:**
+- **Klassen-Challenge anlegen** (Beitreten bleibt kostenlos)
+- **Aufträge mit Ergebnis-Übersicht**
+- **Arbeitsblätter mit Lösungsblatt**
+- Vorlagen „Üben nach Wunsch“ für die ganze Klasse teilen
+- Profi-Stufe und alles aus Familie
+
+Bewusst **nicht** hinter die Bezahlschranke: Stufe 1–5, Lösungswege, Spiele und Belohnungen. Ein Kind soll nie mitten im Üben an eine Bezahlwand stoßen. Pro-Hinweise sieht nur der Elternbereich, hinter der vorhandenen Elternabfrage.
+
+**Vergleich (recherchiert am 16.11.2026; Preise ändern sich, vor Start noch einmal prüfen):**
+
+| App | Modell | Preis |
+|---|---|---|
+| Bastis Lernwelt – Mathe (Einmaleins, iOS) | PRO einmalig | 5,99 € |
+| Mathekönig: Kopfrechnen (iOS) | Komplettpaket einmalig | 5,99 € |
+| 1×1 Einmaleins (Hubatka, iOS) | Vollversion einmalig | 5,49 € |
+| Math: Trainer Kopfrechnen | Premium einmalig | 6,99 € |
+| ANTON Plus | Jahresabo (ältere Angabe) | ca. 10 €/Jahr |
+| Zahlenzorro (Westermann) | Einzellizenz | 19 € pro Kind und Jahr; Schule 213 €/Jahr |
+| Mathegym | Privatlizenz | 16 €/Monat oder 65 €/Jahr; Schule ab 219 €/Jahr |
+
+Quellen: bastis-lernwelt.de, App-Store-Einträge, netzwelt.de, zahlenzorro.westermann.de, mathegym.de/preise. Die ANTON-Angabe stammt aus älteren Artikeln und ist nicht offiziell bestätigt.
+
+**Preisvorschlag:**
+- **Pro Familie: 7,99 € einmalig.** Das liegt im Rahmen der Einmalkauf-Apps (5,49–6,99 €), aber wir bieten deutlich mehr Inhalt (30 Themen bis Klasse 10). Die Freischaltung gilt dauerhaft für bis zu 3 Geräte. Ein Abo für Kinder-Apps kommt bei Eltern schlecht an, deshalb einmalig.
+- **Pro Lehrkraft: 24,99 € pro Schuljahr.** Das liegt unter Zahlenzorro für eine ganze Klasse und weit unter den Schullizenzen.
+- **Schullizenz: 149 € pro Jahr** für alle Lehrkräfte einer Schule. Später, auf Anfrage über die Website, nicht in der App.
+
+### 2. Android und Google Play
+
+- **Play-Fassung (`RB_STORE=play`):** Freischaltung über **Google Play Billing**.
+  - Pro Familie ist ein einmaliges Produkt (`pro_familie`), Pro Lehrkraft ein Jahresabo (`pro_lehrkraft`).
+  - Google behält 15 % ein, solange der Umsatz unter 1 Mio. $ im Jahr liegt.
+  - Der Kauf läuft nur hinter der vorhandenen **Elternabfrage**. Das verlangt die Families-Richtlinie für Kinder-Apps.
+  - In der Play-Fassung gibt es **keinen Hinweis und keinen Link auf den günstigeren Web-Kauf**. Das wäre nur über Googles Programm für externe Angebote im EWR erlaubt. Dort fallen ebenfalls Gebühren an, und für 7,99 € lohnt sich der Aufwand nicht.
+- **Web- und GitHub-APK-Fassung:** Kauf über unsere Website (WooCommerce). Der Kunde bekommt einen **Freischalt-Code** per E-Mail, dazu die Rechnung an Kunde und Marcel.
+- **Damit ein Web-Kauf auch in der Play-App gilt:**
+  - In den Einstellungen gibt es „Code einlösen“ ohne Preis und ohne Link. Wer schon gekauft hat, gibt dort seinen Code ein.
+  - Nach unserem Verständnis erlaubt Google, Inhalte freizuschalten, die außerhalb von Play gekauft wurden, solange die App nicht zum Kauf außerhalb lenkt.
+  - **Vor dem Bau gegen den aktuellen Wortlaut der Play-Zahlungsrichtlinie prüfen.** Ist das strittig, zeigt die Play-Fassung „Code einlösen“ nicht an, und der Web-Kauf gilt nur im Web und in der GitHub-APK.
+- **Umgekehrt gilt ein Play-Kauf auch im Web:** Der Lizenz-Dienst prüft den Play-Kauf und gibt einen Code aus, der sich im Browser einlösen lässt.
+- **Muss geändert werden:**
+  - Store-Eintrag und Website versprechen heute „keine In-App-Käufe“ (`android-app/store/eintrag-de.txt`). Das muss angepasst werden, dazu die Angabe „Enthält In-App-Käufe“ in der Play Console.
+  - Hinweis: Im Apple App Store gibt es bereits eine andere App mit dem Namen „Rechenblitz“ (Entwickler Benjamin Schmolck, kostenlos). Das betrifft eine spätere iOS-Fassung und die Namenswahl, nicht Google Play.
+
+### 3. Was Rechenblitz vom gemeinsamen Lizenz-Dienst braucht
+
+Vorbild Mathe-Trainer Pro: Woo-Produkt → Code → Freischaltung ohne Konto.
+
+- **Woo-Produkte:** „Rechenblitz Pro Familie“ und „Rechenblitz Pro Lehrkraft (Schuljahr)“.
+  - Nach Zahlungseingang erzeugt ein Webhook den Code (z. B. `RB-7K2Q-M9XD`).
+  - Der Code geht per E-Mail an den Kunden, Rechnung an Kunde und Marcel, Nachweis bleibt in der Woo-Bestellung.
+- **Gespeichert wird je Code:**
+  - Produkt
+  - Ablaufdatum (Familie: nie, Lehrkraft: Schuljahresende)
+  - bis zu 3 Geräte-Kennungen. Das ist eine zufällige ID je Installation, nichts Persönliches.
+  - Sperrvermerk bei Erstattung
+- **Schnittstellen:**
+  - `POST /lizenz/einloesen {code, geraet}` liefert ein **signiertes Freischalt-Ticket** (Ed25519). Die App prüft es offline mit dem öffentlichen Schlüssel, also auch im Flugmodus.
+  - `POST /lizenz/pruefen {ticket}` frischt das Ticket gelegentlich auf und erkennt gesperrte Codes.
+  - `POST /lizenz/play {kaufToken, produkt}` prüft einen Play-Kauf über die Google Play Developer API und gibt dasselbe Ticket und einen Code aus. So gibt es in der App nur eine Art Freischaltung.
+  - CORS für die Rechenblitz-Domain.
+  - Am besten ein gemeinsamer Dienst für alle Apps, mit App-Kennung im Ticket.
+- **Kein Konto, keine E-Mail in der App.** Die App speichert nur das Ticket. Das passt zum Versprechen „kein Konto, kein Tracking“.
+- **Abklären:**
+  - Bei Play-Käufen ist Google der Verkäufer und stellt dem Kunden den Beleg aus. Ob diese Käufe zusätzlich als Woo-Nachweis gespiegelt werden sollen und wie sie steuerlich verbucht werden, bitte mit dem Steuerberater klären.
+  - Erstattungen: Bei Play automatisch über den Kauf-Token, im Web über eine Sperre in Woo.
+
+### 4. KI – lohnt sich das?
+
+- **Nutzen gering:** Rechenblitz zeigt schon bei jeder Aufgabe aller 6 Stufen einen fertigen, geprüften Lösungsweg Schritt für Schritt. Er funktioniert offline, kostenlos und ohne Datenweitergabe. Eine KI-„Erklär-Hilfe zu Fehlern“ brächte wenig Neues.
+- **Risiken hoch:**
+  - Bei Kindern als Nutzern greifen DSGVO Art. 8 (Einwilligung der Eltern) und die Families-Regeln von Google Play.
+  - Die Datenübertragung an einen KI-Anbieter widerspricht dem heutigen Versprechen „offline, kein Tracking“.
+- **Kosten wären klein** (Listenpreise der Claude-API, Stand Nov. 2026): Eine kurze Erklärung braucht etwa 600 Eingabe- und 250 Ausgabe-Token, mit Denkanteil eher 500 Ausgabe-Token.
+  - Claude Haiku 5.5 (0,10 $ / 0,50 $ je Mio. Token): etwa **0,02–0,03 Cent je Erklärung**, also rund 0,30 $ je 1000 Erklärungen.
+  - Claude Sonnet 5.5 (2 $ / 10 $ je Mio. Token): etwa **0,4–0,6 Cent je Erklärung**.
+  - Ein sehr aktives Pro-Kind mit 20 Erklärungen am Tag käme mit Haiku auf etwa 2 $ im Jahr.
+  - Dazu kommt ein kleiner Server als Zwischenstelle, denn der API-Schlüssel darf nie in die App.
+- **Empfehlung:**
+  - Jetzt **keine KI** für Kinder.
+  - Später höchstens für **Lehrkräfte** (z. B. „Arbeitsblatt aus Beschreibung erstellen“), über unseren Server, ohne Schülerdaten und mit Tageslimit.
+
+### Was der Leitstand bitte entscheidet
+
+1. Aufteilung kostenlos und Pro wie oben?
+2. Preise: Familie 7,99 € einmalig, Lehrkraft 24,99 €/Schuljahr, Schule 149 €/Jahr?
+3. Bekommt Rechenblitz einen Anteil am gemeinsamen Lizenz-Dienst, oder baut ihn eine App für alle?
+4. KI: vorerst nicht?
+
+Nach der Freigabe baue ich in dieser Reihenfolge: Freischalt-Logik und „Code einlösen“ (Web), dann Play Billing (Play-Fassung), dann die Pro-Funktionen, dann Store-Texte.
 
 ## 16.11.2026 (51) – Schwierigkeit steigt nachweislich, neue Stufe „Profi“ (3.19.0)
 
