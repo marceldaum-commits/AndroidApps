@@ -55,5 +55,17 @@ tasks.register<Sync>("exportWebApp") {
     exclude("**/*.map")
     filesMatching(listOf("index.html", "sw.js", "manifest.webmanifest")) { filter { it.replace("@VERSION@", versionName) } }
     val versionDate = Regex("""VERSION_DATE", "\\"([0-9.]+)\\""""").find(appGradle)!!.groupValues[1]
-    doLast { rootProject.file("webapp/version.json").writeText("{\n  \"version\": \"$versionName\",\n  \"date\": \"$versionDate\"\n}\n") }
+    doLast {
+        val out = rootProject.file("webapp")
+        // Echter Ladebalken: Größe der großen Startdateien (entpackt) ins HTML schreiben
+        val big = out.walkTopDown().filter { it.isFile && (it.extension == "wasm" || it.extension == "ttf" || it.name == "wissensgarten.js") }.toList()
+        val sizes = big.joinToString(",", "{", "}") { "\"${it.name}\":${it.length()}" }
+        // Service Worker: beim Installieren alles vorab speichern → zweiter Start sofort, auch offline
+        val all = out.walkTopDown().filter { it.isFile && !it.name.endsWith(".LICENSE.txt") && it.name != "sw.js" && it.name != "version.json" }
+            .map { it.relativeTo(out).invariantSeparatorsPath }.sorted().toList()
+        val pre = (listOf("./") + all).joinToString(",", "[", "]") { "'$it'" }
+        out.resolve("index.html").let { it.writeText(it.readText().replace("@SIZES@", sizes)) }
+        out.resolve("sw.js").let { it.writeText(it.readText().replace("'@PRECACHE@'", pre)) }
+        rootProject.file("webapp/version.json").writeText("{\n  \"version\": \"$versionName\",\n  \"date\": \"$versionDate\"\n}\n")
+    }
 }

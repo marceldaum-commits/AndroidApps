@@ -1,7 +1,10 @@
 // Service Worker: WebApp offline nutzbar. Bei neuer Version (@VERSION@) wird der Zwischenspeicher erneuert.
 const CACHE = 'wissensgarten-@VERSION@';
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', 'index.html', 'wg-platform.js', 'wissensgarten.js', 'manifest.webmanifest', 'packs/index.json'])).then(() => self.skipWaiting()));
+  // Alles vorab speichern (Liste wird beim Bauen eingesetzt) – beim ersten Besuch kommt das meist schon aus dem Browser-Cache.
+  // Einzeln, damit eine fehlende Datei nicht die ganze Installation verhindert.
+  const files = '@PRECACHE@';
+  e.waitUntil(caches.open(CACHE).then((c) => Promise.all(files.map((f) => c.add(f).catch(() => {})))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', (e) => {
   e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
