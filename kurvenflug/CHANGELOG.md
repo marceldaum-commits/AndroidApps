@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.24.1 – Lernstand: Level gezielt nochmal spielen
+- **📊 Lernstand zum Antippen**: Ein Tipp auf ein Thema klappt seine Level auf – mit den Sternen, die du schon hast.
+  So siehst du sofort, wo noch Sterne fehlen, und kannst einzelne Level direkt nochmal spielen.
+
 ## 0.24.0 – Kurvenflug Pro ist da (Web und GitHub-Version)
 - **⭐ Kurvenflug Pro kaufen**: In der Web- und der GitHub-Version kann man Pro jetzt kaufen – 7,99 € einmalig inkl.
   19 % MwSt., kein Abo. Der Kauf läuft über den Shop auf mathenachhilfe-online.com (nur nach der Frage für Erwachsene).

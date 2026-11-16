@@ -203,6 +203,7 @@ class ScreenshotTest {
             de.kurvenflug.app.ui.learning.LearningScreen(Learning.status(played, now), Learning.review(played, now, day),
                 false, now, {}, {})
         }
+
     }
 
     /** Rechenweg: Volt hat den ersten Schritt vorgerechnet, das Kind ist beim zweiten. */
@@ -416,5 +417,15 @@ class ScreenshotTest {
     }
     @Test fun proUnlocked() = shot("96_pro_freigeschaltet", 2000) {
         de.kurvenflug.app.ui.pro.ProScreen(de.kurvenflug.app.ProState(pro = true, locking = true, viaPlay = true), FakeShop(true, acceptsCodes = false), {}, {})
+    }
+
+    /** Lernstand: Thema angetippt – Level mit Sternen zum gezielten Nochmal-Spielen. */
+    @Test fun learningOpen() {
+        val day = 20_500L; val now = day * Learning.DAY_MS + 43_200_000L
+        val played = Levels.chapters.first { it.number == 1 }.levels.take(5).associate { it.id to Played(if (it.number % 2 == 0) 2 else 3, now - Learning.DAY_MS) }
+        shot("97_lernstand_level", settle = 2500) {
+            de.kurvenflug.app.ui.learning.LearningScreen(Learning.status(played, now), null, false, now, {}, {},
+                stars = played.mapValues { it.value.stars }, initialOpen = 1)
+        }
     }
 }
