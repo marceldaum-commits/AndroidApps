@@ -1,0 +1,446 @@
+{
+  "id": "gs-pflanzen-wald",
+  "version": 1,
+  "title": "Pflanzen und Wald",
+  "subject": "sachunterricht",
+  "grades": [
+    2,
+    3,
+    4
+  ],
+  "emoji": "🌳",
+  "tier": "free",
+  "description": "Wie Pflanzen keimen, welche Bäume Eicheln, Bucheckern und Zapfen tragen und wer in den Stockwerken des Waldes wohnt.",
+  "intro": [
+    {
+      "img": "🌱💧",
+      "text": "Wusstest du? In einem winzigen Samen steckt schon eine ganze Pflanze. Mit Wasser und Wärme wacht sie auf – das nennt man Keimung."
+    },
+    {
+      "img": "🌰🍂",
+      "text": "Im Herbst ist der Waldboden eine Schatzkiste: Eicheln von der Eiche, Bucheckern von der Buche und glänzende Kastanien."
+    },
+    {
+      "img": "🌲🌳",
+      "text": "Laubbäume haben Blätter, Nadelbäume haben Nadeln. Merkspruch: Die Fichte sticht, die Tanne nicht!"
+    },
+    {
+      "img": "🏠🍄🐿️",
+      "text": "Der Wald hat Stockwerke wie ein Haus: unten Moos, dann Kräuter, Sträucher und ganz oben die Baumkronen."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's, kleiner Waldforscher! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welcher Pflanzenteil hält die Pflanze fest im Boden?",
+      "a": "Die Wurzel",
+      "choices": [
+        "Die Blüte",
+        "Das Blatt",
+        "Der Stängel"
+      ],
+      "info": "Die Wurzel ist wie ein Anker. Sie hält die Pflanze und trinkt Wasser.",
+      "img": "🌱⚓"
+    },
+    {
+      "id": "002",
+      "q": "Wie nennt man es, wenn aus einem Samen ein Pflänzchen wächst?",
+      "a": "Keimung",
+      "choices": [
+        "Ernte",
+        "Bestäubung",
+        "Blütezeit"
+      ],
+      "info": "Der Samen keimt: Er quillt auf, platzt und ein Keimling wächst heraus.",
+      "img": "🌰🌱"
+    },
+    {
+      "id": "003",
+      "q": "Was braucht ein Samen auf jeden Fall, um zu keimen?",
+      "a": "Wasser und Wärme",
+      "choices": [
+        "Kälte und Trockenheit",
+        "Salz und Sand",
+        "Dünger und Eis"
+      ],
+      "info": "Ein Samen braucht Wasser, Wärme und Luft. Erst dann wacht er auf.",
+      "img": "💧☀️🌱"
+    },
+    {
+      "id": "004",
+      "q": "Was kommt bei einer keimenden Bohne zuerst aus dem Samen?",
+      "a": "Die Keimwurzel",
+      "choices": [
+        "Die Blüte",
+        "Die Frucht",
+        "Ein großes Blatt"
+      ],
+      "info": "Erst wächst die Wurzel nach unten, dann der Spross nach oben zum Licht.",
+      "img": "🌱👇"
+    },
+    {
+      "id": "005",
+      "q": "Welches Tier trägt Blütenstaub von Blüte zu Blüte?",
+      "a": "Die Biene",
+      "choices": [
+        "Der Regenwurm",
+        "Die Schnecke",
+        "Der Maulwurf"
+      ],
+      "info": "Die Biene sammelt Nektar und bestäubt dabei die Blüten.",
+      "img": "🐝🌼"
+    },
+    {
+      "id": "006",
+      "q": "Was entsteht nach der Bestäubung aus der Blüte?",
+      "a": "Eine Frucht",
+      "choices": [
+        "Eine Wurzel",
+        "Ein Stängel",
+        "Eine Knospe"
+      ],
+      "info": "Aus der Apfelblüte wird ein Apfel. In der Frucht stecken die Samen.",
+      "img": "🌸➡️🍎"
+    },
+    {
+      "id": "007",
+      "q": "Was geben grüne Pflanzen an die Luft ab, das wir zum Atmen brauchen?",
+      "a": "Sauerstoff",
+      "choices": [
+        "Rauch",
+        "Staub",
+        "Abgase"
+      ],
+      "info": "Bäume und Pflanzen machen Sauerstoff. Darum ist Waldluft so frisch!",
+      "img": "🌳💨"
+    },
+    {
+      "id": "008",
+      "q": "Wie heißt die Frucht der Eiche mit dem kleinen Hütchen?",
+      "a": "Eichel",
+      "choices": [
+        "Buchecker",
+        "Kastanie",
+        "Tannenzapfen"
+      ],
+      "info": "Die Eichel sitzt in einem Becher wie unter einem Hütchen.",
+      "img": "🌰🎩"
+    },
+    {
+      "id": "009",
+      "q": "Von welchem Baum fallen die Bucheckern?",
+      "a": "Buche",
+      "choices": [
+        "Eiche",
+        "Birke",
+        "Kiefer"
+      ],
+      "info": "Bucheckern sind kleine, dreikantige Nüsschen in einer stacheligen Hülle.",
+      "img": "🌳🔺"
+    },
+    {
+      "id": "010",
+      "q": "An welchem Baum wachsen die glänzend braunen Kastanien zum Basteln?",
+      "a": "Rosskastanie",
+      "choices": [
+        "Eiche",
+        "Buche",
+        "Fichte"
+      ],
+      "info": "Sie stecken in einer grünen, stacheligen Schale. Essen darf man sie nicht!",
+      "img": "🌰✂️"
+    },
+    {
+      "id": "011",
+      "q": "Welcher Baum hat eine weiße Rinde mit schwarzen Flecken?",
+      "a": "Birke",
+      "choices": [
+        "Buche",
+        "Eiche",
+        "Fichte"
+      ],
+      "info": "Die Birke erkennst du sofort an ihrem weiß-schwarzen Stamm.",
+      "img": "🌳⚪⚫"
+    },
+    {
+      "id": "012",
+      "q": "Welcher Laubbaum hat Blätter mit runden Buchten am Rand?",
+      "a": "Eiche",
+      "choices": [
+        "Birke",
+        "Buche",
+        "Rosskastanie"
+      ],
+      "info": "Das Eichenblatt hat viele runde Lappen, fast wie Wellen.",
+      "img": "🍃〰️"
+    },
+    {
+      "id": "013",
+      "q": "Welcher Baum hat Früchte mit Flügeln, die wie Propeller fliegen?",
+      "a": "Ahorn",
+      "choices": [
+        "Eiche",
+        "Rosskastanie",
+        "Buche"
+      ],
+      "info": "Ahornfrüchte drehen sich beim Fallen wie kleine Hubschrauber.",
+      "img": "🍁🚁"
+    },
+    {
+      "id": "014",
+      "q": "Die Fichte sticht, die Tanne …?",
+      "a": "nicht",
+      "choices": [
+        "auch",
+        "sehr",
+        "manchmal"
+      ],
+      "info": "Fichtennadeln sind spitz und pieksen. Tannennadeln sind weich und flach.",
+      "img": "🌲👆"
+    },
+    {
+      "id": "015",
+      "q": "Bei welchem Nadelbaum stehen die Zapfen aufrecht und zerfallen am Ast?",
+      "a": "Tanne",
+      "choices": [
+        "Fichte",
+        "Kiefer",
+        "Eibe"
+      ],
+      "info": "Ganze Zapfen am Boden sind meist von Fichte oder Kiefer. Tannenzapfen zerfallen oben.",
+      "img": "🌲⬆️"
+    },
+    {
+      "id": "016",
+      "q": "Welcher Nadelbaum verliert im Herbst seine Nadeln?",
+      "a": "Lärche",
+      "choices": [
+        "Tanne",
+        "Fichte",
+        "Kiefer"
+      ],
+      "info": "Die Lärche ist besonders: Ihre Nadeln werden gelb und fallen ab.",
+      "img": "🌲🍂"
+    },
+    {
+      "id": "017",
+      "q": "Welche Bäume bleiben im Winter meist grün?",
+      "a": "Nadelbäume",
+      "choices": [
+        "Laubbäume",
+        "Obstbäume",
+        "Alle Bäume"
+      ],
+      "info": "Die meisten Nadelbäume behalten ihre Nadeln auch im Winter.",
+      "img": "🌲❄️"
+    },
+    {
+      "id": "018",
+      "q": "Woran erkennst du das Alter eines gefällten Baumes?",
+      "a": "An den Jahresringen",
+      "choices": [
+        "An der Rinde",
+        "An den Blättern",
+        "An der Höhe"
+      ],
+      "info": "Jedes Jahr wächst ein neuer Ring dazu. Zähl sie – so alt ist der Baum!",
+      "img": "🌳🎂"
+    },
+    {
+      "id": "019",
+      "q": "Welche Waldschicht liegt ganz unten auf dem Boden?",
+      "a": "Moosschicht",
+      "choices": [
+        "Krautschicht",
+        "Strauchschicht",
+        "Baumschicht"
+      ],
+      "info": "Unten wachsen Moose und Pilze. Darunter liegen nur noch die Wurzeln.",
+      "img": "🍄🌿"
+    },
+    {
+      "id": "020",
+      "q": "In welcher Waldschicht wachsen Farne, Gräser und Blumen?",
+      "a": "Krautschicht",
+      "choices": [
+        "Moosschicht",
+        "Strauchschicht",
+        "Baumschicht"
+      ],
+      "info": "Die Krautschicht ist kniehoch bis hüfthoch.",
+      "img": "🌿🌼"
+    },
+    {
+      "id": "021",
+      "q": "In welcher Waldschicht wachsen Haselnuss und Holunder?",
+      "a": "Strauchschicht",
+      "choices": [
+        "Moosschicht",
+        "Krautschicht",
+        "Wurzelschicht"
+      ],
+      "info": "Sträucher sind höher als du, aber kleiner als Bäume.",
+      "img": "🌳🥜"
+    },
+    {
+      "id": "022",
+      "q": "Wo baut der Specht seine Bruthöhle?",
+      "a": "In der Baumschicht",
+      "choices": [
+        "In der Moosschicht",
+        "In der Krautschicht",
+        "In der Wurzelschicht"
+      ],
+      "info": "Der Specht hämmert sein Loch hoch oben in einen Baumstamm.",
+      "img": "🌳🐦"
+    },
+    {
+      "id": "023",
+      "q": "Welcher Waldvogel hämmert Löcher in Baumstämme?",
+      "a": "Specht",
+      "choices": [
+        "Eule",
+        "Amsel",
+        "Kuckuck"
+      ],
+      "info": "Der Specht klopft so schnell, dass es trommelt. Mit seiner langen Zunge holt er Insekten aus dem Holz.",
+      "img": "🐦🔨"
+    },
+    {
+      "id": "024",
+      "q": "Welches Tier baut im Wald große Hügel aus Nadeln und Zweigen?",
+      "a": "Waldameise",
+      "choices": [
+        "Maulwurf",
+        "Igel",
+        "Dachs"
+      ],
+      "info": "In einem Ameisenhügel wohnen sehr viele Ameisen.",
+      "img": "🐜⛰️"
+    },
+    {
+      "id": "025",
+      "q": "Welcher Waldvogel jagt nachts Mäuse?",
+      "a": "Eule",
+      "choices": [
+        "Specht",
+        "Amsel",
+        "Meise"
+      ],
+      "info": "Eulen fliegen fast lautlos und sehen im Dunkeln sehr gut.",
+      "img": "🦉🌙"
+    },
+    {
+      "id": "026",
+      "q": "Wie heißt das kugelrunde Nest des Eichhörnchens?",
+      "a": "Kobel",
+      "choices": [
+        "Bau",
+        "Horst",
+        "Stall"
+      ],
+      "info": "Der Kobel ist aus Zweigen und Moos, innen weich gepolstert.",
+      "img": "🐿️🏠"
+    },
+    {
+      "id": "027",
+      "q": "Welches Waldtier gräbt einen großen Bau mit vielen Gängen?",
+      "a": "Dachs",
+      "choices": [
+        "Reh",
+        "Eichhörnchen",
+        "Specht"
+      ],
+      "info": "Der Dachs ist sehr ordentlich und polstert seinen Bau mit Gras und Laub.",
+      "img": "🦡🕳️"
+    },
+    {
+      "id": "028",
+      "q": "Was passiert jedes Jahr mit dem Geweih des Hirsches?",
+      "a": "Es fällt ab und wächst neu",
+      "choices": [
+        "Es wächst nur weiter",
+        "Es wird im Winter weiß",
+        "Es wird zu Fell"
+      ],
+      "info": "Im Spätwinter wirft der Hirsch sein Geweih ab. Danach wächst ein neues.",
+      "img": "🦌🔄"
+    },
+    {
+      "id": "029",
+      "q": "Was macht Moos im Wald?",
+      "a": "Es speichert Wasser wie ein Schwamm",
+      "choices": [
+        "Es frisst Insekten",
+        "Es leuchtet nachts",
+        "Es trocknet den Boden aus"
+      ],
+      "info": "Moos saugt Regen auf und gibt ihn langsam wieder ab.",
+      "img": "🌿💧"
+    },
+    {
+      "id": "030",
+      "q": "Wie heißen Blumen, die schon blühen, bevor die Bäume Blätter haben?",
+      "a": "Frühblüher",
+      "choices": [
+        "Spätblüher",
+        "Sommerblumen",
+        "Nachtblüher"
+      ],
+      "info": "Frühblüher sind die ersten bunten Farben im Jahr.",
+      "img": "🌼🌱"
+    },
+    {
+      "id": "031",
+      "q": "Warum blühen Frühblüher im Wald so früh?",
+      "a": "Dann kommt viel Licht zum Boden",
+      "choices": [
+        "Dann ist es am wärmsten",
+        "Dann regnet es nie",
+        "Dann gibt es keine Tiere"
+      ],
+      "info": "Später machen die Blätter der Bäume Schatten. Dann wird es unten dunkel.",
+      "img": "☀️🌸"
+    },
+    {
+      "id": "032",
+      "q": "Woher haben Frühblüher die Kraft, so früh zu wachsen?",
+      "a": "Aus Vorräten in Zwiebel, Knolle oder Wurzelstock",
+      "choices": [
+        "Aus dem Schnee",
+        "Aus dem Mondlicht",
+        "Von den Bäumen"
+      ],
+      "info": "Im Jahr davor haben sie Nährstoffe unter der Erde gespeichert.",
+      "img": "🌷🔋"
+    },
+    {
+      "id": "033",
+      "q": "Welche Blume ist ein Frühblüher im Wald?",
+      "a": "Buschwindröschen",
+      "choices": [
+        "Sonnenblume",
+        "Mohnblume",
+        "Rose"
+      ],
+      "info": "Buschwindröschen bilden im Frühling weiße Blütenteppiche im Wald.",
+      "img": "🌼🌲"
+    },
+    {
+      "id": "034",
+      "q": "Welche Waldpflanze riecht nach Knoblauch?",
+      "a": "Bärlauch",
+      "choices": [
+        "Farn",
+        "Efeu",
+        "Moos"
+      ],
+      "info": "Vorsicht: Bärlauch sieht giftigen Pflanzen ähnlich. Nur mit Erwachsenen pflücken!",
+      "img": "🐻🌿"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
   "id": "gs-geld",
-  "version": 1,
+  "version": 2,
   "title": "Rechnen mit Geld",
   "subject": "mathe",
   "grades": [
@@ -174,7 +174,7 @@
         "103 ct"
       ],
       "info": "1 € = 100 ct, also 3 € = 300 ct.",
-      "img": "🧃🧃🧃"
+      "img": "🥤🥤🥤"
     },
     {
       "id": "013",
@@ -281,7 +281,7 @@
         "3,30 €"
       ],
       "info": "80 ct + 50 ct = 1,30 €. Dazu noch 1 €.",
-      "img": "🥨🧃"
+      "img": "🥨🥤"
     },
     {
       "id": "022",

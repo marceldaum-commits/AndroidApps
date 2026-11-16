@@ -1,0 +1,432 @@
+{
+  "id": "gs-plus-minus-100",
+  "version": 1,
+  "title": "Rechnen bis 100",
+  "subject": "mathe",
+  "grades": [
+    2
+  ],
+  "emoji": "💯",
+  "tier": "free",
+  "description": "Plus und Minus bis 100 mit Zehnerübergang, Ergänzen und kleinen Sachaufgaben.",
+  "intro": [
+    {
+      "img": "🔟🍎",
+      "text": "Wusstest du? Jede Zahl bis 100 besteht aus Zehnern und Einern. 47 sind 4 Zehner und 7 Einer."
+    },
+    {
+      "img": "🦘➕",
+      "text": "Großer Trick: Rechne erst bis zum nächsten Zehner! 38 + 7: Erst 38 + 2 = 40, dann 40 + 5 = 45."
+    },
+    {
+      "img": "➖🔟",
+      "text": "Beim Minus geht es genauso: 52 − 7: Erst 52 − 2 = 50, dann 50 − 5 = 45."
+    },
+    {
+      "img": "💯🧩",
+      "text": "Ergänzen bis 100: Erst bis zum nächsten Zehner, dann bis 100. 63 + 7 = 70, 70 + 30 = 100. Es fehlen 37."
+    },
+    {
+      "img": "🐝🎉",
+      "text": "Los geht's, Rechenprofi! Brummi summt mit dir bis zur 100!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele Zehner hat die Zahl 47?",
+      "a": "4",
+      "choices": [
+        "7",
+        "3",
+        "5"
+      ],
+      "info": "47 = 4 Zehner und 7 Einer. Die Zehner stehen vorne.",
+      "img": "🔟🔟🔟"
+    },
+    {
+      "id": "002",
+      "q": "Wie viele Einer hat die Zahl 63?",
+      "a": "3",
+      "choices": [
+        "6",
+        "9",
+        "4"
+      ],
+      "info": "63 = 6 Zehner und 3 Einer. Die Einer stehen hinten.",
+      "img": "🍬🍬🍬"
+    },
+    {
+      "id": "003",
+      "q": "5 Zehner und 8 Einer sind …",
+      "a": "58",
+      "choices": [
+        "85",
+        "13",
+        "508"
+      ],
+      "info": "Erst die Zehner, dann die Einer: 50 + 8 = 58.",
+      "img": "🔟🍬"
+    },
+    {
+      "id": "004",
+      "q": "35 + 4",
+      "a": "39",
+      "choices": [
+        "38",
+        "40",
+        "75"
+      ],
+      "info": "Nur die Einer ändern sich: 5 + 4 = 9. Also 39.",
+      "img": "🍎➕"
+    },
+    {
+      "id": "005",
+      "q": "60 + 30",
+      "a": "90",
+      "choices": [
+        "80",
+        "63",
+        "100"
+      ],
+      "info": "6 Zehner + 3 Zehner = 9 Zehner = 90.",
+      "img": "🔟➕"
+    },
+    {
+      "id": "006",
+      "q": "Welche Zahl kommt direkt vor 70?",
+      "a": "69",
+      "choices": [
+        "71",
+        "60",
+        "79"
+      ],
+      "info": "Der Vorgänger ist immer 1 weniger: 70 − 1 = 69.",
+      "img": "⬅️🔢"
+    },
+    {
+      "id": "007",
+      "q": "Zähle in 10er-Schritten: 23, 33, 43, …",
+      "a": "53",
+      "choices": [
+        "44",
+        "63",
+        "50"
+      ],
+      "info": "Bei 10er-Schritten ändert sich nur der Zehner, der Einer bleibt 3.",
+      "img": "🐸🦘"
+    },
+    {
+      "id": "008",
+      "q": "Zähle rückwärts in 5er-Schritten: 80, 75, 70, …",
+      "a": "65",
+      "choices": [
+        "60",
+        "69",
+        "55"
+      ],
+      "info": "Immer 5 weniger: 70 − 5 = 65.",
+      "img": "🐢⬅️"
+    },
+    {
+      "id": "009",
+      "q": "Welche Zahl ist die größte?",
+      "a": "96",
+      "choices": [
+        "69",
+        "89",
+        "59"
+      ],
+      "info": "Schau zuerst auf die Zehner: 9 Zehner sind am meisten. 96 > 89.",
+      "img": "🏆🔢"
+    },
+    {
+      "id": "010",
+      "q": "Welcher Zehner liegt am nächsten an 84?",
+      "a": "80",
+      "choices": [
+        "90",
+        "85",
+        "70"
+      ],
+      "info": "84 ist nur 4 von 80 entfernt, aber 6 von 90.",
+      "img": "🎯🔟"
+    },
+    {
+      "id": "011",
+      "q": "Zwischen welchen Zehnern liegt 67?",
+      "a": "60 und 70",
+      "choices": [
+        "50 und 60",
+        "70 und 80",
+        "66 und 68"
+      ],
+      "info": "67 liegt zwischen den Nachbarzehnern 60 und 70.",
+      "img": "🏠🏠"
+    },
+    {
+      "id": "012",
+      "q": "38 + 7",
+      "a": "45",
+      "choices": [
+        "44",
+        "35",
+        "46"
+      ],
+      "info": "Erst bis zum Zehner: 38 + 2 = 40, dann 40 + 5 = 45.",
+      "img": "🦘➕"
+    },
+    {
+      "id": "013",
+      "q": "64 − 30",
+      "a": "34",
+      "choices": [
+        "94",
+        "31",
+        "44"
+      ],
+      "info": "Nur die Zehner ändern sich: 6 Zehner − 3 Zehner = 3 Zehner.",
+      "img": "🔟➖"
+    },
+    {
+      "id": "014",
+      "q": "52 − 7",
+      "a": "45",
+      "choices": [
+        "55",
+        "46",
+        "44"
+      ],
+      "info": "Erst zum Zehner: 52 − 2 = 50, dann 50 − 5 = 45.",
+      "img": "🦘➖"
+    },
+    {
+      "id": "015",
+      "q": "47 + 25",
+      "a": "72",
+      "choices": [
+        "62",
+        "71",
+        "82"
+      ],
+      "info": "47 + 20 = 67, dann 67 + 5 = 72.",
+      "img": "🚂➕"
+    },
+    {
+      "id": "016",
+      "q": "29 + 39",
+      "a": "68",
+      "choices": [
+        "58",
+        "67",
+        "78"
+      ],
+      "info": "Trick: 30 + 40 = 70, dann 2 weniger: 68.",
+      "img": "🎈🎈"
+    },
+    {
+      "id": "017",
+      "q": "56 + 28",
+      "a": "84",
+      "choices": [
+        "74",
+        "83",
+        "94"
+      ],
+      "info": "56 + 20 = 76, dann 76 + 8 = 84.",
+      "img": "🚲➕"
+    },
+    {
+      "id": "018",
+      "q": "81 − 26",
+      "a": "55",
+      "choices": [
+        "65",
+        "54",
+        "45"
+      ],
+      "info": "81 − 20 = 61, dann 61 − 6 = 55.",
+      "img": "🍪➖"
+    },
+    {
+      "id": "019",
+      "q": "73 − 48",
+      "a": "25",
+      "choices": [
+        "35",
+        "24",
+        "15"
+      ],
+      "info": "73 − 40 = 33, dann 33 − 8 = 25.",
+      "img": "🎈➖"
+    },
+    {
+      "id": "020",
+      "q": "90 − 45",
+      "a": "45",
+      "choices": [
+        "55",
+        "35",
+        "50"
+      ],
+      "info": "Die Hälfte von 90 ist 45. Also bleibt 45 übrig.",
+      "img": "✂️🔟"
+    },
+    {
+      "id": "021",
+      "q": "100 − 58",
+      "a": "42",
+      "choices": [
+        "52",
+        "48",
+        "58"
+      ],
+      "info": "100 − 50 = 50, dann 50 − 8 = 42.",
+      "img": "💯➖"
+    },
+    {
+      "id": "022",
+      "q": "Wie viel fehlt von 63 bis 100?",
+      "a": "37",
+      "choices": [
+        "47",
+        "33",
+        "43"
+      ],
+      "info": "63 + 7 = 70, dann 70 + 30 = 100. Zusammen fehlen 37.",
+      "img": "💯🧩"
+    },
+    {
+      "id": "023",
+      "q": "45 + ? = 100",
+      "a": "55",
+      "choices": [
+        "65",
+        "45",
+        "50"
+      ],
+      "info": "45 + 5 = 50, dann 50 + 50 = 100. Es fehlen 55.",
+      "img": "❓💯"
+    },
+    {
+      "id": "024",
+      "q": "78 + ? = 100",
+      "a": "22",
+      "choices": [
+        "32",
+        "12",
+        "28"
+      ],
+      "info": "78 + 2 = 80, dann 80 + 20 = 100. Es fehlen 22.",
+      "img": "❓💯"
+    },
+    {
+      "id": "025",
+      "q": "? − 20 = 35",
+      "a": "55",
+      "choices": [
+        "15",
+        "45",
+        "65"
+      ],
+      "info": "Rechne rückwärts: 35 + 20 = 55.",
+      "img": "🔍➖"
+    },
+    {
+      "id": "026",
+      "q": "Welche Aufgabe ergibt genau 100?",
+      "a": "63 + 37",
+      "choices": [
+        "63 + 47",
+        "54 + 36",
+        "72 + 38"
+      ],
+      "info": "3 + 7 = 10 und 60 + 30 = 90. Zusammen 100.",
+      "img": "💯✅"
+    },
+    {
+      "id": "027",
+      "q": "Was ist die Umkehraufgabe zu 46 + 9 = 55?",
+      "a": "55 − 9 = 46",
+      "choices": [
+        "46 − 9 = 37",
+        "55 + 9 = 64",
+        "9 + 46 = 55"
+      ],
+      "info": "Die Umkehraufgabe rechnet zurück: Aus Plus wird Minus.",
+      "img": "🔄➖"
+    },
+    {
+      "id": "028",
+      "q": "Ich bin 15 mehr als 70. Welche Zahl bin ich?",
+      "a": "85",
+      "choices": [
+        "55",
+        "75",
+        "95"
+      ],
+      "info": "70 + 15 = 85.",
+      "img": "🕵️🔢"
+    },
+    {
+      "id": "029",
+      "q": "Im Bus sitzen 34 Kinder. 18 steigen aus. Wie viele bleiben im Bus?",
+      "a": "16",
+      "choices": [
+        "26",
+        "52",
+        "14"
+      ],
+      "info": "34 − 18: 34 − 10 = 24, dann 24 − 8 = 16.",
+      "img": "🚌👋"
+    },
+    {
+      "id": "030",
+      "q": "Mia hat 45 Sticker. Sie bekommt 27 dazu. Wie viele hat sie jetzt?",
+      "a": "72",
+      "choices": [
+        "62",
+        "18",
+        "71"
+      ],
+      "info": "45 + 27: 45 + 20 = 65, dann 65 + 7 = 72.",
+      "img": "⭐🎁"
+    },
+    {
+      "id": "031",
+      "q": "Ein Buch hat 100 Seiten. Ben hat 64 gelesen. Wie viele fehlen noch?",
+      "a": "36",
+      "choices": [
+        "46",
+        "34",
+        "26"
+      ],
+      "info": "64 + 6 = 70, 70 + 30 = 100. Es fehlen 36 Seiten.",
+      "img": "📖🐛"
+    },
+    {
+      "id": "032",
+      "q": "In einer Kiste sind 50 Äpfel. 3 Kinder nehmen je 10. Wie viele bleiben?",
+      "a": "20",
+      "choices": [
+        "30",
+        "47",
+        "40"
+      ],
+      "info": "3 Kinder nehmen 30 Äpfel. 50 − 30 = 20.",
+      "img": "🍎📦"
+    },
+    {
+      "id": "033",
+      "q": "Lena ist 8 Jahre alt. Oma ist 63 Jahre älter. Wie alt ist Oma?",
+      "a": "71",
+      "choices": [
+        "55",
+        "61",
+        "81"
+      ],
+      "info": "8 + 63 = 71. Oma ist 71 Jahre alt.",
+      "img": "👵🎂"
+    }
+  ]
+}

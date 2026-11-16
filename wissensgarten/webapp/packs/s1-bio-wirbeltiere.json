@@ -1,0 +1,469 @@
+{
+  "id": "s1-bio-wirbeltiere",
+  "version": 1,
+  "title": "Wirbeltiere",
+  "subject": "biologie",
+  "grades": [
+    5,
+    6
+  ],
+  "emoji": "🦎",
+  "tier": "free",
+  "description": "Fische, Amphibien, Reptilien, Vögel und Säugetiere: Merkmale, Atmung, Körpertemperatur, Fortpflanzung und knifflige Grenzfälle.",
+  "intro": [
+    {
+      "img": "🦴🐟",
+      "text": "Wusstest du? Alle Wirbeltiere haben eine Wirbelsäule aus vielen kleinen Knochen – der Fisch im Teich genauso wie du!"
+    },
+    {
+      "img": "🐟🐸🐍",
+      "text": "Es gibt fünf Klassen: Fische, Amphibien, Reptilien, Vögel und Säugetiere. Jede Klasse hat ihre eigenen Erkennungszeichen."
+    },
+    {
+      "img": "🌡️❄️",
+      "text": "Vögel und Säugetiere halten ihre Körpertemperatur fast gleich. Fische, Amphibien und Reptilien werden so warm wie ihre Umgebung."
+    },
+    {
+      "img": "🐋🦇🐧",
+      "text": "Achtung, Grenzfälle! Der Wal schwimmt, ist aber ein Säugetier. Die Fledermaus fliegt – und ist auch eins. Und der Pinguin?"
+    },
+    {
+      "img": "🐝🔍",
+      "text": "Los geht's, Tierforscher! Brummi ist gespannt, ob du jedes Tier in die richtige Klasse sortierst."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was haben alle Wirbeltiere gemeinsam?",
+      "a": "Eine Wirbelsäule",
+      "choices": [
+        "Ein Fell",
+        "Lungen",
+        "Vier Beine"
+      ],
+      "info": "Die Wirbelsäule stützt den Körper und schützt das Rückenmark. Lungen haben nicht alle: Die meisten Fische atmen mit Kiemen.",
+      "img": "🦴➰"
+    },
+    {
+      "id": "002",
+      "q": "Wie viele Klassen der Wirbeltiere unterscheidet man in der Schule?",
+      "a": "5",
+      "choices": [
+        "3",
+        "4",
+        "7"
+      ],
+      "info": "Fische, Amphibien, Reptilien, Vögel, Säugetiere. Zum Merken: eine Hand, fünf Finger, fünf Klassen.",
+      "img": "🖐️🐾"
+    },
+    {
+      "id": "003",
+      "q": "Welches Tier ist KEIN Wirbeltier?",
+      "a": "Regenwurm",
+      "choices": [
+        "Forelle",
+        "Frosch",
+        "Blindschleiche"
+      ],
+      "info": "Der Regenwurm hat gar keine Knochen. Er gehört zu den Ringelwürmern.",
+      "img": "🦴❌"
+    },
+    {
+      "id": "004",
+      "q": "Was bedeckt die Haut der meisten Fische?",
+      "a": "Schuppen",
+      "choices": [
+        "Federn",
+        "Haare",
+        "Eine Hornplatte wie beim Panzer"
+      ],
+      "info": "Die Schuppen liegen wie Dachziegel übereinander. Darüber liegt eine Schleimschicht, die das Gleiten erleichtert.",
+      "img": "🐟🛡️"
+    },
+    {
+      "id": "005",
+      "q": "Welches Organ hilft vielen Fischen, im Wasser zu schweben?",
+      "a": "Die Schwimmblase",
+      "choices": [
+        "Der Kiemendeckel",
+        "Das Seitenlinienorgan",
+        "Die Rückenflosse"
+      ],
+      "info": "Die Schwimmblase ist mit Gas gefüllt – wie ein eingebauter Schwimmring. Haie haben keine.",
+      "img": "🐟🎈"
+    },
+    {
+      "id": "006",
+      "q": "Mit welchem Sinnesorgan spüren Fische Wasserbewegungen?",
+      "a": "Mit dem Seitenlinienorgan",
+      "choices": [
+        "Mit der Schwimmblase",
+        "Mit den Kiemen",
+        "Mit den Schuppen"
+      ],
+      "info": "Die Seitenlinie verläuft an beiden Körperseiten. So spüren Fische Hindernisse und Feinde sogar im trüben Wasser.",
+      "img": "🐟〰️"
+    },
+    {
+      "id": "007",
+      "q": "Wie atmen Kaulquappen?",
+      "a": "Mit Kiemen",
+      "choices": [
+        "Mit Lungen",
+        "Mit Tracheen",
+        "Mit einem Schnorchel"
+      ],
+      "info": "Junge Kaulquappen leben nur im Wasser und atmen wie Fische mit Kiemen. Lungen bilden sich erst später.",
+      "img": "🐸💧"
+    },
+    {
+      "id": "008",
+      "q": "Wie atmen erwachsene Frösche?",
+      "a": "Mit Lungen und über die Haut",
+      "choices": [
+        "Nur mit Kiemen",
+        "Nur über die Haut",
+        "Mit Kiemen und Lungen"
+      ],
+      "info": "Ein großer Teil des Sauerstoffs gelangt beim Frosch durch die dünne, feuchte Haut ins Blut.",
+      "img": "🐸🌬️"
+    },
+    {
+      "id": "009",
+      "q": "Warum müssen Amphibien ihre Haut feucht halten?",
+      "a": "Sie atmen zum Teil über die Haut",
+      "choices": [
+        "Damit ihnen Schuppen wachsen",
+        "Damit sie Fressfeinde blenden",
+        "Weil sie keine Knochen haben"
+      ],
+      "info": "Trocknet die Haut aus, klappt die Hautatmung nicht mehr. Darum leben Amphibien in feuchter Umgebung.",
+      "img": "🐸💦"
+    },
+    {
+      "id": "010",
+      "q": "Wie heißt die Verwandlung von der Kaulquappe zum Frosch?",
+      "a": "Metamorphose",
+      "choices": [
+        "Häutung",
+        "Mauser",
+        "Brutpflege"
+      ],
+      "info": "Erst wachsen Hinterbeine, dann Vorderbeine, der Schwanz wird abgebaut und Lungen entstehen.",
+      "img": "🥚🐸✨"
+    },
+    {
+      "id": "011",
+      "q": "Wo legen heimische Frösche ihren Laich ab?",
+      "a": "Im Wasser",
+      "choices": [
+        "In ein Nest an Land",
+        "In eine Sandgrube",
+        "In einen Bauchbeutel"
+      ],
+      "info": "Froschlaich hat keine feste Schale und würde an Land austrocknen. Die Larven brauchen Wasser zum Atmen.",
+      "img": "🐸💧🥚"
+    },
+    {
+      "id": "012",
+      "q": "Was schützt Reptilien vor dem Austrocknen?",
+      "a": "Trockene Haut mit Hornschuppen",
+      "choices": [
+        "Eine feuchte Schleimhaut",
+        "Ein dichtes Fell",
+        "Ein Federkleid"
+      ],
+      "info": "Dank der Hornschuppen können Reptilien sogar in Wüsten leben – Amphibien könnten das nicht.",
+      "img": "🦎🏜️"
+    },
+    {
+      "id": "013",
+      "q": "Warum legen sich Eidechsen morgens in die Sonne?",
+      "a": "Um ihren Körper aufzuwärmen",
+      "choices": [
+        "Um Wasser zu trinken",
+        "Um ihre Federn zu trocknen",
+        "Um sich zu häuten"
+      ],
+      "info": "Eidechsen sind wechselwarm. Erst wenn sie warm genug sind, werden sie richtig flink.",
+      "img": "🦎☀️"
+    },
+    {
+      "id": "014",
+      "q": "Wie heißt es, wenn eine Schlange ihre alte Haut abstreift?",
+      "a": "Häutung",
+      "choices": [
+        "Mauser",
+        "Metamorphose",
+        "Winterschlaf"
+      ],
+      "info": "Die Hornhaut wächst nicht mit. Darum schlüpft die Schlange aus ihr heraus wie aus einem alten Strumpf.",
+      "img": "🐍🧦"
+    },
+    {
+      "id": "015",
+      "q": "Wie pflanzen sich die meisten Reptilien fort?",
+      "a": "Sie legen Eier mit Schale an Land",
+      "choices": [
+        "Sie laichen im Wasser",
+        "Sie säugen ihre Jungen",
+        "Sie legen Eier ohne Schale ins Wasser"
+      ],
+      "info": "Die ledrige oder harte Schale schützt das Ei vor dem Austrocknen. Sogar Meeresschildkröten legen ihre Eier an Land.",
+      "img": "🐢🥚🏖️"
+    },
+    {
+      "id": "016",
+      "q": "Die Blindschleiche sieht aus wie eine Schlange. Was ist sie?",
+      "a": "Eine Echse ohne Beine",
+      "choices": [
+        "Ein Wurm",
+        "Eine Schlange",
+        "Ein Lurch"
+      ],
+      "info": "Die Blindschleiche kann blinzeln und ihren Schwanz abwerfen – Schlangen können beides nicht.",
+      "img": "🦎😉"
+    },
+    {
+      "id": "017",
+      "q": "Welches Merkmal hat nur die Klasse der Vögel?",
+      "a": "Federn",
+      "choices": [
+        "Einen Schnabel",
+        "Flügel",
+        "Eier mit Schale"
+      ],
+      "info": "Einen Schnabel haben auch Schildkröten und das Schnabeltier, Flügel auch Fledermäuse. Federn aber nur Vögel.",
+      "img": "🦚🐦"
+    },
+    {
+      "id": "018",
+      "q": "Warum sind viele Vogelknochen besonders leicht?",
+      "a": "Sie sind innen hohl und mit Luft gefüllt",
+      "choices": [
+        "Sie bestehen nur aus Knorpel",
+        "Sie sind aus Horn",
+        "Vögel haben fast keine Knochen"
+      ],
+      "info": "Innen stützen feine Knochenbälkchen die hohlen Knochen – leicht und trotzdem stabil, ideal zum Fliegen.",
+      "img": "🦴🎈🐦"
+    },
+    {
+      "id": "019",
+      "q": "Wie hoch ist die Körpertemperatur der meisten Vögel etwa?",
+      "a": "Etwa 40 bis 42 °C",
+      "choices": [
+        "Etwa 20 °C",
+        "Etwa 30 °C",
+        "Etwa 50 °C"
+      ],
+      "info": "Vögel sind sogar etwas wärmer als wir Menschen mit rund 37 °C. Das Federkleid hält die Wärme.",
+      "img": "🐦🌡️"
+    },
+    {
+      "id": "020",
+      "q": "Wie nennt man Tiere mit fast gleichbleibender Körpertemperatur?",
+      "a": "Gleichwarm",
+      "choices": [
+        "Wechselwarm",
+        "Kaltblütig",
+        "Sonnenwarm"
+      ],
+      "info": "Gleichwarm sind Vögel und Säugetiere. Sie brauchen dafür viel Energie aus der Nahrung.",
+      "img": "🌡️⚖️"
+    },
+    {
+      "id": "021",
+      "q": "Welche Wirbeltierklassen sind wechselwarm?",
+      "a": "Fische, Amphibien, Reptilien",
+      "choices": [
+        "Vögel, Säugetiere, Fische",
+        "Amphibien, Vögel, Reptilien",
+        "Säugetiere, Reptilien, Fische"
+      ],
+      "info": "Wechselwarme Tiere haben ungefähr die Temperatur ihrer Umgebung. Bei Kälte werden sie langsam.",
+      "img": "🐟🐸🦎"
+    },
+    {
+      "id": "022",
+      "q": "Was passiert mit Fröschen und Eidechsen im kalten Winter?",
+      "a": "Sie fallen in Kältestarre",
+      "choices": [
+        "Sie halten Winterschlaf wie der Igel",
+        "Sie ziehen in den Süden",
+        "Sie bekommen ein Winterfell"
+      ],
+      "info": "Kältestarre ist kein Winterschlaf: Die Tiere können ihren Körper nicht selbst wärmen und erstarren.",
+      "img": "🐸❄️"
+    },
+    {
+      "id": "023",
+      "q": "Welches Merkmal gibt den Säugetieren ihren Namen?",
+      "a": "Sie säugen ihre Jungen mit Milch",
+      "choices": [
+        "Sie haben eine Wirbelsäule",
+        "Sie atmen mit Lungen",
+        "Sie legen Eier"
+      ],
+      "info": "Nur Säugetiere haben Milchdrüsen. Außerdem haben sie Haare oder ein Fell.",
+      "img": "🍼🐄"
+    },
+    {
+      "id": "024",
+      "q": "Welches Säugetier legt Eier?",
+      "a": "Das Schnabeltier",
+      "choices": [
+        "Das Känguru",
+        "Die Fledermaus",
+        "Der Delfin"
+      ],
+      "info": "Schnabeltier und Ameisenigel legen Eier, säugen ihre Jungen danach aber mit Milch – also Säugetiere!",
+      "img": "🥚🍼"
+    },
+    {
+      "id": "025",
+      "q": "Warum ist der Wal ein Säugetier und kein Fisch?",
+      "a": "Er atmet mit Lungen und säugt seine Jungen",
+      "choices": [
+        "Er hat Flossen und lebt im Meer",
+        "Er legt Eier im Wasser",
+        "Er atmet mit Kiemen"
+      ],
+      "info": "Auch Delfine sind Säugetiere. Wale stammen von Landtieren ab, die vor langer Zeit ins Meer zurückgingen.",
+      "img": "🐋🍼"
+    },
+    {
+      "id": "026",
+      "q": "Wie atmen Wale?",
+      "a": "Sie atmen an der Oberfläche durchs Blasloch",
+      "choices": [
+        "Über Kiemen unter Wasser",
+        "Über ihre Haut",
+        "Über eine Schwimmblase"
+      ],
+      "info": "Die Fontäne beim Ausatmen ist warme, feuchte Atemluft – kein Wasserstrahl aus dem Magen.",
+      "img": "🐋⛲"
+    },
+    {
+      "id": "027",
+      "q": "Wie steht die Schwanzflosse eines Wals?",
+      "a": "Waagerecht",
+      "choices": [
+        "Senkrecht wie beim Fisch",
+        "Schräg",
+        "Wale haben keine Schwanzflosse"
+      ],
+      "info": "Wale schlagen ihre Flosse auf und ab, Fische schlagen ihre senkrechte Flosse hin und her.",
+      "img": "🐋↕️"
+    },
+    {
+      "id": "028",
+      "q": "Die Fledermaus fliegt. Zu welcher Klasse gehört sie?",
+      "a": "Säugetiere",
+      "choices": [
+        "Vögel",
+        "Reptilien",
+        "Amphibien"
+      ],
+      "info": "Fledermäuse haben Fell, keine Federn. Ihre Flügel sind Flughäute zwischen langen Fingerknochen.",
+      "img": "🦇🍼"
+    },
+    {
+      "id": "029",
+      "q": "Wie finden Fledermäuse im Dunkeln ihre Beute?",
+      "a": "Mit Ultraschall-Echos",
+      "choices": [
+        "Mit leuchtenden Augen",
+        "Mit einem Seitenlinienorgan",
+        "Mit einem eingebauten Kompass"
+      ],
+      "info": "Fledermäuse rufen so hoch, dass wir es nicht hören. Aus dem Echo erkennen sie Insekten und Hindernisse.",
+      "img": "🦇🔊"
+    },
+    {
+      "id": "030",
+      "q": "Pinguine können nicht fliegen. Sind sie trotzdem Vögel?",
+      "a": "Ja, sie haben Federn und legen Eier",
+      "choices": [
+        "Nein, sie sind Säugetiere",
+        "Nein, sie sind Fische",
+        "Nein, sie sind Amphibien"
+      ],
+      "info": "Pinguine haben dicht gepackte Federn, einen Schnabel und brüten Eier aus – echte Vögel!",
+      "img": "🐧🥚"
+    },
+    {
+      "id": "031",
+      "q": "Wozu nutzen Pinguine ihre Flügel?",
+      "a": "Zum Schwimmen unter Wasser",
+      "choices": [
+        "Zum Fliegen über das Eis",
+        "Zum Graben im Schnee",
+        "Zum Greifen von Fischen"
+      ],
+      "info": "Die Flügel sind zu kräftigen Flossen geworden. Unter Wasser „fliegen“ Pinguine regelrecht.",
+      "img": "🐧🌊"
+    },
+    {
+      "id": "032",
+      "q": "Was schützt den Eisbären vor der Kälte?",
+      "a": "Dichtes Fell und eine dicke Fettschicht",
+      "choices": [
+        "Federn und Schuppen",
+        "Eine feuchte, dünne Haut",
+        "Seine wechselwarme Körpertemperatur"
+      ],
+      "info": "Unter dem Fell liegt eine Speckschicht, die wie eine Daunenjacke von innen wärmt.",
+      "img": "🐻❄️"
+    },
+    {
+      "id": "033",
+      "q": "Wie ist der Maulwurf an das Graben angepasst?",
+      "a": "Mit schaufelartigen Vorderbeinen",
+      "choices": [
+        "Mit langen Hinterbeinen",
+        "Mit großen Ohrmuscheln",
+        "Mit Schwimmhäuten"
+      ],
+      "info": "Seine breiten Grabhände mit kräftigen Krallen schieben die Erde zur Seite wie zwei Schaufeln.",
+      "img": "🐾⛏️"
+    },
+    {
+      "id": "034",
+      "q": "Welches dieser Meerestiere ist ein Fisch?",
+      "a": "Das Seepferdchen",
+      "choices": [
+        "Der Delfin",
+        "Die Seekuh",
+        "Die Robbe"
+      ],
+      "info": "Das Seepferdchen hat Kiemen und Flossen. Besonders: Bei ihm trägt das Männchen den Nachwuchs aus.",
+      "img": "🐴🌊"
+    },
+    {
+      "id": "035",
+      "q": "Der Molch sieht aus wie eine Eidechse. Was ist er wirklich?",
+      "a": "Eine Amphibie",
+      "choices": [
+        "Ein Reptil",
+        "Ein Fisch",
+        "Ein Säugetier"
+      ],
+      "info": "Molche haben eine feuchte Haut ohne Schuppen und ihre Larven wachsen im Wasser auf – typisch Amphibie.",
+      "img": "🦎💧"
+    },
+    {
+      "id": "036",
+      "q": "Welche Wirbeltierklasse gab es zuerst auf der Erde?",
+      "a": "Fische",
+      "choices": [
+        "Vögel",
+        "Säugetiere",
+        "Reptilien"
+      ],
+      "info": "Fische gab es schon vor über 400 Millionen Jahren. Erst später gingen ihre Nachfahren an Land.",
+      "img": "🐟⏳"
+    }
+  ]
+}

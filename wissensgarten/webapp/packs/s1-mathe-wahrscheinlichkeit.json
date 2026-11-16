@@ -1,0 +1,459 @@
+{
+  "id": "s1-mathe-wahrscheinlichkeit",
+  "version": 1,
+  "title": "Zufall und Statistik",
+  "subject": "mathe",
+  "grades": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "emoji": "🎲",
+  "tier": "free",
+  "description": "Würfel, Münze und Urne: Wahrscheinlichkeiten berechnen und Daten mit Mittelwert, Median und Spannweite auswerten.",
+  "intro": [
+    {
+      "img": "🎲🤔",
+      "text": "Wusstest du? Beim Würfeln weiß niemand, was kommt – aber mit Mathe kannst du ausrechnen, wie wahrscheinlich etwas ist!"
+    },
+    {
+      "img": "🍀➗",
+      "text": "Laplace-Regel: Wahrscheinlichkeit = günstige Ergebnisse : mögliche Ergebnisse. Eine 6 würfeln: 1 von 6, also 1/6."
+    },
+    {
+      "img": "📊📏",
+      "text": "Statistik fasst Daten zusammen: Der Mittelwert verteilt alles gerecht, der Median steht genau in der Mitte der sortierten Liste."
+    },
+    {
+      "img": "🌳🔀",
+      "text": "Bei mehrstufigen Zufallsversuchen hilft ein Baumdiagramm. Entlang eines Pfades wird multipliziert!"
+    },
+    {
+      "img": "🚀🏆",
+      "text": "Los geht's! Mal sehen, ob das Glück – und dein Köpfchen – auf deiner Seite ist!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie viele mögliche Ergebnisse hat ein normaler Spielwürfel?",
+      "a": "6",
+      "choices": [
+        "5",
+        "12",
+        "1"
+      ],
+      "info": "Die Augenzahlen 1, 2, 3, 4, 5 und 6.",
+      "img": "🎲"
+    },
+    {
+      "id": "002",
+      "q": "Wie wahrscheinlich ist es, mit einem Würfel eine 4 zu würfeln?",
+      "a": "1/6",
+      "choices": [
+        "1/4",
+        "4/6",
+        "1/2"
+      ],
+      "info": "Ein günstiges Ergebnis (die 4) von sechs möglichen: 1/6.",
+      "img": "🎲🍀"
+    },
+    {
+      "id": "003",
+      "q": "Wie wahrscheinlich ist eine gerade Zahl beim Würfeln?",
+      "a": "1/2",
+      "choices": [
+        "1/3",
+        "1/6",
+        "2/3"
+      ],
+      "info": "Gerade sind 2, 4 und 6: 3 von 6 Ergebnissen, also 3/6 = 1/2.",
+      "img": "🎲✌️"
+    },
+    {
+      "id": "004",
+      "q": "Wie wahrscheinlich ist eine Zahl größer als 4 beim Würfeln?",
+      "a": "1/3",
+      "choices": [
+        "1/6",
+        "1/2",
+        "2/3"
+      ],
+      "info": "Größer als 4 sind nur 5 und 6: 2/6 = 1/3.",
+      "img": "🎲⬆️"
+    },
+    {
+      "id": "005",
+      "q": "Wie wahrscheinlich ist „Kopf“ beim Wurf einer fairen Münze?",
+      "a": "1/2",
+      "choices": [
+        "1/3",
+        "1/4",
+        "1"
+      ],
+      "info": "Zwei gleich wahrscheinliche Seiten: Kopf oder Zahl.",
+      "img": "👑"
+    },
+    {
+      "id": "006",
+      "q": "Wie wahrscheinlich ist es, mit einem normalen Würfel eine 7 zu würfeln?",
+      "a": "0",
+      "choices": [
+        "1/7",
+        "1/6",
+        "1"
+      ],
+      "info": "Das geht gar nicht – ein unmögliches Ereignis hat die Wahrscheinlichkeit 0.",
+      "img": "🚫"
+    },
+    {
+      "id": "007",
+      "q": "Welche Wahrscheinlichkeit hat ein sicheres Ereignis?",
+      "a": "1",
+      "choices": [
+        "0",
+        "1/2",
+        "10"
+      ],
+      "info": "Sicher heißt: Es passiert immer. Wahrscheinlichkeit 1, also 100 %.",
+      "img": "✅"
+    },
+    {
+      "id": "008",
+      "q": "Zwischen welchen Werten liegt jede Wahrscheinlichkeit?",
+      "a": "Zwischen 0 und 1",
+      "choices": [
+        "Zwischen −1 und 1",
+        "Zwischen 1 und 100",
+        "Zwischen 0 und 10"
+      ],
+      "info": "0 heißt unmöglich, 1 heißt sicher. In Prozent: von 0 % bis 100 %.",
+      "img": "📏"
+    },
+    {
+      "id": "009",
+      "q": "Eine Wahrscheinlichkeit von 1/4 in Prozent?",
+      "a": "25 %",
+      "choices": [
+        "4 %",
+        "14 %",
+        "40 %"
+      ],
+      "info": "1/4 = 0,25 = 25 %.",
+      "img": "🍰"
+    },
+    {
+      "id": "010",
+      "q": "Wie heißt die Regel: P = günstige : mögliche Ergebnisse?",
+      "a": "Laplace-Regel",
+      "choices": [
+        "Gauß-Regel",
+        "Pythagoras-Regel",
+        "Median-Regel"
+      ],
+      "info": "Benannt nach dem französischen Mathematiker Pierre-Simon Laplace.",
+      "img": "📜"
+    },
+    {
+      "id": "011",
+      "q": "Wann darf man die Laplace-Regel benutzen?",
+      "a": "Wenn alle Ergebnisse gleich wahrscheinlich sind",
+      "choices": [
+        "Wenn es genau zwei Ergebnisse gibt",
+        "Nur bei Würfeln",
+        "Wenn das Ergebnis schon feststeht"
+      ],
+      "info": "Bei einem gezinkten Würfel oder einem Reißnagel klappt sie nicht.",
+      "img": "⚖️"
+    },
+    {
+      "id": "012",
+      "q": "In einer Urne liegen 3 rote und 7 blaue Kugeln. P(rot)?",
+      "a": "3/10",
+      "choices": [
+        "3/7",
+        "7/10",
+        "1/3"
+      ],
+      "info": "3 günstige von insgesamt 3 + 7 = 10 Kugeln.",
+      "img": "🔴🔵"
+    },
+    {
+      "id": "013",
+      "q": "Urne: 2 rote, 3 grüne, 5 weiße Kugeln. P(nicht weiß)?",
+      "a": "1/2",
+      "choices": [
+        "1/5",
+        "3/10",
+        "2/5"
+      ],
+      "info": "Nicht weiß sind 2 + 3 = 5 von 10 Kugeln: 5/10 = 1/2.",
+      "img": "🎱"
+    },
+    {
+      "id": "014",
+      "q": "Die Regenwahrscheinlichkeit ist 0,3. Wie groß ist sie für „kein Regen“?",
+      "a": "0,7",
+      "choices": [
+        "0,3",
+        "1,3",
+        "0,03"
+      ],
+      "info": "Gegenereignis: 1 − 0,3 = 0,7.",
+      "img": "☔"
+    },
+    {
+      "id": "015",
+      "q": "Ein Spiel hat 32 Karten, davon 4 Asse. P(Ass) beim Ziehen einer Karte?",
+      "a": "1/8",
+      "choices": [
+        "1/4",
+        "1/32",
+        "1/7"
+      ],
+      "info": "4 von 32 Karten: 4/32 = 1/8.",
+      "img": "🃏"
+    },
+    {
+      "id": "016",
+      "q": "Ein Glücksrad hat 8 gleich große Felder, 3 davon gewinnen. P(Gewinn)?",
+      "a": "3/8",
+      "choices": [
+        "3/5",
+        "5/8",
+        "1/3"
+      ],
+      "info": "3 günstige Felder von 8 möglichen.",
+      "img": "🎡🏆"
+    },
+    {
+      "id": "017",
+      "q": "Ein Würfel zeigt fünfmal hintereinander eine 6. P(6 beim nächsten Wurf)?",
+      "a": "1/6",
+      "choices": [
+        "0",
+        "1/36",
+        "5/6"
+      ],
+      "info": "Der Würfel hat kein Gedächtnis! Jeder Wurf ist unabhängig vom vorherigen.",
+      "img": "🎲🧠"
+    },
+    {
+      "id": "018",
+      "q": "Was macht man im Baumdiagramm mit den Wahrscheinlichkeiten entlang eines Pfades?",
+      "a": "Multiplizieren",
+      "choices": [
+        "Addieren",
+        "Subtrahieren",
+        "Dividieren"
+      ],
+      "info": "Pfadregel: Zweimal Kopf = 1/2 · 1/2 = 1/4.",
+      "img": "🌳✖️"
+    },
+    {
+      "id": "019",
+      "q": "Mehrere Pfade führen zum selben Ereignis. Was macht man mit ihren Wahrscheinlichkeiten?",
+      "a": "Addieren",
+      "choices": [
+        "Multiplizieren",
+        "Subtrahieren",
+        "Nur den größten nehmen"
+      ],
+      "info": "Summenregel: Die Wahrscheinlichkeiten aller passenden Pfade werden addiert.",
+      "img": "🌳➕"
+    },
+    {
+      "id": "020",
+      "q": "Was ergeben die Wahrscheinlichkeiten aller Äste an einer Verzweigung zusammen?",
+      "a": "1",
+      "choices": [
+        "0",
+        "1/2",
+        "2"
+      ],
+      "info": "Irgendein Ast tritt sicher ein – zusammen also immer 1.",
+      "img": "🌳"
+    },
+    {
+      "id": "021",
+      "q": "Zwei Münzen werden geworfen. P(zweimal Kopf)?",
+      "a": "1/4",
+      "choices": [
+        "1/2",
+        "1/3",
+        "1/8"
+      ],
+      "info": "1/2 · 1/2 = 1/4. Möglich sind KK, KZ, ZK und ZZ.",
+      "img": "👑👑"
+    },
+    {
+      "id": "022",
+      "q": "Zweimal würfeln. Wie wahrscheinlich sind zwei Sechsen?",
+      "a": "1/36",
+      "choices": [
+        "1/12",
+        "1/3",
+        "1/6"
+      ],
+      "info": "1/6 · 1/6 = 1/36. Es gibt 36 gleich wahrscheinliche Paare.",
+      "img": "🎲🎲"
+    },
+    {
+      "id": "023",
+      "q": "Urne: 2 rote, 2 blaue Kugeln. Zweimal ohne Zurücklegen ziehen. P(zweimal rot)?",
+      "a": "1/6",
+      "choices": [
+        "1/4",
+        "1/2",
+        "1/3"
+      ],
+      "info": "Erst 2/4, dann ist nur noch 1 rote von 3 Kugeln da: 2/4 · 1/3 = 2/12 = 1/6.",
+      "img": "🔴🔴"
+    },
+    {
+      "id": "024",
+      "q": "Auf wie viele Arten können sich 3 Kinder in einer Reihe aufstellen?",
+      "a": "6",
+      "choices": [
+        "3",
+        "9",
+        "27"
+      ],
+      "info": "Für den 1. Platz 3 Kinder, dann 2, dann 1: 3 · 2 · 1 = 6.",
+      "img": "👧👦🧒"
+    },
+    {
+      "id": "025",
+      "q": "Eine Münze wird 50-mal geworfen, 20-mal fällt Zahl. Relative Häufigkeit von Zahl?",
+      "a": "0,4",
+      "choices": [
+        "20",
+        "0,2",
+        "2,5"
+      ],
+      "info": "Relative Häufigkeit = Anzahl : Gesamtzahl = 20 : 50 = 0,4 = 40 %.",
+      "img": "📊"
+    },
+    {
+      "id": "026",
+      "q": "Was gibt die absolute Häufigkeit an?",
+      "a": "Wie oft ein Ergebnis vorkommt",
+      "choices": [
+        "Den Anteil an allen Versuchen",
+        "Den größten Wert der Liste",
+        "Den Mittelwert der Daten"
+      ],
+      "info": "Absolute Häufigkeit = einfach zählen. Der Anteil ist die relative Häufigkeit.",
+      "img": "✏️"
+    },
+    {
+      "id": "027",
+      "q": "Was passiert nach dem Gesetz der großen Zahlen bei sehr vielen Würfen?",
+      "a": "Die relative Häufigkeit nähert sich der Wahrscheinlichkeit",
+      "choices": [
+        "Jede Zahl kommt genau gleich oft vor",
+        "Die 6 kommt immer seltener vor",
+        "Die Ergebnisse werden vorhersagbar"
+      ],
+      "info": "Bei 6 000 Würfen kommt die 6 ungefähr 1 000-mal – aber selten genau 1 000-mal.",
+      "img": "🔁🎲"
+    },
+    {
+      "id": "028",
+      "q": "Paul würfelt 60-mal. Wie oft kann er ungefähr eine 3 erwarten?",
+      "a": "Etwa 10-mal",
+      "choices": [
+        "Etwa 3-mal",
+        "Etwa 20-mal",
+        "Etwa 30-mal"
+      ],
+      "info": "60 · 1/6 = 10. Es kann aber auch mal etwas mehr oder weniger sein.",
+      "img": "🎲🔢"
+    },
+    {
+      "id": "029",
+      "q": "Mittelwert von 4, 6, 8 und 10?",
+      "a": "7",
+      "choices": [
+        "6",
+        "8",
+        "28"
+      ],
+      "info": "Alles addieren und durch die Anzahl teilen: 28 : 4 = 7.",
+      "img": "⚖️"
+    },
+    {
+      "id": "030",
+      "q": "Mittelwert von 2, 3, 3, 5 und 12?",
+      "a": "5",
+      "choices": [
+        "3",
+        "4",
+        "25"
+      ],
+      "info": "Summe 25, Anzahl 5: 25 : 5 = 5.",
+      "img": "🧮"
+    },
+    {
+      "id": "031",
+      "q": "Median von 3, 9, 1, 7, 5?",
+      "a": "5",
+      "choices": [
+        "7",
+        "3",
+        "9"
+      ],
+      "info": "Erst sortieren: 1, 3, 5, 7, 9 – in der Mitte steht 5.",
+      "img": "🎯"
+    },
+    {
+      "id": "032",
+      "q": "Median von 2, 4, 8, 10?",
+      "a": "6",
+      "choices": [
+        "4",
+        "8",
+        "24"
+      ],
+      "info": "Gerade Anzahl: Mittelwert der beiden mittleren Werte, (4 + 8) : 2 = 6.",
+      "img": "↔️"
+    },
+    {
+      "id": "033",
+      "q": "Spannweite von 12, 5, 19, 8?",
+      "a": "14",
+      "choices": [
+        "7",
+        "19",
+        "11"
+      ],
+      "info": "Spannweite = größter Wert minus kleinster Wert: 19 − 5 = 14.",
+      "img": "📏↔️"
+    },
+    {
+      "id": "034",
+      "q": "Was ist der Modalwert einer Liste?",
+      "a": "Der Wert, der am häufigsten vorkommt",
+      "choices": [
+        "Der Wert in der Mitte",
+        "Der Durchschnitt aller Werte",
+        "Größter minus kleinster Wert"
+      ],
+      "info": "Bei 2, 3, 3, 3, 7 ist der Modalwert 3.",
+      "img": "👑📊"
+    },
+    {
+      "id": "035",
+      "q": "Noten: 1, 2, 2, 2, 6. Welcher Wert wird durch die 6 stark verändert?",
+      "a": "Der Mittelwert",
+      "choices": [
+        "Der Median",
+        "Der Modalwert",
+        "Die Anzahl der Noten"
+      ],
+      "info": "Mittelwert 13 : 5 = 2,6. Median und Modalwert bleiben bei 2 – sie sind robust.",
+      "img": "🐘"
+    }
+  ]
+}

@@ -1,0 +1,462 @@
+{
+  "id": "aw-redewendungen",
+  "version": 1,
+  "title": "Redewendungen",
+  "subject": "deutsch",
+  "grades": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    14
+  ],
+  "emoji": "🐷",
+  "tier": "free",
+  "description": "Was heißt es, Tomaten auf den Augen zu haben? Bekannte deutsche Redewendungen mit witzigen Merkbildern.",
+  "intro": [
+    {
+      "img": "🍅👀",
+      "text": "Wusstest du? Wer „Tomaten auf den Augen“ hat, hat gar kein Gemüse im Gesicht – er übersieht nur etwas, das direkt vor ihm liegt!"
+    },
+    {
+      "img": "🖼️🤪",
+      "text": "Redewendungen sind Sprach-Bilder. Wörtlich genommen klingen sie verrückt – gemeint ist aber etwas ganz anderes."
+    },
+    {
+      "img": "🐷🍀",
+      "text": "Viele sind uralt: „Schwein haben“ kommt wohl von früheren Wettkämpfen, bei denen der Letzte ein Ferkel als Trostpreis bekam."
+    },
+    {
+      "img": "🎨🧠",
+      "text": "Lerntrick: Stell dir das Bild so witzig wie möglich vor. Je lustiger das Kopfkino, desto besser merkst du es dir!"
+    },
+    {
+      "img": "🐻🎉",
+      "text": "Jetzt steppt der Bär! Los geht's – drück dir selbst die Daumen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was bedeutet „Tomaten auf den Augen haben“?",
+      "a": "etwas Offensichtliches nicht sehen",
+      "choices": [
+        "sehr müde sein",
+        "rote Augen vom Weinen haben",
+        "gerne Gemüse essen"
+      ],
+      "info": "Wie mit Tomaten vor den Augen: Man übersieht, was direkt vor einem liegt.",
+      "img": "🍅🍅👀"
+    },
+    {
+      "id": "002",
+      "q": "Was bedeutet „Schwein haben“?",
+      "a": "Glück haben",
+      "choices": [
+        "unordentlich sein",
+        "sehr viel essen",
+        "Streit bekommen"
+      ],
+      "info": "Das Schwein ist bei uns ein Glückssymbol – denk an Glücksschweinchen zu Silvester.",
+      "img": "🐷🍀"
+    },
+    {
+      "id": "003",
+      "q": "Was bedeutet „jemandem die Daumen drücken“?",
+      "a": "jemandem Glück wünschen",
+      "choices": [
+        "jemanden festhalten",
+        "jemandem wehtun",
+        "jemanden um Geld bitten"
+      ],
+      "info": "Man drückt die Daumen, damit etwas gut klappt – z. B. vor einer Arbeit.",
+      "img": "👍🍀"
+    },
+    {
+      "id": "004",
+      "q": "Was bedeutet „Hals- und Beinbruch!“?",
+      "a": "Viel Glück!",
+      "choices": [
+        "Pass auf, du fällst gleich!",
+        "Gute Besserung!",
+        "Lauf schneller!"
+      ],
+      "info": "Ein Glückwunsch, der absichtlich das Gegenteil sagt – gemeint ist: Alles Gute!",
+      "img": "🦵🍀"
+    },
+    {
+      "id": "005",
+      "q": "Wer großen Hunger hat, hat …",
+      "a": "Kohldampf",
+      "choices": [
+        "Kohlrabi",
+        "Dampfnudeln",
+        "Kohlenstaub"
+      ],
+      "info": "„Kohldampf“ kommt aus der alten Gaunersprache und heißt einfach: großer Hunger.",
+      "img": "🥦💨😋"
+    },
+    {
+      "id": "006",
+      "q": "Ergänze: „Auf der Party steppt der …“",
+      "a": "Bär",
+      "choices": [
+        "Hase",
+        "Igel",
+        "Elefant"
+      ],
+      "info": "„Da steppt der Bär“ heißt: Da ist richtig viel los!",
+      "img": "🐻💃🎶"
+    },
+    {
+      "id": "007",
+      "q": "Was bedeutet „jemandem einen Bären aufbinden“?",
+      "a": "jemandem eine Lüge erzählen",
+      "choices": [
+        "jemandem ein Kuscheltier schenken",
+        "jemanden um Hilfe bitten",
+        "jemandem eine schwere Arbeit geben"
+      ],
+      "info": "Wer sich einen Bären aufbinden lässt, glaubt eine erfundene Geschichte.",
+      "img": "🐻🎀"
+    },
+    {
+      "id": "008",
+      "q": "Was bedeutet „jemanden auf den Arm nehmen“?",
+      "a": "jemanden veräppeln, aus Spaß reinlegen",
+      "choices": [
+        "jemanden trösten",
+        "jemanden hochheben, weil er müde ist",
+        "jemanden beschützen"
+      ],
+      "info": "„Du nimmst mich auf den Arm!“ = Das ist doch ein Scherz!",
+      "img": "💪😜"
+    },
+    {
+      "id": "009",
+      "q": "Was bedeutet „auf dem Holzweg sein“?",
+      "a": "sich irren",
+      "choices": [
+        "im Wald spazieren gehen",
+        "Brennholz sammeln",
+        "auf dem richtigen Weg sein"
+      ],
+      "info": "Holzwege führten früher nur zum Holzfällplatz im Wald – nicht ins nächste Dorf.",
+      "img": "🌲🛤️❌"
+    },
+    {
+      "id": "010",
+      "q": "Was bedeutet „ins Fettnäpfchen treten“?",
+      "a": "unabsichtlich etwas Peinliches sagen oder tun",
+      "choices": [
+        "sich beim Kochen bekleckern",
+        "schnell weglaufen",
+        "sehr fettig essen"
+      ],
+      "info": "Früher stand ein Napf mit Fett im Haus – wer hineintrat, verschmutzte den Boden.",
+      "img": "👞🍳😳"
+    },
+    {
+      "id": "011",
+      "q": "Was bedeutet „den Nagel auf den Kopf treffen“?",
+      "a": "genau das Richtige sagen",
+      "choices": [
+        "sich mit dem Hammer verletzen",
+        "etwas kaputt machen",
+        "laut schimpfen"
+      ],
+      "info": "Wie ein perfekter Hammerschlag: genau getroffen!",
+      "img": "🔨📌🎯"
+    },
+    {
+      "id": "012",
+      "q": "Was bedeutet „die Katze im Sack kaufen“?",
+      "a": "etwas kaufen, ohne es vorher anzusehen",
+      "choices": [
+        "ein Haustier kaufen",
+        "sehr günstig einkaufen",
+        "etwas heimlich verstecken"
+      ],
+      "info": "Früher sollen Betrüger auf Märkten statt Ferkeln Katzen in Säcken verkauft haben.",
+      "img": "🐱🛍️❓"
+    },
+    {
+      "id": "013",
+      "q": "Was bedeutet „sich zum Affen machen“?",
+      "a": "sich lächerlich machen",
+      "choices": [
+        "auf Bäume klettern",
+        "sich verkleiden",
+        "viele Bananen essen"
+      ],
+      "info": "Wer sich zum Affen macht, benimmt sich so, dass andere über ihn lachen.",
+      "img": "🐒🤡"
+    },
+    {
+      "id": "014",
+      "q": "Was bedeutet „Eulen nach Athen tragen“?",
+      "a": "etwas Überflüssiges tun",
+      "choices": [
+        "eine weite Reise machen",
+        "Tiere retten",
+        "sehr klug sein"
+      ],
+      "info": "Im alten Athen gab es schon viele Eulen – noch mehr hinzubringen war sinnlos.",
+      "img": "🦉🏛️"
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „jemandem auf den Keks gehen“?",
+      "a": "jemanden nerven",
+      "choices": [
+        "jemandem etwas Süßes schenken",
+        "jemanden zum Kaffee einladen",
+        "jemandem helfen"
+      ],
+      "info": "„Keks“ ist hier ein Scherzwort für den Kopf.",
+      "img": "🍪😤"
+    },
+    {
+      "id": "016",
+      "q": "Was bedeutet „die Nase voll haben“?",
+      "a": "genug von etwas haben",
+      "choices": [
+        "erkältet sein",
+        "sehr neugierig sein",
+        "gut riechen können"
+      ],
+      "info": "Wenn die Nase voll ist, passt nichts mehr rein – man will nichts mehr davon.",
+      "img": "👃😩"
+    },
+    {
+      "id": "017",
+      "q": "Was bedeutet „Das ist nicht mein Bier.“?",
+      "a": "Das ist nicht meine Sache.",
+      "choices": [
+        "Das schmeckt mir nicht.",
+        "Das habe ich nicht bestellt.",
+        "Das ist mir zu teuer."
+      ],
+      "info": "Gemeint ist: Darum kümmere ich mich nicht – das geht mich nichts an.",
+      "img": "🍺🤷"
+    },
+    {
+      "id": "018",
+      "q": "Was bedeutet „jemandem reinen Wein einschenken“?",
+      "a": "jemandem die Wahrheit sagen",
+      "choices": [
+        "jemanden zum Essen einladen",
+        "jemandem etwas verheimlichen",
+        "jemanden betrunken machen"
+      ],
+      "info": "Früher panschten manche Wirte ihren Wein mit Wasser. Reiner Wein war ehrlich.",
+      "img": "🍷😇"
+    },
+    {
+      "id": "019",
+      "q": "Was bedeutet „Lampenfieber haben“?",
+      "a": "vor einem Auftritt aufgeregt sein",
+      "choices": [
+        "eine Erkältung haben",
+        "Angst im Dunkeln haben",
+        "eine Lampe reparieren"
+      ],
+      "info": "Die Lampen sind die Scheinwerfer auf der Bühne.",
+      "img": "🎤💡😰"
+    },
+    {
+      "id": "020",
+      "q": "Was bedeutet „die Ohren steif halten“?",
+      "a": "durchhalten, nicht aufgeben",
+      "choices": [
+        "gut zuhören",
+        "sich die Ohren zuhalten",
+        "sehr stur sein"
+      ],
+      "info": "Wie ein Hase, der wachsam die Ohren aufrecht hält. „Halt die Ohren steif!“",
+      "img": "🐰💪"
+    },
+    {
+      "id": "021",
+      "q": "Was bedeutet „aus einer Mücke einen Elefanten machen“?",
+      "a": "stark übertreiben",
+      "choices": [
+        "etwas Kleines reparieren",
+        "Tiere dressieren",
+        "sehr großzügig sein"
+      ],
+      "info": "Aus etwas winzig Kleinem wird im Erzählen etwas riesig Großes.",
+      "img": "🦟➡️🐘"
+    },
+    {
+      "id": "022",
+      "q": "Was bedeutet „die Flinte ins Korn werfen“?",
+      "a": "vorschnell aufgeben",
+      "choices": [
+        "auf die Jagd gehen",
+        "ein Feld ernten",
+        "sich mutig wehren"
+      ],
+      "info": "Ein Soldat, der seine Flinte wegwirft, gibt den Kampf auf.",
+      "img": "🌾😩"
+    },
+    {
+      "id": "023",
+      "q": "Was bedeutet „sich wie ein Schneekönig freuen“?",
+      "a": "sich riesig freuen",
+      "choices": [
+        "sich über Schnee ärgern",
+        "im Winter frieren",
+        "sehr eingebildet sein"
+      ],
+      "info": "Der Schneekönig ist ein Name für den Zaunkönig – ein kleiner Vogel, der sogar im Winter fröhlich singt.",
+      "img": "🐦❄️👑"
+    },
+    {
+      "id": "024",
+      "q": "Was bedeutet „auf großem Fuß leben“?",
+      "a": "viel Geld ausgeben, verschwenderisch leben",
+      "choices": [
+        "sehr große Schuhe tragen",
+        "weit laufen",
+        "auf dem Land wohnen"
+      ],
+      "info": "Früher trugen reiche Leute besonders lange, spitze Schuhe – je größer, desto vornehmer.",
+      "img": "🦶💰"
+    },
+    {
+      "id": "025",
+      "q": "Was bedeutet „seinen Senf dazugeben“?",
+      "a": "ungefragt seine Meinung sagen",
+      "choices": [
+        "beim Kochen helfen",
+        "etwas würzen",
+        "schnell zustimmen"
+      ],
+      "info": "Wie Senf auf jedem Essen – ob man will oder nicht.",
+      "img": "🌭💬"
+    },
+    {
+      "id": "026",
+      "q": "Was bedeutet „jemandem Löcher in den Bauch fragen“?",
+      "a": "jemandem sehr viele Fragen stellen",
+      "choices": [
+        "jemanden auslachen",
+        "jemanden kitzeln",
+        "jemandem nicht zuhören"
+      ],
+      "info": "So viele Fragen, dass es sich anfühlt, als bohre man Löcher.",
+      "img": "❓❓🕳️"
+    },
+    {
+      "id": "027",
+      "q": "Was bedeutet „unter einer Decke stecken“?",
+      "a": "heimlich zusammenarbeiten",
+      "choices": [
+        "gemeinsam schlafen",
+        "sich verstecken",
+        "frieren"
+      ],
+      "info": "Wer unter einer Decke steckt, macht gemeinsame Sache – oft gegen andere.",
+      "img": "🛏️🤫"
+    },
+    {
+      "id": "028",
+      "q": "Was bedeutet „wie auf heißen Kohlen sitzen“?",
+      "a": "ungeduldig warten",
+      "choices": [
+        "gemütlich grillen",
+        "schwitzen",
+        "sehr bequem sitzen"
+      ],
+      "info": "Auf heißen Kohlen hält es niemand lange aus – man will, dass es endlich weitergeht.",
+      "img": "🔥⏳😬"
+    },
+    {
+      "id": "029",
+      "q": "Was bedeutet „Das ist nur ein Katzensprung.“?",
+      "a": "Das ist nicht weit weg.",
+      "choices": [
+        "Das ist sehr gefährlich.",
+        "Das geht ganz schnell kaputt.",
+        "Das ist nur ein Spiel."
+      ],
+      "info": "So kurz wie ein Sprung einer Katze.",
+      "img": "🐈📍"
+    },
+    {
+      "id": "030",
+      "q": "Was bedeutet „wo sich Fuchs und Hase gute Nacht sagen“?",
+      "a": "an einem sehr abgelegenen Ort",
+      "choices": [
+        "im Zoo",
+        "in einem Märchen",
+        "mitten in der Großstadt"
+      ],
+      "info": "Dort gibt es mehr Tiere als Menschen – weit weg von allem.",
+      "img": "🦊🐇🌙"
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet „mit jemandem ein Hühnchen rupfen“?",
+      "a": "mit jemandem einen Streit austragen",
+      "choices": [
+        "mit jemandem kochen",
+        "jemanden zum Essen einladen",
+        "mit jemandem einen Bauernhof besuchen"
+      ],
+      "info": "„Ich hab noch ein Hühnchen mit dir zu rupfen!“ = Wir müssen da was klären!",
+      "img": "🐔😠"
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet „Perlen vor die Säue werfen“?",
+      "a": "etwas Wertvolles jemandem geben, der es nicht schätzt",
+      "choices": [
+        "Schmuck verlieren",
+        "Tiere füttern",
+        "etwas Wertvolles finden"
+      ],
+      "info": "Ein Schwein freut sich nicht über Perlen – es sucht lieber Futter.",
+      "img": "🐖💎"
+    },
+    {
+      "id": "033",
+      "q": "Was bedeutet „Ich glaub, mein Schwein pfeift!“?",
+      "a": "Ich bin völlig überrascht!",
+      "choices": [
+        "Ich habe Hunger!",
+        "Ich höre schlecht!",
+        "Ich bin müde!"
+      ],
+      "info": "Ein pfeifendes Schwein wäre wirklich eine Überraschung!",
+      "img": "🐷🎶😲"
+    },
+    {
+      "id": "034",
+      "q": "Was bedeutet „ein Brett vor dem Kopf haben“?",
+      "a": "etwas nicht verstehen",
+      "choices": [
+        "Kopfschmerzen haben",
+        "sehr fleißig sein",
+        "handwerklich begabt sein"
+      ],
+      "info": "Mit einem Brett vor dem Kopf sieht und versteht man nichts.",
+      "img": "🚧🤔"
+    },
+    {
+      "id": "035",
+      "q": "Was bedeutet „das fünfte Rad am Wagen sein“?",
+      "a": "überflüssig sein",
+      "choices": [
+        "sehr wichtig sein",
+        "immer pünktlich sein",
+        "schnell vorankommen"
+      ],
+      "info": "Ein Wagen braucht vier Räder – das fünfte ist zu viel.",
+      "img": "🚙5️⃣"
+    }
+  ]
+}

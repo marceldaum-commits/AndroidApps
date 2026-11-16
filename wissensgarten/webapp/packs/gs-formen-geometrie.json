@@ -1,0 +1,447 @@
+{
+  "id": "gs-formen-geometrie",
+  "version": 1,
+  "title": "Formen und Körper",
+  "subject": "mathe",
+  "grades": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "emoji": "🔺",
+  "tier": "free",
+  "description": "Kreis, Dreieck, Quadrat, Würfel und Kugel entdecken – mit Ecken, Spiegelachsen und Umfang.",
+  "intro": [
+    {
+      "img": "🔺⚪",
+      "text": "Wusstest du? Flache Formen wie Kreis, Dreieck und Quadrat kannst du auf Papier malen. Sie heißen Flächen."
+    },
+    {
+      "img": "🎲⚽",
+      "text": "Körper kannst du anfassen: Ein Würfel ist wie ein Spielwürfel, eine Kugel wie ein Ball."
+    },
+    {
+      "img": "🦋✂️",
+      "text": "Viele Dinge sind symmetrisch: Faltest du sie an der Spiegelachse, passen beide Hälften genau aufeinander."
+    },
+    {
+      "img": "📏🏃",
+      "text": "Der Umfang ist der Weg einmal ganz um eine Figur herum. Du zählst alle Seiten zusammen."
+    },
+    {
+      "img": "🐝🔍",
+      "text": "Los geht's, Formen-Detektiv! Brummi sucht mit dir Ecken und Kanten!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welche Form hat keine Ecken?",
+      "a": "Kreis",
+      "choices": [
+        "Dreieck",
+        "Quadrat",
+        "Rechteck"
+      ],
+      "info": "Ein Kreis ist ganz rund. Er hat keine Ecken und keine geraden Seiten.",
+      "img": "⭕🍩"
+    },
+    {
+      "id": "002",
+      "q": "Wie viele Ecken hat ein Dreieck?",
+      "a": "3",
+      "choices": [
+        "4",
+        "2",
+        "5"
+      ],
+      "info": "Drei-Eck: Der Name verrät es! 3 Ecken und 3 Seiten.",
+      "img": "🔺🍕"
+    },
+    {
+      "id": "003",
+      "q": "Wie viele Ecken hat ein Viereck?",
+      "a": "4",
+      "choices": [
+        "3",
+        "5",
+        "6"
+      ],
+      "info": "Vier-Eck: 4 Ecken und 4 Seiten.",
+      "img": "🔷🖼️"
+    },
+    {
+      "id": "004",
+      "q": "Wie viele Ecken hat ein Fünfeck?",
+      "a": "5",
+      "choices": [
+        "4",
+        "6",
+        "3"
+      ],
+      "info": "Fünf-Eck: 5 Ecken und 5 Seiten.",
+      "img": "🖐️⭐"
+    },
+    {
+      "id": "005",
+      "q": "Wie viele Seiten hat ein Sechseck?",
+      "a": "6",
+      "choices": [
+        "5",
+        "8",
+        "4"
+      ],
+      "info": "Die Waben der Bienen sind Sechsecke. Sie haben 6 Seiten.",
+      "img": "🐝🍯"
+    },
+    {
+      "id": "006",
+      "q": "Welche Form hat 4 gleich lange Seiten und 4 rechte Winkel?",
+      "a": "Quadrat",
+      "choices": [
+        "Dreieck",
+        "Kreis",
+        "Fünfeck"
+      ],
+      "info": "Beim Quadrat sind alle Seiten gleich lang und alle Ecken rechte Winkel.",
+      "img": "⬜📐"
+    },
+    {
+      "id": "007",
+      "q": "Wie viele rechte Winkel hat ein Rechteck?",
+      "a": "4",
+      "choices": [
+        "2",
+        "3",
+        "0"
+      ],
+      "info": "Rechteck heißt: Alle 4 Ecken sind rechte Winkel, wie bei einer Tür.",
+      "img": "🚪📐"
+    },
+    {
+      "id": "008",
+      "q": "Ist jedes Quadrat auch ein Rechteck?",
+      "a": "Ja",
+      "choices": [
+        "Nein",
+        "Nur wenn es groß ist",
+        "Nur wenn es klein ist"
+      ],
+      "info": "Ein Quadrat hat 4 rechte Winkel. Es ist ein besonderes Rechteck mit gleich langen Seiten.",
+      "img": "⬜✅"
+    },
+    {
+      "id": "009",
+      "q": "Welche Form hat ein Stoppschild?",
+      "a": "Achteck",
+      "choices": [
+        "Sechseck",
+        "Kreis",
+        "Dreieck"
+      ],
+      "info": "Das rote Stoppschild hat 8 Ecken. So erkennt man es sogar von hinten.",
+      "img": "🛑🚗"
+    },
+    {
+      "id": "010",
+      "q": "Welche Form hat das Schild „Vorfahrt gewähren“?",
+      "a": "Dreieck",
+      "choices": [
+        "Kreis",
+        "Quadrat",
+        "Achteck"
+      ],
+      "info": "Es ist ein Dreieck, das auf der Spitze steht.",
+      "img": "🔻🚲"
+    },
+    {
+      "id": "011",
+      "q": "Was ist eine flache Form und kein Körper?",
+      "a": "Kreis",
+      "choices": [
+        "Kugel",
+        "Zylinder",
+        "Würfel"
+      ],
+      "info": "Einen Kreis kannst du malen. Eine Kugel kannst du anfassen und rollen.",
+      "img": "⭕✏️"
+    },
+    {
+      "id": "012",
+      "q": "Welcher Körper kann in alle Richtungen rollen?",
+      "a": "Kugel",
+      "choices": [
+        "Würfel",
+        "Quader",
+        "Pyramide"
+      ],
+      "info": "Eine Kugel ist überall rund. Darum rollt sie in jede Richtung.",
+      "img": "⚽🏃"
+    },
+    {
+      "id": "013",
+      "q": "Welcher Körper hat keine Ecken und keine Kanten?",
+      "a": "Kugel",
+      "choices": [
+        "Kegel",
+        "Zylinder",
+        "Würfel"
+      ],
+      "info": "Die Kugel hat nur eine runde Fläche. Der Zylinder hat 2 Kanten, der Kegel 1.",
+      "img": "🌍⚽"
+    },
+    {
+      "id": "014",
+      "q": "Wie viele Flächen hat ein Würfel?",
+      "a": "6",
+      "choices": [
+        "4",
+        "8",
+        "12"
+      ],
+      "info": "Zähle die Augen: 1 bis 6. Für jede Zahl gibt es eine Fläche.",
+      "img": "🎲6️⃣"
+    },
+    {
+      "id": "015",
+      "q": "Wie viele Ecken hat ein Würfel?",
+      "a": "8",
+      "choices": [
+        "6",
+        "4",
+        "12"
+      ],
+      "info": "Oben 4 Ecken und unten 4 Ecken. Zusammen 8.",
+      "img": "🎲📍"
+    },
+    {
+      "id": "016",
+      "q": "Wie viele Kanten hat ein Würfel?",
+      "a": "12",
+      "choices": [
+        "8",
+        "6",
+        "10"
+      ],
+      "info": "Oben 4, unten 4 und 4 senkrecht. Zusammen 12 Kanten.",
+      "img": "🎲📏"
+    },
+    {
+      "id": "017",
+      "q": "Welche Form haben die Flächen eines Würfels?",
+      "a": "Quadrate",
+      "choices": [
+        "Dreiecke",
+        "Kreise",
+        "Sechsecke"
+      ],
+      "info": "Alle 6 Flächen eines Würfels sind gleich große Quadrate.",
+      "img": "🎲⬜"
+    },
+    {
+      "id": "018",
+      "q": "Ist ein Würfel eine Fläche oder ein Körper?",
+      "a": "ein Körper",
+      "choices": [
+        "eine Fläche",
+        "eine Linie",
+        "ein Punkt"
+      ],
+      "info": "Einen Körper kannst du in die Hand nehmen. Er ist nicht flach.",
+      "img": "🎲✋"
+    },
+    {
+      "id": "019",
+      "q": "Welchem Körper ähnelt ein Schuhkarton?",
+      "a": "Quader",
+      "choices": [
+        "Kugel",
+        "Zylinder",
+        "Kegel"
+      ],
+      "info": "Ein Quader hat 6 rechteckige Flächen, wie eine Schachtel.",
+      "img": "👟📦"
+    },
+    {
+      "id": "020",
+      "q": "Wie viele Flächen hat ein Quader?",
+      "a": "6",
+      "choices": [
+        "4",
+        "8",
+        "5"
+      ],
+      "info": "Wie ein Würfel hat ein Quader 6 Flächen: oben, unten, vorne, hinten, links, rechts.",
+      "img": "📦6️⃣"
+    },
+    {
+      "id": "021",
+      "q": "Welchem Körper ähnelt eine Konservendose?",
+      "a": "Zylinder",
+      "choices": [
+        "Kegel",
+        "Quader",
+        "Kugel"
+      ],
+      "info": "Ein Zylinder hat oben und unten einen Kreis und dazwischen eine runde Wand.",
+      "img": "🥫🔵"
+    },
+    {
+      "id": "022",
+      "q": "Welchem Körper ähnelt eine Eiswaffel?",
+      "a": "Kegel",
+      "choices": [
+        "Zylinder",
+        "Pyramide",
+        "Würfel"
+      ],
+      "info": "Ein Kegel hat unten einen Kreis und oben eine Spitze.",
+      "img": "🍦🔻"
+    },
+    {
+      "id": "023",
+      "q": "Welche Form hat die Grundfläche eines Kegels?",
+      "a": "Kreis",
+      "choices": [
+        "Dreieck",
+        "Quadrat",
+        "Rechteck"
+      ],
+      "info": "Unten am Kegel ist ein Kreis, oben eine Spitze.",
+      "img": "🍦⭕"
+    },
+    {
+      "id": "024",
+      "q": "Welcher Körper hat eine Spitze und als Boden ein Quadrat?",
+      "a": "Pyramide",
+      "choices": [
+        "Kegel",
+        "Würfel",
+        "Zylinder"
+      ],
+      "info": "Die Pyramiden in Ägypten haben unten ein Quadrat und oben eine Spitze.",
+      "img": "🐫🔺"
+    },
+    {
+      "id": "025",
+      "q": "Was ist eine Spiegelachse?",
+      "a": "eine Linie, an der beide Hälften genau gleich sind",
+      "choices": [
+        "die längste Seite einer Figur",
+        "eine Ecke eines Dreiecks",
+        "eine Linie einmal um die Figur herum"
+      ],
+      "info": "Klappst du die Figur an der Spiegelachse um, liegen beide Hälften genau aufeinander.",
+      "img": "🦋✂️"
+    },
+    {
+      "id": "026",
+      "q": "Wie viele Spiegelachsen hat ein Quadrat?",
+      "a": "4",
+      "choices": [
+        "2",
+        "1",
+        "8"
+      ],
+      "info": "2 Achsen gehen durch die Mitten der Seiten, 2 durch die Ecken. Zusammen 4.",
+      "img": "⬜✂️"
+    },
+    {
+      "id": "027",
+      "q": "Wie viele Spiegelachsen hat ein Rechteck, das kein Quadrat ist?",
+      "a": "2",
+      "choices": [
+        "4",
+        "1",
+        "0"
+      ],
+      "info": "Eine Achse waagerecht, eine senkrecht. Über die Ecken gefaltet passt es nicht.",
+      "img": "🚪✂️"
+    },
+    {
+      "id": "028",
+      "q": "Wie viele Spiegelachsen hat ein Kreis?",
+      "a": "unendlich viele",
+      "choices": [
+        "genau 1",
+        "genau 4",
+        "keine"
+      ],
+      "info": "Jede Linie durch den Mittelpunkt ist eine Spiegelachse. Man hört nie auf!",
+      "img": "⭕♾️"
+    },
+    {
+      "id": "029",
+      "q": "Welcher Großbuchstabe ist achsensymmetrisch?",
+      "a": "A",
+      "choices": [
+        "F",
+        "G",
+        "R"
+      ],
+      "info": "Beim A passt eine senkrechte Spiegelachse genau durch die Mitte.",
+      "img": "🔤🦋"
+    },
+    {
+      "id": "030",
+      "q": "Welcher Großbuchstabe hat keine Spiegelachse?",
+      "a": "S",
+      "choices": [
+        "H",
+        "O",
+        "T"
+      ],
+      "info": "H, O und T kann man spiegeln. Beim S passen die Hälften nie aufeinander.",
+      "img": "🐍🔤"
+    },
+    {
+      "id": "031",
+      "q": "Was ist der Umfang einer Figur?",
+      "a": "die Länge aller Seiten zusammen",
+      "choices": [
+        "die Fläche innen drin",
+        "die längste Seite",
+        "die Zahl der Ecken"
+      ],
+      "info": "Stell dir vor, eine Ameise läuft einmal ganz außen herum. Ihr Weg ist der Umfang.",
+      "img": "🐜📏"
+    },
+    {
+      "id": "032",
+      "q": "Ein Quadrat hat 5 cm lange Seiten. Wie groß ist der Umfang?",
+      "a": "20 cm",
+      "choices": [
+        "25 cm",
+        "10 cm",
+        "15 cm"
+      ],
+      "info": "Ein Quadrat hat 4 gleiche Seiten: 5 + 5 + 5 + 5 = 20 cm.",
+      "img": "⬜📏"
+    },
+    {
+      "id": "033",
+      "q": "Ein Rechteck ist 6 cm lang und 2 cm breit. Wie groß ist der Umfang?",
+      "a": "16 cm",
+      "choices": [
+        "12 cm",
+        "8 cm",
+        "14 cm"
+      ],
+      "info": "6 + 2 + 6 + 2 = 16 cm. Jede Seite gibt es zweimal.",
+      "img": "🚪📏"
+    },
+    {
+      "id": "034",
+      "q": "Ein Dreieck hat die Seiten 3 cm, 4 cm und 5 cm. Wie groß ist der Umfang?",
+      "a": "12 cm",
+      "choices": [
+        "11 cm",
+        "7 cm",
+        "9 cm"
+      ],
+      "info": "3 + 4 + 5 = 12 cm.",
+      "img": "🔺📏"
+    }
+  ]
+}

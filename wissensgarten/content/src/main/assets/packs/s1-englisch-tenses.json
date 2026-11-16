@@ -1,0 +1,459 @@
+{
+  "id": "s1-englisch-tenses",
+  "version": 1,
+  "title": "English Tenses",
+  "subject": "englisch",
+  "grades": [
+    6,
+    7,
+    8,
+    9
+  ],
+  "emoji": "⏰",
+  "tier": "free",
+  "description": "Simple Present bis will-Future: Signalwörter erkennen und die richtige Verbform in Lückensätze einsetzen.",
+  "intro": [
+    {
+      "img": "🕵️🔍",
+      "text": "Wusstest du? Englische Zeitformen verraten sich oft selbst: Signalwörter wie „yesterday“, „now“ oder „since“ sind deine Detektiv-Spuren!"
+    },
+    {
+      "img": "🔁☕",
+      "text": "Simple Present für Gewohnheiten: „I drink tea every day.“ Und nicht vergessen: he, she, it – das s muss mit!"
+    },
+    {
+      "img": "👀⚽",
+      "text": "Present Progressive für „gerade jetzt“: „Look! They are playing football.“ Form: am/is/are + Verb mit -ing."
+    },
+    {
+      "img": "📅✅",
+      "text": "Simple Past für Fertiges mit Zeitpunkt („last week“). Present Perfect, wenn es bis heute wirkt: „I have lost my key.“"
+    },
+    {
+      "img": "🔮🚀",
+      "text": "Zukunft: „will“ für Vorhersagen und spontane Ideen, „going to“ für feste Pläne. Los geht's, Zeit-Detektiv!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Every morning, Tom ___ (drink) a glass of milk.",
+      "a": "drinks",
+      "choices": [
+        "is drinking",
+        "drank",
+        "has drunk"
+      ],
+      "info": "„Every morning“ = Gewohnheit → Simple Present. He, she, it – das s muss mit!",
+      "img": "🌅🥛"
+    },
+    {
+      "id": "002",
+      "q": "My sister usually ___ (go) to school by bus.",
+      "a": "goes",
+      "choices": [
+        "go",
+        "is going",
+        "goed"
+      ],
+      "info": "„usually“ ist ein Signalwort für das Simple Present. go → goes (mit -es).",
+      "img": "🚌🎒"
+    },
+    {
+      "id": "003",
+      "q": "Signalwort „usually“ – welche Zeitform?",
+      "a": "Simple Present",
+      "choices": [
+        "Present Progressive",
+        "Simple Past",
+        "Present Perfect"
+      ],
+      "info": "Auch „often“, „never“, „every day“ zeigen Gewohnheiten an → Simple Present.",
+      "img": "🔁📅"
+    },
+    {
+      "id": "004",
+      "q": "Look! The baby ___ (sleep).",
+      "a": "is sleeping",
+      "choices": [
+        "sleeps",
+        "slept",
+        "has slept"
+      ],
+      "info": "„Look!“ heißt: Es passiert genau jetzt → Present Progressive (is + -ing).",
+      "img": "👶💤"
+    },
+    {
+      "id": "005",
+      "q": "Signalwort „at the moment“ – welche Zeitform?",
+      "a": "Present Progressive",
+      "choices": [
+        "Simple Present",
+        "Simple Past",
+        "will-Future"
+      ],
+      "info": "„now“, „at the moment“, „Look!“, „Listen!“ → es passiert gerade.",
+      "img": "⏱️👀"
+    },
+    {
+      "id": "006",
+      "q": "Wie bildet man das Present Progressive?",
+      "a": "am/is/are + Verb mit -ing",
+      "choices": [
+        "have/has + 3. Form",
+        "Verb + -ed",
+        "will + Grundform"
+      ],
+      "info": "I am reading. She is reading. They are reading.",
+      "img": "🧱🔨"
+    },
+    {
+      "id": "007",
+      "q": "At the moment, the kids ___ (swim) in the lake.",
+      "a": "are swimming",
+      "choices": [
+        "are swiming",
+        "swim",
+        "swam"
+      ],
+      "info": "Kurzer betonter Vokal + ein Konsonant: Der Konsonant wird verdoppelt – swim → swimming.",
+      "img": "🏊🌊"
+    },
+    {
+      "id": "008",
+      "q": "Be quiet! I ___ (write) a letter.",
+      "a": "am writing",
+      "choices": [
+        "am writeing",
+        "write",
+        "wrote"
+      ],
+      "info": "Stummes e fällt vor -ing weg: write → writing.",
+      "img": "🤫✍️"
+    },
+    {
+      "id": "009",
+      "q": "Water ___ (boil) at 100 °C.",
+      "a": "boils",
+      "choices": [
+        "is boiling",
+        "boiled",
+        "has boiled"
+      ],
+      "info": "Naturgesetze und Fakten stehen im Simple Present.",
+      "img": "💧🔥"
+    },
+    {
+      "id": "010",
+      "q": "My brother never ___ (watch) TV in the morning.",
+      "a": "watches",
+      "choices": [
+        "watch",
+        "is watching",
+        "watchs"
+      ],
+      "info": "„never“ → Simple Present. Nach -ch, -sh, -s, -x hängt man -es an: watches.",
+      "img": "📺🙅"
+    },
+    {
+      "id": "011",
+      "q": "___ your dad work in an office?",
+      "a": "Does",
+      "choices": [
+        "Do",
+        "Is",
+        "Has"
+      ],
+      "info": "Fragen im Simple Present mit do/does. Bei he, she, it: does – und das Verb ohne s.",
+      "img": "👨💼"
+    },
+    {
+      "id": "012",
+      "q": "I ___ (know) the answer!",
+      "a": "know",
+      "choices": [
+        "am knowing",
+        "knowed",
+        "knows"
+      ],
+      "info": "Verben wie know, like, want stehen fast nie in der -ing-Form.",
+      "img": "💡🙋"
+    },
+    {
+      "id": "013",
+      "q": "Signalwort „yesterday“ – welche Zeitform?",
+      "a": "Simple Past",
+      "choices": [
+        "Present Perfect",
+        "Simple Present",
+        "going-to-Future"
+      ],
+      "info": "„yesterday“, „last week“, „ago“, „in 2010“ → abgeschlossen in der Vergangenheit.",
+      "img": "📅⬅️"
+    },
+    {
+      "id": "014",
+      "q": "Last summer we ___ (go) to Italy.",
+      "a": "went",
+      "choices": [
+        "have gone",
+        "go",
+        "goed"
+      ],
+      "info": "„Last summer“ → Simple Past. go ist unregelmäßig: go – went – gone.",
+      "img": "☀️🍕"
+    },
+    {
+      "id": "015",
+      "q": "Two days ago, my cat ___ (catch) a mouse.",
+      "a": "caught",
+      "choices": [
+        "catched",
+        "has caught",
+        "catches"
+      ],
+      "info": "„ago“ → Simple Past. catch – caught – caught.",
+      "img": "🐱🐭"
+    },
+    {
+      "id": "016",
+      "q": "We ___ at the cinema last night.",
+      "a": "were",
+      "choices": [
+        "was",
+        "have been",
+        "are"
+      ],
+      "info": "Simple Past von „be“: I/he/she/it was – we/you/they were.",
+      "img": "🎬🍿"
+    },
+    {
+      "id": "017",
+      "q": "___ you watch the match yesterday?",
+      "a": "Did",
+      "choices": [
+        "Do",
+        "Have",
+        "Were"
+      ],
+      "info": "Fragen im Simple Past bildet man mit „did“ + Grundform.",
+      "img": "⚽📺"
+    },
+    {
+      "id": "018",
+      "q": "I ___ (not / see) the film last night.",
+      "a": "didn't see",
+      "choices": [
+        "didn't saw",
+        "haven't seen",
+        "don't see"
+      ],
+      "info": "Nach „didn't“ steht immer die Grundform: didn't see, nicht „didn't saw“.",
+      "img": "🎬🙈"
+    },
+    {
+      "id": "019",
+      "q": "In 1969, people ___ (land) on the moon for the first time.",
+      "a": "landed",
+      "choices": [
+        "have landed",
+        "land",
+        "are landing"
+      ],
+      "info": "Eine Jahreszahl in der Vergangenheit → Simple Past.",
+      "img": "🚀🌕"
+    },
+    {
+      "id": "020",
+      "q": "Welches Signalwort passt zum Simple Past?",
+      "a": "two years ago",
+      "choices": [
+        "at the moment",
+        "since Monday",
+        "every day"
+      ],
+      "info": "„ago“ heißt „vor“: two years ago = vor zwei Jahren.",
+      "img": "⏳⬅️"
+    },
+    {
+      "id": "021",
+      "q": "Wie bildet man das Present Perfect?",
+      "a": "have/has + 3. Verbform",
+      "choices": [
+        "was/were + Verb mit -ing",
+        "did + Grundform",
+        "will + Grundform"
+      ],
+      "info": "I have played. She has eaten. Die 3. Form heißt Past Participle.",
+      "img": "🧩✅"
+    },
+    {
+      "id": "022",
+      "q": "Welches Signalwort passt zum Present Perfect?",
+      "a": "since",
+      "choices": [
+        "yesterday",
+        "ago",
+        "last year"
+      ],
+      "info": "„since“ (seit einem Zeitpunkt): Es hat in der Vergangenheit begonnen und dauert bis heute.",
+      "img": "🌱🌳"
+    },
+    {
+      "id": "023",
+      "q": "We ___ (know) each other since 2019.",
+      "a": "have known",
+      "choices": [
+        "know",
+        "knew",
+        "are knowing"
+      ],
+      "info": "Auf Deutsch „seit“ mit Gegenwart – auf Englisch mit Present Perfect!",
+      "img": "🤝📆"
+    },
+    {
+      "id": "024",
+      "q": "She ___ (live) in Berlin for five years – and she still lives there.",
+      "a": "has lived",
+      "choices": [
+        "lives",
+        "lived",
+        "is living"
+      ],
+      "info": "Sie wohnt immer noch dort → Present Perfect verbindet Vergangenheit und Jetzt.",
+      "img": "🏠🐻"
+    },
+    {
+      "id": "025",
+      "q": "Have you ever ___ (eat) sushi?",
+      "a": "eaten",
+      "choices": [
+        "ate",
+        "eat",
+        "eating"
+      ],
+      "info": "Present Perfect: have + 3. Form. eat – ate – eaten.",
+      "img": "🍣🥢"
+    },
+    {
+      "id": "026",
+      "q": "She has just ___ (finish) her homework.",
+      "a": "finished",
+      "choices": [
+        "finish",
+        "finishing",
+        "finishes"
+      ],
+      "info": "„just“ = gerade eben. Regelmäßige 3. Form mit -ed.",
+      "img": "📚🎉"
+    },
+    {
+      "id": "027",
+      "q": "Oh no! I ___ (lose) my key. Now I can't open the door.",
+      "a": "have lost",
+      "choices": [
+        "lose",
+        "am losing",
+        "loses"
+      ],
+      "info": "Die Folge ist jetzt wichtig (Tür geht nicht auf) → Present Perfect.",
+      "img": "🔑😱"
+    },
+    {
+      "id": "028",
+      "q": "„She has visited Paris twice.“ – welche Zeitform?",
+      "a": "Present Perfect",
+      "choices": [
+        "Simple Past",
+        "Simple Present",
+        "Present Progressive"
+      ],
+      "info": "has + visited (3. Form) = Present Perfect.",
+      "img": "🗼🥐"
+    },
+    {
+      "id": "029",
+      "q": "I think it ___ (snow) tomorrow.",
+      "a": "will snow",
+      "choices": [
+        "snows",
+        "snowed",
+        "has snowed"
+      ],
+      "info": "Eine Vermutung über die Zukunft („I think …“) → will-Future.",
+      "img": "❄️⛄"
+    },
+    {
+      "id": "030",
+      "q": "Don't worry, I ___ (not / tell) anyone.",
+      "a": "won't tell",
+      "choices": [
+        "willn't tell",
+        "not will tell",
+        "am not tell"
+      ],
+      "info": "won't ist die Kurzform von „will not“.",
+      "img": "🤐🔒"
+    },
+    {
+      "id": "031",
+      "q": "The phone is ringing. – „Wait, I ___ (answer) it!“",
+      "a": "will answer",
+      "choices": [
+        "answer",
+        "answered",
+        "have answered"
+      ],
+      "info": "Spontaner Entschluss im Moment des Sprechens → will.",
+      "img": "📞💡"
+    },
+    {
+      "id": "032",
+      "q": "Wann nimmst du das will-Future?",
+      "a": "für Vorhersagen und spontane Entschlüsse",
+      "choices": [
+        "für regelmäßige Gewohnheiten",
+        "für Handlungen gerade jetzt",
+        "für Vergangenes mit „ago“"
+      ],
+      "info": "I think it will rain. – OK, I'll help you!",
+      "img": "🔮💭"
+    },
+    {
+      "id": "033",
+      "q": "Look at those dark clouds! It ___ (rain).",
+      "a": "is going to rain",
+      "choices": [
+        "rains",
+        "rained",
+        "has rained"
+      ],
+      "info": "Man sieht schon Anzeichen → going-to-Future.",
+      "img": "🌧️☁️"
+    },
+    {
+      "id": "034",
+      "q": "We have bought the tickets. We ___ (visit) Grandma next weekend.",
+      "a": "are going to visit",
+      "choices": [
+        "visits",
+        "visited",
+        "have visited"
+      ],
+      "info": "Ein fester Plan (Tickets sind gekauft) → going to.",
+      "img": "🎫👵"
+    },
+    {
+      "id": "035",
+      "q": "„I'm going to learn the guitar.“ – welche Zeitform?",
+      "a": "going-to-Future",
+      "choices": [
+        "will-Future",
+        "Present Perfect",
+        "Simple Past"
+      ],
+      "info": "am/is/are going to + Grundform = Plan oder Absicht.",
+      "img": "🎸📅"
+    }
+  ]
+}

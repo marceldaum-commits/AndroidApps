@@ -1,0 +1,457 @@
+{
+  "id": "s1-mathe-gleichungen",
+  "version": 1,
+  "title": "Gleichungen lösen",
+  "subject": "mathe",
+  "grades": [
+    7,
+    8
+  ],
+  "emoji": "⚖️",
+  "tier": "free",
+  "description": "Lineare Gleichungen lösen, Terme vereinfachen, Klammern auflösen und Textaufgaben knacken – Schritt für Schritt.",
+  "intro": [
+    {
+      "img": "⚖️✨",
+      "text": "Wusstest du? Eine Gleichung ist wie eine Waage im Gleichgewicht: Links und rechts vom „=“ steht gleich viel."
+    },
+    {
+      "img": "🎁❓",
+      "text": "Das x ist ein Geheimpäckchen. Deine Mission: herausfinden, was drin ist – also x ganz allein auf eine Seite bringen!"
+    },
+    {
+      "img": "🔁⚖️",
+      "text": "Goldene Regel: Was du links machst, machst du auch rechts. So bleibt die Waage im Gleichgewicht. Das heißt Äquivalenzumformung."
+    },
+    {
+      "img": "✅🔍",
+      "text": "Profi-Tipp: Setz deine Lösung zur Probe ein. Kommt links und rechts dasselbe heraus, hast du richtig gerechnet!"
+    },
+    {
+      "img": "🚀🏆",
+      "text": "Los geht's! Knack die Gleichungen und lüfte das Geheimnis von x!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Löse: x + 7 = 15",
+      "a": "x = 8",
+      "choices": [
+        "x = 22",
+        "x = 7",
+        "x = −8"
+      ],
+      "info": "Auf beiden Seiten 7 abziehen: x = 15 − 7 = 8. Probe: 8 + 7 = 15.",
+      "img": "🎁➕"
+    },
+    {
+      "id": "002",
+      "q": "Löse: x − 9 = 4",
+      "a": "x = 13",
+      "choices": [
+        "x = −5",
+        "x = 5",
+        "x = −13"
+      ],
+      "info": "Auf beiden Seiten 9 addieren: x = 4 + 9 = 13. Probe: 13 − 9 = 4.",
+      "img": "🎁➖"
+    },
+    {
+      "id": "003",
+      "q": "Löse: 6x = 42",
+      "a": "x = 7",
+      "choices": [
+        "x = 36",
+        "x = 48",
+        "x = 6"
+      ],
+      "info": "Beide Seiten durch 6 teilen: x = 42 : 6 = 7.",
+      "img": "📦📦"
+    },
+    {
+      "id": "004",
+      "q": "Löse: x : 4 = 5",
+      "a": "x = 20",
+      "choices": [
+        "x = 1,25",
+        "x = 9",
+        "x = 1"
+      ],
+      "info": "Beide Seiten mal 4 nehmen: x = 5 · 4 = 20.",
+      "img": "🍕"
+    },
+    {
+      "id": "005",
+      "q": "Wie löst du x + 12 = 30 nach x auf?",
+      "a": "Auf beiden Seiten 12 abziehen",
+      "choices": [
+        "Auf beiden Seiten 12 addieren",
+        "Nur links 12 abziehen",
+        "Beide Seiten durch 12 teilen"
+      ],
+      "info": "Die Umkehrung von „+ 12“ ist „− 12“ – und zwar auf beiden Seiten. Dann ist x = 18.",
+      "img": "⚖️"
+    },
+    {
+      "id": "006",
+      "q": "Wie löst du 5x = 35 nach x auf?",
+      "a": "Beide Seiten durch 5 teilen",
+      "choices": [
+        "Auf beiden Seiten 5 abziehen",
+        "Beide Seiten mal 5 nehmen",
+        "Nur rechts durch 5 teilen"
+      ],
+      "info": "Die Umkehrung von „mal 5“ ist „durch 5“. Dann ist x = 7.",
+      "img": "✂️"
+    },
+    {
+      "id": "007",
+      "q": "Was ist eine Äquivalenzumformung?",
+      "a": "Eine Umformung, die die Lösung nicht verändert",
+      "choices": [
+        "Eine Umformung nur auf einer Seite",
+        "Das Vertauschen von x und einer Zahl",
+        "Das Weglassen des Gleichheitszeichens"
+      ],
+      "info": "Erlaubt: auf beiden Seiten dasselbe addieren, abziehen, mit derselben Zahl (nicht 0) malnehmen oder teilen.",
+      "img": "⚖️🔁"
+    },
+    {
+      "id": "008",
+      "q": "Durch welche Zahl darf man beim Umformen niemals teilen?",
+      "a": "Durch 0",
+      "choices": [
+        "Durch 1",
+        "Durch negative Zahlen",
+        "Durch Brüche"
+      ],
+      "info": "Durch 0 zu teilen ist nicht erlaubt – das ergibt keinen Sinn.",
+      "img": "🚫"
+    },
+    {
+      "id": "009",
+      "q": "Löse: 4x + 3 = 27",
+      "a": "x = 6",
+      "choices": [
+        "x = 7,5",
+        "x = 24",
+        "x = 5"
+      ],
+      "info": "Erst − 3: 4x = 24. Dann : 4: x = 6. Probe: 4 · 6 + 3 = 27.",
+      "img": "🧩"
+    },
+    {
+      "id": "010",
+      "q": "Löse: 2x − 5 = 11",
+      "a": "x = 8",
+      "choices": [
+        "x = 3",
+        "x = 6",
+        "x = 16"
+      ],
+      "info": "Erst + 5: 2x = 16. Dann : 2: x = 8.",
+      "img": "🔑"
+    },
+    {
+      "id": "011",
+      "q": "Löse: 9 − x = 2",
+      "a": "x = 7",
+      "choices": [
+        "x = 11",
+        "x = −7",
+        "x = −11"
+      ],
+      "info": "Welche Zahl muss man von 9 wegnehmen, damit 2 bleibt? 9 − 7 = 2.",
+      "img": "🍪"
+    },
+    {
+      "id": "012",
+      "q": "Löse: −3x = 18",
+      "a": "x = −6",
+      "choices": [
+        "x = 6",
+        "x = 15",
+        "x = 21"
+      ],
+      "info": "Beide Seiten durch −3 teilen: x = 18 : (−3) = −6.",
+      "img": "❄️"
+    },
+    {
+      "id": "013",
+      "q": "Löse: x/3 + 2 = 6",
+      "a": "x = 12",
+      "choices": [
+        "x = 24",
+        "x = 4",
+        "x = 6"
+      ],
+      "info": "Erst − 2: x/3 = 4. Dann mal 3: x = 12.",
+      "img": "🍰"
+    },
+    {
+      "id": "014",
+      "q": "Löse: 0,5x + 1,5 = 4",
+      "a": "x = 5",
+      "choices": [
+        "x = 2,5",
+        "x = 11",
+        "x = 1,25"
+      ],
+      "info": "Erst − 1,5: 0,5x = 2,5. Dann : 0,5 (also mal 2): x = 5.",
+      "img": "💶"
+    },
+    {
+      "id": "015",
+      "q": "Löse: 7x + 4 = 3x + 20",
+      "a": "x = 4",
+      "choices": [
+        "x = 2,4",
+        "x = 6",
+        "x = 16"
+      ],
+      "info": "Erst − 3x: 4x + 4 = 20. Dann − 4: 4x = 16. Also x = 4.",
+      "img": "⚖️🎯"
+    },
+    {
+      "id": "016",
+      "q": "Löse: 5x − 8 = 2x + 7",
+      "a": "x = 5",
+      "choices": [
+        "x = −5",
+        "x = 3",
+        "x = 15"
+      ],
+      "info": "x-Terme nach links, Zahlen nach rechts: 3x = 15, also x = 5.",
+      "img": "🎯"
+    },
+    {
+      "id": "017",
+      "q": "Fasse zusammen: 3x + 5 + 2x − 1",
+      "a": "5x + 4",
+      "choices": [
+        "5x + 6",
+        "9x",
+        "6x + 4"
+      ],
+      "info": "Sortieren: x zu x, Zahlen zu Zahlen. 3x + 2x = 5x und 5 − 1 = 4.",
+      "img": "🧺"
+    },
+    {
+      "id": "018",
+      "q": "Fasse zusammen: 4a − 7a + 2a",
+      "a": "−a",
+      "choices": [
+        "a",
+        "−13a",
+        "13a"
+      ],
+      "info": "4 − 7 + 2 = −1, also −1a. Man schreibt kurz −a.",
+      "img": "🍎"
+    },
+    {
+      "id": "019",
+      "q": "Vereinfache: 2x · 3x",
+      "a": "6x²",
+      "choices": [
+        "6x",
+        "5x²",
+        "5x"
+      ],
+      "info": "Zahlen malnehmen: 2 · 3 = 6. Und x · x = x².",
+      "img": "✖️"
+    },
+    {
+      "id": "020",
+      "q": "Löse die Klammer auf: −(x − 4)",
+      "a": "−x + 4",
+      "choices": [
+        "−x − 4",
+        "x + 4",
+        "x − 4"
+      ],
+      "info": "Ein Minus vor der Klammer dreht alle Vorzeichen in der Klammer um.",
+      "img": "🔄"
+    },
+    {
+      "id": "021",
+      "q": "Löse die Klammer auf: −2(3a − 5)",
+      "a": "−6a + 10",
+      "choices": [
+        "−6a − 10",
+        "6a − 10",
+        "−6a − 5"
+      ],
+      "info": "Jedes Glied mal −2: −2 · 3a = −6a und −2 · (−5) = +10.",
+      "img": "💥"
+    },
+    {
+      "id": "022",
+      "q": "Multipliziere aus: (x + 2)(x + 5)",
+      "a": "x² + 7x + 10",
+      "choices": [
+        "x² + 10",
+        "x² + 10x + 7",
+        "2x + 7"
+      ],
+      "info": "Jeder mit jedem: x · x + x · 5 + 2 · x + 2 · 5 = x² + 7x + 10.",
+      "img": "🧱"
+    },
+    {
+      "id": "023",
+      "q": "Klammere den größten gemeinsamen Faktor aus: 6x + 9",
+      "a": "3(2x + 3)",
+      "choices": [
+        "3(2x + 9)",
+        "6(x + 9)",
+        "9(6x + 1)"
+      ],
+      "info": "6 und 9 haben den größten gemeinsamen Teiler 3: 6x = 3 · 2x und 9 = 3 · 3.",
+      "img": "📦"
+    },
+    {
+      "id": "024",
+      "q": "Löse: 2(x + 3) = 16",
+      "a": "x = 5",
+      "choices": [
+        "x = 6,5",
+        "x = 8",
+        "x = 13"
+      ],
+      "info": "Klammer auflösen: 2x + 6 = 16. Dann 2x = 10, also x = 5.",
+      "img": "🎁🎁"
+    },
+    {
+      "id": "025",
+      "q": "Löse: 4(x − 2) = 2x + 6",
+      "a": "x = 7",
+      "choices": [
+        "x = 4",
+        "x = 1",
+        "x = 2"
+      ],
+      "info": "Auflösen: 4x − 8 = 2x + 6. Dann 2x = 14, also x = 7.",
+      "img": "🔓"
+    },
+    {
+      "id": "026",
+      "q": "Löse: 3(2x − 1) = 4x + 9",
+      "a": "x = 6",
+      "choices": [
+        "x = 5",
+        "x = 4",
+        "x = 3"
+      ],
+      "info": "Auflösen: 6x − 3 = 4x + 9. Dann 2x = 12, also x = 6.",
+      "img": "🏆"
+    },
+    {
+      "id": "027",
+      "q": "Ist x = 3 eine Lösung von 5x − 4 = 11?",
+      "a": "Ja, denn 5 · 3 − 4 = 11",
+      "choices": [
+        "Nein, denn 5 · 3 − 4 = 10",
+        "Nein, die Lösung ist x = 1",
+        "Nein, die Lösung ist x = 4"
+      ],
+      "info": "Probe: x einsetzen und nachrechnen. 15 − 4 = 11 – stimmt!",
+      "img": "✅"
+    },
+    {
+      "id": "028",
+      "q": "Wie viele Lösungen hat x + 2 = x + 5?",
+      "a": "Keine",
+      "choices": [
+        "Genau eine",
+        "Genau zwei",
+        "Unendlich viele"
+      ],
+      "info": "Zieht man x ab, bleibt 2 = 5 – das ist falsch. Keine Zahl passt.",
+      "img": "❌"
+    },
+    {
+      "id": "029",
+      "q": "Wie viele Lösungen hat 2(x + 1) = 2x + 2?",
+      "a": "Unendlich viele",
+      "choices": [
+        "Keine",
+        "Genau eine",
+        "Genau zwei"
+      ],
+      "info": "Links aufgelöst steht auch 2x + 2. Beide Seiten sind gleich – jede Zahl passt.",
+      "img": "♾️"
+    },
+    {
+      "id": "030",
+      "q": "Welche Gleichung passt: „Das Dreifache einer Zahl minus 4 ergibt 11“?",
+      "a": "3x − 4 = 11",
+      "choices": [
+        "3(x − 4) = 11",
+        "x − 3 · 4 = 11",
+        "4 − 3x = 11"
+      ],
+      "info": "Erst die Zahl verdreifachen (3x), dann 4 abziehen. Lösung: x = 5.",
+      "img": "📝"
+    },
+    {
+      "id": "031",
+      "q": "Ich denke mir eine Zahl, verdopple sie und addiere 6. Ergebnis: 20. Welche Zahl?",
+      "a": "7",
+      "choices": [
+        "13",
+        "8",
+        "26"
+      ],
+      "info": "2x + 6 = 20, also 2x = 14 und x = 7.",
+      "img": "💭"
+    },
+    {
+      "id": "032",
+      "q": "Lea ist 3 Jahre älter als Tom. Zusammen sind sie 25. Wie alt ist Tom?",
+      "a": "11 Jahre",
+      "choices": [
+        "14 Jahre",
+        "12 Jahre",
+        "22 Jahre"
+      ],
+      "info": "Tom = x, Lea = x + 3. Also 2x + 3 = 25, 2x = 22, x = 11. Lea ist 14.",
+      "img": "👧👦"
+    },
+    {
+      "id": "033",
+      "q": "Drei aufeinanderfolgende Zahlen ergeben zusammen 48. Welche ist die kleinste?",
+      "a": "15",
+      "choices": [
+        "16",
+        "14",
+        "12"
+      ],
+      "info": "x + (x + 1) + (x + 2) = 48, also 3x + 3 = 48 und x = 15. Probe: 15 + 16 + 17 = 48.",
+      "img": "👣"
+    },
+    {
+      "id": "034",
+      "q": "Ein Rechteck ist doppelt so lang wie breit und hat 36 cm Umfang. Wie breit ist es?",
+      "a": "6 cm",
+      "choices": [
+        "12 cm",
+        "9 cm",
+        "18 cm"
+      ],
+      "info": "Breite x, Länge 2x: 2 · (x + 2x) = 6x = 36, also x = 6.",
+      "img": "🖼️"
+    },
+    {
+      "id": "035",
+      "q": "4 Kinokarten und 6 € Popcorn kosten zusammen 38 €. Was kostet eine Karte?",
+      "a": "8 €",
+      "choices": [
+        "11 €",
+        "9,50 €",
+        "32 €"
+      ],
+      "info": "4x + 6 = 38, also 4x = 32 und x = 8.",
+      "img": "🎬🍿"
+    }
+  ]
+}

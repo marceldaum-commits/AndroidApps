@@ -1,0 +1,469 @@
+{
+  "id": "s1-mathe-kopfrechnen",
+  "version": 1,
+  "title": "Kopfrechnen-Tricks",
+  "subject": "mathe",
+  "grades": [
+    5,
+    6
+  ],
+  "emoji": "🧠",
+  "tier": "free",
+  "description": "Rechengesetze, Teilbarkeitsregeln, Quadratzahlen, Primzahlen und clevere Tricks fürs schnelle Kopfrechnen.",
+  "intro": [
+    {
+      "img": "🧠⚡",
+      "text": "Wusstest du? Rechenprofis rechnen nicht schneller – sie rechnen schlauer! Mit ein paar Tricks wird aus einer schweren Aufgabe eine leichte."
+    },
+    {
+      "img": "🔄➕",
+      "text": "Bei Plus und Mal darfst du tauschen und Klammern verschieben: 25 + 38 + 75 = (25 + 75) + 38 = 138. Viel einfacher, oder?"
+    },
+    {
+      "img": "🕵️🔢",
+      "text": "Teilbarkeitsregeln sind Detektiv-Tricks: Ist die Quersumme durch 3 teilbar, dann auch die Zahl. 123: 1 + 2 + 3 = 6 – passt!"
+    },
+    {
+      "img": "💎🧱",
+      "text": "Primzahlen sind die Bausteine aller Zahlen: Sie haben genau zwei Teiler, 1 und sich selbst – wie 2, 3, 5, 7 und 11."
+    },
+    {
+      "img": "🚀🏆",
+      "text": "Los geht's! Probier die Tricks aus und werde zum Kopfrechen-Profi!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie heißt das Gesetz: a + b = b + a?",
+      "a": "Kommutativgesetz",
+      "choices": [
+        "Assoziativgesetz",
+        "Distributivgesetz",
+        "Potenzgesetz"
+      ],
+      "info": "Kommutativ = Vertauschungsgesetz: Bei Plus und Mal darfst du die Zahlen tauschen.",
+      "img": "🔄"
+    },
+    {
+      "id": "002",
+      "q": "Wie heißt das Gesetz: (a + b) + c = a + (b + c)?",
+      "a": "Assoziativgesetz",
+      "choices": [
+        "Kommutativgesetz",
+        "Distributivgesetz",
+        "Potenzgesetz"
+      ],
+      "info": "Assoziativ = Verbindungsgesetz: Bei Plus und Mal darfst du die Klammern beliebig setzen.",
+      "img": "🤝"
+    },
+    {
+      "id": "003",
+      "q": "Wie heißt das Gesetz: a · (b + c) = a · b + a · c?",
+      "a": "Distributivgesetz",
+      "choices": [
+        "Kommutativgesetz",
+        "Assoziativgesetz",
+        "Potenzgesetz"
+      ],
+      "info": "Distributiv = Verteilungsgesetz: Der Faktor wird an jeden Summanden in der Klammer verteilt.",
+      "img": "🍬👫"
+    },
+    {
+      "id": "004",
+      "q": "Darf man bei 10 − 4 die Zahlen vertauschen?",
+      "a": "Nein, 4 − 10 ergibt etwas anderes",
+      "choices": [
+        "Ja, das geht immer",
+        "Ja, aber nur bei kleinen Zahlen",
+        "Ja, wenn man Klammern setzt"
+      ],
+      "info": "10 − 4 = 6, aber 4 − 10 = −6. Bei Minus und Geteilt gilt das Vertauschungsgesetz nicht.",
+      "img": "🚫🔄"
+    },
+    {
+      "id": "005",
+      "q": "Rechne geschickt: 25 + 47 + 75",
+      "a": "147",
+      "choices": [
+        "137",
+        "157",
+        "146"
+      ],
+      "info": "Erst 25 + 75 = 100, dann 100 + 47 = 147.",
+      "img": "💯"
+    },
+    {
+      "id": "006",
+      "q": "Rechne geschickt: 4 · 17 · 25",
+      "a": "1 700",
+      "choices": [
+        "1 600",
+        "1 725",
+        "170"
+      ],
+      "info": "Erst 4 · 25 = 100, dann 100 · 17 = 1 700.",
+      "img": "🧮"
+    },
+    {
+      "id": "007",
+      "q": "Rechne geschickt: 7 · 102",
+      "a": "714",
+      "choices": [
+        "704",
+        "724",
+        "7 014"
+      ],
+      "info": "Verteilen: 7 · 100 + 7 · 2 = 700 + 14 = 714.",
+      "img": "✂️"
+    },
+    {
+      "id": "008",
+      "q": "Rechne geschickt: 8 · 99",
+      "a": "792",
+      "choices": [
+        "782",
+        "800",
+        "798"
+      ],
+      "info": "8 · 100 − 8 · 1 = 800 − 8 = 792.",
+      "img": "🎯"
+    },
+    {
+      "id": "009",
+      "q": "Rechne geschickt: 13 · 7 + 13 · 3",
+      "a": "130",
+      "choices": [
+        "120",
+        "140",
+        "113"
+      ],
+      "info": "13 ausklammern: 13 · (7 + 3) = 13 · 10 = 130.",
+      "img": "📦"
+    },
+    {
+      "id": "010",
+      "q": "Rechne geschickt: 298 + 156",
+      "a": "454",
+      "choices": [
+        "444",
+        "456",
+        "464"
+      ],
+      "info": "298 ist fast 300: 300 + 156 = 456, dann 2 abziehen = 454.",
+      "img": "🏃"
+    },
+    {
+      "id": "011",
+      "q": "Rechne geschickt: 5 · 48",
+      "a": "240",
+      "choices": [
+        "220",
+        "250",
+        "200"
+      ],
+      "info": "Mal 5 = mal 10 und dann halbieren: 480 : 2 = 240.",
+      "img": "🖐️"
+    },
+    {
+      "id": "012",
+      "q": "Wann ist eine Zahl durch 2 teilbar?",
+      "a": "Wenn die letzte Ziffer gerade ist",
+      "choices": [
+        "Wenn die Quersumme gerade ist",
+        "Wenn die erste Ziffer gerade ist",
+        "Wenn sie auf 5 endet"
+      ],
+      "info": "Gerade Endziffern: 0, 2, 4, 6, 8. Beispiel: 3 578 ist durch 2 teilbar.",
+      "img": "👫"
+    },
+    {
+      "id": "013",
+      "q": "Wann ist eine Zahl durch 3 teilbar?",
+      "a": "Wenn ihre Quersumme durch 3 teilbar ist",
+      "choices": [
+        "Wenn sie auf 3 endet",
+        "Wenn die letzte Ziffer durch 3 teilbar ist",
+        "Wenn sie ungerade ist"
+      ],
+      "info": "Beispiel 471: 4 + 7 + 1 = 12 – durch 3 teilbar, also auch 471.",
+      "img": "🔺"
+    },
+    {
+      "id": "014",
+      "q": "Wann ist eine Zahl durch 5 teilbar?",
+      "a": "Wenn sie auf 0 oder 5 endet",
+      "choices": [
+        "Nur wenn sie auf 5 endet",
+        "Wenn ihre Quersumme 5 ist",
+        "Wenn sie ungerade ist"
+      ],
+      "info": "Die Fünferreihe endet immer abwechselnd auf 5 und 0: 5, 10, 15, 20 …",
+      "img": "⭐"
+    },
+    {
+      "id": "015",
+      "q": "Wann ist eine Zahl durch 4 teilbar?",
+      "a": "Wenn die letzten zwei Ziffern durch 4 teilbar sind",
+      "choices": [
+        "Wenn die letzte Ziffer durch 4 teilbar ist",
+        "Wenn die Quersumme durch 4 teilbar ist",
+        "Wenn sie gerade ist"
+      ],
+      "info": "Beispiel 1 316: 16 ist durch 4 teilbar, also auch 1 316.",
+      "img": "🍀"
+    },
+    {
+      "id": "016",
+      "q": "Wann ist eine Zahl durch 9 teilbar?",
+      "a": "Wenn ihre Quersumme durch 9 teilbar ist",
+      "choices": [
+        "Wenn sie auf 9 endet",
+        "Wenn ihre Quersumme durch 3 teilbar ist",
+        "Wenn sie ungerade ist"
+      ],
+      "info": "Beispiel 738: 7 + 3 + 8 = 18 – durch 9 teilbar, also auch 738.",
+      "img": "🕵️"
+    },
+    {
+      "id": "017",
+      "q": "Wann ist eine Zahl durch 10 teilbar?",
+      "a": "Wenn sie auf 0 endet",
+      "choices": [
+        "Wenn sie auf 1 endet",
+        "Wenn ihre Quersumme 10 ist",
+        "Wenn sie zweistellig ist"
+      ],
+      "info": "Alle Zehnerzahlen enden auf 0: 10, 20, 370, 5 000 …",
+      "img": "🔟"
+    },
+    {
+      "id": "018",
+      "q": "Welche Zahl ist durch 3 teilbar?",
+      "a": "2 451",
+      "choices": [
+        "2 452",
+        "2 453",
+        "2 455"
+      ],
+      "info": "Quersumme von 2 451: 2 + 4 + 5 + 1 = 12 – durch 3 teilbar.",
+      "img": "🔍"
+    },
+    {
+      "id": "019",
+      "q": "Welche Zahl ist durch 6 teilbar?",
+      "a": "354",
+      "choices": [
+        "351",
+        "356",
+        "344"
+      ],
+      "info": "Durch 6 teilbar heißt: durch 2 UND durch 3. 354 ist gerade und hat die Quersumme 12.",
+      "img": "🎲"
+    },
+    {
+      "id": "020",
+      "q": "Was ist eine Primzahl?",
+      "a": "Eine Zahl mit genau zwei Teilern: 1 und sich selbst",
+      "choices": [
+        "Jede ungerade Zahl",
+        "Eine Zahl, die durch 2 teilbar ist",
+        "Eine Zahl mit genau drei Teilern"
+      ],
+      "info": "Beispiele: 2, 3, 5, 7, 11, 13. Die 9 ist ungerade, aber keine Primzahl (9 = 3 · 3).",
+      "img": "💎"
+    },
+    {
+      "id": "021",
+      "q": "Welche Zahl ist eine Primzahl?",
+      "a": "29",
+      "choices": [
+        "27",
+        "33",
+        "39"
+      ],
+      "info": "27 = 3 · 9, 33 = 3 · 11, 39 = 3 · 13. Nur 29 hat keine weiteren Teiler.",
+      "img": "💎✨"
+    },
+    {
+      "id": "022",
+      "q": "Ist 1 eine Primzahl?",
+      "a": "Nein, sie hat nur einen Teiler",
+      "choices": [
+        "Ja, sie ist die kleinste",
+        "Ja, weil sie ungerade ist",
+        "Nein, weil sie gerade ist"
+      ],
+      "info": "Eine Primzahl braucht genau zwei verschiedene Teiler. Die 1 hat nur einen.",
+      "img": "☝️"
+    },
+    {
+      "id": "023",
+      "q": "Welche ist die einzige gerade Primzahl?",
+      "a": "2",
+      "choices": [
+        "4",
+        "0",
+        "6"
+      ],
+      "info": "Jede andere gerade Zahl ist durch 2 teilbar und hat damit mehr als zwei Teiler.",
+      "img": "✌️"
+    },
+    {
+      "id": "024",
+      "q": "Zerlege 60 in Primfaktoren.",
+      "a": "2 · 2 · 3 · 5",
+      "choices": [
+        "2 · 3 · 10",
+        "2 · 2 · 15",
+        "2 · 3 · 3 · 5"
+      ],
+      "info": "Weiter teilen, bis nur Primzahlen übrig sind: 60 = 2 · 30 = 2 · 2 · 15 = 2 · 2 · 3 · 5.",
+      "img": "🧱"
+    },
+    {
+      "id": "025",
+      "q": "Wie viele Primzahlen liegen zwischen 1 und 20?",
+      "a": "8",
+      "choices": [
+        "7",
+        "9",
+        "10"
+      ],
+      "info": "Es sind 2, 3, 5, 7, 11, 13, 17 und 19.",
+      "img": "🔢"
+    },
+    {
+      "id": "026",
+      "q": "12² = ?",
+      "a": "144",
+      "choices": [
+        "124",
+        "132",
+        "154"
+      ],
+      "info": "12² = 12 · 12 = 144. Früher nannte man 144 Stück „ein Gros“.",
+      "img": "🔲"
+    },
+    {
+      "id": "027",
+      "q": "15² = ?",
+      "a": "225",
+      "choices": [
+        "215",
+        "250",
+        "235"
+      ],
+      "info": "Trick bei 5 am Ende: 1 · 2 = 2, dann 25 anhängen → 225.",
+      "img": "🖐️✨"
+    },
+    {
+      "id": "028",
+      "q": "Welche Zahl mal sich selbst ergibt 196?",
+      "a": "14",
+      "choices": [
+        "13",
+        "16",
+        "12"
+      ],
+      "info": "14 · 14 = 196. Merke: 13² = 169 und 16² = 256.",
+      "img": "🔳"
+    },
+    {
+      "id": "029",
+      "q": "17² = ?",
+      "a": "289",
+      "choices": [
+        "279",
+        "299",
+        "269"
+      ],
+      "info": "17 · 17 = 10 · 17 + 7 · 17 = 170 + 119 = 289.",
+      "img": "🎂"
+    },
+    {
+      "id": "030",
+      "q": "20² = ?",
+      "a": "400",
+      "choices": [
+        "40",
+        "200",
+        "4 000"
+      ],
+      "info": "2² = 4, dann zwei Nullen anhängen: 400.",
+      "img": "🏁"
+    },
+    {
+      "id": "031",
+      "q": "Ich bin eine Quadratzahl zwischen 160 und 180. Wer bin ich?",
+      "a": "169",
+      "choices": [
+        "164",
+        "171",
+        "176"
+      ],
+      "info": "169 = 13 · 13. Die Nachbarn sind 12² = 144 und 14² = 196.",
+      "img": "🕵️🔍"
+    },
+    {
+      "id": "032",
+      "q": "37 · 1 000 = ?",
+      "a": "37 000",
+      "choices": [
+        "3 700",
+        "370 000",
+        "370"
+      ],
+      "info": "Mal 1 000 heißt: drei Nullen anhängen.",
+      "img": "🚀"
+    },
+    {
+      "id": "033",
+      "q": "45 000 : 100 = ?",
+      "a": "450",
+      "choices": [
+        "45",
+        "4 500",
+        "4 500 000"
+      ],
+      "info": "Durch 100 heißt: zwei Nullen wegstreichen.",
+      "img": "✂️💨"
+    },
+    {
+      "id": "034",
+      "q": "10⁵ = ?",
+      "a": "100 000",
+      "choices": [
+        "10 000",
+        "1 000 000",
+        "50"
+      ],
+      "info": "Die Hochzahl verrät die Anzahl der Nullen: 10⁵ hat 5 Nullen.",
+      "img": "🔟✨"
+    },
+    {
+      "id": "035",
+      "q": "3,7 · 100 = ?",
+      "a": "370",
+      "choices": [
+        "37",
+        "3,700",
+        "0,037"
+      ],
+      "info": "Mal 100: Das Komma wandert zwei Stellen nach rechts.",
+      "img": "➡️"
+    },
+    {
+      "id": "036",
+      "q": "6 · 4 000 = ?",
+      "a": "24 000",
+      "choices": [
+        "2 400",
+        "240 000",
+        "20 400"
+      ],
+      "info": "6 · 4 = 24, dann die drei Nullen anhängen: 24 000.",
+      "img": "💰"
+    }
+  ]
+}

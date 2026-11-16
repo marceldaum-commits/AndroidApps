@@ -1,0 +1,457 @@
+{
+  "id": "s1-mathe-pythagoras-trigo",
+  "version": 1,
+  "title": "Pythagoras & Trigonometrie",
+  "subject": "mathe",
+  "grades": [
+    9,
+    10
+  ],
+  "emoji": "📐",
+  "tier": "free",
+  "description": "Rechtwinklige Dreiecke meistern: Satz des Pythagoras, pythagoreische Tripel, Sinus, Kosinus, Tangens und besondere Werte.",
+  "intro": [
+    {
+      "img": "📐🏛️",
+      "text": "Wusstest du? Schon vor über 2 500 Jahren kannte man den Satz des Pythagoras. Baumeister nutzten ihn, um rechte Winkel abzustecken."
+    },
+    {
+      "img": "🔺➕",
+      "text": "Im rechtwinkligen Dreieck gilt a² + b² = c². Die beiden Quadrate über den Katheten sind zusammen so groß wie das über der Hypotenuse."
+    },
+    {
+      "img": "👀📏",
+      "text": "Von einem Winkel aus gesehen: Die Gegenkathete liegt ihm gegenüber, die Ankathete liegt an ihm an. Die Hypotenuse ist die längste Seite."
+    },
+    {
+      "img": "🐔🏠",
+      "text": "Merkspruch: „GAGA HühnerHof AG“. Oben G, A, G – unten H, H, A. Also: sin = G/H, cos = A/H, tan = G/A."
+    },
+    {
+      "img": "🚀🏆",
+      "text": "Los geht's! Miss, rechne und knack die Dreiecke!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "In welchem Dreieck gilt der Satz des Pythagoras?",
+      "a": "Im rechtwinkligen Dreieck",
+      "choices": [
+        "In jedem Dreieck",
+        "Im gleichseitigen Dreieck",
+        "Im stumpfwinkligen Dreieck"
+      ],
+      "info": "Nur mit einem 90°-Winkel gilt a² + b² = c².",
+      "img": "📐"
+    },
+    {
+      "id": "002",
+      "q": "Wie heißen die beiden Seiten, die den rechten Winkel bilden?",
+      "a": "Katheten",
+      "choices": [
+        "Hypotenusen",
+        "Diagonalen",
+        "Mittelsenkrechten"
+      ],
+      "info": "Die Katheten sind die beiden Schenkel des rechten Winkels. Gegenüber liegt die Hypotenuse.",
+      "img": "📐📏"
+    },
+    {
+      "id": "003",
+      "q": "Welche Seite ist im rechtwinkligen Dreieck immer die längste?",
+      "a": "Die Hypotenuse",
+      "choices": [
+        "Die Ankathete",
+        "Die Gegenkathete",
+        "Die kürzere Kathete"
+      ],
+      "info": "Sie liegt dem größten Winkel (90°) gegenüber – und der größte Winkel hat die längste Seite.",
+      "img": "🏆📏"
+    },
+    {
+      "id": "004",
+      "q": "Katheten 6 cm und 8 cm. Wie lang ist die Hypotenuse?",
+      "a": "10 cm",
+      "choices": [
+        "14 cm",
+        "12 cm",
+        "100 cm"
+      ],
+      "info": "6² + 8² = 36 + 64 = 100, und √100 = 10.",
+      "img": "🔺"
+    },
+    {
+      "id": "005",
+      "q": "Katheten 8 cm und 15 cm. Wie lang ist die Hypotenuse?",
+      "a": "17 cm",
+      "choices": [
+        "23 cm",
+        "16 cm",
+        "13 cm"
+      ],
+      "info": "8² + 15² = 64 + 225 = 289, und √289 = 17.",
+      "img": "🔺📏"
+    },
+    {
+      "id": "006",
+      "q": "Hypotenuse 25 cm, eine Kathete 7 cm. Wie lang ist die andere Kathete?",
+      "a": "24 cm",
+      "choices": [
+        "18 cm",
+        "26 cm",
+        "32 cm"
+      ],
+      "info": "25² − 7² = 625 − 49 = 576, und √576 = 24.",
+      "img": "🧩"
+    },
+    {
+      "id": "007",
+      "q": "Wie berechnet man die Kathete a, wenn c die Hypotenuse ist?",
+      "a": "a = √(c² − b²)",
+      "choices": [
+        "a = √(c² + b²)",
+        "a = c − b",
+        "a = √(b² − c²)"
+      ],
+      "info": "Für eine Kathete wird abgezogen: Die Hypotenuse ist ja die längste Seite.",
+      "img": "🔑"
+    },
+    {
+      "id": "008",
+      "q": "Was ist ein pythagoreisches Tripel?",
+      "a": "Drei natürliche Zahlen mit a² + b² = c²",
+      "choices": [
+        "Drei gleich lange Seiten",
+        "Drei Zahlen mit a + b = c",
+        "Drei Winkel mit 180° Summe"
+      ],
+      "info": "Das bekannteste ist 3, 4, 5. Auch jedes Vielfache, z. B. 6, 8, 10, ist eines.",
+      "img": "3️⃣✨"
+    },
+    {
+      "id": "009",
+      "q": "Welches Zahlentripel ist pythagoreisch?",
+      "a": "9, 40, 41",
+      "choices": [
+        "6, 8, 11",
+        "4, 5, 6",
+        "7, 9, 12"
+      ],
+      "info": "9² + 40² = 81 + 1 600 = 1 681 = 41².",
+      "img": "💎"
+    },
+    {
+      "id": "010",
+      "q": "Ein Dreieck hat die Seiten 5 cm, 6 cm und 8 cm. Ist es rechtwinklig?",
+      "a": "Nein, denn 25 + 36 ≠ 64",
+      "choices": [
+        "Ja, denn 25 + 36 = 64",
+        "Ja, denn 8 ist die längste Seite",
+        "Ja, denn 5 + 6 > 8"
+      ],
+      "info": "Umkehrung des Pythagoras: Nur wenn a² + b² = c² gilt, ist das Dreieck rechtwinklig. Hier ist 61 ≠ 64.",
+      "img": "🕵️"
+    },
+    {
+      "id": "011",
+      "q": "Eine 2,5 m lange Leiter steht unten 0,7 m von der Wand weg. Wie hoch reicht sie?",
+      "a": "2,4 m",
+      "choices": [
+        "1,8 m",
+        "3,2 m",
+        "2,6 m"
+      ],
+      "info": "2,5² − 0,7² = 6,25 − 0,49 = 5,76, und √5,76 = 2,4.",
+      "img": "🏠📏"
+    },
+    {
+      "id": "012",
+      "q": "Ein Bildschirm ist 48 cm breit und 36 cm hoch. Wie lang ist die Diagonale?",
+      "a": "60 cm",
+      "choices": [
+        "84 cm",
+        "54 cm",
+        "42 cm"
+      ],
+      "info": "48² + 36² = 2 304 + 1 296 = 3 600, und √3 600 = 60.",
+      "img": "📺"
+    },
+    {
+      "id": "013",
+      "q": "Eine Wiese ist 20 m lang und 21 m breit. Wie lang ist der Weg quer über die Diagonale?",
+      "a": "29 m",
+      "choices": [
+        "41 m",
+        "25 m",
+        "31 m"
+      ],
+      "info": "20² + 21² = 400 + 441 = 841, und √841 = 29. Das spart 12 m!",
+      "img": "🏃🌿"
+    },
+    {
+      "id": "014",
+      "q": "Wie lang ist die Höhe eines gleichseitigen Dreiecks mit Seite a?",
+      "a": "h = a/2 · √3",
+      "choices": [
+        "h = a · √2",
+        "h = a/2",
+        "h = a · √3"
+      ],
+      "info": "Die Höhe teilt es in zwei rechtwinklige Dreiecke: h² = a² − (a/2)² = ¾a².",
+      "img": "🔺✂️"
+    },
+    {
+      "id": "015",
+      "q": "Wie heißt die Kathete, die dem Winkel α gegenüberliegt?",
+      "a": "Gegenkathete von α",
+      "choices": [
+        "Ankathete von α",
+        "Hypotenuse",
+        "Seitenhalbierende"
+      ],
+      "info": "„Gegen“ wie gegenüber: Sie berührt den Winkel α nicht.",
+      "img": "👀"
+    },
+    {
+      "id": "016",
+      "q": "Wie heißt die Kathete, die am Winkel α anliegt?",
+      "a": "Ankathete von α",
+      "choices": [
+        "Gegenkathete von α",
+        "Hypotenuse",
+        "Seitenhalbierende"
+      ],
+      "info": "„An“ wie anliegen: Sie bildet zusammen mit der Hypotenuse den Winkel α.",
+      "img": "🤝"
+    },
+    {
+      "id": "017",
+      "q": "sin α = ?",
+      "a": "Gegenkathete : Hypotenuse",
+      "choices": [
+        "Ankathete : Hypotenuse",
+        "Gegenkathete : Ankathete",
+        "Hypotenuse : Gegenkathete"
+      ],
+      "info": "Aus „GAGA HühnerHof AG“: G über H.",
+      "img": "🐔"
+    },
+    {
+      "id": "018",
+      "q": "cos α = ?",
+      "a": "Ankathete : Hypotenuse",
+      "choices": [
+        "Gegenkathete : Hypotenuse",
+        "Gegenkathete : Ankathete",
+        "Hypotenuse : Ankathete"
+      ],
+      "info": "Aus „GAGA HühnerHof AG“: A über H.",
+      "img": "🏠"
+    },
+    {
+      "id": "019",
+      "q": "tan α = ?",
+      "a": "Gegenkathete : Ankathete",
+      "choices": [
+        "Ankathete : Gegenkathete",
+        "Gegenkathete : Hypotenuse",
+        "Ankathete : Hypotenuse"
+      ],
+      "info": "Aus „GAGA HühnerHof AG“: G über A. Der Tangens gibt die Steigung an.",
+      "img": "⛷️"
+    },
+    {
+      "id": "020",
+      "q": "sin 30° = ?",
+      "a": "0,5",
+      "choices": [
+        "√3/2",
+        "√2/2",
+        "1"
+      ],
+      "info": "Ein 30°-Winkel: Die Gegenkathete ist genau halb so lang wie die Hypotenuse.",
+      "img": "🍰"
+    },
+    {
+      "id": "021",
+      "q": "cos 60° = ?",
+      "a": "0,5",
+      "choices": [
+        "√3/2",
+        "√2/2",
+        "0"
+      ],
+      "info": "cos 60° = sin 30° = 0,5. Sinus und Kosinus tauschen bei 30° und 60° die Werte.",
+      "img": "🍕"
+    },
+    {
+      "id": "022",
+      "q": "sin 45° = ?",
+      "a": "√2/2",
+      "choices": [
+        "0,5",
+        "√3/2",
+        "1"
+      ],
+      "info": "√2/2 ≈ 0,707. Bei 45° sind Sinus und Kosinus gleich groß.",
+      "img": "📐✨"
+    },
+    {
+      "id": "023",
+      "q": "cos 30° = ?",
+      "a": "√3/2",
+      "choices": [
+        "0,5",
+        "√2/2",
+        "√3"
+      ],
+      "info": "√3/2 ≈ 0,866. Gleicher Wert wie sin 60°.",
+      "img": "🔺✨"
+    },
+    {
+      "id": "024",
+      "q": "tan 45° = ?",
+      "a": "1",
+      "choices": [
+        "0,5",
+        "0",
+        "√2/2"
+      ],
+      "info": "Bei 45° sind beide Katheten gleich lang: Gegenkathete : Ankathete = 1.",
+      "img": "⛰️"
+    },
+    {
+      "id": "025",
+      "q": "sin 90° = ?",
+      "a": "1",
+      "choices": [
+        "0",
+        "0,5",
+        "90"
+      ],
+      "info": "Merke: sin 0° = 0 und sin 90° = 1.",
+      "img": "⬆️"
+    },
+    {
+      "id": "026",
+      "q": "cos 0° = ?",
+      "a": "1",
+      "choices": [
+        "0",
+        "0,5",
+        "−1"
+      ],
+      "info": "Merke: cos 0° = 1 und cos 90° = 0.",
+      "img": "➡️"
+    },
+    {
+      "id": "027",
+      "q": "Welche Beziehung gilt für jeden Winkel α zwischen 0° und 90°?",
+      "a": "sin α = cos(90° − α)",
+      "choices": [
+        "sin α = cos α",
+        "sin α = tan(90° − α)",
+        "sin α + cos α = 1"
+      ],
+      "info": "Die Gegenkathete von α ist die Ankathete des anderen spitzen Winkels 90° − α.",
+      "img": "🔁"
+    },
+    {
+      "id": "028",
+      "q": "(sin α)² + (cos α)² = ?",
+      "a": "1",
+      "choices": [
+        "0",
+        "2",
+        "sin α · cos α"
+      ],
+      "info": "Das ist Pythagoras im Einheitskreis: G² + A² = H², geteilt durch H².",
+      "img": "🎯"
+    },
+    {
+      "id": "029",
+      "q": "Welcher Wert ist für sin α unmöglich?",
+      "a": "1,2",
+      "choices": [
+        "0,8",
+        "0,3",
+        "0,99"
+      ],
+      "info": "Die Gegenkathete ist nie länger als die Hypotenuse, darum ist sin α höchstens 1.",
+      "img": "🚫"
+    },
+    {
+      "id": "030",
+      "q": "Hypotenuse 10 cm, α = 30°. Wie lang ist die Gegenkathete von α?",
+      "a": "5 cm",
+      "choices": [
+        "8,7 cm",
+        "20 cm",
+        "3 cm"
+      ],
+      "info": "Gegenkathete = Hypotenuse · sin α = 10 cm · 0,5 = 5 cm.",
+      "img": "✂️"
+    },
+    {
+      "id": "031",
+      "q": "Ankathete 8 m, α = 45°. Wie lang ist die Gegenkathete von α?",
+      "a": "8 m",
+      "choices": [
+        "4 m",
+        "11,3 m",
+        "5,7 m"
+      ],
+      "info": "Gegenkathete = Ankathete · tan 45° = 8 m · 1 = 8 m.",
+      "img": "🌲"
+    },
+    {
+      "id": "032",
+      "q": "Gegenkathete 3 cm, Hypotenuse 6 cm. Wie groß ist α?",
+      "a": "30°",
+      "choices": [
+        "60°",
+        "45°",
+        "50°"
+      ],
+      "info": "sin α = 3 : 6 = 0,5 – und sin 30° = 0,5.",
+      "img": "🔍"
+    },
+    {
+      "id": "033",
+      "q": "Mit welcher Taschenrechner-Funktion bestimmt man α aus sin α = 0,5?",
+      "a": "sin⁻¹ (arcsin)",
+      "choices": [
+        "sin",
+        "1/x",
+        "√"
+      ],
+      "info": "Die Umkehrfunktion sin⁻¹ liefert den Winkel: sin⁻¹(0,5) = 30°.",
+      "img": "🧮"
+    },
+    {
+      "id": "034",
+      "q": "Ein Baum wirft 20 m Schatten, die Sonne steht 45° hoch. Wie hoch ist der Baum?",
+      "a": "20 m",
+      "choices": [
+        "10 m",
+        "28,3 m",
+        "14,1 m"
+      ],
+      "info": "tan 45° = Höhe : Schatten = 1, also Höhe = Schatten = 20 m.",
+      "img": "🌳☀️"
+    },
+    {
+      "id": "035",
+      "q": "Eine Drachenschnur ist 50 m lang und steigt mit 30° an. Wie hoch ist der Drachen?",
+      "a": "25 m",
+      "choices": [
+        "43,3 m",
+        "50 m",
+        "30 m"
+      ],
+      "info": "Höhe = 50 m · sin 30° = 25 m (gerechnet ab der Hand, Schnur straff).",
+      "img": "🌬️🎈"
+    }
+  ]
+}

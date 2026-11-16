@@ -1,0 +1,457 @@
+{
+  "id": "gs-ritter-burgen",
+  "version": 1,
+  "title": "Ritter und Burgen",
+  "subject": "geschichte",
+  "grades": [
+    3,
+    4
+  ],
+  "emoji": "🏰",
+  "tier": "free",
+  "description": "Zugbrücke, Bergfried und Ritterschlag: So lebten Ritter, Knappen und Handwerker im Mittelalter.",
+  "intro": [
+    {
+      "img": "🏰⏳",
+      "text": "Wusstest du? Ritter und Burgen gab es im Mittelalter. Das ist lange her – etwa 500 bis 1000 Jahre!"
+    },
+    {
+      "img": "🌉💧",
+      "text": "Eine Burg war gut geschützt: dicke Mauern, ein Burggraben und eine Zugbrücke, die man hochziehen konnte."
+    },
+    {
+      "img": "👦🐴⚔️",
+      "text": "Ritter wurde man nicht einfach so: Erst war man Page, dann Knappe. Erst mit etwa 21 Jahren kam der Ritterschlag."
+    },
+    {
+      "img": "🔨🍞",
+      "text": "Auf der Burg und im Dorf halfen viele mit: Bauern, Schmiede, Müller, Bäcker und Töpfer."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's, edles Burgfräulein und tapferer Knappe! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie heißt die Zeit der Ritter und Burgen?",
+      "a": "Mittelalter",
+      "choices": [
+        "Steinzeit",
+        "Antike",
+        "Neuzeit"
+      ],
+      "info": "Das Mittelalter dauerte etwa von 500 bis 1500 nach Christus.",
+      "img": "🏰⏳"
+    },
+    {
+      "id": "002",
+      "q": "Wie heißt der Graben rund um eine Burg?",
+      "a": "Burggraben",
+      "choices": [
+        "Burgbach",
+        "Wallweg",
+        "Mauerrinne"
+      ],
+      "info": "Der Burggraben war oft mit Wasser gefüllt. So kamen Feinde schwer an die Mauer.",
+      "img": "🏰💧"
+    },
+    {
+      "id": "003",
+      "q": "Womit kam man über den Burggraben? Man konnte sie hochziehen.",
+      "a": "Zugbrücke",
+      "choices": [
+        "Hängebrücke",
+        "Steinbrücke",
+        "Holzsteg"
+      ],
+      "info": "Bei Gefahr zog man die Zugbrücke mit Ketten hoch. Dann war das Tor zu.",
+      "img": "🌉⛓️"
+    },
+    {
+      "id": "004",
+      "q": "Wie heißt das Gitter, das man vor dem Burgtor herunterlassen konnte?",
+      "a": "Fallgatter",
+      "choices": [
+        "Gartenzaun",
+        "Rolltor",
+        "Fensterladen"
+      ],
+      "info": "Das Fallgatter aus Holz und Eisen sauste von oben herab und versperrte das Tor.",
+      "img": "🚪⬇️"
+    },
+    {
+      "id": "005",
+      "q": "Wie heißen die zahnförmigen Mauerstücke oben auf der Burgmauer?",
+      "a": "Zinnen",
+      "choices": [
+        "Erker",
+        "Gauben",
+        "Pfeiler"
+      ],
+      "info": "Hinter den Zinnen konnten sich die Verteidiger verstecken.",
+      "img": "🏰🦷"
+    },
+    {
+      "id": "006",
+      "q": "Wie heißt der Gang oben auf der Burgmauer?",
+      "a": "Wehrgang",
+      "choices": [
+        "Laubengang",
+        "Kreuzgang",
+        "Hausflur"
+      ],
+      "info": "Auf dem Wehrgang liefen die Wächter und hielten Ausschau.",
+      "img": "🧱👀"
+    },
+    {
+      "id": "007",
+      "q": "Wie heißen die schmalen Schlitze in der Mauer, durch die man mit Pfeil und Bogen schoss?",
+      "a": "Schießscharten",
+      "choices": [
+        "Bullaugen",
+        "Dachfenster",
+        "Lüftungsrohre"
+      ],
+      "info": "Von innen waren sie breit, außen ganz schmal. So war der Schütze gut geschützt.",
+      "img": "🏹🧱"
+    },
+    {
+      "id": "008",
+      "q": "Wofür diente der Bergfried, der höchste Turm der Burg?",
+      "a": "Als Wachturm und Zufluchtsort",
+      "choices": [
+        "Als Pferdestall",
+        "Als Küche",
+        "Als Kirche"
+      ],
+      "info": "Der Eingang lag oft hoch oben. Man kam oft nur über eine Leiter hinein, die man hochziehen konnte.",
+      "img": "🗼🛡️"
+    },
+    {
+      "id": "009",
+      "q": "Wie heißt das Wohnhaus des Burgherrn mit dem großen Festsaal?",
+      "a": "Palas",
+      "choices": [
+        "Bergfried",
+        "Zwinger",
+        "Torhaus"
+      ],
+      "info": "Im Palas wohnte die Familie des Burgherrn. Im Saal wurde gefeiert.",
+      "img": "🏰🍗"
+    },
+    {
+      "id": "010",
+      "q": "Warum hatte eine Burg einen Brunnen?",
+      "a": "Damit es bei einer Belagerung Wasser gab",
+      "choices": [
+        "Zum Baden der Pferde",
+        "Als Schwimmbecken",
+        "Für Feuerwerk"
+      ],
+      "info": "Bei einer Belagerung konnte niemand hinaus. Ohne Wasser hätte man aufgeben müssen.",
+      "img": "💧⬇️"
+    },
+    {
+      "id": "011",
+      "q": "Warum bauten viele Ritter ihre Burg auf einem Berg?",
+      "a": "Feinde sah man früh, Angriffe waren schwer",
+      "choices": [
+        "Dort war es wärmer",
+        "Dort gab es mehr Wasser",
+        "Pferde klettern gern"
+      ],
+      "info": "Solche Burgen heißen Höhenburgen. Von oben sah man weit ins Land.",
+      "img": "⛰️🏰"
+    },
+    {
+      "id": "012",
+      "q": "Wie heißt eine Burg, die von Wasser umgeben ist?",
+      "a": "Wasserburg",
+      "choices": [
+        "Höhenburg",
+        "Felsenburg",
+        "Sandburg"
+      ],
+      "info": "Wasserburgen stehen im flachen Land. Das Wasser ersetzt den Berg als Schutz.",
+      "img": "🏰🌊"
+    },
+    {
+      "id": "013",
+      "q": "Mit etwa wie vielen Jahren wurde ein Junge Page?",
+      "a": "Mit etwa 7 Jahren",
+      "choices": [
+        "Mit etwa 2 Jahren",
+        "Mit etwa 21 Jahren",
+        "Mit etwa 30 Jahren"
+      ],
+      "info": "Der Page zog dafür von zu Hause auf eine fremde Burg.",
+      "img": "👦7️⃣"
+    },
+    {
+      "id": "014",
+      "q": "Was lernte ein Page?",
+      "a": "Gutes Benehmen und bei Tisch bedienen",
+      "choices": [
+        "Schwerter schmieden",
+        "Burgen bauen",
+        "Felder pflügen"
+      ],
+      "info": "Dazu kamen Reiten, Singen und höfliche Umgangsformen.",
+      "img": "🍽️🙇"
+    },
+    {
+      "id": "015",
+      "q": "Mit etwa 14 Jahren wurde der Page zum …?",
+      "a": "Knappen",
+      "choices": [
+        "Ritter",
+        "Mönch",
+        "Herold"
+      ],
+      "info": "Als Knappe begleitete er einen Ritter und lernte von ihm.",
+      "img": "🐴🛡️"
+    },
+    {
+      "id": "016",
+      "q": "Was tat ein Knappe?",
+      "a": "Er diente einem Ritter und pflegte Pferd und Rüstung",
+      "choices": [
+        "Er backte das Brot für die Burg",
+        "Er regierte das Land",
+        "Er schrieb Bücher im Kloster"
+      ],
+      "info": "Er übte auch Reiten und Kämpfen mit Schwert und Lanze.",
+      "img": "🐴🧽"
+    },
+    {
+      "id": "017",
+      "q": "Wie heißt die Feier, bei der ein Knappe Ritter wurde?",
+      "a": "Ritterschlag",
+      "choices": [
+        "Ritterfest",
+        "Knappentaufe",
+        "Burgweihe"
+      ],
+      "info": "Dabei berührte ein Ritter oder Fürst den Knappen mit dem Schwert oder der Hand.",
+      "img": "⚔️👑"
+    },
+    {
+      "id": "018",
+      "q": "Mit etwa wie vielen Jahren wurde ein Knappe meist zum Ritter?",
+      "a": "Mit etwa 21 Jahren",
+      "choices": [
+        "Mit etwa 7 Jahren",
+        "Mit etwa 14 Jahren",
+        "Mit etwa 50 Jahren"
+      ],
+      "info": "Page – Knappe – Ritter: Die Ausbildung dauerte viele Jahre.",
+      "img": "🛡️2️⃣1️⃣"
+    },
+    {
+      "id": "019",
+      "q": "Woraus bestand ein Kettenhemd?",
+      "a": "Aus vielen kleinen Eisenringen",
+      "choices": [
+        "Aus Leder",
+        "Aus Holzplättchen",
+        "Aus dickem Stoff"
+      ],
+      "info": "Tausende Ringe wurden ineinander gehängt. Das dauerte sehr lange.",
+      "img": "⛓️👕"
+    },
+    {
+      "id": "020",
+      "q": "Woran erkannte man einen Ritter unter dem geschlossenen Helm?",
+      "a": "Am Wappen auf dem Schild",
+      "choices": [
+        "An seiner Stimme",
+        "Am Namen auf dem Rücken",
+        "An seinen Schuhen"
+      ],
+      "info": "Jede Ritterfamilie hatte ihr eigenes Wappen mit Farben und Tieren.",
+      "img": "🛡️🦁"
+    },
+    {
+      "id": "021",
+      "q": "Wie heißt das starke Pferd eines Ritters für Kampf und Turnier?",
+      "a": "Streitross",
+      "choices": [
+        "Pony",
+        "Ackergaul",
+        "Esel"
+      ],
+      "info": "Ein gutes Streitross war sehr teuer und gut ausgebildet.",
+      "img": "🐴⚔️"
+    },
+    {
+      "id": "022",
+      "q": "Konnte ein Ritter in Plattenrüstung allein aufs Pferd steigen?",
+      "a": "Ja, die Rüstung war beweglich",
+      "choices": [
+        "Nein, nur mit einem Kran",
+        "Nein, er musste laufen",
+        "Nein, Ritter ritten nie"
+      ],
+      "info": "Dass Ritter mit einem Kran aufs Pferd gehoben wurden, ist eine Legende.",
+      "img": "🐴💪"
+    },
+    {
+      "id": "023",
+      "q": "Wie schwer war eine Plattenrüstung ungefähr?",
+      "a": "Etwa 15 bis 25 Kilogramm",
+      "choices": [
+        "Etwa 1 Kilogramm",
+        "Etwa 200 Kilogramm",
+        "Etwa 500 Kilogramm"
+      ],
+      "info": "Das Gewicht war über den ganzen Körper verteilt. So konnte man sich gut bewegen.",
+      "img": "⚖️🛡️"
+    },
+    {
+      "id": "024",
+      "q": "Was war ein Turnier?",
+      "a": "Ein Kampfspiel der Ritter",
+      "choices": [
+        "Ein Gerichtstag",
+        "Eine Kirchenfeier",
+        "Ein Pferdemarkt"
+      ],
+      "info": "Beim Turnier zeigten Ritter, wie gut sie reiten und kämpfen konnten.",
+      "img": "🏇🎺"
+    },
+    {
+      "id": "025",
+      "q": "Was versuchte ein Ritter beim Lanzenstechen?",
+      "a": "Den Gegner mit der Lanze zu treffen",
+      "choices": [
+        "Einen Ball ins Tor zu schießen",
+        "Am schnellsten um die Burg zu reiten",
+        "Ein Lied zu singen"
+      ],
+      "info": "Die Lanzen waren oft stumpf, damit sich niemand schwer verletzte.",
+      "img": "🏇🏇"
+    },
+    {
+      "id": "026",
+      "q": "Wer kannte beim Turnier alle Wappen und rief die Ritter aus?",
+      "a": "Herold",
+      "choices": [
+        "Hofnarr",
+        "Schmied",
+        "Mönch"
+      ],
+      "info": "Der Herold war ein Wappen-Experte und verkündete die Namen.",
+      "img": "📯🛡️"
+    },
+    {
+      "id": "027",
+      "q": "Wer unterhielt an Fürstenhöfen die Leute mit Späßen?",
+      "a": "Hofnarr",
+      "choices": [
+        "Herold",
+        "Knappe",
+        "Burgvogt"
+      ],
+      "info": "Der Hofnarr trug oft bunte Kleidung mit Glöckchen.",
+      "img": "🤡🔔"
+    },
+    {
+      "id": "028",
+      "q": "Womit aßen die Menschen im Mittelalter meist?",
+      "a": "Mit Messer, Löffel und Fingern",
+      "choices": [
+        "Mit Gabel und Messer",
+        "Mit Stäbchen",
+        "Mit Plastikbesteck"
+      ],
+      "info": "Die Gabel wurde bei uns erst viel später üblich.",
+      "img": "🔪🥄✋"
+    },
+    {
+      "id": "029",
+      "q": "Wie wurden Räume auf der Burg geheizt?",
+      "a": "Mit Feuer im Kamin oder Ofen",
+      "choices": [
+        "Mit Heizkörpern",
+        "Mit Strom",
+        "Mit einer Gasheizung"
+      ],
+      "info": "Trotzdem war es im Winter oft kalt und zugig auf der Burg.",
+      "img": "🔥🏰"
+    },
+    {
+      "id": "030",
+      "q": "Womit machte man abends Licht?",
+      "a": "Mit Kerzen, Fackeln und Öllampen",
+      "choices": [
+        "Mit Glühbirnen",
+        "Mit Taschenlampen",
+        "Mit Leuchtreklame"
+      ],
+      "info": "Kerzen aus Bienenwachs waren teuer. Viele nahmen Talg aus Tierfett.",
+      "img": "🕯️🔥"
+    },
+    {
+      "id": "031",
+      "q": "Wer arbeitete auf den Feldern und gab dem Burgherrn Abgaben?",
+      "a": "Die Bauern",
+      "choices": [
+        "Die Ritter",
+        "Die Knappen",
+        "Die Herolde"
+      ],
+      "info": "Die meisten Menschen im Mittelalter waren Bauern.",
+      "img": "🌾🐄"
+    },
+    {
+      "id": "032",
+      "q": "Welcher Handwerker machte Hufeisen?",
+      "a": "Schmied",
+      "choices": [
+        "Bäcker",
+        "Weber",
+        "Töpfer"
+      ],
+      "info": "Der Schmied machte Eisen im Feuer heiß und formte es mit dem Hammer.",
+      "img": "🔨🔥"
+    },
+    {
+      "id": "033",
+      "q": "Wer mahlte das Korn zu Mehl?",
+      "a": "Müller",
+      "choices": [
+        "Bäcker",
+        "Schmied",
+        "Gerber"
+      ],
+      "info": "Die Mühle wurde von Wasser oder Wind angetrieben.",
+      "img": "🌾⚙️"
+    },
+    {
+      "id": "034",
+      "q": "Wer formte Krüge und Schüsseln aus Ton?",
+      "a": "Töpfer",
+      "choices": [
+        "Weber",
+        "Müller",
+        "Böttcher"
+      ],
+      "info": "Der Töpfer drehte den Ton auf der Töpferscheibe und brannte ihn im Ofen.",
+      "img": "🏺🔄"
+    },
+    {
+      "id": "035",
+      "q": "Welcher Handwerker baute Fässer aus Holz?",
+      "a": "Böttcher",
+      "choices": [
+        "Gerber",
+        "Müller",
+        "Weber"
+      ],
+      "info": "Fässer brauchte man für Wein, Bier, Wasser und Salzfleisch.",
+      "img": "🛢️🔨"
+    }
+  ]
+}

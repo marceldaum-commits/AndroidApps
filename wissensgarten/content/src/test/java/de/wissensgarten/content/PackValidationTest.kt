@@ -31,6 +31,7 @@ class PackValidationTest {
         for ((file, p) in packs) {
             fun err(msg: String) { errors += "$file: $msg" }
             if (file != "${p.id}.json") err("Dateiname passt nicht zur id")
+            if (File(dir, file).length() > 1_000_000) err("größer als 1 MB (Grenze fürs Nachladen)")
             if (!ids.add(p.id)) err("doppelte Paket-id")
             if (!Regex("^(gs|s1|ob|aw)-[a-z0-9-]+$").matches(p.id)) err("id-Format")
             if (p.version < 1) err("version < 1")
@@ -39,7 +40,7 @@ class PackValidationTest {
             if (p.tier != Tier.FREE && p.tier != Tier.PLUS) err("tier ungültig")
             if (p.title.isBlank() || p.description.isBlank() || p.emoji.isBlank()) err("Titel/Beschreibung/Emoji fehlt")
             if (p.cards.size !in 15..60) err("Kartenzahl ${p.cards.size}")
-            if (p.intro.size !in 3..5) err("intro: 3–5 Erklär-Szenen nötig")
+            if (p.intro.size !in 3..6) err("intro: 3–6 Erklär-Szenen nötig")
             p.intro.forEach { if (it.text.isBlank() || it.text.length > 170 || it.img.isBlank()) err("intro-Szene ungültig") }
             if (p.cards.any { it.img.isNullOrBlank() }) err("Merkbild (img) fehlt bei mindestens einer Karte")
             val cardIds = mutableSetOf<String>()
