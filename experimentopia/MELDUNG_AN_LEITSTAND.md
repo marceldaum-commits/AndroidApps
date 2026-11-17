@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 0.4.0 vom 17.11.2026: Bio-Dschungel, Stoffe trennen, Malkasten
+
+- **Neue Insel Bio-Dschungel** (Kl. 3–10, neues Fach Biologie): Vererbung nach Mendel mit Kreuzungsquadrat und Aussaat, Blutgruppen, Osmose/Plasmolyse,
+  Nährstoffnachweise, Enzym Amylase, Fotosynthese (Wasserpest), Räuber-Beute. Dazu **Stoffe trennen + Chromatografie** (Chemie) und **Malkasten** (Licht & Klang).
+- **180 Versuche** (vorher 142), 18 Fachbereiche, 30 Geräte im Freien Labor. Alle Antworten aus Modellen berechnet und getestet (neu: `BiologyTest`).
+- Grundlage: Lehrpläne/Beispielcurricula (BW Genetik 9/10, Nährstoffnachweise 5/6, Stofftrennung 5/6) – Quellen in `docs/RECHERCHE.md`. Eigene Texte, nichts kopiert.
+- **App-Karte bitte anpassen:** „Klasse 3–10 · Physik, Chemie & Biologie“.
+
 ## 16.11.2026 – Version 0.3.0 vom 16.11.2026: doppelt so viele Versuche, Themensuche
 
 - **142 Versuche** (vorher 71) in 13 Fachbereichen, neu: Newtonsche Gesetze (Wagen mit Motor, Skateboards). 7 neue Reaktionsgleichungen, neue Stoffe.

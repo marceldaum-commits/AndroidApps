@@ -20,10 +20,10 @@ android {
         applicationId = "de.experimentopia.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 3
-        versionName = "0.3.0"
+        versionCode = 4
+        versionName = "0.4.0"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
-        buildConfigField("String", "VERSION_DATE", "\"16.11.2026\"")
+        buildConfigField("String", "VERSION_DATE", "\"17.11.2026\"")
     }
 
     // Zwei Fassungen derselben App (gleicher Paketname, gleicher Schlüssel):

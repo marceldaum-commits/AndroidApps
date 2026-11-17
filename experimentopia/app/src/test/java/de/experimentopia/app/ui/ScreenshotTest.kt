@@ -110,10 +110,20 @@ class ScreenshotTest {
     @Test fun cart() = lab("n3", "41_newton_wagen", settle = 3000, prepare = { it.tap("Los!") })
     @Test fun skate() = lab("n2", "42_skateboards", settle = 1500, prepare = { it.tap("Abstoßen") })
     @Test fun mercury() = lab("w10", "43_quecksilber", settle = 2500, prepare = { it.tap("kleiner Nagel"); it.tap("Goldbarren") })
+    @Test fun mendel() = lab("g2", "44_mendel_erbsen", settle = 2500, prepare = { it.tap("Kreuzen"); it.tap("säen") })
+    @Test fun bloodGroups() = lab("g6", "45_blutgruppen", prepare = { it.tap("Kreuzen") })
+    @Test fun osmosis() = lab("o3", "46_osmose_zwiebel", settle = 3500, prepare = { it.tap("30 Minuten warten") })
+    @Test fun food() = lab("e1", "47_staerke_nachweis", settle = 2000, prepare = { listOf("Kartoffel", "Brot", "Butter").forEach { t -> it.tap(t) } })
+    @Test fun enzyme() = lab("e6", "48_enzym", settle = 7000, prepare = { it.tap("Start") })
+    @Test fun elodea() = lab("p3", "49_wasserpest", settle = 2500, prepare = { it.tap("mit Natron") })
+    @Test fun predator() = lab("p5", "50_hasen_und_luchse", settle = 6000, prepare = { it.tap("30 Jahre") })
+    @Test fun separate() = lab("t1", "51_stoffe_trennen", prepare = { it.tap("Filtern"); it.tap("Eindampfen") })
+    @Test fun chroma() = lab("t6", "52_chromatografie", settle = 5500, prepare = { it.tap("Papier ins Wasser") })
+    @Test fun paint() = lab("m1", "53_malkasten", prepare = { it.tap("Gelb"); it.tap("Blau") })
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
-        SettingsScreen(true, {}, true, {}, 5, {}, "0.1.0", "16.11.2026", {}, {}, {})
+        SettingsScreen(true, {}, true, {}, 5, {}, "0.4.0", "17.11.2026", {}, {}, {})
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
 }

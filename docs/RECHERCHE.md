@@ -179,3 +179,22 @@ Keine neue Suche; Anwendung der Befunde oben und bekannter Didaktik:
 - [Visible Learning (Hattie)](https://en.wikipedia.org/wiki/Visible_learning) · [Corwin-Effektstärken](https://resources.corwin.com/sites/default/files/appendix_4.pdf)
 - [Patall u. a. 2008: Wahlfreiheit und Motivation](https://selfdeterminationtheory.org/wp-content/uploads/2019/10/2008_PatallCooperRobinson_PsychBulletin.pdf) · [Bureau u. a. 2021](https://selfdeterminationtheory.org/wp-content/uploads/2021/09/2021_PathwaystoStudentMotiv_BureaHowardEtal.pdf)
 - [Escape Games in der Schule – Review](https://library.kab.ac.ug/Record/doaj-art-d5fd09cb69a448d9b5bc92fd39f0db1c/Description)
+
+## Experimentopia 0.4.0 (17.11.2026): Bio-Dschungel, Stoffe trennen, Malkasten – aus den Lehrplänen
+
+Gesucht wurde in Lehrplänen und Unterrichtsmaterial nach Versuchen, die in der Schule vorkommen, zu Hause aber schwer gehen (Chemikalien, Mikroskop, lange Wartezeiten, Jahrzehnte bei Räuber und Beute).
+
+| Lehrplan / Material | Umsetzung |
+| --- | --- |
+| **Genetik Kl. 9/10** (BW Bildungsplan 2016, Beispielcurricula Gymnasium 9/10 und Gemeinschaftsschule 10, je ca. 19 Stunden): Mendel-Regeln, Kreuzungsschema P/F1/F2, Rückkreuzung, Stammbaum. | Gewächshaus: Eltern wählen, Kreuzungsquadrat erscheint Feld für Feld, dann 8, 100 oder 1000 Samen säen und zählen (Zufall vs. 3 : 1). Erbse, Meerschweinchen, Wunderblume (intermediär), Blutgruppen (kodominant). |
+| **Nährstoffnachweise Kl. 5/6** (Iod-Stärke, Glukose-Teststreifen, Fettfleck, Eiweiß; z. B. LMU-Forscherheft, Friedrich-Reihe Kl. 5–6). | Nährstoff-Detektiv: Lebensmittel antippen, Farbe schlägt um. Überraschung: Haushaltszucker zeigt keinen Traubenzucker. |
+| **Enzyme / Verdauung Kl. 8** (Amylase, Temperaturabhängigkeit, Kontrollversuch). | Verdauungs-Labor mit Röhrchen bei 5–80 °C und Uhr; ohne Speichel als Kontrolle. |
+| **Osmose / Zelle Kl. 7–10** (Kartoffelstreifen, Plasmolyse an roter Zwiebel). | Osmose-Gläser mit Streifen, die prall oder schlapp werden, und Mikroskop-Blick auf schrumpfende Saftvakuolen. |
+| **Fotosynthese** (Wasserpest-Bläschen, Lichtabstand, CO₂ durch Natron) und **Ökologie** (Räuber-Beute). | Wasserpest mit Lampe zum Verschieben; Hasen-und-Luchse-Simulation (Lotka-Volterra mit Tragfähigkeit). |
+| **Stofftrennung Kl. 5/6** (Uni Bremen: Trennverfahren am Beginn des Chemieunterrichts; Filzstift-Chromatografie als Schülerversuch, VCI Nord „Farbenrennen“). | Trenn-Werkstatt: Verfahren selbst wählen, falsche Wahl wird freundlich erklärt; Chromatografie mit drei Filzstiften. |
+| **Farbmischung** (Kunst/Sachunterricht Grundschule; Gegensatz zur Lichtmischung aus Physik). | Malkasten mit Tropfen: Gelb + Blau = Grün, alles = matschiges Braun-Grau – direkt neben der Lichtbühne, wo Gelb + Blau Weiß ergibt. |
+
+### Quellen
+- [BW Beispielcurriculum Biologie Kl. 9/10 Gymnasium](https://www.schule-bw.de/service-und-tools/bildungsplaene/allgemein-bildende-schulen/bildungsplan-2016/beispielcurricula/gymnasium/bp2016bw_allg_gym_bio_v2_bc_9-10_bsp_1.pdf) · [BW Beispielcurriculum Biologie Kl. 10 Sek I](https://www.schule-bw.de/service-und-tools/bildungsplaene/allgemein-bildende-schulen/bildungsplan-2016/beispielcurricula/sekundarstufe1/bp2016bw_allg_sek1_bio_v2_bc_10_bsp_1.pdf) · [Lehrerfortbildung BW: Genetik](https://lehrerfortbildung-bw.de/u_matnatech/bio/gym/bp2016/fb9/3_genetik/00_allg/1_anmerkungen/30000_genetik_unterrichtseinheit.doc)
+- [LMU: Ernährung – Forscherheft](https://www.bio.lmu.de/studium/lehrerbildung_lmu/downloads/ernaehrung_forscherheft.pdf) · [LMU: Ernährung – Stationen](https://bio.lmu.de/studium/lehrerbildung_lmu/downloads/ernaehrung_stationen_selbst.pdf) · [Friedrich: Versuche protokollieren (Nährstoffnachweise Kl. 5–6)](https://www.friedrich-verlag.de/friedrich-plus/sekundarstufe/biologie/methoden-konzepte/versuche-protokollieren-in-vier-schritten-19593)
+- [Uni Bremen: Stofftrennung](https://chemiedidaktik.uni-bremen.de/material/Teilchen/Stofftrennung/Stofftrennung.pdf) · [VCI Nord: Farbenrennen](https://www.vci-nord.de/fileadmin/vci-nord/Bilder/bildung/Farbenrennen.pdf) · [schule-bw: Arbeitsblatt Chromatografie](https://schule-bw.de/faecher-und-schularten/mathematisch-naturwissenschaftliche-faecher/chemie/neuer-index.html/mat-seki/stoffe-eigenschaften/trenn_pics/ab_chrom_blatt.pdf)

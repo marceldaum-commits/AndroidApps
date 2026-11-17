@@ -1,10 +1,10 @@
 # Experimentopia 🧪 – das Versuchslabor für die Hosentasche (Klasse 3–10)
 
 Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallgas zünden, einen Hammer auf dem Mond fallen lassen,
-ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf sieben Inseln, mit **Blubb**, einem neugierigen Laborkolben,
+ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 0.3.0 vom 16.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 142 Versuche in 13 Fachbereichen · 21 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 0.4.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 180 Versuche in 18 Fachbereichen (Physik, Chemie, Biologie) · 30 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -22,8 +22,8 @@ und zeigt, wie gut man sich selbst einschätzt („Wenn du dir ganz sicher warst
 
 ## Themen und Suche
 
-13 Fachbereiche: Schwimmen, Dichte & Verdrängung · Hebel & Drehmoment · Rollen & schiefe Ebene · Kraft & Bewegung (Newton) · Fallen & Schwerkraft ·
-Pendel & Schwingungen · Stromkreise · Magnetismus · Wärme & Teilchen · Licht & Farben · Schall & Töne (Physik) · Säuren & Laugen · Chemische Reaktionen (Chemie).
+18 Fachbereiche: Schwimmen, Dichte & Verdrängung · Hebel & Drehmoment · Rollen & schiefe Ebene · Kraft & Bewegung (Newton) · Fallen & Schwerkraft ·
+Pendel & Schwingungen · Stromkreise · Magnetismus · Wärme & Teilchen · Licht & Farben · Schall & Töne (Physik) · Stoffe trennen · Säuren & Laugen · Chemische Reaktionen (Chemie) · Vererbung & Genetik · Zellen & Osmose · Nährstoffe & Enzyme · Pflanzen & Ökosysteme (Biologie).
 Die Themensuche filtert nach Fach und Fachbereich und sucht Stichwörter in Titeln, Fragen, Merksätzen und Fachwörtern.
 
 ## Die Inseln
@@ -33,10 +33,11 @@ Die Themensuche filtert nach Fach und Fachbereich und sucht Stichwörter in Tite
 | 🌊 Wasserinsel | Holz vs. Nagel, Riesenkerze, nackte Orange, Ei im Salzwasser, Knetboot, Eis in Spiritus, Dichteturm, Archimedes | 3–7 |
 | ⚖️ Kraftwerk-Insel | Wippe, Schubkarre, Nussknacker, Flaschenzug, schiefe Ebene, Newton: Wagen und Skateboards (F = m·a, actio = reactio, Trägheit) | 3–10 |
 | ⚡ Blitzinsel | Leitertest, Bleistiftmine, UND/ODER-Schalter, Reihe/Parallel, Kurzschluss, Ohmsches Gesetz, Magnete, Pole | 3–9 |
-| 🌋 Chemie-Vulkan | Rotkohl-Zaubersaft, pH-Wert, Neutralisation, pH-Sprung, Verdünnen, Natron-Ballon, Knallgas, Magnesium, Rost, Fotosynthese … | 3–10 |
+| 🌋 Chemie-Vulkan | Kaffeefilter, Sand-Salz-Wasser trennen, Chromatografie, Rotkohl-Zaubersaft, pH-Wert, Neutralisation, pH-Sprung, Verdünnen, Natron-Ballon, Knallgas, Magnesium, Rost, Fotosynthese … | 3–10 |
 | 🔥 Feuer & Eis | Was schmilzt zuerst, Heizkurve mit Teilchenblick, Mischtemperatur, Badewasser, glühendes Eisen | 3–8 |
-| 🌈 Licht & Klang | Licht mischen, Farbfilter, Prisma (echte Brechung), Gläser-Xylofon, Röhren-Orgel, Stimmgerät, „Alle meine Entchen“, Saite | 3–8 |
+| 🌈 Licht & Klang | Malkasten, Licht mischen, Farbfilter, Prisma (echte Brechung), Gläser-Xylofon, Röhren-Orgel, Stimmgerät, „Alle meine Entchen“, Saite | 3–8 |
 | 🚀 Fallturm-Insel | Kugel gegen Feder, Papier-Trick, Vakuumröhre, Fallzeit, Mond, Pendel, Sekundenpendel | 3–10 |
+| 🌿 Bio-Dschungel | Mendels Erbsen, Wunderblume, Blutgruppen, Osmose, Plasmolyse, Nährstoff-Nachweise, Speichel-Enzym, Wasserpest, Hasen und Luchse | 3–10 |
 
 ## Korrekt gerechnet
 
@@ -44,7 +45,7 @@ Alle richtigen Antworten werden aus Modellen in `core/model` **berechnet**, nich
 Auftrieb (ρ-Vergleich, Eintauchtiefe), Hebelgesetz, Flaschenzug (Goldene Regel), Stromkreise (Reihe/Parallel, Kurzschluss),
 pH aus [H⁺]−[OH⁻] mit Kw, Atomzählung aller Reaktionen, begrenzender Stoff beim Natron-Ballon, Richmann-Mischungsregel, Heizkurve mit Schmelz- und
 Verdampfungswärme, Fall mit Luftwiderstand (numerisch) und ohne, exakte Pendeldauer (elliptisches Integral), Röhren f = c/(4L),
-Prisma mit Cauchy-Brechzahl und Snellius. Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
+Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, AB0), Osmose, Enzymaktivität, Lichtstärke ∼ 1/d², Lotka-Volterra, Trennverfahren (kürzester Weg), subtraktive Farbmischung (`BiologyTest`). Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
 
 ## Frei und Pro
 
@@ -75,8 +76,12 @@ Eingeschaltet wird erst, wenn es einen Bezahlweg gibt.
 | ![](screenshots/34_selbsteinschaetzung.png) | ![](screenshots/35_abzeichen.png) | ![](screenshots/36_einstellungen.png) | ![](screenshots/37_forscher_pass.png) |
 | Forscherbuch mit Erklärung | Themensuche | Thema Newton | Newton-Wagen |
 | ![](screenshots/38_forscherbuch_erklaerung.png) | ![](screenshots/39_themensuche.png) | ![](screenshots/40_thema_newton.png) | ![](screenshots/41_newton_wagen.png) |
-| Skateboards | Eisen auf Quecksilber | | |
-| ![](screenshots/42_skateboards.png) | ![](screenshots/43_quecksilber.png) | | |
+| Skateboards | Eisen auf Quecksilber | Mendels Erbsen | Blutgruppen |
+| ![](screenshots/42_skateboards.png) | ![](screenshots/43_quecksilber.png) | ![](screenshots/44_mendel_erbsen.png) | ![](screenshots/45_blutgruppen.png) |
+| Osmose an der Zwiebel | Stärke-Nachweis | Enzym im Kühlschrank | Wasserpest |
+| ![](screenshots/46_osmose_zwiebel.png) | ![](screenshots/47_staerke_nachweis.png) | ![](screenshots/48_enzym.png) | ![](screenshots/49_wasserpest.png) |
+| Hasen und Luchse | Stoffe trennen | Chromatografie | Malkasten |
+| ![](screenshots/50_hasen_und_luchse.png) | ![](screenshots/51_stoffe_trennen.png) | ![](screenshots/52_chromatografie.png) | ![](screenshots/53_malkasten.png) |
 
 ## Android und Web
 

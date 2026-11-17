@@ -1,6 +1,6 @@
 package de.experimentopia.core.model
 
-enum class Subject(val title: String, val emoji: String) { PHYSIK("Physik", "🔭"), CHEMIE("Chemie", "⚗️") }
+enum class Subject(val title: String, val emoji: String) { PHYSIK("Physik", "🔭"), CHEMIE("Chemie", "⚗️"), BIOLOGIE("Biologie", "🧬") }
 
 /** Fachbereiche – zum gezielten Suchen. Die Reihenfolge ist auch die Reihenfolge auf den Inseln. */
 enum class Topic(val title: String, val emoji: String, val subject: Subject, val words: String) {
@@ -13,10 +13,15 @@ enum class Topic(val title: String, val emoji: String, val subject: Subject, val
     STROM("Stromkreise", "💡", Subject.PHYSIK, "Elektrizität Strom Spannung Widerstand Ohm Leiter Isolator Schalter Reihe parallel Kurzschluss"),
     MAGNET("Magnetismus", "🧲", Subject.PHYSIK, "Magnet Pole Nordpol Südpol Eisen anziehen abstoßen"),
     WAERME("Wärme & Teilchen", "🌡️", Subject.PHYSIK, "Wärmelehre Temperatur schmelzen sieden verdampfen Teilchenmodell Aggregatzustand Mischtemperatur Wärmekapazität"),
-    LICHT("Licht & Farben", "🌈", Subject.PHYSIK, "Optik Licht Farben additiv subtraktiv Prisma Brechung Regenbogen Spektrum Filter"),
+    LICHT("Licht & Farben", "🌈", Subject.PHYSIK, "Optik Licht Farben Malkasten Farben mischen Tuschkasten additiv subtraktiv Prisma Brechung Regenbogen Spektrum Filter"),
     SCHALL("Schall & Töne", "🎵", Subject.PHYSIK, "Akustik Schall Ton Frequenz Hertz Oktave Saite Luftsäule Musik"),
+    TRENNEN("Stoffe trennen", "🧺", Subject.CHEMIE, "Gemisch Stoffgemisch trennen Filtern Sieben Eindampfen Magnet Scheidetrichter Chromatografie Farbstoffe Salz Sand"),
     SAEURE("Säuren & Laugen", "🧪", Subject.CHEMIE, "Säure Lauge Base pH-Wert Indikator Rotkohl neutralisieren Titration verdünnen"),
-    REAKTION("Chemische Reaktionen", "💥", Subject.CHEMIE, "Reaktion Reaktionsgleichung Atome Moleküle ausgleichen Verbrennung Gas Oxidation Rost Fotosynthese"),
+    REAKTION("Chemische Reaktionen", "💥", Subject.CHEMIE, "Reaktion Reaktionsgleichung Atome Moleküle ausgleichen Verbrennung Gas Oxidation Rost"),
+    VERERBUNG("Vererbung & Genetik", "🧬", Subject.BIOLOGIE, "Genetik Vererbung Mendel Erbse Kreuzung Kreuzungsquadrat dominant rezessiv Allel Genotyp Phänotyp Blutgruppe Gene"),
+    ZELLEN("Zellen & Osmose", "🔬", Subject.BIOLOGIE, "Zelle Osmose Diffusion Plasmolyse Salz Kartoffel Zwiebel Mikroskop Konzentration"),
+    ERNAEHRUNG("Nährstoffe & Enzyme", "🍞", Subject.BIOLOGIE, "Ernährung Nährstoffe Stärke Zucker Glukose Fett Eiweiß Nachweis Iod Enzym Amylase Verdauung Speichel"),
+    OEKOLOGIE("Pflanzen & Ökosysteme", "🌲", Subject.BIOLOGIE, "Ökologie Fotosynthese Photosynthese Pflanze Sauerstoff Licht Wasserpest Räuber Beute Nahrungskette Population Luchs Hase"),
     ;
     fun experiments() = Catalog.all.filter { it.topic == this }
 }

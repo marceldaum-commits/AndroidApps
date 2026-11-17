@@ -1,5 +1,17 @@
 # Changelog – Experimentopia
 
+## 0.4.0 – Der Bio-Dschungel (17.11.2026)
+
+- 🌿 **Neue Insel: Bio-Dschungel** mit 27 Versuchen aus den Lehrplänen (Klasse 3–10):
+  - 🧬 **Vererbung wie Mendel**: Erbsen kreuzen, das Kreuzungsquadrat füllt sich, dann 8, 100 oder 1000 Samen säen und zählen.
+    Rosa Wunderblumen, schwarze und weiße Meerschweinchen, Blutgruppen.
+  - 🥔 **Osmose**: Kartoffelstreifen werden im Salzwasser schlapp, Zwiebelzellen schrumpfen unter dem Mikroskop.
+  - 🔍 **Nährstoff-Detektiv**: Stärke, Traubenzucker, Fett und Eiweiß nachweisen. 👅 **Verdauung**: Spucke gegen Stärke – im Kühlschrank, warm und gekocht.
+  - 🌿 **Fotosynthese**: Die Wasserpest blubbert mehr, je näher die Lampe ist. 🐇 **Räuber und Beute**: Hasen und Luchse über 30 Jahre.
+- 🧺 **Stoffe trennen** im Chemie-Vulkan: Sieb, Magnet, Filter, Eindampfen, Scheidetrichter – und 🖊️ Chromatografie: Was steckt in schwarzer Tinte?
+- 🎨 **Malkasten**: Malfarben mischen – Gelb und Blau wird Grün (beim Licht wäre es Weiß!).
+- 180 Versuche, 30 Geräte im Freien Labor, neues Fach Biologie in der Themensuche.
+
 ## 0.3.0 – Doppelt so viel Labor und Themensuche (16.11.2026)
 
 - 🧪 **Doppelt so viele Versuche: 142 statt 71.** Neu u. a.: Eisen schwimmt auf Quecksilber, Holz, das sinkt, Plastik sortieren, das U-Boot,

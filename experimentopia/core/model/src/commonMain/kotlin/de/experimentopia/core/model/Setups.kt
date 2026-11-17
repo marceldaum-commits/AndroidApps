@@ -13,16 +13,25 @@ enum class Lab(val title: String, val emoji: String, val island: Island, val blu
     ROTKOHL("Rotkohl-Labor", "🟣", Island.CHEMIE, "Sauer oder basisch? Der Saft verrät es mit Farben."),
     TITRATION("Säure & Lauge", "🧪", Island.CHEMIE, "Neutralisieren und verdünnen, Tropfen für Tropfen."),
     REAKTION("Atom-Baukasten", "⚛️", Island.CHEMIE, "Reaktionsgleichungen ausgleichen – dann knallt's."),
+    TRENNEN("Trenn-Werkstatt", "🧺", Island.CHEMIE, "Sieb, Magnet, Filter, Eindampfen, Scheidetrichter."),
+    CHROMATOGRAFIE("Chromatografie", "🖊️", Island.CHEMIE, "Welche Farben stecken in der Tinte?"),
     BALLON("Natron-Ballon", "🎈", Island.CHEMIE, "Gas aus der Flasche."),
     SCHMELZEN("Heizplatte", "🍫", Island.WAERME, "Was schmilzt wann?"),
     ERHITZEN("Eis erhitzen", "🌡️", Island.WAERME, "Vom Eis zum Dampf – mit Teilchenblick."),
     MISCHEN("Mischbecken", "🛀", Island.WAERME, "Heiß + kalt = ?"),
     LICHT("Lichtbühne", "🔦", Island.LICHTKLANG, "Farbiges Licht mischen."),
     FILTER("Farbfilter", "🎞️", Island.LICHTKLANG, "Folien schlucken Farben."),
+    MALKASTEN("Malkasten", "🎨", Island.LICHTKLANG, "Malfarben mischen – anders als Licht!"),
     PRISMA("Prisma", "🔺", Island.LICHTKLANG, "Weißes Licht wird zum Regenbogen."),
     KLANG("Klangröhren", "🎵", Island.LICHTKLANG, "Gläser, Röhren und Saiten."),
     FALLTURM("Fallturm", "🗼", Island.FALL, "Was fällt schneller – auf Erde, Mond und im Vakuum?"),
     PENDEL("Pendel", "🕰️", Island.FALL, "Schwingungsdauer messen."),
+    GENETIK("Gewächshaus", "🧬", Island.BIO, "Kreuzen und aussäen – wie Mendel."),
+    OSMOSE("Osmose-Gläser", "🥔", Island.BIO, "Kartoffel und Zwiebel in Salzwasser."),
+    NACHWEIS("Nährstoff-Detektiv", "🔍", Island.BIO, "Stärke, Zucker, Fett und Eiweiß nachweisen."),
+    ENZYM("Verdauungs-Labor", "👅", Island.BIO, "Spucke gegen Stärke – bei jeder Temperatur."),
+    WASSERPEST("Wasserpest", "🌿", Island.BIO, "Fotosynthese: Bläschen zählen."),
+    RAEUBER("Räuber & Beute", "🐇", Island.BIO, "Hasen und Luchse im Wald."),
 }
 
 /** Was im Versuch zu tun ist und was im Labor steht. Jede Art gehört zu einem Labor. */
@@ -97,5 +106,14 @@ object FreeLab {
         Lab.NEWTON -> NewtonSetup(NewtonMode.CART, listOf(1.0, 2.0, 4.0), listOf(5.0, 10.0, 20.0), listOf(30.0 to 30.0, 30.0 to 90.0))
         Lab.FALLTURM -> FallSetup(Faller.KUGEL, Faller.FEDER, Planet.entries, 10.0)
         Lab.PENDEL -> PendulumSetup(listOf(1.0), listOf(0.2, 1.0))
+        Lab.TRENNEN -> SeparationSetup(Mixture("Sand-Salz-Wasser", "🏖️", setOf(Component.SAND, Component.SALZ, Component.WASSER)), free = true)
+        Lab.CHROMATOGRAFIE -> ChromaSetup(Marker.entries)
+        Lab.MALKASTEN -> PaintSetup(Paint.entries, null)
+        Lab.GENETIK -> GeneticsSetup(Trait.ERBSE, "Aa", "Aa", choosable = true)
+        Lab.OSMOSE -> OsmosisSetup(listOf(0.0, 0.5, 1.0, 2.0, 5.0, 10.0), onion = true)
+        Lab.NACHWEIS -> FoodSetup(Food.entries, FoodTest.entries)
+        Lab.ENZYM -> EnzymeSetup(listOf(5.0, 20.0, 37.0, 50.0, 80.0))
+        Lab.WASSERPEST -> PhotoSetup(listOf(10.0, 15.0, 20.0, 30.0), co2Choice = true, darkChoice = true)
+        Lab.RAEUBER -> EcoSetup(400.0, 15.0, compareNoLynx = true)
     }
 }

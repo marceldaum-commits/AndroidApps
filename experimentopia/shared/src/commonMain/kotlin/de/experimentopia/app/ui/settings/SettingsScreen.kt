@@ -58,7 +58,8 @@ fun SettingsScreen(
                 Text("So lernt Ihr Kind: Erst vermuten (mit Selbsteinschätzung), dann ausprobieren, dann Blubb erklären (Lernen durch Lehren), dann eine Knobelfrage. " +
                     "Falsche Vermutungen kosten nichts – sie werden als Aha-Moment gefeiert.", fontSize = 13.sp, color = E.Text)
                 Text("${Catalog.all.size} Versuche auf ${Island.entries.size} Inseln (Klasse 3–10): Dichte und Auftrieb, Hebel, Rollen, schiefe Ebene, Newtonsche Gesetze, Stromkreise, Ohmsches Gesetz, Magnetismus, " +
-                    "pH-Wert und Neutralisation, Reaktionsgleichungen, Schmelzen und Sieden, Teilchenmodell, Mischtemperatur, Farbmischung, Prisma, Akustik, freier Fall, Pendel.", fontSize = 13.sp, color = E.Muted)
+                    "pH-Wert und Neutralisation, Reaktionsgleichungen, Schmelzen und Sieden, Teilchenmodell, Mischtemperatur, Stoffe trennen, Chromatografie, Farbmischung (Licht und Malkasten), Prisma, Akustik, freier Fall, Pendel, " +
+                    "Vererbung nach Mendel, Blutgruppen, Osmose, Nährstoffnachweise, Enzyme, Fotosynthese, Räuber-Beute-Beziehungen.", fontSize = 13.sp, color = E.Muted)
                 Text("Alle Ergebnisse werden in Tests mit physikalischen Modellen nachgerechnet. Versuche mit Säuren, Laugen, Feuer und Strom bitte nur hier in der App – oder mit Erwachsenen.", fontSize = 12.sp, color = E.Muted)
                 Text("Version $installed vom $versionDate", style = MaterialTheme.typography.labelMedium, color = E.Muted, modifier = Modifier.testTag("version"))
             }

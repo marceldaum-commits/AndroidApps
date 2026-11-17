@@ -7,10 +7,11 @@ enum class Island(val title: String, val emoji: String, val color: Long, val sub
     WASSER("Wasserinsel", "🌊", 0xFF3DB8FF, "Schwimmen, Sinken, Dichte", "Kl. 3–8"),
     KRAFT("Kraftwerk-Insel", "⚖️", 0xFFFFA23D, "Hebel, Rollen, Newton", "Kl. 3–10"),
     STROM("Blitzinsel", "⚡", 0xFFFFE04D, "Strom und Magnete", "Kl. 3–10"),
-    CHEMIE("Chemie-Vulkan", "🌋", 0xFFFF5FA2, "Säuren, Laugen, Reaktionen", "Kl. 3–10"),
+    CHEMIE("Chemie-Vulkan", "🌋", 0xFFFF5FA2, "Trennen, Säuren, Reaktionen", "Kl. 3–10"),
     WAERME("Feuer & Eis", "🔥", 0xFFFF6B4A, "Schmelzen, Kochen, Mischen", "Kl. 3–10"),
-    LICHTKLANG("Licht & Klang", "🌈", 0xFFB98CFF, "Farben, Prisma, Töne", "Kl. 3–8"),
+    LICHTKLANG("Licht & Klang", "🌈", 0xFFB98CFF, "Farben, Malkasten, Prisma, Töne", "Kl. 3–8"),
     FALL("Fallturm-Insel", "🚀", 0xFF3DF5C8, "Fallen, Mond, Pendel", "Kl. 3–10"),
+    BIO("Bio-Dschungel", "🌿", 0xFF7ED957, "Vererbung, Zellen, Ökosysteme", "Kl. 3–10"),
 }
 
 /** Eine Antwortmöglichkeit, optional mit Farbklecks */
