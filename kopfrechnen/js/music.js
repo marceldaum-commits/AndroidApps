@@ -28,7 +28,7 @@ const RHYTHMS = [   // [Startschritt, Länge] in Sechzehnteln
 const Music = {
   scene: 'home', cur: null, timer: null, gain: null, noise: null,
   st: null,   // Zustand des laufenden Stücks
-  on: () => S.settings.music !== false,
+  on: () => musicOn(),
   level: () => (S.settings.musicVol ?? 50) / 100,
   out() {   // eigener Lautstärke-Regler für Musik
     const c = Sound.ctx; if (!c) return null;

@@ -2,7 +2,63 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67. Bitte live nehmen.** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (67) – Fertig für den Betriebstest: Rechenblitz 3.25.2
+
+**Version: 3.25.2** (Web und Android-App gleich, Hülle 4; Inhalte laufen ab Hülle 2) – liegt auf `rechenblitz-test`. Bitte live nehmen.
+
+Begonnenes ist fertig: Offline laden Standard/Bestqualität (Meldung 66), Pro-Abzeichen (63), Web = Android. Keine neuen Funktionen angefangen.
+
+### Geprüft (heute Nachmittag, alles automatisch im Browser Chromium)
+
+| Bereich | Wie | Ergebnis |
+|---|---|---|
+| **Alle Wege durchgespielt** | Klick-Prüfung: jedes Fenster öffnen, jeden Knopf drücken – **bei 320 px und bei 1440 px**, 34 Ansichten | keine JS-Fehler; die Knöpfe ohne sichtbare Änderung sind alle erklärbar (siehe unten) |
+| **Konsole ohne Fehler** | Zufallstest je ca. 400 Klicks/Eingaben in DE, EN, UK, Handy und PC | 0 Fehler |
+| **Offline / Flugmodus** | Start ohne Netz; Netz weg mitten im Betrieb | Spiel, Theorie, Musik laufen; Vorlesen fällt still auf die Gerätestimme zurück; Klassen-Punkte warten und werden nachgesendet |
+| **Klassen-Challenge** | gegen nachgebauten Klassen-Server: Lehrkraft legt Klasse an → Kind öffnet `#klasse=…` → beitreten → Runde → Punkte → Rangliste → offline spielen → Punkte nachgesendet → Klasse verlassen; DE/EN/UK | alles ✓ – **2 Fehler gefunden und behoben** |
+| **Stimme, Musik, Einstellungen merken** | Musik aus, Vorlesen an, Effekt-Lautstärke, Sprechtempo 1,3×, Klasse 5, dunkel → neu laden | alles gemerkt, auch richtig im Einstellungs-Fenster angezeigt |
+| **Alle drei Sprachen** | Übersetzungs-Durchlauf über alle Aufgaben, Lösungswege, Einstellungen, Klassen-Challenge, Theorie | 0 fehlende Übersetzungen |
+| **Update von der Vorversion** | Spielstand in **3.16.0** (bis heute früh live) und **3.25.0** angelegt (2 Profile, Runden, Funken, Rekord, Abzeichen, Einstellungen), dann 3.25.2 mit demselben Speicher geöffnet und neu geladen | **keine Daten verloren**, keine Fehler – **1 Fehler gefunden und behoben** |
+| **Android-Modus** | nachgebaute Hülle: Erinnerungen, Zurück-Taste, Updates, Vorlesen-Plugin | ✓ |
+| **Barrierefreiheit** | axe WCAG 2.1 A/AA, hell und dunkel, jetzt auch Theorie, Pro, Klasse, Abzeichen, Neuigkeiten, Advent; Tastatur | **1 Fehler gefunden und behoben**, danach 0 Verstöße |
+| **Weitere** | Pro (frei/gesperrt/Code/Abzeichen), Zahlen-Dungeon, Üben nach Wunsch, Schwierigkeitstest (174 Stufen), Pro-Code-Prüfung | alles ✓ |
+
+### Gefunden und behoben (in 3.25.2)
+
+1. **Musik nach dem Update:**
+   - Vorher: Wer in einer alten Version (z. B. 3.16.0) den Ton ausgeschaltet hatte, bekam nach dem Update trotzdem die neue Musik, weil es die Einstellung damals noch nicht gab.
+   - Jetzt: Ein früheres „Ton aus“ gilt auch für die Musik, bis man sie selbst einschaltet.
+2. **Klassen-Challenge ohne Internet:**
+   - Vorher: Beim Beitreten stand die Technik-Meldung „Failed to fetch“.
+   - Jetzt: „Keine Verbindung – bitte später noch einmal versuchen.“ (DE/EN/UK).
+3. **Klassen-Challenge Übersetzungen:**
+   - Vorher: Die Spitznamen-Regel, die Willkommens-Meldung (enthält den Spitznamen) und die Rückfrage beim Verlassen standen in EN/UK deutsch.
+   - Jetzt: alles übersetzt; der Spitzname bleibt unverändert.
+4. **Abzeichen-Übersicht:** Noch nicht verdiente Abzeichen waren als Ganzes blass – Schrift-Kontrast 2,3:1. Jetzt ist nur das Bild blass, die Schrift voll lesbar (WCAG AA).
+
+### Klick-Prüfung: Knöpfe ohne sichtbare Änderung (alle in Ordnung)
+- Die Option ist schon gewählt („Automatisch“, „bis 1000“, „20 Aufgaben“ …).
+- Drucken / Ansehen öffnet ein Fenster, das der Testbrowser sperrt.
+- Leere Eingabe (⌫ im leeren Feld, „Weiter“ ohne Zahl).
+- Namensabfrage abgebrochen („Als Vorlage speichern“).
+- „▶ Probe hören“ und „🔊 Vorlesen“ geben nur Ton aus.
+- Knöpfe der Startseite, die unter einem offenen Fenster liegen.
+
+### Bekannte Restpunkte (nicht von hier prüfbar oder Entscheidung nötig)
+- **Echtes Handy und echtes Hören:** Ich habe kein Gerät und keinen Lautsprecher. Bitte im Betriebstest auf Android und iPhone anhören:
+  - Musik, Effekte;
+  - Nova (feste Texte und neue Aufgaben über /jetzt);
+  - Sprechtempo;
+  - Offline laden mit dem echten Stimmen-Server.
+- **Klassen-Challenge mit dem echten Server:** Getestet habe ich gegen einen nachgebauten Server – ich wollte keine Testdaten in die echte Rangliste schreiben. Bitte im Betriebstest einmal mit einer echten Klasse.
+- **Pro:** noch nicht im Verkauf; es fehlen Kassen-URL und Test-Code (Meldung 54). Bis dahin ist alles frei, das Abzeichen erscheint erst nach Freischaltung.
+- **Website-Datenschutz:** Der Satz über die „Kennzeichnung“ von Links (Meldung 56) – bitte prüfen, ob er inzwischen gestrichen ist. Die App setzt keine Kennzeichnung.
+- **Git-Geschichte:** Die versehentlich hochgeladenen Thorsten-Dateien (ca. 75 MB, Meldung 65) liegen noch in der Geschichte. Entfernen nur per force-push auf Anweisung.
+- **Gerätestimme (nur Notlösung) auf Ukrainisch:** Zahlwörter werden nicht immer grammatisch gebeugt („1 годин“). Nova ist davon nicht betroffen.
+
+Während des Betriebstests mache ich nur Fehlerbehebungen.
 
 ## 17.11.2026 (66) – Alle Nova-Texte offline laden (3.25.1)
 

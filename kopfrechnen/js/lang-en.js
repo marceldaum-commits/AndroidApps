@@ -2399,4 +2399,12 @@ I18N.add('en', {"% sind":"% are",
 "Neu: alle Nova-Texte offline laden – in den Einstellungen unter Vorlesen, mit Fortschritt und Abbrechen":"New: download all Nova texts for offline use – in the settings under Read aloud, with progress and cancel",
 "Offline laden – Standard":"Download for offline use – standard",
 "Offline laden – Bestqualität":"Download for offline use – best quality",
-"Wahlweise in Bestqualität":"Optionally in best quality"});
+"Wahlweise in Bestqualität":"Optionally in best quality",
+"Keine Verbindung – bitte später noch einmal versuchen.":"No connection – please try again later.",
+"Spitzname":"Nickname",
+"{}–{} Zeichen, nur Buchstaben, Zahlen und Leerzeichen.":"{}–{} characters, only letters, numbers and spaces.",
+"Willkommen in der Klasse,":"Welcome to the class,",
+"Klasse wirklich verlassen? Dein Eintrag in der Rangliste wird gelöscht.":"Really leave the class? Your entry in the ranking will be deleted.",
+"Fehler behoben: Wer früher den Ton ausgeschaltet hatte, bekommt nach dem Update auch keine Musik":"Fixed: if you had switched the sound off before, the update doesn't start the music either",
+"Klassen-Challenge: verständliche Meldung ohne Internet, alle Texte übersetzt":"Class challenge: clear message without internet, all texts translated",
+"Abzeichen-Übersicht besser lesbar":"Badge overview easier to read"});

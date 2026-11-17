@@ -1065,3 +1065,8 @@ button.badge{font:inherit;cursor:pointer}
 .novaoff .btn{display:block;width:100%;text-align:center}
 .novaoff .btn span[translate=no]{white-space:nowrap}
 .setrow .novaoff .btn span{color:inherit;font-size:inherit}
+/* Abzeichen noch nicht verdient: nur das Bild blass, Text bleibt lesbar (Kontrast WCAG AA) */
+.badge{opacity:1;filter:none}
+.badge:not(.on) span{opacity:.45;filter:grayscale(1)}
+.badge:not(.on) b{color:var(--text)}
+.badge:not(.on) small{color:var(--muted)}

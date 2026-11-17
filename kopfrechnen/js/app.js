@@ -324,7 +324,9 @@ $('topics').addEventListener('click', e => {
 });
 $('classNote').addEventListener('click', e => { if (e.target.id === 'toggleAll') { homeShowAll = !homeShowAll; renderHome(); } });
 $('levels').addEventListener('click', e => { const b = e.target.closest('.lvl'); if (!b) return; Sound.init(); Sound.click(); if (b.dataset.lvl === '5' && !needPro('profi')) return; S.sel.lvl = b.dataset.lvl === 'auto' ? 'auto' : +b.dataset.lvl; save(); renderHome(); });
-const anySound = () => S.settings.sound || S.settings.music !== false;
+// Musik gab es vor 3.23 nicht: Wer damals „Ton aus“ hatte, bekommt auch keine Musik, bis er sie selbst einschaltet
+const musicOn = () => S.settings.music === undefined ? S.settings.sound !== false : S.settings.music !== false;
+const anySound = () => S.settings.sound || musicOn();
 function renderSoundIcons() { const on = anySound(); for (const id of ['btnSound', 'btnSoundG']) { $(id).innerHTML = on ? ICON_SOUND_ON : ICON_SOUND_OFF; $(id).title = on ? 'Ton aus' : 'Ton an'; } }
 // Lautsprecher oben: alles aus (Musik und Effekte) bzw. wieder an – einzeln geht es in den Einstellungen
 const toggleSound = () => { const on = !anySound(); S.settings.sound = on; S.settings.music = on; save(); Sound.init(); Sound.click(); renderSoundIcons(); Music.update(); toast(on ? '🔊 Ton an' : '🔇 Ton aus', 1100); };

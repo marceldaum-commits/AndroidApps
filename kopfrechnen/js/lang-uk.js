@@ -2399,4 +2399,12 @@ I18N.add('uk', {"% sind":"% — це",
 "Neu: alle Nova-Texte offline laden – in den Einstellungen unter Vorlesen, mit Fortschritt und Abbrechen":"Нове: завантаж усі тексти Nova офлайн – у налаштуваннях у розділі «Читати вголос», з прогресом і скасуванням",
 "Offline laden – Standard":"Завантажити офлайн – стандарт",
 "Offline laden – Bestqualität":"Завантажити офлайн – найкраща якість",
-"Wahlweise in Bestqualität":"За бажанням – у найкращій якості"});
+"Wahlweise in Bestqualität":"За бажанням – у найкращій якості",
+"Keine Verbindung – bitte später noch einmal versuchen.":"Немає з’єднання – спробуй, будь ласка, пізніше.",
+"Spitzname":"Псевдонім",
+"{}–{} Zeichen, nur Buchstaben, Zahlen und Leerzeichen.":"{}–{} символів, лише літери, цифри та пробіли.",
+"Willkommen in der Klasse,":"Ласкаво просимо до класу,",
+"Klasse wirklich verlassen? Dein Eintrag in der Rangliste wird gelöscht.":"Справді вийти з класу? Твій запис у рейтингу буде видалено.",
+"Fehler behoben: Wer früher den Ton ausgeschaltet hatte, bekommt nach dem Update auch keine Musik":"Виправлено: якщо раніше звук було вимкнено, після оновлення музика теж не вмикається",
+"Klassen-Challenge: verständliche Meldung ohne Internet, alle Texte übersetzt":"Класний челендж: зрозуміле повідомлення без інтернету, усі тексти перекладено",
+"Abzeichen-Übersicht besser lesbar":"Огляд значків легше читати"});

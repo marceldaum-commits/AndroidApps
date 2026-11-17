@@ -94,7 +94,7 @@ const PANELS = {
     const sw = (id, on, t, d) => `<button class="setrow" data-set="${id}" role="switch" aria-checked="${on}"><div><b>${t}</b><span>${d}</span></div><span class="switch ${on ? 'on' : ''}"></span></button>`;
     return { title: 'Einstellungen', html: `<div class="menu">
       ${proLocks() || RBPRO.ok ? mi('pro', '⭐', RBPRO.ok ? 'Rechenblitz Pro <span class="pro-on static">Pro aktiv</span>' : 'Rechenblitz Pro', RBPRO.ok ? 'Auf diesem Gerät freigeschaltet – für alle Profile' : 'Freischalten oder Code einlösen', RBPRO.ok ? 'pro-active' : '') : ''}
-      ${sw('music', S.settings.music !== false, 'Musik', 'Eigene Blitz-Melodien im Menü und im Spiel')}
+      ${sw('music', musicOn(), 'Musik', 'Eigene Blitz-Melodien im Menü und im Spiel')}
       <label class="setrow col vol"><span><b>Lautstärke Musik</b></span><input type="range" id="volMusic" min="0" max="100" step="5" value="${S.settings.musicVol ?? 50}"></label>
       ${sw('sound', S.settings.sound, 'Effekte', 'Klänge bei richtig, falsch, Serien und Sternen')}
       <label class="setrow col vol"><span><b>Lautstärke Effekte</b></span><input type="range" id="volSfx" min="0" max="100" step="5" value="${S.settings.sfxVol ?? 70}"></label>
@@ -298,7 +298,7 @@ async function novaOfflineUi(msg) {
 function initSettings() {
   renderReminder();
   $('sheetBody').querySelectorAll('[data-set]').forEach(b => b.onclick = () => {
-    const k = b.dataset.set; S.settings[k] = k === 'blitz' ? S.settings.blitz === false : k === 'music' ? S.settings.music === false : !S.settings[k]; save(); Sound.init(); Sound.click();
+    const k = b.dataset.set; S.settings[k] = k === 'blitz' ? S.settings.blitz === false : k === 'music' ? !musicOn() : !S.settings[k]; save(); Sound.init(); Sound.click();
     if (k === 'music' || k === 'sound') { renderSoundIcons(); Music.update(); }
     b.setAttribute('aria-checked', S.settings[k]); b.querySelector('.switch').classList.toggle('on', S.settings[k]);
     if (k === 'speech' && S.settings.speech) Voice.say('3/4 + 1/4 = 1');

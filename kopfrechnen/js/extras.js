@@ -213,7 +213,9 @@ const shareInvite = () => shareText(inviteText(), 'Rechenblitz – Kopfrechnen �
 
 /* ================= Klassen-Challenge (braucht Server) ================= */
 async function classApi(path, body) {
-  const r = await fetch(CONFIG.classApi + path, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {});
+  let r;
+  try { r = await fetch(CONFIG.classApi + path, body ? { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) } : {}); }
+  catch { const e = new Error('Keine Verbindung – bitte später noch einmal versuchen.'); e.status = 0; throw e; }   // offline: verständlich statt „Failed to fetch“
   let j = {}; try { j = await r.json(); } catch {}
   if (!r.ok) { const e = new Error(j.error || `Fehler ${r.status}`); e.status = r.status; throw e; }
   return j;
@@ -347,7 +349,7 @@ Object.assign(PANELS, {
           e.preventDefault(); const code = classCode($('klCode').value), nick = $('klNick').value.trim();
           if (code.length < 4) return $('klErr').textContent = 'Bitte den Klassencode prüfen.';
           if (!nickOk(nick)) return $('klErr').textContent = 'Spitzname: 2–20 Zeichen, nur Buchstaben, Zahlen und Leerzeichen.';
-          try { const r = await classApi('/klasse/beitreten', { code, spitzname: nick }); S.klasse = { code, name: r.name || code, spieler: r.spieler, spitzname: nick }; S.klassePending = []; award('klasse'); save(); renderHome(); showPanel('klasse'); toast(`Willkommen in der Klasse, ${esc(nick)}!`); }
+          try { const r = await classApi('/klasse/beitreten', { code, spitzname: nick }); S.klasse = { code, name: r.name || code, spieler: r.spieler, spitzname: nick }; S.klassePending = []; award('klasse'); save(); renderHome(); showPanel('klasse'); toast(`<span>Willkommen in der Klasse,</span> <span translate="no">${esc(nick)}</span>!`); }
           catch (err) { $('klErr').textContent = err.message; }
         };
       } };
