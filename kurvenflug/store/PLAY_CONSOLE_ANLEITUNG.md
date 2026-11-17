@@ -102,6 +102,17 @@ Solange das Produkt nicht angelegt ist, bleibt in der App alles frei. Ab dem Anl
 6. Formulare nachziehen: IARC-Fragebogen → „Digitale Käufe: **Ja**“. Datensicherheit bleibt „keine Daten erhoben“
    (den Kauf wickelt Google ab, die App speichert nur „Pro: ja“). Store-Eintrag zeigt „In-App-Käufe“ automatisch.
 
+## 6b. Version 2.2.0 hochladen (versionCode 41) – Klick-Liste
+1. AAB holen: GitHub → Releases → `kurvenflug-v2.2.0` → **Kurvenflug-2.2.0-play.aab** (19 MB).
+2. Play Console → Testen → (interner bzw. geschlossener) Test → **Neuen Release erstellen** → AAB hochladen.
+3. Versionshinweise (de-DE): Text aus `store/de-DE/release-notes.txt` einfügen (unter 500 Zeichen).
+4. **Neu in dieser Version: Internet-Berechtigung** – nur für den Download der Vorlese-Stimme „Thorsten“ auf Wunsch.
+   Datensicherheit: Antwort bleibt **„Nein, keine Daten erhoben/geteilt“** (Server speichert keine IP-Adressen, Bestätigung
+   Leitstand 17.11.; siehe Abschnitt 4). Falls die Console nach der Berechtigung fragt: „für optionalen Download von
+   App-Inhalten (Sprachdatei)“.
+5. Datenschutzerklärung auf der Website um den Thorsten-Satz ergänzen (Vorschlag unten, Absatz „Kurvenflug“).
+6. Auf dem Testhandy: Einstellungen → Vorlesen → „Thorsten laden“ → „▶ Probe hören“ – einmal ausprobieren, dann freigeben.
+
 ## 7. Updates später
 Jede neue Version baut GitHub automatisch: `Kurvenflug-<Version>-play.aab` im Release → in der Play Console beim gewünschten
 Track „Neuen Release erstellen“ → hochladen. In der App erscheint das Update dann von selbst (Play In-App Updates):
