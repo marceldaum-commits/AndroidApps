@@ -1,4 +1,3 @@
-import java.util.zip.GZIPInputStream
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 // WebApp: dieselbe Oberfläche wie die Android-App (Modul :shared), gebaut für den Browser (Kotlin/Wasm).
@@ -20,9 +19,6 @@ kotlin {
             implementation(project(":shared"))
             implementation(compose.components.resources)
             implementation("org.jetbrains.kotlinx:kotlinx-browser:0.5.0")
-            // Stimme „Thorsten“ im Browser: ONNX Runtime Web (MIT). Wird NICHT eingebunden (kein Import), sondern nur als
-            // Laufzeit-Dateien nach webapp/ort/ kopiert und erst geladen, wenn Thorsten spricht.
-            implementation(npm("onnxruntime-web", "1.22.0"))
         }
     }
 }
@@ -32,18 +28,12 @@ compose.resources { packageOfResClass = "de.wissensgarten.web.res"; generateResC
 val packsDir = rootProject.file("content/src/main/assets/packs")
 val genPacks = layout.buildDirectory.dir("generated/packs")
 val copyPacks by tasks.registering {
-    inputs.dir(packsDir); inputs.dir(rootProject.file("content/src/main/assets/stimme")); outputs.dir(genPacks)
+    inputs.dir(packsDir); outputs.dir(genPacks)
     doLast {
+        genPacks.get().asFile.deleteRecursively()   // auch Reste früherer Fassungen (z. B. stimme/ für Thorsten)
         val out = genPacks.get().dir("packs").asFile.apply { deleteRecursively(); mkdirs() }
         val files = packsDir.listFiles()!!.filter { it.extension == "json" }.sortedBy { it.name }
         files.forEach { it.copyTo(out.resolve(it.name), overwrite = true) }
-        // Stimme „Thorsten“: Lautschrift-Wörterbuch und Zeichenliste (klein; das Modell selbst kommt auf Wunsch von Hugging Face)
-        val voiceOut = genPacks.get().dir("stimme").asFile.apply { deleteRecursively(); mkdirs() }
-        // Die WebApp darf nur Web-Dateiarten ausliefern: das gepackte Wörterbuch kommt entpackt als .txt (der Server packt beim Übertragen selbst)
-        rootProject.file("content/src/main/assets/stimme").listFiles()!!.forEach { f ->
-            if (f.name.endsWith(".tsv.gz")) GZIPInputStream(f.inputStream()).use { i -> voiceOut.resolve(f.name.removeSuffix(".tsv.gz") + ".txt").outputStream().use { i.copyTo(it) } }
-            else f.copyTo(voiceOut.resolve(f.name), overwrite = true)
-        }
         rootProject.file("content/src/main/assets/lizenzen.txt").copyTo(genPacks.get().file("lizenzen.txt").asFile, overwrite = true)
         // Vorschau-Katalog der Plus-Pakete (nur Titel, Erklärung, 3 Beispielkarten) – die vollen Pakete kommen vom Plus-Endpunkt
         rootProject.file("content/src/main/assets/plus_katalog.json").takeIf { it.exists() }?.copyTo(genPacks.get().file("plus_katalog.json").asFile, overwrite = true)
@@ -65,12 +55,6 @@ val versionName = Regex("""versionName = "([^"]+)"""").find(appGradle)!!.groupVa
 tasks.register<Sync>("exportWebApp") {
     dependsOn("wasmJsBrowserDistribution")
     from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
-    // ONNX Runtime Web für Thorsten: nur die drei Dateien für WebAssembly (ohne WebGPU), selbst ausgeliefert
-    from(rootProject.layout.buildDirectory.dir("wasm/node_modules/onnxruntime-web/dist")) {
-        include("ort.wasm.min.js", "ort-wasm-simd-threaded.mjs", "ort-wasm-simd-threaded.wasm")
-        into("ort")
-    }
-    from(rootProject.layout.buildDirectory.dir("wasm/node_modules/onnxruntime-web")) { include("LICENSE"); into("ort") }
     into(rootProject.file("webapp"))
     exclude("**/*.map")
     filesMatching(listOf("index.html", "sw.js", "manifest.webmanifest")) { filter { it.replace("@VERSION@", versionName) } }
@@ -78,13 +62,12 @@ tasks.register<Sync>("exportWebApp") {
     doLast {
         val out = rootProject.file("webapp")
         // Echter Ladebalken: Größe der großen Startdateien (entpackt) ins HTML schreiben
-        val big = out.walkTopDown().filter { it.isFile && !it.relativeTo(out).invariantSeparatorsPath.startsWith("ort/") && (it.extension == "wasm" || it.extension == "ttf" || it.name == "wissensgarten.js") }.toList()
+        val big = out.walkTopDown().filter { it.isFile && (it.extension == "wasm" || it.extension == "ttf" || it.name == "wissensgarten.js") }.toList()
         val sizes = big.joinToString(",", "{", "}") { "\"${it.name}\":${it.length()}" }
         // Service Worker: beim Installieren alles vorab speichern → zweiter Start sofort, auch offline
-        // ort/ (Rechen-Bausteine für Thorsten, ca. 11 MB) nicht vorab speichern – nur bei Bedarf
         // vorlesen/ (Liste der festen Texte für den Stimm-Server „Nova“) braucht die App selbst nicht
         val all = out.walkTopDown().filter { it.isFile && !it.name.endsWith(".LICENSE.txt") && it.name != "sw.js" && it.name != "version.json" &&
-            !it.relativeTo(out).invariantSeparatorsPath.startsWith("ort/") && !it.relativeTo(out).invariantSeparatorsPath.startsWith("vorlesen/") }
+            !it.relativeTo(out).invariantSeparatorsPath.startsWith("vorlesen/") }
             .map { it.relativeTo(out).invariantSeparatorsPath }.sorted().toList()
         val pre = (listOf("./") + all).joinToString(",", "[", "]") { "'$it'" }
         out.resolve("index.html").let { it.writeText(it.readText().replace("@SIZES@", sizes)) }

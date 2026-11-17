@@ -640,34 +640,21 @@ open class ScreenshotTest {
         }
     }
 
-    /** Stimm-Einstellungen unter „Brummi liest vor“ – mit Gerätestimmen und dem Stimm-Paket „Thorsten“ */
-    private fun fakeVoice(pack: de.wissensgarten.app.ui.fx.VoicePackState) = object : de.wissensgarten.app.ui.fx.Voice {
+    /** Stimm-Einstellungen unter „Brummi liest vor“: Nova (Kennzeichnung), Sprechtempo-Stufen, Probe-Taste */
+    private fun fakeVoice() = object : de.wissensgarten.app.ui.fx.Voice {
         override var onSpeaking: (Boolean) -> Unit = {}
         override val isReady = true
         override fun speak(text: String, locale: de.wissensgarten.app.ui.fx.Locale) {}
         override fun stop() {}
         override suspend fun speakAndWait(text: String, locale: de.wissensgarten.app.ui.fx.Locale) {}
-        override val voices = kotlinx.coroutines.flow.MutableStateFlow(listOf(
-            de.wissensgarten.app.ui.fx.VoiceOption("a", "Stimme 1 · Deutschland"), de.wissensgarten.app.ui.fx.VoiceOption("b", "Stimme 2 · Deutschland"),
-            de.wissensgarten.app.ui.fx.VoiceOption("c", "Stimme 3 · Österreich")))
-        override val natural = object : de.wissensgarten.app.ui.fx.NaturalVoicePack {
-            override val state = kotlinx.coroutines.flow.MutableStateFlow(pack)
-            override val problem = kotlinx.coroutines.flow.MutableStateFlow<String?>(null)
-            override fun download() {}
-            override fun cancel() {}
-            override fun remove() {}
-        }
     }
-    private fun voiceShot(name: String, voiceName: String, rate: Int, pack: de.wissensgarten.app.ui.fx.VoicePackState) = shot(name) {
-        val settings = de.wissensgarten.core.data.Settings(de.wissensgarten.core.data.MemoryKeyValueStore()).apply { setVoiceName(voiceName); setVoiceRate(rate) }
+    @Test fun voice() = shot("67_stimme") {
+        val settings = de.wissensgarten.core.data.Settings(de.wissensgarten.core.data.MemoryKeyValueStore()).apply { setVoiceRate(115) }
         Column(Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {
             androidx.compose.material3.Text("Brummi liest vor", style = androidx.compose.material3.MaterialTheme.typography.titleMedium)
-            de.wissensgarten.app.ui.settings.VoiceSettingsPanel(settings, fakeVoice(pack))
+            de.wissensgarten.app.ui.settings.VoiceSettingsPanel(settings, fakeVoice())
         }
     }
-    @Test fun voice() = voiceShot("67_stimme", "", 100, de.wissensgarten.app.ui.fx.VoicePackState.Missing)
-    @Test fun voiceLoading() = voiceShot("68_stimme_laedt", "thorsten", 100, de.wissensgarten.app.ui.fx.VoicePackState.Loading(42))
-    @Test fun voiceThorsten() = voiceShot("69_stimme_thorsten", "thorsten", 120, de.wissensgarten.app.ui.fx.VoicePackState.Ready)
 
     @Test fun gardenPlusBadge() = shot("71_garten_plus_aktiv") {
         androidx.compose.runtime.CompositionLocalProvider(de.wissensgarten.app.ui.plus.LocalPlusStatus provides

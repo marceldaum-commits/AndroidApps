@@ -50,6 +50,8 @@ fun Brummi(
     speech: String? = null,
     bubbleOnLeft: Boolean = false,
     onTap: (() -> Unit)? = null,
+    /** Sprechblase als Laufzeit-Satz (aus Zahlen zusammengesetzt) – nur dann darf der Text vertont werden, falls er neu ist */
+    speechRuntime: de.wissensgarten.core.model.LaufzeitText? = null,
 ) {
     val t by rememberInfiniteTransition(label = "brummi").animateFloat(
         0f, 1000f, infiniteRepeatable(tween(1_000_000, easing = LinearEasing)), label = "t",
@@ -63,7 +65,8 @@ fun Brummi(
     }
     // Antippen: Brummi liest seine Sprechblase vor (wenn das Antippen nicht schon etwas anderes macht)
     val voice = LocalVoice.current
-    val readBubble: (() -> Unit)? = if (voice != null && speech != null) ({ voice.speak(speech) }) else null
+    val readBubble: (() -> Unit)? = if (voice != null && speech != null)
+        ({ if (speechRuntime != null && speechRuntime.text == speech) voice.speak(speechRuntime) else voice.speak(speech) }) else null
     val tap = onTap ?: readBubble
     val tapMod = if (tap != null) Modifier.clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) { tap() } else Modifier
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {

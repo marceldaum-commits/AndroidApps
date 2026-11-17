@@ -3,10 +3,9 @@ package de.wissensgarten.core.data
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import de.wissensgarten.core.model.Sprechtempo
 
 /** Vorlesen: AUTO = für Grundschulkinder an, sonst aus. */
-const val VOICE_THORSTEN = "thorsten"
-
 enum class ReadAloud(val label: String) { AUTO("Automatisch"), ON("Immer"), OFF("Nie") }
 
 enum class ThemeMode(val label: String) { LIGHT("Hell"), DARK("Dunkel"), SYSTEM("Wie das Handy") }
@@ -45,14 +44,15 @@ class Settings(private val prefs: KeyValueStore) {
     val sfxVolume: StateFlow<Int> = _sfxVolume.asStateFlow()
     fun setSfxVolume(v: Int) { val c = v.coerceIn(0, 100); prefs.edit().putInt("ton_laut", c).apply(); _sfxVolume.value = c }
 
-    /** Vorlese-Stimme: "" = Standard des Geräts, [VOICE_THORSTEN] = natürliche Stimme, sonst Name/Kennung einer Geräte- bzw. Browser-Stimme */
-    private val _voiceName = MutableStateFlow(prefs.getString("stimme", "") ?: "")
-    val voiceName: StateFlow<String> = _voiceName.asStateFlow()
-    fun setVoiceName(v: String) { prefs.edit().putString("stimme", v).apply(); _voiceName.value = v }
-    /** Sprechtempo in Prozent (50..150, 100 = normal) */
-    private val _voiceRate = MutableStateFlow(prefs.getInt("stimme_tempo", 100))
+    /**
+     * Sprechtempo als Stufe in Prozent ([Sprechtempo.STUFEN]: 75, 90, 100 = Tempo des Servers, 115, 130, 150).
+     * Alte, frei gewählte Werte (50…150 aus Version 2.0) werden auf die nächste Stufe gesetzt.
+     */
+    private val _voiceRate = MutableStateFlow(Sprechtempo.stufe(prefs.getInt("stimme_tempo", Sprechtempo.NORMAL)))
     val voiceRate: StateFlow<Int> = _voiceRate.asStateFlow()
-    fun setVoiceRate(v: Int) { val c = v.coerceIn(50, 150); prefs.edit().putInt("stimme_tempo", c).apply(); _voiceRate.value = c }
+    fun setVoiceRate(v: Int) { val c = Sprechtempo.stufe(v); prefs.edit().putInt("stimme_tempo", c).apply(); _voiceRate.value = c }
+    // Die Stimmenwahl (Gerätestimme/„Thorsten“) gibt es seit Nova nicht mehr
+    init { if (prefs.contains("stimme")) prefs.edit().remove("stimme").apply() }
 
     /** Beim Start (höchstens einmal am Tag) bei GitHub nach einer neuen App-Version schauen. */
     private val _autoUpdate = MutableStateFlow(prefs.getBoolean("auto_update", true))

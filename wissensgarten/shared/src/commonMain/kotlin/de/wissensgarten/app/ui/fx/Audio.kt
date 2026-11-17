@@ -3,7 +3,9 @@ package de.wissensgarten.app.ui.fx
 import androidx.compose.runtime.staticCompositionLocalOf
 import kotlinx.coroutines.flow.StateFlow
 import de.wissensgarten.app.AppHost
+import de.wissensgarten.core.model.LaufzeitText
 import de.wissensgarten.core.model.MusicMood
+import de.wissensgarten.core.model.Sprechtempo
 
 /** Sprache für Vorlesen und Spracherkennung (BCP-47, z. B. „de-DE“). */
 data class Locale(val tag: String) {
@@ -39,26 +41,24 @@ interface Music {
 }
 
 /**
- * Brummis Stimme: Sprachausgabe des Geräts bzw. des Browsers – oder die natürliche Stimme „Thorsten“ ([natural]),
- * die auf dem Gerät rechnet. Thorsten liest nur Deutsch; Englisch, Französisch und Spanisch liest immer eine Gerätestimme der Sprache.
+ * Brummis Stimme: „Nova“, eine KI-Stimme (OpenAI), vertont von unserem Stimm-Server – siehe [NovaVoice].
+ * Ohne Internet oder wenn ein Text (noch) nicht vertont ist, liest still die Stimme des Geräts.
+ * Fremdsprachige Texte (Englisch, Französisch, Spanisch) spricht Nova in der passenden Sprache.
  */
 interface Voice {
     /** Wird aufgerufen, wenn Brummi anfängt / aufhört zu sprechen (Musik leiser stellen). */
     var onSpeaking: (Boolean) -> Unit
     val isReady: Boolean
+    /** Fester Text (Pakete, Brummis Sätze): kommt vorab vertont vom Server, sonst Gerätestimme – nie an `/jetzt` */
     fun speak(text: String, locale: Locale = Locale.GERMAN)
+    /** Laufzeit-Text: darf, wenn nicht vorab vertont, einmalig an `/jetzt` (siehe [LaufzeitText]) */
+    fun speak(text: LaufzeitText, locale: Locale = Locale.GERMAN) = speak(text.text, locale)
     fun stop()
     /** Sprechen und warten, bis Brummi fertig ist (für Brummi-Radio). */
     suspend fun speakAndWait(text: String, locale: Locale = Locale.GERMAN)
-
-    /** Deutsche Stimmen des Geräts bzw. Browsers zur Auswahl (nur solche, die ohne Internet sprechen) */
-    val voices: StateFlow<List<VoiceOption>> get() = NO_VOICES
-    /** Gewählte Stimme: "" = Standard, [de.wissensgarten.core.data.VOICE_THORSTEN] = Thorsten, sonst [VoiceOption.id] */
-    fun setVoice(name: String) {}
-    /** Sprechtempo in Prozent (50…150) */
+    suspend fun speakAndWait(text: LaufzeitText, locale: Locale = Locale.GERMAN) = speakAndWait(text.text, locale)
+    /** Sprechtempo als Stufe in Prozent ([Sprechtempo.STUFEN], 100 = Tempo des Servers) */
     fun setRate(percent: Int) {}
-    /** Stimm-Paket „Thorsten“; null = gibt es auf dieser Plattform nicht */
-    val natural: NaturalVoicePack? get() = null
 
     companion object {
         private val EMOJI = Regex("[\\p{So}\\p{Cs}\\uFE0F\\u200D]")

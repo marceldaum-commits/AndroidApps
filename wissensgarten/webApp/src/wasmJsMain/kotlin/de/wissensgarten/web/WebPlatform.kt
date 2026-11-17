@@ -114,7 +114,7 @@ class WebMusic : Music {
     }
 }
 
-// Brummis Stimme (Browser-Stimmen und Thorsten): siehe WebVoice.kt
+// Brummis Stimme „Nova“ (mit Browser-Stimme als Notlösung): siehe WebVoice.kt
 
 /** Spracherkennung des Browsers (Chrome, Edge, Safari). */
 class WebListener : Listener {
@@ -192,7 +192,7 @@ class WebHost : AppHost {
         tilt = true, keepsakes = false, widget = false, label = "WebApp", plusPurchase = true)
     override val sfx = WebSfx()
     override val music = WebMusic()
-    override val voice = WebVoice().also { v -> v.onSpeaking = { music.duck(it) } }
+    override val voice = de.wissensgarten.app.ui.fx.NovaVoice(WebNova(), kotlinx.coroutines.MainScope()).also { v -> v.onSpeaking = { music.duck(it) } }
     override val listener = WebListener()
     override val images = WebImages
 
