@@ -102,7 +102,7 @@ fun HomeScreen(
                         .border(if (on) 2.dp else 1.dp, if (on) c else Q.Muted.copy(alpha = 0.35f), RoundedCornerShape(14.dp))
                         .clickable(interaction, null) { area = a.name; open = (list.firstOrNull { ch -> ch.levels.any { it.id == next?.id } } ?: list.first()).number }.padding(vertical = 7.dp),
                         horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("${a.emoji} ${a.title}", fontWeight = FontWeight.Black, fontSize = 14.sp, color = if (on) Q.Text else Q.Muted)
+                        de.raumlicht.app.ui.fx.FitText("${a.emoji} ${a.title}", Modifier.padding(horizontal = 4.dp), fontWeight = FontWeight.Black, fontSize = 14.sp, min = 10f, color = if (on) Q.Text else Q.Muted)
                         Text("★ ${list.sumOf { ch -> ch.levels.sumOf { stars[it.id] ?: 0 } }} / ${list.sumOf { it.levels.size } * 3}", fontSize = 11.sp, color = if (on) Q.Yellow else Q.Muted)
                     }
                 }

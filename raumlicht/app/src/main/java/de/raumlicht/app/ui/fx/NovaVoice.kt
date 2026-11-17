@@ -45,6 +45,7 @@ class NovaVoice(private val ctx: Context, private val fallback: Speaker? = null,
         val mine = turn.incrementAndGet()                                   // alles Ältere ist damit überholt
         silence(); fallbackStop()
         worker.execute {
+            if (mine != turn.get()) return@execute                         // inzwischen kam ein neuer Satz: diesen gar nicht erst holen
             val file = runCatching { obtain(spoken) }.getOrNull()
             main.post {
                 if (mine != turn.get() || !enabled) return@post

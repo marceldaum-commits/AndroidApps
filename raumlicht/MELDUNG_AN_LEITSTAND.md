@@ -2,6 +2,42 @@
 
 Neueste oben.
 
+## 17.11.2026 – ABSCHLUSSMELDUNG: Raumlicht 2.18.1 ist fertig für den Betriebstest
+
+Marcel hat die Abschlussphase direkt bestätigt. **Raumlicht 2.18.1 vom 17.11.2026, Web = Android (beide 2.18.1).** Diese Version bitte live nehmen.
+
+### Fertiggestellt (Punkt 1)
+Nur noch Nova (feste Dateien, `/jetzt` für Laufzeit-Texte, Geräte-Stimme als stille Notlösung), Sprechtempo in sechs Stufen, „Alle Nova-Texte offline laden“ in Standard und Bestqualität,
+Thorsten/sherpa-onnx/Lautschrift entfernt (**kein espeak-ng, keine Sprachsynthese in der App**), Abzeichen „Abi-Pass aktiv“ (Startseite und Einstellungen), Datenschutz-Text nach eurem Wortlaut.
+
+### Geprüft (Punkt 2)
+- **Alle Wege, vier Größen:** 54 Bildschirme (jeder Bereich, Aufgaben aus allen Gebieten, Prüfungen, Üben-Stufen) je bei 320 × 640, iPad hoch 820 × 1180, iPad quer 1180 × 820 und 1920 × 1080 –
+  216 Aufrufe ohne Konsolenfehler, ohne Ausnahme, ohne leeres Bild. Die Bilder bei 320 px habe ich alle angesehen, von den anderen Größen Stichproben (24 iPad hoch, je 11–12 quer und groß).
+- **Offline:** App startet ohne Netz; Nova fragt offline gar nicht erst (kein Konsolenfehler), offline geladene Sätze spielen ohne Abruf.
+- **Merken:** Freischalt-Code, Stimme an/aus, Sprechtempo, Qualitätswahl, Lautstärken, Schreibweise, Spielstand (Android-Tests und Browser-Test).
+- **Update von der Vorversion ohne Datenverlust:** echte WebApp 2.16.3 mit Spielstand → 2.18.1: 15 gespeicherte Einträge unverändert, alte Thorsten-Datei weggeräumt, keine Konsolenfehler (`scene/test/web-vorversion.mjs`).
+  Android: Datenbank-Migrationen sind getestet, die Einstellungs-Schlüssel sind unverändert; alte Stimm-Dateien (`filesDir/stimme`) löscht die App beim Start.
+- **Tests grün:** 151 Logik-Tests, 145 App-Tests (Robolectric), Lint beider Fassungen, Browser: `web.mjs`, `web-update.mjs`, `web-nova.mjs`, `web-vorversion.mjs`, `web-screens.mjs`.
+
+### Dabei gefunden und behoben (alles in 2.18.1)
+- 320 px: abgeschnittene Kacheln/Gebiete auf der Startseite, gekappte Titel, Wortbruch im Abzeichen „Präzisionsarbeit“, gequetschte Regler im Galton-Brett und Binomial-Labor
+  (neu: `FitText` – Schrift verkleinert sich selbst), Erwartungslinie lief durch den Hinweis der Zufallsmaschine.
+- Die Einstellungen fragten den Zählstand auch bei ausgeschaltetem Vorlesen ab – jetzt nur noch bei „Lux spricht“ an.
+- Nova: überholte Sätze werden nicht mehr geladen (kein Stau bei schlechter Verbindung); fehlende Bestqualität wird beim nächsten Tippen nachgeholt statt dauerhaft durch Standard ersetzt.
+
+### Bekannte Restpunkte
+1. **Kein echtes Gerät geprüft.** iPad/Safari (WebKit), echte Android-Handys, echter Ton: nur Marcel kann das. Von ihm noch offen: weißer Bildschirm am iPad (Korrektur seit 2.11.1), „kein Ton nach Update“ (Hinweis seit 2.16.3), Hörtest Nova.
+   Die iPad-Prüfung hier ist nur die Bildschirmgröße in Chromium, nicht Safari.
+2. **Nova im Browser gegen den echten Server:** nur per Einzelabruf geprüft (Dateien, CORS, `/jetzt`), der volle Ablauf im Browser lief gegen einen nachgestellten Server.
+3. **Server:** `bytes_original` fehlt im Zählstand (Bestqualität ohne MB-Angabe); `stand-raumlicht.mathenachhilfe-online.com.json` fehlt (Android nimmt so lange den Test-Stand);
+   Bestqualität war um 17:45 UTC erst teilweise erzeugt. „Keine Zugriffsprotokolle“ steht im App-Text – bitte am Server sicherstellen.
+4. **Zwei Stimmen möglich:** Offline oder bei Serverfehler liest die Geräte-Stimme einzelne Sätze.
+5. **Sehr breite Bildschirme:** Listen nutzen die volle Breite (funktioniert, wirkt aber gestreckt). In zwei Kennzahl-Karten (Binomial-Labor) ist bei 320 px die Unterzeile gekürzt.
+6. **Recht:** Play-Formular „Datensicherheit“ und Datenschutzerklärung der Website sind wegen der Laufzeit-Texte (über euren Server an OpenAI) neu zu fassen – Vorschlag `store/datenschutz-abschnitt.md`. Play bleibt wie besprochen liegen.
+7. **Abi-Pass:** Sperren und Kauf bleiben aus, bis `CHECKOUT_URL` eingetragen ist; ein echter Freischalt-Code wurde noch nie geprüft (nur Test-Schlüssel).
+
+In der Betriebstest-Woche nur Fehlerbehebungen.
+
 ## 17.11.2026 – Raumlicht 2.18.0: „Alle Nova-Texte offline laden“ mit Standard und Bestqualität
 
 Marcel hat beides direkt bestätigt (Offline-Download und die Wahl „Bestqualität“). **Raumlicht 2.18.0 vom 17.11.2026, Web = Android (beide 2.18.0).**

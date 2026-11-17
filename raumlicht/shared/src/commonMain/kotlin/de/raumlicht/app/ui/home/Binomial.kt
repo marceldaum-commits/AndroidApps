@@ -107,9 +107,17 @@ fun BinomialScreen(onBack: () -> Unit) {
             Dial("Erwartungswert μ = n · p", Geo.num(dist.mean), "so viele Treffer im Schnitt", Q.Pink, Modifier.weight(1f).testTag("mu"))
             Dial("Streuung σ", Geo.num(dist.sigma), dist.spreadText(), Q.Violet, Modifier.weight(1f).testTag("sigma"))
         }
-        Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 2.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
-            Stepper("Versuche n", n, n.toString(), Q.Cyan, "n", Modifier.weight(1f), n > 1, n < Binomial.MAX_N) { d -> n = (n + d).coerceIn(1, Binomial.MAX_N); k = k.coerceAtMost(n) }
-            listOf(10, 20, 50, 100).forEach { c -> Pick("$c", n == c, Q.Cyan, "n-$c") { n = c; k = k.coerceAtMost(n) } }
+        // Auf schmalen Handys (unter 360 dp) bekommen die Schnellwahl-Knöpfe eine eigene Zeile – sonst bleibt für den Regler kein Platz
+        androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 2.dp)) {
+            val narrow = maxWidth < 340.dp
+            @Composable fun picks() = listOf(10, 20, 50, 100).forEach { c -> Pick("$c", n == c, Q.Cyan, "n-$c") { n = c; k = k.coerceAtMost(n) } }
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Stepper("Versuche n", n, n.toString(), Q.Cyan, "n", Modifier.weight(1f), n > 1, n < Binomial.MAX_N) { d -> n = (n + d).coerceIn(1, Binomial.MAX_N); k = k.coerceAtMost(n) }
+                    if (!narrow) picks()
+                }
+                if (narrow) Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) { picks() }
+            }
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 2.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             Pick("−10", false, Q.Pink, "p-minus10") { percent = (percent - 10).coerceAtLeast(1) }

@@ -111,7 +111,8 @@ private fun WebApp() {
                         offline = run {
                             // Stand aus dem Browser übernehmen, solange die Einstellungen offen sind
                             var tick by remember { mutableStateOf(0) }; var best by remember { mutableStateOf(prefs.voiceBest) }
-                            LaunchedEffect(Unit) { offRefresh(Vorlesen.SERVER); while (true) { kotlinx.coroutines.delay(400); tick++ } }
+                            // Größe nur erfragen, wenn Vorlesen eingeschaltet ist – sonst geht die App nicht ins Netz
+                            LaunchedEffect(voice) { if (voice) offRefresh(Vorlesen.SERVER); while (true) { kotlinx.coroutines.delay(400); tick++ } }
                             tick.let { de.raumlicht.app.ui.settings.OfflineVoice(offFlag("loading"), offNum("done").toInt(), offNum("total").toInt(), offNum("standardDone").toInt(), offNum("bestDone").toInt(),
                                 offNum("standardStored").toLong(), offNum("bestStored").toLong(), offNum("standardBytes").toLong().takeIf { it >= 0 }, offNum("bestBytes").toLong().takeIf { it >= 0 }, best,
                                 start = { b -> prefs.voiceBest = b; best = b; offStart(Vorlesen.SERVER, b) }, cancel = { offCancel() }, delete = { offRemove(Vorlesen.SERVER) }) }

@@ -62,12 +62,16 @@ class NovaOfflineTest {
         assertEquals(5, o.standardDone); assertEquals(5 * 1003L, o.standardStored); assertEquals(6, asked.size); assertEquals(6, o.done)       // der fehlende (404) wird still übersprungen
         // nochmal tippen: nur der eine fehlende wird wieder versucht
         asked.clear(); o.start(false); wait(o); assertEquals(listOf(Vorlesen.fileUrl(keys[5])), asked.toList())
-        // Bestqualität: aus „original“, gibt es sie dort nicht, die normale Datei
+        // Bestqualität: aus „original“; gibt es sie dort nicht, wird die normale Datei als Standard abgelegt
         asked.clear(); o.start(best = true); wait(o)
-        assertEquals(5, o.bestDone); assertEquals(4 * 3003L + 1003L, o.bestStored); assertEquals(6 + 2, asked.size)
+        assertEquals(4, o.bestDone); assertEquals(4 * 3003L, o.bestStored); assertEquals(5, o.standardDone)
+        assertEquals(6 + 1, asked.size)                                                   // sechs Mal „original“; für den fünften liegt die normale Datei schon da, nur der sechste wird noch einmal versucht
+        // Der Server hat inzwischen alles in Bestqualität: nochmal tippen holt genau die zwei fehlenden
+        val later = NovaOffline(ctx, { url, _ -> asked += url; if (url.contains("/original/")) 200 to big else 404 to ByteArray(0) }) { keys }
+        asked.clear(); later.start(true); wait(later); assertEquals(2, asked.size); assertEquals(6, later.bestDone)
         // die Wiedergabe nimmt die geladene Datei – Bestqualität zuerst, ganz ohne Netz
         val v = NovaVoice(ctx, fetch = { _, _ -> throw AssertionError("kein Netz nötig") })
-        assertEquals(3003L, v.obtain("Eins.")!!.length()); assertEquals(1003L, v.obtain("Fünf.")!!.length())
+        assertEquals(3003L, v.obtain("Eins.")!!.length()); assertEquals(3003L, v.obtain("Fünf.")!!.length())
         // löschen: beide Qualitäten weg
         o.delete(); Thread.sleep(300); assertEquals(0, o.standardDone); assertEquals(0, o.bestDone); assertEquals(0L, o.standardStored + o.bestStored)
         assertNull(NovaOffline.find(ctx, keys[0]))

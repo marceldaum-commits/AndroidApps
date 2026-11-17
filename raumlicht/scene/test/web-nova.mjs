@@ -57,7 +57,7 @@ await page.evaluate(async ([s]) => { await window.__rlNova.offline.start(s, fals
 check(seen.length - n0 === gone, 'nochmal tippen lädt nur, was noch fehlt');
 const ones = [...keys].filter((k) => k.startsWith('1')).length;
 const off2 = await page.evaluate(async ([s]) => { const o = window.__rlNova.offline; await o.start(s, true); return { bd: o.bestDone, stored: o.bestStored }; }, [S]);
-check(off2.bd === keys.size - gone && off2.stored === (off2.bd - ones) * sound.length + ones * 2 * sound.length, `Offline Bestqualität: ${ones} Dateien aus „original“, der Rest in Standard`);
+check(off2.bd === ones && off2.stored === ones * 2 * sound.length, `Offline Bestqualität: ${ones} Dateien aus „original“ – was dort fehlt, bleibt Standard und wird später nachgeholt`);
 await page.evaluate(async () => { await caches.delete('raumlicht-nova'); window.__rlNovaSaved = window.__rlNovaServer; });
 n0 = seen.length; const offPlay = await page.evaluate(([s, u]) => window.__rlNova.say(s, s + u, '', '', 0.5, 1), [S, first.substring(4)]);
 check(offPlay === 'ok' && seen.length === n0, 'offline geladene Sätze spielen ohne Abruf');

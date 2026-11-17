@@ -68,12 +68,20 @@ class NovaOffline(private val ctx: Context, private val fetch: NovaFetch = ::nov
             loading = false
         }
     }
-    /** Eine Datei holen: Bestqualität aus dem Ordner „original“, gibt es sie dort nicht, die normale. Fehlt auch die (404), wird sie still übersprungen. */
+    /**
+     * Eine Datei holen. Bestqualität kommt aus dem Ordner „original“; gibt es sie dort (noch) nicht, wird die normale Datei geholt und als Standard abgelegt –
+     * so spricht Lux offline trotzdem, und beim nächsten Tippen auf „Bestqualität“ wird nur das Fehlende nachgeholt. Fehlt auch die normale (404), wird sie still übersprungen.
+     */
     private fun load(key: String, best: Boolean, target: File) {
+        var into = target
         var (code, bytes) = fetch(Vorlesen.fileUrl(key, best), null)
-        if (best && code == 404) fetch(Vorlesen.fileUrl(key, false), null).let { code = it.first; bytes = it.second }
+        if (best && code == 404) {
+            into = dir(ctx, false).apply { mkdirs() }
+            if (File(into, "$key.mp3").length() > 0) return
+            fetch(Vorlesen.fileUrl(key, false), null).let { code = it.first; bytes = it.second }
+        }
         if (code != 200 || !NovaVoice.looksLikeMp3(bytes)) return
-        val part = File(target, "$key.teil"); part.writeBytes(bytes); part.renameTo(File(target, "$key.mp3"))
+        val part = File(into, "$key.teil"); part.writeBytes(bytes); part.renameTo(File(into, "$key.mp3"))
     }
     fun cancel() { cancelled = true }
     /** Offline-Stimme löschen – beide Qualitäten */

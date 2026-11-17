@@ -116,7 +116,9 @@ class MainActivity : ComponentActivity() {
                     BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, onBack, onReset = vm::resetAll, voice = vm.settings.voice.collectAsStateWithLifecycle().value, onVoice = vm.settings::setVoice,
                     lastProblem = problem, onProblemSeen = { Diagnose.clear(this@MainActivity); problem = null },
                     offline = (application as RaumlichtApp).novaOffline.let { o ->
-                        LaunchedEffect(Unit) { o.refresh() }
+                        val speaks = vm.settings.voice.collectAsStateWithLifecycle().value
+                        // Größe nur erfragen, wenn Vorlesen eingeschaltet ist – sonst geht die App nicht ins Netz
+                        LaunchedEffect(speaks) { o.refresh(askServer = speaks) }
                         var best by remember { mutableStateOf(vm.settings.voiceBest) }
                         de.raumlicht.app.ui.settings.OfflineVoice(o.loading, o.done, o.total, o.standardDone, o.bestDone, o.standardStored, o.bestStored, o.standardBytes, o.bestBytes, best,
                             start = { b -> vm.settings.voiceBest = b; best = b; o.start(b) }, cancel = o::cancel, delete = o::delete) })

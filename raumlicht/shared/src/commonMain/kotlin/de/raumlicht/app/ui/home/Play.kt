@@ -213,9 +213,9 @@ fun GaltonScreen(onBack: () -> Unit, controller: StageController = remember { St
             Modifier.padding(horizontal = 14.dp), color = Q.Muted, fontSize = 12.sp)
         Row(Modifier.padding(horizontal = 12.dp, vertical = 6.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("n", color = Q.Text, fontWeight = FontWeight.Black, fontSize = 18.sp)
-            Stepper(null, rows, "$rows Reihen", Q.Text, "n", Modifier.weight(0.8f), canDown = rows > Galton.ROWS.first && !running, canUp = rows < Galton.ROWS.last && !running) { d -> rows += d }
+            Stepper("Reihen", rows, "$rows", Q.Text, "n", Modifier.weight(0.8f), canDown = rows > Galton.ROWS.first && !running, canUp = rows < Galton.ROWS.last && !running) { d -> rows += d }
             Text("p", color = Q.Pink, fontWeight = FontWeight.Black, fontSize = 18.sp)
-            Stepper(null, tenths, "${tenths * 10} % rechts", Q.Pink, "p", Modifier.weight(1f), canDown = tenths > 1 && !running, canUp = tenths < 9 && !running) { d ->
+            Stepper("nach rechts", tenths, "${tenths * 10} %", Q.Pink, "p", Modifier.weight(1f), canDown = tenths > 1 && !running, canUp = tenths < 9 && !running) { d ->
                 tenths += d; counts = List(board.rows + 1) { 0 }       // neue Wahrscheinlichkeit, neues Experiment
             }
         }

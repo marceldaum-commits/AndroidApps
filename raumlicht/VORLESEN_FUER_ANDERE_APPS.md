@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Nova“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.18.0 vom 17.11.2026. Ersetzt die frühere Anleitung zur Stimme „Thorsten“ (sherpa-onnx, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
+Stand: Raumlicht 2.18.1 vom 17.11.2026. Ersetzt die frühere Anleitung zur Stimme „Thorsten“ (sherpa-onnx, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
 
 ## Kurz
 

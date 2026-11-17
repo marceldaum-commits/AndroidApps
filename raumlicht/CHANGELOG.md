@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.1 – Feinschliff vor dem Betriebstest (17.11.2026)
+- **Kleine Handys:** Auf schmalen Bildschirmen wird nichts mehr abgeschnitten – Kacheln und Gebiete auf der Startseite, lange Titel, das Abzeichen „Präzisionsarbeit“ und die Zahlen-Regler im Galton-Brett und im Binomial-Labor passen jetzt hinein.
+- **Zufallsmaschine:** Die Erwartungslinie läuft nicht mehr durch den Hinweistext.
+- **Nova:** Bei wackeliger Verbindung stauen sich keine alten Sätze mehr. Fehlt eine Datei in Bestqualität noch auf dem Server, wird sie beim nächsten Tippen nachgeholt.
+- **Für Eltern:** Ist „Lux spricht“ ausgeschaltet, fragen die Einstellungen nichts mehr beim Stimmen-Server ab.
+
 ## 2.18.0 – Nova auch ohne Internet (17.11.2026)
 - **Alle Nova-Texte offline laden:** In den Einstellungen unter „Lux spricht“ kannst du alle festen Vorlese-Texte auf einmal laden – am besten im WLAN. Danach spricht Lux auch ohne Internet mit Nova.
 - **Zwei Qualitäten:** „Standard“ (rund 64 MB) oder „Bestqualität“ (deutlich größer). Der Fortschritt wird angezeigt, du kannst abbrechen und später weitermachen. „Offline-Stimme löschen“ gibt den Speicher wieder frei.

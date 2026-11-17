@@ -93,7 +93,8 @@ fun ChanceScreen(onBack: () -> Unit, seed: Long = remember { nowNanos() }) {
                 }
             }
             Text("100 %", Modifier.align(Alignment.TopStart).padding(6.dp), color = Q.Muted, fontSize = 10.sp); Text("0 %", Modifier.align(Alignment.BottomStart).padding(6.dp), color = Q.Muted, fontSize = 10.sp)
-            if (run == null) Text("Erst wetten, dann werfen:\nDie blaue Linie zeigt, wie oft es bisher geklappt hat.", Modifier.align(Alignment.Center).padding(24.dp), color = Q.Muted, fontSize = 13.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            if (run == null) Text("Erst wetten, dann werfen:\nDie blaue Linie zeigt, wie oft es bisher geklappt hat.", Modifier.align(Alignment.TopCenter).padding(start = 30.dp, end = 24.dp, top = 14.dp),   // oben, damit die Erwartungslinie nicht durch den Text läuft
+                 color = Q.Muted, fontSize = 13.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Dial("Bisher", if (run == null) "–" else "${run.hits[shown]} von $shown", if (run == null || shown == 0) "" else "${Geo.num(run.freq(shown) * 100)} %", Q.Cyan, Modifier.weight(1f).testTag("bisher"))
