@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Thorsten“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.15.1 vom 17.11.2026. Geschrieben auf Wunsch des Leitstands, von Marcel bestätigt.
+Stand: Raumlicht 2.16.0 vom 17.11.2026. Geschrieben auf Wunsch des Leitstands, von Marcel bestätigt.
 
 **Was es ist:** Die App liest Texte mit der natürlichen deutschen Stimme „Thorsten“ vor – auf dem Gerät, ohne Internet, **ohne GPL-Baustein**.
 Der Trick: Die Lautschrift (aus Text werden Laute) entsteht vorab am Entwicklungsrechner und wird als reine Daten mitgeliefert.
@@ -8,7 +8,7 @@ In der App rechnet nur noch das Stimm-Modell.
 
 **Ehrlicher Stand:**
 - **Android:** gebaut und in den automatischen Tests grün. **Auf einem echten Gerät hat es noch niemand gehört.** Bitte vor dem Übernehmen einmal auf einem Handy prüfen.
-- **WebApp:** „Thorsten“ gibt es dort **noch nicht**. Die WebApp liest mit der Geräte-Stimme des Browsers (nur Stimmen, die auf dem Gerät eingebaut sind). Abschnitt 6 beschreibt, was zu bauen wäre.
+- **WebApp:** seit 2.16.0 gebaut und in Chromium geprüft (Abschnitt 6). **Auf einem echten Handy oder iPad hat es noch niemand gehört.**
 
 ## 1. Bausteine und Lizenzen
 
@@ -77,11 +77,21 @@ Vorbild: `app/src/main/java/de/raumlicht/app/ui/fx/NaturalVoice.kt` und `core/mo
 - App-Paket: Die Raumlicht-APK hat insgesamt 21 MB – mit sherpa-onnx für zwei Prozessor-Arten, komprimiert eingepackt (die beiden Zeilen oben).
 - Lautschrift-Daten: rund 220 kB. Modell: 63 MB, nur auf Wunsch.
 
-## 6. WebApp – was zu bauen wäre (noch nicht gebaut)
+## 6. Einbindung WebApp (seit Raumlicht 2.16.0, Vorbild: Wissensgarten)
 
-- sherpa-onnx gibt es als WebAssembly-Fassung; das Modell (63 MB) müsste der Browser laden und im Cache halten. Die Lautschrift-Daten und `Lautschrift.kt` sind gemeinsamer Code und sofort nutzbar.
-- Offene Fragen: Ladezeit und Speicher auf Handys, Rechenzeit im Browser (ohne eigenen Thread ruckelt die Oberfläche), Ausliefern von huggingface.co im Browser (CORS) oder vom eigenen Server.
-- Bis dahin in der WebApp: `speechSynthesis` des Browsers, **nur Stimmen mit `localService`** (sonst kann der Text an den Browser-Hersteller gehen – und „keine Daten an einen Server“ stimmt nicht mehr).
+Im Browser rechnet **ONNX Runtime Web** (MIT) das Modell direkt – ohne sherpa-onnx. Deshalb genügt dort die ursprüngliche Piper-Datei vom Server, ohne die 127 angehängten Byte.
+
+- **Bausteine:** `onnxruntime-web` 1.22.0 als npm-Abhängigkeit, aber **nicht eingebunden**: Der Bau kopiert nur drei Dateien nach `webapp/ort/`
+  (`ort.wasm.min.js`, `ort-wasm-simd-threaded.mjs`, `ort-wasm-simd-threaded.wasm`, zusammen 11 MB). Sie werden erst geladen, wenn Thorsten zum ersten Mal spricht – der Start der WebApp wird nicht langsamer.
+- **`web/src/wasmJsMain/resources/rl-stimme.js`:** laden (Fortschritt, abbrechbar), SHA-256 prüfen (`crypto.subtle`), in einem eigenen Browser-Speicher ablegen (Cache Storage `raumlicht-stimme`),
+  Modell starten, Laut-Nummern rechnen, per Web Audio abspielen (Satz für Satz, ein neuer Satz unterbricht den alten). Der Service Worker lässt diesen Speicher bei Updates stehen.
+- **Kotlin-Seite** (`web/.../Thorsten.kt`): `Speech.clean` → `Lautschrift.of` (dieselben `saetze.tsv`/`woerter.tsv` wie Android, nach `webapp/stimme/` kopiert) → `PiperIds.encode`
+  (Anfang „^“, zwischen allen Lauten „_“, Ende „$“, Nummern aus `tokens.txt`) → `rl-stimme.js`. Eingaben des Modells: `input` (int64), `input_lengths`, `scales = [0,667; Tempo; 0,8]`.
+- **Rückfall:** unbekanntes Wort oder Modell startet nicht → die Stimme des Geräts (`speechSynthesis`, **nur Stimmen mit `localService`** – sonst kann der Text an den Browser-Hersteller gehen).
+- **Server:** CORS muss die Web-Adresse erlauben (für `*.mathenachhilfe-online.com` und `localhost` eingerichtet).
+- **Gemessen in Chromium am Rechner:** 1,3 s Sprache in 0,3 s gerechnet; erster Satz mit Start des Bausteins knapp 2 s; 84 Sätze der App ohne Fehler, der längste (525 Laut-Nummern) in 2,5 s.
+  **Nicht gemessen:** Handys und iPad (Rechenzeit, Speicher). Ohne `crossOriginIsolated` rechnet der Baustein mit einem Thread.
+- **Test:** `scene/test/web-stimme.mjs` (laden, Prüfsumme, Satz rechnen, Neuladen, Entfernen).
 
 ## 7. Stolpersteine
 

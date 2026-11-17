@@ -38,4 +38,15 @@ class LautschriftTest {
         assertEquals(listOf("Quarkstrudelxyz"), l.missing("Quarkstrudelxyz ist kein Punkt."))
         assertTrue(Lautschrift.codepoints("aɪ").contentEquals(intArrayOf(0x61, 0x26A)))
     }
+
+    /** Laute → Nummern für das Stimm-Modell im Browser: Anfang, Füllzeichen zwischen allen Lauten, Ende – und jedes Zeichen der Lautschrift ist bekannt */
+    @Test fun lauteWerdenZuNummern() {
+        val dir = java.io.File("../../app/src/main/assets/stimme"); val map = PiperIds.tokens(java.io.File(dir, "tokens.txt").readLines().asSequence())
+        assertEquals(0, map['_'.code]); assertEquals(1, map['^'.code]); assertEquals(2, map['$'.code]); assertEquals(3, map[' '.code])
+        val ids = PiperIds.encode("ab", map).toList()
+        assertEquals(listOf(1, 0, map['a'.code], 0, map['b'.code], 0, 2), ids)
+        // alle Laute aller festen Sätze sind in der Zeichenliste der Stimme – sonst würde im Browser ein Laut verschluckt
+        val unknown = java.io.File(dir, "saetze.tsv").readLines().flatMap { l -> Lautschrift.codepoints(l.substringAfter('\t').replace("|", "")).filter { it !in map } }.toSet()
+        assertEquals("Laute ohne Nummer: " + unknown.map { String(Character.toChars(it)) }, emptySet<Int>(), unknown)
+    }
 }

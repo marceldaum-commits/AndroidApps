@@ -4,7 +4,7 @@
 |---|---|---|---|
 | three.js 0.170 | 3D-Bühne | MIT | gebündelt in `app/src/main/assets/scene/scene.js` |
 | sherpa-onnx 2.0.1 | Sprachsynthese auf dem Gerät (natürliche Stimme); ohne espeak-ng | Apache 2.0 | Bibliothek über JitPack |
-| ONNX Runtime | rechnet das Stimm-Modell | MIT | Teil von sherpa-onnx |
+| ONNX Runtime | rechnet das Stimm-Modell | MIT | Android: Teil von sherpa-onnx · Web: onnxruntime-web 1.22.0, drei Dateien unter `webapp/ort/`, erst bei Bedarf geladen |
 | Lautschrift-Daten | Laute für Lux’ Texte, vorab erzeugt | eigene Daten (erzeugt mit espeak-ng, das **nicht** in der App steckt) | `app/src/main/assets/stimme/*.tsv` |
 | AndroidX Core SplashScreen | Startbild der Android-App | Apache 2.0 | Bibliothek |
 | Play In-App Updates | Updates über den Store (nur Play-Fassung) | Play Core Software Development Kit Terms of Service (Google) | Bibliothek |

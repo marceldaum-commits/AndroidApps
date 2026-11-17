@@ -40,6 +40,10 @@ class WebPrefs : Prefs {
     var voiceName: String
         get() = storeGet(P + "stimmeName") ?: ""
         set(v) = storeSet(P + "stimmeName", v)
+    /** Natürliche Stimme „Thorsten“ eingeschaltet? (gilt nur, wenn sie geladen ist) */
+    var voiceNatural: Boolean
+        get() = storeGet(P + "stimmeThorsten") == "1"
+        set(v) = storeSet(P + "stimmeThorsten", if (v) "1" else "0")
     private val _strict = flag("strengeVektoren", false)
     override val strictVectors: StateFlow<Boolean> = _strict; override fun setStrictVectors(v: Boolean) { put("strengeVektoren", v); _strict.value = v }
     private val _volume = int("lautstaerke", 100)

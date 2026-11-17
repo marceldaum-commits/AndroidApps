@@ -50,3 +50,24 @@ class Lautschrift(saetze: Sequence<String>, woerter: Sequence<String>) {
             return out.toIntArray() }
     }
 }
+
+/**
+ * Laute → Nummern, so wie das Stimm-Modell (Piper) sie erwartet: Anfang „^“, zwischen allen Lauten das Füllzeichen „_“, Ende „$“.
+ * Die Android-App überlässt das dem Sprach-Baustein; im Browser rechnet das Modell direkt, deshalb steht es hier (gemeinsamer Code).
+ */
+object PiperIds {
+    /** Zeilen „Zeichen Nummer“ aus tokens.txt (das Leerzeichen steht als „  3“ drin) → Zeichen-Nummer (Unicode) zu Modell-Nummer */
+    fun tokens(lines: Sequence<String>): Map<Int, Int> = buildMap {
+        lines.forEach { l -> val i = l.lastIndexOf(' '); if (i <= 0) return@forEach
+            val id = l.substring(i + 1).trim().toIntOrNull() ?: return@forEach
+            val sym = l.substring(0, i); if (sym.isEmpty()) return@forEach
+            put(Lautschrift.codepoints(sym).first(), id) }
+    }
+    fun encode(sentence: String, map: Map<Int, Int>): IntArray {
+        val pad = map['_'.code] ?: 0; val out = ArrayList<Int>()
+        map['^'.code]?.let { out += it }; out += pad
+        for (cp in Lautschrift.codepoints(sentence)) { val id = map[cp] ?: continue; out += id; out += pad }
+        map['$'.code]?.let { out += it }
+        return out.toIntArray()
+    }
+}

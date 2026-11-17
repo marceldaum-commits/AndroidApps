@@ -10,12 +10,12 @@ Nicht jeder Baustein steckt in jeder Fassung (Android-App / WebApp) – das steh
  5. Skia (Zeichenbibliothek in Skiko) – Web – BSD-Lizenz (3 Klauseln)
  6. js-joda – Web – BSD-Lizenz (3 Klauseln)
  7. sherpa-onnx 2.0.1 – Sprachsynthese auf dem Gerät – Android – Apache-Lizenz 2.0
- 8. ONNX Runtime – rechnet das Stimm-Modell – Android – MIT-Lizenz
+ 8. ONNX Runtime – rechnet das Stimm-Modell – Android (in sherpa-onnx) und Web (onnxruntime-web 1.22.0, wird nur bei Bedarf geladen) – MIT-Lizenz
  9. Schrift DejaVu Sans – Web – Bitstream-Vera-/DejaVu-Lizenz
 10. Schrift Noto Color Emoji – Web – SIL Open Font License 1.1
 11. Ed25519-Prüfung nach TweetNaCl – gemeinfrei (Public Domain)
 12. Google Play In-App Updates und Play-Dienste – nur Play-Store-Fassung – Nutzungsbedingungen des Play Core SDK von Google
-13. Stimme „Thorsten“ (Piper, de_DE-thorsten-medium) – nicht in der App enthalten, wird nur auf Wunsch geladen – Aufnahmen CC0 (Thorsten Müller)
+13. Stimme „Thorsten“ (Piper, de_DE-thorsten-medium) – nicht in der App enthalten, wird nur auf Wunsch vom eigenen Server geladen (Android und Web) – Aufnahmen CC0 (Thorsten Müller)
 
 Es folgen die Lizenztexte im Original (englisch).
 

@@ -140,6 +140,7 @@
     var waitSW = setInterval(function () { var st = document.getElementById('start'); if (!st || st.dataset.fertig === '1' || document.getElementById('start-text').className === 'fehler') { clearInterval(waitSW); startSW(); } }, 400);
   }
 </script>
+<script src="rl-stimme.js" defer></script>
 <script src="raumlicht.js" onload="got['raumlicht.js'] = PLAN['raumlicht.js']; progress();"></script>
 </body>
 </html>

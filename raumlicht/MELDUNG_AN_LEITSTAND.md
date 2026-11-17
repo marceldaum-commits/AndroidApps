@@ -2,6 +2,24 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.16.0: Thorsten auch in der WebApp (von Marcel direkt bestätigt)
+
+**Web = Android:** ja, jetzt auch beim Vorlesen. Beide Fassungen: Version 2.16.0 vom 17.11.2026, Vorlesen abschaltbar (von Haus aus aus), Stimme wählbar (Gerätestimmen und Thorsten), Sprechtempo, Hörprobe,
+dieselbe Lautschrift, Stimmdatei nur auf Wunsch von `stimmen.mathenachhilfe-online.com`, mit Prüfsumme, danach offline. Kein espeak-ng in der App.
+Verbleibende, technisch bedingte Unterschiede: App-Update-Kasten und Widgets nur in Android; im Browser rechnet ONNX Runtime Web, in Android sherpa-onnx.
+
+- **WebApp:** nach dem Vorbild Wissensgarten gebaut – `rl-stimme.js` (laden, SHA-256, Cache Storage `raumlicht-stimme`, rechnen, abspielen), `Thorsten.kt`, `PiperIds` im gemeinsamen Code.
+  ONNX Runtime Web 1.22.0 (MIT) liegt unter `webapp/ort/` (11 MB) und wird erst geladen, wenn Thorsten zum ersten Mal spricht – Start und Ladeplan der WebApp sind unverändert.
+  Im Browser genügt eure Server-Datei, wie sie ist (sha256 7e64…7819); die 127 Byte Zusatzangaben braucht nur sherpa-onnx in Android.
+- **Hinweis-Text:** „Stimme laden (63 MB) … am besten im WLAN“ – die tatsächliche Größe, nicht „ca. 75 MB“.
+- **Geprüft in Chromium:** laden, Prüfsumme, speichern, Neuladen, entfernen; 84 Sätze der App fehlerfrei gerechnet (1,3 s Sprache in 0,3 s; längster Satz 2,5 s). CORS-Kopfzeile für raumlicht-test per Abruf bestätigt.
+  Neuer Test `scene/test/web-stimme.mjs`. Dazu 153 Tests im Rechenkern, 143 App-Tests, Lint, Ablauf-, Update- und Offline-Test der WebApp.
+- **Nicht geprüft:** der Download im Browser vom echten Server (der Test-Browser hat hier kein Netz – geprüft mit derselben Datei lokal), Handys und iPad (Rechenzeit, Speicher), und wie es klingt. Marcel hat eine Hörprobe aus dem Browser bekommen.
+- **Lizenzen:** `lizenzen.txt` und `LIZENZEN.md` nennen ONNX Runtime Web; Anleitung `VORLESEN_FUER_ANDERE_APPS.md` um den Web-Teil ergänzt.
+- **Bitte in der Datenschutzerklärung nennen:** einmaliger Download der Stimme vom eigenen Server in App und WebApp.
+
+---
+
 ## 17.11.2026 – Version 2.15.1: Thorsten kommt vom eigenen Server (von Marcel direkt bestätigt)
 
 **Web = Android:** gleiche Version 2.15.1 vom 17.11.2026, gleicher Inhalt. **Ausnahme, noch offen:** „Thorsten“ gibt es nur in der Android-App; in der WebApp lesen die Stimmen des Geräts. Der Einbau im Browser ist der nächste Schritt.

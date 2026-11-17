@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.16.0 – Thorsten spricht jetzt auch in der WebApp (17.11.2026)
+- **WebApp:** Die natürliche Stimme „Thorsten“ gibt es jetzt auch im Browser – dieselbe wie in der Android-App. In den Einstellungen unter „Lux spricht“: „Stimme laden (63 MB)“, am besten im WLAN.
+  Sie kommt einmalig von unserem eigenen Server, wird geprüft und bleibt im Browser gespeichert; danach rechnet sie auf deinem Gerät, auch ohne Internet. Vorgelesene Texte verlassen dein Gerät nie.
+- Du kannst jederzeit zur Stimme des Geräts zurückschalten oder Thorsten wieder entfernen. Kennt Thorsten ein Wort nicht, liest diesen einen Satz die Stimme des Geräts.
+- Der Start der WebApp wird dadurch nicht langsamer: Die Rechen-Bausteine werden erst geladen, wenn Thorsten zum ersten Mal spricht.
+
 ## 2.15.1 – Die Stimme kommt jetzt vom eigenen Server (17.11.2026)
 - **Android:** Die natürliche Stimme „Thorsten“ wird – wie bisher nur auf deinen Wunsch – jetzt von unserem eigenen Server geladen, nicht mehr von einem fremden. Sie ist dieselbe wie vorher und wird doppelt geprüft.
 - Wer die Stimme schon geladen hat, muss nichts tun.

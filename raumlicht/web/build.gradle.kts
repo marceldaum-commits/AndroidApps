@@ -33,6 +33,9 @@ kotlin {
                 implementation(project(":shared"))   // alle Bildschirme und der App-Rahmen – derselbe Code wie in der Android-App
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
                 implementation(compose.runtime); implementation(compose.foundation); implementation(compose.material3); implementation(compose.ui)
+                // Stimme „Thorsten“ im Browser: ONNX Runtime Web (MIT). Wird NICHT eingebunden (kein Import), sondern nur als
+                // Laufzeit-Dateien nach webapp/ort/ kopiert und erst geladen, wenn Thorsten spricht.
+                implementation(npm("onnxruntime-web", "1.22.0"))
             }
         }
     }
@@ -64,6 +67,12 @@ tasks.register<Sync>("webapp") {
     from(tasks.named("wasmJsBrowserDistribution"))
     // Lizenztexte der fremden Bausteine – dieselbe Datei wie in der Android-App
     from(rootProject.file("app/src/main/assets/lizenzen.txt"))
+    // Natürliche Stimme im Browser: Lautschrift und Zeichenliste (dieselben Daten wie in der Android-App) …
+    from(rootProject.file("app/src/main/assets/stimme")) { into("stimme") }
+    // … und ONNX Runtime Web: nur die drei Dateien für WebAssembly (ohne WebGPU), selbst ausgeliefert
+    from(rootProject.layout.buildDirectory.dir("wasm/node_modules/onnxruntime-web/dist")) {
+        include("ort.wasm.min.js", "ort-wasm-simd-threaded.mjs", "ort-wasm-simd-threaded.wasm"); into("ort")
+    }
     into(rootProject.file("webapp"))
     exclude("**/*.LICENSE.txt")
     // Ladeplan eintragen: Größen der großen Dateien für den Fortschrittsbalken und die Namen der .wasm-Dateien für den Service Worker
