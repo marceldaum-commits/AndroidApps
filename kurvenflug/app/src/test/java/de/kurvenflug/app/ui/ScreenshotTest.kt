@@ -99,7 +99,7 @@ class ScreenshotTest {
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
     @Test fun throwHelp() = level("4-5", name = "09_wurf_berg", values = mapOf("angle" to 60.0, "v" to 12.0),
-        prepare = { it.onNodeWithText("👁 Bahn").performClick() })
+        prepare = { it.onNodeWithText("👁").performClick() })
 
     @Test fun throwMoon() = level("4-6", name = "10_wurf_mond", values = mapOf("angle" to 35.0, "v" to 5.5), settle = 1500,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
@@ -117,7 +117,7 @@ class ScreenshotTest {
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
     @Test fun slingshotHelp() = level("6-3", name = "15_schleuder_ganze_bahn", values = mapOf("angle" to 70.0, "v" to 7.0),
-        prepare = { it.onNodeWithText("👁 Bahn").performClick() })
+        prepare = { it.onNodeWithText("👁").performClick() })
 
     @Test fun daily() {
         val l = de.kurvenflug.core.model.Daily.forDay(20_501)
@@ -153,7 +153,7 @@ class ScreenshotTest {
     }
 
     @Test fun dragMode() = level("3-4", name = "24_kurve_ziehen", values = mapOf("d" to 1.0, "e" to 2.0),
-        prepare = { it.onNodeWithText("✋ Ziehen").performClick() })
+        prepare = { it.onNodeWithText("✋").performClick() })
 
     @Test fun builder() {
         val spec = de.kurvenflug.core.model.LevelSpec.of(Levels.byId("2-7")!!).copy(title = "Gürtel-Chaos", task = "Schaffst du das?")
@@ -215,9 +215,9 @@ class ScreenshotTest {
     @Test fun fractions() = level("15-1", name = "49_brueche", values = mapOf("x" to 2.75))
     @Test fun angles() = level("16-4", name = "50_winkel", values = mapOf("angle" to 100.0))
     @Test fun refraction() = level("17-1", name = "51_lichtbrechung", values = mapOf("angle" to 22.0),
-        prepare = { it.onNodeWithText("👁 Bahn").performClick() })
+        prepare = { it.onNodeWithText("👁").performClick() })
     @Test fun zeros() = level("18-3", name = "52_nullstellen", values = mapOf("d" to 2.0, "e" to -5.0),
-        prepare = { it.onNodeWithText("👁 Bahn").performClick() })
+        prepare = { it.onNodeWithText("👁").performClick() })
 
     private val storyStars = Levels.chapters.filter { it.number in setOf(1, 15, 8, 2) }.flatMap { it.levels }.associate { it.id to 3 } + someStars
 
@@ -326,7 +326,7 @@ class ScreenshotTest {
     @Test fun ramp() = level("12-1", name = "32_energie_rampe", values = mapOf("h" to 8.0), settle = 1100,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
-    @Test fun log() = level("10-5", name = "33_logarithmus", values = mapOf("b" to 3.0, "d" to -2.0), prepare = { it.onNodeWithText("👁 Bahn").performClick() })
+    @Test fun log() = level("10-5", name = "33_logarithmus", values = mapOf("b" to 3.0, "d" to -2.0), prepare = { it.onNodeWithText("👁").performClick() })
 
     @Test fun motion() = level("13-3", name = "34_weg_zeit", values = mapOf("v" to 0.5, "s0" to 5.0), settle = 1300,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
@@ -427,5 +427,11 @@ class ScreenshotTest {
             de.kurvenflug.app.ui.learning.LearningScreen(Learning.status(played, now), null, false, now, {}, {},
                 stars = played.mapValues { it.value.stars }, initialOpen = 1)
         }
+    }
+
+    /** 📖 Theorie-Knopf in der Übung: Erklärungen des Kapitels zum Nachlesen. */
+    @Test fun theory() = shot("98_theorie", 1500) {
+        val l = Levels.byId("2-5")!!
+        de.kurvenflug.app.ui.flight.TheoryOverlay(de.kurvenflug.core.model.Theories.of(l, Levels.chapters.first { it.number == 2 })!!) {}
     }
 }

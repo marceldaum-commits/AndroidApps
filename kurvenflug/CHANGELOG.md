@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.25.0 – 📖 Theorie zu jeder Übung
+- **📖 Theorie-Knopf**: In jeder Übung gibt es jetzt neben 👁 und ✋ den Knopf 📖. Er zeigt alle Erklärungen zum
+  Thema auf einen Blick – mit der Merkformel. Jederzeit, so oft du willst, und es kostet keine Sterne.
+  Auch im Asteroidensturm, im Duell und in Andromeda: dort erscheint die Theorie zur jeweiligen Bahnart.
+
 ## 0.24.2 – Alles nachgerechnet
 - **✅ Große Korrektheitsprüfung**: Jedes Level, jeder Tipp, jede Rechen-Frage und jeder Rechenweg wurde unabhängig
   nachgerechnet. Korrigiert u. a.: ein falsches Vorzeichen in einem Trigonometrie-Tipp, zwei missverständliche
