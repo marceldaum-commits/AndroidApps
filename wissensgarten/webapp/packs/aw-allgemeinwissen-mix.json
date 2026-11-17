@@ -43,9 +43,9 @@
       "q": "Wer schrieb „Faust“?",
       "a": "Johann Wolfgang von Goethe",
       "choices": [
-        "Friedrich Schiller",
-        "Heinrich Heine",
-        "Thomas Mann"
+        "Johann Gottfried von Herder",
+        "Johann Christoph Friedrich von Schiller",
+        "Joseph von Eichendorff"
       ],
       "img": "📖😈🎭"
     },
@@ -54,9 +54,9 @@
       "q": "Wer schrieb das Drama „Die Räuber“?",
       "a": "Friedrich Schiller",
       "choices": [
-        "Johann Wolfgang von Goethe",
-        "Gotthold Ephraim Lessing",
-        "Bertolt Brecht"
+        "Friedrich Hölderlin",
+        "Friedrich Hebbel",
+        "Friedrich Schlegel"
       ],
       "img": "🌲🔫📜"
     },
@@ -71,9 +71,9 @@
       "q": "Wer schrieb „Der kleine Prinz“?",
       "a": "Antoine de Saint-Exupéry",
       "choices": [
-        "Jules Verne",
-        "Victor Hugo",
-        "Albert Camus"
+        "Antoine de Saint-Just",
+        "Guy de Maupassant",
+        "Honoré de Balzac"
       ],
       "img": "👦🌹⭐"
     },
@@ -89,9 +89,9 @@
       "q": "Wer entwickelte die Relativitätstheorie?",
       "a": "Albert Einstein",
       "choices": [
-        "Isaac Newton",
-        "Max Planck",
-        "Niels Bohr"
+        "Albert Schweitzer",
+        "Alfred Wegener",
+        "Max Planck"
       ],
       "img": "🧠⚡⏳"
     },
@@ -100,9 +100,9 @@
       "q": "Wer entdeckte 1928 das Penicillin?",
       "a": "Alexander Fleming",
       "choices": [
-        "Robert Koch",
-        "Louis Pasteur",
-        "Marie Curie"
+        "Alexander Graham Bell",
+        "Alexander von Humboldt",
+        "John Ambrose Fleming"
       ],
       "img": "🍞🦠💊"
     },
@@ -113,9 +113,9 @@
       "info": "Wichtige Röntgenbilder dafür stammten von Rosalind Franklin.",
       "img": "🧬🌀",
       "choices": [
-        "Robert Koch und Louis Pasteur",
-        "Max Planck und Niels Bohr",
-        "Gregor Mendel und Charles Darwin"
+        "Jacques Monod und François Jacob",
+        "James Chadwick und Francis Aston",
+        "Otto Hahn und Fritz Straßmann"
       ]
     },
     {
@@ -123,9 +123,9 @@
       "q": "Wer erhielt 1886 das Patent auf das erste Automobil mit Benzinmotor?",
       "a": "Carl Benz",
       "choices": [
-        "Gottlieb Daimler",
-        "Rudolf Diesel",
-        "Henry Ford"
+        "Carl Bosch",
+        "Carl Zeiss",
+        "Carl Borgward"
       ],
       "img": "🚗⛽📜"
     },
@@ -141,9 +141,9 @@
       "q": "Wie lautet das chemische Symbol für Gold?",
       "a": "Au",
       "choices": [
-        "Go",
         "Ag",
-        "Gd"
+        "Al",
+        "Ar"
       ],
       "info": "Von lateinisch aurum. Ag ist Silber.",
       "img": "🥇✨"
@@ -153,9 +153,9 @@
       "q": "Welches Element steht an erster Stelle im Periodensystem?",
       "a": "Wasserstoff",
       "choices": [
-        "Helium",
         "Sauerstoff",
-        "Kohlenstoff"
+        "Kohlenstoff",
+        "Stickstoff"
       ],
       "img": "💧🎈"
     },
@@ -165,8 +165,8 @@
       "a": "Stickstoff",
       "choices": [
         "Sauerstoff",
-        "Kohlenstoffdioxid",
-        "Argon"
+        "Wasserstoff",
+        "Kohlenstoff"
       ],
       "info": "Luft besteht zu etwa 78 % aus Stickstoff und 21 % aus Sauerstoff.",
       "img": "🌬️🌍"
@@ -182,9 +182,9 @@
       "q": "Wie schnell ist das Licht im Vakuum ungefähr?",
       "a": "300 000 km pro Sekunde",
       "choices": [
-        "300 000 km pro Stunde",
-        "3000 km pro Sekunde",
-        "30 000 km pro Sekunde"
+        "300 000 m pro Sekunde",
+        "30 000 km pro Sekunde",
+        "300 000 km pro Stunde"
       ],
       "img": "💡⚡💨"
     },
@@ -193,7 +193,7 @@
       "q": "In welcher Einheit misst man Kraft?",
       "a": "Newton",
       "choices": [
-        "Watt",
+        "Newtonmeter",
         "Joule",
         "Pascal"
       ],
@@ -217,7 +217,7 @@
       "choices": [
         "Die Leber",
         "Die Lunge",
-        "Das Gehirn"
+        "Die Milz"
       ],
       "img": "🖐️🧴"
     },
@@ -245,9 +245,9 @@
       "q": "Welches ist das schnellste Landtier?",
       "a": "Der Gepard",
       "choices": [
-        "Der Löwe",
-        "Die Gazelle",
-        "Das Pferd"
+        "Der Leopard",
+        "Der Jaguar",
+        "Die Gazelle"
       ],
       "img": "🐆💨"
     },
@@ -258,7 +258,7 @@
       "choices": [
         "4",
         "8",
-        "10"
+        "16"
       ],
       "info": "Spinnen haben 8 Beine und sind keine Insekten.",
       "img": "🐜6️⃣"
@@ -268,9 +268,9 @@
       "q": "Welche Sprache hat weltweit die meisten Muttersprachler?",
       "a": "Chinesisch (Mandarin)",
       "choices": [
-        "Englisch",
-        "Spanisch",
-        "Hindi"
+        "Chinesisch (Kantonesisch)",
+        "Japanisch",
+        "Spanisch (Kastilisch)"
       ],
       "img": "🐉🗣️"
     },
@@ -285,9 +285,9 @@
       "q": "Wie viele Minuten hat ein Tag?",
       "a": "1440",
       "choices": [
-        "1200",
-        "1340",
-        "1600"
+        "1400",
+        "1240",
+        "1460"
       ],
       "info": "24 × 60 = 1440",
       "img": "🕐🔄"
@@ -297,9 +297,9 @@
       "q": "Welche Zahl bedeutet das römische Zahlzeichen L?",
       "a": "50",
       "choices": [
-        "100",
+        "5",
         "500",
-        "1000"
+        "150"
       ],
       "img": "🔤5️⃣0️⃣"
     },
@@ -314,9 +314,9 @@
       "q": "Seit wann gibt es Euro-Bargeld in Deutschland?",
       "a": "1. Januar 2002",
       "choices": [
+        "1. Januar 2001",
         "1. Januar 1999",
-        "1. Januar 2000",
-        "3. Oktober 1990"
+        "1. Juli 2002"
       ],
       "info": "Als Buchgeld gab es den Euro schon seit 1999.",
       "img": "💶🎆"
@@ -332,9 +332,9 @@
       "q": "In welchem Land gewann Deutschland 2014 die Fußball-Weltmeisterschaft?",
       "a": "Brasilien",
       "choices": [
-        "Südafrika",
-        "Russland",
-        "Katar"
+        "Argentinien",
+        "Kolumbien",
+        "Bolivien"
       ],
       "img": "⚽🏆☀️"
     },
@@ -356,9 +356,9 @@
       "q": "In welcher Stadt steht das Brandenburger Tor?",
       "a": "Berlin",
       "choices": [
-        "München",
-        "Brandenburg an der Havel",
-        "Hamburg"
+        "Bern",
+        "Bremen",
+        "Bonn"
       ],
       "img": "🐻🏛️"
     },
@@ -367,9 +367,9 @@
       "q": "Welches Gas nehmen Pflanzen für die Fotosynthese auf?",
       "a": "Kohlenstoffdioxid",
       "choices": [
-        "Sauerstoff",
-        "Stickstoff",
-        "Wasserstoff"
+        "Kohlenstoffmonoxid",
+        "Schwefeldioxid",
+        "Stickstoffdioxid"
       ],
       "img": "🌿💨"
     },
