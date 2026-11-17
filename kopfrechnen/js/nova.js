@@ -54,7 +54,7 @@ const Nova = {
         let r = await this.get(url);
         if (!r.ok && r.status === 404 && !jetzt) return null;   // nur nachsehen, ob es die fertige Datei gibt
         if (!r.ok && r.status === 404 && this.cfg().jetzt && novaNorm(text).length <= 300) {
-          const ask = () => this.get(this.cfg().jetzt, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: novaNorm(text), sprache: lang }) });
+          const ask = () => this.slot(() => this.get(this.cfg().jetzt, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: novaNorm(text), sprache: lang }) }));
           let j = await ask();
           if (j.status >= 500) { await new Promise(r => setTimeout(r, 300)); j = await ask(); }   // kurzer Serverfehler: einmal neu versuchen
           if (j.status !== 200) { this.miss.set(key, Date.now() + 60000); this.fail = 'fehlt'; return null; }   // 204: gerade nicht vertonbar – in 1 min neu versuchen
@@ -70,6 +70,13 @@ const Nova = {
   },
   // ganze Sätze eines Textes (nicht an „z. B.“ oder Zahlen wie „2.5“ trennen)
   sentences: text => text.split(/(?<=(?:\p{L}{3,}|\d|\)|%|€)[.!?])\s+/u).map(x => x.trim()).filter(Boolean),
+  // höchstens 2 Bestellungen gleichzeitig an /jetzt (der Server drosselt sonst und antwortet 204)
+  slots: 0, waiting: [],
+  async slot(fn) {
+    if (this.slots >= 2) await new Promise(r => this.waiting.push(r));
+    this.slots++;
+    try { return await fn(); } finally { this.slots--; const n = this.waiting.shift(); if (n) n(); }
+  },
   // vorab holen (z. B. die nächste Aufgabe in der Blitzrunde)
   prefetch(text, lang = I18N.lang) { if (text) this.src(text, lang); },
   stop() { if (this.audio) { try { this.audio.pause(); } catch {} this.audio = null; } },

@@ -2427,4 +2427,9 @@ I18N.add('en', {"% sind":"% are",
 "Musik startet sofort: in der Android-App beim Öffnen, im Browser beim ersten Tippen – „Musik aus“ bleibt aus":"Music starts right away: in the Android app when it opens, in the browser at the first tap – “Music off” stays off",
 "Nova gerade nicht erreichbar":"Nova is not reachable right now",
 "Textaufgaben genauer formuliert (z. B. leeres Becken, Tage bis zu einem Datum, Uhrzeit am Morgen)":"Word problems worded more precisely (e.g. empty pool, days until a date, time in the morning)",
-"Vorlesen: Nova liest immer ganze Sätze und wartet kurz, statt auf die Gerätestimme zu wechseln":"Reading aloud: Nova always reads whole sentences and waits briefly instead of switching to the device voice"});
+"Vorlesen: Nova liest immer ganze Sätze und wartet kurz, statt auf die Gerätestimme zu wechseln":"Reading aloud: Nova always reads whole sentences and waits briefly instead of switching to the device voice",
+"Runde {} auf Hundertstel":"Round {} to hundredths",
+"ein Achtel von {}":"one eighth of {}",
+"{} Teile":"{} parts",
+"{} t + {} kg":"{} t + {} kg",
+"{} km {} m + {} km":"{} km {} m + {} km"});

@@ -2427,4 +2427,9 @@ I18N.add('uk', {"% sind":"% — це",
 "Musik startet sofort: in der Android-App beim Öffnen, im Browser beim ersten Tippen – „Musik aus“ bleibt aus":"Музика вмикається одразу: в Android-застосунку під час відкриття, у браузері після першого дотику – «Музику вимкнено» залишається вимкненою",
 "Nova gerade nicht erreichbar":"Nova зараз недоступна",
 "Textaufgaben genauer formuliert (z. B. leeres Becken, Tage bis zu einem Datum, Uhrzeit am Morgen)":"Текстові задачі сформульовано точніше (напр., порожній басейн, дні до певної дати, час уранці)",
-"Vorlesen: Nova liest immer ganze Sätze und wartet kurz, statt auf die Gerätestimme zu wechseln":"Читання вголос: Nova завжди читає цілі речення й трохи чекає, замість перемикатися на голос пристрою"});
+"Vorlesen: Nova liest immer ganze Sätze und wartet kurz, statt auf die Gerätestimme zu wechseln":"Читання вголос: Nova завжди читає цілі речення й трохи чекає, замість перемикатися на голос пристрою",
+"Runde {} auf Hundertstel":"Округли {} до сотих",
+"ein Achtel von {}":"одна восьма від {}",
+"{} Teile":"{} деталей",
+"{} t + {} kg":"{} т + {} кг",
+"{} km {} m + {} km":"{} км {} м + {} км"});
