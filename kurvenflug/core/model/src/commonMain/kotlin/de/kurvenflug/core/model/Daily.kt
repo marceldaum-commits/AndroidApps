@@ -135,7 +135,7 @@ object Gen {
             in functions -> "$label: ${targets.size} Stationen – " + targets.joinToString(", ") { "(${num(it.x)} | ${num(it.y)})" } + ". Finde $keys!"
             Kind.THROW -> "$label: " + l.task + " Unterwegs " + (if (more == 1) "ein Ring" else "$more Ringe") + ": " +
                 targets.dropLast(1).joinToString(", ") { "(${num(it.x, 1)} | ${num(it.y, 1)})" } + "."
-            else -> "$label: " + l.task
+            else -> if (l.task.startsWith(label)) l.task else "$label: " + l.task
         }
         return l.copy(targets = targets, params = params, asteroids = rocks, task = task)
     }
@@ -248,8 +248,8 @@ object Gen {
             difficulty == Tier.HARD -> "Getarnt! Funkspruch: x = (${num(x * k + a)} − $a) : $k,  y = ${num(y + c)} − $c"
             difficulty == Tier.PRO -> "${Tier.label(difficulty)} – getarnt! x = (${num(x * k + a)} − $a) : $k,  y = ${num((y - c) * k)} : $k + $c"
             else -> {
-                val s = x + c   // x = √(s²) − c, nur mit s ≥ 0
-                if (s < 0) return null
+                val s = x + c   // x = √(s²) − c, nur mit s > 0 (√0 wäre kein echtes Rätsel)
+                if (s <= 0) return null
                 "${Tier.label(difficulty)} – getarnt! x = √${num(s * s, 4)} − $c,  y = (${num(y * k + a)} − $a) : $k"
             }
         }

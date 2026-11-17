@@ -128,7 +128,7 @@ object Feedback {
                     val want = toDegrees(kotlin.math.atan2(t.y - level.launch.y, t.x - level.launch.x))
                     val got = v.getValue("angle")
                     return "Dein Winkel: ${num(got)}°. Die Station liegt bei einem ${if (want > got) "größeren" else "kleineren"} Winkel – " +
-                        "weiter nach ${if (want > got) "links" else "rechts"} drehen."
+                        "weiter ${if (want > got) "gegen den Uhrzeigersinn" else "im Uhrzeigersinn"} drehen."
                 }
                 if (level.crystal != null && r.crash == null) {
                     val near = r.path.minByOrNull { kotlin.math.hypot(it.x - t.x, it.y - t.y) } ?: return "Nochmal!"
@@ -187,7 +187,7 @@ object Feedback {
                 val x = v.getValue("x"); val c = Upper.c(v)
                 val slope = Upper.df(c, x)
                 "Bei x = ${num(x)} ist die Steigung f'(${num(x)}) = ${num(slope, 2)} – noch nicht 0. " +
-                    (if (level.tip.contains("f''(x) = ")) "Beim Wendepunkt ist f''(x) = 0." else "Am Extrempunkt ist die Kurve waagrecht: f'(x) = 0.")
+                    (if (level.tip.contains("f''(x) = ")) "Beim Wendepunkt ist f''(x) = 0." else "Am Extrempunkt ist die Kurve waagerecht: f'(x) = 0.")
             }
             Kind.AREA -> {
                 val end = r.path.lastOrNull() ?: return "Nochmal!"
@@ -304,7 +304,7 @@ object Levels {
             2, "Geraden", "Klasse 7–8", "📈",
             listOf(
                 "Jetzt fliegt die Sonde auf einer Geraden quer durchs Bild: y = m · x + b.",
-                "b ist der Startpunkt auf der y-Achse – dort, wo x = 0 ist.",
+                "b ist der Punkt, an dem die Gerade die y-Achse schneidet – dort, wo x = 0 ist.",
                 "m ist die Steigung: Pro Kästchen nach rechts geht es m Kästchen nach oben. Minus heißt bergab.",
                 "Tipp: Rechne mit den Koordinaten der Ziele – dann triffst du beim ersten Versuch. ⭐⭐⭐",
             ),
@@ -384,7 +384,7 @@ object Levels {
             listOf(
                 "Bögen! Die Sonde fliegt auf einer Parabel: y = a · (x − d)² + e.",
                 "Der Scheitel – der tiefste oder höchste Punkt – liegt bei (d | e). d schiebt nach rechts, e nach oben.",
-                "a bestimmt die Form: positiv = Tal ∪, negativ = Hügel ∩. Je größer a, desto schmaler.",
+                "a bestimmt die Form: positiv = Tal ∪, negativ = Hügel ∩. Je weiter a von 0 weg ist (egal ob plus oder minus), desto schmaler.",
                 "Trick: Setz die Koordinaten eines Ziels ein und rechne den fehlenden Wert aus.",
             ),
             listOf(
@@ -396,7 +396,7 @@ object Levels {
                 Level("3-2", 3, 2, "Zur Seite", Kind.PARABOLA,
                     "y = (x − d)² − 1. Schiebe die Parabel seitlich, bis sie (5 | 3) trifft.",
                     listOf(t(5.0, 3.0)), listOf(pd), mapOf("d" to 3.0), fixed = mapOf("a" to 1.0, "e" to -1.0),
-                    tip = "(5 − d)² − 1 = 3, also (5 − d)² = 4. Welche Zahl hoch 2 ergibt 4?"),
+                    tip = "(5 − d)² − 1 = 3, also (5 − d)² = 4. Welche Zahlen hoch 2 ergeben 4? (Es gibt zwei Möglichkeiten für d!)"),
                 Level("3-3", 3, 3, "Umgedreht", Kind.PARABOLA,
                     "y = a · x² + 6. Der Bogen muss (4 | 2) treffen.",
                     listOf(t(4.0, 2.0)), listOf(pa), mapOf("a" to -0.25), fixed = mapOf("d" to 0.0, "e" to 6.0),
@@ -466,7 +466,7 @@ object Levels {
             listOf(
                 "Funkwellen und Bakterien! Jetzt fliegt die Sonde auf Schwingungen und Wachstumskurven.",
                 "Sinus: y = a · sin(b · x) + d. a ist die Amplitude – so hoch schlägt die Welle aus.",
-                "b staucht die Welle: Eine ganze Schwingung ist 2π : b lang. d schiebt alles nach oben oder unten.",
+                "b staucht (b > 1) oder streckt (b < 1) die Welle: Eine ganze Schwingung ist 2π : b lang. d schiebt alles nach oben oder unten.",
                 "Exponentiell: y = a · bˣ. Pro Kästchen nach rechts wird mit b malgenommen – b > 1 wächst, b < 1 zerfällt.",
             ),
             listOf(
@@ -504,7 +504,7 @@ object Levels {
                     "Radioaktiver Zerfall: y = 8 · bˣ. Nach 3 Kästchen ist nur noch 1 übrig – Station (3 | 1).",
                     listOf(t(3.0, 1.0)), listOf(eb), mapOf("b" to 0.5), fixed = mapOf("a" to 8.0, "d" to 0.0),
                     cells = listOf(cell(1.0, 4.0)),
-                    tip = "8 · b³ = 1 → b³ = 1/8. Jedes Kästchen halbiert sich der Wert: Halbwertszeit 1!"),
+                    tip = "8 · b³ = 1 → b³ = 1/8. Mit jedem Kästchen halbiert sich der Wert: Halbwertszeit 1 Kästchen!"),
             ),
         ),
         Chapter(
@@ -555,7 +555,7 @@ object Levels {
                 "Proportional heißt: doppelt so viel x → doppelt so viel y. Die Gerade geht durch (0 | 0): y = k · x.",
                 "k ist der Quotient: k = y : x. Prozent sind auch proportional – 25 % heißt k = 0,25.",
                 "Antiproportional heißt: doppelt so viel x → halb so viel y. Dann ist x · y immer gleich k: y = k : x.",
-                "Die Bahn ist dann eine Hyperbel – sie kommt der Achse nahe, berührt sie aber nie.",
+                "Die Bahn ist dann eine Hyperbel – sie kommt den Achsen immer näher, berührt sie aber nie.",
             ),
             listOf(
                 Level("8-1", 8, 1, "Treibstoff", Kind.PROP, "Proportional: y = k · x. Die Station liegt bei (4 | 6).",
@@ -587,7 +587,7 @@ object Levels {
                 Level("13-2", 13, 2, "Schleichfahrt", Kind.MOTION, "Start bei 2 m. Nach 6 s bei 5 m.",
                     listOf(t(6.0, 5.0)), listOf(mv), mapOf("v" to 0.5), fixed = mapOf("s0" to 2.0), cells = listOf(cell(2.0, 3.0)),
                     tip = "In 6 s kommen 3 m dazu."),
-                Level("13-3", 13, 3, "Zwei Termine", Kind.MOTION, "Nach 2 s bei 6 m, nach 8 s bei 9 m. Wo und wie schnell?",
+                Level("13-3", 13, 3, "Zwei Termine", Kind.MOTION, "Nach 2 s bei 6 m, nach 8 s bei 9 m. Wo startet die Sonde, und wie schnell fliegt sie?",
                     listOf(t(2.0, 6.0), t(8.0, 9.0)), listOf(mv, ms), mapOf("v" to 0.5, "s0" to 5.0),
                     tip = "v = (9 − 6) : (8 − 2). Dann zurückrechnen auf t = 0."),
                 Level("13-4", 13, 4, "Rückflug", Kind.MOTION, "Start bei 8 m, nach 8 s zurück an der Basis (0 m).",
@@ -646,7 +646,7 @@ object Levels {
                     tip = "Δx = 6, Δy = 8."),
                 Level("9-3", 9, 3, "Wurzel-Welle", Kind.RADIUS, "Sender in der Mitte, Station bei (5 | −5). Achtung, Störsender oben links!",
                     listOf(t(5.0, -5.0, 0.25)), listOf(pr), mapOf("r" to 7.1), asteroids = listOf(rock(-6.0, 6.0)), launch = Vec(0.0, 0.0),
-                    tip = "r² = 25 + 25 = 50 → r = √50 ≈ 7,1. Nicht aufrunden – sonst triffst du den Störsender!"),
+                    tip = "r² = 25 + 25 = 50 → r = √50 ≈ 7,1. Nicht auf 8 aufrunden – sonst triffst du den Störsender!"),
                 Level("9-4", 9, 4, "Große Reichweite", Kind.RADIUS, "Sender bei (−6 | 2), Station bei (6 | 7).",
                     listOf(t(6.0, 7.0, 0.25)), listOf(pr), mapOf("r" to 13.0), launch = Vec(-6.0, 2.0),
                     tip = "Δx = 12, Δy = 5 → 144 + 25."),
@@ -658,7 +658,7 @@ object Levels {
         Chapter(
             12, "Energie", "Physik Klasse 8–9", "🎢",
             listOf(
-                "Eine Kugel rollt die Rampe hinunter. Oben hat sie Lageenergie, unten Bewegungsenergie.",
+                "Eine Kugel saust die Rampe hinunter (Reibung und Drehung lassen wir weg). Oben hat sie Lageenergie, unten Bewegungsenergie.",
                 "Energieerhaltung (ohne Reibung): m · g · h = ½ · m · v². Je höher du startest, desto schneller ist sie unten.",
                 "An der Kante fliegt sie waagerecht ab. Die Weite ist: s = 2 · √((h − h₀) · h₀), h₀ = Höhe der Kante.",
                 "Verrückt: In dieser Formel kommt g gar nicht vor! Wähl die Starthöhe h.",
@@ -725,7 +725,7 @@ object Levels {
                     "Der Felsen versperrt den direkten Weg. Spiegel die Station am Boden-Spiegel und rechne den Winkel aus!",
                     listOf(t(7.0, 3.0, 0.5)), listOf(la), mapOf("angle" to -48.0), launch = Vec(-9.0, 3.0),
                     mirrors = listOf(mirror(-6.0, -6.0, 6.0, -6.0)), asteroids = listOf(rock(-1.0, 3.0, 1.2)),
-                    tip = "Spiegelbild der Station: (7 | −15). Weite 16, Tiefe 18 → tan α = 18 : 16 = 1,125 → α ≈ −48°."),
+                    tip = "Spiegelbild der Station: (7 | −15). Weite 16, Tiefe 18 → tan α = 18 : 16 = 1,125 → α ≈ 48° – nach unten, also −48°."),
                 Level("14-5", 14, 5, "Funkmast", Kind.RADIUS, "Die Station liegt unter 30° und 5 Kästchen höher als der Sender. Wie weit muss die Welle reichen?",
                     listOf(t(0.66, -3.0, 0.25)), listOf(pr), mapOf("r" to 10.0), launch = Vec(-8.0, -8.0),
                     triangle = Triangle("30°", height = "5", hyp = "r = ?"),
@@ -738,7 +738,7 @@ object Levels {
                     listOf(t(-0.8, 1.0, 0.25)), listOf(pr), mapOf("r" to 10.4), launch = Vec(-6.0, -8.0),
                     asteroids = listOf(rock(5.3, -8.0, 0.5)),
                     triangle = Triangle("60°", height = "9", hyp = "r = ?"),
-                    tip = "sin 60° = 9 : r → r = 9 : sin 60° ≈ 9 : 0,866 ≈ 10,4. Nicht aufrunden – der Störsender wartet bei 11!"),
+                    tip = "sin 60° = 9 : r → r = 9 : sin 60° ≈ 9 : 0,866 ≈ 10,4. Nicht auf 11 aufrunden – dort wartet der Störsender!"),
             ),
         ),
     )
@@ -762,7 +762,7 @@ object Levels {
             listOf(
                 "Jetzt landest du auf dem Zahlenstrahl! Ein Kästchen ist 1 – und es lässt sich teilen wie eine Pizza. 🍕",
                 "½ heißt: ein Kästchen in 2 Teile, einer davon. ¾: in 4 Teile, drei davon.",
-                "Kommazahlen sind Zehntel: 0,5 = 5 Zehntel = ½. Und 0,25 = ¼.",
+                "Die erste Stelle nach dem Komma zählt Zehntel: 0,5 = 5 Zehntel = ½. Und 0,25 = 25 Hundertstel = ¼.",
                 "Minus heißt wieder: nach links. Los geht's!",
             ),
             listOf(
@@ -790,7 +790,7 @@ object Levels {
             16, "Winkel", "Klasse 5–6", "📐",
             listOf(
                 "Das ist ein Geodreieck! Der Laser dreht sich von rechts (0°) über oben (90°) bis nach links (180°).",
-                "90° ist ein rechter Winkel – genau senkrecht. Kleiner als 90°: spitz. Größer: stumpf.",
+                "90° ist ein rechter Winkel – genau senkrecht. Kleiner als 90°: spitz. Zwischen 90° und 180°: stumpf.",
                 "Lies die Station am Geodreieck ab – oder rechne den Winkel aus.",
                 "Alle Winkel im Dreieck zusammen: 180°. Nebenwinkel ergänzen sich auch zu 180°.",
             ),
