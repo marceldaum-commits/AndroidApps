@@ -1,5 +1,13 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.2.0 live – Nachprüfung
+- Live geprüft: version.json 2.2.0, stimme/tokens.txt, ort/*.mjs, ort/*.wasm, ort/LIZENZ.txt kommen an (richtige Typen).
+- Release `kurvenflug-v2.2.0` vollständig: APK 15,2 MB, Play-AAB 19,2 MB, Web-ZIP 8,5 MB.
+- Play-Fassung vorbereitet: Klick-Liste `store/PLAY_CONSOLE_ANLEITUNG.md` Abschnitt 6b, Versionshinweise in
+  `store/de-DE/release-notes.txt`. Hochladen macht Marcel.
+- Regel übernommen (README): neue Dateiendungen vorher melden. Derzeit genutzt: html, js, mjs, wasm, json, webmanifest,
+  txt, ttf, png, svg, tsv.
+
 ## 2.2.0 – Thorsten auch in Play (Entscheidung Marcel) · Web = Android
 - Play-Fassung hat jetzt die INTERNET-Berechtigung, ausschließlich für den Thorsten-Download auf Wunsch (versionCode 41).
   Damit ist die Play-Ausnahme weg: Vorlesen inkl. Thorsten ist in GitHub-APK, Play und Web gleich.

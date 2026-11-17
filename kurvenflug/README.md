@@ -160,5 +160,7 @@ export ANDROID_HOME=/opt/android-sdk
 Ausliefern: `versionCode`/`versionName` in `app/build.gradle.kts` erhöhen (gilt auch für die WebApp), Abschnitt in `CHANGELOG.md`, pushen.
 WebApp: `:web:webapp` bauen, im Browser prüfen und auf den Zweig `kurvenflug-test` legen (Server holt alle 5 Minuten),
 Meldung in `MELDUNG_AN_LEITSTAND.md`. Den Zweig `kurvenflug-live` setzt nur der Leitstand.
+**Neue Dateiendungen in der WebApp vorher dem Leitstand melden** – der Abholdienst liefert nur erlaubte Endungen aus
+(bisher: html, js, mjs, wasm, json, webmanifest, txt, ttf, png, svg, tsv).
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `kurvenflug-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).
