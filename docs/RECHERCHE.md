@@ -158,3 +158,10 @@ Keine neue Suche; Anwendung der Befunde oben und bekannter Didaktik:
 - **Serien-Tiere**: Serien motivieren, aber Verlust-Angst nicht (Leitlinie „Belohnung ohne Druck“) → verdiente Tiere bleiben
   für immer, bei Pause schlafen sie nur.
 - Eigene Wirksamkeitsdaten gibt es für keinen dieser Bausteine.
+
+## Wissensgarten 0.28.0 – eigene Musik und Vorlesen (17.11.2026)
+
+- **Hintergrundmusik beim Lernen:** Die Studienlage ist gemischt. Bei Lernspielen motiviert Musik, schadet dem Lernen aber nicht messbar ([Background Music in Educational Games](https://irma-international.org/chapter/background-music-in-educational-games/96036/)). Bei 3- bis 5-Jährigen half Musik **ohne Gesang** beim Puzzeln, Musik mit Gesang nicht ([PubMed 29316872](https://pubmed.ncbi.nlm.nih.gov/29316872/)). Unnötige Klänge können nach der Multimedia-Forschung (Mayer/Moreno) ablenken ([eLearning Industry](https://elearningindustry.com/use-background-music-with-instruction-no)).
+  → Nur Instrumente, kein Gesang. Musik leise voreingestellt und mit eigenem Regler. Während Brummi spricht, wird sie leiser. In der Gieß-Runde gibt es keine Naturgeräusche, damit nichts von der Frage ablenkt.
+- **Nicht nerven:** Nach der Melodie folgt eine „Atempause“ nur mit Natur und leisem Klangteppich. Jede Jahreszeit hat ihr eigenes Stück. Die Musik startet nie vor der ersten Berührung und folgt dem Lautlos-Schalter.
+- **Vorlesen:** Für Kinder, die noch nicht sicher lesen, sind vorgelesene Fragen und Antworten der wichtigste Zugang. Deshalb lässt sich die Stimme wählen, das Tempo einstellen und mit einer Probe-Taste anhören. Fremdsprachen liest eine Stimme der jeweiligen Sprache.
