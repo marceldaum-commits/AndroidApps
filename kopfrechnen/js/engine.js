@@ -113,7 +113,7 @@ function tokText(t) {
     default: return t.v;
   }
 }
-const FRAC_NAMES = { 2: 'Halbe', 3: 'Drittel', 4: 'Viertel', 5: 'Fünftel', 6: 'Sechstel', 7: 'Siebtel', 8: 'Achtel', 9: 'Neuntel', 10: 'Zehntel', 11: 'Elftel', 12: 'Zwölftel', 20: 'Zwanzigstel', 25: 'Fünfundzwanzigstel', 100: 'Hundertstel' };
+const FRAC_NAMES = { 2: 'Halbe', 3: 'Drittel', 4: 'Viertel', 5: 'Fünftel', 6: 'Sechstel', 7: 'Siebtel', 8: 'Achtel', 9: 'Neuntel', 10: 'Zehntel', 11: 'Elftel', 12: 'Zwölftel', 13: 'Dreizehntel', 14: 'Vierzehntel', 15: 'Fünfzehntel', 16: 'Sechzehntel', 17: 'Siebzehntel', 18: 'Achtzehntel', 19: 'Neunzehntel', 20: 'Zwanzigstel', 24: 'Vierundzwanzigstel', 30: 'Dreißigstel', 36: 'Sechsunddreißigstel', 40: 'Vierzigstel', 50: 'Fünfzigstel', 1000: 'Tausendstel', 25: 'Fünfundzwanzigstel', 100: 'Hundertstel' };
 function tokSpeech(t) {
   switch (t.t) {
     case 'n': return (t.v < 0 ? 'minus ' : '') + Math.abs(t.v);
@@ -122,7 +122,7 @@ function tokSpeech(t) {
     case 'f': return t.n === 1 && t.d === 2 ? 'ein Halb' : FRAC_NAMES[t.d] ? `${t.n} ${FRAC_NAMES[t.d]}` : `${t.n} durch ${t.d}`;
     case 'o': return { '+': 'plus', '−': 'minus', '·': 'mal', ':': 'geteilt durch' }[t.v];
     case 'x': case 'u': case 's': return t.v.replace('%', ' Prozent').replace('€', ' Euro').replace('ggT', 'größter gemeinsamer Teiler von').replace('kgV', 'kleinstes gemeinsames Vielfaches von');
-    case 'p': return t.e === 2 ? `${tokSpeech(N(t.b))} zum Quadrat` : `${tokSpeech(N(t.b))} hoch ${t.e}`;
+    case 'p': return `${tokSpeech(N(t.b))} hoch ${t.e}`;
     case 'r': return `Wurzel aus ${t.v}`;
     case 'g': return 'wie viel';
     case 'k': return t.v === '(' ? 'Klammer auf' : 'Klammer zu';

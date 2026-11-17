@@ -65,6 +65,7 @@ function blitzPop(mood, text) {
   const win = document.querySelector('#game .win'); if (!win) return;
   $('bzPop')?.remove(); clearTimeout(bzPopT); clearTimeout(bzPopT2);
   win.insertAdjacentHTML('beforeend', `<div class="bz-pop" id="bzPop" role="status"><div class="bz-bubble">${text}</div>${blitzSvg(mood, 58)}</div>`);
+  setTimeout(() => { const el = $('bzPop'); if (el) Voice.speakRaw(mathSpeak(el.querySelector('.bz-bubble').textContent, I18N.lang), { queue: true }); }, 80);   // Blitz spricht (Text ist dann schon übersetzt)
   bzPopT = setTimeout(() => $('bzPop')?.classList.add('out'), 1700);
   bzPopT2 = setTimeout(() => $('bzPop')?.remove(), 2200);
 }

@@ -131,7 +131,7 @@ PANELS.garten = (o = {}) => {
         const go = () => gartenTap(+el.dataset.p);
         el.onclick = go; el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
       });
-      if (grew.length) Sound.hint && Sound.hint();
+      if (grew.length) Sound.water();
     } };
 };
 function gartenTap(i) {

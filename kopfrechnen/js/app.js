@@ -73,46 +73,60 @@ const profile = () => ROOT.profiles[ROOT.cur];
 
 /* ================= Sound (Web Audio, synthetisch) ================= */
 const Sound = {
-  ctx: null, master: null,
+  ctx: null, master: null, bus: null, sfx: null,
   init() {
     if (!this.ctx) {
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
+      try { if (navigator.audioSession) navigator.audioSession.type = 'ambient'; } catch {}   // iPhone: Stummschalter wird beachtet
       this.ctx = new AC();
       const comp = this.ctx.createDynamicsCompressor();
-      this.master = this.ctx.createGain(); this.master.gain.value = .6;
-      this.master.connect(comp).connect(this.ctx.destination);
+      this.bus = this.ctx.createGain(); this.bus.gain.value = .6;      // gemeinsamer Ausgang für Effekte und Musik
+      this.sfx = this.ctx.createGain(); this.sfx.gain.value = this.sfxLevel();
+      this.sfx.connect(this.bus); this.bus.connect(comp).connect(this.ctx.destination);
+      this.master = this.sfx;
     }
-    if (this.ctx.state === 'suspended') this.ctx.resume();
+    if (this.ctx.state === 'suspended') this.ctx.resume().then(() => typeof Music !== 'undefined' && Music.update()).catch(() => {});
   },
+  sfxLevel: () => 1.4 * (S.settings.sfxVol ?? 70) / 100,
+  setVolumes() { if (this.sfx) this.sfx.gain.setTargetAtTime(this.sfxLevel(), this.ctx.currentTime, .05); if (typeof Music !== 'undefined') Music.applyVol(); },
   tone(midi, at, dur, type = 'sine', vol = .2, slideTo) {
     if (!S.settings.sound || !this.ctx) return;
     const c = this.ctx, t = c.currentTime + at, o = c.createOscillator(), g = c.createGain();
     o.type = type; o.frequency.setValueAtTime(440 * 2 ** ((midi - 69) / 12), t);
     if (slideTo) o.frequency.exponentialRampToValueAtTime(440 * 2 ** ((slideTo - 69) / 12), t + dur);
     g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(vol, t + .012); g.gain.exponentialRampToValueAtTime(.0001, t + dur);
-    o.connect(g).connect(this.master); o.start(t); o.stop(t + dur + .05);
+    o.connect(g).connect(this.sfx); o.start(t); o.stop(t + dur + .05);
+  },
+  zap(at = 0) {   // kurzes „Bzzt“ – das Blitz-Geräusch (Rauschen mit fallendem Filter)
+    if (!S.settings.sound || !this.ctx) return;
+    const c = this.ctx, t = c.currentTime + at, n = c.sampleRate * .2, b = c.createBuffer(1, n, c.sampleRate), d = b.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain(); s.buffer = b; f.type = 'bandpass'; f.Q.value = 4;
+    f.frequency.setValueAtTime(6000, t); f.frequency.exponentialRampToValueAtTime(900, t + .18); g.gain.value = .07;
+    s.connect(f).connect(g).connect(this.sfx); s.start(t);
   },
   click() { this.tone(96, 0, .04, 'triangle', .05); },
-  correct(streak, base = 72) { const b = base + Math.min(streak - 1, 12); [0, 4, 7].forEach((n, i) => { this.tone(b + n, i * .06, .22, 'sine', .18); this.tone(b + n + 12, i * .06, .12, 'triangle', .04); }); },
-  wrong() { this.tone(57, 0, .16, 'triangle', .2); this.tone(52, .13, .32, 'triangle', .2, 50); },
+  // richtig: heller Dreiklang, steigt mit der Serie
+  correct(streak, base = 76) { const b = base + Math.min(streak - 1, 12); [0, 4, 7].forEach((n, i) => { this.tone(b + n, i * .055, .2, 'square', .06); this.tone(b + n, i * .055, .24, 'sine', .14); }); },
+  // falsch: freundlich und weich, ohne Absturz-Ton
+  wrong() { this.tone(69, 0, .18, 'sine', .13); this.tone(65, .14, .3, 'triangle', .1); },
   soft(ok) { ok ? (this.tone(76, 0, .35, 'sine', .09), this.tone(83, .08, .4, 'sine', .05)) : this.tone(64, 0, .4, 'sine', .06); },
   hint() { this.tone(76, 0, .12, 'sine', .12); this.tone(79, .1, .16, 'sine', .12); },
-  milestone() { [72, 76, 79, 84, 88].forEach((n, i) => this.tone(n, i * .07, .3, 'square', .06)); this.tone(96, .38, .5, 'sine', .1); },
+  // Serie: das Blitz-Zickzack, schnell
+  milestone() { [0, 7, 5, 12, 19].forEach((n, i) => this.tone(76 + n, i * .065, i === 4 ? .45 : .16, 'square', .06)); this.tone(95, .33, .5, 'sine', .1); this.zap(.3); },
   tick(high) { this.tone(high ? 84 : 79, 0, .07, 'square', .05); },
-  go() { this.tone(84, 0, .35, 'square', .08); this.tone(91, 0, .35, 'sine', .12); },
+  go() { this.tone(84, 0, .35, 'square', .08); this.tone(91, 0, .35, 'sine', .12); this.zap(); },
   badge() { [79, 84, 88, 91].forEach((n, i) => this.tone(n, .9 + i * .09, .35, 'triangle', .09)); },
+  star(i) { this.tone(88 + i * 4, 0, .25, 'triangle', .1); this.tone(100 + i * 4, .04, .18, 'sine', .05); },
+  levelUp() { [0, 7, 5, 12].forEach((n, i) => this.tone(76 + n, i * .09, i === 3 ? .5 : .14, 'square', .07)); [76, 80, 83, 88].forEach(n => this.tone(n, .36, .6, 'triangle', .06)); },
+  water() { this.tone(79, 0, .12, 'sine', .1, 91); this.tone(96, .1, .08, 'sine', .04); },   // Garten: Tropfen
+  step() { this.tone(71, 0, .09, 'triangle', .08); this.tone(76, .08, .14, 'triangle', .08); },  // Reise: ein Schritt weiter
   fanfare(stars) {
-    [60, 64, 67, 72].forEach((n, i) => this.tone(n, i * .12, .25, 'square', .07));
-    (stars >= 2 ? [72, 76, 79, 84] : [67, 72, 76]).forEach(n => { this.tone(n, .5, 1.1, 'triangle', .12); this.tone(n, .5, 1.1, 'sine', .08); });
+    [64, 71, 69, 76].forEach((n, i) => this.tone(n, i * .11, .22, 'square', .07));   // Blitz-Motiv als Auftakt
+    (stars >= 2 ? [76, 80, 83, 88] : [71, 76, 80]).forEach(n => { this.tone(n, .48, 1.1, 'triangle', .12); this.tone(n, .48, 1.1, 'sine', .08); });
   },
 };
-function speak(text) {
-  if (!S.settings.speech || !('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text); u.lang = locale(); u.rate = 1.0;
-  speechSynthesis.speak(u);
-}
 const vibrate = ms => { try { navigator.vibrate && navigator.vibrate(ms); } catch {} };
 
 /* ================= Konfetti ================= */
@@ -309,8 +323,10 @@ $('topics').addEventListener('click', e => {
 });
 $('classNote').addEventListener('click', e => { if (e.target.id === 'toggleAll') { homeShowAll = !homeShowAll; renderHome(); } });
 $('levels').addEventListener('click', e => { const b = e.target.closest('.lvl'); if (!b) return; Sound.init(); Sound.click(); if (b.dataset.lvl === '5' && !needPro('profi')) return; S.sel.lvl = b.dataset.lvl === 'auto' ? 'auto' : +b.dataset.lvl; save(); renderHome(); });
-function renderSoundIcons() { for (const id of ['btnSound', 'btnSoundG']) { $(id).innerHTML = S.settings.sound ? ICON_SOUND_ON : ICON_SOUND_OFF; $(id).title = S.settings.sound ? 'Ton aus' : 'Ton an'; } }
-const toggleSound = () => { S.settings.sound = !S.settings.sound; save(); Sound.init(); Sound.click(); renderSoundIcons(); toast(S.settings.sound ? '🔊 Ton an' : '🔇 Ton aus', 1100); };
+const anySound = () => S.settings.sound || S.settings.music !== false;
+function renderSoundIcons() { const on = anySound(); for (const id of ['btnSound', 'btnSoundG']) { $(id).innerHTML = on ? ICON_SOUND_ON : ICON_SOUND_OFF; $(id).title = on ? 'Ton aus' : 'Ton an'; } }
+// Lautsprecher oben: alles aus (Musik und Effekte) bzw. wieder an – einzeln geht es in den Einstellungen
+const toggleSound = () => { const on = !anySound(); S.settings.sound = on; S.settings.music = on; save(); Sound.init(); Sound.click(); renderSoundIcons(); Music.update(); toast(on ? '🔊 Ton an' : '🔇 Ton aus', 1100); };
 const toggleTheme = () => { S.settings.theme = isDark() ? 'light' : 'dark'; save(); applyTheme(); };
 $('btnSound').onclick = $('btnSoundG').onclick = toggleSound;
 $('btnTheme').onclick = $('btnThemeG').onclick = toggleTheme;
@@ -331,6 +347,7 @@ function show(id) {
   if (id !== 'home' && typeof armBack === 'function') armBack();
   document.body.classList.toggle('ingame', id === 'game');
   document.body.classList.toggle('induel', id === 'duel');
+  if (typeof Music !== 'undefined') Music.setScene(id);
   scrollTo(0, 0);
 }
 const currentScreen = () => ['home', 'game', 'result', 'duel'].find(s => !$(s).hidden);
@@ -492,7 +509,7 @@ function nextTask() {
   $('feedback').textContent = ''; $('feedback').className = 'feedback';
   renderAnswer(); updateHud(); fitExpr();
   if (t.card) merkBeforeTask(t);
-  speak(I18N.lang === 'de' ? (t.story ? t.e[0].v : taskSpeech(t)) : (t.story ? tr(t.e[0].v) : i18nSpeech(t)));
+  speak(I18N.lang === 'de' ? (t.story ? mathSpeak(t.e[0].v, 'de') : taskSpeech(t)) : mathSpeak(t.story ? tr(t.e[0].v) : i18nSpeech(t)));
 }
 
 function renderAnswer(state) {
@@ -598,6 +615,7 @@ function showSolution(t) {
     <ol class="steps">${(t.w || []).map(s => `<li>${esc(s)}</li>`).join('')}</ol>
     ${theoTopic(t.topic) && G.mode !== 'test' ? '<button class="btn block sol-theo" id="solTheo">📖 Theorie dazu</button>' : ''}<button class="btn primary block" id="solNext">Weiter <span class="muted-on-dark">(OK)</span></button>`;
   $('solution').hidden = false;
+  setTimeout(() => { const el = $('solution'); if (!el.hidden) Voice.speakRaw(joinSay([el.querySelector('.sol-head > span:last-child')?.textContent, ...[...el.querySelectorAll('.steps li')].map(li => li.textContent)].map(x => mathSpeak(x || '', I18N.lang)))); }, 80);   // vorlesen, wie es (übersetzt) dasteht
   $('solNext').onclick = continueAfterSolution;
   if ($('solTheo')) $('solTheo').onclick = () => openTheorie(t);
 }
@@ -615,7 +633,7 @@ function adaptStep(ok, dt) {
   G.win.push(ok ? (fast ? 2 : 1) : 0); if (G.win.length > 6) G.win.shift();
   const l5 = G.win.slice(-5), l4 = G.win.slice(-4);
   if (l5.length === 5 && l5.every(v => v > 0) && l5.filter(v => v === 2).length >= 4 && G.lvl < 4) {
-    G.lvl++; G.win = []; const up = G.lvl + 1; setTimeout(() => toast(`⬆ <b>Stufe ${up}</b> – du wirst besser!`, 1800), 450);
+    G.lvl++; G.win = []; const up = G.lvl + 1; setTimeout(() => { toast(`⬆ <b>Stufe ${up}</b> – du wirst besser!`, 1800); Sound.levelUp(); }, 450);
   } else if (l4.filter(v => v === 0).length >= 2 && G.lvl > 0) {
     G.lvl--; G.win = []; const dn = G.lvl + 1; setTimeout(() => toast(`Etwas leichter: <b>Stufe ${dn}</b>`, 1800), 450);
   }
@@ -655,7 +673,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) pause
 function quitGame(silent) {   // silent: ohne Übersicht/Rücksprung (Profilwechsel, Zurücksetzen)
   if (!silent && G && !G.over && G.cfg.calm && G.idx > 0) return finish();   // ruhiges Üben endet mit einer kleinen Übersicht
   if (G) G.over = true; $('merkOv')?.remove(); $('dgOv')?.remove(); cancelAnimationFrame(timerRaf); $('overlay').innerHTML = '';
-  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  Voice.stop();
   silent ? goHome() : backToOrigin();
 }
 /** nach Abbruch/Ergebnis: zurück dorthin, wo die Runde gestartet wurde (Reise-Karte, Adventskalender, Merk-Übersicht) */
@@ -766,11 +784,12 @@ function renderResult(r) {
   bindResultExtras(r);
   $('result').querySelectorAll('.mistakes .linkbtn').forEach(b => b.onclick = () => openSheet('report', { type: 'aufgabe', ctx: G.mistakes[+b.dataset.i] }));
   $('result').querySelectorAll('[data-go]').forEach(b => b.onclick = () => openSheet(b.dataset.go));
+  setTimeout(() => { const bb = $('result').querySelector('.bz-bubble'); if (bb) Voice.speakRaw(mathSpeak(bb.textContent, I18N.lang)); }, 120);   // Blitz sagt das Ergebnis
   if (r.stars != null && !$('rStars')) Sound.fanfare(r.stars);   // Rechen-Reise zeigt eigene Sterne
   else if (r.stars != null) {
     const starEls = $('rStars').children;
     Sound.fanfare(r.stars);
-    for (let i = 0; i < r.stars; i++) setTimeout(() => { starEls[i].classList.add('on'); Sound.tone(84 + i * 4, 0, .2, 'triangle', .1); }, 500 + i * 300);
+    for (let i = 0; i < r.stars; i++) setTimeout(() => { starEls[i].classList.add('on'); Sound.star(i); }, 500 + i * 300);
     if (r.stars >= 2 || r.newBest) setTimeout(() => Confetti.burst(140), 500 + r.stars * 300);
   } else Sound.soft(true);
 }

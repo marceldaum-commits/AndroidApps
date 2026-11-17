@@ -260,6 +260,7 @@ PANELS.theorie = (o = {}) => {
     <div class="theo-lv" role="group" aria-label="Stufe">${[0, 1, 2, 3, 4, 5].map(i => `<button class="${i === lvl ? 'sel' : ''}" data-l="${i}" aria-pressed="${i === lvl}">${i === 5 ? 'Profi' : i + 1}</button>`).join('')}</div>
     <h3 class="theo-h">${esc(LEVEL_DESC[tp][lvl])}</h3>
     <ul class="theo-r" translate="no">${T.l[lvl].map(s => `<li>${esc(s)}</li>`).join('')}</ul>
+    ${Voice.available() ? '<button class="btn block theo-say" id="theoSay">🔊 Vorlesen</button>' : ''}
     <div class="theo-ex"><div class="theo-exh"><b>Beispiel</b><button class="linkbtn" id="theoNew">🔄 Anderes Beispiel</button></div>
       <div class="theo-task"><span class="expr theo-expr${ex.story ? ' storymode' : ''}">${ex.e.map(tokHtml).join('')}${ex.noEq ? '' : `<span class="eq">${esc(ex.eqSign || '=')}</span>`}</span>${ex.noEq ? ' <span class="theo-arr">→</span>' : ''} <b class="theo-ans">${ex.pre ? `<span>${esc(ex.pre)}</span> ` : ''}<span>${esc(showAns(ex.a))}</span>${ex.unit ? ` <span>${esc(ex.unit)}</span>` : ''}</b></div>
       ${(ex.w || []).length ? `<ol class="steps">${ex.w.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}</div>
@@ -268,6 +269,12 @@ PANELS.theorie = (o = {}) => {
     const re = l => { const no = { ...o, lvl: l }; const top = Sheet.stack[Sheet.stack.length - 1]; if (top) top[1] = no; showPanel('theorie', no, false); };
     $('sheetBody').querySelectorAll('[data-l]').forEach(b => b.onclick = () => re(+b.dataset.l));
     $('theoNew').onclick = () => re(lvl);
+    if ($('theoSay')) $('theoSay').onclick = () => {   // liest Kernsatz, Regeln und Beispiel mit Lösungsweg – auch wenn das Vorlesen sonst aus ist
+      const L = I18N.lang, parts = [T.k, ...T.l[lvl]].map(x => mathSpeak(x, L));
+      const q = L === 'de' ? (ex.story ? mathSpeak(ex.e[0].v, L) : taskSpeech(ex)) : mathSpeak(ex.story ? tr(ex.e[0].v) : i18nSpeech(ex), L);
+      const ans = mathSpeak($('sheetBody').querySelector('.theo-ans').textContent, L), steps = [...$('sheetBody').querySelectorAll('.theo-ex .steps li')].map(li => mathSpeak(li.textContent, L));
+      Voice.speakRaw(joinSay([...parts, `${q} ${ex.noEq ? '' : mathSpeak('=', L)} ${ans}`, ...steps]), { force: true });
+    };
     if ($('theoBack')) $('theoBack').onclick = () => closeSheet();
     if ($('theoGo')) $('theoGo').onclick = () => { closeSheet(); S.sel = { op: tp, lvl: lvl === 5 && !hasPro() ? 4 : lvl }; save(); renderHome(); startGame('training'); };
   } };

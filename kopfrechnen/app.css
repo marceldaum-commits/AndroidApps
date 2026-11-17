@@ -1036,3 +1036,13 @@ button.badge{font:inherit;cursor:pointer}
 #theoNew{color:#b84c06}
 :root[data-theme=dark] #theoNew{color:#ff9a57}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) #theoNew{color:#ff9a57}}
+.setrow.vol{padding:8px 14px 10px;gap:4px;margin-top:-4px}
+.setrow.vol input{width:100%;accent-color:var(--orange-d);height:28px}
+.setnote{margin:2px 4px 6px}
+.voicebox{gap:10px;margin-top:-4px}
+.voicebox .vrow{display:flex;align-items:center;gap:10px}
+.voicebox .vrow b{min-width:58px}
+.voicebox select{flex:1;min-width:0;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:inherit;padding:0 8px}
+.voicebox input[type=range]{flex:1;accent-color:var(--orange-d)}
+.voicebox #rateOut{min-width:38px;text-align:right;font-weight:700;color:var(--text)}
+.theo-say{margin:0 0 12px}

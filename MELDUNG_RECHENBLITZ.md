@@ -2,7 +2,104 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (58) – Eigene Musik und Vorlesen (3.23.0 auf `rechenblitz-test`)
+
+Aufträge Leitstand 17.11.: eigene Musik, Vorlesen, Web = Android.
+
+### Musik – so ist sie entstanden
+- **Selbst komponiert und komplett im Code erzeugt** (`kopfrechnen/js/music.js`, Web Audio API):
+  - keine Samples, keine Loops, keine Audiodateien, kein Abruf aus dem Netz;
+  - Oszillatoren (Rechteck, Dreieck) und selbst erzeugtes Rauschen für das Schlagzeug.
+  - Damit gibt es keine Lizenzfragen. Ladegröße: +7 KB (gzip) für Musik und Vorlesen zusammen.
+- **Erkennungsmotiv „Blitz-Zickzack“:** E – H – A – E (hoch, runter, hoch – wie ein Blitz), dazu ein kurzes elektrisches „Bzzt“.
+  - Es erklingt nach der ersten Berührung, bei „Stufe geschafft“, bei Serien und als Auftakt der Ergebnis-Fanfare.
+- **Vier Stücke, alle in E, Chiptune/Arcade:**
+
+  | Stück | Tonart | Tempo | Stimmung |
+  |---|---|---|---|
+  | **Menü** | E-Dur | 104 BPM | freundlich, locker; Puls-Melodie, Dreieck-Bass, leichte Hi-Hats |
+  | **Spiel** | E-Moll | 126 BPM | antreibend; Achtel-Bass, Four-on-the-floor, ab Takt 5 Arpeggio |
+  | **Blitzrunde** | E-Moll | 152 BPM | schnell; Sechzehntel-Arpeggio, Oktav-Bass, Hi-Hat in Sechzehnteln |
+  | **Dungeon** | E-Phrygisch | 108 BPM | geheimnisvoll; Dreieck-Melodie, Halbton-Bass |
+
+- **Keine nervige Endlosschleife:**
+  - Jeder 8-Takt-Durchgang beginnt mit dem Motiv. Danach baut sich die Melodie aus Rhythmus-Bausteinen und Akkordtönen neu zusammen, mit Zufall und Lücken.
+  - Jeder 4. Durchgang ist ein Breakdown ohne Schlagzeug.
+  - Ab und zu kommt ein ganzer Takt Pause.
+- **Lautstärke:** Die Musik ist bewusst leise (Mittel −36 dB bei 50 %), die Effekte liegen darüber.
+- **Effekte neu:**
+  - richtig: heller Dreiklang, steigt mit der Serie;
+  - **falsch: weich und freundlich**, kein Absturz-Ton mehr;
+  - Serie: Blitz-Zickzack;
+  - Stern: Glitzer-Ton je Stern;
+  - Stufe geschafft: Motiv + Akkord;
+  - Garten: Wassertropfen;
+  - Reise: Schritt-Ton beim Öffnen einer Station.
+- **Bedienung:**
+  - In den Einstellungen sind **Musik** und **Effekte** getrennt schaltbar, jedes mit eigener Lautstärke.
+  - Der Lautsprecher oben schaltet alles aus und wieder an.
+- **Respekt:**
+  - Nichts erklingt vor der ersten Berührung.
+  - Die Musik stoppt, wenn die App im Hintergrund ist.
+  - Systemlautstärke gilt; auf dem iPhone wird der Stummschalter beachtet (`audioSession = ambient`).
+  - **Bei Aufträgen von Lehrkräften und im Einstufungstest ist die Musik aus.** Eine eigene Unterrichts-Einstellung gibt es in Rechenblitz nicht – Aufträge sind der Unterrichtsfall.
+  - Kein Inhalt nur über Ton.
+- **Anhören auf der Testseite:**
+  - Seite öffnen, einmal tippen: Das Motiv erklingt, dann läuft die Menü-Musik.
+  - Training starten → Spiel-Musik, Blitzrunde → schnelle Musik, Zahlen-Dungeon → Dungeon-Musik.
+  - Einstellungen → Musik/Effekte und Lautstärken.
+
+### Vorlesen
+- **Ausschaltbar:** Einstellungen → „Vorlesen“.
+- **Was vorgelesen wird:**
+  - Aufgaben;
+  - **Lösungswege** nach einem Fehler: „Richtig ist …“ und alle Schritte;
+  - **Blitz** (Sprechblasen im Spiel und das Ergebnis);
+  - **Theorie** über „🔊 Vorlesen“ – das geht auch, wenn das Vorlesen sonst aus ist.
+- **Stimme wählbar:**
+  - alle Geräte- bzw. Browser-Stimmen der eingestellten Sprache;
+  - Tempo 0,6× bis 1,5×;
+  - „▶ Probe hören“;
+  - die Wahl wird gemerkt.
+- **Mathe richtig gesprochen**, in DE/EN/UK:
+  - „3/4“ → „3 Viertel“, „x²“ → „x hoch 2“, „10⁻³“ → „10 hoch minus 3“, „√144“ → „Wurzel aus 144“;
+  - „:“ → „geteilt durch“, „≙“ → „entspricht“;
+  - Einheiten ausgesprochen („2,5 km“ → „2,5 Kilometer“, „km/h“ → „Kilometer pro Stunde“, „1 h“ → „eine Stunde“), € und %.
+  - Vorgelesen wird immer der Text, wie er auf dem Bildschirm steht – also auch übersetzt.
+
+### Web = Android – ehrlicher Stand
+- **Musik, Effekte, Theorie, alle Texte und die Versionsnummer: Web = Android** (gleicher Code; die App lädt 3.23.0 von selbst).
+- **Vorlesen: noch nicht gleich.**
+  - Die Android-Hülle (WebView) hat keine eingebaute Vorlese-Schnittstelle. Bisher hat das Vorlesen in der APK deshalb gar nicht funktioniert; die Einstellungen sagen dort ehrlich „keine Vorlese-Stimme“.
+  - Der Code nutzt bereits automatisch das Android-TextToSpeech-Plugin, sobald es in der Hülle steckt (`@capacitor-community/text-to-speech` 6.1.0, MIT).
+  - Das Plugin in die Hülle aufzunehmen (neue APK, Hülle 4) braucht noch Marcels Freigabe für die neue Fremd-Bibliothek. Danach sind Stimmen, Tempo und Probe auf Android gleich.
+
+### Natürliche Stimme „Thorsten“ – Plan (noch nicht gebaut)
+- **Raumlicht hat Thorsten nur in der Android-App** (sherpa-onnx nativ, Lautschrift vorab erzeugt), **nicht im Web**. Für Rechenblitz gilt aber Web = Android.
+- **Mein Vorschlag:** Thorsten im Browser rechnen – derselbe Code läuft dann auch in der Android-Hülle.
+  - Rechenwerk: **onnxruntime-web** (MIT, ca. 10 MB). Es wird erst geladen, wenn jemand „Thorsten“ wählt.
+  - Modell: Piper „de_DE-thorsten-medium“ (Aufnahmen CC0, ca. 63 MB), auf Wunsch von Hugging Face. **Dafür ist ein Datenschutz-Hinweis nötig** (Abruf von einem fremden Server).
+  - **Ohne espeak-ng (GPL):** Die Lautschrift erzeuge ich wie bei Raumlicht vorab als Wörterbuch. Zahlen setze ich aus Bausteinen zusammen (ein, zwei … zig, hundert, tausend). Unbekannte Wörter liest die Gerätestimme.
+  - Nur Deutsch; EN/UK bleiben bei den Gerätestimmen.
+- **Bitte entscheiden:**
+  1. Ist der Download von ca. 73 MB auf Wunsch in Ordnung?
+  2. Hugging Face als Quelle, oder legt ihr das Modell auf euren Server?
+  3. Freigabe für onnxruntime-web und das Android-TTS-Plugin.
+
+### Getestet
+- Musik:
+  - vor der ersten Berührung kein Audio;
+  - Menü/Spiel/Blitz/Dungeon je nach Bildschirm;
+  - Einstufungstest und Musik aus → Stille;
+  - Lautstärke gemessen;
+  - Lautsprecher oben schaltet beides.
+- Vorlesen in DE/EN/UK mit Test-Stimme: Aufgabe, Lösungsweg, Theorie, Probe, Stimmen-Auswahl, Tempo; aus → stumm.
+- Einstellungen ohne fehlende Übersetzungen und ohne Überlauf bei 320 px.
+- axe WCAG A/AA hell/dunkel 0 Verstöße.
+- Offline ✓, Zufallstest ✓, Schwierigkeitstest ✓, Pro-Code ✓.
+- **Nicht geprüft: hörbar am echten Gerät** (hier kein Lautsprecher). Kurze Hörproben der vier Stücke habe ich aufgenommen (je 24 s).
 
 ## 17.11.2026 (57) – Theorie zu jeder Übung (3.22.0 auf `rechenblitz-test`)
 

@@ -94,8 +94,15 @@ const PANELS = {
     const sw = (id, on, t, d) => `<button class="setrow" data-set="${id}" role="switch" aria-checked="${on}"><div><b>${t}</b><span>${d}</span></div><span class="switch ${on ? 'on' : ''}"></span></button>`;
     return { title: 'Einstellungen', html: `<div class="menu">
       ${proLocks() || RBPRO.ok ? mi('pro', '⭐', 'Rechenblitz Pro', RBPRO.ok ? 'Freigeschaltet – danke!' : 'Freischalten oder Code einlösen') : ''}
-      ${sw('sound', S.settings.sound, 'Ton', 'Klänge bei richtig, falsch und Serien')}
-      ${sw('speech', S.settings.speech, 'Aufgaben vorlesen', 'Der Browser liest jede Aufgabe vor')}
+      ${sw('music', S.settings.music !== false, 'Musik', 'Eigene Blitz-Melodien im Menü und im Spiel')}
+      <label class="setrow col vol"><span><b>Lautstärke Musik</b></span><input type="range" id="volMusic" min="0" max="100" step="5" value="${S.settings.musicVol ?? 50}"></label>
+      ${sw('sound', S.settings.sound, 'Effekte', 'Klänge bei richtig, falsch, Serien und Sternen')}
+      <label class="setrow col vol"><span><b>Lautstärke Effekte</b></span><input type="range" id="volSfx" min="0" max="100" step="5" value="${S.settings.sfxVol ?? 70}"></label>
+      <p class="small muted setnote">Bei Aufträgen von Lehrkräften und im Einstufungstest bleibt die Musik aus. Alles, was ein Ton sagt, steht auch auf dem Bildschirm.</p>
+      ${sw('speech', S.settings.speech, 'Vorlesen', 'Aufgaben, Lösungswege, Theorie und Blitz')}
+      ${Voice.available() ? `<div class="setrow col voicebox"><label class="vrow"><b>Stimme</b><select id="voiceSel"><option value="">Automatisch</option></select></label>
+        <label class="vrow"><b>Tempo</b><input type="range" id="rateIn" min="0.6" max="1.5" step="0.1" value="${S.settings.rate ?? 1}"><span id="rateOut" translate="no">${(S.settings.rate ?? 1).toFixed(1)}×</span></label>
+        <button class="btn" id="voiceTest">▶ Probe hören</button></div>` : '<p class="small muted setnote">Auf diesem Gerät gibt es keine Vorlese-Stimme.</p>'}
       ${sw('auto', S.settings.auto, 'Automatisch prüfen', 'Prüfen, sobald genug Stellen eingegeben sind')}
       ${sw('blitz', S.settings.blitz !== false, 'Maskottchen Blitz', 'Blitz der Fuchs feuert dich an und erklärt Tricks')}
       ${Reminder.supported() || isIOS() ? reminderHtml() : ''}
@@ -266,11 +273,22 @@ document.addEventListener('click', e => { const b = e.target.closest('[data-open
 function initSettings() {
   renderReminder();
   $('sheetBody').querySelectorAll('[data-set]').forEach(b => b.onclick = () => {
-    const k = b.dataset.set; S.settings[k] = k === 'blitz' ? S.settings.blitz === false : !S.settings[k]; save(); Sound.init(); Sound.click();
+    const k = b.dataset.set; S.settings[k] = k === 'blitz' ? S.settings.blitz === false : k === 'music' ? S.settings.music === false : !S.settings[k]; save(); Sound.init(); Sound.click();
+    if (k === 'music' || k === 'sound') { renderSoundIcons(); Music.update(); }
     b.setAttribute('aria-checked', S.settings[k]); b.querySelector('.switch').classList.toggle('on', S.settings[k]);
-    if (k === 'speech' && S.settings.speech) speak('3 mal 4');
+    if (k === 'speech' && S.settings.speech) Voice.say('3/4 + 1/4 = 1');
     renderHome();
   });
+  if ($('voiceSel')) {
+    Voice.voices().then(vs => { const sel = $('voiceSel'); if (!sel) return; vs.forEach(v => sel.insertAdjacentHTML('beforeend', `<option value="${esc(v.id)}" translate="no">${esc(v.name)}</option>`)); sel.value = vs.some(v => v.id === S.settings.voice) ? S.settings.voice : ''; });
+    $('voiceSel').onchange = e => { S.settings.voice = e.target.value; save(); Voice.say('3/4 + 1/4 = 1', { force: true }); };
+    $('rateIn').oninput = e => { S.settings.rate = +e.target.value; $('rateOut').textContent = S.settings.rate.toFixed(1) + '×'; };
+    $('rateIn').onchange = () => save();
+    $('voiceTest').onclick = () => Voice.speakRaw(joinSay([tr('Hallo, ich bin Blitz!'), ...['3/4 + 1/4 = 1', '12² = 144', '2,5 km = 2500 m'].map(x => mathSpeak(shownText(x)))]), { force: true });
+  }
+  $('volMusic').oninput = e => { S.settings.musicVol = +e.target.value; Sound.init(); Sound.setVolumes(); };
+  $('volSfx').oninput = e => { S.settings.sfxVol = +e.target.value; Sound.init(); Sound.setVolumes(); };
+  $('volMusic').onchange = $('volSfx').onchange = e => { save(); if (e.target.id === 'volSfx') Sound.correct(1); };
   $('klSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.klasse = +b.dataset.v; homeShowAll = false; save(); $('klSeg').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); renderHome(); };
   $('langSeg').onclick = e => { const b = e.target.closest('button'); if (b) setLanguage(b.dataset.v); };
   $('themeSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.theme = b.dataset.v; save(); applyTheme(); $('themeSeg').querySelectorAll('button').forEach(x => x.classList.toggle('sel', x === b)); };

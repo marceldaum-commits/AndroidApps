@@ -160,7 +160,7 @@ PANELS.reise = (o = {}) => {
       $('sheetBody').querySelectorAll('.rn.lock').forEach(g => g.onclick = () => toast(`🔒 Schaff zuerst Etappe ${+g.dataset.st}`, 1800));
       $('sheetBody').querySelectorAll('[data-stk]').forEach(x => x.onclick = () => { const i = +x.dataset.stk; toast(reiseChapterDone(i) ? `${REISE_CH[i].sticker} ${tr(REISE_CH[i].name)}` : `❔ ${tr('Sticker für')} ${tr(REISE_CH[i].name)}`, 1800); });
       $('sheetBody').querySelectorAll('.rn.open').forEach(g => {
-        const go = () => showPanel('reiseStation', { c, s: +g.dataset.st }, true);
+        const go = () => { Sound.step(); showPanel('reiseStation', { c, s: +g.dataset.st }, true); };
         g.onclick = go; g.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
       });
       $('rkGo') && ($('rkGo').onclick = () => showPanel('reiseStation', { c: cur.c, s: cur.s }, true));
