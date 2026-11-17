@@ -1,8 +1,8 @@
-// Kurvenflug 2.0.0 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
-const CACHE = "kurvenflug-2.0.0";
+// Kurvenflug 2.1.0 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
+const CACHE = "kurvenflug-2.1.0";
 const FILES = [
   "./",
-  "28e181b82129a1f22bfc.wasm",
+  "0c96a5350a0e1830456f.wasm",
   "bccfa839aa4b38489c76.wasm",
   "composeResources/de.kurvenflug.web.resources/files/emoji.ttf",
   "composeResources/de.kurvenflug.web.resources/files/symbols.ttf",
