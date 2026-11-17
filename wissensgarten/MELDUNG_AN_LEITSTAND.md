@@ -1,5 +1,49 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.2 vom 17.11.2026 (Web = Android)
+
+**Umfang:** Alles Begonnene ist fertig:
+- Nova: nur Nova, `/jetzt`, Sprechtempo-Stufen, Offline laden Standard/Bestqualität
+- Plus-Abzeichen im Garten und im Eltern-Bereich
+- Datenschutz-Text
+- Musik, Klänge, Theorie-Knopf
+
+Keine neuen Funktionen.
+
+**Abschlussprüfung: 11 Fehler gefunden und behoben**
+1. **Web, hoch:** Kurzmeldungen (Toast) waren nie sichtbar, weil Compose ein Shadow-DOM an `<body>` hängt. Der Toast hängt jetzt an `<html>`.
+2. Web zeigte die Gieß-Erinnerung, obwohl es keine Erinnerungen gibt.
+3. Web zeigte Postkarte/Urkunde, die es dort nicht gibt.
+4. Bei 320–380 dp brach Brummis Sprechblase mitten im Wort um.
+5. Die Gieß-Runde übernahm die Scroll-Position der vorigen Karte.
+6. Bei 320 px waren Texte abgeschnitten (Begrüßung, Plus-Abzeichen, Kacheln, Paketnamen).
+7. Die erste Pflanze im Garten-Panorama wurde riesig.
+8. Kartenschatten waren eckig.
+9. Kürzel „3 T“/„7 Std“ sind durch ganze Wörter ersetzt (neuer `FormatTest`).
+10. Offline erschienen Konsolenfehler durch Stimm-Anfragen, und das Vorladen der Schrift erzeugte Warnungen.
+11. Web: Ein unlesbarer Speicherstand wird jetzt aufbewahrt statt überschrieben.
+
+Außerdem:
+- Die flackernden Bildschirmfotos sind behoben (fester Zufallsstartwert im Test).
+- Neu: `SettingsUpgradeTest` für das Update der Einstellungen.
+
+**Geprüft**
+- **Robolectric:** 82 Bildschirmfotos, alle Unit-Tests, Lint 0 Fehler.
+- **WebApp im Headless-Chromium:** rund 150 Bildschirmfotos bei 320×640, 1280×800 und 800×1280. Durchgespielt wurden alle Wege: Einrichtung, Gieß-Runde, Theorie, Blitz, Rhythmus, Radio, Duell, Samenhandlung, Familie, Wochenbericht, Plus mit Test, Datenschutz und alle Einstellungen. Nova kam vom echten Server.
+- **Offline / Flugmodus:** Start über den Service Worker, Lernen geht, Vorlesen fällt still auf die Gerätestimme zurück, keine Konsolenfehler.
+- **Einstellungen nach Neuladen gemerkt:** Vorlesen, Tempo, Musik, Lautstärken, Profil.
+- **Update von der Vorversion:**
+  - Web: alter Stand mit Daten → neues Build; Lernstand vollständig da, Speicher-Schlüssel seit dem ersten Web-Stand unverändert.
+  - Android: Room-Migration v1→v3 getestet (`MigrationTest`); alte Thorsten-Daten werden entfernt, der Lernstand bleibt.
+- **Freischalten:** Ungültige Codes bekommen eine freundliche Meldung (Feld und `?pro=`). Die Freischalt-Logik ist durch `LicenseTest` und `PlusEntitlementsTest` abgedeckt; einen echten Code habe ich nicht benutzt.
+
+**Bekannte Restpunkte**
+- Nova und Gerätestimme sind auf einem echten Gerät noch nicht angehört.
+- Selten „Node N not found“ in der Konsole bei sehr schnellem Tippen während eines Bildschirmwechsels. Die Ursache liegt in der Barrierefreiheits-Schicht von Compose Web 1.9.3, ohne sichtbare Folgen.
+- Eltern-Tor auf großem Bildschirm: Die Abdunkelung deckt nur die Mittelspalte (rein optisch).
+- Die Samenhandlung zählt 85 Pakete / 2923 Karten (mit Plus-Vorschauen), „Über“ zählt 72 / 2472. Welche Zahl gewollt ist, ist offen.
+- Auf fremden Hosts gibt es keine `stand-<host>.json`; dort zeigt die App eine Schätzung (live und test haben die Datei).
+
 ## Größenangabe Offline-Laden geprüft (Version 2.2.1 vom 17.11.2026) – Web = Android
 
 - **Ursache „ca. 1287 MB“:** Die Zahl stammte nur aus dem Bildschirmfoto. Dessen Testwerte waren „3 × Standard“ – die Schätzung für den Fall, dass der Server kein `bytes_original` nennt.
