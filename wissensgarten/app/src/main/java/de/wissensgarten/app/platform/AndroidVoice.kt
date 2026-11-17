@@ -8,6 +8,8 @@ import android.speech.tts.TextToSpeech
 import de.wissensgarten.app.ui.fx.Locale
 import de.wissensgarten.app.ui.fx.NovaGeraet
 import de.wissensgarten.core.model.Nova
+import de.wissensgarten.core.model.NovaOfflineSpeicher
+import de.wissensgarten.core.model.NovaQualitaet
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -28,10 +30,15 @@ import kotlin.coroutines.resume
  * Android-Teil von Brummis Stimme „Nova“: MP3-Dateien vom Stimm-Server im App-Speicher (`filesDir/nova`), Wiedergabe mit
  * MediaPlayer (Tempo ohne Tonhöhen-Änderung) und als stille Notlösung die Android-Sprachausgabe (etwas höher gestimmt).
  * Anfragen gehen ohne Cookies, ohne Referrer und mit neutraler Kennung („Wissensgarten“) – nicht mit dem Gerätenamen.
+ * „Alle Nova-Texte offline laden“ legt die Dateien dauerhaft in `nova-offline` (Standard) bzw. `nova-original` (Bestqualität) –
+ * die Größengrenze des Zwischenspeichers (`nova`) räumt dort nie auf.
  */
-class AndroidNova(context: Context) : NovaGeraet, TextToSpeech.OnInitListener {
+class AndroidNova(context: Context) : NovaGeraet, NovaOfflineSpeicher, TextToSpeech.OnInitListener {
     private val ctx = context.applicationContext
     private val dir = File(ctx.filesDir, "nova")
+    private val offlineDir = File(ctx.filesDir, "nova-offline")
+    private val originalDir = File(ctx.filesDir, "nova-original")
+    private fun dirOf(q: NovaQualitaet) = if (q == NovaQualitaet.BEST) originalDir else offlineDir
     private val tts = TextToSpeech(ctx, this)
     @Volatile private var ready = false
     private val waiting = ConcurrentHashMap<String, CompletableDeferred<Unit>>()
@@ -43,7 +50,7 @@ class AndroidNova(context: Context) : NovaGeraet, TextToSpeech.OnInitListener {
         // Aufräumen im Hintergrund: alte Stimme „Thorsten“ (bis 2.0.2, ca. 63 MB) löschen, Nova-Speicher klein halten
         Thread {
             runCatching { File(ctx.filesDir, "stimme").takeIf { it.exists() }?.deleteRecursively() }
-            runCatching { dir.mkdirs(); trim(dir, MAX_BYTES) }
+            runCatching { dir.mkdirs(); trim(dir, MAX_BYTES) }   // nur der Zwischenspeicher, nie nova-offline / nova-original
         }.apply { isDaemon = true; start() }
     }
 
@@ -62,13 +69,46 @@ class AndroidNova(context: Context) : NovaGeraet, TextToSpeech.OnInitListener {
     // ---------------------------------------------------------------- Speicher und Netz
 
     private fun file(h: String) = File(dir, "$h.mp3")
+    /** Zum Abspielen: Bestqualität vor Standard (offline) vor Zwischenspeicher */
+    private fun found(h: String): File? = listOf(File(originalDir, "$h.mp3"), File(offlineDir, "$h.mp3"), file(h)).firstOrNull { it.isFile && it.length() > 0 }
 
     override suspend fun imSpeicher(h: String): Boolean = withContext(Dispatchers.IO) {
-        val f = file(h)
-        (f.isFile && f.length() > 0).also { if (it) f.setLastModified(System.currentTimeMillis()) }
+        val f = found(h)
+        (f != null).also { if (f != null && f.parentFile == dir) f.setLastModified(System.currentTimeMillis()) }
     }
 
-    override suspend fun laden(url: String, h: String): Int = withContext(Dispatchers.IO) { runCatching { get(url, h) }.getOrDefault(-1) }
+    override suspend fun laden(url: String, h: String): Int = withContext(Dispatchers.IO) { runCatching { get(url, h, dir) }.getOrDefault(-1) }
+
+    // ---------------------------------------------------------------- Offline laden
+
+    override suspend fun offlineHashes(q: NovaQualitaet): Set<String> = withContext(Dispatchers.IO) {
+        dirOf(q).list()?.filter { it.endsWith(".mp3") }?.map { it.removeSuffix(".mp3") }?.toSet() ?: emptySet()
+    }
+
+    override suspend fun sichern(url: String, h: String, q: NovaQualitaet): Int = withContext(Dispatchers.IO) {
+        runCatching {
+            val target = File(dirOf(q), "$h.mp3")
+            if (target.isFile && target.length() > 0) return@runCatching 200
+            // Standard schon im Zwischenspeicher: nur umziehen, nicht neu laden
+            if (q == NovaQualitaet.STANDARD && file(h).isFile) { dirOf(q).mkdirs(); if (file(h).renameTo(target)) return@runCatching 200 }
+            get(url, h, dirOf(q))
+        }.getOrDefault(-1)
+    }
+
+    override suspend fun text(url: String): String? = withContext(Dispatchers.IO) {
+        runCatching {
+            val c = open(url).apply { setRequestProperty("Accept", "application/json") }
+            try { if (c.responseCode == 200) c.inputStream.use { it.readBytes().decodeToString() } else null } finally { c.disconnect() }
+        }.getOrNull()
+    }
+
+    override suspend fun belegt(): Long = withContext(Dispatchers.IO) {
+        listOf(dir, offlineDir, originalDir).sumOf { d -> d.listFiles()?.sumOf { it.length() } ?: 0L }
+    }
+
+    override suspend fun loeschen() = withContext(Dispatchers.IO) {
+        listOf(dir, offlineDir, originalDir).forEach { d -> d.listFiles()?.forEach { it.delete() } }
+    }
 
     override suspend fun jetzt(text: String, sprache: String, h: String): Int = withContext(Dispatchers.IO) {
         runCatching {
@@ -84,7 +124,7 @@ class AndroidNova(context: Context) : NovaGeraet, TextToSpeech.OnInitListener {
                 val url = Json.parseToJsonElement(c.inputStream.use { it.readBytes().decodeToString() }).jsonObject["url"]?.jsonPrimitive?.content
                 // Nur Dateien von unserem eigenen Stimm-Server
                 if (url == null || !url.startsWith(Nova.BASE + "/")) return@runCatching -1
-                if (get(url, h) == 200) 200 else -1
+                if (get(url, h, dir) == 200) 200 else -1
             } finally { c.disconnect() }
         }.getOrDefault(-1)
     }
@@ -94,17 +134,17 @@ class AndroidNova(context: Context) : NovaGeraet, TextToSpeech.OnInitListener {
         setRequestProperty("User-Agent", "Wissensgarten")
     }
 
-    private fun get(url: String, h: String): Int {
+    private fun get(url: String, h: String, into: File): Int {
         val c = open(url).apply { setRequestProperty("Accept", "audio/mpeg") }
         try {
             val code = c.responseCode
             if (code == 200) {
                 val bytes = c.inputStream.use { it.readNBytesCompat(MAX_FILE) } ?: return -1
                 if (bytes.isEmpty()) return -1
-                dir.mkdirs()
-                val tmp = File(dir, "$h.teil")
+                into.mkdirs()
+                val tmp = File(into, "$h.teil")
                 tmp.writeBytes(bytes)
-                if (!tmp.renameTo(file(h))) { tmp.delete(); return -1 }
+                if (!tmp.renameTo(File(into, "$h.mp3"))) { tmp.delete(); return -1 }
             }
             return code
         } finally { c.disconnect() }
@@ -113,8 +153,7 @@ class AndroidNova(context: Context) : NovaGeraet, TextToSpeech.OnInitListener {
     // ---------------------------------------------------------------- Abspielen
 
     override suspend fun abspielen(h: String, tempo: Float): Boolean {
-        val f = file(h)
-        if (!f.isFile) return false
+        val f = withContext(Dispatchers.IO) { found(h) } ?: return false
         return withContext(Dispatchers.Main) {
             suspendCancellableCoroutine { cont ->
                 audioStopp()
@@ -179,7 +218,7 @@ class AndroidNova(context: Context) : NovaGeraet, TextToSpeech.OnInitListener {
     }
 
     companion object {
-        /** Höchstens so viel Nova-Speicher; ältere (lange nicht gehörte) Dateien gehen zuerst */
+        /** Höchstens so viel automatischer Zwischenspeicher; ältere (lange nicht gehörte) Dateien gehen zuerst */
         const val MAX_BYTES = 150L * 1024 * 1024
         const val MAX_FILE = 5 * 1024 * 1024
 

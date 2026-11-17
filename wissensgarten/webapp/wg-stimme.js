@@ -38,7 +38,10 @@
 
   // ---------------------------------------------------------------- Nova
   const BASE = 'https://stimmen.mathenachhilfe-online.com';
-  const STORE = 'wissensgarten-nova';
+  const STORE = 'wissensgarten-nova';                 // automatischer Zwischenspeicher
+  // „Alle Nova-Texte offline laden“: eigene Speicher, damit nichts davon versehentlich weggeräumt wird
+  const OFFLINE = { STANDARD: 'wissensgarten-nova-offline', BEST: 'wissensgarten-nova-original' };
+  const ALL = [OFFLINE.BEST, OFFLINE.STANDARD, STORE];   // Reihenfolge beim Abspielen: Bestqualität zuerst
   const MAX_FILE = 5 * 1024 * 1024;
   const key = (h) => BASE + '/nova/' + h.slice(0, 2) + '/' + h + '.mp3';
   // Ohne Cookies und ohne Herkunftsangabe – der Server sieht nur, welche Datei geholt wird
@@ -51,13 +54,16 @@
 
   const timed = (ms) => { const c = new AbortController(); const t = setTimeout(() => c.abort(), ms); return [c.signal, () => clearTimeout(t)]; };
 
-  nova.has = async (h) => {
-    if (mem.has(h)) return true;
-    try { const c = await caches.open(STORE); return !!(await c.match(key(h))); } catch (e) { return false; }
-  };
+  async function find(h) {
+    for (const name of ALL) {
+      try { if (await caches.has(name)) { const r = await (await caches.open(name)).match(key(h)); if (r) return r; } } catch (e) {}
+    }
+    return null;
+  }
+  nova.has = async (h) => mem.has(h) || !!(await find(h));
 
   /** Datei holen und bei 200 speichern; liefert den HTTP-Status oder -1 (offline, Zeitüberschreitung, zu groß) */
-  async function store(url, h) {
+  async function store(url, h, cacheName) {
     const [signal, done] = timed(10000);
     try {
       const r = await fetch(url, Object.assign({}, OPTS, { signal }));
@@ -65,9 +71,9 @@
       const b = await r.blob();
       if (!b.size || b.size > MAX_FILE) return -1;
       try {
-        const c = await caches.open(STORE);
-        await c.put(key(h), new Response(b, { headers: { 'Content-Type': 'audio/mpeg' } }));
-      } catch (e) { mem.set(h, b); }
+        const c = await caches.open(cacheName || STORE);
+        await c.put(key(h), new Response(b, { headers: { 'Content-Type': 'audio/mpeg', 'X-Groesse': String(b.size) } }));
+      } catch (e) { if (!cacheName) mem.set(h, b); else return -1; }
       return 200;
     } catch (e) { return -1; } finally { done(); }
   }
@@ -94,7 +100,7 @@
     const my = ++turn;
     (async () => {
       let blob = mem.get(h);
-      if (!blob) { try { const c = await caches.open(STORE); const r = await c.match(key(h)); if (r) blob = await r.blob(); } catch (e) {} }
+      if (!blob) { try { const r = await find(h); if (r) blob = await r.blob(); } catch (e) {} }
       if (my !== turn) { ok(true); return; }
       if (!blob) { ok(false); return; }
       const url = URL.createObjectURL(blob);
@@ -118,4 +124,56 @@
     })();
   });
   nova.stop = () => { turn++; if (finish) finish(true); };
+
+  // ---------------------------------------------------------------- Alle Nova-Texte offline laden
+  const hashOf = (url) => { const m = /([0-9a-f]{32})\.mp3$/.exec(url); return m ? m[1] : null; };
+  /** Namen (h) im Offline-Speicher der Qualität q ('STANDARD' | 'BEST') – als JSON-Liste */
+  nova.offlineList = async (q) => {
+    try {
+      if (!(await caches.has(OFFLINE[q]))) return '[]';
+      const ks = await (await caches.open(OFFLINE[q])).keys(); return JSON.stringify(ks.map((r) => hashOf(r.url)).filter(Boolean));
+    }
+    catch (e) { return '[]'; }
+  };
+  /** Datei dauerhaft sichern: Standard aus dem Zwischenspeicher übernehmen, sonst laden. HTTP-Status oder -1 */
+  nova.secure = async (url, h, q) => {
+    try {
+      const c = await caches.open(OFFLINE[q]);
+      if (await c.match(key(h))) return 200;
+      if (q === 'STANDARD') {
+        const auto = await caches.open(STORE); const r = await auto.match(key(h));
+        if (r) {
+          const b = await r.blob();
+          await c.put(key(h), new Response(b, { headers: { 'Content-Type': 'audio/mpeg', 'X-Groesse': String(b.size) } }));
+          await auto.delete(key(h));
+          return 200;
+        }
+      }
+    } catch (e) { return -1; }
+    return store(url, h, OFFLINE[q]);
+  };
+  /** Kleine Textdatei (Liste, Server-Stand) – null bei Fehler */
+  nova.text = async (url) => {
+    const [signal, done] = timed(20000);
+    try { const r = await fetch(url, Object.assign({}, OPTS, { signal })); return r.ok ? await r.text() : null; }
+    catch (e) { return null; } finally { done(); }
+  };
+  /** Belegter Platz aller Nova-Dateien in Bytes */
+  nova.used = async () => {
+    let sum = 0;
+    for (const name of ALL) {
+      try {
+        if (!(await caches.has(name))) continue;
+        const c = await caches.open(name);
+        for (const req of await c.keys()) {
+          const r = await c.match(req); if (!r) continue;
+          const g = Number(r.headers.get('X-Groesse'));
+          sum += g > 0 ? g : (await r.blob()).size;
+        }
+      } catch (e) {}
+    }
+    return sum;
+  };
+  /** Alle Nova-Dateien löschen (beide Offline-Fassungen und Zwischenspeicher) */
+  nova.clear = async () => { mem.clear(); for (const name of ALL) { try { await caches.delete(name); } catch (e) {} } return true; };
 })();

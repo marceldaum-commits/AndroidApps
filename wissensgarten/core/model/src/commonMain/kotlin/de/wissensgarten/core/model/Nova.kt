@@ -173,6 +173,9 @@ object Nova {
     /** Adresse der vorab vertonten Datei */
     fun url(h: String): String = "$BASE/nova/${h.substring(0, 2)}/$h.mp3"
 
+    /** Bestqualität (unkomprimiert) – nur für „Offline laden“ */
+    fun urlOriginal(h: String): String = "$BASE/nova/original/${h.substring(0, 2)}/$h.mp3"
+
     /** Was die Theorie-Ansicht vorliest: alle Erklär-Szenen eines Pakets am Stück */
     fun theorie(scenes: List<IntroScene>): String = scenes.joinToString(" ") { it.text }
 

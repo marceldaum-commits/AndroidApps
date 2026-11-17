@@ -13,7 +13,13 @@ class WissensgartenApp : Application() {
         private set
 
     /** Brummis Stimme „Nova“ (mit der Android-Sprachausgabe als stiller Notlösung) */
-    val voice: NovaVoice by lazy { NovaVoice(AndroidNova(this), kotlinx.coroutines.MainScope()) }
+    val voice: NovaVoice by lazy {
+        val scope = kotlinx.coroutines.MainScope()
+        val nova = AndroidNova(this)
+        // „Alle Nova-Texte offline laden“: Liste und Server-Stand des Live-Hosts (dieselben Texte und Namen wie der Server)
+        val host = de.wissensgarten.core.model.NovaOffline.LIVE_HOST
+        NovaVoice(nova, scope, de.wissensgarten.app.ui.fx.NovaOfflineManager(nova, scope, de.wissensgarten.core.model.NovaOffline.listeUrl(host), host))
+    }
     val sync: de.wissensgarten.app.sync.DriveSync by lazy { de.wissensgarten.app.sync.DriveSync(this, container) }
     val music: AndroidMusic by lazy { AndroidMusic(this).also { m -> voice.onSpeaking = { m.duck(it) } } }
     val sfx: AndroidSfx by lazy { AndroidSfx(this).also { it.enabled = container.settings.sound.value } }

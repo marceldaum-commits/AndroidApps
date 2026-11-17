@@ -648,6 +648,31 @@ open class ScreenshotTest {
         override fun stop() {}
         override suspend fun speakAndWait(text: String, locale: de.wissensgarten.app.ui.fx.Locale) {}
     }
+    /** „Alle Nova-Texte offline laden“ in drei Zuständen (feste Zahlen, ohne Netz) */
+    private fun offlineShot(name: String, z: de.wissensgarten.app.ui.fx.OfflineZustand) = shot(name) {
+        val settings = de.wissensgarten.core.data.Settings(de.wissensgarten.core.data.MemoryKeyValueStore())
+        val ctl = object : de.wissensgarten.app.ui.fx.NovaOfflineSteuerung {
+            override val zustand = kotlinx.coroutines.flow.MutableStateFlow(z)
+            override fun pruefen() {}
+            override fun laden(q: de.wissensgarten.core.model.NovaQualitaet) {}
+            override fun abbrechen() {}
+            override fun loeschen() {}
+        }
+        Column(Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {
+            androidx.compose.material3.Text("Brummi liest vor", style = androidx.compose.material3.MaterialTheme.typography.titleMedium)
+            de.wissensgarten.app.ui.settings.VoiceSettingsPanel(settings, fakeVoice(), ctl)
+        }
+    }
+    private val std = de.wissensgarten.core.model.NovaQualitaet.STANDARD
+    private val best = de.wissensgarten.core.model.NovaQualitaet.BEST
+    @Test fun offlineButton() = offlineShot("73_offline_laden", de.wissensgarten.app.ui.fx.OfflineZustand(
+        geprueft = true, gesamt = 7802, fehlend = mapOf(std to 7650, best to 7802), rest = mapOf(std to 420_750_000L, best to 1_287_330_000L), belegt = 8_400_000L))
+    @Test fun offlineLoading() = offlineShot("74_offline_laedt", de.wissensgarten.app.ui.fx.OfflineZustand(
+        geprueft = true, gesamt = 7802, fehlend = mapOf(std to 7650, best to 7802), laedt = std, fertig = 3120, ziel = 7802))
+    @Test fun offlineDone() = offlineShot("75_offline_fertig", de.wissensgarten.app.ui.fx.OfflineZustand(
+        geprueft = true, gesamt = 7802, fehlend = mapOf(std to 0, best to 7802), rest = mapOf(std to 0L, best to 1_287_330_000L), belegt = 429_100_000L,
+        hinweis = "✅ Fertig! Brummi liest jetzt auch ohne Internet mit Nova vor."))
+
     @Test fun voice() = shot("67_stimme") {
         val settings = de.wissensgarten.core.data.Settings(de.wissensgarten.core.data.MemoryKeyValueStore()).apply { setVoiceRate(115) }
         Column(Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {
