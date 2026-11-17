@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-version="2.3.1">
+<html lang="de" data-version="2.3.2">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -41,7 +41,7 @@
   </svg>
   <b>EXPERIMENTOPIA</b>
   <div id="balken"><i></i></div>
-  <span id="start-text">lädt … Version 2.3.1 vom 17.11.2026</span>
+  <span id="start-text">lädt … Version 2.3.2 vom 17.11.2026</span>
 </div>
 <div id="app"></div>
 <script>
@@ -56,7 +56,7 @@
   // WebAssembly mit „GC“ fehlt älteren Browsern: gleich prüfen, nicht erst alles laden
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
   // ── Laden mit echtem Fortschritt: App-Kern (.wasm) und Schriften werden sofort angefordert, jedes ankommende Byte bewegt den Balken.
-  var PLAN = { "0ebe40576ac8cdacdb11.wasm": 5454686, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 120552, "fonts/noto_color_emoji.ttf": 664612, "experimentopia.js": 593737 }, got = {}, total = 0, early = {};
+  var PLAN = { "bccfa839aa4b38489c76.wasm": 8405319, "bdba2fa58a9be66aaccc.wasm": 5461011, "fonts/dejavu_sans.ttf": 120976, "fonts/noto_color_emoji.ttf": 664612, "experimentopia.js": 593737 }, got = {}, total = 0, early = {};
   for (var k in PLAN) total += PLAN[k];
   function progress() {
     var sum = 0; for (var k in PLAN) sum += Math.min(got[k] || 0, PLAN[k]);

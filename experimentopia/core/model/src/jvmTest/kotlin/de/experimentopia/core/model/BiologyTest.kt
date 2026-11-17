@@ -8,8 +8,8 @@ private fun assertEquals(a: Double, b: Double, d: Double) = Assert.assertEquals(
 private fun assertTrue(c: Boolean, msg: String = "") = Assert.assertTrue(msg, c)
 
 class BiologyTest {
-    fun ans(id: String) = Catalog.byId(id)!!.predict.let { it.choices[it.answer].text }
-    fun tr(id: String) = Catalog.byId(id)!!.transfer.let { it.choices[it.answer].text }
+    fun ans(id: String) = Catalog.byId(id)!!.predict.let { it.choices[it.answer].text.replace(Typo.NBSP, ' ') }
+    fun tr(id: String) = Catalog.byId(id)!!.transfer.let { it.choices[it.answer].text.replace(Typo.NBSP, ' ') }
 
     @Test fun mendel() {
         assertEquals(mapOf("Aa" to 1.0), Genetics.cross("AA", "aa"))

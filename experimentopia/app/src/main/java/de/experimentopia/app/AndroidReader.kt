@@ -37,6 +37,11 @@ class AndroidReader(ctx: Context) : Reader {
     private var prefs = AudioPrefs()
     private val dir = File(app.filesDir, "nova").apply { mkdirs() }
 
+    init {
+        // Die Stimme „Thorsten“ (bis 2.1) wird nicht mehr gebraucht – ihre Stimmdatei (ca. 63 MB) nach dem Update wegräumen
+        Thread({ runCatching { File(app.filesDir, "stimme").deleteRecursively() } }, "aufraeumen").apply { isDaemon = true }.start()
+    }
+
     override var speaking by mutableStateOf(false); private set
     override var offline by mutableStateOf(OfflineVoice()); private set
 

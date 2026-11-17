@@ -119,7 +119,7 @@ fun ExperimentScreen(
                                             .border(2.dp, if (sure == s) E.Sun else E.Line, RoundedCornerShape(16.dp))
                                             .clickable { sure = s; sfx?.play(Sound.TAP) }.padding(vertical = 10.dp).testTag("sicher${s.ordinal}"), horizontalAlignment = Alignment.CenterHorizontally) {
                                             Text(s.emoji, fontSize = 28.sp)
-                                            Text(s.title, color = E.Text, fontSize = 12.sp)
+                                            Text(s.title, color = E.Text, fontSize = 12.sp, textAlign = TextAlign.Center, lineHeight = 15.sp, modifier = Modifier.padding(horizontal = 4.dp))
                                         }
                                     }
                                 }

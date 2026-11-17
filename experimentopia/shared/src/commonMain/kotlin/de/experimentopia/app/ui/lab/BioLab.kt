@@ -192,7 +192,7 @@ fun OsmosisLab(s: OsmosisSetup, free: Boolean, onGoal: () -> Unit) {
                         drawRoundRect(Color.White.copy(alpha = 0.7f), Offset(w * 0.1f, h * 0.2f), Size(w * 0.8f, h * 0.78f), CornerRadius(8 * density), style = Stroke(2 * density))
                     }
                     Text("${Fmt.num(salt, 1)} % Salz", color = E.Text, fontSize = 11.sp)
-                    Text(if (run > 0) (if (change >= 0) "+" else "") + Fmt.num(change, 1) + " %" else "–", color = if (change > 0.05) E.Green else if (change < -0.05) E.Pink else E.Muted, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                    Text(if (run > 0) Fmt.num(change, 1).let { n -> if (n.trimStart('-', '−') in setOf("0", "0,0")) "±0 %" else (if (change > 0) "+" else "") + n + " %" } else "–", color = if (change > 0.05) E.Green else if (change < -0.05) E.Pink else E.Muted, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 }
             }
         }

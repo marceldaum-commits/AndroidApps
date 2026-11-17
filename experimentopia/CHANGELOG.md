@@ -1,5 +1,13 @@
 # Changelog – Experimentopia
 
+## 2.3.2 – Feinschliff für kleine Handys (17.11.2026)
+
+- 📱 Auf schmalen Handys bricht nichts mehr mitten im Wort um: Die Knöpfe „Forscherbuch“ und „Abzeichen“ auf dem Startbildschirm sind neu angeordnet,
+  Zahl und Einheit bleiben zusammen („5 %“), der Theorie-Knopf zeigt den ganzen Titel, „ziemlich sicher“ passt in sein Feld.
+- 🔊 Das kleine Lautsprecher-Zeichen in Blubbs Sprechblase deckt keinen Text mehr zu.
+- 🥔 Bei der Kartoffel im Salzwasser steht bei „keine Änderung“ jetzt „±0 %“ statt „+0 %“.
+- 🧹 Android: Nach dem Update räumt die App die alte Stimmdatei von „Thorsten“ (ca. 63 MB) automatisch weg.
+
 ## 2.3.1 – Offline in Bestqualität (17.11.2026)
 
 - 🎧 Beim Offline-Laden gibt es jetzt zwei Wahlmöglichkeiten: **Standard** (klein) oder **Bestqualität** (unkomprimiert, etwa dreimal so groß). Die Wahl wird gemerkt;

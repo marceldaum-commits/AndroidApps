@@ -33,13 +33,14 @@ import de.experimentopia.core.model.*
 @Composable
 fun TheoryButton(topic: Topic, onClick: () -> Unit, modifier: Modifier = Modifier, long: Boolean = true) {
     val sfx = LocalSfx.current
-    Row(modifier.clip(CircleShape).background(E.Sky.copy(alpha = 0.16f)).border(1.5.dp, E.Sky, CircleShape)
+    val shape = if (long) androidx.compose.foundation.shape.RoundedCornerShape(18.dp) else CircleShape
+    Row(modifier.clip(shape).background(E.Sky.copy(alpha = 0.16f)).border(1.5.dp, E.Sky, shape)
         .clickable { sfx?.play(Sound.WHOOSH, volume = 0.5f); onClick() }.padding(horizontal = 12.dp, vertical = 7.dp).testTag("theorie"),
         verticalAlignment = Alignment.CenterVertically) {
         Text("📖", fontSize = 16.sp, modifier = Modifier.semantics { contentDescription = "Theorie: ${topic.title}" })
         if (long) {
             Spacer(Modifier.width(6.dp))
-            Text("Theorie: ${topic.title}", color = E.Text, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 2)
+            Text("Theorie: ${topic.title}", color = E.Text, fontSize = 13.sp, fontWeight = FontWeight.Bold, maxLines = 3)
         }
     }
 }

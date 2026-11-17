@@ -134,8 +134,9 @@ fun BlubbSays(text: String, mood: Mood = Mood.HAPPY, modifier: Modifier = Modifi
                 .padding(horizontal = 14.dp, vertical = 10.dp)
         ) {
             // Platz für den ganzen Text reservieren, damit nichts springt
-            Text(text, style = MaterialTheme.typography.bodyLarge, color = Color.Transparent)
-            Text(text.take(shown), style = MaterialTheme.typography.bodyLarge, color = E.Text)
+            val room = if (readOn && reader != null) Modifier.padding(bottom = 10.dp) else Modifier   // Platz für 🔊 unter der letzten Zeile
+            Text(text, style = MaterialTheme.typography.bodyLarge, color = Color.Transparent, modifier = room)
+            Text(text.take(shown), style = MaterialTheme.typography.bodyLarge, color = E.Text, modifier = room)
             if (readOn && reader != null) Text("🔊", fontSize = 12.sp, modifier = Modifier.align(Alignment.BottomEnd).offset(x = 8.dp, y = 6.dp))
         }
     }

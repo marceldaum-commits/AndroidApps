@@ -5,8 +5,8 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class Biology2Test {
-    fun ans(id: String) = Catalog.byId(id)!!.predict.let { it.choices[it.answer].text }
-    fun tr(id: String) = Catalog.byId(id)!!.transfer.let { it.choices[it.answer].text }
+    fun ans(id: String) = Catalog.byId(id)!!.predict.let { it.choices[it.answer].text.replace(Typo.NBSP, ' ') }
+    fun tr(id: String) = Catalog.byId(id)!!.transfer.let { it.choices[it.answer].text.replace(Typo.NBSP, ' ') }
 
     @Test fun mikroskop() {
         assertEquals(Sight.PUNKT, Microscope.sight(Microbe.PANTOFFEL, 1))

@@ -317,6 +317,7 @@ object Catalog {
     val all: List<Experiment> = (CatalogA.water + CatalogD.water + CatalogA.force + CatalogD.force + CatalogB.power + CatalogD.power + CatalogB.chem + CatalogE.chem +
         CatalogC.heat + CatalogE.heat + CatalogC.lightSound + CatalogE.lightSound + CatalogC.fall + CatalogE.fall + CatalogF.bio + CatalogF.chem + CatalogF.light + CatalogG.all)
         .let { all -> Island.entries.flatMap { i -> all.filter { it.island == i }.sortedWith(compareBy({ topicOf(it.id).ordinal }, { it.grades.first })) } }
+        .map { with(Typo) { it.typeset() } }
 
     fun byId(id: String) = all.firstOrNull { it.id == id }
     fun of(island: Island) = all.filter { it.island == island }

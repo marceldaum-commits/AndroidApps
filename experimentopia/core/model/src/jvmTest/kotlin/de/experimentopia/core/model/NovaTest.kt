@@ -46,3 +46,13 @@ class NovaTest {
         assertTrue(Nova.json().startsWith("{\"format\":1,\"app\":\"experimentopia\",\"texte\":[{\"text\":"))
     }
 }
+
+class TypoTest {
+    @Test fun zahlUndEinheitBleibenZusammen() {
+        assertEquals("im Salzwasser (5 %)?", Typo.keep("im Salzwasser (5 %)?"))
+        assertEquals("14 kg und 2 m und 20 °C", Typo.keep("14 kg und 2 m und 20 °C"))
+        assertEquals("Feld 2 geht", Typo.keep("Feld 2 geht"))
+        // Vorlesen und Nova-Dateinamen bleiben gleich
+        assertEquals(Speech.clean("5 % Salz"), Speech.clean(Typo.keep("5 % Salz")))
+    }
+}

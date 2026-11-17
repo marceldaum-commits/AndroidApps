@@ -29,7 +29,7 @@ object Speech {
     private val number = """\d+(?:,\d+)?"""
 
     fun clean(text: String): String {
-        var s = " $text "
+        var s = " ${text.replace(Typo.NBSP, ' ')} "
         // Tausender mit Leerzeichen zusammenziehen: „100 000“ → „100000“
         s = Regex("""(\d) (\d{3})(?!\d)""").replace(s) { "${it.groupValues[1]}${it.groupValues[2]}" }
         s = Regex("""(\d) (\d{3})(?!\d)""").replace(s) { "${it.groupValues[1]}${it.groupValues[2]}" }

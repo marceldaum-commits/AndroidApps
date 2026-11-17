@@ -26,8 +26,8 @@ class CatalogTest {
 
     /** Die erwarteten richtigen Antworten – so steht es in jedem Physik-/Chemiebuch. Berechnet werden sie aus den Modellen. */
     @Test fun antwortenStimmen() {
-        fun ans(id: String) = Catalog.byId(id)!!.predict.let { it.choices[it.answer].text }
-        fun tr(id: String) = Catalog.byId(id)!!.transfer.let { it.choices[it.answer].text }
+        fun ans(id: String) = Catalog.byId(id)!!.predict.let { it.choices[it.answer].text.replace(Typo.NBSP, ' ') }
+        fun tr(id: String) = Catalog.byId(id)!!.transfer.let { it.choices[it.answer].text.replace(Typo.NBSP, ' ') }
         assertEquals("der kleine Nagel", ans("w1")); assertEquals("die kleine Münze", ans("w2")); assertEquals("Apfel", ans("w3"))
         assertEquals("geht unter", ans("w4")); assertEquals("schwimmt", ans("w5")); assertEquals("Ja, als Boot geformt", ans("w6"))
         assertEquals("sinkt", ans("w7")); assertEquals("schwebt mittendrin", tr("w7")); assertEquals("Spiritus", ans("w8"))

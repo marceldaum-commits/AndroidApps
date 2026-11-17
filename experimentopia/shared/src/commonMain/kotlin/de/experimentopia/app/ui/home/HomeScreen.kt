@@ -153,10 +153,19 @@ fun HomeScreen(
             }
             Text("Klasse", color = E.Muted, fontSize = 13.sp)
             ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "alle" else "$it" }, onGrade)
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                GlowButton(onFreeLab, Modifier.weight(1f).testTag("freieslabor"), color = E.Mint) { Text("🔬 Freies\nLabor", fontWeight = FontWeight.Bold, fontSize = 14.sp) }
-                GlowButton(onJournal, Modifier.weight(1f).testTag("forscherbuch"), color = E.Sun) { Text("📒 Forscher-\nbuch", fontWeight = FontWeight.Bold, fontSize = 14.sp) }
-                GlowButton(onBadges, Modifier.weight(1f).testTag("abzeichen"), color = E.Pink) { Text("🏅 ${Badges.earned(stats).size}/${Badges.all.size}\nAbzeichen", fontWeight = FontWeight.Bold, fontSize = 14.sp) }
+            // Auf schmalen Handys (320 dp) Bild über dem Wort, damit nichts mitten im Wort umbricht
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val narrow = maxWidth < 400.dp
+                val badge = "${Badges.earned(stats).size}/${Badges.all.size}"
+                @Composable fun label(emoji: String, wide: String, small: String) =
+                    if (narrow) Text("$emoji\n$small", fontWeight = FontWeight.Bold, fontSize = 13.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center, lineHeight = 17.sp)
+                    else Text("$emoji $wide", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                val pad = if (narrow) 4.dp else 18.dp
+                Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    GlowButton(onFreeLab, Modifier.weight(1f).fillMaxHeight().testTag("freieslabor"), color = E.Mint, padH = pad) { label("🔬", "Freies\nLabor", "Freies\nLabor") }
+                    GlowButton(onJournal, Modifier.weight(1f).fillMaxHeight().testTag("forscherbuch"), color = E.Sun, padH = pad) { label("📒", "Forscher-\nbuch", "Forscher-\nbuch") }
+                    GlowButton(onBadges, Modifier.weight(1f).fillMaxHeight().testTag("abzeichen"), color = E.Pink, padH = pad) { label("🏅", "$badge\nAbzeichen", "$badge\nAbzeichen") }
+                }
             }
             Spacer(Modifier.height(24.dp))
         }

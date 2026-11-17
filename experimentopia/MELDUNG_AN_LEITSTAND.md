@@ -2,6 +2,26 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.3.2 vom 17.11.2026: fertig für den Betriebstest
+
+**Fertiggestellt**: Nova (nur Nova, /jetzt mit Origin, Sprechtempo, Offline laden Standard/Bestqualität), Forscher-Pass-Abzeichen und Kasse, Datenschutz-Text (wörtlich), Web = Android.
+
+**Geprüft**
+- Alle Tests grün: Logik (core:model, inkl. Nova-Hash-Prüfwert, Typo, alte Einstellungen aus 2.1), Datenbank, 69 Bildschirmfotos, 79 Schmal-Bilder (320 dp), Lint Github + Play ohne Fehler, beide APKs gebaut.
+- WebApp mit Playwright bei 320 px und 1280 px: Start, Rätsel des Tages komplett (Rätsel → Vermuten → Labor → Auflösung → Erklären → Merksatz), Einstellungen; Konsole ohne Fehler (nur WebGL-Hinweise des Test-Browsers), kein waagerechtes Scrollen.
+- Offline/Flugmodus: Service Worker aktiv, nach Neuladen ohne Netz startet die App und Versuche öffnen sich.
+- Merken: Musik aus und Sprechtempo 1,3 bleiben nach Neuladen erhalten (localStorage „experimentopia.klang“).
+- Freischalten: ?pro=-Link mit Test-Schlüsselpaar (eigener Testbau, nicht ausgeliefert) → „Forscher-Pass aktiv“, Code bleibt nach Neuladen, Link wird aus der Adresszeile entfernt.
+- Update von der Vorversion: Datenbank seit 1.0 unverändert (Version 1), alte Klang-Einstellungen (Thorsten, Tempo 0,8) werden gelesen, Tempo rastet auf 0,75 ein; Android löscht die alte Thorsten-Stimmdatei (ca. 63 MB).
+- texte.json unverändert (2301 Sätze) – nichts muss neu vertont werden.
+
+**Behoben in 2.3.2**: Wortumbrüche bei 320 px (Startseiten-Knöpfe, „5 %“, Theorie-Knopf, „ziemlich sicher“), 🔊 überdeckte Text in Sprechblasen, „+0 %“ → „±0 %“, Thorsten-Reste auf Android.
+
+**Bekannte Restpunkte**
+- Nova auf einem echten Android-Gerät (Probe hören, Offline laden) nur von Marcel testbar.
+- Lokal (localhost) blockt der Stimmen-Server den Zählstand per CORS – auf test/live erlaubt, kein Fehler im Betrieb.
+- Der Thorsten-Speicher im Browser wird seit 2.2.0 gelöscht; Android erst ab 2.3.2.
+
 ## 17.11.2026 – Version 2.3.1 vom 17.11.2026: Bestqualität offline
 
 - Zwei Knöpfe „Offline laden – Standard (ca. X MB)“ (/nova/…, "bytes") und „Offline laden – Bestqualität (ca. Z MB)“ (/nova/original/…, "bytes_original"; 404 → normale Datei).

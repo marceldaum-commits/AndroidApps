@@ -73,6 +73,7 @@ fun GlowButton(
     color: Color = E.Mint,
     enabled: Boolean = true,
     sound: Sound = Sound.TAP,
+    padH: androidx.compose.ui.unit.Dp = 18.dp,
     content: @Composable RowScope.() -> Unit,
 ) {
     val interaction = remember { MutableInteractionSource() }
@@ -85,7 +86,7 @@ fun GlowButton(
             .background(Brush.verticalGradient(listOf(c.copy(alpha = 0.42f), c.copy(alpha = 0.16f))))
             .border(2.dp, c, RoundedCornerShape(18.dp))
             .clickable(interaction, null, enabled = enabled) { sfx?.play(sound); view.buzz(Buzz.TICK, vib); onClick() }
-            .padding(horizontal = 18.dp, vertical = 12.dp),
+            .padding(horizontal = padH, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) { CompositionLocalProvider(LocalContentColor provides E.Text) { content() } }
