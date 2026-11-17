@@ -29,6 +29,7 @@ fun TopicScreen(results: Map<String, Int>, grade: Int, locked: (Experiment) -> B
                 startTopic: Topic? = null, startQuery: String = "") {
     var subject by remember { mutableStateOf<Subject?>(null) }
     var topic by remember { mutableStateOf(startTopic) }
+    var theoryTopic by remember { mutableStateOf<Topic?>(null) }
     var query by remember { mutableStateOf(startQuery) }
     val found = Search.find(query, subject, topic)
     Box(Modifier.fillMaxSize()) {
@@ -62,11 +63,13 @@ fun TopicScreen(results: Map<String, Int>, grade: Int, locked: (Experiment) -> B
                 Text(if (found.isEmpty()) "Nichts gefunden – probier ein anderes Wort." else "${found.size} Versuche" + (topic?.let { " · ${it.title}" } ?: ""), color = E.Sun, fontWeight = FontWeight.Bold)
                 found.groupBy { it.topic }.forEach { (t, list) ->
                     Text("${t.emoji} ${t.title}", color = E.Text, fontWeight = FontWeight.Black, modifier = Modifier.padding(top = 4.dp))
+                    TheoryButton(t, { theoryTopic = t })
                     list.forEach { e -> ExperimentRow(e, results[e.id], grade, locked(e)) { onOpen(e) } }
                 }
                 Spacer(Modifier.height(24.dp))
             }
         }
+        TheorySheet(theoryTopic != null, theoryTopic ?: Topic.AUFTRIEB, pro = grade >= 7) { theoryTopic = null }
     }
 }
 

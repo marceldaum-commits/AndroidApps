@@ -1,5 +1,17 @@
 # Changelog – Experimentopia
 
+## 0.6.0 – Theorie zum Nachlesen und Lernen nach Fach (17.11.2026)
+
+- 📚 **Lernen nach Fach**: Auf dem Startbildschirm Physik, Chemie oder Biologie wählen – dann kommen die Fachbereiche in der Reihenfolge
+  wie in der Schule, passend zur eigenen Klasse. Bei jedem Bereich steht, worum es geht, wie weit man schon ist, und ein Knopf
+  „▶️ Weiter“ startet gleich den nächsten passenden Versuch.
+
+- 📖 **Theorie-Knopf bei jedem Versuch**: Wer nicht weiterweiß, tippt auf „📖 Theorie“ – oben in jedem Versuch, bei der Vermutung und im Labor.
+  Es öffnet sich eine kurze, bebilderte Seite zum Fachbereich: die Grundidee, die wichtigsten Punkte, ein Beispiel aus dem Alltag und die Fachwörter.
+  Blubb erklärt, ohne die Lösung zu verraten – damit Nachlesen hilft und nicht frustriert.
+- 🎓 **Für Profis (ab Klasse 7)**: Formeln und Gesetze zum Aufklappen (z. B. Ohmsches Gesetz, F = m·a, Hebelgesetz, pH-Wert, Mendel). Bei Versuchen ab Klasse 7 gleich offen.
+- Theorie auch in der Themensuche und im Forscherbuch. Für alle 19 Fachbereiche von Physik, Chemie und Biologie.
+
 ## 0.5.1 – Alles nachgeprüft (17.11.2026)
 
 - ✅ **Große Korrektheitsprüfung**: Alle 200 Versuche wurden fachlich, sprachlich und am Bildschirm nachgeprüft. Über 100 Stellen sind jetzt genauer:

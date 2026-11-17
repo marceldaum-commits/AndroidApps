@@ -66,3 +66,28 @@ class Biology2Test {
 
     @Test fun zweihundert() { assertEquals(200, Catalog.all.size); assertEquals(Island.BIO, Catalog.byId("v1")!!.island) }
 }
+
+class TheoryTest {
+    @org.junit.Test fun jedesThemaHatTheorie() = Topic.entries.forEach { t ->
+        val c = Theory.of(t)
+        org.junit.Assert.assertTrue("$t", c.idea.isNotBlank() && c.basics.size >= 3 && c.pro.size >= 2 && c.everyday.isNotBlank() && c.words.isNotEmpty())
+    }
+    @org.junit.Test fun jederVersuchFindetSeineTheorie() = Catalog.all.forEach { org.junit.Assert.assertEquals(it.topic, Theory.of(it).topic) }
+}
+
+class CurriculumTest {
+    @org.junit.Test fun reihenfolgeUndAuswahl() {
+        Subject.entries.forEach { s ->
+            val all = Curriculum.topics(s)
+            org.junit.Assert.assertEquals(Topic.entries.count { it.subject == s }, all.size)
+            org.junit.Assert.assertEquals(all.map { Curriculum.startGrade(it) }.sorted(), all.map { Curriculum.startGrade(it) })
+        }
+        // Klasse 3: nur Fachbereiche mit Versuchen für Klasse 3
+        Curriculum.topics(Subject.PHYSIK, 3).forEach { t -> org.junit.Assert.assertTrue(t.experiments().any { 3 in it.grades }) }
+        // nächster Versuch passt zur Klasse und ist noch nicht gemacht
+        val t = Topic.STROM
+        val n = Curriculum.next(t, emptySet(), 5)!!
+        org.junit.Assert.assertTrue(5 in n.grades)
+        org.junit.Assert.assertNull(Curriculum.next(t, t.experiments().map { it.id }.toSet(), 5))
+    }
+}

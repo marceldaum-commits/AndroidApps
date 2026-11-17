@@ -33,6 +33,7 @@ enum class JournalTab(val title: String) { VERSUCHE("🧪 Versuche"), WISSEN("�
 fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab = JournalTab.VERSUCHE, onOpen: (Experiment) -> Unit = {}, openFirst: Boolean = false) {
     var tab by remember { mutableStateOf(start) }
     var open by remember { mutableStateOf(if (openFirst) entries.firstOrNull()?.id else null) }
+    var theoryTopic by remember { mutableStateOf<Topic?>(null) }
     Box(Modifier.fillMaxSize()) {
         BubbleBackground(tint = E.Sun)
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -57,7 +58,7 @@ fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab 
                                 }
                                 Text("Ich dachte: ${j.guess}  ${Sure.entries.getOrNull(j.sure)?.let { "${it.emoji} (${it.title})" } ?: ""}", color = E.Text, fontSize = 14.sp)
                                 Text("Es war: ${j.result}", color = if (j.right) E.Mint else E.Sun, fontSize = 14.sp)
-                                if (expanded) Explanation(e, onOpen) else Text("▾ Erklärung anzeigen", color = E.Sky, fontSize = 13.sp)
+                                if (expanded) Explanation(e, onOpen) { theoryTopic = it } else Text("▾ Erklärung anzeigen", color = E.Sky, fontSize = 13.sp)
                             }
                         }
                     }
@@ -71,7 +72,7 @@ fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab 
                                     var more by remember { mutableStateOf(false) }
                                     Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(E.Deep).clickable { more = !more }.padding(10.dp)) {
                                         Row { Text(e.emoji, fontSize = 18.sp); Text("  ${e.fact}", color = E.Text, fontSize = 14.sp) }
-                                        if (more) Explanation(e, onOpen)
+                                        if (more) Explanation(e, onOpen) { theoryTopic = it }
                                     }
                                 }
                             }
@@ -95,6 +96,7 @@ fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab 
                 Spacer(Modifier.height(24.dp))
             }
         }
+        TheorySheet(theoryTopic != null, theoryTopic ?: Topic.AUFTRIEB, pro = false) { theoryTopic = null }
     }
 }
 
@@ -127,7 +129,7 @@ fun BadgesScreen(stats: Stats, onBack: () -> Unit) {
 
 /** Ausführliche Erklärung zu einem Versuch – für das Forscherbuch */
 @Composable
-fun Explanation(e: Experiment, onOpen: (Experiment) -> Unit) {
+fun Explanation(e: Experiment, onOpen: (Experiment) -> Unit, onTheory: (Topic) -> Unit = {}) {
     Column(verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.padding(top = 4.dp)) {
         Section("❓ Die Frage", e.predict.question + "\n" + e.story)
         Section("👀 Was passiert ist", e.reveal)
@@ -135,6 +137,7 @@ fun Explanation(e: Experiment, onOpen: (Experiment) -> Unit) {
         Section("📒 Merksatz", e.fact)
         Safety.note(e.id)?.let { SafetyNote(it) }
         Section("🧩 Knobelfrage", e.transfer.question + "\nLösung: " + e.transfer.choices[e.transfer.answer].text + (if (e.transfer.explain.isNotBlank()) " – " + e.transfer.explain else ""))
+        TheoryButton(e.topic, { onTheory(e.topic) })
         GlowButton({ onOpen(e) }, Modifier.fillMaxWidth(), color = E.Pink) { Text("🔁 Nochmal ausprobieren", fontWeight = FontWeight.Bold) }
     }
 }

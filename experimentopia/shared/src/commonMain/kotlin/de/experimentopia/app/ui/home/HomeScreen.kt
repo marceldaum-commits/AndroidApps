@@ -67,6 +67,7 @@ fun HomeScreen(
     onDaily: () -> Unit,
     onFreeLab: () -> Unit,
     onTopics: () -> Unit = {},
+    onSubject: (Subject) -> Unit = {},
     onJournal: () -> Unit,
     onBadges: () -> Unit,
     onSettings: () -> Unit,
@@ -107,6 +108,9 @@ fun HomeScreen(
                 }
                 Text(if (dailyDone) "✅" else "›", fontSize = 28.sp, color = E.Sun)
             }
+            // am Schulstoff entlang: erst das Fach wählen
+            Text("📚 Lernen nach Fach", color = E.Text, fontWeight = FontWeight.Black, fontSize = 20.sp)
+            SubjectCards(results, onSubject)
             // gezielt suchen: Fachbereiche (Mechanik, Newton, Strom, Säuren …) und Stichwörter
             Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(E.Deep).border(2.dp, E.Sky, RoundedCornerShape(20.dp))
                 .clickable(onClick = onTopics).padding(14.dp).testTag("themen"), verticalAlignment = Alignment.CenterVertically) {

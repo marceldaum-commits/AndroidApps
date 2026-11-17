@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 0.6.0 vom 17.11.2026: Theorie-Knopf zu jedem Versuch und Lernen nach Fach (Wünsche von Marcel)
+
+- **Lernen nach Fach:** Physik, Chemie, Biologie auf dem Startbildschirm. Fachbereiche in Schulstoff-Reihenfolge (nach Einstiegs-Klassenstufe), gefiltert nach Klasse,
+  je Bereich Lernziel, Fortschritt, „Weiter“ zum nächsten passenden Versuch, Theorie und Versuchsliste.
+
+- Jeder Versuch hat „📖 Theorie“ (oben in der Leiste, bei der Vermutung, im Labor; dazu in Themensuche und Forscherbuch).
+- 19 Theorie-Karten (eine je Fachbereich): Grundidee, Punkte mit Bildern, Alltagsbeispiel, Fachwörter, aufklappbarer Teil „Für Profis (ab Klasse 7)“ mit Formeln.
+  Kein Verraten der Versuchslösung; Alltagsbeispiele bewusst anders als in den Versuchen. Inhalte fachlich wie in der Korrektheitsprüfung abgeglichen.
+
 ## Korrektheitsprüfung 17.11.
 
 Version **0.5.1 vom 17.11.2026** (Android-App und WebApp, gleiche Version). Geprüft wurde der gesamte Stand: 200 Versuche auf 8 Inseln und 34 Geräte.

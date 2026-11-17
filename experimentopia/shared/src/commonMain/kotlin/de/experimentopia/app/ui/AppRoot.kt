@@ -37,6 +37,7 @@ sealed interface Route {
     data class Exp(val id: String, val daily: Boolean = false) : Route
     data object Free : Route
     data object Topics : Route
+    data class SubjectR(val subject: Subject) : Route
     data class FreeRun(val lab: Lab) : Route
     data object Journal : Route
     data object Badges : Route
@@ -120,7 +121,7 @@ fun AppRoot(
                     HomeScreen(
                         results = stars, stats = stats, daily = state.daily(), dailyDone = state.dailyDoneToday(journal), grade = grade, welcome = welcome,
                         onIsland = { nav.go(Route.IslandR(it)) }, onDaily = { open(state.daily(), daily = true) },
-                        onFreeLab = { nav.go(Route.Free) }, onTopics = { nav.go(Route.Topics) }, onJournal = { nav.go(Route.Journal) }, onBadges = { nav.go(Route.Badges) },
+                        onFreeLab = { nav.go(Route.Free) }, onTopics = { nav.go(Route.Topics) }, onSubject = { nav.go(Route.SubjectR(it)) }, onJournal = { nav.go(Route.Journal) }, onBadges = { nav.go(Route.Badges) },
                         onSettings = { nav.go(Route.Settings) }, onGrade = state.prefs::setGrade,
                         onWelcomed = { state.prefs.welcomed = true; welcome = false },
                         banner = banner?.let { b -> { b { nav.go(Route.Settings) } } },
@@ -136,6 +137,7 @@ fun AppRoot(
                             onBack = { nav.back() }, daily = r.daily)
                     }
                 }
+                is Route.SubjectR -> de.experimentopia.app.ui.home.SubjectScreen(r.subject, stars, grade, state::locked, { open(it) }, state.prefs::setGrade) { nav.back() }
                 Route.Topics -> de.experimentopia.app.ui.home.TopicScreen(stars, grade, state::locked, { open(it) }, { nav.back() })
                 Route.Free -> FreeLabScreen(state::locked, { l -> if (state.locked(l)) nav.go(Route.ProR(l.title)) else { state.prefs.countFreeLab(); nav.go(Route.FreeRun(l)) } }, { nav.back() })
                 is Route.FreeRun -> FreeLabRun(r.lab) { nav.back() }

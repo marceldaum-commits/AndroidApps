@@ -52,8 +52,25 @@ class ScreenshotTest {
         val e = Catalog.byId(id)!!
         shot(name, settle, prepare) { ExperimentScreen(e, {}, null, {}, startPhase = Phase.LAB, startGuess = 0) }
     }
-    private fun ComposeContentTestRule.tap(text: String, times: Int = 1) = repeat(times) { onAllNodes(hasText(text, substring = true) and hasClickAction()).onFirst().performScrollTo().performClick(); mainClock.advanceTimeBy(250) }
-    private fun ComposeContentTestRule.slide(label: String, v: Float) { onNodeWithTag("regler:$label").performScrollTo().performSemanticsAction(SemanticsActions.SetProgress) { it(v) }; mainClock.advanceTimeBy(200) }
+    /**
+     * Sichtbar machen ohne performScrollTo: Das wartet auf eine Scroll-Animation, die bei angehaltener Uhr nie fertig wird.
+     * Stattdessen wischen wir selbst nach oben und stellen die Uhr dabei vor.
+     */
+    private fun ComposeContentTestRule.reveal(node: () -> SemanticsNodeInteraction) {
+        var tries = 0
+        while (!runCatching { node().assertIsDisplayed() }.isSuccess && tries < 15) {
+            onRoot().performTouchInput { swipeUp(startY = bottom * 0.75f, endY = bottom * 0.35f, durationMillis = 200) }
+            mainClock.advanceTimeBy(600); tries++
+        }
+    }
+    private fun ComposeContentTestRule.tap(text: String, times: Int = 1) = repeat(times) {
+        val find = { onAllNodes(hasText(text, substring = true) and hasClickAction()).onFirst() }
+        reveal(find); find().performClick(); mainClock.advanceTimeBy(250)
+    }
+    private fun ComposeContentTestRule.slide(label: String, v: Float) {
+        reveal { onNodeWithTag("regler:$label") }
+        onNodeWithTag("regler:$label").performSemanticsAction(SemanticsActions.SetProgress) { it(v) }; mainClock.advanceTimeBy(200)
+    }
 
     @Test fun home() = shot("01_start", settle = 4000) {
         HomeScreen(someStars, stats, Daily.forDay(20_600), false, 0, true, onIsland = {}, onDaily = {}, onFreeLab = {}, onJournal = {}, onBadges = {}, onSettings = {}, onGrade = {}, onWelcomed = {})
@@ -66,13 +83,11 @@ class ScreenshotTest {
     }
     @Test fun water() = lab("w5", "05_ei_im_salzwasser", settle = 3000, prepare = { it.tap("frisches Ei"); it.tap("🧂 Salzwasser"); it.tap("frisches Ei") })
     @Test fun reveal() = shot("06_aha_moment", settle = 4000) { ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.REVEAL, startGuess = 1) }
-    @Test fun explain() = shot("07_blubb_erklaeren", settle = 2500, prepare = { it.onNodeWithTag("grund1").performScrollTo().performClick() }) {
+    @Test fun explain() = shot("07_blubb_erklaeren", settle = 2500, prepare = { r -> r.reveal { r.onNodeWithTag("grund1") }; r.onNodeWithTag("grund1").performClick() }) {
         ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.EXPLAIN, startGuess = 1)
     }
     @Test fun done() = shot("08_geschafft", settle = 2500) { ExperimentScreen(Catalog.byId("w5")!!, {}, {}, {}, startPhase = Phase.DONE, startGuess = 0) }
 
-    // Höherer Bildschirm: Mit Sicherheitshinweis liegen die Flüssigkeiten sonst unterhalb – Scrollen hängt im Test ohne Bildtakt
-    @Config(qualifiers = "w400dp-h1300dp-xxhdpi")
     @Test fun tower() = lab("w8", "10_dichteturm", settle = 4000, prepare = { it.tap("Spiritus"); it.tap("🍯 Honig"); it.tap("Speiseöl"); it.tap("💧 Wasser"); it.tap("Spülmittel"); it.mainClock.advanceTimeBy(2000); it.tap("Weintraube"); it.tap("Eiswürfel") })
     @Test fun lever() = lab("k1", "11_wippe", settle = 2500, prepare = { it.tap("Loslassen") })
     @Test fun pulley() = lab("k8", "12_flaschenzug")
@@ -111,7 +126,6 @@ class ScreenshotTest {
     @Test fun topicNewton() = shot("40_thema_newton", prepare = { it.onNodeWithTag("thema_NEWTON").performClick() }) { de.experimentopia.app.ui.home.TopicScreen(someStars, 0, { false }, {}, {}) }
     @Test fun cart() = lab("n3", "41_newton_wagen", settle = 3000, prepare = { it.tap("Los!") })
     @Test fun skate() = lab("n2", "42_skateboards", settle = 1500, prepare = { it.tap("Abstoßen") })
-    @Config(qualifiers = "w400dp-h1300dp-xxhdpi")
     @Test fun mercury() = lab("w10", "43_quecksilber", settle = 2500, prepare = { it.tap("kleiner Nagel"); it.tap("Goldbarren") })
     @Test fun mendel() = lab("g2", "44_mendel_erbsen", settle = 2500, prepare = { it.tap("Kreuzen"); it.tap("säen") })
     @Test fun bloodGroups() = lab("g6", "45_blutgruppen", prepare = { it.tap("Kreuzen") })
@@ -123,7 +137,6 @@ class ScreenshotTest {
     @Test fun separate() = lab("t1", "51_stoffe_trennen", prepare = { it.tap("Filtern"); it.tap("Eindampfen") })
     @Test fun chroma() = lab("t6", "52_chromatografie", settle = 5500, prepare = { it.tap("Papier ins Wasser") })
     @Test fun paint() = lab("m1", "53_malkasten", prepare = { it.tap("Gelb"); it.tap("Blau") })
-    @Config(qualifiers = "w400dp-h1300dp-xxhdpi")
     @Test fun microscope() = lab("u1", "54_mikroskop", prepare = { it.tap("40×") })
     @Test fun microscopeLight() = lab("u4", "55_augentierchen", settle = 3500, prepare = { it.tap("100×"); it.tap("Lampe rechts an") })
     @Test fun germination() = lab("q4", "56_kresse_im_dunkeln", settle = 4500, prepare = { it.tap("Tage vergehen lassen") })
@@ -131,10 +144,14 @@ class ScreenshotTest {
     @Test fun foodWebGone() = lab("j4", "58_ohne_maeuse", prepare = { it.tap("verschwinden lassen") })
     @Test fun pulse() = lab("v1", "59_herz_und_puls", prepare = { it.tap("Joggen") })
     @Test fun recovery() = lab("v5", "60_erholungspuls", settle = 5500, prepare = { it.tap("Beide sprinten") })
+    @Test fun theory() = shot("61_theorie", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.PREDICT) }
+    @Test fun theoryPro() = shot("62_theorie_profi", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("s8")!!, {}, null, {}, startPhase = Phase.PREDICT) }
+    @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, {}) }
+    @Test fun subjectBio() = shot("64_fach_biologie", settle = 2500, prepare = { it.tap("Alle 8 Versuche") }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 9, { false }, {}, {}, {}) }
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
-        SettingsScreen(true, {}, true, {}, 5, {}, "0.5.1", "17.11.2026", {}, {}, {})
+        SettingsScreen(true, {}, true, {}, 5, {}, "0.6.0", "17.11.2026", {}, {}, {})
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
 }

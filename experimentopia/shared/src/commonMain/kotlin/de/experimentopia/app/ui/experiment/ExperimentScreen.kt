@@ -66,6 +66,7 @@ fun ExperimentScreen(
     var transferPick by remember(e.id) { mutableStateOf<Int?>(null) }
     var confetti by remember(e.id) { mutableIntStateOf(0) }
     var saved by remember(e.id) { mutableStateOf(false) }
+    var theory by remember(e.id) { mutableStateOf(false) }
     val right = guess == e.predict.answer
     // Begründungen gemischt, aber für jeden Versuch immer gleich
     val reasons = remember(e.id) { e.why.mapIndexed { i, w -> i to w }.shuffled(kotlin.random.Random(e.id.hashCode())) }
@@ -85,7 +86,7 @@ fun ExperimentScreen(
     Box(Modifier.fillMaxSize()) {
         BubbleBackground(tint = e.island.color.color(), count = 14)
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
-            Bar("${e.emoji} ${e.title}", onBack) { Pill(e.gradeText, e.island.color.color()) }
+            Bar("${e.emoji} ${e.title}", onBack) { TheoryButton(e.topic, { theory = true }, long = false); Spacer(Modifier.width(6.dp)); Pill(e.gradeText, e.island.color.color()) }
             PhaseDots(phase)
             AnimatedContent(phase, transitionSpec = { (slideInHorizontally { it / 3 } + fadeIn()) togetherWith (slideOutHorizontally { -it / 3 } + fadeOut()) }, label = "phase", modifier = Modifier.weight(1f)) { ph ->
                 Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -99,6 +100,7 @@ fun ExperimentScreen(
                         Phase.PREDICT -> {
                             BlubbSays("Was glaubst du? Es gibt kein Falsch – Forscher vermuten immer zuerst.", Mood.HAPPY, size = 56.dp)
                             Text(e.predict.question, style = MaterialTheme.typography.titleMedium, color = E.Text)
+                            TheoryButton(e.topic, { theory = true })
                             e.predict.choices.forEachIndexed { i, c -> ChoiceCard(c, guess == i, { guess = i; sfx?.play(Sound.POP) }, Modifier.popIn(i * 60).testTag("wahl$i")) }
                             if (guess != null) {
                                 Text("Wie sicher bist du dir?", color = E.Muted)
@@ -127,6 +129,7 @@ fun ExperimentScreen(
                                 }
                             }
                             TaskBanner(e.task, goal)
+                            TheoryButton(e.topic, { theory = true })
                             Safety.note(e.id)?.let { SafetyNote(it) }
                             LabView(e.setup, free = false, onGoal = { if (!goal) { goal = true; sfx?.play(Sound.STAR) } })
                             GlowButton({ phase = Phase.REVEAL }, Modifier.fillMaxWidth().pulse(goal, 0.03f).testTag("aufloesung"), enabled = goal, color = E.Sun) {
@@ -187,6 +190,7 @@ fun ExperimentScreen(
             }
         }
         Confetti(confetti)
+        TheorySheet(theory, e.topic, pro = e.grades.first >= 7) { theory = false }
     }
 }
 

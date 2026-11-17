@@ -30,7 +30,7 @@ import org.robolectric.annotation.GraphicsMode
 class NarrowTest(private val name: String) {
     companion object {
         @JvmStatic @ParameterizedRobolectricTestRunner.Parameters(name = "{0}")
-        fun names(): List<Array<Any>> = (listOf("start") + Island.entries.map { "insel_${it.name}" } + Lab.entries.flatMap { listOf("versuch_${it.name}", "frei_${it.name}") }).map { arrayOf<Any>(it) }
+        fun names(): List<Array<Any>> = (listOf("start", "theorie", "fach") + Island.entries.map { "insel_${it.name}" } + Lab.entries.flatMap { listOf("versuch_${it.name}", "frei_${it.name}") }).map { arrayOf<Any>(it) }
     }
     @get:Rule val rule = createComposeRule()
 
@@ -40,6 +40,8 @@ class NarrowTest(private val name: String) {
         rule.setContent {
             ExperimentopiaTheme { Surface(color = E.Night) {
                 when {
+                    name == "theorie" -> androidx.compose.foundation.layout.Box { de.experimentopia.app.ui.common.TheorySheet(true, Topic.STROM, pro = true) {} }
+                    name == "fach" -> de.experimentopia.app.ui.home.SubjectScreen(Subject.CHEMIE, emptyMap(), 6, { false }, {}, {}, {})
                     name == "start" -> HomeScreen(emptyMap(), Stats(), Daily.forDay(20_600), false, 0, true, onIsland = {}, onDaily = {}, onFreeLab = {}, onJournal = {}, onBadges = {}, onSettings = {}, onGrade = {}, onWelcomed = {})
                     name.startsWith("insel_") -> IslandScreen(Island.valueOf(name.removePrefix("insel_")), emptyMap(), 0, { false }, {}, {})
                     name.startsWith("versuch_") -> { val lab = Lab.valueOf(name.removePrefix("versuch_")); val e = Catalog.all.first { it.setup.lab == lab }

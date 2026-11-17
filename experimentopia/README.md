@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 0.5.1 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 0.6.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -46,6 +46,18 @@ Auftrieb (ρ-Vergleich, Eintauchtiefe), Hebelgesetz, Flaschenzug (Goldene Regel)
 pH aus [H⁺]−[OH⁻] mit Kw, Atomzählung aller Reaktionen, begrenzender Stoff beim Natron-Ballon, Richmann-Mischungsregel, Heizkurve mit Schmelz- und
 Verdampfungswärme, Fall mit Luftwiderstand (numerisch) und ohne, exakte Pendeldauer (elliptisches Integral), Röhren f = c/(4L),
 Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, AB0), Osmose, Enzymaktivität, Lichtstärke ∼ 1/d², Lotka-Volterra, Trennverfahren (kürzester Weg), subtraktive Farbmischung (`BiologyTest`), Sehfeld und Auflösung beim Mikroskop, Keimbedingungen, Nahrungsnetz (längste Kette, 10-%-Regel, Anreicherung), Herzzeitvolumen und Erholungspuls (`Biology2Test`). Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
+
+## Lernen nach Fach (am Schulstoff entlang)
+
+Auf dem Startbildschirm: Physik, Chemie oder Biologie wählen. `core/model/Curriculum.kt` ordnet die Fachbereiche nach der Klassenstufe,
+in der sie beginnen, und filtert nach der eingestellten Klasse. Je Bereich: Lernziel (Grundidee), Fortschritt, „▶️ Weiter“ (nächster passender Versuch),
+Theorie und alle Versuche zum Aufklappen.
+
+## Theorie zum Nachlesen
+
+Jeder Versuch hat einen Knopf „📖 Theorie“ (oben, bei der Vermutung und im Labor). Er öffnet eine Theorie-Seite zum Fachbereich
+(`core/model/Theory.kt`, 19 Karten): Grundidee mit Blubb, Punkte mit Bildern, Alltagsbeispiel, Fachwörter und „Für Profis (ab Klasse 7)“ mit Formeln.
+Die Seiten erklären die Idee, verraten aber keine Versuchslösung (Alltagsbeispiele sind bewusst andere als in den Versuchen).
 
 ## Sicherheit
 
@@ -89,8 +101,10 @@ Eingeschaltet wird erst, wenn es einen Bezahlweg gibt.
 | ![](screenshots/50_hasen_und_luchse.png) | ![](screenshots/51_stoffe_trennen.png) | ![](screenshots/52_chromatografie.png) | ![](screenshots/53_malkasten.png) |
 | Mikroskop | Augentierchen | Kresse im Dunkeln | Nahrungskette |
 | ![](screenshots/54_mikroskop.png) | ![](screenshots/55_augentierchen.png) | ![](screenshots/56_kresse_im_dunkeln.png) | ![](screenshots/57_nahrungskette.png) |
-| Ohne Mäuse | Herz und Puls | Erholungspuls | |
-| ![](screenshots/58_ohne_maeuse.png) | ![](screenshots/59_herz_und_puls.png) | ![](screenshots/60_erholungspuls.png) | |
+| Ohne Mäuse | Herz und Puls | Erholungspuls | Theorie |
+| ![](screenshots/58_ohne_maeuse.png) | ![](screenshots/59_herz_und_puls.png) | ![](screenshots/60_erholungspuls.png) | ![](screenshots/61_theorie.png) |
+| Theorie für Profis | Lernen nach Fach | Biologie, Klasse 9 | |
+| ![](screenshots/62_theorie_profi.png) | ![](screenshots/63_lernen_nach_fach.png) | ![](screenshots/64_fach_biologie.png) | |
 
 ## Android und Web
 
