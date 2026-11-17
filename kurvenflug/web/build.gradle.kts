@@ -75,7 +75,7 @@ val webapp by tasks.registering(Sync::class) {
     dependsOn("wasmJsBrowserDistribution", ":core:model:vorlesenTexte")
     from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
     // Feste Vorlese-Texte für die KI-Stimme Nova (das Stimmen-Werk holt sie hier ab)
-    from(project(":core:model").layout.buildDirectory.dir("vorlesen")) { into("vorlesen") }
+    from(project(":core:model").layout.buildDirectory.dir("vorlesen-root"))
     into(rootProject.file("webapp"))
     exclude("**/*.map")
     filesMatching("index.html") { filter { it.replace("{{VERSION}}", appVersion) } }

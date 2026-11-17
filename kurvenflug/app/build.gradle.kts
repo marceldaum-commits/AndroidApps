@@ -26,14 +26,17 @@ android {
         applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 46
-        versionName = "2.4.2"
+        versionCode = 47
+        versionName = "2.5.0"
     }
 
     // Zwei Varianten aus demselben Code:
     // - github: APK aus GitHub-Releases mit eigenem Update-Knopf (Internet + Installations-Berechtigung)
     // - play:   AAB für Google Play – kein eigener Updater, keine Installations-Berechtigung, kein Internet;
     //           Updates über die Play In-App Updates API
+    // Liste der festen Vorlese-Texte (für „Alle Nova-Texte offline laden“) – dieselbe Datei wie in der WebApp
+    sourceSets["main"].assets.srcDir(project(":core:model").layout.buildDirectory.dir("vorlesen-root"))
+
     flavorDimensions += "store"
     productFlavors {
         create("github") {
@@ -126,3 +129,5 @@ dependencies {
 tasks.withType<Test>().configureEach {
     if (name.contains("Release")) enabled = false
 }
+
+tasks.named("preBuild") { dependsOn(":core:model:vorlesenTexte") }

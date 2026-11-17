@@ -147,7 +147,37 @@ private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit, speed: Int, onSp
                     valueRange = 0f..steps.lastIndex.toFloat(), steps = steps.size - 2, modifier = Modifier.weight(1f))
             }
             if (reader != null) OutlinedButton(onClick = { reader.say(de.kurvenflug.app.ui.fx.Reader.PROBE) }) { Text("▶ Probe hören") }
+            if (reader != null) OfflineBox(reader)
             Text("🔒 $NOVA_PRIVACY", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+        }
+    }
+}
+
+/** „Alle Nova-Texte offline laden“: Größe live vom Server, Fortschritt „x von n“, Abbrechen, Löschen */
+@Composable
+private fun OfflineBox(reader: de.kurvenflug.app.ui.fx.Reader) {
+    LaunchedEffect(Unit) { reader.refreshOffline() }
+    val o = reader.offline
+    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Q.Cyan.copy(alpha = 0.08f)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text("📦 Offline-Stimme", style = MaterialTheme.typography.labelLarge)
+        when {
+            o.loading -> {
+                Text(if (o.todo > 0) "Lade … ${o.done} von ${o.todo}" else "Lade …", style = MaterialTheme.typography.bodySmall)
+                LinearProgressIndicator(progress = { if (o.todo > 0) o.done / o.todo.toFloat() else 0f }, modifier = Modifier.fillMaxWidth())
+                TextButton(onClick = { reader.cancelOffline() }, contentPadding = PaddingValues(0.dp)) { Text("Abbrechen", color = Q.Muted) }
+            }
+            o.complete -> Text("✓ Alle ${o.total} Texte sind gespeichert – Volt spricht sie auch ohne Internet.", style = MaterialTheme.typography.bodySmall, color = Q.Green)
+            else -> {
+                Text("Volt kann die festen Texte auch ohne Internet vorlesen. Am besten im WLAN laden." +
+                    if (o.have > 0) " Schon gespeichert: ${o.have} von ${o.total}." else "", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                Button(onClick = { reader.loadOffline() }) {
+                    Text("Alle Nova-Texte offline laden" + (o.missingBytes?.let { " (ca. ${de.kurvenflug.app.ui.fx.mb(it)} MB)" } ?: ""))
+                }
+            }
+        }
+        o.problem?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = Q.Orange) }
+        if (o.have > 0 && !o.loading) TextButton(onClick = { reader.clearOffline() }, contentPadding = PaddingValues(0.dp)) {
+            Text("Offline-Stimme löschen (${de.kurvenflug.app.ui.fx.mb(o.haveBytes)} MB)", color = Q.Muted)
         }
     }
 }

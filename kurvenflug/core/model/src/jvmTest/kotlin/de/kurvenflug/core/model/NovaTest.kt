@@ -50,4 +50,12 @@ class NovaTest {
         assertEquals(listOf("0,75", "0,9", "1,0", "1,15", "1,3", "1,5"), Nova.SPEEDS.map(Nova::speedLabel))
         assertEquals(100, Nova.nearestSpeed(104)); assertEquals(150, Nova.nearestSpeed(400))
     }
+
+    @Test fun offlineList() {
+        assertEquals(188464128L, Nova.standBytes("""{"stimme": "nova", "texte": 1163, "bytes": 188464128, "zu_lang": 0}"""))
+        val texts = VorlesenListe.texts(listOf(File("../../shared/src/commonMain/kotlin")))
+        val back = Nova.listTexts(VorlesenListe.json(texts))
+        assertEquals(texts, back)   // auch Anführungszeichen, Umlaute, Sonderfälle
+        assertEquals(listOf("Er sagt \"Hallo\" – à"), Nova.listTexts(VorlesenListe.json(listOf("Er sagt \"Hallo\" – à"))))
+    }
 }

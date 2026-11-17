@@ -1,5 +1,21 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.5.0 – „Alle Nova-Texte offline laden“ (Vorgabe Marcel) · Web = APK = Play
+- Einstellungen → Vorlesen → Kasten „📦 Offline-Stimme“: Knopf **„Alle Nova-Texte offline laden (ca. X MB)“**, Hinweis
+  „Am besten im WLAN laden“, während des Ladens „Lade … x von n“ mit Balken und **Abbrechen**, danach bzw. sobald etwas
+  gespeichert ist **„Offline-Stimme löschen (Y MB)“**; komplett: „✓ Alle 1 163 Texte sind gespeichert“.
+  Bildschirmfoto `screenshots/99_vorlesen.png`.
+- **X** live aus `stand-<host>.json` → "bytes", minus was schon gespeichert ist (Web: Host der Seite, auf localhost der Live-Host;
+  Android: kurvenflug.mathenachhilfe-online.com). Wird bei jedem Öffnen der Einstellungen neu gelesen.
+- **Liste:** eigene `vorlesen/texte.json` (Web: von der Seite; Android: dieselbe Datei als Asset in der APK), Dateinamen über
+  `Nova.hash`. Nur fehlende Dateien, **4 parallel**, 404 still übersprungen, Laufzeit-Texte (/jetzt) nicht dabei.
+  Nach Abbruch geht es beim nächsten Tippen mit dem Rest weiter.
+- **Speicher:** Android `files/nova` (App-Speicher, nicht Cache, keine Obergrenze; schon zwischengespeicherte Ansagen werden
+  übernommen statt neu geladen), Web Cache Storage „kf-nova“. Abspielen schaut zuerst dort nach.
+- **Browser-Test (gegen den echten Server):** Größe 188 464 128 Bytes gelesen; nach 4 s abgebrochen → 47 gespeichert (6 MB);
+  zweiter Lauf startete mit „0/1116“ (nur Fehlende); Löschen → 0. Android gebaut, nicht auf Gerät getestet.
+- versionCode 47, keine neue Dateiendung.
+
 ## 2.4.2 – Auftrag „Play-Store-fertig“ (Routine 17.11. 15:00) geprüft
 Hinweis: Der Auftrag kam nach deiner Nachricht „Play erst später, keine Zeit in Play-Material“ – ich habe deshalb nur
 geprüft und Lücken geschlossen, nichts neu aufgebaut. Stand:

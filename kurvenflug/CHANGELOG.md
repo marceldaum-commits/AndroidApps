@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.0 – 📦 Volt spricht auch ohne Internet
+- Neu unter Einstellungen → Vorlesen: **„Alle Nova-Texte offline laden“**. Danach liest Volt alle festen Texte – Aufgaben,
+  Erklärungen, Rechen-Stern – auch ohne Internet vor. Die Größe steht auf dem Knopf, am besten im WLAN laden.
+  Man sieht den Fortschritt („x von n“), kann abbrechen und später weitermachen. Mit „Offline-Stimme löschen“ ist der
+  Speicher jederzeit wieder frei.
+
 ## 2.4.2 – Kleinigkeiten
 - Die Liste der Open-Source-Lizenzen in den Einstellungen ist auf dem neuesten Stand (inkl. Hinweis zur KI-Stimme Nova).
 

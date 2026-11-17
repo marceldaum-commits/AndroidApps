@@ -64,7 +64,9 @@ class AndroidReader(context: Context) : Reader {
 
     /** Fertige Ansage aus dem Zwischenspeicher, vom Server oder – für Laufzeit-Texte – frisch vertont; null = Notlösung */
     private fun fetch(spoken: String): File? {
-        val f = File(cacheDir(), Nova.hash(spoken) + ".mp3")
+        val h = Nova.hash(spoken)
+        File(offlineDir(), "$h.mp3").takeIf { it.isFile && it.length() > 0 }?.let { return it }
+        val f = File(cacheDir(), "$h.mp3")
         if (f.isFile && f.length() > 0) { f.setLastModified(System.currentTimeMillis()); return f }
         if (download(Nova.url(spoken), f)) return f
         if (!Nova.maySend(spoken, private)) return null
@@ -77,14 +79,14 @@ class AndroidReader(context: Context) : Reader {
         return if (download(url, f)) f else null
     }
 
-    private fun download(url: String, to: File): Boolean {
+    private fun download(url: String, to: File, trimCache: Boolean = true): Boolean {
         val c = URL(url).openConnection() as HttpURLConnection
         c.connectTimeout = 5_000; c.readTimeout = 15_000
         if (c.responseCode != 200) return false
         val part = File(to.path + ".teil")
         c.inputStream.use { i -> part.outputStream().use { i.copyTo(it) } }
         if (part.length() == 0L || !part.renameTo(to)) { part.delete(); return false }
-        trim(); return true
+        if (trimCache) trim(); return true
     }
 
     private fun trim() {
@@ -133,6 +135,68 @@ class AndroidReader(context: Context) : Reader {
     }
     private fun device(spoken: String) { if (ttsReady) speak(spoken) else { pending = spoken; tts } }
     private fun speak(spoken: String) { runCatching { tts.speak(spoken, TextToSpeech.QUEUE_FLUSH, Bundle(), "volt") } }
+
+    // ------------------------------------------------------------------ „Alle Nova-Texte offline laden“
+    /** Dauerhaft im App-Speicher (nicht im Cache, den das System leeren darf); keine Obergrenze beim manuellen Laden */
+    private fun offlineDir() = File(ctx.filesDir, "nova").also { it.mkdirs() }
+    override var offline by mutableStateOf(OfflineState()); private set
+    private val loader = Executors.newFixedThreadPool(4) { Thread(it, "nova-offline").apply { isDaemon = true } }
+    @Volatile private var cancelled = false
+    private val names: List<String> by lazy {
+        runCatching { ctx.assets.open("vorlesen/texte.json").use { it.readBytes().decodeToString() } }.map { Nova.listTexts(it).map(Nova::hash).distinct() }.getOrDefault(emptyList())
+    }
+
+    private fun scan(): Pair<Int, Long> {
+        val have = offlineDir().listFiles().orEmpty().filter { it.extension == "mp3" }.associateBy { it.nameWithoutExtension }
+        val mine = names.mapNotNull { have[it] }
+        return mine.size to mine.sumOf { it.length() }
+    }
+
+    override fun refreshOffline() {
+        worker.execute {
+            val (n, bytes) = scan()
+            val server = runCatching {
+                val c = URL(Nova.standUrl(Nova.APP_HOST)).openConnection() as HttpURLConnection
+                c.connectTimeout = 5_000; c.readTimeout = 10_000
+                if (c.responseCode == 200) Nova.standBytes(c.inputStream.use { it.readBytes().decodeToString() }) else null
+            }.getOrNull()
+            main.post { offline = offline.copy(total = names.size, have = n, haveBytes = bytes, serverBytes = server ?: offline.serverBytes) }
+        }
+    }
+
+    override fun loadOffline() {
+        if (offline.loading) return
+        cancelled = false
+        val dir = offlineDir()
+        val todo = names.filter { !File(dir, "$it.mp3").isFile }
+        offline = offline.copy(loading = true, done = 0, todo = todo.size, problem = null)
+        if (todo.isEmpty()) { offline = offline.copy(loading = false); refreshOffline(); return }
+        val done = AtomicInteger(0); val failed = AtomicInteger(0); val left = AtomicInteger(todo.size)
+        todo.forEach { h ->
+            loader.execute {
+                if (!cancelled) {
+                    // 404 (noch nicht vertont) still überspringen; Netzfehler zählen
+                    val target = File(dir, "$h.mp3"); val cached = File(cacheDir(), "$h.mp3")
+                    val ok = runCatching { if (!(cached.isFile && cached.renameTo(target))) download("${Nova.BASE}${h.take(2)}/$h.mp3", target, trimCache = false) }
+                    if (ok.isFailure) failed.incrementAndGet()
+                    val d = done.incrementAndGet()
+                    if (d % 10 == 0 || d == todo.size) main.post { if (offline.loading) offline = offline.copy(done = d) }
+                }
+                if (left.decrementAndGet() == 0) main.post {
+                    offline = offline.copy(loading = false, problem = when {
+                        cancelled -> null
+                        failed.get() > 0 -> "${failed.get()} Ansagen ließen sich nicht laden – beim nächsten Tippen geht es dort weiter."
+                        else -> null })
+                    refreshOffline()
+                }
+            }
+        }
+    }
+    override fun cancelOffline() { cancelled = true }
+    override fun clearOffline() {
+        cancelled = true
+        worker.execute { offlineDir().deleteRecursively(); main.post { offline = offline.copy(have = 0, haveBytes = 0, loading = false) }; refreshOffline() }
+    }
 
     companion object { const val CACHE_MB = 40 }
 }
