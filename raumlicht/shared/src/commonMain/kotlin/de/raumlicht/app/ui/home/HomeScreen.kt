@@ -1,5 +1,7 @@
 package de.raumlicht.app.ui.home
 
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import de.raumlicht.app.ui.fx.horizontalFade
 import de.raumlicht.app.ui.fx.verticalFade
 import androidx.compose.runtime.withFrameNanos
@@ -80,7 +82,7 @@ fun HomeScreen(
                         Text("RAUMLICHT", fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 4.sp, color = Q.Text)
                         Text("★ $total / $max", color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                     }
-                    IconButton(onClick = onSettings) { Text("⚙", fontSize = 22.sp, color = Q.Text) }
+                    IconButton(onClick = onSettings) { Text("⚙", Modifier.clearAndSetSemantics { contentDescription = "Einstellungen" }, fontSize = 22.sp, color = Q.Text) }
                 }
                 if (next != null) NeonButton({ onLevel(next.id) }, Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp).pulse(true, 0.02f), color = Q.Green) {
                     Text(if (total == 0) "▶ Tour starten" else "▶ Weiter: ${next.id} ${next.title}", fontWeight = FontWeight.Black, maxLines = 1)

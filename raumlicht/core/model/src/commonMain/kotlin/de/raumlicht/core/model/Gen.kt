@@ -87,7 +87,7 @@ object Gen {
             val d = r.dir(2); val t = r.nextInt(1, 4); val a = s - d * t
             if (s.isZero || (n dot d) == 0.0 || d.ints.count { it != 0 } < 2 || !inRoom(a)) null else Families.pierce(id, ch, "Schräge Scheibe", "Setz die Gerade in die Ebenengleichung ein: Wo ist der Durchstoßpunkt?", a, d, n, rhs,
                 tip = "Jede Koordinate der Geraden in E einsetzen, nach t auflösen.",
-                way = listOf("einsetzen → ${Geo.num((n dot a).toInt())} + ${Geo.num((n dot d).toInt())} · t = $rhs", "t = $t", "S = A + $t · d⃗ = ${s.fmt()}"))
+                way = listOf("einsetzen → ${Geo.plus(Geo.num(n dot a), n dot d)} · t = ${Geo.num(rhs)}", "t = $t", "S = A + $t · d⃗ = ${s.fmt()}"))
         }
         Kind.ANGLE, Kind.DIST_PLANE, Kind.FOOT, Kind.RADIUS -> buildMore(kind, r, id, ch)
         Kind.MOTION_POS, Kind.MOTION_SPEED, Kind.MOTION_TIME, Kind.ROTATION -> buildMotion(kind, r, id, ch)
@@ -113,7 +113,7 @@ object Gen {
             val (u0, v0, deg) = anglePairs.random(r); val k = r.nextInt(3); val u = u0.perm(k) * r.nextInt(2, 5); val v = v0.perm(k) * r.nextInt(2, 5); val o = r.point(0, 1)
             if (!inRoom(o + u) || !inRoom(o + v)) null else Families.scalar(id, ch, "Winkel", "Wie groß ist der Winkel zwischen a⃗ und b⃗?", "α", 0..12, deg / 15, 0,
                 tip = "cos α = (a⃗ · b⃗) : (|a⃗| · |b⃗|). Ist das Skalarprodukt negativ, ist der Winkel größer als 90°.",
-                way = listOf("a⃗ · b⃗ = ${Geo.num(u dot v)}", "|a⃗| · |b⃗| = ${Geo.num(u.length * v.length)}", "α = $deg°"), color = "yellow", step = 15, suffix = "°",
+                way = listOf("a⃗ · b⃗ = ${Geo.num(u dot v)}", "|a⃗| · |b⃗| ${Geo.eq(u.length * v.length)}", "α = $deg°"), color = "yellow", step = 15, suffix = "°",
                 formula = { a -> listOf(listOf(Txt("a⃗ = "), Families.col(u), Txt("   b⃗ = "), Families.col(v)), listOf(Txt("α = "), Part.Num("${a * 15}°", "a"))) },
                 objects = { _, _ -> listOf(Stage.point("O", o, "white"), Stage.vector("a", o, o + u, "cyan", "a⃗"), Stage.vector("b", o, o + v, "pink", "b⃗"), Stage.arc("bogen", o, u, v, 1.5)) },
                 check = { a -> Families.compare(a * 15, deg, "Der Winkel", "Genau $deg°!") })
@@ -128,7 +128,7 @@ object Gen {
                 extras = { listOf(Stage.plane("E", n, rhs.toDouble(), "violet", "E"), Stage.point("P", q, "cyan", "P${q.fmt()}")) })
             else Families.scalar(id, ch, "Abstand Punkt–Ebene", "Wie weit ist P von der Scheibe E entfernt?", "d", 0..8, dist, if (dist == 1) 2 else 1,
                 tip = "d = |n⃗ · p⃗ − c| : |n⃗|.",
-                way = listOf("n⃗ · p⃗ = ${Geo.num(n dot q)}, |n⃗| = ${Geo.num(n.length)}", "d = |${Geo.num(n dot q)} − ${Geo.num(rhs)}| : ${Geo.num(n.length)} = $dist"),
+                way = listOf("n⃗ · p⃗ = ${Geo.num(n dot q)}, |n⃗| = ${Geo.num(n.length)}", "d = |${Geo.minus(Geo.num(n dot q), rhs.toDouble())}| : ${Geo.num(n.length)} = $dist"),
                 formula = { a -> listOf(listOf(Txt("P${q.fmt()}   E: $text")), listOf(Txt("d(P, E) = "), Part.Num(Geo.num(a), "a"))) },
                 objects = { _, ph -> listOf(Stage.plane("E", n, rhs.toDouble(), "violet", "E"), Stage.point("P", q, "cyan", "P${q.fmt()}")) +
                     if (ph == Phase.DONE) listOf(Stage.line("lot", q, f - q, 0.0, 1.0, "pink")) else listOf(Stage.stub("richtung", q, f - q, "pink", length = 0.9)) },
@@ -180,6 +180,7 @@ object Gen {
         Kind.MOTION_TIME -> {
             val v = r.dir(2); val t = r.nextInt(2, 6); val a = r.point(); val q = a + v * t; val h = q.ints[2]
             if (!inRoom(q) || v.ints[2] == 0 || v.ints.count { it != 0 } < 2 || h == 0) null else Families.param(id, ch, "Flughöhe", "Nach wie vielen Sekunden erreiche ich die Höhe $h?", a, v, t, 0..6, hidden = true,
+                given = listOf(listOf(Part.Txt("Höhe: x₃ = $h"))), success = "Nach $t Sekunden bin ich in Höhe $h – bei ${q.fmt()}.",
                 tip = "Höhe ist die x₃-Koordinate: ${Geo.num(a.ints[2])} + t · ${if (v.ints[2] < 0) "(${Geo.num(v.ints[2])})" else Geo.num(v.ints[2])} = $h.",
                 way = listOf("x₃(t) = $h", "t = $t → Ort ${q.fmt()}"), extras = { listOf(Stage.plane("E", V3(0, 0, 1), h.toDouble(), "violet", "x₃ = $h")) })
         }
@@ -223,9 +224,9 @@ object Badges {
         fun chapterDone(n: Int) = Levels.chapters.first { it.number == n }.levels.all { (tour[it.id] ?: 0) > 0 }
         val abi = Levels.all.filter { it.abi }
         return listOf(
-            Badge("start", "🎬", "Erste Aufgabe", "Ein Level geschafft", tour.isNotEmpty()),
-            Badge("perfekt5", "🎯", "Rechnen statt raten", "5 Level beim ersten Versuch", tour.values.count { it == 3 } >= 5),
-            Badge("perfekt20", "💎", "Präzisionsarbeit", "20 Level mit drei Sternen", tour.values.count { it == 3 } >= 20),
+            Badge("start", "🎬", "Erste Aufgabe", "Eine Aufgabe geschafft", tour.isNotEmpty()),
+            Badge("perfekt5", "🎯", "Rechnen statt raten", "5 Aufgaben beim ersten Versuch", tour.values.count { it == 3 } >= 5),
+            Badge("perfekt20", "💎", "Präzisionsarbeit", "20 Aufgaben mit drei Sternen", tour.values.count { it == 3 } >= 20),
             Badge("geraden", "🔦", "Laser-Profi", "Kapitel 3 und 4 gespielt", chapterDone(3) && chapterDone(4)),
             Badge("ebenen", "🔷", "Glasklar", "Kapitel 5 gespielt", chapterDone(5)),
             Badge("kugel", "🔮", "Discokönig:in", "Kapitel 9 gespielt", chapterDone(9)),

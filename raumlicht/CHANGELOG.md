@@ -2,6 +2,18 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.13.0 – Große Korrektheitsprüfung (17.11.2026)
+Alle 136 Aufgaben, alle 7 Prüfungsaufgaben und über 1200 Übungsaufgaben wurden unabhängig nachgerechnet. **Keine einzige Lösung war falsch** – aber rundherum gab es einiges zu verbessern:
+- **Klarere Rückmeldungen:** „Dein Punkt liegt weder auf g noch auf h“ statt eines Satzes, den man falsch verstehen konnte. Beim Zielen zählt jetzt der Abstand zum Strahl, nicht zur ganzen Geraden.
+- **Nichts fehlt mehr:** In Aufgabe 20-4 stand die Ebenengleichung nicht dabei, in 8-5 der Punkt P. In den Prüfungsaufgaben bleibt der Sachzusammenhang (zum Beispiel die Funktion des Lichtbogens) jetzt bei jeder Teilaufgabe sichtbar.
+- **Saubere Schreibweise:** negative Zahlen in Klammern („2 + (−1) · 3“), „≈“ bei gerundeten Werten, Einheiten in den Prüfungsaufgaben, Einzahl und Mehrzahl („1 Einheit“).
+- **Kurve abfahren mit eigenen Funktionen** rechnet genauer: Nullstellen wie bei x³ oder (x − 1)² werden gefunden, Polstellen (1/x²) nicht mehr als Hochpunkt gemeldet, „Wendestelle“ steht nur noch dort, wo wirklich eine ist. Eingaben wie „πx“, „√x“ und „sin 2x“ werden richtig verstanden.
+- **Lux liest Formeln verständlich vor:** „Betrag von“, „geteilt durch“, „P Strich“, „größer als“, „zwei Drittel“ – vorher gingen diese Zeichen beim Vorlesen verloren.
+- **Für Vorlese-Hilfen** (TalkBack) haben der Zurück-Pfeil, das Zahnrad und die Plus/Minus-Knöpfe jetzt Namen.
+- **Lizenzen:** In den Einstellungen steht jetzt, welche freien Bausteine in Raumlicht stecken, mit den Lizenztexten.
+- **WebApp:** Vorgelesen wird nur noch mit Stimmen, die auf dem Gerät eingebaut sind – so geht dabei nichts ins Internet.
+- Viele kleine Textkorrekturen (einheitliche Namen, Rechtschreibung, Fachbegriffe wie „Tempo“ und „Irrtumswahrscheinlichkeit“).
+
 ## 2.12.0 – Abi-Pass eingebaut, aber noch nicht eingeschaltet (16.11.2026)
 - **Für dich ändert sich nichts:** Alles bleibt frei, nirgends steht etwas von einem Kauf. Der Abi-Pass wird erst sichtbar, wenn es ihn auf der Website wirklich gibt.
 - Im Hintergrund fertig: die Abi-Pass-Seite mit Lux (was dazugehört, was immer frei bleibt), der Knopf zur Kasse auf der Website und die **Freischaltung per Code** –
@@ -15,12 +27,12 @@ Jede Version steht hier mit ihrem Datum.
 - Auf Android, iPhone und am PC sieht alles aus wie vorher.
 - Die Mitschrift der Diagnose-Seite zählt gleiche Meldungen jetzt zusammen, statt die Liste zu füllen, und hält fest, ob die Verläufe geklappt haben.
 
-## 2.11.0 – Acht neue Aufgaben-Arten zum Üben (16.11.2026)
+## 2.11.0 – Acht neue Aufgabenarten zum Üben (16.11.2026)
 - **Neu im endlosen Üben** (Themen „Punkte & Vektoren“ und „Geraden“), jedes Mal mit anderen Zahlen:
   - **Einstieg:** Punkte mit Bedingungen finden (zum Beispiel einen Punkt, der in zwei Koordinatenebenen zugleich liegt – hier gibt es viele richtige Antworten), Spiegeln an einer Koordinatenebene.
   - **Abi:** Spiegeln an einer Koordinatenachse, Parallelogramm prüfen und den Schnittpunkt der Diagonalen finden, „Liegen drei Punkte auf einer Geraden?“, dieselbe Gerade in anderer Schreibweise.
   - **Profi:** zwei Spiegelungen hintereinander, Raute mit Parameter.
-- **„Alle“ mischt jetzt wirklich alle Aufgaben-Arten** aus allen Stufen.
+- **„Alle“ mischt jetzt wirklich alle Aufgabenarten** aus allen Stufen.
 - Die Schwierigkeit steigt weiterhin nachweislich von Stufe zu Stufe; alle neuen Lösungen sind unabhängig nachgerechnet.
 - Im Hintergrund vorbereitet, aber ausgeschaltet: der spätere „Abi-Pass“. Für dich ändert sich nichts – alles bleibt frei.
 
@@ -93,7 +105,7 @@ Jede Version steht hier mit ihrem Datum.
 ## 2.6.0 – Bereit für den Play Store (16.11.2026)
 - **Natürliche Stimme ohne fremden Sprach-Baustein:** Die Stimme „Thorsten“ klingt wie bisher, aber die App bringt die nötige Lautschrift jetzt selbst als Daten mit.
   Der bisher enthaltene Baustein espeak-ng (mit strenger GPL-Lizenz) ist damit entfernt. Kennt Lux ein Wort einmal nicht, liest diesen einen Satz die Handy-Stimme.
-- **Zwei Fassungen der App:** Die APK von GitHub bleibt wie sie ist (mit eigenem Update-Knopf). Neu ist eine Fassung für den Play Store:
+- **Zwei Fassungen der App:** Die APK von GitHub bleibt, wie sie ist (mit eigenem Update-Knopf). Neu ist eine Fassung für den Play Store:
   ohne Berechtigung „Apps installieren“, Updates kommen dort über den Store – im Hintergrund, eingespielt beim nächsten App-Start.
 - **Store-Unterlagen:** Texte, Grafiken, Bildschirmfotos und eine Klick-Liste liegen in `STORE-RELEASE.md` und `store/`. Veröffentlicht ist noch nichts.
 - Für alle, die die natürliche Stimme schon geladen haben: Sie bleibt, es muss nichts neu geladen werden.

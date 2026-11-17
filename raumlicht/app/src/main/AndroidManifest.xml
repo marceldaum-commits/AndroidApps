@@ -30,8 +30,8 @@
             </intent-filter>
         </activity>
 
-        <!-- Startbildschirm-Widget „Tagesgig“ -->
-        <receiver android:name=".widget.DailyWidget" android:exported="false" android:label="Raumlicht Tagesgig">
+        <!-- Startbildschirm-Widget „Tagesaufgabe“ -->
+        <receiver android:name=".widget.DailyWidget" android:exported="false" android:label="Raumlicht Tagesaufgabe">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

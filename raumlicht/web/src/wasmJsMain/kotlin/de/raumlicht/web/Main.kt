@@ -67,6 +67,8 @@ private fun WebApp() {
     }
     if (!ready) return
     LaunchedEffect(Unit) { note("Oberfläche gestartet") }
+    // Direkt-Link auf einen Bildschirm („?ziel=binomial“) – für Lesezeichen und für die automatische Prüfung jedes Bildschirms; unbekannte Ziele führen zur Startseite
+    LaunchedEffect(Unit) { takeParam("ziel")?.takeIf { it.isNotBlank() && it.length < 60 }?.let { nav.restart(it) } }
     // Freischalt-Link aus der E-Mail: Code prüfen, merken und die Abi-Pass-Seite zeigen (bei einem falschen Code steht dort die Eingabe bereit)
     LaunchedEffect(Unit) { takeProParam()?.let { raw ->
         val code = de.raumlicht.core.model.License.extract("RL$raw") ?: de.raumlicht.core.model.License.extract(raw)
@@ -102,8 +104,9 @@ private fun WebApp() {
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
                         voice = voice, onVoice = { prefs.setVoice(it); if (!it) stopSpeaking() }, voiceAvailable = canSpeak(),
+                        onLicenses = { openLink("lizenzen.txt") },
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe, keine Daten an einen Server. " +
-                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest die Sprachausgabe deines Browsers vor.")
+                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest eine Stimme vor, die auf deinem Gerät eingebaut ist.")
                 })
         } }
     }

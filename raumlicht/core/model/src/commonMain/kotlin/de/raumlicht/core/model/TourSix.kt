@@ -78,7 +78,7 @@ internal object TourSix {
         listOf(
             angle("19-1", 19, "Zwei Glaswände", "Zwei Glaswände treffen sich in einer Kante. Unter welchem Winkel?", 45,
                 listOf(listOf(Txt("E₁: x₁ + x₂ = 8")), listOf(Txt("E₂: x₁ = 4")), listOf(Txt("cos α = |n⃗₁ · n⃗₂| : (|n⃗₁| · |n⃗₂|)"))),
-                tip = "Der Winkel zwischen zwei Ebenen ist der Winkel zwischen ihren Normalenvektoren (1|1|0) und (1|0|0).",
+                tip = "Der Winkel zwischen zwei Ebenen ist der spitze Winkel zwischen ihren Normalenvektoren (1|1|0) und (1|0|0) – dafür sorgt der Betrag im Zähler.",
                 way = listOf("n⃗₁ = (1|1|0), n⃗₂ = (1|0|0)", "n⃗₁ · n⃗₂ = 1, |n⃗₁| = √2, |n⃗₂| = 1", "cos α = 1 : √2 → α = 45°")) { ph ->
                 listOf(Stage.plane("E1", na, 8.0, "violet", "E₁"), Stage.plane("E2", nb, 4.0, "cyan", "E₂")) +
                     if (ph == Phase.DONE) listOf(Stage.arc("bogen", p(4, 4, 3), V3(-1.0, 1.0, 0.0), V3(0.0, 1.0, 0.0), 1.6)) else emptyList()
@@ -142,8 +142,8 @@ internal object TourSix {
                 r2, hidden = true, name = "P′",
                 given = listOf(listOf(Txt("P(4|2|1)")), lineText("g", a2, d2)),
                 mistakes = listOf(f2 to "Das ist der Lotfußpunkt F. Das Spiegelbild liegt genauso weit dahinter: P′ = 2 · F − P."),
-                tip = "Erst den Lotfußpunkt F auf g bestimmen: (P − A − t · d⃗) · d⃗ = 0. Dann P′ = 2 · F − P.",
-                way = listOf("(P − A) · d⃗ = (4|1|1) · (1|1|1) = 6, d⃗ · d⃗ = 3 → t = 2", "F = (0|1|0) + 2 · (1|1|1) = (2|3|2)", "P′ = 2 · F − P = (4|6|4) − (4|2|1) = (0|4|3)"),
+                tip = "Erst den Lotfußpunkt F auf g bestimmen: (P − A − t · d⃗) · d⃗ = 0 mit dem Stützpunkt A(0|1|0). Dann P′ = 2 · F − P.",
+                way = listOf("Stützpunkt A(0|1|0): (P − A) · d⃗ = (4|1|1) · (1|1|1) = 6, d⃗ · d⃗ = 3 → t = 2", "F = (0|1|0) + 2 · (1|1|1) = (2|3|2)", "P′ = 2 · F − P = (4|6|4) − (4|2|1) = (0|4|3)"),
                 extras = { ph -> listOf(Stage.fullLine("g", a2, d2, Bounds(), "cyan", "g"), Stage.point("P", q2, "cyan", "P(4|2|1)")) +
                     if (ph == Phase.DONE) listOf(Stage.point("F", f2, "pink", "F(2|3|2)"), Stage.line("weg", q2, r2 - q2, 0.0, 1.0, "yellow", dashed = true)) else emptyList() }),
             Families.scalar("20-3", 20, "Scheibe am Punkt spiegeln", "Die Scheibe E wird am Punkt Z gespiegelt. Die neue Scheibe E′ ist parallel – welche Zahl steht rechts?", "c′", 0..24, 14, 6,
@@ -153,14 +153,15 @@ internal object TourSix {
                 objects = { a, _ -> listOf(Stage.plane("E", n3, 6.0, "violet", "E"), Stage.point("Z", z3, "white", "Z(2|2|2)"), Stage.plane("E2", n3, a.toDouble(), "cyan", "E′")) },
                 check = { a -> Families.compare(a, 14, "c′", "c′ = 14 – Z liegt genau in der Mitte zwischen beiden Scheiben.",
                     mapOf(10 to "10 ist n⃗ · Z – das wäre die Scheibe durch Z selbst. Die gespiegelte liegt genauso weit dahinter: 2 · 10 − 6.")) }),
-            Families.param("20-4", 20, "Abstand nach Wunsch", "Lux fliegt auf g durch die Scheibe E hindurch. Bei welchem t ist sie dahinter genau 3 Einheiten von E entfernt?",
+            Families.param("20-4", 20, "Abstand nach Wunsch", "Ich fliege auf g durch die Scheibe E hindurch. Bei welchem t bin ich dahinter genau 3 Einheiten von E entfernt?",
                 a4, d4, 5, 0..6, hidden = true,
+                given = listOf(listOf(Txt("E: x₁ + 2x₂ + 2x₃ = 9"))), success = "t = 5 – bei (6|1|5) bin ich genau 3 Einheiten hinter der Scheibe.",
                 tip = "Abstand eines Punktes von E: |n⃗ · x⃗ − 9| : 3. Für g ist n⃗ · x⃗ = 3 + 3t. Also |3t − 6| : 3 = 3.",
                 way = listOf("n⃗ · (A + t · d⃗) = 3 + 3t mit n⃗ = (1|2|2)", "|3 + 3t − 9| : 3 = 3 → |t − 2| = 3", "t = 5 (t = −1 liegt vor dem Start) → Punkt (6|1|5)"),
                 extras = { listOf(Stage.plane("E", p(1, 2, 2), 9.0, "violet", "E")) }),
             Families.scalar("20-5", 20, "Kabel zwischen zwei Strahlen", "Zwischen den windschiefen Traversen g und h soll ein Kabel gespannt werden. Wie lang ist es mindestens?", "d", 0..9, 6, 1,
-                tip = "n⃗ = d⃗₁ × d⃗₂ = (1|2|2) steht auf beiden senkrecht. Abstand = |(B − A) · n⃗| : |n⃗|.",
-                way = listOf("d⃗₁ × d⃗₂ = (2|−1|0) × (0|1|−1) = (1|2|2), |n⃗| = 3", "(B − A) · n⃗ = (2|3|5) · (1|2|2) = 18", "d = 18 : 3 = 6"),
+                tip = "n⃗ = d⃗₁ × d⃗₂ = (1|2|2) steht auf beiden senkrecht. Abstand = |(B − A) · n⃗| : |n⃗| mit den Stützpunkten A von g und B von h.",
+                way = listOf("d⃗₁ × d⃗₂ = (2|−1|0) × (0|1|−1) = (1|2|2), |n⃗| = 3", "Stützpunkte A(2|4|1) und B(4|7|6): (B − A) · n⃗ = (2|3|5) · (1|2|2) = 18", "d = 18 : 3 = 6"),
                 formula = { a -> listOf(lineText("g", ga, gd, "s"), lineText("h", hb, hd), listOf(Txt("d(g, h) = "), Num(Geo.num(a), "a"))) },
                 objects = { _, ph -> listOf(Stage.fullLine("g", ga, gd, Bounds(), "cyan", "g"), Stage.fullLine("h", hb, hd, Bounds(), "yellow", "h")) +
                     if (ph == Phase.DONE) listOf(Stage.line("lot", fg, fh - fg, 0.0, 1.0, "pink"), Stage.point("Fg", fg, "pink"), Stage.point("Fh", fh, "pink")) else emptyList() },

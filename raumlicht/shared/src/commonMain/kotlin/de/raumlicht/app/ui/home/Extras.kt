@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.raumlicht.app.ui.fx.pressBounce
+import de.raumlicht.app.ui.fx.count
 import de.raumlicht.app.ui.level.stageColor
 import de.raumlicht.app.ui.lux.Lux
 import de.raumlicht.app.ui.lux.LuxMood
@@ -89,7 +90,7 @@ fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit, startL
                     Text(t.emoji, fontSize = 30.sp)
                     Column(Modifier.weight(1f).padding(start = 12.dp)) {
                         Text(t.title, style = MaterialTheme.typography.titleMedium)
-                        Text(if (t == JamTopic.MIX) "Themen bunt gemischt – wie in der Klausur" else "${Practice.count(t, level)} Aufgabenarten", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+                        Text(if (t == JamTopic.MIX) "Themen bunt gemischt – wie in der Klausur" else count(Practice.count(t, level), "Aufgabenart", "Aufgabenarten"), color = Q.Muted, style = MaterialTheme.typography.bodySmall)
                     }
                     Text("▶", color = c, fontSize = 22.sp, fontWeight = FontWeight.Black)
                 }

@@ -70,7 +70,7 @@ internal object TourFive {
             build("15-3", "Drei Tore", "Jetzt kommt die Öffnung a dazu: negativ heißt nach unten geöffnet. Triff alle drei Tore.", g,
                 listOf(Knob("a", "a", -2..2, 1, "yellow"), Knob("d", "d", 0..4, 0, "cyan"), Knob("e", "e", 0..5, 0, "pink")), listOf(2 to 4, 0 to 0, 3 to 3), listOf(-1, 2, 4),
                 { (a, d, e) -> "${Geo.num(a)} · (x − $d)² ${sgn(e)}" }, { (a, d, e) -> { x -> a * (x - d) * (x - d) + e } },
-                tip = "Das höchste Tor ist der Scheitel: d = 2, e = 4. Dann ein anderes Tor einsetzen, um a zu bekommen.", way = listOf("Scheitel S(2|4) → d = 2, e = 4", "f(0) = a · 4 + 4 = 0 → a = −1", "f(x) = −(x − 2)² + 4")),
+                tip = "Versuch es mit dem höchsten Tor als Scheitel: d = 2, e = 4. Dann ein anderes Tor einsetzen, um a zu bekommen – und am dritten Tor die Probe machen.", way = listOf("Scheitel S(2|4) → d = 2, e = 4", "f(0) = a · 4 + 4 = 0 → a = −1", "f(x) = −(x − 2)² + 4, Probe am dritten Tor: f(3) = −1 + 4 = 3 ✓")),
             build("15-4", "Abi-Check: Steckbrief", "Gesucht ist die Parabel f(x) = ax² + bx + c durch drei Punkte. Stell das Gleichungssystem auf – und bau sie.", g,
                 listOf(Knob("a", "a", -2..2, 0, "yellow"), Knob("b", "b", -3..3, 1, "cyan"), Knob("c", "c", -2..3, 0, "pink")), listOf(0 to 1, 1 to 2, 2 to 5), listOf(1, 0, 1),
                 { (a, b, c) -> "${Geo.num(a)}x² ${sgn(b)}x ${sgn(c)}" }, { (a, b, c) -> { x -> a * x * x + b * x + c } }, abi = true,
@@ -139,7 +139,7 @@ internal object TourFive {
                 Act("Von den 40 VIP-Gästen tragen 12 ein Band: 12 von 40.", beams = listOf(Beam(luxAt, fieldAt(0), "pink", false))))),
             mistakes = mapOf(40 to "40 % ist P(VIP) – der Anteil der VIP-Gäste an allen. Gesucht ist der Anteil mit Band unter den VIP-Gästen.", 10 to "12 : 100 wäre P(VIP und Band). Bei der Bedingung „VIP“ teilst du durch 40.")),
         Families.scalar("16-5", 16, "Abi-Check: Streuung", "100 Blitzlichter, jedes zündet mit 50 %. Wie groß ist die Standardabweichung σ der Anzahl der Zündungen?", "σ", 0..25, 5, 0,
-            tip = "σ = √(n · p · (1 − p)).", way = listOf("n · p · (1 − p) = 100 · 0,5 · 0,5 = 25", "σ = √25", "= 5 (also meist zwischen 40 und 60 Zündungen)"), color = "pink", abi = true,
+            tip = "σ = √(n · p · (1 − p)).", way = listOf("n · p · (1 − p) = 100 · 0,5 · 0,5 = 25", "σ = √25", "= 5 (also meist zwischen 45 und 55 Zündungen: μ ± σ)"), color = "pink", abi = true,
             formula = { a -> listOf(listOf(Txt("n = 100, p = 0,5 (binomialverteilt), μ = 50")), listOf(Txt("σ = √(n · p · (1 − p)) = "), Num(Geo.num(a), "a"))) },
             finale = { Finale(acts = listOf(Act("Im Mittel zündet die Hälfte: μ = 100 · 0,5 = 50.", beams = (0 until 10 step 2).map { Beam(luxAt, V3(4.0, 1.2 + (it % 5) * 1.4, 1.5 + (it / 5) * 1.6), "yellow", false) }),
                 Act("Meist liegt die Anzahl nah dran: zwischen 45 und 55, also μ ± σ."))) },
@@ -171,8 +171,8 @@ internal object TourFive {
                 formula = { a -> listOf(listOf(Txt("f(x) = x²,  f′(1) = 2")), listOf(Txt("t(x) = 2x + b,   b = "), Num(Geo.num(a), "a"))) },
                 objects = { a, _ -> listOf(g3.curve("bahn", "cyan", sq), g3.axis(), Stage.point("stelle", g3.at(1.0, 1.0), "yellow", drop = false), g3.line("tangente", -0.5, -1.0 + a, 2.5, 5.0 + a, "yellow")) },
                 check = { a -> Families.compare(a, -1, "Der Achsenabschnitt", "t(x) = 2x − 1 berührt die Bahn genau in (1|1).", mapOf(1 to "Vorzeichen: 1 = 2 + b heißt b = 1 − 2.")) }),
-            Families.scalar("17-4", 17, "Größte Leinwand", "Unter der schrägen Dachkante y = 8 − 2x soll eine rechteckige Leinwand hängen. Bei welcher Breite x ist sie am größten?", "x", 0..4, 2, 1,
-                tip = "Fläche A(x) = x · (8 − 2x) = 8x − 2x². Ableiten und null setzen.", way = listOf("A(x) = 8x − 2x²", "A′(x) = 8 − 4x = 0 → x = 2", "A(2) = 8 – größer geht es nicht"), color = "yellow",
+            Families.scalar("17-4", 17, "Größte Leinwand", "Unter der schrägen Dachkante y = 8 − 2x soll eine rechteckige Leinwand hängen: links unten in der Ecke, die obere rechte Ecke an der Dachkante. Bei welcher Breite x ist sie am größten?", "x", 0..4, 2, 1,
+                tip = "Fläche A(x) = x · (8 − 2x) = 8x − 2x². Ableiten und null setzen.", way = listOf("A(x) = 8x − 2x²", "A′(x) = 8 − 4x = 0 → x = 2", "A″(x) = −4 < 0 → Maximum: A(2) = 8, größer geht es nicht"), color = "yellow",
                 formula = { a -> listOf(listOf(Txt("Dachkante: y = 8 − 2x")), listOf(Txt("x = "), Num(Geo.num(a), "a"), Txt("   A = x · (8 − 2x) = ${a * (8 - 2 * a)}"))) },
                 objects = { a, _ -> val q = listOf(g4.at(0.0, 0.0), g4.at(a.toDouble(), 0.0), g4.at(a.toDouble(), 8.0 - 2 * a), g4.at(0.0, 8.0 - 2 * a))
                     listOf(g4.line("dach", 0.0, 8.0, 4.0, 0.0, "cyan"), g4.axis(), Stage.edges("leinwand", q.indices.map { q[it] to q[(it + 1) % 4] }, "yellow", faces = listOf(q))) },
@@ -180,9 +180,9 @@ internal object TourFive {
             Families.scalar("17-5", 17, "Abi-Check: Wachstum", "Die Zahl der Lichter verdoppelt sich jede Stunde: N(t) = 100 · 2ᵗ. Nach wie vielen Stunden sind es 800?", "t", 0..4, 3, 0,
                 tip = "100 · 2ᵗ = 800 heißt 2ᵗ = 8.", way = listOf("2ᵗ = 800 : 100 = 8", "2³ = 8", "t = 3 Stunden"), color = "yellow", abi = true,
                 lux = { a, _ -> g5.at(a.toDouble(), grow(a.toDouble())) + V3(0.0, 0.0, 0.45) },
-                formula = { a -> listOf(listOf(Txt("N(t) = 100 · 2ᵗ,   Ziel: 800")), listOf(Txt("t = "), Num(Geo.num(a), "a"), Txt("   N = ${(100 * grow(a.toDouble())).toInt()}"))) },
+                formula = { a -> listOf(listOf(Txt("N(t) = 100 · 2ᵗ,   Ziel: 800   (Hochachse: N in Hundert)")), listOf(Txt("t = "), Num(Geo.num(a), "a"), Txt("   N = ${(100 * grow(a.toDouble())).toInt()}"))) },
                 objects = { _, _ -> listOf(g5.curve("bahn", "cyan", grow), g5.axis(), g5.line("ziel", 0.0, 8.0, 4.0, 8.0, "pink", dashed = true)) },
-                check = { a -> if (a == 3) Outcome(true, "Nach 3 Stunden sind es 800 Lichter.") else Outcome(false, "Nach $a Stunden sind es ${(100 * grow(a.toDouble())).toInt()} Lichter.") }),
+                check = { a -> if (a == 3) Outcome(true, "Nach 3 Stunden sind es 800 Lichter.") else Outcome(false, "Nach ${if (a == 1) "1 Stunde" else "$a Stunden"} sind es ${(100 * grow(a.toDouble())).toInt()} Lichter.") }),
         )
     }
 
@@ -218,14 +218,14 @@ internal object MoreExams {
     private val bow = Exam("bogen", "Lichtbogen", "🌈", "Ein Lichtbogen hat die Form des Graphen von f(x) = −3x² + 6x (x und f(x) in Metern).", listOf(
         part("a", 2, num("abi-bogen-a", "Fußpunkt", "Der Bogen beginnt bei x = 0. An welcher Stelle trifft er wieder auf den Boden?", "x", 0..4, 2, 0,
             listOf("−3x² + 6x = 0", "−3x · (x − 2) = 0", "x = 2"), "Ausklammern: −3x · (x − 2) = 0.", "Die Nullstelle") { listOf(g.curve("bahn", "cyan", arc), g.axis()) }),
-        part("b", 3, num("abi-bogen-b", "Höchster Punkt", "Wie hoch ist der Bogen an seiner höchsten Stelle?", "h", 0..6, 3, 0,
-            listOf("f′(x) = −6x + 6 = 0 → x = 1", "f(1) = −3 + 6", "= 3 Meter"), "Erst die Stelle mit f′(x) = 0 suchen, dann in f einsetzen.", "Die Höhe",
-            mapOf(1 to "x = 1 ist die Stelle. Gefragt ist die Höhe dort: f(1).")) { listOf(g.curve("bahn", "cyan", arc), g.axis()) }),
+        part("b", 3, num("abi-bogen-b", "Höchster Punkt", "Wie hoch ist der Bogen an seiner höchsten Stelle?", "h", 0..6, 3, 0, suffix = " m", way =
+            listOf("f′(x) = −6x + 6 = 0 → x = 1", "f(1) = −3 + 6", "= 3 Meter"), tip = "Erst die Stelle mit f′(x) = 0 suchen, dann in f einsetzen.", what = "Die Höhe",
+            mistakes = mapOf(1 to "x = 1 ist die Stelle. Gefragt ist die Höhe dort: f(1).")) { listOf(g.curve("bahn", "cyan", arc), g.axis()) }),
         part("c", 3, num("abi-bogen-c", "Startsteigung", "Wie steil steigt der Bogen am Anfang (x = 0) an?", "m", 0..8, 6, 0,
             listOf("f′(x) = −6x + 6", "f′(0) = 6"), "Ableitung bilden und x = 0 einsetzen.", "Die Steigung") { listOf(g.curve("bahn", "cyan", arc), g.axis(), g.line("tangente", 0.0, 0.0, 0.5, 3.0, "yellow")) }),
-        part("d", 4, num("abi-bogen-d", "Leuchtfläche", "Die Fläche zwischen Bogen und Boden wird mit Licht gefüllt. Wie groß ist sie?", "A", 0..8, 4, 0,
-            listOf("∫₀² (−3x² + 6x) dx = [−x³ + 3x²]₀²", "= −8 + 12", "= 4 m²"), "Stammfunktion: F(x) = −x³ + 3x².", "Die Fläche",
-            mapOf(6 to "6 wäre ein Rechteck aus Breite 2 und Höhe 3. Der Bogen füllt es nicht aus – nimm das Integral.")) {
+        part("d", 4, num("abi-bogen-d", "Leuchtfläche", "Die Fläche zwischen Bogen und Boden wird mit Licht gefüllt. Wie groß ist sie?", "A", 0..8, 4, 0, suffix = " m²", way =
+            listOf("∫₀² (−3x² + 6x) dx = [−x³ + 3x²]₀²", "= −8 + 12", "= 4 m²"), tip = "Stammfunktion: F(x) = −x³ + 3x².", what = "Die Fläche",
+            mistakes = mapOf(6 to "6 wäre ein Rechteck aus Breite 2 und Höhe 3. Der Bogen füllt es nicht aus – nimm das Integral.")) {
             val pts = (0..32).map { val x = 2.0 * it / 32; g.at(x, arc(x)) }
             listOf(Stage.edges("fläche", pts.zipWithNext() + listOf(pts.last() to pts.first()), "yellow", faces = listOf(pts)), g.axis()) }),
     ))
@@ -236,7 +236,7 @@ internal object MoreExams {
         part("a", 2, num("abi-trommel-a", "Ein Zug", "Wie wahrscheinlich ist ein Gewinn bei einem Zug?", "P", 0..10, 40, 0, listOf("P = 2 : 5", "= 40 %"), "Günstige durch mögliche.", "Die Wahrscheinlichkeit", step = 10, suffix = " %", play = drumUrn.one(0)) { urn() }),
         part("b", 3, num("abi-trommel-b", "Zweimal mit Zurücklegen", "Zwei Züge mit Zurücklegen: Wie wahrscheinlich sind zwei Gewinne?", "P", 0..25, 16, 0, listOf("0,4 · 0,4", "= 0,16 = 16 %"), "Pfadregel: multiplizieren.", "Die Wahrscheinlichkeit",
             mapOf(80 to "Nicht addieren – entlang des Pfades wird multipliziert."), step = 4, suffix = " %", play = drumUrn.withReplacement(listOf(0, 1))) { urn() }),
-        part("c", 3, num("abi-trommel-c", "Zweimal ohne Zurücklegen", "Und ohne Zurücklegen?", "P", 0..20, 10, 0, listOf("erster Zug 2 : 5, zweiter 1 : 4", "⅖ · ¼ = 2 : 20", "= 10 %"), "Beim zweiten Zug fehlt eine pinke Kugel – und insgesamt eine.", "Die Wahrscheinlichkeit",
+        part("c", 3, num("abi-trommel-c", "Zweimal ohne Zurücklegen", "Zwei Züge ohne Zurücklegen: Wie wahrscheinlich sind jetzt zwei Gewinne?", "P", 0..20, 10, 0, listOf("erster Zug 2 : 5, zweiter 1 : 4", "⅖ · ¼ = 2 : 20", "= 10 %"), "Beim zweiten Zug fehlt eine pinke Kugel – und insgesamt eine.", "Die Wahrscheinlichkeit",
             step = 5, suffix = " %", play = drumUrn.without(listOf(0, 1))) { urn() }),
         part("d", 4, num("abi-trommel-d", "Viele Züge", "Es wird 20-mal mit Zurücklegen gezogen. Mit wie vielen Gewinnen ist im Mittel zu rechnen?", "μ", 0..12, 8, 0, listOf("μ = n · p", "= 20 · 0,4", "= 8"), "Erwartungswert der Binomialverteilung.", "Der Erwartungswert",
             play = drumUrn.explain("Bei jedem Zug gewinnen 2 von 5 Kugeln: p = 0,4.", "20 Züge mit Zurücklegen: im Mittel 20 · 0,4 = 8 Gewinne.")) { urn() }),

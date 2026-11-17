@@ -64,7 +64,7 @@ internal object TourEight {
             finale = { show(ten, listOf("Bis 6 zusammen: 82,8 % – das reicht noch nicht." to (0..6).toList(), "Mit der Säule für 7 sind es 94,5 %. Also k = 7." to listOf(7))) },
             objects = { a, _ -> bars(ten) { it <= a } },
             check = { a -> when {
-                a == 7 -> Outcome(true, "k = 7: P(X ≤ 7) = 94,5 % – das kleinste k über 90 %.")
+                a == 7 -> Outcome(true, "k = 7: P(X ≤ 7) = 94,5 % – das kleinste k mit mindestens 90 %.")
                 a < 7 -> Outcome(false, "P(X ≤ $a) = ${Geo.num(ten.atMost(a) * 100)} % – das sind noch keine 90 %.")
                 else -> Outcome(false, "P(X ≤ $a) = ${Geo.num(ten.atMost(a) * 100)} % reicht – aber es geht mit einem kleineren k.") } }),
     )
@@ -96,21 +96,21 @@ internal object TourEight {
         listOf(
             curve("25-1", "e hoch – wann ist es 1?", "Die Bahn f kreuzt die x-Achse genau einmal. An welcher Stelle?", g1, "e^(2x − 4) − 1", "x", 0..3, 2, 0,
                 "Nullstelle bei x = 2: Dort ist der Exponent 0 und e⁰ = 1.", tip = "e^(2x − 4) = 1 gilt genau dann, wenn der Exponent 0 ist. Oder beide Seiten logarithmieren: ln(1) = 0.",
-                way = listOf("e^(2x − 4) = 1", "ln auf beiden Seiten: 2x − 4 = 0", "x = 2")) { "f($it) = ${r(exp(2.0 * it - 4) - 1)}. An der Nullstelle muss 0 herauskommen." },
+                way = listOf("e^(2x − 4) = 1", "ln auf beiden Seiten: 2x − 4 = 0", "x = 2")) { "f(${Geo.num(it)}) ${Geo.eq(exp(2.0 * it - 4) - 1)}. An der Nullstelle muss 0 herauskommen." },
             curve("25-2", "Nullstelle des Logarithmus", "Diese Bahn gibt es erst rechts von x = 2. Wo kreuzt sie die x-Achse?", g2, "ln(x − 2)", "x", 3..6, 3, 6,
                 "Nullstelle bei x = 3, denn ln(1) = 0.", tip = "Der Logarithmus ist genau dann 0, wenn in der Klammer 1 steht: x − 2 = 1.",
-                way = listOf("ln(x − 2) = 0", "x − 2 = e⁰ = 1", "x = 3 (Definitionsbereich: x > 2)"), extra = listOf(listOf(Txt("definiert für x > 2")))) { "f($it) = ln(${it - 2}) = ${r(ln(it - 2.0))}. An der Nullstelle muss 0 herauskommen." },
+                way = listOf("ln(x − 2) = 0", "x − 2 = e⁰ = 1", "x = 3 (Definitionsbereich: x > 2)"), extra = listOf(listOf(Txt("definiert für x > 2")))) { "f(${Geo.num(it)}) = ln(${it - 2}) ${Geo.eq(ln(it - 2.0))}. An der Nullstelle muss 0 herauskommen." },
             curve("25-3", "Tiefpunkt mit Produktregel", "Kurvendiskussion mit e-Funktion: Bei welchem x liegt der Tiefpunkt der Bahn?", g3, "(x − 2) · e^x", "x", -2..2, 1, -2,
                 "Tiefpunkt bei x = 1: f′(1) = 0 und f″(1) = e > 0.", tip = "Produktregel: f′(x) = 1 · e^x + (x − 2) · e^x = (x − 1) · e^x. Da e^x nie null wird, entscheidet die Klammer.",
                 way = listOf("f′(x) = e^x + (x − 2) · e^x = (x − 1) · e^x", "f′(x) = 0 → x = 1 (e^x ist nie 0)", "f″(x) = x · e^x, f″(1) = e > 0 → Tiefpunkt T(1|−e)"),
-                mistakes = mapOf(2 to "x = 2 ist die Nullstelle (dort ist x − 2 = 0). Für den Tiefpunkt brauchst du f′(x) = 0.", 0 to "Bei x = 0 ist f″ = 0 – das ist die Wendestelle. Der Tiefpunkt liegt dort, wo f′ = 0 ist.")) { "f′($it) = ${r((it - 1) * exp(it.toDouble()))}. Am Tiefpunkt ist die Steigung 0." },
+                mistakes = mapOf(2 to "x = 2 ist die Nullstelle (dort ist x − 2 = 0). Für den Tiefpunkt brauchst du f′(x) = 0.", 0 to "Bei x = 0 ist f″ = 0 – das ist die Wendestelle. Der Tiefpunkt liegt dort, wo f′ = 0 ist.")) { "f′(${Geo.num(it)}) ${Geo.eq((it - 1) * exp(it.toDouble()))}. Am Tiefpunkt ist die Steigung 0." },
             curve("25-4", "Wendestelle", "Die Bahn steigt kurz an und läuft dann flach aus. Wo wechselt sie die Krümmung?", g4, "x · e^(−x)", "x", 0..5, 2, 0,
                 "Wendestelle bei x = 2: Dort fällt die Bahn am steilsten.", tip = "Zweimal ableiten (Produkt- und Kettenregel): f′(x) = (1 − x) · e^(−x), f″(x) = (x − 2) · e^(−x).",
-                way = listOf("f′(x) = e^(−x) − x · e^(−x) = (1 − x) · e^(−x)", "f″(x) = −e^(−x) − (1 − x) · e^(−x) = (x − 2) · e^(−x)", "f″(x) = 0 → x = 2"),
-                mistakes = mapOf(1 to "Bei x = 1 ist f′ = 0 – das ist der Hochpunkt. Für die Wendestelle brauchst du f″ = 0.")) { "f″($it) = ${r((it - 2) * exp(-it.toDouble()))}. An der Wendestelle muss 0 herauskommen." },
+                way = listOf("f′(x) = e^(−x) − x · e^(−x) = (1 − x) · e^(−x)", "f″(x) = −e^(−x) − (1 − x) · e^(−x) = (x − 2) · e^(−x)", "f″(x) = 0 → x = 2, und f″ wechselt dort das Vorzeichen (von − nach +)"),
+                mistakes = mapOf(1 to "Bei x = 1 ist f′ = 0 – das ist der Hochpunkt. Für die Wendestelle brauchst du f″ = 0.")) { "f″(${Geo.num(it)}) ${Geo.eq((it - 2) * exp(-it.toDouble()))}. An der Wendestelle muss 0 herauskommen." },
             curve("25-5", "Tiefpunkt mit ln", "Jetzt steckt ein Logarithmus in der Bahn. Bei welchem x liegt ihr Tiefpunkt?", g5, "x − 4 · ln(x)", "x", 1..6, 4, 1,
                 "Tiefpunkt bei x = 4: f′(4) = 1 − 1 = 0.", tip = "Die Ableitung von ln(x) ist 1 : x. Also f′(x) = 1 − 4 : x.",
-                way = listOf("f′(x) = 1 − 4 : x", "f′(x) = 0 → x = 4", "f″(x) = 4 : x² > 0 → Tiefpunkt"), extra = listOf(listOf(Txt("definiert für x > 0")))) { "f′($it) = 1 − 4 : $it = ${r(1 - 4.0 / it)}. Am Tiefpunkt ist die Steigung 0." },
+                way = listOf("f′(x) = 1 − 4 : x", "f′(x) = 0 → x = 4", "f″(x) = 4 : x² > 0 → Tiefpunkt"), extra = listOf(listOf(Txt("definiert für x > 0")))) { "f′(${Geo.num(it)}) = 1 − 4 : $it ${Geo.eq(1 - 4.0 / it)}. Am Tiefpunkt ist die Steigung 0." },
             area("25-6", "Fläche unter e^x", "Unter der e-Funktion liegt ein Leuchtfeld von x = 0 bis x = ln(3). Wie groß ist es?", g6, 0.0, ln(3.0), listOf("f(x) = e^x,  x von 0 bis ln(3)"), 2, 6,
                 "Genau 2 – denn e^(ln 3) = 3 und e⁰ = 1.", tip = "Die e-Funktion ist ihre eigene Stammfunktion: F(x) = e^x. Und e^(ln 3) ist einfach 3.",
                 way = listOf("∫ e^x dx = [e^x] von 0 bis ln(3)", "= e^(ln 3) − e⁰", "= 3 − 1 = 2"),

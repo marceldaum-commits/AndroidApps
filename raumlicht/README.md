@@ -1,50 +1,67 @@
-# Raumlicht – analytische Geometrie als Lichtshow (Oberstufe, ab Klasse 11)
+# Raumlicht – Oberstufen-Mathe als Lichtshow (ab Klasse 11 bis zum Abitur)
 
 Du bist Lichtdesigner:in. Laser sind Geraden, Glasscheiben und Leinwände sind Ebenen, die Drohne **Lux** fliegt deine Vektoren.
 Die Bühne ist echtes 3D: drehen, zoomen, Punkte und Vektoren direkt im Raum ziehen. Das Rechnen ist die Spielhandlung selbst –
 man sieht nur den Anfang eines Strahls, den Rest verrät die Rechnung (Recherche: `../docs/RECHERCHE.md`).
 
-**75 Gigs in 14 Kapiteln**, jedes endet mit einem Abi-Check. Dazu Abi-Simulation, Schritt für Schritt, Jam-Session (endlos erzeugte Aufgaben), Tagesgig,
-Lage-Check, Duell, Zu zweit, Klasse, Klausur-Planer, Lernstand, Zweite Chance, Baukasten mit 3D-Rechner, Lux-Werkstatt, Spickzettel und Abzeichen:
+**136 Aufgaben in 25 Kapiteln** aus Geometrie, Analysis und Stochastik, jedes Kapitel endet mit einem Abi-Check – jede Aufgabe mit Tipp und Rechenweg.
+Dazu **7 Prüfungsaufgaben im Abi-Stil**, Tagesaufgabe, Endlos üben und der Bereich „Mehr“: Kurve abfahren, Flug durch den Raum, Ballerbude,
+Achterbahn-Baumeister, Geisterfahrt gegen f′, Ringflug, Zufallsmaschine, Galton-Brett, Binomial-Labor, Rechenweg in Schritten, Ohne Hilfsmittel,
+Lage von Geraden erkennen, Fehler wiederholen, Fehler-Tagebuch, Lernstand, Klausur-Planer, Kalender der Tagesaufgaben, Duell per Code,
+Zu zweit an einem Gerät, Klassen-Paket, 3D-Rechner & Baukasten, Formelsammlung, Lux gestalten und Erfolge.
 
-| Kapitel | Thema | Spielarten |
+| Kapitel | Gebiet | Inhalte |
 |---|---|---|
-| 1 Soundcheck | Punkte im Raum | Koordinaten ablesen, Mittelpunkt, Spiegelung an Koordinatenebene, Pyramidenspitze |
-| 2 Drohnen-Choreo | Vektoren | Verbindungsvektor, Vektorkette, Vielfaches, Parallelogramm, Schwerpunkt |
-| 3 Erster Laser | Geraden | Richtungsvektor, Parameter t, Punktprobe, Spurpunkt |
-| 4 Strahlen kreuzen | Lagebeziehungen | Schnittpunkt, parallel, windschief reparieren |
-| 5 Glas & Leinwand | Ebenen | Durchstoßpunkt, Koordinatenform bauen, Normalenvektor, Schattenpunkt |
-| 6 Headliner | Skalarprodukt · Abstand · Spiegelung | orthogonal, Lotfußpunkt, Spiegelpunkt, Abstand Punkt–Ebene, Reflexion über Bande |
-| 7 Im richtigen Winkel | Winkel | Vektor–Vektor, Gerade–Ebene, Ebene–Ebene (15°-Schritte, Winkelbogen in 3D) |
-| 8 Auf Abstand | Abstände | Lotfußpunkt auf Gerade, Punkt–Gerade, parallele Ebenen, windschiefe Geraden |
-| 9 Discokugel | Kugeln | Radius, Mittelpunkt, Gerade trifft Kugel, Tangentialebene, Schnittkreis, Berührung |
-| 10 Zugabe | Kreuzprodukt | Parallelogramm- und Dreiecksfläche, Pyramidenvolumen, Schnittgerade |
-| 11 Flugplan | Bewegung mit Zeit | Ort nach t Sekunden, Tempo, Treffpunkt, kleinster Abstand zweier Drohnen |
-| 12 Lichtskulpturen | Analysis in 3D | Rotationskörper: Zylinder, Kegel, Vase, Kugel, Trichter (V = π·∫f²) |
-| 13 Lichtlotterie | Stochastik | Laplace, Pfadregel mit/ohne Zurücklegen, Erwartungswert, Gegenereignis |
-| 14 Achterbahn | Analysis | Nullstelle, Hoch-/Tiefpunkt, Wendestelle, Fläche unter der Kurve (Lux fährt mit, Tangente live) |
+| 1 Punkte im Raum | Geometrie | Koordinaten ablesen, Mittelpunkt, Spiegelung an Koordinatenebene, Pyramidenspitze |
+| 2 Vektoren | Geometrie | Verbindungsvektor, Vektorkette, Vielfaches, Parallelogramm, Schwerpunkt |
+| 3 Geraden | Geometrie | Richtungsvektor, Parameter t, Punktprobe, Spurpunkt |
+| 4 Lage von Geraden | Geometrie | Schnittpunkt, parallel, windschief reparieren |
+| 5 Ebenen | Geometrie | Durchstoßpunkt, Koordinatenform bauen, Normalenvektor, Schattenpunkt |
+| 6 Skalarprodukt & Spiegelung | Geometrie | orthogonal, Lotfußpunkt, Spiegelpunkt, Abstand Punkt–Ebene, Reflexion über Bande |
+| 7 Winkel | Geometrie | Vektor–Vektor, Gerade–Ebene, Ebene–Ebene (15°-Schritte, Winkelbogen in 3D) |
+| 8 Abstände | Geometrie | Lotfußpunkt auf Gerade, Punkt–Gerade, parallele Ebenen, windschiefe Geraden |
+| 9 Kugeln | Geometrie | Radius, Mittelpunkt, Gerade trifft Kugel, Tangentialebene, Schnittkreis, Berührung |
+| 10 Kreuzprodukt | Geometrie | Parallelogramm- und Dreiecksfläche, Pyramidenvolumen, Schnittgerade |
+| 11 Bewegung | Geometrie | Ort nach t Sekunden, Tempo, Treffpunkt, kleinster Abstand zweier Drohnen |
+| 12 Rotationskörper | Analysis | Zylinder, Kegel, Vase, Kugel, Trichter (V = π·∫f²) |
+| 13 Wahrscheinlichkeit | Stochastik | Laplace, Pfadregel mit/ohne Zurücklegen, Erwartungswert, Gegenereignis |
+| 14 Kurvendiskussion | Analysis | Nullstelle, Hoch-/Tiefpunkt, Wendestelle, Fläche unter der Kurve (Lux fährt mit, Tangente live) |
+| 15 Funktionen bauen | Analysis | Gerade, Scheitelform, Steckbriefaufgabe |
+| 16 Bäume, Tafeln, Binomial | Stochastik | Baumdiagramm, Vierfeldertafel, bedingte Wahrscheinlichkeit, σ |
+| 17 Ableiten & Anwenden | Analysis | Steigung, Kettenregel, Tangente, Extremwert, Wachstum |
+| 18 Ebenen in allen Formen | Geometrie | Parameter-, Normalen-, Koordinaten- und Achsenabschnittsform, Spurpunkte |
+| 19 Schnitte & Schnittwinkel | Geometrie | Schnittgerade, Winkel Ebene–Ebene und Gerade–Ebene, parallel, Abstand |
+| 20 Spiegeln & Lote | Geometrie | Spiegeln an Punkt, Gerade und Ebene, Abstand windschiefer Geraden |
+| 21 Kugel & Ebene | Geometrie | Berühren, Schnittkreis, zwei Kugeln, Durchflug |
+| 22 Integrale & Flächen | Analysis | Stammfunktion, Fläche, zwischen zwei Kurven, Bestand aus Änderungsrate |
+| 23 Erwartung, Sigma, Testen | Stochastik | fairer Einsatz, Bernoulli-Kette, Mindestanzahl, Sigma-Regel, Hypothesentest |
+| 24 Binomialverteilung | Stochastik | genau, höchstens, mindestens k Treffer – einzeln und kumuliert, Tabelle lesen |
+| 25 e-Funktion & Logarithmus | Analysis | Gleichungen, Kurvendiskussion mit Produkt- und Kettenregel, Integrale mit e^x und 1 : x |
 
-**Weitere Spielarten**
-- 🔎 **Fehler-Analyse** – typische Fehler (A − B statt B − A, nicht gemittelt, Kosinus statt Sinus, ⅓ vergessen …) werden gezielt benannt (`mistakes` in `Families`).
-- 🧩 **Schritt für Schritt** – vier Verfahren in Teilschritten (`Guides`). 📊 **Lernstand** (`Learn`). 🗓️ **Klausur-Planer** (`Planner`, auch im Widget).
-- 🏫 **Klasse** – Paket-Code `RLK-…` (`ClassCode`). 👥 **Zu zweit** (`Match`). 🧮 **3D-Rechner** im Baukasten (`Show.facts`).
-- 🎢 **Achterbahn fahren** – Fahrersicht auf dem Graphen mit Live-Cockpit für f, f′ und f″ (`Coaster`, `RideScreen`, Szenen-Objekt `track`, `RL.ride`).
+**Weitere Spielarten** (Namen wie in der App, Bereich „Mehr“)
+- 🔎 **Fehler-Analyse** – typische Fehler (A − B statt B − A, nicht gemittelt, Kosinus statt Sinus, ⅓ vergessen …) werden gezielt benannt (`mistakes` in `Families`);
+  das 📔 **Fehler-Tagebuch** merkt sie sich (`MistakeBook`, `DiaryEntry`).
+- 🧩 **Rechenweg in Schritten** – Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand in Teilschritten (`Guides`). 📊 **Lernstand** (`Learn`). 🗓️ **Klausur-Planer** (`Planner`, auch im Widget).
+- 🏫 **Klassen-Paket (für Lehrkräfte)** – Paket-Code `RLK-…` (`ClassCode`). 👥 **Zu zweit an einem Gerät** (`Match`). 🧮 **3D-Rechner & Baukasten** (`Show.facts`).
+- 🎢 **Kurve abfahren (Fahrersicht)** – Fahrersicht auf dem Graphen mit Live-Cockpit für f, f′ und f″, auch mit eigener Funktion (`Coaster`, `RideScreen`, Szenen-Objekt `track`, `RL.ride`).
+- 🚀 **Flug durch den Raum** (`Flights`), 🏗️ **Achterbahn-Baumeister**, 👻 **Geisterfahrt gegen f′**, ⭕ **Ringflug**.
+- 🎈 **Ballerbude**, 🎲 **Zufallsmaschine**, 🎰 **Galton-Brett** (`Galton`), 📊 **Binomial-Labor** (`Binomial`) für die Stochastik.
 - 📐 **Querformat/Tablet** – Bühne links, Regler rechts (`LevelScreen`, ab Breite > 1,15 × Höhe).
-- 🎓 **Abi-Simulation** – drei zusammenhängende Aufgaben mit je vier Teilaufgaben und Bewertungseinheiten (`Exams`); freiwillig auf Zeit (45 s je BE).
-- 🧭 **Lage-Check** – acht Runden Lagebeziehung zweier Geraden erkennen; die Bühne zeigt die Geraden erst nach der Antwort.
-- ⚔️ **Duell** – Code wie `RL-4A1B2X` (Thema + Seed + Prüfziffer) steht für dieselben fünf Aufgaben, ohne Server.
-- 📱 **Widget** – Tagesgig auf dem Startbildschirm (`app/widget/DailyWidget`), ein Tipp öffnet die Aufgabe.
-- 🔁 **Zweite Chance** – alle Gigs mit 1–2 Sternen noch einmal. 🎨 **Lux-Werkstatt** – Leuchtfarben durch Sterne.
-- 🎇 **Show-Baukasten** – Laser (Stütz- und Richtungsvektor), Scheiben (Koordinatenform) und Kugeln frei setzen; Code `RLS-…` zum Teilen.
-- 🎧 **Jam-Session** – `Gen` erzeugt aus einem Seed Aufgaben mit ganzzahliger Lösung (Mittelpunkt, Vektor, Zielen, Parameter, Spurpunkt,
-  Schnittpunkt, Durchstoßpunkt). Nach Thema oder gemischt; eine Serie zählt Treffer beim ersten Versuch.
-- 📅 **Tagesgig** – jeden Tag eine Aufgabe (Themen wechseln reihum), für drei Jahre im Test auf Lösbarkeit geprüft.
-- 📓 **Spickzettel** – Formelsammlung. 🏅 **Abzeichen** – 14 Auszeichnungen für Fortschritt.
+- 🎓 **Abi-Prüfungsaufgaben** – 7 Aufgaben im Abi-Stil mit mehreren Teilaufgaben und Bewertungseinheiten (`Exams`); freiwillig auf Zeit (45 s je BE).
+- ✍️ **Ohne Hilfsmittel** – 6 kurze Aufgaben wie im Pflichtteil, ohne Tipp (`Quick`).
+- 🧭 **Lage von Geraden erkennen** – acht Runden Lagebeziehung zweier Geraden erkennen; die Bühne zeigt die Geraden erst nach der Antwort.
+- ⚔️ **Duell per Code** – Code wie `RL-4A1B2X` (Thema + Seed + Prüfziffer) steht für dieselben fünf Aufgaben, ohne Server.
+- 📱 **Widgets** – Tagesaufgabe auf dem Startbildschirm (`app/widget/DailyWidget`), ein Tipp öffnet die Aufgabe; zweites Widget für den Lernstand (`LearnWidget`).
+- 🔁 **Fehler wiederholen** – alle Aufgaben, die nicht beim ersten Versuch saßen, noch einmal. 🎨 **Lux gestalten** – Leuchtfarben durch Sterne, Leuchtspur und Aufsatz durch Erfolge (`Looks`, `RL.look`).
+- 🎇 **Baukasten** – Laser (Stütz- und Richtungsvektor), Scheiben (Koordinatenform) und Kugeln frei setzen; Code `RLS-…` zum Teilen.
+- ♾️ **Endlos üben** – `Gen` erzeugt aus einem Seed immer neue Aufgaben mit anderen Zahlen. Nach Thema oder gemischt, in Stufen;
+  eine Serie zählt Treffer beim ersten Versuch.
+- 📅 **Tagesaufgabe** – jeden Tag eine Aufgabe (Themen wechseln reihum), für drei Jahre im Test auf Lösbarkeit geprüft; 🎟️ **Kalender der Tagesaufgaben** (`Calendar`) – verpasste Tage kosten nichts.
+- 📓 **Formelsammlung** – alle Formeln, mit Sprung zu den passenden Aufgaben. 🏅 **Erfolge** – 14 Auszeichnungen für Fortschritt. Ergebnis-Karte zum Teilen (`ShareCard`).
 
-**Aufbau für Nutzer (seit 0.4.2):** drei Gebiete – Geometrie (Kapitel 1–11), Analysis (12, 14, 15, 17), Stochastik (13, 16). Seit 0.5.0: 89 Aufgaben in 17 Kapiteln,
-Flug durch den Raum (`Flights`), Galton-Brett (`Galton`), Ableitungsbahn und Flächenfüllung (`Ride.scene`), Ohne Hilfsmittel (`Quick`), Fehler-Tagebuch (`MistakeBook`, `DiaryEntry`),
-Kalender (`Calendar`), Zubehör für Lux (`Looks`, `RL.look`), zweites Widget (`LearnWidget`), Ergebnis-Karte (`ShareCard`). Kapitel heißen nach ihrem Thema;
-in älteren Abschnitten dieses READMEs stehen teils noch die früheren Namen (Gig = Aufgabe, Jam-Session = Endlos üben, Backstage = Mehr, Spickzettel = Formelsammlung).
+**Aufbau für Nutzer:** drei Gebiete – Geometrie (Kapitel 1–11 und 18–21), Analysis (12, 14, 15, 17, 22, 25), Stochastik (13, 16, 23, 24). Kapitel heißen nach ihrem Thema.
+In älteren Abschnitten dieses READMEs und in Dateinamen der Bildschirmfotos stehen teils noch die früheren Namen
+(Gig = Aufgabe, Tagesgig = Tagesaufgabe, Jam-Session = Endlos üben, Backstage = Mehr, Spickzettel = Formelsammlung, Abzeichen = Erfolge, Zweite Chance = Fehler wiederholen).
 
 ## So funktioniert Raumlicht
 - Einstellen: Griff in der Bühne ziehen (Kugel = in der Bodenebene, Pfeile = entlang einer Achse) oder Zahlen mit −/+ tippen.
@@ -111,7 +128,7 @@ Querformat: ![](screenshots/48_querformat.png)
 
 ## Aufbau
 - `core/model` – reine Kotlin-Logik: Vektorrechnung (`Geo`), Spielarten (`Families`), alle Level (`Levels`, `MoreLevels`), Aufgaben-Generator,
-  Tagesgig, Abzeichen und Spickzettel (`Gen.kt`), Abi-Simulation, Lage-Check, Duell- und Show-Codes (`Modes.kt`), Bühnen-Beschreibung (`Stage`),
+  Tagesaufgabe, Erfolge und Formelsammlung (`Gen.kt`), Abi-Prüfungsaufgaben, Lage von Geraden, Duell- und Show-Codes (`Modes.kt`), Bühnen-Beschreibung (`Stage`),
   Musik, Update-Prüfung. Tests spielen jedes Level mit seiner Lösung durch und rechnen die Mathematik unabhängig nach.
 - `core/data` – Fortschritt (Room, Sterne sinken nie), Einstellungen
 - `app` – Compose-Oberfläche, Lux, im Code erzeugte Geräusche, Updater. Die 3D-Bühne läuft in einem WebView

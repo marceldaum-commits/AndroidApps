@@ -92,11 +92,26 @@ object Ghost {
         return (lo - pad) to (hi + pad)
     }
     fun x(r: Ride, col: Int) = r.from + (r.to - r.from) * (col + 0.5) / COLUMNS
-    /** Trefferquote in Prozent: mittlerer Abstand zur echten Ableitung, gemessen an der Höhe des Fensters. Nicht gezeichnete Spalten zählen als daneben. */
+    /**
+     * Anteil der Spalten, in denen die Zeichnung auf der richtigen Seite der Achse liegt (über der Achse, wo f steigt – darunter, wo f fällt).
+     * Gezählt werden nur Spalten, in denen f′ deutlich von null weg ist; eine Linie auf der Achse hat dort kein Vorzeichen und zählt als falsch.
+     */
+    fun direction(r: Ride, guess: List<Double?>): Double {
+        val (lo, hi) = window(r); val span = hi - lo
+        val clear = guess.indices.filter { abs(r.df(x(r, it))) > 0.05 * span }; if (clear.isEmpty()) return 1.0
+        return clear.count { c -> guess[c]?.let { g -> abs(g) > 0.01 * span && (g > 0) == (r.df(x(r, c)) > 0) } ?: false }.toDouble() / clear.size
+    }
+    /**
+     * Trefferquote in Prozent: mittlerer Abstand zur echten Ableitung, gemessen an der Höhe des Fensters (nicht gezeichnete Spalten zählen als daneben) –
+     * gewichtet mit der Richtung ([direction]): Wer das Vorzeichen der Ableitung nicht nachzeichnet (etwa eine flache Linie auf der Achse), bleibt
+     * unter 50 % und bekommt nicht „die Richtung passt“ zu hören.
+     */
     fun score(r: Ride, guess: List<Double?>): Int {
         val (lo, hi) = window(r); val span = hi - lo
         val err = guess.indices.map { c -> guess[c]?.let { minOf(abs(it - r.df(x(r, c))) / span, 1.0) } ?: 1.0 }.average()
-        return (100 * (1 - 2.5 * err)).toInt().coerceIn(0, 100)                                // 40 % der Fensterhöhe daneben = 0 Punkte
+        val dir = direction(r, guess)
+        val score = (100 * (1 - 2.5 * err) * (0.5 + 0.5 * dir)).toInt().coerceIn(0, 100)        // 40 % der Fensterhöhe daneben = 0 Punkte
+        return if (dir < 0.75) minOf(score, 49) else score
     }
     fun verdict(score: Int) = when { score >= 90 -> "Wie abgepaust! $score %."; score >= 75 -> "Stark: $score % – die Form stimmt."; score >= 50 -> "$score % – die Richtung passt, schau auf die Hoch- und Tiefpunkte: Dort muss f′ null sein."
         else -> "$score % – Tipp: Wo f steigt, liegt f′ über der Achse; wo f fällt, darunter." }

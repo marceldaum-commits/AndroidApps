@@ -3,6 +3,7 @@ package de.raumlicht.app.ui.home
 import de.raumlicht.app.ui.fx.verticalFade
 import de.raumlicht.app.ui.fx.nowMillis
 import de.raumlicht.app.ui.fx.nowNanos
+import de.raumlicht.app.ui.fx.count
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -123,7 +124,7 @@ fun PlannerScreen(plan: Plan?, today: Long, stars: Map<String, Int>, onSave: (Pl
             val pack = Planner.today(current, today, stars); val rest = Planner.open(current, stars).size
             Column(Modifier.fillMaxWidth().padding(14.dp).background(verticalFade(listOf(Q.Orange.copy(alpha = 0.2f), Q.Deep)), RoundedCornerShape(18.dp)).border(1.5.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(14.dp)) {
                 Text(Planner.headline(current, today, stars) ?: "", fontWeight = FontWeight.Black, fontSize = 17.sp)
-                Text(if (rest == 0) "In diesen Kapiteln hast du alles mit drei Sternen. Mehr geht nicht!" else "Insgesamt noch $rest Aufgaben ohne drei Sterne. Heute: ${pack.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
+                Text(if (rest == 0) "In diesen Kapiteln hast du alles mit drei Sternen. Mehr geht nicht!" else "Insgesamt noch ${count(rest, "Aufgabe", "Aufgaben")} ohne drei Sterne. Heute: ${pack.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp))
                 if (pack.isNotEmpty()) NeonButton({ playing = pack }, Modifier.fillMaxWidth().padding(top = 10.dp), color = Q.Green) { Text("▶ Heutiges Paket spielen", fontWeight = FontWeight.Black) }
             }
             NeonButton({ chosen = emptyList(); onSave(null) }, Modifier.padding(horizontal = 14.dp), color = Q.Muted) { Text("Plan löschen") }
@@ -150,7 +151,7 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
     if (run != null && idx < run.size) {
         val level = run[idx]
         LevelScreen(level, Levels.chapters.first { it.number == level.chapter }, false, {}, onSolved = { s, a -> if (s == 3) hits++; onSolved(level, s, a) }, onNext = { idx++ }, onBack = { pack = null },
-            caption = "🏫 Klassenpaket · ${idx + 1}/${run.size} · Aufgabe ${level.id}", badge = "🎯 $hits")
+            caption = "🏫 Klassen-Paket · ${idx + 1}/${run.size} · Aufgabe ${level.id}", badge = "🎯 $hits")
         return
     }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState())) {
@@ -188,7 +189,7 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
         if (picked.isNotEmpty()) {
             val levels = picked.mapNotNull { Levels.byId(it) }; val c = ClassCode.encode(levels)
             Column(Modifier.fillMaxWidth().padding(14.dp).background(Q.Deep, RoundedCornerShape(18.dp)).border(1.5.dp, Q.Pink.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(14.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-                Text("${levels.size} Aufgaben: ${levels.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
+                Text("${count(levels.size, "Aufgabe", "Aufgaben")}: ${levels.joinToString(", ") { it.id }}", color = Q.Muted, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
                 Text(c, Modifier.padding(vertical = 8.dp).testTag("paket-code"), fontSize = 20.sp, fontWeight = FontWeight.Black, letterSpacing = 2.sp, color = Q.Pink)
                 NeonButton({ share(ClassCode.shareText(levels)) }, Modifier.fillMaxWidth(), color = Q.Pink) { Text("📤 Code an die Klasse schicken", fontWeight = FontWeight.Bold) }
             }

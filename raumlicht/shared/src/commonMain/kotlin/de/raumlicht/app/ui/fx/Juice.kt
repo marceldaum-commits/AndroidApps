@@ -1,5 +1,7 @@
 package de.raumlicht.app.ui.fx
 
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -83,7 +85,8 @@ fun Starfield(modifier: Modifier = Modifier, count: Int = 90, seed: Int = 1) {
 /** Zurück-Pfeil – selbst gezeichnet, damit er auf Android und im Web gleich aussieht */
 @Composable
 fun BackArrow(color: Color = Q.Text) {
-    Canvas(Modifier.size(22.dp)) {
+    // der gezeichnete Pfeil braucht einen Namen für Vorlese-Hilfen (TalkBack)
+    Canvas(Modifier.size(22.dp).semantics { contentDescription = "Zurück" }) {
         val w = size.width; val h = size.height; val sw = w * 0.11f
         drawLine(color, Offset(w * 0.9f, h / 2), Offset(w * 0.12f, h / 2), sw, cap = androidx.compose.ui.graphics.StrokeCap.Round)
         drawLine(color, Offset(w * 0.12f, h / 2), Offset(w * 0.45f, h * 0.18f), sw, cap = androidx.compose.ui.graphics.StrokeCap.Round)

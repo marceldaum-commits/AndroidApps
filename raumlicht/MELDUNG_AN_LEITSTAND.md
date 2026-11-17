@@ -2,6 +2,171 @@
 
 Neueste oben.
 
+## Korrektheitsprüfung 17.11.
+
+**Version nach der Prüfung: Raumlicht 2.13.0 vom 17.11.2026** (Android-APK, Play-Paket und WebApp auf raumlicht-test). Auftrag von Marcel direkt bestätigt.
+
+**Kurzfassung:** Alle Aufgaben wurden unabhängig nachgerechnet. **Keine hinterlegte Lösung war falsch, kein Rechenweg enthielt einen Zahlenfehler.**
+Echte Rechenfehler gab es nur außerhalb der Aufgaben: bei *eigenen* Funktionen in „Kurve abfahren“, im Funktions-Parser und im Zahlformat für sehr große Zahlen.
+Dazu fehlende Angaben in vier Aufgaben, eine Bühne mit falschem Maßstab, missverständliche Rückmeldungen, Schreibweise, Vorlese-Umsetzung von Formeln, fehlende Lizenztexte. Alles unten Genannte ist behoben, sofern nicht unter „Nicht geändert“ oder „Nicht prüfbar“ aufgeführt.
+
+### 1. Was geprüft wurde und wie
+
+| Bereich | Umfang | Wie |
+|---|---|---|
+| Tour-Aufgaben | 136 Aufgaben in 25 Kapiteln, alle Kapitel-Einführungen | Je Paket eine unabhängige Nachrechnung nur aus Aufgabentext und gezeigten Angaben (Python: Brüche, sympy), ohne die hinterlegte Lösung vorauszusetzen. Geprüft: Lösung, Eindeutigkeit, jeder Rechenweg-Schritt, Tipp, Rückmeldungen, 3D-Bühne (Koordinaten, Ebenengleichungen, Kurvenpunkte, Flächen, Labels) |
+| Prüfungsaufgaben | 7 Aufgaben, 28 Teilaufgaben; 9 Schritt-für-Schritt-Aufgaben | wie oben, zusätzlich Zusammenhang der Teile und Punktesummen (je 12 BE) |
+| Endloses Üben, alle Stufen | 29 Aufgabenarten × 40 Zahlensätze = 1160 Aufgaben, dazu 31 Tagesaufgaben | je Art ein eigener Löser, der die Angaben aus dem Text liest; Grenzfälle (parallel, windschief, identisch, Nullvektor, Punkt auf Spiegel, entartete Figuren) gezielt gesucht – keine gefunden |
+| Angenommene Antworten | alle Aufgaben mit durchzählbarem Reglerbereich | alle Reglerstellungen durchprobiert: Es wird genau angenommen, was richtig ist (auch Vielfache von Richtungs- und Normalenvektoren) |
+| Spielarten | Lage von Geraden (20 000 Runden), Binomial (9900 Kombinationen n, p), Galton, Zufallsmaschine, Datum (1,5 Mio. Tage), Flüge, Ballerbude-Regeln, Ringflug (5000), Baumeister, Kurve abfahren, Funktions-Parser, 3D-Rechner, Geisterfahrt | Kotlin-Rechenkern aufgerufen und mit Python nachgerechnet |
+| Sprache | alle Aufgabentexte, alle Oberflächen-Texte (Android, WebApp), Vorlese-Texte, Store-Text, README, Änderungsliste, Lizenzen | vollständig gelesen; Übungsaufgaben und Vorlese-Texte in Stichproben plus Muster-Suche über alles |
+| Funktion | 129 Tests im Rechenkern, 139 App-Tests (Robolectric, mit Bildschirmfotos), Lint für GitHub- und Play-Fassung | alle grün |
+| WebApp | 54 Bildschirme, 72 Aufrufe in Handy- und PC-Größe; Ablauf, Update, Offline-Start, 3D-Bedienung | Chromium: keine Konsolenfehler, kein leeres Bild; Übersichtsblätter aller Bildschirme angesehen |
+| Texte nach außen | Store-Eintrag, Datensicherheit, Datenschutz-Abschnitt in der App, Lizenzen | gegen Berechtigungen, Internet-Adressen im Code und die tatsächlich eingebundenen Bibliotheken geprüft |
+| Stufen-Nachweis | Einstieg 35,75 → Abi 47,93 → Profi 78,44 | weiter grün |
+
+Neu im Repo, damit das so bleibt: `PruefTextTest` (Schreibweise aller 1364 Aufgaben-Varianten, auch bei zufälligen falschen Eingaben; Lösung wird angenommen, Start nicht),
+`PruefDumpTest` (schreibt alle Aufgaben für eine Nachrechnung von außen nach `core/model/build/pruefung/`), `scene/test/web-screens.mjs` (öffnet jeden Bildschirm der WebApp),
+Vergleich der Kurvendiskussion mit sympy an 90 Termen als Dauertest.
+
+### 2. Abweichungen und Korrekturen (vorher → nachher)
+
+**A. Echte Rechenfehler (nicht in Aufgaben, sondern in Spielarten)**
+
+| Wo | vorher | nachher |
+|---|---|---|
+| Kurve abfahren, eigene Funktion | x³, x⁴, (x − 1)², x³ − 6x² + 9x: Nullstellen bzw. Extrempunkte fehlten | werden gefunden (auch Berührstellen und Nullstellen am Rand) |
+| Kurve abfahren, eigene Funktion | 1/x², ln(x²), sin(x)/x: „Hochpunkt/Tiefpunkt bei x = 0“ an einer Polstelle oder Lücke | dort keine Stelle |
+| Kurve abfahren, eigene Funktion | Geraden wie e^(ln x), x²/x: bis zu 60 falsche Wendepunkte | keine |
+| Kurve abfahren, eigene Funktion | |sin x|: Tiefpunkt mit Knick als „Hochpunkt“ | „Tiefpunkt“ mit Regel „Knick: f′ wechselt das Vorzeichen“ |
+| Kurve abfahren, Anzeige | „keine Krümmung (Wendestelle)“ bei jeder Geraden und auf 27 % der fertigen Bahn „Logarithmus“ | „Wendestelle“ nur an echten Wendestellen, sonst „fast gerade“ |
+| Kurve abfahren, Anzeige | ln(x) bei x = −1: „Höhe 0, Steigung 0“; 1/x bei 0,01: Höhe 14,4; Fläche über eine Polstelle hinweg „−4,36“ | „nicht definiert“; 100 mit „außerhalb des Bildes“; Fläche „–“ |
+| Kurve abfahren | Stellen am Rand nie markiert; fielen zwei Stellen zusammen, wurde nur eine angesagt | Rand-Nullstellen markiert; „Tiefpunkt und Nullstelle bei x = 3“ |
+| Funktions-Parser | „πx“, „√x“, „pi x“ abgelehnt („pix kenne ich nicht“); „sin 2x“ = sin(2)·x; „2 2“ = 22; Anzeige „x^23“ als „x²3“ | werden richtig gelesen; sin 2x = sin(2x); Fehlermeldung; richtige Anzeige. Neu: „Verstanden als: f(x) = …“ |
+| Zahlformat | ab 21 Millionen „2,147483647E7“; −0,125 → „−0,12“, aber 0,125 → „0,13“ | ganze Zahl bzw. „4,85 · 10¹⁴“, „∞“, „nicht definiert“; symmetrisch gerundet |
+| 3D-Rechner | identische Ebenen hießen „parallel“; Treffer hinter dem Laser-Start als Treffer gemeldet | „identisch“; „die Gerade trifft …, der Strahl nicht“; parallele Ebenen mit Abstand |
+| Flug | eigener Flug ohne Ebene: „Abstand 0 · genau in der Ebene“; Tangente an die Kugel als Ein- und Austritt; „Boden: x₃ = 1“ | „kein Abstand“; „Berührt K“; „E₃: x₃ = 1“ |
+| Binomial-Labor | „meist zwischen μ − σ und μ + σ“ (teils negativ, teils unter 50 %) | „Mit 66 % zwischen 4 und 6 Treffern (μ ± σ)“ – ausgerechnet |
+| Geisterfahrt | flache Nulllinie: 55 %, „die Richtung passt“ | unter 50 % |
+| Ballerbude | „−1“ eingeblendet, obwohl bei 0 Punkten nichts abgezogen wird | Abzug nur, wenn wirklich abgezogen wird |
+
+**B. Aufgaben: fehlende Angaben und Bühne**
+
+| Aufgabe | vorher | nachher |
+|---|---|---|
+| 20-4 | Ebene E stand weder im Auftrag noch in der Formel (nur im Tipp) | „E: x₁ + 2x₂ + 2x₃ = 9“ steht in der Formel |
+| 8-5 | Punkt P nur als Bühnen-Label, A unbenannt | „P(5|3|4)“ in der Formel, „A(0|1|0) ist der Stützpunkt“ |
+| 11-3, Üben „Flughöhe“, abi-drohnen-b | leere zweite Formelzeile, Zielhöhe nur im Text | „Scheibe: x₃ = 4“ / „Höhe: x₃ = h“ / „Boden: x₃ = 0“ |
+| Prüfungsaufgaben und Schritt-für-Schritt | Sachzusammenhang (z. B. f(x) des Lichtbogens, Lostrommel, Ebene) war während der Teilaufgaben nicht sichtbar | bleibt bei jeder Teilaufgabe über der Formel stehen |
+| 17-5 | Bühne zeigte N/100, Ziellinie bei 8, Text „800“ | Hinweis „Hochachse: N in Hundert“ |
+| 23-5 | 6 von 20 Kugeln gelb bei Grenze 50 (Skala 40–70) | anteilsgetreu: 10 von 20 bei 50, 12 von 20 bei 59 |
+| 10-1 | verkürzter Pfeil mit Label „a⃗×b⃗“ | „Richtung von a⃗×b⃗“ |
+| 10-2 | „A“ zugleich Punkt und Fläche | Fläche heißt F |
+| 11-4, 11-5 | Bahnen „g“, „h“ beschriftet, Formel kennt nur D₁, D₂ | Bahn-Labels entfernt |
+| 3-5, Üben „Zielen“ | Labels „Z1“, „Z2“ | „Z₁“, „Z₂“ |
+| abi-zelt-d | Schattenpunkt hieß „S“ wie die Spitze | „S′“ |
+| abi-trommel-c | Auftrag „Und ohne Zurücklegen?“ | „Zwei Züge ohne Zurücklegen: Wie wahrscheinlich sind jetzt zwei Gewinne?“ |
+| abi-bogen-b/-d, abi-einlass-a/-c | Antwort ohne Einheit | m, m², h |
+| 4-4, 6-1, 5-6, 2-3 | „fehlende Komponente c“ ohne Angabe welche; v⃗ nicht genannt; Start „O(1|1|1)“ (O ist sonst der Ursprung) | „x₃-Komponente c in der Richtung von h“, „x₂-Komponente c von b⃗“, „v⃗ = (1|2|−1)“, „S(1|1|1)“ |
+
+**C. Aufgaben: Rückmeldungen und Fachliches**
+
+| Wo | vorher | nachher |
+|---|---|---|
+| alle Schnitt-/Durchstoßaufgaben (4-1, 4-2, 4-5, 5-1, 5-2, 5-6, 9-3, Üben, Prüfungen) | „Dein Punkt liegt auf g und liegt auf h noch nicht ✗.“ (gemeint: beides nicht) | „Dein Punkt liegt weder auf g noch auf h ✗.“ / „… liegt in E ✓, aber noch nicht auf g ✗.“ |
+| Zielen (3-1, 3-2, 3-5, 4-3, 10-4, 19-3, Üben) | „Jedes Vielfache dieser Richtung hätte auch getroffen.“ | „Jedes positive Vielfache …“ |
+| Zielen | „Der Strahl geht 5 Einheiten am Ziel vorbei.“ (Abstand zur ganzen Geraden, auch wenn das Ziel hinter dem Laser liegt; „1 Einheiten“) | Abstand zum Strahl, mit Namen des Ziels: „… 6,4 Einheiten an Z vorbei.“; „1 Einheit“ |
+| 5-4 | „Der Strahl geht 2,24 Einheiten am Ziel vorbei“ (Ziel unsichtbar, gefragt ist senkrecht) | „n⃗ · u⃗ = 2 und n⃗ · v⃗ = 0 – beide müssen 0 sein.“ |
+| Parameter-Aufgaben (3-4 u. a.) | „g: x⃗ = (6|5|4) + −3 · (1|1|1)“; „Übers Ziel hinaus“, obwohl falsche Richtung; „t = −3 – genau so oft passt der Richtungsvektor hinein“; „Lux braucht …“ (Lux spricht sonst in der Ich-Form) | „+ (−3) ·“; „Falsche Richtung: t muss kleiner sein.“; „t = −3 – 3-mal entgegen dem Richtungsvektor.“ |
+| 8-5, 11-3, 20-4, abi-drohnen-b, Üben „Flughöhe“ | Erfolgsmeldung „genau so oft passt der Richtungsvektor hinein“ auf eine Zeit- oder Abstandsfrage | eigene Sätze, z. B. „Nach 4 Sekunden landet Drohne 1 – bei (8|2|0).“ |
+| 5-5, 9-4 | „Die Scheibe sitzt genau richtig!“ (Auftrag: Lichtfläche); „setz die Punkte ein“ bei einem Punkt; „S ✓  A, B ✗“ | „Die Ebene sitzt …“; „Setz den Punkt ein“; „S ✓ – A, B ✗: …“ |
+| Vektor-Aufgaben | „x₃ stimmt ✓ – x₁ und x₂ noch nicht.“ | „Die 3. Komponente stimmt ✓ – die 1. und 2. Komponente noch nicht.“ |
+| abi-einlass-a/-c | „Der Zeitpunkt ist größer.“ | „Der Zeitpunkt liegt später.“ |
+| 2-2 | „zurück und nach oben“ bei v⃗ = (4|−4|3) | „nach links und nach oben“ |
+| 7-2 | „nicht in einer Koordinatenebene“ | „nicht beide in derselben Koordinatenebene“ |
+| 11-2 | „Die Geschwindigkeit ist die Länge des Vektors“ (Einführung: Länge = Tempo) | „Das Tempo ist die Länge des Geschwindigkeitsvektors“ |
+| 19-1 | „Winkel zwischen den Normalenvektoren“ | „der spitze Winkel … – dafür sorgt der Betrag im Zähler“ |
+| 20-2, 20-5 | A, B im Rechenweg unbenannt | als Stützpunkte benannt |
+| 14-4, 25-4, Einführung Kap. 14 | Wendestelle nur mit f″(x) = 0 | mit f‴ ≠ 0 bzw. Vorzeichenwechsel |
+| 14-2, 14-3, 14-4 | „Hochpunkt bei x = 2“ | „Hochpunkt H(2|4): Bei x = 2 …“ (Punkt und Stelle getrennt) |
+| 15-3 | Scheitel angenommen, drittes Tor nie geprüft | Probe f(3) = 3 ergänzt |
+| 17-4 | Lage des Rechtecks nur aus dem Bild; Maximum ohne Nachweis | Auftrag präzisiert; A″(x) = −4 < 0 |
+| 16-5 | Rechenweg „meist zwischen 40 und 60“, Finale „45 und 55“ | einheitlich 45 und 55 (μ ± σ) |
+| 23-3, 24-5 | „unter 10 %“, „über 90 %“, „klappt es sicher“ (96,9 %), „Mit 1 Versuchen“ | „höchstens 10 %“, „mindestens 90 %“, „reicht es auch“, „Mit 1 Versuch“ |
+| 23-5 | „Irrtum höchstens 5 %“ | „Irrtumswahrscheinlichkeit“ |
+| 13-4, 13-5 | Finale zweimal derselbe Satz; „Mindestens einer/eines/eins“ | zwei Sätze; einheitlich „eines“ |
+| 12-3, 12-4, Einführung Kap. 12 | „V = … = 8π, b = 1“; „x von -3 bis 3“; „Du stellst das Vielfache von π ein“ | „Ziel: V = π · ∫₀ᵇ f(x)² dx = 8π.“; „−3“; „Meist …“ |
+| Einführungen Kap. 4 und 10 | vierter Fall „identisch“ fehlte; „Das letzte Kapitel der Geometrie“ | ergänzt; ersetzt |
+| Schritt-für-Schritt, offene Punkt-Aufgabe | „Mit t = -1“; „liegt in der … und liegt in der … nicht“ | „−1“; „liegt nicht in der … und liegt nicht in der …“ |
+
+**D. Schreibweise in erzeugten Übungsaufgaben**
+
+| Art | vorher | nachher |
+|---|---|---|
+| Schräge Scheibe | „14 + −4 · t = 10“ | „14 − 4 · t = 10“ |
+| Drei auf einer Geraden, Dieselbe Gerade | „r = 2 : −2“, „k = 2 + −1 · 2“, „k = −2 · −1“ | „2 : (−2)“, „2 + (−1) · 2“, „−2 · (−1)“ |
+| Parallel mit Parameter | „2 · 3 + −1 · a + 2 · −1“, „2 · a + −6 = 0“, „1 · a + 2 = 0“ | „2 · 3 + (−1) · a + 2 · (−1)“, „2 · a − 6 = 0“, „a + 2 = 0“ |
+| Schnittkreis, Spiegelbild | „n⃗ · M = -8“, „|11 − −1|“, „F(3,33|6,67|2,33) = … mit t = 0,67“ | „−8“, „|11 + 1|“, „t = ⅔: F ≈ (3,33|6,67|2,33)“ |
+| Winkel, Spiegeln an der Achse | gerundete Werte mit „=“ („= 16,97“, „= 4,12“) | „≈“ |
+| Zweimal spiegeln, Raute | „2 · √25 ≈ 10“, „√9 ≈ 3“, „√9 lang“ | „= 10“, „= 3“, „3 lang“ |
+| e-Funktion-Hinweise | „f′(-2) = −0,41“ | „f′(−2) ≈ −0,41“ |
+
+**E. Vorlesen (Lux liest vor)** – `Speech.kt`, danach Lautschrift-Daten neu erzeugt (610 feste Sätze, 2101 Wörter)
+
+| Zeichen | vorher gesprochen | nachher |
+|---|---|---|
+| d = |9 − 18| : 3 | „d gleich unter der Bedingung 9 minus 18 unter der Bedingung : 3“ | „d gleich Betrag von 9 minus 18, geteilt durch 3“ |
+| P′ = 2 · F − P | „P gleich 2 mal F minus P“ | „P Strich gleich 2 mal F minus P“ |
+| f″(1) = e > 0 | „f zwei Strich 1 gleich e 0“ | „f zwei Strich von 1 gleich e größer als 0“ |
+| (x − 3)(x + 1) | „x minus 3 x plus 1“ | „Klammer auf x minus 3 Klammer zu mal Klammer auf x plus 1 Klammer zu“ |
+| 3 + 3t = 9 → t = 2; t = ⅔; e⁰; ∫₀²; 2 €; ✓ ✗ ∥ | Zeichen fielen weg, der Sinn kippte | „also“, „zwei Drittel“, „e hoch 0“, „Integral von 0 bis 2“, „2 Euro“, „stimmt“, „parallel zu“ |
+
+Nach der Korrektur enthält die Umsetzung aller 3679 Aufgabentexte kein Sonderzeichen mehr.
+
+**F. Oberfläche, Begriffe, Rechtschreibung**
+- Alte Namen ersetzt: „Level“ → „Aufgabe“ (Erfolge), „Backstage“ → „Mehr“, „Tagesgig“ → „Tagesaufgabe“ (Widget-Name), „Jam-Session“ → „Endlos üben“, „Klassenpaket“ → „Klassen-Paket“.
+- Einzahl ergänzt: „1 Aufgabe“, „1 Tagesaufgabe gelöst“, „1 Punkt“, „1 typischer Fehler“, „1 Aufgabenart“, „1 Kugel“, „1 Schritt“, „1 Erfolg“, „Nach 1 Stunde“.
+- „kein Krümmen“ → „keine Krümmung“; „Los geht's“ → „Los geht’s“; „Nochmal“/„noch mal“ → „Noch einmal“; „ich baller“ → „ich ballere“; Größenangabe im Update immer mit Komma.
+- Ballerbude: „Daneben! Serie weg“ → „Daneben – die Serie startet neu“ (der Store-Text verspricht „keine verlorenen Serien“).
+- Binomial-Labor: „P(X ≤ 0) = P(X = 0) + … + P(X = 0)“ → „P(X ≤ 0) = P(X = 0)“; „In etwa 0 von 100“ → „Selten: In weniger als 1 von 100“; bei genau 100 % „Immer“ statt „so gut wie sicher“.
+- Lux spricht durchgehend in der Ich-Form (Flug-Fehlermeldungen, 20-4).
+- Barrierefreiheit: Zurück-Pfeil („Zurück“), Zahnrad („Einstellungen“) und die Plus/Minus-Knöpfe der Regler („x₁ größer“) haben jetzt Namen für TalkBack. Vorher hatte kein Bedienelement eine Beschreibung.
+
+**G. Texte nach außen**
+- Store-Text: „Spickzettel“ → „Formelsammlung“, „Abzeichen“ → „Erfolge“. Zahlen (136/25/7) und Längen stimmen.
+- README: Kopfteil nannte noch „75 Gigs in 14 Kapiteln“ und alte Namen → auf heutigen Stand gebracht.
+- Änderungsliste: Komma, „Aufgaben-Arten“ → „Aufgabenarten“.
+- **Lizenzen:** In App und WebApp fehlten die Lizenztexte der freien Bausteine. In der WebApp steckt außerdem js-joda (BSD), das nirgends genannt war; Skia (BSD), Kotlin/AndroidX (Apache 2.0) und die Ed25519-Prüfung nach TweetNaCl fehlten in `LIZENZEN.md`.
+  Jetzt: `lizenzen.txt` mit allen Texten liegt der Android-App und der WebApp bei, erreichbar über Einstellungen → „Fremde Bausteine & Lizenzen“; `LIZENZEN.md` ergänzt.
+- **GPL:** weiterhin kein GPL-Baustein in der App (sherpa-onnx 2.0.1 ohne espeak-ng; der Bau prüft das Store-Paket darauf). Unverändert.
+- **Datenschutz WebApp:** Die WebApp verspricht „keine Daten an einen Server“, wählte zum Vorlesen aber notfalls eine Browser-Stimme, die den Text an einen Server schicken kann.
+  Jetzt wird nur mit einer deutschen Stimme vorgelesen, die auf dem Gerät eingebaut ist; gibt es keine, ist „Lux spricht“ nicht verfügbar. Text angepasst.
+- Datensicherheit, Berechtigungen (Play-Fassung ohne Installations-Berechtigung), Internet-Adressen (nur GitHub-Updates in der GitHub-Fassung, Hugging Face für die freiwillige Stimme, Impressum/Datenschutz) stimmen mit `STORE-RELEASE.md` überein.
+
+### 3. Nicht geändert – bitte entscheiden (Marcel)
+
+- **Punkt-/Vektor-Kurzschreibweise** „v⃗ = B − A“, „M = ½ · (A + B)“, „g: x⃗ = A + t · d⃗“ (Kapitel 1–3, 6, Formelsammlung): gängige Schulkurzform, streng wäre „OB⃗ − OA⃗“. An einer Stelle (2-6) steht die strenge Form. Welche soll gelten?
+- **„e^x“** neben hochgestelltem „e⁰“, „2ᵗ“ (Kapitel 25, Binomial-Formel): Lange Exponenten lassen sich nicht hochstellen; so gelassen.
+- **Eingabefelder als Gleichung:** „d(P, E) = [Eingabe]“ (6-4), „OZ⃗ = … + r · …“ (2-4), „V = … = 8π, b = [Eingabe]“: Die Zeile zeigt die aktuelle Eingabe. Bewusst so, in 12-3 klarer formuliert.
+- **Üben „Parameter“:** Bei 15 von 40 Zahlensätzen ragt die Spitze des Richtungspfeils aus dem gezeichneten Raum. Rechnerisch richtig, nur Darstellung.
+- **Üben „Rotationskörper“:** nur 8 verschiedene Kurven (fester Katalog), „Tempo“ wiederholt sich öfter. Kein Fehler, aber wenig Abwechslung.
+- **Namen von Erfolgen** „Abi-ready“, „Residency“ (englisch) und **geschützte Leerzeichen** bei „z. B.“ und „30 %“ (können am Zeilenende umbrechen): Geschmack bzw. Typografie, nicht geändert.
+- **Zielgruppe im Play Store:** `STORE-RELEASE.md` empfiehlt „16–17 und 18+“. Schüler der Klasse 11 können 15 sein. Ob „13–15“ dazugehört (mit den strengeren Regeln), ist deine Entscheidung.
+- **Kurve abfahren:** Wo eine eigene Funktion nicht definiert ist, zeichnet die Bühne die Bahn weiter auf Höhe 0 (ein durchgehender Linienzug). Cockpit, Fläche und Hinweis sagen dort ehrlich „nicht definiert“.
+- **3D-Rechner:** unterscheidet jetzt Strahl und Gerade nur am Startpunkt; Treffer jenseits des Raumrands zählen weiter als Treffer.
+
+### 4. Nicht prüfbar
+
+- **Echte Geräte:** Nichts wurde auf einem Handy, iPhone oder iPad geprüft – nur Robolectric (Android) und Chromium (WebApp). Das iPad-Problem (weißer Bildschirm, Korrektur seit 2.11.1) wartet auf Marcels Test.
+- **Vorlese-Hilfen:** In der WebApp (Zeichenfläche) gibt es keine Beschriftungen für Screenreader; die neuen Namen wirken nur in der Android-App. TalkBack selbst wurde nicht ausprobiert.
+- **Klang der Stimme:** Geprüft ist der Text, der vorgelesen wird, nicht die Aussprache (z. B. „Klammer auf … Klammer zu“ klingt bei langen Gleichungen hölzern; Vektor-Rechnungen bleiben Zahlenfolgen).
+- **Ob eine Aufgabe didaktisch gut gestellt ist** (Schwierigkeit, Reihenfolge, Abi-Nähe je Bundesland) kann die Nachrechnung nicht beurteilen.
+- **Bestandteile in sherpa-onnx:** Die Lizenzen der darin enthaltenen Unterbibliotheken sind nicht einzeln geprüft (Lizenzliste nennt sherpa-onnx und ONNX Runtime).
+- **Play In-App Updates, Abi-Pass mit echtem Schlüssel, Freischalt-Link auf der Live-Adresse:** erst mit Store-Installation bzw. echtem Test-Code prüfbar.
+- **Rückmeldungen bei jeder denkbaren falschen Eingabe:** geprüft sind Start-Einstellung, typische Fehler und je Aufgabe 25 zufällige Eingaben, nicht alle.
+
+---
+
 ## 16.11.2026 – Stand Play Store und WebApp (Antwort auf die Fragen vom 16.11.)
 
 **Aktuelle Version:** Android 2.4.1 vom 15.11.2026, WebApp-Vorschau 2.4.1 auf der Testadresse. Seit dem 15.11. keine neue Version.

@@ -58,7 +58,7 @@ object Levels {
             p(1, 1, 0), p(4, 5, 0),
             tip = "Spitze minus Fuß: B − A, Zeile für Zeile.",
             way = listOf("v⃗ = B − A", "(4−1 | 5−1 | 0−0)", "v⃗ = (3|4|0)")),
-        Families.vector("2-2", 2, "Quer durch den Raum", "Diesmal geht es auch zurück und nach oben. Achte auf die Vorzeichen.",
+        Families.vector("2-2", 2, "Quer durch den Raum", "Diesmal geht es auch nach links und nach oben. Achte auf die Vorzeichen.",
             p(2, 6, 1), p(6, 2, 4),
             tip = "B − A: Wird eine Koordinate kleiner, ist die Komponente negativ.",
             way = listOf("v⃗ = B − A", "(6−2 | 2−6 | 4−1)", "v⃗ = (4|−4|3)")),
@@ -66,10 +66,10 @@ object Levels {
             val o = p(1, 1, 1); val u = p(3, 1, 2)
             Families.vector("2-3", 2, "Zwei Etappen", "Die erste Etappe u⃗ bin ich schon geflogen. Welcher Vektor w⃗ bringt mich jetzt ans Ziel?",
                 o + u, p(2, 7, 4), name = "w⃗",
-                given = listOf(listOf(Txt("Start O(1|1|1),  u⃗ = "), col(u))),
-                tip = "Erst ausrechnen, wo ich nach u⃗ bin: O + u⃗. Von dort zum Ziel: B − A.",
-                way = listOf("A = O + u⃗ = (4|2|3)", "w⃗ = B − A = (2−4 | 7−2 | 4−3)", "w⃗ = (−2|5|1)"),
-                extras = { listOf(Stage.point("O", o, "violet", "O(1|1|1)"), Stage.vector("u", o, o + u, "violet", "u⃗")) })
+                given = listOf(listOf(Txt("Start S(1|1|1),  u⃗ = "), col(u))),
+                tip = "Erst ausrechnen, wo ich nach u⃗ bin: S + u⃗. Von dort zum Ziel: B − A.",
+                way = listOf("A = S + u⃗ = (4|2|3)", "w⃗ = B − A = (2−4 | 7−2 | 4−3)", "w⃗ = (−2|5|1)"),
+                extras = { listOf(Stage.point("O", o, "violet", "S(1|1|1)"), Stage.vector("u", o, o + u, "violet", "u⃗")) })
         },
         Families.param("2-4", 2, "Dreimal dasselbe", "Der Vektor v⃗ ist fest. Wie oft muss ich ihn hintereinander fliegen, um bei Z zu landen?",
             p(1, 1, 0), p(1, 2, 1), 3, 0..5, live = true, symbol = "r", vectorName = "v⃗", prefix = "OZ⃗ = ", lineLabel = null,
@@ -102,7 +102,7 @@ object Levels {
     private val ch3 = listOf(
         Families.aim("3-1", 3, "Erster Schuss", "Ein Laser ist eine Gerade: Stützpunkt plus Richtung. Der Laser steht im Ursprung – gib ihm die Richtung zum Ring.",
             p(0, 0, 0), listOf(p(2, 4, 2)),
-            tip = "Richtungsvektor = Ziel − Stützpunkt. Jedes Vielfache davon trifft auch, z. B. (1|2|1).",
+            tip = "Richtungsvektor = Ziel − Stützpunkt. Jedes positive Vielfache davon trifft auch, z. B. (1|2|1).",
             way = listOf("d⃗ = Z − A = (2|4|2)", "kürzer: d⃗ = (1|2|1)", "g: x⃗ = (0|0|0) + t · (1|2|1)")),
         Families.aim("3-2", 3, "Stützvektor", "Jetzt steht der Laser irgendwo im Raum. Die Richtung ist trotzdem Ziel minus Start.",
             p(6, 1, 1), listOf(p(2, 5, 4)),
@@ -150,7 +150,7 @@ object Levels {
             tip = "Parallele Geraden haben denselben Richtungsvektor (oder ein Vielfaches).",
             way = listOf("g hat die Richtung (2|3|1)", "h ∥ g → gleiche Richtung", "Probe: (4|0|1) + 2 · (2|3|1) = (8|6|3) ✓"),
             extras = { listOf(Stage.fullLine("g", p(1, 1, 2), p(2, 3, 1), Bounds(), "pink", "g")) }),
-        Level("4-4", 4, "Windschief?", "Im Moment laufen die Strahlen aneinander vorbei – windschief. Stell die fehlende Komponente c so ein, dass sie sich treffen.",
+        Level("4-4", 4, "Windschief?", "Im Moment laufen die Strahlen aneinander vorbei – windschief. Stell die fehlende x₃-Komponente c in der Richtung von h so ein, dass sie sich treffen.",
             Bounds(), listOf(Control("c", "c", ControlKind.SCALAR, listOf(0), listOf(-3), listOf(3), "yellow")), mapOf("c" to listOf(1)),
             tip = "Aus Zeile 1 und 2 folgen s und t. Setz beide in Zeile 3 ein und löse nach c.",
             way = listOf("x₁, x₂: 2s = 7 − t und 6 − s = 1 + t → s = 2, t = 3", "x₃: 1 + 2 = 0 + 3c", "c = 1"),
@@ -194,6 +194,7 @@ object Levels {
             val q = p(2, 2, 1); val u = p(2, 0, 1); val w = p(0, 2, 1); val m = q + u + w
             Families.aim("5-4", 5, "Normalenvektor", "Der Spot soll senkrecht auf die Leinwand treffen. Gesucht ist ein Vektor, der auf u⃗ und auf v⃗ senkrecht steht.",
                 p(3, 3, 5), listOf(m), hidden = true, name = "n⃗", line = "Spot", solution = p(1, 1, -2),
+                missText = { n -> "n⃗ · u⃗ = ${Geo.num(n dot u)} und n⃗ · v⃗ = ${Geo.num(n dot w)} – beide müssen 0 sein." },
                 given = listOf(listOf(Txt("u⃗ = "), col(u), Txt("   v⃗ = "), col(w))),
                 tip = "Kreuzprodukt u⃗ × v⃗ – oder zwei Gleichungen: n⃗ · u⃗ = 0 und n⃗ · v⃗ = 0. Der Spot hängt über der Leinwand, also zeigt n⃗ nach unten.",
                 way = listOf("u⃗ × v⃗ = (0·1 − 1·2 | 1·0 − 2·1 | 2·2 − 0·0) = (−2|−2|4)", "gekürzt und nach unten gedreht: n⃗ = (1|1|−2)", "Probe: n⃗ · u⃗ = 2 − 2 = 0 ✓, n⃗ · v⃗ = 2 − 2 = 0 ✓"),
@@ -203,7 +204,7 @@ object Levels {
             listOf("A" to p(3, 2, 0), "B" to p(1, 2, 2), "C" to p(0, 4, 2)), p(2, 1, 2), 8,
             tip = "Normalenvektor = AB⃗ × AC⃗. Danach A einsetzen, um c zu bekommen.",
             way = listOf("AB⃗ = (−2|0|2), AC⃗ = (−3|2|2)", "AB⃗ × AC⃗ = (−4|−2|−4) → n⃗ = (2|1|2)", "A einsetzen: 2·3 + 2 + 0 = 8 → E: 2x₁ + x₂ + 2x₃ = 8")),
-        pierce("5-6", "Abi-Check: Schatten", "Ein Scheinwerfer strahlt parallel in Richtung v⃗. Wo landet der Schatten der Mastspitze T auf der LED-Wand E?",
+        pierce("5-6", "Abi-Check: Schatten", "Ein Scheinwerfer strahlt parallel in Richtung v⃗ = (1|2|−1). Wo landet der Schatten der Mastspitze T auf der LED-Wand E?",
             p(2, 2, 5), p(1, 2, -1), p(0, 1, 0), 6, "x₂ = 6", abi = true,
             tip = "Schattengerade durch T mit Richtung v⃗. In E ist x₂ = 6: 2 + 2t = 6.",
             way = listOf("g: x⃗ = (2|2|5) + t · (1|2|−1)", "x₂ = 6: 2 + 2t = 6 → t = 2", "Schattenpunkt S(4|6|3)"),
@@ -216,7 +217,7 @@ object Levels {
         val distP = p(1, 2, 1); val distN = p(1, 2, 2)
         val mirA = p(4, 1, 1); val mirZ = p(2, 7, 4); val mirS = p(0, 5, 3)
         listOf(
-            Level("6-1", 6, "Rechter Winkel", "Zwei Traversen sollen genau rechtwinklig stehen. Stell die fehlende Komponente c ein.",
+            Level("6-1", 6, "Rechter Winkel", "Zwei Traversen sollen genau rechtwinklig stehen. Stell die fehlende x₂-Komponente c von b⃗ ein.",
                 Bounds(), listOf(Control("c", "c", ControlKind.SCALAR, listOf(0), listOf(-2), listOf(5), "pink")), mapOf("c" to listOf(2)),
                 tip = "Senkrecht heißt: Skalarprodukt = 0. Also 2 · (−2) + 1 · c + 2 · 1 = 0.",
                 way = listOf("a⃗ · b⃗ = 2·(−2) + 1·c + 2·1", "−4 + c + 2 = 0", "c = 2"),
@@ -296,7 +297,7 @@ object Levels {
             "g: x⃗ = A + t · d⃗. Mit t wanderst du auf dem Strahl entlang.",
             "Du siehst nur den Anfang des Strahls. Den Rest verrät dir die Rechnung."), ch3),
         Chapter(4, "Lage von Geraden", "Schnittpunkt, parallel, windschief", "Konzerthalle", "✨", "yellow", listOf(
-            "Zwei Geraden im Raum können sich schneiden, parallel laufen – oder windschief aneinander vorbei.",
+            "Zwei Geraden im Raum können sich schneiden, parallel laufen, windschief aneinander vorbeilaufen – oder sogar dieselbe Gerade sein.",
             "Schnittpunkt gesucht? Gleichsetzen und das Gleichungssystem lösen.",
             "Stimmt die dritte Zeile nicht, verfehlen sich die Strahlen."), ch4),
         Chapter(5, "Ebenen", "Durchstoßpunkt, Koordinatenform, Normalenvektor", "Open Air", "🔷", "violet", listOf(

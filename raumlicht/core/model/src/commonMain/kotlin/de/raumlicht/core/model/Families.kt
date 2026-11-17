@@ -22,10 +22,11 @@ object Families {
     fun matchMessage(p: V3, target: V3, what: String = "Koordinate"): String {
         val ok = (0..2).filter { kotlin.math.abs(p.list[it] - target.list[it]) < Geo.EPS }
         val bad = (0..2) - ok.toSet()
-        fun names(l: List<Int>) = l.joinToString(" und ") { X[it] }
+        // Punkte haben Koordinaten x₁, x₂, x₃ – Vektoren haben eine 1., 2. und 3. Komponente
+        fun names(l: List<Int>) = if (what == "Komponente") l.joinToString(" und ") { "${it + 1}." } + " Komponente" else l.joinToString(" und ") { X[it] }
         return when (ok.size) {
             0 -> "Noch stimmt keine $what. Rechne jede Zeile einzeln."
-            else -> "${names(ok)} ${if (ok.size == 1) "stimmt" else "stimmen"} ✓ – ${names(bad)} noch nicht."
+            else -> "${names(ok).let { if (what == "Komponente") "Die $it" else it }} ${if (ok.size == 1) "stimmt" else "stimmen"} ✓ – ${names(bad).let { if (what == "Komponente") "die $it" else it }} noch nicht."
         }
     }
 
@@ -96,6 +97,8 @@ object Families {
         tip: String, way: List<String>, bounds: Bounds = Bounds(), abi: Boolean = false, hidden: Boolean = false,
         start: V3 = V3(1, 0, 0), name: String = "d⃗", line: String = "g", solution: V3 = targets.first() - a,
         given: List<List<Part>> = emptyList(),
+        /** Eigene Rückmeldung für eine falsche Richtung (wenn es nicht ums Treffen eines sichtbaren Ziels geht) */
+        missText: ((V3) -> String)? = null,
         extras: (Phase) -> List<Obj> = { emptyList() },
     ): Level {
         val far = targets.maxBy { (it - a).length }
@@ -112,18 +115,22 @@ object Families {
                     Stage.vector("pfeil", a, a + v.vec("d"), "cyan", name),
                     if (ph == Phase.AIM) Stage.handle("griff", a + v.vec("d"), "cyan") else null,
                     if (ph == Phase.DONE) Stage.line("strahl", a, far - a, 0.0, 1.0, "cyan") else null,
-                ) + (if (!hidden || ph == Phase.DONE) targets.mapIndexed { i, t -> Stage.point("ziel$i", t, "yellow", if (targets.size == 1) "Z${t.fmt()}" else "Z${i + 1}${t.fmt()}", "target") } else emptyList())
+                ) + (if (!hidden || ph == Phase.DONE) targets.mapIndexed { i, t -> Stage.point("ziel$i", t, "yellow", if (targets.size == 1) "Z${t.fmt()}" else "Z${"₁₂₃₄"[i]}${t.fmt()}", "target") } else emptyList())
             },
             evaluate = { v ->
                 val d = v.vec("d")
                 when {
                     d.isZero -> Outcome(false, "Der Nullvektor hat keine Richtung – so kommt kein Strahl raus.")
-                    targets.all { Geo.sameDirection(d, it - a) } -> Outcome(true, "Volltreffer! Jedes Vielfache dieser Richtung hätte auch getroffen.", listOf(Beam(a, far, "cyan", true)))
+                    targets.all { Geo.sameDirection(d, it - a) } -> Outcome(true, "Volltreffer! Jedes positive Vielfache dieser Richtung hätte auch getroffen.", listOf(Beam(a, far, "cyan", true)))
                     else -> {
                         val end = a + d * Geo.exit(a, d, bounds.outerLo, bounds.outerHi)
                         val msg = if (Geo.parallel(d, far - a) && targets.size == 1) "Die Richtung stimmt – aber der Strahl läuft rückwärts. Vorzeichen umdrehen!"
                         else if (!a.isZero && Geo.parallel(d, far)) "Das ist die Richtung vom Ursprung zum Ziel. Der Laser steht aber in A – zieh A ab: Z − A."
-                        else "Der Strahl geht ${Geo.num(Geo.distPointLine(far, a, d))} Einheiten am Ziel vorbei."
+                        else missText?.invoke(d) ?: run {
+                            // der Strahl beginnt in A: Liegt das Ziel hinter dem Laser, zählt der Abstand zu A. Bei mehreren Zielen wird das am weitesten verfehlte genannt.
+                            val worst = targets.withIndex().maxBy { (_, t) -> Geo.distPointRay(t, a, d) }
+                            "Der Strahl geht ${Geo.units(Geo.distPointRay(worst.value, a, d))} an ${if (targets.size == 1) "Z" else "Z" + "₁₂₃₄"[worst.index]} vorbei."
+                        }
                         Outcome(false, msg, listOf(Beam(a, end, "cyan", false)))
                     }
                 }
@@ -136,6 +143,10 @@ object Families {
         id: String, chapter: Int, title: String, mission: String, a: V3, d: V3, tStar: Int, range: IntRange,
         tip: String, way: List<String>, bounds: Bounds = Bounds(), abi: Boolean = false, live: Boolean = false,
         start: Int = 0, symbol: String = "t", vectorName: String = "d⃗", prefix: String = "g: x⃗ = ", lineLabel: String? = "g", hidden: Boolean = false,
+        /** Weitere Angaben unter der Geradengleichung (z. B. die Ebene, um die es geht) */
+        given: List<List<Part>> = emptyList(),
+        /** Eigener Satz, wenn die Lösung stimmt (wenn nicht ein sichtbares Ziel angeflogen wird, sondern etwas zu berechnen war) */
+        success: String? = null,
         extras: (Phase) -> List<Obj> = { emptyList() },
     ): Level {
         val z = a + d * tStar
@@ -143,7 +154,7 @@ object Families {
             id, chapter, title, mission, bounds,
             controls = listOf(Control("t", symbol, ControlKind.SCALAR, listOf(start), listOf(range.first), listOf(range.last), "pink")),
             solution = mapOf("t" to listOf(tStar)), tip = tip, way = way, abi = abi,
-            formula = { v -> listOf(listOf(Txt(prefix), col(a), Txt(" + "), Num(Geo.num(v.int("t")), "t"), Txt(" · "), col(d)), (if (hidden) emptyList() else listOf(Txt("Ziel Z${z.fmt()}")))) },
+            formula = { v -> listOf(listOf(Txt(prefix), col(a), Txt(" + "), Num(Geo.par(v.int("t")), "t"), Txt(" · "), col(d))) + (if (hidden) emptyList() else listOf(listOf(Txt("Ziel Z${z.fmt()}")))) + given },
             objects = { v, ph ->
                 extras(ph) + listOfNotNull(
                     Stage.fullLine("g", a, d, bounds, "cyan", lineLabel),
@@ -158,13 +169,17 @@ object Families {
                 val t = v.int("t")
                 val p = a + d * t
                 when {
-                    t == tStar -> Outcome(true, "$symbol = ${Geo.num(tStar)} – genau so oft passt der Richtungsvektor hinein.", flyTo = p)
-                    t < tStar -> Outcome(false, "Zu kurz gedacht: Lux braucht ein größeres $symbol.", flyTo = p)
-                    else -> Outcome(false, "Übers Ziel hinaus: Lux braucht ein kleineres $symbol.", flyTo = p)
+                    t == tStar -> Outcome(true, success ?: if (tStar < 0) "$symbol = ${Geo.num(tStar)} – ${-tStar}-mal entgegen dem Richtungsvektor." else "$symbol = ${Geo.num(tStar)} – genau so oft passt der Richtungsvektor hinein.", flyTo = p)
+                    // falsche Seite des Stützpunkts: Lux fliegt vom Ziel weg
+                    t != 0 && tStar != 0 && (t > 0) != (tStar > 0) -> Outcome(false, "Falsche Richtung: $symbol muss ${if (t < tStar) "größer" else "kleiner"} sein.", flyTo = p)
+                    kotlin.math.abs(t) < kotlin.math.abs(tStar) -> Outcome(false, "Zu kurz gedacht: $symbol muss ${if (t < tStar) "größer" else "kleiner"} sein.", flyTo = p)
+                    else -> Outcome(false, "Übers Ziel hinaus: $symbol muss ${if (t < tStar) "größer" else "kleiner"} sein.", flyTo = p)
                 }
             },
         )
     }
+
+    private fun place(c: Check) = c.text.removePrefix("liegt ")
 
     /** Strahlen sind gegeben, man sieht nur ihren Anfang. Der Sensor muss genau dorthin, wo es passiert (Schnitt-, Durchstoßpunkt). */
     fun sensor(
@@ -200,8 +215,9 @@ object Families {
                 MistakeBook.add(mistakes.map { it.second })
                 val msg = mistakes.firstOrNull { p.near(it.first) }?.second ?: when {
                     bad.isEmpty() || checks.isEmpty() -> matchMessage(p, answer)
-                    good.isEmpty() -> "Dein Punkt ${bad.joinToString(" und ") { it.text }} noch nicht ✗."
-                    else -> "Dein Punkt ${good.joinToString(" und ") { it.text }} ✓, aber ${bad.joinToString(" und ") { it.text }} nicht ✗."
+                    // die Bedingungen heißen „liegt auf g“, „liegt in E“ … – daraus wird „weder auf g noch in E“ bzw. „auf g ✓, aber noch nicht in E“
+                    good.isEmpty() -> if (bad.size == 2) "Dein Punkt liegt weder ${place(bad[0])} noch ${place(bad[1])} ✗." else "Dein Punkt liegt noch nicht ${bad.joinToString(" und nicht ") { place(it) }} ✗."
+                    else -> "Dein Punkt liegt ${good.joinToString(" und ") { place(it) }} ✓, aber noch nicht ${bad.joinToString(" und nicht ") { place(it) }} ✗."
                 }
                 Outcome(false, msg, beams)
             }
@@ -244,8 +260,8 @@ object Families {
             else {
                 val (good, bad) = points.partition { Geo.onPlane(it.second, nn, cc) }
                 if (bad.isEmpty() && normal != null && !Geo.parallel(nn, normal)) Outcome(false, normalHint)
-                else if (bad.isEmpty()) Outcome(true, "Die Scheibe sitzt genau richtig!")
-                else Outcome(false, (if (good.isEmpty()) "" else good.joinToString(", ") { it.first } + " ✓  ") + bad.joinToString(", ") { it.first } + " ✗ – setz die Punkte ein und prüfe die Gleichung.")
+                else if (bad.isEmpty()) Outcome(true, "Die Ebene sitzt genau richtig!")
+                else Outcome(false, (if (good.isEmpty()) "" else good.joinToString(", ") { it.first } + " ✓ – ") + bad.joinToString(", ") { it.first } + " ✗: Setz ${if (bad.size == 1) "den Punkt" else "die Punkte"} ein und prüfe die Gleichung.")
             }
         },
     )
@@ -255,12 +271,12 @@ object Families {
     /** Durchstoßpunkt: Gerade trifft Ebene n·x = rhs. */
     fun pierce(
         id: String, chapter: Int, title: String, mission: String, a: V3, d: V3, n: V3, rhs: Int,
-        tip: String, way: List<String>, planeText: String = Geo.planeText(n, rhs), abi: Boolean = false, extras: List<Obj> = emptyList(),
+        tip: String, way: List<String>, planeText: String = Geo.planeText(n, rhs), abi: Boolean = false, extras: List<Obj> = emptyList(), name: String = "S",
     ): Level {
         val s = a + d * Geo.linePlane(a, d, n, rhs.toDouble())!!
         return sensor(id, chapter, title, mission, listOf(Ray("g", a, d, "cyan", s)), s,
             listOf(Check("liegt auf g") { Geo.onLine(it, a, d) }, Check("liegt in E") { Geo.onPlane(it, n, rhs.toDouble()) }),
-            given = listOf(lineText("g", a, d), listOf(Txt("E: $planeText"))), tip = tip, way = way, abi = abi,
+            given = listOf(lineText("g", a, d), listOf(Txt("E: $planeText"))), tip = tip, way = way, abi = abi, name = name,
             extras = { extras + Stage.plane("E", n, rhs.toDouble(), "violet", "E") })
     }
 
@@ -290,7 +306,8 @@ object Families {
     fun compare(value: Int, solution: Int, what: String, ok: String, mistakes: Map<Int, String> = emptyMap(), beams: (Boolean) -> List<Beam> = { emptyList() }) = when {
         value == solution -> Outcome(true, ok, beams(true))
         value in mistakes -> { MistakeBook.add(mistakes.values); Outcome(false, mistakes.getValue(value), beams(false)) }
-        value < solution -> Outcome(false, "$what ist größer. Rechne noch einmal nach.", beams(false))
-        else -> Outcome(false, "$what ist kleiner. Rechne noch einmal nach.", beams(false))
+        // ein Zeitpunkt ist nicht „größer“, er liegt später
+        value < solution -> Outcome(false, "$what ${if (what == "Der Zeitpunkt") "liegt später" else "ist größer"}. Rechne noch einmal nach.", beams(false))
+        else -> Outcome(false, "$what ${if (what == "Der Zeitpunkt") "liegt früher" else "ist kleiner"}. Rechne noch einmal nach.", beams(false))
     }
 }

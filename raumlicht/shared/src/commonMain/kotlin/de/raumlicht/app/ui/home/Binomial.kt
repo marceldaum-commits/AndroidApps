@@ -105,7 +105,7 @@ fun BinomialScreen(onBack: () -> Unit) {
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 2.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Dial("Erwartungswert μ = n · p", Geo.num(dist.mean), "so viele Treffer im Schnitt", Q.Pink, Modifier.weight(1f).testTag("mu"))
-            Dial("Streuung σ", Geo.num(dist.sigma), "meist zwischen ${Geo.num(dist.mean - dist.sigma)} und ${Geo.num(dist.mean + dist.sigma)}", Q.Violet, Modifier.weight(1f).testTag("sigma"))
+            Dial("Streuung σ", Geo.num(dist.sigma), dist.spreadText(), Q.Violet, Modifier.weight(1f).testTag("sigma"))
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 2.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
             Stepper("Versuche n", n, n.toString(), Q.Cyan, "n", Modifier.weight(1f), n > 1, n < Binomial.MAX_N) { d -> n = (n + d).coerceIn(1, Binomial.MAX_N); k = k.coerceAtMost(n) }

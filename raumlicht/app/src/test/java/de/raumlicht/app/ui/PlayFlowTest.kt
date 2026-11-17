@@ -47,7 +47,7 @@ class PlayFlowTest {
         rule.onNodeWithText("Abstand 4").assertExists()                                  // Start: 4 von E₁ entfernt
         slide("flug-regler", 0.5f)                                                       // t = 2: genau in E₁
         rule.onNodeWithText("Durchstoßpunkt mit E₁: x₁ = 4").assertExists(); rule.onNodeWithText("t = 2 → S(4|4|3)").assertExists()
-        rule.onNodeWithText("du bist genau in der Ebene").assertExists()
+        rule.onNodeWithText("Du bist genau in der Ebene").assertExists()
         rule.onNodeWithTag("flug-kugel").performClick(); rule.mainClock.advanceTimeBy(400)
         assertTrue(stage.lastState!!.contains("\"type\":\"sphere\""))
     }
@@ -64,7 +64,7 @@ class PlayFlowTest {
 
     @Test fun quickModeHasNoTipButton() {
         show { QuickScreen({ _, _, _ -> }, {}, seed = 3) }
-        rule.onNodeWithText("▶ Los geht's").performClick(); rule.mainClock.advanceTimeBy(800)
+        rule.onNodeWithText("▶ Los geht’s").performClick(); rule.mainClock.advanceTimeBy(800)
         rule.onNodeWithText("▶ Los").assertExists(); rule.onNodeWithText("💡 Tipp").assertDoesNotExist()
         rule.onNodeWithText("✍️ Ohne Hilfsmittel · 1/6 · Geometrie").assertExists()
     }
@@ -211,7 +211,7 @@ class PlayFlowTest {
         assertTrue(stage.log.any { it.startsWith("RL.fire") } && stage.log.any { it.startsWith("RL.burst") })    // Lux ballert
         assertFalse(stage.lastState!!.contains("\"id\":\"b${up[0].id}\""))
         stage.onTap?.invoke("b${up[0].id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("${up[0].kind.points}")   // weg ist weg
-        // daneben getippt: Lux schießt genau dorthin, Punkte bleiben, Serie weg
+        // daneben getippt: Lux schießt genau dorthin, Punkte bleiben, Serie beginnt von vorn
         val shots = stage.log.count { it.startsWith("RL.fire") }
         stage.onMiss?.invoke(V3(4.0, 6.5, 5.0)); rule.mainClock.advanceTimeBy(100)
         assertEquals(shots + 1, stage.log.count { it.startsWith("RL.fire") }); assertTrue(stage.log.last { it.startsWith("RL.fire") }.contains("to:[4.0,6.5,5.0]") )
@@ -249,7 +249,7 @@ class PlayFlowTest {
         rule.onNodeWithTag("flug-eigener").performClick(); rule.mainClock.advanceTimeBy(400)
         rule.onNodeWithTag("richtung-0").performTextReplacement("0"); rule.onNodeWithTag("richtung-1").performTextReplacement("0"); rule.onNodeWithTag("richtung-2").performTextReplacement("0")
         rule.onNodeWithTag("flug-bauen").performClick(); rule.mainClock.advanceTimeBy(300)
-        rule.onNodeWithTag("flug-fehler").assertTextEquals("Die Richtung darf nicht (0|0|0) sein – sonst fliegt Lux nirgendwohin."); assertEquals("", stored)
+        rule.onNodeWithTag("flug-fehler").assertTextEquals("Die Richtung darf nicht (0|0|0) sein – sonst fliege ich nirgendwohin."); assertEquals("", stored)
         rule.onNodeWithTag("richtung-0").performTextReplacement("1"); rule.onNodeWithTag("richtung-1").performTextReplacement("1")           // g: (0|0|1) + t·(1|1|0)
         rule.onNodeWithTag("e2-an").performClick()                                                                                         // zweite Ebene dazu: x₁ + x₂ + x₃ = 16 → hier 1,1,1 = 16
         rule.onNodeWithTag("e2-3").performTextReplacement("9")                                                                             // x₁ + x₂ + x₃ = 9 → t = 4
@@ -259,7 +259,7 @@ class PlayFlowTest {
         rule.onNodeWithTag("flug-term", useUnmergedTree = true).assertTextEquals("g: x⃗ = (0|0|1) + t · (1|1|0)")
         assertTrue(stage.lastState!!.contains("E₂: x₁ + x₂ + x₃ = 9") && !stage.lastState!!.contains("\"type\":\"sphere\""))
         slide("flug-regler", 0.5f)                                                                                                          // t = 4 von 8: beide Ebenen liegen bei t = 4
-        rule.onNodeWithText("du bist genau in der Ebene").assertExists()
+        rule.onNodeWithText("Du bist genau in der Ebene").assertExists()
         rule.onNodeWithTag("flug-zeile").performClick(); rule.mainClock.advanceTimeBy(300); rule.onNodeWithTag("start-0").assertExists()
     }
 
@@ -278,6 +278,10 @@ class PlayFlowTest {
         val later = g.alive(18.0, setOf(good.id, bad.id)); val fits2 = later.first { g.rules[1].ok(g.numbers[it.id]) }; val not2 = later.first { !g.rules[1].ok(g.numbers[it.id]) }
         stage.onTap?.invoke("b${fits2.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("1")
         stage.onTap?.invoke("b${not2.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("meldung").assertTextEquals("${g.numbers[not2.id]} passt nicht! −1")
+        // bei 0 Punkten wird nichts abgezogen – dann steht auch kein „−1“ in der Meldung
+        rule.onNodeWithTag("punkte").assertTextEquals("0")
+        later.firstOrNull { !g.rules[1].ok(g.numbers[it.id]) && it.id != not2.id }?.let { not3 ->
+            stage.onTap?.invoke("b${not3.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("meldung").assertTextEquals("${g.numbers[not3.id]} passt nicht!"); rule.onNodeWithTag("punkte").assertTextEquals("0") }
         rule.mainClock.advanceTimeBy(40_000); rule.onNodeWithTag("ergebnis").assertExists(); assertEquals(emptyList<Int>(), scores)   // Bestwert gibt es nur im Spaß-Modus
         rule.mainClock.autoAdvance = true
     }
@@ -400,12 +404,16 @@ class PlayFlowTest {
         // nach jedem Schieben abwarten, bis die Meldung dazu wirklich verarbeitet ist – erst dann läuft die Uhr weiter
         fun go(u: Float) { slide("fahrt-regler", u); rule.waitForIdle(); rule.mainClock.advanceTimeBy(400); rule.waitForIdle() }
         fun parties() = stage.log.count { it.startsWith("RL.party") }
+        // Die Bahn beginnt auf einer Nullstelle (x = 0, am Rand): Sie bekommt ihr Schild, aber keine Ansage und keine Lichtshow –
+        // sonst wäre die Ruhe für die erste Stelle der Fahrt schon verbraucht, bevor es losgeht
+        rule.waitForIdle(); rule.onNodeWithText("Nullstelle bei x = 0").assertExists(); assertEquals(0, parties()); assertEquals(emptyList<String>(), heard)
         go(0.25f)                                                    // x = 1: Hochpunkt – in Ruhe erreicht
         rule.onNodeWithText("Hochpunkt bei x = 1").assertExists(); assertEquals("ride=" + stage.lastRide, 1, parties())
         assertEquals(listOf("Hochpunkt bei x = 1"), heard)
         clock += 400; go(0.5f)                                        // 0,4 s später schon der Wendepunkt: Schild ja, aber keine Ansage und keine Lichtshow
         rule.onNodeWithText("Wendepunkt bei x = 2").assertExists(); assertEquals(1, heard.size); assertEquals(1, parties())
         clock += 400; go(0.75f)                                       // und gleich der Tiefpunkt: weiter ruhig
+        rule.onNodeWithText("Tiefpunkt und Nullstelle bei x = 3").assertExists()   // fallen zwei Stellen zusammen, werden beide genannt
         assertEquals(1, heard.size); assertEquals(1, parties())
         clock += 3000; go(0.5f)                                       // nach einer Pause wird wieder angesagt
         assertEquals(listOf("Hochpunkt bei x = 1", "Wendepunkt bei x = 2"), heard); assertEquals(2, parties())
@@ -415,6 +423,7 @@ class PlayFlowTest {
     @Test fun binomialLab() {
         show { de.raumlicht.app.ui.home.BinomialScreen({}) }
         rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≤ 3) = 17,19 %")                      // B(10; 0,5), höchstens 3
+        rule.onNodeWithText("Mit 66 % zwischen 4 und 6 Treffern (μ ± σ)").assertExists()            // Streubereich mit der echten Wahrscheinlichkeit statt „meist“
         rule.onNodeWithTag("frage-exact").performClick(); rule.onNodeWithTag("ergebnis").assertTextEquals("P(X = 3) = 11,72 %")
         rule.onNodeWithTag("ansatz").assertTextEquals("P(X = 3) = (10 über 3) · 0,5^3 · 0,5^7")
         rule.onNodeWithTag("frage-at_least").performClick(); rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≥ 3) = 94,53 %")

@@ -159,7 +159,7 @@ fun AppRoot(
                     var streak by rememberSaveable { mutableIntStateOf(0) }
                     val stufe = JamLevel.entries.firstOrNull { it.name == parts.getOrNull(2) }
                     val level = remember(session, n) { Practice.level(topic, stufe, session, n) }
-                    LevelScreen(level, Chapter(0, topic.title, topic.title, "Jam-Session", topic.emoji, topic.color, emptyList(), emptyList()), false, {},
+                    LevelScreen(level, Chapter(0, topic.title, topic.title, "Endlos üben", topic.emoji, topic.color, emptyList(), emptyList()), false, {},
                         // Serie: nur Treffer beim ersten Versuch zählen
                         onSolved = { s, _ -> streak = if (s == 3) streak + 1 else 0; prefs.recordJam(streak) },
                         onNext = { n++ }, onBack = back,
@@ -181,8 +181,8 @@ fun AppRoot(
                         BackstageEntry("🧩", "Rechenweg in Schritten", "Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand – Schritt für Schritt", Q.Green, "Üben") { nav.go(Routes.GUIDES) },
                         BackstageEntry("✍️", "Ohne Hilfsmittel", "6 kurze Aufgaben wie im Pflichtteil – ohne Tipp", Q.Yellow, "Üben") { nav.go(Routes.QUICK) },
                         BackstageEntry("🧭", "Lage von Geraden erkennen", "parallel, identisch, schneidend, windschief? · Rekord $lageBest/${LageCheck.ROUNDS}", Q.Yellow, "Üben") { nav.go(Routes.LAGE) },
-                        BackstageEntry("🔁", "Fehler wiederholen", if (weak == 0) "nichts offen" else "$weak Aufgaben, die nicht beim ersten Versuch saßen", Q.Orange, "Üben") { nav.go(Routes.TRAINING) },
-                        BackstageEntry("📔", "Fehler-Tagebuch", if (diary.isEmpty()) "deine typischen Fehler – noch leer" else "${diary.size} typische Fehler notiert", Q.Orange, "Üben") { nav.go(Routes.DIARY) },
+                        BackstageEntry("🔁", "Fehler wiederholen", if (weak == 0) "nichts offen" else if (weak == 1) "1 Aufgabe, die nicht beim ersten Versuch saß" else "$weak Aufgaben, die nicht beim ersten Versuch saßen", Q.Orange, "Üben") { nav.go(Routes.TRAINING) },
+                        BackstageEntry("📔", "Fehler-Tagebuch", if (diary.isEmpty()) "deine typischen Fehler – noch leer" else if (diary.size == 1) "1 typischer Fehler notiert" else "${diary.size} typische Fehler notiert", Q.Orange, "Üben") { nav.go(Routes.DIARY) },
                         BackstageEntry("📊", "Lernstand", Learn.summary(Learn.topics(starMap)), Q.Cyan, "Planen") { nav.go(Routes.LEARN) },
                         BackstageEntry("🗓️", "Klausur-Planer", plan?.let { Planner.headline(it, today(), starMap) } ?: "Termin eintragen, Tagespakete bekommen", Q.Orange, "Planen") { nav.go(Routes.PLANNER) },
                         BackstageEntry("🎟️", "Kalender der Tagesaufgaben", "${Calendar.solved(starMap).size} gelöst – verpasste Tage kosten nichts", Q.Orange, "Planen") { nav.go(Routes.CALENDAR) },

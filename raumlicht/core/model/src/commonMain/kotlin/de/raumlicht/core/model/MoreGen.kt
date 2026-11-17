@@ -54,7 +54,7 @@ object MoreGen {
         evaluate = { v -> val p = v.vec("P"); val bad = rules.filter { !it.second(p) }
             when { p.isZero -> Outcome(false, "Der Ursprung zählt nicht – such dir einen anderen Punkt.", flyTo = p)
                 bad.isEmpty() -> Outcome(true, "Passt – ${p.fmt()} erfüllt alle Bedingungen. Es gibt noch viele andere richtige Punkte.", flyTo = p)
-                else -> Outcome(false, "Noch nicht: Dein Punkt ${bad.joinToString(" und ") { it.first }} nicht ✗.", flyTo = p) } },
+                else -> Outcome(false, "Noch nicht: Dein Punkt ${bad.joinToString(" und ") { it.first.substringBefore(' ') + " nicht " + it.first.substringAfter(' ') }} ✗.", flyTo = p) } },
     )
 
     private fun build(kind: Kind, r: Random, id: String): Level? = when (kind) {
@@ -91,7 +91,7 @@ object MoreGen {
                 given = listOf(listOf(Txt("P${p.fmt()}"))),
                 mistakes = listOf(flip(p, k) to "Du hast an der ${planeName(k)} gespiegelt. An der ${X[k]}-Achse bleibt ${X[k]} gleich und die beiden anderen wechseln.", flip(p, a) to "Erst eine Koordinate gedreht – an einer Achse wechseln zwei.", flip(p, b) to "Erst eine Koordinate gedreht – an einer Achse wechseln zwei."),
                 tip = "An der ${X[k]}-Achse bleibt ${X[k]} stehen. Die beiden anderen Koordinaten wechseln das Vorzeichen – wie eine halbe Drehung um die Achse.",
-                way = listOf("${X[k]} bleibt: ${n(p.ints[k])}", "${X[a]} und ${X[b]} wechseln das Vorzeichen", "P′${q.fmt()}, Abstand zur Achse √(${n(p.ints[a] * p.ints[a])} + ${n(p.ints[b] * p.ints[b])}) = ${n(sqrt((p.ints[a] * p.ints[a] + p.ints[b] * p.ints[b]).toDouble()))}"),
+                way = listOf("${X[k]} bleibt: ${n(p.ints[k])}", "${X[a]} und ${X[b]} wechseln das Vorzeichen", "P′${q.fmt()}, Abstand zur Achse √(${n(p.ints[a] * p.ints[a])} + ${n(p.ints[b] * p.ints[b])}) ${Geo.eq(sqrt((p.ints[a] * p.ints[a] + p.ints[b] * p.ints[b]).toDouble()))}"),
                 extras = { ph -> listOf(Stage.line("achse", unit(k) * S.min[k], unit(k), 0.0, (S.max[k] - S.min[k]).toDouble(), "violet", "${X[k]}-Achse"), Stage.point("P", p, "cyan", "P${p.fmt()}")) +
                     if (ph == Phase.DONE) listOf(Stage.line("weg", p, q - p, 0.0, 1.0, "yellow", dashed = true)) else emptyList() })
         }
@@ -114,7 +114,7 @@ object MoreGen {
                 fun cAt(k: Int) = V3.of(c.ints.mapIndexed { i, x -> if (i == j) k else x })
                 Families.scalar(id, 0, "Drei auf einer Geraden", "A und B hängen fest. Für welches k liegt auch C genau auf der Geraden durch A und B?", "k", 0..B.max[j], sol, if (sol == 0) 1 else 0,
                     tip = "Drei Punkte liegen auf einer Geraden, wenn AC⃗ ein Vielfaches von AB⃗ ist. Den Faktor liest du an einer bekannten Koordinate ab.",
-                    way = listOf("AB⃗ = ${(b - a).fmt()}", "AC⃗ = r · AB⃗: aus ${X[ref]} folgt r = ${n(c.ints[ref] - a.ints[ref])} : ${n(b.ints[ref] - a.ints[ref])} = ${n(ratio)}", "k = ${n(a.ints[j])} + ${n(ratio)} · ${n(b.ints[j] - a.ints[j])} = ${n(sol)}"), color = "yellow",
+                    way = listOf("AB⃗ = ${(b - a).fmt()}", "AC⃗ = r · AB⃗: aus ${X[ref]} folgt r = ${n(c.ints[ref] - a.ints[ref])} : ${Geo.par(b.ints[ref] - a.ints[ref])} = ${n(ratio)}", "k = ${n(a.ints[j])} + ${Geo.par(ratio)} · ${Geo.par(b.ints[j] - a.ints[j])} = ${n(sol)}"), color = "yellow",
                     formula = { k -> listOf(listOf(Txt("A${a.fmt()}   B${b.fmt()}")), listOf(Txt("C("), *c.ints.indices.flatMap { i -> listOf(if (i == j) Num(Geo.num(k), "a") else Txt(n(c.ints[i])), Txt(if (i < 2) "|" else ")")) }.toTypedArray())) },
                     objects = { k, _ -> listOf(Stage.fullLine("g", a, d, B, "cyan", "g"), Stage.point("A", a, "cyan", "A"), Stage.point("B", b, "cyan", "B"), Stage.point("C", cAt(k), "yellow", "C")) },
                     check = { k -> Families.compare(k, sol, "k", "k = ${n(sol)} – C liegt genau auf der Geraden.") })
@@ -127,7 +127,7 @@ object MoreGen {
                 val sol = e.ints[j]
                 Families.scalar(id, 0, "Dieselbe Gerade?", "Zwei Schreibweisen – eine Gerade? Für welches k beschreibt h dieselbe Gerade wie g?", "k", -6..6, sol, 0,
                     tip = "Dieselbe Gerade heißt zweierlei: Die Richtungsvektoren sind Vielfache voneinander, und der Stützpunkt von h liegt auf g.",
-                    way = listOf("Richtungen: aus ${X[ref]} folgt der Faktor ${n(e.ints[ref])} : ${n(d.ints[ref])} = ${n(f)}", "k = ${n(f)} · ${n(d.ints[j])} = ${n(sol)}", "Stützpunkt ${q.fmt()} liegt auf g (t = 2) – also dieselbe Gerade"), color = "yellow",
+                    way = listOf("Richtungen: aus ${X[ref]} folgt der Faktor ${n(e.ints[ref])} : ${Geo.par(d.ints[ref])} = ${n(f)}", "k = ${n(f)} · ${Geo.par(d.ints[j])} = ${n(sol)}", "Stützpunkt ${q.fmt()} liegt auf g (t = 2) – also dieselbe Gerade"), color = "yellow",
                     formula = { k -> listOf(lineText("g", a, listOf(col(d))), lineText("h", q, listOf(Part.Col(e.ints.mapIndexed { i, x -> if (i == j) Geo.num(k) else n(x) }, "a")), "s")) },
                     objects = { k, _ -> val dir = V3.of(e.ints.mapIndexed { i, x -> if (i == j) k else x })
                         listOf(Stage.fullLine("g", a, d, B, "cyan", "g"), Stage.point("A", a, "cyan", "A"), Stage.point("Q", q, "yellow", "Q")) + if (dir.isZero) emptyList() else listOf(Stage.fullLine("h", q, dir, B, "yellow", "h")) },
@@ -142,7 +142,7 @@ object MoreGen {
                 mistakes = listOf(p1 to "Das ist erst das Bild nach der ersten Spiegelung. Spiegle es noch an der ${planeName(j)}.", flip(p, j) to "Du hast nur an der ${planeName(j)} gespiegelt – die erste Spiegelung fehlt.", flip(p, 0, 1, 2) to "Alle drei Vorzeichen gedreht – das wäre die Spiegelung am Ursprung. Hier wechseln nur zwei."),
                 tip = "Schritt für Schritt: Jede Spiegelung an einer Koordinatenebene dreht genau ein Vorzeichen. Zwei hintereinander wirken wie eine Spiegelung an einer Achse.",
                 way = listOf("an der ${planeName(i)}: ${X[i]} wechselt → P′${p1.fmt()}", "an der ${planeName(j)}: ${X[j]} wechselt → P″${p2.fmt()}", "zusammen wechseln ${X[i]} und ${X[j]} – das ist die Spiegelung an der ${X[k]}-Achse",
-                    "Probe: |PP″| = 2 · √(${n(p.ints[i] * p.ints[i])} + ${n(p.ints[j] * p.ints[j])}) = 2 · √${n(sq)} ≈ ${n(2 * sqrt(sq.toDouble()))}"),
+                    "Probe: |PP″| = 2 · √(${n(p.ints[i] * p.ints[i])} + ${n(p.ints[j] * p.ints[j])}) = 2 · √${n(sq)} ${Geo.eq(2 * sqrt(sq.toDouble()))}"),
                 extras = { ph -> listOf(Stage.plane("spiegel1", unit(i), 0.0, "violet", planeName(i)), Stage.plane("spiegel2", unit(j), 0.0, "cyan", planeName(j)), Stage.point("P", p, "cyan", "P${p.fmt()}")) +
                     if (ph == Phase.DONE) listOf(Stage.point("P1", p1, "pink", "P′"), Stage.line("weg1", p, p1 - p, 0.0, 1.0, "pink", dashed = true), Stage.line("weg2", p1, p2 - p1, 0.0, 1.0, "yellow", dashed = true)) else emptyList() })
         }
@@ -156,12 +156,12 @@ object MoreGen {
                     tip = "Eine Raute ist ein Parallelogramm mit vier gleich langen Seiten. Es reicht |AD⃗| = |AB⃗| – rechne mit den Quadraten, dann brauchst du keine Wurzel.",
                     way = listOf("AB⃗ = ${u.fmt()}, |AB⃗|² = ${n(len)}", "AD⃗ = (${n(v.ints[0])}|k − ${n(a.ints[1])}|${n(v.ints[2])}), |AD⃗|² = ${n(v.ints[0] * v.ints[0])} + (k − ${n(a.ints[1])})² + ${n(v.ints[2] * v.ints[2])}",
                         "gleich lang: (k − ${n(a.ints[1])})² = ${n(rest)} → k = ${n(a.ints[1])} ± ${n(sqrt(rest.toDouble()))}, wegen k > ${n(a.ints[1])} also k = ${n(sol)}",
-                        "C = B + AD⃗ = ${c.fmt()}, die Diagonalen schneiden sich in M${m.fmt()}, Seitenlänge √${n(len)} ≈ ${n(sqrt(len.toDouble()))}"), color = "yellow",
+                        "C = B + AD⃗ = ${c.fmt()}, die Diagonalen schneiden sich in M${m.fmt()}, Seitenlänge √${n(len)} ${Geo.eq(sqrt(len.toDouble()))}"), color = "yellow",
                     formula = { k -> listOf(listOf(Txt("A${a.fmt()}   B${b.fmt()}")), listOf(Txt("D(${n(d.ints[0])}|"), Num(Geo.num(k), "a"), Txt("|${n(d.ints[2])})")), listOf(Txt("|AB⃗| = |AD⃗| ?"))) },
                     objects = { k, ph -> val dd = dAt(k); val cc = b + (dd - a)
                         listOf(Stage.edges("seiten", listOf(a to b, a to dd) + if (inRoom(cc)) listOf(b to cc, dd to cc) else emptyList(), "cyan"), Stage.point("A", a, "cyan", "A"), Stage.point("B", b, "cyan", "B"), Stage.point("D", dd, "yellow", "D")) +
                             if (ph == Phase.DONE) listOf(Stage.point("C", c, "cyan", "C"), Stage.edges("diagonalen", listOf(a to c, b to d), "yellow"), Stage.point("M", m, "pink", "M", drop = false)) else emptyList() },
-                    check = { k -> Families.compare(k, sol, "k", "k = ${n(sol)} – alle vier Seiten sind √${n(len)} lang: eine Raute.") })
+                    check = { k -> Families.compare(k, sol, "k", "k = ${n(sol)} – alle vier Seiten sind ${if (Geo.exact(sqrt(len.toDouble()))) n(sqrt(len.toDouble())) else "√" + n(len)} lang: eine Raute.") })
             }
         }
     }

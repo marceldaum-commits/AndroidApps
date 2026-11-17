@@ -155,7 +155,9 @@ fun FlightScreen(onBack: () -> Unit, controller: StageController = remember { St
             Dial("Ort", "(${Geo.num(d.pos.x)}|${Geo.num(d.pos.y)}|${Geo.num(d.pos.z)})", "", Q.Cyan, Modifier.weight(1.6f))
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            Dial("Nächste Ebene: ${d.nearest}", "Abstand ${Geo.num(d.distance)}", if (d.distance < 0.05) "du bist genau in der Ebene" else "", if (d.distance < 0.05) Q.Green else Q.Violet, Modifier.weight(1f).testTag("flug-abstand"))
+            // ohne Ebene gibt es keinen Abstand – dann steht das da, statt „Abstand 0 · genau in der Ebene“
+            if (!d.hasPlane) Dial("Nächste Ebene: –", "kein Abstand", "In diesem Flug gibt es keine Ebene", Q.Muted, Modifier.weight(1f).testTag("flug-abstand"))
+            else Dial("Nächste Ebene: ${d.nearest}", "Abstand ${Geo.num(d.distance)}", if (d.distance < 0.05) "Du bist genau in der Ebene" else "", if (d.distance < 0.05) Q.Green else Q.Violet, Modifier.weight(1f).testTag("flug-abstand"))
         }
         Slider(u, { u = it; driving = false }, Modifier.fillMaxWidth().padding(horizontal = 16.dp).testTag("flug-regler"),
             colors = SliderDefaults.colors(thumbColor = Q.Yellow, activeTrackColor = Q.Cyan, inactiveTrackColor = Q.Panel))
@@ -199,7 +201,7 @@ fun GaltonScreen(onBack: () -> Unit, controller: StageController = remember { St
     }
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar("Galton-Brett", onBack) { Text("$total Kugeln", color = Q.Yellow, fontWeight = FontWeight.Bold) }
+        Bar("Galton-Brett", onBack) { Text(count(total, "Kugel", "Kugeln"), color = Q.Yellow, fontWeight = FontWeight.Bold) }
         Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) { Stage(controller, Modifier.fillMaxSize()); StageFrame(Q.Pink) }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Dial("Reihen n", "${board.rows}", "", Q.Text, Modifier.weight(0.7f))
@@ -245,7 +247,7 @@ fun QuickScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit, seed: L
             if (idx < 0) {
                 Text("Wie im Pflichtteil", fontSize = 26.sp, fontWeight = FontWeight.Black, modifier = Modifier.padding(top = 8.dp))
                 Text("Sechs kurze Aufgaben: je zwei aus Geometrie, Analysis und Stochastik. Kein Tipp, kein Taschenrechner – nur du und dein Kopf.", Modifier.padding(horizontal = 28.dp, vertical = 12.dp), textAlign = TextAlign.Center)
-                NeonButton({ idx = 0; hits = 0 }, Modifier.padding(16.dp), color = Q.Green) { Text("▶ Los geht's", fontWeight = FontWeight.Black) }
+                NeonButton({ idx = 0; hits = 0 }, Modifier.padding(16.dp), color = Q.Green) { Text("▶ Los geht’s", fontWeight = FontWeight.Black) }
             } else {
                 Text("$hits von ${pack.size}", fontSize = 36.sp, fontWeight = FontWeight.Black, color = Q.Yellow, modifier = Modifier.padding(top = 8.dp))
                 Text("beim ersten Versuch – ganz ohne Hilfe", color = Q.Muted)
@@ -308,7 +310,7 @@ fun CalendarScreen(today: Long, days: Set<Long>, onToday: () -> Unit, onBack: ()
     val grid = remember(today) { Calendar.grid(today) }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding(), horizontalAlignment = Alignment.CenterHorizontally) {
         Bar("Kalender", onBack)
-        Text("${days.size} Tagesaufgaben gelöst · längste Serie ${Calendar.bestRun(days)}", color = Q.Yellow, fontWeight = FontWeight.Bold)
+        Text("${count(days.size, "Tagesaufgabe", "Tagesaufgaben")} gelöst · längste Serie ${Calendar.bestRun(days)}", color = Q.Yellow, fontWeight = FontWeight.Bold)
         Text("Verpasste Tage kosten nichts – jeder gelöste Tag leuchtet.", color = Q.Muted, fontSize = 12.sp, modifier = Modifier.padding(bottom = 10.dp))
         Row(Modifier.fillMaxWidth().padding(horizontal = 18.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             listOf("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So").forEach { Text(it, Modifier.weight(1f), textAlign = TextAlign.Center, color = Q.Muted, fontSize = 12.sp) }

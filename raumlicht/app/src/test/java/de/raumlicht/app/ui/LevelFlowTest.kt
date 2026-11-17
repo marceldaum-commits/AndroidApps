@@ -44,7 +44,7 @@ class LevelFlowTest {
         assertTrue("Lux fliegt zum eingestellten Punkt", stage.lastState!!.contains("\"mood\":\"sad\""))
         tap("plus-P-1", 2); go()
         assertEquals(listOf(2 to 2), solved)
-        rule.onNodeWithText("So rechnet man's").assertExists()
+        rule.onNodeWithText("So rechnet man’s").assertExists()
         rule.onNodeWithText("Weiter ▸").assertExists()
         assertTrue(stage.log.any { it.startsWith("RL.party") })
         rule.onNodeWithText("▶ Los").assertDoesNotExist()        // kein zweites Speichern möglich

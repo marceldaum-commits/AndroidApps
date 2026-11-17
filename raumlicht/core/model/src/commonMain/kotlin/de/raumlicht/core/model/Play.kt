@@ -52,7 +52,8 @@ class Galton(val rows: Int = 8) {
 // ───────────────────────── Flug durch den Raum ─────────────────────────
 
 data class FlightEvent(val t: Double, val title: String, val text: String, val color: String)
-data class FlightData(val pos: V3, val t: Double, val nearest: String, val distance: Double)
+/** [hasPlane]: Gibt es im Flug überhaupt eine Ebene? Ohne Ebene steht [nearest] auf „–“ und [distance] ist NaN – dann gibt es keinen Abstand anzuzeigen. */
+data class FlightData(val pos: V3, val t: Double, val nearest: String, val distance: Double, val hasPlane: Boolean = true)
 
 /** Fahrersicht in der Geometrie: Man fliegt eine Gerade entlang – durch Ebenen hindurch, an Kugeln vorbei. */
 class Flight(val id: String, val title: String, val a: V3, val d: V3, val tMax: Double,
@@ -60,20 +61,32 @@ class Flight(val id: String, val title: String, val a: V3, val d: V3, val tMax: 
     fun at(u: Double) = a + d * (tMax * u.coerceIn(0.0, 1.0))
     fun data(u: Double): FlightData {
         val pos = at(u); val near = planes.minByOrNull { Geo.distPointPlane(pos, it.second, it.third.toDouble()) }
-        return FlightData(pos, tMax * u.coerceIn(0.0, 1.0), near?.first ?: "–", near?.let { Geo.distPointPlane(pos, it.second, it.third.toDouble()) } ?: 0.0)
+        return FlightData(pos, tMax * u.coerceIn(0.0, 1.0), near?.first ?: "–", near?.let { Geo.distPointPlane(pos, it.second, it.third.toDouble()) } ?: Double.NaN, near != null)
     }
-    /** Was unterwegs passiert: Durchstoßpunkte mit den Ebenen, Ein- und Austritt bei Kugeln */
+    /** Was unterwegs passiert: Durchstoßpunkte mit den Ebenen, Ein- und Austritt bei Kugeln – oder eine einzige Berührung, wenn die Gerade Tangente ist */
     val events: List<FlightEvent> by lazy {
         (planes.mapNotNull { (name, n, c) -> Geo.linePlane(a, d, n, c.toDouble())?.takeIf { it > 1e-9 && it < tMax - 1e-9 }?.let {
             FlightEvent(it, "Durchstoßpunkt mit $name", "t = ${Geo.num(it)} → S${(a + d * it).fmt()}", "violet") } } +
             balls.flatMap { (name, m, r) ->
                 // |a + t·d − m|² = r²  →  quadratische Gleichung in t
                 val w = a - m; val qa = d dot d; val qb = 2 * (w dot d); val qc = (w dot w) - r * r; val disc = qb * qb - 4 * qa * qc
-                if (disc < 0) emptyList() else listOf((-qb - sqrt(disc)) / (2 * qa) to "Eintritt in", (-qb + sqrt(disc)) / (2 * qa) to "Austritt aus").filter { it.first > 1e-9 && it.first < tMax - 1e-9 }
+                // Diskriminante null (bis auf Rundung): Tangente – ein Berührpunkt, nicht Ein- und Austritt an derselben Stelle
+                val touch = abs(disc) <= 1e-9 * maxOf(qb * qb, 1.0)
+                (if (touch) listOf(-qb / (2 * qa) to "Berührt") else if (disc < 0) emptyList() else listOf((-qb - sqrt(disc)) / (2 * qa) to "Eintritt in", (-qb + sqrt(disc)) / (2 * qa) to "Austritt aus"))
+                    .filter { it.first > 1e-9 && it.first < tMax - 1e-9 }
                     .map { (t, word) -> FlightEvent(t, "$word $name", "t = ${Geo.num(t)} → ${(a + d * t).fmt()}", "cyan") }
             }).sortedBy { it.t }
     }
-    fun eventNear(t: Double, eps: Double = 0.06) = events.firstOrNull { abs(it.t - t) < eps }
+    /** Alle Ereignisse, an denen man gerade vorbeifliegt: Fallen mehrere auf dieselbe Stelle (Durchstoßpunkt und Austritt aus der Kugel), kommen alle zurück */
+    fun eventsNear(t: Double, eps: Double = 0.06): List<FlightEvent> {
+        val first = events.filter { abs(it.t - t) < eps }.minByOrNull { abs(it.t - t) } ?: return emptyList()
+        return events.filter { abs(it.t - first.t) < 1e-9 }
+    }
+    /** Wie [eventsNear], zu einer Meldung zusammengefasst: „Durchstoßpunkt mit E: x₃ = 4 und Austritt aus K“ */
+    fun eventNear(t: Double, eps: Double = 0.06): FlightEvent? {
+        val all = eventsNear(t, eps); if (all.size <= 1) return all.firstOrNull()
+        return FlightEvent(all[0].t, all.joinToString(" und ") { it.title }, all[0].text, all[0].color)
+    }
     val text get() = "x⃗ = ${a.fmt()} + t · ${d.fmt()}"
 
     fun scene(): String = Stage.encode(Bounds(), listOf(
@@ -89,7 +102,7 @@ object Flights {
     val all = listOf(
         Flight("glas", "Durch zwei Scheiben", p(0, 0, 1), p(2, 2, 1), 4.0, listOf(Triple("E₁: x₁ = 4", p(1, 0, 0), 4), Triple("E₂: x₁ + x₂ + x₃ = 16", p(1, 1, 1), 16))),
         Flight("kugel", "Durch die Discokugel", p(8, 0, 1), p(-2, 2, 1), 4.0, listOf(Triple("E: x₃ = 4", p(0, 0, 1), 4)), listOf(Triple("K", p(4, 4, 3), 3))),
-        Flight("schraeg", "Schräg durch den Raum", p(1, 7, 5), p(1, -1, -1), 5.0, listOf(Triple("E₁: x₂ = 4", p(0, 1, 0), 4), Triple("E₂: x₁ + 2x₃ = 9", p(1, 0, 2), 9), Triple("Boden: x₃ = 1", p(0, 0, 1), 1))),
+        Flight("schraeg", "Schräg durch den Raum", p(1, 7, 5), p(1, -1, -1), 5.0, listOf(Triple("E₁: x₂ = 4", p(0, 1, 0), 4), Triple("E₂: x₁ + 2x₃ = 9", p(1, 0, 2), 9), Triple("E₃: x₃ = 1", p(0, 0, 1), 1))),
     )
     fun byId(id: String) = all.firstOrNull { it.id == id }
 
@@ -108,9 +121,9 @@ object Flights {
             if (p.size != n || p.any { it.toIntOrNull() == null }) bad("$what braucht $n ganze Zahlen."); return p.map { it.toInt() } }
         val a = ints(0, 3, "Der Startpunkt")?.let { V3(it[0], it[1], it[2]) } ?: bad("Der Startpunkt fehlt.")
         val d = ints(1, 3, "Die Richtung")?.let { V3(it[0], it[1], it[2]) } ?: bad("Die Richtung fehlt.")
-        if (d.isZero) bad("Die Richtung darf nicht (0|0|0) sein – sonst fliegt Lux nirgendwohin.")
+        if (d.isZero) bad("Die Richtung darf nicht (0|0|0) sein – sonst fliege ich nirgendwohin.")
         val b = Bounds(); if (a.x !in 0.0..8.0 || a.y !in 0.0..8.0 || a.z !in 0.0..6.0) bad("Der Start muss im Raum liegen: x₁ und x₂ von 0 bis 8, x₃ von 0 bis 6.")
-        val tMax = Geo.exit(a, d, b.lo, b.hi); if (tMax < 0.25) bad("Mit dieser Richtung fliegt Lux sofort aus dem Raum. Dreh die Richtung nach innen.")
+        val tMax = Geo.exit(a, d, b.lo, b.hi); if (tMax < 0.25) bad("Mit dieser Richtung fliege ich sofort aus dem Raum. Dreh die Richtung nach innen.")
         val sub = listOf("₁", "₂")
         val planes = listOfNotNull(ints(2, 4, "Ebene 1"), ints(3, 4, "Ebene 2")).mapIndexed { i, p -> val n = V3(p[0], p[1], p[2])
             if (n.isZero) bad("Der Normalenvektor von Ebene ${i + 1} darf nicht (0|0|0) sein."); Triple("E${sub[i]}: ${Geo.planeText(n, p[3])}", n, p[3]) }
