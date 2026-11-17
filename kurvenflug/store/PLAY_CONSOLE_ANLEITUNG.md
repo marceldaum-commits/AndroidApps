@@ -108,8 +108,8 @@ Solange das Produkt nicht angelegt ist, bleibt in der App alles frei. Ab dem Anl
    Zielgruppe und Inhalte → bei der Frage nach In-App-Käufen ebenfalls **Ja**. Datensicherheit bleibt „keine Daten erhoben“
    (den Kauf wickelt Google ab, die App speichert nur „Pro: ja“). Store-Eintrag zeigt „In-App-Käufe“ automatisch.
 
-## 6b. Neue Version hochladen (ab 2.4.0, versionCode 44) – Klick-Liste
-1. AAB holen: GitHub → Releases → `kurvenflug-v<Version>` → **Kurvenflug-<Version>-play.aab**.
+## 6b. Neue Version hochladen – Klick-Liste (bereit: **2.4.1, versionCode 45**)
+1. AAB holen: GitHub → Releases → `kurvenflug-v2.4.1` → **Kurvenflug-2.4.1-play.aab** (6,5 MB; später jeweils die neueste Version).
 2. Play Console → Testen → (interner bzw. geschlossener) Test → **Neuen Release erstellen** → AAB hochladen.
 3. Versionshinweise (de-DE): Text aus `store/de-DE/release-notes.txt` einfügen (unter 500 Zeichen).
 4. **Internet-Berechtigung** – nur für die Vorlese-Stimme Nova (abschaltbar). Datensicherheit siehe Abschnitt 4.
