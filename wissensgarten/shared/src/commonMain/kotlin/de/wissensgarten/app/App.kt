@@ -595,6 +595,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             syllables = vm.settings.syllables.collectAsStateWithLifecycle().value, onSyllables = { vm.settings.setSyllables(it) },
                             vibration = vm.settings.vibration.collectAsStateWithLifecycle().value, onVibration = { vm.settings.setVibration(it) },
                             syncCard = { host.SyncCard() },
+                            voiceExtras = { de.wissensgarten.app.ui.settings.VoiceSettings(vm.settings, host) },
+                            soundExtras = { de.wissensgarten.app.ui.settings.SoundSettings(vm.settings, host) },
                             onPrivacy = { nav.navigate(Routes.PRIVACY) },
                             typing = vm.settings.typing.collectAsStateWithLifecycle().value, onTyping = { vm.settings.setTyping(it) },
                             dailyLimit = vm.settings.dailyLimit.collectAsStateWithLifecycle().value, onDailyLimit = { vm.settings.setDailyLimit(it) },
