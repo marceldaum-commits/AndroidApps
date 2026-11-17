@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Theorie-Knopf (Version 0.27.0 vom 17.11.2026)
+- **Neu:** Bei jeder ruhigen Übung gibt es den Knopf „📖 Theorie“: in der Gieß-Runde (alle Spielarten), beim Unkraut-Jäten und beim Gedächtnis-Spaziergang. Er öffnet die Erklär-Szenen des passenden Pakets („Brummi erklärt“, mit Bildern, auf Wunsch vorgelesen). Solange die Erklärung offen ist, läuft nichts automatisch weiter.
+- **Bewusst ohne Knopf:** die Zeit-Spiele Blitz, Rhythmus und Duell, damit sie fair bleiben.
+- **Plus:** Plus-Pakete bekommen den Knopf ebenso, weil ihre Intros mitgeliefert werden.
+- **Prüfung:**
+  - Alle Tests grün, Lint ohne Fehler.
+  - Bildschirmfotos angesehen: `07_giessen_grundschule.png` und neu `66_theorie.png`.
+  - WebApp neu exportiert.
+- **Keine Datenbank-Änderung.** Der Lernstand bleibt erhalten.
+- **Stand:** APK und WebApp 0.27.0. `wissensgarten-test` wird von der CI nachgezogen. `wissensgarten-live` ist unverändert, das Umschalten liegt beim Leitstand.
+
 ## Korrektheitsprüfung 17.11. (Version 0.26.0 vom 17.11.2026)
 
 **Was geprüft wurde und wie:**

@@ -256,6 +256,8 @@ fun ReviewScreen(
                         maxLines = 1, modifier = Modifier.weight(1f, fill = false),
                     )
                     if (!calm) LevelBadge(Stage.of(card.memory))
+                    // Theorie zum Thema – jederzeit, ohne Abzug; so bleibt niemand frustriert hängen
+                    if (phase == Phase.PLAY) de.wissensgarten.app.ui.common.TheoryButton(card.bedId, Modifier.padding(start = 4.dp)) { revealPaused = true }
                     StreakBadge(streak)
                 }
                 // Pflanze links, Brummi mit Sprechblase rechts

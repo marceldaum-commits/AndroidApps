@@ -293,6 +293,7 @@ fun LociScreen(suggest: List<StudyCard>, all: Map<String, StudyCard>, placed: Ma
                     val options = remember(stop) { Games.options(card, peers[card.bedId].orEmpty()) ?: listOf(card.back) }
                     Text("${place.emoji} Wir sind am ${place.name}. Was war hier?", style = MaterialTheme.typography.titleMedium)
                     Text(card.front, style = MaterialTheme.typography.titleLarge)
+                    if (answered == null) de.wissensgarten.app.ui.common.TheoryButton(card.bedId)
                     options.forEach { o ->
                         val isRight = o == card.back
                         Button(onClick = {
