@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.0 – Nova auch ohne Internet (17.11.2026)
+- **Alle Nova-Texte offline laden:** In den Einstellungen unter „Lux spricht“ kannst du alle festen Vorlese-Texte auf einmal laden – am besten im WLAN. Danach spricht Lux auch ohne Internet mit Nova.
+- **Zwei Qualitäten:** „Standard“ (rund 64 MB) oder „Bestqualität“ (deutlich größer). Der Fortschritt wird angezeigt, du kannst abbrechen und später weitermachen. „Offline-Stimme löschen“ gibt den Speicher wieder frei.
+- **Für Eltern:** Geladen werden nur Audiodateien von unserem Server. Texte, die erst in der Aufgabe entstehen, brauchen weiterhin Internet.
+
 ## 2.17.2 – Datenschutz-Hinweis ergänzt (17.11.2026)
 - **Für Eltern:** In den Einstellungen steht jetzt zusätzlich, dass unser Stimmen-Server keine Zugriffsprotokolle speichert.
 

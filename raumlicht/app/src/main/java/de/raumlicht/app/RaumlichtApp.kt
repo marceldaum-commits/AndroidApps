@@ -12,6 +12,8 @@ class RaumlichtApp : Application() {
     /** Lux spricht mit „Nova“ (KI-generierte Stimme, fertige Dateien von unserem Server); kommt ein Satz nicht an, liest ihn still die Stimme des Geräts */
     val nova: de.raumlicht.app.ui.fx.NovaVoice by lazy { de.raumlicht.app.ui.fx.NovaVoice(this, voice, onSpeaking = { speaking -> music.duck(speaking) }).also { it.enabled = container.settings.voice.value } }
     val speaker: de.raumlicht.app.ui.fx.Speaker get() = nova
+    /** Alle festen Nova-Texte auf einmal laden (Einstellungen) */
+    val novaOffline: de.raumlicht.app.ui.fx.NovaOffline by lazy { de.raumlicht.app.ui.fx.NovaOffline(this) }
     val sfx: Sfx by lazy { Sfx(this).also { it.enabled = container.settings.sound.value } }
 
     override fun onCreate() {

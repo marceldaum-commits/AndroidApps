@@ -108,6 +108,14 @@ private fun WebApp() {
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
                         voice = voice, onVoice = { prefs.setVoice(it); if (!it) { stopSpeaking(); novaStop() } },
+                        offline = run {
+                            // Stand aus dem Browser übernehmen, solange die Einstellungen offen sind
+                            var tick by remember { mutableStateOf(0) }; var best by remember { mutableStateOf(prefs.voiceBest) }
+                            LaunchedEffect(Unit) { offRefresh(Vorlesen.SERVER); while (true) { kotlinx.coroutines.delay(400); tick++ } }
+                            tick.let { de.raumlicht.app.ui.settings.OfflineVoice(offFlag("loading"), offNum("done").toInt(), offNum("total").toInt(), offNum("standardDone").toInt(), offNum("bestDone").toInt(),
+                                offNum("standardStored").toLong(), offNum("bestStored").toLong(), offNum("standardBytes").toLong().takeIf { it >= 0 }, offNum("bestBytes").toLong().takeIf { it >= 0 }, best,
+                                start = { b -> prefs.voiceBest = b; best = b; offStart(Vorlesen.SERVER, b) }, cancel = { offCancel() }, delete = { offRemove(Vorlesen.SERVER) }) }
+                        }.takeIf { offAvailable() },
                         onLicenses = { openLink("lizenzen.txt") },
                         soundNote = if (appleTouch()) "Kein Ton? Auf iPhone und iPad bleibt Raumlicht still, solange das Gerät stumm geschaltet ist (Schalter an der Seite oder Glocke im Kontrollzentrum)." else null,
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe. " +
@@ -125,3 +133,11 @@ private fun novaSay(server: String, url: String, live: String, body: String, vol
     js("(window.__rlNova ? window.__rlNova.say(server, url, live, body, volume, rate) : Promise.resolve('fehlt'))")
 private fun novaStop(): Unit = js("{ if (window.__rlNova) window.__rlNova.stop(); }")
 private fun novaSpeaking(): Boolean = js("!!(window.__rlNova && window.__rlNova.speaking)")
+// ---- „Alle Nova-Texte offline laden“ (siehe rl-nova.js)
+private fun offAvailable(): Boolean = js("!!(window.__rlNova && window.__rlNova.offline && 'caches' in window && window.crypto && window.crypto.subtle)")
+private fun offNum(name: String): Double = js("(window.__rlNova && window.__rlNova.offline ? Number(window.__rlNova.offline[name]) || 0 : 0)")
+private fun offFlag(name: String): Boolean = js("!!(window.__rlNova && window.__rlNova.offline && window.__rlNova.offline[name])")
+private fun offRefresh(server: String): Unit = js("{ if (window.__rlNova && window.__rlNova.offline) window.__rlNova.offline.refresh(server); }")
+private fun offStart(server: String, best: Boolean): Unit = js("{ window.__rlNova.offline.start(server, best); }")
+private fun offCancel(): Unit = js("{ window.__rlNova.offline.cancel(); }")
+private fun offRemove(server: String): Unit = js("{ window.__rlNova.offline.remove(server); }")

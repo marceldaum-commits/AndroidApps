@@ -72,6 +72,20 @@ object Vorlesen {
     fun key(spoken: String, language: String = LANGUAGE) = Sha256.hex("$VOICE|$language|$spoken").take(32)
     /** Adresse der fertigen Datei zu einem vorlesefertigen Text */
     fun url(spoken: String) = key(spoken).let { "$SERVER/$VOICE/${it.take(2)}/$it.mp3" }
+    // ---- Offline laden: alle festen Texte auf einmal, wahlweise in Bestqualität
+    /** Adresse einer Datei zu ihrem Namen ([key]); Bestqualität liegt im Ordner „original“ */
+    fun fileUrl(key: String, best: Boolean = false) = "$SERVER/$VOICE/${if (best) "original/" else ""}${key.take(2)}/$key.mp3"
+    /** Unter diesen Adressen läuft die WebApp – danach heißt der Zählstand des Servers (Android fragt [APP_HOST], bis es ihn gibt [TEST_HOST]) */
+    const val APP_HOST = "raumlicht.mathenachhilfe-online.com"
+    const val TEST_HOST = "raumlicht-test.mathenachhilfe-online.com"
+    fun standUrl(host: String) = "$SERVER/$VOICE/stand-$host.json"
+    /** Gesamtgröße aller festen Dateien aus dem Zählstand: Standard ("bytes") und Bestqualität ("bytes_original", null = noch nicht gemeldet) */
+    fun stand(json: String): Pair<Long, Long?>? = runCatching { kotlinx.serialization.json.Json.parseToJsonElement(json) as kotlinx.serialization.json.JsonObject }.getOrNull()?.let { o ->
+        val bytes = (o["bytes"] as? JsonPrimitive)?.content?.toLongOrNull() ?: return null
+        bytes to (o["bytes_original"] as? JsonPrimitive)?.content?.toLongOrNull() }
+    /** Größe für die Knöpfe: auf ganze MB gerundet, mindestens 1 */
+    fun megabytes(bytes: Long) = maxOf(1, ((bytes + 524_288) / 1_048_576).toInt())
+
     /** Anfrage an [LIVE] für einen Text, der erst in der Aufgabe entstanden ist – enthält nur Text und Sprache, nichts über den Nutzer */
     fun liveBody(spoken: String): String = buildJsonObject { put("text", spoken); put("sprache", LANGUAGE) }.toString()
     /** Adresse aus der Antwort von [LIVE] ({"url": …}); null, wenn sie fehlt oder nicht auf unseren Server zeigt */

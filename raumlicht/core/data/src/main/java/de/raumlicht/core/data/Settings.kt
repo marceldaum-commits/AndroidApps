@@ -42,6 +42,10 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     var voiceName: String
         get() = prefs.getString("voiceName", "") ?: ""
         set(v) = prefs.edit().putString("voiceName", v).apply()
+    /** Zuletzt gewählte Qualität beim Offline-Laden der Stimme Nova: Bestqualität statt Standard */
+    var voiceBest: Boolean
+        get() = prefs.getBoolean("voiceBest", false)
+        set(v) = prefs.edit().putBoolean("voiceBest", v).apply()
     var voiceBright: Boolean
         get() = prefs.getBoolean("voiceBright", false)
         set(v) = prefs.edit().putBoolean("voiceBright", v).apply()

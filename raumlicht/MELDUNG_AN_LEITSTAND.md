@@ -2,6 +2,20 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.18.0: „Alle Nova-Texte offline laden“ mit Standard und Bestqualität
+
+Marcel hat beides direkt bestätigt (Offline-Download und die Wahl „Bestqualität“). **Raumlicht 2.18.0 vom 17.11.2026, Web = Android (beide 2.18.0).**
+
+- **Stand der Nova-Umstellung:** fertig seit 2.17.0 (nur noch Nova, Thorsten entfernt), 2.17.1 Sprechtempo, 2.17.2 Datenschutz-Satz vollständig. **espeak-ng: nirgends enthalten – in der App steckt keine Sprachsynthese mehr.**
+- **Knöpfe** unter „Lux spricht“: „Offline laden – Standard (ca. X MB)“, „Offline laden – Bestqualität (ca. Z MB)“, „Offline-Stimme löschen (Y MB)“ (löscht beide), beim Laden „Lädt … x von n“ + Abbrechen;
+  nach einem Abbruch „Weiter laden – …“. Hinweis „am besten im WLAN“ steht darüber. Die gewählte Qualität wird gemerkt.
+- **Größe:** `bytes` / `bytes_original` aus `stand-<host>.json`, abzüglich des schon Geladenen. Web nimmt den Host der Seite, Android `raumlicht.mathenachhilfe-online.com` und – solange es den Stand dort nicht gibt – den der Testadresse.
+  **Bitte nachliefern:** `bytes_original` fehlt im Stand noch (17:30 UTC) – bis dahin steht bei Bestqualität keine Größe. Und `stand-raumlicht.mathenachhilfe-online.com.json` gibt 404.
+- **Laden:** Liste der festen Texte (Web: eigene `vorlesen/texte.json`, Android: dieselbe Liste aus dem Code), nur Fehlendes, 4 parallel, 404 still übersprungen; Bestqualität aus `/nova/original/…`, bei 404 die normale Datei.
+- **Speicher:** Android `filesDir/nova-offline/`, Web Cache `raumlicht-nova-offline`. Die Wiedergabe nimmt offline Geladenes zuerst (Bestqualität vor Standard); sonst bleibt es bei der Standard-Datei. `/jetzt`-Texte gehören nicht dazu.
+- **CORS:** `/nova/original/…` und `stand-….json` müssen für die WebApp-Adressen freigegeben sein (wie `/nova/…`) – bitte prüfen.
+- Geprüft: `NovaOfflineTest`, `web-nova.mjs` (Server nachgestellt), alle übrigen Tests, Lint. Nicht auf einem echten Gerät und nicht gegen den echten Server im Browser geprüft.
+
 ## 17.11.2026 – Raumlicht 2.17.2: Datenschutz-Satz vollständig
 
 **Raumlicht 2.17.2 vom 17.11.2026, Web = Android (beide 2.17.2).** Marcel hat direkt angewiesen, den Halbsatz „und unser Server speichert keine Zugriffsprotokolle“ zu ergänzen.
