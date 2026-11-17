@@ -1,5 +1,12 @@
 # Changelog – Experimentopia
 
+## 2.1.0 – Der Forscher-Pass ist da (17.11.2026)
+
+- 💛 **Forscher-Pass**: Für 7,99 € einmalig (kein Abo) öffnet er alle 200 Versuche und alle Geräte im Freien Labor.
+  Gekauft wird auf unserer Website – erst nach einer Frage für Erwachsene. Freigeschaltet wird mit dem Link oder Code aus der E-Mail, ohne Konto.
+- 🎁 **Frei bleibt viel**: die ganze Wasserinsel, von jeder anderen Insel die ersten 5 Versuche, das Rätsel des Tages, Lernen nach Fach, Theorie,
+  Themensuche, Forscherbuch, Musik, Vorlesen und 6 Geräte im Freien Labor. **Was du schon gemacht hast, bleibt immer offen.**
+
 ## 2.0.2 – Thorsten überall vom eigenen Server (17.11.2026)
 
 - 🔊 Auch die Android-App lädt die Stimme „Thorsten“ jetzt vom gemeinsamen Stimmen-Server unserer Lern-Apps – kein fremder Dienst mehr.

@@ -23,8 +23,8 @@ android {
         applicationId = "de.experimentopia.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 11
-        versionName = "2.0.2"
+        versionCode = 12
+        versionName = "2.1.0"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
         // nur echte Handys (Maschinencode der Sprachsynthese) – hält die APK klein
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }

@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.0.2 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.1.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -94,7 +94,7 @@ zeigt der Versuch einen Sicherheitshinweis (`core/model/Safety.kt`), auch im For
 Frei: die ganze Wasserinsel, von jeder anderen Insel die ersten 5 Versuche, Rätsel des Tages, Forscherbuch, Themensuche, Lernen nach Fach, Theorie, 6 Geräte im Freien Labor.
 Der **Forscher-Pass** (7,99 € einmalig inkl. 19 % USt., kein Abo) öffnet alles. Kauf auf der Website (Woo-Kasse) nur nach einer Frage für Erwachsene;
 freigeschaltet wird mit einem signierten Code (Ed25519, Präfix „EX“, App 6, Produkt 1), den die App ohne Server prüft (`License.kt`, `Ed25519.kt`, Tests).
-Codes erzeugt der Lizenz-Dienst (`pro/pro_code.py`). Schlüssel und Kasse stehen in `pro/pro.properties`: **Solange die Kasse leer ist, wird nichts gesperrt.**
+Codes erzeugt der Lizenz-Dienst (`pro/pro_code.py`). Schlüssel und Kasse stehen in `pro/pro.properties` (seit 2.1.0 eingetragen: Produkt 4143; ohne Kasse würde nichts gesperrt).
 Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung hat (noch) keinen Kauf und ist ganz frei.
 
 ## Bildschirme
@@ -132,6 +132,8 @@ Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung ha
 | ![](screenshots/58_ohne_maeuse.png) | ![](screenshots/59_herz_und_puls.png) | ![](screenshots/60_erholungspuls.png) | ![](screenshots/61_theorie.png) |
 | Theorie für Profis | Lernen nach Fach | Biologie, Klasse 9 | Musik und Vorlesen |
 | ![](screenshots/62_theorie_profi.png) | ![](screenshots/63_lernen_nach_fach.png) | ![](screenshots/64_fach_biologie.png) | ![](screenshots/65_musik_und_vorlesen.png) |
+| Forscher-Pass | Insel mit Pass | | |
+| ![](screenshots/66_forscher_pass_kaufen.png) | ![](screenshots/67_insel_mit_pass.png) | | |
 
 ## Android und Web
 

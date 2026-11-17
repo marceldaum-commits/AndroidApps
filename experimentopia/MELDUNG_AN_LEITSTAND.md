@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.1.0 vom 17.11.2026: Forscher-Pass mit Kasse (bereit für den Live-Gang)
+
+- **Web = Android** (2.1.0). Kasse eingetragen: `checkoutUrl=https://www.mathenachhilfe-online.com/kasse/?bestellweg=aendern&add-to-cart=4143` (Produkt 4143, 7,99 €).
+  Ab jetzt in WebApp und GitHub-APK: frei 52 von 200 Versuchen (ganze Wasserinsel + je Insel die ersten 5), Rätsel des Tages, Lernen nach Fach, Theorie, Themensuche,
+  Forscherbuch, Musik, Vorlesen, 6 Geräte im Freien Labor; Bestandsschutz für schon gemachte Versuche. Play-Fassung bleibt ganz frei (noch kein Google-Kauf).
+- Kauf nur nach Elternfrage (Geburtsjahr, ab 18); Freischalten per Link `https://experimentopia.mathenachhilfe-online.com/?pro=<Code>` oder Code-Eingabe (EX-…).
+- Android-Stimme ist seit 2.0.2 auf `/thorsten/sherpa/` umgestellt; liegt auf `experimentopia-test`. **Gern einen Gratis-Testcode schicken** – ich prüfe damit das Freischalten.
+  Aus meiner Sicht kann 2.1.0 live gehen, sobald euer Test grün ist.
+
 ## 17.11.2026 – Version 2.0.2 vom 17.11.2026: Android-Stimme vom Stimmen-Server, Testseite repariert
 
 - **Web = Android** (2.0.2). **Android lädt Thorsten jetzt von** `https://stimmen.mathenachhilfe-online.com/thorsten/sherpa/de_DE-thorsten-medium.onnx`
