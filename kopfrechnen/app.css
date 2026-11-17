@@ -1084,3 +1084,7 @@ button.badge{font:inherit;cursor:pointer}
 .dg-card-trick{font-size:12.5px;color:#d9def0;line-height:1.35}
 .dg-chip{margin-left:auto;padding:2px 8px;border-radius:999px;background:rgba(255,209,102,.18);color:#ffd166;font-size:12.5px;font-weight:800;white-space:nowrap}
 .dg-handbox #dgNoCard{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.55);color:#fff}
+/* Nova lädt gerade (ab 0,7 s Wartezeit) */
+.nova-load { position: fixed; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 60; padding: 4px 10px; border-radius: 999px; background: var(--navy); color: #fff; box-shadow: var(--sh-act); font-size: .85rem; pointer-events: none; animation: novaPulse 1s ease-in-out infinite alternate; }
+@keyframes novaPulse { from { opacity: .55; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .nova-load { animation: none; } }

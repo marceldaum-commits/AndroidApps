@@ -667,7 +667,7 @@ zweistellig	two digits	двоцифрове
 {} Hundertstel = {}	{} hundredths = {}	{} сотих = {}
 {} Hundertstel, {} Hundertstel	{} hundredths, {} hundredths	{} сотих, {} сотих
 {} Minuten sind {} Stunden und {} Minuten.	{} minutes are {} hours and {} minutes.	{} хвилин – це {} годин і {} хвилин.
-{} Personen brauchen {} Tage, um einen Zaun zu streichen. Wie viele Tage brauchen {} Personen?	{} people need {} days to paint a fence. How many days do {} people need?	{} людей фарбують паркан {} днів. Скільки днів потрібно {} людям?
+{} Personen brauchen {} Tage, um einen Zaun zu streichen. Wie viele Tage brauchen {} Personen, wenn alle gleich schnell arbeiten?	{} people need {} days to paint a fence. How many days do {} people need if everyone works equally fast?	{} людей фарбують паркан {} днів. Скільки днів потрібно {} людям, якщо всі працюють однаково швидко?
 {} Personentage	{} person-days	{} людино-днів
 {} Punkte	{} points	{} балів
 {} Reihen mit je {}	{} rows of {}	{} рядів по {}
@@ -1550,7 +1550,7 @@ Dreimal verdoppeln heißt mal {}.	Doubling three times means times {}.	Трич�
 Du kaufst etwas für {} € und bezahlst mit einem {}-€-Schein. Wie viel Rückgeld bekommst du?	You buy something for €{} and pay with a €{} note. How much change do you get?	Ти купуєш щось за {} € і платиш купюрою {} €. Скільки решти ти отримаєш?
 Du kaufst für {} € ein und bezahlst mit {} €. Wie viel Rückgeld bekommst du?	You shop for €{} and pay with €{}. How much change do you get?	Ти купуєш на {} € і платиш {} €. Скільки решти ти отримаєш?
 Durchschnitt = Summe	Average = sum	Середнє = сума
-Ein Becken fasst {} Liter. Pro Minute fließen {} Liter hinein. Nach wie vielen Minuten ist es halb voll?	A pool holds {} litres. {} litres flow in per minute. After how many minutes is it half full?	Басейн вміщує {} літрів. Щохвилини вливається {} літрів. Через скільки хвилин він буде наполовину повний?
+Ein leeres Becken fasst {} Liter. Pro Minute fließen {} Liter hinein. Nach wie vielen Minuten ist es halb voll?	An empty pool holds {} litres. {} litres flow in per minute. After how many minutes is it half full?	Порожній басейн вміщує {} літрів. Щохвилини вливається {} літрів. Через скільки хвилин він буде наполовину повний?
 Ein Bus hat {} Sitzreihen mit je {} Plätzen. Wie viele Kinder können sitzen?	A bus has {} rows with {} seats each. How many children can sit?	В автобусі {} рядів по {} місця. Скільки дітей можуть сісти?
 Ein Dreieck hat die Grundseite {} cm und die Höhe {} cm. Wie groß ist seine Fläche?	A triangle has a base of {} cm and a height of {} cm. What is its area?	Трикутник має основу {} см і висоту {} см. Яка його площа?
 Ein Film beginnt um {} Uhr und dauert {} Minuten. Wie viele Minuten nach {} Uhr ist er zu Ende?	A film starts at {} and lasts {} minutes. How many minutes after {} o'clock does it end?	Фільм починається о {} і триває {} хвилин. Через скільки хвилин після {} години він закінчиться?
@@ -1586,7 +1586,7 @@ Eine Wanderkarte hat den Maßstab {}	A hiking map has a scale of {}	Турист
 Eine ganze Stunde = {} Minuten	A whole hour = {} minutes	Ціла година = {} хвилин
 Eine halbe Stunde = {} Minuten	Half an hour = {} minutes	Пів години = {} хвилин
 Ergänze von {} € bis {} €:	Count up from €{} to €{}:	Доповни від {} € до {} €:
-Es ist {} Uhr. Wie spät ist es in {} Stunden?	It is {} o'clock. What time is it in {} hours?	Зараз {} година. Котра година буде через {} години?
+Es ist {} Uhr morgens. Wie spät ist es in {} Stunden?	It is {} o'clock in the morning. What time is it in {} hours?	Зараз {} година ранку. Котра година буде через {} години?
 Fläche Dreieck = Grundseite	Area of a triangle = base	Площа трикутника = основа
 Fläche Quadrat = Seite	Area of a square = side	Площа квадрата = сторона
 Fläche Trapez = (a + c)	Area of a trapezium = (a + c)	Площа трапеції = (a + c)
@@ -1641,12 +1641,12 @@ Wie viele Sekunden sind {} Minuten und {} Sekunden?	How many seconds are {} minu
 Wie viele Stunden sind das?	How many hours is that?	Скільки це годин?
 Wie viele Stunden sind {} Tage und {} Stunden?	How many hours are {} days and {} hours?	Скільки годин у {} днях і {} годинах?
 Wie viele Tage haben {} Wochen?	How many days are there in {} weeks?	Скільки днів у {} тижнях?
-Wie viele Tage sind es vom {}. April bis zum {}. Mai?	How many days are there from {} April to {} May?	Скільки днів від {} квітня до {} травня?
-Wie viele Tage sind es vom {}. Juni bis zum {}. Juli?	How many days are there from {} June to {} July?	Скільки днів від {} червня до {} липня?
-Wie viele Tage sind es vom {}. Mai bis zum {}. Juni?	How many days are there from {} May to {} June?	Скільки днів від {} травня до {} червня?
-Wie viele Tage sind es vom {}. März bis zum {}. April?	How many days are there from {} March to {} April?	Скільки днів від {} березня до {} квітня?
-Wie viele Tage sind es vom {}. November bis zum {}. Dezember?	How many days are there from {} November to {} December?	Скільки днів від {} листопада до {} грудня?
-Wie viele Tage sind es vom {}. Oktober bis zum {}. November?	How many days are there from {} October to {} November?	Скільки днів від {} жовтня до {} листопада?
+Heute ist der {}. April. In wie vielen Tagen ist der {}. Mai?	Today is {} April. In how many days is it {} May?	Сьогодні {} квітня. Через скільки днів буде {} травня?
+Heute ist der {}. Juni. In wie vielen Tagen ist der {}. Juli?	Today is {} June. In how many days is it {} July?	Сьогодні {} червня. Через скільки днів буде {} липня?
+Heute ist der {}. Mai. In wie vielen Tagen ist der {}. Juni?	Today is {} May. In how many days is it {} June?	Сьогодні {} травня. Через скільки днів буде {} червня?
+Heute ist der {}. März. In wie vielen Tagen ist der {}. April?	Today is {} March. In how many days is it {} April?	Сьогодні {} березня. Через скільки днів буде {} квітня?
+Heute ist der {}. November. In wie vielen Tagen ist der {}. Dezember?	Today is {} November. In how many days is it {} December?	Сьогодні {} листопада. Через скільки днів буде {} грудня?
+Heute ist der {}. Oktober. In wie vielen Tagen ist der {}. November?	Today is {} October. In how many days is it {} November?	Сьогодні {} жовтня. Через скільки днів буде {} листопада?
 Zusammen heißt plus	Together means plus	Разом – це плюс
 Zusammen sind es {} gleiche Teile.	Together that is {} equal parts.	Разом це {} рівні частини.
 Zwei Nebenwinkel ergeben zusammen {}°. Einer ist {}° groß. Wie groß ist der andere?	Two adjacent angles add up to {}°. One is {}°. How big is the other?	Два суміжні кути разом дають {}°. Один дорівнює {}°. Чому дорівнює інший?
@@ -1682,10 +1682,10 @@ ein Viertel von {}	a quarter of {}	чверть від {}
 {} ct − {} ct = {} ct = {} €	{} ct − {} ct = {} ct = €{}	{} ц − {} ц = {} ц = {} €
 {} fährt mit dem Fahrrad {} km pro Stunde. Wie viele Minuten braucht {} für {} km?	{} cycles at {} km per hour. How many minutes does {} need for {} km?	{} їде на велосипеді {} км за годину. Скільки хвилин потрібно {} на {} км?
 {} g Käse kosten {} €. Wie viel kostet {} kg?	{} g of cheese cost €{}. How much does {} kg cost?	{} г сиру коштують {} €. Скільки коштує {} кг?
-{} g kosten {} €. Wie viel kostet {} kg?	{} g cost €{}. How much does {} kg cost?	{} г коштують {} €. Скільки коштує {} кг?
+{} g Käse kosten {} €. Wie viel kostet {} kg Käse?	{} g of cheese cost €{}. How much does {} kg of cheese cost?	{} г сиру коштують {} €. Скільки коштує {} кг сиру?
 {} hat in drei Tests {} und {} Punkte. Wie viele Punkte sind das im Durchschnitt?	{} scored {} and {} points in three tests. What is the average?	{} отримав(-ла) у трьох тестах {} і {} балів. Скільки це в середньому?
 {} hat {} rote und {} blaue Perlen. Wie viele Perlen sind das zusammen?	{} has {} red and {} blue beads. How many beads is that altogether?	У {} {} червоних і {} синіх намистин. Скільки всього намистин?
-{} hat {} €. Ein Buch kostet {} €, ein Stift {} €. Wie viel Geld bleibt übrig?	{} has €{}. A book costs €{}, a pen €{}. How much money is left?	У {} є {} €. Книжка коштує {} €, ручка {} €. Скільки грошей залишиться?
+{} hat {} € und kauft ein Buch für {} € und einen Stift für {} €. Wie viel Geld bleibt übrig?	{} has €{} and buys a book for €{} and a pen for €{}. How much money is left?	{} має {} € і купує книжку за {} € та ручку за {} €. Скільки грошей залишиться?
 {} hat {}-mal so viele Murmeln wie {}. Zusammen haben sie {} Murmeln. Wie viele Murmeln hat {}?	{} has {} times as many marbles as {}. Together they have {} marbles. How many marbles does {} have?	У {} у {} рази більше кульок, ніж у {}. Разом у них {} кульок. Скільки кульок у {}?
 {} ist {} Jahre alt, {} ist {}. In wie vielen Jahren sind beide zusammen {} Jahre alt?	{} is {} years old, {} is {}. In how many years will they be {} years old together?	{} – {} років, {} – {}. Через скільки років їм разом буде {} років?
 {} ist {} Jahre alt. {} ist {} Jahre älter. Wie alt ist {}?	{} is {} years old. {} is {} years older. How old is {}?	{} – {} років. {} на {} роки старший(-а). Скільки років {}?
@@ -2114,7 +2114,7 @@ Die Mutter von {} ist heute {} Jahre alt, {} ist {}. In wie vielen Jahren ist di
 Zufluss	Inflow	Приплив
 {} Liter pro Minute	{} litres per minute	{} л за хвилину
 Abfluss abziehen	Subtract the outflow	Віднімаємо витік
-Ein Becken fasst {} Liter. Rohr A füllt {} Liter pro Minute, Rohr B {} Liter pro Minute. Gleichzeitig laufen {} Liter pro Minute ab. Nach wie vielen Minuten ist das Becken voll?	A pool holds {} litres. Pipe A fills {} litres per minute, pipe B {} litres per minute. At the same time {} litres per minute drain away. After how many minutes is the pool full?	Басейн вміщує {} л. Труба A наливає {} л за хвилину, труба B – {} л за хвилину. Одночасно витікає {} л за хвилину. Через скільки хвилин басейн буде повний?
+Ein leeres Becken fasst {} Liter. Rohr A füllt {} Liter pro Minute, Rohr B {} Liter pro Minute. Gleichzeitig laufen {} Liter pro Minute ab. Nach wie vielen Minuten ist das Becken voll?	An empty pool holds {} litres. Pipe A fills {} litres per minute, pipe B {} litres per minute. At the same time {} litres per minute drain away. After how many minutes is the pool full?	Порожній басейн вміщує {} л. Труба A наливає {} л за хвилину, труба B – {} л за хвилину. Одночасно витікає {} л за хвилину. Через скільки хвилин басейн буде повний?
 Abheben	Withdraw	Зняття
 {} legt {} € zu {} % Zinsen an. Nach einem Jahr hebt {} {} € ab, der Rest wird ein weiteres Jahr mit {} % verzinst. Wie viel Geld ist es am Ende?	{} invests €{} at {} % interest. After one year {} withdraws €{}, the rest earns {} % for another year. How much money is there at the end?	{} кладе {} € під {} %. Через рік {} знімає {} €, решта ще рік дає {} %. Скільки грошей буде в кінці?
 Minuten	Minutes	Хвилини
@@ -2430,3 +2430,6 @@ Zahlen-Dungeon: neue Rechen-Karten 🃏 – echte Rechentricks wie Zehnerfreund,
 Vor jedem Kampf eine Karte spielen: Aufgaben mit diesem Trick machen mehr Schaden, die Probe schützt ein Herz	Play a card before each fight: tasks with that trick do more damage, the check protects a heart	Перед кожним боєм зіграй картку: завдання з цим трюком завдають більше шкоди, перевірка захищає серце
 Nach jedem Sieg eine neue Karte für dein Deck	A new card for your deck after every win	Після кожної перемоги – нова картка для твоєї колоди
 Musik startet sofort: in der Android-App beim Öffnen, im Browser beim ersten Tippen – „Musik aus“ bleibt aus	Music starts right away: in the Android app when it opens, in the browser at the first tap – “Music off” stays off	Музика вмикається одразу: в Android-застосунку під час відкриття, у браузері після першого дотику – «Музику вимкнено» залишається вимкненою
+Nova gerade nicht erreichbar	Nova is not reachable right now	Nova зараз недоступна
+Textaufgaben genauer formuliert (z. B. leeres Becken, Tage bis zu einem Datum, Uhrzeit am Morgen)	Word problems worded more precisely (e.g. empty pool, days until a date, time in the morning)	Текстові задачі сформульовано точніше (напр., порожній басейн, дні до певної дати, час уранці)
+Vorlesen: Nova liest immer ganze Sätze und wartet kurz, statt auf die Gerätestimme zu wechseln	Reading aloud: Nova always reads whole sentences and waits briefly instead of switching to the device voice	Читання вголос: Nova завжди читає цілі речення й трохи чекає, замість перемикатися на голос пристрою

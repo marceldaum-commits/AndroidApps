@@ -67,7 +67,7 @@ const Voice = {
   available() { return Nova.can() || !!(this.plugin() || this.web()); },
   seq: 0, chain: Promise.resolve(),
   stop() { this.seq++; this.chain = Promise.resolve(); Nova.stop(); const P = this.plugin(); if (P) { try { P.stop(); } catch {} } const W = this.web(); if (W) W.cancel(); },
-  // stille Notlösung, wenn Nova nicht verfügbar ist (offline, Server sagt 204): Gerätestimme; Promise endet nach dem Sprechen
+  // Notlösung nur ohne Netz: Gerätestimme; Promise endet nach dem Sprechen
   async device(text) {
     const P = this.plugin();
     if (P) { try { await P.speak({ text, lang: locale(), rate: speechRate(), pitch: 1, volume: 1, category: 'ambient', queueStrategy: 0 }); } catch {} return; }
@@ -91,7 +91,11 @@ const Voice = {
       if (seq !== this.seq) return;
       if (await Nova.play(c, I18N.lang, () => seq !== this.seq)) continue;
       if (seq !== this.seq) return;
-      if (I18N.lang === 'uk') continue;   // Ukrainisch nur mit Nova (Gerätestimmen beugen Zahlwörter oft falsch) – sonst lieber still
+      // Gerätestimme nur, wenn wirklich kein Netz da ist (oder Nova abgeschaltet). Ist Nova bei bestehendem Netz nicht erreichbar:
+      // still, einmal je Sitzung ein Hinweis (Vorgabe Marcel 17.11.). Ukrainisch immer nur mit Nova.
+      if (Nova.fail === 'abspielen') continue;
+      if (!['offline', 'aus'].includes(Nova.fail)) { Nova.notice(); continue; }
+      if (I18N.lang === 'uk') continue;
       await this.device(c);
     }
   },
