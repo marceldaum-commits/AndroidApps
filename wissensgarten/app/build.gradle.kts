@@ -85,6 +85,14 @@ android {
     }
 }
 
+// Sprach-Bibliothek sherpa-onnx (Stimme „Thorsten“): nur die Java-Anbindung für Handys mit ARM-Prozessor einpacken.
+// Auf x86-Geräten (fast nur Emulatoren) startet Thorsten dann nicht – dort liest die Gerätestimme.
+android.packaging.jniLibs.excludes += listOf(
+    "**/libsherpa-onnx-c-api.so", "**/libsherpa-onnx-cxx-api.so",
+    "lib/x86/libsherpa-onnx-jni.so", "lib/x86_64/libsherpa-onnx-jni.so", "lib/x86/libonnxruntime.so", "lib/x86_64/libonnxruntime.so",
+)
+android.packaging.jniLibs.useLegacyPackaging = true   // Maschinencode komprimiert einpacken: der Download wird damit deutlich kleiner
+
 kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
@@ -119,6 +127,8 @@ dependencies {
     // Geräte-Sync: Google-Anmeldung nur für den versteckten App-Ordner im Drive
     implementation("com.google.android.gms:play-services-auth:21.5.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2")
+    // Natürliche Vorlese-Stimme „Thorsten“: Sprachsynthese auf dem Gerät (Apache 2.0, ohne espeak-ng – Lautschrift liegt als Daten bei)
+    implementation("com.github.k2-fsa.sherpa-onnx:sherpa-onnx:v2.0.1@aar")
     // Play-Store-Variante: Updates über Google Play (In-App-Updates)
     "playImplementation"("com.google.android.play:app-update-ktx:2.1.0")
 

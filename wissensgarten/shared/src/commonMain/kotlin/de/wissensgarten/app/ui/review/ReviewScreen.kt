@@ -142,9 +142,22 @@ fun ReviewScreen(
     // Wer malt oder in Ruhe schauen will, hält das automatische Weiterblättern an
     var revealPaused by remember { mutableStateOf(false) }
 
+    // Nach dem Aufdecken: Antwort (ggf. in der Fremdsprache), danach die Erklärung (info) vorlesen
+    var readJob by remember { mutableStateOf<kotlinx.coroutines.Job?>(null) }
+    fun readReveal(c: StudyCard) {
+        val v = voice ?: return
+        readJob?.cancel()
+        v.stop()
+        readJob = scope.launch {
+            v.speakAndWait(c.back, Voice.localeFor(subject, c.back))
+            c.info?.takeIf { it.isNotBlank() }?.let { v.speakAndWait(it, Voice.localeFor(subject, it)) }
+        }
+    }
+
     fun next() {
         // Doppeltipp auf „weiter“ (während die Karte noch ausblendet) darf keine Karte überspringen
         if (phase != Phase.REVEAL) return
+        readJob?.cancel()
         autoAdvancing = false
         revealPaused = false
         levelUp = null
@@ -196,7 +209,7 @@ fun ReviewScreen(
         if (right) particles.burst(Burst.SPARKLE, 0.5f, 0.2f, 26)
         phase = Phase.REVEAL
         autoAdvancing = right
-        if (readAloud) voice?.speak(card.back, Voice.localeFor(subject, card.back))
+        if (readAloud) readReveal(card)
         sfx?.play(Sound.WATER, volume = if (calm) 0.4f else 0.9f)
         scope.launch {
             launch { gainAnim.snapTo(0f); gainAnim.animateTo(1f, tween(1300, easing = LinearOutSlowInEasing)) }
@@ -309,7 +322,7 @@ fun ReviewScreen(
                                 mood = Mood.CHEER; speech = "+$bonus 💧 Bonus!"
                                 phase = Phase.PLAY
                             }
-                            Phase.REVEAL -> RevealCard(card, lastRight, revealPaused || !autoAdvancing, onPause = { revealPaused = true }) { next() }
+                            Phase.REVEAL -> RevealCard(card, lastRight, revealPaused || !autoAdvancing, onPause = { revealPaused = true }, onRead = if (voice != null) ({ revealPaused = true; readReveal(card) }) else null) { next() }
                             Phase.PLAY -> CompositionLocalProvider(LocalSubject provides subject) { when (mode) {
                                 GameMode.DISCOVER -> DiscoverGame(card, options) { finish(it.rating) }
                                 GameMode.BALLOONS -> BalloonGame(card, options!!) { finish(it.rating) }
@@ -334,7 +347,7 @@ fun ReviewScreen(
 
 /** Nach dem Spiel: Merkbild + Antwort, damit sich Bild und Wissen verbinden. */
 @Composable
-private fun RevealCard(card: StudyCard, right: Boolean, paused: Boolean, onPause: () -> Unit, onNext: () -> Unit) {
+private fun RevealCard(card: StudyCard, right: Boolean, paused: Boolean, onPause: () -> Unit, onRead: (() -> Unit)? = null, onNext: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         Card(
             colors = CardDefaults.cardColors(containerColor = if (right) Color(0xFFE6F4DD) else Color(0xFFFFEDE2)),
@@ -343,7 +356,11 @@ private fun RevealCard(card: StudyCard, right: Boolean, paused: Boolean, onPause
             Column(Modifier.fillMaxWidth().padding(18.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 MerkBild(card.img, emojiSize = 56.sp, key = "r" + card.id, cardId = card.id)
                 var drawing by remember(card.id) { mutableStateOf(false) }
-                AssistChip(onClick = { onPause(); drawing = true }, label = { Text(if (de.wissensgarten.app.ui.play.Drawings.rev >= 0 && de.wissensgarten.app.ui.play.Drawings.has(card.id)) "✏️ Neu malen" else "✏️ Selbst malen") })
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    AssistChip(onClick = { onPause(); drawing = true }, label = { Text(if (de.wissensgarten.app.ui.play.Drawings.rev >= 0 && de.wissensgarten.app.ui.play.Drawings.has(card.id)) "✏️ Neu malen" else "✏️ Selbst malen") })
+                    // Antwort und Erklärung (noch einmal) vorlesen
+                    if (onRead != null) AssistChip(onClick = onRead, label = { Text("🔊 Vorlesen") })
+                }
                 if (drawing) de.wissensgarten.app.ui.play.DrawDialog(card.id, "${card.front} → ${card.back}", card.img) { drawing = false }
                 SilbenText(card.front, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F))
                 SilbenText(card.back, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, color = Color(0xFF22261F))
@@ -362,6 +379,16 @@ private fun RevealCard(card: StudyCard, right: Boolean, paused: Boolean, onPause
 private fun FlipGame(card: StudyCard, now: Long, simple: Boolean, onRate: (Rating) -> Unit) {
     var open by remember(card.id) { mutableStateOf(false) }
     val sfx = LocalSfx.current
+    // Vorlesen: erst die Frage, nach dem Umdrehen die Antwort
+    val voice = LocalVoice.current
+    val auto = LocalReadAloud.current
+    val subject = LocalSubject.current
+    LaunchedEffect(card.id, open) {
+        if (!auto || voice == null) return@LaunchedEffect
+        delay(250)
+        val t = if (open) card.back else card.front
+        voice.speak(t, Voice.localeFor(subject, t))
+    }
     val flip by animateFloatAsState(if (open) 180f else 0f, tween(450), label = "flip")
     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
         Card(

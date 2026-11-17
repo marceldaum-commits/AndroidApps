@@ -134,6 +134,10 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         LaunchedEffect(musicOn) { host.music.setEnabled(musicOn) }
         WissensgartenTheme(theme) {
           val readMode by vm.settings.readAloud.collectAsStateWithLifecycle()
+          // Vorlese-Stimme und Tempo (Gerät/Browser oder Thorsten)
+          val voiceName by vm.settings.voiceName.collectAsStateWithLifecycle()
+          val voiceRate by vm.settings.voiceRate.collectAsStateWithLifecycle()
+          LaunchedEffect(voiceName, voiceRate) { host.voice?.setVoice(voiceName); host.voice?.setRate(voiceRate) }
           val prof by vm.profile.collectAsStateWithLifecycle()
           val sylMode by vm.settings.syllables.collectAsStateWithLifecycle()
           val syllablesOn = when (sylMode) {

@@ -1,6 +1,7 @@
 package de.wissensgarten.app.ui.fx
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import kotlinx.coroutines.flow.StateFlow
 import de.wissensgarten.app.AppHost
 import de.wissensgarten.core.model.MusicMood
 
@@ -31,7 +32,10 @@ interface Music {
     fun prepare(vararg moods: MusicMood)
 }
 
-/** Brummis Stimme (Sprachausgabe des Geräts bzw. des Browsers). */
+/**
+ * Brummis Stimme: Sprachausgabe des Geräts bzw. des Browsers – oder die natürliche Stimme „Thorsten“ ([natural]),
+ * die auf dem Gerät rechnet. Thorsten liest nur Deutsch; Englisch, Französisch und Spanisch liest immer eine Gerätestimme der Sprache.
+ */
 interface Voice {
     /** Wird aufgerufen, wenn Brummi anfängt / aufhört zu sprechen (Musik leiser stellen). */
     var onSpeaking: (Boolean) -> Unit
@@ -40,6 +44,15 @@ interface Voice {
     fun stop()
     /** Sprechen und warten, bis Brummi fertig ist (für Brummi-Radio). */
     suspend fun speakAndWait(text: String, locale: Locale = Locale.GERMAN)
+
+    /** Deutsche Stimmen des Geräts bzw. Browsers zur Auswahl (nur solche, die ohne Internet sprechen) */
+    val voices: StateFlow<List<VoiceOption>> get() = NO_VOICES
+    /** Gewählte Stimme: "" = Standard, [de.wissensgarten.core.data.VOICE_THORSTEN] = Thorsten, sonst [VoiceOption.id] */
+    fun setVoice(name: String) {}
+    /** Sprechtempo in Prozent (50…150) */
+    fun setRate(percent: Int) {}
+    /** Stimm-Paket „Thorsten“; null = gibt es auf dieser Plattform nicht */
+    val natural: NaturalVoicePack? get() = null
 
     companion object {
         private val EMOJI = Regex("[\\p{So}\\p{Cs}\\uFE0F\\u200D]")
