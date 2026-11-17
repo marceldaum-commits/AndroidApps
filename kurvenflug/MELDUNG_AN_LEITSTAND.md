@@ -1,6 +1,6 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
-## Korrektheitsprüfung 17.11. (Version 0.24.2, Commit {{COMMIT}})
+## Korrektheitsprüfung 17.11. (Version 0.24.2, Commit 1fbf80d)
 
 ### Was geprüft wurde und wie
 | Bereich | Wie |
