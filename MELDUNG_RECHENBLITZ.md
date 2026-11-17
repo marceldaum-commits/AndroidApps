@@ -2,7 +2,134 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67.** **3.25.3: Pro startklar (Shop/Lizenz-Dienst nötig), Datenschutz-Fund, Ukrainisch nur Nova, Git-Bereinigung vorbereitet (Meldung 68).** **3.25.4: Test-Code ✓, Pro eingeschaltet – live erst nach Website-Freigabe af9af9fd (Meldung 69).** **3.26.0: Zahlen-Dungeon 2 mit Rechen-Karten (Meldung 71) – neue Funktion, bitte erst nach dem Betriebstest live.** **3.26.1: Musik startet sofort, nur Nova, 0 Thorsten-Treffer im Code – FERTIG FÜR DEN BETRIEBSTEST (Meldung 72).** **17.11. abends: 3.26.1 ist live (Leitstand). Ukrainisch bleibt ohne Nova still (bestätigt). Betriebstest läuft – nur noch Fehlerbehebungen.** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67.** **3.25.3: Pro startklar (Shop/Lizenz-Dienst nötig), Datenschutz-Fund, Ukrainisch nur Nova, Git-Bereinigung vorbereitet (Meldung 68).** **3.25.4: Test-Code ✓, Pro eingeschaltet – live erst nach Website-Freigabe af9af9fd (Meldung 69).** **3.26.0: Zahlen-Dungeon 2 mit Rechen-Karten (Meldung 71) – neue Funktion, bitte erst nach dem Betriebstest live.** **3.26.1: Musik startet sofort, nur Nova, 0 Thorsten-Treffer im Code – FERTIG FÜR DEN BETRIEBSTEST (Meldung 72).** **17.11. abends: 3.26.1 ist live (Leitstand). Ukrainisch bleibt ohne Nova still (bestätigt). Betriebstest läuft – nur noch Fehlerbehebungen.** **Nacht 17./18.11.: 3.26.2 auf test – Aufgaben geprüft (10 Vorlagen + 5 Vorlese-Fehler korrigiert), Nova ganze Sätze / kein Rückfall, neues App-Symbol – FERTIG FÜR DEN BETRIEBSTEST (Meldung 73). ⚠️ Stimmen-Server lehnt seit ca. 23:45 Uhr alle neuen Sätze ab (204) – bitte prüfen.** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 18.11.2026 (73) – Nachtauftrag: Aufgaben geprüft, Nova ohne Rückfall, neues App-Symbol (3.26.2) – fertig für den Betriebstest
+
+Aufträge Leitstand (Marcel, 17.11.): 1) jede Aufgabe auf Logik und Verständlichkeit prüfen; 2) Nova nur ganze Sätze, nie die Android-Stimme; 3) neues App-Symbol.
+
+### ⚠️ Zuerst: Stimmen-Server nimmt gerade keine neuen Sätze an
+
+- **Seit ca. 23:45 Uhr antwortet `/jetzt` auf jede neue Bestellung mit 204**, auch auf einzelne, langsame Anfragen. Fertige Dateien (`/nova/…mp3`) kommen weiter.
+- Davor hat der Server bei vielen Anfragen kurz hintereinander einen Teil abgelehnt (204) und dieselben Sätze später angenommen. Das ist eine Drossel oder ein Kontingent.
+- **Meine Abdeckungs-Tests haben heute Nacht etwa 4 500 neue Sätze bestellt** (alle Aufgaben, Lösungswege und Theorie in drei Sprachen, mehrfach). Das hat das Kontingent vermutlich aufgebraucht. Ich habe die Tests danach sofort gestoppt.
+- Folge für Nutzer: Neue Aufgabensätze bleiben still, und es kommt einmal der Hinweis „Nova gerade nicht erreichbar“. Vorab vertonte Texte laufen normal. In 3.26.1 (live) springt dort noch die Gerätestimme ein.
+- **Bitte:** das Limit von `/jetzt` prüfen bzw. erhöhen. Bei Überlast lieber kurz warten statt 204 antworten, und Ablehnungen nicht zwischenspeichern. Außerdem `vorlesen/texte.json` neu vertonen (siehe unten, jetzt 2 027 statt 1 049 Texte). Das senkt die Last auf `/jetzt` deutlich.
+
+### 1. Aufgaben geprüft
+
+**Wie:**
+- **Automatisch:** 261 000 Aufgaben (29 Themen × 6 Stufen × 1 500 Zufallsaufgaben) mit dem unabhängigen Prüfprogramm (Python, exakte Bruchrechnung, 170 eigene Löser) nachgerechnet: **0 falsch**.
+- Dazu 441 594 Gleichungen aus den Lösungswegen: **0 falsch**.
+- Zusatzprüfungen:
+  - Antwort 0 in Sachaufgaben,
+  - Uhrzeit über 12 Uhr ohne Angabe,
+  - Bruch als Lösung, wo keiner verlangt ist,
+  - mehr als 2 Nachkommastellen ohne Hinweis.
+- **Von Hand:** Alle **941 verschiedenen Aufgabenformen** gelesen, darunter alle 73 Textaufgaben-Vorlagen. Jeweils mit Hinweis, Einheit und Antwortformat, so wie das Kind sie sieht.
+- **Gleichwertige Antworten:** Die App vergleicht den Wert. 0,5 = 1/2 und 8,6 = 8,60 werden angenommen. Ein ungekürzter Bruch bekommt eine zweite Chance mit dem Hinweis „kürze noch“. Wo eine Dezimalzahl verlangt ist, kommt der Hinweis „Schreib es als Dezimalzahl“.
+
+**Geändert (10 Vorlagen, mit Übersetzung EN/UK):**
+
+| Vorher | Problem | Jetzt |
+|---|---|---|
+| „Lena hat 20 €. Ein Buch kostet 13 €, ein Stift 3 €. Wie viel Geld bleibt übrig?“ | Kauft sie überhaupt? | „Lena hat 20 € und kauft ein Buch für 13 € und einen Stift für 3 €. …“ |
+| „Ein Becken fasst 680 Liter. … Nach wie vielen Minuten ist es halb voll?“ (2 Vorlagen) | Startwert offen | „Ein **leeres** Becken …“ |
+| „Wie viele Tage sind es vom 26. November bis zum 10. Dezember?“ (6 Monatspaare) | Ersten Tag mitzählen? (14 oder 15) | „Heute ist der 26. November. In wie vielen Tagen ist der 10. Dezember?“ |
+| „Es ist 10 Uhr. Wie spät ist es in 4 Stunden?“ (Lösung 14) | 14 oder 2? | „Es ist 7 Uhr **morgens**. …“, Ergebnis höchstens 12 Uhr |
+| „Film … Wie viele Minuten nach 21 Uhr ist er zu Ende?“ (2 Stufen) | Konnte Lösung **0** haben | kommt nicht mehr vor |
+| „6 Personen brauchen 14 Tage, um einen Zaun zu streichen. Wie viele Tage brauchen 7 Personen?“ | Annahme fehlte | „…, wenn alle gleich schnell arbeiten?“ |
+| „500 g kosten 8,53 €. Wie viel kostet 1 kg?“ (2 Stufen) | Was kostet? | „500 g Käse kosten … Wie viel kostet 1 kg Käse?“ |
+
+Danach alles neu nachgerechnet: 261 000 / 0 falsch. Alle 174 Stufen sind weiterhin strikt schwerer als die vorige ✓.
+
+**Beim Vorlesen gefunden und korrigiert:**
+- **„wie viel?“ an Fragen angehängt (Deutsch):**
+  - Jedes Fragezeichen wurde als „wie viel?“ gesprochen, zum Beispiel „Wie weit kommt er in 5 Stunden **wie viel?**“.
+  - Betroffen waren alle Textaufgaben mit Frage und 8 Theorie-Sätze.
+  - Jetzt wird nur das Lücken-„?“ so gelesen („3 plus wie viel? gleich 11“).
+- **Geld:** „3 € 40 ct“ wurde „3 40 Euro Cent“ gelesen, in allen Sprachen. Jetzt heißt es „3 Euro 40 Cent“.
+- **Ukrainisch:** Die Cent-Abkürzung „ц“ wurde als Buchstabe gelesen, jetzt als „центів“.
+- **Englisch/Ukrainisch lasen Deutsch:**
+  - „Runde … auf Hundertstel“
+  - „ein Achtel von …“
+  - die Einheit „Teile“
+  - „t + kg“, „km m + km“
+
+  Die Übersetzungen sind ergänzt. Eine Prüfung aller Sprechtexte ergibt jetzt 0 fehlende Übersetzungen.
+- **Offen (nicht geändert):** Ukrainisch liest Brüche als „2 на 3“ statt „дві третіх“. Für die richtige Beugung braucht es eigene Sprachregeln. Ich kann das nach dem Betriebstest bauen.
+
+### 2. Nova – ganze Sätze, keine Android-Stimme mehr
+
+**Ursachen, warum trotz Nova die Gerätestimme kam:**
+1. **Datenschutz-Sperre zu grob:**
+   - Enthielt ein Text den Profilnamen, las bisher die Gerätestimme.
+   - Bei Namen wie „Lena“, „Mia“ oder „Ben“ betraf das jede Textaufgabe mit diesem Namen.
+   - Jeder Name, der in einem anderen Wort steckt, löste das ebenfalls aus („Max“ in „Maximum“).
+   - **Jetzt:** Ein echter Profilname wird vor dem Senden nur aus dem Text entfernt („Super gemacht, Kunigunde!“ → „Super gemacht!“). Den Rest liest Nova. Der Name verlässt weiterhin nie das Gerät ✓.
+2. **Kein Warten:** Jede Antwort ohne Datei (204, Fehler) führte sofort zur Gerätestimme, und der Text blieb für die ganze Sitzung gesperrt.
+3. **Lange Lösungswege:** Das Vertonen dauert bis zu 5–9 s.
+
+**Neu in 3.26.2:**
+- **Immer ganze Sätze:**
+  - Gibt es den Text fertig (vorab vertont oder gespeichert), kommt er als Ganzes.
+  - Sonst bestellt die App jeden **Satz einzeln und ganz** beim Server, alle gleichzeitig, höchstens 2 parallel. Dann spricht sie die Sätze nacheinander. So wartet man nicht auf lange Lösungswege.
+  - Nichts wird aus Schnipseln zusammengesetzt.
+- **Bis 3,5 s warten**, ab 0,7 s mit einem kleinen Ladehinweis „🔊 …“ unten rechts. Was länger braucht, lädt im Hintergrund weiter und liegt beim nächsten Mal bereit.
+- **Wiederholen:** Bei 204 oder einem Serverfehler versucht es die App bis zu zweimal neu (nach 0,7 s und nach 1,3 s). Ein abgelehnter Satz wird nur 20 s gesperrt (statt für die ganze Sitzung).
+- **Gerätestimme nur ohne Netz** (und wenn nichts offline geladen ist), für Ukrainisch nie. Ist Nova bei bestehendem Netz nicht erreichbar, bleibt es still. Einmal pro Sitzung kommt dezent „🔇 Nova gerade nicht erreichbar“.
+- **Vorab als ganze Sätze:** Das ganze kleine Einmaleins (mal und geteilt) und Plus/Minus der Stufe 1 stehen jetzt in allen drei Sprachen in `vorlesen/texte.json`. Das sind 978 Sätze, genau so, wie die App sie spricht. **Bitte neu vertonen** (2 027 Texte; die 8 Theorie-Sätze mit „wie viel?“ haben sich ebenfalls geändert).
+
+**Abdeckung gemessen:**
+- Die App wurde im Browser vollständig durchgeklickt. Das waren 29 Themen × 6 Stufen, jeweils:
+  - Aufgabe vorlesen,
+  - falsche Antwort mit Lösungsweg,
+  - Theorie mit Regeln und Beispiel,
+
+  dazu die Probe in den Einstellungen und eine ganze Runde mit Blitz-Sprüchen und Ergebnis.
+- Gemessen wurde gegen den **echten** Stimmen-Server. Das Abspielen wurde übersprungen, damit es schnell geht.
+
+| Sprache | vorgelesene Sätze | mit Nova | Gerätestimme | still (Server lehnte ab / > 3,5 s) |
+|---|---|---|---|---|
+| Deutsch | 2 227 | **2 048 = 92,0 %** | 0 | 158 / 21 |
+| Englisch | 2 188 | **2 012 = 92,0 %** | 0 | 158 / 18 |
+| Ukrainisch | 2 182 | **1 983 = 90,9 %** | 0 | 159 / 40 |
+
+- **Gerätestimme: 0 Mal** ✓.
+- Die fehlenden ~8 % sind **fast nur Ablehnungen (204) durch den Server**. Der Test lief in drei Sprachen gleichzeitig und viel dichter als ein Kind (alle 1–2 s ein neuer Satz). Dieselben Sätze wurden später einzeln angenommen.
+- `/jetzt` brauchte im Mittel 1,6 s, bei 90 % aller Bestellungen höchstens 2,2 s.
+- Die neue Wiederholung bei 204 konnte ich nicht mehr fertig messen, weil der Server danach gar nichts Neues mehr angenommen hat (siehe oben).
+- **100 % gehen nur, wenn `/jetzt` unter Last nicht ablehnt.** Auf der App-Seite ist alles dafür bereit.
+- CORS ist geprüft: `https://rechenblitz.mathenachhilfe-online.com` und `https://localhost` (APK) dürfen GET und POST ✓.
+
+### 3. Neues App-Symbol
+
+- **Motiv:** wie geliefert (oranger Verlauf, dunkler Blitz, + × ÷ − halbtransparent). Die Rechenzeichen sind jetzt **Pfade statt Schrift**.
+- **Quelle:** `android-app/symbol/*.svg`. **Erzeuger:** `android-app/symbol.js` (Chromium rendert die SVGs), danach `python3 icons.py` für das Startbild.
+- **Web:**
+  - `icons/icon-512.png` (die URL bleibt gleich → der Shop übernimmt es),
+  - `icons/icon-192.png`,
+  - `icons/icon-maskable-512.png` (randlos, Inhalt im sicheren Kreis),
+  - `icons/apple-touch-icon.png` (180 px, randlos),
+  - **neu:** `icons/favicon-32.png` (ohne Rechenzeichen).
+- **Android:**
+  - Das Launcher-Symbol ist adaptiv: **Hintergrund = Verlauf** (als Bild), **Vordergrund = Blitz** im sicheren Bereich.
+  - Dazu `ic_launcher` und `ic_launcher_round` in allen Dichten. Bei 48 dp ohne Rechenzeichen.
+  - Das Startbild (dunkelblau) zeigt jetzt das neue Symbol.
+- **Am Handy erst mit der nächsten APK.** Die Inhalte (Web/Live-Update) zeigen es sofort. Es ist keine neue Hülle nötig: `MIN_SHELL` bleibt 2.
+- Das Kopf-Logo „by Nachhilfe – online“ in der App habe ich gelassen. Es ist der Link zur Website, nicht das App-Symbol.
+
+### Tests
+- Fallback-Regeln:
+  - Server weg + Netz da → still + Hinweis ✓
+  - offline DE/EN → Gerätestimme ✓
+  - offline UK → still ✓
+  - Profilname wird nie gesendet ✓
+- Musikstart (App sofort, Web beim ersten Tippen, „Musik aus“) ✓; Musiktest ✓.
+- Übersetzungen: 0 fehlend ✓. Barrierefreiheit (axe): 0 Verstöße ✓. Pro-Codes ✓. Schwierigkeit ✓.
+- Neue Dateiendungen: keine (`.svg`, `.png`, `.json` gibt es schon). Web = Android ✓.
+
+**3.26.2 ist fertig für den Betriebstest** – mit der Bitte, zuerst `/jetzt` (Limit) zu prüfen und `texte.json` neu zu vertonen.
 
 ## 17.11.2026 (72) – Musik sofort, nur Nova (3.26.1) – fertig für den Betriebstest
 

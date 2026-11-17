@@ -1,4 +1,4 @@
-{"app":"rechenblitz","version":"3.26.2","shell":2,"id":"e3140452c872027f","files":{
+{"app":"rechenblitz","version":"3.26.2","shell":2,"id":"58c17c118cc60c7b","files":{
 "LICENSE-fonts-OFL.txt":"7ccbf925128fa58dd9db15a952de2cb1388bada8bceddb13b90302c63c517ef8",
 "LICENSE-qrcode-generator.txt":"cbb4dd65aafcbc67fdd469b12042464153219bc26f238b2f19858c7980e5b01a",
 "app.css":"ab7f7f590b903eabcfd941db13fe2c4c57cb4547ba30d3043c0e32b6c7fe4875",
@@ -29,11 +29,11 @@
 "js/merkvis.js":"01b57d4e57a6de9d1d3c6aa270426043dd1270904e2b066e9ea88e79229ab2a5",
 "js/music.js":"30741773a091ef7156e6779677a604903a1abec4ccd8b4c9ebe078d62362007e",
 "js/native.js":"7500e7e8a0196405b705f2c1ce3be2c388273b44939648b754f0135e4169c32f",
-"js/nova.js":"6bbad87c34a51680c1d265e53c1c836f5c52398e8fae743bf9d1a4637517cb37",
+"js/nova.js":"b7e1226982f8a21a2a1c5f29690abc96a55f857112820feba844ecd44b4d687e",
 "js/panels.js":"83ccac4ac3b245dc881a4456bfc90f4a29bedb1b2a0eeece27a33c6a493b96c0",
 "js/pro.js":"e03cdcc44a9708e91752afa475aa6c3f4eef314e7e272a99dbc2f85ccb173f9e",
 "js/raetsel.js":"150ff6ff85bf552d1060c2a25dac9a8304b36308545b4f842df77a9c00507d1e",
-"js/rechenblitz.min.js":"9801fbc733362e932f32f239685c7666e7ccc652bbfa6266bf6aab89e3519ea1",
+"js/rechenblitz.min.js":"f71c96bbb737969d47970c7e0bfe12dd17109f47bacda4d2c33d092ddde6278d",
 "js/reise.js":"484b62edca9ccbcb55bd78c99f798dab3bb614ed0ceffe6810f05d0617748600",
 "js/reminder.js":"dc1c8158558f6cf41c8239a4a80d05738891e6e39a368b93ee72bd264fc952f7",
 "js/speech.js":"5074a33bf2b68536582a7a509d8c552002aa94f8194486695fc39524275bf003",

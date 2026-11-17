@@ -56,8 +56,9 @@ const Nova = {
         if (!r.ok && r.status === 404 && this.cfg().jetzt && novaNorm(text).length <= 300) {
           const ask = () => this.slot(() => this.get(this.cfg().jetzt, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: novaNorm(text), sprache: lang }) }));
           let j = await ask();
-          if (j.status >= 500) { await new Promise(r => setTimeout(r, 300)); j = await ask(); }   // kurzer Serverfehler: einmal neu versuchen
-          if (j.status !== 200) { this.miss.set(key, Date.now() + 60000); this.fail = 'fehlt'; return null; }   // 204: gerade nicht vertonbar – in 1 min neu versuchen
+          // Serverfehler (5xx) oder Drossel bei vielen Anfragen (204): kurz warten und bis zu zweimal neu versuchen
+          for (let k = 0; k < 2 && (j.status >= 500 || j.status === 204); k++) { await new Promise(r => setTimeout(r, 700 + 600 * k)); j = await ask(); }
+          if (j.status !== 200) { this.miss.set(key, Date.now() + 20000); this.fail = 'fehlt'; return null; }   // weiter abgelehnt: in 20 s neu versuchen
           const u = (await j.json()).url; if (!u) { this.miss.set(key, Date.now() + 60000); this.fail = 'fehlt'; return null; }
           r = await this.get(new URL(u, this.cfg().jetzt).href);
         }
