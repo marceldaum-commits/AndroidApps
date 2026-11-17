@@ -2373,4 +2373,10 @@ I18N.add('uk', {"% sind":"% — це",
 "Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)":"Застосунок Android: читання вголос тепер і тут – голоси телефона, швидкість і приклад (потрібна нова версія застосунку)",
 "Neu: die natürliche Stimme „Thorsten“ zum Vorlesen – einmal laden, dann auch offline":"Нове: природний голос «Thorsten» для читання вголос (лише німецькою) – завантаж один раз, далі працює й офлайн",
 "Stimme „Thorsten“: kommt jetzt von unserem eigenen Stimmen-Server, wird vor dem Speichern geprüft, Laden lässt sich abbrechen":"Голос «Thorsten»: тепер з нашого власного сервера голосів, перевіряється перед збереженням, завантаження можна скасувати",
-"Stimme „Thorsten“: beide Dateien vom Stimmen-Server werden geprüft":"Голос «Thorsten»: обидва файли із сервера голосів перевіряються"});
+"Stimme „Thorsten“: beide Dateien vom Stimmen-Server werden geprüft":"Голос «Thorsten»: обидва файли із сервера голосів перевіряються",
+"⭐ Pro aktiv":"⭐ Pro активний",
+"Pro aktiv":"Pro активний",
+"Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!":"Rechenblitz Pro розблоковано на цьому пристрої – для всіх профілів. Дякуємо за підтримку!",
+"Auf diesem Gerät freigeschaltet – für alle Profile":"Розблоковано на цьому пристрої – для всіх профілів",
+"Rechenblitz Pro ist auf diesem Gerät freigeschaltet.":"Rechenblitz Pro розблоковано на цьому пристрої.",
+"Neu: „Pro aktiv“ ist deutlich zu sehen – auf der Startseite, im Menü, in den Einstellungen und im Elternbericht":"Нове: «Pro активний» добре видно – на головному екрані, у меню, у налаштуваннях і у звіті для батьків"});

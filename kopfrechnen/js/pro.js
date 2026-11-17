@@ -92,7 +92,7 @@ PANELS.pro = ({ what } = {}) => {
     ['💾', 'Vorlagen speichern und teilen', '„Üben nach Wunsch“ als Vorlage, Link oder QR-Code']];
   const WHAT = { profi: 'Die Profi-Stufe gehört zu Rechenblitz Pro.', profile: `Mehr als ${RBPRO.freeProfiles} Profile gibt es mit Rechenblitz Pro.`, bericht: 'Der Elternbericht gehört zu Rechenblitz Pro.', vorlage: 'Vorlagen speichern und teilen gehört zu Rechenblitz Pro.' };
   return { title: '<span>⭐</span> <span>Rechenblitz Pro</span>', html: `<div class="pro">
-    ${own ? '<p class="pro-own">✓ Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!</p>'
+    ${own ? '<p class="pro-own"><span class="pro-on static">⭐ Pro aktiv</span> Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!</p>'
       : `${what && WHAT[what] ? `<p class="pro-what">${WHAT[what]}</p>` : ''}${!locks ? '<p class="small muted">Zurzeit sind alle Pro-Funktionen kostenlos freigeschaltet.</p>' : ''}`}
     <div class="menu">${feats.map(([i, t, s]) => `<div class="mi static"><div class="ico">${i}</div><div><b>${t}</b><span>${s}</span></div></div>`).join('')}</div>
     <p class="small muted">Kostenlos bleiben alle 29 Themen in Stufe 1–5, alle Spiele, Lösungswege, Reise und Garten – ohne Werbung.</p>
@@ -121,7 +121,7 @@ PANELS.elternbericht = () => {
   const amp = acc => acc >= .85 ? ['ok', 'sitzt sicher'] : acc >= .7 ? ['mid', 'fast sicher'] : ['bad', 'üben'];
   const rows = d.topics.map(t => { const [c, l] = amp(t.acc); return `<tr><td><span translate="no">${TOPICS[t.k].g}</span> ${TOPICS[t.k].name}</td><td>${t.n}</td><td><span class="amp ${c}">${pc(t.ok, t.n)} %</span></td><td>${t.lvl != null ? lvlName(t.lvl) : '–'}</td><td>${t.trend == null ? '–' : t.trend >= .03 ? '↗ besser' : t.trend <= -.03 ? '↘ schwächer' : '→ gleich'}</td><td class="small">${l}${d.box[t.k] ? ` · ${d.box[t.k]} in der Fehlerkiste` : ''}</td></tr>`; }).join('');
   const weak = d.topics.filter(t => t.n >= 10 && t.acc < .7).slice(0, 3), strong = d.topics.filter(t => t.n >= 10 && t.acc >= .9).slice(0, 3);
-  return { title: `Elternbericht · ${esc(profile().name)}`, html: `<div class="report" id="elternReport">
+  return { title: `Elternbericht · ${esc(profile().name)}`, html: `<div class="report" id="elternReport">${RBPRO.ok ? '<p class="pro-line"><span class="pro-on static">⭐ Pro aktiv</span> <span class="small muted">Rechenblitz Pro ist auf diesem Gerät freigeschaltet.</span></p>' : ''}
     <p class="small muted" style="margin-top:0">Die letzten 10 Wochen (${fmtDay(dayStr(69))} bis ${fmtDay(dayStr(0))})</p>
     <div class="wgrid"><div class="stat"><b>${d.days}</b><span>Tage geübt</span></div><div class="stat"><b>${d.n}</b><span>Aufgaben</span></div><div class="stat"><b>${pc(d.ok, d.n)} %</b><span>richtig</span></div><div class="stat"><b>${Math.round(d.ms / 60000)}</b><span>Minuten</span></div></div>
     <h4>Aufgaben je Woche</h4>

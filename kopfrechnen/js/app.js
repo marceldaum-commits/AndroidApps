@@ -267,6 +267,7 @@ const streakDays = () => (S.days.last === todayStr() || S.days.last === dayStr(1
 
 const MAIN_TOPICS = ['add', 'sub', 'mul', 'div', 'frac', 'dec', 'pct', 'word', 'mix'];
 function renderHome() {
+  $('proOn').hidden = !(typeof RBPRO !== 'undefined' && RBPRO.ok);   // deutlich sichtbar: Pro ist freigeschaltet
   const p = profile();
   $('btnProfile').innerHTML = `<span class="av">${p.emoji}</span><span class="pn" translate="no">${esc(p.name === 'Ich' ? tr('Ich') : p.name)}</span>`;
   const lv = levelFromXp(S.xp), cur = xpForLevel(lv), nxt = xpForLevel(lv + 1);

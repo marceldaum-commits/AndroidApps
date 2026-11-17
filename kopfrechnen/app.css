@@ -1050,3 +1050,10 @@ button.badge{font:inherit;cursor:pointer}
 #thBox p{margin:0}
 #thBox .bar{height:10px}
 #thBox .bar>i{display:block;height:100%;width:0;background:var(--orange-d);border-radius:99px;transition:width .2s}
+/* ---------- Pro aktiv: deutlich sichtbar ---------- */
+.pro-on{display:inline-flex;align-items:center;gap:4px;margin-left:auto;padding:3px 10px;border-radius:999px;border:0;background:linear-gradient(135deg,#ffb020,#ff7418);color:#101b43;font:inherit;font-size:12.5px;font-weight:800;white-space:nowrap;cursor:pointer;box-shadow:0 2px 6px rgba(255,116,24,.35)}
+.pro-on[hidden]{display:none}
+.pro-on.static{cursor:default;box-shadow:none;margin-left:6px;vertical-align:1px;font-size:11.5px;padding:2px 8px}
+.pro-own .pro-on.static,.pro-line .pro-on.static{margin-left:0;margin-right:6px}
+.pro-line{margin:0 0 10px}
+.mi.pro-active{border-color:#ff9a3c}

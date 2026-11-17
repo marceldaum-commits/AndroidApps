@@ -46,7 +46,7 @@ const PANELS = {
       <div class="mlabel">Mehr</div>
       ${mi('profiles', profile().emoji, 'Wer übt?', 'Profile für Geschwister & Freunde')}
       ${mi('teacher', '👩‍🏫', 'Für Lehrkräfte', 'Aufträge verschicken, Arbeitsblätter drucken')}
-      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', 'Rechenblitz Pro', RBPRO.ok ? 'Freigeschaltet – danke!' : 'Profi-Stufe, mehr Profile, Elternbericht') : ''}
+      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', RBPRO.ok ? 'Rechenblitz Pro <span class="pro-on static">Pro aktiv</span>' : 'Rechenblitz Pro', RBPRO.ok ? 'Auf diesem Gerät freigeschaltet – für alle Profile' : 'Profi-Stufe, mehr Profile, Elternbericht', RBPRO.ok ? 'pro-active' : '') : ''}
       ${mi('settings', '⚙️', 'Einstellungen', 'Ton, Erinnerung, Klassenstufe, Design')}
       ${!isStandalone() && (installPrompt || isIOS()) ? mi('install', '📱', 'Als App installieren', 'Auf den Startbildschirm – läuft auch offline') : ''}
       </div><p class="small muted" style="text-align:center;margin:14px 0 0">Rechenblitz ${versionLabel()}${n ? ` · ${n} Meldung${n > 1 ? 'en' : ''} wartet auf Versand` : ''}</p>` };
@@ -93,7 +93,7 @@ const PANELS = {
   settings() {
     const sw = (id, on, t, d) => `<button class="setrow" data-set="${id}" role="switch" aria-checked="${on}"><div><b>${t}</b><span>${d}</span></div><span class="switch ${on ? 'on' : ''}"></span></button>`;
     return { title: 'Einstellungen', html: `<div class="menu">
-      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', 'Rechenblitz Pro', RBPRO.ok ? 'Freigeschaltet – danke!' : 'Freischalten oder Code einlösen') : ''}
+      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', RBPRO.ok ? 'Rechenblitz Pro <span class="pro-on static">Pro aktiv</span>' : 'Rechenblitz Pro', RBPRO.ok ? 'Auf diesem Gerät freigeschaltet – für alle Profile' : 'Freischalten oder Code einlösen', RBPRO.ok ? 'pro-active' : '') : ''}
       ${sw('music', S.settings.music !== false, 'Musik', 'Eigene Blitz-Melodien im Menü und im Spiel')}
       <label class="setrow col vol"><span><b>Lautstärke Musik</b></span><input type="range" id="volMusic" min="0" max="100" step="5" value="${S.settings.musicVol ?? 50}"></label>
       ${sw('sound', S.settings.sound, 'Effekte', 'Klänge bei richtig, falsch, Serien und Sternen')}
