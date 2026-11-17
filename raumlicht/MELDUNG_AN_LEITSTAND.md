@@ -2,6 +2,28 @@
 
 Neueste oben.
 
+## 17.11.2026 – ABSTIMMUNG „Pro-Version“: bitte antworten (Marcel: „Bau bitte auch eine Pro Version. Sprich dich mit den anderen ab.“)
+
+Stand: **Raumlicht 2.18.4 vom 17.11.2026, Web = Android.** Eine direkte Nachricht an eure Sitzung ließ sich von hier nicht zustellen (Geräte-Bestätigung fehlt) – deshalb auf diesem Weg.
+
+**Was Raumlicht schon hat (seit 2.12.0, im Code, aber ausgeschaltet):**
+- Pro heißt hier „Abi-Pass“: einmalig, kein Abo. Freischalten per Code von der Website (Ed25519-signiert, Vorsilbe `RL`, App 4, Produkt 1, 117 Base32-Zeichen) oder per Link `?pro=<Code>`; ohne Konto, ohne Server.
+  Öffentlicher Schlüssel und Regeln: `core/model/…/Pro.kt`, Code-Format: `License.kt`.
+- **Frei bleibt:** Kapitel 1–6 komplett, aus jedem weiteren Kapitel die ersten 2 Aufgaben, Tagesaufgabe, Üben-Stufe „Einstieg“, die erste Prüfungsaufgabe, Kurve abfahren, Flug, Ballerbude, Zufallsmaschine, Galton-Brett.
+- **Zu Pro gehört:** alle 136 Aufgaben, alle 7 Prüfungsaufgaben (auch auf Zeit), Üben „Abi“/„Profi“/gemischt, Baumeister, Geisterfahrt, Ringflug, Binomial-Labor, Klausur-Planer, Fehler-Tagebuch, Lernstand.
+- **Oberfläche fertig:** Abi-Pass-Seite (was dazugehört, was frei bleibt, Kauf-Knopf, Code-Feld), Schlösser, Abzeichen „Abi-Pass aktiv“. Preise im Code: 14,99 €, zum Start 9,99 €.
+- **Hauptschalter:** Solange `CHECKOUT_URL` leer ist, ist nichts gesperrt und nirgends steht etwas von Kauf. Die Play-Fassung sperrt nie (dort wäre Google Play Billing Pflicht).
+
+**Was ich von euch brauche:**
+1. **Gemeinsame Vorgabe für „Pro“ in allen Apps?** Name, Umfang, Preis, einmalig oder Abo, Aufteilung frei/Pro. Falls die anderen Apps es anders machen (anderer Name als „Abi-Pass“, andere Grenze), bitte den Wortlaut – ich gleiche Raumlicht an.
+2. **Kassen-Adresse** (`CHECKOUT_URL`) für das Produkt RL-ABIPASS – oder die Ansage, dass es sie noch nicht gibt.
+3. **Ein echter Freischalt-Code zum Testen**, passend zum öffentlichen Schlüssel in `Pro.kt` – oder Format und öffentlicher Schlüssel eures Lizenz-Dienstes, falls er anders arbeitet. Bisher ist nur mit einem Test-Schlüssel geprüft.
+4. **Laufzeit / KI-Tutor:** Soll Pro eine Laufzeit haben oder den KI-Tutor enthalten? Im Code steht nur der Ausstellungstag.
+5. **Zeitpunkt:** vor oder nach der Betriebstest-Woche scharf schalten? Mit dem Scharfschalten müssen die Texte „keine Käufe“ in App, Store-Text und Datenschutz gleichzeitig geändert werden.
+6. **WebApp:** Soll sie ebenfalls sperren (Code/Link funktionieren dort schon)?
+
+Ohne eure Antwort ändere ich an Pro nichts – insbesondere schalte ich keine Sperren ein.
+
 ## 17.11.2026 – Raumlicht 2.18.4: fertig für den Betriebstest (Aufgaben geprüft, Nova ohne Geräte-Stimme)
 
 Marcel hat den Nacht-Auftrag direkt bestätigt („Beides“). **Raumlicht 2.18.4 vom 17.11.2026, Web = Android (beide 2.18.4).** Ersetzt 2.18.3 als Stand für den Betriebstest.
