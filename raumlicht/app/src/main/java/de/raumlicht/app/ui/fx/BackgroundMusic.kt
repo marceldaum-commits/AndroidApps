@@ -25,6 +25,14 @@ class BackgroundMusic(private val context: Context) {
     private var foreground = false
     private var ducked = false
     private var master = 1f
+    /** eigene Lautstärke der Musik (Einstellungen), 0..1 */
+    private var own = 1f
+    /** erst nach der ersten Berührung gibt es Musik – nie vorher */
+    private var touched = false
+    /** Prüfung auf Zeit oder Pflichtteil: Musik aus */
+    private var silent = false
+    /** Handy stumm oder auf Vibration geschaltet? Dann bleibt auch die Musik still. */
+    private fun muted() = runCatching { audio.ringerMode != AudioManager.RINGER_MODE_NORMAL }.getOrDefault(false)
     private var level = 0f
     private val cache = HashMap<MusicMood, ShortArray>()
     private var fadeJob: Job? = null
@@ -54,15 +62,18 @@ class BackgroundMusic(private val context: Context) {
     fun duck(on: Boolean) = scope.launch { ducked = on; if (track != null) fadeTo(target()) }
     /** Lautstärke aus den Einstellungen, 0..1 */
     fun setVolume(v: Float) = scope.launch { master = v.coerceIn(0f, 1f); if (track != null) fadeTo(target(), 150) }
+    fun setOwnVolume(v: Float) = scope.launch { own = v.coerceIn(0f, 1f); refresh() }
+    fun onTouch() { if (!touched) scope.launch { touched = true; refresh() } }
+    fun setSilent(on: Boolean) = scope.launch { silent = on; refresh() }
 
     /** Musik schon vorab erzeugen, damit sie sofort da ist. */
     fun prepare(vararg moods: MusicMood) = scope.launch { moods.forEach { pcm(it) } }
 
-    private fun target() = (if (ducked) BASE * 0.35f else BASE) * master
+    private fun target() = (if (ducked) BASE * 0.35f else BASE) * master * own
 
     private suspend fun refresh() {
         val m = wanted
-        val shouldPlay = enabled && foreground && m != null
+        val shouldPlay = enabled && foreground && m != null && touched && !silent && own > 0f && !muted()
         if (!shouldPlay) { fadeOutAndStop(); return }
         if (current == m && track != null) { fadeTo(target()); return }
         // Andere App spielt Musik (Hörbuch, Spotify …)? Dann nicht dazwischenfunken.
@@ -134,8 +145,8 @@ class BackgroundMusic(private val context: Context) {
 
     companion object {
         /** Musik bleibt hinter den Geräuschen, ist aber gut hörbar. */
-        const val BASE = 0.55f
+        const val BASE = 0.8f
         /** Erhöhen, wenn sich Komponist oder Klang ändern (alter Cache wird dann ignoriert). */
-        const val VERSION = 1
+        const val VERSION = 2
     }
 }

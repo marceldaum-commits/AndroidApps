@@ -62,6 +62,8 @@ class MainActivity : ComponentActivity() {
             val volume by vm.settings.volume.collectAsStateWithLifecycle()
             LaunchedEffect(volume) { app.sfx.master = volume / 100f; app.music.setVolume(volume / 100f); app.voice.volume = volume / 100f; app.natural.volume = volume / 100f }
             val voice by vm.settings.voice.collectAsStateWithLifecycle()
+            val musicLevel by vm.settings.musicLevel.collectAsStateWithLifecycle(); val soundLevel by vm.settings.soundLevel.collectAsStateWithLifecycle()
+            LaunchedEffect(musicLevel, soundLevel) { app.music.setOwnVolume(musicLevel / 100f); app.sfx.level = soundLevel / 100f }
             val speechRate by vm.settings.speechRate.collectAsStateWithLifecycle()
             LaunchedEffect(speechRate) { app.voice.rate = speechRate / 100f; app.natural.rate = speechRate / 100f }
             LaunchedEffect(voice) { app.voice.enabled = voice; app.natural.enabled = voice; if (!voice) { app.voice.stop(); app.natural.stop() } }
@@ -76,6 +78,9 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    /** Musik beginnt nie von selbst – erst mit der ersten Berührung */
+    override fun dispatchTouchEvent(ev: android.view.MotionEvent?): Boolean { (application as RaumlichtApp).music.onTouch(); return super.dispatchTouchEvent(ev) }
 
     override fun onStart() {
         super.onStart()
@@ -98,8 +103,8 @@ class MainActivity : ComponentActivity() {
             updateVersion = update?.version,
             // Abi-Pass über die Website gibt es nur in der GitHub-Fassung; im Play Store wäre Google Play Billing Pflicht – dort bleibt vorerst alles frei
             proEnabled = de.raumlicht.core.model.Pro.ENABLED && BuildConfig.SELF_UPDATE,
-            // Musik passend zum Bildschirm: ruhig im Tourplan, treibend auf der Bühne
-            onRoute = { route -> (application as RaumlichtApp).music.setMood(if (Routes.isAction(route)) MusicMood.FLIGHT else MusicMood.MENU) },
+            // Musik passt sich an: ruhig im Menü, bewegter beim Rechnen – und aus in Prüfungen auf Zeit und im Pflichtteil
+            onRoute = { route -> (application as RaumlichtApp).music.let { it.setSilent(Routes.isExam(route)); it.setMood(if (Routes.isAction(route)) MusicMood.FLIGHT else MusicMood.MENU) } },
             onPlanChanged = { de.raumlicht.app.widget.DailyWidget.refresh(this@MainActivity) },
             settings = { onBack ->
                 val sound by vm.settings.sound.collectAsStateWithLifecycle()

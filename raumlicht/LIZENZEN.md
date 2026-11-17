@@ -18,6 +18,9 @@
 | Ed25519-Prüfung nach TweetNaCl | prüft Freischalt-Codes für den Abi-Pass | gemeinfrei (Public Domain) | eigener Kotlin-Code in `core/model` |
 | Piper-Stimme „Thorsten“ (de_DE-thorsten-medium) | natürliche deutsche Stimme | Aufnahmen CC0 (Thorsten Müller) | **nicht** in der App enthalten – wird auf Wunsch von Hugging Face geladen |
 
+**Musik und Klänge** sind keine fremden Bestandteile: Sie sind für Raumlicht komponiert und werden vollständig im Programmcode errechnet
+(`core/model/…/SpaceMusic.kt`, `MusicSynth.kt`, `Klang.kt`) – ohne Aufnahmen, ohne fremde Samples, ohne Klang-Bibliotheken.
+
 Die Lizenztexte im Wortlaut liegen der App bei: `app/src/main/assets/lizenzen.txt` (Android: Einstellungen → „Fremde Bausteine & Lizenzen“;
 WebApp: derselbe Eintrag öffnet `lizenzen.txt`). Bis 2.12.0 fehlten diese Texte in der ausgelieferten App und WebApp.
 

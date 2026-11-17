@@ -27,8 +27,11 @@ private fun byteAt(a: JsAny, i: Int): Byte = js("a[i]")
 fun loadFile(url: String, ready: (ByteArray?) -> Unit) = fetchBytes(url) { a -> ready(a?.let { arr -> ByteArray(size(arr)) { byteAt(arr, it) } }) }
 
 // ── Ton: kurze Klänge aus dem Browser-Synthesizer (keine Dateien). Erst nach der ersten Berührung erlaubt der Browser Ton.
-fun beep(type: String, f0: Double, f1: Double, seconds: Double, gain: Double): Unit = js(
-    "{ try { const A = window.__rlAudio || (window.__rlAudio = new (window.AudioContext || window.webkitAudioContext)()); if (A.state === 'suspended') A.resume(); const o = A.createOscillator(), g = A.createGain(), t = A.currentTime; o.type = type; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(Math.max(20, f1), t + seconds); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, gain), t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + seconds); o.connect(g); g.connect(A.destination); o.start(t); o.stop(t + seconds + 0.02); } catch (e) {} }")
+/** Kurzklang abspielen: [data] sind die im gemeinsamen Rechenkern erzeugten Samples (22050 Hz), [rate] die Abspielgeschwindigkeit (Tonhöhe) */
+fun sfxKnown(name: String): Boolean = js("!!(window.__rlSfx && window.__rlSfx[name])")
+fun sfxStore(name: String, data: JsAny): Unit = js("{ (window.__rlSfx || (window.__rlSfx = {}))[name] = { data: data, buf: null }; }")
+fun sfxPlay(name: String, rate: Double, gain: Double): Unit = js(
+    "{ try { const A = window.__rlAudio || (window.__rlAudio = new (window.AudioContext || window.webkitAudioContext)()); if (A.state === 'suspended') A.resume(); const e = window.__rlSfx && window.__rlSfx[name]; if (!e) return; if (!e.buf) { e.buf = A.createBuffer(1, e.data.length, 22050); e.buf.copyToChannel(e.data, 0); } const s = A.createBufferSource(); s.buffer = e.buf; s.playbackRate.value = rate; const g = A.createGain(); g.gain.value = gain; s.connect(g); g.connect(A.destination); s.start(); } catch (e) {} }")
 fun vibrate(ms: Int): Unit = js("{ if (navigator.vibrate) navigator.vibrate(ms); }")
 
 // ── Stimme: Sprachausgabe des Browsers (rechnet auf dem Gerät bzw. im Browser, je nach System)

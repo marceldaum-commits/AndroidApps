@@ -124,6 +124,13 @@ class AppRootTest {
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.SETTINGS); settle(); rule.onNode(hasAnyAncestor(hasTestTag("schreibweise")) and isToggleable()).performScrollTo().performClick(); settle()
         assertTrue(prefs.strictVectors.value); assertTrue(Settings(ApplicationProvider.getApplicationContext()).strictVectors.value)
+        // Klang: Musik und Geräusche haben eigene Lautstärken, die gemerkt werden
+        rule.onNodeWithTag("ton-laut-text").performScrollTo().assertTextEquals("Geräusche: 100 %")
+        rule.runOnUiThread { prefs.setSoundLevel(40); prefs.setMusicLevel(65) }; settle(); rule.onNodeWithTag("ton-laut-text").assertTextEquals("Geräusche: 40 %")
+        Settings(ApplicationProvider.getApplicationContext()).let { assertEquals(40, it.soundLevel.value); assertEquals(65, it.musicLevel.value) }
+        rule.runOnUiThread { prefs.setSoundLevel(100); prefs.setMusicLevel(100) }
+        // Prüfungsmodus (Musik aus): nur Prüfungen auf Zeit und der Pflichtteil
+        assertTrue(Routes.isExam("abi/zelt/1")); assertTrue(Routes.isExam(Routes.QUICK)); assertFalse(Routes.isExam("abi/zelt/0")); assertFalse(Routes.isExam(Routes.EXAMS)); assertFalse(Routes.isExam("level/1-1"))
         // Vorlesen: Sprechtempo einstellbar und gemerkt, Hörprobe vorhanden
         rule.onNodeWithTag("sprechtempo-text").performScrollTo().assertTextEquals("🐢🐇 Sprechtempo: 100 %"); rule.onNodeWithTag("hoerprobe").assertExists()
         rule.runOnUiThread { prefs.setSpeechRate(120) }; settle(); rule.onNodeWithTag("sprechtempo-text").assertTextEquals("🐢🐇 Sprechtempo: 120 %")

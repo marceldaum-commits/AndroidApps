@@ -2,6 +2,15 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.15.0 – Raumlicht klingt jetzt wie Raumlicht (17.11.2026)
+- **Eigene Musik, neu komponiert:** gläsern und schwebend, wie Licht im Raum – ruhige Flächen, angeschlagenes Glas, feiner Schimmer. Beim Rechnen kommt ein leises Perlen dazu. Keine fremden Aufnahmen: Alles entsteht im Programm.
+- **Erkennungsmelodie:** fünf aufsteigende Töne, wie ein Lichtstrahl. Du hörst sie leise bei der ersten Berührung, in der Musik – und festlich, wenn du ein Kapitel geschafft hast.
+- **Die Lichtshow klingt mit:** Jeder Laserstrahl ist ein Ton, mehrere Strahlen ergeben zusammen einen Akkord. Geht Licht durch eine Scheibe, schillert es.
+- **Alle Geräusche neu** und aus derselben Klangwelt. „Falsch“ ist jetzt leise und sanft – kein Summer.
+- **Getrennt einstellbar:** Musik und Geräusche haben je einen eigenen Lautstärke-Regler (zusätzlich zur Gesamt-Lautstärke) und lassen sich wie bisher einzeln ausschalten.
+- **Rücksichtsvoll:** Die Musik beginnt erst nach der ersten Berührung, wird unter Lux’ Stimme leiser, ist in Prüfungen auf Zeit und im Pflichtteil aus – und bleibt still, wenn dein Handy stumm geschaltet ist.
+- In der Android-App und in der WebApp klingt alles gleich.
+
 ## 2.14.0 – Theorie auf Knopfdruck (17.11.2026)
 - **Neu: „📖 Theorie“ bei jeder Aufgabe.** Hängst du fest, erklärt Lux kurz, worum es geht: die Idee, die Schritte, ein durchgerechnetes Beispiel und der typische Fehler.
   Das gibt es für alle Aufgaben der Tour, die Prüfungsaufgaben, die Tagesaufgabe und das endlose Üben. **Nachlesen kostet keinen Stern** – nur der Tipp zur konkreten Aufgabe kostet weiterhin einen.

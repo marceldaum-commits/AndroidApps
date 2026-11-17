@@ -23,6 +23,11 @@ class Sfx(context: Context) : SoundPlayer {
     @Volatile var enabled = true
     /** Lautstärke aus den Einstellungen, 0..1 */
     @Volatile var master = 1f
+    /** Eigene Lautstärke der Geräusche, 0..1 */
+    @Volatile var level = 1f
+    private val audio = context.getSystemService(android.media.AudioManager::class.java)
+    /** Handy stumm oder auf Vibration geschaltet? Dann bleibt auch Raumlicht still. */
+    private fun muted() = runCatching { audio.ringerMode != android.media.AudioManager.RINGER_MODE_NORMAL }.getOrDefault(false)
 
     init {
         pool.setOnLoadCompleteListener { _, id, status -> if (status == 0) ready += id }
@@ -31,7 +36,7 @@ class Sfx(context: Context) : SoundPlayer {
             Sound.entries.forEach { s ->
                 runCatching {
                     val f = File(dir, "sfx_$VERSION_${s.name.lowercase()}.wav")
-                    if (!f.exists()) f.writeBytes(Synth.wav(Synth.render(s)))
+                    if (!f.exists()) f.writeBytes(Synth.wav(de.raumlicht.core.model.Klang.render(de.raumlicht.core.model.Ton.valueOf(s.name)), de.raumlicht.core.model.Klang.SR))
                     ids[s] = pool.load(f.path, 1)
                 }
             }
@@ -40,13 +45,13 @@ class Sfx(context: Context) : SoundPlayer {
 
     /** @param pitch 1 = normal, >1 höher (z. B. bei Serien) */
     override fun play(s: Sound, pitch: Float, volume: Float) {
-        if (!enabled) return
+        if (!enabled || muted()) return
         val id = ids[s] ?: return
         if (id !in ready) return
-        val v = (volume * master).coerceIn(0f, 1f); if (v <= 0f) return
+        val v = (volume * master * level).coerceIn(0f, 1f); if (v <= 0f) return
         pool.play(id, v, v, 1, 0, pitch.coerceIn(0.5f, 2f))
     }
 
-    private companion object { const val VERSION_ = "v2" }
+    private companion object { const val VERSION_ = "v3" }
 }
 

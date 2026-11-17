@@ -40,6 +40,10 @@ val LocalNotation = staticCompositionLocalOf { NotationChoice(false) {} }
 /** Text in der gewählten Schreibweise */
 @Composable fun noted(text: String): String = if (LocalNotation.current.strict) remember(text) { de.raumlicht.core.model.Notation.strict(text) } else text
 
+/** Eigene Lautstärke für Musik und für Geräusche (je 0 … 100 %) */
+class MixChoice(val music: Int, val setMusic: (Int) -> Unit, val sound: Int, val setSound: (Int) -> Unit)
+val LocalMix = staticCompositionLocalOf { MixChoice(100, {}, 100, {}) }
+
 /** Sprechtempo beim Vorlesen (70 … 130 %) und wie man es umstellt */
 class SpeechChoice(val rate: Int, val setRate: (Int) -> Unit)
 val LocalSpeech = staticCompositionLocalOf { SpeechChoice(100) {} }

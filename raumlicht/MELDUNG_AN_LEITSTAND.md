@@ -2,6 +2,33 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.15.0: eigene Klangwelt (von Marcel direkt bestätigt)
+
+**Web = Android:** ja. Musik und alle Kurzklänge entstehen im gemeinsamen Rechenkern (`core/model`) und sind in Android-App und WebApp Sample für Sample dieselben; gleiche Version 2.15.0 vom 17.11.2026.
+
+**Klang-Identität wie von euch beschrieben:** Ambient, gläsern, schwebend. **Niemand hat das Ergebnis bisher gehört** – geprüft ist es rechnerisch (Tests, Spektrum und Hüllkurve). Marcel hat Hörproben bekommen.
+
+- **Musik** (`SpaceMusic.kt`, `MusicSynth.kt`): D-Dur mit lydischer Färbung. Akkordfolge Dmaj9 – A(add9)/Cis – Hm11 – Gmaj7♯11 – D(add9)/Fis – Gmaj9 – Em11 – A9sus4.
+  Menü: 60 Schläge pro Minute, 64 s Schleife, fast ohne Puls. Beim Rechnen: 72 Schläge, 53 s, dazu ein leises Perlmuster. Nahtlose Schleifen, eigener Nachhall.
+- **Erkennungsmelodie:** a′ – d″ – e″ – a″ – cis‴ (`SpaceMusic.MOTIF`). Sie kommt in beiden Stücken vor, erklingt leise bei der ersten Berührung der Sitzung und festlich, wenn ein Kapitel geschafft ist.
+- **Lichtshow:** Jeder Laserstrahl klingt als Ton der D-Dur-Pentatonik (`Klang.beamPitch`), mehrere Strahlen ergeben einen Akkord. Geht ein Strahl durch eine Ebene, schillert es (neuer Klang „Brechung“).
+- **Effekte** (`Klang.kt`, 12 Stück): Antippen, Regler-Schritt, Start, Treffer, Einrasten, Daneben, Richtig, **Falsch (leise, zwei sanfte Töne)**, Hinweis, Brechung, Kapitel geschafft, Erkennungsmelodie.
+- **Bedienung:** Musik und Geräusche getrennt schaltbar (wie bisher) und jetzt mit **eigener Lautstärke**, zusätzlich zur Gesamt-Lautstärke.
+- **Respekt:** startet nie vor der ersten Berührung (Android neu, im Browser geprüft); wird unter der Stimme leiser (Android wie bisher, WebApp neu);
+  **aus im Prüfungsmodus** (Prüfungsaufgaben auf Zeit und Pflichtteil – die Geräusche bleiben dort als Rückmeldung an); Android: still, wenn das Handy stumm oder auf Vibration steht
+  (im Browser lässt sich die Stummschaltung nicht abfragen).
+- **Schnell:** keine Audiodateien, kein Einfluss auf die Ladegröße. Die Musik wird nach der ersten Berührung errechnet (auf dem Rechner rund 0,3 s je Stück; im Browser lief sie im Test nach etwa 0,5 s), Android legt sie danach im Cache ab.
+- **Barrierefreiheit:** Kein Inhalt hängt am Ton – jede Rückmeldung steht auch als Text da.
+
+**Entstehung (für eure Unterlagen):** Die Klangwelt ist für Raumlicht komponiert und wird vollständig im Programmcode errechnet – keine Aufnahmen, keine fremden Samples, keine Klang-Bibliotheken, nur die Kotlin-Standardbibliothek; damit gibt es keine Lizenzfragen (auch keine GPL).
+Glastöne sind gedämpfte Schwingungen mit den leicht unharmonischen Obertönen eines angestoßenen Kelchs; die Flächen sind Paare minimal verstimmter Sinustöne, die langsam gegeneinander schweben; dazu hoher Schimmer und ein Hauch gefilterten Rauschens.
+Ein eigener Nachhall aus Kammfiltern und Allpässen stellt alles in einen Raum und klingt über die Nahtstelle der Schleife hinweg weiter. Alle Kurzklänge liegen in derselben Tonart wie die Musik.
+
+**Geprüft:** 152 Tests im Rechenkern (darunter 14 für Musik und Klänge: Länge, Schleife, Lautheit, kein Übersteuern, Tonhöhen), 142 App-Tests, Lint beider Fassungen, WebApp: Ablauf, Update/Offline, alle 54 Bildschirme, Ton erst nach Berührung.
+**Nicht geprüft:** wie es klingt, und alles auf echten Geräten (Lautstärke-Verhältnis Musik zu Geräuschen, kleine Handy-Lautsprecher).
+
+---
+
 ## 17.11.2026 – Version 2.14.0: Theorie-Knopf, wählbare Schreibweise, Vorlesen einstellbar (alles von Marcel direkt bestätigt)
 
 **Web = Android:** ja. Beide Fassungen entstehen aus demselben Code und tragen dieselbe Version (2.14.0 vom 17.11.2026). Bewusste Unterschiede: natürliche Stimme „Thorsten“ nur in Android (im Browser noch nicht gebaut),

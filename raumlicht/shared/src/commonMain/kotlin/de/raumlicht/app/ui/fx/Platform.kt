@@ -11,7 +11,8 @@ enum class Buzz { TICK, HIT, CRASH }
 fun interface Buzzer { fun buzz(b: Buzz, enabled: Boolean) }
 val LocalBuzzer = staticCompositionLocalOf<Buzzer> { Buzzer { _, _ -> } }
 
-enum class Sound { TAP, TICK, LAUNCH, HIT, CELL, CRASH, WIN, WRONG, BEEP }
+/** Die Kurzklänge der App – jeder entspricht einem [de.raumlicht.core.model.Ton] aus der gläsernen Klangwelt (im Code erzeugt, in Android und WebApp derselbe Klang) */
+enum class Sound { TAP, TICK, LAUNCH, HIT, CELL, CRASH, WIN, WRONG, BEEP, REFRACT, CHAPTER, JINGLE }
 /** Kurze Geräusche. @param pitch 1 = normal, >1 höher (z. B. bei Serien) */
 interface SoundPlayer { fun play(s: Sound, pitch: Float = 1f, volume: Float = 1f) }
 val LocalSfx = staticCompositionLocalOf<SoundPlayer?> { null }
