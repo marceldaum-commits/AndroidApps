@@ -102,6 +102,7 @@ const PANELS = {
       ${sw('speech', S.settings.speech, 'Vorlesen', 'Aufgaben, Lösungswege, Theorie und Blitz')}
       ${Voice.available() ? `<div class="setrow col voicebox"><label class="vrow"><b>Stimme</b><select id="voiceSel"><option value="">Automatisch</option></select></label>
         <label class="vrow"><b>Tempo</b><input type="range" id="rateIn" min="0.6" max="1.5" step="0.1" value="${S.settings.rate ?? 1}"><span id="rateOut" translate="no">${(S.settings.rate ?? 1).toFixed(1)}×</span></label>
+        <div id="thBox" hidden></div>
         <button class="btn" id="voiceTest">▶ Probe hören</button></div>` : (IS_NATIVE ? '<p class="small muted setnote">Zum Vorlesen bitte die neue Rechenblitz-App installieren.</p>' : '<p class="small muted setnote">Auf diesem Gerät gibt es keine Vorlese-Stimme.</p>')}
       ${sw('auto', S.settings.auto, 'Automatisch prüfen', 'Prüfen, sobald genug Stellen eingegeben sind')}
       ${sw('blitz', S.settings.blitz !== false, 'Maskottchen Blitz', 'Blitz der Fuchs feuert dich an und erklärt Tricks')}
@@ -270,6 +271,24 @@ $('sheetBody').addEventListener('click', e => { const b = e.target.closest('[dat
 document.addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) openSheet(b.dataset.open); });
 
 /* ---------- Einstellungen ---------- */
+// Thorsten: Hinweis vor dem einmaligen Laden (ca. 75 MB von unserem Server), Fortschritt, Fehler
+async function thorstenUi() {
+  const box = $('thBox'); if (!box) return;
+  if (S.settings.voice !== 'thorsten') { box.hidden = true; return; }
+  box.hidden = false;
+  if (Thorsten.st === 'ready') { box.innerHTML = '<p class="small muted">✓ Thorsten ist bereit.</p>'; return; }
+  if (Thorsten.st === 'loading') { box.innerHTML = '<p class="small muted">Stimme wird geladen …</p><div class="bar"><i id="thBar"></i></div>'; return; }
+  const man = await Thorsten.manifest(), stored = man && await Thorsten.cached();
+  if (stored) { box.innerHTML = '<p class="small muted">Stimme wird vorbereitet …</p>'; await Thorsten.load(); thorstenUi(); return; }
+  box.innerHTML = `${Thorsten.st === 'error' ? '<p class="small" style="color:var(--bad,#c0392b)">Das Laden hat nicht geklappt. Bitte später noch einmal versuchen.</p>' : ''}
+    <p class="small muted"><span>Die natürliche Stimme wird einmalig von unserem Server geladen und auf diesem Gerät gespeichert.</span> <span translate="no">(${man ? man.mb : 75} MB)</span> <span>Am besten im WLAN. Es werden dabei keine persönlichen Daten übertragen.</span></p>
+    <button class="btn primary" id="thLoad">⬇ Stimme laden</button>`;
+  $('thLoad').onclick = async () => {
+    box.innerHTML = '<p class="small muted">Stimme wird geladen …</p><div class="bar"><i id="thBar"></i></div>';
+    const ok = await Thorsten.load(p => { const b = $('thBar'); if (b) b.style.width = Math.round(p * 100) + '%'; });
+    thorstenUi(); if (ok) Voice.say('Hallo, ich bin Blitz!', { force: true });
+  };
+}
 function initSettings() {
   renderReminder();
   $('sheetBody').querySelectorAll('[data-set]').forEach(b => b.onclick = () => {
@@ -280,8 +299,11 @@ function initSettings() {
     renderHome();
   });
   if ($('voiceSel')) {
-    Voice.voices().then(vs => { const sel = $('voiceSel'); if (!sel) return; vs.forEach(v => sel.insertAdjacentHTML('beforeend', `<option value="${esc(v.id)}" translate="no">${esc(v.name)}</option>`)); sel.value = vs.some(v => v.id === S.settings.voice) ? S.settings.voice : ''; });
-    $('voiceSel').onchange = e => { S.settings.voice = e.target.value; save(); Voice.say('3/4 + 1/4 = 1', { force: true }); };
+    Promise.all([Voice.voices(), Thorsten.manifest()]).then(([vs, man]) => { const sel = $('voiceSel'); if (!sel) return;
+      if (man) { sel.insertAdjacentHTML('beforeend', `<option value="thorsten">Thorsten – natürliche Stimme</option>`); vs.push({ id: 'thorsten' }); }
+      vs.filter(v => v.id !== 'thorsten').forEach(v => sel.insertAdjacentHTML('beforeend', `<option value="${esc(v.id)}" translate="no">${esc(v.name)}</option>`));
+      sel.value = vs.some(v => v.id === S.settings.voice) ? S.settings.voice : ''; thorstenUi(); });
+    $('voiceSel').onchange = e => { S.settings.voice = e.target.value; save(); thorstenUi(); if (e.target.value !== 'thorsten' || Thorsten.st === 'ready') Voice.say('3/4 + 1/4 = 1', { force: true }); };
     $('rateIn').oninput = e => { S.settings.rate = +e.target.value; $('rateOut').textContent = S.settings.rate.toFixed(1) + '×'; };
     $('rateIn').onchange = () => save();
     $('voiceTest').onclick = () => Voice.speakRaw(joinSay([tr('Hallo, ich bin Blitz!'), ...['3/4 + 1/4 = 1', '12² = 144', '2,5 km = 2500 m'].map(x => mathSpeak(shownText(x)))]), { force: true });

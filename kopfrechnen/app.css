@@ -1046,3 +1046,7 @@ button.badge{font:inherit;cursor:pointer}
 .voicebox input[type=range]{flex:1;accent-color:var(--orange-d)}
 .voicebox #rateOut{min-width:38px;text-align:right;font-weight:700;color:var(--text)}
 .theo-say{margin:0 0 12px}
+#thBox{display:grid;gap:8px}
+#thBox p{margin:0}
+#thBox .bar{height:10px}
+#thBox .bar>i{display:block;height:100%;width:0;background:var(--orange-d);border-radius:99px;transition:width .2s}

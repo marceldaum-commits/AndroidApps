@@ -76,11 +76,17 @@ const Voice = {
     if (!list.length) list = await new Promise(r => { const t = setTimeout(() => r(W.getVoices()), 1200); W.addEventListener('voiceschanged', () => { clearTimeout(t); r(W.getVoices()); }, { once: true }); });
     return list.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(lang)).map(v => ({ id: v.voiceURI, name: v.name + (v.localService ? '' : ' ☁'), lang: v.lang }));
   },
-  stop() { const P = this.plugin(); if (P) { try { P.stop(); } catch {} } const W = this.web(); if (W) W.cancel(); },
+  stop() { Thorsten.stop(); const P = this.plugin(); if (P) { try { P.stop(); } catch {} } const W = this.web(); if (W) W.cancel(); },
   // spricht fertigen Sprechtext; queue: hinten anhängen statt unterbrechen
   async speakRaw(text, { queue = false, force = false } = {}) {
     if ((!S.settings.speech && !force) || !text) return;
-    const P = this.plugin(), rate = this.rate(), vid = S.settings.voice || '';
+    let vid = S.settings.voice || ''; const P = this.plugin(), rate = this.rate();
+    if (vid === 'thorsten') {   // natürliche Stimme (nur Deutsch); solange sie nicht bereit ist oder ein Wort fehlt: Gerätestimme
+      if (I18N.lang === 'de' && Thorsten.st === 'ready') { if (!queue) { const W0 = this.web(); if (W0) W0.cancel(); } if (await Thorsten.speak(text, rate, queue)) return; }
+      else if (Thorsten.st === 'off') Thorsten.warm();
+      vid = '';
+    }
+    if (!queue) Thorsten.stop();
     if (P) {
       try { if (!queue) await P.stop();
         const o = { text, lang: locale(), rate, pitch: 1, volume: 1, category: 'ambient', queueStrategy: queue ? 1 : 0 };

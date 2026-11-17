@@ -2370,4 +2370,5 @@ I18N.add('en', {"% sind":"% are",
 "Musik und Effekte einzeln ein- und ausschalten, mit eigener Lautstärke":"Switch music and effects on and off separately, each with its own volume",
 "Vorlesen: Aufgaben, Lösungswege, Theorie und Blitz – Stimme und Tempo wählbar, mit Probe":"Read aloud: tasks, solution steps, theory and Blitz – choose voice and speed, with a sample",
 "Zum Vorlesen bitte die neue Rechenblitz-App installieren.":"To use read aloud, please install the new Rechenblitz app.",
-"Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)":"Android app: read aloud now works here too – with the phone's voices, speed and a sample (new app version needed)"});
+"Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)":"Android app: read aloud now works here too – with the phone's voices, speed and a sample (new app version needed)",
+"Neu: die natürliche Stimme „Thorsten“ zum Vorlesen – einmal laden, dann auch offline":"New: the natural voice “Thorsten” for reading aloud (German only) – load it once, then it works offline too"});

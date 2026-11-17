@@ -2,7 +2,42 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.0 – Stimme „Thorsten“ fertig; Ordner `stimme/` bitte auf den Server (Meldung 60).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (60) – Natürliche Stimme „Thorsten“ (3.24.0) – bitte Ordner auf den Server laden
+
+Wunsch Marcel: Thorsten von unserem Server verteilen.
+
+**Was gebaut ist:**
+- **Thorsten im Browser:** onnxruntime-web (MIT, nur WebAssembly) rechnet die Piper-Stimme `de_DE-thorsten-medium` (Aufnahmen CC0). Es ist derselbe Code im Web und in der Android-App, also **Web = Android**.
+- **Kein espeak-ng (GPL) in der App:** Die Lautschrift steckt in einem vorab erzeugten Wörterbuch `stimme/build/stimme-de.json`. Es enthält 3 507 Wörter: alle Sprechtexte der App, Zahlwörter 0–999, Ordnungszahlen und Buchstaben.
+  - Zahlen setzt die App aus Bausteinen zusammen („dreizehn+tausend+vierhundert“).
+  - Ebenso Uhrzeiten („zehn Uhr fünf“), Geld („vier Euro fünfzig“), Kommazahlen und Datumsangaben („vom vierundzwanzigsten Mai“).
+- **Ablauf in der App:**
+  - Einstellungen → Stimme → „Thorsten – natürliche Stimme“ (nur bei Sprache Deutsch).
+  - Dann erscheint ein Hinweis: einmalig ca. **75 MB von unserem Server**, am besten im WLAN, keine persönlichen Daten.
+  - Nach „⬇ Stimme laden“ folgt ein Ladebalken; danach ist die Stimme auf dem Gerät gespeichert und **funktioniert auch offline**.
+  - Beim Start der App wird nichts geladen.
+  - Ein Satz mit einem unbekannten Wort (z. B. ein selbst eingegebener Name) wird mit der Gerätestimme gelesen.
+- **Ohne den Server-Ordner bietet die App Thorsten nicht an.** Bis zum Hochladen gibt es also keine falsche Option.
+
+**Getestet (Chromium, lokal mit dem fertigen Server-Ordner):**
+- Laden über die Einstellungen ✓.
+- **Alle 7 311 geprüften Sprechtexte der App kann Thorsten vollständig sprechen.**
+- Lautschrift gleich wie bei Piper selbst.
+- Rechenzeit 0,6 s für 2,4 s Sprache (am Handy langsamer).
+- Zweiter Start ohne Download ✓, ohne Netz ✓.
+- Ohne Server-Ordner wird Thorsten nicht angezeigt ✓.
+- Schwierigkeitstest ✓, Offline ✓, Zufallstest ✓.
+- **Nicht geprüft:** am echten Handy anhören; Ladezeit über das echte Netz.
+
+**Bitte (Leitstand, Server):**
+1. Im Repo `bash stimme/paket.sh` ausführen. Das braucht curl und npm und erzeugt `stimme/build/paket/` mit 10 Dateien, ca. 75 MB.
+2. **Inhalt** hochladen nach `https://rechenblitz.mathenachhilfe-online.com/stimme/` und für die Testseite nach `…/stimme/` der Test-Adresse.
+3. Für `/stimme/` den Kopf **`Access-Control-Allow-Origin: *`** senden. Das braucht die Android-App, weil sie von einer anderen Herkunft lädt.
+4. **Datenschutzerklärung der Website** ergänzen: Auf Wunsch lädt die App die Stimme einmalig von unserem Server. Dabei wird wie bei jedem Seitenabruf die IP-Adresse verarbeitet; es werden keine weiteren Daten übertragen. Fremde Server sind nicht beteiligt.
+
+Anleitung, Bausteine und Lizenzen: `stimme/README.md`.
 
 ## 17.11.2026 (59) – Vorlesen auch in der Android-App (3.23.1, Hülle 4)
 

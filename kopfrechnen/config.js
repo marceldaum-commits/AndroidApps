@@ -20,6 +20,7 @@ window.RECHENBLITZ_CONFIG = {
   // Nur in der Android-App (APK, solange nicht im Play Store): neue Versionen von den GitHub-Release-Seiten anbieten.
   // Für die Play-Store-Fassung auf null setzen (dort aktualisiert Google Play).
   apkUpdates: { repo: 'marceldaum-commits/School' },
+  voiceBase: '/stimme/',   // natürliche Stimme „Thorsten“: Ordner auf unserem Server (Inhalt von stimme/paket.sh); fehlt er, wird Thorsten nicht angeboten
   // Adventskalender: Karte ab 15.11., Türchen 1.–24.12., nachholbar bis 6.1.
   // adventPreview: 'auto' = auf Testseiten alle Türchen offen; adventRaffleUrl = Seite zur Verlosung (leer = keine)
   advent: true,

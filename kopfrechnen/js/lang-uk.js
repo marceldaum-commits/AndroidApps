@@ -2370,4 +2370,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Musik und Effekte einzeln ein- und ausschalten, mit eigener Lautstärke":"Музику й ефекти можна вмикати окремо, кожне зі своєю гучністю",
 "Vorlesen: Aufgaben, Lösungswege, Theorie und Blitz – Stimme und Tempo wählbar, mit Probe":"Читання вголос: завдання, розв’язання, теорія і Бліц – голос і швидкість на вибір, з прикладом",
 "Zum Vorlesen bitte die neue Rechenblitz-App installieren.":"Щоб читати вголос, встанови нову версію застосунку Rechenblitz.",
-"Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)":"Застосунок Android: читання вголос тепер і тут – голоси телефона, швидкість і приклад (потрібна нова версія застосунку)"});
+"Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)":"Застосунок Android: читання вголос тепер і тут – голоси телефона, швидкість і приклад (потрібна нова версія застосунку)",
+"Neu: die natürliche Stimme „Thorsten“ zum Vorlesen – einmal laden, dann auch offline":"Нове: природний голос «Thorsten» для читання вголос (лише німецькою) – завантаж один раз, далі працює й офлайн"});
