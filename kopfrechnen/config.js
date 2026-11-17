@@ -13,7 +13,7 @@ window.RECHENBLITZ_CONFIG = {
   publicUrl: 'https://rechenblitz.mathenachhilfe-online.com/',
   // Klassen-Challenge: Server-Adresse (z. B. '/api'), leer = Funktion ausgeblendet – siehe KLASSEN-API.md
   // Rechenblitz Pro (7,99 € einmalig): Kassen-URL des Woo-Produkts RB-PRO. Leer = keine Sperren, alles frei (pro.js, Meldung 54)
-  proCheckout: '',
+  proCheckout: 'https://www.mathenachhilfe-online.com/kasse/?bestellweg=aendern&add-to-cart=4150',   // Rechenblitz Pro 7,99 € (Shop-Produkt 4150, Leitstand 17.11.) – damit sind die Pro-Sperren an
   classApi: '/api',
   // Erinnerung aufs Handy (Web-Push, Leitstand-Übergabe 38): Server-Pfad und vorgeschlagene Uhrzeit; endpoint '' = ausgeblendet
   push: { endpoint: '/api/push', time: '17:00' },

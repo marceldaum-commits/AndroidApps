@@ -2409,4 +2409,5 @@ I18N.add('en', {"% sind":"% are",
 "Klassen-Challenge: verständliche Meldung ohne Internet, alle Texte übersetzt":"Class challenge: clear message without internet, all texts translated",
 "Abzeichen-Übersicht besser lesbar":"Badge overview easier to read",
 "Pro-Codes lassen sich jetzt auch auf älteren Handys einlösen":"Pro codes can now be redeemed on older phones too",
-"Ukrainisch liest nur noch die Stimme Nova vor":"Ukrainian is now read aloud only by the Nova voice"});
+"Ukrainisch liest nur noch die Stimme Nova vor":"Ukrainian is now read aloud only by the Nova voice",
+"Rechenblitz Pro ist da: Profi-Stufe, mehr Profile, Elternbericht und Vorlagen für einmalig {},{} € – alles andere bleibt kostenlos":"Rechenblitz Pro is here: Pro level, more profiles, parent report and templates for a one-off €{}.{} – everything else stays free"});
