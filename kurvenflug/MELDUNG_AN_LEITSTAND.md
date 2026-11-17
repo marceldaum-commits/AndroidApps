@@ -1,5 +1,15 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## Store-Text für Pro in Play vorbereitet (Auftrag Leitstand)
+- `store/de-DE/beschreibung-mit-pro.txt` (3 173 Zeichen): ohne „keine Käufe“, neuer Abschnitt „⭐ Kurvenflug Pro (optional)“ –
+  Schulstoff bis Klasse 10 frei; Pro (einmaliger In-App-Kauf, kein Abo): Oberstufe (6 Kapitel, 35 Level), Extrem-Prüfungen,
+  Asteroidensturm Profi & Extrem, Andromeda ab Planet 7, bis 6 Spieler (frei: 2), Pro-Werkstatt; Bestandsschutz; Kauf nur
+  nach Frage für Erwachsene. Die aktuelle `beschreibung.txt` bleibt unverändert.
+- **Test `StoreTextTest`** prüft, dass die Liste genau zu `core/model/Pro.kt` passt (jeder Vorteil, Spieler-/Planeten-/Kapitel-/
+  Levelzahlen) und „keine Käufe“ nicht vorkommt – ändert sich Pro, fällt der Test.
+- `store/PLAY_CONSOLE_ANLEITUNG.md` 6a: neuer Schritt 0 „Vor dem Anlegen des In-App-Produkts: Beschreibung tauschen“,
+  Schritt 6 als **Pflicht**: IARC „Digitale Käufe/In-App-Käufe: Ja“ und Zielgruppe-Frage „In-App-Käufe: Ja“.
+
 ## 2.3.0 – „Pro aktiv“ sichtbar (Vorgabe Marcel) · Web = Android
 - Gab es vorher nur als Text „Freigeschaltet“ auf der Pro-Karte in den Einstellungen – jetzt eingebaut:
   - **Startseite, Kopf unter „KURVENFLUG“:** goldenes Abzeichen „⭐ Pro aktiv“ (sanft pulsierend), immer sichtbar,

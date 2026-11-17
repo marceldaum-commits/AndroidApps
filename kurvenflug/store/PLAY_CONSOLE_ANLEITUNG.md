@@ -92,14 +92,18 @@ Kontakt-E-Mail: deine Support-Adresse · Website: `https://www.mathenachhilfe-on
 
 ## 6a. Kurvenflug Pro (In-App-Produkt) – erst wenn Pro starten soll
 Solange das Produkt nicht angelegt ist, bleibt in der App alles frei. Ab dem Anlegen erscheinen die Pro-Sperren.
+0. **Vor dem Anlegen des In-App-Produkts: Beschreibung tauschen** – Wachstum → Store-Präsenz → Hauptseite →
+   „Vollständige Beschreibung“ durch den Text aus `store/de-DE/beschreibung-mit-pro.txt` ersetzen (ohne „keine Käufe“;
+   die Pro-Liste darin entspricht genau `core/model/Pro.kt`, ein Test prüft das) → Speichern.
 1. **Monetarisieren → Produkte → In-App-Produkte** (ggf. erst Händlerkonto/Zahlungsprofil einrichten).
 2. **Produkt erstellen**: Produkt-ID genau `kurvenflug_pro` · Name „Kurvenflug Pro“ · Beschreibung: „Oberstufe,
    Extrem-Prüfungen, Sturm Profi & Extrem, Andromeda ab Planet 7, bis 6 Spieler, Pro-Werkstatt. Einmalkauf, kein Abo.“
 3. **Preis**: 7,99 € (Google zeigt Endpreise inkl. USt. und führt die USt. selbst ab) → für andere Länder umrechnen lassen → **Aktivieren**.
 4. **Lizenztester** (Einstellungen → Lizenztests): eigene Google-Konten eintragen → Testkäufe kosten nichts.
-5. **Pflicht vor der Freigabe:** Im internen Test einmal kaufen und „Käufe wiederherstellen“ probieren (die Play-Fassung
-   – der Kauf läuft über die Play-Store-App; das muss einmal auf echtem Gerät klappen).
-6. Formulare nachziehen: IARC-Fragebogen → „Digitale Käufe: **Ja**“. Datensicherheit bleibt „keine Daten erhoben“
+5. **Pflicht vor der Freigabe:** Im internen Test einmal kaufen und „Käufe wiederherstellen“ probieren (der Kauf läuft
+   über die Play-Store-App; das muss einmal auf echtem Gerät klappen).
+6. **Pflicht – Formulare nachziehen:** App-Inhalte → Einstufung (IARC-Fragebogen) → „Digitale Käufe / In-App-Käufe: **Ja**“;
+   Zielgruppe und Inhalte → bei der Frage nach In-App-Käufen ebenfalls **Ja**. Datensicherheit bleibt „keine Daten erhoben“
    (den Kauf wickelt Google ab, die App speichert nur „Pro: ja“). Store-Eintrag zeigt „In-App-Käufe“ automatisch.
 
 ## 6b. Version 2.2.0 hochladen (versionCode 41) – Klick-Liste
