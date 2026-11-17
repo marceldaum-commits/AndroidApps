@@ -162,6 +162,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
               de.wissensgarten.app.ui.fx.LocalReadAloud provides readAloud,
               de.wissensgarten.app.ui.fx.LocalSyllables provides syllablesOn,
               de.wissensgarten.app.ui.fx.LocalVibration provides vm.settings.vibration.collectAsStateWithLifecycle().value,
+              de.wissensgarten.app.ui.plus.LocalPlusStatus provides vm.plusStatus.collectAsStateWithLifecycle().value,
           ) {
             // imePadding: Eingabefelder rutschen über die Tastatur (bei Randlos-Darstellung nötig)
             // Erste Berührung: erst jetzt darf Musik erklingen, und einmal pro Start grüßt die Erkennungsmelodie
