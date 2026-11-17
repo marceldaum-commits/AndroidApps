@@ -483,6 +483,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 voltVoice = vm.settings.voltVoice.collectAsStateWithLifecycle().value, onVoltVoice = vm.settings::setVoltVoice,
                 readAloud = vm.settings.readAloud.collectAsStateWithLifecycle().value, onReadAloud = vm.settings::setReadAloud,
                 readSpeed = vm.settings.readSpeed.collectAsStateWithLifecycle().value, onReadSpeed = vm.settings::setReadSpeed,
+                offlineBest = vm.settings.offlineBest.collectAsStateWithLifecycle().value, onOfflineBest = vm.settings::setOfflineBest,
             )
         }
     }

@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.1 – 🎧 Offline-Stimme in Bestqualität
+- Beim Offline-Laden gibt es jetzt zwei Möglichkeiten: **Standard** (kleiner) oder **Bestqualität** (unkomprimiert, klingt noch
+  klarer, braucht mehr Platz). Die Wahl wird gemerkt; „Offline-Stimme löschen“ entfernt beide.
+
 ## 2.5.0 – 📦 Volt spricht auch ohne Internet
 - Neu unter Einstellungen → Vorlesen: **„Alle Nova-Texte offline laden“**. Danach liest Volt alle festen Texte – Aufgaben,
   Erklärungen, Rechen-Stern – auch ohne Internet vor. Die Größe steht auf dem Knopf, am besten im WLAN laden.

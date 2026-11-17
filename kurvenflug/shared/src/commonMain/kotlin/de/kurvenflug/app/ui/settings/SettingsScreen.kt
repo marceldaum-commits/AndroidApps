@@ -41,6 +41,7 @@ fun SettingsScreen(
     voltVoice: Boolean = true, onVoltVoice: (Boolean) -> Unit = {},
     readAloud: Boolean = true, onReadAloud: (Boolean) -> Unit = {},
     readSpeed: Int = 100, onReadSpeed: (Int) -> Unit = {},
+    offlineBest: Boolean = false, onOfflineBest: (Boolean) -> Unit = {},
 ) {
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -62,7 +63,7 @@ fun SettingsScreen(
                     if (!readAloud) Toggle("🤖 Volt-Stimme", "Volt plappert in Roboter-Sprache, wenn er spricht", voltVoice, onVoltVoice)
                 }
             }
-            ReadAloudCard(readAloud, onReadAloud, readSpeed, onReadSpeed)
+            ReadAloudCard(readAloud, onReadAloud, readSpeed, onReadSpeed, offlineBest, onOfflineBest)
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -125,7 +126,7 @@ private fun ProCard(state: de.kurvenflug.app.ProState, onPro: () -> Unit) {
  * Datenschutz-Text, den der Leitstand vorgegeben hat.
  */
 @Composable
-private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit, speed: Int, onSpeed: (Int) -> Unit) {
+private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit, speed: Int, onSpeed: (Int) -> Unit, best: Boolean = false, onBest: (Boolean) -> Unit = {}) {
     val reader = de.kurvenflug.app.ui.fx.LocalReader.current
     ElevatedCard(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -147,36 +148,42 @@ private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit, speed: Int, onSp
                     valueRange = 0f..steps.lastIndex.toFloat(), steps = steps.size - 2, modifier = Modifier.weight(1f))
             }
             if (reader != null) OutlinedButton(onClick = { reader.say(de.kurvenflug.app.ui.fx.Reader.PROBE) }) { Text("▶ Probe hören") }
-            if (reader != null) OfflineBox(reader)
+            if (reader != null) OfflineBox(reader, best, onBest)
             Text("🔒 $NOVA_PRIVACY", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
         }
     }
 }
 
-/** „Alle Nova-Texte offline laden“: Größe live vom Server, Fortschritt „x von n“, Abbrechen, Löschen */
+/**
+ * „Alle Nova-Texte offline laden“ – Standard (40 kbit/s) oder Bestqualität (128 kbit/s, unkomprimiert); die Wahl wird gemerkt.
+ * Größe live vom Server, Fortschritt „x von n“, Abbrechen, Löschen (beide Qualitäten).
+ */
 @Composable
-private fun OfflineBox(reader: de.kurvenflug.app.ui.fx.Reader) {
+private fun OfflineBox(reader: de.kurvenflug.app.ui.fx.Reader, best: Boolean, onBest: (Boolean) -> Unit) {
     LaunchedEffect(Unit) { reader.refreshOffline() }
     val o = reader.offline
     Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Q.Cyan.copy(alpha = 0.08f)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Text("📦 Offline-Stimme", style = MaterialTheme.typography.labelLarge)
-        when {
-            o.loading -> {
-                Text(if (o.todo > 0) "Lade … ${o.done} von ${o.todo}" else "Lade …", style = MaterialTheme.typography.bodySmall)
-                LinearProgressIndicator(progress = { if (o.todo > 0) o.done / o.todo.toFloat() else 0f }, modifier = Modifier.fillMaxWidth())
-                TextButton(onClick = { reader.cancelOffline() }, contentPadding = PaddingValues(0.dp)) { Text("Abbrechen", color = Q.Muted) }
+        if (o.loading) {
+            Text((if (best) "Bestqualität: " else "Standard: ") + (if (o.todo > 0) "lade … ${o.done} von ${o.todo}" else "lade …"), style = MaterialTheme.typography.bodySmall)
+            LinearProgressIndicator(progress = { if (o.todo > 0) o.done / o.todo.toFloat() else 0f }, modifier = Modifier.fillMaxWidth())
+            TextButton(onClick = { reader.cancelOffline() }, contentPadding = PaddingValues(0.dp)) { Text("Abbrechen", color = Q.Muted) }
+        } else {
+            if (o.complete(best)) Text("✓ Alle ${o.total} Texte sind gespeichert (${if (best) "Bestqualität" else "Standard"}) – Volt spricht sie auch ohne Internet.",
+                style = MaterialTheme.typography.bodySmall, color = Q.Green)
+            else Text("Volt kann die festen Texte auch ohne Internet vorlesen. Am besten im WLAN laden." +
+                if (o.count(best) > 0) " Schon gespeichert: ${o.count(best)} von ${o.total}." else "", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+            @Composable fun Choice(b: Boolean, label: String) {
+                val text = "Offline laden – $label" + (o.missingBytes(b)?.let { " (ca. ${de.kurvenflug.app.ui.fx.mb(it)} MB)" } ?: "")
+                val go = { onBest(b); reader.loadOffline(b) }
+                if (o.complete(b)) return
+                if (b == best) Button(onClick = go, modifier = Modifier.fillMaxWidth()) { Text(text) }
+                else OutlinedButton(onClick = go, modifier = Modifier.fillMaxWidth()) { Text(text) }
             }
-            o.complete -> Text("✓ Alle ${o.total} Texte sind gespeichert – Volt spricht sie auch ohne Internet.", style = MaterialTheme.typography.bodySmall, color = Q.Green)
-            else -> {
-                Text("Volt kann die festen Texte auch ohne Internet vorlesen. Am besten im WLAN laden." +
-                    if (o.have > 0) " Schon gespeichert: ${o.have} von ${o.total}." else "", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
-                Button(onClick = { reader.loadOffline() }) {
-                    Text("Alle Nova-Texte offline laden" + (o.missingBytes?.let { " (ca. ${de.kurvenflug.app.ui.fx.mb(it)} MB)" } ?: ""))
-                }
-            }
+            Choice(false, "Standard"); Choice(true, "Bestqualität")
         }
         o.problem?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = Q.Orange) }
-        if (o.have > 0 && !o.loading) TextButton(onClick = { reader.clearOffline() }, contentPadding = PaddingValues(0.dp)) {
+        if (o.stored > 0 && !o.loading) TextButton(onClick = { reader.clearOffline() }, contentPadding = PaddingValues(0.dp)) {
             Text("Offline-Stimme löschen (${de.kurvenflug.app.ui.fx.mb(o.haveBytes)} MB)", color = Q.Muted)
         }
     }

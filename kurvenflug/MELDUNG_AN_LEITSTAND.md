@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.5.1 – Offline in Bestqualität (Nachtrag Marcel) · Web = APK = Play
+- Zwei Knöpfe: **„Offline laden – Standard (ca. X MB)“** (X aus "bytes") und **„Offline laden – Bestqualität (ca. Z MB)“**
+  (Z aus "bytes_original"); jeweils anteilig um schon Gespeichertes verringert. Die gemerkte Wahl ist der gefüllte Knopf.
+- Bestqualität lädt `…/nova/original/<h[0:2]>/<h>.mp3`; bei 404 die normale Datei (gespeichert als Bestqualität, damit sie
+  nicht erneut versucht wird). Getrennte Ablage (Android `files/nova` und `files/nova-best`, Web Cache-Schlüssel mit/ohne
+  `original/`), Abspielen: erst Bestqualität, dann Standard, dann laden. Normales Vorlesen bleibt bei der Standard-Datei.
+  „Offline-Stimme löschen“ löscht beide.
+- Browser-Test gegen den Server: Stand 154 551 057 / 188 464 128 Bytes gelesen; Bestqualität geladen – `original/` lieferte
+  noch 404, Rückfall auf normale Datei griff, 32 gespeichert und als Bestqualität gezählt; Löschen ok.
+- versionCode 48. Bildschirmfoto `screenshots/99_vorlesen.png`.
+
 ## 2.5.0 – „Alle Nova-Texte offline laden“ (Vorgabe Marcel) · Web = APK = Play
 - Einstellungen → Vorlesen → Kasten „📦 Offline-Stimme“: Knopf **„Alle Nova-Texte offline laden (ca. X MB)“**, Hinweis
   „Am besten im WLAN laden“, während des Ladens „Lade … x von n“ mit Balken und **Abbrechen**, danach bzw. sobald etwas
