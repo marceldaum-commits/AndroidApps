@@ -3,6 +3,14 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.0 – Nova auch ohne Internet (17.11.2026)
+- **Alle Nova-Sätze offline laden:** In den Einstellungen unter „Brummi liest vor“ lassen sich alle Vorlese-Sätze auf einmal aufs Gerät holen – danach liest Brummi auch ohne Internet mit Nova vor. Die Größe steht direkt auf dem Knopf (am besten im WLAN laden).
+- **Zwei Fassungen:** „Standard“ (klein) oder „Bestqualität“ (klingt noch etwas klarer, braucht mehr Platz).
+- Fortschritt „x von n“, Abbrechen jederzeit – beim nächsten Tippen geht es dort weiter.
+- „Offline-Stimme löschen“ gibt den Platz wieder frei.
+- Mit Wissensgarten Plus werden die Plus-Sätze mitgeladen.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.1.0 – Brummi liest mit Nova vor (17.11.2026)
 - **Neue Vorlese-Stimme „Nova“:** Brummi liest Fragen, Antworten und Erklärungen jetzt mit einer natürlich klingenden Stimme vor. Nova ist eine mit KI (OpenAI) erzeugte Stimme – das steht auch in den Einstellungen.
 - Die Sätze werden von unserem eigenen Server vorab vertont. Die App schickt nie etwas an OpenAI und überträgt keine Namen oder Angaben zu dir. Einmal gehörte Sätze bleiben auf dem Gerät.
