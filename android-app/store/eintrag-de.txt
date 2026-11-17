@@ -8,7 +8,7 @@ Kurzbeschreibung (max. 80 Zeichen):
 Kopfrechnen mit Blitz dem Fuchs – spielerisch, offline, ohne Werbung und Konto.
 
 Vollständige Beschreibung (max. 4000 Zeichen):
-Rechenblitz macht Kopfrechnen zum Abenteuer – für Klasse 1 bis 10, kostenlos, ohne Werbung und ohne Konto. Entwickelt von Nachhilfe – online, wo echte Lehrkräfte jeden Tag Mathe erklären.
+Rechenblitz macht Kopfrechnen zum Abenteuer – für Klasse 1 bis 10, kostenlos nutzbar, ohne Werbung und ohne Konto. Entwickelt von Nachhilfe – online, wo echte Lehrkräfte jeden Tag Mathe erklären.
 
 ⚡ IN 3 MINUTEN BESSER RECHNEN
 Plus, Minus, Mal und Geteilt, Einmaleins, Brüche, Dezimalzahlen, Prozent, negative Zahlen, Potenzen, Runden, Einheiten, Gleichungen, Geld, Uhr und Zeit, Geometrie, Terme, Funktionen, Zinsen, Wahrscheinlichkeit, Statistik und Textaufgaben – 29 Themen in 6 Stufen, bis zur Profi-Stufe. Die Schwierigkeit passt sich automatisch an. Bei jedem Fehler zeigt Rechenblitz den Lösungsweg Schritt für Schritt.
@@ -36,7 +36,8 @@ Rätsel des Tages, Tageschallenge (für alle gleich), Duell zu zweit am selben G
 
 🔒 DATENSCHUTZFREUNDLICH
 • Läuft komplett offline – auch im Flugmodus.
-• Kein Konto, keine Werbung, kein Tracking, keine In-App-Käufe.
+• Kein Konto, keine Werbung, kein Tracking.
+• Optional: Rechenblitz Pro für einmalig 7,99 € (inkl. MwSt., kein Abo) – Profi-Stufe, mehr als 2 Profile, Elternbericht und Vorlagen. Alles andere bleibt kostenlos. Freischalten per Code.
 • Der Lernstand bleibt auf dem Gerät.
 • Neue Inhalte kommen automatisch – ohne neue Installation.
 
