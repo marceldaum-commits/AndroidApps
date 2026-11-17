@@ -176,7 +176,9 @@ private const val LICENSES = "Kurvenflug nutzt freie Software. Danke an alle, di
     "Apache License 2.0 (apache.org/licenses/LICENSE-2.0): Kotlin, kotlinx.coroutines, kotlinx.serialization, " +
     "Jetpack Compose und Compose Multiplatform, AndroidX (Activity, Core, Lifecycle, Navigation, Room, Glance, WorkManager, " +
     "Fragment, SavedState, Startup, DataStore), Guava, JSpecify, JetBrains Annotations.\n\n" +
-    "Nur in der Google-Play-Version: Play In-App Updates (Play Core SDK, Nutzungsbedingungen von Google)."
+    "Nur in der Google-Play-Version: Play In-App Updates und Play Billing (Nutzungsbedingungen von Google), " +
+    "Google Data Transport, Firebase Encoders und javax.inject (Apache License 2.0).\n\n" +
+    "Vorlese-Stimme Nova: KI-generierte Audiodateien (OpenAI), erzeugt auf unserem Server."
 
 private const val LICENSES_WEB = "\n\nIm Browser zusätzlich: Skia/Skiko (BSD-3-Clause), Noto Color Emoji (SIL Open Font License 1.1), " +
     "DejaVu Sans (freie Bitstream-Vera-Lizenz). Volltexte in fonts-lizenzen.txt."

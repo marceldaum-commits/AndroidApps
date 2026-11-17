@@ -1,5 +1,21 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.4.2 – Auftrag „Play-Store-fertig“ (Routine 17.11. 15:00) geprüft
+Hinweis: Der Auftrag kam nach deiner Nachricht „Play erst später, keine Zeit in Play-Material“ – ich habe deshalb nur
+geprüft und Lücken geschlossen, nichts neu aufgebaut. Stand:
+| Punkt | Stand |
+|---|---|
+| Kein Deinstallieren GitHub-APK ↔ Play | ✓ Play App Signing mit **eigenem** Schlüssel (WG_*, 9ece4812…): Anleitung Abschnitt 2 (PEPK über den Workflow „Kurvenflug: Signaturschlüssel für Google Play“, Alternative `java -jar pepk.jar`). **Kein separater Upload-Schlüssel nötig** – derselbe Schlüssel signiert die Uploads; der Release-Workflow prüft den Fingerabdruck des AAB. |
+| Play-Variante ohne eigenen Download/Installations-Recht | ✓ `SELF_UPDATE=false`, REQUEST_INSTALL_PACKAGES nicht im Play-Manifest |
+| Play In-App Updates | ✓ Flexible, bei Priorität 4–5 Immediate (`app/src/play/.../StoreUpdates.kt`) |
+| Kein Nachladen von nativem Code | ✓ seit 2.4.0 gar kein nativer Code mehr (ONNX Runtime entfernt) |
+| Signiertes AAB über GitHub-Workflow | ✓ `kurvenflug-v<Version>`, Fingerabdruck-Prüfung im Workflow |
+| Store-Eintrag de | ✓ Titel, Kurz-/Langbeschreibung (+ Fassung mit Pro), Icon 512, Feature-Grafik 1024×500, 8 Screenshots (`store/`) |
+| Datensicherheit / Familien / Altersfreigabe | ✓ Abschnitt 4 (Zielgruppe 9–17, Familienprogramm, Nova-Begründung) |
+| Lizenzprüfung | **aktualisiert** (`store/LIZENZEN.md` war Stand 0.21): Play Billing + mitgebrachte Google Data Transport, Firebase Encoders, javax.inject (Apache 2.0) ergänzt, auch im Lizenzhinweis der App → deshalb 2.4.2 |
+| Klick-Liste interner Test → geschlossener Test (12 Tester, 14 Tage) | ✓ Abschnitte 5–6, 6b auf 2.4.2 gesetzt |
+| GitHub-APK mit eigenem Updater | ✓ unverändert |
+
 ## 2.4.1 live – Play-Fassung bereit
 - Release `kurvenflug-v2.4.1` vollständig: APK 2,6 MB, **Play-AAB 6,5 MB** (versionCode 45), Web-ZIP 5,6 MB.
 - Klick-Liste `store/PLAY_CONSOLE_ANLEITUNG.md` 6b auf 2.4.1 gesetzt (inkl. KI-Kennzeichnung, Datensicherheit „Nein“ mit
