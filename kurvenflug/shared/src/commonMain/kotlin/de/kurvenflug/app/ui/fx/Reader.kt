@@ -27,7 +27,8 @@ interface Reader {
     val offline: OfflineState get() = OfflineState()
     /** Stand neu ermitteln: was liegt schon auf dem Gerät, wie groß ist alles laut Server */
     fun refreshOffline() {}
-    fun loadOffline() {}
+    /** [best] = Bestqualität (unkomprimiert, 128 kbit/s) statt Standard */
+    fun loadOffline(best: Boolean) {}
     fun cancelOffline() {}
     fun clearOffline() {}
 
@@ -42,11 +43,15 @@ interface Reader {
  */
 data class OfflineState(
     val total: Int = 0, val have: Int = 0, val haveBytes: Long = 0, val serverBytes: Long? = null,
+    /** Bestqualität: gespeicherte Texte und Größe laut Server */
+    val haveBest: Int = 0, val serverBytesBest: Long? = null,
     val loading: Boolean = false, val done: Int = 0, val todo: Int = 0, val problem: String? = null,
 ) {
     /** Noch zu laden, geschätzt: alles laut Server minus das, was schon da ist */
-    val missingBytes: Long? get() = serverBytes?.let { (it - haveBytes).coerceAtLeast(0) }
-    val complete get() = total > 0 && have >= total
+    fun missingBytes(best: Boolean): Long? = (if (best) serverBytesBest else serverBytes)?.let { all -> (all * (total - count(best)).coerceAtLeast(0) / total.coerceAtLeast(1)) }
+    fun count(best: Boolean) = if (best) haveBest else have
+    fun complete(best: Boolean) = total > 0 && count(best) >= total
+    val stored get() = have + haveBest
 }
 
 /** Megabyte zum Anzeigen (mindestens 1, wenn überhaupt etwas da ist) */

@@ -65,7 +65,9 @@ class AndroidReader(context: Context) : Reader {
     /** Fertige Ansage aus dem Zwischenspeicher, vom Server oder – für Laufzeit-Texte – frisch vertont; null = Notlösung */
     private fun fetch(spoken: String): File? {
         val h = Nova.hash(spoken)
-        File(offlineDir(), "$h.mp3").takeIf { it.isFile && it.length() > 0 }?.let { return it }
+        // gespeicherte Offline-Stimme: erst Bestqualität, dann Standard
+        File(offlineDir(true), "$h.mp3").takeIf { it.isFile && it.length() > 0 }?.let { return it }
+        File(offlineDir(false), "$h.mp3").takeIf { it.isFile && it.length() > 0 }?.let { return it }
         val f = File(cacheDir(), "$h.mp3")
         if (f.isFile && f.length() > 0) { f.setLastModified(System.currentTimeMillis()); return f }
         if (download(Nova.url(spoken), f)) return f
@@ -138,7 +140,7 @@ class AndroidReader(context: Context) : Reader {
 
     // ------------------------------------------------------------------ „Alle Nova-Texte offline laden“
     /** Dauerhaft im App-Speicher (nicht im Cache, den das System leeren darf); keine Obergrenze beim manuellen Laden */
-    private fun offlineDir() = File(ctx.filesDir, "nova").also { it.mkdirs() }
+    private fun offlineDir(best: Boolean) = File(ctx.filesDir, if (best) "nova-best" else "nova").also { it.mkdirs() }
     override var offline by mutableStateOf(OfflineState()); private set
     private val loader = Executors.newFixedThreadPool(4) { Thread(it, "nova-offline").apply { isDaemon = true } }
     @Volatile private var cancelled = false
@@ -146,28 +148,29 @@ class AndroidReader(context: Context) : Reader {
         runCatching { ctx.assets.open("vorlesen/texte.json").use { it.readBytes().decodeToString() } }.map { Nova.listTexts(it).map(Nova::hash).distinct() }.getOrDefault(emptyList())
     }
 
-    private fun scan(): Pair<Int, Long> {
-        val have = offlineDir().listFiles().orEmpty().filter { it.extension == "mp3" }.associateBy { it.nameWithoutExtension }
+    private fun scan(best: Boolean): Pair<Int, Long> {
+        val have = offlineDir(best).listFiles().orEmpty().filter { it.extension == "mp3" }.associateBy { it.nameWithoutExtension }
         val mine = names.mapNotNull { have[it] }
         return mine.size to mine.sumOf { it.length() }
     }
 
     override fun refreshOffline() {
         worker.execute {
-            val (n, bytes) = scan()
-            val server = runCatching {
+            val (n, bytes) = scan(false); val (nb, bytesB) = scan(true)
+            val stand = runCatching {
                 val c = URL(Nova.standUrl(Nova.APP_HOST)).openConnection() as HttpURLConnection
                 c.connectTimeout = 5_000; c.readTimeout = 10_000
-                if (c.responseCode == 200) Nova.standBytes(c.inputStream.use { it.readBytes().decodeToString() }) else null
+                if (c.responseCode == 200) c.inputStream.use { it.readBytes().decodeToString() } else null
             }.getOrNull()
-            main.post { offline = offline.copy(total = names.size, have = n, haveBytes = bytes, serverBytes = server ?: offline.serverBytes) }
+            main.post { offline = offline.copy(total = names.size, have = n, haveBest = nb, haveBytes = bytes + bytesB,
+                serverBytes = stand?.let(Nova::standBytes) ?: offline.serverBytes, serverBytesBest = stand?.let(Nova::standBytesBest) ?: offline.serverBytesBest) }
         }
     }
 
-    override fun loadOffline() {
+    override fun loadOffline(best: Boolean) {
         if (offline.loading) return
         cancelled = false
-        val dir = offlineDir()
+        val dir = offlineDir(best)
         val todo = names.filter { !File(dir, "$it.mp3").isFile }
         offline = offline.copy(loading = true, done = 0, todo = todo.size, problem = null)
         if (todo.isEmpty()) { offline = offline.copy(loading = false); refreshOffline(); return }
@@ -177,7 +180,10 @@ class AndroidReader(context: Context) : Reader {
                 if (!cancelled) {
                     // 404 (noch nicht vertont) still überspringen; Netzfehler zählen
                     val target = File(dir, "$h.mp3"); val cached = File(cacheDir(), "$h.mp3")
-                    val ok = runCatching { if (!(cached.isFile && cached.renameTo(target))) download("${Nova.BASE}${h.take(2)}/$h.mp3", target, trimCache = false) }
+                    val ok = runCatching {
+                        if (best) { if (!download(Nova.fileUrl(h, true), target, trimCache = false)) download(Nova.fileUrl(h), target, trimCache = false) }   // original/ fehlt → normale Datei
+                        else if (!(cached.isFile && cached.renameTo(target))) download(Nova.fileUrl(h), target, trimCache = false)
+                    }
                     if (ok.isFailure) failed.incrementAndGet()
                     val d = done.incrementAndGet()
                     if (d % 10 == 0 || d == todo.size) main.post { if (offline.loading) offline = offline.copy(done = d) }
@@ -195,7 +201,7 @@ class AndroidReader(context: Context) : Reader {
     override fun cancelOffline() { cancelled = true }
     override fun clearOffline() {
         cancelled = true
-        worker.execute { offlineDir().deleteRecursively(); main.post { offline = offline.copy(have = 0, haveBytes = 0, loading = false) }; refreshOffline() }
+        worker.execute { offlineDir(false).deleteRecursively(); offlineDir(true).deleteRecursively(); main.post { offline = offline.copy(have = 0, haveBest = 0, haveBytes = 0, loading = false) }; refreshOffline() }
     }
 
     companion object { const val CACHE_MB = 40 }

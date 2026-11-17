@@ -46,13 +46,14 @@ object WebReader : Reader {
         jsText("vorlesen/texte.json") { json -> val hs = Nova.listTexts(json).map(Nova::hash).distinct(); hashes = hs.joinToString("\n"); offline = offline.copy(total = hs.size); then(hashes!!) }
     }
     override fun refreshOffline() {
-        withList { hs -> jsOffStat(hs) { n, bytes, server -> offline = offline.copy(have = n, haveBytes = bytes.toLong(), serverBytes = if (server > 0) server.toLong() else offline.serverBytes) } }
+        withList { hs -> jsOffStat(hs) { n, nb, bytes, server, serverBest -> offline = offline.copy(have = n, haveBest = nb, haveBytes = bytes.toLong(),
+            serverBytes = if (server > 0) server.toLong() else offline.serverBytes, serverBytesBest = if (serverBest > 0) serverBest.toLong() else offline.serverBytesBest) } }
     }
-    override fun loadOffline() {
+    override fun loadOffline(best: Boolean) {
         if (offline.loading) return
         offline = offline.copy(loading = true, done = 0, todo = 0, problem = null)
         withList { hs ->
-            jsOffLoad(hs, { d, n -> offline = offline.copy(done = d, todo = n) }) { failed, aborted ->
+            jsOffLoad(hs, best, { d, n -> offline = offline.copy(done = d, todo = n) }) { failed, aborted ->
                 offline = offline.copy(loading = false, problem = when {
                     failed < 0 -> "Dieser Browser kann die Ansagen nicht speichern."
                     failed > 0 && !aborted -> "$failed Ansagen ließen sich nicht laden – beim nächsten Tippen geht es dort weiter."
@@ -62,7 +63,7 @@ object WebReader : Reader {
         }
     }
     override fun cancelOffline() { jsOffCancel() }
-    override fun clearOffline() { jsOffCancel(); jsOffClear { offline = offline.copy(have = 0, haveBytes = 0, loading = false); refreshOffline() } }
+    override fun clearOffline() { jsOffCancel(); jsOffClear { offline = offline.copy(have = 0, haveBest = 0, haveBytes = 0, loading = false); refreshOffline() } }
 
     override fun stop() { pending = null; if (started) runCatching { jsHush() }; speaking = false }
 }

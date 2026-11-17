@@ -45,6 +45,10 @@ class Settings(private val prefs: Prefs) {
     /** Volt liest Sprechblasen, Aufträge, Rechen-Stern-Fragen und Erklärungen vor */
     val readAloud: StateFlow<Boolean> = _readAloud.asStateFlow()
     fun setReadAloud(v: Boolean) { prefs.edit().putBoolean("readAloud", v).apply(); _readAloud.value = v }
+    private val _offlineBest = flag("offlineBest", false)
+    /** Offline-Stimme in Bestqualität laden (gemerkte Wahl) */
+    val offlineBest: StateFlow<Boolean> = _offlineBest.asStateFlow()
+    fun setOfflineBest(v: Boolean) { prefs.edit().putBoolean("offlineBest", v).apply(); _offlineBest.value = v }
     private val _readSpeed = MutableStateFlow(prefs.getInt("readSpeed", 100))
     /** Sprechtempo in Prozent, eine der Stufen aus [de.kurvenflug.core.model.Nova.SPEEDS] (100 = Server-Tempo) */
     val readSpeed: StateFlow<Int> = _readSpeed.asStateFlow()

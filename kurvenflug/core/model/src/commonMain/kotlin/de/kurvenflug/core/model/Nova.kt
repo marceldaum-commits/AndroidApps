@@ -48,6 +48,10 @@ object Nova {
     fun standUrl(host: String) = "${BASE}stand-$host.json"
     const val APP_HOST = "kurvenflug.mathenachhilfe-online.com"
     fun standBytes(json: String): Long? = Regex(""""bytes"\s*:\s*(\d+)""").find(json)?.groupValues?.get(1)?.toLongOrNull()
+    /** Größe in Bestqualität (128 kbit/s, Ordner original/) – Feld "bytes_original" */
+    fun standBytesBest(json: String): Long? = Regex(""""bytes_original"\s*:\s*(\d+)""").find(json)?.groupValues?.get(1)?.toLongOrNull()
+    /** Adresse einer Ansage nach Dateinamen; [best] = Bestqualität (bei 404 die normale nehmen) */
+    fun fileUrl(h: String, best: Boolean = false) = BASE + (if (best) "original/" else "") + "${h.take(2)}/$h.mp3"
     /** Die Texte aus vorlesen/texte.json (Format 1) */
     fun listTexts(json: String): List<String> = Regex(""""text"\s*:\s*"((?:[^"\\]|\\.)*)"""").findAll(json).map { m ->
         val s = m.groupValues[1]; val out = StringBuilder(); var i = 0

@@ -453,7 +453,7 @@ class ScreenshotTest {
 
     private object FakeReader : de.kurvenflug.app.ui.fx.Reader {
         override val speaking = false
-        override val offline = de.kurvenflug.app.ui.fx.OfflineState(total = 1163, have = 120, haveBytes = 6_500_000, serverBytes = 63_000_000)
+        override val offline = de.kurvenflug.app.ui.fx.OfflineState(total = 1163, have = 120, haveBytes = 6_500_000, serverBytes = 63_000_000, serverBytesBest = 188_000_000)
         override fun say(text: String) {}
         override fun stop() {}
     }
