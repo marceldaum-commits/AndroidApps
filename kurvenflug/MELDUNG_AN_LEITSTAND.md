@@ -4,8 +4,9 @@
 - Play-Fassung hat jetzt die INTERNET-Berechtigung, ausschließlich für den Thorsten-Download auf Wunsch (versionCode 41).
   Damit ist die Play-Ausnahme weg: Vorlesen inkl. Thorsten ist in GitHub-APK, Play und Web gleich.
 - Store-Unterlagen angepasst (Beschreibung, Datenschutz-Text, Play-Console-Anleitung). **Offen für Marcel/Leitstand:**
-  Datensicherheits-Formular – bleibt „keine Daten erhoben“, sofern der Stimmen-Server keine IP-Protokolle dauerhaft
-  speichert. Bitte am Server prüfen (sonst Protokolle abschalten oder im Formular angeben).
+  Datensicherheits-Formular – **geklärt**: Zugriffsprotokoll für /thorsten/ ist aus (Leitstand), keine IP/Kennung gespeichert →
+  bleibt „keine Daten erhoben“. Datenschutz-Text (store/PLAY_CONSOLE_ANLEITUNG.md) nennt den Download vom eigenen Server
+  (HTTPS, IP nur für die Verbindung, nicht gespeichert).
 
 ## 2.1.0 – Thorsten vom gemeinsamen Server · Web = Android
 - Quelle jetzt `stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx`, Größe 63 201 294 Bytes und
