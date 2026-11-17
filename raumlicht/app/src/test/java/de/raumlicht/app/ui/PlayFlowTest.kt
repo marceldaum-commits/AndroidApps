@@ -338,10 +338,10 @@ class PlayFlowTest {
 
     @Test fun galtonRowsCanBeChosen() {
         show { GaltonScreen({}, controller = stage, random = Random(3)) }
-        rule.onNodeWithText("8 Reihen").assertExists(); assertTrue(stage.lastState!!.contains("nägel8"))
+        rule.onNodeWithText("Reihen").assertExists(); assertTrue(stage.lastState!!.contains("nägel8"))
         rule.onNodeWithTag("plus-n").performClick(); rule.onNodeWithTag("plus-n").performClick(); rule.mainClock.advanceTimeBy(400)
-        rule.onNodeWithText("10 Reihen").assertExists(); rule.onNodeWithText("5").assertExists(); assertTrue(stage.lastState!!.contains("nägel10"))     // μ = 10 · 0,5
-        repeat(8) { rule.onNodeWithTag("minus-n").performClick() }; rule.mainClock.advanceTimeBy(400); rule.onNodeWithText("4 Reihen").assertExists()   // unten ist bei 4 Schluss
+        rule.onNodeWithText("5").assertExists(); assertTrue(stage.lastState!!.contains("nägel10"))     // μ = 10 · 0,5
+        repeat(8) { rule.onNodeWithTag("minus-n").performClick() }; rule.mainClock.advanceTimeBy(400); assertTrue(stage.lastState!!.contains("nägel4"))   // unten ist bei 4 Schluss
     }
 
     @Test fun coasterBuilderNeedsEnoughEnergy() {

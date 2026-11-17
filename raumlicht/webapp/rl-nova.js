@@ -27,6 +27,7 @@
   async function obtain(server, url, live, body) {
     const off = await offlineHit(url); if (off) return off;                // offline geladen (Einstellungen), Bestqualität zuerst
     const hit = await cached(url); if (hit) return hit;
+    if (navigator.onLine === false) return null;                            // offline: gar nicht erst fragen (kein Fehler in der Konsole) – die Stimme des Geräts springt ein
     let r = await get(url);
     if (r.status === 404 && live) {
       const a = await fetch(live, { method: 'POST', credentials: 'omit', referrerPolicy: 'no-referrer', headers: { 'Content-Type': 'application/json' }, body: body });
