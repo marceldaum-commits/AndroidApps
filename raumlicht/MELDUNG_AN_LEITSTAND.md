@@ -2,6 +2,20 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.16.2: Abzeichen „Abi-Pass aktiv“ + Vorschlag für die Datenschutzerklärung
+
+Marcel hat beides direkt bestätigt. **Raumlicht 2.16.2 vom 17.11.2026, Web = Android (beide 2.16.2).**
+
+- **Abzeichen:** Ist der Abi-Pass freigeschaltet, steht im Kopf des Startbildschirms „🎓 Abi-Pass aktiv“ (ploppt auf, schimmert, Antippen öffnet die Abi-Pass-Seite) und in den Einstellungen
+  „Abi-Pass aktiv – ✓ Freigeschaltet – alles gehört dir“. Gemeinsamer Code, also in Web und Android gleich. Bildschirmfoto: `screenshots/79_abi_pass_abzeichen.png`.
+  Der Eintrag in den Einstellungen erscheint jetzt auch dann, wenn ein gültiger Code gespeichert, die Kasse aber noch nicht eingetragen ist.
+- **Laufzeit des KI-Tutors: noch nicht im Abzeichen.** Es gibt weder den KI-Tutor noch eine Laufzeit im Freischalt-Code (Inhalt: Version, App, Produkt, Nummer, Ausstellungstag).
+  Sobald ihr festlegt, woher die Laufzeit kommt (z. B. „12 Monate ab Ausstellungstag“ oder eigenes Feld im Code), ergänze ich sie im Abzeichen und in den Einstellungen.
+- **Datenschutzerklärung:** Vorschlag für den App-Abschnitt (lokaler Spielstand, Updates, freiwilliger Stimm-Download von `stimmen.mathenachhilfe-online.com`, Server-Protokolle)
+  liegt in `raumlicht/store/datenschutz-abschnitt.md`. Die Website habe ich nicht angefasst; Speicherdauer/Rechtsgrundlage der Protokolle müsst ihr eintragen. Keine Rechtsberatung.
+- Antwort zu espeak-ng (a): steht weiter unten in dieser Datei (17.11.) – kurz: **nein, nirgends enthalten.**
+- Geprüft: alle Tests, Lint beider Fassungen, WebApp im Browser. Nicht auf einem echten Gerät geprüft.
+
 ## 17.11.2026 – Raumlicht 2.16.1: Android lädt jetzt eure fertige sherpa-Datei
 
 Marcel hat direkt bestätigt („Stell es um“). **Raumlicht 2.16.1 vom 17.11.2026, Web = Android (beide 2.16.1).**

@@ -34,7 +34,7 @@ fun SettingsScreen(
     licenses = androidx.compose.ui.platform.LocalContext.current.let { ctx -> remember { runCatching { ctx.assets.open("lizenzen.txt").bufferedReader().use { it.readText() } }.getOrNull() } },
     privacy = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. Ins Internet geht die App nur, " +
         (if (BuildConfig.SELF_UPDATE) "um nach Updates zu schauen (abschaltbar)" else "wenn der Play Store nach Updates schaut") +
-        " – und einmalig, wenn du die natürliche Stimme lädst. Gesprochen wird immer auf dem Gerät.")
+        " – und einmalig, wenn du die natürliche Stimme lädst (von unserem eigenen Server stimmen.mathenachhilfe-online.com). Gesprochen wird immer auf dem Gerät.")
 
 /** Stimme aussuchen: durch die deutschen Stimmen des Geräts schalten (jede stellt sich vor) und die Stimmlage wählen. */
 @Composable

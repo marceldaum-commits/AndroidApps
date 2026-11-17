@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.16.2 – Abzeichen „Abi-Pass aktiv“ (17.11.2026)
+- **Abi-Pass auf einen Blick:** Ist der Abi-Pass freigeschaltet, leuchtet auf dem Startbildschirm das Abzeichen „🎓 Abi-Pass aktiv“ – und in den Einstellungen steht es ebenfalls. Antippen zeigt, was alles dazugehört. (Den Abi-Pass gibt es noch nicht zu kaufen; bis dahin bleibt alles frei.)
+- **Für Eltern:** In den Einstellungen steht jetzt ausdrücklich, dass die natürliche Stimme von unserem eigenen Server geladen wird.
+
 ## 2.16.1 – Eine Stimm-Datei für alle Apps (17.11.2026)
 - **Android:** Die natürliche Stimme „Thorsten“ kommt weiterhin von unserem eigenen Server – jetzt als fertig aufbereitete Datei, die alle unsere Apps gemeinsam benutzen. Für dich ändert sich nichts; wer die Stimme schon geladen hat, behält sie.
 - Beim Laden der Stimme geht nichts an fremde Server, und beim Vorlesen verlässt kein Text dein Gerät.

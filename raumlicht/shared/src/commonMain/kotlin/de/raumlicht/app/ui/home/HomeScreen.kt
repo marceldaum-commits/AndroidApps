@@ -81,6 +81,7 @@ fun HomeScreen(
                     Column(Modifier.weight(1f)) {
                         Text("RAUMLICHT", fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 4.sp, color = Q.Text)
                         Text("★ $total / $max", color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        de.raumlicht.app.ui.settings.ProBadge(Modifier.padding(top = 6.dp))
                     }
                     IconButton(onClick = onSettings) { Text("⚙", Modifier.clearAndSetSemantics { contentDescription = "Einstellungen" }, fontSize = 22.sp, color = Q.Text) }
                 }

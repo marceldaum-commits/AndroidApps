@@ -34,7 +34,7 @@ fun SettingsPage(
     licenses: String? = null, onLicenses: (() -> Unit)? = null,
     /** Was die App speichert und wann sie ins Internet geht – je Plattform verschieden */
     privacy: String = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
-        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und einmalig, wenn du die natürliche Stimme lädst. Gesprochen wird immer auf dem Gerät.",
+        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und einmalig, wenn du die natürliche Stimme lädst (von unserem eigenen Server). Gesprochen wird immer auf dem Gerät.",
 ) {
     val speaker = de.raumlicht.app.ui.fx.LocalSpeaker.current
     val sfx = de.raumlicht.app.ui.fx.LocalSfx.current
