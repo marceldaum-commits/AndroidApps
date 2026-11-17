@@ -39,6 +39,9 @@ class AndroidReader(context: Context) : Reader {
 
     override fun setPrivate(words: Set<String>) { private = words }
 
+    @Volatile private var speed = 1f
+    override fun setSpeed(speed: Float) { this.speed = speed.coerceIn(0.5f, 2f); if (ttsReady) tts.setSpeechRate(1.1f * this.speed) }
+
     override fun say(text: String) {
         val spoken = Speech.clean(text); if (spoken.isEmpty()) return
         val mine = turn.incrementAndGet()
@@ -97,7 +100,10 @@ class AndroidReader(context: Context) : Reader {
         p.setDataSource(f.path)
         p.setOnCompletionListener { if (mine == turn.get()) speaking = false; it.release(); if (player === it) player = null }
         p.setOnErrorListener { mp, _, _ -> if (mine == turn.get()) speaking = false; mp.release(); if (player === mp) player = null; true }
-        p.prepare(); p.start()
+        p.prepare()
+        // Sprechtempo bei gleicher Tonhöhe
+        if (speed != 1f) p.playbackParams = p.playbackParams.setSpeed(speed).setPitch(1f)
+        p.start()
         player = p; speaking = true
     }.isSuccess
 
@@ -116,7 +122,7 @@ class AndroidReader(context: Context) : Reader {
         // nur Stimmen, die auf dem Gerät rechnen – es geht kein Text ins Netz
         runCatching { tts.voices.orEmpty().filter { it.locale.language == "de" && !it.isNetworkConnectionRequired && "notInstalled" !in it.features.orEmpty() }
             .maxByOrNull { it.quality }?.let { tts.voice = it } }
-        tts.setPitch(1.08f); tts.setSpeechRate(1.1f)
+        tts.setPitch(1.08f); tts.setSpeechRate(1.1f * speed)
         tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
             override fun onStart(id: String?) { main.post { speaking = true } }
             override fun onDone(id: String?) { main.post { speaking = false } }

@@ -40,6 +40,7 @@ fun SettingsScreen(
     onPro: (() -> Unit)? = null,
     voltVoice: Boolean = true, onVoltVoice: (Boolean) -> Unit = {},
     readAloud: Boolean = true, onReadAloud: (Boolean) -> Unit = {},
+    readSpeed: Int = 100, onReadSpeed: (Int) -> Unit = {},
 ) {
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -61,7 +62,7 @@ fun SettingsScreen(
                     if (!readAloud) Toggle("🤖 Volt-Stimme", "Volt plappert in Roboter-Sprache, wenn er spricht", voltVoice, onVoltVoice)
                 }
             }
-            ReadAloudCard(readAloud, onReadAloud)
+            ReadAloudCard(readAloud, onReadAloud, readSpeed, onReadSpeed)
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -124,7 +125,7 @@ private fun ProCard(state: de.kurvenflug.app.ProState, onPro: () -> Unit) {
  * Datenschutz-Text, den der Leitstand vorgegeben hat.
  */
 @Composable
-private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit) {
+private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit, speed: Int, onSpeed: (Int) -> Unit) {
     val reader = de.kurvenflug.app.ui.fx.LocalReader.current
     ElevatedCard(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
@@ -135,6 +136,15 @@ private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit) {
                 Text("Stimme:", style = MaterialTheme.typography.labelLarge)
                 Text("✨ ${de.kurvenflug.core.model.Nova.LABEL}", style = MaterialTheme.typography.labelLarge, color = Q.Cyan,
                     modifier = Modifier.clip(RoundedCornerShape(50)).background(Q.Cyan.copy(alpha = 0.12f)).padding(horizontal = 10.dp, vertical = 4.dp))
+            }
+            // Sprechtempo in festen Stufen (gemerkt); 1,0 = das gewählte Server-Tempo
+            val steps = de.kurvenflug.core.model.Nova.SPEEDS
+            val idx = steps.indexOf(speed).coerceAtLeast(0)
+            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 8.dp)) {
+                Text("Sprechtempo ${de.kurvenflug.core.model.Nova.speedLabel(speed)}",
+                    style = MaterialTheme.typography.bodySmall, color = Q.Muted, modifier = Modifier.width(120.dp), maxLines = 1)
+                Slider(value = idx.toFloat(), onValueChange = { onSpeed(steps[it.toInt().coerceIn(0, steps.lastIndex)]) },
+                    valueRange = 0f..steps.lastIndex.toFloat(), steps = steps.size - 2, modifier = Modifier.weight(1f))
             }
             if (reader != null) OutlinedButton(onClick = { reader.say(de.kurvenflug.app.ui.fx.Reader.PROBE) }) { Text("▶ Probe hören") }
             Text("🔒 $NOVA_PRIVACY", style = MaterialTheme.typography.bodySmall, color = Q.Muted)

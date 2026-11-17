@@ -45,6 +45,10 @@ class Settings(private val prefs: Prefs) {
     /** Volt liest Sprechblasen, Aufträge, Rechen-Stern-Fragen und Erklärungen vor */
     val readAloud: StateFlow<Boolean> = _readAloud.asStateFlow()
     fun setReadAloud(v: Boolean) { prefs.edit().putBoolean("readAloud", v).apply(); _readAloud.value = v }
+    private val _readSpeed = MutableStateFlow(prefs.getInt("readSpeed", 100))
+    /** Sprechtempo in Prozent, eine der Stufen aus [de.kurvenflug.core.model.Nova.SPEEDS] (100 = Server-Tempo) */
+    val readSpeed: StateFlow<Int> = _readSpeed.asStateFlow()
+    fun setReadSpeed(v: Int) { val c = de.kurvenflug.core.model.Nova.nearestSpeed(v); prefs.edit().putInt("readSpeed", c).apply(); _readSpeed.value = c }
 
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)

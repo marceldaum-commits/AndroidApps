@@ -110,6 +110,8 @@ fun KurvenflugRoot(
     val readAloud by vm.settings.readAloud.collectAsStateWithLifecycle()
     val reader = platform.reader
     LaunchedEffect(readAloud) { if (!readAloud) reader?.stop() }
+    val readSpeed by vm.settings.readSpeed.collectAsStateWithLifecycle()
+    LaunchedEffect(readSpeed) { reader?.setSpeed(readSpeed / 100f) }
     // Spielernamen gehen nie an den Stimmen-Server
     val profiles by vm.settings.profiles.collectAsStateWithLifecycle()
     LaunchedEffect(profiles) { reader?.setPrivate(profiles.map { it.name }.toSet()) }
@@ -480,6 +482,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 onPro = if (platform.proShop != null) ({ nav.goOnce(Routes.PRO) }) else null,
                 voltVoice = vm.settings.voltVoice.collectAsStateWithLifecycle().value, onVoltVoice = vm.settings::setVoltVoice,
                 readAloud = vm.settings.readAloud.collectAsStateWithLifecycle().value, onReadAloud = vm.settings::setReadAloud,
+                readSpeed = vm.settings.readSpeed.collectAsStateWithLifecycle().value, onReadSpeed = vm.settings::setReadSpeed,
             )
         }
     }

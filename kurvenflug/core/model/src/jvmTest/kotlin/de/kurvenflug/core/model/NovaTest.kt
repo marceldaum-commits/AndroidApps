@@ -45,4 +45,9 @@ class NovaTest {
         // Prüfwert aus dem Test gegen den echten Server (17.11.)
         assertEquals("acddd8626f25b43663f8efcd3fe60a1f", Nova.hash("Schon 24 Sterne gesammelt. Weiter so, Commander!"))
     }
+
+    @Test fun speeds() {
+        assertEquals(listOf("0,75", "0,9", "1,0", "1,15", "1,3", "1,5"), Nova.SPEEDS.map(Nova::speedLabel))
+        assertEquals(100, Nova.nearestSpeed(104)); assertEquals(150, Nova.nearestSpeed(400))
+    }
 }

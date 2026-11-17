@@ -12,6 +12,11 @@ object Nova {
     /** Laufzeit-Texte vertonen lassen: POST {"text", "sprache"} → 200 {"url"} oder 204 (dann Gerätestimme) */
     const val LIVE = "https://$HOST/jetzt"
     const val MAX_LIVE = 300
+    /** Stufen für „Sprechtempo“ in Prozent (Vorgabe Leitstand); 100 = das Server-Tempo, das Marcel gewählt hat */
+    val SPEEDS = listOf(75, 90, 100, 115, 130, 150)
+    fun nearestSpeed(percent: Int) = SPEEDS.minBy { kotlin.math.abs(it - percent) }
+    /** „0,75“ … „1,5“ für die Anzeige */
+    fun speedLabel(percent: Int): String { val p = nearestSpeed(percent); val s = "${p / 100},${(p % 100).toString().padStart(2, '0')}".removeSuffix("0"); return if (s.endsWith(",")) s + "0" else s }
 
     /**
      * Darf dieser (vorlesefertige) Text zum Vertonen an unseren Server? Nur kurz genug und ohne Spielernamen –
