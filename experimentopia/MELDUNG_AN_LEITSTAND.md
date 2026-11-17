@@ -6,7 +6,7 @@ Neueste oben.
 
 **1) Aufgaben geprüft: 200 von 200 Versuchen** (je Rätsel, Vermutung mit Auswahl, Laboraufbau, Auftrag, Auflösung, Begründungen, Merksatz, Knobelfrage) –
 automatisch ausgelesen, von vier Prüfdurchgängen fachlich und sprachlich gelesen (mit Nachrechnen), dazu die bestehenden Modelltests (Antworten werden aus
-Physik-/Chemie-/Bio-Modellen berechnet). Keine Zufallsaufgaben in dieser App. **Geändert: 72 Stellen in 61 Versuchen**:
+Physik-/Chemie-/Bio-Modellen berechnet). Keine Zufallsaufgaben in dieser App. **Geändert: 72 Stellen in 60 Versuchen**:
 - Fehlende Angaben ergänzt: k1 (Papa auf Feld 1), k9/k17 (ohne Reibung), k12 (Wippe hat 5 Felder), h4 (Wasser, gesuchte Größe), h9 (Vergleich zu 100 g Eis),
   h12 (Masse/Wassertemperatur), h13 (0 → 100 °C), c26 (100 mL → 2 L), p4 (verglichen mit 10 cm), e8 (37 °C, 20 min), m2 (welche Farben), f16 (eine Schwingung), w9 (im Wasser).
 - Unklare Bezüge/Fragen: h10, e7, n7 (3×), f6, f9, u2, u5, c8, c25, c19 (Volumen), k4, k13 („statt …“), f4 (praktisch gleichzeitig), t6, s18, h13.
