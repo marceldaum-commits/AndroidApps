@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.16.1 – Eine Stimm-Datei für alle Apps (17.11.2026)
+- **Android:** Die natürliche Stimme „Thorsten“ kommt weiterhin von unserem eigenen Server – jetzt als fertig aufbereitete Datei, die alle unsere Apps gemeinsam benutzen. Für dich ändert sich nichts; wer die Stimme schon geladen hat, behält sie.
+- Beim Laden der Stimme geht nichts an fremde Server, und beim Vorlesen verlässt kein Text dein Gerät.
+
 ## 2.16.0 – Thorsten spricht jetzt auch in der WebApp (17.11.2026)
 - **WebApp:** Die natürliche Stimme „Thorsten“ gibt es jetzt auch im Browser – dieselbe wie in der Android-App. In den Einstellungen unter „Lux spricht“: „Stimme laden (63 MB)“, am besten im WLAN.
   Sie kommt einmalig von unserem eigenen Server, wird geprüft und bleibt im Browser gespeichert; danach rechnet sie auf deinem Gerät, auch ohne Internet. Vorgelesene Texte verlassen dein Gerät nie.

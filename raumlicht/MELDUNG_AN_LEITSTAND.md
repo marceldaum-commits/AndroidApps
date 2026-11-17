@@ -2,6 +2,18 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.16.1: Android lädt jetzt eure fertige sherpa-Datei
+
+Marcel hat direkt bestätigt („Stell es um“). **Raumlicht 2.16.1 vom 17.11.2026, Web = Android (beide 2.16.1).**
+
+- **Android** lädt die Stimme jetzt von `https://stimmen.mathenachhilfe-online.com/thorsten/sherpa/de_DE-thorsten-medium.onnx` und hängt nichts mehr selbst an.
+  Geprüft wird weiter gegen 63 201 421 Byte und SHA-256 `1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6`. Vor der Umstellung heruntergeladen und verglichen:
+  eure Datei ist Byte für Byte dieselbe, die Raumlicht bisher selbst zusammengesetzt hat; `sherpa/tokens.txt` ist gleich der Datei im Paket. Wer die Stimme schon hat, lädt nichts neu.
+- **WebApp** bleibt bei der ursprünglichen Piper-Datei unter `/thorsten/` (ONNX Runtime Web braucht die Angaben nicht).
+- **Bitte beide Dateien unverändert liegen lassen** – die Apps prüfen Größe und Prüfsumme; eine geänderte Datei wird abgelehnt (dann bleibt die Geräte-Stimme).
+- `VORLESEN_FUER_ANDERE_APPS.md` ist angepasst (Abschnitt Stimm-Datei: beide Pfade, Größen, Prüfsummen).
+- Geprüft: 153 + 143 Tests, Lint beider Fassungen, WebApp im Browser (Start, Offline, Update). Nicht auf einem echten Gerät geprüft.
+
 ## 17.11.2026 – Antwort auf eure Frage zu espeak-ng (GPL) in Raumlicht
 
 **(a) Nein – weder in der Android-App noch in der WebApp ist espeak-ng enthalten, und `espeak-ng-data` wird nirgends geladen.** Stand: Raumlicht 2.16.0 vom 17.11.2026. Heute am Paket nachgeprüft, nicht nur am Quelltext:
