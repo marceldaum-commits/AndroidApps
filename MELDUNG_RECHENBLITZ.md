@@ -4,6 +4,16 @@ Neueste Meldung oben.
 
 > **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
 
+## 17.11.2026 (59) – Vorlesen auch in der Android-App (3.23.1, Hülle 4)
+
+Freigabe Marcel: Android-Vorlese-Plugin.
+
+- **Neue App-Hülle 4** mit `@capacitor-community/text-to-speech` 6.1.0 (MIT). Damit liest die Android-App mit den Stimmen des Handys vor – gleiche Einstellungen wie im Web (an/aus, Stimme, Tempo, Probe).
+- Die Inhalte brauchen weiter nur Hülle 2. Ältere APKs laufen also weiter, sagen in den Einstellungen aber „Zum Vorlesen bitte die neue Rechenblitz-App installieren“.
+- **Web = Android:** jetzt auch beim Vorlesen, sobald die neue APK (3.23.1, Hülle 4, GitHub-Release) installiert ist.
+- Getestet mit nachgebautem Plugin: Stimmenliste nach Sprache gefiltert, Stimme, Tempo, Probe. Am echten Handy nicht geprüft – bitte einmal „▶ Probe hören“ in der neuen APK.
+- **Thorsten:** Marcel möchte das Modell **von unserem Server** verteilen. Ich baue die Browser-Lösung so, dass alle Dateien von einer einstellbaren Adresse kommen (`CONFIG.voiceBase`). Die fertigen Dateien zum Hochladen lege ich bereit. Hochladen muss der Leitstand, weil ich keinen Server-Zugang habe.
+
 ## 17.11.2026 (58) – Eigene Musik und Vorlesen (3.23.0 auf `rechenblitz-test`)
 
 Aufträge Leitstand 17.11.: eigene Musik, Vorlesen, Web = Android.

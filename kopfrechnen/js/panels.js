@@ -102,7 +102,7 @@ const PANELS = {
       ${sw('speech', S.settings.speech, 'Vorlesen', 'Aufgaben, Lösungswege, Theorie und Blitz')}
       ${Voice.available() ? `<div class="setrow col voicebox"><label class="vrow"><b>Stimme</b><select id="voiceSel"><option value="">Automatisch</option></select></label>
         <label class="vrow"><b>Tempo</b><input type="range" id="rateIn" min="0.6" max="1.5" step="0.1" value="${S.settings.rate ?? 1}"><span id="rateOut" translate="no">${(S.settings.rate ?? 1).toFixed(1)}×</span></label>
-        <button class="btn" id="voiceTest">▶ Probe hören</button></div>` : '<p class="small muted setnote">Auf diesem Gerät gibt es keine Vorlese-Stimme.</p>'}
+        <button class="btn" id="voiceTest">▶ Probe hören</button></div>` : (IS_NATIVE ? '<p class="small muted setnote">Zum Vorlesen bitte die neue Rechenblitz-App installieren.</p>' : '<p class="small muted setnote">Auf diesem Gerät gibt es keine Vorlese-Stimme.</p>')}
       ${sw('auto', S.settings.auto, 'Automatisch prüfen', 'Prüfen, sobald genug Stellen eingegeben sind')}
       ${sw('blitz', S.settings.blitz !== false, 'Maskottchen Blitz', 'Blitz der Fuchs feuert dich an und erklärt Tricks')}
       ${Reminder.supported() || isIOS() ? reminderHtml() : ''}

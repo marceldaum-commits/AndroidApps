@@ -2368,4 +2368,6 @@ I18N.add('uk', {"% sind":"% — це",
 "Neu: eigene Rechenblitz-Musik 🎵 – vier selbst komponierte Stücke für Menü, Spiel, Blitzrunde und Dungeon":"Нове: власна музика Rechenblitz 🎵 – чотири власні композиції для меню, гри, бліц-раунду та підземелля",
 "Neue Klänge für richtig, Serie, Sterne, Stufe geschafft, Garten und Reise – falsch klingt jetzt freundlich":"Нові звуки для правильних відповідей, серій, зірок, нового рівня, саду й подорожі – помилка тепер звучить дружньо",
 "Musik und Effekte einzeln ein- und ausschalten, mit eigener Lautstärke":"Музику й ефекти можна вмикати окремо, кожне зі своєю гучністю",
-"Vorlesen: Aufgaben, Lösungswege, Theorie und Blitz – Stimme und Tempo wählbar, mit Probe":"Читання вголос: завдання, розв’язання, теорія і Бліц – голос і швидкість на вибір, з прикладом"});
+"Vorlesen: Aufgaben, Lösungswege, Theorie und Blitz – Stimme und Tempo wählbar, mit Probe":"Читання вголос: завдання, розв’язання, теорія і Бліц – голос і швидкість на вибір, з прикладом",
+"Zum Vorlesen bitte die neue Rechenblitz-App installieren.":"Щоб читати вголос, встанови нову версію застосунку Rechenblitz.",
+"Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)":"Застосунок Android: читання вголос тепер і тут – голоси телефона, швидкість і приклад (потрібна нова версія застосунку)"});

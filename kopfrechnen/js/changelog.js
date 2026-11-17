@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.23.0';
+const APP_VERSION = '3.23.1';
 const APP_DATE = '2026-11-17';
 const CHANGELOG = [
+  ['3.23.1', '2026-11-17', ['Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)']],
   ['3.23.0', '2026-11-17', ['Neu: eigene Rechenblitz-Musik 🎵 – vier selbst komponierte Stücke für Menü, Spiel, Blitzrunde und Dungeon', 'Neue Klänge für richtig, Serie, Sterne, Stufe geschafft, Garten und Reise – falsch klingt jetzt freundlich', 'Musik und Effekte einzeln ein- und ausschalten, mit eigener Lautstärke', 'Vorlesen: Aufgaben, Lösungswege, Theorie und Blitz – Stimme und Tempo wählbar, mit Probe']],
   ['3.22.0', '2026-11-17', ['Neu: Theorie 📖 zu jeder Übung – die passenden Regeln zu Thema und Stufe, mit Beispiel und Lösungsweg', 'In jeder Aufgabe oben das Buch antippen – die Runde wartet so lange', 'Nach einem Fehler: „Theorie dazu“ direkt unter dem Lösungsweg']],
   ['3.21.1', '2026-11-17', ['Große Korrektheitsprüfung: alle Aufgabenarten und Lösungswege unabhängig nachgerechnet', 'Genauere Lösungswege und Merksätze, z. B. Prozent mit „≙“ und gerundete Brüche mit „≈“', 'Besser lesbar: kräftigere Farben auf orangen Knöpfen, klarere Übersetzungen']],
