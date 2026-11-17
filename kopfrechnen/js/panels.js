@@ -277,14 +277,16 @@ async function thorstenUi() {
   if (S.settings.voice !== 'thorsten') { box.hidden = true; return; }
   box.hidden = false;
   if (Thorsten.st === 'ready') { box.innerHTML = '<p class="small muted">✓ Thorsten ist bereit.</p>'; return; }
-  if (Thorsten.st === 'loading') { box.innerHTML = '<p class="small muted">Stimme wird geladen …</p><div class="bar"><i id="thBar"></i></div>'; return; }
+  const loadingUi = () => { box.innerHTML = '<p class="small muted">Stimme wird geladen …</p><div class="bar"><i id="thBar"></i></div><button class="btn" id="thCancel">Abbrechen</button>'; $('thCancel').onclick = () => Thorsten.cancel(); };
+  if (Thorsten.st === 'loading') { loadingUi(); return; }
   const man = await Thorsten.manifest(), stored = man && await Thorsten.cached();
   if (stored) { box.innerHTML = '<p class="small muted">Stimme wird vorbereitet …</p>'; await Thorsten.load(); thorstenUi(); return; }
+  if (!man) { box.innerHTML = '<p class="small muted">Die Stimme ist gerade nicht erreichbar. Bitte später noch einmal versuchen.</p>'; return; }
   box.innerHTML = `${Thorsten.st === 'error' ? '<p class="small" style="color:var(--bad,#c0392b)">Das Laden hat nicht geklappt. Bitte später noch einmal versuchen.</p>' : ''}
-    <p class="small muted"><span>Die natürliche Stimme wird einmalig von unserem Server geladen und auf diesem Gerät gespeichert.</span> <span translate="no">(${man ? man.mb : 75} MB)</span> <span>Am besten im WLAN. Es werden dabei keine persönlichen Daten übertragen.</span></p>
+    <p class="small muted"><span>Die natürliche Stimme wird einmalig von unserem Server geladen, ca.</span> <span translate="no">${man.mb} MB</span> – <b>am besten im WLAN</b>. <span>Danach ist sie auf diesem Gerät gespeichert und klappt auch ohne Internet. Es werden keine persönlichen Daten übertragen.</span></p>
     <button class="btn primary" id="thLoad">⬇ Stimme laden</button>`;
   $('thLoad').onclick = async () => {
-    box.innerHTML = '<p class="small muted">Stimme wird geladen …</p><div class="bar"><i id="thBar"></i></div>';
+    loadingUi();
     const ok = await Thorsten.load(p => { const b = $('thBar'); if (b) b.style.width = Math.round(p * 100) + '%'; });
     thorstenUi(); if (ok) Voice.say('Hallo, ich bin Blitz!', { force: true });
   };

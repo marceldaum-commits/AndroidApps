@@ -4,7 +4,8 @@
    derselbe Code im Web und in der Android-App. Ohne espeak-ng: Die Lautschrift steckt in einem vorab erzeugten Wörterbuch
    (tools/stimme/lautschrift.py); Zahlen werden aus Bausteinen zusammengesetzt. Kommt in einem Satz ein unbekanntes Wort vor,
    liest die Gerätestimme diesen Satz.
-   Alle Dateien liegen auf unserem Server (CONFIG.voiceBase) und werden erst geladen, wenn jemand „Thorsten“ wählt. */
+   Rechenwerk und Wörterbuch liegen auf unserer Web-Seite (/stimme/), das Stimm-Modell auf unserem Stimmen-Server (CONFIG.voice).
+   Geladen wird erst, wenn jemand „Thorsten“ wählt und auf „Stimme laden“ tippt; danach liegt alles im Gerätespeicher (auch offline). */
 
 // ---------- Zahlen als Wörter (dieselbe Funktion erzeugt die Liste fürs Wörterbuch) ----------
 const NW_ONES = ['null', 'eins', 'zwei', 'drei', 'vier', 'fünf', 'sechs', 'sieben', 'acht', 'neun', 'zehn', 'elf', 'zwölf', 'dreizehn', 'vierzehn', 'fünfzehn', 'sechzehn', 'siebzehn', 'achtzehn', 'neunzehn'];
@@ -49,49 +50,75 @@ function thorstenNormalize(s) {
 }
 
 const Thorsten = {
-  st: 'off', pct: 0, dict: null, ids: null, session: null, man: null, tok: 0, src: [],
-  base: () => (CONFIG.voiceBase || '').replace(/\/?$/, '/'),
-  can: () => !!CONFIG.voiceBase && I18N.lang === 'de' && typeof WebAssembly === 'object',
-  // gibt es die Stimme auf dem Server? (kleine Datei stimme.json, wird nur in den Einstellungen abgefragt)
+  st: 'off', pct: 0, dict: null, session: null, man: null, tok: 0, src: [], ctl: null,
+  // Rechenwerk + Wörterbuch: von unserer Web-Seite (/stimme/); Stimm-Modell: vom gemeinsamen Stimmen-Server
+  cfg: () => CONFIG.voice || {},
+  base: () => (Thorsten.cfg().runtime || '').replace(/\/?$/, '/'),
+  can: () => !!(Thorsten.cfg().runtime && Thorsten.cfg().model) && I18N.lang === 'de' && typeof WebAssembly === 'object',
+  // In der Android-App normales fetch (am Capacitor-HTTP-Umweg vorbei): 63 MB nicht über die Brücke schicken
+  get: (url, o) => (window.CapacitorWebFetch || fetch)(url, o),
+  // Ist die Stimme erreichbar (oder schon gespeichert)? Wird nur in den Einstellungen bzw. bei gewählter Stimme gefragt.
   async manifest() {
     if (this.man !== null) return this.man;
     if (!this.can()) return (this.man = false);
-    const url = this.base() + 'stimme.json'; let c = null; try { c = await caches.open('rb-stimme'); } catch {}
-    try { const r = await fetch(url, { cache: 'no-cache' }); this.man = r.ok ? await r.clone().json() : false; if (r.ok && c) c.put(url, r).catch(() => {}); }
-    catch { try { const hit = c && await c.match(url); this.man = hit ? await hit.json() : false; } catch { this.man = false; } }   // offline: gespeicherte Angaben
+    const C = this.cfg(), info = { mb: C.mb || 75 };
+    if (await this.cached()) return (this.man = info);
+    try { const r = await this.get(C.model + '.json', { cache: 'no-cache' }); this.man = r.ok ? info : false; } catch { this.man = false; }
     return this.man;
   },
-  async cached() { try { const c = await caches.open('rb-stimme'); return !!(await c.match(this.base() + this.man.model)); } catch { return false; } },
-  async fetchCached(url, onProg) {
+  async cached() { try { const c = await caches.open('rb-stimme'); return !!(await c.match(this.cfg().model)); } catch { return false; } },
+  async fetchCached(url, onProg, sha) {
     let c = null; try { c = await caches.open('rb-stimme'); const hit = await c.match(url); if (hit) return hit.arrayBuffer(); } catch {}
-    const r = await fetch(url); if (!r.ok) throw new Error('HTTP ' + r.status);
+    const r = await this.get(url, { signal: this.ctl?.signal }); if (!r.ok) throw new Error('HTTP ' + r.status);
     const total = +r.headers.get('content-length') || 0, rd = r.body.getReader(), parts = []; let got = 0;
     for (;;) { const { done, value } = await rd.read(); if (done) break; parts.push(value); got += value.length; if (onProg && total) onProg(got / total); }
-    const blob = new Blob(parts); if (c) { try { await c.put(url, new Response(blob)); } catch {} }
-    return blob.arrayBuffer();
+    const blob = new Blob(parts), buf = await blob.arrayBuffer();
+    if (sha && crypto.subtle) {   // Prüfsumme: nur die echte Thorsten-Datei wird benutzt und gespeichert
+      const h = [...new Uint8Array(await crypto.subtle.digest('SHA-256', buf))].map(b => b.toString(16).padStart(2, '0')).join('');
+      if (h !== sha) throw new Error('Prüfsumme');
+    }
+    if (c) { try { await c.put(url, new Response(blob)); } catch {} }
+    return buf;
   },
   loadScript: src => new Promise((ok, no) => { if (window.ort) return ok(); const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => no(new Error('ort')); document.head.appendChild(s); }),
+  cancel() { if (this.ctl) this.ctl.abort(); },
   async load(onProg = () => {}) {
     if (this.st === 'ready') return true;
     if (this.loading) return this.loading;
     this.loading = (async () => {
       try {
-        this.st = 'loading'; const m = await this.manifest(); if (!m) throw new Error('keine Stimme');
-        const B = this.base();
-        // auch das Rechenwerk kommt aus dem Gerätespeicher (offline, kein zweiter Download)
-        const blobUrl = async (f, type) => URL.createObjectURL(new Blob([await this.fetchCached(B + f)], { type }));
-        const [js, mjs, wasm] = await Promise.all([blobUrl(m.ort, 'text/javascript'), blobUrl('ort-wasm-simd-threaded.mjs', 'text/javascript'), blobUrl('ort-wasm-simd-threaded.wasm', 'application/wasm')]);
+        this.st = 'loading'; this.ctl = new AbortController(); const C = this.cfg(), B = this.base();
+        if (!(await this.manifest())) throw new Error('keine Stimme');
+        // Fortschritt: Modell zählt 85 %, Rechenwerk 15 %
+        let pm = 0, pw = 0; const prog = () => { this.pct = .85 * pm + .15 * pw; onProg(this.pct); };
+        const blobUrl = async (f, type, p) => URL.createObjectURL(new Blob([await this.fetchCached(B + f, p)], { type }));
+        const [js, mjs, wasm, dict, cfgBuf, model] = await Promise.all([
+          blobUrl('ort.wasm.min.js', 'text/javascript'), blobUrl('ort-wasm-simd-threaded.mjs', 'text/javascript'),
+          blobUrl('ort-wasm-simd-threaded.wasm', 'application/wasm', p => { pw = p; prog(); }),
+          this.fetchCached(B + 'stimme-de.json'), this.fetchCached(C.model + '.json'),
+          this.fetchCached(C.model, p => { pm = p; prog(); }, C.sha256)]);
+        const dec = b => JSON.parse(new TextDecoder().decode(b)), mc = dec(cfgBuf);
+        this.dict = dec(dict).w;
+        this.idmap = Object.fromEntries(Object.entries(mc.phoneme_id_map).map(([k, v]) => [k, v[0]]));   // Laute → IDs dieses Modells
+        this.scales = [mc.inference?.noise_scale ?? .667, mc.inference?.noise_w ?? .8];
+        this.rate0 = mc.audio?.sample_rate || 22050;
         await this.loadScript(js);
         ort.env.wasm.wasmPaths = { mjs, wasm }; ort.env.wasm.numThreads = 1;
-        const [dict, model] = await Promise.all([this.fetchCached(B + m.dict).then(b => JSON.parse(new TextDecoder().decode(b))), this.fetchCached(B + m.model, p => { this.pct = p; onProg(p); })]);
-        this.dict = dict.w; this.idmap = dict.ids; this.scales = dict.scales;
         this.session = await ort.InferenceSession.create(new Uint8Array(model), { executionProviders: ['wasm'] });
+        this.cache = {};
         this.st = 'ready'; return true;
-      } catch (e) { this.st = 'error'; this.err = String(e.message || e); return false; } finally { this.loading = null; }
+      } catch (e) { this.st = e.name === 'AbortError' ? 'off' : 'error'; this.err = String(e.message || e); return false; } finally { this.loading = null; this.ctl = null; }
     })();
     return this.loading;
   },
-  word(w) { if (!w) return []; const d = this.dict; return d[w] ?? d[w.toLowerCase()] ?? d[w[0].toUpperCase() + w.slice(1).toLowerCase()]; },
+  // Laut-Liste eines Wortes → IDs (fehlt ein Doppellaut wie „aɪ“ im Modell, werden seine Zeichen einzeln genommen)
+  phonIds(str) {
+    if (this.cache[str]) return this.cache[str];
+    const M = this.idmap, out = [];
+    for (const p of str.split('|')) { if (M[p] !== undefined) out.push(M[p]); else for (const ch of p) if (M[ch] !== undefined) out.push(M[ch]); }
+    return (this.cache[str] = out);
+  },
+  word(w) { if (!w) return []; const d = this.dict, p = d[w] ?? d[w.toLowerCase()] ?? d[w[0].toUpperCase() + w.slice(1).toLowerCase()]; return p === undefined ? undefined : this.phonIds(p); },
   // Satz → Phonem-IDs (Piper: BOS, PAD, je Laut + PAD, EOS); null, wenn ein Wort fehlt
   sentenceIds(text) {
     const M = this.idmap, out = [M['^'], M._];
@@ -122,7 +149,7 @@ const Thorsten = {
   plan(text) { return text.split(/(?<=[.!?])\s+/).filter(x => x.trim()).map(s => this.sentenceIds(s)); },
   stop() { this.tok++; this.src.forEach(s => { try { s.stop(); } catch {} }); this.src = []; this.endAt = 0; },
   // beim Start still nachladen, wenn die Stimme schon auf dem Gerät gespeichert ist
-  async warm() { if (this.st !== 'off' || !(await this.manifest()) || !(await this.cached())) return; this.load(); },
+  async warm() { if (this.st !== 'off' || !this.can() || !(await this.cached())) return; this.load(); },
   async speak(text, rate = 1, queue = false) {
     const plan = this.plan(text); if (plan.some(p => p === null)) return false;
     if (!queue) this.stop(); const tok = this.tok; Sound.init(); const c = Sound.ctx; if (!c) return false;
@@ -130,7 +157,7 @@ const Thorsten = {
     for (const ids of plan) {
       if (!ids.length) continue;
       const pcm = await this.synth(ids, rate); if (tok !== this.tok) return true;
-      const buf = c.createBuffer(1, pcm.length, 22050); buf.copyToChannel(pcm, 0);
+      const buf = c.createBuffer(1, pcm.length, this.rate0); buf.copyToChannel(pcm, 0);
       const s = c.createBufferSource(), g = c.createGain(); g.gain.value = 1.4; s.buffer = buf; s.connect(g).connect(c.destination);
       at = Math.max(at, c.currentTime + .02); s.start(at); at += buf.duration + .12; this.endAt = at; this.src.push(s);
       s.onended = () => { this.src = this.src.filter(x => x !== s); };

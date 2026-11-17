@@ -2,7 +2,51 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.0 – Stimme „Thorsten“ fertig; Ordner `stimme/` bitte auf den Server (Meldung 60).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (61) – Antwort auf die Entscheidungen des Leitstands: Thorsten vom Stimmen-Server, Lizenzen, Live-Freigabe
+
+**1. Android-TTS-Plugin:** erledigt.
+- Hülle 4 mit `@capacitor-community/text-to-speech` 6.1.0 ist gebaut (GitHub-Lauf: „Found 2 Capacitor plugins … text-to-speech@6.1.0“).
+- APK seit 3.23.1. **Web = Android** jetzt auch beim Vorlesen.
+
+**2./3. onnxruntime-web und Download:** umgesetzt.
+- Hinweis vorher: „ca. 75 MB – am besten im WLAN“.
+- Ladebalken mit **Abbrechen-Knopf**.
+- Geladen wird nur, wenn jemand Thorsten wählt und „⬇ Stimme laden“ tippt.
+
+**4. Quelle: euer Stimmen-Server.**
+- Das Modell kommt von `https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx` (+ `.onnx.json`). Die App prüft die **SHA-256** gegen euren Wert `7e64762d…7819`; nur dann wird gespeichert.
+- Rechenwerk (onnxruntime-web, 11 MB) und Wörterbuch liegen auf unserer Web-Seite unter `/stimme/`. Sie sind nicht in der APK; die App holt sie bei Bedarf von der Live-Seite. Kein Dritter beteiligt.
+- **Bitte beachten:**
+  - **CORS:** Die Android-App lädt von der Herkunft **`https://localhost`** (Capacitor), nicht von *.mathenachhilfe-online.com. Bitte auf dem Stimmen-Server auch `https://localhost` erlauben (oder `*`). Ich lade bewusst mit dem normalen Browser-fetch statt über die Capacitor-Brücke, damit 63 MB nicht durch den Speicher der Brücke gehen.
+  - **Eure `.onnx.json` ist die der älteren Thorsten-Fassung** (152 statt 166 Laute, ohne Doppellaute; identisch mit der sherpa-onnx-Fassung). Eure `.onnx` passt zu keiner der beiden öffentlichen Dateien, die ich kenne (rhasspy: `fd270eb3…`, sherpa-onnx: `1c305abe…`).
+  - Ich habe die App deshalb so gebaut, dass sie **mit beiden Fassungen** läuft: Das Wörterbuch speichert Laute, die Zuordnung zu Zahlen kommt aus der `.onnx.json` auf dem Server.
+  - Getestet mit beiden öffentlichen Fassungen ✓. Mit eurer exakten Datei konnte ich nicht testen (Server noch nicht erreichbar). Bitte einmal prüfen, ob `.onnx` und `.onnx.json` zusammengehören.
+- Ist der Server nicht erreichbar, bietet die App Thorsten **nicht** an.
+
+**5. Lizenzen – was drin ist:**
+
+| Baustein | Lizenz | Wo |
+|---|---|---|
+| Rechenblitz-Code, Musik (im Code erzeugt), Theorie, Wörterbuch `stimme-de.json` | eigene | App / Web |
+| qrcode-generator (Vorlagen teilen) | MIT | App / Web (wie bisher) |
+| Capacitor 7, @capacitor/local-notifications | MIT | APK (wie bisher) |
+| **@capacitor-community/text-to-speech 6.1.0** | **MIT** | APK (neu, Hülle 4) |
+| **onnxruntime-web 1.20.1** (nur WebAssembly) | **MIT** | Web-Seite `/stimme/`, Lizenztext daneben |
+| **Piper-Stimme Thorsten** | Aufnahmen **CC0** | euer Stimmen-Server |
+
+- **espeak-ng (GPL-3): nicht enthalten** – weder in der App noch als WASM noch auf einem Server. Es wird nur auf dem Entwicklungsrechner benutzt, um das Wörterbuch vorab zu erzeugen (wie bei Raumlicht).
+- In der App: Wörterbuch nachschlagen, Zahlen/Uhrzeit/Geld/Datum aus Bausteinen. **Unbekannte Wörter → dieser Satz mit der Gerätestimme.**
+- Abdeckung: alle 7 311 geprüften Sprechtexte der App ✓.
+
+**6. Live-Freigabe:** **Web = Android steht mit 3.24.1** (Web-Inhalte und APK 3.24.1 mit Hülle 4). Bitte 3.24.1 live nehmen. Sie enthält:
+- die Korrekturen aus 3.21.1,
+- Theorie (3.22.0),
+- Musik und Vorlesen (3.23.x),
+- Thorsten (erscheint erst, wenn der Stimmen-Server läuft).
+
+`rechenblitz-live` habe ich nicht angefasst.
 
 ## 17.11.2026 (60) – Natürliche Stimme „Thorsten“ (3.24.0) – bitte Ordner auf den Server laden
 

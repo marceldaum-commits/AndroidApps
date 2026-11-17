@@ -19,7 +19,7 @@ const files = {};
     const f = path.join(dir, n), rel = path.relative(root, f).split(path.sep).join('/');
     if (n.startsWith('.')) continue;
     if (fs.statSync(f).isDirectory()) walk(f);
-    else if (!SKIP.has(rel)) files[rel] = crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+    else if (!SKIP.has(rel) && !rel.startsWith('stimme/')) files[rel] = crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
   }
 })(root);
 const version = fs.readFileSync(path.join(root, 'js/changelog.js'), 'utf8').match(/APP_VERSION = '([\d.]+)'/)[1];

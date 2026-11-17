@@ -13,7 +13,7 @@ if (IS_NATIVE) {
   // Server-Funktionen (Fehler melden, Gutschein, Klassen) gehen an die Live-Seite – ohne Netz wartet alles im Postausgang
   c.reportEndpoint = abs(c.reportEndpoint);
   c.classApi = abs(c.classApi);
-  c.voiceBase = abs(c.voiceBase);   // Stimme „Thorsten“ kommt auch in der App von unserem Server
+  if (c.voice) c.voice = { ...c.voice, runtime: abs(c.voice.runtime) };   // Stimme „Thorsten“: Rechenwerk in der App von der Live-Seite (nicht in der APK)
   if (c.adventVoucher) c.adventVoucher = { ...c.adventVoucher, endpoint: abs(c.adventVoucher.endpoint) };
   // Erinnerung: in der APK lokal auf dem Gerät geplant (kein Server, kein Internet nötig)
   if (c.push) c.push = { ...c.push, endpoint: 'native' };

@@ -2371,4 +2371,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Vorlesen: Aufgaben, Lösungswege, Theorie und Blitz – Stimme und Tempo wählbar, mit Probe":"Читання вголос: завдання, розв’язання, теорія і Бліц – голос і швидкість на вибір, з прикладом",
 "Zum Vorlesen bitte die neue Rechenblitz-App installieren.":"Щоб читати вголос, встанови нову версію застосунку Rechenblitz.",
 "Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)":"Застосунок Android: читання вголос тепер і тут – голоси телефона, швидкість і приклад (потрібна нова версія застосунку)",
-"Neu: die natürliche Stimme „Thorsten“ zum Vorlesen – einmal laden, dann auch offline":"Нове: природний голос «Thorsten» для читання вголос (лише німецькою) – завантаж один раз, далі працює й офлайн"});
+"Neu: die natürliche Stimme „Thorsten“ zum Vorlesen – einmal laden, dann auch offline":"Нове: природний голос «Thorsten» для читання вголос (лише німецькою) – завантаж один раз, далі працює й офлайн",
+"Stimme „Thorsten“: kommt jetzt von unserem eigenen Stimmen-Server, wird vor dem Speichern geprüft, Laden lässt sich abbrechen":"Голос «Thorsten»: тепер з нашого власного сервера голосів, перевіряється перед збереженням, завантаження можна скасувати"});

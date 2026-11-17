@@ -3,7 +3,9 @@
 
 Die Piper-Stimme braucht Laute statt Buchstaben. Das Umsetzen macht üblicherweise espeak-ng (GPL-3). Damit die App diesen
 Baustein nicht enthält, werden die Laute hier vorab erzeugt und als reine Daten ausgeliefert (wie bei Raumlicht):
-  build/stimme-de.json   { "w": { Wort: [Phonem-IDs] }, "ids": { Zeichen: ID }, "scales": [noise_scale, noise_w] }
+  build/stimme-de.json   { "w": { Wort: "Laute, durch | getrennt" } }
+Die Laute werden erst in der App mit der .onnx.json des Modells auf unserem Server in Zahlen (IDs) übersetzt – so passt das
+Wörterbuch zu jeder Fassung der Thorsten-Stimme (ältere ohne zusammengezogene Doppellaute, neuere mit).
 Aufruf (aus dem Repo-Wurzelordner):
   python3 -m venv /tmp/piper && /tmp/piper/bin/pip install piper-tts==1.8.0
   /tmp/piper/bin/python stimme/lautschrift.py pfad/zu/de_DE-thorsten-medium.onnx.json
@@ -33,15 +35,14 @@ def word_ids(w):
         ph = phonemes(w)
     ph = [p for p in ph if p not in '.,!?;:']
     while ph and ph[-1] == ' ': ph.pop()
-    return [idmap[p] for p in ph if p in idmap]
+    return [p for p in ph if p in idmap or all(c in idmap for c in p)]
 
 words = [w for w in open(os.path.join(HERE, 'build/woerter.txt'), encoding='utf-8').read().split('\n') if w]
 out = {}
 for i, w in enumerate(words):
-    ids = word_ids(w)
-    if ids: out[w] = ids
+    ph = word_ids(w)
+    if ph: out[w] = '|'.join(ph)
     if i % 500 == 0: print(i, '/', len(words), file=sys.stderr)
-inf = cfg['inference']
-json.dump({'w': out, 'ids': idmap, 'scales': [inf['noise_scale'], inf['noise_w']], 'n': len(out)},
+json.dump({'w': out, 'n': len(out), 'v': 2},
           open(os.path.join(HERE, 'build/stimme-de.json'), 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print(len(out), 'Wörter mit Lautschrift')
