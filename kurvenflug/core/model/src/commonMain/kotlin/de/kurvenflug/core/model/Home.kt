@@ -31,7 +31,7 @@ object Station {
 /** Gast-Planet einer Jahreszeit – kommt jedes Jahr wieder. */
 enum class SeasonEvent(val key: String, val title: String, val emoji: String, val planet: String, val sticker: Sticker, val during: String) {
     HALLOWEEN("halloween", "Halloween", "🎃", "Kürbis-Komet", Sticker("s_halloween", "🎃", "Kürbis-Komet", Rarity.EPIC), "zu Halloween"),
-    ADVENT("advent", "Advent", "🎄", "Lichterplanet", Sticker("s_advent", "🎄", "Sternenbaum", Rarity.EPIC), "im Advent"),
+    ADVENT("advent", "Advent", "🎄", "Lichterplanet", Sticker("s_advent", "🎄", "Sternenbaum", Rarity.EPIC), "im Advent und zu Weihnachten"),
     EASTER("ostern", "Ostern", "🐣", "Eierplanet", Sticker("s_ostern", "🐣", "Weltraum-Küken", Rarity.EPIC), "zu Ostern"),
     SUMMER("sommer", "Sommerferien", "🏖️", "Sonnenstrand", Sticker("s_sommer", "🏖️", "Strandplanet", Rarity.EPIC), "in den Sommerferien"),
 }

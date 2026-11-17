@@ -25,6 +25,9 @@ object Understand {
     // ------------------------------------------------------------------ Live-Rechnung
 
     /** Eine Zeile: die Rechnung mit den aktuellen Reglerwerten und was gebraucht wird (null = für diese Bahnart keine). */
+    /** Negative Zahl in Klammern: 2 + (−1,5) · (−3) */
+    private fun pq(x: Double) = if (x < 0) "(${num(x)})" else num(x)
+
     fun live(l: Level, values: Map<String, Double>): String? = runCatching { liveOrNull(l, values) }.getOrNull()
 
     private fun liveOrNull(l: Level, values: Map<String, Double>): String? {
@@ -90,7 +93,7 @@ object Understand {
             Kind.TANGENT -> {
                 val c = Upper.c(v); val x0 = v.getValue("x0"); val y0 = Upper.f(c, x0); val m = v.getValue("m")
                 val y = y0 + m * (t.x - x0)
-                "Tangente bei x = ${num(t.x)}: ${num(y0)} + ${num(m)} · ${num(t.x - x0)} ≈ ${num(y, 1)}  ·  Station: ${num(t.y)} ${mark(y, t.y, t.r)}"
+                "Tangente bei x = ${num(t.x)}: ${num(y0)} + ${pq(m)} · ${pq(t.x - x0)} ≈ ${num(y, 1)}  ·  Station: ${num(t.y)} ${mark(y, t.y, t.r)}"
             }
             Kind.PEAK -> {
                 val c = Upper.c(v); val x = v.getValue("x")
@@ -192,7 +195,7 @@ object Understand {
                 val bs = b.replace("s0", "s₀")
                 when {
                     keys == setOf(b) && fx.getValue(m) == 0.0 ->
-                        make(q, "$bs = ${p(t[0].y)}  (waagrecht: überall gleich hoch)", "$bs = ${p(t[0].x)}", "$bs = ${p(t[0].y)} − ${p(t[0].x)}", l.id)
+                        make(q, "$bs = ${p(t[0].y)}", "$bs = ${p(t[0].x)}", "$bs = ${p(t[0].y)} − ${p(t[0].x)}", l.id)
                     keys == setOf(m) && fx.getValue(b) == 0.0 ->
                         make(q, "$m = ${p(t[0].y)} : ${p(t[0].x)}", "$m = ${p(t[0].x)} : ${p(t[0].y)}", "$m = ${p(t[0].y)} − ${p(t[0].x)}", l.id)
                     keys == setOf(b) -> { val mm = fx.getValue(m)
@@ -207,7 +210,7 @@ object Understand {
             }
             Kind.PARABOLA -> when {
                 keys == setOf("e") && fx.getValue("d") == 0.0 -> { val a = fx.getValue("a")
-                    make(q, "e = ${p(t[0].y)} − ${p(a)} · ${num(t[0].x)}²", "e = ${p(t[0].y)} + ${p(a)} · ${num(t[0].x)}²", "e = ${p(t[0].y)} − ${p(a)} · ${num(t[0].x)}", l.id) }
+                    make(q, "e = ${p(t[0].y)} − ${p(a)} · ${p(t[0].x)}²", "e = ${p(t[0].y)} + ${p(a)} · ${p(t[0].x)}²", "e = ${p(t[0].y)} − ${p(a)} · ${p(t[0].x)}", l.id) }
                 keys == setOf("e") -> { val a = fx.getValue("a"); val d = fx.getValue("d")
                     make(q, "e = ${p(t[0].y)} − ${p(a)} · (${num(t[0].x)} − ${p(d)})²", "e = ${p(t[0].y)} + ${p(a)} · (${num(t[0].x)} − ${p(d)})²",
                         "e = ${p(t[0].y)} − ${p(a)} · (${num(t[0].x)} + ${p(d)})²", l.id) }
@@ -215,8 +218,8 @@ object Understand {
                     val dx = if (d == 0.0) p(t[0].x) else "(${num(t[0].x)} − ${p(d)})"
                     val dy = if (e == 0.0) p(t[0].y) else "(${p(t[0].y)} − ${p(e)})"
                     make(q, "a = $dy : $dx²", "a = $dy : $dx", "a = $dx² : $dy", l.id) }
-                keys == setOf("d") && t.size >= 2 -> make(q, "d = (${p(t[0].x)} + ${p(t[1].x)}) : 2", "d = ${p(t[0].x)} + ${p(t[1].x)}", "d = (${p(t[1].x)} − ${p(t[0].x)}) : 2", l.id)
-                keys == setOf("d", "e") && l.given != null -> make("Wie findest du den Scheitel?", "d = −p : 2, dann e ausrechnen", "d = p : 2, dann e ausrechnen", "d = −p, dann e ausrechnen", l.id)
+                keys == setOf("d") && t.size >= 2 && t[0].y == t[1].y -> make(q, "d = (${p(t[0].x)} + ${p(t[1].x)}) : 2", "d = ${p(t[0].x)} + ${p(t[1].x)}", "d = (${p(t[1].x)} − ${p(t[0].x)}) : 2", l.id)
+                keys == setOf("d", "e") && l.given != null -> make("Wie findest du den Scheitel?", "a ausklammern, dann d = −p : 2 und e ausrechnen", "a ausklammern, dann d = p : 2 und e ausrechnen", "a ausklammern, dann d = −p und e ausrechnen", l.id)
                 keys == setOf("d", "e") && t.size >= 2 && t[0].y == 0.0 && t[1].y == 0.0 ->
                     make("Wie findest du den Scheitel?", "d = Mitte der Nullstellen", "d = linke Nullstelle", "d = Summe der Nullstellen", l.id)
                 keys == setOf("d", "e") -> make("Wie liest du d und e ab?", "Scheitel (d | e) = (${num(t[0].x)} | ${num(t[0].y)})",
@@ -231,26 +234,30 @@ object Understand {
             }
             Kind.SINE -> when (keys) {
                 setOf("a") -> make("Was stellt a ein?", "Wie hoch die Welle ausschlägt (Amplitude)", "Wie weit zwei Wellenberge auseinander sind", "Wie hoch die Mittellinie liegt", l.id)
-                setOf("b") -> make("Was macht b?", "Staucht die Welle: eine Welle ist 2π : b lang", "Eine Welle ist b : 2π lang", "Macht die Welle höher", l.id)
+                setOf("b") -> make("Was macht b?", "Staucht oder streckt die Welle: eine Welle ist 2π : b lang", "Eine Welle ist b : 2π lang", "Macht die Welle höher", l.id)
                 setOf("d") -> make("Was macht d?", "Schiebt die ganze Welle nach oben/unten", "Macht die Welle breiter", "Schiebt die Welle nach rechts", l.id)
                 else -> make("Was stellen a, b, d ein?", "a: Höhe · b: Stauchung · d: Mittellinie", "a: Mittellinie · b: Höhe · d: Stauchung", "a: Stauchung · b: Mittellinie · d: Höhe", l.id)
             }
             Kind.EXP -> when (keys) {
                 setOf("a") -> make("Wie findest du a?", "Bei x = 0 ist y = a", "Bei x = 1 ist y = a", "a ist die Steigung", l.id)
-                else -> make("Was macht b?", "Pro Kästchen nach rechts wird y mal b genommen", "Pro Kästchen nach rechts kommt b dazu", "b ist der Startwert bei x = 0", l.id)
+                else -> if ("d" in keys || (fx["d"] ?: 0.0) != 0.0)
+                    make("Was macht b?", "Pro Kästchen nach rechts wird (y − d) mal b genommen", "Pro Kästchen nach rechts kommt b dazu", "b ist der Startwert bei x = 0", l.id)
+                    else make("Was macht b?", "Pro Kästchen nach rechts wird y mal b genommen", "Pro Kästchen nach rechts kommt b dazu", "b ist der Startwert bei x = 0", l.id)
             }
             Kind.ORBIT -> make("Was macht ein Planet mit der Sonde?", "Er zieht sie an – je näher, desto stärker die Kurve", "Er stößt sie ab", "Je näher, desto schwächer die Kurve", l.id)
             Kind.TANGENT -> { val x0 = num(fx.getValue("x0"))
                 make(q, "m = f'($x0) – die Steigung der Kurve dort", "m = f($x0) – die Höhe der Kurve dort", "m = f($x0) : $x0", l.id) }
             Kind.PEAK -> if (l.title == "Wendepunkt") make("Woran erkennst du den Wendepunkt?", "f''(x) = 0", "f'(x) = 0", "f(x) = 0", l.id)
-                else make("Woran erkennst du den Extrempunkt?", "f'(x) = 0 – die Kurve ist dort waagrecht", "f(x) = 0 – die Kurve schneidet die x-Achse", "f''(x) = 0 – die Kurve wechselt die Krümmung", l.id)
+                else make("Woran erkennst du den Extrempunkt?", "f'(x) = 0 – die Kurve ist dort waagerecht", "f(x) = 0 – die Kurve schneidet die x-Achse", "f''(x) = 0 – die Kurve wechselt die Krümmung", l.id)
             Kind.AREA -> { val xs = num(t[0].x)
                 make("Wie viel Treibstoff?", "A = ∫₀^$xs f(x) dx = F($xs) − F(0)", "A = f($xs)", "A = f'($xs)", l.id) }
             Kind.VECTOR -> { val tt = fx.getValue("T")
                 if (tt == 1.0) make(q, "v = Q − P", "v = P − Q", "v = Q + P", l.id)
                 else make(q, "v = (Q − P) : ${num(tt)}", "v = Q − P", "v = (P − Q) : ${num(tt)}", l.id) }
             Kind.RENDEZVOUS -> make("Wie findest du den Treffpunkt?", "Beide Gleichungen gleichsetzen", "Beide b addieren", "x = b₁ : m₁ ausrechnen", l.id)
-            Kind.THROW -> make("Welche Formel steckt im Wurf?", "Weite = v² · sin(2α) : g", "Weite = v · sin(α) : g", "Weite = v² : g · α", l.id)
+            Kind.THROW -> if (abs(t[0].y - l.launch.y) > 0.6)
+                make("Wie zerlegst du das Tempo?", "vx = v · cos α, vy = v · sin α", "vx = v · sin α, vy = v · cos α", "vx = v, vy = v · α", l.id)
+                else make("Welche Formel steckt im Wurf?", "Weite = v² · sin(2α) : g", "Weite = v · sin(α) : g", "Weite = v² : g · α", l.id)
             Kind.RAMP -> make("Welche Formel steckt in der Rampe?", "m · g · h = ½ · m · v²", "m · g · h = m · v", "g · h = 2 · v²", l.id)
             else -> null
         }

@@ -161,7 +161,7 @@ private fun TopicRow(s: TopicStatus, now: Long, index: Int, expanded: Boolean = 
             Text("${s.stars}/${s.maxStars} ⭐", style = MaterialTheme.typography.labelMedium, color = Q.Yellow)
         }
         if (s.reviewDue) Text("🔁 Mal wieder dran – kurz auffrischen hilft dem Gedächtnis", style = MaterialTheme.typography.labelSmall, color = Q.Green)
-        Text(if (expanded) "▲ Level zuklappen" else "▼ Level anzeigen und nochmal spielen", style = MaterialTheme.typography.labelSmall, color = Q.Cyan)
+        Text(if (expanded) "▲ Level zuklappen" else "▼ Level anzeigen und noch mal spielen", style = MaterialTheme.typography.labelSmall, color = Q.Cyan)
     }
 }
 

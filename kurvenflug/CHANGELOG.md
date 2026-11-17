@@ -3,21 +3,27 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
-## 0.24.1 – Lernstand: Level gezielt nochmal spielen
+## 0.24.2 – Alles nachgerechnet
+- **✅ Große Korrektheitsprüfung**: Jedes Level, jeder Tipp, jede Rechen-Frage und jeder Rechenweg wurde unabhängig
+  nachgerechnet. Korrigiert u. a.: ein falsches Vorzeichen in einem Trigonometrie-Tipp, zwei missverständliche
+  „Nicht aufrunden“-Tipps, vertauschte Begriffe „großer/kleiner Maßstab“, gerundete Werte im Rechenweg der
+  Binomialverteilung, die Wurf-Frage bei Abschuss von der Klippe, fehlende Klammern bei negativen Zahlen
+  und viele kleine Texte.
+- Der Update-Check fragt jetzt höchstens alle 20 Stunden bei GitHub nach.
+
+## 0.24.1 – Lernstand: Level gezielt noch mal spielen
 - **📊 Lernstand zum Antippen**: Ein Tipp auf ein Thema klappt seine Level auf – mit den Sternen, die du schon hast.
-  So siehst du sofort, wo noch Sterne fehlen, und kannst einzelne Level direkt nochmal spielen.
+  So siehst du sofort, wo noch Sterne fehlen, und kannst einzelne Level direkt noch mal spielen.
 
 ## 0.24.0 – Kurvenflug Pro ist da (Web und GitHub-Version)
 - **⭐ Kurvenflug Pro kaufen**: In der Web- und der GitHub-Version kann man Pro jetzt kaufen – 7,99 € einmalig inkl.
   19 % MwSt., kein Abo. Der Kauf läuft über den Shop auf mathenachhilfe-online.com (nur nach der Frage für Erwachsene).
   Danach den Link aus der E-Mail antippen oder den Code in Einstellungen → Kurvenflug Pro einfügen – fertig, ohne Konto.
-- Alles bis Klasse 10 bleibt kostenlos. Was ihr schon angefangen habt (auch in der Oberstufe), bleibt offen.
+- Alles bis Klasse 10 bleibt kostenlos. Was du schon angefangen hast (auch in der Oberstufe), bleibt offen.
 - Die Google-Play-Version bleibt vorerst komplett frei.
 
-## 0.23.1 – Schullizenz erklärt
-- **🏫 Schullizenz**: Für Schulen gibt es Kurvenflug Pro als Schullizenz – für eine Lehrkraft und alle Schülerinnen und
-  Schüler ihrer Klassen, im Unterricht und zu Hause, auf beliebig vielen Geräten, jeweils bis zum 31. Juli.
-  Den Schul-Code einfach in Einstellungen → Kurvenflug Pro einfügen.
+## 0.23.1 – Texte zu Pro
+- Texte rund um Kurvenflug Pro überarbeitet (Angebote für Schulen folgen später über einen eigenen Lehrerzugang).
 
 ## 0.23.0 – Kurvenflug Pro (vorbereitet)
 - **⭐ Kurvenflug Pro**: Alles bis Klasse 10 bleibt kostenlos. Mit Pro kommen Oberstufe, Extrem-Prüfungen,

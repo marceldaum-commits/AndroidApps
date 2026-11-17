@@ -250,7 +250,7 @@ private fun Galaxy(
     var open by rememberSaveable { mutableStateOf(listOfNotNull(continueLevel?.chapter)) }
     val sfx = LocalSfx.current
     var asMap by rememberSaveable { mutableStateOf(true) }
-    TabTitle("🗺️ Galaxie", "${chapters.size} Planeten · alle offen, Level für Level")
+    TabTitle("🗺️ Galaxie", "${chapters.size} Planeten · Level für Level")
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         FilterChip(selected = asMap, onClick = { sfx?.play(Sound.TICK); asMap = true }, label = { Text("🪐 Karte") },
             colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Violet.copy(alpha = 0.35f), labelColor = Q.Muted, selectedLabelColor = Q.Text))
@@ -342,7 +342,7 @@ private fun GradePicker(current: Int?, first: Boolean, onPick: (Int?) -> Unit) {
             }
             Text("Alle Klassen zeigen", color = Q.Muted, modifier = Modifier.align(Alignment.End)
                 .clickable { sfx?.play(Sound.TAP); onPick(null) }.padding(6.dp))
-            Text("Kein Kapitel wird gesperrt – die Klasse sortiert nur. Eltern: Die Angabe bleibt auf dem Gerät.",
+            Text("Die Klasse sperrt nichts, sie sortiert nur. Eltern: Die Angabe bleibt auf dem Gerät.",
                 color = Q.Muted, style = MaterialTheme.typography.labelSmall)
         }
     }

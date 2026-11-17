@@ -61,14 +61,16 @@ fun SettingsScreen(
                     if (shop) Text("Kurvenflug ist kostenlos bis Klasse 10. Optional gibt es „Kurvenflug Pro“ als Einmalkauf ohne Abo " +
                         "(Oberstufe, Extrem-Stufen, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
-                        "keine Käufe, nichts wird an einen Server geschickt. Neue Versionen lädt die Seite von selbst."
+                        "nichts wird an einen Server geschickt. Neue Versionen lädt die Seite von selbst."
                         else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, " +
-                        "keine Käufe, kein Internet. Neue Versionen kommen über Google Play."
-                        else "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
+                        "kein Internet. Neue Versionen kommen über Google Play."
+                        else "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
                         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
-                    Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel (Kl. 5/6), Zuordnungen und Prozent (Kl. 6/7), lineare Funktionen und Gleichungssysteme (Kl. 7/8), " +
-                        "Pythagoras (Kl. 8/9), quadratische Funktionen und Nullstellen (Kl. 9), Trigonometrie (Kl. 9/10), Sinus, Exponential- und Logarithmusfunktionen (Kl. 10); Oberstufe: Ableitung, Extrempunkte, Integral, Vektoren (Kl. 11–13). " +
-                        "Physik: gleichförmige Bewegung, Reflexion, Lichtbrechung, Energieerhaltung, schräger Wurf, Gravitation.", style = MaterialTheme.typography.bodySmall)
+                    Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel, Maßstab (Kl. 5/6), Zuordnungen, Prozent und Zinseszins (Kl. 6–8), " +
+                        "lineare Funktionen und Gleichungssysteme (Kl. 7/8), Pythagoras (Kl. 8/9), quadratische Funktionen und Nullstellen (Kl. 9), " +
+                        "Trigonometrie, Potenzfunktionen, Sinus, Exponential- und Logarithmusfunktionen (Kl. 9/10); Oberstufe: Ableitung, Extrempunkte, " +
+                        "Integral, Vektoren, e-Funktion, Binomialverteilung (Kl. 11–13). Physik: gleichförmige und beschleunigte Bewegung, Reflexion, " +
+                        "Lichtbrechung, Energieerhaltung, schräger und waagerechter Wurf, Gravitation.", style = MaterialTheme.typography.bodySmall)
                     Text("Version $installed" + if (platform.isWeb) " · WebApp" else "", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                     if (platform.isWeb) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         TextButton(onClick = { platform.openUrl(IMPRESSUM) }) { Text("Impressum") }
@@ -90,7 +92,7 @@ private fun ProCard(state: de.kurvenflug.app.ProState, onPro: () -> Unit) {
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
                 Text("Kurvenflug Pro", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                Text(if (state.pro) "Freigeschaltet – danke! 💛" else "Oberstufe, Extrem-Stufen, mehr Spieler · Code einlösen",
+                Text(if (state.pro) "Freigeschaltet – danke! 💛" else "Oberstufe, Extrem-Stufen, mehr Spieler" + if (de.kurvenflug.app.LocalPlatform.current.proShop?.acceptsCodes == true) " · Code einlösen" else "",
                     style = MaterialTheme.typography.bodySmall)
             }
             Text("›", fontSize = 24.sp, color = Q.Muted)

@@ -26,7 +26,7 @@ object Pro {
         Perk("🎓", "Oberstufe", "Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion und Binomialverteilung – 6 Kapitel, 35 Level"),
         Perk("🔥", "Extrem-Prüfungen", "In jedem der 30 Kapitel die ultimative Herausforderung"),
         Perk("☄️", "Asteroidensturm Profi & Extrem", "Ab Welle 13 wird es richtig wild"),
-        Perk("🌌", "Andromeda ab Planet 7", "Weiter fliegen, schwerere Planeten, das Schiff Nova fertig bauen"),
+        Perk("🌌", "Andromeda ab Planet 7", "Weiterfliegen, schwerere Planeten, das Schiff Nova fertig bauen"),
         Perk("👪", "Bis 6 Spieler", "Für Geschwister und die ganze Familie"),
         Perk("🎨", "Pro-Werkstatt", "Besondere Sonden, Spuren und Hüte für Volt"),
     )

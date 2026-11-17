@@ -12,9 +12,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     val state = AppState(c.settings, c.progress, viewModelScope) { de.kurvenflug.app.widget.KurvenflugWidget.refresh(getApplication()) }
     private val settings = c.settings
 
-    private companion object { const val CHECK_EVERY_MS = 30 * 60_000L }
+    private companion object { const val CHECK_EVERY_MS = 20 * 60 * 60_000L }
 
-    /** Bei jedem Öffnen der App: höchstens alle 30 Minuten bei GitHub nachsehen (abschaltbar). */
+    /** Bei jedem Öffnen der App: höchstens alle 20 Stunden bei GitHub nachsehen (abschaltbar). */
     fun checkForUpdateIfDue(installed: String) {
         if (!BuildConfig.SELF_UPDATE || !settings.autoUpdate.value) return
         val now = System.currentTimeMillis()

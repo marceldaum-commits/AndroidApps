@@ -1,5 +1,55 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## Korrektheitsprüfung 17.11. (Version 0.24.2, Commit {{COMMIT}})
+
+### Was geprüft wurde und wie
+| Bereich | Wie |
+|---|---|
+| Fachlich, alle 30 Kapitel (175 Level) + 30 Extrem-Prüfungen | **5 unabhängige Prüfdurchgänge** (je ein Teil der Inhalte, jede Zahl von Hand bzw. mit Python nachgerechnet: Auftrag, Tipp, Quiz/Rechen-Stern, Rechenweg, Kapitel-Intro, Physik-Formeln/Einheiten, Lexikon-Fakten) **plus neuer automatischer Prüftest** `AuditTest` |
+| `AuditTest` (bleibt dauerhaft in der Testkette) | 607 Level (Kapitel, Extrem, Generator aller 5 Stufen, Bosse, Andromeda 1–20, Rettungen, Gastplaneten, 31 Tagesmissionen): **eigene Schulbuch-Formeln** gegen die Flugbahn an 41 Stellen, Stationen auf der Bahn, **Wurfbahn gegen die Wurfparabel**, Lösbarkeit, Rechenweg-Schritte = Lösung, Live-Rechnung/Rechen-Stern ohne NaN und ohne doppelte Antworten, Text-Hygiene (Platzhalter, englische Dezimalpunkte, doppelte Leerzeichen, Klammern, doppelte Stufen-Namen) → **0 Abweichungen** |
+| Stufen-Tests | `DifficultyTest`, `ChapterExtremeTest` grün (jede Stufe strikt schwerer) |
+| Funktion | alle Unit-/Oberflächentests (inkl. Klicktest durch die App, 100+ Bildschirmfotos), Lint beider Varianten, APK + AAB gebaut; WebApp: **alle 30 Kapitel bei 320 px und am PC ohne Konsolenfehler**, Offline-Start, Auto-Update, **Pro mit echtem Test-Code** (Link + App-Logik), Bestandsschutz |
+| Texte nach außen | Store-Texte (Längen: Titel 25/30, Kurz 80/80, Beschreibung < 4000), Datenschutz-Vorschlag, Preis 7,99 € inkl. 19 % MwSt., Web-Manifest |
+
+### Abweichungen und Korrekturen (vorher → nachher)
+**Fachlich falsch:**
+- 14-4 Tipp: „tan α = 18 : 16 = 1,125 → α ≈ −48°“ → „… → α ≈ 48° – nach unten, also −48°“ (Vorzeichen)
+- 9-3 / 14-7 Tipp: „≈ 7,1. Nicht aufrunden“ / „≈ 10,4. Nicht aufrunden“ (widersprüchlich, 7,07 → 7,1 ist aufgerundet) → „Nicht auf 8 aufrunden“ / „Nicht auf 11 aufrunden“
+- 29-3 / 29-4: großer und kleiner Maßstab vertauscht → 10 km je Kästchen = „Kleiner Maßstab“, 0,5 km = „Großer Maßstab“
+- 30-1 / 30-5 / 30-6 Rechenweg: Antwort auf 2 Stellen gerundet („0,5⁴ = 0,06“) → in Prozent gefragt: „0,5⁴ = 6,25 %“, „0,7⁵ ≈ 16,81 %“, „22 : 2⁶ ≈ 34,38 %“
+- Rechen-Stern beim Wurf von der Klippe (4-4, Generator Profi/Extrem): „richtige“ Antwort „Weite = v² · sin(2α) : g“ gilt dort nicht → bei Höhenunterschied neue Frage „vx = v · cos α, vy = v · sin α“
+- Rechen-Stern Wachstum mit d ≠ 0: „y wird mal b genommen“ → „(y − d) wird mal b genommen“
+- Generator Extrem: Tipps für Sinus mit c und Wachstum mit d passten nicht → eigene Tipps („Bei x = c ist sin = 0 …“, „Bei x = 0 ist y = a + d …“)
+- Kapitel 3 Intro „Je größer a, desto schmaler“ (falsch für a < 0) → „Je weiter a von 0 weg ist …“; Kapitel 5 „b staucht die Welle“ (b < 1 streckt) → „staucht (b > 1) oder streckt (b < 1)“; Kapitel 16 „Größer: stumpf“ → „Zwischen 90° und 180°: stumpf“; Kapitel 15 „Kommazahlen sind Zehntel … 0,25 = ¼“ → „0,25 = 25 Hundertstel = ¼“
+- 26-3 Quiz „c = Stelle des Nulldurchgangs“ (bei d = 1 falsch) → „wo die Welle aufsteigend die Mittellinie kreuzt“; Kap. 27 „Fallzeit hängt nur von der Höhe ab“ → „von der Höhe (und vom Planeten)“, „g = 1,62“ → „1,62 m/s²“
+- 30-3 Tipp: höchste Säule ⇒ μ ≈ 3 präzisiert; 28-3/28-6 „= −1“ → „≈ −1“; 28-5 Quiz „d abziehen“ (kein d im Auftrag) → „die 2 abziehen“
+- Lexikon: Olympus Mons „fast dreimal“ → „rund zweieinhalbmal so hoch“; Marstag 24 h 37 min → Sol „etwa 24 h 40 min“; Merkur „kaum größer als der Mond“ → „nur etwas größer“; Saturnringe „280 000 km breit“ → „Ringsystem 280 000 km von Rand zu Rand“; Saturn „über 140 Monde“ → „über 270“; Voyager „über 22 Stunden“ → „fast einen ganzen Tag“
+**Schreibweise / Darstellung:**
+- Fehlende Klammern bei negativen Zahlen: Vektor-Tipps 22-1 bis 22-5 „(2 − −6)“ → „(2 − (−6))“; Tangente-Live-Rechnung; Parabel-Rechen-Stern „· −2²“ → „· (−2)²“
+- Generator Profi/Extrem: „🔴 Profi: 🔴 Profi – getarnt!“ (Stufe doppelt) → einmal; Rätsel „√0 − 8“ ausgeschlossen
+- Einheit „8m/s“ → „8 m/s“ (Wurf, alle Stellen); Regler „Treibstoff A“ bei 320 px abgeschnitten → „Fläche A“ + flexible Breite
+- 5-7 „Jedes Kästchen halbiert sich der Wert“ → „Mit jedem Kästchen halbiert sich der Wert“; „Eulersche Zahl“ → „eulersche Zahl“; „Hausaufgabe-Code“ → „Hausaufgaben-Code“; „Weiter fliegen“ → „Weiterfliegen“; „Wenige Fehlschüsse“ → „Weniger“; „nochmal“ → „noch mal“; „waagrecht“ → „waagerecht“; „Noch 1 Bauteile“ → „Noch 1 Bauteil“; widersprüchlich „3 Gold-Teile nötig (hast 5)“ → „Erst die Aurora fertig bauen“; „Knapp verloren“ auch bei großem Abstand → nur bei 1 Versuch Unterschied
+- Laser-Hinweis „weiter nach links drehen“ (mehrdeutig) → „gegen den / im Uhrzeigersinn“; Kap. 2 „b ist der Startpunkt“ → „wo die Gerade die y-Achse schneidet“; Kap. 8 „der Achse“ → „den Achsen“; Kap. 12 Rampe ohne Reibung und Drehung; Extrem-Prüfung „Ziele halb so groß“ (nicht immer) → „kleinere Ziele“
+**Texte nach außen / Oberfläche:**
+- „keine Käufe“ in den Eltern-Texten (Web/GitHub verkaufen Pro) → gestrichen; Galaxie „alle offen“ → „Level für Level“; „Kein Kapitel wird gesperrt“ → „Die Klasse sperrt nichts, sie sortiert nur“
+- Inhaltsliste in den Einstellungen veraltet → vollständig (inkl. e-Funktion, Binomialverteilung, Maßstab, Zinseszins, beschleunigte Bewegung, waagerechter Wurf)
+- Web-Manifest „Klasse 5–10“ → „5–13“; App-Name einheitlich „Kurvenflug – Mathe im All“
+- **Play-Beschreibung** versprach Pro, das es in Play noch nicht gibt → „keine Käufe – alles frei spielbar, auch die Oberstufe“ (bei Pro-Start in Play zurückstellen); Datenschutz-Vorschlag „keine In-App-Käufe“ gestrichen
+- CHANGELOG 0.23.1 bewarb die Schullizenz → neutral; Eltern-Anrede vereinheitlicht (neutral statt „Sie“/„dein Kind“); Play-Fassung: Pro-Text ohne „Code einlösen“/„ohne Konto“
+- **Regelverstoß behoben:** Update-Check der GitHub-APK lief höchstens alle 30 Minuten → wie vorgeschrieben höchstens alle 20 Stunden (Text angepasst); README-Angaben (Klasse 5–13, Oberstufe) aktualisiert
+
+### Bewusst nicht geändert (geprüft, kein Fehler)
+- 3-2: zwei richtige Lösungen (d = 3 und d = 7) – beide treffen, Tipp weist jetzt darauf hin
+- 7-1/7-3/7-6 gleicher Treffpunkt (2 | 3), 6-3/11-4 „hinter dir“, doppelter Titel „Um die Ecke“ (6-1/17-4) – fachlich richtig
+- 49 ältere Level (Winkel, Laser, Pythagoras, Energie, Lichtbrechung, Teile von Wurf/Trigonometrie/Schleuder) treffen auch einen Reglerschritt neben der Lösung – gewollt großzügig, keine Falschaussage; Verschärfung wäre eine Spieländerung
+
+### Was nicht (vollständig) prüfbar war
+- **Lücken, keine Fehler:** 58 Level ohne Live-Rechnung und 31 ohne Rechen-Stern (Brüche, Winkel, Laser, Energie, Lichtbrechung, einzelne Boss-/Rettungs-Etappen) – dort wird nichts Falsches angezeigt, es fehlt nur die Zusatzhilfe
+- Echte Android-Geräte (keins angeschlossen): geprüft über Robolectric-Bildschirmfotos und Klicktest; Play-Billing-Testkauf erst nach Anlage des Produkts; Android-12-Startbildschirm nur im Code
+- Barrierefreiheit Web: Bildschirmleser-Spiegel ist bewusst aus (Compose-Web-Fehler „Node not found“); Android: Standard-Compose-Semantik, nicht mit TalkBack geprüft
+- Marcels echter Kauf über die Kasse (Danke-Seite/E-Mail) – Test-Code vom Lizenz-Dienst funktioniert
+
+
 ## 17.11. – End-to-End-Test mit echtem Pro-Code bestanden (Version 0.24.1)
 
 - Test-Code vom Lizenz-Dienst (Produkt 1, App 1, Serie 1001, Tag 17.11.2026; Code selbst nicht im Repo):

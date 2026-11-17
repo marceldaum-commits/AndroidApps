@@ -219,7 +219,7 @@ object Levels {
     private val pd = p("d", "d", -8.0, 8.0, 1.0, 0.0)
     private val pe = p("e", "e", -9.0, 9.0, 1.0, 0.0)
     private val pAngle = p("angle", "Winkel", 5.0, 85.0, 1.0, 45.0, "°")
-    private fun pV(start: Double = 8.0) = p("v", "Tempo", 1.0, 20.0, 0.5, start, "m/s")
+    private fun pV(start: Double = 8.0) = p("v", "Tempo", 1.0, 20.0, 0.5, start, " m/s")
     private val sa = p("a", "a", -5.0, 5.0, 0.5, 1.0)
     private val sb = p("b", "b", 0.25, 3.0, 0.25, 1.0)
     private val sd = p("d", "d", -8.0, 8.0, 1.0, 0.0)

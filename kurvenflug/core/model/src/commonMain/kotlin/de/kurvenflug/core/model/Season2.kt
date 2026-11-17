@@ -28,7 +28,7 @@ object Season2 {
         CrewMember(1, "Pixel", "🤖", "Putzroboter", "Piep … Hilfe! Ich bin in einem Asteroidenfeld stecken geblieben und mein Akku ist fast leer!",
             "Danke! Ich putze ab jetzt die Aurora – blitzblank!", listOf("Ich hab die Kommastellen poliert. ✨", "Ordnung ist das halbe Rechnen!", "Hast du heute schon was gerechnet? Ich hab schon geputzt. 🧽")),
         CrewMember(2, "Kapitänin Kora", "🏴‍☠️", "Weltraum-Piratin", "Ahoi! Meine Schatzkarte ist voller Gleichungen – und mein Schiff steckt fest!",
-            "Arrr, du rechnest besser als meine ganze Mannschaft! Ich bin dabei!", listOf("Ein Schatz ist nur ein Punkt (x | y) – wer rechnet, findet ihn! 🗺️", "Arrr! Drei Sterne sind mehr wert als Gold!", "Auch Piratinnen machen Fehler. Dann rechnen wir eben nochmal.")),
+            "Arrr, du rechnest besser als meine ganze Mannschaft! Ich bin dabei!", listOf("Ein Schatz ist nur ein Punkt (x | y) – wer rechnet, findet ihn! 🗺️", "Arrr! Drei Sterne sind mehr wert als Gold!", "Auch Piratinnen machen Fehler. Dann rechnen wir eben noch mal.")),
         CrewMember(3, "Professor Quark", "🧪", "Physik-Genie", "Faszinierend! Mein Labor driftet in ein Schwarzes Loch. Das ist … ungünstig.",
             "Eine Rettung mit perfekter Flugbahn! Ich nehme das in meine Forschung auf.", listOf("Wusstest du? Auf dem Mond fliegt alles sechsmal so hoch! 🌙", "Energie geht nie verloren – sie wandelt sich nur um.", "Licht ist schneller als alles – aber im Glas wird es langsamer! 💎")),
         CrewMember(4, "Blink", "👾", "Alien-Kind", "Blib blub! Ich hab mich auf dem Heimweg verflogen. Kannst du Kurven?",
@@ -53,9 +53,9 @@ object Season2 {
 
     /** Was braucht Rettung n noch? null = verfügbar */
     fun lock(n: Int, parts: Int, gold: Int): String? = when (n) {
-        in 1..4 -> listOf(3, 7, 11, 15)[n - 1].let { need -> if (parts >= need) null else "Noch ${need - parts} Bauteile finden" }
+        in 1..4 -> listOf(3, 7, 11, 15)[n - 1].let { need -> if (parts >= need) null else (need - parts).let { k -> if (k == 1) "Noch 1 Bauteil finden" else "Noch $k Bauteile finden" } }
         5 -> if (parts >= Story.parts.size) null else "Erst die Aurora fertig bauen"
-        else -> listOf(3, 6, 9)[n - 6].let { need -> if (parts >= Story.parts.size && gold >= need) null else "$need Gold-Teile nötig (hast $gold)" }
+        else -> listOf(3, 6, 9)[n - 6].let { need -> if (parts < Story.parts.size) "Erst die Aurora fertig bauen" else if (gold < need) "$need Gold-Teile nötig (du hast $gold)" else null }
     }
 
     /** Kapitel ohne Level-Generator – daraus kommen die festen Etappen (gemischtes Üben über alle Themen) */

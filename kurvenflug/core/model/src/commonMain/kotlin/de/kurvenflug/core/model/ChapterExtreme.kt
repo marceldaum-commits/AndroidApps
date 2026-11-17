@@ -42,7 +42,7 @@ object ChapterExtreme {
                 // enger als jede Zielzone im ganzen Kapitel
                 targets = base.targets.map { it.copy(r = minOf(it.r * shrink, minR * 0.95)) },
                 params = base.params.map { if (it.key == "n") it else it.copy(step = it.step / 2) },
-                task = base.task + " 🔥 Extrem: Ziele halb so groß, Regler doppelt so fein" + if (n > 0) ", Asteroiden dicht an der Bahn." else ".",
+                task = base.task + " 🔥 Extrem: kleinere Ziele, Regler doppelt so fein" + if (n > 0) ", Asteroiden dicht an der Bahn." else ".",
             )
             if (n > 0) {
                 val flown = Flight.fly(l, l.solution).path

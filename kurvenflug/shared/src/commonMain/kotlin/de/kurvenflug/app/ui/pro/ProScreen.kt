@@ -130,8 +130,9 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
                     codeMsg?.let { Text(it, color = if (it.startsWith("Super")) Q.Green else Q.Pink) }
                 }
             }
-            Text("Für Eltern: Einmalkauf ohne Abo. Der Kauf gilt für dieses Gerät bzw. diesen Browser, ohne Konto. " +
-                "Es werden keine Daten über dein Kind gespeichert – nur „Pro: ja“.",
+            Text("Für Eltern: Einmalkauf ohne Abo. " + (if (shop?.acceptsCodes == false) "Der Kauf läuft über Google Play (Ihr Google-Konto). "
+                else "Der Kauf gilt für dieses Gerät bzw. diesen Browser, ohne Konto. ") +
+                "Es werden keine Daten über das Kind gespeichert – nur „Pro: ja“.",
                 style = MaterialTheme.typography.labelSmall, color = Q.Muted, textAlign = TextAlign.Center)
         }
     }

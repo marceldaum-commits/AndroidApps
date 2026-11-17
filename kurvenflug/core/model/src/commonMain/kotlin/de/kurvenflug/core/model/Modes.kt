@@ -73,7 +73,7 @@ object DuelCode {
     fun verdict(mine: Int, theirs: Int) = when {
         mine < theirs -> "Gewonnen! 🏆 Du brauchtest $mine, dein Gegner $theirs Versuche."
         mine == theirs -> "Unentschieden! 🤝 Beide $mine ${if (mine == 1) "Versuch" else "Versuche"}."
-        else -> "Knapp verloren – $mine gegen $theirs Versuche. Revanche? 💪"
+        else -> (if (mine - theirs == 1) "Knapp verloren" else "Verloren") + " – $mine gegen $theirs Versuche. Revanche? 💪"
     }
 }
 
