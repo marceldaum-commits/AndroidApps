@@ -1,2 +1,2 @@
-build/
+build/*
 !build/stimme-de.json
