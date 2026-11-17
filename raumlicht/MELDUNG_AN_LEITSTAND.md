@@ -2,6 +2,40 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.17.2: Datenschutz-Satz vollständig
+
+**Raumlicht 2.17.2 vom 17.11.2026, Web = Android (beide 2.17.2).** Marcel hat direkt angewiesen, den Halbsatz „und unser Server speichert keine Zugriffsprotokolle“ zu ergänzen.
+Der Datenschutz-Text in der App entspricht jetzt wörtlich eurem Punkt 5. **Bitte sicherstellen, dass das für `stimmen.mathenachhilfe-online.com` wirklich gilt und so bleibt**
+(nginx `access_log off` auch für `/jetzt` und `/nova/`, keine Protokolle im Stimmen-Werk mit IP-Adressen) – von hier aus lässt sich das nicht prüfen.
+
+## 17.11.2026 – Raumlicht 2.17.1: Regler „Sprechtempo“ für Nova
+
+Marcel hat direkt bestätigt. **Raumlicht 2.17.1 vom 17.11.2026, Web = Android (beide 2.17.1).** (Eure Ergänzung kam erst nach der Auslieferung von 2.17.0 an – deshalb eine eigene Version.)
+
+- Stufen 0,75 · 0,9 · 1,0 (Standard) · 1,15 · 1,3 · 1,5, gemerkt (`Vorlesen.TEMPOS`); krumme Werte rasten auf die nächste Stufe.
+- Android: `MediaPlayer.playbackParams` (Speed, Pitch 1,0). Web: `<audio>` mit `playbackRate` und `preservesPitch`, bei der ersten Berührung aufgeschlossen;
+  bei Tempo 1,0 oder wenn das Element nicht spielen darf: Web Audio im normalen Tempo. Geräte-Stimme (Notlösung): dieselbe Einstellung auf die Sprechrate.
+- Geprüft: Tests (`VorlesenTest`, `NovaVoiceTest`, `AppRootTest`), Lint, WebApp im Browser (`web-nova.mjs`: 1,3× aus dem Speicher). Nicht auf einem echten Gerät gehört.
+- Weiter offen von euch: Bestätigung zu „keine Zugriffsprotokolle“ und der Zählstand `…/nova/stand-raumlicht-test.….json` (gab um 13:45 UTC noch 404).
+
+## 17.11.2026 – Nova Schritte (b) und (c): Raumlicht 2.17.0 spricht nur noch mit Nova, Thorsten ist raus
+
+Marcel hat „nur noch Nova, Thorsten raus“ direkt bestätigt. **Raumlicht 2.17.0 vom 17.11.2026, Web = Android (beide 2.17.0).**
+
+- **Stimmenwahl:** „Lux spricht“ an/aus; ist es an, steht dort „Stimme: Nova – KI-generierte Stimme“. Vorlesen bleibt aus, bis man es einschaltet (das habe ich nicht geändert).
+- **Ablauf (Android `NovaVoice.kt`, Web `rl-nova.js`):** gespeicherte Datei → `GET /nova/<h[0:2]>/<h>.mp3` → bei 404 und ≤ 300 Zeichen `POST /jetzt` mit `{"text","sprache"}` → abspielen und behalten;
+  bei 204, Fehler oder offline liest still die Geräte-Stimme. Gesendet wird nur Text und Sprache. Antworten werden nur angenommen, wenn sie auf `stimmen.…` zeigen und wie MP3 aussehen.
+- **Am echten Server geprüft (17.11., 13:05 UTC):** Prüfwert `cb1e6d67…` stimmt, die Prüfdatei kommt mit CORS für `raumlicht-test.…`; ein Laufzeit-Satz über `/jetzt` kam als 200 mit `url` zurück und war danach direkt abrufbar.
+  **Die 679 festen Dateien entstehen gerade** (Stichprobe 13:25 UTC: 4 von 6 der ersten Texte abrufbar) – bitte melden, wenn das Werk durch ist; bis dahin erzeugt `/jetzt` fehlende einzeln.
+- **(c) entfernt:** sherpa-onnx (samt JitPack-Quelle und Proguard-Regel), ONNX Runtime Web, Lautschrift-Daten und -Werkzeug, Stimm-Download, Sprechtempo-Regler, Wahl der Geräte-Stimme.
+  Alte Dateien räumt die App weg (Android `filesDir/stimme`, Web-Cache `raumlicht-stimme`). **Damit ist die espeak-ng-Frage erledigt: In der App steckt keine Sprachsynthese mehr.**
+- **Datenschutz-Text in der App:** euer Wortlaut aus Punkt 5, **ohne** den letzten Halbsatz „und unser Server speichert keine Zugriffsprotokolle“ – den übernehme ich, sobald ihr bestätigt, dass er für `stimmen.…` gilt.
+- **Bitte beachten (steht auch in `STORE-RELEASE.md` und `KLAERUNGSLISTE-RECHT.md`, Abschnitt E):** Laufzeit-Texte enthalten eingegebene Zahlen und gehen über euren Server an OpenAI.
+  Die Antwort „Nein“ im Play-Formular „Datensicherheit“ ist damit neu zu prüfen; Datenschutzerklärung siehe Vorschlag `store/datenschutz-abschnitt.md`.
+- **Punkt 4 (einheitliche Sprechweise):** unverändert `Speech.clean` – Vektoren werden schon ausgeschrieben; falls ihr eine feste Formulierung für alle Apps vorgebt, bitte den genauen Wortlaut schicken.
+- Anleitung für andere Apps neu geschrieben: `raumlicht/VORLESEN_FUER_ANDERE_APPS.md`.
+- Geprüft: alle Tests (darunter `VorlesenTest`, `NovaVoiceTest`), Lint beider Fassungen, WebApp im Browser inkl. `scene/test/web-nova.mjs` (Server dort nachgestellt). **Nicht auf einem echten Gerät gehört.**
+
 ## 17.11.2026 – Nova Schritt (a): `vorlesen/texte.json` liegt auf der Testadresse (Raumlicht 2.16.4)
 
 Marcel hat direkt bestätigt: „nur noch Nova“ stimmt, Thorsten kommt raus, Beginn mit Schritt (a). **Raumlicht 2.16.4 vom 17.11.2026, Web = Android (beide 2.16.4).**

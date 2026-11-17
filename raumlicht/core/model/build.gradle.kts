@@ -13,8 +13,6 @@ kotlin {
     }
 }
 
-// Die Logik-Tests lesen die mitgelieferte Lautschrift – ändert sie sich, müssen die Tests neu laufen
-tasks.withType<Test>().configureEach { inputs.dir(rootProject.file("app/src/main/assets/stimme")) }
 
 // Liste der festen Vorlese-Texte für den Stimmen-Server: entsteht bei jedem Bau der WebApp neu (→ webapp/vorlesen/texte.json)
 val vorleseTexte = tasks.register<JavaExec>("vorleseTexte") {

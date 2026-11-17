@@ -22,9 +22,9 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     override val musicLevel: StateFlow<Int> = _musicLevel.asStateFlow(); override val soundLevel: StateFlow<Int> = _soundLevel.asStateFlow()
     override fun setMusicLevel(percent: Int) { val p = percent.coerceIn(0, 100); prefs.edit().putInt("musicLevel", p).apply(); _musicLevel.value = p }
     override fun setSoundLevel(percent: Int) { val p = percent.coerceIn(0, 100); prefs.edit().putInt("soundLevel", p).apply(); _soundLevel.value = p }
-    private val _rate = MutableStateFlow(prefs.getInt("speechRate", 100))
+    private val _rate = MutableStateFlow(de.raumlicht.core.model.Vorlesen.tempo(prefs.getInt("speechTempo", 100)))
     override val speechRate: StateFlow<Int> = _rate.asStateFlow()
-    override fun setSpeechRate(percent: Int) { val p = percent.coerceIn(70, 130); prefs.edit().putInt("speechRate", p).apply(); _rate.value = p }
+    override fun setSpeechRate(percent: Int) { val p = de.raumlicht.core.model.Vorlesen.tempo(percent); prefs.edit().putInt("speechTempo", p).apply(); _rate.value = p }
     private val _strict = flag("strictVectors", false)
     override val strictVectors: StateFlow<Boolean> = _strict.asStateFlow()
     override fun setStrictVectors(v: Boolean) { prefs.edit().putBoolean("strictVectors", v).apply(); _strict.value = v }
@@ -42,10 +42,6 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     var voiceName: String
         get() = prefs.getString("voiceName", "") ?: ""
         set(v) = prefs.edit().putString("voiceName", v).apply()
-    /** Natürliche Stimme (geladenes Stimm-Paket) statt der Handy-Stimme benutzen */
-    var voiceNatural: Boolean
-        get() = prefs.getBoolean("voiceNatural", false)
-        set(v) = prefs.edit().putBoolean("voiceNatural", v).apply()
     var voiceBright: Boolean
         get() = prefs.getBoolean("voiceBright", false)
         set(v) = prefs.edit().putBoolean("voiceBright", v).apply()
