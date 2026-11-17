@@ -157,8 +157,8 @@ class ScreenshotTest {
     @Test fun soundSettings() = shot("65_musik_und_vorlesen", settle = 1500, prepare = { r -> r.reveal { r.onNodeWithTag("probe") } }) {
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
             androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {
-                de.experimentopia.app.ui.settings.SoundSettings(AudioPrefs(voice = AudioPrefs.NATURAL), {}, true, {}, true, {})
-                de.experimentopia.app.ui.settings.ReadSettings(AudioPrefs(voice = AudioPrefs.NATURAL, autoRead = true), {})
+                de.experimentopia.app.ui.settings.SoundSettings(AudioPrefs(), {}, true, {}, true, {})
+                de.experimentopia.app.ui.settings.ReadSettings(AudioPrefs(autoRead = true), {})
             }
         }
     }
@@ -186,13 +186,8 @@ class ScreenshotTest {
 
 /** Vorlese-Attrappe für Bildschirmfotos */
 private object FakeReader : de.experimentopia.app.ui.fx.Reader {
-    override val voices = listOf(de.experimentopia.app.ui.fx.VoiceOption("a", "Gerätestimme 1 (sehr gut)"), de.experimentopia.app.ui.fx.VoiceOption("b", "Gerätestimme 2"))
-    override val natural: de.experimentopia.app.ui.fx.NaturalState = de.experimentopia.app.ui.fx.NaturalState.Loading(42)
     override val speaking = false
     override fun say(text: String) {}
     override fun stop() {}
     override fun configure(p: AudioPrefs) {}
-    override fun loadNatural() {}
-    override fun cancelNatural() {}
-    override fun removeNatural() {}
 }

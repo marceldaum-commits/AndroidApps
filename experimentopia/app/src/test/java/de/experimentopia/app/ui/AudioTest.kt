@@ -2,7 +2,6 @@ package de.experimentopia.app.ui
 
 import de.experimentopia.app.ui.fx.Composer
 import de.experimentopia.core.model.*
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
@@ -26,15 +25,5 @@ class AudioTest {
         fun save(name: String, pcm: FloatArray) = File(dir, "$name.wav").writeBytes(de.experimentopia.app.wav(pcm, Composer.SR))
         save("0_erkennungsmelodie", Composer.jingle())
         World.entries.forEach { w -> save("${w.ordinal + 1}_${w.name.lowercase()}", Composer.phrase(w, 1) + FloatArray(Composer.SR * 2) + Composer.phrase(w, 2)) }
-    }
-
-    /** Jeder vorlesbare Text hat Lautschrift für „Thorsten“ – sonst tools/stimme/lautschrift.py neu laufen lassen */
-    @Test fun lautschriftDecktAlleTexteAb() {
-        val dir = File("src/main/assets/stimme")
-        val l = Lautschrift(File(dir, "saetze.txt").readLines().asSequence(), File(dir, "woerter.txt").readLines().asSequence())
-        val missing = ReadTexts.all().map { Speech.clean(it) }.filter { it.isNotBlank() && l.of(it) == null }
-        assertEquals("Ohne Lautschrift (Werkzeug neu laufen lassen): ${missing.take(3)}", 0, missing.size)
-        // Web und Android haben dieselben Daten
-        listOf("saetze.txt", "woerter.txt", "tokens.txt").forEach { assertEquals(it, File(dir, it).readText(), File("../web/src/wasmJsMain/resources/stimme/$it").readText()) }
     }
 }

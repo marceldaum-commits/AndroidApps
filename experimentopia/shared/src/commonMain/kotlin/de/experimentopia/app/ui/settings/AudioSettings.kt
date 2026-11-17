@@ -48,7 +48,7 @@ fun SoundSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit, sound: Boole
     }
 }
 
-/** Vorlesen: an/aus, automatisch, Stimme (Gerät/Browser oder „Thorsten“), Tempo, Probe */
+/** Vorlesen: an/aus, automatisch, Probe – gesprochen wird mit der KI-Stimme „Nova“ */
 @Composable
 fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
     val reader = LocalReader.current
@@ -59,42 +59,14 @@ fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
         Switcher("Automatisch vorlesen", "Blubb liest jeden neuen Schritt von selbst vor", audio.autoRead, "vorlesen_auto") { onAudio(audio.copy(autoRead = it)) }
         if (reader == null) { Text("Auf diesem Gerät gibt es keine Sprachausgabe.", color = E.Muted, fontSize = 13.sp); return@Panel }
         Text("Stimme", color = E.Text, fontWeight = FontWeight.Bold)
-        val options = listOf(VoiceOption("", "Automatisch (beste Stimme des Geräts)")) + reader.voices + VoiceOption(AudioPrefs.NATURAL, "Thorsten – natürliche Stimme")
-        options.forEach { v ->
-            val sel = audio.voice == v.id || (v.id == "" && options.none { it.id == audio.voice })
-            Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(if (sel) E.Mint.copy(alpha = 0.16f) else E.Deep)
-                .border(1.5.dp, if (sel) E.Mint else E.Line, RoundedCornerShape(12.dp)).clickable { onAudio(audio.copy(voice = v.id)) }
-                .padding(horizontal = 12.dp, vertical = 9.dp).testTag("stimme_${v.id}"), verticalAlignment = Alignment.CenterVertically) {
-                Text(if (sel) "●" else "○", color = if (sel) E.Mint else E.Muted)
-                Spacer(Modifier.width(8.dp))
-                Text(v.label, color = E.Text, fontSize = 14.sp, modifier = Modifier.weight(1f))
-            }
+        Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(E.Mint.copy(alpha = 0.16f)).border(1.5.dp, E.Mint, RoundedCornerShape(12.dp))
+            .padding(horizontal = 12.dp, vertical = 9.dp).testTag("stimme_nova"), verticalAlignment = Alignment.CenterVertically) {
+            Text("●", color = E.Mint)
+            Spacer(Modifier.width(8.dp))
+            Text("Nova – KI-generierte Stimme", color = E.Text, fontSize = 14.sp, modifier = Modifier.weight(1f))
         }
-        if (audio.voice == AudioPrefs.NATURAL) Panel(border = E.Sun) {
-            when (val st = reader.natural) {
-                NaturalState.Missing -> {
-                    Text("Thorsten klingt wie ein echter Mensch und rechnet ganz auf dem Gerät. Dafür muss einmal eine Stimmdatei geladen werden (ca. 75 MB – am besten im WLAN). " +
-                        "Bis dahin liest die Stimme des Geräts.", color = E.Text, fontSize = 13.sp)
-                    GlowButton({ reader.loadNatural() }, Modifier.testTag("thorsten_laden"), color = E.Sun) { Text("⬇️ Thorsten laden (ca. 75 MB)") }
-                }
-                is NaturalState.Loading -> {
-                    Text("Thorsten wird geladen … ${st.percent} %", color = E.Text)
-                    Box(Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)).background(E.Panel)) {
-                        Box(Modifier.fillMaxWidth(st.percent / 100f).fillMaxHeight().background(E.Sun))
-                    }
-                    GlowButton({ reader.cancelNatural() }, color = E.Sky) { Text("Abbrechen") }
-                }
-                is NaturalState.Failed -> {
-                    Text("Das hat nicht geklappt: ${st.why}", color = E.Pink, fontSize = 13.sp)
-                    GlowButton({ reader.loadNatural() }, color = E.Sun) { Text("🔁 Nochmal versuchen") }
-                }
-                NaturalState.Ready -> {
-                    Text("✅ Thorsten ist da und spricht ohne Internet. Kennt er ein Wort nicht, liest diesen Satz die Stimme des Geräts.", color = E.Text, fontSize = 13.sp)
-                    GlowButton({ reader.removeNatural() }, color = E.Muted) { Text("🗑️ Stimmdatei entfernen") }
-                }
-            }
-        }
-        ValueSlider("Tempo", audio.rate, 0.6f..1.6f, "${(audio.rate * 100).toInt()} %", { onAudio(audio.copy(rate = (it * 20).toInt() / 20f)) }, color = E.Mint)
+        Text("Nova ist eine mit KI (OpenAI) erzeugte Stimme. Wir vertonen die Texte vorab auf unserem Stimmen-Server; jeder Satz wird einmal geladen und bleibt " +
+            "dann auf dem Gerät. Ohne Internet liest die Stimme des Geräts.", color = E.Muted, fontSize = 12.sp)
         GlowButton({ reader.configure(audio); reader.say(ReadTexts.ui[1]) }, Modifier.fillMaxWidth().testTag("probe"), color = E.Mint) { Text("▶️ Probe hören", fontWeight = FontWeight.Bold) }
     }
 }

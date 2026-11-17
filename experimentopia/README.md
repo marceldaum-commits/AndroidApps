@@ -67,10 +67,11 @@ folgt der Stummschaltung (Android: Klingelmodus, Web: Gerät) und wird beim Vorl
 ## Vorlesen
 
 `Speech.kt` macht Texte sprechbar (chemische Formeln, Einheiten, Rechenzeichen, Kreuzungen, Abkürzungen; Test `SpeechTest`).
-Stimmen: die des Geräts bzw. Browsers oder **„Thorsten“** (Piper-Stimme, Aufnahmen CC0). Thorsten rechnet auf dem Gerät –
-Android mit sherpa-onnx (wie Raumlicht), Web mit onnxruntime-web (`web/.../stimme.js`, Bibliothek in `ort/`, wird erst bei Bedarf geladen).
-Die Stimmdatei kommt nur auf Wunsch einmal und wird per Prüfsumme kontrolliert: vom gemeinsamen Stimmen-Server (stimmen.mathenachhilfe-online.com) – Web die Piper-Fassung, Android die Fassung für sherpa-onnx (`/thorsten/sherpa/`).
-Lautschrift wird vorab mit `tools/stimme/lautschrift.py` erzeugt (kein espeak-ng in der App); `AudioTest` prüft, dass jeder vorlesbare Text Lautschrift hat.
+Stimme: **„Nova – KI-generierte Stimme“** (OpenAI), vertont auf dem gemeinsamen Stimmen-Server (stimmen.mathenachhilfe-online.com) – die App spricht nie mit OpenAI.
+`Nova.kt` teilt jeden Text in Sätze (≤ 300 Zeichen) und berechnet den Dateinamen (SHA-256 von „nova|de|Text“, 32 Hex-Zeichen, Test `NovaTest` mit dem Prüfwert des Servers).
+Beim Bau der WebApp entsteht `webapp/vorlesen/texte.json` mit allen festen Sätzen (Gradle-Aufgabe `novaTexte`); der Server holt die Liste alle 30 Minuten und vertont Neues vorab.
+Abspielen: erst vom Gerät/Browser-Speicher, dann `/nova/<h[0:2]>/<h>.mp3`, bei neuen Sätzen `POST /jetzt` (nur der Text); ohne Internet liest leise die Stimme des Geräts bzw. Browsers.
+Android: `AndroidReader.kt` (MediaPlayer, Dateien in `files/nova/`), Web: `nova.js` (WebAudio, Speicher „experimentopia-nova“).
 
 ## Lernen nach Fach (am Schulstoff entlang)
 

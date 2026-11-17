@@ -46,21 +46,15 @@ fun pageHidden(): Boolean = js("document.hidden")
 
 // ── Vorlesen mit den Stimmen des Browsers
 fun canSpeak(): Boolean = js("('speechSynthesis' in window)")
-/** Deutsche Stimmen als „id\tName“-Zeilen (lokale zuerst); meldet sich erneut, wenn der Browser die Liste nachlädt */
-fun browserVoices(changed: (String) -> Unit): Unit = js("{ const f = () => { try { const v = speechSynthesis.getVoices().filter((x) => x.lang && x.lang.toLowerCase().startsWith('de')); v.sort((a, b) => (b.localService - a.localService) || a.name.localeCompare(b.name)); changed(v.map((x) => x.voiceURI + '\\t' + x.name).join('\\n')); } catch (e) { changed(''); } }; if ('speechSynthesis' in window) { f(); speechSynthesis.addEventListener('voiceschanged', f); } }")
 fun browserSpeak(text: String, voice: String, rate: Double, volume: Double, onStart: () -> Unit, onEnd: () -> Unit): Unit = js("{ try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.rate = rate; u.volume = volume; const all = speechSynthesis.getVoices(); const v = all.find((x) => x.voiceURI === voice) || all.filter((x) => x.lang && x.lang.toLowerCase().startsWith('de')).sort((a, b) => b.localService - a.localService)[0]; if (v) u.voice = v; u.onstart = () => onStart(); u.onend = () => onEnd(); u.onerror = () => onEnd(); speechSynthesis.speak(u); } catch (e) { onEnd(); } }")
 fun browserStop(): Unit = js("{ if ('speechSynthesis' in window) speechSynthesis.cancel(); }")
 
-// ── Thorsten (stimme.js wird erst bei Bedarf geladen)
-fun stimmeScript(done: (Boolean) -> Unit): Unit = js("{ if (window.ExStimme) { done(true); return; } const s = document.createElement('script'); s.src = 'stimme.js'; s.onload = () => done(true); s.onerror = () => done(false); document.head.appendChild(s); }")
-fun stimmeInstalled(done: (Boolean) -> Unit): Unit = js("window.ExStimme.installed(done)")
-fun stimmeLoad(progress: (Int) -> Unit, done: (String?) -> Unit): Unit = js("window.ExStimme.load(progress, done)")
-fun stimmeCancel(): Unit = js("window.ExStimme.cancel()")
-fun stimmeRemove(done: () -> Unit): Unit = js("window.ExStimme.remove(done)")
-fun stimmeReady(): Boolean = js("!!(window.ExStimme && window.ExStimme.ready())")
-fun stimmeSpeak(phonemes: String, rate: Double, volume: Double, onStart: () -> Unit, onEnd: () -> Unit): Unit = js("window.ExStimme.speak(phonemes, rate, volume, onStart, onEnd)")
-fun stimmeStop(): Unit = js("{ if (window.ExStimme) window.ExStimme.stop(); }")
-fun stimmeKnown(): Boolean = js("{ try { return localStorage.getItem('experimentopia.thorsten') === '1'; } catch (e) { return false; } }")
+// ── Nova (nova.js wird beim ersten Vorlesen geladen)
+fun novaScript(done: (Boolean) -> Unit): Unit = js("{ if (window.ExNova) { done(true); return; } const s = document.createElement('script'); s.src = 'nova.js'; s.onload = () => done(true); s.onerror = () => done(false); document.head.appendChild(s); }")
+fun novaSpeak(texts: String, urls: String, onStart: () -> Unit, onEnd: () -> Unit, onFail: (Int) -> Unit): Unit = js("window.ExNova.speak(texts, urls, onStart, onEnd, onFail)")
+fun novaStop(): Unit = js("{ if (window.ExNova) window.ExNova.stop(); }")
+/** Der alte Speicher der Stimme „Thorsten“ (bis 2.1) wird nicht mehr gebraucht – Platz freigeben */
+fun dropOldVoice(): Unit = js("{ try { localStorage.removeItem('experimentopia.thorsten'); if (window.caches) caches.delete('experimentopia-stimme'); } catch (e) {} }")
 
 // ── Forscher-Pass: Freischalt-Link „…/?pro=EX…“ lesen und die Adresse danach aufräumen
 fun locationSearch(): String = js("decodeURIComponent(window.location.search || '')")

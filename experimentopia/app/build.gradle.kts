@@ -23,11 +23,10 @@ android {
         applicationId = "de.experimentopia.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 13
-        versionName = "2.1.1"
+        versionCode = 14
+        versionName = "2.2.0"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
         // nur echte Handys (Maschinencode der Sprachsynthese) – hält die APK klein
-        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
         buildConfigField("String", "VERSION_DATE", "\"17.11.2026\"")
     }
 
@@ -105,8 +104,6 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.4")
     implementation(project(":core:data"))
     implementation(project(":shared"))   // alle Bildschirme – derselbe Code wie die WebApp
-    // natürliche Stimme „Thorsten“: Sprachsynthese auf dem Gerät (Apache 2.0, ohne espeak-ng – Lautschrift kommt vorab erzeugt mit)
-    implementation("com.github.k2-fsa.sherpa-onnx:sherpa-onnx:v2.0.1@aar")
     // Nur Play-Fassung: Updates über den Store anbieten (Play In-App Updates)
     "playImplementation"("com.google.android.play:app-update:2.1.0")
 
@@ -123,6 +120,3 @@ tasks.withType<Test>().configureEach {
     if (name.contains("Release")) enabled = false
 }
 
-// sherpa-onnx bringt Anbindungen für andere Sprachen mit, die hier ungenutzt sind
-android.packaging.jniLibs.excludes += listOf("**/libsherpa-onnx-c-api.so", "**/libsherpa-onnx-cxx-api.so")
-android.packaging.jniLibs.useLegacyPackaging = true   // Maschinencode komprimiert einpacken: der Download wird deutlich kleiner

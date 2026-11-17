@@ -1,5 +1,13 @@
 # Changelog – Experimentopia
 
+## 2.2.0 – Neue Vorlese-Stimme Nova (17.11.2026)
+
+- 🔊 **Nova liest vor**: Alle Anleitungen, Fragen und Erklärungen spricht jetzt „Nova“ – eine mit KI erzeugte Stimme (OpenAI), klar und freundlich.
+  Wir vertonen die Texte vorab auf unserem eigenen Stimmen-Server; die App selbst schickt nie etwas an OpenAI. Jeder Satz wird einmal geladen und bleibt dann auf dem Gerät.
+- 📶 Ohne Internet liest wie gewohnt die Stimme des Geräts.
+- 🪶 Die Stimme „Thorsten“ und ihr großer Download (ca. 75 MB) entfallen – die App ist dadurch viel kleiner (Android: rund 2 MB statt 20 MB).
+- 🔒 Datenschutz-Hinweis ergänzt: Texte, die erst im Versuch entstehen, gehen ohne Angaben zu dir an unseren Server; keine Namen, Konten oder Geräte-Kennungen.
+
 ## 2.1.1 – Rätsel nachlesen, Updates sofort sehen (17.11.2026)
 
 - 📜 **Rätsel nochmal lesen**: Nach „Ich vermute …“ verschwand die Geschichte vom Anfang. Jetzt gibt es in jedem Schritt die Karte

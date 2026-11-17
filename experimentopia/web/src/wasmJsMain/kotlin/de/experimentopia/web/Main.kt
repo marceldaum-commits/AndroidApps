@@ -86,8 +86,8 @@ private fun WebApp() {
                     }
                 },
                 privacy = "Experimentopia speichert den Spielstand und das Forscherbuch nur in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, " +
-                    "keine Daten an einen Server. " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
-                    "Nur wenn du die Stimme „Thorsten“ auswählst und laden lässt, kommt einmal eine Stimmdatei von unserem Stimmen-Server (stimmen.mathenachhilfe-online.com, ca. 75 MB mit Rechenbaustein); sie bleibt in diesem Browser.",
+                    "keine Daten über dich an einen Server. " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
+                    de.experimentopia.core.model.Nova.PRIVACY + " Die Sätze bleiben danach in diesem Browser.",
                 onRoute = { atHome(it == Route.Home) })
         } }
     }

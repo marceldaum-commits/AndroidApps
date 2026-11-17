@@ -50,32 +50,15 @@ interface MusicPlayer {
 }
 val LocalMusic = staticCompositionLocalOf<MusicPlayer?> { null }
 
-/** Eine wählbare Stimme des Geräts oder Browsers */
-data class VoiceOption(val id: String, val label: String)
-
-/** Zustand der natürlichen Stimme „Thorsten“ */
-sealed interface NaturalState {
-    data object Missing : NaturalState
-    data class Loading(val percent: Int) : NaturalState
-    data class Failed(val why: String) : NaturalState
-    data object Ready : NaturalState
-}
-
 /**
- * Vorlesen: Stimmen des Geräts bzw. Browsers oder „Thorsten“ (natürliche Stimme, auf Wunsch geladen).
- * Die Texte werden vorher mit [de.experimentopia.core.model.Speech.clean] sprechbar gemacht.
- * Die Felder sind Compose-Zustand, damit die Einstellungen sich von selbst aktualisieren.
+ * Vorlesen mit der Stimme „Nova“ (KI-Stimme von OpenAI, vorab auf unserem Stimmen-Server vertont); ohne Internet liest die Stimme des Geräts bzw. Browsers.
+ * Die Texte werden vorher mit [de.experimentopia.core.model.Speech.clean] sprechbar gemacht und in Sätze geteilt ([de.experimentopia.core.model.Nova]).
  */
 interface Reader {
-    val voices: List<VoiceOption>
-    val natural: NaturalState
     val speaking: Boolean
     fun say(text: String)
     fun stop()
     fun configure(p: de.experimentopia.core.model.AudioPrefs)
-    fun loadNatural()
-    fun cancelNatural()
-    fun removeNatural()
 }
 val LocalReader = staticCompositionLocalOf<Reader?> { null }
 /** Automatisch vorlesen (Einstellung) */

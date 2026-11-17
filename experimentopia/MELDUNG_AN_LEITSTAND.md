@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.2.0 vom 17.11.2026: nur noch Nova
+
+- **texte.json** liegt unter `/vorlesen/texte.json` (live und test), bei jedem Bau aus den Inhalten erzeugt: 2301 Sätze, 192 346 Zeichen, je Satz ≤ 300 Zeichen
+  (Texte werden an Satzgrenzen geteilt, damit jedes Stück auch über /jetzt gehen kann), NFC geprüft, Formeln/Einheiten ausgeschrieben, ohne Emojis.
+  Hash wie vorgegeben, Prüfwert „Hallo Welt“ → cb1e6d67… im Test.
+- Abspielweg Web = Android: Gerätespeicher → /nova/… → POST /jetzt (nur Text ≤ 300) → still Geräte-/Browserstimme. Android schickt bei /jetzt den Header
+  `Origin: https://experimentopia.mathenachhilfe-online.com` (ohne Origin antwortet der Server 403 „Herkunft“) – bitte so zulassen.
+- Thorsten entfernt (sherpa-onnx, onnxruntime-web, Lautschrift, Stimm-Download); der alte Browser-Speicher „experimentopia-stimme“ wird gelöscht. Android-APK ca. 1,7 MB.
+- Datenschutz-Text wörtlich übernommen (App und WebApp). Stimmenwahl zeigt nur „Nova – KI-generierte Stimme“, Vorlesen bleibt abschaltbar. Kein Offline-Komplettdownload (optional, vorerst nicht).
+
 ## 17.11.2026 – Version 2.1.1 vom 17.11.2026: „Forscher-Pass aktiv“ sichtbar, Rätsel nachlesbar, Update-Prüfung bei jedem Start
 
 - Rätsel-Karte „📜 Rätsel nochmal lesen“ in allen Schritten; Android prüft Updates bei jedem Öffnen (mind. 5 Min. Abstand) und zeigt ein gefundenes Update sofort als Banner auf dem Startbildschirm (bleibt gespeichert bis installiert). Web aktualisiert sich weiter selbst über den Service Worker.
