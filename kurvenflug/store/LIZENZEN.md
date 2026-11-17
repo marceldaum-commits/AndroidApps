@@ -1,6 +1,7 @@
-# Lizenzprüfung Kurvenflug (Stand 0.21.0)
+# Lizenzprüfung Kurvenflug (Stand 2.4.2, 17.11.2026)
 
-Ermittelt aus `./gradlew :app:dependencies --configuration playReleaseRuntimeClasspath` (51 Gruppen) und dem Web-Build.
+Ermittelt aus `./gradlew :app:dependencies --configuration playReleaseRuntimeClasspath` (55 Gruppen; GitHub-Variante 46) und dem Web-Build.
+**Kein nativer Code** in der App (seit 2.4.0 ohne ONNX Runtime) und kein Nachladen von Code.
 **Ergebnis: alle Lizenzen erlauben die Veröffentlichung im Play Store und im Web. Kein Copyleft (GPL/LGPL) dabei.**
 
 | Komponente | Lizenz | Pflicht | erfüllt |
@@ -12,8 +13,13 @@ Ermittelt aus `./gradlew :app:dependencies --configuration playReleaseRuntimeCla
 | JSpecify | Apache 2.0 | Lizenzhinweis | ✓ |
 | Play In-App Updates (com.google.android.play:app-update, core-common) – nur Play-Variante | Play Core SDK Terms of Service | Nutzung nur mit Google Play | ✓ (nur Play-Build) |
 | Google Play services Tasks/Basement (com.google.android.gms, über Play Core) – nur Play-Variante | Android SDK License / Google APIs Terms | – | ✓ |
+| Google Play Billing Library 8.3.0 (com.android.billingclient) – nur Play-Variante, für Kurvenflug Pro | Android SDK License / Play Billing Terms | Nutzung nur mit Google Play | ✓ (nur Play-Build) |
+| Google Data Transport, Firebase Encoders (com.google.android.datatransport, com.google.firebase – über Billing) – nur Play-Variante | Apache 2.0 | Lizenzhinweis | Einstellungen → Open-Source-Lizenzen |
+| javax.inject (über Billing) – nur Play-Variante | Apache 2.0 | Lizenzhinweis | ✓ |
 | **Web:** Skia/Skiko (in der .wasm) | BSD-3-Clause | Hinweis | `kurvenflug.js.LICENSE.txt`, Einstellungen |
 | **Web:** Noto Color Emoji (zugeschnitten) | SIL OFL 1.1 | Lizenztext beilegen | `fonts-lizenzen.txt` |
 | **Web:** DejaVu Sans (zugeschnitten) | Bitstream Vera / DejaVu (frei) | Lizenztext beilegen | `fonts-lizenzen.txt` |
 
 Eigene Inhalte (Level, Texte, Grafiken, im Code erzeugte Töne und Musik): eigene Werke, keine fremden Assets.
+Vorlese-Stimme **Nova**: Audiodateien, die unser Server mit OpenAI erzeugt (nicht Teil des App-Pakets). OpenAI verlangt den
+Hinweis, dass die Stimme KI-generiert ist – steht in der App („Nova – KI-generierte Stimme“) und im Store-Text.
