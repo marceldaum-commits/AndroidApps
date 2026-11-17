@@ -167,7 +167,7 @@ fun ReviewScreen(
         if (index < items.size && index % 6 == 0 && bonusAt != index) {
             // Silben-Modus: jede zweite Bonusrunde wird Silben-Klatschen (nur deutsche Wörter)
             if (syllablesOn && (index / 6) % 2 == 1) {
-                val words = clapWords(items.take(index).filter { subjects[it.bedId] !in setOf("englisch", "franzoesisch", "spanisch", "latein") }.map { it.back })
+                val words = clapWords(items.take(index).filter { subjects[it.bedId] !in de.wissensgarten.core.model.Syllables.NO_CLAP_SUBJECTS }.map { it.back })
                 if (words.size >= 2) {
                     bonusAt = index; clapList = words; phase = Phase.BONUS
                     mood = Mood.CHEER; speech = "Klatsch mit! 👏"

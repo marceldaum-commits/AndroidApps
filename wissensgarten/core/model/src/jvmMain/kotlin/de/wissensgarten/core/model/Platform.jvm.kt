@@ -30,6 +30,8 @@ actual object Platform {
     actual fun gunzip(bytes: ByteArray): ByteArray = GZIPInputStream(bytes.inputStream()).use { it.readBytes() }
 }
 
+actual fun nfc(s: String): String = java.text.Normalizer.normalize(s, java.text.Normalizer.Form.NFC)
+
 /** Für Tests und Android: Kalendertag in einer bestimmten Zeitzone. */
 fun Scheduler.localDay(ms: Long, zone: java.util.TimeZone): Long = localDay(ms) { zone.getOffset(it) }
 fun WeekReport.build(entries: List<WeekReport.Entry>, cards: Map<String, WeekReport.CardInfo>, now: Long, zone: java.util.TimeZone) =

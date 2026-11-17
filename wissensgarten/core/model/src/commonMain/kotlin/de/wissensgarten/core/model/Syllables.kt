@@ -65,4 +65,13 @@ object Syllables {
     }
 
     fun count(word: String) = split(word).size
+
+    /** Fächer, deren Wörter nicht geklatscht werden (keine deutschen Wörter) */
+    val NO_CLAP_SUBJECTS = setOf("englisch", "franzoesisch", "spanisch", "latein")
+
+    /** Eignet sich ein Wort zum Silben-Klatschen? (deutsch, ein Wort, 2–4 Silben) */
+    fun isClapWord(answer: String): Boolean = answer.trim().let { w -> w.length in 3..14 && w.all { it.isLetter() } && count(w) in 2..4 }
+
+    /** Was Brummi beim Vormachen sagt: Silbe für Silbe („Gi – raf – fe“) */
+    fun spoken(word: String) = split(word).joinToString(" – ")
 }

@@ -92,7 +92,7 @@ fun SafariScreen(found: Int, englishDefault: Boolean, onPlant: (Safari.Word, Boo
         sfx?.play(Sound.FANFARE)
         particles.burst(Burst.CONFETTI, count = 50)
         scope.launch {
-            voice?.speakAndWait("Das ist ${w.de}!")
+            voice?.speakAndWait(de.wissensgarten.core.model.Safari.say(w))
             voice?.speakAndWait(w.en, Locale.ENGLISH)
         }
     }

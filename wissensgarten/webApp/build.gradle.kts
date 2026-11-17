@@ -82,8 +82,9 @@ tasks.register<Sync>("exportWebApp") {
         val sizes = big.joinToString(",", "{", "}") { "\"${it.name}\":${it.length()}" }
         // Service Worker: beim Installieren alles vorab speichern → zweiter Start sofort, auch offline
         // ort/ (Rechen-Bausteine für Thorsten, ca. 11 MB) nicht vorab speichern – nur bei Bedarf
+        // vorlesen/ (Liste der festen Texte für den Stimm-Server „Nova“) braucht die App selbst nicht
         val all = out.walkTopDown().filter { it.isFile && !it.name.endsWith(".LICENSE.txt") && it.name != "sw.js" && it.name != "version.json" &&
-            !it.relativeTo(out).invariantSeparatorsPath.startsWith("ort/") }
+            !it.relativeTo(out).invariantSeparatorsPath.startsWith("ort/") && !it.relativeTo(out).invariantSeparatorsPath.startsWith("vorlesen/") }
             .map { it.relativeTo(out).invariantSeparatorsPath }.sorted().toList()
         val pre = (listOf("./") + all).joinToString(",", "[", "]") { "'$it'" }
         out.resolve("index.html").let { it.writeText(it.readText().replace("@SIZES@", sizes)) }

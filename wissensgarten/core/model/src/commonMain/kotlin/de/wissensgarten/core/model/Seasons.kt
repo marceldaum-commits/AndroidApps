@@ -31,18 +31,22 @@ object Seasons {
         return LocalDate(year, month, day)
     }
 
+    /** Ostern, Halloween, Advent, Silvester */
+    val FESTIVALS = listOf(
+        Festival("ostern", "Ostern", "Frohe Ostern! Im Garten sind Eier versteckt 🥚", listOf("🥚", "🥚", "🐣")),
+        Festival("halloween", "Halloween", "Huh! Kürbisse im Garten – findest du alle? 🎃", listOf("🎃", "🎃", "👻")),
+        Festival("advent", "Advent", "Im Schnee liegen Geschenke versteckt 🎁", listOf("🎁", "⭐", "🎁")),
+        Festival("silvester", "Silvester", "Frohes neues Jahr! 🎆", listOf("🎉", "🍀", "🐷")),
+    )
+
     fun festival(date: LocalDate): Festival? {
         val md = (date.month.ordinal + 1) * 100 + date.day
         val easter = easter(date.year)
         return when {
-            date >= easter.minus(DatePeriod(days = 7)) && date <= easter.plus(DatePeriod(days = 1)) ->
-                Festival("ostern", "Ostern", "Frohe Ostern! Im Garten sind Eier versteckt 🥚", listOf("🥚", "🥚", "🐣"))
-            md in 1024..1031 ->
-                Festival("halloween", "Halloween", "Huh! Kürbisse im Garten – findest du alle? 🎃", listOf("🎃", "🎃", "👻"))
-            md in 1201..1226 ->
-                Festival("advent", "Advent", "Im Schnee liegen Geschenke versteckt 🎁", listOf("🎁", "⭐", "🎁"))
-            md == 1231 || md == 101 ->
-                Festival("silvester", "Silvester", "Frohes neues Jahr! 🎆", listOf("🎉", "🍀", "🐷"))
+            date >= easter.minus(DatePeriod(days = 7)) && date <= easter.plus(DatePeriod(days = 1)) -> FESTIVALS[0]
+            md in 1024..1031 -> FESTIVALS[1]
+            md in 1201..1226 -> FESTIVALS[2]
+            md == 1231 || md == 101 -> FESTIVALS[3]
             else -> null
         }
     }

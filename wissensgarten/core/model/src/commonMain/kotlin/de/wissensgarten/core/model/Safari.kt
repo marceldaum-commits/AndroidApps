@@ -63,6 +63,12 @@ object Safari {
 
     fun translate(label: String): Word? = WORDS[label.trim().lowercase()]
 
+    /** Alle bekannten Fundstücke (für die Vorab-Vertonung der Stimme Nova) */
+    val words: List<Word> get() = WORDS.values.toList()
+
+    /** Was Brummi zum Fundstück sagt */
+    fun say(w: Word) = "Das ist ${w.de}!"
+
     /** Was taugt als Fundstück? Erkennungen ohne Übersetzung (z. B. „Event“, „Sitting“) fallen weg. */
     fun candidates(labels: List<Pair<String, Float>>, minConfidence: Float = 0.55f): List<Word> =
         labels.filter { it.second >= minConfidence }.sortedByDescending { it.second }.mapNotNull { translate(it.first) }.distinctBy { it.de }.take(3)
