@@ -1,6 +1,6 @@
 {
   "id": "aw-erste-hilfe",
-  "version": 4,
+  "version": 5,
   "title": "Erste Hilfe",
   "subject": "allgemeinwissen",
   "grades": [
@@ -207,7 +207,8 @@
       "a": "Ja, das Gerät gibt Sprachanweisungen",
       "choices": [
         "Nein, nur Ärzte",
-        "Nur mit Erste-Hilfe-Schein"
+        "Nur mit Erste-Hilfe-Schein",
+        "Nur, wenn der Notarzt es erlaubt"
       ],
       "info": "Der AED prüft selbst, ob ein Schock nötig ist.",
       "img": "⚡💓🔊"
@@ -228,7 +229,12 @@
       "id": "019",
       "q": "Sollte man großflächige Verbrennungen lange mit Wasser kühlen?",
       "a": "Nein, es droht Unterkühlung – keimfrei abdecken, 112",
-      "img": "🔥🛁❌"
+      "img": "🔥🛁❌",
+      "choices": [
+        "Ja, mindestens 20 Minuten mit Eiswasser",
+        "Ja, so lange, bis der Rettungsdienst kommt",
+        "Ja, am besten unter der kalten Dusche"
+      ]
     },
     {
       "id": "020",
@@ -302,7 +308,12 @@
       "q": "Jemand hat etwas Giftiges geschluckt. Solltest du Erbrechen auslösen?",
       "a": "Nein",
       "info": "Notruf 112 oder Giftnotruf anrufen, Packung aufbewahren.",
-      "img": "🧪🚫🤮"
+      "img": "🧪🚫🤮",
+      "choices": [
+        "Ja, mit Salzwasser",
+        "Ja, mit dem Finger im Hals",
+        "Ja, wenn es schnell gehen muss"
+      ]
     },
     {
       "id": "028",
@@ -317,7 +328,8 @@
       "a": "Ja, möglichst zu zweit und vorsichtig",
       "choices": [
         "Nein, niemals",
-        "Nur ein Arzt darf das"
+        "Nur ein Arzt darf das",
+        "Nur, wenn die Person wieder wach ist"
       ],
       "info": "Sonst kann man Atmung und Atemwege nicht sichern.",
       "img": "🏍️⛑️👐"
@@ -350,7 +362,8 @@
       "a": "Ja, im Rahmen des Zumutbaren",
       "choices": [
         "Nein, Hilfe ist freiwillig",
-        "Nur wer einen Kurs gemacht hat"
+        "Nur wer einen Kurs gemacht hat",
+        "Nur Erwachsene, Kinder nie"
       ],
       "info": "Unterlassene Hilfeleistung ist strafbar (§ 323c StGB). Schon der Notruf ist Hilfe.",
       "img": "🤝⚖️"

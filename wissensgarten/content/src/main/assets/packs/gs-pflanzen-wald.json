@@ -1,6 +1,6 @@
 {
   "id": "gs-pflanzen-wald",
-  "version": 1,
+  "version": 2,
   "title": "Pflanzen und Wald",
   "subject": "sachunterricht",
   "grades": [
@@ -420,7 +420,7 @@
     },
     {
       "id": "033",
-      "q": "Welche Blume ist ein Frühblüher im Wald?",
+      "q": "Welche Blume ist ein Frühblüher im Wald: Sonnenblume, Buschwindröschen, Mohnblume oder Rose?",
       "a": "Buschwindröschen",
       "choices": [
         "Sonnenblume",

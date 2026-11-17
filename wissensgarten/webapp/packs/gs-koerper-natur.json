@@ -1,6 +1,6 @@
 {
   "id": "gs-koerper-natur",
-  "version": 2,
+  "version": 3,
   "title": "Körper und Natur",
   "subject": "sachunterricht",
   "grades": [
@@ -225,7 +225,7 @@
     },
     {
       "id": "018",
-      "q": "Welcher Monat gehört zum Sommer?",
+      "q": "Welcher Monat gehört zum Sommer: März, Juli, Oktober oder Januar?",
       "a": "Juli",
       "choices": [
         "März",
@@ -369,7 +369,7 @@
     },
     {
       "id": "031",
-      "q": "Welcher Baum hat Nadeln?",
+      "q": "Welcher Baum hat Nadeln: Eiche, Buche, Tanne oder Ahorn?",
       "a": "Tanne",
       "choices": [
         "Eiche",

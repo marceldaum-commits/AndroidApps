@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-kopfrechnen",
-  "version": 1,
+  "version": 2,
   "title": "Kopfrechnen-Tricks",
   "subject": "mathe",
   "grades": [
@@ -251,7 +251,7 @@
     },
     {
       "id": "019",
-      "q": "Welche Zahl ist durch 6 teilbar?",
+      "q": "Welche Zahl ist durch 6 teilbar: 351, 356, 354 oder 344?",
       "a": "354",
       "choices": [
         "351",
@@ -275,7 +275,7 @@
     },
     {
       "id": "021",
-      "q": "Welche Zahl ist eine Primzahl?",
+      "q": "Welche Zahl ist eine Primzahl: 27, 33, 29 oder 39?",
       "a": "29",
       "choices": [
         "27",

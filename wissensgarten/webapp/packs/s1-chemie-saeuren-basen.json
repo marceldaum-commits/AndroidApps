@@ -1,6 +1,6 @@
 {
   "id": "s1-chemie-saeuren-basen",
-  "version": 2,
+  "version": 3,
   "title": "Säuren, Basen, Salze",
   "subject": "chemie",
   "grades": [
@@ -96,7 +96,7 @@
     },
     {
       "id": "006",
-      "q": "Welcher Alltagsstoff ist basisch?",
+      "q": "Welcher Alltagsstoff ist basisch: Essig, Zitronensaft, Seifenlauge oder Cola?",
       "a": "Seifenlauge",
       "choices": [
         "Essig",
@@ -361,7 +361,7 @@
     {
       "id": "028",
       "q": "Welche Farbe zeigt Phenolphthalein in verdünnter Natronlauge?",
-      "a": "Pink",
+      "a": "Pink (Rosa)",
       "choices": [
         "Farblos",
         "Gelb",

@@ -1,6 +1,6 @@
 {
   "id": "gs-uhrzeit",
-  "version": 2,
+  "version": 3,
   "title": "Die Uhr und die Zeit",
   "subject": "mathe",
   "grades": [
@@ -321,7 +321,7 @@
     },
     {
       "id": "025",
-      "q": "Welcher Monat hat 31 Tage?",
+      "q": "Welcher Monat hat 31 Tage: April, Juli, Juni oder September?",
       "a": "Juli",
       "choices": [
         "April",

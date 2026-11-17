@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-organe",
-  "version": 2,
+  "version": 3,
   "title": "Organe und Gesundheit",
   "subject": "biologie",
   "grades": [
@@ -229,7 +229,7 @@
     {
       "id": "017",
       "q": "Welche Nährstoffe braucht der Körper vor allem als Baustoff für Muskeln?",
-      "a": "Eiweiße",
+      "a": "Eiweiße (Proteine)",
       "choices": [
         "Kohlenhydrate",
         "Ballaststoffe",

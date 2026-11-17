@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-oekologie",
-  "version": 3,
+  "version": 4,
   "title": "Ökologie",
   "subject": "biologie",
   "grades": [
@@ -73,7 +73,7 @@
     {
       "id": "004",
       "q": "In welchen Zellbestandteilen läuft die Fotosynthese ab?",
-      "a": "Chloroplasten",
+      "a": "Chloroplasten (Blattgrünkörner)",
       "img": "🍃🏭"
     },
     {
@@ -236,7 +236,7 @@
     },
     {
       "id": "019",
-      "q": "Welcher Faktor ist ein abiotischer Umweltfaktor?",
+      "q": "Welcher Faktor ist abiotisch: Fressfeinde, Temperatur, Parasiten oder Konkurrenten?",
       "a": "Temperatur",
       "choices": [
         "Fressfeinde",

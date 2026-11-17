@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-grammatik",
-  "version": 2,
+  "version": 3,
   "title": "Deutsch Grammatik",
   "subject": "deutsch",
   "grades": [
@@ -37,11 +37,11 @@
     {
       "id": "001",
       "q": "Wie viele Fälle gibt es im Deutschen?",
-      "a": "vier",
+      "a": "4",
       "choices": [
-        "drei",
-        "fünf",
-        "sechs"
+        "3",
+        "5",
+        "6"
       ],
       "info": "Nominativ, Genitiv, Dativ, Akkusativ",
       "img": "4️⃣🗂️"

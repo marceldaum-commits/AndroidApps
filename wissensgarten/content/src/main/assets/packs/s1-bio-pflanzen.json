@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-pflanzen",
-  "version": 1,
+  "version": 2,
   "title": "Pflanzen verstehen",
   "subject": "biologie",
   "grades": [
@@ -407,7 +407,7 @@
     },
     {
       "id": "032",
-      "q": "Welche Pflanze gehört zu den Kreuzblütlern?",
+      "q": "Welche Pflanze gehört zu den Kreuzblütlern: Erbse, Apfelbaum, Raps oder Sonnenblume?",
       "a": "Raps",
       "choices": [
         "Erbse",
@@ -419,7 +419,7 @@
     },
     {
       "id": "033",
-      "q": "Welche Pflanze gehört zu den Rosengewächsen?",
+      "q": "Welche Pflanze gehört zu den Rosengewächsen: Raps, Apfelbaum, Bohne oder Gänseblümchen?",
       "a": "Apfelbaum",
       "choices": [
         "Raps",
@@ -455,7 +455,7 @@
     },
     {
       "id": "036",
-      "q": "Welche Pflanze ist ein Lippenblütler mit vierkantigem Stängel?",
+      "q": "Welche Pflanze ist ein Lippenblütler mit vierkantigem Stängel: Raps, Kirsche, Erbse oder Pfefferminze?",
       "a": "Pfefferminze",
       "choices": [
         "Raps",

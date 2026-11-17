@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-pythagoras-trigo",
-  "version": 2,
+  "version": 3,
   "title": "Pythagoras & Trigonometrie",
   "subject": "mathe",
   "grades": [
@@ -264,7 +264,7 @@
     {
       "id": "020",
       "q": "sin 30° = ?",
-      "a": "0,5",
+      "a": "0,5 (1/2)",
       "choices": [
         "√3/2",
         "√2/2",
@@ -276,7 +276,7 @@
     {
       "id": "021",
       "q": "cos 60° = ?",
-      "a": "0,5",
+      "a": "0,5 (1/2)",
       "choices": [
         "√3/2",
         "√2/2",
@@ -371,7 +371,7 @@
     },
     {
       "id": "029",
-      "q": "Welcher Wert ist für sin α unmöglich?",
+      "q": "Welcher Wert ist für sin α unmöglich: 0,8; 0,3; 1,2 oder 0,99?",
       "a": "1,2",
       "choices": [
         "0,8",

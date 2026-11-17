@@ -1,6 +1,6 @@
 {
   "id": "aw-weltall",
-  "version": 3,
+  "version": 4,
   "title": "Reise ins Weltall",
   "subject": "allgemeinwissen",
   "grades": [
@@ -110,7 +110,12 @@
       "id": "007",
       "q": "Welcher Planet wird „der Rote Planet“ genannt?",
       "a": "Mars",
-      "img": "🔴⚔️"
+      "img": "🔴⚔️",
+      "choices": [
+        "Venus",
+        "Jupiter",
+        "Merkur"
+      ]
     },
     {
       "id": "008",
