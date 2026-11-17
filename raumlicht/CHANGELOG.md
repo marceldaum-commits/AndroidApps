@@ -2,6 +2,9 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.17.2 – Datenschutz-Hinweis ergänzt (17.11.2026)
+- **Für Eltern:** In den Einstellungen steht jetzt zusätzlich, dass unser Stimmen-Server keine Zugriffsprotokolle speichert.
+
 ## 2.17.1 – Sprechtempo für Nova (17.11.2026)
 - **Sprechtempo wählbar:** In den Einstellungen gibt es wieder einen Regler – sechs Stufen von gemütlich (0,75×) bis flott (1,5×). Die Stimme klingt dabei gleich hoch, sie spricht nur langsamer oder schneller. Die Wahl wird gemerkt.
 - Gilt auch für die Stimme des Geräts, die einspringt, wenn es kein Internet gibt.

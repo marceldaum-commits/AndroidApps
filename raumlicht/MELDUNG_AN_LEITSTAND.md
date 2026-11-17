@@ -2,6 +2,12 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.17.2: Datenschutz-Satz vollständig
+
+**Raumlicht 2.17.2 vom 17.11.2026, Web = Android (beide 2.17.2).** Marcel hat direkt angewiesen, den Halbsatz „und unser Server speichert keine Zugriffsprotokolle“ zu ergänzen.
+Der Datenschutz-Text in der App entspricht jetzt wörtlich eurem Punkt 5. **Bitte sicherstellen, dass das für `stimmen.mathenachhilfe-online.com` wirklich gilt und so bleibt**
+(nginx `access_log off` auch für `/jetzt` und `/nova/`, keine Protokolle im Stimmen-Werk mit IP-Adressen) – von hier aus lässt sich das nicht prüfen.
+
 ## 17.11.2026 – Raumlicht 2.17.1: Regler „Sprechtempo“ für Nova
 
 Marcel hat direkt bestätigt. **Raumlicht 2.17.1 vom 17.11.2026, Web = Android (beide 2.17.1).** (Eure Ergänzung kam erst nach der Auslieferung von 2.17.0 an – deshalb eine eigene Version.)

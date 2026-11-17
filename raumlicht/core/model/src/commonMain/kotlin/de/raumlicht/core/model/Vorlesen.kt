@@ -54,7 +54,7 @@ object Vorlesen {
     /** Was beim Vorlesen mit Daten passiert (steht in den Einstellungen von Android und WebApp) */
     const val PRIVACY = "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. " +
         "Texte, die erst in der Aufgabe entstehen, schickt die App ohne Angaben zu dir an unseren Server stimmen.mathenachhilfe-online.com; " +
-        "dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine Namen, Konten oder Geräte-Kennungen übertragen."
+        "dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle."
     /** Unser Stimmen-Server. Dort liegen die MP3-Dateien; nur er spricht mit dem Dienst, der die Stimme erzeugt – die App nie. */
     const val SERVER = "https://stimmen.mathenachhilfe-online.com"
     const val VOICE = "nova"

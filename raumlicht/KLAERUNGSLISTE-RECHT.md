@@ -54,5 +54,5 @@ Sie ist keine Rechtsberatung; Marcel klärt die Punkte mit den zuständigen Stel
 - Feste Texte sind vorab vertont; die App lädt nur Dateien von stimmen.mathenachhilfe-online.com.
 - **Texte aus der Aufgabe (auch mit eingegebenen Zahlen) gehen an unseren Server und von dort einmalig an OpenAI.** Ohne Name, Konto oder Kennung – aber es sind Eingaben von
   (auch minderjährigen) Nutzern, die das Gerät verlassen. Zu klären: Auftragsverarbeitung mit OpenAI, Drittland-Übermittlung, Speicherdauer der Audiodateien,
-  Server-Protokolle von stimmen.… (der Leitstand nennt „keine Zugriffsprotokolle“ – in der App steht dieser Satz erst, wenn das bestätigt ist), Angaben im Play-Formular „Datensicherheit“.
+  Server-Protokolle von stimmen.… (seit 2.17.2 steht in der App „unser Server speichert keine Zugriffsprotokolle“ – von Marcel am 17.11.2026 so angewiesen; die Server-Einstellung muss dazu passen und so bleiben), Angaben im Play-Formular „Datensicherheit“.
 - Kennzeichnung „KI-generierte Stimme“ steht in den Einstellungen.
