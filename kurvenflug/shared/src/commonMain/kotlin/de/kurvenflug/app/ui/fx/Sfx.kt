@@ -5,6 +5,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 /** Spielt die Spiel-Geräusche (im Code erzeugt, siehe [Synth]). Android: SoundPool, Browser: Web Audio. */
 abstract class Sfx {
     var enabled = true
+    /** Lautstärke der Effekte 0…1 (Einstellungen) */
+    var level = 0.9f
 
     /** @param pitch 1 = normal, >1 höher (z. B. bei Serien) */
     abstract fun play(s: Sound, pitch: Float = 1f, volume: Float = 0.9f)

@@ -27,6 +27,13 @@ class Settings(private val prefs: Prefs) {
     val vibration: StateFlow<Boolean> = _vibration.asStateFlow()
     val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
     val voltVoice: StateFlow<Boolean> = _voltVoice.asStateFlow()
+    private val _musicVolume = MutableStateFlow(prefs.getInt("musicVolume", 70))
+    private val _sfxVolume = MutableStateFlow(prefs.getInt("sfxVolume", 90))
+    /** Lautstärke Musik bzw. Effekte in Prozent (0–100) */
+    val musicVolume: StateFlow<Int> = _musicVolume.asStateFlow()
+    val sfxVolume: StateFlow<Int> = _sfxVolume.asStateFlow()
+    fun setMusicVolume(v: Int) { val c = v.coerceIn(0, 100); prefs.edit().putInt("musicVolume", c).apply(); _musicVolume.value = c }
+    fun setSfxVolume(v: Int) { val c = v.coerceIn(0, 100); prefs.edit().putInt("sfxVolume", c).apply(); _sfxVolume.value = c }
     fun setSound(v: Boolean) { prefs.edit().putBoolean("sound", v).apply(); _sound.value = v }
     fun setMusic(v: Boolean) { prefs.edit().putBoolean("music", v).apply(); _music.value = v }
     fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }

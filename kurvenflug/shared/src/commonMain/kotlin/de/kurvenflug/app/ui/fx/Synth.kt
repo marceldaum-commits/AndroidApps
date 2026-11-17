@@ -9,7 +9,7 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 /** Alle Geräusche – im Code erzeugt, keine Audiodateien, keine Lizenzen. Elektronisch, passend zum All. */
-enum class Sound { TAP, TICK, LAUNCH, HIT, CELL, CRASH, WIN, WRONG, BEEP, VOICE }
+enum class Sound { TAP, TICK, LAUNCH, HIT, CELL, CRASH, WIN, WRONG, BEEP, VOICE, FLIGHT, NEAR, STAR, JINGLE }
 
 object Synth {
     const val SR = 44100
@@ -38,8 +38,27 @@ object Synth {
         Sound.WRONG -> buf(0.35).also {
             sweep(it, 0.0, 330.0, 160.0, 0.28, 0.5, square = true)
         }
-        // Eine Silbe von Volts Plapper-Stimme (Tonhöhe wird beim Abspielen pro Silbe verändert)
-        Sound.VOICE -> buf(0.09).also { sweep(it, 0.0, 520.0, 610.0, 0.07, 0.3, square = true); sweep(it, 0.0, 1040.0, 1220.0, 0.06, 0.12) }
+        // Eine Robo-Silbe von Volt (Tonhöhe wird pro Silbe verändert): Rechteck mit Ringmodulation – klingt nach Roboter
+        Sound.VOICE -> buf(0.1).also { b ->
+            for (i in b.indices) {
+                val t = i.toDouble() / SR
+                val env = min(1.0, t / 0.008) * exp(-t * 18)
+                val f = 540.0 + 90.0 * (t / 0.1)
+                val sq = if (sin(2 * PI * f * t) >= 0) 1.0 else -1.0
+                b[i] += (env * (0.22 * sq + 0.25 * sin(2 * PI * 2 * f * t)) * (0.6 + 0.4 * sin(2 * PI * 70 * t))).toFloat()
+            }
+        }
+        // Flug: kurzer weicher Ton, die Tonhöhe folgt beim Abspielen der Höhe der Sonde
+        Sound.FLIGHT -> buf(0.12).also { sweep(it, 0.0, 660.0, 690.0, 0.1, 0.18) }
+        // Knapp daneben: zwei sanft fallende Töne („oh-oh“) – nicht schrill
+        Sound.NEAR -> buf(0.6).also { sweep(it, 0.0, 587.3, 554.4, 0.22, 0.3); sweep(it, 0.26, 523.3, 466.2, 0.3, 0.3) }
+        // Stern: helle Glocke mit Funkeln (Tonhöhe steigt pro Stern)
+        Sound.STAR -> buf(0.9).also { bell(it, 0.0, 1567.98, 0.8, 0.3); bell(it, 0.05, 2349.3, 0.6, 0.15); bell(it, 0.1, 3135.96, 0.4, 0.08) }
+        // Erkennungsmelodie: das Kurven-Motiv (siehe SpaceMusic.jingle), auf die Effekt-Abtastrate gebracht
+        Sound.JINGLE -> MusicSynth.render(de.kurvenflug.core.model.SpaceMusic.jingle()).let { m ->
+            val k = SR / MusicSynth.SR
+            FloatArray(m.size * k) { i -> m[i / k] / 32768f * 0.8f }
+        }
         // Volt „spricht“: kurze Roboter-Piepser
         Sound.BEEP -> buf(0.3).also {
             val r = Random(5)

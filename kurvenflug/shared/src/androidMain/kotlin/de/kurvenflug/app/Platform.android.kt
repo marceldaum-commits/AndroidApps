@@ -32,7 +32,9 @@ class AndroidPlatform(
     override fun openUrl(url: String) {
         runCatching { ctx.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)) }
     }
-    override fun setMusicMood(m: MusicMood) { music?.setMood(m) }
+    override fun setMusicMood(m: MusicMood?) { music?.setMood(m) }
+    override fun setMusicVolume(v: Float) { music?.setVolume(v) }
+    override fun onFirstTouch() { music?.allow() }
     override fun setMusicEnabled(on: Boolean) { music?.setEnabled(on) }
 }
 
