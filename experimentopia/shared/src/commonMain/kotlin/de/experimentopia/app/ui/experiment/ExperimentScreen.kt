@@ -1,6 +1,7 @@
 package de.experimentopia.app.ui.experiment
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
@@ -103,6 +104,7 @@ fun ExperimentScreen(
                             GlowButton({ phase = Phase.PREDICT }, Modifier.fillMaxWidth().pulse(true, 0.02f).testTag("los")) { Text("🤔 Ich vermute …", fontWeight = FontWeight.Bold, fontSize = 18.sp) }
                         }
                         Phase.PREDICT -> {
+                            StoryCard(e, open = true)
                             BlubbSays("Was glaubst du? Es gibt kein Falsch – Forscher vermuten immer zuerst.", Mood.HAPPY, size = 56.dp)
                             Text(e.predict.question, style = MaterialTheme.typography.titleMedium, color = E.Text)
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -135,6 +137,7 @@ fun ExperimentScreen(
                                     Text("Deine Vermutung: " + e.predict.choices[guess ?: 0].let { "${it.emoji} ${it.text}" } + "  ${sure?.emoji ?: ""}", color = E.Sun, fontSize = 13.sp)
                                 }
                             }
+                            StoryCard(e)
                             TaskBanner(e.task, goal)
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                                 TheoryButton(e.topic, { theory = true }, Modifier.weight(1f, fill = false)); ReadButton(ReadTexts.task(e))
@@ -146,6 +149,7 @@ fun ExperimentScreen(
                             }
                         }
                         Phase.REVEAL -> {
+                            StoryCard(e)
                             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
                                 Text(if (right) "🎯" else "💡", fontSize = 80.sp, modifier = Modifier.popIn())
                             }
@@ -162,6 +166,7 @@ fun ExperimentScreen(
                             GlowButton({ phase = Phase.EXPLAIN }, Modifier.fillMaxWidth().testTag("warum"), color = E.Sky) { Text("🗣️ Blubb fragt: Warum?", fontWeight = FontWeight.Bold) }
                         }
                         Phase.EXPLAIN -> {
+                            StoryCard(e)
                             var wrong by remember { mutableIntStateOf(-1) }
                             var shakeKey by remember { mutableIntStateOf(0) }
                             BlubbSays(when { explained -> "Ahhh! Jetzt versteh ich's! Danke, Professor!"; wrong >= 0 -> "Hmm … das glaube ich nicht ganz. Erklär's mir noch mal anders?"; else -> "Ich verstehe das nicht. Kannst du es mir erklären? Warum ist das so?" },
@@ -181,6 +186,7 @@ fun ExperimentScreen(
                             }
                         }
                         Phase.TRANSFER -> {
+                            StoryCard(e)
                             BlubbSays("Jetzt bist du der Profi. Was passiert hier?", Mood.HAPPY, size = 56.dp)
                             Text(e.transfer.question, style = MaterialTheme.typography.titleMedium, color = E.Text)
                             ReadButton(ReadTexts.transfer(e))
@@ -201,6 +207,26 @@ fun ExperimentScreen(
         }
         Confetti(confetti)
         TheorySheet(theory, e.topic, pro = e.grades.first >= 7) { theory = false }
+    }
+}
+
+/** Das Rätsel vom Anfang – jederzeit wieder aufklappbar, damit die Frage nie ohne Zusammenhang dasteht */
+@Composable
+private fun StoryCard(e: Experiment, open: Boolean = false) {
+    var shown by remember(e.id, open) { mutableStateOf(open) }
+    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(E.Deep).border(1.5.dp, E.Sky.copy(alpha = 0.6f), RoundedCornerShape(14.dp))
+        .clickable { shown = !shown }.padding(horizontal = 12.dp, vertical = 8.dp).testTag("raetsel_karte"), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Text("📜", fontSize = 18.sp)
+            Text(if (shown) "  Das Rätsel" else "  Rätsel nochmal lesen", color = E.Sky, fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.weight(1f))
+            Text(if (shown) "▲" else "▼", color = E.Sky)
+        }
+        AnimatedVisibility(shown) {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(e.story, color = E.Text, fontSize = 15.sp)
+                ReadButton(ReadTexts.story(e))
+            }
+        }
     }
 }
 

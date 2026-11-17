@@ -1,5 +1,13 @@
 # Changelog – Experimentopia
 
+## 2.1.1 – Rätsel nachlesen, Updates sofort sehen (17.11.2026)
+
+- 📜 **Rätsel nochmal lesen**: Nach „Ich vermute …“ verschwand die Geschichte vom Anfang. Jetzt gibt es in jedem Schritt die Karte
+  „📜 Rätsel nochmal lesen“ – antippen, und die Frage steht wieder da (auch zum Vorlesen).
+- 🔄 **Updates gleich auf dem Startbildschirm**: Die App schaut bei jedem Öffnen nach einer neuen Version. Gibt es eine, steht sie sofort
+  oben auf dem Startbildschirm (abschaltbar in den Einstellungen).
+- 💛 Ist der Forscher-Pass freigeschaltet, steht jetzt deutlich „Forscher-Pass aktiv“ auf dem Startbildschirm – und für Eltern auch in den Einstellungen.
+
 ## 2.1.0 – Der Forscher-Pass ist da (17.11.2026)
 
 - 💛 **Forscher-Pass**: Für 7,99 € einmalig (kein Abo) öffnet er alle 200 Versuche und alle Geräte im Freien Labor.

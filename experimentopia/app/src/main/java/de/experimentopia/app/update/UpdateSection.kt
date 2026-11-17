@@ -101,7 +101,7 @@ fun UpdateSection(
                             if (onAutoCheck != null) Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Text("Beim Start automatisch nachsehen", style = MaterialTheme.typography.bodyMedium)
-                                    Text("Bei jedem Öffnen der App (höchstens alle 20 Stunden). Es werden keine Daten gesendet.", style = MaterialTheme.typography.bodySmall)
+                                    Text("Bei jedem Öffnen der App – ein neues Update steht dann gleich auf der Startseite. Es werden keine Daten gesendet.", style = MaterialTheme.typography.bodySmall)
                                 }
                                 Switch(autoCheck, onAutoCheck)
                             }

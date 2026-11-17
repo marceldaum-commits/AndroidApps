@@ -89,6 +89,9 @@ class ScreenshotTest {
     @Test fun explain() = shot("07_blubb_erklaeren", settle = 2500, prepare = { r -> r.reveal { r.onNodeWithTag("grund1") }; r.onNodeWithTag("grund1").performClick() }) {
         ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.EXPLAIN, startGuess = 1)
     }
+    @Test fun storyAgain() = shot("69_raetsel_nochmal", settle = 1500, prepare = { it.onNodeWithTag("raetsel_karte").performClick() }) {
+        ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.LAB, startGuess = 1)
+    }
     @Test fun done() = shot("08_geschafft", settle = 2500) { ExperimentScreen(Catalog.byId("w5")!!, {}, {}, {}, startPhase = Phase.DONE, startGuess = 0) }
 
     @Test fun tower() = lab("w8", "10_dichteturm", settle = 4000, prepare = { it.tap("Spiritus"); it.tap("🍯 Honig"); it.tap("Speiseöl"); it.tap("💧 Wasser"); it.tap("Spülmittel"); it.mainClock.advanceTimeBy(2000); it.tap("Weintraube"); it.tap("Eiswürfel") })
@@ -168,11 +171,14 @@ class ScreenshotTest {
         Pro.configure("979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812", "https://www.mathenachhilfe-online.com/kasse/?add-to-cart=4143")
         try { shot("67_insel_mit_pass") { IslandScreen(Island.KRAFT, someStars, 0, { e -> Pro.locked(e, false, done = someStars.keys) }, {}, {}) } } finally { Pro.configure("", "") }
     }
+    @Test fun homePass() = shot("68_forscher_pass_aktiv", settle = 2500) {
+        HomeScreen(someStars, stats, Daily.forDay(20_600), false, 0, false, onIsland = {}, onDaily = {}, onFreeLab = {}, onJournal = {}, onBadges = {}, onSettings = {}, onGrade = {}, onWelcomed = {}, pass = true)
+    }
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
-        SettingsScreen(true, {}, true, {}, 5, {}, "2.1.0", "17.11.2026", {}, {}, {})
+        SettingsScreen(true, {}, true, {}, 5, {}, "2.1.1", "17.11.2026", {}, {}, {})
         }
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }

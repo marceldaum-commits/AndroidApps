@@ -21,11 +21,14 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         dayStart = { LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli() })
 
     // ------------------------------------------------------------ App-Update (nur GitHub-Fassung)
-    private val _update = MutableStateFlow<AppRelease?>(null)
+    // Ein gefundenes Update wird gemerkt, damit der Hinweis auf der Startseite bleibt, bis es installiert ist
+    private val _update = MutableStateFlow(settings.foundUpdate?.let { (v, url) -> AppRelease(v, "", url, 0) }
+        ?.takeIf { Updates.isNewer(it.version, BuildConfig.VERSION_NAME) })
     val availableUpdate: StateFlow<AppRelease?> = _update
-    private companion object { const val CHECK_EVERY_MS = 20 * 60 * 60_000L }
+    /** Höchstens alle paar Minuten fragen (Drehen des Handys, schnelles Hin und Her) */
+    private companion object { const val CHECK_EVERY_MS = 5 * 60_000L }
 
-    /** Beim Start höchstens alle 20 Stunden bei GitHub nachsehen (abschaltbar). */
+    /** Bei jedem Start bei GitHub nachsehen (abschaltbar) – ein neues Update erscheint gleich als Hinweis auf der Startseite. */
     fun checkForUpdateIfDue(installed: String) {
         if (!BuildConfig.SELF_UPDATE || !settings.autoUpdate.value) return
         val now = System.currentTimeMillis()
@@ -33,7 +36,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             de.experimentopia.app.update.AppUpdater.check().onSuccess { r ->
                 settings.lastUpdateCheck = now
-                _update.value = r?.takeIf { Updates.isNewer(it.version, installed) }
+                val newer = r?.takeIf { Updates.isNewer(it.version, installed) }
+                _update.value = newer
+                settings.foundUpdate = newer?.let { it.version to it.apkUrl }
             }
         }
     }

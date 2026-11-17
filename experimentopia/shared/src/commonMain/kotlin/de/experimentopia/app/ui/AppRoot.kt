@@ -117,6 +117,9 @@ fun AppRoot(
     val grade by state.prefs.grade.collectAsState()
     val audio by state.prefs.audio.collectAsState()
     val sound by state.prefs.sound.collectAsState()
+    // Forscher-Pass freigeschaltet? (beobachtet Code und alten Schalter, damit das Abzeichen sofort erscheint)
+    val proCode by state.prefs.proCode.collectAsState(); val proFlag by state.prefs.pro.collectAsState()
+    val pass = remember(proCode, proFlag) { state.pro() }
     val music = LocalMusic.current; val reader = LocalReader.current
     // Musik und Stimme folgen den Einstellungen; Musik erst nach der ersten Berührung
     var touched by remember { mutableStateOf(false) }
@@ -153,7 +156,7 @@ fun AppRoot(
                         onFreeLab = { nav.go(Route.Free) }, onTopics = { nav.go(Route.Topics) }, onSubject = { nav.go(Route.SubjectR(it)) }, onJournal = { nav.go(Route.Journal) }, onBadges = { nav.go(Route.Badges) },
                         onSettings = { nav.go(Route.Settings) }, onGrade = state.prefs::setGrade,
                         onWelcomed = { state.prefs.welcomed = true; welcome = false },
-                        banner = banner?.let { b -> { b { nav.go(Route.Settings) } } },
+                        banner = banner?.let { b -> { b { nav.go(Route.Settings) } } }, pass = pass,
                     )
                 }
                 is Route.IslandR -> IslandScreen(r.island, stars, grade, state::locked, { open(it) }, { nav.back() })
@@ -180,7 +183,7 @@ fun AppRoot(
                         grade = grade, onGrade = state.prefs::setGrade, installed = versionName, versionDate = versionDate,
                         onReset = state::reset, onPro = { nav.go(Route.ProR("Alles")) }, onBack = { nav.back() },
                         top = settingsTop, privacy = privacy ?: de.experimentopia.app.ui.settings.DEFAULT_PRIVACY,
-                        audio = audio, onAudio = state.prefs::setAudio,
+                        audio = audio, onAudio = state.prefs::setAudio, pass = pass,
                     )
                 }
             }

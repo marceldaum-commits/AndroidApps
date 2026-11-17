@@ -52,6 +52,11 @@ class Settings(ctx: Context) : Prefs {
         get() = prefs.getStringSet("badgesSeen", emptySet()).orEmpty()
         set(v) = prefs.edit().putStringSet("badgesSeen", v).apply()
 
+    /** Zuletzt gefundenes Update (Version, APK-Adresse) – der Hinweis bleibt, bis es installiert ist */
+    var foundUpdate: Pair<String, String>?
+        get() = prefs.getString("foundUpdate", null)?.split('\t')?.takeIf { it.size == 2 }?.let { it[0] to it[1] }
+        set(v) = prefs.edit().putString("foundUpdate", v?.let { "${it.first}\t${it.second}" }).apply()
+
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)
         set(v) = prefs.edit().putLong("lastUpdateCheck", v).apply()

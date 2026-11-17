@@ -74,6 +74,8 @@ fun HomeScreen(
     onGrade: (Int) -> Unit,
     onWelcomed: () -> Unit,
     banner: (@Composable () -> Unit)? = null,
+    /** Forscher-Pass freigeschaltet: deutlich sichtbares Abzeichen im Kopf */
+    pass: Boolean = false,
 ) {
     Box(Modifier.fillMaxSize()) {
         BubbleBackground()
@@ -91,6 +93,12 @@ fun HomeScreen(
                 Pill("⭐ ${stats.stars}/${Catalog.all.size * 3}", E.Sun)
                 Pill("🎯 ${stats.hits} Treffer", E.Mint)
                 Pill("💡 ${stats.ahas} Aha!", E.Pink)
+            }
+            if (pass) Row(Modifier.fillMaxWidth().popIn().clip(RoundedCornerShape(16.dp)).background(Brush.horizontalGradient(listOf(E.Sun.copy(alpha = 0.3f), E.Orange.copy(alpha = 0.18f))))
+                .border(2.dp, E.Sun, RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 8.dp).testTag("pass_aktiv"), verticalAlignment = Alignment.CenterVertically) {
+                Text("💛", fontSize = 22.sp, modifier = Modifier.pulse(true, 0.08f))
+                Spacer(Modifier.width(8.dp))
+                Text("Forscher-Pass aktiv – alle Inseln und Geräte sind offen!", color = E.Sun, fontWeight = FontWeight.Bold, fontSize = 14.sp)
             }
             banner?.invoke()
             if (welcome) Panel(border = E.Mint) {

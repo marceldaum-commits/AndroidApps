@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.1.1 vom 17.11.2026: „Forscher-Pass aktiv“ sichtbar, Rätsel nachlesbar, Update-Prüfung bei jedem Start
+
+- Rätsel-Karte „📜 Rätsel nochmal lesen“ in allen Schritten; Android prüft Updates bei jedem Öffnen (mind. 5 Min. Abstand) und zeigt ein gefundenes Update sofort als Banner auf dem Startbildschirm (bleibt gespeichert bis installiert). Web aktualisiert sich weiter selbst über den Service Worker.
+- **Web = Android** (2.1.1). Nach dem Freischalten: Abzeichen „💛 Forscher-Pass aktiv – alle Inseln und Geräte sind offen!“ auf dem Startbildschirm (unter dem Kopf)
+  und im Eltern-Bereich der Einstellungen („Forscher-Pass aktiv – auf diesem Gerät freigeschaltet“). Erscheint sofort nach dem Einlösen.
+- Kasse (Produkt 4143) seit 2.1.0 drin, Android-Stimme seit 2.0.2 auf `/thorsten/sherpa/`. Liegt auf `experimentopia-test`.
+  **Bitte den Gratis-Testcode schicken** – damit prüfe ich das Freischalten Ende-zu-Ende.
+
 ## 17.11.2026 – Version 2.1.0 vom 17.11.2026: Forscher-Pass mit Kasse (bereit für den Live-Gang)
 
 - **Web = Android** (2.1.0). Kasse eingetragen: `checkoutUrl=https://www.mathenachhilfe-online.com/kasse/?bestellweg=aendern&add-to-cart=4143` (Produkt 4143, 7,99 €).

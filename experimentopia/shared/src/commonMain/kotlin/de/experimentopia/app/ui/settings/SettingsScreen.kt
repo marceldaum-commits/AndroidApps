@@ -40,6 +40,8 @@ fun SettingsScreen(
     privacy: String = DEFAULT_PRIVACY,
     audio: AudioPrefs = AudioPrefs(),
     onAudio: (AudioPrefs) -> Unit = {},
+    /** Forscher-Pass freigeschaltet */
+    pass: Boolean = false,
 ) {
     var confirm by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -53,8 +55,12 @@ fun SettingsScreen(
                 Text("Passende Versuche werden hervorgehoben. Alle anderen bleiben spielbar.", color = E.Muted, fontSize = 13.sp)
                 ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "alle" else "Klasse $it" }, onGrade)
             }
-            if (Pro.ENABLED) Panel(border = E.Sun) {
+            if (pass) Panel(Modifier.testTag("pass_status"), border = E.Sun) {
+                Text("💛 Forscher-Pass aktiv", style = MaterialTheme.typography.titleMedium, color = E.Sun)
+                Text("Für Eltern: Der Forscher-Pass ist auf diesem Gerät freigeschaltet – alle Versuche und Geräte sind offen. Danke!", color = E.Text, fontSize = 13.sp)
+            } else if (Pro.ENABLED) Panel(border = E.Sun) {
                 Text("💛 Forscher-Pass", style = MaterialTheme.typography.titleMedium, color = E.Sun)
+                Text("Noch nicht freigeschaltet. Einmalig ${Pro.WEB_PRICE}, kein Abo.", color = E.Muted, fontSize = 13.sp)
                 GlowButton(onPro, color = E.Sun) { Text("Was ist im Forscher-Pass?") }
             }
             Panel {
