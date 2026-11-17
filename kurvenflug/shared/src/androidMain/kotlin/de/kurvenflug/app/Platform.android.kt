@@ -18,6 +18,7 @@ class AndroidPlatform(
     override val sfx: Sfx?,
     private val music: BackgroundMusic?,
     override val proShop: ProShop? = null,
+    override val reader: de.kurvenflug.app.ui.fx.Reader? = null,
 ) : Platform {
     override val isWeb = false
     override fun shareText(text: String, title: String) {

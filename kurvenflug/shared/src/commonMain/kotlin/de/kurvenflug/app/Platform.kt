@@ -30,6 +30,8 @@ interface Platform {
     fun onFirstTouch() {}
     /** Kaufweg für Kurvenflug Pro (null = keiner, z. B. in Bildschirmfoto-Tests) */
     val proShop: ProShop? get() = null
+    /** Vorlesen (null = nicht möglich, z. B. in Bildschirmfoto-Tests) */
+    val reader: de.kurvenflug.app.ui.fx.Reader? get() = null
 }
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */

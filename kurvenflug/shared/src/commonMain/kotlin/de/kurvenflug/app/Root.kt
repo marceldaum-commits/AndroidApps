@@ -100,20 +100,28 @@ fun KurvenflugRoot(
     LaunchedEffect(music) { platform.setMusicEnabled(music) }
     val musicVol by vm.settings.musicVolume.collectAsStateWithLifecycle()
     val sfxVol by vm.settings.sfxVolume.collectAsStateWithLifecycle()
-    LaunchedEffect(musicVol) { platform.setMusicVolume(musicVol / 100f) }
     LaunchedEffect(sfxVol) { platform.sfx?.level = sfxVol / 100f }
     // Ton erst nach der ersten Berührung – dann begrüßt die Kurvenflug-Erkennungsmelodie
     var touched by remember { mutableStateOf(false) }
     LaunchedEffect(touched) {
         if (touched) { platform.onFirstTouch(); kotlinx.coroutines.delay(250); platform.sfx?.play(de.kurvenflug.app.ui.fx.Sound.JINGLE, volume = 0.7f) }
     }
+    // Vorlesen: Stimme und Tempo übernehmen; solange Volt spricht, wird die Musik leiser
+    val readAloud by vm.settings.readAloud.collectAsStateWithLifecycle()
+    val readVoice by vm.settings.readVoice.collectAsStateWithLifecycle()
+    val readRate by vm.settings.readRate.collectAsStateWithLifecycle()
+    val reader = platform.reader
+    LaunchedEffect(readAloud, readVoice, readRate) { if (readAloud) reader?.configure(readVoice, readRate / 100f) else reader?.stop() }
+    val talking = reader?.speaking == true
+    LaunchedEffect(musicVol, talking) { platform.setMusicVolume(musicVol / 100f * (if (talking) 0.35f else 1f)) }
     val proState = rememberProState(vm, platform.proShop)
     KurvenflugTheme {
         val look by vm.settings.look.collectAsStateWithLifecycle()
         val voltVoice by vm.settings.voltVoice.collectAsStateWithLifecycle()
         CompositionLocalProvider(de.kurvenflug.app.LocalPlatform provides platform, LocalSfx provides platform.sfx, LocalVibration provides vibration,
             de.kurvenflug.app.ui.flight.LocalLook provides look, de.kurvenflug.app.ui.volt.LocalVoltHat provides look.third,
-            de.kurvenflug.app.ui.volt.LocalVoltVoice provides voltVoice, LocalPro provides proState) {
+            de.kurvenflug.app.ui.volt.LocalVoltVoice provides voltVoice, LocalPro provides proState,
+            de.kurvenflug.app.ui.fx.LocalReader provides reader, de.kurvenflug.app.ui.fx.LocalReadAloud provides (readAloud && reader != null)) {
             Surface(Modifier.fillMaxSize().pointerInput(Unit) {
                 awaitPointerEventScope {
                     while (!touched) {
@@ -470,6 +478,9 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 onReset = vm::resetAll,
                 onPro = if (platform.proShop != null) ({ nav.goOnce(Routes.PRO) }) else null,
                 voltVoice = vm.settings.voltVoice.collectAsStateWithLifecycle().value, onVoltVoice = vm.settings::setVoltVoice,
+                readAloud = vm.settings.readAloud.collectAsStateWithLifecycle().value, onReadAloud = vm.settings::setReadAloud,
+                readVoice = vm.settings.readVoice.collectAsStateWithLifecycle().value, onReadVoice = vm.settings::setReadVoice,
+                readRate = vm.settings.readRate.collectAsStateWithLifecycle().value, onReadRate = vm.settings::setReadRate,
             )
         }
     }

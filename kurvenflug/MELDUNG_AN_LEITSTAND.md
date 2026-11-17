@@ -1,5 +1,32 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 0.27.0 – 🗣️ Vorlesen (Auftrag Marcel 17.11.) · Web = Android
+
+- **Was vorgelesen wird:** Volts Sprechblasen (auf allen Seiten, damit auch Aufgaben/Aufträge, Kapitel-Erklärungen,
+  Rückmeldungen), **Rechen-Stern** (🔊: Frage + alle drei Antworten, nach dem Antworten die richtige + Lösungsweg) und die
+  **📖 Theorie** (🔊 je Erklärung, Merkformel, „alles vorlesen“). Tipp auf die Sprechblase = nochmal. Neuer Text unterbricht
+  den alten; während Volt spricht, wird die Musik leiser.
+- **Einstellungen (gemerkt):** an/aus (Standard an; ersetzt dann das Robo-Plappern), **Stimme**: Automatisch / jede deutsche
+  Stimme des Geräts bzw. Browsers / **„Thorsten (natürlich)“**, **Tempo** 70–130 %, **▶ Probe hören**.
+- **Formeln und Einheiten:** `Speech.clean` aus Raumlicht übernommen (gemeinsam Android + Web, Raumlicht-Tests
+  mitgenommen) und für Kurvenflug erweitert: m/s, m/s², km/h, s, m, N, kg, h, „π/2“, „rechts/links“, f'(x), Live-Rechnung
+  („Bahn 1 → 5“ = „ergibt“). Test prüft **alle** Spieltexte (Level, Generatoren, Rechen-Stern, Rechenwege, Theorie):
+  keine Sonderzeichen übrig, saubere Satzzeichen.
+- **Thorsten technisch wie Raumlicht:** dieselbe Stimmdatei (de_DE-thorsten-medium, 63 MB, SHA-256 geprüft), **nur auf
+  Wunsch** geladen; Lautschrift vorab erzeugt (`tools/stimme/lautschrift.py`, liegt in `voice/stimme`, 870 feste Sätze +
+  2185 Wörter + Zahlen 0–999) → **kein espeak-ng/GPL** in App oder WebApp. `VoiceDataTest`: jedes Wort aller Spieltexte
+  hat Lautschrift. Unbekannte Wörter (z. B. Spielernamen) liest die Gerätestimme.
+  - Android: sherpa-onnx 2.0.1 (Apache-2.0), nur ARM (wie Raumlicht).
+  - **Web: ja, auch Thorsten** – ONNX Runtime Web 1.22 (MIT) rechnet dasselbe Modell mit denselben Lauten (Raumlicht-Web
+    hat das nicht). Im Browser-Test: Laden + Prüfsumme 4,8 s, Thorsten spricht die Begrüßung nach dem ersten Tippen, offline
+    danach weiter nutzbar (eigener Speicher „kf-stimme“, nicht im normalen Offline-Paket → Start bleibt so schnell wie bisher).
+- **Datenschutz:** Gerätestimmen nur, wenn sie ohne Internet sprechen (es geht kein Text nach draußen). Vor dem Laden von
+  Thorsten Hinweis für Eltern: Datei von huggingface.co (externer Anbieter, sieht wie bei jedem Download die IP-Adresse),
+  keine Texte/keine Kinderdaten; „Stimme entfernen“ gibt den Platz frei. Lizenzen in den Einstellungen ergänzt.
+- **Play-Ausnahme:** Die Play-Fassung hat bewusst kein Internet → dort nur Gerätestimmen (Vorlesen selbst gleich).
+  Soll Thorsten auch in Play, müsste Marcel Internet + Datensicherheits-Angabe freigeben.
+- **APK-Größe:** wächst durch sherpa-onnx (Maschinencode, komprimiert) – Raumlicht hat dasselbe.
+
 ## 0.26.0 – Klang-Identität KurvenFlug (Auftrag Marcel 17.11.) · Web = Android
 
 - **Entstehung:** komplett im Code komponiert und erzeugt (`core/model/SpaceMusic.kt` = Noten, `shared/ui/fx/MusicSynth.kt`

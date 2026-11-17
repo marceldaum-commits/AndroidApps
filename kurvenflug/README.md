@@ -103,6 +103,19 @@ Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsw
 |---|---|---|---|
 | ![Live](screenshots/72_live_rechnung.png) | ![Frage](screenshots/73_rechenstern_frage.png) | ![Richtig](screenshots/74_rechenstern_geschafft.png) | ![Aufgabe](screenshots/76_aufgabe_nach_fehlversuch.png) |
 
+## Vorlesen (`core/model/Speech.kt`, `Lautschrift.kt`, `shared/ui/fx/Reader.kt`)
+Volt liest Sprechblasen, Aufgaben, Rechen-Stern-Fragen und Erklärungen vor (abschaltbar, Stimme und Tempo wählbar, Probe-Taste).
+Formeln und Einheiten werden in Worte übersetzt (`Speech.clean`, gemeinsam für Android und Web: „x² − 2x“ → „x hoch 2 minus 2x“,
+„3 m/s“ → „3 Meter pro Sekunde“). Stimmen: die deutschen Stimmen des Geräts/Browsers (nur solche, die ohne Internet sprechen) oder
+**„Thorsten“** (Piper-Stimme, 63 MB, nur auf Wunsch von huggingface.co geladen, per SHA-256 geprüft). Android rechnet Thorsten mit
+sherpa-onnx (wie Raumlicht), die WebApp mit ONNX Runtime Web (`web/.../resources/ort`). Die Lautschrift liegt fertig in `voice/stimme`
+(erzeugt mit `tools/stimme/lautschrift.py` aus `build/sprechtexte.txt` des `SpeechDumpTest`) – kein espeak-ng (GPL) in App oder WebApp.
+`VoiceDataTest` meldet, wenn neue Texte Wörter ohne Lautschrift enthalten. Die Play-Fassung (ohne Internet) bietet nur die Gerätestimmen.
+
+| Einstellungen | Theorie mit 🔊 |
+|---|---|
+| ![Vorlesen](screenshots/99_vorlesen.png) | ![Theorie](screenshots/100_theorie_vorlesen.png) |
+
 ## Schwierigkeit: Leicht bis Extrem (`core/model/Daily.kt`, `ChapterExtreme.kt`, `Difficulty.kt`)
 Generator-Stufen 🟢 Leicht · 🔵 Normal · 🟠 Schwer · 🔴 Profi · 🔥 Extrem (Asteroidensturm alle 4 Wellen eine Stufe höher,
 Andromeda ab Planet 7 Profi, ab 13 Extrem). Jedes Kapitel hat eine freiwillige 🔥 Extrem-Prüfung (zählt nicht zum Abschluss).

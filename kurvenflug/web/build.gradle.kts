@@ -43,6 +43,7 @@ kotlin {
         commonMain.dependencies { implementation(compose.components.resources) }
         wasmJsMain {
             kotlin.srcDir(genBuildInfo)
+            resources.srcDir(rootProject.file("voice"))   // Lautschrift der Stimme „Thorsten“ – dieselben Dateien wie in der APK
             dependencies { implementation(project(":shared")) }
         }
     }
@@ -80,7 +81,7 @@ val webapp by tasks.registering(Sync::class) {
     doLast {
         // Große Dateien für das Schnell-Laden mit Fortschrittsbalken (kf.js) – Pfad, Größe, Typ
         val dir = rootProject.file("webapp")
-        val big = dir.walkTopDown().filter { it.isFile && (it.extension == "wasm" || it.name == "symbols.ttf") }   // Emoji-Schrift kommt erst nach dem Start.sortedByDescending { it.length() }
+        val big = dir.walkTopDown().filter { it.isFile && !it.relativeTo(dir).invariantSeparatorsPath.startsWith("ort/") && (it.extension == "wasm" || it.name == "symbols.ttf") }   // Emoji-Schrift kommt erst nach dem Start.sortedByDescending { it.length() }
         val json = big.joinToString(",", "[", "]") { f ->
             "{\"u\":\"${f.relativeTo(dir).invariantSeparatorsPath}\",\"s\":${f.length()},\"t\":\"${if (f.extension == "wasm") "application/wasm" else "font/ttf"}\"}"
         }
@@ -89,7 +90,9 @@ val webapp by tasks.registering(Sync::class) {
     }
     doLast {
         val dir = rootProject.file("webapp")
-        val files = dir.walkTopDown().filter { it.isFile }.map { it.relativeTo(dir).invariantSeparatorsPath }.sorted().toList()
+        // Rechenkern und Lautschrift der Stimme „Thorsten“ nicht vorab: die kommen erst, wenn jemand die Stimme lädt (eigener Speicher „kf-stimme“)
+        val files = dir.walkTopDown().filter { it.isFile }.map { it.relativeTo(dir).invariantSeparatorsPath }
+            .filter { !it.startsWith("ort/") && !it.startsWith("stimme/") }.sorted().toList()
         val list = (listOf("./") + files).joinToString(",\n  ") { "\"$it\"" }
         dir.resolve("sw.js").writeText("""
             |// Kurvenflug $appVersion – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
