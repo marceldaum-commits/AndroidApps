@@ -3,6 +3,7 @@ package de.wissensgarten.core.data
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import de.wissensgarten.core.model.NovaQualitaet
 import de.wissensgarten.core.model.Sprechtempo
 
 /** Vorlesen: AUTO = für Grundschulkinder an, sonst aus. */
@@ -51,6 +52,11 @@ class Settings(private val prefs: KeyValueStore) {
     private val _voiceRate = MutableStateFlow(Sprechtempo.stufe(prefs.getInt("stimme_tempo", Sprechtempo.NORMAL)))
     val voiceRate: StateFlow<Int> = _voiceRate.asStateFlow()
     fun setVoiceRate(v: Int) { val c = Sprechtempo.stufe(v); prefs.edit().putInt("stimme_tempo", c).apply(); _voiceRate.value = c }
+    /** Gewählte Fassung für „Alle Nova-Texte offline laden“ (Standard oder Bestqualität) */
+    private val _novaQuality = MutableStateFlow(
+        runCatching { NovaQualitaet.valueOf(prefs.getString("nova_qualitaet", NovaQualitaet.STANDARD.name)!!) }.getOrDefault(NovaQualitaet.STANDARD))
+    val novaQuality: StateFlow<NovaQualitaet> = _novaQuality.asStateFlow()
+    fun setNovaQuality(v: NovaQualitaet) { prefs.edit().putString("nova_qualitaet", v.name).apply(); _novaQuality.value = v }
     // Die Stimmenwahl (Gerätestimme/„Thorsten“) gibt es seit Nova nicht mehr
     init { if (prefs.contains("stimme")) prefs.edit().remove("stimme").apply() }
 

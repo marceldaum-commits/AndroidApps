@@ -192,7 +192,12 @@ class WebHost : AppHost {
         tilt = true, keepsakes = false, widget = false, label = "WebApp", plusPurchase = true)
     override val sfx = WebSfx()
     override val music = WebMusic()
-    override val voice = de.wissensgarten.app.ui.fx.NovaVoice(WebNova(), kotlinx.coroutines.MainScope()).also { v -> v.onSpeaking = { music.duck(it) } }
+    override val voice = run {
+        val scope = kotlinx.coroutines.MainScope()
+        val nova = WebNova()
+        // „Alle Nova-Texte offline laden“: eigene Liste und Server-Stand des Hosts, auf dem die WebApp läuft
+        de.wissensgarten.app.ui.fx.NovaVoice(nova, scope, de.wissensgarten.app.ui.fx.NovaOfflineManager(nova, scope, "vorlesen/texte.json", webHost()))
+    }.also { v -> v.onSpeaking = { music.duck(it) } }
     override val listener = WebListener()
     override val images = WebImages
 

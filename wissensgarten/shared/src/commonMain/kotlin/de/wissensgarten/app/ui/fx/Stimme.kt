@@ -38,7 +38,11 @@ interface NovaGeraet : NovaQuelle {
  * Brummis Stimme „Nova“ – für Android und Web derselbe Ablauf ([NovaWeg]):
  * Gerätespeicher → vorab vertonte Datei vom Stimm-Server → (nur Laufzeit-Texte) `/jetzt` → sonst still die Gerätestimme.
  */
-class NovaVoice(private val g: NovaGeraet, private val scope: CoroutineScope) : Voice {
+class NovaVoice(
+    private val g: NovaGeraet,
+    private val scope: CoroutineScope,
+    override val offline: NovaOfflineSteuerung? = null,
+) : Voice {
     override var onSpeaking: (Boolean) -> Unit = {}
     private val weg = NovaWeg(g)
     private var tempo = 1f

@@ -59,6 +59,8 @@ interface Voice {
     suspend fun speakAndWait(text: LaufzeitText, locale: Locale = Locale.GERMAN) = speakAndWait(text.text, locale)
     /** Sprechtempo als Stufe in Prozent ([Sprechtempo.STUFEN], 100 = Tempo des Servers) */
     fun setRate(percent: Int) {}
+    /** „Alle Nova-Texte offline laden“ (null = gibt es hier nicht) */
+    val offline: NovaOfflineSteuerung? get() = null
 
     companion object {
         private val EMOJI = Regex("[\\p{So}\\p{Cs}\\uFE0F\\u200D]")

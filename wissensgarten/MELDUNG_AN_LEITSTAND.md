@@ -1,5 +1,47 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Größenangabe Offline-Laden geprüft (Version 2.2.1 vom 17.11.2026) – Web = Android
+
+- **Ursache „ca. 1287 MB“:** Die Zahl stammte nur aus dem Bildschirmfoto. Dessen Testwerte waren „3 × Standard“ – die Schätzung für den Fall, dass der Server kein `bytes_original` nennt.
+- **Die App selbst rechnet richtig:**
+  - Größe = Durchschnitt aus `bytes` bzw. `bytes_original` der abgefragten Stände × fehlende Dateien.
+  - Der Plus-Stand wird nur einbezogen, wenn Plus aktiv ist. Es wird nichts mehrfach addiert und kein Live- plus Test-Host zusammengezählt.
+  - Die Zahl wird bei jedem Öffnen neu gelesen.
+- **Neu:**
+  - Bildschirmfotos `73_offline_laden.png` und `75_offline_fertig.png` mit echten Server-Zahlen (17:46): Standard ca. 348 MB (7 650 fehlend), Bestqualität ca. 429 MB.
+  - Unit-Test mit den echten Ständen: Bestqualität frei = 429 MB, mit Plus = 525 MB, Standard frei = 355 MB.
+
+## Nova offline laden (Version 2.2.0 vom 17.11.2026) – Web = Android
+
+- **Knöpfe** unter „Brummi liest vor“:
+  - „Offline laden – Standard (ca. X MB)“
+  - „Offline laden – Bestqualität (ca. Z MB)“; die gewählte Fassung wird gemerkt
+  - „Offline-Stimme löschen (Y MB)“, löscht beide Fassungen und den Zwischenspeicher
+- **Hinweis** „Am besten im WLAN laden“ mit Bestätigungsschritt.
+- **Größe:**
+  - Live aus `stand-<host>.json`: Standard aus `bytes`, Bestqualität aus `bytes_original`.
+  - Android nimmt den Live-Host; Plus kommt aus `stand-lokal-packs.json` dazu.
+  - Bereits Vorhandenes wird abgezogen. Fehlt ein Feld, gibt es eine Schätzung.
+- **Laden:**
+  - Die Liste ist die eigene `vorlesen/texte.json` (Android vom Live-Host; ohne Netz kommt sie aus den eingebauten Paketen). Bei aktivem Plus kommen die Plus-Texte der geladenen Pakete dazu.
+  - Nur fehlende Dateien, 4 parallel, Fortschritt „x von n“, Abbrechen. Beim nächsten Tippen geht es dort weiter.
+  - 404 wird still übersprungen. Bestqualität fällt bei 404 auf Standard zurück. `/jetzt`-Texte sind nicht dabei.
+- **Speicher:**
+  - Android: `filesDir/nova-offline` und `nova-original`.
+  - Web: Caches `wissensgarten-nova-offline` und `-original`; der Service Worker behält alle `wissensgarten-nova*`.
+  - Keine Obergrenze für das manuelle Laden. Die 150-MB-Grenze gilt nur für den automatischen Zwischenspeicher.
+  - Abspielreihenfolge: Bestqualität → Standard offline → Zwischenspeicher → Server.
+- **Bildschirmfotos** (mit festen Testzahlen):
+  - `wissensgarten/screenshots/73_offline_laden.png`
+  - `74_offline_laedt.png`
+  - `75_offline_fertig.png`
+- **Prüfung:**
+  - Alle Tests grün, Lint 0 Fehler, `NovaOfflineTest`.
+  - Headless-Chromium gegen den echten Server (Teilmenge): Laden, Überspringen, Abspielen, Löschen; Bestqualität per Mock.
+- **Server-Stand beim Test:**
+  - `bytes` 429 MB für 7 802 Dateien; `bytes_original` vorhanden.
+  - `/nova/original/` lieferte noch 404, die App fällt dann auf die Standard-Datei zurück.
+
 ## Nova (Version 2.1.0 vom 17.11.2026) – Web = Android
 
 **Stimmenwahl**

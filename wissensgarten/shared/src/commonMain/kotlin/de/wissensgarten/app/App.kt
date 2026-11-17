@@ -608,7 +608,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             syllables = vm.settings.syllables.collectAsStateWithLifecycle().value, onSyllables = { vm.settings.setSyllables(it) },
                             vibration = vm.settings.vibration.collectAsStateWithLifecycle().value, onVibration = { vm.settings.setVibration(it) },
                             syncCard = { host.SyncCard() },
-                            voiceExtras = { de.wissensgarten.app.ui.settings.VoiceSettings(vm.settings, host) },
+                            voiceExtras = { de.wissensgarten.app.ui.settings.VoiceSettings(vm.settings, host, packs, vm.plusStatus.collectAsStateWithLifecycle().value.active) },
                             soundExtras = { de.wissensgarten.app.ui.settings.SoundSettings(vm.settings, host) },
                             onPrivacy = { nav.navigate(Routes.PRIVACY) },
                             typing = vm.settings.typing.collectAsStateWithLifecycle().value, onTyping = { vm.settings.setTyping(it) },

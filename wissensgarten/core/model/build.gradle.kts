@@ -17,6 +17,8 @@ kotlin {
         commonMain.dependencies {
             api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
             api("org.jetbrains.kotlinx:kotlinx-datetime:0.7.1")
+            // „Alle Nova-Texte offline laden“: mehrere Downloads gleichzeitig, abbrechbar
+            api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
         }
         jvmTest.dependencies { implementation("junit:junit:4.13.2") }
         wasmJsMain.dependencies {

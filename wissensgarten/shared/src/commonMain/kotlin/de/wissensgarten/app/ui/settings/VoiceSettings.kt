@@ -1,6 +1,8 @@
 package de.wissensgarten.app.ui.settings
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -21,16 +23,23 @@ import de.wissensgarten.app.ui.fx.Stimme
 import de.wissensgarten.app.ui.fx.Voice
 import de.wissensgarten.core.data.Settings
 import de.wissensgarten.core.model.Sprechtempo
+import de.wissensgarten.core.model.NovaOffline
+import de.wissensgarten.core.model.NovaQualitaet
+import de.wissensgarten.core.model.Pack
+import de.wissensgarten.app.ui.fx.NovaOfflineSteuerung
 
-/** Stimme „Nova“ (Kennzeichnung), Sprechtempo in Stufen und Probe-Taste – unter „Brummi liest vor“. */
+/** Stimme „Nova“ (Kennzeichnung), Sprechtempo in Stufen, Probe-Taste und „Offline laden“ – unter „Brummi liest vor“. */
 @Composable
-fun VoiceSettings(settings: Settings, host: AppHost) {
-    VoiceSettingsPanel(settings, host.voice ?: return)
+fun VoiceSettings(settings: Settings, host: AppHost, packs: List<Pack> = emptyList(), plusActive: Boolean = false) {
+    val voice = host.voice ?: return
+    val offline = voice.offline
+    LaunchedEffect(packs, plusActive) { offline?.pakete(packs, if (plusActive) packs.filter { it.isPlus } else emptyList()) }
+    VoiceSettingsPanel(settings, voice, offline)
 }
 
 /** Inhalt der Stimm-Einstellungen (eigene Funktion, damit sie sich ohne Plattform zeigen lässt – Bildschirmfoto-Test) */
 @Composable
-fun VoiceSettingsPanel(settings: Settings, voice: Voice) {
+fun VoiceSettingsPanel(settings: Settings, voice: Voice, offline: NovaOfflineSteuerung? = voice.offline) {
     val rate by settings.voiceRate.collectAsState()
     val stufen = Sprechtempo.STUFEN
     val index = stufen.indexOf(Sprechtempo.stufe(rate)).coerceAtLeast(0)
@@ -70,4 +79,65 @@ fun VoiceSettingsPanel(settings: Settings, voice: Voice) {
         "Englisch, Französisch und Spanisch spricht Nova in der passenden Sprache.",
         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
+    if (offline != null) OfflineCard(settings, offline)
+}
+
+/** „Alle Nova-Texte offline laden“: Größe, Hinweis aufs WLAN, Fortschritt „x von n“, Abbrechen, Löschen */
+@Composable
+private fun OfflineCard(settings: Settings, offline: NovaOfflineSteuerung) {
+    val z by offline.zustand.collectAsState()
+    val chosen by settings.novaQuality.collectAsState()
+    var confirm by remember { mutableStateOf<NovaQualitaet?>(null) }
+    LaunchedEffect(Unit) { offline.pruefen() }
+
+    Spacer(Modifier.height(12.dp))
+    Surface(color = MaterialTheme.colorScheme.surfaceContainerLow, shape = MaterialTheme.shapes.large, modifier = Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(14.dp).animateContentSize(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("📦 Alle Nova-Texte offline laden", fontWeight = FontWeight.Bold)
+            Text("Dann liest Brummi auch ohne Internet mit Nova vor.", style = MaterialTheme.typography.bodySmall)
+            val laedt = z.laedt
+            when {
+                !z.geprueft -> Text("Brummi schaut nach, was schon da ist …", style = MaterialTheme.typography.bodySmall)
+                laedt != null -> {
+                    val p by animateFloatAsState(if (z.ziel > 0) z.fertig.toFloat() / z.ziel else 0f, label = "offline")
+                    Text("Brummi lädt Nova-Sätze (${laedt.label}) … ${z.fertig} von ${z.ziel}", style = MaterialTheme.typography.bodyMedium)
+                    LinearProgressIndicator(progress = { p }, modifier = Modifier.fillMaxWidth().height(10.dp))
+                    TextButton(onClick = { offline.abbrechen() }) { Text("Abbrechen") }
+                }
+                confirm != null -> {
+                    val q = confirm!!
+                    Surface(color = Color(0xFFE3F2FD), shape = MaterialTheme.shapes.medium) {
+                        Text("📶 Am besten im WLAN laden – das sind ca. ${NovaOffline.mb(z.rest[q] ?: 0)} MB (${q.label}).",
+                            style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(10.dp))
+                    }
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        JuicyButton(onClick = { settings.setNovaQuality(q); confirm = null; offline.laden(q) }, modifier = Modifier.weight(1f)) { Text("Jetzt laden") }
+                        OutlinedButton(onClick = { confirm = null }, modifier = Modifier.weight(1f)) { Text("Später") }
+                    }
+                }
+                else -> {
+                    val std = z.fehlend[NovaQualitaet.STANDARD] ?: 0
+                    if (std == 0 && z.gesamt > 0) Text("✅ Alle ${z.gesamt} Nova-Sätze sind offline da" +
+                        (if ((z.fehlend[NovaQualitaet.BEST] ?: 0) == 0) " – in Bestqualität." else "."), style = MaterialTheme.typography.bodyMedium)
+                    if (z.fehlend.values.any { it > 0 }) Text("📶 Am besten im WLAN laden.", style = MaterialTheme.typography.bodySmall)
+                    NovaQualitaet.entries.forEach { q ->
+                        val n = z.fehlend[q] ?: 0
+                        if (n > 0) {
+                            val label = "⬇️ Offline laden – ${q.label} (ca. ${NovaOffline.mb(z.rest[q] ?: 0)} MB)"
+                            if (q == chosen) JuicyButton(onClick = { confirm = q }, modifier = Modifier.fillMaxWidth()) { Text(label) }
+                            else OutlinedButton(onClick = { confirm = q }, modifier = Modifier.fillMaxWidth()) { Text(label) }
+                        }
+                    }
+                    if ((z.fehlend[NovaQualitaet.BEST] ?: 0) > 0)
+                        Text("Bestqualität ist unkomprimiert: klingt noch etwas klarer, braucht aber mehr Platz.",
+                            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+            z.hinweis?.let { if (laedt == null) Text(it, style = MaterialTheme.typography.bodySmall) }
+            if (z.belegt > 0 && laedt == null && confirm == null)
+                OutlinedButton(onClick = { offline.loeschen() }, modifier = Modifier.fillMaxWidth()) {
+                    Text("🗑️ Offline-Stimme löschen (${NovaOffline.mb(z.belegt)} MB)")
+                }
+        }
+    }
 }
