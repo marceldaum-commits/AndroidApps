@@ -114,7 +114,7 @@ fun SheetScreen(cards: List<SheetCard>, onChapter: (Int) -> Unit = {}, onJam: (J
                     card.lines.forEach { line ->
                         Row(Modifier.padding(top = 6.dp)) {
                             Text("›", color = c, fontWeight = FontWeight.Black, modifier = Modifier.padding(end = 8.dp))
-                            Text(line, style = MaterialTheme.typography.bodyMedium)
+                            Text(de.raumlicht.app.ui.settings.noted(line), style = MaterialTheme.typography.bodyMedium)
                         }
                     }
                     FlowRow(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {

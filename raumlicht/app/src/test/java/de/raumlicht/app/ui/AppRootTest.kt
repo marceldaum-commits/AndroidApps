@@ -112,6 +112,24 @@ class AppRootTest {
         rule.runOnUiThread { prefs.setProCode("") }
     }
 
+    /** Die Schreibweise lässt sich in den Einstellungen umstellen und wird gemerkt; die Formelsammlung folgt ihr */
+    @Test fun schreibweiseUmstellen() {
+        Settings(ApplicationProvider.getApplicationContext()).setStrictVectors(false)
+        prefs = Settings(ApplicationProvider.getApplicationContext())
+        rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
+            AppRoot(nav, prefs, stars, { _, _, _ -> }, { 20_772L }, settings = { onBack -> de.raumlicht.app.ui.settings.SettingsPage(sound = true, onSound = {}, vibration = true, onVibration = {}, versionText = "Test", onBack = onBack) })
+        } } } }
+        rule.mainClock.advanceTimeBy(600)
+        nav.go(Routes.SHEET); settle(); rule.onNodeWithText("Verbindungsvektor: AB⃗ = B − A (Spitze minus Fuß)").assertExists(); nav.back(); settle()
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        nav.go(Routes.SETTINGS); settle(); rule.onNodeWithText("📐 Strenge Vektorschreibweise").performScrollTo().performClick(); settle()
+        assertTrue(prefs.strictVectors.value); assertTrue(Settings(ApplicationProvider.getApplicationContext()).strictVectors.value)
+        rule.onNodeWithText("An: mit Ortsvektoren", substring = true).assertExists(); nav.back(); settle()
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        nav.go(Routes.SHEET); settle(); rule.onNodeWithText("Verbindungsvektor: AB⃗ = OB⃗ − OA⃗ (Spitze minus Fuß)").assertExists()
+        rule.runOnUiThread { prefs.setStrictVectors(false) }
+    }
+
     @Test fun proOffMeansEverythingOpen() {
         start()                                                                                                             // Auslieferungsstand
         nav.go(Routes.level("25-7")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist()

@@ -63,6 +63,15 @@ fun SettingsPage(
                 }
             }
             ElevatedCard(Modifier.fillMaxWidth()) {
+                val notation = LocalNotation.current
+                Column(Modifier.padding(16.dp)) {
+                    Text("Mathe-Schreibweise", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    Box(Modifier.testTag("schreibweise")) { Toggle("📐 Strenge Vektorschreibweise", if (notation.strict) "An: mit Ortsvektoren, z. B. AB⃗ = OB⃗ − OA⃗ und g: x⃗ = OA⃗ + t · d⃗" else "Aus: kurz wie in vielen Schulheften, z. B. AB⃗ = B − A und g: x⃗ = A + t · d⃗",
+                        notation.strict, notation.set) }
+                    Text("Frag im Zweifel, wie es deine Lehrkraft haben möchte. Die Rechnung ist dieselbe.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                }
+            }
+            ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Datenschutz & Inhalte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     // Sobald es den Abi-Pass gibt, stimmt „keine Käufe“ nicht mehr

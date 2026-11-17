@@ -118,7 +118,10 @@ fun AppRoot(
     val keys = nav.stack.mapIndexed { i, r -> "$i:$r" }
     LaunchedEffect(keys) { (known - keys.toSet()).forEach { holder.removeState(it) }; known = keys.toSet() }
 
+    val strictVectors by prefs.strictVectors.collectAsState()
     CompositionLocalProvider(LocalLuxSkin provides skin, LocalLuxLook provides look,
+        de.raumlicht.app.ui.level.LocalOpenSheet provides { nav.go(Routes.SHEET) },
+        de.raumlicht.app.ui.settings.LocalNotation provides de.raumlicht.app.ui.settings.NotationChoice(strictVectors, prefs::setStrictVectors),
         de.raumlicht.app.ui.settings.LocalProEntry provides (if (proEnabled) ({ nav.go(Routes.PRO) }) else null), de.raumlicht.app.ui.settings.LocalProActive provides proActive,
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
         Crossfade(keys.last(), animationSpec = tween(180), label = "ziel") { key -> holder.SaveableStateProvider(key) {

@@ -34,6 +34,12 @@ import de.raumlicht.app.ui.theme.Q
 import de.raumlicht.app.ui.fx.Buzz
 import de.raumlicht.core.model.Pro
 
+/** Vektorschreibweise: kurz („B − A“) oder streng mit Ortsvektoren („OB⃗ − OA⃗“) – und wie man sie umstellt */
+class NotationChoice(val strict: Boolean, val set: (Boolean) -> Unit)
+val LocalNotation = staticCompositionLocalOf { NotationChoice(false) {} }
+/** Text in der gewählten Schreibweise */
+@Composable fun noted(text: String): String = if (LocalNotation.current.strict) remember(text) { de.raumlicht.core.model.Notation.strict(text) } else text
+
 /** Abi-Pass in den Einstellungen: Ziel des Eintrags (null = kein Eintrag, solange der Abi-Pass nicht erhältlich ist) und ob er freigeschaltet ist */
 val LocalProEntry = staticCompositionLocalOf<(() -> Unit)?> { null }
 val LocalProActive = staticCompositionLocalOf { false }

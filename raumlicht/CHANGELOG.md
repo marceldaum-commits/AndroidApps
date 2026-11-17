@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.14.0 – Theorie auf Knopfdruck (17.11.2026)
+- **Neu: „📖 Theorie“ bei jeder Aufgabe.** Hängst du fest, erklärt Lux kurz, worum es geht: die Idee, die Schritte, ein durchgerechnetes Beispiel und der typische Fehler.
+  Das gibt es für alle Aufgaben der Tour, die Prüfungsaufgaben, die Tagesaufgabe und das endlose Üben. **Nachlesen kostet keinen Stern** – nur der Tipp zur konkreten Aufgabe kostet weiterhin einen.
+- **Schreibweise wählbar:** In den Einstellungen kannst du auf die strenge Vektorschreibweise umstellen („AB⃗ = OB⃗ − OA⃗“ statt „AB⃗ = B − A“) – so, wie es deine Lehrkraft möchte. Voreingestellt ist die kurze Form.
+- **Mehr Abwechslung beim Üben:** 29 statt 8 Rotationskörper und dreimal so viele Tempo-Aufgaben.
+- Die Pfeile in den Übungsaufgaben ragen nicht mehr aus dem Raum.
+- Zwei Erfolge haben deutsche Namen bekommen: „Abi-reif“ und „Dauergast“.
+
 ## 2.13.0 – Große Korrektheitsprüfung (17.11.2026)
 Alle 136 Aufgaben, alle 7 Prüfungsaufgaben und über 1200 Übungsaufgaben wurden unabhängig nachgerechnet. **Keine einzige Lösung war falsch** – aber rundherum gab es einiges zu verbessern:
 - **Klarere Rückmeldungen:** „Dein Punkt liegt weder auf g noch auf h“ statt eines Satzes, den man falsch verstehen konnte. Beim Zielen zählt jetzt der Abstand zum Strahl, nicht zur ganzen Geraden.

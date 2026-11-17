@@ -11,6 +11,7 @@ import de.raumlicht.app.ui.stage.StageController
 import de.raumlicht.app.ui.theme.Q
 import de.raumlicht.app.ui.theme.RaumlichtTheme
 import de.raumlicht.core.model.Levels
+import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
@@ -137,5 +138,34 @@ class LevelFlowTest {
         assertEquals(10, Regex("\"type\":\"sphere\"").findAll(stage.lastState!!).count())          // keine Kugel verschwindet
         assertTrue(stage.lastState!!.contains("\"plain\":true") && stage.lastState!!.contains("2. Zug"))
         assertEquals(2, stage.log.count { it.startsWith("RL.fire") })
+    }
+
+    /** Theorie zu jeder Aufgabe: Der Knopf öffnet die passende Karte, sie kostet keinen Stern, und man kommt zurück zur Aufgabe */
+    @Test fun theorieKostetKeinenStern() {
+        play("5-2")
+        rule.onNodeWithTag("theorie-karte").assertDoesNotExist()
+        tap("theorie"); rule.mainClock.advanceTimeBy(1500)
+        val card = de.raumlicht.core.model.Theory.forLevel(Levels.byId("5-2")!!)
+        rule.onNodeWithTag("theorie-titel").assertTextEquals(card.title)
+        rule.onNodeWithText(card.steps.last(), substring = true).assertExists(); rule.onNodeWithText("Beispiel").assertExists(); rule.onNodeWithText("Nachlesen kostet keinen Stern.").assertExists()
+        rule.onRoot().captureRoboImage("../screenshots/78_theorie.png")
+        tap("theorie-ok"); rule.mainClock.advanceTimeBy(800); rule.onNodeWithTag("theorie-karte").assertDoesNotExist()
+        // danach beim ersten Versuch gelöst: volle drei Sterne
+        val sol = Levels.byId("5-2")!!.solution.getValue("P"); sol.forEachIndexed { i, v -> tap("plus-P-$i", v) }; go()
+        assertEquals(listOf(3 to 1), solved)
+    }
+
+    /** Strenge Vektorschreibweise aus den Einstellungen: dieselbe Aufgabe, Tipp und Rechenweg mit Ortsvektoren */
+    @Test fun strengeSchreibweiseImLevel() {
+        val l = Levels.byId("2-1")!!
+        rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) },
+            de.raumlicht.app.ui.settings.LocalNotation provides de.raumlicht.app.ui.settings.NotationChoice(true) {}) {
+            LevelScreen(l, Levels.chapters.first { it.number == l.chapter }, false, {}, { s, a -> solved += s to a }, {}, {}, controller = stage)
+        } } } }
+        rule.mainClock.advanceTimeBy(1000)
+        rule.onNodeWithText("💡 Tipp").performClick(); rule.mainClock.advanceTimeBy(500)
+        rule.onNodeWithText("OB⃗ − OA⃗", substring = true).assertExists(); rule.onNodeWithText("Spitze minus Fuß: B − A", substring = true).assertDoesNotExist()
+        l.solution.getValue("v").forEachIndexed { i, v -> tap(if (v >= 0) "plus-v-$i" else "minus-v-$i", kotlin.math.abs(v)) }; go()
+        rule.onNodeWithText("v⃗ = OB⃗ − OA⃗", substring = true).assertExists()
     }
 }

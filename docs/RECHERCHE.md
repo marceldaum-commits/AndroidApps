@@ -158,3 +158,16 @@ Keine neue Suche; Anwendung der Befunde oben und bekannter Didaktik:
 - **Serien-Tiere**: Serien motivieren, aber Verlust-Angst nicht (Leitlinie „Belohnung ohne Druck“) → verdiente Tiere bleiben
   für immer, bei Pause schlafen sie nur.
 - Eigene Wirksamkeitsdaten gibt es für keinen dieser Bausteine.
+
+## Raumlicht, 17.11.2026 – Theorie auf Knopfdruck (Auftrag: „zu jeder Übung ein Knopf mit der passenden Theorie, damit es nicht frustet“)
+
+Was die Lernforschung dazu sagt (kurze Suche am 17.11.2026):
+- **Durchgerechnete Beispiele helfen.** Eine Meta-Analyse über 55 Studien findet für Mathematik im Mittel einen mittleren Effekt (g ≈ 0,48); am besten wirken *richtige* Beispiele.
+  → Jede Theorie-Karte hat ein kleines, vollständig gerechnetes Beispiel – mit anderen Zahlen als die Aufgabe, damit es erklärt und nicht vorsagt.
+- **Hilfe auf Abruf schlägt ungefragte Hilfe.** In einer Studie mit Mathe-Aufgaben (ASSISTments) lernten Schüler mit Hinweisen auf Abruf mehr als mit automatisch eingeblendeten.
+  → Ein Knopf, kein Einblenden. Nach dem ersten Fehlversuch pulsiert er nur.
+- **Gefahr: Durchklicken ohne Verstehen** („hint abuse“). → Die Theorie verrät die Lösung nicht und kostet deshalb keinen Stern; der Tipp zur konkreten Aufgabe kostet weiterhin einen.
+- Ob das Frust messbar senkt, ist dünn belegt – das ist unsere eigene Annahme, zu prüfen mit Testschülern.
+
+Quellen: Meta-Analyse „Worked Examples Effect on Mathematics Performance“; Razzaq & Heffernan, „Hints: Is It Better to Give or Wait to Be Asked?“ (2010);
+The Learning Scientists, „Worked Examples: An Effective Tool for Math Learning“ (2024).

@@ -61,7 +61,8 @@ object Gen {
         }
         Kind.PARAM -> {
             val d = r.dir(2); val t = listOf(-3, -2, -1, 2, 3, 4).random(r); val a = r.point(); val z = a + d * t
-            if (!inRoom(z) || d.ints.count { it != 0 } < 2) null else {
+            // auch die Spitze des gezeichneten Richtungspfeils (A + d⃗) soll im Raum liegen
+            if (!inRoom(z) || !inRoom(a + d) || d.ints.count { it != 0 } < 2) null else {
                 val i = d.ints.indexOfFirst { it != 0 }
                 Families.param(id, ch, "Parameter", "Für welches t lande ich genau im Ring?", a, d, t, -4..6,
                     tip = "Eine Zeile reicht, um t zu finden. Die anderen sind die Probe.",
@@ -146,20 +147,34 @@ object Gen {
         else -> null
     }
 
-    private val wholeSpeeds = listOf(V3(1, 2, 2), V3(2, 1, 2), V3(2, 2, 1), V3(0, 3, 4), V3(3, 4, 0), V3(4, 0, 3), V3(2, 0, 0), V3(0, 0, 3))
+    // Vektoren mit ganzzahliger Länge (3, 5, 6, 7) – genug verschiedene, damit sich das Üben nicht wiederholt
+    private val wholeSpeeds = listOf(V3(1, 2, 2), V3(2, 1, 2), V3(2, 2, 1), V3(0, 3, 4), V3(3, 4, 0), V3(4, 0, 3), V3(0, 4, 3), V3(4, 3, 0), V3(3, 0, 4), V3(2, 0, 0), V3(0, 0, 3), V3(0, 4, 0),
+        V3(2, 4, 4), V3(4, 2, 4), V3(4, 4, 2), V3(2, 3, 6), V3(3, 2, 6), V3(2, 6, 3), V3(6, 2, 3), V3(3, 6, 2), V3(6, 3, 2), V3(6, 0, 0), V3(0, 5, 0))
     /** Rotationskörper mit „schönem“ Volumen: Funktionstext, f, obere Grenze, Volumen in Vielfachen von π, Schrittweite, Rechenweg */
     private class Turn(val text: String, val to: Int, val piTimes: Int, val step: Int, val way: List<String>, val f: (Double) -> Double)
+    private val SUP = "⁰¹²³⁴⁵⁶⁷⁸⁹"
+    /** Schrittweite des Reglers: so, dass die Lösung zwischen 2 und 9 Schritten liegt (bei Primzahlen 1) */
+    private fun stepFor(v: Int) = (1..v).filter { v % it == 0 && v / it in 2..9 }.maxOrNull() ?: 1
+    private fun turn(text: String, to: Int, v: Int, square: String, anti: String?, f: (Double) -> Double) = Turn(text, to, v, stepFor(v),
+        if (anti == null) listOf("f(x)² = $square", "∫₀${SUP[to]} $square dx = $v", "V = ${v}π") else listOf("f(x)² = $square, Stammfunktion $anti", "[$anti]₀${SUP[to]} = $v", "V = ${v}π"), f)
+    /** 29 Kurven mit ganzzahligem Vielfachen von π: Zylinder, Kegel, Paraboloide, Halbkugel. Jede Zeile ist nachgerechnet (Test GenTest). */
     private val turns = listOf(
-        Turn("1", 3, 3, 1, listOf("f(x)² = 1", "∫₀³ 1 dx = 3", "V = 3π")) { 1.0 },
-        Turn("2", 2, 8, 4, listOf("f(x)² = 4", "∫₀² 4 dx = 8", "V = 8π")) { 2.0 },
-        Turn("2", 3, 12, 4, listOf("f(x)² = 4", "∫₀³ 4 dx = 12", "V = 12π")) { 2.0 },
-        Turn("3", 2, 18, 9, listOf("f(x)² = 9", "∫₀² 9 dx = 18", "V = 18π")) { 3.0 },
-        Turn("x", 3, 9, 3, listOf("f(x)² = x², Stammfunktion ⅓x³", "[⅓x³]₀³ = 9", "V = 9π")) { it },
-        Turn("√x", 2, 2, 1, listOf("f(x)² = x, Stammfunktion ½x²", "[½x²]₀² = 2", "V = 2π")) { kotlin.math.sqrt(it) },
-        Turn("√x", 4, 8, 2, listOf("f(x)² = x, Stammfunktion ½x²", "[½x²]₀⁴ = 8", "V = 8π")) { kotlin.math.sqrt(it) },
-        Turn("√(x + 1)", 2, 4, 2, listOf("f(x)² = x + 1, Stammfunktion ½x² + x", "[½x² + x]₀² = 4", "V = 4π")) { kotlin.math.sqrt(it + 1) },
-        Turn("√(x + 1)", 4, 12, 4, listOf("f(x)² = x + 1, Stammfunktion ½x² + x", "[½x² + x]₀⁴ = 12", "V = 12π")) { kotlin.math.sqrt(it + 1) },
+        turn("1", 2, 2, "1", null) { 1.0 }, turn("1", 3, 3, "1", null) { 1.0 }, turn("1", 4, 4, "1", null) { 1.0 },
+        turn("2", 1, 4, "4", null) { 2.0 }, turn("2", 2, 8, "4", null) { 2.0 }, turn("2", 3, 12, "4", null) { 2.0 }, turn("2", 4, 16, "4", null) { 2.0 },
+        turn("3", 1, 9, "9", null) { 3.0 }, turn("3", 2, 18, "9", null) { 3.0 },
+        turn("x", 3, 9, "x²", "⅓x³") { it }, turn("3x", 1, 3, "9x²", "3x³") { 3 * it },
+        turn("√x", 2, 2, "x", "½x²") { kotlin.math.sqrt(it) }, turn("√x", 4, 8, "x", "½x²") { kotlin.math.sqrt(it) },
+        turn("√(x + 1)", 2, 4, "x + 1", "½x² + x") { kotlin.math.sqrt(it + 1) }, turn("√(x + 1)", 4, 12, "x + 1", "½x² + x") { kotlin.math.sqrt(it + 1) },
+        turn("√(x + 2)", 2, 6, "x + 2", "½x² + 2x") { kotlin.math.sqrt(it + 2) }, turn("√(x + 2)", 4, 16, "x + 2", "½x² + 2x") { kotlin.math.sqrt(it + 2) },
+        turn("√(x + 3)", 2, 8, "x + 3", "½x² + 3x") { kotlin.math.sqrt(it + 3) }, turn("√(x + 3)", 4, 20, "x + 3", "½x² + 3x") { kotlin.math.sqrt(it + 3) },
+        turn("√(2x)", 1, 1, "2x", "x²") { kotlin.math.sqrt(2 * it) }, turn("√(2x)", 2, 4, "2x", "x²") { kotlin.math.sqrt(2 * it) }, turn("√(2x)", 3, 9, "2x", "x²") { kotlin.math.sqrt(2 * it) },
+        turn("2 · √x", 1, 2, "4x", "2x²") { 2 * kotlin.math.sqrt(it) }, turn("2 · √x", 2, 8, "4x", "2x²") { 2 * kotlin.math.sqrt(it) },
+        turn("√(4 − x)", 2, 6, "4 − x", "4x − ½x²") { kotlin.math.sqrt(4 - it) }, turn("√(4 − x)", 4, 8, "4 − x", "4x − ½x²") { kotlin.math.sqrt(maxOf(0.0, 4 - it)) },
+        turn("√(6 − x)", 2, 10, "6 − x", "6x − ½x²") { kotlin.math.sqrt(6 - it) }, turn("√(6 − x)", 4, 16, "6 − x", "6x − ½x²") { kotlin.math.sqrt(6 - it) },
+        turn("√(9 − x²)", 3, 18, "9 − x²", "9x − ⅓x³") { kotlin.math.sqrt(maxOf(0.0, 9 - it * it)) },
     )
+    /** Für den Test: Funktionstext, obere Grenze, Volumen in π und die Funktion selbst */
+    internal val turnCheck: List<Pair<Triple<String, Int, Int>, (Double) -> Double>> get() = turns.map { Triple(it.text, it.to, it.piTimes) to it.f }
 
     private fun buildMotion(kind: Kind, r: Random, id: String, ch: Int): Level? = when (kind) {
         Kind.MOTION_POS -> {
@@ -179,7 +194,7 @@ object Gen {
         }
         Kind.MOTION_TIME -> {
             val v = r.dir(2); val t = r.nextInt(2, 6); val a = r.point(); val q = a + v * t; val h = q.ints[2]
-            if (!inRoom(q) || v.ints[2] == 0 || v.ints.count { it != 0 } < 2 || h == 0) null else Families.param(id, ch, "Flughöhe", "Nach wie vielen Sekunden erreiche ich die Höhe $h?", a, v, t, 0..6, hidden = true,
+            if (!inRoom(q) || !inRoom(a + v) || v.ints[2] == 0 || v.ints.count { it != 0 } < 2 || h == 0) null else Families.param(id, ch, "Flughöhe", "Nach wie vielen Sekunden erreiche ich die Höhe $h?", a, v, t, 0..6, hidden = true,
                 given = listOf(listOf(Part.Txt("Höhe: x₃ = $h"))), success = "Nach $t Sekunden bin ich in Höhe $h – bei ${q.fmt()}.",
                 tip = "Höhe ist die x₃-Koordinate: ${Geo.num(a.ints[2])} + t · ${if (v.ints[2] < 0) "(${Geo.num(v.ints[2])})" else Geo.num(v.ints[2])} = $h.",
                 way = listOf("x₃(t) = $h", "t = $t → Ort ${q.fmt()}"), extras = { listOf(Stage.plane("E", V3(0, 0, 1), h.toDouble(), "violet", "x₃ = $h")) })
@@ -231,11 +246,11 @@ object Badges {
             Badge("ebenen", "🔷", "Glasklar", "Kapitel 5 gespielt", chapterDone(5)),
             Badge("kugel", "🔮", "Discokönig:in", "Kapitel 9 gespielt", chapterDone(9)),
             Badge("abi3", "🎓", "Abi-Luft", "3 Abi-Checks bestanden", abi.count { (tour[it.id] ?: 0) > 0 } >= 3),
-            Badge("abi", "🏆", "Abi-ready", "Alle Abi-Checks bestanden", abi.all { (tour[it.id] ?: 0) > 0 }),
+            Badge("abi", "🏆", "Abi-reif", "Alle Abi-Checks bestanden", abi.all { (tour[it.id] ?: 0) > 0 }),
             Badge("halb", "🚐", "Halbe Tour", "Die Hälfte aller Aufgaben gespielt", tour.size * 2 >= Levels.all.size),
             Badge("tour", "🎆", "Tour geschafft", "Alle Aufgaben gespielt", tour.size == Levels.all.size),
             Badge("tag3", "🎟️", "Stammgast", "3 Tagesaufgaben gelöst", dailies >= 3),
-            Badge("tag10", "🗓️", "Residency", "10 Tagesaufgaben gelöst", dailies >= 10),
+            Badge("tag10", "🗓️", "Dauergast", "10 Tagesaufgaben gelöst", dailies >= 10),
             Badge("jam5", "🎧", "Im Flow", "Endlos üben: 5 in Folge beim ersten Versuch", jamBest >= 5),
             Badge("jam15", "🔥", "Unaufhaltsam", "Endlos üben: 15 in Folge", jamBest >= 15),
         )

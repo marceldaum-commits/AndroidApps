@@ -12,6 +12,8 @@ interface Prefs {
     val vibration: StateFlow<Boolean>; fun setVibration(v: Boolean)
     /** Lux liest ihre Sprechblasen laut vor */
     val voice: StateFlow<Boolean>; fun setVoice(v: Boolean)
+    /** Strenge Vektorschreibweise mit Ortsvektoren („OB⃗ − OA⃗“ statt „B − A“), siehe [Notation]. Voreinstellung: kurz. */
+    val strictVectors: StateFlow<Boolean>; fun setStrictVectors(v: Boolean)
     /** Lautstärke in Prozent */
     val volume: StateFlow<Int>; fun setVolume(v: Int)
 

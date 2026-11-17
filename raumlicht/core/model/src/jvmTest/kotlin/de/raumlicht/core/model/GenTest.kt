@@ -66,4 +66,20 @@ class GenTest {
         // Berührung 9-6: genau eine Lösung im Bereich
         assertEquals(listOf(24), (12..26).filter { Levels.byId("9-6")!!.evaluate(mapOf("a" to listOf(it))).success })
     }
+
+    /** Jede Rotationskurve des Übens: Das angegebene Volumen stimmt (numerisch nachintegriert), und es gibt genug verschiedene */
+    @Test fun rotationskurvenStimmen() {
+        assertTrue(Gen.turnCheck.size >= 25); assertEquals(Gen.turnCheck.size, Gen.turnCheck.map { it.first }.toSet().size)
+        Gen.turnCheck.forEach { (k, f) -> val (text, to, v) = k; val n = 200_000; val h = to.toDouble() / n
+            val integral = (0 until n).sumOf { val x = (it + 0.5) * h; f(x) * f(x) } * h
+            assertEquals("f(x) = $text auf [0; $to]", v.toDouble(), integral, 1e-3) }
+        // viele verschiedene Aufgaben statt immer derselben
+        assertTrue((1L..40L).map { Gen.level(Gen.Kind.ROTATION, it).let { l -> l.formula(l.start).toString() } }.toSet().size >= 18)
+        assertTrue((1L..40L).map { Gen.level(Gen.Kind.MOTION_SPEED, it).let { l -> l.formula(l.start).toString() } }.toSet().size >= 25)
+    }
+
+    /** Beim Üben ragt kein Richtungspfeil aus dem Raum */
+    @Test fun pfeileBleibenImRaum() = listOf(Gen.Kind.PARAM, Gen.Kind.MOTION_TIME).forEach { k -> (1L..60L).forEach { seed -> val l = Gen.level(k, seed)
+        l.objects(l.start, Phase.AIM).filter { it.id == "pfeil" }.forEach { o -> val tip = o.to ?: (o.p!!.zip(o.d!!) { a, b -> a + b })
+            assertTrue("${l.id}: Pfeilspitze $tip", tip[0] in 0.0..8.0 && tip[1] in 0.0..8.0 && tip[2] in 0.0..6.0) } } }
 }
