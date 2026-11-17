@@ -194,6 +194,54 @@
       return a.play().catch(function () { if (novaEl === a) { novaEl = null; deviceSay(text); } });
     }).catch(function () { if (my === novaTurn) deviceSay(text); });
   };
+  // „Alle Nova-Texte offline laden“: dieselben Dateien im Cache „kf-nova“ (Cache Storage, keine Obergrenze beim manuellen Laden)
+  var NOVA = 'https://stimmen.mathenachhilfe-online.com/nova/', offAbort = false;
+  function novaUrl(h) { return NOVA + h.slice(0, 2) + '/' + h + '.mp3'; }
+  function size(r) { var n = +(r.headers.get('content-length') || 0); return n ? Promise.resolve(n) : r.blob().then(function (b) { return b.size; }); }
+  // hashes: Dateinamen der festen Texte (je Zeile) → cb(gespeichert, Bytes, Server-Bytes oder -1)
+  KF.offStat = function (hashes, cb) {
+    var hs = hashes.split('\n').filter(Boolean), host = /^(localhost|127\.)/.test(location.hostname) ? 'kurvenflug.mathenachhilfe-online.com' : location.hostname;
+    var server = fetch(NOVA + 'stand-' + host + '.json', { credentials: 'omit', cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { return j && j.bytes ? j.bytes : -1; }, function () { return -1; });
+    var local = !window.caches ? Promise.resolve([0, 0]) : caches.open('kf-nova').then(function (c) {
+      return c.keys().then(function (ks) {
+        var have = {}; ks.forEach(function (k) { have[k.url] = k; });
+        var mine = hs.map(novaUrl).filter(function (u) { return have[u]; });
+        return Promise.all(mine.map(function (u) { return c.match(u).then(function (r) { return r ? size(r) : 0; }); }))
+          .then(function (sz) { return [mine.length, sz.reduce(function (a, b) { return a + b; }, 0)]; });
+      });
+    });
+    Promise.all([local, server]).then(function (x) { cb(x[0][0], x[0][1], x[1]); }, function () { cb(0, 0, -1); });
+  };
+  // Nur fehlende Dateien, 4 gleichzeitig; 404 still überspringen; progress(fertig, alle), done(Fehlerzahl, abgebrochen)
+  KF.offLoad = function (hashes, progress, done) {
+    offAbort = false;
+    if (!window.caches) { done(-1, false); return; }
+    caches.open('kf-nova').then(function (c) {
+      return c.keys().then(function (ks) {
+        var have = {}; ks.forEach(function (k) { have[k.url] = 1; });
+        var todo = hashes.split('\n').filter(Boolean).map(novaUrl).filter(function (u) { return !have[u]; });
+        var i = 0, fin = 0, fail = 0, n = todo.length;
+        progress(0, n);
+        if (!n) { done(0, false); return; }
+        return new Promise(function (resolve) {
+          function next() {
+            if (offAbort || i >= n) { if (fin >= Math.min(i, n) ) resolve(); return; }
+            var u = todo[i++];
+            fetch(u, { credentials: 'omit' }).then(function (r) {
+              if (r.status === 404) return;
+              if (!r.ok) { fail++; return; }
+              return c.put(u, r);
+            }).catch(function () { fail++; }).then(function () { fin++; progress(fin, n); if (fin >= n || (offAbort && fin >= i)) resolve(); else next(); });
+          }
+          for (var k = 0; k < 4; k++) next();
+        }).then(function () { done(fail, offAbort); });
+      });
+    }).catch(function () { done(-1, offAbort); });
+  };
+  KF.offCancel = function () { offAbort = true; };
+  KF.offClear = function (cb) { if (window.caches) caches.delete('kf-nova').then(function () { cb(); }, function () { cb(); }); else cb(); };
+
   // Reste der früheren Stimme „Thorsten“ (2.0–2.3) aus dem Browser-Speicher räumen
   if (window.caches) caches.delete('kf-stimme').catch(function () {});
 })();
