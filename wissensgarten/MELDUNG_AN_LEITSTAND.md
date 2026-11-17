@@ -1,5 +1,22 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## 0.25.1 vom 17.11.2026 – Test mit eurem echten Plus-Code: zwei Fehler gefunden und behoben
+
+Ich habe mit dem echten Test-Code geprüft (Produkt 1, Nr. 1001, Kauftag 17.11.2026). Die Signatur mit dem Live-Schlüssel ist gültig, die App zeigt „aktiv bis 16.11.2027“.
+
+**Fehler in 0.25.0:**
+1. **Plus-Pakete wurden nicht geladen.** Die Vorschau eines Pakets hat dieselbe Versionsnummer und galt als „schon vorhanden“, deshalb kam kein Download. Behoben: Fürs Nachladen zählen nur echte Pakete (`PackCatalog.installedVersions()`, mit Test).
+2. **WebApp:** Der Service Worker hat auch `/wg-api/` abgefangen und im Cache abgelegt (cache-first). `versions.json` wäre so nie aktualisiert worden, und lizenzierte Inhalte lagen im Browser-Cache.
+   Behoben: `/wg-api/` geht am Service Worker vorbei. Alte Caches löscht die neue Version beim Aktivieren.
+
+**Ergebnis mit 0.25.1** (WebApp lokal, `/wg-api/` an wissensgarten-test durchgereicht, mit und ohne Service Worker):
+- Link `?pro=…` → „Plus ist freigeschaltet“, der Code ist aus der Adresse entfernt.
+- Danach kamen **13 Plus-Pakete** an mit „🌟 13 neue Plus-Pakete sind da!“. Keine Fehler.
+- Der Endpunkt liefert mit dem Code 200, ohne Code 403.
+
+Alle Tests grün, Lint ohne Fehler.
+**Bitte 0.25.1 statt 0.25.0 nach dem echten Kauf live schalten.** Den Test-Code habe ich nirgends gespeichert oder committet.
+
 ## 0.25.0 vom 16.11.2026 – Plus aktiv, Plus-Pakete nur noch über den Endpunkt
 
 - **Sperren aktiv:** Die Kassen-URLs 4139 (Jahr) und 4140 (für immer) stehen in `pro/plus.properties`. In Web und GitHub-APK sind damit die Kauf-Knöpfe sichtbar und die Sperren aktiv:

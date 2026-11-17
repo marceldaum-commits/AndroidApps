@@ -50,4 +50,15 @@ class PackUpdatesTest {
         val cat2 = PackCatalog(texts = { listOf(pack("a", 3, "App")) }, extra = { listOf(pack("a", 2, "Download")) })
         assertEquals("App", cat2.all().single().title)
     }
+
+    @Test fun previewsDoNotBlockDownloadAndLoseToFullPack() = runBlocking {
+        val preview = """[{"id":"ob-p","version":2,"title":"Vorschau","subject":"mathe","grades":[12],"emoji":"🔢","tier":"plus","cardTotal":30,"cards":[{"id":"1","q":"q","a":"a"}]}]"""
+        val cat = PackCatalog(texts = { emptyList() }, previews = { preview })
+        assertEquals(true, cat.all().single().preview)
+        assertTrue("Vorschau zählt nicht als vorhanden", cat.installedVersions().isEmpty())
+        val withFull = PackCatalog(texts = { emptyList() }, extra = { listOf(pack("ob-p", 2, "Voll", cards = 30)) }, previews = { preview })
+        val p = withFull.all().single()
+        assertEquals(false, p.preview); assertEquals(30, p.cards.size)
+        assertEquals(mapOf("ob-p" to 2), withFull.installedVersions())
+    }
 }

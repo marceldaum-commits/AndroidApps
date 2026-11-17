@@ -13,6 +13,8 @@ self.addEventListener('activate', (e) => {
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  // Plus-Endpunkt nie zwischenspeichern: Liste muss frisch sein, Plus-Inhalte gehören nicht in den Cache
+  if (new URL(req.url).pathname.includes('/wg-api/')) return;
   // Seitenaufruf: erst Netz (frische Version), ohne Internet aus dem Zwischenspeicher
   if (req.mode === 'navigate') {
     e.respondWith(fetch(req).then((res) => { if (res.ok) caches.open(CACHE).then((c) => c.put('index.html', res.clone())); return res; })

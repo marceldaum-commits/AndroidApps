@@ -27,6 +27,9 @@ class PackCatalog(
 
     suspend fun byId(id: String): Pack? = all().firstOrNull { it.id == id }
 
+    /** Versionen der wirklich vorhandenen Pakete (ohne Vorschauen) – Grundlage fürs Nachladen. */
+    suspend fun installedVersions(): Map<String, Int> = all().filter { !it.preview }.associate { it.id to it.version }
+
     companion object {
         const val DIR = "packs"
 

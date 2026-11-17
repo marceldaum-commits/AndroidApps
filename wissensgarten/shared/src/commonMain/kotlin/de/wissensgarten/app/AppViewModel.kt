@@ -422,7 +422,7 @@ class AppViewModel(
         val now = de.wissensgarten.core.model.Platform.nowMs()
         if (!force && now - settings.lastPlusPackCheck < 20 * 3_600_000L) return
         viewModelScope.launch {
-            val known = c.catalog.all().associate { it.id to it.version }
+            val known = c.catalog.installedVersions()
             val n = runCatching { h.fetchPlusPacks(code, known) }.getOrNull() ?: return@launch
             settings.lastPlusPackCheck = now
             if (n > 0) {
@@ -440,7 +440,7 @@ class AppViewModel(
         val now = de.wissensgarten.core.model.Platform.nowMs()
         if (!force && now - settings.lastPackCheck < 20 * 3_600_000L) return
         viewModelScope.launch {
-            val known = c.catalog.all().associate { it.id to it.version }
+            val known = c.catalog.installedVersions()
             val n = runCatching { h.fetchPackUpdates(known) }.getOrNull() ?: return@launch
             settings.lastPackCheck = now
             if (n > 0) {

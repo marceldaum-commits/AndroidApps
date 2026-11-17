@@ -3,6 +3,10 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.25.1 – Plus-Pakete kommen sicher an (17.11.2026)
+- Behoben: Nach dem Freischalten wurden die Abi- und Experten-Pakete nicht geladen, weil die Vorschau in der Samenhandlung als „schon vorhanden“ galt. Jetzt holt Brummi sie direkt nach dem Freischalten.
+- Behoben (WebApp): Die Plus-Liste und Plus-Inhalte landen nicht mehr im Offline-Speicher des Browsers – so kommen neue Plus-Pakete zuverlässig an.
+
 ## 0.25.0 – Plus kann jetzt gekauft werden (16.11.2026)
 - **Wissensgarten Plus ist da:** im Eltern-Bereich für 19,99 € pro Jahr oder 49,99 € für immer (inkl. MwSt.) – kein Abo. Der Code kommt per E-Mail und gilt auf allen Geräten der Familie.
 - **Frei bleibt:** alle 72 Pakete von Klasse 1 bis 10 und alle Spielarten. Schon gepflanzte Beete bleiben immer lernbar.
