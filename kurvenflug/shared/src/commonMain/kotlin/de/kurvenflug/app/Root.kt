@@ -1,5 +1,8 @@
 package de.kurvenflug.app
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.ui.draw.clip
 import androidx.compose.material3.Surface
 import androidx.savedstate.read
 import androidx.compose.ui.input.pointer.pointerInput
@@ -142,6 +145,8 @@ fun KurvenflugRoot(
                     val w = minOf(maxWidth, androidx.compose.ui.unit.max(360.dp, minOf(520.dp, maxHeight * 0.62f)))
                     androidx.compose.foundation.layout.Box(Modifier.width(w).fillMaxHeight()) { Nav(vm, platform, incomingDuel, widgetLevel) }
                 }
+                // Einmal je Sitzung, dezent: Nova war nicht erreichbar – dann liest die Stimme des Geräts
+                NovaNotice(reader?.unreachable == true && readAloud)
             }
         }
     }
@@ -515,6 +520,23 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
             newGold = emptyList()
             nav.goOnce(Routes.HANGAR)
         }, gold = goldParts.map { it.chapter }.toSet(), isGold = true)
+    }
+}
+
+/** Kurzer Hinweis unten, einmal je Sitzung, verschwindet nach 4 s */
+@androidx.compose.runtime.Composable
+private fun NovaNotice(trigger: Boolean) {
+    var shown by remember { mutableStateOf(false) }
+    var visible by remember { mutableStateOf(false) }
+    LaunchedEffect(trigger) { if (trigger && !shown) { shown = true; visible = true; kotlinx.coroutines.delay(4000); visible = false } }
+    androidx.compose.foundation.layout.Box(Modifier.fillMaxSize().padding(bottom = 88.dp), contentAlignment = androidx.compose.ui.Alignment.BottomCenter) {
+        androidx.compose.animation.AnimatedVisibility(visible, enter = androidx.compose.animation.fadeIn() + androidx.compose.animation.slideInVertically { it },
+            exit = androidx.compose.animation.fadeOut()) {
+            androidx.compose.material3.Text("🔇 Nova gerade nicht erreichbar – Volt liest mit der Stimme des Geräts.",
+                color = Q.Text, style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                modifier = Modifier.padding(horizontal = 24.dp).clip(androidx.compose.foundation.shape.RoundedCornerShape(14.dp))
+                    .background(Q.Panel).padding(horizontal = 14.dp, vertical = 9.dp))
+        }
     }
 }
 

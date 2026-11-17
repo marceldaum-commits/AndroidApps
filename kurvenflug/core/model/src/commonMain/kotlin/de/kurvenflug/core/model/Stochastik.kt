@@ -62,7 +62,7 @@ object Stochastik {
                 "Die höchste Säule liegt beim Erwartungswert μ = n · p ≈ 3 → p = 0,3. Probe: P(X = 3) = 120 · 0,3³ · 0,7⁷ ≈ 26,7 %.",
                 listOf("μ = n · p = 3 → p = 3 : 10", "p = 10 : 3", "p = 3 · 10"),
                 listOf(s("Erwartungswert μ = n · p. 3 = 10 · p → p = ?", 0.3, "p"), s("(10 über 3) = ?", 120.0))),
-            binom(4, "Höchstens …", 10, 0.5, true, listOf(3, 5), "p", "Kumuliert! 10 Münzwürfe. P(X ≤ 3) = 17,2 % und P(X ≤ 5) = 62,3 %. p = ?",
+            binom(4, "Höchstens …", 10, 0.5, true, listOf(3, 5), "p", "Kumuliert! 10 Versuche. P(X ≤ 3) = 17,2 % und P(X ≤ 5) = 62,3 %. Wie groß ist die Trefferchance p?",
                 "Bei p = 0,5 ist die Verteilung symmetrisch um 5: P(X ≤ 5) liegt etwas über 50 %.",
                 listOf("P(X ≤ 5) = P(X = 0) + … + P(X = 5)", "P(X ≤ 5) = P(X = 5)", "P(X ≤ 5) = 5 · p"),
                 listOf(s("Symmetrisch um n : 2 = 5 – dann ist p = ?", 0.5, "p")), start = 0.3),

@@ -268,7 +268,7 @@ object Gen {
             tip = "Bei x = 0 ist sin = 0 – dort liest du d ab. Der erste Berg (bei negativem a: das erste Tal) liegt bei x = π/2 : b.")
         val peak = kotlin.math.PI / 2 / b
         val t = pointsOn(l, listOf(0.0, peak))
-        l = l.copy(targets = t, task = "Durch (0 | ${num(d)}) und den ersten Wellen-${if (a > 0) "berg" else "tal"} bei x ≈ ${num(peak)} (y = ${num(a + d)}).")
+        l = l.copy(targets = t, task = "Durch (0 | ${num(d)}) und ${if (a > 0) "den ersten Wellenberg" else "das erste Wellental"} bei x ≈ ${num(peak)} (y = ${num(a + d)}).")
         return l.copy(asteroids = rocks(r, Flight.path(l, l.solution), t, 2))
     }
 
@@ -284,7 +284,7 @@ object Gen {
         if (b1 != roundHalfUp(b1 * grid) / grid || b2 != roundHalfUp(b2 * grid) / grid || kotlin.math.abs(b1) > 9 || kotlin.math.abs(b2) > 9) return null
         // Regler in halben Kästchen (ab Profi macht extreme() sie doppelt so fein)
         val params = listOf(Param("x", "x", -9.0, 9.0, 0.5, 0.0), Param("y", "y", -9.0, 9.0, 0.5, 0.0))
-        fun lin(m: Double, b: Double) = "y = ${when (m) { 1.0 -> ""; -1.0 -> "−"; else -> num(m) }}x ${if (b < 0) "−" else "+"} ${num(kotlin.math.abs(b))}"
+        fun lin(m: Double, b: Double) = linText(m, b)
         return mk(day, Kind.RENDEZVOUS, "A: ${lin(m1, b1)} und B: ${lin(m2, b2)}. Wo treffen sie sich?",
             listOf(Body(x, y, 0.35)), params, mapOf("x" to x, "y" to y), fixed = mapOf("m1" to m1, "b1" to b1, "m2" to m2, "b2" to b2),
             tip = "Beide Gleichungen gleichsetzen, nach x auflösen, dann y ausrechnen.").copy(hidden = true)
