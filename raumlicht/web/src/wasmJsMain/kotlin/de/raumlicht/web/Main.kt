@@ -121,6 +121,7 @@ private fun WebApp() {
                             }
                         },
                         onLicenses = { openLink("lizenzen.txt") },
+                        soundNote = if (appleTouch()) "Kein Ton? Auf iPhone und iPad bleibt Raumlicht still, solange das Gerät stumm geschaltet ist (Schalter an der Seite oder Glocke im Kontrollzentrum)." else null,
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe, keine Daten an einen Server. " +
                             "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest eine Stimme vor, die auf deinem Gerät eingebaut ist – " +
                             "oder die natürliche Stimme „Thorsten“: Die lädst du einmalig von unserem Server (63 MB), danach rechnet sie in deinem Browser. Vorgelesene Texte verlassen dein Gerät nie.")
@@ -128,3 +129,6 @@ private fun WebApp() {
         } }
     }
 }
+
+/** iPhone oder iPad (auch iPadOS, das sich als Mac ausgibt)? Dort schaltet der Stumm-Schalter auch den Ton von Webseiten ab. */
+private fun appleTouch(): Boolean = js("/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)")

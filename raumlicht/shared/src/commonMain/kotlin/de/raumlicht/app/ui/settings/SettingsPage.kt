@@ -1,6 +1,9 @@
 package de.raumlicht.app.ui.settings
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
@@ -26,6 +29,8 @@ fun SettingsPage(
     voice: Boolean = true, onVoice: (Boolean) -> Unit = {}, voiceAvailable: Boolean = true,
     /** Knöpfe zum Aussuchen der Stimme (nur wenn Lux spricht) */
     voiceControls: @Composable () -> Unit = {},
+    /** Warum gerade nichts zu hören ist oder sein könnte (z. B. Handy stumm geschaltet) – steht gut sichtbar über den Ton-Schaltern; null = kein Hinweis */
+    soundNote: String? = null,
     /** Bericht über den letzten unerwarteten Abbruch (null = keiner) */
     lastProblem: String? = null, onProblemSeen: () -> Unit = {},
     /** Gibt es Hintergrundmusik? (im Browser noch nicht) */
@@ -52,6 +57,8 @@ fun SettingsPage(
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     val mix = LocalMix.current
+                    if (soundNote != null) Text(soundNote, Modifier.fillMaxWidth().padding(vertical = 6.dp).testTag("ton-hinweis").background(Q.Yellow.copy(alpha = 0.14f), RoundedCornerShape(12.dp))
+                        .border(1.dp, Q.Yellow.copy(alpha = 0.7f), RoundedCornerShape(12.dp)).padding(10.dp), color = Q.Yellow, style = MaterialTheme.typography.bodyMedium)
                     if (hasMusic) Toggle("🎵 Musik", "Gläserne, schwebende Klänge – für Raumlicht komponiert. In Prüfungen auf Zeit ist sie aus.", music, onMusic)
                     if (hasMusic && music) { Text("Musik: ${mix.music} %", Modifier.testTag("musik-laut-text"), style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                         Slider(mix.music / 100f, { mix.setMusic((it * 20).toInt() * 5) }, Modifier.testTag("musik-laut")) }

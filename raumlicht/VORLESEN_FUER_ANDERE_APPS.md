@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Thorsten“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.16.2 vom 17.11.2026. Geschrieben auf Wunsch des Leitstands, von Marcel bestätigt.
+Stand: Raumlicht 2.16.3 vom 17.11.2026. Geschrieben auf Wunsch des Leitstands, von Marcel bestätigt.
 
 **Was es ist:** Die App liest Texte mit der natürlichen deutschen Stimme „Thorsten“ vor – auf dem Gerät, ohne Internet, **ohne GPL-Baustein**.
 Der Trick: Die Lautschrift (aus Text werden Laute) entsteht vorab am Entwicklungsrechner und wird als reine Daten mitgeliefert.

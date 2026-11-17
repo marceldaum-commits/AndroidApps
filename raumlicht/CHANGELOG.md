@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.16.3 – „Warum höre ich nichts?“ (17.11.2026)
+- **Kein Ton trotz eingeschaltetem Ton?** Raumlicht bleibt mit Absicht still, wenn das Handy stumm oder auf Vibration steht (damit im Unterricht nichts losdudelt). Das sagen die Einstellungen jetzt deutlich – ebenso, wenn die Medien-Lautstärke auf 0 steht. Sobald du das Handy laut stellst, verschwindet der Hinweis.
+- **iPhone und iPad (WebApp):** Dort steht jetzt der Tipp, den Stumm-Schalter zu prüfen.
+
 ## 2.16.2 – Abzeichen „Abi-Pass aktiv“ (17.11.2026)
 - **Abi-Pass auf einen Blick:** Ist der Abi-Pass freigeschaltet, leuchtet auf dem Startbildschirm das Abzeichen „🎓 Abi-Pass aktiv“ – und in den Einstellungen steht es ebenfalls. Antippen zeigt, was alles dazugehört. (Den Abi-Pass gibt es noch nicht zu kaufen; bis dahin bleibt alles frei.)
 - **Für Eltern:** In den Einstellungen steht jetzt ausdrücklich, dass die natürliche Stimme von unserem eigenen Server geladen wird.

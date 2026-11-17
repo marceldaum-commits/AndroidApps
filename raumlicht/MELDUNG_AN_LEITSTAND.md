@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.16.3: Hinweis „warum kein Ton“
+
+Marcel meldete nach einem Update: „Sound ist aktiviert, aber kein Ton“. **Raumlicht 2.16.3 vom 17.11.2026, Web = Android (beide 2.16.3).**
+
+- Wahrscheinlichste Ursache (von Marcel noch nicht bestätigt): Seit 2.15.0 schweigen Musik und Geräusche, wenn das Handy stumm oder auf Vibration steht – bisher ohne jeden Hinweis.
+- Neu: Die Einstellungen zeigen über den Ton-Schaltern einen gelben Hinweis, wenn das Handy stumm/auf Vibration steht oder die Medien-Lautstärke 0 ist (Android, jede Sekunde neu geprüft).
+  WebApp auf iPhone/iPad: Tipp zum Stumm-Schalter (lässt sich im Browser nicht erkennen). Bildschirmfoto: `screenshots/80_ton_hinweis.png`.
+- Am Ton selbst ist seit 2.15.0 nichts geändert. Falls andere Apps dieselbe Regel „Handy stumm → App stumm“ übernehmen: bitte immer mit sichtbarem Hinweis.
+
 ## 17.11.2026 – Raumlicht 2.16.2: Abzeichen „Abi-Pass aktiv“ + Vorschlag für die Datenschutzerklärung
 
 Marcel hat beides direkt bestätigt. **Raumlicht 2.16.2 vom 17.11.2026, Web = Android (beide 2.16.2).**

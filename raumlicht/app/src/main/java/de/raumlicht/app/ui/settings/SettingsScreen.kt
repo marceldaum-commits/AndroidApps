@@ -30,11 +30,30 @@ fun SettingsScreen(
 ) = SettingsPage(music, onMusic, sound, onSound, vibration, onVibration, "Version $installed vom ${BuildConfig.VERSION_DATE}", onBack,
     top = { if (BuildConfig.SELF_UPDATE) UpdateSection(installed, update, autoUpdate, onAutoUpdate) },
     onReset = onReset, volume = volume, onVolume = onVolume, voice = voice, onVoice = onVoice, voiceAvailable = voiceAvailable, voiceControls = voiceControls,
-    lastProblem = lastProblem, onProblemSeen = onProblemSeen,
+    lastProblem = lastProblem, onProblemSeen = onProblemSeen, soundNote = silenceReason(),
     licenses = androidx.compose.ui.platform.LocalContext.current.let { ctx -> remember { runCatching { ctx.assets.open("lizenzen.txt").bufferedReader().use { it.readText() } }.getOrNull() } },
     privacy = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. Ins Internet geht die App nur, " +
         (if (BuildConfig.SELF_UPDATE) "um nach Updates zu schauen (abschaltbar)" else "wenn der Play Store nach Updates schaut") +
         " – und einmalig, wenn du die natürliche Stimme lädst (von unserem eigenen Server stimmen.mathenachhilfe-online.com). Gesprochen wird immer auf dem Gerät.")
+
+/**
+ * Warum Raumlicht gerade still ist, obwohl Musik und Geräusche eingeschaltet sind: Handy stumm / auf Vibration (dann schweigt die App mit Absicht)
+ * oder Medien-Lautstärke auf 0. Wird jede Sekunde neu geprüft, damit der Hinweis verschwindet, sobald man das Handy laut stellt.
+ */
+@Composable
+fun silenceReason(): String? {
+    val audio = androidx.compose.ui.platform.LocalContext.current.getSystemService(android.media.AudioManager::class.java)
+    fun reason(): String? = runCatching { when {
+        audio.ringerMode != android.media.AudioManager.RINGER_MODE_NORMAL ->
+            "🔕 Dein Handy ist stumm oder auf Vibration gestellt – deshalb bleiben Musik und Geräusche still. Stell das Handy laut, dann hörst du Raumlicht wieder."
+        audio.getStreamVolume(android.media.AudioManager.STREAM_MUSIC) == 0 ->
+            "🔈 Die Medien-Lautstärke deines Handys steht auf 0. Drück die Lauter-Taste, dann hörst du Raumlicht wieder."
+        else -> null
+    } }.getOrNull()
+    var note by remember { mutableStateOf(reason()) }
+    LaunchedEffect(Unit) { while (true) { kotlinx.coroutines.delay(1000); note = reason() } }
+    return note
+}
 
 /** Stimme aussuchen: durch die deutschen Stimmen des Geräts schalten (jede stellt sich vor) und die Stimmlage wählen. */
 @Composable

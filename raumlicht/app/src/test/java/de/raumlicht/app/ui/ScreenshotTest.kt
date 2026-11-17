@@ -208,6 +208,8 @@ class ScreenshotTest {
         LevelScreen(l, Levels.chapters[0], true, {}, { _, _ -> }, {}, {})
     }
     @Test fun settings() = shot("15_einstellungen", "start") {
+        // Der Hinweis „warum kein Ton“ gehört nicht aufs normale Bild: Medien-Lautstärke über 0
+        androidx.compose.ui.platform.LocalContext.current.getSystemService(android.media.AudioManager::class.java).setStreamVolume(android.media.AudioManager.STREAM_MUSIC, 5, 0)
         SettingsScreen(true, {}, true, {}, true, {}, true, {}, "0.1.0", UpdateState.Idle, {})
     }
 }
