@@ -113,7 +113,7 @@ Volt liest Sprechblasen, Aufgaben, Rechen-Stern-Fragen und Erklärungen vor (abs
 - **Laufzeit-Texte** (Zahlen): erst die /nova/-Adresse, sonst `POST /jetzt` (≤ 300 Zeichen, nie mit Spielernamen – `Nova.maySend`).
 - **Notlösung** (offline, 204): still eine deutsche Stimme des Geräts/Browsers, die ohne Internet spricht.
 - Ansagen werden zwischengespeichert (Android: Cache ≤ 40 MB, Web: Cache „kf-nova“). Die App spricht nie selbst mit OpenAI.
-- Bis 2.3 gab es die Stimme „Thorsten“ (ONNX Runtime) – seit 2.4.0 entfernt, Reste werden beim Start aufgeräumt.
+- Bis 2.3 gab es eine andere Offline-Stimme – seit 2.4.0 entfernt, Reste werden beim Start aufgeräumt.
 
 | Einstellungen | Theorie mit 🔊 |
 |---|---|
