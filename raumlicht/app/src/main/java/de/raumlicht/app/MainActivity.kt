@@ -64,6 +64,8 @@ class MainActivity : ComponentActivity() {
             val voice by vm.settings.voice.collectAsStateWithLifecycle()
             val musicLevel by vm.settings.musicLevel.collectAsStateWithLifecycle(); val soundLevel by vm.settings.soundLevel.collectAsStateWithLifecycle()
             LaunchedEffect(musicLevel, soundLevel) { app.music.setOwnVolume(musicLevel / 100f); app.sfx.level = soundLevel / 100f }
+            val speechRate by vm.settings.speechRate.collectAsStateWithLifecycle()
+            LaunchedEffect(speechRate) { app.nova.rate = speechRate / 100f; app.voice.rate = speechRate / 100f }
             LaunchedEffect(voice) { app.voice.enabled = voice; app.nova.enabled = voice; if (!voice) app.nova.stop() }
             RaumlichtTheme {
                 val view = androidx.compose.ui.platform.LocalView.current

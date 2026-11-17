@@ -139,6 +139,11 @@ class AppRootTest {
         assertTrue(Routes.isExam("abi/zelt/1")); assertTrue(Routes.isExam(Routes.QUICK)); assertFalse(Routes.isExam("abi/zelt/0")); assertFalse(Routes.isExam(Routes.EXAMS)); assertFalse(Routes.isExam("level/1-1"))
         // Vorlesen: Stimme ist als KI-Stimme gekennzeichnet, Hörprobe vorhanden
         rule.onNodeWithTag("stimme-name").performScrollTo().assertTextEquals("Stimme: Nova – KI-generierte Stimme"); rule.onNodeWithTag("hoerprobe").assertExists()
+        // Sprechtempo in sechs Stufen, gemerkt; krumme Werte rasten auf die nächste Stufe
+        rule.onNodeWithTag("sprechtempo-text").performScrollTo().assertTextEquals("🐢🐇 Sprechtempo: 1,0×")
+        rule.runOnUiThread { prefs.setSpeechRate(118) }; settle(); rule.onNodeWithTag("sprechtempo-text").assertTextEquals("🐢🐇 Sprechtempo: 1,15×")
+        assertEquals(115, Settings(ApplicationProvider.getApplicationContext()).speechRate.value)
+        rule.runOnUiThread { prefs.setSpeechRate(75) }; settle(); rule.onNodeWithTag("sprechtempo-text").assertTextEquals("🐢🐇 Sprechtempo: 0,75×"); rule.runOnUiThread { prefs.setSpeechRate(100) }
         rule.onNodeWithText("An: mit Ortsvektoren", substring = true).assertExists(); nav.back(); settle()
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.SHEET); settle(); rule.onNodeWithText("Verbindungsvektor: AB⃗ = OB⃗ − OA⃗ (Spitze minus Fuß)").assertExists()

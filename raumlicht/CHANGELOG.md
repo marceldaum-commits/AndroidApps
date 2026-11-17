@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.17.1 – Sprechtempo für Nova (17.11.2026)
+- **Sprechtempo wählbar:** In den Einstellungen gibt es wieder einen Regler – sechs Stufen von gemütlich (0,75×) bis flott (1,5×). Die Stimme klingt dabei gleich hoch, sie spricht nur langsamer oder schneller. Die Wahl wird gemerkt.
+- Gilt auch für die Stimme des Geräts, die einspringt, wenn es kein Internet gibt.
+
 ## 2.17.0 – Lux spricht mit Nova (17.11.2026)
 - **Neue Stimme:** Lux liest jetzt mit „Nova“ vor – einer KI-generierten Stimme, die viel natürlicher klingt. In den Einstellungen steht deutlich „Nova – KI-generierte Stimme“. Vorlesen bleibt aus, bis du es einschaltest.
 - **Kein großer Download mehr:** Die Stimme „Thorsten“ (63 MB) und alles, was dazugehörte, ist entfernt; schon geladene Dateien räumt die App von selbst weg. Die App wird dadurch deutlich kleiner.

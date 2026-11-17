@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.17.1: Regler „Sprechtempo“ für Nova
+
+Marcel hat direkt bestätigt. **Raumlicht 2.17.1 vom 17.11.2026, Web = Android (beide 2.17.1).** (Eure Ergänzung kam erst nach der Auslieferung von 2.17.0 an – deshalb eine eigene Version.)
+
+- Stufen 0,75 · 0,9 · 1,0 (Standard) · 1,15 · 1,3 · 1,5, gemerkt (`Vorlesen.TEMPOS`); krumme Werte rasten auf die nächste Stufe.
+- Android: `MediaPlayer.playbackParams` (Speed, Pitch 1,0). Web: `<audio>` mit `playbackRate` und `preservesPitch`, bei der ersten Berührung aufgeschlossen;
+  bei Tempo 1,0 oder wenn das Element nicht spielen darf: Web Audio im normalen Tempo. Geräte-Stimme (Notlösung): dieselbe Einstellung auf die Sprechrate.
+- Geprüft: Tests (`VorlesenTest`, `NovaVoiceTest`, `AppRootTest`), Lint, WebApp im Browser (`web-nova.mjs`: 1,3× aus dem Speicher). Nicht auf einem echten Gerät gehört.
+- Weiter offen von euch: Bestätigung zu „keine Zugriffsprotokolle“ und der Zählstand `…/nova/stand-raumlicht-test.….json` (gab um 13:45 UTC noch 404).
+
 ## 17.11.2026 – Nova Schritte (b) und (c): Raumlicht 2.17.0 spricht nur noch mit Nova, Thorsten ist raus
 
 Marcel hat „nur noch Nova, Thorsten raus“ direkt bestätigt. **Raumlicht 2.17.0 vom 17.11.2026, Web = Android (beide 2.17.0).**

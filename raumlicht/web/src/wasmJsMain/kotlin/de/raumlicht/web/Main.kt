@@ -86,8 +86,9 @@ private fun WebApp() {
         // „Nova“ (KI-generierte Stimme): fertige Datei von unserem Server; kommt sie nicht (offline), liest diesen Satz still die Stimme des Geräts
         override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Vorlesen.spoken(text).takeIf { it.isNotEmpty() }?.let { spoken ->
             stopSpeaking(); val volume = prefs.volume.value / 100.0
-            novaSay(Vorlesen.SERVER, Vorlesen.url(spoken), if (spoken.length <= Vorlesen.LIVE_MAX_CHARS) Vorlesen.LIVE else "", Vorlesen.liveBody(spoken), volume)
-                .then { r -> if (r.toString() == "fehlt" && prefs.voice.value) speak(spoken, volume); null } } }
+            val rate = prefs.speechRate.value / 100.0
+            novaSay(Vorlesen.SERVER, Vorlesen.url(spoken), if (spoken.length <= Vorlesen.LIVE_MAX_CHARS) Vorlesen.LIVE else "", Vorlesen.liveBody(spoken), volume, rate)
+                .then { r -> if (r.toString() == "fehlt" && prefs.voice.value) speak(spoken, volume, rate); null } } }
         override fun sayIfQuiet(text: String) { if (!speaking() && !novaSpeaking()) say(text) }
     } }
     CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker,
@@ -120,7 +121,7 @@ private fun WebApp() {
 private fun appleTouch(): Boolean = js("/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)")
 
 // ---- Stimme „Nova“ (siehe resources/rl-nova.js)
-private fun novaSay(server: String, url: String, live: String, body: String, volume: Double): kotlin.js.Promise<JsString> =
-    js("(window.__rlNova ? window.__rlNova.say(server, url, live, body, volume) : Promise.resolve('fehlt'))")
+private fun novaSay(server: String, url: String, live: String, body: String, volume: Double, rate: Double): kotlin.js.Promise<JsString> =
+    js("(window.__rlNova ? window.__rlNova.say(server, url, live, body, volume, rate) : Promise.resolve('fehlt'))")
 private fun novaStop(): Unit = js("{ if (window.__rlNova) window.__rlNova.stop(); }")
 private fun novaSpeaking(): Boolean = js("!!(window.__rlNova && window.__rlNova.speaking)")

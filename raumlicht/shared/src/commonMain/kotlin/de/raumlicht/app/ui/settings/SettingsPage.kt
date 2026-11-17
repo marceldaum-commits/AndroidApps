@@ -1,6 +1,7 @@
 package de.raumlicht.app.ui.settings
 
 import androidx.compose.foundation.layout.*
+import kotlin.math.roundToInt
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.border
 import androidx.compose.foundation.background
@@ -70,6 +71,11 @@ fun SettingsPage(
                         Text("Stimme: ${de.raumlicht.core.model.Vorlesen.VOICE_LABEL}", Modifier.padding(top = 2.dp).testTag("stimme-name"), style = MaterialTheme.typography.bodyLarge)
                         Text("Nova braucht Internet. Schon gehörte Sätze bleiben auf dem Gerät gespeichert. Ohne Netz springt still die Stimme des Geräts ein.",
                             style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                        // Sprechtempo in sechs Stufen: dieselbe Aufnahme schneller oder langsamer, bei gleicher Tonhöhe
+                        val speech = LocalSpeech.current; val tempos = de.raumlicht.core.model.Vorlesen.TEMPOS
+                        Text("🐢🐇 Sprechtempo: ${de.raumlicht.core.model.Vorlesen.tempoLabel(speech.rate)}", Modifier.padding(top = 4.dp).testTag("sprechtempo-text"), style = MaterialTheme.typography.bodyLarge)
+                        Slider(tempos.indexOf(speech.rate).coerceAtLeast(0) / (tempos.size - 1f), { speech.setRate(tempos[(it * (tempos.size - 1)).roundToInt().coerceIn(0, tempos.size - 1)]) },
+                            Modifier.testTag("sprechtempo"), steps = tempos.size - 2)
                         OutlinedButton({ speaker?.say("Hallo, ich bin Lux. So klinge ich jetzt.") }, Modifier.testTag("hoerprobe")) { Text("▶ So klingt es") }
                     }
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)

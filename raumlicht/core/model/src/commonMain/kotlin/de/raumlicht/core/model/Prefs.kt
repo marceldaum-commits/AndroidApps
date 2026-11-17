@@ -15,6 +15,8 @@ interface Prefs {
     /** Eigene Lautstärke für Musik und für Geräusche, je 0 … 100 % (zusätzlich zur Gesamt-Lautstärke [volume]) */
     val musicLevel: StateFlow<Int>; fun setMusicLevel(percent: Int)
     val soundLevel: StateFlow<Int>; fun setSoundLevel(percent: Int)
+    /** Sprechtempo beim Vorlesen in Prozent, eine Stufe aus [Vorlesen.TEMPOS] */
+    val speechRate: StateFlow<Int>; fun setSpeechRate(percent: Int)
     /** Sprechtempo beim Vorlesen in Prozent (70 … 130, 100 = normal) */
     /** Strenge Vektorschreibweise mit Ortsvektoren („OB⃗ − OA⃗“ statt „B − A“), siehe [Notation]. Voreinstellung: kurz. */
     val strictVectors: StateFlow<Boolean>; fun setStrictVectors(v: Boolean)

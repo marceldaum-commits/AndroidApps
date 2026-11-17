@@ -26,10 +26,12 @@ typealias NovaFetch = (url: String, body: String?) -> Pair<Int, ByteArray>
  */
 class NovaVoice(private val ctx: Context, private val fallback: Speaker? = null, private val onSpeaking: (Boolean) -> Unit = {},
                 private val fetch: NovaFetch = ::novaFetch,
-                /** spielt eine Datei ab und ruft am Ende [done] auf; gibt zurück, wie man sie anhält (Tests ersetzen das) */
-                private val play: ((File, Float, () -> Unit) -> (() -> Unit))? = null) : Speaker {
+                /** spielt eine Datei mit Lautstärke und Tempo ab und ruft am Ende [done] auf; gibt zurück, wie man sie anhält (Tests ersetzen das) */
+                private val play: ((File, Float, Float, () -> Unit) -> (() -> Unit))? = null) : Speaker {
     @Volatile var enabled = true
     @Volatile var volume = 1f
+    /** Sprechtempo: 1 = wie aufgenommen; die Datei wird schneller oder langsamer abgespielt, die Tonhöhe bleibt */
+    @Volatile var rate = 1f
     private val worker = Executors.newSingleThreadExecutor { Thread(it, "lux-nova").apply { isDaemon = true } }
     private val main = android.os.Handler(android.os.Looper.getMainLooper())
     private val turn = AtomicInteger(0)
@@ -72,18 +74,21 @@ class NovaVoice(private val ctx: Context, private val fallback: Speaker? = null,
     private fun start(file: File, mine: Int) {
         speaking = true; onSpeaking(true)
         val done = { main.post { if (mine == turn.get()) { halt = null; speaking = false; onSpeaking(false) } }; Unit }
-        halt = runCatching { (play ?: ::playFile)(file, volume.coerceIn(0f, 1f), done) }.getOrElse { file.delete(); done(); null }
+        halt = runCatching { (play ?: ::playFile)(file, volume.coerceIn(0f, 1f), rate.coerceIn(0.5f, 2f), done) }.getOrElse { file.delete(); done(); null }
     }
     private fun silence() { runCatching { halt?.invoke() }; halt = null; if (speaking) { speaking = false; onSpeaking(false) } }
     private fun fallbackStop() { (fallback as? LuxVoice)?.stop() }
 
-    private fun playFile(file: File, volume: Float, done: () -> Unit): () -> Unit {
+    private fun playFile(file: File, volume: Float, rate: Float, done: () -> Unit): () -> Unit {
         val p = MediaPlayer()
         p.setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build())
         p.setDataSource(file.path); p.setVolume(volume, volume)
         p.setOnCompletionListener { runCatching { it.release() }; done() }
         p.setOnErrorListener { mp, _, _ -> runCatching { mp.release() }; file.delete(); done(); true }   // kaputte Datei: beim nächsten Mal neu holen
-        p.prepare(); p.start()
+        p.prepare()
+        // Tempo bei gleicher Tonhöhe; das Setzen startet die Wiedergabe schon – start() danach schadet nicht
+        if (rate != 1f) runCatching { p.playbackParams = android.media.PlaybackParams().setSpeed(rate).setPitch(1f) }
+        p.start()
         return { runCatching { p.stop() }; runCatching { p.release() } }
     }
 

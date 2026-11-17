@@ -25,11 +25,12 @@ class NovaVoiceTest {
     private val asked = ArrayList<Pair<String, String?>>()
     private val played = ArrayList<File>(); private val device = ArrayList<String>(); private val ducked = ArrayList<Boolean>()
     private var finish: (() -> Unit)? = null
+    private val rates = ArrayList<Float>()
 
     @Before fun clean() { File(ctx.cacheDir, "nova").deleteRecursively() }
 
     private fun voice(server: (String, String?) -> Pair<Int, ByteArray>) = NovaVoice(ctx, Speaker { device += it }, { ducked += it },
-        fetch = { url, body -> asked += url to body; server(url, body) }, play = { f, _, done -> played += f; finish = done; {} })
+        fetch = { url, body -> asked += url to body; server(url, body) }, play = { f, _, rate, done -> played += f; rates += rate; finish = done; {} })
     private fun settle() { Thread.sleep(150); shadowOf(android.os.Looper.getMainLooper()).idle() }
 
     @Test fun fixedTextComesFromTheServerAndIsKept() {
@@ -39,6 +40,8 @@ class NovaVoiceTest {
         assertEquals(listOf(true), ducked); finish!!(); settle(); assertEquals(listOf(true, false), ducked)
         // zweites Mal: aus dem Speicher, ohne Netz
         v.say("Hallo Welt"); settle(); assertEquals(1, asked.size); assertEquals(2, played.size); assertTrue(device.isEmpty())
+        // Sprechtempo: dieselbe Datei, nur schneller abgespielt
+        v.rate = 1.3f; v.say("Hallo Welt"); settle(); assertEquals(listOf(1f, 1f, 1.3f), rates); assertEquals(1, asked.size)
     }
 
     @Test fun runtimeTextIsRequestedWithNothingButTextAndLanguage() {
@@ -62,7 +65,7 @@ class NovaVoiceTest {
 
     @Test fun newSentenceCutsTheOldOneAndOffMeansSilent() {
         var stopped = 0
-        val v = NovaVoice(ctx, null, { ducked += it }, fetch = { _, _ -> 200 to mp3 }, play = { f, _, _ -> played += f; { stopped++ } })
+        val v = NovaVoice(ctx, null, { ducked += it }, fetch = { _, _ -> 200 to mp3 }, play = { f, _, _, _ -> played += f; { stopped++ } })
         v.say("Eins."); settle(); v.say("Zwei."); settle(); assertEquals(2, played.size); assertEquals(1, stopped)
         v.stop(); assertEquals(2, stopped); assertEquals(false, ducked.last())
         v.enabled = false; v.say("Drei."); settle(); assertEquals(2, played.size)

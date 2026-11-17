@@ -48,4 +48,10 @@ class VorlesenTest {
         assertEquals("https://stimmen.mathenachhilfe-online.com/nova/ab/abc.mp3", Vorlesen.liveUrl("""{"url":"/nova/ab/abc.mp3"}"""))
         assertEquals(null, Vorlesen.liveUrl("""{"url":"https://fremd.example/x.mp3"}""")); assertEquals(null, Vorlesen.liveUrl("kein json")); assertEquals(null, Vorlesen.liveUrl("{}"))
     }
+
+    @Test fun tempoHasSixSteps() {
+        assertEquals(listOf(75, 90, 100, 115, 130, 150), Vorlesen.TEMPOS)
+        assertEquals(listOf("0,75×", "0,9×", "1,0×", "1,15×", "1,3×", "1,5×"), Vorlesen.TEMPOS.map(Vorlesen::tempoLabel))
+        assertEquals(100, Vorlesen.tempo(100)); assertEquals(115, Vorlesen.tempo(120)); assertEquals(75, Vorlesen.tempo(10)); assertEquals(150, Vorlesen.tempo(999))
+    }
 }

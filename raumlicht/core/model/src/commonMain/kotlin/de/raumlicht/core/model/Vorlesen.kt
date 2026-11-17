@@ -45,6 +45,12 @@ object Vorlesen {
     // ---- Stimme „Nova“: vorab vertonte Dateien auf unserem Server
     /** So heißt die Stimme in der App – die Kennzeichnung „KI-generiert“ ist Pflicht */
     const val VOICE_LABEL = "Nova – KI-generierte Stimme"
+    /** Sprechtempo in Prozent – die Stufen des Reglers. 100 = so, wie der Server die Stimme aufnimmt; schneller oder langsamer spielt die App dieselbe Datei bei gleicher Tonhöhe ab. */
+    val TEMPOS = listOf(75, 90, 100, 115, 130, 150)
+    /** Die nächste erlaubte Stufe zu einem gemerkten Wert */
+    fun tempo(percent: Int) = TEMPOS.minBy { kotlin.math.abs(it - percent) }
+    /** Anzeige: 115 → „1,15×“ */
+    fun tempoLabel(percent: Int) = "${percent / 100},${(percent % 100).toString().padStart(2, '0').trimEnd('0').ifEmpty { "0" }}×"
     /** Was beim Vorlesen mit Daten passiert (steht in den Einstellungen von Android und WebApp) */
     const val PRIVACY = "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. " +
         "Texte, die erst in der Aufgabe entstehen, schickt die App ohne Angaben zu dir an unseren Server stimmen.mathenachhilfe-online.com; " +

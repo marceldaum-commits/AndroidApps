@@ -1,12 +1,15 @@
 # Vorlesen mit der Stimme „Nova“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.17.0 vom 17.11.2026. Ersetzt die frühere Anleitung zur Stimme „Thorsten“ (sherpa-onnx, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
+Stand: Raumlicht 2.17.1 vom 17.11.2026. Ersetzt die frühere Anleitung zur Stimme „Thorsten“ (sherpa-onnx, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
 
 ## Kurz
 
 - Die App rechnet keine Sprache und spricht mit keinem fremden Dienst. Sie spielt **fertige MP3-Dateien** von unserem Server `stimmen.mathenachhilfe-online.com`.
 - „Nova“ ist eine **KI-generierte Stimme (OpenAI)**. Das muss in der App stehen („Nova – KI-generierte Stimme“). Das Tempo legt der Server fest.
 - Vorlesen bleibt **aus, bis man es einschaltet**. Stimmenwahl: Nova oder aus.
+- **Sprechtempo** (seit 2.17.1): Regler mit den Stufen 0,75 · 0,9 · 1,0 · 1,15 · 1,3 · 1,5, gemerkt. 1,0 = so, wie der Server aufnimmt. Die App spielt dieselbe Datei
+  schneller oder langsamer bei gleicher Tonhöhe: Android `MediaPlayer.playbackParams` (Speed, Pitch 1), Web `<audio>` mit `preservesPitch` (bei der ersten Berührung aufschließen;
+  klappt das nicht, normales Tempo über Web Audio). Die Geräte-Stimme als Notlösung bekommt dieselbe Einstellung.
 
 ## 1. Feste Texte: Liste beim Bauen erzeugen
 

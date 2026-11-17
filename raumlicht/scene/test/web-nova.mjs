@@ -34,6 +34,10 @@ check(!seen.some((s) => s.startsWith('POST')), 'für feste Texte geht nichts an 
 const S = 'https://stimmen.mathenachhilfe-online.com'; const before = seen.length;
 const again = await page.evaluate(([s, u]) => window.__rlNova.say(s, s + u, '', '', 0.5), [S, first.substring(4)]);
 check(again === 'ok' && seen.length === before, 'schon gehörte Sätze kommen aus dem Speicher (kein neuer Abruf)');
+// 2b. Sprechtempo: dieselbe Datei, schneller abgespielt, Tonhöhe bleibt
+await page.mouse.click(200, 300);
+const fast = await page.evaluate(([s, u]) => window.__rlNova.say(s, s + u, '', '', 0.5, 1.3).then((r) => ({ r, last: window.__rlNova.last })), [S, first.substring(4)]);
+check(fast.r === 'ok' && fast.last.rate === 1.3 && seen.length === before, 'Sprechtempo 1,3×: gleiche Datei aus dem Speicher, schneller abgespielt (Tonhöhe bleibt)');
 // 3. Laufzeit-Text: Datei fehlt → Server erzeugt sie → abspielen; gesendet werden nur Text und Sprache
 const body = JSON.stringify({ text: 'Fast! Vektor a gleich 1, 2, 3.', sprache: 'de' });
 const live = await page.evaluate(([s, bd]) => window.__rlNova.say(s, s + '/nova/00/fehltnoch.mp3', s + '/jetzt', bd, 0.5), [S, body]);
