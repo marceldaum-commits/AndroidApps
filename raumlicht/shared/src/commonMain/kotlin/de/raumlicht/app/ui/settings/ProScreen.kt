@@ -40,6 +40,10 @@ val LocalNotation = staticCompositionLocalOf { NotationChoice(false) {} }
 /** Text in der gewählten Schreibweise */
 @Composable fun noted(text: String): String = if (LocalNotation.current.strict) remember(text) { de.raumlicht.core.model.Notation.strict(text) } else text
 
+/** Sprechtempo beim Vorlesen (70 … 130 %) und wie man es umstellt */
+class SpeechChoice(val rate: Int, val setRate: (Int) -> Unit)
+val LocalSpeech = staticCompositionLocalOf { SpeechChoice(100) {} }
+
 /** Abi-Pass in den Einstellungen: Ziel des Eintrags (null = kein Eintrag, solange der Abi-Pass nicht erhältlich ist) und ob er freigeschaltet ist */
 val LocalProEntry = staticCompositionLocalOf<(() -> Unit)?> { null }
 val LocalProActive = staticCompositionLocalOf { false }

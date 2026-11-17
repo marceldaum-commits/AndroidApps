@@ -17,6 +17,8 @@ import java.util.Locale
 class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {}) : Speaker {
     @Volatile var enabled = true
     @Volatile var volume = 1f
+    /** Sprechtempo: 1 = normal (Einstellungen: 70 … 130 %) */
+    var rate = 1f; set(v) { field = v; if (ready) apply() }
     /** Gibt es eine deutsche Stimme? Steht erst kurz nach dem Start fest – deshalb beobachtbar. */
     var available by androidx.compose.runtime.mutableStateOf(false)
         private set
@@ -59,7 +61,7 @@ class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {})
         current = name
         runCatching { tts.voices?.firstOrNull { it.name == name }?.let { tts.voice = it } }
         // natürlich: fast unverändert und etwas ruhiger – stark verstellte Tonhöhe klingt blechern
-        tts.setPitch(if (bright) 1.3f else 1.04f); tts.setSpeechRate(if (bright) 1.0f else 0.94f)
+        tts.setPitch(if (bright) 1.3f else 1.04f); tts.setSpeechRate((if (bright) 1.0f else 0.94f) * rate)
     }
     /** Nächste deutsche Stimme des Geräts wählen und gleich vorstellen. @return ihr Name */
     fun nextVoice(): String? {

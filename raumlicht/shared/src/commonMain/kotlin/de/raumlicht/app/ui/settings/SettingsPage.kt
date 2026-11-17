@@ -55,7 +55,14 @@ fun SettingsPage(
                     Toggle("🔊 Geräusche", "Laser, Treffer, Lux’ Piepsen", sound, onSound)
                     Toggle("🗣️ Lux spricht", if (voiceAvailable) "Aus, bis du es einschaltest: Lux liest ihre Sprechblasen laut vor (Sprachausgabe des Geräts)" else "Auf diesem Gerät ist keine deutsche Stimme eingerichtet – Lux bleibt stumm.", voice) {
                         onVoice(it); if (it) speaker?.say("Hallo, ich bin Lux!") }
-                    if (voice && voiceAvailable) voiceControls()
+                    if (voice && voiceAvailable) {
+                        voiceControls()
+                        // Sprechtempo und Hörprobe – gleich in Android und WebApp
+                        val speech = LocalSpeech.current
+                        Text("🐢🐇 Sprechtempo: ${speech.rate} %", Modifier.padding(top = 4.dp).testTag("sprechtempo-text"), style = MaterialTheme.typography.bodyLarge)
+                        Slider((speech.rate - 70) / 60f, { speech.setRate(70 + (it * 6).toInt().coerceIn(0, 6) * 10) }, Modifier.testTag("sprechtempo"), steps = 5)
+                        OutlinedButton({ speaker?.say("Hallo, ich bin Lux. So klinge ich jetzt.") }, Modifier.testTag("hoerprobe")) { Text("▶ So klingt es") }
+                    }
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
                     Text("🔉 Lautstärke: $volume %", Modifier.padding(top = 8.dp).testTag("lautstaerke-text"), style = MaterialTheme.typography.bodyLarge)
                     Text("Für Musik und Geräusche zusammen", style = MaterialTheme.typography.bodySmall, color = Q.Muted)

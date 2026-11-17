@@ -30,6 +30,12 @@ class WebPrefs : Prefs {
     override val music: StateFlow<Boolean> = _music; override fun setMusic(v: Boolean) { put("musik", v); _music.value = v }
     override val vibration: StateFlow<Boolean> = _vibration; override fun setVibration(v: Boolean) { put("vibration", v); _vibration.value = v }
     override val voice: StateFlow<Boolean> = _voice; override fun setVoice(v: Boolean) { put("stimmeAn", v); _voice.value = v }
+    private val _rate = int("sprechtempo", 100)
+    override val speechRate: StateFlow<Int> = _rate; override fun setSpeechRate(percent: Int) { val p = percent.coerceIn(70, 130); storeSet(P + "sprechtempo", p.toString()); _rate.value = p }
+    /** Name der gewählten Geräte-Stimme (leer = die erste deutsche, die auf dem Gerät eingebaut ist) */
+    var voiceName: String
+        get() = storeGet(P + "stimmeName") ?: ""
+        set(v) = storeSet(P + "stimmeName", v)
     private val _strict = flag("strengeVektoren", false)
     override val strictVectors: StateFlow<Boolean> = _strict; override fun setStrictVectors(v: Boolean) { put("strengeVektoren", v); _strict.value = v }
     private val _volume = int("lautstaerke", 100)

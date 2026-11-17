@@ -62,6 +62,8 @@ class MainActivity : ComponentActivity() {
             val volume by vm.settings.volume.collectAsStateWithLifecycle()
             LaunchedEffect(volume) { app.sfx.master = volume / 100f; app.music.setVolume(volume / 100f); app.voice.volume = volume / 100f; app.natural.volume = volume / 100f }
             val voice by vm.settings.voice.collectAsStateWithLifecycle()
+            val speechRate by vm.settings.speechRate.collectAsStateWithLifecycle()
+            LaunchedEffect(speechRate) { app.voice.rate = speechRate / 100f; app.natural.rate = speechRate / 100f }
             LaunchedEffect(voice) { app.voice.enabled = voice; app.natural.enabled = voice; if (!voice) { app.voice.stop(); app.natural.stop() } }
             RaumlichtTheme {
                 val view = androidx.compose.ui.platform.LocalView.current

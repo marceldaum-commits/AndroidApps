@@ -124,6 +124,10 @@ class AppRootTest {
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.SETTINGS); settle(); rule.onNodeWithText("📐 Strenge Vektorschreibweise").performScrollTo().performClick(); settle()
         assertTrue(prefs.strictVectors.value); assertTrue(Settings(ApplicationProvider.getApplicationContext()).strictVectors.value)
+        // Vorlesen: Sprechtempo einstellbar und gemerkt, Hörprobe vorhanden
+        rule.onNodeWithTag("sprechtempo-text").performScrollTo().assertTextEquals("🐢🐇 Sprechtempo: 100 %"); rule.onNodeWithTag("hoerprobe").assertExists()
+        rule.runOnUiThread { prefs.setSpeechRate(120) }; settle(); rule.onNodeWithTag("sprechtempo-text").assertTextEquals("🐢🐇 Sprechtempo: 120 %")
+        assertEquals(120, Settings(ApplicationProvider.getApplicationContext()).speechRate.value); rule.runOnUiThread { prefs.setSpeechRate(100) }
         rule.onNodeWithText("An: mit Ortsvektoren", substring = true).assertExists(); nav.back(); settle()
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.SHEET); settle(); rule.onNodeWithText("Verbindungsvektor: AB⃗ = OB⃗ − OA⃗ (Spitze minus Fuß)").assertExists()

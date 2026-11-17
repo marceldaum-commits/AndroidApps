@@ -84,7 +84,7 @@ private fun WebApp() {
 
     val sfx = remember { WebSfx(prefs) }
     val speaker = remember { object : Speaker {
-        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Speech.clean(text).takeIf { it.isNotEmpty() }?.let { speak(it, prefs.volume.value / 100.0) } }
+        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Speech.clean(text).takeIf { it.isNotEmpty() }?.let { speak(it, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0, prefs.voiceName) } }
         override fun sayIfQuiet(text: String) { if (!speaking()) say(text) }
     } }
     CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker,
@@ -104,6 +104,16 @@ private fun WebApp() {
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
                         voice = voice, onVoice = { prefs.setVoice(it); if (!it) stopSpeaking() }, voiceAvailable = canSpeak(),
+                        voiceControls = {
+                            // Stimme wählen: durch die deutschen Stimmen des Geräts schalten – jede stellt sich gleich vor
+                            val names = remember { localVoices().split('\n').filter { it.isNotBlank() } }
+                            var current by remember { mutableStateOf(prefs.voiceName.takeIf { it in names } ?: names.firstOrNull().orEmpty()) }
+                            Column(Modifier.padding(bottom = 6.dp)) {
+                                OutlinedButton({ if (names.size > 1) { current = names[(names.indexOf(current) + 1) % names.size]; prefs.voiceName = current; speaker.say("Hallo, ich bin Lux. So klinge ich jetzt.") } }, enabled = names.size > 1) {
+                                    Text(if (names.size > 1) "Andere Stimme (${names.indexOf(current) + 1} von ${names.size})" else "Nur eine Stimme vorhanden") }
+                                if (current.isNotBlank()) Text("Stimme des Geräts: $current", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                            }
+                        },
                         onLicenses = { openLink("lizenzen.txt") },
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe, keine Daten an einen Server. " +
                             "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest eine Stimme vor, die auf deinem Gerät eingebaut ist.")

@@ -18,6 +18,9 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     /** Lux liest ihre Sprechblasen laut vor */
     override val voice: StateFlow<Boolean> = _voice.asStateFlow()
     override fun setVoice(v: Boolean) { prefs.edit().putBoolean("voiceOn", v).apply(); _voice.value = v }
+    private val _rate = MutableStateFlow(prefs.getInt("speechRate", 100))
+    override val speechRate: StateFlow<Int> = _rate.asStateFlow()
+    override fun setSpeechRate(percent: Int) { val p = percent.coerceIn(70, 130); prefs.edit().putInt("speechRate", p).apply(); _rate.value = p }
     private val _strict = flag("strictVectors", false)
     override val strictVectors: StateFlow<Boolean> = _strict.asStateFlow()
     override fun setStrictVectors(v: Boolean) { prefs.edit().putBoolean("strictVectors", v).apply(); _strict.value = v }

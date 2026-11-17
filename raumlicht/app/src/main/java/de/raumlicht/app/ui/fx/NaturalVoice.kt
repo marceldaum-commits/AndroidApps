@@ -100,6 +100,8 @@ class VoicePackLoader(private val ctx: Context, private val fetch: (String) -> H
 class NaturalVoice(private val ctx: Context, private val fallback: Speaker? = null, private val onSpeaking: (Boolean) -> Unit = {}) : Speaker {
     @Volatile var enabled = true
     @Volatile var volume = 1f
+    /** Sprechtempo: 1 = normal (Einstellungen: 70 … 130 %) */
+    @Volatile var rate = 1f
     var ready by mutableStateOf(false)
         private set
     /** Warum die Stimme nicht startet (für die Einstellungen) */
@@ -148,7 +150,7 @@ class NaturalVoice(private val ctx: Context, private val fallback: Speaker? = nu
             runCatching {
                 speaking = true; onSpeaking(true)
                 out.setVolume(volume.coerceIn(0f, 1f)); out.play()
-                engine.generateWithConfigAndCallback(clean, GenerationConfig(speed = 1.0f, phonemeCodepoints = laute.map { Lautschrift.codepoints(it) }.toTypedArray())) { samples ->
+                engine.generateWithConfigAndCallback(clean, GenerationConfig(speed = rate, phonemeCodepoints = laute.map { Lautschrift.codepoints(it) }.toTypedArray())) { samples ->
                     if (mine != turn.get()) 0 else { out.write(samples, 0, samples.size, AudioTrack.WRITE_BLOCKING); 1 }
                 }
                 if (mine == turn.get()) out.stop()                           // spielt den Rest aus dem Puffer noch zu Ende
