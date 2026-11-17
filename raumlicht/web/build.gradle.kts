@@ -67,6 +67,8 @@ tasks.register<Sync>("webapp") {
     from(tasks.named("wasmJsBrowserDistribution"))
     // Lizenztexte der fremden Bausteine – dieselbe Datei wie in der Android-App
     from(rootProject.file("app/src/main/assets/lizenzen.txt"))
+    // Liste der festen Vorlese-Texte: holt unser Stimmen-Server und vertont jeden neuen Text einmal vorab (Stimme „Nova“)
+    from(project(":core:model").tasks.named("vorleseTexte")) { into("vorlesen") }
     // Natürliche Stimme im Browser: Lautschrift und Zeichenliste (dieselben Daten wie in der Android-App) …
     // (als .txt: Der Abgleich zur Testadresse lässt nur bekannte Dateitypen durch)
     from(rootProject.file("app/src/main/assets/stimme")) { into("stimme"); rename { it.replace(".tsv", ".txt") } }

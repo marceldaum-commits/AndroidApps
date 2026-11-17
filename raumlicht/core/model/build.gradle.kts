@@ -15,3 +15,14 @@ kotlin {
 
 // Die Logik-Tests lesen die mitgelieferte Lautschrift – ändert sie sich, müssen die Tests neu laufen
 tasks.withType<Test>().configureEach { inputs.dir(rootProject.file("app/src/main/assets/stimme")) }
+
+// Liste der festen Vorlese-Texte für den Stimmen-Server: entsteht bei jedem Bau der WebApp neu (→ webapp/vorlesen/texte.json)
+val vorleseTexte = tasks.register<JavaExec>("vorleseTexte") {
+    val main = kotlin.jvm().compilations.getByName("main")
+    val out = layout.buildDirectory.dir("vorlesen")
+    dependsOn(main.compileTaskProvider)
+    classpath(main.output.allOutputs, main.runtimeDependencyFiles)
+    mainClass.set("de.raumlicht.core.model.VorleseTexteKt")
+    args(out.get().file("texte.json").asFile.path)
+    inputs.files(main.output.allOutputs); outputs.dir(out)
+}

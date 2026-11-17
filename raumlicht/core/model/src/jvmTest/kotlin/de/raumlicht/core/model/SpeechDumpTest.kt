@@ -27,7 +27,7 @@ class SpeechDumpTest {
         ProGen.Kind.entries.forEach { k -> for (seed in 1L..60L) collect(ProGen.level(k, seed), false) }
         JamLevel.entries.forEach { more += it.title; more += it.hint }
         Gen.Kind.entries.forEach { k -> for (seed in 1L..40L) runCatching { collect(Gen.level(k, seed), false) } }
-        fixed += listOf("Hallo, ich bin Lux!", "Hallo, ich bin Lux. So klinge ich jetzt.", "Geschafft!", "Der Schwung reicht nicht.", "Im Ziel, aber der Auftrag fehlt noch.")
+        fixed += Vorlesen.raw()   // dieselbe Liste, aus der vorlesen/texte.json entsteht
         // Theorie-Karten: die Idee liest Lux vor, wenn man die Karte öffnet (fest); der Rest liefert Wörter
         (Theory.cards + Theory.general).forEach { c -> fixed += c.idea; more += c.title; more += c.steps; more += c.example; more += c.trap }
         SpotKind.entries.forEach { fixed += it.title; more += it.rule }

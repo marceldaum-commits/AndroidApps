@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.16.4 – Vorbereitung für die neue Vorlese-Stimme (17.11.2026)
+- **Hinter den Kulissen:** Die WebApp liefert jetzt eine Liste aller festen Vorlese-Texte aus (`vorlesen/texte.json`). Damit kann unser Server sie für die kommende Stimme „Nova“ vorab vertonen.
+- In der App ändert sich noch nichts: Vorgelesen wird weiter wie bisher, und es werden keine Daten gesendet.
+
 ## 2.16.3 – „Warum höre ich nichts?“ (17.11.2026)
 - **Kein Ton trotz eingeschaltetem Ton?** Raumlicht bleibt mit Absicht still, wenn das Handy stumm oder auf Vibration steht (damit im Unterricht nichts losdudelt). Das sagen die Einstellungen jetzt deutlich – ebenso, wenn die Medien-Lautstärke auf 0 steht. Sobald du das Handy laut stellst, verschwindet der Hinweis.
 - **iPhone und iPad (WebApp):** Dort steht jetzt der Tipp, den Stumm-Schalter zu prüfen.

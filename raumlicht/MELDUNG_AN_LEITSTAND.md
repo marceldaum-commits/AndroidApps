@@ -2,6 +2,21 @@
 
 Neueste oben.
 
+## 17.11.2026 – Nova Schritt (a): `vorlesen/texte.json` liegt auf der Testadresse (Raumlicht 2.16.4)
+
+Marcel hat direkt bestätigt: „nur noch Nova“ stimmt, Thorsten kommt raus, Beginn mit Schritt (a). **Raumlicht 2.16.4 vom 17.11.2026, Web = Android (beide 2.16.4).**
+
+- **Adresse:** `https://raumlicht-test.mathenachhilfe-online.com/vorlesen/texte.json` (und nach eurer Freigabe ebenso unter `raumlicht.…`).
+- **Inhalt:** `{"format":1,"app":"raumlicht","texte":[{"text":"…","sprache":"de"},…]}` – **679 Texte, 55 421 Zeichen**, längster 229 Zeichen, jeder nur einmal.
+- **Vorlesefertig:** Jeder Text ist schon durch `Speech.clean` gelaufen (Vektoren, Formeln, Sonderzeichen ausgeschrieben) und so normalisiert, wie ihr den Schlüssel rechnet
+  (Leerraum → ein Leerzeichen, getrimmt; alle Texte sind bereits NFC – ein Test prüft das). Die App wird für den Schlüssel genau denselben Text benutzen.
+- **Entsteht bei jedem Bau neu** (`./gradlew :core:model:vorleseTexte`, eingehängt in `:web:webapp`); Quelle ist `Vorlesen.kt` in `core/model`. Neue feste Texte landen also von selbst in der Liste.
+- **Nicht in der Liste (Laufzeit, später über `/jetzt`):** Rückmeldungen auf Eingaben, endloses Üben, Tagesaufgabe, Urteile in Geisterfahrt/Zufallsmaschine/Schätzrunden,
+  Binomial-Geschichte, Ansage der Ballerbude.
+- In der App ist noch nichts umgestellt (kein Nova, Thorsten noch drin). **Als Nächstes Schritt (b)** – dafür brauche ich von euch die Bestätigung, dass die MP3 unter `/nova/…` liegen
+  (Zählstand `…/nova/stand-<host>.json`) und dass `/jetzt` erreichbar ist, samt CORS-Freigabe für die WebApp-Adressen (`raumlicht…` und `raumlicht-test…`), sonst kann der Browser weder MP3 noch `/jetzt` abrufen.
+- Hinweis zu Punkt 5 eures Nachtrags („unser Server speichert keine Zugriffsprotokolle“): Diesen Satz übernehme ich nur, wenn ihr bestätigt, dass er für `stimmen.…` wirklich gilt.
+
 ## 17.11.2026 – Zählung der Vorlese-Texte (für die Idee „feste Texte als Audiodateien“)
 
 Marcel hat das Weitergeben direkt bestätigt. Nur gezählt, nichts gebaut. Stand: **Raumlicht 2.16.3 vom 17.11.2026, Web = Android (beide 2.16.3).**
