@@ -2,6 +2,9 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.5 – Vorbereitung für Raumlicht Pro (17.11.2026)
+- **Hinter den Kulissen:** Die geplante Vollversion heißt künftig „Raumlicht Pro“ (einmalig 7,99 €, kein Abo, kein Ablauf). Sie ist noch nicht erhältlich – bis dahin bleibt alles frei, und in der App ändert sich nichts.
+
 ## 2.18.4 – Klarere Aufgaben, Nova ohne fremde Stimme (17.11.2026)
 - **Aufgaben verständlicher:** Alle Aufgaben, Prüfungsteile und Übungs-Vorlagen wurden noch einmal darauf geprüft, ob eindeutig ist, was gefragt ist. An rund 60 Stellen steht jetzt eine klare Frage oder die fehlende Angabe dabei – zum Beispiel „Wie groß ist sein Volumen?“ beim Lichtkegel, das Intervall bei Drehkörpern, „Winkel zwischen Strahl und Segel-Ebene (nicht zum Lot)“ oder welche Zahl bei Parameter-Aufgaben eigentlich gesucht ist.
 - **Nichts mehr verraten:** In „Ausfälle einplanen“ zeigte die Bühne die Lösung schon vorher – jetzt sind alle Scheinwerfer gleich gefärbt. Rückmeldungen nennen kein unsichtbares Ziel mehr.
@@ -24,7 +27,7 @@ Jede Version steht hier mit ihrem Datum.
 
 ## 2.18.0 – Nova auch ohne Internet (17.11.2026)
 - **Alle Nova-Texte offline laden:** In den Einstellungen unter „Lux spricht“ kannst du alle festen Vorlese-Texte auf einmal laden – am besten im WLAN. Danach spricht Lux auch ohne Internet mit Nova.
-- **Zwei Qualitäten:** „Standard“ (rund 64 MB) oder „Bestqualität“ (deutlich größer). Der Fortschritt wird angezeigt, du kannst abbrechen und später weitermachen. „Offline-Stimme löschen“ gibt den Speicher wieder frei.
+- **Zwei Qualitäten:** „Standard“ (kleiner) oder „Bestqualität“ (größer) – die App zeigt die aktuelle Größe an. Der Fortschritt wird angezeigt, du kannst abbrechen und später weitermachen. „Offline-Stimme löschen“ gibt den Speicher wieder frei.
 - **Für Eltern:** Geladen werden nur Audiodateien von unserem Server. Texte, die erst in der Aufgabe entstehen, brauchen weiterhin Internet.
 
 ## 2.17.2 – Datenschutz-Hinweis ergänzt (17.11.2026)
