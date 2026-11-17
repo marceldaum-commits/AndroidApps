@@ -23,10 +23,34 @@ interface Reader {
     /** Sprechtempo (1 = Server-Tempo): Abspielgeschwindigkeit der Nova-Ansage bei gleicher Tonhöhe; auch für die Notlösung */
     fun setSpeed(speed: Float) {}
 
+    /** „Alle Nova-Texte offline laden“ – beobachtbar */
+    val offline: OfflineState get() = OfflineState()
+    /** Stand neu ermitteln: was liegt schon auf dem Gerät, wie groß ist alles laut Server */
+    fun refreshOffline() {}
+    fun loadOffline() {}
+    fun cancelOffline() {}
+    fun clearOffline() {}
+
     companion object {
         const val PROBE = de.kurvenflug.core.model.Speech.PROBE
     }
 }
+
+/**
+ * Offline-Paket der Nova-Stimme: [have] von [total] festen Texten liegen auf dem Gerät ([haveBytes]); [serverBytes] = Größe aller
+ * Ansagen laut Server (live gelesen). Während des Ladens: [done] von [todo].
+ */
+data class OfflineState(
+    val total: Int = 0, val have: Int = 0, val haveBytes: Long = 0, val serverBytes: Long? = null,
+    val loading: Boolean = false, val done: Int = 0, val todo: Int = 0, val problem: String? = null,
+) {
+    /** Noch zu laden, geschätzt: alles laut Server minus das, was schon da ist */
+    val missingBytes: Long? get() = serverBytes?.let { (it - haveBytes).coerceAtLeast(0) }
+    val complete get() = total > 0 && have >= total
+}
+
+/** Megabyte zum Anzeigen (mindestens 1, wenn überhaupt etwas da ist) */
+fun mb(bytes: Long): String = if (bytes <= 0) "0" else ((bytes + 500_000) / 1_000_000).coerceAtLeast(1).toString()
 
 /** null = kein Vorlesen möglich (z. B. Bildschirmfoto-Tests) */
 val LocalReader = staticCompositionLocalOf<Reader?> { null }

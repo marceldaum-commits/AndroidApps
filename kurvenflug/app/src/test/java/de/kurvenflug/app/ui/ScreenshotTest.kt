@@ -436,9 +436,9 @@ class ScreenshotTest {
     }
 
     /** Vorlesen: Nova mit Kennzeichnung „KI-generiert“, Probe und Datenschutz-Text. */
-    @Test fun readAloudSettings() = shot("99_vorlesen", 1500, prepare = { it.onNodeWithText("Vorgelesen wird", substring = true).performScrollTo() }) {
+    @Test fun readAloudSettings() = shot("99_vorlesen", 1500, prepare = { it.onNodeWithText("Offline-Stimme löschen", substring = true).performScrollTo() }) {
         androidx.compose.runtime.CompositionLocalProvider(de.kurvenflug.app.ui.fx.LocalReader provides FakeReader, de.kurvenflug.app.ui.fx.LocalReadAloud provides true) {
-            SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "2.4.0",
+            SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "2.5.0",
                 update = UpdateState.Idle, onBack = {}, readAloud = true)
         }
     }
@@ -453,6 +453,7 @@ class ScreenshotTest {
 
     private object FakeReader : de.kurvenflug.app.ui.fx.Reader {
         override val speaking = false
+        override val offline = de.kurvenflug.app.ui.fx.OfflineState(total = 1163, have = 120, haveBytes = 6_500_000, serverBytes = 63_000_000)
         override fun say(text: String) {}
         override fun stop() {}
     }

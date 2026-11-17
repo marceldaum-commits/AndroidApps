@@ -24,7 +24,7 @@ val vorlesenTexte by tasks.registering(JavaExec::class) {
     dependsOn(jvmMain.compileTaskProvider)
     classpath = files(jvmMain.output.allOutputs, jvmMain.runtimeDependencyFiles)
     mainClass.set("de.kurvenflug.core.model.VorlesenListeKt")
-    val out = layout.buildDirectory.file("vorlesen/texte.json")
+    val out = layout.buildDirectory.file("vorlesen-root/vorlesen/texte.json")
     val ui = rootProject.file("shared/src/commonMain/kotlin")
     inputs.dir(ui); outputs.file(out)
     args(out.get().asFile.path, ui.path)

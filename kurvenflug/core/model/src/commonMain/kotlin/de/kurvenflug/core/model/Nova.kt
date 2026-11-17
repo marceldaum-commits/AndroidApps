@@ -44,6 +44,20 @@ object Nova {
     /** Die Adresse aus der Antwort von [LIVE] ({"url": "…"}); nur Adressen auf unserem Server */
     fun liveUrl(json: String): String? = Regex(""""url"\s*:\s*"([^"]+)"""").find(json)?.groupValues?.get(1)?.takeIf { it.startsWith(BASE) }
 
+    /** Größe aller Ansagen laut Server (Feld "bytes" in stand-<host>.json); Android nimmt den Live-Host */
+    fun standUrl(host: String) = "${BASE}stand-$host.json"
+    const val APP_HOST = "kurvenflug.mathenachhilfe-online.com"
+    fun standBytes(json: String): Long? = Regex(""""bytes"\s*:\s*(\d+)""").find(json)?.groupValues?.get(1)?.toLongOrNull()
+    /** Die Texte aus vorlesen/texte.json (Format 1) */
+    fun listTexts(json: String): List<String> = Regex(""""text"\s*:\s*"((?:[^"\\]|\\.)*)"""").findAll(json).map { m ->
+        val s = m.groupValues[1]; val out = StringBuilder(); var i = 0
+        while (i < s.length) { val c = s[i]
+            if (c == '\\' && i + 1 < s.length) { when (val n = s[i + 1]) {
+                'n' -> out.append('\n'); 't' -> out.append('\t'); 'u' -> { out.append(s.substring(i + 2, i + 6).toInt(16).toChar()); i += 4 }
+                else -> out.append(n) }; i += 2 } else { out.append(c); i++ } }
+        out.toString()
+    }.toList()
+
     /** Jeder Leerraum zu einem Leerzeichen, vorne/hinten abgeschnitten. (Die Texte der App sind bereits NFC – der Generator prüft das.) */
     fun normalize(text: String) = text.trim().replace(Regex("""\s+"""), " ")
 
