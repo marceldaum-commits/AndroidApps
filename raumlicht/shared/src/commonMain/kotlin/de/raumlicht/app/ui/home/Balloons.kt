@@ -84,12 +84,12 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
                 }
             }
         }
-        // Daneben getippt: Lux ballert genau dorthin ins Leere – und die Serie ist weg
+        // Daneben getippt: Lux ballert genau dorthin ins Leere – und die Serie beginnt von vorn
         controller.onMiss = { p ->
             if (running) {
                 controller.fire(Beam(BalloonGame.LUX, p, "white", false), 140); sfx?.play(Sound.TICK, 0.7f); view.buzz(Buzz.TICK, vib)
                 val who = if (game.mode == BalloonMode.DUEL) game.side(p) else 0
-                flash = if (scores[who].combo >= 2) "Daneben! Serie weg" else "Daneben!"; scores = scores.toMutableList().also { it[who] = it[who].miss() }
+                flash = if (scores[who].combo >= 2) "Daneben – die Serie startet neu" else "Daneben!"; scores = scores.toMutableList().also { it[who] = it[who].miss() }
             }
         }
         onDispose { controller.onTap = null; controller.onMiss = null }
@@ -117,13 +117,13 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
                 if (over) {
                     Text(when { duel && scores[0].points == scores[1].points -> "Unentschieden!"; duel -> if (scores[0].points > scores[1].points) "Links gewinnt!" else "Rechts gewinnt!"; record -> "Neuer Bestwert!"; else -> "Runde vorbei!" },
                         Modifier.testTag("ausgang"), color = Q.Yellow, fontWeight = FontWeight.Black, fontSize = 22.sp)
-                    Text(if (duel) "Links ${scores[0].points} · Rechts ${scores[1].points}" else "${score.points} Punkte · ${score.hits} Treffer · längste Serie ${score.bestCombo}", Modifier.testTag("ergebnis"), color = Q.Text, textAlign = TextAlign.Center)
+                    Text(if (duel) "Links ${scores[0].points} · Rechts ${scores[1].points}" else "${count(score.points, "Punkt", "Punkte")} · ${score.hits} Treffer · längste Serie ${score.bestCombo}", Modifier.testTag("ergebnis"), color = Q.Text, textAlign = TextAlign.Center)
                 } else {
                     Text("Nur zum Spaß 🎈", color = Q.Yellow, fontWeight = FontWeight.Black, fontSize = 22.sp)
-                    Text("45 Sekunden. Tipp die Ballons an – ich baller sie ab!\nGold bringt 5 Punkte, kleine grüne 2.\nDen dicken orangen lieber nicht: −2 und die Serie ist weg.\nDaneben getippt? Dann ballere ich daneben.", color = Q.Text, textAlign = TextAlign.Center, fontSize = 14.sp)
+                    Text("45 Sekunden. Tipp die Ballons an – ich ballere sie ab!\nGold bringt 5 Punkte, kleine grüne 2.\nDen dicken orangen lieber nicht: −2, und die Serie beginnt von vorn.\nDaneben getippt? Dann ballere ich daneben.", color = Q.Text, textAlign = TextAlign.Center, fontSize = 14.sp)
                 }
                 fun start(m: BalloonMode) { mode = m; round++; running = true; sfx?.play(Sound.LAUNCH) }
-                NeonButton({ start(BalloonMode.SOLO) }, Modifier.testTag("ballern"), color = Q.Green) { Text(if (over && mode == BalloonMode.SOLO) "↻ Noch eine Runde" else "▶ Los geht's", fontWeight = FontWeight.Black) }
+                NeonButton({ start(BalloonMode.SOLO) }, Modifier.testTag("ballern"), color = Q.Green) { Text(if (over && mode == BalloonMode.SOLO) "↻ Noch eine Runde" else "▶ Los geht’s", fontWeight = FontWeight.Black) }
                 NeonButton({ start(BalloonMode.QUIZ) }, Modifier.testTag("ballern-aufgabe"), color = Q.Yellow) { Text("🧮 Mit Aufgabe: nur passende Zahlen", fontWeight = FontWeight.Bold, fontSize = 13.sp) }
                 NeonButton({ start(BalloonMode.DUEL) }, Modifier.testTag("ballern-duell"), color = Q.Cyan) { Text("👥 Zu zweit: links gegen rechts", fontWeight = FontWeight.Bold, fontSize = 13.sp) }
             }

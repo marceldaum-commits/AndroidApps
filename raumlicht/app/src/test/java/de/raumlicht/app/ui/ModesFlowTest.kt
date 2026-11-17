@@ -136,7 +136,7 @@ class ModesFlowTest {
         val code = ClassCode.encode(listOf(Levels.byId("1-1")!!, Levels.byId("1-2")!!))
         rule.onNodeWithTag("paket-code").assertTextEquals(code)
         rule.onNodeWithTag("klassen-code").performTextInput(code); rule.onNodeWithText("Los").performClick(); rule.mainClock.advanceTimeBy(800)
-        rule.onNodeWithText("🏫 Klassenpaket · 1/2 · Aufgabe 1-1").assertExists()
+        rule.onNodeWithText("🏫 Klassen-Paket · 1/2 · Aufgabe 1-1").assertExists()
     }
 
     @Test fun twoPlayersTakeTurns() {
@@ -157,7 +157,7 @@ class ModesFlowTest {
         show { ExamPlay(g, {}, {}, guided = true) }
         rule.onNodeWithText("🧩 Schnittpunkt · Schritt 1 von 2").assertExists()
         rule.onNodeWithTag("plus-a-0").performClick(); go()
-        rule.onNodeWithText("Mit s = t = 1 liegen die Marken noch 3 auseinander.").assertExists()
+        rule.onNodeWithText("Mit s = t = 1 liegen die Marken noch 3 Einheiten auseinander.").assertExists()
         rule.onNodeWithTag("plus-a-0").performClick(); go()
         rule.onNodeWithText("Weiter ▸").performClick(); rule.mainClock.advanceTimeBy(800)
         repeat(5) { rule.onNodeWithTag("plus-P-0").performClick() }; repeat(3) { rule.onNodeWithTag("plus-P-1").performClick() }; repeat(3) { rule.onNodeWithTag("plus-P-2").performClick() }

@@ -66,7 +66,7 @@ class LevelsTest {
         assertTrue(aim.evaluate(mapOf("d" to listOf(0, 0, 0))).message.contains("Nullvektor"))
         assertTrue(aim.evaluate(mapOf("d" to listOf(1, 2, 1))).success)      // gekürzte Richtung trifft auch
         val cross = Levels.byId("4-1")!!
-        assertEquals("Dein Punkt liegt auf g ✓, aber liegt auf h nicht ✗.", cross.evaluate(mapOf("P" to listOf(3, 2, 2))).message)
+        assertEquals("Dein Punkt liegt auf g ✓, aber noch nicht auf h ✗.", cross.evaluate(mapOf("P" to listOf(3, 2, 2))).message)
     }
 
     @Test fun mathIsIndependentlyCorrect() {

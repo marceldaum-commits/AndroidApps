@@ -88,7 +88,7 @@ class ScreenshotTest {
     @Test fun jamPicker() = shot("23_jam_session", "start") { de.raumlicht.app.ui.home.JamPicker(7, {}, {}) }
     @Test fun jamLevel() = shot("24_jam_aufgabe", "jam") {
         val l = de.raumlicht.core.model.Gen.jam(de.raumlicht.core.model.JamTopic.MIX, 1, 0)
-        LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Alles gemischt", "Alles gemischt", "Jam-Session", "🎧", "pink", emptyList(), emptyList()), false, {}, { _, _ -> }, {}, {},
+        LevelScreen(l, de.raumlicht.core.model.Chapter(0, "Alles gemischt", "Alles gemischt", "Endlos üben", "🎧", "pink", emptyList(), emptyList()), false, {}, { _, _ -> }, {}, {},
             caption = "🎧 Jam · ${l.title} · Nr. 4", badge = "🔥 3")
     }
     @Test fun daily() = shot("25_tagesaufgabe", "tag") {

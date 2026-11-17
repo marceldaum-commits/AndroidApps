@@ -23,10 +23,10 @@ SO MACHT ES SPASS
 • Achterbahn-Baumeister, Geisterfahrt gegen die Ableitung, Ringflug mit Richtungsvektor
 • Ballerbude, Zufallsmaschine, Galton-Brett und Binomial-Labor für die Stochastik
 • Tagesaufgabe, endloses Üben und Abi-Aufgaben im Prüfungsstil
-• Klausur-Planer, Fehler-Tagebuch und Spickzettel
+• Klausur-Planer, Fehler-Tagebuch und Formelsammlung
 
 KURZ UND OHNE DRUCK
-Eine Aufgabe dauert wenige Minuten. Es gibt Sterne und Abzeichen, aber keine Strafen und keine verlorenen Serien.
+Eine Aufgabe dauert wenige Minuten. Es gibt Sterne und Erfolge, aber keine Strafen und keine verlorenen Serien.
 
 FÜR ELTERN
 • Keine Werbung, keine Käufe in der App, keine Anmeldung

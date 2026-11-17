@@ -126,7 +126,7 @@ fun ExamPicker(exams: List<Exam>, best: Map<String, Int>, onExam: (Exam, Boolean
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(e.emoji, fontSize = 28.sp)
                         Text(e.title, Modifier.weight(1f).padding(start = 10.dp), style = MaterialTheme.typography.titleMedium)
-                        Text(if (guided) "${e.parts.size} Schritte" else best[e.id]?.let { "$it / ${e.maxPoints} BE" } ?: "${e.maxPoints} BE", color = if (best[e.id] != null) Q.Yellow else Q.Muted, fontWeight = FontWeight.Bold)
+                        Text(if (guided) count(e.parts.size, "Schritt", "Schritte") else best[e.id]?.let { "$it / ${e.maxPoints} BE" } ?: "${e.maxPoints} BE", color = if (best[e.id] != null) Q.Yellow else Q.Muted, fontWeight = FontWeight.Bold)
                     }
                     Text(e.intro, Modifier.padding(top = 6.dp), color = Q.Muted, style = MaterialTheme.typography.bodySmall)
                     Text(e.parts.joinToString("   ") { "${it.label}) ${it.level.title}" }, Modifier.padding(top = 6.dp), color = Q.Orange, fontSize = 12.sp)
@@ -154,7 +154,8 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, 
             onSolved = { s, _ -> got = got + Exam.points(part, s); if (idx == exam.parts.lastIndex) onFinished(got.sum()) },
             onNext = { idx++ }, onBack = onBack,
             caption = if (guided) "🧩 ${exam.title} · Schritt ${part.label} von ${exam.parts.size}" else "🎓 ${exam.title} · Teil ${part.label}) · ${part.points} BE",
-            badge = if (guided) null else (if (timed) "⏱ ${Exam.clock(left)}  " else "") + "${got.sum()} BE")
+            badge = if (guided) null else (if (timed) "⏱ ${Exam.clock(left)}  " else "") + "${got.sum()} BE",
+            context = exam.intro.takeIf { it.isNotBlank() })
     } else {
         val total = got.sum(); val share = LocalShareText.current; val shareCard = LocalShareCard.current
         Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -170,7 +171,7 @@ fun ExamPlay(exam: Exam, onFinished: (points: Int) -> Unit, onBack: () -> Unit, 
                 }
             }
             Row(Modifier.padding(16.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                NeonButton({ idx = 0; got = emptyList(); left = Exam.seconds(exam); timeUp = false }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Nochmal") }
+                NeonButton({ idx = 0; got = emptyList(); left = Exam.seconds(exam); timeUp = false }, Modifier.weight(1f), color = Q.Muted) { Text("↻ Noch einmal") }
                 if (!guided) NeonButton({ shareCard(exam.emoji + " " + exam.title, "$total von ${exam.maxPoints} BE", Exam.verdict(total, exam.maxPoints)) }, Modifier.testTag("karte"), color = Q.Pink) { Text("📤") }
                 NeonButton(onBack, Modifier.weight(1f), color = Q.Green) { Text("Fertig ✓", fontWeight = FontWeight.Black) }
             }
@@ -301,7 +302,7 @@ fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title
             Lux(LuxMood.HAPPY, size = 130.dp)
             Text(if (levels.isEmpty()) "Nichts offen!" else "Runde geschafft!", fontSize = 26.sp, fontWeight = FontWeight.Black, modifier = Modifier.padding(top = 12.dp))
             Text(if (levels.isEmpty()) "Alle gespielten Aufgaben hast du beim ersten Versuch gelöst. Hier landen nur Aufgaben, die mehrere Anläufe gebraucht haben."
-                else "Du hast alle ${levels.size} Wackelkandidaten noch einmal gespielt.", Modifier.padding(horizontal = 28.dp, vertical = 10.dp), textAlign = TextAlign.Center)
+                else if (levels.size == 1) "Du hast deinen Wackelkandidaten noch einmal gespielt." else "Du hast alle ${levels.size} Wackelkandidaten noch einmal gespielt.", Modifier.padding(horizontal = 28.dp, vertical = 10.dp), textAlign = TextAlign.Center)
             NeonButton(onBack, Modifier.padding(16.dp), color = Q.Green) { Text("Zurück", fontWeight = FontWeight.Bold) }
         }
         return
@@ -319,14 +320,14 @@ fun WorkshopScreen(tourStars: Int, selected: String, onSelect: (String) -> Unit,
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding(), horizontalAlignment = Alignment.CenterHorizontally) {
         Bar("Lux gestalten", onBack) { Text("★ $tourStars · 🏅 $badges", color = Q.Yellow, fontWeight = FontWeight.Bold) }
         CompositionLocalProvider(LocalLuxSkin provides selected) { Lux(LuxMood.HAPPY, size = 150.dp) }
-        Text("Such dir Lux' Leuchtfarbe aus. Neue Farben schaltest du mit Sternen aus der Tour frei.", Modifier.padding(horizontal = 24.dp, vertical = 8.dp), textAlign = TextAlign.Center, color = Q.Muted)
+        Text("Such dir Lux’ Leuchtfarbe aus. Neue Farben schaltest du mit Sternen aus der Tour frei.", Modifier.padding(horizontal = 24.dp, vertical = 8.dp), textAlign = TextAlign.Center, color = Q.Muted)
         // Zubehör: Leuchtspur und Aufsatz, freigeschaltet durch Erfolge (in der 3D-Bühne zu sehen)
         listOf("Leuchtspur" to Looks.trails, "Aufsatz" to Looks.hats).forEachIndexed { row, (title, list) ->
             Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 14.dp, vertical = 3.dp), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text(title, Modifier.width(78.dp), color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 list.forEach { x ->
                     val open = badges >= x.badges; val on = (if (row == 0) look.first else look.second) == x.id
-                    Pick(if (open) "${x.emoji} ${x.name}" else "🔒 ${x.name} · ${x.badges} Erfolge", on, Q.Cyan, "zubehoer-${x.id}-$row") { if (open) { if (row == 0) onLook(x.id, look.second) else onLook(look.first, x.id) } }
+                    Pick(if (open) "${x.emoji} ${x.name}" else "🔒 ${x.name} · ${count(x.badges, "Erfolg", "Erfolge")}", on, Q.Cyan, "zubehoer-${x.id}-$row") { if (open) { if (row == 0) onLook(x.id, look.second) else onLook(look.first, x.id) } }
                 }
             }
         }

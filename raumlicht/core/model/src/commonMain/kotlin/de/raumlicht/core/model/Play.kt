@@ -108,9 +108,9 @@ object Flights {
             if (p.size != n || p.any { it.toIntOrNull() == null }) bad("$what braucht $n ganze Zahlen."); return p.map { it.toInt() } }
         val a = ints(0, 3, "Der Startpunkt")?.let { V3(it[0], it[1], it[2]) } ?: bad("Der Startpunkt fehlt.")
         val d = ints(1, 3, "Die Richtung")?.let { V3(it[0], it[1], it[2]) } ?: bad("Die Richtung fehlt.")
-        if (d.isZero) bad("Die Richtung darf nicht (0|0|0) sein – sonst fliegt Lux nirgendwohin.")
+        if (d.isZero) bad("Die Richtung darf nicht (0|0|0) sein – sonst fliege ich nirgendwohin.")
         val b = Bounds(); if (a.x !in 0.0..8.0 || a.y !in 0.0..8.0 || a.z !in 0.0..6.0) bad("Der Start muss im Raum liegen: x₁ und x₂ von 0 bis 8, x₃ von 0 bis 6.")
-        val tMax = Geo.exit(a, d, b.lo, b.hi); if (tMax < 0.25) bad("Mit dieser Richtung fliegt Lux sofort aus dem Raum. Dreh die Richtung nach innen.")
+        val tMax = Geo.exit(a, d, b.lo, b.hi); if (tMax < 0.25) bad("Mit dieser Richtung fliege ich sofort aus dem Raum. Dreh die Richtung nach innen.")
         val sub = listOf("₁", "₂")
         val planes = listOfNotNull(ints(2, 4, "Ebene 1"), ints(3, 4, "Ebene 2")).mapIndexed { i, p -> val n = V3(p[0], p[1], p[2])
             if (n.isZero) bad("Der Normalenvektor von Ebene ${i + 1} darf nicht (0|0|0) sein."); Triple("E${sub[i]}: ${Geo.planeText(n, p[3])}", n, p[3]) }

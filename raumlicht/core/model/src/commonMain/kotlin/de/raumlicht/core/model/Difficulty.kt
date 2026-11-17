@@ -72,6 +72,10 @@ object ProGen {
     private val normals = listOf(V3(1, 2, 2), V3(2, 1, 2), V3(2, 2, 1), V3(2, -1, 2), V3(1, -2, 2), V3(2, 2, -1), V3(-1, 2, 2))
     private fun lineText(name: String, a: V3, d: V3, param: String = "t") = listOf(Txt("$name: x⃗ = "), col(a), Txt(" + $param · "), col(d))
     private fun int(v: Double) = Geo.num(v)
+    /** Drittel als Bruch: 2 → „⅔“, −1 → „−⅓“, 3 → „1“ (die Lotfußpunkte der Profi-Aufgaben liegen oft auf Dritteln) */
+    private fun third(k: Int): String = if (k % 3 == 0) int(k / 3.0) else (if (k < 0) "−" else "") + (if (kotlin.math.abs(k) >= 3) "${kotlin.math.abs(k) / 3} " else "") + (if (kotlin.math.abs(k) % 3 == 1) "⅓" else "⅔")
+    /** Punkt hinter einem Namen: „(3|4|5)“, bei gerundeten Koordinaten „ ≈ (3,33|6,67|2,33)“ */
+    private fun approx(p: V3) = (if (p.list.all { Geo.exact(it) }) "" else " ≈ ") + p.fmt()
 
     fun level(kind: Kind, seed: Long, id: String = "profi-${kind.name.lowercase()}-$seed"): Level {
         val r = Random(seed * 37 + kind.ordinal + 1000)
@@ -85,7 +89,7 @@ object ProGen {
             val s = (n dot p).toInt(); val c = s + sg * 3 * k; val f = p + n * (sg * k / 3.0); val p2 = p + n * (sg * 2 * k / 3.0)
             if (!inRoom(f) || !inRoom(p2)) null else Families.scalar(id, 0, "Spiegelbild", "P wird an der Scheibe E gespiegelt. Wie weit liegen P und sein Spiegelbild P′ auseinander?", "d", 0..18, 2 * k, 1,
                 tip = "Drei Schritte: Abstand von P zur Ebene mit |n⃗ · P − c| : |n⃗|, dann der Lotfußpunkt – und P′ liegt genauso weit dahinter.",
-                way = listOf("n⃗ · P = $s, |n⃗| = 3", "Abstand P–E = |$s − ${int(c.toDouble())}| : 3 = $k", "Lotfußpunkt F${f.fmt()} = P + t · n⃗ mit t = ${int(sg * k / 3.0)}", "P′ = 2 · F − P = ${p2.fmt()} → |PP′| = 2 · $k = ${2 * k}"),
+                way = listOf("n⃗ · P = ${int(s.toDouble())}, |n⃗| = 3", "Abstand P–E = |${Geo.minus(int(s.toDouble()), c.toDouble())}| : 3 = $k", "Lotfußpunkt F = P + t · n⃗ mit t = ${third(sg * k)}: F${approx(f)}", "P′ = 2 · F − P ${if (p2.list.all { Geo.exact(it) }) "=" else "≈"} ${p2.fmt()} → |PP′| = 2 · $k = ${2 * k}"),
                 formula = { a -> listOf(listOf(Txt("P${p.fmt()}")), listOf(Txt("E: ${Geo.planeText(n, c)}")), listOf(Txt("|PP′| = "), Num(Geo.num(a), "a"))) },
                 objects = { _, ph -> listOf(Stage.plane("E", n, c.toDouble(), "violet", "E"), Stage.point("P", p, "cyan", "P${p.fmt()}")) +
                     if (ph == Phase.DONE) listOf(Stage.point("F", f, "pink", "F"), Stage.point("P2", p2, "yellow", "P′"), Stage.line("lot", p, p2 - p, 0.0, 1.0, "pink")) else listOf(Stage.stub("richtung", p, n * sg, "pink", length = 0.9)) },
@@ -111,7 +115,7 @@ object ProGen {
             val n = normals[r.nextInt(normals.size)]; val m = r.point(1); val sg = r.sign(); val s = (n dot m).toInt(); val c = s + sg * 3 * d; val m2 = m + n * (sg * d / 3.0)
             if (!inRoom(m2)) null else Families.scalar(id, 0, "Schnittkreis", "Die Scheibe E schneidet die Lichtkugel K in einem Kreis. Welchen Radius r′ hat er?", "r′", 0..6, rp, 0,
                 tip = "Erst den Abstand d des Mittelpunkts M von der Ebene, dann Pythagoras: r′² = r² − d².",
-                way = listOf("n⃗ · M = $s, |n⃗| = 3", "d = |$s − ${int(c.toDouble())}| : 3 = $d", "r′² = r² − d² = $r2 − ${d * d} = ${rp * rp}", "r′ = $rp, Kreismittelpunkt M′${m2.fmt()}"), color = "yellow",
+                way = listOf("n⃗ · M = ${int(s.toDouble())}, |n⃗| = 3", "d = |${Geo.minus(int(s.toDouble()), c.toDouble())}| : 3 = $d", "r′² = r² − d² = $r2 − ${d * d} = ${rp * rp}", "r′ = $rp, Kreismittelpunkt M′${approx(m2)}"), color = "yellow",
                 formula = { a -> listOf(listOf(Txt("K: M${m.fmt()}, r² = $r2")), listOf(Txt("E: ${Geo.planeText(n, c)}")), listOf(Txt("r′ = "), Num(Geo.num(a), "a"))) },
                 objects = { a, ph -> listOf(Stage.plane("E", n, c.toDouble(), "violet", "E"), Stage.sphere("K", m, sqrt(r2.toDouble()), "cyan"), Stage.point("M", m, "white", "M", drop = false)) +
                     (if (a > 0) listOf(Stage.circle("kreis", m2, n, a.toDouble(), "yellow")) else emptyList()) + if (ph == Phase.DONE) listOf(Stage.point("M2", m2, "pink", "M′", drop = false)) else emptyList() },
@@ -133,7 +137,7 @@ object ProGen {
             val a0 = r.point(); val c = (n dot r.point(1)).toInt(); val sol = if (ny != 0 && rest % ny == 0) -rest / ny else 99
             if (p == 0 || q == 0 || sol == 0 || abs(sol) > 4 || abs((n dot a0) - c) < 1e-9) null else Families.scalar(id, 0, "Parallel mit Parameter", "Die Laserbahn g soll die Scheibe E nie treffen. Für welches a läuft g parallel zu E?", "a", -4..4, sol, 0,
                 tip = "Parallel heißt: Die Richtung von g steht senkrecht auf dem Normalenvektor – Skalarprodukt null. Danach prüfen, dass A nicht in E liegt.",
-                way = listOf("d⃗ · n⃗ = ${int(n.x)} · ${int(p.toDouble())} + ${int(n.y)} · a + ${int(n.z)} · ${int(q.toDouble())}", "${int(n.y)} · a + ${int(rest.toDouble())} = 0", "a = ${int(sol.toDouble())}", "Probe: n⃗ · A = ${int(n dot a0)} ≠ ${int(c.toDouble())}, A liegt nicht in E – also echt parallel"), color = "cyan",
+                way = listOf("d⃗ · n⃗ = ${int(n.x)} · ${Geo.par(p)} + ${Geo.par(n.y)} · a + ${Geo.par(n.z)} · ${Geo.par(q)}", "${Geo.plus((if (ny == 1) "" else if (ny == -1) "−" else int(n.y) + " · ") + "a", rest.toDouble())} = 0", "a = ${int(sol.toDouble())}", "Probe: n⃗ · A = ${int(n dot a0)} ≠ ${int(c.toDouble())}, A liegt nicht in E – also echt parallel"), color = "cyan",
                 formula = { a -> listOf(listOf(Txt("g: x⃗ = "), col(a0), Txt(" + t · "), Part.Col(listOf(int(p.toDouble()), Geo.num(a), int(q.toDouble())), "a")), listOf(Txt("E: ${Geo.planeText(n, c)}"))) },
                 objects = { a, _ -> listOf(Stage.plane("E", n, c.toDouble(), "violet", "E"), Stage.fullLine("g", a0, V3(p, a, q), B, "cyan", "g"), Stage.point("A", a0, "cyan", "A${a0.fmt()}")) },
                 check = { a -> Families.compare(a, sol, "a", "a = ${int(sol.toDouble())} – der Strahl läuft parallel an der Scheibe vorbei.") })

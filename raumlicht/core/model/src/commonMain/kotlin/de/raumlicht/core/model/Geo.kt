@@ -38,11 +38,37 @@ object Geo {
 
     /** Zahl in deutscher Schreibweise: echtes Minus, Komma, keine überflüssigen Nullen. */
     fun num(v: Double): String {
-        val r = (v * 100).roundToInt() / 100.0
-        val s = if (abs(r - r.roundToInt()) < 1e-9) abs(r).roundToInt().toString() else abs(r).toString().replace('.', ',')
-        return if (r < 0) "−$s" else s
+        if (v.isNaN()) return "nicht definiert"
+        if (v.isInfinite()) return if (v > 0) "∞" else "−∞"
+        val a = abs(v); val sign = if (v < 0) "−" else ""
+        // Hundertstel als ganze Zahl – kaufmännisch am Betrag gerundet (0,125 → 0,13 und −0,125 → −0,13), ohne Überlauf bei großen Zahlen
+        fun hundredths(h: Long): String { val frac = (h % 100).toInt()
+            return (h / 100).toString() + if (frac == 0) "" else "," + (if (frac % 10 == 0) (frac / 10).toString() else frac.toString().padStart(2, '0')) }
+        if (a >= 1e12) {
+            // sehr große Beträge: lesbar als „4,85 · 10¹⁴“ statt mit „E“
+            var e = kotlin.math.floor(kotlin.math.log10(a)).toInt(); var p10 = 1.0; repeat(e) { p10 *= 10 }
+            var m = kotlin.math.floor(a / p10 * 100 + 0.5).toLong()
+            if (m >= 1000) { m = (m + 5) / 10; e++ } else if (m < 100) { m *= 10; e-- }
+            return "$sign${hundredths(m)} · 10${e.toString().map { "⁰¹²³⁴⁵⁶⁷⁸⁹"[it - '0'] }.joinToString("")}"
+        }
+        val h = kotlin.math.floor(a * 100 + 0.5).toLong()
+        return if (h == 0L) "0" else sign + hundredths(h)
     }
     fun num(v: Int) = num(v.toDouble())
+    /** Wie [num], aber negative Zahlen in Klammern – für Stellen hinter einem Rechenzeichen: „2 + (−1) · 3“ statt „2 + −1 · 3“ */
+    fun par(v: Double) = if ((v * 100).roundToInt() < 0) "(${num(v)})" else num(v)
+    fun par(v: Int) = par(v.toDouble())
+    /** Zeigt [num] den Wert genau (höchstens zwei Nachkommastellen) – oder ist er gerundet? */
+    fun exact(v: Double) = abs(v * 100 - (v * 100).roundToInt()) < 1e-6
+    /** „= 4“ für genaue, „≈ 4,12“ für gerundete Werte */
+    fun eq(v: Double) = (if (exact(v)) "= " else "≈ ") + num(v)
+    /** „a − b“ bzw. „a + b“ ohne doppeltes Rechenzeichen: 11 und −1 → „11 + 1“ */
+    fun minus(a: String, b: Double) = if (b < 0) "$a + ${num(-b)}" else "$a − ${num(b)}"
+    fun plus(a: String, b: Double) = if (b < 0) "$a − ${num(-b)}" else "$a + ${num(b)}"
+    /** Abstand eines Punktes vom Strahl ab [p] in Richtung [d] (liegt der Punkt hinter dem Start, zählt der Abstand zum Startpunkt) */
+    fun distPointRay(q: V3, p: V3, d: V3) = if (((q - p) dot d) <= 0) (q - p).length else distPointLine(q, p, d)
+    /** „1 Einheit“, „2 Einheiten“, „2,24 Einheiten“ */
+    fun units(v: Double) = num(v) + if (num(v) == "1") " Einheit" else " Einheiten"
     /** Bogenmaß → Grad */
     fun deg(rad: Double) = rad * 180.0 / kotlin.math.PI
 

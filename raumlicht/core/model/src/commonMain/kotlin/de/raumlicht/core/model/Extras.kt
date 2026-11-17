@@ -20,7 +20,7 @@ object Guides {
                 tip = "Zusammenfassen: 3 + 5t = 13.", way = listOf("(1 + t) + 2t + 2 + 2t = 13", "3 + 5t = 13", "t = 2"), color = "yellow",
                 formula = { t -> listOf(lineText("g", a, d), listOf(Txt("E: x₁ + x₂ + 2x₃ = 13    t = "), Num(Geo.num(t), "a"))) },
                 objects = { t, _ -> scene() + Stage.point("marke", a + d * t, "yellow", style = "ghost") },
-                check = { t -> if (t == 2) Outcome(true, "t = 2 – die Marke liegt auf der Scheibe.") else Outcome(false, "Mit t = $t ergibt die linke Seite ${Geo.num(n dot (a + d * t))} statt 13.") })),
+                check = { t -> if (t == 2) Outcome(true, "t = 2 – die Marke liegt auf der Scheibe.") else Outcome(false, "Mit t = ${Geo.num(t)} ergibt die linke Seite ${Geo.num(n dot (a + d * t))} statt 13.") })),
             part("2", Families.point("weg-durchstoss-2", 0, "Punkt ausrechnen", "Jetzt t = 2 in die Gerade einsetzen. Wo liegt der Durchstoßpunkt?", s, hidden = true, name = "S",
                 given = listOf(lineText("g", a, d), listOf(Txt("t = 2"))), tip = "S = (1|0|1) + 2 · (1|2|1), Zeile für Zeile.", way = listOf("S = (1 + 2 | 0 + 4 | 1 + 2)", "S(3|4|3)"),
                 mistakes = listOf(p(2, 4, 2) to "Du hast nur 2 · d⃗ gerechnet. Der Stützvektor (1|0|1) gehört dazu."), extras = { scene() })),
@@ -35,7 +35,7 @@ object Guides {
                 tip = "9t = 9.", way = listOf("(1 + t) + 2(1 + 2t) + 2 · 2t = 12", "3 + 9t = 12", "t = 1"), color = "yellow",
                 formula = { t -> listOf(lineText("l", q, n), listOf(Txt("E: x₁ + 2x₂ + 2x₃ = 12    t = "), Num(Geo.num(t), "a"))) },
                 objects = { t, _ -> scene() + Stage.line("lot", q, n, 0.0, t.toDouble().coerceAtLeast(0.05), "yellow") },
-                check = { t -> if (t == 1) Outcome(true, "t = 1 – das Lot endet genau auf der Scheibe.") else Outcome(false, "Mit t = $t ergibt die linke Seite ${Geo.num(n dot (q + n * t))} statt 12.") })),
+                check = { t -> if (t == 1) Outcome(true, "t = 1 – das Lot endet genau auf der Scheibe.") else Outcome(false, "Mit t = ${Geo.num(t)} ergibt die linke Seite ${Geo.num(n dot (q + n * t))} statt 12.") })),
             part("2", Families.point("weg-spiegel-2", 0, "Lotfußpunkt", "Mit t = 1: Wo trifft das Lot die Scheibe?", f, hidden = true, name = "F",
                 given = listOf(lineText("l", q, n), listOf(Txt("t = 1"))), tip = "F = P + 1 · n⃗.", way = listOf("F = (1 + 1 | 1 + 2 | 0 + 2)", "F(2|3|2)"), extras = { scene() })),
             part("3", Families.point("weg-spiegel-3", 0, "Spiegelpunkt", "Vom Lotfußpunkt denselben Weg noch einmal weiter. Wo liegt P′?", m, hidden = true, name = "P′",
@@ -52,7 +52,7 @@ object Guides {
                 tip = "3s = 6.", way = listOf("1 + 2s = 7 − s", "3s = 6", "s = 2 (und t = 2)"), color = "cyan",
                 formula = { v -> listOf(lineText("g", a, d1, "s"), lineText("h", b, d2), listOf(Txt("s = "), Num(Geo.num(v), "a"))) },
                 objects = { v, _ -> scene() + Stage.point("mg", a + d1 * v, "cyan", style = "ghost") + Stage.point("mh", b + d2 * v, "yellow", style = "ghost") },
-                check = { v -> if (v == 2) Outcome(true, "s = t = 2 – beide Marken treffen sich.") else Outcome(false, "Mit s = t = $v liegen die Marken noch ${Geo.num(((a + d1 * v) - (b + d2 * v)).length)} auseinander.") })),
+                check = { v -> if (v == 2) Outcome(true, "s = t = 2 – beide Marken treffen sich.") else Outcome(false, "Mit s = t = ${Geo.num(v)} liegen die Marken noch ${Geo.units(((a + d1 * v) - (b + d2 * v)).length)} auseinander.") })),
             part("2", Families.point("weg-schnitt-2", 0, "Punkt ausrechnen", "s = 2 in g einsetzen: Wo ist der Schnittpunkt?", s, hidden = true, name = "S",
                 given = listOf(lineText("g", a, d1, "s"), listOf(Txt("s = 2"))), tip = "S = (1|1|1) + 2 · (2|1|1).", way = listOf("S = (1 + 4 | 1 + 2 | 1 + 2)", "S(5|3|3)"), extras = { scene() })),
         ))
@@ -150,8 +150,8 @@ object ClassCode {
         if (check(body) != m.groupValues[2].uppercase()[0]) return null
         return body.chunked(2).map { Levels.all.getOrNull(ALPHA.indexOf(it[0]) * 36 + ALPHA.indexOf(it[1])) ?: return null }
     }
-    fun shareText(levels: List<Level>) = "Raumlicht-Klassenpaket (${levels.size} Aufgaben: ${levels.joinToString(", ") { it.id }}). In der App unter Backstage → Klasse eingeben: ${encode(levels)}"
-    fun resultText(levels: List<Level>, firstTry: Int) = "Raumlicht-Klassenpaket ${encode(levels)}: $firstTry von ${levels.size} beim ersten Versuch gelöst."
+    fun shareText(levels: List<Level>) = "Raumlicht-Klassen-Paket (${levels.size} ${if (levels.size == 1) "Aufgabe" else "Aufgaben"}: ${levels.joinToString(", ") { it.id }}). In der App unter „Mehr“ → „Klassen-Paket (für Lehrkräfte)“ eingeben: ${encode(levels)}"
+    fun resultText(levels: List<Level>, firstTry: Int) = "Raumlicht-Klassen-Paket ${encode(levels)}: $firstTry von ${levels.size} beim ersten Versuch gelöst."
 }
 
 // ───────────────────────── Zwei an einem Gerät ─────────────────────────

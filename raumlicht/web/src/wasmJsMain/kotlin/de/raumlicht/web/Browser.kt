@@ -32,9 +32,11 @@ fun beep(type: String, f0: Double, f1: Double, seconds: Double, gain: Double): U
 fun vibrate(ms: Int): Unit = js("{ if (navigator.vibrate) navigator.vibrate(ms); }")
 
 // ── Stimme: Sprachausgabe des Browsers (rechnet auf dem Gerät bzw. im Browser, je nach System)
-fun canSpeak(): Boolean = js("('speechSynthesis' in window)")
+/** Vorgelesen wird nur mit einer deutschen Stimme, die auf dem Gerät eingebaut ist – Stimmen, die den Text an einen Server schicken, benutzt die App nicht
+ *  (sonst stimmte „keine Daten an einen Server“ nicht). Solange der Browser seine Stimmen noch lädt, gilt: möglich. */
+fun canSpeak(): Boolean = js("(function () { if (!('speechSynthesis' in window)) return false; var v = speechSynthesis.getVoices(); return v.length === 0 || v.some(function (x) { return x.localService && x.lang && x.lang.indexOf('de') === 0; }); })()")
 fun speak(text: String, volume: Double): Unit = js(
-    "{ try { const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.volume = volume; u.rate = 0.96; const v = speechSynthesis.getVoices().filter((x) => x.lang && x.lang.startsWith('de')); const pick = v.find((x) => x.localService) || v[0]; if (pick) u.voice = pick; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }")
+    "{ try { const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.volume = volume; u.rate = 0.96; const v = speechSynthesis.getVoices().filter((x) => x.lang && x.lang.startsWith('de')); const pick = v.find((x) => x.localService); if (!pick) return; u.voice = pick; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }")
 fun speaking(): Boolean = js("('speechSynthesis' in window) && speechSynthesis.speaking")
 fun stopSpeaking(): Unit = js("{ if ('speechSynthesis' in window) speechSynthesis.cancel(); }")
 
@@ -70,5 +72,7 @@ fun musicSetup(render: (String) -> Unit): Unit = js("""{
 /** Welches Stück laufen soll (null = keins) und wie laut (0..1) */
 fun musicWant(mood: String?, vol: Double): Unit = js("{ const M = window.__rlMusic; if (!M) return; M.want = mood; M.vol = vol; M.apply(); }")
 
-/** Freischalt-Link „?pro=<Code>“: liefert den Code (oder null) und nimmt ihn gleich wieder aus der Adresszeile, damit er nicht versehentlich geteilt wird */
-fun takeProParam(): String? = js("(function () { try { var u = new URL(location.href); var c = u.searchParams.get('pro'); if (c === null) return null; u.searchParams.delete('pro'); history.replaceState(history.state, '', u.pathname + u.search + u.hash); return c; } catch (e) { return null; } })()")
+/** Wert aus der Adresszeile („?name=…“) holen und gleich wieder herausnehmen, damit er nicht versehentlich geteilt oder beim Neuladen wiederholt wird */
+fun takeParam(name: String): String? = js("(function () { try { var u = new URL(location.href); var c = u.searchParams.get(name); if (c === null) return null; u.searchParams.delete(name); history.replaceState(history.state, '', u.pathname + u.search + u.hash); return c; } catch (e) { return null; } })()")
+/** Freischalt-Link „?pro=<Code>“ */
+fun takeProParam(): String? = takeParam("pro")

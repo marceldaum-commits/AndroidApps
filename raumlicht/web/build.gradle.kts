@@ -62,6 +62,8 @@ tasks.named<Copy>("wasmJsProcessResources") {
 /** Fertige WebApp nach raumlicht/webapp/ legen – nur reine Dateien, wie der Server sie ausliefert. */
 tasks.register<Sync>("webapp") {
     from(tasks.named("wasmJsBrowserDistribution"))
+    // Lizenztexte der fremden Bausteine – dieselbe Datei wie in der Android-App
+    from(rootProject.file("app/src/main/assets/lizenzen.txt"))
     into(rootProject.file("webapp"))
     exclude("**/*.LICENSE.txt")
     // Ladeplan eintragen: Größen der großen Dateien für den Fortschrittsbalken und die Namen der .wasm-Dateien für den Service Worker

@@ -30,6 +30,8 @@ fun SettingsPage(
     lastProblem: String? = null, onProblemSeen: () -> Unit = {},
     /** Gibt es Hintergrundmusik? (im Browser noch nicht) */
     hasMusic: Boolean = true,
+    /** Lizenzen der fremden Bausteine: als Text zum Anzeigen ([licenses], Android) oder als eigene Aktion ([onLicenses], Web öffnet die Datei) */
+    licenses: String? = null, onLicenses: (() -> Unit)? = null,
     /** Was die App speichert und wann sie ins Internet geht – je Plattform verschieden */
     privacy: String = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und einmalig, wenn du die natürliche Stimme lädst. Gesprochen wird immer auf dem Gerät.",
@@ -37,6 +39,7 @@ fun SettingsPage(
     val speaker = de.raumlicht.app.ui.fx.LocalSpeaker.current
     val sfx = de.raumlicht.app.ui.fx.LocalSfx.current
     var ask by remember { mutableStateOf(false) }; var done by remember { mutableStateOf(false) }
+    var showLicenses by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) { de.raumlicht.app.ui.fx.BackArrow() }
@@ -67,6 +70,7 @@ fun SettingsPage(
                     Text("Inhalte: Mathematik der Oberstufe. Analytische Geometrie – Punkte und Vektoren im Raum, Geraden in Parameterform, " +
                         "Lagebeziehungen, Ebenen in Koordinatenform, Durchstoßpunkte, Normalenvektor, Skalarprodukt, Lotfußpunkt, " +
                         "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen, Bewegungsaufgaben; dazu Analysis (Funktionen, Ableitung, Kurvendiskussion, Integral, Rotationskörper) und Stochastik (Laplace, Pfadregel, Vierfeldertafel, Binomialverteilung). Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)
+                    if (licenses != null || onLicenses != null) TextButton({ if (onLicenses != null) onLicenses() else showLicenses = true }, Modifier.testTag("lizenzen")) { Text("Fremde Bausteine & Lizenzen") }
                     Text(versionText, style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                 }
             }
@@ -93,6 +97,12 @@ fun SettingsPage(
             }
         }
     }
+    if (showLicenses && licenses != null) AlertDialog(
+        onDismissRequest = { showLicenses = false },
+        title = { Text("Fremde Bausteine & Lizenzen") },
+        text = { Text(licenses, Modifier.verticalScroll(rememberScrollState()).testTag("lizenzen-text"), style = MaterialTheme.typography.bodySmall) },
+        confirmButton = { TextButton({ showLicenses = false }) { Text("Schließen") } },
+    )
     if (ask) AlertDialog(
         onDismissRequest = { ask = false },
         title = { Text("Wirklich alles zurücksetzen?") },

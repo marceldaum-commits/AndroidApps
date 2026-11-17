@@ -1,5 +1,7 @@
 package de.raumlicht.app.ui.level
 
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.*
 import androidx.compose.animation.fadeIn
@@ -59,6 +61,8 @@ fun LevelScreen(
     extra: Pair<String, () -> Unit>? = null,
     /** Ohne Hilfsmittel: kein Tipp-Knopf (Pflichtteil) */
     strict: Boolean = false,
+    /** Sachzusammenhang, der über mehrere Teilaufgaben gilt (Prüfungsaufgaben: „Ein Lichtbogen hat die Form von f(x) = …“) – bleibt bei jeder Teilaufgabe sichtbar */
+    context: String? = null,
 ) {
     var values by remember(level.id) { mutableStateOf(initial ?: level.start) }
     var phase by remember(level.id) { mutableStateOf(Phase.AIM) }
@@ -168,7 +172,7 @@ fun LevelScreen(
                         .clickable(remember { MutableInteractionSource() }, null) { extra.second() }.padding(horizontal = 12.dp, vertical = 7.dp), color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     Text(de.raumlicht.app.ui.stage.orbitHint, Modifier.align(Alignment.TopEnd).padding(10.dp), color = Q.Muted.copy(alpha = 0.8f), fontSize = 11.sp)
                     // Dreimal auf den Hinweis tippen zeigt die Selbstauskunft der Bühne (für Fehlersuche)
-                    if (showInfo) Text(controller.info ?: "Bühne hat sich noch nicht gemeldet", Modifier.align(Alignment.BottomStart).background(Q.Space.copy(alpha = 0.85f)).padding(8.dp), color = Q.Yellow, fontSize = 10.sp, lineHeight = 12.sp)
+                    if (showInfo) Text(controller.info ?: "Die Bühne hat sich noch nicht gemeldet.", Modifier.align(Alignment.BottomStart).background(Q.Space.copy(alpha = 0.85f)).padding(8.dp), color = Q.Yellow, fontSize = 10.sp, lineHeight = 12.sp)
                     Box(Modifier.align(Alignment.TopEnd).size(150.dp, 40.dp).clickable(remember { MutableInteractionSource() }, null) { taps++; if (taps >= 3) { showInfo = !showInfo; taps = 0 } })
                 }
             }
@@ -189,6 +193,8 @@ fun LevelScreen(
                     .background(Q.Deep).border(1.dp, accent.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).clickable(remember { MutableInteractionSource() }, null) { says = level.mission to LuxMood.IDLE }
                     .padding(horizontal = 10.dp, vertical = 5.dp), color = Q.Text, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 // Formel
+                if (context != null) Text(context, Modifier.fillMaxWidth().padding(horizontal = 12.dp).padding(top = 6.dp).testTag("zusammenhang").background(Q.Deep, RoundedCornerShape(10.dp)).padding(horizontal = 10.dp, vertical = 6.dp),
+                    style = MaterialTheme.typography.bodySmall, color = Q.Text)
                 FormulaView(level.formula(if (phase == Phase.DONE) level.solutionShown(values) else values), { stageColor(level.control(it).color) },
                     Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp).background(Q.Deep, RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 8.dp))
 
@@ -211,7 +217,7 @@ fun LevelScreen(
                 } else {
                     Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp).background(verticalFade(listOf(Q.Green.copy(alpha = 0.18f), Q.Deep)), RoundedCornerShape(16.dp))
                         .border(1.5.dp, Q.Green.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).padding(12.dp)) {
-                        Text("So rechnet man's", color = Q.Green, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge)
+                        Text("So rechnet man’s", color = Q.Green, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge)
                         level.way.forEachIndexed { i, s -> Text("${i + 1}.  $s", style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 2.dp)) }
                     }
                     Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -253,7 +259,7 @@ fun StarRow(n: Int, lit: Boolean, size: Int = 20) {
 @Composable
 fun Stepper(label: String?, value: Int, text: String, color: Color, tag: String, modifier: Modifier, canDown: Boolean, canUp: Boolean, onStep: (Int) -> Unit) {
     Row(modifier.height(46.dp).background(Q.Deep, RoundedCornerShape(14.dp)).border(1.dp, color.copy(alpha = 0.5f), RoundedCornerShape(14.dp)), verticalAlignment = Alignment.CenterVertically) {
-        StepButton("−", color, canDown, "minus-$tag") { onStep(-1) }
+        StepButton("−", color, canDown, "minus-$tag", "${label ?: "Wert"} kleiner") { onStep(-1) }
         Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
             if (label != null) Text(label, fontSize = 10.sp, color = Q.Muted, lineHeight = 10.sp)
             // Blättert zwischen den fertig beschrifteten Werten (z. B. „20 %“ → „30 %“) – nie über den internen Zählwert
@@ -262,15 +268,16 @@ fun Stepper(label: String?, value: Int, text: String, color: Color, tag: String,
                 Text(it.second, fontSize = 19.sp, fontWeight = FontWeight.Black, color = color, lineHeight = 20.sp)
             }
         }
-        StepButton("+", color, canUp, "plus-$tag") { onStep(1) }
+        StepButton("+", color, canUp, "plus-$tag", "${label ?: "Wert"} größer") { onStep(1) }
     }
 }
 
 @Composable
-private fun StepButton(sign: String, color: Color, enabled: Boolean, tag: String, onClick: () -> Unit) {
+private fun StepButton(sign: String, color: Color, enabled: Boolean, tag: String, name: String, onClick: () -> Unit) {
     val interaction = remember { MutableInteractionSource() }
-    Box(Modifier.testTag(tag).size(42.dp).pressBounce(interaction).clip(CircleShape).clickable(interaction, null, enabled = enabled, onClick = onClick), contentAlignment = Alignment.Center) {
-        Text(sign, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = if (enabled) color else Q.Muted.copy(alpha = 0.3f))
+    // [name] sagt Vorlese-Hilfen, was der Knopf tut („x₁ größer“) – „plus“ allein hilft nicht
+    Box(Modifier.testTag(tag).size(42.dp).pressBounce(interaction).clip(CircleShape).clickable(interaction, null, enabled = enabled, role = androidx.compose.ui.semantics.Role.Button, onClickLabel = name, onClick = onClick), contentAlignment = Alignment.Center) {
+        Text(sign, Modifier.clearAndSetSemantics { contentDescription = name }, fontSize = 24.sp, fontWeight = FontWeight.Bold, color = if (enabled) color else Q.Muted.copy(alpha = 0.3f))
     }
 }
 

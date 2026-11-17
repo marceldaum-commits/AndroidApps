@@ -85,7 +85,7 @@ fun UpdateSection(
                     if (AppUpdater.canInstall(ctx)) AppUpdater.install(ctx, f)
                     else { waitingForPermission = true; AppUpdater.openInstallPermission(ctx) }
                 },
-                onFailure = { state = UpdateState.Failed("Download abgebrochen. Probier es gleich noch mal.") },
+                onFailure = { state = UpdateState.Failed("Download abgebrochen. Probier es gleich noch einmal.") },
             )
         }
     }
@@ -118,14 +118,14 @@ fun UpdateSection(
                                 Lux(LuxMood.HAPPY, size = 56.dp)
                                 Text("Alles aktuell! Du hast die neueste Version ($installed).", modifier = Modifier.padding(start = 8.dp))
                             }
-                            TextButton(onClick = { check() }) { Text("Noch mal prüfen") }
+                            TextButton(onClick = { check() }) { Text("Noch einmal prüfen") }
                         }
                         is UpdateState.Available -> {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Lux(LuxMood.WOW, size = 56.dp)
                                 Column(Modifier.padding(start = 8.dp)) {
                                     Text("Neue Version ${s.r.version} ist da! 🎉", fontWeight = FontWeight.Bold)
-                                    Text("Installiert: $installed · ${"%.1f".format(s.r.sizeBytes / 1_048_576.0)} MB", style = MaterialTheme.typography.bodySmall)
+                                    Text("Installiert: $installed · ${String.format(java.util.Locale.GERMANY, "%.1f", s.r.sizeBytes / 1_048_576.0)} MB", style = MaterialTheme.typography.bodySmall)
                                 }
                             }
                             val notes = s.r.notes.lines().filterNot { it.startsWith("Installieren:") }.joinToString("\n").trim()
@@ -153,7 +153,7 @@ fun UpdateSection(
                         }
                         is UpdateState.Failed -> {
                             Text("😕 ${s.msg}")
-                            TextButton(onClick = { check() }) { Text("Noch mal versuchen") }
+                            TextButton(onClick = { check() }) { Text("Noch einmal versuchen") }
                         }
                     }
                 }

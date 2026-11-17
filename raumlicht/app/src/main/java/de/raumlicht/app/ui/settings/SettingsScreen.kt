@@ -31,6 +31,7 @@ fun SettingsScreen(
     top = { if (BuildConfig.SELF_UPDATE) UpdateSection(installed, update, autoUpdate, onAutoUpdate) },
     onReset = onReset, volume = volume, onVolume = onVolume, voice = voice, onVoice = onVoice, voiceAvailable = voiceAvailable, voiceControls = voiceControls,
     lastProblem = lastProblem, onProblemSeen = onProblemSeen,
+    licenses = androidx.compose.ui.platform.LocalContext.current.let { ctx -> remember { runCatching { ctx.assets.open("lizenzen.txt").bufferedReader().use { it.readText() } }.getOrNull() } },
     privacy = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. Ins Internet geht die App nur, " +
         (if (BuildConfig.SELF_UPDATE) "um nach Updates zu schauen (abschaltbar)" else "wenn der Play Store nach Updates schaut") +
         " – und einmalig, wenn du die natürliche Stimme lädst. Gesprochen wird immer auf dem Gerät.")

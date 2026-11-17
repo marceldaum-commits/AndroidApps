@@ -49,7 +49,7 @@ object Exams {
                 formula = { a -> listOf(listOf(Txt("V = ⅓ · G · h = "), Num(Geo.num(a * 2), "a"))) },
                 objects = { _, _ -> body() }, check = { a -> Families.compare(a * 2, 16, "Das Volumen", "16 Volumeneinheiten.") })),
             ExamPart("d", 3, Families.pierce("abi-zelt-d", 0, "Schatten", "Sonnenlicht fällt in Richtung v⃗ = (1|1|−1). Wo landet der Schatten der Spitze S auf dem Boden?",
-                s, p(1, 1, -1), p(0, 0, 1), 0, planeText = "x₃ = 0 (Boden)",
+                s, p(1, 1, -1), p(0, 0, 1), 0, planeText = "x₃ = 0 (Boden)", name = "S′",
                 tip = "Gerade durch S mit Richtung v⃗, dritte Zeile null setzen: 3 − t = 0.", way = listOf("g: x⃗ = (3|3|3) + t · (1|1|−1)", "x₃ = 0 → t = 3", "S′(6|6|0)"), extras = body())),
         ))
     }
@@ -71,7 +71,7 @@ object Exams {
                 check = { v -> Families.compare(v, 3, "Der Abstand", "3 Einheiten.") { ok -> listOf(Beam(a, a + n * (v / 3.0), "pink", ok)) } })),
             ExamPart("d", 4, Families.point("abi-leinwand-d", 0, "Spiegelbild", "Die Leinwand spiegelt. Wo erscheint das Spiegelbild A′ des Lasers?", p(3, 6, 6), hidden = true, name = "A′",
                 given = listOf(listOf(Txt("A(1|2|2)   E: x₁ + 2x₂ + 2x₃ = 18"))),
-                tip = "Lotfußpunkt ist der Durchstoßpunkt aus a). Denselben Weg noch einmal gehen.", way = listOf("F = S(2|4|4)", "A′ = A + 2 · AF⃗ = (1|2|2) + 2 · (1|2|2)", "A′(3|6|6)"),
+                tip = "Lotfußpunkt ist der Durchstoßpunkt aus Teil a. Denselben Weg noch einmal gehen.", way = listOf("F = S(2|4|4)", "A′ = A + 2 · AF⃗ = (1|2|2) + 2 · (1|2|2)", "A′(3|6|6)"),
                 extras = { e() + listOf(Stage.point("A", a, "cyan", "A(1|2|2)")) })),
         ))
     }
@@ -84,6 +84,7 @@ object Exams {
                 given = listOf(lineText("g", ga, gv)), tip = "t = 2 einsetzen.", way = listOf("x⃗(2) = (0|2|4) + 2 · (2|0|−1)", "P(4|2|2)"),
                 extras = { listOf(Stage.fullLine("g", ga, gv, Bounds(), "cyan", "g")) })),
             ExamPart("b", 2, Families.param("abi-drohnen-b", 0, "Landung", "Nach wie vielen Sekunden erreicht Drohne 1 den Boden?", ga, gv, 4, 0..6, hidden = true,
+                given = listOf(listOf(Txt("Boden: x₃ = 0"))), success = "Nach 4 Sekunden landet Drohne 1 – bei (8|2|0).",
                 tip = "Am Boden ist x₃ = 0: 4 − t = 0.", way = listOf("x₃(t) = 4 − t = 0", "t = 4 → Landepunkt (8|2|0)"))),
             ExamPart("c", 4, Families.scalar("abi-drohnen-c", 0, "Engste Stelle", "Zu welchem Zeitpunkt kommen sich die beiden Drohnen am nächsten?", "t", 0..4, 2, 0,
                 tip = "Abstandsvektor d⃗(t) = (6|0|−3) + t · (−2|1|2); minimal, wenn d⃗(t) · (−2|1|2) = 0.", way = listOf("d⃗(t) · (−2|1|2) = −18 + 9t", "= 0 → t = 2"), color = "yellow",

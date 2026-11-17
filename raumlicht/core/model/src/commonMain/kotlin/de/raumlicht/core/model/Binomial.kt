@@ -36,7 +36,8 @@ class Binomial(val n: Int, val p: Double) {
     /** Lux' Satz dazu: was die Zahl im Alltag heißt */
     fun story(mode: BinomialMode, k: Int): String { val v = ask(mode, k); val per = (v * 100).let { kotlin.math.round(it).toInt() }
         val what = when (mode) { BinomialMode.EXACT -> "genau $k"; BinomialMode.AT_MOST -> "höchstens $k"; BinomialMode.AT_LEAST -> "mindestens $k" }
-        return when { v > 0.9995 -> "Praktisch immer: $what Treffer gibt es so gut wie sicher."; v < 0.0005 -> "Praktisch nie: $what Treffer kommen so gut wie nicht vor."
+        val whatCap = what.replaceFirstChar { it.uppercase() }
+        return when { v > 0.9995 -> "Praktisch immer: $whatCap Treffer gibt es so gut wie sicher."; v < 0.0005 -> "Praktisch nie: $whatCap Treffer gibt es so gut wie nie."
             else -> "In etwa $per von 100 Durchgängen gibt es $what Treffer." } }
     companion object {
         const val MAX_N = 100

@@ -22,10 +22,10 @@ android {
         applicationId = "de.raumlicht.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 46
-        versionName = "2.12.0"
+        versionCode = 47
+        versionName = "2.13.0"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
-        buildConfigField("String", "VERSION_DATE", "\"16.11.2026\"")
+        buildConfigField("String", "VERSION_DATE", "\"17.11.2026\"")
     }
 
     // Zwei Fassungen derselben App (gleicher Paketname, gleicher Schlüssel):
