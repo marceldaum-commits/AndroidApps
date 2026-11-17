@@ -125,11 +125,15 @@ fun ChapterEnd(done: Chapter, grown: Int, onNext: (Chapter) -> Unit, onWater: ()
             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             Text("Kapitel ${done.number} geschafft! 🎉", color = Color.White, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
             Spacer(Modifier.height(16.dp))
+            val runtime = when {
+                next == null -> null
+                open -> de.wissensgarten.core.model.Laufzeit.kapitelOffen(next.number)
+                else -> de.wissensgarten.core.model.Laufzeit.kapitelWartet(next.unlockAt - grown)
+            }
             Brummi(Mood.CHEER, size = 120.dp, speech = when {
                 next == null -> "Wir haben es geschafft – die Wissensblume leuchtet wieder! Danke, dass du mir geholfen hast!"
-                open -> "Weiter geht's! Kapitel ${next.number} wartet schon auf uns!"
-                else -> "Damit es weitergeht, braucht der Garten Kraft. Lass noch ${next.unlockAt - grown} Pflanzen wachsen – dann geht unser Abenteuer weiter!"
-            })
+                else -> runtime!!.text
+            }, speechRuntime = runtime)
             Spacer(Modifier.height(20.dp))
             if (next != null && !open) {
                 val prev = done.unlockAt

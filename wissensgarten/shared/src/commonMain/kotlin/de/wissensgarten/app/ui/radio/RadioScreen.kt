@@ -1,5 +1,7 @@
 package de.wissensgarten.app.ui.radio
 
+import de.wissensgarten.core.model.Laufzeit
+import de.wissensgarten.core.model.LaufzeitText
 import de.wissensgarten.app.ui.common.BackHandler
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
@@ -77,6 +79,11 @@ fun RadioScreen(
     LaunchedEffect(running) {
         if (!running) return@LaunchedEffect
         suspend fun say(t: String, l: Locale = Locale.GERMAN) { phase = RadioPhase.SPEAKING; caption = t; voice?.speakAndWait(t, l) }
+        // Laufzeit-Sätze (aus Karte und Zahlen zusammengesetzt) – fehlt die Fassung (z. B. eigene Karte), liest die Gerätestimme
+        suspend fun say(rt: LaufzeitText?, fallback: String, l: Locale = Locale.GERMAN) {
+            phase = RadioPhase.SPEAKING; caption = fallback
+            if (rt != null) voice?.speakAndWait(rt, l) else voice?.speakAndWait(fallback, l)
+        }
         // Sprachausgabe noch nicht bereit (kalter Start)? Kurz warten, sonst ehrlich sagen.
         var waited = 0
         while (voice?.isReady != true && waited < 4000) { delay(200); waited += 200 }
@@ -90,10 +97,12 @@ fun RadioScreen(
             val q = Radio.question(card, peers[card.bedId].orEmpty())
             val subject = subjects[card.bedId]
             val answerLocale = Voice.localeFor(subject, card.back)
+            val ausPaket = subject != null
             var silent = 0
             while (true) {
-                say(Radio.prompt(q), Voice.localeFor(subject, card.front).takeIf { q.mode == Radio.Mode.FREE } ?: Locale.GERMAN)
-                if (q.mode == Radio.Mode.SELF) { delay(3500); say(Radio.selfReveal(q)) }
+                if (q.mode == Radio.Mode.FREE) say(Radio.prompt(q), Voice.localeFor(subject, card.front))
+                else say(Laufzeit.radioFrage(q, ausPaket), Radio.prompt(q))
+                if (q.mode == Radio.Mode.SELF) { delay(3500); say(Laufzeit.radioAufloesung(q, ausPaket), Radio.selfReveal(q)) }
                 if (stopRequested) break@loop
                 sfx?.play(Sound.TAP, pitch = 1.6f, volume = 0.5f)
                 phase = RadioPhase.LISTENING; caption = "Ich höre zu …"
@@ -111,7 +120,7 @@ fun RadioScreen(
                     Radio.Reply.Unclear -> {
                         if (++silent < 2) { say("Ich hab dich nicht verstanden. Noch mal!"); continue }
                         // Zweimal nichts verstanden: weiter zur nächsten Karte – ohne Bewertung
-                        say("Macht nichts – die heben wir uns für später auf. ${Radio.correction(q).removePrefix("Fast! ")}")
+                        say(Laufzeit.radioSpaeter(q, ausPaket), Radio.later(q))
                         break
                     }
                     else -> {
@@ -123,8 +132,8 @@ fun RadioScreen(
                             good && q.mode == Radio.Mode.LEARN -> say("Super nachgesprochen! Diese Pflanze ist gesät.")
                             good -> say(Radio.praise(i))
                             r == Radio.Reply.No -> say("Kein Problem – das üben wir bald wieder.")
-                            q.mode == Radio.Mode.LEARN -> say("Hör noch mal: ${card.back}. Das üben wir bald wieder.")
-                            else -> say(Radio.correction(q))
+                            q.mode == Radio.Mode.LEARN -> say(Laufzeit.radioNochmal(card, ausPaket), Radio.again(card))
+                            else -> say(Laufzeit.radioKorrektur(q, ausPaket), Radio.correction(q))
                         }
                         break
                     }
@@ -133,7 +142,7 @@ fun RadioScreen(
         }
         index = cards.size
         sfx?.play(Sound.FANFARE)
-        say(Radio.summary(correct, cards.size))
+        if (cards.isEmpty()) say(Radio.summary(0, 0)) else say(Laufzeit.radioSchluss(correct, cards.size), Radio.summary(correct, cards.size))
         phase = RadioPhase.DONE
         running = false
     }

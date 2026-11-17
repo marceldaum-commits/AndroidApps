@@ -1,5 +1,39 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Nova (Version 2.1.0 vom 17.11.2026) – Web = Android
+
+**Stimmenwahl**
+- Nur noch „Nova – KI-generierte Stimme“, dazu „Brummi liest vor“ (Automatisch/Immer/Nie = aus).
+- Sprechtempo in Stufen 0,75 · 0,9 · 1,0 · 1,15 · 1,3 · 1,5 (gemerkt). Android: `PlaybackParams(speed, pitch 1)`; Web: `playbackRate` + `preservesPitch`. Die Gerätestimme bekommt dieselbe Stufe.
+- Probe-Taste.
+
+**Abspielweg**
+- Ablauf: Gerätespeicher → `/nova/<h[0:2]>/<h>.mp3` → bei 404 nur für Laufzeit-Texte `POST /jetzt` (≤ 300 Zeichen) → sonst bzw. bei jedem Fehler oder offline still die Gerätestimme.
+- Feste Texte (frei und Plus) gehen nie an `/jetzt`.
+- Laufzeit-Texte entstehen nur aus Bausteinen mit Zahlen und Paketkarten, nie aus freiem Text. Eigene Karten (selbst geschrieben, Klassen-Code, Safari) gehen nie an den Server. Namen werden nie übertragen (Test).
+- Keine Cookies, kein Referrer, keine Geräte-Kennung.
+- Speicher: Android `filesDir/nova` (≤ 150 MB), Web Cache `wissensgarten-nova`.
+
+**Thorsten entfernt**
+- Entfernt sind sherpa-onnx, onnxruntime-web, Wörterbuch und Stimm-Download.
+- Alte Daten werden einmal gelöscht.
+- APK 22,9 → 3,9 MB.
+
+**Datenschutz-Text** wörtlich wie vorgegeben (Beispiel: Hör-noch-mal-Sätze im Brummi-Radio). Lizenzen angepasst.
+
+**Prüfung**
+- Alle Tests grün, Lint 0 Fehler, `NovaWegTest` (Entscheidungslogik, Tempo, keine Namen).
+- Headless-Chromium gegen den echten Server:
+  - `/nova` 200 für bekannte Texte.
+  - 404 → Gerätestimme ohne Fehler.
+  - `/jetzt` 200: Dabei wurde der Satz „Hör noch mal: Rom. Das üben wir bald wieder.“ einmal tatsächlich vertont.
+  - MP3 wird gespeichert und mit Tempo abgespielt.
+- Bildschirmfoto `screenshots/67_stimme.png` angesehen.
+
+**Offen**
+- „Alle Nova-Texte für offline laden“ weggelassen: rund 7 800 Dateien, Größe unbekannt. Wenn der Server eine Gesamtgröße liefert (z. B. im Stand-JSON), kann es nachkommen.
+- Auf einem echten Android-Gerät noch nicht angehört.
+
 ## Plus sichtbar (Version 2.0.2 vom 17.11.2026) – Web = Android
 
 - **Vorher:** Plus war nur im Eltern-Bereich als Knopftext „Plus ist aktiv“ zu sehen. Das genaue Datum stand erst auf der Plus-Seite.

@@ -310,7 +310,8 @@ fun LociScreen(suggest: List<StudyCard>, all: Map<String, StudyCard>, placed: Ma
                     }
                 } else {
                     LaunchedEffect(Unit) { onWalked(); sfx?.play(Sound.FANFARE); particles.burst(Burst.CONFETTI, 0.5f, 0.3f, 50) }
-                    Brummi(Mood.CHEER, size = 96.dp, speech = "$right von ${stops.size} Orten erinnert – dein Gedächtnis-Palast wächst! 🏰")
+                    Brummi(Mood.CHEER, size = 96.dp, speech = de.wissensgarten.core.model.Laufzeit.palastText(right, stops.size),
+                        speechRuntime = de.wissensgarten.core.model.Laufzeit.palast(right, stops.size))
                     OutlinedButton(onClick = { walking = false }) { Text("Orte ändern") }
                     Button(onClick = onBack) { Text("Zurück in den Garten") }
                 }

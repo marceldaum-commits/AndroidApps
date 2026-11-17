@@ -92,6 +92,7 @@ fun ReviewScreen(
     var gainText by remember { mutableStateOf("") }
     var mood by remember { mutableStateOf(Mood.IDLE) }
     var speech by remember { mutableStateOf<String?>(null) }
+    var speechRuntime by remember { mutableStateOf<de.wissensgarten.core.model.LaufzeitText?>(null) }
     val haptics = LocalHapticFeedback.current
     val vibrationOn = LocalVibration.current
     val sfx = LocalSfx.current
@@ -294,7 +295,7 @@ fun ReviewScreen(
                             },
                         )
                     }
-                    Brummi(mood, Modifier.weight(1f).align(Alignment.CenterVertically), size = 84.dp, speech = speech)
+                    Brummi(mood, Modifier.weight(1f).align(Alignment.CenterVertically), size = 84.dp, speech = speech, speechRuntime = speechRuntime)
                 }
                 LevelUpBanner(levelUp, Modifier.align(Alignment.CenterHorizontally))
                 Spacer(Modifier.height(8.dp))
@@ -312,7 +313,7 @@ fun ReviewScreen(
                                 val bonus = (8 - mistakes).coerceAtLeast(3)
                                 dew += bonus; onBonus(bonus); sfx?.play(Sound.DEW)
                                 particles.burst(Burst.CONFETTI, count = 60)
-                                mood = Mood.CHEER; speech = "+$bonus 💧 Silben-Profi!"
+                                mood = Mood.CHEER; speechRuntime = de.wissensgarten.core.model.Laufzeit.bonus(bonus, silben = true); speech = speechRuntime?.text
                                 clapList = emptyList(); phase = Phase.PLAY
                             } else MatchBonus(bonusCards) { mistakes ->
                                 val bonus = (10 - mistakes * 2).coerceAtLeast(2)
@@ -320,7 +321,7 @@ fun ReviewScreen(
                                 onBonus(bonus)
                                 sfx?.play(Sound.DEW)
                                 particles.burst(Burst.CONFETTI, count = 60)
-                                mood = Mood.CHEER; speech = "+$bonus 💧 Bonus!"
+                                mood = Mood.CHEER; speechRuntime = de.wissensgarten.core.model.Laufzeit.bonus(bonus, silben = false); speech = speechRuntime?.text
                                 phase = Phase.PLAY
                             }
                             Phase.REVEAL -> RevealCard(card, lastRight, revealPaused || !autoAdvancing, onPause = { revealPaused = true }, onRead = if (voice != null) ({ revealPaused = true; readReveal(card) }) else null) { next() }

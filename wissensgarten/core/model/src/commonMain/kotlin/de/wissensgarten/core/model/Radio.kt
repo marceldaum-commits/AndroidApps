@@ -60,6 +60,12 @@ object Radio {
 
     fun correction(q: Question) = "Fast! Die Antwort ist: ${q.card.back}."
 
+    /** Zweimal nichts verstanden: ohne Bewertung weiter */
+    fun later(q: Question) = "Macht nichts – die heben wir uns für später auf. Die Antwort ist: ${q.card.back}."
+
+    /** Neue Karte nicht richtig nachgesprochen */
+    fun again(card: StudyCard) = "Hör noch mal: ${card.back}. Das üben wir bald wieder."
+
     /**
      * Versteht die Antwort. [heard]: Vorschläge der Spracherkennung, wahrscheinlichster zuerst.
      * Steuerwörter (stopp, nochmal, weiß nicht) gehen vor.
