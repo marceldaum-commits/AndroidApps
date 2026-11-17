@@ -31,7 +31,15 @@ object ThorstenFiles {
     const val MODEL = "de_DE-thorsten-medium.onnx"
     const val SIZE = 63_201_421L
     const val SHA256 = "1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6"
-    const val URL = "https://huggingface.co/csukuangfj/vits-piper-de_DE-thorsten-medium/resolve/main/$MODEL"
+    /**
+     * Quelle: unser eigener Stimm-Server (gemeinsam für alle Apps). Dort liegt die reine Piper-Datei ([SOURCE_SIZE] Bytes).
+     * sherpa-onnx braucht zusätzlich ein paar Angaben im Modell (Abtastrate, Sprecherzahl …). Diese 127 Bytes ([SHERPA_TAIL])
+     * hängt die App nach dem Laden an – das Ergebnis ist Byte für Byte die geprüfte sherpa-Fassung ([SIZE], [SHA256]).
+     */
+    const val URL = "https://stimmen.mathenachhilfe-online.com/thorsten/$MODEL"
+    const val SOURCE_SIZE = 63_201_294L
+    const val SHERPA_TAIL_B64 = "chIKCm1vZGVsX3R5cGUSBHZpdHNyEAoHY29tbWVudBIFcGlwZXJyEgoIbGFuZ3VhZ2USBkdlcm1hbnILCgV2b2ljZRICZGVyDwoKaGFzX2VzcGVhaxIBMXIPCgpuX3NwZWFrZXJzEgExchQKC3NhbXBsZV9yYXRlEgUyMjA1MA=="
+    val SHERPA_TAIL: ByteArray get() = java.util.Base64.getDecoder().decode(SHERPA_TAIL_B64)
     fun dir(ctx: Context) = File(ctx.filesDir, "stimme")
     fun model(ctx: Context) = File(dir(ctx), MODEL)
     fun tokens(ctx: Context) = File(dir(ctx), "tokens.txt")
@@ -60,6 +68,8 @@ class ThorstenPack(
     private val fetch: (String) -> HttpURLConnection = { URL(it).openConnection() as HttpURLConnection },
     /** Erwartete Größe und Prüfsumme – im Test mit kleinen Daten austauschbar */
     private val size: Long = ThorstenFiles.SIZE, private val sha256: String = ThorstenFiles.SHA256,
+    /** wird nach dem Laden angehängt (sherpa-Angaben), siehe [ThorstenFiles.URL] */
+    private val tail: ByteArray = ThorstenFiles.SHERPA_TAIL,
 ) : NaturalVoicePack {
     override val state = MutableStateFlow<VoicePackState>(if (ThorstenFiles.installed(ctx, size)) VoicePackState.Ready else VoicePackState.Missing)
     override val problem = MutableStateFlow<String?>(null)
@@ -79,7 +89,8 @@ class ThorstenPack(
                 if (c.responseCode !in 200..299) error("Der Server antwortet mit ${c.responseCode}.")
                 c.inputStream.use { i -> part.outputStream().use { o -> val b = ByteArray(1 shl 16); var done = 0L; var shown = -1
                     while (true) { if (cancelled) error("abgebrochen"); val n = i.read(b); if (n < 0) break; o.write(b, 0, n); done += n
-                        val p = (done * 100 / size).toInt().coerceIn(0, 99); if (p != shown) { shown = p; state.value = VoicePackState.Loading(p) } } } }
+                        val p = (done * 100 / size).toInt().coerceIn(0, 99); if (p != shown) { shown = p; state.value = VoicePackState.Loading(p) } }
+                    if (done + tail.size == size) o.write(tail) } }
                 if (!ThorstenFiles.matches(part, size, sha256)) error("Die Datei ist unvollständig oder beschädigt angekommen.")
                 if (!part.renameTo(ThorstenFiles.model(ctx))) error("Die Datei ließ sich nicht speichern.")
             }

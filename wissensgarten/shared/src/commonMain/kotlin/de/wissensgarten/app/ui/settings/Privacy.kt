@@ -38,8 +38,8 @@ object PrivacyText {
             "Brummi liest mit der Sprachausgabe des Geräts (Android bzw. Browser) vor. Dabei werden nur die Texte der Lernkarten verwendet. " +
             "In der WebApp bieten wir nur Stimmen an, die auf dem Gerät sprechen – keine Online-Stimmen. " +
             "Auf Wunsch gibt es die natürliche Stimme „Thorsten“: Eltern können sie in den Einstellungen einmalig laden (ca. 63 MB). " +
-            "Die Stimmdatei kommt dann von Hugging Face (huggingface.co, betrieben von Hugging Face Inc.); Hugging Face sieht dabei, wie bei jedem Download, " +
-            "die IP-Adresse und den Zeitpunkt. Danach rechnet die Stimme ganz auf dem Gerät – kein Text verlässt das Gerät. " +
+            "Die Stimmdatei kommt dann von unserem eigenen Server (stimmen.mathenachhilfe-online.com); er sieht dabei, wie bei jedem Download, " +
+            "die IP-Adresse und den Zeitpunkt – ohne Cookies, ohne Konto. Danach rechnet die Stimme ganz auf dem Gerät – kein Text verlässt das Gerät. " +
             "Die Stimmdatei lässt sich in den Einstellungen jederzeit wieder entfernen.",
         "Kamera und QR-Codes" to
             "Den QR-Code-Scanner für Klassen-Codes öffnen nur Eltern (nach der Eltern-Aufgabe). Er nutzt den Code-Scanner der Google-Play-Dienste " +

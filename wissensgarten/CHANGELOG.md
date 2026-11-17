@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.0.1 – Thorsten kommt von unserem eigenen Server (17.11.2026)
+- Die natürliche Stimme „Thorsten“ wird jetzt von unserem eigenen Stimm-Server geladen statt von Hugging Face. Wie vorher nur auf Wunsch, ohne Cookies, mit Prüfsumme – und danach ganz ohne Internet.
+- Wer Thorsten schon geladen hat, muss nichts tun.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.0.0 – Brummi singt und liest vor (17.11.2026)
 - **Eigene Garten-Musik:** Jede Jahreszeit klingt anders. Im Frühling spielen Marimba und Glockenspiel mit Vogelgezwitscher, im Sommer Kalimba und Gitarre mit Brummis Summen, im Herbst Gitarre mit Wind und Regentropfen, im Winter Glockenspiel und Spieluhr. Abends gibt es ein Schlaflied mit Grillen.
 - **Damit die Musik nie nervt:** Nach jeder Melodie kommt eine kleine Atempause nur mit Naturgeräuschen. Die Musik startet erst, wenn man den Bildschirm berührt, und schweigt, wenn das Handy auf lautlos steht.

@@ -1,5 +1,15 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Thorsten vom eigenen Stimm-Server (Version 2.0.1 vom 17.11.2026) – Web = Android
+
+- **Quelle:** App und WebApp laden Thorsten jetzt von `https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx` (63 201 294 Bytes, sha256 `7e64762d…`). Hugging Face wird nicht mehr angefragt.
+- **Problem:** sherpa-onnx (Android) braucht Metadaten im Modell; die Server-Datei hat keine. Der Fehler „'sample_rate' does not exist in the metadata“ ist mit sherpa-onnx geprüft.
+- **Lösung ohne Änderung am Server:** Die bisherige sherpa-Fassung ist Byte für Byte die Server-Datei plus 127 angehängte Bytes (ONNX-Metadaten: model_type vits, sample_rate 22050, n_speakers 1 …). Beide Fassungen hängen diese 127 Bytes nach dem Laden an und prüfen dann die sha256 der fertigen Datei (`1c305abe…`). Das Ergebnis ist identisch zur bisherigen Datei. Bereits geladene Stimmen bleiben gültig.
+- **Andere Apps:** Für sherpa-onnx können sie denselben Weg nutzen (Anhang siehe `ThorstenFiles.SHERPA_TAIL_B64` in `wissensgarten/app/.../platform/Thorsten.kt`) – oder ihr legt die 127 Bytes größere sherpa-Fassung zusätzlich auf den Server.
+- **Beweis:** Echter Download im Headless-Chromium von eurem Server (CORS `http://localhost`): 5 s, Prüfsumme ok, Thorsten erzeugt Samples, keine Anfrage an Hugging Face. Test `ThorstenSourceTest` prüft, dass App und WebApp dieselbe Quelle, denselben Anhang und dieselbe Prüfsumme nutzen.
+- **Datenschutz-Text und Lizenzen** nennen jetzt den eigenen Server. Der Hinweis „am besten im WLAN“ stand schon im Text.
+- **Prüfung:** Alle Tests grün, Lint 0 Fehler.
+
 ## Musik, Vorlesen, Versionsschema (Version 2.0.0 vom 17.11.2026) – Web = Android
 
 **Versionsschema:** neu ab **2.0.0**. Der versionCode läuft weiter (44 → 45). App, WebApp und `version.json` zeigen 2.0.0.

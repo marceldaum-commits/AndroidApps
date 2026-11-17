@@ -1,5 +1,5 @@
 // Wissensgarten WebApp – Brummis Stimme: Stimmen des Browsers (nur solche auf dem Gerät) und die natürliche Stimme „Thorsten“.
-// Thorsten rechnet ganz im Browser (ONNX Runtime Web, MIT). Die Stimmdatei (63 MB, CC0) kommt nur auf Wunsch einmal von Hugging Face
+// Thorsten rechnet ganz im Browser (ONNX Runtime Web, MIT). Die Stimmdatei (63 MB, CC0) kommt nur auf Wunsch einmal von unserem Stimm-Server
 // und liegt danach im Browser-Speicher (Cache Storage). Die Rechen-Bausteine (ort/…) werden erst geladen, wenn Thorsten spricht.
 // Kein Text verlässt das Gerät.
 (function () {
@@ -42,7 +42,13 @@
   }).catch(() => null);
 
   // ---------------------------------------------------------------- Thorsten
+  // Merkname im Browser-Speicher (bleibt gleich, damit schon geladene Stimmen erhalten bleiben)
   const MODEL_URL = 'https://huggingface.co/csukuangfj/vits-piper-de_DE-thorsten-medium/resolve/main/de_DE-thorsten-medium.onnx';
+  // Quelle: unser eigener Stimm-Server. Dort liegt die reine Piper-Datei; die 127 Bytes mit den sherpa-Angaben hängen wir an –
+  // das Ergebnis ist Byte für Byte dieselbe geprüfte Datei wie in der Android-App (gleiche Prüfsumme).
+  const SRC_URL = 'https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx';
+  const SRC_SIZE = 63201294;
+  const TAIL_B64 = 'chIKCm1vZGVsX3R5cGUSBHZpdHNyEAoHY29tbWVudBIFcGlwZXJyEgoIbGFuZ3VhZ2USBkdlcm1hbnILCgV2b2ljZRICZGVyDwoKaGFzX2VzcGVhaxIBMXIPCgpuX3NwZWFrZXJzEgExchQKC3NhbXBsZV9yYXRlEgUyMjA1MA==';
   const SIZE = 63201421;
   const SHA256 = '1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6';
   const STORE = 'wissensgarten-stimme';              // eigener Speicher – der Service Worker lässt ihn bei Updates stehen
@@ -61,16 +67,17 @@
     th.state = 'loading'; th.pct = 0; th.why = '';
     const ctl = new AbortController(); abort = ctl;
     try {
-      // ohne Cookies und ohne Herkunftsangabe – Hugging Face sieht nur IP-Adresse und Zeitpunkt
-      const res = await fetch(MODEL_URL, { signal: ctl.signal, credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store' });
+      // ohne Cookies und ohne Herkunftsangabe – unser Stimm-Server sieht nur IP-Adresse und Zeitpunkt
+      const res = await fetch(SRC_URL, { signal: ctl.signal, credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store' });
       if (!res.ok || !res.body) throw new Error('Der Server antwortet mit ' + res.status + '.');
       const reader = res.body.getReader(); const buf = new Uint8Array(SIZE); let got = 0;
       for (;;) {
         const r = await reader.read(); if (r.done) break;
-        if (got + r.value.length > SIZE) throw new Error('Die Datei ist größer als erwartet.');
-        buf.set(r.value, got); got += r.value.length; th.pct = Math.min(99, Math.floor(got * 100 / SIZE));
+        if (got + r.value.length > SRC_SIZE) throw new Error('Die Datei ist größer als erwartet.');
+        buf.set(r.value, got); got += r.value.length; th.pct = Math.min(99, Math.floor(got * 100 / SRC_SIZE));
       }
-      if (got !== SIZE) throw new Error('Die Datei ist unvollständig angekommen.');
+      if (got !== SRC_SIZE) throw new Error('Die Datei ist unvollständig angekommen.');
+      const tail = Uint8Array.from(atob(TAIL_B64), (ch) => ch.charCodeAt(0)); buf.set(tail, SRC_SIZE);
       if (hex(await crypto.subtle.digest('SHA-256', buf)) !== SHA256) throw new Error('Die Datei ist beschädigt angekommen.');
       const c = await caches.open(STORE);
       await c.put(MODEL_URL, new Response(buf, { headers: { 'Content-Type': 'application/octet-stream', 'Content-Length': String(SIZE) } }));

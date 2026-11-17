@@ -19,7 +19,7 @@ sealed interface VoicePackState {
 
 /**
  * Das Stimm-Paket „Thorsten“: eine natürlich klingende deutsche Stimme (Piper, Aufnahmen CC0), die ganz auf dem Gerät rechnet.
- * Die große Stimmdatei kommt nur auf Wunsch von Hugging Face (huggingface.co) – danach verlässt kein Text das Gerät.
+ * Die große Stimmdatei kommt nur auf Wunsch von unserem Stimm-Server (stimmen.mathenachhilfe-online.com) – danach verlässt kein Text das Gerät.
  */
 interface NaturalVoicePack {
     val state: StateFlow<VoicePackState>
