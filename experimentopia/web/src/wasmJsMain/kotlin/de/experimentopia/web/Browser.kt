@@ -51,7 +51,7 @@ fun browserStop(): Unit = js("{ if ('speechSynthesis' in window) speechSynthesis
 
 // ── Nova (nova.js wird beim ersten Vorlesen geladen)
 fun novaScript(done: (Boolean) -> Unit): Unit = js("{ if (window.ExNova) { done(true); return; } const s = document.createElement('script'); s.src = 'nova.js'; s.onload = () => done(true); s.onerror = () => done(false); document.head.appendChild(s); }")
-fun novaSpeak(texts: String, urls: String, onStart: () -> Unit, onEnd: () -> Unit, onFail: (Int) -> Unit): Unit = js("window.ExNova.speak(texts, urls, onStart, onEnd, onFail)")
+fun novaSpeak(texts: String, urls: String, speed: Double, onStart: () -> Unit, onEnd: () -> Unit, onFail: (Int) -> Unit): Unit = js("window.ExNova.speak(texts, urls, speed, onStart, onEnd, onFail)")
 fun novaStop(): Unit = js("{ if (window.ExNova) window.ExNova.stop(); }")
 /** Der alte Speicher der Stimme „Thorsten“ (bis 2.1) wird nicht mehr gebraucht – Platz freigeben */
 fun dropOldVoice(): Unit = js("{ try { localStorage.removeItem('experimentopia.thorsten'); if (window.caches) caches.delete('experimentopia-stimme'); } catch (e) {} }")

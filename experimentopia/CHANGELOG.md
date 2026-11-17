@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.2.1 – Sprechtempo einstellbar (17.11.2026)
+
+- 🐢🐇 **Sprechtempo**: In den Einstellungen unter „Vorlesen“ lässt sich Nova langsamer oder schneller stellen (0,75 bis 1,5) – die Stimme bleibt dabei gleich hoch.
+  Die Wahl wird gemerkt und gilt auch für die Gerätestimme ohne Internet.
+
 ## 2.2.0 – Neue Vorlese-Stimme Nova (17.11.2026)
 
 - 🔊 **Nova liest vor**: Alle Anleitungen, Fragen und Erklärungen spricht jetzt „Nova“ – eine mit KI erzeugte Stimme (OpenAI), klar und freundlich.

@@ -55,11 +55,11 @@ class AndroidReader(ctx: Context) : Reader {
             @Deprecated("Deprecated in Java") override fun onError(id: String?) { main.post { speaking = false } }
             override fun onStop(id: String?, interrupted: Boolean) { main.post { speaking = false } }
         })
-        tts.setSpeechRate(1.1f)
         ttsReady = true
     }
     private fun sayDevice(text: String) {
         if (!ttsReady) { main.post { speaking = false }; return }
+        tts.setSpeechRate(1.1f * Nova.speed(prefs.rate))
         runCatching { tts.speak(text, TextToSpeech.QUEUE_FLUSH, Bundle(), "blubb") }
     }
 
@@ -97,6 +97,7 @@ class AndroidReader(ctx: Context) : Reader {
             MediaPlayer().apply {
                 setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build())
                 setDataSource(f.path); prepare()
+                playbackParams = android.media.PlaybackParams().setSpeed(Nova.speed(prefs.rate)).setPitch(1f)
                 setOnCompletionListener { latch.countDown() }
                 setOnErrorListener { _, _, _ -> latch.countDown(); true }
             }

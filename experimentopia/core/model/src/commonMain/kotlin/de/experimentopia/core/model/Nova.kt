@@ -23,6 +23,11 @@ object Nova {
     /** Jeder Leerraum zu einem Leerzeichen, vorne und hinten abgeschnitten (Unicode-NFC prüft der Export-Test) */
     fun normalize(t: String) = t.replace(Regex("""\s+"""), " ").trim()
 
+    /** Stufen des Reglers „Sprechtempo“ (1,0 = Server-Tempo); abgespielt wird schneller/langsamer bei gleicher Tonhöhe */
+    val SPEEDS = listOf(0.75f, 0.9f, 1.0f, 1.15f, 1.3f, 1.5f)
+    /** Gespeicherte Wahl auf die nächste Stufe (alte Werte aus Thorsten-Zeiten passen so auch) */
+    fun speed(saved: Float): Float = SPEEDS.minBy { kotlin.math.abs(it - saved) }
+
     /** Hinweis für den Datenschutz-Text (Wortlaut abgestimmt mit allen Lern-Apps) */
     const val PRIVACY = "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. Texte, die erst im Versuch " +
         "entstehen (z. B. Messwerte), schickt die App ohne Angaben zu dir an unseren Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI " +

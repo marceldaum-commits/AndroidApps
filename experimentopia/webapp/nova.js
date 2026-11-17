@@ -4,7 +4,7 @@
 (() => {
   const SERVER = 'https://stimmen.mathenachhilfe-online.com';
   const CACHE = 'experimentopia-nova';
-  let turn = 0, playing = [];
+  let turn = 0;
 
   async function mp3(text, url) {
     let c = null;
@@ -24,29 +24,42 @@
     return b;
   }
 
+  // Abgespielt über <audio>: so geht schneller/langsamer bei gleicher Tonhöhe (preservesPitch)
+  let current = null;
+  function play(buf, speed, mine) {
+    return new Promise((done) => {
+      if (mine !== turn) { done(); return; }
+      const url = URL.createObjectURL(new Blob([buf], { type: 'audio/mpeg' }));
+      const a = new Audio(url);
+      a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true;
+      a.playbackRate = speed;
+      const end = () => { URL.revokeObjectURL(url); if (current === a) current = null; done(); };
+      a.onended = end; a.onerror = end; a.onpause = end;
+      current = a;
+      a.play().catch(end);
+    });
+  }
+
   window.ExNova = {
-    /** Sätze (Zeilen) mit den passenden Adressen (Zeilen) nacheinander sprechen; fehlt ein Satz, meldet fail(i) ab welchem Satz die Notlösung liest */
-    speak: (texts, urls, onStart, onEnd, onFail) => {
+    /** Sätze (Zeilen) mit den passenden Adressen (Zeilen) nacheinander sprechen; fehlt ein Satz, meldet fail(i), ab welchem Satz die Notlösung liest */
+    speak: (texts, urls, speed, onStart, onEnd, onFail) => {
       const mine = ++turn; window.ExNova.stopAudio();
-      const A = window.__exAudio;
       const t = texts.split('\n'), u = urls.split('\n');
-      if (!A) { onFail(0); return; }
-      const loads = t.map((x, i) => mp3(x, u[i]).then((b) => (b ? A.decodeAudioData(b) : null)).catch(() => null));
-      let at = A.currentTime + 0.05, started = false;
+      const loads = t.map((x, i) => mp3(x, u[i]).catch(() => null));
       (async () => {
         for (let i = 0; i < loads.length; i++) {
           const buf = await loads[i];
           if (mine !== turn) return;
-          if (!buf) { const wait = Math.max(0, (at - A.currentTime) * 1000); setTimeout(() => { if (mine === turn) onFail(i); }, wait); return; }
-          const s = A.createBufferSource(); s.buffer = buf; s.connect(A.destination);
-          at = Math.max(at, A.currentTime + 0.02); s.start(at); at += buf.duration + 0.15; playing.push(s);
-          if (!started) { started = true; onStart(); }
+          if (!buf) { onFail(i); return; }
+          if (i === 0) onStart();
+          await play(buf, speed, mine);
+          if (mine !== turn) return;
+          if (i < loads.length - 1) await new Promise((r) => setTimeout(r, 120));
         }
-        const wait = Math.max(0, (at - A.currentTime) * 1000);
-        setTimeout(() => { if (mine === turn) onEnd(); }, wait);
+        if (mine === turn) onEnd();
       })().catch(() => { if (mine === turn) onEnd(); });
     },
-    stopAudio: () => { for (const s of playing) { try { s.stop(); } catch (e) {} } playing = []; },
+    stopAudio: () => { if (current) { const a = current; current = null; try { a.pause(); } catch (e) {} } },
     stop: () => { turn++; window.ExNova.stopAudio(); },
   };
 })();

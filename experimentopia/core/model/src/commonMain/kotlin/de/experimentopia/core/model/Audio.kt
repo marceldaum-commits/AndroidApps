@@ -2,7 +2,7 @@ package de.experimentopia.core.model
 
 /**
  * Klang- und Vorlese-Einstellungen – gleich in Android und Web.
- * [voice] und [rate] stammen aus Versionen vor 2.2.0 (Thorsten, Gerätestimmen) – gelesen und gespeichert, aber nicht mehr benutzt: es spricht immer Nova.
+ * [rate] = Sprechtempo (Stufen in [Nova.SPEEDS]); [voice] stammt aus Versionen vor 2.2.0 und wird nicht mehr benutzt: es spricht immer Nova.
  */
 data class AudioPrefs(
     val music: Boolean = true,

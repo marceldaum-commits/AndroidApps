@@ -74,13 +74,13 @@ class WebReader : Reader {
         fun fallback(from: Int) {
             if (mine != turn) return
             val rest = parts.drop(from).joinToString(" ")
-            if (canSpeak()) browserSpeak(rest, "", 1.0, 1.0, { }, { if (mine == turn) speaking = false }) else speaking = false
+            if (canSpeak()) browserSpeak(rest, "", 1.1 * Nova.speed(prefs.rate), 1.0, { }, { if (mine == turn) speaking = false }) else speaking = false
         }
         if (!audioReady()) { fallback(0); return }
         novaScript { ok ->
             if (mine != turn) return@novaScript
             if (!ok) { fallback(0); return@novaScript }
-            novaSpeak(parts.joinToString("\n"), parts.joinToString("\n") { Nova.url(it) }, { }, { if (mine == turn) speaking = false }, { i -> fallback(i) })
+            novaSpeak(parts.joinToString("\n"), parts.joinToString("\n") { Nova.url(it) }, Nova.speed(prefs.rate).toDouble(), { }, { if (mine == turn) speaking = false }, { i -> fallback(i) })
         }
     }
 

@@ -20,6 +20,7 @@ import de.experimentopia.app.ui.common.*
 import de.experimentopia.app.ui.fx.*
 import de.experimentopia.app.ui.theme.E
 import de.experimentopia.core.model.AudioPrefs
+import de.experimentopia.core.model.Nova
 import de.experimentopia.core.model.ReadTexts
 
 @Composable
@@ -67,6 +68,20 @@ fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
         }
         Text("Nova ist eine mit KI (OpenAI) erzeugte Stimme. Wir vertonen die Texte vorab auf unserem Stimmen-Server; jeder Satz wird einmal geladen und bleibt " +
             "dann auf dem Gerät. Ohne Internet liest die Stimme des Geräts.", color = E.Muted, fontSize = 12.sp)
+        Text("Sprechtempo", color = E.Text, fontWeight = FontWeight.Bold)
+        val speed = Nova.speed(audio.rate)
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Nova.SPEEDS.forEach { v ->
+                val sel = v == speed
+                Box(Modifier.weight(1f).clip(RoundedCornerShape(10.dp)).background(if (sel) E.Mint.copy(alpha = 0.2f) else E.Deep)
+                    .border(1.5.dp, if (sel) E.Mint else E.Line, RoundedCornerShape(10.dp)).clickable { onAudio(audio.copy(rate = v)) }
+                    .padding(vertical = 8.dp).testTag("tempo_$v"), contentAlignment = Alignment.Center) {
+                    Text(v.toString().replace('.', ','),
+                        color = if (sel) E.Mint else E.Text, fontSize = 13.sp, fontWeight = if (sel) FontWeight.Bold else FontWeight.Normal)
+                }
+            }
+        }
+        Text(if (speed < 1f) "🐢 langsamer" else if (speed > 1f) "🐇 schneller" else "Normal", color = E.Muted, fontSize = 12.sp)
         GlowButton({ reader.configure(audio); reader.say(ReadTexts.ui[1]) }, Modifier.fillMaxWidth().testTag("probe"), color = E.Mint) { Text("▶️ Probe hören", fontWeight = FontWeight.Bold) }
     }
 }

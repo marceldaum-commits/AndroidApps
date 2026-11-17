@@ -2,6 +2,11 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.2.1 vom 17.11.2026: Sprechtempo
+
+- Regler „Sprechtempo“ mit den Stufen 0,75 · 0,9 · 1,0 (Standard) · 1,15 · 1,3 · 1,5, gemerkt. Web: <audio> mit playbackRate + preservesPitch (nova.js spielt jetzt über HTMLAudioElement),
+  Android: MediaPlayer PlaybackParams(speed, pitch 1). Gerätestimme als Notlösung: Sprechrate × gleicher Faktor.
+
 ## 17.11.2026 – Version 2.2.0 vom 17.11.2026: nur noch Nova
 
 - **texte.json** liegt unter `/vorlesen/texte.json` (live und test), bei jedem Bau aus den Inhalten erzeugt: 2301 Sätze, 192 346 Zeichen, je Satz ≤ 300 Zeichen
