@@ -17,7 +17,7 @@ function look(buf) {
   return { colors: seen.size, white: white / count };
 }
 const [,, url, out] = process.argv;
-const routes = ['start', 'einstellungen', 'abi-pass', 'tagesaufgabe', 'jam', 'jam/MIX/EINSTIEG', 'jam/MIX/ABI', 'jam/MIX/PROFI', 'spickzettel', 'abzeichen', 'backstage', 'abi', 'abi/zelt/0', 'abi/bogen/0', 'abi/trommel/1', 'lage', 'duell', 'zweite-chance', 'werkstatt',
+const routes = ['start', 'einstellungen', 'pro', 'tagesaufgabe', 'jam', 'jam/MIX/EINSTIEG', 'jam/MIX/ABI', 'jam/MIX/PROFI', 'spickzettel', 'abzeichen', 'backstage', 'abi', 'abi/zelt/0', 'abi/bogen/0', 'abi/trommel/1', 'lage', 'duell', 'zweite-chance', 'werkstatt',
   'baukasten', 'schritte', 'schritte/weg-durchstoss', 'lernstand', 'klausur', 'klasse', 'zu-zweit', 'raumflug', 'galton', 'ballerbude', 'zufall', 'binomial', 'baumeister', 'geisterfahrt', 'ringflug', 'pflichtteil', 'fehler-tagebuch', 'kalender',
   'achterbahn/huegel', 'achterbahn/ln', 'achterbahn/ebuckel', 'level/1-1', 'level/5-3', 'level/9-5', 'level/12-3', 'level/13-2', 'level/14-4', 'level/16-3', 'level/17-5', 'level/20-4', 'level/22-3', 'level/23-5', 'level/24-2', 'level/25-7', 'gibt-es-nicht'];
 // Nur bestimmte Bildschirme: RL_ROUTES="start,galton"

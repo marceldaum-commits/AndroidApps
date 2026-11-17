@@ -63,7 +63,7 @@ private fun WebApp() {
     LaunchedEffect(Unit) { note("Oberfläche gestartet") }
     // Direkt-Link auf einen Bildschirm („?ziel=binomial“) – für Lesezeichen und für die automatische Prüfung jedes Bildschirms; unbekannte Ziele führen zur Startseite
     LaunchedEffect(Unit) { takeParam("ziel")?.takeIf { it.isNotBlank() && it.length < 60 }?.let { nav.restart(it) } }
-    // Freischalt-Link aus der E-Mail: Code prüfen, merken und die Abi-Pass-Seite zeigen (bei einem falschen Code steht dort die Eingabe bereit)
+    // Freischalt-Link aus der E-Mail: Code prüfen, merken und die Pro-Seite zeigen (bei einem falschen Code steht dort die Eingabe bereit)
     LaunchedEffect(Unit) { takeProParam()?.let { raw ->
         val code = de.raumlicht.core.model.License.extract("RL$raw") ?: de.raumlicht.core.model.License.extract(raw)
         if (de.raumlicht.core.model.Pro.active(code)) prefs.setProCode(code!!)

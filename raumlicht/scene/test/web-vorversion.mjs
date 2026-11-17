@@ -1,5 +1,5 @@
 // Update von der Vorversion ohne Datenverlust: Die alte WebApp läuft mit Spielstand und Einstellungen, auf dem Server erscheint die neue –
-// danach müssen Spielstand, Abi-Pass-Code und Einstellungen noch da sein, die alte Stimm-Datei weggeräumt und die Konsole fehlerfrei sein.
+// danach müssen Spielstand, Pro-Code und Einstellungen noch da sein, die alte Stimm-Datei weggeräumt und die Konsole fehlerfrei sein.
 // node test/web-vorversion.mjs <alter webapp-Ordner> <neuer webapp-Ordner>
 import { createRequire } from 'module'; const { chromium } = createRequire(import.meta.url)('playwright');
 import fs from 'fs'; import path from 'path'; import http from 'http'; import os from 'os';
@@ -29,11 +29,11 @@ let now = null; for (let i = 0; i < 8 && !now; i++) { await page.goto(url + '?n=
   now = await page.evaluate(() => window.__rlNova ? true : null).catch(() => null); }
 const shown = await page.evaluate(() => fetch('version.json', { cache: 'no-store' }).then((r) => r.json()).then((j) => j.version));
 check(!!now && shown === to, `Update auf ${to} ist angekommen`);
-// 3. Nichts verloren: Spielstand, Abi-Pass-Code, Einstellungen
+// 3. Nichts verloren: Spielstand, Pro-Code, Einstellungen
 const after = await page.evaluate((keys) => Object.fromEntries(keys.map((k) => [k, localStorage.getItem(k)])), Object.keys(data));
 const kept = ['sterne', 'jamBest', 'lageBest', 'proCode', 'stimmeAn', 'musik', 'ton', 'vibration', 'lautstaerke', 'musikLaut', 'tonLaut', 'strengeVektoren', 'skin', 'plan', 'diary'].map((k) => 'raumlicht.' + k);
 const lost = kept.filter((k) => after[k] !== data[k]);
-check(lost.length === 0, lost.length ? 'verloren oder verändert: ' + lost.join(', ') : 'Spielstand, Abi-Pass-Code und Einstellungen unverändert (' + kept.length + ' Einträge)');
+check(lost.length === 0, lost.length ? 'verloren oder verändert: ' + lost.join(', ') : 'Spielstand, Pro-Code und Einstellungen unverändert (' + kept.length + ' Einträge)');
 // 4. Alte Stimm-Datei weg, neuer Regler steht auf Standard (das alte Sprechtempo galt für eine andere Stimme)
 const cachesNow = await page.evaluate(() => caches.keys());
 check(!cachesNow.includes('raumlicht-stimme'), 'alte Stimm-Datei (63 MB) ist weggeräumt');

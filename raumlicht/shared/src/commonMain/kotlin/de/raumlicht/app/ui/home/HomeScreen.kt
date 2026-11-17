@@ -60,7 +60,7 @@ fun HomeScreen(
     dailyDone: Boolean = false, jamBest: Int = 0,
     onDaily: () -> Unit = {}, onJam: () -> Unit = {}, onExam: () -> Unit = {}, onMore: () -> Unit = {},
     controller: StageController = remember { StageController() },
-    /** Aufgaben, die zum Abi-Pass gehören und noch gesperrt sind (zeigen ein Schloss) */
+    /** Aufgaben, die zu Raumlicht Pro gehören und noch gesperrt sind (zeigen ein Schloss) */
     locked: (String) -> Boolean = { false },
 ) {
     val total = chapters.sumOf { c -> c.levels.sumOf { stars[it.id] ?: 0 } }; val max = chapters.sumOf { it.levels.size } * 3

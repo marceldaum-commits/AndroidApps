@@ -3,7 +3,7 @@ package de.raumlicht.core.model
 import org.junit.Assert.*
 import org.junit.Test
 
-/** Regeln für den Abi-Pass: Was frei bleibt, was dazugehört – und dass im Auslieferungsstand nichts gesperrt ist. */
+/** Regeln für Raumlicht Pro: Was frei bleibt, was dazugehört – und dass im Auslieferungsstand nichts gesperrt ist. */
 class ProTest {
     /** Solange keine Kasse eingetragen ist, ist nichts gesperrt. Wer die Kasse einträgt, muss im selben Schritt die Texte „keine Käufe“ ändern – dann diesen Test anpassen. */
     @Test fun ohneKasseIstAllesFrei() { assertEquals("", Pro.CHECKOUT_URL); assertFalse(Pro.ENABLED); assertEquals(64, Pro.PUBLIC_KEY.length) }

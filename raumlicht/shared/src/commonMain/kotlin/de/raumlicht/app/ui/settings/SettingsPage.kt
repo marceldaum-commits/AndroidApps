@@ -99,8 +99,8 @@ fun SettingsPage(
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Datenschutz & Inhalte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                    // Sobald es den Abi-Pass gibt, stimmt „keine Käufe“ nicht mehr
-                    Text(if (LocalProEntry.current == null) privacy else privacy.replace("keine Käufe", "kein Abo – nur der einmalige Abi-Pass, bezahlt auf unserer Website"), style = MaterialTheme.typography.bodySmall)
+                    // Sobald es Raumlicht Pro gibt, stimmt „keine Käufe“ nicht mehr
+                    Text(if (LocalProEntry.current == null) privacy else privacy.replace("keine Käufe", "kein Abo – nur der einmalige Kauf von Raumlicht Pro, bezahlt auf unserer Website"), style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Mathematik der Oberstufe. Analytische Geometrie – Punkte und Vektoren im Raum, Geraden in Parameterform, " +
                         "Lagebeziehungen, Ebenen in Koordinatenform, Durchstoßpunkte, Normalenvektor, Skalarprodukt, Lotfußpunkt, " +
                         "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen, Bewegungsaufgaben; dazu Analysis (Funktionen, Ableitung, Kurvendiskussion, Integral, Rotationskörper) und Stochastik (Laplace, Pfadregel, Vierfeldertafel, Binomialverteilung). Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)

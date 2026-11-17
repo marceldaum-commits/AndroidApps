@@ -47,7 +47,7 @@ interface Prefs {
     var flight: String
 
     /** Neu anfangen: Rekorde, Abi-Punkte, Tagebuch, gesehene Erklärungen und Lux' Aussehen zurücksetzen (Ton-Einstellungen und Plan bleiben) */
-    /** Freischalt-Code für den Abi-Pass (leer = keiner). Ob er gilt, prüft [Pro.active] bei jedem Start neu. */
+    /** Freischalt-Code für Raumlicht Pro (leer = keiner). Ob er gilt, prüft [Pro.active] bei jedem Start neu. */
     val proCode: StateFlow<String>
     fun setProCode(code: String)
     /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */

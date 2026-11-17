@@ -1,22 +1,23 @@
 package de.raumlicht.core.model
 
 /**
- * Pro („Abi-Pass“): was frei bleibt und was dazugehört. Freigeschaltet wird mit einem Code von der Website ([License]) – ohne Konto, ohne Server.
- * **Gesperrt wird erst, wenn man den Abi-Pass auch kaufen kann**, also wenn die Kassen-Adresse eingetragen ist ([CHECKOUT_URL], [ENABLED]).
+ * Pro („Raumlicht Pro“): was frei bleibt und was dazugehört. Freigeschaltet wird mit einem Code von der Website ([License]) – ohne Konto, ohne Server.
+ * **Gesperrt wird erst, wenn man Raumlicht Pro auch kaufen kann**, also wenn die Kassen-Adresse eingetragen ist ([CHECKOUT_URL], [ENABLED]).
  * Bis dahin ist alles frei und nirgends ist von einem Kauf die Rede. Die Play-Fassung sperrt vorerst nie (dort wäre Google Play Billing Pflicht).
  */
 object Pro {
     /** Öffentlicher Ed25519-Schlüssel des Lizenz-Dienstes (64 Hex-Zeichen). Der geheime Schlüssel gehört nie ins Repo. */
     const val PUBLIC_KEY = "979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812"
-    /** Kasse auf der Website. **Leer = Abi-Pass noch nicht erhältlich, nichts ist gesperrt.** Trägt der Leitstand ein, sobald das Produkt RL-ABIPASS angelegt ist –
+    /** Kasse auf der Website. **Leer = Raumlicht Pro noch nicht erhältlich, nichts ist gesperrt.** Trägt der Leitstand ein, sobald das Produkt RL-ABIPASS angelegt ist –
      *  im selben Schritt die Texte „keine Käufe“ in App, Store und Datenschutz ändern. */
     const val CHECKOUT_URL = ""
     /** Preise auf der Website (brutto, inkl. 19 % USt.) */
-    const val PRICE = "14,99 €"
-    const val INTRO_PRICE = "9,99 €"
+    const val PRICE = "7,99 €"
+    /** So heißt die Vollversion in allen Texten (gemeinsame Vorgabe für unsere Apps: Einmalkauf, kein Abo, kein Ablauf) */
+    const val NAME = "Raumlicht Pro"
     /** Hauptschalter: Sperren und Kauf-Hinweise gibt es nur, wenn die Kasse eingetragen ist */
     val ENABLED: Boolean get() = CHECKOUT_URL.isNotBlank() && PUBLIC_KEY.length == 64
-    /** Schaltet dieser Code den Abi-Pass frei? */
+    /** Schaltet dieser Code Raumlicht Pro frei? */
     fun active(code: String?, key: String = PUBLIC_KEY) = License.check(code, key) != null
     /** Die ersten Kapitel sind ganz frei … */
     const val FREE_CHAPTERS = 6
@@ -51,7 +52,7 @@ object Pro {
             "jam" -> JamLevel.entries.firstOrNull { it.name == p.getOrNull(2) }?.let { "Üben in der Stufe „${it.title}“" } ?: "Üben mit allen Stufen gemischt"
             else -> areas[p[0]] ?: "Dieser Bereich"
         } }
-    /** Was der Abi-Pass bringt (für die Hinweis-Seite) */
+    /** Was Raumlicht Pro bringt (für die Hinweis-Seite) */
     val benefits = listOf("📚 alle ${Levels.all.size} Aufgaben in ${Levels.chapters.size} Kapiteln", "🎓 alle ${Exams.all.size} Prüfungsaufgaben im Abi-Stil, auch auf Zeit",
         "🔥 Üben in den Stufen „Abi“ und „Profi“", "🏗️ Baumeister, Geisterfahrt, Ringflug und Binomial-Labor", "📅 Klausur-Planer, Fehler-Tagebuch und Lernstand")
     /** Was auch ohne Pro bleibt */

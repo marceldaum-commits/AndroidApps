@@ -69,7 +69,7 @@ class AppRootTest {
         assertTrue(Routes.isAction("level/3-2") && Routes.isAction("jam/MIX") && Routes.isAction("abi/zelt/1") && !Routes.isAction(Routes.HOME) && !Routes.isAction(Routes.EXAMS) && !Routes.isAction(Routes.BACKSTAGE))
     }
 
-    /** Abi-Pass: eingeschaltet sperrt er genau die Pro-Teile und zeigt die Abi-Pass-Seite; ein gültiger Code öffnet alles, ein falscher nichts. */
+    /** Raumlicht Pro: eingeschaltet sperrt er genau die Pro-Teile und zeigt die Pro-Seite; ein gültiger Code öffnet alles, ein falscher nichts. */
     @Test fun proGate() {
         Settings(ApplicationProvider.getApplicationContext()).setProCode("")
         start(pro = true)
@@ -83,7 +83,7 @@ class AppRootTest {
         nav.go(Routes.BINOMIAL); settle(); rule.onNodeWithTag("pro-grund").assertTextContains("Binomial-Labor", substring = true); nav.back(); settle()
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.CHANCE); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist(); nav.back(); settle()            // Zufallsmaschine bleibt frei
-        // über die Einstellungen zur Abi-Pass-Seite: Kauf-Knopf und Code-Eingabe
+        // über die Einstellungen zur Pro-Seite: Kauf-Knopf und Code-Eingabe
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         rule.onNodeWithTag("pro-abzeichen").assertDoesNotExist()                                                               // noch kein Abzeichen
         nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("pro-eintrag").assertTextContains("Alles freischalten", substring = true).performClick(); settle()
@@ -97,9 +97,9 @@ class AppRootTest {
         rule.onNodeWithTag("pro-freischalten").performScrollTo().performClick(); settle()
         rule.onNodeWithTag("pro-aktiv").assertExists(); rule.onNodeWithTag("pro-kaufen").assertDoesNotExist(); assertEquals(PASS, prefs.proCode.value)
         rule.onRoot().captureRoboImage("../screenshots/77_abi_pass_frei.png")
-        rule.onNodeWithTag("pro-zurueck").performScrollTo().performClick(); settle(); rule.onNodeWithTag("pro-eintrag").assertTextContains("Abi-Pass aktiv", substring = true)
-        // das Abzeichen im Kopf des Startbildschirms – Antippen führt zur Abi-Pass-Seite
-        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle(); assertEquals(Routes.HOME, nav.top); rule.onNodeWithTag("pro-abzeichen").assertTextContains("Abi-Pass aktiv", substring = true)
+        rule.onNodeWithTag("pro-zurueck").performScrollTo().performClick(); settle(); rule.onNodeWithTag("pro-eintrag").assertTextContains("Raumlicht Pro aktiv", substring = true)
+        // das Abzeichen im Kopf des Startbildschirms – Antippen führt zur Pro-Seite
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle(); assertEquals(Routes.HOME, nav.top); rule.onNodeWithTag("pro-abzeichen").assertTextContains("Pro aktiv", substring = true)
         rule.onRoot().captureRoboImage("../screenshots/79_abi_pass_abzeichen.png")
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); rule.onNodeWithTag("pro-abzeichen").performClick(); settle(); assertEquals(Routes.PRO, nav.top)
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle()
