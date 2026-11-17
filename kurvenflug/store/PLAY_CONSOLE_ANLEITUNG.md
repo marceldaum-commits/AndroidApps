@@ -65,7 +65,11 @@ keine Standortfreigabe, keine digitalen Käufe. Erwartet: **USK ab 0 / PEGI 3**.
 
 **Datensicherheit:**
 1. „Erhebt oder teilt deine App erforderliche Arten von Nutzerdaten?“ → **Nein**.
-   (Die Play-Version hat keine Internet-Berechtigung; Spielstand und Einstellungen bleiben auf dem Gerät.)
+   (Spielstand und Einstellungen bleiben auf dem Gerät. Seit 2.2.0 hat die Play-Version die Internet-Berechtigung – nur für
+   die Vorlese-Stimme „Thorsten“, die Eltern/Kinder selbst laden: eine Datei von stimmen.mathenachhilfe-online.com, es werden
+   keine Daten der App gesendet. **Zu prüfen (Marcel/Leitstand):** Speichert der Stimmen-Server IP-Adressen in Protokollen?
+   Wenn nein (oder nur kurz für den Betrieb, ohne Auswertung), bleibt es bei „Nein“. Wenn sie dauerhaft gespeichert werden,
+   ist die einfachste Lösung, die Protokolle am Server abzuschalten – sonst müsste das im Formular angegeben werden.)
 2. Damit sind die Detailfragen erledigt → **Speichern** → **Senden**.
    Hinweis: Das Teilen-Menü (Duell-Code, Foto der Flugbahn) startet der Nutzer selbst in einer anderen App – das zählt nicht als Erhebung.
 
@@ -94,7 +98,7 @@ Solange das Produkt nicht angelegt ist, bleibt in der App alles frei. Ab dem Anl
 3. **Preis**: 7,99 € (Google zeigt Endpreise inkl. USt. und führt die USt. selbst ab) → für andere Länder umrechnen lassen → **Aktivieren**.
 4. **Lizenztester** (Einstellungen → Lizenztests): eigene Google-Konten eintragen → Testkäufe kosten nichts.
 5. **Pflicht vor der Freigabe:** Im internen Test einmal kaufen und „Käufe wiederherstellen“ probieren (die Play-Fassung
-   hat keine Internet-Berechtigung – der Kauf läuft über die Play-Store-App; das muss einmal auf echtem Gerät klappen).
+   – der Kauf läuft über die Play-Store-App; das muss einmal auf echtem Gerät klappen).
 6. Formulare nachziehen: IARC-Fragebogen → „Digitale Käufe: **Ja**“. Datensicherheit bleibt „keine Daten erhoben“
    (den Kauf wickelt Google ab, die App speichert nur „Pro: ja“). Store-Eintrag zeigt „In-App-Käufe“ automatisch.
 
@@ -110,7 +114,9 @@ Play Developer API) sofort beim Start.
 > **App „Kurvenflug – Mathe im All“.** Die App erhebt, speichert und übermittelt keine personenbezogenen Daten. Der Spielstand,
 > Einstellungen und frei gewählte Spitznamen für mehrere Spieler werden ausschließlich lokal auf dem Gerät gespeichert und beim
 > Deinstallieren gelöscht. Die App enthält keine Werbung, keine Analyse- oder Tracking-Werkzeuge.
-> Die Version aus Google Play hat keinen Internetzugriff; Updates werden über Google Play bereitgestellt. Die Version aus GitHub
+> Die Version aus Google Play geht nur ins Internet, wenn man die optionale Vorlese-Stimme „Thorsten“ lädt: Dann wird einmalig
+> eine Stimmdatei von unserem Server stimmen.mathenachhilfe-online.com geladen (technisch bedingt wird dabei die IP-Adresse
+> übertragen); es werden keine Texte oder Spieldaten gesendet. Updates werden über Google Play bereitgestellt. Die Version aus GitHub
 > fragt nur auf GitHub nach neuen Versionen (dabei wird technisch bedingt die IP-Adresse an GitHub übertragen). Die Web-Version
 > speichert den Spielstand nur im Browser (localStorage) und sendet keine Spieldaten an den Server.
 > **Kurvenflug Pro (optional, Einmalkauf):** In der Play-Version wickelt Google Play den Kauf ab. In der Web- und GitHub-Version

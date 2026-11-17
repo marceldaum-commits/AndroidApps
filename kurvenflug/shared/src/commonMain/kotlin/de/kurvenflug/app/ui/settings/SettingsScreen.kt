@@ -71,8 +71,8 @@ fun SettingsScreen(
                         "(Oberstufe, Extrem-Stufen, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
                         "nichts wird an einen Server geschickt. Neue Versionen lädt die Seite von selbst."
-                        else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, " +
-                        "kein Internet. Neue Versionen kommen über Google Play."
+                        else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
+                        "Ins Internet geht die App nur, wenn Sie die Vorlese-Stimme „Thorsten“ laden. Neue Versionen kommen über Google Play."
                         else "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
                         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel, Maßstab (Kl. 5/6), Zuordnungen, Prozent und Zinseszins (Kl. 6–8), " +
