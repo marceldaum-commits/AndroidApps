@@ -15,8 +15,8 @@ object Codex {
             "Einziger bekannter Planet mit flüssigem Wasser an der Oberfläche.")),
         CodexEntry("mars", "🔴", "Mars", 10, listOf(
             "g = 3,71 m/s² – du wiegst dort nur 38 %.",
-            "Olympus Mons ist fast dreimal so hoch wie der Mount Everest.",
-            "Ein Marstag dauert 24 h 37 min.")),
+            "Olympus Mons ist rund zweieinhalbmal so hoch wie der Mount Everest.",
+            "Ein Marstag (Sol) dauert etwa 24 h 40 min.")),
         CodexEntry("sonne", "☀️", "Sonne", 15, listOf(
             "Licht braucht 8 Minuten 20 Sekunden bis zur Erde.",
             "Sie enthält 99,86 % der Masse des Sonnensystems.",
@@ -24,7 +24,7 @@ object Codex {
         CodexEntry("merkur", "🌑", "Merkur", 20, listOf(
             "Ein Jahr dauert nur 88 Tage.",
             "Tagsüber 430 °C, nachts −180 °C.",
-            "Kleinster Planet – kaum größer als unser Mond.")),
+            "Kleinster Planet – nur etwas größer als unser Mond.")),
         CodexEntry("venus", "🟡", "Venus", 25, listOf(
             "Heißester Planet: rund 465 °C – heißer als Merkur!",
             "Ein Tag ist länger als ein Jahr.",
@@ -35,8 +35,8 @@ object Codex {
             "Raumsonden holen sich bei ihm Schwung (Swing-by).")),
         CodexEntry("saturn", "🪐", "Saturn", 40, listOf(
             "Seine Dichte ist geringer als die von Wasser – er würde schwimmen.",
-            "Die Ringe sind bis zu 280 000 km breit, aber oft nur 10 m dick.",
-            "Über 140 Monde sind bekannt.")),
+            "Das Ringsystem misst rund 280 000 km von Rand zu Rand, ist aber oft nur etwa 10 m dick.",
+            "Über 270 Monde sind bekannt.")),
         CodexEntry("uranus", "🧊", "Uranus", 50, listOf(
             "Er rollt quasi auf der Seite um die Sonne (98° gekippt).",
             "Ein Sommer am Pol dauert 21 Jahre.",
@@ -52,7 +52,7 @@ object Codex {
         CodexEntry("voyager", "📡", "Voyager 1", 90, listOf(
             "Gestartet 1977, heute das am weitesten entfernte Menschenwerk.",
             "Sie nutzte Swing-bys an Jupiter und Saturn – wie deine Schleuder-Level!",
-            "Ihre Funksignale brauchen über 22 Stunden zur Erde.")),
+            "Ihre Funksignale brauchen fast einen ganzen Tag zur Erde.")),
         CodexEntry("komet", "☄️", "Halleyscher Komet", 110, listOf(
             "Kommt etwa alle 76 Jahre wieder – das nächste Mal 2061.",
             "Seine Bahn ist eine lang gezogene Ellipse.",

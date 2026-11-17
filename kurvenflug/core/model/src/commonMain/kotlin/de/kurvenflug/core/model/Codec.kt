@@ -24,7 +24,7 @@ object Templates {
         Kind.PARABOLA -> listOf(Param("a", "a", -3.0, 3.0, 0.25, 1.0), Param("d", "d", -8.0, 8.0, 1.0, 0.0), Param("e", "e", -9.0, 9.0, 1.0, 0.0))
         Kind.SINE -> listOf(Param("a", "a", -5.0, 5.0, 0.5, 1.0), Param("b", "b", 0.25, 3.0, 0.25, 1.0), Param("d", "d", -8.0, 8.0, 1.0, 0.0))
         Kind.EXP -> listOf(Param("a", "a", 0.25, 4.0, 0.25, 1.0), Param("b", "b", 0.25, 4.0, 0.25, 1.0))
-        Kind.THROW -> listOf(Param("angle", "Winkel", 5.0, 85.0, 1.0, 45.0, "°"), Param("v", "Tempo", 1.0, 20.0, 0.5, 8.0, "m/s"))
+        Kind.THROW -> listOf(Param("angle", "Winkel", 5.0, 85.0, 1.0, 45.0, "°"), Param("v", "Tempo", 1.0, 20.0, 0.5, 8.0, " m/s"))
         Kind.ORBIT -> listOf(Param("angle", "Winkel", -80.0, 80.0, 1.0, 0.0, "°"), Param("v", "Tempo", 1.0, 10.0, 0.5, 4.0))
         Kind.RENDEZVOUS -> listOf(Param("x", "x", -9.0, 9.0, 0.5, 0.0), Param("y", "y", -9.0, 9.0, 0.5, 0.0))
         Kind.PROP, Kind.ANTI -> listOf(Param("k", "k", -20.0, 20.0, 0.25, 1.0))
@@ -35,7 +35,7 @@ object Templates {
         Kind.MOTION -> listOf(Param("v", "v", -3.0, 3.0, 0.25, 1.0, " m/s"), Param("s0", "s₀", -9.0, 9.0, 1.0, 0.0, " m"))
         Kind.TANGENT -> listOf(Param("m", "m", -8.0, 8.0, 0.5, 0.0))
         Kind.PEAK -> listOf(Param("x", "x", -9.0, 9.0, 0.5, 0.0))
-        Kind.AREA -> listOf(Param("A", "Treibstoff A", 0.0, 40.0, 0.25, 1.0))
+        Kind.AREA -> listOf(Param("A", "Fläche A", 0.0, 40.0, 0.25, 1.0))
         Kind.VECTOR -> listOf(Param("v1", "v₁", -9.0, 9.0, 0.5, 1.0), Param("v2", "v₂", -9.0, 9.0, 0.5, 1.0))
         Kind.ACCEL -> listOf(Param("a", "a", -4.0, 4.0, 0.5, 0.5, " m/s²"), Param("v0", "v₀", -2.0, 8.0, 0.5, 1.0, " m/s"))
         Kind.POWER -> listOf(Param("a", "a", -3.0, 3.0, 0.5, 1.0))
@@ -51,7 +51,7 @@ object Templates {
         Kind.POINT -> "Erst x (rechts/links), dann y (oben/unten)."
         Kind.LINE -> "b ist der Wert bei x = 0, m die Steigung pro Kästchen."
         Kind.PARABOLA -> "Der Scheitel ist (d | e), a macht die Form."
-        Kind.SINE -> "a ist die Amplitude, b staucht die Welle, d schiebt sie hoch."
+        Kind.SINE -> "a ist die Amplitude, b staucht oder streckt die Welle, d schiebt sie hoch."
         Kind.EXP -> "Bei x = 0 ist y = a. Pro Kästchen wird mit b malgenommen."
         Kind.THROW -> "Wurfweite auf ebenem Boden: w = v² · sin(2α) : g."
         Kind.ORBIT -> "Planeten ziehen dich an – nah vorbei biegt stark."

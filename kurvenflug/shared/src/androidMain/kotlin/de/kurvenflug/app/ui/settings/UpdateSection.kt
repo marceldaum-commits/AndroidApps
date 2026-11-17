@@ -94,7 +94,7 @@ actual fun PlatformUpdateSection(
                             if (onAutoCheck != null) Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Text("Beim Start automatisch nachsehen", style = MaterialTheme.typography.bodyMedium)
-                                    Text("Bei jedem Öffnen der App (höchstens alle 30 Minuten). Es werden keine Daten gesendet.", style = MaterialTheme.typography.bodySmall)
+                                    Text("Beim Öffnen der App (höchstens alle 20 Stunden). Dabei werden keine Spieldaten gesendet.", style = MaterialTheme.typography.bodySmall)
                                 }
                                 Switch(autoCheck, onAutoCheck)
                             }

@@ -168,7 +168,7 @@ fun ParentScreen(player: Profile, w: WeekSummary, dayLabels: List<String>, onBac
                 Section("📚 Geübte Themen", if (w.topics.isEmpty()) listOf("Diese Woche noch nichts – vielleicht gemeinsam die Tagesmission spielen?")
                     else w.topics.map { (c, n) -> "${c.emoji} ${c.title} (${c.grades}) – $n× gespielt" }, Q.Cyan)
                 Section("🤝 Hier täte Hilfe gut", if (w.needsHelp.isEmpty()) listOf("Nichts – alles, woran es gehangen hat, wurde inzwischen geschafft. 👍")
-                    else w.needsHelp.map { "${it.emoji} ${it.title}: mehrere Versuche, noch nicht geschafft. Lassen Sie sich die Aufgabe erklären – " +
+                    else w.needsHelp.map { "${it.emoji} ${it.title}: mehrere Versuche, noch nicht geschafft. Am besten lässt man sich die Aufgabe vom Kind erklären – " +
                         "laut erklären hilft oft schon. Nach 3 Versuchen bietet Volt einen Rechenweg an." }, Q.Orange)
                 Section("🌟 Läuft richtig gut", if (w.strong.isEmpty()) listOf("Noch zu wenig gespielt für eine Aussage.")
                     else w.strong.map { "${it.emoji} ${it.title} – meist beim ersten Versuch richtig gerechnet" }, Q.Green)

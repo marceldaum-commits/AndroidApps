@@ -41,8 +41,8 @@ object More {
         listOf(
             map(1, "Erste Karte", 2.0, "km", 6.0, 4.0, "Funkspruch!"),
             map(2, "Westwärts", 5.0, "km", -20.0, 15.0, "Ein Signal aus dem Westen."),
-            map(3, "Tief im Süden", 10.0, "km", 30.0, -50.0, "Großer Maßstab:"),
-            map(4, "Kleiner Maßstab", 0.5, "km", -3.0, -2.5, "Ganz nah dran:"),
+            map(3, "Tief im Süden", 10.0, "km", 30.0, -50.0, "Kleiner Maßstab – weite Strecken:"),
+            map(4, "Großer Maßstab", 0.5, "km", -3.0, -2.5, "Ganz nah dran:"),
             map(5, "Sternenkarte", 100.0, "Lichtjahre", 700.0, 300.0, "Im All rechnet man in Lichtjahren!"),
         ))
 
@@ -138,7 +138,7 @@ object More {
     private val ch25 = Chapter(25, "Potenzfunktionen", "Klasse 10", "📊",
         listOf(
             "y = a · xⁿ: n ist die Hochzahl. n = 2 gibt eine Parabel, n = 3 eine S-Kurve, n = ½ eine Wurzel.",
-            "Gerade Hochzahl: beide Seiten zeigen gleich (nach oben, wenn a > 0). Ungerade: links runter, rechts rauf.",
+            "Gerade Hochzahl: beide Seiten zeigen gleich (nach oben, wenn a > 0). Ungerade: links runter, rechts rauf (wenn a > 0).",
             "a streckt die Kurve, d schiebt sie nach oben oder unten.",
         ),
         listOf(
@@ -174,7 +174,7 @@ object More {
         listOf(
             "Bekannt: y = a · sin(b · x) + d. Neu ist c: y = a · sin(b · (x − c)) + d.",
             "c schiebt die Welle nach rechts (c > 0) oder links (c < 0). Dort, wo vorher der Nulldurchgang bei 0 war, ist er jetzt bei x = c.",
-            "Eine Welle ist 2π : b lang, der Wellenberg liegt eine Viertelwelle (π : 2b) nach dem Nulldurchgang.",
+            "Eine Welle ist 2π : b lang, der Wellenberg liegt eine Viertelwelle (π : (2b)) nach dem Nulldurchgang.",
         ),
         listOf(
             wave(1, "Verschoben", 2.0, 1.0, 1.0, 0.0, setOf("c"), listOf(1.0, 1.0 + HALF_PI), "y = 2 · sin(x − c). Die Welle soll bei x = 1 aufsteigend durch 0 gehen.",
@@ -182,7 +182,7 @@ object More {
             wave(2, "Doppelt so schnell", 1.0, 2.0, 0.5, 1.0, setOf("c"), listOf(0.5, 0.5 + HALF_PI / 2), "y = sin(2 · (x − c)) + 1. Aufsteigend durch die Mittellinie bei x = 0,5.",
                 "Mittellinie y = 1 wird bei x = c gekreuzt → c = 0,5.", listOf("c = 0,5", "c = 0,25", "c = 1"), listOf(s("c = ?", 0.5, "c"))),
             wave(3, "Hoch und verschoben", 2.0, 1.0, 2.0, 1.0, setOf("c", "d"), listOf(2.0, 2.0 + HALF_PI), "y = 2 · sin(x − c) + d. Mittellinie bei y = 1, aufsteigend bei x = 2.",
-                "d = Mittellinie = 1, c = 2.", listOf("d = Mittellinie, c = Stelle des Nulldurchgangs", "d = Wellenberg, c = Periode", "d = 2, c = 1"),
+                "d = Mittellinie = 1, c = 2.", listOf("d = Mittellinie, c = wo die Welle aufsteigend die Mittellinie kreuzt", "d = Wellenberg, c = Periode", "d = 2, c = 1"),
                 listOf(s("Mittellinie: d = ?", 1.0, "d"), s("c = ?", 2.0, "c"))),
             wave(4, "Lange Welle", 2.0, 0.5, 1.0, 0.0, setOf("b"), listOf(1.0, 1.0 + kotlin.math.PI), "y = 2 · sin(b · (x − 1)). Der Wellenberg ist π nach dem Nulldurchgang. b = ?",
                 "Viertelwelle π : (2b) = π → b = 0,5.", listOf("π : (2 · b) = π → b = 0,5", "b = π", "2π : b = π → b = 2"), listOf(s("π : (2b) = π → b = ?", 0.5, "b"))),
@@ -192,7 +192,7 @@ object More {
 
     // ------------------------------------------------------------------ 27 Waagerechter Wurf (Physik 10)
 
-    private val hv = p("v", "Tempo", 1.0, 15.0, 0.5, 2.0, "m/s")
+    private val hv = p("v", "Tempo", 1.0, 15.0, 0.5, 2.0, " m/s")
 
     private fun horizontal(n: Int, title: String, h: Double, v: Double, planet: Planet, task: String, rocks: List<Body> = emptyList()): Level {
         val g = planet.g
@@ -208,7 +208,7 @@ object More {
     private val ch27 = Chapter(27, "Waagerechter Wurf", "Physik Klasse 10", "🏃",
         listOf(
             "Die Sonde wird waagerecht von einer Klippe abgeschossen. Nach vorne fliegt sie gleichmäßig, nach unten fällt sie immer schneller.",
-            "Die Fallzeit hängt nur von der Höhe ab: t = √(2 · h : g). Auf dem Mond (g = 1,62) fällt man viel langsamer!",
+            "Die Fallzeit hängt nur von der Höhe (und vom Planeten) ab: t = √(2 · h : g). Auf dem Mond (g = 1,62 m/s²) fällt man viel langsamer!",
             "In dieser Zeit fliegt sie die Weite x = v · t. Also: v = x : t.",
         ),
         listOf(
@@ -233,7 +233,7 @@ object More {
 
     private val ch28 = Chapter(28, "e-Funktion", "Klasse 11–12", "📈",
         listOf(
-            "Die Eulersche Zahl e ≈ 2,718 ist die Basis für natürliches Wachstum: y = a · e^(k·x).",
+            "Die eulersche Zahl e ≈ 2,718 ist die Basis für natürliches Wachstum: y = a · e^(k·x).",
             "a ist der Startwert bei x = 0. k > 0: Wachstum, k < 0: Zerfall.",
             "Umkehrung mit dem natürlichen Logarithmus ln: Aus e^(k·x) = q folgt k · x = ln(q).",
         ),
@@ -243,14 +243,14 @@ object More {
             expe(2, "Wachstumsrate", 1.0, 0.5, 0.0, listOf(2.0), setOf("k"), "y = e^(k·x) geht durch (2 | e) – also y ≈ 2,72. k = ?", "e^(2k) = e¹ → 2k = 1 → k = 0,5.",
                 listOf("2 · k = ln(e) = 1", "2 · k = e", "k = e : 2"), listOf(s("ln(e) = ?", 1.0), s("k = 1 : 2 = ?", 0.5, "k"))),
             expe(3, "Zerfall", 8.0, -0.5, 0.0, listOf(2.0), setOf("k"), "y = 8 · e^(k·x). Nach x = 2 ist nur noch 8 · e⁻¹ ≈ 2,94 übrig. k = ?", "e^(2k) = e⁻¹ → k = −0,5.",
-                listOf("2 · k = ln(2,94 : 8) = −1", "2 · k = 2,94 : 8", "k = −2,94 : 8"), listOf(s("ln(2,94 : 8) = ln(e⁻¹) = ?", -1.0), s("k = −1 : 2 = ?", -0.5, "k"))),
+                listOf("2 · k = ln(2,94 : 8) ≈ −1", "2 · k = 2,94 : 8", "k = −2,94 : 8"), listOf(s("ln(2,94 : 8) = ln(e⁻¹) = ?", -1.0), s("k = −1 : 2 = ?", -0.5, "k"))),
             expe(4, "Zwei Messpunkte", 2.0, 0.5, 0.0, listOf(0.0, 2.0), setOf("a", "k"), "Gemessen: (0 | 2) und (2 | 2e ≈ 5,44). Finde a und k!", "a = y(0) = 2; e^(2k) = e → k = 0,5.",
                 listOf("a = y(0), dann k = ln(y(2) : a) : 2", "a = y(2), k = 2", "k = y(2) − y(0)"), listOf(s("a = y(0) = ?", 2.0, "a"), s("ln(5,44 : 2) = ln(e) = ?", 1.0), s("k = 1 : 2 = ?", 0.5, "k"))),
             expe(5, "Tee kühlt ab", 6.0, -0.5, 2.0, listOf(2.0), setOf("k"), "Temperatur y = 6 · e^(k·x) + 2 (2 = Raum). Nach x = 2 sind es 6 · e⁻¹ + 2 ≈ 4,21. k = ?",
-                "Erst die 2 abziehen: 6 · e^(2k) = 2,21 → e^(2k) = e⁻¹ → k = −0,5.", listOf("Erst d abziehen, dann ln", "Gleich ln(4,21) nehmen", "k = 4,21 : 6"),
+                "Erst die 2 abziehen: 6 · e^(2k) = 2,21 → e^(2k) = e⁻¹ → k = −0,5.", listOf("Erst die 2 abziehen, dann ln", "Gleich ln(4,21) nehmen", "k = 4,21 : 6"),
                 listOf(s("4,21 − 2 = ?", 2.21), s("ln(2,21 : 6) = ln(e⁻¹) = ?", -1.0), s("k = −1 : 2 = ?", -0.5, "k"))),
             expe(6, "Medikament", 6.0, -0.3, 0.0, listOf(2.0), setOf("k"), "Ein Wirkstoff (6 mg) baut sich ab: y = 6 · e^(k·x). Nach 2 Stunden sind 6 · e^(−0,6) ≈ 3,29 mg übrig. k = ?",
-                "e^(2k) = e^(−0,6) → k = −0,3.", listOf("2 · k = ln(3,29 : 6) = −0,6", "2 · k = 3,29 : 6", "k = ln(3,29) : 2"),
+                "e^(2k) = e^(−0,6) → k = −0,3.", listOf("2 · k = ln(3,29 : 6) ≈ −0,6", "2 · k = 3,29 : 6", "k = ln(3,29) : 2"),
                 listOf(s("ln(3,29 : 6) ≈ ?", -0.6), s("k = −0,6 : 2 = ?", -0.3, "k"))),
         ))
 

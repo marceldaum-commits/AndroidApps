@@ -494,7 +494,7 @@ private fun ParamRow(p: Param, value: Double, color: Color, enabled: Boolean, on
         if (s != value) { sfx?.play(Sound.TICK, volume = 0.5f); view.buzz(Buzz.TICK, vib); onChange(s) }
     }
     Row(verticalAlignment = Alignment.CenterVertically) {
-        Text(p.label, color = color, fontWeight = FontWeight.Black, modifier = Modifier.width(64.dp), maxLines = 1)
+        Text(p.label, color = color, fontWeight = FontWeight.Black, modifier = Modifier.widthIn(min = 64.dp, max = 112.dp).padding(end = 4.dp), maxLines = 1)
         StepButton("−", color, enabled) { set(value - p.step) }
         Slider(
             value = value.toFloat(), onValueChange = { set(it.toDouble()) },

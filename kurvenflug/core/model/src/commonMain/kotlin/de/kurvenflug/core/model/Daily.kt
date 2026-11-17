@@ -100,12 +100,14 @@ object Gen {
         if (d == Tier.EXTREME && k == Kind.SINE) {
             val c = r.pick(-2.0, 2.0, 0.5).takeIf { it != 0.0 } ?: return null
             l = l.copy(targets = l.targets.map { it.copy(x = it.x + c) }, cells = l.cells.map { it.copy(x = it.x + c) },
-                params = l.params + Param("c", "c", -3.0, 3.0, 0.25, 0.0), solution = l.solution + ("c" to c))
+                params = l.params + Param("c", "c", -3.0, 3.0, 0.25, 0.0), solution = l.solution + ("c" to c),
+                tip = "Bei x = c ist sin = 0 – dort liest du d ab. Der erste Berg (bei negativem a: das erste Tal) liegt bei x = c + π/2 : b.")
         }
         if (d == Tier.EXTREME && k == Kind.EXP) {
             val dd = r.pick(-4.0, 4.0, 1.0).takeIf { it != 0.0 } ?: return null
             l = l.copy(targets = l.targets.map { it.copy(y = it.y + dd) }, cells = l.cells.map { it.copy(y = it.y + dd) },
-                params = l.params + Param("d", "d", -6.0, 6.0, 0.5, 0.0), solution = l.solution + ("d" to dd), fixed = l.fixed - "d")
+                params = l.params + Param("d", "d", -6.0, 6.0, 0.5, 0.0), solution = l.solution + ("d" to dd), fixed = l.fixed - "d",
+                tip = "Bei x = 0 ist y = a + d. Pro Kästchen wird der Abstand zur Linie y = d mit b malgenommen.")
         }
         if (k in functions && l.targets.any { kotlin.math.abs(it.x) > 8.5 || kotlin.math.abs(it.y) > 8.5 }) return null
         val more = d - Tier.HARD
@@ -135,7 +137,7 @@ object Gen {
             in functions -> "$label: ${targets.size} Stationen – " + targets.joinToString(", ") { "(${num(it.x)} | ${num(it.y)})" } + ". Finde $keys!"
             Kind.THROW -> "$label: " + l.task + " Unterwegs " + (if (more == 1) "ein Ring" else "$more Ringe") + ": " +
                 targets.dropLast(1).joinToString(", ") { "(${num(it.x, 1)} | ${num(it.y, 1)})" } + "."
-            else -> "$label: " + l.task
+            else -> if (l.task.startsWith(label)) l.task else "$label: " + l.task
         }
         return l.copy(targets = targets, params = params, asteroids = rocks, task = task)
     }
@@ -216,7 +218,7 @@ object Gen {
         val angle = r.pick(30.0, 65.0, 5.0)
         val vMax = if (planet == Planet.EARTH) 14.0 else 7.0
         val v = r.pick(4.0, vMax, 0.5)
-        val params = listOf(Param("angle", "Winkel", 5.0, 85.0, 1.0, 45.0, "°"), Param("v", "Tempo", 1.0, 20.0, 0.5, if (planet == Planet.EARTH) 8.0 else 3.0, "m/s"))
+        val params = listOf(Param("angle", "Winkel", 5.0, 85.0, 1.0, 45.0, "°"), Param("v", "Tempo", 1.0, 20.0, 0.5, if (planet == Planet.EARTH) 8.0 else 3.0, " m/s"))
         var l = mk(day, Kind.THROW, "", emptyList(), params, mapOf("angle" to angle, "v" to v), planet = planet,
             tip = if (h == 0.0) "Wurfweite auf ebenem Boden: w = v² · sin(2α) : g."
                 else "Von der Klippe fliegt die Sonde weiter als auf ebenem Boden: Zerleg das Tempo in vx = v · cos α und vy = v · sin α.")
@@ -248,8 +250,8 @@ object Gen {
             difficulty == Tier.HARD -> "Getarnt! Funkspruch: x = (${num(x * k + a)} − $a) : $k,  y = ${num(y + c)} − $c"
             difficulty == Tier.PRO -> "${Tier.label(difficulty)} – getarnt! x = (${num(x * k + a)} − $a) : $k,  y = ${num((y - c) * k)} : $k + $c"
             else -> {
-                val s = x + c   // x = √(s²) − c, nur mit s ≥ 0
-                if (s < 0) return null
+                val s = x + c   // x = √(s²) − c, nur mit s > 0 (√0 wäre kein echtes Rätsel)
+                if (s <= 0) return null
                 "${Tier.label(difficulty)} – getarnt! x = √${num(s * s, 4)} − $c,  y = (${num(y * k + a)} − $a) : $k"
             }
         }
@@ -263,7 +265,7 @@ object Gen {
         val d = r.pick(-3.0, 3.0, 1.0)
         val params = listOf(Param("a", "a", -5.0, 5.0, 0.5, 1.0), Param("b", "b", 0.25, 3.0, 0.25, 1.0), Param("d", "d", -8.0, 8.0, 1.0, 0.0))
         var l = mk(day, Kind.SINE, "", emptyList(), params, mapOf("a" to a, "b" to b, "d" to d),
-            tip = "Bei x = 0 ist sin = 0 – dort liest du d ab. Der erste Berg liegt bei x = π/2 : b.")
+            tip = "Bei x = 0 ist sin = 0 – dort liest du d ab. Der erste Berg (bei negativem a: das erste Tal) liegt bei x = π/2 : b.")
         val peak = kotlin.math.PI / 2 / b
         val t = pointsOn(l, listOf(0.0, peak))
         l = l.copy(targets = t, task = "Durch (0 | ${num(d)}) und den ersten Wellen-${if (a > 0) "berg" else "tal"} bei x ≈ ${num(peak)} (y = ${num(a + d)}).")

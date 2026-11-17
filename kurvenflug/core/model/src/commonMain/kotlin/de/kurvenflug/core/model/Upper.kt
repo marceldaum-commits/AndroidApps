@@ -13,6 +13,9 @@ import kotlin.math.min
  * - [Kind.VECTOR]: Gerade in Parameterform X = P + t · v – Richtungsvektor so wählen, dass die Sonde nach Zeit T ankommt.
  */
 object Upper {
+    /** Negative Zahl in Klammern: 2 − (−6) statt 2 − −6 */
+    private fun pp(x: Double) = if (x < 0) "(${num(x)})" else num(x)
+
     private const val STEP = 0.02
     private const val R = Flight.R
 
@@ -113,7 +116,7 @@ object Upper {
     private fun poly(vararg k: Double) = mapOf("c0" to k.getOrElse(0) { 0.0 }, "c1" to k.getOrElse(1) { 0.0 }, "c2" to k.getOrElse(2) { 0.0 }, "c3" to k.getOrElse(3) { 0.0 })
     private val pm = Param("m", "m", -8.0, 8.0, 0.5, 0.0)
     private val px = Param("x", "x", -9.0, 9.0, 0.5, 0.0)
-    private val pA = Param("A", "Treibstoff A", 0.0, 40.0, 0.25, 1.0)
+    private val pA = Param("A", "Fläche A", 0.0, 40.0, 0.25, 1.0)
     private fun pv(k: String, l: String) = Param(k, l, -9.0, 9.0, 0.5, 1.0)
 
     private fun tangent(n: Int, title: String, c: Map<String, Double>, x0: Double, m: Double, xs: Double, extra: String = "", rocks: List<Body> = emptyList()): Level {
@@ -141,7 +144,7 @@ object Upper {
         val q = Vec(p.x + tt * v.x, p.y + tt * v.y)
         return Level("22-$n", 22, n, title, Kind.VECTOR, task, extra + t(q.x, q.y, 0.45), listOf(pv("v1", "v₁"), pv("v2", "v₂")),
             mapOf("v1" to v.x, "v2" to v.y), fixed = mapOf("px" to p.x, "py" to p.y, "T" to tt), launch = p, asteroids = rocks,
-            tip = "v = (Q − P) : t = ((${num(q.x)} − ${num(p.x)}) : ${num(tt)} | (${num(q.y)} − ${num(p.y)}) : ${num(tt)}).")
+            tip = "v = (Q − P) : t = ((${pp(q.x)} − ${pp(p.x)}) : ${num(tt)} | (${pp(q.y)} − ${pp(p.y)}) : ${num(tt)}).")
     }
 
     val chapters: List<Chapter> = listOf(

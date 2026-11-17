@@ -81,7 +81,7 @@ fun BossScreen(boss: Boss, probeColor: Color, onWon: (stars: Int, misses: Int) -
             LaunchedEffect(Unit) { sfx?.play(Sound.CRASH, volume = 0.5f) }
             BigEmoji(boss.emoji)
             Text("${boss.name} greift an!", style = MaterialTheme.typography.headlineMedium, color = Q.Pink, textAlign = TextAlign.Center)
-            Text("Sein Schild hat 3 Segmente. Jede geschaffte Etappe zerstört eins. Wenige Fehlschüsse = mehr Sterne.",
+            Text("Sein Schild hat 3 Segmente. Jede geschaffte Etappe zerstört eins. Weniger Fehlschüsse = mehr Sterne.",
                 color = Q.Text, textAlign = TextAlign.Center)
             Text("🛡️🛡️🛡️", fontSize = 32.sp)
             NeonButton(onClick = { intro = false }, color = Q.Pink) { Text("Angriff! 🚀", fontWeight = FontWeight.Black) }
@@ -253,7 +253,7 @@ private fun LocalDuel(probeColor: Color, onResult: (Boolean) -> Unit, onDone: ()
             Text("${names[player]} ist dran!", style = MaterialTheme.typography.headlineMedium, color = colors[player])
             Text(if (player == 1) "${names[0]}: Nicht spicken! Gib das Handy weiter." else "Runde ${round + 1} von $rounds",
                 color = Q.Text, textAlign = TextAlign.Center)
-            Text("Wenige Versuche gewinnen – rechne erst, dann starte.", color = Q.Muted, textAlign = TextAlign.Center)
+            Text("Weniger Versuche gewinnen – rechne erst, dann starte.", color = Q.Muted, textAlign = TextAlign.Center)
             NeonButton(onClick = { handover = false }, color = colors[player]) { Text("Bereit! 🚀", fontWeight = FontWeight.Black) }
         }
         if (finished) Overlay {

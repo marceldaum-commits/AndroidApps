@@ -65,7 +65,7 @@ fun WalkthroughOverlay(level: Level, steps: List<Step>, voltSolves: Int, onClose
                 if (done) VoltMood.WOW else if (wrongPick != null) VoltMood.OOPS else VoltMood.THINK, size = 48.dp,
                 speech = when {
                     done -> "Super gerechnet! 🎉 Jetzt stell ${settings.joinToString(" und ")} ein und starte!"
-                    wrongPick != null -> "Fast! Schau dir die Rechnung nochmal genau an. 🔍"
+                    wrongPick != null -> "Fast! Schau dir die Rechnung noch mal genau an. 🔍"
                     current < voltSolves || (current == voltSolves && voltSolves > 0) -> "Den ersten Schritt habe ich dir vorgerechnet. Jetzt du! 💪"
                     else -> "Tipp die richtige Zahl an. Du schaffst das! 💪"
                 },

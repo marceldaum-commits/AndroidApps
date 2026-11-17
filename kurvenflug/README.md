@@ -6,7 +6,7 @@ selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, 
 Inhalte (175 Level in 30 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
 Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv, Planeten-Lexikon, Werkstatt): Koordinaten, Brüche & Kommazahlen am Zahlenstrahl, Winkel mit Geodreieck (Kl. 5–6), Zuordnungen/Prozent (Kl. 6–7), Geraden (Kl. 7–8), Pythagoras (Kl. 8–9), Parabeln (Kl. 9), Logarithmus (Kl. 10),
 Weg-Zeit und Laser-Optik (Physik 7), Energieerhaltung (Physik 8–9),
-Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren (Kl. 11–13); dazu Maßstab (Kl. 5–6), Prozent & Zinseszins (Kl. 7–8), beschleunigte Bewegung (Physik 9–10), Potenzfunktionen, verschobene Wellen, waagerechter Wurf (Kl. 10–11), e-Funktion (Kl. 11–12), Binomialverteilung – Dichte und kumuliert (Kl. 10–13).
+Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung (Kl. 11–13); dazu Maßstab (Kl. 5–6), Prozent & Zinseszins (Kl. 7–8), beschleunigte Bewegung (Physik 9–10), Potenzfunktionen, verschobene Wellen, waagerechter Wurf (Kl. 10–11), e-Funktion (Kl. 11–12), Binomialverteilung – Dichte und kumuliert (Kl. 10–13).
 
 ## Aufbau der Startseite
 - Vier Reiter unten: 🚀 **Heute** („Weiter, wo du warst“, Tagesmission, Auffrischen), 🗺️ **Galaxie** (Kapitel nach Klasse,
@@ -29,7 +29,7 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
   die ersten 18 Planeten bauen das zweite Schiff „Nova“.
 - Raumstation: 6 Räume mit Sternenstaub (= alle gesammelten Sterne) freischalten, mit Stickern dekorieren, Crew wohnt dort.
   Gast-Planeten zu Halloween, Advent, Ostern (Gaußsche Osterformel) und Sommerferien mit Themen-Sticker – jedes Jahr wieder.
-- Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
+- Beim ersten Start fragt Volt nach der Klasse (5–13 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
 ## So funktioniert Kurvenflug
