@@ -80,6 +80,10 @@ class AuditTest {
                 if (c == null) gaps += "${l.id} Stern"
                 else if (c.options.map { it.trim() }.distinct().size != c.options.size || c.options.any { it.isBlank() }) bad("${l.id}: Rechen-Stern-Antworten doppelt/leer: ${c.options}")
             }
+            // Theorie-Knopf: jede Übung hat eine passende Erklärung
+            val ch = Levels.chapters.firstOrNull { it.number == l.chapter }
+            val th = Theories.of(l, ch)
+            if (th == null || th.points.isEmpty()) bad("${l.id}: keine Theorie")
             // F) Text-Hygiene
             val texts = listOfNotNull(l.title, l.task, l.tip, l.given) + (l.quiz ?: emptyList()) + (l.walk?.map { it.text } ?: emptyList())
             texts.forEach { t ->

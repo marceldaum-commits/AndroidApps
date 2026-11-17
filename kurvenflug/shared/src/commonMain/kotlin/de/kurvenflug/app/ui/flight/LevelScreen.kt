@@ -89,6 +89,9 @@ fun LevelScreen(
     var help by rememberSaveable(level.id) { mutableStateOf(false) }
     /** Kurve mit dem Finger ziehen (zeigt die ganze Bahn → zählt wie Hilfe) */
     var drag by rememberSaveable(level.id) { mutableStateOf(false) }
+    // 📖 Theorie: passende Erklärung jederzeit nachlesen – kostet keine Sterne
+    var theory by rememberSaveable(level.id) { mutableStateOf(false) }
+    val theoryText = remember(level.id, chapter.number) { de.kurvenflug.core.model.Theories.of(level, chapter) }
     var grabbed by remember(level.id) { mutableIntStateOf(-1) }
     var usedHelp by rememberSaveable(level.id) { mutableStateOf(false) }
     var phase by rememberSaveable(level.id) { mutableStateOf(Phase.AIM) }
@@ -128,6 +131,7 @@ fun LevelScreen(
     // Offene Fenster zuerst schließen, statt gleich das Level zu verlassen
     BackHandler(enabled = walkOpen) { walkOpen = false }
     BackHandler(enabled = intro) { intro = false; onIntroSeen() }
+    BackHandler(enabled = theory) { theory = false }
 
     val preview2 = remember(values, help, level.id) {
         Flight.path2(level, values).let { p -> if (help) p else p.take(min(p.size, 100)) }
@@ -313,12 +317,19 @@ fun LevelScreen(
                 }
                 // Schmale Handys (320 dp): Knöpfe nur mit Symbol, ohne „3 ⭐ möglich“ – sonst wird „Start“ zerquetscht
                 BoxWithConstraints(Modifier.fillMaxWidth()) {
-                val narrow = maxWidth < 360.dp
+                // Mit drei Knöpfen (Bahn, Theorie, Ziehen) braucht es ab normaler Handybreite nur Symbole – sonst wird „Start“ zerquetscht
+                val narrow = maxWidth < 470.dp
+                val tiny = maxWidth < 360.dp
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     FilterChip(
                         selected = help, onClick = { help = !help; if (!help) drag = false; sfx?.play(Sound.TICK) }, enabled = phase == Phase.AIM,
                         label = { Text(if (narrow) "👁" else if (level.kind == Kind.POINT) "👁 Hilfe" else "👁 Bahn") },
                         colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Violet.copy(alpha = 0.35f), labelColor = Q.Text, selectedLabelColor = Q.Text),
+                    )
+                    if (theoryText != null) FilterChip(
+                        selected = theory, onClick = { theory = true; sfx?.play(Sound.TICK) },
+                        label = { Text(if (narrow) "📖" else "📖 Theorie") },
+                        colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Cyan.copy(alpha = 0.3f), labelColor = Q.Text, selectedLabelColor = Q.Text),
                     )
                     FilterChip(
                         selected = drag, onClick = { drag = !drag; if (drag) help = true; sfx?.play(Sound.TICK) }, enabled = phase == Phase.AIM,
@@ -326,7 +337,7 @@ fun LevelScreen(
                         colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Q.Yellow.copy(alpha = 0.3f), labelColor = Q.Text, selectedLabelColor = Q.Text),
                     )
                     Spacer(Modifier.weight(1f))
-                    if (!narrow) Text(if (help) "max.\n2 ⭐" else "3 ⭐\nmöglich", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+                    if (!tiny) Text(if (help) "max.\n2 ⭐" else "3 ⭐\nmöglich", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                     NeonButton(onClick = { launch() }, color = Q.Green, enabled = phase == Phase.AIM, modifier = Modifier.pulse(phase == Phase.AIM && attempt == 0, 0.03f)) {
                         Text("🚀 Start", fontWeight = FontWeight.Black, color = Q.Text, fontSize = 18.sp, maxLines = 1, softWrap = false)
                     }
@@ -362,6 +373,7 @@ fun LevelScreen(
 
         if (walkOpen && steps != null) WalkthroughOverlay(level, steps, walkVoltSolves) { walkOpen = false }
         if (intro) IntroOverlay(chapter) { intro = false; onIntroSeen() }
+        if (theory && theoryText != null) TheoryOverlay(theoryText) { theory = false }
     }
 }
 
@@ -564,6 +576,38 @@ private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean,
                 if (allowRetry) NeonButton(onClick = onRetry, color = Q.Violet) { Text("↻ Nochmal", color = Q.Text) }
                 if (onNext != null) NeonButton(onClick = onNext, color = Q.Green, modifier = Modifier.pulse(true, 0.03f)) { Text(nextLabel, color = Q.Text, fontWeight = FontWeight.Black) }
                 else NeonButton(onClick = onBack, color = Q.Green) { Text("Fertig! 🏆", color = Q.Text, fontWeight = FontWeight.Black) }
+            }
+        }
+    }
+}
+
+/** 📖 Theorie zum Nachlesen: alle Erklärungen des Kapitels auf einen Blick, plus Merkformel. */
+@Composable
+fun TheoryOverlay(t: de.kurvenflug.core.model.Theory, onClose: () -> Unit) {
+    val sfx = LocalSfx.current
+    LaunchedEffect(Unit) { sfx?.play(Sound.BEEP, volume = 0.5f) }
+    var shown by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) { shown = true }
+    Box(Modifier.fillMaxSize().background(Color(0xF0070B20)).clickableNoRipple(remember { androidx.compose.foundation.interaction.MutableInteractionSource() }) {}) {
+        Column(Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            Text("📖 ${t.emoji} ${t.title}", style = MaterialTheme.typography.headlineSmall, color = Q.Cyan, fontWeight = FontWeight.Bold)
+            Text(t.grades, color = Q.Muted)
+            Volt(VoltMood.HAPPY, size = 64.dp, speech = "Alles Wichtige zum Nachlesen – das kostet keine Sterne! 💡")
+            t.points.forEachIndexed { i, text ->
+                val a by animateFloatAsState(if (shown) 1f else 0f, tween(350, delayMillis = 90 * i), label = "theory$i")
+                Row(Modifier.fillMaxWidth().graphicsLayer { alpha = a; translationY = (1 - a) * 40f }.clip(RoundedCornerShape(16.dp))
+                    .background(Q.Panel).border(1.dp, Q.Cyan.copy(alpha = 0.35f), RoundedCornerShape(16.dp)).padding(12.dp)) {
+                    Text("${i + 1}", color = Q.Cyan, fontWeight = FontWeight.Black, fontSize = 20.sp, modifier = Modifier.width(28.dp))
+                    Text(text, color = Q.Text)
+                }
+            }
+            t.formula?.let { f ->
+                Text("💡 $f", color = Q.Yellow, modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
+                    .background(Q.Yellow.copy(alpha = 0.12f)).padding(12.dp))
+            }
+            NeonButton(onClick = onClose, color = Q.Cyan, modifier = Modifier.fillMaxWidth()) {
+                Text("Verstanden – weiter üben! 🚀", color = Q.Text, fontWeight = FontWeight.Bold)
             }
         }
     }

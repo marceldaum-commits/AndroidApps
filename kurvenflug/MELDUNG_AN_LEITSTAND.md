@@ -1,5 +1,10 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 0.25.0 – 📖 Theorie-Knopf in jeder Übung (Wunsch Marcel)
+- Jede Übung (alle 607 geprüften spielbaren Level inkl. Sturm, Duell, Andromeda, Extrem) hat einen Knopf 📖: zeigt die
+  Kapitel-Erklärung Schritt für Schritt plus Merkformel, jederzeit, ohne Sterne-Abzug. Abgesichert im Prüftest
+  („jede Übung hat eine Theorie“). Knopfleiste ab normaler Handybreite nur mit Symbolen, damit „Start“ nicht gequetscht wird.
+
 ## Korrektheitsprüfung 17.11. (Version 0.24.2, Commit 1fbf80d)
 
 ### Was geprüft wurde und wie
