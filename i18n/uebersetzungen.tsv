@@ -2296,3 +2296,46 @@ Rechenblitz Pro ist freigeschaltet – danke!	Rechenblitz Pro is unlocked – th
 ✓ Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!	✓ Rechenblitz Pro is unlocked on this device – for all profiles. Thanks for your support!	✓ Rechenblitz Pro розблоковано на цьому пристрої – для всіх профілів. Дякуємо за підтримку!
 Die Profi-Stufe gehört zu Rechenblitz Pro – jetzt Stufe {}	The Pro level is part of Rechenblitz Pro – level {} for now	Рівень Профі входить до Rechenblitz Pro – зараз рівень {}
 Neu für Eltern: der Elternbericht 📈 – Verlauf über {} Wochen, Stärken und Schwächen je Thema, zum Ausdrucken	New for parents: the parent report 📈 – progress over {} weeks, strengths and weaknesses per topic, printable	Нове для батьків: звіт 📈 – прогрес за {} тижнів, сильні та слабкі сторони за темами, для друку
+# 17.11.2026 – Zahlen-Dungeon (3.21.0)
+Zahlen-Dungeon	Number Dungeon	Числове підземелля
+{} Räume, {} Herzen – schaffst du den Wächter?	{} rooms, {} hearts – can you beat the Guardian?	{} кімнат, {} сердець – переможеш Вартового?
+Herzen	Hearts	Серця
+Raum {}	Room {}	Кімната {}
+Raum {} von {}	Room {} of {}	Кімната {} з {}
+Willkommen im Zahlen-Dungeon! Welche Tür nimmst du?	Welcome to the Number Dungeon! Which door do you take?	Ласкаво просимо до Числового підземелля! Які двері обираєш?
+Zwei Türen. Wohin jetzt?	Two doors. Where to now?	Двоє дверей. Куди тепер?
+Letzter Raum	Last room	Остання кімната
+Hinter dieser Tür wartet der Wächter. Bist du bereit?	The Guardian is waiting behind this door. Are you ready?	За цими дверима чекає Вартовий. Ти готовий?
+Monster	Monster	Монстр
+Kampf!	Fight!	Бій!
+Schatz	Treasure	Скарб
+Funken finden	Find sparks	Знайти іскри
+Lagerfeuer	Campfire	Багаття
++{} Herz	+{} heart	+{} серце
+Aufgaben aus Klasse {}	Tasks from grade {}	Завдання з {} класу
+Schleimi	Slimy	Слизик
+Flatter	Flutter	Пурхайко
+Der Zahlengeist	The Number Ghost	Числовий привид
+Steinbeißer	Stonebiter	Каменегриз
+Der Wächter	The Guardian	Вартовий
+{} Treffer besiegen das Monster.	{} hits defeat the monster.	{} влучань перемагають монстра.
+Besiege ihn mit {} Treffern!	Defeat him with {} hits!	Перемож його {} влучаннями!
+{} Volltreffer!	{} critical hit!	{} точне влучання!
+Ein Schatz!	A treasure!	Скарб!
+Du findest	You find	Ти знаходиш
+Ein Lagerfeuer	A campfire	Багаття
+Du ruhst dich aus:	You take a rest:	Ти відпочиваєш:
+Dungeon geschafft!	Dungeon cleared!	Підземелля пройдено!
+Du hast den Wächter besiegt. 👑	You defeated the Guardian. 👑	Ти переміг Вартового. 👑
+Keine Herzen mehr …	No hearts left …	Сердець більше немає …
+Raum {} von {} – beim nächsten Mal kommst du weiter!	Room {} of {} – next time you’ll get further!	Кімната {} з {} – наступного разу пройдеш далі!
+Lauf beendet	Run over	Забіг завершено
+besiegt	defeated	переможено
+Schätze	treasures	скарбів
+Rekord: Raum {} von {}	Record: room {} of {}	Рекорд: кімната {} з {}
+Rekord: Raum {}	Record: room {}	Рекорд: кімната {}
+{}× geschafft	cleared {}×	пройдено {}×
+{}× geschafft 👑	cleared {}× 👑	пройдено {}× 👑
+Neu: der Zahlen-Dungeon 👾 – {} Räume, {} Herzen, Monster besiegst du mit richtigen Antworten	New: the Number Dungeon 👾 – {} rooms, {} hearts, you defeat monsters with correct answers	Нове: Числове підземелля 👾 – {} кімнат, {} сердець, монстрів перемагаєш правильними відповідями
+Wähle Türen: Kampf, Schatz oder Lagerfeuer – und am Ende wartet der Wächter	Choose doors: fight, treasure or campfire – and the Guardian waits at the end	Обирай двері: бій, скарб чи багаття – а в кінці чекає Вартовий
+Neuer Rekord!	New record!	Новий рекорд!

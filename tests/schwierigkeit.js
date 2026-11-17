@@ -3,8 +3,9 @@
 // Aufruf: node tests/schwierigkeit.js [--md]   → Tabelle; Exit-Code 1, wenn eine Stufe nicht strikt schwerer ist.
 const fs = require('fs'), path = require('path');
 global.window = {}; global.document = {};
-eval(fs.readFileSync(path.join(__dirname, '../kopfrechnen/js/engine.js'), 'utf8') + ';global.E={GEN,TOPICS,LEVEL_DESC,makeTask,taskText,canon,fmtDec};');
-const { GEN, TOPICS, LEVEL_DESC, makeTask, taskText, canon, fmtDec } = E;
+eval(fs.readFileSync(path.join(__dirname, '../kopfrechnen/js/engine.js'), 'utf8') + ';global.E={GEN,TOPICS,LEVEL_DESC,makeTask,taskText,canon,fmtDec,withSeed};');
+const { GEN, TOPICS, LEVEL_DESC, makeTask, taskText, canon, fmtDec, withSeed } = E;
+const SEED = 20261116;   // fester Startwert: der Nachweis ist wiederholbar und schwankt nicht von Lauf zu Lauf
 const N = 3000, LEVELS = LEVEL_DESC.add.length;
 const numsOf = t => {   // alle Zahlen der Aufgabe (auch in Textaufgaben)
   const out = [];
@@ -52,7 +53,8 @@ for (const tp of Object.keys(GEN)) {
   let prev = -Infinity;
   for (let l = 0; l < LEVELS; l++) {
     const acc = { stellen: 0, ziffern: 0, zahlen: 0, schritte: 0, bruch: 0, komma: 0, negativ: 0, klammer: 0, uebertrag: 0, score: 0 }; let maxDig = 0;
-    for (let i = 0; i < N; i++) { const m = measure(makeTask(tp, l)); for (const k in m) acc[k] += m[k]; acc.score += score(m); maxDig = Math.max(maxDig, m.stellen); }
+    const tasks = withSeed(SEED + l, () => Array.from({ length: N }, () => makeTask(tp, l)));
+    for (let i = 0; i < N; i++) { const m = measure(tasks[i]); for (const k in m) acc[k] += m[k]; acc.score += score(m); maxDig = Math.max(maxDig, m.stellen); }
     for (const k in acc) acc[k] /= N;
     rows.push({ tp, l, ...acc, maxDig });
     if (!(acc.score > prev + 0.05)) fails.push(`${tp} Stufe ${l + 1}: ${acc.score.toFixed(2)} ist nicht schwerer als Stufe ${l}: ${prev.toFixed(2)}`);

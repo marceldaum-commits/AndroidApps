@@ -262,7 +262,7 @@ function renderHome() {
   $('sDays').textContent = typeof weekCount === 'function' ? `${weekCount()}/7` : streakDays();   // gemütlich: Tage diese Woche statt Serie
   $('sToday').textContent = `${S.today.date === todayStr() ? S.today.solved : 0}/${DAILY_GOAL}`;
   renderSoundIcons();
-  renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); renderWeltCard(); if (typeof renderGartenCard === 'function') renderGartenCard(); if (typeof renderWunschCard === 'function') renderWunschCard();
+  renderAssignCard(); renderChallengeCard(); renderMerkCard(); renderReiseCard(); if (typeof renderDungeonCard === 'function') renderDungeonCard(); renderWeltCard(); if (typeof renderGartenCard === 'function') renderGartenCard(); if (typeof renderWunschCard === 'function') renderWunschCard();
   if ($('sFunken')) $('sFunken').textContent = S.funken ?? 0;
   if ($('bzHome')) {
     $('bzHome').innerHTML = bzOn() ? blitzSay('wave', blitzGreeting() + ' <button class="bz-go" id="bzGo">Los →</button>', 54) : '';
@@ -405,6 +405,7 @@ const MODE_CFG = {
   merk: { title: 'Merk-Training', count: 20, steps: true, points: true },
   reise: { title: 'Rechen-Reise', count: 8, steps: true, points: true },
   wunsch: { title: 'Üben nach Wunsch', count: 20, steps: true, points: true },
+  dungeon: { title: 'Zahlen-Dungeon', count: Infinity, steps: true, points: true },
 };
 let G = null, timerRaf = 0, lastAnswered = null;
 
@@ -419,7 +420,8 @@ $('pad').addEventListener('click', e => { if (e.detail === 0) { const b = e.targ
 function startGame(mode, opts = {}) {
   Sound.init();
   const cfg = opts.cfg ? { ...MODE_CFG[mode], ...opts.cfg } : MODE_CFG[mode], op = opts.op ?? S.sel.op;
-  document.body.classList.toggle('bigpad', !!opts.big);   // große Ziffern und Tasten (Üben nach Wunsch)
+  document.body.classList.toggle('bigpad', !!opts.big);
+  $('game').classList.toggle('dgmode', mode === 'dungeon'); $('dgOv')?.remove();   // Zahlen-Dungeon: eigene Anzeige über der Aufgabe   // große Ziffern und Tasten (Üben nach Wunsch)
   const adapt = !opts.queue && !opts.gen && opts.lvl == null && S.sel.lvl === 'auto' && ['training', 'blitz', 'zen'].includes(mode);
   let lvl = opts.lvl ?? currentLevel(op);
   if (lvl >= 5 && !hasPro()) { lvl = 4; setTimeout(() => toast('Die Profi-Stufe gehört zu Rechenblitz Pro – jetzt Stufe 5', 2400), 300); }
@@ -565,6 +567,7 @@ function submit() {
       else if (G.comeback && bzOn() && !t.card) blitzPop('happy', 'Siehst du – geschafft!');
       G.comeback = false;
     }
+    if (G.mode === 'dungeon') dgAnswer(true, dt, t);
     adaptStep(true, dt); updateHud(); save();
     const g1 = G; setTimeout(() => { if (G === g1 && !g1.over) { G.locked = false; nextTask(); } }, cfg.calm ? 700 : 400);
     return;
@@ -573,6 +576,7 @@ function submit() {
   G.mistakes.push({ ...lastAnswered });
   S.box[key] = { topic: t.topic, lvl: t.lvl, e: t.e, a: t.a, hint: t.hint, unit: t.unit, pre: t.pre, noEq: t.noEq, eqSign: t.eqSign, story: t.story, w: t.w, form: t.form, need: 2 };
   if (cfg.calm || cfg.quiet) Sound.soft(false); else { Sound.wrong(); vibrate(60); }
+  if (G.mode === 'dungeon') dgAnswer(false, dt, t);
   renderAnswer('no'); adaptStep(false, dt); updateHud(); save();
   const g2 = G;
   if (cfg.steps) { setTimeout(() => { if (G === g2 && !g2.over) showSolution(t); }, 450); return; }
@@ -646,7 +650,7 @@ function pauseGame(on) {
 document.addEventListener('visibilitychange', () => { if (document.hidden) pauseGame(true); else if (!Sheet.open) pauseGame(false); });
 function quitGame(silent) {   // silent: ohne Übersicht/Rücksprung (Profilwechsel, Zurücksetzen)
   if (!silent && G && !G.over && G.cfg.calm && G.idx > 0) return finish();   // ruhiges Üben endet mit einer kleinen Übersicht
-  if (G) G.over = true; $('merkOv')?.remove(); cancelAnimationFrame(timerRaf); $('overlay').innerHTML = '';
+  if (G) G.over = true; $('merkOv')?.remove(); $('dgOv')?.remove(); cancelAnimationFrame(timerRaf); $('overlay').innerHTML = '';
   if ('speechSynthesis' in window) speechSynthesis.cancel();
   silent ? goHome() : backToOrigin();
 }
@@ -701,6 +705,7 @@ function finish() {
   if (G.mode === 'test') extra = finishTest();
   if (G.mode === 'merk') extra = merkResultHtml();
   if (G.mode === 'reise') extra = reiseFinish(acc);
+  if (G.mode === 'dungeon') extra = dgFinish();
   if (G.assign && S.assign) {
     const a = S.assign, ok = Math.round(acc * 100) >= (a.min || 0) && answered > 0;
     a.runs.push({ d: today, sc: G.score, c: G.correct, w: G.wrong, ms: G.times.length ? Math.round(G.times.reduce((x, y) => x + y, 0) / G.times.length) : 0, ok, mi: G.mistakes.slice(0, 8).map(m => [m.task, m.given, m.expected]) });
@@ -747,6 +752,7 @@ function renderResult(r) {
     if (G.mode === 'merk') return merkStats().todo ? startMerk() : (goHome(), openSheet('merk'));
     if (G.mode === 'reise' && G_REISE) return startReise(G_REISE.c, G_REISE.s);
     if (G.mode === 'wunsch' && G.wunsch) return startWunsch(G.wunsch);
+    if (G.mode === 'dungeon') return startDungeon();
     if (G.assign && S.assign) return S.assign.runs.filter(x => x.ok).length >= S.assign.r ? goHome() : startAssignment();
     if (G.gen) return startGame(G.mode, { gen: G.gen, op: G.op, lvl: G.lvl, title: G.title });
     startGame(G.mode);

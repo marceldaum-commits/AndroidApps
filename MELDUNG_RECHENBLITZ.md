@@ -2,7 +2,27 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).**
+
+## 17.11.2026 (55) – Zahlen-Dungeon 1 (3.21.0, Roadmap Tag 6)
+
+- **Neu: der Zahlen-Dungeon** 👾 – ein kurzer Spiel-Lauf von 3–5 Minuten. Auf der Startseite steht er als Karte „Zahlen-Dungeon“.
+  - **7 Räume, 5 Herzen.** Vor jedem Raum gibt es zwei Türen: **Monster** (Kampf), **Schatz** (5–10 💫, höchstens 2 je Lauf) oder **Lagerfeuer** (+1 Herz, nur wenn eins fehlt). Raum 1 ist immer ein Kampf, im letzten Raum wartet **der Wächter** mit 6 Lebenspunkten.
+  - **Monster sind Aufgaben:** Jede richtige Antwort ist ein Treffer. Eine schnelle Antwort ist ein **Volltreffer** mit doppeltem Schaden. Eine falsche Antwort kostet ein Herz (Bildschirm wackelt, Handy vibriert), danach kommt wie immer der Lösungsweg. Ohne Herzen endet der Lauf, der Lösungsweg wird aber noch gezeigt.
+  - **5 selbst gezeichnete Monster:** Schleimi, Flatter, der Zahlengeist, Steinbeißer und der Wächter. Sie schweben, zucken bei Treffern und zerplatzen. Es gibt Schadenszahlen, Türen mit Fackel-Licht und Konfetti beim Sieg.
+  - **Aufgaben:** Themen der eingestellten Klasse (ohne lange Textaufgaben). Ohne Klasse kommen das gewählte Thema und die aktuelle Stufe; der Wächter stellt eine Stufe höher.
+  - **Belohnung:** 3 💫 je Monster, 20 💫 für den Wächter, dazu Schätze. Es gibt Rekord (tiefster Raum) und Zähler „×-mal geschafft“. Die Ergebnis-Karte hat eigene Bilder.
+  - Vorbereitet für Tag 7/8: Rechen-Karten (Strategien als Spielzüge) und weitere Bosse.
+- **Nebenbei:**
+  - Der Schwierigkeitsnachweis (`tests/schwierigkeit.js`) läuft jetzt mit festem Startwert. Er ist wiederholbar und schwankt nicht mehr bei sehr knappen Stufen.
+  - Bei Zinsen (Stufe 2/3), Dreisatz Stufe 5 und Brüche Profi habe ich den Abstand etwas vergrößert; alle 174 Stufen ✓.
+- **Getestet:**
+  - komplette Läufe automatisch: gewinnen, verlieren, Lagerfeuer, Schatz, Abbruch mitten im Lauf, danach normales Training ohne Dungeon-Anzeige
+  - Deutsch, Englisch und Ukrainisch auf Handy (320/360/390 px) und PC (1366 px): kein Überlauf, keine JS-Fehler, keine fremden Abrufe, keine fehlenden Übersetzungen
+  - Engine 522 000 Aufgaben ✓, 106 000 Rechenaufgaben nachgerechnet ✓, Pro-Code-Test ✓, „Üben nach Wunsch“ ✓, APK-Modus ✓
+  - rund 40 neue Texte EN/UK
+- **Neue APK: 3.21.0** – GitHub baut sie beim Push auf `rechenblitz-test`. Die Hülle ist unverändert, die Inhalte kommen in der App von selbst.
+- **Nicht geprüft:** Die Leitstand-Übergaben im Repo Website_Backup konnte ich nicht lesen, weil das Repository außerhalb dieser Sitzung liegt. Nachrichten vom Leitstand kamen keine.
 
 ## 16.11.2026 (54) – Rechenblitz Pro gebaut, Sperren noch aus (3.20.0 auf `rechenblitz-test`)
 

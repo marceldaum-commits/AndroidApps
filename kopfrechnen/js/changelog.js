@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.20.0';
-const APP_DATE = '2026-11-16';
+const APP_VERSION = '3.21.0';
+const APP_DATE = '2026-11-17';
 const CHANGELOG = [
+  ['3.21.0', '2026-11-17', ['Neu: der Zahlen-Dungeon 👾 – 7 Räume, 5 Herzen, Monster besiegst du mit richtigen Antworten', 'Wähle Türen: Kampf, Schatz oder Lagerfeuer – und am Ende wartet der Wächter']],
   ['3.20.0', '2026-11-16', ['Neu für Eltern: der Elternbericht 📈 – Verlauf über 10 Wochen, Stärken und Schwächen je Thema, zum Ausdrucken']],
   ['3.19.0', '2026-11-16', ['Neu: Stufe „Profi“ in allen 30 Themen – für richtig gute Rechner, auch Erwachsene', 'Jede Stufe ist jetzt nachweislich schwerer als die davor: größere Zahlen, mehr Rechenschritte', 'Viele neue Aufgabenarten, z. B. Zinseszins, Kreisring, Klammern auf beiden Seiten']],
   ['3.18.1', '2026-11-16', ['Schnellwahl je Klasse 1–10 und „Neustart“ in Üben nach Wunsch']],

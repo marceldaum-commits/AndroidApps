@@ -36,7 +36,7 @@ Jeden Tag ein vollständiges, getestetes Paket. Status: `[ ]` offen · `[x]` erl
 | 3 ✅ | Mo 16.11. (vorgezogen 14.11.) | **Rechen-Reise (Kapitel 1–3)** (3.9.0) | Story-Karte statt Liste: Etappen à 3–5 Min., kleine Geschichte je Kapitel, passend zur Klassenstufe |
 | 4 ✅ | Di 17.11. (vorgezogen 15.11.) | **Rechen-Reise (Kapitel 4–6)** (3.10.0) | Weitere Kapitel, Belohnungsbilder, Urkunde je Kapitel |
 | 5 ✅ | Mi 18.11. (vorgezogen 16.11.) | **Rechengarten (gemütlich)** (3.14.0) | Gelöste Aufgaben lassen Pflanzen wachsen; keine Serien-Strafe: „Tage diese Woche“ statt Tage in Folge, Pausen ohne Verlust |
-| 6 | Do 19.11. | **Zahlen-Dungeon 1** | Roguelike: Räume, Gegner = Aufgaben, Lebenspunkte, kurze Läufe (3–5 Min.) |
+| 6 ✅ | Do 19.11. (vorgezogen 17.11.) | **Zahlen-Dungeon 1** (3.21.0) | Roguelike: Räume, Gegner = Aufgaben, Lebenspunkte, kurze Läufe (3–5 Min.) |
 | 7 | Fr 20.11. | **Zahlen-Dungeon 2** | Deckbuilding: Rechen-Karten = echte Strategien (Zehnerfreund, Verdoppeln, Halbieren, Kommaschieber …) |
 | 8 | Sa 21.11. | **Zahlen-Dungeon 3** | Bosse, Freischaltungen, Balance je Klassenstufe |
 | 9 | So 22.11. | **Fehler-Detektiv 1** ⭐ | Typische Denkfehler erkennen (Reihe verrutscht, Stellenwert, Zähler+Nenner addiert, Vorzeichen, Punkt vor Strich …) und genau diesen Fehler mit Bild erklären |
@@ -71,3 +71,5 @@ Jeden Tag ein vollständiges, getestetes Paket. Status: `[ ]` offen · `[x]` erl
 - 15.11. – 3.10.0: Rechen-Reise Kapitel 4–6 + Finale, Sticker-Album, große Urkunde; alle Aufgabentexte und Advents-Vorschau in EN/UK vervollständigt. Nächster Tag: Rechengarten.
 - 15.11. – 3.10.1: Knopf „Nach Updates suchen“; 3.11.0: Android-Widget für den Startbildschirm (aus Tag 20 vorgezogen, Marcel).
 - 15.11. – 3.11.1: einzelne Bereiche zurücksetzen; 3.12.0: großes Paket „Blitz-Welt“ (Funken, Garderobe, Zimmer, Rätsel des Tages, Jahreszeiten-Events) auf Marcels Wunsch zusätzlich zum Plan.
+- 16.11. – 3.19.0: jede Stufe nachweislich schwerer (tests/schwierigkeit.js), Profi-Stufe; 3.20.0: Rechenblitz Pro (Sperren aus bis zur Kassen-URL) + Elternbericht.
+- 17.11. – 3.21.0: Zahlen-Dungeon 1 (7 Räume, 5 Herzen, Türen Kampf/Schatz/Lagerfeuer, 5 gezeichnete Monster, Wächter). Nächster Tag: Zahlen-Dungeon 2 (Rechen-Karten).

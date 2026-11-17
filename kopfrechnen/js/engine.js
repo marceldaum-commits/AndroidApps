@@ -975,8 +975,8 @@ const GEN = {
   zins(l) {
     const S2 = (story, a, unit, w) => ({ e: [Story(story)], a, unit, w, noEq: true, story: true });
     if (l === 0) { const k = 100 * rnd(2, 50), p = pick([1, 2, 3, 4, 5]); return S2(`Wie viele Euro Zinsen bringen ${fi(k)} € in einem Jahr bei ${p} % Zinsen?`, I(k * p / 100), '€', ['Zinsen = Kapital · p : 100', `${fi(k)} · ${p} : 100 = ${fi(k * p / 100)}`]); }
-    if (l === 1) { const k = 100 * rnd(5, 50), p = rnd(1, 6); return S2(`${fi(k)} € bringen in einem Jahr ${fi(k * p / 100)} € Zinsen. Wie hoch ist der Zinssatz in Prozent?`, I(p), '%', ['p = Zinsen · 100 : Kapital', `${fi(k * p / 100)} · 100 : ${fi(k)} = ${p}`]); }
-    if (l === 2) { const k = 100 * rnd(5, 80), p = pick([2, 4, 5]); return S2(`Bei ${p} % Zinsen gibt es in einem Jahr ${fi(k * p / 100)} € Zinsen. Wie groß ist das Kapital?`, I(k), '€', ['Kapital = Zinsen · 100 : p', `${fi(k * p / 100)} · 100 : ${p} = ${fi(k)}`]); }
+    if (l === 1) { const k = 100 * rnd(10, 90), p = rnd(1, 6); return S2(`${fi(k)} € bringen in einem Jahr ${fi(k * p / 100)} € Zinsen. Wie hoch ist der Zinssatz in Prozent?`, I(p), '%', ['p = Zinsen · 100 : Kapital', `${fi(k * p / 100)} · 100 : ${fi(k)} = ${p}`]); }
+    if (l === 2) { const k = 100 * rnd(20, 180), p = pick([2, 4, 5]); return S2(`Bei ${p} % Zinsen gibt es in einem Jahr ${fi(k * p / 100)} € Zinsen. Wie groß ist das Kapital?`, I(k), '€', ['Kapital = Zinsen · 100 : p', `${fi(k * p / 100)} · 100 : ${p} = ${fi(k)}`]); }
     if (l === 3) { const k = 1200 * rnd(1, 10), p = pick([1, 2, 3, 5]), m = pick([1, 2, 3, 4, 6, 8, 9]); return S2(`${fi(k)} € liegen ${m} Monate zu ${p} % Jahreszins auf dem Konto. Wie viele Euro Zinsen gibt es?`, I(k * p / 100 * m / 12), '€', [`Jahreszinsen: ${fi(k)} · ${p} : 100 = ${fi(k * p / 100)} €`, `Für ${m} Monate: ${fi(k * p / 100)} · ${m} : 12 = ${fi(k * p / 100 * m / 12)} €`]); }
     const k = 1000 * rnd(1, 10), p = pick([5, 10]), k1 = k * (100 + p) / 100, k2 = k1 * (100 + p) / 100;
     return S2(`${fi(k)} € werden 2 Jahre lang mit ${p} % verzinst, die Zinsen bleiben auf dem Konto (Zinseszins). Wie viel Geld ist es nach 2 Jahren?`, Mo(Math.round(k2 * 100)), '€', [`Nach 1 Jahr: ${fi(k)} · ${fmtDec(100 + p, 2)} = ${fi(k1)} €`, `Nach 2 Jahren: ${fi(k1)} · ${fmtDec(100 + p, 2)} = ${decOfQ(Q(Math.round(k2 * 100), 100))} €`]);
@@ -1021,7 +1021,7 @@ const GEN = {
     if (l === 1) { const u = rnd(8, 15), a = rnd(2, 6); let b; do b = rnd(2, 9); while (b === a); return S2(`Ein Auto fährt mit ${a} Litern Benzin ${a * u} km. Wie weit kommt es mit ${b} Litern?`, I(b * u), 'km', [`Mit 1 Liter: ${a * u} : ${a} = ${u} km`, `Mit ${b} Litern: ${b} · ${u} = ${b * u} km`]); }
     if (l === 2) { const p = rnd(3, 9); let q; do q = rnd(2, 12); while (q === p); const W = lcm(p, q) * rnd(2, 8), t = W / p; return S2(`${p} Pumpen leeren ein Becken in ${t} Stunden. Wie lange brauchen ${q} Pumpen?`, I(p * t / q), 'h', ['Mehr Pumpen – weniger Zeit (antiproportional)', `1 Pumpe: ${p} · ${t} = ${p * t} h`, `${q} Pumpen: ${p * t} : ${q} = ${p * t / q} h`]); }
     if (l === 3) { const u = 5 * rnd(3, 40), a = rnd(2, 8); let b; do b = rnd(2, 12); while (b === a); return S2(`${a} kg Äpfel kosten ${fmtMoney(a * u)} €. Wie viel kosten ${b} kg?`, Mo(b * u), '€', [`1 kg: ${fmtMoney(a * u)} € : ${a} = ${fmtMoney(u)} €`, `${b} kg: ${b} · ${fmtMoney(u)} € = ${fmtMoney(b * u)} €`]); }
-    let k, d, t, z, rest, nn; do { k = rnd(12, 40); d = rnd(20, 90); t = rnd(5, d - 8); z = rnd(3, k - 4) * (coin() ? 1 : -1); nn = k - z; rest = k * (d - t); } while (rest % nn);
+    let k, d, t, z, rest, nn; do { k = rnd(15, 48); d = rnd(30, 120); t = rnd(5, d - 8); z = rnd(3, k - 4) * (coin() ? 1 : -1); nn = k - z; rest = k * (d - t); } while (rest % nn);
       return S2(`Ein Futtervorrat reicht für ${k} Pferde ${d} Tage. Nach ${t} Tagen werden ${Math.abs(z)} Pferde ${z > 0 ? 'verkauft' : 'dazugekauft'}. Wie viele Tage reicht der Rest?`, I(rest / nn), 'Tage', [`Vorrat insgesamt: ${k} · ${d} = ${fi(k * d)} Pferdetage`, `Nach ${t} Tagen verbraucht: ${k} · ${t} = ${fi(k * t)} Pferdetage`, `Rest: ${fi(k * d)} − ${fi(k * t)} = ${fi(rest)} Pferdetage`, `Jetzt ${nn} Pferde: ${fi(rest)} : ${nn} = ${rest / nn} Tage`]);
   },
 };
@@ -1059,8 +1059,8 @@ const PRO = {
   },
   frac() {
     const H = 'als gekürzter Bruch';
-    let d1, d2; do { d1 = rnd(2, 12); d2 = rnd(2, 12); } while (d1 === d2 || lcm(d1, d2) > 60);
-    const d3 = rnd(2, 12), n1 = properFrac(d1), n2 = properFrac(d2), n3 = properFrac(d3), L = lcm(d1, d2), a = n1 * L / d1, b = n2 * L / d2;
+    let d1, d2; do { d1 = rnd(3, 15); d2 = rnd(3, 15); } while (d1 === d2 || lcm(d1, d2) > 90);
+    const d3 = rnd(3, 15), n1 = properFrac(d1), n2 = properFrac(d2), n3 = properFrac(d3), L = lcm(d1, d2), a = n1 * L / d1, b = n2 * L / d2;
     if (coin()) { const s = a + b; return { e: [K('('), F(n1, d1), O('+'), F(n2, d2), K(')'), O('·'), F(n3, d3)], a: Fr(s * n3, L * d3), hint: H, w: [`Klammer zuerst, gemeinsamer Nenner ${L}:`, `${fr(a, L)} + ${fr(b, L)} = ${fr(s, L)}`, `${fr(s, L)} · ${fr(n3, d3)} = ${fr(s * n3, L * d3)}`, ...redW(s * n3, L * d3)] }; }
     if (a === b) return PRO.frac();
     const [p1, q1, p2, q2, A, B] = a > b ? [n1, d1, n2, d2, a, b] : [n2, d2, n1, d1, b, a], df = A - B;

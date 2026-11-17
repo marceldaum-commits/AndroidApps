@@ -959,3 +959,49 @@ button.badge{font:inherit;cursor:pointer}
 .etable{overflow-x:auto;margin:0 -4px}.etable table{border-collapse:collapse;width:100%;font-size:13px}
 .etable th,.etable td{text-align:left;padding:5px 4px;border-bottom:1px solid var(--border);white-space:nowrap}
 .amp{padding:1px 6px;border-radius:999px;font-weight:700}.amp.ok{background:#d6f5df;color:#11602b}.amp.mid{background:#fff0c7;color:#7a5200}.amp.bad{background:#ffdcd6;color:#8a1f0e}
+
+/* Zahlen-Dungeon (3.21.0) */
+#game:not(.dgmode) .dg-hud{display:none}
+#game.dgmode .hud{display:none}
+.dg-hud{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 10px;border-radius:18px;background:linear-gradient(135deg,#2a2140,#3d2a24);color:#fff;min-height:64px}
+.dg-me{display:flex;flex-direction:column;gap:2px;flex:none}
+.dg-hearts{display:flex;gap:1px;font-size:15px;line-height:1}.dg-heart.lost{filter:grayscale(1);opacity:.3}
+.dg-room{font-size:12px;opacity:.85;font-weight:700}
+.dg-foe{display:flex;align-items:center;justify-content:flex-end;gap:6px;min-width:0;flex:1}.dg-foe.empty{min-height:56px}
+.dg-foeinfo{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1;max-width:150px}.dg-foeinfo b{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dg-hp{width:100%;height:9px;border-radius:9px;background:rgba(255,255,255,.2);overflow:hidden}.dg-hp i{display:block;height:100%;background:linear-gradient(90deg,#ff6b6b,#ffb347);transition:width .3s}
+.dg-mon{position:relative;animation:dgBob 1.6s ease-in-out infinite}.dg-mon.hit{animation:dgHit .35s}
+.dg-foe.dead .dg-mon{animation:dgPoof .6s forwards}
+@keyframes dgBob{50%{transform:translateY(-4px)}}
+@keyframes dgHit{0%{filter:brightness(3)}30%{transform:translateX(-6px) rotate(-6deg)}60%{transform:translateX(5px) rotate(4deg)}100%{transform:none}}
+@keyframes dgPoof{to{transform:scale(.2) rotate(30deg);opacity:0}}
+.dg-dmg{position:absolute;left:50%;top:0;transform:translateX(-50%);font-weight:900;font-size:16px;color:#ffd166;text-shadow:0 2px 0 #000;white-space:nowrap;animation:dgUp .9s forwards;pointer-events:none}
+.dg-dmg.crit{color:#ff6b6b;font-size:18px}.dg-dmg.gold{color:#ffe08a}
+@keyframes dgUp{to{transform:translate(-50%,-34px);opacity:0}}
+#game.dg-ouch{animation:dgOuch .4s}
+@keyframes dgOuch{0%,100%{transform:none}20%{transform:translateX(-8px)}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}80%{transform:translateX(3px)}}
+#game.dg-ouch::after{content:'';position:fixed;inset:0;background:rgba(220,30,30,.25);pointer-events:none;animation:dgRed .4s forwards}
+@keyframes dgRed{to{opacity:0}}
+.dg-ov{position:fixed;inset:0;z-index:38;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px 16px;text-align:center;color:#fff;
+  background:radial-gradient(circle at 50% 40%,#4a3326 0%,#1e1520 70%);animation:dgIn .25s}
+@keyframes dgIn{from{opacity:0}}
+.dg-room-head{display:flex;flex-direction:column;align-items:center;gap:6px}.dg-room-head b{font-size:20px}
+.dg-say{margin:0;max-width:340px;font-size:16px}
+.dg-doors{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.dg-door{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;color:#fff;cursor:pointer;padding:6px;border-radius:16px;transition:transform .12s}
+.dg-door:hover,.dg-door:focus-visible{transform:translateY(-4px) scale(1.04)}.dg-door:active{transform:scale(.96)}
+.dg-door b{font-size:15px}.dg-door span{font-size:12px;opacity:.8}
+.dg-door.boss svg{width:104px;height:140px;filter:drop-shadow(0 0 14px rgba(255,120,60,.6))}
+.dg-info{opacity:.7;margin:0}
+.dg-intro{display:flex;flex-direction:column;align-items:center;gap:6px;animation:dgZoom .5s}.dg-intro b{font-size:22px}.dg-intro.boss svg{filter:drop-shadow(0 0 18px rgba(255,100,40,.7))}
+@keyframes dgZoom{from{transform:scale(.3);opacity:0}}
+.dg-reward{display:flex;flex-direction:column;align-items:center;gap:6px}.dg-reward p{margin:0}.dg-reward .btn{margin-top:10px;min-width:160px}
+.dg-big{font-size:64px;animation:dgZoom .4s}.dg-fire{animation:dgZoom .4s,dgFlick 1s infinite alternate}
+@keyframes dgFlick{to{transform:scale(1.08) rotate(3deg)}}
+.dungeon-card .dg-ico{background:linear-gradient(160deg,#4a3326,#1e1520);display:flex;align-items:center;justify-content:center}
+.dg-res{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:left}
+.dg-res-head{display:flex;align-items:center;gap:10px}.dg-res-head b{display:block;font-size:18px}.dg-res-head span{font-size:14px}
+.dg-res-stats{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;font-size:14px}
+.dg-res.won{background:linear-gradient(160deg,#fff3d6,#ffe1c7)}
+@media (prefers-reduced-motion:reduce){.dg-mon,.dg-fire,#game.dg-ouch{animation:none}}
+@media (min-width:1000px){#game .dg-hud{grid-column:1/-1;grid-row:2;min-height:96px;padding:8px 22px}#game .dg-mon svg{width:84px;height:84px}#game .dg-hearts{font-size:24px}#game .dg-foeinfo{max-width:240px}#game .dg-foeinfo b{font-size:17px}}
