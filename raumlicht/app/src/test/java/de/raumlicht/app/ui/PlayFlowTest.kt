@@ -409,10 +409,6 @@ class PlayFlowTest {
         assertEquals(listOf("de-lokal-b", "de-lokal-gut", "de-lokal-einfach"), ok.map { it.name })               // ohne Netz, installiert, beste zuerst
         assertEquals("de-lokal-b", de.raumlicht.app.ui.fx.choose(ok, null)); assertEquals("de-lokal-einfach", de.raumlicht.app.ui.fx.choose(ok, "de-lokal-einfach"))
         assertEquals("de-lokal-b", de.raumlicht.app.ui.fx.choose(ok, "gibt-es-nicht-mehr")); assertNull(de.raumlicht.app.ui.fx.choose(emptyList(), "x"))
-        var next = 0; var bright: Boolean? = null
-        show { de.raumlicht.app.ui.settings.VoiceControls(2 to 3, false, { next++ }, { bright = it }) }
-        rule.onNodeWithText("Andere Stimme (2 von 3)").performClick(); assertEquals(1, next)
-        rule.onNodeWithText("Lage: natürlich").performClick(); assertEquals(true, bright); rule.onNodeWithText("Lage: hell").assertExists()
     }
 
     @Test fun rideStaysCalmWhenSpecialPointsComeFast() {

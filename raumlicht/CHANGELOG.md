@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.17.0 – Lux spricht mit Nova (17.11.2026)
+- **Neue Stimme:** Lux liest jetzt mit „Nova“ vor – einer KI-generierten Stimme, die viel natürlicher klingt. In den Einstellungen steht deutlich „Nova – KI-generierte Stimme“. Vorlesen bleibt aus, bis du es einschaltest.
+- **Kein großer Download mehr:** Die Stimme „Thorsten“ (63 MB) und alles, was dazugehörte, ist entfernt; schon geladene Dateien räumt die App von selbst weg. Die App wird dadurch deutlich kleiner.
+- **Für Eltern – wichtig:** Zum Vorlesen braucht die App jetzt Internet. Feste Texte haben wir vorab vertont; die App lädt nur die Audiodatei von unserem Server. Texte, die erst in der Aufgabe entstehen (zum Beispiel eine Rückmeldung mit den eingegebenen Zahlen), schickt die App ohne Angaben zur Person an unseren Server; der lässt sie einmalig von OpenAI vertonen. Namen, Konten oder Geräte-Kennungen werden nicht übertragen. Wer das nicht möchte, lässt „Lux spricht“ ausgeschaltet.
+- Ohne Internet liest still die Stimme des Geräts. Das Sprechtempo ist jetzt fest; der Regler dafür ist entfallen.
+
 ## 2.16.4 – Vorbereitung für die neue Vorlese-Stimme (17.11.2026)
 - **Hinter den Kulissen:** Die WebApp liefert jetzt eine Liste aller festen Vorlese-Texte aus (`vorlesen/texte.json`). Damit kann unser Server sie für die kommende Stimme „Nova“ vorab vertonen.
 - In der App ändert sich noch nichts: Vorgelesen wird weiter wie bisher, und es werden keine Daten gesendet.

@@ -118,7 +118,7 @@ Raumlicht entsteht für Android und Web aus einer Codebasis (Compose Multiplatfo
 - 3D-Bühne im Browser: Das iframe liegt **unter** der Oberfläche; `Stage.wasmJs.kt` lässt dort ein durchsichtiges Fenster und reicht Zeiger und Mausrad
   an die Bühne weiter. So liegen Einblendungen und Konfetti wie unter Android über der Bühne.
 - Hinweis Schriften: siehe unten „WebApp: Start, Schriften, Messen“.
-- Stand: Web = Android bis auf natürliche Stimme, Widgets, Erfolgskarte als Bild und den In-App-Updater (im Web unnötig).
+- Stand: Web = Android bis auf Widgets, Erfolgskarte als Bild und den In-App-Updater (im Web unnötig).
 
 **Bedien-Test der echten Bühne** (seit 2.3.1): `cd scene && node test/interact.mjs ../core/model/build/scenes.json` spielt Antippen, Ziehen und Wischen mit echten
 Zeiger-Ereignissen im Browser durch und prüft, was die Bühne meldet. Vor jeder Auslieferung laufen lassen, wenn sich an der Bedienung der Bühne etwas ändert –
@@ -154,10 +154,11 @@ Ausliefern: `versionCode`/`versionName` und `VERSION_DATE` in `app/build.gradle.
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `raumlicht-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).
 
-## Natürliche Stimme und Lautschrift (seit 2.6.0 ohne espeak-ng in der App)
+## Vorlesen mit „Nova“ (seit 2.17.0)
 
-Die Stimme „Thorsten“ braucht Lautschrift. Die erzeugt `tools/stimme/lautschrift.py` vorab (Anleitung im Kopf der Datei) und legt sie nach
-`app/src/main/assets/stimme/`. **Nach jeder Änderung an Aufgaben- oder Sprechtexten neu laufen lassen** – `LautschriftTest` schlägt sonst fehl und nennt die fehlenden Wörter.
+Lux liest mit der KI-generierten Stimme „Nova“ vor. Die App rechnet nichts: Zu jedem vorlesefertigen Text liegt auf unserem Server eine MP3-Datei.
+`./gradlew :web:webapp` erzeugt dafür `webapp/vorlesen/texte.json` (alle festen Texte, Quelle `core/model/…/Vorlesen.kt`); der Server holt die Liste und vertont Neues vorab.
+Texte, die erst in der Aufgabe entstehen, lässt die App über den Server erzeugen. Einzelheiten: `VORLESEN_FUER_ANDERE_APPS.md`.
 
 ## Zwei Fassungen: GitHub und Play Store
 

@@ -125,7 +125,6 @@ fun AppRoot(
     val strictVectors by prefs.strictVectors.collectAsState()
     CompositionLocalProvider(LocalLuxSkin provides skin, LocalLuxLook provides look,
         de.raumlicht.app.ui.settings.LocalMix provides de.raumlicht.app.ui.settings.MixChoice(prefs.musicLevel.collectAsState().value, prefs::setMusicLevel, prefs.soundLevel.collectAsState().value, prefs::setSoundLevel),
-        de.raumlicht.app.ui.settings.LocalSpeech provides de.raumlicht.app.ui.settings.SpeechChoice(prefs.speechRate.collectAsState().value, prefs::setSpeechRate),
         de.raumlicht.app.ui.level.LocalOpenSheet provides { nav.go(Routes.SHEET) },
         de.raumlicht.app.ui.settings.LocalNotation provides de.raumlicht.app.ui.settings.NotationChoice(strictVectors, prefs::setStrictVectors),
         de.raumlicht.app.ui.settings.LocalProEntry provides (if (proEnabled || proActive) ({ nav.go(Routes.PRO) }) else null), de.raumlicht.app.ui.settings.LocalProActive provides proActive,

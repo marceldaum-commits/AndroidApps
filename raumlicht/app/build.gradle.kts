@@ -22,8 +22,8 @@ android {
         applicationId = "de.raumlicht.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 55
-        versionName = "2.16.4"
+        versionCode = 56
+        versionName = "2.17.0"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
         buildConfigField("String", "VERSION_DATE", "\"17.11.2026\"")
     }
@@ -81,12 +81,7 @@ kotlin {
     }
 }
 
-android.packaging.jniLibs.excludes += listOf("**/libsherpa-onnx-c-api.so", "**/libsherpa-onnx-cxx-api.so")   // andere Sprach-Anbindungen, hier ungenutzt
-android.packaging.jniLibs.useLegacyPackaging = true   // Maschinencode komprimiert einpacken: der Download wird damit weniger als halb so groß
-
 dependencies {
-    // Natürliche Stimme für Lux: Sprachsynthese auf dem Gerät (Apache 2.0; ab 2.0 ohne espeak-ng – die Lautschrift liefert die App als Daten mit, siehe LIZENZEN.md)
-    implementation("com.github.k2-fsa.sherpa-onnx:sherpa-onnx:v2.0.1@aar")
     // Nur Play-Fassung: Updates über den Store anbieten (Play In-App Updates)
     "playImplementation"("com.google.android.play:app-update:2.1.0")
     val composeBom = platform("androidx.compose:compose-bom:2025.10.01")

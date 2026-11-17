@@ -47,10 +47,6 @@ val LocalNotation = staticCompositionLocalOf { NotationChoice(false) {} }
 class MixChoice(val music: Int, val setMusic: (Int) -> Unit, val sound: Int, val setSound: (Int) -> Unit)
 val LocalMix = staticCompositionLocalOf { MixChoice(100, {}, 100, {}) }
 
-/** Sprechtempo beim Vorlesen (70 … 130 %) und wie man es umstellt */
-class SpeechChoice(val rate: Int, val setRate: (Int) -> Unit)
-val LocalSpeech = staticCompositionLocalOf { SpeechChoice(100) {} }
-
 /** Abi-Pass in den Einstellungen: Ziel des Eintrags (null = kein Eintrag, solange der Abi-Pass nicht erhältlich ist) und ob er freigeschaltet ist */
 val LocalProEntry = staticCompositionLocalOf<(() -> Unit)?> { null }
 val LocalProActive = staticCompositionLocalOf { false }

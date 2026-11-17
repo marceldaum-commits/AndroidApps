@@ -32,7 +32,7 @@ FÜR ELTERN
 • Keine Werbung, keine Käufe in der App, keine Anmeldung
 • Der Spielstand bleibt auf dem Gerät. Die App sammelt keine Daten.
 • Musik, Töne, Vibration und das Vorlesen sind abschaltbar. Das Vorlesen ist aus, bis man es einschaltet.
-• Ins Internet geht die App nur für Updates über den Play Store – und wenn man sich die natürliche Stimme für Lux lädt (freiwillig, einmalig, rund 63 MB).
+• Ins Internet geht die App nur für Updates über den Play Store – und zum Vorlesen, wenn man es einschaltet: Lux spricht mit „Nova“, einer KI-generierten Stimme; die Audiodateien kommen von unserem Server.
 
 Raumlicht ersetzt keinen Unterricht, aber es zeigt, was hinter den Formeln steckt.
 

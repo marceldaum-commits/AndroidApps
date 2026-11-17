@@ -23,6 +23,7 @@ import de.raumlicht.core.model.Ton
 import de.raumlicht.core.model.MusicSynth
 import de.raumlicht.core.model.SpaceMusic
 import de.raumlicht.core.model.Speech
+import de.raumlicht.core.model.Vorlesen
 import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -71,11 +72,10 @@ private fun WebApp() {
     var mood by remember { mutableStateOf(MusicMood.MENU) }
     val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()
     LaunchedEffect(Unit) { if (!without("ton")) musicSetup { name -> val pcm = MusicSynth.render(SpaceMusic.compose(MusicMood.valueOf(name))); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i] / 32768f); musicStore(name, b) } }
-    val thorsten = remember { WebThorsten(prefs) { clean -> speak(clean, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0, prefs.voiceName) } }
     val musicLevel by prefs.musicLevel.collectAsState(); val voiceOn by prefs.voice.collectAsState()
     var exam by remember { mutableStateOf(false) }; var talking by remember { mutableStateOf(false) }
     // unter der Stimme wird die Musik leiser
-    LaunchedEffect(voiceOn) { while (voiceOn) { talking = speaking() || thorsten.speaking; kotlinx.coroutines.delay(250) }; talking = false }
+    LaunchedEffect(voiceOn) { while (voiceOn) { talking = speaking() || novaSpeaking(); kotlinx.coroutines.delay(250) }; talking = false }
     // Musik: aus im Prüfungsmodus, eigene Lautstärke, leiser unter der Stimme
     LaunchedEffect(musicOn, loud, mood, musicLevel, exam, talking) { musicWant(if (musicOn && !exam) mood.name else null, 0.75 * loud / 100.0 * musicLevel / 100.0 * (if (talking) 0.35 else 1.0)) }
     // Zurück-Taste des Browsers schließt eine Ebene
@@ -83,11 +83,12 @@ private fun WebApp() {
 
     val sfx = remember { WebSfx(prefs) }
     val speaker = remember { object : Speaker {
-        // erst Thorsten (wenn geladen und eingeschaltet), sonst – oder bei einem unbekannten Wort – die Stimme des Geräts
-        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Speech.clean(text).takeIf { it.isNotEmpty() }?.let { clean ->
-            if (thorsten.say(clean, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0)) stopSpeaking()
-            else { thorsten.stop(); speak(clean, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0, prefs.voiceName) } } }
-        override fun sayIfQuiet(text: String) { if (!speaking() && !thorsten.speaking) say(text) }
+        // „Nova“ (KI-generierte Stimme): fertige Datei von unserem Server; kommt sie nicht (offline), liest diesen Satz still die Stimme des Geräts
+        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Vorlesen.spoken(text).takeIf { it.isNotEmpty() }?.let { spoken ->
+            stopSpeaking(); val volume = prefs.volume.value / 100.0
+            novaSay(Vorlesen.SERVER, Vorlesen.url(spoken), if (spoken.length <= Vorlesen.LIVE_MAX_CHARS) Vorlesen.LIVE else "", Vorlesen.liveBody(spoken), volume)
+                .then { r -> if (r.toString() == "fehlt" && prefs.voice.value) speak(spoken, volume); null } } }
+        override fun sayIfQuiet(text: String) { if (!speaking() && !novaSpeaking()) say(text) }
     } }
     CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker,
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.CRASH -> 40 }) },
@@ -105,26 +106,11 @@ private fun WebApp() {
                             } }
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
-                        voice = voice, onVoice = { prefs.setVoice(it); if (!it) { stopSpeaking(); thorsten.stop() } }, voiceAvailable = canSpeak() || thorsten.state == "ready",
-                        voiceControls = {
-                            // natürliche Stimme „Thorsten“ – wie in der Android-App: auf Wunsch laden, ein- und ausschalten
-                            ThorstenCard(thorsten) { speaker.say("Hallo, ich bin Lux. So klinge ich jetzt.") }
-                            // Stimme des Geräts wählen: durch die deutschen Stimmen schalten – jede stellt sich gleich vor
-                            if (!thorsten.active) {
-                            val names = remember { localVoices().split('\n').filter { it.isNotBlank() } }
-                            var current by remember { mutableStateOf(prefs.voiceName.takeIf { it in names } ?: names.firstOrNull().orEmpty()) }
-                            Column(Modifier.padding(bottom = 6.dp)) {
-                                OutlinedButton({ if (names.size > 1) { current = names[(names.indexOf(current) + 1) % names.size]; prefs.voiceName = current; speaker.say("Hallo, ich bin Lux. So klinge ich jetzt.") } }, enabled = names.size > 1) {
-                                    Text(if (names.size > 1) "Andere Stimme (${names.indexOf(current) + 1} von ${names.size})" else "Nur eine Stimme vorhanden") }
-                                if (current.isNotBlank()) Text("Stimme des Geräts: $current", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
-                            }
-                            }
-                        },
+                        voice = voice, onVoice = { prefs.setVoice(it); if (!it) { stopSpeaking(); novaStop() } },
                         onLicenses = { openLink("lizenzen.txt") },
                         soundNote = if (appleTouch()) "Kein Ton? Auf iPhone und iPad bleibt Raumlicht still, solange das Gerät stumm geschaltet ist (Schalter an der Seite oder Glocke im Kontrollzentrum)." else null,
-                        privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe, keine Daten an einen Server. " +
-                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest eine Stimme vor, die auf deinem Gerät eingebaut ist – " +
-                            "oder die natürliche Stimme „Thorsten“: Die lädst du einmalig von unserem Server (63 MB), danach rechnet sie in deinem Browser. Vorgelesene Texte verlassen dein Gerät nie.")
+                        privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe. " +
+                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Ins Internet geht sie sonst nur zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + Vorlesen.PRIVACY)
                 })
         } }
     }
@@ -132,3 +118,9 @@ private fun WebApp() {
 
 /** iPhone oder iPad (auch iPadOS, das sich als Mac ausgibt)? Dort schaltet der Stumm-Schalter auch den Ton von Webseiten ab. */
 private fun appleTouch(): Boolean = js("/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)")
+
+// ---- Stimme „Nova“ (siehe resources/rl-nova.js)
+private fun novaSay(server: String, url: String, live: String, body: String, volume: Double): kotlin.js.Promise<JsString> =
+    js("(window.__rlNova ? window.__rlNova.say(server, url, live, body, volume) : Promise.resolve('fehlt'))")
+private fun novaStop(): Unit = js("{ if (window.__rlNova) window.__rlNova.stop(); }")
+private fun novaSpeaking(): Boolean = js("!!(window.__rlNova && window.__rlNova.speaking)")

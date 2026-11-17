@@ -10,15 +10,13 @@ import de.raumlicht.core.model.Speech
 import java.util.Locale
 
 /**
- * Lux spricht: die Sprachausgabe des Geräts liest die Sprechblasen vor – höher und etwas flotter gestellt, damit es nach kleiner Drohne klingt.
+ * Die Stimme des Geräts – stille Notlösung, wenn „Nova“ einen Satz nicht liefern kann (offline): Die Sprachausgabe liest die Sprechblasen vor – höher und etwas flotter gestellt, damit es nach kleiner Drohne klingt.
  * Bevorzugt wird eine deutsche Stimme, die ohne Internet auskommt. Gibt es auf dem Gerät keine deutsche Stimme, bleibt Lux stumm ([available] = false).
  * [onSpeaking] meldet Anfang und Ende, damit die Musik so lange leiser wird.
  */
 class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {}) : Speaker {
     @Volatile var enabled = true
     @Volatile var volume = 1f
-    /** Sprechtempo: 1 = normal (Einstellungen: 70 … 130 %) */
-    var rate = 1f; set(v) { field = v; if (ready) apply() }
     /** Gibt es eine deutsche Stimme? Steht erst kurz nach dem Start fest – deshalb beobachtbar. */
     var available by androidx.compose.runtime.mutableStateOf(false)
         private set
@@ -61,17 +59,9 @@ class LuxVoice(context: Context, private val onSpeaking: (Boolean) -> Unit = {})
         current = name
         runCatching { tts.voices?.firstOrNull { it.name == name }?.let { tts.voice = it } }
         // natürlich: fast unverändert und etwas ruhiger – stark verstellte Tonhöhe klingt blechern
-        tts.setPitch(if (bright) 1.3f else 1.04f); tts.setSpeechRate((if (bright) 1.0f else 0.94f) * rate)
+        tts.setPitch(if (bright) 1.3f else 1.04f); tts.setSpeechRate(if (bright) 1.0f else 0.94f)
     }
-    /** Nächste deutsche Stimme des Geräts wählen und gleich vorstellen. @return ihr Name */
-    fun nextVoice(): String? {
-        if (voices.size < 2) return current
-        wanted = voices[(voices.indexOfFirst { it.name == current } + 1) % voices.size].name; apply(); say("Hallo, ich bin Lux. So klinge ich jetzt."); return current
-    }
-    fun setBright(on: Boolean) { bright = on; if (ready) { apply(); say("So klinge ich jetzt.") } }
     fun use(name: String, brightVoice: Boolean) { wanted = name.ifBlank { null }; bright = brightVoice; if (ready) apply() }
-    /** Wievielte von wie vielen Stimmen gerade spricht, z. B. 2 to 5 */
-    val position: Pair<Int, Int> get() = (voices.indexOfFirst { it.name == current } + 1) to voices.size
 
     /** Liest den Text vor; ein neuer Satz unterbricht den alten (Lux redet nie durcheinander). */
     override fun say(text: String) {

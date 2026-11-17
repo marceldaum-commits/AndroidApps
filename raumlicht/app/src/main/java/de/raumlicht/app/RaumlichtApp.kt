@@ -9,10 +9,9 @@ class RaumlichtApp : Application() {
         private set
     val music: de.raumlicht.app.ui.fx.BackgroundMusic by lazy { de.raumlicht.app.ui.fx.BackgroundMusic(this) }
     val voice: de.raumlicht.app.ui.fx.LuxVoice by lazy { de.raumlicht.app.ui.fx.LuxVoice(this) { speaking -> music.duck(speaking) }.also { it.enabled = container.settings.voice.value; it.use(container.settings.voiceName, container.settings.voiceBright) } }
-    /** Natürliche Stimme (Paket „Thorsten“, freiwilliger Download) – spricht statt der Handy-Stimme, sobald sie geladen und eingeschaltet ist */
-    val natural: de.raumlicht.app.ui.fx.NaturalVoice by lazy { de.raumlicht.app.ui.fx.NaturalVoice(this, voice) { speaking -> music.duck(speaking) }.also { it.enabled = container.settings.voice.value; if (container.settings.voiceNatural) it.load() } }
-    val voicePack: de.raumlicht.app.ui.fx.VoicePackLoader by lazy { de.raumlicht.app.ui.fx.VoicePackLoader(this, onReady = { container.settings.voiceNatural = true; natural.load() }) }
-    val speaker: de.raumlicht.app.ui.fx.Speaker by lazy { de.raumlicht.app.ui.fx.VoiceRouter(voice, natural) { container.settings.voiceNatural && natural.ready } }
+    /** Lux spricht mit „Nova“ (KI-generierte Stimme, fertige Dateien von unserem Server); kommt ein Satz nicht an, liest ihn still die Stimme des Geräts */
+    val nova: de.raumlicht.app.ui.fx.NovaVoice by lazy { de.raumlicht.app.ui.fx.NovaVoice(this, voice, onSpeaking = { speaking -> music.duck(speaking) }).also { it.enabled = container.settings.voice.value } }
+    val speaker: de.raumlicht.app.ui.fx.Speaker get() = nova
     val sfx: Sfx by lazy { Sfx(this).also { it.enabled = container.settings.sound.value } }
 
     override fun onCreate() {
@@ -20,5 +19,7 @@ class RaumlichtApp : Application() {
         Diagnose.install(this)
         de.raumlicht.app.ui.stage.stageNote = { Diagnose.note(this, it) }
         container = AppContainer(this)
+        // Aufräumen im Hintergrund: die frühere Stimme „Thorsten“ (63 MB) löschen, gespeicherte Nova-Sätze begrenzen
+        kotlin.concurrent.thread(name = "aufraeumen", isDaemon = true) { runCatching { java.io.File(filesDir, "stimme").deleteRecursively(); de.raumlicht.app.ui.fx.NovaVoice.trim(this) } }
     }
 }

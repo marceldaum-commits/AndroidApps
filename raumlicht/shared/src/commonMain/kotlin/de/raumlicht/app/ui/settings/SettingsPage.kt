@@ -26,9 +26,7 @@ fun SettingsPage(
     top: @Composable () -> Unit = {},
     onReset: () -> Unit = {},
     volume: Int = 100, onVolume: (Int) -> Unit = {},
-    voice: Boolean = true, onVoice: (Boolean) -> Unit = {}, voiceAvailable: Boolean = true,
-    /** Knöpfe zum Aussuchen der Stimme (nur wenn Lux spricht) */
-    voiceControls: @Composable () -> Unit = {},
+    voice: Boolean = true, onVoice: (Boolean) -> Unit = {},
     /** Warum gerade nichts zu hören ist oder sein könnte (z. B. Handy stumm geschaltet) – steht gut sichtbar über den Ton-Schaltern; null = kein Hinweis */
     soundNote: String? = null,
     /** Bericht über den letzten unerwarteten Abbruch (null = keiner) */
@@ -39,7 +37,7 @@ fun SettingsPage(
     licenses: String? = null, onLicenses: (() -> Unit)? = null,
     /** Was die App speichert und wann sie ins Internet geht – je Plattform verschieden */
     privacy: String = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
-        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und einmalig, wenn du die natürliche Stimme lädst (von unserem eigenen Server). Gesprochen wird immer auf dem Gerät.",
+        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + de.raumlicht.core.model.Vorlesen.PRIVACY,
 ) {
     val speaker = de.raumlicht.app.ui.fx.LocalSpeaker.current
     val sfx = de.raumlicht.app.ui.fx.LocalSfx.current
@@ -65,14 +63,13 @@ fun SettingsPage(
                     Toggle("🔊 Geräusche", "Laser, Treffer, Glasklänge der Lichtshow", sound, onSound)
                     if (sound) { Text("Geräusche: ${mix.sound} %", Modifier.testTag("ton-laut-text"), style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                         Slider(mix.sound / 100f, { mix.setSound((it * 20).toInt() * 5) }, Modifier.testTag("ton-laut"), onValueChangeFinished = { sfx?.play(de.raumlicht.app.ui.fx.Sound.HIT) }) }
-                    Toggle("🗣️ Lux spricht", if (voiceAvailable) "Aus, bis du es einschaltest: Lux liest ihre Sprechblasen laut vor (Sprachausgabe des Geräts)" else "Auf diesem Gerät ist keine deutsche Stimme eingerichtet – Lux bleibt stumm.", voice) {
+                    Toggle("🗣️ Lux spricht", "Aus, bis du es einschaltest: Lux liest ihre Sprechblasen laut vor.", voice) {
                         onVoice(it); if (it) speaker?.say("Hallo, ich bin Lux!") }
-                    if (voice && voiceAvailable) {
-                        voiceControls()
-                        // Sprechtempo und Hörprobe – gleich in Android und WebApp
-                        val speech = LocalSpeech.current
-                        Text("🐢🐇 Sprechtempo: ${speech.rate} %", Modifier.padding(top = 4.dp).testTag("sprechtempo-text"), style = MaterialTheme.typography.bodyLarge)
-                        Slider((speech.rate - 70) / 60f, { speech.setRate(70 + (it * 6).toInt().coerceIn(0, 6) * 10) }, Modifier.testTag("sprechtempo"), steps = 5)
+                    if (voice) {
+                        // Stimmenwahl: Nova oder Vorlesen aus. Die Kennzeichnung als KI-Stimme ist Pflicht.
+                        Text("Stimme: ${de.raumlicht.core.model.Vorlesen.VOICE_LABEL}", Modifier.padding(top = 2.dp).testTag("stimme-name"), style = MaterialTheme.typography.bodyLarge)
+                        Text("Nova braucht Internet. Schon gehörte Sätze bleiben auf dem Gerät gespeichert. Ohne Netz springt still die Stimme des Geräts ein.",
+                            style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                         OutlinedButton({ speaker?.say("Hallo, ich bin Lux. So klinge ich jetzt.") }, Modifier.testTag("hoerprobe")) { Text("▶ So klingt es") }
                     }
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)

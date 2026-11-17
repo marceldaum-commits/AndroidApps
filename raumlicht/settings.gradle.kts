@@ -13,8 +13,6 @@ dependencyResolutionManagement {
         google()
         maven("https://maven-central.storage-download.googleapis.com/maven2/")
         mavenCentral()
-        // nur für die Sprach-Bibliothek sherpa-onnx (natürliche Stimme für Lux)
-        maven("https://jitpack.io") { content { includeGroup("com.github.k2-fsa.sherpa-onnx") } }
         // Werkzeuge für die WebApp (Kotlin/Wasm): Node.js, Yarn und Binaryen – jeweils nur genau dieses eine Paket von dieser Adresse
         exclusiveContent {
             forRepository { ivy("https://nodejs.org/dist/") { name = "Node.js"; patternLayout { artifact("v[revision]/[artifact](-v[revision]-[classifier]).[ext]") }; metadataSources { artifact() } } }

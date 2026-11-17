@@ -60,13 +60,11 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(sound) { app.sfx.enabled = sound }
             LaunchedEffect(music) { app.music.setEnabled(music) }
             val volume by vm.settings.volume.collectAsStateWithLifecycle()
-            LaunchedEffect(volume) { app.sfx.master = volume / 100f; app.music.setVolume(volume / 100f); app.voice.volume = volume / 100f; app.natural.volume = volume / 100f }
+            LaunchedEffect(volume) { app.sfx.master = volume / 100f; app.music.setVolume(volume / 100f); app.voice.volume = volume / 100f; app.nova.volume = volume / 100f }
             val voice by vm.settings.voice.collectAsStateWithLifecycle()
             val musicLevel by vm.settings.musicLevel.collectAsStateWithLifecycle(); val soundLevel by vm.settings.soundLevel.collectAsStateWithLifecycle()
             LaunchedEffect(musicLevel, soundLevel) { app.music.setOwnVolume(musicLevel / 100f); app.sfx.level = soundLevel / 100f }
-            val speechRate by vm.settings.speechRate.collectAsStateWithLifecycle()
-            LaunchedEffect(speechRate) { app.voice.rate = speechRate / 100f; app.natural.rate = speechRate / 100f }
-            LaunchedEffect(voice) { app.voice.enabled = voice; app.natural.enabled = voice; if (!voice) { app.voice.stop(); app.natural.stop() } }
+            LaunchedEffect(voice) { app.voice.enabled = voice; app.nova.enabled = voice; if (!voice) app.nova.stop() }
             RaumlichtTheme {
                 val view = androidx.compose.ui.platform.LocalView.current
                 CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration, de.raumlicht.app.ui.fx.LocalSpeaker provides app.speaker,
@@ -88,7 +86,7 @@ class MainActivity : ComponentActivity() {
         de.raumlicht.app.widget.DailyWidget.refresh(this)   // z. B. nach Mitternacht: neuer Tagesaufgabe
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
     }
-    override fun onStop() { (application as RaumlichtApp).music.onForeground(false); (application as RaumlichtApp).voice.stop(); (application as RaumlichtApp).natural.stop(); super.onStop() }
+    override fun onStop() { (application as RaumlichtApp).music.onForeground(false); (application as RaumlichtApp).nova.stop(); super.onStop() }
 
     @Composable
     private fun Nav() {
@@ -114,16 +112,7 @@ class MainActivity : ComponentActivity() {
                 val auto by vm.settings.autoUpdate.collectAsStateWithLifecycle()
                 SettingsScreen(music, vm.settings::setMusic, sound, vm.settings::setSound, vibration, vm.settings::setVibration, auto, vm.settings::setAutoUpdate,
                     BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, onBack, onReset = vm::resetAll, voice = vm.settings.voice.collectAsStateWithLifecycle().value, onVoice = vm.settings::setVoice,
-                    lastProblem = problem, onProblemSeen = { Diagnose.clear(this@MainActivity); problem = null },
-                    voiceControls = { val app = application as RaumlichtApp; val v = app.voice
-                        var natural by remember { mutableStateOf(vm.settings.voiceNatural) }
-                        LaunchedEffect(app.voicePack.state) { natural = vm.settings.voiceNatural }
-                        de.raumlicht.app.ui.settings.NaturalVoiceCard(app.voicePack.state, natural && app.natural.ready, app.natural.problem,
-                            onLoad = { app.voicePack.start() }, onCancel = { app.voicePack.cancel() },
-                            onRemove = { app.natural.unload(); app.voicePack.remove(); vm.settings.voiceNatural = false; natural = false },
-                            onUse = { on -> vm.settings.voiceNatural = on; natural = on; if (on) { app.natural.load(); app.speaker.say("Hallo, ich bin Lux. So klinge ich jetzt.") } else app.natural.stop() })
-                        if (!(natural && app.natural.ready)) de.raumlicht.app.ui.settings.VoiceControls(v.position, vm.settings.voiceBright,
-                        onNext = { v.nextVoice()?.let { vm.settings.voiceName = it } }, onBright = { vm.settings.voiceBright = it; v.setBright(it) }) }, voiceAvailable = (application as RaumlichtApp).voice.let { !it.checked || it.available }, volume = vm.settings.volume.collectAsStateWithLifecycle().value, onVolume = vm.settings::setVolume)
+                    lastProblem = problem, onProblemSeen = { Diagnose.clear(this@MainActivity); problem = null })
             })
     }
 }
