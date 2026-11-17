@@ -95,7 +95,7 @@ const Thorsten = {
         const [js, mjs, wasm, dict, cfgBuf, model] = await Promise.all([
           blobUrl('ort.wasm.min.js', 'text/javascript'), blobUrl('ort-wasm-simd-threaded.mjs', 'text/javascript'),
           blobUrl('ort-wasm-simd-threaded.wasm', 'application/wasm', p => { pw = p; prog(); }),
-          this.fetchCached(B + 'stimme-de.json'), this.fetchCached(C.model + '.json'),
+          this.fetchCached(B + 'stimme-de.json'), this.fetchCached(C.model + '.json', null, C.sha256json),
           this.fetchCached(C.model, p => { pm = p; prog(); }, C.sha256)]);
         const dec = b => JSON.parse(new TextDecoder().decode(b)), mc = dec(cfgBuf);
         this.dict = dec(dict).w;

@@ -2,7 +2,25 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (62) – Thorsten mit dem echten Stimmen-Server geprüft (3.24.2)
+
+- **Server von hier geprüft:**
+  - Beide Dateien sind abrufbar.
+  - Prüfsummen ✓: `.onnx` `7e64762d…7819`, 63 201 294 Bytes; `.onnx.json` `974adee7…4e85`.
+  - CORS antwortet für `Origin: https://localhost` mit `access-control-allow-origin: https://localhost` und `Vary: Origin` ✓.
+- **In der App eingetragen** (3.24.2): beide Prüfsummen. Neu wird auch die `.onnx.json` geprüft. Nur wenn beide stimmen, wird gespeichert.
+- **Test mit genau diesen Dateien** (Chromium):
+  - **PC:** Laden 2,7 s im lokalen Netz. Rechnen 0,7 s für 2,6 s Sprache.
+  - **Handy-Nachbildung** (Pixel 5, CPU 4× gedrosselt): Laden 11,5 s, **ein Satz braucht ca. 3 s Rechenzeit für 2,3 s Sprache**. Vor dem ersten Satz gibt es also eine kurze Pause; die weiteren Sätze werden gerechnet, während der vorige läuft.
+  - Aufgaben, Lösungswege und Theorie werden mit Thorsten gelesen ✓.
+- **Am echten Handy nicht geprüft** – das kann ich von hier nicht (kein Gerät, keine APK-Installation).
+  - Bitte auf einem Android-Handy die APK 3.24.2 (GitHub-Release `rechenblitz-3.24.2`) installieren.
+  - Dann Einstellungen → Vorlesen an → Stimme „Thorsten – natürliche Stimme“ → „⬇ Stimme laden“ → „▶ Probe hören“.
+  - Danach eine Aufgabe falsch beantworten: Der Lösungsweg wird vorgelesen.
+  - Zum Vergleich auch eine Handy-Stimme probieren.
+- **Web = Android:** 3.24.2 in beiden. Bitte 3.24.2 statt 3.24.1 live nehmen (gleicher Inhalt plus zweite Prüfsumme).
 
 ## 17.11.2026 (61) – Antwort auf die Entscheidungen des Leitstands: Thorsten vom Stimmen-Server, Lizenzen, Live-Freigabe
 

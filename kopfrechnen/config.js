@@ -22,7 +22,7 @@ window.RECHENBLITZ_CONFIG = {
   apkUpdates: { repo: 'marceldaum-commits/School' },
   // natürliche Stimme „Thorsten“ (nur Deutsch, auf Wunsch): Rechenwerk + Wörterbuch aus /stimme/ dieser Seite, Modell vom gemeinsamen Stimmen-Server.
   // Ist das Modell nicht erreichbar, bietet die App Thorsten nicht an. sha256 = Prüfsumme der Modell-Datei auf dem Server.
-  voice: { runtime: '/stimme/', model: 'https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx', sha256: '7e64762d8e5118bb578f2eea6207e1a35a8e0c30595010b666f983fc87bb7819', mb: 75 },
+  voice: { runtime: '/stimme/', model: 'https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx', sha256: '7e64762d8e5118bb578f2eea6207e1a35a8e0c30595010b666f983fc87bb7819', sha256json: '974adee790533adb273a1ac88f49027d2a1b8f0f2cf4905954a4791e79264e85', mb: 75 },   // Prüfsummen: rhasspy/piper-voices v1.0.0
   // Adventskalender: Karte ab 15.11., Türchen 1.–24.12., nachholbar bis 6.1.
   // adventPreview: 'auto' = auf Testseiten alle Türchen offen; adventRaffleUrl = Seite zur Verlosung (leer = keine)
   advent: true,

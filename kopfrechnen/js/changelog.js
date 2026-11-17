@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.24.1';
+const APP_VERSION = '3.24.2';
 const APP_DATE = '2026-11-17';
 const CHANGELOG = [
+  ['3.24.2', '2026-11-17', ['Stimme „Thorsten“: beide Dateien vom Stimmen-Server werden geprüft']],
   ['3.24.1', '2026-11-17', ['Stimme „Thorsten“: kommt jetzt von unserem eigenen Stimmen-Server, wird vor dem Speichern geprüft, Laden lässt sich abbrechen']],
   ['3.24.0', '2026-11-17', ['Neu: die natürliche Stimme „Thorsten“ zum Vorlesen – einmal laden, dann auch offline']],
   ['3.23.1', '2026-11-17', ['Android-App: Vorlesen jetzt auch hier – mit den Stimmen des Handys, Tempo und Probe (neue App-Version nötig)']],
