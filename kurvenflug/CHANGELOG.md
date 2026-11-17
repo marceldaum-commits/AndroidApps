@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.0.0 – 🚀 Kurvenflug 2
+- **Neue Versionsnummer**: Mit Vorlesen, eigener Musik, Theorie-Knopf und Pro ist Kurvenflug groß geworden – deshalb jetzt
+  Version 2. Kleine Verbesserungen heißen ab jetzt 2.1, 2.2 …, das nächste große Update wird 3.0. Am Spielstand ändert sich
+  nichts. Neu seit 0.26: Volt liest vor (siehe unten).
+
 ## 0.27.0 – 🗣️ Volt liest vor
 - **Vorlesen**: Volt liest seine Sprechblasen, die Aufgaben, die Rechen-Stern-Fragen und alle Erklärungen in der Theorie
   vor. Ein Tipp auf 🔊 (oder auf Volts Sprechblase) wiederholt den Text. Formeln und Einheiten werden richtig gesprochen:

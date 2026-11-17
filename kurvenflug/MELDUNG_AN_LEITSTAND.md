@@ -1,5 +1,10 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.0.0 – neues Versionsschema (Vorgabe Marcel) · Web = Android
+- versionName **2.0.0** (APK, AAB, WebApp, `version.json`, Anzeige in App/WebApp), versionCode läuft weiter: **39**
+  (0.27.0 war 38). Inhalt = 0.27.0 (Vorlesen, siehe unten). Ab jetzt: kleine Updates 2.1.0, 2.1.1 …, großes Update 3.0.0.
+  Release-Tag `kurvenflug-v2.0.0`. Die Update-Prüfung vergleicht Zahlen, 2.0.0 > 0.27.0 – bestehende Installationen bekommen das Update.
+
 ## 0.27.0 – 🗣️ Vorlesen (Auftrag Marcel 17.11.) · Web = Android
 
 - **Was vorgelesen wird:** Volts Sprechblasen (auf allen Seiten, damit auch Aufgaben/Aufträge, Kapitel-Erklärungen,
