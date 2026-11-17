@@ -1,5 +1,8 @@
 import java.util.Properties
 
+// Forscher-Pass: Schlüssel und Kasse aus pro/pro.properties (GitHub-APK; die Play-Fassung bekommt keine Codes)
+val proProps = Properties().apply { val f = rootProject.file("pro/pro.properties"); if (f.exists()) f.inputStream().use { load(it) } }
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -20,8 +23,8 @@ android {
         applicationId = "de.experimentopia.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 8
-        versionName = "0.7.0"
+        versionCode = 9
+        versionName = "2.0.0"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
         // nur echte Handys (Maschinencode der Sprachsynthese) – hält die APK klein
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
@@ -33,8 +36,12 @@ android {
     //   play   – für den Play Store; Updates kommen über den Store, keine Installations-Berechtigung nötig
     flavorDimensions += "vertrieb"
     productFlavors {
-        create("github") { dimension = "vertrieb"; isDefault = true; buildConfigField("boolean", "SELF_UPDATE", "true") }
-        create("play") { dimension = "vertrieb"; buildConfigField("boolean", "SELF_UPDATE", "false") }
+        create("github") { dimension = "vertrieb"; isDefault = true; buildConfigField("boolean", "SELF_UPDATE", "true")
+            buildConfigField("String", "PRO_KEY", "\"${proProps.getProperty("publicKey", "").trim()}\"")
+            buildConfigField("String", "PRO_CHECKOUT", "\"${proProps.getProperty("checkoutUrl", "").trim()}\"") }
+        // Play: Käufe dort nur über Google Play (noch nicht angebunden) – darum ohne Website-Kasse, alles frei
+        create("play") { dimension = "vertrieb"; buildConfigField("boolean", "SELF_UPDATE", "false")
+            buildConfigField("String", "PRO_KEY", "\"\""); buildConfigField("String", "PRO_CHECKOUT", "\"\"") }
     }
 
     signingConfigs {

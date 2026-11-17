@@ -46,6 +46,8 @@ interface Prefs {
     val audio: StateFlow<AudioPrefs>; fun setAudio(a: AudioPrefs)
     /** Forscher-Pass gekauft? Wirkt erst, wenn Pro eingeschaltet ist ([Pro.ENABLED]). */
     val pro: StateFlow<Boolean>; fun setPro(v: Boolean)
+    /** Freischalt-Code des Forscher-Passes (von der Website, per Link oder eingetippt) */
+    val proCode: StateFlow<String?>; fun setProCode(c: String?)
     /** Klassenstufe für den Filter (0 = alle) */
     val grade: StateFlow<Int>; fun setGrade(g: Int)
     var welcomed: Boolean

@@ -82,3 +82,6 @@ val LocalReader = staticCompositionLocalOf<Reader?> { null }
 val LocalAutoRead = staticCompositionLocalOf { false }
 /** Vorlesen eingeschaltet (Einstellung) – dann gibt es überall 🔊-Knöpfe */
 val LocalReadOn = staticCompositionLocalOf { false }
+
+/** Link im Browser öffnen (Kasse, Impressum) */
+val LocalOpenLink = staticCompositionLocalOf<(String) -> Unit> { {} }

@@ -1,5 +1,12 @@
 # Changelog – Experimentopia
 
+## 2.0.0 – Neue Versionsnummer und Forscher-Pass vorbereitet (17.11.2026)
+
+- 🔢 **Neue Zählung**: Experimentopia springt auf Version 2.0.0 (wie alle Apps). Kleine Updates zählen ab jetzt hinten weiter (2.1.0, 2.1.1 …).
+- 💛 **Forscher-Pass vorbereitet** (7,99 € einmalig, kein Abo): Kauf auf der Website nur nach einer Frage für Erwachsene, Freischalten mit dem Link oder Code aus der E-Mail –
+  ohne Konto, ohne Daten über das Kind. Schon gemachte Versuche bleiben immer offen. **Solange die Kasse noch nicht eingerichtet ist, bleibt alles kostenlos.**
+- Alles aus 0.7.0 (eigene Musik, Vorlesen mit Thorsten) ist enthalten.
+
 ## 0.7.0 – Eigene Musik und Vorlesen (17.11.2026)
 
 - 🎻 **Eigene Musik**: Experimentopia klingt jetzt wie ein verspieltes Forscher-Labor – Pizzicato-Streicher, Klarinette, Fagott, Glas und Blubbern.

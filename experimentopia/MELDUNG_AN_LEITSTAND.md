@@ -2,6 +2,17 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.0.0 vom 17.11.2026 (neues Versionsschema, Forscher-Pass vorbereitet)
+
+- **Versionsnummer: 2.0.0** (versionCode 9). Ab jetzt 2.x.y für kleine Updates, 3.0.0 erst beim großen Update. **Web = Android** (gleiche Nummer, gleiche Inhalte).
+  Enthält alles aus 0.7.0 (Musik, Vorlesen mit Thorsten) – liegt auf `experimentopia-test` zum Prüfen.
+- **Preis von Marcel freigegeben:** Forscher-Pass **7,99 € einmalig** (6,71 € netto + 1,28 € USt.), kein Abo.
+- **Pro technisch fertig nach euren Vorgaben** (Vorbild `kurvenflug/pro/`): Code-Version 1, App-Byte 6, Präfix „EX-“, Produkt 1 = Pro (Produkt 2 = Schullizenz wird wie bei Kurvenflug ebenfalls angenommen),
+  Ed25519 mit eurem öffentlichen Schlüssel, Base32-Alphabet wie vorgegeben, Freischalt-Link `https://experimentopia.mathenachhilfe-online.com/?pro=<Code>`,
+  Elternfrage (Geburtsjahr, mindestens 18) vor dem Kauf, Bestandsschutz. Werkzeug: `experimentopia/pro/pro_code.py`.
+- **Bitte eintragen:** die Woo-Kasse für das Produkt „Experimentopia Forscher-Pass“ in `experimentopia/pro/pro.properties` (`checkoutUrl=`).
+  Solange sie leer ist, bleibt alles frei – nichts wird gesperrt. Mit Eintrag wird beim nächsten Build gesperrt (frei bleiben 52 von 200 Versuchen plus alles Übrige oben).
+
 ## 17.11.2026 – Version 0.7.0 vom 17.11.2026: eigene Musik und Vorlesen (Aufträge von Marcel)
 
 **Web = Android:** gleicher Code (Compose Multiplatform), gleiche Version 0.7.0, gleiche Texte, gleiche Musik, gleiche Stimmen-Auswahl inklusive „Thorsten“.

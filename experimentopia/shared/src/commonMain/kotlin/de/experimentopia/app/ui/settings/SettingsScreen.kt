@@ -5,6 +5,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import de.experimentopia.app.ui.fx.*
+import de.experimentopia.core.model.License
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.AlertDialog
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -89,13 +94,26 @@ private fun Toggle(title: String, sub: String, on: Boolean, onChange: (Boolean) 
     }
 }
 
-/** Hinweis-Seite, wenn etwas zum Forscher-Pass gehört: freundlich, ohne Druck. Kaufen kann man noch nicht (Pro.ENABLED = false). */
+/**
+ * Forscher-Pass: was drin ist, was frei bleibt, Preis, Kauf nur nach einer Frage für Erwachsene, Code-Eingabe (E-Mail/Link).
+ * Solange keine Kasse eingetragen ist ([Pro.ENABLED] falsch), ist alles frei und es gibt nichts zu kaufen.
+ */
 @Composable
-fun ProScreen(what: String, onBack: () -> Unit) {
+fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, onBack: () -> Unit) {
+    val sfx = LocalSfx.current; val open = LocalOpenLink.current
+    val code by (state?.prefs?.proCode ?: kotlinx.coroutines.flow.MutableStateFlow<String?>(null)).collectAsState()
+    val has = state?.let { Pro.valid(code, it.todayDay()) || it.prefs.pro.value } ?: false
+    var gate by remember { mutableStateOf(false) }
+    var input by remember { mutableStateOf("") }
+    var msg by remember { mutableStateOf<String?>(null) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
         Bar("💛 Forscher-Pass", onBack)
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            de.experimentopia.app.ui.blubb.BlubbSays("„$what“ gehört zum Forscher-Pass. Damit öffnest du alle Inseln und Geräte – einmal, ohne Abo.", de.experimentopia.app.ui.blubb.Mood.HAPPY, speak = false)
+            de.experimentopia.app.ui.blubb.BlubbSays(when {
+                has -> "Du hast den Forscher-Pass! Alle Inseln und Geräte gehören dir. Danke! 💛"
+                what == "Alles" -> "Mit dem Forscher-Pass öffnest du alle Inseln und Geräte – einmal, ohne Abo."
+                else -> "„$what“ gehört zum Forscher-Pass. Frag deine Eltern!"
+            }, if (has) de.experimentopia.app.ui.blubb.Mood.CHEER else de.experimentopia.app.ui.blubb.Mood.HAPPY, speak = false)
             Panel(border = E.Sun) {
                 Text("Das bringt der Forscher-Pass", color = E.Sun, fontWeight = FontWeight.Black)
                 Pro.benefits.forEach { Text(it, color = E.Text, fontSize = 14.sp) }
@@ -104,8 +122,51 @@ fun ProScreen(what: String, onBack: () -> Unit) {
                 Text("Das bleibt immer frei", color = E.Mint, fontWeight = FontWeight.Black)
                 Pro.free.forEach { Text("✓ $it", color = E.Muted, fontSize = 13.sp) }
             }
-            Text("Der Forscher-Pass ist noch nicht erhältlich.", color = E.Muted, fontSize = 13.sp, modifier = Modifier.testTag("pro-status"))
+            when {
+                has -> Text("✅ Freigeschaltet. Danke! 💛", color = E.Green, fontWeight = FontWeight.Bold, modifier = Modifier.testTag("pro-status"))
+                !Pro.ENABLED -> Text("Der Forscher-Pass kommt bald – bis dahin ist alles frei. 🎁", color = E.Sun, modifier = Modifier.testTag("pro-status"))
+                else -> Panel(border = E.Sun) {
+                    Text(Pro.WEB_PRICE, color = E.Sun, fontWeight = FontWeight.Black, fontSize = 34.sp)
+                    Text("einmalig · kein Abo · keine Werbung · inkl. 19 % MwSt.", color = E.Text, fontSize = 13.sp)
+                    GlowButton({ gate = true }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = E.Sun) { Text("💛 Forscher-Pass holen", fontWeight = FontWeight.Bold) }
+                    Text("Nur mit Erlaubnis der Eltern – vorher kommt eine Frage für Erwachsene.", color = E.Muted, fontSize = 12.sp)
+                }
+            }
+            if (!has && state != null && Pro.publicKey.length == 64) Panel {
+                Text("Code aus der E-Mail", color = E.Text, fontWeight = FontWeight.Bold)
+                Text("Am einfachsten: den Link aus der E-Mail antippen. Oder den Code hier einfügen.", color = E.Muted, fontSize = 13.sp)
+                OutlinedTextField(input, { input = it; msg = null }, Modifier.fillMaxWidth().testTag("pro-code"), placeholder = { Text("EX-…") }, minLines = 2, maxLines = 5)
+                GlowButton({
+                    val c = License.extract(input)
+                    val ok = c != null && Pro.valid(c, state.todayDay())
+                    msg = if (ok) "Super – der Forscher-Pass ist freigeschaltet! 🎉" else "Dieser Code passt leider nicht. Bitte genau so einfügen, wie er in der E-Mail steht."
+                    if (ok) { state.prefs.setProCode(c); sfx?.play(Sound.WIN) } else sfx?.play(Sound.SOFT)
+                }, Modifier.fillMaxWidth(), enabled = input.isNotBlank()) { Text("Code einlösen", fontWeight = FontWeight.Bold) }
+                msg?.let { Text(it, color = if (it.startsWith("Super")) E.Green else E.Pink) }
+            }
+            Text("Für Eltern: Einmalkauf ohne Abo. Der Kauf gilt für dieses Gerät bzw. diesen Browser, ohne Konto. Gespeichert wird nur der Freischalt-Code – nichts über das Kind. " +
+                "Schon gemachte Versuche bleiben immer offen.", color = E.Muted, fontSize = 12.sp)
             GlowButton(onBack, Modifier.fillMaxWidth()) { Text("Zurück", fontWeight = FontWeight.Bold) }
         }
     }
+    if (gate) ParentGate(state?.todayDay() ?: 0L, onDismiss = { gate = false }) { gate = false; open(Pro.checkoutUrl) }
+}
+
+/** Frage für Erwachsene vor jedem Kauf: Geburtsjahr eingeben, mindestens 18 Jahre (Familienrichtlinie). */
+@Composable
+fun ParentGate(todayDays: Long, onDismiss: () -> Unit, onPassed: () -> Unit) {
+    var year by remember { mutableStateOf("") }
+    var wrong by remember { mutableStateOf(false) }
+    val now = remember(todayDays) { 1970 + (todayDays / 365.2425).toInt() }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Frage für Erwachsene") },
+        text = { Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("Bitte gib dein Geburtsjahr ein (vierstellig).")
+            OutlinedTextField(year, { year = it.filter { c -> c.isDigit() }.take(4); wrong = false }, singleLine = true, modifier = Modifier.testTag("geburtsjahr"))
+            if (wrong) Text("Das passt leider nicht. Den Kauf dürfen nur Erwachsene erledigen.", color = E.Pink)
+        } },
+        confirmButton = { TextButton({ val y = year.toIntOrNull(); if (y != null && y in 1900..(now - 18)) onPassed() else wrong = true }) { Text("Weiter") } },
+        dismissButton = { TextButton(onDismiss) { Text("Abbrechen") } },
+    )
 }

@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 0.7.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.0.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -89,11 +89,13 @@ Die Seiten erklären die Idee, verraten aber keine Versuchslösung (Alltagsbeisp
 In der App ist jeder Versuch gefahrlos. Wo Kinder etwas in echt nachmachen könnten (Strom, Feuer, Säuren, heißes Wasser, Teichwasser …),
 zeigt der Versuch einen Sicherheitshinweis (`core/model/Safety.kt`), auch im Forscherbuch.
 
-## Frei und Pro
+## Frei und Pro (Forscher-Pass)
 
-Vorbereitet wie bei Raumlicht, aber **ausgeschaltet** (`Pro.ENABLED = false`): Heute ist alles frei. Später frei: die ganze Wasserinsel,
-von jeder Insel die ersten 3 Versuche, Rätsel des Tages, Forscherbuch, 6 Geräte im Freien Labor. Der „Forscher-Pass“ (Einmalkauf, kein Abo) öffnet alles.
-Eingeschaltet wird erst, wenn es einen Bezahlweg gibt.
+Frei: die ganze Wasserinsel, von jeder anderen Insel die ersten 5 Versuche, Rätsel des Tages, Forscherbuch, Themensuche, Lernen nach Fach, Theorie, 6 Geräte im Freien Labor.
+Der **Forscher-Pass** (7,99 € einmalig inkl. 19 % USt., kein Abo) öffnet alles. Kauf auf der Website (Woo-Kasse) nur nach einer Frage für Erwachsene;
+freigeschaltet wird mit einem signierten Code (Ed25519, Präfix „EX“, App 6, Produkt 1), den die App ohne Server prüft (`License.kt`, `Ed25519.kt`, Tests).
+Codes erzeugt der Lizenz-Dienst (`pro/pro_code.py`). Schlüssel und Kasse stehen in `pro/pro.properties`: **Solange die Kasse leer ist, wird nichts gesperrt.**
+Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung hat (noch) keinen Kauf und ist ganz frei.
 
 ## Bildschirme
 

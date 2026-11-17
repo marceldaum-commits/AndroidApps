@@ -31,6 +31,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         val app = application as ExperimentopiaApp
+        de.experimentopia.core.model.Pro.configure(BuildConfig.PRO_KEY, BuildConfig.PRO_CHECKOUT)
         if (savedInstanceState == null) de.experimentopia.app.update.StoreUpdate.onStart(this)
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
@@ -42,7 +43,8 @@ class MainActivity : ComponentActivity() {
             val buzzer = remember(view) { AndroidBuzzer(view) }
             ExperimentopiaTheme {
                 CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration, LocalBuzzer provides buzzer,
-                    LocalMusic provides app.music, LocalReader provides app.reader) {
+                    LocalMusic provides app.music, LocalReader provides app.reader,
+                    de.experimentopia.app.ui.fx.LocalOpenLink provides { url -> runCatching { startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(url))) } }) {
                     Surface(Modifier.fillMaxSize(), color = E.Night) {
                         BackHandler(enabled = vm.nav.canBack) { vm.nav.back() }
                         val upd by vm.availableUpdate.collectAsStateWithLifecycle()

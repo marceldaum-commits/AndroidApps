@@ -30,6 +30,9 @@ class Settings(ctx: Context) : Prefs {
     override fun setAudio(a: de.experimentopia.core.model.AudioPrefs) { prefs.edit().putString("audio", a.encode()).apply(); _audio.value = a }
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("autoUpdate", v).apply(); _autoUpdate.value = v }
     override fun setPro(v: Boolean) { prefs.edit().putBoolean("pro", v).apply(); _pro.value = v }
+    private val _proCode = MutableStateFlow(prefs.getString("proCode", null))
+    override val proCode: StateFlow<String?> = _proCode.asStateFlow()
+    override fun setProCode(c: String?) { prefs.edit().putString("proCode", c).apply(); _proCode.value = c }
 
     /** Klassenstufe für den Filter (0 = alle) */
     private val _grade = MutableStateFlow(prefs.getInt("grade", 0))

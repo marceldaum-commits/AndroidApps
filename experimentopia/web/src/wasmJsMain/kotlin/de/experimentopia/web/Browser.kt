@@ -61,3 +61,7 @@ fun stimmeReady(): Boolean = js("!!(window.ExStimme && window.ExStimme.ready())"
 fun stimmeSpeak(phonemes: String, rate: Double, volume: Double, onStart: () -> Unit, onEnd: () -> Unit): Unit = js("window.ExStimme.speak(phonemes, rate, volume, onStart, onEnd)")
 fun stimmeStop(): Unit = js("{ if (window.ExStimme) window.ExStimme.stop(); }")
 fun stimmeKnown(): Boolean = js("{ try { return localStorage.getItem('experimentopia.thorsten') === '1'; } catch (e) { return false; } }")
+
+// ── Forscher-Pass: Freischalt-Link „…/?pro=EX…“ lesen und die Adresse danach aufräumen
+fun locationSearch(): String = js("decodeURIComponent(window.location.search || '')")
+fun clearSearch(): Unit = js("{ try { history.replaceState(history.state, '', location.pathname); } catch (e) {} }")

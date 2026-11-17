@@ -48,6 +48,12 @@ private fun WebApp() {
     val prefs = remember { WebPrefs() }; val store = remember { WebStore() }; val nav = remember { Navigator() }
     val scope = rememberCoroutineScope()
     val state = remember { AppState(store, prefs, scope, { todayLocal().toLong() }, { dayStartLocal().toLong() }) }
+    // Forscher-Pass: Schlüssel/Kasse eintragen; Freischalt-Link aus der E-Mail übernehmen
+    remember {
+        de.experimentopia.core.model.Pro.configure(Version.PRO_KEY, Version.PRO_CHECKOUT)
+        de.experimentopia.core.model.License.extract(locationSearch())?.let { c -> if (de.experimentopia.core.model.Pro.valid(c, todayLocal().toLong())) prefs.setProCode(c); clearSearch() }
+        true
+    }
     val vibration by prefs.vibration.collectAsState()
     // Schriften als Ergänzung zur Standardschrift: Sonderzeichen (₂, →, Ω …) und Emojis. Die Oberfläche startet erst, wenn beide da sind.
     // Fehlt eine Datei, läuft die App trotzdem (dann mit Kästchen statt Zeichen).
@@ -66,7 +72,7 @@ private fun WebApp() {
     val sfx = remember { WebSfx(prefs) }
     val music = remember { WebMusic(scope) }
     val reader = remember { WebReader() }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalReader provides reader,
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) },
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.BIG -> 40 }) }) {
         ExperimentopiaTheme { Surface(Modifier.fillMaxSize(), color = E.Night) {
             AppRoot(nav, state, Version.NAME, Version.DATE,

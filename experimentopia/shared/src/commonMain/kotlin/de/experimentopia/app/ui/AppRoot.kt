@@ -74,8 +74,11 @@ class AppState(private val store: LabStore, val prefs: Prefs, private val scope:
         scope.launch { store.record(Finished(e.id, o.stars, o.guess, o.result, o.right, o.sure.ordinal, o.explainedFirstTry, daily)) }
     }
     fun reset() { scope.launch { store.reset(); prefs.resetProgress() } }
-    fun locked(e: Experiment) = Pro.locked(e, prefs.pro.value)
-    fun locked(l: Lab) = Pro.locked(l, prefs.pro.value)
+    /** Forscher-Pass: alter Schalter oder gültiger Code von der Website */
+    fun pro() = prefs.pro.value || Pro.valid(prefs.proCode.value, today())
+    fun todayDay() = today()
+    fun locked(e: Experiment) = Pro.locked(e, pro(), done = stars.value.keys)
+    fun locked(l: Lab) = Pro.locked(l, pro())
     fun newBadges(s: Stats) = Badges.earned(s).filter { it.id !in prefs.badgesSeen }
 
     companion object {
@@ -169,7 +172,7 @@ fun AppRoot(
                 is Route.FreeRun -> FreeLabRun(r.lab) { nav.back() }
                 Route.Journal -> JournalScreen(journal, { nav.back() }, onOpen = { open(it) })
                 Route.Badges -> BadgesScreen(stats) { nav.back() }
-                is Route.ProR -> ProScreen(r.what) { nav.back() }
+                is Route.ProR -> ProScreen(r.what, state) { nav.back() }
                 Route.Settings -> {
                     val vibration by state.prefs.vibration.collectAsState()
                     de.experimentopia.app.ui.settings.SettingsScreen(

@@ -1,3 +1,4 @@
+import java.util.Properties
 // WebApp: dieselbe Rechenlogik (core:model) und dieselben Bildschirme (shared) wie die Android-App.
 // Bauen:  ./gradlew :web:webapp   → fertige Dateien in experimentopia/webapp/ (so holt sie der Server vom Branch experimentopia-test)
 plugins {
@@ -12,10 +13,13 @@ val versionName = Regex("versionName = \"([^\"]+)\"").find(appGradle)!!.groupVal
 val versionDate = Regex("VERSION_DATE.*?(\\d{2}\\.\\d{2}\\.\\d{4})").find(appGradle)!!.groupValues[1]
 
 val versionSource = layout.buildDirectory.dir("generated/version")
+val proProps = Properties().also { p -> val f = rootProject.file("pro/pro.properties"); if (f.exists()) f.inputStream().use { p.load(it) } }
+val proKey = proProps.getProperty("publicKey", "").trim()
+val proCheckout = proProps.getProperty("checkoutUrl", "").trim()
 val writeVersion by tasks.registering {
-    inputs.property("v", versionName); inputs.property("d", versionDate); outputs.dir(versionSource)
+    inputs.property("v", versionName); inputs.property("d", versionDate); inputs.property("pk", proKey); inputs.property("pc", proCheckout); outputs.dir(versionSource)
     doLast { versionSource.get().file("Version.kt").asFile.apply { parentFile.mkdirs() }.writeText(
-        "package de.experimentopia.web\n\n/** Aus app/build.gradle.kts erzeugt – nicht von Hand ändern. */\nobject Version { const val NAME = \"$versionName\"; const val DATE = \"$versionDate\" }\n") }
+        "package de.experimentopia.web\n\n/** Aus app/build.gradle.kts erzeugt – nicht von Hand ändern. */\nobject Version { const val NAME = \"$versionName\"; const val DATE = \"$versionDate\"; const val PRO_KEY = \"$proKey\"; const val PRO_CHECKOUT = \"$proCheckout\" }\n") }
 }
 
 kotlin {

@@ -111,11 +111,13 @@ class CatalogTest {
     @Test fun freiesLaborHatJedesGeraet() { Lab.entries.forEach { assertEquals(it, FreeLab.setup(it).lab) } }
 
     @Test fun proIstAusgeschaltetUndFair() {
-        assertFalse("Pro erst einschalten, wenn man es kaufen kann", Pro.ENABLED)
+        assertFalse("Pro erst einschalten, wenn man es kaufen kann (Kasse eingetragen)", Pro.ENABLED)
         all.forEach { assertFalse(Pro.locked(it, proOwned = false)) }
         // Eingeschaltet: jede Insel hat freie Versuche, gekauft ist alles offen
         Island.entries.forEach { i -> assertTrue(Catalog.of(i).count { !Pro.locked(it, false, enabled = true) } >= Pro.FREE_PER_ISLAND) }
         assertTrue(all.none { Pro.locked(it, true, enabled = true) })
+        // Bestandsschutz: schon gemachte Versuche bleiben offen
+        assertTrue(all.none { Pro.locked(it, false, enabled = true, done = all.map { e -> e.id }.toSet()) })
         assertTrue(Pro.freeCount in 20 until all.size)
     }
 
