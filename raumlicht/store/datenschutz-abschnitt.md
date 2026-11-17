@@ -1,0 +1,27 @@
+# Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
+
+Stand: Raumlicht 2.16.4 vom 17.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
+
+## Text
+
+**Lern-App „Raumlicht“ (Android-App und WebApp)**
+
+Raumlicht kommt ohne Anmeldung, ohne Werbung und ohne Auswertung des Nutzungsverhaltens aus. Der Spielstand (gelöste Aufgaben, Sterne, Einstellungen)
+wird ausschließlich auf dem Gerät bzw. im Browser gespeichert und nicht an uns übertragen.
+
+Eine Verbindung ins Internet baut die App nur in diesen Fällen auf:
+
+1. **Updates.** Die WebApp lädt ihre Dateien von unserem Server. Die Android-App aus dem Play Store wird über Google Play aktualisiert; die direkt von uns
+   bezogene Android-App fragt bei GitHub (GitHub Inc., USA) nach, ob es eine neuere Version gibt – das lässt sich in den Einstellungen abschalten.
+2. **Natürliche Stimme „Thorsten“ (freiwillig).** Wer in den Einstellungen die natürliche Vorlese-Stimme lädt, ruft einmalig eine Datei (rund 63 MB) von
+   unserem eigenen Server `stimmen.mathenachhilfe-online.com` ab. Die Datei enthält nur das Sprachmodell. Danach wird ausschließlich auf dem Gerät bzw.
+   im Browser gesprochen; vorgelesene Texte verlassen das Gerät nicht. Die Stimme lässt sich jederzeit wieder löschen.
+
+Bei jedem dieser Abrufe verarbeitet der jeweilige Server technisch notwendige Verbindungsdaten (IP-Adresse, Datum und Uhrzeit, abgerufene Datei,
+Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rechtsgrundlage wie im allgemeinen Abschnitt zu Server-Protokollen eintragen.]*
+
+## Noch offen (nicht Teil des Textes)
+
+- Sobald der **Abi-Pass** verkauft wird, kommt ein Absatz zu Kauf und Freischalt-Code dazu (siehe `KLAERUNGSLISTE-RECHT.md`, B6/B7).
+- Lehrerzugang und KI-Tutor brauchen eigene Abschnitte, wenn sie kommen.

@@ -2,6 +2,18 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.16.4 – Vorbereitung für die neue Vorlese-Stimme (17.11.2026)
+- **Hinter den Kulissen:** Die WebApp liefert jetzt eine Liste aller festen Vorlese-Texte aus (`vorlesen/texte.json`). Damit kann unser Server sie für die kommende Stimme „Nova“ vorab vertonen.
+- In der App ändert sich noch nichts: Vorgelesen wird weiter wie bisher, und es werden keine Daten gesendet.
+
+## 2.16.3 – „Warum höre ich nichts?“ (17.11.2026)
+- **Kein Ton trotz eingeschaltetem Ton?** Raumlicht bleibt mit Absicht still, wenn das Handy stumm oder auf Vibration steht (damit im Unterricht nichts losdudelt). Das sagen die Einstellungen jetzt deutlich – ebenso, wenn die Medien-Lautstärke auf 0 steht. Sobald du das Handy laut stellst, verschwindet der Hinweis.
+- **iPhone und iPad (WebApp):** Dort steht jetzt der Tipp, den Stumm-Schalter zu prüfen.
+
+## 2.16.2 – Abzeichen „Abi-Pass aktiv“ (17.11.2026)
+- **Abi-Pass auf einen Blick:** Ist der Abi-Pass freigeschaltet, leuchtet auf dem Startbildschirm das Abzeichen „🎓 Abi-Pass aktiv“ – und in den Einstellungen steht es ebenfalls. Antippen zeigt, was alles dazugehört. (Den Abi-Pass gibt es noch nicht zu kaufen; bis dahin bleibt alles frei.)
+- **Für Eltern:** In den Einstellungen steht jetzt ausdrücklich, dass die natürliche Stimme von unserem eigenen Server geladen wird.
+
 ## 2.16.1 – Eine Stimm-Datei für alle Apps (17.11.2026)
 - **Android:** Die natürliche Stimme „Thorsten“ kommt weiterhin von unserem eigenen Server – jetzt als fertig aufbereitete Datei, die alle unsere Apps gemeinsam benutzen. Für dich ändert sich nichts; wer die Stimme schon geladen hat, behält sie.
 - Beim Laden der Stimme geht nichts an fremde Server, und beim Vorlesen verlässt kein Text dein Gerät.

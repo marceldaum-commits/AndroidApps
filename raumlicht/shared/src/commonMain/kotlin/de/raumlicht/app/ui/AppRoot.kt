@@ -128,7 +128,7 @@ fun AppRoot(
         de.raumlicht.app.ui.settings.LocalSpeech provides de.raumlicht.app.ui.settings.SpeechChoice(prefs.speechRate.collectAsState().value, prefs::setSpeechRate),
         de.raumlicht.app.ui.level.LocalOpenSheet provides { nav.go(Routes.SHEET) },
         de.raumlicht.app.ui.settings.LocalNotation provides de.raumlicht.app.ui.settings.NotationChoice(strictVectors, prefs::setStrictVectors),
-        de.raumlicht.app.ui.settings.LocalProEntry provides (if (proEnabled) ({ nav.go(Routes.PRO) }) else null), de.raumlicht.app.ui.settings.LocalProActive provides proActive,
+        de.raumlicht.app.ui.settings.LocalProEntry provides (if (proEnabled || proActive) ({ nav.go(Routes.PRO) }) else null), de.raumlicht.app.ui.settings.LocalProActive provides proActive,
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
         // Erkennungsmelodie: einmal je Sitzung, bei der ersten Berührung (nie vorher) – leise, damit sie niemanden erschreckt
         val jingle = de.raumlicht.app.ui.fx.LocalSfx.current

@@ -1,6 +1,10 @@
 package de.raumlicht.app.ui
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.test.onNodeWithTag
+import com.github.takahirom.roborazzi.captureRoboImage
+import androidx.compose.ui.test.onRoot
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -136,6 +140,19 @@ class PlayFlowTest {
         rule.onNodeWithTag("zuruecksetzen").performScrollTo().performClick(); rule.mainClock.advanceTimeBy(500)
         rule.onNodeWithTag("zuruecksetzen-ja").performClick(); rule.mainClock.advanceTimeBy(500); assertEquals(1, resets)
         rule.onNodeWithText("✓ Alles zurückgesetzt – du startest wieder bei null.").assertExists()
+    }
+
+    /** Handy stumm → die Einstellungen sagen, warum nichts zu hören ist; laut gestellt verschwindet der Hinweis */
+    @Test fun settingsExplainSilence() {
+        val audio = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>().getSystemService(android.media.AudioManager::class.java)
+        audio.ringerMode = android.media.AudioManager.RINGER_MODE_VIBRATE
+        show { de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.16.3", de.raumlicht.app.ui.settings.UpdateState.Idle, {}) }
+        rule.onNodeWithTag("ton-hinweis").assertTextContains("stumm oder auf Vibration", substring = true)
+        rule.onRoot().captureRoboImage("../screenshots/80_ton_hinweis.png")
+        audio.ringerMode = android.media.AudioManager.RINGER_MODE_NORMAL; audio.setStreamVolume(android.media.AudioManager.STREAM_MUSIC, 0, 0)
+        rule.mainClock.advanceTimeBy(1500); rule.onNodeWithTag("ton-hinweis").assertTextContains("Medien-Lautstärke", substring = true)
+        audio.setStreamVolume(android.media.AudioManager.STREAM_MUSIC, 5, 0)
+        rule.mainClock.advanceTimeBy(1500); rule.onNodeWithTag("ton-hinweis").assertDoesNotExist()
     }
 
     @Test fun volumeSliderInSettings() {

@@ -1,9 +1,9 @@
 // Service Worker: macht Raumlicht offline nutzbar und hält es aktuell. Jede Version hat ihren eigenen Speicher: Ändert sich diese Datei
 // (neue Versionsnummer), lädt der Browser alles frisch, räumt den alten Speicher weg und übernimmt sofort – die Seite lädt sich dann selbst neu.
-const CACHE = 'raumlicht-2.16.1';
+const CACHE = 'raumlicht-2.16.4';
 // Der App-Kern (.wasm): Der Dateiname ändert sich mit dem Inhalt, darum darf er aus dem Zwischenspeicher des Browsers kommen –
 // die Seite hat ihn gerade erst geladen, so wird er beim ersten Besuch nicht doppelt übertragen. Danach startet die App auch ohne Netz.
-const WASM = ['bccfa839aa4b38489c76.wasm', 'e8681dca0f74f71ba0b6.wasm'];
+const WASM = ['bccfa839aa4b38489c76.wasm', 'c73df44e13af7969bff1.wasm'];
 // Alles andere beim Installieren am Zwischenspeicher des Browsers vorbei laden ('reload'): wirklich die neue Fassung
 self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => Promise.all([c.addAll(WASM), c.addAll(['./', 'index.html', 'raumlicht.js', 'scene/index.html', 'scene/scene.js', 'rl-stimme.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf', 'diagnose.html'].map((u) => new Request(u, { cache: 'reload' })))]))); });
 // Die geladene Stimme „Thorsten“ (raumlicht-stimme) bleibt bei Updates stehen – sie soll nur einmal geladen werden

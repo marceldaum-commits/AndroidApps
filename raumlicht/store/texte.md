@@ -38,7 +38,7 @@ Raumlicht ersetzt keinen Unterricht, aber es zeigt, was hinter den Formeln steck
 
 **Kategorie:** Lernen · **Tags:** Mathematik, Abitur, Oberstufe
 **E-Mail für den Store / Website:** bitte in der Play Console eintragen (Website: https://www.mathenachhilfe-online.com)
-**Datenschutzerklärung:** https://www.mathenachhilfe-online.com/datenschutz/ (muss den Abschnitt zur App enthalten)
+**Datenschutzerklärung:** https://www.mathenachhilfe-online.com/datenschutz/ (muss den Abschnitt zur App enthalten – Vorschlag: `store/datenschutz-abschnitt.md`)
 
 **Text „Was ist neu“ für die erste Version (max. 500 Zeichen):**
 Erste Version im Play Store: Vektoren, Analysis und Stochastik in 3D, mit Lux, der Lichtdrohne.

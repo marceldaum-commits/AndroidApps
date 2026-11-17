@@ -2,6 +2,63 @@
 
 Neueste oben.
 
+## 17.11.2026 – Nova Schritt (a): `vorlesen/texte.json` liegt auf der Testadresse (Raumlicht 2.16.4)
+
+Marcel hat direkt bestätigt: „nur noch Nova“ stimmt, Thorsten kommt raus, Beginn mit Schritt (a). **Raumlicht 2.16.4 vom 17.11.2026, Web = Android (beide 2.16.4).**
+
+- **Adresse:** `https://raumlicht-test.mathenachhilfe-online.com/vorlesen/texte.json` (und nach eurer Freigabe ebenso unter `raumlicht.…`).
+- **Inhalt:** `{"format":1,"app":"raumlicht","texte":[{"text":"…","sprache":"de"},…]}` – **679 Texte, 55 421 Zeichen**, längster 229 Zeichen, jeder nur einmal.
+- **Vorlesefertig:** Jeder Text ist schon durch `Speech.clean` gelaufen (Vektoren, Formeln, Sonderzeichen ausgeschrieben) und so normalisiert, wie ihr den Schlüssel rechnet
+  (Leerraum → ein Leerzeichen, getrimmt; alle Texte sind bereits NFC – ein Test prüft das). Die App wird für den Schlüssel genau denselben Text benutzen.
+- **Entsteht bei jedem Bau neu** (`./gradlew :core:model:vorleseTexte`, eingehängt in `:web:webapp`); Quelle ist `Vorlesen.kt` in `core/model`. Neue feste Texte landen also von selbst in der Liste.
+- **Nicht in der Liste (Laufzeit, später über `/jetzt`):** Rückmeldungen auf Eingaben, endloses Üben, Tagesaufgabe, Urteile in Geisterfahrt/Zufallsmaschine/Schätzrunden,
+  Binomial-Geschichte, Ansage der Ballerbude.
+- In der App ist noch nichts umgestellt (kein Nova, Thorsten noch drin). **Als Nächstes Schritt (b)** – dafür brauche ich von euch die Bestätigung, dass die MP3 unter `/nova/…` liegen
+  (Zählstand `…/nova/stand-<host>.json`) und dass `/jetzt` erreichbar ist, samt CORS-Freigabe für die WebApp-Adressen (`raumlicht…` und `raumlicht-test…`), sonst kann der Browser weder MP3 noch `/jetzt` abrufen.
+- Hinweis zu Punkt 5 eures Nachtrags („unser Server speichert keine Zugriffsprotokolle“): Diesen Satz übernehme ich nur, wenn ihr bestätigt, dass er für `stimmen.…` wirklich gilt.
+
+## 17.11.2026 – Zählung der Vorlese-Texte (für die Idee „feste Texte als Audiodateien“)
+
+Marcel hat das Weitergeben direkt bestätigt. Nur gezählt, nichts gebaut. Stand: **Raumlicht 2.16.3 vom 17.11.2026, Web = Android (beide 2.16.3).**
+Quelle: `core/model/build/sprechtexte.txt` aus `SpeechDumpTest` (Zeilen „fest“), jeder Text nur einmal gezählt, in der Sprechfassung (so geht der Text an die Stimme).
+
+1. **Feste Texte, die Lux vorliest: 679.** Kapitel- und Prüfungs-Einführungen, Auftrag und Tipp jeder festen Aufgabe (Tour und Prüfungsaufgaben), Erfolgsmeldung samt Finale-Sätzen,
+   die Kernidee jeder Theorie-Karte, Namen der Kurven-Stellen, einige feste Sätze („Geschafft!“, Hörprobe).
+   **Nicht vorgelesen werden** Lösungswege sowie Schritte, Beispiel und Stolperfalle der Theorie-Karten – die stecken in der Zahl also nicht drin.
+2. **Zeichen: 55 421** (längster Text 229 Zeichen).
+3. **Zur Laufzeit zusammengesetzt, nicht vorab aufnehmbar:**
+   - Rückmeldungen auf falsche oder halb richtige Eingaben (enthalten die eingegebenen Zahlen, Punkte, Vektoren),
+   - alles im endlosen Üben und in der Tagesaufgabe (Auftrag, Tipp, Meldungen mit Zufallszahlen),
+   - Urteile in Geisterfahrt, Zufallsmaschine und Schätzrunden, die Geschichte im Binomial-Labor, die Ansage „Jetzt: …“ in der Ballerbude.
+   Zur Einordnung: Schon eine Stichprobe davon ergibt rund 6 700 verschiedene Sätze mit etwa 393 000 Zeichen; es gibt praktisch beliebig viele.
+
+Folge: Für die veränderlichen Texte bräuchte es weiter Thorsten oder die Geräte-Stimme – Lux hätte dann zwei verschiedene Stimmen. Das bitte bei der Entscheidung mitdenken.
+
+Antwort zu espeak-ng (a): steht weiter unten in dieser Datei (17.11.) – **nein, weder in der Android-App noch in der WebApp enthalten.**
+
+## 17.11.2026 – Raumlicht 2.16.3: Hinweis „warum kein Ton“
+
+Marcel meldete nach einem Update: „Sound ist aktiviert, aber kein Ton“. **Raumlicht 2.16.3 vom 17.11.2026, Web = Android (beide 2.16.3).**
+
+- Wahrscheinlichste Ursache (von Marcel noch nicht bestätigt): Seit 2.15.0 schweigen Musik und Geräusche, wenn das Handy stumm oder auf Vibration steht – bisher ohne jeden Hinweis.
+- Neu: Die Einstellungen zeigen über den Ton-Schaltern einen gelben Hinweis, wenn das Handy stumm/auf Vibration steht oder die Medien-Lautstärke 0 ist (Android, jede Sekunde neu geprüft).
+  WebApp auf iPhone/iPad: Tipp zum Stumm-Schalter (lässt sich im Browser nicht erkennen). Bildschirmfoto: `screenshots/80_ton_hinweis.png`.
+- Am Ton selbst ist seit 2.15.0 nichts geändert. Falls andere Apps dieselbe Regel „Handy stumm → App stumm“ übernehmen: bitte immer mit sichtbarem Hinweis.
+
+## 17.11.2026 – Raumlicht 2.16.2: Abzeichen „Abi-Pass aktiv“ + Vorschlag für die Datenschutzerklärung
+
+Marcel hat beides direkt bestätigt. **Raumlicht 2.16.2 vom 17.11.2026, Web = Android (beide 2.16.2).**
+
+- **Abzeichen:** Ist der Abi-Pass freigeschaltet, steht im Kopf des Startbildschirms „🎓 Abi-Pass aktiv“ (ploppt auf, schimmert, Antippen öffnet die Abi-Pass-Seite) und in den Einstellungen
+  „Abi-Pass aktiv – ✓ Freigeschaltet – alles gehört dir“. Gemeinsamer Code, also in Web und Android gleich. Bildschirmfoto: `screenshots/79_abi_pass_abzeichen.png`.
+  Der Eintrag in den Einstellungen erscheint jetzt auch dann, wenn ein gültiger Code gespeichert, die Kasse aber noch nicht eingetragen ist.
+- **Laufzeit des KI-Tutors: noch nicht im Abzeichen.** Es gibt weder den KI-Tutor noch eine Laufzeit im Freischalt-Code (Inhalt: Version, App, Produkt, Nummer, Ausstellungstag).
+  Sobald ihr festlegt, woher die Laufzeit kommt (z. B. „12 Monate ab Ausstellungstag“ oder eigenes Feld im Code), ergänze ich sie im Abzeichen und in den Einstellungen.
+- **Datenschutzerklärung:** Vorschlag für den App-Abschnitt (lokaler Spielstand, Updates, freiwilliger Stimm-Download von `stimmen.mathenachhilfe-online.com`, Server-Protokolle)
+  liegt in `raumlicht/store/datenschutz-abschnitt.md`. Die Website habe ich nicht angefasst; Speicherdauer/Rechtsgrundlage der Protokolle müsst ihr eintragen. Keine Rechtsberatung.
+- Antwort zu espeak-ng (a): steht weiter unten in dieser Datei (17.11.) – kurz: **nein, nirgends enthalten.**
+- Geprüft: alle Tests, Lint beider Fassungen, WebApp im Browser. Nicht auf einem echten Gerät geprüft.
+
 ## 17.11.2026 – Raumlicht 2.16.1: Android lädt jetzt eure fertige sherpa-Datei
 
 Marcel hat direkt bestätigt („Stell es um“). **Raumlicht 2.16.1 vom 17.11.2026, Web = Android (beide 2.16.1).**

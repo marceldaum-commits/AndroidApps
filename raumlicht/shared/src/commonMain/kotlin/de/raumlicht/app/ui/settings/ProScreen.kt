@@ -6,6 +6,9 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -111,7 +114,25 @@ fun ProScreen(what: String?, active: Boolean, offered: Boolean, onCode: (String)
     }
 }
 
-/** Eintrag „Abi-Pass“ in den Einstellungen – nur sichtbar, wenn der Abi-Pass erhältlich ist */
+/**
+ * Abzeichen „Abi-Pass aktiv“ für den Kopf des Startbildschirms: nur sichtbar, wenn der Abi-Pass freigeschaltet ist. Antippen öffnet die Abi-Pass-Seite.
+ * Ploppt beim Erscheinen auf und schimmert leise – man soll auf einen Blick sehen, dass alles offen ist.
+ */
+@Composable
+fun ProBadge(modifier: Modifier = Modifier) {
+    if (!LocalProActive.current) return
+    val open = LocalProEntry.current
+    val pop = remember { Animatable(0.6f) }
+    LaunchedEffect(Unit) { pop.animateTo(1f, spring(Spring.DampingRatioMediumBouncy, Spring.StiffnessLow)) }
+    val glow by androidx.compose.animation.core.rememberInfiniteTransition().animateFloat(0.55f, 1f,
+        androidx.compose.animation.core.infiniteRepeatable(androidx.compose.animation.core.tween(1600), androidx.compose.animation.core.RepeatMode.Reverse))
+    Text("🎓 Abi-Pass aktiv", modifier.graphicsLayer { scaleX = pop.value; scaleY = pop.value }.testTag("pro-abzeichen")
+        .background(Q.Green.copy(alpha = 0.2f), RoundedCornerShape(50)).border(1.5.dp, Q.Green.copy(alpha = glow), RoundedCornerShape(50))
+        .then(if (open != null) Modifier.clip(RoundedCornerShape(50)).clickable(onClick = open) else Modifier).padding(horizontal = 10.dp, vertical = 4.dp),
+        color = Q.Green, fontWeight = FontWeight.Black, fontSize = 13.sp, maxLines = 1)
+}
+
+/** Eintrag „Abi-Pass“ in den Einstellungen – sichtbar, wenn der Abi-Pass erhältlich oder schon freigeschaltet ist */
 @Composable
 fun ProEntry() {
     val open = LocalProEntry.current ?: return; val active = LocalProActive.current
@@ -119,8 +140,8 @@ fun ProEntry() {
         .clickable(onClick = open).padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
         Text("🎓", fontSize = 26.sp)
         Column(Modifier.padding(start = 12.dp).weight(1f)) {
-            Text("Abi-Pass", color = if (active) Q.Green else Q.Yellow, fontWeight = FontWeight.Black, fontSize = 16.sp)
-            Text(if (active) "✓ Freigeschaltet" else "Alles freischalten oder Code eingeben", color = Q.Muted, fontSize = 13.sp)
+            Text(if (active) "Abi-Pass aktiv" else "Abi-Pass", color = if (active) Q.Green else Q.Yellow, fontWeight = FontWeight.Black, fontSize = 16.sp)
+            Text(if (active) "✓ Freigeschaltet – alles gehört dir" else "Alles freischalten oder Code eingeben", color = Q.Muted, fontSize = 13.sp)
         }
         Text("›", color = Q.Muted, fontSize = 22.sp)
     }

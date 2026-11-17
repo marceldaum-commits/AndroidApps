@@ -85,6 +85,7 @@ class AppRootTest {
         nav.go(Routes.CHANCE); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist(); nav.back(); settle()            // Zufallsmaschine bleibt frei
         // über die Einstellungen zur Abi-Pass-Seite: Kauf-Knopf und Code-Eingabe
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
+        rule.onNodeWithTag("pro-abzeichen").assertDoesNotExist()                                                               // noch kein Abzeichen
         nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("pro-eintrag").assertTextContains("Alles freischalten", substring = true).performClick(); settle()
         assertEquals(Routes.PRO, nav.top); rule.onNodeWithTag("pro-kaufen").assertExists()
         // falscher Code: freundlicher Hinweis, nichts geht auf
@@ -96,7 +97,12 @@ class AppRootTest {
         rule.onNodeWithTag("pro-freischalten").performScrollTo().performClick(); settle()
         rule.onNodeWithTag("pro-aktiv").assertExists(); rule.onNodeWithTag("pro-kaufen").assertDoesNotExist(); assertEquals(PASS, prefs.proCode.value)
         rule.onRoot().captureRoboImage("../screenshots/77_abi_pass_frei.png")
-        rule.onNodeWithTag("pro-zurueck").performScrollTo().performClick(); settle(); rule.onNodeWithTag("pro-eintrag").assertTextContains("Freigeschaltet", substring = true)
+        rule.onNodeWithTag("pro-zurueck").performScrollTo().performClick(); settle(); rule.onNodeWithTag("pro-eintrag").assertTextContains("Abi-Pass aktiv", substring = true)
+        // das Abzeichen im Kopf des Startbildschirms – Antippen führt zur Abi-Pass-Seite
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle(); assertEquals(Routes.HOME, nav.top); rule.onNodeWithTag("pro-abzeichen").assertTextContains("Abi-Pass aktiv", substring = true)
+        rule.onRoot().captureRoboImage("../screenshots/79_abi_pass_abzeichen.png")
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); rule.onNodeWithTag("pro-abzeichen").performClick(); settle(); assertEquals(Routes.PRO, nav.top)
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle()
         // freigeschaltet: alles offen, Schlösser weg – auch nach einem Neustart (der Code wird neu geprüft)
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.level("7-3")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist()
