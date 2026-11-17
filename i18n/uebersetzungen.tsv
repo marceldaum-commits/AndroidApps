@@ -877,9 +877,6 @@ Rekord: {} Punkte	Record: {} points	Рекорд: {} балів
 ⚔️ Duell	⚔️ Duel	⚔️ Дуель
 🧪 Einstufungstest	🧪 Placement test	🧪 Тест рівня
 Tage in Folge	Days in a row	Днів поспіль
-auf jedes Stundenpaket	on any lesson package	на будь-який пакет уроків
-{} % auf jedes Stundenpaket	{}% on any lesson package	{}% на будь-який пакет уроків
-Mit mindestens {} von {} richtig je Türchen gibt es einen {}-%-Gutschein auf jedes Stundenpaket von Nachhilfe – online (gültig bis {}). Gilt nur, wenn die Klassenstufe (Klasse {}) stimmt, einmal je Familie. Noch {} Türchen.	With at least {} of {} correct per door you get a {}% voucher on any lesson package from Nachhilfe – online (valid until {}). Only valid if the grade (grade {}) is correct, once per family. {} doors to go.	Маючи щонайменше {} з {} правильних у кожному віконці, отримаєш ваучер на {}% на будь-який пакет уроків Nachhilfe – online (дійсний до {}). Лише якщо клас ({} клас) правильний, один раз на сім'ю. Залишилося {} віконець.
 Mit mindestens {} von {} richtig je Türchen gibt es einen {}-%-Gutschein auf jedes Stundenpaket von Nachhilfe – online (gültig bis {}). Gilt nur, wenn die Klassenstufe ({}) stimmt, einmal je Familie. Noch {} Türchen.	With at least {} of {} correct per door you get a {}% voucher on any lesson package from Nachhilfe – online (valid until {}). Only valid if the grade ({}) is correct, once per family. {} doors to go.	Маючи щонайменше {} з {} правильних у кожному віконці, отримаєш ваучер на {}% на будь-який пакет уроків Nachhilfe – online (дійсний до {}). Лише якщо клас ({}) правильний, один раз на сім'ю. Залишилося {} віконець.
 Gilt für Klasse {} – nur, wenn die Klassenstufe stimmt. Sie wird bei der Buchung geprüft. Einmal je Familie einlösbar, nicht mit anderen Gutscheinen kombinierbar.	Valid for grade {} – only if the grade is correct. It is checked when booking. Can be redeemed once per family, cannot be combined with other vouchers.	Дійсний для {} класу – лише якщо клас указано правильно. Перевіряється під час бронювання. Один раз на сім'ю, не поєднується з іншими ваучерами.
 Gilt für Oberstufe – nur, wenn die Klassenstufe stimmt. Sie wird bei der Buchung geprüft. Einmal je Familie einlösbar, nicht mit anderen Gutscheinen kombinierbar.	Valid for upper school – only if the grade is correct. It is checked when booking. Can be redeemed once per family, cannot be combined with other vouchers.	Дійсний для старших класів – лише якщо клас указано правильно. Перевіряється під час бронювання. Один раз на сім'ю, не поєднується з іншими ваучерами.
@@ -901,7 +898,6 @@ Schwierigkeit stellt sich automatisch ein	Difficulty adjusts automatically	Ск�
 Englisch und Ukrainisch – passend zur Sprache des Geräts	English and Ukrainian – matching the device language	Англійська та українська – відповідно до мови пристрою
 Logo führt zur Website	Logo links to the website	Логотип веде на сайт
 Adventskalender passend zur Klassenstufe	Advent calendar matching your grade	Адвент-календар відповідно до класу
-Rechen-Adventskalender	Maths Advent calendar	Математичний адвент-календар
 Urkunden zum Teilen und Drucken	Certificates to share and print	Грамоти, щоб поділитися й надрукувати
 Flyer & Poster mit QR-Code	Flyers & posters with QR code	Флаєри й плакати з QR-кодом
 17 Themen mit Lösungsweg bei jedem Fehler	{} topics with worked solutions for every mistake	{} тем із розв'язанням до кожної помилки
@@ -979,7 +975,6 @@ Plus bis {}	Addition up to {}	Додавання до {}
 {} von {} sitzen fest · {} heute	{} of {} memorised · {} today	{} з {} вивчено · {} сьогодні
 Einmaleins	Times tables	Таблиця множення
 Geteilt im Einmaleins	Division facts	Ділення в межах таблиці
-Quadratzahlen bis {}	Square numbers up to {}	Квадрати чисел до {}
 Brüche als Dezimalzahl	Fractions as decimals	Дроби як десяткові
 Brüche als Prozent	Fractions as percentages	Дроби як відсотки
 Fehler aus anderen Runden zählen mit: Was du dort falsch hattest, kommt hier wieder dran.	Mistakes from other rounds count too: what you got wrong there comes up here again.	Помилки з інших раундів теж враховуються: те, що там було неправильно, з'явиться тут знову.
@@ -1115,7 +1110,6 @@ Wahnsinn!	Amazing!	Неймовірно!
 Du bist ein echter Blitz!	You're a real lightning bolt!	Ти справжня блискавка!
 Unglaublich!	Incredible!	Неймовірно круто!
 {} richtig in Folge!	{} correct in a row!	{} правильних поспіль!
-richtig in Folge!	correct in a row!	правильних поспіль!
 Siehst du – geschafft!	See – you did it!	Бачиш – вийшло!
 Kein Problem	No problem	Без проблем
 Übung macht den Meister – probier’s nochmal!	Practice makes perfect – try again!	Повторення – мати навчання. Спробуй ще раз!
@@ -1209,7 +1203,6 @@ Höhlenforscher	Cave explorer	Дослідник печер
 Kapitel {} der Rechen-Reise geschafft	Chapter {} of the maths journey completed	Розділ {} математичної подорожі пройдено
 Kapitel {}–{} geschafft! Bald geht’s weiter.	Chapters {}–{} done! More coming soon.	Розділи {}–{} пройдено! Скоро буде продовження.
 Karte	Map	Карта
-Weiter	Continue	Далі
 {} Sterne gesammelt	{} stars collected	{} зірок зібрано
 Klassenstufe ändern? Deine Sterne bleiben erhalten, die Aufgaben passen sich an.	Change grade? Your stars are kept, the problems will adapt.	Змінити клас? Твої зірки збережуться, завдання підлаштуються.
 {} – Kapitel {} geschafft	{} – chapter {} completed	{} – розділ {} пройдено
@@ -1312,7 +1305,6 @@ Neu im Menü: „Nach Updates suchen“ – holt die neueste Version mit einem T
 🔥 {} Tage	🔥 {} days	🔥 {} днів
 Heute dran:	Up today:	Сьогодні:
 Tippe hier – Blitz wartet schon	Tap here – Blitz is waiting	Торкнися – Бліц уже чекає
-Los	Go	Почати
 🔥 {} Tag	🔥 {} day	🔥 {} день
 Android-App: Rechenblitz-Widget für den Startbildschirm – Merk-Training, Tagesziel und Serie auf einen Blick	Android app: Rechenblitz home screen widget – memory training, daily goal and streak at a glance	Застосунок Android: віджет Rechenblitz на головному екрані – тренування пам’яті, денна мета й серія з одного погляду
 Zurücksetzen	Reset	Скинути
@@ -1973,7 +1965,6 @@ Nur Quadratzahlen	Square numbers only	Лише квадрати чисел
 Geteilt mit Rest	Division with remainder	Ділення з остачею
 Aufgabenform	Problem type	Вид завдання
 gemischt	mixed	змішано
-{} Aufgaben	{} problems	{} завдань
 ohne Zeitdruck	no time pressure	без поспіху
 {} Min.	{} min	{} хв
 Große Ziffern und Tasten	Large digits and keys	Великі цифри й кнопки
@@ -1997,7 +1988,6 @@ Vorlage löschen	Delete template	Видалити шаблон
 Vorlage löschen?	Delete template?	Видалити шаблон?
 Übung teilen	Share practice	Поділитися вправою
 Mit diesem Link oder QR-Code bekommen Kinder genau diese Übung – zum Beispiel als Hausaufgabe. Alles steht im Link, es wird nichts gespeichert.	With this link or QR code, children get exactly this practice – for example as homework. Everything is in the link; nothing is stored.	За цим посиланням або QR-кодом діти отримають саме цю вправу – наприклад, як домашнє завдання. Усе міститься в посиланні, нічого не зберігається.
-Link teilen	Share link	Поділитися посиланням
 Link kopieren	Copy link	Копіювати посилання
 Link kopiert ✓	Link copied ✓	Посилання скопійовано ✓
 Letzte Übung starten	Start last practice	Почати останню вправу
@@ -2400,7 +2390,6 @@ Gerätestimme (automatisch)	Device voice (automatic)	Голос пристрою
 Die Stimme Nova ist eine mit KI (OpenAI) erzeugte Stimme. Die festen Texte der App werden von uns vorab vertont; von deinem Gerät werden keine Daten an OpenAI übertragen. Die Audiodateien lädt die App bei Bedarf von stimmen.mathenachhilfe-online.com.	The voice Nova is a voice generated with AI (OpenAI). We record the app's fixed texts in advance; no data is sent from your device to OpenAI. The app loads the audio files from stimmen.mathenachhilfe-online.com when needed.	Голос Nova створено за допомогою ШІ (OpenAI). Постійні тексти застосунку ми озвучуємо заздалегідь; з твого пристрою жодні дані не передаються до OpenAI. Аудіофайли застосунок за потреби завантажує зі stimmen.mathenachhilfe-online.com.
 Neu: KI-Stimme „Nova“ für Theorie und Blitz – vorab vertont, deine Daten gehen nicht an OpenAI	New: AI voice “Nova” for theory and Blitz – recorded in advance, your data is not sent to OpenAI	Нове: голос ШІ «Nova» для теорії та Бліца – озвучено заздалегідь, твої дані не передаються до OpenAI
 Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. Texte, die erst in der Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zu dir an unseren Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle.	Reading aloud uses the voice Nova, a voice generated with AI (OpenAI). We record fixed texts in advance. Texts that only come up during a task (e.g. maths problems) are sent by the app, without any information about you, to our server stimmen.mathenachhilfe-online.com; it has them recorded once by OpenAI and stores the audio file. No names, accounts or device IDs are transmitted, and our server keeps no access logs.	Для читання вголос використовується голос Nova, створений за допомогою ШІ (OpenAI). Постійні тексти ми озвучуємо заздалегідь. Тексти, що з’являються лише під час завдання (наприклад, приклади), застосунок надсилає без жодних даних про тебе на наш сервер stimmen.mathenachhilfe-online.com; він один раз озвучує їх через OpenAI і зберігає аудіофайл. Імена, облікові записи чи ідентифікатори пристроїв не передаються, а наш сервер не зберігає журналів доступу.
-Nova – KI-generierte Stimme	Nova – AI-generated voice	Nova – голос, згенерований ШІ
 Neu: Vorlesen nur noch mit der KI-Stimme „Nova“ – auch Aufgaben und Lösungswege, in der Blitzrunde ohne Wartezeit	New: reading aloud now only uses the AI voice “Nova” – including tasks and solution steps, without waiting in the Blitz round	Нове: читання вголос лише голосом ШІ «Nova» – також завдання й розв’язання, у бліц-раунді без очікування
 Sprechtempo	Speaking speed	Темп мовлення
 Sprechtempo in den Einstellungen wählbar – von {}× bis {}×	Speaking speed can be chosen in the settings – from {}× to {}×	Темп мовлення можна вибрати в налаштуваннях – від {}× до {}×
@@ -2427,3 +2416,16 @@ Abzeichen-Übersicht besser lesbar	Badge overview easier to read	Огляд зн
 Pro-Codes lassen sich jetzt auch auf älteren Handys einlösen	Pro codes can now be redeemed on older phones too	Коди Pro тепер можна активувати й на старіших телефонах
 Ukrainisch liest nur noch die Stimme Nova vor	Ukrainian is now read aloud only by the Nova voice	Українською тепер читає вголос лише голос Nova
 Rechenblitz Pro ist da: Profi-Stufe, mehr Profile, Elternbericht und Vorlagen für einmalig {},{} € – alles andere bleibt kostenlos	Rechenblitz Pro is here: Pro level, more profiles, parent report and templates for a one-off €{}.{} – everything else stays free	Rechenblitz Pro вже тут: рівень Профі, більше профілів, звіт для батьків і шаблони за одноразові {},{} € – усе інше залишається безкоштовним
+{} Räume, {} Herzen, Rechen-Karten – schaffst du den Wächter?	{} rooms, {} hearts, maths cards – can you beat the Guardian?	{} кімнат, {} сердець, картки-обчислення – чи переможеш Вартового?
+Spiel eine Rechen-Karte	Play a maths card	Зіграй картку-обчислення
+Eine Karte pro Kampf – oder ohne Karte kämpfen.	One card per fight – or fight without a card.	Одна картка на бій – або бийся без картки.
+Ohne Karte kämpfen	Fight without a card	Битися без картки
+Neue Rechen-Karte!	New maths card!	Нова картка-обчислення!
+Wähle eine für dein Deck.	Choose one for your deck.	Вибери одну для своєї колоди.
+Der nächste Fehler kostet kein Herz.	Your next mistake costs no heart.	Наступна помилка не забирає серця.
+Aufgaben mit diesem Trick – jeder Treffer macht {} Schaden mehr.	Tasks for this trick – every hit does {} extra damage.	Завдання з цим трюком – кожне влучання завдає на {} шкоди більше.
+🛡️ Probe schützt!	🛡️ Your check protects you!	🛡️ Перевірка захищає!
+Karten	cards	карток
+Zahlen-Dungeon: neue Rechen-Karten 🃏 – echte Rechentricks wie Zehnerfreund, Verdoppeln oder Fünfer-Trick	Number dungeon: new maths cards 🃏 – real mental maths tricks like make ten, doubling or the fives trick	Числове підземелля: нові картки-обчислення 🃏 – справжні трюки усного рахунку: друг десятки, подвоєння чи трюк з п’ятіркою
+Vor jedem Kampf eine Karte spielen: Aufgaben mit diesem Trick machen mehr Schaden, die Probe schützt ein Herz	Play a card before each fight: tasks with that trick do more damage, the check protects a heart	Перед кожним боєм зіграй картку: завдання з цим трюком завдають більше шкоди, перевірка захищає серце
+Nach jedem Sieg eine neue Karte für dein Deck	A new card for your deck after every win	Після кожної перемоги – нова картка для твоєї колоди

@@ -5,18 +5,65 @@
    Gegner = Aufgaben: Jede richtige Antwort ist ein Treffer (schnell = Volltreffer, doppelter Schaden),
    jede falsche kostet ein Herz – danach kommt wie immer der Lösungsweg. Im letzten Raum wartet der Wächter.
    Aufgaben: Themen der eingestellten Klasse (sonst das gewählte Thema und die aktuelle Stufe).
-   Vorbereitet für Tag 7/8: Rechen-Karten (Strategien) und mehr Bosse.
+   Tag 7 (Dungeon 2): Rechen-Karten – echte Strategien als Spielzüge, Deck wächst mit jedem Sieg. Tag 8: Bosse, Freischaltungen.
    ===================================================================== */
 const DG = { ROOMS: 7, HEARTS: 5 };
 const DG_MON = {
-  schleim: { name: 'Schleimi', hp: 2 },
-  fleder: { name: 'Flatter', hp: 3 },
-  geist: { name: 'Der Zahlengeist', hp: 3 },
-  golem: { name: 'Steinbeißer', hp: 4 },
-  waechter: { name: 'Der Wächter', hp: 6, boss: true },
+  // Lebenspunkte seit Dungeon 2 höher: Rechen-Karten machen +1 Schaden, ein Lauf soll trotzdem 3–5 Minuten dauern
+  schleim: { name: 'Schleimi', hp: 3 },
+  fleder: { name: 'Flatter', hp: 4 },
+  geist: { name: 'Der Zahlengeist', hp: 5 },
+  golem: { name: 'Steinbeißer', hp: 6 },
+  waechter: { name: 'Der Wächter', hp: 9, boss: true },
 };
 const DG_DEPTH = [['schleim', 'fleder'], ['schleim', 'fleder'], ['fleder', 'geist'], ['fleder', 'geist'], ['geist', 'golem'], ['geist', 'golem']];
 let DGN = null;   // laufender Dungeon
+
+/* ---------- Rechen-Karten (Roadmap Tag 7): jede Karte ist eine echte Rechenstrategie ----------
+   Vor jedem Kampf ziehst du bis zu 3 Karten und kannst eine spielen: Dann kommen Aufgaben, bei denen genau dieser Trick hilft,
+   und jeder Treffer macht 1 Schaden mehr. „Probe“ ist ein Schild. Nach jedem besiegten Monster wählst du 1 von 2 neuen Karten. */
+// Klassenstufe fürs Karten-Niveau: eingestellte Klasse, sonst aus der aktuellen Stufe geschätzt
+const dgK = () => S.settings.klasse || [1, 2, 3, 4, 6, 8][Math.min(5, currentLevel(S.sel.op === 'mix' ? 'add' : S.sel.op))];
+const DG_CARDS = {
+  zehner: { icon: '⑩', name: 'Zehnerfreund', k: 1, trick: 'Erst bis zum Zehner auffüllen: 8 + 5 = 8 + 2 + 3',
+    gen: k => { const a = k <= 2 ? rnd(6, 9) : 10 * rnd(2, 8) + rnd(5, 9), u = a % 10, b = rnd(11 - u, 9), f = 10 - u;
+      return { e: [N(a), O('+'), N(b)], a: I(a + b), w: [`Zerlege ${b} in ${f} + ${b - f}, um zum Zehner zu springen:`, `${a} + ${f} = ${a + f}`, `${a + f} + ${b - f} = ${a + b}`] }; } },
+  doppel: { icon: '✌️', name: 'Verdoppeln', k: 1, trick: 'Zehner und Einer getrennt verdoppeln: 2 · 34 = 60 + 8',
+    gen: k => { const x = k <= 2 ? rnd(6, 25) : k <= 4 ? rnd(26, 99) : rnd(101, 499); return { e: [T('das Doppelte von'), N(x)], a: I(2 * x), w: dblW(x) }; } },
+  halb: { icon: '✂️', name: 'Halbieren', k: 2, trick: 'Geschickt zerlegen: die Hälfte von 152 = 70 + 6',
+    gen: k => { const x = k <= 3 ? 2 * rnd(6, 49) : 2 * rnd(51, 499); return { e: [T('die Hälfte von'), N(x)], a: I(x / 2), w: hlfW(x) }; } },
+  tausch: { icon: '🔄', name: 'Tauschaufgabe', k: 1, trick: 'Die kleine Zahl zur großen: 3 + 48 = 48 + 3',
+    gen: k => { const a = rnd(2, 9), b = k <= 2 ? rnd(11, 19) : k <= 4 ? rnd(31, 89) : rnd(120, 890);
+      return { e: [N(a), O('+'), N(b)], a: I(a + b), w: [`Tauschen: ${a} + ${b} = ${b} + ${a}`, `${b} + ${a} = ${a + b}`] }; } },
+  neun: { icon: '9️⃣', name: 'Neuner-Trick', k: 2, trick: '+ 9 ist + 10 − 1, und · 9 ist · 10 minus einmal',
+    gen: k => { if (k <= 3) { const a = rnd(13, 79); return { e: [N(a), O('+'), N(9)], a: I(a + 9), w: ['+ 9 = + 10 − 1', `${a} + 10 = ${a + 10}`, `${a + 10} − 1 = ${a + 9}`] }; }
+      const n = rnd(12, 45); return { e: [N(n), O('·'), N(9)], a: I(9 * n), w: [`${n} · 9 = ${n} · 10 − ${n}`, `${n} · 10 = ${10 * n}`, `${10 * n} − ${n} = ${9 * n}`] }; } },
+  fuenf: { icon: '🖐️', name: 'Fünfer-Trick', k: 3, trick: '· 5 ist · 10 und dann halbieren: 46 · 5 = 460 : 2',
+    gen: k => { const n = k <= 4 ? 2 * rnd(6, 49) : 2 * rnd(50, 240); return { e: [N(n), O('·'), N(5)], a: I(5 * n), w: [`${n} · 5 = ${n} · 10 : 2`, `${n} · 10 = ${10 * n}`, `${10 * n} : 2 = ${5 * n}`] }; } },
+  komma: { icon: '↔️', name: 'Kommaschieber', k: 5, trick: '· 10, · 100: Komma nach rechts – : 10, : 100: Komma nach links',
+    gen: () => GEN.dec(2) },
+  probe: { icon: '🛡️', name: 'Probe', k: 1, shield: true, trick: 'Rechne rückwärts zur Kontrolle: 12 − 5 = 7, denn 7 + 5 = 12' },
+};
+// Namen und Tricks der Karten als ganze Sätze je Sprache (nicht über die automatische Übersetzung – Rechenzeichen bleiben richtig)
+const DG_CARDS_I18N = {
+  en: { zehner: ['Make ten', 'First fill up to the ten: 8 + 5 = 8 + 2 + 3'], doppel: ['Doubling', 'Double tens and ones separately: 2 × 34 = 60 + 8'],
+    halb: ['Halving', 'Split cleverly: half of 152 = 70 + 6'], tausch: ['Swap it', 'Add the small number to the big one: 3 + 48 = 48 + 3'],
+    neun: ['Nines trick', '+ 9 is + 10 − 1, and × 9 is × 10 minus one lot'], fuenf: ['Fives trick', '× 5 is × 10 and then halve: 46 × 5 = 460 ÷ 2'],
+    komma: ['Point shifter', '× 10, × 100: point to the right – ÷ 10, ÷ 100: point to the left'], probe: ['Check', 'Work backwards to check: 12 − 5 = 7, because 7 + 5 = 12'] },
+  uk: { zehner: ['Друг десятки', 'Спершу доповни до десятка: 8 + 5 = 8 + 2 + 3'], doppel: ['Подвоєння', 'Подвоюй десятки й одиниці окремо: 2 · 34 = 60 + 8'],
+    halb: ['Половина', 'Розкладай вдало: половина від 152 = 70 + 6'], tausch: ['Переставляння', 'Менше число до більшого: 3 + 48 = 48 + 3'],
+    neun: ['Трюк з дев’яткою', '+ 9 – це + 10 − 1, а · 9 – це · 10 мінус один раз'], fuenf: ['Трюк з п’ятіркою', '· 5 – це · 10 і поділити навпіл: 46 · 5 = 460 : 2'],
+    komma: ['Посувач коми', '· 10, · 100: кома праворуч – : 10, : 100: кома ліворуч'], probe: ['Перевірка', 'Перевір у зворотному порядку: 12 − 5 = 7, бо 7 + 5 = 12'] },
+};
+const dgCardText = id => { const t = (DG_CARDS_I18N[I18N.lang] || {})[id]; return t ? { name: t[0], trick: t[1] } : { name: DG_CARDS[id].name, trick: DG_CARDS[id].trick }; };
+const dgEligible = () => Object.keys(DG_CARDS).filter(id => DG_CARDS[id].k <= dgK());
+const dgEffect = c => c.shield ? 'Der nächste Fehler kostet kein Herz.' : 'Aufgaben mit diesem Trick – jeder Treffer macht 1 Schaden mehr.';
+function dgCardHtml(id, attrs = '') {
+  const c = DG_CARDS[id];
+  const tx = dgCardText(id), keep = x => esc(x).replace(/([+−·:×÷=]) (?=[\d(])/g, '$1\u00a0').replace(/(\d) (?=[+−·:×÷=])/g, '$1\u00a0');   // Rechnungen nicht umbrechen
+  return `<button class="dg-card ${c.shield ? 'shield' : ''}" ${attrs}><span class="dg-card-ico" aria-hidden="true">${c.icon}</span><b translate="no">${esc(tx.name)}</b><span class="dg-card-fx">${esc(dgEffect(c))}</span><span class="dg-card-trick" translate="no">${keep(tx.trick)}</span></button>`;
+}
+function dgFound(id) { const st = dgState(); st.cards = st.cards || {}; st.cards[id] = (st.cards[id] || 0) + 1; }
 const dgState = () => S.dungeon || (S.dungeon = { best: 0, runs: 0, wins: 0, beaten: 0 });
 
 /** gezeichnete Monster (eigene SVGs) */
@@ -48,7 +95,10 @@ function dgInfo() {
 
 function startDungeon() {
   if (Sheet.open) closeSheet();
-  DGN = { room: 0, hearts: DG.HEARTS, mon: null, beaten: 0, chests: 0, funken: 0, won: false, dead: false, recent: [] };
+  const el = shuffle(dgEligible().filter(id => id !== 'probe'));
+  DGN = { room: 0, hearts: DG.HEARTS, mon: null, beaten: 0, chests: 0, funken: 0, won: false, dead: false, recent: [],
+    draw: shuffle(['probe', el[0], el[1]].filter(Boolean)), discard: [], card: null, shield: false, reward: false };   // Startdeck: Probe + 2 Strategien
+  DGN.draw.forEach(dgFound);
   dgState().runs++; save();
   startGame('dungeon', { gen: dgGen, op: 'mix', lvl: 0, title: 'Zahlen-Dungeon' });
   dgHud();
@@ -58,6 +108,14 @@ function dgGen() {
   if (!DGN.mon || DGN.mon.dead) setTimeout(dgDoors, 30);   // zwischen zwei Räumen: zuerst die Türen
   const boss = DGN.mon && !DGN.mon.dead && DG_MON[DGN.mon.kind].boss, tops = dgTopics();
   let t;
+  const c = DGN.card && DG_CARDS[DGN.card];
+  if (c && c.gen) {   // gespielte Rechen-Karte: Aufgaben, bei denen genau dieser Trick hilft
+    for (let i = 0; i < 20; i++) { t = c.gen(dgK() + (boss ? 1 : 0)); if (!DGN.recent.includes(keyOf({ ...t, topic: 'dgc' }))) break; }
+    t.topic = t.topic || (DGN.card === 'komma' ? 'dec' : DGN.card === 'doppel' || DGN.card === 'halb' ? 'doppel' : ['fuenf', 'neun'].includes(DGN.card) && t.e[1].v === '·' ? 'mul' : 'add');
+    t.lvl = t.lvl ?? Math.min(4, Math.max(0, dgK() - 1)); t.dgCard = DGN.card;
+    DGN.recent.push(keyOf(t)); if (DGN.recent.length > 12) DGN.recent.shift();
+    return t;
+  }
   for (let i = 0; i < 20; i++) {
     const [tp, l] = pick(tops), lvl = Math.min(l + (boss ? 1 : 0), Math.max(l, 4));
     t = makeTask(tp, lvl); if (!DGN.recent.includes(keyOf(t))) break;
@@ -72,7 +130,8 @@ function dgHud() {
   if (!el) { el = document.createElement('div'); el.id = 'dgHud'; el.className = 'dg-hud'; $('game').insertBefore(el, $('game').querySelector('.win')); }
   if (!DGN) return;
   const m = DGN.mon, def = m && DG_MON[m.kind];
-  el.innerHTML = `<div class="dg-me"><div class="dg-hearts" aria-label="Herzen">${dgHearts()}</div><span class="dg-room">Raum ${Math.min(DGN.room, DG.ROOMS)}/${DG.ROOMS}</span></div>
+  const chip = DGN.card ? `<span class="dg-chip">${DG_CARDS[DGN.card].icon} <span translate="no">${esc(dgCardText(DGN.card).name)}</span> +1</span>` : DGN.shield ? '<span class="dg-chip">🛡️ <span>Probe</span></span>' : '';
+  el.innerHTML = `<div class="dg-me"><div class="dg-hearts" aria-label="Herzen">${dgHearts()}</div><span class="dg-room">Raum ${Math.min(DGN.room, DG.ROOMS)}/${DG.ROOMS}</span>${chip}</div>
     ${m ? `<div class="dg-foe ${m.dead ? 'dead' : ''} ${def.boss ? 'boss' : ''}"><div class="dg-mon" id="dgMon">${dgMonSvg(m.kind, def.boss ? 62 : 54)}</div>
       <div class="dg-foeinfo"><b>${esc(def.name)}</b><div class="dg-hp"><i style="width:${Math.max(0, m.hp) / m.max * 100}%"></i></div></div></div>` : '<div class="dg-foe empty"></div>'}`;
 }
@@ -86,22 +145,55 @@ function dgAnswer(ok, dt, t) {
   if (!DGN || !DGN.mon || DGN.mon.dead) return;
   const m = DGN.mon, def = DG_MON[m.kind];
   if (ok) {
-    const crit = dt < (t && t.story ? 12000 : 4000), dmg = crit ? 2 : 1;
-    m.hp -= dmg; dgHud(); $('dgMon')?.classList.add('hit'); dgFloat(crit ? `−${dmg} Volltreffer!` : `−${dmg}`, crit ? 'crit' : '');
+    const crit = dt < (t && t.story ? 12000 : 4000), bonus = t && t.dgCard && t.dgCard === DGN.card ? 1 : 0, dmg = (crit ? 2 : 1) + bonus;
+    m.hp -= dmg; dgHud(); $('dgMon')?.classList.add('hit'); dgFloat(`−${dmg}${crit ? ' Volltreffer!' : ''}${bonus ? ' 🃏' : ''}`, crit ? 'crit' : '');
     Sound.tone(crit ? 45 : 50, 0, .09, 'square', .12); Sound.tone(crit ? 40 : 45, .07, .12, 'square', .1);
     if (m.hp <= 0) {
-      m.dead = true; DGN.beaten++; dgState().beaten++;
+      m.dead = true; DGN.beaten++; dgState().beaten++; dgEndFight(); if (!def.boss) DGN.reward = true;
       const f = def.boss ? 20 : 3; DGN.funken += f; addFunken(f);
       setTimeout(() => { if (DGN && DGN.mon === m) { dgHud(); dgFloat(`+${f} 💫`, 'gold'); } }, 150);
       [0, 4, 7, 12].forEach((n, i) => Sound.tone(67 + n, .15 + i * .08, .18, 'triangle', .14));
       if (def.boss) { DGN.won = true; DGN.room = DG.ROOMS; Confetti.burst(90); }
     }
+  } else if (DGN.shield) {   // Karte „Probe“: dieser Fehler kostet kein Herz
+    DGN.shield = false; dgHud(); dgFloat('🛡️ Probe schützt!', 'gold'); Sound.tone(72, 0, .2, 'triangle', .1);
   } else {
     DGN.hearts--; dgHud(); vibrate([80, 40, 80]);
     $('game').classList.remove('dg-ouch'); void $('game').offsetWidth; $('game').classList.add('dg-ouch');
     Sound.tone(40, 0, .25, 'sawtooth', .12, 33);
     if (DGN.hearts <= 0) DGN.dead = true;
   }
+}
+
+function dgEndFight() { if (DGN.card) DGN.discard.push(DGN.card); DGN.card = null; DGN.shield = false; }
+function dgDrawHand() {
+  const hand = [];
+  while (hand.length < 3) {
+    if (!DGN.draw.length) { if (!DGN.discard.length) break; DGN.draw = shuffle(DGN.discard); DGN.discard = []; }
+    hand.push(DGN.draw.pop());
+  }
+  return hand;
+}
+// vor dem Kampf: eine Karte spielen (oder ohne kämpfen); ungespielte Karten gehen zurück in den Stapel
+function dgHand(go) {
+  const hand = dgDrawHand();
+  if (!hand.length) return go();
+  const ov = dgOverlay(`<div class="dg-handbox"><b>Spiel eine Rechen-Karte</b><p class="small">Eine Karte pro Kampf – oder ohne Karte kämpfen.</p>
+    <div class="dg-hand">${hand.map((id, i) => dgCardHtml(id, `data-c="${i}"`)).join('')}</div>
+    <button class="btn" id="dgNoCard">Ohne Karte kämpfen</button></div>`);
+  const done = i => { Sound.click(); hand.forEach((id, j) => { if (j !== i) DGN.draw.unshift(id); });
+    if (i >= 0) { const id = hand[i]; if (DG_CARDS[id].shield) { DGN.shield = true; DGN.discard.push(id); } else DGN.card = id; }
+    dgHud(); go(); };
+  ov.querySelectorAll('[data-c]').forEach(b => b.onclick = () => done(+b.dataset.c));
+  $('dgNoCard').onclick = () => done(-1);
+}
+// nach einem Sieg: 1 von 2 neuen Karten ins Deck
+function dgReward(then) {
+  DGN.reward = false;
+  const opts = shuffle(dgEligible()).slice(0, 2);
+  const ov = dgOverlay(`<div class="dg-handbox"><div class="dg-big">🃏</div><b>Neue Rechen-Karte!</b><p class="small">Wähle eine für dein Deck.</p>
+    <div class="dg-hand">${opts.map((id, i) => dgCardHtml(id, `data-c="${i}"`)).join('')}</div></div>`);
+  ov.querySelectorAll('[data-c]').forEach(b => b.onclick = () => { Sound.hint(); const id = opts[+b.dataset.c]; DGN.discard.push(id); dgFound(id); save(); then(); });
 }
 
 /* ---------- Türen zwischen den Räumen ---------- */
@@ -113,6 +205,7 @@ function dgCloseOverlay() { $('dgOv')?.remove(); }
 function dgDoors() {
   if (!G || G.mode !== 'dungeon' || G.over || !DGN || DGN.won || DGN.dead || (DGN.mon && !DGN.mon.dead)) return;
   G.paused = true; $('solution').hidden = true;
+  if (DGN.reward) return dgReward(dgDoors);
   const last = DGN.room >= DG.ROOMS - 1;
   let doors;
   if (last) doors = [{ type: 'boss' }];
@@ -143,9 +236,10 @@ function dgEnter(type) {
   const kind = type === 'boss' ? 'waechter' : pick(DG_DEPTH[Math.min(DGN.room - 1, DG_DEPTH.length - 1)]), def = DG_MON[kind];
   DGN.mon = { kind, hp: def.hp, max: def.hp, dead: false };
   dgHud(); dgCloseOverlay();
-  dgOverlay(`<div class="dg-intro ${def.boss ? 'boss' : ''}">${dgMonSvg(kind, 120)}<b>${esc(def.name)}</b><span>${def.boss ? 'Besiege ihn mit 6 Treffern!' : `${def.hp} Treffer besiegen das Monster.`}</span></div>`);
+  dgOverlay(`<div class="dg-intro ${def.boss ? 'boss' : ''}">${dgMonSvg(kind, 120)}<b>${esc(def.name)}</b><span>${def.boss ? `Besiege ihn mit ${def.hp} Treffern!` : `${def.hp} Treffer besiegen das Monster.`}</span></div>`);
   Sound.tone(def.boss ? 36 : 48, 0, .3, 'sawtooth', .08, def.boss ? 30 : 44);
-  setTimeout(() => { if (!G || G.mode !== 'dungeon' || G.over) return; dgCloseOverlay(); G.paused = false; G.locked = false; nextTask(); }, def.boss ? 1400 : 900);
+  setTimeout(() => { if (!G || G.mode !== 'dungeon' || G.over) return;
+    dgHand(() => { dgCloseOverlay(); G.paused = false; G.locked = false; nextTask(); }); }, def.boss ? 1400 : 900);
 }
 
 /** Ergebnis-Karte */
@@ -160,16 +254,16 @@ function dgFinish() {
     : DGN.dead ? `${dgMonSvg(DGN.mon ? DGN.mon.kind : 'schleim', 64)}<div><b>Keine Herzen mehr …</b><span>Raum ${reached} von ${DG.ROOMS} – beim nächsten Mal kommst du weiter!</span></div>`
       : `${dgMonSvg('schleim', 56)}<div><b>Lauf beendet</b><span>Raum ${reached} von ${DG.ROOMS}</span></div>`;
   return `<div class="card dg-res ${DGN.won ? 'won' : ''}"><div class="dg-res-head">${head}</div>
-    <div class="dg-res-stats"><span>👾 <b>${DGN.beaten}</b> besiegt</span><span>💎 <b>${DGN.chests}</b> Schätze</span><span>💫 <b>+${DGN.funken}</b></span></div>
+    <div class="dg-res-stats"><span>👾 <b>${DGN.beaten}</b> besiegt</span><span>💎 <b>${DGN.chests}</b> Schätze</span><span>💫 <b>+${DGN.funken}</b></span><span>🃏 <b>${DGN.draw.length + DGN.discard.length + (DGN.card ? 1 : 0)}</b> Karten</span></div>
     ${rec ? '<span class="newbest">Neuer Rekord!</span>' : `<span class="small muted">Rekord: Raum ${st.best} von ${DG.ROOMS}${st.wins ? ` · ${st.wins}× geschafft` : ''}</span>`}</div>`;
 }
 
 /* ---------- Startseite ---------- */
 function renderDungeonCard() {
   const el = $('dungeonCard'); if (!el) return;
-  const st = dgState();
+  const st = dgState(), coll = Object.keys(st.cards || {}).length;
   el.hidden = false;
-  el.innerHTML = `<div class="ch-ico dg-ico" aria-hidden="true">${dgMonSvg('schleim', 40)}</div><div class="ch-txt"><b>Zahlen-Dungeon</b><span>${st.runs ? `Rekord: Raum ${st.best}/${DG.ROOMS}${st.wins ? ` · ${st.wins}× geschafft 👑` : ''}` : '7 Räume, 5 Herzen – schaffst du den Wächter?'}</span></div>
+  el.innerHTML = `<div class="ch-ico dg-ico" aria-hidden="true">${dgMonSvg('schleim', 40)}</div><div class="ch-txt"><b>Zahlen-Dungeon</b><span>${st.runs ? `Rekord: Raum ${st.best}/${DG.ROOMS}${st.wins ? ` · ${st.wins}× geschafft 👑` : ''}${coll ? ` · 🃏 ${coll}/${Object.keys(DG_CARDS).length}` : ''}` : '7 Räume, 5 Herzen, Rechen-Karten – schaffst du den Wächter?'}</span></div>
     <button class="btn small primary" id="dgGo">Los</button>`;
   $('dgGo').onclick = () => { Sound.init(); Sound.click(); startDungeon(); };
 }

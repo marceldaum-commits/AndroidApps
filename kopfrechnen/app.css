@@ -1070,3 +1070,17 @@ button.badge{font:inherit;cursor:pointer}
 .badge:not(.on) span{opacity:.45;filter:grayscale(1)}
 .badge:not(.on) b{color:var(--text)}
 .badge:not(.on) small{color:var(--muted)}
+/* ---------- Zahlen-Dungeon 2: Rechen-Karten ---------- */
+.dg-handbox{display:grid;gap:10px;justify-items:center;text-align:center;max-width:560px;margin:auto}
+.dg-handbox>b{font-size:20px}.dg-handbox p{margin:0}
+.dg-hand{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;width:100%}
+.dg-card{display:grid;gap:4px;align-content:start;justify-items:center;padding:12px 10px;border-radius:16px;border:2px solid #ffd166;background:linear-gradient(160deg,#2b2350,#1b1638);color:#fff;font:inherit;cursor:pointer;text-align:center;box-shadow:0 6px 16px rgba(0,0,0,.35);transition:transform .15s}
+.dg-card:hover,.dg-card:focus-visible{transform:translateY(-3px)}
+.dg-card.shield{border-color:#7fd3ff;background:linear-gradient(160deg,#1f3a50,#14243a)}
+.dg-card-ico{font-size:30px;line-height:1}
+.dg-card b{font-size:16px}
+.dg-card-fx{font-size:12.5px;color:#ffe3a3}
+.dg-card.shield .dg-card-fx{color:#bfe8ff}
+.dg-card-trick{font-size:12.5px;color:#d9def0;line-height:1.35}
+.dg-chip{margin-left:auto;padding:2px 8px;border-radius:999px;background:rgba(255,209,102,.18);color:#ffd166;font-size:12.5px;font-weight:800;white-space:nowrap}
+.dg-handbox #dgNoCard{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.55);color:#fff}

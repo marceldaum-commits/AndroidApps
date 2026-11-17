@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.25.4';
+const APP_VERSION = '3.26.0';
 const APP_DATE = '2026-11-17';
 const CHANGELOG = [
+  ['3.26.0', '2026-11-17', ['Zahlen-Dungeon: neue Rechen-Karten 🃏 – echte Rechentricks wie Zehnerfreund, Verdoppeln oder Fünfer-Trick', 'Vor jedem Kampf eine Karte spielen: Aufgaben mit diesem Trick machen mehr Schaden, die Probe schützt ein Herz', 'Nach jedem Sieg eine neue Karte für dein Deck']],
   ['3.25.4', '2026-11-17', ['Rechenblitz Pro ist da: Profi-Stufe, mehr Profile, Elternbericht und Vorlagen für einmalig 7,99 € – alles andere bleibt kostenlos']],
   ['3.25.3', '2026-11-17', ['Pro-Codes lassen sich jetzt auch auf älteren Handys einlösen', 'Ukrainisch liest nur noch die Stimme Nova vor']],
   ['3.25.2', '2026-11-17', ['Fehler behoben: Wer früher den Ton ausgeschaltet hatte, bekommt nach dem Update auch keine Musik', 'Klassen-Challenge: verständliche Meldung ohne Internet, alle Texte übersetzt', 'Abzeichen-Übersicht besser lesbar']],

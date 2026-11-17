@@ -2,7 +2,42 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67.** **3.25.3: Pro startklar (Shop/Lizenz-Dienst nötig), Datenschutz-Fund, Ukrainisch nur Nova, Git-Bereinigung vorbereitet (Meldung 68).** **3.25.4: Test-Code ✓, Pro eingeschaltet – live erst nach Website-Freigabe af9af9fd (Meldung 69).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67.** **3.25.3: Pro startklar (Shop/Lizenz-Dienst nötig), Datenschutz-Fund, Ukrainisch nur Nova, Git-Bereinigung vorbereitet (Meldung 68).** **3.25.4: Test-Code ✓, Pro eingeschaltet – live erst nach Website-Freigabe af9af9fd (Meldung 69).** **3.26.0: Zahlen-Dungeon 2 mit Rechen-Karten (Meldung 71) – neue Funktion, bitte erst nach dem Betriebstest live.** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (71) – Zahlen-Dungeon 2: Rechen-Karten (3.26.0, Roadmap Tag 7)
+
+Auftrag Marcel: „weiter mit Zahlen-Dungeon 2“. Das ist eine neue Funktion, obwohl Betriebstest-Woche ist; Marcel hat entschieden. **Bitte erst nach dem Betriebstest live nehmen**, sofern ihr nichts anderes sagt.
+
+- **Rechen-Karten:** Jede Karte ist ein echter Kopfrechen-Trick und zeigt ein Beispiel. Es gibt 8 Karten:
+
+  | Karte | Trick | ab Klasse |
+  |---|---|---|
+  | ⑩ Zehnerfreund | erst zum Zehner auffüllen | 1 |
+  | ✌️ Verdoppeln | Zehner und Einer getrennt | 1 |
+  | 🔄 Tauschaufgabe | kleine Zahl zur großen | 1 |
+  | ✂️ Halbieren | geschickt zerlegen | 2 |
+  | 9️⃣ Neuner-Trick | + 9 = + 10 − 1, · 9 = · 10 − einmal | 2 |
+  | 🖐️ Fünfer-Trick | · 5 = · 10 : 2 | 3 |
+  | ↔️ Kommaschieber | · 10, : 100 … Komma schieben | 5 |
+  | 🛡️ Probe | rückwärts kontrollieren – Schild | 1 |
+
+- **So spielt es sich:**
+  - Start-Deck: Probe plus 2 Strategie-Karten passend zur Klasse.
+  - **Vor jedem Kampf** zieht man bis zu 3 Karten und spielt eine (oder kämpft ohne). Ungespielte Karten gehen zurück in den Stapel; ist er leer, wird neu gemischt.
+  - **Strategie-Karte gespielt:** Das Monster stellt Aufgaben, bei denen genau dieser Trick hilft, und **jeder Treffer macht 1 Schaden mehr**. Nach einem Fehler zeigt der Lösungsweg den Trick Schritt für Schritt.
+  - **Probe:** Der nächste Fehler kostet kein Herz.
+  - **Nach jedem besiegten Monster** wählt man 1 von 2 neuen Karten für das Deck (Deckbau).
+  - **Sammlung:** gefundene Karten werden gemerkt. Startseite: „🃏 x/8“, Ergebnis: Kartenzahl im Deck. Das ist die Vorbereitung für Dungeon 3 (Freischaltungen).
+- **Ausgewogenheit:** Monster haben mehr Lebenspunkte (Schleimi 3, Flatter 4, Zahlengeist 5, Steinbeißer 6, Wächter 9), weil Karten mehr Schaden machen.
+  - Vollautomatischer Durchlauf: 10 Aufgaben, wenn jede Antwort sofort und richtig ist und jedes Mal eine Karte gespielt wird; 17–19 mit Fehlern.
+  - Feinabstimmung je Klasse kommt in Dungeon 3.
+- **Sprachen:** Karten-Namen und Tricks sind als ganze Sätze in DE/EN/UK geschrieben, damit Rechenzeichen richtig bleiben. Rechnungen brechen nicht mitten im Ausdruck um.
+- **Geprüft:**
+  - **30 800 Karten-Aufgaben unabhängig nachgerechnet: 0 falsch;** 57 200 Lösungsweg-Gleichungen: 0 Abweichungen; keine zu lang fürs Eingabefeld.
+  - Komplette Läufe in DE/EN/UK, gewonnen und verloren ✓.
+  - Karte spielen, Bonus-Schaden, Schild, Belohnung, Deck, Sammlung ✓.
+  - 320/360/1366 px ohne Überlauf; axe 0 Verstöße (Kartenwahl); keine fehlenden Übersetzungen; Zufallstest ✓; Schwierigkeitstest ✓.
+- Bildschirmfotos: `meldungen/rechenblitz-dungeon2-karten.png`, `meldungen/rechenblitz-dungeon2-belohnung.png`.
 
 ## 17.11.2026 (70) – Store-Text angepasst; Git-Bereinigung: Skript bereit (aus dieser Sitzung gesperrt)
 
