@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.1.0 – 🔒 Thorsten-Stimme von unserem eigenen Server
+- Die natürliche Stimme „Thorsten“ kommt jetzt von unserem eigenen Server (stimmen.mathenachhilfe-online.com) statt von
+  einem fremden Anbieter. Wie bisher nur, wenn man sie ausdrücklich lädt (ca. 75 MB, am besten im WLAN), mit Prüfsumme;
+  danach spricht Thorsten ohne Internet. Wer Thorsten schon geladen hatte, lädt ihn einmal neu.
+- Auf Android rechnet Thorsten jetzt mit derselben Technik wie im Browser – die App wird dadurch etwas kleiner.
+
 ## 2.0.0 – 🚀 Kurvenflug 2
 - **Neue Versionsnummer**: Mit Vorlesen, eigener Musik, Theorie-Knopf und Pro ist Kurvenflug groß geworden – deshalb jetzt
   Version 2. Kleine Verbesserungen heißen ab jetzt 2.1, 2.2 …, das nächste große Update wird 3.0. Am Spielstand ändert sich

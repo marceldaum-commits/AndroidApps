@@ -436,9 +436,9 @@ class ScreenshotTest {
     }
 
     /** Vorlesen: Stimme wählen, Thorsten mit Datenschutz-Hinweis, Tempo, Probe. */
-    @Test fun readAloudSettings() = shot("99_vorlesen", 1500, prepare = { it.onNodeWithText("Thorsten laden (63 MB)").performScrollTo() }) {
+    @Test fun readAloudSettings() = shot("99_vorlesen", 1500, prepare = { it.onNodeWithText("Thorsten laden (ca. 75 MB)").performScrollTo() }) {
         androidx.compose.runtime.CompositionLocalProvider(de.kurvenflug.app.ui.fx.LocalReader provides FakeReader, de.kurvenflug.app.ui.fx.LocalReadAloud provides true) {
-            SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "0.27.0",
+            SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "2.1.0",
                 update = UpdateState.Idle, onBack = {}, readAloud = true, readVoice = de.kurvenflug.app.ui.fx.Reader.NATURAL)
         }
     }

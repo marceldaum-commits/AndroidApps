@@ -15,7 +15,7 @@ sealed interface PackState {
 
 /**
  * Volt liest vor: Sprechblasen, Aufträge, Rechen-Stern-Fragen und Erklärungen.
- * Android: Sprachausgabe des Geräts bzw. „Thorsten“ (sherpa-onnx). Browser: Stimmen des Browsers bzw. „Thorsten“ (ONNX Runtime Web).
+ * Android: Sprachausgabe des Geräts bzw. „Thorsten“ (ONNX Runtime). Browser: Stimmen des Browsers bzw. „Thorsten“ (ONNX Runtime Web).
  * Beide Wege nutzen dieselbe Aufbereitung ([de.kurvenflug.core.model.Speech]) und dieselbe Lautschrift.
  */
 interface Reader {
@@ -40,9 +40,9 @@ interface Reader {
         const val NATURAL = "thorsten"
         const val NATURAL_LABEL = "Thorsten (natürlich)"
         /** Größe des Stimm-Pakets für den Hinweis vor dem Laden */
-        const val PACK_MB = 63
+        const val PACK_MB = de.kurvenflug.core.model.VoicePack.MB_HINT
         /** Woher das Stimm-Paket kommt (für den Datenschutz-Hinweis) */
-        const val PACK_HOST = "huggingface.co"
+        const val PACK_HOST = de.kurvenflug.core.model.VoicePack.HOST
         const val PROBE = de.kurvenflug.core.model.Speech.PROBE
     }
 }

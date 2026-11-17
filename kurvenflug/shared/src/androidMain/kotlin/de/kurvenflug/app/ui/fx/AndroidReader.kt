@@ -10,13 +10,14 @@ import android.speech.tts.UtteranceProgressListener
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import com.k2fsa.sherpa.onnx.GenerationConfig
-import com.k2fsa.sherpa.onnx.OfflineTts
-import com.k2fsa.sherpa.onnx.OfflineTtsConfig
-import com.k2fsa.sherpa.onnx.OfflineTtsModelConfig
-import com.k2fsa.sherpa.onnx.OfflineTtsVitsModelConfig
+import ai.onnxruntime.OnnxTensor
+import ai.onnxruntime.OrtEnvironment
+import ai.onnxruntime.OrtSession
 import de.kurvenflug.core.model.Lautschrift
 import de.kurvenflug.core.model.Speech
+import de.kurvenflug.core.model.VoicePack
+import java.nio.FloatBuffer
+import java.nio.LongBuffer
 import java.io.File
 import java.net.HttpURLConnection
 import java.net.URL
@@ -28,17 +29,17 @@ import java.util.concurrent.atomic.AtomicInteger
 /**
  * Volt liest vor (Android). Zwei Stimmen:
  *  - die Sprachausgabe des Geräts (nur deutsche Stimmen, die ohne Internet sprechen – es geht kein Text ins Netz),
- *  - „Thorsten“: natürliche Piper-Stimme, rechnet ganz auf dem Gerät (sherpa-onnx). Die große Stimmdatei wird nur auf Wunsch
- *    einmal geladen (von huggingface.co, per Prüfsumme kontrolliert). Die Laute kommen aus der mitgelieferten Lautschrift
- *    (assets/stimme) – kein espeak-ng (GPL) in der App. Kennt die Lautschrift ein Wort nicht, liest diesen Text die Gerätestimme.
- * Übernommen aus Raumlicht (gleicher Weg, gleiche Stimmdatei).
+ *  - „Thorsten“: natürliche Piper-Stimme, rechnet ganz auf dem Gerät (ONNX Runtime, wie die WebApp). Die große Stimmdatei wird nur
+ *    auf Wunsch einmal von unserem eigenen Server geladen ([VoicePack], per Prüfsumme kontrolliert). Die Laute kommen aus der
+ *    mitgelieferten Lautschrift (assets/stimme) – kein espeak-ng (GPL) in der App. Kennt die Lautschrift ein Wort nicht,
+ *    liest diesen Text die Gerätestimme.
  */
 class AndroidReader(context: Context, override val canLoadPack: Boolean) : Reader {
     private val ctx = context.applicationContext
     private val main = android.os.Handler(android.os.Looper.getMainLooper())
 
     override var voices by mutableStateOf(emptyList<VoiceChoice>()); private set
-    override var pack by mutableStateOf<PackState>(if (Pack.installed(ctx)) PackState.Ready else PackState.Missing); private set
+    override var pack by mutableStateOf<PackState>(if (Pack.installed(ctx)) PackState.Ready else { Pack.dropOld(ctx); PackState.Missing }); private set
     override var speaking by mutableStateOf(false); private set
 
     private var wanted = ""
@@ -90,7 +91,7 @@ class AndroidReader(context: Context, override val canLoadPack: Boolean) : Reade
         if (!used) { used = true; tts }
         if (natural()) {
             val laute = sounds?.of(clean)
-            if (engine != null && laute != null) { runCatching { tts.stop() }; sayNatural(clean, laute); return }
+            if (engine != null && laute != null) { runCatching { tts.stop() }; sayNatural(laute); return }
             if (engine == null) loadEngine()
         }
         stopNatural(); sayDevice(clean)
@@ -102,10 +103,12 @@ class AndroidReader(context: Context, override val canLoadPack: Boolean) : Reade
     // ------------------------------------------------------------------ Thorsten
     private val worker = Executors.newSingleThreadExecutor { Thread(it, "volt-stimme").apply { isDaemon = true } }
     private val turn = AtomicInteger(0)
-    @Volatile private var engine: OfflineTts? = null
+    @Volatile private var engine: OrtSession? = null
     @Volatile private var sounds: Lautschrift? = null
+    @Volatile private var tokens: Map<Int, Int> = emptyMap()
     @Volatile private var loading = false
     private var track: AudioTrack? = null
+    private val env by lazy { OrtEnvironment.getEnvironment() }
 
     private fun loadEngine() {
         if (engine != null || loading || !Pack.installed(ctx)) return
@@ -114,9 +117,10 @@ class AndroidReader(context: Context, override val canLoadPack: Boolean) : Reade
             runCatching {
                 val dir = Pack.dir(ctx); Pack.unpackHelpers(ctx)
                 sounds = Lautschrift(File(dir, "saetze.tsv").readLines().asSequence(), File(dir, "woerter.tsv").readLines().asSequence())
-                val e = OfflineTts(null, OfflineTtsConfig(model = OfflineTtsModelConfig(
-                    vits = OfflineTtsVitsModelConfig(model = Pack.model(ctx).path, tokens = File(dir, "tokens.txt").path), numThreads = 2, provider = "cpu")))
-                val sr = e.sampleRate()
+                tokens = Lautschrift.tokens(File(dir, "tokens.txt").readLines().asSequence())
+                val opts = OrtSession.SessionOptions().apply { setIntraOpNumThreads(2) }
+                val e = env.createSession(Pack.model(ctx).path, opts)
+                val sr = VoicePack.SAMPLE_RATE
                 val min = AudioTrack.getMinBufferSize(sr, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_FLOAT)
                 track = AudioTrack.Builder()
                     .setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build())
@@ -128,7 +132,22 @@ class AndroidReader(context: Context, override val canLoadPack: Boolean) : Reade
         }
     }
 
-    private fun sayNatural(clean: String, laute: List<String>) {
+    /** Ein Satz Laute → Klang (Piper: input, input_lengths, scales) */
+    private fun synth(e: OrtSession, sentence: String): FloatArray {
+        val ids = Lautschrift.ids(sentence, tokens).map { it.toLong() }.toLongArray()
+        OnnxTensor.createTensor(env, LongBuffer.wrap(ids), longArrayOf(1, ids.size.toLong())).use { input ->
+            OnnxTensor.createTensor(env, LongBuffer.wrap(longArrayOf(ids.size.toLong())), longArrayOf(1)).use { len ->
+                OnnxTensor.createTensor(env, FloatBuffer.wrap(floatArrayOf(VoicePack.NOISE, 1f / rate, VoicePack.NOISE_W)), longArrayOf(3)).use { scales ->
+                    e.run(mapOf("input" to input, "input_lengths" to len, "scales" to scales)).use { r ->
+                        val fb = (r.get(0) as OnnxTensor).floatBuffer
+                        return FloatArray(fb.remaining()).also { fb.get(it) }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun sayNatural(laute: List<String>) {
         val mine = turn.incrementAndGet()
         runCatching { track?.pause(); track?.flush() }
         worker.execute {
@@ -137,8 +156,12 @@ class AndroidReader(context: Context, override val canLoadPack: Boolean) : Reade
             main.post { speaking = true }
             runCatching {
                 out.play()
-                e.generateWithConfigAndCallback(clean, GenerationConfig(speed = rate, phonemeCodepoints = laute.map { Lautschrift.codepoints(it) }.toTypedArray())) { samples ->
-                    if (mine != turn.get()) 0 else { out.write(samples, 0, samples.size, AudioTrack.WRITE_BLOCKING); 1 }
+                val gap = FloatArray(VoicePack.SAMPLE_RATE * 15 / 100)
+                for (sentence in laute) {
+                    if (mine != turn.get()) break
+                    val samples = synth(e, sentence)
+                    if (mine != turn.get()) break
+                    out.write(samples, 0, samples.size, AudioTrack.WRITE_BLOCKING); out.write(gap, 0, gap.size, AudioTrack.WRITE_BLOCKING)
                 }
                 if (mine == turn.get()) out.stop()
             }
@@ -159,12 +182,12 @@ class AndroidReader(context: Context, override val canLoadPack: Boolean) : Reade
             val part = File(Pack.dir(ctx), Pack.MODEL + ".teil")
             val result = runCatching {
                 Pack.unpackHelpers(ctx)
-                val c = URL(Pack.URL).openConnection() as HttpURLConnection
+                val c = URL(VoicePack.URL).openConnection() as HttpURLConnection
                 c.connectTimeout = 20_000; c.readTimeout = 30_000; c.instanceFollowRedirects = true
                 if (c.responseCode !in 200..299) error("Der Server antwortet mit ${c.responseCode}.")
                 c.inputStream.use { i -> part.outputStream().use { o -> val b = ByteArray(1 shl 16); var done = 0L; var shown = -1
                     while (true) { if (cancelled) error("abgebrochen"); val n = i.read(b); if (n < 0) break; o.write(b, 0, n); done += n
-                        val p = (done * 100 / Pack.SIZE).toInt().coerceIn(0, 99); if (p != shown) { shown = p; main.post { if (pack is PackState.Loading) pack = PackState.Loading(p) } } } } }
+                        val p = (done * 100 / VoicePack.SIZE).toInt().coerceIn(0, 99); if (p != shown) { shown = p; main.post { if (pack is PackState.Loading) pack = PackState.Loading(p) } } } } }
                 if (!Pack.matches(part)) error("Die Datei ist unvollständig oder beschädigt angekommen.")
                 if (!part.renameTo(Pack.model(ctx))) error("Die Datei ließ sich nicht speichern.")
             }
@@ -179,25 +202,24 @@ class AndroidReader(context: Context, override val canLoadPack: Boolean) : Reade
     override fun cancelPack() { cancelled = true }
     override fun removePack() {
         cancelled = true; stopNatural()
-        worker.execute { runCatching { track?.release() }; runCatching { engine?.release() }; track = null; engine = null; sounds = null; Pack.dir(ctx).deleteRecursively() }
+        worker.execute { runCatching { track?.release() }; runCatching { engine?.close() }; track = null; engine = null; sounds = null; Pack.dir(ctx).deleteRecursively() }
         pack = PackState.Missing
     }
 
     fun shutdown() { stop(); if (used) runCatching { tts.shutdown() } }
 
-    /** Das Stimm-Paket „Thorsten“ (dieselbe Datei wie in Raumlicht) */
+    /** Das Stimm-Paket „Thorsten“ auf dem Gerät (Quelle und Prüfsumme: [VoicePack]) */
     object Pack {
         const val MODEL = "de_DE-thorsten-medium.onnx"
-        const val SIZE = 63_201_421L
-        const val SHA256 = "1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6"
-        const val URL = "https://huggingface.co/csukuangfj/vits-piper-de_DE-thorsten-medium/resolve/main/$MODEL"
         fun dir(ctx: Context) = File(ctx.filesDir, "stimme").also { it.mkdirs() }
         fun model(ctx: Context) = File(dir(ctx), MODEL)
-        fun installed(ctx: Context) = model(ctx).let { it.isFile && it.length() == SIZE }
+        /** Ältere Stimmdatei (0.27.0/2.0.0 luden sie noch von huggingface.co) wegräumen – die neue kommt vom eigenen Server */
+        fun dropOld(ctx: Context) { File(ctx.filesDir, "stimme/$MODEL").takeIf { it.isFile && it.length() != VoicePack.SIZE }?.delete() }
+        fun installed(ctx: Context) = model(ctx).let { it.isFile && it.length() == VoicePack.SIZE }
         fun matches(f: File): Boolean {
-            if (!f.isFile || f.length() != SIZE) return false
+            if (!f.isFile || f.length() != VoicePack.SIZE) return false
             val md = MessageDigest.getInstance("SHA-256"); f.inputStream().use { i -> val b = ByteArray(1 shl 16); while (true) { val n = i.read(b); if (n < 0) break; md.update(b, 0, n) } }
-            return md.digest().joinToString("") { "%02x".format(it) } == SHA256
+            return md.digest().joinToString("") { "%02x".format(it) } == VoicePack.SHA256
         }
         /** Zeichenliste und Lautschrift aus der App ins Stimm-Verzeichnis (nach jedem Update neu, damit neue Texte drin sind) */
         fun unpackHelpers(ctx: Context) {

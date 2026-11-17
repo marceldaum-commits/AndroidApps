@@ -167,7 +167,7 @@ private fun NaturalVoiceBox(reader: de.kurvenflug.app.ui.fx.Reader, web: Boolean
             de.kurvenflug.app.ui.fx.PackState.Ready -> {
                 Text("✓ Thorsten ist geladen und spricht ohne Internet.", style = MaterialTheme.typography.bodySmall, color = Q.Green)
                 Text("Unbekannte Wörter (z. B. Spielernamen) liest die normale Stimme.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
-                TextButton(onClick = { reader.removePack() }, contentPadding = PaddingValues(0.dp)) { Text("Stimme entfernen ($mb MB freigeben)", color = Q.Muted) }
+                TextButton(onClick = { reader.removePack() }, contentPadding = PaddingValues(0.dp)) { Text("Stimme entfernen (Speicher freigeben)", color = Q.Muted) }
             }
             is de.kurvenflug.app.ui.fx.PackState.Loading -> {
                 Text("Lade Thorsten … ${p.percent} %", style = MaterialTheme.typography.bodySmall)
@@ -176,12 +176,11 @@ private fun NaturalVoiceBox(reader: de.kurvenflug.app.ui.fx.Reader, web: Boolean
             }
             else -> {
                 Text("Thorsten klingt wie ein echter Mensch und rechnet ganz auf ${if (web) "deinem Gerät" else "dem Handy"}. " +
-                    "Dafür wird einmalig eine Stimmdatei ($mb MB) geladen.", style = MaterialTheme.typography.bodySmall)
-                Text("🔒 Für Eltern: Die Datei kommt von ${de.kurvenflug.app.ui.fx.Reader.PACK_HOST} (externer Anbieter, wie bei jedem Download sieht der Server die IP-Adresse). " +
-                    "Es werden keine Texte und keine Daten über dein Kind gesendet. Danach bleibt alles ${if (web) "in diesem Browser" else "auf dem Gerät"}. " +
-                    "Am besten im WLAN laden.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                    "Dafür wird einmalig eine Stimmdatei geladen (ca. $mb MB – am besten im WLAN).", style = MaterialTheme.typography.bodySmall)
+                Text("🔒 Für Eltern: Die Datei kommt von unserem eigenen Server (${de.kurvenflug.app.ui.fx.Reader.PACK_HOST}), nicht von fremden Anbietern. " +
+                    "Es werden keine Texte und keine Daten über Ihr Kind gesendet. Danach bleibt alles ${if (web) "in diesem Browser" else "auf dem Gerät"} und funktioniert ohne Internet.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                 if (p is de.kurvenflug.app.ui.fx.PackState.Failed) Text("Hat nicht geklappt: ${p.why}", style = MaterialTheme.typography.bodySmall, color = Q.Orange)
-                Button(onClick = { reader.loadPack() }) { Text(if (p is de.kurvenflug.app.ui.fx.PackState.Failed) "Nochmal versuchen" else "Thorsten laden ($mb MB)") }
+                Button(onClick = { reader.loadPack() }) { Text(if (p is de.kurvenflug.app.ui.fx.PackState.Failed) "Nochmal versuchen" else "Thorsten laden (ca. $mb MB)") }
             }
         }
     }
@@ -205,7 +204,7 @@ private const val LICENSES = "Kurvenflug nutzt freie Software. Danke an alle, di
     "Apache License 2.0 (apache.org/licenses/LICENSE-2.0): Kotlin, kotlinx.coroutines, kotlinx.serialization, " +
     "Jetpack Compose und Compose Multiplatform, AndroidX (Activity, Core, Lifecycle, Navigation, Room, Glance, WorkManager, " +
     "Fragment, SavedState, Startup, DataStore), Guava, JSpecify, JetBrains Annotations.\n\n" +
-    "Vorlesen mit „Thorsten“: sherpa-onnx (Apache 2.0) mit ONNX Runtime (MIT), Stimme de_DE-thorsten-medium aus dem Piper-Projekt " +
+    "Vorlesen mit „Thorsten“: ONNX Runtime (MIT), Stimme de_DE-thorsten-medium aus dem Piper-Projekt " +
     "(Stimmdaten von Thorsten Müller, CC0; Modell MIT). Die Lautschrift ist vorab erzeugt – kein espeak-ng in der App.\n\n" +
     "Nur in der Google-Play-Version: Play In-App Updates (Play Core SDK, Nutzungsbedingungen von Google)."
 

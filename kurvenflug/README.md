@@ -107,8 +107,9 @@ Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsw
 Volt liest Sprechblasen, Aufgaben, Rechen-Stern-Fragen und Erklärungen vor (abschaltbar, Stimme und Tempo wählbar, Probe-Taste).
 Formeln und Einheiten werden in Worte übersetzt (`Speech.clean`, gemeinsam für Android und Web: „x² − 2x“ → „x hoch 2 minus 2x“,
 „3 m/s“ → „3 Meter pro Sekunde“). Stimmen: die deutschen Stimmen des Geräts/Browsers (nur solche, die ohne Internet sprechen) oder
-**„Thorsten“** (Piper-Stimme, 63 MB, nur auf Wunsch von huggingface.co geladen, per SHA-256 geprüft). Android rechnet Thorsten mit
-sherpa-onnx (wie Raumlicht), die WebApp mit ONNX Runtime Web (`web/.../resources/ort`). Die Lautschrift liegt fertig in `voice/stimme`
+**„Thorsten“** (Piper-Stimme, gemeinsame Datei aller Apps auf `stimmen.mathenachhilfe-online.com`, nur auf Wunsch geladen, per SHA-256
+geprüft, `core/model/VoicePack.kt`). Android rechnet Thorsten mit ONNX Runtime Android, die WebApp mit ONNX Runtime Web
+(`web/.../resources/ort`) – gleiche Eingabe (Laut-Nummern aus `Lautschrift.ids`, wie Piper). Die Lautschrift liegt fertig in `voice/stimme`
 (erzeugt mit `tools/stimme/lautschrift.py` aus `build/sprechtexte.txt` des `SpeechDumpTest`) – kein espeak-ng (GPL) in App oder WebApp.
 `VoiceDataTest` meldet, wenn neue Texte Wörter ohne Lautschrift enthalten. Die Play-Fassung (ohne Internet) bietet nur die Gerätestimmen.
 
