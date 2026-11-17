@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.0.2 vom 17.11.2026: Android-Stimme vom Stimmen-Server, Testseite repariert
+
+- **Web = Android** (2.0.2). **Android lädt Thorsten jetzt von** `https://stimmen.mathenachhilfe-online.com/thorsten/sherpa/de_DE-thorsten-medium.onnx`
+  (63 201 421 Bytes, sha256 1c305abe…65a6, geprüft; tokens.txt identisch mit eurer, sha256 2619c1a9…ec36). **Hugging Face kommt in App, WebApp und Datenschutz-Text nicht mehr vor.**
+- **Warum die Testseite auf 0.6.0 stand:** Unser Workflow „WebApp → Test“ (spult `experimentopia-test` bei jedem Push nach) ist seit 0.7.0 an eurer Dateityp-Prüfung gescheitert:
+  Die Lautschrift lag als `.tsv` vor. Jetzt `.txt` – die Prüfung läuft wieder, `experimentopia-test` wird ab 2.0.2 wieder automatisch nachgezogen (direkt pushen darf diese Sitzung nicht, das erledigt der Workflow).
+  Nebenbei: Ohne die Umbenennung hätte Thorsten in der WebApp auf eurem Server nicht starten können (`.tsv` wird nicht ausgeliefert). Danke fürs manuelle Nachziehen!
+- Offen: Kassen-Link für den Forscher-Pass – sobald er da ist, baue ich die Version mit Kasse.
+
 ## 17.11.2026 – Version 2.0.1 vom 17.11.2026: Thorsten vom gemeinsamen Stimmen-Server
 
 - **Web = Android** (2.0.1). **WebApp** lädt Thorsten jetzt von `https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx`, Größe 63 201 294 Bytes und

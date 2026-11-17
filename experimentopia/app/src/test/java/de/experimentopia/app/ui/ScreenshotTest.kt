@@ -163,7 +163,7 @@ class ScreenshotTest {
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
-        SettingsScreen(true, {}, true, {}, 5, {}, "2.0.1", "17.11.2026", {}, {}, {})
+        SettingsScreen(true, {}, true, {}, 5, {}, "2.0.2", "17.11.2026", {}, {}, {})
         }
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }

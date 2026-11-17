@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.0.2 – Thorsten überall vom eigenen Server (17.11.2026)
+
+- 🔊 Auch die Android-App lädt die Stimme „Thorsten“ jetzt vom gemeinsamen Stimmen-Server unserer Lern-Apps – kein fremder Dienst mehr.
+- 🛠️ Thorsten funktioniert jetzt auch in der WebApp auf unserer Website (vorher fehlten dort zwei Hilfsdateien).
+
 ## 2.0.1 – Thorsten vom eigenen Server (17.11.2026)
 
 - 🔊 In der WebApp kommt die Stimme „Thorsten“ jetzt vom gemeinsamen Stimmen-Server unserer Lern-Apps statt von einem fremden Dienst.

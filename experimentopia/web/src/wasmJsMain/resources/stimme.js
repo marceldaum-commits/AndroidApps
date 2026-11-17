@@ -1,11 +1,9 @@
 // Natürliche Stimme „Thorsten“ im Browser – nur auf Wunsch geladen.
 // Rechnet mit onnxruntime-web (MIT, liegt in ort/) die Piper-Stimme „Thorsten“ (Aufnahmen CC0). Die Stimmdatei (63 MB) kommt einmal vom
-// gemeinsamen Stimmen-Server aller Apps (stimmen.mathenachhilfe-online.com) und bleibt im Browser-Speicher („experimentopia-stimme“). Die Lautschrift kommt vorab erzeugt aus der App (stimme/*.tsv) – kein espeak-ng.
+// gemeinsamen Stimmen-Server aller Apps (stimmen.mathenachhilfe-online.com) und bleibt im Browser-Speicher („experimentopia-stimme“). Die Lautschrift kommt vorab erzeugt aus der App (stimme/*.txt) – kein espeak-ng.
 (() => {
   const URL_MODEL = 'https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx';
   const SIZE = 63201294, SHA = '7e64762d8e5118bb578f2eea6207e1a35a8e0c30595010b666f983fc87bb7819';
-  // Bis 2.0.0 kam die Stimme von Hugging Face – wer sie schon hat, muss nicht neu laden
-  const URL_OLD = 'https://huggingface.co/csukuangfj/vits-piper-de_DE-thorsten-medium/resolve/main/de_DE-thorsten-medium.onnx';
   const CACHE = 'experimentopia-stimme';
   let session = null, tokens = null, abort = null, turn = 0, playing = [];
 
@@ -13,7 +11,7 @@
   function loadScript(src) {
     return new Promise((ok, no) => { const s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = () => no(new Error('Der Rechenbaustein ließ sich nicht laden.')); document.head.appendChild(s); });
   }
-  async function cachedModel() { try { const c = await caches.open(CACHE); const r = (await c.match(URL_MODEL)) || (await c.match(URL_OLD)); return r ? await r.arrayBuffer() : null; } catch (e) { return null; } }
+  async function cachedModel() { try { const c = await caches.open(CACHE); const r = await c.match(URL_MODEL); return r ? await r.arrayBuffer() : null; } catch (e) { return null; } }
 
   async function start(buf) {
     if (!window.ort) await loadScript('ort/ort.wasm.min.js');

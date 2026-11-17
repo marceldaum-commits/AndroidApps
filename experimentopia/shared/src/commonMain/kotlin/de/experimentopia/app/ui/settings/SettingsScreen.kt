@@ -24,7 +24,7 @@ import de.experimentopia.core.model.Catalog
 import de.experimentopia.core.model.Island
 import de.experimentopia.core.model.Pro
 
-val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + Pro.purchaseNote + " Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und auf ausdrücklichen Wunsch einmal, um die Stimme „Thorsten“ zu laden (63 MB von Hugging Face)."
+val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + Pro.purchaseNote + " Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und auf ausdrücklichen Wunsch einmal, um die Stimme „Thorsten“ von unserem Stimmen-Server zu laden (stimmen.mathenachhilfe-online.com, ca. 75 MB)."
 
 @Composable
 fun SettingsScreen(

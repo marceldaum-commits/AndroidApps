@@ -3,8 +3,8 @@
 
 Warum: Die Stimme „Thorsten“ (Piper) braucht Lautschrift statt Buchstaben. Das Umsetzen erledigt üblicherweise espeak-ng (GPL-3).
 Damit die App diesen Baustein nicht enthalten muss, wird die Lautschrift hier vorab erzeugt und als Daten mitgeliefert:
-  saetze.tsv   feste Texte der App, als ganzer Satz umgesetzt (beste Betonung):   Text <Tab> Laute Satz 1 | Laute Satz 2 …
-  woerter.tsv  Wörterbuch für veränderliche Texte:                               wort <Tab> Laute
+  saetze.txt   feste Texte der App, als ganzer Satz umgesetzt (beste Betonung):   Text <Tab> Laute Satz 1 | Laute Satz 2 …
+  woerter.txt  Wörterbuch für veränderliche Texte:                               wort <Tab> Laute
 Unbekannte Wörter liest in der App die Stimme des Handys.
 
 Aufruf (aus experimentopia/):
@@ -55,9 +55,9 @@ LEX = {w: (alone(w) if len(w) == 1 else in_context(w)) for w in words}
 NUM = {n: alone(str(n)) for n in range(0, 1000)}
 for OUT in OUTS:
     os.makedirs(OUT, exist_ok=True)
-    with open(os.path.join(OUT, 'saetze.tsv'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(OUT, 'saetze.txt'), 'w', encoding='utf-8') as f:
         for t in sorted(set(fixed)): f.write(t + '\t' + '|'.join(SENT[t]) + '\n')
-    with open(os.path.join(OUT, 'woerter.tsv'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(OUT, 'woerter.txt'), 'w', encoding='utf-8') as f:
         for w in words:
             if LEX[w]: f.write(w + '\t' + LEX[w] + '\n')
         for n in range(0, 1000): f.write(str(n) + '\t' + NUM[n] + '\n')

@@ -75,7 +75,7 @@ class WebReader : Reader {
 
     private fun loadLautschrift(done: () -> Unit) {
         if (sounds != null) { done(); return }
-        loadFile("stimme/saetze.tsv") { s -> loadFile("stimme/woerter.tsv") { w ->
+        loadFile("stimme/saetze.txt") { s -> loadFile("stimme/woerter.txt") { w ->
             if (s != null && w != null) sounds = Lautschrift(s.decodeToString().lineSequence(), w.decodeToString().lineSequence())
             done()
         } }

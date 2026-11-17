@@ -31,10 +31,10 @@ class AudioTest {
     /** Jeder vorlesbare Text hat Lautschrift für „Thorsten“ – sonst tools/stimme/lautschrift.py neu laufen lassen */
     @Test fun lautschriftDecktAlleTexteAb() {
         val dir = File("src/main/assets/stimme")
-        val l = Lautschrift(File(dir, "saetze.tsv").readLines().asSequence(), File(dir, "woerter.tsv").readLines().asSequence())
+        val l = Lautschrift(File(dir, "saetze.txt").readLines().asSequence(), File(dir, "woerter.txt").readLines().asSequence())
         val missing = ReadTexts.all().map { Speech.clean(it) }.filter { it.isNotBlank() && l.of(it) == null }
         assertEquals("Ohne Lautschrift (Werkzeug neu laufen lassen): ${missing.take(3)}", 0, missing.size)
         // Web und Android haben dieselben Daten
-        listOf("saetze.tsv", "woerter.tsv", "tokens.txt").forEach { assertEquals(it, File(dir, it).readText(), File("../web/src/wasmJsMain/resources/stimme/$it").readText()) }
+        listOf("saetze.txt", "woerter.txt", "tokens.txt").forEach { assertEquals(it, File(dir, it).readText(), File("../web/src/wasmJsMain/resources/stimme/$it").readText()) }
     }
 }

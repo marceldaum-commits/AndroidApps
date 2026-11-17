@@ -32,14 +32,15 @@ import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 
 /**
- * Die Stimmdatei „Thorsten“ (Piper, Aufnahmen CC0): wird nur auf Wunsch einmal geladen und per Prüfsumme kontrolliert – wie bei Raumlicht.
+ * Die Stimmdatei „Thorsten“ (Piper, Aufnahmen CC0): wird nur auf Wunsch einmal vom Stimmen-Server geladen und per Prüfsumme kontrolliert – wie bei Raumlicht.
  * Der App liegen nur kleine Daten bei: Zeichenliste und vorab erzeugte Lautschrift (tools/stimme), kein espeak-ng.
  */
 object VoicePack {
     const val MODEL = "de_DE-thorsten-medium.onnx"
     const val SIZE = 63_201_421L
     const val SHA256 = "1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6"
-    const val URL = "https://huggingface.co/csukuangfj/vits-piper-de_DE-thorsten-medium/resolve/main/$MODEL"
+    /** Gemeinsamer Stimmen-Server der Lern-Apps (Fassung für sherpa-onnx mit Zusatzangaben) */
+    const val URL = "https://stimmen.mathenachhilfe-online.com/thorsten/sherpa/$MODEL"
     fun dir(ctx: Context) = File(ctx.filesDir, "stimme")
     fun model(ctx: Context) = File(dir(ctx), MODEL)
     fun installed(ctx: Context, size: Long = SIZE) = model(ctx).let { it.isFile && it.length() == size }
@@ -97,14 +98,14 @@ class AndroidReader(ctx: Context) : Reader {
 
     private fun helpers(dir: File) {
         dir.mkdirs()
-        listOf("tokens.txt", "saetze.tsv", "woerter.tsv").forEach { n -> app.assets.open("stimme/$n").use { i -> File(dir, n).outputStream().use { i.copyTo(it) } } }
+        listOf("tokens.txt", "saetze.txt", "woerter.txt").forEach { n -> app.assets.open("stimme/$n").use { i -> File(dir, n).outputStream().use { i.copyTo(it) } } }
     }
     private fun startEngine() {
         if (engine != null || !VoicePack.installed(app)) return
         worker.execute {
             runCatching {
                 val dir = VoicePack.dir(app); helpers(dir)          // nach einem App-Update die neue Lautschrift übernehmen
-                sounds = Lautschrift(File(dir, "saetze.tsv").readLines().asSequence(), File(dir, "woerter.tsv").readLines().asSequence())
+                sounds = Lautschrift(File(dir, "saetze.txt").readLines().asSequence(), File(dir, "woerter.txt").readLines().asSequence())
                 val e = OfflineTts(null, OfflineTtsConfig(model = OfflineTtsModelConfig(vits = OfflineTtsVitsModelConfig(model = VoicePack.model(app).path, tokens = File(dir, "tokens.txt").path), numThreads = 2, provider = "cpu")))
                 val rate = e.sampleRate()
                 val min = AudioTrack.getMinBufferSize(rate, AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_FLOAT)
