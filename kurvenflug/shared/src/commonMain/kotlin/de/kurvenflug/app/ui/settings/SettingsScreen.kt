@@ -40,8 +40,6 @@ fun SettingsScreen(
     onPro: (() -> Unit)? = null,
     voltVoice: Boolean = true, onVoltVoice: (Boolean) -> Unit = {},
     readAloud: Boolean = true, onReadAloud: (Boolean) -> Unit = {},
-    readVoice: String = "", onReadVoice: (String) -> Unit = {},
-    readRate: Int = 100, onReadRate: (Int) -> Unit = {},
 ) {
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -63,7 +61,7 @@ fun SettingsScreen(
                     if (!readAloud) Toggle("🤖 Volt-Stimme", "Volt plappert in Roboter-Sprache, wenn er spricht", voltVoice, onVoltVoice)
                 }
             }
-            ReadAloudCard(readAloud, onReadAloud, readVoice, onReadVoice, readRate, onReadRate)
+            ReadAloudCard(readAloud, onReadAloud)
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -71,11 +69,11 @@ fun SettingsScreen(
                     if (shop) Text("Kurvenflug ist kostenlos bis Klasse 10. Optional gibt es „Kurvenflug Pro“ als Einmalkauf ohne Abo " +
                         "(Oberstufe, Extrem-Stufen, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
-                        "nichts wird an einen Server geschickt. Neue Versionen lädt die Seite von selbst."
+                        "keine Spieldaten an einen Server. Nur das Vorlesen (Nova, abschaltbar) lädt Audiodateien von unserem Server. Neue Versionen lädt die Seite von selbst."
                         else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
-                        "Ins Internet geht die App nur, wenn Sie die Vorlese-Stimme „Thorsten“ laden. Neue Versionen kommen über Google Play."
+                        "Ins Internet geht die App nur für die Vorlese-Stimme Nova (abschaltbar). Neue Versionen kommen über Google Play."
                         else "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
-                        "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar).", style = MaterialTheme.typography.bodySmall)
+                        "Ins Internet geht die App nur, um nach Updates zu schauen und für die Vorlese-Stimme Nova (beides abschaltbar).", style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel, Maßstab (Kl. 5/6), Zuordnungen, Prozent und Zinseszins (Kl. 6–8), " +
                         "lineare Funktionen und Gleichungssysteme (Kl. 7/8), Pythagoras (Kl. 8/9), quadratische Funktionen und Nullstellen (Kl. 9), " +
                         "Trigonometrie, Potenzfunktionen, Sinus, Exponential- und Logarithmusfunktionen (Kl. 9/10); Oberstufe: Ableitung, Extrempunkte, " +
@@ -122,73 +120,33 @@ private fun ProCard(state: de.kurvenflug.app.ProState, onPro: () -> Unit) {
 }
 
 /**
- * Vorlesen: an/aus, Stimme (Gerät/Browser oder „Thorsten“), Tempo, Probe. Thorsten wird nur auf Wunsch geladen –
- * mit klarem Hinweis, woher die Datei kommt.
+ * Vorlesen: an/aus und Probe. Stimme ist immer Nova (Vorgabe Marcel) – mit Pflicht-Kennzeichnung „KI-generiert“ und dem
+ * Datenschutz-Text, den der Leitstand vorgegeben hat.
  */
 @Composable
-private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit, voice: String, onVoice: (String) -> Unit, rate: Int, onRate: (Int) -> Unit) {
+private fun ReadAloudCard(on: Boolean, onOn: (Boolean) -> Unit) {
     val reader = de.kurvenflug.app.ui.fx.LocalReader.current
-    val web = de.kurvenflug.app.LocalPlatform.current.isWeb
     ElevatedCard(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text("Vorlesen", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
             Toggle("🗣️ Volt liest vor", "Sprechblasen, Aufgaben, Rechen-Stern-Fragen und Erklärungen – Formeln richtig gesprochen. Tipp auf 🔊 zum Wiederholen.", on, onOn)
             if (!on) return@Column
-            if (reader == null) { Text("Vorlesen ist hier nicht möglich.", style = MaterialTheme.typography.bodySmall, color = Q.Muted); return@Column }
-            Text("Stimme", style = MaterialTheme.typography.labelLarge)
-            val pack = reader.pack
-            val choices = listOf(de.kurvenflug.app.ui.fx.VoiceChoice("", "Automatisch")) + reader.voices +
-                (if (reader.canLoadPack || pack == de.kurvenflug.app.ui.fx.PackState.Ready)
-                    listOf(de.kurvenflug.app.ui.fx.VoiceChoice(de.kurvenflug.app.ui.fx.Reader.NATURAL, "✨ " + de.kurvenflug.app.ui.fx.Reader.NATURAL_LABEL)) else emptyList())
-            val current = choices.firstOrNull { it.id == voice }?.id ?: ""
-            @OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                choices.forEach { c -> FilterChip(selected = c.id == current, onClick = { onVoice(c.id) }, label = { Text(c.label, maxLines = 1) }) }
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("Stimme:", style = MaterialTheme.typography.labelLarge)
+                Text("✨ ${de.kurvenflug.core.model.Nova.LABEL}", style = MaterialTheme.typography.labelLarge, color = Q.Cyan,
+                    modifier = Modifier.clip(RoundedCornerShape(50)).background(Q.Cyan.copy(alpha = 0.12f)).padding(horizontal = 10.dp, vertical = 4.dp))
             }
-            if (reader.voices.isEmpty()) Text(
-                (if (web) "Dieser Browser hat keine deutsche Stimme, die ohne Internet spricht." else "Auf diesem Gerät ist keine deutsche Stimme installiert (Einstellungen → Sprachausgabe).") +
-                    if (reader.canLoadPack) " Nimm „Thorsten“ – der spricht immer." else "",
-                style = MaterialTheme.typography.bodySmall, color = Q.Orange)
-            if (current == de.kurvenflug.app.ui.fx.Reader.NATURAL) NaturalVoiceBox(reader, web)
-            Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 8.dp)) {
-                Text("Tempo $rate %", style = MaterialTheme.typography.bodySmall, color = Q.Muted, modifier = Modifier.width(120.dp), maxLines = 1)
-                Slider(value = rate.toFloat(), onValueChange = { onRate(it.toInt()) }, valueRange = 70f..130f, steps = 11, modifier = Modifier.weight(1f))
-            }
-            OutlinedButton(onClick = { reader.say(de.kurvenflug.app.ui.fx.Reader.PROBE) }) { Text("▶ Probe hören") }
-            Text(if (web) "Die Stimmen des Browsers rechnen hier auf dem Gerät – es geht kein Text ins Internet."
-                else "Gelesen wird mit der Sprachausgabe des Geräts (nur Stimmen ohne Internet) – es geht kein Text nach draußen.",
-                style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+            if (reader != null) OutlinedButton(onClick = { reader.say(de.kurvenflug.app.ui.fx.Reader.PROBE) }) { Text("▶ Probe hören") }
+            Text("🔒 $NOVA_PRIVACY", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
         }
     }
 }
 
-/** „Thorsten“: laden (mit Datenschutz-Hinweis), Fortschritt, entfernen */
-@Composable
-private fun NaturalVoiceBox(reader: de.kurvenflug.app.ui.fx.Reader, web: Boolean) {
-    val mb = de.kurvenflug.app.ui.fx.Reader.PACK_MB
-    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Q.Cyan.copy(alpha = 0.08f)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        when (val p = reader.pack) {
-            de.kurvenflug.app.ui.fx.PackState.Ready -> {
-                Text("✓ Thorsten ist geladen und spricht ohne Internet.", style = MaterialTheme.typography.bodySmall, color = Q.Green)
-                Text("Unbekannte Wörter (z. B. Spielernamen) liest die normale Stimme.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
-                TextButton(onClick = { reader.removePack() }, contentPadding = PaddingValues(0.dp)) { Text("Stimme entfernen (Speicher freigeben)", color = Q.Muted) }
-            }
-            is de.kurvenflug.app.ui.fx.PackState.Loading -> {
-                Text("Lade Thorsten … ${p.percent} %", style = MaterialTheme.typography.bodySmall)
-                LinearProgressIndicator(progress = { p.percent / 100f }, modifier = Modifier.fillMaxWidth())
-                TextButton(onClick = { reader.cancelPack() }, contentPadding = PaddingValues(0.dp)) { Text("Abbrechen", color = Q.Muted) }
-            }
-            else -> {
-                Text("Thorsten klingt wie ein echter Mensch und rechnet ganz auf ${if (web) "deinem Gerät" else "dem Handy"}. " +
-                    "Dafür wird einmalig eine Stimmdatei geladen (ca. $mb MB – am besten im WLAN).", style = MaterialTheme.typography.bodySmall)
-                Text("🔒 Für Eltern: Die Datei kommt von unserem eigenen Server (${de.kurvenflug.app.ui.fx.Reader.PACK_HOST}), nicht von fremden Anbietern. " +
-                    "Es werden keine Texte und keine Daten über Ihr Kind gesendet. Danach bleibt alles ${if (web) "in diesem Browser" else "auf dem Gerät"} und funktioniert ohne Internet.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
-                if (p is de.kurvenflug.app.ui.fx.PackState.Failed) Text("Hat nicht geklappt: ${p.why}", style = MaterialTheme.typography.bodySmall, color = Q.Orange)
-                Button(onClick = { reader.loadPack() }) { Text(if (p is de.kurvenflug.app.ui.fx.PackState.Failed) "Nochmal versuchen" else "Thorsten laden (ca. $mb MB)") }
-            }
-        }
-    }
-}
+/** Datenschutz-Text zur Stimme Nova (Wortlaut Leitstand 17.11.) */
+const val NOVA_PRIVACY = "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. " +
+    "Texte, die erst in der Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zu dir an unseren Server " +
+    "stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine " +
+    "Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle."
 
 /** Open-Source-Lizenzen (Apache 2.0 verlangt den Hinweis) – aufklappbar, damit es Kinder nicht stört. */
 @Composable
@@ -208,13 +166,10 @@ private const val LICENSES = "Kurvenflug nutzt freie Software. Danke an alle, di
     "Apache License 2.0 (apache.org/licenses/LICENSE-2.0): Kotlin, kotlinx.coroutines, kotlinx.serialization, " +
     "Jetpack Compose und Compose Multiplatform, AndroidX (Activity, Core, Lifecycle, Navigation, Room, Glance, WorkManager, " +
     "Fragment, SavedState, Startup, DataStore), Guava, JSpecify, JetBrains Annotations.\n\n" +
-    "Vorlesen mit „Thorsten“: ONNX Runtime (MIT), Stimme de_DE-thorsten-medium aus dem Piper-Projekt " +
-    "(Stimmdaten von Thorsten Müller, CC0; Modell MIT). Die Lautschrift ist vorab erzeugt – kein espeak-ng in der App.\n\n" +
     "Nur in der Google-Play-Version: Play In-App Updates (Play Core SDK, Nutzungsbedingungen von Google)."
 
 private const val LICENSES_WEB = "\n\nIm Browser zusätzlich: Skia/Skiko (BSD-3-Clause), Noto Color Emoji (SIL Open Font License 1.1), " +
-    "DejaVu Sans (freie Bitstream-Vera-Lizenz). Volltexte in fonts-lizenzen.txt. " +
-    "Vorlesen mit „Thorsten“ im Browser: ONNX Runtime Web (MIT), Hinweis in ort/LIZENZ.txt."
+    "DejaVu Sans (freie Bitstream-Vera-Lizenz). Volltexte in fonts-lizenzen.txt."
 
 @Composable
 private fun Toggle(title: String, sub: String, on: Boolean, onChange: (Boolean) -> Unit) {

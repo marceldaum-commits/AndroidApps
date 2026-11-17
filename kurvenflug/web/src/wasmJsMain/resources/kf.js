@@ -1,6 +1,6 @@
 // Kurvenflug WebApp – kleine Helfer für Ton, Teilen, Fotos und die Zurück-Taste.
-// Keine Verbindungen nach außen, kein Tracking: alles bleibt im Browser. Einzige Ausnahme, nur auf ausdrücklichen Wunsch:
-// das Stimm-Paket „Thorsten“ fürs Vorlesen kommt einmalig von unserem Server stimmen.mathenachhilfe-online.com (siehe unten).
+// Kein Tracking: der Spielstand bleibt im Browser. Einzige Verbindung nach außen: die Vorlese-Stimme Nova von unserem
+// Server stimmen.mathenachhilfe-online.com (nur wenn Vorlesen an ist, siehe unten).
 (function () {
   'use strict';
   var KF = window.KF = {};
@@ -137,120 +137,59 @@
     });
     window.addEventListener('keydown', function (e) { if (e.key === 'Escape' && backHandler) backHandler(); });
   };
-  // ------------------------------------------------------------ Vorlesen
-  // a) Stimmen des Browsers: nur deutsche Stimmen, die auf dem Gerät rechnen (localService) – so geht kein Text ins Netz.
-  // b) „Thorsten“: natürliche Piper-Stimme, rechnet im Browser (ONNX Runtime Web, MIT-Lizenz). Die Lautschrift kommt fertig aus der App
-  //    (stimme/*.tsv, vorab erzeugt) – kein espeak-ng. Stimmdatei nur auf Wunsch von unserem Server (Adresse und Prüfsumme aus der App), geprüft,
-  //    danach im Browser-Speicher (Cache „kf-stimme“, auch offline nutzbar, jederzeit entfernbar).
-  var synth = window.speechSynthesis || null, speakCb = null;
+  // ------------------------------------------------------------ Vorlesen mit der KI-Stimme Nova
+  // Fertige Ansagen (MP3) von unserem Server stimmen.mathenachhilfe-online.com, zwischengespeichert im Browser (Cache „kf-nova“).
+  // Texte mit Zahlen zur Laufzeit vertont unser Server auf Anfrage (/jetzt) – ohne Angaben zum Kind. Die App spricht nie mit OpenAI.
+  // Notlösung (offline): eine deutsche Stimme des Browsers, die auf dem Gerät rechnet.
+  var synth = window.speechSynthesis || null, speakCb = null, novaTurn = 0, novaSrc = null;
   function speaking(b) { if (speakCb) try { speakCb(b); } catch (e) {} }
-  function deVoices() {
-    if (!synth) return [];
-    return synth.getVoices().filter(function (v) { return /^de([-_]|$)/i.test(v.lang) && v.localService; });
-  }
-  KF.voices = function () { return deVoices().map(function (v) { return v.name; }).join('\n'); };
-  KF.onVoices = function (f) { if (synth) synth.addEventListener('voiceschanged', function () { f(); }); };
   KF.onSpeaking = function (f) { speakCb = f; };
-  KF.say = function (text, name, rate) {
-    natStop(); if (!synth) return;
-    synth.cancel();
-    var vs = deVoices(), u = new SpeechSynthesisUtterance(text), v = vs.filter(function (x) { return x.name === name; })[0] || vs[0];
-    u.lang = 'de-DE'; if (v) u.voice = v; u.rate = rate; u.pitch = 1.08;
+  function deviceSay(text) {
+    if (!synth) { speaking(false); return; }
+    var vs = synth.getVoices().filter(function (v) { return /^de([-_]|$)/i.test(v.lang) && v.localService; });
+    if (!vs.length) { speaking(false); return; }
+    var u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.voice = vs[0]; u.rate = 1.1; u.pitch = 1.08;
     u.onstart = function () { speaking(true); }; u.onend = u.onerror = function () { speaking(false); };
-    synth.speak(u);
-  };
-  KF.hush = function () { if (synth) synth.cancel(); natStop(); speaking(false); };
-
-  var PACK = { cache: 'kf-stimme', key: 'stimme/thorsten-piper.onnx', old: 'stimme/thorsten.onnx',
-    helpers: ['stimme/saetze.tsv', 'stimme/woerter.tsv', 'stimme/tokens.txt', 'ort/ort.wasm.min.mjs', 'ort/ort-wasm-simd-threaded.mjs', 'ort/ort-wasm-simd-threaded.wasm'] };
-  function abs(p) { return new URL(p, location.href).href; }
-  KF.packHas = function (cb) {
-    if (!window.caches) { cb(false); return; }
-    caches.open(PACK.cache).then(function (c) { c.delete(abs(PACK.old)); return c.match(abs(PACK.key)); }).then(function (r) { cb(!!r); }, function () { cb(false); });
-  };
-  var packAbort = null;
-  KF.packLoad = function (url, size, sha, progress, done) {
-    PACK.url = url; PACK.size = size; PACK.sha = sha;
-    if (!window.caches || !window.crypto || !crypto.subtle) { done('Dieser Browser kann die Stimme nicht speichern.'); return; }
-    packAbort = new AbortController(); var signal = packAbort.signal;
-    caches.open(PACK.cache).then(function (c) {
-      // erst die kleinen Helfer aus der App (Lautschrift, Rechenkern) – damit Thorsten später auch offline spricht
-      return c.addAll(PACK.helpers.map(function (h) { return new Request(abs(h), { cache: 'no-cache' }); })).then(function () {
-        return fetch(PACK.url, { signal: signal, credentials: 'omit' });
-      }).then(function (r) {
-        if (!r.ok || !r.body) throw new Error('Der Server antwortet mit ' + r.status + '.');
-        var buf = new Uint8Array(PACK.size), got = 0, shown = -1, rd = r.body.getReader();
-        function pump() {
-          return rd.read().then(function (x) {
-            if (x.done) return;
-            if (got + x.value.length > PACK.size) throw new Error('Die Datei ist größer als erwartet.');
-            buf.set(x.value, got); got += x.value.length;
-            var p = Math.min(99, Math.floor(got * 100 / PACK.size)); if (p !== shown) { shown = p; progress(p); }
-            return pump();
-          });
-        }
-        return pump().then(function () {
-          if (got !== PACK.size) throw new Error('Die Datei ist unvollständig angekommen.');
-          return crypto.subtle.digest('SHA-256', buf);
-        }).then(function (h) {
-          var hex = Array.from(new Uint8Array(h)).map(function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
-          if (hex !== PACK.sha) throw new Error('Die Datei ist beschädigt angekommen.');
-          return c.put(abs(PACK.key), new Response(buf, { headers: { 'Content-Type': 'application/octet-stream' } }));
-        });
-      });
-    }).then(function () {
-      if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(function () {});
-      done('');
-    }, function (e) {
-      if (signal.aborted) done('abgebrochen');
-      else done(e && e.message && !/fetch|network/i.test(e.message) ? e.message : 'Keine Verbindung. Bitte später noch einmal versuchen.');
-    });
-  };
-  KF.packCancel = function () { if (packAbort) packAbort.abort(); };
-  KF.packRemove = function () { natStop(); sessP = null; if (window.caches) caches.delete(PACK.cache).catch(function () {}); };
-
-  var sessP = null, natTurn = 0, natSrc = [];
-  function session() {
-    if (sessP) return sessP;
-    sessP = import(abs('ort/ort.wasm.min.mjs')).then(function (ort) {
-      ort.env.wasm.wasmPaths = abs('ort/');
-      ort.env.wasm.numThreads = window.crossOriginIsolated ? Math.min(4, navigator.hardwareConcurrency || 1) : 1;
-      return caches.open(PACK.cache).then(function (c) { return c.match(abs(PACK.key)); }).then(function (r) {
-        if (!r) throw new Error('Stimm-Paket fehlt');
-        return r.arrayBuffer();
-      }).then(function (b) { return ort.InferenceSession.create(new Uint8Array(b)); }).then(function (s) { return { ort: ort, s: s }; });
-    });
-    sessP.catch(function () { sessP = null; });
-    return sessP;
+    synth.cancel(); synth.speak(u);
   }
-  KF.natWarm = function () { session().catch(function (e) { console.warn('Stimme', e); }); };
-  function natStop() { natTurn++; natSrc.forEach(function (s) { try { s.stop(); } catch (e) {} }); natSrc = []; }
-  // ids: Sätze (je eine Zeile, Nummern mit Komma) – berechnet in der App aus der Lautschrift
-  KF.natSay = function (ids, rate, fail) {
-    natStop(); if (synth) synth.cancel();
-    var my = natTurn, sents = ids.split('\n').filter(Boolean).map(function (l) { return l.split(',').map(Number); });
-    var c = audio(); if (!c) { fail(); return; }
-    session().then(function (x) {
-      if (my !== natTurn) return;
-      var t = 0, chain = Promise.resolve(); speaking(true);
-      sents.forEach(function (s) {
-        chain = chain.then(function () {
-          if (my !== natTurn) return;
-          return x.s.run({
-            input: new x.ort.Tensor('int64', BigInt64Array.from(s.map(BigInt)), [1, s.length]),
-            input_lengths: new x.ort.Tensor('int64', BigInt64Array.from([BigInt(s.length)]), [1]),
-            scales: new x.ort.Tensor('float32', Float32Array.from([0.667, 1 / rate, 0.8]), [3])
-          }).then(function (r) {
-            if (my !== natTurn) return;
-            var d = r.output.data, b = c.createBuffer(1, d.length, 22050); b.getChannelData(0).set(d);
-            var src = c.createBufferSource(); src.buffer = b; src.connect(c.destination);
-            t = Math.max(t, c.currentTime + 0.03); src.start(t); t += b.duration + 0.15; natSrc.push(src);
-            var end = t; src.onended = function () { if (my === natTurn && end >= t) speaking(false); };
-          });
+  function hush() { novaTurn++; if (novaSrc) { try { novaSrc.stop(); } catch (e) {} novaSrc = null; } if (synth) synth.cancel(); }
+  KF.hush = function () { hush(); speaking(false); };
+  function cached(url) {
+    if (!window.caches) return fetch(url, { credentials: 'omit' }).then(function (r) { return r.ok ? r.arrayBuffer() : null; });
+    return caches.open('kf-nova').then(function (c) {
+      return c.match(url).then(function (hit) {
+        if (hit) return hit.arrayBuffer();
+        return fetch(url, { credentials: 'omit' }).then(function (r) {
+          if (!r.ok) return null;
+          return c.put(url, r.clone()).catch(function () {}).then(function () { return r.arrayBuffer(); });
         });
       });
-      return chain;
-    }).catch(function (e) { console.warn('Stimme', e); if (my === natTurn) { speaking(false); fail(); } });
+    });
+  }
+  function live(text) {
+    return fetch('https://stimmen.mathenachhilfe-online.com/jetzt', { method: 'POST', credentials: 'omit',
+      headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: text, sprache: 'de' }) })
+      .then(function (r) { return r.status === 200 ? r.json() : null; })
+      .then(function (j) { return j && typeof j.url === 'string' && j.url.indexOf('https://stimmen.mathenachhilfe-online.com/nova/') === 0 ? j.url : null; });
+  }
+  // url: fertige Ansage (aus der App berechnet), text: vorlesefertiger Text, ask: darf zum Vertonen an unseren Server
+  KF.nova = function (url, text, ask) {
+    hush(); var my = novaTurn, c = audio();
+    if (!c) { deviceSay(text); return; }
+    cached(url).then(function (b) {
+      if (b || !ask || my !== novaTurn) return b;
+      return live(text).then(function (u) { return u ? cached(u) : null; });
+    }).then(function (b) {
+      if (my !== novaTurn) return;
+      if (!b) { deviceSay(text); return; }
+      return c.decodeAudioData(b).then(function (buf) {
+        if (my !== novaTurn) return;
+        var s = c.createBufferSource(); s.buffer = buf; s.connect(c.destination);
+        s.onended = function () { if (novaSrc === s) { novaSrc = null; speaking(false); } };
+        novaSrc = s; speaking(true); s.start();
+      });
+    }).catch(function () { if (my === novaTurn) deviceSay(text); });
   };
-  KF.text = function (u, cb) { fetch(u).then(function (r) { return r.ok ? r.text() : ''; }).then(cb, function () { cb(''); }); };
+  // Reste der früheren Stimme „Thorsten“ (2.0–2.3) aus dem Browser-Speicher räumen
+  if (window.caches) caches.delete('kf-stimme').catch(function () {});
 })();

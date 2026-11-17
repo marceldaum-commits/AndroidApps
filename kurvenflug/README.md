@@ -103,15 +103,17 @@ Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsw
 |---|---|---|---|
 | ![Live](screenshots/72_live_rechnung.png) | ![Frage](screenshots/73_rechenstern_frage.png) | ![Richtig](screenshots/74_rechenstern_geschafft.png) | ![Aufgabe](screenshots/76_aufgabe_nach_fehlversuch.png) |
 
-## Vorlesen (`core/model/Speech.kt`, `Lautschrift.kt`, `shared/ui/fx/Reader.kt`)
-Volt liest Sprechblasen, Aufgaben, Rechen-Stern-Fragen und Erklärungen vor (abschaltbar, Stimme und Tempo wählbar, Probe-Taste).
-Formeln und Einheiten werden in Worte übersetzt (`Speech.clean`, gemeinsam für Android und Web: „x² − 2x“ → „x hoch 2 minus 2x“,
-„3 m/s“ → „3 Meter pro Sekunde“). Stimmen: die deutschen Stimmen des Geräts/Browsers (nur solche, die ohne Internet sprechen) oder
-**„Thorsten“** (Piper-Stimme, gemeinsame Datei aller Apps auf `stimmen.mathenachhilfe-online.com`, nur auf Wunsch geladen, per SHA-256
-geprüft, `core/model/VoicePack.kt`). Android rechnet Thorsten mit ONNX Runtime Android, die WebApp mit ONNX Runtime Web
-(`web/.../resources/ort`) – gleiche Eingabe (Laut-Nummern aus `Lautschrift.ids`, wie Piper). Die Lautschrift liegt fertig in `voice/stimme`
-(erzeugt mit `tools/stimme/lautschrift.py` aus `build/sprechtexte.txt` des `SpeechDumpTest`) – kein espeak-ng (GPL) in App oder WebApp.
-`VoiceDataTest` meldet, wenn neue Texte Wörter ohne Lautschrift enthalten. Seit 2.2.0 auch in der Play-Fassung (Internet-Berechtigung nur dafür).
+## Vorlesen mit Nova (`core/model/Speech.kt`, `Nova.kt`, `ReadTexts.kt`, `shared/ui/fx/Reader.kt`)
+Volt liest Sprechblasen, Aufgaben, Rechen-Stern-Fragen und Erklärungen vor (abschaltbar, Probe-Taste). Stimme ist immer
+**„Nova – KI-generierte Stimme“** (OpenAI, Vorgabe Marcel; Tempo 1,25 legt der Server fest). Formeln und Einheiten werden in Worte
+übersetzt (`Speech.clean`: „x² − 2x“ → „x hoch 2 minus 2x“, „3 m/s“ → „3 Meter pro Sekunde“).
+- **Feste Texte:** `:core:model:vorlesenTexte` schreibt beim WebApp-Bau `vorlesen/texte.json` (gesprochene Form, je ≤ 1 500 Zeichen,
+  NFC). Unser Stimmen-Werk vertont sie vorab nach `https://stimmen.mathenachhilfe-online.com/nova/<h[0:2]>/<h>.mp3`,
+  h = SHA-256("nova|de|" + Text) → 32 Hex-Zeichen (`Nova.hash`, eigenes SHA-256 für Android und Web).
+- **Laufzeit-Texte** (Zahlen): erst die /nova/-Adresse, sonst `POST /jetzt` (≤ 300 Zeichen, nie mit Spielernamen – `Nova.maySend`).
+- **Notlösung** (offline, 204): still eine deutsche Stimme des Geräts/Browsers, die ohne Internet spricht.
+- Ansagen werden zwischengespeichert (Android: Cache ≤ 40 MB, Web: Cache „kf-nova“). Die App spricht nie selbst mit OpenAI.
+- Bis 2.3 gab es die Stimme „Thorsten“ (ONNX Runtime) – seit 2.4.0 entfernt, Reste werden beim Start aufgeräumt.
 
 | Einstellungen | Theorie mit 🔊 |
 |---|---|
@@ -162,6 +164,6 @@ Ausliefern: `versionCode`/`versionName` in `app/build.gradle.kts` erhöhen (gilt
 WebApp: `:web:webapp` bauen, im Browser prüfen und auf den Zweig `kurvenflug-test` legen (Server holt alle 5 Minuten),
 Meldung in `MELDUNG_AN_LEITSTAND.md`. Den Zweig `kurvenflug-live` setzt nur der Leitstand.
 **Neue Dateiendungen in der WebApp vorher dem Leitstand melden** – der Abholdienst liefert nur erlaubte Endungen aus
-(bisher: html, js, mjs, wasm, json, webmanifest, txt, ttf, png, svg, tsv).
+(bisher: html, js, wasm, json, webmanifest, txt, ttf, png, svg).
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `kurvenflug-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).

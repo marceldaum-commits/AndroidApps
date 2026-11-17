@@ -9,6 +9,35 @@ object Nova {
     const val HOST = "stimmen.mathenachhilfe-online.com"
     const val BASE = "https://$HOST/nova/"
     const val LABEL = "Nova – KI-generierte Stimme"
+    /** Laufzeit-Texte vertonen lassen: POST {"text", "sprache"} → 200 {"url"} oder 204 (dann Gerätestimme) */
+    const val LIVE = "https://$HOST/jetzt"
+    const val MAX_LIVE = 300
+
+    /**
+     * Darf dieser (vorlesefertige) Text zum Vertonen an unseren Server? Nur kurz genug und ohne Spielernamen –
+     * es werden nie Angaben über das Kind gesendet.
+     */
+    fun maySend(spoken: String, private: Collection<String>): Boolean =
+        spoken.length <= MAX_LIVE && private.none { containsWord(spoken, it.trim()) }
+
+    /** Kommt [word] als eigenes Wort (Groß/klein egal) in [text] vor? */
+    private fun containsWord(text: String, word: String): Boolean {
+        if (word.isEmpty()) return false
+        var i = text.indexOf(word, ignoreCase = true)
+        while (i >= 0) {
+            val before = text.getOrNull(i - 1); val after = text.getOrNull(i + word.length)
+            if ((before == null || !before.isLetter()) && (after == null || !after.isLetter())) return true
+            i = text.indexOf(word, i + 1, ignoreCase = true)
+        }
+        return false
+    }
+
+    /** Anfrage an [LIVE] als JSON */
+    fun liveBody(spoken: String, language: String = "de"): String =
+        "{\"text\": \"" + spoken.replace("\\", "\\\\").replace("\"", "\\\"") + "\", \"sprache\": \"$language\"}"
+
+    /** Die Adresse aus der Antwort von [LIVE] ({"url": "…"}); nur Adressen auf unserem Server */
+    fun liveUrl(json: String): String? = Regex(""""url"\s*:\s*"([^"]+)"""").find(json)?.groupValues?.get(1)?.takeIf { it.startsWith(BASE) }
 
     /** Jeder Leerraum zu einem Leerzeichen, vorne/hinten abgeschnitten. (Die Texte der App sind bereits NFC – der Generator prüft das.) */
     fun normalize(text: String) = text.trim().replace(Regex("""\s+"""), " ")

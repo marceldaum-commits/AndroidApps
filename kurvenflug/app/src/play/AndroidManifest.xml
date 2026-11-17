@@ -5,6 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" tools:node="remove" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" tools:node="remove" />
-    <!-- INTERNET (seit 2.2.0, Wunsch Marcel): nur für die Vorlese-Stimme „Thorsten“, die man selbst in den Einstellungen lädt
-         (stimmen.mathenachhilfe-online.com). Sonst geht die App nicht ins Netz; den Kauf wickelt die Play-Store-App ab. -->
+    <!-- INTERNET: nur für die Vorlese-Stimme Nova (stimmen.mathenachhilfe-online.com, abschaltbar). Sonst geht die App nicht
+         ins Netz; den Kauf wickelt die Play-Store-App ab. -->
 </manifest>

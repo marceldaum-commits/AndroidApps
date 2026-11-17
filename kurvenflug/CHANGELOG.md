@@ -3,6 +3,16 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.4.0 – 🎙️ Volt spricht jetzt mit der Stimme „Nova“
+- Volt liest mit einer neuen, sehr natürlichen Stimme vor: **„Nova – KI-generierte Stimme“**. Aufgaben, Rechen-Stern,
+  Erklärungen und Volts Sprüche klingen jetzt überall gleich – im Browser, auf dem Handy und in der Play-Version.
+- Einfacher: Vorlesen nur noch an oder aus, kein Herunterladen einer Stimme mehr nötig. Die frühere Stimme „Thorsten“
+  und ihr Speicherplatz werden automatisch entfernt; die App wird kleiner.
+- **Für Eltern:** Nova ist eine mit KI (OpenAI) erzeugte Stimme. Feste Texte vertonen wir vorab. Texte, die erst in der
+  Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zu Ihrem Kind an unseren Server
+  stimmen.mathenachhilfe-online.com, der sie einmalig vertonen lässt. Es werden keine Namen, Konten oder Geräte-Kennungen
+  übertragen, unser Server speichert keine Zugriffsprotokolle. Ohne Internet liest die Stimme des Geräts.
+
 ## 2.3.1 – Vorbereitung für die neue Stimme „Nova“
 - Volt macht beim Vorlesen jetzt eine kleine Pause, wo im Text „…“ steht – das klingt natürlicher.
 - Hinter den Kulissen: Die festen Texte der App werden für die kommende KI-Stimme „Nova“ bereitgestellt. In der App

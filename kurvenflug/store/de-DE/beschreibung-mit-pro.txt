@@ -32,7 +32,7 @@ Schon Geschafftes bleibt immer offen. Gekauft wird nur nach einer Frage für Erw
 
 👪 FÜR ELTERN UND LEHRKRÄFTE
 • Keine Werbung, keine Anmeldung. Viele Inhalte frei; Pro ist ein einmaliger Kauf ohne Abo.
-• Kein Internet nötig – der Spielstand bleibt nur auf dem Gerät, es werden keine Daten erhoben oder weitergegeben.
-• Volt liest vor (abschaltbar): mit den Stimmen des Handys oder der natürlichen Stimme „Thorsten“, die man auf Wunsch einmalig lädt.
+• Der Spielstand bleibt nur auf dem Gerät, es werden keine Daten erhoben oder weitergegeben. Internet braucht nur das Vorlesen.
+• Volt liest vor (abschaltbar) – mit „Nova“, einer KI-generierten Stimme. Dafür lädt die App Audiodateien von unserem Server; Angaben zu Ihrem Kind werden nicht gesendet.
 • Ohne Druck: keine verlorenen Serien, keine Strafen. Eine Runde dauert wenige Minuten.
 • Musik, Geräusche und Vibration lassen sich abschalten.
