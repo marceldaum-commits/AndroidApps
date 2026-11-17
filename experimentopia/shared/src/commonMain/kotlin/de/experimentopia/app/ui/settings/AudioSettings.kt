@@ -73,9 +73,9 @@ fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
         if (audio.voice == AudioPrefs.NATURAL) Panel(border = E.Sun) {
             when (val st = reader.natural) {
                 NaturalState.Missing -> {
-                    Text("Thorsten klingt wie ein echter Mensch und rechnet ganz auf dem Gerät. Dafür muss einmal eine Stimmdatei geladen werden (63 MB, am besten im WLAN). " +
+                    Text("Thorsten klingt wie ein echter Mensch und rechnet ganz auf dem Gerät. Dafür muss einmal eine Stimmdatei geladen werden (ca. 75 MB – am besten im WLAN). " +
                         "Bis dahin liest die Stimme des Geräts.", color = E.Text, fontSize = 13.sp)
-                    GlowButton({ reader.loadNatural() }, Modifier.testTag("thorsten_laden"), color = E.Sun) { Text("⬇️ Thorsten laden (63 MB)") }
+                    GlowButton({ reader.loadNatural() }, Modifier.testTag("thorsten_laden"), color = E.Sun) { Text("⬇️ Thorsten laden (ca. 75 MB)") }
                 }
                 is NaturalState.Loading -> {
                     Text("Thorsten wird geladen … ${st.percent} %", color = E.Text)

@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.0.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.0.1 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -69,7 +69,7 @@ folgt der Stummschaltung (Android: Klingelmodus, Web: Gerät) und wird beim Vorl
 `Speech.kt` macht Texte sprechbar (chemische Formeln, Einheiten, Rechenzeichen, Kreuzungen, Abkürzungen; Test `SpeechTest`).
 Stimmen: die des Geräts bzw. Browsers oder **„Thorsten“** (Piper-Stimme, Aufnahmen CC0). Thorsten rechnet auf dem Gerät –
 Android mit sherpa-onnx (wie Raumlicht), Web mit onnxruntime-web (`web/.../stimme.js`, Bibliothek in `ort/`, wird erst bei Bedarf geladen).
-Die Stimmdatei (63 MB) kommt nur auf Wunsch einmal von Hugging Face und wird per Prüfsumme kontrolliert.
+Die Stimmdatei kommt nur auf Wunsch einmal und wird per Prüfsumme kontrolliert: im Web vom gemeinsamen Stimmen-Server (stimmen.mathenachhilfe-online.com), auf Android noch von Hugging Face (sherpa-onnx braucht die Fassung mit Zusatzangaben).
 Lautschrift wird vorab mit `tools/stimme/lautschrift.py` erzeugt (kein espeak-ng in der App); `AudioTest` prüft, dass jeder vorlesbare Text Lautschrift hat.
 
 ## Lernen nach Fach (am Schulstoff entlang)

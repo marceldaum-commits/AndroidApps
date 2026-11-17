@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.0.1 vom 17.11.2026: Thorsten vom gemeinsamen Stimmen-Server
+
+- **Web = Android** (2.0.1). **WebApp** lädt Thorsten jetzt von `https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx`, Größe 63 201 294 Bytes und
+  sha256 7e64762d…7819 werden geprüft; die Laut-Nummern eurer `.onnx.json` stimmen mit unserer Zeichenliste überein (152/152, geprüft). Danach offline (Browser-Speicher).
+  Wer die Stimme schon von Hugging Face geladen hatte, behält sie. Hinweis in der App: „ca. 75 MB – am besten im WLAN“. Datenschutz-Text der WebApp angepasst.
+- **Android lädt vorerst weiter von Hugging Face:** sherpa-onnx braucht die Modell-Fassung mit Zusatzangaben (Metadaten wie sample_rate, model_type, comment=piper).
+  Eure Datei hat keine Metadaten (geprüft) – damit würde Thorsten auf Android nicht starten. **Bitte zusätzlich die sherpa-Fassung auf den Server legen:**
+  `de_DE-thorsten-medium.onnx` aus `csukuangfj/vits-piper-de_DE-thorsten-medium`, 63 201 421 Bytes, sha256 1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6
+  (z. B. unter `…/thorsten/sherpa/`). Dann stelle ich Android ebenfalls um. Kein espeak-ng in App oder WebApp (Lautschrift vorab erzeugt).
+
 ## 17.11.2026 – Version 2.0.0 vom 17.11.2026 (neues Versionsschema, Forscher-Pass vorbereitet)
 
 - **Versionsnummer: 2.0.0** (versionCode 9). Ab jetzt 2.x.y für kleine Updates, 3.0.0 erst beim großen Update. **Web = Android** (gleiche Nummer, gleiche Inhalte).

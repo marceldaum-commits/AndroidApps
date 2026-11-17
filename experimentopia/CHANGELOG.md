@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.0.1 – Thorsten vom eigenen Server (17.11.2026)
+
+- 🔊 In der WebApp kommt die Stimme „Thorsten“ jetzt vom gemeinsamen Stimmen-Server unserer Lern-Apps statt von einem fremden Dienst.
+  Wer sie schon geladen hat, muss nichts neu laden. Hinweis beim Laden: ca. 75 MB – am besten im WLAN.
+
 ## 2.0.0 – Neue Versionsnummer und Forscher-Pass vorbereitet (17.11.2026)
 
 - 🔢 **Neue Zählung**: Experimentopia springt auf Version 2.0.0 (wie alle Apps). Kleine Updates zählen ab jetzt hinten weiter (2.1.0, 2.1.1 …).
