@@ -25,7 +25,7 @@ Physik-/Chemie-/Bio-Modellen berechnet). Keine Zufallsaufgaben in dieser App. **
   jetzt nur noch „hat der Nutzer schon getippt?“. (b) Oberflächen-Sätze lagen nicht vorab vor → /jetzt; jetzt alle vorab. (c) Ein einzelner Netz-Aussetzer führte sofort zur
   Gerätestimme; jetzt ein zweiter Versuch nach 0,8 s. Gerätestimme nur, wenn Nova auch dann nicht kommt – mit einmaligem Hinweis „Nova gerade nicht erreichbar“.
   (Marcels Handy lief außerdem noch auf einer alten Version vor Nova.)
-- **Nova-Abdeckung**: siehe Nachtrag unten, sobald das Stimmen-Werk die neuen Sätze gesprochen hat.
+- **Nova-Abdeckung: 100 %** – alle 2579 Sätze aus texte.json (test) haben ihre Nova-Datei (HEAD 200, geprüft nach dem Lauf des Stimmen-Werks).
 
 ## 17.11.2026 – Version 2.4.1 vom 17.11.2026: fertig für den Betriebstest (Musik + nur Nova)
 
