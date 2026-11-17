@@ -18,6 +18,8 @@ data class Locale(val tag: String) {
 /** Kurze Geräusche (im Code erzeugt, siehe [Synth]). */
 interface Sfx {
     var enabled: Boolean
+    /** Lautstärke aller Geräusche 0..1 (Einstellung „Geräusche“), wird mit dem `volume` jedes Aufrufs verrechnet */
+    var level: Float
     /** @param pitch 1 = normal, >1 höher (z. B. bei Serien) */
     fun play(s: Sound, pitch: Float = 1f, volume: Float = 0.9f)
 }
@@ -29,6 +31,10 @@ interface Music {
     fun onForeground(on: Boolean)
     fun duck(on: Boolean)
     fun prepare(vararg moods: MusicMood)
+    /** Lautstärke 0..1 (Einstellung „Musik“) */
+    fun setVolume(v: Float)
+    /** Erste Berührung: erst ab jetzt darf Musik erklingen (nie ungefragt beim Start) */
+    fun unlock()
 }
 
 /** Brummis Stimme (Sprachausgabe des Geräts bzw. des Browsers). */

@@ -29,7 +29,7 @@ fun HybridReveal(h: Hybrid, onClose: () -> Unit) {
     LaunchedEffect(Unit) {
         sfx?.play(Sound.GROW)
         grow.animateTo(1f, tween(1400, easing = FastOutSlowInEasing))
-        sfx?.play(Sound.FANFARE)
+        sfx?.play(Sound.HARVEST)
         particles.burst(Burst.CONFETTI, count = 90)
         particles.burst(Burst.SPARKLE, 0.5f, 0.4f, 30)
     }

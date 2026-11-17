@@ -15,6 +15,7 @@ import androidx.compose.material.icons.filled.Spa
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -132,6 +133,10 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         LaunchedEffect(soundOn) { sfx.enabled = soundOn }
         val musicOn by vm.settings.music.collectAsStateWithLifecycle()
         LaunchedEffect(musicOn) { host.music.setEnabled(musicOn) }
+        val musicVol by vm.settings.musicVolume.collectAsStateWithLifecycle()
+        LaunchedEffect(musicVol) { host.music.setVolume(musicVol / 100f) }
+        val sfxVol by vm.settings.sfxVolume.collectAsStateWithLifecycle()
+        LaunchedEffect(sfxVol) { sfx.level = sfxVol / 100f }
         WissensgartenTheme(theme) {
           val readMode by vm.settings.readAloud.collectAsStateWithLifecycle()
           val prof by vm.profile.collectAsStateWithLifecycle()
@@ -155,7 +160,11 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
               de.wissensgarten.app.ui.fx.LocalVibration provides vm.settings.vibration.collectAsStateWithLifecycle().value,
           ) {
             // imePadding: Eingabefelder rutschen über die Tastatur (bei Randlos-Darstellung nötig)
-            Surface(Modifier.fillMaxSize().imePadding(), color = MaterialTheme.colorScheme.background) {
+            // Erste Berührung: erst jetzt darf Musik erklingen, und einmal pro Start grüßt die Erkennungsmelodie
+            Surface(Modifier.fillMaxSize().imePadding().firstTouch {
+                host.music.unlock()
+                if (!jinglePlayed) { jinglePlayed = true; sfx.play(de.wissensgarten.app.ui.fx.Sound.JINGLE, volume = 0.7f) }
+            }, color = MaterialTheme.colorScheme.background) {
               // Tablets: Inhalt mittig in angenehmer Breite statt über den ganzen Bildschirm gezogen
               Box(Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.TopCenter) {
               Box(Modifier.fillMaxHeight().widthIn(max = 720.dp)) {
@@ -223,7 +232,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         // Musik passend zum Ort: Gieß-Runde/Duell schwungvoll, Gute-Nacht/abends ein Schlaflied, sonst Garten
         val music = host.music
         val hour = remember(now) { ((now + de.wissensgarten.core.model.Platform.tzOffsetMs(now)) / 3_600_000L % 24).toInt() }
-        LaunchedEffect(Unit) { music.prepare(de.wissensgarten.core.model.MusicMood.GARDEN, de.wissensgarten.core.model.MusicMood.PLAY, de.wissensgarten.core.model.MusicMood.NIGHT) }
+        LaunchedEffect(Unit) { music.prepare(de.wissensgarten.core.model.MusicMood.of(de.wissensgarten.core.model.Seasons.season(de.wissensgarten.core.model.Seasons.today())), de.wissensgarten.core.model.MusicMood.PLAY, de.wissensgarten.core.model.MusicMood.NIGHT) }
         LaunchedEffect(route) { music.duck(route == Routes.RHYTHM) }
         LaunchedEffect(route, hour) {
             val evening = hour >= 19 || hour < 6
@@ -236,7 +245,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     "advent" -> de.wissensgarten.core.model.MusicMood.ADVENT
                     "halloween" -> de.wissensgarten.core.model.MusicMood.HALLOWEEN
                     "ostern" -> de.wissensgarten.core.model.MusicMood.OSTERN
-                    else -> de.wissensgarten.core.model.MusicMood.GARDEN
+                    else -> de.wissensgarten.core.model.MusicMood.of(de.wissensgarten.core.model.Seasons.season(de.wissensgarten.core.model.Seasons.today()))
                 }
             })
         }
@@ -762,5 +771,17 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
     @Composable
     private fun WithProfile(profile: de.wissensgarten.core.data.db.ProfileEntity?, content: @Composable (de.wissensgarten.core.data.db.ProfileEntity) -> Unit) {
         if (profile == null) Box(Modifier.fillMaxSize()) else content(profile)
+    }
+}
+
+/** Erkennungsmelodie nur einmal pro App-Start */
+private var jinglePlayed = false
+
+/** Meldet die erste Berührung (ohne sie zu verbrauchen – der Tipp kommt trotzdem an). */
+private fun Modifier.firstTouch(onFirst: () -> Unit): Modifier = this.pointerInput(Unit) {
+    awaitPointerEventScope {
+        // nur echtes Antippen zählt – bloßes Darüberfahren mit der Maus nicht
+        while (awaitPointerEvent(androidx.compose.ui.input.pointer.PointerEventPass.Initial).type != androidx.compose.ui.input.pointer.PointerEventType.Press) Unit
+        onFirst()
     }
 }

@@ -210,7 +210,7 @@ fun ChestReveal(onOpen: () -> Friend?, onClose: () -> Unit) {
         shake.animateTo(0f, keyframes { durationMillis = 600; 10f at 80; -10f at 160; 8f at 240; -8f at 320; 5f at 400; -3f at 480 })
         lid.animateTo(0.08f, tween(120)); lid.animateTo(0f, tween(120))
         friend = onOpen()
-        sfx?.play(Sound.FANFARE)
+        sfx?.play(Sound.COLLECT)
         launch { glow.animateTo(1f, tween(500)) }
         particles.burst(Burst.SPARKLE, 0.5f, 0.45f, 40)
         particles.burst(Burst.CONFETTI, count = 100)

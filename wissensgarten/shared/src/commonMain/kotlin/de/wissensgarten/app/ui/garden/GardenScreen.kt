@@ -204,6 +204,9 @@ fun DewChip(dew: Int) {
 
 @Composable
 private fun WaterHero(thirsty: Int, seeds: Int, nextInDays: Double?, onWater: () -> Unit) {
+    // Durstige Pflanzen lassen leise die Blätter hängen – einmal pro App-Start, sanft, ohne Druck
+    val sfx = LocalSfx.current
+    LaunchedEffect(thirsty > 0) { if (thirsty > 0 && !wiltHeard) { wiltHeard = true; kotlinx.coroutines.delay(900); sfx?.play(Sound.WILT, volume = 0.45f) } }
     Card(
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
         shape = MaterialTheme.shapes.extraLarge,
@@ -325,3 +328,5 @@ private fun GardenFriends(friends: List<de.wissensgarten.core.model.Friend>, mod
         }
     }
 }
+
+private var wiltHeard = false

@@ -213,12 +213,13 @@ fun ReviewScreen(
                 mood = Mood.CHEER; speech = "Weißt du noch, wie schwer die war? Jetzt ist sie ein Kristall! 💎"
             } else if (up && !sprouted) {
                 levelUp = "⬆ Aufgestiegen: ${Stage.of(after).label}!"
-                sfx?.play(Sound.LEVEL_UP)
+                // Wachsen klingt mit jeder Stufe höher; ein ausgewachsener Baum wird „geerntet“
+                if (Stage.of(after) == Stage.TREE) sfx?.play(Sound.HARVEST) else sfx?.play(Sound.LEVEL_UP, pitch = 0.85f + 0.06f * Stage.of(after).ordinal)
                 particles.burst(Burst.LEAVES, 0.3f, 0.15f, 36)
             } else if (sprouted) {
                 levelUp = if (right) "🌱 Gekeimt!" else "🌱 Gesät"
                 sfx?.play(Sound.GROW, volume = 0.7f)
-            } else sfx?.play(Sound.GROW, volume = 0.5f)
+            } else sfx?.play(Sound.GROW, pitch = 0.85f + 0.06f * Stage.of(after).ordinal, volume = 0.5f)
             growAnim.animateTo(1f, spring(dampingRatio = 0.35f, stiffness = 220f))
             // Richtig: automatisch weiter. Falsch: Zeit zum Lesen, weiter per Knopf.
             if (right) {

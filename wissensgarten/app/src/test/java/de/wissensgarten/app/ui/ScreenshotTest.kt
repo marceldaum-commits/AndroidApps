@@ -632,6 +632,13 @@ open class ScreenshotTest {
             dailyLimit = 20, holiday = true)
     }
 
+    @Test fun soundSettings() = shot("68_ton") {
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp)) {
+            androidx.compose.material3.Text("Ton", style = androidx.compose.material3.MaterialTheme.typography.titleMedium)
+            de.wissensgarten.app.ui.settings.SoundSettingsContent(45, 65, music = true, sound = true, onMusicVol = {}, onSfxVol = {}, onProbe = {})
+        }
+    }
+
     @Test fun plus() = shot("65_plus") {
         de.wissensgarten.app.ui.plus.PlusScreen(
             status = de.wissensgarten.core.data.PlusStatus(active = false, enforced = true), today = 20773,

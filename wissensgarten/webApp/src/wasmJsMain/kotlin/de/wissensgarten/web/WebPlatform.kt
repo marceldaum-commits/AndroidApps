@@ -14,6 +14,7 @@ import de.wissensgarten.core.model.MusicMood
 import kotlinx.browser.localStorage
 import kotlinx.browser.window
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.await
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -44,43 +45,76 @@ private fun jsTiltX(): Double = js("window.wg.tiltX")
 private fun jsKeepAwake(on: Boolean): Unit = js("window.wg.keepAwake(on)")
 private fun jsReload(): Unit = js("location.reload()")
 
-/** Geräusche: im Code erzeugt (Synth), im Browser über WebAudio abgespielt. */
+/** Geräusche: im Code erzeugt (Synth), im Browser über WebAudio abgespielt – dieselben Klänge wie in der App. */
 class WebSfx : Sfx {
     override var enabled = true
-    init { Sound.entries.forEach { s -> jsLoadSound("sfx_${s.name}", Base64.encode(Synth.wav(Synth.render(s)))) } }
-    override fun play(s: Sound, pitch: Float, volume: Float) { if (enabled) jsPlay("sfx_${s.name}", pitch.coerceIn(0.5f, 2f).toDouble(), volume.toDouble()) }
+    override var level = 0.65f
+    private val made = mutableSetOf<Sound>()
+    private fun ensure(s: Sound) { if (made.add(s)) jsLoadSound("sfx_${s.name}", Base64.encode(Synth.wav(Synth.render(s)))) }
+    // Erst nach dem Start in kleinen Schritten erzeugen – der Garten erscheint so ohne Wartezeit
+    init { kotlinx.coroutines.MainScope().launch { delay(1500); Sound.entries.forEach { ensure(it); delay(1) } } }
+    override fun play(s: Sound, pitch: Float, volume: Float) {
+        if (!enabled || level <= 0f) return
+        ensure(s)
+        jsPlay("sfx_${s.name}", pitch.coerceIn(0.5f, 2f).toDouble(), (volume * level).toDouble())
+    }
 }
 
-/** Hintergrundmusik: dieselben Stücke wie in der App (Composer + MusicSynth), als Schleife im Browser. */
+/**
+ * Hintergrundmusik: dieselben Stücke wie in der App (Composer + MusicSynth), als Schleife im Browser.
+ * Die Musik entsteht erst, wenn sie gebraucht wird, und in kleinen Schritten – so ruckelt nichts und der Start bleibt schnell.
+ */
 class WebMusic : Music {
+    private val scope = kotlinx.coroutines.MainScope()
     private var enabled = true
     private var foreground = true
     private var ducked = false
+    private var unlocked = false
+    private var volume = 0.45f
     private var mood: MusicMood? = null
     private val loaded = mutableSetOf<MusicMood>()
-    private fun level() = if (ducked) 0.06 else 0.16
-    private fun load(m: MusicMood) {
-        if (!loaded.add(m)) return
-        val pcm = MusicSynth.render(Composer.compose(m))
-        val f = FloatArray(pcm.size) { pcm[it] / 32768f }
-        jsLoadSound("musik_${m.name}", Base64.encode(wavAt(f, MusicSynth.SR)))
-    }
+    private val loading = mutableSetOf<MusicMood>()
+    /** gleiche Lautstärke-Kurve wie Android (0.16 bei 50 %) */
+    private fun level() = 0.32 * volume * (if (ducked) 0.35 else 1.0)
     private fun refresh() {
         val m = mood
-        if (enabled && foreground && m != null) { load(m); jsMusicPlay("musik_${m.name}", level()) } else jsMusicStop()
+        if (!(enabled && foreground && unlocked && volume > 0f && m != null)) { jsMusicStop(); return }
+        if (m in loaded) { jsMusicPlay("musik_${m.name}", level()); return }
+        if (!loading.add(m)) return
+        scope.launch {
+            val pcm = MusicSynth.renderGently(Composer.compose(m)) { delay(1) }
+            jsLoadSound("musik_${m.name}", wavBase64(pcm, MusicSynth.SR))
+            loaded += m; loading -= m
+            if (mood == m) refresh()
+        }
     }
     override fun setEnabled(on: Boolean) { enabled = on; refresh() }
     override fun setMood(m: MusicMood) { mood = m; refresh() }
     override fun onForeground(on: Boolean) { foreground = on; refresh() }
     override fun duck(on: Boolean) { ducked = on; jsMusicLevel(level()) }
     override fun prepare(vararg moods: MusicMood) { /* erst bei Bedarf erzeugen – spart Ladezeit */ }
+    override fun setVolume(v: Float) { val was = volume; volume = v.coerceIn(0f, 1f); if (was == 0f || volume == 0f) refresh() else jsMusicLevel(level()) }
+    override fun unlock() { if (!unlocked) { unlocked = true; refresh() } }
 
-    /** 16-Bit-Mono-WAV mit eigener Abtastrate */
-    private fun wavAt(samples: FloatArray, sr: Int): ByteArray {
-        val w = Synth.wav(samples)
-        fun i32(at: Int, v: Int) { w[at] = v.toByte(); w[at + 1] = (v shr 8).toByte(); w[at + 2] = (v shr 16).toByte(); w[at + 3] = (v shr 24).toByte() }
-        i32(24, sr); i32(28, sr * 2)
-        return w
+    /** 16-Bit-Mono-WAV als Base64 – in Häppchen, damit der Browser dazwischen weiterzeichnen kann */
+    private suspend fun wavBase64(pcm: ShortArray, sr: Int): String {
+        val bytes = ByteArray(44 + pcm.size * 2)
+        fun str(at: Int, t: String) = t.forEachIndexed { k, c -> bytes[at + k] = c.code.toByte() }
+        fun i32(at: Int, v: Int) { bytes[at] = v.toByte(); bytes[at + 1] = (v shr 8).toByte(); bytes[at + 2] = (v shr 16).toByte(); bytes[at + 3] = (v shr 24).toByte() }
+        fun i16(at: Int, v: Int) { bytes[at] = v.toByte(); bytes[at + 1] = (v shr 8).toByte() }
+        str(0, "RIFF"); i32(4, 36 + pcm.size * 2); str(8, "WAVE"); str(12, "fmt "); i32(16, 16); i16(20, 1); i16(22, 1)
+        i32(24, sr); i32(28, sr * 2); i16(32, 2); i16(34, 16); str(36, "data"); i32(40, pcm.size * 2)
+        var i = 0
+        while (i < pcm.size) {
+            val end = minOf(pcm.size, i + 200_000)
+            while (i < end) { val v = pcm[i].toInt(); bytes[44 + 2 * i] = v.toByte(); bytes[45 + 2 * i] = (v shr 8).toByte(); i++ }
+            delay(1)
+        }
+        val sb = StringBuilder(bytes.size / 3 * 4 + 4)
+        val step = 300_000                                  // durch 3 teilbar: Stücke lassen sich einfach aneinanderhängen
+        var at = 0
+        while (at < bytes.size) { val to = minOf(bytes.size, at + step); sb.append(Base64.encode(bytes, at, to)); at = to; delay(1) }
+        return sb.toString()
     }
 }
 
