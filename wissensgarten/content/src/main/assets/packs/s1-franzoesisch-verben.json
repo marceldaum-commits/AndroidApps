@@ -1,6 +1,6 @@
 {
   "id": "s1-franzoesisch-verben",
-  "version": 4,
+  "version": 5,
   "title": "être, avoir, aller, faire",
   "subject": "franzoesisch",
   "grades": [
@@ -36,7 +36,7 @@
   "cards": [
     {
       "id": "001",
-      "q": "je – être",
+      "q": "Präsens von „être“ mit „je“? (mit Pronomen)",
       "a": "je suis",
       "choices": [
         "je es",
@@ -47,14 +47,14 @@
     },
     {
       "id": "002",
-      "q": "tu – être",
+      "q": "Präsens von „être“ mit „tu“? (mit Pronomen)",
       "a": "tu es",
       "info": "„es“ klingt genauso wie „est“ in il est.",
       "img": "👉🌟"
     },
     {
       "id": "003",
-      "q": "il – être",
+      "q": "Präsens von „être“ mit „il“? (mit Pronomen)",
       "a": "il est",
       "choices": [
         "il es",
@@ -65,7 +65,7 @@
     },
     {
       "id": "004",
-      "q": "nous – être",
+      "q": "Präsens von „être“ mit „nous“? (mit Pronomen)",
       "a": "nous sommes",
       "choices": [
         "nous êtes",
@@ -76,14 +76,14 @@
     },
     {
       "id": "005",
-      "q": "vous – être",
+      "q": "Präsens von „être“ mit „vous“? (mit Pronomen)",
       "a": "vous êtes",
       "info": "Merke: vous êtes, vous faites, vous dites – ohne -ez!",
       "img": "👥🌟"
     },
     {
       "id": "006",
-      "q": "ils – être",
+      "q": "Präsens von „être“ mit „ils“? (mit Pronomen)",
       "a": "ils sont",
       "choices": [
         "ils ont",
@@ -95,7 +95,7 @@
     },
     {
       "id": "007",
-      "q": "je – avoir",
+      "q": "Präsens von „avoir“ mit „je“? (mit Pronomen)",
       "a": "j'ai",
       "choices": [
         "je ai",
@@ -107,13 +107,13 @@
     },
     {
       "id": "008",
-      "q": "tu – avoir",
+      "q": "Präsens von „avoir“ mit „tu“? (mit Pronomen)",
       "a": "tu as",
       "img": "👉🎒"
     },
     {
       "id": "009",
-      "q": "il – avoir",
+      "q": "Präsens von „avoir“ mit „il“? (mit Pronomen)",
       "a": "il a",
       "choices": [
         "il as",
@@ -125,13 +125,13 @@
     },
     {
       "id": "010",
-      "q": "nous – avoir",
+      "q": "Präsens von „avoir“ mit „nous“? (mit Pronomen)",
       "a": "nous avons",
       "img": "👫🎒"
     },
     {
       "id": "011",
-      "q": "vous – avoir",
+      "q": "Präsens von „avoir“ mit „vous“? (mit Pronomen)",
       "a": "vous avez",
       "choices": [
         "vous avons",
@@ -142,13 +142,13 @@
     },
     {
       "id": "012",
-      "q": "ils – avoir",
+      "q": "Präsens von „avoir“ mit „ils“? (mit Pronomen)",
       "a": "ils ont",
       "img": "👬🎒"
     },
     {
       "id": "013",
-      "q": "je – aller",
+      "q": "Präsens von „aller“ mit „je“? (mit Pronomen)",
       "a": "je vais",
       "choices": [
         "je va",
@@ -159,13 +159,13 @@
     },
     {
       "id": "014",
-      "q": "tu – aller",
+      "q": "Präsens von „aller“ mit „tu“? (mit Pronomen)",
       "a": "tu vas",
       "img": "👉🚶"
     },
     {
       "id": "015",
-      "q": "il – aller",
+      "q": "Präsens von „aller“ mit „il“? (mit Pronomen)",
       "a": "il va",
       "choices": [
         "il vas",
@@ -176,13 +176,13 @@
     },
     {
       "id": "016",
-      "q": "nous – aller",
+      "q": "Präsens von „aller“ mit „nous“? (mit Pronomen)",
       "a": "nous allons",
       "img": "👫🚶"
     },
     {
       "id": "017",
-      "q": "vous – aller",
+      "q": "Präsens von „aller“ mit „vous“? (mit Pronomen)",
       "a": "vous allez",
       "choices": [
         "vous allons",
@@ -193,13 +193,13 @@
     },
     {
       "id": "018",
-      "q": "ils – aller",
+      "q": "Präsens von „aller“ mit „ils“? (mit Pronomen)",
       "a": "ils vont",
       "img": "👬🚶"
     },
     {
       "id": "019",
-      "q": "je – faire",
+      "q": "Präsens von „faire“ mit „je“? (mit Pronomen)",
       "a": "je fais",
       "choices": [
         "je fait",
@@ -210,13 +210,13 @@
     },
     {
       "id": "020",
-      "q": "tu – faire",
+      "q": "Präsens von „faire“ mit „tu“? (mit Pronomen)",
       "a": "tu fais",
       "img": "👉🔨"
     },
     {
       "id": "021",
-      "q": "il – faire",
+      "q": "Präsens von „faire“ mit „il“? (mit Pronomen)",
       "a": "il fait",
       "choices": [
         "il fais",
@@ -227,14 +227,14 @@
     },
     {
       "id": "022",
-      "q": "nous – faire",
+      "q": "Präsens von „faire“ mit „nous“? (mit Pronomen)",
       "a": "nous faisons",
       "info": "Gesprochen wie „fe-son“.",
       "img": "👫🔨"
     },
     {
       "id": "023",
-      "q": "vous – faire",
+      "q": "Präsens von „faire“ mit „vous“? (mit Pronomen)",
       "a": "vous faites",
       "choices": [
         "vous faisez",
@@ -245,13 +245,13 @@
     },
     {
       "id": "024",
-      "q": "ils – faire",
+      "q": "Präsens von „faire“ mit „ils“? (mit Pronomen)",
       "a": "ils font",
       "img": "👬🔨"
     },
     {
       "id": "025",
-      "q": "elles – avoir",
+      "q": "Präsens von „avoir“ mit „elles“? (mit Pronomen)",
       "a": "elles ont",
       "choices": [
         "elles sont",
@@ -262,14 +262,14 @@
     },
     {
       "id": "026",
-      "q": "on – aller",
+      "q": "Präsens von „aller“ mit „on“? (mit Pronomen)",
       "a": "on va",
       "info": "on wird wie il/elle konjugiert.",
       "img": "👤🚶"
     },
     {
       "id": "027",
-      "q": "elle – faire",
+      "q": "Präsens von „faire“ mit „elle“? (mit Pronomen)",
       "a": "elle fait",
       "choices": [
         "elle fais",
@@ -280,7 +280,7 @@
     },
     {
       "id": "028",
-      "q": "on – être",
+      "q": "Präsens von „être“ mit „on“? (mit Pronomen)",
       "a": "on est",
       "img": "👤🌟"
     },

@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-tenses",
-  "version": 1,
+  "version": 2,
   "title": "English Tenses",
   "subject": "englisch",
   "grades": [
@@ -289,7 +289,7 @@
     },
     {
       "id": "022",
-      "q": "Welches Signalwort passt zum Present Perfect?",
+      "q": "Welches Present-Perfect-Signalwort bedeutet „seit“ (ab einem Zeitpunkt)?",
       "a": "since",
       "choices": [
         "yesterday",

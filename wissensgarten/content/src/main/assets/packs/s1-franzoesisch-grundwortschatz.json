@@ -1,6 +1,6 @@
 {
   "id": "s1-franzoesisch-grundwortschatz",
-  "version": 2,
+  "version": 3,
   "title": "Französisch Grundwortschatz",
   "subject": "franzoesisch",
   "grades": [
@@ -36,7 +36,7 @@
   "cards": [
     {
       "id": "001",
-      "q": "das Haus",
+      "q": "Was heißt „das Haus“ auf Französisch?",
       "a": "la maison",
       "choices": [
         "le maison",
@@ -47,7 +47,7 @@
     },
     {
       "id": "002",
-      "q": "der Vater",
+      "q": "Was heißt „der Vater“ auf Französisch?",
       "a": "le père",
       "choices": [
         "la père",
@@ -58,7 +58,7 @@
     },
     {
       "id": "003",
-      "q": "die Mutter",
+      "q": "Was heißt „die Mutter“ auf Französisch?",
       "a": "la mère",
       "choices": [
         "la mer",
@@ -70,7 +70,7 @@
     },
     {
       "id": "004",
-      "q": "der Bruder",
+      "q": "Was heißt „der Bruder“ auf Französisch?",
       "a": "le frère",
       "choices": [
         "la frère",
@@ -81,7 +81,7 @@
     },
     {
       "id": "005",
-      "q": "die Schwester",
+      "q": "Was heißt „die Schwester“ auf Französisch?",
       "a": "la sœur",
       "choices": [
         "le sœur",
@@ -92,7 +92,7 @@
     },
     {
       "id": "006",
-      "q": "die Schule",
+      "q": "Was heißt „die Schule“ auf Französisch?",
       "a": "l'école",
       "choices": [
         "la école",
@@ -104,7 +104,7 @@
     },
     {
       "id": "007",
-      "q": "das Buch",
+      "q": "Was heißt „das Buch“ auf Französisch?",
       "a": "le livre",
       "choices": [
         "la livre",
@@ -116,7 +116,7 @@
     },
     {
       "id": "008",
-      "q": "der Hund",
+      "q": "Was heißt „der Hund“ auf Französisch?",
       "a": "le chien",
       "choices": [
         "la chien",
@@ -127,7 +127,7 @@
     },
     {
       "id": "009",
-      "q": "die Katze",
+      "q": "Was heißt „die Katze“ auf Französisch?",
       "a": "le chat",
       "choices": [
         "la chat",
@@ -138,7 +138,7 @@
     },
     {
       "id": "010",
-      "q": "das Brot",
+      "q": "Was heißt „das Brot“ auf Französisch?",
       "a": "le pain",
       "choices": [
         "la pain",
@@ -149,7 +149,7 @@
     },
     {
       "id": "011",
-      "q": "der Käse",
+      "q": "Was heißt „der Käse“ auf Französisch?",
       "a": "le fromage",
       "choices": [
         "la fromage",
@@ -160,7 +160,7 @@
     },
     {
       "id": "012",
-      "q": "das Wasser",
+      "q": "Was heißt „das Wasser“ auf Französisch?",
       "a": "l'eau",
       "choices": [
         "le eau",
@@ -172,7 +172,7 @@
     },
     {
       "id": "013",
-      "q": "der Apfel",
+      "q": "Was heißt „der Apfel“ auf Französisch?",
       "a": "la pomme",
       "choices": [
         "le pomme",
@@ -183,7 +183,7 @@
     },
     {
       "id": "014",
-      "q": "die Stadt",
+      "q": "Was heißt „die Stadt“ auf Französisch?",
       "a": "la ville",
       "choices": [
         "le ville",
@@ -194,7 +194,7 @@
     },
     {
       "id": "015",
-      "q": "der Baum",
+      "q": "Was heißt „der Baum“ auf Französisch?",
       "a": "l'arbre",
       "choices": [
         "la arbre",
@@ -206,7 +206,7 @@
     },
     {
       "id": "016",
-      "q": "das Auto",
+      "q": "Was heißt „das Auto“ auf Französisch?",
       "a": "la voiture",
       "choices": [
         "le voiture",
@@ -217,7 +217,7 @@
     },
     {
       "id": "017",
-      "q": "das Fahrrad",
+      "q": "Was heißt „das Fahrrad“ auf Französisch?",
       "a": "le vélo",
       "choices": [
         "la vélo",
@@ -228,7 +228,7 @@
     },
     {
       "id": "018",
-      "q": "das Schlafzimmer",
+      "q": "Was heißt „das Schlafzimmer“ auf Französisch?",
       "a": "la chambre",
       "choices": [
         "le chambre",
@@ -239,7 +239,7 @@
     },
     {
       "id": "019",
-      "q": "die Küche",
+      "q": "Was heißt „die Küche“ auf Französisch?",
       "a": "la cuisine",
       "choices": [
         "le cuisine",
@@ -251,7 +251,7 @@
     },
     {
       "id": "020",
-      "q": "der Tisch",
+      "q": "Was heißt „der Tisch“ auf Französisch?",
       "a": "la table",
       "choices": [
         "le table",
@@ -262,7 +262,7 @@
     },
     {
       "id": "021",
-      "q": "das Fenster",
+      "q": "Was heißt „das Fenster“ auf Französisch?",
       "a": "la fenêtre",
       "choices": [
         "le fenêtre",
@@ -273,7 +273,7 @@
     },
     {
       "id": "022",
-      "q": "die Tür",
+      "q": "Was heißt „die Tür“ auf Französisch?",
       "a": "la porte",
       "choices": [
         "le porte",
@@ -284,7 +284,7 @@
     },
     {
       "id": "023",
-      "q": "der Tag",
+      "q": "Was heißt „der Tag“ auf Französisch?",
       "a": "le jour",
       "choices": [
         "la jour",
@@ -295,7 +295,7 @@
     },
     {
       "id": "024",
-      "q": "die Nacht",
+      "q": "Was heißt „die Nacht“ auf Französisch?",
       "a": "la nuit",
       "choices": [
         "le nuit",
@@ -306,7 +306,7 @@
     },
     {
       "id": "025",
-      "q": "die Woche",
+      "q": "Was heißt „die Woche“ auf Französisch?",
       "a": "la semaine",
       "choices": [
         "le semaine",
@@ -317,7 +317,7 @@
     },
     {
       "id": "026",
-      "q": "das Meer",
+      "q": "Was heißt „das Meer“ auf Französisch?",
       "a": "la mer",
       "choices": [
         "la mère",
@@ -329,7 +329,7 @@
     },
     {
       "id": "027",
-      "q": "die Sonne",
+      "q": "Was heißt „die Sonne“ auf Französisch?",
       "a": "le soleil",
       "choices": [
         "la soleil",
@@ -340,7 +340,7 @@
     },
     {
       "id": "028",
-      "q": "der Mond",
+      "q": "Was heißt „der Mond“ auf Französisch?",
       "a": "la lune",
       "choices": [
         "le lune",
@@ -351,7 +351,7 @@
     },
     {
       "id": "029",
-      "q": "die Hausaufgaben",
+      "q": "Was heißt „die Hausaufgaben“ auf Französisch?",
       "a": "les devoirs",
       "choices": [
         "les devoir",
@@ -362,7 +362,7 @@
     },
     {
       "id": "030",
-      "q": "der Bahnhof",
+      "q": "Was heißt „der Bahnhof“ auf Französisch?",
       "a": "la gare",
       "choices": [
         "le gare",
@@ -374,7 +374,7 @@
     },
     {
       "id": "031",
-      "q": "das Geld",
+      "q": "Was heißt „das Geld“ auf Französisch?",
       "a": "l'argent",
       "choices": [
         "la argent",
@@ -386,7 +386,7 @@
     },
     {
       "id": "032",
-      "q": "das Heft",
+      "q": "Was heißt „das Heft“ auf Französisch?",
       "a": "le cahier",
       "choices": [
         "la cahier",
@@ -397,7 +397,7 @@
     },
     {
       "id": "033",
-      "q": "der Garten",
+      "q": "Was heißt „der Garten“ auf Französisch?",
       "a": "le jardin",
       "choices": [
         "la jardin",
@@ -408,7 +408,7 @@
     },
     {
       "id": "034",
-      "q": "die Blume",
+      "q": "Was heißt „die Blume“ auf Französisch?",
       "a": "la fleur",
       "choices": [
         "le fleur",
@@ -419,7 +419,7 @@
     },
     {
       "id": "035",
-      "q": "das Kind",
+      "q": "Was heißt „das Kind“ auf Französisch?",
       "a": "l'enfant",
       "choices": [
         "la enfant",

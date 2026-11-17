@@ -1,6 +1,6 @@
 {
   "id": "gs-wetter-jahreszeiten",
-  "version": 2,
+  "version": 3,
   "title": "Wetter und Jahreszeiten",
   "subject": "sachunterricht",
   "grades": [
@@ -74,7 +74,7 @@
     },
     {
       "id": "004",
-      "q": "Welcher Monat gehört zum Winter?",
+      "q": "Welcher Monat gehört zum Winter: April, Juni, Januar oder Oktober?",
       "a": "Januar",
       "choices": [
         "April",
@@ -330,7 +330,7 @@
     },
     {
       "id": "026",
-      "q": "Welcher Vogel ist ein Zugvogel?",
+      "q": "Welcher Vogel ist ein Zugvogel: Spatz, Storch, Elster oder Meise?",
       "a": "Storch",
       "choices": [
         "Spatz",

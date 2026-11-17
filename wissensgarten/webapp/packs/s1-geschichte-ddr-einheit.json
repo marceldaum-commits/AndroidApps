@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-ddr-einheit",
-  "version": 1,
+  "version": 2,
   "title": "DDR und Deutsche Einheit",
   "subject": "geschichte",
   "grades": [
@@ -36,11 +36,11 @@
     {
       "id": "001",
       "q": "Wie viele deutsche Staaten gab es von 1949 bis 1990?",
-      "a": "Zwei",
+      "a": "2",
       "choices": [
-        "Einen",
-        "Drei",
-        "Vier"
+        "1",
+        "3",
+        "4"
       ],
       "info": "Die Bundesrepublik Deutschland im Westen und die Deutsche Demokratische Republik (DDR) im Osten.",
       "img": "✌️🌍"
@@ -72,7 +72,7 @@
     {
       "id": "004",
       "q": "Welche Stadt war die Hauptstadt der DDR?",
-      "a": "Ost-Berlin",
+      "a": "Ost-Berlin (Berlin)",
       "choices": [
         "Leipzig",
         "Dresden",
@@ -431,7 +431,7 @@
     },
     {
       "id": "034",
-      "q": "Welches dieser Bundesländer gehörte NICHT zur ehemaligen DDR?",
+      "q": "Welches Bundesland gehörte NICHT zur DDR: Sachsen, Niedersachsen, Thüringen oder Brandenburg?",
       "a": "Niedersachsen",
       "choices": [
         "Sachsen",

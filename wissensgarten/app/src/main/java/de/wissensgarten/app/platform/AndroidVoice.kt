@@ -79,6 +79,11 @@ class AndroidNova(context: Context) : NovaGeraet, NovaOfflineSpeicher, TextToSpe
 
     override suspend fun laden(url: String, h: String): Int = withContext(Dispatchers.IO) { runCatching { get(url, h, dir) }.getOrDefault(-1) }
 
+    /** Eingebaute Vorlese-Liste (beim Bauen aus `webApp/…/vorlesen/texte.json` übernommen) */
+    override suspend fun liste(): String? = withContext(Dispatchers.IO) {
+        runCatching { ctx.assets.open("vorlesen/texte.json").use { it.readBytes().decodeToString() } }.getOrNull()
+    }
+
     // ---------------------------------------------------------------- Offline laden
 
     override suspend fun offlineHashes(q: NovaQualitaet): Set<String> = withContext(Dispatchers.IO) {

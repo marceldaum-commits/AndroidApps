@@ -1,6 +1,6 @@
 {
   "id": "s1-ethik-weltreligionen",
-  "version": 1,
+  "version": 2,
   "title": "Weltreligionen",
   "subject": "ethik",
   "grades": [
@@ -277,12 +277,12 @@
     },
     {
       "id": "021",
-      "q": "Wie oft am Tag beten gläubige Muslime?",
-      "a": "Fünfmal",
+      "q": "Wie oft am Tag beten gläubige Muslime? (Zahl)",
+      "a": "5",
       "choices": [
-        "Einmal",
-        "Dreimal",
-        "Siebenmal"
+        "1",
+        "3",
+        "7"
       ],
       "info": "Das Gebet ist eine der fünf Säulen des Islam. Die Zeiten richten sich nach dem Stand der Sonne.",
       "img": "🕌🕐"

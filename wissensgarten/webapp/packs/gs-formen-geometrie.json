@@ -1,6 +1,6 @@
 {
   "id": "gs-formen-geometrie",
-  "version": 1,
+  "version": 2,
   "title": "Formen und Körper",
   "subject": "mathe",
   "grades": [
@@ -157,7 +157,7 @@
     },
     {
       "id": "011",
-      "q": "Was ist eine flache Form und kein Körper?",
+      "q": "Was ist eine flache Form und kein Körper: Kugel, Zylinder, Kreis oder Würfel?",
       "a": "Kreis",
       "choices": [
         "Kugel",

@@ -1,6 +1,6 @@
 {
   "id": "gs-gesund-ernaehrung",
-  "version": 1,
+  "version": 2,
   "title": "Gesund und fit",
   "subject": "sachunterricht",
   "grades": [
@@ -37,7 +37,7 @@
   "cards": [
     {
       "id": "001",
-      "q": "Welches davon ist ein Gemüse?",
+      "q": "Was davon ist ein Gemüse: Apfel, Möhre, Banane oder Kirsche?",
       "a": "Möhre",
       "choices": [
         "Apfel",
@@ -49,7 +49,7 @@
     },
     {
       "id": "002",
-      "q": "Welches davon ist Obst?",
+      "q": "Was davon ist Obst: Brokkoli, Möhre, Kartoffel oder Birne?",
       "a": "Birne",
       "choices": [
         "Brokkoli",

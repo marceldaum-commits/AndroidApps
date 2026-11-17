@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-wirbeltiere",
-  "version": 1,
+  "version": 2,
   "title": "Wirbeltiere",
   "subject": "biologie",
   "grades": [
@@ -59,7 +59,7 @@
     },
     {
       "id": "003",
-      "q": "Welches Tier ist KEIN Wirbeltier?",
+      "q": "Welches Tier ist KEIN Wirbeltier: Forelle, Regenwurm, Frosch oder Blindschleiche?",
       "a": "Regenwurm",
       "choices": [
         "Forelle",

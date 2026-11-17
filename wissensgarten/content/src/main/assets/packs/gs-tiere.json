@@ -1,6 +1,6 @@
 {
   "id": "gs-tiere",
-  "version": 2,
+  "version": 3,
   "title": "Tiere entdecken",
   "subject": "sachunterricht",
   "grades": [
@@ -170,7 +170,7 @@
     },
     {
       "id": "013",
-      "q": "Welches Tier ist ein Säugetier?",
+      "q": "Welches Tier ist ein Säugetier: Huhn, Frosch, Hund oder Forelle?",
       "a": "Hund",
       "choices": [
         "Huhn",
@@ -182,7 +182,7 @@
     },
     {
       "id": "014",
-      "q": "Welches Tier ist ein Vogel?",
+      "q": "Welches Tier ist ein Vogel: Fledermaus, Amsel, Biene oder Eichhörnchen?",
       "a": "Amsel",
       "choices": [
         "Fledermaus",
@@ -194,7 +194,7 @@
     },
     {
       "id": "015",
-      "q": "Welches Tier ist ein Fisch?",
+      "q": "Welches Tier ist ein Fisch: Wal, Delfin, Seehund oder Forelle?",
       "a": "Forelle",
       "choices": [
         "Wal",
@@ -216,7 +216,7 @@
     },
     {
       "id": "017",
-      "q": "Welches Tier ist ein Insekt?",
+      "q": "Welches Tier ist ein Insekt: Spinne, Ameise, Schnecke oder Regenwurm?",
       "a": "Ameise",
       "choices": [
         "Spinne",
@@ -250,7 +250,7 @@
     },
     {
       "id": "020",
-      "q": "Welches Tier ist ein Reptil?",
+      "q": "Welches Tier ist ein Reptil: Frosch, Maus, Molch oder Eidechse?",
       "a": "Eidechse",
       "choices": [
         "Frosch",
@@ -261,7 +261,7 @@
     },
     {
       "id": "021",
-      "q": "Welches Tier ist ein Lurch (Amphibie)?",
+      "q": "Welches Tier ist ein Lurch (Amphibie): Eidechse, Frosch, Schildkröte oder Maus?",
       "a": "Frosch",
       "choices": [
         "Eidechse",
@@ -272,7 +272,7 @@
     },
     {
       "id": "022",
-      "q": "Welches Tier legt Eier?",
+      "q": "Welches Tier legt Eier: Kuh, Huhn, Pferd oder Katze?",
       "a": "Huhn",
       "choices": [
         "Kuh",
@@ -316,7 +316,7 @@
     },
     {
       "id": "026",
-      "q": "Welches Tier lebt bei uns im Wald?",
+      "q": "Welches Tier lebt bei uns im Wald: Kamel, Pinguin, Wildschwein oder Löwe?",
       "a": "Wildschwein",
       "choices": [
         "Kamel",
@@ -350,7 +350,7 @@
     },
     {
       "id": "029",
-      "q": "Welches Tier ist ein Pflanzenfresser?",
+      "q": "Welches Tier ist ein Pflanzenfresser: Wolf, Kuh, Fuchs oder Katze?",
       "a": "Kuh",
       "choices": [
         "Wolf",
@@ -361,7 +361,7 @@
     },
     {
       "id": "030",
-      "q": "Welches Tier hält Winterschlaf?",
+      "q": "Welches Tier hält Winterschlaf: Fuchs, Reh, Igel oder Amsel?",
       "a": "Igel",
       "choices": [
         "Fuchs",

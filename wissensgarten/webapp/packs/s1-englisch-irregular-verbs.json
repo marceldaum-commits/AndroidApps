@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-irregular-verbs",
-  "version": 3,
+  "version": 4,
   "title": "Irregular Verbs",
   "subject": "englisch",
   "grades": [
@@ -37,7 +37,7 @@
   "cards": [
     {
       "id": "001",
-      "q": "to go",
+      "q": "Simple Past und Past Participle von „to go“?",
       "a": "went – gone",
       "choices": [
         "goed – goed",
@@ -49,7 +49,7 @@
     },
     {
       "id": "002",
-      "q": "to be",
+      "q": "Simple Past und Past Participle von „to be“?",
       "a": "was/were – been",
       "choices": [
         "was/were – be",
@@ -61,7 +61,7 @@
     },
     {
       "id": "003",
-      "q": "to have",
+      "q": "Simple Past und Past Participle von „to have“?",
       "a": "had – had",
       "choices": [
         "haved – haved",
@@ -72,7 +72,7 @@
     },
     {
       "id": "004",
-      "q": "to do",
+      "q": "Simple Past und Past Participle von „to do“?",
       "a": "did – done",
       "choices": [
         "done – did",
@@ -83,7 +83,7 @@
     },
     {
       "id": "005",
-      "q": "to see",
+      "q": "Simple Past und Past Participle von „to see“?",
       "a": "saw – seen",
       "choices": [
         "seen – saw",
@@ -94,7 +94,7 @@
     },
     {
       "id": "006",
-      "q": "to come",
+      "q": "Simple Past und Past Participle von „to come“?",
       "a": "came – come",
       "choices": [
         "came – came",
@@ -106,7 +106,7 @@
     },
     {
       "id": "007",
-      "q": "to take",
+      "q": "Simple Past und Past Participle von „to take“?",
       "a": "took – taken",
       "choices": [
         "taked – taken",
@@ -117,7 +117,7 @@
     },
     {
       "id": "008",
-      "q": "to give",
+      "q": "Simple Past und Past Participle von „to give“?",
       "a": "gave – given",
       "choices": [
         "gived – given",
@@ -128,7 +128,7 @@
     },
     {
       "id": "009",
-      "q": "to eat",
+      "q": "Simple Past und Past Participle von „to eat“?",
       "a": "ate – eaten",
       "choices": [
         "eated – eaten",
@@ -139,7 +139,7 @@
     },
     {
       "id": "010",
-      "q": "to drink",
+      "q": "Simple Past und Past Participle von „to drink“?",
       "a": "drank – drunk",
       "choices": [
         "drunk – drank",
@@ -150,7 +150,7 @@
     },
     {
       "id": "011",
-      "q": "to write",
+      "q": "Simple Past und Past Participle von „to write“?",
       "a": "wrote – written",
       "choices": [
         "writed – written",
@@ -161,7 +161,7 @@
     },
     {
       "id": "012",
-      "q": "to speak",
+      "q": "Simple Past und Past Participle von „to speak“?",
       "a": "spoke – spoken",
       "choices": [
         "speaked – spoken",
@@ -172,7 +172,7 @@
     },
     {
       "id": "013",
-      "q": "to know",
+      "q": "Simple Past und Past Participle von „to know“?",
       "a": "knew – known",
       "choices": [
         "knowed – known",
@@ -183,7 +183,7 @@
     },
     {
       "id": "014",
-      "q": "to buy",
+      "q": "Simple Past und Past Participle von „to buy“?",
       "a": "bought – bought",
       "choices": [
         "brought – brought",
@@ -195,7 +195,7 @@
     },
     {
       "id": "015",
-      "q": "to bring",
+      "q": "Simple Past und Past Participle von „to bring“?",
       "a": "brought – brought",
       "choices": [
         "bought – bought",
@@ -206,7 +206,7 @@
     },
     {
       "id": "016",
-      "q": "to think",
+      "q": "Simple Past und Past Participle von „to think“?",
       "a": "thought – thought",
       "choices": [
         "thinked – thinked",
@@ -217,7 +217,7 @@
     },
     {
       "id": "017",
-      "q": "to catch",
+      "q": "Simple Past und Past Participle von „to catch“?",
       "a": "caught – caught",
       "choices": [
         "catched – catched",
@@ -228,7 +228,7 @@
     },
     {
       "id": "018",
-      "q": "to teach",
+      "q": "Simple Past und Past Participle von „to teach“?",
       "a": "taught – taught",
       "choices": [
         "teached – teached",
@@ -239,7 +239,7 @@
     },
     {
       "id": "019",
-      "q": "to swim",
+      "q": "Simple Past und Past Participle von „to swim“?",
       "a": "swam – swum",
       "choices": [
         "swum – swam",
@@ -250,7 +250,7 @@
     },
     {
       "id": "020",
-      "q": "to sing",
+      "q": "Simple Past und Past Participle von „to sing“?",
       "a": "sang – sung",
       "choices": [
         "sung – sang",
@@ -261,7 +261,7 @@
     },
     {
       "id": "021",
-      "q": "to begin",
+      "q": "Simple Past und Past Participle von „to begin“?",
       "a": "began – begun",
       "choices": [
         "begun – began",
@@ -272,7 +272,7 @@
     },
     {
       "id": "022",
-      "q": "to run",
+      "q": "Simple Past und Past Participle von „to run“?",
       "a": "ran – run",
       "choices": [
         "runned – runned",
@@ -283,7 +283,7 @@
     },
     {
       "id": "023",
-      "q": "to sleep",
+      "q": "Simple Past und Past Participle von „to sleep“?",
       "a": "slept – slept",
       "choices": [
         "sleeped – sleeped",
@@ -294,7 +294,7 @@
     },
     {
       "id": "024",
-      "q": "to leave",
+      "q": "Simple Past und Past Participle von „to leave“?",
       "a": "left – left",
       "choices": [
         "leaved – leaved",
@@ -305,7 +305,7 @@
     },
     {
       "id": "025",
-      "q": "to feel",
+      "q": "Simple Past und Past Participle von „to feel“?",
       "a": "felt – felt",
       "choices": [
         "feeled – feeled",
@@ -316,7 +316,7 @@
     },
     {
       "id": "026",
-      "q": "to find",
+      "q": "Simple Past und Past Participle von „to find“?",
       "a": "found – found",
       "choices": [
         "finded – finded",
@@ -327,7 +327,7 @@
     },
     {
       "id": "027",
-      "q": "to make",
+      "q": "Simple Past und Past Participle von „to make“?",
       "a": "made – made",
       "choices": [
         "maked – maked",
@@ -338,7 +338,7 @@
     },
     {
       "id": "028",
-      "q": "to say",
+      "q": "Simple Past und Past Participle von „to say“?",
       "a": "said – said",
       "choices": [
         "sayed – sayed",
@@ -349,7 +349,7 @@
     },
     {
       "id": "029",
-      "q": "to tell",
+      "q": "Simple Past und Past Participle von „to tell“?",
       "a": "told – told",
       "choices": [
         "telled – telled",
@@ -360,7 +360,7 @@
     },
     {
       "id": "030",
-      "q": "to sit",
+      "q": "Simple Past und Past Participle von „to sit“?",
       "a": "sat – sat",
       "choices": [
         "sitted – sitted",
@@ -371,7 +371,7 @@
     },
     {
       "id": "031",
-      "q": "to stand",
+      "q": "Simple Past und Past Participle von „to stand“?",
       "a": "stood – stood",
       "choices": [
         "standed – standed",
@@ -382,7 +382,7 @@
     },
     {
       "id": "032",
-      "q": "to fly",
+      "q": "Simple Past und Past Participle von „to fly“?",
       "a": "flew – flown",
       "choices": [
         "flied – flied",
@@ -393,7 +393,7 @@
     },
     {
       "id": "033",
-      "q": "to break",
+      "q": "Simple Past und Past Participle von „to break“?",
       "a": "broke – broken",
       "choices": [
         "breaked – breaked",
@@ -404,7 +404,7 @@
     },
     {
       "id": "034",
-      "q": "to choose",
+      "q": "Simple Past und Past Participle von „to choose“?",
       "a": "chose – chosen",
       "choices": [
         "choosed – choosed",
@@ -415,7 +415,7 @@
     },
     {
       "id": "035",
-      "q": "to forget",
+      "q": "Simple Past und Past Participle von „to forget“?",
       "a": "forgot – forgotten",
       "choices": [
         "forgetted – forgetted",
@@ -426,7 +426,7 @@
     },
     {
       "id": "036",
-      "q": "to ride",
+      "q": "Simple Past und Past Participle von „to ride“?",
       "a": "rode – ridden",
       "choices": [
         "rided – rided",
@@ -437,7 +437,7 @@
     },
     {
       "id": "037",
-      "q": "to wear",
+      "q": "Simple Past und Past Participle von „to wear“?",
       "a": "wore – worn",
       "choices": [
         "weared – weared",
@@ -448,7 +448,7 @@
     },
     {
       "id": "038",
-      "q": "to throw",
+      "q": "Simple Past und Past Participle von „to throw“?",
       "a": "threw – thrown",
       "choices": [
         "throwed – throwed",
@@ -459,7 +459,7 @@
     },
     {
       "id": "039",
-      "q": "to fall",
+      "q": "Simple Past und Past Participle von „to fall“?",
       "a": "fell – fallen",
       "choices": [
         "falled – falled",
@@ -470,7 +470,7 @@
     },
     {
       "id": "040",
-      "q": "to get",
+      "q": "Simple Past und Past Participle von „to get“?",
       "a": "got – got",
       "choices": [
         "getted – getted",

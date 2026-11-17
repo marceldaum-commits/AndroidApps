@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-grundwortschatz",
-  "version": 3,
+  "version": 4,
   "title": "Englisch Grundwortschatz",
   "subject": "englisch",
   "grades": [
@@ -36,7 +36,7 @@
   "cards": [
     {
       "id": "001",
-      "q": "die Schule",
+      "q": "Was heißt „die Schule“ auf Englisch?",
       "a": "school",
       "choices": [
         "shool",
@@ -47,7 +47,7 @@
     },
     {
       "id": "002",
-      "q": "der Lehrer / die Lehrerin",
+      "q": "Was heißt „der Lehrer / die Lehrerin“ auf Englisch?",
       "a": "teacher",
       "choices": [
         "student",
@@ -58,7 +58,7 @@
     },
     {
       "id": "003",
-      "q": "das Buch",
+      "q": "Was heißt „das Buch“ auf Englisch?",
       "a": "book",
       "choices": [
         "boot",
@@ -69,7 +69,7 @@
     },
     {
       "id": "004",
-      "q": "der Bleistift",
+      "q": "Was heißt „der Bleistift“ auf Englisch?",
       "a": "pencil",
       "choices": [
         "pen",
@@ -81,7 +81,7 @@
     },
     {
       "id": "005",
-      "q": "das Lineal",
+      "q": "Was heißt „das Lineal“ auf Englisch?",
       "a": "ruler",
       "choices": [
         "rubber",
@@ -92,7 +92,7 @@
     },
     {
       "id": "006",
-      "q": "die Hausaufgaben",
+      "q": "Was heißt „die Hausaufgaben“ auf Englisch?",
       "a": "homework",
       "choices": [
         "housework",
@@ -104,7 +104,7 @@
     },
     {
       "id": "007",
-      "q": "der Freund (Kumpel)",
+      "q": "Was heißt „der Freund“ (Kumpel) auf Englisch?",
       "a": "friend",
       "choices": [
         "frend",
@@ -115,7 +115,7 @@
     },
     {
       "id": "008",
-      "q": "die Familie",
+      "q": "Was heißt „die Familie“ auf Englisch?",
       "a": "family",
       "choices": [
         "familie",
@@ -126,7 +126,7 @@
     },
     {
       "id": "009",
-      "q": "die Mutter",
+      "q": "Was heißt „die Mutter“ auf Englisch?",
       "a": "mother",
       "choices": [
         "mather",
@@ -137,7 +137,7 @@
     },
     {
       "id": "010",
-      "q": "der Bruder",
+      "q": "Was heißt „der Bruder“ auf Englisch?",
       "a": "brother",
       "choices": [
         "bruther",
@@ -148,7 +148,7 @@
     },
     {
       "id": "011",
-      "q": "die Schwester",
+      "q": "Was heißt „die Schwester“ auf Englisch?",
       "a": "sister",
       "choices": [
         "sista",
@@ -159,7 +159,7 @@
     },
     {
       "id": "012",
-      "q": "der Hund",
+      "q": "Was heißt „der Hund“ auf Englisch?",
       "a": "dog",
       "choices": [
         "cat",
@@ -170,7 +170,7 @@
     },
     {
       "id": "013",
-      "q": "die Katze",
+      "q": "Was heißt „die Katze“ auf Englisch?",
       "a": "cat",
       "choices": [
         "dog",
@@ -181,7 +181,7 @@
     },
     {
       "id": "014",
-      "q": "das Haus",
+      "q": "Was heißt „das Haus“ auf Englisch?",
       "a": "house",
       "choices": [
         "horse",
@@ -192,7 +192,7 @@
     },
     {
       "id": "015",
-      "q": "die Küche",
+      "q": "Was heißt „die Küche“ auf Englisch?",
       "a": "kitchen",
       "choices": [
         "chicken",
@@ -204,7 +204,7 @@
     },
     {
       "id": "016",
-      "q": "das Schlafzimmer",
+      "q": "Was heißt „das Schlafzimmer“ auf Englisch?",
       "a": "bedroom",
       "choices": [
         "bathroom",
@@ -215,7 +215,7 @@
     },
     {
       "id": "017",
-      "q": "der Tisch",
+      "q": "Was heißt „der Tisch“ auf Englisch?",
       "a": "table",
       "choices": [
         "chair",
@@ -226,7 +226,7 @@
     },
     {
       "id": "018",
-      "q": "der Stuhl",
+      "q": "Was heißt „der Stuhl“ auf Englisch?",
       "a": "chair",
       "choices": [
         "table",
@@ -237,7 +237,7 @@
     },
     {
       "id": "019",
-      "q": "das Fenster",
+      "q": "Was heißt „das Fenster“ auf Englisch?",
       "a": "window",
       "choices": [
         "door",
@@ -248,7 +248,7 @@
     },
     {
       "id": "020",
-      "q": "die Tür",
+      "q": "Was heißt „die Tür“ auf Englisch?",
       "a": "door",
       "choices": [
         "window",
@@ -259,7 +259,7 @@
     },
     {
       "id": "021",
-      "q": "das Frühstück",
+      "q": "Was heißt „das Frühstück“ auf Englisch?",
       "a": "breakfast",
       "choices": [
         "lunch",
@@ -270,7 +270,7 @@
     },
     {
       "id": "022",
-      "q": "das Brot",
+      "q": "Was heißt „das Brot“ auf Englisch?",
       "a": "bread",
       "choices": [
         "bred",
@@ -281,7 +281,7 @@
     },
     {
       "id": "023",
-      "q": "der Apfel",
+      "q": "Was heißt „der Apfel“ auf Englisch?",
       "a": "apple",
       "choices": [
         "apel",
@@ -292,7 +292,7 @@
     },
     {
       "id": "024",
-      "q": "das Wasser",
+      "q": "Was heißt „das Wasser“ auf Englisch?",
       "a": "water",
       "choices": [
         "wather",
@@ -303,7 +303,7 @@
     },
     {
       "id": "025",
-      "q": "Montag",
+      "q": "Was heißt „Montag“ auf Englisch?",
       "a": "Monday",
       "choices": [
         "Sunday",
@@ -314,7 +314,7 @@
     },
     {
       "id": "026",
-      "q": "Mittwoch",
+      "q": "Was heißt „Mittwoch“ auf Englisch?",
       "a": "Wednesday",
       "choices": [
         "Tuesday",
@@ -325,7 +325,7 @@
     },
     {
       "id": "027",
-      "q": "Donnerstag",
+      "q": "Was heißt „Donnerstag“ auf Englisch?",
       "a": "Thursday",
       "choices": [
         "Tuesday",
@@ -336,7 +336,7 @@
     },
     {
       "id": "028",
-      "q": "der Geburtstag",
+      "q": "Was heißt „der Geburtstag“ auf Englisch?",
       "a": "birthday",
       "choices": [
         "birthdate",
@@ -347,7 +347,7 @@
     },
     {
       "id": "029",
-      "q": "Wie alt bist du?",
+      "q": "Was heißt „Wie alt bist du?“ auf Englisch?",
       "a": "How old are you?",
       "choices": [
         "How are you old?",
@@ -358,7 +358,7 @@
     },
     {
       "id": "030",
-      "q": "Ich heiße Tom.",
+      "q": "Was heißt „Ich heiße Tom.“ auf Englisch?",
       "a": "My name is Tom.",
       "choices": [
         "I hot Tom.",
@@ -369,7 +369,7 @@
     },
     {
       "id": "031",
-      "q": "gestern",
+      "q": "Was heißt „gestern“ auf Englisch?",
       "a": "yesterday",
       "choices": [
         "today",
@@ -380,7 +380,7 @@
     },
     {
       "id": "032",
-      "q": "morgen (am nächsten Tag)",
+      "q": "Was heißt „morgen“ (am nächsten Tag) auf Englisch?",
       "a": "tomorrow",
       "choices": [
         "morning",
@@ -392,7 +392,7 @@
     },
     {
       "id": "033",
-      "q": "der Bahnhof",
+      "q": "Was heißt „der Bahnhof“ auf Englisch?",
       "a": "station",
       "choices": [
         "stadium",
@@ -403,7 +403,7 @@
     },
     {
       "id": "034",
-      "q": "grün",
+      "q": "Was heißt „grün“ auf Englisch?",
       "a": "green",
       "choices": [
         "grey",
@@ -414,7 +414,7 @@
     },
     {
       "id": "035",
-      "q": "lesen",
+      "q": "Was heißt „lesen“ auf Englisch?",
       "a": "to read",
       "choices": [
         "to write",
@@ -425,7 +425,7 @@
     },
     {
       "id": "036",
-      "q": "schreiben",
+      "q": "Was heißt „schreiben“ auf Englisch?",
       "a": "to write",
       "choices": [
         "to read",
@@ -436,7 +436,7 @@
     },
     {
       "id": "037",
-      "q": "rot",
+      "q": "Was heißt „rot“ auf Englisch?",
       "a": "red",
       "choices": [
         "read",

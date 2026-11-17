@@ -1,6 +1,6 @@
 {
   "id": "s1-physik-strom",
-  "version": 2,
+  "version": 3,
   "title": "Strom und Magnetismus",
   "subject": "physik",
   "grades": [
@@ -60,7 +60,7 @@
     },
     {
       "id": "003",
-      "q": "Welcher Stoff leitet den elektrischen Strom gut?",
+      "q": "Welcher Stoff leitet den elektrischen Strom gut: Gummi, Glas, Kupfer oder trockenes Holz?",
       "a": "Kupfer",
       "choices": [
         "Gummi",
@@ -72,7 +72,7 @@
     },
     {
       "id": "004",
-      "q": "Welcher dieser Stoffe ist ein Isolator?",
+      "q": "Welcher Stoff ist ein Isolator: Eisen, Kunststoff, Aluminium oder Graphit?",
       "a": "Kunststoff",
       "choices": [
         "Eisen",
@@ -360,7 +360,7 @@
     },
     {
       "id": "028",
-      "q": "Welches Metall wird von einem Magneten angezogen?",
+      "q": "Welches Metall wird von einem Magneten angezogen: Kupfer, Aluminium, Eisen oder Messing?",
       "a": "Eisen",
       "choices": [
         "Kupfer",

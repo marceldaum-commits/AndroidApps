@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-bundeslaender",
-  "version": 3,
+  "version": 4,
   "title": "Deutschlands Bundesländer",
   "subject": "erdkunde",
   "grades": [
@@ -308,7 +308,7 @@
     },
     {
       "id": "029",
-      "q": "Durch welche Stadt fließt die Isar?",
+      "q": "Durch welche Landeshauptstadt fließt die Isar?",
       "a": "München",
       "choices": [
         "Nürnberg",

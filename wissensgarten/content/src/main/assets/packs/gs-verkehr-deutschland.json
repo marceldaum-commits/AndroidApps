@@ -1,6 +1,6 @@
 {
   "id": "gs-verkehr-deutschland",
-  "version": 2,
+  "version": 3,
   "title": "Verkehr und Deutschland",
   "subject": "sachunterricht",
   "grades": [
@@ -183,7 +183,8 @@
       "a": "rechts",
       "choices": [
         "links",
-        "in der Mitte"
+        "in der Mitte",
+        "auf dem Gehweg"
       ],
       "img": "➡️🚗"
     },

@@ -155,4 +155,15 @@ class GamesTest {
         val word = StudyCard("v", "b", "Hauptstadt Italiens?", "Rom", listOf("Paris", "Madrid"), null, tree)
         assertTrue(GameMode.TYPE in (1..40).map { Games.choose(word.copy(id = "v$it"), peers, false, canType = true) })
     }
+
+    @Test fun formulaParenthesesAreNotAlternatives() {
+        org.junit.Assert.assertEquals(listOf("cos(x)"), TypedAnswer.alternatives("cos(x)"))
+        org.junit.Assert.assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("x", "cos(x)"))
+        org.junit.Assert.assertEquals(listOf("Kyjiw (Kiew)", "Kyjiw", "Kiew"), TypedAnswer.alternatives("Kyjiw (Kiew)"))
+    }
+
+    @Test fun germanAcceptsAlternativesButStaysStrict() {
+        org.junit.Assert.assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Voraussage", "Vorhersage (Voraussage)", strictSpelling = true))
+        org.junit.Assert.assertNotEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Vorrausage", "Vorhersage (Voraussage)", strictSpelling = true))
+    }
 }

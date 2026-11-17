@@ -1,6 +1,6 @@
 {
   "id": "s1-chemie-elemente",
-  "version": 3,
+  "version": 4,
   "title": "Chemische Elemente",
   "subject": "chemie",
   "grades": [
@@ -230,7 +230,7 @@
     {
       "id": "020",
       "q": "Welches Element hat das Symbol Si?",
-      "a": "Silicium",
+      "a": "Silicium (Silizium)",
       "choices": [
         "Silber",
         "Schwefel",
@@ -258,7 +258,7 @@
     {
       "id": "023",
       "q": "Welches Element hat das Symbol I?",
-      "a": "Iod",
+      "a": "Iod (Jod)",
       "choices": [
         "Indium",
         "Iridium",
@@ -271,7 +271,12 @@
       "id": "024",
       "q": "Welches Element hat das Symbol He?",
       "a": "Helium",
-      "img": "🎈"
+      "img": "🎈",
+      "choices": [
+        "Wasserstoff",
+        "Hafnium",
+        "Holmium"
+      ]
     },
     {
       "id": "025",
@@ -375,7 +380,12 @@
       "id": "035",
       "q": "Mit welchem Edelgas füllt man Ballons, die aufsteigen?",
       "a": "Helium",
-      "img": "🎈⬆️"
+      "img": "🎈⬆️",
+      "choices": [
+        "Neon",
+        "Argon",
+        "Radon"
+      ]
     },
     {
       "id": "036",

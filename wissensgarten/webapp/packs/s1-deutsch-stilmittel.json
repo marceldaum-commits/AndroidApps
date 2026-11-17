@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-stilmittel",
-  "version": 3,
+  "version": 4,
   "title": "Stilmittel erkennen",
   "subject": "deutsch",
   "grades": [
@@ -39,7 +39,7 @@
   "cards": [
     {
       "id": "001",
-      "q": "„Sie hat ein Herz aus Stein.“",
+      "q": "Welches Stilmittel steckt in „Sie hat ein Herz aus Stein.“?",
       "a": "Metapher",
       "choices": [
         "Vergleich",
@@ -51,7 +51,7 @@
     },
     {
       "id": "002",
-      "q": "„Er ist stark wie ein Bär.“",
+      "q": "Welches Stilmittel steckt in „Er ist stark wie ein Bär.“?",
       "a": "Vergleich",
       "choices": [
         "Metapher",
@@ -63,7 +63,7 @@
     },
     {
       "id": "003",
-      "q": "„Milch macht müde Männer munter.“",
+      "q": "Welches Stilmittel steckt in „Milch macht müde Männer munter.“?",
       "a": "Alliteration",
       "choices": [
         "Anapher",
@@ -75,7 +75,7 @@
     },
     {
       "id": "004",
-      "q": "„Die Sonne lacht vom Himmel.“",
+      "q": "Welches Stilmittel steckt in „Die Sonne lacht vom Himmel.“?",
       "a": "Personifikation",
       "choices": [
         "Vergleich",
@@ -87,7 +87,7 @@
     },
     {
       "id": "005",
-      "q": "„Ich habe es dir schon tausendmal gesagt.“",
+      "q": "Welches Stilmittel steckt in „Ich habe es dir schon tausendmal gesagt.“?",
       "a": "Hyperbel",
       "choices": [
         "Litotes",
@@ -99,7 +99,7 @@
     },
     {
       "id": "006",
-      "q": "„Wir wollen Frieden. Wir wollen Freiheit. Wir wollen Gerechtigkeit.“",
+      "q": "Welches Stilmittel steckt in „Wir wollen Frieden. Wir wollen Freiheit. Wir wollen Gerechtigkeit.“?",
       "a": "Anapher",
       "choices": [
         "Epipher",
@@ -111,7 +111,7 @@
     },
     {
       "id": "007",
-      "q": "„Ich bin dafür, du bist dafür, alle sind dafür.“",
+      "q": "Welches Stilmittel steckt in „Ich bin dafür, du bist dafür, alle sind dafür.“?",
       "a": "Epipher",
       "choices": [
         "Anapher",
@@ -123,7 +123,7 @@
     },
     {
       "id": "008",
-      "q": "„Wer hat schon Lust auf Montag?“ (Antwort ist klar)",
+      "q": "Welches Stilmittel steckt in „Wer hat schon Lust auf Montag?“ (Antwort ist klar)?",
       "a": "rhetorische Frage",
       "choices": [
         "Ellipse",
@@ -134,7 +134,7 @@
     },
     {
       "id": "009",
-      "q": "„bittersüß“, „ein alter Jüngling“",
+      "q": "Welches Stilmittel steckt in „bittersüß“, „ein alter Jüngling“?",
       "a": "Oxymoron",
       "choices": [
         "Antithese",
@@ -146,7 +146,7 @@
     },
     {
       "id": "010",
-      "q": "„Die Kunst ist lang, und kurz ist unser Leben.“ (Goethe)",
+      "q": "Welches Stilmittel steckt in „Die Kunst ist lang, und kurz ist unser Leben.“ (Goethe)?",
       "a": "Chiasmus",
       "choices": [
         "Anapher",
@@ -158,7 +158,7 @@
     },
     {
       "id": "011",
-      "q": "„Heute rot, morgen tot.“",
+      "q": "Welches Stilmittel steckt in „Heute rot, morgen tot.“?",
       "a": "Antithese",
       "choices": [
         "Klimax",
@@ -170,7 +170,7 @@
     },
     {
       "id": "012",
-      "q": "„Er kam, sah und siegte.“",
+      "q": "Welches Stilmittel steckt in „Er kam, sah und siegte.“?",
       "a": "Klimax",
       "choices": [
         "Antiklimax",
@@ -182,7 +182,7 @@
     },
     {
       "id": "013",
-      "q": "„Opa ist von uns gegangen.“ (für „gestorben“)",
+      "q": "Welches Stilmittel steckt in „Opa ist von uns gegangen.“ (für „gestorben“)?",
       "a": "Euphemismus",
       "choices": [
         "Hyperbel",
@@ -194,13 +194,13 @@
     },
     {
       "id": "014",
-      "q": "„Na toll, schon wieder Regen!“",
+      "q": "Welches Stilmittel steckt in „Na toll, schon wieder Regen!“?",
       "a": "Ironie",
       "img": "🌧️👍"
     },
     {
       "id": "015",
-      "q": "„Je früher, desto besser.“",
+      "q": "Welches Stilmittel steckt in „Je früher, desto besser.“?",
       "a": "Ellipse",
       "choices": [
         "Inversion",
@@ -212,7 +212,7 @@
     },
     {
       "id": "016",
-      "q": "„Die Bienen summen, es brummt und zischt.“",
+      "q": "Welches Stilmittel steckt in „Die Bienen summen, es brummt und zischt.“?",
       "a": "Onomatopoesie (Lautmalerei)",
       "choices": [
         "Alliteration (Stabreim)",
@@ -223,7 +223,7 @@
     },
     {
       "id": "017",
-      "q": "„Der Himmel ist blau, die Wiese ist grün.“",
+      "q": "Welches Stilmittel steckt in „Der Himmel ist blau, die Wiese ist grün.“?",
       "a": "Parallelismus",
       "choices": [
         "Chiasmus",
@@ -241,7 +241,7 @@
     },
     {
       "id": "019",
-      "q": "„Wir brauchen ein Dach über dem Kopf.“ (Dach für Haus)",
+      "q": "Welches Stilmittel steckt in „Wir brauchen ein Dach über dem Kopf.“ (Dach für Haus)?",
       "a": "Pars pro toto",
       "choices": [
         "Totum pro Parte",
@@ -253,7 +253,7 @@
     },
     {
       "id": "020",
-      "q": "„Der Wind flüstert in den Bäumen.“",
+      "q": "Welches Stilmittel steckt in „Der Wind flüstert in den Bäumen.“?",
       "a": "Personifikation",
       "choices": [
         "Vergleich",
@@ -264,33 +264,33 @@
     },
     {
       "id": "021",
-      "q": "„Das war gar nicht mal so schlecht.“ (= ziemlich gut)",
+      "q": "Welches Stilmittel steckt in „Das war gar nicht mal so schlecht.“ (= ziemlich gut)?",
       "a": "Litotes",
       "info": "Untertreibung durch Verneinung des Gegenteils.",
       "img": "👎❌"
     },
     {
       "id": "022",
-      "q": "Die Taube steht für Frieden, das Herz für Liebe.",
+      "q": "Wie heißt das Stilmittel, wenn die Taube für Frieden und das Herz für Liebe steht?",
       "a": "Symbol",
       "img": "🕊️❤️"
     },
     {
       "id": "023",
-      "q": "„Groß war die Freude.“",
+      "q": "Welches Stilmittel steckt in „Groß war die Freude.“?",
       "a": "Inversion",
       "info": "Umstellung der gewohnten Wortstellung.",
       "img": "🙃🔀"
     },
     {
       "id": "024",
-      "q": "„Ich warte hier schon eine Ewigkeit!“",
+      "q": "Welches Stilmittel steckt in „Ich warte hier schon eine Ewigkeit!“?",
       "a": "Hyperbel",
       "img": "♾️⏳"
     },
     {
       "id": "025",
-      "q": "„Das Leben ist eine Reise.“",
+      "q": "Welches Stilmittel steckt in „Das Leben ist eine Reise.“?",
       "a": "Metapher",
       "choices": [
         "Vergleich",
@@ -301,7 +301,7 @@
     },
     {
       "id": "026",
-      "q": "„mit Kind und Kegel“",
+      "q": "Welches Stilmittel steckt in „mit Kind und Kegel“?",
       "a": "Alliteration",
       "choices": [
         "Anapher",
@@ -312,21 +312,21 @@
     },
     {
       "id": "027",
-      "q": "„ein schreiendes Rot“",
+      "q": "Welches Stilmittel steckt in „ein schreiendes Rot“?",
       "a": "Synästhesie",
       "info": "Vermischung von Sinneseindrücken (Hören und Sehen).",
       "img": "🔴📢"
     },
     {
       "id": "028",
-      "q": "„Und es wallet und siedet und brauset und zischt“ (Schiller)",
+      "q": "Welches Stilmittel steckt in „Und es wallet und siedet und brauset und zischt“ (Schiller)?",
       "a": "Polysyndeton",
       "info": "Häufung von Konjunktionen, hier „und“.",
       "img": "➕➕➕"
     },
     {
       "id": "029",
-      "q": "„Äpfel, Birnen, Pflaumen, Kirschen – das ganze Obst lag am Boden.“",
+      "q": "Welches Stilmittel steckt in „Äpfel, Birnen, Pflaumen, Kirschen – das ganze Obst lag am Boden.“?",
       "a": "Akkumulation",
       "choices": [
         "Klimax",
@@ -338,7 +338,7 @@
     },
     {
       "id": "030",
-      "q": "Ein Stilmittel, das etwas Gemeintes durch sein Gegenteil ausdrückt",
+      "q": "Wie heißt das Stilmittel, das etwas Gemeintes durch sein Gegenteil ausdrückt?",
       "a": "Ironie",
       "img": "😏🔄"
     }

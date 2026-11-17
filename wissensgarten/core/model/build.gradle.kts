@@ -20,6 +20,8 @@ kotlin {
             // „Alle Nova-Texte offline laden“: mehrere Downloads gleichzeitig, abbrechbar
             api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
         }
+        // Nova: Sprechtext und Dateiname müssen auf JVM und im Browser (Wasm) gleich sein
+        commonTest.dependencies { implementation(kotlin("test")) }
         jvmTest.dependencies { implementation("junit:junit:4.13.2") }
         wasmJsMain.dependencies {
             implementation(npm("pako", "2.1.0"))

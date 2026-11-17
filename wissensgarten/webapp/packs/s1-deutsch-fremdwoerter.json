@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-fremdwoerter",
-  "version": 2,
+  "version": 3,
   "title": "Fremdwörter verstehen",
   "subject": "deutsch",
   "grades": [
@@ -373,7 +373,7 @@
     },
     {
       "id": "029",
-      "q": "Welche Schreibweise ist richtig?",
+      "q": "Wie schreibt man das Fremdwort für den Takt in der Musik richtig?",
       "a": "Rhythmus",
       "choices": [
         "Rythmus",
@@ -385,7 +385,7 @@
     },
     {
       "id": "030",
-      "q": "Welche Schreibweise ist richtig?",
+      "q": "Wie schreibt man das Fremdwort für „Maßstab, übliche Norm“ richtig?",
       "a": "Standard",
       "choices": [
         "Standart",
@@ -397,7 +397,7 @@
     },
     {
       "id": "031",
-      "q": "Welche Schreibweise ist richtig?",
+      "q": "Wie schreibt man das Fremdwort für das Instandsetzen von etwas Kaputtem richtig?",
       "a": "Reparatur",
       "choices": [
         "Reperatur",
@@ -409,7 +409,7 @@
     },
     {
       "id": "032",
-      "q": "Welche Schreibweise ist richtig?",
+      "q": "Wie schreibt man das Fremdwort für „liebenswert, angenehm“ richtig?",
       "a": "sympathisch",
       "choices": [
         "sympatisch",
@@ -421,7 +421,7 @@
     },
     {
       "id": "033",
-      "q": "Welche Schreibweise ist richtig?",
+      "q": "Wie schreibt man das Fremdwort für die Lufthülle der Erde richtig?",
       "a": "Atmosphäre",
       "choices": [
         "Athmosphäre",
@@ -433,7 +433,7 @@
     },
     {
       "id": "034",
-      "q": "Welche Schreibweise ist richtig?",
+      "q": "Wie schreibt man das Fremdwort für ein technisches Gerät mit Motor richtig?",
       "a": "Maschine",
       "choices": [
         "Maschiene",
@@ -445,7 +445,7 @@
     },
     {
       "id": "035",
-      "q": "Welche Schreibweise ist richtig?",
+      "q": "Wie schreibt man das Fremdwort für „Meinungsaustausch, Streitgespräch“ richtig?",
       "a": "Diskussion",
       "choices": [
         "Diskusion",

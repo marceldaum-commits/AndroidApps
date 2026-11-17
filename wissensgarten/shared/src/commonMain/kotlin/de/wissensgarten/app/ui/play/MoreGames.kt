@@ -54,12 +54,17 @@ fun TeachGame(card: StudyCard, options: List<String>, onResult: (GameResult) -> 
     val guess = remember(card.id) { if (brummiRight) card.back else options.filter { it != card.back }.random(rnd) }
     var step by remember(card.id) { mutableIntStateOf(0) } // 0 = Urteil, 1 = Korrektur, 2 = fertig
     var mood by remember(card.id) { mutableStateOf(Mood.THINK) }
-    var line by remember(card.id) { mutableStateOf("Ich glaube: „${card.front}“ → $guess!") }
+    // Brummis Sätze mit Karten-Inhalt sind Laufzeit-Sätze (ganze Sätze für Nova; eigene Karten: Gerätestimme)
+    val ausPaket = LocalSubject.current != null
+    val L = de.wissensgarten.core.model.Laufzeit
+    val guessCard = remember(card.id) { card.copy(back = guess) }
+    var lineRt by remember(card.id) { mutableStateOf(L.lehrerRaet(card, guessCard, ausPaket)) }
+    var line by remember(card.id) { mutableStateOf(L.lehrerRaetText(card.front, guess)) }
     val sfx = LocalSfx.current
     val scope = rememberCoroutineScope()
 
-    fun finish(r: GameResult, m: Mood, text: String) {
-        step = 2; mood = m; line = text
+    fun finish(r: GameResult, m: Mood, text: String, rt: de.wissensgarten.core.model.LaufzeitText? = null) {
+        step = 2; mood = m; line = text; lineRt = rt
         sfx?.play(if (r == GameResult.WRONG) Sound.WRONG else Sound.CORRECT)
         scope.launch { delay(if (r == GameResult.WRONG) 1500 else 1000); onResult(r) }
     }
@@ -69,18 +74,18 @@ fun TeachGame(card: StudyCard, options: List<String>, onResult: (GameResult) -> 
             Text("🎓 Bring Brummi was bei!", color = Color(0xFF4E3B00), fontWeight = FontWeight.Bold, modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp))
         }
         Spacer(Modifier.height(10.dp))
-        Brummi(mood, size = 90.dp, speech = line)
+        Brummi(mood, size = 90.dp, speech = line, speechRuntime = lineRt)
         Spacer(Modifier.height(14.dp))
         when (step) {
             0 -> Row(horizontalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.fillMaxWidth()) {
                 JuicyButton(onClick = {
-                    if (brummiRight) finish(GameResult.WRONG, Mood.SAD, "Doch, ich hatte recht! Es ist wirklich $guess. 😅")
-                    else { step = 1; mood = Mood.THINK; line = "Oh! Was ist denn richtig?"; sfx?.play(Sound.TAP) }
+                    if (brummiRight) finish(GameResult.WRONG, Mood.SAD, L.lehrerHatteRechtText(guess), L.lehrerHatteRecht(card, ausPaket))
+                    else { step = 1; mood = Mood.THINK; lineRt = null; line = "Oh! Was ist denn richtig?"; sfx?.play(Sound.TAP) }
                 }, modifier = Modifier.weight(1f).height(58.dp), sound = null,
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer, contentColor = MaterialTheme.colorScheme.onTertiaryContainer)) { Text("Nein, Brummi! ✋") }
                 JuicyButton(onClick = {
                     if (brummiRight) finish(GameResult.PERFECT, Mood.CHEER, "Juhu, ich hatte recht! Danke! 🐝")
-                    else finish(GameResult.WRONG, Mood.SAD, "Hm, eigentlich ist es ${card.back}. Jetzt wissen wir's beide!")
+                    else finish(GameResult.WRONG, Mood.SAD, L.lehrerEigentlichText(card.back), L.lehrerEigentlich(card, ausPaket))
                 }, modifier = Modifier.weight(1f).height(58.dp), sound = null,
                     colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primaryContainer, contentColor = MaterialTheme.colorScheme.onPrimaryContainer)) { Text("Stimmt! 👍") }
             }
@@ -88,8 +93,8 @@ fun TeachGame(card: StudyCard, options: List<String>, onResult: (GameResult) -> 
                 options.filter { it != guess }.forEach { o ->
                     OutlinedButton(
                         onClick = {
-                            if (o == card.back) finish(GameResult.PERFECT, Mood.CHEER, "Danke! Jetzt weiß ich's: ${card.back}! Du bist ein toller Lehrer! 🌟")
-                            else finish(GameResult.WRONG, Mood.SAD, "Hmm, das ist es auch nicht – richtig ist ${card.back}.")
+                            if (o == card.back) finish(GameResult.PERFECT, Mood.CHEER, L.lehrerDankeText(card.back), L.lehrerDanke(card, ausPaket))
+                            else finish(GameResult.WRONG, Mood.SAD, L.lehrerNichtRichtigText(card.back), L.lehrerNichtRichtig(card, ausPaket))
                         },
                         modifier = Modifier.fillMaxWidth().heightIn(min = 54.dp).padding(vertical = 3.dp),
                     ) { Text(o, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center) }
