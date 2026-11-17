@@ -198,3 +198,12 @@ Gesucht wurde in Lehrplänen und Unterrichtsmaterial nach Versuchen, die in der 
 - [BW Beispielcurriculum Biologie Kl. 9/10 Gymnasium](https://www.schule-bw.de/service-und-tools/bildungsplaene/allgemein-bildende-schulen/bildungsplan-2016/beispielcurricula/gymnasium/bp2016bw_allg_gym_bio_v2_bc_9-10_bsp_1.pdf) · [BW Beispielcurriculum Biologie Kl. 10 Sek I](https://www.schule-bw.de/service-und-tools/bildungsplaene/allgemein-bildende-schulen/bildungsplan-2016/beispielcurricula/sekundarstufe1/bp2016bw_allg_sek1_bio_v2_bc_10_bsp_1.pdf) · [Lehrerfortbildung BW: Genetik](https://lehrerfortbildung-bw.de/u_matnatech/bio/gym/bp2016/fb9/3_genetik/00_allg/1_anmerkungen/30000_genetik_unterrichtseinheit.doc)
 - [LMU: Ernährung – Forscherheft](https://www.bio.lmu.de/studium/lehrerbildung_lmu/downloads/ernaehrung_forscherheft.pdf) · [LMU: Ernährung – Stationen](https://bio.lmu.de/studium/lehrerbildung_lmu/downloads/ernaehrung_stationen_selbst.pdf) · [Friedrich: Versuche protokollieren (Nährstoffnachweise Kl. 5–6)](https://www.friedrich-verlag.de/friedrich-plus/sekundarstufe/biologie/methoden-konzepte/versuche-protokollieren-in-vier-schritten-19593)
 - [Uni Bremen: Stofftrennung](https://chemiedidaktik.uni-bremen.de/material/Teilchen/Stofftrennung/Stofftrennung.pdf) · [VCI Nord: Farbenrennen](https://www.vci-nord.de/fileadmin/vci-nord/Bilder/bildung/Farbenrennen.pdf) · [schule-bw: Arbeitsblatt Chromatografie](https://schule-bw.de/faecher-und-schularten/mathematisch-naturwissenschaftliche-faecher/chemie/neuer-index.html/mat-seki/stoffe-eigenschaften/trenn_pics/ab_chrom_blatt.pdf)
+
+## Experimentopia 0.5.0 (17.11.2026): Mikroskop, Keimung, Nahrungsketten, Herz
+
+| Lehrplan-Thema | Umsetzung |
+| --- | --- |
+| Keimungsbedingungen (Sachunterricht Kl. 3/4, Biologie Kl. 5/6: Wasser, Wärme, Luft; Licht erst fürs Ergrünen) | Kresse-Garten mit Vergleichsschalen (immer nur eine Bedingung geändert – Variablenkontrolle) und Zeitraffer. |
+| Mikroskopieren, Einzeller im Teichwasser (Kl. 5–8) | Mikroskop mit Vergrößerungsstufen; zeigt auch die Grenze: Bakterien bleiben bei 400-fach Pünktchen, zu starke Vergrößerung schneidet den Wasserfloh ab. |
+| Nahrungsketten/-netze, Energiefluss, Anreicherung (Kl. 5–10) | Ketten selbst bauen mit sofortiger Rückmeldung, wer wen frisst; Energie- und Giftanzeige je Stufe; „Mäuse verschwinden“. |
+| Herz-Kreislauf, Puls messen (Kl. 5–8) | Puls je Aktivität und Alter, eigener Puls per Antippen oder 15-Sekunden-Zählung, Erholungskurve trainiert/untrainiert. |

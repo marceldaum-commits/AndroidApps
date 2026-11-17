@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 0.4.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 180 Versuche in 18 Fachbereichen (Physik, Chemie, Biologie) · 30 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 0.5.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -22,8 +22,8 @@ und zeigt, wie gut man sich selbst einschätzt („Wenn du dir ganz sicher warst
 
 ## Themen und Suche
 
-18 Fachbereiche: Schwimmen, Dichte & Verdrängung · Hebel & Drehmoment · Rollen & schiefe Ebene · Kraft & Bewegung (Newton) · Fallen & Schwerkraft ·
-Pendel & Schwingungen · Stromkreise · Magnetismus · Wärme & Teilchen · Licht & Farben · Schall & Töne (Physik) · Stoffe trennen · Säuren & Laugen · Chemische Reaktionen (Chemie) · Vererbung & Genetik · Zellen & Osmose · Nährstoffe & Enzyme · Pflanzen & Ökosysteme (Biologie).
+19 Fachbereiche: Schwimmen, Dichte & Verdrängung · Hebel & Drehmoment · Rollen & schiefe Ebene · Kraft & Bewegung (Newton) · Fallen & Schwerkraft ·
+Pendel & Schwingungen · Stromkreise · Magnetismus · Wärme & Teilchen · Licht & Farben · Schall & Töne (Physik) · Stoffe trennen · Säuren & Laugen · Chemische Reaktionen (Chemie) · Vererbung & Genetik · Zellen, Mikroskop & Osmose · Nährstoffe & Enzyme · Pflanzen & Ökosysteme · Körper & Gesundheit (Biologie).
 Die Themensuche filtert nach Fach und Fachbereich und sucht Stichwörter in Titeln, Fragen, Merksätzen und Fachwörtern.
 
 ## Die Inseln
@@ -37,7 +37,7 @@ Die Themensuche filtert nach Fach und Fachbereich und sucht Stichwörter in Tite
 | 🔥 Feuer & Eis | Was schmilzt zuerst, Heizkurve mit Teilchenblick, Mischtemperatur, Badewasser, glühendes Eisen | 3–8 |
 | 🌈 Licht & Klang | Malkasten, Licht mischen, Farbfilter, Prisma (echte Brechung), Gläser-Xylofon, Röhren-Orgel, Stimmgerät, „Alle meine Entchen“, Saite | 3–8 |
 | 🚀 Fallturm-Insel | Kugel gegen Feder, Papier-Trick, Vakuumröhre, Fallzeit, Mond, Pendel, Sekundenpendel | 3–10 |
-| 🌿 Bio-Dschungel | Mendels Erbsen, Wunderblume, Blutgruppen, Osmose, Plasmolyse, Nährstoff-Nachweise, Speichel-Enzym, Wasserpest, Hasen und Luchse | 3–10 |
+| 🌿 Bio-Dschungel | Mendels Erbsen, Wunderblume, Blutgruppen, Osmose, Plasmolyse, Nährstoff-Nachweise, Speichel-Enzym, Wasserpest, Hasen und Luchse, Mikroskop, Kresse keimen lassen, Nahrungsketten, Herz und Puls | 3–10 |
 
 ## Korrekt gerechnet
 
@@ -45,7 +45,7 @@ Alle richtigen Antworten werden aus Modellen in `core/model` **berechnet**, nich
 Auftrieb (ρ-Vergleich, Eintauchtiefe), Hebelgesetz, Flaschenzug (Goldene Regel), Stromkreise (Reihe/Parallel, Kurzschluss),
 pH aus [H⁺]−[OH⁻] mit Kw, Atomzählung aller Reaktionen, begrenzender Stoff beim Natron-Ballon, Richmann-Mischungsregel, Heizkurve mit Schmelz- und
 Verdampfungswärme, Fall mit Luftwiderstand (numerisch) und ohne, exakte Pendeldauer (elliptisches Integral), Röhren f = c/(4L),
-Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, AB0), Osmose, Enzymaktivität, Lichtstärke ∼ 1/d², Lotka-Volterra, Trennverfahren (kürzester Weg), subtraktive Farbmischung (`BiologyTest`). Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
+Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, AB0), Osmose, Enzymaktivität, Lichtstärke ∼ 1/d², Lotka-Volterra, Trennverfahren (kürzester Weg), subtraktive Farbmischung (`BiologyTest`), Sehfeld und Auflösung beim Mikroskop, Keimbedingungen, Nahrungsnetz (längste Kette, 10-%-Regel, Anreicherung), Herzzeitvolumen und Erholungspuls (`Biology2Test`). Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
 
 ## Frei und Pro
 
@@ -82,6 +82,10 @@ Eingeschaltet wird erst, wenn es einen Bezahlweg gibt.
 | ![](screenshots/46_osmose_zwiebel.png) | ![](screenshots/47_staerke_nachweis.png) | ![](screenshots/48_enzym.png) | ![](screenshots/49_wasserpest.png) |
 | Hasen und Luchse | Stoffe trennen | Chromatografie | Malkasten |
 | ![](screenshots/50_hasen_und_luchse.png) | ![](screenshots/51_stoffe_trennen.png) | ![](screenshots/52_chromatografie.png) | ![](screenshots/53_malkasten.png) |
+| Mikroskop | Augentierchen | Kresse im Dunkeln | Nahrungskette |
+| ![](screenshots/54_mikroskop.png) | ![](screenshots/55_augentierchen.png) | ![](screenshots/56_kresse_im_dunkeln.png) | ![](screenshots/57_nahrungskette.png) |
+| Ohne Mäuse | Herz und Puls | Erholungspuls | |
+| ![](screenshots/58_ohne_maeuse.png) | ![](screenshots/59_herz_und_puls.png) | ![](screenshots/60_erholungspuls.png) | |
 
 ## Android und Web
 

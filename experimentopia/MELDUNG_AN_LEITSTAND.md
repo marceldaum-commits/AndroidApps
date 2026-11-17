@@ -2,6 +2,12 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 0.5.0 vom 17.11.2026: Mikroskop, Keimung, Nahrungsketten, Herz & Puls
+
+- 4 neue Geräte im Bio-Dschungel, **200 Versuche**: Mikroskop (Sehfeld 22 mm ÷ Vergrößerung, Erkennbarkeit ab 5 mm scheinbarer Größe), Kresse-Keimung
+  (Wasser, Wärme, Luft; Licht nicht nötig, Vergeilen), Nahrungsketten (Nahrungsnetz einer Wiese, 10-%-Regel, Anreicherung), Herz & Puls (Ruhepuls nach Alter, ca. 5 l/min, Erholungspuls).
+- Puls-Messen per Antippen läuft komplett auf dem Gerät, es wird nichts gespeichert oder gesendet.
+
 ## 17.11.2026 – Version 0.4.0 vom 17.11.2026: Bio-Dschungel, Stoffe trennen, Malkasten
 
 - **Neue Insel Bio-Dschungel** (Kl. 3–10, neues Fach Biologie): Vererbung nach Mendel mit Kreuzungsquadrat und Aussaat, Blutgruppen, Osmose/Plasmolyse,

@@ -120,10 +120,17 @@ class ScreenshotTest {
     @Test fun separate() = lab("t1", "51_stoffe_trennen", prepare = { it.tap("Filtern"); it.tap("Eindampfen") })
     @Test fun chroma() = lab("t6", "52_chromatografie", settle = 5500, prepare = { it.tap("Papier ins Wasser") })
     @Test fun paint() = lab("m1", "53_malkasten", prepare = { it.tap("Gelb"); it.tap("Blau") })
+    @Test fun microscope() = lab("u1", "54_mikroskop", prepare = { it.tap("40×") })
+    @Test fun microscopeLight() = lab("u4", "55_augentierchen", settle = 3500, prepare = { it.tap("100×"); it.tap("Lampe rechts an") })
+    @Test fun germination() = lab("q4", "56_kresse_im_dunkeln", settle = 4500, prepare = { it.tap("Tage vergehen lassen") })
+    @Test fun foodChain() = lab("j3", "57_nahrungskette", prepare = { listOf("Gras", "Hase", "Fuchs").forEach { t -> it.tap(t) } })
+    @Test fun foodWebGone() = lab("j4", "58_ohne_maeuse", prepare = { it.tap("verschwinden lassen") })
+    @Test fun pulse() = lab("v1", "59_herz_und_puls", prepare = { it.tap("Joggen") })
+    @Test fun recovery() = lab("v5", "60_erholungspuls", settle = 5500, prepare = { it.tap("Beide sprinten") })
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
-        SettingsScreen(true, {}, true, {}, 5, {}, "0.4.0", "17.11.2026", {}, {}, {})
+        SettingsScreen(true, {}, true, {}, 5, {}, "0.5.0", "17.11.2026", {}, {}, {})
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
 }

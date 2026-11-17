@@ -11,3 +11,9 @@ data class EcoSetup(val hares: Double, val lynx: Double, val compareNoLynx: Bool
 data class SeparationSetup(val mixture: Mixture, val free: Boolean = false) : Setup { override val lab get() = Lab.TRENNEN }
 data class ChromaSetup(val markers: List<Marker>) : Setup { override val lab get() = Lab.CHROMATOGRAFIE }
 data class PaintSetup(val paints: List<Paint>, val targetName: String?) : Setup { override val lab get() = Lab.MALKASTEN }
+data class MicroscopeSetup(val microbes: List<Microbe>, val target: Microbe?, val lamp: Boolean = false) : Setup { override val lab get() = Lab.MIKROSKOP }
+data class GerminationSetup(val dishes: List<Dish>, val days: Double = 7.0) : Setup { override val lab get() = Lab.KEIMUNG }
+/** goalLength: Kette dieser Länge bauen; energy/poison: Energie oder Gift je Stufe zeigen; remove: dieses Tier kann man verschwinden lassen */
+data class FoodChainSetup(val goalLength: Int, val energy: Boolean = false, val poison: Boolean = false, val remove: Organism? = null) : Setup { override val lab get() = Lab.NAHRUNGSKETTE }
+enum class PulseMode { ACTIVITY, TAP, RECOVERY }
+data class PulseSetup(val mode: PulseMode, val age: Int = 10) : Setup { override val lab get() = Lab.PULS }

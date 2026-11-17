@@ -32,6 +32,10 @@ enum class Lab(val title: String, val emoji: String, val island: Island, val blu
     ENZYM("Verdauungs-Labor", "👅", Island.BIO, "Spucke gegen Stärke – bei jeder Temperatur."),
     WASSERPEST("Wasserpest", "🌿", Island.BIO, "Fotosynthese: Bläschen zählen."),
     RAEUBER("Räuber & Beute", "🐇", Island.BIO, "Hasen und Luchse im Wald."),
+    MIKROSKOP("Mikroskop", "🔬", Island.BIO, "Teichwasser von Lupe bis 400-fach."),
+    KEIMUNG("Kresse-Garten", "🌱", Island.BIO, "Was brauchen Samen zum Keimen?"),
+    NAHRUNGSKETTE("Nahrungsketten", "🦊", Island.BIO, "Wer frisst wen? Ketten bauen."),
+    PULS("Herz & Puls", "❤️", Island.BIO, "Dein Herz in Ruhe und beim Rennen."),
 }
 
 /** Was im Versuch zu tun ist und was im Labor steht. Jede Art gehört zu einem Labor. */
@@ -115,5 +119,9 @@ object FreeLab {
         Lab.ENZYM -> EnzymeSetup(listOf(5.0, 20.0, 37.0, 50.0, 80.0))
         Lab.WASSERPEST -> PhotoSetup(listOf(10.0, 15.0, 20.0, 30.0), co2Choice = true, darkChoice = true)
         Lab.RAEUBER -> EcoSetup(400.0, 15.0, compareNoLynx = true)
+        Lab.MIKROSKOP -> MicroscopeSetup(Microbe.entries, null, lamp = true)
+        Lab.KEIMUNG -> GerminationSetup(listOf(Dish("feucht, 22 °C", true, 22.0)))
+        Lab.NAHRUNGSKETTE -> FoodChainSetup(0, energy = true, poison = true, remove = Organism.MAUS)
+        Lab.PULS -> PulseSetup(PulseMode.ACTIVITY)
     }
 }

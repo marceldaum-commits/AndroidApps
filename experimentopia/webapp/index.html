@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="de" data-version="0.4.0">
+<html lang="de" data-version="0.5.0">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Experimentopia – das Versuchslabor für die Hosentasche</title>
-<meta name="description" content="Experimentopia: Physik und Chemie zum Ausprobieren für Klasse 3 bis 10 – vermuten, experimentieren, erklären.">
+<meta name="description" content="Experimentopia: Physik, Chemie und Biologie zum Ausprobieren für Klasse 3 bis 10 – vermuten, experimentieren, erklären.">
 <meta name="theme-color" content="#160F2E">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon-192.png">
@@ -41,7 +41,7 @@
   </svg>
   <b>EXPERIMENTOPIA</b>
   <div id="balken"><i></i></div>
-  <span id="start-text">lädt … Version 0.4.0 vom 17.11.2026</span>
+  <span id="start-text">lädt … Version 0.5.0 vom 17.11.2026</span>
 </div>
 <div id="app"></div>
 <script>
@@ -56,7 +56,7 @@
   // WebAssembly mit „GC“ fehlt älteren Browsern: gleich prüfen, nicht erst alles laden
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
   // ── Laden mit echtem Fortschritt: App-Kern (.wasm) und Schriften werden sofort angefordert, jedes ankommende Byte bewegt den Balken.
-  var PLAN = { "bccfa839aa4b38489c76.wasm": 8405319, "cb79aee63360b6c28e61.wasm": 4964372, "fonts/dejavu_sans.ttf": 117332, "fonts/noto_color_emoji.ttf": 565676, "experimentopia.js": 590397 }, got = {}, total = 0, early = {};
+  var PLAN = { "a9ca5f990f84e174172f.wasm": 5096957, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 119480, "fonts/noto_color_emoji.ttf": 623440, "experimentopia.js": 590397 }, got = {}, total = 0, early = {};
   for (var k in PLAN) total += PLAN[k];
   function progress() {
     var sum = 0; for (var k in PLAN) sum += Math.min(got[k] || 0, PLAN[k]);

@@ -203,5 +203,5 @@ fun islandIntro(i: Island) = when (i) {
     Island.WAERME -> "Feuer & Eis: Was schmilzt, was kocht, und warum bleibt das Thermometer manchmal stehen?"
     Island.LICHTKLANG -> "Auf dieser Insel mischst du Licht, zauberst Regenbögen und spielst Musik mit Wasser."
     Island.FALL -> "Vom Fallturm bis zum Mond: Was fällt schneller – und warum tickt eine Pendeluhr so gleichmäßig?"
-    Island.BIO -> "Willkommen im Bio-Dschungel! Hier kreuzt du Erbsen wie Mendel, lässt Kartoffeln schrumpfen, jagst Nährstoffe und beobachtest Hasen und Luchse."
+    Island.BIO -> "Willkommen im Bio-Dschungel! Hier kreuzt du Erbsen wie Mendel, lässt Kartoffeln schrumpfen, jagst Nährstoffe, mikroskopierst Teichwasser, baust Nahrungsketten und hörst dein Herz schlagen."
 }

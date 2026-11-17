@@ -51,6 +51,10 @@ fun LabView(setup: Setup, free: Boolean, onGoal: () -> Unit, modifier: Modifier 
             is SeparationSetup -> SeparationLab(setup, free) { goal() }
             is ChromaSetup -> ChromaLab(setup, free) { goal() }
             is PaintSetup -> PaintLab(setup, free) { goal() }
+            is MicroscopeSetup -> MicroscopeLab(setup, free) { goal() }
+            is GerminationSetup -> GerminationLab(setup, free) { goal() }
+            is FoodChainSetup -> FoodChainLab(setup, free) { goal() }
+            is PulseSetup -> PulseLab(setup, free) { goal() }
         }
     }
 }

@@ -1,5 +1,14 @@
 # Changelog – Experimentopia
 
+## 0.5.0 – Mikroskop, Kresse, Nahrungsketten und dein Herz (17.11.2026)
+
+- 🔬 **Mikroskop**: Ein Tropfen Teichwasser – vom bloßen Auge über die Lupe bis 400-fach. Pantoffeltierchen rudern, die Amöbe fließt,
+  der Wasserfloh ist bei zu starker Vergrößerung plötzlich zu groß fürs Bild, und Augentierchen schwimmen zum Licht.
+- 🌱 **Kresse-Garten**: Was brauchen Samen zum Keimen? Trocken, Kühlschrank, unter Wasser, im dunklen Schrank – eine Woche im Zeitraffer.
+- 🦊 **Nahrungsketten bauen**: Tier für Tier antippen – Blubb sagt, wer wen frisst. Energie-Pyramide, Gift in der Kette und: Was passiert, wenn die Mäuse verschwinden?
+- ❤️ **Herz und Puls**: Puls in Ruhe und beim Rennen, eigenen Puls im Takt antippen, und wie schnell sich ein trainiertes Herz erholt.
+- Jetzt **200 Versuche**, 34 Geräte im Freien Labor, neuer Fachbereich „Körper & Gesundheit“.
+
 ## 0.4.0 – Der Bio-Dschungel (17.11.2026)
 
 - 🌿 **Neue Insel: Bio-Dschungel** mit 27 Versuchen aus den Lehrplänen (Klasse 3–10):

@@ -19,9 +19,10 @@ enum class Topic(val title: String, val emoji: String, val subject: Subject, val
     SAEURE("Säuren & Laugen", "🧪", Subject.CHEMIE, "Säure Lauge Base pH-Wert Indikator Rotkohl neutralisieren Titration verdünnen"),
     REAKTION("Chemische Reaktionen", "💥", Subject.CHEMIE, "Reaktion Reaktionsgleichung Atome Moleküle ausgleichen Verbrennung Gas Oxidation Rost"),
     VERERBUNG("Vererbung & Genetik", "🧬", Subject.BIOLOGIE, "Genetik Vererbung Mendel Erbse Kreuzung Kreuzungsquadrat dominant rezessiv Allel Genotyp Phänotyp Blutgruppe Gene"),
-    ZELLEN("Zellen & Osmose", "🔬", Subject.BIOLOGIE, "Zelle Osmose Diffusion Plasmolyse Salz Kartoffel Zwiebel Mikroskop Konzentration"),
+    ZELLEN("Zellen, Mikroskop & Osmose", "🔬", Subject.BIOLOGIE, "Mikroskop Lupe Vergrößerung Einzeller Pantoffeltierchen Wasserfloh Bakterien Amöbe Teich Zelle Osmose Diffusion Plasmolyse Salz Kartoffel Zwiebel Mikroskop Konzentration"),
     ERNAEHRUNG("Nährstoffe & Enzyme", "🍞", Subject.BIOLOGIE, "Ernährung Nährstoffe Stärke Zucker Glukose Fett Eiweiß Nachweis Iod Enzym Amylase Verdauung Speichel"),
-    OEKOLOGIE("Pflanzen & Ökosysteme", "🌲", Subject.BIOLOGIE, "Ökologie Fotosynthese Photosynthese Pflanze Sauerstoff Licht Wasserpest Räuber Beute Nahrungskette Population Luchs Hase"),
+    OEKOLOGIE("Pflanzen & Ökosysteme", "🌲", Subject.BIOLOGIE, "Ökologie Fotosynthese Photosynthese Pflanze Sauerstoff Licht Wasserpest Räuber Beute Nahrungskette Nahrungsnetz Energie Pyramide Produzent Konsument Gift Population Luchs Hase Keimung keimen Samen Kresse"),
+    KOERPER("Körper & Gesundheit", "❤️", Subject.BIOLOGIE, "Körper Herz Puls Kreislauf Blut Sport Gesundheit Herzschlag Training Fitness"),
     ;
     fun experiments() = Catalog.all.filter { it.topic == this }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Experimentopia – Versuchslabor",
   "short_name": "Experimentopia",
-  "description": "Physik und Chemie zum Ausprobieren für Klasse 3 bis 10: vermuten, experimentieren, erklären.",
+  "description": "Physik, Chemie und Biologie zum Ausprobieren für Klasse 3 bis 10: vermuten, experimentieren, erklären.",
   "lang": "de",
   "start_url": "./",
   "scope": "./",
