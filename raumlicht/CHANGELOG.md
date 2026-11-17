@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.15.1 – Die Stimme kommt jetzt vom eigenen Server (17.11.2026)
+- **Android:** Die natürliche Stimme „Thorsten“ wird – wie bisher nur auf deinen Wunsch – jetzt von unserem eigenen Server geladen, nicht mehr von einem fremden. Sie ist dieselbe wie vorher und wird doppelt geprüft.
+- Wer die Stimme schon geladen hat, muss nichts tun.
+
 ## 2.15.0 – Raumlicht klingt jetzt wie Raumlicht (17.11.2026)
 - **Eigene Musik, neu komponiert:** gläsern und schwebend, wie Licht im Raum – ruhige Flächen, angeschlagenes Glas, feiner Schimmer. Beim Rechnen kommt ein leises Perlen dazu. Keine fremden Aufnahmen: Alles entsteht im Programm.
 - **Erkennungsmelodie:** fünf aufsteigende Töne, wie ein Lichtstrahl. Du hörst sie leise bei der ersten Berührung, in der Musik – und festlich, wenn du ein Kapitel geschafft hast.

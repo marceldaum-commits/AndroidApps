@@ -2,6 +2,22 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.15.1: Thorsten kommt vom eigenen Server (von Marcel direkt bestätigt)
+
+**Web = Android:** gleiche Version 2.15.1 vom 17.11.2026, gleicher Inhalt. **Ausnahme, noch offen:** „Thorsten“ gibt es nur in der Android-App; in der WebApp lesen die Stimmen des Geräts. Der Einbau im Browser ist der nächste Schritt.
+
+- **Quelle umgestellt:** Die Android-App lädt die Stimme jetzt von `https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx` (nur auf Wunsch, 63 MB, danach ohne Internet). Hugging Face wird nicht mehr angesprochen.
+- **Wichtig für alle Apps mit sherpa-onnx:** Eure Server-Datei ist die ursprüngliche Piper-Datei (63 201 294 Byte, sha256 7e64…7819). sherpa-onnx braucht sieben Angaben im Modell, die darin fehlen.
+  **Ihr müsst nichts ändern:** Die App hängt nach dem Laden 127 Byte an (`VoicePack.TAIL`). Das ergibt Byte für Byte die für sherpa-onnx aufbereitete Fassung (63 201 421 Byte, sha256 1c30…65a6) –
+  nachgerechnet mit der echten Datei von eurem Server. Geprüft wird die geladene Datei gegen eure Prüfsumme und die fertige gegen die zweite. Steht mit den Bytes in `raumlicht/VORLESEN_FUER_ANDERE_APPS.md`.
+- **Vorgaben erfüllt (Android):** nur auf Wunsch, Prüfsumme, offline nutzbar, Vorlesen abschaltbar, Stimme wählbar (Gerätestimmen und Thorsten), Sprechtempo, Hörprobe, kein espeak-ng in der App.
+  Der Hinweis nennt die tatsächliche Größe „63 MB (am besten im WLAN)“ statt „ca. 75 MB“.
+- **CORS** für raumlicht-test ist da (geprüft), die WebApp könnte die Datei also laden.
+- **Nicht geprüft:** der Download auf einem echten Gerät und ob die so ergänzte Datei dort spricht. Rechnerisch ist sie identisch mit der bisher benutzten.
+- Texte angepasst: `LIZENZEN.md`, `STORE-RELEASE.md` (Datensicherheit), `KLAERUNGSLISTE-RECHT.md` – **bitte auch in der Datenschutzerklärung den Download vom eigenen Server nennen.**
+
+---
+
 ## 17.11.2026 – Version 2.15.0: eigene Klangwelt (von Marcel direkt bestätigt)
 
 **Web = Android:** ja. Musik und alle Kurzklänge entstehen im gemeinsamen Rechenkern (`core/model`) und sind in Android-App und WebApp Sample für Sample dieselben; gleiche Version 2.15.0 vom 17.11.2026.

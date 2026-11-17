@@ -30,7 +30,14 @@ object VoicePack {
     const val MODEL = "de_DE-thorsten-medium.onnx"
     const val SIZE = 63_201_421L
     const val SHA256 = "1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6"
-    const val URL = "https://huggingface.co/csukuangfj/vits-piper-de_DE-thorsten-medium/resolve/main/$MODEL"
+    /** Quelle: der eigene Server (gemeinsam für alle Apps). Dort liegt die ursprüngliche Piper-Datei; */
+    const val URL = "https://stimmen.mathenachhilfe-online.com/thorsten/$MODEL"
+    const val SOURCE_SIZE = 63_201_294L
+    const val SOURCE_SHA256 = "7e64762d8e5118bb578f2eea6207e1a35a8e0c30595010b666f983fc87bb7819"
+    /** … der Sprach-Baustein sherpa-onnx braucht dazu sieben Angaben im Modell (Art, Sprache, Abtastrate …). Die App hängt sie nach dem Laden an –
+     *  das ergibt Byte für Byte die für sherpa-onnx aufbereitete Fassung ([SIZE], [SHA256]), geprüft am 17.11.2026. */
+    val TAIL: ByteArray = ("72120a0a6d6f64656c5f7479706512047669747372100a07636f6d6d656e741205706970657272120a086c616e677561676512064765726d616e720b0a05766f69636512026465" +
+        "720f0a0a6861735f65737065616b120131720f0a0a6e5f737065616b65727312013172140a0b73616d706c655f7261746512053232303530").chunked(2).map { it.toInt(16).toByte() }.toByteArray()
     const val MB = 63
     fun dir(ctx: Context) = File(ctx.filesDir, "stimme")
     fun model(ctx: Context) = File(dir(ctx), MODEL)
@@ -61,7 +68,9 @@ sealed interface PackState {
 /** Lädt das Stimm-Paket, zeigt den Fortschritt, lässt sich abbrechen und wieder entfernen. */
 class VoicePackLoader(private val ctx: Context, private val fetch: (String) -> HttpURLConnection = { URL(it).openConnection() as HttpURLConnection }, private val onReady: () -> Unit = {},
                       /** Erwartete Größe und Prüfsumme – im Test mit kleinen Daten austauschbar */
-                      private val size: Long = VoicePack.SIZE, private val sha256: String = VoicePack.SHA256) {
+                      private val size: Long = VoicePack.SIZE, private val sha256: String = VoicePack.SHA256,
+                      /** Angaben, die nach dem Laden angehängt werden, und die Prüfsumme der geladenen Datei davor (leer = die geladene Datei ist schon die fertige) */
+                      private val tail: ByteArray = if (size == VoicePack.SIZE) VoicePack.TAIL else ByteArray(0), private val sourceSha256: String = VoicePack.SOURCE_SHA256) {
     var state by mutableStateOf<PackState>(if (VoicePack.installed(ctx, size)) PackState.Ready else PackState.Missing)
         private set
     @Volatile private var cancelled = false
@@ -78,7 +87,11 @@ class VoicePackLoader(private val ctx: Context, private val fetch: (String) -> H
                 if (c.responseCode !in 200..299) error("Der Server antwortet mit ${c.responseCode}.")
                 c.inputStream.use { i -> part.outputStream().use { o -> val b = ByteArray(1 shl 16); var done = 0L; var shown = -1
                     while (true) { if (cancelled) error("abgebrochen"); val n = i.read(b); if (n < 0) break; o.write(b, 0, n); done += n
-                        val p = (done * 100 / size).toInt().coerceIn(0, 99); if (p != shown) { shown = p; state = PackState.Loading(p) } } } }
+                        val p = (done * 100 / (size - tail.size)).toInt().coerceIn(0, 99); if (p != shown) { shown = p; state = PackState.Loading(p) } } } }
+                if (tail.isNotEmpty()) {
+                    if (!VoicePack.matches(part, size - tail.size, sourceSha256)) error("Die Datei ist unvollständig oder beschädigt angekommen.")
+                    java.io.FileOutputStream(part, true).use { it.write(tail) }
+                }
                 if (!VoicePack.matches(part, size, sha256)) error("Die Datei ist unvollständig oder beschädigt angekommen.")
                 if (!part.renameTo(VoicePack.model(ctx))) error("Die Datei ließ sich nicht speichern.")
             }
