@@ -3,6 +3,15 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.1.0 – Brummi liest mit Nova vor (17.11.2026)
+- **Neue Vorlese-Stimme „Nova“:** Brummi liest Fragen, Antworten und Erklärungen jetzt mit einer natürlich klingenden Stimme vor. Nova ist eine mit KI (OpenAI) erzeugte Stimme – das steht auch in den Einstellungen.
+- Die Sätze werden von unserem eigenen Server vorab vertont. Die App schickt nie etwas an OpenAI und überträgt keine Namen oder Angaben zu dir. Einmal gehörte Sätze bleiben auf dem Gerät.
+- **Sprechtempo:** Neuer Regler mit sechs Stufen von 🐢 0,75 bis 🐇 1,5 – die Stimme bleibt dabei gleich hoch.
+- Englisch, Französisch und Spanisch liest Nova in der passenden Sprache.
+- Ohne Internet liest wie bisher die Stimme des Geräts.
+- Die Stimme „Thorsten“ fällt dafür weg – die App ist dadurch viel kleiner (etwa 4 statt 23 MB). Eine schon geladene Thorsten-Datei wird automatisch gelöscht.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.0.2 – Plus sieht man jetzt (17.11.2026)
 - **Goldenes Abzeichen:** Ist Wissensgarten Plus freigeschaltet, steht oben im Garten „🌟 Plus · bis …“ bzw. „für immer“ – mit kleinem Glanz. Im Eltern-Bereich steht „Plus aktiv · 1 Jahr bis …“ bzw. „für immer“.
 - Auch der Gratis-Test zeigt, bis wann er läuft.
