@@ -2,7 +2,45 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (64) – KI-Stimme „Nova“: texte.json ist auf test (3.24.4)
+
+Vorgabe Marcel/Leitstand 17.11.
+
+**1. Liste der festen Vorlese-Texte:** `kopfrechnen/vorlesen/texte.json` → `https://rechenblitz-test.mathenachhilfe-online.com/vorlesen/texte.json`
+- Format `{"format": 1, "app": "rechenblitz", "texte": [{"text", "sprache"}]}`, **1049 Texte**: 350 de, 350 en, 349 uk.
+- Längster Text 159 Zeichen.
+- Inhalt:
+  - **Theorie** aller 29 Themen × 6 Stufen: Kernsatz und jede Regel einzeln.
+  - **Blitz-Sätze ohne Zahlen:** Lob bei Serien, Ergebnis-Sätze, „Siehst du – geschafft!“, „Hallo, ich bin Blitz!“.
+  - Aufgaben und Lösungswege mit Zufallszahlen sind **nicht** enthalten.
+- **Die Texte stehen genau so drin, wie die App sie spricht.** Mathe ist schon in Worten („3/4“ → „3 Viertel“, „x²“ → „x hoch 2“, „·“ → „mal“). So spricht Nova Rechenzeichen richtig, und der Hash passt 1:1.
+- **Wird beim Bauen automatisch erzeugt** (`android-app/vorlesen.js`, aufgerufen von `stand.js`). Ändert sich ein Theorie-Text, ändert sich die Liste mit.
+- Neue Dateiendung: keine (nur `.json`, neuer Ordner `vorlesen/`).
+
+**2./3. In der App:**
+- **Stimme „Nova – KI-generierte Stimme“ ist Standard.** Daneben stehen Thorsten (Deutsch, wenn der Stimmen-Server erreichbar ist) und die Gerätestimmen. Abschaltbar über „Vorlesen“.
+- **Ablauf beim Vorlesen:**
+  - Für jeden festen Text bildet die App den Hash nach eurer Vorgabe (Prüfwert „Hallo Welt“ → `cb1e6d67…` ✓).
+  - Sie lädt `https://stimmen.mathenachhilfe-online.com/nova/<h[0:2]>/<h>.mp3`, speichert die Datei zwischen und spielt sie ab; das Tempo ist einstellbar, die Tonhöhe bleibt.
+  - **Fehlt die Datei, liest still die nächste Stimme:** Thorsten (falls geladen), sonst die Gerätestimme.
+  - Aufgaben und Lösungswege liest Thorsten bzw. die Gerätestimme.
+  - Die Theorie wird Satz für Satz gesprochen: Regeln mit Nova, das Zufalls-Beispiel danach mit der anderen Stimme.
+- **Die App schickt nie etwas an OpenAI.** Sie lädt nur MP3-Dateien von unserem Server.
+
+**4. Datenschutz-Text:** steht in den Einstellungen direkt unter der Stimmenwahl, sobald Nova gewählt ist – wörtlich wie vorgegeben, dazu in EN/UK übersetzt.
+
+**5. Web = Android:** gleicher Code. `texte.json` steckt auch in der APK. Die MP3 kommen in beiden Fassungen vom Stimmen-Server (CORS für `https://localhost` habt ihr schon); MP3 sind nicht im Paket.
+
+**Getestet** mit nachgebautem Stimmen-Server:
+- vorhandene MP3 → Nova ✓;
+- fehlende MP3 → Gerätestimme ✓;
+- Zufalls-Beispiel → Gerätestimme ✓;
+- Nova ist Standard ✓;
+- Datenschutz-Text ✓.
+- DE/EN/UK ohne fehlende Übersetzungen. Schwierigkeitstest ✓, Offline ✓, Zufallstest ✓.
+- **Nicht geprüft:** echte Nova-Dateien – die gibt es erst, wenn euer Stimmen-Werk die Liste abgeholt hat. Bitte danach einmal „🔊 Vorlesen“ in der Theorie anhören.
 
 ## 17.11.2026 (63) – „Pro aktiv“ deutlich sichtbar (3.24.3)
 

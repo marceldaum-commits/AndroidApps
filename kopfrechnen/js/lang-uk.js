@@ -2379,4 +2379,8 @@ I18N.add('uk', {"% sind":"% — це",
 "Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!":"Rechenblitz Pro розблоковано на цьому пристрої – для всіх профілів. Дякуємо за підтримку!",
 "Auf diesem Gerät freigeschaltet – für alle Profile":"Розблоковано на цьому пристрої – для всіх профілів",
 "Rechenblitz Pro ist auf diesem Gerät freigeschaltet.":"Rechenblitz Pro розблоковано на цьому пристрої.",
-"Neu: „Pro aktiv“ ist deutlich zu sehen – auf der Startseite, im Menü, in den Einstellungen und im Elternbericht":"Нове: «Pro активний» добре видно – на головному екрані, у меню, у налаштуваннях і у звіті для батьків"});
+"Neu: „Pro aktiv“ ist deutlich zu sehen – auf der Startseite, im Menü, in den Einstellungen und im Elternbericht":"Нове: «Pro активний» добре видно – на головному екрані, у меню, у налаштуваннях і у звіті для батьків",
+"Nova – KI-generierte Stimme":"Nova – голос, згенерований ШІ",
+"Gerätestimme (automatisch)":"Голос пристрою (автоматично)",
+"Die Stimme Nova ist eine mit KI (OpenAI) erzeugte Stimme. Die festen Texte der App werden von uns vorab vertont; von deinem Gerät werden keine Daten an OpenAI übertragen. Die Audiodateien lädt die App bei Bedarf von stimmen.mathenachhilfe-online.com.":"Голос Nova створено за допомогою ШІ (OpenAI). Постійні тексти застосунку ми озвучуємо заздалегідь; з твого пристрою жодні дані не передаються до OpenAI. Аудіофайли застосунок за потреби завантажує зі stimmen.mathenachhilfe-online.com.",
+"Neu: KI-Stimme „Nova“ für Theorie und Blitz – vorab vertont, deine Daten gehen nicht an OpenAI":"Нове: голос ШІ «Nova» для теорії та Бліца – озвучено заздалегідь, твої дані не передаються до OpenAI"});

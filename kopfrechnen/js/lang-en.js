@@ -2379,4 +2379,8 @@ I18N.add('en', {"% sind":"% are",
 "Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!":"Rechenblitz Pro is unlocked on this device – for all profiles. Thank you for your support!",
 "Auf diesem Gerät freigeschaltet – für alle Profile":"Unlocked on this device – for all profiles",
 "Rechenblitz Pro ist auf diesem Gerät freigeschaltet.":"Rechenblitz Pro is unlocked on this device.",
-"Neu: „Pro aktiv“ ist deutlich zu sehen – auf der Startseite, im Menü, in den Einstellungen und im Elternbericht":"New: “Pro active” is clearly visible – on the start screen, in the menu, in the settings and in the parent report"});
+"Neu: „Pro aktiv“ ist deutlich zu sehen – auf der Startseite, im Menü, in den Einstellungen und im Elternbericht":"New: “Pro active” is clearly visible – on the start screen, in the menu, in the settings and in the parent report",
+"Nova – KI-generierte Stimme":"Nova – AI-generated voice",
+"Gerätestimme (automatisch)":"Device voice (automatic)",
+"Die Stimme Nova ist eine mit KI (OpenAI) erzeugte Stimme. Die festen Texte der App werden von uns vorab vertont; von deinem Gerät werden keine Daten an OpenAI übertragen. Die Audiodateien lädt die App bei Bedarf von stimmen.mathenachhilfe-online.com.":"The voice Nova is a voice generated with AI (OpenAI). We record the app's fixed texts in advance; no data is sent from your device to OpenAI. The app loads the audio files from stimmen.mathenachhilfe-online.com when needed.",
+"Neu: KI-Stimme „Nova“ für Theorie und Blitz – vorab vertont, deine Daten gehen nicht an OpenAI":"New: AI voice “Nova” for theory and Blitz – recorded in advance, your data is not sent to OpenAI"});

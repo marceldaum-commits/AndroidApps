@@ -103,6 +103,7 @@ const PANELS = {
       ${Voice.available() ? `<div class="setrow col voicebox"><label class="vrow"><b>Stimme</b><select id="voiceSel"><option value="">Automatisch</option></select></label>
         <label class="vrow"><b>Tempo</b><input type="range" id="rateIn" min="0.6" max="1.5" step="0.1" value="${S.settings.rate ?? 1}"><span id="rateOut" translate="no">${(S.settings.rate ?? 1).toFixed(1)}×</span></label>
         <div id="thBox" hidden></div>
+        <p class="small muted" id="novaNote" hidden>Die Stimme Nova ist eine mit KI (OpenAI) erzeugte Stimme. Die festen Texte der App werden von uns vorab vertont; von deinem Gerät werden keine Daten an OpenAI übertragen. Die Audiodateien lädt die App bei Bedarf von stimmen.mathenachhilfe-online.com.</p>
         <button class="btn" id="voiceTest">▶ Probe hören</button></div>` : (IS_NATIVE ? '<p class="small muted setnote">Zum Vorlesen bitte die neue Rechenblitz-App installieren.</p>' : '<p class="small muted setnote">Auf diesem Gerät gibt es keine Vorlese-Stimme.</p>')}
       ${sw('auto', S.settings.auto, 'Automatisch prüfen', 'Prüfen, sobald genug Stellen eingegeben sind')}
       ${sw('blitz', S.settings.blitz !== false, 'Maskottchen Blitz', 'Blitz der Fuchs feuert dich an und erklärt Tricks')}
@@ -274,7 +275,8 @@ document.addEventListener('click', e => { const b = e.target.closest('[data-open
 // Thorsten: Hinweis vor dem einmaligen Laden (ca. 75 MB von unserem Server), Fortschritt, Fehler
 async function thorstenUi() {
   const box = $('thBox'); if (!box) return;
-  if (S.settings.voice !== 'thorsten') { box.hidden = true; return; }
+  if ($('novaNote')) $('novaNote').hidden = Voice.choice() !== 'nova';
+  if (Voice.choice() !== 'thorsten') { box.hidden = true; return; }
   box.hidden = false;
   if (Thorsten.st === 'ready') { box.innerHTML = '<p class="small muted">✓ Thorsten ist bereit.</p>'; return; }
   const loadingUi = () => { box.innerHTML = '<p class="small muted">Stimme wird geladen …</p><div class="bar"><i id="thBar"></i></div><button class="btn" id="thCancel">Abbrechen</button>'; $('thCancel').onclick = () => Thorsten.cancel(); };
@@ -302,13 +304,15 @@ function initSettings() {
   });
   if ($('voiceSel')) {
     Promise.all([Voice.voices(), Thorsten.manifest()]).then(([vs, man]) => { const sel = $('voiceSel'); if (!sel) return;
+      if (Nova.can()) { sel.insertAdjacentHTML('afterbegin', `<option value="nova">Nova – KI-generierte Stimme</option>`); vs.push({ id: 'nova' }); }
+      sel.querySelector('option[value=""]').textContent = 'Gerätestimme (automatisch)';
       if (man) { sel.insertAdjacentHTML('beforeend', `<option value="thorsten">Thorsten – natürliche Stimme</option>`); vs.push({ id: 'thorsten' }); }
-      vs.filter(v => v.id !== 'thorsten').forEach(v => sel.insertAdjacentHTML('beforeend', `<option value="${esc(v.id)}" translate="no">${esc(v.name)}</option>`));
-      sel.value = vs.some(v => v.id === S.settings.voice) ? S.settings.voice : ''; thorstenUi(); });
+      vs.filter(v => v.id !== 'thorsten' && v.id !== 'nova').forEach(v => sel.insertAdjacentHTML('beforeend', `<option value="${esc(v.id)}" translate="no">${esc(v.name)}</option>`));
+      sel.value = vs.some(v => v.id === Voice.choice()) ? Voice.choice() : ''; thorstenUi(); });
     $('voiceSel').onchange = e => { S.settings.voice = e.target.value; save(); thorstenUi(); if (e.target.value !== 'thorsten' || Thorsten.st === 'ready') Voice.say('3/4 + 1/4 = 1', { force: true }); };
     $('rateIn').oninput = e => { S.settings.rate = +e.target.value; $('rateOut').textContent = S.settings.rate.toFixed(1) + '×'; };
     $('rateIn').onchange = () => save();
-    $('voiceTest').onclick = () => Voice.speakRaw(joinSay([tr('Hallo, ich bin Blitz!'), ...['3/4 + 1/4 = 1', '12² = 144', '2,5 km = 2500 m'].map(x => mathSpeak(shownText(x)))]), { force: true });
+    $('voiceTest').onclick = () => Voice.speakParts([mathSpeak(tr('Hallo, ich bin Blitz!')), joinSay(['3/4 + 1/4 = 1', '12² = 144', '2,5 km = 2500 m'].map(x => mathSpeak(shownText(x))))], { force: true });
   }
   $('volMusic').oninput = e => { S.settings.musicVol = +e.target.value; Sound.init(); Sound.setVolumes(); };
   $('volSfx').oninput = e => { S.settings.sfxVol = +e.target.value; Sound.init(); Sound.setVolumes(); };

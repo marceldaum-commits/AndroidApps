@@ -273,7 +273,7 @@ PANELS.theorie = (o = {}) => {
       const L = I18N.lang, parts = [T.k, ...T.l[lvl]].map(x => mathSpeak(x, L));
       const q = L === 'de' ? (ex.story ? mathSpeak(ex.e[0].v, L) : taskSpeech(ex)) : mathSpeak(ex.story ? tr(ex.e[0].v) : i18nSpeech(ex), L);
       const ans = mathSpeak($('sheetBody').querySelector('.theo-ans').textContent, L), steps = [...$('sheetBody').querySelectorAll('.theo-ex .steps li')].map(li => mathSpeak(li.textContent, L));
-      Voice.speakRaw(joinSay([...parts, `${q} ${ex.noEq ? '' : mathSpeak('=', L)} ${ans}`, ...steps]), { force: true });
+      Voice.speakParts([...parts, joinSay([`${q} ${ex.noEq ? '' : mathSpeak('=', L)} ${ans}`, ...steps])], { force: true });   // Regeln einzeln (vorab vertont mit Nova), Beispiel mit Zufallszahlen danach
     };
     if ($('theoBack')) $('theoBack').onclick = () => closeSheet();
     if ($('theoGo')) $('theoGo').onclick = () => { closeSheet(); S.sel = { op: tp, lvl: lvl === 5 && !hasPro() ? 4 : lvl }; save(); renderHome(); startGame('training'); };

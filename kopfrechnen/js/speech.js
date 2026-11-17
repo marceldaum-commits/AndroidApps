@@ -61,12 +61,15 @@ const joinSay = parts => parts.map(x => String(x).trim().replace(/[.!?:]+$/, '')
 // Deutscher Quelltext → so, wie er gerade angezeigt wird (übersetzt, mit Zahlen-Schreibweise der Sprache)
 const shownText = de => I18N.lang === 'de' ? de : (typeof i18nNumbers === 'function' ? i18nNumbers(tr(de)) : tr(de));
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 const Voice = {
   plugin: () => window.Capacitor?.Plugins?.TextToSpeech || null,
   web: () => 'speechSynthesis' in window ? window.speechSynthesis : null,
-  available() { return !!(this.plugin() || this.web()); },
+  available() { return !!(this.plugin() || this.web() || Nova.can()); },
   rate: () => S.settings.rate ?? 1,
-  // Stimmen für die aktuelle Sprache: [{ id, name }]
+  // gewählte Stimme: 'nova' (Standard), 'thorsten', '' (Gerät automatisch) oder eine Gerätestimme
+  choice: () => S.settings.voice === undefined ? 'nova' : S.settings.voice,
+  // Stimmen des Geräts für die aktuelle Sprache: [{ id, name }]
   async voices() {
     const lang = locale().slice(0, 2).toLowerCase();
     const P = this.plugin();
@@ -76,32 +79,44 @@ const Voice = {
     if (!list.length) list = await new Promise(r => { const t = setTimeout(() => r(W.getVoices()), 1200); W.addEventListener('voiceschanged', () => { clearTimeout(t); r(W.getVoices()); }, { once: true }); });
     return list.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(lang)).map(v => ({ id: v.voiceURI, name: v.name + (v.localService ? '' : ' ☁'), lang: v.lang }));
   },
-  stop() { Thorsten.stop(); const P = this.plugin(); if (P) { try { P.stop(); } catch {} } const W = this.web(); if (W) W.cancel(); },
-  // spricht fertigen Sprechtext; queue: hinten anhängen statt unterbrechen
-  async speakRaw(text, { queue = false, force = false } = {}) {
-    if ((!S.settings.speech && !force) || !text) return;
-    let vid = S.settings.voice || ''; const P = this.plugin(), rate = this.rate();
-    if (vid === 'thorsten') {   // natürliche Stimme (nur Deutsch); solange sie nicht bereit ist oder ein Wort fehlt: Gerätestimme
-      if (I18N.lang === 'de' && Thorsten.st === 'ready') { if (!queue) { const W0 = this.web(); if (W0) W0.cancel(); } if (await Thorsten.speak(text, rate, queue)) return; }
-      else if (Thorsten.st === 'off') Thorsten.warm();
-      vid = '';
-    }
-    if (!queue) Thorsten.stop();
-    if (P) {
-      try { if (!queue) await P.stop();
-        const o = { text, lang: locale(), rate, pitch: 1, volume: 1, category: 'ambient', queueStrategy: queue ? 1 : 0 };
-        if (vid.startsWith('n')) o.voice = +vid.slice(1);
-        await P.speak(o); } catch {}
-      return;
-    }
+  seq: 0, chain: Promise.resolve(),
+  stop() { this.seq++; this.chain = Promise.resolve(); Nova.stop(); Thorsten.stop(); const P = this.plugin(); if (P) { try { P.stop(); } catch {} } const W = this.web(); if (W) W.cancel(); },
+  // Gerätestimme; Promise endet, wenn fertig gesprochen
+  async device(text, vid) {
+    const P = this.plugin(), rate = this.rate();
+    if (P) { try { const o = { text, lang: locale(), rate, pitch: 1, volume: 1, category: 'ambient', queueStrategy: 0 }; if (vid && vid.startsWith('n')) o.voice = +vid.slice(1); await P.speak(o); } catch {} return; }
     const W = this.web(); if (!W) return;
-    if (!queue) W.cancel();
-    const u = new SpeechSynthesisUtterance(text); u.lang = locale(); u.rate = rate;
-    if (vid) { const v = W.getVoices().find(x => x.voiceURI === vid); if (v) { u.voice = v; u.lang = v.lang; } }
-    W.speak(u);
+    await new Promise(res => {
+      const u = new SpeechSynthesisUtterance(text); u.lang = locale(); u.rate = rate;
+      if (vid) { const v = W.getVoices().find(x => x.voiceURI === vid); if (v) { u.voice = v; u.lang = v.lang; } }
+      const t = setTimeout(res, 1500 + text.length * 120); u.onend = u.onerror = () => { clearTimeout(t); res(); };
+      W.speak(u);
+    });
   },
+  // ein Abschnitt: Nova (nur vorab vertonte feste Texte) → Thorsten (Deutsch, wenn geladen) → Gerätestimme
+  async one(text, seq) {
+    const ch = this.choice(), lang = I18N.lang;
+    if (ch === 'nova' && await Nova.play(text, lang, this.rate(), () => seq !== this.seq)) return;
+    if (seq !== this.seq) return;
+    if ((ch === 'thorsten' || ch === 'nova') && lang === 'de') {
+      if (Thorsten.st === 'ready') { if (await Thorsten.speak(text, this.rate())) { while (seq === this.seq && Sound.ctx && Sound.ctx.currentTime < (Thorsten.endAt || 0)) await sleep(60); return; } }
+      else if (Thorsten.st === 'off') Thorsten.warm();
+    }
+    if (seq !== this.seq) return;
+    await this.device(text, ch === 'nova' || ch === 'thorsten' ? '' : ch);
+  },
+  // spricht Abschnitte nacheinander; queue: hinten anhängen statt unterbrechen
+  speakParts(parts, { queue = false, force = false } = {}) {
+    parts = parts.map(p => String(p || '').trim()).filter(Boolean);
+    if ((!S.settings.speech && !force) || !parts.length) return;
+    if (!queue) this.stop();
+    const seq = this.seq;
+    this.chain = this.chain.then(async () => { for (const p of parts) { if (seq !== this.seq) return; await this.one(p, seq); } }).catch(() => {});
+    return this.chain;
+  },
+  speakRaw(text, o) { return this.speakParts([text], o); },
   // deutscher Quelltext (wird übersetzt und mathematisch ausgesprochen)
-  say(de, o) { this.speakRaw(mathSpeak(shownText(de)), o); },
+  say(de, o) { return this.speakRaw(mathSpeak(shownText(de)), o); },
 };
 // alte Schnittstelle: speak(text) für fertige Aufgaben-Sprechtexte
 function speak(text, o) { Voice.speakRaw(text, o); }
