@@ -1,6 +1,6 @@
 {
   "id": "s1-physik-strom",
-  "version": 1,
+  "version": 2,
   "title": "Strom und Magnetismus",
   "subject": "physik",
   "grades": [
@@ -10,7 +10,7 @@
   ],
   "emoji": "⚡",
   "tier": "free",
-  "description": "Stromkreise, Leiter und Isolatoren, Reihen- und Parallelschaltung, Ohmsches Gesetz, Magnete, Elektromagnete und sicherer Umgang mit Strom.",
+  "description": "Stromkreise, Leiter und Isolatoren, Reihen- und Parallelschaltung, ohmsches Gesetz, Magnete, Elektromagnete und sicherer Umgang mit Strom.",
   "intro": [
     {
       "img": "⚡🔁",
@@ -55,7 +55,7 @@
         "Die Lampe ist zu kalt",
         "Die Kabel sind zu lang"
       ],
-      "info": "Ein offener Schalter ist wie eine hochgezogene Brücke: Die Elektronen kommen nicht mehr ringsum.",
+      "info": "Ein offener Schalter ist wie eine hochgezogene Brücke: Die Elektronen kommen nicht mehr rundherum.",
       "img": "🌉💡"
     },
     {
@@ -259,7 +259,7 @@
         "10 Ω",
         "100 Ω"
       ],
-      "info": "1/R = 1/10 Ω + 1/10 Ω = 2/10 Ω, also R = 5 Ω. Zwei Wege nebeneinander lassen mehr Strom durch.",
+      "info": "1/R = 1/(10 Ω) + 1/(10 Ω) = 2/(10 Ω), also R = 5 Ω. Zwei Wege nebeneinander lassen mehr Strom durch.",
       "img": "🔀🧮"
     },
     {

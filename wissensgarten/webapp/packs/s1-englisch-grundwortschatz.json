@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-grundwortschatz",
-  "version": 2,
+  "version": 3,
   "title": "Englisch Grundwortschatz",
   "subject": "englisch",
   "grades": [
@@ -86,7 +86,7 @@
       "choices": [
         "rubber",
         "pencil",
-        "rule"
+        "ruller"
       ],
       "img": "📏"
     },
@@ -164,7 +164,7 @@
       "choices": [
         "cat",
         "dock",
-        "hound"
+        "dogg"
       ],
       "img": "🐕"
     },

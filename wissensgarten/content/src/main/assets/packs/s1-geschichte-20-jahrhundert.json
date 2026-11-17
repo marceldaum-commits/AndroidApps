@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-20-jahrhundert",
-  "version": 4,
+  "version": 5,
   "title": "Das 20. Jahrhundert",
   "subject": "geschichte",
   "grades": [
@@ -41,7 +41,12 @@
       "q": "Welches Attentat löste 1914 den Ersten Weltkrieg aus?",
       "a": "Attentat von Sarajevo",
       "info": "Am 28. Juni 1914 wurde der österreichische Thronfolger Franz Ferdinand ermordet.",
-      "img": "🔫👑"
+      "img": "🔫👑",
+      "choices": [
+        "Attentat von Wien",
+        "Attentat von Belgrad",
+        "Attentat von Berlin"
+      ]
     },
     {
       "id": "002",
@@ -70,7 +75,12 @@
       "q": "An welchem Tag wurde 1918 in Deutschland die Republik ausgerufen?",
       "a": "9. November 1918",
       "info": "Philipp Scheidemann rief sie vom Reichstagsgebäude aus.",
-      "img": "🏛️📢"
+      "img": "🏛️📢",
+      "choices": [
+        "11. November 1918",
+        "7. Oktober 1918",
+        "19. Januar 1919"
+      ]
     },
     {
       "id": "005",
@@ -110,7 +120,12 @@
       "id": "008",
       "q": "Welches Ereignis 1929 löste die Weltwirtschaftskrise aus?",
       "a": "Börsencrash in New York",
-      "img": "📉🏦💥"
+      "img": "📉🏦💥",
+      "choices": [
+        "Hyperinflation in Berlin",
+        "Bankpleite in Wien",
+        "Generalstreik in London"
+      ]
     },
     {
       "id": "009",
@@ -145,7 +160,12 @@
       "q": "Wie nennt man die Gewalttaten gegen Juden am 9./10. November 1938?",
       "a": "Novemberpogrome",
       "info": "Synagogen wurden in Brand gesetzt, Geschäfte zerstört, Menschen verhaftet und ermordet.",
-      "img": "🕯️🕍"
+      "img": "🕯️🕍",
+      "choices": [
+        "Bücherverbrennungen",
+        "Hitlerputsch",
+        "Reichstagsbrand"
+      ]
     },
     {
       "id": "013",
@@ -169,7 +189,12 @@
       "q": "Wie hieß das größte deutsche Vernichtungslager im besetzten Polen?",
       "a": "Auschwitz-Birkenau",
       "info": "Der 27. Januar, Tag der Befreiung von Auschwitz 1945, ist heute Holocaust-Gedenktag.",
-      "img": "🕯️🕯️"
+      "img": "🕯️🕯️",
+      "choices": [
+        "Treblinka",
+        "Sobibor",
+        "Majdanek"
+      ]
     },
     {
       "id": "016",
@@ -226,7 +251,12 @@
       "id": "021",
       "q": "Wie wurde West-Berlin während der Blockade 1948/49 versorgt?",
       "a": "Über die Berliner Luftbrücke",
-      "img": "✈️🍫"
+      "img": "✈️🍫",
+      "choices": [
+        "Über Schiffe auf der Elbe",
+        "Über einen Tunnel unter der Grenze",
+        "Über Güterzüge aus Hamburg"
+      ]
     },
     {
       "id": "022",
@@ -243,7 +273,12 @@
       "id": "023",
       "q": "Wann wurde die DDR gegründet?",
       "a": "7. Oktober 1949",
-      "img": "🏛️📜"
+      "img": "🏛️📜",
+      "choices": [
+        "23. Mai 1949",
+        "17. Juni 1953",
+        "13. August 1961"
+      ]
     },
     {
       "id": "024",
@@ -280,7 +315,12 @@
       "q": "Was geschah am 17. Juni 1953 in der DDR?",
       "a": "Ein Volksaufstand",
       "info": "Er wurde von sowjetischen Panzern niedergeschlagen.",
-      "img": "✊🏭"
+      "img": "✊🏭",
+      "choices": [
+        "Eine Währungsreform",
+        "Eine freie Wahl",
+        "Ein Staatsbesuch"
+      ]
     },
     {
       "id": "028",
@@ -332,7 +372,12 @@
       "q": "Wann trat die DDR der Bundesrepublik bei (Deutsche Einheit)?",
       "a": "3. Oktober 1990",
       "info": "Seitdem ist der 3. Oktober Nationalfeiertag.",
-      "img": "🤝🎉"
+      "img": "🤝🎉",
+      "choices": [
+        "9. November 1989",
+        "18. März 1990",
+        "1. Juli 1990"
+      ]
     },
     {
       "id": "033",

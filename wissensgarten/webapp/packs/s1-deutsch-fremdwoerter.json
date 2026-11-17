@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-fremdwoerter",
-  "version": 1,
+  "version": 2,
   "title": "Fremdwörter verstehen",
   "subject": "deutsch",
   "grades": [
@@ -27,7 +27,7 @@
     },
     {
       "img": "⚠️✍️",
-      "text": "Achtung, Schreibfallen: Rhythmus hat zwei h, Standard endet auf d, und die Reparatur kommt von „parat“ – nicht „Reperatur“."
+      "text": "Achtung, Schreibfallen: Rhythmus hat zwei h, Standard endet auf d, und Reparatur schreibt man wie „parat“ – nicht „Reperatur“."
     },
     {
       "img": "🚀💬",

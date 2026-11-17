@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.26.0 – Große Korrektheitsprüfung (17.11.2026)
+- **Alle 2.923 Karten noch einmal einzeln geprüft** – von einer zweiten, unabhängigen Stelle. 233 Verbesserungen: genauere Fakten, eindeutigere Fragen, bessere Rechtschreibung.
+- **Eintippen ist fairer:** Groß/klein, Bindestriche, Artikel, Akzente und ein Punkt am Ende zählen nicht mehr als Fehler (außer in Deutsch, wo es um die Schreibung geht). „Kiew“ zählt auch für „Kyjiw (Kiew)“.
+- Lange Antworten (Sätze, Listen) werden nicht mehr zum Eintippen verlangt – da gibt es Auswahl oder „erst überlegen, dann aufdecken“.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 0.25.1 – Plus-Pakete kommen sicher an (17.11.2026)
 - Behoben: Nach dem Freischalten wurden die Abi- und Experten-Pakete nicht geladen, weil die Vorschau in der Samenhandlung als „schon vorhanden“ galt. Jetzt holt Brummi sie direkt nach dem Freischalten.
 - Behoben (WebApp): Die Plus-Liste und Plus-Inhalte landen nicht mehr im Offline-Speicher des Browsers – so kommen neue Plus-Pakete zuverlässig an.

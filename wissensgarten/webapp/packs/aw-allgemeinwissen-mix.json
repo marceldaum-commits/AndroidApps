@@ -1,6 +1,6 @@
 {
   "id": "aw-allgemeinwissen-mix",
-  "version": 3,
+  "version": 4,
   "title": "Allgemeinwissen-Quiz",
   "subject": "allgemeinwissen",
   "grades": [
@@ -62,7 +62,7 @@
     },
     {
       "id": "003",
-      "q": "Wer schrieb „Romeo und Julia“?",
+      "q": "Wer schrieb „Romeo und Julia“? (Vor- und Nachname)",
       "a": "William Shakespeare",
       "img": "💑🌹☠️"
     },
@@ -79,9 +79,10 @@
     },
     {
       "id": "005",
-      "q": "Welche Brüder sammelten Märchen wie „Hänsel und Gretel“?",
-      "a": "Jacob und Wilhelm Grimm",
-      "img": "🍬🏠🧙"
+      "q": "Welche Brüder sammelten Märchen wie „Hänsel und Gretel“? (Nachname)",
+      "a": "Grimm",
+      "img": "🍬🏠🧙",
+      "info": "Jacob und Wilhelm Grimm – die Brüder Grimm."
     },
     {
       "id": "006",
@@ -110,7 +111,12 @@
       "q": "Wer beschrieb 1953 die Doppelhelix-Struktur der DNA?",
       "a": "James Watson und Francis Crick",
       "info": "Wichtige Röntgenbilder dafür stammten von Rosalind Franklin.",
-      "img": "🧬🌀"
+      "img": "🧬🌀",
+      "choices": [
+        "Robert Koch und Louis Pasteur",
+        "Max Planck und Niels Bohr",
+        "Gregor Mendel und Charles Darwin"
+      ]
     },
     {
       "id": "009",
@@ -341,8 +347,8 @@
     {
       "id": "033",
       "q": "Welches ist das höchste Gebäude der Welt (Stand 2026)?",
-      "a": "Burj Khalifa in Dubai",
-      "info": "Es ist rund 828 m hoch.",
+      "a": "Burj Khalifa",
+      "info": "Es steht in Dubai und ist rund 828 m hoch.",
       "img": "🏙️🌴🏜️"
     },
     {

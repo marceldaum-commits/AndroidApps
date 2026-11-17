@@ -1,5 +1,57 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Korrektheitsprüfung 17.11. (Version 0.26.0 vom 17.11.2026)
+
+**Was geprüft wurde und wie:**
+- **Inhalte: alle 85 Pakete mit 2.923 Karten**, davon 72 freie Pakete (2.472 Karten) und 13 Plus-Pakete (451 Karten, Zweig `wg-plus-pakete`), jeweils mit Intros, Titeln, Beschreibungen und Klassenstufen.
+  - **Zweitprüfung:** 8 unabhängige Prüfer, keiner hat seine eigenen Pakete geprüft, mit je 347–381 Karten.
+  - **Prüfpunkte je Karte:** Frage, Antwort, Ablenker, info, Merkbild, Stufe.
+  - **Zahlen** mit python3 bzw. von Hand nachgerechnet.
+  - **Fakten** nach gesichertem Wissen geprüft, ohne Web-Recherche (siehe „nicht prüfbar“).
+  - **Freie Eingabe:** Für jede Eingabe-Karte wurde geprüft, ob eine zweite übliche Schreibweise oder ein Synonym als falsch gewertet würde.
+  - Danach `check_pack.py` (Format, Emoji ≤ 11, 1 MB) für alle 85 Pakete grün, Abholprüfung des Plus-Ordners grün.
+- **Ergebnis: 233 Korrekturen in 46 Paketen**, davon 10 Plus-Pakete. Die vollständige Liste (vorher → nachher, Grund) steht in **`wissensgarten/KORREKTUREN_2026-11-17.md`**.
+  - **171 × freie Eingabe eindeutig gemacht.** Richtige Eingaben wären als falsch gewertet worden, z. B. Nachname statt Vor- und Nachname, „Atlantik“/„Atlantischer Ozean“, Listen mit fester Reihenfolge, Formeln mit Hochzahlen, „Jod“/„Iod“.
+    Gelöst wurde das durch eine präzisere Frage, z. B. „(Vor- und Nachname)“ oder „(ein Wort)“, eine kürzere Antwort oder Ablenker, sodass die Karte als Auswahl gespielt wird.
+  - **35 × fachlich genauer bzw. richtig.** Beispiele:
+    - Grundgesetz „verkündet am 23. Mai 1949“
+    - Marianengraben „fast 11 000 m“
+    - Catalan-Zahl C₅ eindeutig gemacht
+    - „Reparatur“ und „parat“ stammen beide von lat. parare
+    - Neandertaler-DNA nur außerhalb Afrikas
+    - 1871–1949 sind 78 Jahre
+    - Schaltjahr „fast alle 4 Jahre“
+    - periphere Nerven leiten in beide Richtungen
+    - Erklärung zu „halb sechs“ berichtigt
+  - **3 × Ablenker war ebenfalls richtig:** „rule“ (auch Lineal), „hound“ (auch Hund), „gat“ (veraltete Form von „get“). Dazu kommt „Amsel“ bei Zugvögeln, gezählt unter „fachlich“.
+  - **24 × Sprache/Rechtschreibung.** Darunter 15 von Namen abgeleitete Adjektive klein nach § 62, z. B. „ohmsches Gesetz“, „eulersche Phi-Funktion“; dazu Grammatik („Sonne und Blume ergeben“) und Zusammenschreibung („dreimal“).
+- **Antwortprüfung der App verbessert**, weil mehrere Prüfer dieselben Grenzfälle fanden (mit Tests):
+  - Groß/klein, Bindestriche, Leerzeichen, Artikel („Blauwal“ = „Der Blauwal“), Schlusspunkt und Akzente („Reykjavik“ = „Reykjavík“) sind kein Fehler mehr. Das gilt nicht im Fach Deutsch, dort zählt die Schreibung weiter streng.
+  - Klammer-Antworten: „Kyjiw“ und „Kiew“ zählen für „Kyjiw (Kiew)“.
+  - Zahlen werden nach Wert verglichen.
+  - **Auswahl-Karten werden auf hohen Stufen nur noch eingetippt, wenn die Antwort ein Wort oder eine Zahl ist.** Vorher hätte man Antworten wie „Nach etwa 12 Jahren“ wörtlich treffen müssen.
+- **Funktion:**
+  - **Tests:** alle Unit- und Robolectric-Tests grün (399 Tests, darunter 60+ Bildschirmfotos aller Bildschirme der gemeinsamen Oberfläche, Interaktionstests, Migration, Sync, Updates, Plus/Lizenz/Test-Zeitraum), Lint ohne Fehler, Play-Fassung kompiliert.
+  - **WebApp:** bei 320, 768 und 1280 px Start und Onboarding ohne Konsolenfehler, kein waagerechtes Scrollen.
+  - **Plus:** mit eurem echten Test-Code Freischalt-Link, Endpunkt (200/403) und Laden aller 13 Plus-Pakete geprüft, auch mit Service Worker.
+  - **Offline:** Der Service Worker speichert alles vorab; der zweite Start lädt 0 Byte.
+  - **Stufen-Nachweis** (`DifficultyTest` mit Plus-Paketen) weiter grün, Tabelle in `SCHWIERIGKEIT.md`.
+- **Texte nach außen:**
+  - **Store-Beschreibung:** veraltete Angaben berichtigt („47 Pakete · über 1 600 Karten“ → „72 Wissenspakete · über 2 400 Karten“). Der Plus-Abschnitt sagt nicht mehr „bis zum Start alle Plus-Pakete gratis“.
+  - **Datenschutz-Abschnitt** passt zum Stand (Plus-Code nur lokal, Endpunkt sieht Code und IP).
+  - **Preise** überall mit „inkl. MwSt.“ (19,99 € / 49,99 €).
+
+**Nicht oder nicht sicher prüfbar:**
+- **Fakten ohne Quellenrecherche:** Die Prüfer hatten keinen Web-Zugriff. Unsichere Werte sind vorsichtig formuliert („etwa“, „gilt als“, „wohl“), z. B. Flusslängen, Epochengrenzen, Herkunft von Redewendungen, Sprecherzahlen. Die Erste-Hilfe-Inhalte sind nach ERC/DRK-Stand aus dem Gedächtnis geprüft.
+  Die Angabe „27 EU-Staaten“ beruht auf dem Wissensstand.
+- **Android auf echten Geräten:** Ein Gerät oder Emulator ist hier nicht verfügbar. Die Oberfläche ist über Robolectric geprüft. Startbild, Widget, Benachrichtigung, Drive-Sync und Kamera brauchen einen Gerätetest.
+- **WebApp:** Nicht jeder Bildschirm wurde in jeder Breite einzeln angeklickt. Die gemeinsame Oberfläche ist über die Android-Bildschirmfotos abgedeckt.
+- **Barrierefreiheit:** Nur die vorhandenen Beschriftungen und Kontraste sind geprüft, kein Screenreader-Durchlauf.
+- **Echter Kauf über die Kasse:** Den macht Marcel.
+
+**Stand:** 0.26.0 vom 17.11.2026 liegt auf wissensgarten-test. Die korrigierten Plus-Pakete liegen in `wg-plus-pakete`, die neuen Versionen stehen in `versions.json` (Commit `2f86855`).
+
+
 ## 0.25.1 vom 17.11.2026 – Test mit eurem echten Plus-Code: zwei Fehler gefunden und behoben
 
 Ich habe mit dem echten Test-Code geprüft (Produkt 1, Nr. 1001, Kauftag 17.11.2026). Die Signatur mit dem Live-Schlüssel ist gültig, die App zeigt „aktiv bis 16.11.2027“.

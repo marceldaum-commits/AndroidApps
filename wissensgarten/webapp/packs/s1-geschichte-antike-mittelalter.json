@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-antike-mittelalter",
-  "version": 2,
+  "version": 3,
   "title": "Antike und Mittelalter",
   "subject": "geschichte",
   "grades": [
@@ -58,7 +58,7 @@
     },
     {
       "id": "003",
-      "q": "Wer entzifferte 1822 die Hieroglyphen?",
+      "q": "Wer entzifferte 1822 die Hieroglyphen? (Vor- und Nachname)",
       "a": "Jean-François Champollion",
       "info": "Geholfen hat ihm der Stein von Rosetta mit demselben Text in drei Schriften.",
       "img": "🔍📜🗿"
@@ -134,7 +134,7 @@
     },
     {
       "id": "011",
-      "q": "Welcher Makedonenkönig eroberte ein Reich bis nach Indien?",
+      "q": "Welcher Makedonenkönig eroberte ein Reich bis nach Indien? (mit Beinamen)",
       "a": "Alexander der Große",
       "info": "Er lebte von 356 bis 323 v. Chr.",
       "img": "🐴⚔️🐘"
@@ -189,7 +189,7 @@
     },
     {
       "id": "017",
-      "q": "Welche Schlacht verloren die Römer im Jahr 9 n. Chr. gegen Arminius?",
+      "q": "Welche Schlacht verloren die Römer im Jahr 9 n. Chr. gegen Arminius? (ein Wort)",
       "a": "Varusschlacht",
       "img": "⚔️🌲"
     },
@@ -225,14 +225,24 @@
       "id": "021",
       "q": "Wo und wann wurde Karl der Große zum Kaiser gekrönt?",
       "a": "In Rom, im Jahr 800",
-      "img": "👑⛪"
+      "img": "👑⛪",
+      "choices": [
+        "In Aachen, im Jahr 800",
+        "In Rom, im Jahr 768",
+        "In Aachen, im Jahr 814"
+      ]
     },
     {
       "id": "022",
       "q": "Wie hießen die drei Stände des Mittelalters?",
       "a": "Klerus, Adel, Bauern",
       "info": "Merkhilfe: Die einen beten, die anderen kämpfen, die dritten arbeiten.",
-      "img": "⛪🛡️🌾"
+      "img": "⛪🛡️🌾",
+      "choices": [
+        "Adel, Bürger, Sklaven",
+        "Kaiser, Papst, Bauern",
+        "Klerus, Ritter, Händler"
+      ]
     },
     {
       "id": "023",

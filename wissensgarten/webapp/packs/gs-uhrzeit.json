@@ -1,6 +1,6 @@
 {
   "id": "gs-uhrzeit",
-  "version": 1,
+  "version": 2,
   "title": "Die Uhr und die Zeit",
   "subject": "mathe",
   "grades": [
@@ -117,7 +117,7 @@
         "6:00 Uhr",
         "5:00 Uhr"
       ],
-      "info": "„Halb sechs“ heißt: die halbe Stunde bis 6 Uhr ist schon um.",
+      "info": "„Halb sechs“ heißt: Die Hälfte der Stunde bis 6 Uhr ist schon um.",
       "img": "🌇⏰"
     },
     {
@@ -293,7 +293,7 @@
         "12 Tage",
         "100 Tage"
       ],
-      "info": "Alle 4 Jahre gibt es ein Schaltjahr mit 366 Tagen.",
+      "info": "Fast alle 4 Jahre gibt es ein Schaltjahr mit 366 Tagen.",
       "img": "🎂🌍"
     },
     {

@@ -1,6 +1,6 @@
 {
   "id": "gs-lesestart",
-  "version": 1,
+  "version": 2,
   "title": "Lesestart",
   "subject": "deutsch",
   "grades": [
@@ -29,7 +29,7 @@
     },
     {
       "img": "☀️➕🌸",
-      "text": "Aus zwei Wörtern wird eins: Sonne und Blume ergibt Sonnenblume."
+      "text": "Aus zwei Wörtern wird eins: Sonne und Blume ergeben Sonnenblume."
     },
     {
       "img": "🌱🎉",
@@ -202,7 +202,7 @@
         "2",
         "4"
       ],
-      "info": "Klatsch mit: Ba – na – ne. Drei Mal!",
+      "info": "Klatsch mit: Ba – na – ne. Dreimal!",
       "img": "🍌👏"
     },
     {
@@ -247,7 +247,7 @@
         "3",
         "5"
       ],
-      "info": "Scho – ko – la – de: vier Mal klatschen!",
+      "info": "Scho – ko – la – de: viermal klatschen!",
       "img": "🍫👏"
     },
     {

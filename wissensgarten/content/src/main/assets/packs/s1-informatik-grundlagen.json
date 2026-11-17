@@ -1,6 +1,6 @@
 {
   "id": "s1-informatik-grundlagen",
-  "version": 2,
+  "version": 3,
   "title": "Informatik-Grundlagen",
   "subject": "informatik",
   "grades": [
@@ -159,7 +159,7 @@
     {
       "id": "013",
       "q": "Wozu dient eine Verzweigung (if)?",
-      "a": "Anweisungen nur unter einer Bedingung auszuführen",
+      "a": "Um Anweisungen nur unter einer Bedingung auszuführen",
       "img": "🔀"
     },
     {
@@ -194,7 +194,12 @@
       "id": "017",
       "q": "Datentyp für ganze Zahlen?",
       "a": "Integer",
-      "img": "🔢"
+      "img": "🔢",
+      "choices": [
+        "Boolean",
+        "String",
+        "Float"
+      ]
     },
     {
       "id": "018",
@@ -230,7 +235,12 @@
       "id": "022",
       "q": "Voraussetzung für die binäre Suche?",
       "a": "Die Daten müssen sortiert sein",
-      "img": "📚🔍"
+      "img": "📚🔍",
+      "choices": [
+        "Die Daten müssen Zahlen sein",
+        "Die Daten dürfen nicht doppelt vorkommen",
+        "Die Liste muss kurz sein"
+      ]
     },
     {
       "id": "023",
@@ -270,7 +280,12 @@
       "q": "Wofür verwendet man CSS?",
       "a": "Zur Gestaltung von Webseiten",
       "info": "CSS = Cascading Style Sheets",
-      "img": "💅"
+      "img": "💅",
+      "choices": [
+        "Zum Abfragen von Datenbanken",
+        "Zum Programmieren von Servern",
+        "Zum Verschlüsseln von Webseiten"
+      ]
     },
     {
       "id": "027",
@@ -286,7 +301,7 @@
     {
       "id": "028",
       "q": "Was ist eine IP-Adresse?",
-      "a": "Eine Adresse eines Geräts in einem Netzwerk",
+      "a": "Die Adresse eines Geräts in einem Netzwerk",
       "img": "🏠📮"
     },
     {

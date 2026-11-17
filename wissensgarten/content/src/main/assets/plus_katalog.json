@@ -1,7 +1,7 @@
 [
  {
   "id": "aw-experte-geschichte-kultur",
-  "version": 2,
+  "version": 3,
   "title": "Experte: Geschichte & Kultur",
   "subject": "geschichte",
   "grades": [
@@ -60,7 +60,7 @@
  },
  {
   "id": "aw-experte-mathe-logik",
-  "version": 2,
+  "version": 3,
   "title": "Experte: Mathe & Logik",
   "subject": "mathe",
   "grades": [
@@ -97,14 +97,14 @@
    {
     "id": "001",
     "q": "Wie heißt die Funktion φ(n), die die zu n teilerfremden Zahlen von 1 bis n zählt? (…sche Phi-Funktion)",
-    "a": "Eulersche Phi-Funktion",
+    "a": "eulersche Phi-Funktion",
     "info": "Für eine Primzahl p gilt φ(p) = p − 1. Sie ist der Schlüssel zum RSA-Verfahren.",
     "img": "🔢🔐"
    },
    {
     "id": "002",
     "q": "Für jedes n > 1 liegt zwischen n und 2n eine Primzahl. Wie heißt diese Aussage? (…sches Postulat)",
-    "a": "Bertrandsches Postulat",
+    "a": "bertrandsches Postulat",
     "info": "Joseph Bertrand vermutete es 1845, Pafnuti Tschebyschow bewies es 1852. Es ist also längst ein Satz.",
     "img": "🔢↔️"
    },
@@ -119,7 +119,7 @@
  },
  {
   "id": "aw-experte-naturwissenschaft",
-  "version": 2,
+  "version": 3,
   "title": "Experte: Naturwissenschaft",
   "subject": "allgemeinwissen",
   "grades": [
@@ -298,7 +298,7 @@
  },
  {
   "id": "ob-abi-chemie",
-  "version": 2,
+  "version": 3,
   "title": "Abi: Organische Chemie",
   "subject": "chemie",
   "grades": [
@@ -359,7 +359,7 @@
  },
  {
   "id": "ob-abi-geschichte",
-  "version": 2,
+  "version": 3,
   "title": "Abi: Geschichte & Politik",
   "subject": "geschichte",
   "grades": [
@@ -373,7 +373,7 @@
   "intro": [
    {
     "img": "👑⚔️",
-    "text": "Von der Kaiserkrone bis zum Grundgesetz: In nur 80 Jahren erlebte Deutschland Monarchie, Republik, Diktatur und Neuanfang."
+    "text": "Von der Kaiserkrone bis zum Grundgesetz: In nicht einmal 80 Jahren erlebte Deutschland Monarchie, Republik, Diktatur und Neuanfang."
    },
    {
     "img": "📜⚖️",
@@ -420,7 +420,7 @@
  },
  {
   "id": "ob-abi-stochastik",
-  "version": 2,
+  "version": 3,
   "title": "Abi: Stochastik",
   "subject": "mathe",
   "grades": [
@@ -442,7 +442,7 @@
    },
    {
     "img": "🔔📏",
-    "text": "Viele Messgrößen folgen der Gaußschen Glockenkurve. Mit μ und σ kannst du Wahrscheinlichkeiten über die Standardisierung bestimmen."
+    "text": "Viele Messgrößen folgen der gaußschen Glockenkurve. Mit μ und σ kannst du Wahrscheinlichkeiten über die Standardisierung bestimmen."
    },
    {
     "img": "⚖️🎯",
@@ -481,7 +481,7 @@
  },
  {
   "id": "ob-bio-genetik",
-  "version": 2,
+  "version": 3,
   "title": "Genetik",
   "subject": "biologie",
   "grades": [
@@ -493,7 +493,7 @@
   ],
   "emoji": "🧬",
   "tier": "plus",
-  "description": "DNA, Proteinbiosynthese, Mendelsche Regeln sowie Mitose und Meiose.",
+  "description": "DNA, Proteinbiosynthese, mendelsche Regeln sowie Mitose und Meiose.",
   "intro": [
    {
     "img": "🧬📏",
@@ -509,7 +509,7 @@
    },
    {
     "img": "🔗🧠",
-    "text": "Eselsbrücke für die Basenpaare: A und T, G und C – „Apfel-Tomate, Gurke-Citrone“. In der RNA ersetzt Uracil das Thymin."
+    "text": "Eselsbrücke für die Basenpaare: A und T, G und C – „Apfel-Tomate, Gurke-Chili“. In der RNA ersetzt Uracil das Thymin."
    },
    {
     "img": "🐝🚀",
@@ -534,6 +534,11 @@
     "id": "002",
     "q": "Die vier Basen der DNA?",
     "a": "Adenin, Thymin, Guanin, Cytosin",
+    "choices": [
+     "Adenin, Uracil, Guanin, Cytosin",
+     "Adenin, Thymin, Guanin, Uracil",
+     "Alanin, Thymin, Glycin, Cytosin"
+    ],
     "img": "🧬4️⃣"
    },
    {
@@ -552,7 +557,7 @@
  },
  {
   "id": "ob-deutsch-epochen",
-  "version": 2,
+  "version": 3,
   "title": "Literaturepochen",
   "subject": "deutsch",
   "grades": [
@@ -625,7 +630,7 @@
  },
  {
   "id": "ob-englisch-abi-vokabeln",
-  "version": 2,
+  "version": 3,
   "title": "Englisch Abi-Vokabeln",
   "subject": "englisch",
   "grades": [
@@ -764,7 +769,7 @@
  },
  {
   "id": "ob-physik-konstanten-begriffe",
-  "version": 2,
+  "version": 3,
   "title": "Naturkonstanten & Begriffe",
   "subject": "physik",
   "grades": [
@@ -787,7 +792,7 @@
    },
    {
     "img": "⚡🔢",
-    "text": "Eselsbrücke: c ≈ 3 · 10⁸ m/s – „eine Drei mit acht Nullen“. Und jede Ladung ist ein ganzzahliges Vielfaches der Elementarladung e ≈ 1,602 · 10⁻¹⁹ C."
+    "text": "Eselsbrücke: c ≈ 3 · 10⁸ m/s – „eine Drei mit acht Nullen“. Und jede frei vorkommende Ladung ist ein ganzzahliges Vielfaches der Elementarladung e ≈ 1,602 · 10⁻¹⁹ C."
    },
    {
     "img": "⚛️🔦",

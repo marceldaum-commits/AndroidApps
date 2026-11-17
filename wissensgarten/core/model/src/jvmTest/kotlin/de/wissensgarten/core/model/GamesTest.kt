@@ -87,9 +87,15 @@ class GamesTest {
     @Test fun typedAnswersForgiveSmallThingsButNotSpelling() {
         assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("  went  ", "went"))
         assertEquals(TypedAnswer.Verdict.ALMOST, TypedAnswer.check("Kopenhagn", "Kopenhagen"))
-        assertEquals(TypedAnswer.Verdict.ALMOST, TypedAnswer.check("apple", "the apple"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("apple", "the apple"))
         assertEquals("Groß/klein zählt außer in Rechtschreibung nicht", TypedAnswer.Verdict.RIGHT, TypedAnswer.check("paris", "Paris"))
         assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Rubisco", "RuBisCO"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Blauwal", "Der Blauwal"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Kiew", "Kyjiw (Kiew)"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Kyjiw", "Kyjiw (Kiew)"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Reykjavik", "Reykjavík"))
+        assertEquals("Umlaut zählt", TypedAnswer.Verdict.WRONG, TypedAnswer.check("Bar", "Bär"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Gewaltenteilung", "Gewaltenteilung."))
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("Rom", "Paris"))
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("", "Paris"))
         // Rechtschreibung: „fast“ reicht nicht
@@ -140,5 +146,13 @@ class GamesTest {
         assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("25", "25 %"))
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("25 €", "25 %"))
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("Paris", "12"))
+    }
+
+    @Test fun choiceCardsWithPhraseAnswersAreNotTyped() {
+        val tree = Memory(90.0, 5.0, 0, 8, 0)
+        val phrase = StudyCard("w", "b", "Wann verdoppelt sich das Geld bei 6 %?", "Nach etwa 12 Jahren", listOf("Nach etwa 6 Jahren", "Nach etwa 20 Jahren"), null, tree)
+        assertFalse(GameMode.TYPE in (1..40).map { Games.choose(phrase.copy(id = "w$it"), peers, false, canType = true) })
+        val word = StudyCard("v", "b", "Hauptstadt Italiens?", "Rom", listOf("Paris", "Madrid"), null, tree)
+        assertTrue(GameMode.TYPE in (1..40).map { Games.choose(word.copy(id = "v$it"), peers, false, canType = true) })
     }
 }

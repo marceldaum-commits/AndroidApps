@@ -116,7 +116,8 @@ object Games {
         if (calm) return if (card.id.hashCode() % 2 == 0) GameMode.CHOICE else GameMode.TEACH
         // Freie Eingabe: Anteil steigt mit der Stufe (0 % Keimling … 100 % Profi)
         if (hash.mod(100) < tier.freePercent) {
-            if (canType && typePossible(card.back)) return GameMode.TYPE
+            // Auswahl-Karten nur dann eintippen, wenn die Antwort ein Wort oder eine Zahl ist („Nach etwa 12 Jahren“ wäre unfair)
+            if (canType && typePossible(card.back) && (!card.isChoice || singleToken(card.back))) return GameMode.TYPE
             if (canSpeak && speakPossible(card.back)) return GameMode.SPEAK
             if (!canType && lettersPossible(card.back, simple)) return GameMode.LETTERS
             // Profi: keine Auswahl mehr – erst selbst erinnern, dann aufdecken (z. B. Formeln, lange Antworten)
@@ -166,6 +167,9 @@ object Games {
 
 
 /** Vergleich für gesprochene Antworten: Groß/klein, Satzzeichen und Artikel egal, kleine Tippfehler erlaubt. */
+/** Ein Wort oder eine Zahl (ggf. mit Einheit) – eindeutig eintippbar. */
+fun singleToken(answer: String): Boolean = answer.trim().let { a -> ' ' !in a || TypedAnswer.number(a) != null }
+
 /** Lässt sich die Antwort gut tippen? (kurz, keine Formelzeichen wie π, ², ·) */
 fun typePossible(answer: String): Boolean =
     answer.length in 1..30 && answer.all { it.isLetterOrDigit() || it in " -–,.'’/()€%" }
@@ -177,6 +181,12 @@ object TypedAnswer {
     private fun clean(s: String) = s.trim().replace('–', '-').replace(Regex("\\s+"), " ")
 
     private val NUMBER = Regex("^(-?)\\s*(\\d{1,3}(?:\\.\\d{3})+|\\d+)(?:,(\\d+))?\\s*(€|%|°C|[A-Za-zµΩ]{1,4})?$")
+
+    private val ARTICLES = setOf("der", "die", "das", "den", "dem", "des", "ein", "eine", "einen", "einem", "einer", "the", "a", "an", "le", "la", "les", "l", "un", "une", "el", "los", "las")
+    private fun bare(s: String): String {
+        val words = s.trim().trimEnd('.', '!', '?', ';').split(Regex("[\\s’']+")).filter { it.isNotBlank() }
+        return joined(words.dropWhile { it.lowercase() in ARTICLES }.joinToString(" "))
+    }
 
     /** „Marshall-Plan“ → „Marshallplan“: Bindestriche/Leerzeichen weg, der Buchstabe danach klein. */
     private fun joined(s: String): String = buildString {
@@ -200,6 +210,39 @@ object TypedAnswer {
      * @param strictSpelling Deutsch/Rechtschreibung: Dort zählt „fast“ nicht – die Schreibweise ist ja der Lernstoff.
      */
     fun check(typed: String, answer: String, strictSpelling: Boolean = false): Verdict {
+        // „Kyjiw (Kiew)“: Hauptform, Klammerform und das Ganze gelten (außer in Rechtschreibung nur das Ganze)
+        val variants = if (strictSpelling) listOf(answer) else alternatives(answer)
+        var best = Verdict.WRONG
+        for (v in variants) {
+            when (checkOne(typed, v, strictSpelling)) {
+                Verdict.RIGHT -> return Verdict.RIGHT
+                Verdict.ALMOST -> best = Verdict.ALMOST
+                Verdict.WRONG -> {}
+            }
+        }
+        return best
+    }
+
+    /** „Kyjiw (Kiew)“ → [„Kyjiw (Kiew)“, „Kyjiw“, „Kiew“] */
+    fun alternatives(answer: String): List<String> {
+        val m = Regex("^(.+?)\\s*\\(([^()]+)\\)\\s*$").matchEntire(answer.trim()) ?: return listOf(answer)
+        return listOf(answer, m.groupValues[1].trim(), m.groupValues[2].trim()).filter { it.isNotBlank() }.distinct()
+    }
+
+    /** Akzente weg (Reykjavík = Reykjavik), Umlaute bleiben (Bar ≠ Bär). */
+    private fun plain(s: String): String = buildString {
+        for (c in s) append(when (c) {
+            'á', 'à', 'â', 'ã', 'å' -> 'a'; 'Á', 'À', 'Â', 'Ã', 'Å' -> 'A'
+            'é', 'è', 'ê', 'ë' -> 'e'; 'É', 'È', 'Ê', 'Ë' -> 'E'
+            'í', 'ì', 'î', 'ï' -> 'i'; 'Í', 'Ì', 'Î', 'Ï' -> 'I'
+            'ó', 'ò', 'ô', 'õ' -> 'o'; 'Ó', 'Ò', 'Ô', 'Õ' -> 'O'
+            'ú', 'ù', 'û' -> 'u'; 'Ú', 'Ù', 'Û' -> 'U'
+            'ñ' -> 'n'; 'Ñ' -> 'N'; 'ç' -> 'c'; 'Ç' -> 'C'; 'č' -> 'c'; 'Č' -> 'C'
+            else -> c
+        })
+    }
+
+    private fun checkOne(typed: String, answer: String, strictSpelling: Boolean): Verdict {
         val t = clean(typed); val a = clean(answer)
         if (t.isEmpty()) return Verdict.WRONG
         if (t == a) return Verdict.RIGHT
@@ -213,6 +256,8 @@ object TypedAnswer {
         // Außer in Rechtschreibung zählen Groß/klein sowie Bindestrich-/Leerzeichen-Varianten nicht als Fehler
         // („RuBisCO“ = „Rubisco“, „Marshallplan“ = „Marshall-Plan“)
         if (!strictSpelling && joined(t).equals(joined(a), ignoreCase = true)) return Verdict.RIGHT
+        // … und ein fehlender/zusätzlicher Artikel oder Schlusspunkt („Blauwal“ = „Der Blauwal“)
+        if (!strictSpelling && bare(t).isNotEmpty() && plain(bare(t)).equals(plain(bare(a)), ignoreCase = true)) return Verdict.RIGHT
         val nt = SpokenAnswer.normalize(t); val na = SpokenAnswer.normalize(a)
         if (na.isEmpty()) return Verdict.WRONG
         val close = nt == na || SpokenAnswer.levenshtein(nt, na) <= maxOf(1, na.length / 6) && na.length >= 5

@@ -1,6 +1,6 @@
 {
   "id": "s1-spanisch-grundwortschatz",
-  "version": 2,
+  "version": 3,
   "title": "Spanisch Grundwortschatz",
   "subject": "spanisch",
   "grades": [
@@ -67,6 +67,11 @@
       "id": "004",
       "q": "die Schule",
       "a": "la escuela",
+      "choices": [
+        "el escuela",
+        "la escuala",
+        "la escalera"
+      ],
       "info": "Auch üblich: el colegio.",
       "img": "🏫🎒"
     },
@@ -85,6 +90,11 @@
       "id": "006",
       "q": "der Freund",
       "a": "el amigo",
+      "choices": [
+        "la amiga",
+        "el enemigo",
+        "el amego"
+      ],
       "img": "🤗"
     },
     {
@@ -272,6 +282,11 @@
       "id": "027",
       "q": "trinken",
       "a": "beber",
+      "choices": [
+        "comer",
+        "vivir",
+        "bailar"
+      ],
       "img": "🍹"
     },
     {
@@ -289,6 +304,11 @@
       "id": "029",
       "q": "haben (besitzen)",
       "a": "tener",
+      "choices": [
+        "haber",
+        "hacer",
+        "tomar"
+      ],
       "img": "🤲💎"
     },
     {

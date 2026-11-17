@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-europa",
-  "version": 3,
+  "version": 4,
   "title": "Europa entdecken",
   "subject": "erdkunde",
   "grades": [
@@ -241,7 +241,7 @@
     },
     {
       "id": "024",
-      "q": "Hauptstädte der baltischen Staaten Estland, Lettland, Litauen?",
+      "q": "Hauptstädte der baltischen Staaten Estland, Lettland, Litauen (in dieser Reihenfolge)?",
       "a": "Tallinn, Riga, Vilnius",
       "img": "🌲🌲🌲"
     },
@@ -364,8 +364,8 @@
     },
     {
       "id": "037",
-      "q": "Welche zwei Länder liegen auf der Iberischen Halbinsel?",
-      "a": "Spanien und Portugal",
+      "q": "Welches große Land teilt sich die Iberische Halbinsel mit Spanien?",
+      "a": "Portugal",
       "info": "Dazu kommen noch der Kleinstaat Andorra und das britische Gibraltar.",
       "img": "🌍🍊"
     },

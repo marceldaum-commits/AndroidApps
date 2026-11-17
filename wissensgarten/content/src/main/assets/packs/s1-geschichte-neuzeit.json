@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-neuzeit",
-  "version": 2,
+  "version": 3,
   "title": "Die Neuzeit",
   "subject": "geschichte",
   "grades": [
@@ -58,7 +58,7 @@
     },
     {
       "id": "003",
-      "q": "Wessen Expedition umsegelte 1519–1522 erstmals die Erde?",
+      "q": "Wessen Expedition umsegelte 1519–1522 erstmals die Erde? (Vor- und Nachname)",
       "a": "Ferdinand Magellan",
       "info": "Magellan starb unterwegs, Juan Sebastián Elcano führte die Fahrt zu Ende.",
       "img": "⛵🌍🔄"
@@ -109,8 +109,8 @@
     },
     {
       "id": "008",
-      "q": "Wo übersetzte Luther das Neue Testament ins Deutsche?",
-      "a": "Auf der Wartburg",
+      "q": "Auf welcher Burg übersetzte Luther das Neue Testament ins Deutsche?",
+      "a": "Wartburg",
       "info": "Dort lebte er 1521/22 versteckt als „Junker Jörg“.",
       "img": "🏰✒️📖"
     },
@@ -164,7 +164,7 @@
     },
     {
       "id": "014",
-      "q": "Wer beschrieb Aufklärung als „Ausgang aus der selbstverschuldeten Unmündigkeit“?",
+      "q": "Wer beschrieb Aufklärung als „Ausgang aus der selbstverschuldeten Unmündigkeit“? (Vor- und Nachname)",
       "a": "Immanuel Kant",
       "img": "💡🧠"
     },
@@ -233,7 +233,7 @@
     },
     {
       "id": "022",
-      "q": "Wer verbesserte die Dampfmaschine entscheidend (Patent 1769)?",
+      "q": "Wer verbesserte die Dampfmaschine entscheidend (Patent 1769)? (Vor- und Nachname)",
       "a": "James Watt",
       "img": "🚂💨⚙️"
     },
@@ -268,8 +268,8 @@
     },
     {
       "id": "026",
-      "q": "Wer schrieb 1848 das „Kommunistische Manifest“?",
-      "a": "Karl Marx und Friedrich Engels",
+      "q": "Wer schrieb 1848 mit Friedrich Engels das „Kommunistische Manifest“? (Vor- und Nachname)",
+      "a": "Karl Marx",
       "img": "📕✊"
     },
     {
@@ -286,7 +286,7 @@
     },
     {
       "id": "028",
-      "q": "Wer war der erste Reichskanzler des Kaiserreichs?",
+      "q": "Wer war der erste Reichskanzler des Kaiserreichs? (Vor- und Nachname)",
       "a": "Otto von Bismarck",
       "img": "🎩🧐"
     },
@@ -317,6 +317,11 @@
       "id": "031",
       "q": "Welcher Kaiser entließ Bismarck im Jahr 1890?",
       "a": "Wilhelm II.",
+      "choices": [
+        "Wilhelm I.",
+        "Friedrich III.",
+        "Franz Joseph I."
+      ],
       "img": "👑⚓"
     }
   ]

@@ -1,6 +1,6 @@
 {
   "id": "s1-chemie-grundbegriffe",
-  "version": 2,
+  "version": 3,
   "title": "Chemie-Grundbegriffe",
   "subject": "chemie",
   "grades": [
@@ -59,8 +59,8 @@
     },
     {
       "id": "003",
-      "q": "Welche Ladung hat ein Neutron?",
-      "a": "Keine (neutral)",
+      "q": "Ist ein Neutron positiv, negativ oder neutral?",
+      "a": "Neutral",
       "img": "😐"
     },
     {

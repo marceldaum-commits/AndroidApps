@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-welt",
-  "version": 2,
+  "version": 3,
   "title": "Rund um die Welt",
   "subject": "erdkunde",
   "grades": [
@@ -83,7 +83,7 @@
     },
     {
       "id": "005",
-      "q": "Welcher Ozean liegt zwischen Europa/Afrika und Amerika?",
+      "q": "Welcher Ozean liegt zwischen Europa/Afrika und Amerika? (ein Wort)",
       "a": "Atlantik",
       "img": "🚢🌊🗽"
     },
@@ -200,9 +200,9 @@
     },
     {
       "id": "016",
-      "q": "Wo liegt die tiefste bekannte Stelle der Ozeane?",
-      "a": "Im Marianengraben",
-      "info": "Der Marianengraben im Pazifik ist rund 11 000 m tief.",
+      "q": "In welchem Tiefseegraben liegt die tiefste bekannte Stelle der Ozeane?",
+      "a": "Marianengraben",
+      "info": "Der Marianengraben im Pazifik ist fast 11 000 m tief.",
       "img": "🌊🕳️🐙"
     },
     {
@@ -230,7 +230,12 @@
       "id": "019",
       "q": "Welche Meere verbindet der Suezkanal?",
       "a": "Mittelmeer und Rotes Meer",
-      "img": "🚢🐫"
+      "img": "🚢🐫",
+      "choices": [
+        "Mittelmeer und Schwarzes Meer",
+        "Rotes Meer und Persischer Golf",
+        "Nordsee und Ostsee"
+      ]
     },
     {
       "id": "020",
@@ -375,7 +380,12 @@
       "id": "035",
       "q": "Hauptstadt von Mexiko?",
       "a": "Mexiko-Stadt",
-      "img": "🌮🌵"
+      "img": "🌮🌵",
+      "choices": [
+        "Guadalajara",
+        "Monterrey",
+        "Cancún"
+      ]
     },
     {
       "id": "036",

@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-bundeslaender",
-  "version": 2,
+  "version": 3,
   "title": "Deutschlands Bundesländer",
   "subject": "erdkunde",
   "grades": [
@@ -164,6 +164,11 @@
       "id": "015",
       "q": "Welche drei Bundesländer sind Stadtstaaten?",
       "a": "Berlin, Hamburg und Bremen",
+      "choices": [
+        "Berlin, Hamburg und München",
+        "Hamburg, Bremen und Kiel",
+        "Berlin, Bremen und Köln"
+      ],
       "info": "Bei Stadtstaaten ist die Stadt selbst ein Bundesland. Zum Land Bremen gehört auch Bremerhaven.",
       "img": "🐻⚓🐓"
     },
@@ -215,7 +220,7 @@
     },
     {
       "id": "020",
-      "q": "Wie hoch ist die Zugspitze ungefähr?",
+      "q": "Wie hoch ist die Zugspitze (in Metern)?",
       "a": "2962 m",
       "img": "🏔️📏"
     },
@@ -323,6 +328,11 @@
       "id": "031",
       "q": "Welcher Fluss bildet einen großen Teil der Grenze zu Polen?",
       "a": "Oder",
+      "choices": [
+        "Elbe",
+        "Spree",
+        "Weser"
+      ],
       "info": "Oder und Neiße bilden zusammen die deutsch-polnische Grenze.",
       "img": "🌊🌉🏞️"
     },
@@ -360,6 +370,11 @@
       "id": "035",
       "q": "An welche zwei Meere grenzt Deutschland?",
       "a": "Nordsee und Ostsee",
+      "choices": [
+        "Nordsee und Mittelmeer",
+        "Ostsee und Schwarzes Meer",
+        "Ostsee und Mittelmeer"
+      ],
       "img": "🌊🐚🌊"
     },
     {
