@@ -1,5 +1,15 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Plus sichtbar (Version 2.0.2 vom 17.11.2026) – Web = Android
+
+- **Vorher:** Plus war nur im Eltern-Bereich als Knopftext „Plus ist aktiv“ zu sehen. Das genaue Datum stand erst auf der Plus-Seite.
+- **Neu:** Ein goldenes Abzeichen mit kleinem Glanz:
+  - **Startbildschirm (Garten-Kopf)**, unter dem Namen: „🌟 Plus · bis 16.11.2027“ bzw. „🌟 Plus · für immer“; im Gratis-Test „🌟 Plus-Test · bis …“. Siehe Bildschirmfoto `wissensgarten/screenshots/71_garten_plus_aktiv.png`.
+  - **Eltern-Bereich** („Für Eltern“): „🌟 Plus aktiv · 1 Jahr bis …“ bzw. „für immer“, antippbar (öffnet die Plus-Seite). Der Knopf darunter heißt jetzt „Plus verwalten“. Siehe Bildschirmfoto `wissensgarten/screenshots/72_eltern_plus_aktiv.png`.
+- Ohne Plus erscheint kein Abzeichen.
+- Der Text ist auch für Screenreader lesbar.
+- **Prüfung:** Alle Tests grün, Lint 0 Fehler, Bildschirmfotos angesehen. Eine erste Fassung brach im Garten in zwei Zeilen um und wurde von Brummis Sprechblase verdeckt. Deshalb steht im Garten jetzt eine kurze, einzeilige Fassung.
+
 ## Thorsten vom eigenen Stimm-Server (Version 2.0.1 vom 17.11.2026) – Web = Android
 
 - **Quelle:** App und WebApp laden Thorsten jetzt von `https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx` (63 201 294 Bytes, sha256 `7e64762d…`). Hugging Face wird nicht mehr angefragt.

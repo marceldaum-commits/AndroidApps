@@ -103,9 +103,10 @@ fun SettingsScreen(
         }
 
         Section("Für Eltern") {
+            de.wissensgarten.app.ui.plus.PlusBadge(de.wissensgarten.app.ui.plus.LocalPlusStatus.current, onClick = onPlus)
             if (onPlus != null) Button(onClick = onPlus, modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = androidx.compose.ui.graphics.Color(0xFFB8860B))) {
-                Text(if (plusActive) "🌟 Wissensgarten Plus ist aktiv" else "🌟 Wissensgarten Plus – 7 Tage gratis testen")
+                Text(if (plusActive) "🌟 Wissensgarten Plus verwalten" else "🌟 Wissensgarten Plus – 7 Tage gratis testen")
             }
             OutlinedButton(onClick = onWeekReport, modifier = Modifier.fillMaxWidth()) { Text("📊 Wochenbericht ansehen") }
             Text("Gesunde Lernzeit pro Tag", style = MaterialTheme.typography.labelLarge, modifier = Modifier.padding(top = 8.dp))

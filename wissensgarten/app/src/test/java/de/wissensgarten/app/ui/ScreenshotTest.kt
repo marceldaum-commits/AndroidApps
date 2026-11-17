@@ -669,6 +669,21 @@ open class ScreenshotTest {
     @Test fun voiceLoading() = voiceShot("68_stimme_laedt", "thorsten", 100, de.wissensgarten.app.ui.fx.VoicePackState.Loading(42))
     @Test fun voiceThorsten() = voiceShot("69_stimme_thorsten", "thorsten", 120, de.wissensgarten.app.ui.fx.VoicePackState.Ready)
 
+    @Test fun gardenPlusBadge() = shot("71_garten_plus_aktiv") {
+        androidx.compose.runtime.CompositionLocalProvider(de.wissensgarten.app.ui.plus.LocalPlusStatus provides
+            de.wissensgarten.core.data.PlusStatus(active = true, product = 1, until = 21138, enforced = true)) {
+            GardenScreen(profile, garden, now, 10, {}, {}, {}, {})
+        }
+    }
+
+    @Test fun parentPlusBadge() = shot("72_eltern_plus_aktiv") {
+        androidx.compose.runtime.CompositionLocalProvider(de.wissensgarten.app.ui.plus.LocalPlusStatus provides
+            de.wissensgarten.core.data.PlusStatus(active = true, product = de.wissensgarten.core.model.License.PRODUCT_FOREVER, enforced = true)) {
+            de.wissensgarten.app.ui.settings.SettingsScreen(profile, true, ThemeMode.LIGHT, true, {}, packCount = 72, cardCount = 2472,
+                version = "2.0.2", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {}, onPlus = {}, plusActive = true)
+        }
+    }
+
     @Test fun plus() = shot("65_plus") {
         de.wissensgarten.app.ui.plus.PlusScreen(
             status = de.wissensgarten.core.data.PlusStatus(active = false, enforced = true), today = 20773,

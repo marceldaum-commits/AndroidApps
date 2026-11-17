@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.0.2 – Plus sieht man jetzt (17.11.2026)
+- **Goldenes Abzeichen:** Ist Wissensgarten Plus freigeschaltet, steht oben im Garten „🌟 Plus · bis …“ bzw. „für immer“ – mit kleinem Glanz. Im Eltern-Bereich steht „Plus aktiv · 1 Jahr bis …“ bzw. „für immer“.
+- Auch der Gratis-Test zeigt, bis wann er läuft.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.0.1 – Thorsten kommt von unserem eigenen Server (17.11.2026)
 - Die natürliche Stimme „Thorsten“ wird jetzt von unserem eigenen Stimm-Server geladen statt von Hugging Face. Wie vorher nur auf Wunsch, ohne Cookies, mit Prüfsumme – und danach ganz ohne Internet.
 - Wer Thorsten schon geladen hat, muss nichts tun.

@@ -97,6 +97,7 @@ fun GardenScreen(
                             "${cards.count { !it.memory.isSeed }} Pflanzen · $trees ${if (trees == 1) "Baum" else "Bäume"}",
                             style = MaterialTheme.typography.bodySmall, color = textColor.copy(alpha = 0.85f),
                         )
+                        de.wissensgarten.app.ui.plus.PlusBadge(de.wissensgarten.app.ui.plus.LocalPlusStatus.current, Modifier.padding(top = 3.dp), compact = true)
                     }
                     DewChip(profile.dewdrops)
                 }
