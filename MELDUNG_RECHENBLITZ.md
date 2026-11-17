@@ -4,6 +4,21 @@ Neueste Meldung oben.
 
 > **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67.** **3.25.3: Pro startklar (Shop/Lizenz-Dienst nötig), Datenschutz-Fund, Ukrainisch nur Nova, Git-Bereinigung vorbereitet (Meldung 68).** **3.25.4: Test-Code ✓, Pro eingeschaltet – live erst nach Website-Freigabe af9af9fd (Meldung 69).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
 
+## 17.11.2026 (70) – Store-Text angepasst; Git-Bereinigung: Skript bereit (aus dieser Sitzung gesperrt)
+
+- **Store-Text** (`android-app/store/eintrag-de.txt`):
+  - Vorher: „Kein Konto, keine Werbung, kein Tracking, keine In-App-Käufe.“ und „kostenlos“.
+  - Jetzt: „Kein Konto, keine Werbung, kein Tracking.“ plus „Optional: Rechenblitz Pro für einmalig 7,99 € (inkl. MwSt., kein Abo) – Profi-Stufe, mehr als 2 Profile, Elternbericht und Vorlagen. Alles andere bleibt kostenlos. Freischalten per Code.“; „kostenlos nutzbar“.
+  - Play ruht weiterhin; der Text ist nur vorbereitet.
+- **Git-Bereinigung – Marcel hat es freigegeben, aus dieser Sitzung aber nicht möglich:**
+  - Die bereinigte Geschichte ist erzeugt und geprüft: 3 Branches und 5 Tags (3.25.0–3.25.4), App-Ordner jedes Stands bit-gleich.
+  - Beim Hochladen hat der Netz-Proxy dieser Sitzung das Überschreiben mit **403 (Richtlinie)** abgelehnt. Normale Pushes gehen weiter; das Überschreiben veröffentlichter Geschichte ist hier gesperrt.
+  - **Fertiges Skript:** `tools/git-bereinigung.sh`. Auf einem Rechner mit GitHub-Schreibrecht: `bash tools/git-bereinigung.sh`.
+    - Es holt eine frische Kopie, findet die betroffenen Branches und Tags selbst und entfernt nur die drei Pfade.
+    - **Es bricht ab, falls sich irgendein App-Stand ändern würde.** Hochgeladen wird mit `--force-with-lease`.
+    - Hier bis kurz vor dem Hochladen getestet ✓.
+  - **Danach** müssen alle Kopien (Leitstand, Abholdienst, diese Sitzung) neu geholt werden: `git fetch` + `git reset --hard origin/<branch>`, **kein** `pull`. Sonst kommen die alten Stände zurück.
+
 ## 17.11.2026 (69) – Test-Code geprüft ✓, Pro eingeschaltet (3.25.4)
 
 **Echter Test-Code** („Test-Rechenblitz-Raum-17.11“) in der App geprüft (3.25.3/3.25.4):
