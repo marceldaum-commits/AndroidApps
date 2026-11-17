@@ -2407,4 +2407,6 @@ I18N.add('uk', {"% sind":"% — це",
 "Klasse wirklich verlassen? Dein Eintrag in der Rangliste wird gelöscht.":"Справді вийти з класу? Твій запис у рейтингу буде видалено.",
 "Fehler behoben: Wer früher den Ton ausgeschaltet hatte, bekommt nach dem Update auch keine Musik":"Виправлено: якщо раніше звук було вимкнено, після оновлення музика теж не вмикається",
 "Klassen-Challenge: verständliche Meldung ohne Internet, alle Texte übersetzt":"Класний челендж: зрозуміле повідомлення без інтернету, усі тексти перекладено",
-"Abzeichen-Übersicht besser lesbar":"Огляд значків легше читати"});
+"Abzeichen-Übersicht besser lesbar":"Огляд значків легше читати",
+"Pro-Codes lassen sich jetzt auch auf älteren Handys einlösen":"Коди Pro тепер можна активувати й на старіших телефонах",
+"Ukrainisch liest nur noch die Stimme Nova vor":"Українською тепер читає вголос лише голос Nova"});

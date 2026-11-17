@@ -91,6 +91,7 @@ const Voice = {
       if (seq !== this.seq) return;
       if (await Nova.play(c, I18N.lang, () => seq !== this.seq)) continue;
       if (seq !== this.seq) return;
+      if (I18N.lang === 'uk') continue;   // Ukrainisch nur mit Nova (Gerätestimmen beugen Zahlwörter oft falsch) – sonst lieber still
       await this.device(c);
     }
   },

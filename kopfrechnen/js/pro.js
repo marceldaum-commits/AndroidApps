@@ -35,18 +35,21 @@ function proDecode(code) {
 const proHex = h => new Uint8Array(h.match(/../g).map(x => parseInt(x, 16)));
 const proNorm = code => String(code || '').toUpperCase().replace(/[^0-9A-Z]/g, '').replace(/^RB/, '');
 
+const proNacl = () => window.nacl ? Promise.resolve() : new Promise((ok, no) => { const sc = document.createElement('script'); sc.src = 'js/vendor/nacl.min.js'; sc.onload = ok; sc.onerror = no; document.head.appendChild(sc); });
 /** Prüft die Signatur. Aufbau: [Version, App, Produkt, … weitere Felder] + 64 Byte Ed25519-Signatur über alles davor. */
 async function proVerify(code) {
   const b = proDecode(code);
   if (!b || b.length < 64 + 3) return { ok: false, why: 'format' };
   const msg = b.slice(0, b.length - 64), sig = b.slice(b.length - 64);
   if (msg[0] !== RBPRO.ver || msg[1] !== RBPRO.app) return { ok: false, why: 'app' };
-  if (!(window.crypto && crypto.subtle)) return { ok: false, why: 'crypto' };
-  try {
+  let good;
+  try {   // 1. WebCrypto (neuere Browser)
     const key = await crypto.subtle.importKey('raw', proHex(RBPRO.key), { name: 'Ed25519' }, false, ['verify']);
-    const good = await crypto.subtle.verify({ name: 'Ed25519' }, key, sig, msg);
-    return good ? { ok: msg[2] === RBPRO.product, why: msg[2] === RBPRO.product ? '' : 'product', product: msg[2] } : { ok: false, why: 'sig' };
-  } catch { return { ok: false, why: 'crypto' }; }
+    good = await crypto.subtle.verify({ name: 'Ed25519' }, key, sig, msg);
+  } catch {   // 2. ältere Geräte (z. B. Android-WebView vor Chrome 137): TweetNaCl, wird nur dann nachgeladen
+    try { await proNacl(); good = window.nacl.sign.detached.verify(msg, sig, proHex(RBPRO.key)); } catch { return { ok: false, why: 'crypto' }; }
+  }
+  return good ? { ok: msg[2] === RBPRO.product, why: msg[2] === RBPRO.product ? '' : 'product', product: msg[2] } : { ok: false, why: 'sig' };
 }
 const RBPRO_WHY = {
   format: 'Das sieht nicht wie ein Rechenblitz-Code aus. Bitte genau so eingeben, wie er in der E-Mail steht.',

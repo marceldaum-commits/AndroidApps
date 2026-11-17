@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.25.2';
+const APP_VERSION = '3.25.3';
 const APP_DATE = '2026-11-17';
 const CHANGELOG = [
+  ['3.25.3', '2026-11-17', ['Pro-Codes lassen sich jetzt auch auf älteren Handys einlösen', 'Ukrainisch liest nur noch die Stimme Nova vor']],
   ['3.25.2', '2026-11-17', ['Fehler behoben: Wer früher den Ton ausgeschaltet hatte, bekommt nach dem Update auch keine Musik', 'Klassen-Challenge: verständliche Meldung ohne Internet, alle Texte übersetzt', 'Abzeichen-Übersicht besser lesbar']],
   ['3.25.1', '2026-11-17', ['Neu: alle Nova-Texte offline laden – in den Einstellungen unter Vorlesen, mit Fortschritt und Abbrechen', 'Wahlweise in Bestqualität']],
   ['3.25.0', '2026-11-17', ['Neu: Vorlesen nur noch mit der KI-Stimme „Nova“ – auch Aufgaben und Lösungswege, in der Blitzrunde ohne Wartezeit', 'Sprechtempo in den Einstellungen wählbar – von 0,75× bis 1,5×']],
