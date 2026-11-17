@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.7 – Raumlicht Pro ist da (17.11.2026)
+- **Raumlicht Pro:** Die Vollversion gibt es jetzt – einmalig 7,99 €, kein Abo, kein Ablauf. Gekauft wird im Shop auf mathenachhilfe-online.com (am besten zusammen mit den Eltern); danach kommt eine E-Mail mit Link und Code. Link antippen oder Code in den Einstellungen unter „Raumlicht Pro“ eingeben – fertig. Auf der Startseite steht dann „🎓 Pro aktiv“.
+- **Das bleibt frei:** Kapitel 1 bis 6 komplett, aus jedem weiteren Kapitel die ersten 2 Aufgaben, die Tagesaufgabe, Üben in der Stufe „Einstieg“, die erste Prüfungsaufgabe sowie Kurve abfahren, Flug, Ballerbude, Zufallsmaschine, Galton-Brett und der 3D-Rechner.
+- **Zu Pro gehören:** alle 136 Aufgaben, alle 7 Prüfungsaufgaben (auch auf Zeit), Üben in „Abi“ und „Profi“, Achterbahn-Baumeister, Geisterfahrt, Ringflug, Binomial-Labor, Klausur-Planer, Fehler-Tagebuch und Lernstand. Dein bisheriger Fortschritt bleibt erhalten.
+- **Für Eltern:** Der Code wird nur auf dem Gerät geprüft und gespeichert; beim Freischalten wird nichts übertragen. In der Fassung aus dem Play Store gibt es keinen Kauf – dort bleibt alles frei.
+- **Behoben:** Der Freischalt-Link aus der E-Mail wurde im Browser nicht erkannt, wenn der Code – wie üblich – mit „RL“ begann.
+
 ## 2.18.6 – Nova spricht in der Android-App jetzt wirklich alles (17.11.2026)
 - **Android:** Sätze, die erst in der Aufgabe entstehen (zum Beispiel Rückmeldungen mit deinen Zahlen), hat unser Stimmen-Server von der Android-App bisher abgelehnt – deshalb war dort die Handy-Stimme zu hören oder gar nichts. Die App meldet sich jetzt richtig an, und Nova spricht auch diese Sätze.
 - Im Browser war das schon in Ordnung.

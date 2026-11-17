@@ -3,10 +3,13 @@ package de.raumlicht.core.model
 import org.junit.Assert.*
 import org.junit.Test
 
-/** Regeln für Raumlicht Pro: Was frei bleibt, was dazugehört – und dass im Auslieferungsstand nichts gesperrt ist. */
+/** Regeln für Raumlicht Pro: Was frei bleibt, was dazugehört, welche Codes gelten. */
 class ProTest {
-    /** Solange keine Kasse eingetragen ist, ist nichts gesperrt. Wer die Kasse einträgt, muss im selben Schritt die Texte „keine Käufe“ ändern – dann diesen Test anpassen. */
-    @Test fun ohneKasseIstAllesFrei() { assertEquals("", Pro.CHECKOUT_URL); assertFalse(Pro.ENABLED); assertEquals(64, Pro.PUBLIC_KEY.length) }
+    /** Seit 2.18.7 ist die Kasse eingetragen (Produkt „Raumlicht Pro“ im Shop) – damit sind die Pro-Teile gesperrt, bis ein Code freischaltet. */
+    @Test fun kasseIstEingetragen() {
+        assertTrue(Pro.CHECKOUT_URL.startsWith("https://www.mathenachhilfe-online.com/kasse/")); assertTrue(Pro.ENABLED); assertEquals(64, Pro.PUBLIC_KEY.length)
+        assertEquals("7,99 €", Pro.PRICE); assertEquals("Raumlicht Pro", Pro.NAME)
+    }
 
     // Schlüssel nur für Tests (Seed 0…31) – mit dem echten Schlüssel kann hier niemand Codes erzeugen
     private val pk = "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
@@ -23,6 +26,13 @@ class ProTest {
         assertTrue(Pro.active(License.extract("https://raumlicht.mathenachhilfe-online.com/?pro=" + pass.replace("-", "")), pk))
         assertTrue(Pro.active(pass.lowercase(), pk))
         assertEquals(pass, License.extract(pass.replace("-", " ")))
+    }
+
+    /** Der Link aus der E-Mail: Code ohne Bindestriche, mit Vorsilbe (so verschickt ihn der Shop), ohne Vorsilbe, mit Bindestrichen – und Unsinn fällt durch */
+    @Test fun linkAusDerMail() {
+        val plain = pass.replace("-", "")
+        assertEquals(pass, Pro.fromLink(plain, pk)); assertEquals(pass, Pro.fromLink(plain.removePrefix("RL"), pk)); assertEquals(pass, Pro.fromLink(pass, pk)); assertEquals(pass, Pro.fromLink(plain.lowercase(), pk))
+        assertNull(Pro.fromLink(plain.substring(0, 60) + (if (plain[60] == 'A') 'B' else 'A') + plain.substring(61), pk)); assertNull(Pro.fromLink("", pk)); assertNull(Pro.fromLink("RL12345", pk)); assertNull(Pro.fromLink(plain))
     }
 
     @Test fun falscheCodesFallenDurch() {

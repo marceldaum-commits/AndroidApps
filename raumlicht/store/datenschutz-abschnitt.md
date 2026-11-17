@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.6 vom 17.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.7 vom 17.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -24,7 +24,11 @@ Eine Verbindung ins Internet baut die App nur in diesen Fällen auf:
 Bei den Abrufen für Updates verarbeitet der jeweilige Server technisch notwendige Verbindungsdaten (IP-Adresse, Datum und Uhrzeit, abgerufene Datei,
 Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rechtsgrundlage wie im allgemeinen Abschnitt zu Server-Protokollen eintragen.]*
 
+3. **Raumlicht Pro (freiwilliger Kauf, seit 2.18.7).** Die Vollversion wird nicht in der App, sondern in unserem Shop auf mathenachhilfe-online.com gekauft; dafür gelten die
+   Angaben zum Shop in dieser Datenschutzerklärung. Nach der Zahlung kommt per E-Mail ein Freischalt-Code. Die App prüft den Code selbst auf dem Gerät (digitale Signatur) und speichert ihn nur dort;
+   beim Freischalten wird nichts an uns übertragen. *[Welche Daten der Lizenz-Dienst zu einem Kauf speichert (Code, laufende Nummer, Zeitpunkt, E-Mail) und wie lange, hier eintragen.]*
+   Die Fassung aus dem Google Play Store enthält keinen Kauf.
+
 ## Noch offen (nicht Teil des Textes)
 
-- Sobald der **Abi-Pass** verkauft wird, kommt ein Absatz zu Kauf und Freischalt-Code dazu (siehe `KLAERUNGSLISTE-RECHT.md`, B6/B7).
 - Lehrerzugang und KI-Tutor brauchen eigene Abschnitte, wenn sie kommen.

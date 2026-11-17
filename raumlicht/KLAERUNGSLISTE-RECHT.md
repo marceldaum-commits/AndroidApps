@@ -22,7 +22,11 @@ Sie ist keine Rechtsberatung; Marcel klärt die Punkte mit den zuständigen Stel
 | A13 | **Leistungsdaten und Notengebung** | Dürfen App-Ergebnisse in Noten einfließen? Das entscheidet die Schule; die App sollte dazu nichts versprechen. Mitbestimmung (Personalrat/Schulkonferenz) kann berührt sein. | Schule |
 | A14 | **Spitznamen** | Regeln gegen beleidigende Namen; Lehrkraft kann umbenennen und entfernen. | intern |
 
-## B. Abi-Pass (Bezahlfunktion)
+## B. Raumlicht Pro (früher „Abi-Pass“, Bezahlfunktion)
+
+> **Stand 17.11.2026:** Raumlicht Pro ist seit Version 2.18.7 scharf geschaltet (Kauf im Shop auf mathenachhilfe-online.com, 7,99 €, Freischalt-Code per E-Mail) – auf Marcels Anweisung.
+> Die Punkte dieser Tabelle sind damit **nicht erledigt**, sondern jetzt dringend: Ob sie für den Shop bereits geklärt sind (Widerruf bei digitalen Inhalten, Kauf durch Minderjährige,
+> Preisangaben, Impressum/AGB, Daten des Lizenz-Dienstes), konnte von hier aus niemand prüfen. Keine Rechtsberatung.
 
 | # | Zu klären | Warum / worauf achten | Mit wem |
 |---|---|---|---|
