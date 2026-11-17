@@ -52,7 +52,11 @@ object Radio {
     /** Nach der Denkpause bei SELF */
     fun selfReveal(q: Question) = "Die Antwort ist: ${q.card.back}. Wusstest du es? Ja oder nein?"
 
-    fun praise(n: Int) = listOf("Richtig!", "Super!", "Genau!", "Klasse!", "Stimmt!", "Bravo!")[n.mod(6)]
+    private val PRAISE = listOf("Richtig!", "Super!", "Genau!", "Klasse!", "Stimmt!", "Bravo!")
+    fun praise(n: Int) = PRAISE[n.mod(PRAISE.size)]
+
+    /** Feste Sätze (ohne Platzhalter) – für die Vorab-Vertonung der Stimme Nova */
+    val FIXED: List<String> get() = PRAISE + summary(0, 0)
 
     fun correction(q: Question) = "Fast! Die Antwort ist: ${q.card.back}."
 

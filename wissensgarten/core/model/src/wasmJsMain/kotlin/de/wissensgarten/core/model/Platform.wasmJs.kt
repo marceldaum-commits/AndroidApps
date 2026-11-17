@@ -17,6 +17,9 @@ private external object Pako : JsAny {
 private fun jsNow(): Double = js("Date.now()")
 private fun jsOffsetMin(ms: Double): Int = js("new Date(ms).getTimezoneOffset()")
 private fun level9(): JsAny = js("({ level: 9 })")
+private fun jsNfc(s: String): String = js("s.normalize('NFC')")
+
+actual fun nfc(s: String): String = jsNfc(s)
 
 private fun ByteArray.toU8(): Uint8Array { val a = Uint8Array(size); for (i in indices) a[i] = this[i]; return a }
 private fun Uint8Array.toBytes(): ByteArray { val i8 = Int8Array(buffer, byteOffset, length); return ByteArray(length) { i8[it] } }

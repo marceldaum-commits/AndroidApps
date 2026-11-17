@@ -23,7 +23,7 @@ class DifficultyTest {
     private val plusDir: File? = (System.getenv("WG_PLUS_DIR")?.let(::File) ?: File("../../../website_backup/wissensgarten-plus"))
         .takeIf { it.isDirectory }
     private val packs: List<Pack> = (File("src/main/assets/packs").listFiles { f -> f.extension == "json" }!!.toList() +
-        plusDir?.listFiles { f -> f.extension == "json" && f.name != "versions.json" }.orEmpty())
+        plusDir?.listFiles { f -> f.extension == "json" && f.name != "versions.json" && f.name != "vorlesen-texte.json" }.orEmpty())
         .sortedBy { it.name }.map { PackJson.parse(it.readText()) }
 
     data class StageRow(val stage: Stage, val free: Double, val options: Double, val similar: Double, val guess: Double, val intervalDays: Double)

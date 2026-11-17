@@ -54,7 +54,7 @@ fun TheoryButton(bedId: String, modifier: Modifier = Modifier, onOpen: () -> Uni
 fun TheorySheet(theory: Theory, onClose: () -> Unit) {
     val voice = LocalVoice.current
     val readAloud = LocalReadAloud.current
-    LaunchedEffect(theory) { if (readAloud) voice?.speak(theory.scenes.joinToString(" ") { it.text }, Locale.GERMAN) }
+    LaunchedEffect(theory) { if (readAloud) voice?.speak(de.wissensgarten.core.model.Nova.theorie(theory.scenes), Locale.GERMAN) }
     ModalBottomSheet(onDismissRequest = { voice?.stop(); onClose() }, sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)) {
         LazyColumn(Modifier.fillMaxWidth().padding(horizontal = 18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {

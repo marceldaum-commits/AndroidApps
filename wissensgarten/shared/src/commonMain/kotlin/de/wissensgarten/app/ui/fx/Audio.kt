@@ -64,17 +64,12 @@ interface Voice {
         private val EMOJI = Regex("[\\p{So}\\p{Cs}\\uFE0F\\u200D]")
         fun stripEmoji(s: String) = s.replace(EMOJI, "")
 
-        private val GERMAN_HINT = Regex("\\b(der|die|das|ein|eine|ist|was|wie|welche[rs]?|heißt|und|auf|von|mit|nicht)\\b|[äöüß]", RegexOption.IGNORE_CASE)
-
-        /** Sprache für einen Text: bei Sprach-Fächern Fremdsprache, außer der Text ist erkennbar deutsch. */
-        fun localeFor(subject: String?, text: String): Locale {
-            val foreign = when (subject) {
-                "englisch" -> Locale.ENGLISH
-                "franzoesisch" -> Locale.FRENCH
-                "spanisch" -> Locale("es", "ES")
-                else -> return Locale.GERMAN
-            }
-            return if (GERMAN_HINT.containsMatchIn(text)) Locale.GERMAN else foreign
+        /** Sprache für einen Text: bei Sprach-Fächern Fremdsprache, außer der Text ist erkennbar deutsch (dieselbe Regel wie die Nova-Liste). */
+        fun localeFor(subject: String?, text: String): Locale = when (de.wissensgarten.core.model.Nova.sprache(subject, text)) {
+            "en" -> Locale.ENGLISH
+            "fr" -> Locale.FRENCH
+            "es" -> Locale("es", "ES")
+            else -> Locale.GERMAN
         }
     }
 }

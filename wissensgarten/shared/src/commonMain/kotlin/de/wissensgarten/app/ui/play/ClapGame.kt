@@ -23,9 +23,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 /** Wörter, die sich zum Silben-Klatschen eignen (deutsch, ein Wort, 2–4 Silben). */
-fun clapWords(answers: List<String>): List<String> = answers.map { it.trim() }
-    .filter { w -> w.length in 3..14 && w.all { it.isLetter() } && Syllables.count(w) in 2..4 }
-    .distinct().take(3)
+fun clapWords(answers: List<String>): List<String> = answers.map { it.trim() }.filter(Syllables::isClapWord).distinct().take(3)
 
 /**
  * Silben-Klatschen (Silbenmethode): Brummi spricht das Wort in Silben vor, die Silben leuchten im Takt auf.
@@ -52,7 +50,7 @@ fun ClapBonus(words: List<String>, onDone: (mistakes: Int) -> Unit) {
     // Vormachen: Silbe für Silbe sprechen und leuchten lassen
     LaunchedEffect(word) {
         delay(400)
-        voice?.speak(parts.joinToString(" – "))
+        voice?.speak(Syllables.spoken(word))
         for (i in parts.indices) {
             lit = i + 1
             sfx?.play(Sound.CLAP, volume = 0.6f)
