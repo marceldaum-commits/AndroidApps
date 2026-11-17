@@ -55,7 +55,9 @@
     speak: (texts, urls, speed, onStart, onEnd, onFail) => {
       const mine = ++turn; window.ExNova.stopAudio();
       const t = texts.split('\n'), u = urls.split('\n');
-      const loads = t.map((x, i) => mp3(x, u[i]).catch(() => null));
+      // einmal kurz nachfassen, bevor die Browserstimme einspringt
+      const once = (x, url) => mp3(x, url).catch(() => null);
+      const loads = t.map((x, i) => once(x, u[i]).then((b) => b || new Promise((r) => setTimeout(r, 800)).then(() => once(x, u[i]))));
       (async () => {
         for (let i = 0; i < loads.length; i++) {
           const buf = await loads[i];

@@ -10,6 +10,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
@@ -187,6 +191,13 @@ fun AppRoot(
                     )
                 }
             }
+        }
+        // Einmal je Sitzung ein dezenter Hinweis, wenn Nova nicht erreichbar war
+        var novaHint by remember { mutableStateOf(false) }
+        LaunchedEffect(reader?.novaDown) { if (reader?.novaDown == true) { novaHint = true; kotlinx.coroutines.delay(4500); novaHint = false } }
+        androidx.compose.animation.AnimatedVisibility(novaHint, Modifier.align(Alignment.BottomCenter).padding(16.dp)) {
+            Text("📶 Nova gerade nicht erreichbar – Blubb liest kurz mit der Stimme des Geräts.", color = E.Text, fontSize = 13.sp,
+                modifier = Modifier.clip(RoundedCornerShape(14.dp)).background(E.Panel).border(1.dp, E.Line, RoundedCornerShape(14.dp)).padding(horizontal = 14.dp, vertical = 10.dp).testTag("nova_hinweis"))
         }
         // Neue Abzeichen auf der Startseite feiern (nicht mitten im Versuch)
         if (celebrate.isNotEmpty() && nav.top == Route.Home) NewBadges(celebrate) { state.prefs.badgesSeen = state.prefs.badgesSeen + celebrate.map { it.id }; celebrate = emptyList() }

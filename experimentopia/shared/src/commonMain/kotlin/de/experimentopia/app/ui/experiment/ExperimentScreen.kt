@@ -105,7 +105,7 @@ fun ExperimentScreen(
                         }
                         Phase.PREDICT -> {
                             StoryCard(e, open = true)
-                            BlubbSays("Was glaubst du? Es gibt kein Falsch – Forscher vermuten immer zuerst.", Mood.HAPPY, size = 56.dp)
+                            BlubbSays(de.experimentopia.core.model.Say.PREDICT, Mood.HAPPY, size = 56.dp)
                             Text(e.predict.question, style = MaterialTheme.typography.titleMedium, color = E.Text)
                             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                                 TheoryButton(e.topic, { theory = true }, Modifier.weight(1f, fill = false)); ReadButton(ReadTexts.question(e))
@@ -169,7 +169,7 @@ fun ExperimentScreen(
                             StoryCard(e)
                             var wrong by remember { mutableIntStateOf(-1) }
                             var shakeKey by remember { mutableIntStateOf(0) }
-                            BlubbSays(when { explained -> "Ahhh! Jetzt versteh ich's! Danke, Professor!"; wrong >= 0 -> "Hmm … das glaube ich nicht ganz. Erklär's mir noch mal anders?"; else -> "Ich verstehe das nicht. Kannst du es mir erklären? Warum ist das so?" },
+                            BlubbSays(when { explained -> de.experimentopia.core.model.Say.EXPLAIN_RIGHT; wrong >= 0 -> de.experimentopia.core.model.Say.EXPLAIN_WRONG; else -> de.experimentopia.core.model.Say.EXPLAIN_ASK },
                                 when { explained -> Mood.CHEER; wrong >= 0 -> Mood.OOPS; else -> Mood.THINK })
                             reasons.forEach { (orig, text) ->
                                 ChoiceCard(Choice(text), false, {
@@ -187,7 +187,7 @@ fun ExperimentScreen(
                         }
                         Phase.TRANSFER -> {
                             StoryCard(e)
-                            BlubbSays("Jetzt bist du der Profi. Was passiert hier?", Mood.HAPPY, size = 56.dp)
+                            BlubbSays(de.experimentopia.core.model.Say.TRANSFER, Mood.HAPPY, size = 56.dp)
                             Text(e.transfer.question, style = MaterialTheme.typography.titleMedium, color = E.Text)
                             ReadButton(ReadTexts.transfer(e))
                             e.transfer.choices.forEachIndexed { i, c ->

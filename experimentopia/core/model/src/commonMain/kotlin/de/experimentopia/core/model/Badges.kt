@@ -65,14 +65,22 @@ object Calibration {
     fun rows(entries: List<Pair<Sure, Boolean>>) = Sure.entries.map { s -> val l = entries.filter { it.first == s }; Row(s, l.size, l.count { it.second }) }
 
     /** Ein Satz für das Forscherbuch */
+    /** Alle Tipps (feste Sätze – so werden sie vorab mit Nova vertont) */
+    val ALL = listOf(
+        "Mach noch ein paar Versuche – dann zeigt dir Blubb, wie gut du dich selbst einschätzt.",
+        "Wenn du dir ganz sicher warst, lagst du oft daneben. Spannend! Die Natur überrascht – lieber einmal mehr nachdenken.",
+        "Wenn du dir sicher bist, liegst du meistens richtig. Du kennst dich gut aus!",
+        "Du weißt mehr, als du denkst – beim Raten lagst du oft richtig. Trau dich!",
+        "Du lernst gerade, wie gut deine Vermutungen sind. Weiter so!",
+    )
     fun advice(rows: List<Row>): String {
         val sure = rows.first { it.sure == Sure.SICHER }; val guess = rows.first { it.sure == Sure.UNSICHER }
         return when {
-            sure.total + guess.total < 3 -> "Mach noch ein paar Versuche – dann zeigt dir Blubb, wie gut du dich selbst einschätzt."
-            sure.total >= 3 && sure.rate < 0.5 -> "Wenn du dir ganz sicher warst, lagst du oft daneben. Spannend! Die Natur überrascht – lieber einmal mehr nachdenken."
-            sure.total >= 3 && sure.rate >= 0.8 -> "Wenn du dir sicher bist, liegst du meistens richtig. Du kennst dich gut aus!"
-            guess.total >= 3 && guess.rate >= 0.7 -> "Du weißt mehr, als du denkst – beim Raten lagst du oft richtig. Trau dich!"
-            else -> "Du lernst gerade, wie gut deine Vermutungen sind. Weiter so!"
+            sure.total + guess.total < 3 -> ALL[0]
+            sure.total >= 3 && sure.rate < 0.5 -> ALL[1]
+            sure.total >= 3 && sure.rate >= 0.8 -> ALL[2]
+            guess.total >= 3 && guess.rate >= 0.7 -> ALL[3]
+            else -> ALL[4]
         }
     }
 }

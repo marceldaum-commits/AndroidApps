@@ -1,5 +1,12 @@
 # Changelog – Experimentopia
 
+## 2.4.2 – Klarere Aufgaben, Nova überall (17.11.2026)
+
+- 🔍 **Alle 200 Versuche geprüft**: 72 Stellen klarer oder richtiger formuliert – z. B. fehlende Angaben ergänzt („ohne Reibung“, „verglichen mit 10 cm“),
+  unklare Bezüge („es“, „er“) ersetzt, Geschichten passend zum Labor gemacht, halb richtige Ablenker ausgetauscht und zwei kleine Rechenfehler behoben.
+- 🔊 **Nova liest wirklich alles**: Auch Begrüßung, Insel- und Fach-Einleitungen, Tipps im Forscherbuch und Forscher-Pass-Sätze sind jetzt vorab mit Nova vertont – immer als ganze Sätze.
+- 📶 Ist Nova kurz nicht erreichbar, wartet die App einen Moment und versucht es noch einmal. Erst dann liest die Stimme des Geräts – mit einem kurzen Hinweis.
+
 ## 2.4.1 – Aufgeräumt (17.11.2026)
 
 - 🧹 Letzte Reste der alten Stimme aus dem Programm entfernt – vorgelesen wird nur mit Nova, ohne Internet mit der Stimme des Geräts.

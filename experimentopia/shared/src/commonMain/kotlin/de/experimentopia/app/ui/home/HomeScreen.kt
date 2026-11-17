@@ -102,7 +102,7 @@ fun HomeScreen(
             }
             banner?.invoke()
             if (welcome) Panel(border = E.Mint) {
-                BlubbSays("Hallo! Ich bin Blubb, der neugierigste Kolben der Welt. Auf ${islandCountWord()} Inseln warten Rätsel. Du vermutest, probierst aus – und erklärst mir dann, warum. Falsch vermuten ist hier super: Das sind Aha-Momente!", Mood.CHEER, size = 56.dp)
+                BlubbSays(de.experimentopia.core.model.Say.welcome(), Mood.CHEER, size = 56.dp)
                 GlowButton(onWelcomed, Modifier.fillMaxWidth().testTag("loslegen")) { Text("🚀 Los geht's!", fontWeight = FontWeight.Bold) }
             }
             // Rätsel des Tages
@@ -220,16 +220,7 @@ fun IslandScreen(island: Island, results: Map<String, Int>, grade: Int, locked: 
     }
 }
 
-fun islandIntro(i: Island) = when (i) {
-    Island.WASSER -> "Willkommen auf der Wasserinsel! Hier geht es ums Schwimmen und Sinken – und um ein Geheimnis namens Dichte."
-    Island.KRAFT -> "Auf der Kraftwerk-Insel hebst du Papas, Klaviere und Steine – mit Köpfchen statt Muskeln."
-    Island.STROM -> "Achtung, Blitzinsel! Lampen, Schalter, Magnete. Hier ist alles sicher – zu Hause bitte nie an die Steckdose!"
-    Island.CHEMIE -> "Im Chemie-Vulkan blubbert, zischt und knallt es. Hier darfst du alles mischen – zu Hause nur mit Erwachsenen."
-    Island.WAERME -> "Feuer & Eis: Was schmilzt, was kocht, und warum bleibt das Thermometer manchmal stehen?"
-    Island.LICHTKLANG -> "Auf dieser Insel mischst du Licht, zauberst Regenbögen und spielst Musik mit Wasser."
-    Island.FALL -> "Vom Fallturm bis zum Mond: Was fällt schneller – und warum tickt eine Pendeluhr so gleichmäßig?"
-    Island.BIO -> "Willkommen im Bio-Dschungel! Hier kreuzt du Erbsen wie Mendel, lässt Kartoffeln schrumpfen, jagst Nährstoffe, mikroskopierst Teichwasser, baust Nahrungsketten und hörst dein Herz schlagen."
-}
+fun islandIntro(i: Island) = de.experimentopia.core.model.Say.island(i)
 
-/** Zahl der Inseln als Wort – damit der Begrüßungstext nie veraltet */
-fun islandCountWord() = listOf("null", "einer", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf").getOrElse(Island.entries.size) { "${Island.entries.size}" }
+/** Zahl der Inseln als Wort */
+fun islandCountWord() = de.experimentopia.core.model.Say.islandCountWord()

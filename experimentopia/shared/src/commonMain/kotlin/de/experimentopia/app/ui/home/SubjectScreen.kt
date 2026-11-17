@@ -66,7 +66,7 @@ fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked:
             Bar("${subject.emoji} ${subject.title}", onBack)
             Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 ChipRow(Subject.entries, subject, { "${it.emoji} ${it.title}" }, { subject = it; open = null }, color = subject.color())
-                BlubbSays("Hier lernst du ${subject.title} Schritt für Schritt – in der Reihenfolge wie in der Schule. Wähl deine Klasse, dann zeige ich dir, was für dich dran ist.", Mood.HAPPY, size = 52.dp, speak = false)
+                BlubbSays(de.experimentopia.core.model.Say.subject(subject.title), Mood.HAPPY, size = 52.dp, speak = false)
                 Text("Deine Klasse", color = E.Muted, fontSize = 12.sp)
                 ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "Alle" else "Kl. $it" }, onGrade, Modifier.testTag("klasse"), color = E.Sun)
                 if (topics.isEmpty()) Text("Für diese Klasse gibt es in ${subject.title} noch keine Versuche – probier eine andere Klasse.", color = E.Muted)

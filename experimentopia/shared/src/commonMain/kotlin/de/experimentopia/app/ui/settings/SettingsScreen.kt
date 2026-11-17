@@ -116,9 +116,9 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
         Bar("💛 Forscher-Pass", onBack)
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             de.experimentopia.app.ui.blubb.BlubbSays(when {
-                has -> "Du hast den Forscher-Pass! Alle Inseln und Geräte gehören dir. Danke! 💛"
-                what == "Alles" -> "Mit dem Forscher-Pass öffnest du alle Inseln und Geräte – einmal, ohne Abo."
-                else -> "„$what“ gehört zum Forscher-Pass. Frag deine Eltern!"
+                has -> de.experimentopia.core.model.Say.PRO_HAS
+                what == "Alles" -> de.experimentopia.core.model.Say.PRO_ALL
+                else -> de.experimentopia.core.model.Say.proWhat(what)
             }, if (has) de.experimentopia.app.ui.blubb.Mood.CHEER else de.experimentopia.app.ui.blubb.Mood.HAPPY, speak = false)
             Panel(Modifier.fillMaxWidth(), border = E.Sun) {
                 Text("Das bringt der Forscher-Pass", color = E.Sun, fontWeight = FontWeight.Black)

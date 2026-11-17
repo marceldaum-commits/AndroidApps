@@ -46,9 +46,9 @@ internal object CatalogB {
             quiz("Leuchtet die Lampe mit der Bleistiftmine?", LIGHT, lightIdx(glowsWith(tester, testerStart, 0, Part.BLEISTIFT, 1))),
             CircuitSetup(tester, testerStart, listOf(Part.BLEISTIFT, Part.SALZWASSER, Part.LEITUNGSWASSER, Part.HOLZ), setOf(1), 4.5, CircuitGoal.TEST_ALL),
             "Teste Bleistiftmine, Salzwasser, Leitungswasser und Holz.",
-            "Die Mine leitet! Salzwasser lässt die Lampe schwach glimmen, Leitungswasser kaum.",
+            "Die Mine leitet! Salzwasser lässt die Lampe schwach glimmen, bei Leitungswasser bleibt sie aus.",
             listOf("Die Mine ist aus Graphit, einer Form von Kohlenstoff – Graphit leitet Strom.", "Bleistifte enthalten Blei, und Blei ist ein Metall.", "Schwarze Dinge leiten immer."),
-            "Auch Graphit leitet Strom. Salzwasser leitet etwas, reines Wasser kaum.",
+            "Auch Graphit leitet Strom. Salzwasser leitet etwas, Leitungswasser nur sehr schwach.",
             quiz("Leuchtet die Lampe mit Leitungswasser in der Lücke?", LIGHT, lightIdx(glowsWith(tester, testerStart, 0, Part.LEITUNGSWASSER, 1)),
                 "Leitungswasser leitet viel zu schwach für das Lämpchen. Mit Netzstrom aus der Steckdose ist Wasser trotzdem lebensgefährlich!")),
 
@@ -77,7 +77,7 @@ internal object CatalogB {
             quiz("Wie hell leuchten sie – verglichen mit einem Lämpchen allein?", BRIGHT, brightIdx(brightness(Layout.single(2), slots(Part.LAMPE, Part.LAMPE), 0))),
             CircuitSetup(Layout.single(2), slots(Part.LAMPE, Part.LAMPE), emptyList(), emptySet(), 4.5, CircuitGoal.REMOVE_ONE),
             "Schau, wie hell sie sind. Dann tipp eine Lampe an, um sie herauszudrehen.",
-            "In Reihe sind beide dunkler. Und ohne die eine geht auch die andere aus!",
+            "In Reihe sind beide dunkler als ein Lämpchen allein. Und ohne die eine geht auch die andere aus!",
             listOf("Die Spannung teilt sich auf beide Lampen auf, und es fließt weniger Strom.", "Die zweite Lampe klaut der ersten das Licht.", "Lampen leuchten nur allein richtig."),
             "Reihenschaltung: Ein Weg für den Strom – Lampen teilen sich die Spannung.",
             quiz("Eine Lampe herausdrehen – was macht die andere?", listOf(c("geht aus"), c("leuchtet weiter")),
@@ -137,7 +137,7 @@ internal object CatalogB {
             "Büroklammer, Schere, Konservendose und sogar die 1-Cent-Münze springen an den Magneten. Alu, Kupfer und Gold nicht!",
             listOf("Magnete ziehen Eisen und die meisten Stahlsorten, Nickel und Kobalt an – nicht jedes Metall.", "Magnete ziehen nur Dinge an, die glänzen.", "Schwere Dinge kann der Magnet nicht hochheben."),
             "Magnete ziehen Eisen, Nickel und Kobalt an (manches Edelstahl-Besteck übrigens kaum).",
-            quiz("Wird eine Alu-Getränkedose angezogen?", listOf(c("ja"), c("nein")), if (MagnetItem.ALUDOSE.magnetic) 0 else 1, "Darum kann man Dosen in der Sortieranlage mit Magneten trennen.")),
+            quiz("Wird eine Alu-Getränkedose angezogen?", listOf(c("ja"), c("nein")), if (MagnetItem.ALUDOSE.magnetic) 0 else 1, "Darum trennt die Sortieranlage Stahl-Dosen (Weißblech) mit Magneten von den Alu-Dosen.")),
 
         Experiment("s11", S, "Nord trifft Nord", "🧭", 3..5,
             "Zwei Magnete, beide mit dem roten Nordpol voran.",
@@ -240,7 +240,7 @@ internal object CatalogB {
             "2 Mg + O₂ → 2 MgO – ein gleißend weißer Blitz.",
             listOf("Ein O₂ hat zwei O-Atome, jedes MgO braucht eins – also zwei Mg.", "Magnesium braucht immer gleich viel Sauerstoff wie sich selbst.", "Der Blitz verbraucht Atome."),
             "Atome zählen: links und rechts gleich viele von jeder Sorte.",
-            quiz("Ist das weiße Pulver nachher schwerer als der Magnesiumstreifen vorher?", listOf(c("leichter"), c("schwerer"), c("gleich schwer")), 1,
+            quiz("Ist das weiße Pulver nachher leichter, schwerer oder gleich schwer wie der Magnesiumstreifen vorher?", listOf(c("leichter"), c("schwerer"), c("gleich schwer")), 1,
                 "Sauerstoff aus der Luft wird eingebaut – das Oxid wiegt mehr.")),
 
         Experiment("c9", CH, "Die Gasflamme", "🔵", 8..10,

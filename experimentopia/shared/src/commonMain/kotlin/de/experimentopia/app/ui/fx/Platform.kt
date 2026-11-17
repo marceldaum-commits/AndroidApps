@@ -58,6 +58,8 @@ val LocalMusic = staticCompositionLocalOf<MusicPlayer?> { null }
  */
 interface Reader {
     val speaking: Boolean
+    /** Nova war in dieser Sitzung nicht erreichbar und die Gerätestimme ist eingesprungen (für einen einmaligen Hinweis) */
+    val novaDown: Boolean get() = false
     fun say(text: String)
     fun stop()
     fun configure(p: de.experimentopia.core.model.AudioPrefs)

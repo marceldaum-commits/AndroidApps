@@ -40,7 +40,7 @@ fun JournalScreen(entries: List<NoteRow>, onBack: () -> Unit, start: JournalTab 
             Bar("📒 Forscherbuch", onBack)
             ChipRow(JournalTab.entries, tab, { it.title }, { tab = it }, Modifier.padding(horizontal = 16.dp), color = E.Sun)
             Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                if (entries.isEmpty()) BlubbSays("Dein Forscherbuch ist noch leer. Mach deinen ersten Versuch – ich schreibe alles mit!", Mood.THINK, speak = false)
+                if (entries.isEmpty()) BlubbSays(de.experimentopia.core.model.Say.JOURNAL_EMPTY, Mood.THINK, speak = false)
                 when (tab) {
                     JournalTab.VERSUCHE -> {
                         if (entries.isNotEmpty()) Text("Tipp einen Eintrag an – dann steht dort die ganze Erklärung.", color = E.Muted, fontSize = 13.sp)

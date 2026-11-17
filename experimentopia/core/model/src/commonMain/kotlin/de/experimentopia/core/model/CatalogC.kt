@@ -35,7 +35,7 @@ internal object CatalogC {
 
         Experiment("h3", H, "Tanzende Teilchen", "💨", 5..6,
             "Blubb hat eine Teilchen-Brille! Damit sieht man, was im Eis, im Wasser und im Dampf passiert.",
-            quiz("Was machen die Teilchen, wenn Wasser verdampft?", listOf(c("Sie werden größer"), c("Sie bewegen sich schneller und fliegen auseinander"), c("Sie verschwinden")), 1),
+            quiz("Was machen die Teilchen, wenn Wasser verdampft?", listOf(c("Sie werden größer"), c("Sie lösen sich voneinander und fliegen frei herum"), c("Sie verschwinden")), 1),
             HeatCurveSetup(30.0, -10.0, 800.0, untilSteam = true),
             "Heiz, bis aus Eis Dampf geworden ist.",
             "Im Eis zittern die Teilchen am Platz, im Wasser rutschen sie aneinander vorbei, im Dampf fliegen sie frei.",
@@ -51,7 +51,7 @@ internal object CatalogC {
             "Genau 50 °C – die Mitte!",
             listOf("Das heiße Wasser gibt so viel Wärme ab, wie das kalte aufnimmt – bei gleichen Mengen landet man in der Mitte.", "Temperaturen werden addiert.", "Das heiße Wasser gewinnt immer."),
             "Mischtemperatur: Was das Warme abgibt, nimmt das Kalte auf.",
-            quiz("200 g mit 80 °C und 100 g mit 20 °C?", listOf(c("50 °C"), c("60 °C"), c("70 °C")), nearest(listOf(50.0, 60.0, 70.0), Heat.mixWater(200.0, 80.0, 100.0, 20.0)))),
+            quiz("200 g Wasser mit 80 °C und 100 g Wasser mit 20 °C – wie warm wird die Mischung?", listOf(c("50 °C"), c("60 °C"), c("70 °C")), nearest(listOf(50.0, 60.0, 70.0), Heat.mixWater(200.0, 80.0, 100.0, 20.0)))),
 
         Experiment("h5", H, "Das perfekte Badewasser", "🛁", 6..7,
             "Badewasser soll 37 °C haben. Im Eimer: 100 g kaltes Wasser (15 °C). Aus dem Hahn kommt 60 °C heißes Wasser.",
@@ -60,7 +60,7 @@ internal object CatalogC {
             MixSetup(Stuff.WASSER, 50.0, 60.0, Stuff.WASSER, 100.0, 15.0, adjustA = 10.0, targetC = 37.0),
             "Stell die Menge heißes Wasser ein, bis die Mischung 37 °C hat (±1 °C).",
             "Mit 100 g heißem Wasser sind es 37,5 °C – perfekt!",
-            listOf("Das heiße Wasser kühlt um 23 °C ab, das kalte wärmt sich um 22 °C auf – fast gleiche Mengen.", "Man braucht immer doppelt so viel heißes Wasser.", "Die Mischung ist immer der Mittelwert der Temperaturen."),
+            listOf("Das heiße Wasser kühlt um 23 °C ab, das kalte wärmt sich um 22 °C auf – fast gleiche Mengen.", "Man braucht immer doppelt so viel heißes Wasser.", "Es kommt nur auf die Temperatur an, nicht auf die Menge."),
             "Richmann: m₁·(T₁ − T) = m₂·(T − T₂).",
             quiz("Warum wird das Badewasser mit der Zeit kühler?", listOf(c("Es gibt Wärme an Luft und Wanne ab"), c("Wasser wird von allein kalt"), c("Der Schaum kühlt")), 0)),
 
@@ -170,14 +170,14 @@ internal object CatalogC {
             quiz("Welche Luftsäule gibt den Kammerton a′ (440 Hz)?", listOf(c("etwa 10 cm"), c("etwa 19 cm"), c("etwa 40 cm")), nearest(listOf(0.10, 0.19, 0.40), Klang.airFor(440.0)))),
 
         Experiment("l9", L, "Alle meine Entchen", "🦆", 3..5,
-            "Die Röhren sind gestimmt! Blubb will ein Lied spielen. Die leuchtende Röhre ist dran.",
+            "Die Röhren sind gestimmt! Blubb pustet über die Röhren und will ein Lied spielen. Die leuchtende Röhre ist dran.",
             quiz("Welche Röhre klingt am höchsten?", listOf(c("die mit am meisten Wasser"), c("die mit am wenigsten Wasser")),
                 if (Klang.tubeHz(Klang.TUBE_M - Klang.waterFor(Note.C6.hz)) > Klang.tubeHz(Klang.TUBE_M - Klang.waterFor(Note.C5.hz)) && Klang.waterFor(Note.C6.hz) > Klang.waterFor(Note.C5.hz)) 0 else 1),
             SoundSetup(SoundMode.MELODY, melody = listOf(Note.C5, Note.D5, Note.E5, Note.F5, Note.G5, Note.G5, Note.A5, Note.A5, Note.A5, Note.A5, Note.G5, Note.A5, Note.A5, Note.A5, Note.A5, Note.G5,
                 Note.F5, Note.F5, Note.F5, Note.F5, Note.E5, Note.E5, Note.D5, Note.D5, Note.D5, Note.D5, Note.C5)),
             "Tipp immer die leuchtende Röhre an.",
             "Du hast „Alle meine Entchen“ gespielt!",
-            listOf("Jede Röhre hat eine andere Luftsäule und damit einen eigenen Ton.", "Die Röhren spielen das Lied von allein.", "Die Farbe der Röhre macht den Ton."),
+            listOf("Viel Wasser lässt nur eine kurze Luftsäule übrig – und eine kurze Luftsäule klingt hoch.", "Die Röhren spielen das Lied von allein.", "Die Farbe der Röhre macht den Ton."),
             "Kürzere Luftsäule – höherer Ton.",
             quiz("Aus einer Röhre verdunstet Wasser. Du pustest wieder darüber. Der Ton wird …", HL, 1, "Die Luftsäule wird länger, also tiefer.")),
 
@@ -230,7 +230,7 @@ internal object CatalogC {
 
         Experiment("f4", F, "Schwer gegen leicht", "🔨", 5..7,
             "Ein Hammer (1,3 kg) und ein Tennisball (58 g) aus 2 m Höhe – an der Luft.",
-            quiz("Wer ist zuerst unten?", who("Hammer", "Tennisball"), whoIdx(Fall.winner(Faller.HAMMER, Faller.TENNIS, 2.0, Planet.ERDE))),
+            quiz("Wer ist zuerst unten – oder kommen beide praktisch gleichzeitig an?", who("Hammer", "Tennisball"), whoIdx(Fall.winner(Faller.HAMMER, Faller.TENNIS, 2.0, Planet.ERDE))),
             FallSetup(Faller.HAMMER, Faller.TENNIS, listOf(Planet.ERDE), 2.0),
             "Lass beide fallen und vergleiche die Zeiten.",
             "Praktisch gleichzeitig – der Ball ist nur wenige Tausendstelsekunden langsamer.",
@@ -257,7 +257,7 @@ internal object CatalogC {
             "Erde: 2,0 s, Mond: 5,0 s – 2,46-mal so lang.",
             listOf("t hängt von der Wurzel aus g ab: √(9,81 ÷ 1,62) ≈ √6,06 ≈ 2,46.", "Auf dem Mond gibt es keine Schwerkraft.", "Sechsfach schwächer heißt sechsfach länger."),
             "Fallzeit ∼ 1/√g.",
-            quiz("Auf dem Jupiter (g = 24,8 m/s²)?", listOf(c("schneller unten"), c("langsamer unten")), if (Fall.timeNoAir(20.0, Planet.JUPITER.g) < Fall.timeNoAir(20.0, Planet.ERDE.g)) 0 else 1)),
+            quiz("Und auf dem Jupiter (g = 24,8 m/s²): Ist der Hammer dort schneller oder langsamer unten als auf der Erde?", listOf(c("schneller unten"), c("langsamer unten")), if (Fall.timeNoAir(20.0, Planet.JUPITER.g) < Fall.timeNoAir(20.0, Planet.ERDE.g)) 0 else 1)),
 
         Experiment("f7", F, "Schweres Pendel", "🕰️", 5..7,
             "Zwei Pendel, beide 1 m lang. An einem hängt 100 g, am anderen 1 kg.",
@@ -289,7 +289,7 @@ internal object CatalogC {
             "Bei 99 cm schwingt das Pendel mit 2,00 s.",
             listOf("l = g·(T/2π)² = 9,81 · (2/6,28)² ≈ 0,99 m.", "Ein Meter pro Sekunde.", "Jedes Pendel braucht 2 s."),
             "Aus T = 2π·√(l/g) folgt l = g·(T/2π)².",
-            quiz("Dieselbe Uhr auf dem Mond?", listOf(c("geht schneller"), c("geht langsamer")), if (Pendulum.periodSmall(0.994, Planet.MOND.g) > 2.0) 1 else 0)),
+            quiz("Wie geht dieselbe Pendeluhr auf dem Mond?", listOf(c("geht schneller"), c("geht langsamer")), if (Pendulum.periodSmall(0.994, Planet.MOND.g) > 2.0) 1 else 0)),
     )
 }
 

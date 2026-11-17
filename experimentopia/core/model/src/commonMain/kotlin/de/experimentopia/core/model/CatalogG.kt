@@ -30,7 +30,7 @@ internal object CatalogG {
             "Bei 400-fach passt nur ein kleines Stück vom Floh ins Bild, zum Beispiel das Auge. Die Lupe (10-fach) zeigt den ganzen Floh.",
             listOf("Je stärker die Vergrößerung, desto kleiner der Ausschnitt, den man sieht.", "Das Mikroskop ist kaputt.", "Wasserflöhe schwimmen bei starker Vergrößerung weg."),
             "Mehr Vergrößerung heißt kleineres Sehfeld – man wählt so viel wie nötig, nicht so viel wie möglich.",
-            magQuiz("Welche Vergrößerung ist für den ganzen Wasserfloh am besten?", listOf(10, 100, 400), Microscope.best(Microbe.WASSERFLOH))),
+            magQuiz("Welche ist die kleinste Vergrößerung, bei der man den ganzen Wasserfloh gut erkennt?", listOf(10, 100, 400), Microscope.best(Microbe.WASSERFLOH))),
 
         Experiment("u3", B, "Die Allerkleinsten", "🦠", 7..9,
             "Im Tropfen leben auch Bakterien. Blubb nimmt die stärkste Stufe: 400-fach.",
@@ -53,8 +53,8 @@ internal object CatalogG {
             quiz("Was macht das Augentierchen grün?", listOf(c("Blattgrün (Chlorophyll)"), c("grünes Wasser"), c("grüne Farbe aus dem Teich")), 0)),
 
         Experiment("u5", B, "Die fließende Amöbe", "🧫", 6..8,
-            "Eine Amöbe hat keine feste Form. Ist sie größer oder kleiner als ein Pantoffeltierchen?",
-            quiz("Welche Vergrößerung reicht für die Amöbe?", listOf(c("Lupe (10-fach)"), c("40-fach"), c("nur 400-fach")), listOf(10, 40, 400).indexOf(Microscope.best(Microbe.AMOEBE))),
+            "Eine Amöbe hat keine feste Form – sie fließt wie ein Tropfen Pudding. Blubb will zusehen, wie sie sich bewegt.",
+            quiz("Welche Vergrößerung reicht schon, um die Amöbe gut zu erkennen?", listOf(c("Lupe (10-fach)"), c("40-fach"), c("nur 400-fach")), listOf(10, 40, 400).indexOf(Microscope.best(Microbe.AMOEBE))),
             MicroscopeSetup(listOf(Microbe.AMOEBE, Microbe.PANTOFFEL, Microbe.AUGENTIER), Microbe.AMOEBE),
             "Stell die Amöbe scharf und beobachte, wie sie fließt.",
             "Bei 40-fach sieht man, wie die Amöbe Scheinfüßchen ausstreckt und hinterherfließt. Sie ist etwas größer als ein Pantoffeltierchen (0,3 statt 0,25 mm).",
@@ -134,7 +134,7 @@ internal object CatalogG {
             FoodChainSetup(FoodWeb.longest()),
             "Baue eine Kette mit ${FoodWeb.longest()} Gliedern.",
             "Gras → Heuschrecke → Frosch → Ringelnatter: vier Glieder!",
-            listOf("Auf jeder Stufe geht viel Energie verloren – darum sind Ketten selten länger als 4 oder 5 Glieder.", "Es gibt nicht genug Tiere.", "Lange Ketten sind verboten."),
+            listOf("Auf jeder Stufe geht viel Energie verloren – darum sind Ketten selten länger als 4 oder 5 Glieder.", "Tiere fressen nie andere Tiere.", "Lange Ketten sind verboten."),
             "Nahrungsketten sind meist kurz – und verknüpfen sich zu einem Nahrungsnetz.",
             quiz("Was frisst die Ringelnatter?", listOf(c("vor allem Frösche, manchmal Mäuse"), c("Gras"), c("Füchse")), if (FoodWeb.food(Organism.SCHLANGE) == setOf(Organism.FROSCH, Organism.MAUS)) 0 else 1)),
 

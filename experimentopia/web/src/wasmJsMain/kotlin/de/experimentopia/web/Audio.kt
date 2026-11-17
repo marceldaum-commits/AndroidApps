@@ -60,6 +60,7 @@ class WebReader : Reader {
     private var prefs = AudioPrefs()
     override var speaking by mutableStateOf(false); private set
     override var offline by mutableStateOf(OfflineVoice()); private set
+    override var novaDown by mutableStateOf(false); private set
     private var turn = 0
     private val urls by lazy { Nova.catalog().joinToString("\n") { Nova.url(it) } }
     private val originals by lazy { Nova.catalog().joinToString("\n") { Nova.originalUrl(it) } }
@@ -80,9 +81,10 @@ class WebReader : Reader {
         fun fallback(from: Int) {
             if (mine != turn) return
             val rest = parts.drop(from).joinToString(" ")
+            novaDown = true
             if (canSpeak()) browserSpeak(rest, "", 1.1 * Nova.speed(prefs.rate), 1.0, { }, { if (mine == turn) speaking = false }) else speaking = false
         }
-        if (!audioReady()) { fallback(0); return }
+        if (!userActivated()) { speaking = false; return }   // vor dem ersten Antippen darf der Browser gar keinen Ton abspielen
         novaScript { ok ->
             if (mine != turn) return@novaScript
             if (!ok) { fallback(0); return@novaScript }

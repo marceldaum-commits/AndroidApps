@@ -36,7 +36,7 @@ fun FreeLabScreen(locked: (Lab) -> Boolean, onOpen: (Lab) -> Unit, onBack: () ->
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
             Bar("🔬 Freies Labor", onBack)
             Column(Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                BlubbSays("Hier gibt es keine Aufgaben. Stell eigene Fragen, gib eigene Werte ein und probier aus, was passiert!", Mood.HAPPY, size = 56.dp, speak = false)
+                BlubbSays(de.experimentopia.core.model.Say.FREE_LAB, Mood.HAPPY, size = 56.dp, speak = false)
                 Island.entries.forEach { island ->
                     Text("${island.emoji} ${island.title}", color = island.color.color(), fontWeight = FontWeight.Black)
                     Lab.entries.filter { it.island == island }.chunked(2).forEach { row ->

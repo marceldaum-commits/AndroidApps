@@ -110,7 +110,7 @@ internal object CatalogF {
             "Blubb streut Salz auf Gurkenscheiben. Nach zehn Minuten steht Wasser in der Schüssel.",
             quiz("Woher kommt das Wasser?", listOf(c("aus den Gurken"), c("aus dem Salz"), c("aus der Luft")), 0),
             OsmosisSetup(listOf(0.0, 2.0, 10.0)),
-            "Prüf die Streifen in drei Salzlösungen.",
+            "Im Labor nimmst du Kartoffelstreifen – bei Gurken passiert dasselbe. Prüf die Streifen in drei Salzlösungen.",
             "Je mehr Salz, desto mehr Wasser zieht es aus den Zellen.",
             listOf("Das Salz zieht durch Osmose Wasser aus den Gurkenzellen.", "Salz schmilzt zu Wasser.", "Gurken schwitzen."),
             "Salzen zieht Wasser – darum macht Salz Lebensmittel haltbar.",
@@ -197,8 +197,8 @@ internal object CatalogF {
             quiz("Bei welcher Temperatur arbeitet Amylase am besten?", listOf(c("um 37 °C"), c("um 5 °C"), c("um 80 °C")), nearest(listOf(37.0, 5.0, 80.0), listOf(5.0, 20.0, 37.0, 50.0, 80.0).maxBy { Enzyme.activity(it) }))),
 
         Experiment("e7", B, "Gekochter Speichel", "♨️", 9..10,
-            "Blubb erhitzt den Speichel kurz auf 80 °C und gibt ihn dann zum Stärkebrei.",
-            quiz("Baut er die Stärke noch ab?", listOf(c("ja, sogar schneller"), c("nein, gar nicht mehr")), if (Enzyme.activity(80.0) == 0.0) 1 else 0),
+            "Blubb macht den Spucke-Versuch diesmal nicht bei Körpertemperatur, sondern in heißem Wasser bei 80 °C.",
+            quiz("Baut der Speichel die Stärke bei 80 °C noch ab?", listOf(c("ja, sogar schneller"), c("nein, gar nicht mehr")), if (Enzyme.activity(80.0) == 0.0) 1 else 0),
             EnzymeSetup(listOf(37.0, 80.0)),
             "Vergleiche 37 °C und 80 °C.",
             "Bei 80 °C bleibt alles blau – das Enzym ist zerstört.",
@@ -207,7 +207,7 @@ internal object CatalogF {
             quiz("Was passiert mit Eiklar in der Pfanne?", listOf(c("Es wird fest – das Eiweiß denaturiert"), c("Es verdampft"), c("Es wird flüssiger")), 0)),
 
         Experiment("e8", B, "Ohne Spucke", "🚫", 7..9,
-            "Zum Vergleich: Stärkebrei mit Iod, aber ohne Speichel.",
+            "Zum Vergleich: Stärkebrei mit Iod ist blau-schwarz. Blubb stellt ihn ohne Speichel 20 Minuten lang auf Körpertemperatur (37 °C).",
             quiz("Was passiert mit der blauen Farbe?", listOf(c("verschwindet"), c("bleibt")), if (Enzyme.starchLeft(37.0, 20.0, withSaliva = false) > 0.9) 1 else 0),
             EnzymeSetup(listOf(37.0), saliva = false),
             "Starte den Versuch ohne Speichel.",
@@ -228,7 +228,7 @@ internal object CatalogF {
             quiz("Was ist in den Bläschen?", listOf(c("vor allem Sauerstoff"), c("Kohlenstoffdioxid"), c("Wasserdampf")), 0)),
 
         Experiment("p2", B, "Im Dunkeln", "🌑", 3..8,
-            "Blubb schaltet die Lampe aus.",
+            "Eine Wasserpflanze, die Wasserpest, steht im Glas neben einer Lampe. Im Licht steigen kleine Bläschen auf. Jetzt schaltet Blubb die Lampe aus.",
             quiz("Was macht die Wasserpest?", listOf(c("blubbert weiter"), c("hört auf zu blubbern")), if (Photosynthesis.bubbles(10.0, true, lampOn = false) == 0.0) 1 else 0),
             PhotoSetup(listOf(10.0), darkChoice = true),
             "Miss einmal mit Licht und einmal im Dunkeln.",
@@ -255,7 +255,7 @@ internal object CatalogF {
             "Ein Viertel des Lichts – aber nicht ein Viertel der Bläschen, weil die Pflanze nahe der Lampe schon „satt“ ist.",
             listOf("Das Licht verteilt sich auf die vierfache Fläche: I ∼ 1/d².", "Licht wird auf dem Weg müde.", "Doppelter Weg, halbes Licht."),
             "Lichtstärke ∼ 1 / Abstand².",
-            quiz("Und bei 30 cm?", listOf(c("ein Drittel"), c("ein Neuntel"), c("ein Sechstel")), nearest(listOf(1 / 3.0, 1 / 9.0, 1 / 6.0), Photosynthesis.light(30.0) / Photosynthesis.light(10.0)))),
+            quiz("Und wie viel Licht kommt bei 30 cm an – verglichen mit 10 cm?", listOf(c("ein Drittel"), c("ein Neuntel"), c("ein Sechstel")), nearest(listOf(1 / 3.0, 1 / 9.0, 1 / 6.0), Photosynthesis.light(30.0) / Photosynthesis.light(10.0)))),
 
         Experiment("p5", B, "Hasen und Luchse", "🐇", 7..9,
             "In den Wäldern Kanadas leben Schneeschuhhasen und Luchse, die vor allem diese Hasen jagen.",
@@ -318,7 +318,7 @@ internal object CatalogF {
             "Trenne alle drei Stoffe: Sand, Salz und Wasser.",
             "Filtern hält den Sand zurück. Danach Eindampfen: Das Wasser verdampft, das Salz bleibt.",
             listOf("Sandkörner sind zu groß für das Filterpapier, gelöstes Salz nicht.", "Filterpapier zieht Sand an.", "Sand löst sich im Wasser."),
-            "Filtern trennt Festes von Flüssigem.",
+            "Filtern trennt Ungelöstes (wie Sand) von Flüssigem – Gelöstes läuft mit durch.",
             quiz("Bleibt das Salz im Filter hängen?", listOf(c("nein, es ist gelöst und läuft durch"), c("ja")), if (Component.SALZ in Separation.extract(Method.FILTER, salzwasser.parts)) 1 else 0)),
 
         Experiment("t2", CH, "Salz zurückgewinnen", "🧂", 5..7,
@@ -369,7 +369,7 @@ internal object CatalogF {
             "Schwarz besteht aus Gelb, Rot und Blau! Die Farben wandern verschieden weit.",
             listOf("Jeder Farbstoff haftet verschieden stark am Papier und wandert verschieden weit mit dem Wasser.", "Wasser färbt das Papier bunt.", "Der Filzstift ist kaputt."),
             "Chromatografie trennt Farbstoffgemische.",
-            quiz("Welche Farbe wandert am weitesten?", Dye.entries.map { c(it.title, color = it.color) }, Dye.entries.indices.maxBy { Dye.entries[it].rf })),
+            quiz("Welche Farbe aus Blubbs schwarzem Stift wandert am weitesten?", Dye.entries.map { c(it.title, color = it.color) }, Dye.entries.indices.maxBy { Dye.entries[it].rf })),
     )
 
     val light = listOf(
@@ -386,7 +386,7 @@ internal object CatalogF {
                 listOf("Orange", "Grün", "Blau").indexOf(Painting.name(Painting.mix(mapOf(Paint.GELB to 1, Paint.MAGENTA to 1)))).coerceAtLeast(0))),
 
         Experiment("m2", L, "Alle Farben zusammen", "🟤", 3..5,
-            "Blubb kippt alle drei Malfarben in einen Becher.",
+            "Blubb kippt alle drei Malfarben – Gelb, Blau (Cyan) und Rot (Magenta) – in einen Becher.",
             quiz("Welche Farbe entsteht?", listOf(c("Weiß", color = 0xFFF3EEFF), c("ein matschiges Braun-Grau", color = 0xFF6A6050), c("Regenbogen")),
                 if (Painting.name(Painting.mix(mapOf(Paint.GELB to 1, Paint.CYAN to 1, Paint.MAGENTA to 1))).contains("Grau")) 1 else 0),
             PaintSetup(listOf(Paint.GELB, Paint.CYAN, Paint.MAGENTA), "matschiges Grau-Braun"),
@@ -409,7 +409,7 @@ internal object CatalogF {
                 if (Painting.name(Painting.mix(mapOf(Paint.MAGENTA to 1, Paint.CYAN to 1))).let { it == "Blauviolett" || it == "Violett" }) 0 else 1)),
 
         Experiment("m4", L, "Rosa aus Rot", "🌸", 3..5,
-            "Blubb hat nur Rot und Weiß. Er will Rosa.",
+            "Blubb hat Rot und will daraus ein zartes Rosa mischen.",
             quiz("Was muss er tun?", listOf(c("Weiß zum Rot geben"), c("Blau zum Rot geben"), c("Gelb zum Rot geben")),
                 listOf(Paint.WEISS, Paint.CYAN, Paint.GELB).indexOfFirst { Painting.name(Painting.mix(mapOf(Paint.MAGENTA to 1, it to 1))) == "Rosa" }),
             PaintSetup(listOf(Paint.MAGENTA, Paint.WEISS, Paint.GELB, Paint.CYAN), "Rosa"),

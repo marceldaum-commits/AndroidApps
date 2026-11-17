@@ -56,6 +56,8 @@ fun novaInfo(host: String, urls: String, done: (Double, Double, Double, Int) -> 
 fun novaLoadAll(urls: String, originals: String, progress: (Int, Int) -> Unit, finished: (String) -> Unit): Unit = js("window.ExNova.loadAll(urls, originals, progress, finished)")
 fun novaCancelAll(): Unit = js("{ if (window.ExNova) window.ExNova.cancelAll(); }")
 fun novaClear(done: () -> Unit): Unit = js("window.ExNova.clear(done)")
+/** Hat der Nutzer schon einmal getippt/geklickt? (vorher blockiert der Browser jeden Ton) */
+fun userActivated(): Boolean = js("{ try { return !navigator.userActivation || navigator.userActivation.hasBeenActive; } catch (e) { return true; } }")
 fun pageHost(): String = js("location.host")
 fun novaStop(): Unit = js("{ if (window.ExNova) window.ExNova.stop(); }")
 /** Den Speicher der alten Offline-Stimme (bis 2.1, ca. 63 MB) freigeben */

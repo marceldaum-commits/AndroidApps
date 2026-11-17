@@ -44,6 +44,7 @@ class AndroidReader(ctx: Context) : Reader {
 
     override var speaking by mutableStateOf(false); private set
     override var offline by mutableStateOf(OfflineVoice()); private set
+    override var novaDown by mutableStateOf(false); private set
 
     private val turn = AtomicInteger(0)
     private val fetcher = Executors.newFixedThreadPool(2) { Thread(it, "nova-laden").apply { isDaemon = true } }
@@ -77,6 +78,11 @@ class AndroidReader(ctx: Context) : Reader {
     private fun fetch(part: String): File? {
         val f = file(part)
         if (f.isFile && f.length() > 0) return f
+        // Einmal kurz nachfassen, bevor die Gerätestimme einspringt (Netz wackelt, Server vertont gerade)
+        return fetchOnce(part, f) ?: run { Thread.sleep(800); fetchOnce(part, f) }
+    }
+
+    private fun fetchOnce(part: String, f: File): File? {
         if (download(Nova.url(part), f)) return f
         if (part.length > Nova.MAX) return null
         val url = runCatching {
@@ -136,9 +142,9 @@ class AndroidReader(ctx: Context) : Reader {
                 if (mine != turn.get()) return@execute
                 val f = runCatching { job.get(40, TimeUnit.SECONDS) }.getOrNull()
                 if (mine != turn.get()) return@execute
-                if (f == null || !play(f, mine)) {          // offline oder Datei fehlt: Rest mit der Stimme des Geräts
+                if (f == null || !play(f, mine)) {          // offline oder Server nicht erreichbar: Rest mit der Stimme des Geräts
                     val rest = parts.drop(i).joinToString(" ")
-                    main.post { if (mine == turn.get()) sayDevice(rest) }
+                    main.post { if (mine == turn.get()) { novaDown = true; sayDevice(rest) } }
                     return@execute
                 }
             }

@@ -2,6 +2,31 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.4.2 vom 17.11.2026: fertig für den Betriebstest (Aufgaben geprüft, Nova ganze Sätze)
+
+**1) Aufgaben geprüft: 200 von 200 Versuchen** (je Rätsel, Vermutung mit Auswahl, Laboraufbau, Auftrag, Auflösung, Begründungen, Merksatz, Knobelfrage) –
+automatisch ausgelesen, von vier Prüfdurchgängen fachlich und sprachlich gelesen (mit Nachrechnen), dazu die bestehenden Modelltests (Antworten werden aus
+Physik-/Chemie-/Bio-Modellen berechnet). Keine Zufallsaufgaben in dieser App. **Geändert: 72 Stellen in 61 Versuchen**:
+- Fehlende Angaben ergänzt: k1 (Papa auf Feld 1), k9/k17 (ohne Reibung), k12 (Wippe hat 5 Felder), h4 (Wasser, gesuchte Größe), h9 (Vergleich zu 100 g Eis),
+  h12 (Masse/Wassertemperatur), h13 (0 → 100 °C), c26 (100 mL → 2 L), p4 (verglichen mit 10 cm), e8 (37 °C, 20 min), m2 (welche Farben), f16 (eine Schwingung), w9 (im Wasser).
+- Unklare Bezüge/Fragen: h10, e7, n7 (3×), f6, f9, u2, u5, c8, c25, c19 (Volumen), k4, k13 („statt …“), f4 (praktisch gleichzeitig), t6, s18, h13.
+- Geschichte passend zum Labor: w3 (Kartoffel ist kein Obst), m4, l9 (pusten), o2 (Kartoffel statt Gurke), s17 (Teilspannung nicht messbar), l19 (Werte einstellbar),
+  p2, u5, h14 (−30 °C statt Tiefkühltruhe), n1, w8 (Reihenfolge).
+- Halb richtige Ablenker ersetzt: h5, j2, s13, k19; h7 neu „Was schmilzt als Letztes?“ (Butter/Schoko überlappen), h7-Knobel-Antwort präzisiert.
+- Fachlich präzisiert: h3 (Verdampfen ≠ schneller), h12 (pro Gramm), w16 (Gewichtskraft), t1 (Gelöstes läuft durch), s20 („meist“), s10, s2 (2×), s5, s13, w4,
+  w12/w14 (Einheit g/cm³), l9/l16 (Begründung), c18 (pH 5 genannt), k11.
+- Rechenfehler: l17 (4 · 659 = 2636), l18 (262 · 1,5 ≈ 393), k18 (490 J).
+
+**2) Nova – ganze Sätze, nie ungewollt die Gerätestimme**
+- Jeder Text wird an Satzgrenzen geteilt, jedes Stück ist ein ganzer Satz (≤ 300 Zeichen, geprüft: kein Satz zerstückelt). Nichts wird aus Schnipseln zusammengesetzt.
+- **Alle** Oberflächen-Sätze (Begrüßung, 8 Insel-, 3 Fach-Einleitungen, Erklär-Reaktionen, Forscherbuch-Tipps, Forscher-Pass-Sätze inkl. jedes Versuchs-/Gerätenamens,
+  Theorie-Einleitungen) stehen jetzt in texte.json → **2579 Sätze** (vorher 2301), 213 119 Zeichen. Ein Test verhindert, dass ein Bildschirm eigene Vorlesetexte baut.
+- Ursachen für die Gerätestimme behoben: (a) Web prüfte vor dem Abspielen den AudioContext – der war kurz nach dem Antippen oft noch nicht „running“ → Browserstimme;
+  jetzt nur noch „hat der Nutzer schon getippt?“. (b) Oberflächen-Sätze lagen nicht vorab vor → /jetzt; jetzt alle vorab. (c) Ein einzelner Netz-Aussetzer führte sofort zur
+  Gerätestimme; jetzt ein zweiter Versuch nach 0,8 s. Gerätestimme nur, wenn Nova auch dann nicht kommt – mit einmaligem Hinweis „Nova gerade nicht erreichbar“.
+  (Marcels Handy lief außerdem noch auf einer alten Version vor Nova.)
+- **Nova-Abdeckung**: siehe Nachtrag unten, sobald das Stimmen-Werk die neuen Sätze gesprochen hat.
+
 ## 17.11.2026 – Version 2.4.1 vom 17.11.2026: fertig für den Betriebstest (Musik + nur Nova)
 
 1) **Musik** (seit 2.4.0): Android (native App, kein WebView) startet die Musik sofort beim Öffnen – folgt nur der Medien-Lautstärke, nicht mehr dem

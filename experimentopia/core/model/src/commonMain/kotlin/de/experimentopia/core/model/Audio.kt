@@ -55,12 +55,12 @@ object ReadTexts {
     }
     /** Feste Sätze der Oberfläche, die Blubb sagt */
     val ui = listOf(
-        "Was glaubst du? Es gibt kein Falsch – Forscher vermuten immer zuerst.",
+        Say.PREDICT,
         "Hallo, ich bin Blubb! Wasser hat die Formel H₂O, und auf der Erde fällt alles mit 9,81 m/s².",
     )
 
     /** Alle festen Texte (Liste für den Stimmen-Server, siehe [Nova.catalog]) */
     fun all(): List<String> = Catalog.all.flatMap { e ->
         listOfNotNull(story(e), question(e), task(e), revealSay(e, true), revealSay(e, false), why(e), fact(e), transfer(e), safety(e.id)) + e.why
-    } + Topic.entries.flatMap { listOf(theory(it, false), theory(it, true)) } + Island.entries.map { it.title } + ui
+    } + Topic.entries.flatMap { listOf(theory(it, false), theory(it, true)) } + Island.entries.map { it.title } + ui + Say.all()
 }

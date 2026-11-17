@@ -38,7 +38,7 @@ internal object CatalogA {
             quiz("Und ein Eiswürfel?", SWIM, swimIdx(Buoyancy.state(Thing.EIS, Liquid.WASSER)), "Eis ist weniger dicht als Wasser.")),
 
         Experiment("w3", W, "Obst-Bad", "🍎", 3..4,
-            "Obstsalat im Wasserbecken! Blubb fragt sich: Welches Obst kann schwimmen?",
+            "Obst und eine Kartoffel im Wasserbecken! Blubb fragt sich: Was davon kann schwimmen?",
             quiz("Was davon schwimmt?", listOf(c("Apfel", "🍎"), c("Weintraube", "🍇"), c("Kartoffel", "🥔")),
                 listOf(Thing.APFEL, Thing.TRAUBE, Thing.KARTOFFEL).indexOfFirst { Buoyancy.state(it, Liquid.WASSER) == FloatState.SCHWIMMT }),
             FloatSetup(listOf(Liquid.WASSER), listOf(Thing.APFEL, Thing.TRAUBE, Thing.KARTOFFEL, Thing.ORANGE)),
@@ -57,7 +57,7 @@ internal object CatalogA {
             "Mit Schale schwimmt sie – ohne Schale geht sie unter!",
             listOf("Die Schale ist voller Luftbläschen – eine eingebaute Schwimmweste.", "Die Schale ist schwer und zieht nach oben.", "Geschältes Obst saugt sich mit Wasser voll."),
             "Die Schale wirkt wie eine Schwimmweste: Luft macht die Orange insgesamt weniger dicht.",
-            quiz("Warum hält dich eine Schwimmweste über Wasser?", listOf(c("Die Luft darin macht mich im Mittel weniger dicht"), c("Sie ist schwer und hält mich fest"), c("Sie macht das Wasser dichter")), 0)),
+            quiz("Warum hält dich eine Schwimmweste über Wasser?", listOf(c("Die Luft darin macht mich mit Weste im Mittel weniger dicht"), c("Sie ist schwer und hält mich fest"), c("Sie macht das Wasser dichter")), 0)),
 
         Experiment("w5", W, "Das Ei-Wunder", "🥚", 4..6,
             "Ein frisches Ei sinkt im Wasser. Blubb rührt viel Salz in ein zweites Becken …",
@@ -96,7 +96,7 @@ internal object CatalogA {
             quiz("Welche Flüssigkeit landet ganz oben?", listOf(c("Honig", "🍯"), c("Wasser", "💧"), c("Speiseöl", "🌻"), c("Spiritus", "🔥")),
                 listOf(Liquid.HONIG, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS).indexOf(DensityTower.top(listOf(Liquid.HONIG, Liquid.SPUELI, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS)).liquids.single())),
             TowerSetup(listOf(Liquid.HONIG, Liquid.SPUELI, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS)),
-            "Gieß alle fünf Flüssigkeiten ins Glas – in beliebiger Reihenfolge.",
+            "Gieß alle fünf Flüssigkeiten vorsichtig nacheinander ins Glas.",
             "Vorsichtig eingegossen gilt: Unten Honig, oben Spiritus – die dichteste Flüssigkeit liegt unten.",
             listOf("Die dichteste Flüssigkeit sinkt nach unten, die am wenigsten dichte steigt nach oben.", "Was zuerst eingefüllt wird, bleibt unten.", "Bunte Flüssigkeiten mischen sich nie."),
             "Vorsichtig eingegossen, schichten sich Flüssigkeiten nach ihrer Dichte – die dichteste unten.",
@@ -108,7 +108,7 @@ internal object CatalogA {
             quiz("Holz (0,55 g/cm³) schwimmt. Wie viel liegt unter Wasser?", listOf(c("etwa ein Viertel"), c("etwa die Hälfte"), c("etwa drei Viertel")),
                 nearest(listOf(0.25, 0.5, 0.75), Buoyancy.submerged(Thing.HOLZ.rho, Liquid.WASSER.rho))),
             FloatSetup(listOf(Liquid.WASSER, Liquid.SALZWASSER), listOf(Thing.HOLZ, Thing.EIS, Thing.APFEL, Thing.KORK)),
-            "Lass die Dinge schwimmen und lies ab, wie viel Prozent eintauchen.",
+            "Lass die Dinge im Wasser schwimmen und lies ab, wie viel Prozent eintauchen.",
             "Holz taucht zu 55 % ein, Eis zu 92 %, Kork nur zu 24 %.",
             listOf("Der eingetauchte Anteil ist Dichte des Körpers geteilt durch Dichte der Flüssigkeit.", "Alles taucht immer zur Hälfte ein.", "Schwere Dinge tauchen weniger tief ein."),
             "Schwimmt ein Körper, verdrängt er genau so viel Flüssigkeit, wie er selbst wiegt.",
@@ -123,7 +123,7 @@ internal object CatalogA {
 
     val force = listOf(
         Experiment("k1", K, "Kind gegen Papa", "👧", 3..4,
-            "Papa (80 kg) setzt sich auf die Wippe, ganz nah an die Mitte. Mia (30 kg) setzt sich weit nach außen (Feld 4).",
+            "Papa (80 kg) setzt sich auf die Wippe, ganz nah an die Mitte (Feld 1). Mia (30 kg) setzt sich weit nach außen (Feld 4).",
             quiz("Welche Seite der Wippe geht runter?", PAPA_MIA, tiltIdx(listOf(l(80.0, -1, "👨", "Papa"), l(30.0, 4, "👧", "Mia")))),
             LeverSetup(listOf(l(80.0, -1, "👨", "Papa 80 kg"), l(30.0, 4, "👧", "Mia 30 kg")), emptyList(), LeverGoal.RELEASE),
             "Lass die Wippe los.",
@@ -161,7 +161,7 @@ internal object CatalogA {
             "Links 3·4 + 2·1 = 14, rechts 7·2 = 14.",
             listOf("Alle Drehwirkungen einer Seite werden addiert: 12 + 2 = 14.", "Man zählt nur das schwerste Gewicht.", "Man addiert die Felder: 4 + 1 = 5."),
             "Mehrere Gewichte auf einer Seite: Masse × Abstand addieren.",
-            quiz("Welches Gewicht passt rechts auf Feld 1?", listOf(c("7 kg"), c("14 kg"), c("21 kg")), nearest(listOf(7.0, 14.0, 21.0), Lever.leftTorque(listOf(Load(3.0, -4), Load(2.0, -1))) / 1))),
+            quiz("Statt der 7 kg: Welches Gewicht passt rechts auf Feld 1?", listOf(c("7 kg"), c("14 kg"), c("21 kg")), nearest(listOf(7.0, 14.0, 21.0), Lever.leftTorque(listOf(Load(3.0, -4), Load(2.0, -1))) / 1))),
 
         Experiment("k5", K, "Der Hebel-Trick", "🌑", 6..8,
             "Ein Stein (60 kg) liegt ein Feld neben dem Drehpunkt einer Brechstange. Du drückst ganz außen auf Feld 5.",
@@ -206,7 +206,7 @@ internal object CatalogA {
             quiz("Mit 4 Seilen 3 m hoch heben: Wie viel Seil ziehst du?", listOf(c("3 m"), c("7 m"), c("12 m")), nearest(listOf(3.0, 7.0, 12.0), Pulley.ropeM(3.0, 4)))),
 
         Experiment("k9", K, "Die schiefe Ebene", "📐", 7..8,
-            "Ein Fass (50 kg) soll auf einen 1 m hohen Wagen. Es gibt eine kurze (2 m) und eine lange Rampe (4 m).",
+            "Ein Fass (50 kg) soll auf einen 1 m hohen Wagen. Es gibt eine kurze (2 m) und eine lange Rampe (4 m), beide ohne Reibung.",
             quiz("Wo brauchst du weniger Kraft?", listOf(c("kurze Rampe"), c("lange Rampe"), c("gleich")),
                 if (Ramp.forceN(50.0, 1.0, 4.0) < Ramp.forceN(50.0, 1.0, 2.0)) 1 else 0),
             RampSetup(50.0, 1.0, listOf(2.0, 4.0)),
@@ -217,7 +217,7 @@ internal object CatalogA {
             quiz("Wie groß ist die Kraft auf der 4-m-Rampe?", listOf(c("123 N"), c("245 N"), c("491 N")), nearest(listOf(123.0, 245.0, 491.0), Ramp.forceN(50.0, 1.0, 4.0)))),
 
         Experiment("n1", K, "Skateboard-Schubs", "🛹", 5..7,
-            "Zwei gleich schwere Kinder stehen auf Skateboards und schubsen sich gegenseitig weg.",
+            "Zwei gleich schwere Kinder stehen auf Skateboards. Das eine schubst das andere kräftig weg.",
             quiz("Wer rollt schneller weg?", listOf(c("das Kind, das schubst"), c("das geschubste Kind"), c("beide gleich schnell", "🤝")),
                 Newton.pushSpeeds(30.0, 30.0).let { (a, b) -> if (Fmt.close(a, b, 1e-9)) 2 else if (a > b) 0 else 1 }),
             NewtonSetup(NewtonMode.PUSH, pairs = listOf(30.0 to 30.0)),
