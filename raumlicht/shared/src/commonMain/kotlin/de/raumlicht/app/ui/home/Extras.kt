@@ -150,7 +150,9 @@ fun BadgesScreen(badges: List<Badge>, onBack: () -> Unit) {
                     .border(1.5.dp, if (b.earned) Q.Yellow else Q.Muted.copy(alpha = 0.4f), RoundedCornerShape(18.dp)).padding(12.dp).height(112.dp),
                     horizontalAlignment = Alignment.CenterHorizontally) {
                     Text(if (b.earned) b.emoji else "🔒", fontSize = 32.sp)
-                    Text(b.title, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                    // ein einzelnes langes Wort („Präzisionsarbeit“) wird kleiner statt mitten im Wort umzubrechen
+                    if (' ' in b.title) Text(b.title, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+                    else de.raumlicht.app.ui.fx.FitText(b.title, Modifier.fillMaxWidth(), fontSize = 16.sp, min = 10f, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
                     Text(b.text, color = Q.Muted, fontSize = 11.sp, lineHeight = 13.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
                 }
             }
@@ -176,7 +178,7 @@ private fun Tile(emoji: String, title: String, sub: String, color: androidx.comp
         .border(if (highlight) 2.dp else 1.dp, color.copy(alpha = if (highlight) 1f else 0.4f), RoundedCornerShape(16.dp)).clickable(interaction, null, onClick = onClick).padding(vertical = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally) {
         Text(emoji, fontSize = 22.sp)
-        Text(title, fontWeight = FontWeight.Bold, color = Q.Text, fontSize = 12.sp, maxLines = 1)
-        Text(sub, color = if (highlight) color else Q.Muted, fontSize = 10.sp, maxLines = 1)
+        de.raumlicht.app.ui.fx.FitText(title, Modifier.padding(horizontal = 3.dp), fontWeight = FontWeight.Bold, color = Q.Text, fontSize = 12.sp)
+        de.raumlicht.app.ui.fx.FitText(sub, Modifier.padding(horizontal = 3.dp), color = if (highlight) color else Q.Muted, fontSize = 10.sp, min = 7f)
     }
 }

@@ -272,11 +272,12 @@ fun Stepper(label: String?, value: Int, text: String, color: Color, tag: String,
     Row(modifier.height(46.dp).background(Q.Deep, RoundedCornerShape(14.dp)).border(1.dp, color.copy(alpha = 0.5f), RoundedCornerShape(14.dp)), verticalAlignment = Alignment.CenterVertically) {
         StepButton("−", color, canDown, "minus-$tag", "${label ?: "Wert"} kleiner") { onStep(-1) }
         Column(Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally) {
-            if (label != null) Text(label, fontSize = 10.sp, color = Q.Muted, lineHeight = 10.sp)
+            if (label != null) de.raumlicht.app.ui.fx.FitText(label, fontSize = 10.sp, min = 7f, color = Q.Muted, style = androidx.compose.material3.LocalTextStyle.current.copy(lineHeight = 10.sp))
             // Blättert zwischen den fertig beschrifteten Werten (z. B. „20 %“ → „30 %“) – nie über den internen Zählwert
             AnimatedContent(value to text, transitionSpec = { (slideInVertically { if (targetState.first > initialState.first) it else -it } + fadeIn()) togetherWith fadeOut() },
                 contentKey = { it.first }, label = "wert") {
-                Text(it.second, fontSize = 19.sp, fontWeight = FontWeight.Black, color = color, lineHeight = 20.sp)
+                // auf schmalen Handys wird ein langer Wert („50 % rechts“) kleiner statt umzubrechen
+                de.raumlicht.app.ui.fx.FitText(it.second, fontSize = 19.sp, min = 11f, fontWeight = FontWeight.Black, color = color, style = androidx.compose.material3.LocalTextStyle.current.copy(lineHeight = 20.sp))
             }
         }
         StepButton("+", color, canUp, "plus-$tag", "${label ?: "Wert"} größer") { onStep(1) }

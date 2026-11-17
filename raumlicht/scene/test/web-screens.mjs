@@ -1,5 +1,5 @@
 // Öffnet jeden Bildschirm der gebauten WebApp über den Direkt-Link ?ziel=… und prüft: keine Konsolenfehler, keine Ausnahme, die Oberfläche zeichnet etwas (kein leeres/weißes Bild).
-// node test/web-screens.mjs <url> <outDir>
+// node test/web-screens.mjs <url> <outDir>          (RL_VIEWS="klein:320x640,ipad:820x1180" prüft jeden Bildschirm in diesen Größen)
 import { createRequire } from 'module'; const { chromium } = createRequire(import.meta.url)('playwright');
 import { inflateSync } from 'zlib';
 // Anteil weißer Bildpunkte und Zahl verschiedener Farben eines PNG (8 Bit RGB/RGBA, ohne Zeilensprung) – ohne fremde Bibliothek
@@ -22,9 +22,11 @@ const routes = ['start', 'einstellungen', 'abi-pass', 'tagesaufgabe', 'jam', 'ja
   'achterbahn/huegel', 'achterbahn/ln', 'achterbahn/ebuckel', 'level/1-1', 'level/5-3', 'level/9-5', 'level/12-3', 'level/13-2', 'level/14-4', 'level/16-3', 'level/17-5', 'level/20-4', 'level/22-3', 'level/23-5', 'level/24-2', 'level/25-7', 'gibt-es-nicht'];
 const browser = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
 const problems = []; let n = 0;
-for (const [name, vp] of [['handy', { width: 400, height: 860 }], ['pc', { width: 1280, height: 800 }]]) {
+// Eigene Bildschirmgrößen für die gründliche Prüfung: RL_VIEWS="klein:320x640,ipad:820x1180" – dann jeder Bildschirm in jeder Größe
+const own = (process.env.RL_VIEWS || '').split(',').filter(Boolean).map((v) => { const [name, size] = v.split(':'); const [w, h] = size.split('x').map(Number); return [name, { width: w, height: h }]; });
+for (const [name, vp] of own.length ? own : [['handy', { width: 400, height: 860 }], ['pc', { width: 1280, height: 800 }]]) {
   for (const r of routes) {
-    if (name === 'pc' && n % 3 !== 0) { n++; continue; } n++;   // am PC jede dritte: der Aufbau ist derselbe, nur breiter
+    if (!own.length && name === 'pc' && n % 3 !== 0) { n++; continue; } n++;   // am PC jede dritte: der Aufbau ist derselbe, nur breiter
     const page = await browser.newPage({ viewport: vp, deviceScaleFactor: 1 }); const errs = [];
     page.on('console', (m) => { if (m.type() === 'error') errs.push(m.text()); }); page.on('pageerror', (e) => errs.push(e.message));
     await page.goto(url + '?ziel=' + encodeURIComponent(r));

@@ -57,7 +57,7 @@ import kotlinx.coroutines.launch
 fun Bar(title: String, onBack: () -> Unit, trailing: @Composable RowScope.() -> Unit = {}) {
     Row(Modifier.fillMaxWidth().padding(end = 14.dp), verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onBack) { BackArrow() }
-        Text(title, Modifier.weight(1f), style = MaterialTheme.typography.titleLarge, maxLines = 1)
+        de.raumlicht.app.ui.fx.FitText(title, Modifier.weight(1f), fontSize = MaterialTheme.typography.titleLarge.fontSize, min = 14f, style = MaterialTheme.typography.titleLarge)
         trailing()
     }
 }
