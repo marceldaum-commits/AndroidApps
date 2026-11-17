@@ -3,6 +3,18 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.0.0 – Brummi singt und liest vor (17.11.2026)
+- **Eigene Garten-Musik:** Jede Jahreszeit klingt anders. Im Frühling spielen Marimba und Glockenspiel mit Vogelgezwitscher, im Sommer Kalimba und Gitarre mit Brummis Summen, im Herbst Gitarre mit Wind und Regentropfen, im Winter Glockenspiel und Spieluhr. Abends gibt es ein Schlaflied mit Grillen.
+- **Damit die Musik nie nervt:** Nach jeder Melodie kommt eine kleine Atempause nur mit Naturgeräuschen. Die Musik startet erst, wenn man den Bildschirm berührt, und schweigt, wenn das Handy auf lautlos steht.
+- **Neue Klänge** für Gießen, Wachsen (wird mit jeder Pflanzen-Stufe höher), Ernte und neue Gartenfreunde. Dazu eine eigene kleine Erkennungsmelodie. Falsche Antworten klingen sanft und leise.
+- **Zwei Lautstärke-Regler:** Musik und Geräusche lassen sich getrennt einstellen.
+- **Vorlesen für alle:** Brummi liest Fragen, Antworten und Erklärungen vor. Antippen von Brummi liest seinen Satz vor.
+- **Stimme wählen:** die Stimme des Geräts oder **„Thorsten“**, eine natürlich klingende deutsche Stimme. Thorsten wird nur auf Wunsch einmal geladen (63 MB) und rechnet danach ganz auf dem Gerät – kein Text verlässt das Gerät. Dazu gibt es das Tempo (🐢 bis 🐇) und eine Probe-Taste.
+- Englisch, Französisch und Spanisch liest immer eine Stimme in der passenden Sprache.
+- Alle Klänge und die Musik sind selbst komponiert und entstehen im Gerät. App und WebApp klingen gleich.
+- **Neue Versionsnummer:** Der Wissensgarten zählt jetzt ab 2.0.0. Kleine Updates erhöhen nur die Zahlen hinten.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 0.27.0 – Brummi erklärt (17.11.2026)
 - **Neuer Knopf „📖 Theorie“ bei jeder Übung:** Wenn eine Frage schwer ist, erklärt Brummi das Thema noch einmal in Ruhe – mit Bildern und auf Wunsch vorgelesen. Danach geht es genau dort weiter, wo du warst.
 - Während die Erklärung offen ist, läuft nichts weiter – kein Zeitdruck, kein Frust.

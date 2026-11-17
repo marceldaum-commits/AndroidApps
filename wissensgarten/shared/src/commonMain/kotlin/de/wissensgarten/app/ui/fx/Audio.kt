@@ -1,6 +1,7 @@
 package de.wissensgarten.app.ui.fx
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import kotlinx.coroutines.flow.StateFlow
 import de.wissensgarten.app.AppHost
 import de.wissensgarten.core.model.MusicMood
 
@@ -18,6 +19,8 @@ data class Locale(val tag: String) {
 /** Kurze Geräusche (im Code erzeugt, siehe [Synth]). */
 interface Sfx {
     var enabled: Boolean
+    /** Lautstärke aller Geräusche 0..1 (Einstellung „Geräusche“), wird mit dem `volume` jedes Aufrufs verrechnet */
+    var level: Float
     /** @param pitch 1 = normal, >1 höher (z. B. bei Serien) */
     fun play(s: Sound, pitch: Float = 1f, volume: Float = 0.9f)
 }
@@ -29,9 +32,16 @@ interface Music {
     fun onForeground(on: Boolean)
     fun duck(on: Boolean)
     fun prepare(vararg moods: MusicMood)
+    /** Lautstärke 0..1 (Einstellung „Musik“) */
+    fun setVolume(v: Float)
+    /** Erste Berührung: erst ab jetzt darf Musik erklingen (nie ungefragt beim Start) */
+    fun unlock()
 }
 
-/** Brummis Stimme (Sprachausgabe des Geräts bzw. des Browsers). */
+/**
+ * Brummis Stimme: Sprachausgabe des Geräts bzw. des Browsers – oder die natürliche Stimme „Thorsten“ ([natural]),
+ * die auf dem Gerät rechnet. Thorsten liest nur Deutsch; Englisch, Französisch und Spanisch liest immer eine Gerätestimme der Sprache.
+ */
 interface Voice {
     /** Wird aufgerufen, wenn Brummi anfängt / aufhört zu sprechen (Musik leiser stellen). */
     var onSpeaking: (Boolean) -> Unit
@@ -40,6 +50,15 @@ interface Voice {
     fun stop()
     /** Sprechen und warten, bis Brummi fertig ist (für Brummi-Radio). */
     suspend fun speakAndWait(text: String, locale: Locale = Locale.GERMAN)
+
+    /** Deutsche Stimmen des Geräts bzw. Browsers zur Auswahl (nur solche, die ohne Internet sprechen) */
+    val voices: StateFlow<List<VoiceOption>> get() = NO_VOICES
+    /** Gewählte Stimme: "" = Standard, [de.wissensgarten.core.data.VOICE_THORSTEN] = Thorsten, sonst [VoiceOption.id] */
+    fun setVoice(name: String) {}
+    /** Sprechtempo in Prozent (50…150) */
+    fun setRate(percent: Int) {}
+    /** Stimm-Paket „Thorsten“; null = gibt es auf dieser Plattform nicht */
+    val natural: NaturalVoicePack? get() = null
 
     companion object {
         private val EMOJI = Regex("[\\p{So}\\p{Cs}\\uFE0F\\u200D]")

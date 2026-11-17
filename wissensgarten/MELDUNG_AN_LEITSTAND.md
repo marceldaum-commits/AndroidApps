@@ -1,5 +1,45 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Musik, Vorlesen, Versionsschema (Version 2.0.0 vom 17.11.2026) – Web = Android
+
+**Versionsschema:** neu ab **2.0.0**. Der versionCode läuft weiter (44 → 45). App, WebApp und `version.json` zeigen 2.0.0.
+
+**Klang-Identität Wissensgarten**
+- **Entstehung:** Alles ist im Code komponiert und erzeugt (`core/model/Music.kt` Komponist, `shared/ui/fx/MusicSynth.kt` und `Synth.kt` Klangerzeugung). Es gibt keine fremden Samples, keine Dateien und keine Lizenzen. Android und Web nutzen denselben Kotlin-Code, deshalb klingt beides gleich.
+- **Instrumente:** Marimba (Holz-Obertöne ×3,93 und ×9,2), Glockenspiel, Kalimba, Nylon-Gitarre, Spieluhr. **Natur:** Vögel, Grillen, Wind, Wassertropfen, Brummis Summen. Gesang gibt es nicht.
+- **Jede Jahreszeit eigen:**
+  - Frühling: Marimba und Glockenspiel, Vögel und Tropfen
+  - Sommer: Kalimba mit Gitarren-Zupfmuster, Summen
+  - Herbst: Gitarre und Marimba, Wind und Regen
+  - Winter: Glockenspiel und Spieluhr, leiser Wind
+  - Dazu Schlaflied mit Grillen, Gieß-Runde (ohne Natur) und die Feste.
+- **Nicht nervig:**
+  - Form A A' B A C A: Teil C spielt ein zweites Instrument, danach folgt eine 6–8 Takte lange Atempause nur mit Natur und Teppich.
+  - Ein Stück dauert 53–109 s und wiederholt sich nahtlos.
+  - Messung: Anteil über 4 kHz unter 1,4 %, nichts Schrilles.
+- **Effekte:** gießen, wachsen (Tonhöhe steigt mit der Stufe), richtig (Marimba und Glockenspiel), falsch (sanft und tief), welken (leiser Seufzer, einmal pro Start), Ernte (Baum ausgewachsen, Kreuzung), Sammelfigur, Erkennungsmelodie „Wis-sens-gar-ten“.
+- **Bedienung und Respekt:**
+  - Musik und Geräusche getrennt schaltbar, mit eigenen Lautstärken (Standard 45 % bzw. 65 %).
+  - Nichts startet vor der ersten Berührung; im Browser zählt bloßes Darüberfahren nicht.
+  - Android folgt Lautlos und Vibration, auch beim Umschalten während des Spielens.
+  - Leiser, während vorgelesen wird.
+- **Schnell:** Der Start ist unverändert. Musik entsteht erst nach der ersten Berührung, im Web in kleinen Häppchen; eine frühere 1-Sekunden-Blockade ist beseitigt (gemessen im Headless-Chromium).
+- **Barrierefreiheit:** Ton ist immer nur Zugabe; alles ist auch zu sehen.
+
+**Vorlesen**
+- **Was:** Frage, Antwort und info werden vorgelesen, außerdem Brummis Sätze (Antippen). Schaltbar mit Automatisch/Immer/Nie.
+- **Stimme:** Gerätestimmen, im Web nur `localService` (keine Online-Stimmen), oder **Thorsten**. Dazu Tempo 50–150 % und Probe-Taste. Die Wahl wird gemerkt.
+- **Fremdsprachen:** Englisch, Französisch und Spanisch liest immer eine Gerätestimme der Sprache.
+- **Thorsten auf Android:** wie bei Raumlicht, sherpa-onnx 2.0.1, ohne espeak-ng und ohne GPL. Die Lautschrift ist vorab erzeugt (Wörterbuch mit 10 606 Wörtern, 91 KB). Abdeckung 100 % der Pakettexte (6472/6472, Test). Kennt Thorsten ein Wort nicht, liest die Gerätestimme diesen Text.
+- **Thorsten im Web:**
+  - onnxruntime-web 1.22.0 (MIT) liegt unter `webapp/ort/`. Es wird nur bei Bedarf geladen und ist nicht im Precache.
+  - Das Modell kommt per fetch von Hugging Face, wird per SHA-256 geprüft und im Browser-Speicher abgelegt.
+  - Beweis im Headless-Chromium: Es entstehen Audio-Samples.
+- **Modell:** 63 MB, nur auf Wunsch von huggingface.co geladen. Datenschutz-Text ist ergänzt, `LIZENZEN.md` und `lizenzen.txt` sind neu.
+- **Offen:** Thorsten ist auf Android nur gebaut und getestet, nicht auf einem echten Gerät angehört. Der erste Satz braucht im Browser einige Sekunden. Lizenztexte gibt es bisher nur als Datei, ohne Menüpunkt.
+
+**Prüfung:** Alle Tests grün, Lint 0 Fehler. Bildschirmfotos angesehen (`67_stimme`, `68_stimme_laedt`, `69_stimme_thorsten`, `70_ton`). Browser-Probelauf ohne Fehler. `wissensgarten-live` ist unverändert.
+
 ## Theorie-Knopf (Version 0.27.0 vom 17.11.2026)
 - **Neu:** Bei jeder ruhigen Übung gibt es den Knopf „📖 Theorie“: in der Gieß-Runde (alle Spielarten), beim Unkraut-Jäten und beim Gedächtnis-Spaziergang. Er öffnet die Erklär-Szenen des passenden Pakets („Brummi erklärt“, mit Bildern, auf Wunsch vorgelesen). Solange die Erklärung offen ist, läuft nichts automatisch weiter.
 - **Bewusst ohne Knopf:** die Zeit-Spiele Blitz, Rhythmus und Duell, damit sie fair bleiben.

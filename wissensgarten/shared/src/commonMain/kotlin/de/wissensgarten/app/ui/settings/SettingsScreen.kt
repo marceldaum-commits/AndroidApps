@@ -58,6 +58,9 @@ fun SettingsScreen(
     onCheckPacks: () -> Unit = {},
     onPlus: (() -> Unit)? = null,
     plusActive: Boolean = false,
+    /** Zusätzliche Einstellungen unter „Brummi liest vor“ (Stimme, Tempo, Probe) bzw. unter „Ton“ (Lautstärken) */
+    voiceExtras: @Composable () -> Unit = {},
+    soundExtras: @Composable () -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
     var wipeStep by remember { mutableIntStateOf(0) }
@@ -181,6 +184,7 @@ fun SettingsScreen(
             }
             Text("Automatisch: für Grundschulkinder an. Mit 🔊 an jeder Frage geht's immer. Englisch, Französisch und Spanisch werden in der richtigen Sprache gesprochen.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            voiceExtras()
         }
 
         Section("Silben farbig") {
@@ -208,6 +212,7 @@ fun SettingsScreen(
                 }
                 Switch(checked = music, onCheckedChange = onMusic)
             }
+            soundExtras()
         }
 
         Section("Aussehen") {

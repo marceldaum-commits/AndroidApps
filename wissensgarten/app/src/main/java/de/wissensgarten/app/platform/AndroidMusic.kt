@@ -30,6 +30,9 @@ class AndroidMusic(private val context: Context) : Music {
     private val cache = HashMap<MusicMood, ShortArray>()
     private var fadeJob: Job? = null
     private var interrupted = false
+    private var volume = 0.45f
+    /** Erst nach der ersten Berührung spielen – nie ungefragt beim Start */
+    private var unlocked = false
 
     private val focusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
         .setAudioAttributes(attributes())
@@ -49,19 +52,33 @@ class AndroidMusic(private val context: Context) : Music {
             }
         }.build()
 
+    init {
+        // Stellt jemand das Handy auf lautlos, verstummt die Musik sofort (und kommt danach wieder)
+        runCatching {
+            androidx.core.content.ContextCompat.registerReceiver(context.applicationContext, object : android.content.BroadcastReceiver() {
+                override fun onReceive(c: Context?, i: android.content.Intent?) { scope.launch { refresh() } }
+            }, android.content.IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION), androidx.core.content.ContextCompat.RECEIVER_NOT_EXPORTED)
+        }
+    }
+
     override fun setEnabled(on: Boolean) { scope.launch { enabled = on; refresh() } }
     override fun setMood(m: MusicMood) { scope.launch { wanted = m; refresh() } }
     override fun onForeground(on: Boolean) { scope.launch { foreground = on; refresh() } }
+    override fun setVolume(v: Float) { scope.launch { volume = v.coerceIn(0f, 1f); if (track != null) fadeTo(target(), 250) else refresh() } }
+    override fun unlock() { scope.launch { if (!unlocked) { unlocked = true; refresh() } } }
     override fun duck(on: Boolean) { scope.launch { ducked = on; if (track != null) fadeTo(target()) } }
 
     /** Musik schon vorab erzeugen, damit sie sofort da ist. */
     override fun prepare(vararg moods: MusicMood) { scope.launch { moods.forEach { pcm(it) } } }
 
-    private fun target() = if (ducked) BASE * 0.35f else BASE
+    private fun target() = BASE * volume * 2f * (if (ducked) 0.35f else 1f)
+
+    /** Handy lautlos/Vibration: dann auch keine Musik */
+    private fun silentMode() = runCatching { audio.ringerMode != AudioManager.RINGER_MODE_NORMAL }.getOrDefault(false)
 
     private suspend fun refresh() {
         val m = wanted
-        val shouldPlay = enabled && foreground && m != null
+        val shouldPlay = enabled && foreground && unlocked && volume > 0f && !silentMode() && m != null
         if (!shouldPlay) { fadeOutAndStop(); return }
         if (current == m && track != null) { fadeTo(target()); return }
         // Andere App spielt Musik (Hörbuch, Spotify …)? Dann nicht dazwischenfunken.
@@ -132,9 +149,9 @@ class AndroidMusic(private val context: Context) : Music {
         .setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_MUSIC).build()
 
     companion object {
-        /** Musik bewusst leise – Geräusche und Brummi sollen vorne bleiben. */
+        /** Musik bewusst leise – Geräusche und Brummi sollen vorne bleiben (bei Lautstärke 50 %). */
         const val BASE = 0.32f
         /** Erhöhen, wenn sich Komponist oder Klang ändern (alter Cache wird dann ignoriert). */
-        const val VERSION = 1
+        const val VERSION = 2
     }
 }

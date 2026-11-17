@@ -7,7 +7,8 @@ self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => Promise.all(files.map((f) => c.add(f).catch(() => {})))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
+  // Die geladene Stimme „Thorsten“ (wissensgarten-stimme) bleibt bei Updates stehen – sie soll nur einmal geladen werden
+  e.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((k) => k !== CACHE && k !== 'wissensgarten-stimme').map((k) => caches.delete(k)))).then(() => self.clients.claim()));
 });
 // Erst Zwischenspeicher, sonst Netz (und dann merken) – so läuft alles auch ohne Internet weiter
 self.addEventListener('fetch', (e) => {

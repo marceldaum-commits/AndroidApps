@@ -50,9 +50,9 @@ private val BalloonColors = listOf(Color(0xFFEF5350), Color(0xFF42A5F5), Color(0
 
 /** Frage mit Lautsprecher-Knopf; liest bei Bedarf automatisch vor. */
 @Composable
-fun QuestionText(text: String, modifier: Modifier = Modifier) {
+fun QuestionText(text: String, modifier: Modifier = Modifier, autoRead: Boolean = true) {
     val voice = LocalVoice.current
-    val auto = LocalReadAloud.current
+    val auto = LocalReadAloud.current && autoRead
     val subject = LocalSubject.current
     LaunchedEffect(text) { if (auto) { delay(250); voice?.speak(text, Voice.localeFor(subject, text)) } }
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
@@ -68,6 +68,20 @@ fun QuestionText(text: String, modifier: Modifier = Modifier) {
 @Composable
 fun DiscoverGame(card: StudyCard, options: List<String>?, onResult: (GameResult) -> Unit) {
     var checking by remember(card.id) { mutableStateOf(false) }
+    val voice = LocalVoice.current
+    val subject = LocalSubject.current
+    val scope = rememberCoroutineScope()
+    // Neue Karte: Frage, Antwort und Erklärung nacheinander vorlesen
+    suspend fun readAll(withQuestion: Boolean) {
+        val v = voice ?: return
+        if (withQuestion) v.speakAndWait(card.front, Voice.localeFor(subject, card.front))
+        v.speakAndWait(card.back, Voice.localeFor(subject, card.back))
+        card.info?.takeIf { it.isNotBlank() }?.let { v.speakAndWait(it, Voice.localeFor(subject, it)) }
+    }
+    val auto = LocalReadAloud.current
+    var manual by remember(card.id) { mutableStateOf<kotlinx.coroutines.Job?>(null) }
+    // beim Weitergehen zur Prüf-Frage hört das Vorlesen der Karte auf
+    LaunchedEffect(card.id, checking) { if (checking) manual?.cancel() else if (auto) { delay(250); voice?.stop(); readAll(true) } }
     AnimatedContent(checking, transitionSpec = { (slideInHorizontally { it } + fadeIn()) togetherWith (slideOutHorizontally { -it } + fadeOut()) }, label = "discover") { check ->
         if (!check) Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
             Surface(color = Color(0xFFFFF3C4), shape = CircleShape) {
@@ -76,9 +90,14 @@ fun DiscoverGame(card: StudyCard, options: List<String>?, onResult: (GameResult)
             Spacer(Modifier.height(10.dp))
             MerkBild(card.img, emojiSize = 72.sp, key = card.id, cardId = card.id)
             Spacer(Modifier.height(8.dp))
-            QuestionText(card.front)
+            QuestionText(card.front, autoRead = false)
             Text("↓", fontSize = 26.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Text(card.back, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary, textAlign = TextAlign.Center)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+                Text(card.back, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary,
+                    textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
+                if (voice != null) IconButton(onClick = { manual?.cancel(); voice.stop(); manual = scope.launch { readAll(false) } },
+                    modifier = Modifier.semantics { contentDescription = "Antwort vorlesen" }) { Text("🔊", fontSize = 20.sp) }
+            }
             card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 6.dp)) }
             Spacer(Modifier.height(16.dp))
             JuicyButton(

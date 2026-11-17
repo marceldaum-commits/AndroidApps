@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 /** Vorlesen: AUTO = für Grundschulkinder an, sonst aus. */
+const val VOICE_THORSTEN = "thorsten"
+
 enum class ReadAloud(val label: String) { AUTO("Automatisch"), ON("Immer"), OFF("Nie") }
 
 enum class ThemeMode(val label: String) { LIGHT("Hell"), DARK("Dunkel"), SYSTEM("Wie das Handy") }
@@ -34,6 +36,23 @@ class Settings(private val prefs: KeyValueStore) {
     private val _music = MutableStateFlow(prefs.getBoolean("musik", true))
     val music: StateFlow<Boolean> = _music.asStateFlow()
     fun setMusic(v: Boolean) { prefs.edit().putBoolean("musik", v).apply(); _music.value = v }
+
+    /** Lautstärken 0..100 (Musik und Geräusche getrennt). Bewusst leise voreingestellt – Kinder-App. */
+    private val _musicVolume = MutableStateFlow(prefs.getInt("musik_laut", 45))
+    val musicVolume: StateFlow<Int> = _musicVolume.asStateFlow()
+    fun setMusicVolume(v: Int) { val c = v.coerceIn(0, 100); prefs.edit().putInt("musik_laut", c).apply(); _musicVolume.value = c }
+    private val _sfxVolume = MutableStateFlow(prefs.getInt("ton_laut", 65))
+    val sfxVolume: StateFlow<Int> = _sfxVolume.asStateFlow()
+    fun setSfxVolume(v: Int) { val c = v.coerceIn(0, 100); prefs.edit().putInt("ton_laut", c).apply(); _sfxVolume.value = c }
+
+    /** Vorlese-Stimme: "" = Standard des Geräts, [VOICE_THORSTEN] = natürliche Stimme, sonst Name/Kennung einer Geräte- bzw. Browser-Stimme */
+    private val _voiceName = MutableStateFlow(prefs.getString("stimme", "") ?: "")
+    val voiceName: StateFlow<String> = _voiceName.asStateFlow()
+    fun setVoiceName(v: String) { prefs.edit().putString("stimme", v).apply(); _voiceName.value = v }
+    /** Sprechtempo in Prozent (50..150, 100 = normal) */
+    private val _voiceRate = MutableStateFlow(prefs.getInt("stimme_tempo", 100))
+    val voiceRate: StateFlow<Int> = _voiceRate.asStateFlow()
+    fun setVoiceRate(v: Int) { val c = v.coerceIn(50, 150); prefs.edit().putInt("stimme_tempo", c).apply(); _voiceRate.value = c }
 
     /** Beim Start (höchstens einmal am Tag) bei GitHub nach einer neuen App-Version schauen. */
     private val _autoUpdate = MutableStateFlow(prefs.getBoolean("auto_update", true))

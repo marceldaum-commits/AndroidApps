@@ -30,7 +30,7 @@ class ComposerTest {
     @Test fun lengthsAreKidFriendly() {
         for (mood in MusicMood.entries) {
             val sec = Composer.compose(mood).seconds
-            assertTrue("$mood: $sec s", sec in 30.0..65.0)
+            assertTrue("$mood: $sec s", sec in 40.0..115.0)
         }
     }
 
@@ -39,5 +39,27 @@ class ComposerTest {
     @Test fun melodyHasEnoughNotesButAlsoAir() {
         val notes = Composer.compose(MusicMood.GARDEN).voices[0].notes
         assertTrue(notes.size in 30..120)
+    }
+
+    @Test fun everySeasonSoundsDifferentAndHasNature() {
+        val seasons = listOf(MusicMood.SPRING, MusicMood.SUMMER, MusicMood.AUTUMN, MusicMood.WINTER)
+        assertEquals("jede Jahreszeit hat ihr eigenes Melodie-Instrument", 4, seasons.map { Composer.style(it).instrument }.toSet().size)
+        for (m in seasons) {
+            val s = Composer.compose(m)
+            assertTrue("$m ohne Natur", s.voices.any { it.instrument.isNature && it.notes.isNotEmpty() })
+        }
+        assertTrue("Gieß-Runde ohne Natur (Konzentration)", Composer.compose(MusicMood.PLAY).voices.none { it.instrument.isNature })
+        assertEquals(MusicMood.WINTER, MusicMood.of(Season.WINTER))
+    }
+
+    @Test fun breatherIsMelodyFreeSoTheLoopNeverNags() {
+        for (m in MusicMood.entries) {
+            val st = Composer.style(m)
+            if (st.breather == 0) continue
+            val s = Composer.compose(m)
+            val melodyEnd = Composer.MELODY_BARS * 4.0
+            assertTrue("$m: Melodie in der Atempause", s.voices[0].notes.all { it.beat < melodyEnd })
+            assertEquals(s.beats, (Composer.MELODY_BARS + st.breather) * 4.0, 0.0)
+        }
     }
 }

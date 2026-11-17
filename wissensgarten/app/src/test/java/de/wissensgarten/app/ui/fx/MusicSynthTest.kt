@@ -37,3 +37,14 @@ class MusicSynthTest {
         return out.toByteArray()
     }
 }
+
+class MusicSynthGentleTest {
+    @Test fun gentleRenderIsIdenticalToNormalRender() = kotlinx.coroutines.runBlocking {
+        val song = Composer.compose(MusicMood.SPRING)
+        var pauses = 0
+        val a = MusicSynth.render(song)
+        val b = MusicSynth.renderGently(song) { pauses++ }
+        assertArrayEquals(a, b)
+        assertTrue("gibt die Kontrolle oft genug ab ($pauses)", pauses > 50)
+    }
+}
