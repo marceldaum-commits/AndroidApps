@@ -88,7 +88,8 @@ class GamesTest {
         assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("  went  ", "went"))
         assertEquals(TypedAnswer.Verdict.ALMOST, TypedAnswer.check("Kopenhagn", "Kopenhagen"))
         assertEquals(TypedAnswer.Verdict.ALMOST, TypedAnswer.check("apple", "the apple"))
-        assertEquals(TypedAnswer.Verdict.ALMOST, TypedAnswer.check("paris", "Paris"))
+        assertEquals("Groß/klein zählt außer in Rechtschreibung nicht", TypedAnswer.Verdict.RIGHT, TypedAnswer.check("paris", "Paris"))
+        assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Rubisco", "RuBisCO"))
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("Rom", "Paris"))
         assertEquals(TypedAnswer.Verdict.WRONG, TypedAnswer.check("", "Paris"))
         // Rechtschreibung: „fast“ reicht nicht

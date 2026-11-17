@@ -210,7 +210,9 @@ object TypedAnswer {
             return if (kotlin.math.abs(av - tv) < 1e-9 && unitOk) Verdict.RIGHT else Verdict.WRONG
         }
         // „Marshallplan“ = „Marshall-Plan“: Bindestriche/Leerzeichen sind keine Fehler (außer in Rechtschreibung)
-        if (!strictSpelling && joined(t) == joined(a)) return Verdict.RIGHT
+        // Außer in Rechtschreibung zählen Groß/klein sowie Bindestrich-/Leerzeichen-Varianten nicht als Fehler
+        // („RuBisCO“ = „Rubisco“, „Marshallplan“ = „Marshall-Plan“)
+        if (!strictSpelling && joined(t).equals(joined(a), ignoreCase = true)) return Verdict.RIGHT
         val nt = SpokenAnswer.normalize(t); val na = SpokenAnswer.normalize(a)
         if (na.isEmpty()) return Verdict.WRONG
         val close = nt == na || SpokenAnswer.levenshtein(nt, na) <= maxOf(1, na.length / 6) && na.length >= 5
