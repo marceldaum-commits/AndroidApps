@@ -29,6 +29,7 @@ object WebReader : Reader {
     }
 
     override fun setPrivate(words: Set<String>) { private = words }
+    override fun setSpeed(speed: Float) { runCatching { jsNovaSpeed(speed.toDouble()) } }
 
     override fun say(text: String) {
         start()

@@ -1,5 +1,12 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.4.1 – Sprechtempo (Ergänzung Marcel) · Web = APK = Play
+- Einstellungen → Vorlesen: Regler „Sprechtempo“ mit den Stufen 0,75 · 0,9 · 1,0 (Standard) · 1,15 · 1,3 · 1,5, gemerkt
+  (`Nova.SPEEDS`, Test). 1,0 = Server-Tempo.
+- Android: MediaPlayer `PlaybackParams(speed, pitch 1.0)`. Web: Wiedergabe jetzt über HTMLAudioElement mit
+  `playbackRate` und `preservesPitch = true` (statt Web-Audio-Puffer). Notlösung Gerätestimme: Sprechrate × Tempo.
+- 2.4.0 war schon ausgeliefert, daher eigener kleiner Schritt 2.4.1 (versionCode 45).
+
 ## 2.4.0 – Nur noch Nova (Vorgabe Marcel, von ihm im Chat bestätigt) · Web = APK = Play
 - **Stimmenwahl:** „Nova – KI-generierte Stimme“ (Kennzeichnung in den Einstellungen) oder Vorlesen aus. Kein Tempo-Regler
   (Server: 1,25). Probe-Taste bleibt. Bildschirmfoto `screenshots/99_vorlesen.png`.

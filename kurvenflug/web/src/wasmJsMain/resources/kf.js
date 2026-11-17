@@ -141,18 +141,23 @@
   // Fertige Ansagen (MP3) von unserem Server stimmen.mathenachhilfe-online.com, zwischengespeichert im Browser (Cache „kf-nova“).
   // Texte mit Zahlen zur Laufzeit vertont unser Server auf Anfrage (/jetzt) – ohne Angaben zum Kind. Die App spricht nie mit OpenAI.
   // Notlösung (offline): eine deutsche Stimme des Browsers, die auf dem Gerät rechnet.
-  var synth = window.speechSynthesis || null, speakCb = null, novaTurn = 0, novaSrc = null;
+  var synth = window.speechSynthesis || null, speakCb = null, novaTurn = 0, novaEl = null, novaSpeed = 1;
+  KF.novaSpeed = function (v) { novaSpeed = v; if (novaEl) novaEl.playbackRate = v; };
   function speaking(b) { if (speakCb) try { speakCb(b); } catch (e) {} }
   KF.onSpeaking = function (f) { speakCb = f; };
   function deviceSay(text) {
     if (!synth) { speaking(false); return; }
     var vs = synth.getVoices().filter(function (v) { return /^de([-_]|$)/i.test(v.lang) && v.localService; });
     if (!vs.length) { speaking(false); return; }
-    var u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.voice = vs[0]; u.rate = 1.1; u.pitch = 1.08;
+    var u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.voice = vs[0]; u.rate = Math.min(2, 1.1 * novaSpeed); u.pitch = 1.08;
     u.onstart = function () { speaking(true); }; u.onend = u.onerror = function () { speaking(false); };
     synth.cancel(); synth.speak(u);
   }
-  function hush() { novaTurn++; if (novaSrc) { try { novaSrc.stop(); } catch (e) {} novaSrc = null; } if (synth) synth.cancel(); }
+  function hush() {
+    novaTurn++;
+    if (novaEl) { try { novaEl.pause(); URL.revokeObjectURL(novaEl.src); } catch (e) {} novaEl = null; }
+    if (synth) synth.cancel();
+  }
   KF.hush = function () { hush(); speaking(false); };
   function cached(url) {
     if (!window.caches) return fetch(url, { credentials: 'omit' }).then(function (r) { return r.ok ? r.arrayBuffer() : null; });
@@ -174,20 +179,19 @@
   }
   // url: fertige Ansage (aus der App berechnet), text: vorlesefertiger Text, ask: darf zum Vertonen an unseren Server
   KF.nova = function (url, text, ask) {
-    hush(); var my = novaTurn, c = audio();
-    if (!c) { deviceSay(text); return; }
+    hush(); var my = novaTurn;
     cached(url).then(function (b) {
       if (b || !ask || my !== novaTurn) return b;
       return live(text).then(function (u) { return u ? cached(u) : null; });
     }).then(function (b) {
       if (my !== novaTurn) return;
       if (!b) { deviceSay(text); return; }
-      return c.decodeAudioData(b).then(function (buf) {
-        if (my !== novaTurn) return;
-        var s = c.createBufferSource(); s.buffer = buf; s.connect(c.destination);
-        s.onended = function () { if (novaSrc === s) { novaSrc = null; speaking(false); } };
-        novaSrc = s; speaking(true); s.start();
-      });
+      // Audio-Element: Sprechtempo mit gleicher Tonhöhe (preservesPitch)
+      var a = new Audio(URL.createObjectURL(new Blob([b], { type: 'audio/mpeg' })));
+      a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true; a.playbackRate = novaSpeed;
+      a.onended = a.onerror = function () { if (novaEl === a) { novaEl = null; speaking(false); URL.revokeObjectURL(a.src); } };
+      novaEl = a; speaking(true);
+      return a.play().catch(function () { if (novaEl === a) { novaEl = null; deviceSay(text); } });
     }).catch(function () { if (my === novaTurn) deviceSay(text); });
   };
   // Reste der früheren Stimme „Thorsten“ (2.0–2.3) aus dem Browser-Speicher räumen

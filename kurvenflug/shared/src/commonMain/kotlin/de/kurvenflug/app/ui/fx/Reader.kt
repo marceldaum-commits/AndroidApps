@@ -20,6 +20,8 @@ interface Reader {
     fun stop()
     /** Spielernamen – Texte, die einen davon enthalten, gehen nie an den Server */
     fun setPrivate(words: Set<String>) {}
+    /** Sprechtempo (1 = Server-Tempo): Abspielgeschwindigkeit der Nova-Ansage bei gleicher Tonhöhe; auch für die Notlösung */
+    fun setSpeed(speed: Float) {}
 
     companion object {
         const val PROBE = de.kurvenflug.core.model.Speech.PROBE

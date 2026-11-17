@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.4.1 – 🐢🐇 Sprechtempo einstellbar
+- Neu in den Einstellungen unter „Vorlesen“: der Regler **Sprechtempo** (0,75 · 0,9 · 1,0 · 1,15 · 1,3 · 1,5). Langsamer zum
+  Mitlesen, schneller für Profis – die Stimme bleibt dabei gleich hoch. Die Wahl wird gemerkt.
+
 ## 2.4.0 – 🎙️ Volt spricht jetzt mit der Stimme „Nova“
 - Volt liest mit einer neuen, sehr natürlichen Stimme vor: **„Nova – KI-generierte Stimme“**. Aufgaben, Rechen-Stern,
   Erklärungen und Volts Sprüche klingen jetzt überall gleich – im Browser, auf dem Handy und in der Play-Version.

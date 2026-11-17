@@ -24,3 +24,4 @@ internal fun jsOnUnlock(handler: () -> Unit): Unit = js("window.KF.onUnlock(hand
 internal fun jsOnSpeaking(f: (Boolean) -> Unit): Unit = js("window.KF.onSpeaking(f)")
 internal fun jsNova(url: String, text: String, ask: Boolean): Unit = js("window.KF.nova(url, text, ask)")
 internal fun jsHush(): Unit = js("window.KF.hush()")
+internal fun jsNovaSpeed(speed: Double): Unit = js("window.KF.novaSpeed(speed)")
