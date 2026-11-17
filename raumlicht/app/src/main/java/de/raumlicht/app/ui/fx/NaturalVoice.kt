@@ -30,14 +30,8 @@ object VoicePack {
     const val MODEL = "de_DE-thorsten-medium.onnx"
     const val SIZE = 63_201_421L
     const val SHA256 = "1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6"
-    /** Quelle: der eigene Server (gemeinsam für alle Apps). Dort liegt die ursprüngliche Piper-Datei; */
-    const val URL = "https://stimmen.mathenachhilfe-online.com/thorsten/$MODEL"
-    const val SOURCE_SIZE = 63_201_294L
-    const val SOURCE_SHA256 = "7e64762d8e5118bb578f2eea6207e1a35a8e0c30595010b666f983fc87bb7819"
-    /** … der Sprach-Baustein sherpa-onnx braucht dazu sieben Angaben im Modell (Art, Sprache, Abtastrate …). Die App hängt sie nach dem Laden an –
-     *  das ergibt Byte für Byte die für sherpa-onnx aufbereitete Fassung ([SIZE], [SHA256]), geprüft am 17.11.2026. */
-    val TAIL: ByteArray = ("72120a0a6d6f64656c5f7479706512047669747372100a07636f6d6d656e741205706970657272120a086c616e677561676512064765726d616e720b0a05766f69636512026465" +
-        "720f0a0a6861735f65737065616b120131720f0a0a6e5f737065616b65727312013172140a0b73616d706c655f7261746512053232303530").chunked(2).map { it.toInt(16).toByte() }.toByteArray()
+    /** Quelle: der eigene Server (gemeinsam für alle Apps) – dort liegt die für sherpa-onnx fertige Datei (mit den Angaben zu Art, Sprache, Abtastrate). Seit 2.16.1. */
+    const val URL = "https://stimmen.mathenachhilfe-online.com/thorsten/sherpa/$MODEL"
     const val MB = 63
     fun dir(ctx: Context) = File(ctx.filesDir, "stimme")
     fun model(ctx: Context) = File(dir(ctx), MODEL)
@@ -69,8 +63,9 @@ sealed interface PackState {
 class VoicePackLoader(private val ctx: Context, private val fetch: (String) -> HttpURLConnection = { URL(it).openConnection() as HttpURLConnection }, private val onReady: () -> Unit = {},
                       /** Erwartete Größe und Prüfsumme – im Test mit kleinen Daten austauschbar */
                       private val size: Long = VoicePack.SIZE, private val sha256: String = VoicePack.SHA256,
-                      /** Angaben, die nach dem Laden angehängt werden, und die Prüfsumme der geladenen Datei davor (leer = die geladene Datei ist schon die fertige) */
-                      private val tail: ByteArray = if (size == VoicePack.SIZE) VoicePack.TAIL else ByteArray(0), private val sourceSha256: String = VoicePack.SOURCE_SHA256) {
+                      /** Für Quellen ohne die sherpa-Angaben: Bytes, die nach dem Laden angehängt werden, und die Prüfsumme der geladenen Datei davor.
+                       *  Der eigene Server liefert die fertige Datei – dort bleibt beides leer. */
+                      private val tail: ByteArray = ByteArray(0), private val sourceSha256: String = "") {
     var state by mutableStateOf<PackState>(if (VoicePack.installed(ctx, size)) PackState.Ready else PackState.Missing)
         private set
     @Volatile private var cancelled = false

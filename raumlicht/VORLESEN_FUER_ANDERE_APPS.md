@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Thorsten“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.15.1 vom 17.11.2026. Geschrieben auf Wunsch des Leitstands, von Marcel bestätigt.
+Stand: Raumlicht 2.16.1 vom 17.11.2026. Geschrieben auf Wunsch des Leitstands, von Marcel bestätigt.
 
 **Was es ist:** Die App liest Texte mit der natürlichen deutschen Stimme „Thorsten“ vor – auf dem Gerät, ohne Internet, **ohne GPL-Baustein**.
 Der Trick: Die Lautschrift (aus Text werden Laute) entsteht vorab am Entwicklungsrechner und wird als reine Daten mitgeliefert.
@@ -8,7 +8,7 @@ In der App rechnet nur noch das Stimm-Modell.
 
 **Ehrlicher Stand:**
 - **Android:** gebaut und in den automatischen Tests grün. **Auf einem echten Gerät hat es noch niemand gehört.** Bitte vor dem Übernehmen einmal auf einem Handy prüfen.
-- **WebApp:** „Thorsten“ gibt es dort **noch nicht**. Die WebApp liest mit der Geräte-Stimme des Browsers (nur Stimmen, die auf dem Gerät eingebaut sind). Abschnitt 6 beschreibt, was zu bauen wäre.
+- **WebApp:** seit 2.16.0 gebaut und in Chromium geprüft (Abschnitt 6). **Auf einem echten Handy oder iPad hat es noch niemand gehört.**
 
 ## 1. Bausteine und Lizenzen
 
@@ -27,13 +27,11 @@ Die Ausgabe eines Programms fällt nach verbreiteter Lesart nicht unter dessen L
 
 ## 2. Modell: Quelle und Größe
 
-- **Quelle (seit Raumlicht 2.15.1): der eigene Server**, gemeinsam für alle Apps: `https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx`
-  – 63 201 294 Byte, SHA-256 `7e64762d8e5118bb578f2eea6207e1a35a8e0c30595010b666f983fc87bb7819`. Das ist die ursprüngliche Piper-Datei.
-- **Achtung, wichtig für sherpa-onnx:** Der Baustein liest sieben Angaben aus dem Modell (`model_type=vits`, `comment=piper`, `language`, `voice`, `has_espeak`, `n_speakers`, `sample_rate`).
-  Die ursprüngliche Piper-Datei enthält sie nicht. Lösung ohne zweite Datei auf dem Server: **Die App hängt nach dem Laden 127 Byte an** (`VoicePack.TAIL` in `NaturalVoice.kt` –
-  das sind genau diese Angaben als ONNX-Metadaten). Ergebnis ist Byte für Byte die für sherpa-onnx aufbereitete Fassung:
-  63 201 421 Byte, SHA-256 `1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6` (dieselbe Datei wie bei Hugging Face unter `csukuangfj/vits-piper-de_DE-thorsten-medium`). Am 17.11.2026 nachgerechnet.
-  Geprüft wird zweimal: die geladene Datei gegen die erste Prüfsumme, die fertige gegen die zweite.
+- **Quelle: der eigene Server**, gemeinsam für alle Apps (`https://stimmen.mathenachhilfe-online.com/thorsten/`):
+  - **für sherpa-onnx (Android):** `sherpa/de_DE-thorsten-medium.onnx` – 63 201 421 Byte, SHA-256 `1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6`, dazu `sherpa/tokens.txt`. Raumlicht lädt diese Datei seit 2.16.1.
+  - **ursprüngliche Piper-Datei (Browser mit ONNX Runtime Web):** `de_DE-thorsten-medium.onnx` – 63 201 294 Byte, SHA-256 `7e64762d8e5118bb578f2eea6207e1a35a8e0c30595010b666f983fc87bb7819`.
+- **Der Unterschied:** sherpa-onnx liest sieben Angaben aus dem Modell (`model_type=vits`, `comment=piper`, `language`, `voice`, `has_espeak`, `n_speakers`, `sample_rate`). Die sherpa-Datei ist die Piper-Datei
+  plus genau 127 Byte mit diesen Angaben am Ende (am 17.11.2026 Byte für Byte verglichen). Mit der ursprünglichen Datei startet sherpa-onnx nicht; ONNX Runtime Web braucht die Angaben nicht.
 - Die App lädt die Datei **nur auf Knopfdruck** (Einstellungen → „Stimme laden (63 MB)“), prüft Größe und Prüfsumme und legt sie in den App-Speicher (`filesDir/stimme/`).
   Man kann sie wieder entfernen. Ohne Modell liest die Geräte-Stimme.
 - Für Store und Datenschutz: einmaliger Download vom eigenen Server, es wird nichts gesendet; der Server sieht die IP-Adresse. In der Datenschutzerklärung nennen.
@@ -77,11 +75,21 @@ Vorbild: `app/src/main/java/de/raumlicht/app/ui/fx/NaturalVoice.kt` und `core/mo
 - App-Paket: Die Raumlicht-APK hat insgesamt 21 MB – mit sherpa-onnx für zwei Prozessor-Arten, komprimiert eingepackt (die beiden Zeilen oben).
 - Lautschrift-Daten: rund 220 kB. Modell: 63 MB, nur auf Wunsch.
 
-## 6. WebApp – was zu bauen wäre (noch nicht gebaut)
+## 6. Einbindung WebApp (seit Raumlicht 2.16.0, Vorbild: Wissensgarten)
 
-- sherpa-onnx gibt es als WebAssembly-Fassung; das Modell (63 MB) müsste der Browser laden und im Cache halten. Die Lautschrift-Daten und `Lautschrift.kt` sind gemeinsamer Code und sofort nutzbar.
-- Offene Fragen: Ladezeit und Speicher auf Handys, Rechenzeit im Browser (ohne eigenen Thread ruckelt die Oberfläche), Ausliefern von huggingface.co im Browser (CORS) oder vom eigenen Server.
-- Bis dahin in der WebApp: `speechSynthesis` des Browsers, **nur Stimmen mit `localService`** (sonst kann der Text an den Browser-Hersteller gehen – und „keine Daten an einen Server“ stimmt nicht mehr).
+Im Browser rechnet **ONNX Runtime Web** (MIT) das Modell direkt – ohne sherpa-onnx. Deshalb genügt dort die ursprüngliche Piper-Datei vom Server, ohne die 127 angehängten Byte.
+
+- **Bausteine:** `onnxruntime-web` 1.22.0 als npm-Abhängigkeit, aber **nicht eingebunden**: Der Bau kopiert nur drei Dateien nach `webapp/ort/`
+  (`ort.wasm.min.js`, `ort-wasm-simd-threaded.mjs`, `ort-wasm-simd-threaded.wasm`, zusammen 11 MB). Sie werden erst geladen, wenn Thorsten zum ersten Mal spricht – der Start der WebApp wird nicht langsamer.
+- **`web/src/wasmJsMain/resources/rl-stimme.js`:** laden (Fortschritt, abbrechbar), SHA-256 prüfen (`crypto.subtle`), in einem eigenen Browser-Speicher ablegen (Cache Storage `raumlicht-stimme`),
+  Modell starten, Laut-Nummern rechnen, per Web Audio abspielen (Satz für Satz, ein neuer Satz unterbricht den alten). Der Service Worker lässt diesen Speicher bei Updates stehen.
+- **Kotlin-Seite** (`web/.../Thorsten.kt`): `Speech.clean` → `Lautschrift.of` (dieselben `saetze.tsv`/`woerter.tsv` wie Android, als `.txt` nach `webapp/stimme/` kopiert – der Abgleich zur Testadresse lässt `.tsv` nicht durch) → `PiperIds.encode`
+  (Anfang „^“, zwischen allen Lauten „_“, Ende „$“, Nummern aus `tokens.txt`) → `rl-stimme.js`. Eingaben des Modells: `input` (int64), `input_lengths`, `scales = [0,667; Tempo; 0,8]`.
+- **Rückfall:** unbekanntes Wort oder Modell startet nicht → die Stimme des Geräts (`speechSynthesis`, **nur Stimmen mit `localService`** – sonst kann der Text an den Browser-Hersteller gehen).
+- **Server:** CORS muss die Web-Adresse erlauben (für `*.mathenachhilfe-online.com` und `localhost` eingerichtet).
+- **Gemessen in Chromium am Rechner:** 1,3 s Sprache in 0,3 s gerechnet; erster Satz mit Start des Bausteins knapp 2 s; 84 Sätze der App ohne Fehler, der längste (525 Laut-Nummern) in 2,5 s.
+  **Nicht gemessen:** Handys und iPad (Rechenzeit, Speicher). Ohne `crossOriginIsolated` rechnet der Baustein mit einem Thread.
+- **Test:** `scene/test/web-stimme.mjs` (laden, Prüfsumme, Satz rechnen, Neuladen, Entfernen).
 
 ## 7. Stolpersteine
 

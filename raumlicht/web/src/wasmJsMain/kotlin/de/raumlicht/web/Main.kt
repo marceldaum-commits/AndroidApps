@@ -71,10 +71,11 @@ private fun WebApp() {
     var mood by remember { mutableStateOf(MusicMood.MENU) }
     val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()
     LaunchedEffect(Unit) { if (!without("ton")) musicSetup { name -> val pcm = MusicSynth.render(SpaceMusic.compose(MusicMood.valueOf(name))); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i] / 32768f); musicStore(name, b) } }
+    val thorsten = remember { WebThorsten(prefs) { clean -> speak(clean, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0, prefs.voiceName) } }
     val musicLevel by prefs.musicLevel.collectAsState(); val voiceOn by prefs.voice.collectAsState()
     var exam by remember { mutableStateOf(false) }; var talking by remember { mutableStateOf(false) }
     // unter der Stimme wird die Musik leiser
-    LaunchedEffect(voiceOn) { while (voiceOn) { talking = speaking(); kotlinx.coroutines.delay(250) }; talking = false }
+    LaunchedEffect(voiceOn) { while (voiceOn) { talking = speaking() || thorsten.speaking; kotlinx.coroutines.delay(250) }; talking = false }
     // Musik: aus im Prüfungsmodus, eigene Lautstärke, leiser unter der Stimme
     LaunchedEffect(musicOn, loud, mood, musicLevel, exam, talking) { musicWant(if (musicOn && !exam) mood.name else null, 0.75 * loud / 100.0 * musicLevel / 100.0 * (if (talking) 0.35 else 1.0)) }
     // Zurück-Taste des Browsers schließt eine Ebene
@@ -82,8 +83,11 @@ private fun WebApp() {
 
     val sfx = remember { WebSfx(prefs) }
     val speaker = remember { object : Speaker {
-        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Speech.clean(text).takeIf { it.isNotEmpty() }?.let { speak(it, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0, prefs.voiceName) } }
-        override fun sayIfQuiet(text: String) { if (!speaking()) say(text) }
+        // erst Thorsten (wenn geladen und eingeschaltet), sonst – oder bei einem unbekannten Wort – die Stimme des Geräts
+        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Speech.clean(text).takeIf { it.isNotEmpty() }?.let { clean ->
+            if (thorsten.say(clean, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0)) stopSpeaking()
+            else { thorsten.stop(); speak(clean, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0, prefs.voiceName) } } }
+        override fun sayIfQuiet(text: String) { if (!speaking() && !thorsten.speaking) say(text) }
     } }
     CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker,
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.CRASH -> 40 }) },
@@ -101,9 +105,12 @@ private fun WebApp() {
                             } }
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
-                        voice = voice, onVoice = { prefs.setVoice(it); if (!it) stopSpeaking() }, voiceAvailable = canSpeak(),
+                        voice = voice, onVoice = { prefs.setVoice(it); if (!it) { stopSpeaking(); thorsten.stop() } }, voiceAvailable = canSpeak() || thorsten.state == "ready",
                         voiceControls = {
-                            // Stimme wählen: durch die deutschen Stimmen des Geräts schalten – jede stellt sich gleich vor
+                            // natürliche Stimme „Thorsten“ – wie in der Android-App: auf Wunsch laden, ein- und ausschalten
+                            ThorstenCard(thorsten) { speaker.say("Hallo, ich bin Lux. So klinge ich jetzt.") }
+                            // Stimme des Geräts wählen: durch die deutschen Stimmen schalten – jede stellt sich gleich vor
+                            if (!thorsten.active) {
                             val names = remember { localVoices().split('\n').filter { it.isNotBlank() } }
                             var current by remember { mutableStateOf(prefs.voiceName.takeIf { it in names } ?: names.firstOrNull().orEmpty()) }
                             Column(Modifier.padding(bottom = 6.dp)) {
@@ -111,10 +118,12 @@ private fun WebApp() {
                                     Text(if (names.size > 1) "Andere Stimme (${names.indexOf(current) + 1} von ${names.size})" else "Nur eine Stimme vorhanden") }
                                 if (current.isNotBlank()) Text("Stimme des Geräts: $current", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                             }
+                            }
                         },
                         onLicenses = { openLink("lizenzen.txt") },
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe, keine Daten an einen Server. " +
-                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest eine Stimme vor, die auf deinem Gerät eingebaut ist.")
+                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest eine Stimme vor, die auf deinem Gerät eingebaut ist – " +
+                            "oder die natürliche Stimme „Thorsten“: Die lädst du einmalig von unserem Server (63 MB), danach rechnet sie in deinem Browser. Vorgelesene Texte verlassen dein Gerät nie.")
                 })
         } }
     }

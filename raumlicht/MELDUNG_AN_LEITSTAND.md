@@ -2,6 +2,54 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.16.1: Android lädt jetzt eure fertige sherpa-Datei
+
+Marcel hat direkt bestätigt („Stell es um“). **Raumlicht 2.16.1 vom 17.11.2026, Web = Android (beide 2.16.1).**
+
+- **Android** lädt die Stimme jetzt von `https://stimmen.mathenachhilfe-online.com/thorsten/sherpa/de_DE-thorsten-medium.onnx` und hängt nichts mehr selbst an.
+  Geprüft wird weiter gegen 63 201 421 Byte und SHA-256 `1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6`. Vor der Umstellung heruntergeladen und verglichen:
+  eure Datei ist Byte für Byte dieselbe, die Raumlicht bisher selbst zusammengesetzt hat; `sherpa/tokens.txt` ist gleich der Datei im Paket. Wer die Stimme schon hat, lädt nichts neu.
+- **WebApp** bleibt bei der ursprünglichen Piper-Datei unter `/thorsten/` (ONNX Runtime Web braucht die Angaben nicht).
+- **Bitte beide Dateien unverändert liegen lassen** – die Apps prüfen Größe und Prüfsumme; eine geänderte Datei wird abgelehnt (dann bleibt die Geräte-Stimme).
+- `VORLESEN_FUER_ANDERE_APPS.md` ist angepasst (Abschnitt Stimm-Datei: beide Pfade, Größen, Prüfsummen).
+- Geprüft: 153 + 143 Tests, Lint beider Fassungen, WebApp im Browser (Start, Offline, Update). Nicht auf einem echten Gerät geprüft.
+
+## 17.11.2026 – Antwort auf eure Frage zu espeak-ng (GPL) in Raumlicht
+
+**(a) Nein – weder in der Android-App noch in der WebApp ist espeak-ng enthalten, und `espeak-ng-data` wird nirgends geladen.** Stand: Raumlicht 2.16.0 vom 17.11.2026. Heute am Paket nachgeprüft, nicht nur am Quelltext:
+
+- **Android:** eingebunden ist **sherpa-onnx 2.0.1** (nicht 1.x). In `libsherpa-onnx-jni.so` (arm64 und arm32) gibt es **keine einzige espeak-Funktion**; die einzigen Fundstellen des Wortes sind
+  die Namen zweier Modell-Angaben (`has_espeak`, `use_espeak`) und der Hinweistext der Bibliothek selbst: „espeak-ng is no longer used“ (seit sherpa-onnx 2.0.0).
+  Zum Vergleich: In der Fassung 1.13.8 finden sich 30 Fundstellen von espeak-Funktionen. Das AAR enthält keine espeak-Daten, die App-Assets auch nicht (`app/src/main/assets/stimme/`: nur `tokens.txt`, `saetze.tsv`, `woerter.tsv`).
+  Der GitHub-Lauf bricht ab, wenn das Store-Paket espeak-Daten enthält. Reste aus den Versionen 2.4.0 bis 2.5.1 (dort war espeak-ng noch dabei) löscht die App beim Start der Stimme aus ihrem Speicher.
+- **Lautschrift:** wie bei Rechenblitz vorab erzeugt (`tools/stimme/lautschrift.py`, nur am Entwicklungsrechner) und als Daten mitgeliefert; zur Laufzeit übergibt die App fertige Laute (`phonemeCodepoints`).
+- **WebApp:** ONNX Runtime Web (MIT) und dieselben Lautschrift-Daten; kein sherpa-onnx, kein espeak-ng.
+
+**(b) entfällt.** Seit Version 2.6.0 (16.11.2026) ist Raumlicht ohne espeak-ng.
+
+**Zum Modell unter `…/thorsten/sherpa/`:** Danke – Raumlicht braucht es nicht zwingend: Die Android-App lädt die ursprüngliche Datei (`…/thorsten/de_DE-thorsten-medium.onnx`) und hängt die 127 Byte Angaben selbst an;
+das Ergebnis hat genau eure Prüfsumme 1c305abe…65a6. Wenn euch lieber ist, dass alle Apps die fertige sherpa-Datei laden, stelle ich um – das ist eine Zeile.
+
+---
+
+## 17.11.2026 – Version 2.16.0: Thorsten auch in der WebApp (von Marcel direkt bestätigt)
+
+**Web = Android:** ja, jetzt auch beim Vorlesen. Beide Fassungen: Version 2.16.0 vom 17.11.2026, Vorlesen abschaltbar (von Haus aus aus), Stimme wählbar (Gerätestimmen und Thorsten), Sprechtempo, Hörprobe,
+dieselbe Lautschrift, Stimmdatei nur auf Wunsch von `stimmen.mathenachhilfe-online.com`, mit Prüfsumme, danach offline. Kein espeak-ng in der App.
+Verbleibende, technisch bedingte Unterschiede: App-Update-Kasten und Widgets nur in Android; im Browser rechnet ONNX Runtime Web, in Android sherpa-onnx.
+
+- **WebApp:** nach dem Vorbild Wissensgarten gebaut – `rl-stimme.js` (laden, SHA-256, Cache Storage `raumlicht-stimme`, rechnen, abspielen), `Thorsten.kt`, `PiperIds` im gemeinsamen Code.
+  ONNX Runtime Web 1.22.0 (MIT) liegt unter `webapp/ort/` (11 MB) und wird erst geladen, wenn Thorsten zum ersten Mal spricht – Start und Ladeplan der WebApp sind unverändert.
+  Im Browser genügt eure Server-Datei, wie sie ist (sha256 7e64…7819); die 127 Byte Zusatzangaben braucht nur sherpa-onnx in Android.
+- **Hinweis-Text:** „Stimme laden (63 MB) … am besten im WLAN“ – die tatsächliche Größe, nicht „ca. 75 MB“.
+- **Geprüft in Chromium:** laden, Prüfsumme, speichern, Neuladen, entfernen; 84 Sätze der App fehlerfrei gerechnet (1,3 s Sprache in 0,3 s; längster Satz 2,5 s). CORS-Kopfzeile für raumlicht-test per Abruf bestätigt.
+  Neuer Test `scene/test/web-stimme.mjs`. Dazu 153 Tests im Rechenkern, 143 App-Tests, Lint, Ablauf-, Update- und Offline-Test der WebApp.
+- **Nicht geprüft:** der Download im Browser vom echten Server (der Test-Browser hat hier kein Netz – geprüft mit derselben Datei lokal), Handys und iPad (Rechenzeit, Speicher), und wie es klingt. Marcel hat eine Hörprobe aus dem Browser bekommen.
+- **Lizenzen:** `lizenzen.txt` und `LIZENZEN.md` nennen ONNX Runtime Web; Anleitung `VORLESEN_FUER_ANDERE_APPS.md` um den Web-Teil ergänzt.
+- **Bitte in der Datenschutzerklärung nennen:** einmaliger Download der Stimme vom eigenen Server in App und WebApp.
+
+---
+
 ## 17.11.2026 – Version 2.15.1: Thorsten kommt vom eigenen Server (von Marcel direkt bestätigt)
 
 **Web = Android:** gleiche Version 2.15.1 vom 17.11.2026, gleicher Inhalt. **Ausnahme, noch offen:** „Thorsten“ gibt es nur in der Android-App; in der WebApp lesen die Stimmen des Geräts. Der Einbau im Browser ist der nächste Schritt.
