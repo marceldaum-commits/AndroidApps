@@ -1,8 +1,8 @@
 package de.experimentopia.core.model
 
-/** Dinge für den Magnet-Test. Angezogen werden Eisen (Stahl), Nickel und Kobalt – nicht jedes Metall! */
+/** Dinge für den Magnet-Test. Angezogen werden Eisen und die meisten Stahlsorten, Nickel und Kobalt – nicht jedes Metall! */
 enum class MagnetItem(val title: String, val emoji: String, val magnetic: Boolean, val note: String) {
-    BUEROKLAMMER("Büroklammer", "📎", true, "Büroklammern sind aus Stahl – das ist Eisen."),
+    BUEROKLAMMER("Büroklammer", "📎", true, "Büroklammern sind aus Stahl – und Stahl besteht größtenteils aus Eisen."),
     NAGEL("Eisennagel", "📌", true, "Eisen wird vom Magneten angezogen."),
     CENT("1-Cent-Münze", "🥉", true, "Kupferfarben, aber innen Stahl: 1-, 2- und 5-Cent-Münzen haben einen Eisenkern."),
     SCHERE("Schere", "✂️", true, "Die Klingen sind aus Stahl."),

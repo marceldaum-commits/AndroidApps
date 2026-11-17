@@ -13,7 +13,7 @@ internal object CatalogF {
 
     val bio = listOf(
         Experiment("g1", B, "Mendels Erbsen", "🟢", 8..10,
-            "Gregor Mendel kreuzte vor 160 Jahren reinerbig gelbe Erbsen (AA) mit reinerbig grünen (aa). Blubb macht es nach.",
+            "Gregor Mendel kreuzte vor über 160 Jahren reinerbig gelbe Erbsen (AA) mit reinerbig grünen (aa). Blubb macht es nach.",
             quiz("Welche Farbe haben die Kinder-Erbsen?", listOf(c("alle gelb", "🟡"), c("alle grün", "🟢"), c("halb gelb, halb grün")),
                 Genetics.share(E, "AA", "aa", "gelb").let { if (it == 1.0) 0 else if (it == 0.0) 1 else 2 }),
             GeneticsSetup(E, "AA", "aa"),
@@ -102,8 +102,8 @@ internal object CatalogF {
             OsmosisSetup(listOf(0.0, 1.0, 5.0)),
             "Leg je einen Streifen in jedes Glas und warte.",
             "Im Salzwasser verliert die Kartoffel Wasser und wird schlapp, im Leitungswasser nimmt sie Wasser auf.",
-            listOf("Wasser wandert durch die Zellwand dorthin, wo mehr Salz gelöst ist – aus der Kartoffel heraus.", "Salz frisst die Kartoffel auf.", "Salz macht die Kartoffel schwerer."),
-            "Osmose: Wasser wandert zur höheren Konzentration.",
+            listOf("Wasser wandert durch die Zellhaut (Zellmembran) dorthin, wo mehr Salz gelöst ist – aus der Kartoffel heraus.", "Salz frisst die Kartoffel auf.", "Salz macht die Kartoffel schwerer."),
+            "Osmose: Wasser wandert dorthin, wo mehr gelöst ist (höhere Salz- oder Zuckerkonzentration).",
             quiz("Und im Leitungswasser (0 %)?", listOf(c("wird schwerer und fest"), c("wird leichter")), if (Osmosis.massChange(0.0) > 0) 0 else 1)),
 
         Experiment("o2", B, "Gurkensalat", "🥒", 6..8,
@@ -113,7 +113,7 @@ internal object CatalogF {
             "Prüf die Streifen in drei Salzlösungen.",
             "Je mehr Salz, desto mehr Wasser zieht es aus den Zellen.",
             listOf("Das Salz zieht durch Osmose Wasser aus den Gurkenzellen.", "Salz schmilzt zu Wasser.", "Gurken schwitzen."),
-            "Salzen zieht Wasser – darum hält Salz Lebensmittel haltbar.",
+            "Salzen zieht Wasser – darum macht Salz Lebensmittel haltbar.",
             quiz("Warum verdirbt gesalzener Fisch langsamer?", listOf(c("Bakterien wird das Wasser entzogen"), c("Salz ist kalt"), c("Fisch mag Salz")), 0)),
 
         Experiment("o3", B, "Zwiebelzellen unterm Mikroskop", "🔬", 8..10,
@@ -197,13 +197,13 @@ internal object CatalogF {
             quiz("Bei welcher Temperatur arbeitet Amylase am besten?", listOf(c("um 37 °C"), c("um 5 °C"), c("um 80 °C")), nearest(listOf(37.0, 5.0, 80.0), listOf(5.0, 20.0, 37.0, 50.0, 80.0).maxBy { Enzyme.activity(it) }))),
 
         Experiment("e7", B, "Gekochter Speichel", "♨️", 9..10,
-            "Blubb kocht den Speichel kurz auf (80 °C) und gibt ihn dann zum Stärkebrei.",
+            "Blubb erhitzt den Speichel kurz auf 80 °C und gibt ihn dann zum Stärkebrei.",
             quiz("Baut er die Stärke noch ab?", listOf(c("ja, sogar schneller"), c("nein, gar nicht mehr")), if (Enzyme.activity(80.0) == 0.0) 1 else 0),
             EnzymeSetup(listOf(37.0, 80.0)),
             "Vergleiche 37 °C und 80 °C.",
             "Bei 80 °C bleibt alles blau – das Enzym ist zerstört.",
             listOf("Enzyme sind Eiweiße; Hitze verändert ihre Form dauerhaft (Denaturierung).", "Heißes Iod ist stärker.", "Kochen macht Stärke hart."),
-            "Hohes Fieber ist gefährlich, weil Eiweiße im Körper ab etwa 42 °C Schaden nehmen.",
+            "Hitze zerstört Enzyme dauerhaft – sie sind Eiweiße und verlieren ihre Form (Denaturierung).",
             quiz("Was passiert mit Eiklar in der Pfanne?", listOf(c("Es wird fest – das Eiweiß denaturiert"), c("Es verdampft"), c("Es wird flüssiger")), 0)),
 
         Experiment("e8", B, "Ohne Spucke", "🚫", 7..9,
@@ -244,8 +244,8 @@ internal object CatalogF {
             "Miss mit und ohne Natron.",
             "Mit CO₂ sprudelt es viel stärker.",
             listOf("Für die Fotosynthese braucht die Pflanze CO₂ – mehr CO₂, mehr Sauerstoff.", "Natron sprudelt selbst.", "Natron macht das Wasser warm."),
-            "Fotosynthese: CO₂ + Wasser + Licht → Zucker + Sauerstoff.",
-            quiz("Warum gibt man in manchen Aquarien CO₂ ins Wasser?", listOf(c("Damit die Pflanzen besser wachsen"), c("Für die Fische zum Atmen"), c("Gegen Algen")), 0)),
+            "Fotosynthese: Kohlenstoffdioxid + Wasser → (mit Licht als Energie) → Traubenzucker + Sauerstoff.",
+            quiz("Warum gibt man in manchen Aquarien CO₂ ins Wasser?", listOf(c("Damit die Pflanzen besser wachsen"), c("Für die Fische zum Atmen"), c("Damit das Wasser sprudelt")), 0)),
 
         Experiment("p4", B, "Doppelter Abstand", "💡", 8..10,
             "Die Lampe rückt von 10 cm auf 20 cm Abstand.",
@@ -258,7 +258,7 @@ internal object CatalogF {
             quiz("Und bei 30 cm?", listOf(c("ein Drittel"), c("ein Neuntel"), c("ein Sechstel")), nearest(listOf(1 / 3.0, 1 / 9.0, 1 / 6.0), Photosynthesis.light(30.0) / Photosynthesis.light(10.0)))),
 
         Experiment("p5", B, "Hasen und Luchse", "🐇", 7..9,
-            "In einem Wald leben viele Hasen und ein paar Luchse, die Hasen jagen.",
+            "In den Wäldern Kanadas leben Schneeschuhhasen und Luchse, die vor allem diese Hasen jagen.",
             quiz("Was passiert mit den Luchsen, wenn es viele Hasen gibt?", listOf(c("Sie werden mehr – etwas später"), c("Sie werden sofort weniger"), c("nichts")),
                 PredatorPrey.simulate(400.0, 15.0).let { pts -> if (pts.maxOf { it.lynx } > 15.0) 0 else 1 }),
             EcoSetup(400.0, 15.0),
@@ -278,7 +278,7 @@ internal object CatalogF {
             "Ohne Luchse vermehren sich die Hasen, bis das Futter knapp wird.",
             listOf("Ohne Räuber wächst die Beute, bis Platz und Futter knapp werden.", "Hasen brauchen Luchse zum Leben.", "Hasen vermehren sich nur im Sommer."),
             "Räuber halten Beutetiere in Grenzen – jedes Tier hat seine Rolle.",
-            quiz("Warum wurden in Deutschland wieder Luchse angesiedelt?", listOf(c("Sie gehören zum natürlichen Gleichgewicht"), c("Damit es weniger Wald gibt"), c("Als Haustiere")), 0)),
+            quiz("Warum sind Räuber wie Luchs und Wolf wichtig für den Wald?", listOf(c("Sie halten Beutetiere wie Rehe in Grenzen, die sonst junge Bäume abfressen"), c("Sie fressen Bäume"), c("Sie machen den Wald dunkler")), 0)),
 
         Experiment("p7", B, "Mehr Räuber am Anfang", "🐾", 8..10,
             "Diesmal starten mit 400 Hasen gleich 40 Luchse.",
@@ -308,7 +308,7 @@ internal object CatalogF {
             "Im Filter bleibt der Kaffeesatz liegen, unten tropft klarer Kaffee heraus.",
             listOf("Die Löcher im Papier sind kleiner als die Krümel, aber groß genug für Wasser.", "Das Papier saugt die Krümel auf.", "Die Krümel lösen sich auf."),
             "Ein Filter hält Festes zurück und lässt Flüssiges durch.",
-            quiz("Wo benutzt man noch Filter?", listOf(c("Staubsauger und Aquarium"), c("Kühlschrank"), c("Fahrrad")), 0)),
+            quiz("Wo benutzt man noch Filter?", listOf(c("Staubsauger und Aquarium"), c("Toaster"), c("Fahrrad")), 0)),
 
         Experiment("t1", CH, "Sand aus dem Wasser", "🏖️", 5..6,
             "Im Glas: Wasser, Sand und Salz durcheinander. Blubb will alles wieder einzeln haben.",
@@ -362,7 +362,7 @@ internal object CatalogF {
             quiz("Welches Verfahren holt den Kies?", listOf(c("Sieben"), c("Magnet"), c("Eindampfen")), listOf(Method.SIEB, Method.MAGNET, Method.VERDAMPFEN).indexOfFirst { Component.KIES in Separation.extract(it, kies.parts) })),
 
         Experiment("t6", CH, "Geheimnis der schwarzen Tinte", "🖊️", 5..7,
-            "Blubb malt mit schwarzem Filzstift einen Punkt auf Filterpapier und stellt es in Wasser.",
+            "Blubb malt mit schwarzem Filzstift einen Punkt auf Filterpapier und stellt den unteren Rand in Wasser – der Punkt bleibt über dem Wasser.",
             quiz("Was passiert mit dem schwarzen Punkt?", listOf(c("Er zerfällt in mehrere Farben"), c("Er bleibt schwarz"), c("Er verschwindet")), if (Marker.SCHWARZ.dyes.size > 1) 0 else 1),
             ChromaSetup(listOf(Marker.SCHWARZ, Marker.GRUEN, Marker.ORANGE)),
             "Starte die Chromatografie mit allen drei Stiften.",
@@ -391,7 +391,7 @@ internal object CatalogF {
                 if (Painting.name(Painting.mix(mapOf(Paint.GELB to 1, Paint.CYAN to 1, Paint.MAGENTA to 1))).contains("Grau")) 1 else 0),
             PaintSetup(listOf(Paint.GELB, Paint.CYAN, Paint.MAGENTA), "matschiges Grau-Braun"),
             "Misch alle drei Farben.",
-            "Matschiges Braun-Grau – fast Schwarz. Beim Licht ergäben alle drei Weiß!",
+            "Matschiges Braun-Grau – ziemlich dunkel. Beim Licht ergäben alle drei Weiß!",
             listOf("Jede Farbe schluckt einen Teil des Lichts – alle zusammen schlucken fast alles.", "Farben vermischen sich zu Weiß.", "Der Becher war schmutzig."),
             "Licht: alle Farben = Weiß. Malfarbe: alle Farben = dunkel.",
             quiz("Was ergeben alle drei Lichtfarben (Rot, Grün, Blau)?", listOf(c("Weiß"), c("Schwarz"), c("Braun")), if (Colors.name(Colors.add(listOf(Rgb.ROT, Rgb.GRUEN, Rgb.BLAU))) == "Weiß") 0 else 1)),
@@ -411,8 +411,8 @@ internal object CatalogF {
         Experiment("m4", L, "Rosa aus Rot", "🌸", 3..5,
             "Blubb hat nur Rot und Weiß. Er will Rosa.",
             quiz("Was muss er tun?", listOf(c("Weiß zum Rot geben"), c("Blau zum Rot geben"), c("Gelb zum Rot geben")),
-                listOf(Paint.WEISS, Paint.CYAN, Paint.GELB).indexOfFirst { Painting.name(Painting.mix(mapOf(Paint.MAGENTA to 1, it to 1))) == "Pink" }),
-            PaintSetup(listOf(Paint.MAGENTA, Paint.WEISS, Paint.GELB, Paint.CYAN), "Pink"),
+                listOf(Paint.WEISS, Paint.CYAN, Paint.GELB).indexOfFirst { Painting.name(Painting.mix(mapOf(Paint.MAGENTA to 1, it to 1))) == "Rosa" }),
+            PaintSetup(listOf(Paint.MAGENTA, Paint.WEISS, Paint.GELB, Paint.CYAN), "Rosa"),
             "Misch Rosa.",
             "Weiß hellt das Rot auf: Rosa!",
             listOf("Weiß wirft viel Licht zurück und macht die Farbe heller.", "Weiß ist keine Farbe.", "Rosa braucht Blau."),

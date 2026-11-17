@@ -80,7 +80,7 @@ fun PhLab(s: PhSetup, free: Boolean, onGoal: () -> Unit) {
     var ownShown by remember { mutableStateOf(false) }
     GoalWhen(!free && s.substances.all { it in poured }, onGoal)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text("Jedes Glas enthält lila Rotkohlsaft. Tipp ein Glas an, um den Stoff hineinzugießen.", color = E.Muted, fontSize = 13.sp)
+        Text("Jedes Glas enthält violetten Rotkohlsaft. Tipp ein Glas an, um den Stoff hineinzugießen.", color = E.Muted, fontSize = 13.sp)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.testTag("glaeser")) {
             s.substances.forEach { h ->
                 JuiceGlass(h.title, h.emoji, if (h in poured) h.pH else null, {

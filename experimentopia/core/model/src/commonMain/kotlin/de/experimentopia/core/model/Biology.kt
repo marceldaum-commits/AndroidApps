@@ -47,7 +47,7 @@ object Blood {
     fun share(p1: String, p2: String, group: String) = Genetics.cross(p1, p2).filterKeys { group(it) == group }.values.sum()
 }
 
-/** Osmose: Wasser wandert durch die Zellwand dorthin, wo mehr gelöst ist. Kartoffelzellen entsprechen etwa 1 % Salz. */
+/** Osmose: Wasser wandert durch die Zellmembran dorthin, wo mehr gelöst ist. Kartoffelzellen entsprechen etwa 1 % Salz. */
 object Osmosis {
     const val CELL_SALT = 1.0   // % Kochsalz, bei dem sich nichts ändert (isotonisch, gerundet)
     /** Massenänderung in % nach 30 Minuten (Modell, gerundet an Schulversuche): positiv = Zelle nimmt Wasser auf */
@@ -60,7 +60,7 @@ enum class Food(val title: String, val emoji: String, val starch: Boolean, val g
     KARTOFFEL("Kartoffel", "🥔", true, false, false, false, "Kartoffeln speichern ihre Energie als Stärke."),
     BROT("Brot", "🍞", true, false, false, true, "Mehl ist vor allem Stärke, dazu etwas Eiweiß (Gluten)."),
     BUTTER("Butter", "🧈", false, false, true, false, "Butter ist fast nur Fett."),
-    APFEL("Apfel", "🍎", false, true, false, false, "Äpfel enthalten Trauben- und Fruchtzucker."),
+    APFEL("Apfel", "🍎", false, true, false, false, "Reife Äpfel enthalten Trauben- und Fruchtzucker. (Unreife enthalten noch Stärke – daran erkennt man die Reife.)"),
     HONIG("Honig", "🍯", false, true, false, false, "Honig ist vor allem Trauben- und Fruchtzucker."),
     ZUCKER("Haushaltszucker", "🍬", false, false, false, false, "Haushaltszucker ist Saccharose – der Teststreifen sucht nur Traubenzucker (Glukose)!"),
     EIKLAR("Eiklar", "🥚", false, false, false, true, "Eiklar ist fast reines Eiweiß und Wasser."),
@@ -175,7 +175,7 @@ object Painting {
         if (mx - mn < 0.12) return if (mx > 0.85) "Weiß" else "matschiges Grau-Braun"
         return when {
             c.g >= c.r && c.g >= c.b && c.b < c.g * 0.6 && c.r < c.g * 0.6 -> "Grün"
-            c.r >= c.g && c.b > c.g && c.b > c.r * 0.35 -> if (c.b > c.r * 0.75) "Violett" else "Pink"
+            c.r >= c.g && c.b > c.g && c.b > c.r * 0.35 -> if (c.b > c.r * 0.75) "Violett" else if (c.g > 0.3) "Rosa" else "Pink"
             c.r >= c.g && c.g > c.b && c.g > c.r * 0.7 -> "Gelb"
             c.r >= c.g && c.g > c.b -> "Orange"
             c.b >= c.r && c.b >= c.g -> if (c.g > c.b * 0.6) "Blau (Cyan)" else "Blauviolett"

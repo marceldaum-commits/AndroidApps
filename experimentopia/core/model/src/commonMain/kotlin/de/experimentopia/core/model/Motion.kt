@@ -5,7 +5,6 @@ import kotlin.math.abs
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-/** Fallbeschleunigung g in m/s² (bzw. N/kg) */
 /** Fallbeschleunigung g in m/s² und Luftdichte in kg/m³ (Mars: sehr dünne Luft; Jupiter: Gasplanet, Werte auf Höhe von 1 bar) */
 enum class Planet(val title: String, val emoji: String, val g: Double, val airRho: Double) {
     ERDE("Erde", "🌍", 9.81, 1.2),

@@ -16,7 +16,7 @@ enum class Household(val title: String, val emoji: String, val pH: Double, val n
     WASSER("Wasser", "💧", 7.0, "Reines Wasser ist neutral."),
     NATRON("Natron-Lösung", "🧂", 8.3, "Natron ist schwach basisch."),
     SEIFE("Seifenlauge", "🧼", 10.0, "Seife ist basisch."),
-    WASCHSODA("Waschsoda", "🧺", 11.5, "Soda ist stark basisch – Handschuhe!"),
+    WASCHSODA("Waschsoda", "🧺", 11.5, "Soda ist stark basisch – Schutzbrille und Handschuhe!"),
     ;
 }
 

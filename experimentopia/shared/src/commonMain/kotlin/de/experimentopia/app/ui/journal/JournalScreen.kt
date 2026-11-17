@@ -133,6 +133,7 @@ fun Explanation(e: Experiment, onOpen: (Experiment) -> Unit) {
         Section("👀 Was passiert ist", e.reveal)
         Section("🧠 Warum?", e.why.first())
         Section("📒 Merksatz", e.fact)
+        Safety.note(e.id)?.let { SafetyNote(it) }
         Section("🧩 Knobelfrage", e.transfer.question + "\nLösung: " + e.transfer.choices[e.transfer.answer].text + (if (e.transfer.explain.isNotBlank()) " – " + e.transfer.explain else ""))
         GlowButton({ onOpen(e) }, Modifier.fillMaxWidth(), color = E.Pink) { Text("🔁 Nochmal ausprobieren", fontWeight = FontWeight.Bold) }
     }

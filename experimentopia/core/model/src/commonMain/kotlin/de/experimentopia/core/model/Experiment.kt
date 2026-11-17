@@ -2,7 +2,7 @@ package de.experimentopia.core.model
 
 import kotlin.math.abs
 
-/** Die sieben Inseln von Experimentopia. */
+/** Die Inseln von Experimentopia. */
 enum class Island(val title: String, val emoji: String, val color: Long, val subtitle: String, val grades: String) {
     WASSER("Wasserinsel", "🌊", 0xFF3DB8FF, "Schwimmen, Sinken, Dichte", "Kl. 3–8"),
     KRAFT("Kraftwerk-Insel", "⚖️", 0xFFFFA23D, "Hebel, Rollen, Newton", "Kl. 3–10"),

@@ -71,6 +71,8 @@ class ScreenshotTest {
     }
     @Test fun done() = shot("08_geschafft", settle = 2500) { ExperimentScreen(Catalog.byId("w5")!!, {}, {}, {}, startPhase = Phase.DONE, startGuess = 0) }
 
+    // Höherer Bildschirm: Mit Sicherheitshinweis liegen die Flüssigkeiten sonst unterhalb – Scrollen hängt im Test ohne Bildtakt
+    @Config(qualifiers = "w400dp-h1300dp-xxhdpi")
     @Test fun tower() = lab("w8", "10_dichteturm", settle = 4000, prepare = { it.tap("Spiritus"); it.tap("🍯 Honig"); it.tap("Speiseöl"); it.tap("💧 Wasser"); it.tap("Spülmittel"); it.mainClock.advanceTimeBy(2000); it.tap("Weintraube"); it.tap("Eiswürfel") })
     @Test fun lever() = lab("k1", "11_wippe", settle = 2500, prepare = { it.tap("Loslassen") })
     @Test fun pulley() = lab("k8", "12_flaschenzug")
@@ -109,6 +111,7 @@ class ScreenshotTest {
     @Test fun topicNewton() = shot("40_thema_newton", prepare = { it.onNodeWithTag("thema_NEWTON").performClick() }) { de.experimentopia.app.ui.home.TopicScreen(someStars, 0, { false }, {}, {}) }
     @Test fun cart() = lab("n3", "41_newton_wagen", settle = 3000, prepare = { it.tap("Los!") })
     @Test fun skate() = lab("n2", "42_skateboards", settle = 1500, prepare = { it.tap("Abstoßen") })
+    @Config(qualifiers = "w400dp-h1300dp-xxhdpi")
     @Test fun mercury() = lab("w10", "43_quecksilber", settle = 2500, prepare = { it.tap("kleiner Nagel"); it.tap("Goldbarren") })
     @Test fun mendel() = lab("g2", "44_mendel_erbsen", settle = 2500, prepare = { it.tap("Kreuzen"); it.tap("säen") })
     @Test fun bloodGroups() = lab("g6", "45_blutgruppen", prepare = { it.tap("Kreuzen") })
@@ -120,6 +123,7 @@ class ScreenshotTest {
     @Test fun separate() = lab("t1", "51_stoffe_trennen", prepare = { it.tap("Filtern"); it.tap("Eindampfen") })
     @Test fun chroma() = lab("t6", "52_chromatografie", settle = 5500, prepare = { it.tap("Papier ins Wasser") })
     @Test fun paint() = lab("m1", "53_malkasten", prepare = { it.tap("Gelb"); it.tap("Blau") })
+    @Config(qualifiers = "w400dp-h1300dp-xxhdpi")
     @Test fun microscope() = lab("u1", "54_mikroskop", prepare = { it.tap("40×") })
     @Test fun microscopeLight() = lab("u4", "55_augentierchen", settle = 3500, prepare = { it.tap("100×"); it.tap("Lampe rechts an") })
     @Test fun germination() = lab("q4", "56_kresse_im_dunkeln", settle = 4500, prepare = { it.tap("Tage vergehen lassen") })
@@ -130,7 +134,7 @@ class ScreenshotTest {
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
-        SettingsScreen(true, {}, true, {}, 5, {}, "0.5.0", "17.11.2026", {}, {}, {})
+        SettingsScreen(true, {}, true, {}, 5, {}, "0.5.1", "17.11.2026", {}, {}, {})
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
 }

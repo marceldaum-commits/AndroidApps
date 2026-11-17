@@ -68,3 +68,18 @@ object Newton {
 object Ramp {
     fun forceN(massKg: Double, heightM: Double, lengthM: Double, g: Double = Planet.ERDE.g) = massKg * g * heightM / lengthM
 }
+
+/** Trägheit: ein Wagen bekommt einen Schubs und rollt dann ohne Antrieb – mit oder ohne Reibung */
+object Glide {
+    const val V0 = 0.8          // m/s nach dem Schubs
+    const val TRACK = 3.0       // m Bahnlänge
+    const val FRICTION = 0.25   // m/s² Bremsung durch Reibung (Rollreibung, gerundet)
+    /** Ort und Geschwindigkeit nach t Sekunden */
+    fun at(t: Double, friction: Boolean): Pair<Double, Double> {
+        if (!friction) return V0 * t to V0
+        val tStop = V0 / FRICTION
+        val tt = minOf(t, tStop)
+        return (V0 * tt - 0.5 * FRICTION * tt * tt) to (V0 - FRICTION * tt)
+    }
+    fun stopDistance() = V0 * V0 / (2 * FRICTION)
+}

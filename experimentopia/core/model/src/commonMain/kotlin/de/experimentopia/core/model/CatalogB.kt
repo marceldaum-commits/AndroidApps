@@ -70,7 +70,7 @@ internal object CatalogB {
             "Ein einziger geschlossener Schalter reicht – eine ODER-Schaltung.",
             listOf("Der Strom hat zwei Wege – einer reicht.", "Parallele Schalter sind stärker.", "Die Lampe merkt sich den letzten Schalter."),
             "Parallelschaltung von Schaltern = ODER.",
-            quiz("Eine Klingel soll an der Haustür UND am Gartentor gehen. Welche Schaltung?", listOf(c("Schalter in Reihe"), c("Schalter parallel")), 1)),
+            quiz("Die Klingel soll läuten, egal ob jemand an der Haustür oder am Gartentor drückt. Welche Schaltung?", listOf(c("Schalter in Reihe"), c("Schalter parallel")), 1)),
 
         Experiment("s5", S, "Lampen in Reihe", "💡", 5..7,
             "Zwei Lämpchen hintereinander an derselben Batterie.",
@@ -135,9 +135,9 @@ internal object CatalogB {
             MagnetSetup(listOf(MagnetItem.BUEROKLAMMER, MagnetItem.ALUDOSE, MagnetItem.CENT, MagnetItem.HOLZ, MagnetItem.GOLDRING, MagnetItem.SCHERE, MagnetItem.KUPFER, MagnetItem.WEISSBLECH)),
             "Fahr mit dem Magneten über jedes Ding.",
             "Büroklammer, Schere, Konservendose und sogar die 1-Cent-Münze springen an den Magneten. Alu, Kupfer und Gold nicht!",
-            listOf("Magnete ziehen Eisen (Stahl), Nickel und Kobalt an – nicht jedes Metall.", "Magnete ziehen nur Dinge an, die glänzen.", "Schwere Dinge kann der Magnet nicht hochheben."),
-            "Magnete ziehen Eisen, Nickel und Kobalt an.",
-            quiz("Wird eine Alu-Getränkedose angezogen?", listOf(c("ja"), c("nein")), if (MagnetItem.ALUDOSE.magnetic) 0 else 1, "Darum kann man Dosen im Recyclinghof mit Magneten sortieren.")),
+            listOf("Magnete ziehen Eisen und die meisten Stahlsorten, Nickel und Kobalt an – nicht jedes Metall.", "Magnete ziehen nur Dinge an, die glänzen.", "Schwere Dinge kann der Magnet nicht hochheben."),
+            "Magnete ziehen Eisen, Nickel und Kobalt an (manches Edelstahl-Besteck übrigens kaum).",
+            quiz("Wird eine Alu-Getränkedose angezogen?", listOf(c("ja"), c("nein")), if (MagnetItem.ALUDOSE.magnetic) 0 else 1, "Darum kann man Dosen in der Sortieranlage mit Magneten trennen.")),
 
         Experiment("s11", S, "Nord trifft Nord", "🧭", 3..5,
             "Zwei Magnete, beide mit dem roten Nordpol voran.",
@@ -158,13 +158,13 @@ internal object CatalogB {
 
     val chem = listOf(
         Experiment("c1", CH, "Zauber-Saft", "🟣", 3..4,
-            "Blubb hat Rotkohl gekocht. Der Saft ist lila. Angeblich kann er zaubern …",
+            "Blubb hat Rotkohl gekocht. Der Saft ist violett. Angeblich kann er zaubern …",
             quiz("Welche Farbe bekommt der Saft mit Zitronensaft?", COLORS3.map { (n, p) -> colorChoice(n, p) }, COLORS3.indexOfFirst { it.first == Indicator.name(Household.ZITRONE.pH) }),
             PhSetup(listOf(Household.ZITRONE, Household.WASSER, Household.SEIFE)),
             "Gib jeden Stoff in ein eigenes Glas mit Rotkohlsaft.",
-            "Zitrone: rot. Wasser: bleibt lila. Seife: grün!",
+            "Zitrone: rot. Wasser: bleibt violett. Seife: grün!",
             listOf("Rotkohlsaft ist ein Anzeiger: Säuren färben ihn rot, Laugen grün.", "Die Zitrone ist gelb und färbt den Saft.", "Seife wäscht die Farbe heraus."),
-            "Rotkohlsaft zeigt an: sauer = rot, neutral = lila, basisch = grün/gelb.",
+            "Rotkohlsaft zeigt an: sauer = rot, neutral = violett, basisch = blau, grün oder gelb.",
             quiz("Welche Farbe bekommt der Saft mit Seifenlauge?", COLORS3.map { (n, p) -> colorChoice(n, p) }, COLORS3.indexOfFirst { it.first == Indicator.name(Household.SEIFE.pH) })),
 
         Experiment("c2", CH, "Sauer oder basisch?", "🧫", 4..6,
@@ -174,7 +174,7 @@ internal object CatalogB {
             "Teste alle sechs Stoffe.",
             "Essig, Cola und Apfelsaft sind sauer, Milch fast neutral, Natron und Soda basisch.",
             listOf("Der pH-Wert sagt es: unter 7 sauer, 7 neutral, über 7 basisch – der Saft zeigt ihn als Farbe.", "Alles Süße ist basisch.", "Flüssigkeiten sind immer sauer."),
-            "pH-Wert: 0–6 sauer, 7 neutral, 8–14 basisch.",
+            "pH-Wert: unter 7 sauer, genau 7 neutral, über 7 basisch.",
             quiz("Und Natron?", KIND, kindIdx(Household.NATRON.pH))),
 
         Experiment("c3", CH, "Säure trifft Lauge", "🧪", 7..8,
@@ -183,9 +183,9 @@ internal object CatalogB {
             TitrationSetup(0.1, 10.0, 0.1, 1.0),
             "Tropf Lauge dazu, bis der Saft neutral ist.",
             "Bei genau 10 mL ist alles neutral: gleich viel Säure- wie Lauge-Teilchen.",
-            listOf("Gleiche Konzentration und gleiche Menge – die Teilchen heben sich genau auf.", "Lauge ist stärker als Säure, man braucht weniger.", "Neutral wird es nie."),
+            listOf("Gleiche Konzentration und gleiche Menge – die Teilchen heben sich genau auf.", "Lauge ist konzentrierter als Säure, man braucht weniger.", "Neutral wird es nie."),
             "Neutralisation: n(Säure) = n(Lauge).",
-            quiz("Mit doppelt so starker Lauge (0,2 mol/L) – wie viel?", listOf(c("5 mL"), c("10 mL"), c("20 mL")), nearest(listOf(5.0, 10.0, 20.0), Acid.neutralMl(0.1, 10.0, 0.2)))),
+            quiz("Mit doppelt so konzentrierter Lauge (0,2 mol/L) – wie viel?", listOf(c("5 mL"), c("10 mL"), c("20 mL")), nearest(listOf(5.0, 10.0, 20.0), Acid.neutralMl(0.1, 10.0, 0.2)))),
 
         Experiment("c4", CH, "Der pH-Sprung", "📈", 8..10,
             "Kurz vor dem Neutralpunkt (9 mL Lauge) zeigt das Messgerät pH 2,3. Blubb gibt noch 2 mL dazu.",
@@ -193,7 +193,7 @@ internal object CatalogB {
                 nearest(listOf(3.0, 7.0, 12.0), Beaker().addAcid(0.1, 10.0).addBase(0.1, 11.0).pH)),
             TitrationSetup(0.1, 10.0, 0.1, 1.0),
             "Tropf langsam bis über den Neutralpunkt und beobachte die Kurve.",
-            "Um den Neutralpunkt springt der pH-Wert von 2 auf fast 12 – mit nur 2 mL!",
+            "Um den Neutralpunkt springt der pH-Wert von gut 2 auf fast 12 – mit nur 2 mL!",
             listOf("Kurz vorm Ende ist kaum Säure übrig – schon ein Tropfen Lauge zu viel macht die Lösung basisch.", "Das Messgerät ist kaputt.", "Die Lauge wird plötzlich stärker."),
             "Am Neutralpunkt ändert sich der pH-Wert sprunghaft.",
             quiz("Jede pH-Stufe bedeutet zehnmal weniger sauer. Wie viel weniger sauer ist pH 2,3 als pH 1 (Unterschied 1,3 Stufen)?",
@@ -201,7 +201,7 @@ internal object CatalogB {
                 "1 Stufe = 10-mal, 1,3 Stufen ≈ 20-mal (10 hoch 1,3).")),
 
         Experiment("c5", CH, "Verdünnen", "🚰", 8..10,
-            "Blubb hat 10 mL Salzsäure mit pH 1 und gießt Wasser dazu.",
+            "Blubb hat 10 mL Salzsäure mit pH 1 und verdünnt sie mit Wasser.",
             quiz("Zehnmal so viel Volumen (100 mL) – welcher pH?", listOf(c("0,1"), c("2"), c("7")), nearest(listOf(0.1, 2.0, 7.0), Beaker().addAcid(0.1, 10.0).addWater(90.0).pH)),
             TitrationSetup(0.1, 10.0, null, 10.0, targetPh = 2.0, tolPh = 0.05),
             "Gib Wasser dazu, bis der pH-Wert 2 ist.",
@@ -250,7 +250,7 @@ internal object CatalogB {
             "Gleiche die Gleichung aus.",
             "CH₄ + 2 O₂ → CO₂ + 2 H₂O.",
             listOf("Die 4 H werden zu 2 H₂O, das C zu CO₂ – dafür braucht es 4 O, also 2 O₂.", "Ein O₂ reicht immer.", "Methan enthält schon Sauerstoff."),
-            "Beim Verbrennen von Kohlenwasserstoffen entstehen CO₂ und Wasser.",
+            "Verbrennen Kohlenwasserstoffe mit genug Sauerstoff, entstehen CO₂ und Wasser.",
             coeffQuiz(Reactions.byId("erdgas"), 3, listOf(1, 2, 4), "Wie viele Wasser-Moleküle entstehen?")),
 
         Experiment("c10", CH, "Warum rostet Eisen?", "🟤", 8..10,

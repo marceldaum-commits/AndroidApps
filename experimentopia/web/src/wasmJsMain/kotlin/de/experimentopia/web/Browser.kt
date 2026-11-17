@@ -24,7 +24,7 @@ fun loadFile(url: String, ready: (ByteArray?) -> Unit) = fetchBytes(url) { a -> 
 
 // ── Ton: dieselben im Code erzeugten Klänge wie in der Android-App, abgespielt über WebAudio.
 // Browser erlauben Ton erst nach der ersten Berührung – vorher wird still nichts gespielt.
-fun audioReady(): Boolean = js("{ try { const A = window.__exAudio || (window.__exAudio = new (window.AudioContext || window.webkitAudioContext)()); if (A.state === 'suspended') A.resume(); return A.state === 'running'; } catch (e) { return false; } }")
+fun audioReady(): Boolean = js("{ try { if (!window.__exAudio && navigator.userActivation && !navigator.userActivation.hasBeenActive) return false; const A = window.__exAudio || (window.__exAudio = new (window.AudioContext || window.webkitAudioContext)()); if (A.state === 'suspended') A.resume(); return A.state === 'running'; } catch (e) { return false; } }")
 fun hasBuffer(key: String): Boolean = js("!!(window.__exBufs && window.__exBufs[key])")
 fun newSamples(n: Int): JsAny = js("new Float32Array(n)")
 fun putSample(b: JsAny, i: Int, v: Float): Unit = js("{ b[i] = v; }")

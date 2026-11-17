@@ -127,6 +127,7 @@ fun ExperimentScreen(
                                 }
                             }
                             TaskBanner(e.task, goal)
+                            Safety.note(e.id)?.let { SafetyNote(it) }
                             LabView(e.setup, free = false, onGoal = { if (!goal) { goal = true; sfx?.play(Sound.STAR) } })
                             GlowButton({ phase = Phase.REVEAL }, Modifier.fillMaxWidth().pulse(goal, 0.03f).testTag("aufloesung"), enabled = goal, color = E.Sun) {
                                 Text(if (goal) "✨ Auflösung!" else "Erst den Auftrag erfüllen …", fontWeight = FontWeight.Bold)
@@ -163,6 +164,7 @@ fun ExperimentScreen(
                             }
                             if (explained) {
                                 Panel(border = E.Sun) { Text("📒 Merksatz", color = E.Sun, fontWeight = FontWeight.Bold); Text(e.fact, color = E.Text, fontSize = 16.sp) }
+                                Safety.note(e.id)?.let { SafetyNote(it) }
                                 GlowButton({ phase = Phase.TRANSFER }, Modifier.fillMaxWidth().testTag("knobeln"), color = E.Violet) { Text("🧩 Noch eine Knobelfrage!", fontWeight = FontWeight.Bold) }
                             }
                         }

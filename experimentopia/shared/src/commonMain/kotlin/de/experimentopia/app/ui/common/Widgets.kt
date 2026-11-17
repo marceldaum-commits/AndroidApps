@@ -37,7 +37,9 @@ import de.experimentopia.core.model.Fmt
 fun Bar(title: String, onBack: () -> Unit, modifier: Modifier = Modifier, trailing: @Composable RowScope.() -> Unit = {}) {
     Row(modifier.fillMaxWidth().padding(end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onBack, modifier = Modifier.testTag("zurueck")) { Text("←", fontSize = 26.sp, color = E.Text, fontWeight = FontWeight.Bold) }
-        Text(title, style = MaterialTheme.typography.titleLarge, color = E.Text, modifier = Modifier.weight(1f), maxLines = 1)
+        // Lange Titel dürfen umbrechen (schmale Handys ab 320 dp), werden dafür etwas kleiner
+        Text(title, style = if (title.length > 18) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleLarge, color = E.Text,
+            modifier = Modifier.weight(1f), maxLines = 2, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
         trailing()
     }
 }
@@ -136,7 +138,7 @@ fun NumberField(label: String, unit: String, min: Double, max: Double, initial: 
     OutlinedTextField(
         value = text,
         onValueChange = { text = it; (checkInput(it, min, max, unit) as? Check.Ok)?.let { ok -> onValid(ok.value) } },
-        label = { Text("$label ($unit)") },
+        label = { Text(if (unit.isBlank()) label else "$label ($unit)") },
         singleLine = true,
         isError = check is Check.Bad,
         supportingText = { Text(when (check) { is Check.Bad -> "🙈 ${check.message}"; is Check.Ok -> "✓ erlaubt: ${Fmt.num(min)} bis ${Fmt.num(max)} $unit" }, fontSize = 12.sp) },
@@ -154,5 +156,19 @@ fun TaskBanner(text: String, done: Boolean, modifier: Modifier = Modifier) {
         Text(if (done) "✅" else "🎯", fontSize = 18.sp)
         Spacer(Modifier.width(8.dp))
         Text(if (done) "Geschafft! Schau dir an, was passiert ist." else text, color = E.Text, fontSize = 14.sp, modifier = Modifier.testTag("auftrag"))
+    }
+}
+
+/** Sicherheitshinweis für echte Versuche zu Hause (aus [de.experimentopia.core.model.Safety]) */
+@Composable
+fun SafetyNote(text: String, modifier: Modifier = Modifier) {
+    Row(modifier.fillMaxWidth().clip(RoundedCornerShape(14.dp)).background(E.Orange.copy(alpha = 0.14f)).border(1.5.dp, E.Orange, RoundedCornerShape(14.dp))
+        .padding(horizontal = 12.dp, vertical = 8.dp).testTag("sicherheit"), verticalAlignment = Alignment.Top) {
+        Text("⚠️", fontSize = 18.sp)
+        Spacer(Modifier.width(8.dp))
+        Column {
+            Text("In echt: Sicherheit zuerst", color = E.Orange, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+            Text(text, color = E.Text, fontSize = 13.sp)
+        }
     }
 }

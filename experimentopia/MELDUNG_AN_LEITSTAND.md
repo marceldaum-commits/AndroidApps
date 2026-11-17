@@ -2,6 +2,151 @@
 
 Neueste oben.
 
+## Korrektheitsprüfung 17.11.
+
+Version **0.5.1 vom 17.11.2026** (Android-App und WebApp, gleiche Version). Geprüft wurde der gesamte Stand: 200 Versuche auf 8 Inseln und 34 Geräte.
+
+### Was geprüft wurde und wie
+1. **Fachlich (unabhängige Zweitprüfung):** Vier getrennte Prüfer haben ohne meine Vorarbeit jede Zeile gelesen. Aufgeteilt war nach (a) Wasser, Mechanik, Strom und Magnet, (b) Chemie und Stofftrennung, (c) Wärme, Licht, Schall, Fall und Malkasten, (d) Biologie.
+   Geprüft gegen verlässliche Quellen (Lehrerfortbildung BW, NABU, LfU Bayern, NASA Fact Sheets, Sicherheitsdatenblätter u. a.). Alle berechneten Antworten haben sie nachgerechnet, Fallzeiten und Räuber-Beute-Kurven in einem eigenen Nachbau.
+   Zusätzlich gibt es automatische Tests: Jede richtige Antwort wird aus den Modellen berechnet und in `CatalogTest`, `PhysicsTest`, `BiologyTest` und `Biology2Test` geprüft (jetzt auch Sicherheitshinweise, Trägheit und Mikroskop-Sehfeld).
+2. **Sprache:** Rechtschreibung, Grammatik, Du-Anrede, Fachbegriffe und Platzhalter, bei allen Texten durch die vier Prüfer. Einheitlich ist jetzt „violett“ statt „lila“ beim Rotkohl, Einheiten und Bindestriche sind korrigiert.
+3. **Funktion:**
+   - Android: 59 Bildschirmfotos (Robolectric) angesehen.
+   - Neu: Prüfung bei 320 dp für Start, alle 8 Inseln und alle 34 Geräte, jeweils im Versuch und im Freien Labor (77 Bilder, `NarrowTest`).
+   - Web: Chromium bei 320 und 400 px – kein weißer Bildschirm (Hintergrund ab dem ersten Bild dunkel), keine waagerechte Scrollleiste, keine Konsolenfehler.
+   - Lint ohne Fehler, beide APKs gebaut.
+4. **Barrierefreiheit:**
+   - Kontraste aller Textfarben auf den Hintergründen nachgemessen: mindestens 4,5 : 1 (WCAG AA), Fließtext 12–16 : 1.
+   - Tippflächen mindestens 32 dp (WCAG 2.2 verlangt 24 px).
+   - Alles lässt sich auch ohne Wischen bedienen (Knöpfe statt Gesten).
+   - Ton und Vibration sind abschaltbar.
+5. **Standards:**
+   - Web = Android: gleicher Code, gleiche Version 0.5.1.
+   - Ladebild ohne weißen Bildschirm.
+   - Stufen-Nachweis: Jeder Versuch hat eine Klassenstufe, ein Test prüft die Angabe jeder Insel.
+   - Datenschutz: keine Daten nach außen, nur lokale Speicherung.
+   - Keine GPL, keine kopierten Schulbuchtexte.
+6. **Test-Adresse:** Der Branch `experimentopia-test` enthält `experimentopia/webapp/` und wird bei jedem Push automatisch nachgezogen. Vor dieser Prüfung lag dort Version 0.5.0, nach dem Push ist es 0.5.1.
+
+### Abweichungen und Korrekturen (vorher → nachher)
+
+**Echte Fehler**
+| Versuch | vorher | nachher |
+|---|---|---|
+| Mikroskop (u1–u5) | Sehfeld = 22 mm ÷ Gesamtvergrößerung (10-mal zu klein); u3: „etwa 30 Bakterien passen nebeneinander“ | 22 mm ÷ Objektiv-Vergrößerung (bei 400-fach 0,55 mm); u3: „etwa 300“ |
+| n9 Trägheit | Text „kein Motor“, im Labor zog aber ein Motor den Wagen | eigener Laborteil: einmal schubsen, dann rollen, spiegelglatt gegen Teppich |
+| l9 „Alle meine Entchen“ | zweites „A A A A G“ fehlte | Melodie vollständig |
+| j4 Nahrungsnetz | Waldkauz frisst nur Mäuse (falsch, er ist ein Allesfresser) | Schleiereule (fast nur Mäuse) |
+| w8 Dichteturm | „Egal in welcher Reihenfolge …“ (Spiritus mischt sich mit Wasser) | „Vorsichtig eingegossen gilt …“, Merksatz angepasst |
+| w13 | falsche Begründung „54 g ist mehr als 20“ war in Wahrheit richtig (Archimedes) | „Glänzende Würfel sinken immer.“ |
+| c16, c3 | „schwache“ / „starke“ Säure bzw. Lauge für die Konzentration | „verdünnte“ / „konzentriertere“ |
+| c22 Thermit | „ein Funke, und …“ (ein Funke zündet Thermit nicht) | „mit einem brennenden Magnesiumband gezündet“ |
+| h6 | „Glühendes Eisen … Zisch!“ bei 100 °C | „Heißes Eisen … Plumps!“ |
+| h14 | „kälter geht immer“ | „… bis zum absoluten Nullpunkt (−273 °C)“ |
+| e7 Merksatz | „Eiweiße nehmen ab 42 °C Schaden“ (widersprach dem Versuch, Amylase arbeitet bei 50 °C) | „Hitze zerstört Enzyme dauerhaft (Denaturierung)“ |
+| o1 | Wasser wandert „durch die Zellwand“ | „durch die Zellhaut (Zellmembran)“ |
+
+**Ungenau (präzisiert)**
+- **c2:** pH „0–6 sauer, 8–14 basisch“ → „unter 7 / genau 7 / über 7“.
+- **c1:** basisch „grün/gelb“ → „blau, grün oder gelb“.
+- **c18:** „jede Verzehnfachung +1“ → „anfangs +1, nahe 7 immer weniger“.
+- **c19:** Elektrolyse jetzt mit Natron und Batterie statt „Strom“.
+- **c4:** „von 2“ → „von gut 2“.
+- **c9:** „Verbrennen …“ → „mit genug Sauerstoff“.
+- **c22:** „unedleres Metall nimmt einem edleren …“.
+- **k18:** „ohne Reibung“ ergänzt; 245 N · 2 m ≈ 491 J (ungerundet 490,5 J).
+- **w7:** Knobelfrage als Gedankenversuch („Angenommen, gleiche Dichte …“).
+- **Spiritus:** Dichte 0,79 → 0,81 g/cm³ (Brennspiritus).
+- **Magnete:** „Eisen und die meisten Stahlsorten (manches Edelstahl kaum)“.
+- **s20:** „Messingschlüssel“; **s4:** „UND“ → „egal ob … oder …“.
+- **k10:** Merksatz erklärt einseitigen Hebel.
+- **k11:** „Nuss 6 kg“ → „Knackkraft wie 6 kg“.
+- **k13:** Mobile im Museum statt über dem Babybett.
+- **n7:** Impuls „gleich groß, entgegengesetzt“.
+- **s12:** „etwas dunkler“ → „deutlich dunkler“.
+- **Recyclinghof** → Sortier- bzw. Recyclinganlage.
+- **Balsa:** „eines der leichtesten Hölzer“.
+- **l18:** Grundton 262 Hz genannt (sonst war die Frage nicht lösbar).
+- **l3:** „gelbes Licht wirkt im Auge wie Rot + Grün“; **l2:** „fast jede Lichtfarbe“.
+- **h10, h12, h6:** „spezifische Wärmekapazität“.
+- **h12:** falsche Begründung „Eisen leitet schlechter“ (die stimmt) ersetzt.
+- **h13:** „kostet Kraft“ → „kostet Energie“.
+- **f6:** √(9,81 ÷ 1,62) ≈ 2,46.
+- **f10:** Hinweis, dass ein Ballon im Vakuum platzt.
+- **f15:** „Dauer fast gleich“ statt „immer gleich“.
+- **m2:** „fast Schwarz“ → „ziemlich dunkel“ (passt zur gezeigten Farbe).
+- **m4:** Ziel heißt einheitlich „Rosa“.
+- **p5/p6:** Hase-Luchs-Zyklus jetzt in Kanada. Knobelfrage über Räuber in Deutschland auf Rehe umgestellt (der Luchs frisst hier vor allem Rehe).
+- **j2:** Ringelnatter frisst „vor allem Frösche, manchmal Mäuse“.
+- **o1:** Merksatz Osmose eindeutig formuliert.
+- **e7:** „kocht auf (80 °C)“ → „erhitzt auf 80 °C“.
+- **p3:** Fotosynthese-Gleichung mit Licht als Energie; Antwort „Gegen Algen“ (teilweise richtig) ersetzt.
+- **u4:** Antwort „Algen, die es gefressen hat“ (teilweise richtig) ersetzt.
+- **Apfel:** „reife Äpfel“ (unreife enthalten Stärke).
+- **q3:** abgekochtes Wasser, „keimen nicht – ihnen fehlt Luft“.
+- **Kresse:** keimt ab 5 °C statt 2 °C.
+- **u2:** „ein kleines Stück vom Floh, z. B. das Auge“.
+- **u5:** Größenvergleich Amöbe und Pantoffeltierchen ergänzt.
+- **g1:** „vor über 160 Jahren“.
+- **t6:** Filterpapier nur mit dem Rand ins Wasser.
+- **t7:** Antwort „Kühlschrank“ (manche haben Filter) → „Toaster“.
+- **c14:** Hinweis, dass man die Farbe beim Kaffee schlecht sieht.
+
+**Sprache:** „einen Viertelmillimeter“, „100 000-mal“, „Wievielmal so lange“, „Wie lange braucht“, „näher an der Temperatur der größeren Menge“, „Tausendstelsekunden“, „ein Sechstel so groß“,
+„Mia wiegt nur ein Drittel so viel“, „eine 40-kg-Kiste“, „Feld 4“ statt „ganz außen“, Kraftmesser-Satz, „macht Lebensmittel haltbar“, Schwimmweste-Frage, „Blubb lässt … fallen“.
+
+**Sicherheit (neu):**
+- Bisher gab es keine Sicherheitshinweise. Jetzt zeigen **72 Versuche** einen gut sichtbaren Hinweis „⚠️ In echt: Sicherheit zuerst“, im Versuch und im Forscherbuch (`Safety.kt`).
+- Inhalte:
+  - Strom nur mit Batterie, nie Steckdose; Kurzschluss heiß.
+  - Säure/Lauge nur mit Schutzbrille im Chemieraum; erst das Wasser, dann die Säure.
+  - Knallgas, Thermit und Magnesium nur Lehrkraft/Fachleute.
+  - Elektrolyse ohne Kochsalz (Chlor); Wasserstoffperoxid; Spiritusflamme fast unsichtbar.
+  - Herd, Karamell, 60-°C-Wasser, heißes Metall.
+  - Prisma: nie in die Sonne schauen; nie etwas von Türmen werfen.
+  - Iod und Biuret; Speichel hygienisch.
+  - Teichwasser nur mit Erwachsenen; Puls am Hals sanft.
+  - Quecksilber giftig.
+
+**Oberfläche und Technik:**
+- Inselpfade bei 320 dp: Wörter brachen mitten im Wort um („Wasse-r“) → Pfad schlängelt sich nur so weit, dass 160 dp für den Titel bleiben.
+- Lange Titel wurden abgeschnitten → dürfen zweizeilig werden.
+- Blubb sagte „sieben Inseln“ → zählt jetzt selbst („acht“).
+- Mikroskop: Lampen-Schalter direkt unter dem Bild; Augentierchen schwimmen sichtbar zum Licht. Gezeichnet wird jetzt genau, was man erkennt:
+  Mit bloßem Auge erschien der Wasserfloh vorher groß, obwohl daneben „nur ein winziger Punkt“ stand.
+- Magnet-Labor bei 320 dp: Gegenstände und Namen überlappten sich, die vierte Reihe ragte aus der Fläche → 3 je Reihe, lange Namen zweizeilig, Fläche wächst mit.
+- Eingabefelder ohne Einheit zeigten leere Klammern („Hasen ()“) → nur noch der Name.
+- Rotkohl-Labor: „lila“ → „violett“ (wie in den Antworten).
+- Atom-Baukasten: Die Reaktionsgleichung ist bei 320 dp breiter als der Bildschirm; man kann sie seitlich verschieben (war schon so, geprüft).
+- Web: Ton-Warnung in der Konsole vor dem ersten Antippen beseitigt.
+- Play-Fassung: Berechtigung „Apps installieren“ entfernt (nur noch GitHub-Fassung mit Selbst-Update).
+
+### Was nicht (vollständig) prüfbar war
+- Echte Geräte: kein iPhone/iPad, kein echtes Android-Handy, nur Robolectric und Chromium.
+- Bildschirmleser im Web: Compose Multiplatform zeichnet in ein Canvas, die Unterstützung für Bildschirmleser ist dort noch eingeschränkt. Auf Android tragen die Knöpfe Text.
+- Reale Messwerte, die von Hersteller und Sorte abhängen: Rf-Werte echter Filzstifte, Farbskalen von Glukose-Teststreifen, Rotkohl-Farbgrenzen (in der Literatur uneinheitlich).
+  Die App nutzt übliche Schulwerte.
+- Vereinfachte Modelle (bewusst, für Klasse 3–10): Räuber-Beute (Lotka-Volterra), Enzymkurve, Erholungspuls (eher optimistisch), Keimdauer.
+
+### Vorstellung (aktueller Stand)
+- **Was:** Experimentopia – ein virtuelles Versuchslabor. Kinder vermuten, probieren aus und erklären dem Laborkolben Blubb, warum etwas passiert (Predict–Observe–Explain).
+  200 Versuche auf 8 Inseln: Wasser, Kraft, Strom, Chemie, Wärme, Licht & Klang, Fallturm, Bio-Dschungel. Dazu 34 Geräte im Freien Labor mit eigenen Werten, Themensuche (19 Fachbereiche), Forscherbuch und Abzeichen.
+- **Für wen:** Klasse 3–10, gestaffelt; Eltern und Lehrkräfte.
+- **Technik:** Kotlin, Compose Multiplatform (Android + WebApp aus einem Code), Room, Service Worker mit Auto-Update, GitHub-Releases mit Updater. Keine Werbung, kein Tracking.
+- **Zeitplan:** 0.1–0.5 stehen. Als Nächstes Feinschliff nach euren Rückmeldungen. Pro erst nach Freigabe des Preises.
+- **Pro-Konzept (unverändert, wartet auf Freigabe):**
+  - Frei bleiben die ganze Wasserinsel und je Insel die ersten 5 Versuche (52 von 200), dazu Rätsel des Tages, Forscherbuch und Themensuche.
+  - Forscher-Pass 7,99 € einmalig (6,71 € netto + 1,28 € USt), Einführung 4,99 €.
+  - Freischalt-Code nach euren Vorgaben, Eltern-Abfrage.
+
+### App-Karte
+- **Name:** Experimentopia
+- **Emoji:** 🧪
+- **Zielgruppe:** Klasse 3–10 · Physik, Chemie & Biologie
+- **Ein Satz:** Das Versuchslabor für die Hosentasche: 200 Versuche vermuten, ausprobieren und dem Laborkolben Blubb erklären.
+
+
 ## 17.11.2026 – Version 0.5.0 vom 17.11.2026: Mikroskop, Keimung, Nahrungsketten, Herz & Puls
 
 - 4 neue Geräte im Bio-Dschungel, **200 Versuche**: Mikroskop (Sehfeld 22 mm ÷ Vergrößerung, Erkennbarkeit ab 5 mm scheinbarer Größe), Kresse-Keimung

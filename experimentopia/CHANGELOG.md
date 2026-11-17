@@ -1,5 +1,17 @@
 # Changelog – Experimentopia
 
+## 0.5.1 – Alles nachgeprüft (17.11.2026)
+
+- ✅ **Große Korrektheitsprüfung**: Alle 200 Versuche wurden fachlich, sprachlich und am Bildschirm nachgeprüft. Über 100 Stellen sind jetzt genauer:
+  - Zum Beispiel: beim Mikroskop ist das Bildfeld jetzt richtig groß – bei 400-fach passen etwa 300 Bakterien nebeneinander (vorher stand dort 30).
+  - Der Versuch zur Trägheit zeigt jetzt wirklich einen Wagen ohne Motor: einmal schubsen, dann rollen lassen – spiegelglatt oder auf dem Teppich.
+  - „Alle meine Entchen“ ist jetzt vollständig, die Schleiereule ersetzt den Waldkauz (der frisst nicht nur Mäuse), Säuren heißen „verdünnt“ statt „schwach“.
+- ⚠️ **Sicherheitshinweise**: Bei 72 Versuchen, die man in echt nachmachen könnte (Strom, Feuer, Säuren, heißes Wasser, Teichwasser …), steht jetzt,
+  worauf man achten muss – im Versuch und im Forscherbuch.
+- 📱 **Kleine Handys**: Auf schmalen Bildschirmen (320 Pixel) brechen Titel und Wörter auf den Inseln nicht mehr mitten im Wort um,
+  und im Magnet-Labor überlappen sich die Dinge nicht mehr.
+- Blubb begrüßt jetzt richtig mit „acht Inseln“. Die Play-Store-Fassung braucht keine Installations-Berechtigung mehr.
+
 ## 0.5.0 – Mikroskop, Kresse, Nahrungsketten und dein Herz (17.11.2026)
 
 - 🔬 **Mikroskop**: Ein Tropfen Teichwasser – vom bloßen Auge über die Lupe bis 400-fach. Pantoffeltierchen rudern, die Amöbe fließt,

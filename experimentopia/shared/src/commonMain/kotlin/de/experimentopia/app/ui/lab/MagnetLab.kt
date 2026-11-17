@@ -49,12 +49,16 @@ private fun ItemsLab(items: List<MagnetItem>, free: Boolean, onGoal: () -> Unit)
     var last by remember { mutableStateOf<MagnetItem?>(null) }
     GoalWhen(!free && items.all { it in tested }, onGoal)
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Canvas(Modifier.fillMaxWidth().height(280.dp).testTag("magnettisch").pointerInput(items) {
+        // Auf schmalen Handys 3 statt 4 Dinge je Reihe; die Fläche wächst mit der Zahl der Reihen
+        BoxWithConstraints(Modifier.fillMaxWidth()) {
+        val cols = if (maxWidth < 340.dp) 3 else 4
+        val rows = (items.size + cols - 1) / cols
+        fun home(i: Int, w: Float, d: Float) = Offset(w * ((i % cols) + 0.5f) / cols, d * (64f + 100f * (i / cols)))
+        Canvas(Modifier.fillMaxWidth().height((rows * 100 + 70).dp).testTag("magnettisch").pointerInput(items, cols) {
             fun test(at: Offset) {
                 magnet = at
-                val cols = 4
                 items.forEachIndexed { i, it ->
-                    val home = Offset(size.width * (0.14f + 0.24f * (i % cols)), size.height * (0.3f + 0.36f * (i / cols)))
+                    val home = home(i, size.width.toFloat(), density)
                     if (it !in stuck && (home - magnet).getDistance() < 44.dp.toPx()) {
                         if (it !in tested) tested += it
                         val first = last != it; last = it
@@ -68,15 +72,16 @@ private fun ItemsLab(items: List<MagnetItem>, free: Boolean, onGoal: () -> Unit)
             }
         }) {
             drawRoundRect(Color(0xFF2A1F55), Offset.Zero, size, CornerRadius((24f * density)))
-            val cols = 4
             items.forEachIndexed { i, it ->
-                val home = Offset(size.width * (0.14f + 0.24f * (i % cols)), size.height * (0.3f + 0.36f * (i / cols)))
+                val home = home(i, size.width, density)
                 val k = stuck.indexOf(it)
                 val p = if (k >= 0 && magnet.x >= 0) magnet + Offset(-(30f * density) + (k % 3) * (30f * density), (46f * density) + (k / 3) * (26f * density)) else home
                 val wobble = if (it in tested && !it.magnetic && it == last) sin(now * 30f) * (2f * density) else 0f
                 label(tm, it.emoji, p + Offset(wobble, 0f), 30.sp)
                 if (k < 0) {
-                    label(tm, it.title, home + Offset(0f, (30f * density)), 10.sp, E.Muted)
+                    // Lange Namen zweizeilig, damit sie sich nicht überlappen
+                    val name = if (it.title.length > 11 && ' ' in it.title) it.title.replaceFirst(' ', '\n') else it.title
+                    label(tm, name, home + Offset(0f, (34f * density)), 10.sp, E.Muted)
                     if (it in tested) label(tm, if (it.magnetic) "🧲" else "✗", home + Offset((26f * density), -(22f * density)), 14.sp, if (it.magnetic) E.Mint else E.Muted)
                 }
             }
@@ -89,7 +94,8 @@ private fun ItemsLab(items: List<MagnetItem>, free: Boolean, onGoal: () -> Unit)
                 drawLine(Color.White, Offset(m.x - (28f * density), m.y + (8f * density)), Offset(m.x - (28f * density), m.y + (18f * density)), (16f * density))
                 drawLine(Color.White, Offset(m.x + (28f * density), m.y + (8f * density)), Offset(m.x + (28f * density), m.y + (18f * density)), (16f * density))
                 repeat(3) { k -> drawCircle(E.Sun.copy(alpha = 0.25f * (1 - ((now * 1.5f + k / 3f) % 1f))), (30f * density) + (50f * density) * ((now * 1.5f + k / 3f) % 1f), m + Offset(0f, (14f * density)), style = Stroke((2f * density))) }
-            } else label(tm, "👆 Ein Ding antippen oder mit dem Finger darüberwischen", Offset(size.width / 2, size.height * 0.92f), 12.sp, E.Muted)
+            } else label(tm, "👆 Antippen oder mit dem Finger darüberwischen", Offset(size.width / 2, size.height - 18 * density), 12.sp, E.Muted)
+        }
         }
         last?.let { Panel(border = if (it.magnetic) E.Mint else E.Muted) {
             Text("${it.emoji} ${it.title}: ${if (it.magnetic) "wird angezogen!" else "wird nicht angezogen"}", fontWeight = FontWeight.Bold, color = E.Text)

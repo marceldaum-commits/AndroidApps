@@ -10,7 +10,7 @@ enum class Liquid(val title: String, val rho: Double, val color: Long, val emoji
     OEL("Speiseöl", 0.92, 0xFFFFD24D, "🌻"),
     HONIG("Honig", 1.42, 0xFFE89A1C, "🍯"),
     SPUELI("Spülmittel", 1.06, 0xFF7CF29A, "🧴"),
-    SPIRITUS("Spiritus", 0.79, 0xFFB98CFF, "🔥"),
+    SPIRITUS("Spiritus", 0.81, 0xFFB98CFF, "🔥"),
     QUECKSILBER("Quecksilber (giftig!)", 13.53, 0xFFC8CCD6, "🥄"),
     ;
     companion object {
@@ -43,7 +43,7 @@ enum class Thing(val title: String, val emoji: String, val rho: Double, val mass
     TRAUBE("Weintraube", "🍇", 1.08, 5.0, "Trauben sind voller Zuckersaft – dichter als Wasser."),
     EBENHOLZ("Ebenholz", "🟫", 1.2, 60.0, "Ebenholz ist so dicht, dass es untergeht – ein Holz, das sinkt!"),
     EICHE("Eichenholz", "🌳", 0.75, 75.0, "Eiche ist schwer, aber immer noch weniger dicht als Wasser."),
-    BALSA("Balsaholz", "🍂", 0.16, 8.0, "Balsa ist das leichteste Holz – daraus baut man Modellflugzeuge."),
+    BALSA("Balsaholz", "🍂", 0.16, 8.0, "Balsa ist eines der leichtesten Hölzer – daraus baut man Modellflugzeuge."),
     PE("Flaschendeckel (PE)", "🔵", 0.95, 2.0, "Polyethylen ist leichter als Wasser – so trennt man Kunststoffe im Recycling."),
     PVC("Rohrstück (PVC)", "⚪", 1.4, 20.0, "PVC ist dichter als Wasser und sinkt."),
     ALUWUERFEL("Metallwürfel (54 g, 20 cm³)", "🧊", 2.7, 54.0, "54 g ÷ 20 cm³ = 2,7 g/cm³ – das ist Aluminium."),

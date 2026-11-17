@@ -24,8 +24,8 @@ import de.experimentopia.core.model.*
 fun NewtonLab(s: NewtonSetup, free: Boolean, onGoal: () -> Unit) {
     var mode by remember { mutableStateOf(s.mode) }
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        if (free) ChipRow(NewtonMode.entries, mode, { if (it == NewtonMode.CART) "🛒 Wagen ziehen (F = m·a)" else "🛹 Abstoßen (actio = reactio)" }, { mode = it })
-        if (mode == NewtonMode.CART) CartLab(s, free, onGoal) else PushLab(s, free, onGoal)
+        if (free) ChipRow(NewtonMode.entries, mode, { when (it) { NewtonMode.CART -> "🛒 Wagen ziehen (F = m·a)"; NewtonMode.PUSH -> "🛹 Abstoßen (actio = reactio)"; NewtonMode.GLIDE -> "🧊 Schubs (Trägheit)" } }, { mode = it })
+        when (mode) { NewtonMode.CART -> CartLab(s, free, onGoal); NewtonMode.PUSH -> PushLab(s, free, onGoal); NewtonMode.GLIDE -> GlideLab(free, onGoal) }
     }
 }
 
@@ -132,5 +132,42 @@ private fun PushLab(s: NewtonSetup, free: Boolean, onGoal: () -> Unit) {
             Text("Eigene Werte: rechte Person", fontWeight = FontWeight.Bold, color = E.Sun)
             NumberField("Masse rechts", "kg", 5.0, 300.0, own, { own = it; pair = pair.first to it; startAt = -1f })
         }
+    }
+}
+
+/** Trägheit: einmal schubsen, dann ohne Motor rollen lassen – spiegelglatt oder mit Reibung */
+@Composable
+private fun GlideLab(free: Boolean, onGoal: () -> Unit) {
+    val sfx = LocalSfx.current
+    val tm = rememberTextMeasurer()
+    val now by rememberSeconds()
+    var friction by remember { mutableStateOf(false) }
+    var startAt by remember { mutableFloatStateOf(-1f) }
+    val done = remember { mutableStateListOf<Boolean>() }
+    val t = if (startAt < 0) 0.0 else (now - startAt).toDouble()
+    val (x, v) = Glide.at(t, friction)
+    val finished = startAt >= 0 && (x >= Glide.TRACK || (friction && v <= 0.0))
+    LaunchedEffect(finished) { if (finished) { sfx?.play(if (friction) Sound.SOFT else Sound.CLANK); if (friction !in done) done += friction } }
+    GoalWhen(!free && done.containsAll(listOf(false, true)), onGoal)
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Canvas(Modifier.fillMaxWidth().height(170.dp).testTag("gleitbahn")) {
+            val w = size.width; val h = size.height; val d = density
+            val x0 = w * 0.1f; val x1 = w * 0.92f; val y = h * 0.6f
+            drawLine(if (friction) Color(0xFFB5651D) else Color(0xFFBFE8FF), Offset(x0 - 20 * d, y + 22 * d), Offset(x1 + 10 * d, y + 22 * d), (if (friction) 8 else 4) * d, StrokeCap.Round)
+            for (k in 0..3) { val xx = x0 + (x1 - x0) * k / 3; label(tm, "${k} m", Offset(xx, y + 40 * d), 10.sp, E.Muted) }
+            val cx = x0 + ((minOf(x, Glide.TRACK) / Glide.TRACK) * (x1 - x0)).toFloat()
+            val bw = 50 * d; val bh = 24 * d
+            drawRoundRect(E.Sky, Offset(cx - bw, y - bh), Size(bw, bh), CornerRadius(6 * d))
+            drawCircle(E.Text, 6 * d, Offset(cx - bw * 0.75f, y + 2 * d)); drawCircle(E.Text, 6 * d, Offset(cx - bw * 0.25f, y + 2 * d))
+            if (startAt >= 0 && t < 0.4) label(tm, "✋", Offset(cx - bw - 14 * d, y - bh / 2), 22.sp)
+            label(tm, if (friction) "Teppich (mit Reibung)" else "spiegelglatt, ohne Reibung", Offset(w / 2, h * 0.1f), 12.sp, E.Muted)
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+            Readout("Geschwindigkeit", "${Fmt.num(maxOf(v, 0.0), 2)} m/s", E.Mint, Modifier.weight(1f))
+            Readout("Strecke", "${Fmt.num(minOf(x, Glide.TRACK), 2)} m", E.Sun, Modifier.weight(1f))
+        }
+        ChipRow(listOf(false, true), friction, { b -> (if (b) "🟫 Teppich" else "🧊 spiegelglatt") + if (b in done) " ✓" else "" }, { friction = it; startAt = -1f })
+        GlowButton({ startAt = now; sfx?.play(Sound.WHOOSH) }, Modifier.fillMaxWidth().pulse(startAt < 0), color = E.Mint) { Text("✋ Schubsen!", fontWeight = FontWeight.Bold) }
+        Text("Nach dem Schubs gibt es keinen Motor mehr – nur noch die Bahn.", color = E.Muted, fontSize = 13.sp)
     }
 }

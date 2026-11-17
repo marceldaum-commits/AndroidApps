@@ -19,8 +19,9 @@ enum class Sight(val text: String) { NICHTS("nicht zu sehen"), PUNKT("nur ein wi
 object Microscope {
     /** Vergrößerungen: bloßes Auge, Lupe, Mikroskop-Stufen */
     val MAGS = listOf(1, 10, 40, 100, 400)
-    /** Sehfeldzahl: Durchmesser des sichtbaren Kreises in mm = 22 / Vergrößerung (beim Auge: Wassertropfen ca. 5 mm) */
-    fun fieldMm(mag: Int) = if (mag == 1) 5.0 else 22.0 / mag
+    /** Sehfeld: Sehfeldzahl des Okulars (22 mm) ÷ Objektiv-Vergrößerung; das Okular vergrößert 10-fach, also 220 ÷ Gesamtvergrößerung.
+     *  Lupe (10-fach) ebenfalls etwa 22 mm. Beim bloßen Auge zeigen wir den Wassertropfen (ca. 5 mm). */
+    fun fieldMm(mag: Int) = if (mag == 1) 5.0 else 220.0 / mag
     /** Scheinbare Größe in mm (so groß wirkt es) */
     fun apparentMm(m: Microbe, mag: Int) = m.sizeMm * mag
     /** Erkennbar: Ab 0,1 mm sieht man einen Punkt, ab 5 mm scheinbarer Größe Einzelheiten */
@@ -42,8 +43,8 @@ object Microscope {
 data class Dish(val label: String, val water: Boolean, val tempC: Double, val air: Boolean = true, val light: Boolean = true)
 
 object Germination {
-    /** Kresse keimt nur mit Wasser, Luft (Sauerstoff) und zwischen etwa 2 und 38 °C. Licht ist zum Keimen nicht nötig. */
-    fun canGerminate(d: Dish) = d.water && d.air && d.tempC > 2 && d.tempC < 38
+    /** Kresse keimt nur mit Wasser, Luft (Sauerstoff) und zwischen etwa 5 und 38 °C. Licht ist zum Keimen nicht nötig. */
+    fun canGerminate(d: Dish) = d.water && d.air && d.tempC >= 5 && d.tempC < 38
     /** Tage bis zum Keimen (bei 22 °C etwa 1,5 Tage; Kälte bremst stark) */
     fun daysToSprout(d: Dish) = if (!canGerminate(d)) Double.POSITIVE_INFINITY else 1.5 / exp(-((d.tempC - 22) / 12).pow(2))
     /** Höhe in cm nach [days] Tagen. Im Dunkeln schießt der Keimling in die Höhe (Vergeilen), bleibt aber gelb und dünn. */
@@ -61,7 +62,7 @@ object Germination {
 enum class Organism(val title: String, val emoji: String, val producer: Boolean = false) {
     GRAS("Gras", "🌱", true), LOEWENZAHN("Löwenzahn", "🌼", true),
     RAUPE("Raupe", "🐛"), HEUSCHRECKE("Heuschrecke", "🦗"), HASE("Hase", "🐇"), MAUS("Maus", "🐭"),
-    AMSEL("Amsel", "🐦"), FROSCH("Frosch", "🐸"), SCHLANGE("Ringelnatter", "🐍"), FUCHS("Fuchs", "🦊"), EULE("Waldkauz", "🦉"),
+    AMSEL("Amsel", "🐦"), FROSCH("Frosch", "🐸"), SCHLANGE("Ringelnatter", "🐍"), FUCHS("Fuchs", "🦊"), EULE("Schleiereule", "🦉"),
 }
 
 object FoodWeb {

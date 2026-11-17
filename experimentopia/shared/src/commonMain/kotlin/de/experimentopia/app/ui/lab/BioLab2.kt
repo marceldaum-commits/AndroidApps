@@ -123,10 +123,11 @@ fun MicroscopeLab(s: MicroscopeSetup, free: Boolean, onGoal: () -> Unit) {
             val cam = swarm.first { it.first == focus }.let { wander(it.first, it.second, it.third, light = false) }
             clipPath(circle) {
                 swarm.forEach { (m, base, ph) ->
-                    val apparent = Microscope.apparentMm(m, mag)
-                    if (apparent < 0.1) return@forEach
+                    // Gezeichnet wird, was man wirklich erkennt: unsichtbar, nur ein Pünktchen oder mit Einzelheiten
+                    val st = Microscope.sight(m, mag)
+                    if (st == Sight.NICHTS) return@forEach
                     val p = ctr + (wander(m, base, ph) - cam) * pxPerMm
-                    microbe(m, p, (m.sizeMm * pxPerMm).toFloat(), (ph * 57f + sin(now * 0.3f + ph) * 20f) * (if (m.seeksLight) 1f - drift else 1f), now)
+                    microbe(m, p, if (st == Sight.PUNKT) 2f * density else (m.sizeMm * pxPerMm).toFloat(), (ph * 57f + sin(now * 0.3f + ph) * 20f) * (if (m.seeksLight) 1f - drift else 1f), now)
                 }
             }
             drawCircle(Color(0xFF222222), rad, ctr, style = Stroke(6 * density))

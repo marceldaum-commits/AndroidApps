@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 0.5.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 0.5.1 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -46,6 +46,11 @@ Auftrieb (ρ-Vergleich, Eintauchtiefe), Hebelgesetz, Flaschenzug (Goldene Regel)
 pH aus [H⁺]−[OH⁻] mit Kw, Atomzählung aller Reaktionen, begrenzender Stoff beim Natron-Ballon, Richmann-Mischungsregel, Heizkurve mit Schmelz- und
 Verdampfungswärme, Fall mit Luftwiderstand (numerisch) und ohne, exakte Pendeldauer (elliptisches Integral), Röhren f = c/(4L),
 Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, AB0), Osmose, Enzymaktivität, Lichtstärke ∼ 1/d², Lotka-Volterra, Trennverfahren (kürzester Weg), subtraktive Farbmischung (`BiologyTest`), Sehfeld und Auflösung beim Mikroskop, Keimbedingungen, Nahrungsnetz (längste Kette, 10-%-Regel, Anreicherung), Herzzeitvolumen und Erholungspuls (`Biology2Test`). Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
+
+## Sicherheit
+
+In der App ist jeder Versuch gefahrlos. Wo Kinder etwas in echt nachmachen könnten (Strom, Feuer, Säuren, heißes Wasser, Teichwasser …),
+zeigt der Versuch einen Sicherheitshinweis (`core/model/Safety.kt`), auch im Forscherbuch.
 
 ## Frei und Pro
 

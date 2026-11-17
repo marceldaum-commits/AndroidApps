@@ -57,7 +57,7 @@ internal object CatalogA {
             "Mit Schale schwimmt sie – ohne Schale geht sie unter!",
             listOf("Die Schale ist voller Luftbläschen – eine eingebaute Schwimmweste.", "Die Schale ist schwer und zieht nach oben.", "Geschältes Obst saugt sich mit Wasser voll."),
             "Die Schale wirkt wie eine Schwimmweste: Luft macht die Orange insgesamt weniger dicht.",
-            quiz("Warum trägt man beim Segeln eine Schwimmweste?", listOf(c("Die Luft darin macht mich im Mittel weniger dicht"), c("Sie ist schwer und hält mich fest"), c("Sie macht das Wasser dichter")), 0)),
+            quiz("Warum hält dich eine Schwimmweste über Wasser?", listOf(c("Die Luft darin macht mich im Mittel weniger dicht"), c("Sie ist schwer und hält mich fest"), c("Sie macht das Wasser dichter")), 0)),
 
         Experiment("w5", W, "Das Ei-Wunder", "🥚", 4..6,
             "Ein frisches Ei sinkt im Wasser. Blubb rührt viel Salz in ein zweites Becken …",
@@ -88,7 +88,7 @@ internal object CatalogA {
             "Im Spiritus geht das Eis unter!",
             listOf("Spiritus ist weniger dicht als Eis – er kann es nicht tragen.", "Spiritus schmilzt das Eis sofort.", "Eis ist im Spiritus schwerer geworden."),
             "Ob etwas schwimmt, hängt von beiden ab: Dichte des Gegenstands und Dichte der Flüssigkeit.",
-            quiz("Eis (0,92 g/cm³) in Speiseöl (0,92 g/cm³)?", listOf(c("schwimmt oben"), c("schwebt mittendrin"), c("sinkt schnell")),
+            quiz("Gedankenversuch: Angenommen, Eis und Speiseöl hätten genau dieselbe Dichte (0,92 g/cm³). Was macht das Eis?", listOf(c("schwimmt oben"), c("schwebt mittendrin"), c("sinkt schnell")),
                 Buoyancy.state(Thing.EIS, Liquid.OEL).ordinal)),
 
         Experiment("w8", W, "Der Dichteturm", "🌈", 5..7,
@@ -97,9 +97,9 @@ internal object CatalogA {
                 listOf(Liquid.HONIG, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS).indexOf(DensityTower.top(listOf(Liquid.HONIG, Liquid.SPUELI, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS)).liquids.single())),
             TowerSetup(listOf(Liquid.HONIG, Liquid.SPUELI, Liquid.WASSER, Liquid.OEL, Liquid.SPIRITUS)),
             "Gieß alle fünf Flüssigkeiten ins Glas – in beliebiger Reihenfolge.",
-            "Egal in welcher Reihenfolge: Unten Honig, oben Spiritus.",
+            "Vorsichtig eingegossen gilt: Unten Honig, oben Spiritus – die dichteste Flüssigkeit liegt unten.",
             listOf("Die dichteste Flüssigkeit sinkt nach unten, die am wenigsten dichte steigt nach oben.", "Was zuerst eingefüllt wird, bleibt unten.", "Bunte Flüssigkeiten mischen sich nie."),
-            "Flüssigkeiten, die sich nicht mischen, schichten sich nach ihrer Dichte.",
+            "Vorsichtig eingegossen, schichten sich Flüssigkeiten nach ihrer Dichte – die dichteste unten.",
             quiz("Spiritus direkt auf Wasser, ohne Öl dazwischen?", listOf(c("liegt oben"), c("mischt sich mit dem Wasser"), c("sinkt nach unten")),
                 if (DensityTower.layers(listOf(Liquid.WASSER, Liquid.SPIRITUS)).size == 1) 1 else 0, "Wasser und Alkohol mischen sich – das Öl war die Trennwand.")),
 
@@ -123,7 +123,7 @@ internal object CatalogA {
 
     val force = listOf(
         Experiment("k1", K, "Kind gegen Papa", "👧", 3..4,
-            "Papa (80 kg) setzt sich auf die Wippe, ganz nah an die Mitte. Mia (30 kg) setzt sich ganz nach außen.",
+            "Papa (80 kg) setzt sich auf die Wippe, ganz nah an die Mitte. Mia (30 kg) setzt sich weit nach außen (Feld 4).",
             quiz("Welche Seite der Wippe geht runter?", PAPA_MIA, tiltIdx(listOf(l(80.0, -1, "👨", "Papa"), l(30.0, 4, "👧", "Mia")))),
             LeverSetup(listOf(l(80.0, -1, "👨", "Papa 80 kg"), l(30.0, 4, "👧", "Mia 30 kg")), emptyList(), LeverGoal.RELEASE),
             "Lass die Wippe los.",
@@ -185,7 +185,7 @@ internal object CatalogA {
             quiz("Wofür ist eine feste Rolle trotzdem praktisch?", listOf(c("Man kann nach unten ziehen statt nach oben zu heben"), c("Die Last wird leichter"), c("Es geht schneller")), 0)),
 
         Experiment("k7", K, "Die lose Rolle", "🏋️", 7..8,
-            "Jetzt hängt die 40-kg-Kiste an einer losen Rolle – zwei Seilstücke tragen sie.",
+            "Jetzt hängt eine 40-kg-Kiste an einer losen Rolle – zwei Seilstücke tragen sie.",
             quiz("Welche Kraft brauchst du?", listOf(c("98 N"), c("196 N"), c("392 N")), nearest(listOf(98.0, 196.0, 392.0), Pulley.forceN(40.0, 2))),
             PulleySetup(40.0, listOf(2)),
             "Heb die Kiste 1 m hoch.",
@@ -234,7 +234,7 @@ internal object CatalogA {
                 Newton.pushSpeeds(30.0, 90.0).let { (a, b) -> if (Fmt.close(a, b, 1e-9)) 2 else if (a > b) 0 else 1 }),
             NewtonSetup(NewtonMode.PUSH, pairs = listOf(30.0 to 90.0)),
             "Lass die beiden abstoßen.",
-            "Beide bekommen denselben Schubs – aber Mia ist dreimal leichter und rollt dreimal so schnell.",
+            "Beide bekommen denselben Schubs – aber Mia wiegt nur ein Drittel so viel und rollt dreimal so schnell.",
             listOf("Beide spüren dieselbe Kraft, aber die leichtere Masse wird stärker beschleunigt.", "Papa schubst stärker, weil er größer ist.", "Kinder rollen immer schneller."),
             "Gleiche Kraft, kleinere Masse – größere Geschwindigkeit.",
             quiz("Wie viel schneller rollt Mia?", listOf(c("gleich schnell"), c("doppelt so schnell"), c("dreimal so schnell")),

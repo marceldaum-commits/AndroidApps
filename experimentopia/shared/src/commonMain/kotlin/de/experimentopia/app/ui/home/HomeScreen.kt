@@ -93,7 +93,7 @@ fun HomeScreen(
             }
             banner?.invoke()
             if (welcome) Panel(border = E.Mint) {
-                BlubbSays("Hallo! Ich bin Blubb, der neugierigste Kolben der Welt. Auf sieben Inseln warten Rätsel. Du vermutest, probierst aus – und erklärst mir dann, warum. Falsch vermuten ist hier super: Das sind Aha-Momente!", Mood.CHEER, size = 56.dp)
+                BlubbSays("Hallo! Ich bin Blubb, der neugierigste Kolben der Welt. Auf ${islandCountWord()} Inseln warten Rätsel. Du vermutest, probierst aus – und erklärst mir dann, warum. Falsch vermuten ist hier super: Das sind Aha-Momente!", Mood.CHEER, size = 56.dp)
                 GlowButton(onWelcomed, Modifier.fillMaxWidth().testTag("loslegen")) { Text("🚀 Los geht's!", fontWeight = FontWeight.Bold) }
             }
             // Rätsel des Tages
@@ -159,6 +159,9 @@ fun IslandScreen(island: Island, results: Map<String, Int>, grade: Int, locked: 
         BubbleBackground(tint = island.color.color())
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
             Bar("${island.emoji} ${island.title}", onBack) { Pill("⭐ ${list.sumOf { results[it.id] ?: 0 }}/${list.size * 3}", E.Sun) }
+            BoxWithConstraints(Modifier.fillMaxSize()) {
+            // Der Pfad schlängelt sich nur so weit, dass rechts immer mindestens 160 dp für den Titel bleiben (schmale Handys ab 320 dp)
+            val swing = (maxWidth - 32.dp - 70.dp - 10.dp - 160.dp).coerceAtLeast(0.dp)
             Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 BlubbSays(islandIntro(island), Mood.HAPPY, size = 56.dp, speak = false)
                 Spacer(Modifier.height(8.dp))
@@ -168,9 +171,9 @@ fun IslandScreen(island: Island, results: Map<String, Int>, grade: Int, locked: 
                     val done = e.id in results
                     val lock = locked(e)
                     val fits = grade == 0 || grade in e.grades
-                    val shift = (sin(i * 1.1f) * 70).dp
+                    val shift = swing * ((sin(i * 1.1f) + 1f) / 2f)
                     val next = !done && list.take(i).all { it.id in results }
-                    Column(Modifier.fillMaxWidth().padding(start = (90.dp + shift).coerceAtLeast(0.dp)).clickable(remember { MutableInteractionSource() }, null) { onOpen(e) }.testTag("versuch_${e.id}"),
+                    Column(Modifier.fillMaxWidth().padding(start = shift).clickable(remember { MutableInteractionSource() }, null) { onOpen(e) }.testTag("versuch_${e.id}"),
                         horizontalAlignment = Alignment.Start) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(Modifier.size(70.dp).pulse(next && !lock, 0.05f).clip(CircleShape)
@@ -191,6 +194,7 @@ fun IslandScreen(island: Island, results: Map<String, Int>, grade: Int, locked: 
                 }
                 Spacer(Modifier.height(24.dp))
             }
+            }
         }
     }
 }
@@ -205,3 +209,6 @@ fun islandIntro(i: Island) = when (i) {
     Island.FALL -> "Vom Fallturm bis zum Mond: Was fällt schneller – und warum tickt eine Pendeluhr so gleichmäßig?"
     Island.BIO -> "Willkommen im Bio-Dschungel! Hier kreuzt du Erbsen wie Mendel, lässt Kartoffeln schrumpfen, jagst Nährstoffe, mikroskopierst Teichwasser, baust Nahrungsketten und hörst dein Herz schlagen."
 }
+
+/** Zahl der Inseln als Wort – damit der Begrüßungstext nie veraltet */
+fun islandCountWord() = listOf("null", "einer", "zwei", "drei", "vier", "fünf", "sechs", "sieben", "acht", "neun", "zehn", "elf", "zwölf").getOrElse(Island.entries.size) { "${Island.entries.size}" }

@@ -79,7 +79,7 @@ data class PrismSetup(val dummy: Int = 0) : Setup { override val lab get() = Lab
 enum class SoundMode { STRIKE, BLOW, TUNE, MELODY, STRING }
 data class SoundSetup(val mode: SoundMode, val target: Note? = null, val melody: List<Note> = emptyList(), val stringFrac: Double = 0.5) : Setup { override val lab get() = Lab.KLANG }
 
-enum class NewtonMode { CART, PUSH }
+enum class NewtonMode { CART, PUSH, GLIDE }
 /** CART: Wagen wird mit Kraft F gezogen (Massen- und Kraft-Auswahl). PUSH: zwei Skateboarder stoßen sich ab (Massenpaare). */
 data class NewtonSetup(val mode: NewtonMode, val masses: List<Double> = emptyList(), val forces: List<Double> = emptyList(), val pairs: List<Pair<Double, Double>> = emptyList()) : Setup { override val lab get() = Lab.NEWTON }
 data class FallSetup(val a: Faller, val b: Faller?, val planets: List<Planet>, val heightM: Double) : Setup { override val lab get() = Lab.FALLTURM }

@@ -20,8 +20,8 @@ android {
         applicationId = "de.experimentopia.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 5
-        versionName = "0.5.0"
+        versionCode = 6
+        versionName = "0.5.1"
         // Datum dieser Version – bei jeder Auslieferung zusammen mit versionName anpassen (steht auch im CHANGELOG)
         buildConfigField("String", "VERSION_DATE", "\"17.11.2026\"")
     }
@@ -67,7 +67,11 @@ android {
                 it.systemProperty("robolectric.dependency.repo.url", "https://maven-central.storage-download.googleapis.com/maven2")
                 it.systemProperty("robolectric.pixelCopyRenderMode", "hardware")
                 it.maxHeapSize = "2g"
+                // Robolectric-Bildschirmfotos sammeln Speicher an – alle 25 Tests eine frische Java-Instanz
+                it.setForkEvery(25)
                 it.systemProperty("roborazzi.test.record", "true")
+                // Schmal-Prüfung (320 dp) nur auf Wunsch: ./gradlew … -Pschmal
+                if (project.hasProperty("schmal")) it.systemProperty("schmal", "1")
             }
         }
     }
