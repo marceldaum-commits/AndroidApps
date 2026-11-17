@@ -7,7 +7,7 @@ Brummis natürliche Stimme „Thorsten“ nutzt die folgenden freien Bausteine. 
  2. ONNX Runtime – rechnet das Stimm-Modell – Android (Teil von sherpa-onnx) – MIT-Lizenz
  3. ONNX Runtime Web (onnxruntime-web 1.22.0) – rechnet das Stimm-Modell im Browser – WebApp, wird nur bei Bedarf geladen – MIT-Lizenz
  4. Stimme „Thorsten“ (Piper, de_DE-thorsten-medium) – nicht in App oder WebApp enthalten, wird nur auf Wunsch
-    von Hugging Face geladen – Aufnahmen CC0 1.0 (Thorsten Müller), Modell von Piper / rhasspy
+    von unserem Stimm-Server (stimmen.mathenachhilfe-online.com) geladen – Aufnahmen CC0 1.0 (Thorsten Müller), Modell von Piper / rhasspy
  5. Lautschrift-Wörterbuch – eigene Daten, erzeugt mit piper-tts/espeak-ng am Entwicklungsrechner (beide nicht in der App)
 
 Es folgen die Lizenztexte im Original (englisch).
