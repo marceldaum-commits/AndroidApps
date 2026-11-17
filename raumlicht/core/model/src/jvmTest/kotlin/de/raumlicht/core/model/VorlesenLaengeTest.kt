@@ -19,6 +19,10 @@ class VorlesenLaengeTest {
         val long = spoken.filter { it.length > Vorlesen.LIVE_MAX_CHARS }
         println("LAENGE: ${spoken.size} Texte, längster ${spoken.maxOf { it.length }}, über ${Vorlesen.LIVE_MAX_CHARS}: ${long.size}")
         long.take(3).forEach { println("LANG: ${it.length} $it") }
+        // Stichprobe von Texten, die NICHT in der festen Liste stehen – zum Nachmessen der Laufzeit-Vertonung am Server (build/laufzeit-stichprobe.txt)
+        val fixed = Vorlesen.texts().toSet(); val sample = spoken.filter { it !in fixed }.shuffled(Random(5)).take(40)
+        java.io.File("build").mkdirs(); java.io.File("build/laufzeit-stichprobe.txt").writeText(sample.joinToString("\n"))
+        println("LAENGE: davon nicht in der festen Liste: ${spoken.count { it !in fixed }}")
         org.junit.Assert.assertTrue("Diese Texte sind zu lang für die Laufzeit-Vertonung: ${long.take(2)}", long.isEmpty())
     }
 }
