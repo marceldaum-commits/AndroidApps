@@ -25,6 +25,7 @@
   }
   // 1. gespeichert  2. fertige Datei vom Server  3. Server bitten, sie zu erzeugen (nur für Texte, die erst in der Aufgabe entstehen)
   async function obtain(server, url, live, body) {
+    const off = await offlineHit(url); if (off) return off;                // offline geladen (Einstellungen), Bestqualität zuerst
     const hit = await cached(url); if (hit) return hit;
     let r = await get(url);
     if (r.status === 404 && live) {
@@ -52,6 +53,72 @@
     N.speaking = false;
   }
   N.stop = function () { turn++; quiet(); };
+
+  // ---- „Alle Nova-Texte offline laden“: die fertigen Dateien aller festen Texte in den Speicher des Browsers holen (Standard oder Bestqualität)
+  const OFF = 'raumlicht-nova-offline';
+  const O = N.offline = { loading: false, done: 0, total: 0, standardDone: 0, bestDone: 0, standardStored: 0, bestStored: 0, standardBytes: -1, bestBytes: -1 };
+  let keys = null, cancelled = false;
+  function best(url) { return url.replace('/nova/', '/nova/original/'); }
+  async function offlineHit(url) {
+    try { if (!('caches' in window) || !(await caches.has(OFF))) return null; const c = await caches.open(OFF); const r = (await c.match(best(url))) || (await c.match(url)); return r ? await r.arrayBuffer() : null; } catch (e) { return null; }
+  }
+  // Dateinamen aller festen Texte – aus der eigenen Liste, gerechnet wie auf dem Server
+  async function loadKeys() {
+    if (keys) return keys;
+    const j = await (await fetch('vorlesen/texte.json', { cache: 'no-cache' })).json(); const out = [];
+    for (const t of j.texte) {
+      const d = new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nova|' + t.sprache + '|' + t.text)));
+      out.push(Array.prototype.map.call(d, function (b) { return ('0' + b.toString(16)).slice(-2); }).join('').substring(0, 32));
+    }
+    keys = out; return keys;
+  }
+  function file(server, k, isBest) { return server + '/nova/' + (isBest ? 'original/' : '') + k.substring(0, 2) + '/' + k + '.mp3'; }
+  async function count(s) {
+    const ks = await loadKeys(); O.total = ks.length; let sd = 0, bd = 0, sb = 0, bb = 0;
+    if (await caches.has(OFF)) {
+      const c = await caches.open(OFF); const have = {};
+      for (const q of await c.keys()) { const r = await c.match(q); have[q.url] = r ? (+r.headers.get('X-Bytes') || 0) : 0; }
+      for (const k of ks) { const a = have[file(s, k, false)], b = have[file(s, k, true)]; if (a !== undefined) { sd++; sb += a; } if (b !== undefined) { bd++; bb += b; } }
+    }
+    O.standardDone = sd; O.bestDone = bd; O.standardStored = sb; O.bestStored = bb;
+  }
+  O.refresh = async function (server) {
+    const s = window.__rlNovaServer || server;
+    try { await count(s); } catch (e) {}
+    try {
+      const r = await fetch(s + '/nova/stand-' + (window.__rlNovaHost || location.hostname) + '.json', { credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer' });
+      if (r.ok) { const j = await r.json(); O.standardBytes = typeof j.bytes === 'number' ? j.bytes : -1; O.bestBytes = typeof j.bytes_original === 'number' ? j.bytes_original : -1; }
+    } catch (e) {}
+  };
+  // Nur Fehlendes laden, vier Dateien gleichzeitig; nach einem Abbruch geht es beim nächsten Mal dort weiter
+  O.start = async function (server, isBest) {
+    if (O.loading) return; O.loading = true; cancelled = false;
+    const s = window.__rlNovaServer || server;
+    try {
+      const ks = await loadKeys(); const c = await caches.open(OFF); const have = {};
+      for (const q of await c.keys()) have[q.url] = true;
+      const missing = ks.filter(function (k) { return !have[file(s, k, isBest)]; });
+      O.total = ks.length; O.done = ks.length - missing.length;
+      async function worker() {
+        while (!cancelled && missing.length) {
+          const k = missing.shift();
+          try {
+            let r = await get(file(s, k, isBest));
+            if (isBest && r.status === 404) r = await get(file(s, k, false));      // Bestqualität fehlt: die normale Datei nehmen
+            if (r.status === 200 && r.buf && r.buf.byteLength >= 256)               // 404 wird still übersprungen
+              await c.put(file(s, k, isBest), new Response(r.buf, { headers: { 'Content-Type': 'audio/mpeg', 'X-Bytes': String(r.buf.byteLength) } }));
+          } catch (e) {}
+          O.done++;
+        }
+      }
+      await Promise.all([worker(), worker(), worker(), worker()]);
+      await count(s);
+    } catch (e) {}
+    O.loading = false;
+  };
+  O.cancel = function () { cancelled = true; };
+  // Offline-Stimme löschen – beide Qualitäten
+  O.remove = async function (server) { cancelled = true; try { await caches.delete(OFF); await count(window.__rlNovaServer || server); } catch (e) {} };
   async function paced(buf, volume, rate, mine) {
     if (!el) return false;
     try {

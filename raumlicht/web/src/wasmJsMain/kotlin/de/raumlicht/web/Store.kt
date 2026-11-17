@@ -36,6 +36,10 @@ class WebPrefs : Prefs {
     override fun setSoundLevel(percent: Int) { val p = percent.coerceIn(0, 100); storeSet(P + "tonLaut", p.toString()); _soundLevel.value = p }
     private val _rate = MutableStateFlow(de.raumlicht.core.model.Vorlesen.tempo(storeGet(P + "novaTempo")?.toIntOrNull() ?: 100))
     override val speechRate: StateFlow<Int> = _rate; override fun setSpeechRate(percent: Int) { val p = de.raumlicht.core.model.Vorlesen.tempo(percent); storeSet(P + "novaTempo", p.toString()); _rate.value = p }
+    /** Zuletzt gewählte Qualität beim Offline-Laden der Stimme Nova: Bestqualität statt Standard */
+    var voiceBest: Boolean
+        get() = storeGet(P + "novaBest") == "1"
+        set(v) = storeSet(P + "novaBest", if (v) "1" else "0")
     private val _strict = flag("strengeVektoren", false)
     override val strictVectors: StateFlow<Boolean> = _strict; override fun setStrictVectors(v: Boolean) { put("strengeVektoren", v); _strict.value = v }
     private val _volume = int("lautstaerke", 100)

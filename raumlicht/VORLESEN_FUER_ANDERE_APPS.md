@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Nova“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.17.2 vom 17.11.2026. Ersetzt die frühere Anleitung zur Stimme „Thorsten“ (sherpa-onnx, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
+Stand: Raumlicht 2.18.0 vom 17.11.2026. Ersetzt die frühere Anleitung zur Stimme „Thorsten“ (sherpa-onnx, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
 
 ## Kurz
 
@@ -33,6 +33,16 @@ Text vorher: NFC, jeder Leerraum zu einem Leerzeichen, getrimmt. Prüfwert: `de`
 
 Dazu: ein neuer Satz unterbricht den alten; Musik wird unter der Stimme leiser; nur Antworten annehmen, die auf den eigenen Server zeigen und wie MP3 aussehen;
 gespeicherte Sätze begrenzen (Android: 60 MB im Cache, älteste zuerst weg; Web: eigener Cache `raumlicht-nova`, den der Service Worker bei Updates stehen lässt).
+
+## 3a. Alle festen Texte offline laden (seit 2.18.0)
+
+- Einstellungen unter „Lux spricht“: „Offline laden – Standard (ca. X MB)“, „Offline laden – Bestqualität (ca. Z MB)“ und, sobald etwas da ist, „Offline-Stimme löschen (Y MB)“ (löscht beide).
+- Größe aus `…/nova/stand-<host>.json`: `bytes` (Standard), `bytes_original` (Bestqualität), abzüglich dessen, was schon geladen ist. Android fragt den Live-Host, sonst den Test-Host.
+- Bestqualität: `…/nova/original/<h[0:2]>/<h>.mp3`; bei 404 die normale Datei. 404 der normalen Datei still überspringen.
+- Nur Fehlendes, 4 gleichzeitig, Fortschritt „x von n“, Abbrechen; nächstes Tippen macht weiter. Laufzeit-Texte gehören nicht dazu.
+- Speicher: Android `filesDir/nova-offline/{standard,best}` (wird nicht automatisch aufgeräumt), Web Cache `raumlicht-nova-offline` (Service Worker lässt ihn stehen).
+- Die Wiedergabe schaut zuerst dort nach (Bestqualität vor Standard), dann im normalen Speicher, dann im Netz.
+- Dateien: `app/…/ui/fx/NovaOffline.kt`, `rl-nova.js` (Abschnitt „offline“), gemeinsame Knöpfe `OfflineVoiceCard` in `shared/…/settings/ProScreen.kt`; Tests `NovaOfflineTest`, `web-nova.mjs`.
 
 ## 4. Stolpersteine
 

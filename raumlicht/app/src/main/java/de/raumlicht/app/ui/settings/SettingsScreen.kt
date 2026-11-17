@@ -25,10 +25,11 @@ fun SettingsScreen(
     onReset: () -> Unit = {},
     volume: Int = 100, onVolume: (Int) -> Unit = {},
     voice: Boolean = true, onVoice: (Boolean) -> Unit = {},
+    offline: OfflineVoice? = null,
     lastProblem: String? = null, onProblemSeen: () -> Unit = {},
 ) = SettingsPage(music, onMusic, sound, onSound, vibration, onVibration, "Version $installed vom ${BuildConfig.VERSION_DATE}", onBack,
     top = { if (BuildConfig.SELF_UPDATE) UpdateSection(installed, update, autoUpdate, onAutoUpdate) },
-    onReset = onReset, volume = volume, onVolume = onVolume, voice = voice, onVoice = onVoice,
+    onReset = onReset, volume = volume, onVolume = onVolume, voice = voice, onVoice = onVoice, offline = offline,
     lastProblem = lastProblem, onProblemSeen = onProblemSeen, soundNote = silenceReason(),
     licenses = androidx.compose.ui.platform.LocalContext.current.let { ctx -> remember { runCatching { ctx.assets.open("lizenzen.txt").bufferedReader().use { it.readText() } }.getOrNull() } },
     privacy = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. Ins Internet geht die App nur, " +

@@ -28,6 +28,8 @@ fun SettingsPage(
     onReset: () -> Unit = {},
     volume: Int = 100, onVolume: (Int) -> Unit = {},
     voice: Boolean = true, onVoice: (Boolean) -> Unit = {},
+    /** „Alle Nova-Texte offline laden“ (null = wird nicht angeboten) */
+    offline: OfflineVoice? = null,
     /** Warum gerade nichts zu hören ist oder sein könnte (z. B. Handy stumm geschaltet) – steht gut sichtbar über den Ton-Schaltern; null = kein Hinweis */
     soundNote: String? = null,
     /** Bericht über den letzten unerwarteten Abbruch (null = keiner) */
@@ -77,6 +79,7 @@ fun SettingsPage(
                         Slider(tempos.indexOf(speech.rate).coerceAtLeast(0) / (tempos.size - 1f), { speech.setRate(tempos[(it * (tempos.size - 1)).roundToInt().coerceIn(0, tempos.size - 1)]) },
                             Modifier.testTag("sprechtempo"), steps = tempos.size - 2)
                         OutlinedButton({ speaker?.say("Hallo, ich bin Lux. So klinge ich jetzt.") }, Modifier.testTag("hoerprobe")) { Text("▶ So klingt es") }
+                        offline?.let { OfflineVoiceCard(it) }
                     }
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
                     Text("🔉 Lautstärke: $volume %", Modifier.padding(top = 8.dp).testTag("lautstaerke-text"), style = MaterialTheme.typography.bodyLarge)

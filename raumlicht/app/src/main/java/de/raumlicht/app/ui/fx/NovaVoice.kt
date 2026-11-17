@@ -17,7 +17,7 @@ typealias NovaFetch = (url: String, body: String?) -> Pair<Int, ByteArray>
  * Lux spricht mit „Nova“ – einer mit KI erzeugten Stimme. Die App rechnet nichts und spricht mit keinem fremden Dienst:
  * Zu jedem vorlesefertigen Text gibt es auf unserem Server eine MP3-Datei, deren Name sich aus dem Text ergibt ([Vorlesen.url]).
  *
- * 1. schon auf dem Gerät gespeichert → sofort abspielen (geht auch ohne Internet)
+ * 1. schon auf dem Gerät gespeichert (offline geladen oder schon einmal gehört) → sofort abspielen (geht auch ohne Internet)
  * 2. sonst die Datei von unserem Server holen (feste Texte sind vorab vertont)
  * 3. gibt es sie noch nicht (Text ist erst in der Aufgabe entstanden): unseren Server bitten, sie zu erzeugen ([Vorlesen.LIVE]) – nur Text und Sprache, nichts über den Nutzer
  * 4. klappt das alles nicht (offline, zu lang, Server sagt nein): diesen einen Text liest still die Stimme des Geräts ([fallback])
@@ -58,7 +58,9 @@ class NovaVoice(private val ctx: Context, private val fallback: Speaker? = null,
 
     /** Die Datei zu einem vorlesefertigen Text: aus dem Speicher, sonst vom Server (Schritte 1–3). null = nicht zu bekommen. */
     internal fun obtain(spoken: String): File? {
-        val file = File(dir, Vorlesen.key(spoken) + ".mp3")
+        val key = Vorlesen.key(spoken)
+        NovaOffline.find(ctx, key)?.let { return it }                        // offline geladen (Einstellungen)
+        val file = File(dir, "$key.mp3")
         if (file.length() > 0) return file
         var (code, bytes) = fetch(Vorlesen.url(spoken), null)
         if (code == 404 && spoken.length <= Vorlesen.LIVE_MAX_CHARS) {

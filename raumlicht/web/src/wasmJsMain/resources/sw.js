@@ -6,8 +6,8 @@ const CACHE = 'raumlicht-@VERSION@';
 const WASM = @WASM@;
 // Alles andere beim Installieren am Zwischenspeicher des Browsers vorbei laden ('reload'): wirklich die neue Fassung
 self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => Promise.all([c.addAll(WASM), c.addAll(['./', 'index.html', 'raumlicht.js', 'scene/index.html', 'scene/scene.js', 'rl-nova.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf', 'diagnose.html'].map((u) => new Request(u, { cache: 'reload' })))]))); });
-// Schon gehörte Sätze der Stimme „Nova“ (raumlicht-nova) bleiben bei Updates stehen
-self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE && k !== 'raumlicht-nova').map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
+// Schon gehörte und offline geladene Sätze der Stimme „Nova“ (raumlicht-nova, raumlicht-nova-offline) bleiben bei Updates stehen
+self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE && k !== 'raumlicht-nova' && k !== 'raumlicht-nova-offline').map((k) => caches.delete(k)))).then(() => self.clients.claim())); });
 self.addEventListener('fetch', (e) => {
   const u = new URL(e.request.url);
   if (e.request.method !== 'GET' || u.origin !== location.origin) return;       // Fremdes (Impressum, Datenschutz) geht normal ins Netz

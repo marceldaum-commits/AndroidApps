@@ -114,7 +114,12 @@ class MainActivity : ComponentActivity() {
                 val auto by vm.settings.autoUpdate.collectAsStateWithLifecycle()
                 SettingsScreen(music, vm.settings::setMusic, sound, vm.settings::setSound, vibration, vm.settings::setVibration, auto, vm.settings::setAutoUpdate,
                     BuildConfig.VERSION_NAME, update?.let { UpdateState.Available(it) } ?: UpdateState.Idle, onBack, onReset = vm::resetAll, voice = vm.settings.voice.collectAsStateWithLifecycle().value, onVoice = vm.settings::setVoice,
-                    lastProblem = problem, onProblemSeen = { Diagnose.clear(this@MainActivity); problem = null })
+                    lastProblem = problem, onProblemSeen = { Diagnose.clear(this@MainActivity); problem = null },
+                    offline = (application as RaumlichtApp).novaOffline.let { o ->
+                        LaunchedEffect(Unit) { o.refresh() }
+                        var best by remember { mutableStateOf(vm.settings.voiceBest) }
+                        de.raumlicht.app.ui.settings.OfflineVoice(o.loading, o.done, o.total, o.standardDone, o.bestDone, o.standardStored, o.bestStored, o.standardBytes, o.bestBytes, best,
+                            start = { b -> vm.settings.voiceBest = b; best = b; o.start(b) }, cancel = o::cancel, delete = o::delete) })
             })
     }
 }
