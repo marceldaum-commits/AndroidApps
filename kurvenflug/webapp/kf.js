@@ -250,6 +250,6 @@
   KF.offCancel = function () { offAbort = true; };
   KF.offClear = function (cb) { if (window.caches) caches.delete('kf-nova').then(function () { cb(); }, function () { cb(); }); else cb(); };
 
-  // Reste der früheren Stimme „Thorsten“ (2.0–2.3) aus dem Browser-Speicher räumen
+  // Reste der früheren Offline-Stimme (2.0–2.3) aus dem Browser-Speicher räumen
   if (window.caches) caches.delete('kf-stimme').catch(function () {});
 })();
