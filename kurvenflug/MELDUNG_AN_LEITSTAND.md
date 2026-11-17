@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.5.5 – Fehlerbehebung aus dem Test (Marcel: „unklare Frage“ bei Winkel · Level 6) · Web = APK = Play
+- Alle 66 getarnten/Rendezvous-Aufgaben durchgesehen, unklare neu formuliert (auch in Extrem-Prüfung und Rettungsmission,
+  die dieselben Texte nutzen):
+  - Winkel 6: „Ein Dreieck hat die Winkel 60° und 70°. Wie groß ist der dritte Winkel? Stell genau diesen Winkel ein – dort
+    liegt die Station.“ (vorher „Feuere unter dem dritten.“); Tipp nennt jetzt die 180°-Regel.
+  - Winkel 5: „Die Station liegt beim Nebenwinkel von 50°. Wie groß ist er? Stell genau diesen Winkel ein.“
+  - Brüche 6: „… Rechne aus und flieg genau dorthin.“
+  - Rendezvous 2–7: „Wo treffen sie sich?“ ergänzt.
+- Nova: die neuen Texte stehen in vorlesen/texte.json; bis das Werk sie vertont hat, gehen sie über /jetzt.
+- versionCode 52, Web-/Android-Fingerabdruck neu gesetzt (beide gleich).
+
 ## ✅ 2.5.4 – fertig für den Betriebstest (versionCode 51) · Web = APK = Play
 - **Musik:** Android startet die Hintergrundmusik jetzt **sofort beim Öffnen** (natives Android, kein WebView – die Sperre
   bis zur ersten Berührung ist entfernt). Web: startet automatisch beim allerersten Tippen/Klick irgendwo (Browser-Regel).
