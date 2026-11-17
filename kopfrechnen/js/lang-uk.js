@@ -2396,4 +2396,7 @@ I18N.add('uk', {"% sind":"% — це",
 "Lade Nova-Texte …":"Завантаження текстів Nova …",
 "Abgebrochen – beim nächsten Tippen geht es dort weiter.":"Скасовано – натисни ще раз, щоб продовжити з того місця.",
 "✓ Alle Nova-Texte sind offline gespeichert.":"✓ Усі тексти Nova збережено офлайн.",
-"Neu: alle Nova-Texte offline laden – in den Einstellungen unter Vorlesen, mit Fortschritt und Abbrechen":"Нове: завантаж усі тексти Nova офлайн – у налаштуваннях у розділі «Читати вголос», з прогресом і скасуванням"});
+"Neu: alle Nova-Texte offline laden – in den Einstellungen unter Vorlesen, mit Fortschritt und Abbrechen":"Нове: завантаж усі тексти Nova офлайн – у налаштуваннях у розділі «Читати вголос», з прогресом і скасуванням",
+"Offline laden – Standard":"Завантажити офлайн – стандарт",
+"Offline laden – Bestqualität":"Завантажити офлайн – найкраща якість",
+"Wahlweise in Bestqualität":"За бажанням – у найкращій якості"});

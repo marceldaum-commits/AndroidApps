@@ -278,17 +278,21 @@ async function novaOfflineUi(msg) {
   if (NovaOffline.busy) return;
   box.innerHTML = '<p class="small muted">…</p>';
   const e = await NovaOffline.estimate(); if (!$('novaOff')) return;
-  const mb = b => Math.max(1, Math.round(b / 1e6)), all = e.have >= e.total && e.total > 0;
+  const mb = b => Math.max(1, Math.round(b / 1e6)), q = S.settings.novaQ === 'best' ? 'best' : 'std';
+  const allStd = e.total > 0 && e.have >= e.total, allBest = e.total > 0 && e.best >= e.total;
+  const btn = (id, label, n, done) => done ? '' : `<button class="btn ${q === id ? 'primary' : ''}" data-q="${id}">⬇ <span>${label}</span>${n != null ? ` <span translate="no">(≈ ${n} MB)</span>` : ''}</button>`;
   box.innerHTML = `${msg ? `<p class="small">${msg}</p>` : ''}
-    ${all ? '<p class="small">✓ Alle Nova-Texte sind offline gespeichert.</p>' : `<button class="btn" id="novaLoad">⬇ <span>Alle Nova-Texte offline laden</span>${e.mb != null ? ` <span translate="no">(≈ ${Math.max(1, e.mb)} MB)</span>` : ''}</button>
-      <p class="small muted">Am besten im WLAN. ${e.have ? `<span>Schon gespeichert:</span> <span translate="no">${e.have}/${e.total}</span>` : ''}</p>`}
+    ${allBest || (allStd && q === 'std') ? '<p class="small">✓ Alle Nova-Texte sind offline gespeichert.</p>' : ''}
+    ${btn('std', 'Offline laden – Standard', e.std, allStd)}${btn('best', 'Offline laden – Bestqualität', e.bestMb, allBest)}
+    ${allStd && allBest ? '' : `<p class="small muted">Am besten im WLAN. ${e.have ? `<span>Schon gespeichert:</span> <span translate="no">${e.have}/${e.total}</span>` : ''}</p>`}
     ${e.bytes > 0 ? `<button class="btn" id="novaDel">🗑 <span>Offline-Stimme löschen</span> <span translate="no">(${mb(e.bytes)} MB)</span></button>` : ''}`;
-  if ($('novaLoad')) $('novaLoad').onclick = async () => {
+  box.querySelectorAll('[data-q]').forEach(b => b.onclick = async () => {
+    const q = b.dataset.q; S.settings.novaQ = q; save();   // Wahl merken
     box.innerHTML = '<p class="small"><span>Lade Nova-Texte …</span> <span id="novaProg" translate="no"></span></p><div class="bar"><i id="novaBar"></i></div><button class="btn" id="novaStop">Abbrechen</button>';
     $('novaStop').onclick = () => NovaOffline.stop();
-    const ok = await NovaOffline.load((d, n) => { const p = $('novaProg'), b = $('novaBar'); if (p) p.textContent = `${d} ${tr('von')} ${n}`; if (b) b.style.width = Math.round(d / Math.max(1, n) * 100) + '%'; });
+    const ok = await NovaOffline.load((d, n) => { const p = $('novaProg'), bar = $('novaBar'); if (p) p.textContent = `${d} ${tr('von')} ${n}`; if (bar) bar.style.width = Math.round(d / Math.max(1, n) * 100) + '%'; }, q);
     novaOfflineUi(ok ? '' : 'Abgebrochen – beim nächsten Tippen geht es dort weiter.');
-  };
+  });
   if ($('novaDel')) $('novaDel').onclick = async () => { if (!confirm(tr('Offline-Stimme löschen?'))) return; await NovaOffline.clear(); novaOfflineUi(); };
 }
 function initSettings() {

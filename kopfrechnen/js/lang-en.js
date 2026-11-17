@@ -2396,4 +2396,7 @@ I18N.add('en', {"% sind":"% are",
 "Lade Nova-Texte …":"Downloading Nova texts …",
 "Abgebrochen – beim nächsten Tippen geht es dort weiter.":"Cancelled – tap again to continue where it stopped.",
 "✓ Alle Nova-Texte sind offline gespeichert.":"✓ All Nova texts are saved for offline use.",
-"Neu: alle Nova-Texte offline laden – in den Einstellungen unter Vorlesen, mit Fortschritt und Abbrechen":"New: download all Nova texts for offline use – in the settings under Read aloud, with progress and cancel"});
+"Neu: alle Nova-Texte offline laden – in den Einstellungen unter Vorlesen, mit Fortschritt und Abbrechen":"New: download all Nova texts for offline use – in the settings under Read aloud, with progress and cancel",
+"Offline laden – Standard":"Download for offline use – standard",
+"Offline laden – Bestqualität":"Download for offline use – best quality",
+"Wahlweise in Bestqualität":"Optionally in best quality"});

@@ -1064,3 +1064,4 @@ button.badge{font:inherit;cursor:pointer}
 .voicebox,.novaoff{min-width:0}
 .novaoff .btn{display:block;width:100%;text-align:center}
 .novaoff .btn span[translate=no]{white-space:nowrap}
+.setrow .novaoff .btn span{color:inherit;font-size:inherit}

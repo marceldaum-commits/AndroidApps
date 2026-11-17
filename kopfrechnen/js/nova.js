@@ -73,32 +73,38 @@ const NovaOffline = {
   // Größe aller Dateien laut Server (live, wird kleiner, wenn der Server neu kodiert)
   async stand() { try { const r = await Nova.get(`${Nova.base()}stand-${this.host()}.json`, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch { return null; } },
   async cache() { try { return await caches.open('rb-nova'); } catch { return null; } },
-  // was liegt schon auf dem Gerät: { have: Anzahl dieser Sprache, total: n, bytes: alle gespeicherten Nova-Dateien }
+  // was liegt schon auf dem Gerät: have (beliebige Qualität) / best (Bestqualität) dieser Sprache, total, bytes (alle Nova-Dateien)
   async status(lang = I18N.lang) {
-    const c = await this.cache(), list = await this.texts(lang); let have = 0, bytes = 0;
-    if (c) { const keys = await c.keys(); const set = new Set(keys.map(k => k.url));
-      for (const t of list) if (set.has(await Nova.url(lang, t))) have++;
-      for (const k of keys) { try { const r = await c.match(k); bytes += (await r.blob()).size; } catch {} } }
-    return { have, total: list.length, bytes };
+    const c = await this.cache(), list = await this.texts(lang); let have = 0, best = 0, bytes = 0;
+    if (c) { for (const t of list) { const r = await c.match(await Nova.url(lang, t)); if (r) { have++; if (r.headers.get('X-Nova-Q') === 'best') best++; } }
+      for (const k of await c.keys()) { try { const r = await c.match(k); bytes += (await r.blob()).size; } catch {} } }
+    return { have, best, total: list.length, bytes };
   },
-  // geschätzte Download-Größe für die fehlenden Dateien dieser Sprache
+  // geschätzte Download-Größe (MB) für die fehlenden Dateien dieser Sprache – Standard (40 kbit/s) und Bestqualität (128 kbit/s)
   async estimate(lang = I18N.lang) {
     const [st, s] = await Promise.all([this.stand(), this.status(lang)]);
-    if (!st || !st.bytes || !st.texte) return { ...s, mb: null };
-    return { ...s, mb: Math.max(0, Math.round(st.bytes / st.texte * (s.total - s.have) / 1e6)) };
+    if (!st || !st.texte) return { ...s, std: null, best: null };
+    const mb = (bytes, n) => bytes ? Math.max(1, Math.round(bytes / st.texte * n / 1e6)) : null;
+    return { ...s, std: mb(st.bytes, s.total - s.have), bestMb: mb(st.bytes_original || st.bytes, s.total - s.best) };
   },
   stop() { this.stopFlag = true; },
-  async load(onProg = () => {}, lang = I18N.lang) {
+  async load(onProg = () => {}, q = 'std', lang = I18N.lang) {
     if (this.busy) return false; this.busy = true; this.stopFlag = false;
     try {
       const c = await this.cache(); if (!c) return false;
       const list = await this.texts(lang), todo = [];
-      for (const t of list) { const u = await Nova.url(lang, t); if (!(await c.match(u))) todo.push(u); }
+      for (const t of list) { const u = await Nova.url(lang, t), r = await c.match(u); if (!r || (q === 'best' && r.headers.get('X-Nova-Q') !== 'best')) todo.push(u); }
       let done = list.length - todo.length; onProg(done, list.length);
+      const fetchOne = async u => {
+        if (q === 'best') {   // Bestqualität: …/nova/original/…; gibt es die nicht (404), die normale Datei
+          try { const r = await Nova.get(u.replace(Nova.base(), Nova.base() + 'original/')); if (r.ok) return [await r.blob(), 'best']; } catch {}
+        }
+        const r = await Nova.get(u); return r.ok ? [await r.blob(), q === 'best' ? 'best' : 'std'] : null;   // ohne Original: normale Datei gilt als beste verfügbare
+      };
       const worker = async () => {
         while (todo.length && !this.stopFlag) {
           const u = todo.shift();
-          try { const r = await Nova.get(u); if (r.ok) await c.put(u, new Response(await r.blob(), { headers: { 'Content-Type': 'audio/mpeg' } })); } catch {}   // 404/Fehler: still überspringen
+          try { const got = await fetchOne(u); if (got) await c.put(u, new Response(got[0], { headers: { 'Content-Type': 'audio/mpeg', 'X-Nova-Q': got[1] } })); } catch {}   // 404/Fehler: still überspringen
           done++; onProg(done, list.length);
         }
       };
