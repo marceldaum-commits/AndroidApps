@@ -32,12 +32,12 @@ achtung	ˈaxtʊŋ
 activedays	ˈaktiːvˌeːdaɪs
 activity	aktˈɪvɪti
 addieren	adˈiːrən
-adresse	adrˈɛsə
 advent	advˈɛnt
 ago	ˈɑːɡoː
 ahoi	ˈɑːoːˌiː
 ak	ˈɑːk
 akku	ˈakuː
+aktiv	aktˈiːf
 aktualisieren	ˌaktuːˌɑliːzˈiːrən
 album	ˈalbʊm
 algen	ˈalɡən
@@ -53,7 +53,7 @@ also	ˈalzoː
 am	am
 amplitude	ˈampliːtˌuːdə
 an	an
-anbieter	ˈanbˌiːtɜ
+anbietern	ˈanbˌiːtɜn
 andere	ˈandərə
 anderer	ˈandərɜ
 anders	ˈandɜs
@@ -236,6 +236,7 @@ bys	bˈyːs
 bzw	bˌeːtsˌɛtvˈeː
 bögen	bˈøːɡən
 c	tsˈeː
+ca	kˈɑː
 cc	tsˌeːtsˈeː
 cells	tsˈɛls
 challenge	ʃˈalɛŋə
@@ -351,7 +352,6 @@ doppelter	dˈɔpəltɜ
 doppeltreffer	dˈɔpəltrˌɛfɜ
 doppelzug	dˈɔpəltsˌuːk
 dort	dˈɔɾt
-download	dˈaʊnləʊd
 dran	drˈɑːn
 dranbleiben	drˈanblaɪbən
 draußen	drˈaʊsən
@@ -367,6 +367,7 @@ driftet	drˈɪftət
 drin	drˈiːn
 drittel	drˈɪtəl
 dritten	drˈɪtən
+drittens	drˈɪtəns
 druck	drˈʊk
 drumherum	drˈʊmheːrˌʊm
 drunter	drˈʊntɜ
@@ -475,6 +476,7 @@ erreichen	ɛɾrˈaɪçən
 erst	ˈeːɾst
 erste	ˈeːɾstə
 ersten	ˈeːɾstən
+erstens	ˈeːɾstəns
 erster	ˈeːɾstɜ
 erstes	ˈeːɾstəs
 erstkontakt	ˈɛɾstkɔntˌakt
@@ -498,7 +500,6 @@ experiment	ˌɛkspeːriːmˈɛnt
 explodiert	ˌɛksploːdˈiːɾt
 exponential	ˌɛkspoːnˌɛntiːˈɑːl
 exponentiell	ˌɛkspoːnˌɛntɪʲˈɛl
-externer	ˈɛkstɜnɜ
 extra	ˈɛkstrɑː
 extrem	ɛkstrˈeːm
 extrempunkt	ˈɛkstrɛmpˌʊŋkt
@@ -584,6 +585,7 @@ freie	frˈaɪə
 freigeben	frˈaɪɡeːbən
 freigeschaltet	frˈaɪɡɛʃˌaltət
 freischalten	frˈaɪʃaltən
+fremden	frˈɛmdən
 freund	frˈɔønt
 freunde	frˈɔøndə
 freunden	frˈɔøndən
@@ -602,6 +604,7 @@ funkstille	fˈʊŋkstɪlə
 funkt	fˈʊŋkt
 funktion	fʊŋktsjˈoːn
 funktionen	fʊŋktsjˈoːnən
+funktioniert	fʊŋktsjˌoːnˈiːɾt
 funkwellen	fʊŋkvˈɛlən
 fx	ˌɛfˈɪks
 fälle	fˈɛlə
@@ -660,6 +663,7 @@ gemischte	ɡəmˈɪʃtə
 genau	ɡənˈaʊ
 genaue	ɡənˈaʊə
 genauso	ɡənˈaʊzoː
+generierte	ɡˌɛneːrˈiːɾtə
 genial	ɡeːnjˈɑːl
 genommen	ɡənˈɔmən
 genug	ɡənˈuːk
@@ -903,7 +907,6 @@ integraltext	ˈɪntɛɡrˌaltɛkst
 internet	ˈɪntɜnˌɛt
 intro	ˈɪntroː
 inzwischen	ɪntsvˈɪʃən
-ip	ˈiːp
 irgendwo	ɪɾɡˈɛndvoː
 ist	ɪst
 it	ˈiːt
@@ -956,6 +959,7 @@ kfc	kˌɑːˌɛftsˈeː
 kfl	kˌɑːˌɛfˈɛl
 kfr	kˌɑːˌɛfˈɛɾ
 kg	kˌɑːɡˈeː
+ki	kˈiː
 kilogramm	kˌiːlɔɡrˈam
 kilometer	kˌiːloːmˈeːtɜ
 kind	kˈɪnt
@@ -1340,6 +1344,7 @@ open	ˈoːpən
 optik	ˈɔptiːk
 optional	ɔptsjˌoːnˈɑːl
 options	ɔptsjˈoːns
+ordinals	ˌɔɾdiːnˈɑːls
 ordnung	ˈɔɾdnʊŋ
 org	ˈɔɾk
 ort	ˈɔɾt
@@ -1494,6 +1499,7 @@ rekord	rˈeːkɔɾt
 rekorde	rˈeːkɔɾdə
 rendezvous	rˌɑ̃deːvˈuː
 repariere	rˌeːparˈiːrə
+replace	rˈɛplɑːkə
 rescued	rˈɛskuːˌeːt
 rest	rˈɛst
 retten	rˈɛtən
@@ -1652,7 +1658,6 @@ settings	zˈɛtɪŋs
 setz	zˈɛts
 setze	zˈɛtsə
 setzen	zˈɛtsən
-sherpa	ʃˈɛɾpɑː
 shift	ʃˈɪft
 ship	ʃˈiːp
 sich	zɪç
@@ -1708,6 +1713,7 @@ sp	ˌɛspˈeː
 sparschwein	ʃpˈaɾʃvaɪn
 spaß	ʃpˈɑːs
 spec	ʃpˈeːk
+speicher	ʃpˈaɪçɜ
 speichern	ʃpˈaɪçɜn
 speichert	ʃpˈaɪçɜt
 sperrt	ʃpˈɛɾt
@@ -1942,6 +1948,7 @@ umgedreht	ˈʊmɡədrˌeːt
 umkehren	ˈʊmkˌeːrən
 umkehrung	ˈʊmkˌeːrʊŋ
 umstellen	ˈʊmʃtˌɛlən
+unbegrenzt	ˈʊnbəɡrˌɛntst
 unbekannte	ˈʊnbəkˌantə
 unbekannter	ˈʊnbəkˌantɜ
 und	ʊnt
@@ -1956,6 +1963,7 @@ unit	uːnˈɪt
 unlocked	ˈʊnlˌɔkeːt
 uns	ʊns
 unser	ˌʊnzɜ
+unserem	ˌʊnzərəm
 unserer	ˌʊnzərɜ
 unsichtbar	ˈʊnzˌɪçtbɑːɾ
 unten	ˈʊntən
@@ -2015,6 +2023,7 @@ vielleicht	fɪlˈaɪçt
 vier	fˈiːɾ
 viertel	fˈiːɾtəl
 viertelwelle	fˌiːɾtəlvˈɛlə
+viertens	fˈiːɾtəns
 voll	fˈɔl
 voller	fˈɔlɜ
 vollgas	fˈɔlɡˌɑːs
@@ -2031,6 +2040,7 @@ vorbeizielen	foːɾbˈaɪtsˌiːlən
 vorgerechnet	fˈoːɾɡərˌɛçnət
 vorher	foːɾhˈeːɾ
 vorhergesagt	foːɾhˈeːɾɡəzˌɑːkt
+vorlese	fˈoːɾlˌeːzə
 vorlesen	fˈoːɾlˌeːzən
 vorn	fˈɔɾn
 vorne	fˈɔɾnə
@@ -2066,6 +2076,7 @@ wasser	vˈasɜ
 wasserbecken	vˈasɜbˌɛkən
 web	wˈɛp
 webapp	vˈeːbap
+website	wˈɛbsaɪt
 wechseln	vˈɛksəln
 wechselt	vˈɛksəlt
 weg	vˈɛk
@@ -2223,6 +2234,7 @@ zweierpotenz	tsvˌaɪɜpoːtˈɛnts
 zweit	tsvˈaɪt
 zweite	tsvˈaɪtə
 zweiten	tsvˈaɪtən
+zweitens	tsvˈaɪtəns
 zweites	tsvˈaɪtəs
 zwischen	tsvˈɪʃən
 zwo	tsvˈoː
