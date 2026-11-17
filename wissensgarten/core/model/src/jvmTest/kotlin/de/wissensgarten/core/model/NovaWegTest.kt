@@ -36,82 +36,163 @@ class NovaWegTest {
     }
 
     private var t = 1_000_000L
-    private fun weg(f: Fake) = NovaWeg(f) { t }
+    private val gewartet = ArrayList<Long>()
+    private fun weg(f: Fake) = NovaWeg(f, { t }, { gewartet += it; t += it })
+    private val O = NovaArt.OEFFENTLICH
 
     @Test fun ausDemSpeicherOhneNetz() = runBlocking {
         val f = Fake(); f.speicher += Nova.hash("Super!", "de")
-        assertEquals(NovaWeg.Ergebnis.SPEICHER, weg(f).finde("Super!", "de", false))
+        assertEquals(NovaWeg.Ergebnis.SPEICHER, weg(f).finde("Super!", "de", O).ergebnis)
+        // auch Privates darf aus dem Speicher (offline geladen) – ohne Netz
+        assertEquals(NovaWeg.Ergebnis.SPEICHER, weg(f).finde("Super!", "de", NovaArt.PRIVAT).ergebnis)
         assertTrue(f.geladen.isEmpty())
     }
 
     @Test fun vorabVertonteDateiWirdGeladen() = runBlocking {
         val f = Fake(status = 200)
         val w = weg(f)
-        assertEquals(NovaWeg.Ergebnis.NOVA, w.finde("Hallo Welt", "de", false))
+        val fund = w.finde("Hallo Welt", "de", O)
+        assertEquals(NovaWeg.Ergebnis.NOVA, fund.ergebnis)
+        assertEquals(listOf("cb1e6d67882767042ebaa54d163e450c"), fund.dateien)
         assertEquals(listOf("https://stimmen.mathenachhilfe-online.com/nova/cb/cb1e6d67882767042ebaa54d163e450c.mp3"), f.geladen)
         // zweites Mal aus dem Speicher
-        assertEquals(NovaWeg.Ergebnis.SPEICHER, w.finde("Hallo Welt", "de", false))
+        assertEquals(NovaWeg.Ergebnis.SPEICHER, w.finde("Hallo Welt", "de", O).ergebnis)
         assertEquals(1, f.geladen.size)
     }
 
-    @Test fun festerTextNieAnJetzt() = runBlocking {
+    @Test fun oeffentlicherFesterTextNach404AnJetzt() = runBlocking {
         val f = Fake(status = 404, jetztStatus = 200)
-        assertEquals(NovaWeg.Ergebnis.GERAET, weg(f).finde("Eine Frage aus einem Plus-Paket?", "de", laufzeit = false))
+        val fund = weg(f).finde("Ein neuer Satz von Brummi.", "de", O)
+        assertEquals(NovaWeg.Ergebnis.JETZT, fund.ergebnis)
+        assertEquals(listOf("Ein neuer Satz von Brummi." to "de"), f.jetzt)
+        assertEquals(listOf(Nova.hash("Ein neuer Satz von Brummi.", "de")), fund.dateien)
+    }
+
+    @Test fun plusTextNieAnJetztSondernKurzWartenUndNochmal() = runBlocking {
+        val f = Fake(status = 404, jetztStatus = 200)
+        val w = weg(f)
+        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("Eine Frage aus einem Plus-Paket?", "de", NovaArt.PLUS).ergebnis)
         assertTrue(f.jetzt.isEmpty())
+        assertEquals(2, f.geladen.size)                       // einmal, kurz gewartet, noch einmal
+        assertEquals(listOf(NovaWeg.PLUS_NOCHMAL_MS), gewartet)
+        // gleich danach nicht schon wieder warten
+        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("Eine Frage aus einem Plus-Paket?", "de", NovaArt.PLUS).ergebnis)
+        assertEquals(2, f.geladen.size); assertEquals(1, gewartet.size)
+    }
+
+    @Test fun plusTextKommtBeimZweitenBlick() = runBlocking {
+        var n = 0
+        val f = object : NovaQuelle {
+            override suspend fun imSpeicher(h: String) = false
+            override suspend fun laden(url: String, h: String) = if (n++ == 0) 404 else 200
+            override suspend fun jetzt(text: String, sprache: String, h: String) = error("nie /jetzt")
+        }
+        assertEquals(NovaWeg.Ergebnis.NOVA, NovaWeg(f, { t }, { t += it }).finde("Plus!", "de", NovaArt.PLUS).ergebnis)
+    }
+
+    @Test fun privatGarNichtAnsNetz() = runBlocking {
+        val f = Fake(status = 200, jetztStatus = 200)
+        assertEquals(NovaWeg.Ergebnis.GERAET, weg(f).finde("Wie heißt meine Lehrerin? Frau Müller", "de", NovaArt.PRIVAT).ergebnis)
+        assertTrue(f.geladen.isEmpty()); assertTrue(f.jetzt.isEmpty())
+    }
+
+    @Test fun unbekanntNurLadenNieJetzt() = runBlocking {
+        val f = Fake(status = 404, jetztStatus = 200)
+        assertEquals(NovaWeg.Ergebnis.GERAET, weg(f).finde("Irgendwas", "de", NovaArt.UNBEKANNT).ergebnis)
+        assertEquals(1, f.geladen.size); assertTrue(f.jetzt.isEmpty())
     }
 
     @Test fun laufzeitTextNur404DannJetzt() = runBlocking {
         val f = Fake(status = 404, jetztStatus = 200)
-        assertEquals(NovaWeg.Ergebnis.JETZT, weg(f).finde("Hör noch mal: Rom. Das üben wir bald wieder.", "de", laufzeit = true))
+        assertEquals(NovaWeg.Ergebnis.JETZT, weg(f).finde("Hör noch mal: Rom. Das üben wir bald wieder.", "de", NovaArt.LAUFZEIT).ergebnis)
         assertEquals(listOf("Hör noch mal: Rom. Das üben wir bald wieder." to "de"), f.jetzt)
     }
 
-    @Test fun jetztMit204OderFehlerGeraetestimme() = runBlocking {
+    @Test fun jetztMit204EinmalNochmalDannGeraetUndNichtStaendigFragen() = runBlocking {
         val f = Fake(status = 404, jetztStatus = 204)
-        assertEquals(NovaWeg.Ergebnis.GERAET, weg(f).finde("3 von 5 Orten erinnert", "de", true))
-        val g = Fake(status = 404, jetztStatus = 403)
+        val w = weg(f)
+        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("3 von 5 Orten erinnert", "de", NovaArt.LAUFZEIT).ergebnis)
+        assertEquals(2, f.jetzt.size)                                // kurz gewartet, noch einmal gefragt
+        assertEquals(listOf(NovaWeg.JETZT_NOCHMAL_MS), gewartet)
+        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("3 von 5 Orten erinnert", "de", NovaArt.LAUFZEIT).ergebnis)
+        assertEquals(2, f.jetzt.size)                                // derselbe Satz eine Weile nicht mehr
+        // ein anderer Satz darf sofort
+        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("4 von 5 Orten erinnert", "de", NovaArt.LAUFZEIT).ergebnis)
+        assertEquals(4, f.jetzt.size)
+        t += NovaWeg.ABGELEHNT_MS + 1
+        f.jetztStatus = 200
+        assertEquals(NovaWeg.Ergebnis.JETZT, w.finde("3 von 5 Orten erinnert", "de", NovaArt.LAUFZEIT).ergebnis)
+    }
+
+    @Test fun jetztErst204DannDoch() = runBlocking {
+        var n = 0
+        val f = object : NovaQuelle {
+            override suspend fun imSpeicher(h: String) = false
+            override suspend fun laden(url: String, h: String) = 404
+            override suspend fun jetzt(text: String, sprache: String, h: String) = if (n++ == 0) 204 else 200
+        }
+        var erzeugt = 0
+        assertEquals(NovaWeg.Ergebnis.JETZT, NovaWeg(f, { t }, { t += it }).finde("Neu!", "de", O) { erzeugt++ }.ergebnis)
+        assertEquals(2, n); assertEquals(1, erzeugt)
+    }
+
+    @Test fun serverUeberlastetKurzePauseNurFuerJetzt() = runBlocking {
+        val g = Fake(status = 404, jetztStatus = 503)
         val w = weg(g)
-        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("3 von 5 Orten erinnert", "de", true))
-        // nach einem Fehler eine Weile kein neuer /jetzt-Versuch
-        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("4 von 5 Orten erinnert", "de", true))
+        assertEquals(NovaWeg.Ergebnis.NETZ, w.finde("3 von 5 Orten erinnert", "de", NovaArt.LAUFZEIT).ergebnis)
+        assertEquals(NovaWeg.Ergebnis.NETZ, w.finde("4 von 5 Orten erinnert", "de", NovaArt.LAUFZEIT).ergebnis)
         assertEquals(1, g.jetzt.size)
+        t += NovaWeg.JETZT_PAUSE_MS + 1
+        g.jetztStatus = 200
+        assertEquals(NovaWeg.Ergebnis.JETZT, w.finde("4 von 5 Orten erinnert", "de", NovaArt.LAUFZEIT).ergebnis)
     }
 
-    @Test fun zuLangeLaufzeitTexteNichtAnJetzt() = runBlocking {
+    @Test fun zuLangeTexteInGanzenSaetzenAnJetzt() = runBlocking {
+        val satz = "Das ist ein ganzer Satz mit genau so vielen Wörtern, dass er etwas länger wird als nötig."
+        val text = List(6) { satz.replace("Satz", "Satz Nummer ${it + 1}") }.joinToString(" ")
+        assertTrue(text.length > NovaWeg.JETZT_MAX)
         val f = Fake(status = 404, jetztStatus = 200)
-        assertEquals(NovaWeg.Ergebnis.GERAET, weg(f).finde("a".repeat(301), "de", true))
-        assertTrue(f.jetzt.isEmpty())
+        val fund = weg(f).finde(text, "de", O)
+        assertEquals(NovaWeg.Ergebnis.JETZT, fund.ergebnis)
+        assertTrue(f.jetzt.size >= 2)
+        f.jetzt.forEach { (t, _) -> assertTrue(t.length <= NovaWeg.JETZT_MAX); assertTrue(t.endsWith(".")); assertTrue(t.startsWith("Das")) }
+        assertEquals(text, f.jetzt.joinToString(" ") { it.first })
+        assertEquals(f.jetzt.size, fund.dateien.size)
+        // ein einziges Wort ohne Satzgrenzen über 300 Zeichen: nie zerhackt
+        assertEquals(NovaWeg.Ergebnis.GERAET, weg(Fake(404, 200)).finde("a".repeat(301), "de", O).ergebnis)
     }
 
-    @Test fun offlineStillGeraetUndPause() = runBlocking {
+    @Test fun einNetzfehlerIstNochKeinOffline() = runBlocking {
         val f = Fake(status = -1)
         val w = weg(f)
-        assertFalse(w.offline)
-        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("Super!", "de", true))
-        assertTrue(w.offline)
+        assertEquals(NovaWeg.Ergebnis.NETZ, w.finde("Super!", "de", O).ergebnis)
+        assertFalse(w.offline)                                 // ein Wackler – nächster Satz versucht es wieder
+        assertEquals(NovaWeg.Ergebnis.NETZ, w.finde("Klasse!", "de", O).ergebnis)
+        assertEquals(2, f.geladen.size)
+        assertTrue(w.offline)                                  // zweimal hintereinander: kurz Pause
         assertTrue(f.jetzt.isEmpty())
-        // während der Pause keine Anfragen
-        assertEquals(NovaWeg.Ergebnis.GERAET, w.finde("Klasse!", "de", false))
-        assertEquals(1, f.geladen.size)
+        assertEquals(NovaWeg.Ergebnis.NETZ, w.finde("Prima!", "de", O).ergebnis)
+        assertEquals(2, f.geladen.size)
         t += NovaWeg.NETZ_PAUSE_MS + 1
         f.status = 200
-        assertEquals(NovaWeg.Ergebnis.NOVA, w.finde("Klasse!", "de", false))
+        assertEquals(NovaWeg.Ergebnis.NOVA, w.finde("Prima!", "de", O).ergebnis)
     }
 
     @Test fun fehlendeDateiNichtStaendigNeuAnfragen() = runBlocking {
-        val f = Fake(status = 404)
+        val f = Fake(status = 404, jetztStatus = 204)
         val w = weg(f)
-        repeat(3) { w.finde("Super!", "de", false) }
+        repeat(3) { w.finde("Super!", "de", O) }
         assertEquals(1, f.geladen.size)
+        assertEquals(2, f.jetzt.size)                                // einmal mit kurzem zweiten Versuch
         t += NovaWeg.FEHLT_MS + 1
-        w.finde("Super!", "de", false)
+        w.finde("Super!", "de", O)
         assertEquals(2, f.geladen.size)
     }
 
     @Test fun andereSprachenUndUnbekannte() = runBlocking {
         val f = Fake(status = 200)
-        assertEquals(NovaWeg.Ergebnis.NOVA, weg(f).finde("the dog", "en", false))
-        assertEquals(NovaWeg.Ergebnis.GERAET, weg(f).finde("canis", "la", false))
+        assertEquals(NovaWeg.Ergebnis.NOVA, weg(f).finde("the dog", "en", O).ergebnis)
+        assertEquals(NovaWeg.Ergebnis.GERAET, weg(f).finde("canis", "la", O).ergebnis)
     }
 
     @Test fun sprechtempoStufen() {

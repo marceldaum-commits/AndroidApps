@@ -195,6 +195,7 @@ class WebHost : AppHost {
     override val voice = run {
         val scope = kotlinx.coroutines.MainScope()
         val nova = WebNova()
+        novaPruefungEinrichten()
         // „Alle Nova-Texte offline laden“: eigene Liste und Server-Stand des Hosts, auf dem die WebApp läuft
         de.wissensgarten.app.ui.fx.NovaVoice(nova, scope, de.wissensgarten.app.ui.fx.NovaOfflineManager(nova, scope, "vorlesen/texte.json", webHost()))
     }.also { v -> v.onSpeaking = { music.duck(it) } }

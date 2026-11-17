@@ -25,33 +25,63 @@ private fun jsClear(): Promise<JsAny?> = js("window.wg.nova.clear()")
 /** Host, auf dem die WebApp läuft (für den Server-Stand der Offline-Größe) */
 fun webHost(): String = js("location.hostname")
 
+private fun jsNovaPruefung(sprech: (JsString, JsString) -> JsString, paket: (JsString) -> JsString): Unit =
+    js("{ window.wg = window.wg || {}; window.wg.novaSprech = (t, l) => sprech(t, l); window.wg.novaPaket = (p) => paket(p); }")
+
+/**
+ * Prüfhilfe (nur lesend, ohne Netz): Sprechtext und Dateiname so, wie die WebApp sie im Browser berechnet –
+ * `wg.novaSprech(text, sprache)` und `wg.novaPaket(paketJson)` (leer = feste Texte). Damit prüft der Klicktest, dass
+ * Browser und Vorlese-Liste (JVM) exakt dieselben Namen haben.
+ */
+fun novaPruefungEinrichten() = runCatching {
+    fun eintrag(t: String, l: String) = "{\"text\":${kotlinx.serialization.json.JsonPrimitive(t)},\"sprache\":\"$l\",\"h\":\"${de.wissensgarten.core.model.Nova.hash(t, l)}\"}"
+    jsNovaPruefung(
+        { t, l -> val s = l.toString(); eintrag(de.wissensgarten.core.model.Nova.normalisiert(de.wissensgarten.core.model.Nova.sprechText(t.toString(), s)), s).toJsString() },
+        { p ->
+            val n = de.wissensgarten.core.model.Nova
+            val list = if (p.toString().isBlank()) n.festeTexte() else de.wissensgarten.core.model.PackJson.parse(p.toString()).let { n.packTexte(it) + n.packLaufzeit(it) }
+            list.joinToString(",", "[", "]") { eintrag(it.text, it.sprache) }.toJsString()
+        },
+    )
+}
+
 /**
  * Browser-Teil von Brummis Stimme „Nova“: MP3 vom Stimm-Server im Browser-Speicher (Cache Storage), Wiedergabe mit
  * HTMLAudioElement (playbackRate, preservesPitch) und als stille Notlösung eine Browser-Stimme, die auf dem Gerät spricht.
  * „Alle Nova-Texte offline laden“: eigene Speicher `wissensgarten-nova-offline` (Standard) und `wissensgarten-nova-original` (Bestqualität).
  */
+/**
+ * Wie runCatching, aber ein Abbruch (Coroutine beendet, z. B. weil Brummi schon den nächsten Satz sagt) bleibt ein Abbruch.
+ * Früher wurde er als „ging nicht“ gelesen – dann sprang die Gerätestimme für den abgebrochenen Satz ein.
+ */
+private inline fun <T> sicher(block: () -> T): Result<T> = try { Result.success(block()) }
+    catch (e: kotlin.coroutines.cancellation.CancellationException) { throw e }
+    catch (e: Throwable) { Result.failure(e) }
+
 class WebNova : NovaGeraet, NovaOfflineSpeicher {
-    override suspend fun imSpeicher(h: String): Boolean = runCatching { jsHas(h).await<JsBoolean>().toBoolean() }.getOrDefault(false)
-    override suspend fun laden(url: String, h: String): Int = runCatching { jsLoad(url, h).await<JsNumber>().toInt() }.getOrDefault(-1)
+    override suspend fun imSpeicher(h: String): Boolean = sicher { jsHas(h).await<JsBoolean>().toBoolean() }.getOrDefault(false)
+    override suspend fun laden(url: String, h: String): Int = sicher { jsLoad(url, h).await<JsNumber>().toInt() }.getOrDefault(-1)
     override suspend fun jetzt(text: String, sprache: String, h: String): Int =
-        runCatching { jsNow(text, sprache, h).await<JsNumber>().toInt() }.getOrDefault(-1)
+        sicher { jsNow(text, sprache, h).await<JsNumber>().toInt() }.getOrDefault(-1)
 
     override suspend fun abspielen(h: String, tempo: Float): Boolean =
-        runCatching { jsPlay(h, tempo.toDouble()).await<JsBoolean>().toBoolean() }.getOrDefault(false)
+        sicher { jsPlay(h, tempo.toDouble()).await<JsBoolean>().toBoolean() }.getOrDefault(false)
     override fun audioStopp() { runCatching { jsStopAudio() } }
 
     override val geraetBereit: Boolean get() = runCatching { jsTtsAvailable() }.getOrDefault(false)
     override suspend fun geraetSprechen(text: String, locale: Locale, tempo: Float) {
-        runCatching { jsSay(text, locale.tag, 0.95 * tempo).await<JsAny?>() }
+        sicher { jsSay(text, locale.tag, 0.95 * tempo).await<JsAny?>() }
     }
     override fun geraetStopp() { runCatching { jsStopSpeaking() } }
 
-    override suspend fun offlineHashes(q: NovaQualitaet): Set<String> = runCatching {
+    override suspend fun offlineHashes(q: NovaQualitaet): Set<String> = sicher {
         kotlinx.serialization.json.Json.decodeFromString<List<String>>(jsOfflineList(q.name).await<JsString>().toString()).toSet()
     }.getOrDefault(emptySet())
     override suspend fun sichern(url: String, h: String, q: NovaQualitaet): Int =
-        runCatching { jsSecure(url, h, q.name).await<JsNumber>().toInt() }.getOrDefault(-1)
-    override suspend fun text(url: String): String? = runCatching { jsText(url).await<JsString?>()?.toString() }.getOrNull()
-    override suspend fun belegt(): Long = runCatching { jsUsed().await<JsNumber>().toDouble().toLong() }.getOrDefault(0L)
-    override suspend fun loeschen() { runCatching { jsClear().await<JsAny?>() } }
+        sicher { jsSecure(url, h, q.name).await<JsNumber>().toInt() }.getOrDefault(-1)
+    override suspend fun text(url: String): String? = sicher { jsText(url).await<JsString?>()?.toString() }.getOrNull()
+    /** Die Vorlese-Liste liegt neben der WebApp */
+    override suspend fun liste(): String? = text("vorlesen/texte.json")
+    override suspend fun belegt(): Long = sicher { jsUsed().await<JsNumber>().toDouble().toLong() }.getOrDefault(0L)
+    override suspend fun loeschen() { sicher { jsClear().await<JsAny?>() } }
 }

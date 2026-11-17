@@ -97,6 +97,14 @@
     } catch (e) { return -1; } finally { done(); }
   };
 
+  // Autoplay-Sperre: Vor der ersten Berührung lässt der Browser nichts abspielen. Dann springt NICHT die Gerätestimme ein –
+  // die Nova-Datei wartet und startet beim ersten Antippen (innerhalb der Berührung, damit der Browser es erlaubt).
+  let pendingStart = null;
+  const onGesture = () => { const p = pendingStart; pendingStart = null; if (p) p(); };
+  ['pointerdown', 'pointerup', 'touchend', 'keydown', 'click'].forEach((ev) =>
+    document.addEventListener(ev, onGesture, { capture: true, passive: true }));
+  nova.wartetAufTippen = () => pendingStart !== null;
+
   let turn = 0, finish = null;
   /** Gespeicherte Datei abspielen – Tempo ohne Tonhöhen-Änderung. true = zu Ende gespielt (oder angehalten), false = ging nicht */
   nova.play = (h, rate) => new Promise((ok) => {
@@ -110,9 +118,19 @@
       const url = URL.createObjectURL(blob);
       const a = new Audio();
       let done = false;
+      const start = () => {
+        if (done) return;
+        const p = a.play();
+        if (p && p.catch) p.catch((e) => {
+          if (done) return;
+          if (e && e.name === 'NotAllowedError') pendingStart = start;   // auf das erste Antippen warten
+          else fin(false);
+        });
+      };
       const fin = (v) => {
         if (done) return; done = true;
         if (finish === fin) finish = null;
+        if (pendingStart === start) pendingStart = null;
         try { a.pause(); } catch (e) {}
         URL.revokeObjectURL(url);
         ok(v);
@@ -123,8 +141,7 @@
       a.onerror = () => fin(false);
       a.src = url;
       a.defaultPlaybackRate = rate || 1; a.playbackRate = rate || 1;
-      const p = a.play();
-      if (p && p.catch) p.catch(() => fin(false));
+      start();
     })();
   });
   nova.stop = () => { turn++; if (finish) finish(true); };

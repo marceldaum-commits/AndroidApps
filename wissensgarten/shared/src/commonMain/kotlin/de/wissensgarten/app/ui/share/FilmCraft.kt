@@ -48,7 +48,7 @@ import kotlin.random.Random
 data class CraftItem(val front: String, val back: String, val img: String?)
 
 /** Dateinamen ohne Sonderzeichen („Lena/Ben“ darf keinen Pfad zerschießen). */
-fun safeFileName(name: String) = name.replace(Regex("[^\\p{L}\\p{N}_-]"), "_").ifBlank { "Garten" }
+fun safeFileName(name: String) = name.map { if (it.isLetterOrDigit() || it == '_' || it == '-') it else '_' }.joinToString("").ifBlank { "Garten" }
 
 /**
  * Malt ein Bild des Gartens zu einem Zeitpunkt – für den Zeitraffer-Film und den Filmstreifen zum Teilen.

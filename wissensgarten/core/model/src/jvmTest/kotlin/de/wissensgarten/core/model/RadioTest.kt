@@ -58,4 +58,12 @@ class RadioTest {
         assertEquals(Radio.Reply.Correct, Radio.interpret(listOf("Ende"), q))
         assertEquals(Radio.Reply.Stop, Radio.interpret(listOf("stopp"), q))
     }
+
+    @Test fun cardsWithOwnChoicesAreAskedWithChoices() {
+        val m = Memory(stability = 3.0, lastReview = 1L, reps = 2)
+        val c = StudyCard("r1", "b", "Welches Wort ist richtig geschrieben?", "Fahrrad", listOf("Farrad", "Fahrad"), null, m)
+        val q = Radio.question(c, emptyList())
+        org.junit.Assert.assertEquals(Radio.Mode.CHOICE, q.mode)
+        org.junit.Assert.assertTrue("Fahrrad" in q.options)
+    }
 }

@@ -68,7 +68,7 @@ class NovaOfflineManager(
     }
 
     private suspend fun hashes(): List<String> {
-        val free = liste ?: (s.text(listeUrl)?.let { runCatching { NovaOffline.hashes(NovaOffline.liste(it)) }.getOrNull() }
+        val free = liste ?: (s.text(listeUrl)?.let { runCatching { NovaOffline.hashes(NovaOffline.liste(it, ohneLaufzeit = true)) }.getOrNull() }
             // Rückfall ohne Liste: dieselbe Rechnung aus den eingebauten Paketen (ohne Brummis Oberflächen-Sätze)
             ?: NovaOffline.hashes(frei.flatMap { Nova.packTexte(it) } + Nova.festeTexte()).takeIf { frei.isNotEmpty() })
             ?.also { liste = it } ?: emptyList()

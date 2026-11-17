@@ -246,9 +246,9 @@ open class ScreenshotTest {
     }
 
     @Test fun gameMatch() = shot("19_zuordnen", prepare = { r ->
-        r.onNodeWithText("to go").performClick()
+        r.onNodeWithText("„to go“", substring = true).performClick()
         r.onNodeWithText("went – gone").performClick()
-        r.onNodeWithText("to be").performClick()
+        r.onNodeWithText("„to be“", substring = true).performClick()
     }) {
         val cs = listOf("001", "002", "003", "004").map { grownCard(it) }
         Column(Modifier.padding(16.dp)) { MatchBonus(cs) {} }

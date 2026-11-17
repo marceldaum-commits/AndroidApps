@@ -1,5 +1,50 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.4 vom 17.11.2026 (Web = Android)
+
+**1) Aufgaben geprüft:** Alle 2 923 Karten (2 472 frei, 451 Plus) wurden automatisch geprüft (Skript, alle Rechnungen nachgerechnet, Ablenker-Paare aller Zufallsziehungen) und dann von Hand gelesen.
+- **Geändert:** 346 Karten (306 frei, 40 Plus) in 36 Paketen; Paketversion jeweils + 1, Karten-ids unverändert.
+  - unklar / fehlender Kontext: 324
+  - falsch gewertet: 3
+  - Ablenker ersetzt: 14
+  - Alternative ergänzt: 9
+- **Liste der Änderungen:** `wissensgarten/KORREKTUREN_VERSTAENDLICHKEIT_2026-11-17.md`. Plus-Karten stehen dort nur mit id.
+- **Plus-Pakete** sind auf `wg-plus-pakete` abgelegt (3 Pakete v4).
+- **App-Logik behoben:**
+  - Das Radio fragt Auswahl-Karten („Welches Wort ist richtig geschrieben?“) jetzt immer mit A/B/C.
+  - Klammer-Alternativen gelten auch in Deutsch (weiter streng in der Schreibweise).
+  - „cos(x)“ wird nicht mehr in „cos“ und „x“ zerlegt.
+
+**2) Nova – ganze Sätze, nie unnötig die Gerätestimme.** Gefundene Ursachen:
+- **Hauptursache im Web:** Kotlin/Wasm kennt `\p{So}` nicht. Emojis blieben deshalb im Sprechtext, und der Hash passte nicht.
+- Ein Abbruch wurde als Fehler gewertet, dann las die Gerätestimme den abgebrochenen Satz.
+- `\p{N}` brachte im Web das Radio zum Absturz.
+- Sperren nach dem ersten Fehler: 60 s / 1 h / 10 min. Ein 204 von `/jetzt` galt als endgültig.
+- Fehlende feste Texte gingen nie an `/jetzt`.
+- Einige Sätze fehlten in der Liste.
+- Die Autoplay-Sperre führte zur Gerätestimme.
+
+Neu:
+- **Warten:** bis 3 s auf Nova warten (beim Neu-Vertonen über `/jetzt` bis 6 s); ab 0,4 s ein dezentes „🎧 …“.
+- **Gerätestimme:** nur bei echtem Netzausfall bzw. endgültigem Fehler, dann einmal je Sitzung „Nova ist gerade nicht erreichbar“.
+- **204:** nach 1,5 s einmal neu fragen.
+- **404 bei öffentlichen Texten:** dann `/jetzt`. Plus-Texte gehen nie an `/jetzt`. Private Texte (Namen, eigene Karten) nie ins Netz.
+- **Web:** Bei Autoplay-Sperre wartet Nova und spielt beim ersten Antippen.
+
+**Ganze Sätze:** Laufzeit-Sätze gehen vollständig an `/jetzt`. Häufige Radio-Sätze sind vorab gelistet.
+
+**Liste `texte.json`:**
+- 8 068 feste Texte (351 853 Zeichen)
+- zusätzlich 9 651 Radio-Sätze mit `"laufzeit": true` (772 801 Zeichen; nicht im Offline-Download)
+
+**Bitte prüfen:** Überspringt oder verarbeitet das Werk den Schlüssel `"laufzeit"` ohne Fehler?
+
+**Abdeckung:**
+- Vor dem Push: alle 7 802 bisherigen festen Texte auf dem Server (100 %). Neue Texte kommen nach dem nächsten Werk-Lauf.
+- Klicktest in Headless-Chromium (Probe, Säen, Prüffrage, Theorie, Brummi, Gieß-Runde, Unkraut, Palast, Abenteuer, Radio): 17 Nova-Wiedergaben, 0 Gerätestimme → **100 %**.
+
+**Tests:** alle grün, Lint 0 Fehler.
+
 ## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.3 vom 17.11.2026 (Web = Android)
 
 - **Musik:**

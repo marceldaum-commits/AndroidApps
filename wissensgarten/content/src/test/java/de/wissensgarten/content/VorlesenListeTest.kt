@@ -34,18 +34,26 @@ class VorlesenListeTest {
     private fun packs(dir: File) = dir.listFiles { f -> f.extension == "json" && f.name != "versions.json" && f.name != "vorlesen-texte.json" }!!
         .sortedBy { it.name }.map { PackJson.parse(it.readText()) }
 
+    /** Vorab vertonte Laufzeit-Sätze (Brummi-Radio) – in der Liste mit `"laufzeit": true` markiert (nicht für „offline laden“) */
+    private fun laufzeit(packs: List<de.wissensgarten.core.model.Pack>): Set<Nova.Eintrag> =
+        (packs.flatMap { Nova.packLaufzeit(it) } - packs.flatMap { Nova.packTexte(it) }.toSet() - Nova.festeTexte().toSet()).toSet()
+
     private fun freeTexts(): List<Nova.Eintrag> {
-        val list = packs(packsDir).filter { !it.isPlus }.flatMap { Nova.packTexte(it) } + Nova.festeTexte() +
+        val free = packs(packsDir).filter { !it.isPlus }
+        val list = free.flatMap { Nova.packTexte(it) } + Nova.festeTexte() +
             BrummiSaetze.find(listOf(File("../shared/src/commonMain/kotlin"), File("../app/src/main/java/de/wissensgarten/app/ui"))).mapNotNull { raw ->
                 Nova.normalisiert(Nova.sprechText(raw, "de")).takeIf { t -> t.any { it.isLetterOrDigit() } }?.let { Nova.Eintrag(it, "de") }
-            }
+            } +
+            // häufige Laufzeit-Sätze aus festen Paketdaten (Brummi-Radio) – hinten, damit die Reihenfolge der übrigen bleibt
+            free.flatMap { Nova.packLaufzeit(it) }
         return list.distinct()
     }
 
-    private fun json(texts: List<Nova.Eintrag>): String = buildString {
+    private fun json(texts: List<Nova.Eintrag>, laufzeit: Set<Nova.Eintrag>): String = buildString {
         append("{\"format\": 1, \"app\": \"wissensgarten\", \"texte\": [\n")
         texts.forEachIndexed { i, e ->
-            append("  {\"text\": ").append(quote(e.text)).append(", \"sprache\": ").append(quote(e.sprache)).append("}")
+            append("  {\"text\": ").append(quote(e.text)).append(", \"sprache\": ").append(quote(e.sprache))
+            append(if (e in laufzeit) ", \"laufzeit\": true}" else "}")
             append(if (i < texts.lastIndex) ",\n" else "\n")
         }
         append("]}\n")
@@ -79,14 +87,14 @@ class VorlesenListeTest {
         val free = freeTexts()
         check(free)
         println(stats("Frei", free))
-        val text = json(free)
+        val text = json(free, laufzeit(packs(packsDir).filter { !it.isPlus }))
 
         plusDir?.let { dir ->
             val known = free.toHashSet()
-            val plus = packs(dir).flatMap { Nova.packTexte(it) }.distinct().filter { it !in known }
+            val plus = packs(dir).flatMap { Nova.packTexte(it) + Nova.packLaufzeit(it) }.distinct().filter { it !in known }
             check(plus)
             println(stats("Plus", plus) + " → ${File(dir, "vorlesen-texte.json")}")
-            File(dir, "vorlesen-texte.json").writeText(json(plus))
+            File(dir, "vorlesen-texte.json").writeText(json(plus, laufzeit(packs(dir))))
         }
 
         if (!out.exists() || out.readText() != text) {
@@ -117,13 +125,13 @@ class VorlesenListeTest {
 }
 
 /**
- * Sucht Brummis feste Sätze im Quelltext der Oberfläche (`shared` und `app/…/ui`, nicht die Plattform-Brücken): Zeichenketten ohne Platzhalter, die bei `speech =`, `line =`,
+ * Sucht Brummis feste Sätze im Quelltext der Oberfläche (`shared` und `app/…/ui`, nicht die Plattform-Brücken): Zeichenketten ohne Platzhalter, die bei `speech =`, `line =`, `error =` (Sprechblase im Klassen-Code),
  * `val say =`, `say(…)`, `speak(…)`, `speakAndWait(…)`, `finish(…)` (Brummi-lernt-Spiel), `PROBE =` oder in `object BrummiSays` stehen.
  */
 object BrummiSaetze {
     private data class Lit(val start: Int, val end: Int, val value: String, val template: Boolean)
 
-    private val TRIGGER = Regex("""(?<![\w.])(?:speech|line)\s*=(?!=)|\(mood, line\)\s*=|\bval say\s*=|\bsay\(|\.speak\(|\.speakAndWait\(|\bfinish\(|\bPROBE\s*=""")
+    private val TRIGGER = Regex("""(?<![\w.])(?:speech|line|error)\s*=(?!=)|\(mood, line\)\s*=|\bval say\s*=|\bsay\(|\.speak\(|\.speakAndWait\(|\bfinish\(|\bPROBE\s*=""")
 
     fun find(roots: List<File>): Set<String> = roots.flatMap { r -> r.walkTopDown().filter { it.extension == "kt" }.toList() }
         .sortedBy { it.path }.flatMap { scan(it.readText()) }.toCollection(LinkedHashSet())

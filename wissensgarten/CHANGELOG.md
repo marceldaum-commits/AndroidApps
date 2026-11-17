@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.4 – Klarere Aufgaben, Nova zuverlässiger (17.11.2026)
+- **Alle 2 923 Lernkarten noch einmal gelesen:** 346 Karten sind jetzt klarer formuliert. Vokabelkarten sagen, in welche Sprache übersetzt wird; Fragen mit mehreren möglichen Antworten nennen die Auswahl; einige Ablenker, die versehentlich auch richtig waren, sind ersetzt; gleichwertige Schreibweisen (z. B. Silizium/Silicium, Jod/Iod) zählen als richtig.
+- **Nova liest zuverlässiger:** Brummi wartet kurz auf Nova (mit kleinem 🎧-Zeichen), statt gleich auf die Stimme des Geräts zu wechseln. In der WebApp wurden Sätze mit Emoji nie gefunden – behoben.
+- **Brummi-Radio:** Fragen wie „Welches Wort ist richtig geschrieben?“ kommen jetzt immer mit Auswahl A/B/C.
+- **Eintippen:** Gleichwertige Antworten in Klammern zählen jetzt auch in Deutsch; bei Formeln wie „cos(x)“ wird ein getipptes „x“ nicht mehr als richtig gewertet.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.3 – Musik gleich zum Start (17.11.2026)
 - **App:** Die Garten-Musik läuft jetzt direkt beim Öffnen (in der WebApp beim ersten Antippen – das verlangen die Browser). „Musik aus“, die Lautstärke und der Lautlos-Schalter des Handys gelten weiter.
 - Vorgelesen wird überall nur mit Nova; ohne Internet liest die Stimme des Geräts.
