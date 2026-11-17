@@ -1,6 +1,6 @@
 // Kurvenflug WebApp – kleine Helfer für Ton, Teilen, Fotos und die Zurück-Taste.
 // Keine Verbindungen nach außen, kein Tracking: alles bleibt im Browser. Einzige Ausnahme, nur auf ausdrücklichen Wunsch:
-// das Stimm-Paket „Thorsten“ fürs Vorlesen kommt einmalig von huggingface.co (siehe unten).
+// das Stimm-Paket „Thorsten“ fürs Vorlesen kommt einmalig von unserem Server stimmen.mathenachhilfe-online.com (siehe unten).
 (function () {
   'use strict';
   var KF = window.KF = {};
@@ -140,7 +140,7 @@
   // ------------------------------------------------------------ Vorlesen
   // a) Stimmen des Browsers: nur deutsche Stimmen, die auf dem Gerät rechnen (localService) – so geht kein Text ins Netz.
   // b) „Thorsten“: natürliche Piper-Stimme, rechnet im Browser (ONNX Runtime Web, MIT-Lizenz). Die Lautschrift kommt fertig aus der App
-  //    (stimme/*.tsv, vorab erzeugt) – kein espeak-ng. Stimmdatei (63 MB) nur auf Wunsch von huggingface.co, per Prüfsumme kontrolliert,
+  //    (stimme/*.tsv, vorab erzeugt) – kein espeak-ng. Stimmdatei nur auf Wunsch von unserem Server (Adresse und Prüfsumme aus der App), geprüft,
   //    danach im Browser-Speicher (Cache „kf-stimme“, auch offline nutzbar, jederzeit entfernbar).
   var synth = window.speechSynthesis || null, speakCb = null;
   function speaking(b) { if (speakCb) try { speakCb(b); } catch (e) {} }
@@ -161,22 +161,22 @@
   };
   KF.hush = function () { if (synth) synth.cancel(); natStop(); speaking(false); };
 
-  var PACK = { url: 'https://huggingface.co/csukuangfj/vits-piper-de_DE-thorsten-medium/resolve/main/de_DE-thorsten-medium.onnx',
-    size: 63201421, sha: '1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6', cache: 'kf-stimme', key: 'stimme/thorsten.onnx',
+  var PACK = { cache: 'kf-stimme', key: 'stimme/thorsten-piper.onnx', old: 'stimme/thorsten.onnx',
     helpers: ['stimme/saetze.tsv', 'stimme/woerter.tsv', 'stimme/tokens.txt', 'ort/ort.wasm.min.mjs', 'ort/ort-wasm-simd-threaded.mjs', 'ort/ort-wasm-simd-threaded.wasm'] };
   function abs(p) { return new URL(p, location.href).href; }
   KF.packHas = function (cb) {
     if (!window.caches) { cb(false); return; }
-    caches.open(PACK.cache).then(function (c) { return c.match(abs(PACK.key)); }).then(function (r) { cb(!!r); }, function () { cb(false); });
+    caches.open(PACK.cache).then(function (c) { c.delete(abs(PACK.old)); return c.match(abs(PACK.key)); }).then(function (r) { cb(!!r); }, function () { cb(false); });
   };
   var packAbort = null;
-  KF.packLoad = function (progress, done) {
+  KF.packLoad = function (url, size, sha, progress, done) {
+    PACK.url = url; PACK.size = size; PACK.sha = sha;
     if (!window.caches || !window.crypto || !crypto.subtle) { done('Dieser Browser kann die Stimme nicht speichern.'); return; }
     packAbort = new AbortController(); var signal = packAbort.signal;
     caches.open(PACK.cache).then(function (c) {
       // erst die kleinen Helfer aus der App (Lautschrift, Rechenkern) – damit Thorsten später auch offline spricht
       return c.addAll(PACK.helpers.map(function (h) { return new Request(abs(h), { cache: 'no-cache' }); })).then(function () {
-        return fetch(PACK.url, { signal: signal, credentials: 'omit', referrerPolicy: 'no-referrer' });
+        return fetch(PACK.url, { signal: signal, credentials: 'omit' });
       }).then(function (r) {
         if (!r.ok || !r.body) throw new Error('Der Server antwortet mit ' + r.status + '.');
         var buf = new Uint8Array(PACK.size), got = 0, shown = -1, rd = r.body.getReader();

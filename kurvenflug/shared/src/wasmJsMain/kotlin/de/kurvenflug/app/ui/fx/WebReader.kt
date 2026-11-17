@@ -91,7 +91,7 @@ object WebReader : Reader {
         start()
         if (pack is PackState.Loading || pack == PackState.Ready) return
         pack = PackState.Loading(0)
-        jsPackLoad({ p -> if (pack is PackState.Loading) pack = PackState.Loading(p) }) { err ->
+        jsPackLoad(de.kurvenflug.core.model.VoicePack.URL, de.kurvenflug.core.model.VoicePack.SIZE.toDouble(), de.kurvenflug.core.model.VoicePack.SHA256, { p -> if (pack is PackState.Loading) pack = PackState.Loading(p) }) { err ->
             pack = when { err.isEmpty() -> PackState.Ready; err == "abgebrochen" -> PackState.Missing; else -> PackState.Failed(err) }
             if (err.isEmpty() && wanted == Reader.NATURAL) prepareNatural()
         }

@@ -13,8 +13,6 @@ dependencyResolutionManagement {
         google()
         maven("https://maven-central.storage-download.googleapis.com/maven2/")
         mavenCentral()
-        // Natürliche Stimme „Thorsten“ (sherpa-onnx, Apache-2.0) – nur diese eine Bibliothek von JitPack
-        maven("https://jitpack.io") { content { includeGroup("com.github.k2-fsa.sherpa-onnx") } }
     }
 }
 rootProject.name = "Kurvenflug"

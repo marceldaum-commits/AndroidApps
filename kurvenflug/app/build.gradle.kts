@@ -26,14 +26,13 @@ android {
         applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 39
-        versionName = "2.0.0"
+        versionCode = 40
+        versionName = "2.1.0"
         // Maschinencode der Stimme „Thorsten“ nur für Handys/Tablets mit ARM (wie Raumlicht)
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
     }
     // Lautschrift und Zeichenliste der Stimme (voice/stimme) – dieselben Dateien liegen in der WebApp
     sourceSets["main"].assets.srcDir("../voice")
-    packaging.jniLibs.excludes += listOf("**/libsherpa-onnx-c-api.so", "**/libsherpa-onnx-cxx-api.so")   // andere Sprach-Anbindungen, hier ungenutzt
     packaging.jniLibs.useLegacyPackaging = true   // Maschinencode komprimiert einpacken: der Download wird damit deutlich kleiner
 
     // Zwei Varianten aus demselben Code:

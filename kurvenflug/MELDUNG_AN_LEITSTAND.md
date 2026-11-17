@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.1.0 – Thorsten vom gemeinsamen Server · Web = Android
+- Quelle jetzt `stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx`, Größe 63 201 294 Bytes und
+  SHA-256 7e64762d… werden in App und WebApp geprüft (eine Stelle im Code: `core/model/VoicePack.kt`). Hinweis „ca. 75 MB –
+  am besten im WLAN“, Elternhinweis jetzt „eigener Server, keine fremden Anbieter“. Laden nur auf Wunsch, danach offline.
+- **Technik geändert:** Die Server-Datei ist das originale Piper-Modell ohne die Zusatzangaben, die sherpa-onnx verlangt
+  (sherpa bricht ohne sie ab). Deshalb rechnet Android jetzt mit **ONNX Runtime Android** – derselbe Weg wie die WebApp
+  (Laut-Nummern wie Piper, Werte aus der .onnx.json: noise 0,667 / noise_w 0,8, 22 050 Hz). Laut-Liste mit der
+  `phoneme_id_map` der Server-.json verglichen: identisch (152 Laute). sherpa-onnx und JitPack entfallen.
+- Alte Stimmdatei (von huggingface.co, 0.27.0/2.0.0) wird automatisch entfernt; wer sie hatte, lädt einmal neu.
+- Kein espeak-ng (GPL): Lautschrift weiterhin vorab erzeugt und mitgeliefert. versionCode 40.
+
 ## 2.0.0 – neues Versionsschema (Vorgabe Marcel) · Web = Android
 - versionName **2.0.0** (APK, AAB, WebApp, `version.json`, Anzeige in App/WebApp), versionCode läuft weiter: **39**
   (0.27.0 war 38). Inhalt = 0.27.0 (Vorlesen, siehe unten). Ab jetzt: kleine Updates 2.1.0, 2.1.1 …, großes Update 3.0.0.
