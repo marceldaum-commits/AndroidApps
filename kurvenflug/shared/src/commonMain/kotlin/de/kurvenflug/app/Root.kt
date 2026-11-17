@@ -103,6 +103,9 @@ fun KurvenflugRoot(
     LaunchedEffect(sfxVol) { platform.sfx?.level = sfxVol / 100f }
     // Ton erst nach der ersten Berührung – dann begrüßt die Kurvenflug-Erkennungsmelodie
     var touched by remember { mutableStateOf(false) }
+    // Musik: Android sofort beim Öffnen (Vorgabe Marcel 17.11.); der Browser erlaubt Ton erst nach dem ersten Tippen –
+    // dort startet sie automatisch bei der ersten Berührung. „Musik aus“ bleibt respektiert (setMusicEnabled).
+    LaunchedEffect(Unit) { if (!platform.isWeb) platform.onFirstTouch() }
     LaunchedEffect(touched) {
         if (touched) { platform.onFirstTouch(); kotlinx.coroutines.delay(250); platform.sfx?.play(de.kurvenflug.app.ui.fx.Sound.JINGLE, volume = 0.7f) }
     }

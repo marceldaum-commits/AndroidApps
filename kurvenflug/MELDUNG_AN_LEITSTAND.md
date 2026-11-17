@@ -1,5 +1,14 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.4 – fertig für den Betriebstest (versionCode 51) · Web = APK = Play
+- **Musik:** Android startet die Hintergrundmusik jetzt **sofort beim Öffnen** (natives Android, kein WebView – die Sperre
+  bis zur ersten Berührung ist entfernt). Web: startet automatisch beim allerersten Tippen/Klick irgendwo (Browser-Regel).
+  Kein Musik-Knopf; „Musik aus“ bleibt respektiert; im Hintergrund weiterhin still.
+- **Stimme:** nur Nova, Notlösung Gerätestimme – war seit 2.4.0 so. Codesuche „thorsten“/„sherpa“: **0 Treffer** in Code,
+  Tests, README und gebauter WebApp (drei Kommentare/Testwerte neutral umformuliert). Treffer nur noch in CHANGELOG und in
+  der Historie dieser Meldungsdatei (Protokoll früherer Versionen).
+- Prüfkette grün (Tests, Lint, APK, AAB, WebApp). Restpunkte unverändert wie unter 2.5.3.
+
 ## ✅ 2.5.3 – fertig für den Betriebstest (versionCode 50) · Web = APK = Play
 Begonnenes ist fertig (Nova, Sprechtempo, Offline Standard/Bestqualität, Pro-Abzeichen), keine neuen Funktionen.
 

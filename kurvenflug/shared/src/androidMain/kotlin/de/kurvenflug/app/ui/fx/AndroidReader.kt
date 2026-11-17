@@ -33,7 +33,7 @@ class AndroidReader(context: Context) : Reader {
     override var speaking by mutableStateOf(false); private set
 
     init {
-        // Reste der früheren Stimme „Thorsten“ (2.0–2.3) wegräumen
+        // Reste der früheren Offline-Stimme (2.0–2.3) wegräumen
         worker.execute { runCatching { File(ctx.filesDir, "stimme").deleteRecursively() } }
     }
 

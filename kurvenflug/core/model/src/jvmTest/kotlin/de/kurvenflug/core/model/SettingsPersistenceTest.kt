@@ -41,8 +41,8 @@ class SettingsPersistenceTest {
     }
 
     @Test fun defaultsAndOldVersionKeys() {
-        // Schlüssel aus 2.0–2.3 (Thorsten: Stimme, Tempo in %) liegen noch herum – sie stören nicht
-        val p = MemPrefs().apply { m["readVoice"] = "thorsten"; m["readRate"] = 80; m["readAloud"] = true; m["proCode"] = "KFALT" }
+        // Schlüssel aus 2.0–2.3 (frühere Stimme, Tempo in %) liegen noch herum – sie stören nicht
+        val p = MemPrefs().apply { m["readVoice"] = "alt"; m["readRate"] = 80; m["readAloud"] = true; m["proCode"] = "KFALT" }
         Settings(p).apply {
             assertTrue(readAloud.value); assertEquals(100, readSpeed.value); assertFalse(offlineBest.value)
             assertEquals("KFALT", proCode.value)      // Pro-Code aus der Vorversion bleibt

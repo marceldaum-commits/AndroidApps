@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.4 – Musik gleich beim Start
+- Auf dem Handy startet die Musik jetzt sofort beim Öffnen (im Browser beim ersten Tippen, weil Browser Ton vorher nicht
+  erlauben). „Musik aus“ in den Einstellungen gilt weiter.
+
 ## 2.5.3 – Feinschliff vor dem Testbetrieb
 - Kleine Handys (z. B. 320 × 640): Das Spielfeld wird etwas kleiner, damit die Regler und der Start-Knopf ohne Scrollen
   sichtbar sind.
