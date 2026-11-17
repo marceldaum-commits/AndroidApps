@@ -50,20 +50,20 @@ fun SettingsScreen(
             top()
             SoundSettings(audio, onAudio, sound, onSound, vibration, onVibration)
             ReadSettings(audio, onAudio)
-            Panel {
+            Panel(Modifier.fillMaxWidth()) {
                 Text("Klassenstufe", style = MaterialTheme.typography.titleMedium, color = E.Mint)
                 Text("Passende Versuche werden hervorgehoben. Alle anderen bleiben spielbar.", color = E.Muted, fontSize = 13.sp)
                 ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "alle" else "Klasse $it" }, onGrade)
             }
-            if (pass) Panel(Modifier.testTag("pass_status"), border = E.Sun) {
+            if (pass) Panel(Modifier.fillMaxWidth().testTag("pass_status"), border = E.Sun) {
                 Text("💛 Forscher-Pass aktiv", style = MaterialTheme.typography.titleMedium, color = E.Sun)
                 Text("Für Eltern: Der Forscher-Pass ist auf diesem Gerät freigeschaltet – alle Versuche und Geräte sind offen. Danke!", color = E.Text, fontSize = 13.sp)
-            } else if (Pro.ENABLED) Panel(border = E.Sun) {
+            } else if (Pro.ENABLED) Panel(Modifier.fillMaxWidth(), border = E.Sun) {
                 Text("💛 Forscher-Pass", style = MaterialTheme.typography.titleMedium, color = E.Sun)
                 Text("Noch nicht freigeschaltet. Einmalig ${Pro.WEB_PRICE}, kein Abo.", color = E.Muted, fontSize = 13.sp)
                 GlowButton(onPro, color = E.Sun) { Text("Was ist im Forscher-Pass?") }
             }
-            Panel {
+            Panel(Modifier.fillMaxWidth()) {
                 Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = E.Mint)
                 Text(privacy, fontSize = 13.sp, color = E.Text)
                 Text("So lernt Ihr Kind: Erst vermuten (mit Selbsteinschätzung), dann ausprobieren, dann Blubb erklären (Lernen durch Lehren), dann eine Knobelfrage. " +
@@ -74,7 +74,7 @@ fun SettingsScreen(
                 Text("Alle Ergebnisse werden in Tests mit physikalischen Modellen nachgerechnet. Versuche mit Säuren, Laugen, Feuer und Strom bitte nur hier in der App – oder mit Erwachsenen.", fontSize = 12.sp, color = E.Muted)
                 Text("Version $installed vom $versionDate", style = MaterialTheme.typography.labelMedium, color = E.Muted, modifier = Modifier.testTag("version"))
             }
-            Panel {
+            Panel(Modifier.fillMaxWidth()) {
                 Text("Fortschritt", style = MaterialTheme.typography.titleMedium, color = E.Mint)
                 GlowButton({ confirm = true }, color = E.Red) { Text("🧽 Alles zurücksetzen") }
             }
@@ -120,25 +120,25 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
                 what == "Alles" -> "Mit dem Forscher-Pass öffnest du alle Inseln und Geräte – einmal, ohne Abo."
                 else -> "„$what“ gehört zum Forscher-Pass. Frag deine Eltern!"
             }, if (has) de.experimentopia.app.ui.blubb.Mood.CHEER else de.experimentopia.app.ui.blubb.Mood.HAPPY, speak = false)
-            Panel(border = E.Sun) {
+            Panel(Modifier.fillMaxWidth(), border = E.Sun) {
                 Text("Das bringt der Forscher-Pass", color = E.Sun, fontWeight = FontWeight.Black)
                 Pro.benefits.forEach { Text(it, color = E.Text, fontSize = 14.sp) }
             }
-            Panel(border = E.Mint) {
+            Panel(Modifier.fillMaxWidth(), border = E.Mint) {
                 Text("Das bleibt immer frei", color = E.Mint, fontWeight = FontWeight.Black)
                 Pro.free.forEach { Text("✓ $it", color = E.Muted, fontSize = 13.sp) }
             }
             when {
                 has -> Text("✅ Freigeschaltet. Danke! 💛", color = E.Green, fontWeight = FontWeight.Bold, modifier = Modifier.testTag("pro-status"))
                 !Pro.ENABLED -> Text("Der Forscher-Pass kommt bald – bis dahin ist alles frei. 🎁", color = E.Sun, modifier = Modifier.testTag("pro-status"))
-                else -> Panel(border = E.Sun) {
+                else -> Panel(Modifier.fillMaxWidth(), border = E.Sun) {
                     Text(Pro.WEB_PRICE, color = E.Sun, fontWeight = FontWeight.Black, fontSize = 34.sp)
                     Text("einmalig · kein Abo · keine Werbung · inkl. 19 % MwSt.", color = E.Text, fontSize = 13.sp)
                     GlowButton({ gate = true }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = E.Sun) { Text("💛 Forscher-Pass holen", fontWeight = FontWeight.Bold) }
                     Text("Nur mit Erlaubnis der Eltern – vorher kommt eine Frage für Erwachsene.", color = E.Muted, fontSize = 12.sp)
                 }
             }
-            if (!has && state != null && Pro.publicKey.length == 64) Panel {
+            if (!has && state != null && Pro.publicKey.length == 64) Panel(Modifier.fillMaxWidth()) {
                 Text("Code aus der E-Mail", color = E.Text, fontWeight = FontWeight.Bold)
                 Text("Am einfachsten: den Link aus der E-Mail antippen. Oder den Code hier einfügen.", color = E.Muted, fontSize = 13.sp)
                 OutlinedTextField(input, { input = it; msg = null }, Modifier.fillMaxWidth().testTag("pro-code"), placeholder = { Text("EX-…") }, minLines = 2, maxLines = 5)

@@ -1,5 +1,11 @@
 # Changelog – Experimentopia
 
+## 2.3.3 – Jedes Thema zum Anprobieren (17.11.2026)
+
+- 🎁 **Mehr gratis**: Bei „Lernen nach Fach“ sind jetzt in **jedem Thema die ersten beiden Versuche frei** – auch Zellen, Ernährung, Ökologie, Körper, Säuren,
+  Reaktionen, Magnetismus, Schall, Newton, Schwingungen und Maschinen. Zusammen 74 von 200 Versuchen ohne Forscher-Pass (vorher 52).
+- 📐 In den Einstellungen sind alle Kästen jetzt gleich breit (auch „Forscher-Pass“).
+
 ## 2.3.2 – Feinschliff für kleine Handys (17.11.2026)
 
 - 📱 Auf schmalen Handys bricht nichts mehr mitten im Wort um: Die Knöpfe „Forscherbuch“ und „Abzeichen“ auf dem Startbildschirm sind neu angeordnet,

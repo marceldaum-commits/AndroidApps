@@ -25,7 +25,14 @@ object Pro {
     /** Labore, die man auch ohne Pro frei bespielen kann */
     val FREE_LABS = setOf(Lab.SCHWIMMEN, Lab.WIPPE, Lab.STROM, Lab.ROTKOHL, Lab.LICHT, Lab.FALLTURM)
 
-    fun freeExperiment(e: Experiment) = e.island in FREE_ISLANDS || Catalog.of(e.island).indexOf(e) < FREE_PER_ISLAND
+    /** … und in jedem Thema (Lernen nach Fach, Reihenfolge wie in der Schule) die ersten beiden – so kann man jedes Thema anprobieren */
+    const val FREE_PER_TOPIC = 2
+    private val freeIds: Set<String> by lazy {
+        (Catalog.all.filter { it.island in FREE_ISLANDS } +
+            Island.entries.flatMap { Catalog.of(it).take(FREE_PER_ISLAND) } +
+            Topic.entries.flatMap { Curriculum.experiments(it).take(FREE_PER_TOPIC) }).map { it.id }.toSet()
+    }
+    fun freeExperiment(e: Experiment) = e.id in freeIds
     fun freeLab(l: Lab) = l in FREE_LABS
 
     /** Gesperrt für diesen Spieler? [proOwned] = gekauft, [enabled] = Sperren aktiv */
@@ -46,7 +53,7 @@ object Pro {
     )
     val free get() = listOf(
         "die ganze Wasserinsel",
-        "von jeder anderen Insel die ersten $FREE_PER_ISLAND Versuche ($freeCount Versuche insgesamt)",
+        "von jeder anderen Insel die ersten $FREE_PER_ISLAND Versuche und in jedem Thema die ersten $FREE_PER_TOPIC ($freeCount Versuche insgesamt)",
         "Rätsel des Tages und die Themensuche",
         "Forscherbuch und Abzeichen",
         "Freies Labor: ${FREE_LABS.joinToString { it.title }}",

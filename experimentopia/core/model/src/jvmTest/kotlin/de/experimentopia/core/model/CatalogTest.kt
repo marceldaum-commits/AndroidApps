@@ -119,6 +119,8 @@ class CatalogTest {
         // Bestandsschutz: schon gemachte Versuche bleiben offen
         assertTrue(all.none { Pro.locked(it, false, enabled = true, done = all.map { e -> e.id }.toSet()) })
         assertTrue(Pro.freeCount in 20 until all.size)
+        // Lernen nach Fach: jedes Thema lässt sich anprobieren – die ersten beiden Versuche sind immer frei
+        Topic.entries.forEach { t -> Curriculum.experiments(t).take(Pro.FREE_PER_TOPIC).forEach { e -> assertTrue("$t: ${e.id} gesperrt", !Pro.locked(e, false, enabled = true)) } }
     }
 
     @Test fun raetselDesTagesWechselt() {

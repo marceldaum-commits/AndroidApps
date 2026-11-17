@@ -38,7 +38,7 @@ private fun Switcher(title: String, sub: String, on: Boolean, tag: String, onCha
 @Composable
 fun SoundSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit, sound: Boolean, onSound: (Boolean) -> Unit, vibration: Boolean, onVibration: (Boolean) -> Unit) {
     val sfx = LocalSfx.current
-    Panel {
+    Panel(Modifier.fillMaxWidth()) {
         Text("🎵 Musik & Klang", style = MaterialTheme.typography.titleMedium, color = E.Mint)
         Switcher("🎻 Musik", "Eigene Labor-Musik: Pizzicato, Klarinette, Fagott – jede Welt klingt anders", audio.music, "musik") { onAudio(audio.copy(music = it)) }
         if (audio.music) ValueSlider("Lautstärke Musik", audio.musicVol, 0f..1f, "${(audio.musicVol * 100).toInt()} %", { onAudio(audio.copy(musicVol = it)) }, color = E.Violet)
@@ -53,7 +53,7 @@ fun SoundSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit, sound: Boole
 @Composable
 fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
     val reader = LocalReader.current
-    Panel {
+    Panel(Modifier.fillMaxWidth()) {
         Text("🔊 Vorlesen", style = MaterialTheme.typography.titleMedium, color = E.Mint)
         Switcher("Vorlesen", "Anleitungen, Fragen und Erklärungen – überall gibt es dann einen 🔊-Knopf", audio.read, "vorlesen_an") { onAudio(audio.copy(read = it)); if (!it) reader?.stop() }
         if (!audio.read) return@Panel
@@ -92,7 +92,7 @@ fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
 private fun OfflineVoicePanel(reader: Reader, audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
     LaunchedEffect(reader) { reader.refreshOffline() }
     val o = reader.offline
-    Panel(border = E.Sky) {
+    Panel(Modifier.fillMaxWidth(), border = E.Sky) {
         Text("📦 Ohne Internet vorlesen", color = E.Text, fontWeight = FontWeight.Bold)
         when {
             o.loading -> {

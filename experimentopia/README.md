@@ -92,7 +92,7 @@ zeigt der Versuch einen Sicherheitshinweis (`core/model/Safety.kt`), auch im For
 
 ## Frei und Pro (Forscher-Pass)
 
-Frei: die ganze Wasserinsel, von jeder anderen Insel die ersten 5 Versuche, Rätsel des Tages, Forscherbuch, Themensuche, Lernen nach Fach, Theorie, 6 Geräte im Freien Labor.
+Frei: die ganze Wasserinsel, von jeder anderen Insel die ersten 5 Versuche, in jedem Thema die ersten 2, Rätsel des Tages, Forscherbuch, Themensuche, Lernen nach Fach, Theorie, 6 Geräte im Freien Labor.
 Der **Forscher-Pass** (7,99 € einmalig inkl. 19 % USt., kein Abo) öffnet alles. Kauf auf der Website (Woo-Kasse) nur nach einer Frage für Erwachsene;
 freigeschaltet wird mit einem signierten Code (Ed25519, Präfix „EX“, App 6, Produkt 1), den die App ohne Server prüft (`License.kt`, `Ed25519.kt`, Tests).
 Codes erzeugt der Lizenz-Dienst (`pro/pro_code.py`). Schlüssel und Kasse stehen in `pro/pro.properties` (seit 2.1.0 eingetragen: Produkt 4143; ohne Kasse würde nichts gesperrt).

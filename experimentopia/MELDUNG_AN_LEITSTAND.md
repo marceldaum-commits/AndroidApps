@@ -2,6 +2,12 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.3.3 vom 17.11.2026: Gratis-Regel ergänzt (Marcel)
+
+- Auf Marcels Hinweis (Bio unter „Lernen nach Fach“ komplett gesperrt) und seine Wahl: zusätzlich zu Wasserinsel + erste 5 je Insel sind **in jedem Thema die ersten 2** frei.
+  Frei jetzt **74 von 200** (vorher 52). Bitte Texte auf der Website/Produktseite anpassen, falls dort „52“ oder nur „erste 5 je Insel“ steht.
+- Einstellungen: alle Kästen volle Breite. Test: jedes Thema hat seine ersten beiden Versuche frei (CatalogTest).
+
 ## 17.11.2026 – Version 2.3.2 vom 17.11.2026: fertig für den Betriebstest
 
 **Fertiggestellt**: Nova (nur Nova, /jetzt mit Origin, Sprechtempo, Offline laden Standard/Bestqualität), Forscher-Pass-Abzeichen und Kasse, Datenschutz-Text (wörtlich), Web = Android.
