@@ -19,23 +19,37 @@
   async function keep(url, buf) {
     try { if ('caches' in window) await (await caches.open(STORE)).put(url, new Response(buf, { headers: { 'Content-Type': 'audio/mpeg' } })); } catch (e) {}
   }
-  async function get(url) {
-    const r = await fetch(url, { credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer' });
-    return { status: r.status, buf: r.status === 200 ? await r.arrayBuffer() : null };
+  // Antwort 0 = keine Verbindung. Bei einem Aussetzer (keine Verbindung, Serverfehler) kurz warten und noch einmal versuchen.
+  async function once(url, post) {
+    try {
+      const r = await fetch(url, post ? { method: 'POST', credentials: 'omit', referrerPolicy: 'no-referrer', headers: { 'Content-Type': 'application/json' }, body: post }
+                                      : { credentials: 'omit', cache: 'no-store', referrerPolicy: 'no-referrer' });
+      return { status: r.status, buf: r.status === 200 && !post ? await r.arrayBuffer() : null, json: r.status === 200 && post ? await r.json() : null };
+    } catch (e) { return { status: 0, buf: null, json: null }; }
   }
+  async function get(url, post) {
+    const first = await once(url, post); if (first.status !== 0 && first.status < 500) return first;
+    await new Promise(function (ok) { setTimeout(ok, N.retryPause); });
+    return once(url, post);
+  }
+  N.retryPause = 700;
   // 1. gespeichert  2. fertige Datei vom Server  3. Server bitten, sie zu erzeugen (nur für Texte, die erst in der Aufgabe entstehen)
+  // Ergebnis: die Datei – oder 'offline' (gar keine Verbindung) – oder null (Server erreichbar, aber keine Datei)
   async function obtain(server, url, live, body) {
     const off = await offlineHit(url); if (off) return off;                // offline geladen (Einstellungen), Bestqualität zuerst
     const hit = await cached(url); if (hit) return hit;
-    if (navigator.onLine === false) return null;                            // offline: gar nicht erst fragen (kein Fehler in der Konsole) – die Stimme des Geräts springt ein
+    if (navigator.onLine === false) return 'offline';                      // gar nicht erst fragen (kein Fehler in der Konsole)
     let r = await get(url);
+    if (r.status === 0) return 'offline';
     if (r.status === 404 && live) {
-      const a = await fetch(live, { method: 'POST', credentials: 'omit', referrerPolicy: 'no-referrer', headers: { 'Content-Type': 'application/json' }, body: body });
+      const a = await get(live, body);
+      if (a.status === 0) return 'offline';
       if (a.status !== 200) return null;
-      const j = await a.json(); let u = j && typeof j.url === 'string' ? j.url : null;
+      let u = a.json && typeof a.json.url === 'string' ? a.json.url : null;
       if (u && u.charAt(0) === '/') u = server + u;
       if (!u || u.indexOf(server + '/') !== 0) return null;
       r = await get(u);
+      if (r.status === 0) return 'offline';
     }
     if (r.status !== 200 || !r.buf || r.buf.byteLength < 256) return null;
     keep(url, r.buf.slice(0));
@@ -135,7 +149,8 @@
       N.speaking = true; return true;
     } catch (e) { return false; }
   }
-  // Antwort: 'ok' (spielt), 'fehlt' (nicht zu bekommen – dann liest die Stimme des Geräts), 'alt' (inzwischen kam ein neuer Satz)
+  // Antwort: 'ok' (spielt), 'offline' (kein Netz und nichts gespeichert – dann liest die Stimme des Geräts),
+  // 'fehlt' (Server erreichbar, aber keine Datei – dieser Satz bleibt stumm), 'alt' (inzwischen kam ein neuer Satz)
   N.say = async function (server, url, live, body, volume, rate) {
     N.stop(); const mine = turn; rate = rate || 1;
     try {
@@ -144,6 +159,7 @@
       if (s !== server) { url = s + url.substring(server.length); if (live) live = s + live.substring(server.length); }
       const buf = await obtain(s, url, live, body);
       if (mine !== turn) return 'alt';
+      if (buf === 'offline') return 'offline';
       if (!buf) return 'fehlt';
       if (Math.abs(rate - 1) > 0.01 && await paced(buf.slice(0), volume, rate, mine)) { N.last = { url: url, rate: rate, seconds: el.duration || 0 }; return mine === turn ? 'ok' : 'alt'; }
       if (mine !== turn) return 'alt';

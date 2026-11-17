@@ -61,8 +61,8 @@ object Guides {
     private val skew = run {
         val ga = p(1, 3, 1); val gd = p(1, 2, 2); val hb = p(4, 1, 0); val hd = p(1, 0, -2)
         val scene = { listOf(Stage.fullLine("g", ga, gd, Bounds(), "cyan", "g"), Stage.fullLine("h", hb, hd, Bounds(), "yellow", "h")) }
-        Exam("weg-windschief", "Abstand windschiefer Geraden", "📏", "g: x⃗ = (1|3|1) + s · (1|2|2) und h: x⃗ = (4|1|0) + t · (1|0|−2). Es gilt n⃗ = (2|−2|1).", listOf(
-            part("1", Families.scalar("weg-windschief-1", 0, "Skalarprodukt", "Der Verbindungsvektor der Stützpunkte ist (3|−2|−1). Wie groß ist sein Skalarprodukt mit n⃗ = (2|−2|1)?", "k", 0..12, 9, 0,
+        Exam("weg-windschief", "Abstand windschiefer Geraden", "📏", "g: x⃗ = (1|3|1) + s · (1|2|2) und h: x⃗ = (4|1|0) + t · (1|0|−2) sind windschief. n⃗ = (2|−2|1) steht senkrecht auf beiden Richtungsvektoren (Kreuzprodukt, gekürzt).", listOf(
+            part("1", Families.scalar("weg-windschief-1", 0, "Skalarprodukt", "Der Verbindungsvektor vom Stützpunkt A von g zum Stützpunkt B von h ist (3|−2|−1). Wie groß ist sein Skalarprodukt mit n⃗ = (2|−2|1)?", "k", 0..12, 9, 0,
                 tip = "3 · 2 + (−2) · (−2) + (−1) · 1.", way = listOf("(3|−2|−1) · (2|−2|1)", "= 6 + 4 − 1", "= 9"), color = "yellow",
                 formula = { v -> listOf(listOf(Txt("(B − A) · n⃗ = "), col(p(3, -2, -1)), Txt(" · "), col(p(2, -2, 1)), Txt(" = "), Num(Geo.num(v), "a"))) },
                 objects = { _, _ -> scene() + Stage.vector("ab", ga, hb, "pink", "B − A") },

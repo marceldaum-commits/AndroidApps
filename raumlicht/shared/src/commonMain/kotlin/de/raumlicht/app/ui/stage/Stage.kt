@@ -73,13 +73,16 @@ class StageController {
     var generation by androidx.compose.runtime.mutableIntStateOf(0)
         private set
     /** Der Darstellungsprozess ist weg: alte Ansicht loslassen, neue anfordern. Der letzte Bühnen-Zustand wird nach dem Start wieder gezeigt. */
+    companion object { const val SLOW_START = "Die 3D-Bühne startet nicht. Bitte „Android System WebView“ im Play Store aktualisieren." }
     fun rendererGone() { runner = null; ready = false; queue.clear(); generation++ }
     fun report(msg: String) { if (problem == null) problem = msg }
+    /** Die Bühne hat sich lange nicht gemeldet. Meldet sie sich später doch (langsamer Start, App war im Hintergrund), verschwindet der Hinweis wieder. */
+    fun reportSlowStart() { if (!ready) report(SLOW_START) }
     fun tell(json: String) { info = json }
     fun onEvent(json: String) {
         val o = runCatching { Json.parseToJsonElement(json).jsonObject }.getOrNull() ?: return
         when (o["type"]?.jsonPrimitive?.content) {
-            "ready" -> { ready = true; state?.let { run("RL.setState($it)") }; queue.forEach(::run); queue.clear() }
+            "ready" -> { ready = true; if (problem == SLOW_START) problem = null; state?.let { run("RL.setState($it)") }; queue.forEach(::run); queue.clear() }
             "info" -> info = json
             "error" -> if (problem == null) problem = o["msg"]?.jsonPrimitive?.content
             "miss" -> o.getValue("p").jsonArray.map { it.jsonPrimitive.content.toDouble() }.let { onMiss?.invoke(V3(it[0], it[1], it[2])) }

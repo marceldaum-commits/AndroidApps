@@ -31,16 +31,16 @@ internal object TourEight {
             check = { a -> Families.compare(a * step, solution, "Die Wahrscheinlichkeit", ok, mistakes) })
 
     private val two = Binomial(2, 0.4); private val pair = Binomial(2, 0.3); private val ten = Binomial(10, 0.5)
-    private const val TABLE = "Tabelle: P(X ≤ 3) = 0,172 · P(X ≤ 4) = 0,377 · P(X ≤ 6) = 0,828 · P(X ≤ 7) = 0,945"
+    private const val TABLE = "Tabelle: P(X ≤ 3) = 0,172 | P(X ≤ 4) = 0,377 | P(X ≤ 6) = 0,828 | P(X ≤ 7) = 0,945"
     private val ch24 = listOf(
-        percent("24-1", "Genau ein Treffer", "Ein Blitzlicht zündet mit 40 %. Ich löse zweimal aus. Wie wahrscheinlich zündet es genau einmal?", two, { it == 1 }, 48, 4, 100, 0,
+        percent("24-1", "Genau ein Treffer", "Ein Blitzlicht zündet mit einer Wahrscheinlichkeit von 40 %. Ich löse zweimal aus. Wie wahrscheinlich zündet es genau einmal?", two, { it == 1 }, 48, 4, 100, 0,
             listOf("n = 2, p = 0,4", "P(X = k) = (n über k) · pᵏ · (1 − p)ⁿ⁻ᵏ"), "P(X = 1)", "48 % – zwei Reihenfolgen mit je 24 %.",
             tip = "Formel von Bernoulli: (2 über 1) · 0,4 · 0,6. Der Binomialkoeffizient zählt die Reihenfolgen.",
             way = listOf("(2 über 1) = 2 Reihenfolgen", "jede: 0,4 · 0,6 = 0,24", "P(X = 1) = 2 · 0,24 = 48 %"),
             mistakes = mapOf(24 to "0,4 · 0,6 = 24 % ist nur eine Reihenfolge. Es gibt zwei: Treffer–Niete und Niete–Treffer.", 16 to "16 % ist P(X = 2): beide zünden. Gesucht ist genau einmal."),
             steps = listOf("Die mittlere Säule: genau ein Treffer. Den gibt es in zwei Reihenfolgen." to listOf(1), "Zweimal 24 % macht 48 %." to listOf(1))),
         percent("24-2", "Höchstens ein Treffer", "Dieselben zwei Versuche. Wie wahrscheinlich zündet es höchstens einmal? Jetzt wird aufsummiert.", two, { it <= 1 }, 84, 4, 100, 0,
-            listOf("n = 2, p = 0,4", "P(X = 0) = 0,36 · P(X = 1) = 0,48 · P(X = 2) = 0,16"), "P(X ≤ 1)", "84 % – die Säulen für 0 und 1 zusammen.",
+            listOf("n = 2, p = 0,4", "P(X = 0) = 0,36 | P(X = 1) = 0,48 | P(X = 2) = 0,16"), "P(X ≤ 1)", "84 % – die Säulen für 0 und 1 zusammen.",
             tip = "Kumuliert heißt aufsummiert: P(X ≤ 1) = P(X = 0) + P(X = 1).",
             way = listOf("P(X = 0) = 0,6 · 0,6 = 0,36", "P(X = 1) = 0,48", "P(X ≤ 1) = 0,36 + 0,48 = 84 %"),
             mistakes = mapOf(48 to "48 % ist nur „genau einmal“. „Höchstens einmal“ schließt „keinmal“ mit ein – aufsummieren.", 36 to "36 % ist nur „keinmal“. Dazu kommt „genau einmal“."),
@@ -51,13 +51,13 @@ internal object TourEight {
             way = listOf("P(X = 0) = 0,7 · 0,7 = 0,49", "P(X ≥ 1) = 1 − 0,49", "= 51 %"),
             mistakes = mapOf(42 to "42 % ist „genau einmal“. Bei „mindestens einmal“ zählt „zweimal“ auch mit.", 48 to "Fast: 49 % ist P(X = 0). Gesucht ist das Gegenereignis.", 60 to "0,3 + 0,3 = 60 % zählt den Fall „beide“ doppelt. Rechne über das Gegenereignis."),
             steps = listOf("Nur diese Säule zählt nicht: keinmal, 49 %." to listOf(0), "Alles andere bleibt übrig: 51 %." to listOf(1, 2))),
-        percent("24-4", "Von … bis", "Zehn Blitzlichter, jedes zündet mit 50 %. Wie wahrscheinlich zünden 4 bis 6 davon? Lies aus der kumulierten Tabelle ab (auf ganze Prozent).", ten, { it in 4..6 }, 66, 1, 90, 40,
+        percent("24-4", "Von … bis", "Zehn Blitzlichter, jedes zündet mit einer Wahrscheinlichkeit von 50 %. Wie wahrscheinlich zünden mindestens 4 und höchstens 6 davon? Lies aus der kumulierten Tabelle ab (auf ganze Prozent).", ten, { it in 4..6 }, 66, 1, 90, 40,
             listOf("n = 10, p = 0,5", TABLE), "P(4 ≤ X ≤ 6)", "66 % – die drei mittleren Säulen.",
             tip = "P(4 ≤ X ≤ 6) = P(X ≤ 6) − P(X ≤ 3). Abgezogen wird alles unterhalb von 4 – also bis einschließlich 3.",
             way = listOf("P(X ≤ 6) = 0,828", "P(X ≤ 3) = 0,172", "0,828 − 0,172 = 0,656 ≈ 66 %"),
             mistakes = mapOf(45 to "Du hast P(X ≤ 4) abgezogen – dann fehlt die 4. Abziehen musst du P(X ≤ 3).", 83 to "83 % ist P(X ≤ 6). Zieh noch ab, was unter 4 liegt: P(X ≤ 3)."),
             steps = listOf("Bis 6 sind es 82,8 %." to listOf(0, 1, 2, 3, 4, 5, 6), "Davon weg, was unter 4 liegt: 17,2 %. Es bleiben die drei mittleren Säulen." to listOf(4, 5, 6))),
-        Families.scalar("24-5", 24, "Abi-Check: Wie viele reichen?", "Zehn Blitzlichter, jedes zündet mit 50 %. Ich will mit mindestens 90 % Sicherheit sagen: „Es zünden höchstens k.“ Wie klein darf k sein?", "k", 0..10, 7, 10, abi = true,
+        Families.scalar("24-5", 24, "Abi-Check: Wie viele reichen?", "Zehn Blitzlichter, jedes zündet mit einer Wahrscheinlichkeit von 50 %. Ich will mit mindestens 90 % Sicherheit sagen: „Es zünden höchstens k.“ Wie klein darf k sein?", "k", 0..10, 7, 10, abi = true,
             tip = "Gesucht ist das kleinste k mit P(X ≤ k) ≥ 0,9. In der kumulierten Tabelle von links nach rechts suchen.",
             way = listOf("P(X ≤ 6) = 0,828 – noch unter 90 %", "P(X ≤ 7) = 0,945 – reicht", "kleinstes k: 7"), color = "pink",
             formula = { a -> listOf(listOf(Txt("n = 10, p = 0,5")), listOf(Txt(TABLE)), listOf(Txt("P(X ≤ k) ≥ 90 % ab k = "), Num(Geo.num(a), "a"))) },

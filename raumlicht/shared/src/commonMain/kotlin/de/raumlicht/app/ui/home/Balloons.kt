@@ -60,7 +60,7 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
         }
     }
     // Mit Aufgabe: Lux sagt jede neue Regel an
-    LaunchedEffect(round, rule.text, running) { if (running && quiz) speaker?.say("Jetzt: ${rule.text}") }
+    LaunchedEffect(round, rule.text, running) { if (running && quiz) speaker?.say(de.raumlicht.core.model.Vorlesen.BALLOON_CALL + rule.text) }
     // Bühne in kleinen Schritten nachführen (die Kugeln gleiten dazwischen von selbst weiter)
     LaunchedEffect(round, (t * 14).toInt(), popped, running, mode) {
         controller.setState(if (round == 0) BalloonGame(seed).scene(1.6, emptySet()) else game.scene(t, popped, if (over) "happy" else "idle"))

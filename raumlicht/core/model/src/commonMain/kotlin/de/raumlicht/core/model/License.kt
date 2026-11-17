@@ -1,9 +1,9 @@
 package de.raumlicht.core.model
 
 /**
- * Freischalt-Codes für den Abi-Pass: ohne Konto und ohne Server prüfbar (gleiches Verfahren wie bei KurvenFlug).
+ * Freischalt-Codes für Raumlicht Pro: ohne Konto und ohne Server prüfbar (gleiches Verfahren wie bei KurvenFlug).
  *
- * Inhalt (9 Byte): Version 1 · App (4 = Raumlicht) · Produkt (1 = Abi-Pass) · laufende Nummer (4 Byte) · Tag der Ausstellung (2 Byte, Tage seit 1.1.2020).
+ * Inhalt (9 Byte): Version 1 · App (4 = Raumlicht) · Produkt (1 = Raumlicht Pro) · laufende Nummer (4 Byte) · Tag der Ausstellung (2 Byte, Tage seit 1.1.2020).
  * Dahinter 64 Byte Ed25519-Signatur des Lizenz-Dienstes. Alles zusammen in Crockford-Base32, z. B. „RL-1AB2C-…“.
  * Den geheimen Schlüssel hat nur der Lizenz-Dienst; die App kennt nur den öffentlichen ([Pro.PUBLIC_KEY]).
  */
@@ -59,7 +59,7 @@ object License {
     private fun hex(s: String): ByteArray? = s.trim().takeIf { it.length % 2 == 0 && it.all { c -> c.isDigit() || c.lowercaseChar() in 'a'..'f' } }
         ?.chunked(2)?.map { it.toInt(16).toByte() }?.toByteArray()
 
-    /** Gültiger Abi-Pass-Code für Raumlicht? Sonst null. */
+    /** Gültiger Pro-Code für Raumlicht? Sonst null. */
     fun check(code: String?, publicKeyHex: String): Info? {
         if (code.isNullOrBlank()) return null
         val pk = hex(publicKeyHex)?.takeIf { it.size == 32 } ?: return null

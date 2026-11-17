@@ -1,5 +1,6 @@
 package de.raumlicht.app.ui
 
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +22,7 @@ import kotlinx.coroutines.flow.StateFlow
 object Routes {
     const val HOME = "start"
     const val SETTINGS = "einstellungen"
-    const val PRO = "abi-pass"
+    const val PRO = "pro"
     const val DAILY = "tagesaufgabe"
     const val JAM_HOME = "jam"
     const val SHEET = "spickzettel"
@@ -90,7 +91,7 @@ fun AppRoot(
     nav: Navigator, prefs: Prefs, stars: StateFlow<Map<String, Int>>, record: (levelId: String, stars: Int, attempts: Int) -> Unit, today: () -> Long,
     settings: @Composable (onBack: () -> Unit) -> Unit,
     updateVersion: String? = null, onRoute: (String) -> Unit = {}, onPlanChanged: () -> Unit = {},
-    /** Abi-Pass erhältlich und Pro-Teile gesperrt? Erst wenn die Kasse eingetragen ist ([Pro.ENABLED]); die Play-Fassung schaltet es aus, Tests schalten es ein. */
+    /** Raumlicht Pro erhältlich und Pro-Teile gesperrt? Erst wenn die Kasse eingetragen ist ([Pro.ENABLED]); die Play-Fassung schaltet es aus, Tests schalten es ein. */
     proEnabled: Boolean = Pro.ENABLED,
     /** Öffentlicher Schlüssel zum Prüfen der Freischalt-Codes (Tests nehmen einen eigenen) */
     proKey: String = Pro.PUBLIC_KEY,
@@ -246,6 +247,8 @@ fun AppRoot(
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }
             }
         } }
+        // dezente Hinweise zur Stimme (lädt … / gerade nicht erreichbar)
+        de.raumlicht.app.ui.fx.VoiceHints(androidx.compose.ui.Modifier.align(androidx.compose.ui.Alignment.TopCenter).systemBarsPadding())
         }
     }
 }

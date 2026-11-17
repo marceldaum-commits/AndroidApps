@@ -65,9 +65,9 @@ const off3 = await page.evaluate(async ([s]) => { const o = window.__rlNova.offl
 check(off3 === 0, 'Offline-Stimme löschen entfernt beide Qualitäten');
 // 4. zu langer Text (kein /jetzt) und Server weg: „fehlt“ – dann liest die Stimme des Geräts
 const none = await page.evaluate(([s]) => window.__rlNova.say(s, s + '/nova/00/gibtsnicht.mp3', '', '', 0.5), [S]);
-check(none === 'fehlt', 'ohne Datei und ohne /jetzt meldet Nova „fehlt“');
-await page.evaluate(() => { window.__rlNovaServer = 'http://localhost:9'; });
+check(none === 'fehlt', 'Server erreichbar, aber keine Datei: Nova meldet „fehlt“ – der Satz bleibt stumm, keine Geräte-Stimme');
+await page.evaluate(() => { window.__rlNovaServer = 'http://localhost:9'; window.__rlNova.retryPause = 50; });
 const off = await page.evaluate(([s]) => window.__rlNova.say(s, s + '/nova/ab/offline.mp3', s + '/jetzt', '{}', 0.5), [S]);
-check(off === 'fehlt', 'Server nicht erreichbar: Nova meldet „fehlt“');
+check(off === 'offline', 'keine Verbindung (nach zweitem Versuch): Nova meldet „offline“ – nur dann liest die Stimme des Geräts');
 check(errs.length === 0, errs.length ? 'Fehler: ' + errs.join(' | ') : 'keine Konsolenfehler');
 await b.close(); server.close(); process.exit(fail ? 1 : 0);

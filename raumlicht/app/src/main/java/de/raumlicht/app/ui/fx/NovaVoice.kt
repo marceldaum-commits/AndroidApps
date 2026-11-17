@@ -20,14 +20,20 @@ typealias NovaFetch = (url: String, body: String?) -> Pair<Int, ByteArray>
  * 1. schon auf dem Gerät gespeichert (offline geladen oder schon einmal gehört) → sofort abspielen (geht auch ohne Internet)
  * 2. sonst die Datei von unserem Server holen (feste Texte sind vorab vertont)
  * 3. gibt es sie noch nicht (Text ist erst in der Aufgabe entstanden): unseren Server bitten, sie zu erzeugen ([Vorlesen.LIVE]) – nur Text und Sprache, nichts über den Nutzer
- * 4. klappt das alles nicht (offline, zu lang, Server sagt nein): diesen einen Text liest still die Stimme des Geräts ([fallback])
+ * 4. Aussetzer (keine Verbindung, Serverfehler)? Kurz warten und noch einmal versuchen.
+ * 5. Die Stimme des Geräts ([fallback]) liest nur, wenn wirklich kein Netz da ist und der Satz nicht gespeichert war. Ist unser Server erreichbar,
+ *    hat aber keine Datei, bleibt dieser eine Satz stumm – dazu einmal je Sitzung der Hinweis „Nova ist gerade nicht erreichbar“.
  *
  * Ein neuer Satz unterbricht den alten.
  */
 class NovaVoice(private val ctx: Context, private val fallback: Speaker? = null, private val onSpeaking: (Boolean) -> Unit = {},
                 private val fetch: NovaFetch = ::novaFetch,
                 /** spielt eine Datei mit Lautstärke und Tempo ab und ruft am Ende [done] auf; gibt zurück, wie man sie anhält (Tests ersetzen das) */
-                private val play: ((File, Float, Float, () -> Unit) -> (() -> Unit))? = null) : Speaker {
+                private val play: ((File, Float, Float, () -> Unit) -> (() -> Unit))? = null,
+                /** für die dezenten Hinweise „Nova lädt …“ und „gerade nicht erreichbar“ */
+                private val status: VoiceStatus? = null,
+                /** Pause vor dem zweiten Versuch (Tests: 0) */
+                private val retryPause: Long = 700) : Speaker {
     @Volatile var enabled = true
     @Volatile var volume = 1f
     /** Sprechtempo: 1 = wie aufgenommen; die Datei wird schneller oder langsamer abgespielt, die Tonhöhe bleibt */
@@ -46,32 +52,53 @@ class NovaVoice(private val ctx: Context, private val fallback: Speaker? = null,
         silence(); fallbackStop()
         worker.execute {
             if (mine != turn.get()) return@execute                         // inzwischen kam ein neuer Satz: diesen gar nicht erst holen
-            val file = runCatching { obtain(spoken) }.getOrNull()
+            main.post { if (mine == turn.get()) status?.loading = true }
+            val got = runCatching { find(spoken) }.getOrDefault(Got(null, offline = false))
             main.post {
-                if (mine != turn.get() || !enabled) return@post
-                if (file == null) { fallback?.say(text); return@post }       // stille Notlösung: die Stimme des Geräts
-                start(file, mine)
+                if (mine != turn.get()) return@post
+                status?.loading = false
+                if (!enabled) return@post
+                when {
+                    got.file != null -> start(got.file, mine)
+                    // Die Stimme des Geräts nur, wenn wirklich kein Netz da ist (und nichts gespeichert war) …
+                    got.offline -> { status?.unreachable(); fallback?.say(text) }
+                    // … sonst lieber diesen einen Satz auslassen als mit fremder Stimme sprechen
+                    else -> status?.unreachable()
+                }
             }
         }
     }
     override fun sayIfQuiet(text: String) { if (!speaking) say(text) }
     fun stop() { turn.incrementAndGet(); silence(); fallbackStop() }
 
+    /** Ergebnis der Suche nach einer Datei: [file] oder – wenn es keine gab – ob gar kein Netz da war ([offline]) */
+    internal class Got(val file: File?, val offline: Boolean)
+
     /** Die Datei zu einem vorlesefertigen Text: aus dem Speicher, sonst vom Server (Schritte 1–3). null = nicht zu bekommen. */
-    internal fun obtain(spoken: String): File? {
+    internal fun obtain(spoken: String): File? = find(spoken).file
+
+    /** Holt eine Adresse und versucht es bei einem Aussetzer (keine Verbindung, Serverfehler) nach kurzer Pause noch einmal – lieber kurz warten als aufgeben */
+    private fun patient(url: String, body: String?): Pair<Int, ByteArray> {
+        val first = fetch(url, body); if (first.first != 0 && first.first < 500) return first
+        Thread.sleep(retryPause); return fetch(url, body)
+    }
+
+    internal fun find(spoken: String): Got {
         val key = Vorlesen.key(spoken)
-        NovaOffline.find(ctx, key)?.let { return it }                        // offline geladen (Einstellungen)
+        NovaOffline.find(ctx, key)?.let { return Got(it, false) }             // offline geladen (Einstellungen)
         val file = File(dir, "$key.mp3")
-        if (file.length() > 0) return file
-        var (code, bytes) = fetch(Vorlesen.url(spoken), null)
+        if (file.length() > 0) return Got(file, false)
+        var (code, bytes) = patient(Vorlesen.url(spoken), null)
+        if (code == 0) return Got(null, offline = true)                      // keine Verbindung zu unserem Server: kein Netz
         if (code == 404 && spoken.length <= Vorlesen.LIVE_MAX_CHARS) {
-            val (c, answer) = fetch(Vorlesen.LIVE, Vorlesen.liveBody(spoken))
+            val (c, answer) = patient(Vorlesen.LIVE, Vorlesen.liveBody(spoken))
+            if (c == 0) return Got(null, offline = true)
             val url = if (c == 200) Vorlesen.liveUrl(answer.decodeToString()) else null
-            if (url != null) fetch(url, null).let { code = it.first; bytes = it.second } else return null
+            if (url != null) patient(url, null).let { code = it.first; bytes = it.second } else return Got(null, false)
         }
-        if (code != 200 || !looksLikeMp3(bytes)) return null
+        if (code != 200 || !looksLikeMp3(bytes)) return Got(null, offline = code == 0)
         val part = File(dir, file.name + ".teil"); part.writeBytes(bytes)
-        return if (part.renameTo(file)) file else null
+        return Got(if (part.renameTo(file)) file else null, false)
     }
 
     private fun start(file: File, mine: Int) {
@@ -112,7 +139,7 @@ fun novaFetch(url: String, body: String?): Pair<Int, ByteArray> = runCatching {
     val c = URL(url).openConnection() as HttpURLConnection
     try {
         c.connectTimeout = 6000; c.readTimeout = 20000; c.instanceFollowRedirects = false
-        if (body != null) { c.requestMethod = "POST"; c.doOutput = true; c.setRequestProperty("Content-Type", "application/json"); c.outputStream.use { it.write(body.encodeToByteArray()) } }
+        if (body != null) { c.requestMethod = "POST"; c.doOutput = true; c.setRequestProperty("Content-Type", "application/json"); c.setRequestProperty("Origin", Vorlesen.APP_ORIGIN); c.outputStream.use { it.write(body.encodeToByteArray()) } }
         val code = c.responseCode
         code to (if (code == 200) c.inputStream.use { it.readBytes() } else ByteArray(0))
     } finally { c.disconnect() }

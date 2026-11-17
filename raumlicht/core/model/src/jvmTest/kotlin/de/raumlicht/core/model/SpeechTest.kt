@@ -109,7 +109,7 @@ class SpeechTest {
         says("d gleich Betrag von minus 1 minus 5, geteilt durch 3, gleich 2", "d = |-1 − 5| : 3 = 2")
         says("f Strich von minus 2 gleich minus 0,41. Am Tiefpunkt ist die Steigung 0.", "f′(-2) = −0,41. Am Tiefpunkt ist die Steigung 0.")
         says("Beim Spiegeln an der x1x3-Ebene wechselt nur x2 das Vorzeichen.", "Beim Spiegeln an der x₁x₃-Ebene wechselt nur x₂ das Vorzeichen.")
-        says("Zweimal ableiten, Produkt- und Kettenregel", "Zweimal ableiten (Produkt- und Kettenregel)"); says("Abi-Pass", "Abi-Pass")
+        says("Zweimal ableiten, Produkt- und Kettenregel", "Zweimal ableiten (Produkt- und Kettenregel)"); says("Raumlicht Pro", "Raumlicht Pro")
     }
 
     /** A10: Häkchen, Kreuzchen, parallel und senkrecht – die Aussage kippt nicht. */

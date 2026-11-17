@@ -10,8 +10,9 @@ class RaumlichtApp : Application() {
     val music: de.raumlicht.app.ui.fx.BackgroundMusic by lazy { de.raumlicht.app.ui.fx.BackgroundMusic(this) }
     val voice: de.raumlicht.app.ui.fx.LuxVoice by lazy { de.raumlicht.app.ui.fx.LuxVoice(this) { speaking -> music.duck(speaking) }.also { it.enabled = container.settings.voice.value; it.use(container.settings.voiceName, container.settings.voiceBright) } }
     /** Lux spricht mit „Nova“ (KI-generierte Stimme, fertige Dateien von unserem Server); kommt ein Satz nicht an, liest ihn still die Stimme des Geräts */
-    val nova: de.raumlicht.app.ui.fx.NovaVoice by lazy { de.raumlicht.app.ui.fx.NovaVoice(this, voice, onSpeaking = { speaking -> music.duck(speaking) }).also { it.enabled = container.settings.voice.value } }
+    val nova: de.raumlicht.app.ui.fx.NovaVoice by lazy { de.raumlicht.app.ui.fx.NovaVoice(this, voice, onSpeaking = { speaking -> music.duck(speaking) }, status = voiceStatus).also { it.enabled = container.settings.voice.value } }
     val speaker: de.raumlicht.app.ui.fx.Speaker get() = nova
+    val voiceStatus = de.raumlicht.app.ui.fx.VoiceStatus()
     /** Alle festen Nova-Texte auf einmal laden (Einstellungen) */
     val novaOffline: de.raumlicht.app.ui.fx.NovaOffline by lazy { de.raumlicht.app.ui.fx.NovaOffline(this) }
     val sfx: Sfx by lazy { Sfx(this).also { it.enabled = container.settings.sound.value } }

@@ -2,6 +2,22 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.6 – Nova spricht in der Android-App jetzt wirklich alles (17.11.2026)
+- **Android:** Sätze, die erst in der Aufgabe entstehen (zum Beispiel Rückmeldungen mit deinen Zahlen), hat unser Stimmen-Server von der Android-App bisher abgelehnt – deshalb war dort die Handy-Stimme zu hören oder gar nichts. Die App meldet sich jetzt richtig an, und Nova spricht auch diese Sätze.
+- Im Browser war das schon in Ordnung.
+
+## 2.18.5 – Vorbereitung für Raumlicht Pro (17.11.2026)
+- **Hinter den Kulissen:** Die geplante Vollversion heißt künftig „Raumlicht Pro“ (einmalig 7,99 €, kein Abo, kein Ablauf). Sie ist noch nicht erhältlich – bis dahin bleibt alles frei, und in der App ändert sich nichts.
+
+## 2.18.4 – Klarere Aufgaben, Nova ohne fremde Stimme (17.11.2026)
+- **Aufgaben verständlicher:** Alle Aufgaben, Prüfungsteile und Übungs-Vorlagen wurden noch einmal darauf geprüft, ob eindeutig ist, was gefragt ist. An rund 60 Stellen steht jetzt eine klare Frage oder die fehlende Angabe dabei – zum Beispiel „Wie groß ist sein Volumen?“ beim Lichtkegel, das Intervall bei Drehkörpern, „Winkel zwischen Strahl und Segel-Ebene (nicht zum Lot)“ oder welche Zahl bei Parameter-Aufgaben eigentlich gesucht ist.
+- **Nichts mehr verraten:** In „Ausfälle einplanen“ zeigte die Bühne die Lösung schon vorher – jetzt sind alle Scheinwerfer gleich gefärbt. Rückmeldungen nennen kein unsichtbares Ziel mehr.
+- **Nova statt Handy-Stimme:** Hakt die Verbindung, versucht es die App noch einmal und zeigt dezent „Nova lädt …“. Die Stimme des Geräts liest nur noch, wenn wirklich kein Netz da ist und der Satz nicht gespeichert war. Ist Nova einmal nicht erreichbar, steht das kurz oben – höchstens einmal je Sitzung.
+- **Mehr vorab vertont:** Häufige Rückmeldungen (auch mit „Tipp gefällig?“), die Urteile der Geisterfahrt und die Regeln der Ballerbude gehören jetzt zu den festen Texten und lassen sich offline laden.
+
+## 2.18.3 – Falscher Hinweis an der 3D-Bühne behoben (17.11.2026)
+- **Android:** Über der 3D-Bühne stand manchmal „Die 3D-Bühne startet nicht …“, obwohl sie längst lief – zum Beispiel, wenn man kurz in eine andere App gewechselt war. Der Hinweis erscheint jetzt nur noch, wenn die Bühne wirklich nicht startet, und verschwindet von selbst, sobald sie da ist.
+
 ## 2.18.2 – Musik gleich beim Öffnen (17.11.2026)
 - **Android:** Die Musik läuft jetzt sofort, wenn du die App öffnest – nicht erst nach dem ersten Tippen. Im Browser beginnt sie weiterhin beim ersten Tippen oder Klick, weil Browser Ton vorher nicht erlauben.
 - „Musik aus“ in den Einstellungen gilt wie bisher, und bei stumm geschaltetem Handy bleibt Raumlicht still.
@@ -15,7 +31,7 @@ Jede Version steht hier mit ihrem Datum.
 
 ## 2.18.0 – Nova auch ohne Internet (17.11.2026)
 - **Alle Nova-Texte offline laden:** In den Einstellungen unter „Lux spricht“ kannst du alle festen Vorlese-Texte auf einmal laden – am besten im WLAN. Danach spricht Lux auch ohne Internet mit Nova.
-- **Zwei Qualitäten:** „Standard“ (rund 64 MB) oder „Bestqualität“ (deutlich größer). Der Fortschritt wird angezeigt, du kannst abbrechen und später weitermachen. „Offline-Stimme löschen“ gibt den Speicher wieder frei.
+- **Zwei Qualitäten:** „Standard“ (kleiner) oder „Bestqualität“ (größer) – die App zeigt die aktuelle Größe an. Der Fortschritt wird angezeigt, du kannst abbrechen und später weitermachen. „Offline-Stimme löschen“ gibt den Speicher wieder frei.
 - **Für Eltern:** Geladen werden nur Audiodateien von unserem Server. Texte, die erst in der Aufgabe entstehen, brauchen weiterhin Internet.
 
 ## 2.17.2 – Datenschutz-Hinweis ergänzt (17.11.2026)

@@ -63,7 +63,7 @@ private fun WebApp() {
     LaunchedEffect(Unit) { note("Oberfläche gestartet") }
     // Direkt-Link auf einen Bildschirm („?ziel=binomial“) – für Lesezeichen und für die automatische Prüfung jedes Bildschirms; unbekannte Ziele führen zur Startseite
     LaunchedEffect(Unit) { takeParam("ziel")?.takeIf { it.isNotBlank() && it.length < 60 }?.let { nav.restart(it) } }
-    // Freischalt-Link aus der E-Mail: Code prüfen, merken und die Abi-Pass-Seite zeigen (bei einem falschen Code steht dort die Eingabe bereit)
+    // Freischalt-Link aus der E-Mail: Code prüfen, merken und die Pro-Seite zeigen (bei einem falschen Code steht dort die Eingabe bereit)
     LaunchedEffect(Unit) { takeProParam()?.let { raw ->
         val code = de.raumlicht.core.model.License.extract("RL$raw") ?: de.raumlicht.core.model.License.extract(raw)
         if (de.raumlicht.core.model.Pro.active(code)) prefs.setProCode(code!!)
@@ -82,16 +82,24 @@ private fun WebApp() {
     LaunchedEffect(nav.stack.size) { syncHistory(nav.stack.size) { nav.back() } }
 
     val sfx = remember { WebSfx(prefs) }
+    val voiceStatus = remember { de.raumlicht.app.ui.fx.VoiceStatus() }
     val speaker = remember { object : Speaker {
         // „Nova“ (KI-generierte Stimme): fertige Datei von unserem Server; kommt sie nicht (offline), liest diesen Satz still die Stimme des Geräts
         override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Vorlesen.spoken(text).takeIf { it.isNotEmpty() }?.let { spoken ->
             stopSpeaking(); val volume = prefs.volume.value / 100.0
             val rate = prefs.speechRate.value / 100.0
+            val mine = ++novaTurn; voiceStatus.loading = true
             novaSay(Vorlesen.SERVER, Vorlesen.url(spoken), if (spoken.length <= Vorlesen.LIVE_MAX_CHARS) Vorlesen.LIVE else "", Vorlesen.liveBody(spoken), volume, rate)
-                .then { r -> if (r.toString() == "fehlt" && prefs.voice.value) speak(spoken, volume, rate); null } } }
+                .then { r -> if (mine == novaTurn) voiceStatus.loading = false
+                    when (r.toString()) {
+                        // die Stimme des Geräts nur, wenn wirklich kein Netz da ist (und nichts gespeichert war) …
+                        "offline" -> { voiceStatus.unreachable(); if (prefs.voice.value && mine == novaTurn) speak(spoken, volume, rate) }
+                        // … sonst bleibt dieser eine Satz stumm
+                        "fehlt" -> voiceStatus.unreachable()
+                    }; null } } }
         override fun sayIfQuiet(text: String) { if (!speaking() && !novaSpeaking()) say(text) }
     } }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker,
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker, de.raumlicht.app.ui.fx.LocalVoiceStatus provides voiceStatus,
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.CRASH -> 40 }) },
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
@@ -142,3 +150,6 @@ private fun offRefresh(server: String): Unit = js("{ if (window.__rlNova && wind
 private fun offStart(server: String, best: Boolean): Unit = js("{ window.__rlNova.offline.start(server, best); }")
 private fun offCancel(): Unit = js("{ window.__rlNova.offline.cancel(); }")
 private fun offRemove(server: String): Unit = js("{ window.__rlNova.offline.remove(server); }")
+
+/** laufende Nummer des letzten Satzes – ein älterer darf den Ladehinweis nicht mehr ändern */
+private var novaTurn = 0

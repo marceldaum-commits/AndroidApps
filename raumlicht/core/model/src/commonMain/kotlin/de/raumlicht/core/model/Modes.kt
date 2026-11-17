@@ -35,12 +35,12 @@ object Exams {
     private val tent = run {
         val base = arrayOf(p(1, 1, 0), p(5, 1, 0), p(5, 5, 0), p(1, 5, 0)); val s = p(3, 3, 3)
         val body = { listOf(Stage.edges("zelt", loop(*base) + base.map { it to s }, "yellow", faces = base.indices.map { listOf(base[it], base[(it + 1) % 4], s) })) }
-        Exam("zelt", "Festivalzelt", "🎪", "Ein Zelt hat die Form einer quadratischen Pyramide mit A(1|1|0), B(5|1|0), C(5|5|0), D(1|5|0). Es ist 3 hoch.", listOf(
+        Exam("zelt", "Festivalzelt", "🎪", "Ein Zelt hat die Form einer quadratischen Pyramide mit A(1|1|0), B(5|1|0), C(5|5|0), D(1|5|0). Das Zelt ist 3 Längeneinheiten hoch.", listOf(
             ExamPart("a", 2, Families.point("abi-zelt-a", 0, "Spitze", "Die Spitze S liegt senkrecht über dem Mittelpunkt der Grundfläche, in Höhe 3. Gib S an.", s, hidden = true, name = "S",
                 given = listOf(listOf(Txt("A(1|1|0)  B(5|1|0)  C(5|5|0)  D(1|5|0)"))),
                 tip = "Mittelpunkt der Diagonale AC, dann 3 nach oben.", way = listOf("Mittelpunkt von AC: (3|3|0)", "S(3|3|3)"),
                 extras = { listOf(Stage.edges("grund", loop(*base), "cyan")) })),
-            ExamPart("b", 4, Families.plane("abi-zelt-b", 0, "Seitenfläche", "Bestimme eine Koordinatengleichung der Ebene, in der die Seitenfläche ABS liegt.",
+            ExamPart("b", 4, Families.plane("abi-zelt-b", 0, "Seitenfläche", "Bestimme eine Koordinatengleichung der Ebene, in der die Seitenfläche ABS liegt. Kürze den Normalenvektor so weit wie möglich.",
                 listOf("A" to base[0], "B" to base[1], "S" to s), p(0, 3, -2), 3,
                 tip = "n⃗ = AB⃗ × AS⃗ mit AB⃗ = (4|0|0), AS⃗ = (2|2|3). Danach A einsetzen.",
                 way = listOf("AB⃗ × AS⃗ = (0|−12|8), gekürzt n⃗ = (0|3|−2)", "A einsetzen: 3 · 1 − 0 = 3", "E: 3x₂ − 2x₃ = 3"), extras = { body() })),
@@ -71,7 +71,7 @@ object Exams {
                 check = { v -> Families.compare(v, 3, "Der Abstand", "3 Einheiten.") { ok -> listOf(Beam(a, a + n * (v / 3.0), "pink", ok)) } })),
             ExamPart("d", 4, Families.point("abi-leinwand-d", 0, "Spiegelbild", "Die Leinwand spiegelt. Wo erscheint das Spiegelbild A′ des Lasers?", p(3, 6, 6), hidden = true, name = "A′",
                 given = listOf(listOf(Txt("A(1|2|2)   E: x₁ + 2x₂ + 2x₃ = 18"))),
-                tip = "Lotfußpunkt ist der Durchstoßpunkt aus Teil a. Denselben Weg noch einmal gehen.", way = listOf("F = S(2|4|4)", "A′ = A + 2 · AF⃗ = (1|2|2) + 2 · (1|2|2)", "A′(3|6|6)"),
+                tip = "Der Lotfußpunkt ist der Durchstoßpunkt S(2|4|4) aus Teil a, denn der Laser trifft senkrecht auf. Geh denselben Weg noch einmal.", way = listOf("F = S(2|4|4)", "A′ = A + 2 · AF⃗ = (1|2|2) + 2 · (1|2|2)", "A′(3|6|6)"),
                 extras = { e() + listOf(Stage.point("A", a, "cyan", "A(1|2|2)")) })),
         ))
     }
@@ -91,7 +91,7 @@ object Exams {
                 formula = { v -> listOf(lineText("g", ga, gv), lineText("h", hb, hw), listOf(Txt("t = "), Num(Geo.num(v), "a"))) },
                 objects = { v, _ -> lines() + listOf(Stage.point("d1", ga + gv * v, "cyan", "D₁", "target"), Stage.point("d2", hb + hw * v, "yellow", "D₂", "target")) },
                 check = { v -> if (v == 2) Outcome(true, "Bei t = 2 – richtig.") else Outcome(false, "Bei t = $v beträgt der Abstand ${Geo.num(((ga + gv * v) - (hb + hw * v)).length)}. Es geht noch näher.") })),
-            ExamPart("d", 4, Families.scalar("abi-drohnen-d", 0, "Mindestabstand", "Wie groß ist der Abstand der Drohnen in diesem Moment? (Vorgeschrieben sind mindestens 2 Einheiten.)", "d", 0..8, 3, 1,
+            ExamPart("d", 4, Families.scalar("abi-drohnen-d", 0, "Mindestabstand", "Wie groß ist der Abstand der Drohnen im Moment der engsten Annäherung (t = 2 aus Teil c)? Vorgeschrieben sind mindestens 2 Einheiten.", "d", 0..8, 3, 1,
                 tip = "Orte bei t = 2: (4|2|2) und (6|4|3). Länge des Verbindungsvektors.", way = listOf("d⃗(2) = (2|2|1)", "|d⃗| = √(4 + 4 + 1) = 3", "3 ≥ 2: Sicherheitsabstand eingehalten"),
                 formula = { v -> listOf(listOf(Txt("D₁(4|2|2)   D₂(6|4|3)")), listOf(Txt("d = "), Num(Geo.num(v), "a"))) },
                 objects = { _, _ -> lines() + listOf(Stage.point("d1", p(4, 2, 2), "cyan", "D₁", "target"), Stage.point("d2", p(6, 4, 3), "yellow", "D₂", "target")) },

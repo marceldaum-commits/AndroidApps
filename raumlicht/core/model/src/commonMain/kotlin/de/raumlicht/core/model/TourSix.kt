@@ -34,7 +34,7 @@ internal object TourSix {
                 way = listOf("n⃗ = (−2|3|0) × (−2|0|1) = (3|2|6)", "A einsetzen: 3·2 + 2·0 + 6·0 = 6", "E: 3x₁ + 2x₂ + 6x₃ = 6")),
             Families.plane("18-2", 18, "Normalenform lesen", "Hier steht die Scheibe in Normalenform. Lies den Normalenvektor ab und rechne c aus.",
                 listOf("P" to q2), n2, 10, normal = n2,
-                normalHint = "P liegt drin – aber die Scheibe ist verdreht. Der Normalenvektor steht in der Normalenform: (2|1|2).",
+                normalHint = "P liegt drin – aber die Scheibe ist verdreht. Der Normalenvektor steht in der Normalenform hinter dem Malpunkt.",
                 given = listOf(listOf(Txt("E: [x⃗ − "), col(q2), Txt("] · "), col(n2), Txt(" = 0"))),
                 tip = "Ausmultiplizieren: n⃗ · x⃗ = n⃗ · P. Links stehen die Vorfaktoren 2, 1, 2 – rechts die Zahl n⃗ · P.",
                 way = listOf("n⃗ = (2|1|2)", "c = n⃗ · P = 2·1 + 1·2 + 2·3 = 10", "E: 2x₁ + x₂ + 2x₃ = 10"),
@@ -47,7 +47,7 @@ internal object TourSix {
                 way = listOf("x₂ = 0 und x₃ = 0 einsetzen", "3x₁ = 12 → x₁ = 4", "S₁(4|0|0); genauso S₂(0|3|0) und S₃(0|0|2)"),
                 extras = { ph -> listOf(Stage.plane("E", n3, 12.0, "violet", "E")) +
                     if (ph == Phase.DONE) listOf(Stage.point("S2", s2, "cyan", "S₂(0|3|0)"), Stage.point("S3", s3, "cyan", "S₃(0|0|2)"), Stage.edges("spur", loop(s1, s2, s3), "cyan")) else emptyList() }),
-            Families.plane("18-4", 18, "Aus den Achsenabschnitten", "Die Scheibe hängt an drei Haken auf den Achsen. Stell ihre Gleichung auf.",
+            Families.plane("18-4", 18, "Aus den Achsenabschnitten", "Die Scheibe hängt an drei Haken auf den Achsen. Mach aus der Achsenabschnittsform eine Koordinatenform mit ganzen Zahlen.",
                 listOf("S₁" to t1, "S₂" to t2, "S₃" to t3), p(1, 2, 3), 6,
                 given = listOf(listOf(Txt("Achsenabschnittsform: x₁ : 6 + x₂ : 3 + x₃ : 2 = 1"))),
                 tip = "Achsenabschnittsform: x₁ : 6 + x₂ : 3 + x₃ : 2 = 1. Mit 6 malnehmen, dann stehen nur noch ganze Zahlen da.",
@@ -59,7 +59,7 @@ internal object TourSix {
                 formula = { a -> listOf(listOf(Txt("E: 2x₁ − x₂ + 2x₃ = 3")), listOf(Txt("P(2|"), Num(Geo.num(a), "a"), Txt("|1)"))) },
                 objects = { a, _ -> listOf(Stage.plane("E", n5, 3.0, "violet", "E"), Stage.point("P", p(2, a, 1), "yellow", "P(2|$a|1)")) },
                 check = { a -> Families.compare(a, 3, "a", "a = 3 – der Sensor sitzt genau in der Scheibe.") }),
-            Families.plane("18-6", 18, "Abi-Check: Gerade und Punkt", "Eine Traverse g und ein Aufhängepunkt P spannen eine Leinwand auf. Gesucht ist ihre Koordinatenform.",
+            Families.plane("18-6", 18, "Abi-Check: Gerade und Punkt", "Eine Traverse g und ein Aufhängepunkt P spannen eine Leinwand auf. Stell die Koordinatenform ihrer Ebene E auf.",
                 listOf("A" to a6, "B" to b6, "P" to q6), p(1, -1, 2), 5, abi = true,
                 given = listOf(lineText("g", a6, d6), listOf(Txt("P(3|0|1)"))),
                 tip = "Zwei Spannvektoren: die Richtung von g, also (1|1|0), und AP⃗ = (2|0|−1). Ihr Kreuzprodukt ist n⃗.",
@@ -90,13 +90,15 @@ internal object TourSix {
                 mistakes = mapOf(60 to "60° ist der Winkel zwischen Strahl und Normalenvektor. Zur Wand selbst fehlt der Rest auf 90° – oder gleich den Sinus nehmen.")) { ph ->
                 listOf(Stage.plane("E", n2, 6.0, "violet", "E"), Stage.line("g", a2, d2, 0.0, 4.0, "cyan", "g"), Stage.point("S", hit2, "pink", if (ph == Phase.DONE) "S(5|1|5)" else null))
             },
-            Families.aim("19-3", 19, "Schnittkante", "Zwei Scheiben schneiden sich in einer Kante. A liegt schon drauf – in welche Richtung läuft sie?",
+            Families.aim("19-3", 19, "Schnittkante", "Zwei Scheiben schneiden sich in einer Kante. A liegt schon drauf – in welche Richtung läuft die Kante nach oben (x₃ > 0)?",
                 a3, listOf(p(3, 2, 1), z3), hidden = true, line = "s",
+                missText = { "Diese Richtung liegt noch nicht in beiden Scheiben. Sie muss auf beiden Normalenvektoren senkrecht stehen." },
+                hitText = "Genau – das ist die Richtung der Schnittkante. Jedes Vielfache davon beschreibt dieselbe Gerade.",
                 given = listOf(listOf(Txt("E₁: x₁ + x₂ + x₃ = 6")), listOf(Txt("E₂: x₁ − x₂ + x₃ = 2"))),
                 tip = "Die Schnittgerade liegt in beiden Ebenen, steht also auf beiden Normalenvektoren senkrecht: d⃗ = n⃗₁ × n⃗₂.",
-                way = listOf("n⃗₁ × n⃗₂ = (1|1|1) × (1|−1|1) = (2|0|−2)", "gekürzt und umgedreht: d⃗ = (−1|0|1)", "s: x⃗ = (4|2|0) + t · (−1|0|1)"),
+                way = listOf("n⃗₁ × n⃗₂ = (1|1|1) × (1|−1|1) = (2|0|−2)", "gekürzt: (1|0|−1); nach oben zeigt d⃗ = (−1|0|1)", "s: x⃗ = (4|2|0) + t · (−1|0|1)"),
                 extras = { listOf(Stage.plane("E1", n3a, 6.0, "violet", "E₁"), Stage.plane("E2", n3b, 2.0, "cyan", "E₂")) }),
-            Families.scalar("19-4", 19, "Nie berühren", "Die Laserbahn g soll die Scheibe E nie treffen. Stell a so ein, dass g parallel zu E läuft.", "a", -3..5, 2, 0,
+            Families.scalar("19-4", 19, "Nie berühren", "Die Laserbahn g hat die Richtung (2|a|−3) und soll die Scheibe E nie treffen. Stell a so ein, dass g parallel zu E läuft.", "a", -3..5, 2, 0,
                 tip = "Parallel heißt: Die Richtung (2|a|−3) steht senkrecht auf dem Normalenvektor (2|1|2). Skalarprodukt null setzen.",
                 way = listOf("(2|a|−3) · (2|1|2) = 4 + a − 6", "a − 2 = 0", "a = 2; A liegt nicht in E (2 + 2 + 10 = 14), also echt parallel"), color = "cyan",
                 formula = { a -> listOf(listOf(Txt("g: x⃗ = "), col(a4), Txt(" + t · "), Part.Col(listOf("2", Geo.num(a), "−3"), "a")), listOf(Txt("E: 2x₁ + x₂ + 2x₃ = 12"))) },
@@ -146,7 +148,7 @@ internal object TourSix {
                 way = listOf("Stützpunkt A(0|1|0): (P − A) · d⃗ = (4|1|1) · (1|1|1) = 6, d⃗ · d⃗ = 3 → t = 2", "F = (0|1|0) + 2 · (1|1|1) = (2|3|2)", "P′ = 2 · F − P = (4|6|4) − (4|2|1) = (0|4|3)"),
                 extras = { ph -> listOf(Stage.fullLine("g", a2, d2, Bounds(), "cyan", "g"), Stage.point("P", q2, "cyan", "P(4|2|1)")) +
                     if (ph == Phase.DONE) listOf(Stage.point("F", f2, "pink", "F(2|3|2)"), Stage.line("weg", q2, r2 - q2, 0.0, 1.0, "yellow", dashed = true)) else emptyList() }),
-            Families.scalar("20-3", 20, "Scheibe am Punkt spiegeln", "Die Scheibe E wird am Punkt Z gespiegelt. Die neue Scheibe E′ ist parallel – welche Zahl steht rechts?", "c′", 0..24, 14, 6,
+            Families.scalar("20-3", 20, "Scheibe am Punkt spiegeln", "Die Scheibe E wird am Punkt Z gespiegelt. Die neue Scheibe E′ ist parallel zu E. Welche Zahl c′ steht rechts in ihrer Gleichung?", "c′", 0..24, 14, 6,
                 tip = "Parallel heißt: gleicher Normalenvektor. Z liegt genau in der Mitte, also ist n⃗ · Z = 10 der Mittelwert von 6 und c′.",
                 way = listOf("n⃗ · Z = 2 + 4 + 4 = 10", "10 liegt mittig zwischen 6 und c′", "c′ = 2 · 10 − 6 = 14 → E′: x₁ + 2x₂ + 2x₃ = 14"), color = "cyan",
                 formula = { a -> listOf(listOf(Txt("E: x₁ + 2x₂ + 2x₃ = 6")), listOf(Txt("Z(2|2|2)")), listOf(Txt("E′: x₁ + 2x₂ + 2x₃ = "), Num(Geo.num(a), "a"))) },
@@ -235,7 +237,7 @@ internal object TourSix {
     val chapters = listOf(
         Chapter(18, "Ebenen in allen Formen", "Parameter-, Normalen-, Koordinaten- und Achsenabschnittsform, Spurpunkte", "Glaspalast", "🔶", "violet", listOf(
             "Eine Ebene, viele Schreibweisen. Im Abi musst du zwischen allen wechseln können.",
-            "Parameterform: ein Punkt und zwei Spannvektoren. Koordinatenform: n⃗ · x⃗ = c. Das Kreuzprodukt bringt dich von der einen zur anderen.",
+            "Parameterform: ein Punkt und zwei Spannvektoren. Koordinatenform: n₁x₁ + n₂x₂ + n₃x₃ = c – die Vorfaktoren bilden den Normalenvektor n⃗. Das Kreuzprodukt bringt dich von der einen zur anderen.",
             "Spurpunkte sind die Stellen, an denen die Ebene die Achsen trifft – damit kannst du sie schnell zeichnen."), ch18),
         Chapter(19, "Schnitte & Schnittwinkel", "Schnittgerade, Winkel Ebene–Ebene und Gerade–Ebene, parallel, Abstand", "Spiegelkabinett", "✂️", "green", listOf(
             "Wo sich zwei Scheiben treffen, entsteht eine Kante – die Schnittgerade.",
@@ -247,7 +249,7 @@ internal object TourSix {
             "Windschiefe Geraden kommen sich nur an einer Stelle am nächsten – dort steht das Lot auf beiden senkrecht."), ch20),
         Chapter(21, "Kugel & Ebene", "Berühren, Schnittkreis, zwei Kugeln, Durchflug", "Planetarium", "🌐", "cyan", listOf(
             "Eine Ebene kann eine Kugel verfehlen, berühren oder schneiden. Entscheidend ist der Abstand des Mittelpunkts.",
-            "Schneidet sie, entsteht ein Kreis. Sein Radius kommt aus dem Satz des Pythagoras: r² = d² + r′².",
+            "Schneidet sie, entsteht ein Kreis. Sein Radius r′ kommt aus dem Satz des Pythagoras: r² = d² + r′² (r Kugelradius, d Abstand des Mittelpunkts von der Ebene).",
             "Fliegt etwas durch die Kugel, gibt das eine quadratische Gleichung – mit Eintritt und Austritt."), ch21),
     )
 }

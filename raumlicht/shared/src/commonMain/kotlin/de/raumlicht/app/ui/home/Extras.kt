@@ -55,7 +55,7 @@ private fun TopBar(title: String, onBack: () -> Unit) {
 @Composable
 fun JamPicker(best: Int, onTopic: (JamTopic) -> Unit, onBack: () -> Unit, startLevel: String = "", onLevel: (String) -> Unit = {},
               onPick: (JamTopic, JamLevel?) -> Unit = { t, _ -> onTopic(t) },
-              /** Stufen, die zum Abi-Pass gehören und noch gesperrt sind (zeigen ein Schloss) */
+              /** Stufen, die zu Raumlicht Pro gehören und noch gesperrt sind (zeigen ein Schloss) */
               lockedLevel: (JamLevel?) -> Boolean = { false }) {
     // Schwierigkeit: „Alle“ mischt wie bisher; sonst kommen nur Aufgaben der gewählten Stufe (jede nachweislich schwerer als die vorige)
     var levelName by rememberSaveable { mutableStateOf(startLevel) }
