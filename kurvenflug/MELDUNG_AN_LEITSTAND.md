@@ -1,5 +1,24 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.4.0 – Nur noch Nova (Vorgabe Marcel, von ihm im Chat bestätigt) · Web = APK = Play
+- **Stimmenwahl:** „Nova – KI-generierte Stimme“ (Kennzeichnung in den Einstellungen) oder Vorlesen aus. Kein Tempo-Regler
+  (Server: 1,25). Probe-Taste bleibt. Bildschirmfoto `screenshots/99_vorlesen.png`.
+- **Abspielweg (gemeinsame Regeln in `core/model/Nova.kt`):** vorlesefertiger Text (`Speech.clean`) → erst
+  `/nova/<h[0:2]>/<h>.mp3` (Zwischenspeicher: Android Cache ≤ 40 MB, Web Cache „kf-nova“) → fehlt sie: `POST /jetzt`
+  (nur ≤ 300 Zeichen und nur ohne Spielernamen – Namen der Spielerprofile werden geprüft, ganze Wörter) → 200 {"url"}
+  laden, nur Adressen unter /nova/ → 204/offline/Fehler: still die Gerätestimme (nur lokal rechnende deutsche Stimmen).
+  Nichts an OpenAI, keine Kennungen, keine Konten.
+- **Getestet im Browser (http://localhost, CORS ok):** Volts Begrüßung → /nova/ 404 (Werk hatte noch nichts vertont) → /jetzt →
+  URL mit identischem Hash → MP3 gespielt (4,8 s) und zwischengespeichert; keine Gerätestimme nötig. /jetzt-Prüfwert:
+  „Schon 24 Sterne gesammelt. Weiter so, Commander!“ → acddd8626f25b43663f8efcd3fe60a1f (Test). Android-Weg nur gebaut,
+  nicht auf Gerät gehört.
+- **Thorsten entfernt:** ONNX Runtime (Android + Web, `ort/`), Lautschrift (`voice/`), Werkzeug `tools/stimme`, Download,
+  Tests. Reste werden beim Start gelöscht (Android `files/stimme`, Web Cache „kf-stimme“). Keine ABI-Beschränkung mehr.
+- **Datenschutz-Text** in der App wörtlich nach deiner Vorgabe (Einstellungen → Vorlesen); Store-Beschreibungen,
+  Datenschutz-Vorschlag und Play-Anleitung angepasst (Datensicherheit: „Nein“, Begründung + Prüfhinweis; KI-Kennzeichnung
+  als Schritt). Play-Manifest: INTERNET jetzt für Nova.
+- versionCode 44. Keine neue Dateiendung (eine weniger: `.mjs`/`.tsv` entfallen).
+
 ## 2.3.1 – Nova Schritt 1: vorlesen/texte.json auf test · Web = Android
 - **URL:** https://kurvenflug-test.mathenachhilfe-online.com/vorlesen/texte.json (nach Live auch ohne -test).
   Format genau nach Vorgabe: `{"format": 1, "app": "kurvenflug", "texte": [{"text": "…", "sprache": "de"}, …]}`.

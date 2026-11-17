@@ -435,11 +435,11 @@ class ScreenshotTest {
         de.kurvenflug.app.ui.flight.TheoryOverlay(de.kurvenflug.core.model.Theories.of(l, Levels.chapters.first { it.number == 2 })!!) {}
     }
 
-    /** Vorlesen: Stimme wählen, Thorsten mit Datenschutz-Hinweis, Tempo, Probe. */
-    @Test fun readAloudSettings() = shot("99_vorlesen", 1500, prepare = { it.onNodeWithText("Thorsten laden (ca. 75 MB)").performScrollTo() }) {
+    /** Vorlesen: Nova mit Kennzeichnung „KI-generiert“, Probe und Datenschutz-Text. */
+    @Test fun readAloudSettings() = shot("99_vorlesen", 1500, prepare = { it.onNodeWithText("Vorgelesen wird", substring = true).performScrollTo() }) {
         androidx.compose.runtime.CompositionLocalProvider(de.kurvenflug.app.ui.fx.LocalReader provides FakeReader, de.kurvenflug.app.ui.fx.LocalReadAloud provides true) {
-            SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "2.1.0",
-                update = UpdateState.Idle, onBack = {}, readAloud = true, readVoice = de.kurvenflug.app.ui.fx.Reader.NATURAL)
+            SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "2.4.0",
+                update = UpdateState.Idle, onBack = {}, readAloud = true)
         }
     }
 
@@ -452,16 +452,9 @@ class ScreenshotTest {
     }
 
     private object FakeReader : de.kurvenflug.app.ui.fx.Reader {
-        override val voices = listOf(de.kurvenflug.app.ui.fx.VoiceChoice("a", "Gerät 1"), de.kurvenflug.app.ui.fx.VoiceChoice("b", "Gerät 2"))
-        override val canLoadPack = true
-        override val pack: de.kurvenflug.app.ui.fx.PackState = de.kurvenflug.app.ui.fx.PackState.Missing
         override val speaking = false
-        override fun configure(voice: String, rate: Float) {}
         override fun say(text: String) {}
         override fun stop() {}
-        override fun loadPack() {}
-        override fun cancelPack() {}
-        override fun removePack() {}
     }
 
     /** Pro aktiv: Abzeichen im Kopf der Startseite (Schullizenz mit Ablaufdatum in den Einstellungen). */

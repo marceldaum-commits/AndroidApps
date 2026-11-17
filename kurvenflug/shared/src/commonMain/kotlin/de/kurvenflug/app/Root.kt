@@ -108,10 +108,11 @@ fun KurvenflugRoot(
     }
     // Vorlesen: Stimme und Tempo übernehmen; solange Volt spricht, wird die Musik leiser
     val readAloud by vm.settings.readAloud.collectAsStateWithLifecycle()
-    val readVoice by vm.settings.readVoice.collectAsStateWithLifecycle()
-    val readRate by vm.settings.readRate.collectAsStateWithLifecycle()
     val reader = platform.reader
-    LaunchedEffect(readAloud, readVoice, readRate) { if (readAloud) reader?.configure(readVoice, readRate / 100f) else reader?.stop() }
+    LaunchedEffect(readAloud) { if (!readAloud) reader?.stop() }
+    // Spielernamen gehen nie an den Stimmen-Server
+    val profiles by vm.settings.profiles.collectAsStateWithLifecycle()
+    LaunchedEffect(profiles) { reader?.setPrivate(profiles.map { it.name }.toSet()) }
     val talking = reader?.speaking == true
     LaunchedEffect(musicVol, talking) { platform.setMusicVolume(musicVol / 100f * (if (talking) 0.35f else 1f)) }
     val proState = rememberProState(vm, platform.proShop)
@@ -479,8 +480,6 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 onPro = if (platform.proShop != null) ({ nav.goOnce(Routes.PRO) }) else null,
                 voltVoice = vm.settings.voltVoice.collectAsStateWithLifecycle().value, onVoltVoice = vm.settings::setVoltVoice,
                 readAloud = vm.settings.readAloud.collectAsStateWithLifecycle().value, onReadAloud = vm.settings::setReadAloud,
-                readVoice = vm.settings.readVoice.collectAsStateWithLifecycle().value, onReadVoice = vm.settings::setReadVoice,
-                readRate = vm.settings.readRate.collectAsStateWithLifecycle().value, onReadRate = vm.settings::setReadRate,
             )
         }
     }

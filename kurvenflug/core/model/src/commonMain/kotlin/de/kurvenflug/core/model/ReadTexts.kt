@@ -1,8 +1,8 @@
 package de.kurvenflug.core.model
 
 /**
- * Alles, was Volt vorliest und schon beim Bauen feststeht – für die Liste vorlesen/texte.json (KI-Stimme Nova) und die
- * Lautschrift (Thorsten). Die zusammengesetzten Vorlese-Texte (Rechen-Stern, Theorie am Stück) entstehen hier, damit App
+ * Alles, was Volt vorliest und schon beim Bauen feststeht – für die Liste vorlesen/texte.json (KI-Stimme Nova).
+ * Die zusammengesetzten Vorlese-Texte (Rechen-Stern, Theorie am Stück) entstehen hier, damit App
  * und Liste genau denselben Wortlaut haben.
  */
 object ReadTexts {

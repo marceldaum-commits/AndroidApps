@@ -25,8 +25,6 @@ kotlin {
             api(project(":core:data"))
             implementation("androidx.activity:activity-compose:1.11.0")
             implementation("androidx.core:core-ktx:1.17.0")
-            // Vorlesen mit der natürlichen Stimme „Thorsten“ (ONNX Runtime, MIT – wie die WebApp; Laute vorab erzeugt, kein espeak-ng/GPL)
-            implementation("com.microsoft.onnxruntime:onnxruntime-android:1.22.0")
         }
     }
 }

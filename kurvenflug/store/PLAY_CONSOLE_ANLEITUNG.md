@@ -65,11 +65,13 @@ keine Standortfreigabe, keine digitalen Käufe. Erwartet: **USK ab 0 / PEGI 3**.
 
 **Datensicherheit:**
 1. „Erhebt oder teilt deine App erforderliche Arten von Nutzerdaten?“ → **Nein**.
-   (Spielstand und Einstellungen bleiben auf dem Gerät. Seit 2.2.0 hat die Play-Version die Internet-Berechtigung – nur für
-   die Vorlese-Stimme „Thorsten“, die Eltern/Kinder selbst laden: eine Datei von stimmen.mathenachhilfe-online.com, es werden
-   keine Daten der App gesendet. Geklärt mit dem Leitstand (17.11.): Für /thorsten/ ist das Zugriffsprotokoll abgeschaltet,
-   der Server speichert keine IP-Adressen und keine Kennungen; die IP wird nur flüchtig für die Verbindung genutzt
-   („ephemeral“, nach Play-Regeln nicht anzugeben), Übertragung nur per HTTPS → Antwort bleibt **Nein**.)
+   (Spielstand und Einstellungen bleiben auf dem Gerät. Die Internet-Berechtigung dient nur der Vorlese-Stimme Nova
+   (abschaltbar): Die App lädt fertige Ansagen von stimmen.mathenachhilfe-online.com; Texte, die erst in der Aufgabe
+   entstehen (z. B. „x gleich 3“), schickt sie ohne Namen, Konto oder Geräte-Kennung an /jetzt. Das sind von der App
+   erzeugte Aufgabentexte, keine Angaben über das Kind; Texte mit Spielernamen werden nie gesendet. Laut Leitstand
+   (17.11.) speichert der Server keine Zugriffsprotokolle, Übertragung nur per HTTPS → Antwort **Nein**. Bitte beim
+   Ausfüllen einmal gegen die aktuelle Play-Hilfe prüfen – Grenzfall wäre „App-Aktivität“; da kein Nutzerbezug besteht,
+   bleibt es nach unserer Einschätzung bei „Nein“.)
 2. Damit sind die Detailfragen erledigt → **Speichern** → **Senden**.
    Hinweis: Das Teilen-Menü (Duell-Code, Foto der Flugbahn) startet der Nutzer selbst in einer anderen App – das zählt nicht als Erhebung.
 
@@ -106,16 +108,16 @@ Solange das Produkt nicht angelegt ist, bleibt in der App alles frei. Ab dem Anl
    Zielgruppe und Inhalte → bei der Frage nach In-App-Käufen ebenfalls **Ja**. Datensicherheit bleibt „keine Daten erhoben“
    (den Kauf wickelt Google ab, die App speichert nur „Pro: ja“). Store-Eintrag zeigt „In-App-Käufe“ automatisch.
 
-## 6b. Version 2.2.0 hochladen (versionCode 41) – Klick-Liste
-1. AAB holen: GitHub → Releases → `kurvenflug-v2.2.0` → **Kurvenflug-2.2.0-play.aab** (19 MB).
+## 6b. Neue Version hochladen (ab 2.4.0, versionCode 44) – Klick-Liste
+1. AAB holen: GitHub → Releases → `kurvenflug-v<Version>` → **Kurvenflug-<Version>-play.aab**.
 2. Play Console → Testen → (interner bzw. geschlossener) Test → **Neuen Release erstellen** → AAB hochladen.
 3. Versionshinweise (de-DE): Text aus `store/de-DE/release-notes.txt` einfügen (unter 500 Zeichen).
-4. **Neu in dieser Version: Internet-Berechtigung** – nur für den Download der Vorlese-Stimme „Thorsten“ auf Wunsch.
-   Datensicherheit: Antwort bleibt **„Nein, keine Daten erhoben/geteilt“** (Server speichert keine IP-Adressen, Bestätigung
-   Leitstand 17.11.; siehe Abschnitt 4). Falls die Console nach der Berechtigung fragt: „für optionalen Download von
-   App-Inhalten (Sprachdatei)“.
-5. Datenschutzerklärung auf der Website um den Thorsten-Satz ergänzen (Vorschlag unten, Absatz „Kurvenflug“).
-6. Auf dem Testhandy: Einstellungen → Vorlesen → „Thorsten laden“ → „▶ Probe hören“ – einmal ausprobieren, dann freigeben.
+4. **Internet-Berechtigung** – nur für die Vorlese-Stimme Nova (abschaltbar). Datensicherheit siehe Abschnitt 4.
+   Falls die Console nach der Berechtigung fragt: „Laden von Sprachausgaben (Audio) für die Vorlese-Funktion“.
+5. **KI-Kennzeichnung:** In der App steht „Nova – KI-generierte Stimme“. In der Play Console unter App-Inhalte ggf. die Frage
+   nach KI-generierten Inhalten mit **Ja** (Sprachausgabe) beantworten.
+6. Datenschutzerklärung auf der Website um den Nova-Absatz ergänzen (Vorschlag unten, Absatz „Kurvenflug“).
+7. Auf dem Testhandy: Einstellungen → Vorlesen → „▶ Probe hören“, dann ein Level starten – Volt muss mit Nova sprechen.
 
 ## 7. Updates später
 Jede neue Version baut GitHub automatisch: `Kurvenflug-<Version>-play.aab` im Release → in der Play Console beim gewünschten
@@ -129,9 +131,12 @@ Play Developer API) sofort beim Start.
 > **App „Kurvenflug – Mathe im All“.** Die App erhebt, speichert und übermittelt keine personenbezogenen Daten. Der Spielstand,
 > Einstellungen und frei gewählte Spitznamen für mehrere Spieler werden ausschließlich lokal auf dem Gerät gespeichert und beim
 > Deinstallieren gelöscht. Die App enthält keine Werbung, keine Analyse- oder Tracking-Werkzeuge.
-> Die Version aus Google Play geht nur ins Internet, wenn man die optionale Vorlese-Stimme „Thorsten“ lädt: Dann wird einmalig
-> eine Stimmdatei von unserem Server stimmen.mathenachhilfe-online.com geladen (verschlüsselt per HTTPS; die IP-Adresse wird
-> technisch bedingt nur für die Verbindung genutzt und nicht gespeichert); es werden keine Texte, Kennungen oder Spieldaten gesendet. Updates werden über Google Play bereitgestellt. Die Version aus GitHub
+> **Vorlesen (abschaltbar):** Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen
+> wir vorab. Texte, die erst in der Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zum Kind an unseren
+> Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es
+> werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle (die
+> IP-Adresse wird technisch bedingt nur für die Verbindung genutzt). Sonst geht die Play-Version nicht ins Internet;
+> Updates werden über Google Play bereitgestellt. Die Version aus GitHub
 > fragt nur auf GitHub nach neuen Versionen (dabei wird technisch bedingt die IP-Adresse an GitHub übertragen). Die Web-Version
 > speichert den Spielstand nur im Browser (localStorage) und sendet keine Spieldaten an den Server.
 > **Kurvenflug Pro (optional, Einmalkauf):** In der Play-Version wickelt Google Play den Kauf ab. In der Web- und GitHub-Version

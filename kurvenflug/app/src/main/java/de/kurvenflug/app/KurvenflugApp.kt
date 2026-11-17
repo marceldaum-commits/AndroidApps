@@ -8,8 +8,8 @@ class KurvenflugApp : Application() {
     lateinit var container: AppContainer
         private set
     val music: de.kurvenflug.app.ui.fx.BackgroundMusic by lazy { de.kurvenflug.app.ui.fx.BackgroundMusic(this) }
-    /** Vorlesen: Gerätestimme bzw. „Thorsten“ (in beiden Fassungen ladbar, nur auf Wunsch) */
-    val reader by lazy { de.kurvenflug.app.ui.fx.AndroidReader(this, canLoadPack = true) }
+    /** Vorlesen mit der KI-Stimme Nova (Notlösung: Stimme des Geräts) */
+    val reader by lazy { de.kurvenflug.app.ui.fx.AndroidReader(this) }
     val sfx: AndroidSfx by lazy { AndroidSfx(this).also { it.enabled = container.settings.sound.value } }
 
     override fun onCreate() {

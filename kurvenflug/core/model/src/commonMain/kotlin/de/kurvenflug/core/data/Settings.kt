@@ -45,14 +45,6 @@ class Settings(private val prefs: Prefs) {
     /** Volt liest Sprechblasen, Aufträge, Rechen-Stern-Fragen und Erklärungen vor */
     val readAloud: StateFlow<Boolean> = _readAloud.asStateFlow()
     fun setReadAloud(v: Boolean) { prefs.edit().putBoolean("readAloud", v).apply(); _readAloud.value = v }
-    private val _readVoice = MutableStateFlow(prefs.getString("readVoice", "").orEmpty())
-    /** Gewählte Stimme: "" = beste Stimme des Geräts, „thorsten“ = natürliche Stimme, sonst Name einer Gerätestimme */
-    val readVoice: StateFlow<String> = _readVoice.asStateFlow()
-    fun setReadVoice(v: String) { prefs.edit().putString("readVoice", v).apply(); _readVoice.value = v }
-    private val _readRate = MutableStateFlow(prefs.getInt("readRate", 100))
-    /** Sprechtempo in Prozent (70–130) */
-    val readRate: StateFlow<Int> = _readRate.asStateFlow()
-    fun setReadRate(v: Int) { val c = v.coerceIn(70, 130); prefs.edit().putInt("readRate", c).apply(); _readRate.value = c }
 
     var lastUpdateCheck: Long
         get() = prefs.getLong("lastUpdateCheck", 0)

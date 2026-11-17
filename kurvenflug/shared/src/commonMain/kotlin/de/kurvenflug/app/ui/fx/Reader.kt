@@ -2,47 +2,26 @@ package de.kurvenflug.app.ui.fx
 
 import androidx.compose.runtime.staticCompositionLocalOf
 
-/** Eine wählbare Stimme (Gerät/Browser oder die natürliche Stimme „Thorsten“). */
-data class VoiceChoice(val id: String, val label: String)
-
-/** Zustand des Stimm-Pakets „Thorsten“ (wird nur auf Wunsch geladen). */
-sealed interface PackState {
-    data object Missing : PackState
-    data class Loading(val percent: Int) : PackState
-    data class Failed(val why: String) : PackState
-    data object Ready : PackState
-}
-
 /**
- * Volt liest vor: Sprechblasen, Aufträge, Rechen-Stern-Fragen und Erklärungen.
- * Android: Sprachausgabe des Geräts bzw. „Thorsten“ (ONNX Runtime). Browser: Stimmen des Browsers bzw. „Thorsten“ (ONNX Runtime Web).
- * Beide Wege nutzen dieselbe Aufbereitung ([de.kurvenflug.core.model.Speech]) und dieselbe Lautschrift.
+ * Volt liest vor – mit der Stimme **Nova** (KI-generiert, OpenAI; Vorgabe Marcel 17.11.: „zukünftig nur Nova“).
+ * Ablauf (gleich auf Android und im Browser):
+ *  1. Text vorlesefertig machen ([de.kurvenflug.core.model.Speech.clean]) → fertige Ansage unter [de.kurvenflug.core.model.Nova.url]
+ *     laden (feste Texte vertont unser Stimmen-Werk vorab) und zwischenspeichern.
+ *  2. Fehlt sie (Text mit Zahlen zur Laufzeit), den Text ohne Angaben zum Kind an unseren Server schicken ([de.kurvenflug.core.model.Nova.LIVE]),
+ *     nur wenn er kurz genug ist und keinen Spielernamen enthält ([de.kurvenflug.core.model.Nova.maySend]).
+ *  3. Klappt beides nicht (offline, Server sagt nein): still die Stimme des Geräts als Notlösung.
+ * Die App schickt nie etwas an OpenAI.
  */
 interface Reader {
-    /** Deutsche Stimmen des Geräts/Browsers, die ohne Internet sprechen (beste zuerst) – beobachtbar */
-    val voices: List<VoiceChoice>
-    /** Das Stimm-Paket „Thorsten“ kann geladen werden (nicht in der Play-Fassung: die kommt ohne Internet aus) */
-    val canLoadPack: Boolean
-    /** Stimm-Paket „Thorsten“ – beobachtbar */
-    val pack: PackState
     /** Spricht gerade (dann wird die Musik leiser) – beobachtbar */
     val speaking: Boolean
-    /** Gewählte Stimme ("" = beste Stimme des Geräts, [NATURAL] = Thorsten) und Tempo (1 = normal) */
-    fun configure(voice: String, rate: Float)
     /** Liest den Text vor; ein neuer Text unterbricht den alten. */
     fun say(text: String)
     fun stop()
-    fun loadPack()
-    fun cancelPack()
-    fun removePack()
+    /** Spielernamen – Texte, die einen davon enthalten, gehen nie an den Server */
+    fun setPrivate(words: Set<String>) {}
 
     companion object {
-        const val NATURAL = "thorsten"
-        const val NATURAL_LABEL = "Thorsten (natürlich)"
-        /** Größe des Stimm-Pakets für den Hinweis vor dem Laden */
-        const val PACK_MB = de.kurvenflug.core.model.VoicePack.MB_HINT
-        /** Woher das Stimm-Paket kommt (für den Datenschutz-Hinweis) */
-        const val PACK_HOST = de.kurvenflug.core.model.VoicePack.HOST
         const val PROBE = de.kurvenflug.core.model.Speech.PROBE
     }
 }
@@ -60,13 +39,4 @@ object Voice {
     private var owner: Any? = null
     fun say(reader: Reader?, text: String, from: Any) { if (reader == null) return; owner = from; reader.say(text) }
     fun leave(reader: Reader?, from: Any) { if (owner === from) { owner = null; reader?.stop() } }
-}
-
-/** Liest [text] vor, sobald er erscheint oder sich ändert (wenn Vorlesen an ist), und hört auf, wenn er verschwindet. */
-@androidx.compose.runtime.Composable
-fun ReadAloud(text: String?) {
-    val reader = LocalReader.current; val on = LocalReadAloud.current
-    val me = androidx.compose.runtime.remember { Any() }
-    androidx.compose.runtime.LaunchedEffect(text, on) { if (on && !text.isNullOrBlank()) Voice.say(reader, text, me) }
-    androidx.compose.runtime.DisposableEffect(Unit) { onDispose { Voice.leave(reader, me) } }
 }
