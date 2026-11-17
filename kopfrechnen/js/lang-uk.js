@@ -2423,4 +2423,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Karten":"карток",
 "Zahlen-Dungeon: neue Rechen-Karten 🃏 – echte Rechentricks wie Zehnerfreund, Verdoppeln oder Fünfer-Trick":"Числове підземелля: нові картки-обчислення 🃏 – справжні трюки усного рахунку: друг десятки, подвоєння чи трюк з п’ятіркою",
 "Vor jedem Kampf eine Karte spielen: Aufgaben mit diesem Trick machen mehr Schaden, die Probe schützt ein Herz":"Перед кожним боєм зіграй картку: завдання з цим трюком завдають більше шкоди, перевірка захищає серце",
-"Nach jedem Sieg eine neue Karte für dein Deck":"Після кожної перемоги – нова картка для твоєї колоди"});
+"Nach jedem Sieg eine neue Karte für dein Deck":"Після кожної перемоги – нова картка для твоєї колоди",
+"Musik startet sofort: in der Android-App beim Öffnen, im Browser beim ersten Tippen – „Musik aus“ bleibt aus":"Музика вмикається одразу: в Android-застосунку під час відкриття, у браузері після першого дотику – «Музику вимкнено» залишається вимкненою"});

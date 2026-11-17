@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Entfernt die am 17.11.2026 versehentlich hochgeladenen Bau-Dateien (Thorsten-Modell 63 MB u. a.) aus der Git-Geschichte.
+# Entfernt die am 17.11.2026 versehentlich hochgeladenen Bau-Dateien (früheres Stimmmodell 63 MB u. a.) aus der Git-Geschichte.
 # Inhalt aller Branches bleibt bit-gleich; nur diese Dateien verschwinden aus älteren Commits.
 # Aufruf auf einem Rechner mit GitHub-Schreibrecht (eigenes Konto):  bash tools/git-bereinigung.sh
 # Braucht: git, python3 (pip install git-filter-repo). Danach müssen alle anderen Kopien neu geholt werden (git fetch + reset, kein pull).

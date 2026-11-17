@@ -3,7 +3,7 @@
    Klang-Identität: hell, schnell, Chiptune. Erkennungsmotiv „Blitz-Zickzack“: E – H – A – E (hoch, runter, hoch – wie ein Blitz).
    Vier Stücke, alle mit Grundton E: Menü (E-Dur, 104 BPM), Spiel (E-Moll, 126), Blitzrunde (E-Moll, 152), Dungeon (E-Phrygisch, 108).
    Jede Schleife ändert sich: Melodie aus Rhythmus-Bausteinen mit Zufall, Pausen-Takte, Breakdown ohne Schlagzeug, ab und zu eine Pause.
-   Es wird nichts geladen – die Töne entstehen erst, wenn Musik läuft. Start nie vor der ersten Berührung. */
+   Es wird nichts geladen – die Töne entstehen erst, wenn Musik läuft. Web: Start beim ersten Tippen, Android-App: sofort. */
 const MOTIF = [0, 7, 5, 12];   // Blitz-Zickzack, Halbtöne über dem Grundton
 const TRACKS = {
   //            Akkorde: [Grundton (MIDI, Bass-Lage), Terz-Abstand 4 = Dur / 3 = Moll]
@@ -140,7 +140,8 @@ const Music = {
   sting() { if (!S.settings.sound) return; MOTIF.forEach((m, i) => { Sound.tone(76 + m, i * .075, i === 3 ? .45 : .12, 'square', .07); Sound.tone(88 + m, i * .075, .08, 'triangle', .03); }); Sound.zap(.3); },
 };
 
-// Erst nach der ersten Berührung: Audio starten, Erkennungsmelodie, dann Musik
+// Start (Vorgabe Marcel 17.11.): Android-App sofort beim Öffnen (die WebView braucht keine Berührung für Ton);
+// Web: Browser erlauben Ton erst nach einer Berührung – dann beim allerersten Tippen oder Klick irgendwo. „Musik aus“ gilt immer.
 (() => {
   let first = true;
   const go = () => {
@@ -148,7 +149,10 @@ const Music = {
     if (first && Sound.ctx) { first = false; if (S.settings.sound) setTimeout(() => Music.sting(), 120); }
     setTimeout(() => Music.update(), first ? 0 : 50);
   };
-  addEventListener('pointerdown', go, { capture: true, passive: true });
-  addEventListener('keydown', go, { capture: true });
-  document.addEventListener('visibilitychange', () => Music.update());
+  for (const ev of ['pointerdown', 'touchend', 'click', 'keydown']) addEventListener(ev, go, { capture: true, passive: true });
+  const autoOk = () => { try { return IS_NATIVE || (navigator.getAutoplayPolicy && navigator.getAutoplayPolicy('audiocontext') === 'allowed'); } catch { return false; } };
+  // erst, wenn das Profil geladen ist (Einstellung „Musik aus“)
+  const auto = () => { if (typeof S === 'undefined' || !S) return setTimeout(auto, 100); if (autoOk() && musicOn()) go(); };
+  setTimeout(auto, 0);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && Sound.ctx) Sound.init(); Music.update(); });
 })();

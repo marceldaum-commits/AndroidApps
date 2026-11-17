@@ -2423,4 +2423,5 @@ I18N.add('en', {"% sind":"% are",
 "Karten":"cards",
 "Zahlen-Dungeon: neue Rechen-Karten 🃏 – echte Rechentricks wie Zehnerfreund, Verdoppeln oder Fünfer-Trick":"Number dungeon: new maths cards 🃏 – real mental maths tricks like make ten, doubling or the fives trick",
 "Vor jedem Kampf eine Karte spielen: Aufgaben mit diesem Trick machen mehr Schaden, die Probe schützt ein Herz":"Play a card before each fight: tasks with that trick do more damage, the check protects a heart",
-"Nach jedem Sieg eine neue Karte für dein Deck":"A new card for your deck after every win"});
+"Nach jedem Sieg eine neue Karte für dein Deck":"A new card for your deck after every win",
+"Musik startet sofort: in der Android-App beim Öffnen, im Browser beim ersten Tippen – „Musik aus“ bleibt aus":"Music starts right away: in the Android app when it opens, in the browser at the first tap – “Music off” stays off"});

@@ -11,6 +11,9 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(RbWidgetPlugin.class);   // Brücke Web-App → Startbildschirm-Widget
         registerPlugin(RbUpdatePlugin.class);   // Inhalte selbst aktualisieren (GitHub, Ersatz: eigener Server)
         super.onCreate(savedInstanceState);
+        // Musik/Ton sofort beim Öffnen, ohne erste Berührung (Capacitor setzt das schon; hier ausdrücklich)
+        if (getBridge() != null && getBridge().getWebView() != null)
+            getBridge().getWebView().getSettings().setMediaPlaybackRequiresUserGesture(false);
         // Zurück-Taste: erst die Web-App reagieren lassen (Fenster schließen, Runde beenden),
         // die App wird nur auf der Startseite verlassen.
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {

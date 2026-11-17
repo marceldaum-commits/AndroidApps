@@ -114,5 +114,5 @@ const NovaOffline = {
   },
   async clear() { try { await caches.delete('rb-nova'); } catch {} Nova.pending.clear(); },
 };
-// Reste der früheren Stimme „Thorsten“ vom Gerät räumen (bis 3.24.x)
+// Speicher der früheren Zusatzstimme (bis 3.24.x) vom Gerät räumen
 try { caches.delete('rb-stimme'); } catch {}
