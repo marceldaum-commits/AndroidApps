@@ -2,6 +2,9 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.3 – Falscher Hinweis an der 3D-Bühne behoben (17.11.2026)
+- **Android:** Über der 3D-Bühne stand manchmal „Die 3D-Bühne startet nicht …“, obwohl sie längst lief – zum Beispiel, wenn man kurz in eine andere App gewechselt war. Der Hinweis erscheint jetzt nur noch, wenn die Bühne wirklich nicht startet, und verschwindet von selbst, sobald sie da ist.
+
 ## 2.18.2 – Musik gleich beim Öffnen (17.11.2026)
 - **Android:** Die Musik läuft jetzt sofort, wenn du die App öffnest – nicht erst nach dem ersten Tippen. Im Browser beginnt sie weiterhin beim ersten Tippen oder Klick, weil Browser Ton vorher nicht erlauben.
 - „Musik aus“ in den Einstellungen gilt wie bisher, und bei stumm geschaltetem Handy bleibt Raumlicht still.

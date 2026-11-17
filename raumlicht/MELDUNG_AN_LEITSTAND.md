@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.18.3: Fehlerbehebung aus Marcels Gerätetest (falscher Bühnen-Hinweis)
+
+**Raumlicht 2.18.3 vom 17.11.2026, Web = Android (beide 2.18.3).** Ersetzt 2.18.2 als Stand für den Betriebstest; reine Fehlerbehebung.
+
+- **Befund (Marcels Bildschirmfoto, Android, Prüfungsaufgabe Festivalzelt b):** Über der laufenden 3D-Bühne stand „⚠ Die 3D-Bühne startet nicht. Bitte Android System WebView aktualisieren“ – obwohl WebView aktuell ist und die Bühne sichtbar lief.
+- **Ursache:** Der Hinweis wurde nach 6 Sekunden gesetzt, wenn die Bühne sich bis dahin nicht gemeldet hatte, und nie wieder gelöscht. Zeit im Hintergrund (App-Wechsel) zählte mit.
+- **Behoben:** Gezählt wird nur noch Zeit im Vordergrund (10 s); meldet sich die Bühne später, verschwindet der Hinweis von selbst. Echte Fehler der Bühne bleiben stehen. Test: `StageHintTest`.
+- Die WebApp war nicht betroffen (dort gibt es diesen Hinweis nicht); sie trägt nur dieselbe Versionsnummer.
+
 ## 17.11.2026 – Raumlicht 2.18.2: fertig für den Betriebstest (Musik sofort, Stimm-Reste entfernt)
 
 Marcel hat beide Punkte direkt bestätigt. **Raumlicht 2.18.2 vom 17.11.2026, Web = Android (beide 2.18.2).** Diese Version ersetzt 2.18.1 als Stand für den Betriebstest;

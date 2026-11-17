@@ -63,9 +63,15 @@ actual fun PlatformStage(controller: StageController, modifier: Modifier) {
         onRelease = { controller.detach(); it.destroy() },
     ) }
     // Meldet sich die Bühne nicht, sagen wir das – statt nur schwarz zu bleiben
-    androidx.compose.runtime.LaunchedEffect(controller) {
-        kotlinx.coroutines.delay(6000)
-        if (!controller.isReady) controller.report("Die 3D-Bühne startet nicht. Bitte „Android System WebView“ im Play Store aktualisieren.")
+    // Gezählt wird nur die Zeit, in der die App wirklich vorn ist: Im Hintergrund ruht die Bühne, das ist kein Fehler.
+    // Meldet sie sich später doch, nimmt der Controller den Hinweis von selbst zurück.
+    androidx.compose.runtime.LaunchedEffect(controller, controller.generation) {
+        var waited = 0
+        while (!controller.isReady && waited < 10_000) {
+            kotlinx.coroutines.delay(500)
+            if (owner.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) waited += 500
+        }
+        if (!controller.isReady) controller.reportSlowStart()
     }
     controller.problem?.let { msg ->
         androidx.compose.material3.Text("⚠ $msg", modifier.then(Modifier.padding(16.dp)), color = androidx.compose.ui.graphics.Color(0xFFFF8A3D), fontSize = 12.sp)
