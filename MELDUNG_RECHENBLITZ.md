@@ -74,6 +74,13 @@ Auftrag Marcel über den Leitstand: die ganze App auf Korrektheit prüfen, ohne 
     - falscher Code und fremd signierter Code werden abgelehnt (`tests/pro-code.js` ✓).
   - **Tastatur:** Eingabe, Enter, Esc und Tab-Fokus.
 - **Konsole: keine JS-Fehler.**
+- **Klick-Prüfung im Detail:** 31 Ansichten mit 865 Bedienelementen. 27 Knöpfe zeigten keine sichtbare Änderung; das ist bei allen 27 so gewollt:
+  - die Option ist schon gewählt (z. B. „Automatisch“, „bis 1000“, „20 Aufgaben“),
+  - Drucken oder „Ansehen“ öffnet ein neues Fenster, das im Testbrowser gesperrt ist,
+  - leere Eingabe (⌫ im leeren Feld, „Weiter“ ohne Zahl in der Elternabfrage),
+  - Namensabfrage abgebrochen („Als Vorlage speichern“),
+  - der Knopf liegt unter einem offenen Fenster oder in einem zugeklappten Bereich.
+- **Übersetzungs-Durchlauf** über alle Ansichten und Lösungswege: Er fand 4 Lösungsweg-Sätze, die durch die heutigen Korrekturen neu waren und noch nicht übersetzt (z. B. „1 Tag = 24 h“, „− x auf beiden Seiten“). Ich habe sie übersetzt; danach 0 fehlende Übersetzungen in EN und UK.
 - **Barrierefreiheit:** axe-core 4.10 (WCAG 2.1 A/AA) in hellem und dunklem Design. **Vorher: Verstöße bei Kontrast und ARIA → nachher 0.**
 
 **Texte nach außen:**
