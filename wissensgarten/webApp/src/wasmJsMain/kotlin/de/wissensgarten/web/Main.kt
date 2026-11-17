@@ -66,7 +66,11 @@ private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
 fun main() {
     // Lernstand aus dem Browser-Speicher laden (nur auf diesem Gerät, kein Server)
-    val saved = runCatching { localStorage.getItem(STORE_KEY)?.let { json.decodeFromString(StoreState.serializer(), it) } }.getOrNull() ?: StoreState()
+    val raw = runCatching { localStorage.getItem(STORE_KEY) }.getOrNull()
+    val saved = raw?.let { runCatching { json.decodeFromString(StoreState.serializer(), it) }.getOrNull() } ?: StoreState()
+    // Lässt sich ein gespeicherter Lernstand nicht lesen, wird er nicht still überschrieben: Kopie bleibt erhalten
+    if (raw != null && saved == StoreState() && raw.length > 2)
+        runCatching { if (localStorage.getItem(STORE_KEY + ".unlesbar") == null) localStorage.setItem(STORE_KEY + ".unlesbar", raw) }
     val scope = MainScope()
     var saveJob: Job? = null
     var latest: StoreState? = null

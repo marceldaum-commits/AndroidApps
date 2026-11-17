@@ -62,7 +62,8 @@
   // Kurze Meldung unten am Bildschirm
   wg.toast = (msg) => {
     let t = document.getElementById('wg-toast');
-    if (!t) { t = document.createElement('div'); t.id = 'wg-toast'; document.body.appendChild(t); }
+    // Nicht in <body>: dort hängt Compose ein Shadow-DOM an, normale Kinder von <body> werden dann nicht gezeigt
+    if (!t) { t = document.createElement('div'); t.id = 'wg-toast'; t.setAttribute('role', 'status'); document.documentElement.appendChild(t); }
     t.textContent = msg; t.className = 'show'; clearTimeout(wg._tt); wg._tt = setTimeout(() => { t.className = ''; }, 3500);
   };
   // Teilen: Teilen-Menü des Geräts, sonst in die Zwischenablage

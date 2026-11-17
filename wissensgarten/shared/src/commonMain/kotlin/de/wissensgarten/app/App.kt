@@ -273,7 +273,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             onClick = {
                                 sfx?.play(de.wissensgarten.app.ui.fx.Sound.TAP, volume = 0.5f)
                                 // „Mehr“ enthält Konto, Updates, Löschen → nur für Eltern
-                                if (t.route == Routes.SETTINGS) gate("Die Einstellungen sind für Eltern: Sync mit Google, Updates, Daten löschen.") { goTab(t.route) }
+                                if (t.route == Routes.SETTINGS) gate(if (host.features.sync) "Die Einstellungen sind für Eltern: Sync mit Google, Updates, Daten löschen." else "Die Einstellungen sind für Eltern: Ton, Vorlesen, Lernzeit, Daten löschen.") { goTab(t.route) }
                                 else goTab(t.route)
                             },
                             icon = { Icon(t.icon, null) },
@@ -392,7 +392,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                                 }
                             },
                             onGoodNight = if (remember(rev) { vm.goodNightDoneToday() }) null else { { if (vm.startGoodNight()) nav.goOnce(Routes.REVIEW) } },
-                            reminderPrompt = if (asked) null else {
+                            // Nur wo es Erinnerungen gibt (Android) – die WebApp kann keine senden, „Ja“ täte dort nichts
+                            reminderPrompt = if (asked || !host.features.reminders) null else {
                                 { ReminderPromptCard(hour, onYes = askPermission, onNo = { vm.setReminder(false) }) }
                             },
                         )
@@ -573,10 +574,11 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                         onFamilyReward = { vm.settings.setFamilyReward(it) },
                         onLocalDuel = { nav.navigate(Routes.LOCAL_DUEL) },
                         onWeekReport = { gate("Der Wochenbericht ist für Eltern.") { nav.navigate(if (vm.entitlements.canUseWeekReport()) Routes.WEEK_REPORT else Routes.PLUS) } },
-                        onPostcard = { id -> gate("Die Postkarte wird an eine andere App (z. B. WhatsApp) geschickt.") {
+                        // Postkarte und Urkunde nur, wo es sie gibt (Android) – in der WebApp keine Knöpfe, die nichts tun
+                        onPostcard = if (!host.features.keepsakes) null else { id -> gate("Die Postkarte wird an eine andere App (z. B. WhatsApp) geschickt.") {
                             scope.launch { runCatching { host.sharePostcard(vm.keepsakeData(id)) }.onFailure { host.toast("Die Postkarte konnte nicht erstellt werden.") } }
                         } },
-                        onCertificate = { id -> gate("Die Urkunde wird an eine andere App geschickt.") {
+                        onCertificate = if (!host.features.keepsakes) null else { id -> gate("Die Urkunde wird an eine andere App geschickt.") {
                             scope.launch { runCatching { host.shareCertificate(vm.keepsakeData(id)) }.onFailure { host.toast("Die Urkunde konnte nicht erstellt werden.") } }
                         } },
                     )

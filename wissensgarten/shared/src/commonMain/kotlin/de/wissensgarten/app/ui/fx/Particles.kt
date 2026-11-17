@@ -16,6 +16,9 @@ import kotlin.random.Random
 
 enum class Burst { SPARKLE, WATER, LEAVES, CONFETTI }
 
+/** Zufallsquelle für Partikel und gemischte Spielrunden – Bildschirmfoto-Tests setzen einen festen Startwert. */
+object Zufall { var quelle: Random = Random.Default }
+
 private class P(
     var x: Float, var y: Float, var vx: Float, var vy: Float,
     val color: Color, val size: Float, val kind: Burst,
@@ -39,7 +42,7 @@ class Particles {
     internal var frame by mutableLongStateOf(0L)
 
     fun burst(kind: Burst, x: Float = 0.5f, y: Float = 0.5f, count: Int = 24) {
-        val r = Random.Default
+        val r = Zufall.quelle
         repeat(count) {
             val a = when (kind) {
                 Burst.WATER -> PI / 2 + r.nextDouble(-0.6, 0.6)            // nach unten

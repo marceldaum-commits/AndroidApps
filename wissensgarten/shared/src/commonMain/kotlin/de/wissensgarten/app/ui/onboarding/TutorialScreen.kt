@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.wissensgarten.app.ui.common.Plant
-import de.wissensgarten.app.ui.common.formatDays
+import de.wissensgarten.app.ui.common.formatDaysText
 import de.wissensgarten.app.ui.fx.*
 import de.wissensgarten.core.model.Memory
 import de.wissensgarten.core.model.Rating
@@ -118,7 +118,7 @@ fun TutorialScreen(onDone: () -> Unit) {
                     if (thirsty) {
                         Text(
                             "Jetzt hat die Pflanze Durst – das ist der beste Moment zum Wiederholen! " +
-                                "Laut Vergessenskurve ist das nach ${formatDays(memory.stability)} der Fall.",
+                                "Laut Vergessenskurve ist das nach ${formatDaysText(memory.stability, dativ = true)} der Fall.",
                             textAlign = TextAlign.Center,
                         )
                         JuicyButton(onClick = { step = 3 }, Modifier.fillMaxWidth().height(54.dp)) { Text("Weiter") }
@@ -145,7 +145,7 @@ fun TutorialScreen(onDone: () -> Unit) {
 
                 else -> Explain(
                     "Sie wächst! 🌿",
-                    "Vorher hielt das Wissen ${formatDays(beforeStability)}, jetzt etwa ${formatDays(memory.stability)}. " +
+                    "Vorher hielt das Wissen ${formatDaysText(beforeStability)}, jetzt etwa ${formatDaysText(memory.stability)}. " +
                         "Mit jedem rechtzeitigen Gießen wird aus dem Keimling ein Busch, eine Blüte und schließlich ein Baum – " +
                         "dann sitzt das Wissen für Monate.\n\nKein Stress: Welke Pflanzen kann man jederzeit retten.",
                 ) { JuicyButton(onClick = onDone, Modifier.fillMaxWidth().height(54.dp)) { Text("Zu meinem Garten") } }

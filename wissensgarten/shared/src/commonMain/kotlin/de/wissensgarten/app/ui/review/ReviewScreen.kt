@@ -1,3 +1,5 @@
+@file:OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
+
 package de.wissensgarten.app.ui.review
 
 import de.wissensgarten.app.ui.common.BackHandler
@@ -7,7 +9,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -30,6 +31,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.wissensgarten.app.ui.common.Plant
@@ -268,7 +270,7 @@ fun ReviewScreen(
                     Text(
                         "${bed?.emoji ?: ""} ${bed?.name ?: ""}",
                         style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1, modifier = Modifier.weight(1f, fill = false),
+                        maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f, fill = false),
                     )
                     if (!calm) LevelBadge(Stage.of(card.memory))
                     // Theorie zum Thema – jederzeit, ohne Abzug; so bleibt niemand frustriert hängen
@@ -276,8 +278,11 @@ fun ReviewScreen(
                     StreakBadge(streak)
                 }
                 // Pflanze links, Brummi mit Sprechblase rechts
+                // Schmale Handys (z. B. 320 dp): Pflanze und Brummi kleiner, sonst bleibt für die Sprechblase kaum Platz
+                BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val narrow = maxWidth < 380.dp
                 Row(Modifier.fillMaxWidth().height(150.dp), verticalAlignment = Alignment.Bottom) {
-                    Box(Modifier.width(130.dp).fillMaxHeight(), contentAlignment = Alignment.BottomCenter) {
+                    Box(Modifier.width(if (narrow) 100.dp else 130.dp).fillMaxHeight(), contentAlignment = Alignment.BottomCenter) {
                         Plant(
                             Stage.of(shownMemory),
                             if (phase == Phase.REVEAL) 0f else Scheduler.wilt(shownMemory, now),
@@ -295,12 +300,13 @@ fun ReviewScreen(
                             },
                         )
                     }
-                    Brummi(mood, Modifier.weight(1f).align(Alignment.CenterVertically), size = 84.dp, speech = speech, speechRuntime = speechRuntime)
+                    Brummi(mood, Modifier.weight(1f).align(Alignment.CenterVertically), size = if (narrow) 64.dp else 84.dp, speech = speech, speechRuntime = speechRuntime)
+                }
                 }
                 LevelUpBanner(levelUp, Modifier.align(Alignment.CenterHorizontally))
                 Spacer(Modifier.height(8.dp))
 
-                Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), horizontalAlignment = Alignment.CenterHorizontally) {
+                Column(Modifier.weight(1f).verticalScroll(remember(card.id) { androidx.compose.foundation.ScrollState(0) }), horizontalAlignment = Alignment.CenterHorizontally) {
                     AnimatedContent(
                         targetState = Triple(phase, card.id, bonusAt),
                         // wie im Onboarding: alte Karte blendet schnell aus, neue kommt kurz danach – kein Durcheinander
@@ -358,10 +364,11 @@ private fun RevealCard(card: StudyCard, right: Boolean, paused: Boolean, onPause
             Column(Modifier.fillMaxWidth().padding(18.dp), horizontalAlignment = Alignment.CenterHorizontally) {
                 MerkBild(card.img, emojiSize = 56.sp, key = "r" + card.id, cardId = card.id)
                 var drawing by remember(card.id) { mutableStateOf(false) }
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                // FlowRow: auf schmalen Handys rutscht „Vorlesen“ in die nächste Zeile statt umzubrechen
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)) {
                     AssistChip(onClick = { onPause(); drawing = true }, label = { Text(if (de.wissensgarten.app.ui.play.Drawings.rev >= 0 && de.wissensgarten.app.ui.play.Drawings.has(card.id)) "✏️ Neu malen" else "✏️ Selbst malen") })
                     // Antwort und Erklärung (noch einmal) vorlesen
-                    if (onRead != null) AssistChip(onClick = onRead, label = { Text("🔊 Vorlesen") })
+                    if (onRead != null) AssistChip(onClick = onRead, label = { Text("🔊 Vorlesen", maxLines = 1) })
                 }
                 if (drawing) de.wissensgarten.app.ui.play.DrawDialog(card.id, "${card.front} → ${card.back}", card.img) { drawing = false }
                 SilbenText(card.front, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F))
@@ -581,7 +588,13 @@ private fun StatTile(icon: String, value: String, label: String, modifier: Modif
         Column(Modifier.fillMaxWidth().padding(vertical = 12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Text(icon, fontSize = 20.sp)
             Text(value, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
-            Text(label, style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
+            // Schmale Handys: Schrift schrumpft etwas, statt „gewachsen“ oder „beste Serie“ abzuschneiden
+            androidx.compose.foundation.text.BasicText(
+                label, Modifier.padding(horizontal = 3.dp),
+                style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center),
+                maxLines = 1,
+                autoSize = androidx.compose.foundation.text.TextAutoSize.StepBased(minFontSize = 8.sp, maxFontSize = MaterialTheme.typography.labelSmall.fontSize),
+            )
         }
     }
 }

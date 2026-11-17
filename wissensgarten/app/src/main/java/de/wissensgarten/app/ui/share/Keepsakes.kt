@@ -23,13 +23,13 @@ object Keepsakes {
     private val GREEN = 0xFF2E5E2A.toInt()
     private val BROWN = 0xFF4E3B00.toInt()
 
-    fun postcard(d: KeepsakeData): Bitmap {
+    /** [hour]: Tageszeit des Himmels (Bildschirmfoto-Tests geben sie fest vor) */
+    fun postcard(d: KeepsakeData, hour: Int = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)): Bitmap {
         val w = 1080; val h = 1350
         val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
         val c = Canvas(bmp)
         c.drawColor(CREAM)
-        val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY).coerceIn(8, 17)
-        val garden = GardenBitmap.render(w, 520, d.flowers, hour, party = true)
+        val garden = GardenBitmap.render(w, 520, d.flowers, hour.coerceIn(8, 17), party = true)
         c.drawBitmap(garden, 0f, 0f, null)
         // Briefmarke oben rechts
         val p = Paint(Paint.ANTI_ALIAS_FLAG)

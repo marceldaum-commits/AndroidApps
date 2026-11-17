@@ -8,8 +8,14 @@
   <meta name="theme-color" content="#3f6b3a">
   <meta name="wg-version" content="2.2.1">
   <link rel="manifest" href="manifest.webmanifest">
-  <!-- Emoji-Schrift gleich parallel zur App laden (statt erst danach) -->
-  <link rel="preload" href="composeResources/de.wissensgarten.web.res/font/noto_color_emoji.ttf" as="fetch" crossorigin>
+  <!-- Emoji-Schrift gleich parallel zur App laden (statt erst danach) – nur beim ersten Besuch; danach kommt sie aus dem
+       Zwischenspeicher des Service Workers (ein Vorab-Laden würde dort nur doppelt laden und eine Konsolen-Warnung erzeugen) -->
+  <script>
+    if (!(navigator.serviceWorker && navigator.serviceWorker.controller)) {
+      const l = document.createElement('link'); l.rel = 'preload'; l.as = 'fetch'; l.crossOrigin = 'anonymous';
+      l.href = 'composeResources/de.wissensgarten.web.res/font/noto_color_emoji.ttf'; document.head.appendChild(l);
+    }
+  </script>
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <style>
@@ -54,7 +60,7 @@
   <script>
     // Echter Ladebalken: zählt die geladenen Bytes der großen Startdateien (App, Grafik-Engine, Emoji-Schrift).
     (function () {
-      const sizes = {"588352bef75744758340.wasm":7882688,"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"wissensgarten.js":663412};
+      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"b15bea2e5ab47a0f0c46.wasm":7895098,"wissensgarten.js":663454};
       const total = Object.values(sizes).reduce((a, b) => a + b, 0);
       const got = {};
       const bar = document.getElementById('bar'), barI = document.getElementById('barI'), pct = document.getElementById('pct');
