@@ -1,5 +1,14 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 17.11. – End-to-End-Test mit echtem Pro-Code bestanden (Version 0.24.1)
+
+- Test-Code vom Lizenz-Dienst (Produkt 1, App 1, Serie 1001, Tag 17.11.2026; Code selbst nicht im Repo):
+  Signatur mit dem öffentlichen Schlüssel gültig (Python/cryptography **und** App-Logik `License.check`).
+- Freischalt-Link `https://kurvenflug.mathenachhilfe-online.com/?pro=<Code>` in der WebApp (0.24.1): Code wird
+  gespeichert, Adresse aufgeräumt, keine Konsolenfehler. Mit dem Code sind Pro-Level (z. B. Ableitung 19-3) offen.
+- Neu in 0.24.1: Lernstand-Themen klappen beim Antippen ihre Level mit Sternen auf (gezielt nochmal spielen).
+- Offen: Marcels echter Testkauf über die Kasse (Danke-Seite + E-Mail) – Code bitte wieder schicken, ich prüfe ihn gleich.
+
 ## 0.24.0 – Pro über die Website freigeschaltet (Web + GitHub-APK)
 
 - **Version:** 0.24.0 · **Commit:** bfa1fe2
