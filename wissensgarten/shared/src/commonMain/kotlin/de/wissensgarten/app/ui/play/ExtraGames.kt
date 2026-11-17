@@ -209,7 +209,7 @@ private fun WeedDone(pulled: Int, of: Int, totalPulled: Int, onClose: () -> Unit
 
 @Composable
 fun BlitzScreen(pool: List<StudyCard>, peers: Map<String, List<String>>, onDone: (correct: Int) -> Unit, onClose: () -> Unit) {
-    val deck = remember { pool.shuffled() }
+    val deck = remember { pool.shuffled(de.wissensgarten.app.ui.fx.Zufall.quelle) }
     var started by remember { mutableStateOf(false) }
     var left by remember { mutableIntStateOf(Blitz.SECONDS) }
     var i by remember { mutableIntStateOf(0) }
@@ -293,7 +293,7 @@ fun BlitzScreen(pool: List<StudyCard>, peers: Map<String, List<String>>, onDone:
 
 @Composable
 fun RhythmScreen(pool: List<StudyCard>, peers: Map<String, List<String>>, onDone: (points: Int, right: Int) -> Unit, onClose: () -> Unit) {
-    val deck = remember { pool.shuffled().take(Rhythm.QUESTIONS) }
+    val deck = remember { pool.shuffled(de.wissensgarten.app.ui.fx.Zufall.quelle).take(Rhythm.QUESTIONS) }
     var i by remember { mutableIntStateOf(0) }
     var points by remember { mutableIntStateOf(0) }
     var right by remember { mutableIntStateOf(0) }

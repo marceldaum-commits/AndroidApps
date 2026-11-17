@@ -55,6 +55,10 @@ open class ScreenshotTest {
     /** Store-Fotos: nur diese Bildschirme (die schönsten 8) */
     private val storeSet = setOf("gardenHome", "reviewKids", "adventurePath", "chest", "album", "shop", "family", "duelHub")
 
+    /** Fester Startwert für Konfetti, Wassertropfen und gemischte Runden – sonst flackern die Bilder bei jedem Lauf */
+    @org.junit.Before fun fixedRandom() { de.wissensgarten.app.ui.fx.Zufall.quelle = kotlin.random.Random(42) }
+    @org.junit.After fun resetRandom() { de.wissensgarten.app.ui.fx.Zufall.quelle = kotlin.random.Random.Default }
+
     @org.junit.Before fun onlyStoreShots() {
         if (outDir != "../screenshots") org.junit.Assume.assumeTrue(testName.methodName in storeSet)
     }
@@ -508,7 +512,7 @@ open class ScreenshotTest {
                 de.wissensgarten.app.widget.Flower(210f, 1f, true), de.wissensgarten.app.widget.Flower(45f, 0.9f, false)),
             listOf("Irregular Verbs", "Zelle & Mensch", "Europa", "Brüche"))
         val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
-        val png = de.wissensgarten.app.ui.share.Keepsakes.postcard(d)
+        val png = de.wissensgarten.app.ui.share.Keepsakes.postcard(d, hour = 11)
         File("../screenshots/46_postkarte.png").outputStream().use { png.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
         // PDF gibt es nur auf dem Gerät – hier dieselbe Zeichnung als Bild (doppelte Auflösung)
         val cert = android.graphics.Bitmap.createBitmap(1190, 1684, android.graphics.Bitmap.Config.ARGB_8888)

@@ -24,7 +24,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.wissensgarten.app.ui.common.Plant
-import de.wissensgarten.app.ui.common.formatDays
+import de.wissensgarten.app.ui.common.formatDaysText
 import de.wissensgarten.app.ui.common.plantsWord
 import de.wissensgarten.app.ui.theme.BigNumber
 import de.wissensgarten.app.ui.fx.*
@@ -92,7 +92,12 @@ fun GardenScreen(
                     ) { Text(profile.avatar, fontSize = 26.sp) }
                     Spacer(Modifier.width(12.dp))
                     Column(Modifier.weight(1f)) {
-                        Text(greeting(now, profile.name), style = MaterialTheme.typography.titleLarge, color = textColor, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        // Schmale Handys: lieber etwas kleiner als den Namen abschneiden („Guten Abend, L…“)
+                        androidx.compose.foundation.text.BasicText(
+                            greeting(now, profile.name), style = MaterialTheme.typography.titleLarge.copy(color = textColor), maxLines = 1,
+                            overflow = TextOverflow.Clip,   // mit Ellipsis würde autoSize nie verkleinern
+                            autoSize = androidx.compose.foundation.text.TextAutoSize.StepBased(minFontSize = 15.sp, maxFontSize = MaterialTheme.typography.titleLarge.fontSize),
+                        )
                         Text(
                             "${cards.count { !it.memory.isSeed }} Pflanzen · $trees ${if (trees == 1) "Baum" else "Bäume"}",
                             style = MaterialTheme.typography.bodySmall, color = textColor.copy(alpha = 0.85f),
@@ -111,7 +116,8 @@ fun GardenScreen(
                     // Die Zahl steht schon auf der Gieß-Karte – Brummi ermuntert lieber (wechselt täglich)
                     thirsty > 0 -> Mood.HAPPY to listOf("Komm, wir gießen zusammen! 💧", "Ich hab die Gießkanne schon gefüllt!",
                         "Ein paar Minuten – und alles blüht wieder! 🌸", "Deine Pflanzen winken dir schon zu! 👋")[(de.wissensgarten.core.model.Scheduler.localDay(now).toInt()).mod(4)]
-                    cards.isEmpty() -> Mood.HAPPY to "Hallo! Ich bin Brummi 🐝"
+                    // Nur Samen im Beet: noch blüht nichts
+                    cards.none { !it.memory.isSeed } -> Mood.HAPPY to "Hallo! Ich bin Brummi 🐝"
                     else -> Mood.HAPPY to "Dein Garten blüht! 🌸"
                 }
                 Brummi(
@@ -128,8 +134,14 @@ fun GardenScreen(
                         Spacer(Modifier.weight(1f))
                         repeat(3) { Plant(Stage.SEED, 0f, 0f, it, Modifier.weight(1f).fillMaxHeight()) }
                         Spacer(Modifier.weight(1f))
-                    } else panorama.forEach { (c, bed) ->
-                        Plant(Stage.of(c.memory), Scheduler.wilt(c.memory, now), bed.hue, c.id.hashCode() and 0xff, Modifier.weight(1f).fillMaxHeight(), species = bed.species)
+                    } else {
+                        // Mindestens 5 Plätze: eine einzelne erste Pflanze soll nicht riesig über den ganzen Himmel wachsen
+                        val gap = (5 - panorama.size).coerceAtLeast(0) / 2f
+                        if (gap > 0f) Spacer(Modifier.weight(gap))
+                        panorama.forEach { (c, bed) ->
+                            Plant(Stage.of(c.memory), Scheduler.wilt(c.memory, now), bed.hue, c.id.hashCode() and 0xff, Modifier.weight(1f).fillMaxHeight(), species = bed.species)
+                        }
+                        if (gap > 0f) Spacer(Modifier.weight(gap))
                     }
                 }
             }
@@ -224,7 +236,7 @@ private fun WaterHero(thirsty: Int, seeds: Int, nextInDays: Double?, onWater: ()
                 Text(if (seeds > 0) "Zeit zum Säen 🌱" else "Alles grün 🌿", style = MaterialTheme.typography.headlineSmall)
                 val hint = buildString {
                     if (seeds > 0) append("$seeds neue Samen warten auf dich. ") else append("Für heute ist alles gesät. ")
-                    if (nextInDays != null) append("Nächster Durst in ${formatDays(nextInDays)}.")
+                    if (nextInDays != null) append("Nächster Durst in ${formatDaysText(nextInDays, dativ = true)}.")
                 }
                 Text(hint, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(top = 4.dp))
             }
@@ -261,7 +273,8 @@ private fun EmptyGarden(onShop: () -> Unit) {
 private fun BedCard(b: BedWithCards, now: Long, onClick: () -> Unit) {
     val thirsty = b.cards.count { Scheduler.isThirsty(it.memory, now) }
     val grown = b.cards.count { !it.memory.isSeed }
-    ElevatedCard(Modifier.fillMaxWidth().clickable(onClick = onClick), shape = MaterialTheme.shapes.large) {
+    // onClick der Karte selbst: Druck- und Hover-Schatten folgen den runden Ecken (nicht eckig darüber)
+    ElevatedCard(onClick = onClick, modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.large) {
         Column(Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(b.bed.emoji, fontSize = 28.sp)

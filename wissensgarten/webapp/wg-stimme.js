@@ -52,6 +52,8 @@
   // Alte Stimme „Thorsten“ (bis Version 2.0.2, ca. 63 MB) einmal aus dem Browser-Speicher löschen
   try { if ('caches' in window) caches.delete('wissensgarten-stimme').catch(() => {}); } catch (e) {}
 
+  // Sicher offline (Flugmodus): gar nicht erst anfragen – sonst meldet der Browser jeden Versuch als Fehler in der Konsole
+  const offline = () => navigator.onLine === false;
   const timed = (ms) => { const c = new AbortController(); const t = setTimeout(() => c.abort(), ms); return [c.signal, () => clearTimeout(t)]; };
 
   async function find(h) {
@@ -64,6 +66,7 @@
 
   /** Datei holen und bei 200 speichern; liefert den HTTP-Status oder -1 (offline, Zeitüberschreitung, zu groß) */
   async function store(url, h, cacheName) {
+    if (offline()) return -1;
     const [signal, done] = timed(10000);
     try {
       const r = await fetch(url, Object.assign({}, OPTS, { signal }));
@@ -81,6 +84,7 @@
 
   /** Laufzeit-Text einmalig vertonen lassen (POST /jetzt) und die gelieferte Datei speichern */
   nova.now = async (text, sprache, h) => {
+    if (offline()) return -1;
     const [signal, done] = timed(15000);
     try {
       const r = await fetch(BASE + '/jetzt', Object.assign({}, OPTS, {
@@ -154,6 +158,7 @@
   };
   /** Kleine Textdatei (Liste, Server-Stand) – null bei Fehler */
   nova.text = async (url) => {
+    if (offline()) return null;
     const [signal, done] = timed(20000);
     try { const r = await fetch(url, Object.assign({}, OPTS, { signal })); return r.ok ? await r.text() : null; }
     catch (e) { return null; } finally { done(); }

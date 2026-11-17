@@ -40,9 +40,10 @@ fun FamilyScreen(
     onClaimFamily: () -> Unit = {},
     familyReward: String = "",
     onFamilyReward: (String) -> Unit = {},
-    onPostcard: (String) -> Unit = {},
+    /** null = Postkarte/Urkunde gibt es hier nicht (WebApp) – dann keine Knöpfe */
+    onPostcard: ((String) -> Unit)? = {},
     onLocalDuel: () -> Unit = {},
-    onCertificate: (String) -> Unit = {},
+    onCertificate: ((String) -> Unit)? = {},
     onWeekReport: () -> Unit = {},
 ) {
     LazyColumn(
@@ -66,7 +67,7 @@ fun FamilyScreen(
                 p, p.id == activeId,
                 beds.filter { it.bed.profileId == p.id },
                 logs.filter { it.profileId == p.id }, now,
-                onPostcard = { onPostcard(p.id) }, onCertificate = { onCertificate(p.id) },
+                onPostcard = onPostcard?.let { f -> { f(p.id) } }, onCertificate = onCertificate?.let { f -> { f(p.id) } },
             ) { onSwitch(p.id) }
         }
         item {
@@ -88,7 +89,7 @@ fun FamilyScreen(
 @Composable
 private fun ProfileCard(
     p: ProfileEntity, active: Boolean, beds: List<BedWithCards>, logs: List<ReviewLogEntity>, now: Long,
-    onPostcard: () -> Unit = {}, onCertificate: () -> Unit = {}, onClick: () -> Unit,
+    onPostcard: (() -> Unit)? = null, onCertificate: (() -> Unit)? = null, onClick: () -> Unit,
 ) {
     val cards = beds.flatMap { it.cards }
     val grown = cards.count { !it.memory.isSeed }
@@ -123,9 +124,9 @@ private fun ProfileCard(
             Spacer(Modifier.height(12.dp))
             Text("Gegossen in den letzten 7 Tagen: ${perDay.sum()}", style = MaterialTheme.typography.labelLarge)
             WeekBars(perDay, now)
-            if (grown > 0) Row(Modifier.fillMaxWidth().padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilledTonalButton(onClick = onPostcard, modifier = Modifier.weight(1f)) { Text("💌 Postkarte", maxLines = 1) }
-                FilledTonalButton(onClick = onCertificate, modifier = Modifier.weight(1f)) { Text("🏅 Urkunde", maxLines = 1) }
+            if (grown > 0 && (onPostcard != null || onCertificate != null)) Row(Modifier.fillMaxWidth().padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (onPostcard != null) FilledTonalButton(onClick = onPostcard, modifier = Modifier.weight(1f)) { Text("💌 Postkarte", maxLines = 1) }
+                if (onCertificate != null) FilledTonalButton(onClick = onCertificate, modifier = Modifier.weight(1f)) { Text("🏅 Urkunde", maxLines = 1) }
             }
         }
     }

@@ -3,6 +3,15 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.2 – Feinschliff vor dem Praxistest (17.11.2026)
+- **WebApp:** Kurze Hinweise (z. B. „In die Zwischenablage kopiert“, „Freischalt-Link ungültig“) werden jetzt wirklich angezeigt.
+- WebApp zeigt keine Knöpfe mehr, die dort nicht funktionieren (Gieß-Erinnerung, Postkarte/Urkunde – die gibt es in der Android-App).
+- Kleine Handys: Brummis Sprechblase bricht nicht mehr mitten im Wort um; lange Namen und Texte passen sauber hinein.
+- Garten: Die erste Pflanze wächst nicht mehr riesig über den ganzen Himmel.
+- Klarere Sätze: „in 2 Tagen“ statt „in 2 T“.
+- Ohne Internet keine unnötigen Fehlermeldungen im Browser; ein unlesbarer Speicherstand wird nie mehr überschrieben, sondern aufbewahrt.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.1 – Richtige Größenangaben (17.11.2026)
 - Die Bilder in der Anleitung zeigen jetzt die echten Größen für „Offline laden“ (die App selbst rechnet schon immer mit den aktuellen Zahlen vom Server).
 - Zusätzliche Prüfung, dass „Bestqualität“ genau die Größe zeigt, die der Server meldet.

@@ -151,7 +151,8 @@ fun PackRow(pack: Pack, chosen: Boolean, chosenLabel: String, chooseLabel: Strin
             ) { Text(pack.emoji, fontSize = 26.sp) }
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
-                Text(pack.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                // zweizeilig: auf schmalen Handys sonst nur „Richtig schrei…“
+                Text(pack.title, style = MaterialTheme.typography.titleMedium, maxLines = 2, overflow = TextOverflow.Ellipsis)
                 Text(
                     "${pack.subjectInfo.label} · ${Levels.range(pack.grades)} · ${pack.cardCount} Karten",
                     style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
