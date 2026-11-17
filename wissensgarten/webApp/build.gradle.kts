@@ -30,7 +30,7 @@ val genPacks = layout.buildDirectory.dir("generated/packs")
 val copyPacks by tasks.registering {
     inputs.dir(packsDir); outputs.dir(genPacks)
     doLast {
-        genPacks.get().asFile.deleteRecursively()   // auch Reste früherer Fassungen (z. B. stimme/ für Thorsten)
+        genPacks.get().asFile.deleteRecursively()   // auch Reste früherer Fassungen (z. B. stimme/ der früheren Offline-Stimme)
         val out = genPacks.get().dir("packs").asFile.apply { deleteRecursively(); mkdirs() }
         val files = packsDir.listFiles()!!.filter { it.extension == "json" }.sortedBy { it.name }
         files.forEach { it.copyTo(out.resolve(it.name), overwrite = true) }

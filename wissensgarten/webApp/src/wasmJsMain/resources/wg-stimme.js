@@ -49,7 +49,7 @@
   const mem = new Map();                              // Notlösung, falls der Browser-Speicher fehlt (z. B. ohne https)
   const nova = (wg.nova = {});
 
-  // Alte Stimme „Thorsten“ (bis Version 2.0.2, ca. 63 MB) einmal aus dem Browser-Speicher löschen
+  // Frühere Offline-Stimme (bis Version 2.0.2, ca. 63 MB) einmal aus dem Browser-Speicher löschen
   try { if ('caches' in window) caches.delete('wissensgarten-stimme').catch(() => {}); } catch (e) {}
 
   // Sicher offline (Flugmodus): gar nicht erst anfragen – sonst meldet der Browser jeden Versuch als Fehler in der Konsole

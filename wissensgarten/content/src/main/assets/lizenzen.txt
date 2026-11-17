@@ -5,4 +5,4 @@ Die Audiodateien erzeugt und liefert unser Server stimmen.mathenachhilfe-online.
 Die App selbst spricht nie mit OpenAI und enthält keinen fremden Programm-Baustein für die Stimme.
 Ohne Internet liest die Sprachausgabe des Geräts (Android bzw. Browser).
 
-Die früheren Bausteine der Stimme „Thorsten“ (sherpa-onnx, ONNX Runtime, ONNX Runtime Web, Piper-Stimme) sind entfernt.
+Die frühere Offline-Stimme und ihre Rechen-Bausteine sind entfernt.

@@ -31,7 +31,7 @@ fun SoundSettingsContent(musicVol: Int, sfxVol: Int, music: Boolean, sound: Bool
     VolumeRow("🔔", "Lautstärke Geräusche", sfxVol, enabled = sound, onChange = onSfxVol, onDone = onProbe)
     Text(
         "Alle Klänge und die Musik sind selbst komponiert und entstehen im Gerät – Marimba, Glockenspiel, Kalimba, Vögel und Wind. " +
-            "Jede Jahreszeit klingt anders. Musik startet erst, wenn du den Bildschirm berührst, und schweigt, wenn das Handy lautlos ist.",
+            "Jede Jahreszeit klingt anders. In der App startet die Musik beim Öffnen, im Browser beim ersten Antippen – und sie schweigt, wenn das Handy lautlos ist oder „Musik“ aus ist.",
         style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
 }

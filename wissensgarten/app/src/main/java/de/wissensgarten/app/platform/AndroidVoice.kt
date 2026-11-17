@@ -47,7 +47,7 @@ class AndroidNova(context: Context) : NovaGeraet, NovaOfflineSpeicher, TextToSpe
     private var finishPlay: ((Boolean) -> Unit)? = null
 
     init {
-        // Aufräumen im Hintergrund: alte Stimme „Thorsten“ (bis 2.0.2, ca. 63 MB) löschen, Nova-Speicher klein halten
+        // Aufräumen im Hintergrund: alte Offline-Stimme (bis 2.0.2, ca. 63 MB) löschen, Nova-Speicher klein halten
         Thread {
             runCatching { File(ctx.filesDir, "stimme").takeIf { it.exists() }?.deleteRecursively() }
             runCatching { dir.mkdirs(); trim(dir, MAX_BYTES) }   // nur der Zwischenspeicher, nie nova-offline / nova-original

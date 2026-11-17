@@ -6,13 +6,13 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
- * Update von 2.0.x (Stimmenwahl „Thorsten“, freies Tempo) auf den aktuellen Stand:
+ * Update von 2.0.x (alte Stimmenwahl, freies Tempo) auf den aktuellen Stand:
  * Nur der alte Schlüssel „stimme“ verschwindet, alles andere (Profil, Plus-Code, Lautstärken, Fortschritt) bleibt.
  */
 class SettingsUpgradeTest {
     @Test fun alteStimmenEinstellungWirdAufgeraeumtRestBleibt() {
         val old = mapOf<String, Any>(
-            "stimme" to "thorsten", "stimme_tempo" to 137, "aktives_profil" to "p1", "einrichtung_fertig" to true,
+            "stimme" to "alte-stimme", "stimme_tempo" to 137, "aktives_profil" to "p1", "einrichtung_fertig" to true,
             "musik" to false, "musik_laut" to 30, "ton_laut" to 80, "vorlesen" to "ON", "plus_code" to "WG-TEST",
             "truhen_p1" to 4, "kapitel_p1" to setOf("1", "2"), "design" to "DARK",
         )
