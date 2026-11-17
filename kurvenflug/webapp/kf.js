@@ -162,7 +162,8 @@
   function cached(url) {
     if (!window.caches) return fetch(url, { credentials: 'omit' }).then(function (r) { return r.ok ? r.arrayBuffer() : null; });
     return caches.open('kf-nova').then(function (c) {
-      return c.match(url).then(function (hit) {
+      // offline gespeicherte Bestqualität (nova/original/…) zuerst
+      return c.match(url.replace('/nova/', '/nova/original/')).then(function (b) { return b || c.match(url); }).then(function (hit) {
         if (hit) return hit.arrayBuffer();
         return fetch(url, { credentials: 'omit' }).then(function (r) {
           if (!r.ok) return null;
@@ -196,31 +197,33 @@
   };
   // „Alle Nova-Texte offline laden“: dieselben Dateien im Cache „kf-nova“ (Cache Storage, keine Obergrenze beim manuellen Laden)
   var NOVA = 'https://stimmen.mathenachhilfe-online.com/nova/', offAbort = false;
-  function novaUrl(h) { return NOVA + h.slice(0, 2) + '/' + h + '.mp3'; }
+  function novaUrl(h, best) { return NOVA + (best ? 'original/' : '') + h.slice(0, 2) + '/' + h + '.mp3'; }
   function size(r) { var n = +(r.headers.get('content-length') || 0); return n ? Promise.resolve(n) : r.blob().then(function (b) { return b.size; }); }
-  // hashes: Dateinamen der festen Texte (je Zeile) → cb(gespeichert, Bytes, Server-Bytes oder -1)
+  // hashes: Dateinamen der festen Texte (je Zeile) → cb(Standard gespeichert, Bestqualität gespeichert, Bytes beide, Server Standard, Server Best; -1 = unbekannt)
   KF.offStat = function (hashes, cb) {
     var hs = hashes.split('\n').filter(Boolean), host = /^(localhost|127\.)/.test(location.hostname) ? 'kurvenflug.mathenachhilfe-online.com' : location.hostname;
     var server = fetch(NOVA + 'stand-' + host + '.json', { credentials: 'omit', cache: 'no-store' })
-      .then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { return j && j.bytes ? j.bytes : -1; }, function () { return -1; });
-    var local = !window.caches ? Promise.resolve([0, 0]) : caches.open('kf-nova').then(function (c) {
+      .then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { return j ? [j.bytes || -1, j.bytes_original || -1] : [-1, -1]; }, function () { return [-1, -1]; });
+    var local = !window.caches ? Promise.resolve([0, 0, 0]) : caches.open('kf-nova').then(function (c) {
       return c.keys().then(function (ks) {
         var have = {}; ks.forEach(function (k) { have[k.url] = k; });
-        var mine = hs.map(novaUrl).filter(function (u) { return have[u]; });
-        return Promise.all(mine.map(function (u) { return c.match(u).then(function (r) { return r ? size(r) : 0; }); }))
-          .then(function (sz) { return [mine.length, sz.reduce(function (a, b) { return a + b; }, 0)]; });
+        var std = hs.map(function (h) { return novaUrl(h, false); }).filter(function (u) { return have[u]; });
+        var best = hs.map(function (h) { return novaUrl(h, true); }).filter(function (u) { return have[u]; });
+        return Promise.all(std.concat(best).map(function (u) { return c.match(u).then(function (r) { return r ? size(r) : 0; }); }))
+          .then(function (sz) { return [std.length, best.length, sz.reduce(function (a, b) { return a + b; }, 0)]; });
       });
     });
-    Promise.all([local, server]).then(function (x) { cb(x[0][0], x[0][1], x[1]); }, function () { cb(0, 0, -1); });
+    Promise.all([local, server]).then(function (x) { cb(x[0][0], x[0][1], x[0][2], x[1][0], x[1][1]); }, function () { cb(0, 0, 0, -1, -1); });
   };
   // Nur fehlende Dateien, 4 gleichzeitig; 404 still überspringen; progress(fertig, alle), done(Fehlerzahl, abgebrochen)
-  KF.offLoad = function (hashes, progress, done) {
+  // best: Bestqualität (nova/original/…); liefert original/ 404, wird die normale Datei unter der original-Adresse gespeichert
+  KF.offLoad = function (hashes, best, progress, done) {
     offAbort = false;
     if (!window.caches) { done(-1, false); return; }
     caches.open('kf-nova').then(function (c) {
       return c.keys().then(function (ks) {
         var have = {}; ks.forEach(function (k) { have[k.url] = 1; });
-        var todo = hashes.split('\n').filter(Boolean).map(novaUrl).filter(function (u) { return !have[u]; });
+        var todo = hashes.split('\n').filter(Boolean).map(function (h) { return novaUrl(h, best); }).filter(function (u) { return !have[u]; });
         var i = 0, fin = 0, fail = 0, n = todo.length;
         progress(0, n);
         if (!n) { done(0, false); return; }
@@ -229,6 +232,9 @@
             if (offAbort || i >= n) { if (fin >= Math.min(i, n) ) resolve(); return; }
             var u = todo[i++];
             fetch(u, { credentials: 'omit' }).then(function (r) {
+              if (r.status === 404 && best) return fetch(u.replace('/nova/original/', '/nova/'), { credentials: 'omit' });
+              return r;
+            }).then(function (r) {
               if (r.status === 404) return;
               if (!r.ok) { fail++; return; }
               return c.put(u, r);
