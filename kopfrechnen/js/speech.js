@@ -1,7 +1,7 @@
 'use strict';
 /* ================= Vorlesen: Aufgaben, Lösungswege, Theorie und Blitz =================
-   Stimmen des Geräts bzw. Browsers (Web Speech API). In der Android-Hülle wird – sobald vorhanden – das
-   TextToSpeech-Plugin der Hülle benutzt (dieselben Einstellungen). Mathe wird ausgesprochen: „3/4“ → „3 Viertel“, „x²“ → „x hoch 2“, Einheiten als Wörter. */
+   Gesprochen wird mit der KI-Stimme „Nova“ (nova.js). Nur wenn sie nicht verfügbar ist, still die Gerätestimme
+   (Web Speech API bzw. TextToSpeech-Plugin der Android-Hülle). Mathe wird ausgesprochen: „3/4“ → „3 Viertel“, „x²“ → „x hoch 2“, Einheiten als Wörter. */
 const SPEECH_FRAC = { de: FRAC_NAMES };
 const SPEECH = {
   de: { op: { '·': 'mal', '×': 'mal', ':': 'geteilt durch', '÷': 'geteilt durch', '−': 'minus', '+': 'plus', '=': 'gleich', '≈': 'ungefähr', '≙': 'entspricht', '→': ', also', '<': 'kleiner als', '>': 'größer als' },
@@ -61,49 +61,38 @@ const joinSay = parts => parts.map(x => String(x).trim().replace(/[.!?:]+$/, '')
 // Deutscher Quelltext → so, wie er gerade angezeigt wird (übersetzt, mit Zahlen-Schreibweise der Sprache)
 const shownText = de => I18N.lang === 'de' ? de : (typeof i18nNumbers === 'function' ? i18nNumbers(tr(de)) : tr(de));
 
-const sleep = ms => new Promise(r => setTimeout(r, ms));
 const Voice = {
   plugin: () => window.Capacitor?.Plugins?.TextToSpeech || null,
   web: () => 'speechSynthesis' in window ? window.speechSynthesis : null,
-  available() { return !!(this.plugin() || this.web() || Nova.can()); },
-  rate: () => S.settings.rate ?? 1,
-  // gewählte Stimme: 'nova' (Standard), 'thorsten', '' (Gerät automatisch) oder eine Gerätestimme
-  choice: () => S.settings.voice === undefined ? 'nova' : S.settings.voice,
-  // Stimmen des Geräts für die aktuelle Sprache: [{ id, name }]
-  async voices() {
-    const lang = locale().slice(0, 2).toLowerCase();
-    const P = this.plugin();
-    if (P) { try { const r = await P.getSupportedVoices(); return (r.voices || []).map((v, i) => ({ id: 'n' + i, name: v.name, lang: v.lang })).filter(v => (v.lang || '').toLowerCase().startsWith(lang)); } catch { return []; } }
-    const W = this.web(); if (!W) return [];
-    let list = W.getVoices();
-    if (!list.length) list = await new Promise(r => { const t = setTimeout(() => r(W.getVoices()), 1200); W.addEventListener('voiceschanged', () => { clearTimeout(t); r(W.getVoices()); }, { once: true }); });
-    return list.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(lang)).map(v => ({ id: v.voiceURI, name: v.name + (v.localService ? '' : ' ☁'), lang: v.lang }));
-  },
+  available() { return Nova.can() || !!(this.plugin() || this.web()); },
   seq: 0, chain: Promise.resolve(),
-  stop() { this.seq++; this.chain = Promise.resolve(); Nova.stop(); Thorsten.stop(); const P = this.plugin(); if (P) { try { P.stop(); } catch {} } const W = this.web(); if (W) W.cancel(); },
-  // Gerätestimme; Promise endet, wenn fertig gesprochen
-  async device(text, vid) {
-    const P = this.plugin(), rate = this.rate();
-    if (P) { try { const o = { text, lang: locale(), rate, pitch: 1, volume: 1, category: 'ambient', queueStrategy: 0 }; if (vid && vid.startsWith('n')) o.voice = +vid.slice(1); await P.speak(o); } catch {} return; }
+  stop() { this.seq++; this.chain = Promise.resolve(); Nova.stop(); const P = this.plugin(); if (P) { try { P.stop(); } catch {} } const W = this.web(); if (W) W.cancel(); },
+  // stille Notlösung, wenn Nova nicht verfügbar ist (offline, Server sagt 204): Gerätestimme; Promise endet nach dem Sprechen
+  async device(text) {
+    const P = this.plugin();
+    if (P) { try { await P.speak({ text, lang: locale(), rate: 1, pitch: 1, volume: 1, category: 'ambient', queueStrategy: 0 }); } catch {} return; }
     const W = this.web(); if (!W) return;
     await new Promise(res => {
-      const u = new SpeechSynthesisUtterance(text); u.lang = locale(); u.rate = rate;
-      if (vid) { const v = W.getVoices().find(x => x.voiceURI === vid); if (v) { u.voice = v; u.lang = v.lang; } }
+      const u = new SpeechSynthesisUtterance(text); u.lang = locale();
       const t = setTimeout(res, 1500 + text.length * 120); u.onend = u.onerror = () => { clearTimeout(t); res(); };
       W.speak(u);
     });
   },
-  // ein Abschnitt: Nova (nur vorab vertonte feste Texte) → Thorsten (Deutsch, wenn geladen) → Gerätestimme
+  // lange Texte in Stücke bis 300 Zeichen (an Satzgrenzen) – so viel nimmt der Stimmen-Server
+  chunks(text) {
+    if (text.length <= 300) return [text];
+    const out = []; let cur = '';
+    for (const s of text.split(/(?<=[.!?])\s+/)) { if (cur && (cur + ' ' + s).length > 300) { out.push(cur); cur = s; } else cur = cur ? cur + ' ' + s : s; }
+    if (cur) out.push(cur);
+    return out.flatMap(c => c.length <= 300 ? [c] : c.match(/.{1,300}(\s|$)/g).map(x => x.trim()));
+  },
   async one(text, seq) {
-    const ch = this.choice(), lang = I18N.lang;
-    if (ch === 'nova' && await Nova.play(text, lang, this.rate(), () => seq !== this.seq)) return;
-    if (seq !== this.seq) return;
-    if ((ch === 'thorsten' || ch === 'nova') && lang === 'de') {
-      if (Thorsten.st === 'ready') { if (await Thorsten.speak(text, this.rate())) { while (seq === this.seq && Sound.ctx && Sound.ctx.currentTime < (Thorsten.endAt || 0)) await sleep(60); return; } }
-      else if (Thorsten.st === 'off') Thorsten.warm();
+    for (const c of this.chunks(text)) {
+      if (seq !== this.seq) return;
+      if (await Nova.play(c, I18N.lang, () => seq !== this.seq)) continue;
+      if (seq !== this.seq) return;
+      await this.device(c);
     }
-    if (seq !== this.seq) return;
-    await this.device(text, ch === 'nova' || ch === 'thorsten' ? '' : ch);
   },
   // spricht Abschnitte nacheinander; queue: hinten anhängen statt unterbrechen
   speakParts(parts, { queue = false, force = false } = {}) {

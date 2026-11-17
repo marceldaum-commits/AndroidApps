@@ -492,12 +492,14 @@ function fitExpr() {
   while ((el.scrollWidth > box.clientWidth - 20 || box.scrollHeight > box.clientHeight + 1) && size > (story ? 12 : 20)) { size -= story ? 1 : 2; el.style.fontSize = size + 'px'; }
 }
 
+// Sprechtext einer Aufgabe – immer gleich formuliert („7 mal 8“), damit sich die Sprachdateien oft wiederholen
+const taskSay = t => I18N.lang === 'de' ? (t.story ? mathSpeak(t.e[0].v, 'de') : taskSpeech(t)) : mathSpeak(t.story ? tr(t.e[0].v) : i18nSpeech(t));
 function nextTask() {
   if (G.total !== Infinity && G.idx >= G.total) return finish();
   let t;
   if (G.queue) { t = G.queue[G.idx]; if (!t) return finish(); }
   else if (G.gen) { t = G.gen(); if (!t) return finish(); }
-  else { for (let i = 0; i < 25; i++) { t = makeTask(G.op, G.lvl); if (!G.recent.includes(keyOf(t))) break; } G.recent.push(keyOf(t)); if (G.recent.length > 10) G.recent.shift(); }
+  else { const pre = G.pre; G.pre = null; if (pre && pre.lvl === G.lvl && (G.op === 'mix' || pre.topic === G.op) && !G.recent.includes(keyOf(pre))) t = pre; else for (let i = 0; i < 25; i++) { t = makeTask(G.op, G.lvl); if (!G.recent.includes(keyOf(t))) break; } G.recent.push(keyOf(t)); if (G.recent.length > 10) G.recent.shift(); }
   G.task = t; G.input = ''; G.t0 = performance.now(); G.hinted = false;
   $('expr').className = 'expr' + (t.story ? ' storymode' : '');
   $('expr').innerHTML = t.e.map(tokHtml).join('') + (t.noEq ? '' : `<span class="eq">${t.eqSign || '='}</span>`);
@@ -510,7 +512,9 @@ function nextTask() {
   $('feedback').textContent = ''; $('feedback').className = 'feedback';
   renderAnswer(); updateHud(); fitExpr();
   if (t.card) merkBeforeTask(t);
-  speak(I18N.lang === 'de' ? (t.story ? mathSpeak(t.e[0].v, 'de') : taskSpeech(t)) : mathSpeak(t.story ? tr(t.e[0].v) : i18nSpeech(t)));
+  speak(taskSay(t));
+  // Blitzrunde: die nächste Aufgabe schon vorbereiten und ihre Sprachdatei vorab holen – dann gibt es keine Wartezeit
+  if (G.mode === 'blitz' && S.settings.speech && !G.queue && !G.gen) { G.pre = makeTask(G.op, G.lvl); Nova.prefetch(taskSay(G.pre)); }
 }
 
 function renderAnswer(state) {

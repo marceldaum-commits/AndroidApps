@@ -1,0 +1,1 @@
+{ "name": "Thorsten", "model": "de_DE-thorsten-medium.onnx", "size": 63221984, "dict": "stimme-de.json", "ort": "ort.wasm.min.js", "mb": 75 }

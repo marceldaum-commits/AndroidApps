@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.24.4';
+const APP_VERSION = '3.25.0';
 const APP_DATE = '2026-11-17';
 const CHANGELOG = [
+  ['3.25.0', '2026-11-17', ['Neu: Vorlesen nur noch mit der KI-Stimme „Nova“ – auch Aufgaben und Lösungswege, in der Blitzrunde ohne Wartezeit']],
   ['3.24.4', '2026-11-17', ['Neu: KI-Stimme „Nova“ für Theorie und Blitz – vorab vertont, deine Daten gehen nicht an OpenAI']],
   ['3.24.3', '2026-11-17', ['Neu: „Pro aktiv“ ist deutlich zu sehen – auf der Startseite, im Menü, in den Einstellungen und im Elternbericht']],
   ['3.24.2', '2026-11-17', ['Stimme „Thorsten“: beide Dateien vom Stimmen-Server werden geprüft']],

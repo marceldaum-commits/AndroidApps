@@ -100,10 +100,8 @@ const PANELS = {
       <label class="setrow col vol"><span><b>Lautstärke Effekte</b></span><input type="range" id="volSfx" min="0" max="100" step="5" value="${S.settings.sfxVol ?? 70}"></label>
       <p class="small muted setnote">Bei Aufträgen von Lehrkräften und im Einstufungstest bleibt die Musik aus. Alles, was ein Ton sagt, steht auch auf dem Bildschirm.</p>
       ${sw('speech', S.settings.speech, 'Vorlesen', 'Aufgaben, Lösungswege, Theorie und Blitz')}
-      ${Voice.available() ? `<div class="setrow col voicebox"><label class="vrow"><b>Stimme</b><select id="voiceSel"><option value="">Automatisch</option></select></label>
-        <label class="vrow"><b>Tempo</b><input type="range" id="rateIn" min="0.6" max="1.5" step="0.1" value="${S.settings.rate ?? 1}"><span id="rateOut" translate="no">${(S.settings.rate ?? 1).toFixed(1)}×</span></label>
-        <div id="thBox" hidden></div>
-        <p class="small muted" id="novaNote" hidden>Die Stimme Nova ist eine mit KI (OpenAI) erzeugte Stimme. Die festen Texte der App werden von uns vorab vertont; von deinem Gerät werden keine Daten an OpenAI übertragen. Die Audiodateien lädt die App bei Bedarf von stimmen.mathenachhilfe-online.com.</p>
+      ${Voice.available() ? `<div class="setrow col voicebox"><div class="vrow"><b>Stimme</b><span class="vname">Nova – KI-generierte Stimme</span></div>
+        <p class="small muted" id="novaNote">Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. Texte, die erst in der Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zu dir an unseren Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle.</p>
         <button class="btn" id="voiceTest">▶ Probe hören</button></div>` : (IS_NATIVE ? '<p class="small muted setnote">Zum Vorlesen bitte die neue Rechenblitz-App installieren.</p>' : '<p class="small muted setnote">Auf diesem Gerät gibt es keine Vorlese-Stimme.</p>')}
       ${sw('auto', S.settings.auto, 'Automatisch prüfen', 'Prüfen, sobald genug Stellen eingegeben sind')}
       ${sw('blitz', S.settings.blitz !== false, 'Maskottchen Blitz', 'Blitz der Fuchs feuert dich an und erklärt Tricks')}
@@ -272,27 +270,6 @@ $('sheetBody').addEventListener('click', e => { const b = e.target.closest('[dat
 document.addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) openSheet(b.dataset.open); });
 
 /* ---------- Einstellungen ---------- */
-// Thorsten: Hinweis vor dem einmaligen Laden (ca. 75 MB von unserem Server), Fortschritt, Fehler
-async function thorstenUi() {
-  const box = $('thBox'); if (!box) return;
-  if ($('novaNote')) $('novaNote').hidden = Voice.choice() !== 'nova';
-  if (Voice.choice() !== 'thorsten') { box.hidden = true; return; }
-  box.hidden = false;
-  if (Thorsten.st === 'ready') { box.innerHTML = '<p class="small muted">✓ Thorsten ist bereit.</p>'; return; }
-  const loadingUi = () => { box.innerHTML = '<p class="small muted">Stimme wird geladen …</p><div class="bar"><i id="thBar"></i></div><button class="btn" id="thCancel">Abbrechen</button>'; $('thCancel').onclick = () => Thorsten.cancel(); };
-  if (Thorsten.st === 'loading') { loadingUi(); return; }
-  const man = await Thorsten.manifest(), stored = man && await Thorsten.cached();
-  if (stored) { box.innerHTML = '<p class="small muted">Stimme wird vorbereitet …</p>'; await Thorsten.load(); thorstenUi(); return; }
-  if (!man) { box.innerHTML = '<p class="small muted">Die Stimme ist gerade nicht erreichbar. Bitte später noch einmal versuchen.</p>'; return; }
-  box.innerHTML = `${Thorsten.st === 'error' ? '<p class="small" style="color:var(--bad,#c0392b)">Das Laden hat nicht geklappt. Bitte später noch einmal versuchen.</p>' : ''}
-    <p class="small muted"><span>Die natürliche Stimme wird einmalig von unserem Server geladen, ca.</span> <span translate="no">${man.mb} MB</span> – <b>am besten im WLAN</b>. <span>Danach ist sie auf diesem Gerät gespeichert und klappt auch ohne Internet. Es werden keine persönlichen Daten übertragen.</span></p>
-    <button class="btn primary" id="thLoad">⬇ Stimme laden</button>`;
-  $('thLoad').onclick = async () => {
-    loadingUi();
-    const ok = await Thorsten.load(p => { const b = $('thBar'); if (b) b.style.width = Math.round(p * 100) + '%'; });
-    thorstenUi(); if (ok) Voice.say('Hallo, ich bin Blitz!', { force: true });
-  };
-}
 function initSettings() {
   renderReminder();
   $('sheetBody').querySelectorAll('[data-set]').forEach(b => b.onclick = () => {
@@ -302,16 +279,7 @@ function initSettings() {
     if (k === 'speech' && S.settings.speech) Voice.say('3/4 + 1/4 = 1');
     renderHome();
   });
-  if ($('voiceSel')) {
-    Promise.all([Voice.voices(), Thorsten.manifest()]).then(([vs, man]) => { const sel = $('voiceSel'); if (!sel) return;
-      if (Nova.can()) { sel.insertAdjacentHTML('afterbegin', `<option value="nova">Nova – KI-generierte Stimme</option>`); vs.push({ id: 'nova' }); }
-      sel.querySelector('option[value=""]').textContent = 'Gerätestimme (automatisch)';
-      if (man) { sel.insertAdjacentHTML('beforeend', `<option value="thorsten">Thorsten – natürliche Stimme</option>`); vs.push({ id: 'thorsten' }); }
-      vs.filter(v => v.id !== 'thorsten' && v.id !== 'nova').forEach(v => sel.insertAdjacentHTML('beforeend', `<option value="${esc(v.id)}" translate="no">${esc(v.name)}</option>`));
-      sel.value = vs.some(v => v.id === Voice.choice()) ? Voice.choice() : ''; thorstenUi(); });
-    $('voiceSel').onchange = e => { S.settings.voice = e.target.value; save(); thorstenUi(); if (e.target.value !== 'thorsten' || Thorsten.st === 'ready') Voice.say('3/4 + 1/4 = 1', { force: true }); };
-    $('rateIn').oninput = e => { S.settings.rate = +e.target.value; $('rateOut').textContent = S.settings.rate.toFixed(1) + '×'; };
-    $('rateIn').onchange = () => save();
+  if ($('voiceTest')) {
     $('voiceTest').onclick = () => Voice.speakParts([mathSpeak(tr('Hallo, ich bin Blitz!')), joinSay(['3/4 + 1/4 = 1', '12² = 144', '2,5 km = 2500 m'].map(x => mathSpeak(shownText(x))))], { force: true });
   }
   $('volMusic').oninput = e => { S.settings.musicVol = +e.target.value; Sound.init(); Sound.setVolumes(); };

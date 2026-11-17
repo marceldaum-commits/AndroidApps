@@ -6,7 +6,7 @@ const JS = f => fs.readFileSync(path.join(__dirname, '../kopfrechnen/js', f), 'u
 function build() {
   const ctx = {};
   const fracLine = JS('engine.js').match(/const FRAC_NAMES = \{[^}]*\};/)[0];
-  const speech = JS('speech.js').split('const sleep =')[0].replace('const SPEECH_FRAC = { de: FRAC_NAMES };', '');
+  const speech = JS('speech.js').split('const Voice = {')[0].replace('const SPEECH_FRAC = { de: FRAC_NAMES };', '');
   const theo = JS('theorie.js'), th = theo.slice(theo.indexOf('const THEORIE ='), theo.indexOf('// Thema für die Theorie'));
   const thI = JS('theorie-i18n.js').split('// Theorie in der aktuellen Sprache')[0];
   const bl = JS('blitz.js'), bzStreak = bl.match(/const BZ_STREAK = \{[^}]*\};/)[0];

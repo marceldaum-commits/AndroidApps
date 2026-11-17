@@ -2,7 +2,41 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (65) – Nur noch Nova, mit /jetzt; Thorsten entfernt (3.25.0)
+
+Nachtrag Marcel/Leitstand 17.11.: „zukünftig nur Nova“. Reihenfolge eingehalten: (a) texte.json (Meldung 64), (b) Nova mit /jetzt, (c) Thorsten raus.
+
+**Vorlesen jetzt:**
+- **Stimmenwahl:** In den Einstellungen gibt es nur noch „Vorlesen“ an/aus. Darunter steht fest „Stimme: Nova – KI-generierte Stimme“, dann euer neuer Datenschutz-Text (wörtlich, dazu EN/UK) und „▶ Probe hören“.
+  - Kein Tempo-Regler mehr; das Tempo legt der Server fest.
+  - Die Gerätestimme bleibt **nur stille Notlösung**.
+- **Ablauf für jeden Text** (Aufgabe, Lösungsweg, Theorie, Blitz):
+  1. Gerätespeicher.
+  2. Feste Adresse `…/nova/<h[0:2]>/<h>.mp3`.
+  3. Fehlt sie: **`POST https://stimmen.mathenachhilfe-online.com/jetzt`** mit `{"text", "sprache"}` (≤ 300 Zeichen; längere Texte zerlege ich an Satzgrenzen). Bei 200 wird `{url}` abgespielt und gespeichert.
+  4. Bei 204 oder ohne Netz liest **still die Gerätestimme**.
+- **Einheitlich formuliert:** Aufgaben werden immer gleich gesprochen („7 mal 8“, „3 Viertel plus 1 Viertel“). So wiederholen sich die Dateien beim Kopfrechnen stark.
+- **Blitzrunde:** Die nächste Aufgabe wird schon während der aktuellen erzeugt und ihre Sprachdatei vorab über /jetzt geholt – keine Wartezeit.
+- **Keine Namen:** Enthält ein Text einen Profilnamen, geht er nicht an den Server, sondern an die Gerätestimme. Es werden keine Konten oder Geräte-Kennungen gesendet, nur Text und Sprache.
+- **Getestet** mit nachgebautem Stimmen-Server:
+  - neue Aufgabe → 404 → /jetzt → Nova ✓; dieselbe Aufgabe nochmal → aus dem Speicher, kein Abruf ✓;
+  - 204 → Gerätestimme ✓;
+  - Text mit Name → kein Abruf, Gerätestimme ✓;
+  - langer Text in 2 Stücken ✓;
+  - Blitzrunde holt die nächste Aufgabe vorab ✓.
+  - Einstellungen DE/EN/UK ohne fehlende Übersetzungen, axe 0 Verstöße, Offline ✓, Zufallstest ✓, Schwierigkeitstest ✓.
+- **Nicht geprüft:** euer echter /jetzt-Dienst und echte Nova-Dateien. Bitte nach dem Hochladen einmal in einer Aufgabe mit Vorlesen anhören.
+
+**Thorsten entfernt:**
+- Weg sind: `thorsten.js`, onnxruntime-web, das Wörterbuch, der Download, `kopfrechnen/stimme/` (11 MB) und die Werkzeuge in `stimme/`.
+- Auf den Geräten wird der gespeicherte Thorsten-Speicher beim nächsten Start gelöscht.
+- **Bitte auf dem Web-Server `/stimme/` von Rechenblitz löschen**, falls der Abholdienst gelöschte Dateien nicht von selbst entfernt.
+
+**Web = Android:** gleicher Code, `texte.json` auch in der APK, TTS-Plugin als Notlösung in Hülle 4. Neue Dateiendungen: keine.
+
+**Live:** 3.25.0 enthält alles bis hier. Bitte 3.25.0 live nehmen, wenn ihr so weit seid.
 
 ## 17.11.2026 (64) – KI-Stimme „Nova“: texte.json ist auf test (3.24.4)
 

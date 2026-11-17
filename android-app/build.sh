@@ -14,7 +14,6 @@ echo "Kanal: ${RB_CHANNEL:-test} · Hülle $(cat SHELL)"
 rm -rf www && mkdir www
 cp -r ../kopfrechnen/. www/
 rm -f www/sw.js
-rm -rf www/stimme   # Rechenwerk der Stimme „Thorsten“ lädt die App bei Bedarf von der Live-Seite (11 MB nicht in die APK)
 
 # 2. Version aus js/changelog.js (z. B. 3.5.2 → versionCode 30502)
 VER=$(grep -oP "APP_VERSION = '\K[0-9.]+" www/js/changelog.js)
