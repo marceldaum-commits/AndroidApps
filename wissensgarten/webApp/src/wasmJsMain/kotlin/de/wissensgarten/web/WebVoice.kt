@@ -120,7 +120,7 @@ class WebVoice : Voice {
         scope.launch {
             runCatching {
                 val t = jsFetchText("stimme/tokens.txt").await<JsString?>()?.toString()
-                val w = jsFetchText("stimme/woerter.tsv.gz").await<JsString?>()?.toString()
+                val w = jsFetchText("stimme/woerter.txt").await<JsString?>()?.toString()
                 if (t != null && w != null) { tokens = PiperIds.tokens(t.lineSequence()); lexicon = Lautschrift(w.lineSequence()) }
             }
             loadingLex = false

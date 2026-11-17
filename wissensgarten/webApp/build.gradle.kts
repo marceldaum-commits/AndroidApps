@@ -1,3 +1,4 @@
+import java.util.zip.GZIPInputStream
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 // WebApp: dieselbe Oberfläche wie die Android-App (Modul :shared), gebaut für den Browser (Kotlin/Wasm).
@@ -38,7 +39,11 @@ val copyPacks by tasks.registering {
         files.forEach { it.copyTo(out.resolve(it.name), overwrite = true) }
         // Stimme „Thorsten“: Lautschrift-Wörterbuch und Zeichenliste (klein; das Modell selbst kommt auf Wunsch von Hugging Face)
         val voiceOut = genPacks.get().dir("stimme").asFile.apply { deleteRecursively(); mkdirs() }
-        rootProject.file("content/src/main/assets/stimme").listFiles()!!.forEach { it.copyTo(voiceOut.resolve(it.name), overwrite = true) }
+        // Die WebApp darf nur Web-Dateiarten ausliefern: das gepackte Wörterbuch kommt entpackt als .txt (der Server packt beim Übertragen selbst)
+        rootProject.file("content/src/main/assets/stimme").listFiles()!!.forEach { f ->
+            if (f.name.endsWith(".tsv.gz")) GZIPInputStream(f.inputStream()).use { i -> voiceOut.resolve(f.name.removeSuffix(".tsv.gz") + ".txt").outputStream().use { i.copyTo(it) } }
+            else f.copyTo(voiceOut.resolve(f.name), overwrite = true)
+        }
         rootProject.file("content/src/main/assets/lizenzen.txt").copyTo(genPacks.get().file("lizenzen.txt").asFile, overwrite = true)
         // Vorschau-Katalog der Plus-Pakete (nur Titel, Erklärung, 3 Beispielkarten) – die vollen Pakete kommen vom Plus-Endpunkt
         rootProject.file("content/src/main/assets/plus_katalog.json").takeIf { it.exists() }?.copyTo(genPacks.get().file("plus_katalog.json").asFile, overwrite = true)

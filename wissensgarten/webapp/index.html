@@ -54,7 +54,7 @@
   <script>
     // Echter Ladebalken: zählt die geladenen Bytes der großen Startdateien (App, Grafik-Engine, Emoji-Schrift).
     (function () {
-      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"wissensgarten.js":663662,"e2f5d6fe700a8c1c9e73.wasm":7822704};
+      const sizes = {"3b9ff82ba917a6a73607.wasm":7822698,"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"wissensgarten.js":663662};
       const total = Object.values(sizes).reduce((a, b) => a + b, 0);
       const got = {};
       const bar = document.getElementById('bar'), barI = document.getElementById('barI'), pct = document.getElementById('pct');
