@@ -21,7 +21,7 @@ class RaumlichtApp : Application() {
         Diagnose.install(this)
         de.raumlicht.app.ui.stage.stageNote = { Diagnose.note(this, it) }
         container = AppContainer(this)
-        // Aufräumen im Hintergrund: die frühere Stimme „Thorsten“ (63 MB) löschen, gespeicherte Nova-Sätze begrenzen
+        // Aufräumen im Hintergrund: das frühere Stimm-Paket (63 MB, bis 2.16) löschen, gespeicherte Nova-Sätze begrenzen
         kotlin.concurrent.thread(name = "aufraeumen", isDaemon = true) { runCatching { java.io.File(filesDir, "stimme").deleteRecursively(); de.raumlicht.app.ui.fx.NovaVoice.trim(this) } }
     }
 }

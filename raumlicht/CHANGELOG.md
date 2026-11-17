@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.2 – Musik gleich beim Öffnen (17.11.2026)
+- **Android:** Die Musik läuft jetzt sofort, wenn du die App öffnest – nicht erst nach dem ersten Tippen. Im Browser beginnt sie weiterhin beim ersten Tippen oder Klick, weil Browser Ton vorher nicht erlauben.
+- „Musik aus“ in den Einstellungen gilt wie bisher, und bei stumm geschaltetem Handy bleibt Raumlicht still.
+- Aufgeräumt: letzte Erwähnungen der früheren Stimme aus Code und Unterlagen entfernt (vorgelesen wird nur noch mit Nova).
+
 ## 2.18.1 – Feinschliff vor dem Betriebstest (17.11.2026)
 - **Kleine Handys:** Auf schmalen Bildschirmen wird nichts mehr abgeschnitten – Kacheln und Gebiete auf der Startseite, lange Titel, das Abzeichen „Präzisionsarbeit“ und die Zahlen-Regler im Galton-Brett und im Binomial-Labor passen jetzt hinein.
 - **Zufallsmaschine:** Die Erwartungslinie läuft nicht mehr durch den Hinweistext.

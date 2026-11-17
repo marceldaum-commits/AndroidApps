@@ -2,6 +2,19 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.18.2: fertig für den Betriebstest (Musik sofort, Stimm-Reste entfernt)
+
+Marcel hat beide Punkte direkt bestätigt. **Raumlicht 2.18.2 vom 17.11.2026, Web = Android (beide 2.18.2).** Diese Version ersetzt 2.18.1 als Stand für den Betriebstest;
+alles aus der Abschlussmeldung darunter (Geprüftes, Restpunkte) gilt weiter.
+
+1. **Musik:** Android spielt jetzt sofort beim Öffnen (die Sperre „erst nach der ersten Berührung“ ist entfernt). Raumlicht ist eine echte Android-App (Compose, kein WebView/Capacitor) –
+   `mediaPlaybackRequiresUserGesture` gibt es hier nicht. Web: unverändert automatisch beim allerersten Tippen/Klick irgendwo. Kein Musik-Knopf; „Musik aus“ gilt.
+   Unverändert bleibt außerdem: bei stumm/auf Vibration gestelltem Handy schweigt die App, in Prüfungen auf Zeit und im Pflichtteil ist die Musik aus.
+2. **Nur Nova:** Codesuche nach „thorsten“ und „sherpa“ (ohne Groß-/Kleinschreibung) über `raumlicht/` ergibt **0 Treffer außer `CHANGELOG.md` und dieser Meldungsdatei** (beide Verlauf).
+   Keine Dateien, keine Adressen, keine Auswahl. Geblieben ist nur der Aufräum-Code, der ein altes 63-MB-Paket vom Gerät löscht (Android `filesDir/stimme`, Web-Cache `raumlicht-stimme`).
+   Nova nicht erreichbar oder offline nicht geladen → Geräte-Stimme.
+- Geprüft: 151 Logik-Tests, 145 App-Tests, Lint beider Fassungen, Browser (`web.mjs`, `web-update.mjs`, `web-nova.mjs`, `web-vorversion.mjs`). Den Musikstart beim Öffnen kann ich nicht hören – bitte am echten Gerät prüfen.
+
 ## 17.11.2026 – ABSCHLUSSMELDUNG: Raumlicht 2.18.1 ist fertig für den Betriebstest
 
 Marcel hat die Abschlussphase direkt bestätigt. **Raumlicht 2.18.1 vom 17.11.2026, Web = Android (beide 2.18.1).** Diese Version bitte live nehmen.
