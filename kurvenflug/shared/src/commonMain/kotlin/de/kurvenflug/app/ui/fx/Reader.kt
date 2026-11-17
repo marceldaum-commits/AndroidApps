@@ -15,6 +15,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 interface Reader {
     /** Spricht gerade (dann wird die Musik leiser) – beobachtbar */
     val speaking: Boolean
+    /** Nova war in dieser Sitzung schon einmal nicht erreichbar (dann einmal dezent Bescheid geben) – beobachtbar */
+    val unreachable: Boolean get() = false
     /** Liest den Text vor; ein neuer Text unterbricht den alten. */
     fun say(text: String)
     fun stop()

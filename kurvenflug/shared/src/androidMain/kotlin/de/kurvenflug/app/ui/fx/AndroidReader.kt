@@ -31,6 +31,7 @@ class AndroidReader(context: Context) : Reader {
     private var player: MediaPlayer? = null
 
     override var speaking by mutableStateOf(false); private set
+    override var unreachable by mutableStateOf(false); private set
 
     init {
         // Reste der früheren Offline-Stimme (2.0–2.3) wegräumen
@@ -48,10 +49,14 @@ class AndroidReader(context: Context) : Reader {
         stopPlayback()
         worker.execute {
             if (mine != turn.get()) return@execute
-            val file = runCatching { fetch(spoken) }.getOrNull()
+            // Ganzer Text (fest vertont oder kurz genug für /jetzt) – sonst in ganzen Sätzen, nacheinander gespielt
+            val whole = runCatching { fetch(spoken) }.getOrNull()
+            val files = if (whole != null) listOf(whole) else if (spoken.length > Nova.MAX_LIVE)
+                Nova.chunks(spoken).map { part -> if (mine != turn.get()) return@execute; runCatching { fetch(part) }.getOrNull() } else listOf(null)
             main.post {
                 if (mine != turn.get()) return@post
-                if (file != null && play(file, mine)) return@post
+                if (files.all { it != null } && playAll(files.filterNotNull(), 0, mine)) return@post
+                unreachable = true   // Gerätestimme nur, wenn Nova wirklich nichts liefern konnte
                 device(spoken)
             }
         }
@@ -98,11 +103,14 @@ class AndroidReader(context: Context) : Reader {
     }
 
     // ------------------------------------------------------------------ Abspielen
-    private fun play(f: File, mine: Int): Boolean = runCatching {
+    /** Spielt die Ansagen nacheinander (lange Texte in ganzen Sätzen) */
+    private fun playAll(files: List<File>, i: Int, mine: Int): Boolean = play(files[i], mine) { if (i + 1 < files.size) playAll(files, i + 1, mine) else speaking = false }
+
+    private fun play(f: File, mine: Int, next: (() -> Unit)? = null): Boolean = runCatching {
         val p = MediaPlayer()
         p.setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build())
         p.setDataSource(f.path)
-        p.setOnCompletionListener { if (mine == turn.get()) speaking = false; it.release(); if (player === it) player = null }
+        p.setOnCompletionListener { it.release(); if (player === it) player = null; if (mine == turn.get()) { if (next != null) next() else speaking = false } }
         p.setOnErrorListener { mp, _, _ -> if (mine == turn.get()) speaking = false; mp.release(); if (player === mp) player = null; true }
         p.prepare()
         // Sprechtempo bei gleicher Tonhöhe

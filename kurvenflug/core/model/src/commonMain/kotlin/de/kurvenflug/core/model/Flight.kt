@@ -392,6 +392,13 @@ object Flight {
 }
 
 /** Zahlen deutsch formatiert: 0,5 statt 0.5, ohne überflüssige Nullen, echtes Minuszeichen. */
+/** Geradengleichung zum Anzeigen: „y = −6“ statt „y = 0x − 6“, „y = 2,25x“ statt „y = 2,25x + 0“, „y = −x + 3“ */
+fun linText(m: Double, b: Double): String {
+    if (m == 0.0) return "y = ${num(b)}"
+    val mx = "${when (m) { 1.0 -> ""; -1.0 -> "−"; else -> num(m) }}x"
+    return if (b == 0.0) "y = $mx" else "y = $mx ${if (b < 0) "−" else "+"} ${num(kotlin.math.abs(b))}"
+}
+
 fun num(v: Double, digits: Int = 2): String {
     val r = roundHalfUp(v * 10.0.pow(digits)) / 10.0.pow(digits)
     val s = if (r == kotlin.math.floor(r)) r.toLong().toString() else r.toString().trimEnd('0')

@@ -58,4 +58,15 @@ class NovaTest {
         assertEquals(texts, back)   // auch Anführungszeichen, Umlaute, Sonderfälle
         assertEquals(listOf("Er sagt \"Hallo\" – à"), Nova.listTexts(VorlesenListe.json(listOf("Er sagt \"Hallo\" – à"))))
     }
+
+    @Test fun longTextsBecomeWholeSentences() {
+        assertEquals(listOf("Kurz."), Nova.chunks("Kurz."))
+        val long = (1..20).joinToString(" ") { "Das ist Satz Nummer $it mit etwas Text." }
+        val parts = Nova.chunks(long)
+        assertTrue(parts.size > 1); assertTrue(parts.all { it.length <= Nova.MAX_LIVE && it.endsWith(".") })
+        assertEquals(long, parts.joinToString(" "))
+        // alle vorlesbaren Texte des Spiels lassen sich so vertonen (100 % Abdeckung für /jetzt)
+        val all = SpeechTexts.all().map { Speech.clean(it.second) }.filter { it.isNotBlank() }
+        assertTrue(all.flatMap(Nova::chunks).all { it.length <= Nova.MAX_LIVE })
+    }
 }

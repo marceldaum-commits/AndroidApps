@@ -37,6 +37,23 @@ object Nova {
         return false
     }
 
+    /**
+     * Zu lange Laufzeit-Texte (über [MAX_LIVE]) in ganze Sätze aufteilen – jeder Satz wird als Ganzes vertont, nie aus Wort-Schnipseln.
+     * Sätze werden zusammengefasst, solange sie zusammen unter der Grenze bleiben; ein einzelner überlanger Satz wird an Kommas geteilt.
+     */
+    fun chunks(spoken: String): List<String> {
+        if (spoken.length <= MAX_LIVE) return listOf(spoken)
+        val sentences = Regex("""[^.!?]+[.!?]*\s*""").findAll(spoken).map { it.value.trim() }.filter { it.isNotEmpty() }
+            .flatMap { s -> if (s.length <= MAX_LIVE) sequenceOf(s) else s.split(Regex("""(?<=,)\s+""")).asSequence() }.toList()
+        val out = ArrayList<String>(); val cur = StringBuilder()
+        for (s in sentences) {
+            if (cur.isNotEmpty() && cur.length + 1 + s.length > MAX_LIVE) { out += cur.toString(); cur.clear() }
+            if (cur.isNotEmpty()) cur.append(' '); cur.append(s)
+        }
+        if (cur.isNotEmpty()) out += cur.toString()
+        return out.map { if (it.length > MAX_LIVE) it.take(MAX_LIVE) else it }
+    }
+
     /** Anfrage an [LIVE] als JSON */
     fun liveBody(spoken: String, language: String = "de"): String =
         "{\"text\": \"" + spoken.replace("\\", "\\\\").replace("\"", "\\\"") + "\", \"sprache\": \"$language\"}"

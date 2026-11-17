@@ -398,7 +398,7 @@ private fun frac(x: Double): String? {
     return (if (x < 0) "−" else "") + (if (whole > 0) "$whole" else "") + part
 }
 
-private fun lin(m: Double, b: Double) = "y = ${when (m) { 1.0 -> ""; -1.0 -> "−"; else -> num(m) }}x ${if (b < 0) "−" else "+"} ${num(kotlin.math.abs(b))}"
+private fun lin(m: Double, b: Double) = de.kurvenflug.core.model.linText(m, b)
 
 /** Die Formel mit den eingestellten Zahlen – farbig wie die Regler. */
 @Composable

@@ -178,22 +178,41 @@
       .then(function (r) { return r.status === 200 ? r.json() : null; })
       .then(function (j) { return j && typeof j.url === 'string' && j.url.indexOf('https://stimmen.mathenachhilfe-online.com/nova/') === 0 ? j.url : null; });
   }
-  // url: fertige Ansage (aus der App berechnet), text: vorlesefertiger Text, ask: darf zum Vertonen an unseren Server
-  KF.nova = function (url, text, ask) {
-    hush(); var my = novaTurn;
-    cached(url).then(function (b) {
-      if (b || !ask || my !== novaTurn) return b;
+  var unreachCb = null; KF.onUnreach = function (f) { unreachCb = f; };
+  function one(url, text, ask) {   // eine Ansage: Zwischenspeicher/Server, sonst (falls erlaubt) frisch vertonen
+    return cached(url).then(function (b) {
+      if (b || !ask) return b;
       return live(text).then(function (u) { return u ? cached(u) : null; });
-    }).then(function (b) {
+    });
+  }
+  function playChain(bufs, i, my, text) {
+    var a = new Audio(URL.createObjectURL(new Blob([bufs[i]], { type: 'audio/mpeg' })));
+    a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true; a.playbackRate = novaSpeed;
+    a.onended = a.onerror = function () {
+      URL.revokeObjectURL(a.src);
+      if (novaEl !== a) return;
+      if (i + 1 < bufs.length && my === novaTurn) playChain(bufs, i + 1, my, text); else { novaEl = null; speaking(false); }
+    };
+    novaEl = a; speaking(true);
+    return a.play().catch(function () { if (novaEl === a) { novaEl = null; fallback(text); } });
+  }
+  function fallback(text) { if (unreachCb) try { unreachCb(); } catch (e) {} deviceSay(text); }
+  // items: Zeilen „Adresse⇥Text⇥ja/nein“ – erst der ganze Text, bei langen Texten danach dieselben Worte in ganzen Sätzen.
+  // Gerätestimme nur, wenn Nova wirklich nichts liefern kann (kein Netz, Server sagt nein).
+  KF.nova = function (items) {
+    hush(); var my = novaTurn;
+    var it = items.split('\n').filter(Boolean).map(function (l) { var p = l.split('\t'); return { url: p[0], text: p[1], ask: p[2] === '1' }; });
+    var whole = it[0], parts = it.slice(1);
+    one(whole.url, whole.text, whole.ask).then(function (b) {
+      if (b) return [b];
+      if (!parts.length) return null;
+      return Promise.all(parts.map(function (p) { return one(p.url, p.text, p.ask); }))
+        .then(function (bs) { return bs.every(Boolean) ? bs : null; });
+    }).then(function (bufs) {
       if (my !== novaTurn) return;
-      if (!b) { deviceSay(text); return; }
-      // Audio-Element: Sprechtempo mit gleicher Tonhöhe (preservesPitch)
-      var a = new Audio(URL.createObjectURL(new Blob([b], { type: 'audio/mpeg' })));
-      a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true; a.playbackRate = novaSpeed;
-      a.onended = a.onerror = function () { if (novaEl === a) { novaEl = null; speaking(false); URL.revokeObjectURL(a.src); } };
-      novaEl = a; speaking(true);
-      return a.play().catch(function () { if (novaEl === a) { novaEl = null; deviceSay(text); } });
-    }).catch(function () { if (my === novaTurn) deviceSay(text); });
+      if (!bufs) { fallback(whole.text); return; }
+      return playChain(bufs, 0, my, whole.text);
+    }).catch(function () { if (my === novaTurn) fallback(whole.text); });
   };
   // „Alle Nova-Texte offline laden“: dieselben Dateien im Cache „kf-nova“ (Cache Storage, keine Obergrenze beim manuellen Laden)
   var NOVA = 'https://stimmen.mathenachhilfe-online.com/nova/', offAbort = false;

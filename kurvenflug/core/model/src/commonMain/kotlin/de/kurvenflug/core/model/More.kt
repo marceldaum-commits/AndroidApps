@@ -77,7 +77,7 @@ object More {
             pct(2, "Rabattschlacht", 8.0, 0.8, 2.0, "Ein Preis von 8 sinkt jedes Jahr um 20 %. Welcher Faktor?", "20 % weniger: b = 1 − 0,2 = 0,8."),
             pct(3, "Algenblüte", 2.0, 1.5, 3.0, "Algen wachsen jedes Jahr um 50 %. Start: 2. Faktor?", "50 % mehr: b = 1,5. Probe: 2 · 1,5³ = 6,75."),
             pct(4, "Wie viel am Anfang?", 5.0, 1.1, 2.0, "Mit 10 % Zinsen sind es nach 2 Jahren 6,05. Wie viel war es am Anfang?", "a = 6,05 : 1,1² = 6,05 : 1,21 = 5.", findA = true),
-            pct(5, "Halbierung", 8.0, 0.5, 3.0, "Jedes Jahr halbiert sich der Vorrat (8). Welcher Faktor – und wie viel Prozent sind das?", "Halbieren = − 50 % → b = 0,5."),
+            pct(5, "Halbierung", 8.0, 0.5, 3.0, "Jedes Jahr halbiert sich der Vorrat (Start: 8). Stell den Faktor b ein!", "Halbieren = − 50 % → b = 0,5."),
             pct(6, "Zinseszins", 5.0, 1.1, 4.0, "5 Taler, 10 % Zinsen pro Jahr, 4 Jahre lang. Stell b ein!", "b = 1,1. Nach 4 Jahren: 5 · 1,1⁴ ≈ 7,32."),
         ))
 
@@ -181,7 +181,7 @@ object More {
                 "Nulldurchgang bei x = c → c = 1.", listOf("c = 1 (Nulldurchgang wandert nach x = c)", "c = −1", "c = 2 (Wellenberg)"), listOf(s("Der Nulldurchgang liegt bei x = c. c = ?", 1.0, "c"))),
             wave(2, "Doppelt so schnell", 1.0, 2.0, 0.5, 1.0, setOf("c"), listOf(0.5, 0.5 + HALF_PI / 2), "y = sin(2 · (x − c)) + 1. Aufsteigend durch die Mittellinie bei x = 0,5.",
                 "Mittellinie y = 1 wird bei x = c gekreuzt → c = 0,5.", listOf("c = 0,5", "c = 0,25", "c = 1"), listOf(s("c = ?", 0.5, "c"))),
-            wave(3, "Hoch und verschoben", 2.0, 1.0, 2.0, 1.0, setOf("c", "d"), listOf(2.0, 2.0 + HALF_PI), "y = 2 · sin(x − c) + d. Mittellinie bei y = 1, aufsteigend bei x = 2.",
+            wave(3, "Hoch und verschoben", 2.0, 1.0, 2.0, 1.0, setOf("c", "d"), listOf(2.0, 2.0 + HALF_PI), "y = 2 · sin(x − c) + d. Mittellinie bei y = 1, aufsteigend durch sie bei x = 2. Finde c und d!",
                 "d = Mittellinie = 1, c = 2.", listOf("d = Mittellinie, c = wo die Welle aufsteigend die Mittellinie kreuzt", "d = Wellenberg, c = Periode", "d = 2, c = 1"),
                 listOf(s("Mittellinie: d = ?", 1.0, "d"), s("c = ?", 2.0, "c"))),
             wave(4, "Lange Welle", 2.0, 0.5, 1.0, 0.0, setOf("b"), listOf(1.0, 1.0 + kotlin.math.PI), "y = 2 · sin(b · (x − 1)). Der Wellenberg ist π nach dem Nulldurchgang. b = ?",
@@ -213,10 +213,10 @@ object More {
         ),
         listOf(
             horizontal(1, "Klippensprung", 5.0, 4.0, Planet.EARTH, "Erde, Klippe 5 m hoch. Die Station liegt gut 4 m entfernt. Wie schnell abschießen?"),
-            horizontal(2, "Hoher Turm", 10.0, 6.0, Planet.EARTH, "Erde, Turm 10 m hoch. Die Station liegt etwa 8,6 m entfernt."),
-            horizontal(3, "Mondklippe", 10.0, 3.0, Planet.MOON, "Mond, Klippe 10 m. Ziel etwa 10,5 m entfernt – auf dem Mond fällt man langsam!"),
-            horizontal(4, "Marsschlucht", 15.0, 4.0, Planet.MARS, "Mars, Schlucht 15 m tief. Ziel etwa 11,4 m entfernt."),
-            horizontal(5, "Weitschuss", 18.0, 9.0, Planet.EARTH, "Erde, 18 m hoch. Die Station liegt über 17 m entfernt!"),
+            horizontal(2, "Hoher Turm", 10.0, 6.0, Planet.EARTH, "Erde, Turm 10 m hoch. Die Station liegt etwa 8,6 m entfernt. Wie schnell abschießen?"),
+            horizontal(3, "Mondklippe", 10.0, 3.0, Planet.MOON, "Mond, Klippe 10 m. Ziel etwa 10,5 m entfernt – auf dem Mond fällt man langsam! Wie schnell abschießen?"),
+            horizontal(4, "Marsschlucht", 15.0, 4.0, Planet.MARS, "Mars, Schlucht 15 m tief. Ziel etwa 11,4 m entfernt. Wie schnell abschießen?"),
+            horizontal(5, "Weitschuss", 18.0, 9.0, Planet.EARTH, "Erde, 18 m hoch. Die Station liegt über 17 m entfernt! Wie schnell abschießen?"),
         ))
 
     // ------------------------------------------------------------------ 28 e-Funktion (Kl. 11–12)

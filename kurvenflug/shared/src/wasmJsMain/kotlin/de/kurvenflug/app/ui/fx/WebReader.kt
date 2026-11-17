@@ -14,6 +14,7 @@ import de.kurvenflug.core.model.Speech
  */
 object WebReader : Reader {
     override var speaking by mutableStateOf(false); private set
+    override var unreachable by mutableStateOf(false); private set
     private var started = false
     private var unlocked = false
     private var pending: String? = null
@@ -24,6 +25,7 @@ object WebReader : Reader {
         started = true
         runCatching {
             jsOnSpeaking { speaking = it }
+            jsOnUnreach { unreachable = true }
             jsOnUnlock { unlocked = true; pending?.let { p -> pending = null; say(p) } }
         }
     }
@@ -35,7 +37,9 @@ object WebReader : Reader {
         start()
         val spoken = Speech.clean(text); if (spoken.isEmpty()) return
         if (!unlocked) { pending = text; return }
-        runCatching { jsNova(Nova.url(spoken), spoken, Nova.maySend(spoken, private)) }
+        // ganzer Text zuerst; lange Texte zusätzlich in ganzen Sätzen (falls der ganze nicht vorab vertont ist)
+        val items = listOf(spoken) + (if (spoken.length > Nova.MAX_LIVE) Nova.chunks(spoken) else emptyList())
+        runCatching { jsNova(items.joinToString("\n") { "${Nova.url(it)}\t${it.replace('\t', ' ').replace('\n', ' ')}\t${if (Nova.maySend(it, private)) "1" else "0"}" }) }
     }
 
     // ------------------------------------------------------------------ „Alle Nova-Texte offline laden“

@@ -1,5 +1,37 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.6 – fertig für den Betriebstest (Nachtauftrag 17.11.) · Web = APK = Play
+
+### 1) Aufgaben geprüft
+- **Geprüft:** alle **346 festen Aufgaben** (Kapitel, Extrem-Prüfungen, Bosse, Andromeda, Rettungen) einzeln gelesen +
+  Zufallsgeneratoren mit vielen Seeds (Generator alle Stufen × 60 Seeds, 401 Tagesmissionen, Jahreszeiten = **75 Vorlagen**
+  aus rund 3 600 erzeugten Aufgaben). Richtigkeit der Lösungen prüft weiterhin `AuditTest` unabhängig nach (eigene Formeln);
+  gleichwertige Antworten (z. B. zwei Winkel beim Wurf, zwei d bei Parabeln) werden über den Treffer akzeptiert.
+- **Neuer Prüftest `TaskClarityTest`:** jede Aufgabe enthält eine Frage/Aufforderung; keine Formfehler („0x“, „+ 0“, „Wellen-“).
+- **Geändert: 41 feste Aufgaben + 2 Generator-Vorlagen** (betrifft alle Zufallsaufgaben dieser Art):
+  - Frage ergänzt, wo unklar war, was einzustellen ist: Koordinaten 3, Winkel 4, Zuordnungen 2/5/6 („Wie groß ist k?“),
+    Weg-Zeit 1/2/4, Spiegel 2/5, Pythagoras 2/4/5 („Welcher Radius?“), Parabel 3-6, Scheitelform 18-6, Rampe 12-1…12-5
+    („Welche Starthöhe h?“), Lichtbrechung 17-1/2/4/5, Wurf 4-2/4-4/4-5/4-6, waagerechter Wurf 27-2…27-5, Trigonometrie
+    14-2/14-3, Sinus 5-2/26-3, Logarithmus 10-1/2/4, Zinsen 23-5 (fragte zwei Dinge, nur eins einstellbar).
+  - Binomial 30-4: „10 Münzwürfe … p = ?“ verriet p = 0,5 → „10 Versuche … Wie groß ist die Trefferchance p?“.
+  - Generator Rendezvous: „y = 0x − 6“ → „y = −6“, „+ 0“ entfällt (auch in der Formelzeile); Generator Sinus:
+    „den ersten Wellen-tal“ → „das erste Wellental“ / „den ersten Wellenberg“.
+  - (aus 2.5.5) Winkel 5/6, Komma-Funkspruch 15-6, Rendezvous 7-2…7-7.
+- Keine falsche Lösung gefunden.
+
+### 2) Nova – ganze Sätze, Gerätestimme nur im Notfall
+- **Ursache gefunden:** Laufzeit-Texte über 300 Zeichen (z. B. Rechen-Stern mit Lösungsweg bei Zufallsaufgaben) durften
+  nicht an /jetzt und gingen sofort an die Gerätestimme. **Jetzt:** erst der ganze Text (vorab vertont?), sonst in **ganzen
+  Sätzen** (≤ 300 Zeichen, nie Wort-Schnipsel) über /jetzt, nacheinander abgespielt. Gerätestimme nur noch, wenn Nova
+  wirklich nichts liefert (kein Netz, Server sagt 204); dann **einmal je Sitzung** dezent „🔇 Nova gerade nicht erreichbar“.
+  Zeitlimits: Verbindung 5 s, Antwort 20 s (Android), Browser ohne künstliches Limit.
+- Spielernamen gehen weiterhin nie an den Server (solche Texte: Gerätestimme).
+- **Nova-Abdeckung: 100 %** – Browser-Durchlauf durch alle 30 Kapitel (Level öffnen, Volt liest die Aufgabe) gegen den echten
+  Server: 30 von 30 Ansagen von Nova (12 neue Texte frisch über /jetzt, Rest fertige Dateien), **0 × Gerätestimme**.
+  Test `NovaTest`: alle vorlesbaren Spieltexte (inkl. Zufallsaufgaben) lassen sich in Sätze ≤ 300 Zeichen teilen.
+  Die geänderten Texte stehen in vorlesen/texte.json und werden vom Werk vorab vertont.
+- versionCode 53, Prüfkette grün. Android-Wiedergabe weiterhin nur gebaut, nicht auf echtem Gerät gehört.
+
 ## 2.5.5 – Fehlerbehebung aus dem Test (Marcel: „unklare Frage“ bei Winkel · Level 6) · Web = APK = Play
 - Alle 66 getarnten/Rendezvous-Aufgaben durchgesehen, unklare neu formuliert (auch in Extrem-Prüfung und Rettungsmission,
   die dieselben Texte nutzen):

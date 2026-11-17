@@ -3,6 +3,13 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.6 – Alle Aufgaben durchgesehen, Nova zuverlässiger
+- Alle Aufgaben wurden auf Verständlichkeit geprüft. Wo nicht klar war, was man einstellen soll, steht jetzt eine Frage
+  dabei („Wie schnell muss sie fliegen?“, „Welche Starthöhe h?“, „Welcher Radius?“ …). Zufallsaufgaben schreiben Geraden
+  jetzt richtig („y = −6“ statt „y = 0x − 6“) und sagen „das erste Wellental“ statt „den ersten Wellen-tal“.
+- Vorlesen: Auch lange Texte spricht jetzt Nova – in ganzen Sätzen. Die Stimme des Geräts kommt nur noch, wenn Nova
+  wirklich nicht erreichbar ist; dann sagt die App einmal kurz Bescheid.
+
 ## 2.5.5 – Klarere Aufgaben
 - Einige Aufgaben waren missverständlich formuliert und sagen jetzt genau, was zu tun ist – z. B. „Ein Dreieck hat die
   Winkel 60° und 70°. Wie groß ist der dritte Winkel? Stell genau diesen Winkel ein“ (statt „Feuere unter dem dritten“),
