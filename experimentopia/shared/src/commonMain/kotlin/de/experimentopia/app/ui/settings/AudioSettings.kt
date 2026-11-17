@@ -83,13 +83,13 @@ fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
         }
         Text(if (speed < 1f) "🐢 langsamer" else if (speed > 1f) "🐇 schneller" else "Normal", color = E.Muted, fontSize = 12.sp)
         GlowButton({ reader.configure(audio); reader.say(ReadTexts.ui[1]) }, Modifier.fillMaxWidth().testTag("probe"), color = E.Mint) { Text("▶️ Probe hören", fontWeight = FontWeight.Bold) }
-        OfflineVoicePanel(reader)
+        OfflineVoicePanel(reader, audio, onAudio)
     }
 }
 
 /** Alle festen Nova-Sätze auf einmal laden – für unterwegs ohne Internet */
 @Composable
-private fun OfflineVoicePanel(reader: Reader) {
+private fun OfflineVoicePanel(reader: Reader, audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
     LaunchedEffect(reader) { reader.refreshOffline() }
     val o = reader.offline
     Panel(border = E.Sky) {
@@ -105,10 +105,15 @@ private fun OfflineVoicePanel(reader: Reader) {
             o.complete -> Text("✅ Alle Nova-Sätze sind auf diesem Gerät – Blubb liest auch ohne Internet vor.", color = E.Text, fontSize = 13.sp)
             else -> {
                 Text("Lädt alle festen Sätze auf einmal, dann liest Nova auch ohne Internet vor – am besten im WLAN.", color = E.Muted, fontSize = 12.sp)
-                val left = o.totalBytes?.let { (it - o.savedBytes).coerceAtLeast(0) }
-                GlowButton({ reader.loadOffline() }, Modifier.fillMaxWidth().testTag("offline_laden"), color = E.Sky) {
-                    Text("⬇️ Alle Nova-Texte offline laden" + (left?.let { " (ca. ${Nova.mb(it)} MB)" } ?: ""), fontWeight = FontWeight.Bold)
+                fun left(total: Long?) = total?.let { (it - o.savedBytes).coerceAtLeast(0) }?.let { " (ca. ${Nova.mb(it)} MB)" } ?: ""
+                listOf(false to "Standard" + left(o.totalBytes), true to "Bestqualität" + left(o.totalBestBytes)).forEach { (best, label) ->
+                    val chosen = best == audio.bestQuality
+                    GlowButton({ onAudio(audio.copy(bestQuality = best)); reader.loadOffline(best) }, Modifier.fillMaxWidth().testTag(if (best) "offline_best" else "offline_laden"),
+                        color = if (chosen) E.Sky else E.Muted) {
+                        Text("⬇️ Offline laden – $label", fontWeight = if (chosen) FontWeight.Bold else FontWeight.Normal)
+                    }
                 }
+                Text("Bestqualität klingt etwas klarer (unkomprimiert), braucht aber etwa dreimal so viel Platz.", color = E.Muted, fontSize = 12.sp)
                 if (o.done > 0 && o.count > 0) Text("Schon da: ${o.done} von ${o.count} Sätzen", color = E.Muted, fontSize = 12.sp)
             }
         }

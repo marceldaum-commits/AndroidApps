@@ -14,6 +14,9 @@ class NovaTest {
     @Test fun zaehlstand() {
         assertEquals(217802112L, Nova.bytesOf("""{"stimme": "nova", "texte": 2301, "bytes": 217802112, "zu_lang": 0}"""))
         assertEquals(null, Nova.bytesOf("{}"))
+        val both = """{"bytes_original": 300, "bytes": 100}"""
+        assertEquals(100L, Nova.bytesOf(both)); assertEquals(300L, Nova.bytesOriginalOf(both))
+        assertEquals("https://stimmen.mathenachhilfe-online.com/nova/original/cb/cb1e6d67882767042ebaa54d163e450c.mp3", Nova.originalUrl("Hallo Welt"))
         assertEquals(208L, Nova.mb(217802112L)); assertEquals(1L, Nova.mb(10))
         assertEquals("https://stimmen.mathenachhilfe-online.com/nova/stand-experimentopia.mathenachhilfe-online.com.json", Nova.standUrl(Nova.APP_HOST))
     }

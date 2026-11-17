@@ -62,7 +62,8 @@ interface Reader {
     /** Alle festen Nova-Sätze für unterwegs ohne Internet */
     val offline: OfflineVoice
     fun refreshOffline()
-    fun loadOffline()
+    /** [best]: Bestqualität (unkomprimiert, 128 kbit/s) statt Standard */
+    fun loadOffline(best: Boolean)
     fun cancelOffline()
     fun deleteOffline()
 }
@@ -70,6 +71,7 @@ interface Reader {
 /** Stand der Offline-Stimme: Größe aller Sätze laut Server ([totalBytes], null = unbekannt), schon gespeichert, Fortschritt beim Laden */
 data class OfflineVoice(
     val totalBytes: Long? = null,
+    val totalBestBytes: Long? = null,
     val savedBytes: Long = 0,
     val loading: Boolean = false,
     val done: Int = 0,

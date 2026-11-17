@@ -69,30 +69,31 @@
         if (mine === turn) onEnd();
       })().catch(() => { if (mine === turn) onEnd(); });
     },
-    /** Größe aller Sätze laut Server (-1 = unbekannt) und was schon im Browser liegt; done(total, saved, vorhandeneAdressen) */
+    /** Größe aller Sätze laut Server (Standard und Bestqualität, -1 = unbekannt) und was schon im Browser liegt; done(total, best, saved, vorhanden) */
     info: (host, urls, done) => {
       (async () => {
-        let total = -1;
-        try { const r = await fetch(SERVER + '/nova/stand-' + host + '.json', { cache: 'no-store' }); if (r.ok) { const j = await r.json(); if (typeof j.bytes === 'number') total = j.bytes; } } catch (e) {}
+        let total = -1, best = -1;
+        try { const r = await fetch(SERVER + '/nova/stand-' + host + '.json', { cache: 'no-store' }); if (r.ok) { const j = await r.json(); if (typeof j.bytes === 'number') total = j.bytes; if (typeof j.bytes_original === 'number') best = j.bytes_original; } } catch (e) {}
         const s = await saved(urls.split('\n'));
-        done(total, s.bytes, s.have);
+        done(total, best, s.bytes, s.have);
       })();
     },
     /** Alle fehlenden Sätze laden: 4 gleichzeitig, 404 still überspringen; progress(fertig, alle), finished(Hinweis oder '') */
-    loadAll: (urls, progress, finished) => {
+    loadAll: (urls, originals, progress, finished) => {
       bulk++; const mine = bulk;
       (async () => {
-        const list = urls.split('\n');
+        const list = urls.split('\n'); const orig = originals ? originals.split('\n') : null;
         let c; try { c = await caches.open(CACHE); } catch (e) { finished('Dieser Browser erlaubt keinen Speicher (privates Fenster?).'); return; }
         const have = new Set((await c.keys()).map((k) => k.url));
-        const todo = list.filter((u) => !have.has(u));
+        const todo = list.map((u, i) => [u, orig ? orig[i] : null]).filter(([u]) => !have.has(u));
         let n = list.length - todo.length, failed = 0, next = 0;
         progress(n, list.length);
         async function worker() {
           while (next < todo.length && mine === bulk) {
-            const u = todo[next++];
+            const [u, o] = todo[next++];
             try {
-              const r = await fetch(u);
+              let r = o ? await fetch(o) : null;            // Bestqualität; fehlt sie (404), die normale Datei
+              if (!r || r.status === 404) r = await fetch(u);
               if (r.ok) { const b = await r.arrayBuffer(); await c.put(u, new Response(b, { headers: { 'Content-Type': 'audio/mpeg', 'X-Bytes': String(b.byteLength) } })); }
               else if (r.status !== 404) failed++;
             } catch (e) { failed++; }

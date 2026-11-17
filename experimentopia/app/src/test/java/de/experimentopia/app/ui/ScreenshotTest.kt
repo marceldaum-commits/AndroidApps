@@ -190,9 +190,9 @@ private object FakeReader : de.experimentopia.app.ui.fx.Reader {
     override fun say(text: String) {}
     override fun stop() {}
     override fun configure(p: AudioPrefs) {}
-    override val offline = de.experimentopia.app.ui.fx.OfflineVoice(totalBytes = 73_000_000, savedBytes = 9_500_000, done = 312, count = 2301)
+    override val offline = de.experimentopia.app.ui.fx.OfflineVoice(totalBytes = 73_000_000, totalBestBytes = 218_000_000, savedBytes = 9_500_000, done = 312, count = 2301)
     override fun refreshOffline() {}
-    override fun loadOffline() {}
+    override fun loadOffline(best: Boolean) {}
     override fun cancelOffline() {}
     override fun deleteOffline() {}
 }

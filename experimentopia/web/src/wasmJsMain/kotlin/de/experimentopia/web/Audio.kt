@@ -62,6 +62,7 @@ class WebReader : Reader {
     override var offline by mutableStateOf(OfflineVoice()); private set
     private var turn = 0
     private val urls by lazy { Nova.catalog().joinToString("\n") { Nova.url(it) } }
+    private val originals by lazy { Nova.catalog().joinToString("\n") { Nova.originalUrl(it) } }
     private val count by lazy { Nova.catalog().size }
     /** Zählstand der Live-Seite, wenn die App lokal oder anderswo läuft */
     private fun host() = pageHost().takeIf { it.endsWith("mathenachhilfe-online.com") } ?: Nova.APP_HOST
@@ -90,16 +91,16 @@ class WebReader : Reader {
     }
 
     override fun refreshOffline() {
-        novaScript { ok -> if (ok) novaInfo(host(), urls) { total, saved, have ->
-            offline = offline.copy(totalBytes = total.toLong().takeIf { it >= 0 } ?: offline.totalBytes, savedBytes = saved.toLong(), done = have, count = count, complete = have >= count)
+        novaScript { ok -> if (ok) novaInfo(host(), urls) { total, best, saved, have ->
+            offline = offline.copy(totalBytes = total.toLong().takeIf { it >= 0 } ?: offline.totalBytes, totalBestBytes = best.toLong().takeIf { it >= 0 } ?: offline.totalBestBytes, savedBytes = saved.toLong(), done = have, count = count, complete = have >= count)
         } }
     }
-    override fun loadOffline() {
+    override fun loadOffline(best: Boolean) {
         if (offline.loading) return
         offline = offline.copy(loading = true, note = null)
         novaScript { ok ->
             if (!ok) { offline = offline.copy(loading = false, note = "Keine Verbindung. Bitte später noch einmal versuchen."); return@novaScript }
-            novaLoadAll(urls, { n, all -> offline = offline.copy(done = n, count = all) }) { note ->
+            novaLoadAll(urls, if (best) originals else "", { n, all -> offline = offline.copy(done = n, count = all) }) { note ->
                 offline = offline.copy(loading = false, note = note.ifBlank { null }); refreshOffline()
             }
         }

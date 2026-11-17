@@ -2,6 +2,12 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.3.1 vom 17.11.2026: Bestqualität offline
+
+- Zwei Knöpfe „Offline laden – Standard (ca. X MB)“ (/nova/…, "bytes") und „Offline laden – Bestqualität (ca. Z MB)“ (/nova/original/…, "bytes_original"; 404 → normale Datei).
+  Wahl gemerkt (AudioPrefs „best“), beide Fassungen liegen unter demselben Satz-Schlüssel, „Offline-Stimme löschen“ löscht alles. Normales Vorlesen online bleibt Standard.
+  Bildschirmfoto: screenshots/65_musik_und_vorlesen.png.
+
 ## 17.11.2026 – Version 2.3.0 vom 17.11.2026: Alle Nova-Texte offline laden
 
 - Einstellungen → Vorlesen → „📦 Ohne Internet vorlesen“: Knopf „Alle Nova-Texte offline laden (ca. X MB)“, X = live "bytes" aus stand-<host>.json (Android: experimentopia.mathenachhilfe-online.com,

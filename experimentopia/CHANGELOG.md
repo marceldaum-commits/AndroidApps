@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.3.1 – Offline in Bestqualität (17.11.2026)
+
+- 🎧 Beim Offline-Laden gibt es jetzt zwei Wahlmöglichkeiten: **Standard** (klein) oder **Bestqualität** (unkomprimiert, etwa dreimal so groß). Die Wahl wird gemerkt;
+  „Offline-Stimme löschen“ löscht beides. Beim normalen Vorlesen mit Internet bleibt es bei Standard.
+
 ## 2.3.0 – Vorlesen auch ohne Internet (17.11.2026)
 
 - 📦 **Alle Nova-Texte offline laden**: In den Einstellungen unter „Vorlesen“ lädt ein Knopf alle Sätze auf einmal (Größe steht dabei, am besten im WLAN).

@@ -149,13 +149,14 @@ class AndroidReader(ctx: Context) : Reader {
 
     override fun refreshOffline() {
         bulk.execute {
-            val total = runCatching { URL(Nova.standUrl(Nova.APP_HOST)).readText() }.getOrNull()?.let { Nova.bytesOf(it) }
+            val stand = runCatching { URL(Nova.standUrl(Nova.APP_HOST)).readText() }.getOrNull()
+            val total = stand?.let { Nova.bytesOf(it) }; val best = stand?.let { Nova.bytesOriginalOf(it) }
             val s = saved(); val left = missing().size; val all = Nova.catalog().size
-            main.post { offline = offline.copy(totalBytes = total ?: offline.totalBytes, savedBytes = s, complete = left == 0, done = all - left, count = all) }
+            main.post { offline = offline.copy(totalBytes = total ?: offline.totalBytes, totalBestBytes = best ?: offline.totalBestBytes, savedBytes = s, complete = left == 0, done = all - left, count = all) }
         }
     }
 
-    override fun loadOffline() {
+    override fun loadOffline(best: Boolean) {
         if (offline.loading) return
         cancelBulk = false
         offline = offline.copy(loading = true, note = null)
@@ -167,7 +168,7 @@ class AndroidReader(ctx: Context) : Reader {
             var failed = 0
             val jobs = todo.map { p -> pool.submit<Boolean> {
                 if (cancelBulk) return@submit true
-                val code = get(Nova.url(p), file(p))
+                val code = if (best) get(Nova.originalUrl(p), file(p)).let { if (it == 404) get(Nova.url(p), file(p)) else it } else get(Nova.url(p), file(p))
                 val n = done.incrementAndGet()
                 if (n % 10 == 0 || n == all.size) main.post { offline = offline.copy(done = n) }
                 code == 200 || code == 404   // 404: still überspringen

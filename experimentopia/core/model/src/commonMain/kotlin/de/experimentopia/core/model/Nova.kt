@@ -27,6 +27,7 @@ object Nova {
     fun standUrl(host: String) = "$SERVER/nova/stand-$host.json"
     const val APP_HOST = "experimentopia.mathenachhilfe-online.com"
     fun bytesOf(standJson: String): Long? = Regex(""""bytes"\s*:\s*(\d+)""").find(standJson)?.groupValues?.get(1)?.toLongOrNull()
+    fun bytesOriginalOf(standJson: String): Long? = Regex(""""bytes_original"\s*:\s*(\d+)""").find(standJson)?.groupValues?.get(1)?.toLongOrNull()
     /** „ca. 73 MB“ – auf ganze MB gerundet, mindestens 1 */
     fun mb(bytes: Long) = maxOf(1L, (bytes + 524_288) / 1_048_576)
     /** Gleichzeitige Downloads beim Offline-Laden */
@@ -47,6 +48,8 @@ object Nova {
         Sha256.digest("nova|$lang|${normalize(text)}".encodeToByteArray()).joinToString("") { (it.toInt() and 0xff).toString(16).padStart(2, '0') }.take(32)
 
     fun url(text: String) = hash(text).let { "$SERVER/nova/${it.take(2)}/$it.mp3" }
+    /** Bestqualität (128 kbit/s) nur fürs Offline-Laden; fehlt sie (404), nimmt die App die normale Datei */
+    fun originalUrl(text: String) = hash(text).let { "$SERVER/nova/original/${it.take(2)}/$it.mp3" }
 
     /** Ein App-Text → sprechbare Stücke (Satzgrenzen, je höchstens [MAX] Zeichen) */
     fun parts(text: String): List<String> = chunks(Speech.clean(text))

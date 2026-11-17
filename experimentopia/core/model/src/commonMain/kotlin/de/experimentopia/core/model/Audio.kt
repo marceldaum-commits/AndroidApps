@@ -12,9 +12,11 @@ data class AudioPrefs(
     val autoRead: Boolean = false,
     val voice: String = "",
     val rate: Float = 1f,
+    /** Offline laden in Bestqualität (128 kbit/s statt 40 kbit/s) – gemerkte Wahl */
+    val bestQuality: Boolean = false,
 ) {
     fun encode() = listOf("musik=${if (music) 1 else 0}", "musikLaut=$musicVol", "effektLaut=$sfxVol", "vorlesen=${if (read) 1 else 0}",
-        "auto=${if (autoRead) 1 else 0}", "tempo=$rate", "stimme=${voice.replace(";", "")}").joinToString(";")
+        "auto=${if (autoRead) 1 else 0}", "tempo=$rate", "stimme=${voice.replace(";", "")}", "best=${if (bestQuality) 1 else 0}").joinToString(";")
 
     companion object {
         fun decode(s: String?): AudioPrefs {
@@ -23,7 +25,8 @@ data class AudioPrefs(
             val d = AudioPrefs()
             fun f(k: String, def: Float) = m[k]?.toFloatOrNull()?.coerceIn(0f, 2f) ?: def
             return AudioPrefs(m["musik"]?.let { it == "1" } ?: d.music, f("musikLaut", d.musicVol), f("effektLaut", d.sfxVol),
-                m["vorlesen"]?.let { it == "1" } ?: d.read, m["auto"]?.let { it == "1" } ?: d.autoRead, m["stimme"] ?: d.voice, f("tempo", d.rate).coerceIn(0.6f, 1.6f))
+                m["vorlesen"]?.let { it == "1" } ?: d.read, m["auto"]?.let { it == "1" } ?: d.autoRead, m["stimme"] ?: d.voice, f("tempo", d.rate).coerceIn(0.6f, 1.6f),
+                m["best"]?.let { it == "1" } ?: d.bestQuality)
         }
     }
 }
