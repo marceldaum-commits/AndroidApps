@@ -18,6 +18,16 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     /** Lux liest ihre Sprechblasen laut vor */
     override val voice: StateFlow<Boolean> = _voice.asStateFlow()
     override fun setVoice(v: Boolean) { prefs.edit().putBoolean("voiceOn", v).apply(); _voice.value = v }
+    private val _musicLevel = MutableStateFlow(prefs.getInt("musicLevel", 100)); private val _soundLevel = MutableStateFlow(prefs.getInt("soundLevel", 100))
+    override val musicLevel: StateFlow<Int> = _musicLevel.asStateFlow(); override val soundLevel: StateFlow<Int> = _soundLevel.asStateFlow()
+    override fun setMusicLevel(percent: Int) { val p = percent.coerceIn(0, 100); prefs.edit().putInt("musicLevel", p).apply(); _musicLevel.value = p }
+    override fun setSoundLevel(percent: Int) { val p = percent.coerceIn(0, 100); prefs.edit().putInt("soundLevel", p).apply(); _soundLevel.value = p }
+    private val _rate = MutableStateFlow(prefs.getInt("speechRate", 100))
+    override val speechRate: StateFlow<Int> = _rate.asStateFlow()
+    override fun setSpeechRate(percent: Int) { val p = percent.coerceIn(70, 130); prefs.edit().putInt("speechRate", p).apply(); _rate.value = p }
+    private val _strict = flag("strictVectors", false)
+    override val strictVectors: StateFlow<Boolean> = _strict.asStateFlow()
+    override fun setStrictVectors(v: Boolean) { prefs.edit().putBoolean("strictVectors", v).apply(); _strict.value = v }
     override val sound: StateFlow<Boolean> = _sound.asStateFlow()
     override val music: StateFlow<Boolean> = _music.asStateFlow()
     override val vibration: StateFlow<Boolean> = _vibration.asStateFlow()

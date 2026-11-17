@@ -2,7 +2,9 @@ package de.raumlicht.app.ui
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import de.raumlicht.app.ui.fx.nowMillis
@@ -52,6 +54,8 @@ object Routes {
     fun exam(id: String, timed: Boolean) = "abi/$id/${if (timed) 1 else 0}"
     fun jam(topic: String) = "jam/$topic"
     fun level(id: String) = "level/$id"
+    /** Prüfungsmodus: Prüfungsaufgabe auf Zeit oder Pflichtteil ohne Hilfsmittel – dort läuft keine Musik */
+    fun isExam(route: String) = route == QUICK || (route.startsWith("$EXAMS/") && route.endsWith("/1"))
     /** Ziele, in denen gespielt oder gerechnet wird – dort läuft die treibendere Musik */
     fun isAction(route: String) = route.substringBefore('/') in setOf("level", "tagesaufgabe", "abi", "zweite-chance", "duell", "lage", "schritte", "klasse", "zu-zweit", "klausur", "achterbahn", "raumflug", "galton", "pflichtteil") &&
         route !in setOf(EXAMS, GUIDES) || route.startsWith("jam/")
@@ -118,9 +122,20 @@ fun AppRoot(
     val keys = nav.stack.mapIndexed { i, r -> "$i:$r" }
     LaunchedEffect(keys) { (known - keys.toSet()).forEach { holder.removeState(it) }; known = keys.toSet() }
 
+    val strictVectors by prefs.strictVectors.collectAsState()
     CompositionLocalProvider(LocalLuxSkin provides skin, LocalLuxLook provides look,
+        de.raumlicht.app.ui.settings.LocalMix provides de.raumlicht.app.ui.settings.MixChoice(prefs.musicLevel.collectAsState().value, prefs::setMusicLevel, prefs.soundLevel.collectAsState().value, prefs::setSoundLevel),
+        de.raumlicht.app.ui.settings.LocalSpeech provides de.raumlicht.app.ui.settings.SpeechChoice(prefs.speechRate.collectAsState().value, prefs::setSpeechRate),
+        de.raumlicht.app.ui.level.LocalOpenSheet provides { nav.go(Routes.SHEET) },
+        de.raumlicht.app.ui.settings.LocalNotation provides de.raumlicht.app.ui.settings.NotationChoice(strictVectors, prefs::setStrictVectors),
         de.raumlicht.app.ui.settings.LocalProEntry provides (if (proEnabled) ({ nav.go(Routes.PRO) }) else null), de.raumlicht.app.ui.settings.LocalProActive provides proActive,
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
+        // Erkennungsmelodie: einmal je Sitzung, bei der ersten Berührung (nie vorher) – leise, damit sie niemanden erschreckt
+        val jingle = de.raumlicht.app.ui.fx.LocalSfx.current
+        androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.fillMaxSize().pointerInput(Unit) { awaitPointerEventScope {
+            // wirklich eine Berührung (oder ein Mausklick) – nicht schon der Mauszeiger, der nur über die Seite fährt
+            while (awaitPointerEvent(androidx.compose.ui.input.pointer.PointerEventPass.Initial).type != androidx.compose.ui.input.pointer.PointerEventType.Press) { }
+            jingle?.play(de.raumlicht.app.ui.fx.Sound.JINGLE, volume = 0.6f) } }) {
         Crossfade(keys.last(), animationSpec = tween(180), label = "ziel") { key -> holder.SaveableStateProvider(key) {
             val route = key.substringAfter(':'); val parts = route.split('/')
             if (needsPro(route)) de.raumlicht.app.ui.settings.ProScreen(Pro.what(route), false, true, enterCode, back) else
@@ -231,5 +246,6 @@ fun AppRoot(
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }
             }
         } }
+        }
     }
 }

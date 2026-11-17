@@ -2,6 +2,54 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.15.0: eigene Klangwelt (von Marcel direkt bestätigt)
+
+**Web = Android:** ja. Musik und alle Kurzklänge entstehen im gemeinsamen Rechenkern (`core/model`) und sind in Android-App und WebApp Sample für Sample dieselben; gleiche Version 2.15.0 vom 17.11.2026.
+
+**Klang-Identität wie von euch beschrieben:** Ambient, gläsern, schwebend. **Niemand hat das Ergebnis bisher gehört** – geprüft ist es rechnerisch (Tests, Spektrum und Hüllkurve). Marcel hat Hörproben bekommen.
+
+- **Musik** (`SpaceMusic.kt`, `MusicSynth.kt`): D-Dur mit lydischer Färbung. Akkordfolge Dmaj9 – A(add9)/Cis – Hm11 – Gmaj7♯11 – D(add9)/Fis – Gmaj9 – Em11 – A9sus4.
+  Menü: 60 Schläge pro Minute, 64 s Schleife, fast ohne Puls. Beim Rechnen: 72 Schläge, 53 s, dazu ein leises Perlmuster. Nahtlose Schleifen, eigener Nachhall.
+- **Erkennungsmelodie:** a′ – d″ – e″ – a″ – cis‴ (`SpaceMusic.MOTIF`). Sie kommt in beiden Stücken vor, erklingt leise bei der ersten Berührung der Sitzung und festlich, wenn ein Kapitel geschafft ist.
+- **Lichtshow:** Jeder Laserstrahl klingt als Ton der D-Dur-Pentatonik (`Klang.beamPitch`), mehrere Strahlen ergeben einen Akkord. Geht ein Strahl durch eine Ebene, schillert es (neuer Klang „Brechung“).
+- **Effekte** (`Klang.kt`, 12 Stück): Antippen, Regler-Schritt, Start, Treffer, Einrasten, Daneben, Richtig, **Falsch (leise, zwei sanfte Töne)**, Hinweis, Brechung, Kapitel geschafft, Erkennungsmelodie.
+- **Bedienung:** Musik und Geräusche getrennt schaltbar (wie bisher) und jetzt mit **eigener Lautstärke**, zusätzlich zur Gesamt-Lautstärke.
+- **Respekt:** startet nie vor der ersten Berührung (Android neu, im Browser geprüft); wird unter der Stimme leiser (Android wie bisher, WebApp neu);
+  **aus im Prüfungsmodus** (Prüfungsaufgaben auf Zeit und Pflichtteil – die Geräusche bleiben dort als Rückmeldung an); Android: still, wenn das Handy stumm oder auf Vibration steht
+  (im Browser lässt sich die Stummschaltung nicht abfragen).
+- **Schnell:** keine Audiodateien, kein Einfluss auf die Ladegröße. Die Musik wird nach der ersten Berührung errechnet (auf dem Rechner rund 0,3 s je Stück; im Browser lief sie im Test nach etwa 0,5 s), Android legt sie danach im Cache ab.
+- **Barrierefreiheit:** Kein Inhalt hängt am Ton – jede Rückmeldung steht auch als Text da.
+
+**Entstehung (für eure Unterlagen):** Die Klangwelt ist für Raumlicht komponiert und wird vollständig im Programmcode errechnet – keine Aufnahmen, keine fremden Samples, keine Klang-Bibliotheken, nur die Kotlin-Standardbibliothek; damit gibt es keine Lizenzfragen (auch keine GPL).
+Glastöne sind gedämpfte Schwingungen mit den leicht unharmonischen Obertönen eines angestoßenen Kelchs; die Flächen sind Paare minimal verstimmter Sinustöne, die langsam gegeneinander schweben; dazu hoher Schimmer und ein Hauch gefilterten Rauschens.
+Ein eigener Nachhall aus Kammfiltern und Allpässen stellt alles in einen Raum und klingt über die Nahtstelle der Schleife hinweg weiter. Alle Kurzklänge liegen in derselben Tonart wie die Musik.
+
+**Geprüft:** 152 Tests im Rechenkern (darunter 14 für Musik und Klänge: Länge, Schleife, Lautheit, kein Übersteuern, Tonhöhen), 142 App-Tests, Lint beider Fassungen, WebApp: Ablauf, Update/Offline, alle 54 Bildschirme, Ton erst nach Berührung.
+**Nicht geprüft:** wie es klingt, und alles auf echten Geräten (Lautstärke-Verhältnis Musik zu Geräuschen, kleine Handy-Lautsprecher).
+
+---
+
+## 17.11.2026 – Version 2.14.0: Theorie-Knopf, wählbare Schreibweise, Vorlesen einstellbar (alles von Marcel direkt bestätigt)
+
+**Web = Android:** ja. Beide Fassungen entstehen aus demselben Code und tragen dieselbe Version (2.14.0 vom 17.11.2026). Bewusste Unterschiede: natürliche Stimme „Thorsten“ nur in Android (im Browser noch nicht gebaut),
+App-Update-Kasten und Widgets nur in Android.
+
+- **Neu: „📖 Theorie“ bei jeder Aufgabe** (Marcels Wunsch: „zu jeder Übung ein Button mit der passenden Theorie, damit es nicht frustet“). 68 Theorie-Karten, jede mit Idee, Schritten,
+  durchgerechnetem Beispiel (andere Zahlen als die Aufgabe) und typischem Fehler. Zuordnung für alle 136 Tour-Aufgaben, 28 Prüfungs-Teilaufgaben, 9 Schritt-Aufgaben einzeln, für Üben und Tagesaufgabe über die Aufgabenart.
+  Nachlesen kostet keinen Stern; im Pflichtteil „ohne Hilfsmittel“ gibt es den Knopf nicht. Alle 68 Beispiele sind unabhängig nachgerechnet. Recherche dazu in `docs/RECHERCHE.md`.
+- **Vektorschreibweise wählbar** (Marcels Entscheidung zu Punkt 3.1 des Prüfberichts): Voreinstellung kurz („AB⃗ = B − A“), in den Einstellungen umstellbar auf streng („AB⃗ = OB⃗ − OA⃗“).
+  Gilt für Aufgaben, Tipps, Rechenwege, Rückmeldungen, Theorie und Formelsammlung. Ein Test stellt sicher, dass Analysis und Stochastik dabei unverändert bleiben.
+- **Vorlesen** (eure Nachricht vom 17.11., von Marcel bestätigt): ausschaltbar (war es schon, von Haus aus aus), **Sprechtempo 70–130 %**, Knopf **„So klingt es“**, in der WebApp **Wahl unter den deutschen Stimmen des Geräts** –
+  alles wird gemerkt, gleich in Web und Android. Android zusätzlich wie bisher „Thorsten“. **„Thorsten“ im Browser ist nicht gebaut** – mit Marcel als eigener späterer Schritt vereinbart.
+- **Anleitung für die anderen Apps:** `raumlicht/VORLESEN_FUER_ANDERE_APPS.md` (Bausteine, Lizenzen, Modell-Quelle und -Größe, Einbindung, Stolpersteine – mit dem ehrlichen Stand: Android nie auf einem echten Gerät gehört, Web noch offen).
+- **Aus dem Prüfbericht nachgezogen** (Marcels Entscheidungen): 29 statt 8 Rotationskurven und mehr Tempo-Vektoren beim Üben; Pfeilspitzen bleiben im Raum; Erfolge heißen „Abi-reif“ und „Dauergast“;
+  Zielgruppe im Store bleibt wie empfohlen (16–17 und 18+).
+- **Geprüft:** 140 Tests im Rechenkern, 142 App-Tests, Lint beider Fassungen, WebApp: Ablauf, Update, Offline, alle 54 Bildschirme (72 Aufrufe). Nichts davon auf einem echten Gerät.
+- **Play Store:** Marcel sieht die App dafür als fertig an; das Play-Paket liegt jedem Release bei, die Schritte in der Play Console macht er selbst.
+- **Als Nächstes (von Marcel bestätigt):** eigene Klangwelt für Raumlicht (gläsern, schwebend, Erkennungsmelodie, Töne zur Lichtshow) – ist im Code komponiert, der Einbau in Android und WebApp folgt als nächste Version.
+
+---
+
 ## Korrektheitsprüfung 17.11.
 
 **Version nach der Prüfung: Raumlicht 2.13.0 vom 17.11.2026** (Android-APK, Play-Paket und WebApp auf raumlicht-test). Auftrag von Marcel direkt bestätigt.

@@ -64,6 +64,11 @@ fun LevelScreen(
     /** Sachzusammenhang, der über mehrere Teilaufgaben gilt (Prüfungsaufgaben: „Ein Lichtbogen hat die Form von f(x) = …“) – bleibt bei jeder Teilaufgabe sichtbar */
     context: String? = null,
 ) {
+    // gewählte Vektorschreibweise (Einstellungen): dieselbe Aufgabe, nur anders aufgeschrieben
+    val strictVectors = de.raumlicht.app.ui.settings.LocalNotation.current.strict
+    @Suppress("NAME_SHADOWING") val level = remember(level.id, strictVectors) { if (strictVectors) level.withText(de.raumlicht.core.model.Notation::strict) else level }
+    // Theorie zur Aufgabe: jederzeit nachlesbar, kostet keinen Stern (nur im Pflichtteil „ohne Hilfsmittel“ nicht)
+    var theory by remember(level.id) { mutableStateOf(false) }
     var values by remember(level.id) { mutableStateOf(initial ?: level.start) }
     var phase by remember(level.id) { mutableStateOf(Phase.AIM) }
     var attempts by remember(level.id) { mutableIntStateOf(0) }
@@ -114,10 +119,12 @@ fun LevelScreen(
                 override = level.encode(level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list) else it })
                 delay(1100)
             }
-            out.beams.forEach { b ->
+            // Lichtshow zum Hören: jeder Strahl ein Ton desselben Glas-Akkords; geht Licht durch eine Scheibe, schillert es
+            val glass = level.objects(values, Phase.AIM).any { it.type == "plane" || it.type == "pane" }
+            out.beams.forEachIndexed { i, b ->
                 val ms = ((b.to - b.from).length * 110).toInt().coerceIn(450, 1100)
                 controller.fire(b, ms); delay(ms + 200L)
-                if (b.hit) { sfx?.play(Sound.HIT); view.buzz(Buzz.HIT, vib) }
+                if (b.hit) { if (glass && i == 0) sfx?.play(Sound.REFRACT, volume = 0.7f); sfx?.play(Sound.HIT, de.raumlicht.core.model.Klang.beamPitch(i)); view.buzz(Buzz.HIT, vib) }
             }
             if (out.success) {
                 stars = Level.stars(attempts, usedTip)
@@ -125,17 +132,18 @@ fun LevelScreen(
                 val aim = level.objects(values, Phase.AIM)
                 val fin = level.finale?.invoke(values) ?: Finale.default(aim, level.objects(values, Phase.DONE), out)
                 fin.path.forEach { pt -> override = level.encode(aim.map { if (it.type == "drone") it.copy(p = pt.list) else it }); delay(90) }
-                fin.beams.forEachIndexed { i, b -> controller.fire(b, 240); sfx?.play(Sound.HIT, 1f + i * 0.08f); view.buzz(Buzz.TICK, vib); delay(170) }
+                fin.beams.forEachIndexed { i, b -> controller.fire(b, 240); sfx?.play(Sound.HIT, de.raumlicht.core.model.Klang.beamPitch(i), 0.8f); view.buzz(Buzz.TICK, vib); delay(170) }
                 if (fin.beams.isNotEmpty()) delay(260)
                 // Drehbuch: Schritt für Schritt das tun, wonach gefragt war – Lux sagt dazu, was gerade passiert
                 fin.acts.forEach { act ->
                     says = act.say to LuxMood.HAPPY
-                    act.beams.forEachIndexed { i, b -> controller.fire(b, 260); sfx?.play(Sound.HIT, 1f + i * 0.08f); view.buzz(Buzz.TICK, vib); delay(200) }
+                    act.beams.forEachIndexed { i, b -> controller.fire(b, 260); sfx?.play(Sound.HIT, de.raumlicht.core.model.Klang.beamPitch(i), 0.8f); view.buzz(Buzz.TICK, vib); delay(200) }
                     act.objects?.let { o -> override = level.encode(o + aim.filter { it.type == "drone" }) }
                     delay(act.ms.toLong())
                 }
                 out.flyTo?.let { controller.burst(it, "green") }
-                controller.party(); sfx?.play(Sound.WIN); view.buzz(Buzz.HIT, vib)
+                // letzte Aufgabe eines Kapitels: die Erkennungsmelodie festlich
+                controller.party(); sfx?.play(if (chapter.levels.lastOrNull()?.id == level.id) Sound.CHAPTER else Sound.WIN); view.buzz(Buzz.HIT, vib)
                 override = null; phase = Phase.DONE
                 says = out.message to LuxMood.HAPPY
                 onSolved(stars, attempts)
@@ -211,8 +219,10 @@ fun LevelScreen(
                         }
                     }
                     Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        if (!strict) NeonButton({ usedTip = true; says = level.tip to LuxMood.THINK }, Modifier.weight(1f), color = Q.Yellow, enabled = !busy) { Text("💡 Tipp", fontWeight = FontWeight.Bold) }
-                        NeonButton(::go, Modifier.weight(2f).pulse(!busy && attempts == 0, 0.025f), color = accent, enabled = !busy) { Text("▶ Los", fontWeight = FontWeight.Black, fontSize = 18.sp) }
+                        // nach dem ersten Fehlversuch winkt die Theorie – nachlesen ist ausdrücklich erwünscht
+                        if (!strict) NeonButton({ theory = true }, Modifier.weight(1.25f).testTag("theorie").pulse(!busy && attempts >= 1, 0.03f), color = Q.Cyan, enabled = !busy) { Text("📖 Theorie", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1) }
+                        if (!strict) NeonButton({ usedTip = true; says = level.tip to LuxMood.THINK }, Modifier.weight(1f), color = Q.Yellow, enabled = !busy) { Text("💡 Tipp", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1) }
+                        NeonButton(::go, Modifier.weight(1.5f).pulse(!busy && attempts == 0, 0.025f), color = accent, enabled = !busy) { Text("▶ Los", fontWeight = FontWeight.Black, fontSize = 18.sp, maxLines = 1) }
                     }
                 } else {
                     Column(Modifier.fillMaxWidth().padding(horizontal = 12.dp).background(verticalFade(listOf(Q.Green.copy(alpha = 0.18f), Q.Deep)), RoundedCornerShape(16.dp))
@@ -238,6 +248,7 @@ fun LevelScreen(
             }
         }
         if (intro) IntroOverlay(chapter, onStep = { introStep = it }) { intro = false; onIntroSeen() }
+        TheorySheet(if (theory) remember(level.id) { de.raumlicht.core.model.Theory.forLevel(level) } else null, accent) { theory = false }
     }
 }
 

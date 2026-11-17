@@ -51,15 +51,36 @@ fun SettingsPage(
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                    if (hasMusic) Toggle("🎵 Musik", "Elektronische Klänge im Hintergrund", music, onMusic)
-                    Toggle("🔊 Geräusche", "Laser, Treffer, Lux’ Piepsen", sound, onSound)
+                    val mix = LocalMix.current
+                    if (hasMusic) Toggle("🎵 Musik", "Gläserne, schwebende Klänge – für Raumlicht komponiert. In Prüfungen auf Zeit ist sie aus.", music, onMusic)
+                    if (hasMusic && music) { Text("Musik: ${mix.music} %", Modifier.testTag("musik-laut-text"), style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                        Slider(mix.music / 100f, { mix.setMusic((it * 20).toInt() * 5) }, Modifier.testTag("musik-laut")) }
+                    Toggle("🔊 Geräusche", "Laser, Treffer, Glasklänge der Lichtshow", sound, onSound)
+                    if (sound) { Text("Geräusche: ${mix.sound} %", Modifier.testTag("ton-laut-text"), style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                        Slider(mix.sound / 100f, { mix.setSound((it * 20).toInt() * 5) }, Modifier.testTag("ton-laut"), onValueChangeFinished = { sfx?.play(de.raumlicht.app.ui.fx.Sound.HIT) }) }
                     Toggle("🗣️ Lux spricht", if (voiceAvailable) "Aus, bis du es einschaltest: Lux liest ihre Sprechblasen laut vor (Sprachausgabe des Geräts)" else "Auf diesem Gerät ist keine deutsche Stimme eingerichtet – Lux bleibt stumm.", voice) {
                         onVoice(it); if (it) speaker?.say("Hallo, ich bin Lux!") }
-                    if (voice && voiceAvailable) voiceControls()
+                    if (voice && voiceAvailable) {
+                        voiceControls()
+                        // Sprechtempo und Hörprobe – gleich in Android und WebApp
+                        val speech = LocalSpeech.current
+                        Text("🐢🐇 Sprechtempo: ${speech.rate} %", Modifier.padding(top = 4.dp).testTag("sprechtempo-text"), style = MaterialTheme.typography.bodyLarge)
+                        Slider((speech.rate - 70) / 60f, { speech.setRate(70 + (it * 6).toInt().coerceIn(0, 6) * 10) }, Modifier.testTag("sprechtempo"), steps = 5)
+                        OutlinedButton({ speaker?.say("Hallo, ich bin Lux. So klinge ich jetzt.") }, Modifier.testTag("hoerprobe")) { Text("▶ So klingt es") }
+                    }
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
                     Text("🔉 Lautstärke: $volume %", Modifier.padding(top = 8.dp).testTag("lautstaerke-text"), style = MaterialTheme.typography.bodyLarge)
-                    Text("Für Musik und Geräusche zusammen", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                    Text("Für alles zusammen: Musik, Geräusche und Stimme", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                     Slider(volume / 100f, { onVolume((it * 20).toInt() * 5) }, Modifier.testTag("lautstaerke"), onValueChangeFinished = { sfx?.play(de.raumlicht.app.ui.fx.Sound.HIT) })
+                }
+            }
+            ElevatedCard(Modifier.fillMaxWidth()) {
+                val notation = LocalNotation.current
+                Column(Modifier.padding(16.dp)) {
+                    Text("Mathe-Schreibweise", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    Box(Modifier.testTag("schreibweise")) { Toggle("📐 Strenge Vektorschreibweise", if (notation.strict) "An: mit Ortsvektoren, z. B. AB⃗ = OB⃗ − OA⃗ und g: x⃗ = OA⃗ + t · d⃗" else "Aus: kurz wie in vielen Schulheften, z. B. AB⃗ = B − A und g: x⃗ = A + t · d⃗",
+                        notation.strict, notation.set) }
+                    Text("Frag im Zweifel, wie es deine Lehrkraft haben möchte. Die Rechnung ist dieselbe.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                 }
             }
             ElevatedCard(Modifier.fillMaxWidth()) {

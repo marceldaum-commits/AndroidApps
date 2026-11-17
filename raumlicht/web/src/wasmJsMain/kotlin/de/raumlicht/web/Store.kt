@@ -30,6 +30,18 @@ class WebPrefs : Prefs {
     override val music: StateFlow<Boolean> = _music; override fun setMusic(v: Boolean) { put("musik", v); _music.value = v }
     override val vibration: StateFlow<Boolean> = _vibration; override fun setVibration(v: Boolean) { put("vibration", v); _vibration.value = v }
     override val voice: StateFlow<Boolean> = _voice; override fun setVoice(v: Boolean) { put("stimmeAn", v); _voice.value = v }
+    private val _musicLevel = int("musikLaut", 100); private val _soundLevel = int("tonLaut", 100)
+    override val musicLevel: StateFlow<Int> = _musicLevel; override val soundLevel: StateFlow<Int> = _soundLevel
+    override fun setMusicLevel(percent: Int) { val p = percent.coerceIn(0, 100); storeSet(P + "musikLaut", p.toString()); _musicLevel.value = p }
+    override fun setSoundLevel(percent: Int) { val p = percent.coerceIn(0, 100); storeSet(P + "tonLaut", p.toString()); _soundLevel.value = p }
+    private val _rate = int("sprechtempo", 100)
+    override val speechRate: StateFlow<Int> = _rate; override fun setSpeechRate(percent: Int) { val p = percent.coerceIn(70, 130); storeSet(P + "sprechtempo", p.toString()); _rate.value = p }
+    /** Name der gewählten Geräte-Stimme (leer = die erste deutsche, die auf dem Gerät eingebaut ist) */
+    var voiceName: String
+        get() = storeGet(P + "stimmeName") ?: ""
+        set(v) = storeSet(P + "stimmeName", v)
+    private val _strict = flag("strengeVektoren", false)
+    override val strictVectors: StateFlow<Boolean> = _strict; override fun setStrictVectors(v: Boolean) { put("strengeVektoren", v); _strict.value = v }
     private val _volume = int("lautstaerke", 100)
     override val volume: StateFlow<Int> = _volume; override fun setVolume(v: Int) { val c = v.coerceIn(0, 100); storeSet(P + "lautstaerke", c.toString()); _volume.value = c }
 

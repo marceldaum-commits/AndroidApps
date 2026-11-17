@@ -17,7 +17,9 @@ import de.raumlicht.app.ui.fx.*
 import de.raumlicht.app.ui.settings.SettingsPage
 import de.raumlicht.app.ui.theme.Q
 import de.raumlicht.app.ui.theme.RaumlichtTheme
+import de.raumlicht.core.model.Klang
 import de.raumlicht.core.model.MusicMood
+import de.raumlicht.core.model.Ton
 import de.raumlicht.core.model.MusicSynth
 import de.raumlicht.core.model.SpaceMusic
 import de.raumlicht.core.model.Speech
@@ -30,22 +32,13 @@ fun main() {
 }
 
 /** Kurze Klänge aus dem Browser-Synthesizer – dieselben Anlässe wie in der Android-App */
+/** Dieselben Kurzklänge wie in der Android-App: im gemeinsamen Rechenkern erzeugt ([Klang]), beim ersten Gebrauch einmal berechnet */
 private class WebSfx(private val prefs: WebPrefs) : SoundPlayer {
     override fun play(s: Sound, pitch: Float, volume: Float) {
-        if (!prefs.sound.value) return
-        val g = 0.16 * volume * prefs.volume.value / 100.0; if (g <= 0) return
-        val p = pitch.toDouble()
-        when (s) {
-            Sound.TAP -> beep("triangle", 520 * p, 420 * p, 0.05, g * 0.7)
-            Sound.TICK -> beep("square", 880 * p, 880 * p, 0.03, g * 0.35)
-            Sound.LAUNCH -> beep("sawtooth", 220 * p, 880 * p, 0.28, g * 0.6)
-            Sound.HIT -> beep("triangle", 660 * p, 1320 * p, 0.14, g)
-            Sound.CELL -> beep("sine", 440 * p, 660 * p, 0.12, g)
-            Sound.CRASH -> beep("sawtooth", 200 * p, 60 * p, 0.3, g)
-            Sound.WIN -> { beep("triangle", 523 * p, 784 * p, 0.18, g); beep("triangle", 784 * p, 1047 * p, 0.34, g * 0.8) }
-            Sound.WRONG -> beep("square", 240 * p, 150 * p, 0.22, g * 0.6)
-            Sound.BEEP -> beep("sine", 990 * p, 990 * p, 0.08, g * 0.7)
-        }
+        if (!prefs.sound.value || without("ton")) return
+        val g = 0.9 * volume * prefs.volume.value / 100.0 * prefs.soundLevel.value / 100.0; if (g <= 0) return
+        if (!sfxKnown(s.name)) { val pcm = Klang.render(Ton.valueOf(s.name)); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i]); sfxStore(s.name, b) }
+        sfxPlay(s.name, pitch.toDouble().coerceIn(0.5, 2.0), g.coerceAtMost(1.0))
     }
 }
 
@@ -78,13 +71,18 @@ private fun WebApp() {
     var mood by remember { mutableStateOf(MusicMood.MENU) }
     val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()
     LaunchedEffect(Unit) { if (!without("ton")) musicSetup { name -> val pcm = MusicSynth.render(SpaceMusic.compose(MusicMood.valueOf(name))); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i] / 32768f); musicStore(name, b) } }
-    LaunchedEffect(musicOn, loud, mood) { musicWant(if (musicOn) mood.name else null, 0.5 * loud / 100.0) }
+    val musicLevel by prefs.musicLevel.collectAsState(); val voiceOn by prefs.voice.collectAsState()
+    var exam by remember { mutableStateOf(false) }; var talking by remember { mutableStateOf(false) }
+    // unter der Stimme wird die Musik leiser
+    LaunchedEffect(voiceOn) { while (voiceOn) { talking = speaking(); kotlinx.coroutines.delay(250) }; talking = false }
+    // Musik: aus im Prüfungsmodus, eigene Lautstärke, leiser unter der Stimme
+    LaunchedEffect(musicOn, loud, mood, musicLevel, exam, talking) { musicWant(if (musicOn && !exam) mood.name else null, 0.75 * loud / 100.0 * musicLevel / 100.0 * (if (talking) 0.35 else 1.0)) }
     // Zurück-Taste des Browsers schließt eine Ebene
     LaunchedEffect(nav.stack.size) { syncHistory(nav.stack.size) { nav.back() } }
 
     val sfx = remember { WebSfx(prefs) }
     val speaker = remember { object : Speaker {
-        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Speech.clean(text).takeIf { it.isNotEmpty() }?.let { speak(it, prefs.volume.value / 100.0) } }
+        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Speech.clean(text).takeIf { it.isNotEmpty() }?.let { speak(it, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0, prefs.voiceName) } }
         override fun sayIfQuiet(text: String) { if (!speaking()) say(text) }
     } }
     CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker,
@@ -92,7 +90,7 @@ private fun WebApp() {
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
             AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
-                onRoute = { atHome(it == Routes.HOME); mood = if (Routes.isAction(it)) MusicMood.FLIGHT else MusicMood.MENU },
+                onRoute = { atHome(it == Routes.HOME); exam = Routes.isExam(it); mood = if (Routes.isAction(it)) MusicMood.FLIGHT else MusicMood.MENU },
                 settings = { onBack ->
                     val music by prefs.music.collectAsState(); val sound by prefs.sound.collectAsState(); val volume by prefs.volume.collectAsState(); val voice by prefs.voice.collectAsState()
                     SettingsPage(music, prefs::setMusic, sound, prefs::setSound, vibration, prefs::setVibration, "Version ${Version.NAME} vom ${Version.DATE} · WebApp", onBack,
@@ -104,6 +102,16 @@ private fun WebApp() {
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
                         voice = voice, onVoice = { prefs.setVoice(it); if (!it) stopSpeaking() }, voiceAvailable = canSpeak(),
+                        voiceControls = {
+                            // Stimme wählen: durch die deutschen Stimmen des Geräts schalten – jede stellt sich gleich vor
+                            val names = remember { localVoices().split('\n').filter { it.isNotBlank() } }
+                            var current by remember { mutableStateOf(prefs.voiceName.takeIf { it in names } ?: names.firstOrNull().orEmpty()) }
+                            Column(Modifier.padding(bottom = 6.dp)) {
+                                OutlinedButton({ if (names.size > 1) { current = names[(names.indexOf(current) + 1) % names.size]; prefs.voiceName = current; speaker.say("Hallo, ich bin Lux. So klinge ich jetzt.") } }, enabled = names.size > 1) {
+                                    Text(if (names.size > 1) "Andere Stimme (${names.indexOf(current) + 1} von ${names.size})" else "Nur eine Stimme vorhanden") }
+                                if (current.isNotBlank()) Text("Stimme des Geräts: $current", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                            }
+                        },
                         onLicenses = { openLink("lizenzen.txt") },
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe, keine Daten an einen Server. " +
                             "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Schaltest du „Lux spricht“ ein, liest eine Stimme vor, die auf deinem Gerät eingebaut ist.")
