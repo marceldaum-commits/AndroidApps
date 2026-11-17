@@ -1,6 +1,9 @@
 package de.experimentopia.app.ui
 
 import androidx.compose.material3.Surface
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.semantics.SemanticsActions
 import androidx.compose.ui.test.*
@@ -148,10 +151,33 @@ class ScreenshotTest {
     @Test fun theoryPro() = shot("62_theorie_profi", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("s8")!!, {}, null, {}, startPhase = Phase.PREDICT) }
     @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, {}) }
     @Test fun subjectBio() = shot("64_fach_biologie", settle = 2500, prepare = { it.tap("Alle 8 Versuche") }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 9, { false }, {}, {}, {}) }
+    @Test fun soundSettings() = shot("65_musik_und_vorlesen", settle = 1500, prepare = { r -> r.reveal { r.onNodeWithTag("probe") } }) {
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {
+                de.experimentopia.app.ui.settings.SoundSettings(AudioPrefs(voice = AudioPrefs.NATURAL), {}, true, {}, true, {})
+                de.experimentopia.app.ui.settings.ReadSettings(AudioPrefs(voice = AudioPrefs.NATURAL, autoRead = true), {})
+            }
+        }
+    }
     @Test fun calibration() = shot("34_selbsteinschaetzung") { JournalScreen(entries, {}, start = JournalTab.ICH) }
     @Test fun badges() = shot("35_abzeichen") { BadgesScreen(stats) {} }
     @Test fun settings() = shot("36_einstellungen") {
-        SettingsScreen(true, {}, true, {}, 5, {}, "0.6.0", "17.11.2026", {}, {}, {})
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
+        SettingsScreen(true, {}, true, {}, 5, {}, "0.7.0", "17.11.2026", {}, {}, {})
+        }
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
+}
+
+/** Vorlese-Attrappe für Bildschirmfotos */
+private object FakeReader : de.experimentopia.app.ui.fx.Reader {
+    override val voices = listOf(de.experimentopia.app.ui.fx.VoiceOption("a", "Gerätestimme 1 (sehr gut)"), de.experimentopia.app.ui.fx.VoiceOption("b", "Gerätestimme 2"))
+    override val natural: de.experimentopia.app.ui.fx.NaturalState = de.experimentopia.app.ui.fx.NaturalState.Loading(42)
+    override val speaking = false
+    override fun say(text: String) {}
+    override fun stop() {}
+    override fun configure(p: AudioPrefs) {}
+    override fun loadNatural() {}
+    override fun cancelNatural() {}
+    override fun removeNatural() {}
 }

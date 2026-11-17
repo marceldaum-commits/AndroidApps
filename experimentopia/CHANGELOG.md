@@ -1,5 +1,17 @@
 # Changelog – Experimentopia
 
+## 0.7.0 – Eigene Musik und Vorlesen (17.11.2026)
+
+- 🎻 **Eigene Musik**: Experimentopia klingt jetzt wie ein verspieltes Forscher-Labor – Pizzicato-Streicher, Klarinette, Fagott, Glas und Blubbern.
+  Jede Welt klingt anders: Physik wie ein Uhrwerk mit Glas-Glockenspiel, Chemie geheimnisvoll mit Klarinette und Blubbern, Biologie lebendig mit Marimba und Vogelzwitschern.
+  Die Musik erfindet jedes Mal eine neue kurze Melodie und macht dazwischen Pause – nichts dudelt in Schleife. Beim Start gibt es eine eigene Erkennungsmelodie.
+- 🧪 **Neue Klänge**: Reagenzglas, Blubbern, Zischen, Funken, Messgerät, „Heureka“ bei Entdeckungen, ein fröhliches „Richtig“ und ein ganz sanftes „Hmm“, wenn etwas nicht stimmt.
+- 🔊 **Vorlesen**: Anleitungen, Fragen, Erklärungen, Merksätze, Theorie und Sicherheitshinweise – mit einem 🔊-Knopf oder automatisch.
+  Formeln und Einheiten werden richtig gesprochen („H₂O“ als „H 2 O“, „m/s²“ als „Meter pro Sekunde zum Quadrat“).
+  Stimme wählbar: die Stimmen des Geräts oder **Thorsten**, eine natürliche Stimme (wird nur auf Wunsch einmal geladen, 63 MB), dazu das Tempo und „Probe hören“.
+- 🖥️ Auf Tablets und am Computer steht der Inhalt jetzt in einer gut lesbaren Spalte in der Mitte, statt sich über die ganze Breite zu ziehen.
+- ⚙️ In den Einstellungen sind Musik, Effekte und Vorlesen getrennt schaltbar, jeweils mit eigener Lautstärke. Musik startet erst nach dem ersten Antippen und bleibt still, wenn das Handy stumm ist.
+
 ## 0.6.0 – Theorie zum Nachlesen und Lernen nach Fach (17.11.2026)
 
 - 📚 **Lernen nach Fach**: Auf dem Startbildschirm Physik, Chemie oder Biologie wählen – dann kommen die Fachbereiche in der Reihenfolge

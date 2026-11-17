@@ -14,11 +14,12 @@ import androidx.compose.ui.unit.sp
 import de.experimentopia.app.ui.common.*
 import de.experimentopia.app.ui.fx.GlowButton
 import de.experimentopia.app.ui.theme.E
+import de.experimentopia.core.model.AudioPrefs
 import de.experimentopia.core.model.Catalog
 import de.experimentopia.core.model.Island
 import de.experimentopia.core.model.Pro
 
-val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + Pro.purchaseNote + " Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)."
+val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + Pro.purchaseNote + " Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) – und auf ausdrücklichen Wunsch einmal, um die Stimme „Thorsten“ zu laden (63 MB von Hugging Face)."
 
 @Composable
 fun SettingsScreen(
@@ -32,17 +33,16 @@ fun SettingsScreen(
     /** oben: Android zeigt hier „App-Update“, die WebApp Impressum/Datenschutz */
     top: @Composable () -> Unit = {},
     privacy: String = DEFAULT_PRIVACY,
+    audio: AudioPrefs = AudioPrefs(),
+    onAudio: (AudioPrefs) -> Unit = {},
 ) {
     var confirm by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
         Bar("Einstellungen", onBack)
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             top()
-            Panel {
-                Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = E.Mint)
-                Toggle("🔊 Geräusche und Töne", "Blubbern, Zischen, Klangröhren", sound, onSound)
-                Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
-            }
+            SoundSettings(audio, onAudio, sound, onSound, vibration, onVibration)
+            ReadSettings(audio, onAudio)
             Panel {
                 Text("Klassenstufe", style = MaterialTheme.typography.titleMedium, color = E.Mint)
                 Text("Passende Versuche werden hervorgehoben. Alle anderen bleiben spielbar.", color = E.Muted, fontSize = 13.sp)

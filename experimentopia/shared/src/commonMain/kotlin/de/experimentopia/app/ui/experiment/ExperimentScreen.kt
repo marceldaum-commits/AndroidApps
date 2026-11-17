@@ -72,7 +72,12 @@ fun ExperimentScreen(
     val reasons = remember(e.id) { e.why.mapIndexed { i, w -> i to w }.shuffled(kotlin.random.Random(e.id.hashCode())) }
     val stars = Score.stars(explained && explainTries == 1, transferPick == e.transfer.answer)
 
+    val reader = LocalReader.current; val readOn = LocalReadOn.current; val autoRead = LocalAutoRead.current
+    DisposableEffect(e.id) { onDispose { reader?.stop() } }
     LaunchedEffect(phase) {
+        if (readOn && autoRead) when (phase) {
+            Phase.PREDICT -> reader?.say(ReadTexts.question(e)); Phase.LAB -> reader?.say(ReadTexts.task(e)); Phase.TRANSFER -> reader?.say(ReadTexts.transfer(e)); else -> {}
+        }
         when (phase) {
             Phase.REVEAL -> if (right) { sfx?.play(Sound.WIN); confetti++ } else sfx?.play(Sound.AHA)
             Phase.DONE -> {
@@ -100,7 +105,9 @@ fun ExperimentScreen(
                         Phase.PREDICT -> {
                             BlubbSays("Was glaubst du? Es gibt kein Falsch – Forscher vermuten immer zuerst.", Mood.HAPPY, size = 56.dp)
                             Text(e.predict.question, style = MaterialTheme.typography.titleMedium, color = E.Text)
-                            TheoryButton(e.topic, { theory = true })
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                                TheoryButton(e.topic, { theory = true }, Modifier.weight(1f, fill = false)); ReadButton(ReadTexts.question(e))
+                            }
                             e.predict.choices.forEachIndexed { i, c -> ChoiceCard(c, guess == i, { guess = i; sfx?.play(Sound.POP) }, Modifier.popIn(i * 60).testTag("wahl$i")) }
                             if (guess != null) {
                                 Text("Wie sicher bist du dir?", color = E.Muted)
@@ -129,7 +136,9 @@ fun ExperimentScreen(
                                 }
                             }
                             TaskBanner(e.task, goal)
-                            TheoryButton(e.topic, { theory = true })
+                            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                                TheoryButton(e.topic, { theory = true }, Modifier.weight(1f, fill = false)); ReadButton(ReadTexts.task(e))
+                            }
                             Safety.note(e.id)?.let { SafetyNote(it) }
                             LabView(e.setup, free = false, onGoal = { if (!goal) { goal = true; sfx?.play(Sound.STAR) } })
                             GlowButton({ phase = Phase.REVEAL }, Modifier.fillMaxWidth().pulse(goal, 0.03f).testTag("aufloesung"), enabled = goal, color = E.Sun) {
@@ -149,7 +158,7 @@ fun ExperimentScreen(
                                 Text("Herausgekommen ist:", color = E.Muted, fontSize = 13.sp)
                                 Text(e.predict.choices[e.predict.answer].let { "${it.emoji} ${it.text}" }, color = E.Mint, fontWeight = FontWeight.Bold)
                             }
-                            BlubbSays(if (right) e.reveal else "Überraschung! ${e.reveal} Genau so entdecken Forscher Neues – wer sich wundert, lernt am meisten.", if (right) Mood.CHEER else Mood.WOW)
+                            BlubbSays(ReadTexts.revealSay(e, right), if (right) Mood.CHEER else Mood.WOW)
                             GlowButton({ phase = Phase.EXPLAIN }, Modifier.fillMaxWidth().testTag("warum"), color = E.Sky) { Text("🗣️ Blubb fragt: Warum?", fontWeight = FontWeight.Bold) }
                         }
                         Phase.EXPLAIN -> {
@@ -161,12 +170,12 @@ fun ExperimentScreen(
                                 ChoiceCard(Choice(text), false, {
                                     if (explained) return@ChoiceCard
                                     explainTries++
-                                    if (orig == 0) { explained = true; sfx?.play(Sound.DING); view.buzz(Buzz.HIT, vib) } else { wrong = orig; shakeKey++; sfx?.play(Sound.SOFT) }
+                                    if (orig == 0) { explained = true; sfx?.play(Sound.DING); view.buzz(Buzz.HIT, vib); if (readOn && autoRead) reader?.say(ReadTexts.fact(e)) } else { wrong = orig; shakeKey++; sfx?.play(Sound.SOFT) }
                                 }, state = if (explained && orig == 0) true else if (wrong == orig) false else null, shakeKey = if (wrong == orig) shakeKey else 0,
                                     modifier = Modifier.testTag("grund$orig"))
                             }
                             if (explained) {
-                                Panel(border = E.Sun) { Text("📒 Merksatz", color = E.Sun, fontWeight = FontWeight.Bold); Text(e.fact, color = E.Text, fontSize = 16.sp) }
+                                Panel(border = E.Sun) { Text("📒 Merksatz", color = E.Sun, fontWeight = FontWeight.Bold); Text(e.fact, color = E.Text, fontSize = 16.sp); ReadButton(ReadTexts.fact(e)) }
                                 Safety.note(e.id)?.let { SafetyNote(it) }
                                 GlowButton({ phase = Phase.TRANSFER }, Modifier.fillMaxWidth().testTag("knobeln"), color = E.Violet) { Text("🧩 Noch eine Knobelfrage!", fontWeight = FontWeight.Bold) }
                             }
@@ -174,6 +183,7 @@ fun ExperimentScreen(
                         Phase.TRANSFER -> {
                             BlubbSays("Jetzt bist du der Profi. Was passiert hier?", Mood.HAPPY, size = 56.dp)
                             Text(e.transfer.question, style = MaterialTheme.typography.titleMedium, color = E.Text)
+                            ReadButton(ReadTexts.transfer(e))
                             e.transfer.choices.forEachIndexed { i, c ->
                                 ChoiceCard(c, transferPick == i, { if (transferPick == null) { transferPick = i; sfx?.play(if (i == e.transfer.answer) Sound.DING else Sound.SOFT) } },
                                     state = transferPick?.let { if (i == e.transfer.answer) true else if (i == it) false else null }, modifier = Modifier.testTag("transfer$i"))

@@ -2,6 +2,30 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 0.7.0 vom 17.11.2026: eigene Musik und Vorlesen (Aufträge von Marcel)
+
+**Web = Android:** gleicher Code (Compose Multiplatform), gleiche Version 0.7.0, gleiche Texte, gleiche Musik, gleiche Stimmen-Auswahl inklusive „Thorsten“.
+
+**Musik – wie sie entsteht:** komplett im Code komponiert und erzeugt (`shared/.../fx/Music.kt`), keine Samples, keine fremden Dateien.
+Klang-Identität „verspieltes Forscher-Labor“: Pizzicato, Klarinette, Fagott, Glas, Marimba, Blubbern. Vier Welten mit eigener Tonart, eigenem Tempo und eigenen Instrumenten:
+Labor C-Dur, Physik G-Dur (Uhrwerk), Chemie D-dorisch, Biologie F-lydisch. Jede Phrase (8 Takte, etwa 12 Sekunden) wird nach Regeln neu erfunden
+(Akkordfolge der Welt, Rhythmus-Vorrat, Akkordtöne auf betonten Zählzeiten, kleine Schritte, gelegentliche Vorschläge), danach 4–9 Sekunden Stille – keine Schleife.
+Dazu eine Erkennungsmelodie (Klarinette steigt auf, Pizzicato antwortet, Glas funkelt, Blubb). Im Versuch selbst ist es still.
+**Effekte:** Reagenzglas, Blubbern, Zischen, Funken, Messgerät, Heureka (Entdeckung), richtig, falsch (sanftes Fagott). Alles neu im Code erzeugt.
+**Bedienung:** Musik und Effekte getrennt schaltbar mit eigener Lautstärke; Start erst nach der ersten Berührung; folgt der Stummschaltung; leiser beim Vorlesen; kein Inhalt nur über Ton.
+**Schnell:** Musik wird erst nach dem ersten Antippen komponiert, kein Einfluss auf Start und Ladegröße.
+
+**Vorlesen:** Anleitungen, Beobachtungsfragen, Erklärungen, Merksätze, Theorie, Sicherheitshinweise – per 🔊-Knopf oder automatisch (abschaltbar).
+Stimmen des Geräts/Browsers oder „Thorsten“ (natürlich), Tempo, Probe-Taste; die Wahl wird gemerkt. Formeln, Einheiten und chemische Formeln werden richtig gesprochen (`Speech.kt`, Test).
+**Thorsten technisch:** Android wie Raumlicht (sherpa-onnx 2.0.1, ohne espeak-ng, Lautschrift vorab erzeugt). Web mit onnxruntime-web 1.20.1 (MIT, selbst gehostet in `webapp/ort/`,
+11 MB, nur bei Bedarf geladen). Stimmdatei (63 MB, CC0/MIT) nur auf Wunsch von Hugging Face, mit Prüfsumme, im Web im Browser-Speicher. Datenschutz-Text angepasst.
+Hinweis: Die Android-APK wird durch die Sprach-Bibliothek größer: 1,7 MB → 20,7 MB (Maschinencode nur für echte Handys, komprimiert eingepackt; wie Raumlicht).
+Die WebApp lädt beim Start nichts davon – Rechenbaustein (11 MB) und Stimmdatei kommen erst, wenn jemand Thorsten wählt.
+Geprüft im Browser: Thorsten lädt, prüft die Datei und spricht; Musik startet erst nach dem ersten Antippen; keine Konsolenfehler.
+
+**WebApp füllt die Seite:** geprüft bei 360×740, 740×360, 820×1180, 1366×768 und 1920×1080 sowie nach Größenänderung – die Fläche füllt das Fenster exakt,
+keine Ränder, keine Scrollleisten. Auf breiten Bildschirmen steht der Inhalt jetzt in einer lesbaren Spalte (höchstens 720 dp) in der Mitte, der Hintergrund füllt den Rest.
+
 ## 17.11.2026 – Version 0.6.0 vom 17.11.2026: Theorie-Knopf zu jedem Versuch und Lernen nach Fach (Wünsche von Marcel)
 
 - **Lernen nach Fach:** Physik, Chemie, Biologie auf dem Startbildschirm. Fachbereiche in Schulstoff-Reihenfolge (nach Einstiegs-Klassenstufe), gefiltert nach Klasse,

@@ -84,7 +84,7 @@ fun PhLab(s: PhSetup, free: Boolean, onGoal: () -> Unit) {
         FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp), modifier = Modifier.testTag("glaeser")) {
             s.substances.forEach { h ->
                 JuiceGlass(h.title, h.emoji, if (h in poured) h.pH else null, {
-                    if (h !in poured) { poured += h; last = h; sfx?.play(Sound.BUBBLE) }
+                    if (h !in poured) { poured += h; last = h; sfx?.play(Sound.GLASS); sfx?.play(Sound.BUBBLE, volume = 0.5f) }
                 }, Modifier.width(92.dp))
             }
             if (free) JuiceGlass("Mein Stoff", "🧪", if (ownShown) ownPh else null, { ownShown = true; sfx?.play(Sound.BUBBLE) }, Modifier.width(92.dp))

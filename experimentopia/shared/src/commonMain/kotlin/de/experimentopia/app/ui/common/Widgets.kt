@@ -169,6 +169,22 @@ fun SafetyNote(text: String, modifier: Modifier = Modifier) {
         Column {
             Text("In echt: Sicherheit zuerst", color = E.Orange, fontWeight = FontWeight.Bold, fontSize = 13.sp)
             Text(text, color = E.Text, fontSize = 13.sp)
+            ReadButton("Sicherheit zuerst: $text", Modifier.padding(top = 4.dp))
         }
+    }
+}
+
+/** „🔊 Vorlesen“ – nur sichtbar, wenn Vorlesen eingeschaltet ist. Nochmal antippen hält an. */
+@Composable
+fun ReadButton(text: String, modifier: Modifier = Modifier) {
+    val reader = LocalReader.current ?: return
+    if (!LocalReadOn.current) return
+    val busy = reader.speaking
+    Row(modifier.clip(CircleShape).background(E.Mint.copy(alpha = 0.14f)).border(1.5.dp, E.Mint, CircleShape)
+        .clickable { if (busy) reader.stop() else reader.say(text) }.padding(horizontal = 12.dp, vertical = 7.dp).testTag("vorlesen"),
+        verticalAlignment = Alignment.CenterVertically) {
+        Text(if (busy) "⏹️" else "🔊", fontSize = 16.sp)
+        Spacer(Modifier.width(6.dp))
+        Text(if (busy) "Stopp" else "Vorlesen", color = E.Text, fontSize = 13.sp, fontWeight = FontWeight.Bold)
     }
 }

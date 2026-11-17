@@ -37,3 +37,27 @@ fun vibrate(ms: Int): Unit = js("{ if (navigator.vibrate) navigator.vibrate(ms);
 // ── Zurück-Taste des Browsers: Jede geöffnete Ebene bekommt einen Eintrag im Verlauf; „zurück“ schließt eine Ebene.
 fun syncHistory(depth: Int, onBack: () -> Unit): Unit = js(
     "{ window.__exBack = onBack; if (window.__exDepth === undefined) { window.__exDepth = 1; window.addEventListener('popstate', () => { if (window.__exSkip > 0) { window.__exSkip--; return; } if (window.__exDepth > 1) { window.__exDepth--; window.__exBack(); } }); window.__exSkip = 0; } while (window.__exDepth < depth) { history.pushState({ ex: window.__exDepth }, ''); window.__exDepth++; } if (window.__exDepth > depth) { const n = window.__exDepth - depth; window.__exDepth = depth; window.__exSkip += 1; history.go(-n); } }")
+
+// ── Musik: eigener Lautstärke-Regler, die Phrase wird in Kotlin komponiert und hier abgespielt
+fun musicPlay(key: String, gain: Double): Double = js("{ try { const A = window.__exAudio; const b = window.__exBufs[key]; if (!A || !b) return 0; if (!window.__exMusic) { window.__exMusic = A.createGain(); window.__exMusic.connect(A.destination); } window.__exMusic.gain.value = gain; if (window.__exMusicSrc) { try { window.__exMusicSrc.stop(); } catch (e) {} } const s = A.createBufferSource(); s.buffer = b; s.connect(window.__exMusic); s.start(); window.__exMusicSrc = s; return b.duration; } catch (e) { return 0; } }")
+fun musicGain(gain: Double): Unit = js("{ if (window.__exMusic) window.__exMusic.gain.setTargetAtTime(gain, window.__exAudio.currentTime, 0.15); }")
+fun musicStop(): Unit = js("{ try { if (window.__exMusicSrc) { const g = window.__exMusic; const A = window.__exAudio; g.gain.setTargetAtTime(0, A.currentTime, 0.08); const s = window.__exMusicSrc; setTimeout(() => { try { s.stop(); } catch (e) {} }, 300); window.__exMusicSrc = null; } } catch (e) {} }")
+fun pageHidden(): Boolean = js("document.hidden")
+
+// ── Vorlesen mit den Stimmen des Browsers
+fun canSpeak(): Boolean = js("('speechSynthesis' in window)")
+/** Deutsche Stimmen als „id\tName“-Zeilen (lokale zuerst); meldet sich erneut, wenn der Browser die Liste nachlädt */
+fun browserVoices(changed: (String) -> Unit): Unit = js("{ const f = () => { try { const v = speechSynthesis.getVoices().filter((x) => x.lang && x.lang.toLowerCase().startsWith('de')); v.sort((a, b) => (b.localService - a.localService) || a.name.localeCompare(b.name)); changed(v.map((x) => x.voiceURI + '\\t' + x.name).join('\\n')); } catch (e) { changed(''); } }; if ('speechSynthesis' in window) { f(); speechSynthesis.addEventListener('voiceschanged', f); } }")
+fun browserSpeak(text: String, voice: String, rate: Double, volume: Double, onStart: () -> Unit, onEnd: () -> Unit): Unit = js("{ try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.lang = 'de-DE'; u.rate = rate; u.volume = volume; const all = speechSynthesis.getVoices(); const v = all.find((x) => x.voiceURI === voice) || all.filter((x) => x.lang && x.lang.toLowerCase().startsWith('de')).sort((a, b) => b.localService - a.localService)[0]; if (v) u.voice = v; u.onstart = () => onStart(); u.onend = () => onEnd(); u.onerror = () => onEnd(); speechSynthesis.speak(u); } catch (e) { onEnd(); } }")
+fun browserStop(): Unit = js("{ if ('speechSynthesis' in window) speechSynthesis.cancel(); }")
+
+// ── Thorsten (stimme.js wird erst bei Bedarf geladen)
+fun stimmeScript(done: (Boolean) -> Unit): Unit = js("{ if (window.ExStimme) { done(true); return; } const s = document.createElement('script'); s.src = 'stimme.js'; s.onload = () => done(true); s.onerror = () => done(false); document.head.appendChild(s); }")
+fun stimmeInstalled(done: (Boolean) -> Unit): Unit = js("window.ExStimme.installed(done)")
+fun stimmeLoad(progress: (Int) -> Unit, done: (String?) -> Unit): Unit = js("window.ExStimme.load(progress, done)")
+fun stimmeCancel(): Unit = js("window.ExStimme.cancel()")
+fun stimmeRemove(done: () -> Unit): Unit = js("window.ExStimme.remove(done)")
+fun stimmeReady(): Boolean = js("!!(window.ExStimme && window.ExStimme.ready())")
+fun stimmeSpeak(phonemes: String, rate: Double, volume: Double, onStart: () -> Unit, onEnd: () -> Unit): Unit = js("window.ExStimme.speak(phonemes, rate, volume, onStart, onEnd)")
+fun stimmeStop(): Unit = js("{ if (window.ExStimme) window.ExStimme.stop(); }")
+fun stimmeKnown(): Boolean = js("{ try { return localStorage.getItem('experimentopia.thorsten') === '1'; } catch (e) { return false; } }")

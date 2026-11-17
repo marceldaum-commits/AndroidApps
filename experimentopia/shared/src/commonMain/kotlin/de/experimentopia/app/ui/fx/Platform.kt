@@ -38,3 +38,47 @@ fun dateText(millis: Long): String {
     val y = yoe + era * 400 + if (m <= 2) 1 else 0
     return "${d.toString().padStart(2, '0')}.${m.toString().padStart(2, '0')}.$y"
 }
+
+/** Hintergrundmusik: je Welt eigene, immer neue Phrasen mit Pausen dazwischen; [world] null = Stille (z. B. im Versuch) */
+interface MusicPlayer {
+    fun world(w: de.experimentopia.core.model.World?)
+    /** Erkennungsmelodie (einmal nach der ersten Berührung) */
+    fun jingle()
+    fun configure(p: de.experimentopia.core.model.AudioPrefs)
+    /** Leiser stellen, während vorgelesen wird */
+    fun duck(on: Boolean)
+}
+val LocalMusic = staticCompositionLocalOf<MusicPlayer?> { null }
+
+/** Eine wählbare Stimme des Geräts oder Browsers */
+data class VoiceOption(val id: String, val label: String)
+
+/** Zustand der natürlichen Stimme „Thorsten“ */
+sealed interface NaturalState {
+    data object Missing : NaturalState
+    data class Loading(val percent: Int) : NaturalState
+    data class Failed(val why: String) : NaturalState
+    data object Ready : NaturalState
+}
+
+/**
+ * Vorlesen: Stimmen des Geräts bzw. Browsers oder „Thorsten“ (natürliche Stimme, auf Wunsch geladen).
+ * Die Texte werden vorher mit [de.experimentopia.core.model.Speech.clean] sprechbar gemacht.
+ * Die Felder sind Compose-Zustand, damit die Einstellungen sich von selbst aktualisieren.
+ */
+interface Reader {
+    val voices: List<VoiceOption>
+    val natural: NaturalState
+    val speaking: Boolean
+    fun say(text: String)
+    fun stop()
+    fun configure(p: de.experimentopia.core.model.AudioPrefs)
+    fun loadNatural()
+    fun cancelNatural()
+    fun removeNatural()
+}
+val LocalReader = staticCompositionLocalOf<Reader?> { null }
+/** Automatisch vorlesen (Einstellung) */
+val LocalAutoRead = staticCompositionLocalOf { false }
+/** Vorlesen eingeschaltet (Einstellung) – dann gibt es überall 🔊-Knöpfe */
+val LocalReadOn = staticCompositionLocalOf { false }

@@ -22,6 +22,11 @@ class AndroidSfx(context: Context) : SoundPlayer {
     private val toneCache = ConcurrentHashMap<String, FloatArray>()
 
     @Volatile var enabled = true
+    /** Effekt-Lautstärke (Einstellungen) */
+    @Volatile var volume = 0.9f
+    private val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as android.media.AudioManager
+    /** Stumm oder Vibration am Gerät: dann bleibt auch die App still */
+    private fun silent() = audioManager.ringerMode != android.media.AudioManager.RINGER_MODE_NORMAL
 
     init {
         pool.setOnLoadCompleteListener { _, id, status -> if (status == 0) ready += id }
@@ -38,15 +43,16 @@ class AndroidSfx(context: Context) : SoundPlayer {
     }
 
     override fun play(s: Sound, pitch: Float, volume: Float) {
-        if (!enabled) return
+        if (!enabled || silent()) return
         val id = ids[s] ?: return
         if (id !in ready) return
-        pool.play(id, volume, volume, 1, 0, pitch.coerceIn(0.5f, 2f))
+        val v = (volume * this.volume).coerceIn(0f, 1f)
+        pool.play(id, v, v, 1, 0, pitch.coerceIn(0.5f, 2f))
     }
 
     /** Spielt einen Ton der Frequenz [hz] (Klangröhren, Gläser, Saite) */
     override fun tone(hz: Double, timbre: Timbre) {
-        if (!enabled) return
+        if (!enabled || silent()) return
         toneThread.execute {
             runCatching {
                 val key = "${timbre.name}_${hz.toInt()}"
@@ -62,12 +68,12 @@ class AndroidSfx(context: Context) : SoundPlayer {
         }
     }
 
-    private companion object { const val VERSION = "v1" }
+    private companion object { const val VERSION = "v2" }
 }
 
 
 /** 16-Bit-WAV aus den im Code erzeugten Klängen (SoundPool braucht Dateien) */
-fun wav(samples: FloatArray): ByteArray {
+fun wav(samples: FloatArray, rate: Int = Synth.SR): ByteArray {
     val data = ByteArray(samples.size * 2)
     samples.forEachIndexed { i, s ->
         val v = (s.coerceIn(-1f, 1f) * 32767).toInt()
@@ -78,7 +84,7 @@ fun wav(samples: FloatArray): ByteArray {
     fun i32(v: Int) = out.write(byteArrayOf(v.toByte(), (v shr 8).toByte(), (v shr 16).toByte(), (v shr 24).toByte()))
     fun i16(v: Int) = out.write(byteArrayOf(v.toByte(), (v shr 8).toByte()))
     str("RIFF"); i32(36 + data.size); str("WAVE")
-    str("fmt "); i32(16); i16(1); i16(1); i32(Synth.SR); i32(Synth.SR * 2); i16(2); i16(16)
+    str("fmt "); i32(16); i16(1); i16(1); i32(rate); i32(rate * 2); i16(2); i16(16)
     str("data"); i32(data.size); out.write(data)
     return out.toByteArray()
 }

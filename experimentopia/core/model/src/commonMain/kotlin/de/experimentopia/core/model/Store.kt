@@ -42,6 +42,8 @@ object Progress {
 interface Prefs {
     val sound: StateFlow<Boolean>; fun setSound(v: Boolean)
     val vibration: StateFlow<Boolean>; fun setVibration(v: Boolean)
+    /** Musik, Effekt-Lautstärke und Vorlesen (die Effekte selbst schaltet [sound]) */
+    val audio: StateFlow<AudioPrefs>; fun setAudio(a: AudioPrefs)
     /** Forscher-Pass gekauft? Wirkt erst, wenn Pro eingeschaltet ist ([Pro.ENABLED]). */
     val pro: StateFlow<Boolean>; fun setPro(v: Boolean)
     /** Klassenstufe für den Filter (0 = alle) */

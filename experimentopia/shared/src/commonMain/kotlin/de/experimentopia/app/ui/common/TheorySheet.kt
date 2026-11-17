@@ -72,6 +72,7 @@ fun TheorySheet(visible: Boolean, topic: Topic, pro: Boolean, onClose: () -> Uni
                     }
                 }
                 BlubbSays(card.idea, Mood.HAPPY, size = 52.dp, speak = false)
+                ReadButton(ReadTexts.theory(topic, showPro))
                 card.basics.forEachIndexed { i, pt -> Point(pt, i) }
                 Panel(border = E.Sun) {
                     Text("🏠 Im Alltag", color = E.Sun, fontWeight = FontWeight.Bold)

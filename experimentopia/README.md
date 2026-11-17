@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 0.6.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 0.7.0 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -46,6 +46,31 @@ Auftrieb (ρ-Vergleich, Eintauchtiefe), Hebelgesetz, Flaschenzug (Goldene Regel)
 pH aus [H⁺]−[OH⁻] mit Kw, Atomzählung aller Reaktionen, begrenzender Stoff beim Natron-Ballon, Richmann-Mischungsregel, Heizkurve mit Schmelz- und
 Verdampfungswärme, Fall mit Luftwiderstand (numerisch) und ohne, exakte Pendeldauer (elliptisches Integral), Röhren f = c/(4L),
 Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, AB0), Osmose, Enzymaktivität, Lichtstärke ∼ 1/d², Lotka-Volterra, Trennverfahren (kürzester Weg), subtraktive Farbmischung (`BiologyTest`), Sehfeld und Auflösung beim Mikroskop, Keimbedingungen, Nahrungsnetz (längste Kette, 10-%-Regel, Anreicherung), Herzzeitvolumen und Erholungspuls (`Biology2Test`). Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
+
+## Musik und Klänge (selbst komponiert)
+
+Alles entsteht im Code (`shared/.../fx/Music.kt`, `Synth.kt`) – keine Samples, keine Lizenzen; Android und Web klingen gleich.
+Klang-Identität „verspieltes Forscher-Labor“: Pizzicato (gezupfte Saite mit Holzkörper), Klarinette (ungerade Obertöne, leichtes Vibrato), Fagott (näselnd, Obertöne 2/3),
+Glas (unharmonischer Oberton 2,76), Marimba, Blubbern, Holzblock-Ticks, Vogel-Zwitschern.
+
+| Welt | Tonart, Tempo | Instrumente |
+|---|---|---|
+| Labor (Start, Menüs) | C-Dur, 108 | Klarinette über Pizzicato, Glas und Blubbern |
+| Physik | G-Dur, 116 | Glas-Glockenspiel wie ein Uhrwerk, Pizzicato, Holzblock-Ticks |
+| Chemie | D-dorisch, 96 | tiefe Klarinette, Fagott-Staccato, Blubbern |
+| Biologie | F-lydisch, 100 | Marimba, Fagott-Bögen, Vogel-Zwitschern |
+
+Jede Phrase (8 Takte) wird neu erfunden: Akkordfolge der Welt, Rhythmen aus einem kleinen Vorrat, Akkordtöne auf betonten Zählzeiten, kleine Schritte dazwischen,
+manchmal ein schrulliger Vorschlag; danach 4–9 Sekunden Stille. Im Versuch selbst ist es still. Musik startet erst nach der ersten Berührung,
+folgt der Stummschaltung (Android: Klingelmodus, Web: Gerät) und wird beim Vorlesen leiser.
+
+## Vorlesen
+
+`Speech.kt` macht Texte sprechbar (chemische Formeln, Einheiten, Rechenzeichen, Kreuzungen, Abkürzungen; Test `SpeechTest`).
+Stimmen: die des Geräts bzw. Browsers oder **„Thorsten“** (Piper-Stimme, Aufnahmen CC0). Thorsten rechnet auf dem Gerät –
+Android mit sherpa-onnx (wie Raumlicht), Web mit onnxruntime-web (`web/.../stimme.js`, Bibliothek in `ort/`, wird erst bei Bedarf geladen).
+Die Stimmdatei (63 MB) kommt nur auf Wunsch einmal von Hugging Face und wird per Prüfsumme kontrolliert.
+Lautschrift wird vorab mit `tools/stimme/lautschrift.py` erzeugt (kein espeak-ng in der App); `AudioTest` prüft, dass jeder vorlesbare Text Lautschrift hat.
 
 ## Lernen nach Fach (am Schulstoff entlang)
 
@@ -103,8 +128,8 @@ Eingeschaltet wird erst, wenn es einen Bezahlweg gibt.
 | ![](screenshots/54_mikroskop.png) | ![](screenshots/55_augentierchen.png) | ![](screenshots/56_kresse_im_dunkeln.png) | ![](screenshots/57_nahrungskette.png) |
 | Ohne Mäuse | Herz und Puls | Erholungspuls | Theorie |
 | ![](screenshots/58_ohne_maeuse.png) | ![](screenshots/59_herz_und_puls.png) | ![](screenshots/60_erholungspuls.png) | ![](screenshots/61_theorie.png) |
-| Theorie für Profis | Lernen nach Fach | Biologie, Klasse 9 | |
-| ![](screenshots/62_theorie_profi.png) | ![](screenshots/63_lernen_nach_fach.png) | ![](screenshots/64_fach_biologie.png) | |
+| Theorie für Profis | Lernen nach Fach | Biologie, Klasse 9 | Musik und Vorlesen |
+| ![](screenshots/62_theorie_profi.png) | ![](screenshots/63_lernen_nach_fach.png) | ![](screenshots/64_fach_biologie.png) | ![](screenshots/65_musik_und_vorlesen.png) |
 
 ## Android und Web
 

@@ -16,6 +16,8 @@ import de.experimentopia.app.ui.AppRoot
 import de.experimentopia.app.ui.fx.LocalBuzzer
 import de.experimentopia.app.ui.fx.LocalSfx
 import de.experimentopia.app.ui.fx.LocalVibration
+import de.experimentopia.app.ui.fx.LocalMusic
+import de.experimentopia.app.ui.fx.LocalReader
 import de.experimentopia.app.ui.settings.UpdateBanner
 import de.experimentopia.app.ui.theme.E
 import de.experimentopia.app.ui.theme.ExperimentopiaTheme
@@ -33,11 +35,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             val sound by vm.settings.sound.collectAsStateWithLifecycle()
             val vibration by vm.settings.vibration.collectAsStateWithLifecycle()
+            val audio by vm.settings.audio.collectAsStateWithLifecycle()
             LaunchedEffect(sound) { app.sfx.enabled = sound }
+            LaunchedEffect(audio) { app.sfx.volume = audio.sfxVol }
             val view = LocalView.current
             val buzzer = remember(view) { AndroidBuzzer(view) }
             ExperimentopiaTheme {
-                CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration, LocalBuzzer provides buzzer) {
+                CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration, LocalBuzzer provides buzzer,
+                    LocalMusic provides app.music, LocalReader provides app.reader) {
                     Surface(Modifier.fillMaxSize(), color = E.Night) {
                         BackHandler(enabled = vm.nav.canBack) { vm.nav.back() }
                         val upd by vm.availableUpdate.collectAsStateWithLifecycle()
@@ -53,6 +58,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
+        (application as ExperimentopiaApp).music.pause(false)
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // im Hintergrund: keine Musik, kein Vorlesen
+        val app = application as ExperimentopiaApp
+        app.music.pause(true); app.reader.stop()
     }
 }

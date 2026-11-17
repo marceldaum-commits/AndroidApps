@@ -9,6 +9,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.background
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -108,12 +112,34 @@ fun AppRoot(
     val stats by state.stats.collectAsState()
     val journal by state.journal.collectAsState()
     val grade by state.prefs.grade.collectAsState()
+    val audio by state.prefs.audio.collectAsState()
+    val sound by state.prefs.sound.collectAsState()
+    val music = LocalMusic.current; val reader = LocalReader.current
+    // Musik und Stimme folgen den Einstellungen; Musik erst nach der ersten Berührung
+    var touched by remember { mutableStateOf(false) }
+    LaunchedEffect(audio) { music?.configure(audio); reader?.configure(audio) }
+    LaunchedEffect(touched) { if (touched && audio.music) music?.jingle() }
+    LaunchedEffect(nav.top, touched) {
+        if (!touched) return@LaunchedEffect
+        music?.world(when (val r = nav.top) {
+            is Route.IslandR -> r.island.world(); is Route.SubjectR -> r.subject.world()
+            is Route.Exp, is Route.FreeRun -> null
+            else -> World.LABOR
+        })
+    }
+    LaunchedEffect(reader?.speaking) { music?.duck(reader?.speaking == true) }
     var celebrate by remember { mutableStateOf<List<Badge>>(emptyList()) }
     LaunchedEffect(stats) { val n = state.newBadges(stats); if (n.isNotEmpty()) celebrate = n }
     LaunchedEffect(nav.top) { onRoute(nav.top) }
     fun open(e: Experiment, daily: Boolean = false) { if (!daily && state.locked(e)) nav.go(Route.ProR(e.title)) else nav.go(Route.Exp(e.id, daily)) }
 
-    Box(Modifier.fillMaxSize()) {
+    CompositionLocalProvider(LocalReadOn provides audio.read, LocalAutoRead provides audio.autoRead) {
+    // Große Bildschirme (Laptop, Tablet quer): Hintergrund füllt alles, der Inhalt bleibt in angenehmer Lesebreite in der Mitte
+    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(E.Deep, E.Night))), contentAlignment = Alignment.TopCenter) {
+    Box(Modifier.widthIn(max = 720.dp).fillMaxSize().pointerInput(Unit) {
+        // erste Berührung merken (ohne sie zu verbrauchen) – erst dann darf Musik spielen
+        awaitPointerEventScope { while (!touched) { val ev = awaitPointerEvent(PointerEventPass.Initial); if (ev.changes.any { it.pressed }) touched = true } }
+    }) {
         AnimatedContent(nav.top, transitionSpec = { fadeIn() togetherWith fadeOut() }, label = "nav") { r ->
             when (r) {
                 Route.Home -> {
@@ -145,19 +171,21 @@ fun AppRoot(
                 Route.Badges -> BadgesScreen(stats) { nav.back() }
                 is Route.ProR -> ProScreen(r.what) { nav.back() }
                 Route.Settings -> {
-                    val sound by state.prefs.sound.collectAsState()
                     val vibration by state.prefs.vibration.collectAsState()
                     de.experimentopia.app.ui.settings.SettingsScreen(
                         sound = sound, onSound = state.prefs::setSound, vibration = vibration, onVibration = state.prefs::setVibration,
                         grade = grade, onGrade = state.prefs::setGrade, installed = versionName, versionDate = versionDate,
                         onReset = state::reset, onPro = { nav.go(Route.ProR("Alles")) }, onBack = { nav.back() },
                         top = settingsTop, privacy = privacy ?: de.experimentopia.app.ui.settings.DEFAULT_PRIVACY,
+                        audio = audio, onAudio = state.prefs::setAudio,
                     )
                 }
             }
         }
         // Neue Abzeichen auf der Startseite feiern (nicht mitten im Versuch)
         if (celebrate.isNotEmpty() && nav.top == Route.Home) NewBadges(celebrate) { state.prefs.badgesSeen = state.prefs.badgesSeen + celebrate.map { it.id }; celebrate = emptyList() }
+    }
+    }
     }
 }
 

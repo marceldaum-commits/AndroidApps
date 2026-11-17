@@ -34,12 +34,12 @@ private class WebSfx(private val prefs: WebPrefs) : SoundPlayer {
     }
     override fun play(s: Sound, pitch: Float, volume: Float) {
         if (!prefs.sound.value) return
-        if (ensure(s.name) { Synth.render(s) }) playBuffer(s.name, pitch.toDouble(), 0.7 * volume)
+        if (ensure(s.name) { Synth.render(s) }) playBuffer(s.name, pitch.toDouble(), 0.78 * volume * prefs.audio.value.sfxVol)
     }
     override fun tone(hz: Double, timbre: Timbre) {
         if (!prefs.sound.value) return
         val key = "${timbre.name}_${hz.toInt()}"
-        if (ensure(key) { Synth.tone(hz, timbre) }) playBuffer(key, 1.0, 0.7)
+        if (ensure(key) { Synth.tone(hz, timbre) }) playBuffer(key, 1.0, 0.78 * prefs.audio.value.sfxVol)
     }
 }
 
@@ -64,7 +64,9 @@ private fun WebApp() {
     // Zurück-Taste des Browsers schließt eine Ebene
     LaunchedEffect(nav.stack.size) { syncHistory(nav.stack.size) { nav.back() } }
     val sfx = remember { WebSfx(prefs) }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration,
+    val music = remember { WebMusic(scope) }
+    val reader = remember { WebReader() }
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalReader provides reader,
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.BIG -> 40 }) }) {
         ExperimentopiaTheme { Surface(Modifier.fillMaxSize(), color = E.Night) {
             AppRoot(nav, state, Version.NAME, Version.DATE,
@@ -78,7 +80,8 @@ private fun WebApp() {
                     }
                 },
                 privacy = "Experimentopia speichert den Spielstand und das Forscherbuch nur in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, " +
-                    "keine Daten an einen Server. " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge entstehen im Browser.",
+                    "keine Daten an einen Server. " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
+                    "Nur wenn du die Stimme „Thorsten“ auswählst und laden lässt, kommt einmal eine Stimmdatei von Hugging Face (63 MB); sie bleibt in diesem Browser.",
                 onRoute = { atHome(it == Route.Home) })
         } }
     }

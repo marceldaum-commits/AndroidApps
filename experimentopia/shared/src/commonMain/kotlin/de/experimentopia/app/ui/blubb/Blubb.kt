@@ -21,7 +21,11 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.experimentopia.app.ui.fx.LocalSfx
+import de.experimentopia.app.ui.fx.LocalReader
+import de.experimentopia.app.ui.fx.LocalReadOn
+import de.experimentopia.app.ui.fx.LocalAutoRead
 import de.experimentopia.app.ui.fx.Sound
 import de.experimentopia.app.ui.fx.rememberSeconds
 import de.experimentopia.app.ui.theme.E
@@ -111,13 +115,14 @@ fun Blubb(mood: Mood, modifier: Modifier = Modifier, size: Dp = 96.dp) {
     }
 }
 
-/** Blubb mit Sprechblase. Der Text tippt sich schnell ein – antippen zeigt sofort alles. */
+/** Blubb mit Sprechblase. Der Text tippt sich schnell ein – antippen zeigt sofort alles und liest vor (wenn Vorlesen an ist). */
 @Composable
 fun BlubbSays(text: String, mood: Mood = Mood.HAPPY, modifier: Modifier = Modifier, size: Dp = 72.dp, speak: Boolean = true) {
     val sfx = LocalSfx.current
+    val reader = LocalReader.current; val readOn = LocalReadOn.current; val auto = LocalAutoRead.current
     var shown by remember(text) { mutableIntStateOf(0) }
     LaunchedEffect(text) {
-        if (speak) sfx?.play(Sound.BLUBB, volume = 0.5f)
+        if (readOn && auto && reader != null) reader.say(text) else if (speak) sfx?.play(Sound.BLUBB, volume = 0.5f)
         while (shown < text.length) { delay(12); shown = (shown + 2).coerceAtMost(text.length) }
     }
     Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom) {
@@ -125,12 +130,13 @@ fun BlubbSays(text: String, mood: Mood = Mood.HAPPY, modifier: Modifier = Modifi
         Spacer(Modifier.width(6.dp))
         Box(
             Modifier.weight(1f).background(E.Panel, RoundedCornerShape(18.dp, 18.dp, 18.dp, 4.dp))
-                .clickable(remember { MutableInteractionSource() }, null) { shown = text.length }
+                .clickable(remember { MutableInteractionSource() }, null) { shown = text.length; if (readOn) reader?.say(text) }
                 .padding(horizontal = 14.dp, vertical = 10.dp)
         ) {
             // Platz für den ganzen Text reservieren, damit nichts springt
             Text(text, style = MaterialTheme.typography.bodyLarge, color = Color.Transparent)
             Text(text.take(shown), style = MaterialTheme.typography.bodyLarge, color = E.Text)
+            if (readOn && reader != null) Text("🔊", fontSize = 12.sp, modifier = Modifier.align(Alignment.BottomEnd).offset(x = 8.dp, y = 6.dp))
         }
     }
 }

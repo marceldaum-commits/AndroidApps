@@ -9,7 +9,11 @@ import kotlin.math.sin
 import kotlin.random.Random
 
 /** Alle Geräusche – im Code erzeugt, keine Audiodateien, keine Lizenzen. Blubbernd, gläsern, freundlich. */
-enum class Sound { TAP, POP, SPLASH, BUBBLE, DING, WIN, AHA, SOFT, BANG, FIZZ, ZAP, CLANK, WHOOSH, BLUBB, STAR, SWITCH }
+/**
+ * Effekte der Klang-Identität „Forscher-Labor“: TAP = Pizzicato-Zupfer, GLASS = Reagenzglas, BUBBLE/BLUBB = Blubbern, FIZZ = Zischen,
+ * ZAP = Funken, DING = Messgerät, AHA = Entdeckung („Heureka“), WIN = richtig, SOFT = falsch (sanftes Fagott, nie ein Fehler-Ton).
+ */
+enum class Sound { TAP, POP, SPLASH, BUBBLE, DING, WIN, AHA, SOFT, BANG, FIZZ, ZAP, CLANK, WHOOSH, BLUBB, STAR, SWITCH, GLASS }
 
 /** Klangfarben für Töne mit fester Höhe (Klangröhren, Gläser, Saite) */
 enum class Timbre { FLUTE, BELL, PLUCK }
@@ -19,21 +23,28 @@ object Synth {
     private const val TAU = 2 * PI
 
     fun render(s: Sound): FloatArray = when (s) {
-        Sound.TAP -> buf(0.06).also { sweep(it, 0.0, 1300.0, 900.0, 0.045, 0.3) }
+        // Pizzicato-Zupfer
+        Sound.TAP -> buf(0.18).also { pluck(it, 0.0, 880.0, 0.17, 0.5) }
         Sound.SWITCH -> buf(0.08).also { noise(it, 0.0, 0.02, 0.5, false, 0.6); sweep(it, 0.0, 2200.0, 1800.0, 0.03, 0.3, square = true) }
         Sound.POP -> buf(0.12).also { sweep(it, 0.0, 400.0, 1400.0, 0.08, 0.6) }
         Sound.BUBBLE -> buf(0.18).also { sweep(it, 0.0, 500.0, 1600.0, 0.12, 0.45); sweep(it, 0.06, 700.0, 2000.0, 0.1, 0.25) }
         Sound.SPLASH -> buf(0.6).also { noise(it, 0.0, 0.55, 0.8, false, 0.25); sweep(it, 0.0, 300.0, 120.0, 0.2, 0.4) }
-        Sound.DING -> buf(0.8).also { bell(it, 0.0, 1568.0, 0.7, 0.4); bell(it, 0.0, 2349.0, 0.5, 0.15) }
+        // Messgerät: zwei kurze Pieptöne
+        Sound.DING -> buf(0.32).also { beep(it, 0.0, 1760.0, 0.09, 0.45); beep(it, 0.15, 2349.0, 0.12, 0.45) }
+        // Reagenzglas: hell, unharmonisch, kurz nachklingend
+        Sound.GLASS -> buf(0.7).also { bell(it, 0.0, 3150.0, 0.6, 0.35); bell(it, 0.0, 4710.0, 0.35, 0.2); bell(it, 0.03, 3420.0, 0.5, 0.15) }
         Sound.STAR -> buf(0.5).also { bell(it, 0.0, 2093.0, 0.45, 0.35); bell(it, 0.05, 2637.0, 0.4, 0.25) }
+        // Richtig: Pizzicato steigt auf, die Klarinette antwortet, ein Glas funkelt
         Sound.WIN -> buf(1.6).also {
-            listOf(523.25, 659.25, 783.99, 1046.5).forEachIndexed { i, f -> bell(it, i * 0.1, f, 0.5, 0.3) }
-            listOf(1046.5, 1318.5, 1568.0).forEach { f -> bell(it, 0.45, f, 1.1, 0.2) }
+            listOf(523.25, 659.25, 783.99).forEachIndexed { i, f -> pluck(it, i * 0.1, f, 0.5, 0.45) }
+            reed(it, 0.32, 1046.5, 0.5, 0.35)
+            bell(it, 0.4, 2093.0, 1.0, 0.18)
         }
-        // Aha-Moment: funkelndes Aufwärts-Glitzern
-        Sound.AHA -> buf(1.0).also { listOf(784.0, 988.0, 1175.0, 1568.0, 1976.0, 2349.0).forEachIndexed { i, f -> bell(it, i * 0.06, f, 0.6, 0.22) } }
-        // Sanftes „Hmm“ statt eines harten Fehlertons
-        Sound.SOFT -> buf(0.4).also { sweep(it, 0.0, 392.0, 330.0, 0.35, 0.4) }
+        // Entdeckung („Heureka“): Glas-Glitzern steigt auf, oben ein Klarinetten-Triller
+        Sound.AHA -> buf(1.2).also { listOf(784.0, 988.0, 1175.0, 1568.0, 1976.0).forEachIndexed { i, f -> bell(it, i * 0.06, f, 0.6, 0.2) }
+            repeat(4) { k -> reed(it, 0.32 + k * 0.07, if (k % 2 == 0) 1568.0 else 1760.0, 0.065, 0.22) } }
+        // Falsch – ganz sanft: zwei weiche Fagott-Töne abwärts („hmm“), nie ein harter Fehlerton
+        Sound.SOFT -> buf(0.6).also { reed(it, 0.0, 164.8, 0.2, 0.4, low = true); reed(it, 0.22, 130.8, 0.32, 0.4, low = true) }
         Sound.BANG -> buf(1.0).also { noise(it, 0.0, 0.9, 1.0, false, 0.5); sweep(it, 0.0, 120.0, 35.0, 0.6, 0.9) }
         Sound.FIZZ -> buf(1.2).also { noise(it, 0.0, 1.15, 0.6, true, 0.9); repeat(10) { k -> sweep(it, k * 0.1, 900.0 + k * 80, 2400.0, 0.06, 0.15) } }
         Sound.ZAP -> buf(0.35).also { val r = Random(9); repeat(6) { k -> sweep(it, k * 0.04, r.nextDouble(800.0, 3000.0), r.nextDouble(200.0, 900.0), 0.05, 0.3, square = true) }; noise(it, 0.0, 0.3, 0.4, false, 0.8) }
@@ -63,6 +74,29 @@ object Synth {
     }
 
     private fun buf(sec: Double) = FloatArray((sec * SR).toInt())
+
+    /** Gezupfte Saite (Pizzicato) */
+    private fun pluck(out: FloatArray, start: Double, f: Double, dur: Double, amp: Double) {
+        val s0 = (start * SR).toInt(); val n = min((dur * SR).toInt(), out.size - s0)
+        for (i in 0 until n) { val t = i.toDouble() / SR
+            out[s0 + i] += (amp * min(1.0, t / 0.002) * exp(-t * 9) * (1..5).sumOf { k -> sin(TAU * k * f * t) * exp(-t * 3.0 * k) / k }).toFloat() }
+    }
+
+    /** Rohrblatt: Klarinette (ungerade Obertöne) bzw. Fagott ([low], näselnd) */
+    private fun reed(out: FloatArray, start: Double, f: Double, dur: Double, amp: Double, low: Boolean = false) {
+        val s0 = (start * SR).toInt(); val n = min(((dur + 0.08) * SR).toInt(), out.size - s0)
+        for (i in 0 until n) { val t = i.toDouble() / SR; val ph = TAU * f * t
+            val env = min(1.0, t / 0.03) * (if (t > dur) exp(-(t - dur) * 30) else 1.0)
+            val w = if (low) 0.6 * sin(ph) + sin(2 * ph) + 0.7 * sin(3 * ph) + 0.3 * sin(4 * ph) else sin(ph) + 0.42 * sin(3 * ph) + 0.22 * sin(5 * ph)
+            out[s0 + i] += (amp * env * w * 0.5).toFloat() }
+    }
+
+    /** Piepton eines Messgeräts */
+    private fun beep(out: FloatArray, start: Double, f: Double, dur: Double, amp: Double) {
+        val s0 = (start * SR).toInt(); val n = min((dur * SR).toInt(), out.size - s0)
+        for (i in 0 until n) { val t = i.toDouble() / SR
+            out[s0 + i] += (amp * min(1.0, t / 0.003) * min(1.0, (dur - t) / 0.01) * sin(TAU * f * t)).toFloat() }
+    }
 
     private fun bell(out: FloatArray, start: Double, f: Double, dur: Double, amp: Double) {
         val s0 = (start * SR).toInt()

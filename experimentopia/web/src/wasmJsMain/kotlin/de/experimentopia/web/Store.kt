@@ -37,6 +37,8 @@ class WebPrefs : Prefs {
     private val _sound = flag("ton", true); private val _vibration = flag("vibration", true); private val _pro = flag("pro", false)
     override val sound: StateFlow<Boolean> = _sound; override fun setSound(v: Boolean) { put("ton", v); _sound.value = v }
     override val vibration: StateFlow<Boolean> = _vibration; override fun setVibration(v: Boolean) { put("vibration", v); _vibration.value = v }
+    private val _audio = MutableStateFlow(AudioPrefs.decode(storeGet(P + "klang")))
+    override val audio: StateFlow<AudioPrefs> = _audio; override fun setAudio(a: AudioPrefs) { storeSet(P + "klang", a.encode()); _audio.value = a }
     override val pro: StateFlow<Boolean> = _pro; override fun setPro(v: Boolean) { put("pro", v); _pro.value = v }
     private val _grade = MutableStateFlow(storeGet(P + "klasse")?.toIntOrNull() ?: 0)
     override val grade: StateFlow<Int> = _grade; override fun setGrade(g: Int) { storeSet(P + "klasse", g.toString()); _grade.value = g }

@@ -23,6 +23,11 @@ class Settings(ctx: Context) : Prefs {
 
     override fun setSound(v: Boolean) { prefs.edit().putBoolean("sound", v).apply(); _sound.value = v }
     override fun setVibration(v: Boolean) { prefs.edit().putBoolean("vibration", v).apply(); _vibration.value = v }
+
+    /** Musik, Effekt-Lautstärke und Vorlesen – als eine Zeile gespeichert (gleiches Format wie im Web) */
+    private val _audio = MutableStateFlow(de.experimentopia.core.model.AudioPrefs.decode(prefs.getString("audio", null)))
+    override val audio: StateFlow<de.experimentopia.core.model.AudioPrefs> = _audio.asStateFlow()
+    override fun setAudio(a: de.experimentopia.core.model.AudioPrefs) { prefs.edit().putString("audio", a.encode()).apply(); _audio.value = a }
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("autoUpdate", v).apply(); _autoUpdate.value = v }
     override fun setPro(v: Boolean) { prefs.edit().putBoolean("pro", v).apply(); _pro.value = v }
 
