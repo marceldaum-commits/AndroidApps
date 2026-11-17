@@ -1,13 +1,13 @@
 # Raumlicht in den Play Store bringen
 
-Stand: Version 2.15.0 vom 17.11.2026. Vorbereitet ist alles, **veröffentlicht ist nichts**. Die Schritte in der Play Console macht Marcel selbst.
+Stand: Version 2.15.1 vom 17.11.2026. Vorbereitet ist alles, **veröffentlicht ist nichts**. Die Schritte in der Play Console macht Marcel selbst.
 Hinweis: Die Beschriftungen in der Play Console ändern sich gelegentlich – die Namen unten können leicht abweichen.
 
 ## Was fertig ist
 
 | Was | Wo |
 |---|---|
-| Store-Paket (AAB), signiert mit dem Upload-Schlüssel | GitHub → Releases → „Raumlicht 2.15.0 (17.11.2026)“ → `Raumlicht-2.15.0-play.aab` |
+| Store-Paket (AAB), signiert mit dem Upload-Schlüssel | GitHub → Releases → „Raumlicht 2.15.1 (17.11.2026)“ → `Raumlicht-2.15.1-play.aab` |
 | Play-Fassung der App | Fassung `play`: kein eigener Updater, keine Berechtigung „Apps installieren“, Updates über den Store (Play In-App Updates) |
 | Kein GPL-Baustein mehr | espeak-ng ist seit 2.6.0 nicht mehr enthalten (siehe `LIZENZEN.md`) |
 | Store-Texte (Deutsch) | `store/texte.md` |
@@ -42,8 +42,8 @@ Der Schlüssel bleibt dabei in Bitwarden – nicht ins Repo, nicht in einen Chat
    - Zielgruppe: wie unten
    - Datensicherheit: wie unten
    - Regierungs-, Finanz-, Gesundheits-Apps: jeweils **Nein**
-4. **Test → Interner Test** → „Neuen Release erstellen“ → beim ersten Mal die Schlüssel-Frage (siehe oben) → `Raumlicht-2.15.0-play.aab` hochladen →
-   Release-Name `2.15.0 (17.11.2026)`, „Was ist neu“ aus `store/texte.md` → speichern → prüfen → „Einführung starten“.
+4. **Test → Interner Test** → „Neuen Release erstellen“ → beim ersten Mal die Schlüssel-Frage (siehe oben) → `Raumlicht-2.15.1-play.aab` hochladen →
+   Release-Name `2.15.1 (17.11.2026)`, „Was ist neu“ aus `store/texte.md` → speichern → prüfen → „Einführung starten“.
 5. **Tester eintragen** (E-Mail-Liste) und den Einladungs-Link auf dem eigenen Handy öffnen. Prüfen: App startet, Aufgabe lösen, Musik, Einstellungen (dort darf **kein** „App-Update“-Kasten stehen).
 6. Erst danach: geschlossener Test bzw. Produktion. **Neue private Entwicklerkonten** müssen laut Google vor der Produktion einen geschlossenen Test
    mit einer Mindestzahl an Testern über mehrere Tage nachweisen – die aktuelle Zahl zeigt die Play Console an.
@@ -56,7 +56,7 @@ Dringende Updates: beim Release die „Update-Priorität“ auf 4 oder 5 setzen 
 - Erhebt oder teilt die App Nutzerdaten? **Nein.**
 - Begründung zum Nachlesen: kein Konto, keine Werbung, keine Analyse, kein Absturz-Dienst. Spielstand und Einstellungen liegen nur auf dem Gerät.
   Der Abbruch-Bericht in den Einstellungen bleibt auf dem Gerät.
-- Netzwerkzugriffe: (1) Play Store für Updates, (2) freiwilliger einmaliger Download der Stimme „Thorsten“ (63 MB, reine Daten, mit Prüfsumme) von huggingface.co.
+- Netzwerkzugriffe: (1) Play Store für Updates, (2) freiwilliger einmaliger Download der Stimme „Thorsten“ (63 MB, reine Daten, mit Prüfsumme) vom eigenen Server stimmen.mathenachhilfe-online.com (seit 2.15.1; vorher huggingface.co).
   Dabei wird nichts aus der App gesendet; der Server sieht wie bei jedem Download die IP-Adresse. Nach Googles Definition ist das keine Datenerhebung durch die App –
   in der Datenschutzerklärung sollte der Download trotzdem genannt sein.
 - Verschlüsselung bei der Übertragung: Ja (HTTPS). Löschung von Daten: nicht zutreffend (es gibt keine).

@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Thorsten“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.14.0 vom 17.11.2026. Geschrieben auf Wunsch des Leitstands, von Marcel bestätigt.
+Stand: Raumlicht 2.15.1 vom 17.11.2026. Geschrieben auf Wunsch des Leitstands, von Marcel bestätigt.
 
 **Was es ist:** Die App liest Texte mit der natürlichen deutschen Stimme „Thorsten“ vor – auf dem Gerät, ohne Internet, **ohne GPL-Baustein**.
 Der Trick: Die Lautschrift (aus Text werden Laute) entsteht vorab am Entwicklungsrechner und wird als reine Daten mitgeliefert.
@@ -27,12 +27,16 @@ Die Ausgabe eines Programms fällt nach verbreiteter Lesart nicht unter dessen L
 
 ## 2. Modell: Quelle und Größe
 
-- Datei: `de_DE-thorsten-medium.onnx`, **63 201 421 Byte (rund 63 MB)**
-- Quelle: `https://huggingface.co/csukuangfj/vits-piper-de_DE-thorsten-medium/resolve/main/de_DE-thorsten-medium.onnx`
-- Prüfsumme SHA-256: `1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6`
+- **Quelle (seit Raumlicht 2.15.1): der eigene Server**, gemeinsam für alle Apps: `https://stimmen.mathenachhilfe-online.com/thorsten/de_DE-thorsten-medium.onnx`
+  – 63 201 294 Byte, SHA-256 `7e64762d8e5118bb578f2eea6207e1a35a8e0c30595010b666f983fc87bb7819`. Das ist die ursprüngliche Piper-Datei.
+- **Achtung, wichtig für sherpa-onnx:** Der Baustein liest sieben Angaben aus dem Modell (`model_type=vits`, `comment=piper`, `language`, `voice`, `has_espeak`, `n_speakers`, `sample_rate`).
+  Die ursprüngliche Piper-Datei enthält sie nicht. Lösung ohne zweite Datei auf dem Server: **Die App hängt nach dem Laden 127 Byte an** (`VoicePack.TAIL` in `NaturalVoice.kt` –
+  das sind genau diese Angaben als ONNX-Metadaten). Ergebnis ist Byte für Byte die für sherpa-onnx aufbereitete Fassung:
+  63 201 421 Byte, SHA-256 `1c305abe13dda2f50a9783da3e7645396833cdf2d09f24fa9a823c91293d65a6` (dieselbe Datei wie bei Hugging Face unter `csukuangfj/vits-piper-de_DE-thorsten-medium`). Am 17.11.2026 nachgerechnet.
+  Geprüft wird zweimal: die geladene Datei gegen die erste Prüfsumme, die fertige gegen die zweite.
 - Die App lädt die Datei **nur auf Knopfdruck** (Einstellungen → „Stimme laden (63 MB)“), prüft Größe und Prüfsumme und legt sie in den App-Speicher (`filesDir/stimme/`).
   Man kann sie wieder entfernen. Ohne Modell liest die Geräte-Stimme.
-- Für Store und Datenschutz: einmaliger Download von huggingface.co, es wird nichts gesendet; der Server sieht die IP-Adresse. In der Datenschutzerklärung nennen.
+- Für Store und Datenschutz: einmaliger Download vom eigenen Server, es wird nichts gesendet; der Server sieht die IP-Adresse. In der Datenschutzerklärung nennen.
 
 ## 3. So entsteht die Lautschrift (am Entwicklungsrechner)
 

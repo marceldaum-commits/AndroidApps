@@ -102,4 +102,19 @@ class VoicePackTest {
         rule.onNodeWithTag("abbruch-weg").performClick(); assertEquals(1, seen)
         de.raumlicht.app.Diagnose.clear(ctx); assertNull(de.raumlicht.app.Diagnose.last(ctx))
     }
+
+    /** Die Datei vom eigenen Server bekommt die Angaben für den Sprach-Baustein angehängt – geprüft wird davor und danach */
+    @Test fun angabenWerdenAngehaengt() {
+        val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>(); VoicePack.dir(ctx).deleteRecursively()
+        fun sha(b: ByteArray) = java.security.MessageDigest.getInstance("SHA-256").digest(b).joinToString("") { "%02x".format(it) }
+        val source = ByteArray(40_000) { (it * 31 % 251).toByte() }; val tail = VoicePack.TAIL; val whole = source + tail
+        assertEquals(127, tail.size); assertTrue(String(tail, Charsets.ISO_8859_1).contains("sample_rate")); assertEquals(VoicePack.SIZE, VoicePack.SOURCE_SIZE + tail.size)
+        val l = VoicePackLoader(ctx, server(source), size = whole.size.toLong(), sha256 = sha(whole), tail = tail, sourceSha256 = sha(source)); l.start(); wait(l)
+        assertEquals(PackState.Ready, l.state); assertArrayEquals(whole, VoicePack.model(ctx).readBytes())
+        // falsche Quelle: wird abgelehnt, obwohl die Größe stimmt
+        VoicePack.dir(ctx).deleteRecursively()
+        val bad = VoicePackLoader(ctx, server(source.copyOf().also { it[7] = 9 }), size = whole.size.toLong(), sha256 = sha(whole), tail = tail, sourceSha256 = sha(source)); bad.start(); wait(bad)
+        assertTrue(bad.state is PackState.Failed); assertFalse(VoicePack.model(ctx).exists())
+        assertTrue(VoicePack.URL.startsWith("https://stimmen.mathenachhilfe-online.com/"))
+    }
 }

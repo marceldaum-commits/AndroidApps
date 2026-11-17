@@ -16,7 +16,7 @@
 | Kotlin, kotlinx (Coroutines, Serialization, Datetime) | Sprache und Grundbibliotheken | Apache 2.0 | Bibliotheken |
 | Jetpack / AndroidX (Compose, Room, Lifecycle, Core u. a.) | Oberfläche und Speicher der Android-App | Apache 2.0 | Bibliotheken |
 | Ed25519-Prüfung nach TweetNaCl | prüft Freischalt-Codes für den Abi-Pass | gemeinfrei (Public Domain) | eigener Kotlin-Code in `core/model` |
-| Piper-Stimme „Thorsten“ (de_DE-thorsten-medium) | natürliche deutsche Stimme | Aufnahmen CC0 (Thorsten Müller) | **nicht** in der App enthalten – wird auf Wunsch von Hugging Face geladen |
+| Piper-Stimme „Thorsten“ (de_DE-thorsten-medium) | natürliche deutsche Stimme | Aufnahmen CC0 (Thorsten Müller) | **nicht** in der App enthalten – wird auf Wunsch vom eigenen Server geladen (stimmen.mathenachhilfe-online.com) |
 
 **Musik und Klänge** sind keine fremden Bestandteile: Sie sind für Raumlicht komponiert und werden vollständig im Programmcode errechnet
 (`core/model/…/SpaceMusic.kt`, `MusicSynth.kt`, `Klang.kt`) – ohne Aufnahmen, ohne fremde Samples, ohne Klang-Bibliotheken.
