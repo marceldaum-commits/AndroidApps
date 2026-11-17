@@ -65,7 +65,7 @@ object Gen {
             if (!inRoom(z) || !inRoom(a + d) || d.ints.count { it != 0 } < 2) null else {
                 val i = d.ints.indexOfFirst { it != 0 }
                 Families.param(id, ch, "Parameter", "Für welches t lande ich genau im Ring?", a, d, t, -4..6,
-                    tip = "Eine Zeile reicht, um t zu finden. Die anderen sind die Probe.",
+                    tip = "Eine Zeile, in der der Richtungsvektor nicht 0 ist, reicht für t. Die anderen sind die Probe.",
                     way = listOf("x${"₁₂₃"[i]}: ${Geo.num(a.ints[i])} + t · ${if (d.ints[i] < 0) "(${Geo.num(d.ints[i])})" else Geo.num(d.ints[i])} = ${Geo.num(z.ints[i])}", "t = ${Geo.num(t)}"))
             }
         }
@@ -79,16 +79,16 @@ object Gen {
                 Families.pierce(id, ch, if (kind == Kind.TRACE) "Spurpunkt" else "Durchstoßpunkt",
                     if (kind == Kind.TRACE) "Wo trifft der Laser den Boden? Stell den Sensor dorthin." else "Wo stößt der Laser durch die Scheibe E?", a, d, n, k,
                     tip = "In E gilt $text. Diese Zeile der Geraden liefert t.",
-                    way = listOf("$text: ${Geo.num(a.ints[axis])} + t · ${if (d.ints[axis] < 0) "(${Geo.num(d.ints[axis])})" else Geo.num(d.ints[axis])} = $k → t = $t", "S = A + $t · d⃗ = ${s.fmt()}"),
+                    way = listOf("$text: ${Geo.num(a.ints[axis])} + t · ${if (d.ints[axis] < 0) "(${Geo.num(d.ints[axis])})" else Geo.num(d.ints[axis])} = $k → t = $t", "t in g einsetzen: S${s.fmt()}"),
                     planeText = if (kind == Kind.TRACE) "x₃ = 0 (Boden)" else text)
             }
         }
         Kind.PIERCE_SKEW -> {
             val n = normals.random(r); val s = r.point(0, 1); val rhs = (n dot s).toInt()
             val d = r.dir(2); val t = r.nextInt(1, 4); val a = s - d * t
-            if (s.isZero || (n dot d) == 0.0 || d.ints.count { it != 0 } < 2 || !inRoom(a)) null else Families.pierce(id, ch, "Schräge Scheibe", "Setz die Gerade in die Ebenengleichung ein: Wo ist der Durchstoßpunkt?", a, d, n, rhs,
+            if (s.isZero || (n dot d) == 0.0 || d.ints.count { it != 0 } < 2 || !inRoom(a)) null else Families.pierce(id, ch, "Schräge Scheibe", "Wo stößt der Laser durch die Scheibe? Setz die Gerade in die Ebenengleichung ein.", a, d, n, rhs,
                 tip = "Jede Koordinate der Geraden in E einsetzen, nach t auflösen.",
-                way = listOf("einsetzen → ${Geo.plus(Geo.num(n dot a), n dot d)} · t = ${Geo.num(rhs)}", "t = $t", "S = A + $t · d⃗ = ${s.fmt()}"))
+                way = listOf("einsetzen → ${(n dot d).let { k -> if (k == 1.0) "${Geo.num(n dot a)} + t" else if (k == -1.0) "${Geo.num(n dot a)} − t" else "${Geo.plus(Geo.num(n dot a), k)} · t" }} = ${Geo.num(rhs)}", "t = $t", "t in g einsetzen: S${s.fmt()}"))
         }
         Kind.ANGLE, Kind.DIST_PLANE, Kind.FOOT, Kind.RADIUS -> buildMore(kind, r, id, ch)
         Kind.MOTION_POS, Kind.MOTION_SPEED, Kind.MOTION_TIME, Kind.ROTATION -> buildMotion(kind, r, id, ch)
@@ -99,7 +99,7 @@ object Gen {
             if (s.isZero || Geo.parallel(d1, d2) || !inRoom(a) || !inRoom(b) || d1.ints.count { it != 0 } < 2 || d2.ints.count { it != 0 } < 2 || u < 0 || w < 0) null
             else Families.crossing(id, ch, "Kreuzung", "Wo kreuzen sich die Strahlen g und h?", a, d1, b, d2,
                 tip = "Gleichsetzen und aus zwei Zeilen s und t bestimmen. Die dritte Zeile ist die Probe.",
-                way = listOf("gleichsetzen → s = $u, t = $w", "S = A + $u · d⃗ = ${s.fmt()}"))
+                way = listOf("gleichsetzen → s = $u, t = $w", "s in g einsetzen: S${s.fmt()}"))
         }
     }
 
@@ -128,7 +128,7 @@ object Gen {
                 way = listOf("Lotgerade: x⃗ = P + t · ${n.fmt()}", "in E einsetzen → t = ${Geo.num(-k)}", "F${f.fmt()}"),
                 extras = { listOf(Stage.plane("E", n, rhs.toDouble(), "violet", "E"), Stage.point("P", q, "cyan", "P${q.fmt()}")) })
             else Families.scalar(id, ch, "Abstand Punkt–Ebene", "Wie weit ist P von der Scheibe E entfernt?", "d", 0..8, dist, if (dist == 1) 2 else 1,
-                tip = "d = |n⃗ · p⃗ − c| : |n⃗|.",
+                tip = "d = |n⃗ · p⃗ − c| : |n⃗|. Dabei ist c die Zahl rechts in der Ebenengleichung.",
                 way = listOf("n⃗ · p⃗ = ${Geo.num(n dot q)}, |n⃗| = ${Geo.num(n.length)}", "d = |${Geo.minus(Geo.num(n dot q), rhs.toDouble())}| : ${Geo.num(n.length)} = $dist"),
                 formula = { a -> listOf(listOf(Txt("P${q.fmt()}   E: $text")), listOf(Txt("d(P, E) = "), Part.Num(Geo.num(a), "a"))) },
                 objects = { _, ph -> listOf(Stage.plane("E", n, rhs.toDouble(), "violet", "E"), Stage.point("P", q, "cyan", "P${q.fmt()}")) +
@@ -194,7 +194,7 @@ object Gen {
         }
         Kind.MOTION_TIME -> {
             val v = r.dir(2); val t = r.nextInt(2, 6); val a = r.point(); val q = a + v * t; val h = q.ints[2]
-            if (!inRoom(q) || !inRoom(a + v) || v.ints[2] == 0 || v.ints.count { it != 0 } < 2 || h == 0) null else Families.param(id, ch, "Flughöhe", "Nach wie vielen Sekunden erreiche ich die Höhe $h?", a, v, t, 0..6, hidden = true,
+            if (!inRoom(q) || !inRoom(a + v) || v.ints[2] == 0 || v.ints.count { it != 0 } < 2 || h == 0) null else Families.param(id, ch, "Flughöhe", "Ich starte in A und fliege jede Sekunde um d⃗ weiter. Nach wie vielen Sekunden bin ich auf Höhe $h?", a, v, t, 0..6, hidden = true,
                 given = listOf(listOf(Part.Txt("Höhe: x₃ = $h"))), success = "Nach $t Sekunden bin ich in Höhe $h – bei ${q.fmt()}.",
                 tip = "Höhe ist die x₃-Koordinate: ${Geo.num(a.ints[2])} + t · ${if (v.ints[2] < 0) "(${Geo.num(v.ints[2])})" else Geo.num(v.ints[2])} = $h.",
                 way = listOf("x₃(t) = $h", "t = $t → Ort ${q.fmt()}"), extras = { listOf(Stage.plane("E", V3(0, 0, 1), h.toDouble(), "violet", "x₃ = $h")) })

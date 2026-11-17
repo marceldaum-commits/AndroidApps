@@ -33,7 +33,7 @@ internal object MoreLevels {
                 way = listOf("a⃗ · b⃗ = 5·5 + 0·5 + 0·0 = 25", "|a⃗| = 5, |b⃗| = √50 = 5√2", "cos α = 25 : (25√2) = 1 : √2 → α = 45°")) {
                 listOf(Stage.point("O", o1, "white"), Stage.vector("a", o1, o1 + a1, "cyan", "a⃗"), Stage.vector("b", o1, o1 + b1, "pink", "b⃗"))
             },
-            angle("7-2", "Schräg im Raum", "Diesmal liegen die Arme nicht beide in derselben Koordinatenebene. Die Formel ist dieselbe.", o2, a2, b2, 60,
+            angle("7-2", "Schräg im Raum", "Diesmal liegen die Arme schräg im Raum. Wie groß ist der Winkel zwischen a⃗ und b⃗? Die Formel ist dieselbe.", o2, a2, b2, 60,
                 listOf(listOf(Txt("a⃗ = "), col(a2), Txt("   b⃗ = "), col(b2)), listOf(Txt("cos α = (a⃗ · b⃗) : (|a⃗| · |b⃗|)"))),
                 tip = "a⃗ · b⃗ = 16, beide Längen sind √32. cos α = 16 : 32.",
                 way = listOf("a⃗ · b⃗ = 0 + 16 + 0 = 16", "|a⃗| = |b⃗| = √32", "cos α = 16 : 32 = ½ → α = 60°")) {
@@ -45,13 +45,13 @@ internal object MoreLevels {
                 way = listOf("n⃗ = (0|0|1), n⃗ · d⃗ = 5", "|d⃗| = √(9 + 16 + 25) = √50 = 5√2", "sin α = 5 : (5√2) = 1 : √2 → α = 45°")) {
                 listOf(Stage.point("A", a3, "cyan", "A"), Stage.line("g", a3, d3, 0.0, 1.0, "cyan", "g"), Stage.line("schatten", a3, f3, 0.0, 1.0, "pink", dashed = true))
             },
-            angle("7-4", "Zwei Scheiben", "Zwei Glasscheiben schneiden sich. Der Winkel zwischen Ebenen ist der Winkel zwischen ihren Normalenvektoren.", o4, n4a, n4b, 60,
+            angle("7-4", "Zwei Scheiben", "Zwei Glasscheiben schneiden sich. Wie groß ist ihr Schnittwinkel? Rechne mit den Normalenvektoren – der Schnittwinkel ist höchstens 90°.", o4, n4a, n4b, 60,
                 listOf(listOf(Txt("E₁: x₁ + x₂ = 8    E₂: x₂ + x₃ = 6")), listOf(Txt("cos α = |n⃗₁ · n⃗₂| : (|n⃗₁| · |n⃗₂|)"))),
                 tip = "n⃗₁ = (1|1|0), n⃗₂ = (0|1|1). Skalarprodukt 1, beide Längen √2.",
                 way = listOf("n⃗₁ = (1|1|0), n⃗₂ = (0|1|1)", "n⃗₁ · n⃗₂ = 1, |n⃗₁| = |n⃗₂| = √2", "cos α = 1 : 2 → α = 60°")) {
                 listOf(Stage.plane("E1", n4a, 8.0, "violet", "E₁"), Stage.plane("E2", n4b, 6.0, "cyan", "E₂"), Stage.vector("n1", o4, o4 + n4a * 2, "violet", "n⃗₁"), Stage.vector("n2", o4, o4 + n4b * 2, "cyan", "n⃗₂"))
             },
-            angle("7-5", "Abi-Check: Einfallswinkel", "Ein Laser trifft das Sonnensegel E. Unter welchem Winkel trifft er auf?", s5, -d5, -pr5, 30,
+            angle("7-5", "Abi-Check: Auftreffwinkel", "Ein Laser trifft das Sonnensegel E. Wie groß ist der Winkel zwischen Strahl und Segel-Ebene (nicht zum Lot)?", s5, -d5, -pr5, 30,
                 listOf(lineText("g", a5, d5), listOf(Txt("E: x₁ + x₂ = 8    sin α = |n⃗ · d⃗| : (|n⃗| · |d⃗|)"))), abi = true,
                 mistakes = mapOf(60 to "60° ist der Winkel zum Normalenvektor (Kosinus). Zwischen Gerade und Ebene brauchst du den Sinus: 90° − 60°."),
                 tip = "n⃗ = (1|1|0), d⃗ = (0|1|1): n⃗ · d⃗ = 1, beide Längen √2. Achtung: Sinus, nicht Kosinus.",
@@ -183,7 +183,7 @@ internal object MoreLevels {
                 way = listOf("AB⃗ = (4|4|2), AC⃗ = (4|1|−1)", "AB⃗ × AC⃗ = (−6|12|−12), Länge √324 = 18", "F = ½ · 18 = 9"), color = "yellow",
                 formula = { a -> listOf(listOf(Txt("A(1|1|2)   B(5|5|4)   C(5|2|1)")), listOf(Txt("F = ½ · |AB⃗ × AC⃗| = "), Num(Geo.num(a), "a"))) },
                 objects = { _, _ -> listOf(Stage.edges("segel", loop(ta, tb, tc), "yellow", faces = listOf(listOf(ta, tb, tc))), Stage.point("A", ta, "cyan", "A"), Stage.point("B", tb, "cyan", "B"), Stage.point("C", tc, "cyan", "C")) },
-                check = { a -> Families.compare(a, 9, "Die Fläche", "9 Flächeneinheiten – halb so viel wie das Parallelogramm.", mapOf(18 to "18 ist die Fläche des Parallelogramms. Ein Dreieck ist die Hälfte davon.")) }),
+                check = { a -> Families.compare(a, 9, "Die Fläche", "9 Flächeneinheiten – die Hälfte des Parallelogramms aus AB⃗ und AC⃗ (18).", mapOf(18 to "18 ist die Fläche des Parallelogramms. Ein Dreieck ist die Hälfte davon.")) }),
             Families.scalar("10-3", 10, "Zeltvolumen", "Ein schiefes Zelt: Grundfläche von a⃗ und b⃗ aufgespannt, c⃗ führt zur Spitze. Wie viel Raum ist darin?", "V", 0..18, 6, 0,
                 tip = "Pyramide mit Parallelogramm als Grundfläche: V = ⅓ · |(a⃗ × b⃗) · c⃗|.",
                 way = listOf("a⃗ × b⃗ = (0|0|6)", "(a⃗ × b⃗) · c⃗ = 6 · 3 = 18", "V = ⅓ · 18 = 6"), color = "yellow",
@@ -194,8 +194,10 @@ internal object MoreLevels {
                         Stage.vector("a", o3, o3 + a3, "cyan", "a⃗"), Stage.vector("b", o3, o3 + b3, "pink", "b⃗"), Stage.vector("c", o3, s, "green", "c⃗"))
                 },
                 check = { a -> Families.compare(a, 6, "Das Volumen", "6 Volumeneinheiten passen ins Zelt.", mapOf(18 to "18 ist das Spatprodukt selbst. Für die Pyramide fehlt noch der Faktor ⅓.")) }),
-            Families.aim("10-4", 10, "Schnittgerade", "Zwei Scheiben schneiden sich in einer Geraden. Der Laser in A liegt auf beiden – schick den Strahl genau die Schnittkante entlang.",
+            Families.aim("10-4", 10, "Schnittgerade", "Zwei Scheiben schneiden sich in einer Geraden. Der Laser in A liegt auf beiden – schick den Strahl die Schnittkante entlang, in den Raum hinein.",
                 p(4, 0, 2), listOf(p(0, 4, 2)), hidden = true, solution = p(-1, 1, 0), line = "s",
+                missText = { "Dein Strahl verlässt die Schnittkante. Er muss in E₁ und in E₂ bleiben: d⃗ · n⃗₁ = 0 und d⃗ · n⃗₂ = 0." },
+                hitText = "Genau auf der Schnittkante! Jedes Vielfache dieser Richtung beschreibt dieselbe Gerade.",
                 given = listOf(listOf(Txt("E₁: x₁ + x₂ + x₃ = 6    E₂: x₃ = 2"))),
                 tip = "Die Schnittgerade liegt in beiden Ebenen, steht also auf beiden Normalenvektoren senkrecht: d⃗ = n⃗₁ × n⃗₂.",
                 way = listOf("n⃗₁ = (1|1|1), n⃗₂ = (0|0|1)", "n⃗₁ × n⃗₂ = (1|−1|0)", "in den Raum hinein: d⃗ = (−1|1|0)"),
@@ -293,9 +295,9 @@ internal object TourThree {
             check = { a -> Families.compare(a * step, piTimes, "Das Volumen", "V = ${piTimes}π – genau so viel Licht passt hinein.") })
 
     private val ch12 = listOf(
-        volume("12-1", "Lichtsäule", "Dreht sich die Strecke f(x) = 2 um die x-Achse, entsteht ein Zylinder. Wie groß ist sein Volumen?", "2", 0, 4, 16, 4,
+        volume("12-1", "Lichtsäule", "Dreht sich die Strecke f(x) = 2 von x = 0 bis x = 4 um die x-Achse, entsteht ein Zylinder. Wie groß ist sein Volumen?", "2", 0, 4, 16, 4,
             tip = "f(x)² = 4. Das Integral von 4 über [0; 4] ist 16.", way = listOf("f(x)² = 4", "∫₀⁴ 4 dx = 16", "V = 16π")) { 2.0 },
-        volume("12-2", "Lichtkegel", "Jetzt dreht sich die Gerade f(x) = x. Es entsteht ein Kegel.", "x", 0, 3, 9, 3,
+        volume("12-2", "Lichtkegel", "Jetzt dreht sich die Gerade f(x) = x von 0 bis 3 um die x-Achse. Es entsteht ein Kegel. Wie groß ist sein Volumen?", "x", 0, 3, 9, 3,
             tip = "f(x)² = x², Stammfunktion ⅓x³. Grenzen 0 und 3 einsetzen.", way = listOf("∫₀³ x² dx = [⅓x³]₀³", "= 9", "V = 9π")) { it },
         Families.scalar("12-3", 12, "Vase füllen", "Die Kurve f(x) = √x dreht sich zur Vase. Bis zu welcher Stelle b muss sie reichen, damit genau 8π hineinpassen?", "b", 1..6, 4, 1,
             tip = "f(x)² = x. V(b) = π · ∫₀ᵇ x dx = π · ½b². Das soll 8π sein.",
@@ -311,7 +313,7 @@ internal object TourThree {
 
     val chapters = listOf(
         Chapter(11, "Bewegung", "Ort nach t Sekunden, Tempo, Treffpunkt", "Flugfeld", "🛫", "orange", listOf(
-            "Jetzt kommt die Zeit dazu: Der Parameter t sind Sekunden.",
+            "Jetzt kommt die Zeit dazu: Der Parameter t zählt die Sekunden.",
             "Der Richtungsvektor ist die Geschwindigkeit – seine Länge das Tempo.",
             "Achtung, Abi-Klassiker: Bahnen können sich kreuzen, ohne dass die Drohnen sich treffen."), ch11),
         Chapter(12, "Rotationskörper", "Volumen mit dem Integral", "Lichtkunst-Museum", "🏺", "violet", listOf(
@@ -344,6 +346,8 @@ internal object TourFour {
                 Stage.point("n$i", V3(4.0, y, 3.9), if (i == 3) "violet" else "yellow", name, style = "ghost", drop = false)) } }.flatten()
 
     private val lamps = Urn(20, 2, { ballAt(it, 5) })
+    /** vor der Lösung sind alle Scheinwerfer gleich gefärbt – sonst verriete die Bühne die Antwort */
+    private val lampsPlain = Urn(20, 0, { ballAt(it, 5) })
     private val ch13 = listOf(
         chance("13-1", "Lichtlotterie", "Zehn Leuchtkugeln, drei davon pink. Ich greife blind eine heraus. Wie wahrscheinlich ist sie pink?", 30, 10,
             "10 Kugeln, 3 pink", tip = "Laplace: günstige durch mögliche Ergebnisse.", way = listOf("P = günstige : mögliche", "= 3 : 10", "= 30 %"), total = 10, pink = 3) { it.one(1) },
@@ -351,19 +355,19 @@ internal object TourFour {
             "10 Kugeln, 5 pink · zweimal ziehen mit Zurücklegen", tip = "Pfadregel: entlang des Pfades multiplizieren. Mit Zurücklegen bleibt die Wahrscheinlichkeit gleich.",
             way = listOf("P(pink) = 5 : 10 = ½", "P(pink, pink) = ½ · ½", "= ¼ = 25 %"), total = 10, pink = 5,
             mistakes = mapOf(100 to "Wahrscheinlichkeiten entlang eines Pfades werden multipliziert, nicht addiert.", 50 to "50 % gilt für eine Kugel. Für zwei hintereinander: ½ · ½.")) { it.withReplacement(listOf(1, 3)) },
-        chance("13-3", "Ohne Zurücklegen", "Jetzt sind nur zwei von fünf Kugeln pink – und die erste bleibt draußen. Wie wahrscheinlich ziehe ich beide pinken?", 10, 5,
+        chance("13-3", "Ohne Zurücklegen", "Jetzt sind nur zwei von fünf Kugeln pink. Ich ziehe wieder zweimal – aber die erste Kugel bleibt draußen. Wie wahrscheinlich erwische ich beide pinken?", 10, 5,
             "5 Kugeln, 2 pink · zweimal ziehen ohne Zurücklegen", tip = "Nach dem ersten Zug ist eine pinke Kugel weniger da – und insgesamt eine weniger.",
             way = listOf("erster Zug: 2 : 5", "zweiter Zug: 1 : 4", "P = ⅖ · ¼ = 2 : 20 = 10 %"), total = 5, pink = 2,
             mistakes = mapOf(15 to "Fast: ⅖ · ⅖ = 16 % wäre mit Zurücklegen. Hier fehlt beim zweiten Zug eine Kugel.")) { it.without(listOf(0, 1)) },
-        Families.scalar("13-4", 13, "Ausfälle einplanen", "In der Show hängen 20 Scheinwerfer. Jeder fällt unabhängig mit 10 % aus. Mit wie vielen Ausfällen muss ich im Schnitt rechnen?", "μ", 0..10, 2, 0,
+        Families.scalar("13-4", 13, "Ausfälle einplanen", "In der Show hängen 20 Scheinwerfer. Jeder fällt unabhängig von den anderen mit einer Wahrscheinlichkeit von 10 % aus. Mit wie vielen Ausfällen muss ich im Schnitt rechnen?", "μ", 0..10, 2, 0,
             tip = "Erwartungswert der Binomialverteilung: μ = n · p.", way = listOf("n = 20, p = 0,1", "μ = n · p = 20 · 0,1", "= 2 Ausfälle"), color = "pink",
             formula = { a -> listOf(listOf(Txt("n = 20, p = 10 %  (binomialverteilt)")), listOf(Txt("μ = n · p = "), Num(Geo.num(a), "a"))) },
             finale = { lamps.fail(2, "Im Schnitt fallen 2 von 20 aus – zum Beispiel diese hier …", "… und diese. Also zwei Ersatzlampen einpacken.").first },
-            objects = { _, ph -> if (ph == Phase.DONE) lamps.balls(setOf(0, 1)) else lamps.balls() },
+            objects = { _, ph -> if (ph == Phase.DONE) lamps.balls(setOf(0, 1)) else lampsPlain.balls() },
             check = { a -> Families.compare(a, 2, "Der Erwartungswert", "Im Schnitt 2 Ausfälle – also zwei Ersatzlampen einpacken.") }),
-        Families.scalar("13-5", 13, "Abi-Check: Mindestens eines", "Ein Blitzlicht zündet mit 50 %. Ich habe zwei davon. Wie wahrscheinlich zündet mindestens eines?", "P", 0..20, 15, 0,
+        Families.scalar("13-5", 13, "Abi-Check: Mindestens eines", "Ein Blitzlicht zündet mit einer Wahrscheinlichkeit von 50 %. Ich habe zwei davon. Wie wahrscheinlich zündet mindestens eines?", "P", 0..20, 15, 0,
             tip = "„Mindestens eines“ rechnet man über das Gegenereignis: 1 − P(keines).", way = listOf("P(keines zündet) = ½ · ½ = ¼", "P(mindestens eines) = 1 − ¼", "= 75 %"), color = "pink", step = 5, suffix = " %", abi = true,
-            formula = { a -> listOf(listOf(Txt("2 Blitzlichter, jedes zündet mit 50 % · vier gleich wahrscheinliche Fälle")), listOf(Txt("P = "), Num("${a * 5} %", "a"))) },
+            formula = { a -> listOf(listOf(Txt("2 Blitzlichter, jedes zündet mit 50 %; vier gleich wahrscheinliche Fälle")), listOf(Txt("P = "), Num("${a * 5} %", "a"))) },
             finale = { Finale(acts = listOf(
                 Act("Vier gleich wahrscheinliche Fälle. Nur bei einem zündet keines.", beams = listOf(Beam(V3(8, 0, 1), V3(4.0, 6.7, 2.45), "violet", false))),
                 Act("Das Gegenereignis fällt weg: 3 von 4 Fällen bleiben.", flashCases(setOf(3)), listOf(Beam(V3(8, 0, 1), V3(4.0, 6.7, 3.0), "pink", true), Beam(V3(8, 0, 1), V3(4.0, 6.7, 1.9), "pink", true))))) },
@@ -432,7 +436,7 @@ internal object TourFour {
         Chapter(14, "Kurvendiskussion", "Nullstelle, Extrema, Wendestelle, Fläche", "Freizeitpark", "🎢", "cyan", listOf(
             "Drittes Abi-Gebiet: Analysis. Ich fahre die Kurve ab – du sagst, wo ich halten soll.",
             "Die gelbe Linie ist die Tangente. Waagerecht heißt: f′(x) = 0.",
-            "Hoch- oder Tiefpunkt entscheidet f″. Wendestelle: f″(x) = 0 – und f″ wechselt dort das Vorzeichen."), ch14, Area.ANALYSIS),
+            "Ob Hoch- oder Tiefpunkt, entscheidet f″: negativ heißt Hochpunkt, positiv Tiefpunkt. Wendestelle: f″(x) = 0 – und f″ wechselt dort das Vorzeichen."), ch14, Area.ANALYSIS),
     )
 }
 

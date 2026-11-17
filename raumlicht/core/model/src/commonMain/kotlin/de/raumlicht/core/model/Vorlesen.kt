@@ -20,12 +20,19 @@ object Vorlesen {
     /** Feste Sätze der Oberfläche, die Lux spricht (Einstellungen, Baumeister) */
     val phrases = listOf("Hallo, ich bin Lux!", "Hallo, ich bin Lux. So klinge ich jetzt.", "Geschafft!", "Der Schwung reicht nicht.", "Im Ziel, aber der Auftrag fehlt noch.")
 
+    /** Was Lux nach dem zweiten Fehlversuch anhängt */
+    const val TIP_OFFER = " Tipp gefällig? 💡"
+    /** Ansage einer neuen Regel in der Ballerbude */
+    const val BALLOON_CALL = "Jetzt: "
+
     /** Die festen Texte, so wie sie in der App stehen (noch nicht vorlesefertig) */
     fun raw(): Set<String> {
         val fixed = LinkedHashSet<String>()
         fun collect(l: Level) {
             fixed += l.mission; fixed += l.tip
             runCatching { fixed += l.evaluate(l.solution).message; l.finale?.invoke(l.solution)?.acts?.forEach { fixed += it.say } }
+            // häufigster Fehlversuch: „Los“ gedrückt, ohne etwas zu ändern – diese Rückmeldung steht fest, mit und ohne Tipp-Angebot
+            runCatching { val out = l.evaluate(l.start); if (!out.success) { fixed += out.message; fixed += out.message + TIP_OFFER } }
         }
         Levels.chapters.forEach { c -> fixed += c.intro; c.levels.forEach { collect(it) } }
         Exams.all.forEach { e -> fixed += e.intro; e.parts.forEach { collect(it.level) } }
@@ -33,6 +40,9 @@ object Vorlesen {
         // Theorie-Karten: die Idee liest Lux vor, wenn man die Karte öffnet
         (Theory.cards + Theory.general).forEach { fixed += it.idea }
         SpotKind.entries.forEach { fixed += it.title }
+        // Geisterfahrt: Urteil zu jeder Punktzahl · Ballerbude: jede Regel
+        for (score in 0..100) fixed += Ghost.verdict(score)
+        BalloonGame.RULES.forEach { fixed += BALLOON_CALL + it.text }
         return fixed
     }
 

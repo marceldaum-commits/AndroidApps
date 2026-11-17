@@ -25,7 +25,7 @@ object Families {
         // Punkte haben Koordinaten x₁, x₂, x₃ – Vektoren haben eine 1., 2. und 3. Komponente
         fun names(l: List<Int>) = if (what == "Komponente") l.joinToString(" und ") { "${it + 1}." } + " Komponente" else l.joinToString(" und ") { X[it] }
         return when (ok.size) {
-            0 -> "Noch stimmt keine $what. Rechne jede Zeile einzeln."
+            0 -> "Noch stimmt keine $what. Prüf jede einzeln."
             else -> "${names(ok).let { if (what == "Komponente") "Die $it" else it }} ${if (ok.size == 1) "stimmt" else "stimmen"} ✓ – ${names(bad).let { if (what == "Komponente") "die $it" else it }} noch nicht."
         }
     }
@@ -99,6 +99,8 @@ object Families {
         given: List<List<Part>> = emptyList(),
         /** Eigene Rückmeldung für eine falsche Richtung (wenn es nicht ums Treffen eines sichtbaren Ziels geht) */
         missText: ((V3) -> String)? = null,
+        /** Eigene Erfolgsmeldung (sonst: Volltreffer …) */
+        hitText: String? = null,
         extras: (Phase) -> List<Obj> = { emptyList() },
     ): Level {
         val far = targets.maxBy { (it - a).length }
@@ -121,7 +123,7 @@ object Families {
                 val d = v.vec("d")
                 when {
                     d.isZero -> Outcome(false, "Der Nullvektor hat keine Richtung – so kommt kein Strahl raus.")
-                    targets.all { Geo.sameDirection(d, it - a) } -> Outcome(true, "Volltreffer! Jedes positive Vielfache dieser Richtung hätte auch getroffen.", listOf(Beam(a, far, "cyan", true)))
+                    targets.all { Geo.sameDirection(d, it - a) } -> Outcome(true, hitText ?: "Volltreffer! Jedes positive Vielfache dieser Richtung hätte auch getroffen.", listOf(Beam(a, far, "cyan", true)))
                     else -> {
                         val end = a + d * Geo.exit(a, d, bounds.outerLo, bounds.outerHi)
                         val msg = if (Geo.parallel(d, far - a) && targets.size == 1) "Die Richtung stimmt – aber der Strahl läuft rückwärts. Vorzeichen umdrehen!"
@@ -169,10 +171,10 @@ object Families {
                 val t = v.int("t")
                 val p = a + d * t
                 when {
-                    t == tStar -> Outcome(true, success ?: if (tStar < 0) "$symbol = ${Geo.num(tStar)} – ${-tStar}-mal entgegen dem Richtungsvektor." else "$symbol = ${Geo.num(tStar)} – genau so oft passt der Richtungsvektor hinein.", flyTo = p)
+                    t == tStar -> Outcome(true, success ?: if (tStar < 0) "$symbol = ${Geo.num(tStar)} – ${listOf("einmal", "zweimal", "dreimal", "viermal", "fünfmal", "sechsmal").getOrElse(-tStar - 1) { "${-tStar}-mal" }} rückwärts, gegen den Richtungsvektor." else "$symbol = ${Geo.num(tStar)} – genau so oft passt der Richtungsvektor hinein.", flyTo = p)
                     // falsche Seite des Stützpunkts: Lux fliegt vom Ziel weg
                     t != 0 && tStar != 0 && (t > 0) != (tStar > 0) -> Outcome(false, "Falsche Richtung: $symbol muss ${if (t < tStar) "größer" else "kleiner"} sein.", flyTo = p)
-                    kotlin.math.abs(t) < kotlin.math.abs(tStar) -> Outcome(false, "Zu kurz gedacht: $symbol muss ${if (t < tStar) "größer" else "kleiner"} sein.", flyTo = p)
+                    kotlin.math.abs(t) < kotlin.math.abs(tStar) -> Outcome(false, if (tStar < 0 && t > tStar) "Noch nicht weit genug zurück: $symbol muss kleiner sein (weiter ins Minus)." else "Zu kurz gedacht: $symbol muss ${if (t < tStar) "größer" else "kleiner"} sein.", flyTo = p)
                     else -> Outcome(false, "Übers Ziel hinaus: $symbol muss ${if (t < tStar) "größer" else "kleiner"} sein.", flyTo = p)
                 }
             },
@@ -209,7 +211,7 @@ object Families {
             val p = v.vec("P")
             val ok = p.near(answer)
             val beams = shots?.invoke(p, ok) ?: rays.map { Beam(it.a, if (ok) it.end else it.a + it.d * Geo.exit(it.a, it.d, bounds.outerLo, bounds.outerHi), it.color, ok) }
-            if (ok) Outcome(true, "Der Sensor leuchtet – genau bei ${answer.fmt()}!", beams)
+            if (ok) Outcome(true, "Genau dort: $name${answer.fmt()}!", beams)
             else {
                 val (good, bad) = checks.partition { it.ok(p) }
                 MistakeBook.add(mistakes.map { it.second })

@@ -69,7 +69,7 @@ class MainActivity : ComponentActivity() {
             LaunchedEffect(voice) { app.voice.enabled = voice; app.nova.enabled = voice; if (!voice) app.nova.stop() }
             RaumlichtTheme {
                 val view = androidx.compose.ui.platform.LocalView.current
-                CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration, de.raumlicht.app.ui.fx.LocalSpeaker provides app.speaker,
+                CompositionLocalProvider(LocalSfx provides app.sfx, LocalVibration provides vibration, de.raumlicht.app.ui.fx.LocalSpeaker provides app.speaker, de.raumlicht.app.ui.fx.LocalVoiceStatus provides app.voiceStatus,
                     de.raumlicht.app.ui.fx.LocalBuzzer provides remember(view) { de.raumlicht.app.ui.fx.Buzzer { b, on -> with(de.raumlicht.app.ui.fx.Haptic) { view.buzzNow(b, on) } } },
                     de.raumlicht.app.ui.fx.LocalShareText provides { text -> runCatching { startActivity(android.content.Intent.createChooser(android.content.Intent(android.content.Intent.ACTION_SEND).setType("text/plain").putExtra(android.content.Intent.EXTRA_TEXT, text), "Teilen")) } },
                     de.raumlicht.app.ui.fx.LocalShareCard provides { title, points, verdict -> de.raumlicht.app.ui.home.ShareCard.share(this@MainActivity, title, points, verdict) }) {

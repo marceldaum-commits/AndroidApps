@@ -151,7 +151,7 @@ fun LevelScreen(
                 sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib)
                 out.flyTo?.let { to -> override = level.encode(level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list, mood = "sad") else it }) }
                 if (MistakeBook.isNamed(out.message)) sink(level.id, out.message)      // typischer Fehler → ins Fehler-Tagebuch
-                says = (out.message + if (attempts == 2 && !usedTip && !strict) " Tipp gefällig? 💡" else "") to LuxMood.SAD
+                says = (out.message + if (attempts == 2 && !usedTip && !strict) de.raumlicht.core.model.Vorlesen.TIP_OFFER else "") to LuxMood.SAD
             }
             busy = false
         }

@@ -92,10 +92,10 @@ internal object TourSeven {
         Stage.sphere("t${i}_$j", V3(4.0, 0.9 + i * 0.9, 3.6 - j * 0.9), 0.33, if (hit) "yellow" else "violet") } }.flatten() + Stage.podium()
 
     private val ch23 = listOf(
-        Families.scalar("23-1", 23, "Fairer Einsatz", "Am Glücksrad gewinnt man in 5 von 10 Feldern nichts, in 3 Feldern 2 € und in 2 Feldern 7 €. Welcher Einsatz macht das Spiel fair?", "E", 0..7, 2, 0,
+        Families.scalar("23-1", 23, "Fairer Einsatz", "Am Glücksrad gibt es in 5 von 10 Feldern nichts, in 3 Feldern 2 € und in 2 Feldern 7 € ausgezahlt. Bei welchem Einsatz ist das Spiel fair?", "E", 0..7, 2, 0,
             tip = "Fair heißt: Der Einsatz ist so groß wie der Gewinn im Schnitt. Erwartungswert = Summe aus Gewinn mal Wahrscheinlichkeit.",
             way = listOf("E = 0 · 0,5 + 2 · 0,3 + 7 · 0,2", "= 0 + 0,6 + 1,4", "= 2 € – bei diesem Einsatz gewinnt auf Dauer keiner"), color = "pink", suffix = " €",
-            formula = { a -> listOf(listOf(Txt("Gewinn: 0 € (50 %) · 2 € (30 %) · 7 € (20 %)")), listOf(Txt("fairer Einsatz = Erwartungswert = "), Num("${a} €", "a"))) },
+            formula = { a -> listOf(listOf(Txt("Auszahlung: 0 € (50 %); 2 € (30 %); 7 € (20 %)")), listOf(Txt("fairer Einsatz = Erwartungswert = "), Num("${a} €", "a"))) },
             finale = { Finale(acts = listOf(
                 Act("Drei blaue Felder bringen 2 €: 2 · 0,3 = 0,60 €.", beams = (5..7).map { Beam(lux, spot(it, 5), "cyan", false) }),
                 Act("Zwei goldene Felder bringen 7 €: 7 · 0,2 = 1,40 €.", beams = (8..9).map { Beam(lux, spot(it, 5), "yellow", false) }),
@@ -103,10 +103,10 @@ internal object TourSeven {
             objects = { _, _ -> dots(wheel) + listOf(sign("s0", V3(4.0, 7.4, 1.3), "0 €", "violet"), sign("s1", V3(4.0, 2.7, 3.3), "2 €", "cyan"), sign("s2", V3(4.0, 5.9, 3.3), "7 €", "yellow")) },
             check = { a -> Families.compare(a, 2, "Der Erwartungswert", "2 € – so viel gewinnt man im Schnitt pro Spiel.",
                 mapOf(3 to "(0 + 2 + 7) : 3 = 3 wäre richtig, wenn alle drei Gewinne gleich wahrscheinlich wären. Gewichte mit 0,5, 0,3 und 0,2.")) }),
-        Families.scalar("23-2", 23, "Höchstens einmal", "Ein Blitzlicht zündet mit 50 %. Ich löse dreimal aus. Wie wahrscheinlich zündet es höchstens einmal?", "P", 0..20, 10, 0,
+        Families.scalar("23-2", 23, "Höchstens einmal", "Ein Blitzlicht zündet mit einer Wahrscheinlichkeit von 50 %. Ich löse dreimal aus. Wie wahrscheinlich zündet es höchstens einmal?", "P", 0..20, 10, 0,
             tip = "Höchstens einmal heißt: keinmal oder genau einmal. Von den 8 gleich wahrscheinlichen Ausgängen zählen 1 + 3.",
             way = listOf("P(X = 0) = 1 : 8", "P(X = 1) = 3 : 8 (drei Reihenfolgen)", "P(X ≤ 1) = 4 : 8 = 50 %"), color = "pink", step = 5, suffix = " %",
-            formula = { a -> listOf(listOf(Txt("n = 3, p = 50 % · 8 gleich wahrscheinliche Ausgänge")), listOf(Txt("P(X ≤ 1) = "), Num("${a * 5} %", "a"))) },
+            formula = { a -> listOf(listOf(Txt("n = 3, p = 50 %; 8 gleich wahrscheinliche Ausgänge")), listOf(Txt("P(X ≤ 1) = "), Num("${a * 5} %", "a"))) },
             finale = { Finale(acts = listOf(
                 Act("Keinmal: nur ein Ausgang von acht.", tripleDots { t -> t.count { it } == 0 }),
                 Act("Genau einmal: drei Ausgänge – der Treffer kann vorn, in der Mitte oder hinten stehen.", tripleDots { t -> t.count { it } <= 1 }),
@@ -114,7 +114,7 @@ internal object TourSeven {
             objects = { _, ph -> if (ph == Phase.DONE) tripleDots { t -> t.count { it } <= 1 } else tripleDots() },
             check = { a -> Families.compare(a * 5, 50, "Die Wahrscheinlichkeit", "Genau 50 % – vier von acht Ausgängen.",
                 mapOf(15 to "Nah an 12,5 %? Das wäre nur „keinmal“. Dazu kommt „genau einmal“ mit drei Ausgängen.", 40 to "Nah an 37,5 %? Das wäre nur „genau einmal“. „Höchstens einmal“ schließt „keinmal“ mit ein.")) }),
-        Families.scalar("23-3", 23, "Wie oft mindestens?", "Ein Blitzlicht zündet mit 50 %. Wie oft muss ich mindestens auslösen, damit es mit mindestens 90 % Sicherheit wenigstens einmal zündet?", "n", 1..8, 4, 1,
+        Families.scalar("23-3", 23, "Wie oft mindestens?", "Ein Blitzlicht zündet mit einer Wahrscheinlichkeit von 50 %. Wie oft muss ich mindestens auslösen, damit es mit mindestens 90 % Sicherheit wenigstens einmal zündet?", "n", 1..8, 4, 1,
             tip = "Gegenereignis: Es zündet nie – das passiert mit 0,5ⁿ. Diese Zahl darf höchstens 10 % sein.",
             way = listOf("1 − 0,5ⁿ ≥ 0,9, also 0,5ⁿ ≤ 0,1", "n = 3: 0,125 – noch zu groß", "n = 4: 0,0625 → 93,75 % Sicherheit, also n = 4"), color = "pink",
             formula = { a -> listOf(listOf(Txt("p = 50 %, mindestens ein Treffer mit ≥ 90 %")), listOf(Txt("1 − 0,5ⁿ ≥ 0,9")), listOf(Txt("n = "), Num(Geo.num(a), "a"))) },
@@ -125,18 +125,18 @@ internal object TourSeven {
                 a == 4 -> Outcome(true, "n = 4 – ab dann liegt die Sicherheit bei mindestens 90 % (genau: 93,75 %).")
                 a < 4 -> Outcome(false, "Mit ${if (a == 1) "1 Versuch" else "$a Versuchen"} ist die Sicherheit erst ${Geo.num(100 - 100.0 / (1 shl a))} %. Das reicht noch nicht.")
                 else -> Outcome(false, "Mit $a Versuchen reicht es auch – aber gefragt ist die kleinste Anzahl. Probier weniger.") } }),
-        Families.scalar("23-4", 23, "Sigma-Regel", "400 Blitzlichter, jedes zündet mit 50 %. Etwa 95 % aller Shows liegen zwischen μ − 2σ und μ + 2σ. Wo liegt die untere Grenze?", "k", 32..40, 36, 40,
+        Families.scalar("23-4", 23, "Sigma-Regel", "In jeder Show werden 400 Blitzlichter ausgelöst, jedes zündet mit einer Wahrscheinlichkeit von 50 %. In etwa 95 % aller Shows liegt die Zahl der Zündungen zwischen μ − 2σ und μ + 2σ. Wie groß ist die untere Grenze μ − 2σ?", "k", 32..40, 36, 40,
             tip = "μ = n · p und σ = √(n · p · (1 − p)). Dann μ − 2 · σ.",
             way = listOf("μ = 400 · 0,5 = 200", "σ = √(400 · 0,5 · 0,5) = √100 = 10", "μ − 2σ = 200 − 20 = 180 (obere Grenze 220)"), color = "pink", step = 5,
             formula = { a -> listOf(listOf(Txt("n = 400, p = 0,5 (binomialverteilt)")), listOf(Txt("μ − 2σ = "), Num(Geo.num(a * 5), "a"))) },
             finale = { Finale(acts = listOf(Act("Im Mittel zünden 200 der 400 Blitzlichter.", ms = 1000), Act("Zwei Standardabweichungen sind 20: Fast immer liegt die Anzahl zwischen 180 und 220.", ms = 1100))) },
-            objects = { a, ph -> dots((0 until 20).map { if (it % 2 == 0) "yellow" else "cyan" }, perRow = 5, r = 0.36) + sign("grenze", V3(4.0, 4.0, 6.0), if (ph == Phase.DONE) "180 bis 220" else "ab ${a * 5}?") },
+            objects = { a, ph -> dots((0 until 20).map { if (it % 2 == 0) "yellow" else "cyan" }, perRow = 5, r = 0.36) + sign("grenze", V3(4.0, 4.0, 6.0), if (ph == Phase.DONE) "180 bis 220" else "untere Grenze: ${a * 5}?") },
             check = { a -> Families.compare(a * 5, 180, "Die Grenze", "180 – zwischen 180 und 220 liegen etwa 95 % aller Shows.",
                 mapOf(190 to "190 ist μ − σ. Für rund 95 % brauchst du zwei Standardabweichungen.", 200 to "200 ist der Erwartungswert μ selbst. Zieh 2 · σ ab.")) }),
-        Families.scalar("23-5", 23, "Abi-Check: Hypothesentest", "Der Hersteller sagt: Die Blitzlichter zünden mit 50 %. Ich vermute mehr und teste 100 Stück (Irrtumswahrscheinlichkeit höchstens 5 %). Ab wie vielen Zündungen lehne ich seine Angabe ab?", "k", 50..65, 59, 50, abi = true,
+        Families.scalar("23-5", 23, "Abi-Check: Hypothesentest", "Der Hersteller sagt: Die Blitzlichter zünden mit einer Wahrscheinlichkeit von 50 %. Ich vermute mehr und teste 100 Stück (Irrtumswahrscheinlichkeit höchstens 5 %). Ab wie vielen Zündungen lehne ich seine Angabe ab?", "k", 50..65, 59, 50, abi = true,
             tip = "Rechtsseitiger Test: Die Grenze liegt bei μ + 1,64 · σ. Erst μ und σ für n = 100 und p = 0,5 ausrechnen, dann aufrunden.",
             way = listOf("μ = 100 · 0,5 = 50, σ = √25 = 5", "μ + 1,64 · σ = 50 + 8,2 = 58,2", "ablehnen ab k = 59 (genau gerechnet: P(X ≥ 59) ≈ 4,4 %)"), color = "pink",
-            formula = { a -> listOf(listOf(Txt("H₀: p = 0,5 · n = 100 · Signifikanzniveau 5 %")), listOf(Txt("Ablehnungsbereich: X ≥ "), Num(Geo.num(a), "a"))) },
+            formula = { a -> listOf(listOf(Txt("H₀: p = 0,5;  n = 100;  Signifikanzniveau 5 %")), listOf(Txt("Ablehnungsbereich: X ≥ "), Num(Geo.num(a), "a"))) },
             finale = { Finale(acts = listOf(Act("Stimmt die Angabe, erwarte ich 50 Zündungen, mit einer Streuung von 5.", ms = 1100),
                 Act("59 oder mehr kämen dann nur in etwa 4 von 100 Tests vor – so viel Zufall glaube ich nicht.", ms = 1200))) },
             objects = { a, ph -> dots((0 until 20).map { if (it < (a * 20 + 50) / 100) "yellow" else "cyan" }, perRow = 5, r = 0.36) + sign("grenze", V3(4.0, 4.0, 6.0), if (ph == Phase.DONE) "ablehnen ab 59" else "ablehnen ab $a?") },
@@ -177,12 +177,12 @@ internal object TourSeven {
                          mistakes: Map<Int, String> = emptyMap(), unit: String = "", objects: (Int, Phase) -> List<Obj>) =
         ExamPart(label, pts, Families.scalar(id, 0, title, mission, name, range, solution, start, tip, way, "yellow", suffix = unit,
             formula = { a -> listOf(listOf(Txt("r(t) = −3t² + 12t")), listOf(Txt("$name = "), Num(Geo.num(a) + unit, "a"))) },
-            objects = objects, check = { a -> Families.compare(a, solution, what, "Richtig: ${Geo.num(solution)}$unit.", mistakes) }))
-    private val entry = Exam("einlass", "Einlass", "🎟️", "Am Festival-Einlass kommen r(t) = −3t² + 12t Hundert Gäste pro Stunde (t in Stunden nach Öffnung, 0 ≤ t ≤ 4).", listOf(
+            objects = objects, check = { a -> Families.compare(a, solution, what, "Richtig: ${Geo.num(solution)}${unit.ifEmpty { " Hundert" }}.", mistakes) }))
+    private val entry = Exam("einlass", "Einlass", "🎟️", "Am Festival-Einlass beschreibt r(t) = −3t² + 12t, wie viele Gäste pro Stunde kommen (r in Hundert Gästen pro Stunde, t in Stunden nach Öffnung, 0 ≤ t ≤ 4).", listOf(
         gatePart("a", 2, "abi-einlass-a", "Größter Andrang", "Zu welchem Zeitpunkt t kommen die meisten Gäste pro Stunde?", "t", 0..4, 2, 0, "Der Zeitpunkt",
             "Maximum der Rate: r′(t) = 0 setzen.", listOf("r′(t) = −6t + 12", "r′(t) = 0 → t = 2", "r″(2) = −6 < 0 → Maximum"), unit = " h") { a, _ ->
             listOf(gate.curve(), gate.axis(), Stage.point("stelle", gate.at(a.toDouble()), "yellow", drop = false)) },
-        gatePart("b", 3, "abi-einlass-b", "Spitzenwert", "Wie viele Hundert Gäste pro Stunde sind das dann?", "r", 0..14, 12, 0, "Der Wert",
+        gatePart("b", 3, "abi-einlass-b", "Spitzenwert", "Wie viele Hundert Gäste pro Stunde kommen zum Zeitpunkt des größten Andrangs (Teil a)?", "r", 0..14, 12, 0, "Der Wert",
             "Die Stelle t = 2 in r einsetzen.", listOf("r(2) = −3 · 4 + 12 · 2", "= −12 + 24", "= 12 Hundert Gäste pro Stunde"),
             mapOf(2 to "t = 2 ist der Zeitpunkt. Gefragt ist der Wert der Rate dort: r(2).")) { _, _ ->
             listOf(gate.curve(), gate.axis(), Stage.point("stelle", gate.at(2.0), "yellow", drop = false)) },

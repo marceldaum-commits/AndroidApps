@@ -87,7 +87,7 @@ object MoreGen {
         }
         Kind.MIRROR_AXIS -> {
             val p = r.offAxes(); val k = r.nextInt(3); val (a, b) = (0..2).filter { it != k }; val q = flip(p, a, b)
-            Families.point(id, 0, "Spiegeln an der Achse", "Jetzt ist die ${X[k]}-Achse der Spiegel. Wo landet das Spiegelbild von P?", q, hidden = true, name = "P′", bounds = S,
+            Families.point(id, 0, "Spiegeln an der Achse", "Die ${X[k]}-Achse ist ein Spiegel. Wo landet das Spiegelbild von P?", q, hidden = true, name = "P′", bounds = S,
                 given = listOf(listOf(Txt("P${p.fmt()}"))),
                 mistakes = listOf(flip(p, k) to "Du hast an der ${planeName(k)} gespiegelt. An der ${X[k]}-Achse bleibt ${X[k]} gleich und die beiden anderen wechseln.", flip(p, a) to "Erst eine Koordinate gedreht – an einer Achse wechseln zwei.", flip(p, b) to "Erst eine Koordinate gedreht – an einer Achse wechseln zwei."),
                 tip = "An der ${X[k]}-Achse bleibt ${X[k]} stehen. Die beiden anderen Koordinaten wechseln das Vorzeichen – wie eine halbe Drehung um die Achse.",
@@ -98,7 +98,7 @@ object MoreGen {
         Kind.PARALLELOGRAM -> {
             val a = r.point(); val u = r.dir(4); val v = r.dir(4); val b = a + u; val d = a + v; val c = b + v; val m = (a + c) * 0.5
             if (Geo.parallel(u, v) || !inRoom(b) || !inRoom(c) || !inRoom(d) || (a + c).ints.any { it % 2 != 0 } || u.ints.count { it != 0 } < 2) null
-            else Families.point(id, 0, "Parallelogramm", "Vier Haken A, B, C, D tragen ein Lichtsegel. Prüfe, ob es ein Parallelogramm ist – und setz den Spot auf den Schnittpunkt der Diagonalen.", m, hidden = true, name = "M",
+            else Families.point(id, 0, "Parallelogramm", "Vier Haken A, B, C, D tragen ein Lichtsegel – ein Parallelogramm. Setz den Spot genau auf den Schnittpunkt der Diagonalen.", m, hidden = true, name = "M",
                 given = listOf(listOf(Txt("A${a.fmt()}   B${b.fmt()}")), listOf(Txt("C${c.fmt()}   D${d.fmt()}"))),
                 mistakes = listOf(a + c to "Du hast A und C addiert – jetzt noch durch 2 teilen."),
                 tip = "Parallelogramm heißt: AB⃗ und DC⃗ sind gleich. Dann halbieren sich die Diagonalen – ihr Schnittpunkt ist die Mitte von A und C.",
@@ -112,7 +112,7 @@ object MoreGen {
             if (g == f || d.ints[j] == 0 || ref == null || !inRoom(b) || !inRoom(c)) null else {
                 val sol = c.ints[j]; val ratio = g.toDouble() / f
                 fun cAt(k: Int) = V3.of(c.ints.mapIndexed { i, x -> if (i == j) k else x })
-                Families.scalar(id, 0, "Drei auf einer Geraden", "A und B hängen fest. Für welches k liegt auch C genau auf der Geraden durch A und B?", "k", 0..B.max[j], sol, if (sol == 0) 1 else 0,
+                Families.scalar(id, 0, "Drei auf einer Geraden", "A und B hängen fest. Bei C ist eine Koordinate noch frei: k (farbig markiert). Für welches k liegt auch C genau auf der Geraden durch A und B?", "k", 0..B.max[j], sol, if (sol == 0) 1 else 0,
                     tip = "Drei Punkte liegen auf einer Geraden, wenn AC⃗ ein Vielfaches von AB⃗ ist. Den Faktor liest du an einer bekannten Koordinate ab.",
                     way = listOf("AB⃗ = ${(b - a).fmt()}", "AC⃗ = r · AB⃗: aus ${X[ref]} folgt r = ${n(c.ints[ref] - a.ints[ref])} : ${Geo.par(b.ints[ref] - a.ints[ref])} = ${n(ratio)}", "k = ${n(a.ints[j])} + ${Geo.par(ratio)} · ${Geo.par(b.ints[j] - a.ints[j])} = ${n(sol)}"), color = "yellow",
                     formula = { k -> listOf(listOf(Txt("A${a.fmt()}   B${b.fmt()}")), listOf(Txt("C("), *c.ints.indices.flatMap { i -> listOf(if (i == j) Num(Geo.num(k), "a") else Txt(n(c.ints[i])), Txt(if (i < 2) "|" else ")")) }.toTypedArray())) },
@@ -125,7 +125,7 @@ object MoreGen {
             val ref = (0..2).firstOrNull { it != j && d.ints[it] != 0 }
             if (d.ints[j] == 0 || ref == null || !inRoom(q) || !inRoom(a + d) || abs(e.ints[j]) > 6) null else {
                 val sol = e.ints[j]
-                Families.scalar(id, 0, "Dieselbe Gerade?", "Zwei Schreibweisen – eine Gerade? Für welches k beschreibt h dieselbe Gerade wie g?", "k", -6..6, sol, 0,
+                Families.scalar(id, 0, "Dieselbe Gerade?", "Zwei Schreibweisen – eine Gerade? Im Richtungsvektor von h ist eine Zahl noch frei: k (farbig markiert). Für welches k beschreibt h dieselbe Gerade wie g?", "k", -6..6, sol, 0,
                     tip = "Dieselbe Gerade heißt zweierlei: Die Richtungsvektoren sind Vielfache voneinander, und der Stützpunkt von h liegt auf g.",
                     way = listOf("Richtungen: aus ${X[ref]} folgt der Faktor ${n(e.ints[ref])} : ${Geo.par(d.ints[ref])} = ${n(f)}", "k = ${n(f)} · ${Geo.par(d.ints[j])} = ${n(sol)}", "Stützpunkt ${q.fmt()} liegt auf g (t = 2) – also dieselbe Gerade"), color = "yellow",
                     formula = { k -> listOf(lineText("g", a, listOf(col(d))), lineText("h", q, listOf(Part.Col(e.ints.mapIndexed { i, x -> if (i == j) Geo.num(k) else n(x) }, "a")), "s")) },
@@ -152,7 +152,7 @@ object MoreGen {
             val b = a + u; val d = a + v; val c = b + v; val len = (u dot u).toInt(); val vy = v.ints[1]; val rest = len - v.ints[0] * v.ints[0] - v.ints[2] * v.ints[2]; val m = (a + c) * 0.5
             if (Geo.parallel(u, v) || vy == 0 || u.ints.count { it != 0 } < 2 || !inRoom(b) || !inRoom(c) || !inRoom(d) || a.ints[1] - vy >= 0 && false) null else {
                 val sol = d.ints[1]; fun dAt(k: Int) = V3(d.x, k.toDouble(), d.z)
-                Families.scalar(id, 0, "Raute mit Parameter", "A, B und D spannen ein Parallelogramm ABCD auf. Für welches k ist es eine Raute? (D soll rechts von A liegen: k > ${n(a.ints[1])}.)", "k", a.ints[1]..B.max[1], sol, a.ints[1],
+                Families.scalar(id, 0, "Raute mit Parameter", "A, B und D spannen ein Parallelogramm ABCD auf. Die x₂-Koordinate von D ist k. Für welches k > ${n(a.ints[1])} ist es eine Raute?", "k", a.ints[1]..B.max[1], sol, a.ints[1],
                     tip = "Eine Raute ist ein Parallelogramm mit vier gleich langen Seiten. Es reicht |AD⃗| = |AB⃗| – rechne mit den Quadraten, dann brauchst du keine Wurzel.",
                     way = listOf("AB⃗ = ${u.fmt()}, |AB⃗|² = ${n(len)}", "AD⃗ = (${n(v.ints[0])}|k − ${n(a.ints[1])}|${n(v.ints[2])}), |AD⃗|² = ${n(v.ints[0] * v.ints[0])} + (k − ${n(a.ints[1])})² + ${n(v.ints[2] * v.ints[2])}",
                         "gleich lang: (k − ${n(a.ints[1])})² = ${n(rest)} → k = ${n(a.ints[1])} ± ${n(sqrt(rest.toDouble()))}, wegen k > ${n(a.ints[1])} also k = ${n(sol)}",

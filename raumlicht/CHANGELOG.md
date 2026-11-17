@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.4 – Klarere Aufgaben, Nova ohne fremde Stimme (17.11.2026)
+- **Aufgaben verständlicher:** Alle Aufgaben, Prüfungsteile und Übungs-Vorlagen wurden noch einmal darauf geprüft, ob eindeutig ist, was gefragt ist. An rund 60 Stellen steht jetzt eine klare Frage oder die fehlende Angabe dabei – zum Beispiel „Wie groß ist sein Volumen?“ beim Lichtkegel, das Intervall bei Drehkörpern, „Winkel zwischen Strahl und Segel-Ebene (nicht zum Lot)“ oder welche Zahl bei Parameter-Aufgaben eigentlich gesucht ist.
+- **Nichts mehr verraten:** In „Ausfälle einplanen“ zeigte die Bühne die Lösung schon vorher – jetzt sind alle Scheinwerfer gleich gefärbt. Rückmeldungen nennen kein unsichtbares Ziel mehr.
+- **Nova statt Handy-Stimme:** Hakt die Verbindung, versucht es die App noch einmal und zeigt dezent „Nova lädt …“. Die Stimme des Geräts liest nur noch, wenn wirklich kein Netz da ist und der Satz nicht gespeichert war. Ist Nova einmal nicht erreichbar, steht das kurz oben – höchstens einmal je Sitzung.
+- **Mehr vorab vertont:** Häufige Rückmeldungen (auch mit „Tipp gefällig?“), die Urteile der Geisterfahrt und die Regeln der Ballerbude gehören jetzt zu den festen Texten und lassen sich offline laden.
+
 ## 2.18.3 – Falscher Hinweis an der 3D-Bühne behoben (17.11.2026)
 - **Android:** Über der 3D-Bühne stand manchmal „Die 3D-Bühne startet nicht …“, obwohl sie längst lief – zum Beispiel, wenn man kurz in eine andere App gewechselt war. Der Hinweis erscheint jetzt nur noch, wenn die Bühne wirklich nicht startet, und verschwindet von selbst, sobald sie da ist.
 

@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Nova“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.18.3 vom 17.11.2026. Ersetzt die frühere Anleitung zur ladbaren Stimme (Sprachsynthese auf dem Gerät, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
+Stand: Raumlicht 2.18.4 vom 17.11.2026. Ersetzt die frühere Anleitung zur ladbaren Stimme (Sprachsynthese auf dem Gerät, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
 
 ## Kurz
 
@@ -29,7 +29,11 @@ Text vorher: NFC, jeder Leerraum zu einem Leerzeichen, getrimmt. Prüfwert: `de`
 1. Datei schon gespeichert → sofort abspielen (geht offline).
 2. Sonst `GET …/nova/<h[0:2]>/<h>.mp3`.
 3. Antwort 404 und Text ≤ 300 Zeichen (entsteht erst in der Aufgabe): `POST …/jetzt` mit `{"text":"…","sprache":"de"}` → 200 `{"url":…}` → Datei holen. **Nichts über den Nutzer mitsenden.**
-4. Antwort 204, Fehler oder offline → diesen einen Satz liest still die Stimme des Geräts.
+4. Aussetzer (keine Verbindung, Serverfehler 5xx)? Kurz warten (0,7 s) und **einmal wiederholen**. Dauert das Holen länger als 0,8 s, zeigt die App dezent „Nova lädt …“.
+5. **Die Stimme des Geräts liest nur, wenn wirklich kein Netz da ist** (auch der zweite Versuch scheitert an der Verbindung) und der Satz nicht gespeichert war.
+   Ist der Server erreichbar, hat aber keine Datei (204, 404 ohne `/jetzt`, fremde Adresse), bleibt dieser eine Satz stumm – nie mit fremder Stimme.
+   In beiden Fällen einmal je Sitzung der Hinweis „Nova ist gerade nicht erreichbar.“ (seit 2.18.4).
+6. Immer **ganze Sätze** senden und hashen – nie aus Schnipseln zusammensetzen. Häufige feste Rückmeldungen gehören in die Liste (Raumlicht: Rückmeldung auf „Los“ ohne Änderung, mit und ohne Tipp-Angebot).
 
 Dazu: ein neuer Satz unterbricht den alten; Musik wird unter der Stimme leiser; nur Antworten annehmen, die auf den eigenen Server zeigen und wie MP3 aussehen;
 gespeicherte Sätze begrenzen (Android: 60 MB im Cache, älteste zuerst weg; Web: eigener Cache `raumlicht-nova`, den der Service Worker bei Updates stehen lässt).

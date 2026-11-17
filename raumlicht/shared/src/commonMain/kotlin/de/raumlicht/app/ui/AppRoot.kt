@@ -1,5 +1,6 @@
 package de.raumlicht.app.ui
 
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
@@ -246,6 +247,8 @@ fun AppRoot(
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }
             }
         } }
+        // dezente Hinweise zur Stimme (lädt … / gerade nicht erreichbar)
+        de.raumlicht.app.ui.fx.VoiceHints(androidx.compose.ui.Modifier.align(androidx.compose.ui.Alignment.TopCenter).systemBarsPadding())
         }
     }
 }

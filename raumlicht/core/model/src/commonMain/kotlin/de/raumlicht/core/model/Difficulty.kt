@@ -135,7 +135,7 @@ object ProGen {
         Kind.PARALLEL_PARAM -> {
             val n = normals[r.nextInt(normals.size)]; val p = r.nextInt(-3, 4); val q = r.nextInt(-3, 4); val rest = (n.x * p + n.z * q).toInt(); val ny = n.y.toInt()
             val a0 = r.point(); val c = (n dot r.point(1)).toInt(); val sol = if (ny != 0 && rest % ny == 0) -rest / ny else 99
-            if (p == 0 || q == 0 || sol == 0 || abs(sol) > 4 || abs((n dot a0) - c) < 1e-9) null else Families.scalar(id, 0, "Parallel mit Parameter", "Die Laserbahn g soll die Scheibe E nie treffen. Für welches a läuft g parallel zu E?", "a", -4..4, sol, 0,
+            if (p == 0 || q == 0 || sol == 0 || abs(sol) > 4 || abs((n dot a0) - c) < 1e-9) null else Families.scalar(id, 0, "Parallel mit Parameter", "Die Laserbahn g soll die Scheibe E nie treffen. Die mittlere Zahl im Richtungsvektor ist a (farbig markiert) – für welches a läuft g parallel zu E?", "a", -4..4, sol, 0,
                 tip = "Parallel heißt: Die Richtung von g steht senkrecht auf dem Normalenvektor – Skalarprodukt null. Danach prüfen, dass A nicht in E liegt.",
                 way = listOf("d⃗ · n⃗ = ${int(n.x)} · ${Geo.par(p)} + ${Geo.par(n.y)} · a + ${Geo.par(n.z)} · ${Geo.par(q)}", "${Geo.plus((if (ny == 1) "" else if (ny == -1) "−" else int(n.y) + " · ") + "a", rest.toDouble())} = 0", "a = ${int(sol.toDouble())}", "Probe: n⃗ · A = ${int(n dot a0)} ≠ ${int(c.toDouble())}, A liegt nicht in E – also echt parallel"), color = "cyan",
                 formula = { a -> listOf(listOf(Txt("g: x⃗ = "), col(a0), Txt(" + t · "), Part.Col(listOf(int(p.toDouble()), Geo.num(a), int(q.toDouble())), "a")), listOf(Txt("E: ${Geo.planeText(n, c)}"))) },

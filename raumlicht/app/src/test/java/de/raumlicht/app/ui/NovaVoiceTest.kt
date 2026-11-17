@@ -29,8 +29,9 @@ class NovaVoiceTest {
 
     @Before fun clean() { File(ctx.cacheDir, "nova").deleteRecursively() }
 
+    private val status = de.raumlicht.app.ui.fx.VoiceStatus()
     private fun voice(server: (String, String?) -> Pair<Int, ByteArray>) = NovaVoice(ctx, Speaker { device += it }, { ducked += it },
-        fetch = { url, body -> asked += url to body; server(url, body) }, play = { f, _, rate, done -> played += f; rates += rate; finish = done; {} })
+        fetch = { url, body -> asked += url to body; server(url, body) }, play = { f, _, rate, done -> played += f; rates += rate; finish = done; {} }, status = status, retryPause = 0)
     private fun settle() { Thread.sleep(150); shadowOf(android.os.Looper.getMainLooper()).idle() }
 
     @Test fun fixedTextComesFromTheServerAndIsKept() {
@@ -52,15 +53,34 @@ class NovaVoiceTest {
         assertEquals(1, played.size); assertTrue(device.isEmpty())
     }
 
-    @Test fun deviceVoiceStepsInQuietly() {
-        // offline
-        voice { _, _ -> 0 to ByteArray(0) }.say("Geschafft!"); settle(); assertEquals(listOf("Geschafft!"), device); assertTrue(played.isEmpty())
-        // Server lehnt ab (204) · zu langer Text wird gar nicht erst geschickt · Fehlerseite statt MP3 landet nicht im Speicher
-        asked.clear(); voice { _, body -> if (body != null) 204 to ByteArray(0) else 404 to ByteArray(0) }.say("Nochmal."); settle(); assertEquals(2, asked.size); assertEquals(2, device.size)
-        asked.clear(); val long = "a ".repeat(200).trim(); voice { _, _ -> 404 to ByteArray(0) }.say(long); settle(); assertEquals(1, asked.size); assertEquals(3, device.size)
+    /** Die Stimme des Geräts liest nur, wenn wirklich kein Netz da ist – nach einem zweiten Versuch. Dazu einmal je Sitzung ein Hinweis. */
+    @Test fun deviceVoiceOnlyWithoutNetwork() {
+        voice { _, _ -> 0 to ByteArray(0) }.say("Geschafft!"); settle()
+        assertEquals(listOf("Geschafft!"), device); assertTrue(played.isEmpty()); assertEquals(2, asked.size)                 // zweimal versucht
+        assertEquals(de.raumlicht.app.ui.fx.VoiceStatus.UNREACHABLE, status.note); assertEquals(false, status.loading)
+        // der Hinweis kommt nur einmal je Sitzung
+        status.note = null; voice { _, _ -> 0 to ByteArray(0) }.say("Nochmal."); settle(); assertEquals(null, status.note); assertEquals(2, device.size)
+    }
+
+    /** Ist unser Server erreichbar, hat aber keine Datei, spricht NICHT die Stimme des Geräts – der Satz bleibt stumm. */
+    @Test fun serverWithoutFileStaysSilent() {
+        // /jetzt lehnt ab (204)
+        voice { _, body -> if (body != null) 204 to ByteArray(0) else 404 to ByteArray(0) }.say("Nochmal."); settle(); assertEquals(2, asked.size)
+        assertTrue(device.isEmpty()); assertTrue(played.isEmpty()); assertEquals(de.raumlicht.app.ui.fx.VoiceStatus.UNREACHABLE, status.note)
+        // zu langer Text wird gar nicht erst an /jetzt geschickt
+        asked.clear(); val long = "a ".repeat(200).trim(); voice { _, _ -> 404 to ByteArray(0) }.say(long); settle(); assertEquals(1, asked.size); assertTrue(device.isEmpty())
+        // Fehlerseite statt MP3 landet nicht im Speicher
         val v = voice { _, _ -> 200 to "<html>Fehler</html>".toByteArray() }; assertNull(v.obtain("Hallo Welt")); assertNull(File(ctx.cacheDir, "nova").listFiles()?.firstOrNull { it.name.endsWith(".mp3") })
         // Antwort mit fremder Adresse wird nicht geholt
         asked.clear(); voice { _, body -> if (body != null) 200 to """{"url":"https://fremd.example/x.mp3"}""".toByteArray() else 404 to ByteArray(0) }.say("Hm."); settle(); assertEquals(2, asked.size)
+        assertTrue(device.isEmpty())
+    }
+
+    /** Ein Aussetzer des Servers (500) oder der Verbindung wird einmal wiederholt – danach spricht Nova ganz normal. */
+    @Test fun hiccupIsRetried() {
+        var n = 0
+        val v = voice { _, _ -> if (n++ == 0) 503 to ByteArray(0) else 200 to mp3 }
+        v.say("Hallo Welt"); settle(); assertEquals(2, asked.size); assertEquals(1, played.size); assertTrue(device.isEmpty()); assertEquals(null, status.note)
     }
 
     @Test fun newSentenceCutsTheOldOneAndOffMeansSilent() {

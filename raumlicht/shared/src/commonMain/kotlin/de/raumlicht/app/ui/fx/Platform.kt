@@ -1,6 +1,14 @@
 package de.raumlicht.app.ui.fx
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.testTag
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.border
+import androidx.compose.foundation.background
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.getValue
 
 // Was Android und der Browser verschieden lösen. Die Bildschirme kennen nur diese Schnittstellen; jede Plattform füllt sie auf ihre Art.
 
@@ -24,6 +32,38 @@ fun interface Speaker {
     fun sayIfQuiet(text: String) = say(text)
 }
 val LocalSpeaker = staticCompositionLocalOf<Speaker?> { null }
+
+/**
+ * Was die Stimme „Nova“ gerade tut – für zwei dezente Hinweise in der Oberfläche:
+ * [loading] = ein Satz wird geholt (dauert es länger, erscheint „Nova lädt …“), [note] = eine Meldung, höchstens einmal je Sitzung („Nova gerade nicht erreichbar“).
+ */
+class VoiceStatus {
+    var loading by androidx.compose.runtime.mutableStateOf(false)
+    var note by androidx.compose.runtime.mutableStateOf<String?>(null)
+    private var told = false
+    /** Einmal je Sitzung sagen, dass Nova gerade nicht zu erreichen ist */
+    fun unreachable() { if (!told) { told = true; note = UNREACHABLE } }
+    companion object { const val UNREACHABLE = "Nova ist gerade nicht erreichbar." }
+}
+val LocalVoiceStatus = staticCompositionLocalOf<VoiceStatus?> { null }
+
+/** Die zwei Hinweise zur Stimme: klein, oben in der Mitte, ohne etwas zu verdecken, das man antippen muss */
+@androidx.compose.runtime.Composable
+fun VoiceHints(modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modifier) {
+    val status = LocalVoiceStatus.current ?: return
+    // „lädt“ erst zeigen, wenn es spürbar dauert – sonst flackert es bei jedem Satz
+    var slow by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
+    androidx.compose.runtime.LaunchedEffect(status.loading) { slow = false; if (status.loading) { kotlinx.coroutines.delay(800); slow = true } }
+    androidx.compose.runtime.LaunchedEffect(status.note) { if (status.note != null) { kotlinx.coroutines.delay(5000); status.note = null } }
+    val text = status.note ?: if (status.loading && slow) "🔊 Nova lädt …" else null
+    androidx.compose.animation.AnimatedVisibility(text != null, modifier, enter = androidx.compose.animation.fadeIn(), exit = androidx.compose.animation.fadeOut()) {
+        var last by androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf("") }; if (text != null) last = text
+        androidx.compose.material3.Text(last, androidx.compose.ui.Modifier.padding(top = 6.dp).testTag("stimme-hinweis")
+            .background(androidx.compose.ui.graphics.Color(0xE6101433), androidx.compose.foundation.shape.RoundedCornerShape(50))
+            .border(1.dp, androidx.compose.ui.graphics.Color(0x8838E8FF), androidx.compose.foundation.shape.RoundedCornerShape(50)).padding(horizontal = 12.dp, vertical = 5.dp),
+            color = androidx.compose.ui.graphics.Color(0xFFDDE6FF), fontSize = 12.sp)
+    }
+}
 
 /** Text weitergeben (Android: Teilen-Dialog, Web: Teilen oder Zwischenablage) */
 val LocalShareText = staticCompositionLocalOf<(String) -> Unit> { {} }

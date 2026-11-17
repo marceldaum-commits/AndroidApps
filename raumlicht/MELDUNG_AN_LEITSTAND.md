@@ -2,6 +2,41 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.18.4: fertig für den Betriebstest (Aufgaben geprüft, Nova ohne Geräte-Stimme)
+
+Marcel hat den Nacht-Auftrag direkt bestätigt („Beides“). **Raumlicht 2.18.4 vom 17.11.2026, Web = Android (beide 2.18.4).** Ersetzt 2.18.3 als Stand für den Betriebstest.
+
+### 1) Aufgaben auf Logik und Verständlichkeit geprüft
+**Geprüft (jede einzeln gelesen, fünf Pakete):** 136 feste Aufgaben in 25 Kapiteln und alle 25 Kapitel-Einführungen · 7 Prüfungsaufgaben mit 28 Teilen · 4 Schritt-Verfahren mit 9 Schritten ·
+Tagesaufgabe (15 Tage gelesen, 16 weitere durchgesehen) · endloses Üben: 29 Aufgabenarten, **1160 erzeugte Varianten automatisch durchsucht** (Lösung einstellbar und angenommen, Einzahl/Mehrzahl, Klammern, Vorzeichen, leere Felder), 116 davon gelesen.
+**Ergebnis: kein Fall „nicht lösbar“ oder „richtige Antwort abgelehnt“. Geändert: 39 von 136 festen Aufgaben, 6 Einführungen, 11 Stellen in Prüfungen/Schritten, 11 von 29 Übungs-Vorlagen und 4 allgemeine Rückmeldungen – zusammen rund 60 Stellen.**
+
+Änderungen (Auswahl nach Art; vollständig im Diff von `core/model/…/Levels.kt`, `MoreLevels.kt`, `Tour*.kt`, `Modes.kt`, `Extras.kt`, `Gen.kt`, `MoreGen.kt`, `Difficulty.kt`, `Families.kt`):
+- **Frage fehlte:** 1-2, 1-3, 3-2, 3-4, 5-2, 7-2, 7-4, 12-2 (jetzt mit ausdrücklichem Auftrag, z. B. „Wie groß ist sein Volumen?“).
+- **Angabe fehlte oder stand nur in der Formelzeile:** 12-1/12-2 (Intervall), 13-3 (zweimal ziehen), 17-4 (Ursprung, Fläche), 19-4 (Richtung (2|a|−3)), 20-3 (c′), 23-4 (was gezählt wird), 4-4/6-1 (welche Komponente frei ist),
+  Üben: same_line, collinear, rhombus, parallel_param (wo k bzw. a steht), motion_time (Start in A, pro Sekunde um d⃗), Schritte „windschief“ (was n⃗ ist), Prüfungen: Zelt (Einheit), Einlass (was r(t) misst), einlass-b / drohnen-d / leinwand-d (Bezug auf den früheren Teil).
+- **Mehrdeutig:** 7-5 „Einfallswinkel“ → „Winkel zwischen Strahl und Segel-Ebene (nicht zum Lot)“; 7-4 Schnittwinkel ≤ 90°; 18-4 (gesucht ist die ganzzahlige Koordinatenform); 24-4 „4 bis 6“ → „mindestens 4 und höchstens 6“; 23-1 „gewinnt“ → „ausgezahlt“; abi-zelt-b (Normalenvektor kürzen).
+- **Rückmeldung passte nicht:** 10-4 und 19-3 nannten ein unsichtbares Ziel „Z“ – jetzt eigene Meldungen; abi-zelt-d „Der Sensor leuchtet“ → „Genau dort: S′(6|6|0)!“; 18-2 verriet den Normalenvektor; negatives t („1-mal entgegen“, „zu kurz … kleiner“);
+  Ablese-Aufgaben („Rechne jede Zeile einzeln“); Prüfungs-Ergebnisse ohne Einheit (einlass-b/d, bogen-a).
+- **Bühne verriet die Lösung:** 13-4 (2 von 20 Scheinwerfern waren schon pink).
+- **Bezeichner doppelt belegt:** 16-2 Regler „k“ → „Anzahl“, 16-3 „n“ → „Gäste“.
+- **Formelzeile:** „·“ als Trennzeichen las sich wie „mal“ (16-3, 13-5, 23-1, 23-2, 23-5, 24-2, 24-4, 24-5) → „;“ bzw. „|“.
+- **Fachsprache:** „zündet mit 50 %“ → „mit einer Wahrscheinlichkeit von 50 %“ (9 Aufgaben); Einführungen Kapitel 4, 5, 11, 14, 18, 21 präzisiert; Rechenwege ohne „1 · t“ und ohne unbenanntes „A + 1 · d⃗“.
+
+**Bewusst nicht geändert (Restpunkte):** Punktwerte einzelner Prüfungsteile (drohnen-d, trommel-d wirken zu hoch bewertet); 18-1 nimmt die Gegenrichtung (−3|−2|−6) nicht an, weil der Regler bei −5 endet (einstellbar ist nur die positive Fassung);
+Bezeichner in 11-2/11-3 („v“ für den Betrag, „d⃗“ statt „v⃗“ auf der Bühne); **Zahlenvielfalt im Üben:** bei skew_dist, radius, motion_time und rotation ist die Lösung in über drei Vierteln der Varianten dieselbe Zahl bzw. Raste – nach wenigen Runden ratbar.
+
+### 2) Nova – ganze Sätze, nie die Android-Stimme
+- **Ganze Sätze:** In Raumlicht wird nichts aus Schnipseln gebaut; jeder Satz geht als Ganzes an `/nova/…` bzw. `/jetzt`. Kein Laufzeit-Text ist länger als 300 Zeichen (Test `VorlesenLaengeTest`: 3212 Stichproben, längster 229).
+- **Feste Liste erweitert: 949 Texte (vorher 679), 75 040 Zeichen.** Neu darin: die Rückmeldung auf „Los“ ohne Änderung für jede feste Aufgabe, jeweils auch mit „Tipp gefällig?“, alle 101 Urteile der Geisterfahrt, die Regeln der Ballerbude.
+- **Ursachen für „Geräte-Stimme trotz Nova“ in Raumlicht (bis 2.18.3):** Die Geräte-Stimme sprang bei JEDEM Fehlschlag ein – auch bei einem einzelnen Aussetzer, bei 204/5xx von `/jetzt` oder wenn der Server erreichbar war, die Datei aber fehlte. Hash und Text passen (Prüfwert, Liste = gesprochener Text).
+- **Jetzt:** bei Aussetzern (keine Verbindung, 5xx) kurz warten und einmal wiederholen; Ladehinweis „Nova lädt …“ ab 0,8 s; **Geräte-Stimme nur, wenn auch der zweite Versuch keine Verbindung bekommt und nichts gespeichert/offline geladen ist**;
+  ist der Server erreichbar, aber ohne Datei, bleibt der Satz stumm. Einmal je Sitzung „Nova ist gerade nicht erreichbar.“ Android und Web gleich.
+- **Abdeckung:** Messung gegen den echten Server folgt als Nachtrag, sobald euer Werk die neue Liste (949) geholt hat – die 270 neuen Texte gab es beim Ausliefern naturgemäß noch nicht.
+
+### Geprüft
+152 Logik-Tests, 148 App-Tests, Lint beider Fassungen, Browser (`web.mjs`, `web-update.mjs`, `web-nova.mjs`, `web-vorversion.mjs`). Nicht auf einem echten Gerät gehört. Restpunkte der Abschlussmeldung vom 17.11. gelten weiter.
+
 ## 17.11.2026 – Raumlicht 2.18.3: Fehlerbehebung aus Marcels Gerätetest (falscher Bühnen-Hinweis)
 
 **Raumlicht 2.18.3 vom 17.11.2026, Web = Android (beide 2.18.3).** Ersetzt 2.18.2 als Stand für den Betriebstest; reine Fehlerbehebung.
