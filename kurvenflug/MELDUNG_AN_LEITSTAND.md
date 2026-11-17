@@ -1,5 +1,14 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.3.0 – „Pro aktiv“ sichtbar (Vorgabe Marcel) · Web = Android
+- Gab es vorher nur als Text „Freigeschaltet“ auf der Pro-Karte in den Einstellungen – jetzt eingebaut:
+  - **Startseite, Kopf unter „KURVENFLUG“:** goldenes Abzeichen „⭐ Pro aktiv“ (sanft pulsierend), immer sichtbar,
+    Bildschirmfoto `screenshots/101_pro_aktiv_start.png`.
+  - **Einstellungen, Karte „Kurvenflug Pro“ (oben):** dasselbe Abzeichen plus Art und ggf. Ablauf: „Einmalkauf über Google
+    Play – unbegrenzt“, „Einmalkauf über die Website (Code) – unbegrenzt“ oder „Schullizenz – gültig bis 31.7.2027“,
+    Bildschirmfoto `screenshots/102_pro_aktiv_einstellungen.png`. Die Pro-Seite selbst zeigte Art/Ablauf schon.
+- Ohne Pro: unverändert (kein Abzeichen). Gleicher Code für Web, APK und Play. versionCode 42.
+
 ## 2.2.0 live – Nachprüfung
 - Live geprüft: version.json 2.2.0, stimme/tokens.txt, ort/*.mjs, ort/*.wasm, ort/LIZENZ.txt kommen an (richtige Typen).
 - Release `kurvenflug-v2.2.0` vollständig: APK 15,2 MB, Play-AAB 19,2 MB, Web-ZIP 8,5 MB.

@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.clickable
 import de.kurvenflug.app.ui.theme.Q
+import de.kurvenflug.app.ui.pro.kindText
 
 @Composable
 fun SettingsScreen(
@@ -108,8 +109,11 @@ private fun ProCard(state: de.kurvenflug.app.ProState, onPro: () -> Unit) {
             Text("⭐", fontSize = 28.sp)
             Spacer(Modifier.width(12.dp))
             Column(Modifier.weight(1f)) {
-                Text("Kurvenflug Pro", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                Text(if (state.pro) "Freigeschaltet – danke! 💛" else "Oberstufe, Extrem-Stufen, mehr Spieler" + if (de.kurvenflug.app.LocalPlatform.current.proShop?.acceptsCodes == true) " · Code einlösen" else "",
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text("Kurvenflug Pro", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                    de.kurvenflug.app.ui.pro.ProBadge(state, Modifier.padding(start = 8.dp))
+                }
+                Text(if (state.pro) state.kindText() + " · danke! 💛" else "Oberstufe, Extrem-Stufen, mehr Spieler" + if (de.kurvenflug.app.LocalPlatform.current.proShop?.acceptsCodes == true) " · Code einlösen" else "",
                     style = MaterialTheme.typography.bodySmall)
             }
             Text("›", fontSize = 24.sp, color = Q.Muted)

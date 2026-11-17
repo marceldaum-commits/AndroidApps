@@ -135,6 +135,7 @@ Schlüssel und Kasse in `pro/pro.properties` (nur der öffentliche Schlüssel!),
 | Pro-Seite | Pro-Kapitel gesperrt | Freigeschaltet |
 |---|---|---|
 | ![](screenshots/94_pro.png) | ![](screenshots/95_pro_kapitel_gesperrt.png) | ![](screenshots/96_pro_freigeschaltet.png) |
+| ![](screenshots/101_pro_aktiv_start.png) | ![](screenshots/102_pro_aktiv_einstellungen.png) | |
 
 ## Google Play
 Zwei Varianten aus demselben Code: `github` (APK, eigener Updater, Internet + Installations-Recht) und `play`

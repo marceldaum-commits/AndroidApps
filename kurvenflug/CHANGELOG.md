@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.3.0 – ⭐ „Pro aktiv“ gut sichtbar
+- Ist Kurvenflug Pro freigeschaltet, zeigt die Startseite jetzt oben ein goldenes Abzeichen „⭐ Pro aktiv“. In den
+  Einstellungen steht zusätzlich, wie Pro freigeschaltet wurde (Kauf über Google Play, Website-Code oder Schullizenz) und
+  bei einer Schullizenz, bis wann sie gilt. Ohne Pro ändert sich nichts.
+
 ## 2.2.0 – 🗣️ Thorsten jetzt auch in der Google-Play-Version
 - Die natürliche Vorlese-Stimme „Thorsten“ gibt es jetzt auch in der App aus Google Play. Dafür darf die App ins Internet –
   aber nur, wenn Sie Thorsten in den Einstellungen selbst laden (einmalig ca. 75 MB von unserem eigenen Server). Sonst

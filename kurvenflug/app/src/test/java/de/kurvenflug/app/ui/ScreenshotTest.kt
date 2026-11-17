@@ -463,4 +463,22 @@ class ScreenshotTest {
         override fun cancelPack() {}
         override fun removePack() {}
     }
+
+    /** Pro aktiv: Abzeichen im Kopf der Startseite (Schullizenz mit Ablaufdatum in den Einstellungen). */
+    @Test fun proBadgeHome() = shot("101_pro_aktiv_start") {
+        androidx.compose.runtime.CompositionLocalProvider(de.kurvenflug.app.LocalPro provides proSchool) {
+            HomeScreen(someStars.values.sum(), Levels.all.size * 3, 7, 0, {}, Levels.chapters, someStars, {}, {})
+        }
+    }
+
+    @Test fun proBadgeSettings() = shot("102_pro_aktiv_einstellungen") {
+        androidx.compose.runtime.CompositionLocalProvider(de.kurvenflug.app.LocalPro provides proSchool) {
+            SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "2.3.0",
+                update = UpdateState.Idle, onBack = {}, onPro = {})
+        }
+    }
+
+    private val proSchool = de.kurvenflug.app.ProState(pro = true, locking = true,
+        license = de.kurvenflug.core.model.License.Info(de.kurvenflug.core.model.Pro.APP_ID, de.kurvenflug.core.model.License.PRODUCT_SCHOOL, 7,
+            de.kurvenflug.core.model.CalDate(2027, 7, 31).toEpochDay() - de.kurvenflug.core.model.License.DAY0))
 }
