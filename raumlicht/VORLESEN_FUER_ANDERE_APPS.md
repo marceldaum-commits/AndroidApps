@@ -85,7 +85,7 @@ Im Browser rechnet **ONNX Runtime Web** (MIT) das Modell direkt – ohne sherpa-
   (`ort.wasm.min.js`, `ort-wasm-simd-threaded.mjs`, `ort-wasm-simd-threaded.wasm`, zusammen 11 MB). Sie werden erst geladen, wenn Thorsten zum ersten Mal spricht – der Start der WebApp wird nicht langsamer.
 - **`web/src/wasmJsMain/resources/rl-stimme.js`:** laden (Fortschritt, abbrechbar), SHA-256 prüfen (`crypto.subtle`), in einem eigenen Browser-Speicher ablegen (Cache Storage `raumlicht-stimme`),
   Modell starten, Laut-Nummern rechnen, per Web Audio abspielen (Satz für Satz, ein neuer Satz unterbricht den alten). Der Service Worker lässt diesen Speicher bei Updates stehen.
-- **Kotlin-Seite** (`web/.../Thorsten.kt`): `Speech.clean` → `Lautschrift.of` (dieselben `saetze.tsv`/`woerter.tsv` wie Android, nach `webapp/stimme/` kopiert) → `PiperIds.encode`
+- **Kotlin-Seite** (`web/.../Thorsten.kt`): `Speech.clean` → `Lautschrift.of` (dieselben `saetze.tsv`/`woerter.tsv` wie Android, als `.txt` nach `webapp/stimme/` kopiert – der Abgleich zur Testadresse lässt `.tsv` nicht durch) → `PiperIds.encode`
   (Anfang „^“, zwischen allen Lauten „_“, Ende „$“, Nummern aus `tokens.txt`) → `rl-stimme.js`. Eingaben des Modells: `input` (int64), `input_lengths`, `scales = [0,667; Tempo; 0,8]`.
 - **Rückfall:** unbekanntes Wort oder Modell startet nicht → die Stimme des Geräts (`speechSynthesis`, **nur Stimmen mit `localService`** – sonst kann der Text an den Browser-Hersteller gehen).
 - **Server:** CORS muss die Web-Adresse erlauben (für `*.mathenachhilfe-online.com` und `localhost` eingerichtet).

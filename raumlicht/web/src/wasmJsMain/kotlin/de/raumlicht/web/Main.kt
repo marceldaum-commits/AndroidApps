@@ -71,7 +71,7 @@ private fun WebApp() {
     var mood by remember { mutableStateOf(MusicMood.MENU) }
     val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()
     LaunchedEffect(Unit) { if (!without("ton")) musicSetup { name -> val pcm = MusicSynth.render(SpaceMusic.compose(MusicMood.valueOf(name))); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i] / 32768f); musicStore(name, b) } }
-    val thorsten = remember { WebThorsten(prefs) }
+    val thorsten = remember { WebThorsten(prefs) { clean -> speak(clean, prefs.volume.value / 100.0, prefs.speechRate.value / 100.0, prefs.voiceName) } }
     val musicLevel by prefs.musicLevel.collectAsState(); val voiceOn by prefs.voice.collectAsState()
     var exam by remember { mutableStateOf(false) }; var talking by remember { mutableStateOf(false) }
     // unter der Stimme wird die Musik leiser

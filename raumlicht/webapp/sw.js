@@ -3,7 +3,7 @@
 const CACHE = 'raumlicht-2.16.0';
 // Der App-Kern (.wasm): Der Dateiname ändert sich mit dem Inhalt, darum darf er aus dem Zwischenspeicher des Browsers kommen –
 // die Seite hat ihn gerade erst geladen, so wird er beim ersten Besuch nicht doppelt übertragen. Danach startet die App auch ohne Netz.
-const WASM = ['69d637a34600b5bde081.wasm', 'bccfa839aa4b38489c76.wasm'];
+const WASM = ['a84336545f8fc5547486.wasm', 'bccfa839aa4b38489c76.wasm'];
 // Alles andere beim Installieren am Zwischenspeicher des Browsers vorbei laden ('reload'): wirklich die neue Fassung
 self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => Promise.all([c.addAll(WASM), c.addAll(['./', 'index.html', 'raumlicht.js', 'scene/index.html', 'scene/scene.js', 'rl-stimme.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf', 'diagnose.html'].map((u) => new Request(u, { cache: 'reload' })))]))); });
 // Die geladene Stimme „Thorsten“ (raumlicht-stimme) bleibt bei Updates stehen – sie soll nur einmal geladen werden

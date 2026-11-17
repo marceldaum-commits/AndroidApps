@@ -68,7 +68,8 @@ tasks.register<Sync>("webapp") {
     // Lizenztexte der fremden Bausteine – dieselbe Datei wie in der Android-App
     from(rootProject.file("app/src/main/assets/lizenzen.txt"))
     // Natürliche Stimme im Browser: Lautschrift und Zeichenliste (dieselben Daten wie in der Android-App) …
-    from(rootProject.file("app/src/main/assets/stimme")) { into("stimme") }
+    // (als .txt: Der Abgleich zur Testadresse lässt nur bekannte Dateitypen durch)
+    from(rootProject.file("app/src/main/assets/stimme")) { into("stimme"); rename { it.replace(".tsv", ".txt") } }
     // … und ONNX Runtime Web: nur die drei Dateien für WebAssembly (ohne WebGPU), selbst ausgeliefert
     from(rootProject.layout.buildDirectory.dir("wasm/node_modules/onnxruntime-web/dist")) {
         include("ort.wasm.min.js", "ort-wasm-simd-threaded.mjs", "ort-wasm-simd-threaded.wasm"); into("ort")

@@ -23,7 +23,7 @@ const st = await page.evaluate(() => ({ state: window.__rlThorsten.state, why: w
 ok('Stimme geladen und Prüfsumme stimmt', st.state === 'ready', `${((Date.now() - t0) / 1000).toFixed(1)} s ${st.why}`);
 // Laut-Nummern für einen festen Satz – wie PiperIds.encode
 const tokens = new Map(fs.readFileSync(path.join(dir, 'stimme/tokens.txt'), 'utf8').split('\n').filter(Boolean).map((l) => { const i = l.lastIndexOf(' '); return [l.slice(0, i), Number(l.slice(i + 1))]; }));
-const line = fs.readFileSync(path.join(dir, 'stimme/saetze.tsv'), 'utf8').split('\n').find((l) => l.startsWith('Hallo, ich bin Lux. So klinge ich jetzt.\t'));
+const line = fs.readFileSync(path.join(dir, 'stimme/saetze.txt'), 'utf8').split('\n').find((l) => l.startsWith('Hallo, ich bin Lux. So klinge ich jetzt.\t'));
 ok('der Probesatz hat Lautschrift', !!line);
 const sentences = line.split('\t')[1].split('|').filter(Boolean).map((s) => { const out = [1, 0]; for (const ch of s) { if (tokens.has(ch)) { out.push(tokens.get(ch), 0); } } out.push(2); return out; });
 const t1 = Date.now();
