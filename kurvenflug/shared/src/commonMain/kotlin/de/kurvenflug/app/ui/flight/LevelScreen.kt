@@ -601,19 +601,26 @@ fun TheoryOverlay(t: de.kurvenflug.core.model.Theory, onClose: () -> Unit) {
         Column(Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text("📖 ${t.emoji} ${t.title}", style = MaterialTheme.typography.headlineSmall, color = Q.Cyan, fontWeight = FontWeight.Bold)
-            Text(t.grades, color = Q.Muted)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                Text(t.grades, color = Q.Muted, modifier = Modifier.weight(1f))
+                // alles am Stück vorlesen
+                de.kurvenflug.app.ui.fx.SpeakButton({ (listOf(t.title) + t.points + listOfNotNull(t.formula)).joinToString(" ") { it.trimEnd().let { p -> if (p.last() in ".!?:") p else "$p." } } })
+            }
             Volt(VoltMood.HAPPY, size = 64.dp, speech = "Alles Wichtige zum Nachlesen – das kostet keine Sterne! 💡")
             t.points.forEachIndexed { i, text ->
                 val a by animateFloatAsState(if (shown) 1f else 0f, tween(350, delayMillis = 90 * i), label = "theory$i")
                 Row(Modifier.fillMaxWidth().graphicsLayer { alpha = a; translationY = (1 - a) * 40f }.clip(RoundedCornerShape(16.dp))
                     .background(Q.Panel).border(1.dp, Q.Cyan.copy(alpha = 0.35f), RoundedCornerShape(16.dp)).padding(12.dp)) {
                     Text("${i + 1}", color = Q.Cyan, fontWeight = FontWeight.Black, fontSize = 20.sp, modifier = Modifier.width(28.dp))
-                    Text(text, color = Q.Text)
+                    Text(text, color = Q.Text, modifier = Modifier.weight(1f))
+                    de.kurvenflug.app.ui.fx.SpeakButton({ text }, Modifier.padding(start = 6.dp))
                 }
             }
             t.formula?.let { f ->
-                Text("💡 $f", color = Q.Yellow, modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp))
-                    .background(Q.Yellow.copy(alpha = 0.12f)).padding(12.dp))
+                Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Yellow.copy(alpha = 0.12f)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text("💡 $f", color = Q.Yellow, modifier = Modifier.weight(1f))
+                    de.kurvenflug.app.ui.fx.SpeakButton({ f }, Modifier.padding(start = 6.dp))
+                }
             }
             NeonButton(onClick = onClose, color = Q.Cyan, modifier = Modifier.fillMaxWidth()) {
                 Text("Verstanden – weiter üben! 🚀", color = Q.Text, fontWeight = FontWeight.Bold)
@@ -668,7 +675,13 @@ private fun LiveCalc(level: Level, values: Map<String, Double>, visible: Boolean
 private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, onAnswer: (Int) -> Unit) {
     Column(Modifier.padding(top = 10.dp).fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Space.copy(alpha = 0.6f))
         .border(1.dp, Q.Violet.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-        Text("🧠 Rechen-Stern: ${check.question}", color = Q.Text, fontWeight = FontWeight.Bold)
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("🧠 Rechen-Stern: ${check.question}", color = Q.Text, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
+            de.kurvenflug.app.ui.fx.SpeakButton({
+                if (answer < 0) "Rechen-Stern: ${check.question} " + check.options.mapIndexed { i, o -> "${listOf("Erstens", "Zweitens", "Drittens", "Viertens").getOrElse(i) { "" }}: $o." }.joinToString(" ")
+                else "Richtig ist: ${check.options[check.correct]}." + (worked?.let { w -> " So rechnet man's: " + w.joinToString(" ") { it.solved() + "." } } ?: "")
+            })
+        }
         check.options.forEachIndexed { i, o ->
             val right = i == check.correct
             val col = when {

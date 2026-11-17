@@ -3,6 +3,18 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.27.0 – 🗣️ Volt liest vor
+- **Vorlesen**: Volt liest seine Sprechblasen, die Aufgaben, die Rechen-Stern-Fragen und alle Erklärungen in der Theorie
+  vor. Ein Tipp auf 🔊 (oder auf Volts Sprechblase) wiederholt den Text. Formeln und Einheiten werden richtig gesprochen:
+  aus „y = 2x + 1“ wird „y gleich 2x plus 1“, aus „3 m/s“ „3 Meter pro Sekunde“. Gut für Kinder, die noch nicht so
+  schnell lesen – und für alle, die lieber zuhören.
+- **Stimme wählen**: die Stimmen des Handys bzw. Browsers oder **„Thorsten“**, eine natürlich klingende Stimme. Dazu
+  Tempo und eine Probe-Taste. Die Wahl wird gemerkt. Vorlesen lässt sich in den Einstellungen ausschalten.
+- **Für Eltern**: Thorsten wird nur geladen, wenn man es ausdrücklich antippt (einmalig 63 MB von huggingface.co, am
+  besten im WLAN). Dabei werden keine Texte und keine Daten über Ihr Kind gesendet; danach spricht Thorsten ohne Internet
+  und lässt sich jederzeit wieder entfernen. Die Gerätestimmen sprechen ebenfalls ohne Internet.
+- Während Volt spricht, wird die Musik leiser.
+
 ## 0.26.0 – 🎵 Kurvenflug hat jetzt seinen eigenen Sound
 - **Eigene Musik für jedes Kapitel**: Synthwave im Weltall mit weitem Hall, Arpeggios und einer Melodie – dem
   Kurven-Motiv, das wie eine Flugbahn steigt und fällt. Jedes Kapitel hat seine eigene Tonart, Akkorde und sein

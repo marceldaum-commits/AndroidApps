@@ -8,12 +8,14 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -24,6 +26,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.kurvenflug.app.ui.theme.Q
 import kotlin.math.sin
 
@@ -49,7 +52,15 @@ fun Volt(mood: VoltMood, modifier: Modifier = Modifier, size: Dp = 72.dp, speech
     val spin = remember { Animatable(0f) }
     val sfx = de.kurvenflug.app.ui.fx.LocalSfx.current
     val voice = LocalVoltVoice.current
-    LaunchedEffect(speech) { if (voice && speech != null && mood != VoltMood.SLEEP) sfx?.babble(speech) }
+    // Vorlesen an: Volt spricht richtig (antippen = nochmal); sonst plappert er in Roboter-Sprache
+    val readAloud = de.kurvenflug.app.ui.fx.LocalReadAloud.current
+    val reader = de.kurvenflug.app.ui.fx.LocalReader.current
+    val me = remember { Any() }
+    LaunchedEffect(speech, readAloud) {
+        if (speech == null || mood == VoltMood.SLEEP) return@LaunchedEffect
+        if (readAloud) de.kurvenflug.app.ui.fx.Voice.say(reader, speech, me) else if (voice) sfx?.babble(speech)
+    }
+    androidx.compose.runtime.DisposableEffect(Unit) { onDispose { de.kurvenflug.app.ui.fx.Voice.leave(reader, me) } }
     LaunchedEffect(mood) {
         if (mood == VoltMood.DANCE) {
             // Freudentanz: Hüpfer und eine ganze Drehung
@@ -72,8 +83,14 @@ fun Volt(mood: VoltMood, modifier: Modifier = Modifier, size: Dp = 72.dp, speech
             label = "say", modifier = Modifier.weight(1f, fill = false)) { s ->
             if (s != null) Surface(
                 color = Q.Panel, shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.padding(start = 8.dp).border(1.5.dp, Q.Cyan.copy(alpha = 0.6f), RoundedCornerShape(16.dp)),
-            ) { Text(s, color = Q.Text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.padding(horizontal = 12.dp, vertical = 9.dp)) }
+                modifier = Modifier.padding(start = 8.dp).border(1.5.dp, Q.Cyan.copy(alpha = 0.6f), RoundedCornerShape(16.dp))
+                    .then(if (readAloud) Modifier.clip(RoundedCornerShape(16.dp)).clickable { de.kurvenflug.app.ui.fx.Voice.say(reader, s, me) } else Modifier),
+            ) {
+                Row(verticalAlignment = Alignment.Top) {
+                    Text(s, color = Q.Text, style = MaterialTheme.typography.bodyMedium, modifier = Modifier.weight(1f, fill = false).padding(start = 12.dp, end = if (readAloud) 4.dp else 12.dp, top = 9.dp, bottom = 9.dp))
+                    if (readAloud) Text("🔊", fontSize = 12.sp, modifier = Modifier.padding(top = 6.dp, end = 8.dp).graphicsLayer { alpha = 0.7f })
+                }
+            }
         }
     }
 }

@@ -162,3 +162,15 @@ Auftrag (Marcel über den Leitstand): „sehr viel Inhalt“, jede Aufgabe mit E
   kurzer Loops. Sonifikation (Ton folgt der Kurve) unterstützt das Verständnis von Funktionsgraphen (Audio-Graphen,
   wie in Barrierefreiheits-Tools), ersetzt aber nie die Anzeige.
 - Respekt im Unterricht: Ton nie vor Interaktion, getrennte Lautstärken, still in Klassen-Challenges.
+
+## Kurvenflug 0.27: Vorlesen (Nov. 2026)
+- **Warum**: Leseschwache und jüngere Kinder scheitern in Mathe-Spielen oft am Text, nicht an der Mathematik. Vorlesen
+  (Text + Ton gleichzeitig) entlastet das Arbeitsgedächtnis (Modalitätseffekt, Mayer/Sweller); Lernspiele für Kinder
+  bieten es heute fast immer an. Wichtig: abschaltbar, wiederholbar (🔊), Tempo wählbar – und Formeln müssen
+  verständlich gesprochen werden, sonst liest eine Sprachausgabe „x²“ als „x“ oder Sonderzeichen gar nicht.
+- **Technik**: Gleicher Weg wie Raumlicht (Leitstand-Vorgabe): Formel-Aufbereitung `Speech.clean` gemeinsam für Android
+  und Web, um Physik-Einheiten (m/s, m/s², km/h, s, m, N, kg) und Live-Rechnungen erweitert. Natürliche Stimme „Thorsten“
+  (Piper, CC0-Stimmdaten) ohne espeak-ng (GPL): Lautschrift vorab erzeugt. Android: sherpa-onnx. Web: ONNX Runtime Web
+  (MIT, 11 MB Rechenkern, wird erst mit der Stimme geladen) – im Test 0,3× Echtzeit am PC, Download + Prüfung 5 s.
+- **Datenschutz**: Gerätestimmen nur, wenn sie ohne Internet sprechen (Browser: `localService`). Stimmdatei nur auf
+  ausdrücklichen Wunsch, mit Hinweis für Eltern (Herkunft huggingface.co, keine Texte/keine Kinderdaten).

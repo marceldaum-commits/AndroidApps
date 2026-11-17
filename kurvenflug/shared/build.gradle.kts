@@ -25,6 +25,8 @@ kotlin {
             api(project(":core:data"))
             implementation("androidx.activity:activity-compose:1.11.0")
             implementation("androidx.core:core-ktx:1.17.0")
+            // Vorlesen mit der natürlichen Stimme „Thorsten“ (wie Raumlicht; Laute vorab erzeugt, kein espeak-ng/GPL)
+            implementation("com.github.k2-fsa.sherpa-onnx:sherpa-onnx:v2.0.1@aar")
         }
     }
 }
