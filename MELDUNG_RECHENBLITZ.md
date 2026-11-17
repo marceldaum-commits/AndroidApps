@@ -2,7 +2,37 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden (Meldung 66, mit Bildschirmfotos).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (66) – Alle Nova-Texte offline laden (3.25.1)
+
+Vorgabe Marcel 17.11., Web = Android.
+
+- **Einstellungen → Vorlesen**, zwei Knöpfe:
+  - **„⬇ Alle Nova-Texte offline laden (≈ X MB)“** mit dem Hinweis „Am besten im WLAN“ und dem Stand „Schon gespeichert: x/n“.
+  - **„🗑 Offline-Stimme löschen (Y MB)“** – erscheint, sobald etwas gespeichert ist, mit Rückfrage.
+  - Ist alles da, steht dort „✓ Alle Nova-Texte sind offline gespeichert.“
+- **Größe X:** live aus `https://stimmen.mathenachhilfe-online.com/nova/stand-<host>.json`, Feld `bytes`.
+  - `<host>` ist der Host, auf dem die App gerade läuft; Android nimmt `rechenblitz.mathenachhilfe-online.com`.
+  - Geladen wird **nur die eingestellte Sprache**. X ist deshalb anteilig geschätzt: Bytes je Text × fehlende Texte dieser Sprache. Was schon auf dem Gerät liegt, ist abgezogen.
+  - Heute zeigt das ≈ 31 MB für Deutsch; nach eurem Neu-Kodieren auf 40 kbit/s wird es von selbst kleiner.
+- **Y:** die tatsächliche Größe aller gespeicherten Nova-Dateien.
+- **Laden:**
+  - Liste aus der eigenen `/vorlesen/texte.json`, nur fehlende Dateien, **4 parallel**.
+  - Fortschritt „x von n“ mit Balken und **Abbrechen**. Nach einem Abbruch geht es beim nächsten Tippen dort weiter.
+  - **404 wird still übersprungen.** Laufzeit-Texte (/jetzt) sind nicht dabei.
+- **Speicher:** Cache Storage `rb-nova`. In der Android-App liegt dieser Speicher im privaten App-Bereich der WebView, also im App-Speicher. Es ist derselbe Speicher, aus dem das Vorlesen ohnehin liest – offline geladene Texte werden sofort benutzt.
+- **Getestet** mit nachgebautem Stimmen-Server (300 von 350 Dateien vorhanden):
+  - Größe ✓;
+  - Laden mit Fortschritt ✓;
+  - Abbruch nach 37/350 und Weitermachen ✓;
+  - 50 × 404 still übersprungen ✓;
+  - Löschen setzt auf 0 zurück ✓.
+  - DE/EN/UK ohne fehlende Übersetzungen, 320 und 360 px ohne Überlauf, Offline ✓, Zufallstest ✓, Schwierigkeitstest ✓.
+- **Bildschirmfotos der Einstellungen** (im Repo):
+  - `meldungen/rechenblitz-3.25.1-einstellungen-vorlesen.png` – vor dem Laden;
+  - `meldungen/rechenblitz-3.25.1-einstellungen-offline-gespeichert.png` – teilweise gespeichert, mit Lösch-Knopf.
+- **Neue Dateiendungen:** keine in der App. Die beiden `.png` liegen in `meldungen/` außerhalb von `kopfrechnen/`, werden also nicht ausgeliefert.
 
 ## 17.11.2026 (65) – Nur noch Nova, mit /jetzt; Thorsten entfernt (3.25.0)
 

@@ -63,5 +63,50 @@ const Nova = {
     return true;
   },
 };
+// ---------- Alle festen Nova-Texte offline laden (Vorgabe Marcel 17.11.) ----------
+// Nur die eingestellte Sprache, nur fehlende Dateien, 4 parallel; Abbrechen und später weitermachen; 404 still überspringen.
+// Gespeichert im Cache-Speicher der App (Web: Cache Storage, Android: derselbe Speicher im privaten App-Bereich der WebView).
+const NovaOffline = {
+  busy: false, stopFlag: false,
+  host: () => (typeof IS_NATIVE !== 'undefined' && IS_NATIVE) ? 'rechenblitz.mathenachhilfe-online.com' : location.hostname,
+  async texts(lang = I18N.lang) { try { const j = await (await fetch('vorlesen/texte.json')).json(); return (j.texte || []).filter(t => t.sprache === lang).map(t => t.text); } catch { return []; } },
+  // Größe aller Dateien laut Server (live, wird kleiner, wenn der Server neu kodiert)
+  async stand() { try { const r = await Nova.get(`${Nova.base()}stand-${this.host()}.json`, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch { return null; } },
+  async cache() { try { return await caches.open('rb-nova'); } catch { return null; } },
+  // was liegt schon auf dem Gerät: { have: Anzahl dieser Sprache, total: n, bytes: alle gespeicherten Nova-Dateien }
+  async status(lang = I18N.lang) {
+    const c = await this.cache(), list = await this.texts(lang); let have = 0, bytes = 0;
+    if (c) { const keys = await c.keys(); const set = new Set(keys.map(k => k.url));
+      for (const t of list) if (set.has(await Nova.url(lang, t))) have++;
+      for (const k of keys) { try { const r = await c.match(k); bytes += (await r.blob()).size; } catch {} } }
+    return { have, total: list.length, bytes };
+  },
+  // geschätzte Download-Größe für die fehlenden Dateien dieser Sprache
+  async estimate(lang = I18N.lang) {
+    const [st, s] = await Promise.all([this.stand(), this.status(lang)]);
+    if (!st || !st.bytes || !st.texte) return { ...s, mb: null };
+    return { ...s, mb: Math.max(0, Math.round(st.bytes / st.texte * (s.total - s.have) / 1e6)) };
+  },
+  stop() { this.stopFlag = true; },
+  async load(onProg = () => {}, lang = I18N.lang) {
+    if (this.busy) return false; this.busy = true; this.stopFlag = false;
+    try {
+      const c = await this.cache(); if (!c) return false;
+      const list = await this.texts(lang), todo = [];
+      for (const t of list) { const u = await Nova.url(lang, t); if (!(await c.match(u))) todo.push(u); }
+      let done = list.length - todo.length; onProg(done, list.length);
+      const worker = async () => {
+        while (todo.length && !this.stopFlag) {
+          const u = todo.shift();
+          try { const r = await Nova.get(u); if (r.ok) await c.put(u, new Response(await r.blob(), { headers: { 'Content-Type': 'audio/mpeg' } })); } catch {}   // 404/Fehler: still überspringen
+          done++; onProg(done, list.length);
+        }
+      };
+      await Promise.all([worker(), worker(), worker(), worker()]);
+      return !this.stopFlag;
+    } finally { this.busy = false; }
+  },
+  async clear() { try { await caches.delete('rb-nova'); } catch {} Nova.pending.clear(); },
+};
 // Reste der früheren Stimme „Thorsten“ vom Gerät räumen (bis 3.24.x)
 try { caches.delete('rb-stimme'); } catch {}

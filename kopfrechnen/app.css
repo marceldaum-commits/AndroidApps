@@ -1056,3 +1056,11 @@ button.badge{font:inherit;cursor:pointer}
 .mi.pro-active{border-color:#ff9a3c}
 .voicebox #rateSeg{flex:1;flex-wrap:wrap;gap:4px}
 .voicebox #rateSeg button{padding:4px 8px;font-size:13px}
+.novaoff{display:grid;gap:8px}
+.novaoff p{margin:0}
+.novaoff .bar{height:10px}
+.novaoff .bar>i{display:block;height:100%;width:0;background:var(--orange-d);border-radius:99px;transition:width .2s}
+.novaoff .btn{white-space:normal;height:auto;min-height:44px;padding-top:8px;padding-bottom:8px;line-height:1.3}
+.voicebox,.novaoff{min-width:0}
+.novaoff .btn{display:block;width:100%;text-align:center}
+.novaoff .btn span[translate=no]{white-space:nowrap}

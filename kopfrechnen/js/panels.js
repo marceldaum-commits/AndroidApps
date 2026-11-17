@@ -103,7 +103,8 @@ const PANELS = {
       ${Voice.available() ? `<div class="setrow col voicebox"><div class="vrow"><b>Stimme</b><span class="vname">Nova – KI-generierte Stimme</span></div>
         <div class="vrow"><b>Sprechtempo</b><div class="chips" id="rateSeg" role="group" aria-label="Sprechtempo">${RATES.map(r => `<button data-v="${r}" class="${speechRate() === r ? 'sel' : ''}" aria-pressed="${speechRate() === r}" translate="no">${String(r).replace('.', ',')}×</button>`).join('')}</div></div>
         <p class="small muted" id="novaNote">Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. Texte, die erst in der Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zu dir an unseren Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle.</p>
-        <button class="btn" id="voiceTest">▶ Probe hören</button></div>` : (IS_NATIVE ? '<p class="small muted setnote">Zum Vorlesen bitte die neue Rechenblitz-App installieren.</p>' : '<p class="small muted setnote">Auf diesem Gerät gibt es keine Vorlese-Stimme.</p>')}
+        <button class="btn" id="voiceTest">▶ Probe hören</button>
+        <div id="novaOff" class="novaoff"></div></div>` : (IS_NATIVE ? '<p class="small muted setnote">Zum Vorlesen bitte die neue Rechenblitz-App installieren.</p>' : '<p class="small muted setnote">Auf diesem Gerät gibt es keine Vorlese-Stimme.</p>')}
       ${sw('auto', S.settings.auto, 'Automatisch prüfen', 'Prüfen, sobald genug Stellen eingegeben sind')}
       ${sw('blitz', S.settings.blitz !== false, 'Maskottchen Blitz', 'Blitz der Fuchs feuert dich an und erklärt Tricks')}
       ${Reminder.supported() || isIOS() ? reminderHtml() : ''}
@@ -271,6 +272,25 @@ $('sheetBody').addEventListener('click', e => { const b = e.target.closest('[dat
 document.addEventListener('click', e => { const b = e.target.closest('[data-open]'); if (b) openSheet(b.dataset.open); });
 
 /* ---------- Einstellungen ---------- */
+// Offline-Stimme: alle festen Nova-Texte der eingestellten Sprache aufs Gerät laden bzw. wieder löschen
+async function novaOfflineUi(msg) {
+  const box = $('novaOff'); if (!box || !Nova.can()) return;
+  if (NovaOffline.busy) return;
+  box.innerHTML = '<p class="small muted">…</p>';
+  const e = await NovaOffline.estimate(); if (!$('novaOff')) return;
+  const mb = b => Math.max(1, Math.round(b / 1e6)), all = e.have >= e.total && e.total > 0;
+  box.innerHTML = `${msg ? `<p class="small">${msg}</p>` : ''}
+    ${all ? '<p class="small">✓ Alle Nova-Texte sind offline gespeichert.</p>' : `<button class="btn" id="novaLoad">⬇ <span>Alle Nova-Texte offline laden</span>${e.mb != null ? ` <span translate="no">(≈ ${Math.max(1, e.mb)} MB)</span>` : ''}</button>
+      <p class="small muted">Am besten im WLAN. ${e.have ? `<span>Schon gespeichert:</span> <span translate="no">${e.have}/${e.total}</span>` : ''}</p>`}
+    ${e.bytes > 0 ? `<button class="btn" id="novaDel">🗑 <span>Offline-Stimme löschen</span> <span translate="no">(${mb(e.bytes)} MB)</span></button>` : ''}`;
+  if ($('novaLoad')) $('novaLoad').onclick = async () => {
+    box.innerHTML = '<p class="small"><span>Lade Nova-Texte …</span> <span id="novaProg" translate="no"></span></p><div class="bar"><i id="novaBar"></i></div><button class="btn" id="novaStop">Abbrechen</button>';
+    $('novaStop').onclick = () => NovaOffline.stop();
+    const ok = await NovaOffline.load((d, n) => { const p = $('novaProg'), b = $('novaBar'); if (p) p.textContent = `${d} ${tr('von')} ${n}`; if (b) b.style.width = Math.round(d / Math.max(1, n) * 100) + '%'; });
+    novaOfflineUi(ok ? '' : 'Abgebrochen – beim nächsten Tippen geht es dort weiter.');
+  };
+  if ($('novaDel')) $('novaDel').onclick = async () => { if (!confirm(tr('Offline-Stimme löschen?'))) return; await NovaOffline.clear(); novaOfflineUi(); };
+}
 function initSettings() {
   renderReminder();
   $('sheetBody').querySelectorAll('[data-set]').forEach(b => b.onclick = () => {
@@ -281,6 +301,7 @@ function initSettings() {
     renderHome();
   });
   if ($('voiceTest')) {
+    novaOfflineUi();
     $('rateSeg').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.settings.rate = +b.dataset.v; save();
       $('rateSeg').querySelectorAll('button').forEach(x => { x.classList.toggle('sel', x === b); x.setAttribute('aria-pressed', x === b); }); Voice.say('3/4 + 1/4 = 1', { force: true }); };
     $('voiceTest').onclick = () => Voice.speakParts([mathSpeak(tr('Hallo, ich bin Blitz!')), joinSay(['3/4 + 1/4 = 1', '12² = 144', '2,5 km = 2500 m'].map(x => mathSpeak(shownText(x))))], { force: true });
