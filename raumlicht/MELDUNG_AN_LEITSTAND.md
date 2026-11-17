@@ -2,6 +2,27 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.14.0: Theorie-Knopf, wählbare Schreibweise, Vorlesen einstellbar (alles von Marcel direkt bestätigt)
+
+**Web = Android:** ja. Beide Fassungen entstehen aus demselben Code und tragen dieselbe Version (2.14.0 vom 17.11.2026). Bewusste Unterschiede: natürliche Stimme „Thorsten“ nur in Android (im Browser noch nicht gebaut),
+App-Update-Kasten und Widgets nur in Android.
+
+- **Neu: „📖 Theorie“ bei jeder Aufgabe** (Marcels Wunsch: „zu jeder Übung ein Button mit der passenden Theorie, damit es nicht frustet“). 68 Theorie-Karten, jede mit Idee, Schritten,
+  durchgerechnetem Beispiel (andere Zahlen als die Aufgabe) und typischem Fehler. Zuordnung für alle 136 Tour-Aufgaben, 28 Prüfungs-Teilaufgaben, 9 Schritt-Aufgaben einzeln, für Üben und Tagesaufgabe über die Aufgabenart.
+  Nachlesen kostet keinen Stern; im Pflichtteil „ohne Hilfsmittel“ gibt es den Knopf nicht. Alle 68 Beispiele sind unabhängig nachgerechnet. Recherche dazu in `docs/RECHERCHE.md`.
+- **Vektorschreibweise wählbar** (Marcels Entscheidung zu Punkt 3.1 des Prüfberichts): Voreinstellung kurz („AB⃗ = B − A“), in den Einstellungen umstellbar auf streng („AB⃗ = OB⃗ − OA⃗“).
+  Gilt für Aufgaben, Tipps, Rechenwege, Rückmeldungen, Theorie und Formelsammlung. Ein Test stellt sicher, dass Analysis und Stochastik dabei unverändert bleiben.
+- **Vorlesen** (eure Nachricht vom 17.11., von Marcel bestätigt): ausschaltbar (war es schon, von Haus aus aus), **Sprechtempo 70–130 %**, Knopf **„So klingt es“**, in der WebApp **Wahl unter den deutschen Stimmen des Geräts** –
+  alles wird gemerkt, gleich in Web und Android. Android zusätzlich wie bisher „Thorsten“. **„Thorsten“ im Browser ist nicht gebaut** – mit Marcel als eigener späterer Schritt vereinbart.
+- **Anleitung für die anderen Apps:** `raumlicht/VORLESEN_FUER_ANDERE_APPS.md` (Bausteine, Lizenzen, Modell-Quelle und -Größe, Einbindung, Stolpersteine – mit dem ehrlichen Stand: Android nie auf einem echten Gerät gehört, Web noch offen).
+- **Aus dem Prüfbericht nachgezogen** (Marcels Entscheidungen): 29 statt 8 Rotationskurven und mehr Tempo-Vektoren beim Üben; Pfeilspitzen bleiben im Raum; Erfolge heißen „Abi-reif“ und „Dauergast“;
+  Zielgruppe im Store bleibt wie empfohlen (16–17 und 18+).
+- **Geprüft:** 140 Tests im Rechenkern, 142 App-Tests, Lint beider Fassungen, WebApp: Ablauf, Update, Offline, alle 54 Bildschirme (72 Aufrufe). Nichts davon auf einem echten Gerät.
+- **Play Store:** Marcel sieht die App dafür als fertig an; das Play-Paket liegt jedem Release bei, die Schritte in der Play Console macht er selbst.
+- **Als Nächstes (von Marcel bestätigt):** eigene Klangwelt für Raumlicht (gläsern, schwebend, Erkennungsmelodie, Töne zur Lichtshow) – ist im Code komponiert, der Einbau in Android und WebApp folgt als nächste Version.
+
+---
+
 ## Korrektheitsprüfung 17.11.
 
 **Version nach der Prüfung: Raumlicht 2.13.0 vom 17.11.2026** (Android-APK, Play-Paket und WebApp auf raumlicht-test). Auftrag von Marcel direkt bestätigt.

@@ -21,6 +21,7 @@ import org.robolectric.annotation.Config
 
 /** Ein Level von vorn bis hinten spielen: einstellen, daneben, Rückmeldung, Treffer, Sterne. */
 @RunWith(RobolectricTestRunner::class)
+@org.robolectric.annotation.GraphicsMode(org.robolectric.annotation.GraphicsMode.Mode.NATIVE)   // echte Bilder für das Bildschirmfoto der Theorie-Karte
 @Config(sdk = [35], qualifiers = "w400dp-h860dp-xxhdpi")
 class LevelFlowTest {
     @get:Rule val rule = createComposeRule()
@@ -146,8 +147,9 @@ class LevelFlowTest {
         rule.onNodeWithTag("theorie-karte").assertDoesNotExist()
         tap("theorie"); rule.mainClock.advanceTimeBy(1500)
         val card = de.raumlicht.core.model.Theory.forLevel(Levels.byId("5-2")!!)
-        rule.onNodeWithTag("theorie-titel").assertTextEquals(card.title)
-        rule.onNodeWithText(card.steps.last(), substring = true).assertExists(); rule.onNodeWithText("Beispiel").assertExists(); rule.onNodeWithText("Nachlesen kostet keinen Stern.").assertExists()
+        rule.onNodeWithTag("theorie-titel", useUnmergedTree = true).assertTextEquals(card.title)
+        rule.onNodeWithText(card.steps.last(), substring = true, useUnmergedTree = true).assertExists(); rule.onNodeWithText("Beispiel", useUnmergedTree = true).assertExists()
+        rule.onNodeWithText("Nachlesen kostet keinen Stern.", useUnmergedTree = true).assertExists()
         rule.onRoot().captureRoboImage("../screenshots/78_theorie.png")
         tap("theorie-ok"); rule.mainClock.advanceTimeBy(800); rule.onNodeWithTag("theorie-karte").assertDoesNotExist()
         // danach beim ersten Versuch gelöst: volle drei Sterne
