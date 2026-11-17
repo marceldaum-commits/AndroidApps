@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Nova“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.18.5 vom 17.11.2026. Ersetzt die frühere Anleitung zur ladbaren Stimme (Sprachsynthese auf dem Gerät, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
+Stand: Raumlicht 2.18.6 vom 17.11.2026. Ersetzt die frühere Anleitung zur ladbaren Stimme (Sprachsynthese auf dem Gerät, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
 
 ## Kurz
 
@@ -49,6 +49,10 @@ gespeicherte Sätze begrenzen (Android: 60 MB im Cache, älteste zuerst weg; Web
 - Dateien: `app/…/ui/fx/NovaOffline.kt`, `rl-nova.js` (Abschnitt „offline“), gemeinsame Knöpfe `OfflineVoiceCard` in `shared/…/settings/ProScreen.kt`; Tests `NovaOfflineTest`, `web-nova.mjs`.
 
 ## 4. Stolpersteine
+
+- **`/jetzt` prüft die Herkunft (wichtig für Android!):** Der Server antwortet mit 403 `{"fehler":"Herkunft"}`, wenn der `Origin`-Kopf fehlt oder nicht zu einer unserer Web-Adressen gehört.
+  Der Browser schickt ihn von selbst; eine echte Android-App nicht. Raumlicht sendet deshalb seit 2.18.6 bei `POST /jetzt` `Origin: https://raumlicht.mathenachhilfe-online.com`.
+  Vorher blieb jeder Laufzeit-Satz in der Android-App ohne Nova (bis 2.18.3 sprach dann die Geräte-Stimme). Die festen Dateien unter `/nova/…` sind davon nicht betroffen.
 
 - **Browser:** Der Server muss CORS für die WebApp-Adressen erlauben (GET und POST). Ton gibt es erst nach einer Berührung – deshalb Web Audio statt `<audio>`.
 - **Zwei Texte, ein Hash:** Schon ein doppeltes Leerzeichen ergibt einen anderen Dateinamen. Immer dieselbe Funktion für Liste und App benutzen.

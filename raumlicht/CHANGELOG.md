@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.6 – Nova spricht in der Android-App jetzt wirklich alles (17.11.2026)
+- **Android:** Sätze, die erst in der Aufgabe entstehen (zum Beispiel Rückmeldungen mit deinen Zahlen), hat unser Stimmen-Server von der Android-App bisher abgelehnt – deshalb war dort die Handy-Stimme zu hören oder gar nichts. Die App meldet sich jetzt richtig an, und Nova spricht auch diese Sätze.
+- Im Browser war das schon in Ordnung.
+
 ## 2.18.5 – Vorbereitung für Raumlicht Pro (17.11.2026)
 - **Hinter den Kulissen:** Die geplante Vollversion heißt künftig „Raumlicht Pro“ (einmalig 7,99 €, kein Abo, kein Ablauf). Sie ist noch nicht erhältlich – bis dahin bleibt alles frei, und in der App ändert sich nichts.
 

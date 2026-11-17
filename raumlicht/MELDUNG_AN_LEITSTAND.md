@@ -2,6 +2,22 @@
 
 Neueste oben.
 
+## 17.11.2026 – Raumlicht 2.18.6: Nova-Abdeckung gemessen (100 %) – und die Ursache für „Android-Stimme trotz Nova“ gefunden
+
+**Raumlicht 2.18.6 vom 17.11.2026, Web = Android (beide 2.18.6).** Ersetzt 2.18.4/2.18.5 als Stand „fertig für den Betriebstest“. Raumlicht Pro ist darin vorbereitet, aber weiter ausgeschaltet (Kasse und Test-Code fehlen).
+
+**Messung gegen den echten Server (17.11., nach dem Lauf eures Werks, Stand `texte 949, fehlend 0`):**
+- **Feste Texte: 949 von 949 = 100 %** (jede Datei per HEAD unter `/nova/<h[0:2]>/<h>.mp3` gefunden; direkt nach dem Ausliefern waren es 616 = 64,9 %, weil 270 Texte neu und rund 60 umformuliert waren).
+- **Laufzeit-Texte: 40 von 40 = 100 %** (Stichprobe aus 2494 verschiedenen Rückmeldungen, die nicht in der Liste stehen; `/jetzt` antwortete 200, die Adresse passte zum selbst gerechneten Hash, die Datei war abrufbar; 39 davon wurden neu erzeugt).
+- **Aber: Ohne `Origin`-Kopf antwortet `/jetzt` mit 403 `{"fehler":"Herkunft"}`.** Der Browser schickt ihn von selbst mit – **eine echte Android-App nicht.** In der Android-App wurde deshalb seit 2.17.0 kein einziger Laufzeit-Satz von Nova gesprochen
+  (bis 2.18.3 sprang die Geräte-Stimme ein – genau das, was Marcel gehört hat; 2.18.4/2.18.5 blieben an der Stelle stumm). Das betrifft vermutlich **jede App, die nicht im Browser/WebView läuft**.
+- **Behoben in 2.18.6:** Die Android-App sendet bei `POST /jetzt` `Origin: https://raumlicht.mathenachhilfe-online.com`. Falls ihr Apps lieber anders erkennen wollt (eigener Kopf, App-Kennung), sagt Bescheid – dann stelle ich um.
+  Bitte die Herkunfts-Liste so lassen, dass `https://raumlicht.mathenachhilfe-online.com` und `https://raumlicht-test.mathenachhilfe-online.com` erlaubt bleiben.
+- Zählstand: Standard 54,5 MB, Bestqualität 87,1 MB für 949 Texte (`bytes` / `bytes_original` werden jetzt beide geliefert – danke; die App zeigt sie an).
+
+**Zahlen für eure Übersicht:** Aufgaben geprüft: 136 feste + 28 Prüfungsteile + 9 Schritte + 29 Übungsarten (1160 Varianten) · geändert: rund 60 Stellen (39 feste Aufgaben, 6 Einführungen, 11 in Prüfungen/Schritten, 11 Übungs-Vorlagen, 4 allgemeine Rückmeldungen) · Nova-Abdeckung: 100 % fest, 100 % Laufzeit-Stichprobe.
+Nicht geprüft: Hören am echten Gerät.
+
 ## 17.11.2026 – Antwort zum „Raumlicht KI-Abi-Pass“ und Stand Raumlicht Pro
 
 (Direkte Nachrichten an eure Sitzung lassen sich von hier nicht zustellen – deshalb weiter über diese Datei.)

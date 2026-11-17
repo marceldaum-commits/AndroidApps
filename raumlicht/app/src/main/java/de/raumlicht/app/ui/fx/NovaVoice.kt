@@ -139,7 +139,7 @@ fun novaFetch(url: String, body: String?): Pair<Int, ByteArray> = runCatching {
     val c = URL(url).openConnection() as HttpURLConnection
     try {
         c.connectTimeout = 6000; c.readTimeout = 20000; c.instanceFollowRedirects = false
-        if (body != null) { c.requestMethod = "POST"; c.doOutput = true; c.setRequestProperty("Content-Type", "application/json"); c.outputStream.use { it.write(body.encodeToByteArray()) } }
+        if (body != null) { c.requestMethod = "POST"; c.doOutput = true; c.setRequestProperty("Content-Type", "application/json"); c.setRequestProperty("Origin", Vorlesen.APP_ORIGIN); c.outputStream.use { it.write(body.encodeToByteArray()) } }
         val code = c.responseCode
         code to (if (code == 200) c.inputStream.use { it.readBytes() } else ByteArray(0))
     } finally { c.disconnect() }

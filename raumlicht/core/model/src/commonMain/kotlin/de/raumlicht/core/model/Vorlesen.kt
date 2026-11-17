@@ -88,6 +88,8 @@ object Vorlesen {
     /** Unter diesen Adressen läuft die WebApp – danach heißt der Zählstand des Servers (Android fragt [APP_HOST], bis es ihn gibt [TEST_HOST]) */
     const val APP_HOST = "raumlicht.mathenachhilfe-online.com"
     const val TEST_HOST = "raumlicht-test.mathenachhilfe-online.com"
+    /** Herkunft, mit der sich die Android-App beim Stimmen-Server meldet: Er nimmt Laufzeit-Texte nur von unseren Apps an und erkennt sie an der Adresse der WebApp. (Der Browser schickt sie von selbst mit.) */
+    const val APP_ORIGIN = "https://$APP_HOST"
     fun standUrl(host: String) = "$SERVER/$VOICE/stand-$host.json"
     /** Gesamtgröße aller festen Dateien aus dem Zählstand: Standard ("bytes") und Bestqualität ("bytes_original", null = noch nicht gemeldet) */
     fun stand(json: String): Pair<Long, Long?>? = runCatching { kotlinx.serialization.json.Json.parseToJsonElement(json) as kotlinx.serialization.json.JsonObject }.getOrNull()?.let { o ->
