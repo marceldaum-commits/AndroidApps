@@ -77,8 +77,9 @@ fun BalloonScreen(best: Int, onScore: (Int) -> Unit, onBack: () -> Unit, control
                 scores = scores.toMutableList().also { it[who] = now }
                 controller.fire(Beam(BalloonGame.LUX, p, b.kind.color, true), 140); controller.burst(p, b.kind.color)
                 when {
-                    !fits -> { flash = "${game.numbers[b.id]} passt nicht! −1"; sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib) }
-                    b.kind == BalloonKind.DUD -> { flash = "Blindgänger! −2"; sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib) }
+                    // der Abzug steht nur da, wenn wirklich Punkte abgezogen wurden (bei 0 Punkten geht es nicht tiefer)
+                    !fits -> { flash = "${game.numbers[b.id]} passt nicht!" + (old.points - now.points).let { if (it > 0) " −$it" else "" }; sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib) }
+                    b.kind == BalloonKind.DUD -> { flash = "Blindgänger!" + (old.points - now.points).let { if (it > 0) " −$it" else "" }; sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib) }
                     b.kind == BalloonKind.GOLD -> { flash = "Gold! +${b.kind.points + old.bonus}"; controller.party(1.2); sfx?.play(Sound.WIN, 1.3f); view.buzz(Buzz.HIT, vib) }
                     else -> { flash = if (now.combo % 5 == 0) "Serie ${now.combo}! Jeder Treffer +${now.bonus}" else null; sfx?.play(Sound.HIT, (1f + now.combo * 0.04f).coerceAtMost(1.9f)); view.buzz(Buzz.TICK, vib) }
                 }

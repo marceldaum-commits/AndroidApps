@@ -209,6 +209,8 @@ object Show {
     /**
      * 3D-Rechner: was sich aus den Bausteinen ausrechnen lässt – Lagebeziehungen, Schnitt- und Durchstoßpunkte, Abstände, Winkel.
      * So lässt sich eine Aufgabe aus dem Schulbuch eingeben und nachprüfen.
+     * Ein Laser ist ein Strahl: Er beginnt im Startpunkt und läuft nur in Richtung d (t ≥ 0) – so wird er auch gezeichnet.
+     * Trifft nur die ganze Gerade (t < 0, „hinter“ dem Start), steht das dabei, damit Text und Bild zusammenpassen.
      */
     fun facts(items: List<ShowItem>): List<String> {
         val out = ArrayList<String>()
@@ -222,7 +224,11 @@ object Show {
                 ta == ShowType.LASER && tb == ShowType.LASER -> if (!dir(a).isZero && !dir(b).isZero) {
                     val r = Geo.lineLine(pt(a), dir(a), pt(b), dir(b))
                     out += head + when (r.relation) {
-                        Relation.INTERSECT -> "schneiden sich in ${r.point!!.fmt()}, Winkel ${Geo.num(Geo.angle(dir(a), dir(b)).let { minOf(it, 180 - it) })}°"
+                        Relation.INTERSECT -> { val q = r.point!!; val angle = "Winkel ${Geo.num(Geo.angle(dir(a), dir(b)).let { minOf(it, 180 - it) })}°"
+                            // liegt der Schnittpunkt bei einem der beiden hinter dem Start, treffen sich nur die Geraden – die gezeichneten Strahlen nicht
+                            val behind = listOf(a, b).filter { ((q - pt(it)) dot dir(it)) < -Geo.EPS }
+                            if (behind.isEmpty()) "schneiden sich in ${q.fmt()}, $angle"
+                            else "die Geraden schneiden sich in ${q.fmt()}, $angle – die Strahlen treffen sich nicht (der Punkt liegt hinter dem Start von ${behind.joinToString(" und ") { name(it) }})" }
                         Relation.SKEW -> "windschief, Abstand ${Geo.num(r.distance)}"
                         Relation.PARALLEL -> "parallel, Abstand ${Geo.num(r.distance)}"
                         Relation.IDENTICAL -> "identisch"
@@ -231,15 +237,30 @@ object Show {
                 ta == ShowType.LASER && tb == ShowType.PLANE -> if (!dir(a).isZero && !pt(b).isZero) {
                     val n = pt(b); val c = items[b].v[3].toDouble(); val t = Geo.linePlane(pt(a), dir(a), n, c)
                     out += head + if (t == null) (if (Geo.onPlane(pt(a), n, c)) "Gerade liegt in der Ebene" else "parallel, Abstand ${Geo.num(Geo.distPointPlane(pt(a), n, c))}")
-                    else "Durchstoßpunkt ${(pt(a) + dir(a) * t).fmt()}, Winkel ${Geo.num(90 - Geo.angle(dir(a), n).let { minOf(it, 180 - it) })}°"
+                    else if (t >= -Geo.EPS) "Durchstoßpunkt ${(pt(a) + dir(a) * t).fmt()}, Winkel ${Geo.num(90 - Geo.angle(dir(a), n).let { minOf(it, 180 - it) })}°"
+                    else "der Strahl trifft die Ebene nicht (er läuft von ihr weg) – die ganze Gerade durchstößt sie in ${(pt(a) + dir(a) * t).fmt()}, Winkel ${Geo.num(90 - Geo.angle(dir(a), n).let { minOf(it, 180 - it) })}°"
                 }
                 ta == ShowType.LASER && tb == ShowType.BALL -> if (!dir(a).isZero) {
                     val d = Geo.distPointLine(pt(b), pt(a), dir(a)); val r = items[b].v[3]
-                    out += head + when { d < r - Geo.EPS -> "zwei Treffer (Abstand zum Mittelpunkt ${Geo.num(d)})"; d < r + Geo.EPS -> "Tangente (berührt)"; else -> "kein Treffer (Abstand zum Mittelpunkt ${Geo.num(d)})" }
+                    // Parameter des Lotfußpunkts und halbe Sehne: die Gerade trifft bei t0 ± half; der Strahl nur, wo t ≥ 0 ist
+                    val t0 = ((pt(b) - pt(a)) dot dir(a)) / (dir(a) dot dir(a)); val half = kotlin.math.sqrt(maxOf(0.0, r * r - d * d)) / dir(a).length
+                    out += head + when {
+                        d < r - Geo.EPS -> when {
+                            t0 - half >= -Geo.EPS -> "zwei Treffer (Abstand zum Mittelpunkt ${Geo.num(d)})"
+                            t0 + half >= -Geo.EPS -> "der Strahl startet in der Kugel – ein Treffer beim Austritt (die ganze Gerade trifft zweimal, Abstand zum Mittelpunkt ${Geo.num(d)})"
+                            else -> "die Gerade trifft die Kugel zweimal, der Strahl nicht – er läuft von ihr weg (Abstand der Geraden zum Mittelpunkt ${Geo.num(d)})"
+                        }
+                        d < r + Geo.EPS -> if (t0 >= -Geo.EPS) "Tangente (berührt)" else "die Gerade berührt die Kugel, der Strahl nicht – er läuft von ihr weg"
+                        else -> "kein Treffer (Abstand zum Mittelpunkt ${Geo.num(d)})"
+                    }
                 }
-                ta == ShowType.LASER && tb == ShowType.DOT -> if (!dir(a).isZero) out += head + (if (Geo.onLine(pt(b), pt(a), dir(a))) "Punkt liegt auf der Geraden" else "Abstand ${Geo.num(Geo.distPointLine(pt(b), pt(a), dir(a)))}")
+                ta == ShowType.LASER && tb == ShowType.DOT -> if (!dir(a).isZero) out += head + (
+                    if (!Geo.onLine(pt(b), pt(a), dir(a))) "Abstand ${Geo.num(Geo.distPointLine(pt(b), pt(a), dir(a)))}"
+                    else if (((pt(b) - pt(a)) dot dir(a)) >= -Geo.EPS) "Punkt liegt auf der Geraden" else "Punkt liegt auf der Geraden, aber hinter dem Start des Strahls")
                 ta == ShowType.PLANE && tb == ShowType.PLANE -> if (!pt(a).isZero && !pt(b).isZero) out += head +
-                    (if (Geo.parallel(pt(a), pt(b))) "parallel" else "schneiden sich, Winkel ${Geo.num(Geo.angle(pt(a), pt(b)).let { minOf(it, 180 - it) })}°, Schnittgerade in Richtung ${(pt(a) cross pt(b)).fmt()}")
+                    // parallele Normalenvektoren: ein Punkt der einen Ebene entscheidet – liegt er auch in der anderen, sind es dieselben Ebenen
+                    (if (Geo.parallel(pt(a), pt(b))) { val q = pt(a) * (items[a].v[3] / (pt(a) dot pt(a))); val c = items[b].v[3].toDouble()
+                        if (Geo.onPlane(q, pt(b), c)) "identisch" else "parallel, Abstand ${Geo.num(Geo.distPointPlane(q, pt(b), c))}" } else "schneiden sich, Winkel ${Geo.num(Geo.angle(pt(a), pt(b)).let { minOf(it, 180 - it) })}°, Schnittgerade in Richtung ${(pt(a) cross pt(b)).fmt()}")
                 ta == ShowType.PLANE && tb == ShowType.BALL -> if (!pt(a).isZero) {
                     val d = Geo.distPointPlane(pt(b), pt(a), items[a].v[3].toDouble()); val r = items[b].v[3]
                     out += head + when { d < r - Geo.EPS -> "Schnittkreis mit Radius ${Geo.num(kotlin.math.sqrt(r * r - d * d))}"; d < r + Geo.EPS -> "Tangentialebene (berührt)"; else -> "kein Schnitt (Abstand ${Geo.num(d)})" }

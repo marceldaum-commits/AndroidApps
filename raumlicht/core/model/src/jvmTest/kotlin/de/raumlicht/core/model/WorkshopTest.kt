@@ -51,6 +51,18 @@ class WorkshopTest {
             val near = exact.map { it + (hi - lo) * 0.03 }; assertTrue(r.id, Ghost.score(r, near) in 88..99)   // leicht daneben: fast voll
         }
         assertTrue(Ghost.verdict(95).startsWith("Wie abgepaust")); assertTrue(Ghost.verdict(20).contains("steigt"))
+        // G: Eine flache Linie auf (oder knapp neben) der Achse zeichnet das Vorzeichen von f′ nicht nach – unter 50 %, also nie „die Richtung passt“
+        Ghost.rides.forEach { r ->
+            val (lo, hi) = Ghost.window(r); val exact = (0 until Ghost.COLUMNS).map { r.df(Ghost.x(r, it)) }
+            listOf(0.0, (hi - lo) * 0.02, -(hi - lo) * 0.02).forEach { level -> val flat = List(Ghost.COLUMNS) { level }
+                assertTrue("${r.id} $level: ${Ghost.score(r, flat)}", Ghost.score(r, flat) < 50); assertFalse(Ghost.verdict(Ghost.score(r, flat)).contains("Richtung passt")); assertTrue(Ghost.direction(r, flat) < 0.75) }
+            assertEquals(1.0, Ghost.direction(r, exact), 0.0); assertEquals(0.0, Ghost.direction(r, exact.map { -it }), 0.0); assertEquals(0.0, Ghost.direction(r, List(Ghost.COLUMNS) { null }), 0.0)
+            // gute Zeichnungen bleiben gut: richtige Form mit halber oder anderthalbfacher Höhe, grob in Stufen gezeichnet
+            assertTrue(r.id, Ghost.score(r, exact.map { it * 0.5 }) >= 50); assertTrue(r.id, Ghost.score(r, exact.map { it * 1.3 }) >= 75)
+            val steps = exact.chunked(4).flatMap { c -> List(c.size) { c.average() } }; assertTrue("${r.id} ${Ghost.score(r, steps)}", Ghost.score(r, steps) >= 85)
+            // wer überall die richtige Seite trifft, bekommt mindestens das erste Lob – und dann stimmt „die Richtung passt“ auch
+            for (s in 50..100) if (Ghost.verdict(s).contains("Richtung passt")) assertTrue(s in 50..74)
+        }
     }
 
     @Test fun ringRunsAreSolvedByRingMinusStart() {

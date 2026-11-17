@@ -70,7 +70,7 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
         if (from >= to) { error = "„von“ muss kleiner sein als „bis“."; return false }
         if (to - from > 1000) { error = "Der Abschnitt ist zu lang – höchstens 1000 Einheiten auf einmal."; return false }
         val e = Expr.parse(term).getOrElse { error = it.message; return false }
-        if (Coaster.custom(e, from.toDouble(), to.toDouble()) == null) { error = "Zwischen $from und $to ist die Funktion nicht definiert. Wähl einen anderen Abschnitt."; return false }
+        if (Coaster.custom(e, from.toDouble(), to.toDouble()) == null) { error = "Zwischen ${Geo.num(from)} und ${Geo.num(to)} ist die Funktion (fast) nirgends definiert. Wähl einen anderen Abschnitt."; return false }
         error = null; built = "$term|$from|$to"; onCustom(built); return true
     }
     val isOwn = rideId == Coaster.CUSTOM
@@ -84,7 +84,8 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     var showD2 by rememberSaveable { mutableStateOf(false) }
     // Tempo der automatischen Fahrt: Index in TEMPO (½×, 1×, 2×, 4×)
     var tempo by rememberSaveable { mutableIntStateOf(1) }
-    var seen by remember(key) { mutableStateOf<Spot?>(null) }
+    // die besonderen Stellen, an denen der Wagen gerade steht – mehrere, wenn sie zusammenfallen (Tiefpunkt und Nullstelle)
+    var seen by remember(key) { mutableStateOf<List<Spot>>(emptyList()) }
     var lastSpot by remember(key) { mutableLongStateOf(-10_000L) }
     val sfx = LocalSfx.current; val view = LocalBuzzer.current; val vib = LocalVibration.current; val speaker = LocalSpeaker.current
     val d = ride.data(u.toDouble())
@@ -109,17 +110,20 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
     }
     // An Hoch-, Tief-, Wendepunkten und Nullstellen: Lux meldet sich, es vibriert kurz
     LaunchedEffect(d.x) {
-        val s = ride.spotNear(d.x, if (driving) 0.05 else 0.04)
-        if (s != null && s != seen) {
+        val s = ride.spotsNear(d.x, if (driving) 0.05 else 0.04)
+        if (s.isNotEmpty() && s != seen) {
             seen = s
+            // Eine Stelle genau am Start (Nullstelle am Rand) bekommt ihr Schild, aber keine Ansage und keine Lichtshow:
+            // Sonst wäre die Ruhe für die erste Stelle der Fahrt schon verbraucht, bevor es losgeht.
+            if (u == 0f) return@LaunchedEffect
             // Kommen die Stellen dicht hintereinander (schnelle Fahrt, enge Kurve), würde es hektisch: dann nur ein leiser Tick und das Schild.
             // Mit Ruhe dazwischen gibt es Treffer-Ton, Lichtblitz und die Ansage – bei hohem Tempo in Kurzform, und Lux fällt sich nie selbst ins Wort.
             val t = now(); val calm = t - lastSpot >= CALM_MS; lastSpot = t
             if (calm) { sfx?.play(Sound.HIT); view.buzz(Buzz.HIT, vib); controller.party(1.0)
-                speaker?.sayIfQuiet(if (driving && TEMPO[tempo].second > 1f) s.kind.title else "${s.kind.title} bei x = ${Geo.num(s.x)}") }
+                speaker?.sayIfQuiet(if (driving && TEMPO[tempo].second > 1f) spotTitle(s) else "${spotTitle(s)} bei x = ${Geo.num(s.first().x)}") }
             else sfx?.play(Sound.TICK, 1.2f, 0.5f)
         }
-        else if (s == null && seen != null && abs(seen!!.x - d.x) > 0.25) seen = null
+        else if (s.isEmpty() && seen.isNotEmpty() && abs(seen.first().x - d.x) > 0.25) seen = emptyList()
     }
 
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
@@ -138,6 +142,9 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
                 keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(imeAction = androidx.compose.ui.text.input.ImeAction.Done, autoCorrectEnabled = false),
                 keyboardActions = androidx.compose.foundation.text.KeyboardActions(onDone = { if (build()) editing = false }))
             error?.let { Text(it, Modifier.testTag("eigene-fehler"), color = Q.Orange, fontSize = 12.sp) }
+            // so wurde der Term verstanden – mit allen Klammern, damit man ein Missverständnis sofort sieht (e^-0,3x ist e^(−0,3) · x)
+            if (error == null) remember(term) { Expr.parse(term).getOrNull()?.read }?.let { Text("Verstanden als: f(x) = $it", Modifier.testTag("eigene-verstanden"), color = Q.Cyan, fontSize = 12.sp) }
+            Text("Exponenten und Nenner in Klammern: e^(−0,3x), 1/(2x). Ohne Klammer gilt: e^−0,3x = e^(−0,3) · x.", Modifier.testTag("eigene-hilfe"), color = Q.Muted, fontSize = 11.sp)
             // Zeichen, die auf der Handy-Tastatur schwer zu finden sind
             Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(5.dp)) {
                 listOf("x", "^", "²", "(", ")", "sin(", "cos(", "√(", "e^(", "ln(", "π", "/").forEach { t -> Pick(t, false, Q.Cyan, "taste-$t") { term += t; error = null } }
@@ -161,29 +168,38 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
             Text("✏️ ändern", color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 13.sp)
         }
         if (isOwn && !editing && ride.clipped) Text("Die Kurve ist am Rand abgeschnitten (Polstelle oder Lücke).", Modifier.padding(horizontal = 12.dp).testTag("abgeschnitten"), color = Q.Orange, fontSize = 12.sp)
+        // wo die Funktion im Abschnitt überhaupt definiert ist – und ob nur eine Auswahl der besonderen Stellen markiert ist
+        if (isOwn && !editing) ride.own?.let { o ->
+            o.domain?.let { Text("$it – sonst gibt es keine Bahn.", Modifier.padding(horizontal = 12.dp).testTag("definiert"), color = Q.Orange, fontSize = 12.sp) }
+            if (o.found > ride.spots.size) Text("${o.found} besondere Stellen gefunden – markiert sind ${ride.spots.size}, gleichmäßig über den Abschnitt verteilt.", Modifier.padding(horizontal = 12.dp).testTag("ausgeduennt"), color = Q.Muted, fontSize = 12.sp)
+        }
         Box(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 8.dp)) {
             Stage(controller, Modifier.fillMaxSize())
             StageFrame(Q.Cyan)
             // Meldung an besonderen Stellen
             val s = seen
-            if (s != null) Row(Modifier.align(Alignment.TopCenter).padding(12.dp).background(Q.Space.copy(alpha = 0.85f), RoundedCornerShape(16.dp)).border(1.5.dp, stageColor(s.kind.color), RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 6.dp),
+            if (s.isNotEmpty()) Row(Modifier.align(Alignment.TopCenter).padding(12.dp).background(Q.Space.copy(alpha = 0.85f), RoundedCornerShape(16.dp)).border(1.5.dp, stageColor(s.first().kind.color), RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 6.dp),
                 verticalAlignment = Alignment.CenterVertically) {
                 Lux(LuxMood.WOW, size = 40.dp)
                 Column(Modifier.padding(start = 8.dp)) {
-                    Text("${s.kind.title} bei x = ${Geo.num(s.x)}", fontWeight = FontWeight.Black, color = stageColor(s.kind.color))
-                    Text(s.kind.rule, fontSize = 12.sp, color = Q.Text)
+                    Text("${spotTitle(s)} bei x = ${Geo.num(s.first().x)}", fontWeight = FontWeight.Black, color = stageColor(s.first().kind.color))
+                    // fallen mehrere Stellen zusammen, steht jede Regel in ihrer eigenen Zeile
+                    s.forEach { Text(if (s.size > 1) "${it.kind.title}: ${it.rule}" else it.rule, fontSize = 12.sp, color = Q.Text) }
                 }
             }
         }
         // Cockpit
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Gauge("Stelle x", Geo.num(d.x), "", Q.Text, Modifier.weight(0.8f))
-            Gauge("Höhe f(x)", Geo.num(d.height), "", Q.Cyan, Modifier.weight(1f))
-            Gauge("Steigung f′(x)", "${d.arrow} ${Geo.num(d.slope)}", "${d.slopeWord} · ${Geo.num(d.angle)}°", if (abs(d.slope) < 0.05) Q.Yellow else if (d.slope > 0) Q.Green else Q.Orange, Modifier.weight(1.5f).testTag("steigung"))
+            // wo es keinen Wert gibt, steht keiner da: „nicht definiert“ statt erfundener Zahlen; neben Polstellen der echte Wert, auch wenn das Bild abgeschnitten ist
+            Gauge("Höhe f(x)", if (d.defined) Geo.num(d.height) else "–", if (!d.defined) "nicht definiert" else if (d.offscreen) "außerhalb des Bildes" else "", Q.Cyan, Modifier.weight(1f).testTag("hoehe"))
+            if (d.smooth) Gauge("Steigung f′(x)", "${d.arrow} ${Geo.num(d.slope)}", "${d.slopeWord} · ${Geo.num(d.angle)}°", if (abs(d.slope) < 0.05) Q.Yellow else if (d.slope > 0) Q.Green else Q.Orange, Modifier.weight(1.5f).testTag("steigung"))
+            else Gauge("Steigung f′(x)", "–", d.slopeWord, Q.Muted, Modifier.weight(1.5f).testTag("steigung"))
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            Gauge("Krümmung f″(x)", Geo.num(d.bend), d.bendWord, if (abs(d.bend) < 0.05) Q.Pink else Q.Violet, Modifier.weight(1f).testTag("kruemmung"))
-            if (showFill) Gauge("Fläche ∫ f(x) dx", Geo.num(ride.integral(d.x)), "vom Start bis x", Q.Yellow, Modifier.weight(1f).testTag("flaeche"))
+            Gauge("Krümmung f″(x)", if (d.smooth) Geo.num(d.bend) else "–", d.bendWord, if (!d.smooth) Q.Muted else if (d.turn && abs(d.bend) < 0.05) Q.Pink else Q.Violet, Modifier.weight(1f).testTag("kruemmung"))
+            // Fläche nur, solange die Funktion vom Start bis x durchgehend definiert ist – hinter einer Lücke oder Polstelle gibt es keine
+            if (showFill) ride.integral(d.x).let { area -> Gauge("Fläche ∫ f(x) dx", if (area.isFinite()) Geo.num(area) else "–", if (area.isFinite()) "vom Start bis x" else "nicht definiert (Lücke oder Polstelle)", Q.Yellow, Modifier.weight(1f).testTag("flaeche")) }
         }
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(start = 10.dp, end = 10.dp, top = 6.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             if (isOwn && own != null && !editing) {
@@ -206,6 +222,9 @@ fun RideScreen(onBack: () -> Unit, startId: String = Coaster.rides.first().id, c
         }
     }
 }
+
+/** „Tiefpunkt und Nullstelle“ – alle Stellen, die an derselben Stelle x zusammenfallen */
+private fun spotTitle(spots: List<Spot>) = spots.map { it.kind.title }.distinct().joinToString(" und ")
 
 /** Kleines Zahlenfeld für „von“ / „bis“: antippen und eintippen (auch negative Zahlen) */
 @Composable

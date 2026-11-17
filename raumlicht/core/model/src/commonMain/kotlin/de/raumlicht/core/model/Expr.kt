@@ -50,7 +50,7 @@ class Expr private constructor(private val root: (Double) -> Double, private val
         }
         private fun div(a: N, b: N) = N({ x -> a.f(x) / b.f(x) }, "${wrap(a, a.p == SUM || a.p == DIV)} / ${wrap(b, b.p < POW)}", DIV) { x ->
             val u = a.f(x); val w = b.f(x); a.e(x) / abs(w) + abs(u) * b.e(x) / (w * w) + EPS * abs(u / w) }
-        private fun neg(a: N) = N({ x -> -a.f(x) }, "−${wrap(a, a.p < MUL)}", NEG, e = a.e)
+        private fun neg(a: N) = N({ x -> -a.f(x) }, "−${wrap(a, a.p < MUL)}", NEG, a.number, a.e)
         private fun add(a: N, b: N, sign: Int, s: String) = N({ x -> a.f(x) + sign * b.f(x) }, s, SUM) { x -> a.e(x) + b.e(x) + EPS * abs(a.f(x) + sign * b.f(x)) }
         private fun call(nm: String, a: N, s: String): N { val f = FUNCTIONS.getValue(nm)
             return N({ x -> f(a.f(x)) }, s, ATOM) { x -> val u = a.f(x); val r = f(u); val ea = a.e(x)

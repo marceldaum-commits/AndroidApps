@@ -217,7 +217,8 @@ object Coaster {
  * - **Rauschen**: [Expr.noise] schätzt den Rundungsfehler jedes Werts. Ein Extremum zählt erst, wenn die Kurve davor und danach deutlich
  *   mehr als das Rauschen steigt bzw. fällt; f″ hat erst ein Vorzeichen, wenn es deutlich über seinem Rauschen liegt (und das an zwei Rasterpunkten hintereinander).
  * - **Extrema** werden an f selbst erkannt (Vorzeichenwechsel von f′ = erst steigen, dann fallen), nicht über f″ an einer gerundeten Stelle –
- *   so stimmt die Art auch bei x⁴ (f″ = 0) und an Knicken. Die Stelle ist die Mitte zwischen zwei gleich hohen Punkten links und rechts (genau auch bei flachen Stellen).
+ *   so stimmt die Art auch bei x⁴ (f″ = 0) und an Knicken. Die Stelle wird im goldenen Schnitt gesucht; wo die Kurve ganz flach ist,
+ *   zählt die Mitte zwischen zwei gleich hohen Punkten links und rechts.
  * - **Nullstellen**: Vorzeichenwechsel (Bisektion) und Berührstellen (Extremum mit Wert null). An einer Polstelle wechselt das Vorzeichen, ohne dass f klein wird – keine Nullstelle.
  * - **Wendestellen**: echter Vorzeichenwechsel von f″; die Stelle ist die Mitte zwischen den Durchgängen durch +L und −L. An Knicken (f′ springt) keine Wendestelle.
  * - **Polstellen, Lücken, Sprünge**: nirgends eine Stelle; sie begrenzen außerdem die Fläche ([areaEnd]).
@@ -257,7 +258,7 @@ private class CurveScan(val e: Expr, val from: Double, val to: Double, val xs: D
     private fun kink(r: Double, y: Double): Boolean {
         val db = 4 * h2; val da = 10 * db
         val nb = abs(e.at(r + db) - 2 * y + e.at(r - db)); val na = abs(e.at(r + da) - 2 * y + e.at(r - da))
-        return nb.isFinite() && na.isFinite() && nb > 400 * n(r) && nb / db > 0.5 * na / da
+        return nb.isFinite() && na.isFinite() && nb > 400 * maxOf(n(r), n(r - da), n(r + da)) && nb / db > 0.5 * na / da
     }
 
     private fun zeros() {
@@ -272,10 +273,20 @@ private class CurveScan(val e: Expr, val from: Double, val to: Double, val xs: D
             }
             a = i
         }
-        // Nullstellen genau am Rand des Abschnitts zählen mit
-        for (i in intArrayOf(0, m)) if (fin(i) && (v[i] == 0.0 && around(xs[i], if (i == 0) 1 else -1) > 0 || v[i] != 0.0 && abs(v[i]) <= 64 * noise[i] && isZero(xs[i], v[i], if (i == 0) 1 else -1)))
-            add(SpotKind.ZERO, xs[i])
+        // Nullstellen genau am Rand des Abschnitts zählen mit – ebenso am Rand des Definitionsbereichs (√x bei 0), wenn f dort null ist
+        for ((s, t) in pieces()) {
+            if (t - s < 2) continue
+            edgeZero(if (s == 0) from else shown(edge(xs[s], xs[s - 1])), s, 1); edgeZero(if (t == m) to else shown(edge(xs[t], xs[t + 1])), t, -1)
+        }
     }
+    /** Nullstelle am Rand [x] eines Stücks (neben Rasterpunkt [i], das Stück liegt auf der Seite [side]): f ist dort null, daneben aber klar nicht (kein Stück, auf dem f überall null ist) */
+    private fun edgeZero(x: Double, i: Int, side: Int) {
+        val y = e.at(x); if (!y.isFinite() || abs(x - xs[i]) > step) return
+        val near = around(x, side)
+        if (near > 64 * noise[i + side] && (y == 0.0 || (abs(y) <= 64 * n(x) && abs(y) <= 1e-2 * near))) add(SpotKind.ZERO, x)
+    }
+    /** Rand des Definitionsbereichs zwischen einem definierten und einem nicht definierten Rasterpunkt */
+    private fun edge(inside: Double, outside: Double): Double { var a = inside; var b = outside; repeat(30) { val mid = (a + b) / 2; if (e.at(mid).isFinite()) a = mid else b = mid }; return a }
 
     /** Extrema im durchgehend definierten Stück [s; t] des Rasters */
     private fun extrema(s: Int, t: Int) {
@@ -295,17 +306,32 @@ private class CurveScan(val e: Expr, val from: Double, val to: Double, val xs: D
             val a = if (k == 0) s else at[k - 1]; val b = if (k == at.size - 1) t else at[k + 1]
             var pl = 0.0; for (j in a until i) pl = maxOf(pl, q * (v[j] - y0)); var pr = 0.0; for (j in i + 1..b) pr = maxOf(pr, q * (v[j] - y0))
             val p = minOf(pl, pr); if (!(p > 0) || i <= s || i >= t) continue
-            // Mitte zwischen zwei gleich hohen Punkten knapp über (unter) dem Extremum: genau auch dort, wo die Kurve ganz flach ist
-            val level = minOf(0.5 * p, maxOf(1e-6 * p, 1000 * noise[i]))
-            var jl = i - 1; while (jl > a && q * (v[jl] - y0) < level) jl--
-            var jr = i + 1; while (jr < b && q * (v[jr] - y0) < level) jr++
-            val xl = bisect(xs[jl], xs[jl + 1], false) { q * (e.at(it) - y0) - level }; val xr = bisect(xs[jr - 1], xs[jr], true) { q * (e.at(it) - y0) - level }
-            val r = (xl + xr) / 2; val y = if (r.isNaN()) Double.NaN else e.at(r)
+            // 1. Die Stelle selbst: Suche im goldenen Schnitt zwischen den Nachbarpunkten – trifft auch Knicke und schiefe Spitzen genau.
+            var ga = xs[i - 1]; var gb = xs[i + 1]; var gc = gb - GOLD * (gb - ga); var gd = ga + GOLD * (gb - ga); var fc = q * e.at(gc); var fd = q * e.at(gd)
+            repeat(45) { if (fc < fd) { gb = gd; gd = gc; fd = fc; gc = gb - GOLD * (gb - ga); fc = q * e.at(gc) } else { ga = gc; gc = gd; fc = fd; gd = ga + GOLD * (gb - ga); fd = q * e.at(gd) } }
+            val r0 = (ga + gb) / 2; val yt = e.at(r0)
+            // 2. Wo die Kurve ganz flach ist (x⁴, oder Rauschen um das Extremum), ist die Mitte zwischen zwei gleich hohen Punkten links und rechts genauer.
+            //    Das gilt nur, wenn die Kurve dort spiegelbildlich ist: Die Mitten für zwei verschiedene Höhen müssen übereinstimmen – sonst bleibt es bei 1.
+            val level = minOf(p / 8, maxOf(1e-6 * p, 1000 * noise[i]))
+            fun cross(side: Int, lv: Double): Double {
+                var j = if (side < 0) (if (xs[i] < r0) i else i - 1) else (if (xs[i] > r0) i else i + 1)
+                while (j > a && j < b && q * (v[j] - yt) < lv) j += side
+                val inner = if (side < 0) minOf(xs[j + 1], r0) else maxOf(xs[j - 1], r0)
+                return if (side < 0) bisect(xs[j], inner, false) { q * (e.at(it) - yt) - lv } else bisect(inner, xs[j], true) { q * (e.at(it) - yt) - lv }
+            }
+            var r = r0
+            if (yt.isFinite()) { val l1 = cross(-1, level); val r1 = cross(1, level); val m1 = (l1 + r1) / 2; val m2 = (cross(-1, 4 * level) + cross(1, 4 * level)) / 2
+                if (abs(m1 - m2) <= 0.01 * (r1 - l1)) r = m1 }
+            val y = if (r.isNaN()) Double.NaN else e.at(r)
             // Polstelle, Lücke oder Sprung statt Extremum: der Wert schießt über die Rasterwerte hinaus, oder der Abstand zum Nachbarwert schrumpft beim Heranrücken nicht
             var singular = !y.isFinite() || q * (y0 - y) > 10 * maxOf(q * (v[i - 1] - y0), q * (v[i + 1] - y0), 0.0) + level
-            if (!singular) for (sg in SIDES) { val ea = abs(y - e.at(r + sg * step)); val eb = abs(y - e.at(r + sg * step / 10))
-                if (!ea.isFinite() || !eb.isFinite() || (eb > 0.5 * ea && eb > 1000 * n(r))) singular = true }
+            val floor = if (singular) 0.0 else 1000 * maxOf(n(r), n(r - step), n(r + step))
+            if (!singular) for (sg in SIDES) { val ya = e.at(r + sg * step); val yb = e.at(r + sg * step / 10); val ea = abs(y - ya); val eb = abs(y - yb)
+                // … oder die Kurve steigt (fällt) neben der Stelle noch weiter: dann ist es gar kein Extremum, sondern der Rand eines Sprungs
+                if (!ea.isFinite() || !eb.isFinite() || (eb > 0.5 * ea && eb > floor) || q * (ya - y) < -floor || q * (yb - y) < -floor) singular = true }
             if (singular) { breaks += if (r.isNaN()) xs[i] else r; continue }
+            // Plateau (z. B. |x − 1| + |x + 1| zwischen −1 und 1): die Kurve bleibt neben der Stelle gleich hoch – kein einzelner Tief- oder Hochpunkt
+            if (SIDES.all { abs(y - e.at(r + it * 8 * step)) <= floor / 100 }) continue
             val word = if (high[k]) "von + nach −" else "von − nach +"
             val w = 20 * h2; val curve = abs(d2(r)); val side = maxOf(abs(d2(r - w)), abs(d2(r + w)))
             val note = when {
@@ -361,13 +387,11 @@ private class CurveScan(val e: Expr, val from: Double, val to: Double, val xs: D
     /** Hinweis, wo die Funktion definiert ist – nur wenn ein ganzes Stück des Abschnitts fehlt (einzelne Polstellen und Lücken zählen nicht) */
     fun domain(): String? {
         val merged = ArrayList<Pair<Int, Int>>()
-        for (p in pieces()) if (merged.isNotEmpty() && p.first - merged.last().second <= 2) merged[merged.size - 1] = merged.last().first to p.second else merged += p
+        for (p in pieces().filter { it.second - it.first >= 2 }) if (merged.isNotEmpty() && p.first - merged.last().second <= 2) merged[merged.size - 1] = merged.last().first to p.second else merged += p
         if (merged.isEmpty() || (merged.size == 1 && merged[0].first <= 1 && merged[0].second >= m - 1)) return null
-        // Rand des Definitionsbereichs zwischen einem definierten und einem nicht definierten Rasterpunkt
-        fun edge(inside: Double, outside: Double): Double { var a = inside; var b = outside; repeat(30) { val mid = (a + b) / 2; if (e.at(mid).isFinite()) a = mid else b = mid }; return a }
         val parts = merged.take(3).map { (s, t) -> "zwischen ${Geo.num(if (s <= 1) from else edge(xs[s], xs[s - 1]))} und ${Geo.num(if (t >= m - 1) to else edge(xs[t], xs[t + 1]))}" }
         return "Definiert nur " + parts.joinToString(" sowie ") + if (merged.size > 3) " …" else ""
     }
 
-    private companion object { val SPAN = intArrayOf(1, 2, 4, 8); val SIDES = intArrayOf(-1, 1) }
+    private companion object { val SPAN = intArrayOf(1, 2, 4, 8); val SIDES = intArrayOf(-1, 1); const val GOLD = 0.6180339887498949 }
 }

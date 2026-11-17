@@ -61,4 +61,32 @@ class ModesTest {
         assertEquals(1, Skins.unlocked(0).size); assertEquals(Skins.all.size, Skins.unlocked(999).size)
         assertEquals(listOf("1-2", "1-3"), Training.levels(mapOf("1-1" to 3, "1-2" to 2, "1-3" to 1, "tag-5" to 1)).map { it.id })
     }
+
+    /** D: identische Ebenen heißen identisch, parallele bekommen ihren Abstand; ein Laser ist ein Strahl (t ≥ 0), kein Treffer „hinter“ dem Start */
+    @Test fun calculatorKnowsIdenticalPlanesAndTreatsLasersAsRays() {
+        fun l(vararg v: Int) = ShowItem(ShowType.LASER, v.toList())
+        fun e(vararg v: Int) = ShowItem(ShowType.PLANE, v.toList())
+        fun b(vararg v: Int) = ShowItem(ShowType.BALL, v.toList())
+        fun d(vararg v: Int) = ShowItem(ShowType.DOT, v.toList())
+        fun fact(vararg items: ShowItem) = Show.facts(items.toList()).single().substringAfter(": ")
+        assertEquals("identisch", fact(e(1, 1, 0, 4), e(2, 2, 0, 8))); assertEquals("identisch", fact(e(0, 0, 1, 3), e(0, 0, -2, -6)))
+        assertEquals("parallel, Abstand 0,71", fact(e(1, 1, 0, 4), e(2, 2, 0, 10))); assertEquals("parallel, Abstand 3", fact(e(0, 0, 1, 1), e(0, 0, 1, 4)))
+        assertEquals("parallel, Abstand 5", fact(e(0, 0, 1, 1), e(0, 0, -1, 4))); assertTrue(fact(e(1, 1, 0, 8), e(0, 1, 1, 6)).startsWith("schneiden sich, Winkel 60°"))
+        // Laser und Ebene: vor dem Start liegt kein Durchstoßpunkt des Strahls
+        assertEquals("Durchstoßpunkt (3|5|4), Winkel 41,81°", fact(l(1, 1, 0, 1, 2, 2), e(0, 0, 1, 4)))
+        assertEquals("der Strahl trifft die Ebene nicht (er läuft von ihr weg) – die ganze Gerade durchstößt sie in (4|4|4), Winkel 90°", fact(l(4, 4, 5, 0, 0, 1), e(0, 0, 1, 4)))
+        assertEquals("Durchstoßpunkt (4|4|4), Winkel 90°", fact(l(4, 4, 4, 0, 0, 1), e(0, 0, 1, 4)))                 // Start genau in der Ebene: t = 0 zählt
+        // Laser und Kugel
+        assertTrue(fact(l(0, 4, 3, 1, 0, 0), b(4, 4, 3, 2)).startsWith("zwei Treffer")); assertTrue(fact(l(4, 4, 3, 1, 0, 0), b(4, 4, 3, 2)).startsWith("der Strahl startet in der Kugel – ein Treffer"))
+        assertTrue(fact(l(8, 4, 3, 1, 0, 0), b(4, 4, 3, 2)).startsWith("die Gerade trifft die Kugel zweimal, der Strahl nicht")); assertTrue(fact(l(2, 4, 3, 1, 0, 0), b(4, 4, 3, 2)).startsWith("zwei Treffer"))
+        assertEquals("Tangente (berührt)", fact(l(0, 4, 5, 1, 0, 0), b(4, 4, 3, 2))); assertEquals("die Gerade berührt die Kugel, der Strahl nicht – er läuft von ihr weg", fact(l(8, 4, 5, 1, 0, 0), b(4, 4, 3, 2)))
+        assertTrue(fact(l(0, 4, 6, 1, 0, 0), b(4, 4, 3, 2)).startsWith("kein Treffer"))
+        // zwei Laser: Die Geraden schneiden sich in (5|3|3) – liegt das hinter einem Start, treffen sich die Strahlen nicht
+        assertEquals("schneiden sich in (5|3|3), Winkel 90°", fact(l(1, 1, 1, 2, 1, 1), l(7, 1, 1, -1, 1, 1)))
+        fact(l(7, 4, 4, 2, 1, 1), l(7, 1, 1, -1, 1, 1)).let { assertTrue(it, it.startsWith("die Geraden schneiden sich in (5|3|3), Winkel 90° – die Strahlen treffen sich nicht") && it.endsWith("(der Punkt liegt hinter dem Start von Laser 1)")) }
+        assertTrue(fact(l(7, 4, 4, 2, 1, 1), l(3, 5, 5, -1, 1, 1)).endsWith("hinter dem Start von Laser 1 und Laser 2)"))
+        // Laser und Punkt
+        assertEquals("Punkt liegt auf der Geraden", fact(l(1, 1, 1, 1, 0, 0), d(3, 1, 1))); assertEquals("Punkt liegt auf der Geraden", fact(l(1, 1, 1, 1, 0, 0), d(1, 1, 1)))
+        assertEquals("Punkt liegt auf der Geraden, aber hinter dem Start des Strahls", fact(l(1, 1, 1, 1, 0, 0), d(0, 1, 1))); assertEquals("Abstand 2", fact(l(1, 1, 1, 1, 0, 0), d(0, 1, 3)))
+    }
 }

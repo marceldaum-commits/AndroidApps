@@ -30,14 +30,37 @@ class Binomial(val n: Int, val p: Double) {
     /** Der Ansatz in Worten und Formel – so schreibt man es in der Klausur hin */
     fun approach(mode: BinomialMode, k: Int): String = when (mode) {
         BinomialMode.EXACT -> "P(X = $k) = ($n über $k) · ${pct(p)}^$k · ${pct(1 - p)}^${n - k}"
-        BinomialMode.AT_MOST -> "P(X ≤ $k) = P(X = 0) + … + P(X = $k)  (kumuliert)"
-        BinomialMode.AT_LEAST -> if (k <= 0) "P(X ≥ 0) = 1" else "P(X ≥ $k) = 1 − P(X ≤ ${k - 1})  (Gegenereignis)"
+        // wenige Summanden werden ausgeschrieben – „P(X = 0) + … + P(X = 0)“ wäre Unsinn
+        BinomialMode.AT_MOST -> when { k >= n -> "P(X ≤ $k) = 1  (mehr als $n Treffer gibt es nicht)"; k <= 0 -> "P(X ≤ 0) = P(X = 0)"
+            k <= 2 -> "P(X ≤ $k) = ${(0..k).joinToString(" + ") { "P(X = $it)" }}  (kumuliert)"; else -> "P(X ≤ $k) = P(X = 0) + … + P(X = $k)  (kumuliert)" }
+        BinomialMode.AT_LEAST -> when { k <= 0 -> "P(X ≥ 0) = 1"; k > n -> "P(X ≥ $k) = 0"; k == n -> "P(X ≥ $n) = P(X = $n)"
+            k == n - 1 -> "P(X ≥ $k) = P(X = $k) + P(X = $n)"; else -> "P(X ≥ $k) = 1 − P(X ≤ ${k - 1})  (Gegenereignis)" }
     }
+    /** Ist das gefragte Ereignis sicher (Wahrscheinlichkeit genau 1)? „mindestens 0“ und „höchstens n“ treffen immer zu. */
+    fun certain(mode: BinomialMode, k: Int) = (mode == BinomialMode.AT_LEAST && k <= 0) || (mode == BinomialMode.AT_MOST && k >= n)
+    /**
+     * Streubereich μ ± σ in ganzen Trefferzahlen (auf 0 … n begrenzt) samt der Wahrscheinlichkeit, wirklich darin zu landen.
+     * Das sind oft rund zwei Drittel – aber nicht immer (B(100; 0,01): nur 37 %), deshalb wird gerechnet statt „meist“ gesagt.
+     * @return (kleinste Trefferzahl, größte Trefferzahl, Wahrscheinlichkeit) oder null, wenn keine ganze Zahl im Bereich liegt
+     */
+    fun spread(): Triple<Int, Int, Double>? {
+        val lo = kotlin.math.ceil(mean - sigma - 1e-9).toInt().coerceAtLeast(0); val hi = kotlin.math.floor(mean + sigma + 1e-9).toInt().coerceAtMost(n)
+        return if (lo > hi) null else Triple(lo, hi, between(lo, hi))
+    }
+    /** Der Streubereich als Satz: „Mit 66 % zwischen 4 und 6 Treffern (μ ± σ)“ */
+    fun spreadText(): String { val (lo, hi, v) = spread() ?: return "Zwischen μ − σ und μ + σ liegt keine ganze Trefferzahl"
+        val per = kotlin.math.floor(v * 100 + 0.5).toInt()
+        return if (lo == hi) "Mit $per % genau $lo Treffer (μ ± σ)" else "Mit $per % zwischen $lo und $hi Treffern (μ ± σ)" }
     /** Lux' Satz dazu: was die Zahl im Alltag heißt */
-    fun story(mode: BinomialMode, k: Int): String { val v = ask(mode, k); val per = (v * 100).let { kotlin.math.round(it).toInt() }
+    fun story(mode: BinomialMode, k: Int): String { val v = ask(mode, k); val per = kotlin.math.floor(v * 100 + 0.5).toInt()
         val what = when (mode) { BinomialMode.EXACT -> "genau $k"; BinomialMode.AT_MOST -> "höchstens $k"; BinomialMode.AT_LEAST -> "mindestens $k" }
         val whatCap = what.replaceFirstChar { it.uppercase() }
-        return when { v > 0.9995 -> "Praktisch immer: $whatCap Treffer gibt es so gut wie sicher."; v < 0.0005 -> "Praktisch nie: $whatCap Treffer gibt es so gut wie nie."
+        return when {
+            certain(mode, k) -> "Immer: $whatCap Treffer gibt es sicher."                                   // P = 1 genau, nicht nur „so gut wie“
+            v > 0.9995 -> "Praktisch immer: $whatCap Treffer gibt es so gut wie sicher."
+            v >= 0.995 -> "Fast immer: In mehr als 99 von 100 Durchgängen gibt es $what Treffer."
+            v < 0.0005 -> "Praktisch nie: $whatCap Treffer gibt es so gut wie nie."
+            v < 0.005 -> "Selten: In weniger als 1 von 100 Durchgängen gibt es $what Treffer."              // nicht „in etwa 0 von 100“
             else -> "In etwa $per von 100 Durchgängen gibt es $what Treffer." } }
     companion object {
         const val MAX_N = 100

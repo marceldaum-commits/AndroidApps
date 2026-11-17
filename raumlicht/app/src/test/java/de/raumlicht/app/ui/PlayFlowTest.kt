@@ -278,6 +278,10 @@ class PlayFlowTest {
         val later = g.alive(18.0, setOf(good.id, bad.id)); val fits2 = later.first { g.rules[1].ok(g.numbers[it.id]) }; val not2 = later.first { !g.rules[1].ok(g.numbers[it.id]) }
         stage.onTap?.invoke("b${fits2.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("punkte").assertTextEquals("1")
         stage.onTap?.invoke("b${not2.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("meldung").assertTextEquals("${g.numbers[not2.id]} passt nicht! −1")
+        // bei 0 Punkten wird nichts abgezogen – dann steht auch kein „−1“ in der Meldung
+        rule.onNodeWithTag("punkte").assertTextEquals("0")
+        later.firstOrNull { !g.rules[1].ok(g.numbers[it.id]) && it.id != not2.id }?.let { not3 ->
+            stage.onTap?.invoke("b${not3.id}"); rule.mainClock.advanceTimeBy(100); rule.onNodeWithTag("meldung").assertTextEquals("${g.numbers[not3.id]} passt nicht!"); rule.onNodeWithTag("punkte").assertTextEquals("0") }
         rule.mainClock.advanceTimeBy(40_000); rule.onNodeWithTag("ergebnis").assertExists(); assertEquals(emptyList<Int>(), scores)   // Bestwert gibt es nur im Spaß-Modus
         rule.mainClock.autoAdvance = true
     }
@@ -400,12 +404,16 @@ class PlayFlowTest {
         // nach jedem Schieben abwarten, bis die Meldung dazu wirklich verarbeitet ist – erst dann läuft die Uhr weiter
         fun go(u: Float) { slide("fahrt-regler", u); rule.waitForIdle(); rule.mainClock.advanceTimeBy(400); rule.waitForIdle() }
         fun parties() = stage.log.count { it.startsWith("RL.party") }
+        // Die Bahn beginnt auf einer Nullstelle (x = 0, am Rand): Sie bekommt ihr Schild, aber keine Ansage und keine Lichtshow –
+        // sonst wäre die Ruhe für die erste Stelle der Fahrt schon verbraucht, bevor es losgeht
+        rule.waitForIdle(); rule.onNodeWithText("Nullstelle bei x = 0").assertExists(); assertEquals(0, parties()); assertEquals(emptyList<String>(), heard)
         go(0.25f)                                                    // x = 1: Hochpunkt – in Ruhe erreicht
         rule.onNodeWithText("Hochpunkt bei x = 1").assertExists(); assertEquals("ride=" + stage.lastRide, 1, parties())
         assertEquals(listOf("Hochpunkt bei x = 1"), heard)
         clock += 400; go(0.5f)                                        // 0,4 s später schon der Wendepunkt: Schild ja, aber keine Ansage und keine Lichtshow
         rule.onNodeWithText("Wendepunkt bei x = 2").assertExists(); assertEquals(1, heard.size); assertEquals(1, parties())
         clock += 400; go(0.75f)                                       // und gleich der Tiefpunkt: weiter ruhig
+        rule.onNodeWithText("Tiefpunkt und Nullstelle bei x = 3").assertExists()   // fallen zwei Stellen zusammen, werden beide genannt
         assertEquals(1, heard.size); assertEquals(1, parties())
         clock += 3000; go(0.5f)                                       // nach einer Pause wird wieder angesagt
         assertEquals(listOf("Hochpunkt bei x = 1", "Wendepunkt bei x = 2"), heard); assertEquals(2, parties())
@@ -415,6 +423,7 @@ class PlayFlowTest {
     @Test fun binomialLab() {
         show { de.raumlicht.app.ui.home.BinomialScreen({}) }
         rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≤ 3) = 17,19 %")                      // B(10; 0,5), höchstens 3
+        rule.onNodeWithText("Mit 66 % zwischen 4 und 6 Treffern (μ ± σ)").assertExists()            // Streubereich mit der echten Wahrscheinlichkeit statt „meist“
         rule.onNodeWithTag("frage-exact").performClick(); rule.onNodeWithTag("ergebnis").assertTextEquals("P(X = 3) = 11,72 %")
         rule.onNodeWithTag("ansatz").assertTextEquals("P(X = 3) = (10 über 3) · 0,5^3 · 0,5^7")
         rule.onNodeWithTag("frage-at_least").performClick(); rule.onNodeWithTag("ergebnis").assertTextEquals("P(X ≥ 3) = 94,53 %")

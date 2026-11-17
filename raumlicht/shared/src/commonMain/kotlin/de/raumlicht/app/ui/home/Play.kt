@@ -155,7 +155,9 @@ fun FlightScreen(onBack: () -> Unit, controller: StageController = remember { St
             Dial("Ort", "(${Geo.num(d.pos.x)}|${Geo.num(d.pos.y)}|${Geo.num(d.pos.z)})", "", Q.Cyan, Modifier.weight(1.6f))
         }
         Row(Modifier.fillMaxWidth().padding(horizontal = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            Dial("Nächste Ebene: ${d.nearest}", "Abstand ${Geo.num(d.distance)}", if (d.distance < 0.05) "Du bist genau in der Ebene" else "", if (d.distance < 0.05) Q.Green else Q.Violet, Modifier.weight(1f).testTag("flug-abstand"))
+            // ohne Ebene gibt es keinen Abstand – dann steht das da, statt „Abstand 0 · genau in der Ebene“
+            if (!d.hasPlane) Dial("Nächste Ebene: –", "kein Abstand", "In diesem Flug gibt es keine Ebene", Q.Muted, Modifier.weight(1f).testTag("flug-abstand"))
+            else Dial("Nächste Ebene: ${d.nearest}", "Abstand ${Geo.num(d.distance)}", if (d.distance < 0.05) "Du bist genau in der Ebene" else "", if (d.distance < 0.05) Q.Green else Q.Violet, Modifier.weight(1f).testTag("flug-abstand"))
         }
         Slider(u, { u = it; driving = false }, Modifier.fillMaxWidth().padding(horizontal = 16.dp).testTag("flug-regler"),
             colors = SliderDefaults.colors(thumbColor = Q.Yellow, activeTrackColor = Q.Cyan, inactiveTrackColor = Q.Panel))
