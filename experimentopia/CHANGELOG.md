@@ -1,5 +1,12 @@
 # Changelog – Experimentopia
 
+## 2.4.0 – Neue Musik (17.11.2026)
+
+- 🎶 **Ganz neue Musik**: Statt der alten, eintönigen Klänge spielen jetzt richtige, fröhliche Lieder mit Ohrwurm-Melodie, Bass, Begleitung und leichtem Schlagzeug.
+  Jede Welt hat ihre eigenen Stücke: „Forscher-Marsch“ und „Treppauf“ im Labor und in der Physik, „Geheimlabor“ in der Chemie, „Sommerwiese“ in der Biologie.
+- ▶️ **Android**: Die Musik startet sofort beim Öffnen der App und richtet sich nach der Medien-Lautstärke – auch wenn das Handy auf Vibration steht.
+  (In der WebApp erlaubt der Browser Ton erst nach dem ersten Antippen.)
+
 ## 2.3.3 – Jedes Thema zum Anprobieren (17.11.2026)
 
 - 🎁 **Mehr gratis**: Bei „Lernen nach Fach“ sind jetzt in **jedem Thema die ersten beiden Versuche frei** – auch Zellen, Ernährung, Ökologie, Körper, Säuren,

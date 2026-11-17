@@ -39,7 +39,7 @@ class WebMusic(private val scope: CoroutineScope) : MusicPlayer {
                 if (w == null || pageHidden()) { delay(1000); continue }
                 storeBuffer("musik", newSamplesOf(Composer.phrase(w, seed++)), Composer.SR)
                 val d = musicPlay("musik", gain())
-                delay((d * 1000).toLong() + 4000 + Random.nextLong(5000))
+                delay((d * 1000).toLong() + 2500 + Random.nextLong(2500))
             }
         }
     }

@@ -40,12 +40,13 @@ fun SoundSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit, sound: Boole
     val sfx = LocalSfx.current
     Panel(Modifier.fillMaxWidth()) {
         Text("🎵 Musik & Klang", style = MaterialTheme.typography.titleMedium, color = E.Mint)
-        Switcher("🎻 Musik", "Eigene Labor-Musik: Pizzicato, Klarinette, Fagott – jede Welt klingt anders", audio.music, "musik") { onAudio(audio.copy(music = it)) }
+        Switcher("🎻 Musik", "Eigene fröhliche Labor-Lieder – jede Welt hat ihre eigenen Melodien", audio.music, "musik") { onAudio(audio.copy(music = it)) }
         if (audio.music) ValueSlider("Lautstärke Musik", audio.musicVol, 0f..1f, "${(audio.musicVol * 100).toInt()} %", { onAudio(audio.copy(musicVol = it)) }, color = E.Violet)
         Switcher("🧪 Effekte", "Reagenzglas, Blubbern, Zischen, Funken, Messgerät", sound, "effekte", onSound)
         if (sound) ValueSlider("Lautstärke Effekte", audio.sfxVol, 0.1f..1f, "${(audio.sfxVol * 100).toInt()} %", { onAudio(audio.copy(sfxVol = it)); sfx?.play(Sound.GLASS, volume = 1f) }, color = E.Sky)
         Switcher("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, "vibration", onVibration)
-        Text("Musik und Ton starten erst, wenn du die App das erste Mal antippst. Ist das Gerät stumm geschaltet, bleibt auch die App still.", color = E.Muted, fontSize = 12.sp)
+        Text(if (LocalMusic.current?.needsTouch == false) "Die Musik startet gleich beim Öffnen und richtet sich nach der Medien-Lautstärke des Geräts. Im Versuch selbst ist es still."
+            else "Der Browser erlaubt Ton erst, wenn du die App das erste Mal antippst – dann startet die Musik. Im Versuch selbst ist es still.", color = E.Muted, fontSize = 12.sp)
     }
 }
 

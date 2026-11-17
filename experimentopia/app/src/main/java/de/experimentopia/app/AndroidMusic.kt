@@ -34,7 +34,9 @@ class AndroidMusic(context: Context) : MusicPlayer {
 
     init { Thread(::loop, "musik").apply { isDaemon = true }.start() }
 
-    private fun silent() = audioManager.ringerMode != AudioManager.RINGER_MODE_NORMAL
+    /** Musik richtet sich nach der Medien-Lautstärke (nicht nach Klingelton/Vibration): stumm nur, wenn die Medien-Lautstärke auf 0 steht */
+    private fun silent() = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) == 0
+    override val needsTouch = false
     private fun gain() = (if (ducked) 0.3f else 1f) * volume * 0.8f
 
     private fun loop() {
@@ -59,7 +61,7 @@ class AndroidMusic(context: Context) : MusicPlayer {
             }
             inJingle = false
             // Stille zwischen den Phrasen – oder warten, bis sich etwas ändert
-            synchronized(lock) { if (gen == generation) runCatching { lock.wait(if (pcm == null) 60_000L else (4_000L + Random.nextLong(5_000L))) } }
+            synchronized(lock) { if (gen == generation) runCatching { lock.wait(if (pcm == null) 60_000L else (2_500L + Random.nextLong(2_500L))) } }
         }
     }
 

@@ -50,19 +50,19 @@ Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, 
 ## Musik und Klänge (selbst komponiert)
 
 Alles entsteht im Code (`shared/.../fx/Music.kt`, `Synth.kt`) – keine Samples, keine Lizenzen; Android und Web klingen gleich.
-Klang-Identität „verspieltes Forscher-Labor“: Pizzicato (gezupfte Saite mit Holzkörper), Klarinette (ungerade Obertöne, leichtes Vibrato), Fagott (näselnd, Obertöne 2/3),
-Glas (unharmonischer Oberton 2,76), Marimba, Blubbern, Holzblock-Ticks, Vogel-Zwitschern.
+Seit 2.4.0 richtige, eingängige Lieder statt Zufallstönen: vier selbst komponierte Melodien (8 Takte, Frage und Antwort, klarer Schluss) mit Bass auf 1 und 3,
+gezupften Begleit-Akkorden auf den Nachschlägen und leichtem Schlagzeug (Kick, Snare, Hi-Hat) – fröhlich und hüpfend, nicht einlullend.
 
-| Welt | Tonart, Tempo | Instrumente |
-|---|---|---|
-| Labor (Start, Menüs) | C-Dur, 108 | Klarinette über Pizzicato, Glas und Blubbern |
-| Physik | G-Dur, 116 | Glas-Glockenspiel wie ein Uhrwerk, Pizzicato, Holzblock-Ticks |
-| Chemie | D-dorisch, 96 | tiefe Klarinette, Fagott-Staccato, Blubbern |
-| Biologie | F-lydisch, 100 | Marimba, Fagott-Bögen, Vogel-Zwitschern |
+| Welt | Lieder, Tonart, Tempo | Melodie-Instrument | Farbtupfer |
+|---|---|---|---|
+| Labor (Start, Menüs) | „Forscher-Marsch“ / „Treppauf“, C- oder F-Dur, 118 | E-Piano | Glas |
+| Physik | „Treppauf“ / „Forscher-Marsch“, D-Dur, 124 | Glockenspiel + E-Piano | Glas-Funkeln |
+| Chemie | „Geheimlabor“, a-Moll (dorisch), 108 | gezupft wie eine Mandoline | Blubbern |
+| Biologie | „Sommerwiese“ / „Forscher-Marsch“, F-Dur, 112 | Marimba + Flöte | Vögel |
 
-Jede Phrase (8 Takte) wird neu erfunden: Akkordfolge der Welt, Rhythmen aus einem kleinen Vorrat, Akkordtöne auf betonten Zählzeiten, kleine Schritte dazwischen,
-manchmal ein schrulliger Vorschlag; danach 4–9 Sekunden Stille. Im Versuch selbst ist es still. Musik startet erst nach der ersten Berührung,
-folgt der Stummschaltung (Android: Klingelmodus, Web: Gerät) und wird beim Vorlesen leiser.
+Jedes Stück wechselt mit dem nächsten ab (andere Melodie, andere Begleitung, manchmal ein anderes Melodie-Instrument oder eine zweite Stimme), dazwischen 2–5 Sekunden Stille.
+Im Versuch selbst ist es still. Android startet die Musik gleich beim Öffnen und richtet sich nach der Medien-Lautstärke; der Browser erst nach dem ersten Antippen.
+Beim Vorlesen wird die Musik leiser.
 
 ## Vorlesen
 

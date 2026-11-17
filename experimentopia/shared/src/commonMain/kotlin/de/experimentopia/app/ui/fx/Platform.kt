@@ -47,6 +47,8 @@ interface MusicPlayer {
     fun configure(p: de.experimentopia.core.model.AudioPrefs)
     /** Leiser stellen, während vorgelesen wird */
     fun duck(on: Boolean)
+    /** Browser erlauben Ton erst nach dem ersten Antippen; Android spielt gleich beim Start */
+    val needsTouch: Boolean get() = true
 }
 val LocalMusic = staticCompositionLocalOf<MusicPlayer?> { null }
 

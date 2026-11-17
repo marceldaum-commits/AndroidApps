@@ -122,7 +122,7 @@ fun AppRoot(
     val pass = remember(proCode, proFlag) { state.pro() }
     val music = LocalMusic.current; val reader = LocalReader.current
     // Musik und Stimme folgen den Einstellungen; Musik erst nach der ersten Berührung
-    var touched by remember { mutableStateOf(false) }
+    var touched by remember { mutableStateOf(music?.needsTouch == false) }
     LaunchedEffect(audio) { music?.configure(audio); reader?.configure(audio) }
     LaunchedEffect(touched) { if (touched && audio.music) music?.jingle() }
     LaunchedEffect(nav.top, touched) {

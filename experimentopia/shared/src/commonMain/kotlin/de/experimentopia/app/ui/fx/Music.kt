@@ -11,127 +11,175 @@ import kotlin.random.Random
 
 /**
  * Experimentopias eigene Musik – komplett im Code komponiert und erzeugt, keine Samples, keine Lizenzen.
- * Klang-Identität „verspieltes Forscher-Labor“: Pizzicato-Streicher, Klarinette, Fagott, Glas und Blubbern.
- * Jede Welt klingt eigen (Instrumente, Tonart, Tempo). Statt einer Schleife entsteht jedes Mal eine neue kurze Phrase,
- * danach ist es ein paar Sekunden still – so nervt nichts.
+ * Statt Zufallstönen spielt jede Welt richtige, eingängige Melodien (8 Takte, Frage und Antwort, klarer Schluss) mit
+ * Bass, Begleit-Akkorden auf den Nachschlägen und einem leichten Schlagzeug – fröhlich und hüpfend, nicht einlullend.
+ * Jede Phrase ist ein ganzes kleines Stück; danach ist es kurz still, dann kommt das nächste (andere Melodie, andere Begleitung).
  */
 object Composer {
     const val SR = 22050
     private const val TAU = 2 * PI
+    private const val REST = -1
 
-    private class Style(
-        val root: Int, val scale: IntArray, val bpm: Double, val chords: IntArray,
-        val melody: (FloatArray, Double, Double, Double, Double) -> Unit,
-        val bass: (FloatArray, Double, Double, Double, Double) -> Unit,
-        val color: (FloatArray, Double, Random) -> Unit,
-        val low: Int,
-    )
+    /** Ein Stück: Melodie als (MIDI-Ton oder REST, Länge in Achteln), Akkorde je Takt als (Grundton, Moll?) */
+    private class Tune(val melody: List<Pair<Int, Int>>, val chords: List<Pair<Int, Boolean>>)
 
-    private val MAJOR = intArrayOf(0, 2, 4, 5, 7, 9, 11)
-    private val DORIAN = intArrayOf(0, 2, 3, 5, 7, 9, 10)
-    private val LYDIAN = intArrayOf(0, 2, 4, 6, 7, 9, 11)
+    private fun n(vararg x: Int) = x.toList().chunked(2).map { it[0] to it[1] }
+    private val C = 48 to false; private val F = 53 to false; private val G = 55 to false; private val Am = 57 to true; private val Dm = 50 to true
+    private val Em = 52 to true; private val D = 50 to false; private val E = 52 to false; private val Bb = 46 to false
 
+    /** „Forscher-Marsch“ – hüpfend, Dreiklang hoch, Antwort runter */
+    private val MARSCH = Tune(n(64, 2, 67, 2, 72, 2, 67, 2, 69, 2, 67, 1, 65, 1, 64, 4, 65, 2, 69, 2, 74, 2, 72, 1, 71, 1, 72, 6, REST, 2,
+        64, 2, 67, 2, 72, 2, 67, 2, 69, 2, 72, 2, 76, 2, 74, 2, 72, 2, 71, 2, 69, 2, 71, 2, 72, 6, REST, 2), listOf(C, F, G, C, C, F, G, C))
+    /** „Treppauf“ – Tonleiter-Lauf als Frage, Sprung als Antwort */
+    private val TREPPAUF = Tune(n(67, 1, 69, 1, 71, 1, 72, 1, 74, 2, 67, 2, 76, 3, 74, 1, 72, 4, 69, 1, 71, 1, 72, 1, 74, 1, 76, 2, 72, 2, 74, 6, REST, 2,
+        67, 1, 69, 1, 71, 1, 72, 1, 74, 2, 79, 2, 77, 2, 76, 2, 74, 2, 72, 2, 69, 2, 74, 2, 72, 2, 71, 2, 72, 6, REST, 2), listOf(C, Am, F, G, C, F, G, C))
+    /** „Geheimlabor“ – a-Moll, schleichend, aber mit Augenzwinkern (dorische Sexte) */
+    private val GEHEIM = Tune(n(69, 2, 72, 1, 76, 1, 74, 2, 72, 2, 71, 2, 67, 2, 69, 4, 69, 1, 72, 1, 76, 2, 78, 2, 76, 2, 74, 2, 71, 2, 76, 4,
+        69, 2, 72, 1, 76, 1, 74, 2, 72, 2, 71, 2, 74, 2, 72, 2, 71, 2, 69, 2, 67, 2, 64, 2, 67, 2, 69, 6, REST, 2), listOf(Am, G, D, E, Am, G, C, Am))
+    /** „Sommerwiese“ – F-Dur, wiegend, mit kleinem Jodler-Sprung */
+    private val WIESE = Tune(n(72, 2, 69, 1, 72, 1, 77, 2, 76, 2, 74, 2, 70, 2, 72, 4, 69, 1, 70, 1, 72, 2, 74, 2, 72, 1, 70, 1, 69, 2, 67, 2, 65, 4,
+        72, 2, 69, 1, 72, 1, 77, 2, 79, 2, 81, 2, 79, 1, 77, 1, 76, 2, 72, 2, 74, 2, 77, 2, 76, 1, 74, 1, 72, 2, 77, 6, REST, 2), listOf(F, Bb, 48 to false, F, F, 48 to false, Bb, F))
+
+    private class Style(val tunes: List<Tune>, val shift: Int, val bpm: Double, val lead: Int, val color: Int)
     private fun style(w: World) = when (w) {
-        // Labor: C-Dur, Klarinette über Pizzicato, Glas-Funkeln
-        World.LABOR -> Style(60, MAJOR, 108.0, intArrayOf(0, 5, 3, 4, 0, 5, 1, 4), ::clarinet, ::pizz, { b, t, r -> if (r.nextBoolean()) glass(b, t, 2093.0 * listOf(1.0, 1.26, 1.5)[r.nextInt(3)], 0.12) else bubble(b, t, 0.18) }, 36)
-        // Physik: G-Dur, Glas-Celesta wie ein Uhrwerk, Holzblock-Ticks
-        World.PHYSIK -> Style(67, MAJOR, 116.0, intArrayOf(0, 3, 4, 0, 5, 3, 1, 4), { b, t, f, d, a -> glass(b, t, f, a * 0.9); glass(b, t, f * 2, a * 0.2) }, ::pizz, { b, t, _ -> tick(b, t, 0.22); tick(b, t + 0.14, 0.12) }, 43)
-        // Chemie: D-dorisch, geheimnisvoll-schrullig, tiefe Klarinette, Fagott-Staccato, Blubbern
-        World.CHEMIE -> Style(62, DORIAN, 96.0, intArrayOf(0, 6, 3, 0, 0, 6, 4, 0), { b, t, f, d, a -> clarinet(b, t, f / 2, d, a) }, { b, t, f, d, a -> bassoon(b, t, f, min(d, 0.35), a) }, { b, t, r -> bubble(b, t, 0.22); if (r.nextBoolean()) bubble(b, t + 0.09, 0.14) }, 38)
-        // Biologie: F-lydisch, lebendig, Marimba, Fagott-Bögen, Vogel-Zwitschern
-        World.BIOLOGIE -> Style(65, LYDIAN, 100.0, intArrayOf(0, 1, 4, 0, 3, 1, 4, 0), ::marimba, ::bassoon, { b, t, r -> chirp(b, t, 2600.0 + r.nextDouble(600.0), 0.1) }, 41)
+        World.LABOR -> Style(listOf(MARSCH, TREPPAUF), 0, 118.0, 0, 0)
+        World.PHYSIK -> Style(listOf(TREPPAUF, MARSCH), 2, 124.0, 1, 1)        // D-Dur, Glockenspiel, etwas flotter
+        World.CHEMIE -> Style(listOf(GEHEIM, GEHEIM), 0, 108.0, 2, 2)          // a-Moll, gezupft, Blubbern
+        World.BIOLOGIE -> Style(listOf(WIESE, MARSCH), 0, 112.0, 3, 3)         // F-Dur, Marimba und Flöte, Vögel
     }
 
     private fun hz(midi: Int) = 440.0 * 2.0.pow((midi - 69) / 12.0)
-    private fun deg(s: Style, d: Int, octave: Int = 0): Int { val n = s.scale.size; val o = d.floorDiv(n); return s.root + 12 * (o + octave) + s.scale[d.mod(n)] }
 
-    /** Rhythmen je Takt in Achteln (Summe 8) */
-    private val RHYTHMS = listOf(intArrayOf(2, 2, 2, 2), intArrayOf(1, 1, 2, 2, 2), intArrayOf(3, 1, 2, 2), intArrayOf(2, 1, 1, 4), intArrayOf(4, 2, 2), intArrayOf(2, 2, 4), intArrayOf(1, 1, 1, 1, 4))
-
-    /** Eine Phrase von 8 Takten in der Welt [w]; [seed] macht jede Phrase anders */
+    /** Ein ganzes kleines Stück (8 Takte + Ausklang) in der Welt [w]; [seed] wählt Melodie, Begleitung und Verzierungen */
     fun phrase(w: World, seed: Int): FloatArray {
         val s = style(w); val r = Random(seed)
+        val tune = s.tunes[seed.mod(s.tunes.size)]
+        val shift = s.shift + if (w == World.LABOR && r.nextBoolean()) 5 else 0   // mal in C, mal in F
         val beat = 60.0 / s.bpm; val eighth = beat / 2
-        val bars = 8
-        val out = FloatArray(((bars * 4 * beat + 2.0) * SR).toInt())
-        var d = 7 + s.chords[0]   // Melodie startet eine Oktave über dem Grundton
-        for (bar in 0 until bars) {
+        val bars = tune.chords.size
+        val out = FloatArray(((bars * 4 * beat + 2.2) * SR).toInt())
+        val noise = Random(seed * 31 + 7)
+        val busyDrums = r.nextBoolean()
+        val leadKind = if (r.nextDouble() < 0.3) (s.lead + 1) % 4 else s.lead   // manchmal spielt ein anderes Instrument die Melodie
+        // Begleitung: Bass auf 1 und 3 (Grundton, Quinte), kurze Akkorde auf den Nachschlägen, leises Schlagzeug
+        tune.chords.forEachIndexed { bar, (root, minor) ->
             val t0 = bar * 4 * beat
-            val chord = s.chords[bar]
-            // Bass: Grundton auf 1, Quinte auf 3
-            s.bass(out, t0, hz(deg(s, chord, -1)), beat * 1.6, 0.5)
-            s.bass(out, t0 + 2 * beat, hz(deg(s, chord + 4, -1)), beat * 1.4, 0.38)
-            // Melodie
-            val rhythm = if (bar == bars - 1) intArrayOf(2, 6) else RHYTHMS[r.nextInt(RHYTHMS.size)]
-            var t = t0
-            rhythm.forEachIndexed { i, len ->
-                val strong = i == 0
-                d = when {
-                    bar == bars - 1 && i == rhythm.lastIndex -> 7                                   // Schluss auf dem Grundton
-                    strong -> listOf(chord, chord + 2, chord + 4, chord + 7).minBy { abs(it - d) }  // Akkordton
-                    else -> (d + listOf(-2, -1, -1, 1, 1, 2)[r.nextInt(6)]).coerceIn(3, 13)       // kleine Schritte
-                }
-                val rest = !strong && r.nextDouble() < 0.12
-                if (!rest) {
-                    // Schrullige Vorschläge: manchmal ein schneller Nachbarton vor dem Hauptton
-                    if (strong && r.nextDouble() < 0.25) s.melody(out, t - 0.05, hz(deg(s, d + 1)), 0.05, 0.25)
-                    s.melody(out, t, hz(deg(s, d)), len * eighth * 0.92, if (strong) 0.55 else 0.42)
-                }
-                t += len * eighth
-            }
-            // Farbtupfer der Welt auf einer unbetonten Zählzeit
-            if (r.nextDouble() < 0.45) s.color(out, t0 + (1 + 2 * r.nextInt(2)) * beat + eighth, r)
+            val rt = root + shift
+            bass(out, t0, hz(rt - 12), beat * 0.9, 0.55)
+            bass(out, t0 + 2 * beat, hz(rt - 5), beat * 0.9, 0.45)
+            if (bar % 2 == 1) bass(out, t0 + 3.5 * beat, hz(rt - 10), beat * 0.4, 0.3)                // kleiner Durchgang
+            val chord = listOf(rt + 12, rt + 12 + (if (minor) 3 else 4), rt + 19)
+            listOf(1, 3).forEach { b -> chord.forEach { m -> pluck(out, t0 + b * beat, hz(m), 0.16) } }
+            if (busyDrums) chord.forEach { m -> pluck(out, t0 + 1.5 * beat, hz(m), 0.08) }
+            // Schlagzeug
+            kick(out, t0, 0.5); kick(out, t0 + 2 * beat, 0.42)
+            snare(out, t0 + beat, 0.16, noise); snare(out, t0 + 3 * beat, 0.16, noise)
+            for (e in 0 until 8) if (busyDrums || e % 2 == 1) hat(out, t0 + e * eighth, if (e % 2 == 1) 0.07 else 0.04, noise)
         }
+        // Melodie
+        var t = 0.0
+        tune.melody.forEachIndexed { i, (m, len) ->
+            if (m != REST) {
+                val note = m + shift
+                val accent = (t / beat).let { abs(it - kotlin.math.round(it)) < 1e-6 && kotlin.math.round(it).toInt() % 2 == 0 }
+                lead(leadKind, out, t, hz(note), len * eighth * 0.9, if (accent) 0.5 else 0.42)
+                // Verzierung: in der zweiten Hälfte manchmal eine Terz darunter (zweistimmig)
+                if (t > bars * 2 * beat && r.nextDouble() < 0.35 && len >= 2) lead(leadKind, out, t, hz(note - 3), len * eighth * 0.9, 0.18)
+            }
+            t += len * eighth
+        }
+        // Farbtupfer der Welt in den Pausen am Ende von Takt 4 und 8
+        listOf(4, 8).forEach { bar -> color(s.color, out, (bar * 4 - 0.5) * beat, r) }
         normalize(out, 0.55f)
         return out
     }
 
-    /** Erkennungsmelodie: Klarinette steigt auf, Pizzicato antwortet, Glas funkelt, Blubb! */
+    /** Erkennungsmelodie: E-Piano steigt auf, Bass und Schlagzeug antworten, Glas funkelt, Blubb! */
     fun jingle(): FloatArray {
-        val out = FloatArray((3.2 * SR).toInt())
-        val e = 0.16
-        listOf(67, 72, 76, 79).forEachIndexed { i, m -> clarinet(out, i * e, hz(m), e * 0.95, 0.5) }
-        clarinet(out, 4 * e, hz(77), e * 0.6, 0.35); clarinet(out, 4.6 * e, hz(76), e * 2.2, 0.55)
-        listOf(60, 64, 67, 72).forEachIndexed { i, m -> pizz(out, 1.2 + i * 0.11, hz(m), 0.5, 0.6) }
-        glass(out, 1.66, hz(96), 0.35); glass(out, 1.78, hz(100), 0.22)
-        bubble(out, 2.15, 0.45); bubble(out, 2.3, 0.3)
+        val out = FloatArray((3.0 * SR).toInt())
+        val e = 0.14
+        listOf(67, 72, 76, 79).forEachIndexed { i, m -> epiano(out, i * e, hz(m), e * 0.95, 0.5) }
+        epiano(out, 4 * e, hz(84), e * 3.0, 0.55); epiano(out, 4 * e, hz(76), e * 3.0, 0.3)
+        bass(out, 4 * e, hz(36), 0.5, 0.6); kick(out, 4 * e, 0.5)
+        glass(out, 1.25, hz(96), 0.3); glass(out, 1.38, hz(100), 0.2)
+        bubble(out, 1.75, 0.45); bubble(out, 1.9, 0.3)
         normalize(out, 0.6f)
         return out
     }
 
     // ── Instrumente ──
 
-    /** Pizzicato: gezupfte Saite mit hölzernem Körper */
-    private fun pizz(b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = add(b, t0, 0.7) { t ->
-        val env = min(1.0, t / 0.002) * exp(-t * 7.0)
-        a * env * ((1..6).sumOf { k -> sin(TAU * k * f * t) * exp(-t * (2.0 * k)) / k } + 0.3 * sin(TAU * 220.0 * t) * exp(-t * 40))
+    private fun lead(kind: Int, b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = when (kind) {
+        0 -> epiano(b, t0, f, d, a)
+        1 -> { glock(b, t0, f, a * 0.8); epiano(b, t0, f, d, a * 0.35) }
+        2 -> pluckLead(b, t0, f, d, a)
+        else -> { marimba(b, t0, f, a * 0.8); flute(b, t0, f, d, a * 0.35) }
     }
 
-    /** Klarinette: ungerade Obertöne, weicher Einsatz, leichtes Vibrato */
-    private fun clarinet(b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = add(b, t0, d + 0.12) { t ->
-        val env = min(1.0, t / 0.035) * (if (t > d) exp(-(t - d) * 30) else 1.0)
-        val vib = 1 + (if (t > 0.18) 0.004 * sin(TAU * 5.2 * t) else 0.0)
-        val ph = TAU * f * vib * t
-        a * env * (sin(ph) + 0.42 * sin(3 * ph) + 0.22 * sin(5 * ph) + 0.1 * sin(7 * ph)) * 0.6
+    /** E-Piano (FM): warmer Anschlag, glockiger Beginn, verklingt weich */
+    private fun epiano(b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = add(b, t0, d + 0.35) { t ->
+        val env = min(1.0, t / 0.004) * exp(-t * 2.2) * (if (t > d) exp(-(t - d) * 14) else 1.0)
+        val idx = 1.6 * exp(-t * 6)
+        a * env * sin(TAU * f * t + idx * sin(TAU * f * t)) * 0.8
     }
 
-    /** Fagott: tief, näselnd, Obertöne 2 und 3 betont */
-    private fun bassoon(b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = add(b, t0, d + 0.1) { t ->
-        val env = min(1.0, t / 0.04) * (if (t > d) exp(-(t - d) * 25) else 1.0)
-        val ph = TAU * f * t
-        a * env * (0.6 * sin(ph) + 1.0 * sin(2 * ph) + 0.7 * sin(3 * ph) + 0.35 * sin(4 * ph) + 0.2 * sin(5 * ph)) * 0.35
+    /** Glockenspiel: hell und klar */
+    private fun glock(b: FloatArray, t0: Double, f: Double, a: Double) = add(b, t0, 1.0) { t ->
+        a * min(1.0, t / 0.002) * (sin(TAU * 2 * f * t) * exp(-t * 3.5) + 0.25 * sin(TAU * 5.4 * f * t) * exp(-t * 9)) * 0.7
     }
 
-    /** Marimba: Holz, Grundton plus schnell verklingender vierfacher Oberton */
-    private fun marimba(b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = add(b, t0, 0.9) { t ->
-        val env = min(1.0, t / 0.002)
-        a * env * (sin(TAU * f * t) * exp(-t * 4.5) + 0.35 * sin(TAU * 4 * f * t) * exp(-t * 18))
+    /** Gezupfte Melodie (wie eine Mandoline) */
+    private fun pluckLead(b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = add(b, t0, d + 0.3) { t ->
+        val env = min(1.0, t / 0.002) * exp(-t * 4.0) * (if (t > d) exp(-(t - d) * 12) else 1.0)
+        a * env * ((1..5).sumOf { k -> sin(TAU * k * f * t) * exp(-t * 3.0 * k) / k }) * 0.8
+    }
+
+    /** Flöte: weich, leichtes Vibrato */
+    private fun flute(b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = add(b, t0, d + 0.1) { t ->
+        val env = min(1.0, t / 0.05) * (if (t > d) exp(-(t - d) * 25) else 1.0)
+        val ph = TAU * f * t + 0.03 * sin(TAU * 5.5 * t) * min(1.0, t / 0.3) * 6
+        a * env * (sin(ph) + 0.12 * sin(2 * ph))
+    }
+
+    /** Marimba: Holz, Grundton plus schnell verklingender Oberton */
+    private fun marimba(b: FloatArray, t0: Double, f: Double, a: Double) = add(b, t0, 0.8) { t ->
+        a * min(1.0, t / 0.002) * (sin(TAU * f * t) * exp(-t * 5.0) + 0.3 * sin(TAU * 4 * f * t) * exp(-t * 20))
+    }
+
+    /** Begleit-Akkordton: kurz gezupft */
+    private fun pluck(b: FloatArray, t0: Double, f: Double, a: Double) = add(b, t0, 0.35) { t ->
+        a * min(1.0, t / 0.003) * exp(-t * 11) * (sin(TAU * f * t) + 0.4 * sin(TAU * 2 * f * t) * exp(-t * 20))
+    }
+
+    /** Bass: runder, gezupfter Ton */
+    private fun bass(b: FloatArray, t0: Double, f: Double, d: Double, a: Double) = add(b, t0, d + 0.1) { t ->
+        val env = min(1.0, t / 0.005) * exp(-t * 3.0) * (if (t > d) exp(-(t - d) * 30) else 1.0)
+        a * env * (sin(TAU * f * t) + 0.35 * sin(TAU * 2 * f * t) * exp(-t * 8))
+    }
+
+    private fun kick(b: FloatArray, t0: Double, a: Double) {
+        var ph = 0.0
+        add(b, t0, 0.18) { t -> ph += TAU * (45.0 + 90.0 * exp(-t * 35)) / SR; a * exp(-t * 18) * sin(ph) }
+    }
+
+    private fun snare(b: FloatArray, t0: Double, a: Double, r: Random) =
+        add(b, t0, 0.15) { t -> a * exp(-t * 28) * ((r.nextDouble() * 2 - 1) * 0.8 + 0.4 * sin(TAU * 190 * t)) }
+
+    private fun hat(b: FloatArray, t0: Double, a: Double, r: Random) {
+        var last = 0.0
+        add(b, t0, 0.04) { t -> val x = r.nextDouble() * 2 - 1; val y = x - last; last = x; a * exp(-t * 90) * y }
+    }
+
+    private fun color(kind: Int, b: FloatArray, t: Double, r: Random) = when (kind) {
+        0 -> glass(b, t, 2093.0 * listOf(1.0, 1.26, 1.5)[r.nextInt(3)], 0.12)
+        1 -> { glass(b, t, 2637.0, 0.1); glass(b, t + 0.12, 3136.0, 0.08) }
+        2 -> { bubble(b, t, 0.22); bubble(b, t + 0.1, 0.15) }
+        else -> chirp(b, t, 2600.0 + r.nextDouble(600.0), 0.1)
     }
 
     /** Glas: unharmonischer Oberton wie ein angeschlagenes Reagenzglas */
     private fun glass(b: FloatArray, t0: Double, f: Double, a: Double) = add(b, t0, 1.2) { t ->
-        val env = min(1.0, t / 0.002)
-        a * env * (sin(TAU * f * t) * exp(-t * 3.0) + 0.3 * sin(TAU * 2.76 * f * t) * exp(-t * 8))
+        a * min(1.0, t / 0.002) * (sin(TAU * f * t) * exp(-t * 3.0) + 0.3 * sin(TAU * 2.76 * f * t) * exp(-t * 8))
     }
 
     /** Blubb: aufsteigendes Glucksen */
@@ -139,9 +187,6 @@ object Composer {
         var ph = 0.0; val dur = 0.11
         add(b, t0, dur) { t -> ph += TAU * (450.0 * (4.0).pow(t / dur)) / SR; a * min(1.0, t / 0.004) * (1 - t / dur).pow(2) * sin(ph) }
     }
-
-    /** Holzblock-Tick (Uhrwerk) */
-    private fun tick(b: FloatArray, t0: Double, a: Double) = add(b, t0, 0.05) { t -> a * exp(-t * 90) * sin(TAU * 1800 * t) }
 
     /** Vogel-Zwitschern: kurzer, schneller Gleitton */
     private fun chirp(b: FloatArray, t0: Double, f: Double, a: Double) {
