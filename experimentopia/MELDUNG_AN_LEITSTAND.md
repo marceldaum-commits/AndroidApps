@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.4.1 vom 17.11.2026: fertig für den Betriebstest (Musik + nur Nova)
+
+1) **Musik** (seit 2.4.0): Android (native App, kein WebView) startet die Musik sofort beim Öffnen – folgt nur der Medien-Lautstärke, nicht mehr dem
+   Klingelmodus/Vibration. Web: startet automatisch beim allerersten Tippen/Klick irgendwo. Kein Musik-Knopf; „Musik aus“ wird respektiert.
+   Neue Musik mit komponierten Melodien (Marcel fand die alte „grausam/hypnotisch“).
+2) **Nur Nova**: Codesuche nach „thorsten“ und „sherpa“ (Quellcode, Ressourcen, gebaute WebApp) = **0 Treffer**; nur CHANGELOG und dieses Meldungs-Protokoll
+   (Versionsgeschichte) nennen Thorsten noch. Keine Thorsten-/Sherpa-Dateien, -URLs oder -Auswahl. Fallback: Gerätestimme. Alte Stimmdatei wird auf Android
+   gelöscht, alter Browser-Speicher in der WebApp ebenfalls.
+Geprüft: Tests grün (Logik, Bildschirmfotos, Audio), Lint ohne Fehler, beide APKs gebaut. Liegt auf test.
+
 ## 17.11.2026 – Version 2.3.3 vom 17.11.2026: Gratis-Regel ergänzt (Marcel)
 
 - Auf Marcels Hinweis (Bio unter „Lernen nach Fach“ komplett gesperrt) und seine Wahl: zusätzlich zu Wasserinsel + erste 5 je Insel sind **in jedem Thema die ersten 2** frei.

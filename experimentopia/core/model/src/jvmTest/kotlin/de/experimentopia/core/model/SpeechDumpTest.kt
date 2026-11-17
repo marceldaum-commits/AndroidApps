@@ -10,9 +10,9 @@ class SpeechDumpTest {
         org.junit.Assert.assertEquals(AudioPrefs(), AudioPrefs.decode(null))
     }
 
-    /** Update von 2.1 (Thorsten, Tempo 0,8): nichts geht verloren, das Tempo rastet auf die nächste Stufe ein */
+    /** Update von 2.1 (alte Stimmenwahl, Tempo 0,8): nichts geht verloren, das Tempo rastet auf die nächste Stufe ein */
     @Test fun alteEinstellungenAus21() {
-        val old = AudioPrefs.decode("musik=0;musikLaut=0.3;effektLaut=0.7;vorlesen=1;auto=1;tempo=0.8;stimme=thorsten")
+        val old = AudioPrefs.decode("musik=0;musikLaut=0.3;effektLaut=0.7;vorlesen=1;auto=1;tempo=0.8;stimme=alt")
         org.junit.Assert.assertEquals(false, old.music); org.junit.Assert.assertEquals(0.3f, old.musicVol); org.junit.Assert.assertEquals(true, old.autoRead)
         org.junit.Assert.assertEquals(0.75f, Nova.speed(old.rate)); org.junit.Assert.assertEquals(false, old.bestQuality)
     }

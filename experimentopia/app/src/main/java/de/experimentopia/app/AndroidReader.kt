@@ -38,7 +38,7 @@ class AndroidReader(ctx: Context) : Reader {
     private val dir = File(app.filesDir, "nova").apply { mkdirs() }
 
     init {
-        // Die Stimme „Thorsten“ (bis 2.1) wird nicht mehr gebraucht – ihre Stimmdatei (ca. 63 MB) nach dem Update wegräumen
+        // Die alte Offline-Stimme (bis 2.1) wird nicht mehr gebraucht – ihre Stimmdatei (ca. 63 MB) nach dem Update wegräumen
         Thread({ runCatching { File(app.filesDir, "stimme").deleteRecursively() } }, "aufraeumen").apply { isDaemon = true }.start()
     }
 

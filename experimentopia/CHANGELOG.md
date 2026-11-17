@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.4.1 – Aufgeräumt (17.11.2026)
+
+- 🧹 Letzte Reste der alten Stimme aus dem Programm entfernt – vorgelesen wird nur mit Nova, ohne Internet mit der Stimme des Geräts.
+
 ## 2.4.0 – Neue Musik (17.11.2026)
 
 - 🎶 **Ganz neue Musik**: Statt der alten, eintönigen Klänge spielen jetzt richtige, fröhliche Lieder mit Ohrwurm-Melodie, Bass, Begleitung und leichtem Schlagzeug.

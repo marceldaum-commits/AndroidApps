@@ -35,7 +35,7 @@ object Nova {
 
     /** Stufen des Reglers „Sprechtempo“ (1,0 = Server-Tempo); abgespielt wird schneller/langsamer bei gleicher Tonhöhe */
     val SPEEDS = listOf(0.75f, 0.9f, 1.0f, 1.15f, 1.3f, 1.5f)
-    /** Gespeicherte Wahl auf die nächste Stufe (alte Werte aus Thorsten-Zeiten passen so auch) */
+    /** Gespeicherte Wahl auf die nächste Stufe (alte Werte aus Versionen vor 2.2 passen so auch) */
     fun speed(saved: Float): Float = SPEEDS.minBy { kotlin.math.abs(it - saved) }
 
     /** Hinweis für den Datenschutz-Text (Wortlaut abgestimmt mit allen Lern-Apps) */

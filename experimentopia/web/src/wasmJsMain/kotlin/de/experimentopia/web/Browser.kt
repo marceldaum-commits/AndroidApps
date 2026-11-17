@@ -58,8 +58,8 @@ fun novaCancelAll(): Unit = js("{ if (window.ExNova) window.ExNova.cancelAll(); 
 fun novaClear(done: () -> Unit): Unit = js("window.ExNova.clear(done)")
 fun pageHost(): String = js("location.host")
 fun novaStop(): Unit = js("{ if (window.ExNova) window.ExNova.stop(); }")
-/** Der alte Speicher der Stimme „Thorsten“ (bis 2.1) wird nicht mehr gebraucht – Platz freigeben */
-fun dropOldVoice(): Unit = js("{ try { localStorage.removeItem('experimentopia.thorsten'); if (window.caches) caches.delete('experimentopia-stimme'); } catch (e) {} }")
+/** Den Speicher der alten Offline-Stimme (bis 2.1, ca. 63 MB) freigeben */
+fun dropOldVoice(): Unit = js("{ try { if (window.caches) caches.delete('experimentopia-stimme'); } catch (e) {} }")
 
 // ── Forscher-Pass: Freischalt-Link „…/?pro=EX…“ lesen und die Adresse danach aufräumen
 fun locationSearch(): String = js("decodeURIComponent(window.location.search || '')")
