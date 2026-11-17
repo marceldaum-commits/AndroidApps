@@ -181,7 +181,8 @@ class AndroidReader(context: Context) : Reader {
                     // 404 (noch nicht vertont) still überspringen; Netzfehler zählen
                     val target = File(dir, "$h.mp3"); val cached = File(cacheDir(), "$h.mp3")
                     val ok = runCatching {
-                        if (best) { if (!download(Nova.fileUrl(h, true), target, trimCache = false)) download(Nova.fileUrl(h), target, trimCache = false) }   // original/ fehlt → normale Datei
+                        // original/ fehlt noch → normale Datei, aber als Standard ablegen: beim nächsten Tippen wird die Bestqualität nachgeholt
+                        if (best) { if (!download(Nova.fileUrl(h, true), target, trimCache = false)) File(offlineDir(false), "$h.mp3").let { std -> if (!std.isFile) download(Nova.fileUrl(h), std, trimCache = false) } }
                         else if (!(cached.isFile && cached.renameTo(target))) download(Nova.fileUrl(h), target, trimCache = false)
                     }
                     if (ok.isFailure) failed.incrementAndGet()

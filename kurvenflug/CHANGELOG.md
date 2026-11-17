@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.2 – Kleinigkeit
+- Bestqualität offline: Fehlt eine Datei auf dem Server noch, speichert die App vorerst die normale Fassung und holt die
+  Bestqualität beim nächsten Laden nach.
+
 ## 2.5.1 – 🎧 Offline-Stimme in Bestqualität
 - Beim Offline-Laden gibt es jetzt zwei Möglichkeiten: **Standard** (kleiner) oder **Bestqualität** (unkomprimiert, klingt noch
   klarer, braucht mehr Platz). Die Wahl wird gemerkt; „Offline-Stimme löschen“ entfernt beide.
