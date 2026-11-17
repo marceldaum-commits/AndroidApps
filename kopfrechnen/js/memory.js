@@ -40,7 +40,9 @@ const MERK_DECKS = [
     task: (n, d) => { const p = tenPow(d), m = p / d; return { topic: 'dec', lvl: 4, e: [F(n, d)], a: De(n, d), form: 'dec', hint: 'Als Dezimalzahl', w: [`Erweitere auf ${p}: ${n}/${d} = ${n * m}/${p}`, `${n * m}/${p} = ${showAns(De(n, d))}`] }; } },
   { id: 'bp', icon: '%', name: 'Brüche als Prozent', k: [7, 8, 9, 10],
     keys: () => BP.map(([n, d]) => `bp:${n}:${d}`),
-    task: (n, d) => { const q = pctOf(n, d), a = q.d === 1 ? I(q.n) : De(q.n, q.d), p = tenPow(d);
+    task: (n, d) => { const q = pctOf(n, d), p = tenPow(d);
+      if (d === 3) { const r = Math.round(n * 1000 / d); return { topic: 'pct', lvl: 2, e: [F(n, d)], a: De(r, 10), unit: '%', eqSign: '≈', hint: 'auf eine Nachkommastelle gerundet', w: [`${n}/${d} = ${n} : ${d} = ${n === 1 ? '0,3333…' : '0,6666…'}`, `≈ ${fmtDec(r, 1)} %`] }; }   // 1/3, 2/3 nicht abbrechend: gerundet statt „100/3 %“
+      const a = q.d === 1 ? I(q.n) : De(q.n, q.d);
       return { topic: 'pct', lvl: 2, e: [F(n, d)], a, unit: '%', w: p && p <= 100 ? [`Erweitere auf 100: ${n}/${d} = ${n * 100 / d}/100`, `${n * 100 / d}/100 = ${n * 100 / d} %`] : [`${n}/${d} = ${n} : ${d} · 100 %`, `= ${showAns(a)} %`] }; } },
 ];
 const MERK_BY = Object.fromEntries(MERK_DECKS.map(d => [d.id, d]));
@@ -254,7 +256,7 @@ function merkCorrectFx(t) {
 function merkTipText(t) {
   const [id] = t.card.split(':');
   if (id === 'ee' || id === 'div') { const a = t.e[0].v, b = t.e[2].v; return id === 'ee' ? `Zähl die Reihen: ${a} Reihen mit je ${b} Punkten.` : `Wie viele Reihen zu ${b} Punkten ergeben ${a}?`; }
-  if (id === 'plus') return 'Füll erst bis 10 auf – dann den Rest dazu.';
+  if (id === 'plus') { const a = t.e[0].v, b = t.e[2].v; return a === 10 || b === 10 ? 'Zehn dazu: Die Einer bleiben gleich.' : a + b > 10 ? 'Füll erst bis 10 auf – dann den Rest dazu.' : 'Zähl vom größeren Summanden aus weiter.'; }
   if (id === 'sq') return 'Rechne die vier Flächen zusammen.';
   return 'Wie viele der 100 Kästchen sind gefärbt?';
 }

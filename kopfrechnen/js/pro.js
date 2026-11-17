@@ -86,7 +86,7 @@ const proBadge = () => proLocks() && !RBPRO.ok ? ' <span class="probadge">Pro</s
 
 PANELS.pro = ({ what } = {}) => {
   const own = RBPRO.ok, locks = proLocks();
-  const feats = [['🏔️', 'Profi-Stufe in allen 30 Themen', 'Für richtig gute Rechner – große Zahlen, viele Schritte'],
+  const feats = [['🏔️', 'Profi-Stufe in allen 29 Themen', 'Für richtig gute Rechner – große Zahlen, viele Schritte'],
     ['👨‍👩‍👧', 'Unbegrenzt Profile', `Frei sind ${RBPRO.freeProfiles} Profile – mit Pro für alle Geschwister`],
     ['📈', 'Elternbericht', 'Verlauf über 10 Wochen, Stärken und Schwächen je Thema, zum Ausdrucken'],
     ['💾', 'Vorlagen speichern und teilen', '„Üben nach Wunsch“ als Vorlage, Link oder QR-Code']];
@@ -95,7 +95,7 @@ PANELS.pro = ({ what } = {}) => {
     ${own ? '<p class="pro-own">✓ Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!</p>'
       : `${what && WHAT[what] ? `<p class="pro-what">${WHAT[what]}</p>` : ''}${!locks ? '<p class="small muted">Zurzeit sind alle Pro-Funktionen kostenlos freigeschaltet.</p>' : ''}`}
     <div class="menu">${feats.map(([i, t, s]) => `<div class="mi static"><div class="ico">${i}</div><div><b>${t}</b><span>${s}</span></div></div>`).join('')}</div>
-    <p class="small muted">Kostenlos bleiben alle 30 Themen in Stufe 1–5, alle Spiele, Lösungswege, Reise und Garten – ohne Werbung.</p>
+    <p class="small muted">Kostenlos bleiben alle 29 Themen in Stufe 1–5, alle Spiele, Lösungswege, Reise und Garten – ohne Werbung.</p>
     ${!own && locks && !proPlay() ? `<button class="btn primary big" id="proBuy">Pro kaufen – ${RBPRO.price} einmalig</button><p class="small muted" style="text-align:center;margin:4px 0 0">inkl. MwSt. · kein Abo · Kauf auf unserer Website, der Code kommt per E-Mail</p>` : ''}
     ${own ? '' : `<form class="pro-code" id="proForm" autocomplete="off"><label class="field"><span>Code schon gekauft? Hier einfügen:</span>
       <input id="proIn" placeholder="RB-…" autocapitalize="characters" spellcheck="false" translate="no"></label><button class="btn" type="submit">Einlösen</button></form>`}

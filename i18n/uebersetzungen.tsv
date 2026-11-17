@@ -65,7 +65,7 @@ Auto-Stufe jetzt {}	auto level now {}	авто-рівень тепер {}
 Automatisch	Automatic	Автоматично
 Automatisch prüfen	Check automatically	Перевіряти автоматично
 Beenden	Quit	Завершити
-Bei {} °C friert alles. Wird es {} Grad wärmer, sind es +{} °C.	At {} °C everything freezes. If it gets {} degrees warmer, it's +{} °C.	При {} °C усе замерзає. Якщо потеплішає на {} градусів, буде +{} °C.
+Bei {} °C ist es frostig kalt. Wird es {} Grad wärmer, sind es +{} °C.	At {} °C it is freezing cold. If it gets {} degrees warmer, it's +{} °C.	При {} °C дуже морозно. Якщо потеплішає на {} градусів, буде +{} °C.
 Beide Klammern zuerst: {} und {}	Both brackets first: {} and {}	Спочатку обидві дужки: {} і {}
 Beide Seiten durch {} teilen:	Divide both sides by {}:	Поділи обидві частини на {}:
 Beide Seiten mal {} nehmen:	Multiply both sides by {}:	Помнож обидві частини на {}:
@@ -117,7 +117,7 @@ Der direkte Versand ist hier noch nicht eingerichtet. Deine Meldung ist gespeich
 Der größte gemeinsame Teiler ist {}.	The greatest common divisor is {}.	Найбільший спільний дільник – {}.
 Der kleinste Primfaktor ist {}.	The smallest prime factor is {}.	Найменший простий множник – {}.
 Der {}-%-Gutschein für alle {} Türchen gilt nur, wenn die Klassenstufe stimmt (Prüfung bei der Buchung) und ist einmal je Familie einlösbar.	The {}% voucher for all {} doors is only valid if the grade is correct (checked when booking) and can be redeemed once per family.	Ваучер на {}% за всі {} віконець дійсний, лише якщо клас указано правильно (перевірка під час бронювання), і його можна використати один раз на сім'ю.
-Der {}. Dezember ist der kürzeste Tag des Jahres – ab jetzt werden die Tage wieder länger!	{} December is the shortest day of the year – from now on the days get longer again!	{} грудня – найкоротший день року – відтепер дні знову довшають!
+Um den {}. Dezember ist der kürzeste Tag des Jahres – danach werden die Tage wieder länger!	Around {} December is the shortest day of the year – after that the days get longer again!	Близько {} грудня – найкоротший день року, потім дні знову стають довшими!ь!
 Design	Appearance	Вигляд
 Dezimal	Decimals	Десяткові
 Dezimalzahlen ab Stufe {} mit {} Sternen	Decimals from level {} with {} stars	Десяткові від рівня {} з {} зірками
@@ -170,7 +170,7 @@ Einmaleins-König	Times-table king	Король таблиці множення
 Einmaleins-Übersicht	Times-table overview	Огляд таблиці множення
 Einstellungen	Settings	Налаштування
 Einstufungstest	Placement test	Тест рівня
-Empfehlen Sie Nachhilfe – online weiter: Bucht die empfohlene Familie ein Paket ab {} Stunden, schenken wir Ihnen eine Unterrichtsstunde.	Recommend Nachhilfe – online: if the family you recommend books a package of {} hours or more, we'll give you a free lesson.	Порекомендуйте Nachhilfe – online: якщо рекомендована родина забронює пакет від {} годин, ми подаруємо вам урок.
+Empfiehl Nachhilfe – online weiter: Bucht die empfohlene Familie ein Paket ab {} Stunden, schenken wir dir eine Unterrichtsstunde.	Recommend Nachhilfe – online: if the family you recommend books a package of {} hours or more, we'll give you a free lesson.	Порекомендуй Nachhilfe – online: якщо рекомендована родина забронює пакет від {} годин, ми подаруємо тобі урок.
 Entdecker	Explorer	Дослідник
 Entfernen	Remove	Видалити
 Entscheidend ist die Einerstelle: {}	The ones digit decides: {}	Вирішує розряд одиниць: {}
@@ -555,7 +555,7 @@ Wir schauen sie uns an.	We'll take a look.	Ми її переглянемо.
 Wird geladen …	Loading …	Завантаження …
 Wochen-Held	Week hero	Герой тижня
 Wochenbericht	Weekly report	Тижневий звіт
-Wusstest du? {} + … + {}. So viele Zahlen stecken in allen Türchen zusammen!	Did you know? {} + … + {}. That's how many numbers are behind all the doors together!	А ти знав? {} + … + {}. Стільки чисел ховається за всіма віконцями разом!
+Wusstest du? {} + … + {}. Zählt man alle Türchen-Zahlen zusammen, kommt {} heraus!	Did you know? {} + … + {}. Add up all the door numbers and you get {}!	А ти знав? {} + … + {}. Якщо скласти всі числа на віконцях, вийде {}!
 Wähle	Choose	Вибери
 Wähle deine Klassenstufe – dann geht’s los!	Choose your grade – then off you go!	Вибери свій клас – і вперед!
 Zahlen-Genie	Number genius	Геній чисел
@@ -1660,8 +1660,8 @@ Zusammen sind es {} gleiche Teile.	Together that is {} equal parts.	Разом �
 Zwei Nebenwinkel ergeben zusammen {}°. Einer ist {}° groß. Wie groß ist der andere?	Two adjacent angles add up to {}°. One is {}°. How big is the other?	Два суміжні кути разом дають {}°. Один дорівнює {}°. Чому дорівнює інший?
 das Doppelte von	double	подвоєне
 das Doppelte von {}	double {}	подвоєне {}
-das Vierfache von	four times	учетверене
-das Vierfache von {}	four times {}	учетверене {}
+das Vierfache von	four times	вчетверо більше, ніж
+das Vierfache von {}	four times {}	вчетверо більше, ніж {}
 die Hälfte von	half of	половина від
 die Hälfte von {}	half of {}	половина від {}
 dreimal halbieren	halve three times	тричі поділити навпіл
@@ -1735,7 +1735,7 @@ Dreieck, Quader, Viereck, Würfel	Triangle, cuboid, quadrilateral, cube	Трик
 Pythagoras, Vielecke, Trapez, Volumen	Pythagoras, polygons, trapezium, volume	Піфагор, многокутники, трапеція, об'єм
 Plus und minus in kleinen Schritten	Plus and minus in small steps	Плюс і мінус малими кроками
 Größere Schritte und Verdoppeln	Bigger steps and doubling	Більші кроки й подвоєння
-Abwechselnd, wachsende Abstände, mal 3	Alternating, growing steps, times {}	По черзі, зростаючі кроки, помножити на {}
+Abwechselnd, wachsende Abstände, mal 3	Alternating, growing steps, times {}	По черзі, кроки, що зростають, помножити на {}
 Quadratzahlen, Halbieren, Fibonacci, Lücke	Square numbers, halving, Fibonacci, gap	Квадрати, ділення навпіл, Фібоначчі, пропуск
 Negative Zahlen und knifflige Regeln	Negative numbers and tricky rules	Від'ємні числа й хитрі правила
 Viele neue Aufgaben: 5 neue Themen – Verdoppeln, Geld, Uhr & Zeit, Geometrie und Zahlenfolgen	Lots of new problems: {} new topics – doubling, money, clock & time, geometry and number sequences	Багато нових завдань: {} нових тем – подвоєння, гроші, годинник і час, геометрія та числові послідовності
@@ -2219,7 +2219,7 @@ Also {}⁸	So {}⁸	Отже, {}⁸
 Also {}⁹	So {}⁹	Отже, {}⁹
 Erst beide Zahlen als Zehnerpotenz schreiben	First write both numbers with powers of ten	Спочатку запиши обидва числа через степені десяти
 Vorrat insgesamt	Total supply	Запас загалом
-{} Pferdetage	{} horse-days	{} коне-днів
+{} Pferdetage	{} horse-days	{} днів корму на одного коня
 Nach {} Tagen verbraucht	Used after {} days	Витрачено за {} днів
 Jetzt {} Pferde	Now {} horses	Тепер {} коней
 Ein Futtervorrat reicht für {} Pferde {} Tage. Nach {} Tagen werden {} Pferde verkauft. Wie viele Tage reicht der Rest?	A supply of feed lasts {} horses {} days. After {} days, {} horses are sold. How many days does the rest last?	Запасу корму вистачає {} коням на {} днів. Через {} днів продають {} коней. На скільки днів вистачить решти?
@@ -2319,7 +2319,7 @@ Der Zahlengeist	The Number Ghost	Числовий привид
 Steinbeißer	Stonebiter	Каменегриз
 Der Wächter	The Guardian	Вартовий
 {} Treffer besiegen das Monster.	{} hits defeat the monster.	{} влучань перемагають монстра.
-Besiege ihn mit {} Treffern!	Defeat him with {} hits!	Перемож його {} влучаннями!
+Besiege ihn mit {} Treffern!	Defeat him with {} hits!	Переможи його {} влучаннями!
 {} Volltreffer!	{} critical hit!	{} точне влучання!
 Ein Schatz!	A treasure!	Скарб!
 Du findest	You find	Ти знаходиш
@@ -2339,3 +2339,18 @@ Rekord: Raum {}	Record: room {}	Рекорд: кімната {}
 Neu: der Zahlen-Dungeon 👾 – {} Räume, {} Herzen, Monster besiegst du mit richtigen Antworten	New: the Number Dungeon 👾 – {} rooms, {} hearts, you defeat monsters with correct answers	Нове: Числове підземелля 👾 – {} кімнат, {} сердець, монстрів перемагаєш правильними відповідями
 Wähle Türen: Kampf, Schatz oder Lagerfeuer – und am Ende wartet der Wächter	Choose doors: fight, treasure or campfire – and the Guardian waits at the end	Обирай двері: бій, скарб чи багаття – а в кінці чекає Вартовий
 Neuer Rekord!	New record!	Новий рекорд!
+{} € liegen {} Monat zu {} % Jahreszins auf dem Konto. Wie viele Euro Zinsen gibt es?	€{} stays in the account for {} month at {} % annual interest. How many euros of interest are paid?	{} € лежать на рахунку {} місяць під {} % річних. Скільки євро відсотків нараховано?
+Profi: gewichteter Durchschnitt, zehn Werte	Pro: weighted average, ten values	Профі: зважене середнє, десять значень
+Große Korrektheitsprüfung: alle Aufgabenarten und Lösungswege unabhängig nachgerechnet	Big correctness check: all task types and solution paths independently recalculated	Велика перевірка правильності: усі типи завдань і способи розв'язання незалежно перераховано
+Genauere Lösungswege und Merksätze, z. B. Prozent mit „≙“ und gerundete Brüche mit „≈“	More precise solution paths and memory tips, e.g. percentages with “≙” and rounded fractions with “≈”	Точніші способи розв'язання й підказки, напр. відсотки з «≙» і округлені дроби з «≈»
+Besser lesbar: kräftigere Farben auf orangen Knöpfen, klarere Übersetzungen	Easier to read: stronger colours on orange buttons, clearer translations	Легше читати: насиченіші кольори на помаранчевих кнопках, зрозуміліші переклади
+{} % von {} und {} % von {}	{}% of {} and {}% of {}	{} % від {} і {} % від {}
+{} Tag = {} h	{} day = {} h	{} день = {} год
+− x auf beiden Seiten	− x on both sides	− x з обох боків
+{} % von {} € = {}	{}% of {} € = {}	{} % від {} € = {}
+− x auf beiden Seiten: x + {}	− x on both sides: x + {}	− x з обох боків: x + {}
+− x auf beiden Seiten: x = {}	− x on both sides: x = {}	− x з обох боків: x = {}
+− x auf beiden Seiten: x − {}	− x on both sides: x − {}	− x з обох боків: x − {}
+− x auf beiden Seiten: {}x + {}	− x on both sides: {}x + {}	− x з обох боків: {}x + {}
+− x auf beiden Seiten: {}x = {}	− x on both sides: {}x = {}	− x з обох боків: {}x = {}
+− x auf beiden Seiten: {}x − {}	− x on both sides: {}x − {}	− x з обох боків: {}x − {}

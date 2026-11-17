@@ -37,7 +37,7 @@ function printRaw(html, cls) {
 
 /* ================= Adventskalender ================= */
 const ADVENT_FACTS = [
-  ['⭐', 'Wusstest du? 1 + 2 + 3 + … + 24 = 300. So viele Zahlen stecken in allen Türchen zusammen!'],
+  ['⭐', 'Wusstest du? 1 + 2 + 3 + … + 24 = 300. Zählt man alle Türchen-Zahlen zusammen, kommt 300 heraus!'],
   ['❄️', 'Jede Schneeflocke hat 6 Arme – und trotzdem gleicht keine der anderen.'],
   ['🍪', '3 Bleche mit je 12 Plätzchen sind 36 Plätzchen. Malnehmen ist schnelles Plusrechnen!'],
   ['🎄', 'Eine Zahl ist durch 3 teilbar, wenn ihre Quersumme durch 3 teilbar ist: 1224 → 1 + 2 + 2 + 4 = 9 ✓'],
@@ -56,8 +56,8 @@ const ADVENT_FACTS = [
   ['🎄', 'Ungerade Zahlen ergeben Quadratzahlen: 1 + 3 + 5 + 7 = 16 = 4².'],
   ['🕯️', 'Runden: 4,6 ≈ 5 und 4,4 ≈ 4. Ab der 5 wird aufgerundet.'],
   ['🍪', 'Durch 4 teilen heißt zweimal halbieren: 96 → 48 → 24.'],
-  ['🌨️', 'Bei −10 °C friert alles. Wird es 15 Grad wärmer, sind es +5 °C.'],
-  ['🌙', 'Der 21. Dezember ist der kürzeste Tag des Jahres – ab jetzt werden die Tage wieder länger!'],
+  ['🌨️', 'Bei −10 °C ist es frostig kalt. Wird es 15 Grad wärmer, sind es +5 °C.'],
+  ['🌙', 'Um den 21. Dezember ist der kürzeste Tag des Jahres – danach werden die Tage wieder länger!'],
   ['⚖️', 'Gleichungen sind wie eine Waage: Was du links machst, musst du auch rechts machen.'],
   ['✨', '1000 Minuten sind 16 Stunden und 40 Minuten.'],
   ['🎄', 'Frohe Weihnachten! Du hast gerechnet wie ein Profi. 🎉'],
@@ -305,7 +305,7 @@ Object.assign(PANELS, {
     return { title: 'Freunde einladen', html: `<p style="margin:0 0 10px">Rechenblitz ist <b>kostenlos</b> und braucht keine Anmeldung. Zeig den Code deinen Freunden oder schick ihnen den Link.</p>
       <div class="qrbox">${qrSvg(publicUrl())}<div class="small muted">${esc(publicUrl())}</div></div>
       <button class="btn primary block" id="invShare">Link teilen</button>
-      <div class="card parents"><b>Für Eltern: Freunde werben</b><p class="small muted" style="margin:4px 0 8px">Empfehlen Sie Nachhilfe – online weiter: Bucht die empfohlene Familie ein Paket ab 10 Stunden, schenken wir Ihnen eine Unterrichtsstunde.</p><a class="btn block" href="${esc(siteLink(CONFIG.referralUrl, 'einladen'))}" target="_blank" rel="noopener">Zu „Freunde werben“ ↗</a></div>`,
+      <div class="card parents"><b>Für Eltern: Freunde werben</b><p class="small muted" style="margin:4px 0 8px">Empfiehl Nachhilfe – online weiter: Bucht die empfohlene Familie ein Paket ab 10 Stunden, schenken wir dir eine Unterrichtsstunde.</p><a class="btn block" href="${esc(siteLink(CONFIG.referralUrl, 'einladen'))}" target="_blank" rel="noopener">Zu „Freunde werben“ ↗</a></div>`,
       init() { $('invShare').onclick = shareInvite; } };
   },
   flyer() {
@@ -383,7 +383,7 @@ function flyerHtml(note, preview) {
     <div class="fl-eyebrow">Kostenlos · ohne Anmeldung</div>
     <h2>Kopfrechnen üben mit <em>Rechenblitz</em></h2>
     <p class="fl-lead">Vom Einmaleins bis zu Brüchen, Prozent und Gleichungen – mit Lösungsweg bei jedem Fehler.</p>
-    <div class="fl-body"><ul><li>17 Themen, 5 Stufen – passt sich automatisch an</li><li>Tageschallenge, Duell & Abzeichen</li><li>Handy, Tablet und PC – auch offline</li><li>Für Lehrkräfte: Aufträge & Arbeitsblätter</li>${voucher() && ['teaser', 'on'].includes(adventPhase()) ? `<li>Im Advent: Rechen-Adventskalender mit ${voucher().percent || 10}-%-Gutschein</li>` : ''}</ul>
+    <div class="fl-body"><ul><li>29 Themen, 6 Stufen – passt sich automatisch an</li><li>Tageschallenge, Duell & Abzeichen</li><li>Handy, Tablet und PC – auch offline</li><li>Für Lehrkräfte: Aufträge & Arbeitsblätter</li>${voucher() && ['teaser', 'on'].includes(adventPhase()) ? `<li>Im Advent: Rechen-Adventskalender mit ${voucher().percent || 10}-%-Gutschein</li>` : ''}</ul>
     <div class="fl-qr">${qrSvg(url)}<span>${esc(short)}</span></div></div>
     ${note ? `<div class="fl-note">${esc(note)}</div>` : ''}
     <div class="fl-foot"><b>Nachhilfe – online</b> · Persönliche Online-Nachhilfe 1:1 · Kostenlose Probestunde: mathenachhilfe-online.com/probestunde</div></div>`;

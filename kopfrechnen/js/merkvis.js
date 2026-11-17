@@ -131,8 +131,8 @@ const MERK_STORY = {
   'ee:3:4': ['🔢', '1, 2, 3, 4 → 12 = 3 · 4. Die Zahlen stehen einfach der Reihe nach!'],
   'ee:7:8': ['🔢', '5, 6, 7, 8 → 56 = 7 · 8. Wieder der Reihe nach – so vergisst du es nie!'],
   'ee:8:8': ['♟️', '8 · 8 = 64 – so viele Felder hat ein Schachbrett.'],
-  'ee:6:6': ['🎲', '6 · 6 = 36 – mit zwei Würfeln gibt es genau 36 Würfe.'],
-  'ee:7:7': ['🧙', 'Sieben Zwerge mit je sieben Mützen: 7 · 7 = 49 Mützen.'],
+  'ee:6:6': ['🎲', '6 · 6 = 36 – mit zwei Würfeln gibt es genau 36 mögliche Paare.'],
+  'ee:7:7': ['📅', 'Sieben Wochen haben 7 · 7 = 49 Tage.'],
   'ee:6:7': ['🐞', 'Sechs Marienkäfer mit je 7 Punkten: 6 · 7 = 42 Punkte.'],
   'ee:6:8': ['🕷️', 'Sechs Spinnen mit je 8 Beinen: 6 · 8 = 48 Beine.'],
   'ee:2:8': ['🕷️', 'Eine Spinne hat 8 Beine – zwei Spinnen haben 2 · 8 = 16.'],
@@ -146,7 +146,7 @@ const MERK_STORY = {
   'ee:5:5': ['🖐️', 'Fünf Hände mit je 5 Fingern: 5 · 5 = 25 Finger.'],
   'ee:2:10': ['🦶', 'Finger und Zehen zusammen: 2 · 10 = 20.'],
   'ee:9:9': ['🖐️', 'Neuner-Trick: 9 · 10 = 90, eine 9 weg: 90 − 9 = 81.'],
-  'ee:3:3': ['🔺', 'Ein Dreieck aus 3 Reihen zu je 3 Kugeln: 3 · 3 = 9.'],
+  'ee:3:3': ['🟦', 'Ein Quadrat aus 3 Reihen zu je 3 Kugeln: 3 · 3 = 9.'],
   'ee:4:4': ['🐾', 'Vier Hunde mit je 4 Pfoten: 4 · 4 = 16 Pfoten.'],
   'ee:2:4': ['🐾', 'Zwei Katzen mit je 4 Pfoten: 2 · 4 = 8 Pfoten.'],
 };
@@ -184,6 +184,7 @@ function merkStory(t) {
     if (a === b) return ['👯', `Verdoppeln: ${a} + ${a} = ${a * 2}.`];
     if (Math.abs(a - b) === 1) { const m = Math.min(a, b); return ['👯', `Fast verdoppeln: ${m} + ${m} = ${m * 2}, plus 1 = ${a + b}.`]; }
     if (a + b === 10) return ['🤝', `Zehnerfreunde: ${a} und ${b} ergeben zusammen 10.`];
+    if (a === 10 || b === 10) return ['🔟', `Plus 10: der Zehner kommt dazu – ${a + b - 10} + 10 = ${a + b}.`];   // kein Übergang
     if (a + b > 10) return ['🔟', `Über die 10: erst bis 10 auffüllen, dann den Rest dazu.`];
     return ['🧮', `${a} + ${b} = ${a + b}`];
   }

@@ -2,7 +2,180 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## Korrektheitsprüfung 17.11. (56) – Rechenblitz 3.21.1 auf `rechenblitz-test`
+
+Auftrag Marcel über den Leitstand: die ganze App auf Korrektheit prüfen, ohne Ausnahme. Alle Korrekturen stecken in **3.21.1** auf `rechenblitz-test`. Live (`rechenblitz-live`) habe ich nicht angefasst.
+
+### 1. Was geprüft wurde und wie
+
+**Fachlich – Rechnungen von einem zweiten, unabhängigen Prüfprogramm nachgerechnet** (Python, exakte Bruchrechnung; es benutzt keinen Code der App):
+- **Aufgaben-Generatoren:** 261 000 Aufgaben, je 1 500 für alle 29 Themen × 6 Stufen. Jede Lösung wurde neu berechnet.
+  - Textaufgaben über 170 eigene Löser, je einer pro Aufgabenvorlage.
+  - Rechenaufgaben aus den Zahlen der Aufgabe.
+  - **Ergebnis: 261 000 von 261 000 geprüft, 0 falsch.**
+- **Lösungswege:** 441 594 Gleichungen aus den Lösungswegen nachgerechnet, mit Einheiten (min/h, €/ct, %, Brüche). **0 falsche Gleichungen.**
+  - 199 429 Zeilen sind reiner Text ohne Gleichung, z. B. „Nach 20 % Rabatt bleiben 80 % übrig.“
+- **Schreibweise und Lesbarkeit:** Prüfprogramm gegen
+  - „1 Tage/Stunden/Monate“,
+  - „+ −3“, „1x“,
+  - leere Platzhalter wie „{}“, „undefined“, „NaN“,
+  - doppelte Leerzeichen,
+  - Antworten länger als das Eingabefeld (9 Zeichen).
+- **Merk-Training:** alle 185 Karten mit Antwort und alle 435 Gleichungen in Merksätzen und Tipps. **0 falsche Antworten.**
+- **Üben nach Wunsch:** 72 000 Aufgaben, geprüft auf
+  - Zahlenraum,
+  - Zehnerübergang ja/nein,
+  - Mal-Reihen,
+  - Lückenart,
+  - Lösung.
+
+  **0 Abweichungen.**
+- **Rätsel des Tages:** 990 Hinweise und 20 000 Bewertungen von Rateversuchen. **0 Abweichungen.**
+- **Feste Inhalte, Stück für Stück gelesen:**
+  - 24 Adventstürchen,
+  - Merksätze und Geschichten,
+  - Stufen-Beschreibungen (29 × 6) gegen echte Beispielaufgaben,
+  - Abzeichen,
+  - Reise-Texte,
+  - Dungeon-Texte,
+  - Pro-Texte,
+  - Changelog.
+- **Schwierigkeit:** `tests/schwierigkeit.js` → **alle 174 Stufen strikt schwerer als die vorige ✓**, auch nach allen Korrekturen.
+
+**Sprache:**
+- Rechtschreibprüfung mit den LibreOffice-Wörterbüchern (de-DE, en-GB, uk-UA), rund 7 300 verschiedene Wörter. Übrig blieben nur Namen und Abkürzungen.
+- Alle 2 329 Übersetzungen per Skript geprüft:
+  - Anzahl der Platzhalter gleich,
+  - keine leeren Felder,
+  - keine deutschen Reste.
+- Durchsicht der Ukrainisch-Texte auf Grammatik.
+- Anrede durchgehend „du“.
+
+**Funktion:**
+- Automatische Browser-Tests (Playwright/Chromium) in **Deutsch, Englisch und Ukrainisch**.
+- Getestete Breiten:
+  - 320, 360 und 390 px (Handy),
+  - 768 px (Tablet),
+  - 1366 px (PC).
+- Was die Tests abdecken:
+  - **Klick-Prüfung:** jedes Menü und jedes Fenster öffnen, jeden Knopf drücken, auf Überlauf achten.
+  - **Zufallstest:** über 800 zufällige Klicks und Eingaben.
+  - **Offline:** Neustart ohne Netz.
+  - **Android-Modus:** Erinnerungen, Zurück-Taste, Update.
+  - **Speicherstände:** Profile, Fortschritt, Zurücksetzen.
+  - **Dungeon:** komplette Läufe mit Sieg, Niederlage, Lagerfeuer, Schatz und Abbruch.
+  - **Üben nach Wunsch.**
+  - **Pro:**
+    - ohne Kassen-URL: alles frei, kein Kauf-Knopf;
+    - mit Kassen-URL: Profi-Stufe gesperrt, Sperr-Fenster, Elternabfrage vor dem Kauf;
+    - Freischalt-Link `?pro=` und Code-Eingabe;
+    - falscher Code und fremd signierter Code werden abgelehnt (`tests/pro-code.js` ✓).
+  - **Tastatur:** Eingabe, Enter, Esc und Tab-Fokus.
+- **Konsole: keine JS-Fehler.**
+- **Barrierefreiheit:** axe-core 4.10 (WCAG 2.1 A/AA) in hellem und dunklem Design. **Vorher: Verstöße bei Kontrast und ARIA → nachher 0.**
+
+**Texte nach außen:**
+- Store-Eintrag (`android-app/store/eintrag-de.txt`),
+- README,
+- Flyer,
+- Pro-Fenster,
+- Datenschutz-Abschnitt und Impressum-Link in der App,
+- Preise („7,99 € einmalig, inkl. MwSt.“).
+
+### 2. Gefundene Fehler und Korrekturen (vorher → nachher)
+
+**Fachlich – Lösungswege und Aufgaben:**
+
+1. **Prozent-Lösungswege mit falscher Gleichung:**
+   - „30 % = 3 · 29 = 87“ → „30 % von 290 = 3 · 29 = 87“
+   - ebenso „15 % = 29 + 14,5 = …“ → „15 % von 290 = …“
+2. **Prozent-Zuordnungen mit „=“, obwohl keine Gleichheit besteht:**
+   - „80 % = 24 € → 10 % = 3 €“ → „80 % ≙ 24 € → 10 % ≙ 3 €“
+   - betrifft die T-Shirt-Aufgabe, Prozent Stufe 4 und Prozent Profi (Grundwert)
+3. **Zinsen-Textaufgabe:** „3 % = 3 · 12 = 36 €“ → „3 % von 1200 € = 3 · 12 € = 36 €“
+4. **Brüche als Anteil:**
+   - „3/4 = 3 · 30 = 90“ → „3/4 von 120 = 3 · 30 = 90“
+   - ebenso „Jungen: 3/5 = …“ → „Jungen: 3/5 von 25 = …“
+5. **Mal-Lösungsweg bei kleinen Zahlen:** Bei 3 · 3, 4 · 3 und 4 · 4 stand ein Weg über 5 mit „+ −2“ → jetzt „3 · 3 = 3 + 3 + 3 = 9“.
+6. **Zug-Textaufgabe:** Bei Abfahrt zur vollen Stunde stand „Bis 8:00 Uhr: 0 min“ → Abfahrt ist nie zur vollen Stunde.
+7. **Film-Aufgabe:** „0,75 h = 0,75 · 60 = 45 min“ → „0,75 · 60 min = 45 min“ (Einheit fehlte).
+8. **Eingabe unmöglich:** Potenzen „10⁹“ hat die Lösung 1 000 000 000, das sind 10 Ziffern. Das Eingabefeld nimmt aber nur 9 → höchstens 10⁸.
+9. **Merk-Training Bruch → Prozent:** „1/3 = 33,3 %“ und „2/3 = 66,7 %“ standen mit „=“ → „≈“ mit dem Hinweis „auf eine Nachkommastelle gerundet“.
+10. **Merk-Tipp bei Plus:** „Füll erst bis 10 auf“ stand auch bei 3 + 4 und 10 + 5, wo das nicht passt. Jetzt je nach Fall:
+    - mit 10: „Zehn dazu: Die Einer bleiben gleich.“
+    - mit Übergang: „Füll erst bis 10 auf …“
+    - sonst: „Zähl vom größeren Summanden aus weiter.“
+    - Dazu passt eine neue Merk-Karte „Plus 10“.
+11. **Merksätze sachlich falsch:**
+    - 6 · 6: „mit zwei Würfeln gibt es genau 36 Würfe“ → „36 mögliche Paare“
+    - 3 · 3: „Ein **Dreieck** aus 3 Reihen zu je 3 Kugeln“ → „Ein **Quadrat** …“
+    - 7 · 7: „Sieben Zwerge mit je sieben Mützen“ → „Sieben Wochen haben 7 · 7 = 49 Tage.“
+12. **Adventstürchen:**
+    - „Bei −10 °C friert alles.“ → „Bei −10 °C ist es frostig kalt.“
+    - „Der 21. Dezember ist der kürzeste Tag“ (stimmt nicht jedes Jahr) → „Um den 21. Dezember …“
+    - „1 + … + 24 = 300. So viele Zahlen stecken in allen Türchen“ (es sind 24 Zahlen) → „Zählt man alle Türchen-Zahlen zusammen, kommt 300 heraus!“
+13. **Stufe passt nicht zur Beschreibung:**
+    - Minus Stufe 3 „zweistellig − einstellig“ zeigte z. B. „22 − 13“ → jetzt „22 − 9“
+    - Lücken Stufe 1 „Plus-Lücken bis 20“ enthielt auch Minus-Lücken → Beschreibung „Plus- und Minus-Lücken bis 20“
+    - Statistik Profi → „gewichteter Durchschnitt, zehn Werte“ (beide Aufgabenarten sind jetzt genannt)
+
+**Sprache:**
+
+14. **Einzahl/Mehrzahl, mit Ersatz im ganzen Programm:**
+    - „1 Jahre älter“, „in 1 Stunden“, „6 Tage und 1 Stunden“, „1 Tage … h … min“, „1 Monate“ → kommen nicht mehr vor
+    - Einheiten-Weg „1 Tage = 24 h“ → „1 Tag = 24 h“
+15. **Gleichungen:** „− 1x auf beiden Seiten“ → „− x auf beiden Seiten“ (Stufen 4/5 und Terme Profi)
+16. **Anrede:** Der Werbe-Text „Freunde werben“ stand in der Sie-Form → du-Form wie überall in der App.
+17. **Ukrainisch:**
+    - „Перемож“ → „Переможи“
+    - „учетверене“ → „вчетверо більше, ніж“
+    - „зростаючі кроки“ → „кроки, що зростають“
+    - „коне-днів“ → „днів корму на одного коня“
+    - „вам“ → „тобі“ (du-Form)
+    - Rechtschreibfehler „довшают“ → korrigiert
+    - die drei Adventstexte neu übersetzt, ebenso auf Englisch
+
+**Zahlen in Texten:**
+
+18. **Veraltete Angaben:**
+    - Flyer „17 Themen, 5 Stufen“ → „29 Themen, 6 Stufen“
+    - Pro-Fenster „30 Themen“ → „29 Themen“
+    - Store-Text „17 Themen in 5 Stufen“ → „29 Themen in 6 Stufen“ mit vollständiger Themenliste
+    - README → „29 Themen, je 6 Stufen“
+
+**Funktion und Barrierefreiheit:**
+
+19. **Weiße Schrift auf Orange** (Kontrast 2,7 : 1, unter WCAG AA) → dunkle Schrift (6,2 : 1). Das betrifft 14 Stellen:
+    - Hauptknöpfe,
+    - OK-Taste,
+    - gewählte Stufe,
+    - Reiter,
+    - Abzeichen, Pro-Marke usw.
+20. **Graue Nebenschrift** #61718a → #5b6a83 (jetzt ≥ 4,5 : 1).
+21. **Versionshinweis** orange auf hell → #b84c06; im dunklen Design #ff9a57.
+22. **Merk-Training:** Nicht gewählte Kartenstapel waren als ganzer Stapel blass, auch der Text → nur noch das Bild ist blass, der Text bleibt voll lesbar.
+23. **Rechengarten:** Die Grafik war als „Bild“ markiert, obwohl man darin Knöpfe bedient → als Gruppe markiert, damit Bildschirmleser die Knöpfe finden.
+
+### 3. Was ich nicht prüfen konnte – und warum
+
+- **Echtes Android-Gerät:** Hier gibt es kein Gerät und keinen Emulator.
+  - Geprüft habe ich den Android-Modus im Browser mit nachgebauter Hülle: Erinnerungen, Zurück-Taste, Updates, Offline.
+  - Die APK baut GitHub. Bitte einmal auf einem echten Handy ansehen.
+- **Pro-Code-Format der Website (KurvenFlug):** Das Repository Website_Backup ist in dieser Sitzung nicht zugänglich.
+  - Ich habe mit selbst erzeugten Schlüsseln getestet.
+  - Ob ein echter Code der Website angenommen wird, ist erst mit einem Test-Code vom Leitstand prüfbar. Das ist weiter offen (Meldung 54).
+- **Mit echter Kassen-URL und echtem Kauf:** Die Kassen-URL fehlt noch. Getestet habe ich mit einer Platzhalter-URL.
+- **Datenschutzerklärung auf der Website:** liegt beim Leitstand. **Ein Fund:**
+  - Dort steht sinngemäß, Links aus der App enthielten eine Kennzeichnung (UTM).
+  - Das stimmt nicht: In der App ist `CONFIG.utm = false`, Links haben keine Kennzeichnung.
+  - **Bitte den Satz auf der Website streichen** oder mir sagen, dass die Kennzeichnung gewollt ist.
+- **Store-Texte, wie sie live bei Google Play stehen:** Darauf habe ich keinen Zugriff. Geprüft ist die Vorlage im Repo.
+  - Wichtig: „keine In-App-Käufe“ stimmt heute.
+  - **Sobald die Pro-Sperren an sind, muss das geändert werden.**
+  - In der Play-Version zeigt die App keinen Kauf-Knopf (Google-Regeln). Freischalten geht dort nur über einen Code.
+- **Echte Bildschirmleser (TalkBack, VoiceOver):** nicht verfügbar. Geprüft wurde mit axe-core und der Tastatur.
 
 ## 17.11.2026 (55) – Zahlen-Dungeon 1 (3.21.0, Roadmap Tag 6)
 

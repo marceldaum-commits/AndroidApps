@@ -26,7 +26,7 @@ Web-App im Design von mathenachhilfe-online.com, für Handy, Tablet und PC (eige
 
 **Aufbau:** `index.html` (Gerüst), `app.css` (Design), `js/engine.js` (Aufgaben-Generatoren mit Lösungswegen), `js/app.js` (Spiel, Profile, Statistik, Abzeichen, Duell), `js/panels.js` (Menü & Panels), `js/extras.js` (Advent, Urkunde, Flyer, Klassen-Challenge), `js/vendor/qrcode.js` (MIT), `config.js` (Adressen & Schalter), `LICENSE-*.txt`, `sw.js` (Offline).
 
-- **17 Themen, je 5 Stufen, alles zufällig erzeugt:** Plus, Minus, Mal, Geteilt, Lücken · Brüche, Dezimalzahlen, Prozent, negative Zahlen, Potenzen & Wurzeln · Klammern/Punkt vor Strich, Runden & Überschlag, Einheiten, Teiler (Rest, Quersumme, ggT, kgV, Primfaktoren), Gleichungen · Textaufgaben · Alles gemischt
+- **29 Themen, je 6 Stufen (bis „Profi“), alles zufällig erzeugt:** Plus, Minus, Mal, Geteilt, Lücken · Brüche, Dezimalzahlen, Prozent, negative Zahlen, Potenzen & Wurzeln · Klammern/Punkt vor Strich, Runden & Überschlag, Einheiten, Teiler (Rest, Quersumme, ggT, kgV, Primfaktoren), Gleichungen · Textaufgaben · Alles gemischt
 - **Lösungsweg** bei jedem Fehler (Schritt für Schritt), auch im Ergebnis nachlesbar
 - **Stufe „Auto“:** passt sich beim Üben an; **Einstufungstest** je Klassenstufe stellt die Stufen ein; **Klassenmodus** zeigt nur passende Themen
 - **Modi:** Training, Blitzrunde, Ruhig üben (ohne Zeit/Punkte), Duell zu zweit an einem Gerät, Fehlerkiste, Tageschallenge (für alle gleich, teilbar)

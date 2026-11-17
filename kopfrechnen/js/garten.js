@@ -94,7 +94,7 @@ function gartenScene(anim = []) {
       ${open ? `<g class="gp-plant${anim.includes(i) ? ' grew' : ''}" transform="scale(${sc * 1.35})">${plantSvg(pl && pl.t, st, st === 4)}</g>${pl ? '' : `<text y="-8" text-anchor="middle" font-size="18">＋</text>`}` : `<text y="-6" text-anchor="middle" font-size="16">🔒</text>`}
       ${anim.includes(i) ? `<g class="gp-drops">${[-10, 0, 10].map((dx, k) => `<path d="M${dx} -70 q4 6 0 9 q-4 -3 0 -9z" fill="#5ab4ff" style="--k:${k}"/>`).join('')}</g>` : ''}</g>`;
   }).join('');
-  return `<svg class="garten-svg" viewBox="0 0 360 230" role="img" aria-label="Rechengarten">
+  return `<svg class="garten-svg" viewBox="0 0 360 230" role="group" aria-label="Rechengarten">
     <defs><linearGradient id="gsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${night ? '#1b2a5c' : '#9fd8ff'}"/><stop offset="1" stop-color="${night ? '#33497e' : '#d9f1ff'}"/></linearGradient></defs>
     <rect width="360" height="230" fill="url(#gsky)"/>
     ${night ? '<circle cx="318" cy="30" r="13" fill="#fff6d6"/><circle cx="324" cy="26" r="11" fill="#1b2a5c"/>' + [[40, 22], [120, 40], [200, 18], [260, 46]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="1.4" fill="#fff"/>`).join('') : '<circle class="g-sun" cx="318" cy="32" r="16" fill="#ffd54a"/><g fill="#fff" opacity=".9"><ellipse cx="70" cy="34" rx="22" ry="9"/><ellipse cx="88" cy="28" rx="15" ry="9"/><ellipse cx="200" cy="48" rx="18" ry="7"/></g>'}
