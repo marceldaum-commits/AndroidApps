@@ -41,7 +41,7 @@
   wg.musicStop = () => { music.want = null; music.stop(0.5); };
   wg.musicLevel = (level) => { music.level = level; music.fade(level); };
 
-  // Vorlesen: siehe wg-stimme.js (Browser-Stimmen und die natürliche Stimme „Thorsten“)
+  // Vorlesen: siehe wg-stimme.js (Stimme „Nova“ vom Stimm-Server, Browser-Stimme als Notlösung)
 
   // Spracherkennung (Chrome, Edge, Safari)
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;

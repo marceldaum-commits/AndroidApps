@@ -35,12 +35,10 @@ object PrivacyText {
             "wandelt die gesprochene Antwort in Text um – je nach Gerät geschieht das auf dem Gerät oder über den Sprachdienst von Google. " +
             "Der Wissensgarten speichert keine Aufnahmen und sendet sie nirgendwohin.",
         "Vorlesen" to
-            "Brummi liest mit der Sprachausgabe des Geräts (Android bzw. Browser) vor. Dabei werden nur die Texte der Lernkarten verwendet. " +
-            "In der WebApp bieten wir nur Stimmen an, die auf dem Gerät sprechen – keine Online-Stimmen. " +
-            "Auf Wunsch gibt es die natürliche Stimme „Thorsten“: Eltern können sie in den Einstellungen einmalig laden (ca. 63 MB). " +
-            "Die Stimmdatei kommt dann von unserem eigenen Server (stimmen.mathenachhilfe-online.com); er sieht dabei, wie bei jedem Download, " +
-            "die IP-Adresse und den Zeitpunkt – ohne Cookies, ohne Konto. Danach rechnet die Stimme ganz auf dem Gerät – kein Text verlässt das Gerät. " +
-            "Die Stimmdatei lässt sich in den Einstellungen jederzeit wieder entfernen.",
+            "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. " +
+            "Texte, die erst in der Aufgabe entstehen (z. B. Hör-noch-mal-Sätze im Brummi-Radio), schickt die App ohne Angaben zu dir " +
+            "an unseren Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. " +
+            "Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle.",
         "Kamera und QR-Codes" to
             "Den QR-Code-Scanner für Klassen-Codes öffnen nur Eltern (nach der Eltern-Aufgabe). Er nutzt den Code-Scanner der Google-Play-Dienste " +
             "auf dem Gerät; der Wissensgarten bekommt nur den Text des Codes, kein Foto. In der GitHub-Version gibt es zusätzlich die Wissens-Safari: " +
