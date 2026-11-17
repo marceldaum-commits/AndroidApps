@@ -17,3 +17,15 @@ kotlin {
         jvmTest.dependencies { implementation("junit:junit:4.13.2") }
     }
 }
+
+/** Liste der festen Vorlese-Texte für die KI-Stimme Nova (build/vorlesen/texte.json) – die WebApp liefert sie unter vorlesen/texte.json aus. */
+val vorlesenTexte by tasks.registering(JavaExec::class) {
+    val jvmMain = kotlin.jvm().compilations.getByName("main")
+    dependsOn(jvmMain.compileTaskProvider)
+    classpath = files(jvmMain.output.allOutputs, jvmMain.runtimeDependencyFiles)
+    mainClass.set("de.kurvenflug.core.model.VorlesenListeKt")
+    val out = layout.buildDirectory.file("vorlesen/texte.json")
+    val ui = rootProject.file("shared/src/commonMain/kotlin")
+    inputs.dir(ui); outputs.file(out)
+    args(out.get().asFile.path, ui.path)
+}

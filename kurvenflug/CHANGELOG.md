@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.3.1 – Vorbereitung für die neue Stimme „Nova“
+- Volt macht beim Vorlesen jetzt eine kleine Pause, wo im Text „…“ steht – das klingt natürlicher.
+- Hinter den Kulissen: Die festen Texte der App werden für die kommende KI-Stimme „Nova“ bereitgestellt. In der App
+  ändert sich dadurch noch nichts; es werden keine Daten gesendet.
+
 ## 2.3.0 – ⭐ „Pro aktiv“ gut sichtbar
 - Ist Kurvenflug Pro freigeschaltet, zeigt die Startseite jetzt oben ein goldenes Abzeichen „⭐ Pro aktiv“. In den
   Einstellungen steht zusätzlich, wie Pro freigeschaltet wurde (Kauf über Google Play, Website-Code oder Schullizenz) und

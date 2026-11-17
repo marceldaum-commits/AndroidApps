@@ -1,5 +1,21 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.3.1 – Nova Schritt 1: vorlesen/texte.json auf test · Web = Android
+- **URL:** https://kurvenflug-test.mathenachhilfe-online.com/vorlesen/texte.json (nach Live auch ohne -test).
+  Format genau nach Vorgabe: `{"format": 1, "app": "kurvenflug", "texte": [{"text": "…", "sprache": "de"}, …]}`.
+- **Inhalt:** 1 163 Texte, rund 152 000 Zeichen, längster 697 Zeichen (Grenze 1 500 wird beim Bauen geprüft, ebenso NFC).
+  Feste Texte: Aufträge und Tipps aller festen Level (Kapitel, Extrem-Prüfungen, Bosse, Andromeda, Rettungen),
+  Rechen-Stern (Frage + Antworten bzw. richtige Antwort + Lösungsweg – genau wie die 🔊-Knöpfe), Theorie (je Punkt,
+  Merkformel, „alles vorlesen“), Kapitel-Einführungen, Geschichte, Crew-Sprüche, Probe-Satz und Volts feste Sätze aus der
+  Oberfläche (`speech = "…"`). **Nicht drin:** Texte mit Zahlen/Namen zur Laufzeit (Tagesmission, Generator, „Schon 24 ⭐“,
+  Spielernamen) – dort weicht die App später leise auf Thorsten/Gerätestimme aus.
+- **Gesprochene Form:** Formeln stehen so drin, wie sie gesprochen werden („y gleich 2x plus 1“, „3 Meter pro Sekunde“).
+- **Beim Bauen erzeugt:** Gradle-Aufgabe `:core:model:vorlesenTexte` (läuft mit `:web:webapp`), gemeinsame Quelle
+  `ReadTexts.kt` – App und Liste haben denselben Wortlaut. Nicht im Offline-Paket der WebApp.
+- **Dateiname:** `Nova.hash` mit eigenem SHA-256 (Android = Web), Prüfwert „Hallo Welt“ → cb1e6d67882767042ebaa54d163e450c
+  im Test bestätigt. Abspielweg baue ich nach deiner Rückmeldung (Schritt 3).
+- Keine neue Dateiendung (json).
+
 ## Store-Text für Pro in Play vorbereitet (Auftrag Leitstand)
 - `store/de-DE/beschreibung-mit-pro.txt` (3 173 Zeichen): ohne „keine Käufe“, neuer Abschnitt „⭐ Kurvenflug Pro (optional)“ –
   Schulstoff bis Klasse 10 frei; Pro (einmaliger In-App-Kauf, kein Abo): Oberstufe (6 Kapitel, 35 Level), Extrem-Prüfungen,

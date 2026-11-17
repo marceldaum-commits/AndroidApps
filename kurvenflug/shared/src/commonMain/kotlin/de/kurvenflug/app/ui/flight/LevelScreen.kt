@@ -604,7 +604,7 @@ fun TheoryOverlay(t: de.kurvenflug.core.model.Theory, onClose: () -> Unit) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 Text(t.grades, color = Q.Muted, modifier = Modifier.weight(1f))
                 // alles am Stück vorlesen
-                de.kurvenflug.app.ui.fx.SpeakButton({ (listOf(t.title) + t.points + listOfNotNull(t.formula)).joinToString(" ") { it.trimEnd().let { p -> if (p.last() in ".!?:") p else "$p." } } })
+                de.kurvenflug.app.ui.fx.SpeakButton({ de.kurvenflug.core.model.ReadTexts.theoryAll(t) })
             }
             Volt(VoltMood.HAPPY, size = 64.dp, speech = "Alles Wichtige zum Nachlesen – das kostet keine Sterne! 💡")
             t.points.forEachIndexed { i, text ->
@@ -678,8 +678,7 @@ private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, on
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("🧠 Rechen-Stern: ${check.question}", color = Q.Text, fontWeight = FontWeight.Bold, modifier = Modifier.weight(1f))
             de.kurvenflug.app.ui.fx.SpeakButton({
-                if (answer < 0) "Rechen-Stern: ${check.question} " + check.options.mapIndexed { i, o -> "${listOf("Erstens", "Zweitens", "Drittens", "Viertens").getOrElse(i) { "" }}: $o." }.joinToString(" ")
-                else "Richtig ist: ${check.options[check.correct]}." + (worked?.let { w -> " So rechnet man's: " + w.joinToString(" ") { it.solved() + "." } } ?: "")
+                if (answer < 0) de.kurvenflug.core.model.ReadTexts.calcQuestion(check) else de.kurvenflug.core.model.ReadTexts.calcAnswer(check, worked)
             })
         }
         check.options.forEachIndexed { i, o ->
