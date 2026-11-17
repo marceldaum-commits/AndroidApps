@@ -2,6 +2,25 @@
 
 Neueste oben.
 
+## 17.11.2026 – Zählung der Vorlese-Texte (für die Idee „feste Texte als Audiodateien“)
+
+Marcel hat das Weitergeben direkt bestätigt. Nur gezählt, nichts gebaut. Stand: **Raumlicht 2.16.3 vom 17.11.2026, Web = Android (beide 2.16.3).**
+Quelle: `core/model/build/sprechtexte.txt` aus `SpeechDumpTest` (Zeilen „fest“), jeder Text nur einmal gezählt, in der Sprechfassung (so geht der Text an die Stimme).
+
+1. **Feste Texte, die Lux vorliest: 679.** Kapitel- und Prüfungs-Einführungen, Auftrag und Tipp jeder festen Aufgabe (Tour und Prüfungsaufgaben), Erfolgsmeldung samt Finale-Sätzen,
+   die Kernidee jeder Theorie-Karte, Namen der Kurven-Stellen, einige feste Sätze („Geschafft!“, Hörprobe).
+   **Nicht vorgelesen werden** Lösungswege sowie Schritte, Beispiel und Stolperfalle der Theorie-Karten – die stecken in der Zahl also nicht drin.
+2. **Zeichen: 55 421** (längster Text 229 Zeichen).
+3. **Zur Laufzeit zusammengesetzt, nicht vorab aufnehmbar:**
+   - Rückmeldungen auf falsche oder halb richtige Eingaben (enthalten die eingegebenen Zahlen, Punkte, Vektoren),
+   - alles im endlosen Üben und in der Tagesaufgabe (Auftrag, Tipp, Meldungen mit Zufallszahlen),
+   - Urteile in Geisterfahrt, Zufallsmaschine und Schätzrunden, die Geschichte im Binomial-Labor, die Ansage „Jetzt: …“ in der Ballerbude.
+   Zur Einordnung: Schon eine Stichprobe davon ergibt rund 6 700 verschiedene Sätze mit etwa 393 000 Zeichen; es gibt praktisch beliebig viele.
+
+Folge: Für die veränderlichen Texte bräuchte es weiter Thorsten oder die Geräte-Stimme – Lux hätte dann zwei verschiedene Stimmen. Das bitte bei der Entscheidung mitdenken.
+
+Antwort zu espeak-ng (a): steht weiter unten in dieser Datei (17.11.) – **nein, weder in der Android-App noch in der WebApp enthalten.**
+
 ## 17.11.2026 – Raumlicht 2.16.3: Hinweis „warum kein Ton“
 
 Marcel meldete nach einem Update: „Sound ist aktiviert, aber kein Ton“. **Raumlicht 2.16.3 vom 17.11.2026, Web = Android (beide 2.16.3).**
