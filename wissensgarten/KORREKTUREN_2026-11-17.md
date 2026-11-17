@@ -1,11 +1,33 @@
 # Korrekturliste – Korrektheitsprüfung 17.11.2026
 
-233 Änderungen in 46 Paketen. Jede Zeile: Paket · Karte · Feld · vorher → nachher · Grund. „(Plus)“ = privater Zweig `wg-plus-pakete`.
+255 Änderungen in 46 Paketen. Jede Zeile: Karte · Feld · vorher → nachher · Grund. „(Plus)“ = privater Zweig `wg-plus-pakete`.
 
 ## aw-allgemeinwissen-mix
 
 | Karte | Feld | vorher | nachher | Grund |
 |---|---|---|---|---|
+| 001 | choices | Friedrich Schiller · Heinrich Heine · Thomas Mann | Johann Gottfried von Herder · Johann Christoph Friedrich von Schiller · Joseph von Eichendorff | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 002 | choices | Johann Wolfgang von Goethe · Gotthold Ephraim Lessing · Bertolt Brecht | Friedrich Hölderlin · Friedrich Hebbel · Friedrich Schlegel | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 004 | choices | Jules Verne · Victor Hugo · Albert Camus | Antoine de Saint-Just · Guy de Maupassant · Honoré de Balzac | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 006 | choices | Isaac Newton · Max Planck · Niels Bohr | Albert Schweitzer · Alfred Wegener · Max Planck | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 007 | choices | Robert Koch · Louis Pasteur · Marie Curie | Alexander Graham Bell · Alexander von Humboldt · John Ambrose Fleming | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 008 | choices | Robert Koch und Louis Pasteur · Max Planck und Niels Bohr · Gregor Mendel und Charles Darwin | Jacques Monod und François Jacob · James Chadwick und Francis Aston · Otto Hahn und Fritz Straßmann | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 009 | choices | Gottlieb Daimler · Rudolf Diesel · Henry Ford | Carl Bosch · Carl Zeiss · Carl Borgward | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 011 | choices | Go · Ag · Gd | Ag · Al · Ar | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 012 | choices | Helium · Sauerstoff · Kohlenstoff | Sauerstoff · Kohlenstoff · Stickstoff | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 013 | choices | Sauerstoff · Kohlenstoffdioxid · Argon | Sauerstoff · Wasserstoff · Kohlenstoff | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 015 | choices | 300 000 km pro Stunde · 3000 km pro Sekunde · 30 000 km pro Sekunde | 300 000 m pro Sekunde · 30 000 km pro Sekunde · 300 000 km pro Stunde | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 016 | choices | Watt · Joule · Pascal | Newtonmeter · Joule · Pascal | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 018 | choices | Die Leber · Die Lunge · Das Gehirn | Die Leber · Die Lunge · Die Milz | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 022 | choices | Der Löwe · Die Gazelle · Das Pferd | Der Leopard · Der Jaguar · Die Gazelle | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 023 | choices | 4 · 8 · 10 | 4 · 8 · 16 | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 024 | choices | Englisch · Spanisch · Hindi | Chinesisch (Kantonesisch) · Japanisch · Spanisch (Kastilisch) | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 026 | choices | 1200 · 1340 · 1600 | 1400 · 1240 · 1460 | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 027 | choices | 100 · 500 · 1000 | 5 · 500 · 150 | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 029 | choices | 1. Januar 1999 · 1. Januar 2000 · 3. Oktober 1990 | 1. Januar 2001 · 1. Januar 1999 · 1. Juli 2002 | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 031 | choices | Südafrika · Russland · Katar | Argentinien · Kolumbien · Bolivien | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 034 | choices | München · Brandenburg an der Havel · Hamburg | Bern · Bremen · Bonn | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
+| 035 | choices | Sauerstoff · Stickstoff · Wasserstoff | Kohlenstoffmonoxid · Schwefeldioxid · Stickstoffdioxid | Ablenker näher an der Antwort (Stufen-Nachweis Kl. 8–10), weiterhin eindeutig falsch |
 | 003 | q | Wer schrieb „Romeo und Julia“? | Wer schrieb „Romeo und Julia“? (Vor- und Nachname) | Freie Eingabe: nur „Shakespeare“ getippt wäre falsch gewertet worden |
 | 005 | q | Welche Brüder sammelten Märchen wie „Hänsel und Gretel“? | Welche Brüder sammelten Märchen wie „Hänsel und Gretel“? (Nachname) | Freie Eingabe: „Jacob und Wilhelm Grimm“ hatte viele übliche Schreibweisen (Brüder Grimm, Grimm …) |
 | 005 | a | Jacob und Wilhelm Grimm | Grimm | Freie Eingabe: eindeutige Antwort |

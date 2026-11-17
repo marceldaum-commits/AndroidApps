@@ -10,7 +10,7 @@
   - **Fakten** nach gesichertem Wissen geprüft, ohne Web-Recherche (siehe „nicht prüfbar“).
   - **Freie Eingabe:** Für jede Eingabe-Karte wurde geprüft, ob eine zweite übliche Schreibweise oder ein Synonym als falsch gewertet würde.
   - Danach `check_pack.py` (Format, Emoji ≤ 11, 1 MB) für alle 85 Pakete grün, Abholprüfung des Plus-Ordners grün.
-- **Ergebnis: 233 Korrekturen in 46 Paketen**, davon 10 Plus-Pakete. Die vollständige Liste (vorher → nachher, Grund) steht in **`wissensgarten/KORREKTUREN_2026-11-17.md`**.
+- **Ergebnis: 255 Korrekturen in 46 Paketen**, davon 10 Plus-Pakete. Die vollständige Liste (vorher → nachher, Grund) steht in **`wissensgarten/KORREKTUREN_2026-11-17.md`**.
   - **171 × freie Eingabe eindeutig gemacht.** Richtige Eingaben wären als falsch gewertet worden, z. B. Nachname statt Vor- und Nachname, „Atlantik“/„Atlantischer Ozean“, Listen mit fester Reihenfolge, Formeln mit Hochzahlen, „Jod“/„Iod“.
     Gelöst wurde das durch eine präzisere Frage, z. B. „(Vor- und Nachname)“ oder „(ein Wort)“, eine kürzere Antwort oder Ablenker, sodass die Karte als Auswahl gespielt wird.
   - **35 × fachlich genauer bzw. richtig.** Beispiele:
@@ -24,6 +24,8 @@
     - periphere Nerven leiten in beide Richtungen
     - Erklärung zu „halb sechs“ berichtigt
   - **3 × Ablenker war ebenfalls richtig:** „rule“ (auch Lineal), „hound“ (auch Hund), „gat“ (veraltete Form von „get“). Dazu kommt „Amsel“ bei Zugvögeln, gezählt unter „fachlich“.
+  - **22 × Ablenker näher an der Antwort** (Allgemeinwissen-Quiz). Der Stufen-Nachweis lief im CI ohne die privaten Plus-Pakete nicht durch: Kl. 8–10 war bei der Ablenker-Ähnlichkeit knapp unter Kl. 5–7 (0,546 < 0,550).
+    Jetzt sind die Ablenker anspruchsvoller (Paketwert 0,41 → 0,66), weiterhin eindeutig falsch und von mir gegengelesen. Der Nachweis ist mit und ohne Plus-Pakete grün.
   - **24 × Sprache/Rechtschreibung.** Darunter 15 von Namen abgeleitete Adjektive klein nach § 62, z. B. „ohmsches Gesetz“, „eulersche Phi-Funktion“; dazu Grammatik („Sonne und Blume ergeben“) und Zusammenschreibung („dreimal“).
 - **Antwortprüfung der App verbessert**, weil mehrere Prüfer dieselben Grenzfälle fanden (mit Tests):
   - Groß/klein, Bindestriche, Leerzeichen, Artikel („Blauwal“ = „Der Blauwal“), Schlusspunkt und Akzente („Reykjavik“ = „Reykjavík“) sind kein Fehler mehr. Das gilt nicht im Fach Deutsch, dort zählt die Schreibung weiter streng.
