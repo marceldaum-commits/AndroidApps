@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-geometrie-formeln",
-  "version": 2,
+  "version": 3,
   "title": "Geometrie-Formeln",
   "subject": "mathe",
   "grades": [
@@ -341,7 +341,7 @@
     {
       "id": "033",
       "q": "1 m³ = ? Liter",
-      "a": "1 000 Liter",
+      "a": "1 000",
       "info": "1 m³ = 1 000 dm³",
       "img": "🛁"
     }

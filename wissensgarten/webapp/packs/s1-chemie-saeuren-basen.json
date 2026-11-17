@@ -1,6 +1,6 @@
 {
   "id": "s1-chemie-saeuren-basen",
-  "version": 1,
+  "version": 2,
   "title": "Säuren, Basen, Salze",
   "subject": "chemie",
   "grades": [
@@ -60,7 +60,7 @@
     },
     {
       "id": "003",
-      "q": "Lösung A hat pH 3, Lösung B pH 4. Wie viel mehr H₃O⁺-Ionen hat A?",
+      "q": "Lösung A hat pH 3, Lösung B pH 4. Wie viele H₃O⁺-Ionen hat A im Vergleich zu B?",
       "a": "10-mal so viele",
       "choices": [
         "1 Ion mehr",
@@ -72,7 +72,7 @@
     },
     {
       "id": "004",
-      "q": "Wie viel mehr H₃O⁺-Ionen hat eine Lösung mit pH 2 als eine mit pH 5?",
+      "q": "Wie viele H₃O⁺-Ionen hat eine Lösung mit pH 2 im Vergleich zu einer mit pH 5?",
       "a": "1000-mal so viele",
       "choices": [
         "3-mal so viele",

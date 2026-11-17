@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-steinzeit-aegypten",
-  "version": 1,
+  "version": 2,
   "title": "Steinzeit und Ägypten",
   "subject": "geschichte",
   "grades": [
@@ -78,7 +78,7 @@
         "In Australien",
         "In Nordamerika"
       ],
-      "info": "Vor über 11 000 Jahren, im Gebiet des heutigen Irak, Syrien, der Türkei und Israel. Später kam der Ackerbau nach Europa.",
+      "info": "Vor über 11 000 Jahren, im Gebiet des heutigen Irak, Syriens, der Türkei und Israels. Später kam der Ackerbau nach Europa.",
       "img": "🌙🌾"
     },
     {
@@ -198,7 +198,7 @@
         "Silber",
         "Blei"
       ],
-      "info": "Bronze ist härter als Kupfer. Nach der Steinzeit folgte deshalb die Bronzezeit.",
+      "info": "Bronze ist härter als Kupfer. Nach ihr ist die Bronzezeit benannt, die auf die Steinzeit folgte.",
       "img": "🥉🔥"
     },
     {

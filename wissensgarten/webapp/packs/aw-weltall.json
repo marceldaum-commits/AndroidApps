@@ -1,6 +1,6 @@
 {
   "id": "aw-weltall",
-  "version": 2,
+  "version": 3,
   "title": "Reise ins Weltall",
   "subject": "allgemeinwissen",
   "grades": [
@@ -53,6 +53,11 @@
       "id": "002",
       "q": "Wie heißen die Planeten in der Reihenfolge von der Sonne aus?",
       "a": "Merkur, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun",
+      "choices": [
+        "Merkur, Venus, Erde, Mars, Saturn, Jupiter, Uranus, Neptun",
+        "Venus, Merkur, Erde, Mars, Jupiter, Saturn, Uranus, Neptun",
+        "Merkur, Venus, Erde, Mars, Jupiter, Saturn, Neptun, Uranus"
+      ],
       "info": "Merkspruch: Mein Vater erklärt mir jeden Sonntag unseren Nachthimmel.",
       "img": "👨🌌📖"
     },
@@ -167,6 +172,11 @@
       "id": "013",
       "q": "Wie lange braucht die Erde für eine Runde um die Sonne?",
       "a": "Etwa 365 Tage (ein Jahr)",
+      "choices": [
+        "Etwa 30 Tage (ein Monat)",
+        "Etwa 24 Stunden (ein Tag)",
+        "Etwa 7 Tage (eine Woche)"
+      ],
       "img": "🌍🔄☀️"
     },
     {
@@ -195,6 +205,11 @@
       "id": "016",
       "q": "Was verursacht hauptsächlich Ebbe und Flut?",
       "a": "Die Anziehungskraft des Mondes",
+      "choices": [
+        "Der Wind über dem Meer",
+        "Die Wärme der Sonne",
+        "Die Strömung der Flüsse"
+      ],
       "img": "🌕🌊"
     },
     {
@@ -251,6 +266,11 @@
       "id": "022",
       "q": "Wie heißt der größte bekannte Vulkan im Sonnensystem?",
       "a": "Olympus Mons auf dem Mars",
+      "choices": [
+        "Mauna Loa auf der Erde",
+        "Ätna auf der Erde",
+        "Vesuv auf der Erde"
+      ],
       "img": "🌋🔴"
     },
     {
@@ -268,6 +288,11 @@
       "id": "024",
       "q": "Wie heißen die beiden Monde des Mars?",
       "a": "Phobos und Deimos",
+      "choices": [
+        "Io und Europa",
+        "Phobos und Titan",
+        "Deimos und Triton"
+      ],
       "img": "😨😱🌑"
     },
     {
@@ -331,6 +356,11 @@
       "id": "031",
       "q": "Wofür steht die Abkürzung ISS?",
       "a": "Internationale Raumstation",
+      "choices": [
+        "Internationale Satellitenstation",
+        "Interstellares Raumschiff",
+        "Internationale Sternwarte"
+      ],
       "img": "🛰️🌐🏠"
     },
     {
@@ -348,6 +378,11 @@
       "id": "033",
       "q": "Wie heißt das große Weltraumteleskop, das im Dezember 2021 startete?",
       "a": "James-Webb-Weltraumteleskop",
+      "choices": [
+        "Hubble-Weltraumteleskop",
+        "Kepler-Weltraumteleskop",
+        "Spitzer-Weltraumteleskop"
+      ],
       "img": "🔭✨🌌"
     },
     {

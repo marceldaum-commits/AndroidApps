@@ -43,7 +43,7 @@ class AndroidHost(private val activity: Activity, private val onFlushUsage: () -
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     override val features = Features(
-        selfUpdate = BuildConfig.SELF_UPDATE, safari = BuildConfig.SAFARI, reminders = true, sync = true, packUpdates = true,
+        selfUpdate = BuildConfig.SELF_UPDATE, safari = BuildConfig.SAFARI, reminders = true, sync = true, packUpdates = true, plusPurchase = BuildConfig.SELF_UPDATE,
         qrScan = true, tilt = true, keepsakes = true, widget = true, label = "App",
     )
     override val sfx get() = app.sfx
@@ -90,6 +90,8 @@ class AndroidHost(private val activity: Activity, private val onFlushUsage: () -
     override fun flushUsage() = onFlushUsage()
     override suspend fun checkUpdate(installed: String): AppRelease? = de.wissensgarten.app.update.AppUpdater.check().getOrThrow()
     override suspend fun fetchPackUpdates(known: Map<String, Int>): Int = de.wissensgarten.app.update.PackDownloader.fetch(activity, known)
+    override suspend fun fetchPlusPacks(code: String, known: Map<String, Int>): Int =
+        de.wissensgarten.app.update.PackDownloader.fetch(activity, known, de.wissensgarten.app.PLUS_API, code)
     override fun keepScreenOn(on: Boolean) {
         val w = activity.window
         if (on) { w.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); w.attributes = w.attributes.apply { screenBrightness = 0.02f } }

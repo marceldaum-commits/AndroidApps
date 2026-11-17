@@ -1,5 +1,139 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Korrektheitsprüfung 17.11. (Version 0.26.0 vom 17.11.2026)
+
+**Was geprüft wurde und wie:**
+- **Inhalte: alle 85 Pakete mit 2.923 Karten**, davon 72 freie Pakete (2.472 Karten) und 13 Plus-Pakete (451 Karten, Zweig `wg-plus-pakete`), jeweils mit Intros, Titeln, Beschreibungen und Klassenstufen.
+  - **Zweitprüfung:** 8 unabhängige Prüfer, keiner hat seine eigenen Pakete geprüft, mit je 347–381 Karten.
+  - **Prüfpunkte je Karte:** Frage, Antwort, Ablenker, info, Merkbild, Stufe.
+  - **Zahlen** mit python3 bzw. von Hand nachgerechnet.
+  - **Fakten** nach gesichertem Wissen geprüft, ohne Web-Recherche (siehe „nicht prüfbar“).
+  - **Freie Eingabe:** Für jede Eingabe-Karte wurde geprüft, ob eine zweite übliche Schreibweise oder ein Synonym als falsch gewertet würde.
+  - Danach `check_pack.py` (Format, Emoji ≤ 11, 1 MB) für alle 85 Pakete grün, Abholprüfung des Plus-Ordners grün.
+- **Ergebnis: 255 Korrekturen in 46 Paketen**, davon 10 Plus-Pakete. Die vollständige Liste (vorher → nachher, Grund) steht in **`wissensgarten/KORREKTUREN_2026-11-17.md`**.
+  - **171 × freie Eingabe eindeutig gemacht.** Richtige Eingaben wären als falsch gewertet worden, z. B. Nachname statt Vor- und Nachname, „Atlantik“/„Atlantischer Ozean“, Listen mit fester Reihenfolge, Formeln mit Hochzahlen, „Jod“/„Iod“.
+    Gelöst wurde das durch eine präzisere Frage, z. B. „(Vor- und Nachname)“ oder „(ein Wort)“, eine kürzere Antwort oder Ablenker, sodass die Karte als Auswahl gespielt wird.
+  - **35 × fachlich genauer bzw. richtig.** Beispiele:
+    - Grundgesetz „verkündet am 23. Mai 1949“
+    - Marianengraben „fast 11 000 m“
+    - Catalan-Zahl C₅ eindeutig gemacht
+    - „Reparatur“ und „parat“ stammen beide von lat. parare
+    - Neandertaler-DNA nur außerhalb Afrikas
+    - 1871–1949 sind 78 Jahre
+    - Schaltjahr „fast alle 4 Jahre“
+    - periphere Nerven leiten in beide Richtungen
+    - Erklärung zu „halb sechs“ berichtigt
+  - **3 × Ablenker war ebenfalls richtig:** „rule“ (auch Lineal), „hound“ (auch Hund), „gat“ (veraltete Form von „get“). Dazu kommt „Amsel“ bei Zugvögeln, gezählt unter „fachlich“.
+  - **22 × Ablenker näher an der Antwort** (Allgemeinwissen-Quiz). Der Stufen-Nachweis lief im CI ohne die privaten Plus-Pakete nicht durch: Kl. 8–10 war bei der Ablenker-Ähnlichkeit knapp unter Kl. 5–7 (0,546 < 0,550).
+    Jetzt sind die Ablenker anspruchsvoller (Paketwert 0,41 → 0,66), weiterhin eindeutig falsch und von mir gegengelesen. Der Nachweis ist mit und ohne Plus-Pakete grün.
+  - **24 × Sprache/Rechtschreibung.** Darunter 15 von Namen abgeleitete Adjektive klein nach § 62, z. B. „ohmsches Gesetz“, „eulersche Phi-Funktion“; dazu Grammatik („Sonne und Blume ergeben“) und Zusammenschreibung („dreimal“).
+- **Antwortprüfung der App verbessert**, weil mehrere Prüfer dieselben Grenzfälle fanden (mit Tests):
+  - Groß/klein, Bindestriche, Leerzeichen, Artikel („Blauwal“ = „Der Blauwal“), Schlusspunkt und Akzente („Reykjavik“ = „Reykjavík“) sind kein Fehler mehr. Das gilt nicht im Fach Deutsch, dort zählt die Schreibung weiter streng.
+  - Klammer-Antworten: „Kyjiw“ und „Kiew“ zählen für „Kyjiw (Kiew)“.
+  - Zahlen werden nach Wert verglichen.
+  - **Auswahl-Karten werden auf hohen Stufen nur noch eingetippt, wenn die Antwort ein Wort oder eine Zahl ist.** Vorher hätte man Antworten wie „Nach etwa 12 Jahren“ wörtlich treffen müssen.
+- **Funktion:**
+  - **Tests:** alle Unit- und Robolectric-Tests grün (399 Tests, darunter 60+ Bildschirmfotos aller Bildschirme der gemeinsamen Oberfläche, Interaktionstests, Migration, Sync, Updates, Plus/Lizenz/Test-Zeitraum), Lint ohne Fehler, Play-Fassung kompiliert.
+  - **WebApp:** bei 320, 768 und 1280 px Start und Onboarding ohne Konsolenfehler, kein waagerechtes Scrollen.
+  - **Plus:** mit eurem echten Test-Code Freischalt-Link, Endpunkt (200/403) und Laden aller 13 Plus-Pakete geprüft, auch mit Service Worker.
+  - **Offline:** Der Service Worker speichert alles vorab; der zweite Start lädt 0 Byte.
+  - **Stufen-Nachweis** (`DifficultyTest` mit Plus-Paketen) weiter grün, Tabelle in `SCHWIERIGKEIT.md`.
+- **Texte nach außen:**
+  - **Store-Beschreibung:** veraltete Angaben berichtigt („47 Pakete · über 1 600 Karten“ → „72 Wissenspakete · über 2 400 Karten“). Der Plus-Abschnitt sagt nicht mehr „bis zum Start alle Plus-Pakete gratis“.
+  - **Datenschutz-Abschnitt** passt zum Stand (Plus-Code nur lokal, Endpunkt sieht Code und IP).
+  - **Preise** überall mit „inkl. MwSt.“ (19,99 € / 49,99 €).
+
+**Nicht oder nicht sicher prüfbar:**
+- **Fakten ohne Quellenrecherche:** Die Prüfer hatten keinen Web-Zugriff. Unsichere Werte sind vorsichtig formuliert („etwa“, „gilt als“, „wohl“), z. B. Flusslängen, Epochengrenzen, Herkunft von Redewendungen, Sprecherzahlen. Die Erste-Hilfe-Inhalte sind nach ERC/DRK-Stand aus dem Gedächtnis geprüft.
+  Die Angabe „27 EU-Staaten“ beruht auf dem Wissensstand.
+- **Android auf echten Geräten:** Ein Gerät oder Emulator ist hier nicht verfügbar. Die Oberfläche ist über Robolectric geprüft. Startbild, Widget, Benachrichtigung, Drive-Sync und Kamera brauchen einen Gerätetest.
+- **WebApp:** Nicht jeder Bildschirm wurde in jeder Breite einzeln angeklickt. Die gemeinsame Oberfläche ist über die Android-Bildschirmfotos abgedeckt.
+- **Barrierefreiheit:** Nur die vorhandenen Beschriftungen und Kontraste sind geprüft, kein Screenreader-Durchlauf.
+- **Echter Kauf über die Kasse:** Den macht Marcel.
+
+**Stand:** 0.26.0 vom 17.11.2026 liegt auf wissensgarten-test. Die korrigierten Plus-Pakete liegen in `wg-plus-pakete`, die neuen Versionen stehen in `versions.json` (Commit `2f86855`).
+
+
+## 0.25.1 vom 17.11.2026 – Test mit eurem echten Plus-Code: zwei Fehler gefunden und behoben
+
+Ich habe mit dem echten Test-Code geprüft (Produkt 1, Nr. 1001, Kauftag 17.11.2026). Die Signatur mit dem Live-Schlüssel ist gültig, die App zeigt „aktiv bis 16.11.2027“.
+
+**Fehler in 0.25.0:**
+1. **Plus-Pakete wurden nicht geladen.** Die Vorschau eines Pakets hat dieselbe Versionsnummer und galt als „schon vorhanden“, deshalb kam kein Download. Behoben: Fürs Nachladen zählen nur echte Pakete (`PackCatalog.installedVersions()`, mit Test).
+2. **WebApp:** Der Service Worker hat auch `/wg-api/` abgefangen und im Cache abgelegt (cache-first). `versions.json` wäre so nie aktualisiert worden, und lizenzierte Inhalte lagen im Browser-Cache.
+   Behoben: `/wg-api/` geht am Service Worker vorbei. Alte Caches löscht die neue Version beim Aktivieren.
+
+**Ergebnis mit 0.25.1** (WebApp lokal, `/wg-api/` an wissensgarten-test durchgereicht, mit und ohne Service Worker):
+- Link `?pro=…` → „Plus ist freigeschaltet“, der Code ist aus der Adresse entfernt.
+- Danach kamen **13 Plus-Pakete** an mit „🌟 13 neue Plus-Pakete sind da!“. Keine Fehler.
+- Der Endpunkt liefert mit dem Code 200, ohne Code 403.
+
+Alle Tests grün, Lint ohne Fehler.
+**Bitte 0.25.1 statt 0.25.0 nach dem echten Kauf live schalten.** Den Test-Code habe ich nirgends gespeichert oder committet.
+
+## 0.25.0 vom 16.11.2026 – Plus aktiv, Plus-Pakete nur noch über den Endpunkt
+
+- **Sperren aktiv:** Die Kassen-URLs 4139 (Jahr) und 4140 (für immer) stehen in `pro/plus.properties`. In Web und GitHub-APK sind damit die Kauf-Knöpfe sichtbar und die Sperren aktiv:
+  Plus-Pakete, mehr als 2 Profile, Wochenbericht. Die Play-Fassung bleibt weiter ohne Kauf und ohne Sperren.
+- **13 Plus-Pakete raus** aus APK und WebApp (`content/…/packs` und `webapp/packs`): Es bleiben 72 freie Pakete.
+  Die vollen Pakete gibt es nur noch über `/wg-api/plus/` (Stand Website_Backup `53afb08`).
+- **Vorschau statt Paket:** `plus_katalog.json` (APK-Asset und `webapp/plus_katalog.json`) enthält je Plus-Paket nur Titel, Beschreibung, Erklär-Szenen, Kartenzahl und 3 Beispielkarten.
+  - In der Samenhandlung stehen sie mit „🌟 Plus“; Antippen führt (Eltern-Tor) zur Plus-Seite.
+  - Mit gültigem Code lädt die App die vollen Pakete vom Endpunkt; Antippen stößt das Laden sofort an.
+  - Vorschauen gehen nie ins Lernen und verändern nie bestehende Beete.
+- **Bestehende Beete** mit früheren Plus-Paketen bleiben vollständig lernbar, die Karten liegen ja schon im Lernstand.
+- **7-Tage-Test:** Er schaltet Profile und Wochenbericht frei, die Plus-Pakete aber nicht, weil der Endpunkt ohne Kaufcode nichts ausliefert.
+  Falls der Test auch Pakete öffnen soll: Der Lizenz-Dienst könnte 7-Tage-Test-Codes ausgeben, z. B. als neues Produkt.
+- **Nachweis Schwierigkeit:** Der `DifficultyTest` liest die Plus-Pakete jetzt aus der privaten Ablage, lokal `website_backup/wissensgarten-plus` oder über `WG_PLUS_DIR`.
+  Im CI ohne Zugriff prüft er die freien Stufen; `SCHWIERIGKEIT.md` wird nur mit allen Paketen neu geschrieben.
+- **Tests:** alle grün, Lint ohne Fehler. WebApp ohne Fehler; der Endpunkt antwortet mit 200 (versions.json) bzw. 403 ohne Code.
+  **Kauf mit echtem Code konnte ich nicht testen** (kein Kaufcode vorhanden). Bitte beim Prüfen einmal über die Kasse kaufen und den Link aus der E-Mail öffnen.
+- **Bitte 0.25.0 auf wissensgarten-test prüfen (inkl. Kasse) und dann live schalten.**
+
+## 0.24.0 vom 16.11.2026 – Wissensgarten Plus gebaut (Sperren noch aus)
+
+**Gebaut (Web und GitHub-APK; Play ohne Kauf):**
+- **Plus-Bereich** im Eltern-Bereich, hinter dem Eltern-Tor (Einstellungen → „Für Eltern“ → 🌟 Wissensgarten Plus).
+- **7-Tage-Test:** einmal je Gerät, ohne Zahlungsdaten, endet von allein.
+- **Kauf-Knöpfe:** „1 Jahr 19,99 €“ und „Für immer 49,99 €“, jeweils inkl. MwSt.
+- **Code-Eingabe** im Eltern-Bereich.
+- **Freischalt-Link** `https://wissensgarten.mathenachhilfe-online.com/?pro=<Code ohne Bindestriche>`. Der Code wird danach aus der Adresszeile entfernt.
+- **Code-Format:** das gemeinsame Format, 1:1 wie KurvenFlug: Version 1, App 3, Präfix „WG-“, Ed25519, Crockford-Base32.
+  - Produkt 1 = Plus Jahr, gültig ab Tag im Code für 365 Tage.
+  - Produkt 3 = für immer.
+  - Öffentlicher Schlüssel: `979eb515…b812`. Prüfung offline in `core/model/License.kt`; Generator für den Lizenz-Dienst: `wissensgarten/pro/plus_code.py`.
+- **Sperren, sobald aktiv:**
+  - Plus-Pakete: in der Samenhandlung „🌟 Plus“ statt „Pflanzen“.
+  - Mehr als 2 Profile.
+  - Wochenbericht.
+  - Schon gepflanzte Beete bleiben immer lernbar, der Lernstand geht nie verloren.
+- **Plus-Pakete:** alle `ob-…` (Abi, 11–13) und `aw-experte-…` (14 Pakete, je Version +1). `s1-geschichte-20-jahrhundert` (ab Kl. 9) ist jetzt frei, passend zu „frei bis Kl. 10“.
+
+**Sperren greifen erst mit Kassen-URL:**
+- Bitte in `wissensgarten/pro/plus.properties` die Werte `checkoutUrlYear=` (WG-PLUS-JAHR) und `checkoutUrlForever=` (WG-PLUS-IMMER) eintragen. Danach baut der nächste Release mit Sperren.
+- Bis dahin ist alles frei, und die Kauf-Knöpfe sind ausgeblendet.
+- Die Play-Fassung bleibt ganz ohne Kauf und ohne Sperren, bis Play Billing kommt.
+
+**Plus-Pakete und Endpunkt:**
+- Die App ruft bei aktivem Plus mit Code `wg-api/plus/versions.json` und `wg-api/plus/<datei>.json` mit Header `X-Lizenz` ab, genau nach der Schnittstelle oben.
+  - Android: über die Live-Adresse.
+  - WebApp: relativ zur eigenen Domain.
+- Mit dem 7-Tage-Test wird nichts abgerufen, weil es keinen Code gibt. Er schaltet nur die mitgelieferten Plus-Pakete frei.
+- **Ehrlicher Hinweis zu den 14 Plus-Paketen in der App:** Die 14 vorhandenen Plus-Pakete liegen schon in der öffentlichen Git-Historie, im APK und in `webapp/packs`.
+  Sie sind in der App gesperrt, aber technisch nicht geheim. **Neue Plus-Pakete** lege ich nicht mehr ins öffentliche Repo, sondern liefere sie an euch für den Endpunkt. Den Ablageort bitte nennen.
+  Sollen auch die 14 vorhandenen aus APK und WebApp raus (dann nur noch über den Endpunkt)? Das geht, sobald der Endpunkt läuft.
+
+**Datenschutz-Ergänzung** (in App und Vorlage schon drin, Abschnitt „Käufe (Wissensgarten Plus)“):
+
+> Alle Pakete bis Klasse 10 und alle Spielarten sind frei. „Wissensgarten Plus“ ist freiwillig und wird nur im Eltern-Bereich nach der Eltern-Aufgabe gekauft. WebApp und GitHub-Version: Der Kauf läuft über den Shop auf mathenachhilfe-online.com (WooCommerce). Dort gebt ihr die für Kauf und Rechnung nötigen Daten an; Rechnung und Freischalt-Code kommen per E-Mail. In der App wird kein Konto angelegt. Der Code wird nur auf diesem Gerät gespeichert und offline geprüft (digitale Unterschrift) – er enthält keinen Namen und keine E-Mail-Adresse. Der 7-Tage-Test wird ebenfalls nur auf dem Gerät vermerkt. Mit aktivem Plus lädt die App höchstens einmal am Tag neue Plus-Pakete von unserem Server (wissensgarten.mathenachhilfe-online.com) und schickt dabei den Code mit, damit der Server prüfen kann, ob Plus gültig ist. Der Server sieht dabei den Code, die IP-Adresse und den Zeitpunkt; daraus wird kein Profil gebildet, Lernstand und Profile werden nie übertragen. In der Play-Store-Version gibt es noch keine Käufe – dort ist im Moment alles frei.
+
+**Tests:**
+- 397 Tests grün, darunter neue Tests für Code-Prüfung, Ablauf, Link, Test-Zeitraum und Sperren mit und ohne Kassen-URL.
+- Lint ohne Fehler, Play-Fassung kompiliert.
+- Bildschirmfoto `screenshots/65_plus.png` angesehen.
+- **Browser:** Ein `?pro=`-Link mit fremdem Code zeigt „ungültig“, der Parameter verschwindet aus der Adresse, keine Fehler.
+- **Bitte 0.24.0 auf wissensgarten-test prüfen.**
+
 ## 16.11.2026 – Plus: Schnittstelle für den Paket-Endpunkt (bitte so bauen)
 
 Basis: `https://wissensgarten.mathenachhilfe-online.com/wg-api/plus/`. Dieselbe Adresse gilt für die Test-WebApp (`wissensgarten-test.…`), die Android-App nutzt die Live-Adresse.

@@ -12,12 +12,14 @@ import kotlinx.coroutines.sync.withLock
 class PackCatalog(
     private val texts: suspend () -> List<String>,
     private val extra: suspend () -> List<String> = { emptyList() },
+    private val previews: suspend () -> String? = { null },
 ) {
     private val mutex = Mutex()
     private var cache: List<Pack>? = null
 
     suspend fun all(): List<Pack> = mutex.withLock {
-        cache ?: merge(parse(texts()), parse(extra())).also { cache = it }
+        cache ?: merge(parse(texts()) + runCatching { previews()?.let(PackJson::parseList) }.getOrNull().orEmpty().map { it.copy(preview = true) }, parse(extra()))
+            .also { cache = it }
     }
 
     /** Nach dem Nachladen neuer Pakete: Liste neu aufbauen. */
@@ -25,14 +27,17 @@ class PackCatalog(
 
     suspend fun byId(id: String): Pack? = all().firstOrNull { it.id == id }
 
+    /** Versionen der wirklich vorhandenen Pakete (ohne Vorschauen) – Grundlage fürs Nachladen. */
+    suspend fun installedVersions(): Map<String, Int> = all().filter { !it.preview }.associate { it.id to it.version }
+
     companion object {
         const val DIR = "packs"
 
         private fun parse(texts: List<String>) = texts.mapNotNull { runCatching { PackJson.parse(it) }.getOrNull() }
 
-        /** Mitgelieferte + nachgeladene Pakete: je id die höchste Version, sortiert nach Klasse und Titel. */
+        /** Mitgelieferte + nachgeladene Pakete: je id das volle Paket vor der Vorschau, dann die höchste Version; sortiert nach Klasse und Titel. */
         fun merge(bundled: List<Pack>, downloaded: List<Pack>): List<Pack> =
-            (bundled + downloaded).groupBy { it.id }.values.map { same -> same.maxBy { it.version } }
+            (bundled + downloaded).groupBy { it.id }.values.map { same -> same.maxWith(compareBy<Pack>({ !it.preview }, { it.version })) }
                 .sortedWith(compareBy({ it.grades.minOrNull() ?: 99 }, { it.title }))
     }
 }

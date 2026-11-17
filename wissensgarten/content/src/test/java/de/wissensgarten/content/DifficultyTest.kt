@@ -19,7 +19,11 @@ import java.io.File
  * Die Tabellen landen in SCHWIERIGKEIT.md (für Eltern und die Meldung).
  */
 class DifficultyTest {
-    private val packs: List<Pack> = File("src/main/assets/packs").listFiles { f -> f.extension == "json" }!!
+    /** Plus-Pakete liegen nicht mehr im öffentlichen Repo – lokal aus dem privaten Ablage-Ordner, wenn vorhanden. */
+    private val plusDir: File? = (System.getenv("WG_PLUS_DIR")?.let(::File) ?: File("../../../website_backup/wissensgarten-plus"))
+        .takeIf { it.isDirectory }
+    private val packs: List<Pack> = (File("src/main/assets/packs").listFiles { f -> f.extension == "json" }!!.toList() +
+        plusDir?.listFiles { f -> f.extension == "json" && f.name != "versions.json" }.orEmpty())
         .sortedBy { it.name }.map { PackJson.parse(it.readText()) }
 
     data class StageRow(val stage: Stage, val free: Double, val options: Double, val similar: Double, val guess: Double, val intervalDays: Double)
@@ -76,8 +80,9 @@ class DifficultyTest {
 
     @Test fun everyStageIsStrictlyHarder() {
         val rows = stageRows()
-        val bandRows = bandRows()
-        writeReport(rows, bandRows)
+        // Ohne die privaten Plus-Pakete (z. B. im CI) fehlen Abi/Experte – dann nur die vorhandenen Stufen prüfen
+        val bandRows = bandRows().let { b -> if (plusDir == null) b.filter { it.packs > 0 } else b }
+        if (plusDir != null) writeReport(rows, bandRows)
         val errors = mutableListOf<String>()
         rows.zipWithNext { a, b ->
             val t = "${a.stage.label} → ${b.stage.label}"
@@ -104,7 +109,7 @@ class DifficultyTest {
         val md = buildString {
             appendLine("# Schwierigkeit im Wissensgarten – Nachweis")
             appendLine()
-            appendLine("Automatisch erzeugt von `content/src/test/java/de/wissensgarten/content/DifficultyTest.kt` aus allen ${packs.size} Paketen (${packs.sumOf { it.cards.size }} Karten).")
+            appendLine("Automatisch erzeugt von `content/src/test/java/de/wissensgarten/content/DifficultyTest.kt` aus allen ${packs.size} Paketen (${packs.sumOf { it.cards.size }} Karten, davon die Plus-Pakete aus der privaten Ablage).")
             appendLine("Der Test schlägt fehl, sobald eine Stufe nicht strikt schwerer ist als die vorige.")
             appendLine()
             appendLine("## 1. Beim Spielen: Je größer die Pflanze, desto schwerer die Frage")

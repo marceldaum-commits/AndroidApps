@@ -22,14 +22,16 @@ fun ShopScreen(
     onOpenBed: (String) -> Unit,
     onOwnBed: (String, String) -> Unit,
     onClassCode: () -> Unit = {},
+    onLocked: () -> Unit = {},
 ) {
     val planted = beds.mapNotNull { b -> b.bed.packId?.let { it to b.bed.id } }.toMap()
     var showOwn by remember { mutableStateOf(false) }
     PackBrowser(
-        packs = packs.filter(canUse),
+        packs = packs,
         level = profile.level,
         isChosen = { it.id in planted },
-        onToggle = { p -> planted[p.id]?.let(onOpenBed) ?: onPlant(p) },
+        onToggle = { p -> planted[p.id]?.let(onOpenBed) ?: if (canUse(p)) onPlant(p) else onLocked() },
+        isLocked = { !canUse(it) && it.id !in planted },
         chosenLabel = "Im Garten",
         chooseLabel = "Pflanzen",
         modifier = Modifier.fillMaxSize().statusBarsPadding(),
@@ -37,7 +39,7 @@ fun ShopScreen(
             item {
                 Text("Samenhandlung", style = MaterialTheme.typography.headlineMedium)
                 Text(
-                    "${packs.size} Wissenspakete mit ${packs.sumOf { it.cards.size }} Karten. Alles, was dich interessiert – egal welche Klasse.",
+                    "${packs.size} Wissenspakete mit ${packs.sumOf { it.cardCount }} Karten. Alles, was dich interessiert – egal welche Klasse.",
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(top = 4.dp),
                 )

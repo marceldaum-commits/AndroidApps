@@ -64,9 +64,13 @@ object PrivacyText {
             "Der Wissensgarten richtet sich an Kinder und ihre Eltern. Bereiche, in denen Daten das Gerät verlassen könnten (Sync, Teilen, Updates, Kamera), " +
             "sind durch eine Eltern-Aufgabe geschützt. Es gibt keine Werbung und keine Links zu sozialen Netzwerken.",
         "Käufe (Wissensgarten Plus)" to
-            "Im Moment gibt es keine Käufe – alles ist kostenlos. Später kommt ein freiwilliges „Wissensgarten Plus“ mit zusätzlichen Paketen. " +
-            "Gekauft wird dann nur nach der Eltern-Aufgabe und über Google Play mit eurem Google-Konto. Die Zahlung wickelt Google ab; " +
-            "wir erhalten keine Zahlungs- oder Kontodaten, nur die Bestätigung, dass Plus freigeschaltet ist.",
+            "Alle Pakete bis Klasse 10 und alle Spielarten sind frei. „Wissensgarten Plus“ ist freiwillig und wird nur im Eltern-Bereich nach der Eltern-Aufgabe gekauft. " +
+            "WebApp und GitHub-Version: Der Kauf läuft über den Shop auf mathenachhilfe-online.com (WooCommerce). Dort gebt ihr die für Kauf und Rechnung nötigen Daten an; " +
+            "Rechnung und Freischalt-Code kommen per E-Mail. In der App wird kein Konto angelegt. Der Code wird nur auf diesem Gerät gespeichert und offline geprüft " +
+            "(digitale Unterschrift) – er enthält keinen Namen und keine E-Mail-Adresse. Der 7-Tage-Test wird ebenfalls nur auf dem Gerät vermerkt. " +
+            "Mit aktivem Plus lädt die App höchstens einmal am Tag neue Plus-Pakete von unserem Server (wissensgarten.mathenachhilfe-online.com) und schickt dabei den Code mit, " +
+            "damit der Server prüfen kann, ob Plus gültig ist. Der Server sieht dabei den Code, die IP-Adresse und den Zeitpunkt; daraus wird kein Profil gebildet, " +
+            "Lernstand und Profile werden nie übertragen. In der Play-Store-Version gibt es noch keine Käufe – dort ist im Moment alles frei.",
         "Eure Rechte" to
             "Ihr habt nach der DSGVO das Recht auf Auskunft, Berichtigung, Löschung und Beschwerde bei einer Datenschutz-Aufsichtsbehörde. " +
             "Da wir selbst keine Daten von euch erhalten, könnt ihr alles direkt in der App einsehen und löschen. Bei Fragen schreibt uns über das Impressum.",

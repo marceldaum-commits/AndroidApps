@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-stilmittel",
-  "version": 2,
+  "version": 3,
   "title": "Stilmittel erkennen",
   "subject": "deutsch",
   "grades": [
@@ -125,6 +125,11 @@
       "id": "008",
       "q": "„Wer hat schon Lust auf Montag?“ (Antwort ist klar)",
       "a": "rhetorische Frage",
+      "choices": [
+        "Ellipse",
+        "Anapher",
+        "Parallelismus"
+      ],
       "img": "❓🙄"
     },
     {
@@ -209,6 +214,11 @@
       "id": "016",
       "q": "„Die Bienen summen, es brummt und zischt.“",
       "a": "Onomatopoesie (Lautmalerei)",
+      "choices": [
+        "Alliteration (Stabreim)",
+        "Personifikation (Vermenschlichung)",
+        "Synästhesie (Sinnesvermischung)"
+      ],
       "img": "🐝🔊"
     },
     {
@@ -233,6 +243,11 @@
       "id": "019",
       "q": "„Wir brauchen ein Dach über dem Kopf.“ (Dach für Haus)",
       "a": "Pars pro toto",
+      "choices": [
+        "Totum pro Parte",
+        "Euphemismus",
+        "Hyperbel"
+      ],
       "info": "Ein Teil steht für das Ganze.",
       "img": "🧩➡️🏠"
     },
@@ -313,6 +328,11 @@
       "id": "029",
       "q": "„Äpfel, Birnen, Pflaumen, Kirschen – das ganze Obst lag am Boden.“",
       "a": "Akkumulation",
+      "choices": [
+        "Klimax",
+        "Ellipse",
+        "Polysyndeton"
+      ],
       "info": "Aufzählung von Unterbegriffen zu einem Oberbegriff.",
       "img": "🍎🍐🍒"
     },

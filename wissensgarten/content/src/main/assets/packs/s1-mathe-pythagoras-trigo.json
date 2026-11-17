@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-pythagoras-trigo",
-  "version": 1,
+  "version": 2,
   "title": "Pythagoras & Trigonometrie",
   "subject": "mathe",
   "grades": [
@@ -13,7 +13,7 @@
   "intro": [
     {
       "img": "📐🏛️",
-      "text": "Wusstest du? Schon vor über 2 500 Jahren kannte man den Satz des Pythagoras. Baumeister nutzten ihn, um rechte Winkel abzustecken."
+      "text": "Wusstest du? Schon vor über 2 500 Jahren kannte man den Satz des Pythagoras. Baumeister sollen ihn genutzt haben, um rechte Winkel abzustecken."
     },
     {
       "img": "🔺➕",
@@ -66,7 +66,7 @@
         "Die Gegenkathete",
         "Die kürzere Kathete"
       ],
-      "info": "Sie liegt dem größten Winkel (90°) gegenüber – und der größte Winkel hat die längste Seite.",
+      "info": "Sie liegt dem größten Winkel (90°) gegenüber – und dem größten Winkel liegt immer die längste Seite gegenüber.",
       "img": "🏆📏"
     },
     {

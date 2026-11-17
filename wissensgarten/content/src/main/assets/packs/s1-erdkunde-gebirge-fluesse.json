@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-gebirge-fluesse",
-  "version": 1,
+  "version": 2,
   "title": "Flüsse, Berge, Meere",
   "subject": "erdkunde",
   "grades": [
@@ -15,7 +15,7 @@
   "intro": [
     {
       "img": "🌊🌍",
-      "text": "Wusstest du? Etwa 71 % der Erde sind mit Wasser bedeckt. Vom Weltall aus sieht sie darum aus wie ein blauer Planet."
+      "text": "Wusstest du? Etwa 71 % der Erdoberfläche sind mit Wasser bedeckt. Vom Weltall aus sieht die Erde darum aus wie ein blauer Planet."
     },
     {
       "img": "🏔️🧗",

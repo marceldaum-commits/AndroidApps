@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-irregular-verbs",
-  "version": 2,
+  "version": 3,
   "title": "Irregular Verbs",
   "subject": "englisch",
   "grades": [
@@ -474,7 +474,7 @@
       "a": "got – got",
       "choices": [
         "getted – getted",
-        "gat – gotten",
+        "gotten – got",
         "get – got"
       ],
       "info": "Im amerikanischen Englisch lautet das Past Participle meist „gotten“.",

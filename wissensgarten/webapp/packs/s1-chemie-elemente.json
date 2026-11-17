@@ -1,6 +1,6 @@
 {
   "id": "s1-chemie-elemente",
-  "version": 2,
+  "version": 3,
   "title": "Chemische Elemente",
   "subject": "chemie",
   "grades": [
@@ -259,7 +259,13 @@
       "id": "023",
       "q": "Welches Element hat das Symbol I?",
       "a": "Iod",
-      "img": "🌊🐟"
+      "choices": [
+        "Indium",
+        "Iridium",
+        "Eisen"
+      ],
+      "img": "🌊🐟",
+      "info": "Früher schrieb man meist „Jod“."
     },
     {
       "id": "024",
@@ -323,12 +329,22 @@
       "id": "031",
       "q": "Die sechs natürlichen Edelgase?",
       "a": "Helium, Neon, Argon, Krypton, Xenon, Radon",
+      "choices": [
+        "Helium, Neon, Argon, Krypton, Xenon, Stickstoff",
+        "Wasserstoff, Neon, Argon, Krypton, Xenon, Radon",
+        "Helium, Neon, Argon, Chlor, Xenon, Radon"
+      ],
       "img": "6️⃣👑"
     },
     {
       "id": "032",
       "q": "Warum reagieren Edelgase kaum?",
       "a": "Ihre äußere Schale ist voll besetzt",
+      "choices": [
+        "Ihre äußere Schale ist leer",
+        "Sie haben keine Protonen",
+        "Sie sind zu schwer"
+      ],
       "info": "Man spricht von Edelgaskonfiguration.",
       "img": "✅🔒"
     },

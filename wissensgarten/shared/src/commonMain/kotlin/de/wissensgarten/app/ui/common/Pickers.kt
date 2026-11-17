@@ -100,6 +100,7 @@ fun PackBrowser(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(16.dp),
     header: LazyListScope.() -> Unit = {},
+    isLocked: (Pack) -> Boolean = { false },
 ) {
     var filter by remember { mutableStateOf(if (level == 0) PackFilter.ALL else PackFilter.RECOMMENDED) }
     var subject by remember { mutableStateOf<Subject?>(null) }
@@ -128,7 +129,7 @@ fun PackBrowser(
         if (shown.isEmpty()) item {
             Text("Hier gibt es noch keine Pakete. Wähle oben einen anderen Filter.", Modifier.padding(8.dp))
         }
-        items(shown, key = { it.id }) { p -> PackRow(p, isChosen(p), chosenLabel, chooseLabel) { onToggle(p) } }
+        items(shown, key = { it.id }) { p -> PackRow(p, isChosen(p), chosenLabel, if (isLocked(p)) "🌟 Plus" else chooseLabel) { onToggle(p) } }
     }
 }
 
@@ -152,7 +153,7 @@ fun PackRow(pack: Pack, chosen: Boolean, chosenLabel: String, chooseLabel: Strin
             Column(Modifier.weight(1f)) {
                 Text(pack.title, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 Text(
-                    "${pack.subjectInfo.label} · ${Levels.range(pack.grades)} · ${pack.cards.size} Karten",
+                    "${pack.subjectInfo.label} · ${Levels.range(pack.grades)} · ${pack.cardCount} Karten",
                     style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 if (pack.description.isNotBlank()) Text(

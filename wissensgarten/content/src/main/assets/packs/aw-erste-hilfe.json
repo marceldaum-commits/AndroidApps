@@ -1,6 +1,6 @@
 {
   "id": "aw-erste-hilfe",
-  "version": 3,
+  "version": 4,
   "title": "Erste Hilfe",
   "subject": "allgemeinwissen",
   "grades": [
@@ -348,6 +348,10 @@
       "id": "032",
       "q": "Ist man in Deutschland zur Ersten Hilfe verpflichtet?",
       "a": "Ja, im Rahmen des Zumutbaren",
+      "choices": [
+        "Nein, Hilfe ist freiwillig",
+        "Nur wer einen Kurs gemacht hat"
+      ],
       "info": "Unterlassene Hilfeleistung ist strafbar (§ 323c StGB). Schon der Notruf ist Hilfe.",
       "img": "🤝⚖️"
     },

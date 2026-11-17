@@ -13,15 +13,24 @@ plugins {
 val appGradle = rootProject.file("app/build.gradle.kts").readText()
 val versionName = Regex("""versionName = "([^"]+)"""").find(appGradle)!!.groupValues[1]
 val versionDate = Regex("""VERSION_DATE", "\\"([0-9.]+)\\""""").find(appGradle)!!.groupValues[1]
+// Wissensgarten Plus: öffentlicher Schlüssel und Kassen-URLs (leer = noch keine Sperren)
+val plusFile = rootProject.file("pro/plus.properties")
+val plusProps: Map<String, String> = if (!plusFile.exists()) emptyMap() else plusFile.readLines()
+    .map { it.trim() }.filter { it.isNotEmpty() && !it.startsWith("#") && "=" in it }
+    .associate { it.substringBefore("=").trim() to it.substringAfter("=").trim() }
+fun plusProp(k: String) = plusProps[k] ?: ""
 val genDir = layout.buildDirectory.dir("generated/appinfo/kotlin")
 val genAppInfo by tasks.registering {
     inputs.property("v", versionName); inputs.property("d", versionDate)
+    inputs.property("pk", plusProp("publicKey")); inputs.property("cy", plusProp("checkoutUrlYear")); inputs.property("cf", plusProp("checkoutUrlForever"))
     outputs.dir(genDir)
     doLast {
         val f = genDir.get().file("de/wissensgarten/app/AppInfo.kt").asFile
         f.parentFile.mkdirs()
         f.writeText("package de.wissensgarten.app\n\n/** Automatisch erzeugt aus app/build.gradle.kts – gleiche Version für App und WebApp. */\n" +
-            "object AppInfo {\n    const val VERSION = \"$versionName\"\n    const val DATE = \"$versionDate\"\n}\n")
+            "object AppInfo {\n    const val VERSION = \"$versionName\"\n    const val DATE = \"$versionDate\"\n" +
+            "    const val PLUS_KEY = \"${plusProp("publicKey")}\"\n    const val PLUS_CHECKOUT_YEAR = \"${plusProp("checkoutUrlYear")}\"\n" +
+            "    const val PLUS_CHECKOUT_FOREVER = \"${plusProp("checkoutUrlForever")}\"\n}\n")
     }
 }
 

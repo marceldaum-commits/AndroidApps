@@ -37,6 +37,17 @@ class AppViewModel(
 
     private val _packs = MutableStateFlow<List<Pack>>(emptyList())
     val packs: StateFlow<List<Pack>> = _packs.asStateFlow()
+    private val _plusPreviews = MutableStateFlow<List<Pack>>(emptyList())
+    /** Plus-Pakete, die noch nicht geladen sind (nur Vorschau für die Samenhandlung) */
+    val plusPreviews: StateFlow<List<Pack>> = _plusPreviews.asStateFlow()
+
+    /** Vorschauen nie ins Lernen geben und nie Beete damit „aktualisieren“ – nur volle Pakete. */
+    private suspend fun setPacks(all: List<Pack>) {
+        val full = all.filter { !it.preview }
+        _packs.value = full
+        _plusPreviews.value = all.filter { it.preview }
+        repo.syncPacks(full)
+    }
 
     /** Aktuelle Zeit, minütlich aktualisiert – damit Pflanzen auch bei offener App welken. */
     private val _now = MutableStateFlow(de.wissensgarten.core.model.Platform.nowMs())
@@ -362,13 +373,12 @@ class AppViewModel(
     init {
         viewModelScope.launch {
             val all = c.catalog.all()
-            _packs.value = all
-            repo.syncPacks(all)
+            setPacks(all)
         }
         viewModelScope.launch { while (true) { delay(60_000); _now.value = de.wissensgarten.core.model.Platform.nowMs() } }
     }
 
-    fun tick() { _now.value = de.wissensgarten.core.model.Platform.nowMs() }
+    fun tick() { _now.value = de.wissensgarten.core.model.Platform.nowMs(); c.entitlements.refresh() }
 
     // ------------------------------------------------------------ App-Update
 
@@ -392,6 +402,37 @@ class AppViewModel(
         }
     }
 
+    // ------------------------------------------------------------ Wissensgarten Plus
+
+    val plusStatus = c.entitlements.status
+
+    /** Code aus Eingabe, E-Mail oder Link übernehmen. */
+    fun redeemPlus(text: String): de.wissensgarten.core.data.PlusEntitlements.Redeem {
+        val r = c.entitlements.redeem(text)
+        if (r == de.wissensgarten.core.data.PlusEntitlements.Redeem.OK) refreshPlusPacksIfDue(force = true)
+        return r
+    }
+
+    fun startPlusTrial(): Boolean = c.entitlements.startTrial()
+
+    /** Plus-Pakete vom Plus-Endpunkt holen (nur mit gültigem Code, höchstens alle 20 h). */
+    fun refreshPlusPacksIfDue(force: Boolean = false) {
+        val h = host ?: return
+        val code = c.entitlements.code ?: return
+        val now = de.wissensgarten.core.model.Platform.nowMs()
+        if (!force && now - settings.lastPlusPackCheck < 20 * 3_600_000L) return
+        viewModelScope.launch {
+            val known = c.catalog.installedVersions()
+            val n = runCatching { h.fetchPlusPacks(code, known) }.getOrNull() ?: return@launch
+            settings.lastPlusPackCheck = now
+            if (n > 0) {
+                val all = c.catalog.reload()
+                setPacks(all)
+                h.toast(if (n == 1) "🌟 Ein neues Plus-Paket ist da!" else "🌟 $n neue Plus-Pakete sind da!")
+            }
+        }
+    }
+
     /** Höchstens alle 20 Stunden neue Wissenspakete (nur Daten) nachladen – abschaltbar in den Einstellungen. */
     fun refreshPacksIfDue(force: Boolean = false) {
         val h = host ?: return
@@ -399,13 +440,12 @@ class AppViewModel(
         val now = de.wissensgarten.core.model.Platform.nowMs()
         if (!force && now - settings.lastPackCheck < 20 * 3_600_000L) return
         viewModelScope.launch {
-            val known = c.catalog.all().associate { it.id to it.version }
+            val known = c.catalog.installedVersions()
             val n = runCatching { h.fetchPackUpdates(known) }.getOrNull() ?: return@launch
             settings.lastPackCheck = now
             if (n > 0) {
                 val all = c.catalog.reload()
-                _packs.value = all
-                repo.syncPacks(all)
+                setPacks(all)
                 h.toast(if (n == 1) "🐝 Brummi hat ein neues Wissenspaket mitgebracht!" else "🐝 Brummi hat $n neue Wissenspakete mitgebracht!")
             } else if (force) h.toast("Alle Wissenspakete sind aktuell 🌼")
         }

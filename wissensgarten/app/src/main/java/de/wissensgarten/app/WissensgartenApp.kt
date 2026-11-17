@@ -18,7 +18,7 @@ class WissensgartenApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        container = AppContainer(this)
+        container = AppContainer(this, plusConfig(purchaseAllowed = BuildConfig.SELF_UPDATE))
         Reminders.createChannel(this)
         // Erinnerung sicherstellen (z. B. nach App-Update), ohne die Uhrzeit zu verschieben
         if (container.settings.reminderOn.value) Reminders.schedule(this, container.settings.reminderHour.value, replace = false)

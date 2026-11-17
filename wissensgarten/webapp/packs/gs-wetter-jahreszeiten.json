@@ -1,6 +1,6 @@
 {
   "id": "gs-wetter-jahreszeiten",
-  "version": 1,
+  "version": 2,
   "title": "Wetter und Jahreszeiten",
   "subject": "sachunterricht",
   "grades": [
@@ -93,7 +93,7 @@
         "4",
         "52"
       ],
-      "info": "Ein Jahr hat 12 Monate und 52 Wochen.",
+      "info": "Ein Jahr hat 12 Monate und etwas mehr als 52 Wochen.",
       "img": "📅"
     },
     {
@@ -117,7 +117,7 @@
         "September",
         "Dezember"
       ],
-      "info": "Der Sommer beginnt am 21. Juni.",
+      "info": "Der Sommer beginnt am 20. oder 21. Juni. Wetterforscher zählen schon ab dem 1. Juni.",
       "img": "☀️📅"
     },
     {
@@ -334,7 +334,7 @@
       "a": "Storch",
       "choices": [
         "Spatz",
-        "Amsel",
+        "Elster",
         "Meise"
       ],
       "info": "Der Storch fliegt im Herbst bis nach Afrika.",

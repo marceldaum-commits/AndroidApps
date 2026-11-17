@@ -1,0 +1,845 @@
+[
+ {
+  "id": "aw-experte-geschichte-kultur",
+  "version": 3,
+  "title": "Experte: Geschichte & Kultur",
+  "subject": "geschichte",
+  "grades": [
+   14
+  ],
+  "emoji": "🏛️",
+  "tier": "plus",
+  "description": "Weltgeschichte, Kunst-, Musik- und Literaturgeschichte für Kenner: Werke, Urheber, Jahreszahlen und Epochenbegriffe.",
+  "intro": [
+   {
+    "img": "🏛️🐝",
+    "text": "Expertenstufe! Hier geht es um Wissen, das man nicht einfach errät: Jahreszahlen, Fachbegriffe und Namen tippst du selbst ein."
+   },
+   {
+    "img": "📜⚔️",
+    "text": "Geschichte ist ein Netz: Ein Konzil, ein Vertrag oder eine Schlacht verändert Kunst, Glauben und Sprache oft für Jahrhunderte."
+   },
+   {
+    "img": "🎨🎻",
+    "text": "Kunst und Musik haben eigene Fachwörter – Sfumato, Basso continuo, Zwölftontechnik. Wer sie kennt, sieht und hört genauer hin."
+   },
+   {
+    "img": "📚✒️",
+    "text": "Bei Namen zählt die übliche deutsche Schreibweise. Die Klammer in der Frage verrät dir, ob Nachname oder ganzer Name gesucht ist."
+   },
+   {
+    "img": "💪🐝",
+    "text": "Brummi hat sich extra einen Museumsführer besorgt. Bereit für die Zeitreise durch fast zwei Jahrtausende? Los geht's!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 34,
+  "cards": [
+   {
+    "id": "001",
+    "q": "In welchem Jahr siegte Wilhelm der Eroberer in der Schlacht bei Hastings?",
+    "a": "1066",
+    "info": "Die normannische Eroberung prägte England tief: Das Englische übernahm Tausende französische Wörter.",
+    "img": "⚔️🏰"
+   },
+   {
+    "id": "002",
+    "q": "In welchem Ort teilten Spanien und Portugal 1494 die Neue Welt per Vertrag auf? (Ortsname)",
+    "a": "Tordesillas",
+    "info": "Die Linie verlief 370 Leguas westlich der Kapverden – deshalb spricht man in Brasilien Portugiesisch.",
+    "img": "🗺️✂️"
+   },
+   {
+    "id": "003",
+    "q": "Wer verfasste die Schrift „Der Fürst“ („Il Principe“)? (Nachname)",
+    "a": "Machiavelli",
+    "info": "Niccolò Machiavelli schrieb sie 1513, gedruckt 1532. Macht wird darin nüchtern ohne Moral analysiert.",
+    "img": "👑🦊"
+   }
+  ]
+ },
+ {
+  "id": "aw-experte-mathe-logik",
+  "version": 3,
+  "title": "Experte: Mathe & Logik",
+  "subject": "mathe",
+  "grades": [
+   14
+  ],
+  "emoji": "♾️",
+  "tier": "plus",
+  "description": "Zahlentheorie, Kombinatorik, berühmte Sätze und Vermutungen, Logik-Begriffe und knifflige Rechnungen für Mathe-Fans.",
+  "intro": [
+   {
+    "img": "♾️🐝",
+    "text": "Willkommen in der Expertenstufe Mathe! Rechnen, Namen, Fachbegriffe – die meisten Antworten tippst du selbst ein. Stift und Papier helfen."
+   },
+   {
+    "img": "🔢🔍",
+    "text": "Zahlentheorie wirkt wie ein Spiel mit ganzen Zahlen – und birgt doch Rätsel, an denen Genies jahrhundertelang knobelten."
+   },
+   {
+    "img": "🏆📜",
+    "text": "Fermat, Poincaré, Riemann: Hinter jedem berühmten Satz steht eine Geschichte. Manche Beweise brauchten über 350 Jahre."
+   },
+   {
+    "img": "🧠⚖️",
+    "text": "Logik ist das Werkzeug aller Beweise. Kontraposition, Modus ponens und Tautologie solltest du sicher unterscheiden können."
+   },
+   {
+    "img": "💪🐝",
+    "text": "Tipp: Zahlen ohne Leerzeichen eintippen, bei Namen gilt die übliche Schreibweise. Brummi rechnet im Kopf mit. Los geht's!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 34,
+  "cards": [
+   {
+    "id": "001",
+    "q": "Wie heißt die Funktion φ(n), die die zu n teilerfremden Zahlen von 1 bis n zählt? (…sche Phi-Funktion)",
+    "a": "eulersche Phi-Funktion",
+    "info": "Für eine Primzahl p gilt φ(p) = p − 1. Sie ist der Schlüssel zum RSA-Verfahren.",
+    "img": "🔢🔐"
+   },
+   {
+    "id": "002",
+    "q": "Für jedes n > 1 liegt zwischen n und 2n eine Primzahl. Wie heißt diese Aussage? (…sches Postulat)",
+    "a": "bertrandsches Postulat",
+    "info": "Joseph Bertrand vermutete es 1845, Pafnuti Tschebyschow bewies es 1852. Es ist also längst ein Satz.",
+    "img": "🔢↔️"
+   },
+   {
+    "id": "003",
+    "q": "Wer bewies 1994 (teils mit Richard Taylor) den Großen Fermatschen Satz? (Vor- und Nachname)",
+    "a": "Andrew Wiles",
+    "info": "Fermat behauptete um 1637, einen Beweis zu haben – „der Rand ist zu schmal“. Es dauerte über 350 Jahre.",
+    "img": "📜🏆"
+   }
+  ]
+ },
+ {
+  "id": "aw-experte-naturwissenschaft",
+  "version": 3,
+  "title": "Experte: Naturwissenschaft",
+  "subject": "allgemeinwissen",
+  "grades": [
+   14
+  ],
+  "emoji": "🔬",
+  "tier": "plus",
+  "description": "Naturkonstanten, Elementarteilchen, Nobelpreis-Entdeckungen und Fachbegriffe aus Physik, Chemie und Biologie auf Studienniveau.",
+  "intro": [
+   {
+    "img": "🔬🐝",
+    "text": "Willkommen in der Expertenstufe! Hier tippst du die Antworten meist selbst ein – kein Raten, nur echtes Wissen. Brummi ist gespannt."
+   },
+   {
+    "img": "⚛️📏",
+    "text": "Seit 2019 sind sieben Naturkonstanten exakt festgelegt. Aus ihnen leitet man Kilogramm, Kelvin, Mol und Co. ab – Physik als Fundament."
+   },
+   {
+    "img": "🎆🔍",
+    "text": "Quarks, Leptonen, Bosonen: Das Standardmodell sortiert die kleinsten Bausteine der Welt. Das Higgs-Boson war 2012 sein letztes fehlendes Teil."
+   },
+   {
+    "img": "🏅🧬",
+    "text": "Viele Fragen drehen sich um Nobelpreise – von Rutherford bis zur Genschere. Achte bei Namen auf die genaue Schreibweise."
+   },
+   {
+    "img": "💪🐝",
+    "text": "Tipp: Lies die Klammer in der Frage, sie verrät die gesuchte Form. Los geht's – Brummi drückt dir alle sechs Daumen!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 34,
+  "cards": [
+   {
+    "id": "001",
+    "q": "Welche …-Konstante hat den exakten Wert 6,62607015 · 10⁻³⁴ J·s?",
+    "a": "Planck-Konstante",
+    "info": "Max Planck führte sie 1900 ein. Seit 2019 ist ihr Wert exakt festgelegt und definiert das Kilogramm.",
+    "img": "⚛️⚖️"
+   },
+   {
+    "id": "002",
+    "q": "Welche …-Konstante hat den exakten Wert 1,380649 · 10⁻²³ J/K?",
+    "a": "Boltzmann-Konstante",
+    "info": "Sie verknüpft Temperatur mit der Energie einzelner Teilchen und definiert seit 2019 das Kelvin.",
+    "img": "🌡️🎲"
+   },
+   {
+    "id": "003",
+    "q": "Welche …-Konstante hat den exakten Wert 6,02214076 · 10²³ 1/mol?",
+    "a": "Avogadro-Konstante",
+    "info": "So viele Teilchen stecken in einem Mol – seit 2019 exakt festgelegt.",
+    "img": "🧪🔢"
+   }
+  ]
+ },
+ {
+  "id": "aw-experte-sprache",
+  "version": 2,
+  "title": "Experte: Sprache & Wörter",
+  "subject": "deutsch",
+  "grades": [
+   14
+  ],
+  "emoji": "✒️",
+  "tier": "plus",
+  "description": "Seltene Fremdwörter, Wortherkunft, rhetorische Figuren, Grammatik-Fachbegriffe und knifflige Rechtschreibung für Sprachprofis.",
+  "intro": [
+   {
+    "img": "✒️🐝",
+    "text": "Expertenstufe Sprache! Die meisten Antworten tippst du selbst – und hier zählt jeder Buchstabe, auch Groß- und Kleinschreibung."
+   },
+   {
+    "img": "🎭🗣️",
+    "text": "Zeugma, Hendiadyoin, Katachrese: Die Rhetorik hat für jeden Kniff einen Namen. Wer die Namen kennt, durchschaut gute Reden schneller."
+   },
+   {
+    "img": "🌍📜",
+    "text": "Wörter wandern: Alkohol kommt aus dem Arabischen, Tohuwabohu aus dem Hebräischen. Etymologie erzählt Geschichte in einem einzigen Wort."
+   },
+   {
+    "img": "🔍📏",
+    "text": "Fachbegriffe der Grammatik und der Verslehre helfen dir, Texte präzise zu beschreiben – im Studium, im Beruf und beim Rätseln."
+   },
+   {
+    "img": "💪🐝",
+    "text": "Brummi hat den Duden unter dem Flügel. Lies die Klammer in der Frage genau, sie verrät die gesuchte Form. Los geht's!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 34,
+  "cards": [
+   {
+    "id": "001",
+    "q": "„Er nahm den Hut und Abschied.“ – Wie heißt diese Stilfigur? (Fachbegriff)",
+    "a": "Zeugma",
+    "info": "Ein Verb wird auf zwei Wörter bezogen, die nicht zusammenpassen – einmal wörtlich, einmal übertragen.",
+    "img": "🎩👋"
+   },
+   {
+    "id": "002",
+    "q": "„Er sah den Fluss. Den Fluss, der alles nahm.“ – Wie heißt diese Wiederholung? (Fachbegriff)",
+    "a": "Anadiplose",
+    "info": "Das letzte Wort einer Einheit wird zum ersten der nächsten – wie eine Kette.",
+    "img": "🔗🔁"
+   },
+   {
+    "id": "003",
+    "q": "„Wenn ich dich erwische, dann …!“ – Wie heißt der bewusste Satzabbruch? (Fachbegriff)",
+    "a": "Aposiopese",
+    "info": "Der Rest bleibt unausgesprochen und wirkt dadurch oft umso drohender oder gefühlvoller.",
+    "img": "🤐✂️"
+   }
+  ]
+ },
+ {
+  "id": "ob-abi-biologie",
+  "version": 2,
+  "title": "Abi: Stoffwechsel & Neuro",
+  "subject": "biologie",
+  "grades": [
+   11,
+   12,
+   13
+  ],
+  "emoji": "🧬",
+  "tier": "plus",
+  "description": "Zellatmung, Fotosynthese, Enzyme, Nervenzellen, Proteinbiosynthese und Evolution auf Abiturniveau.",
+  "intro": [
+   {
+    "img": "🔋🌿",
+    "text": "Jede Zelle braucht Energie: Pflanzen fangen sie mit der Fotosynthese ein, und alle Lebewesen setzen sie in der Zellatmung als ATP frei."
+   },
+   {
+    "img": "⚙️🧪",
+    "text": "Enzyme sind die Werkzeuge des Stoffwechsels: Sie senken die Aktivierungsenergie und lassen sich gezielt hemmen."
+   },
+   {
+    "img": "⚡🧠",
+    "text": "Nervenzellen rechnen mit Ionen: Na⁺ und K⁺ erzeugen Aktionspotenziale, an Synapsen übernehmen Transmitter die Botschaft."
+   },
+   {
+    "img": "🦎🌍",
+    "text": "Evolution verbindet alles: Mutation, Selektion und Gendrift verändern Populationen über Generationen hinweg."
+   },
+   {
+    "img": "🐝📝",
+    "text": "Hier tippst du die Fachbegriffe selbst ein – genau wie in der Klausur. Kleine Tippfehler verzeihe ich dir. Los geht's!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 34,
+  "cards": [
+   {
+    "id": "001",
+    "q": "Wie heißt der erste Abschnitt des Glucoseabbaus, der im Cytoplasma abläuft? (ein Wort)",
+    "a": "Glykolyse",
+    "info": "Aus einem Glucosemolekül entstehen zwei Pyruvat, netto 2 ATP und 2 NADH + H⁺.",
+    "img": "🍬✂️"
+   },
+   {
+    "id": "002",
+    "q": "Wie heißt das Enzym der inneren Mitochondrienmembran, das ATP aus ADP und Phosphat bildet? (Fachbegriff)",
+    "a": "ATP-Synthase",
+    "info": "Protonen strömen durch die ATP-Synthase zurück in die Matrix und treiben sie wie eine Turbine an.",
+    "img": "⚙️🔋"
+   },
+   {
+    "id": "003",
+    "q": "Wie heißt die ATP-Bildung, die von einem Protonengradienten über eine Membran angetrieben wird? (ein Wort)",
+    "a": "Chemiosmose",
+    "info": "Peter Mitchell erhielt dafür 1978 den Nobelpreis. Sie läuft in Mitochondrien und Chloroplasten ab.",
+    "img": "🌊⚙️"
+   }
+  ]
+ },
+ {
+  "id": "ob-abi-chemie",
+  "version": 3,
+  "title": "Abi: Organische Chemie",
+  "subject": "chemie",
+  "grades": [
+   11,
+   12,
+   13
+  ],
+  "emoji": "⚗️",
+  "tier": "plus",
+  "description": "Stoffklassen, Nomenklatur, Reaktionsmechanismen, Ester und Kunststoffe auf Abiturniveau.",
+  "intro": [
+   {
+    "img": "⚗️🌿",
+    "text": "Kohlenstoff ist der Baumeister des Lebens: Er bildet Ketten, Ringe und Millionen Verbindungen – von Aromastoffen bis zu Kunststoffen."
+   },
+   {
+    "img": "🧩🔍",
+    "text": "Funktionelle Gruppen sind die Erkennungszeichen: Sie bestimmen Stoffklasse, Name und Reaktionsverhalten eines Moleküls."
+   },
+   {
+    "img": "⚡🎯",
+    "text": "Mechanismen erklären das Warum: Wer greift wen an? Elektrophile suchen Elektronen, Nucleophile bieten sie an."
+   },
+   {
+    "img": "🧴♻️",
+    "text": "Ester duften nach Obst, Polymere stecken in Flaschen und Fasern – organische Chemie begegnet dir überall im Alltag."
+   },
+   {
+    "img": "🐝✍️",
+    "text": "Namen und Fachbegriffe tippst du selbst ein, genau wie in der Klausur. Achte auf Bindestriche und Ziffern. Los geht's!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 34,
+  "cards": [
+   {
+    "id": "001",
+    "q": "Wie heißt die Bildung eines Esters aus Carbonsäure und Alkohol? (ein Wort)",
+    "a": "Veresterung",
+    "info": "Säurekatalysierte Gleichgewichtsreaktion, bei der Wasser abgespalten wird.",
+    "img": "🍎⚗️"
+   },
+   {
+    "id": "002",
+    "q": "Wie heißt die Spaltung eines Esters mit einer Lauge, z. B. von Fett zu Seife? (ein Wort)",
+    "a": "Verseifung",
+    "info": "Es entstehen Alkohol und das Salz der Carbonsäure. Anders als die saure Hydrolyse läuft sie vollständig ab.",
+    "img": "🧼💧"
+   },
+   {
+    "id": "003",
+    "q": "Wie heißt der Ester aus Ethansäure und Ethanol? (IUPAC-Name, ein Wort)",
+    "a": "Ethylethanoat",
+    "info": "Auch Essigsäureethylester genannt – ein typisches Lösungsmittel, z. B. in Nagellackentferner.",
+    "img": "💅🍐"
+   }
+  ]
+ },
+ {
+  "id": "ob-abi-geschichte",
+  "version": 3,
+  "title": "Abi: Geschichte & Politik",
+  "subject": "geschichte",
+  "grades": [
+   11,
+   12,
+   13
+  ],
+  "emoji": "🏛️",
+  "tier": "plus",
+  "description": "Kaiserreich, Weimar, NS-Zeit, Kalter Krieg, europäische Integration und Grundgesetz auf Abiturniveau.",
+  "intro": [
+   {
+    "img": "👑⚔️",
+    "text": "Von der Kaiserkrone bis zum Grundgesetz: In nicht einmal 80 Jahren erlebte Deutschland Monarchie, Republik, Diktatur und Neuanfang."
+   },
+   {
+    "img": "📜⚖️",
+    "text": "Weimar zeigt, wie verletzlich eine Demokratie ist. Das Grundgesetz zog daraus Lehren – darum lohnt der genaue Vergleich."
+   },
+   {
+    "img": "🧱🌍",
+    "text": "Im Kalten Krieg standen sich zwei Blöcke gegenüber. Mitten durch Deutschland verlief die Grenze zwischen ihnen."
+   },
+   {
+    "img": "🤝⭐",
+    "text": "Aus Kohle und Stahl wurde die Europäische Union: Zusammenarbeit statt Krieg ist die Idee der europäischen Integration."
+   },
+   {
+    "img": "🐝📅",
+    "text": "Hier tippst du Jahreszahlen, Namen und Fachbegriffe selbst ein. Präzise Begriffe sind im Abi Gold wert. Los geht's!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 32,
+  "cards": [
+   {
+    "id": "001",
+    "q": "In welchem Jahr wurde das Deutsche Kaiserreich in Versailles proklamiert?",
+    "a": "1871",
+    "info": "Am 18. Januar 1871 wurde Wilhelm I. im Spiegelsaal zum Deutschen Kaiser ausgerufen.",
+    "img": "👑🏰"
+   },
+   {
+    "id": "002",
+    "q": "Wie hieß Bismarcks Konflikt mit der katholischen Kirche in den 1870er-Jahren? (ein Wort)",
+    "a": "Kulturkampf",
+    "info": "Dazu gehörten Kanzelparagraf, Jesuitengesetz und die Einführung der Zivilehe.",
+    "img": "⛪⚔️"
+   },
+   {
+    "id": "003",
+    "q": "Wie hieß das Gesetz von 1878, mit dem Bismarck die Sozialdemokratie bekämpfte? (ein Wort)",
+    "a": "Sozialistengesetz",
+    "info": "Es verbot sozialdemokratische Vereine und Schriften bis 1890 – die SPD wurde trotzdem stärker.",
+    "img": "🚫🌹"
+   }
+  ]
+ },
+ {
+  "id": "ob-abi-stochastik",
+  "version": 3,
+  "title": "Abi: Stochastik",
+  "subject": "mathe",
+  "grades": [
+   11,
+   12,
+   13
+  ],
+  "emoji": "🎲",
+  "tier": "plus",
+  "description": "Binomial- und Normalverteilung, bedingte Wahrscheinlichkeit und Hypothesentests auf Abiturniveau.",
+  "intro": [
+   {
+    "img": "🎲🧠",
+    "text": "Zufall ist nicht chaotisch, sondern berechenbar! In Stochastik-Aufgaben zählt genaues Lesen: Treffer, Stufen, „höchstens“ oder „mindestens“?"
+   },
+   {
+    "img": "🌳🔄",
+    "text": "Baumdiagramm und Vierfeldertafel sind deine Werkzeuge für bedingte Wahrscheinlichkeiten. Bayes dreht die Bedingung einfach um."
+   },
+   {
+    "img": "🔔📏",
+    "text": "Viele Messgrößen folgen der gaußschen Glockenkurve. Mit μ und σ kannst du Wahrscheinlichkeiten über die Standardisierung bestimmen."
+   },
+   {
+    "img": "⚖️🎯",
+    "text": "Beim Hypothesentest entscheidest du mit Daten – und weißt genau, wie groß das Risiko für einen Irrtum höchstens ist."
+   },
+   {
+    "img": "🐝🧮",
+    "text": "Taschenrechner bereit? Tipp die Ergebnisse mit Komma ein und runde genau wie angegeben. Ich fiebere mit – los geht's!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 34,
+  "cards": [
+   {
+    "id": "001",
+    "q": "X ~ B(10; 0,5). P(X = 5) auf vier Nachkommastellen?",
+    "a": "0,2461",
+    "info": "(10 über 5) · 0,5¹⁰ = 252/1024 ≈ 0,2461",
+    "img": "🎲🔟"
+   },
+   {
+    "id": "002",
+    "q": "X ~ B(5; 0,4). P(X ≥ 1) auf vier Nachkommastellen?",
+    "a": "0,9222",
+    "info": "Gegenereignis: 1 − P(X = 0) = 1 − 0,6⁵ = 1 − 0,07776 ≈ 0,9222",
+    "img": "🔄✅"
+   },
+   {
+    "id": "003",
+    "q": "X ~ B(20; 0,5). P(X ≤ 8) auf vier Nachkommastellen?",
+    "a": "0,2517",
+    "info": "Kumulierte Binomialverteilung: P(X = 0) + … + P(X = 8) ≈ 0,2517",
+    "img": "📊➕"
+   }
+  ]
+ },
+ {
+  "id": "ob-bio-genetik",
+  "version": 3,
+  "title": "Genetik",
+  "subject": "biologie",
+  "grades": [
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "emoji": "🧬",
+  "tier": "plus",
+  "description": "DNA, Proteinbiosynthese, mendelsche Regeln sowie Mitose und Meiose.",
+  "intro": [
+   {
+    "img": "🧬📏",
+    "text": "Würdest du die DNA aus einer einzigen deiner Zellen ausrollen, wäre sie rund 2 Meter lang – zusammengefaltet in einem Kern, viel kleiner als ein Staubkorn!"
+   },
+   {
+    "img": "📖🔤",
+    "text": "Stell dir die DNA als Kochbuch vor: Die Basen A, T, G und C sind die Buchstaben, ein Gen ist ein Rezept – und das fertige Gericht ist ein Protein."
+   },
+   {
+    "img": "📝🏭",
+    "text": "Proteinbiosynthese: Die Zelle schreibt das Rezept als mRNA ab (Transkription), und das Ribosom kocht danach das Protein (Translation)."
+   },
+   {
+    "img": "🔗🧠",
+    "text": "Eselsbrücke für die Basenpaare: A und T, G und C – „Apfel-Tomate, Gurke-Chili“. In der RNA ersetzt Uracil das Thymin."
+   },
+   {
+    "img": "🐝🚀",
+    "text": "Mendel, Mitose, Meiose – klingt viel, ist aber logisch. Lass uns den Code des Lebens gemeinsam knacken!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 35,
+  "cards": [
+   {
+    "id": "001",
+    "q": "Wofür steht die Abkürzung DNA (deutsch DNS)?",
+    "a": "Desoxyribonukleinsäure",
+    "choices": [
+     "Ribonukleinsäure",
+     "Desoxyribose-Nitratsäure",
+     "Diaminonukleinsäure"
+    ],
+    "img": "🧬"
+   },
+   {
+    "id": "002",
+    "q": "Die vier Basen der DNA?",
+    "a": "Adenin, Thymin, Guanin, Cytosin",
+    "choices": [
+     "Adenin, Uracil, Guanin, Cytosin",
+     "Adenin, Thymin, Guanin, Uracil",
+     "Alanin, Thymin, Glycin, Cytosin"
+    ],
+    "img": "🧬4️⃣"
+   },
+   {
+    "id": "003",
+    "q": "Welche Basen paaren sich in der DNA?",
+    "a": "A mit T und G mit C",
+    "choices": [
+     "A mit G und T mit C",
+     "A mit C und G mit T",
+     "A mit U und G mit C"
+    ],
+    "info": "Komplementäre Basenpaarung",
+    "img": "🤝🧩"
+   }
+  ]
+ },
+ {
+  "id": "ob-deutsch-epochen",
+  "version": 3,
+  "title": "Literaturepochen",
+  "subject": "deutsch",
+  "grades": [
+   11,
+   12,
+   13
+  ],
+  "emoji": "📜",
+  "tier": "plus",
+  "description": "Deutsche Literaturepochen vom Barock bis zur Nachkriegszeit: Zeiträume, Autoren, Werke.",
+  "intro": [
+   {
+    "img": "📘💔🧥",
+    "text": "1774 erschien Goethes „Werther“ – und junge Männer trugen plötzlich blauen Frack und gelbe Weste wie ihr Romanheld. Literatur konnte schon damals Trends setzen!"
+   },
+   {
+    "img": "🕰️📚",
+    "text": "Epochen sind wie Kapitel der Literaturgeschichte: Jede hat ihr Lebensgefühl, ihre Themen und typische Autoren – vom Barock bis zur Nachkriegszeit."
+   },
+   {
+    "img": "💀💡🔥🏛️",
+    "text": "Trick: Gib jeder Epoche ein Schlagwort. Barock = memento mori, Aufklärung = Vernunft, Sturm und Drang = Gefühl & Genie, Klassik = Humanität."
+   },
+   {
+    "img": "⚖️🔄",
+    "text": "Noch ein Trick: Epochen reagieren oft aufeinander – wie ein Pendel. Auf Vernunft folgt Gefühl, auf Ideal folgt Wirklichkeit. Frag dich immer: Wogegen richtet sie sich?"
+   },
+   {
+    "img": "🎓🚀",
+    "text": "Mit diesem Überblick ordnest du jeden Text im Abi sicher ein. Los geht’s mit der Zeitreise durch die Literatur!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 37,
+  "cards": [
+   {
+    "id": "001",
+    "q": "Zeitraum des Barock",
+    "a": "ca. 1600–1720",
+    "choices": [
+     "ca. 1720–1800",
+     "ca. 1767–1785",
+     "ca. 1848–1890"
+    ],
+    "img": "💀🕯️⏳"
+   },
+   {
+    "id": "002",
+    "q": "Barockmotiv: „Bedenke, dass du sterben musst“",
+    "a": "memento mori",
+    "choices": [
+     "sapere aude",
+     "l'art pour l'art",
+     "in dubio pro reo"
+    ],
+    "img": "💀⏳"
+   },
+   {
+    "id": "003",
+    "q": "Autor des Sonetts „Es ist alles eitel“",
+    "a": "Andreas Gryphius",
+    "choices": [
+     "Friedrich Schiller",
+     "Joseph von Eichendorff",
+     "Gotthold Ephraim Lessing"
+    ],
+    "img": "🥀🍂"
+   }
+  ]
+ },
+ {
+  "id": "ob-englisch-abi-vokabeln",
+  "version": 3,
+  "title": "Englisch Abi-Vokabeln",
+  "subject": "englisch",
+  "grades": [
+   10,
+   11,
+   12,
+   13
+  ],
+  "emoji": "🌍",
+  "tier": "plus",
+  "description": "Anspruchsvolle Vokabeln zu Politik, Umwelt und Gesellschaft für Oberstufe und Abitur.",
+  "intro": [
+   {
+    "img": "🏛️🔤",
+    "text": "Wusstest du, dass ein großer Teil des englischen Wortschatzes aus dem Lateinischen und Französischen stammt? Gerade die Abi-Wörter sind oft solche Lehnwörter."
+   },
+   {
+    "img": "♻️🌍",
+    "text": "Hier geht’s um Wörter zu Umwelt, Politik und Gesellschaft – genau das, was du in Klausuren, Comments und der mündlichen Prüfung brauchst."
+   },
+   {
+    "img": "🧩🔍",
+    "text": "Lerntrick: Zerleg Wörter in Bausteine. sustain-abil-ity, re-new-able – wer die Wortfamilie kennt, erschließt sich auch unbekannte Wörter."
+   },
+   {
+    "img": "📝💬",
+    "text": "Noch ein Trick: Lern Vokabeln in Kollokationen, z. B. „to tackle climate change“. So klingt dein Englisch gleich viel natürlicher."
+   },
+   {
+    "img": "🎯🚀",
+    "text": "Jedes Wort hier ist ein Punktgewinn im Abi. Let’s get started!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 37,
+  "cards": [
+   {
+    "id": "001",
+    "q": "die Nachhaltigkeit",
+    "a": "sustainability",
+    "choices": [
+     "sustenance",
+     "durability",
+     "viability"
+    ],
+    "img": "♻️🌱"
+   },
+   {
+    "id": "002",
+    "q": "der Klimawandel",
+    "a": "climate change",
+    "img": "🌡️🌍"
+   },
+   {
+    "id": "003",
+    "q": "erneuerbare Energien",
+    "a": "renewable energy",
+    "choices": [
+     "recycled energy",
+     "reusable energy",
+     "renewed energy"
+    ],
+    "img": "☀️🌬️"
+   }
+  ]
+ },
+ {
+  "id": "ob-mathe-analysis",
+  "version": 3,
+  "title": "Analysis kompakt",
+  "subject": "mathe",
+  "grades": [
+   11,
+   12,
+   13
+  ],
+  "emoji": "📈",
+  "tier": "plus",
+  "description": "Ableitungsregeln, Stammfunktionen und Kurvendiskussion für die Oberstufe.",
+  "intro": [
+   {
+    "img": "🚗⏱️",
+    "text": "Dein Tacho zeigt nicht, wie schnell du im Schnitt warst, sondern genau jetzt – das ist Analysis: Die Momentangeschwindigkeit ist eine Ableitung!"
+   },
+   {
+    "img": "⛷️⛰️",
+    "text": "Stell dir den Graphen als Skipiste vor: Die Ableitung f'(x) sagt dir an jeder Stelle, wie steil es gerade bergauf oder bergab geht."
+   },
+   {
+    "img": "⬇️🔢",
+    "text": "Eselsbrücke Potenzregel: „Exponent nach vorn, dann eins weniger.“ Aus x³ wird 3x², aus x⁵ wird 5x⁴."
+   },
+   {
+    "img": "📈🔍",
+    "text": "Bei f'(x) = 0 ist die Piste flach – dort können Hoch- und Tiefpunkte liegen. Die Stammfunktion geht den Weg rückwärts und hilft, Flächen zu berechnen."
+   },
+   {
+    "img": "🐝💪",
+    "text": "Ableiten, Integrieren, Kurvendiskussion – mit diesen Regeln im Kopf rockst du jede Abi-Aufgabe. Los geht's!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 36,
+  "cards": [
+   {
+    "id": "001",
+    "q": "Ableitung von f(x) = xⁿ?",
+    "a": "f'(x) = n · xⁿ⁻¹",
+    "choices": [
+     "f'(x) = xⁿ⁺¹/(n + 1)",
+     "f'(x) = n · xⁿ",
+     "f'(x) = (n − 1) · xⁿ"
+    ],
+    "info": "Potenzregel",
+    "img": "⬇️🔢"
+   },
+   {
+    "id": "002",
+    "q": "Ableitung von f(x) = x³?",
+    "a": "f'(x) = 3x²",
+    "choices": [
+     "f'(x) = 3x³",
+     "f'(x) = x²",
+     "f'(x) = 3x"
+    ],
+    "img": "3️⃣⬇️"
+   },
+   {
+    "id": "003",
+    "q": "Ableitung einer Konstanten?",
+    "a": "0",
+    "info": "Eine waagerechte Gerade hat Steigung 0.",
+    "img": "🧱0️⃣"
+   }
+  ]
+ },
+ {
+  "id": "ob-physik-konstanten-begriffe",
+  "version": 3,
+  "title": "Naturkonstanten & Begriffe",
+  "subject": "physik",
+  "grades": [
+   10,
+   11,
+   12,
+   13
+  ],
+  "emoji": "⚛️",
+  "tier": "plus",
+  "description": "Wichtige Naturkonstanten mit Wert und Einheit sowie Kernbegriffe aus Mechanik, E-Lehre und Quantenphysik.",
+  "intro": [
+   {
+    "img": "💡🌍",
+    "text": "Licht schafft rund 300 000 km pro Sekunde – damit könnte es die Erde in einer Sekunde etwa 7,5-mal umrunden!"
+   },
+   {
+    "img": "📜🌌",
+    "text": "Naturkonstanten sind wie die festen Spielregeln des Universums: Ob hier oder in einer fernen Galaxie – c, e und h haben überall denselben Wert."
+   },
+   {
+    "img": "⚡🔢",
+    "text": "Eselsbrücke: c ≈ 3 · 10⁸ m/s – „eine Drei mit acht Nullen“. Und jede frei vorkommende Ladung ist ein ganzzahliges Vielfaches der Elementarladung e ≈ 1,602 · 10⁻¹⁹ C."
+   },
+   {
+    "img": "⚛️🔦",
+    "text": "In der Quantenwelt kommt Licht in Päckchen: Ein Photon hat die Energie E = h · f. Je höher die Frequenz, desto energiereicher das Päckchen."
+   },
+   {
+    "img": "🐝🎯",
+    "text": "Konstanten, Gesetze, Quanten – das ist das Werkzeug echter Physiker. Schnapp es dir, wir starten!"
+   }
+  ],
+  "preview": true,
+  "cardTotal": 36,
+  "cards": [
+   {
+    "id": "001",
+    "q": "Lichtgeschwindigkeit im Vakuum c?",
+    "a": "≈ 3,00 · 10⁸ m/s",
+    "choices": [
+     "≈ 3,00 · 10⁶ m/s",
+     "≈ 3,00 · 10⁸ km/s",
+     "≈ 3,43 · 10² m/s"
+    ],
+    "info": "Exakt 299 792 458 m/s; 343 m/s ist die Schallgeschwindigkeit in Luft.",
+    "img": "💡🚀"
+   },
+   {
+    "id": "002",
+    "q": "Elementarladung e?",
+    "a": "≈ 1,602 · 10⁻¹⁹ C",
+    "choices": [
+     "≈ 9,109 · 10⁻³¹ C",
+     "≈ 1,602 · 10¹⁹ C",
+     "≈ 6,022 · 10⁻²³ C"
+    ],
+    "img": "⚡"
+   },
+   {
+    "id": "003",
+    "q": "Plancksches Wirkungsquantum h?",
+    "a": "≈ 6,626 · 10⁻³⁴ J · s",
+    "choices": [
+     "≈ 6,626 · 10⁻³⁴ J/s",
+     "≈ 6,674 · 10⁻¹¹ J · s",
+     "≈ 6,626 · 10³⁴ J · s"
+    ],
+    "img": "⚛️"
+   }
+  ]
+ }
+]

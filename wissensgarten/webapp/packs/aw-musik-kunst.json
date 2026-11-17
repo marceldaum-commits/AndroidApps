@@ -1,6 +1,6 @@
 {
   "id": "aw-musik-kunst",
-  "version": 2,
+  "version": 3,
   "title": "Musik und Kunst",
   "subject": "musik",
   "grades": [
@@ -95,7 +95,7 @@
     },
     {
       "id": "006",
-      "q": "Wer komponierte „Die vier Jahreszeiten“?",
+      "q": "Wer komponierte „Die vier Jahreszeiten“? (Vor- und Nachname)",
       "a": "Antonio Vivaldi",
       "img": "🌸☀️🍂"
     },
@@ -112,7 +112,7 @@
     },
     {
       "id": "008",
-      "q": "Wer komponierte die „Wassermusik“?",
+      "q": "Wer komponierte die „Wassermusik“? (Vor- und Nachname)",
       "a": "Georg Friedrich Händel",
       "img": "⛵🎺🌊"
     },
@@ -182,6 +182,11 @@
       "id": "015",
       "q": "Was bedeutet „crescendo“?",
       "a": "Allmählich lauter werden",
+      "choices": [
+        "Allmählich leiser werden",
+        "Allmählich schneller werden",
+        "Allmählich langsamer werden"
+      ],
       "img": "📈🔊"
     },
     {
@@ -290,7 +295,7 @@
     },
     {
       "id": "027",
-      "q": "Wer malte „Der Schrei“?",
+      "q": "Wer malte „Der Schrei“? (Vor- und Nachname)",
       "a": "Edvard Munch",
       "img": "😱🌅"
     },
@@ -325,7 +330,7 @@
     },
     {
       "id": "031",
-      "q": "Welcher deutsche Künstler schuf 1502 das berühmte Bild „Feldhase“?",
+      "q": "Welcher deutsche Künstler schuf 1502 das berühmte Bild „Feldhase“? (Vor- und Nachname)",
       "a": "Albrecht Dürer",
       "img": "🐇🎨"
     },

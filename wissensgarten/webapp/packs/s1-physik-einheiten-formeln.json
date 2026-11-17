@@ -1,6 +1,6 @@
 {
   "id": "s1-physik-einheiten-formeln",
-  "version": 2,
+  "version": 3,
   "title": "Physik: Einheiten & Formeln",
   "subject": "physik",
   "grades": [
@@ -23,7 +23,7 @@
     },
     {
       "img": "💧🚰",
-      "text": "Strom ist wie Wasser im Rohr: Die Spannung U ist der Druck, die Stromstärke I die Wassermenge, der Widerstand R ein enges Rohr."
+      "text": "Strom ist wie Wasser im Rohr: Die Spannung U ist der Druck, die Stromstärke I die Wassermenge pro Sekunde, der Widerstand R ein enges Rohr."
     },
     {
       "img": "🧠⚡",
@@ -70,8 +70,8 @@
     },
     {
       "id": "004",
-      "q": "SI-Einheit des Drucks?",
-      "a": "Pascal (Pa)",
+      "q": "SI-Einheit des Drucks (Name der Einheit)?",
+      "a": "Pascal",
       "info": "1 Pa = 1 N/m²; 1 bar = 100 000 Pa",
       "img": "👠"
     },
@@ -88,15 +88,17 @@
     },
     {
       "id": "006",
-      "q": "SI-Einheit der elektrischen Spannung?",
-      "a": "Volt (V)",
-      "img": "⚡"
+      "q": "SI-Einheit der elektrischen Spannung (Name der Einheit)?",
+      "a": "Volt",
+      "img": "⚡",
+      "info": "Einheitenzeichen: V"
     },
     {
       "id": "007",
-      "q": "SI-Einheit des elektrischen Widerstands?",
-      "a": "Ohm (Ω)",
-      "img": "🚧"
+      "q": "SI-Einheit des elektrischen Widerstands (Name der Einheit)?",
+      "a": "Ohm",
+      "img": "🚧",
+      "info": "Einheitenzeichen: Ω"
     },
     {
       "id": "008",
@@ -112,8 +114,8 @@
     },
     {
       "id": "009",
-      "q": "SI-Einheit der elektrischen Ladung?",
-      "a": "Coulomb (C)",
+      "q": "SI-Einheit der elektrischen Ladung (Name der Einheit)?",
+      "a": "Coulomb",
       "info": "1 C = 1 A · s",
       "img": "🎈⚡"
     },
@@ -132,6 +134,11 @@
       "id": "011",
       "q": "Die sieben SI-Basiseinheiten?",
       "a": "Meter, Kilogramm, Sekunde, Ampere, Kelvin, Mol, Candela",
+      "choices": [
+        "Meter, Gramm, Sekunde, Ampere, Kelvin, Mol, Candela",
+        "Meter, Kilogramm, Sekunde, Volt, Kelvin, Mol, Candela",
+        "Meter, Kilogramm, Stunde, Ampere, Grad Celsius, Mol, Candela"
+      ],
       "img": "7️⃣📏"
     },
     {
@@ -184,6 +191,11 @@
       "id": "016",
       "q": "Was bedeutet die Vorsilbe Mikro (µ)?",
       "a": "10⁻⁶",
+      "choices": [
+        "10⁶",
+        "10⁻³",
+        "10⁻⁹"
+      ],
       "img": "🔬"
     },
     {
@@ -213,11 +225,16 @@
       "id": "019",
       "q": "Formel für die Beschleunigung?",
       "a": "a = Δv / Δt",
+      "choices": [
+        "a = Δv · Δt",
+        "a = Δt / Δv",
+        "a = Δs / Δt"
+      ],
       "img": "🚀"
     },
     {
       "id": "020",
-      "q": "Zweites Newtonsches Gesetz (Grundgleichung der Mechanik)?",
+      "q": "Zweites newtonsches Gesetz (Grundgleichung der Mechanik)?",
       "a": "F = m · a",
       "choices": [
         "F = m / a",
@@ -230,6 +247,11 @@
       "id": "021",
       "q": "Formel für die Gewichtskraft?",
       "a": "F_G = m · g",
+      "choices": [
+        "F_G = m / g",
+        "F_G = g / m",
+        "F_G = m · v"
+      ],
       "img": "⚖️🌍"
     },
     {
@@ -270,6 +292,11 @@
       "id": "025",
       "q": "Formel für die mechanische Arbeit (Kraft in Wegrichtung)?",
       "a": "W = F · s",
+      "choices": [
+        "W = F / s",
+        "W = s / F",
+        "W = m · s"
+      ],
       "img": "🛒"
     },
     {
@@ -298,12 +325,22 @@
       "id": "028",
       "q": "Formel für die potenzielle Energie (Lageenergie)?",
       "a": "E_pot = m · g · h",
+      "choices": [
+        "E_pot = m · h",
+        "E_pot = ½ · m · v²",
+        "E_pot = m · g / h"
+      ],
       "img": "🎢"
     },
     {
       "id": "029",
       "q": "Hebelgesetz?",
       "a": "F₁ · l₁ = F₂ · l₂",
+      "choices": [
+        "F₁ · F₂ = l₁ · l₂",
+        "F₁ / l₁ = F₂ / l₂",
+        "F₁ + l₁ = F₂ + l₂"
+      ],
       "info": "Kraft mal Kraftarm = Last mal Lastarm",
       "img": "🏗️"
     },
@@ -334,12 +371,22 @@
       "id": "032",
       "q": "Formel für die elektrische Leistung?",
       "a": "P = U · I",
+      "choices": [
+        "P = U / I",
+        "P = R · I",
+        "P = U · t"
+      ],
       "img": "💡⚡"
     },
     {
       "id": "033",
       "q": "Formel für die elektrische Energie?",
       "a": "E = U · I · t",
+      "choices": [
+        "E = U · I / t",
+        "E = U · R · t",
+        "E = U · t / I"
+      ],
       "info": "Gleichwertig: E = P · t",
       "img": "🧾⚡"
     },
@@ -358,12 +405,22 @@
       "id": "035",
       "q": "Gesamtwiderstand bei Parallelschaltung?",
       "a": "1/R = 1/R₁ + 1/R₂",
+      "choices": [
+        "R = R₁ + R₂",
+        "1/R = R₁ + R₂",
+        "R = 1/R₁ + 1/R₂"
+      ],
       "img": "🛤️"
     },
     {
       "id": "036",
       "q": "Wirkungsgrad η?",
       "a": "η = E_nutz / E_zu",
+      "choices": [
+        "η = E_zu / E_nutz",
+        "η = E_nutz · E_zu",
+        "η = E_zu − E_nutz"
+      ],
       "info": "Er ist immer kleiner als 1 (100 %).",
       "img": "🎯"
     },
@@ -371,6 +428,11 @@
       "id": "037",
       "q": "Zusammenhang Wellenlänge λ, Frequenz f und Ausbreitungsgeschwindigkeit c?",
       "a": "c = λ · f",
+      "choices": [
+        "c = λ / f",
+        "c = f / λ",
+        "λ = c · f"
+      ],
       "img": "🌊"
     }
   ]

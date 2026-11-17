@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-algebra",
-  "version": 2,
+  "version": 3,
   "title": "Algebra & Funktionen",
   "subject": "mathe",
   "grades": [
@@ -154,6 +154,11 @@
       "id": "011",
       "q": "a^(1/2) als Wurzel geschrieben?",
       "a": "√a",
+      "choices": [
+        "a/2",
+        "a²",
+        "1/a²"
+      ],
       "info": "Allgemein: a^(1/n) ist die n-te Wurzel aus a.",
       "img": "🌱"
     },
@@ -190,12 +195,22 @@
       "id": "015",
       "q": "√a · √b = ? (a, b ≥ 0)",
       "a": "√(a · b)",
+      "choices": [
+        "√(a + b)",
+        "a · b",
+        "2 · √(a · b)"
+      ],
       "img": "🌱🤝"
     },
     {
       "id": "016",
       "q": "Allgemeine Form einer linearen Funktion?",
       "a": "f(x) = m · x + b",
+      "choices": [
+        "f(x) = a · x² + b",
+        "f(x) = m · x · b",
+        "f(x) = m / x + b"
+      ],
       "info": "m ist die Steigung, b der y-Achsenabschnitt.",
       "img": "📏"
     },
@@ -226,6 +241,11 @@
       "id": "019",
       "q": "Formel für die Steigung durch zwei Punkte?",
       "a": "m = (y₂ − y₁)/(x₂ − x₁)",
+      "choices": [
+        "m = (x₂ − x₁)/(y₂ − y₁)",
+        "m = (y₂ + y₁)/(x₂ + x₁)",
+        "m = (y₂ − x₂)/(y₁ − x₁)"
+      ],
       "info": "„Höhenunterschied durch Längenunterschied“",
       "img": "📐"
     },
@@ -245,12 +265,22 @@
       "id": "021",
       "q": "Wann sind zwei Geraden parallel?",
       "a": "Wenn sie die gleiche Steigung haben",
+      "choices": [
+        "Wenn sie den gleichen y-Achsenabschnitt haben",
+        "Wenn ihre Steigungen zusammen 0 ergeben",
+        "Wenn m₁ · m₂ = −1 gilt"
+      ],
       "img": "🛤️"
     },
     {
       "id": "022",
       "q": "Wann stehen zwei Geraden senkrecht aufeinander?",
       "a": "Wenn m₁ · m₂ = −1 gilt",
+      "choices": [
+        "Wenn m₁ · m₂ = 1 gilt",
+        "Wenn m₁ = m₂ gilt",
+        "Wenn m₁ + m₂ = 0 gilt"
+      ],
       "img": "➕"
     },
     {
@@ -279,6 +309,11 @@
       "id": "025",
       "q": "Funktionsgleichung der Normalparabel?",
       "a": "f(x) = x²",
+      "choices": [
+        "f(x) = 2x",
+        "f(x) = x³",
+        "f(x) = x² + 1"
+      ],
       "img": "🥣"
     },
     {
@@ -307,6 +342,11 @@
       "id": "028",
       "q": "Was muss vor der p-q-Formel gelten?",
       "a": "Normalform: Faktor vor x² ist 1",
+      "choices": [
+        "Die Diskriminante muss positiv sein",
+        "Es darf keinen x-Term geben",
+        "q muss größer als 0 sein"
+      ],
       "info": "Sonst zuerst durch den Faktor vor x² teilen.",
       "img": "🧹"
     },
@@ -336,12 +376,22 @@
       "id": "031",
       "q": "Satz von Vieta für x² + px + q = 0?",
       "a": "x₁ + x₂ = −p und x₁ · x₂ = q",
+      "choices": [
+        "x₁ + x₂ = p und x₁ · x₂ = q",
+        "x₁ + x₂ = −p und x₁ · x₂ = −q",
+        "x₁ + x₂ = q und x₁ · x₂ = −p"
+      ],
       "img": "🧩"
     },
     {
       "id": "032",
       "q": "Drei Lösungsverfahren für lineare Gleichungssysteme?",
       "a": "Gleichsetzungs-, Einsetzungs-, Additionsverfahren",
+      "choices": [
+        "Gleichsetzungs-, Einsetzungs-, Divisionsverfahren",
+        "Ausklammer-, Einsetzungs-, Additionsverfahren",
+        "Gleichsetzungs-, Kürzungs-, Additionsverfahren"
+      ],
       "img": "🔱"
     }
   ]

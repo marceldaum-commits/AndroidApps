@@ -15,10 +15,10 @@ import java.net.URL
  * der Server sieht nur, wie bei jedem Webseitenaufruf, die IP-Adresse.
  */
 object PackDownloader {
-    suspend fun fetch(context: Context, known: Map<String, Int>): Int = withContext(Dispatchers.IO) {
+    suspend fun fetch(context: Context, known: Map<String, Int>, base: String = BuildConfig.PACKS_URL, license: String? = null): Int = withContext(Dispatchers.IO) {
         val dir = AppContainer.remotePackDir(context)
         PackUpdates(
-            get = { name -> download(BuildConfig.PACKS_URL + name) },
+            get = { name -> download(base + name, license) },
             save = { name, text ->
                 val tmp = File(dir, "$name.tmp")
                 tmp.writeText(text)
@@ -27,10 +27,11 @@ object PackDownloader {
         ).fetch(known)
     }
 
-    private fun download(url: String): String? = runCatching {
+    private fun download(url: String, license: String? = null): String? = runCatching {
         val c = (URL(url).openConnection() as HttpURLConnection).apply {
             connectTimeout = 10_000; readTimeout = 15_000; instanceFollowRedirects = false
             setRequestProperty("User-Agent", "Wissensgarten")
+            if (license != null) { setRequestProperty("X-Lizenz", license); useCaches = false }
         }
         try {
             if (c.responseCode != 200) return@runCatching null

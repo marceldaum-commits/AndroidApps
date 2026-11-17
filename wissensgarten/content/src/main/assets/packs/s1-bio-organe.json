@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-organe",
-  "version": 1,
+  "version": 2,
   "title": "Organe und Gesundheit",
   "subject": "biologie",
   "grades": [
@@ -283,7 +283,7 @@
         "Rückenmark und Herz",
         "Die Nerven in Armen und Beinen"
       ],
-      "info": "Die Nerven im übrigen Körper bilden das periphere Nervensystem. Sie melden alles an die Zentrale.",
+      "info": "Die Nerven im übrigen Körper bilden das periphere Nervensystem. Sie leiten Meldungen zur Zentrale und Befehle zurück.",
       "img": "🧠🦴"
     },
     {

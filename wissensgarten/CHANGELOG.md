@@ -3,6 +3,29 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.26.0 – Große Korrektheitsprüfung (17.11.2026)
+- **Alle 2.923 Karten noch einmal einzeln geprüft** – von einer zweiten, unabhängigen Stelle. 233 Verbesserungen: genauere Fakten, eindeutigere Fragen, bessere Rechtschreibung.
+- **Eintippen ist fairer:** Groß/klein, Bindestriche, Artikel, Akzente und ein Punkt am Ende zählen nicht mehr als Fehler (außer in Deutsch, wo es um die Schreibung geht). „Kiew“ zählt auch für „Kyjiw (Kiew)“.
+- Lange Antworten (Sätze, Listen) werden nicht mehr zum Eintippen verlangt – da gibt es Auswahl oder „erst überlegen, dann aufdecken“.
+- Dein Lernstand bleibt vollständig erhalten.
+
+## 0.25.1 – Plus-Pakete kommen sicher an (17.11.2026)
+- Behoben: Nach dem Freischalten wurden die Abi- und Experten-Pakete nicht geladen, weil die Vorschau in der Samenhandlung als „schon vorhanden“ galt. Jetzt holt Brummi sie direkt nach dem Freischalten.
+- Behoben (WebApp): Die Plus-Liste und Plus-Inhalte landen nicht mehr im Offline-Speicher des Browsers – so kommen neue Plus-Pakete zuverlässig an.
+
+## 0.25.0 – Plus kann jetzt gekauft werden (16.11.2026)
+- **Wissensgarten Plus ist da:** im Eltern-Bereich für 19,99 € pro Jahr oder 49,99 € für immer (inkl. MwSt.) – kein Abo. Der Code kommt per E-Mail und gilt auf allen Geräten der Familie.
+- **Frei bleibt:** alle 72 Pakete von Klasse 1 bis 10 und alle Spielarten. Schon gepflanzte Beete bleiben immer lernbar.
+- **Plus-Pakete** (Abi und Experte) zeigt die Samenhandlung mit „🌟 Plus“ und Beispielkarten; nach dem Kauf lädt Brummi sie automatisch.
+- **7 Tage gratis testen:** mehr Profile und der Wochenbericht – ohne Zahlungsdaten, endet von allein.
+
+## 0.24.0 – Wissensgarten Plus (16.11.2026)
+- **Alles Wichtige bleibt frei:** alle Wissenspakete von Klasse 1 bis 10 und alle Spielarten – ohne Werbung, für immer.
+- **Neu: Wissensgarten Plus 🌟** (freiwillig, nur im Eltern-Bereich hinter dem Eltern-Tor): Abi- und Experten-Pakete, jeden Monat neue Plus-Pakete, bis zu 6 Profile und der Wochenbericht.
+- **7 Tage gratis testen** – ohne Zahlungsdaten, endet von allein. Danach 19,99 € für ein Jahr oder 49,99 € für immer (inkl. MwSt.) – kein Abo, nichts verlängert sich.
+- **Freischalten ohne Konto:** Nach dem Kauf kommt ein Code per E-Mail – Link antippen oder Code im Eltern-Bereich einfügen. Er gilt auf allen Geräten der Familie.
+- Solange der Kauf noch nicht eingerichtet ist, bleibt alles frei. In der Play-Store-Version gibt es vorerst keine Käufe.
+
 ## 0.23.0 – Vom Keimling zum Profi (16.11.2026)
 - **Es wird nachweislich immer schwerer:** Je besser eine Karte sitzt, desto kniffliger wird sie abgefragt – erst wenige, leicht unterscheidbare Antworten, dann mehr und sehr ähnliche, dann immer öfter frei eintippen. Auf der **Profi-Stufe 🏆** gibt es gar keine Auswahl mehr: ganz aus dem Kopf.
 - Oben in der Gieß-Runde zeigt ein Abzeichen die Stufe der Karte: 🌱 Leicht · 🌿 Mittel · 🌳 Knifflig · 🌸 Schwer · 🏆 Profi.

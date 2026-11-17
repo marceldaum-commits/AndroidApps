@@ -1,6 +1,6 @@
 {
   "id": "s1-politik-grundgesetz",
-  "version": 3,
+  "version": 4,
   "title": "Grundgesetz und Staat",
   "subject": "politik",
   "grades": [
@@ -18,11 +18,11 @@
   "intro": [
     {
       "img": "📜",
-      "text": "„Die Würde des Menschen ist unantastbar.“ Mit diesem Satz beginnen die Grundrechte unseres Grundgesetzes – seit dem 23. Mai 1949."
+      "text": "„Die Würde des Menschen ist unantastbar.“ Mit diesem Satz beginnen die Grundrechte unseres Grundgesetzes – verkündet am 23. Mai 1949."
     },
     {
       "img": "⚖️👧👦",
-      "text": "Gewaltenteilung ist wie drei Kinder, die sich gegenseitig aufpassen: Eins macht Regeln (Legislative), eins führt sie aus (Exekutive), eins schlichtet (Judikative)."
+      "text": "Gewaltenteilung ist wie drei Kinder, die aufeinander aufpassen: Eins macht Regeln (Legislative), eins führt sie aus (Exekutive), eins schlichtet (Judikative)."
     },
     {
       "img": "🗳️",
@@ -52,7 +52,7 @@
     {
       "id": "002",
       "q": "Wie lautet Artikel 1, Satz 1 des Grundgesetzes?",
-      "a": "Die Würde des Menschen ist unantastbar.",
+      "a": "Die Würde des Menschen ist unantastbar",
       "img": "💎👤"
     },
     {
@@ -92,6 +92,11 @@
       "id": "006",
       "q": "Was bedeutet Gewaltenteilung?",
       "a": "Trennung von Gesetzgebung, Regierung und Rechtsprechung",
+      "choices": [
+        "Trennung von Staat und Kirche",
+        "Verteilung der Ministerien auf die Parteien",
+        "Aufteilung der Steuern zwischen Bund und Ländern"
+      ],
       "info": "Legislative, Exekutive und Judikative kontrollieren sich gegenseitig.",
       "img": "🏛️✂️3️⃣"
     },
@@ -110,6 +115,11 @@
       "id": "008",
       "q": "Welche fünf Grundsätze gelten für die Bundestagswahl?",
       "a": "Allgemein, unmittelbar, frei, gleich, geheim",
+      "choices": [
+        "Allgemein, unmittelbar, frei, gleich, öffentlich",
+        "Allgemein, mittelbar, frei, gleich, geheim",
+        "Allgemein, unmittelbar, frei, gleich, verpflichtend"
+      ],
       "info": "Sie stehen in Artikel 38 des Grundgesetzes.",
       "img": "🗳️5️⃣"
     },
@@ -139,6 +149,11 @@
       "id": "011",
       "q": "Was wählt man mit der Erststimme?",
       "a": "Eine Direktkandidatin bzw. einen Direktkandidaten",
+      "choices": [
+        "Eine Partei mit ihrer Landesliste",
+        "Die Bundeskanzlerin bzw. den Bundeskanzler",
+        "Den Bundespräsidenten bzw. die Bundespräsidentin"
+      ],
       "img": "☝️🧑"
     },
     {
@@ -201,6 +216,11 @@
       "id": "017",
       "q": "Wer gehört zur Bundesversammlung?",
       "a": "Alle Bundestagsabgeordneten und ebenso viele Ländervertreter",
+      "choices": [
+        "Alle Bundestagsabgeordneten und alle Ministerpräsidenten",
+        "Nur die Mitglieder des Bundesrats",
+        "Alle Bundestagsabgeordneten und die Bundesregierung"
+      ],
       "img": "🏛️🤝🗺️"
     },
     {
@@ -241,6 +261,11 @@
       "id": "021",
       "q": "Wer bestimmt die Richtlinien der Politik?",
       "a": "Der Bundeskanzler bzw. die Bundeskanzlerin",
+      "choices": [
+        "Der Bundespräsident bzw. die Bundespräsidentin",
+        "Die Bundestagspräsidentin bzw. der Bundestagspräsident",
+        "Der Bundesrat"
+      ],
       "info": "Das nennt man Richtlinienkompetenz (Artikel 65).",
       "img": "🧭🏛️"
     },
@@ -248,6 +273,11 @@
       "id": "022",
       "q": "Wie kann der Bundestag einen Kanzler vorzeitig abwählen?",
       "a": "Konstruktives Misstrauensvotum: Wahl eines Nachfolgers",
+      "choices": [
+        "Einfaches Misstrauensvotum: Abstimmung ohne Nachfolger",
+        "Amtsenthebung durch das Bundesverfassungsgericht",
+        "Volksentscheid über den Kanzler"
+      ],
       "info": "Bisher gelang das nur einmal: 1982 wurde Helmut Kohl so Kanzler.",
       "img": "🔄🗳️"
     },
@@ -266,6 +296,11 @@
       "id": "024",
       "q": "Was schützt die „Ewigkeitsklausel“ (Art. 79 Abs. 3)?",
       "a": "Grundsätze aus Art. 1 und 20, Gliederung in Länder",
+      "choices": [
+        "Alle Artikel des Grundgesetzes",
+        "Die Zahl der Länder und die Hauptstadt Berlin",
+        "Die Fünfprozenthürde und das Wahlalter"
+      ],
       "info": "Diese Teile dürfen auch mit Zweidrittelmehrheit nicht abgeschafft werden.",
       "img": "🔒♾️"
     },
@@ -284,6 +319,11 @@
       "id": "026",
       "q": "Was besagt das freie Mandat der Abgeordneten?",
       "a": "Sie sind nur ihrem Gewissen unterworfen",
+      "choices": [
+        "Sie müssen immer wie ihre Fraktion abstimmen",
+        "Sie sind an Weisungen ihrer Partei gebunden",
+        "Sie sind nur dem Bundeskanzler verantwortlich"
+      ],
       "info": "Sie sind an Aufträge und Weisungen nicht gebunden (Art. 38).",
       "img": "🧠🙋"
     },
@@ -291,6 +331,11 @@
       "id": "027",
       "q": "Welche Farben hat die Bundesflagge?",
       "a": "Schwarz, Rot, Gold",
+      "choices": [
+        "Schwarz, Weiß, Rot",
+        "Rot, Gold, Grün",
+        "Blau, Weiß, Rot"
+      ],
       "img": "⚫❤️💛"
     },
     {
@@ -326,6 +371,11 @@
       "id": "031",
       "q": "Wie oft wird das Europäische Parlament gewählt?",
       "a": "Alle 5 Jahre",
+      "choices": [
+        "Alle 4 Jahre",
+        "Alle 6 Jahre",
+        "Alle 7 Jahre"
+      ],
       "img": "🗳️5️⃣🔁"
     },
     {

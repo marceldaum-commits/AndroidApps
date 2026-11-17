@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-oekologie",
-  "version": 2,
+  "version": 3,
   "title": "Ökologie",
   "subject": "biologie",
   "grades": [
@@ -62,6 +62,11 @@
       "id": "003",
       "q": "Gleichung der Zellatmung?",
       "a": "C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O",
+      "choices": [
+        "6 CO₂ + 6 H₂O → C₆H₁₂O₆ + 6 O₂",
+        "C₆H₁₂O₆ + 6 CO₂ → 6 O₂ + 6 H₂O",
+        "C₆H₁₂O₆ + 6 H₂O → 6 CO₂ + 6 O₂"
+      ],
       "info": "Dabei wird Energie freigesetzt – die Umkehrung der Fotosynthese.",
       "img": "🔥🍬"
     },
@@ -97,6 +102,11 @@
       "id": "007",
       "q": "Öffnungen an der Blattunterseite für den Gasaustausch?",
       "a": "Spaltöffnungen (Stomata)",
+      "choices": [
+        "Blattadern (Leitbündel)",
+        "Blattgrünkörner (Chloroplasten)",
+        "Wurzelhaare (Rhizodermis)"
+      ],
       "img": "👄🍃"
     },
     {
@@ -127,6 +137,11 @@
       "id": "010",
       "q": "Wie nennt man Pflanzenfresser in einer Nahrungskette?",
       "a": "Primärkonsumenten (Konsumenten 1. Ordnung)",
+      "choices": [
+        "Sekundärkonsumenten (Konsumenten 2. Ordnung)",
+        "Produzenten (Erzeuger)",
+        "Destruenten (Zersetzer)"
+      ],
       "img": "🐄"
     },
     {
@@ -156,6 +171,11 @@
       "id": "013",
       "q": "Was ist ein Nahrungsnetz?",
       "a": "Mehrere miteinander verknüpfte Nahrungsketten",
+      "choices": [
+        "Eine einzelne, besonders lange Nahrungskette",
+        "Das Netz einer Spinne beim Beutefang",
+        "Alle Pflanzen eines Lebensraums"
+      ],
       "img": "🕸️"
     },
     {
@@ -174,12 +194,22 @@
       "id": "015",
       "q": "Was ist ein Biotop?",
       "a": "Der Lebensraum mit seinen unbelebten Bedingungen",
+      "choices": [
+        "Die Lebensgemeinschaft aller Lebewesen in einem Gebiet",
+        "Alle Individuen einer Art in einem Gebiet",
+        "Die Rolle einer Art im Ökosystem"
+      ],
       "img": "🏞️"
     },
     {
       "id": "016",
       "q": "Was ist eine Biozönose?",
       "a": "Die Lebensgemeinschaft aller Lebewesen in einem Biotop",
+      "choices": [
+        "Der Lebensraum mit seinen unbelebten Bedingungen",
+        "Alle Individuen einer Art in einem Biotop",
+        "Das Zusammenleben zweier Arten zum Vorteil beider"
+      ],
       "img": "🐾"
     },
     {
@@ -197,6 +227,11 @@
       "id": "018",
       "q": "Was ist eine Population?",
       "a": "Alle Individuen einer Art in einem Gebiet zur gleichen Zeit",
+      "choices": [
+        "Alle Lebewesen verschiedener Arten in einem Gebiet",
+        "Alle Ansprüche einer Art an ihre Umwelt",
+        "Alle Arten einer Gattung auf der ganzen Erde"
+      ],
       "img": "🐟🐟🐟"
     },
     {
@@ -214,6 +249,11 @@
       "id": "020",
       "q": "Was sind biotische Umweltfaktoren?",
       "a": "Einflüsse, die von Lebewesen ausgehen",
+      "choices": [
+        "Einflüsse der unbelebten Umwelt wie Licht und Wasser",
+        "Einflüsse, die nur vom Wetter ausgehen",
+        "Einflüsse, die vom Gestein und Boden ausgehen"
+      ],
       "img": "🐺"
     },
     {
@@ -231,6 +271,11 @@
       "id": "022",
       "q": "Was ist Parasitismus?",
       "a": "Ein Lebewesen nutzt ein anderes und schadet ihm dabei",
+      "choices": [
+        "Zwei Arten leben zum gegenseitigen Vorteil zusammen",
+        "Zwei Arten konkurrieren um dieselbe Nahrung",
+        "Ein Lebewesen zersetzt tote organische Stoffe"
+      ],
       "img": "🦟"
     },
     {
@@ -248,6 +293,11 @@
       "id": "024",
       "q": "Was versteht man unter der ökologischen Nische?",
       "a": "Alle Ansprüche und Beziehungen einer Art zu ihrer Umwelt",
+      "choices": [
+        "Ein kleines Versteck, in dem eine Art wohnt",
+        "Alle Individuen einer Art in einem Gebiet",
+        "Der Lebensraum mit seinen unbelebten Bedingungen"
+      ],
       "info": "Man sagt auch: der „Beruf“ einer Art.",
       "img": "🏠"
     },
@@ -255,6 +305,11 @@
       "id": "025",
       "q": "Konkurrenzausschlussprinzip?",
       "a": "Gleiche Nische: keine dauerhafte Koexistenz zweier Arten",
+      "choices": [
+        "Gleiche Nische: dauerhafte Koexistenz zweier Arten",
+        "Verschiedene Nischen: keine Koexistenz zweier Arten",
+        "Gleiche Nische: beide Arten sterben sofort aus"
+      ],
       "img": "🥊"
     },
     {
@@ -272,6 +327,11 @@
       "id": "027",
       "q": "Was ist ein Bioindikator?",
       "a": "Ein Lebewesen, das Umweltbedingungen anzeigt",
+      "choices": [
+        "Ein Messgerät für Luftschadstoffe",
+        "Ein Lebewesen, das nur im Labor gezüchtet wird",
+        "Ein Stoff, der Pflanzen schneller wachsen lässt"
+      ],
       "info": "Beispiel: Flechten zeigen die Luftqualität an.",
       "img": "🚦🌱"
     },
@@ -279,6 +339,11 @@
       "id": "028",
       "q": "Was ist Eutrophierung?",
       "a": "Überdüngung eines Gewässers mit Nährstoffen",
+      "choices": [
+        "Austrocknung eines Gewässers im Sommer",
+        "Versalzung eines Gewässers durch Meerwasser",
+        "Übersäuerung des Bodens durch sauren Regen"
+      ],
       "info": "Folge: Algenblüte und Sauerstoffmangel.",
       "img": "🌊🧪"
     },
@@ -308,6 +373,11 @@
       "id": "031",
       "q": "Stockwerke des Waldes von unten nach oben?",
       "a": "Wurzel-, Moos-, Kraut-, Strauch-, Baumschicht",
+      "choices": [
+        "Baum-, Strauch-, Kraut-, Moos-, Wurzelschicht",
+        "Wurzel-, Kraut-, Moos-, Strauch-, Baumschicht",
+        "Moos-, Wurzel-, Kraut-, Baum-, Strauchschicht"
+      ],
       "img": "🏢🌲"
     },
     {

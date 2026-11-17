@@ -621,6 +621,14 @@ open class ScreenshotTest {
             version = "0.17.0", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {},
             dailyLimit = 20, holiday = true)
     }
+
+    @Test fun plus() = shot("65_plus") {
+        de.wissensgarten.app.ui.plus.PlusScreen(
+            status = de.wissensgarten.core.data.PlusStatus(active = false, enforced = true), today = 20773,
+            purchaseAllowed = true, checkoutYear = "https://shop/jahr", checkoutForever = "https://shop/immer",
+            onTrial = { true }, onRedeem = { de.wissensgarten.core.data.PlusEntitlements.Redeem.INVALID }, onBack = {},
+        )
+    }
 }
 
 /** Play-Store-Fotos Handy: 1080 × 1920 (9:16, Store verlangt höchstens 2:1). */
@@ -629,4 +637,5 @@ class StorePhoneShots : ScreenshotTest() { override val outDir = "../store/handy
 
 /** Play-Store-Fotos Tablet: 1600 × 2560. */
 @Config(sdk = [35], qualifiers = "w800dp-h1280dp-xhdpi")
-class StoreTabletShots : ScreenshotTest() { override val outDir = "../store/tablet" }
+class StoreTabletShots : ScreenshotTest() { override val outDir = "../store/tablet"
+}

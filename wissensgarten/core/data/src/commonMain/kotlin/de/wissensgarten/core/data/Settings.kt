@@ -40,6 +40,17 @@ class Settings(private val prefs: KeyValueStore) {
     val autoUpdate: StateFlow<Boolean> = _autoUpdate.asStateFlow()
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("auto_update", v).apply(); _autoUpdate.value = v }
 
+    /** Wissensgarten Plus: Freischalt-Code (nur auf dem Gerät) und Ende des Gratis-Tests (Tage seit 1970, -1 = nie gestartet) */
+    var plusCode: String?
+        get() = prefs.getString("plus_code", null)
+        set(v) { prefs.edit().putString("plus_code", v).apply() }
+    var plusTrialUntil: Long
+        get() = prefs.getLong("plus_test_bis", -1)
+        set(v) { prefs.edit().putLong("plus_test_bis", v).apply() }
+    var lastPlusPackCheck: Long
+        get() = prefs.getLong("plus_pack_check", 0)
+        set(v) { prefs.edit().putLong("plus_pack_check", v).apply() }
+
     /** Neue Wissenspakete automatisch nachladen (nur Daten) */
     private val _packUpdates = MutableStateFlow(prefs.getBoolean("pack_updates", true))
     val packUpdates: StateFlow<Boolean> = _packUpdates.asStateFlow()
