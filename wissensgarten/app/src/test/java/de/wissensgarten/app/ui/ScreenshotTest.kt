@@ -666,11 +666,11 @@ open class ScreenshotTest {
     private val std = de.wissensgarten.core.model.NovaQualitaet.STANDARD
     private val best = de.wissensgarten.core.model.NovaQualitaet.BEST
     @Test fun offlineButton() = offlineShot("73_offline_laden", de.wissensgarten.app.ui.fx.OfflineZustand(
-        geprueft = true, gesamt = 7802, fehlend = mapOf(std to 7650, best to 7802), rest = mapOf(std to 420_750_000L, best to 1_287_330_000L), belegt = 8_400_000L))
+        geprueft = true, gesamt = 7802, fehlend = mapOf(std to 7650, best to 7802), rest = mapOf(std to 348_170_000L, best to 429_110_000L), belegt = 7_000_000L))
     @Test fun offlineLoading() = offlineShot("74_offline_laedt", de.wissensgarten.app.ui.fx.OfflineZustand(
         geprueft = true, gesamt = 7802, fehlend = mapOf(std to 7650, best to 7802), laedt = std, fertig = 3120, ziel = 7802))
     @Test fun offlineDone() = offlineShot("75_offline_fertig", de.wissensgarten.app.ui.fx.OfflineZustand(
-        geprueft = true, gesamt = 7802, fehlend = mapOf(std to 0, best to 7802), rest = mapOf(std to 0L, best to 1_287_330_000L), belegt = 429_100_000L,
+        geprueft = true, gesamt = 7802, fehlend = mapOf(std to 0, best to 7802), rest = mapOf(std to 0L, best to 429_110_000L), belegt = 355_090_000L,
         hinweis = "✅ Fertig! Brummi liest jetzt auch ohne Internet mit Nova vor."))
 
     @Test fun voice() = shot("67_stimme") {

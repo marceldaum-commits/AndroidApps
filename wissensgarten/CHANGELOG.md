@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.1 – Richtige Größenangaben (17.11.2026)
+- Die Bilder in der Anleitung zeigen jetzt die echten Größen für „Offline laden“ (die App selbst rechnet schon immer mit den aktuellen Zahlen vom Server).
+- Zusätzliche Prüfung, dass „Bestqualität“ genau die Größe zeigt, die der Server meldet.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.0 – Nova auch ohne Internet (17.11.2026)
 - **Alle Nova-Sätze offline laden:** In den Einstellungen unter „Brummi liest vor“ lassen sich alle Vorlese-Sätze auf einmal aufs Gerät holen – danach liest Brummi auch ohne Internet mit Nova vor. Die Größe steht direkt auf dem Knopf (am besten im WLAN laden).
 - **Zwei Fassungen:** „Standard“ (klein) oder „Bestqualität“ (klingt noch etwas klarer, braucht mehr Platz).

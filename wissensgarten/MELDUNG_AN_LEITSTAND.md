@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## Größenangabe Offline-Laden geprüft (Version 2.2.1 vom 17.11.2026) – Web = Android
+
+- **Ursache „ca. 1287 MB“:** Die Zahl stammte nur aus dem Bildschirmfoto. Dessen Testwerte waren „3 × Standard“ – die Schätzung für den Fall, dass der Server kein `bytes_original` nennt.
+- **Die App selbst rechnet richtig:**
+  - Größe = Durchschnitt aus `bytes` bzw. `bytes_original` der abgefragten Stände × fehlende Dateien.
+  - Der Plus-Stand wird nur einbezogen, wenn Plus aktiv ist. Es wird nichts mehrfach addiert und kein Live- plus Test-Host zusammengezählt.
+  - Die Zahl wird bei jedem Öffnen neu gelesen.
+- **Neu:**
+  - Bildschirmfotos `73_offline_laden.png` und `75_offline_fertig.png` mit echten Server-Zahlen (17:46): Standard ca. 348 MB (7 650 fehlend), Bestqualität ca. 429 MB.
+  - Unit-Test mit den echten Ständen: Bestqualität frei = 429 MB, mit Plus = 525 MB, Standard frei = 355 MB.
+
 ## Nova offline laden (Version 2.2.0 vom 17.11.2026) – Web = Android
 
 - **Knöpfe** unter „Brummi liest vor“:

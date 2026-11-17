@@ -136,4 +136,15 @@ class NovaOfflineTest {
         assertEquals(0, r.geladen)
     }
 
+
+    @Test fun bestQualityUsesServerOriginalSizeNotAMultiple() {
+        // Server-Stand vom 17.11.2026, 17:46 (frei + Plus)
+        val frei = NovaOffline.Stand(7802, 355_088_955, 429_111_168)
+        val plus = NovaOffline.Stand(1332, 79_961_841, 95_990_016)
+        val nurFrei = NovaOffline.mb(NovaOffline.restBytes(listOf(frei), 7802, NovaQualitaet.BEST))
+        org.junit.Assert.assertEquals(429, nurFrei)
+        val mitPlus = NovaOffline.mb(NovaOffline.restBytes(listOf(frei, plus), 7802 + 1332, NovaQualitaet.BEST))
+        org.junit.Assert.assertEquals(525, mitPlus)
+        org.junit.Assert.assertEquals(355, NovaOffline.mb(NovaOffline.restBytes(listOf(frei), 7802, NovaQualitaet.STANDARD)))
+    }
 }
