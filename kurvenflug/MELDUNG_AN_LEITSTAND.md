@@ -1,5 +1,11 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.4.1 live – Play-Fassung bereit
+- Release `kurvenflug-v2.4.1` vollständig: APK 2,6 MB, **Play-AAB 6,5 MB** (versionCode 45), Web-ZIP 5,6 MB.
+- Klick-Liste `store/PLAY_CONSOLE_ANLEITUNG.md` 6b auf 2.4.1 gesetzt (inkl. KI-Kennzeichnung, Datensicherheit „Nein“ mit
+  Prüfhinweis, Datenschutz-Absatz Nova), Versionshinweise `store/de-DE/release-notes.txt` (Nova + Sprechtempo).
+- Stichprobe: fester Text „Volltreffer beim ersten Versuch! …“ liegt jetzt als MP3 unter /nova/ (200, audio/mpeg).
+
 ## 2.4.1 – Sprechtempo (Ergänzung Marcel) · Web = APK = Play
 - Einstellungen → Vorlesen: Regler „Sprechtempo“ mit den Stufen 0,75 · 0,9 · 1,0 (Standard) · 1,15 · 1,3 · 1,5, gemerkt
   (`Nova.SPEEDS`, Test). 1,0 = Server-Tempo.
