@@ -2,7 +2,58 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67. Bitte live nehmen.** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67.** **3.25.3: Pro startklar (Shop/Lizenz-Dienst nötig), Datenschutz-Fund, Ukrainisch nur Nova, Git-Bereinigung vorbereitet (Meldung 68) – bitte 3.25.3 statt 3.25.2 live nehmen.** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (68) – Pro startklar, Datenschutz geprüft, Ukrainisch nur Nova (3.25.3)
+
+Aufträge Marcel 17.11.: „Pro organisieren“, „Datenschutz prüfen“, „Git löschen“, „Ukrainisch nur Nova“.
+
+### 1. Rechenblitz Pro – App ist bereit, es fehlt nur der Verkauf (bitte Leitstand / Shop)
+**In der App erledigt (3.25.3):**
+- Codes im **gemeinsamen Format aller Lern-Apps**: 9 Byte (Version 1 · App 2 = Rechenblitz · Produkt 1 = Pro · Nummer 4 Byte · Tag seit 1.1.2020 2 Byte) + 64 Byte Ed25519-Signatur, Crockford-Base32, Vorsilbe `RB-`. Öffentlicher Schlüssel `979eb515…b812` (derselbe wie Raumlicht/Wissensgarten).
+- **Neu:** Auch ältere Handys und Browser ohne Ed25519 in WebCrypto (z. B. Android-WebView vor Chrome 137) können Codes prüfen. Dafür gibt es TweetNaCl als Ersatz (gemeinfrei/Unlicense, 18 KB). Es wird nur auf solchen Geräten geladen.
+- **Code-Generator für den Lizenz-Dienst:** `tools/pro/rb_code.py` (wie `wissensgarten/pro/plus_code.py`). Aufruf: `python3 rb_code.py pro GEHEIM.key 1001` → Code und Freischalt-Link `https://rechenblitz.mathenachhilfe-online.com/?pro=…`.
+- **Getestet** mit selbst erzeugtem Test-Schlüssel und einem Code aus dem Generator:
+  - Code eingeben ✓, auch klein geschrieben oder ohne Striche ✓;
+  - verfälschter Code abgelehnt ✓, Code einer anderen App abgelehnt ✓;
+  - Ersatzweg für alte Geräte ✓;
+  - **Freischalt-Link aus der E-Mail:** Pro aktiv, „⭐ Pro aktiv“-Abzeichen erscheint, Link wird aus der Adresse entfernt, bleibt nach Neuladen ✓.
+
+**Bitte vom Leitstand (Shop und Lizenz-Dienst):**
+1. WooCommerce-Produkt „Rechenblitz Pro“, **7,99 € inkl. MwSt., einmalig**, digital, Artikelnummer z. B. `RB-PRO`.
+2. Nach Zahlung erzeugt der Lizenz-Dienst den Code: App 2, Produkt 1, mit `tools/pro/rb_code.py` oder dem gemeinsamen Generator. Die E-Mail enthält den Code und den Freischalt-Link.
+3. Mir die **Kassen-URL** schicken (die trage ich als `proCheckout` ein – erst dann gibt es Sperren und Kauf-Knopf) und **einen echten Test-Code** zum Gegenprüfen.
+4. Datenschutz/Shop: Was speichert der Lizenz-Dienst zum Kauf (Code, Nummer, Zeitpunkt)? Das gehört in Abschnitt 9. In der App wird der Code nur auf dem Gerät geprüft, ohne Server.
+
+### 2. Datenschutzerklärung der Website geprüft (Abschnitte 10b und 10g)
+Abgeglichen mit dem, was die App heute wirklich tut:
+- **Falsch – bitte streichen (10b):** „Links zu unserer Website enthalten eine Kennzeichnung, dass sie aus der App kommen; daraus entsteht kein Nutzerprofil.“ Die App setzt **keine** Kennzeichnung (`utm` ist aus, im Code geprüft).
+- **Richtig:**
+  - „lädt keine Inhalte von fremden Servern“ (Stimmen-Server und Klassen-Server sind eigene);
+  - lokale Speicherung;
+  - Android-Updates über GitHub (`raw.githubusercontent.com`, Test-Fassung zusätzlich `api.github.com`) – stimmt mit dem Code überein;
+  - Fehler melden; Klassen-Challenge (Felder und Löschung stimmen);
+  - Teilen/Aufträge; Erinnerung.
+- **10g (Nova):** stimmt (feste Texte vorab, Laufzeit-Texte über unseren Server, keine Namen, Gerätestimme als Rückfall, Offline-Speicher auf dem Gerät).
+  - Kleine Ergänzung möglich: In Rechenblitz liest auf **Ukrainisch** keine Gerätestimme mehr vor (siehe 4). Der Satz „liest die Sprachausgabe deines Geräts“ gilt dort also nicht – kein Datenschutz-Problem, nur der Vollständigkeit halber.
+- **Sobald Pro verkauft wird:** in 10b einen Satz ergänzen, dass der Freischalt-Code nur auf dem Gerät geprüft wird (keine Übertragung).
+
+### 3. Git-Geschichte – vorbereitet, Freigabe fürs Überschreiben nötig
+- Die versehentlich hochgeladenen Dateien (Thorsten-Modell 63 MB, Rechenwerk, Arbeitsdateien) stecken in **drei Branches** (`ccr-a093b6b5-0d6oyq`, `rechenblitz-test`, `rechenblitz-live`) und **drei Tags** (`rechenblitz-3.25.0` bis `3.25.2`).
+- **Die bereinigte Geschichte ist fertig und geprüft:**
+  - Nur diese Dateien sind entfernt.
+  - Der Inhalt aller drei Branches ist **bit-gleich** (auch live).
+  - Die größte verbleibende Datei ist das absichtlich eingecheckte Rechenwerk aus 3.24.x (11 MB).
+- **Noch nicht hochgeladen:** Das Überschreiben (force-push) hat die Rechte-Prüfung gestoppt, weil es veröffentlichte Branches inklusive `rechenblitz-live` neu schreibt. Das braucht Marcels ausdrückliche Freigabe.
+- **Danach muss der Leitstand** seine Kopien von `rechenblitz-test` und `-live` neu holen (`git fetch` + `reset`, kein `pull`/merge), sonst kommen die alten Commits zurück.
+- GitHub hält gelöschte Daten noch eine Weile im Zwischenspeicher. Endgültig entfernt sie nur der GitHub-Support.
+
+### 4. Ukrainisch nur mit Nova (3.25.3)
+- Auf Ukrainisch liest **nur Nova** vor. Gibt es keine Nova-Datei (offline, Server 204), bleibt es still statt der Gerätestimme mit falsch gebeugten Zahlwörtern.
+- Deutsch und Englisch fallen weiter still auf die Gerätestimme zurück.
+- Getestet ✓.
+
+**Version 3.25.3** auf `rechenblitz-test` (Web = Android). Neue Dateiendungen: keine (`.js`, `.py` außerhalb der App).
 
 ## 17.11.2026 (67) – Fertig für den Betriebstest: Rechenblitz 3.25.2
 
