@@ -1,5 +1,28 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.3 – fertig für den Betriebstest (versionCode 50) · Web = APK = Play
+Begonnenes ist fertig (Nova, Sprechtempo, Offline Standard/Bestqualität, Pro-Abzeichen), keine neuen Funktionen.
+
+**Geprüft**
+| Bereich | Wie | Ergebnis |
+|---|---|---|
+| Alle 30 Kapitel öffnen | Browser, **320 × 640** und **1440 × 900** (je 30 Bildschirmfotos angesehen) | läuft; **Fehler gefunden und behoben:** bei 320 × 640 war „Start“ nur halb sichtbar (Spielfeld zu groß) → Spielfeld wird auf niedrigen Bildschirmen (< 720 dp) kleiner |
+| Konsole | beide Größen, alle Kapitel | **keine Fehler** (einzige Meldungen: Stimmen-Server lässt meine Test-Adresse localhost:8765 nicht zu – auf der echten Seite erlaubt, dort getestet) |
+| Offline / Flugmodus | WebApp laden, offline neu laden | startet offline ohne Fehler |
+| Pro-Code | Freischalt-Link `?pro=…` → gespeichert, nach Neuladen „⭐ Pro aktiv“ sichtbar | ok |
+| Stimme / Musik / Einstellungen merken | neuer Test `SettingsPersistenceTest` (Pro-Code, Vorlesen an/aus, Tempo, Bestqualität, Musik, Lautstärken, Ton, Vibration, Updates, Volt-Stimme) + Browser (Tempo 1,3 nach Neuladen aktiv) | ok |
+| Update von der Vorversion | Room-Migrationstests (Spielstand), Test mit Einstellungen aus 2.0–2.3 (alte Thorsten-Schlüssel stören nicht, Pro-Code bleibt), Web-Schlüssel unverändert; Thorsten-Reste werden beim Start aufgeräumt | kein Datenverlust |
+| Nova | Browser gegen den Server: feste Ansage, /jetzt, Tempo, Offline laden/abbrechen/fortsetzen/löschen, Bestqualität mit Rückfall | ok |
+| Gesamt | 275 Tests, Lint (GitHub + Play), APK, AAB, WebApp | grün |
+
+**Bekannte Restpunkte**
+- **Android nicht auf einem echten Gerät gehört:** Nova-Wiedergabe, Sprechtempo und Offline-Laden sind gebaut und laufen in Tests/Browser gleich, aber nicht auf einem Handy angehört – bitte im Betriebstest zuerst prüfen.
+- 320 × 640: bei sehr langen Volt-Texten (z. B. Binomialverteilung) ist „Start“ noch knapp am Rand – der Bereich lässt sich scrollen.
+- Inhaltlich unverändert offen (aus der Korrektheitsprüfung): 58 Level ohne Live-Rechnung, 31 ohne Rechen-Stern – kein Fehler, nur weniger Hilfe.
+- Bestqualität: der Server füllt `original/` noch; bis dahin speichert die App die normale Fassung als Standard.
+- Play-Store bleibt bis nach dem Betriebstest liegen (Material vorhanden).
+- Diese Sitzung kann dir nicht direkt schreiben (vertrauenswürdiges Gerät nötig) – Meldungen stehen hier.
+
 ## 2.5.2 – Bestqualität: Rückfall sauberer · Web = APK = Play
 - Liefert `original/` noch 404, wird die normale Datei jetzt **als Standard** gespeichert (nicht mehr als Bestqualität).
   Folge: Sie spielt sofort offline, zählt aber nicht als Bestqualität – ein späteres Tippen auf „Bestqualität“ lädt genau

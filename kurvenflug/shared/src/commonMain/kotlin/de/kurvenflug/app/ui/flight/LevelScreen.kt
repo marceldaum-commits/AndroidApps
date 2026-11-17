@@ -262,7 +262,10 @@ fun LevelScreen(
 
     Box(Modifier.fillMaxSize()) {
         Starfield(seed = level.chapter * 10 + level.number)
-        Column(Modifier.fillMaxSize().systemBarsPadding()) {
+        BoxWithConstraints(Modifier.fillMaxSize().systemBarsPadding()) {
+        // Niedrige Bildschirme (z. B. 320 × 640): Spielfeld etwas kleiner, damit Regler und „Start“ ohne Scrollen sichtbar bleiben
+        val field = if (maxHeight < 720.dp) minOf(maxWidth - 24.dp, maxHeight * 0.4f) else maxWidth - 24.dp
+        Column(Modifier.fillMaxSize()) {
             // Kopfzeile
             Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
@@ -282,7 +285,7 @@ fun LevelScreen(
             Spacer(Modifier.height(6.dp))
             // Spielfeld
             Box(
-                Modifier.padding(horizontal = 12.dp).fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(18.dp))
+                Modifier.align(Alignment.CenterHorizontally).size(field).clip(RoundedCornerShape(18.dp))
                     .background(Color(0x66070B20)).border(1.5.dp, Q.Cyan.copy(alpha = 0.35f), RoundedCornerShape(18.dp))
             ) {
                 SpaceCanvas(spaceView, Modifier.fillMaxSize().onSizeChanged { canvasSize = it }.pointerInput(drag, phase, level.id) {
@@ -354,6 +357,7 @@ fun LevelScreen(
                 }
                 Spacer(Modifier.height(8.dp))
             }
+        }
         }
 
         // Ergebnis
