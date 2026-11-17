@@ -11,6 +11,12 @@ class NovaTest {
     @Test fun leerraumZaehltNicht() = assertEquals(Nova.hash("Hallo Welt"), Nova.hash("  Hallo \n Welt "))
     @Test fun adresse() = assertEquals("https://stimmen.mathenachhilfe-online.com/nova/cb/cb1e6d67882767042ebaa54d163e450c.mp3", Nova.url("Hallo Welt"))
 
+    @Test fun zaehlstand() {
+        assertEquals(217802112L, Nova.bytesOf("""{"stimme": "nova", "texte": 2301, "bytes": 217802112, "zu_lang": 0}"""))
+        assertEquals(null, Nova.bytesOf("{}"))
+        assertEquals(208L, Nova.mb(217802112L)); assertEquals(1L, Nova.mb(10))
+        assertEquals("https://stimmen.mathenachhilfe-online.com/nova/stand-experimentopia.mathenachhilfe-online.com.json", Nova.standUrl(Nova.APP_HOST))
+    }
     @Test fun sha256WieJava() {
         val md = MessageDigest.getInstance("SHA-256")
         listOf("", "a", "x".repeat(55), "y".repeat(56), "z".repeat(64), "Ä Ö Ü ß – Blubb", "q".repeat(1000)).forEach { s ->

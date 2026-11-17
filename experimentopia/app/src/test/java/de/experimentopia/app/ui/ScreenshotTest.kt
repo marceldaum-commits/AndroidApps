@@ -154,7 +154,7 @@ class ScreenshotTest {
     @Test fun theoryPro() = shot("62_theorie_profi", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("s8")!!, {}, null, {}, startPhase = Phase.PREDICT) }
     @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, {}) }
     @Test fun subjectBio() = shot("64_fach_biologie", settle = 2500, prepare = { it.tap("Alle 8 Versuche") }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 9, { false }, {}, {}, {}) }
-    @Test fun soundSettings() = shot("65_musik_und_vorlesen", settle = 1500, prepare = { r -> r.reveal { r.onNodeWithTag("probe") } }) {
+    @Test fun soundSettings() = shot("65_musik_und_vorlesen", settle = 1500, prepare = { r -> r.reveal { r.onNodeWithTag("offline_loeschen") } }) {
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
             androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {
                 de.experimentopia.app.ui.settings.SoundSettings(AudioPrefs(), {}, true, {}, true, {})
@@ -190,4 +190,9 @@ private object FakeReader : de.experimentopia.app.ui.fx.Reader {
     override fun say(text: String) {}
     override fun stop() {}
     override fun configure(p: AudioPrefs) {}
+    override val offline = de.experimentopia.app.ui.fx.OfflineVoice(totalBytes = 73_000_000, savedBytes = 9_500_000, done = 312, count = 2301)
+    override fun refreshOffline() {}
+    override fun loadOffline() {}
+    override fun cancelOffline() {}
+    override fun deleteOffline() {}
 }

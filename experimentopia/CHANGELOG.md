@@ -1,5 +1,11 @@
 # Changelog – Experimentopia
 
+## 2.3.0 – Vorlesen auch ohne Internet (17.11.2026)
+
+- 📦 **Alle Nova-Texte offline laden**: In den Einstellungen unter „Vorlesen“ lädt ein Knopf alle Sätze auf einmal (Größe steht dabei, am besten im WLAN).
+  Danach liest Nova auch unterwegs ohne Internet vor. Abbrechen geht jederzeit – beim nächsten Tippen geht es dort weiter.
+- 🗑️ „Offline-Stimme löschen“ gibt den Speicher wieder frei.
+
 ## 2.2.1 – Sprechtempo einstellbar (17.11.2026)
 
 - 🐢🐇 **Sprechtempo**: In den Einstellungen unter „Vorlesen“ lässt sich Nova langsamer oder schneller stellen (0,75 bis 1,5) – die Stimme bleibt dabei gleich hoch.

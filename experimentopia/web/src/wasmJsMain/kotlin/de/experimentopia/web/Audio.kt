@@ -59,7 +59,12 @@ private fun newSamplesOf(pcm: FloatArray): JsAny { val b = newSamples(pcm.size);
 class WebReader : Reader {
     private var prefs = AudioPrefs()
     override var speaking by mutableStateOf(false); private set
+    override var offline by mutableStateOf(OfflineVoice()); private set
     private var turn = 0
+    private val urls by lazy { Nova.catalog().joinToString("\n") { Nova.url(it) } }
+    private val count by lazy { Nova.catalog().size }
+    /** Zählstand der Live-Seite, wenn die App lokal oder anderswo läuft */
+    private fun host() = pageHost().takeIf { it.endsWith("mathenachhilfe-online.com") } ?: Nova.APP_HOST
 
     init { dropOldVoice() }
 
@@ -83,6 +88,24 @@ class WebReader : Reader {
             novaSpeak(parts.joinToString("\n"), parts.joinToString("\n") { Nova.url(it) }, Nova.speed(prefs.rate).toDouble(), { }, { if (mine == turn) speaking = false }, { i -> fallback(i) })
         }
     }
+
+    override fun refreshOffline() {
+        novaScript { ok -> if (ok) novaInfo(host(), urls) { total, saved, have ->
+            offline = offline.copy(totalBytes = total.toLong().takeIf { it >= 0 } ?: offline.totalBytes, savedBytes = saved.toLong(), done = have, count = count, complete = have >= count)
+        } }
+    }
+    override fun loadOffline() {
+        if (offline.loading) return
+        offline = offline.copy(loading = true, note = null)
+        novaScript { ok ->
+            if (!ok) { offline = offline.copy(loading = false, note = "Keine Verbindung. Bitte später noch einmal versuchen."); return@novaScript }
+            novaLoadAll(urls, { n, all -> offline = offline.copy(done = n, count = all) }) { note ->
+                offline = offline.copy(loading = false, note = note.ifBlank { null }); refreshOffline()
+            }
+        }
+    }
+    override fun cancelOffline() { novaCancelAll() }
+    override fun deleteOffline() { novaScript { ok -> if (ok) novaClear { offline = offline.copy(savedBytes = 0, done = 0, complete = false, note = null) } } }
 
     override fun stop() { turn++; browserStop(); novaStop(); speaking = false }
 }

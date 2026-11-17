@@ -23,6 +23,15 @@ object Nova {
     /** Jeder Leerraum zu einem Leerzeichen, vorne und hinten abgeschnitten (Unicode-NFC prüft der Export-Test) */
     fun normalize(t: String) = t.replace(Regex("""\s+"""), " ").trim()
 
+    /** Zählstand des Servers für eine Adresse (Feld "bytes" = Größe aller fertigen Sätze) */
+    fun standUrl(host: String) = "$SERVER/nova/stand-$host.json"
+    const val APP_HOST = "experimentopia.mathenachhilfe-online.com"
+    fun bytesOf(standJson: String): Long? = Regex(""""bytes"\s*:\s*(\d+)""").find(standJson)?.groupValues?.get(1)?.toLongOrNull()
+    /** „ca. 73 MB“ – auf ganze MB gerundet, mindestens 1 */
+    fun mb(bytes: Long) = maxOf(1L, (bytes + 524_288) / 1_048_576)
+    /** Gleichzeitige Downloads beim Offline-Laden */
+    const val PARALLEL = 4
+
     /** Stufen des Reglers „Sprechtempo“ (1,0 = Server-Tempo); abgespielt wird schneller/langsamer bei gleicher Tonhöhe */
     val SPEEDS = listOf(0.75f, 0.9f, 1.0f, 1.15f, 1.3f, 1.5f)
     /** Gespeicherte Wahl auf die nächste Stufe (alte Werte aus Thorsten-Zeiten passen so auch) */

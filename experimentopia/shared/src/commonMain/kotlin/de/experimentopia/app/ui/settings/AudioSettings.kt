@@ -83,5 +83,38 @@ fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
         }
         Text(if (speed < 1f) "🐢 langsamer" else if (speed > 1f) "🐇 schneller" else "Normal", color = E.Muted, fontSize = 12.sp)
         GlowButton({ reader.configure(audio); reader.say(ReadTexts.ui[1]) }, Modifier.fillMaxWidth().testTag("probe"), color = E.Mint) { Text("▶️ Probe hören", fontWeight = FontWeight.Bold) }
+        OfflineVoicePanel(reader)
+    }
+}
+
+/** Alle festen Nova-Sätze auf einmal laden – für unterwegs ohne Internet */
+@Composable
+private fun OfflineVoicePanel(reader: Reader) {
+    LaunchedEffect(reader) { reader.refreshOffline() }
+    val o = reader.offline
+    Panel(border = E.Sky) {
+        Text("📦 Ohne Internet vorlesen", color = E.Text, fontWeight = FontWeight.Bold)
+        when {
+            o.loading -> {
+                Text("Nova-Sätze werden geladen … ${o.done} von ${o.count}", color = E.Text, fontSize = 13.sp)
+                Box(Modifier.fillMaxWidth().height(8.dp).clip(RoundedCornerShape(4.dp)).background(E.Panel)) {
+                    Box(Modifier.fillMaxWidth(if (o.count > 0) o.done / o.count.toFloat() else 0f).fillMaxHeight().background(E.Sky))
+                }
+                GlowButton({ reader.cancelOffline() }, Modifier.testTag("offline_stopp"), color = E.Muted) { Text("⏸️ Abbrechen") }
+            }
+            o.complete -> Text("✅ Alle Nova-Sätze sind auf diesem Gerät – Blubb liest auch ohne Internet vor.", color = E.Text, fontSize = 13.sp)
+            else -> {
+                Text("Lädt alle festen Sätze auf einmal, dann liest Nova auch ohne Internet vor – am besten im WLAN.", color = E.Muted, fontSize = 12.sp)
+                val left = o.totalBytes?.let { (it - o.savedBytes).coerceAtLeast(0) }
+                GlowButton({ reader.loadOffline() }, Modifier.fillMaxWidth().testTag("offline_laden"), color = E.Sky) {
+                    Text("⬇️ Alle Nova-Texte offline laden" + (left?.let { " (ca. ${Nova.mb(it)} MB)" } ?: ""), fontWeight = FontWeight.Bold)
+                }
+                if (o.done > 0 && o.count > 0) Text("Schon da: ${o.done} von ${o.count} Sätzen", color = E.Muted, fontSize = 12.sp)
+            }
+        }
+        o.note?.let { Text(it, color = E.Sun, fontSize = 12.sp) }
+        if (o.savedBytes > 0 && !o.loading) GlowButton({ reader.deleteOffline() }, Modifier.testTag("offline_loeschen"), color = E.Muted) {
+            Text("🗑️ Offline-Stimme löschen (${Nova.mb(o.savedBytes)} MB)")
+        }
     }
 }

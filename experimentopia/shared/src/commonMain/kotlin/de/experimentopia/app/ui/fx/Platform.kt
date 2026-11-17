@@ -59,7 +59,24 @@ interface Reader {
     fun say(text: String)
     fun stop()
     fun configure(p: de.experimentopia.core.model.AudioPrefs)
+    /** Alle festen Nova-Sätze für unterwegs ohne Internet */
+    val offline: OfflineVoice
+    fun refreshOffline()
+    fun loadOffline()
+    fun cancelOffline()
+    fun deleteOffline()
 }
+
+/** Stand der Offline-Stimme: Größe aller Sätze laut Server ([totalBytes], null = unbekannt), schon gespeichert, Fortschritt beim Laden */
+data class OfflineVoice(
+    val totalBytes: Long? = null,
+    val savedBytes: Long = 0,
+    val loading: Boolean = false,
+    val done: Int = 0,
+    val count: Int = 0,
+    val complete: Boolean = false,
+    val note: String? = null,
+)
 val LocalReader = staticCompositionLocalOf<Reader?> { null }
 /** Automatisch vorlesen (Einstellung) */
 val LocalAutoRead = staticCompositionLocalOf { false }

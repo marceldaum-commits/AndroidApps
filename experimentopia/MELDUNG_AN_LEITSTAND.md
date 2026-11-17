@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 17.11.2026 – Version 2.3.0 vom 17.11.2026: Alle Nova-Texte offline laden
+
+- Einstellungen → Vorlesen → „📦 Ohne Internet vorlesen“: Knopf „Alle Nova-Texte offline laden (ca. X MB)“, X = live "bytes" aus stand-<host>.json (Android: experimentopia.mathenachhilfe-online.com,
+  Web: eigener Host) minus schon Gespeichertes; Hinweis „am besten im WLAN“; Fortschritt „x von n“, Abbrechen, Weitermachen beim nächsten Tippen; 4 parallel; 404 still übersprungen;
+  „Offline-Stimme löschen (Y MB)“ sobald etwas gespeichert ist. Liste = dieselben Sätze wie /vorlesen/texte.json (aus Nova.catalog()), /jetzt-Texte nicht dabei.
+  Speicher: Android files/nova/, Web Cache Storage „experimentopia-nova“. Bildschirmfoto: screenshots/65_musik_und_vorlesen.png.
+
 ## 17.11.2026 – Version 2.2.1 vom 17.11.2026: Sprechtempo
 
 - Regler „Sprechtempo“ mit den Stufen 0,75 · 0,9 · 1,0 (Standard) · 1,15 · 1,3 · 1,5, gemerkt. Web: <audio> mit playbackRate + preservesPitch (nova.js spielt jetzt über HTMLAudioElement),

@@ -11,6 +11,7 @@ import android.speech.tts.UtteranceProgressListener
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import de.experimentopia.app.ui.fx.OfflineVoice
 import de.experimentopia.app.ui.fx.Reader
 import de.experimentopia.core.model.AudioPrefs
 import de.experimentopia.core.model.Nova
@@ -37,6 +38,7 @@ class AndroidReader(ctx: Context) : Reader {
     private val dir = File(app.filesDir, "nova").apply { mkdirs() }
 
     override var speaking by mutableStateOf(false); private set
+    override var offline by mutableStateOf(OfflineVoice()); private set
 
     private val turn = AtomicInteger(0)
     private val fetcher = Executors.newFixedThreadPool(2) { Thread(it, "nova-laden").apply { isDaemon = true } }
@@ -82,14 +84,19 @@ class AndroidReader(ctx: Context) : Reader {
         return if (download(url, f)) f else null
     }
 
-    private fun download(url: String, to: File): Boolean = runCatching {
+    private fun download(url: String, to: File): Boolean = get(url, to) == 200
+
+    /** Datei holen: 200 = gespeichert, sonst HTTP-Status (404 = gibt es noch nicht) bzw. -1 ohne Verbindung */
+    private fun get(url: String, to: File): Int = runCatching {
         val c = URL(url).openConnection() as HttpURLConnection
         c.connectTimeout = 10_000; c.readTimeout = 20_000
-        if (c.responseCode != 200 || c.contentType?.startsWith("audio/") != true) return false
+        val code = c.responseCode
+        if (code != 200) return code
+        if (c.contentType?.startsWith("audio/") != true) return -1
         val part = File(dir, to.name + ".teil")
         c.inputStream.use { i -> part.outputStream().use { i.copyTo(it) } }
-        part.length() > 0 && part.renameTo(to)
-    }.getOrDefault(false)
+        if (part.length() > 0 && part.renameTo(to)) 200 else -1
+    }.getOrDefault(-1)
 
     private fun play(f: File, mine: Int): Boolean {
         val latch = CountDownLatch(1)
@@ -131,6 +138,55 @@ class AndroidReader(ctx: Context) : Reader {
                 }
             }
             main.post { if (mine == turn.get()) speaking = false }
+        }
+    }
+
+    // ── Alle festen Sätze offline (nur auf ausdrücklichen Wunsch; /jetzt-Texte gehören nicht dazu)
+    private val bulk = Executors.newSingleThreadExecutor { Thread(it, "nova-offline").apply { isDaemon = true } }
+    @Volatile private var cancelBulk = false
+    private fun saved() = dir.listFiles { f -> f.name.endsWith(".mp3") }?.sumOf { it.length() } ?: 0L
+    private fun missing() = Nova.catalog().filterNot { file(it).isFile }
+
+    override fun refreshOffline() {
+        bulk.execute {
+            val total = runCatching { URL(Nova.standUrl(Nova.APP_HOST)).readText() }.getOrNull()?.let { Nova.bytesOf(it) }
+            val s = saved(); val left = missing().size; val all = Nova.catalog().size
+            main.post { offline = offline.copy(totalBytes = total ?: offline.totalBytes, savedBytes = s, complete = left == 0, done = all - left, count = all) }
+        }
+    }
+
+    override fun loadOffline() {
+        if (offline.loading) return
+        cancelBulk = false
+        offline = offline.copy(loading = true, note = null)
+        bulk.execute {
+            val all = Nova.catalog(); val todo = all.filterNot { file(it).isFile }
+            val done = AtomicInteger(all.size - todo.size)
+            main.post { offline = offline.copy(done = done.get(), count = all.size) }
+            val pool = Executors.newFixedThreadPool(Nova.PARALLEL)
+            var failed = 0
+            val jobs = todo.map { p -> pool.submit<Boolean> {
+                if (cancelBulk) return@submit true
+                val code = get(Nova.url(p), file(p))
+                val n = done.incrementAndGet()
+                if (n % 10 == 0 || n == all.size) main.post { offline = offline.copy(done = n) }
+                code == 200 || code == 404   // 404: still überspringen
+            } }
+            jobs.forEach { if (runCatching { !it.get() }.getOrDefault(true)) failed++ }
+            pool.shutdown()
+            val s = saved(); val left = missing().size
+            main.post {
+                offline = offline.copy(loading = false, savedBytes = s, complete = left == 0, done = all.size - left,
+                    note = when { cancelBulk -> "Angehalten – beim nächsten Tippen geht es dort weiter."; failed > 0 -> "Einige Sätze kamen nicht an (keine Verbindung?). Nochmal tippen lädt den Rest."; else -> null })
+            }
+        }
+    }
+    override fun cancelOffline() { cancelBulk = true }
+    override fun deleteOffline() {
+        cancelBulk = true
+        bulk.execute {
+            dir.listFiles()?.forEach { it.delete() }
+            main.post { offline = offline.copy(savedBytes = 0, complete = false, done = 0, note = null) }
         }
     }
 
