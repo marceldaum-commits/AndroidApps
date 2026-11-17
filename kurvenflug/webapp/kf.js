@@ -216,7 +216,8 @@
     Promise.all([local, server]).then(function (x) { cb(x[0][0], x[0][1], x[0][2], x[1][0], x[1][1]); }, function () { cb(0, 0, 0, -1, -1); });
   };
   // Nur fehlende Dateien, 4 gleichzeitig; 404 still überspringen; progress(fertig, alle), done(Fehlerzahl, abgebrochen)
-  // best: Bestqualität (nova/original/…); liefert original/ 404, wird die normale Datei unter der original-Adresse gespeichert
+  // best: Bestqualität (nova/original/…); liefert original/ 404, wird die normale Datei als Standard gespeichert
+  // (so holt ein späteres Tippen die Bestqualität nach, sobald der Server sie hat)
   KF.offLoad = function (hashes, best, progress, done) {
     offAbort = false;
     if (!window.caches) { done(-1, false); return; }
@@ -231,13 +232,14 @@
           function next() {
             if (offAbort || i >= n) { if (fin >= Math.min(i, n) ) resolve(); return; }
             var u = todo[i++];
+            var key = u;
             fetch(u, { credentials: 'omit' }).then(function (r) {
-              if (r.status === 404 && best) return fetch(u.replace('/nova/original/', '/nova/'), { credentials: 'omit' });
+              if (r.status === 404 && best) { key = u.replace('/nova/original/', '/nova/'); return have[key] ? null : fetch(key, { credentials: 'omit' }); }
               return r;
             }).then(function (r) {
-              if (r.status === 404) return;
+              if (!r || r.status === 404) return;
               if (!r.ok) { fail++; return; }
-              return c.put(u, r);
+              return c.put(key, r);
             }).catch(function () { fail++; }).then(function () { fin++; progress(fin, n); if (fin >= n || (offAbort && fin >= i)) resolve(); else next(); });
           }
           for (var k = 0; k < 4; k++) next();
