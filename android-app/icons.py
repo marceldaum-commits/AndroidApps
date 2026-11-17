@@ -1,23 +1,10 @@
-# Erzeugt App-Symbol und Startbildschirm der APK aus den Symbolen der Web-App (../kopfrechnen/icons).
-# Aufruf: python3 icons.py   (nur nötig, wenn sich die Symbole ändern)
+# Erzeugt den Startbildschirm der APK aus dem Symbol der Web-App und verkleinert alle Symbol-Bilder.
+# Aufruf: node symbol.js && python3 icons.py   (nur nötig, wenn sich das Symbol ändert)
 from PIL import Image
 import os
 R = 'android/app/src/main/res'
-mask = Image.open('../kopfrechnen/icons/icon-maskable-512.png').convert('RGBA')
 icon = Image.open('../kopfrechnen/icons/icon-512.png').convert('RGBA')
-bg = mask.getpixel((4, 4))
-hexbg = '#%02X%02X%02X' % bg[:3]
-dens = {'mdpi': 1, 'hdpi': 1.5, 'xhdpi': 2, 'xxhdpi': 3, 'xxxhdpi': 4}
-def circle(im):
-    m = Image.new('L', im.size, 0); from PIL import ImageDraw; ImageDraw.Draw(m).ellipse((0, 0, im.size[0] - 1, im.size[1] - 1), fill=255)
-    out = Image.new('RGBA', im.size, (0, 0, 0, 0)); out.paste(im, (0, 0), m); return out
-for d, f in dens.items():
-    s = round(48 * f); fg = round(108 * f)
-    icon.resize((s, s), Image.LANCZOS).save(f'{R}/mipmap-{d}/ic_launcher.png')
-    circle(mask.resize((s, s), Image.LANCZOS)).save(f'{R}/mipmap-{d}/ic_launcher_round.png')
-    # Vordergrund für adaptive Symbole: maskierbares Symbol randlos (Logo liegt im sicheren Bereich)
-    mask.resize((fg, fg), Image.LANCZOS).save(f'{R}/mipmap-{d}/ic_launcher_foreground.png')
-open(f'{R}/values/ic_launcher_background.xml', 'w').write(f'<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">{hexbg}</color>\n</resources>\n')
+# Launcher-Symbole (ic_launcher*, auch adaptiv: Hintergrund = Verlauf, Vordergrund = Blitz) erzeugt seit 17.11. symbol.js
 # Startbildschirm: Dunkelblau der Marke mit hellem Logo in der Mitte (wie das Startbild der Web-App, kein weißes Aufblitzen)
 for root, _, files in os.walk(R):
     for fn in files:
@@ -34,4 +21,4 @@ for root, _, files in os.walk(R):
             p = os.path.join(root, fn); im = Image.open(p)
             im = im.convert('RGBA').quantize(256, method=Image.FASTOCTREE) if im.mode == 'RGBA' else im.convert('RGB').quantize(256)
             im.save(p, optimize=True)
-print('Hintergrund', hexbg)
+print('fertig')

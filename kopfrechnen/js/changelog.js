@@ -3,7 +3,7 @@
 const APP_VERSION = '3.26.2';
 const APP_DATE = '2026-11-17';
 const CHANGELOG = [
-  ['3.26.2', '2026-11-17', ['Textaufgaben genauer formuliert (z. B. leeres Becken, Tage bis zu einem Datum, Uhrzeit am Morgen)', 'Vorlesen: Nova liest immer ganze Sätze und wartet kurz, statt auf die Gerätestimme zu wechseln']],
+  ['3.26.2', '2026-11-17', ['Textaufgaben genauer formuliert (z. B. leeres Becken, Tage bis zu einem Datum, Uhrzeit am Morgen)', 'Vorlesen: Nova liest immer ganze Sätze und wartet kurz, statt auf die Gerätestimme zu wechseln', 'Neues App-Symbol: der Rechenblitz ⚡']],
   ['3.26.1', '2026-11-17', ['Musik startet sofort: in der Android-App beim Öffnen, im Browser beim ersten Tippen – „Musik aus“ bleibt aus']],
   ['3.26.0', '2026-11-17', ['Zahlen-Dungeon: neue Rechen-Karten 🃏 – echte Rechentricks wie Zehnerfreund, Verdoppeln oder Fünfer-Trick', 'Vor jedem Kampf eine Karte spielen: Aufgaben mit diesem Trick machen mehr Schaden, die Probe schützt ein Herz', 'Nach jedem Sieg eine neue Karte für dein Deck']],
   ['3.25.4', '2026-11-17', ['Rechenblitz Pro ist da: Profi-Stufe, mehr Profile, Elternbericht und Vorlagen für einmalig 7,99 € – alles andere bleibt kostenlos']],

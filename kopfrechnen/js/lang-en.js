@@ -2432,4 +2432,5 @@ I18N.add('en', {"% sind":"% are",
 "ein Achtel von {}":"one eighth of {}",
 "{} Teile":"{} parts",
 "{} t + {} kg":"{} t + {} kg",
-"{} km {} m + {} km":"{} km {} m + {} km"});
+"{} km {} m + {} km":"{} km {} m + {} km",
+"Neues App-Symbol: der Rechenblitz ⚡":"New app icon: the Rechenblitz lightning bolt ⚡"});
