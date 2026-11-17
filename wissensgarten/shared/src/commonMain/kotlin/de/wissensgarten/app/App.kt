@@ -193,6 +193,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                         if (vm.startSession()) nav.navigate(Routes.REVIEW)
                     }
                 }
+                host.voice?.let { de.wissensgarten.app.ui.fx.NovaLadehinweis(it, host) }
               }
               }
               }
@@ -206,6 +207,9 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
     private fun AppNav(nav: NavHostController, startRoute: String) {
         val beds by vm.beds.collectAsStateWithLifecycle()
         val packs by vm.packs.collectAsStateWithLifecycle()
+        val previews by vm.plusPreviews.collectAsStateWithLifecycle()
+        // Brummis Stimme muss wissen, welche Texte öffentlich (freie Pakete), Plus oder privat sind
+        LaunchedEffect(packs, previews) { host.voice?.pakete(packs + previews) }
         val theory = remember(beds, packs) {
             val byId = packs.associateBy { it.id }
             val map = beds.associate { b -> b.bed.id to b.bed.packId?.let(byId::get) }

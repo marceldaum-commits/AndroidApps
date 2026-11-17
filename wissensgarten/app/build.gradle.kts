@@ -87,6 +87,27 @@ android {
 
 android.packaging.jniLibs.useLegacyPackaging = true   // Maschinencode komprimiert einpacken: der Download wird damit deutlich kleiner
 
+/**
+ * Brummis Stimme „Nova“: die öffentliche Vorlese-Liste der WebApp (`vorlesen/texte.json`) kommt beim Bauen als Asset in die App.
+ * Damit weiß die App ohne Netz, welche Texte öffentlich sind – nur solche dürfen an `/jetzt` (nie eigene Karten oder Namen).
+ */
+abstract class NovaListeAsset : DefaultTask() {
+    @get:InputFile abstract val liste: RegularFileProperty
+    @get:OutputDirectory abstract val ziel: DirectoryProperty
+    @TaskAction fun kopieren() {
+        val d = ziel.get().asFile.resolve("vorlesen")
+        d.deleteRecursively(); d.mkdirs()
+        liste.get().asFile.copyTo(d.resolve("texte.json"), overwrite = true)
+    }
+}
+val novaListe = tasks.register<NovaListeAsset>("novaListeAsset") {
+    liste.set(rootProject.layout.projectDirectory.file("webApp/src/wasmJsMain/resources/vorlesen/texte.json"))
+    ziel.set(layout.buildDirectory.dir("generated/novaListe"))
+}
+androidComponents {
+    onVariants { v -> v.sources.assets?.addGeneratedSourceDirectory(novaListe, NovaListeAsset::ziel) }
+}
+
 kotlin {
     compilerOptions {
         jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)

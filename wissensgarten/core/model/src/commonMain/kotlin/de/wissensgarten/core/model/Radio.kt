@@ -35,9 +35,9 @@ object Radio {
         card.memory.isSeed -> Question(card, Mode.LEARN)
         Games.speakPossible(card.back) -> Question(card, Mode.FREE)
         else -> Games.options(card, peers)?.take(4)?.let { opts ->
-            // richtige Antwort sicher dabei, Reihenfolge fest je Karte
+            // richtige Antwort sicher dabei, Reihenfolge fest je Karten-Inhalt (auf jedem Gerät gleich → vorab vertont)
             val withAnswer = (if (card.back in opts) opts else opts.dropLast(1) + card.back)
-            Question(card, Mode.CHOICE, withAnswer.sortedBy { (it + card.id).hashCode() })
+            Question(card, Mode.CHOICE, withAnswer.sortedBy { (it + card.front).hashCode() })
         } ?: Question(card, Mode.SELF)
     }
 
@@ -72,7 +72,7 @@ object Radio {
      */
     fun interpret(heard: List<String>, q: Question): Reply {
         // „A“ ist für die Normalisierung ein Artikel – für Buchstaben-Antworten den Rohtext behalten
-        val raw = heard.map { it.lowercase().replace(Regex("[^\\p{L}\\p{N} ]"), " ").trim().replace(Regex("\\s+"), " ") }.filter { it.isNotBlank() }
+        val raw = heard.map { nurWorte(it.lowercase()).trim().replace(Regex("\\s+"), " ") }.filter { it.isNotBlank() }
         if (raw.isEmpty()) return Reply.Unclear
         val all = heard.map { SpokenAnswer.normalize(it) }.filter { it.isNotBlank() }.ifEmpty { raw }
         val first = all.first()

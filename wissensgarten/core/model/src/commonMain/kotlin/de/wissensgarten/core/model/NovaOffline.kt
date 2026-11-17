@@ -6,6 +6,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.booleanOrNull
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.intOrNull
 import kotlinx.serialization.json.jsonArray
@@ -66,11 +67,17 @@ object NovaOffline {
         Stand(vorhanden ?: o["texte"]!!.jsonPrimitive.int, o["bytes"]?.jsonPrimitive?.longOrNull, o["bytes_original"]?.jsonPrimitive?.longOrNull)
     }.getOrNull()
 
-    /** Liste `vorlesen/texte.json` → Einträge (Texte sind schon so, wie Nova sie spricht) */
-    fun liste(json: String): List<Nova.Eintrag> = Json.parseToJsonElement(json).jsonObject["texte"]!!.jsonArray.map {
-        val o = it.jsonObject
-        Nova.Eintrag(o["text"]!!.jsonPrimitive.content, o["sprache"]!!.jsonPrimitive.content)
-    }
+    /**
+     * Liste `vorlesen/texte.json` → Einträge (Texte sind schon so, wie Nova sie spricht).
+     * @param ohneLaufzeit vorab vertonte Laufzeit-Sätze (`"laufzeit": true`, z. B. Brummi-Radio) weglassen – „Alle Nova-Texte
+     *   offline laden“ holt nur die festen Texte, sonst würde der Download mehr als doppelt so groß
+     */
+    fun liste(json: String, ohneLaufzeit: Boolean = false): List<Nova.Eintrag> = Json.parseToJsonElement(json).jsonObject["texte"]!!.jsonArray
+        .filter { !ohneLaufzeit || it.jsonObject["laufzeit"]?.jsonPrimitive?.booleanOrNull != true }
+        .map {
+            val o = it.jsonObject
+            Nova.Eintrag(o["text"]!!.jsonPrimitive.content, o["sprache"]!!.jsonPrimitive.content)
+        }
 
     fun hashes(eintraege: Collection<Nova.Eintrag>): List<String> = eintraege.map { Nova.hash(it.text, it.sprache) }.distinct()
 

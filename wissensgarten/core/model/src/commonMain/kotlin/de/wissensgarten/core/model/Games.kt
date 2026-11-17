@@ -77,7 +77,8 @@ object Games {
         fun order(list: List<String>): List<String> = when (tier.distractors) {
             Difficulty.Pick.FAR -> list.sortedWith(compareBy<String> { Difficulty.similarity(it, card.back) }.thenBy { it })
             Difficulty.Pick.NEAR -> list.sortedWith(compareByDescending<String> { Difficulty.similarity(it, card.back) }.thenBy { it })
-            Difficulty.Pick.MIXED -> list.map { it to (it.hashCode() xor card.id.hashCode()) }.sortedBy { it.second }.map { it.first }
+            // fest je Karten-Inhalt (nicht je Gerät): so lassen sich Brummi-Radio-Fragen vorab vertonen
+            Difficulty.Pick.MIXED -> list.map { it to (it.hashCode() xor card.front.hashCode()) }.sortedBy { it.second }.map { it.first }
         }
         val wrong = (order(given) + order(extra)).take(tier.options - 1)
         if (wrong.size < 2) return null
@@ -97,7 +98,7 @@ object Games {
     fun speakPossible(answer: String) = answer.length in 2..24 && answer.trim().split(Regex("\\s+")).size <= 3 &&
         answer.none { it.isDigit() || it in "=+×÷²³√π/()" } &&
         // Artikel gehören zur Antwort („la maison“, „der“)? Die Spracherkennung kann sie nicht sicher prüfen.
-        SpokenAnswer.normalize(answer) == answer.lowercase().replace(Regex("[^\\p{L}\\p{N} ]"), " ").trim().replace(Regex("\\s+"), " ")
+        SpokenAnswer.normalize(answer) == nurWorte(answer.lowercase()).trim().replace(Regex("\\s+"), " ")
 
     fun tiltPossible(options: List<String>) = options.size <= 4 && options.all { it.length <= 16 }
 
@@ -273,7 +274,7 @@ object SpokenAnswer {
     private val articles = setOf("der", "die", "das", "the", "a", "an", "le", "la", "les", "l", "un", "une", "el", "los", "las")
 
     fun normalize(s: String): String = s.lowercase()
-        .replace(Regex("[^\\p{L}\\p{N} ]"), " ")
+        .let(::nurWorte)
         .split(Regex("\\s+")).filter { it.isNotBlank() && it !in articles }.joinToString(" ")
 
     fun matches(heard: String, answer: String): Boolean {
@@ -297,3 +298,9 @@ object SpokenAnswer {
         return d[y.length]
     }
 }
+
+/**
+ * Alles außer Buchstaben, Ziffern und Leerzeichen wird Leerzeichen (früher `Regex("[^\\p{L}\\p{N} ]")`).
+ * Ohne Regex: Kotlin/Wasm (WebApp) kennt `\\p{N}` nicht und brach dort ab (Brummi-Radio, Sprech-Spiel).
+ */
+fun nurWorte(s: String): String = buildString(s.length) { s.forEach { append(if (it.isLetterOrDigit() || it == ' ') it else ' ') } }
