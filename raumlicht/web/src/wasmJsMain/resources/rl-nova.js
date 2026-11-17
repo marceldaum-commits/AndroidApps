@@ -4,7 +4,7 @@
   const STORE = 'raumlicht-nova';
   let ctx = null, turn = 0, node = null;
   const N = window.__rlNova = { speaking: false };
-  // Reste der früheren Stimme „Thorsten“ (63 MB) wegräumen
+  // Reste des früheren Stimm-Pakets (63 MB, bis 2.16) wegräumen
   try { if ('caches' in window) caches.delete('raumlicht-stimme'); } catch (e) {}
   function audio() {
     if (!ctx) { const C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }

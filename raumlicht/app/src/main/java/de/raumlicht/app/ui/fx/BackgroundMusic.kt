@@ -27,8 +27,6 @@ class BackgroundMusic(private val context: Context) {
     private var master = 1f
     /** eigene Lautstärke der Musik (Einstellungen), 0..1 */
     private var own = 1f
-    /** erst nach der ersten Berührung gibt es Musik – nie vorher */
-    private var touched = false
     /** Prüfung auf Zeit oder Pflichtteil: Musik aus */
     private var silent = false
     /** Handy stumm oder auf Vibration geschaltet? Dann bleibt auch die Musik still. */
@@ -63,7 +61,6 @@ class BackgroundMusic(private val context: Context) {
     /** Lautstärke aus den Einstellungen, 0..1 */
     fun setVolume(v: Float) = scope.launch { master = v.coerceIn(0f, 1f); if (track != null) fadeTo(target(), 150) }
     fun setOwnVolume(v: Float) = scope.launch { own = v.coerceIn(0f, 1f); refresh() }
-    fun onTouch() { if (!touched) scope.launch { touched = true; refresh() } }
     fun setSilent(on: Boolean) = scope.launch { silent = on; refresh() }
 
     /** Musik schon vorab erzeugen, damit sie sofort da ist. */
@@ -73,7 +70,7 @@ class BackgroundMusic(private val context: Context) {
 
     private suspend fun refresh() {
         val m = wanted
-        val shouldPlay = enabled && foreground && m != null && touched && !silent && own > 0f && !muted()
+        val shouldPlay = enabled && foreground && m != null && !silent && own > 0f && !muted()
         if (!shouldPlay) { fadeOutAndStop(); return }
         if (current == m && track != null) { fadeTo(target()); return }
         // Andere App spielt Musik (Hörbuch, Spotify …)? Dann nicht dazwischenfunken.

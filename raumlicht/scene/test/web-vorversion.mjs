@@ -1,5 +1,5 @@
 // Update von der Vorversion ohne Datenverlust: Die alte WebApp läuft mit Spielstand und Einstellungen, auf dem Server erscheint die neue –
-// danach müssen Spielstand, Abi-Pass-Code und Einstellungen noch da sein, die alte Stimm-Datei (Thorsten) weggeräumt und die Konsole fehlerfrei sein.
+// danach müssen Spielstand, Abi-Pass-Code und Einstellungen noch da sein, die alte Stimm-Datei weggeräumt und die Konsole fehlerfrei sein.
 // node test/web-vorversion.mjs <alter webapp-Ordner> <neuer webapp-Ordner>
 import { createRequire } from 'module'; const { chromium } = createRequire(import.meta.url)('playwright');
 import fs from 'fs'; import path from 'path'; import http from 'http'; import os from 'os';
@@ -16,10 +16,10 @@ let fail = 0; const check = (ok, text) => { console.log((ok ? 'ok   ' : 'FAIL ')
 const started = () => page.waitForFunction(() => document.getElementById('start').style.display === 'none', null, { timeout: 90000 });
 // 1. Vorversion: einmal starten (Service Worker richtet sich ein), dann Spielstand und Einstellungen wie nach längerer Nutzung
 await page.goto(url); await started(); await page.waitForFunction(() => navigator.serviceWorker.controller || navigator.serviceWorker.ready.then(() => true), null, { timeout: 60000 });
-const data = { 'raumlicht.sterne': '1-1=3;1-2=2;5-3=1;abi-zelt-a=3', 'raumlicht.jamBest': '17', 'raumlicht.lageBest': '9', 'raumlicht.proCode': 'RL-TEST-CODE', 'raumlicht.stimmeAn': '1', 'raumlicht.stimmeThorsten': '1',
+const data = { 'raumlicht.sterne': '1-1=3;1-2=2;5-3=1;abi-zelt-a=3', 'raumlicht.jamBest': '17', 'raumlicht.lageBest': '9', 'raumlicht.proCode': 'RL-TEST-CODE', 'raumlicht.stimmeAn': '1',
   'raumlicht.stimmeName': 'Anna', 'raumlicht.sprechtempo': '120', 'raumlicht.musik': '0', 'raumlicht.ton': '1', 'raumlicht.vibration': '0', 'raumlicht.lautstaerke': '65', 'raumlicht.musikLaut': '40', 'raumlicht.tonLaut': '80',
   'raumlicht.strengeVektoren': '1', 'raumlicht.skin': 'gold', 'raumlicht.plan': 'x', 'raumlicht.diary': 'y' };
-await page.evaluate(async (d) => { for (const k in d) localStorage.setItem(k, d[k]); const c = await caches.open('raumlicht-stimme'); await c.put('/alt-thorsten.onnx', new Response(new Uint8Array(5000))); }, data);
+await page.evaluate(async (d) => { for (const k in d) localStorage.setItem(k, d[k]); const c = await caches.open('raumlicht-stimme'); await c.put('/alte-stimme.onnx', new Response(new Uint8Array(5000))); }, data);
 await page.reload(); await started(); await page.waitForTimeout(1500);
 const seenOld = await page.evaluate(() => ({ nova: !!window.__rlNova, sterne: localStorage.getItem('raumlicht.sterne') }));
 check(!seenOld.nova && seenOld.sterne === data['raumlicht.sterne'], `Vorversion ${from} läuft mit Spielstand`);
@@ -36,7 +36,7 @@ const lost = kept.filter((k) => after[k] !== data[k]);
 check(lost.length === 0, lost.length ? 'verloren oder verändert: ' + lost.join(', ') : 'Spielstand, Abi-Pass-Code und Einstellungen unverändert (' + kept.length + ' Einträge)');
 // 4. Alte Stimm-Datei weg, neuer Regler steht auf Standard (das alte Sprechtempo galt für eine andere Stimme)
 const cachesNow = await page.evaluate(() => caches.keys());
-check(!cachesNow.includes('raumlicht-stimme'), 'alte Stimm-Datei (Thorsten) ist weggeräumt');
+check(!cachesNow.includes('raumlicht-stimme'), 'alte Stimm-Datei (63 MB) ist weggeräumt');
 // 5. Einstellungen öffnen und eine Aufgabe: ohne Fehler, Spielstand bleibt
 await page.goto(url + '?ziel=einstellungen'); await started(); await page.waitForTimeout(2500);
 await page.goto(url + '?ziel=level/1-1'); await started(); await page.waitForTimeout(2500);

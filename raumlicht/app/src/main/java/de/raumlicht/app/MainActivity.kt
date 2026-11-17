@@ -79,9 +79,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    /** Musik beginnt nie von selbst – erst mit der ersten Berührung */
-    override fun dispatchTouchEvent(ev: android.view.MotionEvent?): Boolean { (application as RaumlichtApp).music.onTouch(); return super.dispatchTouchEvent(ev) }
-
     override fun onStart() {
         super.onStart()
         (application as RaumlichtApp).music.onForeground(true)

@@ -23,7 +23,7 @@ WebApp: derselbe Eintrag öffnet `lizenzen.txt`). Bis 2.12.0 fehlten diese Texte
 
 ## Kein GPL-Baustein (Stand 2.17.0)
 
-Von 2.4.0 bis 2.5.1 enthielt die Android-App mit sherpa-onnx 1.13.8 auch **espeak-ng (GPL-3.0)**. Von 2.6.0 bis 2.16.4 war espeak-ng nicht mehr enthalten
-(sherpa-onnx 2.0.1, Lautschrift als mitgelieferte Daten). Seit **2.17.0** gibt es in der App gar keine Sprachsynthese mehr: sherpa-onnx, ONNX Runtime,
-die Lautschrift-Daten und die Stimme „Thorsten“ sind entfernt. Vorgelesen wird mit fertigen Audiodateien der Stimme „Nova“ von unserem Server;
+Von 2.4.0 bis 2.5.1 enthielt die Android-App über eine Sprach-Bibliothek auch **espeak-ng (GPL-3.0)**. Von 2.6.0 bis 2.16.4 war espeak-ng nicht mehr enthalten
+(neuere Fassung der Bibliothek, Lautschrift als mitgelieferte Daten). Seit **2.17.0** gibt es in der App gar keine Sprachsynthese mehr: Die Sprach-Bibliothek, ONNX Runtime,
+die Lautschrift-Daten und die frühere ladbare Stimme sind entfernt. Vorgelesen wird mit fertigen Audiodateien der Stimme „Nova“ von unserem Server;
 kommt eine Datei nicht an, liest die Sprachausgabe des Geräts. Der GitHub-Lauf prüft weiter, dass das Store-Paket keine espeak-ng-Daten enthält. Das ist keine Rechtsberatung.
