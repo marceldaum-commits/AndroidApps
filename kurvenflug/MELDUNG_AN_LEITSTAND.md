@@ -1,5 +1,11 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 2.5.2 – Bestqualität: Rückfall sauberer · Web = APK = Play
+- Liefert `original/` noch 404, wird die normale Datei jetzt **als Standard** gespeichert (nicht mehr als Bestqualität).
+  Folge: Sie spielt sofort offline, zählt aber nicht als Bestqualität – ein späteres Tippen auf „Bestqualität“ lädt genau
+  die nachgeholten Originale. (Vorher hätte ein früher Ladevorgang die Standard-Datei dauerhaft als Bestqualität behalten.)
+- versionCode 49.
+
 ## 2.5.1 – Offline in Bestqualität (Nachtrag Marcel) · Web = APK = Play
 - Zwei Knöpfe: **„Offline laden – Standard (ca. X MB)“** (X aus "bytes") und **„Offline laden – Bestqualität (ca. Z MB)“**
   (Z aus "bytes_original"); jeweils anteilig um schon Gespeichertes verringert. Die gemerkte Wahl ist der gefüllte Knopf.
