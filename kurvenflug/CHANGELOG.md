@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.0 – 🗣️ Thorsten jetzt auch in der Google-Play-Version
+- Die natürliche Vorlese-Stimme „Thorsten“ gibt es jetzt auch in der App aus Google Play. Dafür darf die App ins Internet –
+  aber nur, wenn Sie Thorsten in den Einstellungen selbst laden (einmalig ca. 75 MB von unserem eigenen Server). Sonst
+  bleibt alles wie bisher auf dem Gerät: keine Anmeldung, keine Werbung, keine Daten über Ihr Kind.
+
 ## 2.1.0 – 🔒 Thorsten-Stimme von unserem eigenen Server
 - Die natürliche Stimme „Thorsten“ kommt jetzt von unserem eigenen Server (stimmen.mathenachhilfe-online.com) statt von
   einem fremden Anbieter. Wie bisher nur, wenn man sie ausdrücklich lädt (ca. 75 MB, am besten im WLAN), mit Prüfsumme;

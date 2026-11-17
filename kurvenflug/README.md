@@ -111,7 +111,7 @@ Formeln und Einheiten werden in Worte übersetzt (`Speech.clean`, gemeinsam für
 geprüft, `core/model/VoicePack.kt`). Android rechnet Thorsten mit ONNX Runtime Android, die WebApp mit ONNX Runtime Web
 (`web/.../resources/ort`) – gleiche Eingabe (Laut-Nummern aus `Lautschrift.ids`, wie Piper). Die Lautschrift liegt fertig in `voice/stimme`
 (erzeugt mit `tools/stimme/lautschrift.py` aus `build/sprechtexte.txt` des `SpeechDumpTest`) – kein espeak-ng (GPL) in App oder WebApp.
-`VoiceDataTest` meldet, wenn neue Texte Wörter ohne Lautschrift enthalten. Die Play-Fassung (ohne Internet) bietet nur die Gerätestimmen.
+`VoiceDataTest` meldet, wenn neue Texte Wörter ohne Lautschrift enthalten. Seit 2.2.0 auch in der Play-Fassung (Internet-Berechtigung nur dafür).
 
 | Einstellungen | Theorie mit 🔊 |
 |---|---|
