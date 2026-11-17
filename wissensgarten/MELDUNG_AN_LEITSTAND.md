@@ -1,5 +1,19 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.3 vom 17.11.2026 (Web = Android)
+
+- **Musik:**
+  - Android startet sie sofort beim Öffnen. Es ist eine native Compose-App ohne WebView; die Musik wartet nicht mehr auf die erste Berührung.
+  - Web startet sie beim allerersten Tippen oder Klick (war schon so).
+  - Kein Musik-Knopf. „Musik aus“, Lautstärke, Lautlos-Schalter und Audio-Fokus werden weiter beachtet.
+- **Nur Nova:**
+  - Codesuche nach „thorsten“ und „sherpa“: 0 Treffer außer `CHANGELOG.md` und diesem Meldungs-Verlauf.
+  - Es gab nur noch Kommentare und einen Testwert, die jetzt neutral formuliert sind.
+  - Keine Dateien, URLs oder Auswahl mehr.
+  - Rückfall auf die Gerätestimme, wenn Nova nicht erreichbar oder nicht offline geladen ist.
+- **„Über“** zeigt jetzt dieselbe Paketzahl wie die Samenhandlung (85 mit Plus-Vorschauen).
+- Alle Tests grün, Lint 0 Fehler.
+
 ## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.2 vom 17.11.2026 (Web = Android)
 
 **Umfang:** Alles Begonnene ist fertig:

@@ -31,8 +31,8 @@ class AndroidMusic(private val context: Context) : Music {
     private var fadeJob: Job? = null
     private var interrupted = false
     private var volume = 0.45f
-    /** Erst nach der ersten Berührung spielen – nie ungefragt beim Start */
-    private var unlocked = false
+    /** Android: Musik läuft gleich beim Öffnen (Vorgabe). Im Browser wartet sie dagegen aufs erste Antippen. */
+    private var unlocked = true
 
     private val focusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
         .setAudioAttributes(attributes())

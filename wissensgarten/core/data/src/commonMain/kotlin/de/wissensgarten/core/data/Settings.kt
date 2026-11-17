@@ -57,7 +57,7 @@ class Settings(private val prefs: KeyValueStore) {
         runCatching { NovaQualitaet.valueOf(prefs.getString("nova_qualitaet", NovaQualitaet.STANDARD.name)!!) }.getOrDefault(NovaQualitaet.STANDARD))
     val novaQuality: StateFlow<NovaQualitaet> = _novaQuality.asStateFlow()
     fun setNovaQuality(v: NovaQualitaet) { prefs.edit().putString("nova_qualitaet", v.name).apply(); _novaQuality.value = v }
-    // Die Stimmenwahl (Gerätestimme/„Thorsten“) gibt es seit Nova nicht mehr
+    // Die Stimmenwahl (Gerätestimme/frühere Offline-Stimme) gibt es seit Nova nicht mehr
     init { if (prefs.contains("stimme")) prefs.edit().remove("stimme").apply() }
 
     /** Beim Start (höchstens einmal am Tag) bei GitHub nach einer neuen App-Version schauen. */

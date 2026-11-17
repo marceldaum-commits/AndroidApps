@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.3 – Musik gleich zum Start (17.11.2026)
+- **App:** Die Garten-Musik läuft jetzt direkt beim Öffnen (in der WebApp beim ersten Antippen – das verlangen die Browser). „Musik aus“, die Lautstärke und der Lautlos-Schalter des Handys gelten weiter.
+- Vorgelesen wird überall nur mit Nova; ohne Internet liest die Stimme des Geräts.
+- In den Einstellungen unter „Über“ steht jetzt dieselbe Paketzahl wie in der Samenhandlung.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.2 – Feinschliff vor dem Praxistest (17.11.2026)
 - **WebApp:** Kurze Hinweise (z. B. „In die Zwischenablage kopiert“, „Freischalt-Link ungültig“) werden jetzt wirklich angezeigt.
 - WebApp zeigt keine Knöpfe mehr, die dort nicht funktionieren (Gieß-Erinnerung, Postkarte/Urkunde – die gibt es in der Android-App).

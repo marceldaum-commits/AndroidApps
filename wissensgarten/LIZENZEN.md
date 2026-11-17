@@ -1,7 +1,7 @@
 # Lizenzen fremder Bestandteile für Brummis Vorlese-Stimme
 
 Seit der Umstellung auf **Nova** steckt **kein fremder Baustein** für die Stimme mehr in App oder WebApp
-(sherpa-onnx, ONNX Runtime, ONNX Runtime Web, das Lautschrift-Wörterbuch und die Stimme „Thorsten“ sind entfernt).
+(die frühere Offline-Stimme samt ihrer Rechen-Bausteine und dem Lautschrift-Wörterbuch ist entfernt).
 
 | Bestandteil | Wozu | Hinweis |
 |---|---|---|

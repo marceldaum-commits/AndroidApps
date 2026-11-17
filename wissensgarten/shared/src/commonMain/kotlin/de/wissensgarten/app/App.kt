@@ -599,7 +599,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             sound = sound, onSound = { vm.settings.setSound(it) },
                             reminderOn = reminderOn, reminderHour = reminderHour, onReminder = { on, h -> vm.setReminder(on, h) },
                             readAloud = readMode2, onReadAloud = { vm.settings.setReadAloud(it) },
-                            packCount = packs.size, cardCount = packs.sumOf { it.cardCount }, version = AppInfo.VERSION,
+                            packCount = (packs + vm.plusPreviews.collectAsStateWithLifecycle().value).size, cardCount = (packs + vm.plusPreviews.collectAsStateWithLifecycle().value).sumOf { it.cardCount }, version = AppInfo.VERSION,
                             onTheme = { vm.setTheme(it) }, onUpdateProfile = { vm.updateProfile(it) },
                             onDeleteProfile = { vm.deleteProfile(p.id); goTab(Routes.GARDEN) },
                             onTutorial = { nav.navigate(Routes.tutorial(false)) },
