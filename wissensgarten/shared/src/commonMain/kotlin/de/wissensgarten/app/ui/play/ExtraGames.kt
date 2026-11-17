@@ -173,6 +173,7 @@ fun WeedScreen(cards: List<StudyCard>, peers: Map<String, List<String>>, total: 
             }
             Text((card.img?.let { "$it  " } ?: "") + card.front, style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 10.dp))
+            if (phase == 0) de.wissensgarten.app.ui.common.TheoryButton(card.bedId, Modifier.align(Alignment.CenterHorizontally))
             when (phase) {
                 0 -> OptionButtons(options, true) { i ->
                     if (options[i] == card.back) { sfx?.play(Sound.CORRECT); phase = 1 }

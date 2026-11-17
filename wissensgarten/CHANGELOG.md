@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.27.0 – Brummi erklärt (17.11.2026)
+- **Neuer Knopf „📖 Theorie“ bei jeder Übung:** Wenn eine Frage schwer ist, erklärt Brummi das Thema noch einmal in Ruhe – mit Bildern und auf Wunsch vorgelesen. Danach geht es genau dort weiter, wo du warst.
+- Während die Erklärung offen ist, läuft nichts weiter – kein Zeitdruck, kein Frust.
+- Bei den Zeit-Spielen (Blitz, Rhythmus, Duell) gibt es den Knopf bewusst nicht, damit das Spiel fair bleibt; in allen anderen Übungen ist er da.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 0.26.0 – Große Korrektheitsprüfung (17.11.2026)
 - **Alle 2.923 Karten noch einmal einzeln geprüft** – von einer zweiten, unabhängigen Stelle. 233 Verbesserungen: genauere Fakten, eindeutigere Fragen, bessere Rechtschreibung.
 - **Eintippen ist fairer:** Groß/klein, Bindestriche, Artikel, Akzente und ein Punkt am Ende zählen nicht mehr als Fehler (außer in Deutsch, wo es um die Schreibung geht). „Kiew“ zählt auch für „Kyjiw (Kiew)“.

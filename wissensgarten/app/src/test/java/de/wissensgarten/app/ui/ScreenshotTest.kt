@@ -1,5 +1,7 @@
 package de.wissensgarten.app.ui
 
+import androidx.compose.runtime.CompositionLocalProvider
+
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.*
@@ -290,7 +292,15 @@ open class ScreenshotTest {
 
     @Test fun reviewKids() = shot("07_giessen_grundschule") {
         val kid = bed(pack("gs-tiere"), 6, "kid")
-        ReviewScreen(listOf(kid.cards[2].toStudy()), mapOf(kid.bed.id to kid.bed), true, { _, _, _ -> }, {})
+        val tiere = pack("gs-tiere")
+        CompositionLocalProvider(de.wissensgarten.app.ui.common.LocalTheory provides { _: String -> de.wissensgarten.app.ui.common.Theory("${tiere.emoji} ${tiere.title}", tiere.intro) }) {
+            ReviewScreen(listOf(kid.cards[2].toStudy()), mapOf(kid.bed.id to kid.bed), true, { _, _, _ -> }, {})
+        }
+    }
+
+    @Test fun theory() = shot("66_theorie", settle = 1500) {
+        val tiere = pack("gs-tiere")
+        de.wissensgarten.app.ui.common.TheorySheet(de.wissensgarten.app.ui.common.Theory("${tiere.emoji} ${tiere.title}", tiere.intro)) {}
     }
 
     @Test fun shop() = shot("08_samenhandlung") {

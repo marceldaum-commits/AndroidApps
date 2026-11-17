@@ -188,8 +188,21 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         }
     }
 
+    /** Theorie-Knopf in jeder Übung: Beet → Paket → Brummis Erklär-Szenen */
     @Composable
     private fun AppNav(nav: NavHostController, startRoute: String) {
+        val beds by vm.beds.collectAsStateWithLifecycle()
+        val packs by vm.packs.collectAsStateWithLifecycle()
+        val theory = remember(beds, packs) {
+            val byId = packs.associateBy { it.id }
+            val map = beds.associate { b -> b.bed.id to b.bed.packId?.let(byId::get) }
+            ({ bedId: String -> map[bedId]?.let { p -> de.wissensgarten.app.ui.common.Theory("${p.emoji} ${p.title}", p.intro) } })
+        }
+        CompositionLocalProvider(de.wissensgarten.app.ui.common.LocalTheory provides theory) { AppNavContent(nav, startRoute) }
+    }
+
+    @Composable
+    private fun AppNavContent(nav: NavHostController, startRoute: String) {
         val profile by vm.profile.collectAsStateWithLifecycle()
         val profiles by vm.profiles.collectAsStateWithLifecycle()
         val beds by vm.beds.collectAsStateWithLifecycle()
