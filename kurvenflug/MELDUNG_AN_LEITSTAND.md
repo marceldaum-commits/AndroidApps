@@ -1,5 +1,24 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 0.26.0 – Klang-Identität KurvenFlug (Auftrag Marcel 17.11.) · Web = Android
+
+- **Entstehung:** komplett im Code komponiert und erzeugt (`core/model/SpaceMusic.kt` = Noten, `shared/ui/fx/MusicSynth.kt`
+  und `Synth.kt` = Klangsynthese). Keine Samples, keine fremden Dateien, keine Lizenzfragen; Android und Web nutzen
+  denselben Code → **klingen gleich**. Keine zusätzliche Ladegröße (Musik entsteht erst nach der ersten Berührung,
+  im Browser in kleinen Häppchen: längste Blockade 0,15 s statt vorher 2,3 s).
+- **Musik:** Synthwave, A-Moll-Welt mit Arpeggios, weichen Flächen, Takt-Echo und Hall-Raum (Kamm- und Allpassfilter).
+  Wiederkehrendes **Kurven-Motiv** (Melodie steigt wie eine Flugbahn und fällt) = Erkennungsmelodie und Thema im
+  B-Teil. 16 Takte in zwei Teilen (A ohne, B mit Melodie) → keine kurze nervige Schleife.
+  **Jedes Kapitel eigene Variation** (Tonart aus 12, Akkordfolge aus 8, Arpeggio-Muster aus 6, Tempo) – im Test
+  geprüft: 30 Kapitel = 30 verschiedene Stücke. Menü ruhig (80–86 BPM), Flug 98–106, **Sturm/Boss 118–122 mit Beat,
+  Extrem 128 mit Sechzehntel-Bass**.
+- **Effekte:** Start/Schub, **Flug-Ton folgt der Kurve** (Tonhöhe = Höhe der Sonde), Treffer, **knapp daneben**
+  (≤ 1 Kästchen, sanftes „oh-oh“) vs. daneben, **Sterne** (steigende Glocken je Stern), **Volt-Robo-Silben**
+  (Ringmodulation, Tonhöhe folgt den Vokalen), Erkennungsmelodie beim Start.
+- **Bedienung/Respekt:** Musik und Geräusche getrennt schaltbar, **je eigene Lautstärke** (Einstellungen);
+  **nie vor der ersten Berührung** (jetzt auch Android); folgt Stummschaltung bzw. anderer Musik auf dem Gerät;
+  **Klassen-Challenge still**. Kein Inhalt nur über Ton (alles auch sichtbar).
+
 ## 0.25.0 – 📖 Theorie-Knopf in jeder Übung (Wunsch Marcel)
 - Jede Übung (alle 607 geprüften spielbaren Level inkl. Sturm, Duell, Andromeda, Extrem) hat einen Knopf 📖: zeigt die
   Kapitel-Erklärung Schritt für Schritt plus Merkformel, jederzeit, ohne Sterne-Abzug. Abgesichert im Prüftest

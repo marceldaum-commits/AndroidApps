@@ -1,6 +1,7 @@
 package de.kurvenflug.app
 
 import de.kurvenflug.app.ui.fx.MusicSynth
+import kotlinx.coroutines.launch
 import de.kurvenflug.app.ui.fx.Sfx
 import de.kurvenflug.app.ui.fx.Sound
 import de.kurvenflug.app.ui.fx.Synth
@@ -11,21 +12,45 @@ import de.kurvenflug.core.model.SpaceMusic
 import de.kurvenflug.core.model.Vec
 import de.kurvenflug.core.model.num
 
-/** Geräusche im Browser: einmal erzeugt (wie auf Android), über Web Audio abgespielt. */
+/** In kleinen Stücken an Web Audio übergeben – jeder Wert ist ein Aufruf über die Grenze Kotlin ↔ JavaScript. */
+internal suspend fun transfer(id: Int, n: Int, value: (Int) -> Double) {
+    var i = 0
+    while (i < n) {
+        val end = minOf(n, i + 40_000)
+        while (i < end) { jsBufSet(id, i, value(i)); i++ }
+        kotlinx.coroutines.delay(1)
+    }
+    jsBufDone(id)
+}
+
+/** Geräusche im Browser: einmal erzeugt (wie auf Android), über Web Audio abgespielt – Stück für Stück vorbereitet. */
 object WebSfx : Sfx() {
     private val ids = HashMap<Sound, Int>()
-    private fun id(s: Sound) = ids.getOrPut(s) {
-        val data = Synth.render(s)
-        val id = jsBufNew(data.size, Synth.SR)
-        for (i in data.indices) jsBufSet(id, i, data[i].toDouble())
-        jsBufDone(id); id
+    private val scope = kotlinx.coroutines.MainScope()
+    private var pending: Triple<Sound, Float, Float>? = null
+    private var pendingAt = 0L
+
+    /** Alle Geräusche nach und nach erzeugen (nach dem ersten Tippen), ohne die Oberfläche anzuhalten */
+    fun prepare() = scope.launch {
+        // kurze Klänge zuerst, die Erkennungsmelodie zuletzt
+        for (s in Sound.entries.sortedBy { if (it == Sound.JINGLE) 1 else 0 }) {
+            if (s in ids) continue
+            val data = Synth.render(s)
+            val id = jsBufNew(data.size, Synth.SR)
+            transfer(id, data.size) { data[it].toDouble() }
+            ids[s] = id
+            pending?.let { (ps, pitch, vol) -> if (ps == s && de.kurvenflug.core.model.nowMillis() - pendingAt < 4000) { pending = null; play(ps, pitch, vol) } }
+            kotlinx.coroutines.delay(1)
+        }
     }
-    /** Alle Geräusche vorab erzeugen (nach dem Start, damit der erste Tipp sofort klingt) */
-    fun prepare() = Sound.entries.forEach { id(it) }
     /** Browser erlauben Ton erst nach dem ersten Tippen – vorher nichts erzeugen */
     internal var ready = false
     override fun play(s: Sound, pitch: Float, volume: Float) {
-        if (enabled && ready) jsPlay(id(s), pitch.coerceIn(0.5f, 2f).toDouble(), volume.toDouble())
+        if (!enabled || !ready) return
+        val id = ids[s]
+        // Noch nicht fertig erzeugt? Erkennungsmelodie kurz vormerken, alles andere auslassen
+        if (id == null) { if (s == Sound.JINGLE) { pending = Triple(s, pitch, volume); pendingAt = de.kurvenflug.core.model.nowMillis() }; return }
+        jsPlay(id, pitch.coerceIn(0.5f, 2f).toDouble(), (volume * level).toDouble())
     }
 }
 
@@ -64,14 +89,27 @@ object WebPlatform : Platform {
     private var musicOn = true
     private var mood: MusicMood? = null
     private val musicIds = HashMap<MusicMood, Int>()
-    private fun musicId(m: MusicMood) = musicIds.getOrPut(m) {
-        val data = MusicSynth.render(SpaceMusic.compose(m))
-        val id = jsBufNew(data.size, MusicSynth.SR)
-        for (i in data.indices) jsBufSet(id, i, data[i] / 32768.0)
-        jsBufDone(id); id
+    private val rendering = HashSet<MusicMood>()
+    private val musicScope = kotlinx.coroutines.MainScope()
+    /** Musik im Hintergrund in Häppchen erzeugen; fertig → spielen, falls sie noch gewünscht ist */
+    private fun musicId(m: MusicMood): Int? {
+        musicIds[m]?.let { return it }
+        if (rendering.add(m)) musicScope.launch {
+            val data = MusicSynth.renderInSlices(SpaceMusic.compose(m)) { kotlinx.coroutines.delay(1) }
+            val id = jsBufNew(data.size, MusicSynth.SR)
+            transfer(id, data.size) { data[it] / 32768.0 }
+            musicIds[m] = id; rendering.remove(m)
+            refresh()
+        }
+        return null
     }
-    private fun refresh() = mood.let { m -> if (!WebSfx.ready) return@let; if (musicOn && m != null) jsMusic(musicId(m), 0.32) else jsMusic(-1, 0.0) }
-    override fun setMusicMood(m: MusicMood) { mood = m; refresh() }
+    private var musicVol = 0.7
+    private fun refresh() = mood.let { m ->
+        if (!WebSfx.ready) return@let
+        if (musicOn && m != null && musicVol > 0.01) musicId(m)?.let { jsMusic(it, 0.32 * musicVol / 0.7) } ?: Unit else jsMusic(-1, 0.0)
+    }
+    override fun setMusicMood(m: MusicMood?) { mood = m; refresh() }
+    override fun setMusicVolume(v: Float) { musicVol = v.toDouble(); refresh() }
     override fun setMusicEnabled(on: Boolean) { musicOn = on; refresh() }
 }
 

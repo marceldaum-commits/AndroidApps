@@ -3,6 +3,17 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 0.26.0 – 🎵 Kurvenflug hat jetzt seinen eigenen Sound
+- **Eigene Musik für jedes Kapitel**: Synthwave im Weltall mit weitem Hall, Arpeggios und einer Melodie – dem
+  Kurven-Motiv, das wie eine Flugbahn steigt und fällt. Jedes Kapitel hat seine eigene Tonart, Akkorde und sein
+  Tempo. Im Asteroidensturm, bei Bossen und in der Extrem-Prüfung wird es treibender, mit Beat.
+- **Neue Klänge**: Beim Flug folgt ein leiser Ton der Kurve (oben hoch, unten tief), knapp daneben klingt anders als
+  weit daneben, jeder Stern bekommt einen hellen Glockenton, Volt spricht in Robo-Silben. Beim Start spielt die
+  Kurvenflug-Erkennungsmelodie.
+- **Lautstärke einstellbar**: Musik und Geräusche getrennt ein- und ausschalten und je eine eigene Lautstärke wählen.
+- Ton erst nach der ersten Berührung, in der Klassen-Challenge still. Alles im Code komponiert, keine Musikdateien –
+  die App wird dadurch nicht größer.
+
 ## 0.25.0 – 📖 Theorie zu jeder Übung
 - **📖 Theorie-Knopf**: In jeder Übung gibt es jetzt neben 👁 und ✋ den Knopf 📖. Er zeigt alle Erklärungen zum
   Thema auf einen Blick – mit der Merkformel. Jederzeit, so oft du willst, und es kostet keine Sterne.

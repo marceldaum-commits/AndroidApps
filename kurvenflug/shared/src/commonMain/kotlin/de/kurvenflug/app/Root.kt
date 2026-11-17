@@ -2,6 +2,7 @@ package de.kurvenflug.app
 
 import androidx.compose.material3.Surface
 import androidx.savedstate.read
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -97,6 +98,15 @@ fun KurvenflugRoot(
     val music by vm.settings.music.collectAsStateWithLifecycle()
     LaunchedEffect(sound) { platform.sfx?.enabled = sound }
     LaunchedEffect(music) { platform.setMusicEnabled(music) }
+    val musicVol by vm.settings.musicVolume.collectAsStateWithLifecycle()
+    val sfxVol by vm.settings.sfxVolume.collectAsStateWithLifecycle()
+    LaunchedEffect(musicVol) { platform.setMusicVolume(musicVol / 100f) }
+    LaunchedEffect(sfxVol) { platform.sfx?.level = sfxVol / 100f }
+    // Ton erst nach der ersten Berührung – dann begrüßt die Kurvenflug-Erkennungsmelodie
+    var touched by remember { mutableStateOf(false) }
+    LaunchedEffect(touched) {
+        if (touched) { platform.onFirstTouch(); kotlinx.coroutines.delay(250); platform.sfx?.play(de.kurvenflug.app.ui.fx.Sound.JINGLE, volume = 0.7f) }
+    }
     val proState = rememberProState(vm, platform.proShop)
     KurvenflugTheme {
         val look by vm.settings.look.collectAsStateWithLifecycle()
@@ -104,7 +114,14 @@ fun KurvenflugRoot(
         CompositionLocalProvider(de.kurvenflug.app.LocalPlatform provides platform, LocalSfx provides platform.sfx, LocalVibration provides vibration,
             de.kurvenflug.app.ui.flight.LocalLook provides look, de.kurvenflug.app.ui.volt.LocalVoltHat provides look.third,
             de.kurvenflug.app.ui.volt.LocalVoltVoice provides voltVoice, LocalPro provides proState) {
-            Surface(Modifier.fillMaxSize(), color = Q.Space) {
+            Surface(Modifier.fillMaxSize().pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (!touched) {
+                        val e = awaitPointerEvent(androidx.compose.ui.input.pointer.PointerEventPass.Initial)
+                        if (e.changes.any { it.pressed }) touched = true
+                    }
+                }
+            }, color = Q.Space) {
                 if (!platform.isWeb) Nav(vm, platform, incomingDuel, widgetLevel)
                 // Browser am PC: Kurvenflug als Handy-Spalte in der Mitte – das Spielfeld ist quadratisch, Regler bleiben sichtbar
                 else androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
@@ -122,8 +139,20 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     // Musik passend zum Bildschirm: ruhig im Menü, treibend im Level
     val entry by nav.currentBackStackEntryAsState()
     val route = entry?.destination?.route
-    LaunchedEffect(route) {
-        platform.setMusicMood(if (route == Routes.LEVEL) MusicMood.FLIGHT else MusicMood.MENU)
+    val levelArg = entry?.arguments?.read { getStringOrNull("id") }
+    LaunchedEffect(route, levelArg) {
+        platform.setMusicMood(when (route) {
+            Routes.LEVEL -> levelArg.orEmpty().let { id ->
+                val ch = Levels.byId(id)?.chapter ?: de.kurvenflug.core.model.ChapterExtreme.levelFor(id)?.chapter ?: 0
+                de.kurvenflug.core.model.SpaceMusic.forLevel(id, ch)
+            }
+            Routes.STORM -> MusicMood(MusicMood.Mode.STORM, 0)
+            Routes.BOSS -> MusicMood(MusicMood.Mode.STORM, 7)
+            Routes.DUEL, Routes.PLAY -> MusicMood(MusicMood.Mode.FLIGHT, 50)
+            // Klassen-Challenge (Unterricht): standardmäßig still
+            Routes.CHALLENGE, Routes.CHALLENGE_NEW -> null
+            else -> MusicMood.MENU
+        })
     }
     val stars by vm.stars.collectAsStateWithLifecycle()
     val cells by vm.totalCells.collectAsStateWithLifecycle()
@@ -430,6 +459,8 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
             val music by vm.settings.music.collectAsStateWithLifecycle()
             SettingsScreen(
                 music = music, onMusic = vm.settings::setMusic,
+                musicVolume = vm.settings.musicVolume.collectAsStateWithLifecycle().value, onMusicVolume = vm.settings::setMusicVolume,
+                sfxVolume = vm.settings.sfxVolume.collectAsStateWithLifecycle().value, onSfxVolume = { vm.settings.setSfxVolume(it); platform.sfx?.play(de.kurvenflug.app.ui.fx.Sound.STAR, volume = 0.6f) },
                 sound = sound, onSound = vm.settings::setSound,
                 vibration = vibration, onVibration = vm.settings::setVibration,
                 autoUpdate = autoUpd, onAutoUpdate = vm.settings::setAutoUpdate,

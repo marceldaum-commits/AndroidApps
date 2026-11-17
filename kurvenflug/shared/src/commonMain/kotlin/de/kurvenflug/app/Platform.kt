@@ -21,8 +21,13 @@ interface Platform {
     /** Foto der geschafften Flugbahn teilen */
     fun sharePhoto(level: Level, path: List<Vec>, stars: Int, values: Map<String, Double>)
     fun openUrl(url: String)
-    fun setMusicMood(m: MusicMood) {}
+    /** null = Stille (z. B. Klassen-Challenge) */
+    fun setMusicMood(m: MusicMood?) {}
     fun setMusicEnabled(on: Boolean) {}
+    /** Musik-Lautstärke 0…1 */
+    fun setMusicVolume(v: Float) {}
+    /** Erste Berührung: erst ab jetzt darf Musik spielen (Android; der Browser erlaubt Ton ohnehin erst danach) */
+    fun onFirstTouch() {}
     /** Kaufweg für Kurvenflug Pro (null = keiner, z. B. in Bildschirmfoto-Tests) */
     val proShop: ProShop? get() = null
 }

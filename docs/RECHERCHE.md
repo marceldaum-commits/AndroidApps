@@ -155,3 +155,10 @@ Auftrag (Marcel über den Leitstand): „sehr viel Inhalt“, jede Aufgabe mit E
 - Google-Play-Familienrichtlinie: Käufe nicht aufdringlich, keine Täuschung → Kauf nur hinter einer Frage für
   Erwachsene, keine Kaufhinweise mitten im Level; Family-Link-Freigabe greift bei Google Play Billing automatisch.
 - „Frei bis Klasse 10“: Empfehlung durch Schulen/Eltern bleibt möglich (Freemium mit großem Gratis-Kern).
+
+## Kurvenflug 0.26: eigene Klang-Identität (Nov. 2026)
+- Spiele-Praxis: wiedererkennbares Leitmotiv (Erkennungsmelodie) + adaptive Musik (Intensität folgt dem Spiel:
+  Menü ruhig, Flug spannend, Sturm/Boss treibend) bindet und vermeidet Ermüdung; lange Schleifen mit A/B-Teil statt
+  kurzer Loops. Sonifikation (Ton folgt der Kurve) unterstützt das Verständnis von Funktionsgraphen (Audio-Graphen,
+  wie in Barrierefreiheits-Tools), ersetzt aber nie die Anzeige.
+- Respekt im Unterricht: Ton nie vor Interaktion, getrennte Lautstärken, still in Klassen-Challenges.

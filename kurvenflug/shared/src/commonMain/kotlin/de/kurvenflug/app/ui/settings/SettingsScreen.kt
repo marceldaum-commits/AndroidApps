@@ -24,6 +24,8 @@ import de.kurvenflug.app.ui.theme.Q
 @Composable
 fun SettingsScreen(
     music: Boolean = true, onMusic: (Boolean) -> Unit = {},
+    musicVolume: Int = 70, onMusicVolume: (Int) -> Unit = {},
+    sfxVolume: Int = 90, onSfxVolume: (Int) -> Unit = {},
     sound: Boolean, onSound: (Boolean) -> Unit,
     vibration: Boolean, onVibration: (Boolean) -> Unit,
     autoUpdate: Boolean, onAutoUpdate: (Boolean) -> Unit,
@@ -48,8 +50,10 @@ fun SettingsScreen(
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
-                    Toggle("🎵 Musik", "Leise Weltraum-Klänge im Hintergrund", music, onMusic)
-                    Toggle("🔊 Geräusche", "Start, Treffer, Volts Piepsen", sound, onSound)
+                    Toggle("🎵 Musik", "Synthwave im All – jedes Kapitel klingt anders", music, onMusic)
+                    if (music) Volume("Lautstärke", musicVolume, onMusicVolume)
+                    Toggle("🔊 Geräusche", "Start, Flug, Treffer, Sterne, Volts Robo-Stimme", sound, onSound)
+                    if (sound) Volume("Lautstärke", sfxVolume, onSfxVolume)
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
                     Toggle("🤖 Volt-Stimme", "Volt plappert in Roboter-Sprache, wenn er spricht", voltVoice, onVoltVoice)
                 }
@@ -81,6 +85,14 @@ fun SettingsScreen(
             LicenseCard(platform.isWeb)
             if (onReset != null) ResetCard(onReset)
         }
+    }
+}
+
+@Composable
+private fun Volume(label: String, value: Int, onChange: (Int) -> Unit) {
+    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(start = 8.dp)) {
+        Text("$label $value %", style = MaterialTheme.typography.bodySmall, color = Q.Muted, modifier = Modifier.width(120.dp), maxLines = 1)
+        Slider(value = value.toFloat(), onValueChange = { onChange(it.toInt()) }, valueRange = 0f..100f, steps = 9, modifier = Modifier.weight(1f))
     }
 }
 

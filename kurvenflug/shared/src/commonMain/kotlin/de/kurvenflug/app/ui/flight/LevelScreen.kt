@@ -39,6 +39,7 @@ import de.kurvenflug.app.ui.volt.Volt
 import de.kurvenflug.app.ui.volt.VoltMood
 import de.kurvenflug.core.model.*
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlin.math.max
 import kotlin.math.min
 
@@ -91,6 +92,8 @@ fun LevelScreen(
     var drag by rememberSaveable(level.id) { mutableStateOf(false) }
     // 📖 Theorie: passende Erklärung jederzeit nachlesen – kostet keine Sterne
     var theory by rememberSaveable(level.id) { mutableStateOf(false) }
+    // Für Klänge, die nach dem Flug weiterlaufen (Sterne), unabhängig vom Flug-Effekt
+    val soundScope = rememberCoroutineScope()
     val theoryText = remember(level.id, chapter.number) { de.kurvenflug.core.model.Theories.of(level, chapter) }
     var grabbed by remember(level.id) { mutableIntStateOf(-1) }
     var usedHelp by rememberSaveable(level.id) { mutableStateOf(false) }
@@ -185,6 +188,11 @@ fun LevelScreen(
                     bursts = bursts + (Burst(toPx(Vec(level.targets[tg].x, level.targets[tg].y)), listOf(Q.Green, Q.Cyan, Color.White), seed = tg + attempt) to clockF.toLong())
                 } }
             }
+            // Flug-Ton: Tonhöhe folgt der Kurve (oben hoch, unten tief) – leise, etwa 8× pro Sekunde
+            if (idx / 6 != last / 6 || last < 0) {
+                val y = r.path[idx].y
+                sfx?.play(Sound.FLIGHT, pitch = (1.0 + y / 14.0).toFloat().coerceIn(0.55f, 1.7f), volume = 0.16f)
+            }
             shown = idx; last = idx
             if (idx >= total - 1) break
         }
@@ -203,6 +211,7 @@ fun LevelScreen(
             answer = -1
             stars = starsWithCheck(flightStars, check != null, null)
             sfx?.play(Sound.WIN)
+            soundScope.launch { repeat(flightStars) { i -> delay(650L + 260L * i); sfx?.play(Sound.STAR, pitch = 1f + 0.26f * i, volume = 0.6f) } }
             mood = if (flightStars == 3) VoltMood.DANCE else VoltMood.WOW
             speech = when {
                 check != null && flightStars == 3 -> "Volltreffer! Und wie hast du's gerechnet? Dafür gibt's den 3. Stern 🧠"
@@ -224,7 +233,7 @@ fun LevelScreen(
             gap = Feedback.gap(level, values, r)
             val fb = Feedback.after(level, values, r)
             speech = if (attempt >= 2) "$fb\n💡 ${level.tip}" else fb
-            if (r.crash == null) sfx?.play(Sound.WRONG)
+            if (r.crash == null) sfx?.play(if (gap?.let { kotlin.math.abs(it.to - it.from) <= 1.0 } == true) Sound.NEAR else Sound.WRONG)
             phase = Phase.AIM
             onMiss?.invoke(attempt)
         }

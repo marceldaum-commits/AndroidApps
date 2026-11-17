@@ -38,8 +38,9 @@ class AndroidSfx(context: Context) : Sfx() {
         if (!enabled) return
         val id = ids[s] ?: return
         if (id !in ready) return
-        pool.play(id, volume, volume, 1, 0, pitch.coerceIn(0.5f, 2f))
+        val v = (volume * level).coerceIn(0f, 1f)
+        pool.play(id, v, v, 1, 0, pitch.coerceIn(0.5f, 2f))
     }
 
-    private companion object { const val VERSION_ = "v1" }
+    private companion object { const val VERSION_ = "v2" }
 }

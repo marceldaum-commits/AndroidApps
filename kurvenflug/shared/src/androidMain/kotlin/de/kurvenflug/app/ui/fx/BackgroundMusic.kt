@@ -49,18 +49,23 @@ class BackgroundMusic(private val context: Context) {
         }.build()
 
     fun setEnabled(on: Boolean) = scope.launch { enabled = on; refresh() }
-    fun setMood(m: MusicMood) = scope.launch { wanted = m; refresh() }
+    fun setMood(m: MusicMood?) = scope.launch { wanted = m; refresh() }
+    /** Musik startet nie vor der ersten Berührung */
+    private var allowed = false
+    fun allow() = scope.launch { if (!allowed) { allowed = true; refresh() } }
+    private var volume = 0.7f
+    fun setVolume(v: Float) = scope.launch { volume = v.coerceIn(0f, 1f); if (track != null) fadeTo(target(), 200) }
     fun onForeground(on: Boolean) = scope.launch { foreground = on; refresh() }
     fun duck(on: Boolean) = scope.launch { ducked = on; if (track != null) fadeTo(target()) }
 
     /** Musik schon vorab erzeugen, damit sie sofort da ist. */
     fun prepare(vararg moods: MusicMood) = scope.launch { moods.forEach { pcm(it) } }
 
-    private fun target() = if (ducked) BASE * 0.35f else BASE
+    private fun target() = (if (ducked) BASE * 0.35f else BASE) * volume / 0.7f
 
     private suspend fun refresh() {
         val m = wanted
-        val shouldPlay = enabled && foreground && m != null
+        val shouldPlay = enabled && allowed && foreground && m != null && volume > 0.01f
         if (!shouldPlay) { fadeOutAndStop(); return }
         if (current == m && track != null) { fadeTo(target()); return }
         // Andere App spielt Musik (Hörbuch, Spotify …)? Dann nicht dazwischenfunken.
@@ -119,7 +124,7 @@ class BackgroundMusic(private val context: Context) {
 
     /** Erzeugt das Stück einmal und legt es im Cache ab (nächster Start: sofort da). */
     private fun pcm(m: MusicMood): ShortArray = cache.getOrPut(m) {
-        val f = File(context.cacheDir, "musik/${m.name.lowercase()}-v$VERSION.pcm")
+        val f = File(context.cacheDir, "musik/${m.mode.name.lowercase()}-${m.variant}-v$VERSION.pcm")
         if (f.exists()) runCatching {
             val bb = ByteBuffer.wrap(f.readBytes()).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer()
             return@getOrPut ShortArray(bb.remaining()).also { bb.get(it) }
@@ -141,6 +146,6 @@ class BackgroundMusic(private val context: Context) {
         /** Musik bewusst leise – Geräusche sollen vorne bleiben. */
         const val BASE = 0.32f
         /** Erhöhen, wenn sich Komponist oder Klang ändern (alter Cache wird dann ignoriert). */
-        const val VERSION = 1
+        const val VERSION = 2
     }
 }
