@@ -27,10 +27,6 @@ private fun jsPlay(name: String, rate: Double, vol: Double): Unit = js("window.w
 private fun jsMusicPlay(name: String, level: Double): Unit = js("window.wg.musicPlay(name, level)")
 private fun jsMusicStop(): Unit = js("window.wg.musicStop()")
 private fun jsMusicLevel(level: Double): Unit = js("window.wg.musicLevel(level)")
-private fun jsTtsAvailable(): Boolean = js("window.wg.ttsAvailable()")
-private fun jsSpeak(text: String, lang: String, queue: Boolean): Unit = js("window.wg.speak(text, lang, queue)")
-private fun jsSpeaking(): Boolean = js("!!window.wg.speaking")
-private fun jsStopSpeaking(): Unit = js("window.wg.stopSpeaking()")
 private fun jsSrAvailable(): Boolean = js("window.wg.srAvailable()")
 private fun jsListen(lang: String): Unit = js("window.wg.listen(lang)")
 private fun jsSrState(): String = js("window.wg.sr.state")
@@ -118,25 +114,7 @@ class WebMusic : Music {
     }
 }
 
-/** Brummis Stimme: Sprachausgabe des Browsers. */
-class WebVoice : Voice {
-    override var onSpeaking: (Boolean) -> Unit = {}
-    override val isReady get() = jsTtsAvailable()
-    override fun speak(text: String, locale: Locale) {
-        val clean = Voice.stripEmoji(text).trim()
-        if (clean.isNotEmpty() && isReady) { onSpeaking(true); jsSpeak(clean, locale.tag, false) }
-    }
-    override fun stop() { jsStopSpeaking(); onSpeaking(false) }
-    override suspend fun speakAndWait(text: String, locale: Locale) {
-        val clean = Voice.stripEmoji(text).trim()
-        if (clean.isEmpty() || !isReady) return
-        onSpeaking(true); jsSpeak(clean, locale.tag, true)
-        delay(150)
-        var waited = 0
-        while (jsSpeaking() && waited < 30_000) { delay(100); waited += 100 }
-        onSpeaking(false)
-    }
-}
+// Brummis Stimme (Browser-Stimmen und Thorsten): siehe WebVoice.kt
 
 /** Spracherkennung des Browsers (Chrome, Edge, Safari). */
 class WebListener : Listener {

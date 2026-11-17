@@ -61,24 +61,28 @@ fun Brummi(
             jump.snapTo(0f); jump.animateTo(1f, tween(220, easing = FastOutSlowInEasing)); jump.animateTo(0f, spring(dampingRatio = 0.35f))
         }
     }
-    val tapMod = if (onTap != null) Modifier.clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) { onTap() } else Modifier
+    // Antippen: Brummi liest seine Sprechblase vor (wenn das Antippen nicht schon etwas anderes macht)
+    val voice = LocalVoice.current
+    val readBubble: (() -> Unit)? = if (voice != null && speech != null) ({ voice.speak(speech) }) else null
+    val tap = onTap ?: readBubble
+    val tapMod = if (tap != null) Modifier.clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) { tap() } else Modifier
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-        if (bubbleOnLeft) Bubble(speech, Modifier.weight(1f, fill = false))
+        if (bubbleOnLeft) Bubble(speech, Modifier.weight(1f, fill = false), readBubble)
         Canvas(Modifier.size(size).then(tapMod).graphicsLayer { translationY = -jump.value * size.toPx() * 0.25f }) {
             drawBrummi(mood, t)
         }
-        if (!bubbleOnLeft) Bubble(speech, Modifier.weight(1f, fill = false))
+        if (!bubbleOnLeft) Bubble(speech, Modifier.weight(1f, fill = false), readBubble)
     }
 }
 
 @Composable
-private fun Bubble(text: String?, modifier: Modifier) {
+private fun Bubble(text: String?, modifier: Modifier, onRead: (() -> Unit)? = null) {
     AnimatedContent(text, transitionSpec = {
         (scaleIn(spring(dampingRatio = 0.5f)) + fadeIn()) togetherWith fadeOut(tween(120))
     }, label = "bubble", modifier = modifier) { s ->
         if (s != null) Surface(
             color = Color.White, shape = MaterialTheme.shapes.large, shadowElevation = 3.dp,
-            modifier = Modifier.padding(horizontal = 6.dp),
+            modifier = Modifier.padding(horizontal = 6.dp).then(if (onRead != null) Modifier.clickable(onClickLabel = "Vorlesen") { onRead() } else Modifier),
         ) {
             Text(
                 s, color = Color(0xFF22261F), style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.Medium,

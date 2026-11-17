@@ -35,7 +35,12 @@ object PrivacyText {
             "wandelt die gesprochene Antwort in Text um – je nach Gerät geschieht das auf dem Gerät oder über den Sprachdienst von Google. " +
             "Der Wissensgarten speichert keine Aufnahmen und sendet sie nirgendwohin.",
         "Vorlesen" to
-            "Brummi liest mit der Sprachausgabe von Android vor. Dabei werden nur die Texte der Lernkarten verwendet.",
+            "Brummi liest mit der Sprachausgabe des Geräts (Android bzw. Browser) vor. Dabei werden nur die Texte der Lernkarten verwendet. " +
+            "In der WebApp bieten wir nur Stimmen an, die auf dem Gerät sprechen – keine Online-Stimmen. " +
+            "Auf Wunsch gibt es die natürliche Stimme „Thorsten“: Eltern können sie in den Einstellungen einmalig laden (ca. 63 MB). " +
+            "Die Stimmdatei kommt dann von Hugging Face (huggingface.co, betrieben von Hugging Face Inc.); Hugging Face sieht dabei, wie bei jedem Download, " +
+            "die IP-Adresse und den Zeitpunkt. Danach rechnet die Stimme ganz auf dem Gerät – kein Text verlässt das Gerät. " +
+            "Die Stimmdatei lässt sich in den Einstellungen jederzeit wieder entfernen.",
         "Kamera und QR-Codes" to
             "Den QR-Code-Scanner für Klassen-Codes öffnen nur Eltern (nach der Eltern-Aufgabe). Er nutzt den Code-Scanner der Google-Play-Dienste " +
             "auf dem Gerät; der Wissensgarten bekommt nur den Text des Codes, kein Foto. In der GitHub-Version gibt es zusätzlich die Wissens-Safari: " +

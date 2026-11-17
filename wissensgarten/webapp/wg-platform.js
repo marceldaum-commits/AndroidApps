@@ -41,19 +41,7 @@
   wg.musicStop = () => { music.want = null; music.stop(0.5); };
   wg.musicLevel = (level) => { music.level = level; music.fade(level); };
 
-  // Vorlesen (Sprachausgabe des Browsers)
-  wg.speaking = false;
-  wg.ttsAvailable = () => 'speechSynthesis' in window;
-  wg.speak = (text, lang, queue) => {
-    if (!('speechSynthesis' in window)) return;
-    if (!queue) speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text); u.lang = lang; u.pitch = 1.25; u.rate = 0.95;
-    const v = speechSynthesis.getVoices().find((x) => x.lang && x.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()));
-    if (v) u.voice = v;
-    u.onstart = () => { wg.speaking = true; }; u.onend = u.onerror = () => { wg.speaking = speechSynthesis.speaking && speechSynthesis.pending; };
-    wg.speaking = true; speechSynthesis.speak(u);
-  };
-  wg.stopSpeaking = () => { if ('speechSynthesis' in window) speechSynthesis.cancel(); wg.speaking = false; };
+  // Vorlesen: siehe wg-stimme.js (Browser-Stimmen und die natürliche Stimme „Thorsten“)
 
   // Spracherkennung (Chrome, Edge, Safari)
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
