@@ -26,8 +26,8 @@ android {
         applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 42
-        versionName = "2.3.0"
+        versionCode = 43
+        versionName = "2.3.1"
         // Maschinencode der Stimme „Thorsten“ nur für Handys/Tablets mit ARM (wie Raumlicht)
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
     }

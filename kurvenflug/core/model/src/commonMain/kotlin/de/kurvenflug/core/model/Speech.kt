@@ -41,6 +41,8 @@ object Speech {
         var s = text.replace("\u20D7", "").replace('\u00A0', ' ').replace('\u202F', ' ')
         // Geteilt-Zeichen steht frei zwischen zwei Rechenteilen – ein Doppelpunkt als Satzzeichen klebt am Wort davor
         s = s.replace(" : ", " $DIVIDE ")
+        // Auslassungspunkte („Miau … ich bin“) sind eine Sprechpause
+        s = Regex("""…(?=[“”"])""").replace(s, "").replace("…", "$PAUSE").replace("...", "$PAUSE")
         s = units(s)
         // f'(x) mit einfachem Apostroph wie f′(x)
         s = Regex("""([A-Za-z])('{1,3})(?=\()""").replace(s) { it.groupValues[1] + listOf("′", "″", "‴")[it.groupValues[2].length - 1] }

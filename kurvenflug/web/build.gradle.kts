@@ -73,8 +73,10 @@ tasks.named("compileKotlinWasmJs") { dependsOn(checkWebFonts) }
  * Dazu ein Service Worker mit genau diesen Dateien (offline spielbar) und version.json für den Leitstand.
  */
 val webapp by tasks.registering(Sync::class) {
-    dependsOn("wasmJsBrowserDistribution")
+    dependsOn("wasmJsBrowserDistribution", ":core:model:vorlesenTexte")
     from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
+    // Feste Vorlese-Texte für die KI-Stimme Nova (das Stimmen-Werk holt sie hier ab)
+    from(project(":core:model").layout.buildDirectory.dir("vorlesen")) { into("vorlesen") }
     into(rootProject.file("webapp"))
     exclude("**/*.map")
     filesMatching("index.html") { filter { it.replace("{{VERSION}}", appVersion) } }
@@ -92,7 +94,7 @@ val webapp by tasks.registering(Sync::class) {
         val dir = rootProject.file("webapp")
         // Rechenkern und Lautschrift der Stimme „Thorsten“ nicht vorab: die kommen erst, wenn jemand die Stimme lädt (eigener Speicher „kf-stimme“)
         val files = dir.walkTopDown().filter { it.isFile }.map { it.relativeTo(dir).invariantSeparatorsPath }
-            .filter { !it.startsWith("ort/") && !it.startsWith("stimme/") }.sorted().toList()
+            .filter { !it.startsWith("ort/") && !it.startsWith("stimme/") && !it.startsWith("vorlesen/") }.sorted().toList()
         val list = (listOf("./") + files).joinToString(",\n  ") { "\"$it\"" }
         dir.resolve("sw.js").writeText("""
             |// Kurvenflug $appVersion – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.

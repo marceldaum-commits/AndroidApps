@@ -182,6 +182,8 @@ class SpeechKurvenflugTest {
         says("Start bei 2 Meter. Nach 1 Sekunde bei 5 Meter, nach 1,5 Sekunden bei 12 Newton.", "Start bei 2 m. Nach 1 s bei 5 m, nach 1,5 s bei 12 N.")
         says("Bei x gleich 2: Bahn 1 ergibt 5, Sonde ergibt 5, stimmt", "Bei x = 2: Bahn 1 → 5, Sonde → 5 ✓")
         says("y gleich 2 ungefähr 4. Station: 4, stimmt", "y = 2 ≈ 4  ·  Station: 4 ✓")
+        says("Miau, ich bin auf einem Kometen eingeschlafen.", "Miau … ich bin auf einem Kometen eingeschlafen.")
+        says("Hinter der Galaxie wartet noch mehr", "Hinter der Galaxie wartet noch mehr …")
         says("So rechnet mans!", "So rechnet man's! 🧠")
     }
 }
