@@ -7,6 +7,9 @@
    2. Fehlt die Datei (z. B. eine neue Rechenaufgabe), fragt die App unseren Server: POST /jetzt {text, sprache} (höchstens 300 Zeichen).
       Er lässt den Text einmalig vertonen und antwortet mit {url}. Antwort 204 oder kein Netz → still die Gerätestimme.
    Es werden keine Namen, Konten oder Geräte-Kennungen übertragen. Tempo (1,25) legt der Server fest. */
+// Sprechtempo aus den Einstellungen (1,0 = Server-Tempo); Stufen wie bei allen Apps
+const RATES = [0.75, 0.9, 1, 1.15, 1.3, 1.5];
+const speechRate = () => RATES.includes(S.settings.rate) ? S.settings.rate : 1;
 const novaNorm = s => String(s).normalize('NFC').replace(/\s+/g, ' ').trim();
 const Nova = {
   miss: new Set(), pending: new Map(), audio: null,
@@ -53,7 +56,7 @@ const Nova = {
   async play(text, lang, cancelled = () => false) {
     const blob = await this.src(text, lang); if (!blob) return false;
     if (cancelled()) return true;
-    const a = new Audio(URL.createObjectURL(blob)); this.audio = a;
+    const a = new Audio(URL.createObjectURL(blob)); a.preservesPitch = true; a.playbackRate = speechRate(); this.audio = a;   // Sprechtempo, gleiche Tonhöhe
     try { await a.play(); } catch { this.audio = null; return false; }
     await new Promise(res => { a.onended = a.onerror = a.onpause = res; });
     URL.revokeObjectURL(a.src); if (this.audio === a) this.audio = null;

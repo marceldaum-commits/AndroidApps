@@ -1054,3 +1054,5 @@ button.badge{font:inherit;cursor:pointer}
 .pro-own .pro-on.static,.pro-line .pro-on.static{margin-left:0;margin-right:6px}
 .pro-line{margin:0 0 10px}
 .mi.pro-active{border-color:#ff9a3c}
+.voicebox #rateSeg{flex:1;flex-wrap:wrap;gap:4px}
+.voicebox #rateSeg button{padding:4px 8px;font-size:13px}

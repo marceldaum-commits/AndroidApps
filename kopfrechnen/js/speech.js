@@ -70,10 +70,10 @@ const Voice = {
   // stille Notlösung, wenn Nova nicht verfügbar ist (offline, Server sagt 204): Gerätestimme; Promise endet nach dem Sprechen
   async device(text) {
     const P = this.plugin();
-    if (P) { try { await P.speak({ text, lang: locale(), rate: 1, pitch: 1, volume: 1, category: 'ambient', queueStrategy: 0 }); } catch {} return; }
+    if (P) { try { await P.speak({ text, lang: locale(), rate: speechRate(), pitch: 1, volume: 1, category: 'ambient', queueStrategy: 0 }); } catch {} return; }
     const W = this.web(); if (!W) return;
     await new Promise(res => {
-      const u = new SpeechSynthesisUtterance(text); u.lang = locale();
+      const u = new SpeechSynthesisUtterance(text); u.lang = locale(); u.rate = speechRate();
       const t = setTimeout(res, 1500 + text.length * 120); u.onend = u.onerror = () => { clearTimeout(t); res(); };
       W.speak(u);
     });

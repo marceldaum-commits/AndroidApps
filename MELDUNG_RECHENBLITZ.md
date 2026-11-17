@@ -34,6 +34,16 @@ Nachtrag Marcel/Leitstand 17.11.: „zukünftig nur Nova“. Reihenfolge eingeha
 - Auf den Geräten wird der gespeicherte Thorsten-Speicher beim nächsten Start gelöscht.
 - **Bitte auf dem Web-Server `/stimme/` von Rechenblitz löschen**, falls der Abholdienst gelöschte Dateien nicht von selbst entfernt.
 
+**Sprechtempo** (Ergänzung Marcel, im selben Versionssprung 3.25.0):
+- In den Einstellungen gibt es „Sprechtempo“ mit den Stufen 0,75× · 0,9× · **1×** (Standard = Server-Tempo 1,25) · 1,15× · 1,3× · 1,5×. Die Wahl wird gemerkt.
+- Wirkt auf die Nova-MP3 (`playbackRate` mit `preservesPitch = true`, gleich im Web und in der Android-WebView) und als Sprechrate auf die Gerätestimme (Notlösung).
+- Getestet: Nova 1,3× mit gleicher Tonhöhe ✓, Gerätestimme 1,3× ✓, 320 px ohne Überlauf ✓, DE/EN/UK ✓.
+
+**Panne beim Hochladen:** Beim Entfernen von Thorsten ist mein lokaler Bauordner `stimme/build/` versehentlich mitgegangen: das Thorsten-Modell (63 MB, CC0), das Rechenwerk (MIT) und Arbeitsdateien.
+- Nichts davon ist geheim, und nichts liegt unter `kopfrechnen/` – es wird also nicht ausgeliefert und steckt nicht in der APK.
+- Im nächsten Commit habe ich alles wieder entfernt. Es bleibt aber in der Git-Geschichte (Repo +ca. 75 MB).
+- Wer das aus der Geschichte tilgen will, müsste die Branches neu schreiben (force-push). Das mache ich nur auf ausdrückliche Anweisung.
+
 **Web = Android:** gleicher Code, `texte.json` auch in der APK, TTS-Plugin als Notlösung in Hülle 4. Neue Dateiendungen: keine.
 
 **Live:** 3.25.0 enthält alles bis hier. Bitte 3.25.0 live nehmen, wenn ihr so weit seid.
