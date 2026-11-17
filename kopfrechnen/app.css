@@ -1008,3 +1008,31 @@ button.badge{font:inherit;cursor:pointer}
 
 :root[data-theme=dark] .vtag{color:#ff9a57}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .vtag{color:#ff9a57}}
+
+/* ---------- Theorie ---------- */
+.gtop{gap:8px}
+.theo-k{margin:0 0 12px;padding:10px 12px;border-radius:14px;background:var(--chip);font-weight:600;line-height:1.45}
+.theo-lv{display:flex;gap:6px;margin:0 0 10px}
+.theo-lv button{flex:1;min-width:0;height:40px;border-radius:999px;background:var(--surface);border:1px solid var(--border);font:inherit;font-weight:700;font-size:15px;color:var(--text);cursor:pointer}
+.theo-lv button.sel{background:var(--orange);border-color:var(--orange);color:var(--on-orange)}
+.theo-h{margin:4px 0 6px;font-size:16px;color:var(--head)}
+.theo-r{margin:0 0 14px;padding-left:20px;line-height:1.5}
+.theo-r li{margin:3px 0}
+.theo-ex{border:1px solid var(--border);border-radius:14px;padding:10px 12px;margin:0 0 14px;background:var(--surface)}
+.theo-exh{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.theo-task{margin:8px 0 6px;font-size:17px;line-height:1.45;overflow-wrap:anywhere}
+.theo-ex .steps{margin:0;padding-left:20px;line-height:1.5}
+.theo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-top:10px}
+.theo-tp{display:flex;align-items:center;gap:8px;padding:10px;border-radius:14px;border:1px solid var(--border);background:var(--surface);font:inherit;font-weight:700;color:var(--text);text-align:left;cursor:pointer;min-width:0}
+.theo-tp .g{width:34px;height:34px;flex:none;border-radius:10px;display:grid;place-items:center;background:var(--chip);font-size:15px}
+.theo-tp span:last-child{min-width:0;overflow-wrap:anywhere}
+.sol-theo{margin-bottom:8px}
+@media (max-width:360px){.gtop .round{width:40px;height:40px}}
+.theo-task{margin:8px 0 6px;font-size:18px;line-height:1.5;display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px}
+.theo-expr{font-size:20px;white-space:normal;flex-wrap:wrap;justify-content:flex-start;letter-spacing:0;line-height:1.35}
+.theo-expr .story{font-size:16px;font-weight:600;white-space:normal;text-align:left}
+.theo-arr{color:var(--muted)}
+.theo-ans{color:var(--orange-d);font-size:20px}
+#theoNew{color:#b84c06}
+:root[data-theme=dark] #theoNew{color:#ff9a57}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) #theoNew{color:#ff9a57}}

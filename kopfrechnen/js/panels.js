@@ -27,6 +27,7 @@ const PANELS = {
     const n = ROOT.outbox.length;
     return { title: 'Wie können wir helfen?', html: `<div class="menu">
       ${mi('report', '🐞', 'Fehler melden', 'Falsche Lösung oder Problem in der App', 'accent')}
+      ${mi('theorie', '📖', 'Theorie', 'Regeln und Beispiele zu allen Themen')}
       ${mi('idea', '💡', 'Idee oder Feedback', 'Was sollen wir verbessern?')}
       ${miLink(siteLink(CONFIG.websiteUrl, 'menu'), '🌐', 'Zu Nachhilfe – online', 'Online-Nachhilfe 1:1 in Mathe & mehr', 'accent')}
       ${miLink(siteLink(CONFIG.trialUrl, 'menu-probestunde'), '🎓', 'Kostenlose Probestunde', 'Unverbindlich ausprobieren')}

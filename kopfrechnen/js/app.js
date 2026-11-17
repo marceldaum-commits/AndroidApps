@@ -316,6 +316,8 @@ $('btnSound').onclick = $('btnSoundG').onclick = toggleSound;
 $('btnTheme').onclick = $('btnThemeG').onclick = toggleTheme;
 $('btnStart').onclick = () => startGame('training');
 $('lvlToggle').onclick = () => { $('levelBox').hidden = !$('levelBox').hidden; };
+$('theoHome').onclick = () => openSheet('theorie', S.sel.op === 'mix' ? {} : { topic: S.sel.op, lvl: currentLevel(S.sel.op) });
+$('btnTheo').onclick = () => G && !G.over && openTheorie(G.task);
 $('modes').addEventListener('click', e => {
   const b = e.target.closest('[data-mode]'); if (!b) return;
   const m = b.dataset.mode;
@@ -486,6 +488,7 @@ function nextTask() {
   $('pre').textContent = t.pre || '';
   if (G.op === 'mix' || G.queue) $('winTitle').textContent = G.mode === 'merk' ? `🧠 ${TOPICS[t.topic].name}` : `${G.mode === 'training' || G.mode === 'blitz' ? '' : G.cfg.title + ' · '}${TOPICS[t.topic].name}`;
   $('winTag').textContent = G.mode === 'merk' ? merkTag(t.card) : G.mode === 'wunsch' ? (G.total === Infinity ? '' : `Aufgabe ${G.idx + 1}/${G.total}`) : ['challenge', 'test', 'advent'].includes(G.mode) ? `Aufgabe ${G.idx + 1}/${G.total}` : `Stufe ${t.lvl + 1}${G.adapt ? ' · Auto' : ''}`;
+  $('btnTheo').hidden = G.mode === 'test' || !theoTopic(t.topic);
   $('feedback').textContent = ''; $('feedback').className = 'feedback';
   renderAnswer(); updateHud(); fitExpr();
   if (t.card) merkBeforeTask(t);
@@ -593,9 +596,10 @@ function showSolution(t) {
   G.waiting = true;
   $('solution').innerHTML = `<div class="sol-head">${bzOn() ? `<span class="sol-bz">${blitzSvg('comfort', 40)}</span>` : ''}<b>So geht’s</b><span>Richtig ist: <span class="fx">${esc(showAns(t.a))}${t.unit ? ' ' + esc(t.unit) : ''}</span></span></div>
     <ol class="steps">${(t.w || []).map(s => `<li>${esc(s)}</li>`).join('')}</ol>
-    <button class="btn primary block" id="solNext">Weiter <span class="muted-on-dark">(OK)</span></button>`;
+    ${theoTopic(t.topic) && G.mode !== 'test' ? '<button class="btn block sol-theo" id="solTheo">📖 Theorie dazu</button>' : ''}<button class="btn primary block" id="solNext">Weiter <span class="muted-on-dark">(OK)</span></button>`;
   $('solution').hidden = false;
   $('solNext').onclick = continueAfterSolution;
+  if ($('solTheo')) $('solTheo').onclick = () => openTheorie(t);
 }
 function continueAfterSolution() {
   if (!G || !G.waiting) return;

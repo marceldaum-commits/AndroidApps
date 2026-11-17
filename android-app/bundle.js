@@ -5,7 +5,7 @@ const fs = require('fs'), path = require('path'), esbuild = require('esbuild');
 const ROOT = path.join(__dirname, '..', 'kopfrechnen');
 // Reihenfolge wie früher die einzelnen <script>-Tags (config.js bleibt eigene Datei, Übersetzungen werden bei Bedarf geladen)
 const SOURCES = ['js/native.js', 'js/i18n.js', 'js/changelog.js', 'js/engine.js', 'js/app.js', 'js/panels.js', 'js/vendor/qrcode.js', 'js/extras.js',
-  'js/memory.js', 'js/merkvis.js', 'js/blitz.js', 'js/reise.js', 'js/welt.js', 'js/raetsel.js', 'js/garten.js', 'js/dungeon.js', 'js/wunsch.js', 'js/elterntor.js', 'js/pro.js', 'js/reminder.js'];
+  'js/memory.js', 'js/merkvis.js', 'js/blitz.js', 'js/reise.js', 'js/welt.js', 'js/raetsel.js', 'js/garten.js', 'js/dungeon.js', 'js/wunsch.js', 'js/elterntor.js', 'js/pro.js', 'js/theorie.js', 'js/theorie-i18n.js', 'js/reminder.js'];
 const OUT = { js: 'js/rechenblitz.min.js', css: 'app.min.css' };
 function build() {
   const src = SOURCES.map(f => `/* ${f} */\n` + fs.readFileSync(path.join(ROOT, f), 'utf8').replace(/^'use strict';\s*/, '')).join('\n;\n');

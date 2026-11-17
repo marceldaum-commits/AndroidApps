@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.21.1';
+const APP_VERSION = '3.22.0';
 const APP_DATE = '2026-11-17';
 const CHANGELOG = [
+  ['3.22.0', '2026-11-17', ['Neu: Theorie 📖 zu jeder Übung – die passenden Regeln zu Thema und Stufe, mit Beispiel und Lösungsweg', 'In jeder Aufgabe oben das Buch antippen – die Runde wartet so lange', 'Nach einem Fehler: „Theorie dazu“ direkt unter dem Lösungsweg']],
   ['3.21.1', '2026-11-17', ['Große Korrektheitsprüfung: alle Aufgabenarten und Lösungswege unabhängig nachgerechnet', 'Genauere Lösungswege und Merksätze, z. B. Prozent mit „≙“ und gerundete Brüche mit „≈“', 'Besser lesbar: kräftigere Farben auf orangen Knöpfen, klarere Übersetzungen']],
   ['3.21.0', '2026-11-17', ['Neu: der Zahlen-Dungeon 👾 – 7 Räume, 5 Herzen, Monster besiegst du mit richtigen Antworten', 'Wähle Türen: Kampf, Schatz oder Lagerfeuer – und am Ende wartet der Wächter']],
   ['3.20.0', '2026-11-16', ['Neu für Eltern: der Elternbericht 📈 – Verlauf über 10 Wochen, Stärken und Schwächen je Thema, zum Ausdrucken']],

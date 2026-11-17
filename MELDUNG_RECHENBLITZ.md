@@ -2,7 +2,30 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 17.11.2026 (57) – Theorie zu jeder Übung (3.22.0 auf `rechenblitz-test`)
+
+Wunsch Marcel: „Zu jeder Übung ein Button mit der passenden Theorie. Damit es nicht frustet.“
+
+- **Neu: Theorie 📖** für alle 29 Themen × 6 Stufen (174 Theorie-Seiten):
+  - ein Kernsatz zum Thema;
+  - die Regeln genau für die Stufe;
+  - **ein echtes Beispiel mit Lösungsweg.** Es kommt aus demselben Aufgaben-Generator wie die Übung (die Korrektheitsprüfung von heute deckt es ab). „🔄 Anderes Beispiel“ zeigt ein neues; das Beispiel ist nie die gerade gestellte Aufgabe.
+- **Wo der Knopf ist:**
+  - **In jeder Aufgabe** oben in der Leiste (Buch-Symbol). Es öffnet die Theorie zu Thema und Stufe genau dieser Aufgabe. Die Runde pausiert, auch die Uhr in der Blitzrunde. „Zurück zur Aufgabe“ macht weiter.
+  - **Nach einem Fehler** direkt unter dem Lösungsweg: „📖 Theorie dazu“.
+  - **Auf der Startseite** neben „ändern“: „📖 Theorie“ zum gewählten Thema.
+  - **Im Menü:** „Theorie“ mit Übersicht aller Themen. Von dort geht es mit „▶ Jetzt üben“ direkt los.
+  - Im Einstufungstest ist der Knopf aus.
+- **Sprachen:** Die Theorie ist auf Englisch und Ukrainisch als ganze Sätze geschrieben, nicht Stück für Stück automatisch übersetzt. Dabei gilt die jeweilige Schreibweise: 3.5 und × auf Englisch, 3,5 und · auf Ukrainisch.
+- **Getestet:**
+  - alle 174 Seiten in DE/EN/UK bei 320, 360, 390 und 1366 px: kein Überlauf, keine leeren Seiten, keine fehlenden Übersetzungen, keine JS-Fehler;
+  - Pause und Weiter in der Runde, Zurück-Knopf, Stufenwahl;
+  - axe WCAG A/AA hell und dunkel: 0 Verstöße;
+  - Rechtschreibprüfung DE/EN/UK;
+  - Schwierigkeitstest ✓, Offline ✓, Zufallstest ✓.
+- **Nicht von mir zu erledigen:** Die mitgeschickte Wissensgarten-Meldung (0.25.0, Plus, Testkauf, Test-Codes) ist an den Leitstand gerichtet. Sie betrifft nicht Rechenblitz, ich habe dort nichts unternommen. Falls der Theorie-Knopf auch im Wissensgarten gewünscht ist, bitte an den Wissensgarten-Raum weitergeben.
 
 ## Korrektheitsprüfung 17.11. (56) – Rechenblitz 3.21.1 auf `rechenblitz-test`
 
