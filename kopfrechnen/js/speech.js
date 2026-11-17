@@ -49,7 +49,7 @@ function mathSpeak(text, lang = I18N.lang) {
   s = s.replace(/ ?([=≈≙→<>]) ?/g, (m, op) => ` ${L.op[op]} `);
   s = s.replace(/(^|[\s(=])−\s?(?=[\dx(])/g, `$1${sp}`).replace(/ − /g, sp);
   s = s.replace(/ \+ /g, ` ${L.op['+']} `);
-  s = s.replace(/[()|]/g, ' ').replace(/\?/g, lang === 'de' ? ' wie viel? ' : '?');
+  s = s.replace(/[()|]/g, ' ').replace(/(?<=^|[\s(])\?/gu, lang === 'de' ? ' wie viel? ' : '?');   // nur die Lücke „?“, nicht das Fragezeichen am Satzende
   s = s.replace(/\s+/g, ' ').replace(/ ([.,;:!])/g, '$1');
   // Einzahl nach „1“: „1 Stunde“, „1 hour“
   if (lang === 'de') s = s.replace(/(^|[^\d,])1 (Stunde|Minute|Sekunde|Tonne)n\b/g, '$1eine $2');
@@ -86,17 +86,29 @@ const Voice = {
     if (cur) out.push(cur);
     return out.flatMap(c => c.length <= 300 ? [c] : c.match(/.{1,300}(\s|$)/g).map(x => x.trim()));
   },
+  // ein Stück mit Nova sprechen, sonst Rückfall nach den Regeln; false = abgebrochen
+  async part(c, seq, jetzt = true) {
+    if (await Nova.play(c, I18N.lang, () => seq !== this.seq, jetzt)) return true;
+    if (seq !== this.seq) return false;
+    if (!jetzt && Nova.fail === 'fehlt') return null;   // fertige Datei gibt es nicht → Satz für Satz
+    // Gerätestimme nur, wenn wirklich kein Netz da ist (oder Nova abgeschaltet). Ist Nova bei bestehendem Netz nicht erreichbar:
+    // still, einmal je Sitzung ein Hinweis (Vorgabe Marcel 17.11.). Ukrainisch immer nur mit Nova.
+    if (Nova.fail === 'abspielen') return true;
+    if (!['offline', 'aus'].includes(Nova.fail)) { Nova.notice(); return true; }
+    if (I18N.lang !== 'uk') await this.device(c);
+    return true;
+  },
   async one(text, seq) {
     for (const c of this.chunks(text)) {
       if (seq !== this.seq) return;
-      if (await Nova.play(c, I18N.lang, () => seq !== this.seq)) continue;
-      if (seq !== this.seq) return;
-      // Gerätestimme nur, wenn wirklich kein Netz da ist (oder Nova abgeschaltet). Ist Nova bei bestehendem Netz nicht erreichbar:
-      // still, einmal je Sitzung ein Hinweis (Vorgabe Marcel 17.11.). Ukrainisch immer nur mit Nova.
-      if (Nova.fail === 'abspielen') continue;
-      if (!['offline', 'aus'].includes(Nova.fail)) { Nova.notice(); continue; }
-      if (I18N.lang === 'uk') continue;
-      await this.device(c);
+      // Gibt es den Text schon fertig (vorab vertont / gespeichert), als Ganzes. Sonst Satz für Satz: alle Sätze gleichzeitig
+      // beim Server bestellen (jeder Satz bleibt ganz), dann nacheinander sprechen – so wartet niemand lange auf einen Lösungsweg.
+      const sent = Nova.sentences(c);
+      if (sent.length > 1 && Nova.can()) {
+        const r = await this.part(c, seq, false);
+        if (r === false) return;
+        if (r === null) { sent.forEach(x => Nova.prefetch(Nova.scrub(x))); for (const x of sent) if ((await this.part(x, seq)) === false) return; }
+      } else if ((await this.part(c, seq)) === false) return;
     }
   },
   // spricht Abschnitte nacheinander; queue: hinten anhängen statt unterbrechen

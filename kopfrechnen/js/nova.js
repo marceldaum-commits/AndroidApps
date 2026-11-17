@@ -42,18 +42,21 @@ const Nova = {
   },
   async cachePut(url, blob) { try { const c = await caches.open('rb-nova'); await c.put(url, new Response(blob, { headers: { 'Content-Type': 'audio/mpeg' } })); } catch {} },
   // Audiodatei holen: Gerätespeicher → feste Adresse → /jetzt; null = gerade nicht verfügbar (Grund in Nova.fail)
-  async src(text, lang) {
-    const key = lang + '|' + novaNorm(text);
+  async src(text, lang, jetzt = true) {
+    const key = lang + '|' + novaNorm(text), pkey = key + (jetzt ? '' : '|nur-datei');
     if (!this.can()) { this.fail = 'aus'; return null; }
     if ((this.miss.get(key) || 0) > Date.now()) { this.fail = 'fehlt'; return null; }
-    if (this.pending.has(key)) return this.pending.get(key);
+    if (this.pending.has(pkey)) return this.pending.get(pkey);
     const job = (async () => {
       const url = await this.url(lang, text);
       try { const c = await caches.open('rb-nova'); const hit = await c.match(url); if (hit) return hit.blob(); } catch {}
       try {
         let r = await this.get(url);
+        if (!r.ok && r.status === 404 && !jetzt) return null;   // nur nachsehen, ob es die fertige Datei gibt
         if (!r.ok && r.status === 404 && this.cfg().jetzt && novaNorm(text).length <= 300) {
-          const j = await this.get(this.cfg().jetzt, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: novaNorm(text), sprache: lang }) });
+          const ask = () => this.get(this.cfg().jetzt, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text: novaNorm(text), sprache: lang }) });
+          let j = await ask();
+          if (j.status >= 500) { await new Promise(r => setTimeout(r, 300)); j = await ask(); }   // kurzer Serverfehler: einmal neu versuchen
           if (j.status !== 200) { this.miss.set(key, Date.now() + 60000); this.fail = 'fehlt'; return null; }   // 204: gerade nicht vertonbar – in 1 min neu versuchen
           const u = (await j.json()).url; if (!u) { this.miss.set(key, Date.now() + 60000); this.fail = 'fehlt'; return null; }
           r = await this.get(new URL(u, this.cfg().jetzt).href);
@@ -62,9 +65,11 @@ const Nova = {
         const b = await r.blob(); this.cachePut(url, b); return b;
       } catch { this.fail = navigator.onLine === false ? 'offline' : 'netz'; return null; }   // später wieder versuchen
     })();
-    this.pending.set(key, job); job.finally(() => setTimeout(() => this.pending.delete(key), 60000));
+    this.pending.set(pkey, job); job.finally(() => setTimeout(() => this.pending.delete(pkey), 60000));
     return job;
   },
+  // ganze Sätze eines Textes (nicht an „z. B.“ oder Zahlen wie „2.5“ trennen)
+  sentences: text => text.split(/(?<=(?:\p{L}{3,}|\d|\)|%|€)[.!?])\s+/u).map(x => x.trim()).filter(Boolean),
   // vorab holen (z. B. die nächste Aufgabe in der Blitzrunde)
   prefetch(text, lang = I18N.lang) { if (text) this.src(text, lang); },
   stop() { if (this.audio) { try { this.audio.pause(); } catch {} this.audio = null; } },
@@ -77,13 +82,13 @@ const Nova = {
   // einmal je Sitzung: Nova gerade nicht erreichbar
   notice() { if (this.noticed) return; this.noticed = true; try { toast('🔇 ' + tr('Nova gerade nicht erreichbar'), 2600); } catch {} },
   // true = mit Nova gesprochen (oder abgebrochen); false = nicht möglich, Grund in Nova.fail ('offline' → Gerätestimme)
-  async play(text, lang, cancelled = () => false) {
+  async play(text, lang, cancelled = () => false, jetzt = true) {
     text = this.scrub(text); if (!text) return true;
     this.fail = ''; this.busy(true);
-    const blob = await Promise.race([this.src(text, lang), new Promise(r => setTimeout(() => r('zeit'), this.WAIT))]);
+    const blob = await Promise.race([this.src(text, lang, jetzt), new Promise(r => setTimeout(() => r('zeit'), this.WAIT))]);
     this.busy(false);
     if (blob === 'zeit') { this.fail = navigator.onLine === false ? 'offline' : 'zeit'; return false; }   // lädt im Hintergrund weiter (pending)
-    if (!blob) return false;
+    if (!blob) { if (!jetzt && !this.fail) this.fail = 'fehlt'; return false; }
     if (cancelled()) return true;
     const a = new Audio(URL.createObjectURL(blob)); a.preservesPitch = true; a.playbackRate = speechRate(); this.audio = a;   // Sprechtempo, gleiche Tonhöhe
     try { await a.play(); } catch { this.audio = null; this.fail = 'abspielen'; return false; }
