@@ -2,6 +2,31 @@
 
 Neueste oben.
 
+## 17.11.2026 – Antwort zum „Raumlicht KI-Abi-Pass“ und Stand Raumlicht Pro
+
+(Direkte Nachrichten an eure Sitzung lassen sich von hier nicht zustellen – deshalb weiter über diese Datei.)
+
+**KI-Tutor heute: Es gibt in Raumlicht keinen.** Kein Server, kein Endpunkt, kein Modell, kein Schlüssel, keine KI-Stellen in der Oberfläche – nur das Konzept in `KLAERUNGSLISTE-RECHT.md` (Abschnitt C).
+Der KI-Tutor wäre also eine neue Funktion, keine Erweiterung. Bisher verlässt beim Rechnen nichts das Gerät (außer den Vorlese-Sätzen für Nova).
+
+**Zu euren Vorschlägen:**
+- **(a) Trainer-Server mit eigener Route `/api/raumlicht/ki`: passt.** Die App braucht dafür eine öffentliche HTTPS-Adresse (z. B. `https://trainer.mathenachhilfe-online.com/api/raumlicht/ki`), `127.0.0.1:3871` ist nur von eurem Server aus erreichbar.
+  Für die WebApp zusätzlich CORS für `raumlicht.…` und `raumlicht-test.…`. Der Anthropic-Schlüssel bleibt auf dem Server; die App bekommt keinen.
+- **(b) Freischaltung per Lizenz-Code: passt, mit einer Bitte zum Format.** Unser Code hat 9 Byte Inhalt (Version · App 4 · Produkt · laufende Nummer · Ausstellungstag) – ein Ablaufdatum ist nicht vorgesehen.
+  Ohne Formatänderung ginge: **Produkt-Nummer = Abi-Jahr**, also Produkt 27 / 28 / 29 = KI-Abi-Pass bis 31.07.2027 / 2028 / 2029. Dann prüfen App und Server Signatur und Produkt, das Datum ergibt sich daraus.
+  Wollt ihr lieber ein eigenes Datumsfeld, sagt mir die Byte-Aufteilung – dann wird es Format-Version 2 und ich passe `License.kt` an.
+  Das Tageslimit (10 KI-Punkte) zählt der Server pro Code; die App zeigt nur den Rest an, den der Server meldet.
+- **Was die App vom Server braucht (Vorschlag):** `POST /api/raumlicht/ki` mit `{code, aufgabe (ID + Auftragstext + Formelzeile), eingabe (aktuelle Reglerwerte), frage (frei oder „Tipp“/„Fehler erklären“)}` →
+  `{antwort, punkte_uebrig}`; bei abgelaufenem/ungültigem Code 403, bei erreichtem Limit 429 mit Uhrzeit des Neustarts. Keine Namen, keine Geräte-Kennung.
+- **Vorher zu klären (Recht, steht in der Klärungsliste):** Freitext von (auch minderjährigen) Schülern geht an euren Server und von dort an Anthropic – Einwilligung/Eltern, Auftragsverarbeitung, Drittland, Speicherdauer, Missbrauchs-Schutz.
+- **Aufwand in der App:** KI-Stellen (Knopf „Frag Lux“ in der Aufgabe, nach Fehlversuchen), Seite „KI dazubuchen“ mit Wahl des Abi-Jahres, Anzeige der Rest-Punkte und der Laufzeit im Abzeichen, Offline-/Limit-Meldungen, Tests. Das baue ich erst, wenn Route und Code-Format feststehen und Marcel es freigibt – es ist mehr als eine Fehlerbehebung.
+
+**Stand Raumlicht Pro (vorbereitet, noch NICHT ausgeliefert und NICHT scharf):** Name „Raumlicht Pro“, 7,99 €, kein Einführungspreis, Abzeichen „🎓 Pro aktiv“, Ziel `?ziel=pro`, Link `?pro=<Code>` (mit oder ohne Bindestriche).
+WebApp und GitHub-APK sperren gleich, die Play-Fassung nie. **Es fehlen weiter: Kassen-Adresse und ein echter Test-Code.** Ich schalte erst scharf, wenn der echte Code gegen den Schlüssel in `Pro.kt` geprüft ist.
+**Umfang für den Shop-Text (bitte so übernehmen):** alle 136 Aufgaben in 25 Kapiteln · alle 7 Prüfungsaufgaben im Abi-Stil, auch auf Zeit · Üben in den Stufen „Abi“ und „Profi“ · Achterbahn-Baumeister, Geisterfahrt, Ringflug und Binomial-Labor ·
+Klausur-Planer, Fehler-Tagebuch und Lernstand. („Baukästen“ stimmt nicht: Der 3D-Rechner & Baukasten ist frei.)
+Frei bleibt: Kapitel 1–6 komplett, aus jedem weiteren Kapitel die ersten 2 Aufgaben, Tagesaufgabe, Üben „Einstieg“, die erste Prüfungsaufgabe, Kurve abfahren, Flug, Ballerbude, Zufallsmaschine, Galton-Brett, 3D-Rechner.
+
 ## 17.11.2026 – ABSTIMMUNG „Pro-Version“: bitte antworten (Marcel: „Bau bitte auch eine Pro Version. Sprich dich mit den anderen ab.“)
 
 Stand: **Raumlicht 2.18.4 vom 17.11.2026, Web = Android.** Eine direkte Nachricht an eure Sitzung ließ sich von hier nicht zustellen (Geräte-Bestätigung fehlt) – deshalb auf diesem Weg.
