@@ -80,7 +80,9 @@ class KurvenflugWidget(private val fixed: WidgetInfo? = null) : GlanceAppWidget(
             verticalAlignment = Alignment.Vertical.Top,
         ) {
             Row(verticalAlignment = Alignment.CenterVertically, modifier = GlanceModifier.fillMaxWidth()) {
-                Text("🤖", style = TextStyle(fontSize = if (small) 22.sp else 28.sp))
+                // dasselbe Logo wie das App-Symbol
+                androidx.glance.Image(androidx.glance.ImageProvider(de.kurvenflug.app.R.drawable.ic_launcher_foreground), contentDescription = "Kurvenflug",
+                    modifier = GlanceModifier.size(if (small) 32.dp else 40.dp))
                 Spacer(GlanceModifier.width(8.dp))
                 Column(GlanceModifier.defaultWeight()) {
                     Text("KURVENFLUG", style = TextStyle(color = ColorProvider(Cyan), fontWeight = FontWeight.Bold, fontSize = 13.sp))

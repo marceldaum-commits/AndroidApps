@@ -114,7 +114,15 @@
       g.lineWidth = w[0]; g.strokeStyle = w[1]; g.lineCap = 'round'; g.lineJoin = 'round'; g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
       pts.forEach(function (p) { g.lineTo(p[0], p[1]); }); g.stroke(); });
     var stars = +d.S || 0;
-    g.fillStyle = 'rgb(61,232,255)'; g.font = 'bold ' + (size * 0.06) + 'px sans-serif'; g.fillText('KURVENFLUG', size * 0.06, size * 0.09);
+    // App-Logo (wie icons/icon.svg) links neben dem Schriftzug
+    (function (x, y, w) { var cr = 18, k = w / (108 - 2 * cr); function X(v) { return x + (v - cr) * k; } function Y(v) { return y + (v - cr) * k; }
+      g.fillStyle = '#0b1026'; g.beginPath(); if (g.roundRect) g.roundRect(x, y, w, w, w * 0.22); else g.rect(x, y, w, w); g.fill();
+      g.strokeStyle = '#38E8FF'; g.lineWidth = 3.5 * k; g.lineCap = 'round'; g.beginPath(); g.moveTo(X(30), Y(76)); g.quadraticCurveTo(X(46), Y(26), X(76), Y(62)); g.stroke();
+      g.fillStyle = '#FF5CA8'; g.beginPath(); g.arc(X(76), Y(62), 7 * k, 0, 7); g.fill();
+      g.fillStyle = '#FFD54F'; g.beginPath(); g.moveTo(X(50), Y(38)); g.lineTo(X(58), Y(43)); g.lineTo(X(50), Y(48)); g.lineTo(X(52), Y(43)); g.closePath(); g.fill();
+      g.fillStyle = '#fff'; g.beginPath(); g.arc(X(36), Y(38), 1.5 * k, 0, 7); g.fill(); g.beginPath(); g.arc(X(70), Y(34), 1.2 * k, 0, 7); g.fill();
+    })(size * 0.06, size * 0.025, size * 0.085);
+    g.fillStyle = 'rgb(61,232,255)'; g.font = 'bold ' + (size * 0.06) + 'px sans-serif'; g.fillText('KURVENFLUG', size * 0.16, size * 0.09);
     g.fillStyle = '#fff'; g.font = (size * 0.042) + 'px sans-serif'; g.fillText(title + '  ' + '★'.repeat(stars) + '☆'.repeat(3 - stars), size * 0.06, size * 0.15);
     g.fillStyle = 'rgb(169,176,214)'; g.font = (size * 0.04) + 'px sans-serif'; g.fillText(d.F || '', size * 0.06, top + size + size * 0.045);
     cv.toBlob(function (blob) {

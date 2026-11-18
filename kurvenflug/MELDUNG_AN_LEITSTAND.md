@@ -1,5 +1,14 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.7 – Logo überall gleich (Marcel 18.11.) · Web = APK = Play
+- **Geprüft, war schon gleich** (gleiche Geometrie und Farben, Bilder nebeneinander verglichen): icons/icon.svg,
+  icon-512/-192, maskable-512 (PWA), apple-touch-icon, favicon-32, Store-Symbol icon_512, Android-Symbol
+  (adaptive icon `ic_launcher_foreground`) und Android-Splash (Android 12+, gleiches Symbol). Web-Ladebildschirm nutzt icon-192.
+- **Abweichend – angeglichen:** dort stand nur der Schriftzug „KURVENFLUG“ (bzw. 🤖 im Widget), jetzt mit demselben Logo:
+  Kopf der Startseite (neue gemeinsame Komponente `KurvenflugLogo`, Web = Android), Startbildschirm-Widget (groß + klein,
+  nutzt direkt die Android-Symboldatei), Teilen-Bilder der Flugbahn (Android `Photo.kt` und Web `kf.js`, gleich gezeichnet).
+- Bildschirmfotos 01_start, 47/48_widget angesehen. versionCode 54, Prüfkette grün. Keine neue Dateiendung.
+
 ## ✅ 2.5.6 – fertig für den Betriebstest (Nachtauftrag 17.11.) · Web = APK = Play
 
 ### 1) Aufgaben geprüft
