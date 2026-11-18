@@ -114,8 +114,8 @@ fun AppRoot(
     offers: Boolean = true,
     /** „Eltern-Handy koppeln“: was die Plattform dafür kann (null = hier nicht verfügbar) */
     eltern: de.raumlicht.app.ui.settings.ElternPlatform? = null,
-    /** Adresse der Crashkurs-Seite (leer = Hinweis „Klausur bald“ gibt es nicht; Tests setzen eine) */
-    crashUrl: String = de.raumlicht.core.model.Nachhilfe.CRASH_URL,
+    /** Adresse, auf die der Hinweis „Klausur bald“ führt – die kostenlose Probestunde (leer = Hinweis gibt es nicht) */
+    examUrl: String = de.raumlicht.core.model.Nachhilfe.TRIAL_URL,
 ) {
     // ── Lern-Protokoll (nur auf dem Gerät) und Eltern-Bericht ──
     val parentText by prefs.parentLink.collectAsState()
@@ -325,12 +325,12 @@ fun AppRoot(
                     val uri = androidx.compose.ui.platform.LocalUriHandler.current
                     var state by remember { mutableStateOf(prefs.tutorState) }
                     val day = remember { today() }
-                    val hint = remember(plan, state, hintsOn) { de.raumlicht.core.model.Nachhilfe.exam(plan, day, state, offers && hintsOn, crashUrl) }
+                    val hint = remember(plan, state, hintsOn) { de.raumlicht.core.model.Nachhilfe.exam(plan, day, state, offers && hintsOn, examUrl) }
                     // je Klausur einmal am Tag zählen
                     LaunchedEffect(hint?.key) { hint?.let { h -> if (de.raumlicht.core.model.Nachhilfe.isNew(state, h.key, day)) { count("nachhilfe_hinweis", "klassenarbeit", h.topic)
                         prefs.tutorState = de.raumlicht.core.model.Nachhilfe.shown(prefs.tutorState, h.key, day); state = prefs.tutorState } } }
                     PlannerScreen(plan, today(), starMap, { prefs.setPlan(it?.encode() ?: ""); onPlanChanged() }, { l, s, a -> record(l.id, s, a) }, back, hint,
-                        onHint = { hint?.let { h -> count("crashkurs_klick", "klassenarbeit", h.topic); runCatching { uri.openUri(h.link) } } },
+                        onHint = { hint?.let { h -> count("probestunde_klick", "klassenarbeit", h.topic); runCatching { uri.openUri(h.link) } } },
                         onHideHint = { hint?.let { h -> prefs.tutorState = de.raumlicht.core.model.Nachhilfe.hide(prefs.tutorState, h.key); state = prefs.tutorState } })
                 }
                 Routes.CLASS -> ClassScreen({ l, s, a -> record(l.id, s, a) }, back)

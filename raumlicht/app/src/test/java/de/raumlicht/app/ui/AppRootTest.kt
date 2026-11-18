@@ -39,7 +39,7 @@ class AppRootTest {
     private val counted = ArrayList<String>()
     /** Zählaufrufe aus den Aufgaben (gestartet, geschafft, Theorie) – getrennt gesammelt */
     private val played = ArrayList<String>()
-    private var crash = de.raumlicht.core.model.Nachhilfe.CRASH_URL
+    private var crash = de.raumlicht.core.model.Nachhilfe.TRIAL_URL
     /** Nachgestellte Plattform fürs Eltern-Koppeln: merkt sich, was hochgeladen und gelöscht würde (hier unverschlüsselt, die Verschlüsselung prüft der Browser-Test) */
     private val uploads = ArrayList<Triple<String, String, String>>(); private val deleted = ArrayList<String>()
     private var eltern: de.raumlicht.app.ui.settings.ElternPlatform? = null
@@ -49,7 +49,7 @@ class AppRootTest {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
             AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry(); de.raumlicht.app.ui.settings.ElternEntry() } },
-                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, crashUrl = crash)
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, examUrl = crash)
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -215,12 +215,12 @@ class AppRootTest {
         rule.onNodeWithTag("klausur-hinweis").performScrollTo().assertExists(); rule.onNodeWithText("In 7 Tagen ist deine Klausur.", substring = true).assertExists()
         rule.onRoot().captureRoboImage("../screenshots/86_klausur_hinweis.png")
         assertEquals(listOf("""{"app":"raumlicht","v":"test","ev":"nachhilfe_hinweis","ort":"klassenarbeit","thema":"vektoren"}"""), counted.toList())
-        rule.onNodeWithTag("klausur-crashkurse").performClick(); settle(); assertTrue(counted.last().contains("crashkurs_klick"))
+        rule.onNodeWithTag("klausur-probestunde").assertTextContains("Kostenlose Probestunde anfragen").performClick(); settle(); assertTrue(counted.last(), counted.last().contains("\"ev\":\"probestunde_klick\",\"ort\":\"klassenarbeit\""))
         rule.onNodeWithTag("klausur-aus").performClick(); settle(); rule.onNodeWithTag("klausur-hinweis").assertDoesNotExist()
         rule.runOnUiThread { prefs.setPlan(""); prefs.tutorState = "" }
     }
 
-    /** Ohne Adresse der Crashkurs-Seite erscheint im Klausur-Planer kein Hinweis. */
+    /** Ohne Adresse erscheint im Klausur-Planer kein Hinweis. */
     @Test fun klausurHinweisErstMitAdresse() {
         crash = ""; start(); rule.runOnUiThread { prefs.tutorState = ""; prefs.setPlan(de.raumlicht.core.model.Plan(20_772L + 7, setOf(1, 2)).encode()) }
         nav.go(Routes.PLANNER); settle(); rule.onNodeWithTag("klausur-hinweis").assertDoesNotExist(); assertTrue(counted.isEmpty())

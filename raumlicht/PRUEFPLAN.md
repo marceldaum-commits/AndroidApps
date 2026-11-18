@@ -33,7 +33,7 @@ So ist jeder Teil dreimal im Jahr gründlich dran.
 - Start in beiden Fassungen (`web-modus.mjs`), Schrittprotokoll (`web-diag.mjs`), Störungsfälle (`web-stoerung.mjs`)
 - Selbst-Update und Sprung von einer alten Version (`web-update.mjs`, `web-vorversion.mjs`)
 - Zählung (`web-zaehler.mjs`), „nichts spricht“ (`web-still.mjs`), KI-Tutor (`web-ki.mjs`), „App installieren“ (`web-install.mjs`)
-- Alle Links nach außen antworten (Shop Pro, Shop KI, Probestunde, Crashkurse, Geschenke, Startseite, Impressum, Datenschutz)
+- Alle Links nach außen antworten (Shop Pro, Shop KI, Probestunde, Geschenke, Startseite, Impressum, Datenschutz)
 - Logik- und App-Tests, Lint
 - Auf dem echten iPhone/iPad kann nur Marcel prüfen: einmal im Monat `…/?diag=1` öffnen.
 
