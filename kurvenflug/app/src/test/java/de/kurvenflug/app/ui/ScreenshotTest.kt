@@ -292,7 +292,7 @@ class ScreenshotTest {
             parent = de.kurvenflug.app.ui.together.ParentArea(7, 20_400L, 20_410L, false, 0L, true, {}, {}, {}, {}, {}))
     }
 
-    @Test fun parentPairing() = shot("105_eltern_handy", settle = 2000, prepare = { it.onNodeWithText("Link teilen").performScrollTo() }) {
+    @Test fun parentPairing() = shot("105_eltern_handy", settle = 2000, prepare = { it.onNodeWithText("Fortschritt wiederherstellen", substring = true).performScrollTo() }) {
         val today = 20_500L * de.kurvenflug.core.model.Weekly.DAY
         val d = de.kurvenflug.core.model.Weekly.DAY
         val plays = listOf(

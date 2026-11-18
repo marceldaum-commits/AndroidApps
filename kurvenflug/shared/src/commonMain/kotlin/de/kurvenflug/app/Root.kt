@@ -214,6 +214,15 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     // Elternbereich nur hinter dem Eltern-Tor (dort stehen Angebote für Eltern – nie für Kinder sichtbar)
     var parentGate by remember { mutableStateOf(false) }
     if (parentGate) de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { parentGate = false }, why = "Der Elternbereich ist für Erwachsene.") { parentGate = false; platform.count("elternbereich"); nav.goOnce(Routes.PARENT) }
+    // Monatssummen dauerhaft fortschreiben (Eltern-Bericht „verlauf“; die einzelnen Durchgänge hält die App nur 60 Tage)
+    val allPlays by remember { vm.weekPlays(0L) }.collectAsStateWithLifecycle(emptyList())
+    var months by remember { mutableStateOf(de.kurvenflug.core.model.MonthSums.parse(vm.settings.monthSums)) }
+    LaunchedEffect(allPlays) {
+        if (allPlays.isEmpty()) return@LaunchedEffect
+        val merged = de.kurvenflug.core.model.MonthSums.merge(months,
+            allPlays.map { de.kurvenflug.core.model.PlayRecord(it.levelId, it.stars, it.attempts, it.seconds, it.at) })
+        if (merged != months) { months = merged; vm.settings.monthSums = de.kurvenflug.core.model.MonthSums.format(merged) }
+    }
     // Eltern-Handy koppeln: solange gekoppelt, hält die App den Bericht (letzte 14 Tage) aktuell; gesendet wird beim Verlassen (kf.js)
     var parentLink by remember { mutableStateOf(platform.parentLink()) }
     if (!parentLink.isNullOrEmpty()) {
@@ -222,13 +231,13 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
         val reportProgress by vm.progress.collectAsStateWithLifecycle()
         val reportGrade by vm.settings.grade.collectAsStateWithLifecycle()
         val reportExam by vm.settings.examUntil.collectAsStateWithLifecycle()
-        LaunchedEffect(reportPlays, reportProgress, reportGrade, reportExam, parentLink) {
+        LaunchedEffect(reportPlays, reportProgress, reportGrade, reportExam, parentLink, months) {
             val now = de.kurvenflug.core.model.nowMillis()
             platform.parentReport(de.kurvenflug.core.model.ParentReport.json(
                 reportPlays.map { de.kurvenflug.core.model.PlayRecord(it.levelId, it.stars, it.attempts, it.seconds, it.at) },
                 reportProgress.mapValues { it.value.stars }, now, de.kurvenflug.core.model.CalDate.startOfToday(now),
                 de.kurvenflug.core.model.utcOffsetMinutes(now), reportGrade, platform.parentNick(),
-                examSoon = reportExam >= de.kurvenflug.core.model.CalDate.today().toEpochDay()))
+                examSoon = reportExam >= de.kurvenflug.core.model.CalDate.today().toEpochDay(), months = months))
         }
     }
     // Anonyme Nutzungszählung: Level-Abschlüsse aus dem Spielstand
@@ -410,7 +419,8 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                     pairLink = parentLink, pairNick = remember(parentLink) { platform.parentNick() },
                     onPair = { nick -> parentLink = platform.parentPair(nick) },
                     onUnpair = { platform.parentUnpair(); parentLink = platform.parentLink() },
-                    onShare = { link -> platform.shareText(link, "Kurvenflug – Lernbericht") }))
+                    onShare = { link -> platform.shareText(link, "Kurvenflug – Lernbericht") },
+                    onRestore = { link, force, done -> platform.parentRestore(link, force, done) }))
         }
         composable(Routes.RESULTS) { de.kurvenflug.app.ui.together.ResultsBoard({ nav.popSafe() }) }
         composable(Routes.STICKERS) {

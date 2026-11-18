@@ -118,6 +118,7 @@
   // Test-Stufe (…-test, localhost) → trainer-test / staging; sonst trainer / www
   var testStage = /-test\.|localhost|127\.0\.0\.1/.test(location.hostname);
   var ELTERN_API = (testStage ? 'https://trainer-test.mathenachhilfe-online.com' : 'https://trainer.mathenachhilfe-online.com') + '/eltern/v1/b/';
+  var SICHERUNG_API = ELTERN_API.replace('/eltern/v1/b/', '/eltern/v1/s/');
   var ELTERN_PAGE = (testStage ? 'https://staging.mathenachhilfe-online.com' : 'https://www.mathenachhilfe-online.com') + '/eltern-bericht/#';
   KF.elternLink = function () { var id = lsGet(E.id), k = lsGet(E.k); return id && k ? ELTERN_PAGE + id + '.' + k : ''; };
   KF.elternNick = function () { return lsGet(E.n) || ''; };
@@ -131,9 +132,17 @@
     var id = lsGet(E.id), w = lsGet(E.w);
     if (id && w) fetch(ELTERN_API + id, { method: 'DELETE', headers: { 'X-Schreib': w }, credentials: 'omit', keepalive: true }).catch(function () {});
     [E.id, E.w, E.k, E.n, E.t].forEach(function (k) { lsSet(k, null); });
-    readyBody = null; reportJson = null;
+    readyBody = null; reportJson = null; readyBackup = null; backupPlain = null; sentBackup = null;
   };
   var reportJson = null, readyBody = null, pendingFirst = false, encrypting = null;
+  function encryptMax(json, max) {
+    var k = lsGet(E.k); if (!k || !window.crypto || !crypto.subtle) return Promise.resolve(null);
+    var iv = new Uint8Array(12); crypto.getRandomValues(iv);
+    return crypto.subtle.importKey('raw', unb64u(k), { name: 'AES-GCM' }, false, ['encrypt'])
+      .then(function (key) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, new TextEncoder().encode(json)); })
+      .then(function (ct) { var body = b64u(iv) + '.' + b64u(new Uint8Array(ct)); return body.length <= max ? body : null; })
+      .catch(function () { return null; });
+  }
   function encrypt(json) {
     var k = lsGet(E.k); if (!k || !window.crypto || !crypto.subtle) return Promise.resolve(null);
     var iv = new Uint8Array(12); crypto.getRandomValues(iv);
@@ -149,12 +158,73 @@
     var body = readyBody; lsSet(E.t, String(Date.now()));
     fetch(ELTERN_API + id, { method: 'PUT', headers: { 'X-Schreib': w, 'Content-Type': 'text/plain' }, body: body, credentials: 'omit', keepalive: true })
       .then(function (r) { if (!r.ok) lsSet(E.t, String(last)); }, function () { lsSet(E.t, String(last)); });
+    // Sicherung des Lernstands – nur wenn sie sich seit der letzten Sendung geändert hat
+    if (readyBackup && backupPlain !== sentBackup) {
+      var plain = backupPlain;
+      fetch(SICHERUNG_API + id, { method: 'PUT', headers: { 'X-Schreib': w, 'Content-Type': 'text/plain' }, body: readyBackup, credentials: 'omit', keepalive: readyBackup.length < 60000 })
+        .then(function (r) { if (r.ok) sentBackup = plain; }, function () {});
+    }
   }
+
+  // ------------------------------------------------------------ Verschlüsselte Sicherung des Lernstands (über die Kopplung)
+  // „daten“ = alle Kurvenflug-Einträge im Browser (Fortschritt, Durchgänge, Monatssummen, Einstellungen, Pro-Code) – ohne die
+  // technischen Merker und ohne die Kopplungs-Schlüssel selbst (schreib steht eigens im verschlüsselten Klartext).
+  var backupPlain = null, readyBackup = null, sentBackup = null;
+  function techKey(k) { return /^kf\.(eltern\.|start$|wasmGescheitert$|modus$|opt\.|lastVersion$|diag$|letzterWechsel$)/.test(k); }
+  function gameData(withPlays) {
+    var d = {};
+    try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf('kf.') === 0 && !techKey(k) && (withPlays || !/^kf\.plays\./.test(k))) d[k] = localStorage.getItem(k); }); } catch (e) {}
+    return d;
+  }
+  function isoNow() {
+    var d = new Date(), o = -d.getTimezoneOffset(), p = function (n) { return (n < 10 ? '0' : '') + n; };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + 'T' + p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds()) +
+      (o < 0 ? '-' : '+') + p(Math.floor(Math.abs(o) / 60)) + ':' + p(Math.abs(o) % 60);
+  }
+  function prepareBackup() {
+    var w = lsGet(E.w); if (!w) return Promise.resolve();
+    var data = gameData(true);
+    var json = JSON.stringify({ format: 1, app: 'kurvenflug', v: window.KF_VER || '', stand: isoNow(), schreib: w, daten: data });
+    if (json.length > 380 * 1024) {   // zu groß (≤ 512 KB nach Verschlüsselung): ohne Einzelergebnisse, Monatssummen bleiben
+      data = gameData(false); json = JSON.stringify({ format: 1, app: 'kurvenflug', v: window.KF_VER || '', stand: isoNow(), schreib: w, daten: data });
+    }
+    var compare = JSON.stringify(data);
+    if (compare === backupPlain && readyBackup) return Promise.resolve();
+    return encryptMax(json, 512 * 1024).then(function (b) { if (b) { readyBackup = b; backupPlain = compare; } });
+  }
+  KF.elternHasProgress = function () { try { return Object.keys(localStorage).some(function (k) { return /^kf\.progress\./.test(k) && localStorage.getItem(k); }); } catch (e) { return false; } };
+  // Wiederherstellen auf einem neuen Gerät: Link einfügen → Sicherung holen, entschlüsseln, (nach Rückfrage) übernehmen.
+  // Ergebnis an cb: ok | vorhanden (Lernstand da – erst nachfragen) | keine | andere_app | link | fehler
+  KF.elternRestore = function (link, force, cb) {
+    var m = /#([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})/.exec(String(link || ''));
+    if (!m) { cb('link'); return; }
+    var id = m[1], key = m[2];
+    fetch(SICHERUNG_API + id, { credentials: 'omit', cache: 'no-store' }).then(function (r) {
+      if (r.status === 404) throw 'keine';
+      if (!r.ok) throw 'fehler';
+      return r.json();
+    }).then(function (j) {
+      var parts = String(j.d || '').split('.');
+      return crypto.subtle.importKey('raw', unb64u(key), { name: 'AES-GCM' }, false, ['decrypt'])
+        .then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64u(parts[0]) }, k, unb64u(parts[1] || '')); })
+        .then(function (plain) { return JSON.parse(new TextDecoder().decode(plain)); }, function () { throw 'link'; });
+    }).then(function (b) {
+      if (!b || b.app !== 'kurvenflug' || !b.daten || !b.schreib) throw 'andere_app';
+      if (!force && KF.elternHasProgress()) { cb('vorhanden'); return; }
+      try {
+        Object.keys(localStorage).forEach(function (k) { if (k.indexOf('kf.') === 0 && !techKey(k)) localStorage.removeItem(k); });
+        Object.keys(b.daten).forEach(function (k) { if (k.indexOf('kf.') === 0 && !techKey(k)) localStorage.setItem(k, b.daten[k]); });
+      } catch (e) { throw 'fehler'; }
+      lsSet(E.id, id); lsSet(E.k, key); lsSet(E.w, b.schreib); lsSet(E.t, null);
+      cb('ok');
+      setTimeout(function () { location.reload(); }, 1800);
+    }).catch(function (e) { cb(typeof e === 'string' ? e : 'fehler'); });
+  };
   // Neuer Bericht aus der App: gleich verschlüsseln, damit er beim Verlassen sofort gesendet werden kann
   KF.elternReport = function (json) {
     if (!lsGet(E.id)) return;
     reportJson = json;
-    encrypting = encrypt(json).then(function (b) { if (b && json === reportJson) { readyBody = b; if (pendingFirst) { pendingFirst = false; upload(true); } } });
+    encrypting = Promise.all([encrypt(json), prepareBackup()]).then(function (r) { var b = r[0]; if (b && json === reportJson) { readyBody = b; if (pendingFirst) { pendingFirst = false; upload(true); } } });
   };
   function elternLeave() { if (lsGet(E.id)) upload(false); }
   window.addEventListener('pagehide', elternLeave);

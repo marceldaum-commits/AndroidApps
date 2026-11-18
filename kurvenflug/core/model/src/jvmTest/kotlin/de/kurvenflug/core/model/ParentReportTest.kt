@@ -44,6 +44,22 @@ class ParentReportTest {
         assertEquals("Bald steht eine Klassenarbeit an: Lineare Funktionen", e["hinweis"]!!.jsonPrimitive.content)
     }
 
+    @Test fun monthHistoryGrowsAndNeverShrinks() {
+        val utc: (Long) -> Int = { 0 }
+        val nov = 20_773L * day   // 2026-11-15
+        val oct = nov - 30 * day
+        val first = MonthSums.merge(emptyList(), listOf(PlayRecord("2-1", 3, 1, 600, oct), PlayRecord("2-2", 0, 2, 600, oct), PlayRecord("2-3", 3, 1, 300, nov)), utc)
+        assertEquals(listOf("2026-10", "2026-11"), first.map { it.month }); assertEquals(20, first[0].minutes); assertEquals(50, first[0].percent)
+        // Oktober-Durchgänge aufgeräumt → Oktober bleibt, November wächst
+        val second = MonthSums.merge(MonthSums.parse(MonthSums.format(first)), listOf(PlayRecord("2-3", 3, 1, 300, nov), PlayRecord("2-4", 3, 1, 300, nov)), utc)
+        assertEquals(first[0], second[0]); assertEquals(2, second[1].tasks)
+        val j = Json.parseToJsonElement(ParentReport.json(emptyList(), emptyMap(), now, today, 60, null, null, months = second)).jsonObject
+        val v = j["verlauf"]!!.jsonArray
+        assertEquals("2026-10", v.first().jsonObject["monat"]!!.jsonPrimitive.content); assertEquals(100, v.last().jsonObject["richtigProzent"]!!.jsonPrimitive.int)
+        val many = (1..20).map { MonthSum("20${10 + it}-01", 1, 1, 1) }
+        assertEquals(12, Json.parseToJsonElement(ParentReport.json(emptyList(), emptyMap(), now, today, 60, null, null, months = many)).jsonObject["verlauf"]!!.jsonArray.size)
+    }
+
     @Test fun emptyIsValid() {
         val j = Json.parseToJsonElement(ParentReport.json(emptyList(), emptyMap(), now, today, 60, null, " ")).jsonObject
         assertEquals(0, j["aufgaben"]!!.jsonPrimitive.int); assertTrue("name" !in j)

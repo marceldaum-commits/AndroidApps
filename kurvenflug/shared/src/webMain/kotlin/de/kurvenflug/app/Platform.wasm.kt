@@ -70,6 +70,9 @@ object WebPlatform : Platform {
     override fun parentUnpair() { runCatching { jsElternUnpair() } }
     override fun parentNick(): String = runCatching { jsElternNick() }.getOrDefault("")
     override fun parentReport(json: String) { runCatching { jsElternReport(json) } }
+    override fun parentRestore(link: String, force: Boolean, done: (String) -> Unit) {
+        runCatching { jsElternRestore(link, force, done) }.onFailure { done("fehler") }
+    }
 
     // Anonyme Nutzungszählung (nur wenn eingeschaltet): Zähler im Speicher, beim Verlassen/Verstecken der Seite einmal senden (kf.js)
     private val counts = HashMap<String, Int>()

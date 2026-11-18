@@ -52,6 +52,8 @@ interface Platform {
     fun parentNick(): String = ""
     /** Neuer Bericht (JSON) – wird verschlüsselt und nach der Lernsitzung hochgeladen */
     fun parentReport(json: String) {}
+    /** Lernstand aus der Sicherung wiederherstellen; Ergebnis: ok | vorhanden | keine | andere_app | link | fehler */
+    fun parentRestore(link: String, force: Boolean, done: (String) -> Unit) { done("fehler") }
 }
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */

@@ -1,5 +1,26 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.27 – Verschlüsselte Sicherung über die Kopplung + Monatsverlauf
+1. **Sicherung:** Zusammen mit dem Bericht (beim Verstecken/Verlassen, höchstens alle 10 min) `PUT …/eltern/v1/s/<id>`, X-Schreib, text/plain
+   `<iv>.<ct>` (AES-GCM-256 mit key, neuer 12-Byte-IV je Sendung), **nur bei Änderung**, ≤ 512 KB. Klartext
+   `{"format":1,"app":"kurvenflug","v":"2.5.27","stand":"…+01:00","schreib":"…","daten":{…}}`; daten = alle `kf.*`-Einträge des Browsers
+   (Fortschritt, Durchgänge der letzten 60 Tage, Monatssummen, Einstellungen, Pro-Code) **ohne** technische Merker und ohne `kf.eltern.*`.
+   Wäre es zu groß: ohne Einzeldurchgänge (Monatssummen bleiben).
+2. **Wiederherstellen** (Elternbereich hinter dem Eltern-Tor): „♻️ Fortschritt wiederherstellen“ → „Kopplungs-Link einfügen“ → GET `…/s/<id>` →
+   `d` entschlüsseln → app ≠ kurvenflug: „Dieser Link gehört zu einer anderen App“; 404: „Keine Sicherung gefunden“; vorhandener Lernstand:
+   **Rückfrage „Lernstand ersetzen?“**; danach id/key/schreib gespeichert → wieder gekoppelt, App startet neu.
+3. **Monatssummen** dauerhaft (`kf.monate` je Spieler; je Monat Maximum aus Gespeichertem und Neuem, damit sie beim 60-Tage-Aufräumen nicht
+   schrumpfen) und im Bericht als `"verlauf":[{"monat":"2026-11","min":7,"aufgaben":3,"richtigProzent":67}]`, höchstens 12, älteste zuerst.
+   Tests in `ParentReportTest`.
+4. **Rundlauf gegen trainer-test (zwei getrennte Browser-Profile, echte Antworten):** Gerät A (Lernstand vorhanden) koppelt → PUT s/ 204, PUT b/ 204;
+   Sicherung entschlüsselt: app, v, stand, **schreib passt**, 10 Einträge, keine kf.eltern-Schlüssel; Bericht enthält verlauf 2026-11. Gerät B (leer):
+   Wiederherstellen → **ok**, **Fortschritt und Durchgänge identisch**, gleiche id/schreib → danach **PUT b/ 204, PUT s/ 204** (neues Gerät schreibt);
+   erneutes Wiederherstellen → „vorhanden“ (Rückfrage); fremdes X-Schreib → **403**; unbekannter Link → „keine“; Entkoppeln (DELETE b/ 204) →
+   Bericht **404** und Sicherung **404**.
+5. **Datenschutz-Satz** in der App (Eltern-Karte und Einstellungen/Für Eltern im Browser): „Bei gekoppeltem Eltern-Handy wird zusätzlich eine
+   Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i).“
+- Bildschirmfoto `105_eltern_handy` angesehen. versionCode 74 / 2.5.27, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.26 – hinweis „Klassenarbeit bald“ + Rundlauf gegen trainer-test
 - **hinweis:** Ist „Klassenarbeit bald“ eingestellt, enthält der Bericht `"hinweis":"Bald steht eine Klassenarbeit an: <Thema>"` (Thema = schwächstes
   Thema, sonst zuletzt gespieltes Kapitel; ohne Spieldaten „Bald steht eine Klassenarbeit an.“). Test in `ParentReportTest`.
