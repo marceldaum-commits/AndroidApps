@@ -1,5 +1,9 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.33 – Probestunden-Link vor Klassenarbeiten korrigiert
+- `https://www.mathenachhilfe-online.com/probestunde/?src=kurvenflug-klassenarbeit&thema=<id>&klasse=<n>` (statt /probestunde-anfrage/), Test angepasst.
+- versionCode 80 / 2.5.33, Prüfkette grün.
+
 ## ✅ 2.5.32 – Zählung: Ereignisse mit ort als Einzelaufruf
 - **Sammelsendung** nur noch: `start`, `level_start`, `level_geschafft`, `theorie`, `elternbereich` (Test: probestunde_klick landet nie darin).
 - **Einzelaufruf sofort beim Antippen** (fetch POST, text/plain, keepalive, credentials 'omit', Fehler ignoriert; nur wenn die Zählung an ist):

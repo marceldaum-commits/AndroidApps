@@ -20,7 +20,7 @@ class ParentOffersTest {
 
     @Test fun linksCarrySourceAndNoPrice() {
         assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=kurvenflug-elternbericht&thema=pythagoras&klasse=9", ParentOffers.trialLesson(9, 9))
-        assertEquals("https://www.mathenachhilfe-online.com/probestunde-anfrage/?src=kurvenflug-klassenarbeit&thema=quadratische-funktionen&klasse=9",
+        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=kurvenflug-klassenarbeit&thema=quadratische-funktionen&klasse=9",
             ParentOffers.trialLesson(3, 9, ParentOffers.Reason.EXAM))
         assertTrue("crashkurs_klick" !in UsageCount.EVENTS)
         assertTrue("src=kurvenflug-geschenk" in ParentOffers.GIFT && "src=kurvenflug-fusszeile" in ParentOffers.FOOTER)
