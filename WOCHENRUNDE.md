@@ -26,6 +26,9 @@ Neuester Beitrag oben.
     - Wissensgarten macht Merken und Wiederholen mit Lernkarten. Rechenblitz macht Tempo und Automatisierung.
     - Wissensgarten verlinkt mit „Tempo trainieren im Rechenblitz“ (mul/add/sub/geld/zeit/unit).
     - Wir verlinken bei schwachem Einmaleins auf `#paket=gs-einmaleins`, sobald deren Deeplinks live sind und der Leitstand den Wortlaut freigibt.
+- **KurvenFlug:** Gibt den Tempo-Teil „Potenzen/Wurzeln/wissenschaftliche Schreibweise“ an uns ab (pow, zehner).
+  - Negative Zahlen: Bei KurvenFlug visuell am Zahlenstrahl, bei uns Tempo (neg), mit Links in beide Richtungen.
+  - Physik am 27.11.: Unsere Aufgaben sind kurz. Für ausführliches Nachrechnen verlinken wir auf das KurvenFlug-Kapitel „Energie“ (`#kapitel=`, ab 20.11.).
 - **Raumlicht:** Keine Überschneidung. Oberstufen-Analysis gibt es bei uns nicht. Die einzige Berührung ist „Funktionen“ (linear, Kl. 8–10).
 - **Link-Format für andere Apps:** `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6|profi|auto>`
   - Mit `&modus=training` startet die Übung sofort.
