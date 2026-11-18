@@ -91,7 +91,7 @@ class NovaVoice(
 
     override fun pakete(packs: List<Pack>) {
         listeLaden()
-        scope.launch(Dispatchers.Default) { katalog.pakete(packs) }
+        scope.launch(Dispatchers.Default) { katalog.paketeSchrittweise(packs) }
     }
 
     override fun speak(text: String, locale: Locale) = launch(text, locale, null)
