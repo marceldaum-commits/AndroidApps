@@ -60,11 +60,14 @@ private suspend fun plusPackTexts(): List<String> = runCatching {
 private fun takeProParam(): JsString? = js("(() => { const u = new URL(location.href); const v = u.searchParams.get('pro'); if (v) { u.searchParams.delete('pro'); history.replaceState(null, '', u.pathname + u.search + u.hash); } return v; })()")
 
 private fun hideSplash(): Unit = js("(() => { const s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(() => s.remove(), 600); } window.dispatchEvent(new Event('wg-ready')); })()")
+/** Schritt ins Start-Protokoll (index.html, sichtbar mit ?diag=1) */
+private fun diag(step: String): Unit = js("window.wgDiag && window.wgDiag(step)")
 private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', () => cb(document.visibilityState === 'visible'))")
 private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', () => cb())")
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
 fun main() {
+    diag("App: main() läuft")
     // Lernstand aus dem Browser-Speicher laden (nur auf diesem Gerät, kein Server)
     val raw = runCatching { localStorage.getItem(STORE_KEY) }.getOrNull()
     val saved = raw?.let { runCatching { json.decodeFromString(StoreState.serializer(), it) }.getOrNull() } ?: StoreState()
@@ -117,8 +120,10 @@ fun main() {
         }
     }
     vm.refreshPlusPacksIfDue()
+    diag("App: Daten bereit → Zeichenfläche anlegen")
 
     ComposeViewport(document.body!!) {
+        LaunchedEffect(Unit) { diag("App: erstes Compose-Bild") }
         // Emoji-Schrift laden (Merkbilder!), danach erst die App zeigen
         val emoji by preloadFont(Res.font.noto_color_emoji)
         val symbols by preloadFont(Res.font.dejavu_symbols)
@@ -127,6 +132,7 @@ fun main() {
         LaunchedEffect(emoji, symbols) {
             val e = emoji; val s = symbols
             if (e != null && s != null) {
+                diag("App: Schriften geladen")
                 resolver.preload(FontFamily(e)); resolver.preload(FontFamily(s)); ready = true; hideSplash()
                 plusMessage?.let { delay(900); jsToast(it) }
             }

@@ -1,5 +1,13 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## iOS 2.2.10 – Startbild zuerst, Diagnose ?diag=1 (18.11.2026)
+- **a) Schrittprotokoll:** `?diag=1` schaltet es ein (bleibt an, bis `?diag=0`). Jeder Schritt landet sofort in `localStorage` unter `wg.diag`: Gerät (UA, Bildschirm, Schärfe), HTML gelesen, Startbild gemalt, jedes Skript, jede große Datei (Start, KB, Dauer), Wasm instantiate/compile (Start, fertig, FEHLER), App main(), erstes Compose-Bild, Schriften, „Garten steht“ und „erstes Bild gemalt ✓“. Nach einem Abbruch steht beim nächsten Öffnen oben „⚠ LETZTER START ABGEBROCHEN“ mit allen Schritten. Mit dem Knopf „Kopieren“ lässt sich alles kopieren. Keine persönlichen Daten, nichts verlässt das Gerät.
+- **b) Startbild zuerst:** Im `<head>` stehen keine externen Skripte mehr. `wg-platform.js`, `wg-stimme.js` und `wissensgarten.js` werden erst nach zwei requestAnimationFrame-Ticks nacheinander geladen (nach spätestens 0,5 s auch im Hintergrund-Tab).
+- **c) Nacheinander laden:** Skiko-Wasm → App-Wasm → Emoji-Schrift → Symbol-Schrift, eine Datei nach der anderen. Bleibt eine Datei hängen, gibt die nächste spätestens nach 60 s frei. Das Vorab-Laden der Emoji-Schrift ist entfernt.
+- **Zusätzlicher Befund (wichtig):** Compose legt eine Shadow-Root auf `<body>`. Ab diesem Moment war alles im Body unsichtbar: das Startbild, aber auch die Fehlerseite „konnte nicht starten“ aus 2.2.8. Malt die Zeichenfläche dann nichts (z. B. auf dem iPhone), entsteht genau eine leere Seite. Behoben: Startbild, Fehlerseite und Diagnose hängen jetzt direkt an `<html>`, und Brummi bleibt sichtbar, bis der Garten wirklich gezeichnet ist.
+- **Geprüft (Chromium, iPhone-Emulation):** Startbild nach 0,1 s sichtbar, Protokoll vollständig, ein abgebrochener Start wird beim nächsten Öffnen angezeigt. Install-Test 21/21. Auto-Update 2.2.9 → 2.2.10 klappt mit Hinweis, Spielstand und Nova-Cache bleiben (Modus „start“; Modus „tab“ lässt sich headless nicht prüfen, das war schon in 2.2.9 so).
+- **Test:** https://wissensgarten-test.mathenachhilfe-online.com/?diag=1
+
 ## iOS-Nachtrag – Version 2.2.9 vom 18.11.2026
 
 - **(a) Speicher:**

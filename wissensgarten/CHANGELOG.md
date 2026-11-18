@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.10 – Startbild sofort, Diagnose für iPhone (18.11.2026)
+- Beim Öffnen erscheint jetzt **sofort** das Startbild mit Brummi – erst danach lädt der Garten. Eine ganz leere weiße Seite gibt es damit nicht mehr.
+- Die großen Startdateien werden **nacheinander** statt gleichzeitig geladen, die Emoji-Bilder zuletzt. Das schont Speicher und Netz auf dem Handy.
+- Für die Fehlersuche: Mit dem Zusatz `?diag=1` an der Adresse zeigt der Garten unten eine Liste seiner Startschritte. Bricht ein Start ab, sieht man beim nächsten Öffnen, wo. Es werden keine persönlichen Daten erfasst, und nichts verlässt das Gerät. Mit `?diag=0` wird die Liste wieder ausgeschaltet.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.9 – Sparsamer auf iPhone und iPad (18.11.2026)
 - Auf iPhone und iPad zeichnet der Garten mit höchstens doppelter Schärfe – das spart viel Grafikspeicher, damit Safari die Seite nicht mehr wegen Speichermangels leer lässt. Man sieht kaum einen Unterschied.
 - Dein Lernstand bleibt vollständig erhalten.
