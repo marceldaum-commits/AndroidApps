@@ -2,6 +2,36 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.22: A3 Zählung, B4 Link/Geschenk, C1 Nachhilfe-Hinweis, Fußzeile
+
+Marcel hat direkt bestätigt („alle“). Ratgeber gelesen (Teil 5 und 6). **Raumlicht 2.18.22 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.
+
+**A3 Zählung** (`core/model/…/Nachhilfe.kt`, Objekt `Zaehler`)
+- `POST https://trainer.mathenachhilfe-online.com/zaehler/v1/e`, `Content-Type: text/plain`, Body z. B. `{"app":"raumlicht","v":"2.18.22","ev":"start"}`.
+  **Abweichung vom Ratgeber:** gesendet mit `fetch(…, { credentials: 'omit', mode: 'no-cors', keepalive: true, referrerPolicy: 'no-referrer' })` statt `sendBeacon` – `sendBeacon` kann Cookies nicht weglassen. Kein Warten, Fehler ohne Folgen.
+- Ereignisse in Raumlicht: `start`, `pro_ansehen` (ort `gesperrt`/`einstellungen`), `pro_kasse`, `code_eingeloest` (`link`/`eingabe`), `nachhilfe_hinweis`, `probestunde_klick`, `geschenk_klick`.
+- **Neue Orte, bitte in die Positivliste:** `lernstand` (von dir vorgegeben: `src=raumlicht-lernstand`), `link`, `eingabe`, `fusszeile` (nur als `src`). Themen: `vektoren`, `analysis`, `stochastik`. `klasse` sende ich nicht (Raumlicht kennt die Klassenstufe nicht).
+- Schalter „📊 Anonyme Nutzungszählung“ in den Einstellungen, **eingeschaltet** (wie im Ratgeber), mit Erklärsatz. Aus → kein Aufruf.
+- Tests: `NachhilfeTest.zaehlaufrufEnthaeltNurDieFuenfFelder` (alle Kombinationen: nur `app`, `v`, `ev`, `ort`, `thema`), `AppRootTest.nachhilfeHinweisUndZaehlung` (Schalter aus → nichts), Browser `web-zaehler.mjs`.
+- **Offen bei dir:** Der Endpunkt antwortet noch nicht – der „echte Aufruf in der Admin-Tabelle“ fehlt deshalb. Der KI-Abi-Pass hat kein Ereignis in der abschließenden Liste; ich zähle dort nichts (Links tragen aber `src`).
+
+**B4** – `?pro=` und `?ki=` gab es schon; die Seite zeigt nach dem Link die Bestätigung („… ist freigeschaltet 🎉“ bzw. „KI-Abi-Pass aktiv bis …“), gezählt wird `code_eingeloest`/`link` (nur Pro, siehe oben).
+Eintrag „🎁 Lern-Geschenk verschenken“ in den Einstellungen → `https://www.mathenachhilfe-online.com/geschenke/?src=raumlicht-geschenk`. (Raumlicht hat keinen Elternbereich; die Einstellungen sind der Ort dafür.)
+
+**C1 Nachhilfe-Hinweis** – im Lernstand, ohne Eltern-Tor (Oberstufe), ohne Figur, ohne Preis:
+„Bei Vektoren hakt es noch? Üben hilft – manchmal braucht es aber eine Erklärung von einem Menschen. Eine kostenlose Probestunde kann helfen.“ · [Kostenlose Probestunde anfragen] · Ausblenden
+- Link: `https://www.mathenachhilfe-online.com/probestunde/?src=raumlicht-lernstand&thema=vektoren` (deine Adresse; der Ratgeber nennt `/probestunde-anfrage/` – bitte sag, welche gilt).
+- Auslöser: ein Gebiet (Geometrie → `vektoren`, Analysis, Stochastik) mit mindestens 6 gespielten Aufgaben und unter 60 % der möglichen Sterne. Raumlicht speichert keine Zeitpunkte je Antwort, darum ohne 14-Tage-Fenster.
+- Höchstens ein Hinweis, je Gebiet höchstens alle 14 Tage, „Ausblenden“ je Gebiet dauerhaft; Schalter „Hinweise auf unsere Nachhilfe zeigen“ (eingeschaltet). Nie in Aufgaben (Test).
+- **Hinweis:** Der Lernstand gehört zu Raumlicht Pro. Den Hinweis sehen also nur Nutzer mit Pro. Soll er alle erreichen, bräuchte er einen zweiten Ort – bitte mit Marcel klären.
+- **Nicht gebaut: „Klausur bald“ → Crashkurse.** Mir fehlt die feste Adresse der Crashkurs-Seite (im Ratgeber noch `<URL Crashkurse>`). Sobald sie da ist, kommt der Hinweis in den Klausur-Planer.
+
+**Fußzeile** – ganz unten in den Einstellungen: „Ein Angebot von Nachhilfe – online“ → `https://www.mathenachhilfe-online.com/?src=raumlicht-fusszeile`.
+Alle Shop-Links tragen jetzt `src` (`raumlicht-gesperrt`, `raumlicht-einstellungen`).
+
+**Datenschutz:** Die App sagte bisher „keine Werbung“ – jetzt „keine fremde Werbung“, mit dem Satz, dass sich Nachhilfe-Hinweise und Zählung abschalten lassen. Vorschlag für die Website: `raumlicht/store/datenschutz-abschnitt.md`, Punkte 5 und 6.
+Bildschirmfotos: `screenshots/84_nachhilfe_hinweis.png`, `screenshots/85_schalter_zaehlung.png`.
+
 ## 18.11.2026 – BESTÄTIGT am echten Gerät: Raumlicht 2.18.21 zeigt in Safari wieder ein Bild – in beiden Fassungen
 
 Marcel hat auf seinem Gerät (Safari 27.2) beide Links geprüft: **`?diag=1` (JavaScript-Fassung) lädt – und `?diag=1&modus=wasm` (Wasm-Fassung) lädt auch.**

@@ -55,6 +55,14 @@ interface Prefs {
     fun setKiCode(code: String)
     /** Zufällige Kennung dieses Geräts für den KI-Tutor (zählt die Proben) – entsteht erst bei der ersten KI-Frage */
     fun kiDevice(): String
+    /** Anonyme Nutzungszählung an (Vorgabe: ja, abschaltbar) – siehe [Zaehler] */
+    val countUsage: StateFlow<Boolean>
+    fun setCountUsage(on: Boolean)
+    /** Hinweise auf unsere Nachhilfe im Lernstand zeigen (Vorgabe: ja, abschaltbar) – siehe [Nachhilfe] */
+    val tutorHints: StateFlow<Boolean>
+    fun setTutorHints(on: Boolean)
+    /** Wann welcher Nachhilfe-Hinweis zuletzt erschien bzw. ausgeblendet wurde (nur auf dem Gerät) */
+    var tutorState: String
     /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */
     var jamLevel: String
     fun resetProgress()

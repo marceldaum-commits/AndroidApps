@@ -60,13 +60,13 @@ private fun WebApp() {
         ready = true; hideStartScreen()
     }
     if (!ready) return
-    LaunchedEffect(Unit) { note("Oberfläche gestartet") }
+    LaunchedEffect(Unit) { note("Oberfläche gestartet"); zaehle(prefs, "start", null) }
     // Direkt-Link auf einen Bildschirm („?ziel=binomial“) – für Lesezeichen und für die automatische Prüfung jedes Bildschirms; unbekannte Ziele führen zur Startseite
     LaunchedEffect(Unit) { takeParam("ziel")?.takeIf { it.isNotBlank() && it.length < 60 }?.let { nav.restart(it) } }
     // Freischalt-Link aus der E-Mail: Code prüfen, merken und die Pro-Seite zeigen (bei einem falschen Code steht dort die Eingabe bereit)
     LaunchedEffect(Unit) { takeProParam()?.let { raw ->
         val code = de.raumlicht.core.model.Pro.fromLink(raw)
-        if (code != null) prefs.setProCode(code)
+        if (code != null) { prefs.setProCode(code); zaehle(prefs, "code_eingeloest", "link") }
         note("Freischalt-Link: " + if (code != null) "Code angenommen" else "Code nicht erkannt"); nav.restart(Routes.PRO) } }
     // Link aus der E-Mail zum KI-Abi-Pass („?ki=…“): Code merken und die KI-Seite zeigen
     LaunchedEffect(Unit) { takeParam("ki")?.let { raw ->
@@ -112,6 +112,7 @@ private fun WebApp() {
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
             AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
+                countSend = { body -> beacon(de.raumlicht.core.model.Zaehler.URL, body) },
                 kiSend = { body -> kotlinx.coroutines.suspendCancellableCoroutine { c -> kiPost(kiUrl, body) { status, text -> if (c.isActive) c.resumeWith(Result.success(status to text)) } } },
                 kiEnabled = de.raumlicht.core.model.Ki.ENABLED || kiTest, version = Version.NAME,
                 onRoute = { atHome(it == Routes.HOME); exam = Routes.isExam(it); mood = if (Routes.isAction(it)) MusicMood.FLIGHT else MusicMood.MENU },
@@ -138,7 +139,7 @@ private fun WebApp() {
                         }.takeIf { offAvailable() },
                         onLicenses = { openLink("lizenzen.txt") },
                         soundNote = if (appleTouch()) "Kein Ton? Auf iPhone und iPad bleibt Raumlicht still, solange das Gerät stumm geschaltet ist (Schalter an der Seite oder Glocke im Kontrollzentrum)." else null,
-                        privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe. " +
+                        privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine fremde Werbung, keine Käufe. " +
                             "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. " + (if (Vorlesen.ENABLED) "Ins Internet geht sie sonst nur zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + Vorlesen.PRIVACY else "Sonst geht sie nicht ins Internet."))
                 })
         } }
@@ -186,4 +187,9 @@ private fun InstallCard() {
             Text("Am besten in Safari. Dein Spielstand zieht dabei nicht mit um – installiere also gleich am Anfang.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
         }
     } }
+}
+
+/** Ein Ereignis zählen (anonym, abschaltbar) – für Stellen außerhalb der gemeinsamen Oberfläche: App geöffnet, Code per Link eingelöst */
+private fun zaehle(prefs: WebPrefs, event: String, place: String?) {
+    if (prefs.countUsage.value) de.raumlicht.core.model.Zaehler.body(event, place, null, Version.NAME)?.let { beacon(de.raumlicht.core.model.Zaehler.URL, it) }
 }

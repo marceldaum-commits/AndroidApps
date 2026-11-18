@@ -62,11 +62,24 @@ private fun Note(text: String, mood: LuxMood = LuxMood.IDLE) {
 
 /** Pro Thema ein Balken: sicher, wackelig oder offen – mit direktem Sprung ins Kapitel. */
 @Composable
-fun LearnScreen(topics: List<TopicState>, onChapter: (Int) -> Unit, onBack: () -> Unit) {
+fun LearnScreen(topics: List<TopicState>, onChapter: (Int) -> Unit, onBack: () -> Unit,
+                /** Sachlicher Hinweis auf unsere Nachhilfe, wenn ein Gebiet hakt (null = keiner) – ohne Figur, ohne Preis; [onHint] öffnet die Probestunde, [onHideHint] blendet ihn für dieses Gebiet aus */
+                hint: de.raumlicht.core.model.Nachhilfe.Hint? = null, onHint: () -> Unit = {}, onHideHint: () -> Unit = {}) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Lernstand", onBack)
         Text(Learn.summary(topics), Modifier.padding(horizontal = 18.dp, vertical = 4.dp), color = Q.Yellow, fontWeight = FontWeight.Bold)
         LazyColumn(contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 24.dp, top = 6.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            if (hint != null) item(key = "nachhilfe") {
+                Column(Modifier.fillMaxWidth().testTag("nachhilfe-hinweis").clip(RoundedCornerShape(16.dp)).background(Q.Deep).border(1.dp, Q.Muted.copy(alpha = 0.5f), RoundedCornerShape(16.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    Text(hint.text, color = Q.Text, fontSize = 14.sp)
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text("Kostenlose Probestunde anfragen", Modifier.testTag("nachhilfe-probestunde").clip(RoundedCornerShape(10.dp)).border(1.dp, Q.Cyan.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).clickable(onClick = onHint).padding(horizontal = 10.dp, vertical = 7.dp),
+                            color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                        Text("Ausblenden", Modifier.testTag("nachhilfe-aus").clip(RoundedCornerShape(10.dp)).clickable(onClick = onHideHint).padding(horizontal = 8.dp, vertical = 7.dp), color = Q.Muted, fontSize = 13.sp)
+                    }
+                    Text("Ein Angebot von Nachhilfe – online. Abschaltbar in den Einstellungen.", color = Q.Muted, fontSize = 11.sp)
+                }
+            }
             itemsIndexed(topics) { i, t ->
                 // Überschrift, sobald ein neues Gebiet beginnt
                 if (i == 0 || topics[i - 1].chapter.area != t.chapter.area) Text("${t.chapter.area.emoji} ${t.chapter.area.title}".uppercase(), Modifier.padding(start = 4.dp, top = if (i == 0) 0.dp else 10.dp, bottom = 6.dp), color = stageColor(t.chapter.area.color), fontSize = 12.sp, fontWeight = FontWeight.Black, letterSpacing = 1.5.sp)

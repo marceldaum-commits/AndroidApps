@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.21 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.22 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -35,6 +35,13 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
    gehen nicht an den KI-Dienst. Namen, Konten und Lernstände werden nicht übertragen; Fragen und Antworten speichert unser Server nicht. Bitte keine persönlichen Angaben in Rückfragen schreiben.
    Die Antworten stammen von einer KI und können Fehler enthalten. *[Rechtsgrundlage, Auftragsverarbeitung/Drittland-Übermittlung an Anthropic, Speicherdauer der Zähler und beim KI-Dienst eintragen.]*
    Der KI-Abi-Pass wird wie Raumlicht Pro im Shop gekauft; die Fassung aus dem Google Play Store enthält den KI-Tutor nicht.
+5. **Anonyme Nutzungszählung (ab 2.18.22, abschaltbar in den Einstellungen).** Um zu sehen, welche Teile der App genutzt werden, meldet die WebApp unserem Server
+   `trainer.mathenachhilfe-online.com` einzelne Ereignisse: dass die App geöffnet wurde, dass die Seite zu Raumlicht Pro angesehen oder der Link zum Shop angetippt wurde, dass ein Code eingelöst wurde,
+   dass ein Hinweis auf unsere Nachhilfe angezeigt oder der Link zur Probestunde bzw. zu den Lern-Geschenken angetippt wurde. Übertragen werden nur der Name der App, ihre Version, die Art des Ereignisses,
+   der Ort in der App und gegebenenfalls das Themengebiet (z. B. „Vektoren“) – **keine Kennung, kein Cookie, keine Gerätedaten, kein Lernstand.** Der Server führt daraus nur Tageszähler und speichert für diese
+   Aufrufe keine IP-Adressen. *[Rechtsgrundlage eintragen; bestätigen, dass das Zugriffsprotokoll für diesen Pfad abgeschaltet ist.]*
+6. **Hinweise auf unsere Nachhilfe (ab 2.18.22, abschaltbar).** Im „Lernstand“ kann ein sachlicher Hinweis auf eine kostenlose Probestunde erscheinen, wenn ein Themengebiet noch nicht sicher sitzt.
+   Ob er erscheint, entscheidet die App allein auf dem Gerät. Erst wer den Link antippt, öffnet unsere Website; die Adresse enthält dann die Herkunft (`src=raumlicht-lernstand`) und das Themengebiet.
 
 ## Noch offen (nicht Teil des Textes)
 

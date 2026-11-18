@@ -28,6 +28,8 @@ fun installState(): String = js("""(function () {
     return 'nichts'; })()""")
 /** Fragt den Browser, ob er die WebApp installieren soll (zeigt dessen eigenes Fenster) */
 fun installNow(): Unit = js("{ var I = window.__rlInstall; if (I && I.prompt) { var p = I.prompt; I.prompt = null; p.prompt(); if (p.userChoice) p.userChoice.then(function (c) { if (c && c.outcome === 'accepted') I.done = true; }); } }")
+/** Zählaufruf abschicken: ohne Cookies, ohne auf die Antwort zu warten; Fehler bleiben ohne Folgen. „text/plain“, damit der Browser keine Vorab-Anfrage braucht. */
+fun beacon(url: String, body: String): Unit = js("{ try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true, referrerPolicy: 'no-referrer' }).catch(function () {}); } catch (e) {} }")
 fun hostName(): String = js("location.hostname")
 /** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer KI-Server (window.__rlKiServer), sonst null */
 fun kiServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlKiServer) || null")

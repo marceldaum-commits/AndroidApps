@@ -101,6 +101,8 @@ val LocalProActive = staticCompositionLocalOf { false }
  */
 @Composable
 fun ProScreen(what: String?, active: Boolean, offered: Boolean, onCode: (String) -> Boolean, onBack: () -> Unit) {
+    val count = de.raumlicht.app.ui.fx.LocalCount.current; val place = if (what != null) "gesperrt" else "einstellungen"
+    LaunchedEffect(Unit) { if (!active) count("pro_ansehen", place, null) }
     val uri = LocalUriHandler.current; val sfx = LocalSfx.current; val buzzer = LocalBuzzer.current; val vibration = LocalVibration.current
     var input by rememberSaveable { mutableStateOf("") }
     var wrong by rememberSaveable { mutableStateOf(false) }
@@ -132,7 +134,7 @@ fun ProScreen(what: String?, active: Boolean, offered: Boolean, onCode: (String)
                     Pro.free.forEach { Text("✓ $it", color = Q.Muted, fontSize = 13.sp) }
                 }
                 if (offered) {
-                    NeonButton({ runCatching { uri.openUri(Pro.CHECKOUT_URL) } }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = Q.Yellow) { Text("Zum Shop: Raumlicht Pro · ${Pro.PRICE}", fontWeight = FontWeight.Bold) }
+                    NeonButton({ count("pro_kasse", place, null); runCatching { uri.openUri(de.raumlicht.core.model.Zaehler.link(Pro.CHECKOUT_URL, place)) } }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = Q.Yellow) { Text("Zum Shop: Raumlicht Pro · ${Pro.PRICE}", fontWeight = FontWeight.Bold) }
                     Text("Einmalig ${Pro.PRICE} (inkl. MwSt.), kein Abo, kein Ablauf. Gekauft wird im Shop auf mathenachhilfe-online.com. Bist du noch nicht 18, schließen deine Eltern den Kauf ab. " +
                         "Danach kommt eine E-Mail mit Link und Code. Raumlicht Pro gilt in der Web-App.", Modifier.testTag("pro-status"), color = Q.Muted, fontSize = 13.sp)
                 } else Text("Raumlicht Pro ist noch nicht erhältlich.", Modifier.testTag("pro-status"), color = Q.Muted, fontSize = 13.sp)
