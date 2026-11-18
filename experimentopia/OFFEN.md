@@ -19,4 +19,4 @@
 8. **Eltern-Koppeln** (2.8.0): echter Handytest auf der Test-Seite + Eltern-Seite (Leitstand). Vor Live: CORS des Live-Servers für experimentopia.mathenachhilfe-online.com.
 9. **Rhythmus** (`PRUEFPLAN.md`): großes Inhaltsupdate Di + Fr bis 16 Uhr auf test (erstes: Fr 20.11.), Monatsprüfung Dezember = Block A (Wasser + Kraft).
 10. **Sicherung** (2.9.0): Zwei-Browser-Test auf der Test-Seite (koppeln → privates Fenster → Link einfügen → gleicher Stand). Leitstand gibt live frei; Marcel möchte Bescheid, wenn alles live ist.
-11. **Probestunden-Adresse**: `/probestunde-anfrage/` liefert 404 – App nutzt vorerst `/probestunde/`. Umstellen (`Angebote.PROBESTUNDE_PFAD`), sobald der Leitstand die Seite meldet.
+11. ~~Probestunden-Adresse~~ – erledigt: `/probestunde/` ist laut Leitstand richtig (18.11.).

@@ -35,7 +35,7 @@ object Zaehlung {
 /** Links aus dem Elternbereich zur Website – mit Herkunft (src), Thema und Klasse */
 object Angebote {
     const val SEITE = "https://www.mathenachhilfe-online.com"
-    /** Vorgabe Leitstand: „/probestunde-anfrage/“ – liefert am 18.11. noch 404, darum vorerst die bestehende Seite „/probestunde/“ */
+    /** Probestunden-Seite (vom Leitstand am 18.11. bestätigt: „/probestunde/“) */
     const val PROBESTUNDE_PFAD = "probestunde"
     const val PROBESTUNDE_TEXT = "Eine kostenlose Probestunde kann vor der Arbeit helfen."
 

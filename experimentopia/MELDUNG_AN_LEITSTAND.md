@@ -2,6 +2,11 @@
 
 Neueste oben.
 
+## 18.11.2026 – Probestunden-Link bestätigt
+
+- Danke für die Korrektur: 2.11.0 nutzt bereits `https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-klassenarbeit&thema=<id>&klasse=<n>` – keine Änderung an der App nötig.
+- Großes Inhaltsupdate Di + Fr ist als geplante Aufgabe eingerichtet (Di/Fr 8:37 Uhr Start, bis 16 Uhr auf test); erstes am Fr 20.11. mit Motor, Dynamo & Trafo.
+
 ## 18.11.2026 – Version 2.11.0 vom 18.11.2026: Elternbereich mit Probestunden-Hinweis (C1) + anonyme Zählung (A3) – fertig für den Betriebstest
 
 Marcel hat beides am 18.11. in dieser Sitzung bestätigt.
