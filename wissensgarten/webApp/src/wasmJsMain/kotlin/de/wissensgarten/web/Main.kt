@@ -62,6 +62,7 @@ private fun takeProParam(): JsString? = js("(() => { const u = new URL(location.
 private fun hideSplash(): Unit = js("(() => { const s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(() => s.remove(), 600); } window.dispatchEvent(new Event('wg-ready')); })()")
 /** Schritt ins Start-Protokoll (index.html, sichtbar mit ?diag=1) */
 private fun diag(step: String): Unit = js("window.wgDiag && window.wgDiag(step)")
+private fun diagOn(): Boolean = js("!!window.wgDiagOn")
 private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', () => cb(document.visibilityState === 'visible'))")
 private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', () => cb())")
 
@@ -121,6 +122,7 @@ fun main() {
     }
     vm.refreshPlusPacksIfDue()
     diag("App: Daten bereit → Zeichenfläche anlegen")
+    if (diagOn()) de.wissensgarten.app.ui.fx.skiaSelbsttest { diag(it) }
 
     ComposeViewport(document.body!!) {
         LaunchedEffect(Unit) { diag("App: erstes Compose-Bild") }

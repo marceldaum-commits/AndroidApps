@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="de" data-version="2.2.10">
+<html lang="de" data-version="2.2.11">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Wissensgarten – Lernen & Gießen</title>
   <meta name="description" content="Wissensgarten: Lernen wie Gärtnern – jede Karte eine Pflanze, die wächst, wenn du sie gießt. Ohne Werbung, ohne Konto, Fortschritt bleibt im Browser.">
   <meta name="theme-color" content="#3f6b3a">
-  <meta name="wg-version" content="2.2.10">
+  <meta name="wg-version" content="2.2.11">
   <link rel="manifest" href="manifest.webmanifest">
   <script>
     // Schrittprotokoll (Diagnose): jeder Startschritt wird sofort im Browser-Speicher abgelegt (wg.diag).
@@ -66,6 +66,47 @@
         (n.deviceMemory ? ', Speicher ' + n.deviceMemory + ' GB' : '') + (n.hardwareConcurrency ? ', Kerne ' + n.hardwareConcurrency : '') +
         ', Service Worker ' + (n.serviceWorker ? (n.serviceWorker.controller ? 'aktiv' : 'noch nicht') : 'fehlt'));
       if (prev && !prev.ok && prev.log) window.wgDiag('Hinweis: letzter Start (' + prev.v + ') kam nicht bis zum Garten – letzter Schritt: ' + prev.log[prev.log.length - 1]);
+      // Nur mit Diagnose: Browser-Warnungen und Pixelproben der Zeichenfläche (zeigt, ob Safari wirklich etwas malt)
+      if (on) {
+        window.wgDiagOn = true;
+        ['error', 'warn'].forEach(function (k) {
+          var o = console[k], cnt = 0;
+          console[k] = function () {
+            try { if (cnt++ < 40) window.wgDiag('Konsole ' + k + ': ' + Array.prototype.map.call(arguments, String).join(' ').slice(0, 220)); } catch (e) {}
+            return o.apply(console, arguments);
+          };
+        });
+        var probes = 0, last = '', shown = 0;
+        var canvasOf = function () { var r = document.body && document.body.shadowRoot; return (r && r.querySelector('canvas')) || document.querySelector('canvas'); };
+        var glOf = function (c) { return c.__wgGl || (c.__wgGl = c.getContext('webgl2') || c.getContext('webgl')); };
+        var probe = function (when) {
+          try {
+            var c = canvasOf(); if (!c) { if (last !== 'x') { last = 'x'; window.wgDiag('Pixel: keine Zeichenfläche gefunden'); } return; }
+            var gl = glOf(c); if (!gl) { if (last !== 'g') { last = 'g'; window.wgDiag('Pixel: kein WebGL-Zugriff auf die Zeichenfläche'); } return; }
+            var w = gl.drawingBufferWidth, h = gl.drawingBufferHeight, px = new Uint8Array(4), out = [];
+            [[w / 2, h / 2], [10, 10], [w / 2, h * 0.75], [w * 0.25, h * 0.25]].forEach(function (q) { gl.readPixels(q[0] | 0, q[1] | 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); out.push(px.join(',')); });
+            var key = out.join(' | ') + ' (Puffer ' + w + '×' + h + ', verloren ' + gl.isContextLost() + ', GL-Fehler ' + gl.getError() + ')';
+            if (key !== last && shown < 8) { last = key; shown++; window.wgDiag('Pixel ' + when + ' [RGBA Mitte | Ecke | unten | oben links]: ' + key); }
+          } catch (e) { window.wgDiag('Pixelprobe Fehler: ' + e); }
+        };
+        var oraf = window.requestAnimationFrame.bind(window);
+        window.requestAnimationFrame = function (cb) { return oraf(function (t) { cb(t); if (probes > 0) { probes--; probe('direkt nach dem Malen'); } }); };
+        window.addEventListener('wg-ready', function () {
+          probes = 60;
+          setTimeout(function () {
+            probe('1,5 s später');
+            try {
+              var c = canvasOf(), r = document.body.shadowRoot, cs = c && getComputedStyle(c), b = c && c.getBoundingClientRect();
+              var gl = c && glOf(c), a = gl && gl.getContextAttributes();
+              var top = (r && r.elementFromPoint ? r.elementFromPoint(innerWidth / 2, innerHeight / 2) : null) || document.elementFromPoint(innerWidth / 2, innerHeight / 2);
+              window.wgDiag('Fläche: ' + (c ? c.width + '×' + c.height + ' px, CSS ' + Math.round(b.width) + '×' + Math.round(b.height) + ' @' + Math.round(b.left) + ',' + Math.round(b.top) +
+                ', sichtbar ' + cs.display + '/' + cs.visibility + '/' + cs.opacity + ', Hintergrund ' + cs.backgroundColor : 'fehlt') +
+                ', Body-Hintergrund ' + getComputedStyle(document.body).backgroundColor + ', oben in der Mitte: ' + (top ? top.tagName + (top.id ? '#' + top.id : '') : '–'));
+              if (gl) window.wgDiag('WebGL: ' + gl.getParameter(gl.VERSION) + ' · ' + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + ' · Attribute ' + JSON.stringify(a));
+            } catch (e) { window.wgDiag('Flächen-Info Fehler: ' + e); }
+          }, 1500);
+        });
+      }
       // WebAssembly-Schritte mitschreiben (Übersetzen/Starten der App und der Grafik-Engine)
       try {
         ['compile', 'instantiate', 'instantiateStreaming'].forEach(function (k) {
@@ -145,7 +186,14 @@
         var px = Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight);
         // höchstens doppelte Schärfe (statt 3×) und höchstens ~3,5 Mio. Bildpunkte: spart auf dem iPhone viel Grafikspeicher
         var use = Math.max(1, Math.min(real, 2, Math.sqrt(3.5e6 / px)));
-        if (ios && use < real) {
+        var voll = false;
+        try {
+          if (/[?&]schaerfe=voll/.test(location.search)) localStorage.setItem('wg.schaerfe', 'voll');
+          if (/[?&]schaerfe=auto/.test(location.search)) localStorage.removeItem('wg.schaerfe');
+          voll = localStorage.getItem('wg.schaerfe') === 'voll';
+        } catch (e) {}
+        if (voll) window.wgStartNote('Schärfe-Begrenzung aus (?schaerfe=voll)');
+        if (ios && use < real && !voll) {
           Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true });
           window.wgStartNote('iOS-Schärfe ' + real + ' → ' + use.toFixed(2));
         }
@@ -164,13 +212,13 @@
     <div class="pct" id="pct"></div>
     <p class="hint" id="hint"></p>
     <noscript><p>Bitte JavaScript einschalten, dann wächst der Garten.</p></noscript>
-    <div class="links">Version 2.2.10 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
+    <div class="links">Version 2.2.11 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" rel="noopener">Datenschutz</a></div>
   </div>
   <script>
     // Echter Ladebalken: zählt die geladenen Bytes der großen Startdateien (App, Grafik-Engine, Emoji-Schrift).
     (function () {
-      const sizes = {"7bf353bf7f126c647ae0.wasm":7997442,"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"wissensgarten.js":664352};
+      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"wissensgarten.js":664404,"1c0a750018190c0693e1.wasm":8000945};
       const total = Object.values(sizes).reduce((a, b) => a + b, 0);
       const got = {};
       const bar = document.getElementById('bar'), barI = document.getElementById('barI'), pct = document.getElementById('pct');

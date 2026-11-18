@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.11 – Mehr Spürsinn für iPad und iPhone (18.11.2026)
+- Die Diagnose (`?diag=1`) prüft jetzt auch, ob die Zeichenbibliothek richtig malt und was wirklich auf dem Bildschirm ankommt. Damit finden wir die Ursache der weißen Fläche auf iPad und iPhone.
+- Zum Ausprobieren: Mit `?schaerfe=voll` zeichnet der Garten auf Apple-Geräten mit voller Schärfe, mit `?schaerfe=auto` wieder sparsam.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.10 – Startbild sofort, Diagnose für iPhone (18.11.2026)
 - Beim Öffnen erscheint jetzt **sofort** das Startbild mit Brummi – erst danach lädt der Garten. Eine ganz leere weiße Seite gibt es damit nicht mehr.
 - Die großen Startdateien werden **nacheinander** statt gleichzeitig geladen, die Emoji-Bilder zuletzt. Das schont Speicher und Netz auf dem Handy.
