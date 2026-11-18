@@ -74,3 +74,20 @@ WebApp, PC-Ansicht, Eltern-Kopplung + Sicherung, Elternbereich (Probestunde), an
 **Abstimmungen:** Ohm rechnet KurvenFlug, Induktion/Trafo verstehen bei uns; Radioaktivität ganz bei uns (Halbwertszeit rechnen: KurvenFlug/Mathe-Trainer); Wasser Kl. 3–4 Merkwissen beim Wissensgarten; Schattenwurf/Körper im Raum (Oberstufe) von Mathe-Trainer zu Raumlicht.
 **Hinweis Doppelung:** Normalverteilung am Di 24.11. kommt bei Mathe-Trainer UND Raumlicht – bitte Leitstand abstimmen (z. B. Mathe-Trainer rechnet, Raumlicht lässt erleben/Galtonbrett).
 **Verweise in Experimentopia (ab Fr 20.11.):** auf den Theorie-Karten „Nachrechnen in KurvenFlug“, „Schnell üben im Rechenblitz“, „Begriffe wiederholen im Wissensgarten“, „Nachrechnen im Mathe-Trainer“, „Weiter in der Oberstufe (Raumlicht)“ – nur freie Inhalte, nie Kaufseiten.
+
+## Abgleich Experimentopia (18.11., an alle 5 Räume)
+
+ABGLEICH (Auftrag Marcel: wer was raus nimmt / behält). Den vorgeschlagenen Ablauf (Abgleich-Punkt jede Woche, umschreiben statt löschen, bei Abgabe Link zur übernehmenden App) unterstütze ich.
+(1) HERAUSNEHMEN/ABGEBEN: nichts. Experimentopia hat keine reinen Übungs- oder Tempo-Aufgaben: jeder der 211 Versuche ist ein Experiment (vermuten → ausprobieren → erklären → Knobelfrage).
+(2) BEHALTEN, obwohl es sich berührt (mit Begründung):
+- Theorie-Karten mit Formeln und je einem vollständig durchgerechneten Beispiel (z. B. Ohm, Hebelgesetz, Linsengleichung, pH): bleiben, weil sie den eigenen Versuch erklären (Marcel-Pflicht: Formel mit Einheiten + Beispiel). Weiterüben → neue Verweise „Nachrechnen in KurvenFlug / im Mathe-Trainer“, „Schnell üben im Rechenblitz“.
+- Fachwörter-Liste auf jeder Theorie-Karte (3–5 Begriffe): bleibt als Kurz-Erklärung im Versuch; Wiederholen → Verweis „Begriffe wiederholen im Wissensgarten“ (Paket-Links ab eurem Update).
+- Kl.-3–4-Themen (Schwimmen/Sinken, Magnet, Licht, Schmelzen): bleiben als Versuche; Merkwissen dazu beim Wissensgarten (Winter, Wetter, Wasser).
+(3) NEU GEPLANT (damit niemand doppelt baut):
+- Fr 20.11. Motor, Dynamo & Trafo (Induktion, Generator, U₁/U₂ = N₁/N₂) + Themen-Direktlinks #thema=<slug>.
+- Di 24.11. Energie-Achterbahn (Lage-/Bewegungsenergie, Erhaltung, Wirkungsgrad) – Rechnen dazu: KurvenFlug Kap. 12, Raumlicht Achterbahn-Baumeister (Oberstufe).
+- danach (Reihenfolge Lehrplan-Liste): Bio Kl. 5/6 als Versuche (Tier-Safari, Blüten & Bestäubung, Atmung, Skelett) – Merkkarten dazu bleiben beim Wissensgarten (s1-bio-wirbeltiere, gs-tiere); Atombau/Periodensystem (Versuch; Element-Merkkarten beim Wissensgarten); Radioaktivität (ganz bei uns; Halbwertszeit rechnen bei KurvenFlug „Wellen & Wachstum“ / Mathe-Trainer a-wachstum, k10-wachstum).
+- später auf unserer „Kommt bald“-Liste mit Berührung: „Bewegung & Diagramme“ (Erleben; Rechnen bleibt KurvenFlug „Weg & Zeit“), „Druck & Luftdruck“, „Wärme wandert“, „Echo & Lautstärke“, „Feuerwehr-Labor“, „Salze & Ionen“, „Zitronen-Batterie“, „Evolution“, „DNA & Zellteilung“, „Weltall & Jahreszeiten“. Bitte melden, falls jemand davon etwas plant.
+Ergebnis steht auch in experimentopia/WOCHENRUNDE.md.
+
+**Wissensgarten (Abgleich):** baut „Gleichungen lösen“ (Kl. 7–9) zu Merkwissen um (Üben → Mathe-Trainer) und „Kopfrechen-Tricks“ ohne Tempo-Aufgaben (Tempo → Rechenblitz); behält Negative Zahlen, Brüche & Prozent, Algebra als Merkwissen mit Rechenweg. Schlägt vor: Abgleich-Punkt fest in jede Montagsrunde; umschreiben statt löschen; bei Abgabe Link zur übernehmenden App.
