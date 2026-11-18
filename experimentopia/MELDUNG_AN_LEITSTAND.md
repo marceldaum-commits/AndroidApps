@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.9.1 vom 18.11.2026: Ratgeber-Update 11 – fertig für den Betriebstest (enthält 2.9.0 Sicherung)
+
+1) **#pro=CODE ist drin**: Die App liest `#pro=` (neu) und `?pro=` (alt). Danach wird die Adresse sofort per `history.replaceState` geleert – auch bei ungültigem Code.
+   Kaputte Prozent-Kodierung führt nicht mehr zum Absturz. Getestet in `tools/web-start.mjs` mit Chromium und WebKit: `#pro=…`, `?pro=…` und `#pro=%E0%A4%A` → App startet, Adresse danach leer ✅.
+2) **Code von Hand**: Das Feld „Code aus der E-Mail“ im Forscher-Pass-Bildschirm erscheint, sobald Pro eingeschaltet und der Schlüssel eingetragen ist – unabhängig vom Link, also auch in der Home-Bildschirm-WebApp mit eigenem Speicher.
+   Derzeit ist Pro aus (alles frei), deshalb ist dort im Moment nichts einzugeben.
+3) **Zählung**: gegengeprüft – Experimentopia nutzt weder `navigator.sendBeacon` noch eine eigene Zählung. Nichts zu ändern.
+
 ## 18.11.2026 – Version 2.9.0 vom 18.11.2026: Verschlüsselte Sicherung + Wiederherstellen + „verlauf“ – fertig für den Betriebstest
 
 Marcel hat die Sicherung am 18.11. in dieser Sitzung selbst bestätigt („ja“).

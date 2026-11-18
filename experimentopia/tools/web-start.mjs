@@ -23,11 +23,16 @@ try {
     const ctx = await b.newContext({ ...(engine === webkit ? devices['iPhone 13'] : {}), ...opts }); const p = await ctx.newPage();
     if (init) await p.addInitScript(init); if (route) await p.route(route, (r) => r.abort());
     await p.goto('http://localhost:8792/' + q); await p.waitForTimeout(wait);
-    const r = await p.evaluate(() => ({ modus: window.__exModus, fertig: document.getElementById('start').dataset.fertig === '1', problem: document.getElementById('problem') ? document.getElementById('problem').innerText : null }));
+    const r = await p.evaluate(() => ({ modus: window.__exModus, fertig: document.getElementById('start').dataset.fertig === '1', problem: document.getElementById('problem') ? document.getElementById('problem').innerText : null, addr: location.search + location.hash }));
     await ctx.close(); return r;
   }
   let r = await modus('', {}, null, null, 14000);
   ok(r.fertig && !r.problem && r.modus === 'wasm', `${name}: Start ohne Fehlermeldung, Fassung ${r.modus} (Wasm mit Safari-Abhilfe)`);
+  // Freischalt-Link: neu „#pro=…“, alt „?pro=…“ – App startet, Code verschwindet sofort aus der Adresszeile
+  for (const q of ['#pro=EX-TEST-1234', '?pro=EX-TEST-1234', '#pro=%E0%A4%A']) {
+    const a = await modus(q, {}, null, null, 14000);
+    ok(a.fertig && !a.problem && a.addr === '', `Freischalt-Link ${q}: startet, Adresse danach „${a.addr}“`);
+  }
   r = await modus('', { userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1' },
     () => { const v = WebAssembly.validate; WebAssembly.validate = (x) => x.length === 15 ? false : v(x); }, null, 14000);
   ok(r.fertig && !r.problem && r.modus === 'js', `altes iOS ohne WasmGC: startet mit der JS-Fassung (${r.modus})`);

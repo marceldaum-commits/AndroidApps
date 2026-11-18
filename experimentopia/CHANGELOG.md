@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.9.1 – Freischalt-Link noch datensparsamer (18.11.2026)
+
+- 🔐 Der Freischalt-Link für den Forscher-Pass funktioniert jetzt auch als „…/#pro=CODE“ – so landet der Code nie in Server-Protokollen. Alte Links mit „?pro=“ gehen weiter.
+  In beiden Fällen verschwindet der Code sofort aus der Adresszeile.
+
 ## 2.9.0 – Lernstand sicher aufbewahrt (18.11.2026)
 
 - 💾 **Verschlüsselte Sicherung**: Ist ein Eltern-Handy gekoppelt, sichert Experimentopia den ganzen Lernstand (Sterne, Forscherbuch, Abzeichen, Einstellungen, Forscher-Pass)

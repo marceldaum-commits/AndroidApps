@@ -53,7 +53,10 @@ private fun WebApp() {
     // Forscher-Pass: Schlüssel/Kasse eintragen; Freischalt-Link aus der E-Mail übernehmen
     remember {
         de.experimentopia.core.model.Pro.configure(Version.PRO_KEY, Version.PRO_CHECKOUT)
-        de.experimentopia.core.model.License.extract(locationSearch())?.let { c -> if (de.experimentopia.core.model.Pro.valid(c, todayLocal().toLong())) prefs.setProCode(c); clearSearch() }
+        val addr = locationSearch()
+        de.experimentopia.core.model.License.extract(addr)?.let { c -> if (de.experimentopia.core.model.Pro.valid(c, todayLocal().toLong())) prefs.setProCode(c) }
+        // Code sofort aus der Adresszeile entfernen (auch wenn er nicht passt)
+        if (addr.contains("pro=", ignoreCase = true)) clearSearch()
         true
     }
     val vibration by prefs.vibration.collectAsState()

@@ -75,8 +75,8 @@ fun novaStop(): Unit = js("{ if (window.ExNova) window.ExNova.stop(); }")
 /** Den Speicher der alten Offline-Stimme (bis 2.1, ca. 63 MB) freigeben */
 fun dropOldVoice(): Unit = js("{ try { if (window.caches) caches.delete('experimentopia-stimme'); } catch (e) {} }")
 
-// ── Forscher-Pass: Freischalt-Link „…/?pro=EX…“ lesen und die Adresse danach aufräumen
-fun locationSearch(): String = js("decodeURIComponent(window.location.search || '')")
+// ── Forscher-Pass: Freischalt-Link „…/#pro=EX…“ (neu, landet nicht in Server-Logs) oder „…/?pro=EX…“ (alte Karten und Mails) lesen und die Adresse danach aufräumen
+fun locationSearch(): String = js("(function () { var a = (window.location.search || '') + ' ' + (window.location.hash || ''); try { return decodeURIComponent(a); } catch (e) { return a; } })()")
 fun clearSearch(): Unit = js("{ try { history.replaceState(history.state, '', location.pathname); } catch (e) {} }")
 
 // ── Eltern-Kopplung: sichere Zufallszahlen, HTTP zum Eltern-Server, Teilen
