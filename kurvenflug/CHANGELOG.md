@@ -3,6 +3,9 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.31 – Vor Klassenarbeiten: Probestunde
+- Steht eine Klassenarbeit an, empfiehlt der Elternbereich jetzt eine kostenlose Probestunde passend zum Thema.
+
 ## 2.5.30 – Klassen-Auswahl am PC
 - Die Frage „In welcher Klasse bist du?“ erscheint am PC als handliche Karte in der Mitte statt über die ganze Breite.
 
