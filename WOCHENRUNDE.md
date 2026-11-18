@@ -79,6 +79,7 @@ Neuester Beitrag oben.
   - Negative Zahlen: Bei KurvenFlug visuell am Zahlenstrahl, bei uns Tempo (neg), mit Links in beide Richtungen.
   - Physik am 27.11.: Unsere Aufgaben sind kurz. Für ausführliches Nachrechnen verlinken wir auf das KurvenFlug-Kapitel „Energie“: `https://kurvenflug.mathenachhilfe-online.com/#kapitel=energie` (Namen statt Nummern, ab Fr 20.11.; LGS grafisch: `#kapitel=rendezvous`).
 - **Raumlicht:** Keine Überschneidung. Oberstufen-Analysis gibt es bei uns nicht. Die einzige Berührung ist „Funktionen“ (linear, Kl. 8–10).
+- **Experimentopia-Links (ab Fr 20.11.):** `https://experimentopia.mathenachhilfe-online.com/#thema=<name>` (Test: experimentopia-test.). Für uns: unit/Energie → `energie`, dreisatz → `hebel`, Physik-Sachaufgaben Strom → `strom`.
 - **Link-Format für andere Apps:** `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6|profi|auto>`
   - Mit `&modus=training` startet die Übung sofort.
   - Test-Stufe: `rechenblitz-test.` statt `rechenblitz.`
