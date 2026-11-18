@@ -192,7 +192,7 @@ object Levels {
             way = listOf("A: 6n₁ = c,  B: 3n₂ = c,  C: 2n₃ = c", "mit c = 6: n₁ = 1, n₂ = 2, n₃ = 3", "E: x₁ + 2x₂ + 3x₃ = 6")),
         run {
             val q = p(2, 2, 1); val u = p(2, 0, 1); val w = p(0, 2, 1); val m = q + u + w
-            Families.aim("5-4", 5, "Normalenvektor", "Der Spot soll senkrecht auf die Leinwand treffen. Gesucht ist ein Vektor, der auf u⃗ und auf v⃗ senkrecht steht.",
+            Families.aim("5-4", 5, "Normalenvektor", "Der Spot hängt über der Leinwand und soll senkrecht auf sie treffen. Gesucht ist ein Vektor, der auf u⃗ und auf v⃗ senkrecht steht und nach unten zeigt (x₃ < 0).",
                 p(3, 3, 5), listOf(m), hidden = true, name = "n⃗", line = "Spot", solution = p(1, 1, -2),
                 missText = { n -> "n⃗ · u⃗ = ${Geo.num(n dot u)} und n⃗ · v⃗ = ${Geo.num(n dot w)} – beide müssen 0 sein." },
                 given = listOf(listOf(Txt("u⃗ = "), col(u), Txt("   v⃗ = "), col(w))),

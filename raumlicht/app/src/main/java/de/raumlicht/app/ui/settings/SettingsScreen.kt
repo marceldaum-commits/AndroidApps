@@ -37,19 +37,16 @@ fun SettingsScreen(
         " – und zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + de.raumlicht.core.model.Vorlesen.PRIVACY)
 
 /**
- * Warum Raumlicht gerade still ist, obwohl Musik und Geräusche eingeschaltet sind: Handy stumm / auf Vibration (dann schweigt die App mit Absicht)
- * oder Medien-Lautstärke auf 0. Wird jede Sekunde neu geprüft, damit der Hinweis verschwindet, sobald man das Handy laut stellt.
+ * Warum Raumlicht gerade still ist, obwohl Musik und Geräusche eingeschaltet sind: Die Medien-Lautstärke des Handys steht auf 0.
+ * (Der Klingelton-Schalter – stumm oder Vibration – zählt seit 2.18.12 nicht mehr: Laut ist, was die Medien-Lautstärke sagt.)
+ * Wird jede Sekunde neu geprüft, damit der Hinweis verschwindet, sobald man lauter stellt.
  */
 @Composable
 fun silenceReason(): String? {
     val audio = androidx.compose.ui.platform.LocalContext.current.getSystemService(android.media.AudioManager::class.java)
-    fun reason(): String? = runCatching { when {
-        audio.ringerMode != android.media.AudioManager.RINGER_MODE_NORMAL ->
-            "🔕 Dein Handy ist stumm oder auf Vibration gestellt – deshalb bleiben Musik und Geräusche still. Stell das Handy laut, dann hörst du Raumlicht wieder."
-        audio.getStreamVolume(android.media.AudioManager.STREAM_MUSIC) == 0 ->
-            "🔈 Die Medien-Lautstärke deines Handys steht auf 0. Drück die Lauter-Taste, dann hörst du Raumlicht wieder."
-        else -> null
-    } }.getOrNull()
+    fun reason(): String? = runCatching {
+        if (audio.getStreamVolume(android.media.AudioManager.STREAM_MUSIC) == 0) "🔈 Die Medien-Lautstärke deines Handys steht auf 0. Drück die Lauter-Taste, dann hörst du Raumlicht wieder." else null
+    }.getOrNull()
     var note by remember { mutableStateOf(reason()) }
     LaunchedEffect(Unit) { while (true) { kotlinx.coroutines.delay(1000); note = reason() } }
     return note

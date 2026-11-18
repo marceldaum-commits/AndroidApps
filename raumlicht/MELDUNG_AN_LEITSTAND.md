@@ -2,6 +2,61 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.12: Fehlerbehebung aus dem Betriebstest (kein Ton bei stummem Klingelton)
+
+**Raumlicht 2.18.12 vom 18.11.2026, Web = Android (beide 2.18.12).** Bitte statt 2.18.11 live nehmen.
+
+- **Befund (Marcels Bildschirmfoto, Android):** Medien-Lautstärke aufgedreht, Klingelton auf stumm/Vibration → Musik und Geräusche blieben still, die Einstellungen sagten „Dein Handy ist stumm“. Für Marcel war das Handy laut – zu Recht.
+- **Ursache:** Seit 2.15.0 schwieg die Android-App bei jedem Klingelton-Modus außer „normal“.
+- **Behoben:** Der Klingelton-Schalter spielt keine Rolle mehr; es gilt allein die Medien-Lautstärke (wie bei Musik und Videos). Hinweis in den Einstellungen nur noch bei Medien-Lautstärke 0. Test angepasst (`settingsExplainSilence`).
+- Falls andere Apps die Regel „Handy stumm → App stumm“ übernommen haben: bitte ebenfalls auf die Medien-Lautstärke umstellen.
+- WebApp nicht betroffen (trägt nur dieselbe Versionsnummer).
+
+## 18.11.2026 – Raumlicht 2.18.11: „Zwei Wege, eine Kontrolle“ geprüft und abgesichert
+
+Marcel hat es direkt bestätigt. **Raumlicht 2.18.11 vom 18.11.2026, Web = Android (beide 2.18.11).** Ersetzt 2.18.10 als Stand „fertig für den Betriebstest“ (Pro-Sperre, Nacht-Auftrag, einheitliches Logo, Nova-Liste enthalten).
+
+**Neuer automatischer Test `MehrdeutigTest`** über alle 136 festen Aufgaben, 28 Prüfungsteile, 9 Schritte und die 29 Übungs-Vorlagen (je 40 Zufalls-Fassungen):
+- **Ebenen (Regler n⃗, c):** Jedes ganzzahlige Vielfache der gekürzten Gleichung, auch mit umgedrehten Vorzeichen, muss angenommen werden, sobald es sich einstellen lässt – und die Fassung mit umgedrehten Vorzeichen muss sich einstellen lassen.
+- **Richtungen (Regler d⃗):** Jedes einstellbare positive Vielfache muss angenommen werden. Wo die Gegenrichtung abgelehnt wird, muss die Aufgabe in einer begründeten Liste stehen und der Auftrag das Ziel nennen.
+- Ergebnis: 8 Ebenen- und 47 Richtungs-Aufgaben, **108 gleichwertige Antworten, alle angenommen.**
+
+**Liste der Fälle:**
+| Fall | Lösung |
+|---|---|
+| Ebenen in Koordinatenform: 5-3, 5-5, 9-4, 18-1, 18-2, 18-4, 18-6, abi-zelt-b | (a) Kontrolle prüft mathematisch (alle gegebenen Punkte liegen in der Ebene) – jedes Vielfache gilt. Erfolgsmeldung nennt das jetzt. |
+| **18-1** – Fassung mit umgedrehten Vorzeichen (−3\|−2\|−6; −6) war nicht einstellbar | **behoben:** Regler für n⃗ reicht bei allen Ebenen-Aufgaben von −6 bis 6 (vorher −5 bis 6) |
+| **5-4** Normalenvektor: (−1\|−1\|2) steht auch senkrecht, war aber nicht einstellbar und nicht ausgeschlossen | (b) **eindeutig gemacht:** „… senkrecht steht und nach unten zeigt (x₃ < 0)“ |
+| Richtungen auf ein Ziel (3-1, 3-2, 3-5, Üben „Zielen“ u. a.) | (a) jedes positive Vielfache gilt; die Gegenrichtung verfehlt das Ziel wirklich – der Auftrag nennt es („zum Ring“) |
+| Schnittgerade zweier Ebenen: 10-4, 19-3 | (b) eindeutig: „in den Raum hinein“ bzw. „nach oben (x₃ > 0)“; eigene Rückmeldung; Erfolgsmeldung „Jedes Vielfache … dieselbe Gerade“ |
+| Zwei Lösungen einer Gleichung: 9-3 (Kugel: „zuerst“), 9-6 („so weit nach oben“), 14-1 („positive Stelle“), 14-3 („Tiefpunkt“) | (b) der Auftrag nennt die gemeinte Lösung (per Test festgehalten für 10-4, 14-1, 14-3, 19-3) |
+| Punkt auf einer Geraden/Ebene frei wählbar (Üben „offener Punkt“) | (a) jeder passende Punkt gilt (6 bis 62 angenommene Punkte je Fassung) |
+| Parameterform ↔ Koordinatenform | kommt als Eingabe nicht doppelt vor: Gefragt ist jeweils genau eine Form, die Formelzeile zeigt sie |
+
+Nicht automatisch prüfbar (bleibt Lese-Prüfung): ob ein *anderer Rechenweg* zu einer Zahl führt, die die Kontrolle nicht kennt – bei Zahlen-Aufgaben gibt es genau einen Wert; benannte typische Fehler bekommen eigene Hinweise.
+Geprüft: 156 Logik-Tests, 148 App-Tests, Lint beider Fassungen, Browser. Nova-Abdeckung der erweiterten Liste: Messung läuft, Nachtrag folgt.
+
+## 18.11.2026 – Raumlicht 2.18.10: einheitliches Logo + vorhersehbare Laufzeit-Sätze in der Liste
+
+Marcel hat beides direkt bestätigt (Logo: ja; Nova vorab: „sparsam“). **Raumlicht 2.18.10 vom 18.11.2026, Web = Android (beide 2.18.10).** Ersetzt 2.18.9 als Stand „fertig für den Betriebstest“
+(enthält Pro-Sperre, Nacht-Auftrag, sachlichen Kauf-Hinweis).
+
+**Logo – es war NICHT überall gleich, jetzt ist es das:**
+- Maßgeblich: `icon-512.png` der WebApp (Lux mit Rotoren und pinker Laserlinie) = Favicon, PWA-Symbol, Shop-Bild.
+- **Abweichend waren:** das Android-App-Symbol und das Android-Startbild (Achsen, Laserstrahl, Zielpunkt) sowie das Ladebild der WebApp (gekreuzte Strahlen mit kleinem Lux).
+  Alle drei zeigen jetzt dieselbe Lux-Zeichnung (`app/src/main/res/drawable/ic_launcher_foreground.xml` + neuer Hintergrund mit Schein, `web/…/index.html`).
+- Im Kopf der Startseite steht weiter der Schriftzug „RAUMLICHT“ (kein Bild); Teilen-Bilder zeigen kein Logo. Die Figur Lux in der App ist dieselbe Drohne, nur beweglich gezeichnet.
+
+**Nova – Liste abgeschlossen (sparsam, wie von Marcel gewählt):**
+- `vorlesen/texte.json`: **1471 Texte, 116 645 Zeichen** (unter 150 000 – keine Ankündigung nötig). Davon 949 feste und **522 vorhersehbare Laufzeit-Sätze mit `"laufzeit": true`** (41 605 Zeichen):
+  bei Aufgaben mit höchstens 64 Einstell-Kombinationen jede mögliche Rückmeldung, sonst die Rückmeldungen auf Eingaben, die an einer Stelle um 1 neben Lösung oder Startwert liegen – jeweils auch mit „Tipp gefällig?“.
+- **Nicht** vorab: die Zufalls-Aufgaben im endlosen Üben und in der Tagesaufgabe (praktisch unbegrenzt viele Sätze) – die laufen über `/jetzt`; gestern gemessen 40 von 40.
+- „Alle Nova-Texte offline laden“ nimmt die ganze Liste (1471) und zeigt die Größe aus eurem Zählstand.
+- Live gibt es die Liste, sobald ihr die Version live nehmt (die Live-Adresse fasse ich nicht an).
+- **Abdeckung:** messe ich nach eurem nächsten Werk-Lauf erneut und trage sie hier nach (Stand vor dieser Version: 949 von 949 fest = 100 %, Laufzeit-Stichprobe 100 %).
+
+Geprüft: 154 Logik-Tests, 148 App-Tests, Lint beider Fassungen, Browser (`web.mjs`, `web-update.mjs`, `web-nova.mjs`, `web-pro.mjs`, `web-vorversion.mjs`). Das neue Symbol habe ich nur als Zeichnung im Vergleich angesehen, nicht auf einem Handy.
+
 ## 18.11.2026 – Raumlicht 2.18.9: nur das Versionsdatum berichtigt
 
 **Raumlicht 2.18.9 vom 18.11.2026, Web = Android (beide 2.18.9).** Mein Fehler: 2.18.8 trug in App und `version.json` noch das Datum 17.11.2026. Inhaltlich gleich 2.18.8 – bitte 2.18.9 als Stand „fertig für den Betriebstest“ nehmen.

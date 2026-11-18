@@ -142,16 +142,16 @@ class PlayFlowTest {
         rule.onNodeWithText("✓ Alles zurückgesetzt – du startest wieder bei null.").assertExists()
     }
 
-    /** Handy stumm → die Einstellungen sagen, warum nichts zu hören ist; laut gestellt verschwindet der Hinweis */
+    /** Medien-Lautstärke 0 → die Einstellungen sagen, warum nichts zu hören ist. Der Klingelton-Schalter (stumm/Vibration) spielt keine Rolle. */
     @Test fun settingsExplainSilence() {
         val audio = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>().getSystemService(android.media.AudioManager::class.java)
-        audio.ringerMode = android.media.AudioManager.RINGER_MODE_VIBRATE
-        show { de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.16.3", de.raumlicht.app.ui.settings.UpdateState.Idle, {}) }
-        rule.onNodeWithTag("ton-hinweis").assertTextContains("stumm oder auf Vibration", substring = true)
-        rule.onRoot().captureRoboImage("../screenshots/80_ton_hinweis.png")
-        audio.ringerMode = android.media.AudioManager.RINGER_MODE_NORMAL; audio.setStreamVolume(android.media.AudioManager.STREAM_MUSIC, 0, 0)
+        audio.ringerMode = android.media.AudioManager.RINGER_MODE_VIBRATE; audio.setStreamVolume(android.media.AudioManager.STREAM_MUSIC, 5, 0)
+        show { de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.18.12", de.raumlicht.app.ui.settings.UpdateState.Idle, {}) }
+        rule.onNodeWithTag("ton-hinweis").assertDoesNotExist()                       // Handy auf Vibration, Medien laut: kein Hinweis – Raumlicht spielt
+        audio.setStreamVolume(android.media.AudioManager.STREAM_MUSIC, 0, 0)
         rule.mainClock.advanceTimeBy(1500); rule.onNodeWithTag("ton-hinweis").assertTextContains("Medien-Lautstärke", substring = true)
-        audio.setStreamVolume(android.media.AudioManager.STREAM_MUSIC, 5, 0)
+        rule.onRoot().captureRoboImage("../screenshots/80_ton_hinweis.png")
+        audio.ringerMode = android.media.AudioManager.RINGER_MODE_NORMAL; audio.setStreamVolume(android.media.AudioManager.STREAM_MUSIC, 5, 0)
         rule.mainClock.advanceTimeBy(1500); rule.onNodeWithTag("ton-hinweis").assertDoesNotExist()
     }
 

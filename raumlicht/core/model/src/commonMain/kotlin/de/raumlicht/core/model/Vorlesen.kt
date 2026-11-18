@@ -46,8 +46,43 @@ object Vorlesen {
         return fixed
     }
 
+    /**
+     * Vorhersehbare Rückmeldungen der festen Aufgaben – Sätze, die zwar erst nach einer Eingabe entstehen, deren Wortlaut sich aber aufzählen lässt:
+     * bei Aufgaben mit wenigen Einstellmöglichkeiten (bis [SMALL] Kombinationen) jede mögliche Rückmeldung, bei den übrigen die Rückmeldungen auf Eingaben,
+     * die an genau einer Stelle um 1 neben der Lösung oder neben dem Startwert liegen. Jeweils auch mit dem Tipp-Angebot.
+     * Bewusst sparsam: Das endlose Üben mit seinen Zufallszahlen gehört nicht dazu – dort erzeugt der Server den Satz beim ersten Gebrauch.
+     */
+    fun predictableRaw(): Set<String> {
+        val out = LinkedHashSet<String>()
+        fun note(l: Level, v: Values) { runCatching { val o = l.evaluate(v); if (!o.success) { out += o.message; out += o.message + TIP_OFFER } } }
+        fun collect(l: Level) {
+            val sizes = l.controls.flatMap { c -> c.start.indices.map { i -> c.max[i] - c.min[i] + 1 } }
+            val combos = sizes.fold(1L) { a, b -> (a * b).coerceAtMost(1_000_000) }
+            if (combos <= SMALL) {
+                // alle Kombinationen durchzählen
+                var all = listOf<Values>(emptyMap())
+                for (c in l.controls) { var parts = listOf(emptyList<Int>())
+                    for (i in c.start.indices) parts = parts.flatMap { p -> (c.min[i]..c.max[i]).map { p + it } }
+                    all = all.flatMap { v -> parts.map { v + (c.key to it) } } }
+                all.forEach { note(l, it) }
+            } else for (base in listOf(l.solution, l.start)) for (c in l.controls) for (i in c.start.indices) for (d in listOf(-1, 1)) {
+                val list = (base[c.key] ?: c.start).toMutableList(); val x = list[i] + d
+                if (x in c.min[i]..c.max[i]) { list[i] = x; note(l, base + (c.key to list.toList())) }
+            }
+        }
+        Levels.chapters.forEach { c -> c.levels.forEach(::collect) }
+        Exams.all.forEach { e -> e.parts.forEach { collect(it.level) } }
+        return out - raw()
+    }
+    /** bis zu so vielen Einstell-Kombinationen wird eine Aufgabe ganz durchgezählt */
+    const val SMALL = 64L
+
     /** Vorlesefertig (Vektoren und Formeln ausgeschrieben, siehe [Speech.clean]), ohne Leerraum-Reste, jeder Text nur einmal */
-    fun texts(): List<String> = raw().map { normalize(Speech.clean(it)) }.filter { it.isNotEmpty() }.distinct()
+    fun fixedTexts(): List<String> = raw().map { normalize(Speech.clean(it)) }.filter { it.isNotEmpty() }.distinct()
+    /** Vorhersehbare Rückmeldungen, vorlesefertig – ohne die, die schon bei den festen Texten stehen */
+    fun predictableTexts(): List<String> = fixedTexts().toSet().let { fixed -> predictableRaw().map { normalize(Speech.clean(it)) }.filter { it.isNotEmpty() && it !in fixed && it.length <= LIVE_MAX_CHARS }.distinct() }
+    /** Alles, was vorab vertont wird (feste Texte, dann vorhersehbare Rückmeldungen) – diese Liste lädt auch „Alle Nova-Texte offline laden“ */
+    fun texts(): List<String> = fixedTexts() + predictableTexts()
 
     /** Jeder Leerraum wird zu einem Leerzeichen, vorne und hinten abgeschnitten – so rechnet auch der Stimmen-Server */
     fun normalize(text: String) = text.replace(Regex("\\s+"), " ").trim()
@@ -108,6 +143,8 @@ object Vorlesen {
     /** Inhalt von `vorlesen/texte.json` */
     fun json(): String = buildJsonObject {
         put("format", FORMAT); put("app", APP)
-        put("texte", JsonArray(texts().map { t -> buildJsonObject { put("text", JsonPrimitive(t)); put("sprache", LANGUAGE) } }))
+        put("texte", JsonArray(fixedTexts().map { t -> buildJsonObject { put("text", JsonPrimitive(t)); put("sprache", LANGUAGE) } } +
+            // Rückmeldungen, die erst nach einer Eingabe fallen, aber vorhersehbar sind: der Server spricht sie vorab (der Schlüssel „laufzeit“ ist nur ein Vermerk)
+            predictableTexts().map { t -> buildJsonObject { put("text", JsonPrimitive(t)); put("sprache", LANGUAGE); put("laufzeit", true) } }))
     }.toString()
 }

@@ -235,7 +235,8 @@ object Families {
     ) = Level(
         id, chapter, title, mission, bounds,
         controls = listOf(
-            Control("n", "n⃗", ControlKind.VECTOR, listOf(0, 0, 1), listOf(-5, -5, -5), listOf(6, 6, 6), "violet"),
+            // von −6 bis 6: So lässt sich jede Ebene auch mit umgedrehten Vorzeichen einstellen – beides ist dieselbe Ebene und wird angenommen
+            Control("n", "n⃗", ControlKind.VECTOR, listOf(0, 0, 1), listOf(-6, -6, -6), listOf(6, 6, 6), "violet"),
             Control("c", "c", ControlKind.SCALAR, listOf(3), listOf(-maxC), listOf(maxC), "yellow"),
         ),
         solution = mapOf("n" to n.ints, "c" to listOf(c)), tip = tip, way = way, abi = abi,
@@ -262,7 +263,7 @@ object Families {
             else {
                 val (good, bad) = points.partition { Geo.onPlane(it.second, nn, cc) }
                 if (bad.isEmpty() && normal != null && !Geo.parallel(nn, normal)) Outcome(false, normalHint)
-                else if (bad.isEmpty()) Outcome(true, "Die Ebene sitzt genau richtig!")
+                else if (bad.isEmpty()) Outcome(true, "Die Ebene sitzt genau richtig! Jedes Vielfache dieser Gleichung beschreibt dieselbe Ebene.")
                 else Outcome(false, (if (good.isEmpty()) "" else good.joinToString(", ") { it.first } + " ✓ – ") + bad.joinToString(", ") { it.first } + " ✗: Setz ${if (bad.size == 1) "den Punkt" else "die Punkte"} ein und prüfe die Gleichung.")
             }
         },
