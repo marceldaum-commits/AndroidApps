@@ -1,5 +1,20 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.17 – Diagnose-Leiste erweitert (zu Marcels Ergebnis: alle Quadrate farbig, App mit gl=beides weiß)
+**Bei uns geprüft (Chromium, iPhone-Maße):** Über der Zeichenfläche liegt nichts – Aufbau: `<body>` (dunkelblau 11,16,38) → Shadow-DOM
+→ `DIV` 393×856 (transparent) → `CANVAS` 393×852 + ein leeres `DIV` 0×0 (Texteingabe). Lader nach dem Start entfernt.
+`elementFromPoint(Mitte)` = BODY, im Shadow = CANVAS. Canvas-Layout 393×852 @0,0 (kein 0-Größe, kein vh-Fehler).
+**Neue Leiste (`?diag=1`)** – am `<html>` mit z-index 2147483647, schwarz mit pinker Linie, sofort beim Laden sichtbar:
+Fenster/visualViewport/body-Größe · `elementFromPoint` Mitte (Dokument und Shadow-DOM) · Lader da/weg · Canvas Pixel- und
+Layout-Größe, Position, display/opacity/transform, im Dokument? · **WebGL-Renderer** (Software? z. B. „SwiftShader“, auf dem
+iPhone sollte „Apple GPU“ stehen) · Kontext verlangt/bekommen · **Pixelprobe oben links + Mitte** – mit `gl=beides` echte Farben:
+oben links muss ≈ 4,6,13 bzw. 11,16,38 (dunkelblau) sein. Steht dort **255,255,255** → Skia malt selbst Weiß; dunkle Werte bei
+weißem Bild → Safari zeigt die fertige Fläche nicht an. Die Zeichenfläche wird alle 5 s für 1,5 s **rot umrandet** (sieht man den
+Rahmen, liegt sie richtig). Diagnose-Seite: fünftes Quadrat **violett = genau die Kontext-Einstellungen der App** (depth/stencil).
+**Bitte Marcel:** https://kurvenflug-test.mathenachhilfe-online.com/?diag=1&gl=beides → Foto mit der Leiste (Zeile „Pixel …“,
+„Renderer“, „Mitte“) und ob der rote Rahmen kommt. Danach `…/?diag=0&gl=standard`.
+- versionCode 64 / 2.5.17, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.16 – WebGL-Anzeige auf iOS untersuchen: Bildprobe, Diagnose-Leiste, Versuchsschalter
 **Diagnose-Link:** https://kurvenflug-test.mathenachhilfe-online.com/diag.html – neu als Schritt 6 die **Bildprobe**: vier
 Quadrate – türkis (WebGL 2 Standard), grün (preserveDrawingBuffer), pink (alpha:false), orange (normale 2D-Fläche); dazu
