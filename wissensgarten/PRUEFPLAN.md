@@ -23,7 +23,7 @@ Dauerregel von Marcel (18.11.2026, ersetzt „wöchentlich mittwochs“): **Jede
 
 | Termin | Vorschlag |
 |---|---|
-| Fr 20.11.2026 | Grundschule Mathe: Rechengeschichten (Sachaufgaben mit vollständigem Rechenweg) + Ergänzung fehlender Rechenwege im Einmaleins |
+| Fr 20.11.2026 | **Aufräum-Tag** (Vorschlag Marcel): „Gleichungen lösen“ und „Kopfrechen-Tricks“ zu Merkwissen umbauen, Deeplinks `#paket=<ID>`, abgestimmte Querverweise zu Mathe-Trainer, Rechenblitz, KurvenFlug, Experimentopia und Raumlicht; danach, wenn Zeit bleibt, Rechengeschichten Klasse 1–4 |
 | Di 24.11.2026 | Sachunterricht: Winter, Wetter, Wasser (mit Erklärungen) |
 | Fr 27.11.2026 | Klasse 5–6: Dezimalzahlen (alle Rechenschritte) |
 | Di 01.12.2026 | Englisch Grundschule: Winter, Kleidung, Feiertage |
