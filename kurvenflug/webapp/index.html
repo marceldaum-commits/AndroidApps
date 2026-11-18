@@ -6,7 +6,7 @@
   <title>Kurvenflug – Mathe im All</title>
   <meta name="description" content="Kurvenflug: Formeln steuern das Raumschiff. Mathe und Physik für Klasse 5–13 – ohne Werbung, ohne Anmeldung.">
   <meta name="theme-color" content="#0B1026">
-  <meta name="kurvenflug-version" content="2.5.16">
+  <meta name="kurvenflug-version" content="2.5.17">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -47,7 +47,7 @@
     <div class="s">Volt macht das Raumschiff startklar …</div>
     <div class="bar"><b id="kf-bar"></b></div>
     <div class="s" id="kf-pct" style="font-size:13px;opacity:.7">Lade …</div>
-    <div class="v">Version 2.5.16 <span id="kf-fassung"></span> · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
+    <div class="v">Version 2.5.17 <span id="kf-fassung"></span> · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></div>
   </div>
   <noscript><p style="padding:24px">Kurvenflug braucht JavaScript und einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).</p></noscript>
@@ -55,7 +55,7 @@
     // ---------------------------------------------------------------- Start: Fassung wählen, nie eine weiße Seite
     // Die Compose-Oberfläche hängt sich an <body> (Shadow-DOM) – alles, was im <body> steht, wird dann unsichtbar.
     // Darum liegen Ladebild und Fehlermeldung am <html>-Element.
-    var KF_VER = '2.5.16';
+    var KF_VER = '2.5.17';
     (function () { var l = document.getElementById('kf-loader'); if (l) document.documentElement.appendChild(l); })();
     // Pixeldichte auf 2 begrenzen: Bei 3 (neuere iPhones) wird die Zeichenfläche 1179×2556 Pixel groß – das kostet viel
     // Grafikspeicher, und iOS beendet dann den Tab (weiße Seite). Mit 2 sieht man keinen Unterschied, braucht aber weniger als die Hälfte.
@@ -180,23 +180,38 @@
       });
     }
     setInterval(kfWatchCanvas, 1000);
-    // Diagnose-Leiste (?diag=1): was der Browser wirklich bekommt – für ein Foto vom iPhone
+    // Diagnose-Leiste (?diag=1): was der Browser wirklich bekommt – für ein Foto vom iPhone. Liegt am <html>-Element
+    // (außerhalb der Compose-Fläche) mit höchstem z-index, damit sie auch bei weißer App sichtbar ist.
+    var kfDiagFlash = 0;
     function kfDiagBar() {
       if (kfOpt.diag !== '1') return;
       var bar = document.getElementById('kf-diag');
       if (!bar) { bar = document.createElement('div'); bar.id = 'kf-diag';
-        bar.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:50;background:rgba(0,0,0,.82);color:#9ff;font:11px/1.35 monospace;padding:4px 6px;pointer-events:none;white-space:pre-wrap;word-break:break-all';
+        bar.style.cssText = 'position:fixed;left:0;right:0;top:0;z-index:2147483647;background:#000;color:#9ff;font:12px/1.35 monospace;padding:6px 8px;pointer-events:none;white-space:pre-wrap;word-break:break-all;border-bottom:2px solid #f0f';
         document.documentElement.appendChild(bar); }
-      var g = window.kfGl || {}, c = g.canvas, probe = '';
+      var g = window.kfGl || {}, c = g.canvas, probe = '', rend = '';
       if (c && g.gl && !g.gl.isContextLost()) {
-        try { var px = new Uint8Array(4); g.gl.readPixels(Math.floor(c.width / 2), Math.floor(c.height / 2), 1, 1, g.gl.RGBA, g.gl.UNSIGNED_BYTE, px); probe = 'Pixel Mitte ' + Array.prototype.join.call(px, ','); } catch (e) { probe = 'Pixelprobe: ' + e.message; }
+        try { var px = new Uint8Array(4); g.gl.readPixels(Math.floor(c.width / 2), Math.floor(c.height / 2), 1, 1, g.gl.RGBA, g.gl.UNSIGNED_BYTE, px);
+          var px2 = new Uint8Array(4); g.gl.readPixels(8, c.height - 8, 1, 1, g.gl.RGBA, g.gl.UNSIGNED_BYTE, px2);   // oben links: sollte dunkelblau sein (11,16,38)
+          probe = 'Pixel oben links ' + Array.prototype.join.call(px2, ',') + ' · Mitte ' + Array.prototype.join.call(px, ',') + (g.used && g.used.indexOf('"preserveDrawingBuffer":true') < 0 ? ' (ohne preserve meist 0,0,0,0)' : ''); } catch (e) { probe = 'Pixelprobe: ' + e.message; }
+        try { var dbg = g.gl.getExtension('WEBGL_debug_renderer_info'); rend = dbg ? g.gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : g.gl.getParameter(g.gl.RENDERER); } catch (e) {}
       }
-      var cs = c ? getComputedStyle(c) : null;
+      var cs = c ? getComputedStyle(c) : null, r = c ? c.getBoundingClientRect() : null, br = document.body ? document.body.getBoundingClientRect() : null;
+      var cx = innerWidth / 2, cy = innerHeight / 2, top = document.elementFromPoint(cx, cy), inner = document.body && document.body.shadowRoot ? document.body.shadowRoot.elementFromPoint(cx, cy) : null;
+      function nm(e) { return e ? e.tagName + (e.id ? '#' + e.id : '') : '–'; }
+      var vv = window.visualViewport;
+      // Zeichenfläche alle 5 s kurz rot umranden: Sieht man den Rahmen, liegt die Fläche an der richtigen Stelle
+      if (c && (kfDiagFlash++ % 5 === 0)) { c.style.outline = '6px solid red'; c.style.outlineOffset = '-6px'; setTimeout(function () { c.style.outline = ''; }, 1500); }
       bar.textContent = 'KF ' + KF_VER + ' · ' + window.kfMode + ' · bereit ' + kfIsReady + ' · DPR echt ' + kfRealDpr + ' / genutzt ' + (window.devicePixelRatio || 1) +
-        ' · Schalter ' + JSON.stringify(kfOpt) + '\nCanvas ' + (c ? c.width + '×' + c.height + ' (CSS ' + (cs && cs.width) + '×' + (cs && cs.height) + ', transform ' + (cs && cs.transform) + ')' : 'noch keins') +
-        ' · ' + (g.type || '') + (g.gl && g.gl.isContextLost() ? ' · KONTEXT VERLOREN' : '') + '\nverlangt ' + g.wanted + '\nbekommen ' + g.used + '\n' + probe;
+        ' · Schalter ' + JSON.stringify(kfOpt) +
+        '\nFenster ' + innerWidth + '×' + innerHeight + (vv ? ' (sichtbar ' + Math.round(vv.width) + '×' + Math.round(vv.height) + ')' : '') + ' · body ' + (br ? Math.round(br.width) + '×' + Math.round(br.height) : '–') +
+        ' · Mitte: ' + nm(top) + ' / im Shadow: ' + nm(inner) + ' · Lader ' + (document.getElementById('kf-loader') ? 'da' : 'weg') +
+        '\nCanvas ' + (c ? c.width + '×' + c.height + ' · Layout ' + Math.round(r.width) + '×' + Math.round(r.height) + ' @' + Math.round(r.left) + ',' + Math.round(r.top) +
+          ' · display ' + cs.display + ' · opacity ' + cs.opacity + ' · transform ' + cs.transform + ' · im Dokument ' + c.isConnected : 'noch keins') +
+        ' · ' + (g.type || '') + (g.gl && g.gl.isContextLost() ? ' · KONTEXT VERLOREN' : '') + (rend ? ' · Renderer ' + rend : '') +
+        '\nverlangt ' + g.wanted + '\nbekommen ' + g.used + '\n' + probe;
     }
-    if (kfOpt.diag === '1') setInterval(kfDiagBar, 1000);
+    if (kfOpt.diag === '1') { kfDiagBar(); setInterval(kfDiagBar, 1000); }
     setTimeout(function () {
       var l = document.getElementById('kf-loader');
       if (l && !kfIsReady) l.querySelector('.s').textContent = 'Dauert etwas … gleich geht es los.';
@@ -225,7 +240,7 @@
       var e = kfInstallEvt; if (!e) return; kfInstallEvt = null;
       e.prompt(); if (e.userChoice) e.userChoice.then(function (c) { if (c && c.outcome === 'accepted') kfInstalled = true; });
     };
-    var KF_VERSION = '2.5.16';
+    var KF_VERSION = '2.5.17';
     try { var kfLast = localStorage.getItem('kf.lastVersion'); if (kfLast && kfLast !== KF_VERSION) window.kfUpdated = KF_VERSION; localStorage.setItem('kf.lastVersion', KF_VERSION); } catch (e) {}
     var kfStart = Date.now(), kfPending = false, kfReloading = false, kfAtHome = true, kfReg = null;
     function kfReload() { if (!kfReloading) { kfReloading = true; location.reload(); } }
@@ -272,7 +287,7 @@
       if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js?fassung=' + window.kfMode).then(function (r) { kfReg = r; go(); }).catch(go); else go();
     };
   </script>
-  <script>window.KF_FILES = ({"wasm":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"3adf9ece36decf6964bc.wasm","s":5848482,"t":"application/wasm"}],"js":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"}]})[window.kfMode];</script>
+  <script>window.KF_FILES = ({"wasm":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"e0a83d2c9141571e6796.wasm","s":5848482,"t":"application/wasm"}],"js":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"}]})[window.kfMode];</script>
   <script src="kf.js"></script>
   <script>
     // Erst das Ladebild malen lassen (zwei Bilder lang), dann das Programm laden
