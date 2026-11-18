@@ -8,6 +8,7 @@ import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -72,7 +73,66 @@ fun HomeScreen(
     // Alle paar Sekunden ein kleiner Lichtblitz – die Bühne lebt
     LaunchedEffect(controller) { while (true) { delay(6000); controller.party(1.2) } }
 
-    LazyColumn(Modifier.fillMaxSize().background(Q.Space), contentPadding = PaddingValues(bottom = 24.dp)) {
+    // Die Wahl des Gebiets – drei Gebiete wie im Abitur, so muss niemand suchen
+    val areaTabs: @Composable (Modifier) -> Unit = { m ->
+        Row(m, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Area.entries.forEach { a ->
+                val list = chapters.filter { it.area == a }; val c = stageColor(a.color); val on = a.name == area
+                val interaction = remember { MutableInteractionSource() }
+                Column(Modifier.weight(1f).testTag("gebiet-${a.name}").pressBounce(interaction).clip(RoundedCornerShape(14.dp)).background(if (on) c.copy(alpha = 0.28f) else Q.Deep)
+                    .border(if (on) 2.dp else 1.dp, if (on) c else Q.Muted.copy(alpha = 0.35f), RoundedCornerShape(14.dp))
+                    .clickable(interaction, null) { area = a.name; open = (list.firstOrNull { ch -> ch.levels.any { it.id == next?.id } } ?: list.first()).number }.padding(vertical = 7.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    de.raumlicht.app.ui.fx.FitText("${a.emoji} ${a.title}", Modifier.padding(horizontal = 4.dp), fontWeight = FontWeight.Black, fontSize = 14.sp, min = 10f, color = if (on) Q.Text else Q.Muted)
+                    Text("★ ${list.sumOf { ch -> ch.levels.sumOf { stars[it.id] ?: 0 } }} / ${list.sumOf { it.levels.size } * 3}", fontSize = 11.sp, color = if (on) Q.Yellow else Q.Muted)
+                }
+            }
+        }
+    }
+    val chapter: @Composable (Boolean) -> Unit = { wide ->
+        val c = chapters.firstOrNull { it.number == open } ?: chapters.first()
+        AnimatedContent(c, transitionSpec = { (slideInHorizontally { if (targetState.number > initialState.number) it / 3 else -it / 3 } + fadeIn()) togetherWith fadeOut() }, label = "kapitel") { ch ->
+            ChapterDetail(ch, stars, next?.id, onLevel, locked, wide)
+        }
+    }
+
+    BoxWithConstraints(Modifier.fillMaxSize().background(Q.Space)) {
+    // Breiter Bildschirm (PC, Tablet quer): nicht strecken, sondern aufteilen – links die Bühne groß, rechts Gebiete, Kapitel und Aufgaben ohne Wischen
+    val full = maxWidth; val side = (full * 0.4f).coerceIn(440.dp, 640.dp)
+    if (full >= 900.dp && full > maxHeight * 1.2f) Row(Modifier.fillMaxSize().testTag("start-breit")) {
+        Box(Modifier.weight(1f).fillMaxHeight()) {
+            Stage(controller, Modifier.fillMaxSize())
+            Box(Modifier.fillMaxSize().background(verticalFade(0f to Q.Space.copy(alpha = 0.6f), 0.25f to Color.Transparent, 0.6f to Color.Transparent, 1f to Q.Space.copy(alpha = 0.92f))))
+            Box(Modifier.align(Alignment.CenterEnd).fillMaxHeight().width(90.dp).background(horizontalFade(listOf(Color.Transparent, Q.Space))))
+            Column(Modifier.align(Alignment.TopStart).statusBarsPadding().padding(start = 32.dp, top = 22.dp)) {
+                Text("RAUMLICHT", fontSize = if (full < 1200.dp) 32.sp else 42.sp, fontWeight = FontWeight.Black, letterSpacing = if (full < 1200.dp) 5.sp else 7.sp, color = Q.Text)
+                Text("Mathe im Raum – Oberstufe und Abitur", color = Q.Muted, fontSize = 15.sp)
+                Text("★ $total / $max", Modifier.padding(top = 8.dp), color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 18.sp)
+                de.raumlicht.app.ui.settings.ProBadge(Modifier.padding(top = 8.dp))
+            }
+            Column(Modifier.align(Alignment.BottomCenter).widthIn(max = 680.dp).fillMaxWidth().padding(horizontal = 18.dp, vertical = 22.dp)) {
+                if (next != null) NeonButton({ onLevel(next.id) }, Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp).pulse(true, 0.02f), color = Q.Green) {
+                    Text(if (total == 0) "▶ Tour starten" else "▶ Weiter: ${next.id} ${next.title}", fontWeight = FontWeight.Black, fontSize = 18.sp, maxLines = 1)
+                }
+                ModeTiles(dailyDone, jamBest, onDaily, onJam, onExam, onMore)
+            }
+        }
+        Column(Modifier.width(side).fillMaxHeight().verticalScroll(rememberScrollState()).statusBarsPadding().padding(bottom = 24.dp)) {
+            Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 8.dp, top = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                Text("TOURPLAN", Modifier.weight(1f), color = Q.Muted, fontSize = 13.sp, fontWeight = FontWeight.Black, letterSpacing = 3.sp)
+                IconButton(onClick = onSettings) { Text("⚙", Modifier.clearAndSetSemantics { contentDescription = "Einstellungen" }, fontSize = 24.sp, color = Q.Text) }
+            }
+            if (updateVersion != null) de.raumlicht.app.ui.settings.UpdateBanner(updateVersion, onUpdate)
+            areaTabs(Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, top = 4.dp, bottom = 10.dp))
+            val list = chapters.filter { it.area.name == area }
+            Text("${list.size} Kapitel", Modifier.padding(start = 16.dp, bottom = 6.dp).testTag("kapitel-anzahl"), color = Q.Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
+            FlowRow(Modifier.fillMaxWidth().padding(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                list.forEach { c -> ChapterChip(c, stars, open == c.number, c.levels.any { it.id == next?.id }) { open = c.number } }
+            }
+            chapter(true)
+        }
+    } else
+    LazyColumn(Modifier.fillMaxSize(), contentPadding = PaddingValues(bottom = 24.dp)) {
         item {
             Box(Modifier.fillMaxWidth().height(240.dp)) {
                 Stage(controller, Modifier.fillMaxSize())
@@ -92,22 +152,7 @@ fun HomeScreen(
         }
         if (updateVersion != null) item { de.raumlicht.app.ui.settings.UpdateBanner(updateVersion, onUpdate) }
         item { ModeTiles(dailyDone, jamBest, onDaily, onJam, onExam, onMore) }
-        // Drei Gebiete wie im Abitur – so muss niemand suchen
-        item {
-            Row(Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, top = 10.dp, bottom = 6.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Area.entries.forEach { a ->
-                    val list = chapters.filter { it.area == a }; val c = stageColor(a.color); val on = a.name == area
-                    val interaction = remember { MutableInteractionSource() }
-                    Column(Modifier.weight(1f).testTag("gebiet-${a.name}").pressBounce(interaction).clip(RoundedCornerShape(14.dp)).background(if (on) c.copy(alpha = 0.28f) else Q.Deep)
-                        .border(if (on) 2.dp else 1.dp, if (on) c else Q.Muted.copy(alpha = 0.35f), RoundedCornerShape(14.dp))
-                        .clickable(interaction, null) { area = a.name; open = (list.firstOrNull { ch -> ch.levels.any { it.id == next?.id } } ?: list.first()).number }.padding(vertical = 7.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally) {
-                        de.raumlicht.app.ui.fx.FitText("${a.emoji} ${a.title}", Modifier.padding(horizontal = 4.dp), fontWeight = FontWeight.Black, fontSize = 14.sp, min = 10f, color = if (on) Q.Text else Q.Muted)
-                        Text("★ ${list.sumOf { ch -> ch.levels.sumOf { stars[it.id] ?: 0 } }} / ${list.sumOf { it.levels.size } * 3}", fontSize = 11.sp, color = if (on) Q.Yellow else Q.Muted)
-                    }
-                }
-            }
-        }
+        item { areaTabs(Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, top = 10.dp, bottom = 6.dp)) }
         // Alle Kapitel des Gebiets mit Namen auf einen Blick – darunter das gewählte Kapitel mit seinen Aufgaben
         // Aufgeräumt (seit 2.9.2): eine einzige Zeile zum Wischen statt einer Wand aus Knöpfen. Das gewählte Kapitel rutscht von selbst ins Bild.
         item {
@@ -123,12 +168,8 @@ fun HomeScreen(
                     ChapterChip(c, stars, open == c.number, c.levels.any { it.id == next?.id }) { open = c.number } } }
             }
         }
-        item {
-            val c = chapters.firstOrNull { it.number == open } ?: chapters.first()
-            AnimatedContent(c, transitionSpec = { (slideInHorizontally { if (targetState.number > initialState.number) it / 3 else -it / 3 } + fadeIn()) togetherWith fadeOut() }, label = "kapitel") { ch ->
-                ChapterDetail(ch, stars, next?.id, onLevel, locked)
-            }
-        }
+        item { chapter(false) }
+    }
     }
 }
 
@@ -148,7 +189,7 @@ private fun ChapterChip(c: Chapter, stars: Map<String, Int>, selected: Boolean, 
 
 /** Das gewählte Kapitel mit seinen Aufgaben. */
 @Composable
-private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, onLevel: (String) -> Unit, locked: (String) -> Boolean = { false }) {
+private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, onLevel: (String) -> Unit, locked: (String) -> Boolean = { false }, wide: Boolean = false) {
     val accent = stageColor(c.color)
     val got = c.levels.sumOf { stars[it.id] ?: 0 }
     Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp).clip(RoundedCornerShape(20.dp))
@@ -161,6 +202,21 @@ private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, 
             }
             Text("★ $got/${c.levels.size * 3}", color = Q.Yellow, fontWeight = FontWeight.Bold)
         }
+        // Breiter Bildschirm: jede Aufgabe als Zeile mit ihrem Namen – Platz ist da, und man sieht, worum es geht
+        if (wide) Column(Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp, top = 10.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            c.levels.forEach { l ->
+                val s = stars[l.id] ?: 0
+                val interaction = remember { MutableInteractionSource() }
+                Row(Modifier.pulse(l.id == nextId, 0.015f).pressBounce(interaction).fillMaxWidth().clip(RoundedCornerShape(14.dp))
+                    .background(if (s > 0) accent.copy(alpha = 0.22f) else Q.Panel)
+                    .border(if (l.id == nextId) 2.dp else 1.dp, if (l.id == nextId) Q.Green else accent.copy(alpha = 0.5f), RoundedCornerShape(14.dp))
+                    .clickable(interaction, null) { onLevel(l.id) }.padding(horizontal = 12.dp, vertical = 9.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Text(if (l.abi) "🎓" else l.id.substringAfter('-'), Modifier.width(30.dp), fontWeight = FontWeight.Black, fontSize = 18.sp, color = Q.Text)
+                    Text(l.title, Modifier.weight(1f).padding(end = 8.dp), fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Q.Text, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                    if (locked(l.id)) Text("🔒", Modifier.testTag("schloss-${l.id}"), fontSize = 13.sp) else StarRow(s, lit = true, size = 16)
+                }
+            }
+        } else
         Row(Modifier.fillMaxWidth().padding(start = 10.dp, end = 10.dp, top = 10.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             c.levels.forEach { l ->
                 val s = stars[l.id] ?: 0

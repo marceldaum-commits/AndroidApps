@@ -30,12 +30,12 @@ const hint = await page.evaluate(() => (document.getElementById('neu') || {}).te
 check('Hinweis „Neue Version 9.9.1 geladen“ erscheint', /Neue Version 9\.9\.1 geladen/.test(hint), hint);
 
 // 2 · neue Version, Nutzer ist nicht auf der Startseite → kein Neuladen mittendrin, erst beim Zurückgehen
-await page.mouse.click(1112, 290); await page.waitForTimeout(2000);                    // „Mehr“ öffnen – weg von der Startseite
+await page.mouse.click(615, 730); await page.waitForTimeout(2000);                    // „Mehr“ öffnen (PC-Ansicht: vierte Kachel unten links) – weg von der Startseite
 check('ein anderer Bildschirm ist offen', await page.evaluate(() => window.__rlHome === false));
 fs.writeFileSync(path.join(dir, 'version.json'), '{ "version": "9.9.2" }'); for (const f of ['index.html', 'sw.js']) fs.writeFileSync(path.join(dir, f), fs.readFileSync(path.join(dir, f), 'utf8').split('9.9.1').join('9.9.2'));
 await ask(); await page.waitForFunction(() => caches.keys().then((k) => k.includes('raumlicht-9.9.2')), null, { timeout: 60000 }).catch(() => {}); await page.waitForTimeout(3000);
 check('mittendrin wird nicht neu geladen', await shown() === '9.9.1' && await page.evaluate(() => window.__rlHome === false), await shown());
-await page.mouse.click(24, 24);                                                           // Pfeil zurück
+await page.mouse.click(234, 24);   // Pfeil zurück (die Seite steht als 860 breite Spalte in der Mitte)
 await page.waitForFunction(() => document.documentElement.dataset.version === '9.9.2', null, { timeout: 60000 }).catch(() => {}); await page.waitForTimeout(1500);
 check('zurück auf der Startseite: Update kommt von selbst', await shown() === '9.9.2', await shown());
 

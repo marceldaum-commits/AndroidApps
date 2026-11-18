@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.18.29 auf test: PC-Ansicht (Marcel direkt, mit Bildschirmfoto von live: „am PC sieht das so nicht toll aus … nicht nur strecken“)
+
+- **Startseite ab 900 dp Breite im Querformat zweigeteilt:** links die Bühne über die ganze Höhe mit Titel, „Tour starten“ und den vier Kacheln; rechts (40 %, 440–640 dp) Gebiete, alle Kapitel umbrechend statt zum Wischen, darunter die Aufgaben als Zeilen mit Namen. Bild: `screenshots/90_startseite_pc.png`.
+- **Lese- und Auswahlseiten** (Einstellungen, Pro, KI, Eltern, Mehr, Lernstand, Klausurplaner, Spickzettel, Abzeichen, Abi-Liste, Üben-Liste, Schritte-Liste, Tagebuch, Kalender) stehen ab 860 dp als Spalte in der Mitte. Aufgaben und Spiele nutzen weiter die volle Breite (dort gab es schon eine Queransicht).
+- Handy-Ansicht unverändert. Neuer Browser-Test `scene/test/web-breit.mjs` (9 Prüfungen, Wasm und JS); `web-update.mjs` an die neue Lage der Kachel „Mehr“ angepasst. Enthält alles aus 2.18.27 und 2.18.28.
+- **Noch nicht angefasst:** das Begrüßungsfenster einer Aufgabe zieht sich am PC noch über die ganze Breite.
+
 ## 18.11.2026 – 2.18.28 auf test: Eltern-Koppeln für alle, Update 11 (Marcel hat hier selbst „jo“ gesagt)
 
 - **`Eltern.ENABLED = true`.** Geprüft am 18.11.: `https://www.mathenachhilfe-online.com/eltern-bericht/` und die staging-Adresse liefern 200. Live zeigt der Link auf www und schreibt nach `trainer.…`, auf raumlicht-test auf staging und `trainer-test.…`.

@@ -4,6 +4,9 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.background
+import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.*
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -52,6 +55,8 @@ object Routes {
     const val QUICK = "pflichtteil"
     const val DIARY = "fehler-tagebuch"
     const val CALENDAR = "kalender"
+    /** Seiten, die auf breiten Bildschirmen als Spalte in der Mitte stehen (Listen, Texte, Einstellungen) – alles mit Bühne oder Spielfeld nutzt die volle Breite */
+    val COLUMN_PAGES = setOf(SETTINGS, PRO, KI, PARENTS, JAM_HOME, SHEET, BADGES, BACKSTAGE, EXAMS, GUIDES, LEARN, PLANNER, DIARY, CALENDAR)
     fun ride(id: String) = "achterbahn/$id"
     fun guide(id: String) = "schritte/$id"
     fun exam(id: String, timed: Boolean) = "abi/$id/${if (timed) 1 else 0}"
@@ -218,6 +223,10 @@ fun AppRoot(
             jingle?.play(de.raumlicht.app.ui.fx.Sound.JINGLE, volume = 0.6f) } }) {
         Crossfade(keys.last(), animationSpec = tween(180), label = "ziel") { key -> holder.SaveableStateProvider(key) {
             val route = key.substringAfter(':'); val parts = route.split('/')
+            // Breiter Bildschirm (PC): Seiten zum Lesen und Auswählen nicht über die ganze Breite ziehen, sondern als Spalte in die Mitte setzen
+            val column = needsPro(route) || route in Routes.COLUMN_PAGES
+            androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.fillMaxSize().background(Q.Space), contentAlignment = androidx.compose.ui.Alignment.TopCenter) {
+                androidx.compose.foundation.layout.Box(if (column) androidx.compose.ui.Modifier.widthIn(max = 860.dp).fillMaxSize() else androidx.compose.ui.Modifier.fillMaxSize()) {
             if (needsPro(route)) de.raumlicht.app.ui.settings.ProScreen(Pro.what(route), false, true, enterCode, back) else
             when (parts[0]) {
                 Routes.HOME -> HomeScreen(Levels.chapters, starMap, { nav.go(Routes.level(it)) }, { nav.go(Routes.SETTINGS) }, locked = { needsPro(Routes.level(it)) },
@@ -355,6 +364,7 @@ fun AppRoot(
                 Routes.KI -> if (kiSend == null) LaunchedEffect(Unit) { nav.back() } else de.raumlicht.app.ui.settings.KiScreen(kiLast, today(), enterKi, back)
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }
             }
+            } }
         } }
         // dezente Hinweise zur Stimme (lädt … / gerade nicht erreichbar)
         de.raumlicht.app.ui.fx.VoiceHints(androidx.compose.ui.Modifier.align(androidx.compose.ui.Alignment.TopCenter).systemBarsPadding())

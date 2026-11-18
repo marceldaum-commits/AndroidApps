@@ -170,6 +170,10 @@ Freiwilliger, Ende-zu-Ende verschlüsselter Eltern-Bericht (`core/model/…/Elte
 | ![](screenshots/87_eltern_koppeln.png) | ![](screenshots/88_kommt_bald.png) |
 | ![](screenshots/89_fortschritt_wiederherstellen.png) | |
 
+**Am PC (seit 2.18.29):** Die Startseite teilt sich auf breiten Bildschirmen auf – links die Bühne, rechts Gebiete, Kapitel und Aufgaben.
+
+![](screenshots/90_startseite_pc.png)
+
 ## Zählung, Nachhilfe-Hinweis, Geschenk (seit 2.18.22)
 
 Anonyme Nutzungszählung (`Zaehler`), sachlicher Nachhilfe-Hinweis im Lernstand (`Nachhilfe`), Eintrag „Lern-Geschenk verschenken“ und Absender-Zeile – beide Schalter in den Einstellungen, alles in `core/model/…/Nachhilfe.kt`.
