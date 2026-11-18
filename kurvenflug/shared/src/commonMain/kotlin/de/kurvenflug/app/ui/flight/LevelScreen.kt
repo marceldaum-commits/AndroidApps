@@ -364,7 +364,7 @@ fun LevelScreen(
         AnimatedVisibility(phase == Phase.DONE, enter = fadeIn() + scaleIn(initialScale = 0.8f, animationSpec = spring(dampingRatio = 0.6f)), exit = fadeOut(),
             modifier = Modifier.align(Alignment.BottomCenter)) {
             ResultCard(stars, taken.size + 0, level.cells.size, usedHelp, nextLabel, allowRetry, reward,
-                check = check, answer = answer, worked = steps,
+                check = check, answer = answer, worked = steps, ownWay = de.kurvenflug.core.model.ReadTexts.ownWay(level, values),
                 onAnswer = { i ->
                     answer = i
                     val ok = i == check?.correct
@@ -549,6 +549,7 @@ private fun Modifier.clickableNoRipple(i: androidx.compose.foundation.interactio
 private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean, nextLabel: String, allowRetry: Boolean,
                        reward: StickerDrop?, onPhoto: () -> Unit,
                        check: CalcCheck? = null, answer: Int = -1, worked: List<Step>? = null, onAnswer: (Int) -> Unit = {},
+                       ownWay: String? = null,
                        onRetry: () -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit) {
     Card(
         Modifier.padding(16.dp).fillMaxWidth().navigationBarsPadding(),
@@ -567,7 +568,7 @@ private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean,
             }
             if (totalCells > 0) Text("⚡ $cells von $totalCells Energiezellen", color = Q.Yellow, style = MaterialTheme.typography.bodyMedium)
             if (helped && stars == 2 && check == null) Text("Ohne Zielhilfe gibt's 3 ⭐ – traust du dich?", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
-            if (check != null) CalcCheckCard(check, answer, worked, onAnswer)
+            if (check != null) CalcCheckCard(check, answer, worked, onAnswer, ownWay)
             reward?.let { d ->
                 // Überraschungs-Sticker: ploppt nach den Sternen herein
                 val pop = remember { Animatable(0f) }
@@ -676,7 +677,7 @@ private fun LiveCalc(level: Level, values: Map<String, Double>, visible: Boolean
  * (ausgearbeitetes Beispiel), Schritt für Schritt eingeblendet.
  */
 @Composable
-private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, onAnswer: (Int) -> Unit) {
+private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, onAnswer: (Int) -> Unit, ownWay: String? = null) {
     Column(Modifier.padding(top = 10.dp).fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Space.copy(alpha = 0.6f))
         .border(1.dp, Q.Violet.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -705,6 +706,8 @@ private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, on
                     .clickable { if (answer < 0) onAnswer(i) }.padding(horizontal = 12.dp, vertical = 10.dp))
         }
         if (answer >= 0 && worked != null) {
+            // Andere Lösung getroffen? Dann ausdrücklich: auch richtig (mehrere Lösungswege)
+            ownWay?.let { Text("✅ $it", color = Q.Green, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 4.dp)) }
             Text("📝 So rechnet man's", color = Q.Yellow, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 4.dp))
             // Schritt für Schritt einblenden, wie an der Tafel
             val reveal = remember(worked) { Animatable(0f) }
