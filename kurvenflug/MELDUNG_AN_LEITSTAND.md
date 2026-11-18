@@ -1,5 +1,27 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.22 – Vorgaben aus dem Ratgeber übernommen (eure Nachricht 18.11. 14:37)
+1. **Zählung:** Sendung jetzt `{"app":"kurvenflug","v":"2.5.22","e":{…}}` (ohne `f`), je Ereignis höchstens 50. Gezählt werden:
+   `start`, `level_start`, `level_geschafft`, `theorie`, `elternbereich` (Eltern-Tor bestanden), `pro_ansehen` (Pro-Seite geöffnet),
+   `pro_kasse` (Kauf nach Eltern-Tor), `code_eingeloest` (Code-Feld oder `?pro=`-Link gültig), `probestunde_klick`, `crashkurs_klick`,
+   `nachhilfe_hinweis` (Hinweis gezeigt), `geschenk_klick`. `neukunde_klick` steht in der erlaubten Liste, KurvenFlug hat dafür keinen Knopf.
+   Kein `ort`/`thema` (optional). Unbekannte Ereignisse kann die App nicht senden (feste Liste, Test). Browser: an → `{"start":1}` gesendet, aus → nichts.
+2. **Schalter** „📊 Anonyme Nutzungszählung (hilft uns, die App zu verbessern)“, **Standard AN**, Satz: gezählt wird nur, wie oft etwas
+   passiert – ohne Kennung, ohne IP, ohne Namen/Spielstand; auf dem Gerät nur die Schalterstellung (Zähler nur im Speicher).
+3. **Themen-Zuordnung** (Kapitel → Kennung): 1 Koordinaten → geometrie · 2 Geraden → lineare-funktionen · 3 Parabeln → quadratische-funktionen ·
+   4 Wurf & Schwerkraft → physik-mechanik · 5 Wellen & Wachstum → trigonometrie · 6 Schwerkraft-Schleuder → physik-mechanik ·
+   7 Rendezvous → gleichungssysteme · 8 Zuordnungen → zuordnungen · 9 Pythagoras → pythagoras · 10 Logarithmus → exponential-log ·
+   11 Laser-Optik → physik-optik · 12 Energie → physik-energie · 13 Weg & Zeit → physik-mechanik · 14 Trigonometrie → trigonometrie ·
+   15 Brüche & Kommazahlen → brueche · 16 Winkel → geometrie · 17 Lichtbrechung → physik-optik · 18 Nullstellen → quadratische-funktionen ·
+   19 Ableitung & Tangente → analysis · 20 Extrempunkte → analysis · 21 Integral → analysis · 22 Vektoren → vektoren ·
+   23 Prozent & Zinseszins → prozent · 24 Beschleunigte Bewegung → physik-mechanik · 25 Potenzfunktionen → potenzen-wurzeln ·
+   26 Verschobene Wellen → trigonometrie · 27 Waagerechter Wurf → physik-mechanik · 28 e-Funktion → exponential-log ·
+   29 Maßstab & Karten → zuordnungen · 30 Binomialverteilung → stochastik. (Test: jedes Kapitel hat eine Kennung aus der Liste.)
+4. **Probestunde:** `…/probestunde/?src=kurvenflug-elternbericht&thema=<id>&klasse=<n>` (Thema hakt) bzw. `src=kurvenflug-klassenarbeit`.
+5. **Crashkurs** (nur bei „Klassenarbeit bald“): Knopf „Crashkurs ansehen“ → `…/produkt/easy-learning-crash-kurs/?src=kurvenflug-klassenarbeit`,
+   Wortlaut „kostenlos für Familien mit Stundenpaket“.
+6. Rest unverändert. versionCode 69 / 2.5.22, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.21 – A3 Zählung, B4 Einlöse-Link + Lern-Geschenk, C1 Nachhilfe-Hinweis, Fußzeile
 **Hinweis:** Den Ratgeber (Website_Backup, geld-verdienen/RATGEBER.md) konnte ich **nicht lesen** – das Hinzufügen des Repos wurde
 in meiner Sitzung abgelehnt. Umgesetzt nach eurer Nachricht; wo der Ratgeber Genaueres vorgibt (Format, Crashkurs-Links,

@@ -19,15 +19,22 @@ class ParentOffersTest {
     }
 
     @Test fun linksCarrySourceAndNoPrice() {
-        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=kurvenflug-eltern&thema=kf-9&klasse=9", ParentOffers.trialLesson(9, 9))
-        assertTrue(ParentOffers.trialLesson(3, null).endsWith("thema=kf-3"))
+        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=kurvenflug-elternbericht&thema=pythagoras&klasse=9", ParentOffers.trialLesson(9, 9))
+        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=kurvenflug-klassenarbeit&thema=quadratische-funktionen",
+            ParentOffers.trialLesson(3, null, ParentOffers.Reason.EXAM))
+        assertTrue("src=kurvenflug-klassenarbeit" in ParentOffers.CRASH_COURSE)
         assertTrue("src=kurvenflug-geschenk" in ParentOffers.GIFT && "src=kurvenflug-fusszeile" in ParentOffers.FOOTER)
         listOf(ParentOffers.GIFT, ParentOffers.FOOTER, ParentOffers.FOOTER_TEXT).forEach { assertTrue('€' !in it) }
     }
 
+    @Test fun everyChapterHasAnAllowedTopic() {
+        Levels.chapters.forEach { c -> val t = ParentOffers.TOPICS[c.number]; assertTrue(t != null && t in ParentOffers.ALLOWED_TOPICS, "Kapitel ${c.number} ohne Thema") }
+    }
+
     @Test fun usageBodyOnlyKnownEventsNoIds() {
-        assertNull(UsageCount.body("2.5.21", "wasm", emptyMap()))
-        val b = UsageCount.body("2.5.21", "wasm", mapOf("start" to 1, "level_geschafft" to 3, "name:Lena" to 1, "theorie" to 0))!!
-        assertEquals("{\"app\":\"kurvenflug\",\"v\":\"2.5.21\",\"f\":\"wasm\",\"e\":{\"level_geschafft\":3,\"start\":1}}", b)
+        assertNull(UsageCount.body("2.5.22", emptyMap()))
+        val b = UsageCount.body("2.5.22", mapOf("start" to 1, "level_geschafft" to 300, "name:Lena" to 1, "theorie" to 0))!!
+        assertEquals("{\"app\":\"kurvenflug\",\"v\":\"2.5.22\",\"e\":{\"level_geschafft\":50,\"start\":1}}", b)
+        assertTrue(UsageCount.EVENTS.size <= 20)
     }
 }

@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.22 – Elternbereich nach Vorgabe
+- Vor einer Klassenarbeit zeigt der Elternbereich neben der Probestunde auch den Easy-Learning-Crashkurs
+  (kostenlos für Familien mit Stundenpaket). Die Probestunde öffnet passend vorausgefüllt mit Thema und Klasse.
+- Die anonyme Nutzungszählung ist jetzt standardmäßig an und im Elternbereich abschaltbar. Gezählt wird nur, wie oft
+  etwas passiert – ohne Kennung, ohne IP, ohne Namen oder Spielstand; auf dem Gerät wird dafür nur der Schalter gespeichert.
+
 ## 2.5.21 – Mehr für Eltern
 - Der Elternbereich („Ich“ → „Für Eltern“) ist jetzt durch eine Frage für Erwachsene geschützt. Dort gibt es neu:
   einen Hinweis, wenn ein Thema länger hakt oder eine Klassenarbeit ansteht (mit kostenloser Probestunde bei

@@ -257,13 +257,15 @@ class ParentArea(
     val onHideHint: () -> Unit,
     val onHintSeen: () -> Unit,
     val onCounting: (Boolean) -> Unit,
+    /** Anonyme Nutzungszählung: Klicks und Hinweise (nur gesendet, wenn die Zählung an ist) */
+    val onCount: (String) -> Unit = {},
 )
 
 @Composable
 private fun ParentExtras(p: ParentArea, w: WeekSummary) {
     val sfx = LocalSfx.current
     val reason = de.kurvenflug.core.model.ParentOffers.hint(p.today, w.needsHelp.isNotEmpty(), p.examUntil, p.hintHidden, p.hintShown)
-    LaunchedEffect(reason) { if (reason != null) p.onHintSeen() }
+    LaunchedEffect(reason) { if (reason != null) { p.onHintSeen(); p.onCount("nachhilfe_hinweis") } }
     // Nachhilfe-Hinweis – themenbezogen, höchstens an einem Tag pro Woche, ausblendbar
     if (reason != null) {
         val topic = w.needsHelp.firstOrNull() ?: w.topics.firstOrNull()?.first
@@ -275,13 +277,19 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
             Text("💡 Für dich als Elternteil", fontWeight = FontWeight.Bold, color = Q.Cyan)
             Text(when (reason) {
                 de.kurvenflug.core.model.ParentOffers.Reason.EXAM -> "Bald steht eine Klassenarbeit an" + (topic?.let { " – zum Beispiel zu „${it.title}“" } ?: "") +
-                    ". Wenn du dir Unterstützung wünschst: Bei Nachhilfe – online gibt es eine kostenlose Probestunde mit einer Lehrkraft, passend zum Thema."
+                    ". Wenn du dir Unterstützung wünschst: Bei Nachhilfe – online gibt es eine kostenlose Probestunde mit einer Lehrkraft, passend zum Thema – " +
+                    "und den Easy-Learning-Crashkurs zur Vorbereitung (kostenlos für Familien mit Stundenpaket)."
                 else -> "Bei „${topic?.title}“ hakt es gerade. Das ist normal und meist schnell geklärt. Wenn du dir Unterstützung wünschst: " +
                     "Bei Nachhilfe – online gibt es eine kostenlose Probestunde mit einer Lehrkraft, genau zu diesem Thema."
             }, color = Q.Text, style = MaterialTheme.typography.bodySmall)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Button(onClick = { sfx?.play(Sound.TAP); p.onOpen(de.kurvenflug.core.model.ParentOffers.trialLesson(topic?.number ?: 0, p.grade)) },
+                Button(onClick = { sfx?.play(Sound.TAP); p.onCount("probestunde_klick"); p.onOpen(de.kurvenflug.core.model.ParentOffers.trialLesson(topic?.number, p.grade, reason)) },
                     colors = ButtonDefaults.buttonColors(containerColor = Q.Cyan, contentColor = Q.Space)) { Text("Probestunde ansehen", fontWeight = FontWeight.Bold) }
+                if (reason != de.kurvenflug.core.model.ParentOffers.Reason.EXAM) TextButton(onClick = { sfx?.play(Sound.TICK); p.onHideHint() }) { Text("Nicht mehr zeigen", color = Q.Muted) }
+            }
+            if (reason == de.kurvenflug.core.model.ParentOffers.Reason.EXAM) Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                OutlinedButton(onClick = { sfx?.play(Sound.TAP); p.onCount("crashkurs_klick"); p.onOpen(de.kurvenflug.core.model.ParentOffers.CRASH_COURSE) }) {
+                    Text("Crashkurs ansehen", color = Q.Cyan, fontWeight = FontWeight.Bold) }
                 TextButton(onClick = { sfx?.play(Sound.TICK); p.onHideHint() }) { Text("Nicht mehr zeigen", color = Q.Muted) }
             }
         }
@@ -297,7 +305,7 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
         Switch(exam, { sfx?.play(Sound.TICK); p.onExam(it) })
     }
     // Lern-Geschenk
-    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TAP); p.onOpen(de.kurvenflug.core.model.ParentOffers.GIFT) }.padding(14.dp),
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TAP); p.onCount("geschenk_klick"); p.onOpen(de.kurvenflug.core.model.ParentOffers.GIFT) }.padding(14.dp),
         verticalAlignment = Alignment.CenterVertically) {
         Text("🎁", fontSize = 24.sp)
         Column(Modifier.weight(1f).padding(start = 10.dp)) {
@@ -309,9 +317,9 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
     // Anonyme Nutzungszählung (aus = Standard)
     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
         Column(Modifier.weight(1f)) {
-            Text("📊 Anonyme Nutzungszählung", fontWeight = FontWeight.Bold, color = Q.Text)
-            Text("Hilft uns, Kurvenflug zu verbessern: Gezählt wird nur, wie oft gestartet, ein Level begonnen oder geschafft und die Theorie " +
-                "geöffnet wurde – ohne Namen, ohne Spielstand, ohne Cookies, ohne Kennung.", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+            Text("📊 Anonyme Nutzungszählung (hilft uns, die App zu verbessern)", fontWeight = FontWeight.Bold, color = Q.Text)
+            Text("Gezählt wird nur, wie oft etwas passiert (z. B. Start, Level geschafft, Theorie geöffnet) – ohne Kennung, ohne IP, ohne Namen " +
+                "oder Spielstand. Auf dem Gerät wird dafür nichts gespeichert außer diesem Schalter.", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
         }
         Switch(p.counting, { sfx?.play(Sound.TICK); p.onCounting(it) })
     }

@@ -15,9 +15,30 @@ object ParentOffers {
     /** „Klassenarbeit bald“ gilt so lange, nachdem die Eltern es angetippt haben */
     const val EXAM_DAYS = 21L
 
-    /** Kostenlose Probestunde zum Thema (Kapitel-Nummer) und zur Klasse */
-    fun trialLesson(chapter: Int, grade: Int?): String =
-        "$SITE/probestunde/?src=kurvenflug-eltern&thema=kf-$chapter" + (grade?.let { "&klasse=$it" } ?: "")
+    /** Crashkurs vor einer Klassenarbeit (Wortlaut Leitstand: „kostenlos für Familien mit Stundenpaket“) */
+    const val CRASH_COURSE = "$SITE/produkt/easy-learning-crash-kurs/?src=kurvenflug-klassenarbeit"
+
+    /**
+     * Gemeinsame Themen-Kennungen (Leitstand 18.11.; andere Werte verwirft das Probestunden-Formular) je Kurvenflug-Kapitel.
+     */
+    val TOPICS: Map<Int, String> = mapOf(
+        1 to "geometrie", 2 to "lineare-funktionen", 3 to "quadratische-funktionen", 4 to "physik-mechanik", 5 to "trigonometrie",
+        6 to "physik-mechanik", 7 to "gleichungssysteme", 8 to "zuordnungen", 9 to "pythagoras", 10 to "exponential-log",
+        11 to "physik-optik", 12 to "physik-energie", 13 to "physik-mechanik", 14 to "trigonometrie", 15 to "brueche",
+        16 to "geometrie", 17 to "physik-optik", 18 to "quadratische-funktionen", 19 to "analysis", 20 to "analysis",
+        21 to "analysis", 22 to "vektoren", 23 to "prozent", 24 to "physik-mechanik", 25 to "potenzen-wurzeln",
+        26 to "trigonometrie", 27 to "physik-mechanik", 28 to "exponential-log", 29 to "zuordnungen", 30 to "stochastik",
+    )
+    /** Die erlaubte gemeinsame Liste (zur Prüfung im Test) */
+    val ALLOWED_TOPICS = setOf("grundrechenarten", "einmaleins", "brueche", "dezimalzahlen", "prozent", "zuordnungen", "terme-gleichungen",
+        "lineare-funktionen", "gleichungssysteme", "pythagoras", "quadratische-funktionen", "potenzen-wurzeln", "exponential-log", "trigonometrie",
+        "geometrie", "vektoren", "analysis", "stochastik", "physik-mechanik", "physik-optik", "physik-energie", "sachkunde", "deutsch", "englisch",
+        "allgemeinwissen")
+
+    /** Kostenlose Probestunde zum Thema und zur Klasse; [reason] bestimmt die Quelle (elternbericht bzw. klassenarbeit) */
+    fun trialLesson(chapter: Int?, grade: Int?, reason: Reason = Reason.STUCK): String =
+        "$SITE/probestunde/?src=kurvenflug-" + (if (reason == Reason.EXAM) "klassenarbeit" else "elternbericht") +
+            (chapter?.let { TOPICS[it] }?.let { "&thema=$it" } ?: "") + (grade?.let { "&klasse=$it" } ?: "")
 
     /** Warum der Hinweis kommt */
     enum class Reason { STUCK, EXAM }
@@ -41,13 +62,16 @@ object ParentOffers {
 object UsageCount {
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     /** Erlaubte Ereignisse – nichts anderes wird je gezählt */
-    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie")
+    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "elternbereich", "pro_ansehen", "pro_kasse", "code_eingeloest",
+        "probestunde_klick", "neukunde_klick", "crashkurs_klick", "nachhilfe_hinweis", "geschenk_klick")
+    /** Der Zähler nimmt je Ereignis höchstens so viele an */
+    const val MAX_PER_EVENT = 50
 
-    /** Inhalt der Sendung: {"app":"kurvenflug","v":"2.5.21","f":"wasm","e":{"start":1,…}} – null, wenn nichts zu senden ist */
-    fun body(version: String, variant: String, counts: Map<String, Int>): String? {
+    /** Inhalt der Sendung: {"app":"kurvenflug","v":"2.5.22","e":{"start":1,…}} – null, wenn nichts zu senden ist */
+    fun body(version: String, counts: Map<String, Int>): String? {
         val e = counts.filterKeys { it in EVENTS }.filterValues { it > 0 }
         if (e.isEmpty()) return null
-        val list = e.entries.sortedBy { it.key }.joinToString(",") { "\"${it.key}\":${it.value}" }
-        return "{\"app\":\"kurvenflug\",\"v\":\"${version.filter { it.isLetterOrDigit() || it == '.' }}\",\"f\":\"${variant.filter { it.isLetter() }}\",\"e\":{$list}}"
+        val list = e.entries.sortedBy { it.key }.joinToString(",") { "\"${it.key}\":${it.value.coerceAtMost(MAX_PER_EVENT)}" }
+        return "{\"app\":\"kurvenflug\",\"v\":\"${version.filter { it.isLetterOrDigit() || it == '.' }}\",\"e\":{$list}}"
     }
 }
