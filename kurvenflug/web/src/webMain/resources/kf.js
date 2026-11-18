@@ -8,7 +8,8 @@
   // ------------------------------------------------------------ Schnellstart: große Dateien sofort parallel laden
   // window.KF_FILES (vom Build in index.html eingesetzt): [{u: Pfad, s: Bytes, t: Typ}]. Wir laden alles gleich los,
   // zählen die Bytes für den Fortschrittsbalken und reichen die Daten an die App weiter, sobald sie danach fragt.
-  var files = window.KF_FILES || [], total = files.reduce(function (a, f) { return a + f.s; }, 0), loaded = 0, pending = {};
+  // ?direkt=1: ohne unseren Vorlade-Strom (Test: Liegt es am fetch-/ReadableStream-Weg?)
+  var files = /[?&]direkt=1/.test(location.search) ? [] : (window.KF_FILES || []), total = files.reduce(function (a, f) { return a + f.s; }, 0), loaded = 0, pending = {};
   function progress() {
     var bar = document.getElementById('kf-bar'), txt = document.getElementById('kf-pct');
     if (!bar || !total) return;
@@ -16,7 +17,7 @@
     bar.style.width = (4 + 96 * p) + '%';
     if (txt) txt.textContent = p < 1 ? 'Lade … ' + Math.round(p * 100) + ' %' : 'Starte die Triebwerke …';
     // alles geladen: stürzt der Tab jetzt beim Übersetzen ab, nimmt der nächste Start die Kompatibilitäts-Fassung (index.html)
-    if (p >= 1 && window.kfMode === 'wasm') { try { if ((localStorage.getItem('kf.start') || '').indexOf('wasm|') === 0) localStorage.setItem('kf.start', 'wasm|geladen'); } catch (e) {} }
+    if (p >= 1 && window.kfMode === 'wasm') { try { if ((localStorage.getItem('kf.start') || '').indexOf('wasm|startet') === 0 && window.kfStage) window.kfStage('geladen'); } catch (e) {} }
   }
   // Jede Datei wird sofort angefragt; die Daten fließen als Strom weiter, damit der Browser das Wasm schon
   // während des Ladens übersetzen kann (instantiateStreaming). Wir zählen nur mit.
@@ -47,22 +48,25 @@
   };
 
   // ------------------------------------------------------------ Ton (Web Audio, erst nach dem ersten Tippen)
-  var ctx = null, unlocked = false, unlockCbs = [];
+  var ctx = null, unlocked = false, unlockCbs = [], waiting = [];
   KF.bufData = []; var buffers = [];
+  // Ton-Ausgabe erst nach dem ersten Tippen anlegen (iOS: kein AudioContext vor einer Berührung)
   function audio() {
-    if (!ctx) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; ctx = new C(); }
+    if (!ctx && unlocked) { var C = window.AudioContext || window.webkitAudioContext; if (!C) return null; try { ctx = new C(); } catch (e) { return null; } }
     return ctx;
   }
   function unlock() {
+    if (!unlocked) unlocked = true;
     var c = audio(); if (!c) return;
     if (c.state === 'suspended') c.resume();
-    if (!unlocked) { unlocked = true; unlockCbs.forEach(function (f) { try { f(); } catch (e) { console.warn(e); } }); }
+    if (waiting.length) { var w = waiting; waiting = []; w.forEach(function (id) { KF.bufDone(id); }); }
+    if (unlockCbs.length) { var cbs = unlockCbs; unlockCbs = []; cbs.forEach(function (f) { try { f(); } catch (e) { console.warn(e); } }); }
   }
   ['pointerdown', 'keydown', 'touchend'].forEach(function (t) { window.addEventListener(t, unlock, { capture: true, passive: true }); });
-  KF.onUnlock = function (f) { if (unlocked) f(); else unlockCbs.push(f); };
+  KF.onUnlock = function (f) { if (unlocked && ctx) f(); else unlockCbs.push(f); };
   KF.bufNew = function (n, rate) { KF.bufData.push(new Float32Array(n)); buffers.push({ rate: rate, buf: null }); return KF.bufData.length - 1; };
   KF.bufDone = function (id) {
-    var c = audio(); if (!c) return;
+    var c = audio(); if (!c) { waiting.push(id); return; }   // vor dem ersten Tippen: Daten aufheben
     var d = KF.bufData[id], b = c.createBuffer(1, d.length, buffers[id].rate);
     b.getChannelData(0).set(d); buffers[id].buf = b; KF.bufData[id] = null;
   };

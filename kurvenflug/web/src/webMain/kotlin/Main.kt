@@ -18,11 +18,15 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 private fun locationSearch(): String = js("decodeURIComponent(window.location.search || '')")
 private fun clearSearch(): Unit = js("(function () { try { history.replaceState(null, '', window.location.pathname); } catch (e) {} })()")
 
+/** Start-Protokoll (index.html): das Programm läuft – bricht der Start danach ab, weiß der nächste Start, wo */
+private fun stage(s: String): Unit = js("(function () { if (window.kfStage) window.kfStage(s) })()")
+
 private fun hideLoader(): Unit = js("(function () { var l = document.getElementById('kf-loader'); if (l) { l.classList.add('weg'); setTimeout(function () { l.remove(); }, 400); } if (window.kfReady) window.kfReady(); })()")
 
 /** Kurvenflug im Browser: dieselbe Oberfläche wie auf Android, Spielstand im lokalen Speicher des Browsers. */
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
 fun main() {
+    stage("läuft")
     WebPlatform.init(BuildInfo.VERSION, BuildInfo.PRO_KEY, BuildInfo.PRO_CHECKOUT)
     val settings = Settings(WebPrefs())
     // Freischalt-Link aus der E-Mail: …/?pro=KF… → Code merken, Adresse wieder aufräumen
