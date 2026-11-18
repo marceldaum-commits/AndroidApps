@@ -1,6 +1,7 @@
 package de.wissensgarten.app
 
 import de.wissensgarten.app.ui.common.encodePng
+import kotlinx.coroutines.sync.withLock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.wissensgarten.core.data.DataContainer
@@ -636,7 +637,9 @@ class AppViewModel(
     }
 
     /** Bericht bauen, verschlüsseln (auf dem Gerät) und hochladen. Ergebnis: HTTP-Status (204 = ok), −1 = Fehler/keine Kopplung */
-    suspend fun elternHochladen(profileId: String): Int {
+    private val elternMutex = kotlinx.coroutines.sync.Mutex()
+    suspend fun elternHochladen(profileId: String): Int = elternMutex.withLock { elternHochladenJetzt(profileId) }
+    private suspend fun elternHochladenJetzt(profileId: String): Int {
         val h = host ?: return -1
         val k = c.settings.elternKopplung(profileId) ?: return -1
         verlaufAktualisieren(profileId)
@@ -682,8 +685,9 @@ class AppViewModel(
         val now = de.wissensgarten.core.model.Platform.nowMs()
         val all = c.snapshots.snapshot()
         if (all.profiles.none { it.id == profileId }) return null
+        // savedAt bleibt 0: sonst wäre jede Sicherung „geändert“ (hochgeladen wird nur bei Änderung)
         fun snap(logTage: Long) = de.wissensgarten.core.model.SyncSnapshot(
-            savedAt = now,
+            savedAt = 0,
             profiles = all.profiles.filter { it.id == profileId },
             beds = all.beds.filter { it.profileId == profileId },
             cards = all.cards.filter { it.profileId == profileId },

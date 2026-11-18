@@ -44,7 +44,7 @@ const store = {
     check(status === '204', `${modus}: Hochladen 204`, res);
     const m = /^https:\/\/staging\.mathenachhilfe-online\.com\/eltern-bericht\/#([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})$/.exec(link || '');
     check(!!m, `${modus}: Eltern-Link (Test-Stufe) mit id.key nach #`, link);
-    const puts = calls.filter((c) => c.method === 'PUT');
+    const puts = calls.filter((c) => c.method === 'PUT' && c.url.includes('/eltern/v1/b/'));
     check(puts.length >= 1, `${modus}: PUT gesendet`, puts.length);
     if (m && puts.length) {
       const put = puts[puts.length - 1];
@@ -67,7 +67,7 @@ const store = {
     // ---- Sicherung: wurde sie mit hochgeladen, lässt sie sich entschlüsseln?
     const sPut = calls.filter((c) => c.method === 'PUT' && c.url.includes('/eltern/v1/s/'));
     check(sPut.length >= 1 && m && sPut[0].url === 'https://trainer-test.mathenachhilfe-online.com/eltern/v1/s/' + m[1], `${modus}: Sicherung hochgeladen`, sPut.map((c) => c.url));
-    let sicherungBody = null, schreib = puts.length ? puts[0].headers['x-schreib'] : null;
+    let kartenVorher = -1, sicherungBody = null, schreib = puts.length ? puts[0].headers['x-schreib'] : null;
     if (sPut.length && m) {
       sicherungBody = sPut[sPut.length - 1].body;
       check(sicherungBody.length < 512 * 1024, `${modus}: Sicherung < 512 KB`, sicherungBody.length);
@@ -77,7 +77,9 @@ const store = {
         const j = JSON.parse(Buffer.concat([d.update(ct.subarray(0, ct.length - 16)), d.final()]).toString('utf8'));
         check(JSON.stringify(Object.keys(j).sort()) === JSON.stringify(['app', 'daten', 'format', 'schreib', 'stand', 'v']) && j.app === 'wissensgarten' && j.schreib === schreib,
           `${modus}: Sicherung entschlüsselt, Hülle mit schreib`, Object.keys(j));
-        check(j.daten.lernstand.cards.length === 8 && j.daten.lernstand.profiles.length === 1, `${modus}: Lernstand vollständig`, { karten: j.daten.lernstand.cards.length });
+        const hier = await p.evaluate(() => (JSON.parse(localStorage.getItem('wg.garten') || '{}').cards || []).filter((x) => x.profileId === 'p1').length);
+        kartenVorher = j.daten.lernstand.cards.length;
+        check(kartenVorher === hier && kartenVorher >= 8 && j.daten.lernstand.profiles.length === 1, `${modus}: Lernstand vollständig`, { gesichert: kartenVorher, hier });
       } catch (e) { check(false, `${modus}: Sicherung entschlüsseln`, String(e)); }
     }
     // Zweites Hochladen ohne Änderung: keine neue Sicherung
@@ -112,11 +114,11 @@ const store = {
       check((await neu(link)).includes('anderen App'), `${modus}: andere App → Hinweis`);
       antwort = { status: 200, body: JSON.stringify({ d: sicherungBody, t: 'x' }) };
       const r3 = await neu(link);
-      check(r3.startsWith('ok 8'), `${modus}: Wiederherstellen`, r3);
+      check(r3.startsWith('ok ' + kartenVorher), `${modus}: Wiederherstellen`, r3);
       await p2.waitForTimeout(2500);
       const garten = await p2.evaluate(() => JSON.parse(localStorage.getItem('wg.garten') || '{}'));
       const kartenNeu = (garten.cards || []).filter((x) => x.profileId === 'p1');
-      check(kartenNeu.length === 8 && kartenNeu.filter((x) => x.stability >= 10).length === 4 && (garten.logs || []).length === 12, `${modus}: derselbe Lernstand`, { karten: kartenNeu.length, logs: (garten.logs || []).length });
+      check(kartenNeu.length === kartenVorher && kartenNeu.filter((x) => x.stability >= 10).length === 4 && (garten.logs || []).length === 12, `${modus}: derselbe Lernstand`, { karten: kartenNeu.length, logs: (garten.logs || []).length });
       const w = calls2.filter((x) => x.method === 'PUT' && x.url.endsWith('/b/' + m[1]));
       check(w.length >= 1 && w[0].headers['x-schreib'] === schreib, `${modus}: neues Gerät schreibt weiter (gleiches Schreibrecht)`, w.length);
       await ctx2.close();
