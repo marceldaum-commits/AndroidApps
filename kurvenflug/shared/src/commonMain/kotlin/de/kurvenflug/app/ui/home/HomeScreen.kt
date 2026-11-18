@@ -276,6 +276,7 @@ private fun Galaxy(
     if (asMap) {
         de.kurvenflug.app.ui.story.GalaxyMap(chapters.filter { subject == null || it.subject == subject }, chapters, stars, grade,
             continueLevel?.chapter, onLevel, bossStars, onBoss)
+        ComingSoon(subject, grade)
         return
     }
     de.kurvenflug.core.model.Plan.sections(chapters, grade, subject).forEach { sec ->
@@ -290,6 +291,40 @@ private fun Galaxy(
             AnimatedVisibility(expanded, enter = expandVertically(spring(dampingRatio = 0.8f)) + fadeIn(), exit = shrinkVertically() + fadeOut()) {
                 de.kurvenflug.app.ui.flight.ChapterCard(c, index, stars, onLevel, bossStars[c.number] ?: 0, onBoss?.let { b -> { b(c.number) } }, header = false)
             }
+        }
+    }
+    ComingSoon(subject, grade)
+}
+
+/**
+ * „Kommt bald“: Lehrplan-Themen, die es noch nicht als Kapitel gibt (Lehrplan-Abgleich 18.11.) – ohne Datum, ohne Kaufhinweis.
+ * Passend zur gewählten Klasse oben; leicht schwebende, abgedunkelte Planeten.
+ */
+@Composable
+private fun ComingSoon(subject: de.kurvenflug.core.model.Subject?, grade: Int?) {
+    val list = de.kurvenflug.core.model.Curriculum.upcoming(subject).sortedBy { u -> if (grade != null && grade in u.grades) 0 else 1 }
+    if (list.isEmpty()) return
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp), modifier = Modifier.padding(top = 8.dp)) {
+        Text("🔭 Kommt bald", fontWeight = FontWeight.Black, color = Q.Text, fontSize = 18.sp)
+        Text("Diese Themen aus dem Lehrplan bauen wir als Nächstes – neue Planeten am Rand der Galaxie.", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+    }
+    val drift by rememberInfiniteTransition(label = "bald").animateFloat(-3f, 3f, infiniteRepeatable(tween(2200, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "d")
+    list.chunked(2).forEachIndexed { row, pair ->
+        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+            pair.forEachIndexed { i, u ->
+                val mine = grade != null && grade in u.grades
+                Column(Modifier.weight(1f).graphicsLayer { translationY = if ((row + i) % 2 == 0) drift else -drift; alpha = if (mine) 0.95f else 0.7f }
+                    .clip(RoundedCornerShape(16.dp)).background(Q.Panel).border(1.5.dp, if (mine) Q.Cyan.copy(alpha = 0.6f) else Q.Muted.copy(alpha = 0.3f), RoundedCornerShape(16.dp))
+                    .padding(10.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(u.emoji, fontSize = 22.sp)
+                        Text(u.title, fontWeight = FontWeight.Bold, color = Q.Text, maxLines = 2, fontSize = 14.sp, lineHeight = 17.sp, modifier = Modifier.padding(start = 6.dp))
+                    }
+                    Text("${u.subject.emoji} ${u.gradeText}", color = if (mine) Q.Cyan else Q.Muted, style = MaterialTheme.typography.labelSmall)
+                    Text(u.what, color = Q.Muted, style = MaterialTheme.typography.labelSmall, maxLines = 3)
+                }
+            }
+            if (pair.size == 1) Spacer(Modifier.weight(1f))
         }
     }
 }

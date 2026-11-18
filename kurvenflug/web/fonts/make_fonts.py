@@ -56,7 +56,7 @@ missing = [c for c in cps if c not in ecm and c not in dcm]
 if missing: print('Ohne Schrift (bitte im Code ersetzen):', ''.join(map(chr, missing)), file=sys.stderr)
 
 open(os.path.join(HERE, 'chars.txt'), 'w', encoding='utf-8').write(''.join(map(chr, cps)) + '\n')
-lic = os.path.join(ROOT, 'web/src/wasmJsMain/resources/fonts-lizenzen.txt')
+lic = os.path.join(ROOT, 'web/src/webMain/resources/fonts-lizenzen.txt')
 with open(lic, 'w', encoding='utf-8') as f:
     f.write('Schriften in Kurvenflug (Web)\n\nNoto Color Emoji – SIL Open Font License 1.1\n\n')
     f.write(emoji_tar.extractfile('package/LICENSE').read().decode('utf-8'))
