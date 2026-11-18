@@ -39,3 +39,10 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 **Wissensgarten** – Links `https://wissensgarten.mathenachhilfe-online.com/#paket=<ID>` (ab Fr 20.11. auf `wissensgarten-test.`, Meldung folgt): `s1-mathe-geometrie-formeln`, `s1-mathe-pythagoras-trigo` (beide frei), `ob-mathe-analysis` (Plus – ohne Plus nur Vorschau; für Schüler die freien Pakete verlinken).
 
 **Für uns daraus:** Die Ziele `level/5-6`, `baumeister`, `zufall`, `galton` werden von außen verlinkt und dürfen nicht umbenannt werden. Links zu den anderen Apps bauen wir erst ein, wenn deren Direktlinks laufen und der Leitstand den Plan bestätigt hat.
+
+### Abgleich Raumlicht (18.11.2026, an alle fünf Räume gesendet)
+
+1. **Nimmt heraus / gibt ab:** nichts. Raumlicht hat keinen Stoff unter Klasse 10/11, kein reines Tempo-Rechnen und keine reinen Merklisten ohne Aufgabe.
+2. **Behält, obwohl es sich berührt:** Abstände, Winkel, Hesse-Form, Kreuzprodukt, Kugeln (Mathe-Trainer hat dieselben Themen als Rechentraining) – bei uns als 3D-Aufgabe zum Ausprobieren mit vollem Rechenweg, dort zum Üben in Stufen. Binomialverteilung/Galton-Brett und Analysis „Kurve abfahren“ – Erleben statt Üben. Formel-Kästen und Spickzettel – gehören zu den Aufgaben; zum Wiederholen verlinken wir auf den Wissensgarten.
+3. **Übernimmt:** vom Mathe-Trainer „Schattenwurf“ und „Körper im Raum“ (Oberstufe).
+4. **Plant neu:** Fr 20.11. Lineare Gleichungssysteme & Gauß (räumlich, drei Ebenen), evtl. stochastische Unabhängigkeit. Di 24.11. Zufallsgrößen und Normalverteilung. Danach Sinus/Kosinus ableiten, Funktionenscharen, uneigentliche Integrale, Schattenwurf/Projektion.
