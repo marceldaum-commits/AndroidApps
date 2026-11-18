@@ -11,6 +11,8 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         outputModuleName.set("wissensgarten")
+        // kein Import von WebAssembly.JSTag – Safari 26/27 verarbeitet Tag-Importe fehlerhaft (weiße Fläche)
+        compilerOptions { freeCompilerArgs.add("-Xwasm-no-jstag") }
         browser { commonWebpackConfig { outputFileName = "wissensgarten.js" } }
         binaries.executable()
     }

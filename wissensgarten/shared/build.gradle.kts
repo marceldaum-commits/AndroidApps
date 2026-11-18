@@ -37,7 +37,8 @@ val genAppInfo by tasks.registering {
 kotlin {
     androidTarget { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(ExperimentalWasmDsl::class)
-    wasmJs { browser() }
+    // -Xwasm-no-jstag: kein Import von WebAssembly.JSTag – Safari 26/27 verarbeitet Tag-Importe fehlerhaft (weiße Fläche)
+    wasmJs { browser(); compilerOptions { freeCompilerArgs.add("-Xwasm-no-jstag") } }
     // Kotlin/JS-Fassung für Browser ohne passendes WasmGC (Safari 27 auf iPad/iPhone)
     js { browser(); useCommonJs() }
     compilerOptions {

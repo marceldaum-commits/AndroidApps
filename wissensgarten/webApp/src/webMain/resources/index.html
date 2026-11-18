@@ -209,8 +209,22 @@
         else if (webkit) { use = 'js'; why = 'Safari/WebKit'; }
         else if (kaputt === v) { use = 'js'; why = 'Wasm-Start scheiterte vorher bei ' + v; }
         else { use = 'wasm'; why = 'Standard'; }
+        // Ist der letzte Wasm-Start dieser Version im selben Tab abgestürzt (Tab neu geladen, ohne dass der Garten stand)? → JS
+        try {
+          if (use === 'wasm' && !forced && sessionStorage.getItem('wg.wasmLauf') === v) { localStorage.setItem('wg.wasmKaputt', v); use = 'js'; why = 'Wasm-Start brach vorher ab'; }
+          if (use === 'wasm') sessionStorage.setItem('wg.wasmLauf', v);
+          window.addEventListener('wg-ready', function () { try { sessionStorage.removeItem('wg.wasmLauf'); } catch (e) {} });
+        } catch (e) {}
         window.wgModus = use; window.wgModusAuto = !forced;
         window.wgStartNote('Fassung ' + use + ' (' + why + ')');
+        if (use === 'wasm' && !forced) {
+          // „Can't wrap nullptr“ u. ä. landen oft nur in der Konsole – vor dem Start als Startfehler werten
+          var oe = console.error;
+          console.error = function () {
+            try { var t = Array.prototype.map.call(arguments, String).join(' '); if (!window.wgReady && /nullptr|import descriptors|CompileError|LinkError/.test(t)) window.wgStartFailed('Wasm: ' + t.slice(0, 160)); } catch (e) {}
+            return oe.apply(console, arguments);
+          };
+        }
       })();
       // iPhone/iPad: Zeichenfläche auf höchstens ~3,5 Mio. Bildpunkte begrenzen – sonst bleibt das Bild auf großen Geräten weiß
       try {
@@ -378,7 +392,12 @@
         try { var sp = document.getElementById('splash'); if (sp) document.documentElement.appendChild(sp); } catch (e) {}
         var list = ['wg-platform.js', 'wg-stimme.js', window.wgModus === 'js' ? 'wissensgarten-js.js' : 'wissensgarten.js'];
         var next = function (i) {
-          if (i >= list.length) { window.wgDiag('alle Skripte geladen → App startet'); return; }
+          if (i >= list.length) {
+            window.wgDiag('alle Skripte geladen → App startet');
+            // Zeitlimit: steht der Wasm-Garten nach 25 s nicht, gilt das als Startfehler (→ automatisch JS-Fassung)
+            if (window.wgModus === 'wasm') setTimeout(function () { if (!window.wgReady && document.visibilityState === 'visible') window.wgStartFailed('Wasm-Start: Zeitlimit'); }, 25000);
+            return;
+          }
           var s = document.createElement('script');
           s.src = list[i];
           s.onload = function () { window.wgDiag('Skript ' + list[i] + ' ok'); next(i + 1); };
