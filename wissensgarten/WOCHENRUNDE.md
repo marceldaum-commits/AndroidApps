@@ -26,3 +26,61 @@ _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen 
 - **Verlinken:** In unseren 8 Mathe-Paketen Klasse 5–10 kommt unter „Theorie“ ein Knopf „Üben mit Rechenwegen im Mathe-Trainer“. Dafür brauchen wir die Einheiten-IDs vom Mathe-Trainer (angefragt).
 - **Stand:** Antwort des Mathe-Trainers steht aus.
 
+### 18.11.2026 – Vereinbarte Verlinkungen (Einbau mit dem Update Fr 20.11., zusammen mit unseren Deeplinks `#paket=<ID>`)
+
+**Mathe-Trainer** (Aufteilung angenommen; Link `https://trainer.mathenachhilfe-online.com/#/u/<id>`, die erste ID ist jeweils der beste Einstieg):
+
+| Unser Paket | Einheiten beim Mathe-Trainer |
+|---|---|
+| s1-mathe-algebra | k7-terme, k8-linear, k9-parabel, k10-funktionen |
+| s1-mathe-brueche-prozent | k6-bruch, k6-bruchmal, k6-dezimal, k6-prozent, k7-prozent, k7-zinsen |
+| s1-mathe-geometrie-formeln | k8-flaechen, k8-kreis, k6-quader, k10-koerper, k5-groessen |
+| s1-mathe-gleichungen | k7-gleichungen, k8-lgs, k9-quadrat |
+| s1-mathe-negative-zahlen | k5-ganz, k7-rational |
+| s1-mathe-pythagoras-trigo | k9-pythagoras, k10-sinussatz, k10-koerper |
+| s1-mathe-wahrscheinlichkeit | k6-zufall, k8-zufall, k6-daten, k10-daten |
+| Plus Analysis | `#/g/analysis` |
+
+Der Gegen-Link des Mathe-Trainers folgt nach dem 23.11.
+
+**KurvenFlug** (Link `https://kurvenflug.mathenachhilfe-online.com/#kapitel=<nr>`, Test-Stufe `kurvenflug-test.`; das Format geht ab Fr 20.11. auf test, KurvenFlug meldet sich):
+
+| Unser Paket | Kapitel bei KurvenFlug |
+|---|---|
+| s1-mathe-algebra | Geraden 2, Zuordnungen 8, Parabeln 3, Nullstellen 18, Potenzfunktionen 25, Wellen & Wachstum 5, Logarithmus 10 |
+| s1-physik-einheiten-formeln | Weg & Zeit 13, Beschleunigte Bewegung 24, Wurf & Schwerkraft 4, Energie 12, Laser-Optik 11, Lichtbrechung 17 |
+| s1-physik-strom | folgt („Strom & Ohmsches Gesetz“, voraussichtlich Fr 27.11.) |
+
+**Rechenblitz** („Tempo trainieren im Rechenblitz“; Link `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6>&modus=<training|blitz>`, Test-Stufe `rechenblitz-test.`):
+
+| Unser Paket | Ziel beim Rechenblitz |
+|---|---|
+| gs-einmaleins | mul&stufe=2 (zusätzlich mul 1, div 2) |
+| gs-plus-minus-20 | add&stufe=2, sub&stufe=2 |
+| gs-plus-minus-100 | add&stufe=3/4, sub&stufe=3/4 |
+| gs-zahlenraum-1000 | add&stufe=5, sub&stufe=5 |
+| gs-geld | thema=geld |
+| gs-uhrzeit | thema=zeit |
+| gs-mathe-groessen | thema=unit |
+
+Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `#paket=gs-einmaleins`, sobald der Leitstand den Wortlaut freigibt.
+
+**Experimentopia** („Ausprobieren in Experimentopia“; Link `https://experimentopia.mathenachhilfe-online.com/#thema=<id>`, Test-Stufe `experimentopia-test.`, eingebaut bis Fr 20.11.):
+- Wasser für Klasse 3–4 baut Experimentopia in den nächsten zwei Wochen nicht aus. Unser Update „Winter, Wetter, Wasser“ bleibt deshalb am Di 24.11.
+
+| Unser Paket | Thema bei Experimentopia |
+|---|---|
+| s1-physik-strom | physik-elektrizitaet |
+| gs-wetter-jahreszeiten (und „Winter, Wetter, Wasser“) | physik-waerme |
+| s1-chemie-saeuren-basen | chemie-saeuren-laugen |
+| s1-chemie-grundbegriffe | chemie-stoffe |
+| s1-bio-pflanzen, s1-bio-oekologie, gs-pflanzen-wald | biologie-oekologie |
+| s1-bio-zelle-mensch | biologie-zellen |
+| s1-bio-organe, gs-koerper-natur | biologie-koerper |
+| gs-gesund-ernaehrung | biologie-ernaehrung |
+| s1-physik-einheiten-formeln | physik-mechanik |
+
+- Experimentopia verlinkt umgekehrt mit „Begriffe wiederholen im Wissensgarten“ auf `#paket=…`.
+
+**Wortlaut und Zählung (`src=…`) der App-zu-App-Links** stimmen wir mit dem Leitstand ab. Vorschlag: `src=wissensgarten-theorie`.
+
