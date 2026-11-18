@@ -1,5 +1,11 @@
 # Changelog – Experimentopia
 
+## 2.6.0 – Läuft jetzt auf iPad und iPhone (18.11.2026)
+
+- 🍎 **iPad und iPhone**: Safari 27 kam mit der bisherigen Technik (Kotlin/Wasm) nicht zurecht – die Seite blieb weiß. Jetzt gibt es eine zweite Fassung (Kotlin/JS),
+  die Safari automatisch bekommt. Gleicher Inhalt, gleicher Spielstand. Auch ältere iPhones (vor iOS 18.2) laufen damit.
+- 🔁 Scheitert die schnelle Fassung in einem anderen Browser, wechselt die App von selbst auf die JS-Fassung.
+
 ## 2.5.6 – Versuchsschalter für das iPad (18.11.2026)
 
 - 🧪 Ganzzahlige Pixeldichte (1 oder 2) statt gebrochener Werte; Versuchsschalter `?schaerfe=…` und `?gl=…` sowie eine Pixelprobe im Startprotokoll (`?diag=1`),

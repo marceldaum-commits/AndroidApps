@@ -66,6 +66,18 @@
   var dpr = schaerfe === 'voll' ? echtDpr : schaerfe === '1' ? 1 : schaerfe === '2' ? 2 : Math.max(1, Math.min(2, Math.round(echtDpr)));
   window.__exDpr = [echtDpr, dpr];
   try { if (dpr !== echtDpr) Object.defineProperty(window, 'devicePixelRatio', { get: function () { return dpr; }, configurable: true }); } catch (e) {}
+  // Fassung wählen: Kotlin/Wasm (schnell) oder Kotlin/JS (Ersatz). ?modus=js|wasm|auto – Standard auto:
+  // Safari/WebKit (auch Chrome auf iPhone/iPad) und Browser ohne WasmGC bekommen JS (Safari 27 kann das Wasm-Hauptmodul nicht verarbeiten),
+  // alle anderen Wasm. Scheitert ein Wasm-Start, merkt sich die Seite für diese Version JS und lädt neu.
+  (function () {
+    var m = (Q.get('modus') || 'auto').toLowerCase(), ua = navigator.userAgent, gcOk = false;
+    try { gcOk = WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0])); } catch (e) {}
+    var webkit = (/AppleWebKit/.test(ua) && !/Chrome|Chromium|Edg\/|OPR|Android/.test(ua)) || /CriOS|FxiOS|EdgiOS/.test(ua);
+    var gemerkt = null; try { gemerkt = localStorage.getItem('exModus@VERSION@'); } catch (e) {}
+    window.__exAuto = m === 'auto';
+    window.__exModus = m === 'js' || m === 'wasm' ? m : (gemerkt || (webkit || !gcOk ? 'js' : 'wasm'));
+    exStep('Fassung ' + window.__exModus + (m === 'auto' ? ' (automatisch' + (gemerkt ? ', gemerkt' : webkit ? ', Safari/WebKit' : !gcOk ? ', ohne WasmGC' : '') + ')' : ' (Schalter)'));
+  })();
   // Grafik-Kontext: welche Wünsche hat die App, was bekommt sie – und Schalter zum Ausprobieren
   try {
     var gc = HTMLCanvasElement.prototype.getContext;
@@ -117,6 +129,9 @@
   function wasmGC() { try { return WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0])); } catch (e) { return false; } }
   function showProblem(why) {
     if (document.getElementById('problem')) return;
+    // automatische Wahl und Wasm ist gescheitert: einmal mit der JS-Fassung versuchen (für diese Version gemerkt)
+    // nur beim Start – lief die App schon, gibt es keinen Fassungswechsel
+    if (window.__exAuto && window.__exModus === 'wasm' && !window.__exOk) { try { localStorage.setItem('exModus@VERSION@', 'js'); } catch (e) {} exStep('Wasm gescheitert → JS'); location.reload(); return; }
     var ios = iosVersion(), gc = wasmGC(), alt = !gc && ios && (ios[0] < 18 || (ios[0] === 18 && ios[1] < 2));   // iOS-Hinweis nur, wenn WasmGC wirklich fehlt
     var text = alt ? 'Dein iPhone/iPad hat iOS ' + ios[0] + '.' + ios[1] + '. Experimentopia braucht mindestens iOS 18.2 – bitte unter Einstellungen → Allgemein → Softwareupdate aktualisieren.'
       : (!gc ? 'Dieser Browser ist zu alt für Experimentopia. Bitte Safari ab iOS 18.2 oder Chrome, Edge oder Firefox ab 2024 verwenden.'
@@ -128,7 +143,7 @@
       + '<button id="p-leer" style="font:14px system-ui;padding:9px 16px;border-radius:14px;border:1px solid #A99BD6;background:transparent;color:#A99BD6">Speicher leeren & neu laden</button>'
       + '<small style="color:#A99BD6;max-width:34em;word-break:break-word;white-space:pre-wrap"></small>';
     d.children[2].textContent = text;
-    d.children[5].textContent = 'Version @VERSION@ vom @DATUM@ · ' + (ios ? 'iOS ' + ios.join('.') + ' · ' : '') + 'WasmGC ' + (wasmGC() ? 'ja' : 'nein') + (why ? ' · ' + String(why).slice(0, 160) : '') + (window.__exDiagText ? '\n' + window.__exDiagText() : '');
+    d.children[5].textContent = 'Version @VERSION@ vom @DATUM@ · ' + (ios ? 'iOS ' + ios.join('.') + ' · ' : '') + 'WasmGC ' + (wasmGC() ? 'ja' : 'nein') + (why ? ' · ' + String(why).slice(0, 160) : '') + ' · Fassung ' + window.__exModus + (window.__exDiagText ? '\n' + window.__exDiagText() : '');
     document.body.appendChild(d);
     document.getElementById('p-neu').onclick = function () { location.reload(); };
     document.getElementById('p-leer').onclick = function () {
@@ -156,15 +171,17 @@
     // Pixelprobe: Was steht wirklich in der Zeichenfläche? (weiß = Safari zeigt nichts an, obwohl gezeichnet wurde?)
     try { var gl = window.__exGl; if (gl) { var px = new Uint8Array(4), cv = gl.canvas; gl.readPixels(cv.width >> 1, cv.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
       var cs = getComputedStyle(cv); exStep('Pixel Mitte ' + Array.prototype.join.call(px, ',') + ' · Fläche ' + cv.width + '×' + cv.height + ' / CSS ' + cs.width + '×' + cs.height + (cs.transform && cs.transform !== 'none' ? ' transform ' + cs.transform : '') + ' · DPR ' + window.__exDpr.join('→')); } } catch (e) { exStep('Pixelprobe: ' + e); }
-    exStep('fertig');
+    window.__exOk = true; exStep('fertig');
     // Verliert iOS den Grafik-Kontext (Metal/WebGL), zeigen wir das an, statt still eine leere Fläche zu lassen
     var a = document.getElementById('app'); var c = (a.shadowRoot && a.shadowRoot.querySelector('canvas')) || a.querySelector('canvas');
     c.addEventListener('webglcontextlost', function (e) { e.preventDefault(); showProblem('Grafik vom System zurückgesetzt (WebGL-Kontext verloren)'); }, false);
   }, 4000); } else setTimeout(watch, 300); })();
   // WebAssembly mit „GC“ fehlt älteren Browsern: gleich prüfen, nicht erst alles laden
-  try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) showProblem('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
+  try { if (window.__exModus === 'wasm' && (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0])))) showProblem('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
   // ── Laden mit echtem Fortschritt: App-Kern (.wasm) und Schriften werden sofort angefordert, jedes ankommende Byte bewegt den Balken.
   var PLAN = @LADEPLAN@, got = {}, total = 0, early = {};
+  // nur die Dateien der gewählten Fassung zählen für den Balken
+  (function () { var js = window.__exModus === 'js'; for (var k in PLAN) { var dabei = /\.ttf$/.test(k) || k === '@SKIKO@' || (js ? k === 'experimentopia-js.js' : (k === 'experimentopia.js' || /\.wasm$/.test(k))); if (!dabei) delete PLAN[k]; } })();
   for (var k in PLAN) total += PLAN[k];
   function progress() {
     var sum = 0; for (var k in PLAN) sum += Math.min(got[k] || 0, PLAN[k]);
@@ -187,7 +204,7 @@
   // Große Dateien nacheinander anfordern (nicht alle gleichzeitig) – schont den Speicher auf dem iPhone
   function prefetch() {
     var chain = Promise.resolve();
-    for (var k in PLAN) if (/\.(wasm|ttf)$/.test(k)) (function (k) {
+    for (var k in PLAN) if (/\.ttf$/.test(k) || k === '@SKIKO@' || (window.__exModus === 'wasm' && /\.wasm$/.test(k))) (function (k) {
       var p = chain.then(function () { exStep('lade ' + k); return tracked(k, k); });
       early[k] = p.then(function (r) { exStep(k + ' da'); return r; });
       // die nächste Datei erst, wenn diese ganz angekommen ist
@@ -239,9 +256,10 @@
   function startApp() {
     if (appStarted) return; appStarted = true;
     exStep('Ladebild gemalt'); prefetch();
-    var sc = document.createElement('script'); sc.src = 'experimentopia.js';
-    sc.onload = function () { got['experimentopia.js'] = PLAN['experimentopia.js']; progress(); exStep('experimentopia.js geladen'); };
-    sc.onerror = function () { showProblem('experimentopia.js nicht ladbar'); };
+    var datei = window.__exModus === 'js' ? 'experimentopia-js.js' : 'experimentopia.js';
+    var sc = document.createElement('script'); sc.src = datei;
+    sc.onload = function () { got[datei] = PLAN[datei]; progress(); exStep(datei + ' geladen'); };
+    sc.onerror = function () { showProblem(datei + ' nicht ladbar'); };
     document.body.appendChild(sc);
   }
   if (window.__exDiag || window.__exPrev) { var dg = document.getElementById('diag'); dg.hidden = false; dg.textContent = window.__exDiagText(); }

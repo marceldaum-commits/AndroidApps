@@ -31,13 +31,13 @@ class WebMusic(private val scope: CoroutineScope) : MusicPlayer {
             while (!audioReady()) delay(400)
             if (withJingle) {
                 inJingle = true
-                storeBuffer("musik", newSamplesOf(Composer.jingle()), Composer.SR)
+                storePcm("musik", Composer.jingle(), Composer.SR)
                 val d = musicPlay("musik", gain()); delay((d * 1000).toLong() + 2500); inJingle = false
             }
             while (true) {
                 val w = world
                 if (w == null || pageHidden()) { delay(1000); continue }
-                storeBuffer("musik", newSamplesOf(Composer.phrase(w, seed++)), Composer.SR)
+                storePcm("musik", Composer.phrase(w, seed++), Composer.SR)
                 val d = musicPlay("musik", gain())
                 delay((d * 1000).toLong() + 2500 + Random.nextLong(2500))
             }
@@ -53,7 +53,6 @@ class WebMusic(private val scope: CoroutineScope) : MusicPlayer {
     override fun duck(on: Boolean) { ducked = on; musicGain(gain()) }
 }
 
-private fun newSamplesOf(pcm: FloatArray): JsAny { val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i]); return b }
 
 /** Vorlesen im Browser mit „Nova“ (nova.js) – dieselben Sätze und Dateien wie unter Android; ohne Internet liest die Stimme des Browsers. */
 class WebReader : Reader {

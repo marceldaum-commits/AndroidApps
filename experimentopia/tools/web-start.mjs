@@ -1,6 +1,7 @@
 // Browser-Test „nie eine weiße Seite“ (WebKit wie Safari auf dem iPhone, sonst Chromium):
 //   node tools/web-start.mjs            (nach ./gradlew :web:webapp; WebKit braucht ggf. PLAYWRIGHT_BROWSERS_PATH mit webkit)
-// Prüft: normaler Start ohne Fehlermeldung · altes iOS ohne WasmGC → klare Meldung „mindestens iOS 18.2“ · fehlende Datei → „Neu laden“.
+// Prüft: Safari/WebKit startet automatisch die JS-Fassung · altes iOS ohne WasmGC startet (JS) · fehlende Datei → „Neu laden“ ·
+//        Chromium: Wasm-Fassung, ?modus=js geht, gescheitertes Wasm wechselt automatisch auf JS · Pixeldichte · Grafik-Verlust.
 import { createRequire } from 'module'; import { spawn } from 'child_process'; import path from 'path';
 const require = createRequire(import.meta.url);
 const { webkit, chromium, devices } = require('playwright');
@@ -18,12 +19,33 @@ try {
     await p.goto('http://localhost:8792/'); await p.waitForTimeout(wait);
     const r = await p.evaluate(() => document.getElementById('problem') ? document.getElementById('problem').innerText : null); await ctx.close(); return r;
   }
-  ok((await run({}, null, null, 14000)) === null, `${name}: normaler Start ohne Fehlermeldung`);
-  const alt = await run({ userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1' },
-    () => { const v = WebAssembly.validate; WebAssembly.validate = (x) => x.length === 15 ? false : v(x); }, null, 6000);
-  ok(!!alt && alt.includes('iOS 18.2') && alt.includes('Neu laden'), 'altes iOS (ohne WasmGC): Meldung „mindestens iOS 18.2“ + „Neu laden“');
-  const fehlt = await run({}, null, '**/*.wasm', 8000);
-  ok(!!fehlt && fehlt.includes('Neu laden') && fehlt.includes('Version'), 'Datei fehlt: Meldung mit Version und „Neu laden“ statt weißer Seite');
+  async function modus(q, opts, init, route, wait) {
+    const ctx = await b.newContext({ ...(engine === webkit ? devices['iPhone 13'] : {}), ...opts }); const p = await ctx.newPage();
+    if (init) await p.addInitScript(init); if (route) await p.route(route, (r) => r.abort());
+    await p.goto('http://localhost:8792/' + q); await p.waitForTimeout(wait);
+    const r = await p.evaluate(() => ({ modus: window.__exModus, fertig: document.getElementById('start').dataset.fertig === '1', problem: document.getElementById('problem') ? document.getElementById('problem').innerText : null }));
+    await ctx.close(); return r;
+  }
+  let r = await modus('', {}, null, null, 14000);
+  ok(r.fertig && !r.problem && r.modus === (engine === webkit ? 'js' : 'wasm'), `${name}: Start ohne Fehlermeldung, Fassung ${r.modus}`);
+  r = await modus('', { userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1' },
+    () => { const v = WebAssembly.validate; WebAssembly.validate = (x) => x.length === 15 ? false : v(x); }, null, 14000);
+  ok(r.fertig && !r.problem && r.modus === 'js', `altes iOS ohne WasmGC: startet mit der JS-Fassung (${r.modus})`);
+  r = await modus('', {}, null, '**/*.wasm', 9000);
+  ok(!!r.problem && r.problem.includes('Neu laden') && r.problem.includes('Version'), 'Datei fehlt: Meldung mit Version und „Neu laden“ statt weißer Seite');
+  if (engine !== webkit) {
+    r = await modus('?modus=js', {}, null, null, 14000);
+    ok(r.fertig && !r.problem && r.modus === 'js', 'Chromium mit ?modus=js: JS-Fassung startet');
+    // Wasm-Hauptmodul kaputt (wie in Safari 27) → automatisch JS, für diese Version gemerkt
+    const sw = await (await fetch('http://localhost:8792/sw.js')).text(), jsb = await (await fetch('http://localhost:8792/experimentopia-js.js')).text();
+    const appWasm = sw.match(/'[0-9a-f]+\.wasm'/g).map((x) => x.replace(/'/g, '')).find((n) => !jsb.includes(n));
+    const ctx = await b.newContext(); const p = await ctx.newPage();
+    await p.route('**/' + appWasm, (rt) => rt.abort());
+    await p.goto('http://localhost:8792/'); await p.waitForTimeout(20000);
+    const f = await p.evaluate(() => ({ modus: window.__exModus, fertig: document.getElementById('start').dataset.fertig === '1', problem: !!document.getElementById('problem'), gemerkt: Object.keys(localStorage).filter((k) => k.startsWith('exModus')).map((k) => localStorage.getItem(k)) }));
+    ok(f.fertig && !f.problem && f.modus === 'js' && f.gemerkt.includes('js'), `Wasm gescheitert → automatisch JS und gemerkt (${JSON.stringify(f)})`);
+    await ctx.close();
+  }
   // Pixeldichte auf 2 begrenzt (iPhone hat 3 → weniger Grafikspeicher) und Grafik-Verlust wird angezeigt
   const ctx = await b.newContext({ viewport: { width: 393, height: 852 }, deviceScaleFactor: 3 }); const p = await ctx.newPage();
   await p.goto('http://localhost:8792/'); await p.waitForFunction(() => document.getElementById('start').dataset.fertig === '1', null, { timeout: 90000 }); await p.waitForTimeout(6000);

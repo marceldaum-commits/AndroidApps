@@ -10,6 +10,7 @@ kotlin {
     androidTarget { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs { browser() }
+    js { browser() }   // Ersatz für Browser, die Kotlin/Wasm nicht verarbeiten (Safari 27)
     sourceSets {
         commonMain.dependencies {
             api(project(":core:model"))

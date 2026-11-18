@@ -29,6 +29,8 @@ fun hasBuffer(key: String): Boolean = js("!!(window.__exBufs && window.__exBufs[
 fun newSamples(n: Int): JsAny = js("new Float32Array(n)")
 fun putSample(b: JsAny, i: Int, v: Float): Unit = js("{ b[i] = v; }")
 fun storeBuffer(key: String, data: JsAny, rate: Int): Unit = js("{ const A = window.__exAudio; const buf = A.createBuffer(1, data.length, rate); buf.copyToChannel(data, 0); (window.__exBufs || (window.__exBufs = {}))[key] = buf; }")
+/** Klang-Daten (im Code erzeugt) als WebAudio-Puffer ablegen */
+fun storePcm(key: String, pcm: FloatArray, rate: Int) { val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i]); storeBuffer(key, b, rate) }
 fun playBuffer(key: String, rate: Double, gain: Double): Unit = js("{ try { const A = window.__exAudio; const b = window.__exBufs[key]; if (!A || !b) return; const s = A.createBufferSource(); s.buffer = b; s.playbackRate.value = rate; const g = A.createGain(); g.gain.value = gain; s.connect(g); g.connect(A.destination); s.start(); } catch (e) {} }")
 /** Ton wecken, sobald der Nutzer das erste Mal tippt */
 fun wakeAudioOnTouch(): Unit = js("{ const w = () => { try { const A = window.__exAudio || (window.__exAudio = new (window.AudioContext || window.webkitAudioContext)()); if (A.state !== 'running') A.resume(); } catch (e) {} }; window.addEventListener('pointerdown', w, true); window.addEventListener('keydown', w, true); document.addEventListener('visibilitychange', () => { const A = window.__exAudio; if (!A) return; if (document.hidden) A.suspend(); else A.resume(); }); }")

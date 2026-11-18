@@ -2,6 +2,21 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.6.0 vom 18.11.2026: Kotlin/JS-Ersatz für Safari – fertig für den Betriebstest
+
+Ursache (laut Leitstand/KurvenFlug): Safari 27 verarbeitet das Kotlin/Wasm-Hauptmodul nicht („WebAssembly.Module.imports unable to produce import descriptors“).
+1) **Kotlin/JS-Ziel** gebaut (core:model, shared, web je `js { browser() }`): gemeinsamer Web-Code in `web/src/webShared` (für beide Ziele übersetzt), Browser-Brücke je Ziel
+   (`wasmJsMain/Browser.kt`, `jsMain/Browser.kt` – ES5, weil Kotlin/JS-`js()` nur ES5 versteht). Paket `experimentopia-js.js` (4,7 MB) nutzt **dieselbe Skiko-Datei** wie Wasm.
+   Ein JS-Fehler gefunden und behoben: Regex `(?i)EX` (Freischaltcodes) → `RegexOption.IGNORE_CASE`.
+2) **Lader** `?modus=auto` (Standard): Safari/WebKit (auch CriOS/FxiOS/EdgiOS) und Browser ohne WasmGC → **direkt JS**; sonst Wasm. Scheitert der Wasm-**Start**
+   (Fehler vor „fertig“, Wächter), wird `exModus<Version>=js` gemerkt und neu geladen. Nach erfolgreichem Start kein Fassungswechsel (Grafik-Verlust → Fehlerseite).
+   Balken und Vorladen nur für die Dateien der gewählten Fassung. Schrittprotokoll zeigt „Fassung js/wasm (Grund)“.
+3) Wasm-Flags: unverändert (Standard von Kotlin 2.2.21); da Safari JS bekommt, nicht mehr kritisch – kann nach Klärung geprüft werden.
+4) Schalter **`?modus=js|wasm|auto`** (plus `?diag=1`, `?schaerfe=…`, `?gl=…`).
+Tests: `tools/web-start.mjs` Chromium 7/7 (u. a. ?modus=js startet, kaputtes Wasm → automatisch JS + gemerkt), WebKit 5/5 (Fassung js, altes iOS ohne WasmGC startet);
+`web-update.mjs` 7/7; JS-Fassung durchgeklickt (Startseite, Rätsel, Vermuten, Einstellungen gemerkt). Mindest-iOS: vorher 18.2 (WasmGC) → **jetzt ohne WasmGC-Bedarf** (JS).
+Links: https://experimentopia-test.mathenachhilfe-online.com/ · …/?modus=js · …/?modus=wasm · …/?diag=1
+
 ## 18.11.2026 – Version 2.5.6 vom 18.11.2026: Versuchsschalter + Pixelprobe (weiße WebGL-Fläche)
 
 - Standard jetzt **ganzzahlige Pixeldichte**: round(DPR), begrenzt auf 1–2 (vorher nur > 2 auf 2 gekappt; gebrochene 1,61 o. ä. blieben).

@@ -24,7 +24,7 @@ object License {
     /** Der Code aus einem Text (auch mitten in einer E-Mail oder einem Link „?pro=…“), ohne Prüfung. */
     fun extract(text: String): String? {
         // genau 117 Zeichen (73 Byte) einsammeln – Bindestriche und Zeilenumbrüche (E-Mail) dazwischen überspringen
-        for (m in Regex("""(?i)EX""").findAll(text)) {
+        for (m in Regex("EX", RegexOption.IGNORE_CASE).findAll(text)) {   // ohne (?i): das kennt JavaScript nicht
             val sb = StringBuilder()
             var i = m.range.last + 1
             while (i < text.length && sb.length < CHARS) {

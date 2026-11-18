@@ -31,7 +31,7 @@ fun main() {
 private class WebSfx(private val prefs: WebPrefs) : SoundPlayer {
     private fun ensure(key: String, make: () -> FloatArray): Boolean {
         if (!audioReady()) return false
-        if (!hasBuffer(key)) { val pcm = make(); val b = newSamples(pcm.size); for (i in pcm.indices) putSample(b, i, pcm[i]); storeBuffer(key, b, Synth.SR) }
+        if (!hasBuffer(key)) { val pcm = make(); storePcm(key, pcm, Synth.SR) }
         return true
     }
     override fun play(s: Sound, pitch: Float, volume: Float) {

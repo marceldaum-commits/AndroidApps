@@ -29,10 +29,18 @@ kotlin {
         browser { commonWebpackConfig { outputFileName = "experimentopia.js" } }
         binaries.executable()
     }
+    // Kotlin/JS-Fassung: gleicher Code, für Browser, die Kotlin/Wasm nicht verarbeiten (Safari 27 auf iPad/iPhone). Der Lader in index.html wählt.
+    js {
+        outputModuleName.set("experimentopia-js")
+        browser { commonWebpackConfig { outputFileName = "experimentopia-js.js" } }
+        binaries.executable()
+    }
     sourceSets {
-        val wasmJsMain by getting {
-            kotlin.srcDir(writeVersion)
-            dependencies {
+        // Gemeinsamer Web-Code (src/webShared) wird für beide Fassungen übersetzt; nur die Browser-Brücke (Browser.kt) gibt es je Fassung.
+        listOf(getByName("wasmJsMain"), getByName("jsMain")).forEach { set ->
+            set.kotlin.srcDir("src/webShared/kotlin")
+            set.kotlin.srcDir(writeVersion)
+            set.dependencies {
                 implementation(project(":core:model"))
                 implementation(project(":shared"))   // alle Bildschirme und der App-Rahmen – derselbe Code wie in der Android-App
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
@@ -77,6 +85,7 @@ val novaTexte = tasks.register<JavaExec>("novaTexte") {
 /** Fertige WebApp nach experimentopia/webapp/ legen – nur reine Dateien, wie der Server sie ausliefert. */
 tasks.register<Sync>("webapp") {
     from(tasks.named("wasmJsBrowserDistribution"))
+    from(tasks.named("jsBrowserDistribution")) { include("experimentopia-js.js") }   // JS-Fassung (Safari 27); nutzt dieselbe Skiko-Datei
     from(novaTexte) { into("vorlesen") }
     into(rootProject.file("webapp"))
     exclude("**/*.LICENSE.txt")
@@ -84,9 +93,12 @@ tasks.register<Sync>("webapp") {
     doLast {
         val out = rootProject.file("webapp")
         val wasm = out.listFiles { f -> f.name.endsWith(".wasm") }!!.sortedBy { it.name }
-        val files = wasm.map { it.name to it.length() } + listOf("fonts/dejavu_sans.ttf", "fonts/noto_color_emoji.ttf", "experimentopia.js").map { it to out.resolve(it).length() }
+        val files = wasm.map { it.name to it.length() } + listOf("fonts/dejavu_sans.ttf", "fonts/noto_color_emoji.ttf", "experimentopia.js", "experimentopia-js.js").map { it to out.resolve(it).length() }
+        // Skiko-Grafikkern: die .wasm-Datei, die auch die JS-Fassung lädt
+        val jsBundle = out.resolve("experimentopia-js.js").readText()
+        val skiko = wasm.map { it.name }.firstOrNull { jsBundle.contains(it) } ?: error("Skiko-Datei der JS-Fassung nicht gefunden")
         val plan = files.joinToString(", ", "{ ", " }") { (n, s) -> "\"$n\": $s" }
-        out.resolve("index.html").let { it.writeText(it.readText().replace("@LADEPLAN@", plan)) }
+        out.resolve("index.html").let { it.writeText(it.readText().replace("@LADEPLAN@", plan).replace("@SKIKO@", skiko)) }
         out.resolve("sw.js").let { it.writeText(it.readText().replace("@WASM@", wasm.joinToString(", ", "[", "]") { "'${it.name}'" })) }
     }
 }
