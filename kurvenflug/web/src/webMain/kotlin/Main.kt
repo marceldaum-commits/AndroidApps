@@ -39,7 +39,7 @@ fun main() {
         clearSearch()
         // Bestätigung (B4): gültig → Freude, sonst freundlich sagen, was zu tun ist
         val ok = de.kurvenflug.core.model.License.check(code, BuildInfo.PRO_KEY, de.kurvenflug.core.model.CalDate.today().toEpochDay()) != null
-        if (ok) WebPlatform.count("code_eingeloest")
+        if (ok) WebPlatform.countAt("code_eingeloest", "link")
         confirm(if (ok) "🎉 Kurvenflug Pro ist freigeschaltet – viel Spaß!" else "Der Freischalt-Link hat nicht gepasst. Bitte den Code unter Einstellungen → Kurvenflug Pro eingeben.")
     }
     val state = AppState(settings, WebProgressStore(settings.profile), MainScope())

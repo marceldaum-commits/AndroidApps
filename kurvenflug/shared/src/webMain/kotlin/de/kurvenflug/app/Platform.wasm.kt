@@ -80,7 +80,14 @@ object WebPlatform : Platform {
     private var leaveHooked = false
     // Gezählt wird nur im Speicher (nichts auf dem Gerät abgelegt); gesendet nur, wenn die Zählung an ist
     override fun count(event: String) { if (event in de.kurvenflug.core.model.UsageCount.EVENTS) counts[event] = (counts[event] ?: 0) + 1 }
+    private var pendingSingles = ArrayList<String>()
+    override fun countAt(event: String, place: String, topic: String?) {
+        val body = de.kurvenflug.core.model.UsageCount.single(versionName, event, place, topic) ?: return
+        if (counting) runCatching { jsCountNow(body) } else if (!leaveHooked && pendingSingles.size < 5) pendingSingles += body   // vor dem Einschalten (Start-Link)
+    }
     override fun setCounting(on: Boolean) {
+        if (on) { pendingSingles.forEach { runCatching { jsCountNow(it) } } }
+        pendingSingles.clear()
         counting = on; if (!on) counts.clear()
         if (on && !leaveHooked) { leaveHooked = true; runCatching { jsOnLeave { takeBody() } } }
     }

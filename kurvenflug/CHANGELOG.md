@@ -3,6 +3,9 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.32 – Kleine Verbesserung der Zählung
+- Die anonyme Nutzungszählung (abschaltbar im Elternbereich) unterscheidet jetzt, wo etwas angetippt wurde – weiterhin ohne Kennung und ohne Cookies.
+
 ## 2.5.31 – Vor Klassenarbeiten: Probestunde
 - Steht eine Klassenarbeit an, empfiehlt der Elternbereich jetzt eine kostenlose Probestunde passend zum Thema.
 

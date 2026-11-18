@@ -41,7 +41,7 @@ import de.kurvenflug.core.model.Pro
 @Composable
 fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack: () -> Unit, locked: Boolean = false) {
     val counter = de.kurvenflug.app.LocalPlatform.current
-    LaunchedEffect(Unit) { counter.count("pro_ansehen") }
+    LaunchedEffect(Unit) { counter.countAt("pro_ansehen", if (locked) "gesperrt" else "einstellungen") }
     val sfx = LocalSfx.current
     var gate by remember { mutableStateOf(false) }
     var code by remember { mutableStateOf("") }
@@ -128,7 +128,7 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
                         val c = License.extract(code)
                         val ok = c != null && shop.publicKey.isNotEmpty() && License.check(c, shop.publicKey, CalDate.today().toEpochDay()) != null
                         codeMsg = if (ok) "Super – Pro ist freigeschaltet! 🎉" else "Dieser Code passt leider nicht. Bitte genau so einfügen, wie er in der E-Mail steht."
-                        if (ok) { onCode(c!!); counter.count("code_eingeloest"); sfx?.play(Sound.WIN) } else sfx?.play(Sound.WRONG)
+                        if (ok) { onCode(c!!); counter.countAt("code_eingeloest", "eingabe"); sfx?.play(Sound.WIN) } else sfx?.play(Sound.WRONG)
                     }, enabled = code.isNotBlank(), modifier = Modifier.fillMaxWidth()) { Text("Code einlösen", fontWeight = FontWeight.Bold) }
                     codeMsg?.let { Text(it, color = if (it.startsWith("Super")) Q.Green else Q.Pink) }
                 }
@@ -140,7 +140,7 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
                 style = MaterialTheme.typography.labelSmall, color = Q.Muted, textAlign = TextAlign.Center)
         }
     }
-    if (gate) ParentGate(onDismiss = { gate = false }) { gate = false; counter.count("pro_kasse"); shop?.buy() }
+    if (gate) ParentGate(onDismiss = { gate = false }) { gate = false; counter.countAt("pro_kasse", if (locked) "gesperrt" else "einstellungen"); shop?.buy() }
 }
 
 /** Frage für Erwachsene vor jedem Kauf: Geburtsjahr eingeben, mindestens 18 Jahre. */

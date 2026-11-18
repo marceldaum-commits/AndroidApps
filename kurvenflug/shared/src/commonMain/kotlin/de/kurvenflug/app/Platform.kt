@@ -44,6 +44,8 @@ interface Platform {
     /** Anonyme Nutzungszählung: Ereignis zählen ([de.kurvenflug.core.model.UsageCount.EVENTS]); gesendet wird nur, wenn [setCounting] an ist */
     fun count(event: String) {}
     fun setCounting(on: Boolean) {}
+    /** Ereignis mit Ort (und Thema): sofort einzeln gesendet, nur wenn die Zählung an ist ([de.kurvenflug.core.model.UsageCount.SINGLE]) */
+    fun countAt(event: String, place: String, topic: String? = null) {}
     /** „Eltern-Handy koppeln“ (nur WebApp): null = nicht möglich; "" = nicht gekoppelt; sonst der Link fürs Eltern-Handy */
     fun parentLink(): String? = null
     /** Koppeln (Schlüssel entstehen im Browser), gibt den Link zurück */

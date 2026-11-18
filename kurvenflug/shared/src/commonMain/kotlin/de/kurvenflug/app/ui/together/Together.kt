@@ -259,6 +259,8 @@ class ParentArea(
     val onCounting: (Boolean) -> Unit,
     /** Anonyme Nutzungszählung: Klicks und Hinweise (nur gesendet, wenn die Zählung an ist) */
     val onCount: (String) -> Unit = {},
+    /** Ereignis mit Ort/Thema – sofort einzeln */
+    val onCountAt: (event: String, place: String, topic: String?) -> Unit = { _, _, _ -> },
     /** Eltern-Handy koppeln: null = auf diesem Gerät nicht möglich, "" = nicht gekoppelt, sonst Link */
     val pairLink: String? = null,
     val pairNick: String = "",
@@ -275,7 +277,9 @@ class ParentArea(
 private fun ParentExtras(p: ParentArea, w: WeekSummary) {
     val sfx = LocalSfx.current
     val reason = de.kurvenflug.core.model.ParentOffers.hint(p.today, w.needsHelp.isNotEmpty(), p.examUntil, p.hintHidden, p.hintShown)
-    LaunchedEffect(reason) { if (reason != null) { p.onHintSeen(); p.onCount("nachhilfe_hinweis") } }
+    val hintTopic = (w.needsHelp.firstOrNull() ?: w.topics.firstOrNull()?.first)?.let { de.kurvenflug.core.model.ParentOffers.TOPICS[it.number] }
+    val hintPlace = if (reason == de.kurvenflug.core.model.ParentOffers.Reason.EXAM) "klassenarbeit" else "elternbericht"
+    LaunchedEffect(reason) { if (reason != null) { p.onHintSeen(); p.onCountAt("nachhilfe_hinweis", hintPlace, hintTopic) } }
     // Nachhilfe-Hinweis – themenbezogen, höchstens an einem Tag pro Woche, ausblendbar
     if (reason != null) {
         val topic = w.needsHelp.firstOrNull() ?: w.topics.firstOrNull()?.first
@@ -292,7 +296,7 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
                     "Bei Nachhilfe – online gibt es eine kostenlose Probestunde mit einer Lehrkraft, genau zu diesem Thema."
             }, color = Q.Text, style = MaterialTheme.typography.bodySmall)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                Button(onClick = { sfx?.play(Sound.TAP); p.onCount("probestunde_klick"); p.onOpen(de.kurvenflug.core.model.ParentOffers.trialLesson(topic?.number, p.grade, reason)) },
+                Button(onClick = { sfx?.play(Sound.TAP); p.onCountAt("probestunde_klick", hintPlace, hintTopic); p.onOpen(de.kurvenflug.core.model.ParentOffers.trialLesson(topic?.number, p.grade, reason)) },
                     colors = ButtonDefaults.buttonColors(containerColor = Q.Cyan, contentColor = Q.Space)) { Text("Probestunde ansehen", fontWeight = FontWeight.Bold) }
                 TextButton(onClick = { sfx?.play(Sound.TICK); p.onHideHint() }) { Text("Nicht mehr zeigen", color = Q.Muted) }
             }
@@ -322,7 +326,7 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
         }
     }
     // Lern-Geschenk
-    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TAP); p.onCount("geschenk_klick"); p.onOpen(de.kurvenflug.core.model.ParentOffers.GIFT) }.padding(14.dp),
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TAP); p.onCountAt("geschenk_klick", "elternbereich", null); p.onOpen(de.kurvenflug.core.model.ParentOffers.GIFT) }.padding(14.dp),
         verticalAlignment = Alignment.CenterVertically) {
         Text("🎁", fontSize = 24.sp)
         Column(Modifier.weight(1f).padding(start = 10.dp)) {
@@ -364,7 +368,7 @@ private fun PairCard(p: ParentArea) {
             "verschlüsselt: Der Schlüssel steckt nur im Link bzw. QR-Code und geht nie an unseren Server.", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
         if (link.isEmpty()) {
             OutlinedTextField(nick, { nick = it.take(30) }, label = { Text("Spitzname für den Bericht (freiwillig)") }, singleLine = true, modifier = Modifier.fillMaxWidth())
-            Button(onClick = { sfx?.play(Sound.TAP); p.onCount("elternbereich"); p.onPair(nick.trim()) },
+            Button(onClick = { sfx?.play(Sound.TAP); p.onPair(nick.trim()) },
                 colors = ButtonDefaults.buttonColors(containerColor = Q.Violet, contentColor = Q.Space)) { Text("Eltern-Handy koppeln", fontWeight = FontWeight.Bold) }
         } else {
             Text("Mit dem Eltern-Handy scannen:", color = Q.Text, style = MaterialTheme.typography.bodySmall)

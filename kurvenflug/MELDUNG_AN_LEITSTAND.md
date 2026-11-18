@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.32 – Zählung: Ereignisse mit ort als Einzelaufruf
+- **Sammelsendung** nur noch: `start`, `level_start`, `level_geschafft`, `theorie`, `elternbereich` (Test: probestunde_klick landet nie darin).
+- **Einzelaufruf sofort beim Antippen** (fetch POST, text/plain, keepalive, credentials 'omit', Fehler ignoriert; nur wenn die Zählung an ist):
+  `{"app":"kurvenflug","v":"2.5.32","ev":…,"ort":…[,"thema":…]}` für
+  - `probestunde_klick` / `nachhilfe_hinweis` → ort `klassenarbeit` bzw. `elternbericht`, thema aus der gemeinsamen Liste,
+  - `pro_ansehen` / `pro_kasse` → ort `gesperrt` (Pro-Seite statt gesperrtem Level) bzw. `einstellungen`,
+  - `code_eingeloest` → ort `eingabe` (Code-Feld) bzw. `link` (#pro=/?pro=; wird nach dem Einschalten der Zählung nachgereicht),
+  - `geschenk_klick` → ort `elternbereich`.
+  Unbekannte ort/thema-Werte werden nicht gesendet (`UsageCount.single`, Tests in `ParentOffersTest`). Browser: Sammelsendung weiter ok.
+- versionCode 79 / 2.5.32, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.31 – C1 geändert: vor Klassenarbeiten Probestunde statt Crashkurs (Marcel 18.11.)
 - Crashkurs-Knopf und -Link entfernt (auch aus dem Code), `crashkurs_klick` aus der Ereignisliste genommen.
 - „Klassenarbeit bald“: Text „… Eine kostenlose Probestunde kann vor der Arbeit helfen – bei Nachhilfe – online, mit einer Lehrkraft, passend zum Thema.“,
