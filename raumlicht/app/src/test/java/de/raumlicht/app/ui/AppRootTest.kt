@@ -37,12 +37,14 @@ class AppRootTest {
     private val KI_PASS = "RL-04208-0000Z-8GNM5-HJFN6-SDW5Y-QPW2T-BSSPN-9DS5K-7Z3A1-PTFJ2-ACM3Q-GX1H4-ZM8EV-3GR33-K3N31-3VN22-58C7D-HP8Y1-1321W-HG25S-PNJ23-FSKM6-JYD9R-GJ"
     private val KI_ALT = "RL-04208-0000Z-90JRS-KVK76-JC5YR-K5AB8-66P5J-B9FQ0-J8M2Q-N9CCS-9YCEM-0XX2C-KCRBZ-8QGFP-J83ZY-RYKBJ-8WK56-H6461-JQTF0-1PN3P-K7Q9A-337T4-N8R7X-GE"
     private val counted = ArrayList<String>()
+    /** Zählaufrufe aus den Aufgaben (gestartet, geschafft, Theorie) – getrennt gesammelt */
+    private val played = ArrayList<String>()
     private var crash = de.raumlicht.core.model.Nachhilfe.CRASH_URL
     private fun start(pro: Boolean = false, ki: (suspend (String) -> Pair<Int, String>)? = null, kiOn: Boolean = true) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
             AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry() } },
-                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", countSend = { counted += it }, crashUrl = crash)
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, crashUrl = crash)
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -174,6 +176,9 @@ class AppRootTest {
         start()
         // in der Aufgabe und auf der Startseite: kein Hinweis
         rule.onNodeWithTag("nachhilfe-hinweis").assertDoesNotExist(); nav.go(Routes.level("1-2")); settle(); rule.onNodeWithTag("nachhilfe-hinweis").assertDoesNotExist()
+        // die Aufgabe zählt „gestartet“ und „Theorie geöffnet“ – nur mit dem Gebiet, ohne Aufgabe, Sterne oder Versuche
+        rule.onNodeWithTag("theorie").performClick(); settle(); rule.onNodeWithTag("theorie-formel", useUnmergedTree = true).assertExists(); rule.onNodeWithTag("theorie-zu", useUnmergedTree = true).performClick(); settle()
+        assertEquals(listOf("""{"app":"raumlicht","v":"test","ev":"level_start","thema":"vektoren"}""", """{"app":"raumlicht","v":"test","ev":"theorie","thema":"vektoren"}"""), played.toList())
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle()
         nav.go(Routes.LEARN); settle()
         rule.onNodeWithTag("nachhilfe-hinweis").assertExists(); rule.onNodeWithText("Bei Vektoren hakt es noch?", substring = true).assertExists()

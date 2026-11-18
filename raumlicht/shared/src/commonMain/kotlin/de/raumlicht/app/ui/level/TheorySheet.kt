@@ -72,6 +72,14 @@ fun TheorySheet(card: TheoryCard?, accent: Color, onClose: () -> Unit) {
                         Lux(LuxMood.THINK, size = 56.dp)
                         Text(noted(c.idea), Modifier.padding(start = 8.dp).background(Q.Panel, RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).padding(12.dp), style = MaterialTheme.typography.bodyMedium)
                     }
+                    // Die Formel zuerst und hervorgehoben – mit der Bedeutung der Größen darunter
+                    c.formula?.let { f ->
+                        Column(Modifier.fillMaxWidth().testTag("theorie-formel").background(accent.copy(alpha = 0.14f), RoundedCornerShape(16.dp)).border(1.5.dp, accent.copy(alpha = 0.8f), RoundedCornerShape(16.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            Text("DIE FORMEL", color = accent, fontSize = 11.sp, fontWeight = FontWeight.Black, letterSpacing = 1.5.sp)
+                            f.lines.forEach { Text(noted(it), color = Q.Text, fontWeight = FontWeight.Black, fontSize = 17.sp, lineHeight = 23.sp) }
+                            Text(noted(f.meaning), Modifier.padding(top = 2.dp), color = Q.Muted, fontSize = 13.sp, lineHeight = 18.sp)
+                        }
+                    }
                     Block("So gehst du vor", accent) {
                         c.steps.forEachIndexed { i, s ->
                             // die Schritte erscheinen nacheinander – so liest man sie auch nacheinander

@@ -2,6 +2,36 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.25: Theorie-Prüfung, Formel-Kasten, neues Kapitel 26, drei weitere Zähl-Ereignisse
+
+Marcel hat direkt bestätigt („alles“). **Raumlicht 2.18.25 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.
+
+**1) Prüfliste – Ergebnis:** vollständig in `raumlicht/THEORIE-PRUEFLISTE.md` (144 Zeilen, aus dem Code erzeugt: Aufgabe → Karte → Formel).
+- **Befund vor der Änderung:** Jede der 136 festen Aufgaben, alle 28 Prüfungsteile und alle Übungs- und Tagesaufgaben hatten schon eine passende Karte; keine fiel auf die allgemeine Karte. Die nötige Formel stand in fast jeder Karte – aber nur als eine Zeile unter den Schritten, ohne Erklärung der Größen.
+  Für „Winkel zwischen zwei Vektoren“ (7-1, 7-2) stand `cos α = (a⃗ · b⃗) : (|a⃗| · |b⃗|)` als Schritt 2 in der Karte und zusätzlich in der Formelzeile der Aufgabe. Marcels Beobachtung könnte also aus einer anderen App stammen – bitte dort nachsehen.
+- **Ergänzt:** Jede der jetzt 72 Karten hat einen eigenen Kasten „DIE FORMEL“ ganz oben, mit der Bedeutung jeder Größe darunter (`core/model/…/TheoryFormulas.kt`). Die Winkel-Karte nennt jetzt Skalarprodukt und Längen als ausgeschriebene Formeln.
+- Rein verfahrensartige Karten (z. B. Durchstoßpunkt, Spurpunkt) hatten keine geschlossene Formel; sie haben jetzt eine (`n⃗ · (A + t · d⃗) = c`, `t = (c − n⃗ · A) : (n⃗ · d⃗)`).
+- Neu zugeordnet: 7-4 und 19-1 → eigene Karte „Winkel zwischen zwei Ebenen“ (vorher mit auf der Vektor-Karte); 8-3 und 19-5 → „Abstand: Gerade–Ebene und Ebene–Ebene (parallel)“ (vorher unter Punkt–Ebene).
+- Test `TheoryFormulaTest`: jede Karte hat Formel, Bedeutung, Schritte, Beispiel; jede Aufgabe (über 400 geprüft) führt zu einer Karte mit Formel; die Beispiele der neuen Karten sind nachgerechnet.
+
+**2) Fehlende Themen – jetzt mit Theorie und Aufgaben** (neues Kapitel 26 „HNF, Abstände & Winkel“, `TourNine.kt`):
+| Thema | Theorie-Karte | Aufgaben |
+|---|---|---|
+| Hessesche Normalform | neu: `hesse` | 26-1, 26-2 (Parameter c), 26-8 (Abi-Check, Ebene aus Achsenabschnitten) |
+| Abstand Punkt–Ebene | vorhanden | 6-4, 20-4, Prüfungsteile |
+| Abstand Gerade–Ebene (parallel) | neu: `abstand-parallel` | 19-5, 26-3 |
+| Abstand Ebene–Ebene (parallel) | neu: `abstand-parallel` | 8-3, 26-4 (verschieden geschriebene Gleichungen) |
+| Abstand Gerade–Gerade windschief | vorhanden | 8-4, 20-5 |
+| Abstand Gerade–Gerade parallel | neu: `abstand-parallele-geraden` | 26-5 |
+| Winkel Ebene–Ebene | neu: `winkel-ebenen` | 7-4, 19-1, 26-7 |
+| Winkel Gerade–Ebene | vorhanden | 7-3, 7-5, 19-2 |
+| Winkel Gerade–Gerade | neu: `winkel-geraden` | 26-6 (mit Falle „120° ohne Betrag“) |
+Damit 144 feste Aufgaben in 26 Kapiteln. Kapitel 26 gehört zu Pro (die ersten zwei Aufgaben frei, wie überall ab Kapitel 7).
+
+**3) Weiterer Ausbau:** In dieser Version nur das Kapitel oben. Mehr Abi-Aufgaben quer durch alle Themen sind **noch nicht** gebaut – dafür brauche ich eine Größenordnung (z. B. „je Geometrie-Kapitel zwei weitere Abi-Aufgaben“). Nova bleibt aus; alles ist Text.
+
+**Zählung:** zusätzlich `level_start`, `level_geschafft`, `theorie` (einzeln, mit `thema`, ohne Aufgaben-Kennung, ohne Sterne). Der Erklärsatz am Schalter und der Datenschutz-Vorschlag nennen das.
+
 ## 18.11.2026 – Raumlicht 2.18.24: Crashkurs-Hinweis eingeschaltet (deine Adresse) – und eine Rückfrage zu den neuen Ereignissen
 
 Danke für den Nachtrag. **Raumlicht 2.18.24 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.

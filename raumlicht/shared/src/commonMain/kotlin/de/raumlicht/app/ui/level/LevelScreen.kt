@@ -71,6 +71,10 @@ fun LevelScreen(
     var theory by remember(level.id) { mutableStateOf(false) }
     // KI-Tutor: nach einem Fehlversuch bietet Lux an, es anders zu erklären (nicht im Pflichtteil „ohne Hilfsmittel“)
     val ki = LocalKi.current
+    // Anonyme Zählung (abschaltbar): nur „gestartet / geschafft / Theorie geöffnet“ mit dem Gebiet – nie die Aufgabe, nie Sterne oder Versuche
+    val count = de.raumlicht.app.ui.fx.LocalCount.current
+    val topic = remember(chapter.number) { if (chapter.number > 0) de.raumlicht.core.model.Zaehler.topic(chapter.area) else null }
+    LaunchedEffect(level.id) { count("level_start", null, topic) }
     var kiOpen by remember(level.id) { mutableStateOf(false) }
     var lastTry by remember(level.id) { mutableStateOf<Pair<Values, String>?>(null) }
     var values by remember(level.id) { mutableStateOf(initial ?: level.start) }
@@ -150,7 +154,7 @@ fun LevelScreen(
                 controller.party(); sfx?.play(if (chapter.levels.lastOrNull()?.id == level.id) Sound.CHAPTER else Sound.WIN); view.buzz(Buzz.HIT, vib)
                 override = null; phase = Phase.DONE
                 says = out.message to LuxMood.HAPPY
-                onSolved(stars, attempts)
+                onSolved(stars, attempts); count("level_geschafft", null, topic)
             } else {
                 sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib)
                 out.flyTo?.let { to -> override = level.encode(level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list, mood = "sad") else it }) }
@@ -231,7 +235,7 @@ fun LevelScreen(
                     }
                     Row(Modifier.fillMaxWidth().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         // nach dem ersten Fehlversuch winkt die Theorie – nachlesen ist ausdrücklich erwünscht
-                        if (!strict) NeonButton({ theory = true }, Modifier.weight(1.25f).testTag("theorie").pulse(!busy && attempts >= 1, 0.03f), color = Q.Cyan, enabled = !busy) { Text("📖 Theorie", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1) }
+                        if (!strict) NeonButton({ theory = true; count("theorie", null, topic) }, Modifier.weight(1.25f).testTag("theorie").pulse(!busy && attempts >= 1, 0.03f), color = Q.Cyan, enabled = !busy) { Text("📖 Theorie", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1) }
                         if (!strict) NeonButton({ usedTip = true; says = level.tip to LuxMood.THINK }, Modifier.weight(1f), color = Q.Yellow, enabled = !busy) { Text("💡 Tipp", fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1) }
                         NeonButton(::go, Modifier.weight(1.5f).pulse(!busy && attempts == 0, 0.025f), color = accent, enabled = !busy) { Text("▶ Los", fontWeight = FontWeight.Black, fontSize = 18.sp, maxLines = 1) }
                     }

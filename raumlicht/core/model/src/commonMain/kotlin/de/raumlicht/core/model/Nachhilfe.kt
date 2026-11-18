@@ -11,11 +11,11 @@ object Zaehler {
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     const val APP = "raumlicht"
     /** Ereignisse, die es in Raumlicht gibt (aus der gemeinsamen, abschließenden Liste) */
-    val EVENTS = setOf("start", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "crashkurs_klick", "nachhilfe_hinweis", "geschenk_klick")
+    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "crashkurs_klick", "nachhilfe_hinweis", "geschenk_klick")
     val PLACES = setOf("gesperrt", "einstellungen", "link", "eingabe", "lernstand", "klassenarbeit", "geschenk", "fusszeile")
     val TOPICS = setOf("vektoren", "analysis", "stochastik")
     const val SWITCH = "Anonyme Nutzungszählung"
-    const val SWITCH_NOTE = "Hilft uns, die App zu verbessern. Gezählt wird nur, dass etwas geschah – etwa „App geöffnet“ oder „Link angetippt“. Ohne Kennung, ohne Gerät, ohne Lernstand."
+    const val SWITCH_NOTE = "Hilft uns, die App zu verbessern. Gezählt wird nur, dass etwas geschah – etwa „App geöffnet“, „Aufgabe gestartet“, „Aufgabe geschafft“, „Theorie geöffnet“ oder „Link angetippt“. Ohne Kennung, ohne Gerät; welche Aufgabe es war und wie gut du bist, wird nicht übertragen."
 
     /** Der Zählaufruf als Text – oder null, wenn etwas nicht auf den Listen steht (dann wird nichts gesendet) */
     fun body(event: String, place: String?, topic: String?, version: String): String? {
