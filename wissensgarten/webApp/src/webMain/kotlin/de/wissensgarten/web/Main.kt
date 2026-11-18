@@ -60,7 +60,8 @@ private suspend fun plusPackTexts(): List<String> = runCatching {
 }.getOrDefault(emptyList())
 
 /** Wert von ?pro= lesen und aus der Adresse entfernen (der Code soll nicht im Verlauf/Lesezeichen bleiben). */
-private fun takeProParam(): JsString? = js("(function () { var u = new URL(location.href); var v = u.searchParams.get('pro'); if (v) { u.searchParams.delete('pro'); history.replaceState(null, '', u.pathname + u.search + u.hash); } return v; })()")
+/** Freischalt-Code aus #pro=… (neu, landet nicht in Server-Protokollen) oder ?pro=… (alte Karten und Mails) – danach sofort aus der Adresse entfernen */
+private fun takeProParam(): JsString? = js("(function () { var u = new URL(location.href); var v = u.searchParams.get('pro'); if (v) u.searchParams.delete('pro'); var h = (u.hash || '').replace(/^#/, ''); var hp = new URLSearchParams(h); var w = hp.get('pro'); if (w) { hp.delete('pro'); var rest = hp.toString(); u.hash = rest ? '#' + rest : ''; } var code = w || v; if (code) history.replaceState(null, '', u.pathname + u.search + u.hash); return code; })()")
 
 private fun hideSplash(): Unit = js("(function () { var s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(function () { s.remove(); }, 600); } window.dispatchEvent(new Event('wg-ready')); })()")
 /** Schritt ins Start-Protokoll (index.html, sichtbar mit ?diag=1) */

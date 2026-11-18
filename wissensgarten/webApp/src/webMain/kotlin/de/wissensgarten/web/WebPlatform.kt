@@ -42,8 +42,8 @@ private fun jsTiltX(): Double = js("window.wg.tiltX")
 private fun jsKeepAwake(on: Boolean): Unit = js("window.wg.keepAwake(on)")
 private fun jsReload(): Unit = js("location.reload()")
 private fun jsSafe(safe: Boolean): Unit = js("window.wgUpdate && window.wgUpdate.safe(safe)")
-/** Zählaufruf: einfacher text/plain-Aufruf ohne Cookies (keine CORS-Vorabfrage), Antwort egal; sonst sendBeacon */
-private fun jsSendCount(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true }).catch(function () {}); } catch (e) { try { navigator.sendBeacon(url, body); } catch (e2) {} } })()")
+/** Zählaufruf: einfacher text/plain-Aufruf ohne Cookies (keine CORS-Vorabfrage), Antwort egal. Bewusst kein sendBeacon – das schickt Cookies mit. */
+private fun jsSendCount(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true }).catch(function () {}); } catch (e) {} })()")
 // ---- Eltern-Kopplung: Zufall, AES-GCM-256 (WebCrypto), Hochladen ohne Cookies. Der Schlüssel verlässt das Gerät nur im Link für die Eltern.
 private fun jsRandomB64(n: Int): String = js("(function () { var a = new Uint8Array(n); crypto.getRandomValues(a); var s = ''; for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s).replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, ''); })()")
 private fun jsTestStage(): Boolean = js("(function () { var h = location.hostname; return h.indexOf('-test') >= 0 || h === 'localhost' || h === '127.0.0.1'; })()")
