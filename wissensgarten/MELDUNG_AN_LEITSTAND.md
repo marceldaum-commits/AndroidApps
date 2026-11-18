@@ -6,6 +6,33 @@
 
 
 
+
+## 2.2.15 – Sicherung über die Kopplung, Wiederherstellen, Monatsverlauf (18.11.2026)
+- **Marcel hat direkt bestätigt** („Ja, so bauen“).
+- **Sicherung:**
+  - `PUT …/eltern/v1/s/<id>` mit X-Schreib, AES-GCM-256 mit neuem 12-Byte-IV je Sendung, gleicher Schlüssel wie der Bericht.
+  - Hochgeladen wird zusammen mit dem Bericht, höchstens alle 10 Minuten und nur bei Änderung (Prüfsumme ohne Zeitstempel).
+  - Klartext `{format:1, app, v, stand, schreib, daten}`. In `daten` stehen nur die Daten des gekoppelten Profils:
+    - `lernstand`: das Sync-Format des Drive-Syncs mit Profil, Beeten, Karten, Einkäufen, Fortschritt und Einzelergebnissen der letzten 90 Tagen; zu groß → 30 Tage → keine.
+    - `verlauf`: die Monatssummen.
+    - `plusCode` und `bilder`: selbst gemalte Merkbilder, nur solange alles unter ~370 KB Klartext (≈ 512 KB verschlüsselt) bleibt. Weggelassene Bilder werden gezählt.
+- **Wiederherstellen:**
+  - Elternbereich → „🔄 Fortschritt wiederherstellen“ → Kopplungs-Link einfügen → „Prüfen“ zeigt Name, Kartenzahl und Bilder → erst nach „Wiederherstellen“ wird eingespielt.
+  - Vorhandener Lernstand wird **zusammengeführt** (Sync.merge, nichts geht verloren), nicht überschritten. Danach sind id, key und schreib gespeichert, und das Gerät schreibt weiter.
+  - Hinweise: kein vollständiger Link; 404 → „Keine Sicherung gefunden“; andere App → „Dieser Link gehört zu einer anderen App“; neuere Version.
+- **Monatssummen** werden dauerhaft je Profil gespeichert (nach jeder Runde fortgeschrieben). Im Bericht als `verlauf` (höchstens 12, älteste zuerst, mit monat, min, aufgaben, richtigProzent).
+- **Entkoppeln:** wie bisher DELETE `/b/<id>` (löscht laut Server auch die Sicherung).
+- **Belege:**
+  - `webApp/tools/web-eltern.cjs` (Wasm und JS, alles grün): Sicherung hochgeladen und mit dem Link-Schlüssel entschlüsselt; Hülle mit schreib; Lernstand vollständig; unveränderte Sicherung nicht erneut gesendet; leerer Browser → Link → derselbe Lernstand (Karten, Stabilität, Einzelergebnisse); neues Gerät schreibt mit demselben Schreibrecht; die Fehlerfälle; Entkoppeln.
+  - Echter Server trainer-test: PUT s 204, GET s 200, fremdes schreib 403, DELETE b → GET s 404.
+  - `ElternKopplungTest` (Link lesen, Verlauf, Hülle).
+- **Ratgeber-Update 11:** `#pro=` wird gelesen (`?pro=` weiter), danach mit replaceState aus der Adresse entfernt. Zählung nur per fetch (`credentials:'omit'`, keepalive, text/plain), sendBeacon entfernt. Die Code-Eingabe von Hand im Elternbereich gab es schon.
+- **Wichtiger Nebenfund (behoben):** Beim **ersten** Öffnen in einem frischen Browser hing die Wasm-Fassung bis zu ~43 s. Der Stimmen-Katalog berechnete beim Start für alle ~2500 Karten die Radio-Fragen und sortierte dabei mit Levenshtein im Vergleich. Das bestand schon vor 2.2.15.
+  - Jetzt: Ähnlichkeit einmal je Antwort, Katalog Paket für Paket mit `delay`.
+  - Längste Blockade gemessen: ~1,1 s (Wasm) bzw. ~0,6 s (JS).
+- Install-Test 21/21, Update 2.2.14 → 2.2.15 ok, Zählung grün.
+- Datenschutz in der App ergänzt (euer Satz zu 10i).
+
 ## 2.2.14 – Eltern-Handy koppeln (18.11.2026)
 - **Marcel hat direkt bestätigt** („Ja, so bauen“).
 - **Ort:** Einstellungen → Für Eltern (hinter dem Eltern-Tor) → „📱 Eltern-Handy koppeln“, optional mit Spitzname. Danach erscheinen QR-Code, „Link schicken“, „Jetzt aktualisieren“ und „Kopplung aufheben“. Im Kinderbereich gibt es davon nichts.
