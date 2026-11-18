@@ -47,6 +47,11 @@ object PrivacyText {
             "trainer.mathenachhilfe-online.com: dass die App geöffnet wurde, dass der Elternbereich geöffnet wurde und ob dort ein Link (z. B. Plus, Probestunde, Lern-Geschenk) angetippt wurde. " +
             "Übertragen werden nur App-Name, Versionsnummer, Ereignis und gegebenenfalls Ort und Thema (z. B. „Bruchrechnung“) – keine Namen, keine Kennung, keine Gerätedaten, kein Lernstand, keine Cookies. " +
             "Der Server zählt nur Tagessummen und speichert für diese Aufrufe keine IP-Adressen. Ausschalten: Einstellungen → Für Eltern → „Anonyme Nutzungszählung“.",
+        "Eltern-Handy koppeln (nur wenn ihr es einschaltet)" to
+            "Koppelt ihr im Elternbereich euer Handy, legt der Wissensgarten nach Lernrunden (höchstens alle 10 Minuten) einen kurzen Lernbericht auf unserem Server trainer.mathenachhilfe-online.com ab: " +
+            "Klassenstufe, Lernzeit, aktive Tage, Anzahl und Anteil richtiger Antworten, Themen, die gut sitzen oder schwerfallen, Fortschritt je Beet, die nächste eingetragene Klassenarbeit und – nur wenn ihr ihn eintragt – einen Spitznamen. " +
+            "Der Bericht wird auf diesem Gerät mit AES-256 verschlüsselt; den Schlüssel enthält nur euer Link (der Teil nach „#“ wird nie an einen Server gesendet). Unser Server kann den Bericht daher nicht lesen. " +
+            "„Kopplung aufheben“ löscht ihn sofort; ohne Aktualisierung wird er nach 90 Tagen gelöscht. Ohne Kopplung wird nichts gesendet.",
         "Hinweise auf unsere Nachhilfe" to
             "Im Wochenbericht (nur hinter dem Eltern-Tor, nie im Kinderbereich) kann ein sachlicher Hinweis auf unsere Online-Nachhilfe erscheinen, wenn ein Thema länger schwerfällt oder eine Klassenarbeit ansteht. " +
             "Das wird nur auf dem Gerät berechnet; der Lernstand wird dafür nicht gesendet. Höchstens alle zwei Wochen je Thema, jederzeit ausblendbar oder ganz abschaltbar.",

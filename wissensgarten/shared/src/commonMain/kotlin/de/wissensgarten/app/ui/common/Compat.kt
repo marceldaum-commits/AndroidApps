@@ -32,6 +32,11 @@ object Clock {
     private val DAYS = listOf("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")
     private val MONTHS = listOf("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember")
     /** „Montag, 3. März“ */
+    /** „18. Nov. 2026, 15:40“ (Ortszeit) */
+    fun dateTimeText(ms: Long): String {
+        val h = hourOf(ms); val hh = h.toInt(); val mm = ((h - hh) * 60).toInt()
+        return shortDate(date(ms)) + ", " + hh.toString().padStart(2, '0') + ":" + mm.toString().padStart(2, '0')
+    }
     fun longDate(d: LocalDate) = "${DAYS[d.dayOfWeek.ordinal]}, ${d.day}. ${MONTHS[d.month.ordinal]}"
     /** „3. Mär. 2026“ */
     fun shortDate(d: LocalDate) = "${d.day}. ${MONTHS[d.month.ordinal].take(3)}${if (MONTHS[d.month.ordinal].length > 4) "." else ""} ${d.year}"

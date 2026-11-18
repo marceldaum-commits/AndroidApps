@@ -627,7 +627,20 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             syncCard = { host.SyncCard() },
                             voiceExtras = { de.wissensgarten.app.ui.settings.VoiceSettings(vm.settings, host, packs, vm.plusStatus.collectAsStateWithLifecycle().value.active) },
                             soundExtras = { de.wissensgarten.app.ui.settings.SoundSettings(vm.settings, host) },
-                            parentExtras = { de.wissensgarten.app.ui.settings.ElternAngebote(vm.settings, onGift = { vm.zaehle("geschenk_klick", "elternbereich") }) },
+                            parentExtras = { de.wissensgarten.app.ui.settings.ElternAngebote(vm.settings, onGift = { vm.zaehle("geschenk_klick", "elternbereich") }, kopplung = {
+                                vm.settings.pairRev.collectAsStateWithLifecycle().value
+                                val k = vm.settings.elternKopplung(p.id)
+                                val up = vm.settings.elternUpload(p.id)
+                                val kScope = rememberCoroutineScope()
+                                de.wissensgarten.app.ui.settings.ElternKopplungKnopf(
+                                    name = p.name, link = k?.let { vm.elternLink(it) },
+                                    letzterUpload = up.takeIf { it > 0 }?.let { de.wissensgarten.app.ui.common.Clock.dateTimeText(it) },
+                                    onKoppeln = { n -> if (vm.elternKoppeln(p.id, n) == null) host.toast("Koppeln geht in diesem Browser leider nicht.") },
+                                    onAktualisieren = { done -> kScope.launch { done(vm.elternHochladen(p.id) in 200..299) } },
+                                    onTeilen = { l -> host.shareText("Lernbericht von ${p.name} im Wissensgarten (nur für euch): $l") },
+                                    onAufheben = { vm.elternAufheben(p.id) { ok -> host.toast(if (ok) "Kopplung aufgehoben." else "Kopplung lokal aufgehoben. Der Server war nicht erreichbar – der Bericht wird dort nach 90 Tagen gelöscht.") } },
+                                )
+                            }) },
                             onPrivacy = { nav.navigate(Routes.PRIVACY) },
                             typing = vm.settings.typing.collectAsStateWithLifecycle().value, onTyping = { vm.settings.setTyping(it) },
                             dailyLimit = vm.settings.dailyLimit.collectAsStateWithLifecycle().value, onDailyLimit = { vm.settings.setDailyLimit(it) },

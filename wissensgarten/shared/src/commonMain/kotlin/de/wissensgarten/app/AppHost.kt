@@ -68,6 +68,14 @@ interface AppHost {
     fun setSafeToUpdate(safe: Boolean) {}
     /** Anonymen Zählaufruf abschicken (Text, ohne Cookies, ohne Antwort abzuwarten, Fehler werden ignoriert) */
     fun sendCount(url: String, body: String) {}
+    /** Eltern-Kopplung: n sichere Zufallsbytes als base64url ohne Padding (null = nicht verfügbar) */
+    fun secureRandomB64(n: Int): String? = null
+    /** Läuft als Test-Fassung (wissensgarten-test) → Test-Server und Test-Elternseite */
+    val testStage: Boolean get() = false
+    /** Bericht mit AES-GCM-256 (12-Byte-IV) verschlüsseln und per PUT hochladen; Ergebnis HTTP-Status, −1 bei Fehler */
+    suspend fun elternPut(url: String, schreib: String, keyB64: String, json: String): Int = -1
+    /** Bericht auf dem Server löschen (Kopplung aufheben); HTTP-Status, −1 bei Fehler */
+    suspend fun elternDelete(url: String, schreib: String): Int = -1
     fun shareText(text: String)
     fun shareImage(image: ImageBitmap, fileName: String, text: String)
     fun printCraftSheet(bedName: String, emoji: String, items: List<CraftItem>)

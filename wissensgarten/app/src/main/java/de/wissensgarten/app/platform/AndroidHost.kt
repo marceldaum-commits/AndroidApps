@@ -60,6 +60,33 @@ class AndroidHost(private val activity: Activity, private val onFlushUsage: () -
     }
 
     override fun toast(message: String) = android.widget.Toast.makeText(activity, message, android.widget.Toast.LENGTH_LONG).show()
+    override fun secureRandomB64(n: Int): String? = runCatching {
+        val b = ByteArray(n).also { java.security.SecureRandom().nextBytes(it) }
+        android.util.Base64.encodeToString(b, android.util.Base64.URL_SAFE or android.util.Base64.NO_PADDING or android.util.Base64.NO_WRAP)
+    }.getOrNull()
+    override suspend fun elternPut(url: String, schreib: String, keyB64: String, json: String): Int = kotlinx.coroutines.withContext(Dispatchers.IO) {
+        runCatching {
+            val flags = android.util.Base64.URL_SAFE or android.util.Base64.NO_PADDING or android.util.Base64.NO_WRAP
+            val key = javax.crypto.spec.SecretKeySpec(android.util.Base64.decode(keyB64, flags), "AES")
+            val iv = ByteArray(12).also { java.security.SecureRandom().nextBytes(it) }
+            val c = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
+            c.init(javax.crypto.Cipher.ENCRYPT_MODE, key, javax.crypto.spec.GCMParameterSpec(128, iv))
+            val body = android.util.Base64.encodeToString(iv, flags) + "." + android.util.Base64.encodeToString(c.doFinal(json.toByteArray()), flags)
+            val h = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+            h.requestMethod = "PUT"; h.doOutput = true; h.connectTimeout = 8000; h.readTimeout = 8000
+            h.setRequestProperty("X-Schreib", schreib); h.setRequestProperty("Content-Type", "text/plain")
+            h.outputStream.use { it.write(body.toByteArray()) }
+            h.responseCode.also { h.disconnect() }
+        }.getOrDefault(-1)
+    }
+    override suspend fun elternDelete(url: String, schreib: String): Int = kotlinx.coroutines.withContext(Dispatchers.IO) {
+        runCatching {
+            val h = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+            h.requestMethod = "DELETE"; h.connectTimeout = 8000; h.readTimeout = 8000
+            h.setRequestProperty("X-Schreib", schreib)
+            h.responseCode.also { h.disconnect() }
+        }.getOrDefault(-1)
+    }
     override fun sendCount(url: String, body: String) {
         // Einfacher Aufruf ohne Wiederholung, ohne Cookies; Fehler werden ignoriert
         Thread {
