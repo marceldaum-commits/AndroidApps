@@ -659,6 +659,13 @@ open class ScreenshotTest {
         }
     }
 
+    /** Eltern-Handy koppeln: vor der Kopplung (Erklärung, Spitzname) und danach (QR, Link, Aktualisieren, Aufheben) */
+    // Der Dialog vor der Kopplung (mit Eingabefeld) wird im Browser-Test fotografiert – Robolectric wird mit dem Textfeld im Dialog nicht „idle“
+    @Test fun elternKopplungFertig() = shot("80_eltern_gekoppelt", settle = 2500) {
+        de.wissensgarten.app.ui.settings.ElternKopplungDialog("Lena", "https://www.mathenachhilfe-online.com/eltern-bericht/#AAAAAAAAAAAAAAAAAAAAAA.BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+            "18. Nov. 2026, 15:40", {}, {}, {}, {}, {})
+    }
+
     @Test fun soundSettings() = shot("70_ton") {
         androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp)) {
             androidx.compose.material3.Text("Ton", style = androidx.compose.material3.MaterialTheme.typography.titleMedium)

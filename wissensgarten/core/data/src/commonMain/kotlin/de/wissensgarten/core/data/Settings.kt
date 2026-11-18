@@ -199,6 +199,22 @@ class Settings(private val prefs: KeyValueStore) {
     fun hintsHidden(profileId: String): Set<String> = prefs.getStringSet("hinweis_aus_$profileId", null).orEmpty()
     fun hideHint(profileId: String, key: String) { prefs.edit().putStringSet("hinweis_aus_$profileId", hintsHidden(profileId) + key).apply(); bump() }
 
+    // ---- Eltern-Handy koppeln: Kopplung je Profil (id.schreib.key, nur lokal), Spitzname, letzter Upload
+    private val _pairRev = MutableStateFlow(0)
+    val pairRev = _pairRev.asStateFlow()
+    fun elternKopplung(profileId: String): de.wissensgarten.core.model.ElternKopplung.Kopplung? =
+        prefs.getString("eltern_kopplung_$profileId", null)?.split('.')?.takeIf { it.size == 3 }
+            ?.let { de.wissensgarten.core.model.ElternKopplung.Kopplung(it[0], it[1], it[2]) }
+    fun setElternKopplung(profileId: String, k: de.wissensgarten.core.model.ElternKopplung.Kopplung?, name: String? = null) {
+        val e = prefs.edit()
+        if (k == null) { e.putString("eltern_kopplung_$profileId", null); e.putString("eltern_name_$profileId", null); e.putLong("eltern_upload_$profileId", 0L) }
+        else { e.putString("eltern_kopplung_$profileId", "${k.id}.${k.schreib}.${k.key}"); e.putString("eltern_name_$profileId", name?.trim()?.take(20)?.ifEmpty { null }) }
+        e.apply(); _pairRev.value++
+    }
+    fun elternName(profileId: String): String? = prefs.getString("eltern_name_$profileId", null)
+    fun elternUpload(profileId: String): Long = prefs.getLong("eltern_upload_$profileId", 0L)
+    fun setElternUpload(profileId: String, at: Long) { prefs.edit().putLong("eltern_upload_$profileId", at).apply(); _pairRev.value++ }
+
     // ---- Klassenarbeiten (Prüfungsmodus)
     private val examJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
     private val examList = kotlinx.serialization.builtins.ListSerializer(de.wissensgarten.core.model.Exam.serializer())

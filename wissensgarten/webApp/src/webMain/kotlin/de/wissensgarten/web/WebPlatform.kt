@@ -19,6 +19,7 @@ import kotlinx.coroutines.await
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.serialization.json.*
+import kotlin.js.Promise
 import kotlin.io.encoding.Base64
 
 // ---- kleine JS-Aufrufe (siehe resources/wg-platform.js)
@@ -43,6 +44,21 @@ private fun jsReload(): Unit = js("location.reload()")
 private fun jsSafe(safe: Boolean): Unit = js("window.wgUpdate && window.wgUpdate.safe(safe)")
 /** Zählaufruf: einfacher text/plain-Aufruf ohne Cookies (keine CORS-Vorabfrage), Antwort egal; sonst sendBeacon */
 private fun jsSendCount(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true }).catch(function () {}); } catch (e) { try { navigator.sendBeacon(url, body); } catch (e2) {} } })()")
+// ---- Eltern-Kopplung: Zufall, AES-GCM-256 (WebCrypto), Hochladen ohne Cookies. Der Schlüssel verlässt das Gerät nur im Link für die Eltern.
+private fun jsRandomB64(n: Int): String = js("(function () { var a = new Uint8Array(n); crypto.getRandomValues(a); var s = ''; for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s).replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, ''); })()")
+private fun jsTestStage(): Boolean = js("(function () { var h = location.hostname; return h.indexOf('-test') >= 0 || h === 'localhost' || h === '127.0.0.1'; })()")
+private fun jsElternPut(url: String, schreib: String, key: String, json: String): Promise<JsNumber> = js("""(function () {
+  function dec(t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; var b = atob(t), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+  function enc(a) { var s = ''; for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  try {
+    var iv = new Uint8Array(12); crypto.getRandomValues(iv);
+    return crypto.subtle.importKey('raw', dec(key), { name: 'AES-GCM' }, false, ['encrypt'])
+      .then(function (k) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, new TextEncoder().encode(json)); })
+      .then(function (ct) { return fetch(url, { method: 'PUT', headers: { 'X-Schreib': schreib, 'Content-Type': 'text/plain' }, body: enc(iv) + '.' + enc(new Uint8Array(ct)), credentials: 'omit', cache: 'no-store' }); })
+      .then(function (r) { return r.status; }, function () { return -1; });
+  } catch (e) { return Promise.resolve(-1); }
+})()""")
+private fun jsElternDelete(url: String, schreib: String): Promise<JsNumber> = js("fetch(url, { method: 'DELETE', headers: { 'X-Schreib': schreib }, credentials: 'omit', cache: 'no-store' }).then(function (r) { return r.status; }, function () { return -1; })")
 private fun jsInstallWatch(cb: (String) -> Unit): Unit = js("window.wg.install.onChange(function (s) { cb(s); })")
 private fun jsInstallPrompt(): Unit = js("window.wg.install.prompt()")
 private fun jsInstallPostpone(): Unit = js("window.wg.install.postpone()")
@@ -224,6 +240,12 @@ class WebHost : AppHost {
 
     override fun toast(message: String) = jsToast(message)
     override fun sendCount(url: String, body: String) = jsSendCount(url, body)
+    override fun secureRandomB64(n: Int): String? = runCatching { jsRandomB64(n) }.getOrNull()
+    override val testStage: Boolean get() = jsTestStage()
+    override suspend fun elternPut(url: String, schreib: String, keyB64: String, json: String): Int =
+        runCatching { jsElternPut(url, schreib, keyB64, json).await<JsNumber>().toInt() }.getOrDefault(-1)
+    override suspend fun elternDelete(url: String, schreib: String): Int =
+        runCatching { jsElternDelete(url, schreib).await<JsNumber>().toInt() }.getOrDefault(-1)
     override fun setSafeToUpdate(safe: Boolean) = jsSafe(safe)
 
     // Plus-Pakete: gleicher Server wie die WebApp (relativ), Code im Header – nichts landet in Adresse oder Protokoll

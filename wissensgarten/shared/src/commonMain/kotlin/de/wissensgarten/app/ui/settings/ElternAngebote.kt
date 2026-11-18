@@ -15,8 +15,8 @@ import de.wissensgarten.core.model.Angebote
  * Absender-Hinweis. Keine Figuren, keine Preise, kein Druck.
  */
 @Composable
-fun ElternAngebote(settings: Settings, onGift: () -> Unit) {
-    ElternAngeboteContent(
+fun ElternAngebote(settings: Settings, onGift: () -> Unit, kopplung: @Composable () -> Unit = {}) {
+    ElternAngeboteContent(kopplung = kopplung,
         countUsage = settings.countUsage.collectAsState().value, onCountUsage = { settings.setCountUsage(it) },
         tutorHints = settings.tutorHints.collectAsState().value, onTutorHints = { settings.setTutorHints(it) },
         onGift = onGift,
@@ -28,8 +28,11 @@ fun ElternAngeboteContent(
     countUsage: Boolean, onCountUsage: (Boolean) -> Unit,
     tutorHints: Boolean, onTutorHints: (Boolean) -> Unit,
     onGift: () -> Unit,
+    kopplung: @Composable () -> Unit = {},
 ) {
     val uri = LocalUriHandler.current
+    kopplung()
+    Spacer(Modifier.height(4.dp))
     OutlinedButton(onClick = { onGift(); runCatching { uri.openUri(Angebote.geschenk) } }, modifier = Modifier.fillMaxWidth()) {
         Text("🎁 Lern-Geschenk verschenken")
     }

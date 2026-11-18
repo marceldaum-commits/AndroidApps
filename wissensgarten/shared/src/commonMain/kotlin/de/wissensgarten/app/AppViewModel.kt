@@ -589,7 +589,78 @@ class AppViewModel(
         viewModelScope.launch { repo.addDew(p.id, amount) }
     }
 
-    fun endSession() { session = emptyList(); saved[K_MIX] = null; tick(); refreshWidget() }
+    fun endSession() { session = emptyList(); saved[K_MIX] = null; tick(); refreshWidget(); elternBald() }
+
+    // ---------------- Eltern-Handy koppeln (nur hinter dem Eltern-Tor; ohne Kopplung wird nichts gesendet) ----------------
+    private val EK = de.wissensgarten.core.model.ElternKopplung
+
+    /** Neue Kopplung für ein Profil anlegen und gleich den ersten Bericht hochladen. null = Gerät kann keine sicheren Zufallszahlen. */
+    fun elternKoppeln(profileId: String, spitzname: String?): de.wissensgarten.core.model.ElternKopplung.Kopplung? {
+        val h = host ?: return null
+        val k = de.wissensgarten.core.model.ElternKopplung.Kopplung(h.secureRandomB64(16) ?: return null, h.secureRandomB64(16) ?: return null, h.secureRandomB64(32) ?: return null)
+        if (!EK.gueltig(k)) return null
+        c.settings.setElternKopplung(profileId, k, spitzname)
+        viewModelScope.launch { elternHochladen(profileId) }
+        return k
+    }
+
+    fun elternLink(k: de.wissensgarten.core.model.ElternKopplung.Kopplung) = EK.elternLink(host?.testStage == true, k)
+
+    /** Kopplung aufheben: Bericht auf dem Server löschen, Werte lokal löschen (auch wenn der Server gerade nicht erreichbar ist) */
+    fun elternAufheben(profileId: String, onDone: (Boolean) -> Unit = {}) {
+        val k = c.settings.elternKopplung(profileId) ?: return onDone(true)
+        val h = host
+        c.settings.setElternKopplung(profileId, null)
+        viewModelScope.launch {
+            val st = h?.elternDelete(EK.berichtUrl(h.testStage, k.id), k.schreib) ?: -1
+            onDone(st == 204 || st == 404)
+        }
+    }
+
+    /** Nach einer Lernrunde: Bericht hochladen, höchstens alle 10 Minuten (später nachgeholt) */
+    private var elternJob: kotlinx.coroutines.Job? = null
+    fun elternBald() {
+        val pid = c.settings.activeProfileId.value ?: return
+        if (c.settings.elternKopplung(pid) == null) return
+        elternJob?.cancel()
+        elternJob = viewModelScope.launch {
+            val warten = (c.settings.elternUpload(pid) + EK.ABSTAND_MS - de.wissensgarten.core.model.Platform.nowMs()).coerceAtLeast(5_000)
+            kotlinx.coroutines.delay(warten)
+            elternHochladen(pid)
+        }
+    }
+
+    /** Bericht bauen, verschlüsseln (auf dem Gerät) und hochladen. Ergebnis: HTTP-Status (204 = ok), −1 = Fehler/keine Kopplung */
+    suspend fun elternHochladen(profileId: String): Int {
+        val h = host ?: return -1
+        val k = c.settings.elternKopplung(profileId) ?: return -1
+        val json = elternBerichtText(profileId) ?: return -1
+        val st = h.elternPut(EK.berichtUrl(h.testStage, k.id), k.schreib, k.key, json)
+        if (st in 200..299) c.settings.setElternUpload(profileId, de.wissensgarten.core.model.Platform.nowMs())
+        return st
+    }
+
+    /** Der Bericht als JSON-Text (vor der Verschlüsselung) – auch für Tests */
+    suspend fun elternBerichtText(profileId: String): String? {
+        val p = repo.profile(profileId) ?: return null
+        val now = de.wissensgarten.core.model.Platform.nowMs()
+        val beds = repo.bedsOnce(profileId)
+        val packOf = packs.value.associateBy { it.id }
+        val beete = beds.map { b ->
+            val pack = b.bed.packId?.let(packOf::get)
+            de.wissensgarten.core.model.ElternKopplung.Beet(b.bed.id, b.bed.name, de.wissensgarten.core.model.Angebote.thema(b.bed.packId, pack?.subject),
+                pack?.subjectInfo?.label ?: de.wissensgarten.core.model.Subject.EIGENE.label)
+        }
+        val karten = beds.flatMap { b -> b.cards.map { de.wissensgarten.core.model.ElternKopplung.Karte(it.id, it.bedId, it.reps, it.stability) } }
+        val logs = repo.profileLogsSince(profileId, now - 15 * Scheduler.DAY_MS)
+        val antworten = logs.map { de.wissensgarten.core.model.ElternKopplung.Antwort(it.cardId, it.time, it.rating != de.wissensgarten.core.model.Rating.AGAIN.ordinal) }
+        val subj = beds.associate { it.bed.id to (it.bed.packId?.let(packOf::get)?.subject ?: "eigene") }
+        val infos = beds.flatMap { b -> b.cards.map { it.id to de.wissensgarten.core.model.WeekReport.CardInfo(it.front, subj[b.bed.id] ?: "eigene", it.stability, it.lapses) } }.toMap()
+        val tipp = de.wissensgarten.core.model.WeekReport.build(logs.map { de.wissensgarten.core.model.WeekReport.Entry(it.cardId, it.time, it.rating) }, infos, now).tip
+        val arbeiten = c.settings.exams(profileId).map { e -> de.wissensgarten.core.model.ElternKopplung.Arbeit(e.day, e.title) }
+        val b = EK.bericht(c.settings.elternName(profileId), p.level.takeIf { it in 1..13 }, now, Scheduler.localDay(now), beete, karten, antworten, arbeiten, tipp)
+        return EK.berichtText(b)
+    }
 
     // --- Einrichtung & Profile ---
 

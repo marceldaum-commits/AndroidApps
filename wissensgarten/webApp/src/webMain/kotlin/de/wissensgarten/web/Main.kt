@@ -66,6 +66,10 @@ private fun hideSplash(): Unit = js("(function () { var s = document.getElementB
 /** Schritt ins Start-Protokoll (index.html, sichtbar mit ?diag=1) */
 private fun diag(step: String): Unit = js("window.wgDiag && window.wgDiag(step)")
 private fun diagOn(): Boolean = js("!!window.wgDiagOn")
+/** Nur mit ?diag=1: Test-Einstieg für den Rundlauf der Eltern-Kopplung (Browser-Test webApp/tools/web-eltern.cjs) */
+private fun onElternTest(koppeln: () -> Unit, aufheben: () -> Unit): Unit =
+    js("(function () { window.wgElternTest = function () { window.wgElternErgebnis = null; koppeln(); }; window.wgElternAufheben = function () { window.wgElternErgebnis = null; aufheben(); }; })()")
+private fun setElternErgebnis(s: String): Unit = js("window.wgElternErgebnis = s")
 private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', function () { cb(document.visibilityState === 'visible'); })")
 private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', function () { cb(); })")
 
@@ -125,6 +129,22 @@ fun main() {
     }
     vm.refreshPlusPacksIfDue()
     diag("App: Daten bereit → Zeichenfläche anlegen")
+    if (diagOn()) onElternTest(
+        koppeln = {
+            scope.launch {
+                val pid = vm.settings.activeProfileId.value
+                if (pid == null) { setElternErgebnis("kein Profil"); return@launch }
+                val k = vm.settings.elternKopplung(pid) ?: vm.elternKoppeln(pid, "Testkind")
+                if (k == null) { setElternErgebnis("keine Kopplung"); return@launch }
+                delay(800)
+                setElternErgebnis("${vm.elternHochladen(pid)} ${vm.elternLink(k)}")
+            }
+        },
+        aufheben = {
+            val pid = vm.settings.activeProfileId.value
+            if (pid == null) setElternErgebnis("kein Profil") else vm.elternAufheben(pid) { ok -> setElternErgebnis(if (ok) "aufgehoben" else "lokal aufgehoben") }
+        },
+    )
 
     ComposeViewport(document.body!!) {
         LaunchedEffect(Unit) {
