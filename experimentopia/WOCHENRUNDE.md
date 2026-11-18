@@ -150,3 +150,7 @@ e) AUS EINEM GUSS: alle 20 Themen unter „Lernen nach Fach“ in Schulreihenfol
 **Regel für Querverweise (Geld verdienen, 18.11., von uns angenommen):** höchstens EIN Querverweis je Thema, nur wo ein Kind den Zusammenhang sofort sieht, immer mit einem Satz („Hier rechnest du … nach“).
 Für Fr 20.11. damit festgelegt: optik → Mathe-Trainer k9-aehnlich bzw. KurvenFlug laser/lichtbrechung · kraft → KurvenFlug weg-zeit/beschleunigung · fallen → KurvenFlug wurf · energie → KurvenFlug energie / Raumlicht baumeister · strom → Mathe-Trainer k7-zuordnung (U = R·I proportional) oder Wissensgarten s1-physik-strom · saeure → Wissensgarten s1-chemie-saeuren-basen · oekologie → Wissensgarten s1-bio-pflanzen · vererbung → Mathe-Trainer k8-zufall (Kreuzungsquadrat).
 Gestrichen: Prozent → zellen, Wachstum → saeure, Zuordnung → hebel. Je Thema EINEN davon wählen.
+
+## Entscheidung (Leitstand, 18.11., 22:40, von Marcel)
+- Profil Experimentopia: **„Naturwissenschaften Kl. 3–10, ausprobieren (Versuche)“**. Di/Fr-Updates wie geplant.
+- Ab Mo 23.11. 8. Teilnehmer in der Wochenrunde: **Sprachlern-App Englisch** (session_015vg1TjebYSwmNKS51LnUAY).
