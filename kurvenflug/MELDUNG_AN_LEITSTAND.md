@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.26 – hinweis „Klassenarbeit bald“ + Rundlauf gegen trainer-test
+- **hinweis:** Ist „Klassenarbeit bald“ eingestellt, enthält der Bericht `"hinweis":"Bald steht eine Klassenarbeit an: <Thema>"` (Thema = schwächstes
+  Thema, sonst zuletzt gespieltes Kapitel; ohne Spieldaten „Bald steht eine Klassenarbeit an.“). Test in `ParentReportTest`.
+- **Rundlauf gegen https://trainer-test.mathenachhilfe-online.com (18.11., echte Antworten):** App koppelt → **PUT 204** (Inhalt/Kopfzeilen der App) →
+  **GET 200** `{"d":"<iv>.<ct>","t":…}` → mit dem key aus dem Link **entschlüsselt** = gültiges JSON (format 1, name, klasse 8, stand, hinweis …) →
+  PUT mit fremdem X-Schreib **403** → App entkoppelt → **DELETE 204** → **GET 404** `{"fehler":"kein_bericht"}`.
+  (Im Test lief die Seite als localhost; die App-Anfragen gingen deshalb über Playwright an den echten Server.)
+- **CORS geprüft:** Preflight von `https://kurvenflug-test.…` und `https://kurvenflug.…` → 204, allow-origin passend, `Content-Type, X-Schreib`, `GET, PUT, DELETE, OPTIONS`.
+- Hinweis für die Eltern-Seite: GET liefert JSON `{"d","t"}` – zum Entschlüsseln `d` nehmen.
+- versionCode 73 / 2.5.26, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.25 – Eltern-Handy koppeln + Prüfplan (Dauerregel)
 **Eltern-Handy koppeln** (nur WebApp, nur im Elternbereich hinter dem Eltern-Tor):
 1. Karte „📱 Eltern-Handy koppeln“ mit freiwilligem Feld „Spitzname für den Bericht“. Koppeln erzeugt mit `crypto.getRandomValues`:

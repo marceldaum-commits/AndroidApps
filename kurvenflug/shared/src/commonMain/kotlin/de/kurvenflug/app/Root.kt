@@ -221,12 +221,14 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
         val reportPlays by remember { vm.weekPlays(reportStart - (de.kurvenflug.core.model.ParentReport.DAYS - 1) * de.kurvenflug.core.model.Weekly.DAY) }.collectAsStateWithLifecycle(emptyList())
         val reportProgress by vm.progress.collectAsStateWithLifecycle()
         val reportGrade by vm.settings.grade.collectAsStateWithLifecycle()
-        LaunchedEffect(reportPlays, reportProgress, reportGrade, parentLink) {
+        val reportExam by vm.settings.examUntil.collectAsStateWithLifecycle()
+        LaunchedEffect(reportPlays, reportProgress, reportGrade, reportExam, parentLink) {
             val now = de.kurvenflug.core.model.nowMillis()
             platform.parentReport(de.kurvenflug.core.model.ParentReport.json(
                 reportPlays.map { de.kurvenflug.core.model.PlayRecord(it.levelId, it.stars, it.attempts, it.seconds, it.at) },
                 reportProgress.mapValues { it.value.stars }, now, de.kurvenflug.core.model.CalDate.startOfToday(now),
-                de.kurvenflug.core.model.utcOffsetMinutes(now), reportGrade, platform.parentNick()))
+                de.kurvenflug.core.model.utcOffsetMinutes(now), reportGrade, platform.parentNick(),
+                examSoon = reportExam >= de.kurvenflug.core.model.CalDate.today().toEpochDay()))
         }
     }
     // Anonyme Nutzungszählung: Level-Abschlüsse aus dem Spielstand

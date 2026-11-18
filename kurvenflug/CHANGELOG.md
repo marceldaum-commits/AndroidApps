@@ -3,6 +3,9 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.26 – Eltern-Bericht mit Klassenarbeit-Hinweis
+- Steht im Elternbereich „Klassenarbeit bald“, sieht das gekoppelte Eltern-Handy einen Hinweis mit dem passenden Thema.
+
 ## 2.5.25 – Eltern-Handy koppeln
 - Im Elternbereich: „📱 Eltern-Handy koppeln“. Ein QR-Code bzw. Link verbindet dein Handy – dort siehst du Lernzeit,
   Stärken und wo es hakt, ohne Konto. Der Bericht ist Ende-zu-Ende verschlüsselt; der Schlüssel steckt nur im Link und
