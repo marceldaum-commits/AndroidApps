@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.9 – Mehrere Lösungen zählen
+- Manche Aufgaben haben mehr als eine richtige Lösung (z. B. flacher oder steiler Wurf). Getroffen ist getroffen – und jetzt
+  sagt die Lösungsanzeige auch ausdrücklich: „Deine Einstellung ist auch richtig – diese Aufgabe hat mehrere Lösungen.“
+  Wo es zwei Lösungen gibt, steht das gleich in der Aufgabe.
+
 ## 2.5.8 – Nova spricht noch mehr vorab
 - Auch Sätze mit Zahlen, die sich vorhersehen lassen – Volts Begrüßung („Schon 24 Sterne gesammelt“), Fortschritt in der
   Geschichte und in Andromeda, die Tagesmissionen der nächsten Wochen – liegen jetzt fertig gesprochen bereit. Sie kommen

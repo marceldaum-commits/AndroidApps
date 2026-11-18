@@ -1,5 +1,29 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.9 – Mehrere Lösungen (Marcel 18.11.) · Web = APK = Play
+**Grundsatz in KurvenFlug:** Kontrolliert wird der Flug – **jede Einstellung, die trifft, zählt als richtig** (nie nur die
+hinterlegte). Der Formel-Detektiv vergleicht die Kurve, nicht die Schreibweise (2(x+1) = 2x+2 wird akzeptiert).
+Feste Einzelwerte gibt es nur an zwei Stellen: im **Rechenweg** (Zahl antippen) und in der **Lösungsanzeige nach dem
+Rechen-Stern** („So rechnet man's“).
+
+**Suche:** Skript probiert für alle 346 festen Level + 61 Tagesmissionen **jede Reglerstellung** durch und fasst Treffer zu
+getrennten Lösungen zusammen (`MultiSolutionScan`). Ergebnis: **73 Level mit mehr als einer Lösung** (4 Profi-Sinus-Level mit 4 Reglern waren zu groß zum Durchprobieren – Flug akzeptiert dort ebenso jeden Treffer):
+| Art | Fälle | Entscheidung |
+|---|---|---|
+| echte Doppellösung der Mathematik: **3-2** (d = 3 oder 7), **4-3** (Wurf 28° oder 63°) | 2 | (a) beide zählen; **Aufgabe nennt jetzt beide Wege** („Zwei Werte für d passen – einer reicht!“, „flach oder steil, beide zählen“) |
+| Wurf mit Winkel **und** Tempo frei (4-6, Boss-/Andromeda-/Rettungs-/Tageswürfe) | 13 | (a) „Winkel und Tempo – du entscheidest!“ – alle zählen |
+| Gravitation/Schleuder (6-1…6-5, Boss 6: 9) und Laser mit Glas (17-1…17-5 u. Wiederholungen: 8) | 17 | (a) Tüftel-Level, jede treffende Bahn zählt |
+| Sinus periodisch / zweiter Wellenberg (5-2, 26-2, 26-4, 5-4 u. a.) | 15 | (b) eindeutig durch „der **erste** Wellenberg“ bzw. „aufsteigend“; andere Treffer zählen trotzdem |
+| Parabel „Talstation/Gipfelstation + zweite Station“ (Boss 3, Tagesmissionen, Rettungen), 3-6 – und Gerade 2-8 | 26 | (b) eindeutig durch „Scheitel bei …“; Zweittreffer sind Toleranz-Treffer und zählen trotzdem |
+- **Neu (a) für alle Fälle:** Hat das Kind mit anderen Werten getroffen als hinterlegt, zeigt die Lösungsanzeige
+  „✅ Deine Einstellung (α = 63°) ist auch richtig – diese Aufgabe hat mehrere Lösungen. Der Lösungsweg zeigt die Lösung α = 27°.“
+- **Neuer Test `MultiSolutionTest`:** Kein Rechenweg-Schritt bietet eine Zahl als „falsch“ an, die zu einer anderen treffenden
+  Lösung gehört (berücksichtigt die schon festgelegten Werte) – **0 Verstöße**; dazu Test, dass die andere Lösung genannt wird.
+- **Marcels Fall:** Der Flug hat nie eine richtige Lösung abgelehnt; sichtbar wurde „nur einer“ in der Lösungsanzeige nach dem
+  Rechen-Stern (z. B. Wurf 4-3 mit 63° getroffen, angezeigt wurde nur 27°) – genau das ist jetzt behoben. Falls Marcel ein
+  anderes Level meinte: bitte die Level-Nummer schicken.
+- versionCode 56, Prüfkette grün.
+
 ## ✅ 2.5.8 – fertig für den Betriebstest: Nova abgeschlossen + einheitliches Logo · Web = APK = Play
 - **vorlesen/texte.json** (test und nach Freigabe live): **1 162 feste Texte** (153 197 Zeichen, unverändert vertont) +
   **1 797 vorhersehbare Laufzeit-Sätze mit `"laufzeit": true`** (**94 998 Zeichen neu** – unter der 150 000er-Grenze, daher
