@@ -11,8 +11,8 @@ import org.junit.Test
 class ElternTest {
     private val id = "A".repeat(22); private val write = "b-_".repeat(7) + "c"; private val key = "K9".repeat(21) + "x"
 
-    /** Solange die Eltern-Seite fehlt, bleibt das Koppeln außerhalb der Testseite unsichtbar. */
-    @Test fun nochNichtFuerAlle() { assertFalse(Eltern.ENABLED) }
+    /** Die Eltern-Seite steht: Koppeln ist für alle da, und der Link zeigt auf die Website (auf der Testseite auf deren Vorstufe). */
+    @Test fun fuerAlle() { assertTrue(Eltern.ENABLED); assertTrue(Eltern.PAGE.startsWith("https://www.mathenachhilfe-online.com/")); assertTrue(Eltern.SERVER.startsWith("https://trainer.mathenachhilfe-online.com/")) }
 
     @Test fun kopplungUndLink() {
         val p = Eltern.Pairing.fresh("$id.$write.$key", "  Lena.M  ")!!

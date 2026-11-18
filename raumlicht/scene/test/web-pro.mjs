@@ -3,7 +3,7 @@
 import { createRequire } from 'module'; const require = createRequire(import.meta.url); const { chromium } = require('playwright');
 import http from 'http'; import fs from 'fs'; import path from 'path';
 const [,, dir, codeFile, out] = process.argv; const code = fs.readFileSync(codeFile, 'utf8').trim(); const plain = code.replace(/-/g, '');
-const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.split('?')[0]); if (p === '/') p = '/index.html'; const f = path.join(dir, p);
+const reqs = []; const server = http.createServer((q, r) => { reqs.push(q.url); let p = decodeURIComponent(q.url.split('?')[0]); if (p === '/') p = '/index.html'; const f = path.join(dir, p);
   fs.readFile(f, (e, d) => { if (e) { r.writeHead(404); r.end(); } else { r.writeHead(200, { 'Content-Type': f.endsWith('.wasm') ? 'application/wasm' : f.endsWith('.js') || f.endsWith('.mjs') ? 'text/javascript' : f.endsWith('.html') ? 'text/html' : f.endsWith('.json') ? 'application/json' : 'application/octet-stream' }); r.end(d); } }); });
 await new Promise((ok) => server.listen(0, ok)); const url = `http://localhost:${server.address().port}/`;
 const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] });
@@ -30,5 +30,13 @@ await open('?pro=' + plain, '4-freigeschaltet');
 const unlocked = await open('?ziel=level/9-5', '5-offen'); const home = await open('', '6-start');
 check(!same(locked, unlocked), 'Aufgabe 9-5 sieht nach dem Freischalten anders aus als die Sperrseite');
 check((await stored()).replace(/-/g, '') === plain, 'der Code bleibt nach dem Neuladen gemerkt');
+// 5. neue Linkform „#pro=<Code>“: schaltet genauso frei, der Code geht dabei an keinen Server und verschwindet aus der Adresszeile
+await page.evaluate(() => localStorage.removeItem('raumlicht.proCode')); await page.goto('about:blank'); reqs.length = 0; await open('#pro=' + plain, '7-link-mit-raute');
+check((await stored()).replace(/-/g, '') === plain, 'Link mit „#pro=“ schaltet frei und wird gemerkt');
+check(!reqs.some((u) => u.includes(plain.slice(0, 20))), 'bei „#pro=“ sieht der Server den Code nicht');
+check(!(await page.evaluate(() => location.href)).includes(plain.slice(0, 20)), 'der Code steht danach nicht mehr in der Adresszeile');
+// 6. alte Linkform „?pro=“ geht weiter (alte Karten und E-Mails) und wird ebenfalls aus der Adresszeile genommen; anderes hinter dem „#“ bleibt stehen
+await page.evaluate(() => localStorage.removeItem('raumlicht.proCode')); await page.goto('about:blank'); await open('?pro=' + plain + '#anker=1', '8-alter-link');
+check((await stored()).replace(/-/g, '') === plain && !(await page.evaluate(() => location.href)).includes(plain.slice(0, 20)) && (await page.evaluate(() => location.hash)) === '#anker=1', 'alter Link „?pro=“ schaltet weiter frei, Code danach aus der Adresszeile');
 check(errs.length === 0, errs.length ? 'Fehler: ' + errs.slice(0, 3).join(' | ') : 'keine Konsolenfehler');
 await b.close(); server.close(); process.exit(fail ? 1 : 0);

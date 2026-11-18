@@ -2,6 +2,17 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.29 – Raumlicht am PC: großes Bild statt gestreckter Handy-Ansicht (18.11.2026)
+- **Neue Startseite für breite Bildschirme** (PC, Laptop, Tablet quer): Links schwebt die 3D-Bühne groß über die ganze Höhe, mit „Tour starten“ und den vier Schnellzugängen darunter. Rechts stehen Gebiete, alle Kapitel auf einen Blick (kein Wischen mehr) und die Aufgaben des Kapitels – jetzt mit ihren Namen.
+- **Listen und Einstellungen** ziehen sich am PC nicht mehr über die ganze Breite, sondern stehen als gut lesbare Spalte in der Mitte.
+- Auf dem Handy bleibt alles, wie es war.
+
+## 2.18.28 – Eltern-Handy koppeln für alle (18.11.2026)
+- **Eltern-Handy koppeln ist jetzt für alle da** (Einstellungen): freiwillig, ohne Konto, verschlüsselt. Deine Eltern sehen auf ihrem Handy, wie es bei dir in Mathe läuft – samt Monatsverlauf.
+- **Mit dabei: die verschlüsselte Sicherung.** Solange gekoppelt ist, geht dein Lernstand nicht mehr verloren. Auf einem neuen Gerät holst du ihn mit dem Kopplungs-Link zurück („Fortschritt wiederherstellen“).
+- **Freischalt-Links sind sicherer:** Der Code steht jetzt hinter einem „#“ im Link. So wird er an keinen Server geschickt. Alte Links aus Karten und E-Mails gehen weiter.
+- **Für Eltern:** Bericht und Sicherung werden auf dem Gerät verschlüsselt; unser Server kann sie nicht lesen. Den Kopplungs-Link bitte nur in der Familie weitergeben – mit ihm lässt sich der Lernstand samt Freischalt-Codes auf ein anderes Gerät holen.
+
 ## 2.18.27 – Dein Lernstand geht nicht mehr verloren (18.11.2026)
 - **Neu, zunächst nur auf der Testseite: verschlüsselte Sicherung.** Ist das Eltern-Handy gekoppelt, sichert Raumlicht deinen ganzen Lernstand zusätzlich: Sterne, Rekorde, Lernverlauf, Einstellungen und deine Freischalt-Codes. Neues Handy oder gelöschte Browser-Daten sind dann kein Problem mehr.
 - **Fortschritt wiederherstellen:** Auf der Seite „Eltern-Handy koppeln“ fügst du den Kopplungs-Link ein, und alles ist wieder da. Gibt es auf dem Gerät schon einen Lernstand, fragt Raumlicht vorher nach und überschreibt nichts ungefragt.
