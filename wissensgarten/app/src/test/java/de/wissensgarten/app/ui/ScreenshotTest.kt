@@ -654,8 +654,8 @@ open class ScreenshotTest {
                 "Bruchrechnung fällt Lena gerade schwer (52 % richtig in den letzten zwei Wochen). Üben in der App hilft – manchmal braucht es aber eine Erklärung von einem Menschen. Wenn ihr mögt: Wir bieten Online-Nachhilfe an.",
                 "Kostenlose Probestunde anfragen", onOpen = {}, onHide = {}, second = "Neukundenpaket ansehen")
             de.wissensgarten.app.ui.parents.NachhilfeKarte(
-                "Am Dienstag ist die Klassenarbeit „Mathe: Brüche“. Falls ihr noch Unterstützung wollt: Wir bieten Online-Nachhilfe an – die erste Stunde ist eine kostenlose Probestunde.",
-                "Kostenlose Probestunde anfragen", onOpen = {}, onHide = {}, second = "Crashkurs ansehen (kostenlos für Familien mit Stundenpaket)")
+                "Am Dienstag ist die Klassenarbeit „Mathe: Brüche“. Eine kostenlose Probestunde kann vor der Arbeit helfen.",
+                "Kostenlose Probestunde anfragen", onOpen = {}, onHide = {})
         }
     }
 

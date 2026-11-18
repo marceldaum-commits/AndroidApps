@@ -812,13 +812,10 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             val tag = de.wissensgarten.app.ui.common.Clock.weekdayName(exam.day)
                             LaunchedEffect(exam.id) { vm.zaehle("nachhilfe_hinweis", "klassenarbeit", thema) }
                             de.wissensgarten.app.ui.parents.NachhilfeKarte(
-                                "Am $tag ist die Klassenarbeit „${exam.title}“. Falls ihr noch Unterstützung wollt: Wir bieten Online-Nachhilfe an – die erste Stunde ist eine kostenlose Probestunde.",
+                                "Am $tag ist die Klassenarbeit „${exam.title}“. Eine kostenlose Probestunde kann vor der Arbeit helfen.",
                                 "Kostenlose Probestunde anfragen",
                                 onOpen = { vm.zaehle("probestunde_klick", "klassenarbeit", thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("klassenarbeit", thema, klasse)) } },
                                 onHide = { vm.settings.hideHint(p.id, "ka:" + exam.id); hintRev++ },
-                                // Crashkurse gibt es für Mittel- und Oberstufe – kostenlos für Familien mit Stundenpaket
-                                second = if (de.wissensgarten.core.model.Angebote.crashkursPasst(klasse)) "Crashkurs ansehen (kostenlos für Familien mit Stundenpaket)" else null,
-                                onSecond = { vm.zaehle("crashkurs_klick", "klassenarbeit", thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.crashkurs(thema, klasse)) } },
                             )
                             return@WeekReportScreen
                         }

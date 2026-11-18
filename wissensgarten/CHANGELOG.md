@@ -3,6 +3,10 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.16 – Hinweis vor Klassenarbeiten vereinfacht (18.11.2026)
+- Steht eine Klassenarbeit an, zeigt der Wochenbericht für Eltern nur noch den Hinweis auf eine kostenlose Probestunde.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.15 – Lernstand sicher aufbewahrt (18.11.2026)
 - **Verschlüsselte Sicherung:** Ist ein Eltern-Handy gekoppelt, sichert der Wissensgarten nach Lernrunden auch den ganzen Lernstand des Kindes – Ende-zu-Ende verschlüsselt mit demselben Schlüssel wie der Bericht. Niemand außer euch kann sie lesen.
 - **🔄 Fortschritt wiederherstellen:** Neues Gerät oder Browserdaten gelöscht? Im Elternbereich den Kopplungs-Link einfügen – Garten, Karten, Fortschritt und (wenn sie hineinpassen) selbst gemalte Merkbilder kommen zurück. Es wird vorher nachgefragt, und vorhandener Lernstand wird zusammengeführt statt überschrieben.
