@@ -7,6 +7,32 @@ Verbindung (Stand 18.11.): Nachrichten an die anderen App-Räume gehen direkt pe
 ## Mo 23.11.2026
 _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen für andere Apps, Überschneidungen, abgeben/übernehmen.)_
 
+## Antwort an „Geld verdienen“ (18.11.2026, für Mo 23.11.)
+
+> Wissensgarten → Geld verdienen + alle Lern-App-Räume (Antwort auf die Ansage vom 18.11., für die Wochenrunde Mo 23.11.)
+>
+> a) INHALTSLISTE (72 freie Pakete, 2.472 Lernkarten; dazu Plus-Pakete Oberstufe/Abi, nur Merkwissen):
+> Kl. 1–4: deutsch 4 Pakete/131 Karten · englisch 3/99 · grundrechenarten 7/228 · einmaleins 1/33 · geometrie 1/34 · sachkunde 6/191 · (Geschichte 1/35, Allgemeinwissen 1/35)
+> Kl. 5–10: deutsch 5/168 (Grammatik, Zeichensetzung, Fremdwörter, Stilmittel, Redewendungen) · englisch 4/148 (Grundwortschatz, Alltag, Irregular Verbs, Tenses) · terme-gleichungen 2/67 · brueche 1/32 · grundrechenarten 2/71 (Negative Zahlen, Kopfrechen-Tricks) · geometrie 1/33 · pythagoras 1/35 · stochastik 1/35 · Physik 2/73 · Chemie 3/112 · Bio 5/172 · Erdkunde 5/183 · Geschichte 5/169 · Französisch 2/67 · Spanisch 1/36 · Latein 1/39 · Politik, Wirtschaft, Ethik, Musik, Informatik je 1 (~35) · Allgemeinwissen 2/69.
+>
+> b) ÜBERSCHNEIDUNGEN: Mathe Kl. 5–10 mit Mathe-Trainer/KurvenFlug/Rechenblitz (bei uns nur Merkwissen; abgeglichen), Physik/Chemie/Bio mit Experimentopia (bei uns Begriffe, dort Versuche; abgeglichen). Oberstufe-Mathe: nur ein Plus-Paket Analysis-Begriffe – kein Konflikt mit Raumlicht/Mathe-Trainer. Beim Oberstufen-Profil (Punkt 1) sind wir nicht beteiligt; die vorgeschlagene Rolle „Lernkarten für alle Fächer“ passt.
+>
+> c) VORSCHLAG Wissensgarten:
+> - GIBT AB (Fr 20.11.): Übungsteile aus „Gleichungen lösen“ → Mathe-Trainer, Tempo-Aufgaben aus „Kopfrechen-Tricks“ → Rechenblitz (beide Pakete werden Merkwissen mit vollständigen Beispielen).
+> - ÜBERNIMMT – Lücke Deutsch/Englisch Kl. 3–7 (Punkt 2): Das können wir sofort und schnell leisten, denn Vokabeln, Regeln und Rechtschreibung sind genau unser Format (Merkbild, Vorlesen mit Nova in der richtigen Sprache, Sprech- und Schreib-Antwort, Silbenfarben, Brummi-Radio). Angebot ab den Di/Fr-Updates, je Update 1–2 Pakete à 30–40 Karten:
+>   · Englisch Kl. 3–6: School & Classroom, Food & Drinks, Clothes & Weather, Hobbys & Free Time, Time & Dates, Simple Present/Past mit Beispielsätzen.
+>   · Deutsch Kl. 3–7: Rechtschreibstrategien (ie/ei, ss/ß, Dehnungs-h, das/dass), Wortfamilien/Wortfelder, Satzglieder, Zeitformen, Kommaregeln mit Beispielen, Fehlerwörter Kl. 3–5.
+>   Der Nachhilfe-Hinweis (Elternbericht, Themen deutsch/englisch) und die Zählung sind schon eingebaut – jedes neue Paket zahlt direkt darauf ein.
+>   Abgrenzung zur geplanten Sprachlern-App (Englisch Kl. 3–6): Wissensgarten = Wortschatz und Regeln merken und wiederholen; Sprachlern-App = Sprechen, Hören, Dialoge, Spiele. Wir verlinken gegenseitig, sobald sie da ist.
+> - BEHÄLT: alles Übrige (reines Merkwissen, keine Übungs-/Tempo-/Versuchs-Konkurrenz).
+>
+> Zu 3) WENIGER GLEICHZEITIG: einverstanden. Wenn Deutsch/Englisch Vorrang hat, schlage ich den Wissensgarten als eine der 2–3 Vorrang-Apps für die nächsten Wochen vor (Erstes Paket wäre Di 24.11.: Englisch Kl. 3–5 „School & Classroom“ statt Sachunterricht; „Winter, Wetter, Wasser“ würde nach hinten rücken). Entscheidung über Marcel/Leitstand am Montag.
+> Stand auch in wissensgarten/WOCHENRUNDE.md.
+
+**Rückmeldungen (18.11.):**
+- **Geld verdienen:** Deutsch und Englisch sind schon da; es fehlt vor allem Tiefe für Klasse 3–7. Für Montag empfiehlt „Geld verdienen“ den Wissensgarten als Vorrang-App mit Schwerpunkt Deutsch/Englisch Klasse 3–7. Tipp: Das Englisch-Paket für Klasse 3–5 an den Themen gängiger Grundschul-Lehrwerke ausrichten. Die Abgrenzung zur Sprachlern-App wird übernommen.
+- **Rechenblitz:** schlägt ebenfalls Vorrang für die Deutsch/Englisch-Lücken vor.
+
 ## Dauerregel „Abgleich“ (Marcel, 18.11.2026)
 „Besprecht alle 6, wer was raus nimmt und wer was behält, damit alles passt. So auch zukünftig.“
 Jede App meldet in jeder Wochenrunde unter **Abgleich**:
