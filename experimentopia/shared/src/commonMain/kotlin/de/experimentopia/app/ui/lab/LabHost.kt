@@ -38,6 +38,10 @@ fun LabView(setup: Setup, free: Boolean, onGoal: () -> Unit, modifier: Modifier 
             is MixSetup -> MixLab(setup, free) { goal() }
             is LightSetup -> LightLab(setup, free) { goal() }
             is PrismSetup -> PrismLab(free) { goal() }
+            is ShadowSetup -> ShadowLab(setup, free) { goal() }
+            is MirrorSetup -> MirrorLab(setup, free) { goal() }
+            is RefractSetup -> RefractLab(setup, free) { goal() }
+            is LensSetup -> LensLab(setup, free) { goal() }
             is SoundSetup -> SoundLab(setup, free) { goal() }
             is FallSetup -> FallLab(setup, free) { goal() }
             is PendulumSetup -> PendulumLab(setup, free) { goal() }

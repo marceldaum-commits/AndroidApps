@@ -1,5 +1,17 @@
 # Changelog – Experimentopia
 
+## 2.7.0 – Neue Optik: Schatten, Spiegel & Linsen (18.11.2026)
+
+- 🔍 **Neuer Fachbereich „Schatten, Spiegel & Linsen“** auf der Insel Licht & Klang – 11 Versuche für Kl. 3–10, passend zum Lehrplan aller Länder:
+  - 🐰 **Schattenbühne**: Lampe verschieben, der Hasenschatten wächst – mit Strahlensatz zum Nachrechnen.
+  - 🔴 **Spiegel-Laser**: Spiegel drehen und alle Sterne treffen; Einfalls- und Reflexionswinkel am Lot.
+  - 💧 **Lichtknick**: Laser ins Aquarium, Münze treffen; Totalreflexion in Glas und Diamant entdecken.
+  - 🕯️ **Optische Bank**: Kerze, Linse, Schirm – scharf stellen, Bild doppelt so groß machen, die Lupe verstehen.
+  - Überall eigene Werte im Freien Labor (Figurgröße, Laserrichtung, Stoffe, Brennweite).
+- 🚧 **„Kommt bald“**: Unter jedem Fach stehen die Themen aus dem Lehrplan, an denen wir gerade bauen (z. B. Motor & Dynamo, Atom-Werkstatt, Tier-Safari). Antippen verrät, worauf man sich freuen kann.
+- 📖 Neue Theorie-Karte mit Strahlensatz, Reflexions- und Brechungsgesetz, Grenzwinkel und Linsengleichung – jeweils mit Rechenbeispiel.
+- Jetzt 211 Versuche; gratis bleiben die ersten Versuche je Insel und je Thema (76 von 211).
+
 ## 2.6.2 – Theorie mit Formeln und Rechenbeispielen (18.11.2026)
 
 - 🧮 **Theorie-Karten überarbeitet**: Jede Formel, die man für die Versuche braucht, steht jetzt in der Theorie – mit Bedeutung der Zeichen, Einheiten

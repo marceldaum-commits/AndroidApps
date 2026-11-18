@@ -2,6 +2,17 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.7.0 vom 18.11.2026: Optik + „Kommt bald“ – fertig für den Betriebstest
+
+- Auftrag (über Marcel): Lehrplan-Lücken bauen bzw. als „Kommt bald“ zeigen. Liste: `docs/LEHRPLAN-ABGLEICH.md` (BY/BW/NRW/NI/HE, Gym/RS Kl. 5–10).
+- **Gebaut – größte Lücke, Optik** (Pflicht in allen 5 Ländern): neuer Fachbereich „Schatten, Spiegel & Linsen“ (Insel Licht & Klang), 11 Versuche x1–x11 (Kl. 3–10),
+  4 neue Geräte: Schattenbühne (Strahlensatz), Spiegel-Laser (Reflexionsgesetz, Sterne treffen), Lichtknick (Snellius, Totalreflexion Glas/Diamant), optische Bank (Linsengleichung,
+  Abbildungsmaßstab, Lupe). Alle mit eigenen Werten im Freien Labor. Theorie-Karte mit Formeln + Rechenbeispielen.
+- **„Kommt bald“**: 23 Themen (Physik 9, Chemie 6, Bio 8) als Kacheln unter jedem Fach, ohne Datum, ohne Kaufhinweis; nach Klasse gefiltert; Antippen wackelt + Vorschau-Satz.
+- Zahlen: 211 Versuche, 20 Fachbereiche, 38 Geräte; gratis 76 von 211 (erste 2 der Optik frei).
+- Tests: `OpticsTest` (Werte, Antworten, Ziele mit Reglern erreichbar, Gratis-Umfang), alle Modell- und App-Tests, Lint, Webapp; `web-start.mjs` grün. Bildschirmfotos 71–77 geprüft.
+- Nächste Bausteine laut Liste: Motor/Dynamo/Trafo, Energie, Bio Kl. 5/6 (Tiere, Blüten, Atmung), Atombau/PSE.
+
 ## 18.11.2026 – Version 2.6.2 vom 18.11.2026: Theorie-Prüfliste umgesetzt – fertig für den Betriebstest
 
 **Prüfliste** (alle 19 Theorie-Karten gegen die Versuche geprüft: Welche Formel/welches Gesetz braucht man? Steht es mit Größen, Einheiten und Rechenbeispiel da?)

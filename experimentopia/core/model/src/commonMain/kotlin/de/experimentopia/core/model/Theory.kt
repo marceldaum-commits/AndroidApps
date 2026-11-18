@@ -185,6 +185,27 @@ object Theory {
             "Jeder Bildschirm besteht aus winzigen roten, grünen und blauen Lichtpunkten.",
             listOf("additiv" to "Licht kommt dazu", "subtraktiv" to "Licht wird weggenommen", "Spektrum" to "alle Farben des Lichts nebeneinander")),
 
+        TheoryCard(Topic.OPTIK, "Licht läuft geradeaus – bis es auf einen Spiegel, eine Wasseroberfläche oder eine Linse trifft.",
+            listOf(
+                p("➡️", "Licht breitet sich geradlinig aus. Wo es nicht hinkommt, ist Schatten. Je näher die Lampe an einem Gegenstand, desto größer sein Schatten."),
+                p("↩️", "Ein Spiegel wirft Licht zurück wie eine Wand einen Ball: So schräg es ankommt, so schräg fliegt es weiter."),
+                p("💧", "Geht Licht schräg von Luft in Wasser oder Glas, knickt es ab. Darum sieht ein Strohhalm im Glas geknickt aus."),
+                p("🔍", "Eine Sammellinse (Lupe) bündelt Licht. Hält man ein Blatt in den richtigen Abstand, erscheint ein Bild – auf dem Kopf."),
+                p("👁️", "Auch dein Auge hat eine Linse: Sie wirft ein umgedrehtes Bild auf die Netzhaut, das Gehirn dreht es wieder um."),
+                p("🌑", "Rechentrick Schatten: Steht die Lampe halb so weit von der Figur weg, wird der Schatten doppelt so groß. Beispiel: Wand 100 cm weg, Lampe 50 cm vor einer 10-cm-Figur → 20 cm Schatten; Lampe 25 cm vor der Figur → 40 cm."),
+            ),
+            listOf(
+                p("📐", "Strahlensatz für Schatten: S = G · d_W ÷ d_G (S = Schattengröße, G = Gegenstandsgröße in cm, d_W = Abstand Lampe–Wand, d_G = Abstand Lampe–Gegenstand). Beispiel: G = 10 cm, d_W = 100 cm, d_G = 40 cm → S = 10 cm · 100 ÷ 40 = 25 cm."),
+                p("📐", "Reflexionsgesetz: Einfallswinkel α = Reflexionswinkel β, beide gemessen gegen das Lot (die Senkrechte auf dem Spiegel). Dreht man den Spiegel um 10°, dreht sich der zurückgeworfene Strahl um 20°."),
+                p("📏", "Brechungsgesetz (Snellius): n₁ · sin α = n₂ · sin β (n = Brechzahl: Luft 1,0; Wasser 1,33; Glas 1,5; Diamant 2,42). Beispiel Luft → Wasser bei α = 42°: sin β = 1,0 · 0,669 ÷ 1,33 ≈ 0,503, also β ≈ 30° – zum Lot hin."),
+                p("🔦", "Totalreflexion: Von dicht nach dünn gibt es einen Grenzwinkel mit sin α_G = n₂ ÷ n₁. Glas → Luft: sin α_G = 1 ÷ 1,5 ≈ 0,667, α_G ≈ 42°. Darüber bleibt alles Licht drin – so funktionieren Glasfaserkabel."),
+                p("🧮", "Linsengleichung: 1/f = 1/g + 1/b (f = Brennweite, g = Gegenstandsweite, b = Bildweite, alles in cm). Beispiel f = 10 cm, g = 25 cm: 1/b = 1/10 − 1/25 = 0,06 → b ≈ 16,7 cm."),
+                p("🔎", "Abbildungsmaßstab: B ÷ G = b ÷ g (B = Bildgröße). Beispiel f = 10 cm, g = 15 cm → b = 30 cm, das Bild ist 30 ÷ 15 = 2-mal so groß. Bei g = 2f ist das Bild gleich groß, bei g < f entsteht kein Bild auf dem Schirm – die Linse wirkt als Lupe."),
+            ),
+            "Glasfaserkabel bringen das Internet ins Haus: Das Licht wird in der dünnen Faser tausendfach total reflektiert und kommt so um jede Kurve.",
+            listOf("Lot" to "Senkrechte auf Spiegel oder Grenzfläche", "Brechung" to "Knick des Lichts an einer Grenzfläche", "Brennweite" to "Abstand vom Brennpunkt zur Linse",
+                "Totalreflexion" to "Licht wird vollständig zurückgeworfen", "Kernschatten" to "Bereich, in den gar kein Licht fällt")),
+
         TheoryCard(Topic.SCHALL, "Schall ist Schwingung: Etwas zittert und bringt die Luft zum Zittern.",
             listOf(
                 p("🎵", "Je schneller etwas schwingt, desto höher klingt der Ton."),

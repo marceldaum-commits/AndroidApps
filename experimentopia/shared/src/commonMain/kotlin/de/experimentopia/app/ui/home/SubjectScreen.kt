@@ -106,9 +106,43 @@ fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked:
                         }
                     }
                 }
+                ComingSoon(subject, grade, topics.size)
                 Spacer(Modifier.height(24.dp))
             }
         }
         TheorySheet(theoryTopic != null, theoryTopic ?: Topic.AUFTRIEB, pro = grade >= 7) { theoryTopic = null }
+    }
+}
+
+/** Themen aus dem Lehrplan, an denen noch gebaut wird – ohne Datum, ohne Kaufhinweis. Antippen lässt die Kachel wackeln. */
+@Composable
+private fun ComingSoon(subject: Subject, grade: Int, offset: Int) {
+    val list = Coming.of(subject, grade)
+    if (list.isEmpty()) return
+    var poked by remember(subject) { mutableStateOf<Upcoming?>(null) }
+    var pokes by remember { mutableIntStateOf(0) }
+    Spacer(Modifier.height(4.dp))
+    Text("🚧 Kommt bald", color = E.Text, fontWeight = FontWeight.Black, fontSize = 17.sp, modifier = Modifier.testTag("kommt_bald"))
+    Text("Daran forschen wir gerade – aus dem Lehrplan der Klassen 5–10.", color = E.Muted, fontSize = 12.sp)
+    list.chunked(2).forEachIndexed { r, row ->
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            row.forEachIndexed { j, u ->
+                val me = poked == u
+                Column(Modifier.weight(1f).popIn((offset + r * 2 + j) * 50).shake(if (me) pokes else 0).clip(RoundedCornerShape(18.dp)).background(E.Deep.copy(alpha = 0.7f))
+                    .border(2.dp, subject.color().copy(alpha = 0.35f), RoundedCornerShape(18.dp))
+                    .clickable { poked = u; pokes++ }.padding(10.dp).testTag("bald_${r * 2 + j}"), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(u.emoji, fontSize = 26.sp)
+                        Spacer(Modifier.weight(1f))
+                        Text("⏳ bald", color = E.Sun, fontSize = 11.sp, fontWeight = FontWeight.Bold,
+                            modifier = Modifier.clip(CircleShape).background(E.Sun.copy(alpha = 0.15f)).padding(horizontal = 8.dp, vertical = 2.dp))
+                    }
+                    Text(u.title, color = E.Text.copy(alpha = 0.85f), fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                    Text(u.gradeText, color = E.Muted, fontSize = 11.sp)
+                    AnimatedVisibility(me) { Text(u.teaser, color = E.Text, fontSize = 12.sp) }
+                }
+            }
+            if (row.size == 1) Spacer(Modifier.weight(1f))
+        }
     }
 }

@@ -310,12 +310,13 @@ object Catalog {
         (1..8).forEach { put("e$it", Topic.ERNAEHRUNG) }; (1..7).forEach { put("p$it", Topic.OEKOLOGIE) }
         (1..7).forEach { put("t$it", Topic.TRENNEN) }; (1..4).forEach { put("m$it", Topic.LICHT) }
         (1..5).forEach { put("u$it", Topic.ZELLEN); put("q$it", Topic.OEKOLOGIE); put("j$it", Topic.OEKOLOGIE); put("v$it", Topic.KOERPER) }
+        (1..11).forEach { put("x$it", Topic.OPTIK) }
     }
     fun topicOf(id: String): Topic = topics[id] ?: error("Versuch $id hat kein Thema")
 
     /** Je Insel nach Klassenstufe sortiert (stabil: gleiche Stufe bleibt in der geschriebenen Reihenfolge) */
     val all: List<Experiment> = (CatalogA.water + CatalogD.water + CatalogA.force + CatalogD.force + CatalogB.power + CatalogD.power + CatalogB.chem + CatalogE.chem +
-        CatalogC.heat + CatalogE.heat + CatalogC.lightSound + CatalogE.lightSound + CatalogC.fall + CatalogE.fall + CatalogF.bio + CatalogF.chem + CatalogF.light + CatalogG.all)
+        CatalogC.heat + CatalogE.heat + CatalogC.lightSound + CatalogE.lightSound + CatalogC.fall + CatalogE.fall + CatalogF.bio + CatalogF.chem + CatalogF.light + CatalogG.all + CatalogH.optics)
         .let { all -> Island.entries.flatMap { i -> all.filter { it.island == i }.sortedWith(compareBy({ topicOf(it.id).ordinal }, { it.grades.first })) } }
         .map { with(Typo) { it.typeset() } }
 

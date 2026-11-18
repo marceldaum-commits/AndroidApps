@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.5.0 vom 18.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.7.0 vom 18.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -35,7 +35,7 @@ Die Themensuche filtert nach Fach und Fachbereich und sucht Stichwörter in Tite
 | ⚡ Blitzinsel | Leitertest, Bleistiftmine, UND/ODER-Schalter, Reihe/Parallel, Kurzschluss, Ohmsches Gesetz, Magnete, Pole | 3–9 |
 | 🌋 Chemie-Vulkan | Kaffeefilter, Sand-Salz-Wasser trennen, Chromatografie, Rotkohl-Zaubersaft, pH-Wert, Neutralisation, pH-Sprung, Verdünnen, Natron-Ballon, Knallgas, Magnesium, Rost, Fotosynthese … | 3–10 |
 | 🔥 Feuer & Eis | Was schmilzt zuerst, Heizkurve mit Teilchenblick, Mischtemperatur, Badewasser, glühendes Eisen | 3–8 |
-| 🌈 Licht & Klang | Malkasten, Licht mischen, Farbfilter, Prisma (echte Brechung), Gläser-Xylofon, Röhren-Orgel, Stimmgerät, „Alle meine Entchen“, Saite | 3–8 |
+| 🌈 Licht & Klang | Malkasten, Licht mischen, Farbfilter, Prisma (echte Brechung), Schattenbühne, Spiegel-Laser, Lichtknick (Totalreflexion), optische Bank (Linse, Lupe), Gläser-Xylofon, Röhren-Orgel, Stimmgerät, „Alle meine Entchen“, Saite | 3–10 |
 | 🚀 Fallturm-Insel | Kugel gegen Feder, Papier-Trick, Vakuumröhre, Fallzeit, Mond, Pendel, Sekundenpendel | 3–10 |
 | 🌿 Bio-Dschungel | Mendels Erbsen, Wunderblume, Blutgruppen, Osmose, Plasmolyse, Nährstoff-Nachweise, Speichel-Enzym, Wasserpest, Hasen und Luchse, Mikroskop, Kresse keimen lassen, Nahrungsketten, Herz und Puls | 3–10 |
 
@@ -45,7 +45,7 @@ Alle richtigen Antworten werden aus Modellen in `core/model` **berechnet**, nich
 Auftrieb (ρ-Vergleich, Eintauchtiefe), Hebelgesetz, Flaschenzug (Goldene Regel), Stromkreise (Reihe/Parallel, Kurzschluss),
 pH aus [H⁺]−[OH⁻] mit Kw, Atomzählung aller Reaktionen, begrenzender Stoff beim Natron-Ballon, Richmann-Mischungsregel, Heizkurve mit Schmelz- und
 Verdampfungswärme, Fall mit Luftwiderstand (numerisch) und ohne, exakte Pendeldauer (elliptisches Integral), Röhren f = c/(4L),
-Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, AB0), Osmose, Enzymaktivität, Lichtstärke ∼ 1/d², Lotka-Volterra, Trennverfahren (kürzester Weg), subtraktive Farbmischung (`BiologyTest`), Sehfeld und Auflösung beim Mikroskop, Keimbedingungen, Nahrungsnetz (längste Kette, 10-%-Regel, Anreicherung), Herzzeitvolumen und Erholungspuls (`Biology2Test`). Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
+Prisma mit Cauchy-Brechzahl und Snellius, Kreuzungsquadrat und Aussaat (Mendel, AB0), Osmose, Enzymaktivität, Lichtstärke ∼ 1/d², Lotka-Volterra, Trennverfahren (kürzester Weg), subtraktive Farbmischung (`BiologyTest`), Strahlensatz, Reflexions- und Brechungsgesetz, Grenzwinkel, Linsengleichung (`OpticsTest`), Sehfeld und Auflösung beim Mikroskop, Keimbedingungen, Nahrungsnetz (längste Kette, 10-%-Regel, Anreicherung), Herzzeitvolumen und Erholungspuls (`Biology2Test`). Ziele, die man einstellen muss (z. B. 0,2 A, pH 2, 880 Hz, T = 2 s), sind mit den Reglern erreichbar.
 
 ## Musik und Klänge (selbst komponiert)
 
@@ -139,6 +139,10 @@ Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung ha
 | ![](screenshots/62_theorie_profi.png) | ![](screenshots/63_lernen_nach_fach.png) | ![](screenshots/64_fach_biologie.png) | ![](screenshots/65_musik_und_vorlesen.png) |
 | Forscher-Pass | Insel mit Pass | Pass aktiv | |
 | ![](screenshots/66_forscher_pass_kaufen.png) | ![](screenshots/67_insel_mit_pass.png) | ![](screenshots/68_forscher_pass_aktiv.png) | ![](screenshots/69_raetsel_nochmal.png) |
+| App installieren | Schattenbühne | Spiegel-Laser | Lichtknick |
+| ![](screenshots/70_app_installieren.png) | ![](screenshots/71_schattenbuehne.png) | ![](screenshots/72_spiegel_laser.png) | ![](screenshots/73_lichtknick.png) |
+| Totalreflexion | Optische Bank | Lupe | Kommt bald |
+| ![](screenshots/74_totalreflexion.png) | ![](screenshots/75_optische_bank.png) | ![](screenshots/76_lupe.png) | ![](screenshots/77_kommt_bald.png) |
 
 ## Nur WebApp (seit 2.5.0)
 

@@ -14,6 +14,7 @@ enum class Topic(val title: String, val emoji: String, val subject: Subject, val
     MAGNET("Magnetismus", "🧲", Subject.PHYSIK, "Magnet Pole Nordpol Südpol Eisen anziehen abstoßen"),
     WAERME("Wärme & Teilchen", "🌡️", Subject.PHYSIK, "Wärmelehre Temperatur schmelzen sieden verdampfen Teilchenmodell Aggregatzustand Mischtemperatur Wärmekapazität"),
     LICHT("Licht & Farben", "🌈", Subject.PHYSIK, "Optik Licht Farben Malkasten Farben mischen Tuschkasten additiv subtraktiv Prisma Brechung Regenbogen Spektrum Filter"),
+    OPTIK("Schatten, Spiegel & Linsen", "🔍", Subject.PHYSIK, "Optik Schatten Kernschatten Lichtausbreitung Spiegel Reflexion Reflexionsgesetz Einfallswinkel Lot Laser Brechung Brechzahl Snellius Totalreflexion Grenzwinkel Glasfaser Linse Sammellinse Brennweite Brennpunkt Bildweite Gegenstandsweite Lupe Auge"),
     SCHALL("Schall & Töne", "🎵", Subject.PHYSIK, "Akustik Schall Ton Frequenz Hertz Oktave Saite Luftsäule Musik"),
     TRENNEN("Stoffe trennen", "🧺", Subject.CHEMIE, "Gemisch Stoffgemisch trennen Filtern Sieben Eindampfen Magnet Scheidetrichter Chromatografie Farbstoffe Salz Sand"),
     SAEURE("Säuren & Laugen", "🧪", Subject.CHEMIE, "Säure Lauge Base pH-Wert Indikator Rotkohl neutralisieren Titration verdünnen"),

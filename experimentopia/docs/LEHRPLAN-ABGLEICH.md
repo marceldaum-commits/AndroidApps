@@ -187,6 +187,18 @@ Realschule, nur über Übersichten geprüft:
 - **NRW, Klassenzuordnung:** Die Kernlehrpläne nennen nur Stufe 1 (5/6) und Stufe 2 (7–10). Die genauen Klassen legt jede Schule selbst fest.
 
  
-### Spalte „geplant“
+### Spalte „geplant“ (Freigabe Marcel, 18.11.2026)
 
-Noch offen: Welche Lücken gebaut werden und ob fehlende Themen vorher als „Kommt bald“ (ohne Datum, ohne Kaufhinweis) erscheinen, entscheidet Marcel.
+Fehlende Themen erscheinen in der App als „Kommt bald“ (ohne Datum, ohne Kaufhinweis; Liste `Coming` in `core/model/.../Upcoming.kt`). Reihenfolge:
+
+| # | Thema | Stand |
+|---|---|---|
+| 1 | Optik: Schatten, Spiegel, Brechung, Linsen | ✅ gebaut in 2.7.0 (x1–x11) |
+| 2 | Motor, Dynamo & Trafo (Elektromagnetismus) | Kommt bald |
+| 3 | Energie-Achterbahn (Energieformen, Erhaltung) | Kommt bald |
+| 4 | Tier-Safari, Blüten & Bestäubung, Atmung, Skelett (Bio 5/6) | Kommt bald |
+| 5 | Atom-Werkstatt & Periodensystem, Salze & Ionen | Kommt bald |
+| 6 | Druck & Luftdruck, Bewegung & Diagramme, Wärme wandert, Ladung, Echo | Kommt bald |
+| 7 | Feuerwehr-Labor, Metalle & Redox, Zitronen-Batterie, Erdöl & Kunststoffe | Kommt bald |
+| 8 | Sinne & Nerven, Abwehr-Burg, Evolution, DNA & Zellteilung | Kommt bald |
+| 9 | Radioaktivität, Weltall & Jahreszeiten | Kommt bald |

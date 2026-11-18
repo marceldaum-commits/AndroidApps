@@ -1,6 +1,6 @@
 # Experimentopia – Stand und offene Punkte (18.11.2026)
 
-**Stand:** Version 2.6.2 vom 18.11.2026 (Theorie mit Formeln und Rechenbeispielen; iPad/Safari 27.2 läuft – bestätigt) liegt auf `experimentopia-test`; live ist 2.4.8, Freigabe durch den Leitstand.
+**Stand:** Version 2.7.0 vom 18.11.2026 (Optik + „Kommt bald“; davor 2.6.2 Theorie mit Formeln; iPad/Safari 27.2 läuft – bestätigt) liegt auf `experimentopia-test`; live ist 2.4.8, Freigabe durch den Leitstand.
 
 ## Nova
 - **Seit 2.4.8 ist das Vorlesen ausgeschaltet** (Schalter `Nova.ENABLED` in `core/model/.../Nova.kt`). Zum Wiedereinschalten: auf `true` setzen, bauen – dann gilt alles Folgende wieder.
@@ -15,4 +15,4 @@
 4. **Website/Produktseite**: Gratis-Umfang ist seit 2.3.3 **74 von 200** Versuchen (Wasserinsel + erste 5 je Insel + erste 2 je Thema) – Texte dort ggf. anpassen.
 5. **Nur WebApp** (seit 2.5.0, für 1–2 Monate): keine APK, kein Play. Android-Code bleibt im Repo; Release-Workflow nur von Hand. Live gibt der Leitstand frei.
 6. Betriebstest (eine Woche): nur Fehlerbehebungen, Rückmeldungen aus dem Betrieb abarbeiten.
-7. **Lehrplan-Abgleich** (Gymnasium/Realschule Kl. 5–10, BY/BW/NRW/NI/HE): Recherche läuft, Liste folgt; fehlende Themen erst nach Rückfrage bauen oder als „Kommt bald“ zeigen.
+7. **Lehrplan-Lücken** (`docs/LEHRPLAN-ABGLEICH.md`): Marcel hat am 18.11. Bauen + „Kommt bald“ freigegeben. Erledigt: Optik (2.7.0). Als Nächstes: Motor/Dynamo/Trafo, Energie, Bio Kl. 5/6, Atombau/PSE – jeweils Kachel aus `Coming` in `Upcoming.kt` entfernen, wenn gebaut.

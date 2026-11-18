@@ -23,6 +23,10 @@ enum class Lab(val title: String, val emoji: String, val island: Island, val blu
     FILTER("Farbfilter", "🎞️", Island.LICHTKLANG, "Folien schlucken Farben."),
     MALKASTEN("Malkasten", "🎨", Island.LICHTKLANG, "Malfarben mischen – anders als Licht!"),
     PRISMA("Prisma", "🔺", Island.LICHTKLANG, "Weißes Licht wird zum Regenbogen."),
+    SCHATTEN("Schattenbühne", "🐰", Island.LICHTKLANG, "Lampe näher, Schatten größer – mit Strahlensatz."),
+    SPIEGEL("Spiegel-Laser", "🔴", Island.LICHTKLANG, "Dreh den Spiegel und triff die Sterne."),
+    BRECHUNG("Lichtknick", "💧", Island.LICHTKLANG, "Licht knickt an Wasser und Glas – oder bleibt gefangen."),
+    LINSE("Optische Bank", "🔍", Island.LICHTKLANG, "Kerze, Linse, Schirm: Wann wird das Bild scharf?"),
     KLANG("Klangröhren", "🎵", Island.LICHTKLANG, "Gläser, Röhren und Saiten."),
     FALLTURM("Fallturm", "🗼", Island.FALL, "Was fällt schneller – auf Erde, Mond und im Vakuum?"),
     PENDEL("Pendel", "🕰️", Island.FALL, "Schwingungsdauer messen."),
@@ -106,6 +110,10 @@ object FreeLab {
         Lab.LICHT -> LightSetup(LightMode.ADD, null)
         Lab.FILTER -> LightSetup(LightMode.SUB, null)
         Lab.PRISMA -> PrismSetup()
+        Lab.SCHATTEN -> ShadowSetup()
+        Lab.SPIEGEL -> MirrorSetup(targets = listOf(40.0, 70.0, 130.0), showAngles = true)
+        Lab.BRECHUNG -> RefractSetup(Medium.LUFT, Medium.WASSER, RefractGoal.FREE)
+        Lab.LINSE -> LensSetup(goal = LensGoal.FREE)
         Lab.KLANG -> SoundSetup(SoundMode.BLOW)
         Lab.NEWTON -> NewtonSetup(NewtonMode.CART, listOf(1.0, 2.0, 4.0), listOf(5.0, 10.0, 20.0), listOf(30.0 to 30.0, 30.0 to 90.0))
         Lab.FALLTURM -> FallSetup(Faller.KUGEL, Faller.FEDER, Planet.entries, 10.0)

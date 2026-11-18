@@ -155,6 +155,13 @@ class ScreenshotTest {
     @Test fun foodWebGone() = lab("j4", "58_ohne_maeuse", prepare = { it.tap("verschwinden lassen") })
     @Test fun pulse() = lab("v1", "59_herz_und_puls", prepare = { it.tap("Joggen") })
     @Test fun recovery() = lab("v5", "60_erholungspuls", settle = 5500, prepare = { it.tap("Beide sprinten") })
+    @Test fun shadow() = lab("x1", "71_schattenbuehne", prepare = { it.slide("💡 Lampe ↔ Figur", 20f) })
+    @Test fun mirror() = lab("x4", "72_spiegel_laser", prepare = { it.slide("↩️ Spiegel drehen", 20f) })
+    @Test fun refract() = lab("x5", "73_lichtknick", prepare = { it.slide("🔴 Einfallswinkel", 42f) })
+    @Test fun total() = lab("x6", "74_totalreflexion", prepare = { it.slide("🔴 Einfallswinkel", 50f) })
+    @Test fun lens() = lab("x9", "75_optische_bank", prepare = { it.slide("⬜ Linse ↔ Schirm", 17f) })
+    @Test fun loupe() = lab("x11", "76_lupe", prepare = { it.slide("🕯️ Kerze ↔ Linse", 6f) })
+    @Test fun comingSoon() = shot("77_kommt_bald", settle = 2500, prepare = { r -> r.reveal { r.onNodeWithTag("bald_${Coming.of(Subject.BIOLOGIE).size - 1}") }; r.onNodeWithTag("bald_1").performClick() }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 0, { false }, {}, {}, {}) }
     @Test fun theory() = shot("61_theorie", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.PREDICT) }
     @Test fun theoryPro() = shot("62_theorie_profi", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("s8")!!, {}, null, {}, startPhase = Phase.PREDICT) }
     @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, {}) }
