@@ -88,14 +88,27 @@
   // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
   // (Startseite oder App im Hintergrund), nie mitten in einem Versuch.
   window.__exHome = true; var updateWaiting = false;
-  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; location.reload(); } };
+  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; try { sessionStorage.setItem('exVorher', '@VERSION@'); } catch (e) {} location.reload(); } };
+  // Nach einem automatischen Update kurz zeigen, welche Version jetzt läuft (Spielstand und Einstellungen bleiben unangetastet)
+  try { var vorher = sessionStorage.getItem('exVorher'); if (vorher) { sessionStorage.removeItem('exVorher'); if (vorher !== '@VERSION@') window.addEventListener('load', function () {
+    var n = document.createElement('div'); n.id = 'neu'; n.textContent = '✨ Neue Version @VERSION@ geladen';
+    n.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9;background:#2A1F55;color:#F3EEFF;border:1px solid #3DF5C8;border-radius:14px;padding:10px 16px;font:14px sans-serif;transition:opacity .6s';
+    document.body.appendChild(n); setTimeout(function () { n.style.opacity = '0'; }, 4000); setTimeout(function () { n.remove(); }, 4800); }); } } catch (e) {}
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     var hadWorker = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.addEventListener('controllerchange', function () { if (hadWorker) { updateWaiting = true; window.__exTry(); } hadWorker = true; });
     var startSW = function () {
       navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
-        var check = function () { reg.update().catch(function () {}); };
+        // Abgleich mit version.json (nie aus einem Zwischenspeicher) und Nachfrage beim Service Worker
+        var check = function () {
+          reg.update().catch(function () {});
+          fetch('version.json?nc=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (v) {
+            if (v && v.version && v.version !== '@VERSION@') reg.update().catch(function () {});
+          }).catch(function () {});
+        };
+        check();
         document.addEventListener('visibilitychange', function () { if (document.hidden) window.__exTry(); else check(); });
+        window.addEventListener('focus', check);
         setInterval(check, 30 * 60 * 1000);
       });
     };

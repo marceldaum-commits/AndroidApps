@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-version="2.4.6">
+<html lang="de" data-version="2.4.7">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -41,7 +41,7 @@
   </svg>
   <b>EXPERIMENTOPIA</b>
   <div id="balken"><i></i></div>
-  <span id="start-text">lädt … Version 2.4.6 vom 18.11.2026</span>
+  <span id="start-text">lädt … Version 2.4.7 vom 18.11.2026</span>
 </div>
 <div id="app"></div>
 <script>
@@ -56,7 +56,7 @@
   // WebAssembly mit „GC“ fehlt älteren Browsern: gleich prüfen, nicht erst alles laden
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
   // ── Laden mit echtem Fortschritt: App-Kern (.wasm) und Schriften werden sofort angefordert, jedes ankommende Byte bewegt den Balken.
-  var PLAN = { "bccfa839aa4b38489c76.wasm": 8405319, "bdc726b879189120c32b.wasm": 5473102, "fonts/dejavu_sans.ttf": 120976, "fonts/noto_color_emoji.ttf": 665140, "experimentopia.js": 593825 }, got = {}, total = 0, early = {};
+  var PLAN = { "6a20da1bb410ebdac821.wasm": 5473102, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 120976, "fonts/noto_color_emoji.ttf": 665140, "experimentopia.js": 593825 }, got = {}, total = 0, early = {};
   for (var k in PLAN) total += PLAN[k];
   function progress() {
     var sum = 0; for (var k in PLAN) sum += Math.min(got[k] || 0, PLAN[k]);
@@ -88,14 +88,27 @@
   // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
   // (Startseite oder App im Hintergrund), nie mitten in einem Versuch.
   window.__exHome = true; var updateWaiting = false;
-  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; location.reload(); } };
+  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; try { sessionStorage.setItem('exVorher', '2.4.7'); } catch (e) {} location.reload(); } };
+  // Nach einem automatischen Update kurz zeigen, welche Version jetzt läuft (Spielstand und Einstellungen bleiben unangetastet)
+  try { var vorher = sessionStorage.getItem('exVorher'); if (vorher) { sessionStorage.removeItem('exVorher'); if (vorher !== '2.4.7') window.addEventListener('load', function () {
+    var n = document.createElement('div'); n.id = 'neu'; n.textContent = '✨ Neue Version 2.4.7 geladen';
+    n.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9;background:#2A1F55;color:#F3EEFF;border:1px solid #3DF5C8;border-radius:14px;padding:10px 16px;font:14px sans-serif;transition:opacity .6s';
+    document.body.appendChild(n); setTimeout(function () { n.style.opacity = '0'; }, 4000); setTimeout(function () { n.remove(); }, 4800); }); } } catch (e) {}
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     var hadWorker = !!navigator.serviceWorker.controller;
     navigator.serviceWorker.addEventListener('controllerchange', function () { if (hadWorker) { updateWaiting = true; window.__exTry(); } hadWorker = true; });
     var startSW = function () {
       navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
-        var check = function () { reg.update().catch(function () {}); };
+        // Abgleich mit version.json (nie aus einem Zwischenspeicher) und Nachfrage beim Service Worker
+        var check = function () {
+          reg.update().catch(function () {});
+          fetch('version.json?nc=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (v) {
+            if (v && v.version && v.version !== '2.4.7') reg.update().catch(function () {});
+          }).catch(function () {});
+        };
+        check();
         document.addEventListener('visibilitychange', function () { if (document.hidden) window.__exTry(); else check(); });
+        window.addEventListener('focus', check);
         setInterval(check, 30 * 60 * 1000);
       });
     };

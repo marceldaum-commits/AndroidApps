@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.4.7 – WebApp immer aktuell (18.11.2026)
+
+- 🔄 Die WebApp schaut beim Öffnen, bei jeder Rückkehr in den Tab und alle 30 Minuten nach einer neuen Version und lädt sie von selbst –
+  nie mitten in einem Versuch, sondern auf der Startseite. Danach steht kurz „Neue Version … geladen“. Spielstand, Einstellungen und Offline-Stimme bleiben erhalten.
+
 ## 2.4.6 – Nova auf allen Android-Handys (18.11.2026)
 
 - 🔊 Auf manchen Android-Handys sprang beim Vorlesen die Gerätestimme ein, obwohl die Nova-Datei da war: Das Handy lehnte das Einstellen des Sprechtempos

@@ -73,6 +73,10 @@ Beim Bau der WebApp entsteht `webapp/vorlesen/texte.json` mit allen festen Sätz
 Abspielen: erst vom Gerät/Browser-Speicher, dann `/nova/<h[0:2]>/<h>.mp3`, bei neuen Sätzen `POST /jetzt` (nur der Text); ohne Internet liest leise die Stimme des Geräts bzw. Browsers.
 Android: `AndroidReader.kt` (MediaPlayer, Dateien in `files/nova/`), Web: `nova.js` (WebAudio, Speicher „experimentopia-nova“).
 
+## WebApp-Updates
+
+Die WebApp aktualisiert sich selbst (Service Worker, Abgleich mit `version.json`, Neuladen nur auf der Startseite). Browser-Test: `node tools/web-update.mjs` (nach `./gradlew :web:webapp`).
+
 ## Lernen nach Fach (am Schulstoff entlang)
 
 Auf dem Startbildschirm: Physik, Chemie oder Biologie wählen. `core/model/Curriculum.kt` ordnet die Fachbereiche nach der Klassenstufe,

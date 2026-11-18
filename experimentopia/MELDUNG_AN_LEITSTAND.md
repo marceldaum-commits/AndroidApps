@@ -2,6 +2,19 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.4.7 vom 18.11.2026: WebApp immer automatisch aktuell – fertig für den Betriebstest
+
+1) Update-Prüfung beim Öffnen, bei Rückkehr (visibilitychange **und** focus) und alle 30 Minuten: `registration.update()` + Abgleich `version.json?nc=…` mit `cache:'no-store'`
+   (der Service Worker leitet version.json und `?nc=` immer ans Netz durch, nie aus dem Speicher).
+2) skipWaiting + clients.claim; Neuladen nur auf der Startseite oder wenn der Tab im Hintergrund ist – nie mitten in einem Versuch (sonst beim nächsten Wechsel zur Startseite).
+   Danach Hinweis „✨ Neue Version x.y.z geladen“.
+3) localStorage bleibt unangetastet; alte Versions-Speicher werden gelöscht, `experimentopia-nova` (Offline-Stimme) bleibt.
+4) Wer eine alte Version offen hat, bekommt die neue spätestens beim nächsten Öffnen/Zurückkehren.
+5) Version sichtbar: Einstellungen („Version x vom …“) und Ladebild.
+**Beleg**: Browser-Test `experimentopia/tools/web-update.mjs` (Playwright): A läuft → B erscheint auf dem Server → Tab kehrt zurück: mitten im Versuch kein Neuladen ✅,
+auf der Startseite automatisch B ✅, Hinweis ✅, localStorage erhalten ✅, Caches aufgeräumt + Nova bleibt ✅, neuer Tab startet mit B ✅ (7/7 grün).
+Außerdem in 2.4.6: Android-Nova robuster (Sprechtempo erst nach dem Start setzen – vermutlich Ursache dafür, dass auf Marcels Handy die Gerätestimme kam) + Diagnose unter „Probe hören“.
+
 ## 18.11.2026 – 2.4.5 ist live
 
 - Auf Marcels „Ja“ `experimentopia-live` auf den getesteten Stand von `experimentopia-test` gesetzt (fast-forward, ac22462). Live meldet 2.4.5. Nova: 3 neue Auftrags-Sätze werden beim nächsten Werk-Lauf vertont (vorher 99,9 %).
