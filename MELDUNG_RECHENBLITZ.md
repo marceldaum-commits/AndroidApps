@@ -24,7 +24,7 @@ Neueste Meldung oben.
 - Die bestehenden Probestunde-Links bleiben unverändert: Menü, Wochenbericht, Elternbericht und Ergebnis bei schwachen Themen.
 - Falls Marcel später doch einen Klassenarbeits-Termin in Rechenblitz will, wird er direkt so gebaut:
   - Text: „Eine kostenlose Probestunde kann vor der Arbeit helfen.“
-  - Link: `probestunde-anfrage/?src=rechenblitz-klassenarbeit&thema=<id>&klasse=<n>`
+  - Link: `https://www.mathenachhilfe-online.com/probestunde/?src=rechenblitz-klassenarbeit&thema=<id>&klasse=<n>` (Korrektur Leitstand: nicht /probestunde-anfrage/)
   - Zählung: `probestunde_klick` mit `ort=klassenarbeit`
 - Hinweis: Eine direkte Antwort an den Leitstand-Raum per Nachricht war aus dieser Sitzung nicht möglich (fehlende Geräte-Bestätigung). Deshalb steht sie hier.
 
