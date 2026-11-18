@@ -135,7 +135,7 @@ class AppRootTest {
         rule.onNodeWithTag("ki-anders").performClick(); settle()
         rule.onNodeWithTag("ki-problem").assertTextContains("Proben sind aufgebraucht", substring = true); rule.onAllNodesWithTag("ki-antwort").assertCountEquals(2)
         rule.onNodeWithTag("ki-dazubuchen").performScrollTo().performClick(); settle(); assertEquals(Routes.KI, nav.top)
-        rule.onNodeWithTag("ki-status").assertTextContains("bald im Shop", substring = true); rule.onNodeWithTag("ki-kaufen").assertDoesNotExist(); rule.onNodeWithTag("ki-datenschutz").assertExists()
+        rule.onNodeWithTag("ki-kaufen").assertTextContains("Zum Shop: KI-Abi-Pass · 14,99 €", substring = true); rule.onNodeWithTag("ki-status").assertTextContains("kein Abo", substring = true).assertTextContains("gilt in der Web-App", substring = true); rule.onNodeWithTag("ki-datenschutz").assertExists()
         // abgelaufener Pass, falscher Code, gültiger Pass (mitten aus der E-Mail)
         rule.onNodeWithTag("ki-code").performScrollTo().performTextInput(KI_ALT); rule.onNodeWithTag("ki-freischalten").performScrollTo().performClick(); settle()
         rule.onNodeWithTag("ki-aktiv").assertTextContains("abgelaufen am 31.07.2026", substring = true)

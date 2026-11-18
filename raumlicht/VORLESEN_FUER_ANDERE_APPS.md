@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Nova“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.18.18 vom 18.11.2026. **In Raumlicht ist das Vorlesen seit 2.18.14 abgeschaltet (Schalter `Vorlesen.ENABLED`); der Code und diese Anleitung bleiben für später.** Ersetzt die frühere Anleitung zur ladbaren Stimme (Sprachsynthese auf dem Gerät, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
+Stand: Raumlicht 2.18.20 vom 18.11.2026. **In Raumlicht ist das Vorlesen seit 2.18.14 abgeschaltet (Schalter `Vorlesen.ENABLED`); der Code und diese Anleitung bleiben für später.** Ersetzt die frühere Anleitung zur ladbaren Stimme (Sprachsynthese auf dem Gerät, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
 
 ## Kurz
 

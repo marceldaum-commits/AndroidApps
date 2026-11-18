@@ -75,6 +75,12 @@ tasks.register<Sync>("webapp") {
         val files = wasm.map { it.name to it.length() } + listOf("fonts/dejavu_sans.ttf", "fonts/noto_color_emoji.ttf", "raumlicht.js").map { it to out.resolve(it).length() }
         val plan = files.joinToString(", ", "{ ", " }") { (n, s) -> "\"$n\": $s" }
         out.resolve("index.html").let { it.writeText(it.readText().replace("@LADEPLAN@", plan)) }
+        // Safari 27.2 (weiße Seite): Im fertigen Paket darf kein Aufruf der Grafik-Bibliothek mehr als Endaufruf stehen (siehe web/webpack/skiko-no-tail-call.cjs)
+        val js = out.resolve("raumlicht.js").readText()
+        val tail = Regex("""=>\(\w+=\w+\._\.org_jetbrains_\w+\)\(""").findAll(js).count()
+        val safe = Regex("""try\{return\(\w+=\w+\._\.org_jetbrains_\w+\)\(""").findAll(js).count()
+        check(tail == 0 && safe > 900) { "Safari-Abhilfe fehlt im Paket: $tail Endaufrufe übrig, $safe abgesichert" }
+        println("Safari-27.2-Abhilfe: $safe Aufrufe der Grafik-Bibliothek abgesichert, $tail Endaufrufe übrig")
         out.resolve("sw.js").let { it.writeText(it.readText().replace("@WASM@", wasm.joinToString(", ", "[", "]") { "'${it.name}'" })) }
     }
 }
