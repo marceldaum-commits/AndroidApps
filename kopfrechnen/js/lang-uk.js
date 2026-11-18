@@ -2434,4 +2434,5 @@ I18N.add('uk', {"% sind":"% — це",
 "{} t + {} kg":"{} т + {} кг",
 "{} km {} m + {} km":"{} км {} м + {} км",
 "Neues App-Symbol: der Rechenblitz ⚡":"Новий значок застосунку: блискавка Rechenblitz ⚡",
-"Ukrainisch: Brüche werden richtig vorgelesen (z. B. „дві третіх“)":"Українська: дроби тепер читаються правильно (напр., «дві третіх»)"});
+"Ukrainisch: Brüche werden richtig vorgelesen (z. B. „дві третіх“)":"Українська: дроби тепер читаються правильно (напр., «дві третіх»)",
+"Überall dasselbe Rechenblitz-Symbol: im Kopf der App, beim Start, auf Bildern zum Teilen und beim Drucken":"Всюди однаковий значок Rechenblitz: у заголовку застосунку, під час запуску, на зображеннях для поширення та під час друку"});

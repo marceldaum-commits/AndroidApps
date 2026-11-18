@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.26.3';
+const APP_VERSION = '3.26.4';
 const APP_DATE = '2026-11-18';
 const CHANGELOG = [
+  ['3.26.4', '2026-11-18', ['Überall dasselbe Rechenblitz-Symbol: im Kopf der App, beim Start, auf Bildern zum Teilen und beim Drucken']],
   ['3.26.3', '2026-11-18', ['Ukrainisch: Brüche werden richtig vorgelesen (z. B. „дві третіх“)']],
   ['3.26.2', '2026-11-17', ['Textaufgaben genauer formuliert (z. B. leeres Becken, Tage bis zu einem Datum, Uhrzeit am Morgen)', 'Vorlesen: Nova liest immer ganze Sätze und wartet kurz, statt auf die Gerätestimme zu wechseln', 'Neues App-Symbol: der Rechenblitz ⚡']],
   ['3.26.1', '2026-11-17', ['Musik startet sofort: in der Android-App beim Öffnen, im Browser beim ersten Tippen – „Musik aus“ bleibt aus']],

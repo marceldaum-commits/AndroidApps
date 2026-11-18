@@ -57,7 +57,11 @@ html{background:#101b43}body{margin:0}
 <script defer src="js/rechenblitz.min.js" onload="__bp()"></script>
 </head>
 <body>
-<div id="boot" aria-hidden="true" translate="no"><svg viewBox="0 0 24 24"><path d="M13.5 2 4.5 13.5h6.5l-1.5 8.5 9-11.5H12z" fill="#ffc83d" stroke="#ff7418" stroke-width="1.4" stroke-linejoin="round"/></svg><div>Rechenblitz</div><small>Kopfrechnen üben</small><div class="bar"><i id="bootBar"></i></div></div>
+<div id="boot" aria-hidden="true" translate="no"><svg viewBox="0 0 512 512"><defs><linearGradient id="bootg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9a3c"/><stop offset="1" stop-color="#ff6a00"/></linearGradient></defs><rect width="512" height="512" rx="112" fill="url(#bootg)"/><g fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" opacity=".35">
+  <path d="M88 82 V122 M68 102 H108"/>
+  <path d="M407 90 L435 118 M435 90 L407 118"/>
+  <path d="M68 400 H108"/><circle cx="88" cy="384" r="5.5" fill="#fff" stroke="none"/><circle cx="88" cy="416" r="5.5" fill="#fff" stroke="none"/>
+  <path d="M406 412 H446"/></g><path d="M262 60 L150 280 H248 L208 452 L380 214 H286 L334 60 Z" fill="#0a0f24"/></svg><div>Rechenblitz</div><small>Kopfrechnen üben</small><div class="bar"><i id="bootBar"></i></div></div>
 <script>(function () { var t = { en: 'Practise mental maths', uk: 'Тренуй усний рахунок' }[window.__bootLang]; if (t) document.querySelector('#boot small').textContent = t; })();</script>
 <div class="app">
 
