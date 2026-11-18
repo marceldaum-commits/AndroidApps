@@ -2,6 +2,44 @@
 
 Neueste oben.
 
+## 18.11.2026 – Technische Grundlage für den Prototype-Fund-Antrag („Freie 3D-Geometrie-Werkstatt“)
+
+Marcel hat direkt bestätigt, dass ich das schreibe. Stand: Raumlicht 2.18.15 vom 18.11.2026. Zahlen aus dem Repository gezählt; Einschätzungen sind als solche gekennzeichnet. Keine Rechtsberatung.
+
+**1. Was der Kern heute kann**
+- **3D-Bühne** (`scene/src/main.js`, 947 Zeilen JavaScript auf three.js 0.170, gebündelt 570 kB): Koordinatensystem, Punkte, Vektoren, Geraden, Ebenen, Kugeln, Strahlen, Kurven, Drehen/Zoomen, Ziehen von Punkten, Partikel. Sie bekommt ihren Zustand als **JSON** (`Scene.kt`: Liste von Objekten mit `type`, `p`, `d`, `from`, `to` …) – läuft in jedem Browser, in der WebApp als eingebettetes Fenster.
+- **Rechenkern** (`core/model`, Kotlin Multiplatform für JVM und Browser/Wasm, 36 Dateien, rund 6 900 Zeilen, ohne Android- und ohne Oberflächen-Abhängigkeit): Vektorrechnung und analytische Geometrie (Abstände, Lagebeziehungen, Schnitte, Spiegelungen), Funktionen und Ableitungen (eigener Term-Leser), Binomialverteilung, Aufgaben-Modell, Prüf-Logik, Zufalls-Aufgaben in Schwierigkeitsstufen, Theorie-Karten, Musik und Klänge (im Code errechnet).
+- **Aufgaben und Prüf-Logik:** 136 feste Aufgaben, 28 Prüfungsteile, 29 Übungs-Vorlagen. Eine Aufgabe besteht aus Reglern (Punkt, Vektor, Zahl), Auftrag, Tipp, Rechenweg, Bühnen-Objekten und einer Prüf-Funktion. Geprüft wird mathematisch (z. B. „alle Punkte liegen in der Ebene“), nicht gegen eine Musterzahl – gleichwertige Antworten gelten.
+  **Wichtig:** Aufgaben sind heute **Kotlin-Code** (Funktionen), kein Datenformat. Nur die Bühne ist schon datengetrieben.
+- **Oberfläche** (`shared`, Compose Multiplatform, 33 Dateien, rund 4 400 Zeilen): derselbe Code für Android und Web. Web-Hülle: 374 Zeilen Kotlin plus `index.html`/Service Worker (offline, Selbst-Update). Android-Hülle: rund 1 300 Zeilen (pausiert).
+- **Tests:** 165 Logik-Tests (rund 2 500 Zeilen), 150 Oberflächen-Tests mit Bildschirmfotos, 8 Browser-Tests. **Auslieferung:** 17 MB statische Dateien, ohne Server-Logik, ohne Konto, offline nutzbar.
+- **Abhängigkeiten und Lizenzen** (vollständig in `LIZENZEN.md`): three.js (MIT), Kotlin/kotlinx, Compose Multiplatform, Skiko (Apache 2.0), Skia, js-joda (BSD-3), DejaVu Sans (freie Bitstream-Vera-Lizenz), Noto Color Emoji (OFL 1.1). **Kein GPL-Baustein.** Ed25519-Prüfung nach TweetNaCl (gemeinfrei) – gehört zu Pro.
+
+**2. Was für den offenen Kern neu entstehen müsste** (Reihenfolge = Abhängigkeit)
+1. **Offenes Aufgabenformat (JSON) mit Spezifikation.** Größter Brocken: Die Prüf-Logik steckt heute in Code. Nötig ist ein Satz benannter, parametrierbarer Prüfer („Punkt liegt auf Gerade“, „Ebene enthält Punkte“, „Vektor ist Vielfaches von …“, „Abstand = …“) statt freiem Code – sicher (kein fremder Code läuft), versionierbar, mit Schema und Testaufgaben. Einschätzung: Mit etwa 15–20 Prüfern lassen sich die Geometrie-Kapitel abbilden; Analysis und Stochastik später.
+2. **Abspieler für das Format** (lädt eine Aufgaben-Datei, zeigt Bühne, Regler, Rückmeldung) – aus dem vorhandenen Aufgaben-Bildschirm ableitbar.
+3. **Editor für Lehrkräfte** im Browser: Objekte setzen, Regler festlegen, Prüfer wählen, Vorschau, Export als Datei oder Link. Heute nicht vorhanden; es gibt nur Eingaben für eigene Funktionen und Flüge.
+4. **Einbettung:** als `<iframe>`/Web-Component sofort machbar (alles statisch). Für Moodle ein H5P-Inhaltstyp oder LTI 1.3; H5P ist der kürzere Weg, weil es ohne Server auskommt. Rückgabe des Ergebnisses per xAPI/H5P-Schnittstelle wäre neu.
+5. **Barrierefreiheit:** Heute schwach – die Oberfläche wird auf eine Zeichenfläche gemalt, Screenreader sehen fast nichts (nur an etwa 10 Stellen sind Bedienhilfen gesetzt), die 3D-Bühne hat keine Text-Alternative. Nötig: Tastaturbedienung, Textbeschreibung der Szene, Kontraste, ggf. eine HTML-Oberfläche für den Abspieler statt der Zeichenfläche. **Das ist ein ehrlicher Schwachpunkt und im Antrag ein eigenes Arbeitspaket wert.**
+6. **Selbsthosting:** fast geschenkt (statische Dateien); fehlt nur Anleitung, Paket zum Herunterladen und ein Schalter für Adressen (Update-Prüfung, keine fremden Server).
+7. **Öffnung des Projekts:** eigenes Repository, Bau ohne unsere Schlüssel, Beitragsregeln, englische Bezeichner/Doku (heute gemischt, Texte deutsch), Übersetzbarkeit der Texte.
+
+**3. Kern und Pro sauber trennen**
+- Heute liegt alles in einem Repository, und alle Aufgaben stecken in `core/model` – auch die, die zu Pro gehören. Gesperrt wird nur über eine Liste (`Pro.kt`). So wie es ist, wären die Pro-Inhalte im offenen Code.
+- Vorschlag: **Offen** = Bühne, Rechenkern, Aufgabenformat, Abspieler, Editor, eine freie Beispiel-Sammlung. **Bei uns** (eigenes, privates Repository, baut auf dem offenen Kern auf): die Raumlicht-Aufgabenpakete (als Dateien im offenen Format), Lux und die Marke, Musik/Klänge nach Wunsch, Lizenz-Prüfung (`License`, `Pro`, `Ki`), KI-Tutor samt Server-Funktion, Stimmen-Anbindung.
+- Folge: Die Umstellung der Aufgaben auf das Datenformat (Punkt 2.1) ist zugleich die Trennung – Pro-Aufgaben werden Dateien, die nur in unserer Fassung mitkommen.
+- Zu bedenken: Die bisherige Git-Geschichte enthält alles. Das offene Repository deshalb **neu anlegen** (ohne Geschichte), nicht dieses öffnen. Hier liegen außerdem Meldungen, Shop-Adressen und Test-Schlüssel.
+
+**4. Lizenzvorschlag und Stolpersteine**
+- **Code:** MIT oder Apache 2.0 wären mit allen Abhängigkeiten verträglich und für Schulen/Plattformen am einfachsten. Wer verhindern will, dass Dritte eine geschlossene Fassung bauen, nimmt MPL 2.0 (dateiweises Copyleft). Der Prototype Fund verlangt eine anerkannte Open-Source-Lizenz – welche er aktuell vorgibt, bitte in den Förderbedingungen nachlesen; das habe ich nicht geprüft.
+- **Aufgaben, Texte, Bilder der freien Sammlung:** CC BY 4.0 oder CC BY-SA 4.0 (passt zu Unterrichtsmaterial).
+- **Marke:** Name „Raumlicht“, Logo und die Figur Lux **nicht** mitlizenzieren; der offene Kern braucht einen eigenen Namen und eine neutrale Figur oder keine.
+- **Schriften:** DejaVu und Noto Emoji dürfen weitergegeben werden (Lizenztexte beilegen, bei OFL keinen geschützten Schriftnamen für veränderte Fassungen verwenden – wir liefern gekürzte Fassungen aus, das ist zu prüfen).
+- **Musik und Klänge:** selbst komponiert, im Code errechnet, keine fremden Samples – frei entscheidbar, ob offen oder bei uns.
+- **Bilder:** Die App benutzt Emojis und selbst gezeichnete Formen; Bildschirmfotos sind eigene. Ob irgendwo fremde Bilder liegen, habe ich für diesen Text nicht einzeln nachgezählt.
+- **KI-Anteil am Code:** Der Code ist zu großen Teilen mit KI-Hilfe entstanden. Ob und wie der Antrag das nennen soll und was es für die Urheberschaft heißt, bitte klären, bevor die Lizenz festgelegt wird.
+- **Nicht in den offenen Kern:** Stimme „Nova“ (fremder Dienst), KI-Tutor, Lizenz-Schlüssel, Shop-Anbindung.
+
 ## 18.11.2026 – Raumlicht 2.18.15: nur noch Web-App, „App installieren“, KI-Tutor für alle
 
 Marcel hat beides direkt bestätigt („1 und 2 ja“). **Raumlicht 2.18.15 vom 18.11.2026 – nur Web-App.** (Die Angabe „Web = Android“ entfällt ab jetzt.)
