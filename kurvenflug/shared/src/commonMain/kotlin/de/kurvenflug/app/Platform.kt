@@ -54,9 +54,13 @@ interface Platform {
     fun parentNick(): String = ""
     /** Neuer Bericht (JSON) – wird verschlüsselt und nach der Lernsitzung hochgeladen */
     fun parentReport(json: String) {}
+    /** „← Alle Apps“: zurück zur App-Auswahl der Website (Browser: gleicher Tab; Home-Bildschirm-App: normaler Browser) */
+    fun openAllApps() { openUrl(ALL_APPS_URL) }
     /** Lernstand aus der Sicherung wiederherstellen; Ergebnis: ok | vorhanden | keine | andere_app | link | fehler */
     fun parentRestore(link: String, force: Boolean, done: (String) -> Unit) { done("fehler") }
 }
+
+const val ALL_APPS_URL = "https://www.mathenachhilfe-online.com/lern-apps/?src=kurvenflug-kopf"
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */
 val LocalPlatform = staticCompositionLocalOf { defaultPlatform() }

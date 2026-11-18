@@ -105,6 +105,13 @@
     document.documentElement.appendChild(t); setTimeout(function () { t.remove(); }, 2600);
   }
   KF.toast = toast;
+  // „← Alle Apps“: Test-Stufe → staging, sonst www. Im Browser im selben Tab, als Home-Bildschirm-App im normalen Browser.
+  KF.allApps = function () {
+    var test = /-test\.|localhost|127\.0\.0\.1/.test(location.hostname);
+    var url = 'https://' + (test ? 'staging' : 'www') + '.mathenachhilfe-online.com/lern-apps/?src=kurvenflug-kopf';
+    var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+    if (app) window.open(url, '_blank', 'noopener'); else location.href = url;
+  };
 
   // ------------------------------------------------------------ Eltern-Handy koppeln (Ende-zu-Ende verschlüsselt)
   // id, schreib und key entstehen hier per crypto.getRandomValues und liegen nur in diesem Browser. Der Link für das Eltern-Handy
