@@ -4,9 +4,9 @@ Angelegt am 18.11.2026 (Auftrag: „jede Woche neuer Inhalt, einmal im Monat geg
 
 ## Rhythmus
 
-- **Jede Woche (mittwochs):** mindestens eine neue Inhaltseinheit aus `LEHRPLAN-ABGLEICH.md`, auf die Testadresse, kurze Zeile in `MELDUNG_AN_LEITSTAND.md`. Live nimmt der Leitstand.
+- **Jeden Dienstag und Freitag (seit 18.11.2026, vorher mittwochs):** ein großes Inhaltsupdate bis 16 Uhr auf die Testadresse – neue Themen aus `LEHRPLAN-ABGLEICH.md`, mehr Aufgaben, Korrekturen oder neue Optionen. Pflicht: jeder Lösungsweg mit allen Schritten, jede Formel mit Beispiel in der Theorie, jedes Ergebnis nachgerechnet. Meldung in `MELDUNG_AN_LEITSTAND.md` (was neu, wie viele Aufgaben, wie geprüft). Live nimmt der Leitstand.
 - **Jeden Monat (ab dem 24.):** ein Block gründlich, dazu der neue Inhalt des Monats und die kurze Rundum-Prüfung.
-- Beides läuft als geplante Aufgabe in dieser Sitzung (mittwochs 8:47 Uhr und am 24. um 9:41 Uhr).
+- Beides läuft als geplante Aufgabe in dieser Sitzung (dienstags und freitags 8:47 Uhr und am 24. um 9:41 Uhr).
 
 ## Die vier Blöcke (rollierend)
 
