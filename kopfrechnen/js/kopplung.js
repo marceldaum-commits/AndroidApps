@@ -178,7 +178,7 @@ PANELS.wiederherstellen = () => ({ title: '♻️ Fortschritt wiederherstellen',
     <button class="btn primary block" id="wdGo">♻️ Wiederherstellen</button>
     <p class="small muted" id="wdMsg" role="status"></p>
   </div>`, init() {
-    const msg = t => { $('wdMsg').textContent = tr(t); };
+    const msg = t => { $('wdMsg').textContent = t; };   // deutscher Text, die Seite übersetzt ihn selbst
     $('wdGo').onclick = async () => {
       const l = linkLesen($('wdLink').value); if (!l) return msg('Das ist kein gültiger Kopplungs-Link.');
       msg('⏳ …'); const r = await sicherungHolen(l);

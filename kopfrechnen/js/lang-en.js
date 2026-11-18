@@ -2501,4 +2501,5 @@ I18N.add('en', {"% sind":"% are",
 "Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung {}i). Mit dem Kopplungs-Link lässt sich der Fortschritt auf einem neuen Gerät wiederherstellen.":"With a linked parent's phone, an end-to-end encrypted backup of the learning progress is also stored (see privacy policy {}i). The link can restore the progress on a new device.",
 "Der Link enthält den Schlüssel – bitte nur an Eltern weitergeben. Er stellt auch den Fortschritt auf einem neuen Gerät wieder her (Elternbereich → Fortschritt wiederherstellen).":"The link contains the key – please only share it with parents. It also restores the progress on a new device (parents' area → Restore progress).",
 "Mit gekoppeltem Eltern-Handy wird der Lernstand verschlüsselt gesichert – auf einem neuen Gerät „Fortschritt wiederherstellen“":"With a linked parent's phone the learning progress is backed up encrypted – on a new device use “Restore progress”",
-"Eltern-Bericht mit Monatsverlauf":"Parents' report with monthly history"});
+"Eltern-Bericht mit Monatsverlauf":"Parents' report with monthly history",
+"Kleine Korrektur beim Wiederherstellen (Hinweistexte auf Englisch)":"Small fix when restoring (hint texts in English)"});

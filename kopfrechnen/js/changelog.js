@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.26.13';
+const APP_VERSION = '3.26.14';
 const APP_DATE = '2026-11-18';
 const CHANGELOG = [
+  ['3.26.14', '2026-11-18', ['Kleine Korrektur beim Wiederherstellen (Hinweistexte auf Englisch)']],
   ['3.26.13', '2026-11-18', ['Mit gekoppeltem Eltern-Handy wird der Lernstand verschlüsselt gesichert – auf einem neuen Gerät „Fortschritt wiederherstellen“', 'Eltern-Bericht mit Monatsverlauf']],
   ['3.26.12', '2026-11-18', ['Neu im Elternbereich: Eltern-Handy koppeln – Lernstand auf dem Handy der Eltern, ohne Konto und verschlüsselt']],
   ['3.26.11', '2026-11-18', ['Neuer Elternbereich: Berichte, Lern-Geschenk und die anonyme Nutzungszählung (abschaltbar)']],
