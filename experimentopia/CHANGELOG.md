@@ -1,5 +1,13 @@
 # Changelog – Experimentopia
 
+## 2.6.2 – Theorie mit Formeln und Rechenbeispielen (18.11.2026)
+
+- 🧮 **Theorie-Karten überarbeitet**: Jede Formel, die man für die Versuche braucht, steht jetzt in der Theorie – mit Bedeutung der Zeichen, Einheiten
+  und einem durchgerechneten Beispiel (z. B. Dichte, Auftriebskraft, Hebelgesetz, freier Fall, Reihen- und Parallelschaltung, Wärmemenge, Pendel,
+  Flaschenzug, pH-Wert, Neutralisation, Massenerhaltung, 10-%-Regel, Kreuzungsquadrat, Blutgruppen).
+- 🧒 Für die Jüngeren gibt es einfache Rechentricks (Wippe, Mischtemperatur, Puls messen, Mikroskop-Vergrößerung) und den Farb-Detektiv (Chromatografie).
+- ✏️ Sieben Stellen genauer formuliert (u. a. Mischregel, Farbfilter, Pendeldauer, Kurzschluss, rezessive Merkmale, Herzleistung).
+
 ## 2.6.1 – Schnell auch auf iPad und iPhone (18.11.2026)
 
 - 🍎 Die Ursache der weißen Seite ist gefunden: ein Fehler in Safari 27.2 beim Zeichnen. Experimentopia umgeht ihn jetzt – Safari bekommt wieder die schnelle Fassung.

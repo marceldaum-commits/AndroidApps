@@ -2,6 +2,21 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.6.2 vom 18.11.2026: Theorie-Prüfliste umgesetzt – fertig für den Betriebstest
+
+**Prüfliste** (alle 19 Theorie-Karten gegen die Versuche geprüft: Welche Formel/welches Gesetz braucht man? Steht es mit Größen, Einheiten und Rechenbeispiel da?)
+- **Physik** (10 Themen): Lücken in 9 – Auftrieb (Dichte mit Beispiel, Eintauchanteil, F_A = ρ·V·g), Hebel (Hebelgesetz mit N/m, mehrere Kräfte), Fall (Fallzeit/Endgeschwindigkeit
+  durchgerechnet, √h-Verhältnisse, s = v·t), Strom (R in Reihe/parallel, P = U·I), Wärme (Q = m·c·ΔT, Schmelz-/Verdampfungswärme, Mischregel durchgerechnet), Licht (Folien-Rechnung,
+  Farbanzahl), Schall (Saitenfrequenz, Röhrenlänge), Newton (F = m·a, v = a·t, s = ½at², Rückstoß), Schwingung (Pendel durchgerechnet, nach l umgestellt), Maschinen (schiefe Ebene,
+  Flaschenzug, Hubarbeit). Magnet: vollständig.
+- **Chemie** (3 Themen) und **Biologie** (5 Themen): Lücken in allen 8 – Trennen (Dichte, Siedetemperatur, Gemisch/Verbindung, Chromatografie), Säure (pH = −log c, Überschussrechnung,
+  pOH; Neutralisation c·V), Reaktion (Ausgleichen, Massenerhaltung, Volumenverhältnisse), Zellen (Vergrößerung, Bildausschnitt, Osmose in %), Ernährung (RGT-Regel, Energiegehalt),
+  Ökologie (10-%-Regel, I ~ 1/d², begrenzender Faktor), Körper (Puls, Blutmenge, Herzzeitvolumen), Vererbung (Kreuzungsquadrat, intermediär, Testkreuzung, Blutgruppen).
+- **Korrekturen** (7): Mischregel (Bedeutung T₁/T₂/T), subtraktive Farben (welcher Filter schluckt was), Pendel („vierfache Länge → doppelte Dauer“ ergänzt um g), Kurzschluss
+  („fast ohne Widerstand“, sehr großer Strom), Neutralisation (c_S·V_S = c_L·V_L mit Beispiel), rezessiv („nur bei aa“ statt „beide gleich“), Herzzeitvolumen (Einheiten + Beispiel).
+- Umfang: 70 neue Punkte (Grundlagen für Kl. 3–6 als Rechentricks, „Für Profis“ mit Formeln). Jedes Beispiel nachgerechnet.
+- Tests: core:model jvmTest grün, Theorie-Bildschirmfotos 61/62 geprüft, Webapp gebaut. **Fertig für den Betriebstest: Experimentopia 2.6.2 vom 18.11.2026** auf experimentopia-test.
+
 ## 18.11.2026 – BESTÄTIGT: 2.6.1 läuft auf Marcels iPad (Safari 27.2) – bitte live freigeben
 
 - Foto von Marcel (iPad, Safari, `?diag=1`, 14:40): Startseite vollständig gezeichnet. Protokoll: „Fassung wasm (automatisch) · WebKit“, beide .wasm geladen, webgl2 2540×2120,
