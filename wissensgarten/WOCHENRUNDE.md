@@ -28,6 +28,10 @@ _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen 
 | vorhanden | gs-englisch-familie-koerper | Welt 2 Family House |
 
 - Wir haben die Wortlisten je Welt angefragt, damit beide Apps dieselben Wörter in derselben Schreibweise verwenden.
+- **Welt 1 „Hello Harbour“** (Wortliste vom 18.11., britische Schreibweise):
+  - Die Englisch-App verlinkt `w1e1` auf `#paket=gs-englisch-basics` und `w1e2`/`w1e3` auf `#paket=gs-englisch-farben-zahlen`.
+  - Unser Abgleich: Diese Wendungen fehlen bei uns noch: „You're welcome.“, „Nice to meet you.“, „See you soon!“, „How many …?“, „boat“, „What colour is …? – It's …“. Sie kommen als Karten in diese beiden Pakete (Di 24.11. zusammen mit gs-englisch-school).
+  - Schreibweise: bei uns schon britisch (grey, favourite), Amerikanisches nur als Hinweis.
 
 ## Antwort an „Geld verdienen“ (18.11.2026, für Mo 23.11.)
 
