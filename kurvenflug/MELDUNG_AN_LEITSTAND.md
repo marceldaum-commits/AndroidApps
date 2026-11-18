@@ -1,5 +1,29 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.25 – Eltern-Handy koppeln + Prüfplan (Dauerregel)
+**Eltern-Handy koppeln** (nur WebApp, nur im Elternbereich hinter dem Eltern-Tor):
+1. Karte „📱 Eltern-Handy koppeln“ mit freiwilligem Feld „Spitzname für den Bericht“. Koppeln erzeugt mit `crypto.getRandomValues`:
+   id 16 Bytes (22 Zeichen), schreib 16 Bytes (22), key 32 Bytes (43), base64url ohne Padding – nur in localStorage (`kf.eltern.*`).
+   Danach QR-Code (eigener Erzeuger, Fehlerkorrektur M, Modul für Modul gegen die Python-Bibliothek „qrcode“ geprüft; Test
+   `QrCodeTest`) und „Link teilen“. Link: Test-Stufe (`*-test.*`/localhost) `https://staging.mathenachhilfe-online.com/eltern-bericht/#<id>.<key>`,
+   sonst `https://www.…/eltern-bericht/#<id>.<key>`.
+2. Bericht (Format 1 genau nach eurer Spezifikation, `core/model/ParentReport.kt`, Test `ParentReportTest`): format, app, appName, name
+   (nur wenn eingegeben), klasse, stand (ISO mit Zeitzone), zeitraum „letzte 14 Tage“, lernzeitMin, tageAktiv, aufgaben (= Durchgänge),
+   richtigProzent (= geschaffte Durchgänge), staerken (≥ 80 %, ab 3 Durchgängen, max. 3), schwach (≤ 60 %, mit tipp = Merkformel des Kapitels),
+   fortschritt (zuletzt gespielte Kapitel: geschafft/von), letzte (bis 7 Tage). thema aus der gemeinsamen Liste. **klassenarbeit** sende ich
+   nicht: KurvenFlug kennt nur „bald“ (Schalter), kein Datum – sagt, falls ihr dafür ein Datum-Feld wollt. Keine E-Mail, Gerätedaten, Standort.
+   Die App hält den Bericht aktuell, verschlüsselt ihn sofort (AES-GCM-256, WebCrypto, 12-Byte-IV) und sendet beim Verstecken/Verlassen
+   **höchstens alle 10 Minuten** `PUT https://trainer(-test).mathenachhilfe-online.com/eltern/v1/b/<id>`, `X-Schreib`, Body text/plain
+   `<iv>.<ciphertext>` (≤ 24 KB); gleich nach dem Koppeln einmal sofort (legt das Schreibrecht fest).
+3. „Kopplung aufheben“ (mit Rückfrage) → `DELETE …/<id>` mit X-Schreib, alle `kf.eltern.*` lokal gelöscht.
+4. **Rundlauf-Test (Chromium, Server abgefangen):** Link-Format ok; PUT mit 22-Zeichen-X-Schreib, text/plain, iv 16 Zeichen; Schlüssel nicht im
+   Körper; mit dem key aus dem Link entschlüsselt → gültiges JSON (format 1, name „Lena“, klasse 7 …); zweites Verstecken < 10 min → kein
+   zweiter PUT; DELETE mit demselben X-Schreib, lokal leer. Kinderbereich zeigt nichts (Karte nur in der Elternseite). Bildschirmfoto `105_eltern_handy`.
+**Prüfplan (Dauerregel):** `kurvenflug/PRUEFPLAN.md` – 4 rollierende Blöcke (A Grundlagen 5–8, B Funktionen 7–10, C Physik, D Oberstufe +
+Spielmodi), je Monat ein Block gründlich + Neu-Content + Rundum-Prüfung; erster Prüfmonat November (23.–30.11.: Block A). Wöchentlicher
+Neu-Content mittwochs; diese Woche: Theorie-Merkformeln + Beispiele (2.5.23), „Kommt bald“ (2.5.24), Eltern-Handy (2.5.25).
+- versionCode 72 / 2.5.25, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.24 – Lehrplan-Abgleich (Marcel 18.11.) + „Kommt bald“ in der Galaxie
 **Grundlage und Ehrlichkeit:** Abgleich gegen die KMK-Bildungsstandards (Primar/Sek I: Leitideen Zahl, Messen, Raum & Form,
 Funktionaler Zusammenhang, Daten & Zufall; Sek II/Abitur: Analysis, Analytische Geometrie, Stochastik; Physik: Mechanik, Elektrizität,

@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.25 – Eltern-Handy koppeln
+- Im Elternbereich: „📱 Eltern-Handy koppeln“. Ein QR-Code bzw. Link verbindet dein Handy – dort siehst du Lernzeit,
+  Stärken und wo es hakt, ohne Konto. Der Bericht ist Ende-zu-Ende verschlüsselt; der Schlüssel steckt nur im Link und
+  geht nie an unseren Server. „Kopplung aufheben“ löscht alles wieder. Kinder sehen davon nichts.
+
 ## 2.5.24 – Was als Nächstes kommt
 - In der Galaxie steht ganz unten „🔭 Kommt bald“: Themen aus dem Lehrplan, die Kurvenflug noch nicht hat – zum Beispiel
   Terme & Gleichungen, Kreis & Flächen, Wahrscheinlichkeit, Strom & Ohmsches Gesetz oder Radioaktivität. Passend zur

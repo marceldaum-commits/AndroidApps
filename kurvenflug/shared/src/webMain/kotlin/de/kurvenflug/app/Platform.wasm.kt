@@ -65,6 +65,11 @@ object WebPlatform : Platform {
     override fun onHome(home: Boolean) { runCatching { jsAtHome(home) } }
     override fun installMode(): String = runCatching { jsInstallMode() }.getOrDefault("")
     override fun install() { runCatching { jsInstall() } }
+    override fun parentLink(): String? = runCatching { jsElternLink() }.getOrNull()
+    override fun parentPair(nick: String): String = runCatching { jsElternPair(nick) }.getOrDefault("")
+    override fun parentUnpair() { runCatching { jsElternUnpair() } }
+    override fun parentNick(): String = runCatching { jsElternNick() }.getOrDefault("")
+    override fun parentReport(json: String) { runCatching { jsElternReport(json) } }
 
     // Anonyme Nutzungszählung (nur wenn eingeschaltet): Zähler im Speicher, beim Verlassen/Verstecken der Seite einmal senden (kf.js)
     private val counts = HashMap<String, Int>()

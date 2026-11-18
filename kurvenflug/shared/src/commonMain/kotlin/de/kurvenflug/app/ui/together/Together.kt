@@ -259,6 +259,12 @@ class ParentArea(
     val onCounting: (Boolean) -> Unit,
     /** Anonyme Nutzungszählung: Klicks und Hinweise (nur gesendet, wenn die Zählung an ist) */
     val onCount: (String) -> Unit = {},
+    /** Eltern-Handy koppeln: null = auf diesem Gerät nicht möglich, "" = nicht gekoppelt, sonst Link */
+    val pairLink: String? = null,
+    val pairNick: String = "",
+    val onPair: (String) -> Unit = {},
+    val onUnpair: () -> Unit = {},
+    val onShare: (String) -> Unit = {},
 )
 
 @Composable
@@ -294,6 +300,7 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
             }
         }
     }
+    if (p.pairLink != null) PairCard(p)
     // Klassenarbeit bald? (Auslöser für den Hinweis, gilt 3 Wochen)
     val exam = p.examUntil >= p.today
     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TICK); p.onExam(!exam) }.padding(14.dp),
@@ -330,4 +337,50 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
 fun Footer(onOpen: (String) -> Unit, modifier: Modifier = Modifier) {
     Text(de.kurvenflug.core.model.ParentOffers.FOOTER_TEXT, color = Q.Muted, style = MaterialTheme.typography.labelSmall, textAlign = TextAlign.Center,
         modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)).clickable { onOpen(de.kurvenflug.core.model.ParentOffers.FOOTER) }.padding(8.dp))
+}
+
+
+/** „📱 Eltern-Handy koppeln“: QR-Code + Link fürs Eltern-Handy, Ende-zu-Ende verschlüsselt, ohne Konto */
+@Composable
+private fun PairCard(p: ParentArea) {
+    val sfx = LocalSfx.current
+    val link = p.pairLink.orEmpty()
+    var nick by rememberSaveable { mutableStateOf(p.pairNick) }
+    var confirmOff by remember { mutableStateOf(false) }
+    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).border(1.5.dp, Q.Violet.copy(alpha = 0.5f), RoundedCornerShape(16.dp)).padding(14.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text("📱 Eltern-Handy koppeln", fontWeight = FontWeight.Bold, color = Q.Violet)
+        Text("Auf deinem eigenen Handy siehst du Lernzeit, Stärken und wo es hakt – ohne Konto. Der Bericht ist Ende-zu-Ende " +
+            "verschlüsselt: Der Schlüssel steckt nur im Link bzw. QR-Code und geht nie an unseren Server.", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+        if (link.isEmpty()) {
+            OutlinedTextField(nick, { nick = it.take(30) }, label = { Text("Spitzname für den Bericht (freiwillig)") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+            Button(onClick = { sfx?.play(Sound.TAP); p.onCount("elternbereich"); p.onPair(nick.trim()) },
+                colors = ButtonDefaults.buttonColors(containerColor = Q.Violet, contentColor = Q.Space)) { Text("Eltern-Handy koppeln", fontWeight = FontWeight.Bold) }
+        } else {
+            Text("Mit dem Eltern-Handy scannen:", color = Q.Text, style = MaterialTheme.typography.bodySmall)
+            QrImage(link, Modifier.align(Alignment.CenterHorizontally).size(210.dp))
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Button(onClick = { sfx?.play(Sound.TAP); p.onShare(link) }, colors = ButtonDefaults.buttonColors(containerColor = Q.Violet, contentColor = Q.Space)) {
+                    Text("Link teilen", fontWeight = FontWeight.Bold) }
+                TextButton(onClick = { sfx?.play(Sound.TICK); confirmOff = true }) { Text("Kopplung aufheben", color = Q.Muted) }
+            }
+            Text("Der Bericht wird nach dem Üben aktualisiert (höchstens alle 10 Minuten).", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+        }
+    }
+    if (confirmOff) AlertDialog(onDismissRequest = { confirmOff = false },
+        title = { Text("Kopplung aufheben?") },
+        text = { Text("Der Bericht wird gelöscht und das Eltern-Handy sieht nichts mehr. Du kannst jederzeit neu koppeln.") },
+        confirmButton = { TextButton(onClick = { confirmOff = false; p.onUnpair() }) { Text("Aufheben") } },
+        dismissButton = { TextButton(onClick = { confirmOff = false }) { Text("Abbrechen") } })
+}
+
+/** QR-Code (schwarz auf weiß, mit Rand) – eigener Erzeuger [de.kurvenflug.core.model.QrCode] */
+@Composable
+private fun QrImage(text: String, modifier: Modifier) {
+    val qr = remember(text) { runCatching { de.kurvenflug.core.model.QrCode.encode(text) }.getOrNull() } ?: return
+    androidx.compose.foundation.Canvas(modifier.clip(RoundedCornerShape(10.dp)).background(Color.White)) {
+        val n = qr.size + 8; val cell = size.minDimension / n
+        for (y in 0 until qr.size) for (x in 0 until qr.size) if (qr[x, y])
+            drawRect(Color.Black, androidx.compose.ui.geometry.Offset((x + 4) * cell, (y + 4) * cell), androidx.compose.ui.geometry.Size(cell + 0.5f, cell + 0.5f))
+    }
 }
