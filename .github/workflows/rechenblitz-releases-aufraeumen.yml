@@ -1,0 +1,28 @@
+# Einmalig (Marcel 18.11.2026: „nur noch Web-App, APK-Downloads weg“): löscht alle GitHub-Releases „rechenblitz-*“
+# samt APK/ZIP-Anhang und Tag. Läuft beim Push dieser Datei auf rechenblitz-test und wird danach wieder entfernt.
+name: Rechenblitz Releases aufräumen
+
+on:
+  push:
+    branches: [rechenblitz-test]
+    paths: ['.github/workflows/rechenblitz-releases-aufraeumen.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  aufraeumen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Releases rechenblitz-* löschen
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          tags=$(gh release list -R "$REPO" -L 200 --json tagName -q '.[].tagName' | grep '^rechenblitz-' || true)
+          echo "Gefunden: $(echo "$tags" | grep -c . || true) Releases"
+          for t in $tags; do
+            gh release delete "$t" -R "$REPO" --yes --cleanup-tag && echo "gelöscht: $t"
+          done
+          echo "Übrig (rechenblitz-*): $(gh release list -R "$REPO" -L 200 --json tagName -q '.[].tagName' | grep -c '^rechenblitz-' || true)"
