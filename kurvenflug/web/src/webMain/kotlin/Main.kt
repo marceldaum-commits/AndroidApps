@@ -21,6 +21,9 @@ private fun clearSearch(): Unit = js("(function () { try { history.replaceState(
 /** Start-Protokoll (index.html): das Programm läuft – bricht der Start danach ab, weiß der nächste Start, wo */
 private fun stage(s: String): Unit = js("(function () { if (window.kfStage) window.kfStage(s) })()")
 
+/** Kurzer Hinweis nach dem Start (Bestätigung des Einlöse-Links) */
+private fun confirm(msg: String): Unit = js("(function () { setTimeout(function () { if (window.KF && window.KF.toast) window.KF.toast(msg); }, 3500); })()")
+
 private fun hideLoader(): Unit = js("(function () { var l = document.getElementById('kf-loader'); if (l) { l.classList.add('weg'); setTimeout(function () { l.remove(); }, 400); } if (window.kfReady) window.kfReady(); })()")
 
 /** Kurvenflug im Browser: dieselbe Oberfläche wie auf Android, Spielstand im lokalen Speicher des Browsers. */
@@ -33,6 +36,9 @@ fun main() {
     de.kurvenflug.core.model.License.extract(locationSearch())?.let { code ->
         settings.setProCode(code)
         clearSearch()
+        // Bestätigung (B4): gültig → Freude, sonst freundlich sagen, was zu tun ist
+        val ok = de.kurvenflug.core.model.License.check(code, BuildInfo.PRO_KEY, de.kurvenflug.core.model.CalDate.today().toEpochDay()) != null
+        confirm(if (ok) "🎉 Kurvenflug Pro ist freigeschaltet – viel Spaß!" else "Der Freischalt-Link hat nicht gepasst. Bitte den Code unter Einstellungen → Kurvenflug Pro eingeben.")
     }
     val state = AppState(settings, WebProgressStore(settings.profile), MainScope())
     // Bildschirmleser-Spiegel aus: Er meldete bei Levelende gelegentlich „Node … not found“ (Compose 1.9) –

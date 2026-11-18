@@ -276,7 +276,20 @@ class ScreenshotTest {
             de.kurvenflug.core.model.PlayRecord("3-1", 0, 3, 400, today - d), de.kurvenflug.core.model.PlayRecord("15-1", 3, 1, 120, today),
             de.kurvenflug.core.model.PlayRecord("15-2", 3, 1, 90, today), de.kurvenflug.core.model.PlayRecord("2-5", 3, 1, 260, today))
         de.kurvenflug.app.ui.together.ParentScreen(de.kurvenflug.core.data.Profile(0, "Lena", "🦊"),
-            de.kurvenflug.core.model.Weekly.summary(plays, today + 3_600_000L, today), listOf("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So")) {}
+            de.kurvenflug.core.model.Weekly.summary(plays, today + 3_600_000L, today), listOf("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"), onBack = {})
+    }
+
+    @Test fun parentOffers() = shot("104_eltern_angebote", settle = 2000, prepare = { it.onNodeWithText("Anonyme Nutzungszählung", substring = true).performScrollTo() }) {
+        val today = 20_500L * de.kurvenflug.core.model.Weekly.DAY
+        val d = de.kurvenflug.core.model.Weekly.DAY
+        val plays = listOf(
+            de.kurvenflug.core.model.PlayRecord("2-1", 3, 1, 180, today - 5 * d), de.kurvenflug.core.model.PlayRecord("2-2", 3, 1, 240, today - 5 * d),
+            de.kurvenflug.core.model.PlayRecord("2-3", 3, 1, 200, today - 3 * d), de.kurvenflug.core.model.PlayRecord("2-4", 2, 2, 300, today - 3 * d),
+            de.kurvenflug.core.model.PlayRecord("3-1", 0, 3, 400, today - d), de.kurvenflug.core.model.PlayRecord("15-1", 3, 1, 120, today),
+            de.kurvenflug.core.model.PlayRecord("15-2", 3, 1, 90, today), de.kurvenflug.core.model.PlayRecord("2-5", 3, 1, 260, today))
+        de.kurvenflug.app.ui.together.ParentScreen(de.kurvenflug.core.data.Profile(0, "Lena", "🦊"),
+            de.kurvenflug.core.model.Weekly.summary(plays, today + 3_600_000L, today), listOf("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"), onBack = {},
+            parent = de.kurvenflug.app.ui.together.ParentArea(7, 20_400L, 0L, false, 0L, false, {}, {}, {}, {}, {}))
     }
 
     @Test fun results() = shot("63_bestenliste") {

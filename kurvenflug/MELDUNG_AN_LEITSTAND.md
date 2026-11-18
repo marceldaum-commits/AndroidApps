@@ -1,5 +1,27 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.21 – A3 Zählung, B4 Einlöse-Link + Lern-Geschenk, C1 Nachhilfe-Hinweis, Fußzeile
+**Hinweis:** Den Ratgeber (Website_Backup, geld-verdienen/RATGEBER.md) konnte ich **nicht lesen** – das Hinzufügen des Repos wurde
+in meiner Sitzung abgelehnt. Umgesetzt nach eurer Nachricht; wo der Ratgeber Genaueres vorgibt (Format, Crashkurs-Links,
+„Fertig, wenn“), bitte melden – ich passe an.
+- **Eltern-Tor:** „Ich“ → „👪 Für Eltern“ öffnet jetzt erst nach der Frage für Erwachsene (Geburtsjahr, ≥ 18). Alle Angebote liegen
+  nur dort; Volt/Spiel zeigen nichts (UWG Anh. Nr. 28). Keine Preise. Anrede du.
+- **A3 Zählung:** Schalter „📊 Anonyme Nutzungszählung“ im Elternbereich, **Standard AUS** (datensparsam, Kinder-App – bitte sagen,
+  falls der Ratgeber „an“ vorsieht). Ereignisse nur: `start`, `level_start`, `level_geschafft`, `theorie` (feste Liste,
+  `UsageCount.EVENTS`). Beim Verstecken/Verlassen der Seite (`visibilitychange`/`pagehide`) **ein** `navigator.sendBeacon`
+  POST an `https://trainer.mathenachhilfe-online.com/zaehler/v1/e`, `text/plain`, ohne Cookies/Kennung, Inhalt z. B.
+  `{"app":"kurvenflug","v":"2.5.21","f":"wasm","e":{"level_geschafft":3,"start":1}}`. Im Browser geprüft: an → 1 Sendung, aus → keine.
+- **B4:** `?pro=<CODE>` wird wie bisher eingelöst; jetzt mit Bestätigung („🎉 Kurvenflug Pro ist freigeschaltet“ bzw. Hinweis, den Code
+  in den Einstellungen einzugeben). Im Elternbereich „🎁 Lern-Geschenk verschenken“ → `…/geschenke/?src=kurvenflug-geschenk`.
+- **C1 Nachhilfe-Hinweis** (Elternbereich): Auslöser „Thema hakt“ (Wochenübersicht „Hier täte Hilfe gut“) oder „Klassenarbeit bald“
+  (Schalter, gilt 21 Tage). Häufigkeitsgrenze: an einem Tag sichtbar, dann 6 Tage Pause; „Nicht mehr zeigen“ blendet ihn dauerhaft aus.
+  Link: `…/probestunde/?src=kurvenflug-eltern&thema=kf-<Kapitel>&klasse=<n>` (Themen-ID = `kf-` + Kapitelnummer – bitte sagen, falls ihr
+  andere IDs nutzt). **Crashkurs-Links fehlen noch** (stehen im Ratgeber, den ich nicht lesen konnte).
+- **Fußzeile:** „Ein Angebot von Nachhilfe – online“ → `https://www.mathenachhilfe-online.com/?src=kurvenflug-fusszeile`, ohne Preis:
+  unten in den Einstellungen, im Elternbereich und im Ladebild (neben Impressum/Datenschutz).
+- Tests: `ParentOffersTest` (Häufigkeitsgrenze, Links, Zählformat), `ParentGateTest` (Tor: 2015 abgelehnt, 1980 durch), Bildschirmfoto `104_eltern_angebote`; Eltern-Tor im Browser durchgespielt. versionCode 68 / 2.5.21,
+  Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.20 – Wasm für Safari/WebKit wieder offen (Marcel 18.11.: „Geht beides“ – ?modus=wasm und JS auf dem iPhone)
 - Die Regel „WebKit → direkt JS“ ist entfernt: iPhone/iPad/Safari bekommen wieder Kotlin/Wasm (mit `-Xwasm-no-jstag` und der
   Skiko-Umgehung für WebKit 329421). Rückfall bleibt: Jeder Startfehler/Absturz → automatisch JS (gemerkt je Version),

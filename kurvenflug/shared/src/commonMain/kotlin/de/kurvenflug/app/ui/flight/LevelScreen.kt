@@ -92,6 +92,10 @@ fun LevelScreen(
     var drag by rememberSaveable(level.id) { mutableStateOf(false) }
     // 📖 Theorie: passende Erklärung jederzeit nachlesen – kostet keine Sterne
     var theory by rememberSaveable(level.id) { mutableStateOf(false) }
+    // Anonyme Nutzungszählung (nur wenn eingeschaltet): Level begonnen, Theorie geöffnet
+    val counter = de.kurvenflug.app.LocalPlatform.current
+    LaunchedEffect(level.id) { counter.count("level_start") }
+    LaunchedEffect(theory) { if (theory) counter.count("theorie") }
     // Für Klänge, die nach dem Flug weiterlaufen (Sterne), unabhängig vom Flug-Effekt
     val soundScope = rememberCoroutineScope()
     val theoryText = remember(level.id, chapter.number) { de.kurvenflug.core.model.Theories.of(level, chapter) }

@@ -65,6 +65,21 @@ object WebPlatform : Platform {
     override fun onHome(home: Boolean) { runCatching { jsAtHome(home) } }
     override fun installMode(): String = runCatching { jsInstallMode() }.getOrDefault("")
     override fun install() { runCatching { jsInstall() } }
+
+    // Anonyme Nutzungszählung (nur wenn eingeschaltet): Zähler im Speicher, beim Verlassen/Verstecken der Seite einmal senden (kf.js)
+    private val counts = HashMap<String, Int>()
+    private var counting = false
+    private var leaveHooked = false
+    override fun count(event: String) { if (counting && event in de.kurvenflug.core.model.UsageCount.EVENTS) counts[event] = (counts[event] ?: 0) + 1 }
+    override fun setCounting(on: Boolean) {
+        counting = on; if (!on) counts.clear()
+        if (on && !leaveHooked) { leaveHooked = true; runCatching { jsOnLeave { takeBody() } } }
+    }
+    private fun takeBody(): String {
+        if (!counting) return ""
+        val b = de.kurvenflug.core.model.UsageCount.body(versionName, runCatching { jsMode() }.getOrDefault(""), counts) ?: return ""
+        counts.clear(); return b
+    }
     override fun shareText(text: String, title: String) = jsShare(text, title)
     override fun openUrl(url: String) = jsOpen(url)
 

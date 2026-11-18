@@ -105,6 +105,18 @@
     document.documentElement.appendChild(t); setTimeout(function () { t.remove(); }, 2600);
   }
   KF.toast = toast;
+
+  // ------------------------------------------------------------ Anonyme Nutzungszählung (nur wenn Eltern sie einschalten)
+  // Die App liefert beim Verlassen/Verstecken der Seite die Ereignisliste (Text); hier wird sie einmal per sendBeacon geschickt –
+  // ohne Cookies, ohne Kennung. Ist der Zähler (noch) nicht erreichbar, geht der Aufruf still ins Leere.
+  var leaveFn = null;
+  KF.onLeave = function (f) { leaveFn = f; };
+  function leave() {
+    if (!leaveFn || !navigator.sendBeacon) return;
+    try { var b = leaveFn(); if (b) navigator.sendBeacon('https://trainer.mathenachhilfe-online.com/zaehler/v1/e', new Blob([b], { type: 'text/plain' })); } catch (e) {}
+  }
+  window.addEventListener('pagehide', leave);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) leave(); });
   KF.share = function (text, title) {
     if (navigator.share) { navigator.share({ title: title, text: text }).catch(function () {}); return; }
     if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast('In die Zwischenablage kopiert 📋'); }, function () { window.prompt(title, text); });

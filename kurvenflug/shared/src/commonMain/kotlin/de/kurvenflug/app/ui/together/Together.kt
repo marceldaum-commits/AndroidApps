@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -138,7 +139,7 @@ fun HoldToConfirm(label: String, onConfirm: () -> Unit) {
  * Alles bleibt auf dem Gerät.
  */
 @Composable
-fun ParentScreen(player: Profile, w: WeekSummary, dayLabels: List<String>, onBack: () -> Unit) {
+fun ParentScreen(player: Profile, w: WeekSummary, dayLabels: List<String>, onBack: () -> Unit, parent: ParentArea? = null) {
     Box(Modifier.fillMaxSize()) {
         Starfield(seed = 61)
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -172,9 +173,11 @@ fun ParentScreen(player: Profile, w: WeekSummary, dayLabels: List<String>, onBac
                         "laut erklären hilft oft schon. Nach 3 Versuchen bietet Volt einen Rechenweg an." }, Q.Orange)
                 Section("🌟 Läuft richtig gut", if (w.strong.isEmpty()) listOf("Noch zu wenig gespielt für eine Aussage.")
                     else w.strong.map { "${it.emoji} ${it.title} – meist beim ersten Versuch richtig gerechnet" }, Q.Green)
-                Text("Hinweis: Die Übersicht bleibt auf diesem Gerät. Kurvenflug zählt nur Level, Versuche und Dauer – keine Standorte, " +
-                    "nichts verlässt das Gerät. Pausen sind völlig in Ordnung; es gibt keine Serien, die verfallen.",
+                parent?.let { ParentExtras(it, w) }
+                Text("Hinweis: Die Übersicht bleibt auf diesem Gerät. Kurvenflug zählt nur Level, Versuche und Dauer – keine Standorte. " +
+                    "Pausen sind völlig in Ordnung; es gibt keine Serien, die verfallen.",
                     color = Q.Muted, style = MaterialTheme.typography.bodySmall)
+                if (parent != null) Footer(parent.onOpen)
             }
         }
     }
@@ -235,4 +238,88 @@ fun ResultsBoard(onBack: () -> Unit, initial: String = "") {
             }
         }
     }
+}
+
+
+/**
+ * Zusätzliches im Elternbereich (nur hinter dem Eltern-Tor): Nachhilfe-Hinweis zum Thema, Lern-Geschenk, Zählung.
+ * Anrede: du. Keine Preise, keine Kaufaufforderung an Kinder (UWG Anhang Nr. 28) – das Kind sieht diese Seite nur mit den Eltern.
+ */
+class ParentArea(
+    val grade: Int?,
+    val today: Long,
+    val examUntil: Long,
+    val hintHidden: Boolean,
+    val hintShown: Long,
+    val counting: Boolean,
+    val onOpen: (String) -> Unit,
+    val onExam: (Boolean) -> Unit,
+    val onHideHint: () -> Unit,
+    val onHintSeen: () -> Unit,
+    val onCounting: (Boolean) -> Unit,
+)
+
+@Composable
+private fun ParentExtras(p: ParentArea, w: WeekSummary) {
+    val sfx = LocalSfx.current
+    val reason = de.kurvenflug.core.model.ParentOffers.hint(p.today, w.needsHelp.isNotEmpty(), p.examUntil, p.hintHidden, p.hintShown)
+    LaunchedEffect(reason) { if (reason != null) p.onHintSeen() }
+    // Nachhilfe-Hinweis – themenbezogen, höchstens an einem Tag pro Woche, ausblendbar
+    if (reason != null) {
+        val topic = w.needsHelp.firstOrNull() ?: w.topics.firstOrNull()?.first
+        val enter = remember { Animatable(0f) }
+        LaunchedEffect(Unit) { enter.animateTo(1f, spring(dampingRatio = 0.6f)) }
+        Column(Modifier.fillMaxWidth().graphicsLayer { alpha = enter.value; translationY = (1 - enter.value) * 40f }
+            .clip(RoundedCornerShape(16.dp)).background(Q.Panel).border(1.5.dp, Q.Cyan.copy(alpha = 0.5f), RoundedCornerShape(16.dp)).padding(14.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("💡 Für dich als Elternteil", fontWeight = FontWeight.Bold, color = Q.Cyan)
+            Text(when (reason) {
+                de.kurvenflug.core.model.ParentOffers.Reason.EXAM -> "Bald steht eine Klassenarbeit an" + (topic?.let { " – zum Beispiel zu „${it.title}“" } ?: "") +
+                    ". Wenn du dir Unterstützung wünschst: Bei Nachhilfe – online gibt es eine kostenlose Probestunde mit einer Lehrkraft, passend zum Thema."
+                else -> "Bei „${topic?.title}“ hakt es gerade. Das ist normal und meist schnell geklärt. Wenn du dir Unterstützung wünschst: " +
+                    "Bei Nachhilfe – online gibt es eine kostenlose Probestunde mit einer Lehrkraft, genau zu diesem Thema."
+            }, color = Q.Text, style = MaterialTheme.typography.bodySmall)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                Button(onClick = { sfx?.play(Sound.TAP); p.onOpen(de.kurvenflug.core.model.ParentOffers.trialLesson(topic?.number ?: 0, p.grade)) },
+                    colors = ButtonDefaults.buttonColors(containerColor = Q.Cyan, contentColor = Q.Space)) { Text("Probestunde ansehen", fontWeight = FontWeight.Bold) }
+                TextButton(onClick = { sfx?.play(Sound.TICK); p.onHideHint() }) { Text("Nicht mehr zeigen", color = Q.Muted) }
+            }
+        }
+    }
+    // Klassenarbeit bald? (Auslöser für den Hinweis, gilt 3 Wochen)
+    val exam = p.examUntil >= p.today
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TICK); p.onExam(!exam) }.padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) {
+            Text("📅 Klassenarbeit bald", fontWeight = FontWeight.Bold, color = Q.Text)
+            Text(if (exam) "Gemerkt für die nächsten Wochen" else "Antippen, wenn eine Klassenarbeit ansteht", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+        }
+        Switch(exam, { sfx?.play(Sound.TICK); p.onExam(it) })
+    }
+    // Lern-Geschenk
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TAP); p.onOpen(de.kurvenflug.core.model.ParentOffers.GIFT) }.padding(14.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+        Text("🎁", fontSize = 24.sp)
+        Column(Modifier.weight(1f).padding(start = 10.dp)) {
+            Text("Lern-Geschenk verschenken", fontWeight = FontWeight.Bold, color = Q.Text)
+            Text("Für Geburtstage, Ostern oder Weihnachten – öffnet die Website", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+        }
+        Text("›", color = Q.Muted, fontSize = 22.sp)
+    }
+    // Anonyme Nutzungszählung (aus = Standard)
+    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).padding(14.dp), verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) {
+            Text("📊 Anonyme Nutzungszählung", fontWeight = FontWeight.Bold, color = Q.Text)
+            Text("Hilft uns, Kurvenflug zu verbessern: Gezählt wird nur, wie oft gestartet, ein Level begonnen oder geschafft und die Theorie " +
+                "geöffnet wurde – ohne Namen, ohne Spielstand, ohne Cookies, ohne Kennung.", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+        }
+        Switch(p.counting, { sfx?.play(Sound.TICK); p.onCounting(it) })
+    }
+}
+
+/** Fußzeile: „Ein Angebot von Nachhilfe – online“ (ohne Preis) */
+@Composable
+fun Footer(onOpen: (String) -> Unit, modifier: Modifier = Modifier) {
+    Text(de.kurvenflug.core.model.ParentOffers.FOOTER_TEXT, color = Q.Muted, style = MaterialTheme.typography.labelSmall, textAlign = TextAlign.Center,
+        modifier = modifier.fillMaxWidth().clip(RoundedCornerShape(8.dp)).clickable { onOpen(de.kurvenflug.core.model.ParentOffers.FOOTER) }.padding(8.dp))
 }
