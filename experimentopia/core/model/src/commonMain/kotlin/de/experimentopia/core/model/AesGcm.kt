@@ -71,6 +71,15 @@ object AesGcm {
         return z
     }
 
+    /** Entschlüsseln: [data] = Geheimtext ‖ Prüfwert; null, wenn Schlüssel falsch oder Daten verändert */
+    fun decrypt(key: ByteArray, iv: ByteArray, data: ByteArray): ByteArray? {
+        if (data.size < 16 || iv.size != 12) return null
+        val n = data.size - 16
+        // CTR ist symmetrisch: Geheimtext nochmal „verschlüsseln“ ergibt den Klartext; danach den Prüfwert vergleichen
+        val plain = encrypt(key, iv, data.copyOf(n)).copyOf(n)
+        return if (encrypt(key, iv, plain).contentEquals(data)) plain else null
+    }
+
     /** Verschlüsseln: [iv] 12 Byte, Ergebnis = Geheimtext ‖ Prüfwert (16 Byte) */
     fun encrypt(key: ByteArray, iv: ByteArray, plain: ByteArray, aad: ByteArray = ByteArray(0)): ByteArray {
         require(iv.size == 12) { "GCM hier nur mit 12-Byte-IV" }

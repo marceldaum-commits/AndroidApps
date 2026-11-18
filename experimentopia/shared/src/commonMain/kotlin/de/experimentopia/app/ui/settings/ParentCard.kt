@@ -42,16 +42,70 @@ class ParentCoupling(private val p: ParentSync) {
     fun upload(stars: Map<String, Int>, journal: List<NoteRow>, grade: Int, done: (Boolean) -> Unit = {}) {
         val l = _link.value ?: return
         val now = p.now()
-        val json = ParentReport.build(stars.map { ResultRow(it.key, it.value, true) }, journal, grade, l.nickname, now, p.offsetMs)
+        // Monatssummen dauerhaft fortschreiben (bleiben, auch wenn das Forscherbuch alte Einträge abgibt)
+        val months = Monthly.merge(Monthly.decode(p.months), journal, p.offsetMs)
+        p.months = Monthly.encode(months)
+        val json = ParentReport.build(stars.map { ResultRow(it.key, it.value, true) }, journal, grade, l.nickname, now, p.offsetMs, months)
         val body = ParentReport.seal(json, l.key, p.random(12))
         if (body.length > ParentReport.MAX_BYTES) { _status.value = "Bericht zu groß – bitte melden."; done(false); return }
         _status.value = "Sende Bericht …"
         p.send("PUT", l.uploadUrl, l.write, body) { st ->
             val ok = st in 200..299
-            if (ok) _link.value?.takeIf { it.id == l.id }?.let { keep(it.copy(sentAt = now)) }
-            _status.value = when { ok -> "✓ Bericht übertragen"; st == 0 -> "Gerade kein Internet – der Bericht wird später geschickt."; st == 403 -> "Der Server kennt diese Kopplung nicht mehr. Bitte neu koppeln."; else -> "Server antwortet nicht (Fehler $st) – später neuer Versuch." }
+            if (ok) { _link.value?.takeIf { it.id == l.id }?.let { keep(it.copy(sentAt = now)) }; backup(done); return@send }
+            _status.value = when { st == 0 -> "Gerade kein Internet – der Bericht wird später geschickt."; st == 403 -> "Der Server kennt diese Kopplung nicht mehr. Bitte neu koppeln."; else -> "Server antwortet nicht (Fehler $st) – später neuer Versuch." }
             done(ok)
         }
+    }
+
+    /** Verschlüsselte Sicherung des ganzen Lernstands – nur, wenn sich seit der letzten etwas geändert hat */
+    private fun backup(done: (Boolean) -> Unit) {
+        val l = _link.value ?: return done(false)
+        val now = p.now()
+        var data = p.snapshot()
+        val h = Backup.hash(l.nickname, data)
+        if (h == l.backupHash) { _status.value = "✓ Bericht übertragen · Sicherung aktuell"; return done(true) }
+        fun seal(d: Map<String, String>) = ParentReport.seal(Backup.build(p.version, now, p.offsetMs, l.write, l.nickname, d), l.key, p.random(12))
+        var body = seal(data)
+        if (body.length > Backup.MAX_BYTES) { data = Backup.shrink(data, p.journalKey, now); body = seal(data) }
+        if (body.length > Backup.MAX_BYTES) { _status.value = "✓ Bericht übertragen · Sicherung zu groß – bitte melden."; return done(false) }
+        p.send("PUT", l.backupUrl, l.write, body) { st ->
+            val ok = st in 200..299
+            if (ok) _link.value?.takeIf { it.id == l.id }?.let { keep(it.copy(backupHash = h, backupAt = now)) }
+            _status.value = if (ok) "✓ Bericht übertragen · Lernstand gesichert" else "✓ Bericht übertragen · Sicherung klappte nicht (${if (st == 0) "kein Internet" else "Fehler $st"}) – nächster Versuch später."
+            done(ok)
+        }
+    }
+
+    /** Was beim Wiederherstellen gefunden wurde */
+    sealed interface Found {
+        data class Ok(val id: String, val key: String, val test: Boolean, val backup: Backup.Read.Ok) : Found
+        data class Problem(val message: String) : Found
+    }
+
+    /** Sicherung zum eingefügten Kopplungs-Link holen und entschlüsseln (noch nichts überschreiben) */
+    fun fetchBackup(text: String, done: (Found) -> Unit) {
+        val pl = Backup.parseLink(text) ?: return done(Found.Problem("Das sieht nicht wie ein Kopplungs-Link aus. Bitte den ganzen Link aus der Eltern-Nachricht einfügen (…/eltern-bericht/#…)."))
+        val test = pl.test ?: p.test
+        p.get(Backup.url(test, pl.id)) { st, text2 ->
+            done(when {
+                st == 404 -> Found.Problem("Keine Sicherung gefunden. Gesichert wird erst, wenn das alte Gerät gekoppelt war und einmal etwas gesendet hat.")
+                st == 0 -> Found.Problem("Gerade kein Internet – bitte später noch einmal.")
+                st !in 200..299 -> Found.Problem("Der Server antwortet nicht (Fehler $st) – bitte später noch einmal.")
+                else -> when (val r = Backup.open(text2, pl.key)?.let { Backup.read(it) }) {
+                    null -> Found.Problem("Die Sicherung lässt sich mit diesem Link nicht öffnen. Ist der Link vollständig?")
+                    Backup.Read.OtherApp -> Found.Problem("Dieser Link gehört zu einer anderen App.")
+                    Backup.Read.Broken -> Found.Problem("Die Sicherung ist beschädigt.")
+                    is Backup.Read.Ok -> Found.Ok(pl.id, pl.key, test, r)
+                }
+            })
+        }
+    }
+
+    /** Lernstand übernehmen, Kopplung übernehmen (das Gerät schreibt danach weiter) und die App neu starten */
+    fun applyRestore(f: Found.Ok) {
+        val b = f.backup
+        keep(ParentLink(f.id, b.write, f.key, f.test, b.nickname, sentAt = 0, backupHash = Backup.hash(b.nickname, b.data), backupAt = p.now()))
+        p.restore(b.data)
     }
 
     fun unlink(done: () -> Unit = {}) {
@@ -59,7 +113,7 @@ class ParentCoupling(private val p: ParentSync) {
         _status.value = "Kopplung wird aufgehoben …"
         p.send("DELETE", l.uploadUrl, l.write, null) { st ->
             keep(null)
-            _status.value = if (st in 200..299 || st == 404) "Kopplung aufgehoben – der Bericht ist gelöscht." else "Kopplung auf diesem Gerät aufgehoben. Der Server war nicht erreichbar; dort wird der Bericht nach 90 Tagen von selbst gelöscht."
+            _status.value = if (st in 200..299 || st == 404) "Kopplung aufgehoben – Bericht und Sicherung sind gelöscht." else "Kopplung auf diesem Gerät aufgehoben. Der Server war nicht erreichbar; dort wird der Bericht nach 90 Tagen von selbst gelöscht."
             done()
         }
     }
@@ -80,7 +134,7 @@ fun QrImage(text: String, modifier: Modifier = Modifier) {
  * Auf Plattformen ohne [ParentSync] erscheint nichts.
  */
 @Composable
-fun ParentCard(coupling: ParentCoupling?, todayDays: Long, report: () -> Unit) {
+fun ParentCard(coupling: ParentCoupling?, todayDays: Long, hasProgress: Boolean = false, restoreOpenAtStart: Boolean = false, report: () -> Unit) {
     coupling ?: return
     val link by coupling.link.collectAsState()
     val status by coupling.status.collectAsState()
@@ -91,6 +145,10 @@ fun ParentCard(coupling: ParentCoupling?, todayDays: Long, report: () -> Unit) {
     var nick by remember(link?.id) { mutableStateOf(link?.nickname ?: "") }
     var shared by remember { mutableStateOf("") }
     var confirmUnlink by remember { mutableStateOf(false) }
+    var restoreOpen by remember { mutableStateOf(restoreOpenAtStart) }   // true nur für Bildschirmfotos
+    var pasted by remember { mutableStateOf("") }
+    var busy by remember { mutableStateOf(false) }
+    var found by remember { mutableStateOf<ParentCoupling.Found?>(null) }
     Panel(Modifier.fillMaxWidth().testTag("eltern_karte"), border = E.Sky) {
         Text("👨‍👩‍👧 Eltern-Handy koppeln", style = MaterialTheme.typography.titleMedium, color = E.Sky)
         Text("Für Eltern: Sehen Sie auf Ihrem eigenen Handy, was Ihr Kind geschafft hat und wo es hakt – ohne Konto, Ende-zu-Ende verschlüsselt. " +
@@ -122,12 +180,39 @@ fun ParentCard(coupling: ParentCoupling?, todayDays: Long, report: () -> Unit) {
             TextButton({ gate = "aufheben" }, Modifier.testTag("eltern_aufheben")) { Text("Kopplung aufheben", color = E.Pink) }
         }
         status?.let { Text(it, color = if (it.startsWith("✓")) E.Green else E.Muted, fontSize = 12.sp, modifier = Modifier.testTag("eltern_status")) }
-        Text("Übertragen werden nur Zahlen zum Lernen (Klasse, Lernzeit, Versuche, richtige Vermutungen, Themen) und – wenn gewünscht – ein Spitzname. " +
-            "Der Server speichert nur verschlüsselten Text, den Schlüssel kennt nur der Link. Nach 90 Tagen ohne Aktualisierung wird alles gelöscht.", color = E.Muted, fontSize = 11.sp)
+        Text("Der Bericht enthält nur Zahlen zum Lernen (Klasse, Lernzeit, Versuche, richtige Vermutungen, Themen) und – wenn gewünscht – einen Spitznamen. " +
+            "Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i) – " +
+            "so geht auf einem neuen Gerät nichts verloren. Der Server speichert nur verschlüsselten Text, den Schlüssel kennt nur der Link. Nach 90 Tagen ohne Aktualisierung wird alles gelöscht.", color = E.Muted, fontSize = 11.sp)
+        HorizontalDivider(color = E.Line)
+        Text("💾 Fortschritt wiederherstellen", color = E.Text, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+        Text("Neues Gerät oder Browser-Daten gelöscht? Mit dem Kopplungs-Link vom Eltern-Handy kommt der gesicherte Lernstand zurück.", color = E.Muted, fontSize = 12.sp)
+        if (!restoreOpen) TextButton({ gate = "wiederherstellen" }, Modifier.testTag("eltern_wiederherstellen")) { Text("Fortschritt wiederherstellen …", color = E.Sky) }
+        AnimatedVisibility(restoreOpen) {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                OutlinedTextField(pasted, { pasted = it; found = null }, Modifier.fillMaxWidth().testTag("eltern_link"), label = { Text("Kopplungs-Link einfügen") }, minLines = 2, maxLines = 4,
+                    placeholder = { Text("https://…/eltern-bericht/#…", fontSize = 12.sp) })
+                GlowButton({ busy = true; found = null; coupling.fetchBackup(pasted) { f -> busy = false; found = f; if (f is ParentCoupling.Found.Ok && !hasProgress) { sfx?.play(Sound.WIN); coupling.applyRestore(f) } } },
+                    Modifier.fillMaxWidth().testTag("eltern_holen"), enabled = pasted.isNotBlank() && !busy, color = E.Sky) { Text(if (busy) "Suche Sicherung …" else "💾 Sicherung holen", fontWeight = FontWeight.Bold) }
+                (found as? ParentCoupling.Found.Problem)?.let { Text("🙈 ${it.message}", color = E.Pink, fontSize = 13.sp, modifier = Modifier.testTag("eltern_problem")) }
+            }
+        }
     }
     when (gate) {
         "koppeln" -> ParentGate(todayDays, onDismiss = { gate = null }) { gate = null; coupling.couple(nick); open = true; sfx?.play(Sound.WIN); report() }
         "aufheben" -> ParentGate(todayDays, onDismiss = { gate = null }) { gate = null; confirmUnlink = true }
+        "wiederherstellen" -> ParentGate(todayDays, onDismiss = { gate = null }) { gate = null; restoreOpen = true }
+    }
+    // Vorhandenen Lernstand nie ohne Nachfrage überschreiben
+    (found as? ParentCoupling.Found.Ok)?.takeIf { hasProgress }?.let { f ->
+        val n = f.backup.data.size
+        AlertDialog(
+            onDismissRequest = { found = null },
+            title = { Text("Lernstand ersetzen?") },
+            text = { Text("Sicherung gefunden" + (if (f.backup.nickname.isNotBlank()) " („${f.backup.nickname}“)" else "") + (if (f.backup.stand.length >= 10) " vom ${f.backup.stand.take(10).split('-').reversed().joinToString(".")}" else "") +
+                ". Auf diesem Gerät gibt es schon einen Lernstand – er wird durch die Sicherung ersetzt und lässt sich nicht zurückholen. ($n Einträge)") },
+            confirmButton = { TextButton({ found = null; sfx?.play(Sound.WIN); coupling.applyRestore(f) }, Modifier.testTag("eltern_ersetzen")) { Text("Ersetzen", color = E.Pink) } },
+            dismissButton = { TextButton({ found = null }) { Text("Abbrechen") } },
+        )
     }
     if (confirmUnlink) AlertDialog(
         onDismissRequest = { confirmUnlink = false },

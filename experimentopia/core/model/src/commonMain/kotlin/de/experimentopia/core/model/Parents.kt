@@ -21,7 +21,11 @@ data class ParentLink(
     val nickname: String = "",
     /** Zeitpunkt des letzten erfolgreichen Hochladens (ms), 0 = noch nie */
     val sentAt: Long = 0,
+    /** Prüfsumme der zuletzt hochgeladenen Sicherung – nur bei Änderung neu senden */
+    val backupHash: String = "",
+    val backupAt: Long = 0,
 ) {
+    val backupUrl get() = Backup.url(test, id)
     val server get() = if (test) "https://trainer-test.mathenachhilfe-online.com" else "https://trainer.mathenachhilfe-online.com"
     val uploadUrl get() = "$server/eltern/v1/b/$id"
     fun encode() = Json.encodeToString(serializer(), this)
@@ -97,7 +101,7 @@ object ParentReport {
     private fun pct(right: Int, all: Int) = if (all == 0) 0 else (right * 100 + all / 2) / all
 
     /** Der Bericht als JSON (Format 1). [offsetMs] = Zeitzone des Geräts (für die Tage). */
-    fun build(results: List<ResultRow>, journal: List<NoteRow>, grade: Int, nickname: String, now: Long, offsetMs: Long = 0): String {
+    fun build(results: List<ResultRow>, journal: List<NoteRow>, grade: Int, nickname: String, now: Long, offsetMs: Long = 0, months: Map<String, MonthSum> = emptyMap()): String {
         val local = { ms: Long -> (ms + offsetMs).floorDiv(DAY) }
         val today = local(now)
         val recent = journal.filter { Catalog.byId(it.experimentId) != null && today - local(it.at) < WINDOW_DAYS && it.at <= now + 60_000 }
@@ -129,6 +133,9 @@ object ParentReport {
             } }
             putJsonArray("letzte") { days.entries.sortedByDescending { it.key }.take(7).forEach { (d, l) -> addJsonObject {
                 put("tag", dayText(d)); put("min", minutes(l.map { it.at })); put("aufgaben", l.size); put("richtig", l.count { it.right })
+            } } }
+            putJsonArray("verlauf") { Monthly.verlauf(months).forEach { (m, v) -> addJsonObject {
+                put("monat", m); put("min", v.min); put("aufgaben", v.aufgaben); put("richtigProzent", pct(v.richtig, v.aufgaben))
             } } }
             put("hinweis", "„Richtig“ heißt: Die Vermutung vor dem Versuch stimmte. Falsche Vermutungen werden in Experimentopia als Aha-Moment gefeiert. Die Lernzeit ist geschätzt.")
         }

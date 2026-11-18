@@ -200,6 +200,15 @@ class ScreenshotTest {
             SettingsScreen(true, {}, true, {}, 5, {}, "2.8.0", "18.11.2026", {}, {}, {}, parents = { de.experimentopia.app.ui.settings.ParentCard(de.experimentopia.app.ui.settings.ParentCoupling(sync), 20_600) {} })
         }
     }
+    @Test fun parentsRestore() = shot("80_fortschritt_wiederherstellen", prepare = { r ->
+        r.reveal { r.onNodeWithTag("eltern_link") }; r.onNodeWithTag("eltern_link").performTextReplacement("https://staging.mathenachhilfe-online.com/eltern-bericht/#" + "A".repeat(22) + "." + "B".repeat(43))
+        r.onNodeWithTag("eltern_holen").performClick(); r.mainClock.advanceTimeBy(600); r.reveal { r.onNodeWithTag("eltern_problem") }
+    }) {
+        val sync = FakeParents(null)
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalParentSync provides sync) {
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.ParentCard(de.experimentopia.app.ui.settings.ParentCoupling(sync), 20_600, hasProgress = true, restoreOpenAtStart = true) {} }
+        }
+    }
     @Test fun parentsLinked() = shot("79_eltern_qr", prepare = { r -> r.onNodeWithTag("eltern_zeigen").performClick(); r.mainClock.advanceTimeBy(800); r.reveal { r.onNodeWithTag("eltern_teilen") } }) {
         val link = ParentLink("AAAAAAAAAAAAAAAAAAAAAA", "BBBBBBBBBBBBBBBBBBBBBB", "C".repeat(43), test = true, nickname = "Mia", sentAt = 1_795_535_000_000)
         val sync = FakeParents(link.encode())
@@ -217,6 +226,12 @@ private class FakeParents(override var stored: String?) : de.experimentopia.app.
     override val test = true
     override fun now() = 1_795_535_000_000L
     override val offsetMs = 3_600_000L
+    override fun get(url: String, done: (Int, String) -> Unit) = done(404, "")
+    override fun snapshot() = emptyMap<String, String>()
+    override fun restore(data: Map<String, String>) {}
+    override var months: String? = null
+    override val version = "2.9.0"
+    override val journalKey = "experimentopia.forscherbuch"
 }
 
 private object FakeInstaller : de.experimentopia.app.ui.fx.Installer {

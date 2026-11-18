@@ -120,5 +120,17 @@ interface ParentSync {
     fun now(): Long
     /** Zeitzone des Geräts in Millisekunden (für die Tage im Bericht) */
     val offsetMs: Long
+    /** GET ohne Schreibrecht (Sicherung holen); [done] bekommt Status und Antworttext */
+    fun get(url: String, done: (Int, String) -> Unit)
+    /** Der ganze Speicherstand der App (Fortschritt, Forscherbuch, Einstellungen, Monatssummen, Pass-Code) – ohne Geräte-IDs und ohne die Kopplung selbst */
+    fun snapshot(): Map<String, String>
+    /** Speicherstand ersetzen und die App neu starten */
+    fun restore(data: Map<String, String>)
+    /** dauerhafte Monatssummen (JSON, [de.experimentopia.core.model.Monthly]) – Teil des Speicherstands */
+    var months: String?
+    /** Version der App (steht in der Sicherung) */
+    val version: String
+    /** Name des Forscherbuchs im Speicherstand (wird gekürzt, wenn die Sicherung zu groß wird) */
+    val journalKey: String
 }
 val LocalParentSync = staticCompositionLocalOf<ParentSync?> { null }

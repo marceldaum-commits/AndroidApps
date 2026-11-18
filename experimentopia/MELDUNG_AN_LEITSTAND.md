@@ -2,6 +2,23 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.9.0 vom 18.11.2026: Verschlüsselte Sicherung + Wiederherstellen + „verlauf“ – fertig für den Betriebstest
+
+Marcel hat die Sicherung am 18.11. in dieser Sitzung selbst bestätigt („ja“).
+- **Sicherung**: zusammen mit dem Bericht (höchstens alle 10 Min.), **nur bei Änderung** (SHA-256-Prüfsumme des Speicherstands), PUT `/eltern/v1/s/<id>`, X-Schreib, AES-GCM-256 mit neuem 12-Byte-IV.
+  Klartext `{"format":1,"app":"experimentopia","v":"2.9.0","stand":"…+01:00","schreib":"…","daten":{"spitzname"?,"speicher":{…}}}`.
+  `speicher` = alle localStorage-Schlüssel `experimentopia.*`: Ergebnisse, Forscherbuch (≤ 500), Klasse, Klang, Abzeichen, Laborläufe, **Pass-Code**, Monatssummen. Keine Geräte-IDs; die Kopplung selbst (`exEltern`) nicht.
+  > 512 KB → Forscherbuch auf 90 Tage gekürzt (praktisch ~100 KB).
+- **Fortschritt wiederherstellen** (Elternbereich, hinter dem Eltern-Tor): Feld „Kopplungs-Link einfügen“ (ganzer Link oder `id.key`; Stufe aus staging/www, sonst die eigene).
+  404 → „Keine Sicherung gefunden …“; anderer `app` → „Dieser Link gehört zu einer anderen App.“; falscher Schlüssel → „lässt sich nicht öffnen“.
+  Vorhandener Lernstand → Nachfrage „Lernstand ersetzen?“. Danach id/key/schreib gespeichert, Speicher ersetzt, App lädt neu → gekoppelt, schreibt weiter.
+- **„verlauf“** im Bericht: `[{monat:"2026-11",min,aufgaben,richtigProzent}]`, höchstens 12, älteste zuerst; Monatssummen dauerhaft (`experimentopia.verlauf`, je Monat Maximum, damit Monate nicht schrumpfen, wenn das Forscherbuch alte Einträge abgibt).
+- Datenschutztext in der App ergänzt (wörtlich wie vorgegeben, 10i).
+- **Rundlauf gegen trainer-test** (`ParentRoundtripTest`, zwei simulierte Geräte über die echte App-Steuerung): A koppelt → PUT b 204, PUT s 204; zweites Senden ohne Änderung → kein PUT s ✓;
+  B (leer) → GET s 200 → entschlüsselt → **gleicher Speicherstand wie A** ✓ (inkl. Pass-Code) → B sendet PUT b 204 + PUT s 204 (schreibt weiter) ✓; falsches Schreibrecht → 403 ✓;
+  unbekannte id → „Keine Sicherung gefunden“ ✓; DELETE b 204 → GET s 404 ✓.
+- Alle Tests, Lint, Webapp, `web-start.mjs` grün. Bildschirmfoto 80 geprüft. Noch offen: echter Test mit zwei Browsern auf der Test-Seite.
+
 ## 18.11.2026 – Version 2.8.0 vom 18.11.2026: Eltern-Handy koppeln + PRUEFPLAN.md – fertig für den Betriebstest
 
 Marcel hat beide Aufträge am 18.11. bestätigt.

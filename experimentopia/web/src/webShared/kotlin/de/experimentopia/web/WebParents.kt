@@ -14,5 +14,18 @@ class WebParentSync : ParentSync {
     override val test: Boolean = ParentLink.isTestHost(pageHost())
     override fun now(): Long = nowMs().toLong()
     override val offsetMs: Long get() = tzOffsetMin() * 60_000L
-    private companion object { const val KEY = "exEltern" }
+    override fun get(url: String, done: (Int, String) -> Unit) = httpGet(url, done)
+    /** Alles, was mit „experimentopia.“ beginnt: Ergebnisse, Forscherbuch, Einstellungen, Monatssummen, Pass-Code */
+    override fun snapshot(): Map<String, String> = storeKeys(PREFIX).split('\n').filter { it.isNotEmpty() }.mapNotNull { k -> storeGet(k)?.let { k to it } }.toMap()
+    override fun restore(data: Map<String, String>) {
+        storeKeys(PREFIX).split('\n').filter { it.isNotEmpty() }.forEach { storeRemove(it) }
+        data.filterKeys { it.startsWith(PREFIX) }.forEach { (k, v) -> storeSet(k, v) }
+        reloadPage()
+    }
+    override var months: String?
+        get() = storeGet(PREFIX + "verlauf")
+        set(v) { if (v == null) storeRemove(PREFIX + "verlauf") else storeSet(PREFIX + "verlauf", v) }
+    override val version: String get() = Version.NAME
+    override val journalKey: String = PREFIX + "forscherbuch"
+    private companion object { const val KEY = "exEltern"; const val PREFIX = "experimentopia." }
 }

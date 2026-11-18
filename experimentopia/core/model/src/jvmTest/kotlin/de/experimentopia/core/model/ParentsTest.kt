@@ -116,3 +116,64 @@ class ParentsRoundtripExport {
         java.io.File(out).writeText(buildJsonObject { put("id", l.id); put("write", l.write); put("key", l.key); put("body", body); put("json", json); put("parentUrl", l.parentUrl) }.toString())
     }
 }
+
+/** Sicherung des Lernstands: Entschlüsseln, Aufbau nach Spezifikation, Link einlesen, Monatssummen */
+class BackupTest {
+    private val r = Random(11)
+    @Test fun entschluesseln() {
+        val key = r.nextBytes(32); val iv = r.nextBytes(12); val pt = "Hallo Sicherung äöü".encodeToByteArray()
+        val ct = AesGcm.encrypt(key, iv, pt)
+        assertArrayEquals(pt, AesGcm.decrypt(key, iv, ct))
+        assertNull("falscher Schlüssel", AesGcm.decrypt(r.nextBytes(32), iv, ct))
+        assertNull("verändert", AesGcm.decrypt(key, iv, ct.copyOf().also { it[0] = (it[0] + 1).toByte() }))
+    }
+
+    @Test fun aufbauUndLesen() {
+        val l = ParentLink.create({ r.nextBytes(it) }, true, "Mia")
+        val data = mapOf("experimentopia.ergebnisse" to "[]", "experimentopia.procode" to "EX-123", "experimentopia.klasse" to "5")
+        val plain = Backup.build("2.9.0", 1_795_538_000_000L, 3_600_000L, l.write, l.nickname, data)
+        val o = Json.parseToJsonElement(plain).jsonObject
+        assertEquals(1, o["format"]!!.jsonPrimitive.int); assertEquals("experimentopia", o["app"]!!.jsonPrimitive.content); assertEquals("2.9.0", o["v"]!!.jsonPrimitive.content)
+        assertTrue(o["stand"]!!.jsonPrimitive.content.endsWith("+01:00")); assertEquals(l.write, o["schreib"]!!.jsonPrimitive.content)
+        // über den Server-Weg: versiegeln, als {"d": …} zurück, öffnen, lesen
+        val sealed = ParentReport.seal(plain, l.key, r.nextBytes(12))
+        val back = Backup.read(Backup.open("""{"d":"$sealed","t":"x"}""", l.key)!!) as Backup.Read.Ok
+        assertEquals(data, back.data); assertEquals(l.write, back.write); assertEquals("Mia", back.nickname)
+        assertNull(Backup.open("""{"d":"$sealed"}""", ParentLink.create({ r.nextBytes(it) }, true).key))
+        assertEquals(Backup.Read.OtherApp, Backup.read(plain.replace("\"experimentopia\"", "\"rechenblitz\"")))
+        assertEquals(Backup.hash("Mia", data), Backup.hash("Mia", data.toList().reversed().toMap())); assertNotEquals(Backup.hash("Mia", data), Backup.hash("Mia", data + ("x" to "1")))
+        assertEquals("https://trainer-test.mathenachhilfe-online.com/eltern/v1/s/${l.id}", l.backupUrl)
+    }
+
+    @Test fun linkEinlesen() {
+        val l = ParentLink.create({ r.nextBytes(it) }, true)
+        assertEquals(PastedLink(l.id, l.key, true), Backup.parseLink("  " + l.parentUrl + "\n"))
+        assertEquals(PastedLink(l.id, l.key, false), Backup.parseLink(l.copy(test = false).parentUrl))
+        assertEquals(PastedLink(l.id, l.key, null), Backup.parseLink("${l.id}.${l.key}"))
+        assertNull(Backup.parseLink("https://example.com")); assertNull(Backup.parseLink("${l.id}.${l.key.dropLast(1)}"))
+    }
+
+    @Test fun kuerzen() {
+        val now = 100L * 86_400_000L
+        val j = Json.encodeToString(kotlinx.serialization.builtins.ListSerializer(NoteRow.serializer()), listOf(
+            NoteRow(1, "x1", now - 10 * 86_400_000L, "g", "r", true, 1, true), NoteRow(2, "x2", now - 95 * 86_400_000L, "g", "r", true, 1, true)))
+        val out = Backup.shrink(mapOf("j" to j, "k" to "v"), "j", now)
+        assertEquals(1, Json.parseToJsonElement(out["j"]!!).jsonArray.size); assertEquals("v", out["k"])
+    }
+
+    @Test fun monatssummen() {
+        val oct = 20_390L * 86_400_000L; val nov = 20_410L * 86_400_000L   // 2025-10-28 / 2025-11-17
+        val j = listOf(NoteRow(1, "x1", oct, "g", "r", true, 1, true), NoteRow(2, "x2", oct + 300_000, "g", "r", false, 1, true), NoteRow(3, "x3", nov, "g", "r", true, 1, true))
+        val m = Monthly.merge(emptyMap(), j, 0)
+        assertEquals(listOf("2025-10", "2025-11"), m.keys.toList()); assertEquals(MonthSum(8, 2, 1), m["2025-10"]); assertEquals(MonthSum(3, 1, 1), m["2025-11"])
+        // Forscherbuch hat den Oktober abgegeben: die Summe bleibt
+        val later = Monthly.merge(m, j.drop(2), 0)
+        assertEquals(MonthSum(8, 2, 1), later["2025-10"]); assertEquals(m, Monthly.decode(Monthly.encode(later)))
+        val many = (1..15).associate { "2025-${it.toString().padStart(2, '0')}".let { k -> (if (it > 12) "2026-0${it - 12}" else k) to MonthSum(1, 1, 1) } }
+        assertEquals(12, Monthly.verlauf(many).size); assertEquals("2025-04", Monthly.verlauf(many).first().key)
+        // im Bericht
+        val o = Json.parseToJsonElement(ParentReport.build(emptyList(), j, 5, "", nov + 1000, 0, m)).jsonObject
+        val v = o["verlauf"]!!.jsonArray
+        assertEquals("2025-10", v[0].jsonObject["monat"]!!.jsonPrimitive.content); assertEquals(50, v[0].jsonObject["richtigProzent"]!!.jsonPrimitive.int); assertEquals(8, v[0].jsonObject["min"]!!.jsonPrimitive.int)
+    }
+}

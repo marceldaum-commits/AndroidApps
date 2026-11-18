@@ -1,6 +1,6 @@
 # Experimentopia – Stand und offene Punkte (18.11.2026)
 
-**Stand:** Version 2.8.0 vom 18.11.2026 (Eltern-Handy koppeln; 2.7.0 Optik + „Kommt bald“; davor 2.6.2 Theorie mit Formeln; iPad/Safari 27.2 läuft – bestätigt) liegt auf `experimentopia-test`; live ist 2.4.8, Freigabe durch den Leitstand.
+**Stand:** Version 2.9.0 vom 18.11.2026 (Sicherung + Wiederherstellen; 2.8.0 Eltern-Handy koppeln, live; 2.7.0 Optik + „Kommt bald“; davor 2.6.2 Theorie mit Formeln; iPad/Safari 27.2 läuft – bestätigt) liegt auf `experimentopia-test`; live ist 2.8.0 (Leitstand, 18.11.), Freigabe durch den Leitstand.
 
 ## Nova
 - **Seit 2.4.8 ist das Vorlesen ausgeschaltet** (Schalter `Nova.ENABLED` in `core/model/.../Nova.kt`). Zum Wiedereinschalten: auf `true` setzen, bauen – dann gilt alles Folgende wieder.
@@ -18,3 +18,4 @@
 7. **Lehrplan-Lücken** (`docs/LEHRPLAN-ABGLEICH.md`): Marcel hat am 18.11. Bauen + „Kommt bald“ freigegeben. Erledigt: Optik (2.7.0). Als Nächstes: Motor/Dynamo/Trafo, Energie, Bio Kl. 5/6, Atombau/PSE – jeweils Kachel aus `Coming` in `Upcoming.kt` entfernen, wenn gebaut.
 8. **Eltern-Koppeln** (2.8.0): echter Handytest auf der Test-Seite + Eltern-Seite (Leitstand). Vor Live: CORS des Live-Servers für experimentopia.mathenachhilfe-online.com.
 9. **Prüfplan** (`PRUEFPLAN.md`): wöchentlich neuer Inhalt (mittwochs), Monatsprüfung Dezember = Block A (Wasser + Kraft).
+10. **Sicherung** (2.9.0): Zwei-Browser-Test auf der Test-Seite (koppeln → privates Fenster → Link einfügen → gleicher Stand). Leitstand gibt live frei; Marcel möchte Bescheid, wenn alles live ist.

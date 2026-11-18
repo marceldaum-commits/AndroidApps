@@ -90,7 +90,7 @@ private fun WebApp() {
                     }
                 },
                 privacy = "Experimentopia speichert den Spielstand und das Forscherbuch nur in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, " +
-                    "keine Daten über dich an einen Server – außer Eltern koppeln ausdrücklich ihr Handy (dann geht ein verschlüsselter Lernbericht ohne Namen an unseren Server, siehe „Eltern-Handy koppeln“). " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
+                    "keine Daten über dich an einen Server – außer Eltern koppeln ausdrücklich ihr Handy (dann geht ein verschlüsselter Lernbericht ohne Namen an unseren Server, siehe „Eltern-Handy koppeln“). Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i). " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
                     if (de.experimentopia.core.model.Nova.ENABLED) de.experimentopia.core.model.Nova.PRIVACY + " Die Sätze bleiben danach in diesem Browser." else "",
                 onRoute = { atHome(it == Route.Home) })
         } }

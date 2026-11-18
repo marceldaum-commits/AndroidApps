@@ -1,5 +1,14 @@
 # Changelog – Experimentopia
 
+## 2.9.0 – Lernstand sicher aufbewahrt (18.11.2026)
+
+- 💾 **Verschlüsselte Sicherung**: Ist ein Eltern-Handy gekoppelt, sichert Experimentopia den ganzen Lernstand (Sterne, Forscherbuch, Abzeichen, Einstellungen, Forscher-Pass)
+  Ende-zu-Ende verschlüsselt mit demselben Schlüssel wie der Eltern-Bericht – nur wenn sich etwas geändert hat. Wir können ihn nicht lesen.
+- 🔁 **Fortschritt wiederherstellen**: Neues Gerät oder Browser-Daten gelöscht? Im Elternbereich den Kopplungs-Link einfügen – der Lernstand ist wieder da,
+  und das Gerät ist gleich wieder gekoppelt. Ein vorhandener Lernstand wird nur nach Nachfrage ersetzt.
+- 📈 **Monatsverlauf** im Eltern-Bericht: Lernzeit, Versuche und Trefferquote der letzten 12 Monate – die Monatssummen bleiben dauerhaft erhalten.
+- „Kopplung aufheben“ löscht Bericht und Sicherung. Ohne Kopplung bleibt wie bisher alles auf dem Gerät.
+
 ## 2.8.0 – Eltern-Handy koppeln (18.11.2026)
 
 - 👨‍👩‍👧 **Eltern-Handy koppeln** (Einstellungen, nur nach der Frage für Erwachsene): Eltern scannen einen QR-Code oder bekommen einen Link

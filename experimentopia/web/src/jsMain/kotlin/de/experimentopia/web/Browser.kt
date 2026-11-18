@@ -83,3 +83,8 @@ fun httpSend(method: String, url: String, write: String, body: String, done: (In
 fun shareLink(title: String, url: String, done: (String) -> Unit): Unit = js("(function () { var copy = function () { try { navigator.clipboard.writeText(url).then(function () { done('kopiert'); }, function () { done(''); }); } catch (e) { done(''); } }; if (navigator.share) { navigator.share({ title: title, url: url }).then(function () { done('geteilt'); }, function (e) { if (e && e.name === 'AbortError') done(''); else copy(); }); } else copy(); })()")
 /** Zeitzone: Minuten östlich von UTC */
 fun tzOffsetMin(): Int = js("-new Date().getTimezoneOffset()")
+/** GET (Sicherung holen); done(Status, Text) – 0 bei Netzfehler */
+fun httpGet(url: String, done: (Int, String) -> Unit): Unit = js("(function () { try { fetch(url, { cache: 'no-store' }).then(function (r) { return r.text().then(function (t) { done(r.status, t); }); }).catch(function () { done(0, ''); }); } catch (e) { done(0, ''); } })()")
+/** Alle Schlüssel im Browser-Speicher, die mit [prefix] beginnen (durch Zeilenumbruch getrennt) */
+fun storeKeys(prefix: String): String = js("(function () { var r = []; for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf(prefix) === 0) r.push(k); } return r.join('\\n'); })()")
+fun reloadPage(): Unit = js("location.reload()")
