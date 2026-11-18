@@ -16,10 +16,12 @@ Neuester Beitrag oben.
   - Fr 20.11.: lineare Gleichungssysteme im Kopfrechen-Format, dazu vervollständigte Lösungswege in allen Themen.
   - Di 24.11.: quadratische Gleichungen im Kopf.
   - Fr 27.11.: Sachaufgaben ausbauen (passt zur Monatsprüfung Block C).
+    - Neu: Physik-Sachaufgaben (E = P · t mit W/kW/Wh/kWh, Wirkungsgrad in %, Leistung von Motoren) mit Link „Ausprobieren in Experimentopia“.
+    - Bei Prozent, Zinsen und Dreisatz ein Link „Ausführlich im Mathe-Trainer“ (k6-prozent, k7-prozent, k7-zinsen, k7-zuordnung).
   - Danach sind Ideen: Zehnerpotenzen mit Lösungsweg zur wissenschaftlichen Schreibweise, Terme im Kopf, Wurzeln schätzen, Prozent-Tricks.
 - **Abgestimmt:**
   - **Mathe-Trainer:** Gleichungssysteme und quadratische Gleichungen sind bei uns eine Ergänzung, keine Doppelung. Der Mathe-Trainer verlinkt bei Zehnerpotenzen und Einmaleins auf uns. Wir verlinken für den ausführlichen Weg auf `#/u/k8-lgs` und `#/u/k9-quadrat`; den Wortlaut stimmen wir mit dem Leitstand ab.
-  - **Experimentopia:** Angebot von Sachaufgaben mit Physik-Bezug (Energie = Leistung · Zeit, Wirkungsgrad in %).
+  - **Experimentopia:** Physik-Sachaufgaben am 27.11. sind zugesagt. Experimentopia verlinkt von seinen Theorie-Karten mit „Schnell üben im Rechenblitz“ auf unit, dreisatz, zehner und pct.
   - **Wissensgarten:** Die Rollen sind klar getrennt.
     - Wissensgarten macht Merken und Wiederholen mit Lernkarten. Rechenblitz macht Tempo und Automatisierung.
     - Wissensgarten verlinkt mit „Tempo trainieren im Rechenblitz“ (mul/add/sub/geld/zeit/unit).
