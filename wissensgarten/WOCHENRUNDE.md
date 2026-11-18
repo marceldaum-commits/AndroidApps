@@ -33,6 +33,19 @@ _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen 
 - **Geld verdienen:** Deutsch und Englisch sind schon da; es fehlt vor allem Tiefe für Klasse 3–7. Für Montag empfiehlt „Geld verdienen“ den Wissensgarten als Vorrang-App mit Schwerpunkt Deutsch/Englisch Klasse 3–7. Tipp: Das Englisch-Paket für Klasse 3–5 an den Themen gängiger Grundschul-Lehrwerke ausrichten. Die Abgrenzung zur Sprachlern-App wird übernommen.
 - **Rechenblitz:** schlägt ebenfalls Vorrang für die Deutsch/Englisch-Lücken vor.
 
+### Ergänzung d/e (2. Ansage „Geld verdienen“, 18.11.: „Bestand anpassen oder streichen, aus einem Guss“)
+- **d) Streichen bzw. abgeben (Fr 20.11.):**
+  - „Gleichungen lösen“: 18 von 35 Karten werden gestrichen bzw. zu Merkwissen umgeschrieben. Das Üben läuft nur noch über einen Link zum Mathe-Trainer.
+  - „Kopfrechen-Tricks“: 9 von 36 Tempo-Aufgaben werden gestrichen. Für das Tempo gibt es einen Link zum Rechenblitz.
+  - Negative Zahlen (6), Brüche & Prozent (4), Algebra (2): Diese Karten werden Merkbeispiele mit vollständigem Rechenweg (Di 24.11.).
+  - Plus-Pakete Oberstufe/Abi: reines Merkwissen, sie bleiben.
+  - Sonst gibt es keine Ausreißer.
+- **e) Aus einem Guss:**
+  - Jede Karte ist Merkwissen mit Merkbild, Vorlesen und Erklärung. Es gibt keine Rechnung ohne Rechenweg.
+  - Pro Berührung mit einer anderen App gibt es genau einen Querverweis, keinen halben eigenen Übungsteil.
+  - Paket- und Kartenzahlen, Abenteuerpfad, Bildschirmfotos und README sind aktuell. Keine toten Links; das prüft der Browser-Test.
+  - Im CHANGELOG steht ein Satz für Eltern.
+
 ## Dauerregel „Abgleich“ (Marcel, 18.11.2026)
 „Besprecht alle 6, wer was raus nimmt und wer was behält, damit alles passt. So auch zukünftig.“
 Jede App meldet in jeder Wochenrunde unter **Abgleich**:
