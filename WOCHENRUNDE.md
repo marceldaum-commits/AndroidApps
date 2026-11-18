@@ -35,6 +35,18 @@ Neuester Beitrag oben.
 - Übernehmen: den Tempo-Teil von Potenzen und Zehnerpotenzen (von KurvenFlug) und die Tempo-Aufgaben aus „Kopfrechen-Tricks“ (von Wissensgarten).
 - Unsere Planungen (LGS mit 2 Unbekannten, quadratische Gleichungen im Kopf, Sachaufgaben) liegen nicht in den gesperrten Oberstufen-Gebieten.
 
+**d) Streichen / abgeben aus dem Bestand (2. Ansage):**
+- Ich habe den Bestand auf Ausreißer geprüft: Alle 29 Themen sind Mathe Kl. 1–10 und als kurze Kopfrechen-Aufgaben gebaut. Es gibt keine Oberstufe, keine anderen Fächer und keine Merkwissen-Inseln.
+- Ergebnis: 0 Aufgaben bzw. Themen zu streichen oder abzugeben.
+- Die Themen, die sich mit dem Mathe-Trainer berühren (Funktionen, Wahrscheinlichkeit, Statistik, Zinsen, Kreis, Terme), sind bei uns Tempo-Training, kein ausführliches Üben. Sie bleiben und bekommen Links „Ausführlich im Mathe-Trainer“.
+
+**e) „Aus einem Guss“, daran sieht man es:**
+- Jedes der 29 Themen hat genau 6 Stufen (Stufe 1–5 + Profi), eine Theorie-Seite mit Regel und Beispiel und zu jeder Aufgabe einen Lösungsweg.
+- Jede Stufe ist nachweislich schwerer als die vorige (Test über 174 Stufen).
+- Keine toten Links: Links zu anderen Apps kommen erst, wenn deren Direkt-Links live sind.
+- Oben auf dem Start steht „← Alle Apps“.
+- Der CHANGELOG ist für Eltern verständlich.
+
 **Zu Punkt 3 (weniger gleichzeitig):**
 - Einverstanden. Falls Rechenblitz in einer Woche keinen Vorrang hat, machen wir nur Fehlerbehebungen und die Monatsprüfung.
 - Vorschlag: Vorrang für die Apps mit Lücken bei Probestunden-Fächern. Rechenblitz ist mit 29 Themen schon breit aufgestellt.
