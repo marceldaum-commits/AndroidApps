@@ -250,10 +250,23 @@ class PlayFlowTest {
         assertEquals("1. Zug: pink, 2 von 5. Die Kugel bleibt draußen.", Speech.clean(heard[1]))
     }
 
+    /** Seit 2.18.14 ist das Vorlesen abgeschaltet: kein Schalter, kein Sprechtempo, kein Offline-Laden – und niemand spricht. Musik und Geräusche bleiben getrennt schaltbar. */
+    @Test fun vorlesenIstAbgeschaltet() {
+        assertFalse(de.raumlicht.core.model.Vorlesen.ENABLED)
+        val heard = ArrayList<String>()
+        show { CompositionLocalProvider(de.raumlicht.app.ui.fx.LocalSpeaker provides de.raumlicht.app.ui.fx.Speaker { heard += it }) {
+            de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.18.14", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, voice = true) } }
+        rule.onNodeWithText("🗣️ Lux spricht").assertDoesNotExist(); rule.onNodeWithTag("stimme-name").assertDoesNotExist(); rule.onNodeWithTag("sprechtempo").assertDoesNotExist()
+        rule.onNodeWithTag("hoerprobe").assertDoesNotExist(); rule.onNodeWithTag("offline").assertDoesNotExist()
+        rule.onNodeWithText("🎵 Musik").assertExists(); rule.onNodeWithText("🔊 Geräusche").assertExists(); rule.onNodeWithText("Für alles zusammen: Musik und Geräusche").assertExists()
+        rule.onNodeWithText("Vorlesen", substring = true).assertDoesNotExist(); rule.onNodeWithText("Nova", substring = true).assertDoesNotExist()
+        assertTrue(heard.isEmpty())
+    }
+
     @Test fun voiceSwitchInSettings() {
         var on = true; val heard = ArrayList<String>()
         show { CompositionLocalProvider(de.raumlicht.app.ui.fx.LocalSpeaker provides de.raumlicht.app.ui.fx.Speaker { heard += it }) {
-            de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.0.0", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, voice = on, onVoice = { on = it }) } }
+            de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.0.0", de.raumlicht.app.ui.settings.UpdateState.Idle, {}, voice = on, onVoice = { on = it }, voiceOffered = true) } }
         rule.onNodeWithText("🗣️ Lux spricht").assertExists()
         val ctx = androidx.test.core.app.ApplicationProvider.getApplicationContext<android.content.Context>()
         val s = de.raumlicht.core.data.Settings(ctx); assertFalse(s.voice.value) /* aus, bis man es einschaltet */; s.setVoice(true); assertTrue(de.raumlicht.core.data.Settings(ctx).voice.value)

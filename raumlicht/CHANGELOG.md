@@ -2,6 +2,19 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.15 – Raumlicht als App installieren, KI-Tutor für alle (18.11.2026)
+- **Raumlicht gibt es vorerst nur noch als Web-App** – im Browser, auf Wunsch installiert wie eine App. Die Android-App (APK) wird in den nächsten ein bis zwei Monaten nicht weiter ausgeliefert.
+- **Neu: „App installieren“** in den Einstellungen. Ein Tipp legt Raumlicht auf den Startbildschirm; dann startet es im Vollbild und auch ohne Internet. Auf iPhone und iPad zeigt eine kurze Anleitung den Weg über „Teilen → Zum Home-Bildschirm“. Ist Raumlicht schon installiert, verschwindet der Hinweis.
+- **Der KI-Tutor ist jetzt für alle da:** Nach einem Fehlversuch erklärt Lux die Aufgabe auf Wunsch anders und beantwortet Rückfragen. 3 Proben sind frei; den KI-Abi-Pass gibt es bald im Shop.
+- Raumlicht Pro und der KI-Abi-Pass gelten in der Web-App.
+- **Für Eltern:** Der KI-Tutor arbeitet nur, wenn man ihn antippt. Was dabei gesendet wird, steht auf der KI-Seite in den Einstellungen.
+
+## 2.18.14 – Vorlesen macht Pause, die WebApp hält sich selbst aktuell (18.11.2026)
+- **Vorlesen ist vorerst abgeschaltet.** Der Schalter „Lux spricht“, das Sprechtempo und das Offline-Laden der Stimme sind aus den Einstellungen verschwunden. Lux zeigt ihre Sprechblasen weiter – sie liest sie nur nicht mehr vor. Vielleicht kommt das Vorlesen später zurück.
+- **Musik und Geräusche bleiben** und lassen sich wie bisher getrennt ein- und ausschalten und einzeln leiser stellen.
+- **Für Eltern:** Damit geht Raumlicht zum Vorlesen nicht mehr ins Internet; auch die Sprachausgabe des Geräts wird nicht mehr benutzt.
+- **WebApp immer aktuell:** Die WebApp schaut beim Öffnen, bei jeder Rückkehr in den Tab und alle 30 Minuten nach einer neuen Version – jetzt auf zwei Wegen, damit niemand auf einer alten Version hängen bleibt. Neu geladen wird nur an einer ruhigen Stelle, nie mitten in einer Aufgabe; der Spielstand bleibt. Danach sagt ein kurzer Hinweis „Neue Version … geladen“.
+
 ## 2.18.13 – Lux erklärt’s anders: der KI-Tutor ist eingebaut (18.11.2026)
 - **Neu, noch im Probebetrieb:** Hängst du nach einem Fehlversuch fest, erklärt dir Lux die Aufgabe mit KI-Hilfe noch einmal anders – passend zu dem, was du eingestellt hast. Du kannst nachfragen wie bei einer Nachhilfe. Lux führt dich zum Weg; die Lösung findest du selbst.
 - **Sichtbar ist der KI-Tutor zunächst nur auf der Testseite.** Für alle wird er freigeschaltet, sobald unser Server dafür bereit ist. Bis dahin ändert sich in der App nichts.

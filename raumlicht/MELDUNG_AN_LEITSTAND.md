@@ -2,6 +2,123 @@
 
 Neueste oben.
 
+## 18.11.2026 – Technische Grundlage für den Prototype-Fund-Antrag („Freie 3D-Geometrie-Werkstatt“)
+
+Marcel hat direkt bestätigt, dass ich das schreibe. Stand: Raumlicht 2.18.15 vom 18.11.2026. Zahlen aus dem Repository gezählt; Einschätzungen sind als solche gekennzeichnet. Keine Rechtsberatung.
+
+**1. Was der Kern heute kann**
+- **3D-Bühne** (`scene/src/main.js`, 947 Zeilen JavaScript auf three.js 0.170, gebündelt 570 kB): Koordinatensystem, Punkte, Vektoren, Geraden, Ebenen, Kugeln, Strahlen, Kurven, Drehen/Zoomen, Ziehen von Punkten, Partikel. Sie bekommt ihren Zustand als **JSON** (`Scene.kt`: Liste von Objekten mit `type`, `p`, `d`, `from`, `to` …) – läuft in jedem Browser, in der WebApp als eingebettetes Fenster.
+- **Rechenkern** (`core/model`, Kotlin Multiplatform für JVM und Browser/Wasm, 36 Dateien, rund 6 900 Zeilen, ohne Android- und ohne Oberflächen-Abhängigkeit): Vektorrechnung und analytische Geometrie (Abstände, Lagebeziehungen, Schnitte, Spiegelungen), Funktionen und Ableitungen (eigener Term-Leser), Binomialverteilung, Aufgaben-Modell, Prüf-Logik, Zufalls-Aufgaben in Schwierigkeitsstufen, Theorie-Karten, Musik und Klänge (im Code errechnet).
+- **Aufgaben und Prüf-Logik:** 136 feste Aufgaben, 28 Prüfungsteile, 29 Übungs-Vorlagen. Eine Aufgabe besteht aus Reglern (Punkt, Vektor, Zahl), Auftrag, Tipp, Rechenweg, Bühnen-Objekten und einer Prüf-Funktion. Geprüft wird mathematisch (z. B. „alle Punkte liegen in der Ebene“), nicht gegen eine Musterzahl – gleichwertige Antworten gelten.
+  **Wichtig:** Aufgaben sind heute **Kotlin-Code** (Funktionen), kein Datenformat. Nur die Bühne ist schon datengetrieben.
+- **Oberfläche** (`shared`, Compose Multiplatform, 33 Dateien, rund 4 400 Zeilen): derselbe Code für Android und Web. Web-Hülle: 374 Zeilen Kotlin plus `index.html`/Service Worker (offline, Selbst-Update). Android-Hülle: rund 1 300 Zeilen (pausiert).
+- **Tests:** 165 Logik-Tests (rund 2 500 Zeilen), 150 Oberflächen-Tests mit Bildschirmfotos, 8 Browser-Tests. **Auslieferung:** 17 MB statische Dateien, ohne Server-Logik, ohne Konto, offline nutzbar.
+- **Abhängigkeiten und Lizenzen** (vollständig in `LIZENZEN.md`): three.js (MIT), Kotlin/kotlinx, Compose Multiplatform, Skiko (Apache 2.0), Skia, js-joda (BSD-3), DejaVu Sans (freie Bitstream-Vera-Lizenz), Noto Color Emoji (OFL 1.1). **Kein GPL-Baustein.** Ed25519-Prüfung nach TweetNaCl (gemeinfrei) – gehört zu Pro.
+
+**2. Was für den offenen Kern neu entstehen müsste** (Reihenfolge = Abhängigkeit)
+1. **Offenes Aufgabenformat (JSON) mit Spezifikation.** Größter Brocken: Die Prüf-Logik steckt heute in Code. Nötig ist ein Satz benannter, parametrierbarer Prüfer („Punkt liegt auf Gerade“, „Ebene enthält Punkte“, „Vektor ist Vielfaches von …“, „Abstand = …“) statt freiem Code – sicher (kein fremder Code läuft), versionierbar, mit Schema und Testaufgaben. Einschätzung: Mit etwa 15–20 Prüfern lassen sich die Geometrie-Kapitel abbilden; Analysis und Stochastik später.
+2. **Abspieler für das Format** (lädt eine Aufgaben-Datei, zeigt Bühne, Regler, Rückmeldung) – aus dem vorhandenen Aufgaben-Bildschirm ableitbar.
+3. **Editor für Lehrkräfte** im Browser: Objekte setzen, Regler festlegen, Prüfer wählen, Vorschau, Export als Datei oder Link. Heute nicht vorhanden; es gibt nur Eingaben für eigene Funktionen und Flüge.
+4. **Einbettung:** als `<iframe>`/Web-Component sofort machbar (alles statisch). Für Moodle ein H5P-Inhaltstyp oder LTI 1.3; H5P ist der kürzere Weg, weil es ohne Server auskommt. Rückgabe des Ergebnisses per xAPI/H5P-Schnittstelle wäre neu.
+5. **Barrierefreiheit:** Heute schwach – die Oberfläche wird auf eine Zeichenfläche gemalt, Screenreader sehen fast nichts (nur an etwa 10 Stellen sind Bedienhilfen gesetzt), die 3D-Bühne hat keine Text-Alternative. Nötig: Tastaturbedienung, Textbeschreibung der Szene, Kontraste, ggf. eine HTML-Oberfläche für den Abspieler statt der Zeichenfläche. **Das ist ein ehrlicher Schwachpunkt und im Antrag ein eigenes Arbeitspaket wert.**
+6. **Selbsthosting:** fast geschenkt (statische Dateien); fehlt nur Anleitung, Paket zum Herunterladen und ein Schalter für Adressen (Update-Prüfung, keine fremden Server).
+7. **Öffnung des Projekts:** eigenes Repository, Bau ohne unsere Schlüssel, Beitragsregeln, englische Bezeichner/Doku (heute gemischt, Texte deutsch), Übersetzbarkeit der Texte.
+
+**3. Kern und Pro sauber trennen**
+- Heute liegt alles in einem Repository, und alle Aufgaben stecken in `core/model` – auch die, die zu Pro gehören. Gesperrt wird nur über eine Liste (`Pro.kt`). So wie es ist, wären die Pro-Inhalte im offenen Code.
+- Vorschlag: **Offen** = Bühne, Rechenkern, Aufgabenformat, Abspieler, Editor, eine freie Beispiel-Sammlung. **Bei uns** (eigenes, privates Repository, baut auf dem offenen Kern auf): die Raumlicht-Aufgabenpakete (als Dateien im offenen Format), Lux und die Marke, Musik/Klänge nach Wunsch, Lizenz-Prüfung (`License`, `Pro`, `Ki`), KI-Tutor samt Server-Funktion, Stimmen-Anbindung.
+- Folge: Die Umstellung der Aufgaben auf das Datenformat (Punkt 2.1) ist zugleich die Trennung – Pro-Aufgaben werden Dateien, die nur in unserer Fassung mitkommen.
+- Zu bedenken: Die bisherige Git-Geschichte enthält alles. Das offene Repository deshalb **neu anlegen** (ohne Geschichte), nicht dieses öffnen. Hier liegen außerdem Meldungen, Shop-Adressen und Test-Schlüssel.
+
+**4. Lizenzvorschlag und Stolpersteine**
+- **Code:** MIT oder Apache 2.0 wären mit allen Abhängigkeiten verträglich und für Schulen/Plattformen am einfachsten. Wer verhindern will, dass Dritte eine geschlossene Fassung bauen, nimmt MPL 2.0 (dateiweises Copyleft). Der Prototype Fund verlangt eine anerkannte Open-Source-Lizenz – welche er aktuell vorgibt, bitte in den Förderbedingungen nachlesen; das habe ich nicht geprüft.
+- **Aufgaben, Texte, Bilder der freien Sammlung:** CC BY 4.0 oder CC BY-SA 4.0 (passt zu Unterrichtsmaterial).
+- **Marke:** Name „Raumlicht“, Logo und die Figur Lux **nicht** mitlizenzieren; der offene Kern braucht einen eigenen Namen und eine neutrale Figur oder keine.
+- **Schriften:** DejaVu und Noto Emoji dürfen weitergegeben werden (Lizenztexte beilegen, bei OFL keinen geschützten Schriftnamen für veränderte Fassungen verwenden – wir liefern gekürzte Fassungen aus, das ist zu prüfen).
+- **Musik und Klänge:** selbst komponiert, im Code errechnet, keine fremden Samples – frei entscheidbar, ob offen oder bei uns.
+- **Bilder:** Die App benutzt Emojis und selbst gezeichnete Formen; Bildschirmfotos sind eigene. Ob irgendwo fremde Bilder liegen, habe ich für diesen Text nicht einzeln nachgezählt.
+- **KI-Anteil am Code:** Der Code ist zu großen Teilen mit KI-Hilfe entstanden. Ob und wie der Antrag das nennen soll und was es für die Urheberschaft heißt, bitte klären, bevor die Lizenz festgelegt wird.
+- **Nicht in den offenen Kern:** Stimme „Nova“ (fremder Dienst), KI-Tutor, Lizenz-Schlüssel, Shop-Anbindung.
+
+### Ergänzung: Antworten auf die fünf Fragen aus dem Bewerbungsentwurf (Arbeitstitel „Lichtraum-Werkstatt“)
+
+**1) Lässt sich der Rechenkern sauber trennen? Welche Dateien gehören in den offenen Kern?** Ja. Nachgesehen in `core/model/src/commonMain/…/model/`: Außer `Pro.kt`, `Ki.kt`, `License.kt` und `Prefs.kt` benutzt **keine** Datei etwas aus Pro, KI, Freischaltung oder Stimme.
+- **Offener Kern (rund 1 200 Zeilen Kotlin + die Bühne):** `Geo.kt` (Vektoren, Geraden, Ebenen, Abstände, Schnitte), `Expr.kt` (Term-Leser, Ableitung), `Binomial.kt`, `Scene.kt` (Bühnen-Objekte und ihr JSON), `Level.kt` (Aufgaben-Modell: Regler, Formelzeile, Ergebnis), `Notation.kt`, `Difficulty.kt`, die Vorlagen für Zufalls-Aufgaben `Families.kt`/`Gen.kt`/`MoreGen.kt` (als Grundlage der Prüfer), dazu `scene/src/main.js`. Aus `shared`: Bühnen-Anbindung, Aufgaben-Bildschirm, Formel-Anzeige, Regler.
+- **Kann offen, muss nicht:** `Coaster.kt`, `Workshop.kt`, `Balloons.kt` (Erlebnis-Teile), `Klang.kt`, `MusicSynth.kt`, `SpaceMusic.kt` (Töne), `Theory.kt` (Theorie-Karten – Inhalt, eher CC als Code-Lizenz).
+- **Bleibt bei uns:** `Pro.kt`, `License.kt`, `Ed25519.kt`, `Sha512.kt`, `Ki.kt`, `Vorlesen.kt`, `Speech.kt`, `Sha256.kt`, `Updates.kt`, die Aufgaben-Sammlungen `Levels.kt`, `MoreLevels.kt`, `TourFive…Eight.kt`, `Modes.kt`, `Extras.kt`, `Play.kt` (Raumlicht-Inhalte und Spielarten), `server/`, Lux, Logo, Texte der Marke.
+- Einschränkung: `Prefs.kt` (Spielstand) nennt Pro- und KI-Code; fürs Trennen in zwei Schnittstellen teilen. Und die Aufgaben-Sammlungen sind Code – siehe Punkt 2.1 der Grundlage.
+
+**2) Ist `Workshop.kt` schon ein Editor-Ansatz?** **Nein – bitte nicht als „Stand“ zählen.** `Workshop.kt` enthält drei Erlebnis-Spiele: Achterbahn-Baumeister (fünf Stützpunkte, Probefahrt mit Physik), Geisterfahrt (Ableitung mit dem Finger zeichnen) und Ringflug.
+Ein echter Ansatz ist etwas anderes: **„3D-Rechner & Baukasten“** (`BuilderScreen` in `shared/…/home/Modes.kt`). Der kann heute: Laser (Geraden), Scheiben (Ebenen) und Kugeln per Formel in den Raum setzen, die Szene abspielen, **als Code teilen** und wieder einlesen, und im 3D-Rechner Größen daraus ausrechnen (zum Nachprüfen von Schulbuch-Aufgaben).
+Er kann **nicht**: einen Auftrag, Regler oder eine Prüfung festlegen – also keine Aufgabe erstellen. Ehrliche Formulierung für den Antrag: „Stand: Szenen-Baukasten mit Teilen per Code; neu: Aufgaben-Editor mit Auftrag, Reglern und Prüf-Logik.“ Ebenfalls Stand: „Duell per Code“ (dieselben Aufgaben über einen Code teilen).
+
+**3) Bleiben three.js-Szene und Compose-Oberfläche, oder wird der Editor eine eigene Weboberfläche?** Meine Empfehlung (Einschätzung): **Bühne bleibt** (three.js, datengetrieben, erprobt). **Abspieler und Editor als eigene, schlanke HTML-Oberfläche** (TypeScript oder Kotlin/JS), nicht Compose.
+Gründe: Compose malt im Browser auf eine Zeichenfläche – für Screenreader fast unsichtbar, 14 MB Ladegewicht, schwer in Moodle/H5P einzubetten. Eine HTML-Oberfläche ist barrierearm, klein (Bühne 570 kB + Abspieler) und lässt sich einbetten. Den Rechenkern in Kotlin behalten und nach JavaScript übersetzen (Kotlin Multiplatform kann das), damit die Prüf-Logik nur einmal existiert. Raumlicht selbst bleibt bei Compose und nutzt denselben Kern.
+
+**4) Lizenzen aller Abhängigkeiten, Schriften, Bilder, Sounds – passen MPL 2.0 und CC BY 4.0?** Ja, nach dem, was im Repository liegt (keine Rechtsberatung):
+- three.js **MIT**; Kotlin, kotlinx, Compose Multiplatform, Skiko **Apache 2.0**; Skia, js-joda **BSD-3** – alle mit MPL 2.0 verträglich (MPL erlaubt das Kombinieren mit freizügig lizenziertem Code; deren Lizenztexte müssen beiliegen, das tun sie in `lizenzen.txt`). **Kein GPL-Baustein.** Bauwerkzeug esbuild (MIT) wird nicht ausgeliefert.
+- Schriften: DejaVu Sans (Bitstream-Vera-/DejaVu-Lizenz, Weitergabe und Änderung erlaubt) und Noto Color Emoji (OFL 1.1) – beide nur in der Compose-WebApp nötig; eine HTML-Oberfläche nimmt die Schriften des Geräts und braucht sie nicht.
+- Bilder: Logo und Lux sind selbst gezeichnet (Vektor im Code) – Marke, bleiben draußen. Sonst Emojis und im Code gezeichnete Formen. Fremde Bilddateien habe ich im Web-Teil keine gefunden (nur die zwei eigenen App-Symbole); den Android-Ordner habe ich dafür nicht einzeln durchgesehen.
+- Sounds und Musik: vollständig im Code errechnet, keine Aufnahmen, keine fremden Samples.
+- **MPL 2.0 für den Kern** passt gut zum Ziel „offen, aber Verbesserungen am Kern fließen zurück“, und unsere Pro-Fassung darf als eigenes Werk darauf aufbauen. **CC BY 4.0 für Format-Beschreibung und Beispielaufgaben** passt; für das Schema selbst zusätzlich CC0 erwägen, damit jede Plattform es ohne Namensnennung einbauen kann. Ob der Fonds eine bestimmte Lizenz verlangt: nicht geprüft.
+
+**5) Grobe Aufwandsschätzung** (Personentage, meine Schätzung ohne Erfahrungswerte aus diesem Projekt – eher Größenordnung als Zusage):
+| Teil | Tage |
+|---|---|
+| Offenes Aufgabenformat: Schema, 15–20 benannte Prüfer, Versionierung, Testaufgaben, Spezifikation | 25–35 |
+| Abspieler als HTML-Oberfläche (Bühne, Regler, Rückmeldung, Tastatur) | 15–20 |
+| Editor für Lehrkräfte (Objekte, Regler, Prüfer wählen, Vorschau, Speichern/Laden) | 30–40 |
+| Teilen per Link und QR (Aufgabe im Link kodiert, ohne Server) | 4–6 |
+| Einbettung per iframe + H5P-Inhaltstyp | 8–12 |
+| LTI 1.3 (braucht einen kleinen Server und Prüfung in Moodle) | 10–15, **als Kür** |
+| Offline und Selbsthosting (Paket, Anleitung, keine fremden Server) | 3–5 |
+| 50 freie Aufgaben im neuen Format (aus vorhandenen Vorlagen neu geschrieben, geprüft) | 10–15 |
+| Barrierefreiheit (Textbeschreibung der Szene, Kontraste, Prüfung mit Screenreader) | 15–25 |
+| Öffnung: neues Repository, Bau ohne unsere Schlüssel, Doku, Beitragsregeln | 8–12 |
+| **Summe ohne LTI** | **rund 120–170** |
+Das ist für sechs Monate Förderzeit mit einer Person knapp, mit zwei gut machbar. Wenn gekürzt werden muss: LTI streichen, Editor zunächst nur für Geometrie (Punkt, Gerade, Ebene, Kugel), Analysis und Stochastik später.
+
+## 18.11.2026 – Raumlicht 2.18.15: nur noch Web-App, „App installieren“, KI-Tutor für alle
+
+Marcel hat beides direkt bestätigt („1 und 2 ja“). **Raumlicht 2.18.15 vom 18.11.2026 – nur Web-App.** (Die Angabe „Web = Android“ entfällt ab jetzt.)
+
+**A) KI-Tutor**
+- Deine Route auf **trainer-test** habe ich mit einer echten Anfrage geprüft: 200, `rest: 2`, gute Erklärung ohne Lösung; `OPTIONS` 204 (auch live).
+- `Ki.ENABLED = true`: Der KI-Tutor ist für alle sichtbar (live → trainer, raumlicht-test → trainer-test). Ohne Kassenlink: 3 Proben, Code-Eingabe, „bald im Shop“.
+- **Noch von dir:** Kassenlink (→ `Ki.CHECKOUT_URL`) und ein Test-KI-Code. Dann kommt der Kauf-Knopf mit der nächsten Nachkomma-Version.
+
+**B) Nur noch Web-App**
+1. Android-Code bleibt im Repo. `.github/workflows/raumlicht-release.yml` steht auf Pause (`APK_AUSLIEFERN: "false"`): nur noch Logik-Tests, kein Signieren, kein Bauen, kein Release, kein Drive-Upload.
+2. **Wo APKs liegen:** in den GitHub-Releases des Repos `AndroidApps`, Tags `raumlicht-v0.1.0` … `raumlicht-v2.18.14`, je `Raumlicht-<Version>.apk` und `Raumlicht-<Version>-play.aab`; dazu ggf. der Drive-Ordner „Raumlicht“, falls der Upload eingerichtet war.
+   **Ich habe nichts gelöscht** – Releases löschen ist endgültig; bitte mit Marcel entscheiden. In der WebApp selbst gab es keinen APK-Link. Wer die Android-App installiert hat, bekommt keine Updates mehr (sein Updater findet schlicht keine neuere Version).
+3. Auto-Update: siehe 2.18.14 (unverändert, `web-update.mjs` 13 von 13).
+4. **„App installieren“** in den Einstellungen ganz oben: Knopf über `beforeinstallprompt`; iPhone/iPad: Anleitung „Teilen → Zum Home-Bildschirm → Hinzufügen“; unsichtbar, wenn schon installiert (`display-mode: standalone`, `navigator.standalone`, `appinstalled`) oder wenn der Browser nichts anbietet.
+   Manifest geprüft und um `id` ergänzt (Name, Kurzname, `start_url`, `scope`, `display: standalone`, Symbole 192 und 512 maskierbar). Beleg: `scene/test/web-install.mjs`, 7 von 7.
+5. Texte: „Raumlicht Pro gilt in der Web-App.“ / „Der Pass gilt in der Web-App.“ auf der Pro- und der KI-Seite.
+- Hinweis für die Kauf-Mails und den Shop: bitte ebenfalls „gilt in der Web-App“ und keinen APK-Link mehr.
+
+## 18.11.2026 – Raumlicht 2.18.14: Vorlesen abgeschaltet, WebApp-Update vervollständigt
+
+Marcel hat beides direkt bestätigt. **Raumlicht 2.18.14 vom 18.11.2026, Web = Android (beide 2.18.14).**
+
+**Vorlesen aus (Code bleibt):** Schalter `Vorlesen.ENABLED = false`.
+- Ausgeblendet: „Lux spricht“, Sprechtempo, Hörprobe, „Nova ohne Internet“, Nova-Hinweise; die Datenschutz-Zeile in den Einstellungen nennt das Vorlesen nicht mehr.
+- Keine Abrufe an `stimmen.mathenachhilfe-online.com` (weder Dateien noch `/jetzt` noch Zählstand), keine Gerätestimme – auch nicht bei Nutzern, die „Lux spricht“ vorher eingeschaltet hatten. Auf Android wird die Sprachausgabe gar nicht mehr angelegt.
+- `vorlesen/texte.json` wird leer ausgeliefert: `{"format":1,"app":"raumlicht","texte":[]}`. Schon geladene Offline-Dateien bleiben auf den Geräten liegen (für später).
+- Musik und Geräusche unverändert, getrennt schaltbar und einzeln regelbar.
+- Belege: `PlayFlowTest.vorlesenIstAbgeschaltet`, `VorlesenTest.abgeschaltetHeisstLeereListe`, Browser-Test `scene/test/web-still.mjs` (3 von 3: kein Abruf am Stimmen-Server, Gerätestimme schweigt, Liste leer). `web-nova.mjs` gilt erst wieder, wenn das Vorlesen zurückkommt.
+- Der Nachtrag unten (21 fehlende Nova-Dateien) hat sich damit vorerst erledigt.
+
+**WebApp immer automatisch aktuell – deine fünf Punkte:**
+1. Prüfung beim Öffnen, bei Rückkehr in den Tab (`visibilitychange`, `focus`, `pageshow`, `online`) und alle 30 Minuten: `registration.update()` **und** Abgleich von `version.json` (`fetch(…?nc=…, {cache:'no-store'})`).
+2. `skipWaiting` + `clients.claim` wie bisher; neu geladen wird auf der Startseite oder im Hintergrund, nie mitten in einer Aufgabe. Danach Hinweis „✨ Neue Version x.y.z geladen“ (5 Sekunden).
+3. Spielstand und Einstellungen bleiben; alte Caches werden entfernt, `raumlicht-nova` und `raumlicht-nova-offline` bleiben.
+4. Zweite Sicherung gegen Hängenbleiben: Meldet `version.json` eine neue Version und der Browser hat sie nach 60 Sekunden nicht übernommen, löscht die Seite den Cache der alten Version und lädt an der nächsten ruhigen Stelle neu – höchstens einmal je Version (keine Schleife).
+5. Version sichtbar: Einstellungen, „Version 2.18.14 vom 18.11.2026 · WebApp“.
+- Beleg: `scene/test/web-update.mjs`, 13 von 13 – darunter „Rückkehr in den Tab: neue Version ohne manuelles Neuladen“, „version.json als zweite Sicherung“, „keine Neulade-Schleife, Spielstand bleibt“, „Hinweis erscheint“, „offline startet die App“. Dazu `web-vorversion.mjs` (Spielstand, Pro-Code, Einstellungen bleiben beim Sprung von 2.16.3).
+
+KI-Tutor: unverändert wie in der Meldung zur 2.18.13 darunter (Schnittstelle, Funktion, offene Punkte).
+
 ## 18.11.2026 – Raumlicht 2.18.13: KI-Tutor eingebaut, Server-Funktion liegt bereit
 
 Marcel hat direkt bestätigt („Ja bauen und Server-Route und Kassenlink bauen“). **Raumlicht 2.18.13 vom 18.11.2026, Web = Android (beide 2.18.13).**

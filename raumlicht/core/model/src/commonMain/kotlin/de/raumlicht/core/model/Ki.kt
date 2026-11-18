@@ -21,10 +21,10 @@ object Ki {
     /** Kasse für den KI-Abi-Pass. **Leer = noch nicht erhältlich** (dann gibt es nur die Proben und die Code-Eingabe). Trägt der Leitstand ein, sobald das Produkt im Shop steht. */
     const val CHECKOUT_URL = ""
     /**
-     * Ist die Server-Route live? Solange nicht, zeigt die App den KI-Tutor nur auf der Testseite (raumlicht-test ⇄ trainer-test)
-     * und bei allen, die schon einen gültigen KI-Code eingegeben haben – sonst stünde ein Knopf da, der nur „nicht erreichbar“ sagen kann.
+     * Für alle sichtbar? Seit 2.18.15 ja: Die Server-Route läuft (trainer und trainer-test). Solange [CHECKOUT_URL] leer ist, gibt es die Proben und die Code-Eingabe.
+     * Auf false zeigt die App den KI-Tutor nur auf der Testseite und bei allen, die schon einen gültigen KI-Code eingegeben haben.
      */
-    const val ENABLED = false
+    const val ENABLED = true
     const val URL = "https://trainer.mathenachhilfe-online.com/api/raumlicht/ki"
     /** Für die Testseite (raumlicht-test ⇄ trainer-test) */
     const val TEST_URL = "https://trainer-test.mathenachhilfe-online.com/api/raumlicht/ki"

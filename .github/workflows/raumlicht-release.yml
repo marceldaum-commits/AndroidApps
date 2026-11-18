@@ -1,3 +1,8 @@
+# PAUSE seit 18.11.2026 (Entscheidung: vorerst nur noch die WebApp, keine APK und kein Play-Paket).
+# Solange APK_AUSLIEFERN unten auf "false" steht, laufen hier nur die Logik-Tests – es wird nichts signiert, gebaut oder veröffentlicht.
+# Der Android-Code bleibt im Repo. Zum Wiedereinschalten: APK_AUSLIEFERN auf "true".
+# Die WebApp kommt über raumlicht-web-test.yml auf die Testadresse.
+#
 # Baut Raumlicht, signiert ihn mit dem Upload-Schlüssel und stellt die APK unter „Releases“ bereit.
 # Zusätzlich entsteht das Paket für den Play Store (AAB, Fassung „play“: ohne eigenen Updater, ohne Installations-Berechtigung).
 # Es liegt beim Release als „Raumlicht-<Version>-play.aab“ – hochgeladen in die Play Console wird es von Hand (siehe raumlicht/STORE-RELEASE.md).
@@ -12,7 +17,7 @@
 #   GDRIVE_SA_JSON         = JSON-Schlüssel eines Google-Dienstkontos
 #   GDRIVE_IMPERSONATE     = E-Mail, in deren Namen hochgeladen wird (nur mit domainweiter Delegierung)
 # Variable (Settings → Variables): RAUMLICHT_DRIVE_FOLDER = ID des Drive-Ordners „Raumlicht“ (eigener Unterordner)
-name: Raumlicht APK
+name: Raumlicht (APK pausiert – nur Tests)
 
 on:
   workflow_dispatch:
@@ -28,6 +33,7 @@ jobs:
     env:
       # Secrets dürfen in „if:“ nicht direkt stehen – darum hier als Merker
       HAS_DRIVE: ${{ secrets.GDRIVE_SA_JSON != '' }}
+      APK_AUSLIEFERN: "false"
     defaults:
       run:
         working-directory: raumlicht
@@ -42,6 +48,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Signatur-Schlüssel einrichten
+        if: env.APK_AUSLIEFERN == 'true'
         env:
           KEYSTORE_BASE64: ${{ secrets.WG_KEYSTORE_BASE64 }}
           KEYSTORE_PROPERTIES: ${{ secrets.WG_KEYSTORE_PROPERTIES }}
@@ -106,12 +113,14 @@ jobs:
         run: ./gradlew --no-daemon :core:model:jvmTest
 
       - name: APK (GitHub-Fassung) und AAB (Play-Fassung) bauen
+        if: env.APK_AUSLIEFERN == 'true'
         run: |
           ./gradlew --no-daemon assembleGithubRelease bundlePlayRelease
           cp app/build/outputs/apk/github/release/app-github-release.apk "Raumlicht-${{ steps.version.outputs.name }}.apk"
           cp app/build/outputs/bundle/playRelease/app-play-release.aab "Raumlicht-${{ steps.version.outputs.name }}-play.aab"
 
       - name: Signatur prüfen
+        if: env.APK_AUSLIEFERN == 'true'
         run: |
           $ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)/apksigner verify --print-certs \
             "Raumlicht-${{ steps.version.outputs.name }}.apk" | tee cert.txt
@@ -127,7 +136,7 @@ jobs:
             && { echo "::error::Das Store-Paket enthält espeak-ng-Daten."; exit 1; } || true
 
       - name: Release veröffentlichen
-        if: steps.check.outputs.new == 'true'
+        if: env.APK_AUSLIEFERN == 'true' && steps.check.outputs.new == 'true'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: raumlicht-v${{ steps.version.outputs.name }}
@@ -139,7 +148,7 @@ jobs:
             raumlicht/Raumlicht-${{ steps.version.outputs.name }}-play.aab
 
       - name: In Google Drive hochladen
-        if: steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.RAUMLICHT_DRIVE_FOLDER != ''
+        if: env.APK_AUSLIEFERN == 'true' && steps.check.outputs.new == 'true' && env.HAS_DRIVE == 'true' && vars.RAUMLICHT_DRIVE_FOLDER != ''
         env:
           GDRIVE_SA_JSON: ${{ secrets.GDRIVE_SA_JSON }}
           GDRIVE_IMPERSONATE: ${{ secrets.GDRIVE_IMPERSONATE }}

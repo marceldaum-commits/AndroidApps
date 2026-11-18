@@ -24,17 +24,17 @@ fun SettingsScreen(
     onBack: () -> Unit,
     onReset: () -> Unit = {},
     volume: Int = 100, onVolume: (Int) -> Unit = {},
-    voice: Boolean = true, onVoice: (Boolean) -> Unit = {},
+    voice: Boolean = true, onVoice: (Boolean) -> Unit = {}, voiceOffered: Boolean = de.raumlicht.core.model.Vorlesen.ENABLED,
     offline: OfflineVoice? = null,
     lastProblem: String? = null, onProblemSeen: () -> Unit = {},
 ) = SettingsPage(music, onMusic, sound, onSound, vibration, onVibration, "Version $installed vom ${BuildConfig.VERSION_DATE}", onBack,
     top = { if (BuildConfig.SELF_UPDATE) UpdateSection(installed, update, autoUpdate, onAutoUpdate) },
-    onReset = onReset, volume = volume, onVolume = onVolume, voice = voice, onVoice = onVoice, offline = offline,
+    onReset = onReset, volume = volume, onVolume = onVolume, voice = voice, onVoice = onVoice, voiceOffered = voiceOffered, offline = offline,
     lastProblem = lastProblem, onProblemSeen = onProblemSeen, soundNote = silenceReason(),
     licenses = androidx.compose.ui.platform.LocalContext.current.let { ctx -> remember { runCatching { ctx.assets.open("lizenzen.txt").bufferedReader().use { it.readText() } }.getOrNull() } },
     privacy = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. Ins Internet geht die App nur, " +
         (if (BuildConfig.SELF_UPDATE) "um nach Updates zu schauen (abschaltbar)" else "wenn der Play Store nach Updates schaut") +
-        " – und zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + de.raumlicht.core.model.Vorlesen.PRIVACY)
+        de.raumlicht.core.model.Vorlesen.privacyNote)
 
 /**
  * Warum Raumlicht gerade still ist, obwohl Musik und Geräusche eingeschaltet sind: Die Medien-Lautstärke des Handys steht auf 0.

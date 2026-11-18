@@ -11,8 +11,15 @@ import java.text.Normalizer
 
 /** Die Liste für den Stimmen-Server: vollständig, im vereinbarten Format, jeder Text vorlesefertig. */
 class VorlesenTest {
+    /** Seit 2.18.14 abgeschaltet: Die ausgelieferte Liste ist leer – der Stimmen-Server vertont dann nichts mehr für Raumlicht. Die Texte selbst bleiben im Code. */
+    @Test fun abgeschaltetHeisstLeereListe() {
+        assertTrue(!Vorlesen.ENABLED)
+        assertEquals("""{"format":1,"app":"raumlicht","texte":[]}""", Vorlesen.json())
+        assertTrue(Vorlesen.texts().size > 1000); assertEquals(".", Vorlesen.privacyNote)
+    }
+
     @Test fun listHasTheAgreedFormat() {
-        val root = Json.parseToJsonElement(Vorlesen.json()).jsonObject
+        val root = Json.parseToJsonElement(Vorlesen.json(enabled = true)).jsonObject
         assertEquals(1, root["format"]!!.jsonPrimitive.content.toInt()); assertEquals("raumlicht", root["app"]!!.jsonPrimitive.content)
         val texts = root["texte"]!!.jsonArray.map { it.jsonObject }
         assertTrue("zu wenige Texte: ${texts.size}", texts.size > 600)
@@ -61,7 +68,7 @@ class VorlesenTest {
         println("VORLESEN: fest ${fixed.size} (${fixed.sumOf { it.length }} Zeichen), vorhersehbar ${more.size} (${more.sumOf { it.length }} Zeichen)")
         assertTrue(more.size > 100); assertTrue(more.none { it in fixed.toSet() }); assertEquals(more.size, more.toSet().size)
         assertTrue("Liste zu groß – vorher ankündigen: ${Vorlesen.texts().sumOf { it.length }}", Vorlesen.texts().sumOf { it.length } < 150_000)
-        val marked = Json.parseToJsonElement(Vorlesen.json()).jsonObject["texte"]!!.jsonArray.count { it.jsonObject["laufzeit"]?.jsonPrimitive?.content == "true" }
+        val marked = Json.parseToJsonElement(Vorlesen.json(enabled = true)).jsonObject["texte"]!!.jsonArray.count { it.jsonObject["laufzeit"]?.jsonPrimitive?.content == "true" }
         assertEquals(more.size, marked)
     }
 }

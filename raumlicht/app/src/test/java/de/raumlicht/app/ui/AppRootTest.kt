@@ -177,7 +177,7 @@ class AppRootTest {
         Settings(ApplicationProvider.getApplicationContext()).setStrictVectors(false)
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
-            AppRoot(nav, prefs, stars, { _, _, _ -> }, { 20_772L }, settings = { onBack -> de.raumlicht.app.ui.settings.SettingsPage(sound = true, onSound = {}, vibration = true, onVibration = {}, versionText = "Test", onBack = onBack) })
+            AppRoot(nav, prefs, stars, { _, _, _ -> }, { 20_772L }, settings = { onBack -> de.raumlicht.app.ui.settings.SettingsPage(voiceOffered = true, sound = true, onSound = {}, vibration = true, onVibration = {}, versionText = "Test", onBack = onBack) })
         } } } }
         rule.mainClock.advanceTimeBy(600)
         nav.go(Routes.SHEET); settle(); rule.onNodeWithText("Verbindungsvektor: AB⃗ = B − A (Spitze minus Fuß)").assertExists(); nav.back(); settle()

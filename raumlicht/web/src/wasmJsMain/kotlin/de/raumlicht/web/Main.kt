@@ -93,7 +93,7 @@ private fun WebApp() {
     val voiceStatus = remember { de.raumlicht.app.ui.fx.VoiceStatus() }
     val speaker = remember { object : Speaker {
         // „Nova“ (KI-generierte Stimme): fertige Datei von unserem Server; kommt sie nicht (offline), liest diesen Satz still die Stimme des Geräts
-        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Vorlesen.spoken(text).takeIf { it.isNotEmpty() }?.let { spoken ->
+        override fun say(text: String) { if (Vorlesen.ENABLED && prefs.voice.value && prefs.volume.value > 0) Vorlesen.spoken(text).takeIf { it.isNotEmpty() }?.let { spoken ->
             stopSpeaking(); val volume = prefs.volume.value / 100.0
             val rate = prefs.speechRate.value / 100.0
             val mine = ++novaTurn; voiceStatus.loading = true
@@ -107,7 +107,7 @@ private fun WebApp() {
                     }; null } } }
         override fun sayIfQuiet(text: String) { if (!speaking() && !novaSpeaking()) say(text) }
     } }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker, de.raumlicht.app.ui.fx.LocalVoiceStatus provides voiceStatus,
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides (if (Vorlesen.ENABLED) speaker else null), de.raumlicht.app.ui.fx.LocalVoiceStatus provides voiceStatus,
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.CRASH -> 40 }) },
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
@@ -119,6 +119,7 @@ private fun WebApp() {
                     val music by prefs.music.collectAsState(); val sound by prefs.sound.collectAsState(); val volume by prefs.volume.collectAsState(); val voice by prefs.voice.collectAsState()
                     SettingsPage(music, prefs::setMusic, sound, prefs::setSound, vibration, prefs::setVibration, "Version ${Version.NAME} vom ${Version.DATE} · WebApp", onBack,
                         top = {
+                            InstallCard()
                             ElevatedCard(Modifier.fillMaxWidth()) { Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 TextButton({ openLink("https://www.mathenachhilfe-online.com/impressum/") }) { Text("Impressum") }
                                 TextButton({ openLink("https://www.mathenachhilfe-online.com/datenschutz/") }) { Text("Datenschutz") }
@@ -126,7 +127,7 @@ private fun WebApp() {
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
                         voice = voice, onVoice = { prefs.setVoice(it); if (!it) { stopSpeaking(); novaStop() } },
-                        offline = run {
+                        offline = if (!Vorlesen.ENABLED) null else run {
                             // Stand aus dem Browser übernehmen, solange die Einstellungen offen sind
                             var tick by remember { mutableStateOf(0) }; var best by remember { mutableStateOf(prefs.voiceBest) }
                             // Größe nur erfragen, wenn Vorlesen eingeschaltet ist – sonst geht die App nicht ins Netz
@@ -138,7 +139,7 @@ private fun WebApp() {
                         onLicenses = { openLink("lizenzen.txt") },
                         soundNote = if (appleTouch()) "Kein Ton? Auf iPhone und iPad bleibt Raumlicht still, solange das Gerät stumm geschaltet ist (Schalter an der Seite oder Glocke im Kontrollzentrum)." else null,
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe. " +
-                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Ins Internet geht sie sonst nur zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + Vorlesen.PRIVACY)
+                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. " + (if (Vorlesen.ENABLED) "Ins Internet geht sie sonst nur zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + Vorlesen.PRIVACY else "Sonst geht sie nicht ins Internet."))
                 })
         } }
     }
@@ -163,3 +164,26 @@ private fun offRemove(server: String): Unit = js("{ window.__rlNova.offline.remo
 
 /** laufende Nummer des letzten Satzes – ein älterer darf den Ladehinweis nicht mehr ändern */
 private var novaTurn = 0
+
+/**
+ * „App installieren“ in den Einstellungen: nur sichtbar, solange Raumlicht noch nicht als App installiert ist.
+ * Wo der Browser es anbietet, ein Knopf; auf iPhone und iPad die Anleitung über „Teilen“. Der Spielstand bleibt beim Installieren erhalten.
+ */
+@Composable
+private fun InstallCard() {
+    var state by remember { mutableStateOf(installState()) }
+    LaunchedEffect(Unit) { while (true) { kotlinx.coroutines.delay(500); state = installState() } }
+    if (state != "knopf" && state != "ios") return
+    val sfx = LocalSfx.current
+    ElevatedCard(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text("📲 Raumlicht als App", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+        if (state == "knopf") {
+            Text("Leg Raumlicht auf deinen Startbildschirm: startet wie eine App, im Vollbild und auch ohne Internet. Dein Spielstand bleibt.", style = MaterialTheme.typography.bodyMedium)
+            NeonButton({ sfx?.play(Sound.TAP); installNow() }, Modifier.fillMaxWidth(), color = Q.Cyan) { Text("📲 App installieren", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) }
+        } else {
+            Text("So kommt Raumlicht auf deinen Home-Bildschirm – dann startet es wie eine App, im Vollbild:", style = MaterialTheme.typography.bodyMedium)
+            Text("1. Unten (oder oben) auf „Teilen“ tippen – das Viereck mit dem Pfeil nach oben\n2. „Zum Home-Bildschirm“ wählen\n3. „Hinzufügen“ antippen", style = MaterialTheme.typography.bodyMedium, color = Q.Text)
+            Text("Am besten in Safari. Dein Spielstand zieht dabei nicht mit um – installiere also gleich am Anfang.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+        }
+    } }
+}

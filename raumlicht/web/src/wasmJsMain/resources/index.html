@@ -126,16 +126,47 @@
   // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
   // (Startseite oder App im Hintergrund), nie mitten in einer Aufgabe.
   window.__rlHome = true; var updateWaiting = false;
-  window.__rlTry = function () { if (updateWaiting && (document.hidden || window.__rlHome)) { updateWaiting = false; location.reload(); } };
+  var CURRENT = document.documentElement.dataset.version;
+  // „App installieren“: Der Browser meldet, wenn er die WebApp installieren kann – die Einstellungen zeigen dann den Knopf (nur solange sie noch nicht installiert ist)
+  window.__rlInstall = { prompt: null, done: false };
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__rlInstall.prompt = e; });
+  window.addEventListener('appinstalled', function () { window.__rlInstall.prompt = null; window.__rlInstall.done = true; });
+  // Vor dem Neuladen merken, von welcher Version wir kommen – danach sagt ein kurzer Hinweis „Neue Version x.y.z geladen“
+  window.__rlTry = function () { if (updateWaiting && (document.hidden || window.__rlHome)) { updateWaiting = false; try { sessionStorage.setItem('rl-von', CURRENT); } catch (e) {} location.reload(); } };
+  (function () { var from = null; try { from = sessionStorage.getItem('rl-von'); sessionStorage.removeItem('rl-von'); } catch (e) {}
+    if (!from || from === CURRENT) return;
+    var n = document.createElement('div'); n.id = 'neu'; n.setAttribute('role', 'status'); n.textContent = '✨ Neue Version ' + CURRENT + ' geladen';
+    n.style.cssText = 'position:fixed;left:50%;top:14px;transform:translate(-50%,-80px);z-index:50;background:#161b3d;color:#eef0ff;border:1.5px solid #35e0ff;border-radius:14px;padding:9px 16px;font:600 14px system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.5);transition:transform .45s cubic-bezier(.2,1.4,.4,1),opacity .4s;pointer-events:none;white-space:nowrap';
+    var show = setInterval(function () { var st = document.getElementById('start'); if (st && st.dataset.fertig !== '1') return; clearInterval(show);
+      document.body.appendChild(n); requestAnimationFrame(function () { n.style.transform = 'translate(-50%,0)'; });
+      setTimeout(function () { n.style.opacity = '0'; setTimeout(function () { n.remove(); }, 500); }, 5000); }, 300); })();
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
     var hadWorker = !!navigator.serviceWorker.controller;      // beim allerersten Besuch gibt es nichts zu aktualisieren
     navigator.serviceWorker.addEventListener('controllerchange', function () { if (hadWorker) { updateWaiting = true; window.__rlTry(); } hadWorker = true; });
     // Der Service Worker speichert alles für später – aber erst, wenn die App läuft: Beim Start gehört die Leitung dem App-Kern.
     var startSW = function () {
       navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
-        var check = function () { reg.update().catch(function () {}); };
+        // Zwei Wege, damit niemand auf einer alten Version hängen bleibt: Der Browser prüft den Service Worker, und die Seite vergleicht selbst version.json
+        // (immer frisch vom Server). Meldet version.json eine neue Version und der Browser hat sie nach einer Minute nicht übernommen, räumt die Seite den
+        // Speicher der alten Version weg und lädt an der nächsten ruhigen Stelle neu – höchstens einmal je Version, Spielstand und Nova-Dateien bleiben.
+        var lastCheck = 0;
+        var check = function () {
+          if (Date.now() - lastCheck < 5000) return; lastCheck = Date.now();
+          reg.update().catch(function () {});
+          fetch('version.json?nc=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+            var v = j && j.version; if (!v || v === CURRENT) return;
+            window.__rlNeu = v; reg.update().catch(function () {});
+            setTimeout(function () {
+              var forced = null; try { forced = sessionStorage.getItem('rl-zwang'); } catch (e) {}
+              if (updateWaiting || forced === v) return;
+              try { sessionStorage.setItem('rl-zwang', v); } catch (e) { return; }
+              (window.caches ? caches.delete('raumlicht-' + CURRENT) : Promise.resolve()).then(function () { updateWaiting = true; window.__rlTry(); });
+            }, window.__rlZwangMs || 60000);
+          }).catch(function () {});
+        };
         document.addEventListener('visibilitychange', function () { if (document.hidden) window.__rlTry(); else check(); });
-        setInterval(check, 30 * 60 * 1000);
+        window.addEventListener('focus', check); window.addEventListener('pageshow', check); window.addEventListener('online', check);
+        check(); setInterval(check, 30 * 60 * 1000);
       });
     };
     var waitSW = setInterval(function () { var st = document.getElementById('start'); if (!st || st.dataset.fertig === '1' || document.getElementById('start-text').className === 'fehler') { clearInterval(waitSW); startSW(); } }, 400);

@@ -24,7 +24,7 @@
   function row(name, value, good) { rows.push(name + ': ' + value); var tr = t.insertRow(); tr.insertCell().textContent = name; var c = tr.insertCell(); c.textContent = value; if (good !== undefined) c.className = good ? 'ok' : 'bad'; }
   function wasm(bytes) { try { return typeof WebAssembly === 'object' && WebAssembly.validate(new Uint8Array(bytes)); } catch (e) { return false; } }
   var head = [0, 97, 115, 109, 1, 0, 0, 0];
-  row('Version der WebApp', '2.18.13 vom 18.11.2026');
+  row('Version der WebApp', '2.18.15 vom 18.11.2026');
   row('Browser', navigator.userAgent);
   row('Gerät laut Browser', (navigator.platform || '?') + ' · Berührungspunkte ' + (navigator.maxTouchPoints || 0) + ' · ' + (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1 ? 'iPad im Desktop-Modus (gibt sich als Mac aus)' : /iPad/.test(navigator.userAgent) ? 'iPad im Mobil-Modus' : /iPhone/.test(navigator.userAgent) ? 'iPhone' : 'anderes Gerät'));
   row('Bildschirm', innerWidth + ' × ' + innerHeight + ', Schärfe ' + (window.devicePixelRatio || 1) + ', als App gestartet: ' + ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone ? 'ja' : 'nein'));
