@@ -1,5 +1,5 @@
-// Service Worker: WebApp offline nutzbar. Bei neuer Version (2.2.16) wird der Zwischenspeicher erneuert.
-const CACHE = 'wissensgarten-2.2.16';
+// Service Worker: WebApp offline nutzbar. Bei neuer Version (2.2.17) wird der Zwischenspeicher erneuert.
+const CACHE = 'wissensgarten-2.2.17';
 self.addEventListener('install', (e) => {
   // Alles vorab speichern (Liste wird beim Bauen eingesetzt) – beim ersten Besuch kommt das meist schon aus dem Browser-Cache.
   // Einzeln, damit eine fehlende Datei nicht die ganze Installation verhindert.

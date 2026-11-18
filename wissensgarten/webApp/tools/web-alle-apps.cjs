@@ -25,7 +25,8 @@ const check = (c, t, x) => { console.log((c ? '✔ ' : '✘ ') + t + (x !== unde
     await p.waitForTimeout(3500);
     await p.screenshot({ path: `${OUT}/alle_apps_${name}.png` });
     // Knopf oben links antippen (Leiste ist 44 px hoch, Text beginnt links)
-    await p.mouse.click(60, 22);
+    // Am PC steht die App mittig (größte Breite) – Knopf liegt dann weiter rechts
+    await p.mouse.click(name === 'pc' ? 350 : 60, 22);
     await p.waitForTimeout(2500);
     check(ziel === 'https://staging.mathenachhilfe-online.com/lern-apps/?src=wissensgarten-kopf' && p.url().startsWith('https://staging.mathenachhilfe-online.com/lern-apps/'),
       `${name}: „← Alle Apps“ öffnet die App-Auswahl im selben Tab`, p.url());
