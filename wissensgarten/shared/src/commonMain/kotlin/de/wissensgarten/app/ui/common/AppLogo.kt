@@ -3,6 +3,15 @@ package de.wissensgarten.app.ui.common
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
@@ -40,6 +49,29 @@ fun DrawScope.drawAppLogo(grow: Float = 1f) {
                 drawPath(p { moveTo(54f, 40f); quadraticTo(46f, 30f, 38f, 32f); lineTo(38f, 26f); quadraticTo(47f, 24f, 54f, 32f); close() }, Color(0xFFF28AB2))
                 drawPath(p { moveTo(54f, 40f); quadraticTo(62f, 30f, 70f, 32f); lineTo(70f, 26f); quadraticTo(61f, 24f, 54f, 32f); close() }, Color(0xFFE26A9C))
                 drawCircle(Color(0xFFFFD54F), radius = 3f, center = Offset(54f, 30f))
+            }
+        }
+    }
+}
+
+/**
+ * Schmale Leiste oben in den Hauptansichten: „← Alle Apps“ führt zur App-Auswahl auf unserer Website.
+ * Kein Preis, kein Kaufhinweis; Tippziel mindestens 44 dp, in hellem und dunklem Design lesbar.
+ */
+@Composable
+fun AlleAppsLeiste(onClick: () -> Unit) {
+    androidx.compose.material3.Surface(color = androidx.compose.material3.MaterialTheme.colorScheme.surface.copy(alpha = 0.92f)) {
+        androidx.compose.foundation.layout.Row(
+            Modifier.fillMaxWidth().statusBarsPadding().padding(horizontal = 6.dp),
+            verticalAlignment = androidx.compose.ui.Alignment.CenterVertically,
+        ) {
+            androidx.compose.material3.TextButton(
+                onClick = onClick,
+                modifier = Modifier.heightIn(min = 44.dp).semantics { contentDescription = "Zurück zu allen Lern-Apps auf mathenachhilfe-online.com" },
+            ) {
+                AppLogo(Modifier.size(22.dp))
+                androidx.compose.foundation.layout.Spacer(Modifier.width(6.dp))
+                androidx.compose.material3.Text("← Alle Apps", style = androidx.compose.material3.MaterialTheme.typography.labelLarge)
             }
         }
     }
