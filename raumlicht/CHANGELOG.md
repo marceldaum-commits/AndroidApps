@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.20 – Der KI-Abi-Pass ist im Shop (18.11.2026)
+- **KI-Tutor:** Auf der KI-Seite (Einstellungen → KI-Tutor) führt jetzt ein Knopf zum Shop. Der „Raumlicht KI-Abi-Pass“ kostet einmalig 14,99 €, ist kein Abo und gilt bis zum 31. Juli des gewählten Abi-Jahres (2027, 2028 oder 2029) – mit 10 KI-Punkten an jedem Tag.
+- 3 Proben bleiben frei. Nach dem Kauf kommt eine E-Mail mit Link und Code; ein Tipp auf den Link schaltet frei.
+- **Für Eltern:** Gekauft wird im Shop auf mathenachhilfe-online.com, nicht in der App. Wer noch nicht 18 ist, lässt die Eltern kaufen.
+
 ## 2.18.19 – Weiße Seite auf iPhone, iPad und Mac: Ursache gefunden (18.11.2026)
 - **Die Ursache ist ein Fehler im neuen Safari (27.2):** Er gibt der Zeichenbibliothek an bestimmten Stellen kaputte Zahlen weiter. Dadurch lief Raumlicht zwar, malte aber nichts – die Seite blieb weiß.
 - **Raumlicht umgeht den Fehler jetzt.** Beim Bauen der App werden alle betroffenen Aufrufe so umgeschrieben, dass Safari sie richtig ausführt. Für andere Browser ändert sich nichts.

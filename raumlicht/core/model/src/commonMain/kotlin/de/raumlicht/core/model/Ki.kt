@@ -18,10 +18,10 @@ import kotlinx.serialization.json.put
 object Ki {
     const val NAME = "Raumlicht KI-Abi-Pass"
     const val PRICE = "14,99 €"
-    /** Kasse für den KI-Abi-Pass. **Leer = noch nicht erhältlich** (dann gibt es nur die Proben und die Code-Eingabe). Trägt der Leitstand ein, sobald das Produkt im Shop steht. */
-    const val CHECKOUT_URL = ""
+    /** Produktseite des KI-Abi-Passes im Shop (dort wählt man das Abi-Jahr 2027, 2028 oder 2029). Leer = nicht erhältlich: dann gibt es nur die Proben und die Code-Eingabe. */
+    const val CHECKOUT_URL = "https://www.mathenachhilfe-online.com/produkt/raumlicht-ki-abi-pass/"
     /**
-     * Für alle sichtbar? Seit 2.18.15 ja: Die Server-Route läuft (trainer und trainer-test). Solange [CHECKOUT_URL] leer ist, gibt es die Proben und die Code-Eingabe.
+     * Für alle sichtbar? Seit 2.18.15 ja: Die Server-Route läuft (trainer und trainer-test). Seit 2.18.20 ist auch der Shop eingetragen ([CHECKOUT_URL]).
      * Auf false zeigt die App den KI-Tutor nur auf der Testseite und bei allen, die schon einen gültigen KI-Code eingegeben haben.
      */
     const val ENABLED = true

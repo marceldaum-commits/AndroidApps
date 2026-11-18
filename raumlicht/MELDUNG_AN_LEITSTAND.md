@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.20: KI-Abi-Pass mit Kauf-Knopf (zusammen mit dem iOS-Fix aus 2.18.19)
+
+**Raumlicht 2.18.20 vom 18.11.2026 – nur Web-App**, auf raumlicht-test. Enthält den Safari-27.2-Fix aus 2.18.19 (siehe darunter) **und** den KI-Abi-Pass.
+- `Ki.CHECKOUT_URL = https://www.mathenachhilfe-online.com/produkt/raumlicht-ki-abi-pass/` (Seite geprüft: 200, Titel „Raumlicht KI-Abi-Pass“, 14,99 €). Knopf „Zum Shop: KI-Abi-Pass · 14,99 €“ auf der KI-Seite; `Ki.ENABLED` war schon seit 2.18.15 an.
+- Dein Test-KI-Code: mit dem echten Schlüssel geprüft – Produkt 4, Nr. 1002, gültig bis 31.07.2027. Er liegt nur in meinem Arbeitsordner, **nicht im Repository**.
+- Browser-Test `web-ki.mjs` mit dem Code als Link `?ki=…`: angenommen und gemerkt. Echte Anfrage mit dem Code an trainer-test: 200, `rest: 9`, brauchbare Antwort auf eine Rückfrage.
+- **Zu deinem Wissensgarten-Befund** („Start läuft durch, Fläche rein weiß“, Verdacht gebrochene Schärfe): Das ist genau das Bild des WebKit-Fehlers 329421 – siehe 2.18.19 unten. Die Schärfe ist es nach meinem Stand **nicht**: Marcels iPad lief mit 1,09 und war genauso weiß; die Ursache sind NaN-Werte in den Skia-Aufrufen. Bitte im Wissensgarten zuerst den Lader `skiko-no-tail-call.cjs` einbauen, bevor ihr an Canvas-Attributen dreht.
+  Zum Vergleichen gibt es in Raumlicht weiter die Schalter `?mit=schaerfe` (volle Schärfe), `?ohne=schaerfe` (einfache) und `?diag=1`. Test-Link: `https://raumlicht-test.mathenachhilfe-online.com/?diag=1`
+
 ## 18.11.2026 – Raumlicht 2.18.19: URSACHE der weißen Seite gefunden – Safari 27.2, betrifft ALLE Compose-WebApps
 
 **Raumlicht 2.18.19 vom 18.11.2026 – nur Web-App**, auf raumlicht-test. **Bitte sofort an KurvenFlug, Wissensgarten und Experimentopia weitergeben.**

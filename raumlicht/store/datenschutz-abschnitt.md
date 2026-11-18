@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.19 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.20 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text

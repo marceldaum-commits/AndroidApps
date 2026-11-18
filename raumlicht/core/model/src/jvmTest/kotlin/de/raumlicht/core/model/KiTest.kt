@@ -15,9 +15,9 @@ class KiTest {
     private val alt = "RL-04208-0000Z-90JRS-KVK76-JC5YR-K5AB8-66P5J-B9FQ0-J8M2Q-N9CCS-9YCEM-0XX2C-KCRBZ-8QGFP-J83ZY-RYKBJ-8WK56-H6461-JQTF0-1PN3P-K7Q9A-337T4-N8R7X-GE"
     private val pro = "RL-04202-0000F-MGKKT-CDRGB-BYPG5-8XEVQ-M0F02-94P76-M1MXZ-28QYX-86PN1-NEY0T-JNXA5-8S0GJ-HA3X2-C0GQW-AW2K1-BQN3M-4PV5F-ZHQBG-ZKMPE-KJSDT-6VARJ-0W"
 
-    /** Seit 2.18.15 für alle sichtbar (die Route läuft); die Kasse trägt der Leitstand nach – bis dahin gibt es die Proben. */
-    @Test fun freigegebenOhneKasse() {
-        assertTrue(Ki.ENABLED); assertEquals("", Ki.CHECKOUT_URL); assertEquals("14,99 €", Ki.PRICE); assertEquals(10, Ki.DAILY); assertEquals(3, Ki.TRIALS)
+    /** Seit 2.18.15 für alle sichtbar (die Route läuft), seit 2.18.20 mit Produktseite im Shop. */
+    @Test fun freigegebenMitShop() {
+        assertTrue(Ki.ENABLED); assertEquals("https://www.mathenachhilfe-online.com/produkt/raumlicht-ki-abi-pass/", Ki.CHECKOUT_URL); assertEquals("14,99 €", Ki.PRICE); assertEquals(10, Ki.DAILY); assertEquals(3, Ki.TRIALS)
         assertEquals("https://trainer.mathenachhilfe-online.com/api/raumlicht/ki", Ki.URL); assertEquals("https://trainer-test.mathenachhilfe-online.com/api/raumlicht/ki", Ki.TEST_URL)
     }
 
