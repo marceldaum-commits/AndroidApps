@@ -29,4 +29,12 @@ Neuester Beitrag oben.
 - **Link-Format für andere Apps:** `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6|profi|auto>`
   - Mit `&modus=training` startet die Übung sofort.
   - Test-Stufe: `rechenblitz-test.` statt `rechenblitz.`
-- **Abgeben/übernehmen:** Von uns aus nichts.
+- **Abgleich (Marcel 18.11.: „wer was rausnimmt und wer was behält“, ab jetzt jede Woche):**
+  1. **Nimmt heraus:** nichts. Rechenblitz hat nur Übungsaufgaben mit Lösungsweg, keine Begriffs- oder Vokabelkarten.
+  2. **Behält, obwohl es sich berührt:**
+     - Merk-Training mit 6 Decks (Plus bis 20, Einmaleins, Geteilt, Quadratzahlen, Brüche ↔ Dezimal, Brüche ↔ Prozent). Begründung: Das ist Automatisieren von Rechenfakten, also schnelles Abrufen, kein Begriffswissen. Gegenseitig mit Wissensgarten verlinkt.
+     - Kurze Sachaufgaben mit 1–2 Schritten.
+     - Theorie-Seiten (Regel + Beispiel) als Erklärung zur Übung.
+  3. **Übernimmt:**
+     - die Tempo-Teile aus Wissensgarten „Kopfrechen-Tricks“ (per Link),
+     - Zehnerpotenzen/wissenschaftliche Schreibweise (Mathe-Trainer verlinkt auf uns).
