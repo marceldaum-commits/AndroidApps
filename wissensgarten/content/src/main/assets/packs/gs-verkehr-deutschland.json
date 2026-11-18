@@ -1,6 +1,6 @@
 {
   "id": "gs-verkehr-deutschland",
-  "version": 3,
+  "version": 4,
   "title": "Verkehr und Deutschland",
   "subject": "sachunterricht",
   "grades": [
@@ -202,7 +202,7 @@
     {
       "id": "016",
       "q": "Was bedeutet ein rundes blaues Schild mit weißem Fahrrad?",
-      "a": "Radweg",
+      "a": "Radweg (Fahrradweg)",
       "choices": [
         "Fahrräder verboten",
         "Fahrradladen",
@@ -291,7 +291,7 @@
     },
     {
       "id": "024",
-      "q": "Welche Stadt ist auch ein eigenes Bundesland?",
+      "q": "Welche dieser Städte ist auch ein eigenes Bundesland: Köln, München, Frankfurt am Main oder Hamburg?",
       "a": "Hamburg",
       "choices": [
         "Köln",

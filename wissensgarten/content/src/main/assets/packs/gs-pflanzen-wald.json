@@ -1,6 +1,6 @@
 {
   "id": "gs-pflanzen-wald",
-  "version": 2,
+  "version": 3,
   "title": "Pflanzen und Wald",
   "subject": "sachunterricht",
   "grades": [
@@ -84,7 +84,7 @@
     },
     {
       "id": "005",
-      "q": "Welches Tier trägt Blütenstaub von Blüte zu Blüte?",
+      "q": "Welches Insekt, das Honig macht, trägt Blütenstaub von Blüte zu Blüte?",
       "a": "Die Biene",
       "choices": [
         "Der Regenwurm",

@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-irregular-verbs",
-  "version": 4,
+  "version": 5,
   "title": "Irregular Verbs",
   "subject": "englisch",
   "grades": [
@@ -471,7 +471,7 @@
     {
       "id": "040",
       "q": "Simple Past und Past Participle von „to get“?",
-      "a": "got – got",
+      "a": "got – got/gotten",
       "choices": [
         "getted – getted",
         "gotten – got",

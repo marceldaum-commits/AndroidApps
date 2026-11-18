@@ -1,6 +1,6 @@
 {
   "id": "gs-englisch-familie-koerper",
-  "version": 2,
+  "version": 3,
   "title": "Familie, Körper, Kleidung",
   "subject": "englisch",
   "grades": [
@@ -252,7 +252,7 @@
     {
       "id": "019",
       "q": "Was heißt „lange Hose“ auf Englisch?",
-      "a": "trousers",
+      "a": "trousers (pants)",
       "choices": [
         "shorts",
         "socks",

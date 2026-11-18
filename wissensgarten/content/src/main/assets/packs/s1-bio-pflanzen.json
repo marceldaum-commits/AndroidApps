@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-pflanzen",
-  "version": 2,
+  "version": 3,
   "title": "Pflanzen verstehen",
   "subject": "biologie",
   "grades": [
@@ -48,7 +48,7 @@
     {
       "id": "002",
       "q": "Welchen Nährstoff stellt die Pflanze bei der Fotosynthese her?",
-      "a": "Traubenzucker",
+      "a": "Traubenzucker (Glucose)",
       "choices": [
         "Mineralsalze",
         "Kalk",
@@ -108,7 +108,7 @@
     {
       "id": "007",
       "q": "Wie heißen die männlichen Teile der Blüte?",
-      "a": "Staubblätter",
+      "a": "Staubblätter (Staubgefäße)",
       "choices": [
         "Fruchtblätter",
         "Kelchblätter",

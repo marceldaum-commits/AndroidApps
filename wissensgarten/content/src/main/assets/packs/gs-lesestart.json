@@ -1,6 +1,6 @@
 {
   "id": "gs-lesestart",
-  "version": 2,
+  "version": 3,
   "title": "Lesestart",
   "subject": "deutsch",
   "grades": [
@@ -252,7 +252,7 @@
     },
     {
       "id": "020",
-      "q": "Welcher Buchstabe ist ein Selbstlaut?",
+      "q": "Welcher Buchstabe ist ein Selbstlaut: B, E, K oder T?",
       "a": "E",
       "choices": [
         "B",
@@ -264,7 +264,7 @@
     },
     {
       "id": "021",
-      "q": "Welcher Buchstabe ist ein Mitlaut?",
+      "q": "Welcher Buchstabe ist ein Mitlaut: A, M, I oder O?",
       "a": "M",
       "choices": [
         "A",

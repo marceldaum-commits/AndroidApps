@@ -1,6 +1,6 @@
 {
   "id": "gs-wetter-jahreszeiten",
-  "version": 3,
+  "version": 4,
   "title": "Wetter und Jahreszeiten",
   "subject": "sachunterricht",
   "grades": [
@@ -170,7 +170,7 @@
     {
       "id": "012",
       "q": "Wie nennt man sehr starken Wind?",
-      "a": "Sturm",
+      "a": "Sturm (Orkan)",
       "choices": [
         "Nebel",
         "Frost",
@@ -227,7 +227,7 @@
     {
       "id": "017",
       "q": "Wie nennt man Temperaturen unter 0 °C?",
-      "a": "Minusgrade",
+      "a": "Minusgrade (Frost)",
       "choices": [
         "Plusgrade",
         "Hitzegrade",
@@ -355,7 +355,7 @@
     {
       "id": "028",
       "q": "Was sammelt das Eichhörnchen im Herbst als Vorrat?",
-      "a": "Nüsse",
+      "a": "Nüsse (Eicheln)",
       "choices": [
         "Steine",
         "Federn",
@@ -376,8 +376,8 @@
     },
     {
       "id": "030",
-      "q": "Was ziehst du bei Regen an?",
-      "a": "Regenjacke",
+      "q": "Was ziehst du bei Regen über deine Kleidung?",
+      "a": "Regenjacke (Regenmantel)",
       "choices": [
         "Badehose",
         "Sandalen",
@@ -387,8 +387,8 @@
     },
     {
       "id": "031",
-      "q": "Was schützt deine Haut vor Sonnenbrand?",
-      "a": "Sonnencreme",
+      "q": "Was cremst du auf die Haut, damit du keinen Sonnenbrand bekommst?",
+      "a": "Sonnencreme (Sonnenmilch)",
       "choices": [
         "Schal",
         "Handschuhe",
@@ -399,7 +399,7 @@
     {
       "id": "032",
       "q": "Was brauchst du bei Frost für die Hände?",
-      "a": "Handschuhe",
+      "a": "Handschuhe (Fäustlinge)",
       "choices": [
         "Sandalen",
         "Sonnenbrille",

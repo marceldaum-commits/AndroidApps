@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-alltag",
-  "version": 1,
+  "version": 2,
   "title": "Englisch im Alltag",
   "subject": "englisch",
   "grades": [
@@ -157,7 +157,7 @@
     {
       "id": "011",
       "q": "Was heißt die „Pause“ zwischen zwei Schulstunden auf Englisch?",
-      "a": "break",
+      "a": "break (recess)",
       "choices": [
         "pause",
         "rest",

@@ -1,5 +1,32 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.6 vom 18.11.2026 (Web = Android): mehrere richtige Antworten
+
+- **Geprüft:** alle 2 923 Karten (2 472 frei, 451 Plus). Automatischer Test `AntwortKontrolleTest` über alle Karten, dazu von Hand alle 1 591 eintippbaren und 447 nur sprechbaren Antworten.
+- **Fälle: 118 Karten** (114 frei, 4 Plus) in 43 Paketen; Paketversion + 1, Karten-ids unverändert. Fallliste: `KORREKTUREN_MEHRERE_ANTWORTEN_2026-11-18.md`.
+  - **(a) Alternative ergänzt:** Synonyme 55, Bedeutungsangaben 16, Schreibweisen 13, Kurzform 10, englische Varianten 8, Einzahl/Mehrzahl 1.
+  - **(b) eindeutig formuliert:** offene Fragen mit vielen richtigen Antworten 16, Kurzform 2.
+- **Kontrolle (Code), für Tippen und Sprechen:**
+  - Zahlwörter 0–1000 (de/en) gelten wie Ziffern.
+  - Bruch, Dezimalzahl und Prozent zählen nach Wert, außer die Frage verlangt eine Schreibweise.
+  - Ausgeschriebene Einheiten werden akzeptiert.
+  - Aufzählungen in beliebiger Reihenfolge, außer bei Reihenfolge-Fragen.
+  - Englische Kurzformen.
+  - „A (B / C)“.
+  - Nachname genügt bei „Wer…?“ (nur Sprechen).
+  - Strenger: Ein falscher Artikel (fr/es) ist nur noch „fast“ richtig.
+  - Auswahl-Fragen ohne sichtbare Auswahl kommen nicht mehr zum Tippen.
+  - Die Lösungsanzeige nennt die Alternativen in Klammern.
+- **Tests:** `AntwortKontrolleTest` (alle Karten: Alternativen, Zahlwort, Reihenfolge, kein Ablenker richtig, ~85 Synonym-Gruppen), 6 neue `GamesTest`. Alles grün, Lint 0 Fehler.
+- **Plus:** `ob-abi-biologie` v3 und `ob-bio-genetik` v4 auf `wg-plus-pakete`.
+- **Nova-Abdeckung (Server-Stand 06:50):**
+  - Liste wissensgarten-test 13 609 / 17 719 = **77 %** (läuft weiter, ca. 600 000 Zeichen je Lauf).
+  - Plus 2 393 / 3 160 = 76 %.
+  - Klicktest (2.2.4): 100 % Nova, 0 × Gerätestimme.
+  - Fehlende Sätze werden beim ersten Abspielen einzeln vertont (`/jetzt`), Plus wartet kurz.
+  - Offline-Größe live aus `bytes`/`vorhanden` × fehlende Dateien.
+- **Logo (2.2.5)** und **Nacht-Auftrag (2.2.4)** sind enthalten.
+
 ## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.5 vom 18.11.2026 (Web = Android): einheitliches Logo
 
 - **Schon gleich waren:**

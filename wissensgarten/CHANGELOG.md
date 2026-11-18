@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.6 – Jede richtige Antwort zählt (18.11.2026)
+- **Mehrere richtige Antworten werden erkannt:** „vier“ zählt wie 4, ½ wie 0,5 oder 50 %, „50 Prozent“ wie „50 %“; Aufzählungen dürfen in beliebiger Reihenfolge stehen (außer, wenn nach der Reihenfolge gefragt ist); englische Kurzformen wie „didn't“ zählen wie „did not“.
+- **118 Karten** nennen jetzt gleichwertige Antworten (z. B. Synonyme, andere Schreibweisen) oder sind eindeutiger gefragt.
+- Fragen, die nur mit Auswahl lösbar sind („Welches Wort ist ein Nomen?“), kommen nicht mehr zum Eintippen.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.5 – Überall dasselbe Logo (18.11.2026)
 - Das Wissensgarten-Logo (die Pflanze mit der Buch-Blüte) ist jetzt überall gleich: als App-Symbol, auf dem Willkommensbildschirm, beim Laden der WebApp und auf Postkarte und Urkunde.
 - Dein Lernstand bleibt vollständig erhalten.

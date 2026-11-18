@@ -1,6 +1,6 @@
 {
   "id": "gs-englisch-farben-zahlen",
-  "version": 1,
+  "version": 2,
   "title": "Farben, Zahlen, Tiere",
   "subject": "englisch",
   "grades": [
@@ -133,7 +133,7 @@
     {
       "id": "009",
       "q": "Was heißt „grau“ auf Englisch?",
-      "a": "grey",
+      "a": "grey (gray)",
       "choices": [
         "green",
         "blue",

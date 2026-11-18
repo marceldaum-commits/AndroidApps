@@ -83,7 +83,7 @@ object Radio {
         val first = all.first()
         fun has(vararg w: String) = all.any { h -> w.any { h == it || h.startsWith("$it ") || h.endsWith(" $it") || h.contains(" $it ") } }
         // Ist die richtige Antwort selbst ein Steuerwort („Ende“, „weiter“, „was“ …)? Dann zählt sie als Antwort.
-        if ((q.mode == Mode.FREE || q.mode == Mode.LEARN) && all.any { SpokenAnswer.matches(it, q.card.back) }) return Reply.Correct
+        if ((q.mode == Mode.FREE || q.mode == Mode.LEARN) && all.any { SpokenAnswer.matches(it, q.card.back, q.card.front) }) return Reply.Correct
         if (has("stopp", "stop", "aufhören", "beenden", "ende", "schluss")) return Reply.Stop
         if (has("nochmal", "noch mal", "wiederholen", "wie bitte", "was")) return Reply.Repeat
         if (all.any { it.contains("weiß nicht") || it.contains("weiss nicht") || it.contains("keine ahnung") } || has("passe", "weiter")) return Reply.DontKnow
@@ -96,14 +96,14 @@ object Radio {
             }
             Mode.CHOICE -> {
                 val idx = raw.firstNotNullOfOrNull { h -> letterIndex(h) }
-                    ?: all.firstNotNullOfOrNull { h -> q.options.indexOfFirst { SpokenAnswer.matches(h, it) }.takeIf { it >= 0 } }
+                    ?: all.firstNotNullOfOrNull { h -> q.options.indexOfFirst { SpokenAnswer.matches(h, it, q.card.front) }.takeIf { it >= 0 } }
                 when {
                     idx == null -> Reply.Unclear
                     q.options.getOrNull(idx) == q.card.back -> Reply.Correct
                     else -> Reply.Wrong(raw.first())
                 }
             }
-            Mode.FREE, Mode.LEARN -> if (all.any { SpokenAnswer.matches(it, q.card.back) }) Reply.Correct else Reply.Wrong(first)
+            Mode.FREE, Mode.LEARN -> if (all.any { SpokenAnswer.matches(it, q.card.back, q.card.front) }) Reply.Correct else Reply.Wrong(first)
         }
     }
 

@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-gebirge-fluesse",
-  "version": 2,
+  "version": 3,
   "title": "Flüsse, Berge, Meere",
   "subject": "erdkunde",
   "grades": [
@@ -434,7 +434,7 @@
     {
       "id": "034",
       "q": "Wie nennt man den Meeresboden, der an der Nordsee bei Ebbe trocken fällt?",
-      "a": "Watt",
+      "a": "Watt (Wattenmeer)",
       "choices": [
         "Fjord",
         "Riff",

@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-zeichensetzung",
-  "version": 1,
+  "version": 2,
   "title": "Komma & Co.",
   "subject": "deutsch",
   "grades": [
@@ -325,7 +325,7 @@
     },
     {
       "id": "025",
-      "q": "Ergänze: „Mama sagt, ___ wir gleich essen.“",
+      "q": "Ergänze: „Mama sagt, ___ wir gleich essen.“ (das oder dass?)",
       "a": "dass",
       "choices": [
         "das",
@@ -337,7 +337,7 @@
     },
     {
       "id": "026",
-      "q": "Ergänze: „Das Spiel, ___ wir gespielt haben, war super.“",
+      "q": "Ergänze: „Das Spiel, ___ wir gespielt haben, war super.“ (das oder dass?)",
       "a": "das",
       "choices": [
         "dass",
@@ -349,7 +349,7 @@
     },
     {
       "id": "027",
-      "q": "Ergänze: „Ich finde es toll, ___ du mir hilfst.“",
+      "q": "Ergänze: „Ich finde es toll, ___ du mir hilfst.“ (das oder dass?)",
       "a": "dass",
       "choices": [
         "das",
@@ -361,7 +361,7 @@
     },
     {
       "id": "028",
-      "q": "Ergänze: „Siehst du das Pferd? ___ ist schnell!“",
+      "q": "Ergänze: „Siehst du das Pferd? ___ ist schnell!“ (das oder dass?)",
       "a": "Das",
       "choices": [
         "Dass",

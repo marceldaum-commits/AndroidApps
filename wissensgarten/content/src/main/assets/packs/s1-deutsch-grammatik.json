@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-grammatik",
-  "version": 3,
+  "version": 4,
   "title": "Deutsch Grammatik",
   "subject": "deutsch",
   "grades": [
@@ -249,7 +249,7 @@
     {
       "id": "020",
       "q": "Mit welcher Probe ermittelt man Satzglieder?",
-      "a": "Umstellprobe",
+      "a": "Umstellprobe (Verschiebeprobe)",
       "choices": [
         "Verlängerungsprobe",
         "Silbenprobe",
@@ -260,7 +260,7 @@
     },
     {
       "id": "021",
-      "q": "„Ich hoffe, ___ du morgen kommst.“",
+      "q": "„Ich hoffe, ___ du morgen kommst.“ (das oder dass?)",
       "a": "dass",
       "choices": [
         "das",
@@ -272,7 +272,7 @@
     },
     {
       "id": "022",
-      "q": "„Das Fahrrad, ___ dort steht, gehört mir.“",
+      "q": "„Das Fahrrad, ___ dort steht, gehört mir.“ (das oder dass?)",
       "a": "das",
       "choices": [
         "dass",
@@ -284,7 +284,7 @@
     },
     {
       "id": "023",
-      "q": "„___ Wetter ist heute schön.“",
+      "q": "„___ Wetter ist heute schön.“ (das oder dass?)",
       "a": "Das",
       "choices": [
         "Dass",
@@ -296,7 +296,7 @@
     },
     {
       "id": "024",
-      "q": "„Er sagt, ___ er müde ist.“",
+      "q": "„Er sagt, ___ er müde ist.“ (das oder dass?)",
       "a": "dass",
       "choices": [
         "das",
@@ -319,7 +319,7 @@
     {
       "id": "026",
       "q": "Zeitform: „Ich gehe nach Hause.“",
-      "a": "Präsens",
+      "a": "Präsens (Gegenwart)",
       "choices": [
         "Präteritum",
         "Perfekt",
@@ -330,7 +330,7 @@
     {
       "id": "027",
       "q": "Zeitform: „Ich ging nach Hause.“",
-      "a": "Präteritum",
+      "a": "Präteritum (Imperfekt)",
       "choices": [
         "Präsens",
         "Perfekt",
@@ -352,7 +352,7 @@
     {
       "id": "029",
       "q": "Zeitform: „Ich war nach Hause gegangen.“",
-      "a": "Plusquamperfekt",
+      "a": "Plusquamperfekt (Vorvergangenheit)",
       "choices": [
         "Perfekt",
         "Präteritum",

@@ -219,7 +219,7 @@ fun SpeakGame(card: StudyCard, options: List<String>?, locale: Locale, onResult:
         if (results.isEmpty()) return@rememberSpeechPrompt
         heard = results.first()
         tries++
-        if (results.any { SpokenAnswer.matches(it, card.back) }) {
+        if (results.any { SpokenAnswer.matches(it, card.back, card.front) }) {
             sfx?.play(Sound.CORRECT)
             scope.launch { delay(700); onResult(if (tries == 1) GameResult.PERFECT else GameResult.SHAKY) }
         } else {
@@ -245,7 +245,7 @@ fun SpeakGame(card: StudyCard, options: List<String>?, locale: Locale, onResult:
             }, modifier = Modifier.fillMaxSize()) { Text("🎤", fontSize = 48.sp) }
         }
         heard?.let { h ->
-            val ok = SpokenAnswer.matches(h, card.back)
+            val ok = SpokenAnswer.matches(h, card.back, card.front)
             Text(
                 if (ok) "Ich habe „$h“ gehört – richtig! 🎉" else if (tries >= 2) "„$h“ – richtig ist: ${card.back}" else "Ich habe „$h“ gehört. Versuch's noch mal!",
                 textAlign = TextAlign.Center, fontWeight = FontWeight.Bold,
@@ -279,7 +279,7 @@ fun TypeGame(card: StudyCard, strictSpelling: Boolean, onResult: (GameResult) ->
     fun check() {
         if (done || text.isBlank()) return
         tries++
-        val v = de.wissensgarten.core.model.TypedAnswer.check(text, card.back, strictSpelling)
+        val v = de.wissensgarten.core.model.TypedAnswer.check(text, card.back, strictSpelling, card.front)
         verdict = v
         when (v) {
             de.wissensgarten.core.model.TypedAnswer.Verdict.RIGHT -> { sfx?.play(Sound.CORRECT); finish(if (tries == 1) GameResult.PERFECT else GameResult.SHAKY) }
@@ -311,7 +311,7 @@ fun TypeGame(card: StudyCard, strictSpelling: Boolean, onResult: (GameResult) ->
                 v == de.wissensgarten.core.model.TypedAnswer.Verdict.RIGHT -> "Genau richtig! 🎉"
                 v == de.wissensgarten.core.model.TypedAnswer.Verdict.ALMOST -> "Fast! Ganz genau: ${card.back}"
                 done -> "Richtig ist: ${card.back}"
-                strictSpelling && de.wissensgarten.core.model.TypedAnswer.check(text, card.back) != de.wissensgarten.core.model.TypedAnswer.Verdict.WRONG ->
+                strictSpelling && de.wissensgarten.core.model.TypedAnswer.check(text, card.back, question = card.front) != de.wissensgarten.core.model.TypedAnswer.Verdict.WRONG ->
                     "Ganz knapp – achte auf die Schreibweise!"
                 else -> "Noch nicht – versuch's noch mal!"
             }

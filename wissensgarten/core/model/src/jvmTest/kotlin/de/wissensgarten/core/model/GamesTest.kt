@@ -162,6 +162,102 @@ class GamesTest {
         org.junit.Assert.assertEquals(listOf("Kyjiw (Kiew)", "Kyjiw", "Kiew"), TypedAnswer.alternatives("Kyjiw (Kiew)"))
     }
 
+    private val R = TypedAnswer.Verdict.RIGHT
+    private val W = TypedAnswer.Verdict.WRONG
+
+    @Test fun numberWordsCountLikeDigits() {
+        assertEquals(R, TypedAnswer.check("vier", "4", question = "Wie viele Fälle gibt es im Deutschen?"))
+        assertEquals(R, TypedAnswer.check("Acht", "8"))
+        assertEquals(R, TypedAnswer.check("eight", "8"))
+        assertEquals(R, TypedAnswer.check("einundzwanzig", "21"))
+        assertEquals(R, TypedAnswer.check("twenty-one", "21"))
+        assertEquals(R, TypedAnswer.check("zwanzig", "20"))
+        assertEquals(R, TypedAnswer.check("null", "0 °C"))
+        assertEquals(R, TypedAnswer.check("acht Tage", "8 Tage"))
+        assertEquals(R, TypedAnswer.check("tausend", "1 000"))
+        assertEquals(W, TypedAnswer.check("sieben", "8"))
+        // steht das Zahlwort schon in der Frage, ist es keine Antwort
+        assertEquals(W, TypedAnswer.check("six", "6", question = "Welche Zahl ist „six“?"))
+        // umgekehrt nicht: „eight“ ist das gesuchte Wort, „8“ reicht nicht
+        assertEquals(W, TypedAnswer.check("8", "eight", question = "Was heißt „acht“ auf Englisch?"))
+    }
+
+    @Test fun fractionsDecimalsAndPercentAreTheSameValue() {
+        assertEquals(R, TypedAnswer.check("0,5", "1/2"))
+        assertEquals(R, TypedAnswer.check("0.5", "1/2"))
+        assertEquals(R, TypedAnswer.check("½", "1/2"))
+        assertEquals(R, TypedAnswer.check("50 %", "1/2"))
+        assertEquals(R, TypedAnswer.check("1/2", "0,5 (1/2)"))
+        assertEquals(R, TypedAnswer.check("0,75", "3/4", question = "1/2 + 1/4 = ?"))
+        assertEquals(R, TypedAnswer.check("0,25", "25 %", question = "Wie wahrscheinlich ist das?"))
+        assertEquals(W, TypedAnswer.check("1/3", "0,333"))
+        // verlangt die Frage eine Schreibweise, zählt nur diese
+        assertEquals(W, TypedAnswer.check("0,75", "3/4", question = "0,75 als vollständig gekürzter Bruch?"))
+        assertEquals(W, TypedAnswer.check("4/6", "2/3", question = "Kürze 12/18 vollständig."))
+        assertEquals(R, TypedAnswer.check("2/3", "2/3", question = "Kürze 12/18 vollständig."))
+        assertEquals(W, TypedAnswer.check("17/5", "3 2/5", question = "Schreibe 17/5 als gemischte Zahl."))
+        assertEquals(W, TypedAnswer.check("1/8", "0,125", question = "1/8 als Dezimalzahl?"))
+        assertEquals(R, TypedAnswer.check("40", "40 %", question = "2/5 in Prozent?"))
+        assertEquals(W, TypedAnswer.check("0,4", "40 %", question = "2/5 in Prozent?"))
+    }
+
+    @Test fun unitsMayBeWrittenOut() {
+        assertEquals(R, TypedAnswer.check("50 Prozent", "50 %"))
+        assertEquals(R, TypedAnswer.check("100 Grad", "100 °C"))
+        assertEquals(R, TypedAnswer.check("100 °C", "100 °C"))
+        assertEquals(R, TypedAnswer.check("7 °C", "7 Grad"))
+        assertEquals(R, TypedAnswer.check("5 Zentimeter", "5 cm"))
+        assertEquals(R, TypedAnswer.check("5", "5 cm"))
+        assertEquals(R, TypedAnswer.check("2,50 Euro", "2,50 €"))
+        assertEquals(R, TypedAnswer.check("100 ct", "100 Cent"))
+        assertEquals(R, TypedAnswer.check("20", "20 m/s"))
+        assertEquals(W, TypedAnswer.check("5 m", "5 cm"))
+        assertEquals(W, TypedAnswer.check("1 km", "1000 m", question = "1 km = ? m"))
+    }
+
+    @Test fun listsInAnyOrderUnlessOrderIsAsked() {
+        assertEquals(R, TypedAnswer.check("Remus und Romulus", "Romulus und Remus", question = "Wie heißen die Zwillinge der römischen Gründungssage?"))
+        assertEquals(R, TypedAnswer.check("Haken, Appel", "Appel und Haken"))
+        assertEquals(R, TypedAnswer.check("Blau, Gelb, Rot", "Gelb, Rot, Blau", question = "Welche drei Grundfarben hat der Farbkreis nach Itten?"))
+        assertEquals(W, TypedAnswer.check("Vilnius, Riga, Tallinn", "Tallinn, Riga, Vilnius", question = "Hauptstädte der baltischen Staaten (in dieser Reihenfolge)?"))
+        assertEquals(W, TypedAnswer.check("Kern, Mantel, Kruste", "Kruste, Mantel, Kern", question = "Wie heißen die drei Schalen der Erde von außen nach innen?"))
+        assertEquals(W, TypedAnswer.check("Drang und Sturm", "Sturm und Drang", question = "Epoche von Schillers „Die Räuber“"))
+        assertEquals(W, TypedAnswer.check("Romulus", "Romulus und Remus"))
+        assertTrue(SpokenAnswer.matches("deimos und phobos", "Phobos und Deimos", "Wie heißen die beiden Monde des Mars?"))
+        assertFalse(SpokenAnswer.matches("gold rot schwarz", "Schwarz, Rot, Gold", "Welche Farben hat die deutsche Flagge (von oben nach unten)?"))
+    }
+
+    @Test fun alternativesInParenthesesAndOtherEquivalentForms() {
+        assertEquals(listOf("Nomen (Namenwort / Substantiv)", "Nomen", "Namenwort", "Substantiv"), TypedAnswer.alternatives("Nomen (Namenwort / Substantiv)"))
+        assertEquals(R, TypedAnswer.check("Substantiv", "Nomen (Namenwort / Substantiv)", strictSpelling = true))
+        assertEquals(listOf("Δx · Δp ≥ h / (4π)"), TypedAnswer.alternatives("Δx · Δp ≥ h / (4π)"))
+        assertEquals(1, TypedAnswer.alternatives("Münster (mit Frankreich) und Osnabrück (mit Schweden)").size)
+        assertEquals(R, TypedAnswer.check("I am full", "I'm full."))
+        assertEquals(R, TypedAnswer.check("did not see", "didn't see"))
+        assertEquals(R, TypedAnswer.check("read", "to read"))
+        assertEquals(R, TypedAnswer.check("Schweiz", "In der Schweiz"))
+        assertEquals(W, TypedAnswer.check("Aus der Schweiz", "In der Schweiz"))
+        assertEquals(R, TypedAnswer.check("CO2", "CO₂"))
+        assertTrue(SpokenAnswer.matches("rufen", "rufen (schreien)"))
+        assertTrue(SpokenAnswer.matches("schreien", "rufen (schreien)"))
+        assertTrue(SpokenAnswer.matches("did not see", "didn't see"))
+        assertTrue(SpokenAnswer.matches("didn t see", "didn't see"))
+        assertTrue(SpokenAnswer.matches("halb 8", "halb acht"))
+        assertTrue(SpokenAnswer.matches("schweiz", "In der Schweiz"))
+        assertTrue(SpokenAnswer.matches("einstein", "Albert Einstein", "Wer entwickelte die Relativitätstheorie?"))
+        assertTrue(SpokenAnswer.matches("da vinci", "Leonardo da Vinci", "Wer malte die „Mona Lisa“?"))
+        assertFalse(SpokenAnswer.matches("albert", "Albert Einstein", "Wer entwickelte die Relativitätstheorie?"))
+        assertFalse(SpokenAnswer.matches("einstein", "Albert Einstein", "Wer entwickelte die Relativitätstheorie? (Vor- und Nachname)"))
+    }
+
+    @Test fun ambiguousChoiceQuestionsAreNotAskedFreely() {
+        val tree = Memory(90.0, 5.0, 0, 8, 0)
+        val c = StudyCard("n", "b", "Welches Wort ist ein Nomen?", "Hund", listOf("laufen", "rot", "schnell"), null, tree)
+        val modes = (1..40).map { Games.choose(c.copy(id = "n$it"), peers, false, canSpeak = true, canType = true) }.toSet()
+        assertFalse(GameMode.TYPE in modes)
+        assertFalse(GameMode.SPEAK in modes)
+    }
+
     @Test fun germanAcceptsAlternativesButStaysStrict() {
         org.junit.Assert.assertEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Voraussage", "Vorhersage (Voraussage)", strictSpelling = true))
         org.junit.Assert.assertNotEquals(TypedAnswer.Verdict.RIGHT, TypedAnswer.check("Vorrausage", "Vorhersage (Voraussage)", strictSpelling = true))

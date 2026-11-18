@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-zelle-mensch",
-  "version": 4,
+  "version": 5,
   "title": "Zelle & Mensch",
   "subject": "biologie",
   "grades": [
@@ -72,7 +72,7 @@
     {
       "id": "004",
       "q": "In welchen Zellbestandteilen findet die Fotosynthese statt?",
-      "a": "Chloroplasten",
+      "a": "Chloroplasten (Blattgrünkörner)",
       "choices": [
         "Mitochondrien",
         "Ribosomen",
@@ -94,7 +94,7 @@
     {
       "id": "006",
       "q": "Welche dünne Hülle umgibt jede Zelle?",
-      "a": "Zellmembran",
+      "a": "Zellmembran (Plasmamembran)",
       "choices": [
         "Zellwand",
         "Kernhülle",
@@ -202,7 +202,7 @@
     {
       "id": "016",
       "q": "Blutgefäße, die Blut vom Herzen wegführen?",
-      "a": "Arterien",
+      "a": "Arterien (Schlagadern)",
       "choices": [
         "Venen",
         "Kapillaren",
@@ -213,7 +213,7 @@
     {
       "id": "017",
       "q": "Blutgefäße, die Blut zum Herzen hinführen?",
-      "a": "Venen",
+      "a": "Venen (Blutadern)",
       "img": "➡️❤️"
     },
     {
@@ -293,7 +293,7 @@
     {
       "id": "025",
       "q": "Lichtempfindliche Schicht im Auge mit den Sinneszellen?",
-      "a": "Netzhaut",
+      "a": "Netzhaut (Retina)",
       "choices": [
         "Hornhaut",
         "Lederhaut",

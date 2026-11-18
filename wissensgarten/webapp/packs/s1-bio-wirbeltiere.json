@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-wirbeltiere",
-  "version": 2,
+  "version": 3,
   "title": "Wirbeltiere",
   "subject": "biologie",
   "grades": [
@@ -264,7 +264,7 @@
     {
       "id": "020",
       "q": "Wie nennt man Tiere mit fast gleichbleibender Körpertemperatur?",
-      "a": "Gleichwarm",
+      "a": "Gleichwarm (warmblütig)",
       "choices": [
         "Wechselwarm",
         "Kaltblütig",
@@ -348,7 +348,7 @@
     {
       "id": "027",
       "q": "Wie steht die Schwanzflosse eines Wals?",
-      "a": "Waagerecht",
+      "a": "Waagerecht (horizontal)",
       "choices": [
         "Senkrecht wie beim Fisch",
         "Schräg",

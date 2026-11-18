@@ -1,6 +1,6 @@
 {
   "id": "gs-uhrzeit",
-  "version": 3,
+  "version": 4,
   "title": "Die Uhr und die Zeit",
   "subject": "mathe",
   "grades": [
@@ -251,7 +251,7 @@
     {
       "id": "019",
       "q": "Wie nennt man 12 Uhr nachts noch?",
-      "a": "0 Uhr",
+      "a": "0 Uhr (Mitternacht)",
       "choices": [
         "12 Uhr mittags",
         "6 Uhr",
