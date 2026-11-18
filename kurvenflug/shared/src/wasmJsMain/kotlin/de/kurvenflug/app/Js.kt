@@ -25,6 +25,7 @@ internal fun jsOnSpeaking(f: (Boolean) -> Unit): Unit = js("window.KF.onSpeaking
 internal fun jsNova(items: String): Unit = js("window.KF.nova(items)")
 internal fun jsOnUnreach(f: () -> Unit): Unit = js("window.KF.onUnreach(f)")
 internal fun jsHush(): Unit = js("window.KF.hush()")
+internal fun jsAtHome(home: Boolean): Unit = js("{ if (window.kfAtHome) window.kfAtHome(home) }")
 internal fun jsNovaSpeed(speed: Double): Unit = js("window.KF.novaSpeed(speed)")
 internal fun jsOffStat(hashes: String, cb: (Int, Int, Double, Double, Double) -> Unit): Unit = js("window.KF.offStat(hashes, cb)")
 internal fun jsOffLoad(hashes: String, best: Boolean, progress: (Int, Int) -> Unit, done: (Int, Boolean) -> Unit): Unit = js("window.KF.offLoad(hashes, best, progress, done)")

@@ -32,6 +32,8 @@ interface Platform {
     val proShop: ProShop? get() = null
     /** Vorlesen (null = nicht möglich, z. B. in Bildschirmfoto-Tests) */
     val reader: de.kurvenflug.app.ui.fx.Reader? get() = null
+    /** Startbildschirm offen? (WebApp: dort darf ein Update neu laden) */
+    fun onHome(home: Boolean) {}
 }
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */

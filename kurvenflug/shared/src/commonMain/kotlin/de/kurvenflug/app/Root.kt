@@ -159,6 +159,8 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     val entry by nav.currentBackStackEntryAsState()
     val route = entry?.destination?.route
     val levelArg = entry?.arguments?.read { getStringOrNull("id") }
+    // WebApp: auf dem Startbildschirm darf ein Update neu laden – nie mitten in einer Aufgabe
+    LaunchedEffect(route) { platform.onHome(route == null || route == Routes.HOME) }
     LaunchedEffect(route, levelArg) {
         platform.setMusicMood(when (route) {
             Routes.LEVEL -> levelArg.orEmpty().let { id ->

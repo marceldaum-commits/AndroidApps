@@ -1,5 +1,26 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.10 – fertig für den Betriebstest: WebApp aktualisiert sich selbst + Theorie im Rechen-Stern · Web = APK = Play
+**WebApp immer auf dem neuesten Stand (Leitstand 18.11.):**
+- Prüft auf neue Versionen beim Öffnen, bei Rückkehr in den Tab (visibilitychange/focus/pageshow) und alle 30 min:
+  `registration.update()` + `version.json?nc=…` mit `cache: 'no-store'`. sw.js: `skipWaiting` + `clients.claim`.
+- Neu geladen wird **nur an sicheren Stellen**: in den ersten 15 s nach dem Start, wenn der Tab im Hintergrund ist oder die
+  App auf dem Startbildschirm steht (die App meldet das über `window.kfAtHome`) – **nie mitten in einer Aufgabe**; steht das
+  Kind in einem Level, wird beim nächsten Wechsel zur Startseite bzw. in den Hintergrund geladen.
+- Danach kurz „✨ Neue Version 2.5.10 geladen“; in den Einstellungen steht „Kurvenflug Version … · aktualisiert sich von selbst“.
+- **Browser-Test (Playwright):** alte Version offen → neue Version auf den Server → Tab weg und zurück → neue Version aktiv
+  ohne Neuladen von Hand, Hinweis sichtbar; **Spielstand (localStorage) und Nova-Offline-Speicher (Cache `kf-nova`)
+  unverändert**, alter App-Cache entfernt.
+- **Nebenbei gefunden und behoben:** Kleine Hinweise im Browser („Foto gespeichert 📸“, „In die Zwischenablage kopiert“)
+  waren unsichtbar (Compose hängt sein Shadow-DOM an `<body>`) – jetzt am `<html>`-Element, sichtbar.
+- Für den Server: `index.html`, `sw.js` und `version.json` bitte **ohne langes Caching** ausliefern (`Cache-Control: no-cache`);
+  die wasm-Dateien haben Inhalts-Namen und dürfen lange gecacht werden. Keine neuen Dateiendungen.
+
+**Theorie im Rechen-Stern (Marcel 18.11.):** In der Rechen-Stern-Karte gibt es jetzt den Knopf „📖 Theorie nachlesen“
+(nach der Antwort „📖 Theorie dazu“): öffnet die Theorie des Kapitels (Formel, Erklärung, Beispiel) darüber, danach geht es
+an derselben Stelle weiter. Gleich auf Android und im Web.
+- Keine neuen festen Vorlese-Texte (nur das 60-Tage-Fenster der Tagesmissionen rückt wie bei jedem Bau weiter). versionCode 57, Prüfkette grün.
+
 ## ✅ 2.5.9 – Mehrere Lösungen (Marcel 18.11.) · Web = APK = Play
 **Grundsatz in KurvenFlug:** Kontrolliert wird der Flug – **jede Einstellung, die trifft, zählt als richtig** (nie nur die
 hinterlegte). Der Formel-Detektiv vergleicht die Kurve, nicht die Schreibweise (2(x+1) = 2x+2 wird akzeptiert).

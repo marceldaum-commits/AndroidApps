@@ -365,6 +365,7 @@ fun LevelScreen(
             modifier = Modifier.align(Alignment.BottomCenter)) {
             ResultCard(stars, taken.size + 0, level.cells.size, usedHelp, nextLabel, allowRetry, reward,
                 check = check, answer = answer, worked = steps, ownWay = de.kurvenflug.core.model.ReadTexts.ownWay(level, values),
+                onTheory = if (theoryText != null) ({ theory = true; sfx?.play(Sound.TICK) }) else null,
                 onAnswer = { i ->
                     answer = i
                     val ok = i == check?.correct
@@ -549,7 +550,7 @@ private fun Modifier.clickableNoRipple(i: androidx.compose.foundation.interactio
 private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean, nextLabel: String, allowRetry: Boolean,
                        reward: StickerDrop?, onPhoto: () -> Unit,
                        check: CalcCheck? = null, answer: Int = -1, worked: List<Step>? = null, onAnswer: (Int) -> Unit = {},
-                       ownWay: String? = null,
+                       ownWay: String? = null, onTheory: (() -> Unit)? = null,
                        onRetry: () -> Unit, onNext: (() -> Unit)?, onBack: () -> Unit) {
     Card(
         Modifier.padding(16.dp).fillMaxWidth().navigationBarsPadding(),
@@ -568,7 +569,7 @@ private fun ResultCard(stars: Int, cells: Int, totalCells: Int, helped: Boolean,
             }
             if (totalCells > 0) Text("⚡ $cells von $totalCells Energiezellen", color = Q.Yellow, style = MaterialTheme.typography.bodyMedium)
             if (helped && stars == 2 && check == null) Text("Ohne Zielhilfe gibt's 3 ⭐ – traust du dich?", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
-            if (check != null) CalcCheckCard(check, answer, worked, onAnswer, ownWay)
+            if (check != null) CalcCheckCard(check, answer, worked, onAnswer, ownWay, onTheory)
             reward?.let { d ->
                 // Überraschungs-Sticker: ploppt nach den Sternen herein
                 val pop = remember { Animatable(0f) }
@@ -677,7 +678,7 @@ private fun LiveCalc(level: Level, values: Map<String, Double>, visible: Boolean
  * (ausgearbeitetes Beispiel), Schritt für Schritt eingeblendet.
  */
 @Composable
-private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, onAnswer: (Int) -> Unit, ownWay: String? = null) {
+private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, onAnswer: (Int) -> Unit, ownWay: String? = null, onTheory: (() -> Unit)? = null) {
     Column(Modifier.padding(top = 10.dp).fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Space.copy(alpha = 0.6f))
         .border(1.dp, Q.Violet.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -686,6 +687,9 @@ private fun CalcCheckCard(check: CalcCheck, answer: Int, worked: List<Step>?, on
                 if (answer < 0) de.kurvenflug.core.model.ReadTexts.calcQuestion(check) else de.kurvenflug.core.model.ReadTexts.calcAnswer(check, worked)
             })
         }
+        // Wer lernen will, schlägt nach: die Theorie zum Thema – kostet keine Sterne, danach normal antworten
+        if (onTheory != null) AssistChip(onClick = onTheory, label = { Text(if (answer < 0) "📖 Theorie nachlesen" else "📖 Theorie dazu") },
+            colors = AssistChipDefaults.assistChipColors(labelColor = Q.Cyan))
         check.options.forEachIndexed { i, o ->
             val right = i == check.correct
             val col = when {

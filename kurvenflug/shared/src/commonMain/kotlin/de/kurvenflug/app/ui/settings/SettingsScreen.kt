@@ -51,6 +51,9 @@ fun SettingsScreen(
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             val platform = de.kurvenflug.app.LocalPlatform.current
             if (platform.selfUpdate) PlatformUpdateSection(installed, update, autoUpdate, onAutoUpdate)
+            // Welche Version läuft? (WebApp und Play: kein Update-Knopf, aber die Nummer soll sichtbar sein)
+            else if (installed.isNotBlank()) Text("Kurvenflug Version $installed" + if (platform.isWeb) " · aktualisiert sich von selbst" else " · Updates über Google Play",
+                style = MaterialTheme.typography.bodySmall, color = Q.Muted)
             if (onPro != null) ProCard(de.kurvenflug.app.LocalPro.current, onPro)
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
