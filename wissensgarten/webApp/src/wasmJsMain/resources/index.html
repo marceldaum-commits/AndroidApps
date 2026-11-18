@@ -8,13 +8,117 @@
   <meta name="theme-color" content="#3f6b3a">
   <meta name="wg-version" content="@VERSION@">
   <link rel="manifest" href="manifest.webmanifest">
-  <!-- Emoji-Schrift gleich parallel zur App laden (statt erst danach) – nur beim ersten Besuch; danach kommt sie aus dem
-       Zwischenspeicher des Service Workers (ein Vorab-Laden würde dort nur doppelt laden und eine Konsolen-Warnung erzeugen) -->
   <script>
-    if (!(navigator.serviceWorker && navigator.serviceWorker.controller)) {
-      const l = document.createElement('link'); l.rel = 'preload'; l.as = 'fetch'; l.crossOrigin = 'anonymous';
-      l.href = 'composeResources/de.wissensgarten.web.res/font/noto_color_emoji.ttf'; document.head.appendChild(l);
-    }
+    // Schrittprotokoll (Diagnose): jeder Startschritt wird sofort im Browser-Speicher abgelegt (wg.diag).
+    // Mit ?diag=1 eingeschaltet (bleibt an, bis ?diag=0): sichtbare Liste unten – und nach einem Absturz beim nächsten Öffnen
+    // die Schritte des abgebrochenen Starts. Es werden keine persönlichen Daten erfasst, nichts verlässt das Gerät.
+    (function () {
+      var KEY = 'wg.diag', t0 = Date.now(), log = [], on = false, prev = null, done = false, box = null;
+      var v = document.documentElement.getAttribute('data-version') || '';
+      try {
+        if (/[?&]diag=1/.test(location.search)) localStorage.setItem('wg.diag.an', '1');
+        if (/[?&]diag=0/.test(location.search)) localStorage.removeItem('wg.diag.an');
+        on = localStorage.getItem('wg.diag.an') === '1';
+        prev = JSON.parse(localStorage.getItem(KEY) || 'null');
+      } catch (e) {}
+      var save = function () { try { localStorage.setItem(KEY, JSON.stringify({ v: v, t: t0, ok: done, log: log })); } catch (e) {} };
+      var esc = function (t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); };
+      var text = function () {
+        var out = '';
+        if (prev && prev.log) out += (prev.ok ? 'Letzter Start (ok)' : '⚠ LETZTER START ABGEBROCHEN') + ' – Version ' + prev.v + ', ' + new Date(prev.t).toLocaleString('de-DE') + '\n' + prev.log.join('\n') + '\n\n';
+        return out + 'Dieser Start – Version ' + v + '\n' + log.join('\n');
+      };
+      var render = function () {
+        if (!on || !document.body) return;   // erst wenn die Seite steht
+        if (!box) {
+          box = document.createElement('div');
+          box.id = 'wg-diag';
+          box.style.cssText = 'position:fixed;left:0;right:0;bottom:0;max-height:48vh;z-index:100;background:rgba(20,30,20,.92);color:#e8ffe0;font:11px/1.35 ui-monospace,Menlo,monospace;padding:8px 10px;box-sizing:border-box;display:flex;flex-direction:column;gap:6px';
+          box.innerHTML = '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center"><b style="flex:1">🔧 Diagnose ' + esc(v) + '</b>' +
+            '<button data-a="copy">Kopieren</button><button data-a="hide">Ausblenden</button><button data-a="off">Diagnose aus</button></div>' +
+            '<pre style="margin:0;overflow:auto;white-space:pre-wrap;word-break:break-word;flex:1"></pre>';
+          box.addEventListener('click', function (e) {
+            var a = e.target && e.target.getAttribute && e.target.getAttribute('data-a');
+            if (a === 'copy') { try { navigator.clipboard.writeText(text()).then(function () { e.target.textContent = 'Kopiert ✓'; }); } catch (x) {} }
+            if (a === 'hide') box.style.display = 'none';
+            if (a === 'off') { try { localStorage.removeItem('wg.diag.an'); } catch (x) {} on = false; box.remove(); }
+          });
+          document.documentElement.appendChild(box);   // nicht in <body>: dort legt Compose eine Shadow-Root an, alles andere wäre unsichtbar
+        }
+        var pre = box.querySelector('pre'); pre.textContent = text(); pre.scrollTop = pre.scrollHeight;
+      };
+      window.wgDiag = function (s) {
+        log.push(((Date.now() - t0) / 1000).toFixed(2) + 's ' + String(s).slice(0, 240));
+        if (log.length > 120) log.splice(8, 1);   // Kopf (Gerät) bleibt stehen
+        save(); render();
+      };
+      window.addEventListener('wg-ready', function () {
+        window.wgDiag('Garten steht (Startbild weg)');
+        requestAnimationFrame(function () { requestAnimationFrame(function () { done = true; window.wgDiag('erstes Bild gemalt ✓'); }); });
+      });
+      window.addEventListener('pagehide', function () { window.wgDiag('Seite verlassen/neu geladen'); });
+      document.addEventListener('visibilitychange', function () { window.wgDiag('Tab ' + (document.visibilityState === 'visible' ? 'sichtbar' : 'verborgen')); });
+      document.addEventListener('DOMContentLoaded', function () { window.wgDiag('HTML gelesen'); });
+      // Gerät (ohne persönliche Daten)
+      var n = navigator;
+      window.wgDiag('Kopf · ' + n.userAgent);
+      window.wgDiag('Bildschirm ' + screen.width + '×' + screen.height + ', Fenster ' + innerWidth + '×' + innerHeight + ', Schärfe ' + (window.devicePixelRatio || 1) +
+        (n.deviceMemory ? ', Speicher ' + n.deviceMemory + ' GB' : '') + (n.hardwareConcurrency ? ', Kerne ' + n.hardwareConcurrency : '') +
+        ', Service Worker ' + (n.serviceWorker ? (n.serviceWorker.controller ? 'aktiv' : 'noch nicht') : 'fehlt'));
+      if (prev && !prev.ok && prev.log) window.wgDiag('Hinweis: letzter Start (' + prev.v + ') kam nicht bis zum Garten – letzter Schritt: ' + prev.log[prev.log.length - 1]);
+      // Nur mit Diagnose: Browser-Warnungen und Pixelproben der Zeichenfläche (zeigt, ob Safari wirklich etwas malt)
+      if (on) {
+        window.wgDiagOn = true;
+        ['error', 'warn'].forEach(function (k) {
+          var o = console[k], cnt = 0;
+          console[k] = function () {
+            try { if (cnt++ < 40) window.wgDiag('Konsole ' + k + ': ' + Array.prototype.map.call(arguments, String).join(' ').slice(0, 220)); } catch (e) {}
+            return o.apply(console, arguments);
+          };
+        });
+        var probes = 0, last = '', shown = 0;
+        var canvasOf = function () { var r = document.body && document.body.shadowRoot; return (r && r.querySelector('canvas')) || document.querySelector('canvas'); };
+        var glOf = function (c) { return c.__wgGl || (c.__wgGl = c.getContext('webgl2') || c.getContext('webgl')); };
+        var probe = function (when) {
+          try {
+            var c = canvasOf(); if (!c) { if (last !== 'x') { last = 'x'; window.wgDiag('Pixel: keine Zeichenfläche gefunden'); } return; }
+            var gl = glOf(c); if (!gl) { if (last !== 'g') { last = 'g'; window.wgDiag('Pixel: kein WebGL-Zugriff auf die Zeichenfläche'); } return; }
+            var w = gl.drawingBufferWidth, h = gl.drawingBufferHeight, px = new Uint8Array(4), out = [];
+            [[w / 2, h / 2], [10, 10], [w / 2, h * 0.75], [w * 0.25, h * 0.25]].forEach(function (q) { gl.readPixels(q[0] | 0, q[1] | 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); out.push(px.join(',')); });
+            var key = out.join(' | ') + ' (Puffer ' + w + '×' + h + ', verloren ' + gl.isContextLost() + ', GL-Fehler ' + gl.getError() + ')';
+            if (key !== last && shown < 8) { last = key; shown++; window.wgDiag('Pixel ' + when + ' [RGBA Mitte | Ecke | unten | oben links]: ' + key); }
+          } catch (e) { window.wgDiag('Pixelprobe Fehler: ' + e); }
+        };
+        var oraf = window.requestAnimationFrame.bind(window);
+        window.requestAnimationFrame = function (cb) { return oraf(function (t) { cb(t); if (probes > 0) { probes--; probe('direkt nach dem Malen'); } }); };
+        window.addEventListener('wg-ready', function () {
+          probes = 60;
+          setTimeout(function () {
+            probe('1,5 s später');
+            try {
+              var c = canvasOf(), r = document.body.shadowRoot, cs = c && getComputedStyle(c), b = c && c.getBoundingClientRect();
+              var gl = c && glOf(c), a = gl && gl.getContextAttributes();
+              var top = (r && r.elementFromPoint ? r.elementFromPoint(innerWidth / 2, innerHeight / 2) : null) || document.elementFromPoint(innerWidth / 2, innerHeight / 2);
+              window.wgDiag('Fläche: ' + (c ? c.width + '×' + c.height + ' px, CSS ' + Math.round(b.width) + '×' + Math.round(b.height) + ' @' + Math.round(b.left) + ',' + Math.round(b.top) +
+                ', sichtbar ' + cs.display + '/' + cs.visibility + '/' + cs.opacity + ', Hintergrund ' + cs.backgroundColor : 'fehlt') +
+                ', Body-Hintergrund ' + getComputedStyle(document.body).backgroundColor + ', oben in der Mitte: ' + (top ? top.tagName + (top.id ? '#' + top.id : '') : '–'));
+              if (gl) window.wgDiag('WebGL: ' + gl.getParameter(gl.VERSION) + ' · ' + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + ' · Attribute ' + JSON.stringify(a));
+            } catch (e) { window.wgDiag('Flächen-Info Fehler: ' + e); }
+          }, 1500);
+        });
+      }
+      // WebAssembly-Schritte mitschreiben (Übersetzen/Starten der App und der Grafik-Engine)
+      try {
+        ['compile', 'instantiate', 'instantiateStreaming'].forEach(function (k) {
+          var o = WebAssembly[k]; if (typeof o !== 'function') return;
+          WebAssembly[k] = function () {
+            window.wgDiag('Wasm ' + k + ' …');
+            return o.apply(WebAssembly, arguments).then(function (r) { window.wgDiag('Wasm ' + k + ' fertig'); return r; },
+              function (e) { window.wgDiag('Wasm ' + k + ' FEHLER: ' + e); throw e; });
+          };
+        });
+      } catch (e) { window.wgDiag('Wasm-Protokoll nicht möglich: ' + e); }
+    })();
   </script>
   <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
@@ -46,11 +150,12 @@
     // Nie eine weiße Seite: Jeder Startfehler zeigt eine sichtbare Meldung mit Version und „Neu laden“.
     (function () {
       var shown = false, t0 = Date.now(), notes = [];
-      window.wgStartNote = function (t) { notes.push(String(t).slice(0, 300)); if (notes.length > 12) notes.shift(); };
+      window.wgStartNote = function (t) { notes.push(String(t).slice(0, 300)); if (notes.length > 12) notes.shift(); if (window.wgDiag) window.wgDiag('Notiz: ' + t); };
       window.wgStartFailed = function (why) {
         window.wgStartNote(why || 'unbekannt');
         if (shown) { var d = document.getElementById('wg-fail-detail'); if (d) d.textContent = notes.join(' | '); return; }
         shown = true;
+        if (window.wgDiag) window.wgDiag('FEHLERSEITE gezeigt: ' + why);
         var show = function () {
           var v = document.documentElement.getAttribute('data-version') || '';
           var box = document.createElement('div');
@@ -62,7 +167,7 @@
             '<button onclick="location.reload()" style="font:600 16px system-ui;color:#fff;background:#3f6b3a;border:0;border-radius:22px;padding:12px 22px">Neu laden</button>' +
             '<p style="margin:0;font-size:12px;color:#7a7360">Version ' + v + '</p>' +
             '<p id="wg-fail-detail" style="margin:0;font-size:11px;color:#9a917b;max-width:360px;word-break:break-word">' + notes.join(' | ').replace(/</g, '&lt;') + '</p>';
-          document.body.appendChild(box);
+          document.documentElement.appendChild(box);   // nicht in <body>: dort legt Compose eine Shadow-Root an, alles andere wäre unsichtbar
         };
         if (document.body) show(); else document.addEventListener('DOMContentLoaded', show);
       };
@@ -81,7 +186,14 @@
         var px = Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight);
         // höchstens doppelte Schärfe (statt 3×) und höchstens ~3,5 Mio. Bildpunkte: spart auf dem iPhone viel Grafikspeicher
         var use = Math.max(1, Math.min(real, 2, Math.sqrt(3.5e6 / px)));
-        if (ios && use < real) {
+        var voll = false;
+        try {
+          if (/[?&]schaerfe=voll/.test(location.search)) localStorage.setItem('wg.schaerfe', 'voll');
+          if (/[?&]schaerfe=auto/.test(location.search)) localStorage.removeItem('wg.schaerfe');
+          voll = localStorage.getItem('wg.schaerfe') === 'voll';
+        } catch (e) {}
+        if (voll) window.wgStartNote('Schärfe-Begrenzung aus (?schaerfe=voll)');
+        if (ios && use < real && !voll) {
           Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true });
           window.wgStartNote('iOS-Schärfe ' + real + ' → ' + use.toFixed(2));
         }
@@ -90,8 +202,6 @@
       window.addEventListener('webglcontextlost', function () { window.wgStartFailed('Grafik-Kontext verloren'); }, true);
     })();
   </script>
-  <script src="wg-platform.js"></script>
-  <script src="wg-stimme.js"></script>
 </head>
 <body>
   <div id="splash">
@@ -119,26 +229,44 @@
         bar.classList.add('echt'); barI.style.width = p + '%';
         pct.textContent = p + ' %';
       };
-      if (!total || !window.ReadableStream || !window.Response) return;
+      // Große Dateien (Wasm, Schriften) nacheinander statt gleichzeitig laden: schont Speicher und Leitung auf dem Handy.
+      // Die Emoji-Schrift fordert die App erst nach den Wasm-Dateien an – sie kommt damit automatisch zuletzt.
       const orig = window.fetch.bind(window);
-      window.fetch = async function (input, init) {
-        const res = await orig(input, init);
+      let queue = Promise.resolve();
+      const nameOf = (input) => { const url = typeof input === 'string' ? input : (input && input.url) || String(input); return url.split('?')[0].split('/').pop(); };
+      const track = (res, name, release) => {
+        if (!res.ok || !res.body || !window.ReadableStream || !window.Response) { release(); return res; }
         try {
-          const url = typeof input === 'string' ? input : (input && input.url) || String(input);
-          const name = url.split('?')[0].split('/').pop();
-          if (!(name in sizes) || !res.ok || !res.body || !document.getElementById('splash')) return res;
           const reader = res.body.getReader();
           got[name] = 0;
           const body = new ReadableStream({
             async pull(c) {
-              const r = await reader.read();
-              if (r.done) { got[name] = sizes[name]; show(); c.close(); return; }
+              let r;
+              try { r = await reader.read(); } catch (e) { release(); throw e; }
+              if (r.done) { got[name] = sizes[name] || got[name]; show(); release(); c.close(); return; }
               got[name] += r.value.byteLength; show(); c.enqueue(r.value);
             },
-            cancel(reason) { reader.cancel(reason); },
+            cancel(reason) { release(); reader.cancel(reason); },
           });
           return new Response(body, { status: res.status, statusText: res.statusText, headers: res.headers });
-        } catch (e) { return res; }
+        } catch (e) { release(); return res; }
+      };
+      window.fetch = function (input, init) {
+        let name = '';
+        try { name = nameOf(input); } catch (e) {}
+        if (!(name in sizes) || name.endsWith('.js')) return orig(input, init);
+        let release;
+        const mine = new Promise((r) => { release = r; });
+        const before = queue;
+        queue = queue.then(() => mine);
+        return before.then(() => {
+          const t = Date.now();
+          let freed = false;
+          const free = () => { if (freed) return; freed = true; clearTimeout(safety); if (window.wgDiag) window.wgDiag('geladen ' + name + ' (' + Math.round((got[name] || 0) / 1024) + ' KB, ' + ((Date.now() - t) / 1000).toFixed(1) + ' s)'); release(); };
+          const safety = setTimeout(free, 60000);   // nie hängen bleiben
+          if (window.wgDiag) window.wgDiag('lädt ' + name + ' …');
+          return orig(input, init).then((res) => track(res, name, free), (e) => { if (window.wgDiag) window.wgDiag('Laden fehlgeschlagen ' + name + ': ' + e); free(); throw e; });
+        });
       };
     })();
     // Beim ersten Öffnen lädt der Garten einmal ca. 10 MB (App + Emoji-Bilder) – danach kommt alles aus dem Zwischenspeicher.
@@ -196,10 +324,35 @@
           window.addEventListener('focus', check);
         }).catch(() => {});
       };
-      if (hadController) window.addEventListener('load', register);
+      if (hadController) window.addEventListener('wg-ready', () => setTimeout(register, 3000));
       else { window.addEventListener('wg-ready', register); setTimeout(register, 120000); }
     }
   </script>
-  <script src="wissensgarten.js"></script>
+  <script>
+    // Erst das Startbild malen, dann die Skripte holen (nacheinander): So sieht man nie eine leere weiße Seite,
+    // auch wenn das Laden oder Starten später scheitert.
+    (function () {
+      var started = false;
+      var start = function (why) {
+        if (started) return; started = true;
+        window.wgDiag('Startbild gemalt (' + why + ') → Skripte laden');
+        // Startbild aus <body> herausnehmen: Compose legt dort eine Shadow-Root an, die alles andere ausblendet.
+        // So bleibt Brummi sichtbar, bis der Garten wirklich gezeichnet ist – nie eine leere Fläche dazwischen.
+        try { var sp = document.getElementById('splash'); if (sp) document.documentElement.appendChild(sp); } catch (e) {}
+        var list = ['wg-platform.js', 'wg-stimme.js', 'wissensgarten.js'];
+        var next = function (i) {
+          if (i >= list.length) { window.wgDiag('alle Skripte geladen → App startet'); return; }
+          var s = document.createElement('script');
+          s.src = list[i];
+          s.onload = function () { window.wgDiag('Skript ' + list[i] + ' ok'); next(i + 1); };
+          s.onerror = function () { window.wgStartFailed('Datei konnte nicht geladen werden: ' + list[i]); };
+          document.body.appendChild(s);
+        };
+        next(0);
+      };
+      requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(function () { start('Bild'); }, 20); }); });
+      setTimeout(function () { start('Zeit'); }, 500);   // im Hintergrund-Tab ruht requestAnimationFrame
+    })();
+  </script>
 </body>
 </html>
