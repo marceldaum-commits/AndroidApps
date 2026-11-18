@@ -58,6 +58,19 @@ private fun jsElternPut(url: String, schreib: String, key: String, json: String)
       .then(function (r) { return r.status; }, function () { return -1; });
   } catch (e) { return Promise.resolve(-1); }
 })()""")
+/** GET + Entschlüsseln: Ergebnis „<status> <klartext>“ (bei Fehler nur der Status, −2 = Entschlüsseln gescheitert) */
+private fun jsElternGet(url: String, key: String): Promise<JsString> = js("""(function () {
+  function dec(t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; var b = atob(t), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+  return fetch(url, { credentials: 'omit', cache: 'no-store' }).then(function (r) {
+    if (r.status !== 200) return String(r.status);
+    return r.json().then(function (j) {
+      var p = String(j.d || '').split('.');
+      return crypto.subtle.importKey('raw', dec(key), { name: 'AES-GCM' }, false, ['decrypt'])
+        .then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: dec(p[0]) }, k, dec(p[1])); })
+        .then(function (pt) { return '200 ' + new TextDecoder().decode(pt); }, function () { return '-2'; });
+    });
+  }, function () { return '-1'; });
+})()""")
 private fun jsElternDelete(url: String, schreib: String): Promise<JsNumber> = js("fetch(url, { method: 'DELETE', headers: { 'X-Schreib': schreib }, credentials: 'omit', cache: 'no-store' }).then(function (r) { return r.status; }, function () { return -1; })")
 private fun jsInstallWatch(cb: (String) -> Unit): Unit = js("window.wg.install.onChange(function (s) { cb(s); })")
 private fun jsInstallPrompt(): Unit = js("window.wg.install.prompt()")
@@ -244,6 +257,11 @@ class WebHost : AppHost {
     override val testStage: Boolean get() = jsTestStage()
     override suspend fun elternPut(url: String, schreib: String, keyB64: String, json: String): Int =
         runCatching { jsElternPut(url, schreib, keyB64, json).await<JsNumber>().toInt() }.getOrDefault(-1)
+    override suspend fun elternGetDecrypt(url: String, keyB64: String): Pair<Int, String?> = runCatching {
+        val r = jsElternGet(url, keyB64).await<JsString>().toString()
+        val st = r.substringBefore(' ').toIntOrNull() ?: -1
+        st to r.substringAfter(' ', "").takeIf { st == 200 && it.isNotEmpty() }
+    }.getOrDefault(-1 to null)
     override suspend fun elternDelete(url: String, schreib: String): Int =
         runCatching { jsElternDelete(url, schreib).await<JsNumber>().toInt() }.getOrDefault(-1)
     override fun setSafeToUpdate(safe: Boolean) = jsSafe(safe)

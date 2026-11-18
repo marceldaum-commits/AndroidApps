@@ -207,11 +207,23 @@ class Settings(private val prefs: KeyValueStore) {
             ?.let { de.wissensgarten.core.model.ElternKopplung.Kopplung(it[0], it[1], it[2]) }
     fun setElternKopplung(profileId: String, k: de.wissensgarten.core.model.ElternKopplung.Kopplung?, name: String? = null) {
         val e = prefs.edit()
-        if (k == null) { e.putString("eltern_kopplung_$profileId", null); e.putString("eltern_name_$profileId", null); e.putLong("eltern_upload_$profileId", 0L) }
+        if (k == null) { e.putString("eltern_kopplung_$profileId", null); e.putString("eltern_name_$profileId", null); e.putLong("eltern_upload_$profileId", 0L); e.putString("eltern_sicherung_$profileId", null) }
         else { e.putString("eltern_kopplung_$profileId", "${k.id}.${k.schreib}.${k.key}"); e.putString("eltern_name_$profileId", name?.trim()?.take(20)?.ifEmpty { null }) }
         e.apply(); _pairRev.value++
     }
     fun elternName(profileId: String): String? = prefs.getString("eltern_name_$profileId", null)
+    /** Prüfsumme der zuletzt hochgeladenen Sicherung – nur bei Änderung erneut hochladen */
+    fun elternSicherungStand(profileId: String): String? = prefs.getString("eltern_sicherung_$profileId", null)
+    fun setElternSicherungStand(profileId: String, h: String?) { prefs.edit().putString("eltern_sicherung_$profileId", h).apply() }
+
+    // ---- Monatssummen je Profil (dauerhaft, auch wenn alte Einzelergebnisse gekürzt werden) – für den Verlauf im Eltern-Bericht
+    private val monatJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+    private val monatSer = kotlinx.serialization.builtins.MapSerializer(kotlinx.serialization.serializer<String>(), de.wissensgarten.core.model.ElternKopplung.Monat.serializer())
+    fun monatsVerlauf(profileId: String): Map<String, de.wissensgarten.core.model.ElternKopplung.Monat> =
+        prefs.getString("verlauf_$profileId", null)?.let { runCatching { monatJson.decodeFromString(monatSer, it) }.getOrNull() }.orEmpty()
+    fun setMonatsVerlauf(profileId: String, m: Map<String, de.wissensgarten.core.model.ElternKopplung.Monat>) {
+        prefs.edit().putString("verlauf_$profileId", monatJson.encodeToString(monatSer, m.entries.sortedBy { it.key }.takeLast(24).associate { it.key to it.value })).apply()
+    }
     fun elternUpload(profileId: String): Long = prefs.getLong("eltern_upload_$profileId", 0L)
     fun setElternUpload(profileId: String, at: Long) { prefs.edit().putLong("eltern_upload_$profileId", at).apply(); _pairRev.value++ }
 

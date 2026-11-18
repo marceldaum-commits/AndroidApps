@@ -1,5 +1,6 @@
 package de.wissensgarten.app
 
+import de.wissensgarten.app.ui.common.encodePng
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.wissensgarten.core.data.DataContainer
@@ -589,7 +590,11 @@ class AppViewModel(
         viewModelScope.launch { repo.addDew(p.id, amount) }
     }
 
-    fun endSession() { session = emptyList(); saved[K_MIX] = null; tick(); refreshWidget(); elternBald() }
+    fun endSession() {
+        session = emptyList(); saved[K_MIX] = null; tick(); refreshWidget()
+        c.settings.activeProfileId.value?.let { pid -> viewModelScope.launch { runCatching { verlaufAktualisieren(pid) } } }
+        elternBald()
+    }
 
     // ---------------- Eltern-Handy koppeln (nur hinter dem Eltern-Tor; ohne Kopplung wird nichts gesendet) ----------------
     private val EK = de.wissensgarten.core.model.ElternKopplung
@@ -634,10 +639,152 @@ class AppViewModel(
     suspend fun elternHochladen(profileId: String): Int {
         val h = host ?: return -1
         val k = c.settings.elternKopplung(profileId) ?: return -1
+        verlaufAktualisieren(profileId)
         val json = elternBerichtText(profileId) ?: return -1
         val st = h.elternPut(EK.berichtUrl(h.testStage, k.id), k.schreib, k.key, json)
-        if (st in 200..299) c.settings.setElternUpload(profileId, de.wissensgarten.core.model.Platform.nowMs())
+        if (st in 200..299) {
+            c.settings.setElternUpload(profileId, de.wissensgarten.core.model.Platform.nowMs())
+            sicherungHochladen(profileId)
+        }
         return st
+    }
+
+    /** Monatssummen aus den Einzelergebnissen nachführen (dauerhaft, auch wenn alte Einzelergebnisse später gekürzt werden) */
+    suspend fun verlaufAktualisieren(profileId: String) {
+        val now = de.wissensgarten.core.model.Platform.nowMs()
+        val logs = repo.profileLogsSince(profileId, now - 400 * Scheduler.DAY_MS)
+        val neu = EK.monatsSummen(logs.map { de.wissensgarten.core.model.ElternKopplung.Antwort(it.cardId, it.time, it.rating != de.wissensgarten.core.model.Rating.AGAIN.ordinal) })
+        c.settings.setMonatsVerlauf(profileId, EK.monateZusammen(c.settings.monatsVerlauf(profileId), neu))
+    }
+
+    // ---------------- Verschlüsselte Sicherung über die Kopplung ----------------
+    private val sJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+
+    /** Sicherung nur bei Änderung hochladen (gleicher Schlüssel und gleiches Schreibrecht wie der Bericht). Ergebnis: Status oder 0 = unverändert */
+    suspend fun sicherungHochladen(profileId: String): Int {
+        val h = host ?: return -1
+        val k = c.settings.elternKopplung(profileId) ?: return -1
+        val (daten, _) = sicherungDaten(profileId) ?: return -1
+        val stand = daten.toString().let { "${it.length}:${it.hashCode()}" }
+        if (stand == c.settings.elternSicherungStand(profileId)) return 0
+        val text = EK.sicherung(AppInfo.VERSION, de.wissensgarten.core.model.Platform.nowMs(), k.schreib, daten)
+        val st = h.elternPut(EK.sicherungUrl(h.testStage, k.id), k.schreib, k.key, text)
+        if (st in 200..299) c.settings.setElternSicherungStand(profileId, stand)
+        return st
+    }
+
+    /**
+     * Der Lernstand eines Profils für die Sicherung: Profil, Beete, Karten, Einkäufe, Fortschritt (Kapitel, Truhen, Klassenarbeiten),
+     * Einzelergebnisse der letzten 90 Tage, Monatssummen, Plus-Code und – solange es klein bleibt – selbst gemalte Merkbilder.
+     * Ergebnis: Daten und Zahl der weggelassenen Bilder.
+     */
+    suspend fun sicherungDaten(profileId: String): Pair<kotlinx.serialization.json.JsonObject, Int>? {
+        val now = de.wissensgarten.core.model.Platform.nowMs()
+        val all = c.snapshots.snapshot()
+        if (all.profiles.none { it.id == profileId }) return null
+        fun snap(logTage: Long) = de.wissensgarten.core.model.SyncSnapshot(
+            savedAt = now,
+            profiles = all.profiles.filter { it.id == profileId },
+            beds = all.beds.filter { it.profileId == profileId },
+            cards = all.cards.filter { it.profileId == profileId },
+            inventory = all.inventory.filter { it.profileId == profileId },
+            logs = all.logs.filter { it.profileId == profileId && it.time >= now - logTage * Scheduler.DAY_MS },
+            extras = all.extras.filterKeys { it == profileId },
+        )
+        val verlauf = sJson.encodeToJsonElement(
+            kotlinx.serialization.builtins.MapSerializer(kotlinx.serialization.serializer<String>(), de.wissensgarten.core.model.ElternKopplung.Monat.serializer()),
+            c.settings.monatsVerlauf(profileId))
+        fun bauen(logTage: Long, bilder: Map<String, String>) = kotlinx.serialization.json.buildJsonObject {
+            put("lernstand", sJson.parseToJsonElement(de.wissensgarten.core.model.Sync.encodeText(snap(logTage))))
+            put("verlauf", verlauf)
+            c.entitlements.code?.let { put("plusCode", kotlinx.serialization.json.JsonPrimitive(it)) }
+            if (bilder.isNotEmpty()) put("bilder", kotlinx.serialization.json.JsonObject(bilder.mapValues { kotlinx.serialization.json.JsonPrimitive(it.value) }))
+        }
+        // Zu groß? Erst Einzelergebnisse kürzen (90 → 30 Tage → keine), Monatssummen bleiben
+        var tage = 90L
+        var ohne = bauen(tage, emptyMap())
+        while (ohne.toString().length > EK.SICHERUNG_MAX_KLARTEXT && tage > 0) { tage = if (tage > 30) 30 else 0; ohne = bauen(tage, emptyMap()) }
+        // Selbst gemalte Merkbilder nur, solange alles unter der Grenze bleibt
+        val bilder = LinkedHashMap<String, String>()
+        var weg = 0
+        var groesse = ohne.toString().length
+        val b64 = kotlin.io.encoding.Base64.Default
+        for (card in all.cards.filter { it.profileId == profileId }) {
+            if (!de.wissensgarten.app.ui.play.Drawings.has(card.id)) continue
+            val bytes = runCatching { de.wissensgarten.app.ui.play.Drawings.load(card.id)?.encodePng() }.getOrNull()
+            val t = bytes?.let { b64.encode(it) }
+            if (t == null || groesse + t.length + card.id.length + 8 > EK.SICHERUNG_MAX_KLARTEXT) { weg++; continue }
+            bilder[card.id] = t; groesse += t.length + card.id.length + 8
+        }
+        return bauen(tage, bilder) to weg
+    }
+
+    /** Ergebnis der Prüfung eines Kopplungs-Links auf einem (neuen) Gerät */
+    sealed class Fund {
+        data class Fehler(val text: String) : Fund()
+        data class Gefunden(val id: String, val key: String, val schreib: String, val daten: kotlinx.serialization.json.JsonObject,
+                            val name: String, val karten: Int, val stand: String, val bilder: Int, val hierSchonLernstand: Boolean) : Fund()
+    }
+
+    /** Kopplungs-Link prüfen: Sicherung holen und entschlüsseln (noch nichts überschreiben) */
+    suspend fun sicherungPruefen(link: String): Fund {
+        val h = host ?: return Fund.Fehler("Das geht hier leider nicht.")
+        val (id, key) = EK.ausLink(link) ?: return Fund.Fehler("Das ist kein vollständiger Kopplungs-Link. Er endet mit „#…“ – bitte ganz kopieren.")
+        val (st, text) = h.elternGetDecrypt(EK.sicherungUrl(h.testStage, id), key)
+        if (st == 404) return Fund.Fehler("Keine Sicherung gefunden. Sie entsteht erst nach der ersten Lernrunde auf dem gekoppelten Gerät.")
+        if (st != 200) return Fund.Fehler("Der Server ist gerade nicht erreichbar. Bitte später noch einmal versuchen.")
+        if (text == null) return Fund.Fehler("Die Sicherung ließ sich nicht öffnen – stimmt der Link?")
+        val j = runCatching { sJson.parseToJsonElement(text) as kotlinx.serialization.json.JsonObject }.getOrNull()
+            ?: return Fund.Fehler("Die Sicherung ist beschädigt.")
+        val app = (j["app"] as? kotlinx.serialization.json.JsonPrimitive)?.content
+        if (app != "wissensgarten") return Fund.Fehler("Dieser Link gehört zu einer anderen App.")
+        val schreib = (j["schreib"] as? kotlinx.serialization.json.JsonPrimitive)?.content ?: return Fund.Fehler("Die Sicherung ist unvollständig.")
+        val daten = j["daten"] as? kotlinx.serialization.json.JsonObject ?: return Fund.Fehler("Die Sicherung ist unvollständig.")
+        val snap = runCatching { de.wissensgarten.core.model.Sync.decodeText(daten["lernstand"].toString()) }.getOrNull()
+            ?: return Fund.Fehler("Die Sicherung stammt aus einer neueren Version. Bitte erst den Wissensgarten aktualisieren.")
+        if (snap.format > de.wissensgarten.core.model.Sync.FORMAT) return Fund.Fehler("Die Sicherung stammt aus einer neueren Version. Bitte erst den Wissensgarten aktualisieren.")
+        val hier = c.snapshots.snapshot().let { s -> s.cards.isNotEmpty() || s.logs.isNotEmpty() }
+        return Fund.Gefunden(id, key, schreib, daten, snap.profiles.firstOrNull()?.name ?: "", snap.cards.size,
+            (j["stand"] as? kotlinx.serialization.json.JsonPrimitive)?.content.orEmpty(),
+            (daten["bilder"] as? kotlinx.serialization.json.JsonObject)?.size ?: 0, hier)
+    }
+
+    /**
+     * Sicherung einspielen – NUR nach Rückfrage. Vorhandener Lernstand wird nicht überschrieben, sondern zusammengeführt
+     * (wie beim Geräte-Sync: nichts geht verloren). Danach ist dieses Gerät wieder gekoppelt und schreibt weiter.
+     */
+    suspend fun sicherungEinspielen(f: Fund.Gefunden): String {
+        val now = de.wissensgarten.core.model.Platform.nowMs()
+        val remote = de.wissensgarten.core.model.Sync.decodeText(f.daten["lernstand"].toString())
+        val local = c.snapshots.snapshot()
+        val merged = de.wissensgarten.core.model.Sync.merge(local, remote, null, now)
+        c.snapshots.apply(merged, local)
+        // Profil im zusammengeführten Stand finden (gleiche ID oder zugeordnet)
+        val rp = remote.profiles.firstOrNull()?.id
+        val pid = rp?.let { merged.aliases[it] ?: it }?.takeIf { p -> merged.profiles.any { it.id == p } } ?: merged.profiles.firstOrNull()?.id
+        // Merkbilder
+        val b64 = kotlin.io.encoding.Base64.Default
+        (f.daten["bilder"] as? kotlinx.serialization.json.JsonObject)?.forEach { (cardId, v) ->
+            val bytes = runCatching { b64.decode((v as kotlinx.serialization.json.JsonPrimitive).content) }.getOrNull() ?: return@forEach
+            de.wissensgarten.app.ui.common.decodeImage(bytes)?.let { de.wissensgarten.app.ui.play.Drawings.saveImage(cardId, it) }
+        }
+        // Plus-Code (nur wenn hier noch nicht aktiv)
+        (f.daten["plusCode"] as? kotlinx.serialization.json.JsonPrimitive)?.content?.let { code ->
+            if (c.entitlements.code == null) runCatching { c.entitlements.redeem(code) }
+        }
+        if (pid != null) {
+            (f.daten["verlauf"])?.let { v -> runCatching {
+                sJson.decodeFromJsonElement(kotlinx.serialization.builtins.MapSerializer(kotlinx.serialization.serializer<String>(), de.wissensgarten.core.model.ElternKopplung.Monat.serializer()), v)
+            }.getOrNull() }?.let { c.settings.setMonatsVerlauf(pid, EK.monateZusammen(c.settings.monatsVerlauf(pid), it)) }
+            c.settings.setElternKopplung(pid, de.wissensgarten.core.model.ElternKopplung.Kopplung(f.id, f.schreib, f.key), c.settings.elternName(pid))
+            c.settings.setActiveProfile(pid)
+        }
+        c.settings.setOnboarded(true)
+        c.settings.syncChanged()
+        tick(); refreshWidget()
+        // Weiter schreiben (Bericht + Sicherung) – zeigt zugleich, dass das Schreibrecht passt
+        if (pid != null) viewModelScope.launch { elternHochladen(pid) }
+        return "Fortschritt von ${f.name.ifBlank { "eurem Kind" }} wiederhergestellt 🌱"
     }
 
     /** Der Bericht als JSON-Text (vor der Verschlüsselung) – auch für Tests */
@@ -658,7 +805,8 @@ class AppViewModel(
         val infos = beds.flatMap { b -> b.cards.map { it.id to de.wissensgarten.core.model.WeekReport.CardInfo(it.front, subj[b.bed.id] ?: "eigene", it.stability, it.lapses) } }.toMap()
         val tipp = de.wissensgarten.core.model.WeekReport.build(logs.map { de.wissensgarten.core.model.WeekReport.Entry(it.cardId, it.time, it.rating) }, infos, now).tip
         val arbeiten = c.settings.exams(profileId).map { e -> de.wissensgarten.core.model.ElternKopplung.Arbeit(e.day, e.title) }
-        val b = EK.bericht(c.settings.elternName(profileId), p.level.takeIf { it in 1..13 }, now, Scheduler.localDay(now), beete, karten, antworten, arbeiten, tipp)
+        val b = EK.bericht(c.settings.elternName(profileId), p.level.takeIf { it in 1..13 }, now, Scheduler.localDay(now), beete, karten, antworten, arbeiten, tipp,
+            verlauf = c.settings.monatsVerlauf(profileId))
         return EK.berichtText(b)
     }
 

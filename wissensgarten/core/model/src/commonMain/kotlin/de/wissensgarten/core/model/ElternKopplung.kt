@@ -36,6 +36,40 @@ object ElternKopplung {
 
     private fun server(test: Boolean) = if (test) "https://trainer-test.mathenachhilfe-online.com" else "https://trainer.mathenachhilfe-online.com"
     fun berichtUrl(test: Boolean, id: String) = "${server(test)}/eltern/v1/b/$id"
+    /** Verschlüsselte Sicherung des Lernstands (gleiche id, gleicher Schlüssel, gleiches Schreibrecht) */
+    fun sicherungUrl(test: Boolean, id: String) = "${server(test)}/eltern/v1/s/$id"
+    /** Höchstens 512 KB nach Verschlüsselung → Klartext höchstens ~370 KB (Base64 + GCM) */
+    const val SICHERUNG_MAX_KLARTEXT = 370 * 1024
+
+    /** id und key aus einem Kopplungs-Link (…/eltern-bericht/#<id>.<key>) oder direkt „<id>.<key>“ – null, wenn es nicht passt */
+    fun ausLink(text: String): Pair<String, String>? {
+        val t = text.trim().substringAfter('#')
+        val m = Regex("""^([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})$""").find(t) ?: return null
+        return m.groupValues[1] to m.groupValues[2]
+    }
+
+    /** Hülle der Sicherung (Klartext vor der Verschlüsselung). schreib steht drin, damit ein neues Gerät weiter schreiben darf. */
+    fun sicherung(version: String, jetzt: Long, schreib: String, daten: kotlinx.serialization.json.JsonElement): String = buildJsonObject {
+        put("format", FORMAT); put("app", "wissensgarten"); put("v", version); put("stand", isoZeit(jetzt)); put("schreib", schreib)
+        put("daten", daten)
+    }.toString()
+
+    // ---------------- Monatssummen (Verlauf) ----------------
+
+    @kotlinx.serialization.Serializable
+    data class Monat(val aufgaben: Int, val richtig: Int)
+
+    /** Monatssummen aus Einzelergebnissen: „2026-11“ → (Aufgaben, richtig) */
+    fun monatsSummen(antworten: List<Antwort>, offset: (Long) -> Int = Platform::tzOffsetMs): Map<String, Monat> =
+        antworten.groupBy { isoTag(Scheduler.localDay(it.zeit, offset)).take(7) }
+            .mapValues { (_, l) -> Monat(l.size, l.count { it.richtig }) }
+
+    /** Gespeicherte Summen mit frisch berechneten zusammenführen: je Monat gilt der größere Stand (alte Rohdaten werden gekürzt, Summen bleiben) */
+    fun monateZusammen(alt: Map<String, Monat>, neu: Map<String, Monat>): Map<String, Monat> =
+        (alt.keys + neu.keys).associateWith { k ->
+            val a = alt[k]; val n = neu[k]
+            if (a == null) n!! else if (n == null) a else if (n.aufgaben >= a.aufgaben) n else a
+        }
     /** Link für das Eltern-Handy – der Teil nach „#“ (id.key) verlässt den Browser der Eltern nie */
     fun elternLink(test: Boolean, k: Kopplung) =
         (if (test) "https://staging.mathenachhilfe-online.com" else "https://www.mathenachhilfe-online.com") + "/eltern-bericht/#${k.id}.${k.key}"
@@ -57,6 +91,7 @@ object ElternKopplung {
         name: String?, klasse: Int?, jetzt: Long, heute: Long,
         beete: List<Beet>, karten: List<Karte>, antworten: List<Antwort>, arbeiten: List<Arbeit>,
         tipp: String?, offset: (Long) -> Int = Platform::tzOffsetMs,
+        verlauf: Map<String, Monat> = emptyMap(),
     ): JsonObject {
         val beetVon = karten.associate { it.id to it.bedId }
         val beetById = beete.associateBy { it.id }
@@ -107,6 +142,12 @@ object ElternKopplung {
             }
             if (naechste != null) putJsonObject("klassenarbeit") { put("tag", isoTag(naechste.tag)); put("thema", naechste.titel.take(60)) }
             tipp?.let { put("hinweis", it) }
+            if (verlauf.isNotEmpty()) putJsonArray("verlauf") {
+                verlauf.entries.sortedBy { it.key }.takeLast(12).forEach { (m, v) -> addJsonObject {
+                    put("monat", m); put("min", (v.aufgaben * WeekReport.SECONDS_PER_CARD + 59) / 60); put("aufgaben", v.aufgaben)
+                    put("richtigProzent", if (v.aufgaben == 0) 0 else v.richtig * 100 / v.aufgaben)
+                } }
+            }
         }
     }
 

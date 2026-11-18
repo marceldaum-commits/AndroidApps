@@ -67,8 +67,8 @@ private fun hideSplash(): Unit = js("(function () { var s = document.getElementB
 private fun diag(step: String): Unit = js("window.wgDiag && window.wgDiag(step)")
 private fun diagOn(): Boolean = js("!!window.wgDiagOn")
 /** Nur mit ?diag=1: Test-Einstieg für den Rundlauf der Eltern-Kopplung (Browser-Test webApp/tools/web-eltern.cjs) */
-private fun onElternTest(koppeln: () -> Unit, aufheben: () -> Unit): Unit =
-    js("(function () { window.wgElternTest = function () { window.wgElternErgebnis = null; koppeln(); }; window.wgElternAufheben = function () { window.wgElternErgebnis = null; aufheben(); }; })()")
+private fun onElternTest(koppeln: () -> Unit, aufheben: () -> Unit, wiederherstellen: (String) -> Unit): Unit =
+    js("(function () { window.wgElternTest = function () { window.wgElternErgebnis = null; koppeln(); }; window.wgElternAufheben = function () { window.wgElternErgebnis = null; aufheben(); }; window.wgElternWiederherstellen = function (l) { window.wgElternErgebnis = null; wiederherstellen(l); }; })()")
 private fun setElternErgebnis(s: String): Unit = js("window.wgElternErgebnis = s")
 private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', function () { cb(document.visibilityState === 'visible'); })")
 private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', function () { cb(); })")
@@ -143,6 +143,14 @@ fun main() {
         aufheben = {
             val pid = vm.settings.activeProfileId.value
             if (pid == null) setElternErgebnis("kein Profil") else vm.elternAufheben(pid) { ok -> setElternErgebnis(if (ok) "aufgehoben" else "lokal aufgehoben") }
+        },
+        wiederherstellen = { link ->
+            scope.launch {
+                when (val f = vm.sicherungPruefen(link)) {
+                    is de.wissensgarten.app.AppViewModel.Fund.Fehler -> setElternErgebnis("fehler " + f.text)
+                    is de.wissensgarten.app.AppViewModel.Fund.Gefunden -> { vm.sicherungEinspielen(f); setElternErgebnis("ok ${f.karten} ${f.name}") }
+                }
+            }
         },
     )
 

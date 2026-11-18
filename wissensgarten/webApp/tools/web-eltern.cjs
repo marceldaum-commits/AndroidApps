@@ -64,6 +64,64 @@ const store = {
         check(j.name === 'Testkind' && j.klasse === 3 && j.aufgaben > 0 && !JSON.stringify(j).includes('Lena'), `${modus}: Spitzname statt Profilname, Kennzahlen`, { name: j.name, klasse: j.klasse, aufgaben: j.aufgaben });
       } catch (e) { check(false, `${modus}: Entschlüsseln`, String(e)); }
     }
+    // ---- Sicherung: wurde sie mit hochgeladen, lässt sie sich entschlüsseln?
+    const sPut = calls.filter((c) => c.method === 'PUT' && c.url.includes('/eltern/v1/s/'));
+    check(sPut.length >= 1 && m && sPut[0].url === 'https://trainer-test.mathenachhilfe-online.com/eltern/v1/s/' + m[1], `${modus}: Sicherung hochgeladen`, sPut.map((c) => c.url));
+    let sicherungBody = null, schreib = puts.length ? puts[0].headers['x-schreib'] : null;
+    if (sPut.length && m) {
+      sicherungBody = sPut[sPut.length - 1].body;
+      check(sicherungBody.length < 512 * 1024, `${modus}: Sicherung < 512 KB`, sicherungBody.length);
+      try {
+        const [ivT, ctT] = sicherungBody.split('.'); const ct = b64(ctT), d = crypto.createDecipheriv('aes-256-gcm', b64(m[2]), b64(ivT));
+        d.setAuthTag(ct.subarray(ct.length - 16));
+        const j = JSON.parse(Buffer.concat([d.update(ct.subarray(0, ct.length - 16)), d.final()]).toString('utf8'));
+        check(JSON.stringify(Object.keys(j).sort()) === JSON.stringify(['app', 'daten', 'format', 'schreib', 'stand', 'v']) && j.app === 'wissensgarten' && j.schreib === schreib,
+          `${modus}: Sicherung entschlüsselt, Hülle mit schreib`, Object.keys(j));
+        check(j.daten.lernstand.cards.length === 8 && j.daten.lernstand.profiles.length === 1, `${modus}: Lernstand vollständig`, { karten: j.daten.lernstand.cards.length });
+      } catch (e) { check(false, `${modus}: Sicherung entschlüsseln`, String(e)); }
+    }
+    // Zweites Hochladen ohne Änderung: keine neue Sicherung
+    const vorher = calls.filter((c) => c.url.includes('/eltern/v1/s/')).length;
+    await p.evaluate(() => window.wgElternTest());
+    await p.waitForFunction(() => window.wgElternErgebnis, null, { timeout: 30000 });
+    check(calls.filter((c) => c.url.includes('/eltern/v1/s/')).length === vorher, `${modus}: unveränderte Sicherung nicht erneut gesendet`);
+
+    // ---- Neues Gerät: leerer Browser, Kopplungs-Link einfügen → derselbe Lernstand, danach schreibt das Gerät weiter
+    if (sicherungBody && m) {
+      const ctx2 = await b.newContext();
+      const calls2 = [];
+      let antwort = { status: 200, body: JSON.stringify({ d: sicherungBody, t: new Date().toISOString() }) };
+      await ctx2.route('**/eltern/v1/**', async (r) => {
+        const q = r.request(); calls2.push({ url: q.url(), method: q.method(), headers: q.headers() });
+        if (q.method() === 'GET') await r.fulfill({ status: antwort.status, contentType: 'application/json', body: antwort.body });
+        else await r.fulfill({ status: 204, body: '' });
+      });
+      await ctx2.route('https://trainer*.mathenachhilfe-online.com/zaehler/**', (r) => r.fulfill({ status: 204, body: '' }));
+      const p2 = await ctx2.newPage();
+      await p2.goto(BASE + '?diag=1&modus=' + modus);
+      await p2.waitForFunction(() => window.wgReady && window.wgElternWiederherstellen, null, { timeout: 120000 });
+      const neu = async (l) => { await p2.evaluate((x) => window.wgElternWiederherstellen(x), l); return p2.waitForFunction(() => window.wgElternErgebnis, null, { timeout: 30000 }).then((h) => h.jsonValue()); };
+      check((await neu('https://example.org/eltern-bericht/#kaputt')).includes('kein vollständiger'), `${modus}: kaputter Link → Hinweis`);
+      antwort = { status: 404, body: '{}' };
+      check((await neu(link)).includes('Keine Sicherung gefunden'), `${modus}: 404 → „Keine Sicherung gefunden“`);
+      // Sicherung einer anderen App (richtig verschlüsselt)
+      const iv = crypto.randomBytes(12), c = crypto.createCipheriv('aes-256-gcm', b64(m[2]), iv);
+      const ct = Buffer.concat([c.update(JSON.stringify({ format: 1, app: 'kurvenflug', v: '1', stand: 'x', schreib: 'x', daten: {} })), c.final(), c.getAuthTag()]);
+      const enc = (x) => x.toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+      antwort = { status: 200, body: JSON.stringify({ d: enc(iv) + '.' + enc(ct), t: 'x' }) };
+      check((await neu(link)).includes('anderen App'), `${modus}: andere App → Hinweis`);
+      antwort = { status: 200, body: JSON.stringify({ d: sicherungBody, t: 'x' }) };
+      const r3 = await neu(link);
+      check(r3.startsWith('ok 8'), `${modus}: Wiederherstellen`, r3);
+      await p2.waitForTimeout(2500);
+      const garten = await p2.evaluate(() => JSON.parse(localStorage.getItem('wg.garten') || '{}'));
+      const kartenNeu = (garten.cards || []).filter((x) => x.profileId === 'p1');
+      check(kartenNeu.length === 8 && kartenNeu.filter((x) => x.stability >= 10).length === 4 && (garten.logs || []).length === 12, `${modus}: derselbe Lernstand`, { karten: kartenNeu.length, logs: (garten.logs || []).length });
+      const w = calls2.filter((x) => x.method === 'PUT' && x.url.endsWith('/b/' + m[1]));
+      check(w.length >= 1 && w[0].headers['x-schreib'] === schreib, `${modus}: neues Gerät schreibt weiter (gleiches Schreibrecht)`, w.length);
+      await ctx2.close();
+    }
+
     await p.evaluate(() => window.wgElternAufheben());
     const r2 = await p.waitForFunction(() => window.wgElternErgebnis, null, { timeout: 30000 }).then((h) => h.jsonValue());
     const del = calls.filter((c) => c.method === 'DELETE');

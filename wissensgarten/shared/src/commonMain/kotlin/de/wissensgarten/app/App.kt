@@ -640,6 +640,9 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                                     onTeilen = { l -> host.shareText("Lernbericht von ${p.name} im Wissensgarten (nur für euch): $l") },
                                     onAufheben = { vm.elternAufheben(p.id) { ok -> host.toast(if (ok) "Kopplung aufgehoben." else "Kopplung lokal aufgehoben. Der Server war nicht erreichbar – der Bericht wird dort nach 90 Tagen gelöscht.") } },
                                 )
+                                de.wissensgarten.app.ui.settings.WiederherstellenKnopf(
+                                    pruefen = { vm.sicherungPruefen(it) }, einspielen = { vm.sicherungEinspielen(it) }, onFertig = { host.toast(it) },
+                                )
                             }) },
                             onPrivacy = { nav.navigate(Routes.PRIVACY) },
                             typing = vm.settings.typing.collectAsStateWithLifecycle().value, onTyping = { vm.settings.setTyping(it) },
