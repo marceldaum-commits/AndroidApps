@@ -11,7 +11,7 @@ object Zaehler {
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     const val APP = "raumlicht"
     /** Ereignisse, die es in Raumlicht gibt (aus der gemeinsamen, abschließenden Liste) */
-    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "crashkurs_klick", "nachhilfe_hinweis", "geschenk_klick")
+    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "nachhilfe_hinweis", "geschenk_klick")
     val PLACES = setOf("gesperrt", "einstellungen", "link", "eingabe", "lernstand", "klassenarbeit", "geschenk", "fusszeile")
     val TOPICS = setOf("vektoren", "analysis", "stochastik")
     const val SWITCH = "Anonyme Nutzungszählung"
@@ -37,8 +37,6 @@ object Nachhilfe {
     const val TRIAL_URL = "https://www.mathenachhilfe-online.com/probestunde/"
     const val GIFT_URL = "https://www.mathenachhilfe-online.com/geschenke/"
     const val HOME_URL = "https://www.mathenachhilfe-online.com/"
-    /** Feste Adresse der Crashkurs-Seite (vom Leitstand am 18.11.2026 genannt). Leer = Hinweis „Klausur bald“ gibt es nicht. */
-    const val CRASH_URL = "https://www.mathenachhilfe-online.com/produkt/easy-learning-crash-kurs/"
     const val FOOTER = "Ein Angebot von Nachhilfe – online"
     const val SWITCH = "Hinweise auf unsere Nachhilfe zeigen"
     const val SWITCH_NOTE = "Im Lernstand, wenn ein Gebiet noch hakt: ein kurzer Hinweis auf eine kostenlose Probestunde. Nie in den Aufgaben."
@@ -73,12 +71,12 @@ object Nachhilfe {
             s != "aus" && (s?.toLongOrNull()?.let { today == it || today >= it + PAUSE_DAYS } ?: true) } ?: return null
         return Hint(Zaehler.topic(area), if (area == Area.GEOMETRIE) "Vektoren" else area.title)
     }
-    /** Hinweis im Klausur-Planer: 3 bis 14 Tage vor dem eingetragenen Termin, je Klausur einmal ausblendbar */
+    /** Hinweis im Klausur-Planer: 3 bis 14 Tage vor dem eingetragenen Termin, je Klausur einmal ausblendbar. Seit 2.18.30 führt er zur kostenlosen Probestunde (der Crashkurs ist nur für Kunden). */
     class ExamHint(val days: Int, val topic: String?, val key: String, base: String) {
-        val text get() = "In $days Tagen ist deine Klausur. Falls du noch Unterstützung möchtest: Wir bieten Crashkurse zur Vorbereitung an."
+        val text get() = "In $days Tagen ist deine Klausur. Eine kostenlose Probestunde kann vor der Arbeit helfen."
         val link = Zaehler.link(base, "klassenarbeit", topic)
     }
-    fun exam(plan: Plan?, today: Long, state: String, enabled: Boolean, url: String = CRASH_URL): ExamHint? {
+    fun exam(plan: Plan?, today: Long, state: String, enabled: Boolean, url: String = TRIAL_URL): ExamHint? {
         if (!enabled || plan == null || url.isEmpty()) return null
         val days = Planner.daysLeft(plan, today); if (days !in 3..14) return null
         val key = "klausur${plan.examDay}"; if (parse(state)[key] == "aus") return null

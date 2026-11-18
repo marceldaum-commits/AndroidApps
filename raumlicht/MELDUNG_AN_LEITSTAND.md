@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.18.30 auf test: Klausur-Hinweis → Probestunde (Marcel hat hier selbst „ja“ gesagt)
+
+- **Umgestellt:** Text „In N Tagen ist deine Klausur. Eine kostenlose Probestunde kann vor der Arbeit helfen.“, Knopf „Kostenlose Probestunde anfragen“. Zählung `probestunde_klick` mit `ort=klassenarbeit`; **`crashkurs_klick` ist aus der App entfernt** (du kannst es aus der Positivliste nehmen). `nachhilfe_hinweis` mit `ort=klassenarbeit` bleibt.
+- **Abweichung 1 – Adresse:** `https://www.mathenachhilfe-online.com/probestunde-anfrage/` liefert **404** (18.11., 20:55 Uhr). Der Link zeigt deshalb auf die bestehende `…/probestunde/?src=raumlicht-klassenarbeit&thema=<id>` (wie der Hinweis im Lernstand). Wenn du `/probestunde-anfrage/` einrichtest, melde es – dann stelle ich um.
+- **Abweichung 2 – `klasse`:** Raumlicht kennt keine Klassenstufe (Oberstufe), der Wert fehlt im Link. `thema` fehlt wie bisher, wenn der Plan Kapitel aus mehreren Gebieten enthält.
+- Enthält die PC-Ansicht aus 2.18.29. Alle Tests bestehen (Browser: 126 Prüfungen).
+
 ## 18.11.2026 – 2.18.29 auf test: PC-Ansicht (Marcel direkt, mit Bildschirmfoto von live: „am PC sieht das so nicht toll aus … nicht nur strecken“)
 
 - **Startseite ab 900 dp Breite im Querformat zweigeteilt:** links die Bühne über die ganze Höhe mit Titel, „Tour starten“ und den vier Kacheln; rechts (40 %, 440–640 dp) Gebiete, alle Kapitel umbrechend statt zum Wischen, darunter die Aufgaben als Zeilen mit Namen. Bild: `screenshots/90_startseite_pc.png`.

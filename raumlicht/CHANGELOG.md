@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.30 – Vor der Klausur: Hinweis auf die kostenlose Probestunde (18.11.2026)
+- **Klausur-Planer:** Der sachliche Hinweis kurz vor deiner Klausur führt jetzt zur kostenlosen Probestunde statt zu den Crashkursen. Er lässt sich weiter ausblenden und in den Einstellungen ganz abschalten.
+- Enthält die neue PC-Ansicht aus 2.18.29.
+
 ## 2.18.29 – Raumlicht am PC: großes Bild statt gestreckter Handy-Ansicht (18.11.2026)
 - **Neue Startseite für breite Bildschirme** (PC, Laptop, Tablet quer): Links schwebt die 3D-Bühne groß über die ganze Höhe, mit „Tour starten“ und den vier Schnellzugängen darunter. Rechts stehen Gebiete, alle Kapitel auf einen Blick (kein Wischen mehr) und die Aufgaben des Kapitels – jetzt mit ihren Namen.
 - **Listen und Einstellungen** ziehen sich am PC nicht mehr über die ganze Breite, sondern stehen als gut lesbare Spalte in der Mitte.

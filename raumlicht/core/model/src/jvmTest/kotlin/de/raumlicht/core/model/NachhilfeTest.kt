@@ -53,21 +53,20 @@ class NachhilfeTest {
 
     /** „Klausur bald“: nur 3 bis 14 Tage vorher, nur mit bekannter Adresse, je Klausur ausblendbar – und solange die Adresse fehlt, gar nicht. */
     @Test fun klausurHinweis() {
-        val url = "https://www.mathenachhilfe-online.com/crashkurse/"
+        val url = "https://www.mathenachhilfe-online.com/irgendwo/"
         val geo = Levels.chapters.filter { it.area == Area.GEOMETRIE }.map { it.number }.take(2).toSet()
         val plan = Plan(1000, geo)
-        assertEquals("https://www.mathenachhilfe-online.com/produkt/easy-learning-crash-kurs/", Nachhilfe.CRASH_URL)
-        assertEquals(Nachhilfe.CRASH_URL + "?src=raumlicht-klassenarbeit&thema=vektoren", Nachhilfe.exam(plan, 990, "", true)!!.link); assertNull("ohne Adresse kein Hinweis", Nachhilfe.exam(plan, 990, "", true, ""))
+        assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=raumlicht-klassenarbeit&thema=vektoren", Nachhilfe.exam(plan, 990, "", true)!!.link); assertNull("ohne Adresse kein Hinweis", Nachhilfe.exam(plan, 990, "", true, ""))
         for (d in listOf(986L, 990L, 997L)) assertNotNull("Tag $d", Nachhilfe.exam(plan, d, "", true, url))
         for (d in listOf(900L, 985L, 998L, 999L, 1000L, 1001L)) assertNull("Tag $d", Nachhilfe.exam(plan, d, "", true, url))
         val h = Nachhilfe.exam(plan, 990, "", true, url)!!
-        assertEquals(10, h.days); assertEquals("$url?src=raumlicht-klassenarbeit&thema=vektoren", h.link); assertTrue(h.text.startsWith("In 10 Tagen ist deine Klausur."))
-        for (bad in listOf("€", "Euro", "jetzt", "Lux", "!", "kostenlos")) assertFalse(bad, h.text.contains(bad))
+        assertEquals(10, h.days); assertEquals("$url?src=raumlicht-klassenarbeit&thema=vektoren", h.link); assertEquals("In 10 Tagen ist deine Klausur. Eine kostenlose Probestunde kann vor der Arbeit helfen.", h.text)
+        for (bad in listOf("€", "Euro", "jetzt", "Lux", "!", "Crashkurs")) assertFalse(bad, h.text.contains(bad))
         assertNull(Nachhilfe.exam(plan, 990, Nachhilfe.hide("", h.key), true, url)); assertNotNull("eine andere Klausur zeigt ihn wieder", Nachhilfe.exam(Plan(1001, geo), 990, Nachhilfe.hide("", h.key), true, url))
         assertNull(Nachhilfe.exam(plan, 990, "", false, url)); assertNull(Nachhilfe.exam(null, 990, "", true, url))
         // gemischte Gebiete: kein Thema im Link
         val mixed = Plan(1000, setOf(Levels.chapters.first { it.area == Area.GEOMETRIE }.number, Levels.chapters.first { it.area == Area.ANALYSIS }.number))
         assertEquals("$url?src=raumlicht-klassenarbeit", Nachhilfe.exam(mixed, 990, "", true, url)!!.link)
-        assertNotNull(Zaehler.body("crashkurs_klick", "klassenarbeit", "vektoren", "1"))
+        assertNotNull(Zaehler.body("probestunde_klick", "klassenarbeit", "vektoren", "1")); assertNull("der Crashkurs wird nicht mehr gezählt", Zaehler.body("crashkurs_klick", "klassenarbeit", "vektoren", "1"))
     }
 }

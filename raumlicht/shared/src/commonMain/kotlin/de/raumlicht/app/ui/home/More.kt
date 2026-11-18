@@ -111,7 +111,7 @@ fun LearnScreen(topics: List<TopicState>, onChapter: (Int) -> Unit, onBack: () -
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PlannerScreen(plan: Plan?, today: Long, stars: Map<String, Int>, onSave: (Plan?) -> Unit, onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit,
-                  /** Sachlicher Hinweis auf Crashkurse, 3 bis 14 Tage vor der Klausur (null = keiner) */
+                  /** Sachlicher Hinweis auf die kostenlose Probestunde, 3 bis 14 Tage vor der Klausur (null = keiner) */
                   hint: de.raumlicht.core.model.Nachhilfe.ExamHint? = null, onHint: () -> Unit = {}, onHideHint: () -> Unit = {}) {
     var days by rememberSaveable { mutableIntStateOf(plan?.let { Planner.daysLeft(it, today).coerceIn(1, 60) } ?: 7) }
     var chosen by rememberSaveable { mutableStateOf(plan?.chapters?.toList() ?: emptyList()) }
@@ -144,12 +144,12 @@ fun PlannerScreen(plan: Plan?, today: Long, stars: Map<String, Int>, onSave: (Pl
             }
             NeonButton({ chosen = emptyList(); onSave(null) }, Modifier.padding(horizontal = 14.dp), color = Q.Muted) { Text("Plan löschen") }
         }
-        // Hinweis auf unsere Crashkurse: ganz unten, getrennt von Lux und vom Tagespaket – die Figur wirbt nie
+        // Hinweis auf die kostenlose Probestunde: ganz unten, getrennt von Lux und vom Tagespaket – die Figur wirbt nie
         Spacer(Modifier.height(10.dp))
         if (hint != null) Column(Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp).testTag("klausur-hinweis").clip(RoundedCornerShape(16.dp)).background(Q.Deep).border(1.dp, Q.Muted.copy(alpha = 0.5f), RoundedCornerShape(16.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             Text(hint.text, color = Q.Text, fontSize = 14.sp)
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Crashkurse ansehen", Modifier.testTag("klausur-crashkurse").clip(RoundedCornerShape(10.dp)).border(1.dp, Q.Cyan.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).clickable(onClick = onHint).padding(horizontal = 10.dp, vertical = 7.dp),
+                Text("Kostenlose Probestunde anfragen", Modifier.testTag("klausur-probestunde").clip(RoundedCornerShape(10.dp)).border(1.dp, Q.Cyan.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).clickable(onClick = onHint).padding(horizontal = 10.dp, vertical = 7.dp),
                     color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 Text("Ausblenden", Modifier.testTag("klausur-aus").clip(RoundedCornerShape(10.dp)).clickable(onClick = onHideHint).padding(horizontal = 8.dp, vertical = 7.dp), color = Q.Muted, fontSize = 13.sp)
             }
