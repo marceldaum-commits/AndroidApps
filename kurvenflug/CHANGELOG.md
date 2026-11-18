@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.19 – Vorbereitung für die schnelle Fassung auf dem iPhone
+- Eine Umgehung für einen Fehler in Safari 27 ist eingebaut. iPhone und iPad nutzen weiter die zuverlässige Fassung,
+  bis die schnelle dort bestätigt ist. Im Spiel ändert sich nichts.
+
 ## 2.5.18 – Läuft auf iPhone und iPad
 - Auf iPhone, iPad und Safari am Mac startet Kurvenflug jetzt gleich in der Fassung, die dort zuverlässig läuft – keine
   weiße Seite mehr. Klappt der Start in einem anderen Browser einmal nicht, wechselt Kurvenflug von selbst und ohne Zutun.

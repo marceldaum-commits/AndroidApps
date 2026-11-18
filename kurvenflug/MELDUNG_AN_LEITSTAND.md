@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.19 – Safari-27.2-Umgehung (WebKit 329421, Endaufrufe) von Raumlicht übernommen
+- `web/webpack/skiko-no-tail-call.cjs` + `web/webpack.config.d/skiko-no-tail-call.js` aus Raumlicht 92608706 übernommen: schreibt in
+  `skiko.mjs` jeden Skia-Aufruf aus der Endaufruf-Stellung (try-Block). Gilt für **beide** Fassungen (Wasm und JS nutzen dasselbe
+  skiko.mjs). Bau-Prüfung in `:web:webapp`: kurvenflug.js **937 abgesichert, 0 Endaufrufe übrig**; kurvenflug-compat.js ebenso.
+  `-Xwasm-no-jstag` bleibt an.
+- **Wasm für WebKit noch NICHT wieder offen:** Bliebe die Seite trotz Umgehung weiß, gäbe es keinen Fehler, den der Auto-Wechsel
+  erkennen könnte (die App „läuft“, malt aber nichts). Darum bitte zuerst Marcel: **https://kurvenflug-test.mathenachhilfe-online.com/?modus=wasm**
+  (danach `?modus=auto`). Zeigt das iPhone/iPad damit das Spiel, öffne ich Wasm für Safari im nächsten Nachkomma-Schritt (mit
+  Rückfall auf JS bei jedem Startfehler).
+- Chromium-Tests beider Fassungen grün. versionCode 66 / 2.5.19, keine neuen Dateiendungen.
+
 ## ✅ 2.5.18 – iOS/Safari: JS-Fassung automatisch, Startfehler wechseln ohne Zutun, Kotlin-Flags geprüft
 **Ursache genauer (aus Marcels iPad-Befund + Analyse der Module):**
 - Das App-Wasm importiert genau **einen Nicht-Funktions-Import: `intrinsics.tag` (kind „tag“)**. Bisher lieferte die Kotlin-Brücke

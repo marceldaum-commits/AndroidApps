@@ -148,6 +148,15 @@ val webapp by tasks.registering(Sync::class) {
             |  })));
             |});
             |""".trimMargin())
+        // Safari 27.2 (WebKit-Fehler 329421, weiße Seite): Im fertigen Paket darf kein Aufruf der Grafik-Bibliothek mehr als
+        // Endaufruf stehen (siehe web/webpack/skiko-no-tail-call.cjs, übernommen von Raumlicht) – für beide Fassungen
+        listOf("kurvenflug.js", "kurvenflug-compat.js").forEach { name ->
+            val js = dir.resolve(name).readText()
+            val tail = Regex("""=>\(\w+=\w+\._\.org_jetbrains_\w+\)\(""").findAll(js).count()
+            val safe = Regex("""try\{return\(\w+=\w+\._\.org_jetbrains_\w+\)\(""").findAll(js).count()
+            check(tail == 0 && safe > 900) { "Safari-Abhilfe fehlt in $name: $tail Endaufrufe übrig, $safe abgesichert" }
+            println("Safari-27.2-Abhilfe $name: $safe Aufrufe abgesichert, $tail Endaufrufe übrig")
+        }
         dir.resolve("version.json").writeText("{\n  \"app\": \"kurvenflug\",\n  \"version\": \"$appVersion\"\n}\n")
     }
 }
