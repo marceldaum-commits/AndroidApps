@@ -4,6 +4,11 @@ Lernkarten als gemütliches Garten-Spiel – für die ganze Familie, von Klasse 
 Jede Karte ist eine Pflanze: Sie wächst mit dem Wissen und welkt nach der Vergessenskurve.
 Gießen = Wiederholen zum richtigen Zeitpunkt.
 
+> **Vorerst nur als WebApp (seit 18.11.2026):** Für etwa 1–2 Monate gibt es den Wissensgarten nur als WebApp im Browser –
+> installierbar auf dem Startbildschirm (PWA, Knopf „App installieren“ im Garten und in den Einstellungen; auf iPhone/iPad
+> zeigt Brummi den Weg über „Teilen → Zum Home-Bildschirm“). Die Android-App ruht: Es werden keine APKs gebaut und keine
+> Releases veröffentlicht, auch nicht im Play Store. Der Android-Code bleibt im Repo und wird danach weitergeführt.
+
 **Neu in 0.8.0**
 
 | Advent im Garten | Brummi beibringen | Kipp-Spiel | Abenteuer-Geschichte | Kreuzungs-Blume | Kreuzungen im Album |
@@ -163,18 +168,16 @@ Release-APKs werden mit dem Upload-Schlüssel signiert, wenn `keystore.propertie
 Ordner `wissensgarten/` liegen (beides per `.gitignore` ausgeschlossen; Ablage nur in Bitwarden, für
 GitHub zusätzlich in den Repo-Secrets – nie in Git oder Google Drive). Ohne die Dateien wird mit dem Test-Schlüssel gebaut.
 
-## Download (automatisch)
+## Ausliefern (vorerst nur WebApp)
 
-Bei jedem Push mit neuer Version (`versionName`) baut GitHub die App, signiert sie, prüft die Signatur und
-veröffentlicht `Wissensgarten-<Version>.apk` unter **Releases** – und, wenn eingerichtet, im Drive-Ordner „Wissensgarten“
-(`.github/workflows/wissensgarten-release.yml`, Upload: `.github/scripts/drive_upload.py`).
-Benötigte Secrets stehen im Kopf der Workflow-Datei. Die Release-Notizen kommen aus [`CHANGELOG.md`](CHANGELOG.md).
+Die WebApp entsteht mit `./gradlew :webApp:exportWebApp` im Ordner `webapp/` und wird mitcommittet. Der Workflow
+`.github/workflows/wissensgarten-web-test.yml` prüft sie (gleiche Version wie `versionName`, gleiche Wissenspakete) und
+spult den Branch `wissensgarten-test` vor; von dort holt sie der Server. Die WebApp aktualisiert sich selbst.
 
-**Update-Knopf in der App** (Einstellungen → App-Update): fragt GitHub nach der neuesten Version, lädt die APK und öffnet
-den Android-Installer (einmalig „Apps installieren erlauben“). Beim Start schaut die App höchstens einmal am Tag nach
-(abschaltbar) und zeigt im Garten ein Banner, wenn es etwas Neues gibt. Es werden keine Daten gesendet.
-Für eine Play-Store-Version `SELF_UPDATE` in `app/build.gradle.kts` auf `false` setzen (und die Berechtigung
-`REQUEST_INSTALL_PACKAGES` entfernen).
+Der APK-Workflow (`.github/workflows/wissensgarten-release.yml`) ruht: Er läuft nur noch von Hand und baut sonst keine
+APKs und keine Releases. Wenn es wieder als Android-App weitergeht, den `push`-Auslöser dort wieder eintragen
+(Anleitung im Kopf der Datei). Der eingebaute Updater der Android-App (Einstellungen → App-Update, GitHub-Releases,
+`SELF_UPDATE` in `app/build.gradle.kts`) bleibt im Code, wird aber gerade nicht ausgeliefert.
 
 **Neue Version ausliefern:** `versionCode`/`versionName` erhöhen, Abschnitt in `CHANGELOG.md` ergänzen, pushen.
 
@@ -183,7 +186,8 @@ Für eine Play-Store-Version `SELF_UPDATE` in `app/build.gradle.kts` auf `false`
 Benötigt JDK 17+ und Android SDK (Plattform 36).
 
 ```bash
-./gradlew assembleRelease     # → app/build/outputs/apk/release/app-release.apk
+./gradlew :webApp:exportWebApp   # → webapp/ (die WebApp, die gerade ausgeliefert wird)
+./gradlew assembleRelease        # Android (ruht gerade – nur zum Weiterentwickeln, nicht zum Verteilen)
 ./gradlew test                # Logik, Datenbank, Paket-Prüfung, Bildschirmfotos (→ screenshots/)
 ```
 
@@ -195,7 +199,7 @@ Benötigt JDK 17+ und Android SDK (Plattform 36).
 - Play Store: eigener Upload-Schlüssel, Datenschutzerklärung, Billing für „Plus“
 
 
-## Play Store
+## Play Store (ruht gerade – vorerst nur WebApp)
 Zwei Varianten aus demselben Code (`app/build.gradle.kts`, `productFlavors`):
 - **github** – APK für GitHub-Releases mit eingebautem Updater
 - **play** – AAB für Google Play: kein eigener Updater (Updates über Play In-App-Updates), keine Installations-Berechtigung,

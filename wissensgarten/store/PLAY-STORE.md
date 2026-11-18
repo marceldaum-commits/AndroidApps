@@ -1,5 +1,9 @@
 # Wissensgarten im Google Play Store veröffentlichen
 
+> **Ruht gerade (seit 18.11.2026):** Vorerst gibt es den Wissensgarten nur als WebApp (PWA). Keine APK, kein Play-Store-Eintrag.
+> Diese Anleitung gilt wieder, sobald es als Android-App weitergeht. Kauf von Plus läuft bis dahin über den Shop auf
+> mathenachhilfe-online.com (Code per E-Mail).
+
 Stand: **Version 0.19.0 vom 16.11.2026** (versionCode 33). Alles, was die Play Console abfragt – zuerst als Klick-Liste,
 darunter die Antworten im Detail.
 

@@ -707,6 +707,61 @@ open class ScreenshotTest {
         }
     }
 
+    /** Plattform-Attrappe wie in der WebApp: „App installieren“ wird angeboten ([mode]). */
+    private fun installHost(mode: de.wissensgarten.app.InstallMode) = object : de.wissensgarten.app.AppHost {
+        override val features = de.wissensgarten.app.Features(label = "WebApp", keepsakes = false, plusPurchase = true, tilt = true)
+        override val sfx = object : de.wissensgarten.app.ui.fx.Sfx {
+            override var enabled = false; override var level = 0f
+            override fun play(s: de.wissensgarten.app.ui.fx.Sound, pitch: Float, volume: Float) {}
+        }
+        override val music = object : de.wissensgarten.app.ui.fx.Music {
+            override fun setEnabled(on: Boolean) {}; override fun setMood(m: de.wissensgarten.core.model.MusicMood) {}
+            override fun onForeground(on: Boolean) {}; override fun duck(on: Boolean) {}
+            override fun prepare(vararg moods: de.wissensgarten.core.model.MusicMood) {}; override fun setVolume(v: Float) {}; override fun unlock() {}
+        }
+        override val voice: de.wissensgarten.app.ui.fx.Voice? = null
+        override val listener: de.wissensgarten.app.ui.fx.Listener? = null
+        override val images = object : de.wissensgarten.app.ImageStore {
+            override fun save(name: String, image: androidx.compose.ui.graphics.ImageBitmap) {}
+            override fun load(name: String): androidx.compose.ui.graphics.ImageBitmap? = null
+            override fun exists(name: String) = false
+            override fun delete(name: String) {}
+        }
+        override val installOffer = kotlinx.coroutines.flow.MutableStateFlow(de.wissensgarten.app.InstallOffer(mode))
+        override fun toast(message: String) {}
+        override fun shareText(text: String) {}
+        override fun shareImage(image: androidx.compose.ui.graphics.ImageBitmap, fileName: String, text: String) {}
+        override fun printCraftSheet(bedName: String, emoji: String, items: List<de.wissensgarten.app.ui.share.CraftItem>) {}
+        override suspend fun wipeAll(): String? = null
+        override fun restart() {}
+    }
+
+    @Test fun installGarden() = shot("77_garten_app_installieren") {
+        val host = installHost(de.wissensgarten.app.InstallMode.PROMPT)
+        androidx.compose.runtime.CompositionLocalProvider(de.wissensgarten.app.ui.fx.LocalHost provides host) {
+            GardenScreen(profile, garden, now, 10, {}, {}, {}, {},
+                installCard = { de.wissensgarten.app.ui.settings.InstallAppCard(host, inGarden = true) })
+        }
+    }
+
+    @Test fun installSettings() = shot("78_einstellungen_app_installieren") {
+        val host = installHost(de.wissensgarten.app.InstallMode.PROMPT)
+        androidx.compose.runtime.CompositionLocalProvider(de.wissensgarten.app.ui.fx.LocalHost provides host) {
+            de.wissensgarten.app.ui.settings.SettingsScreen(profile, true, ThemeMode.LIGHT, true, {}, packCount = 72, cardCount = 2472,
+                version = "2.2.7", onTheme = {}, onUpdateProfile = {}, onDeleteProfile = {}, onTutorial = {}, onPlus = {})
+        }
+    }
+
+    @Test fun installIphone() = shot("79_iphone_app_installieren", prepare = { r ->
+        r.onNodeWithText("So geht's").performClick(); r.mainClock.advanceTimeBy(600)
+    }) {
+        val host = installHost(de.wissensgarten.app.InstallMode.IOS_GUIDE)
+        androidx.compose.runtime.CompositionLocalProvider(de.wissensgarten.app.ui.fx.LocalHost provides host) {
+            GardenScreen(profile, garden, now, 10, {}, {}, {}, {},
+                installCard = { de.wissensgarten.app.ui.settings.InstallAppCard(host, inGarden = true) })
+        }
+    }
+
     @Test fun plus() = shot("65_plus") {
         de.wissensgarten.app.ui.plus.PlusScreen(
             status = de.wissensgarten.core.data.PlusStatus(active = false, enforced = true), today = 20773,

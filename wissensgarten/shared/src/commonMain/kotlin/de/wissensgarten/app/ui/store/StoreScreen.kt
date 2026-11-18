@@ -271,9 +271,9 @@ private fun PlusTab(plusPacks: List<Pack>, onOpenPacks: () -> Unit) {
         text = {
             Text("• Plus wird ein freiwilliger Zusatz mit weiteren Wissenspaketen.\n" +
                 "• Alle Grundpakete bleiben kostenlos. Die Plus-Pakete (heute 6) sind bis zum Start gratis.\n" +
-                "• Kaufen geht nur hinter der Eltern-Aufgabe und über Google Play mit eurem Google-Konto – wir sehen keine Zahlungsdaten.\n" +
+                "• Kaufen geht nur hinter der Eltern-Aufgabe, über den Shop auf mathenachhilfe-online.com. Der Freischalt-Code kommt per E-Mail.\n" +
                 "• Keine Werbung, keine Lockangebote, kein Kaufdruck auf Kinder. Brummi bettelt nie.\n" +
-                "• Ein Kauf gilt für die ganze Familie auf allen Geräten mit demselben Google-Konto.")
+                "• Ein Kauf gilt für die ganze Familie auf allen Geräten in der Web-App – kein Konto nötig.")
         },
         confirmButton = { TextButton(onClick = { parentInfo = false }) { Text("Verstanden") } },
     )

@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.8 – Läuft jetzt auch auf iPhone und iPad, App installieren (18.11.2026)
+- **Keine weiße Seite mehr auf iPhone/iPad:** Safari konnte manche Farbverläufe nicht zeichnen – daran brach das ganze Bild ab. Jetzt nimmt der Garten dann einfach eine schlichtere Farbe. Außerdem zeichnet er auf großen Apple-Geräten etwas sparsamer.
+- Klappt der Start trotzdem einmal nicht, erscheint statt einer leeren Seite eine Meldung mit „Neu laden“ und der Versionsnummer (auf iPhone und iPad braucht es mindestens iOS 18.2).
+- **„App installieren“:** Ein Knopf im Garten und in den Einstellungen legt den Wissensgarten auf den Startbildschirm. Auf iPhone und iPad zeigt Brummi, wie es geht.
+- Den Wissensgarten gibt es vorerst nur noch als Web-App; Plus-Codes gelten in der Web-App auf allen Geräten.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.7 – Großer Vorlese-Knopf, WebApp immer aktuell (18.11.2026)
 - **Großer Knopf „🔊 Vorlesen“** an jeder Karte – bei der Frage und bei der Antwort, gut sichtbar und mit dem Daumen leicht zu treffen. Ein Tipp, und Brummi liest mit Nova vor.
 - **WebApp immer aktuell:** Sie schaut beim Öffnen, bei jeder Rückkehr und alle 30 Minuten nach einer neuen Version und spielt sie ein, sobald du auf dem Startbildschirm bist – nie mitten in einer Runde. Danach erscheint kurz „Neue Version … geladen“.

@@ -1,5 +1,13 @@
+# RUHT (seit 18.11.2026): Der Wissensgarten gibt es vorerst (ca. 1–2 Monate) nur als WebApp (installierbar als PWA).
+# Darum baut dieser Workflow nicht mehr bei jedem Push: Es entstehen keine APKs, keine AABs und keine GitHub-Releases.
+# Der Android-Code bleibt im Repo; wenn es wieder als Android-App weitergeht, den „push“-Auslöser unten wieder eintragen:
+#   push:
+#     paths: ["wissensgarten/**", ".github/**"]
+# Bis dahin nur von Hand startbar (Actions → „Run workflow“). Die WebApp hält „wissensgarten-web-test.yml“ aktuell –
+# der braucht keine Releases.
+#
 # Baut den Wissensgarten, signiert ihn mit dem Upload-Schlüssel und stellt die APK unter „Releases“ bereit.
-# Läuft automatisch bei jedem Push, der den Wissensgarten ändert. Veröffentlicht wird nur, wenn die Version
+# (Früher: lief automatisch bei jedem Push, der den Wissensgarten ändert.) Veröffentlicht wird nur, wenn die Version
 # (versionName in app/build.gradle.kts) neu ist – jede Version genau einmal. Von Hand: Actions → „Run workflow“.
 #
 # Secrets (Settings → Secrets and variables → Actions):
@@ -13,9 +21,7 @@
 name: Wissensgarten APK
 
 on:
-  workflow_dispatch:
-  push:
-    paths: ["wissensgarten/**", ".github/**"]
+  workflow_dispatch:   # nur von Hand – siehe Kopf der Datei
 
 permissions:
   contents: write
