@@ -79,8 +79,9 @@
         var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
         var real = window.devicePixelRatio || 1;
         var px = Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight);
-        if (ios && px * real * real > 3.5e6) {
-          var use = Math.max(1, Math.sqrt(3.5e6 / px));
+        // höchstens doppelte Schärfe (statt 3×) und höchstens ~3,5 Mio. Bildpunkte: spart auf dem iPhone viel Grafikspeicher
+        var use = Math.max(1, Math.min(real, 2, Math.sqrt(3.5e6 / px)));
+        if (ios && use < real) {
           Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true });
           window.wgStartNote('iOS-Schärfe ' + real + ' → ' + use.toFixed(2));
         }

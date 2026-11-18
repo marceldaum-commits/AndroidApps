@@ -3,6 +3,10 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.9 – Sparsamer auf iPhone und iPad (18.11.2026)
+- Auf iPhone und iPad zeichnet der Garten mit höchstens doppelter Schärfe – das spart viel Grafikspeicher, damit Safari die Seite nicht mehr wegen Speichermangels leer lässt. Man sieht kaum einen Unterschied.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.8 – Läuft jetzt auch auf iPhone und iPad, App installieren (18.11.2026)
 - **Keine weiße Seite mehr auf iPhone/iPad:** Safari konnte manche Farbverläufe nicht zeichnen – daran brach das ganze Bild ab. Jetzt nimmt der Garten dann einfach eine schlichtere Farbe. Außerdem zeichnet er auf großen Apple-Geräten etwas sparsamer.
 - Klappt der Start trotzdem einmal nicht, erscheint statt einer leeren Seite eine Meldung mit „Neu laden“ und der Versionsnummer (auf iPhone und iPad braucht es mindestens iOS 18.2).

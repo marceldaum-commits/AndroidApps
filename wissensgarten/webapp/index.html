@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="de" data-version="2.2.8">
+<html lang="de" data-version="2.2.9">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Wissensgarten – Lernen & Gießen</title>
   <meta name="description" content="Wissensgarten: Lernen wie Gärtnern – jede Karte eine Pflanze, die wächst, wenn du sie gießt. Ohne Werbung, ohne Konto, Fortschritt bleibt im Browser.">
   <meta name="theme-color" content="#3f6b3a">
-  <meta name="wg-version" content="2.2.8">
+  <meta name="wg-version" content="2.2.9">
   <link rel="manifest" href="manifest.webmanifest">
   <!-- Emoji-Schrift gleich parallel zur App laden (statt erst danach) – nur beim ersten Besuch; danach kommt sie aus dem
        Zwischenspeicher des Service Workers (ein Vorab-Laden würde dort nur doppelt laden und eine Konsolen-Warnung erzeugen) -->
@@ -79,8 +79,9 @@
         var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
         var real = window.devicePixelRatio || 1;
         var px = Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight);
-        if (ios && px * real * real > 3.5e6) {
-          var use = Math.max(1, Math.sqrt(3.5e6 / px));
+        // höchstens doppelte Schärfe (statt 3×) und höchstens ~3,5 Mio. Bildpunkte: spart auf dem iPhone viel Grafikspeicher
+        var use = Math.max(1, Math.min(real, 2, Math.sqrt(3.5e6 / px)));
+        if (ios && use < real) {
           Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true });
           window.wgStartNote('iOS-Schärfe ' + real + ' → ' + use.toFixed(2));
         }
@@ -101,13 +102,13 @@
     <div class="pct" id="pct"></div>
     <p class="hint" id="hint"></p>
     <noscript><p>Bitte JavaScript einschalten, dann wächst der Garten.</p></noscript>
-    <div class="links">Version 2.2.8 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
+    <div class="links">Version 2.2.9 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" rel="noopener">Datenschutz</a></div>
   </div>
   <script>
     // Echter Ladebalken: zählt die geladenen Bytes der großen Startdateien (App, Grafik-Engine, Emoji-Schrift).
     (function () {
-      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"wissensgarten.js":664289,"27218ee16c9f41a2cc36.wasm":7996788};
+      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"wissensgarten.js":664289,"b6d65c9e78b4d6bd983c.wasm":7996788};
       const total = Object.values(sizes).reduce((a, b) => a + b, 0);
       const got = {};
       const bar = document.getElementById('bar'), barI = document.getElementById('barI'), pct = document.getElementById('pct');

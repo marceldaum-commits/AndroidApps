@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## iOS-Nachtrag – Version 2.2.9 vom 18.11.2026
+
+- **(a) Speicher:**
+  - iPhone/iPad zeichnen jetzt mit höchstens DPR 2, zusätzlich ist die Zeichenfläche auf 3,5 Mio. Pixel begrenzt. Ein iPhone 15 Pro Max braucht damit statt ca. 3,6 Mio. nur ca. 1,6 Mio. Pixel, also etwa 56 % weniger Canvas-Speicher.
+  - Ladegrößen: App-WASM 8,0 MB, Skiko-WASM 8,4 MB, Emoji-Schrift 2,1 MB (bereits auf die benutzten Zeichen gekürzt, wird für die Merkbilder sofort gebraucht), Symbolschrift 0,1 MB.
+  - Echten iOS-Speicher kann ich hier nicht messen (kein Gerät, kein WebKit).
+- **(b) WebGL-Kontextverlust:** wird seit 2.2.8 per `webglcontextlost` abgefangen und als Meldung mit „Neu laden“ angezeigt.
+- **(c) Alte Version:** Der Service Worker spielt neue Versionen sofort ein (`skipWaiting`/`claim`, Prüfung bei Öffnen, Fokus und alle 30 min), alte Caches werden gelöscht. Die Startbildschirm-App bekommt die neue Version spätestens beim nächsten Öffnen. Die Fehlermeldung zeigt die laufende Version.
+- **Farbverläufe:** Der Rückfall von 2.2.8 bleibt (wahrscheinlichste Ursache laut Raumlicht-Befund).
+- **Bitte auf dem iPhone testen.** Falls eine Meldung erscheint, steht der Fehlertext darin.
+
 ## DRINGEND iOS weiße Seite + nur WebApp – Version 2.2.8 vom 18.11.2026
 
 ### iOS: weiße Seite
