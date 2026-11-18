@@ -1,5 +1,5 @@
-// Kurvenflug 2.5.30 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
-const CACHE = "kurvenflug-2.5.30";
+// Kurvenflug 2.5.31 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
+const CACHE = "kurvenflug-2.5.31";
 const SHARED = [
   "./",
   "bccfa839aa4b38489c76.wasm",
@@ -18,7 +18,7 @@ const SHARED = [
   "manifest.webmanifest"
 ];
 const ONLY = {
-  wasm: ["01022b6633ec146259fe.wasm",
+  wasm: ["0fbd62adba4ed8965232.wasm",
   "kurvenflug.js"],
   js: ["kurvenflug-compat.js"]
 };
