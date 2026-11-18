@@ -51,6 +51,8 @@ interface AppHost {
     val images: ImageStore
 
     fun toast(message: String)
+    /** WebApp: Ist gerade ein ungefährlicher Moment für ein automatisches Update (Startbildschirm, keine Runde)? */
+    fun setSafeToUpdate(safe: Boolean) {}
     fun shareText(text: String)
     fun shareImage(image: ImageBitmap, fileName: String, text: String)
     fun printCraftSheet(bedName: String, emoji: String, items: List<CraftItem>)

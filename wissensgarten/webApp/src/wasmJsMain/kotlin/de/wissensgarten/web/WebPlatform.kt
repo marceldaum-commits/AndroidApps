@@ -40,6 +40,7 @@ private fun jsStartTilt(): Unit = js("window.wg.startTilt()")
 private fun jsTiltX(): Double = js("window.wg.tiltX")
 private fun jsKeepAwake(on: Boolean): Unit = js("window.wg.keepAwake(on)")
 private fun jsReload(): Unit = js("location.reload()")
+private fun jsSafe(safe: Boolean): Unit = js("window.wgUpdate && window.wgUpdate.safe(safe)")
 
 /** Geräusche: im Code erzeugt (Synth), im Browser über WebAudio abgespielt – dieselben Klänge wie in der App. */
 class WebSfx : Sfx {
@@ -203,6 +204,7 @@ class WebHost : AppHost {
     override val images = WebImages
 
     override fun toast(message: String) = jsToast(message)
+    override fun setSafeToUpdate(safe: Boolean) = jsSafe(safe)
 
     // Plus-Pakete: gleicher Server wie die WebApp (relativ), Code im Header – nichts landet in Adresse oder Protokoll
     override suspend fun fetchPlusPacks(code: String, known: Map<String, Int>): Int {

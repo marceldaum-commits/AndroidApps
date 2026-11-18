@@ -183,7 +183,7 @@ fun SettingsScreen(
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 de.wissensgarten.core.data.ReadAloud.entries.forEach { r -> FilterChip(selected = r == readAloud, onClick = { onReadAloud(r) }, label = { Text(r.label) }) }
             }
-            Text("Automatisch: für Grundschulkinder an. Mit 🔊 an jeder Frage geht's immer. Englisch, Französisch und Spanisch werden in der richtigen Sprache gesprochen.",
+            Text("Automatisch: für Grundschulkinder an. Mit dem großen Knopf „🔊 Vorlesen“ an jeder Karte geht's immer. Englisch, Französisch und Spanisch werden in der richtigen Sprache gesprochen.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             voiceExtras()
         }

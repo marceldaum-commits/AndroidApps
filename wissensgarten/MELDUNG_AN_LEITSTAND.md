@@ -1,5 +1,33 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.7 vom 18.11.2026 (Web = Android): Vorlese-Knopf und Auto-Update
+
+**Vorlesen (Marcels Antwort):**
+- Die Voreinstellung bleibt: kein automatisches Vorlesen für alle ab Werk.
+- Neu ist der große Knopf „🔊 Vorlesen“ (≥ 56 dp, Daumengröße, wackelt beim Erscheinen kurz). Er sitzt unter jeder Frage (`QuestionText`), unter der Antwort beim Entdecken und unter Antwort und Erklärung nach dem Aufdecken. Vorher gab es nur ein kleines 🔊-Symbol bzw. einen Chip.
+- Bildschirmfoto: `screenshots/76_vorlesen_knopf.png`.
+
+**WebApp immer aktuell:**
+1. **Prüfung** beim Öffnen, bei `visibilitychange` (sichtbar) und `focus` sowie alle 30 Minuten. Dabei laufen `registration.update()` (Anmeldung mit `updateViaCache: 'none'`) und ein Abgleich von `version.json` mit `?nc=` und `cache: 'no-store'`.
+2. **Einspielen:**
+   - Die neue Version wird sofort aktiv (`skipWaiting` + `clients.claim`).
+   - Neu geladen wird nur in einem ungefährlichen Moment: in den ersten 15 s nach dem Start, wenn der Tab im Hintergrund ist, oder sobald die App den Startbildschirm meldet (`setSafeToUpdate`, Route Garten). Nie mitten in einer Runde oder Eingabe.
+   - Danach erscheint der Hinweis „Neue Version x.y.z geladen 🌱“.
+3. **Kein Datenverlust:** localStorage bleibt unberührt. Alte Caches werden gelöscht, `wissensgarten-nova*` bleibt.
+4. **Nie hängen bleiben:** Spätestens beim nächsten Öffnen läuft die neue Version.
+5. **Version sichtbar** in Einstellungen → Über („Version x.y.z vom …“).
+
+**Browser-Test** `webApp/tools/web-update.cjs` (Playwright, lokaler Server mit `Cache-Control: no-cache`):
+- Ablauf: Version 2.2.7 laden, mit Service Worker neu laden, dann 2.2.8 einspielen, während der Tab offen bleibt. Danach Rückkehr in den Tab.
+- Während der Einrichtung wird das Update erkannt, aber es wird noch nicht neu geladen (richtig).
+- Beim Startbildschirm-Signal wird die Seite neu geladen, Hinweis „Neue Version 2.2.8 geladen 🌱“; Spielstand-Marke und Nova-Cache bleiben, alter App-Cache ist gelöscht.
+- **Grenze:** Der Fall „Tab im Hintergrund“ ist im Headless-Browser nicht nachstellbar (dort ist der Tab immer sichtbar). Im echten Browser greift er beim Tab-Wechsel, spätestens beim nächsten Öffnen.
+- **Hinweis:** Wer gerade noch 2.2.6 offen hat, bekommt 2.2.7 nach der alten Regel: beim nächsten Verlassen des Tabs bzw. beim nächsten Öffnen.
+
+**Nova-Abdeckung (Stand 07:46):** wissensgarten-test 17 025 / 17 850 = 95 %, Plus 3 059 / 3 167 = 97 %. Das Werk ist laut euch pausiert, der Rest kommt über `/jetzt`.
+
+**Tests:** alle grün, Lint 0 Fehler.
+
 ## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.6 vom 18.11.2026 (Web = Android): mehrere richtige Antworten
 
 - **Geprüft:** alle 2 923 Karten (2 472 frei, 451 Plus). Automatischer Test `AntwortKontrolleTest` über alle Karten, dazu von Hand alle 1 591 eintippbaren und 447 nur sprechbaren Antworten.
