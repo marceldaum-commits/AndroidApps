@@ -64,17 +64,19 @@ fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked:
         BubbleBackground(tint = subject.color())
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
             Bar("${subject.emoji} ${subject.title}", onBack)
+            BoxWithConstraints(Modifier.fillMaxSize()) {
+            val cols = if (maxWidth >= 900.dp) 2 else 1
             Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 ChipRow(Subject.entries, subject, { "${it.emoji} ${it.title}" }, { subject = it; open = null }, color = subject.color())
                 BlubbSays(de.experimentopia.core.model.Say.subject(subject.title), Mood.HAPPY, size = 52.dp, speak = false)
                 Text("Deine Klasse", color = E.Muted, fontSize = 12.sp)
                 ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "Alle" else "Kl. $it" }, onGrade, Modifier.testTag("klasse"), color = E.Sun)
                 if (topics.isEmpty()) Text("Für diese Klasse gibt es in ${subject.title} noch keine Versuche – probier eine andere Klasse.", color = E.Muted)
-                topics.forEachIndexed { i, t ->
+                topics.withIndex().chunked(cols).forEach { row -> Row(horizontalArrangement = Arrangement.spacedBy(12.dp), verticalAlignment = Alignment.Top) { row.forEach { (i, t) ->
                     val (n, total) = Curriculum.progress(t, done)
                     val next = Curriculum.next(t, done, grade)
                     val frac by animateFloatAsState(n.toFloat() / total, tween(700), label = "p")
-                    Column(Modifier.fillMaxWidth().popIn(i * 60).clip(RoundedCornerShape(20.dp)).background(E.Deep)
+                    Column(Modifier.weight(1f).popIn(i * 60).clip(RoundedCornerShape(20.dp)).background(E.Deep)
                         .border(2.dp, if (n == total) E.Green else subject.color().copy(alpha = 0.6f), RoundedCornerShape(20.dp)).padding(12.dp).testTag("bereich_${t.name}"),
                         verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
@@ -106,8 +108,10 @@ fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked:
                         }
                     }
                 }
-                ComingSoon(subject, grade, topics.size)
+                repeat(cols - row.size) { Spacer(Modifier.weight(1f)) } } }
+                ComingSoon(subject, grade, topics.size, if (cols == 2) 4 else 2)
                 Spacer(Modifier.height(24.dp))
+            }
             }
         }
         TheorySheet(theoryTopic != null, theoryTopic ?: Topic.AUFTRIEB, pro = grade >= 7) { theoryTopic = null }
@@ -116,7 +120,7 @@ fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked:
 
 /** Themen aus dem Lehrplan, an denen noch gebaut wird – ohne Datum, ohne Kaufhinweis. Antippen lässt die Kachel wackeln. */
 @Composable
-private fun ComingSoon(subject: Subject, grade: Int, offset: Int) {
+private fun ComingSoon(subject: Subject, grade: Int, offset: Int, cols: Int = 2) {
     val list = Coming.of(subject, grade)
     if (list.isEmpty()) return
     var poked by remember(subject) { mutableStateOf<Upcoming?>(null) }
@@ -124,13 +128,13 @@ private fun ComingSoon(subject: Subject, grade: Int, offset: Int) {
     Spacer(Modifier.height(4.dp))
     Text("🚧 Kommt bald", color = E.Text, fontWeight = FontWeight.Black, fontSize = 17.sp, modifier = Modifier.testTag("kommt_bald"))
     Text("Daran forschen wir gerade – aus dem Lehrplan der Klassen 5–10.", color = E.Muted, fontSize = 12.sp)
-    list.chunked(2).forEachIndexed { r, row ->
+    list.chunked(cols).forEachIndexed { r, row ->
         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             row.forEachIndexed { j, u ->
                 val me = poked == u
-                Column(Modifier.weight(1f).popIn((offset + r * 2 + j) * 50).shake(if (me) pokes else 0).clip(RoundedCornerShape(18.dp)).background(E.Deep.copy(alpha = 0.7f))
+                Column(Modifier.weight(1f).popIn((offset + r * cols + j) * 50).shake(if (me) pokes else 0).clip(RoundedCornerShape(18.dp)).background(E.Deep.copy(alpha = 0.7f))
                     .border(2.dp, subject.color().copy(alpha = 0.35f), RoundedCornerShape(18.dp))
-                    .clickable { poked = u; pokes++ }.padding(10.dp).testTag("bald_${r * 2 + j}"), verticalArrangement = Arrangement.spacedBy(3.dp)) {
+                    .clickable { poked = u; pokes++ }.padding(10.dp).testTag("bald_${r * cols + j}"), verticalArrangement = Arrangement.spacedBy(3.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(u.emoji, fontSize = 26.sp)
                         Spacer(Modifier.weight(1f))
@@ -142,7 +146,7 @@ private fun ComingSoon(subject: Subject, grade: Int, offset: Int) {
                     AnimatedVisibility(me) { Text(u.teaser, color = E.Text, fontSize = 12.sp) }
                 }
             }
-            if (row.size == 1) Spacer(Modifier.weight(1f))
+            repeat(cols - row.size) { Spacer(Modifier.weight(1f)) }
         }
     }
 }

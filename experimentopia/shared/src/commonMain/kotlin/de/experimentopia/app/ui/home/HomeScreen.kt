@@ -5,6 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -77,35 +80,38 @@ fun HomeScreen(
     /** Forscher-Pass freigeschaltet: deutlich sichtbares Abzeichen im Kopf */
     pass: Boolean = false,
 ) {
-    Box(Modifier.fillMaxSize()) {
-        BubbleBackground()
-        Column(Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+    // Breite Bildschirme (PC, Tablet quer): eigene Anordnung in zwei Spalten – links Rätsel, Fächer und Werkzeuge, rechts die Inseln als Kartenraster
+    BoxWithConstraints(Modifier.fillMaxSize()) {
+        val wide = maxWidth >= 900.dp
+        val islandCols = 2
+        BubbleBackground(count = if (wide) 48 else 26)
+        val header: @Composable () -> Unit = {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                de.experimentopia.app.ui.common.AppLogo(70.dp)
+                de.experimentopia.app.ui.common.AppLogo(if (wide) 84.dp else 70.dp)
                 BoxWithConstraints(Modifier.weight(1f).padding(start = 8.dp)) { val narrow = maxWidth < 230.dp; Column {
                     // auf schmalen Handys (320 px) kleiner, damit das Wort nicht umbricht
-                    Text("Experimentopia", style = TextStyle(brush = Brush.horizontalGradient(listOf(E.Mint, E.Sky, E.Pink)), fontSize = if (narrow) 21.sp else 28.sp, fontWeight = FontWeight.Black), maxLines = 1, softWrap = false)
-                    Text("Dein Versuchslabor für die Hosentasche", color = E.Muted, fontSize = 13.sp)
+                    Text("Experimentopia", style = TextStyle(brush = Brush.horizontalGradient(listOf(E.Mint, E.Sky, E.Pink)), fontSize = if (narrow) 21.sp else if (wide) 36.sp else 28.sp, fontWeight = FontWeight.Black), maxLines = 1, softWrap = false)
+                    Text(if (wide) "Dein Versuchslabor – ${Catalog.all.size} Experimente auf ${Island.entries.size} Inseln" else "Dein Versuchslabor für die Hosentasche", color = E.Muted, fontSize = if (wide) 15.sp else 13.sp)
                 } }
+                if (wide) Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(end = 12.dp)) { pills(stats) }
                 IconButton(onClick = onSettings, modifier = Modifier.testTag("einstellungen")) { Text("⚙️", fontSize = 24.sp) }
             }
-            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                Pill("⭐ ${stats.stars}/${Catalog.all.size * 3}", E.Sun)
-                Pill("🎯 ${stats.hits} Treffer", E.Mint)
-                Pill("💡 ${stats.ahas} Aha!", E.Pink)
-            }
+        }
+        val passRow: @Composable () -> Unit = {
             if (pass) Row(Modifier.fillMaxWidth().popIn().clip(RoundedCornerShape(16.dp)).background(Brush.horizontalGradient(listOf(E.Sun.copy(alpha = 0.3f), E.Orange.copy(alpha = 0.18f))))
                 .border(2.dp, E.Sun, RoundedCornerShape(16.dp)).padding(horizontal = 12.dp, vertical = 8.dp).testTag("pass_aktiv"), verticalAlignment = Alignment.CenterVertically) {
                 Text("💛", fontSize = 22.sp, modifier = Modifier.pulse(true, 0.08f))
                 Spacer(Modifier.width(8.dp))
                 Text("Forscher-Pass aktiv – alle Inseln und Geräte sind offen!", color = E.Sun, fontWeight = FontWeight.Bold, fontSize = 14.sp)
             }
-            banner?.invoke()
-            de.experimentopia.app.ui.common.InstallCard()
+        }
+        val welcomeCard: @Composable () -> Unit = {
             if (welcome) Panel(border = E.Mint) {
                 BlubbSays(de.experimentopia.core.model.Say.welcome(), Mood.CHEER, size = 56.dp)
                 GlowButton(onWelcomed, Modifier.fillMaxWidth().testTag("loslegen")) { Text("🚀 Los geht's!", fontWeight = FontWeight.Bold) }
             }
+        }
+        val dailyCard: @Composable () -> Unit = {
             // Rätsel des Tages
             Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(22.dp)).background(Brush.horizontalGradient(listOf(E.Sun.copy(alpha = 0.28f), E.Pink.copy(alpha = 0.2f))))
                 .border(2.dp, E.Sun, RoundedCornerShape(22.dp)).clickable(onClick = onDaily).padding(14.dp).testTag("tagesraetsel"), verticalAlignment = Alignment.CenterVertically) {
@@ -117,6 +123,8 @@ fun HomeScreen(
                 }
                 Text(if (dailyDone) "✅" else "›", fontSize = 28.sp, color = E.Sun)
             }
+        }
+        val subjects: @Composable () -> Unit = {
             // am Schulstoff entlang: erst das Fach wählen
             Text("📚 Lernen nach Fach", color = E.Text, fontWeight = FontWeight.Black, fontSize = 20.sp)
             SubjectCards(results, onSubject)
@@ -130,6 +138,62 @@ fun HomeScreen(
                 }
                 Text("›", fontSize = 28.sp, color = E.Sky)
             }
+        }
+        val tools: @Composable () -> Unit = {
+            Text("Klasse", color = E.Muted, fontSize = 13.sp)
+            ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "alle" else "$it" }, onGrade)
+            // Auf schmalen Handys (320 dp) Bild über dem Wort, damit nichts mitten im Wort umbricht
+            BoxWithConstraints(Modifier.fillMaxWidth()) {
+                val narrow = maxWidth < 400.dp
+                val badge = "${Badges.earned(stats).size}/${Badges.all.size}"
+                @Composable fun label(emoji: String, wide: String, small: String) =
+                    if (narrow) Text("$emoji\n$small", fontWeight = FontWeight.Bold, fontSize = 13.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center, lineHeight = 17.sp)
+                    else Text("$emoji $wide", fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                val pad = if (narrow) 4.dp else 18.dp
+                Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    GlowButton(onFreeLab, Modifier.weight(1f).fillMaxHeight().testTag("freieslabor"), color = E.Mint, padH = pad) { label("🔬", "Freies\nLabor", "Freies\nLabor") }
+                    GlowButton(onJournal, Modifier.weight(1f).fillMaxHeight().testTag("forscherbuch"), color = E.Sun, padH = pad) { label("📒", "Forscher-\nbuch", "Forscher-\nbuch") }
+                    GlowButton(onBadges, Modifier.weight(1f).fillMaxHeight().testTag("abzeichen"), color = E.Pink, padH = pad) { label("🏅", "$badge\nAbzeichen", "$badge\nAbzeichen") }
+                }
+            }
+        }
+        if (wide) {
+            // Hintergrund über die ganze Breite, Inhalt höchstens 1600 dp breit in der Mitte
+            Box(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), contentAlignment = Alignment.TopCenter) {
+            Column(Modifier.widthIn(max = 1600.dp).fillMaxWidth().systemBarsPadding().padding(horizontal = 32.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                header()
+                passRow()
+                banner?.invoke()
+                Row(horizontalArrangement = Arrangement.spacedBy(28.dp)) {
+                    Column(Modifier.weight(0.42f), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                        de.experimentopia.app.ui.common.InstallCard()
+                        welcomeCard(); dailyCard(); subjects(); tools()
+                        // Platz für Blubb: ein Wissens-Häppchen zum Thema des Tagesrätsels
+                        if (!welcome) Panel(Modifier.fillMaxWidth(), border = E.Mint.copy(alpha = 0.5f)) {
+                            BlubbSays(de.experimentopia.core.model.Say.didYouKnow(daily.topic), Mood.HAPPY, size = 64.dp, speak = false)
+                            Text("💡 ${Theory.of(daily.topic).everyday}", color = E.Muted, fontSize = 13.sp)
+                        }
+                    }
+                    Column(Modifier.weight(0.58f), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                        Text("🗺️ Wähle eine Insel", color = E.Text, fontWeight = FontWeight.Black, fontSize = 22.sp)
+                        Island.entries.chunked(islandCols).forEachIndexed { r, row ->
+                            Row(Modifier.fillMaxWidth().height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+                                row.forEachIndexed { j, island -> IslandTile(island, results, grade, r * islandCols + j, Modifier.weight(1f).fillMaxHeight()) { onIsland(island) } }
+                                repeat(islandCols - row.size) { Spacer(Modifier.weight(1f)) }
+                            }
+                        }
+                    }
+                }
+                Spacer(Modifier.height(24.dp))
+            }
+            }
+        } else Column(Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            header()
+            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) { pills(stats) }
+            passRow()
+            banner?.invoke()
+            de.experimentopia.app.ui.common.InstallCard()
+            welcomeCard(); dailyCard(); subjects()
             Text("…oder wähle eine Insel", color = E.Text, fontWeight = FontWeight.Black, fontSize = 20.sp)
             Island.entries.forEachIndexed { i, island ->
                 val list = Catalog.of(island)
@@ -152,24 +216,50 @@ fun HomeScreen(
                     }
                 }
             }
-            Text("Klasse", color = E.Muted, fontSize = 13.sp)
-            ChipRow(listOf(0) + (3..10).toList(), grade, { if (it == 0) "alle" else "$it" }, onGrade)
-            // Auf schmalen Handys (320 dp) Bild über dem Wort, damit nichts mitten im Wort umbricht
-            BoxWithConstraints(Modifier.fillMaxWidth()) {
-                val narrow = maxWidth < 400.dp
-                val badge = "${Badges.earned(stats).size}/${Badges.all.size}"
-                @Composable fun label(emoji: String, wide: String, small: String) =
-                    if (narrow) Text("$emoji\n$small", fontWeight = FontWeight.Bold, fontSize = 13.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center, lineHeight = 17.sp)
-                    else Text("$emoji $wide", fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                val pad = if (narrow) 4.dp else 18.dp
-                Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    GlowButton(onFreeLab, Modifier.weight(1f).fillMaxHeight().testTag("freieslabor"), color = E.Mint, padH = pad) { label("🔬", "Freies\nLabor", "Freies\nLabor") }
-                    GlowButton(onJournal, Modifier.weight(1f).fillMaxHeight().testTag("forscherbuch"), color = E.Sun, padH = pad) { label("📒", "Forscher-\nbuch", "Forscher-\nbuch") }
-                    GlowButton(onBadges, Modifier.weight(1f).fillMaxHeight().testTag("abzeichen"), color = E.Pink, padH = pad) { label("🏅", "$badge\nAbzeichen", "$badge\nAbzeichen") }
-                }
-            }
+            tools()
             Spacer(Modifier.height(24.dp))
         }
+    }
+}
+
+@Composable
+private fun pills(stats: Stats) {
+    Pill("⭐ ${stats.stars}/${Catalog.all.size * 3}", E.Sun)
+    Pill("🎯 ${stats.hits} Treffer", E.Mint)
+    Pill("💡 ${stats.ahas} Aha!", E.Pink)
+}
+
+/** Große Inselkarte für breite Bildschirme: Insel schwebt sanft, Fortschritt, Themen der Insel; beim Darüberfahren hebt sie sich */
+@Composable
+private fun IslandTile(island: Island, results: Map<String, Int>, grade: Int, index: Int, modifier: Modifier, onClick: () -> Unit) {
+    val list = Catalog.of(island)
+    val done = list.count { it.id in results }
+    val st = list.sumOf { results[it.id] ?: 0 }
+    val fits = grade == 0 || list.any { grade in it.grades }
+    val t by rememberSeconds()
+    val hover = remember { MutableInteractionSource() }
+    val hovered by hover.collectIsHoveredAsState()
+    val lift by androidx.compose.animation.core.animateFloatAsState(if (hovered) 1f else 0f, label = "lift")
+    val topics = list.map { it.topic }.distinct()
+    Column(modifier.popIn(index * 70).graphicsLayer { translationY = -6f * density * lift; scaleX = 1f + 0.02f * lift; scaleY = 1f + 0.02f * lift }
+        .clip(RoundedCornerShape(26.dp))
+        .background(Brush.verticalGradient(listOf(island.color.color().copy(alpha = if (fits) 0.22f else 0.08f), E.Deep.copy(alpha = if (fits) 0.95f else 0.5f))))
+        .border(2.dp, island.color.color().copy(alpha = if (fits) 0.5f + 0.5f * lift else 0.3f), RoundedCornerShape(26.dp))
+        .hoverable(hover).clickable(onClick = onClick).padding(16.dp).testTag("insel_${island.name}"), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            IslandBlob(island, Modifier.graphicsLayer { translationY = sin(t * 1.3f + index) * 4f * density }, size = 104)
+            Column(Modifier.weight(1f).padding(start = 12.dp)) {
+                Text(island.title, color = E.Text, fontWeight = FontWeight.Black, fontSize = 20.sp)
+                Text(island.grades, color = island.color.color(), fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                Text(island.subtitle, color = E.Muted, fontSize = 13.sp)
+            }
+        }
+        Text(topics.joinToString("  ") { it.emoji + " " + it.title.substringBefore(" (").substringBefore(",") }, color = E.Text.copy(alpha = 0.85f), fontSize = 12.sp, lineHeight = 17.sp)
+        Spacer(Modifier.weight(1f))
+        Box(Modifier.fillMaxWidth().height(8.dp).clip(CircleShape).background(E.Panel)) {
+            Box(Modifier.fillMaxWidth(done / list.size.toFloat()).fillMaxHeight().clip(CircleShape).background(island.color.color()))
+        }
+        Text("$done von ${list.size} Versuchen · ⭐ $st", color = E.Muted, fontSize = 12.sp)
     }
 }
 

@@ -31,9 +31,12 @@ object Say {
         Island.BIO -> "Willkommen im Bio-Dschungel! Hier kreuzt du Erbsen wie Mendel, lässt Kartoffeln schrumpfen, jagst Nährstoffe, mikroskopierst Teichwasser, baust Nahrungsketten und hörst dein Herz schlagen."
     }
 
+    /** Startseite am PC: Wissens-Häppchen zum Thema des Tagesrätsels */
+    fun didYouKnow(t: Topic) = "Wusstest du? ${Theory.of(t).idea}"
+
     /** Jeder mögliche Satz (für die Vertonung vorab) */
     fun all(): List<String> = listOf(PREDICT, TRANSFER, EXPLAIN_ASK, EXPLAIN_WRONG, EXPLAIN_RIGHT, JOURNAL_EMPTY, FREE_LAB, PRO_HAS, PRO_ALL, welcome()) +
         Subject.entries.map { subject(it.title) } + Island.entries.map { island(it) } +
         (Catalog.all.map { it.title } + Lab.entries.map { it.title }).distinct().map { proWhat(it) } +
-        Calibration.ALL + Topic.entries.map { Theory.of(it).idea }
+        Calibration.ALL + Topic.entries.map { Theory.of(it).idea } + Topic.entries.map { didYouKnow(it) }
 }

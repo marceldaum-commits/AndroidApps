@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.10.0 vom 18.11.2026: PC-Ansicht – fertig für den Betriebstest (enthält 2.9.0/2.9.1)
+
+- Wunsch von Marcel: „am PC … nicht nur strecken“. Ab 900 dp Breite eigene Anordnung: Startseite zweispaltig (links Tagesrätsel, Fächer, Klasse, Werkzeuge, Blubb-„Wusstest du?“;
+  rechts 8 Inselkarten 2 × 4 mit schwebender Insel, Themen, Fortschritt, Hover-Effekt), Hintergrund über die ganze Breite, Inhalt max. 1600 dp.
+  Fach-Übersicht 2 Spalten, Themensuche bis 4 Spalten, Freies Labor als lückenloses Zwei-Spalten-Mauerwerk. Versuche/Einstellungen max. 900 dp, Insel 960 dp. Handy unverändert.
+- Geprüft: Roborazzi bei 1400 × 900 dp (Bilder 90–92) und echter Chromium bei 1920 × 1000 (Bild 93); alle Tests, Lint, Webapp grün.
+
 ## 18.11.2026 – Version 2.9.1 vom 18.11.2026: Ratgeber-Update 11 – fertig für den Betriebstest (enthält 2.9.0 Sicherung)
 
 1) **#pro=CODE ist drin**: Die App liest `#pro=` (neu) und `?pro=` (alt). Danach wird die Adresse sofort per `history.replaceState` geleert – auch bei ungültigem Code.

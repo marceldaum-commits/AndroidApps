@@ -1,5 +1,13 @@
 # Changelog – Experimentopia
 
+## 2.10.0 – Schön auf dem großen Bildschirm (18.11.2026)
+
+- 🖥️ **Eigene PC-Ansicht** statt einer schmalen Handy-Spalte: Auf breiten Bildschirmen (Laptop, PC, Tablet quer) ordnet sich die Startseite in zwei Spalten –
+  links Rätsel des Tages, Fächer, Klasse und Werkzeuge, rechts die acht Inseln als große Karten mit schwebender Insel, Themen und Fortschritt.
+  Mit der Maus darüber heben sich die Karten leicht an. Blubb verrät links ein „Wusstest du?“ zum Thema des Tagesrätsels.
+- 📚 Fach-Übersicht, Themensuche und Freies Labor nutzen die Breite mit mehreren Spalten (ohne Lücken); Versuche und Einstellungen bleiben in gut lesbarer Breite in der Mitte.
+- Auf dem Handy bleibt alles wie gewohnt.
+
 ## 2.9.1 – Freischalt-Link noch datensparsamer (18.11.2026)
 
 - 🔐 Der Freischalt-Link für den Forscher-Pass funktioniert jetzt auch als „…/#pro=CODE“ – so landet der Code nie in Server-Protokollen. Alte Links mit „?pro=“ gehen weiter.

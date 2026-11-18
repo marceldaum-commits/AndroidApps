@@ -148,13 +148,15 @@ fun AppRoot(
     fun open(e: Experiment, daily: Boolean = false) { if (!daily && state.locked(e)) nav.go(Route.ProR(e.title)) else nav.go(Route.Exp(e.id, daily)) }
 
     CompositionLocalProvider(LocalReadOn provides (audio.read && de.experimentopia.core.model.Nova.ENABLED), LocalAutoRead provides (audio.autoRead && de.experimentopia.core.model.Nova.ENABLED)) {
-    // Große Bildschirme (Laptop, Tablet quer): Hintergrund füllt alles, der Inhalt bleibt in angenehmer Lesebreite in der Mitte
+    // Große Bildschirme (PC, Tablet quer): Hintergrund füllt alles. Startseite und Übersichten ordnen sich selbst in Spalten an;
+    // Versuche und Einstellungen bleiben in angenehmer Lesebreite in der Mitte.
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(E.Deep, E.Night))), contentAlignment = Alignment.TopCenter) {
-    Box(Modifier.widthIn(max = 720.dp).fillMaxSize().pointerInput(Unit) {
+    Box(Modifier.fillMaxSize().pointerInput(Unit) {
         // erste Berührung merken (ohne sie zu verbrauchen) – erst dann darf Musik spielen
         awaitPointerEventScope { while (!touched) { val ev = awaitPointerEvent(PointerEventPass.Initial); if (ev.changes.any { it.pressed }) touched = true } }
     }) {
         AnimatedContent(nav.top, transitionSpec = { fadeIn() togetherWith fadeOut() }, label = "nav") { r ->
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) { Box(Modifier.widthIn(max = maxWidthFor(r)).fillMaxSize()) {
             when (r) {
                 Route.Home -> {
                     var welcome by remember { mutableStateOf(!state.prefs.welcomed) }
@@ -196,6 +198,7 @@ fun AppRoot(
                     )
                 }
             }
+            } }
         }
         // Einmal je Sitzung ein dezenter Hinweis, wenn Nova nicht erreichbar war
         var novaHint by remember { mutableStateOf(false) }
@@ -209,6 +212,14 @@ fun AppRoot(
     }
     }
     }
+}
+
+/** Größte Breite je Bildschirm: Übersichten dürfen breit werden (eigene Spalten), Versuche bleiben gut lesbar */
+fun maxWidthFor(r: Route) = when (r) {
+    Route.Home -> androidx.compose.ui.unit.Dp.Infinity   // ordnet sich selbst an (Hintergrund ganze Breite)
+    is Route.SubjectR, Route.Topics, Route.Free, Route.Journal, Route.Badges -> 1240.dp
+    is Route.IslandR -> 960.dp
+    else -> 900.dp
 }
 
 @Composable

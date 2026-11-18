@@ -36,18 +36,20 @@ fun TopicScreen(results: Map<String, Int>, grade: Int, locked: (Experiment) -> B
         BubbleBackground(tint = E.Sky)
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
             Bar("🔎 Themen & Suche", onBack)
+            BoxWithConstraints(Modifier.fillMaxSize()) {
+            val cols = if (maxWidth >= 1000.dp) 4 else if (maxWidth >= 680.dp) 3 else 2
             Column(Modifier.verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 OutlinedTextField(query, { query = it }, Modifier.fillMaxWidth().testTag("suche"), singleLine = true,
                     label = { Text("Suchen, z. B. Newton, Magnet, Säure, Pendel") }, leadingIcon = { Text("🔎") },
                     trailingIcon = { if (query.isNotEmpty()) Text("✖️", Modifier.clickable { query = "" }.padding(8.dp)) })
                 ChipRow(listOf<Subject?>(null) + Subject.entries, subject, { it?.let { s -> "${s.emoji} ${s.title}" } ?: "Alle Fächer" }, { subject = it; topic = null }, color = E.Sky)
                 Text("Fachbereiche", color = E.Text, fontWeight = FontWeight.Black)
-                Topic.entries.filter { subject == null || it.subject == subject }.chunked(2).forEach { row ->
-                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Topic.entries.filter { subject == null || it.subject == subject }.chunked(cols).forEach { row ->
+                    Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         row.forEach { t ->
                             val list = t.experiments(); val done = list.count { it.id in results }
                             val sel = topic == t
-                            Row(Modifier.weight(1f).clip(RoundedCornerShape(16.dp)).background(if (sel) E.Panel else E.Deep)
+                            Row(Modifier.weight(1f).fillMaxHeight().clip(RoundedCornerShape(16.dp)).background(if (sel) E.Panel else E.Deep)
                                 .border(2.dp, if (sel) E.Sun else E.Line, RoundedCornerShape(16.dp)).clickable { topic = if (sel) null else t }
                                 .padding(10.dp).testTag("thema_${t.name}"), verticalAlignment = Alignment.CenterVertically) {
                                 Text(t.emoji, fontSize = 24.sp)
@@ -57,7 +59,7 @@ fun TopicScreen(results: Map<String, Int>, grade: Int, locked: (Experiment) -> B
                                 }
                             }
                         }
-                        if (row.size == 1) Spacer(Modifier.weight(1f))
+                        repeat(cols - row.size) { Spacer(Modifier.weight(1f)) }
                     }
                 }
                 Text(if (found.isEmpty()) "Nichts gefunden – probier ein anderes Wort." else "${found.size} Versuche" + (topic?.let { " · ${it.title}" } ?: ""), color = E.Sun, fontWeight = FontWeight.Bold)
@@ -67,6 +69,7 @@ fun TopicScreen(results: Map<String, Int>, grade: Int, locked: (Experiment) -> B
                     list.forEach { e -> ExperimentRow(e, results[e.id], grade, locked(e)) { onOpen(e) } }
                 }
                 Spacer(Modifier.height(24.dp))
+            }
             }
         }
         TheorySheet(theoryTopic != null, theoryTopic ?: Topic.AUFTRIEB, pro = grade >= 7) { theoryTopic = null }

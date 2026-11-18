@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.9.1 vom 18.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.10.0 vom 18.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -145,6 +145,12 @@ Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung ha
 | ![](screenshots/74_totalreflexion.png) | ![](screenshots/75_optische_bank.png) | ![](screenshots/76_lupe.png) | ![](screenshots/77_kommt_bald.png) |
 | Eltern-Handy koppeln | QR-Code für Eltern | Fortschritt wiederherstellen | |
 | ![](screenshots/78_eltern_koppeln.png) | ![](screenshots/79_eltern_qr.png) | ![](screenshots/80_fortschritt_wiederherstellen.png) | |
+
+### Am PC (ab 900 dp Breite eigene Anordnung)
+
+| Startseite (1920 × 1000, Browser) | Lernen nach Fach | Freies Labor |
+|---|---|---|
+| ![](screenshots/93_pc_browser_1920.png) | ![](screenshots/91_pc_fach.png) | ![](screenshots/92_pc_freies_labor.png) |
 
 ## Eltern-Handy koppeln (seit 2.8.0)
 
