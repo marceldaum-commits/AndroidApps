@@ -8,9 +8,8 @@ package de.raumlicht.core.model
 object Pro {
     /** Öffentlicher Ed25519-Schlüssel des Lizenz-Dienstes (64 Hex-Zeichen). Der geheime Schlüssel gehört nie ins Repo. */
     const val PUBLIC_KEY = "979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812"
-    /** Kasse auf der Website. **Leer = Raumlicht Pro noch nicht erhältlich, nichts ist gesperrt.** Trägt der Leitstand ein, sobald das Produkt RL-ABIPASS angelegt ist –
-     *  im selben Schritt die Texte „keine Käufe“ in App, Store und Datenschutz ändern. */
-    const val CHECKOUT_URL = ""
+    /** Kasse auf der Website (Produkt „Raumlicht Pro“, SKU RL-PRO, seit 2.18.7 eingetragen). **Leer = nicht erhältlich, nichts ist gesperrt.** */
+    const val CHECKOUT_URL = "https://www.mathenachhilfe-online.com/kasse/?bestellweg=aendern&add-to-cart=4156"
     /** Preise auf der Website (brutto, inkl. 19 % USt.) */
     const val PRICE = "7,99 €"
     /** So heißt die Vollversion in allen Texten (gemeinsame Vorgabe für unsere Apps: Einmalkauf, kein Abo, kein Ablauf) */
@@ -19,6 +18,13 @@ object Pro {
     val ENABLED: Boolean get() = CHECKOUT_URL.isNotBlank() && PUBLIC_KEY.length == 64
     /** Schaltet dieser Code Raumlicht Pro frei? */
     fun active(code: String?, key: String = PUBLIC_KEY) = License.check(code, key) != null
+    /**
+     * Der gültige Code aus dem Freischalt-Link „?pro=…“ – oder null. Der Link trägt den Code ohne Bindestriche, mit oder ohne die Vorsilbe „RL“
+     * (und manche Mail-Programme hängen etwas an); probiert werden alle Lesarten, genommen wird die erste, die wirklich gilt.
+     */
+    fun fromLink(raw: String, key: String = PUBLIC_KEY): String? =
+        listOfNotNull(License.extract(raw), License.extract(License.PREFIX + raw), raw.trim().takeIf { it.isNotEmpty() }).firstOrNull { active(it, key) }
+
     /** Die ersten Kapitel sind ganz frei … */
     const val FREE_CHAPTERS = 6
     /** … von jedem weiteren die ersten Aufgaben zum Reinschnuppern */

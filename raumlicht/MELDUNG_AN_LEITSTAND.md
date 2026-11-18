@@ -2,6 +2,50 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.9: nur das Versionsdatum berichtigt
+
+**Raumlicht 2.18.9 vom 18.11.2026, Web = Android (beide 2.18.9).** Mein Fehler: 2.18.8 trug in App und `version.json` noch das Datum 17.11.2026. Inhaltlich gleich 2.18.8 – bitte 2.18.9 als Stand „fertig für den Betriebstest“ nehmen.
+
+## 18.11.2026 – Raumlicht 2.18.8 + Recherche „Was gilt rechtlich für den Verkauf?“ – bitte den Shop prüfen
+
+**Raumlicht 2.18.8 vom 18.11.2026, Web = Android (beide 2.18.8).** Ersetzt 2.18.7 als Stand „fertig für den Betriebstest“ (Pro scharf, Nacht-Auftrag enthalten).
+Marcel hat beides direkt beauftragt: Kauf-Knopf sachlicher, und „google nach, was Gesetz ist“.
+
+- **App:** Knopf „Zum Shop: Raumlicht Pro · 7,99 €“ (vorher „… holen“); Text: „Einmalig 7,99 € (inkl. MwSt.), kein Abo, kein Ablauf. Gekauft wird im Shop … Bist du noch nicht 18, schließen deine Eltern den Kauf ab.“
+- **Recherche (keine Rechtsberatung; Einzelheiten und Quellen in `docs/RECHERCHE.md` im Repo-Stamm, letzter Abschnitt). Für den Shop heißt das – bitte prüfen bzw. umsetzen, gilt vermutlich für alle Pro-Produkte:**
+  1. **Widerruf bei digitalen Inhalten:** Das Widerrufsrecht erlischt nur, wenn der Käufer an der Kasse per **nicht vorangekreuzter Checkbox** der sofortigen Lieferung zustimmt und den Verlust des Widerrufsrechts bestätigt –
+     und das in der Bestell-E-Mail bestätigt wird. Sonst 14 Tage Widerruf trotz Freischalt-Code.
+  2. **Widerrufsbutton (Pflicht seit 19.06.2026):** Im Fuß steht „Vertrag widerrufen“ – gut. Bitte prüfen: zwei Schritte (erklären, bestätigen) und sofortige Eingangsbestätigung per E-Mail.
+  3. **Bestell-Knopf an der Kasse:** „zahlungspflichtig bestellen“ oder „kaufen“; Preis, Umfang und „einmalig“ unmittelbar davor sichtbar.
+  4. **Produktseite Raumlicht Pro:** Umfang ist falsch („Baukästen“ sind frei). Richtig: alle 136 Aufgaben in 25 Kapiteln · alle 7 Prüfungsaufgaben, auch auf Zeit · Üben in „Abi“ und „Profi“ ·
+     Achterbahn-Baumeister, Geisterfahrt, Ringflug, Binomial-Labor · Klausur-Planer, Fehler-Tagebuch, Lernstand. Dazu fehlt ein Hinweis für Eltern/Minderjährige („Kauf durch Erwachsene“).
+  5. **Minderjährige:** Kauf ohne Eltern ist schwebend unwirksam (Taschengeldparagraf nur im Einzelfall) – Rückabwicklung auf Wunsch der Eltern einplanen.
+  6. **Werbung an Kinder (UWG Anhang Nr. 28, BGH „Runes of Magic“):** keine „Hol dir …“-Sätze in Du-Form mit Kauf-Link – bitte auch in Shop-Texten, E-Mails und den anderen Apps beachten.
+- Geprüft: Tests, Lint, WebApp im Browser. Die Kasse selbst (Checkbox, Knopf-Beschriftung, E-Mails) konnte ich nicht ansehen.
+
+## 17.11.2026 – Raumlicht 2.18.7: Raumlicht Pro ist scharf – fertig für den Betriebstest
+
+Marcel hat die Pro-Version direkt beauftragt und auf eure Antworten verwiesen. **Raumlicht 2.18.7 vom 17.11.2026, Web = Android (beide 2.18.7).** Ersetzt 2.18.6 als Stand „fertig für den Betriebstest“
+(enthält weiter den Nacht-Auftrag: Aufgaben geprüft/rund 60 Stellen geändert, Nova 100 % fest und 100 % Laufzeit-Stichprobe).
+
+**Pro-Sperre:**
+- Kasse eingetragen: `https://www.mathenachhilfe-online.com/kasse/?bestellweg=aendern&add-to-cart=4156`; Name „Raumlicht Pro“, 7,99 €, einmalig, kein Abo, kein Ablauf, kein KI-Tutor.
+- **Euer Test-Code ist geprüft und gilt** (Schlüssel `979eb515…b812` stimmt mit `Pro.kt` überein; App 4, Produkt 1, laufende Nummer 1001): mit Bindestrichen, ohne und aus dem Link.
+  Der Code steht **nicht** im Repository; die Prüfung lief lokal (`scene/test/web-pro.mjs <webapp> <Datei mit Code> <Bilder>` und ein JVM-Test).
+- **Fehler dabei gefunden und behoben:** Die WebApp las den Link `?pro=RL0420…` falsch (sie setzte ein zweites „RL“ davor) und lehnte **jeden echten Link ab**. Jetzt `Pro.fromLink` mit Test (`ProTest.linkAusDerMail`): mit/ohne Vorsilbe, mit/ohne Bindestriche, Kleinschreibung.
+- **WebApp im Browser geprüft:** ohne Code ist Aufgabe 9-5 gesperrt und 2-1 offen; falscher Code im Link wird abgelehnt; der echte Link schaltet frei, bleibt nach dem Neuladen gemerkt, 9-5 ist offen, Startseite zeigt „🎓 Pro aktiv“.
+- **Android (GitHub-APK):** dieselbe gemeinsame Logik; App-Tests decken Sperren, Code-Eingabe (auch mitten aus einer E-Mail), Merken nach Neustart und Abzeichen ab – dort mit Test-Schlüssel. Am echten Handy nicht geprüft.
+  Hinweis: In der Android-App gibt es keinen Link-Einstieg (`?pro=` öffnet die WebApp) – dort wird der Code in den Einstellungen unter „Raumlicht Pro“ eingefügt (die ganze E-Mail einfügen geht auch).
+- **Play-Fassung:** sperrt nie und zeigt keinen Kauf (wie vorgegeben).
+- **Texte:** In den Einstellungen steht statt „keine Käufe“ jetzt „kein Abo – nur der einmalige Kauf von Raumlicht Pro, bezahlt auf unserer Website“. Vorschlag für die Datenschutzerklärung ergänzt (`store/datenschutz-abschnitt.md`, Punkt 3);
+  offen: was der Lizenz-Dienst zu einem Kauf speichert und wie lange.
+- **Umfang für den Shop-Text** (siehe Eintrag darunter): „Baukästen“ bitte streichen – der 3D-Rechner & Baukasten ist frei. Zu Pro gehören zusätzlich Geisterfahrt, Ringflug, Binomial-Labor, Klausur-Planer, Fehler-Tagebuch, Lernstand.
+- **Bestandsnutzer:** Wer schon in Kapitel 7–25 gespielt hat, behält Sterne und Fortschritt, kann die gesperrten Aufgaben aber erst mit Code wieder öffnen.
+
+**KI-Abi-Pass:** Meine Antwort zur Technik steht zwei Einträge weiter unten (kurz: Raumlicht hat heute keinen KI-Tutor; Trainer-Server mit öffentlicher Route passt; Abi-Jahr als Produkt-Nummer 27/28/29 oder neues Datumsfeld – eure Wahl).
+
+Geprüft: 153 Logik-Tests, 148 App-Tests, Lint beider Fassungen, Browser (`web.mjs`, `web-update.mjs`, `web-nova.mjs`, `web-vorversion.mjs`, `web-pro.mjs`, betroffene Bildschirme).
+
 ## 17.11.2026 – Raumlicht 2.18.6: Nova-Abdeckung gemessen (100 %) – und die Ursache für „Android-Stimme trotz Nova“ gefunden
 
 **Raumlicht 2.18.6 vom 17.11.2026, Web = Android (beide 2.18.6).** Ersetzt 2.18.4/2.18.5 als Stand „fertig für den Betriebstest“. Raumlicht Pro ist darin vorbereitet, aber weiter ausgeschaltet (Kasse und Test-Code fehlen).
