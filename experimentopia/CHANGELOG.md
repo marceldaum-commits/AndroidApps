@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.5.2 – Stabiler auf dem iPhone (18.11.2026)
+
+- 📱 Experimentopia braucht auf iPhones jetzt deutlich weniger Grafikspeicher (sieht genauso scharf aus) – so beendet iOS die Seite nicht mehr still.
+- 🔄 Holt Safari einen schlafenden Tab zurück, lädt die App sauber neu. Setzt das System die Grafik zurück, erscheint eine Meldung mit „Neu laden“.
+
 ## 2.5.1 – Nie mehr eine weiße Seite (18.11.2026)
 
 - 🛟 Startet Experimentopia nicht (z. B. auf einem zu alten iPhone), erscheint jetzt immer eine klare Meldung mit „Neu laden“ – statt einer leeren Seite.

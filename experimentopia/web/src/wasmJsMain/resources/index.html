@@ -27,6 +27,11 @@
   #start .fehler { color: #FFA23D; max-width: 30em; }
 </style>
 <script>
+  // iPhones haben Pixeldichte 3: Die Zeichenfläche wäre riesig und iOS beendet den Tab dann ohne Meldung (weiße Seite).
+  // Mit Dichte 2 sieht es genauso scharf aus und braucht gut die Hälfte weniger Grafikspeicher.
+  try { if ((window.devicePixelRatio || 1) > 2) Object.defineProperty(window, 'devicePixelRatio', { get: function () { return 2; }, configurable: true }); } catch (e) {}
+  // Safari holt Tabs manchmal „eingefroren“ zurück – die Grafik ist dann weg. Sauber neu laden statt eine leere Fläche zu zeigen.
+  window.addEventListener('pageshow', function (e) { if (e.persisted) location.reload(); });
   // „App installieren“: Chrome/Edge/Android melden früh, dass die App installierbar ist – das Angebot aufheben, bis jemand auf den Knopf tippt
   window.__exBip = null;
   window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__exBip = e; if (window.__exInstallChanged) window.__exInstallChanged(); });
@@ -90,7 +95,12 @@
   window.addEventListener('unhandledrejection', function (e) { startFailed(e.reason); });
   // Wächter: nach 60 s noch nicht gestartet, oder nach dem Start keine Zeichenfläche → Meldung statt leerer Seite
   setTimeout(function () { var st = document.getElementById('start'); if (st && st.dataset.fertig !== '1') showProblem('Start dauert zu lange'); }, 60000);
-  (function watch() { var st = document.getElementById('start'); if (st && st.dataset.fertig === '1') { window.__exStarted = Date.now(); setTimeout(function () { if (!appVisible()) showProblem('keine Zeichenfläche'); }, 4000); } else setTimeout(watch, 300); })();
+  (function watch() { var st = document.getElementById('start'); if (st && st.dataset.fertig === '1') { window.__exStarted = Date.now(); setTimeout(function () {
+    if (!appVisible()) { showProblem('keine Zeichenfläche'); return; }
+    // Verliert iOS den Grafik-Kontext (Metal/WebGL), zeigen wir das an, statt still eine leere Fläche zu lassen
+    var a = document.getElementById('app'); var c = (a.shadowRoot && a.shadowRoot.querySelector('canvas')) || a.querySelector('canvas');
+    c.addEventListener('webglcontextlost', function (e) { e.preventDefault(); showProblem('Grafik vom System zurückgesetzt (WebGL-Kontext verloren)'); }, false);
+  }, 4000); } else setTimeout(watch, 300); })();
   // WebAssembly mit „GC“ fehlt älteren Browsern: gleich prüfen, nicht erst alles laden
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) showProblem('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
   // ── Laden mit echtem Fortschritt: App-Kern (.wasm) und Schriften werden sofort angefordert, jedes ankommende Byte bewegt den Balken.

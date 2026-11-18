@@ -2,6 +2,19 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.5.2 vom 18.11.2026: iOS-Laufzeit abgesichert – fertig für den Betriebstest
+
+Test-Link: https://experimentopia-test.mathenachhilfe-online.com (2.5.2). Ursache auf Marcels iPhone (iOS ≥ 18.4) mit WebKit nicht nachstellbar; abgesichert wurden alle Kandidaten:
+- **(a) Speicher**: Pixeldichte für die Zeichenfläche auf 2 begrenzt (iPhone hat 3) → Zeichenfläche iPhone 15: 786×1704 statt 1179×2556 = **5,1 statt 11,5 MB je Bildpuffer (−56 %)**,
+  JS-Heap 13,9 statt 17,6 MB (gemessen in Chromium mit DPR 3). Große Teile (Nova, Stimme) werden ohnehin nicht geladen (Vorlesen aus).
+- **(b) WebGL-Kontextverlust**: `webglcontextlost` auf der Compose-Zeichenfläche abgefangen → Fehlerseite mit Version, Grund und „Neu laden“ (Test mit WEBGL_lose_context ✅).
+- **(c) Alte Version**: `pageshow` mit `persisted` (Safari holt eingefrorenen Tab/Startbildschirm-App zurück) → sauberes Neuladen; Fehlerseite bietet „Speicher leeren & neu laden“
+  (Service Worker + Versions-Speicher weg, Spielstand bleibt). Auto-Update unverändert (7/7).
+- **Audio vor dem ersten Tippen**: im Browser schon abgesichert (Ton erst nach `userActivation`).
+- **Jeder Startfehler sichtbar** (seit 2.5.1): Fehlerseite statt weißer Seite, Wächter „keine Zeichenfläche nach 4 s“ und „nach 60 s nicht gestartet“.
+- Tests: `tools/web-start.mjs` (WebKit) 5/5 ✅ · `tools/web-update.mjs` 7/7 ✅. JS-Ersatz zurückgestellt (WasmGC ist auf iOS ≥ 18.2 da).
+Bitte Marcel auf dem iPhone test öffnen lassen: Startet sie, ist es behoben; sonst zeigt die Fehlerseite unten Version, iOS und Grund – Foto davon an mich.
+
 ## 18.11.2026 – Version 2.5.1 vom 18.11.2026: iOS „weiße Seite“ – Zwischenstand, fertig für den Betriebstest
 
 - **Nachgestellt mit Playwright-WebKit 26.6 (≈ Safari iOS 26), iPhone-13-Profil**: test startet einwandfrei (Bildschirmfoto ok, keine Fehler). Die weiße Seite war damit

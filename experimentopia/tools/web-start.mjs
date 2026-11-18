@@ -24,5 +24,13 @@ try {
   ok(!!alt && alt.includes('iOS 18.2') && alt.includes('Neu laden'), 'altes iOS (ohne WasmGC): Meldung „mindestens iOS 18.2“ + „Neu laden“');
   const fehlt = await run({}, null, '**/*.wasm', 8000);
   ok(!!fehlt && fehlt.includes('Neu laden') && fehlt.includes('Version'), 'Datei fehlt: Meldung mit Version und „Neu laden“ statt weißer Seite');
+  // Pixeldichte auf 2 begrenzt (iPhone hat 3 → weniger Grafikspeicher) und Grafik-Verlust wird angezeigt
+  const ctx = await b.newContext({ viewport: { width: 393, height: 852 }, deviceScaleFactor: 3 }); const p = await ctx.newPage();
+  await p.goto('http://localhost:8792/'); await p.waitForFunction(() => document.getElementById('start').dataset.fertig === '1', null, { timeout: 90000 }); await p.waitForTimeout(6000);
+  const cv = await p.evaluate(() => { const c = document.getElementById('app').shadowRoot.querySelector('canvas'); return [devicePixelRatio, c.width]; });
+  ok(cv[0] === 2 && cv[1] <= 393 * 2, `Pixeldichte begrenzt: ${cv[0]}, Zeichenfläche ${cv[1]} px breit`);
+  await p.evaluate(() => { const c = document.getElementById('app').shadowRoot.querySelector('canvas'); const gl = c.getContext('webgl2') || c.getContext('webgl'); const x = gl && gl.getExtension('WEBGL_lose_context'); if (x) x.loseContext(); else c.dispatchEvent(new Event('webglcontextlost', { cancelable: true })); });
+  await p.waitForTimeout(1500);
+  ok(await p.evaluate(() => !!document.getElementById('problem') && document.getElementById('problem').innerText.includes('Neu laden')), 'Grafik-Verlust: Meldung mit „Neu laden“');
   await b.close();
 } finally { server.kill(); }
