@@ -2,6 +2,24 @@
 
 Neueste oben.
 
+## 18.11.2026 – Abgrenzung mit dem Wissensgarten vereinbart
+
+- Wissensgarten: Wortschatz, unregelmäßige Verben, Tenses, Regeln als Merkkarten; Brummi-Radio bleibt dort. Englisch-App: hören, nachsprechen, Rollenspiele, Satzbau, Hörverstehen, Chants – keine Karteikarten.
+- Gleiche Themen, andere Form, gegenseitig verlinkt: gs-englisch-school ↔ Welt 3, gs-englisch-food ↔ Welt 5, gs-englisch-clothes-weather ↔ Welt 6, gs-englisch-hobbys ↔ Welt 8, gs-englisch-familie-koerper ↔ Welt 2 (Tabelle in `wissensgarten/WOCHENRUNDE.md`).
+- Wortlisten je Welt gehen an den Wissensgarten, damit beide Apps dieselbe Schreibweise nutzen (britisch: colour, favourite …). Welt 1 ist verschickt.
+
+## 18.11.2026 – Version 0.1.0 vom 18.11.2026: erster spielbarer Prototyp „Hello Harbour“ (noch nicht auf einer Test-Domain)
+
+- **Ordner** `englisch/webapp/` (Branch ccr-0e3accf3-cdxlc8). Nach der Namenswahl: Ordner umbenennen, `APP_ID` setzen, Workflow `<name>-web-test.yml` (Kopie Experimentopia) → Branch `<name>-test`.
+- **Inhalt:** 3 Episoden – „Hello!“ (sich vorstellen), „Fish and numbers“ (Zahlen 1–10, Fische kaufen bei Grandpa Ted), „Colourful boats“ (Farben). Je Episode Szene hören → 3 Spiele → Sprech-Mission → Stempel, dazu „Ruby erklärt“ (Deutsch, ohne Abkürzungen).
+- **5 Spielarten:** Hör-Detektiv, Papagei-Echo (Aufnahme bleibt im Speicher, Vergleich Ruby ↔ Kind), Satz-Zug, Ruby says, Dialog-Bühne mit Zahl-/Farbwahl und eigenem Namen (Prüfung mit verständlicher Meldung).
+- **Plattform:** „← Alle Apps“ (`?src=englisch-kopf`, Test-Stufe staging.), Eltern-Tor (Geburtsjahr), Mikrofon-Wahl für Eltern (Browser / nur Gerät / aus), Datenschutzseite, offline (Service Worker), Update nur außerhalb von Runden, Version + Datum in Einstellungen und Elternbereich.
+  Noch nicht drin (Woche 2): Zählung, `#pro=`, Eltern-Kopplung + Sicherung, Nachhilfe-Hinweis – brauchen Name/Domain/CORS.
+- **Stimme:** vorerst die englische Gerätestimme (nur lokale Stimmen); ohne Stimme zeigt die App den Satz als Text. KI-Vertonung, sobald Guthaben da ist.
+- **Geprüft:** `node --test tools/test-inhalt.mjs` 12/12 grün (eindeutige Lösungen, Platzhalter, Version überall gleich, Service Worker vollständig).
+  `node tools/web-start.mjs` grün in **Chromium (Handy, PC) und WebKit (iPhone 13, iPad)**: alle 3 Episoden durchgespielt, Fortschritt nach Neuladen da, Eltern-Tor, „← Alle Apps“, **offline-Start**, keine Konsolenfehler. Bildschirmfotos in `englisch/screenshots/` angesehen.
+- **Noch offen:** echter Test auf Marcels iPad mit Mikrofon und Stimme (geht erst mit Test-Domain).
+
 ## 18.11.2026 – Konzept zur Entscheidung (Frist Mo 23.11., 11 Uhr – früher fertig)
 
 - **Konzept:** `englisch/KONZEPT.md` (Namen, Zielgruppe, Welten, Spielarten, Stimmen/Mikrofon, Gratis/Pro, Abgrenzung Wissensgarten, Plan 4 Wochen).
