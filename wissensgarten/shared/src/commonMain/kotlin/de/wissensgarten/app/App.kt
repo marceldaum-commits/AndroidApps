@@ -800,6 +800,9 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                                 "Kostenlose Probestunde anfragen",
                                 onOpen = { vm.zaehle("probestunde_klick", "klassenarbeit", thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("klassenarbeit", thema, klasse)) } },
                                 onHide = { vm.settings.hideHint(p.id, "ka:" + exam.id); hintRev++ },
+                                // Crashkurse gibt es für Mittel- und Oberstufe – kostenlos für Familien mit Stundenpaket
+                                second = if (de.wissensgarten.core.model.Angebote.crashkursPasst(klasse)) "Crashkurs ansehen (kostenlos für Familien mit Stundenpaket)" else null,
+                                onSecond = { vm.zaehle("crashkurs_klick", "klassenarbeit", thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.crashkurs(thema, klasse)) } },
                             )
                             return@WeekReportScreen
                         }
@@ -815,6 +818,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             "Kostenlose Probestunde anfragen",
                             onOpen = { vm.zaehle("probestunde_klick", "elternbericht", h.thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("elternbericht", h.thema, klasse)) } },
                             onHide = { vm.settings.hideHint(p.id, h.thema); hintRev++ },
+                            second = "Neukundenpaket ansehen",
+                            onSecond = { vm.zaehle("neukunde_klick", "elternbericht", h.thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.neukundenpaket("elternbericht", h.thema, klasse)) } },
                         )
                     }, report = { pid ->
                         val subj = packs.associate { it.id to it.subject }

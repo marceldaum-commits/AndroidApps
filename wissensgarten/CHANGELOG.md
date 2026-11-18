@@ -3,6 +3,10 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.14 – Hinweis für Eltern mit mehr Möglichkeiten (18.11.2026)
+- Im Hinweis im Wochenbericht gibt es jetzt auch „Neukundenpaket ansehen“. Steht eine Klassenarbeit an und ist das Kind ab Klasse 5, gibt es zusätzlich „Crashkurs ansehen“ – kostenlos für Familien mit Stundenpaket. Alles weiterhin nur hinter dem Eltern-Tor, ausblendbar und abschaltbar.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.13 – Für Eltern: Lern-Geschenk, anonyme Zählung, Nachhilfe-Hinweis (18.11.2026)
 - **🎁 Lern-Geschenk verschenken:** Im Elternbereich (Einstellungen → Für Eltern) führt ein Knopf zu unseren Geschenkkarten: Wissensgarten Plus oder Nachhilfe zum Ausdrucken. Ein geschenkter Plus-Code schaltet per Link direkt frei.
 - **Anonyme Zählung, abschaltbar:** Der Garten meldet nur, dass er geöffnet wurde und ob im Elternbereich ein Link angetippt wurde. Es gibt keine Namen, keine Kennung, keinen Lernstand und keine Cookies. Ausschalten geht unter Einstellungen → Für Eltern.

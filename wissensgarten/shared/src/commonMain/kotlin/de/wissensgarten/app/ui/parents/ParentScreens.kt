@@ -116,7 +116,7 @@ fun WeekReportScreen(
  * Mit „Ausblenden“ verschwindet er für dieses Thema bzw. diese Arbeit dauerhaft.
  */
 @Composable
-fun NachhilfeKarte(text: String, button: String, onOpen: () -> Unit, onHide: () -> Unit) {
+fun NachhilfeKarte(text: String, button: String, onOpen: () -> Unit, onHide: () -> Unit, second: String? = null, onSecond: () -> Unit = {}) {
     OutlinedCard(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             Text("Für Eltern", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
@@ -125,6 +125,7 @@ fun NachhilfeKarte(text: String, button: String, onOpen: () -> Unit, onHide: () 
                 FilledTonalButton(onClick = onOpen, modifier = Modifier.weight(1f)) { Text(button, textAlign = TextAlign.Center) }
                 TextButton(onClick = onHide) { Text("Ausblenden") }
             }
+            if (second != null) OutlinedButton(onClick = onSecond, modifier = Modifier.fillMaxWidth()) { Text(second, textAlign = TextAlign.Center) }
         }
     }
 }

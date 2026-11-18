@@ -3,6 +3,12 @@
 
 
 
+
+## 2.2.14 – Neukundenpaket und Crashkurs im Hinweis (18.11.2026)
+- Thema-Hinweis: zweiter Knopf „Neukundenpaket ansehen“ → `/produkt/einzelnachhilfe-neukundenpaket/?src=wissensgarten-elternbericht&thema&klasse`, zählt `neukunde_klick`/`elternbericht`.
+- Klassenarbeits-Hinweis: nur ab Klasse 5 zusätzlich „Crashkurs ansehen (kostenlos für Familien mit Stundenpaket)“ → `/produkt/easy-learning-crash-kurs/?src=wissensgarten-klassenarbeit&…`, zählt `crashkurs_klick`/`klassenarbeit`.
+- Beide Adressen geprüft (200). Tests und Bildschirmfoto `screenshots/73_nachhilfe_hinweis.png` aktualisiert.
+
 ## 2.2.13 – A3, B4, C1 und Fußzeile (18.11.2026)
 - **Marcel hat direkt bestätigt** („alle vier umsetzen“). Ratgeber Teil 5 und 6 habe ich gelesen (Website_Backup, Branch claude/sleepy-knuth-4cf5u3, nur lesend).
 - **A3 Zählung:**

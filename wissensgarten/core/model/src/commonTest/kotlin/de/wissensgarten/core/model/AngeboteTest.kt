@@ -37,6 +37,11 @@ class AngeboteTest {
         assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=wissensgarten-klassenarbeit",
             Angebote.probestunde("klassenarbeit", null, 14))
         assertEquals("https://www.mathenachhilfe-online.com/geschenke/?src=wissensgarten-geschenk", Angebote.geschenk)
+        assertEquals("https://www.mathenachhilfe-online.com/produkt/einzelnachhilfe-neukundenpaket/?src=wissensgarten-elternbericht&thema=deutsch&klasse=3",
+            Angebote.neukundenpaket("elternbericht", "deutsch", 3))
+        assertEquals("https://www.mathenachhilfe-online.com/produkt/easy-learning-crash-kurs/?src=wissensgarten-klassenarbeit&klasse=7",
+            Angebote.crashkurs(null, 7))
+        assertTrue(Angebote.crashkursPasst(5)); assertFalse(Angebote.crashkursPasst(4)); assertFalse(Angebote.crashkursPasst(null)); assertFalse(Angebote.crashkursPasst(14))
         assertEquals("https://www.mathenachhilfe-online.com/?src=wissensgarten-fusszeile", Angebote.fusszeile)
     }
 

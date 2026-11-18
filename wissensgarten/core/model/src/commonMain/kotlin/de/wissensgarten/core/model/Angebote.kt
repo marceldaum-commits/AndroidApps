@@ -58,6 +58,11 @@ object Angebote {
 
     /** Kostenlose Probestunde anfragen */
     fun probestunde(ort: String, thema: String?, klasse: Int?) = link("probestunde", ort, thema, klasse)
+    /** Neukundenpaket (Einzelnachhilfe) */
+    fun neukundenpaket(ort: String, thema: String?, klasse: Int?) = link("produkt/einzelnachhilfe-neukundenpaket", ort, thema, klasse)
+    /** Easy-Learning-Crashkurs vor Klassenarbeiten – nur Mittel- und Oberstufe (Klasse ≥ 5) */
+    fun crashkurs(thema: String?, klasse: Int?) = link("produkt/easy-learning-crash-kurs", "klassenarbeit", thema, klasse)
+    fun crashkursPasst(klasse: Int?) = klasse != null && klasse in 5..13
     /** „Lern-Geschenk verschenken“ (Weihnachts-Gutscheine) */
     val geschenk = link("geschenke", "geschenk")
     /** Absender-Hinweis „Ein Angebot von Nachhilfe – online“ */
