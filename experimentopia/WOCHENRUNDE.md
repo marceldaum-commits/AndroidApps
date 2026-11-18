@@ -44,3 +44,10 @@ WebApp, PC-Ansicht, Eltern-Kopplung + Sicherung, Elternbereich (Probestunde), an
 - Setzt „Ausprobieren in Experimentopia“ mit unseren `#thema=`-Kennungen in die Pakete. Atombau/PSE als Versuch bei uns, Merkkarten bei ihnen.
 
 **Daraus für Experimentopia:** Bis Fr 20.11. Themen-Deeplinks `…/#thema=<slug>` bauen; auf den Theorie-Karten Verweise „Nachrechnen in KurvenFlug“, „Schnell üben im Rechenblitz“, „Begriffe wiederholen im Wissensgarten“, „Nachrechnen im Mathe-Trainer“ (sobald deren Links laufen).
+
+**Mathe-Trainer:** Mathe Kl. 5–10 + Abi (74 Einheiten). Ziele für „Nachrechnen im Mathe-Trainer“ (`https://trainer.mathenachhilfe-online.com/#/u/<id>`):
+- Halbwertszeit/Radioaktivität/pH → `a-wachstum` (Oberstufe), `k10-funktionen` (Exponentialfunktionen Kl. 10)
+- Trafo U₁/U₂ = N₁/N₂, Hebel, Ohm → `k7-zuordnung` (proportional, Dreisatz)
+- Strahlensatz beim Schatten → `k9-aehnlich`
+- Mendel → `k8-zufall`; Osmose (Prozent) → `k7-prozent`
+- Links in unsere Versuche, sobald wir Direkt-Links haben.
