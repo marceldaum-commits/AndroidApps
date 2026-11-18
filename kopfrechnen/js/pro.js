@@ -86,7 +86,7 @@ async function proStartup() {
   if (RBPRO.ok) renderHome();
 }
 // Link geöffnet, während die App schon läuft (nur der #-Teil ändert sich)
-addEventListener('hashchange', async () => { const c = proFromUrl(); if (c && !(RBPRO.ok && proNorm(c) === (ROOT.pro && ROOT.pro.code))) await proRedeem(c); });
+if (typeof addEventListener === 'function') addEventListener('hashchange', async () => { const c = proFromUrl(); if (c && !(RBPRO.ok && proNorm(c) === (ROOT.pro && ROOT.pro.code))) await proRedeem(c); });
 
 /** Pro-Funktion angefragt: frei → true, sonst Pro-Fenster öffnen */
 function needPro(what) {
