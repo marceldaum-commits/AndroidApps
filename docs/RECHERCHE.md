@@ -230,3 +230,26 @@ Quellen: [SSRN – Generative AI Without Guardrails Can Harm Learning](https://p
 [Wharton – Without guardrails, generative AI can harm education](https://knowledge.wharton.upenn.edu/article/without-guardrails-generative-ai-can-harm-education) ·
 [CMS – Die neuen Transparenzpflichten der KI-VO](https://cms.law/de/deu/legal-updates/deepfakes-chatbots-co.-die-neuen-transparenzpflichten-der-ki-vo) ·
 [IHK Halle – Transparenzpflichten nach der KI-Verordnung seit August 2026](https://www.ihk.de/halle/recht/transparenzpflichten-nach-der-ki-verordnung-7172022)
+
+## Englisch-App „sprechen, hören, spielen“ (Kl. 3–6), 18.11.2026 – Konzept (`englisch/KONZEPT.md`)
+
+1. **Lehrpläne Grundschule: Hören und Sprechen zuerst.** Die Grundschul-Lehrpläne (z. B. LehrplanPLUS Bayern Kl. 3/4, Lehrplan NRW mit Fortbildungsmodul „Hörverstehen“,
+   Bildungsplan BW mit Beispielcurriculum 3/4) stellen Hörverstehen und Sprechen vor das Schriftbild; Lieder, Reime, Geschichten und Unterrichtsanweisungen sind typische Hörtexte.
+   → **App:** Stufe Grundschule fast ohne Text, jede Szene gesprochen, „Ruby says“ mit Anweisungen, Chant-Bühne.
+2. **Kinder-Sprach-Apps bringen Kinder selten zum lauten Sprechen.** Viele Apps bleiben beim Antippen von Bildern (Branchenbeobachtung, Anbieter Studycat – Herstellerangabe, keine unabhängige Studie).
+   → **App:** Jede Episode endet mit einer Sprech-Mission; Papagei-Echo (nachsprechen + sich selbst hören) ist das Kernspiel.
+3. **Spracherkennung auf dem Gerät.** Chrome erkennt seit Version 139 Sprache auf dem Gerät (`SpeechRecognition.processLocally`), Edge experimentell; zu Safari/iOS fand sich nichts Verlässliches.
+   → **App:** auf dem Gerät, wo möglich; sonst Browser-Erkennung mit Datenschutz-Hinweis wie im Wissensgarten; Eltern-Schalter „Nur auf dem Gerät“.
+4. **Kinderstimmen werden schlecht erkannt** (keine unabhängigen Zahlen gefunden) → großzügig werten, nie Strafe, nach zwei Versuchen geht es weiter.
+5. **KI-Stimmen kennzeichnen** (KI-Verordnung Art. 50, OpenAI-Nutzungsregeln) → Hinweis „Stimmen mit KI erzeugt“ in der App und im Datenschutz.
+6. **Namen:** „Hörspielplatz“ ist ein Podcast (Rocket Beans TV/Sony Music) → verworfen; „Pip“ ist der Papagei der App Wordzy → Figur heißt Ruby.
+
+Quellen: [ISB Bayern – Fachlehrplan Englisch 3/4](https://www.isb.bayern.de/fileadmin/user_upload/Grundschule/Lehrplan_aktualisiert/Englisch_Fachlehrplan_aktualisiert_3-4.pdf) ·
+[schulentwicklung.nrw – Modul Hörverstehen](https://www.schulentwicklung.nrw.de/cms/upload/eng_primar/Module/04_modul_3_hoerverstehen.pdf) ·
+[schule-bw – Beispielcurriculum Englisch 3/4](https://www.schule-bw.de/service-und-tools/bildungsplaene/allgemein-bildende-schulen/bildungsplan-2016/beispielcurricula/grundschule/BP2016BW_ALLG_GS_E_BC_3-4_BSP_1.pdf) ·
+[Studycat – Bringen Kinder-Sprach-Apps Kinder zum Sprechen?](https://studycat.com/blog/can-popular-kids-language-apps-actually-get-children-speaking-aloud/) ·
+[Ejournal TSB – Studycat und Sprechübung](https://ejournal.tsb.ac.id/index.php/jpb/article/view/4921) ·
+[MDN – SpeechRecognition.processLocally](https://developer.mozilla.org/docs/Web/API/SpeechRecognition/processLocally) ·
+[Chromium blink-dev – Intent to Ship: On-device Web Speech API](https://groups.google.com/a/chromium.org/g/blink-dev/c/VNOok2dbmHM/m/cz7ZnL59AAAJ) ·
+[podcastrepublic – Hörspielplatz](https://podcastrepublic.net/podcast/1533967463) ·
+[coddykit – Wordzy](https://www.coddykit.com/de/apps/english-for-kids)
