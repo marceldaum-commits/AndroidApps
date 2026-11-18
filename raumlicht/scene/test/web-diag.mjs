@@ -17,7 +17,7 @@ let fail = 0; const check = (ok, text) => { console.log((ok ? 'ok   ' : 'FAIL ')
 const started = (page) => page.waitForFunction(() => document.getElementById('start').style.display === 'none', null, { timeout: 90000 });
 const iphone = { ...devices['iPhone 15'], serviceWorkers: 'block' };
 // 1. iPhone mit ?diag=1: Protokoll sichtbar, Reihenfolge stimmt, Kern-Dateien nacheinander
-{ const ctx = await b.newContext(iphone); const page = await ctx.newPage(); await page.goto(url + '?diag=1'); await started(page); await page.waitForTimeout(1500);
+{ const ctx = await b.newContext(iphone); const page = await ctx.newPage(); /* iPhones bekommen sonst die JavaScript-Fassung – hier geht es um das Laden der zwei Kern-Dateien der Wasm-Fassung */ await page.goto(url + '?diag=1&modus=wasm'); await started(page); await page.waitForTimeout(1500);
   await page.screenshot({ path: `${out}/1-schritte.png` });
   const text = await page.evaluate(() => (document.getElementById('schritte') || {}).textContent || ''); const at = (re) => text.search(re);
   check(/Schrittprotokoll/.test(text) && at(/Seite gelesen/) >= 0 && at(/Seite gelesen/) < at(/erstes Bild gemalt/) && at(/erstes Bild gemalt/) < at(/angekommen/) && at(/raumlicht\.js geladen/) > 0 && at(/Start geschafft/) > at(/angekommen/),

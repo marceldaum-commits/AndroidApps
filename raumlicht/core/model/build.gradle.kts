@@ -6,7 +6,11 @@ plugins {
 kotlin {
     jvm { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
-    wasmJs { browser() }
+    wasmJs { browser()
+        // Safari 26/27 verarbeitet den Import „WebAssembly.JSTag“ fehlerhaft (weiße Seite) – mit diesem Schalter legt Kotlin ein eigenes Ausnahme-Kennzeichen an
+        compilerOptions { freeCompilerArgs.add("-Xwasm-no-jstag") } }
+    // Zweite Web-Fassung ohne Kotlin/Wasm (für Browser, die das Wasm-Hauptmodul nicht verarbeiten – Safari 26/27)
+    js { browser() }
     sourceSets {
         commonMain.dependencies { api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"); api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2") }
         jvmTest.dependencies { implementation("junit:junit:4.13.2") }

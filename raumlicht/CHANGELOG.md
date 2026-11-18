@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.21 – Zweite Fassung für Safari, iPhone und iPad (18.11.2026)
+- **Raumlicht gibt es jetzt in zwei Fassungen**, die gleich aussehen und dasselbe können. Safari sowie alle Browser auf iPhone und iPad bekommen von selbst die Fassung, die dort zuverlässig ein Bild zeigt; alle anderen behalten die schnellere.
+- **Startet eine Fassung auf einem Gerät nicht, wechselt Raumlicht von selbst zur anderen** und merkt sich das. Der Spielstand bleibt.
+- Dazu zwei weitere Vorkehrungen gegen die weiße Seite im neuen Safari.
+- Für die Fehlersuche: `?modus=js` oder `?modus=wasm` an der Adresse wählt die Fassung von Hand, `?diag=1` zeigt die Schritte des Starts.
+
 ## 2.18.20 – Der KI-Abi-Pass ist im Shop (18.11.2026)
 - **KI-Tutor:** Auf der KI-Seite (Einstellungen → KI-Tutor) führt jetzt ein Knopf zum Shop. Der „Raumlicht KI-Abi-Pass“ kostet einmalig 14,99 €, ist kein Abo und gilt bis zum 31. Juli des gewählten Abi-Jahres (2027, 2028 oder 2029) – mit 10 KI-Punkten an jedem Tag.
 - 3 Proben bleiben frei. Nach dem Kauf kommt eine E-Mail mit Link und Code; ein Tipp auf den Link schaltet frei.

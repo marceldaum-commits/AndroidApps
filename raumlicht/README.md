@@ -161,6 +161,12 @@ Ausliefern: `versionCode`/`versionName` und `VERSION_DATE` in `app/build.gradle.
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `raumlicht-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).
 
+## Zwei Web-Fassungen: Wasm und JavaScript (seit 2.18.21)
+
+Safari 26/27 zeigt mit der Kotlin/Wasm-Fassung eine weiße Seite. Darum baut `./gradlew :web:webapp` zwei Pakete aus denselben Quelltexten: `raumlicht.js` + Kern-`.wasm` (Kotlin/Wasm) und `raumlicht-js.js` (Kotlin/JS).
+Die Startseite wählt (`modus=auto`): WebKit/Safari, Browser ohne WebAssembly-GC und Geräte, auf denen die Wasm-Fassung nicht startet, bekommen die JavaScript-Fassung. Von Hand: `?modus=js`, `?modus=wasm`; Schritte des Starts: `?diag=1`.
+Die JS-Quelltexte erzeugt `tools/webjs/gen.py` beim Bau aus `src/wasmJsMain` (nur die eingebetteten `js("…")`-Schnipsel werden umgesetzt). Prüfung: `node scene/test/web-modus.mjs webapp <Bilder>`.
+
 ## Vorlesen mit „Nova“ (seit 2.17.0)
 
 > **Seit 2.18.14 abgeschaltet** (`Vorlesen.ENABLED = false`): kein Schalter in den Einstellungen, keine Abrufe am Stimmen-Server, `texte.json` wird leer ausgeliefert. Der Code bleibt; das Folgende gilt wieder, sobald der Schalter auf `true` steht.

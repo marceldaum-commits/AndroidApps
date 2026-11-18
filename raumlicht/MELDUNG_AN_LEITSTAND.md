@@ -2,6 +2,22 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.21: JS-Fassung mit Weiche, `-Xwasm-no-jstag`, Tail-Call-Abhilfe – alles zusammen
+
+Marcel hat direkt bestätigt („bau die Fassung“). **Raumlicht 2.18.21 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.
+
+1. **Kotlin/JS-Ziel gebaut** (`js { browser() }` in `core/model`, `shared`, `web`). Eine Quelle: Die JS-Quelltexte entstehen beim Bau aus `src/wasmJsMain` (`tools/webjs/gen.py` setzt die 59 eingebetteten `js("…")`-Schnipsel um, sonst zeichengleich). Paket `raumlicht-js.js` (5,2 MB); Schriften, Bühne und die Skiko-Grafik-Datei teilt es sich mit der Wasm-Fassung.
+2. **Lader mit `modus=auto`** (in `index.html`): „js“ für Safari/WebKit (alle iPhone-/iPad-Browser, Safari auf dem Mac), für Browser ohne WebAssembly-GC und wenn die Wasm-Fassung dieser Version auf dem Gerät schon einmal nicht gestartet ist (`localStorage` `raumlicht.modus.<Version>`); sonst „wasm“.
+   Jeder Startfehler der Wasm-Fassung (auch der 45-Sekunden-Hänger) → merken → mit JS neu laden. Die Vorabprüfung macht der Start selbst: Scheitert `compile`/`instantiate` des Hauptmoduls, greift genau dieser Weg.
+   **Nebenwirkung: Die Mindestversion für iPhone/iPad sinkt** – die JS-Fassung braucht kein WebAssembly-GC (vorher iOS 18.2). Wie weit herunter, habe ich nicht gemessen.
+3. **`-Xwasm-no-jstag`** in allen drei Wasm-Modulen gesetzt (Kotlin 2.2.21 nimmt den Schalter an): im Wasm-Paket jetzt 0 × `JSTag`.
+4. **Schalter:** `?modus=js|wasm|auto`, `?diag=1` (zeigt die gewählte Fassung als Schritt „Fassung: js – Safari/WebKit“).
+- Die Tail-Call-Abhilfe aus 2.18.19 (WebKit 329421) steckt in **beiden** Paketen; der Bau prüft das.
+- Beleg: `scene/test/web-modus.mjs` 11 von 11 – Chromium → wasm; `?modus=js` lädt nur die Grafik-Datei und zeigt dasselbe Bild; Aufgabe mit Bühne und „Los“ läuft in der JS-Fassung; iPhone- und Safari-27.2-Kennung → js; `?modus=wasm` zum Vergleichen; kaputtes Hauptmodul → gemerkt, von selbst JS, Bild da. Übrige Browser-Tests grün.
+- **Nicht geprüft:** echtes Safari/iPhone (habe keines). Welche der drei Maßnahmen dort trägt, zeigt Marcels Vergleich: `…/?diag=1` (JS), `…/?diag=1&modus=wasm` (Wasm mit beiden Abhilfen).
+- **Zu den zwei Erklärungen** (Tag-Import vs. NaN bei Endaufrufen): Für Raumlicht kann ich nicht belegen, welche zutrifft – hier lief der Start unter Safari 27.2 durch (Hauptmodul wurde also verarbeitet), nur gezeichnet wurde nichts. Darum sind beide Abhilfen drin, und die JS-Fassung ist für WebKit die Vorgabe.
+- Offline: `raumlicht-js.js` wird beim ersten Laden vom Service Worker gespeichert (nicht vorab – sonst lüden alle 5 MB mehr).
+
 ## 18.11.2026 – Raumlicht 2.18.20: KI-Abi-Pass mit Kauf-Knopf (zusammen mit dem iOS-Fix aus 2.18.19)
 
 **Raumlicht 2.18.20 vom 18.11.2026 – nur Web-App**, auf raumlicht-test. Enthält den Safari-27.2-Fix aus 2.18.19 (siehe darunter) **und** den KI-Abi-Pass.
