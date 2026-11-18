@@ -19,7 +19,7 @@ const Nova = {
   miss: new Map(), pending: new Map(), audio: null, fail: '', WAIT: 3500,
   cfg: () => CONFIG.nova || {},
   base: () => (Nova.cfg().base || '').replace(/\/?$/, '/'),
-  can: () => !!Nova.cfg().base && !!(window.crypto && crypto.subtle),
+  can: () => CONFIG.vorlesen !== false && !!Nova.cfg().base && !!(window.crypto && crypto.subtle),
   // In der Android-App normales fetch (nicht über die Capacitor-Brücke)
   get: (url, o) => (window.CapacitorWebFetch || fetch)(url, o),
   async hash(lang, text) {

@@ -99,8 +99,8 @@ const PANELS = {
       ${sw('sound', S.settings.sound, 'Effekte', 'Klänge bei richtig, falsch, Serien und Sternen')}
       <label class="setrow col vol"><span><b>Lautstärke Effekte</b></span><input type="range" id="volSfx" min="0" max="100" step="5" value="${S.settings.sfxVol ?? 70}"></label>
       <p class="small muted setnote">Bei Aufträgen von Lehrkräften und im Einstufungstest bleibt die Musik aus. Alles, was ein Ton sagt, steht auch auf dem Bildschirm.</p>
-      ${sw('speech', S.settings.speech, 'Vorlesen', 'Aufgaben, Lösungswege, Theorie und Blitz')}
-      ${Voice.available() ? `<div class="setrow col voicebox"><div class="vrow"><b>Stimme</b><span class="vname">Nova – KI-generierte Stimme</span></div>
+      ${!VORLESEN() ? '' : sw('speech', S.settings.speech, 'Vorlesen', 'Aufgaben, Lösungswege, Theorie und Blitz')}
+      ${!VORLESEN() ? '' : Voice.available() ? `<div class="setrow col voicebox"><div class="vrow"><b>Stimme</b><span class="vname">Nova – KI-generierte Stimme</span></div>
         <div class="vrow"><b>Sprechtempo</b><div class="chips" id="rateSeg" role="group" aria-label="Sprechtempo">${RATES.map(r => `<button data-v="${r}" class="${speechRate() === r ? 'sel' : ''}" aria-pressed="${speechRate() === r}" translate="no">${String(r).replace('.', ',')}×</button>`).join('')}</div></div>
         <p class="small muted" id="novaNote">Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. Texte, die erst in der Aufgabe entstehen (z. B. Rechenaufgaben), schickt die App ohne Angaben zu dir an unseren Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle.</p>
         <button class="btn" id="voiceTest">▶ Probe hören</button>

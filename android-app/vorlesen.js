@@ -27,11 +27,13 @@ function build() {
   const addRaw = (text, sprache) => { const t = text.normalize('NFC').replace(/\s+/g, ' ').trim(), k = sprache + '|' + t; if (t && !seen.has(k)) { seen.add(k); out.push({ text: t, sprache, laufzeit: true }); } };
   for (const de of blitzDe) { add(de, 'de'); const t = tsv.get(de); if (t) { if (t.en) add(t.en, 'en'); if (t.uk) add(t.uk, 'uk'); } }
   for (const [lang, list] of Object.entries(haeufig)) list.forEach(t => addRaw(t, lang));
-  const json = JSON.stringify({ format: 1, app: 'rechenblitz', texte: out }, null, 1) + '\n';
+  // Vorlesen abgeschaltet (config.js vorlesen: false, Marcel 18.11.): leere Liste, damit das Stimmen-Werk für Rechenblitz nichts spricht
+  const aus = /^\s*vorlesen:\s*false/m.test(fs.readFileSync(path.join(__dirname, '../kopfrechnen/config.js'), 'utf8'));
+  const json = JSON.stringify({ format: 1, app: 'rechenblitz', texte: aus ? [] : out }, null, 1) + '\n';
   const file = path.join(__dirname, '../kopfrechnen/vorlesen/texte.json');
   fs.mkdirSync(path.dirname(file), { recursive: true });
   if (!fs.existsSync(file) || fs.readFileSync(file, 'utf8') !== json) fs.writeFileSync(file, json);
-  return out.length;
+  return aus ? 0 : out.length;
 }
 module.exports = { build };
 if (require.main === module) console.log('vorlesen/texte.json: ' + build() + ' Texte');

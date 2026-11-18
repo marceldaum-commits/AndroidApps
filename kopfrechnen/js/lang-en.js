@@ -2442,4 +2442,5 @@ I18N.add('en', {"% sind":"% are",
 "Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort":"Dice questions now ask for the average instead of “about” – so there is exactly one correct answer",
 "Neue Version {} geladen ✓":"New version {} loaded ✓",
 "Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"The web app now fetches new versions even more reliably by itself – never in the middle of a round",
-"Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon":"Brand-new music: a modern sound with reverb, pads and beats – lo-fi in the menu, pop while practising, dance in the Blitz round, trap in the dungeon"});
+"Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon":"Brand-new music: a modern sound with reverb, pads and beats – lo-fi in the menu, pop while practising, dance in the Blitz round, trap in the dungeon",
+"Vorlesen ist vorerst ausgeschaltet – dafür gibt es die neue Musik und Klänge":"Reading aloud is switched off for now – enjoy the new music and sounds instead"});

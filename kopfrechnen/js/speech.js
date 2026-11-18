@@ -75,10 +75,12 @@ const joinSay = parts => parts.map(x => String(x).trim().replace(/[.!?:]+$/, '')
 // Deutscher Quelltext → so, wie er gerade angezeigt wird (übersetzt, mit Zahlen-Schreibweise der Sprache)
 const shownText = de => I18N.lang === 'de' ? de : (typeof i18nNumbers === 'function' ? i18nNumbers(tr(de)) : tr(de));
 
+// Vorlesen insgesamt an? (Schalter in config.js, Marcel 18.11.: vorerst aus)
+const VORLESEN = () => CONFIG.vorlesen !== false;
 const Voice = {
   plugin: () => window.Capacitor?.Plugins?.TextToSpeech || null,
   web: () => 'speechSynthesis' in window ? window.speechSynthesis : null,
-  available() { return Nova.can() || !!(this.plugin() || this.web()); },
+  available() { return VORLESEN() && (Nova.can() || !!(this.plugin() || this.web())); },
   seq: 0, chain: Promise.resolve(),
   stop() { this.seq++; this.chain = Promise.resolve(); Nova.stop(); const P = this.plugin(); if (P) { try { P.stop(); } catch {} } const W = this.web(); if (W) W.cancel(); },
   // Notlösung nur ohne Netz: Gerätestimme; Promise endet nach dem Sprechen
@@ -128,7 +130,7 @@ const Voice = {
   // spricht Abschnitte nacheinander; queue: hinten anhängen statt unterbrechen
   speakParts(parts, { queue = false, force = false } = {}) {
     parts = parts.map(p => String(p || '').trim()).filter(Boolean);
-    if ((!S.settings.speech && !force) || !parts.length) return;
+    if (!VORLESEN() || (!S.settings.speech && !force) || !parts.length) return;
     if (!queue) this.stop();
     const seq = this.seq;
     this.chain = this.chain.then(async () => { for (const p of parts) { if (seq !== this.seq) return; await this.one(p, seq); } }).catch(() => {});

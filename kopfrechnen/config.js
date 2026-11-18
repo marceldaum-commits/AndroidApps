@@ -20,6 +20,9 @@ window.RECHENBLITZ_CONFIG = {
   // Nur in der Android-App (APK, solange nicht im Play Store): neue Versionen von den GitHub-Release-Seiten anbieten.
   // Für die Play-Store-Fassung auf null setzen (dort aktualisiert Google Play).
   apkUpdates: { repo: 'marceldaum-commits/School' },
+  // Vorlesen (Nova) an/aus. Marcel 18.11.: „Vorlesen erstmal rausnehmen“ – false = keine Vorlese-Knöpfe/-Einstellungen,
+  // keine Abrufe beim Stimmen-Server, keine Gerätestimme. Der Code bleibt; true schaltet alles wieder ein.
+  vorlesen: false,
   // Vorlesen nur mit der KI-Stimme „Nova“: Audiodateien von unserem Stimmen-Server; neue Texte über /jetzt (die App schickt nichts an OpenAI)
   nova: { base: 'https://stimmen.mathenachhilfe-online.com/nova/', jetzt: 'https://stimmen.mathenachhilfe-online.com/jetzt' },
   // Adventskalender: Karte ab 15.11., Türchen 1.–24.12., nachholbar bis 6.1.

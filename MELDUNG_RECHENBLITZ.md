@@ -2,7 +2,55 @@
 
 Neueste Meldung oben.
 
-> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67.** **3.25.3: Pro startklar (Shop/Lizenz-Dienst nötig), Datenschutz-Fund, Ukrainisch nur Nova, Git-Bereinigung vorbereitet (Meldung 68).** **3.25.4: Test-Code ✓, Pro eingeschaltet – live erst nach Website-Freigabe af9af9fd (Meldung 69).** **3.26.0: Zahlen-Dungeon 2 mit Rechen-Karten (Meldung 71) – neue Funktion, bitte erst nach dem Betriebstest live.** **3.26.1: Musik startet sofort, nur Nova, 0 Thorsten-Treffer im Code – FERTIG FÜR DEN BETRIEBSTEST (Meldung 72).** **17.11. abends: 3.26.1 ist live (Leitstand). Ukrainisch bleibt ohne Nova still (bestätigt). Betriebstest läuft – nur noch Fehlerbehebungen.** **Nacht 17./18.11.: 3.26.2 auf test – Aufgaben geprüft (10 Vorlagen + 5 Vorlese-Fehler korrigiert), Nova ganze Sätze / kein Rückfall, neues App-Symbol – FERTIG FÜR DEN BETRIEBSTEST (Meldung 73). ⚠️ Stimmen-Server lehnt seit ca. 23:45 Uhr alle neuen Sätze ab (204) – bitte prüfen.** **18.11.: 3.26.3 – Fehlerbehebung: ukrainische Brüche richtig vorgelesen (Meldung 74). /jetzt um 05:40 Uhr weiter 204, texte.json noch nicht neu vertont.** **18.11.: 3.26.4 – überall dasselbe orange Blitz-Symbol (Meldung 75).** **18.11.: 3.26.5–3.26.8 – Nova-Laufzeit-Sätze, eindeutige Aufgaben, Web-Update, neue Musik (Meldung 76).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+> **AKTUELLER STAND (16.11.2026, abends) – für den Leitstand:** Live ist 3.16.0 (1e10027). Auf `rechenblitz-test` liegen **3.17.0** (schneller Start, Meldung 48), **3.18.0/3.18.1** (Üben nach Wunsch, Meldungen 49/50) und **3.19.0** (jede Stufe nachweislich schwerer + neue Stufe „Profi“ in allen Themen, Meldung 51). Bitte prüfen und freigeben. Inhalte laufen in Hülle 2. Die neue APK (Hülle 3, dunkelblaues Startbild) ist optional. **Neu: Meldung 52 – Konzept „Pro“ (Entscheidung durch den Leitstand nötig, noch nichts gebaut).** **Neu: Meldung 53 – Konzept Lehrerzugang (noch nichts gebaut).** **Neu: 3.20.0 auf `rechenblitz-test` – Rechenblitz Pro gebaut, Sperren aus bis zur Kassen-URL; bitte Code-Format bestätigen / Test-Code schicken (Meldung 54).** **17.11.: 3.21.0 (Zahlen-Dungeon) auf `rechenblitz-test` (Meldung 55).** **17.11.: 3.24.1 – Web = Android steht (Hülle 4 mit Vorlese-Plugin); Thorsten vom Stimmen-Server mit Prüfsumme; bitte CORS auch für https://localhost; 3.24.1 bitte live nehmen (Meldung 61).** **Stimmen-Server geprüft, 3.24.2 mit beiden Prüfsummen – bitte am Handy testen und 3.24.2 live nehmen (Meldung 62).** **3.24.3: „Pro aktiv“ deutlich sichtbar; keine neuen Dateiendungen (Meldung 63).** **3.24.4: Nova – `vorlesen/texte.json` ist auf test (Meldung 64).** **3.25.0: nur noch Nova mit /jetzt, Thorsten entfernt (Meldung 65) – live.** **3.25.1: alle Nova-Texte offline laden, Standard oder Bestqualität (Meldung 66, mit Bildschirmfotos).** **3.25.2: FERTIG FÜR DEN BETRIEBSTEST – Prüfbericht und Restpunkte in Meldung 67.** **3.25.3: Pro startklar (Shop/Lizenz-Dienst nötig), Datenschutz-Fund, Ukrainisch nur Nova, Git-Bereinigung vorbereitet (Meldung 68).** **3.25.4: Test-Code ✓, Pro eingeschaltet – live erst nach Website-Freigabe af9af9fd (Meldung 69).** **3.26.0: Zahlen-Dungeon 2 mit Rechen-Karten (Meldung 71) – neue Funktion, bitte erst nach dem Betriebstest live.** **3.26.1: Musik startet sofort, nur Nova, 0 Thorsten-Treffer im Code – FERTIG FÜR DEN BETRIEBSTEST (Meldung 72).** **17.11. abends: 3.26.1 ist live (Leitstand). Ukrainisch bleibt ohne Nova still (bestätigt). Betriebstest läuft – nur noch Fehlerbehebungen.** **Nacht 17./18.11.: 3.26.2 auf test – Aufgaben geprüft (10 Vorlagen + 5 Vorlese-Fehler korrigiert), Nova ganze Sätze / kein Rückfall, neues App-Symbol – FERTIG FÜR DEN BETRIEBSTEST (Meldung 73). ⚠️ Stimmen-Server lehnt seit ca. 23:45 Uhr alle neuen Sätze ab (204) – bitte prüfen.** **18.11.: 3.26.3 – Fehlerbehebung: ukrainische Brüche richtig vorgelesen (Meldung 74). /jetzt um 05:40 Uhr weiter 204, texte.json noch nicht neu vertont.** **18.11.: 3.26.4 – überall dasselbe orange Blitz-Symbol (Meldung 75).** **18.11.: 3.26.5–3.26.8 – Nova-Laufzeit-Sätze, eindeutige Aufgaben, Web-Update, neue Musik (Meldung 76).** **18.11.: 3.26.9 – Vorlesen abgeschaltet, texte.json leer – FERTIG FÜR DEN BETRIEBSTEST (Meldung 77, Gesamtübersicht).** **17.11.: 3.23.0 – eigene Musik + Vorlesen mit Stimmenwahl (Meldung 58; Entscheidung zu „Thorsten“ und Android-Vorlese-Plugin nötig).** **17.11.: 3.22.0 – Theorie-Knopf zu jeder Übung (Meldung 57).** **17.11.: Korrektheitsprüfung abgeschlossen – 3.21.1 mit allen Korrekturen auf `rechenblitz-test` (Meldung 56, ganz oben).**
+
+## 18.11.2026 (77) – Vorlesen abgeschaltet (3.26.9) – fertig für den Betriebstest
+
+Auftrag Leitstand (Marcel 18.11.): „Vorlesen überall erstmal rausnehmen … Es reicht, wenn coole Musik und Klänge drin sind.“
+
+### Vorlesen aus
+- **Schalter:** In `config.js` steht jetzt `vorlesen: false`. Der Code bleibt; mit `true` ist alles wieder da. Bei `false`:
+  - Es gibt keinen Vorlese-Schalter, keine Stimme, kein Sprechtempo, keinen Probe-Knopf und kein „Alle Nova-Texte offline laden“ in den Einstellungen.
+  - Den Knopf „🔊 Vorlesen“ in der Theorie gibt es nicht mehr.
+  - Es kommt kein Hinweis „Nova nicht erreichbar“.
+  - Die App schickt **keine Abrufe** an `stimmen.mathenachhilfe-online.com` oder `/jetzt` und spricht **nie mit der Gerätestimme**, auch nicht in der Android-App und auch nicht auf Ukrainisch.
+  - Profile, bei denen Vorlesen früher eingeschaltet war, bleiben ebenfalls still.
+- **`vorlesen/texte.json`:** Die Datei wird leer ausgeliefert (`{"format":1,"app":"rechenblitz","texte":[]}`). `android-app/vorlesen.js` liest den Schalter aus `config.js`, damit sie auch bei künftigen Versionen leer bleibt. **Das Stimmen-Werk spricht für Rechenblitz nichts mehr.**
+- **Musik und Klänge:**
+  - Die neue Musik (3.26.8) startet direkt (App sofort, Web beim ersten Tippen).
+  - Klänge gibt es für richtig/falsch, Serien, Rekord, Blitz, Sternbilder, Dungeon usw.
+  - „Musik“ und „Effekte“ lassen sich in den Einstellungen getrennt ein- und ausschalten, je mit eigenem Lautstärke-Regler. Der Lautsprecher-Knopf oben schaltet beides gemeinsam.
+- **Test `tests/vorlesen-aus.js`** in DE/EN/UK bei 320 px, mit einem alten Profil mit `speech: true`:
+  - 0 Vorlese-Elemente,
+  - 0 Abrufe beim Stimmen-Server,
+  - 0× Gerätestimme,
+  - Musik läuft,
+  - keine Fehler ✓.
+- **Hinweis:** Auf Live (3.26.1) liegt noch die alte `texte.json` mit 1 049 Texten, und das Vorlesen ist dort noch an. Das ändert sich mit der Live-Freigabe.
+
+### Gesamtübersicht für den Betriebstest (alles auf `rechenblitz-test`, 3.26.9)
+
+| Auftrag | Stand | Meldung |
+|---|---|---|
+| **Nacht-Auftrag: Aufgaben prüfen** | 261 000 Aufgaben nachgerechnet (0 falsch), 941 Formen von Hand gelesen, 12 Vorlagen eindeutiger, 5 Vorlese-Fehler behoben | 73, 76 |
+| **Mehrere richtige Antworten** | Kontrolle nach Wert; Test mit 811 371 gleichwertigen Eingaben ✓; Überschlag-Hinweis und „im Durchschnitt“ eindeutig | 76 |
+| **Nova** | ganze Sätze, kein Rückfall, Klicktest (nachgebildeter Server) 100 % in DE/EN/UK – **jetzt per Schalter abgeschaltet** | 73, 76, 77 |
+| **Einheitliches Logo** | neues orange Blitz-Symbol überall: Favicon, PWA, Apple, Android (adaptiv), Startbild, Kopf, Teilen-Bilder, Flyer, Druck | 75 |
+| **Web-App immer aktuell** | Prüfung bei Öffnen, Rückkehr, Fokus und alle 30 Min.; neu laden nur auf der Startseite; Hinweis „Neue Version … geladen“; Test `tests/web-update.mjs` ✓ | 76 |
+| **Neue Musik** | Lo-Fi / Pop / Dance / Trap, Hall, Flächen, Pumpen | 76 |
+| **Ukrainische Brüche** | „дві третіх“ statt „2 на 3“ (wirkt erst wieder, wenn Vorlesen an ist) | 74 |
+
+- **Tests 3.26.9:**
+  - Engine und Schwierigkeit (174 Stufen) ✓,
+  - Übersetzungen 0 fehlend ✓,
+  - Pro-Codes ✓,
+  - Musiktest und Autostart (App/Web) ✓,
+  - axe 0 Verstöße ✓,
+  - Web-Update ✓,
+  - Vorlesen-aus ✓.
+- Neue Dateiendungen: keine. Web = Android ✓ (gleicher Inhalt über `stand.json`; das neue App-Symbol am Handy erst mit der nächsten APK).
+
+**3.26.9 ist fertig für den Betriebstest.**
 
 ## 18.11.2026 (76) – Nova-Liste, eindeutige Aufgaben, Web-Update, neue Musik (3.26.5–3.26.8)
 

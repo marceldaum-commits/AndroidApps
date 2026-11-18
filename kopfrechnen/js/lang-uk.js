@@ -2442,4 +2442,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort":"Задачі з кубиком тепер питають про середнє, а не «приблизно», – тож є рівно одна правильна відповідь",
 "Neue Version {} geladen ✓":"Нову версію {} завантажено ✓",
 "Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"Веб-застосунок ще надійніше сам завантажує нові версії – ніколи посеред раунду",
-"Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon":"Зовсім нова музика: сучасне звучання з ревербом, падами та бітом – lo-fi в меню, поп під час вправ, денс у бліц-раунді, треп у підземеллі"});
+"Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon":"Зовсім нова музика: сучасне звучання з ревербом, падами та бітом – lo-fi в меню, поп під час вправ, денс у бліц-раунді, треп у підземеллі",
+"Vorlesen ist vorerst ausgeschaltet – dafür gibt es die neue Musik und Klänge":"Читання вголос поки вимкнено – натомість є нова музика та звуки"});
