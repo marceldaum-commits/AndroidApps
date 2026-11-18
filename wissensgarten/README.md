@@ -54,7 +54,7 @@ Gießen = Wiederholen zum richtigen Zeitpunkt.
   Compose Multiplatform), `app` (Android: Widget, Erinnerungen, Drive-Sync, Safari, Updater, Postkarte/Urkunde/PDF),
   `webApp` (Kotlin/Wasm-Einstieg, PWA mit Manifest und Service Worker).
 - **Plattform-Brücke**: `shared/.../AppHost.kt` – Ton, Musik, Vorlesen, Spracherkennung, Teilen, Bilder; Android: `app/.../platform/AndroidHost.kt`,
-  Web: `webApp/.../WebPlatform.kt` + `webApp/src/wasmJsMain/resources/wg-platform.js` (WebAudio, speechSynthesis, SpeechRecognition).
+  Web: `webApp/.../WebPlatform.kt` + `webApp/src/webMain/resources/wg-platform.js` (WebAudio, speechSynthesis, SpeechRecognition).
 - **Gleichstand**: Versionsnummer aus `app/build.gradle.kts` wird als `AppInfo` erzeugt; die WebApp bekommt dieselben Paket-Dateien
   (`content/src/main/assets/packs`). `StoreParityTest` prüft, dass Android-Datenbank und Web-Speicher denselben Garten ergeben.
 - **WebApp bauen**: `./gradlew :webApp:exportWebApp` → fertige Dateien in `webapp/` (wird auf den Branch `wissensgarten-test` gelegt).

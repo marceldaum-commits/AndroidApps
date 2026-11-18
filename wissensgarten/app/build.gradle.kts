@@ -20,8 +20,8 @@ android {
         applicationId = "de.wissensgarten.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 61
-        versionName = "2.2.12"
+        versionCode = 62
+        versionName = "2.2.13"
         buildConfigField("String", "VERSION_DATE", "\"18.11.2026\"")
         // Nachladbare Wissenspakete (nur JSON-Daten) aus der freigegebenen WebApp-Fassung
         buildConfigField("String", "PACKS_URL", "\"https://raw.githubusercontent.com/marceldaum-commits/AndroidApps/wissensgarten-live/wissensgarten/webapp/packs/\"")
@@ -101,7 +101,7 @@ abstract class NovaListeAsset : DefaultTask() {
     }
 }
 val novaListe = tasks.register<NovaListeAsset>("novaListeAsset") {
-    liste.set(rootProject.layout.projectDirectory.file("webApp/src/wasmJsMain/resources/vorlesen/texte.json"))
+    liste.set(rootProject.layout.projectDirectory.file("webApp/src/webMain/resources/vorlesen/texte.json"))
     ziel.set(layout.buildDirectory.dir("generated/novaListe"))
 }
 androidComponents {

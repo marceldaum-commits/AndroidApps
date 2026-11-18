@@ -184,6 +184,21 @@ class Settings(private val prefs: KeyValueStore) {
     fun questChestWeek(pid: String) = prefs.getLong("aufgaben_kiste_$pid", -1)
     fun setQuestChestWeek(pid: String, w: Long) { prefs.edit().putLong("aufgaben_kiste_$pid", w).apply(); bump() }
 
+    // ---- Elternbereich: anonyme Nutzungszählung und Hinweise auf unsere Nachhilfe (beide abschaltbar, Standard an)
+    private val _countUsage = MutableStateFlow(prefs.getBoolean("zaehlung", true))
+    val countUsage = _countUsage.asStateFlow()
+    fun setCountUsage(v: Boolean) { prefs.edit().putBoolean("zaehlung", v).apply(); _countUsage.value = v }
+    private val _tutorHints = MutableStateFlow(prefs.getBoolean("nachhilfe_hinweise", true))
+    val tutorHints = _tutorHints.asStateFlow()
+    fun setTutorHints(v: Boolean) { prefs.edit().putBoolean("nachhilfe_hinweise", v).apply(); _tutorHints.value = v }
+    /** Wann wurde der Nachhilfe-Hinweis je Profil und Thema zuletzt gezeigt (Häufigkeitsgrenze) */
+    fun hintShown(profileId: String): Map<String, Long> = de.wissensgarten.core.model.Zaehlung.THEMEN
+        .associateWith { prefs.getLong("hinweis_${profileId}_$it", 0L) }.filterValues { it > 0 }
+    fun setHintShown(profileId: String, thema: String, at: Long) { prefs.edit().putLong("hinweis_${profileId}_$thema", at).apply() }
+    /** Ausgeblendete Hinweise je Profil: Themen bzw. „ka:<Klassenarbeit>“ */
+    fun hintsHidden(profileId: String): Set<String> = prefs.getStringSet("hinweis_aus_$profileId", null).orEmpty()
+    fun hideHint(profileId: String, key: String) { prefs.edit().putStringSet("hinweis_aus_$profileId", hintsHidden(profileId) + key).apply(); bump() }
+
     // ---- Klassenarbeiten (Prüfungsmodus)
     private val examJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
     private val examList = kotlinx.serialization.builtins.ListSerializer(de.wissensgarten.core.model.Exam.serializer())

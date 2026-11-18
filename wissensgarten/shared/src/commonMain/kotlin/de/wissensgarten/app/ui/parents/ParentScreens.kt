@@ -32,7 +32,12 @@ import de.wissensgarten.core.model.WeekReport
 /** Eltern-Wochenbericht: pro Kind, nur auf dem Gerät berechnet. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WeekReportScreen(profiles: List<ProfileEntity>, startId: String?, report: (String) -> WeekReport.Report, onBack: () -> Unit) {
+fun WeekReportScreen(
+    profiles: List<ProfileEntity>, startId: String?, report: (String) -> WeekReport.Report,
+    /** Hinweis auf unsere Nachhilfe (nur hier hinter dem Eltern-Tor, sachlich, ohne Figur) */
+    hint: @Composable ColumnScope.(ProfileEntity) -> Unit = {},
+    onBack: () -> Unit,
+) {
     var sel by remember { mutableStateOf(startId ?: profiles.firstOrNull()?.id) }
     val p = profiles.firstOrNull { it.id == sel }
     val r = remember(sel) { sel?.let(report) }
@@ -100,7 +105,26 @@ fun WeekReportScreen(profiles: List<ProfileEntity>, startId: String?, report: (S
                     }
                 }
             }
+            hint(p)
             Spacer(Modifier.height(16.dp))
+        }
+    }
+}
+
+/**
+ * Sachlicher Hinweis an Eltern (Du-Form, ohne Figur, ohne Preis): ein Thema fällt länger schwer oder eine Klassenarbeit steht an.
+ * Mit „Ausblenden“ verschwindet er für dieses Thema bzw. diese Arbeit dauerhaft.
+ */
+@Composable
+fun NachhilfeKarte(text: String, button: String, onOpen: () -> Unit, onHide: () -> Unit) {
+    OutlinedCard(Modifier.fillMaxWidth()) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("Für Eltern", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.primary)
+            Text(text, style = MaterialTheme.typography.bodyMedium)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                FilledTonalButton(onClick = onOpen, modifier = Modifier.weight(1f)) { Text(button, textAlign = TextAlign.Center) }
+                TextButton(onClick = onHide) { Text("Ausblenden") }
+            }
         }
     }
 }

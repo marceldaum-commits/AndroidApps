@@ -7,7 +7,7 @@ from fontTools import subset
 from fontTools.ttLib import TTFont
 
 src = sys.argv[1] if len(sys.argv) > 1 else "/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"
-out = "webApp/src/wasmJsMain/composeResources/font/noto_color_emoji.ttf"
+out = "webApp/src/webMain/composeResources/font/noto_color_emoji.ttf"
 text = ""
 for pat in ["content/src/main/assets/packs/*.json", "shared/src/**/*.kt", "core/**/src/**/*.kt", "app/src/main/**/*.kt", "webApp/src/**/*.kt"]:
     for f in glob.glob(pat, recursive=True):
@@ -33,7 +33,7 @@ print(f"{len(cps)} Zeichen → {out} ({os.path.getsize(out) // 1024} KB)")
 
 # Zweite Schrift: Pfeile, Mathe- und Sonderzeichen (DejaVu Sans, freie Lizenz) für alles, was keine Emoji ist
 sym_src = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
-sym_out = "webApp/src/wasmJsMain/composeResources/font/dejavu_symbols.ttf"
+sym_out = "webApp/src/webMain/composeResources/font/dejavu_symbols.ttf"
 sym_cmap = TTFont(sym_src)["cmap"].getBestCmap()
 sym = {ord(c) for c in text if ord(c) > 0x7F and ord(c) in sym_cmap and ord(c) not in cps}
 sym |= {c for r in [(0x2190, 0x21FF), (0x2200, 0x22FF), (0x2070, 0x209F), (0x2150, 0x218F), (0x0370, 0x03FF), (0x00A0, 0x017F), (0x2010, 0x205E), (0x25A0, 0x25FF)] for c in range(r[0], r[1] + 1) if c in sym_cmap}

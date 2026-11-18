@@ -117,7 +117,7 @@ fun main() {
 
     // Freischalt-Link aus der Kauf-E-Mail: …/?pro=<Code> – übernehmen und aus der Adresszeile entfernen
     val plusMessage = takeProParam()?.toString()?.let { text ->
-        when (vm.redeemPlus(text)) {
+        when (vm.redeemPlus(text, ort = "link")) {
             de.wissensgarten.core.data.PlusEntitlements.Redeem.OK -> "🌟 Wissensgarten Plus ist freigeschaltet – vielen Dank!"
             de.wissensgarten.core.data.PlusEntitlements.Redeem.EXPIRED -> "Dieser Plus-Code ist abgelaufen."
             de.wissensgarten.core.data.PlusEntitlements.Redeem.INVALID -> "Der Freischalt-Link ist leider ungültig. Bitte den Code im Eltern-Bereich eingeben."
