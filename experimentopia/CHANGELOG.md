@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.4.4 – Richtiges Datum (18.11.2026)
+
+- 📅 In den Einstellungen steht jetzt das richtige Versionsdatum (2.4.3 zeigte noch den 17.11.). Sonst wie 2.4.3.
+
 ## 2.4.3 – Ein Logo überall (18.11.2026)
 
 - 🧪 Das Logo ist jetzt überall gleich: Der Kolben vom App-Symbol steht auch oben auf dem Startbildschirm und im Ladebild – mit sanft schwebenden Blasen.

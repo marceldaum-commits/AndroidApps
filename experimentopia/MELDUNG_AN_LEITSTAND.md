@@ -2,6 +2,19 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.4.4 vom 18.11.2026: fertig für den Betriebstest (Nacht-Auftrag + Logo + Nova abgeschlossen)
+
+- **Nova abgeschlossen**: texte.json (live und test) enthält **alle** festen Sätze und alle vorhersehbaren Oberflächen-Sätze (Begrüßung, Insel-/Fach-Einleitungen,
+  Forscherbuch-Tipps, Forscher-Pass-Sätze je Versuch/Gerät) als ganze Sätze – **2579 Sätze**, keine echten Laufzeit-Sätze mehr (`/jetzt` wird nicht gebraucht).
+  Liste unverändert seit 2.4.2 – keine neue große Liste, keine Kostenmeldung nötig.
+- **Nova-Abdeckung: 100 %** (2579/2579, HEAD 200, live und test, 18.11. früh).
+- **Klicktest** auf test (320 px, Chromium): Begrüßung, Rätsel des Tages, Rätsel-Karte, Frage, Blubb-Sätze → alle Nova-Abrufe 200, **0 × Gerätestimme**.
+  Dazu verhindert ein Test (`NovaCoverageTest`), dass ein Bildschirm eigene, nicht vertonte Vorlesetexte baut.
+- **Offline laden**: lädt genau die 2579 Sätze aus derselben Liste; Größenangabe aus `stand-<host>.json` „bytes“ = **72,4 MB**, nachgemessen als Summe aller
+  Dateien = 72,4 MB (stimmt). Bestqualität laut „bytes_original“ 228 MB. Fassung 2 des Werks: an der App nichts zu ändern (Hash = Originaltext).
+- **Logo**: siehe 2.4.3 (überall das App-Symbol). **Nacht-Auftrag**: siehe 2.4.2 (200 Versuche geprüft, 72 Stellen in 60 Versuchen geändert).
+- 2.4.4 korrigiert nur das Versionsdatum (2.4.3 zeigte „vom 17.11.2026“). Liegt auf test; live ist 2.4.2.
+
 ## 18.11.2026 – Version 2.4.3 vom 18.11.2026: ein Logo überall – fertig für den Betriebstest
 
 - Referenz: App-Symbol (`icon-512.png` = Android `ic_launcher_foreground`, gleiche Geometrie). Schon gleich waren: Android-Symbol (adaptiv + monochrom), PWA-Symbole 192/512, Favicon/Apple-Touch-Icon.
