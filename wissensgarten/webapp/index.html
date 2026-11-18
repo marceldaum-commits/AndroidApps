@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="de" data-version="2.2.11">
+<html lang="de" data-version="2.2.12">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Wissensgarten – Lernen & Gießen</title>
   <meta name="description" content="Wissensgarten: Lernen wie Gärtnern – jede Karte eine Pflanze, die wächst, wenn du sie gießt. Ohne Werbung, ohne Konto, Fortschritt bleibt im Browser.">
   <meta name="theme-color" content="#3f6b3a">
-  <meta name="wg-version" content="2.2.11">
+  <meta name="wg-version" content="2.2.12">
   <link rel="manifest" href="manifest.webmanifest">
   <script>
     // Schrittprotokoll (Diagnose): jeder Startschritt wird sofort im Browser-Speicher abgelegt (wg.diag).
@@ -53,6 +53,7 @@
         save(); render();
       };
       window.addEventListener('wg-ready', function () {
+        window.wgReady = true;
         window.wgDiag('Garten steht (Startbild weg)');
         requestAnimationFrame(function () { requestAnimationFrame(function () { done = true; window.wgDiag('erstes Bild gemalt ✓'); }); });
       });
@@ -151,9 +152,20 @@
     (function () {
       var shown = false, t0 = Date.now(), notes = [];
       window.wgStartNote = function (t) { notes.push(String(t).slice(0, 300)); if (notes.length > 12) notes.shift(); if (window.wgDiag) window.wgDiag('Notiz: ' + t); };
-      window.wgStartFailed = function (why) {
+      window.wgStartFailed = function (why, afterReady) {
         window.wgStartNote(why || 'unbekannt');
         if (shown) { var d = document.getElementById('wg-fail-detail'); if (d) d.textContent = notes.join(' | '); return; }
+        // Wasm-Start gescheitert: einmal automatisch mit der JS-Fassung neu starten (für diese Version gemerkt)
+        if (window.wgModus === 'wasm' && window.wgModusAuto && (!window.wgReady || afterReady)) {
+          try {
+            if (!sessionStorage.getItem('wg.jsVersuch')) {
+              sessionStorage.setItem('wg.jsVersuch', '1');
+              localStorage.setItem('wg.wasmKaputt', document.documentElement.getAttribute('data-version') || '');
+              if (window.wgDiag) window.wgDiag('Wasm-Start gescheitert → neu mit JS-Fassung');
+              shown = true; location.reload(); return;
+            }
+          } catch (e) {}
+        }
         shown = true;
         if (window.wgDiag) window.wgDiag('FEHLERSEITE gezeigt: ' + why);
         var show = function () {
@@ -174,11 +186,70 @@
       // Fehler in den ersten 30 Sekunden (Start, erstes Bild) führen zur Meldung statt zu einer leeren Seite
       window.addEventListener('error', function (e) { if (Date.now() - t0 < 30000) window.wgStartFailed((e.message || 'Fehler') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || '')); });
       window.addEventListener('unhandledrejection', function (e) { if (Date.now() - t0 < 30000) window.wgStartFailed(e.reason && (e.reason.message || e.reason)); });
-      // WebAssembly mit „GC“ fehlt älteren Browsern (Safari vor 18.2) – 'WebAssembly' in window erkennt das nicht
-      try {
-        if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0])))
-          window.wgStartFailed('WebAssembly-GC fehlt (Browser zu alt)');
-      } catch (e) { window.wgStartFailed('WebAssembly-Prüfung: ' + e); }
+      // Welche Fassung startet? „wasm“ (Kotlin/Wasm, schnell) oder „js“ (Kotlin/JS – gleiche App, für Safari/WebKit:
+      // Safari 27 kann das Wasm-Hauptmodul nicht verarbeiten, die Fläche bleibt dann weiß).
+      // Schalter ?modus=js|wasm|auto (bleibt gemerkt, auto löscht ihn). Scheitert der Wasm-Start, wird je Version auf JS umgeschaltet.
+      (function () {
+        var v = document.documentElement.getAttribute('data-version') || '';
+        var forced = null, kaputt = null, gc = false;
+        try {
+          var mq = /[?&]modus=(js|wasm|auto)/.exec(location.search);
+          if (mq) { if (mq[1] === 'auto') localStorage.removeItem('wg.modus'); else localStorage.setItem('wg.modus', mq[1]); }
+          forced = localStorage.getItem('wg.modus');
+          kaputt = localStorage.getItem('wg.wasmKaputt');
+        } catch (e) {}
+        if (typeof WebAssembly !== 'object') { window.wgStartFailed('WebAssembly fehlt (Browser zu alt)'); return; }
+        try { gc = WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0])); } catch (e) {}
+        var ua = navigator.userAgent;
+        var webkit = /iPad|iPhone|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) ||
+          (/AppleWebKit/.test(ua) && /Safari\//.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Android|Firefox|FxiOS/.test(ua));
+        var use, why;
+        if (forced === 'js' || forced === 'wasm') { use = forced; why = 'Schalter ?modus=' + forced; }
+        else if (!gc) { use = 'js'; why = 'kein WasmGC'; }
+        // Safari/WebKit: seit 2.2.12 wieder Wasm (Abhilfe für WebKit-Fehler 329421 im Bündel); malt Wasm dort nichts, folgt automatisch JS
+        else if (kaputt === v) { use = 'js'; why = 'Wasm-Start scheiterte vorher bei ' + v; }
+        else { use = 'wasm'; why = 'Standard'; }
+        // Ist der letzte Wasm-Start dieser Version im selben Tab abgestürzt (Tab neu geladen, ohne dass der Garten stand)? → JS
+        try {
+          if (use === 'wasm' && !forced && sessionStorage.getItem('wg.wasmLauf') === v) { localStorage.setItem('wg.wasmKaputt', v); use = 'js'; why = 'Wasm-Start brach vorher ab'; }
+          if (use === 'wasm') sessionStorage.setItem('wg.wasmLauf', v);
+          window.addEventListener('wg-ready', function () { try { sessionStorage.removeItem('wg.wasmLauf'); } catch (e) {} });
+        } catch (e) {}
+        window.wgModus = use; window.wgModusAuto = !forced;
+        window.wgStartNote('Fassung ' + use + ' (' + why + ')');
+        if (use === 'wasm' && !forced) {
+          // Malt die Wasm-Fassung wirklich? 4 s nach dem Start Bildpunkte der Zeichenfläche prüfen (direkt nach dem Malen):
+          // nur Weiß/Durchsichtig = weiße Fläche (z. B. Safari 27) → automatisch JS-Fassung
+          window.addEventListener('wg-ready', function () {
+            var seen = false, tries = 0, oraf = window.requestAnimationFrame.bind(window), until = Date.now() + 4000;
+            var look = function () {
+              try {
+                var r = document.body.shadowRoot, c = (r && r.querySelector('canvas')) || document.querySelector('canvas'); if (!c) return;
+                var gl = c.__wgGl || (c.__wgGl = c.getContext('webgl2') || c.getContext('webgl')); if (!gl) { seen = true; return; }
+                var w = gl.drawingBufferWidth, h = gl.drawingBufferHeight, px = new Uint8Array(4);
+                [[0.5, 0.5], [0.25, 0.25], [0.75, 0.75], [0.5, 0.15], [0.5, 0.85]].forEach(function (q) {
+                  gl.readPixels((w * q[0]) | 0, (h * q[1]) | 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+                  if (px[3] > 0 && !(px[0] > 252 && px[1] > 252 && px[2] > 252)) seen = true;
+                });
+                tries++;
+              } catch (e) { seen = true; }
+            };
+            window.requestAnimationFrame = function (cb) {
+              return oraf(function (t) { cb(t); if (!seen && Date.now() < until) look(); });
+            };
+            setTimeout(function () {
+              window.wgDiag('Bildprüfung Wasm: ' + (seen ? 'Garten sichtbar ✓' : 'nur weiß (' + tries + ' Proben)'));
+              if (!seen && tries > 0) window.wgStartFailed('Wasm zeichnet nichts (weiße Fläche)', true);
+            }, 4500);
+          });
+          // „Can't wrap nullptr“ u. ä. landen oft nur in der Konsole – vor dem Start als Startfehler werten
+          var oe = console.error;
+          console.error = function () {
+            try { var t = Array.prototype.map.call(arguments, String).join(' '); if (!window.wgReady && /nullptr|import descriptors|CompileError|LinkError/.test(t)) window.wgStartFailed('Wasm: ' + t.slice(0, 160)); } catch (e) {}
+            return oe.apply(console, arguments);
+          };
+        }
+      })();
       // iPhone/iPad: Zeichenfläche auf höchstens ~3,5 Mio. Bildpunkte begrenzen – sonst bleibt das Bild auf großen Geräten weiß
       try {
         var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
@@ -212,13 +283,13 @@
     <div class="pct" id="pct"></div>
     <p class="hint" id="hint"></p>
     <noscript><p>Bitte JavaScript einschalten, dann wächst der Garten.</p></noscript>
-    <div class="links">Version 2.2.11 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
+    <div class="links">Version 2.2.12 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" rel="noopener">Datenschutz</a></div>
   </div>
   <script>
     // Echter Ladebalken: zählt die geladenen Bytes der großen Startdateien (App, Grafik-Engine, Emoji-Schrift).
     (function () {
-      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"wissensgarten.js":664404,"1c0a750018190c0693e1.wasm":8000945};
+      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"skiko.wasm":8405319,"wissensgarten-js.js":7107127,"382182cc790b73026d14.wasm":8001051,"wissensgarten.js":723726};
       const total = Object.values(sizes).reduce((a, b) => a + b, 0);
       const got = {};
       const bar = document.getElementById('bar'), barI = document.getElementById('barI'), pct = document.getElementById('pct');
@@ -319,6 +390,10 @@
             }).catch(() => {});
           };
           check();
+          // Dateien der eigenen Fassung (Wasm oder JS) für den nächsten Start und offline merken – nur was noch fehlt
+          const mine = ({"wasm":["bccfa839aa4b38489c76.wasm","382182cc790b73026d14.wasm","wissensgarten.js"],"js":["skiko.wasm","wissensgarten-js.js"]})[window.wgModus === 'js' ? 'js' : 'wasm'] || [];
+          navigator.serviceWorker.ready.then(() => caches.open('wissensgarten-' + document.documentElement.getAttribute('data-version')))
+            .then((c) => Promise.all(mine.map((f) => c.match(f).then((hit) => hit || c.add(f)).catch(() => {})))).catch(() => {});
           setInterval(check, 30 * 60 * 1000);
           document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
           window.addEventListener('focus', check);
@@ -339,9 +414,14 @@
         // Startbild aus <body> herausnehmen: Compose legt dort eine Shadow-Root an, die alles andere ausblendet.
         // So bleibt Brummi sichtbar, bis der Garten wirklich gezeichnet ist – nie eine leere Fläche dazwischen.
         try { var sp = document.getElementById('splash'); if (sp) document.documentElement.appendChild(sp); } catch (e) {}
-        var list = ['wg-platform.js', 'wg-stimme.js', 'wissensgarten.js'];
+        var list = ['wg-platform.js', 'wg-stimme.js', window.wgModus === 'js' ? 'wissensgarten-js.js' : 'wissensgarten.js'];
         var next = function (i) {
-          if (i >= list.length) { window.wgDiag('alle Skripte geladen → App startet'); return; }
+          if (i >= list.length) {
+            window.wgDiag('alle Skripte geladen → App startet');
+            // Zeitlimit: steht der Wasm-Garten nach 25 s nicht, gilt das als Startfehler (→ automatisch JS-Fassung)
+            if (window.wgModus === 'wasm') setTimeout(function () { if (!window.wgReady && document.visibilityState === 'visible') window.wgStartFailed('Wasm-Start: Zeitlimit'); }, 25000);
+            return;
+          }
           var s = document.createElement('script');
           s.src = list[i];
           s.onload = function () { window.wgDiag('Skript ' + list[i] + ' ok'); next(i + 1); };
