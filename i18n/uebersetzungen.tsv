@@ -1768,7 +1768,7 @@ Du würfelst einmal mit einem normalen Würfel. Wie groß ist die Wahrscheinlich
 Du würfelst einmal. Wie groß ist die Wahrscheinlichkeit für eine gerade Zahl?	You roll a dice once. What is the probability of an even number?	Ти один раз кидаєш кубик. Яка ймовірність парного числа?
 Du würfelst mit zwei Würfeln. Wie groß ist die Wahrscheinlichkeit für die Augensumme {}?	You roll two dice. What is the probability of a total of {}?	Ти кидаєш два кубики. Яка ймовірність суми очок {}?
 Du würfelst zweimal. Wie groß ist die Wahrscheinlichkeit für zwei Sechsen?	You roll a dice twice. What is the probability of two sixes?	Ти кидаєш кубик двічі. Яка ймовірність двох шісток?
-Du würfelst {}-mal. Wie oft erwartest du ungefähr eine Sechs?	You roll a dice {} times. About how often do you expect a six?	Ти кидаєш кубик {} разів. Приблизно скільки разів ти очікуєш шістку?
+Du würfelst {}-mal. Wie oft erwartest du im Durchschnitt eine Sechs?	You roll a dice {} times. On average, how often do you expect a six?	Ти кидаєш кубик {} разів. Скільки разів у середньому ти очікуєш шістку?
 Ein Auto fährt mit {} Litern Benzin {} km. Wie weit kommt es mit {} Litern?	A car travels {1} km on {0} litres of petrol. How far does it get on {2} litres?	Автомобіль на {} літрах бензину проїжджає {} км. Скільки він проїде на {} літрах?
 Ein Futtervorrat reicht für {} Pferde {} Tage. Wie lange reicht er für {} Pferde?	A supply of feed lasts {1} days for {0} horses. How long does it last for {2} horses?	Запасу корму вистачає для {} коней на {} днів. На скільки днів його вистачить для {} коней?
 Ein Glücksrad hat {} gleich große Felder, {} davon sind Gewinne. Wie groß ist die Gewinnchance in Prozent?	A prize wheel has {} equal sections, {} of them are wins. What is the chance of winning in percent?	Колесо фортуни має {} однакових секторів, {} з них виграшні. Який шанс виграти у відсотках?
@@ -2074,11 +2074,11 @@ plus mal plus ergibt plus	plus times plus gives plus	плюс на плюс да
 {}, also	{}, so	{}, отже
 Innere Klammer	Inner brackets	Внутрішні дужки
 {}, dann drei Nullen anhängen	{}, then add three zeros	{}, потім дописати три нулі
-Runde auf Hunderter und Zehner	Round to hundreds and tens	Округли до сотень і десятків
+Runde die erste Zahl auf Hunderter, die zweite auf Zehner	Round the first number to hundreds and the second to tens	Округли перше число до сотень, а друге – до десятків
 Entscheidend ist die Tausendstelstelle	The thousandths digit decides	Вирішує цифра тисячних
 auf Hundertstel	to hundredths	до сотих
 {}, dann fünf Nullen anhängen	{}, then add five zeros	{}, потім дописати п’ять нулів
-Runde auf Tausender und Hunderter	Round to thousands and hundreds	Округли до тисяч і сотень
+Runde die erste Zahl auf Tausender, die zweite auf Hunderter	Round the first number to thousands and the second to hundreds	Округли перше число до тисяч, а друге – до сотень
 {} km {} m = {} m	{} km {} m = {} m	{} км {} м = {} м
 {} m/s = {} m pro Stunde = {} km/h	{} m/s = {} m per hour = {} km/h	{} м/с = {} м за годину = {} км/год
 {} km/h	{} km/h	{} км/год
@@ -2173,9 +2173,9 @@ Wie groß ist die y-Koordinate des Schnittpunkts?	What is the y-coordinate of th
 Wo hat die Gerade durch P und Q ihre Nullstelle?	Where is the zero of the line through P and Q?	Де нуль прямої, що проходить через P і Q?
 Die Wahrscheinlichkeit für Regen ist {}. Wie groß ist die Wahrscheinlichkeit, dass es nicht regnet?	The probability of rain is {}. What is the probability that it does not rain?	Імовірність дощу – {}. Яка ймовірність, що дощу не буде?
 {} von {} Zahlen → {}	{} of {} numbers → {}	{} з {} чисел → {}
-Du würfelst {}-mal. Wie oft erwartest du ungefähr eine Zahl größer als {}?	You roll a die {} times. About how often do you expect a number greater than {}?	Ти кидаєш кубик {} разів. Скільки приблизно разів ти очікуєш число, більше за {}?
-Du würfelst {}-mal. Wie oft erwartest du ungefähr eine gerade Zahl?	You roll a die {} times. About how often do you expect an even number?	Ти кидаєш кубик {} разів. Скільки приблизно разів ти очікуєш парне число?
-Du würfelst {}-mal. Wie oft erwartest du ungefähr eine Zahl kleiner als {}?	You roll a die {} times. About how often do you expect a number less than {}?	Ти кидаєш кубик {} разів. Скільки приблизно разів ти очікуєш число, менше за {}?
+Du würfelst {}-mal. Wie oft erwartest du im Durchschnitt eine Zahl größer als {}?	You roll a die {} times. On average, how often do you expect a number greater than {}?	Ти кидаєш кубик {} разів. Скільки разів у середньому ти очікуєш число, більше за {}?
+Du würfelst {}-mal. Wie oft erwartest du im Durchschnitt eine gerade Zahl?	You roll a die {} times. On average, how often do you expect an even number?	Ти кидаєш кубик {} разів. Скільки разів у середньому ти очікуєш парне число?
+Du würfelst {}-mal. Wie oft erwartest du im Durchschnitt eine Zahl kleiner als {}?	You roll a die {} times. On average, how often do you expect a number less than {}?	Ти кидаєш кубик {} разів. Скільки разів у середньому ти очікуєш число, менше за {}?
 Ein Glücksrad hat {} gleich große Felder, {} davon sind rot. Du drehst zweimal. Wie groß ist die Wahrscheinlichkeit für zweimal Rot?	A wheel of fortune has {} equal sections, {} of them red. You spin twice. What is the probability of red twice?	Колесо фортуни має {} однакових секторів, {} з них червоні. Ти крутиш двічі. Яка ймовірність двічі червоного?
 In einer Urne sind {} rote, {} blaue und {} grüne Kugeln. Du ziehst zweimal mit Zurücklegen. Wie groß ist die Wahrscheinlichkeit für erst Rot, dann Blau?	An urn contains {} red, {} blue and {} green balls. You draw twice with replacement. What is the probability of first red, then blue?	В урні {} червоних, {} синіх і {} зелених кульок. Ти тягнеш двічі з поверненням. Яка ймовірність спочатку червоної, потім синьої?
 In einer Urne sind {} rote und {} blaue Kugeln. Du ziehst drei Kugeln ohne Zurücklegen. Wie groß ist die Wahrscheinlichkeit für dreimal Rot?	An urn contains {} red and {} blue balls. You draw three balls without replacement. What is the probability of red three times?	В урні {} червоних і {} синіх кульок. Ти тягнеш три кульки без повернення. Яка ймовірність тричі червоної?
@@ -2443,3 +2443,5 @@ Ukrainisch: Brüche werden richtig vorgelesen (z. B. „дві третіх“)	
 Überall dasselbe Rechenblitz-Symbol: im Kopf der App, beim Start, auf Bildern zum Teilen und beim Drucken	The same Rechenblitz icon everywhere: in the app header, at start-up, on share images and when printing	Всюди однаковий значок Rechenblitz: у заголовку застосунку, під час запуску, на зображеннях для поширення та під час друку
 Noch mehr Sätze kommen sofort mit Nova: Einmaleins mit Lösungswegen, Merk-Karten und Blitz-Sprüche	Even more sentences come straight from Nova: times tables with solutions, memory cards and Blitz's sayings	Ще більше речень одразу озвучує Nova: таблиця множення з розв’язками, картки для запам’ятовування та фрази Бліца
 Offline laden zeigt die Größe jetzt genauer an	Offline download now shows the size more accurately	Завантаження офлайн тепер точніше показує розмір
+Überschlag: Der Hinweis sagt jetzt genau, welche Zahl wie gerundet wird	Estimating: the hint now says exactly how to round each number	Оцінка: підказка тепер точно каже, як округлити кожне число
+Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort	Dice questions now ask for the average instead of “about” – so there is exactly one correct answer	Задачі з кубиком тепер питають про середнє, а не «приблизно», – тож є рівно одна правильна відповідь

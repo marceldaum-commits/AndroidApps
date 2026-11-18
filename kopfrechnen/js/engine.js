@@ -585,7 +585,7 @@ const GEN = {
     }
     let a, b; do { a = rnd(1001, 9999); b = rnd(12, 99); } while (r(a, 100) % 1000 === 0 || b % 10 === 0);
     const ra = r(a, 100), rb = r(b, 10);
-    return { e: [T('Überschlag:'), N(a), O('·'), N(b)], a: I(ra * rb), eqSign: '≈', hint: 'Runde auf Hunderter und Zehner', w: [`${fi(a)} ≈ ${fi(ra)} und ${b} ≈ ${rb}`, `${ra / 100} · ${rb / 10} = ${ra * rb / 1000}, dann drei Nullen anhängen`, `${fi(ra)} · ${rb} = ${fi(ra * rb)}`] };
+    return { e: [T('Überschlag:'), N(a), O('·'), N(b)], a: I(ra * rb), eqSign: '≈', hint: 'Runde die erste Zahl auf Hunderter, die zweite auf Zehner', w: [`${fi(a)} ≈ ${fi(ra)} und ${b} ≈ ${rb}`, `${ra / 100} · ${rb / 10} = ${ra * rb / 1000}, dann drei Nullen anhängen`, `${fi(ra)} · ${rb} = ${fi(ra * rb)}`] };
   },
 
   unit(l) {
@@ -958,7 +958,7 @@ const GEN = {
       switch (rnd(0, 2)) {
         case 0: { const d = rnd(5, 24); let n; do n = rnd(2, d - 1); while (gcd(n, d) !== 1); return S2(`Die Wahrscheinlichkeit für Regen ist ${n}/${d}. Wie groß ist die Wahrscheinlichkeit, dass es nicht regnet?`, F_(d - n, d), ['Gegenereignis: 1 − p', `1 = ${fr(d, d)}`, `${fr(d, d)} − ${fr(n, d)} = ${fr(d - n, d)}`, ...redW(d - n, d)], 'als gekürzter Bruch'); }
         case 1: { const k = pick([8, 16, 40]); let f; do f = rnd(3, k - 1); while (f * 100 % k === 0); return { ...S2(`Ein Glücksrad hat ${k} gleich große Felder, ${f} davon sind Gewinne. Wie groß ist die Gewinnchance in Prozent?`, De(f * 100, k), [`${f} von ${k} = ${fr(f, k)}`, `${fr(f, k)} = ${f} : ${k} = ${decOfQ(Q(f, k))}`, `${decOfQ(Q(f, k))} = ${decOfQ(Q(f * 100, k))} %`]), unit: '%' }; }
-        default: { const n = 6 * rnd(15, 200), [ev, g] = pick([['eine Sechs', 1], ['eine Zahl größer als 4', 2], ['eine gerade Zahl', 3], ['eine Zahl kleiner als 5', 4]]); return S2(`Du würfelst ${n}-mal. Wie oft erwartest du ungefähr ${ev}?`, I(n * g / 6), [`Günstig: ${g} von 6 Zahlen → ${fr(g, 6)}`, `${n} : 6 = ${n / 6}`, `${n / 6} · ${g} = ${n * g / 6}`]); }
+        default: { const n = 6 * rnd(15, 200), [ev, g] = pick([['eine Sechs', 1], ['eine Zahl größer als 4', 2], ['eine gerade Zahl', 3], ['eine Zahl kleiner als 5', 4]]); return S2(`Du würfelst ${n}-mal. Wie oft erwartest du im Durchschnitt ${ev}?`, I(n * g / 6), [`Günstig: ${g} von 6 Zahlen → ${fr(g, 6)}`, `${n} : 6 = ${n / 6}`, `${n / 6} · ${g} = ${n * g / 6}`]); }
       }
     }
     if (l === 3) {
@@ -1108,7 +1108,7 @@ const PRO = {
     if (coin()) {
       let a, b; do { a = rnd(10001, 99999); b = rnd(101, 999); } while (r(b, 100) % 1000 === 0);
       const ra = r(a, 1000), rb = r(b, 100);
-      return { e: [T('Überschlag:'), N(a), O('·'), N(b)], a: I(ra * rb), eqSign: '≈', hint: 'Runde auf Tausender und Hunderter', w: [`${fi(a)} ≈ ${fi(ra)} und ${b} ≈ ${rb}`, `${ra / 1000} · ${rb / 100} = ${ra * rb / 100000}, dann fünf Nullen anhängen`, `${fi(ra)} · ${rb} = ${fi(ra * rb)}`] };
+      return { e: [T('Überschlag:'), N(a), O('·'), N(b)], a: I(ra * rb), eqSign: '≈', hint: 'Runde die erste Zahl auf Tausender, die zweite auf Hunderter', w: [`${fi(a)} ≈ ${fi(ra)} und ${b} ≈ ${rb}`, `${ra / 1000} · ${rb / 100} = ${ra * rb / 100000}, dann fünf Nullen anhängen`, `${fi(ra)} · ${rb} = ${fi(ra * rb)}`] };
     }
     const i = noTrail(100001, 9999999), dg = Math.floor(i / 10) % 10, ri = Math.round(i / 100);
     return { e: [T('Runde'), D(i, 4), T('auf Hundertstel')], a: De(ri, 100), eqSign: '≈', w: [`Entscheidend ist die Tausendstelstelle: ${dg}`, dg >= 5 ? `${dg} ist 5 oder mehr → aufrunden` : `${dg} ist kleiner als 5 → abrunden`, `${fmtDec(i, 4)} ≈ ${fmtDec(ri, 2)}`] };

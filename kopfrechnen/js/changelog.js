@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.26.5';
+const APP_VERSION = '3.26.6';
 const APP_DATE = '2026-11-18';
 const CHANGELOG = [
+  ['3.26.6', '2026-11-18', ['Überschlag: Der Hinweis sagt jetzt genau, welche Zahl wie gerundet wird', 'Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort']],
   ['3.26.5', '2026-11-18', ['Noch mehr Sätze kommen sofort mit Nova: Einmaleins mit Lösungswegen, Merk-Karten und Blitz-Sprüche', 'Offline laden zeigt die Größe jetzt genauer an']],
   ['3.26.4', '2026-11-18', ['Überall dasselbe Rechenblitz-Symbol: im Kopf der App, beim Start, auf Bildern zum Teilen und beim Drucken']],
   ['3.26.3', '2026-11-18', ['Ukrainisch: Brüche werden richtig vorgelesen (z. B. „дві третіх“)']],
