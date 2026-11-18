@@ -7,6 +7,13 @@
 
 
 
+
+## 2.2.16 – C1: vor Klassenarbeiten nur Probestunde (18.11.2026)
+- Crashkurs-Knopf entfernt (kein `crashkurs_klick` mehr). Text: „Am <Tag> ist die Klassenarbeit „…“. Eine kostenlose Probestunde kann vor der Arbeit helfen.“ Knopf „Kostenlose Probestunde anfragen“, zählt `probestunde_klick`/`klassenarbeit`.
+- **Abweichung:** `/probestunde-anfrage/` liefert gerade **404**, deshalb weiter `https://www.mathenachhilfe-online.com/probestunde/?src=wissensgarten-klassenarbeit&thema=…&klasse=…` (200). Bitte melden, sobald `/probestunde-anfrage/` steht, dann stelle ich um.
+- Neue Dauerregel (Di/Fr großes Inhaltsupdate bis 16 Uhr) in `PRUEFPLAN.md` übernommen; erstes Update Fr 20.11.
+- Belege: Bildschirmfoto `screenshots/73_nachhilfe_hinweis.png`, Zählung und Eltern-Rundlauf grün.
+
 ## 2.2.15 – Sicherung über die Kopplung, Wiederherstellen, Monatsverlauf (18.11.2026)
 - **Marcel hat direkt bestätigt** („Ja, so bauen“).
 - **Sicherung:**
