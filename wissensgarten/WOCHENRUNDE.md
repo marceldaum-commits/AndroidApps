@@ -29,6 +29,10 @@ _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen 
 > Zu 3) WENIGER GLEICHZEITIG: einverstanden. Wenn Deutsch/Englisch Vorrang hat, schlage ich den Wissensgarten als eine der 2–3 Vorrang-Apps für die nächsten Wochen vor (Erstes Paket wäre Di 24.11.: Englisch Kl. 3–5 „School & Classroom“ statt Sachunterricht; „Winter, Wetter, Wasser“ würde nach hinten rücken). Entscheidung über Marcel/Leitstand am Montag.
 > Stand auch in wissensgarten/WOCHENRUNDE.md.
 
+**Rückmeldungen (18.11.):**
+- **Geld verdienen:** Deutsch und Englisch sind schon da; es fehlt vor allem Tiefe für Klasse 3–7. Für Montag empfiehlt „Geld verdienen“ den Wissensgarten als Vorrang-App mit Schwerpunkt Deutsch/Englisch Klasse 3–7. Tipp: Das Englisch-Paket für Klasse 3–5 an den Themen gängiger Grundschul-Lehrwerke ausrichten. Die Abgrenzung zur Sprachlern-App wird übernommen.
+- **Rechenblitz:** schlägt ebenfalls Vorrang für die Deutsch/Englisch-Lücken vor.
+
 ## Dauerregel „Abgleich“ (Marcel, 18.11.2026)
 „Besprecht alle 6, wer was raus nimmt und wer was behält, damit alles passt. So auch zukünftig.“
 Jede App meldet in jeder Wochenrunde unter **Abgleich**:
