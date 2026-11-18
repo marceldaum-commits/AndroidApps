@@ -1,5 +1,23 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.16 – WebGL-Anzeige auf iOS untersuchen: Bildprobe, Diagnose-Leiste, Versuchsschalter
+**Diagnose-Link:** https://kurvenflug-test.mathenachhilfe-online.com/diag.html – neu als Schritt 6 die **Bildprobe**: vier
+Quadrate – türkis (WebGL 2 Standard), grün (preserveDrawingBuffer), pink (alpha:false), orange (normale 2D-Fläche); dazu
+readPixels-Werte und die tatsächlichen Kontext-Einstellungen. **Marcel: Welche Quadrate sind farbig, welche weiß?**
+Darunter Links für Versuche mit der App (mit Diagnose-Leiste) und „alles zurücksetzen“.
+**Geprüft bei uns:**
+- Zeichenfläche ganzzahlig × DPR: CSS 393×852, Canvas 786×1704 (DPR echt 3, genutzt 2 – ganzzahlig, keine gebrochene Skalierung;
+  mit `?schaerfe=voll` 1179×2556). Kein CSS-transform/will-change auf dem Canvas.
+- Kontext-Einstellungen, die Skiko/Compose verlangt (aufgezeichnet): `alpha:1, premultipliedAlpha:1, preserveDrawingBuffer:0,
+  antialias:0, depth:1, stencil:8, majorVersion:2` – Compose-Standard, nichts Eigenes von uns.
+- Pixelprobe nach dem ersten Bild: ohne preserveDrawingBuffer liefert readPixels nach dem Zusammensetzen 0,0,0,0 (normal);
+  mit `?gl=beides` echte Farbwerte (232,236,255,255).
+**Versuchsschalter (werden gemerkt, `…=standard` setzt zurück):**
+`?diag=1` Diagnose-Leiste oben (Fassung, DPR echt/genutzt, Canvas-Größe + CSS-Größe + transform, Kontext verlangt/bekommen,
+Pixelprobe, Kontextverlust) · `?gl=preserve|opak|beides` (preserveDrawingBuffer:true und/oder alpha:false) ·
+`?schaerfe=voll|2|1` · `?modus=js|wasm|auto`. Beispiel für Marcel: `…/?diag=1&gl=beides`, dann `…/?diag=1&schaerfe=1`.
+- Keine neuen Dateiendungen. versionCode 63 / 2.5.16, Prüfkette grün.
+
 ## ✅ 2.5.15 – Diagnose-Seite für iOS + Lader zuerst, Wasm nacheinander
 **Diagnose-Link für Marcel:** https://kurvenflug-test.mathenachhilfe-online.com/diag.html
 Reines HTML+JS, lädt die App NICHT. Jeder Schritt wird groß angezeigt und **vor** der Ausführung in localStorage (`kf.diag`)

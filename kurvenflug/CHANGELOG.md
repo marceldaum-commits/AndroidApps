@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.16 – Hilfe bei der Fehlersuche auf dem iPhone
+- Für die Suche nach der weißen Seite auf iPhone/iPad gibt es Versuchsschalter und eine Bildprobe auf der Diagnose-Seite.
+  Im normalen Spiel ändert sich nichts.
+
 ## 2.5.15 – Ruhigerer Start
 - Beim Öffnen erscheint zuerst das Ladebild, dann lädt Kurvenflug seine großen Dateien nacheinander statt alle auf einmal –
   das schont Speicher und Leitung, besonders auf dem iPhone.
