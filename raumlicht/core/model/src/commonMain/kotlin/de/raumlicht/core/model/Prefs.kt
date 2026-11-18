@@ -50,6 +50,11 @@ interface Prefs {
     /** Freischalt-Code für Raumlicht Pro (leer = keiner). Ob er gilt, prüft [Pro.active] bei jedem Start neu. */
     val proCode: StateFlow<String>
     fun setProCode(code: String)
+    /** Code für den KI-Abi-Pass (leer = keiner); geprüft wird er in der App ([Ki.info]) und bei jeder Frage auf dem Server */
+    val kiCode: StateFlow<String>
+    fun setKiCode(code: String)
+    /** Zufällige Kennung dieses Geräts für den KI-Tutor (zählt die Proben) – entsteht erst bei der ersten KI-Frage */
+    fun kiDevice(): String
     /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */
     var jamLevel: String
     fun resetProgress()

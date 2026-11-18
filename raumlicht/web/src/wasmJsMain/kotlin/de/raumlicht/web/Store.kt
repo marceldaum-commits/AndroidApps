@@ -71,6 +71,9 @@ class WebPrefs : Prefs {
     override var flight: String get() = storeGet(P + "flight") ?: ""; set(v) = storeSet(P + "flight", v)
     private val _proCode = text("proCode")
     override val proCode: StateFlow<String> = _proCode; override fun setProCode(code: String) { storeSet(P + "proCode", code); _proCode.value = code }
+    private val _kiCode = text("kiCode")
+    override val kiCode: StateFlow<String> = _kiCode; override fun setKiCode(code: String) { storeSet(P + "kiCode", code); _kiCode.value = code }
+    override fun kiDevice(): String = storeGet(P + "kiDevice") ?: randomId().also { storeSet(P + "kiDevice", it) }
     override var jamLevel: String get() = storeGet(P + "jamLevel") ?: ""; set(v) = storeSet(P + "jamLevel", v)
 
     override fun resetProgress() {

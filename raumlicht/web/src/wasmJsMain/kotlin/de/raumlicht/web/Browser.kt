@@ -11,6 +11,17 @@ fun storeSet(key: String, value: String): Unit = js("localStorage.setItem(key, v
 fun storeRemove(key: String): Unit = js("localStorage.removeItem(key)")
 /** Alle Schlüssel mit diesem Anfang, durch Zeilenumbruch getrennt */
 fun storeKeys(prefix: String): String = js("Object.keys(localStorage).filter((k) => k.startsWith(prefix)).join('\\n')")
+/** Zufällige Kennung (32 Hex-Zeichen) aus dem Zufallsgenerator des Browsers */
+fun randomId(): String = js("Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => b.toString(16).padStart(2, '0')).join('')")
+/** JSON an den KI-Tutor schicken; [done] bekommt den Status (0 = keine Verbindung) und den Antworttext */
+fun kiPost(url: String, body: String, done: (Int, String) -> Unit): Unit = js("""{
+    const c = new AbortController(); const t = setTimeout(() => c.abort(), 45000);
+    fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, signal: c.signal })
+        .then((r) => r.text().then((x) => done(r.status, x)), () => done(0, '')).finally(() => clearTimeout(t));
+}""")
+fun hostName(): String = js("location.hostname")
+/** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer KI-Server (window.__rlKiServer), sonst null */
+fun kiServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlKiServer) || null")
 fun openLink(url: String): Unit = js("window.open(url, '_blank', 'noopener')")
 /** Ladebild sanft ausblenden; spätestens jetzt wird auch die 3D-Bühne angefordert */
 fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; s.style.opacity = '0'; s.style.pointerEvents = 'none'; setTimeout(() => { s.style.display = 'none'; }, 380); } if (window.__rlStage) window.__rlStage(); }")

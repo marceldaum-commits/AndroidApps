@@ -102,6 +102,13 @@ Seit 0.6.0: eigene Funktionen in „Kurve abfahren“ (`Expr` liest den Term, `C
 | ![](screenshots/64_eigene_funktion.png) | ![](screenshots/65_eigene_funktion_eingabe.png) |
 |---|---|
 
+**KI-Tutor (ab 2.18.13, zunächst nur auf der Testseite sichtbar):** Nach einem Fehlversuch erklärt Lux die Aufgabe mit KI-Hilfe anders und beantwortet Rückfragen. 3 Proben frei, danach „Raumlicht KI-Abi-Pass“
+(10 KI-Punkte am Tag bis zum 31. Juli des Abi-Jahres). Die Server-Seite liegt als fertige Funktion in [`server/raumlicht-ki.js`](server/raumlicht-ki.js) (Prüfung: `node --test server/raumlicht-ki.test.js`).
+
+| „Erklär’s mir anders“ mit Rückfrage | Seite zum KI-Abi-Pass |
+|---|---|
+| ![](screenshots/82_ki_tutor.png) | ![](screenshots/83_ki_abi_pass.png) |
+
 ## WebApp (seit 2.5.0 vom 16.11.2026 mit der ganzen App)
 
 Raumlicht entsteht für Android und Web aus einer Codebasis (Compose Multiplatform, Kotlin/Wasm):

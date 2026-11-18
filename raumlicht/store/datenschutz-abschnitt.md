@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.12 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.13 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -28,7 +28,15 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
    Angaben zum Shop in dieser Datenschutzerklärung. Nach der Zahlung kommt per E-Mail ein Freischalt-Code. Die App prüft den Code selbst auf dem Gerät (digitale Signatur) und speichert ihn nur dort;
    beim Freischalten wird nichts an uns übertragen. *[Welche Daten der Lizenz-Dienst zu einem Kauf speichert (Code, laufende Nummer, Zeitpunkt, E-Mail) und wie lange, hier eintragen.]*
    Die Fassung aus dem Google Play Store enthält keinen Kauf.
+4. **KI-Tutor (freiwillig, nur wenn man ihn benutzt; ab 2.18.13 vorbereitet, sichtbar erst nach Freigabe).** Tippt man nach einem Fehlversuch auf „Erklär’s mir anders“ oder stellt eine Rückfrage,
+   sendet die App die Aufgabe, die eingestellten Werte, die Rückmeldung der App, die eigene Frage und den bisherigen Wortwechsel zu dieser Aufgabe an unseren Server
+   `trainer.mathenachhilfe-online.com`. Der Server lässt die Antwort von einem KI-Dienst (Claude von Anthropic, USA) schreiben und gibt sie an die App zurück. Mitgesendet werden der Code des
+   KI-Abi-Passes, falls vorhanden, und eine zufällige Geräte-Kennung; mit beiden zählt der Server nur, wie viele Fragen heute bzw. als Probe schon gestellt wurden. Die Geräte-Kennung und der Code
+   gehen nicht an den KI-Dienst. Namen, Konten und Lernstände werden nicht übertragen; Fragen und Antworten speichert unser Server nicht. Bitte keine persönlichen Angaben in Rückfragen schreiben.
+   Die Antworten stammen von einer KI und können Fehler enthalten. *[Rechtsgrundlage, Auftragsverarbeitung/Drittland-Übermittlung an Anthropic, Speicherdauer der Zähler und beim KI-Dienst eintragen.]*
+   Der KI-Abi-Pass wird wie Raumlicht Pro im Shop gekauft; die Fassung aus dem Google Play Store enthält den KI-Tutor nicht.
 
 ## Noch offen (nicht Teil des Textes)
 
-- Lehrerzugang und KI-Tutor brauchen eigene Abschnitte, wenn sie kommen.
+- Der Lehrerzugang braucht einen eigenen Abschnitt, wenn er kommt.
+- KI-Tutor: Vertrag zur Auftragsverarbeitung mit Anthropic und dessen Aufbewahrungsfristen prüfen; klären, ob für Minderjährige eine Einwilligung der Eltern nötig ist (der Tutor läuft ohne Konto und ohne Namen).

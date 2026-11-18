@@ -23,6 +23,7 @@ object Routes {
     const val HOME = "start"
     const val SETTINGS = "einstellungen"
     const val PRO = "pro"
+    const val KI = "ki"
     const val DAILY = "tagesaufgabe"
     const val JAM_HOME = "jam"
     const val SHEET = "spickzettel"
@@ -95,14 +96,31 @@ fun AppRoot(
     proEnabled: Boolean = Pro.ENABLED,
     /** Öffentlicher Schlüssel zum Prüfen der Freischalt-Codes (Tests nehmen einen eigenen) */
     proKey: String = Pro.PUBLIC_KEY,
+    /** Schickt eine Anfrage (JSON) an den KI-Tutor und liefert Status (0 = keine Verbindung) und Antworttext; null = hier gibt es keinen KI-Tutor (Play-Fassung) */
+    kiSend: (suspend (String) -> Pair<Int, String>)? = null,
+    /** KI-Tutor für alle sichtbar? Sonst nur mit eingetragenem KI-Code (siehe [de.raumlicht.core.model.Ki.ENABLED]) */
+    kiEnabled: Boolean = de.raumlicht.core.model.Ki.ENABLED,
+    /** Versionsname, geht mit jeder KI-Anfrage mit */
+    version: String = "",
 ) {
+    val kiCode by prefs.kiCode.collectAsState()
+    val kiLast = remember(kiCode, proKey) { de.raumlicht.core.model.Ki.info(kiCode, proKey)?.let(de.raumlicht.core.model.Ki::lastDay) }
+    val kiShown = kiSend != null && (kiEnabled || kiLast != null)
     val proCode by prefs.proCode.collectAsState()
     val proActive = remember(proCode, proKey) { Pro.active(proCode, proKey) }
     // Was zu Pro gehört und (noch) nicht freigeschaltet ist
     fun needsPro(route: String) = proEnabled && !proActive && Pro.locked(route)
     // Code prüfen und merken – auch wenn er mitten in einer kopierten E-Mail steht
     val enterCode: (String) -> Boolean = { text -> val code = de.raumlicht.core.model.License.extract(text) ?: text.trim()
-        Pro.active(code, proKey).also { if (it) prefs.setProCode(code) } }
+        // ein KI-Code im Pro-Feld (oder umgekehrt) landet trotzdem an der richtigen Stelle
+        val ki = if (kiSend != null) de.raumlicht.core.model.Ki.fromText(text, proKey) else null
+        if (ki != null) { prefs.setKiCode(ki); nav.go(Routes.KI); true } else Pro.active(code, proKey).also { if (it) prefs.setProCode(code) } }
+    val enterKi: (String) -> Boolean = { text -> val ki = de.raumlicht.core.model.Ki.fromText(text, proKey); val pro = de.raumlicht.core.model.License.extract(text) ?: text.trim()
+        if (ki != null) { prefs.setKiCode(ki); true } else if (Pro.active(pro, proKey)) { prefs.setProCode(pro); nav.go(Routes.PRO); true } else false }
+    val kiTutor = remember(kiShown, kiCode, kiLast) { if (!kiShown) null else de.raumlicht.app.ui.level.KiTutor(kiLast != null && today() <= kiLast,
+        { level, values, feedback, kind, question, history ->
+            val (status, body) = kiSend!!(de.raumlicht.core.model.Ki.request(level, values, feedback, kind, question, history, kiCode, prefs.kiDevice(), version))
+            de.raumlicht.core.model.Ki.answer(status, body) }, { nav.go(Routes.KI) }) }
     val starMap by stars.collectAsState()
     val skin by prefs.skin.collectAsState(); val look by prefs.look.collectAsState()
     val exams by prefs.exams.collectAsState(); val lageBest by prefs.lageBest.collectAsState(); val jamBest by prefs.jamBest.collectAsState()
@@ -130,6 +148,8 @@ fun AppRoot(
         de.raumlicht.app.ui.level.LocalOpenSheet provides { nav.go(Routes.SHEET) },
         de.raumlicht.app.ui.settings.LocalNotation provides de.raumlicht.app.ui.settings.NotationChoice(strictVectors, prefs::setStrictVectors),
         de.raumlicht.app.ui.settings.LocalProEntry provides (if (proEnabled || proActive) ({ nav.go(Routes.PRO) }) else null), de.raumlicht.app.ui.settings.LocalProActive provides proActive,
+        de.raumlicht.app.ui.level.LocalKi provides kiTutor,
+        de.raumlicht.app.ui.settings.LocalKiEntry provides (if (kiShown) de.raumlicht.app.ui.settings.KiEntryState({ nav.go(Routes.KI) }, kiLast, today()) else null),
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
         // Erkennungsmelodie: einmal je Sitzung, bei der ersten Berührung (nie vorher) – leise, damit sie niemanden erschreckt
         val jingle = de.raumlicht.app.ui.fx.LocalSfx.current
@@ -244,6 +264,7 @@ fun AppRoot(
                 Routes.BADGES -> BadgesScreen(badges, back)
                 Routes.SETTINGS -> settings(back)
                 Routes.PRO -> de.raumlicht.app.ui.settings.ProScreen(null, proActive, proEnabled, enterCode, back)
+                Routes.KI -> if (kiSend == null) LaunchedEffect(Unit) { nav.back() } else de.raumlicht.app.ui.settings.KiScreen(kiLast, today(), enterKi, back)
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }
             }
         } }

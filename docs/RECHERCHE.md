@@ -213,3 +213,20 @@ Quellen: [IHK Braunschweig – Widerrufs-Button verpflichtend seit Juni 2026](ht
 [Heuking – Werbung gegenüber Kindern und Jugendlichen](https://www.heuking.de/de/news-events/newsletter-fachbeitraege/artikel/neues-zur-werbung-gegenueber-kindern-und-jugendlichen.html) ·
 [Händlerbund – Button-Lösung](https://www.haendlerbund.de/de/leistungen/rechtssicherheit/button-regelung) ·
 [Verbraucherzentrale – So kommt online ein Vertrag zustande](https://www.verbraucherzentrale.de/node/6762)
+
+## Raumlicht, 18.11.2026 – KI-Tutor: Was hilft beim Lernen, was schadet? (Auftrag: „KI-Tutor bauen“)
+
+1. **KI ohne Leitplanken kann dem Lernen schaden.** Feldversuch mit knapp 1000 Schülerinnen und Schülern im Mathe-Unterricht (Bastani u. a., PNAS 2025): Mit einem gewöhnlichen Chat lösten sie beim Üben mehr Aufgaben (+48 %),
+   schnitten in der Prüfung ohne KI aber 17 % schlechter ab als die Gruppe ohne KI. Mit einem Tutor, der Hinweise statt Lösungen gab, lag die Übungsleistung noch höher (+127 %), und der Nachteil in der Prüfung verschwand.
+   Außerdem überschätzten die Schüler mit KI ihr Können. (Zahlen aus Zusammenfassungen der Studie, Volltext nicht gelesen.)
+   → **App:** Lux verrät die einzustellenden Zahlen nicht, sondern führt zum nächsten Schritt oder rechnet ein Beispiel mit anderen Zahlen vor. Den Tutor gibt es erst **nach** einem eigenen Fehlversuch, nie im Pflichtteil „ohne Hilfsmittel“.
+   Der Rechenweg der Musterlösung geht als Hintergrund mit, damit die KI nichts erfindet. Unter jeder Antwort steht „sie kann sich irren. Rechne mit.“
+2. **Kennzeichnung ist Pflicht.** Art. 50 Abs. 1 der KI-Verordnung gilt seit 2. August 2026: Wer mit einer KI spricht, muss das erfahren, außer es ist offensichtlich. (Sekundärquellen; die Leitlinien der Kommission vom 20.07.2026 nicht im Volltext gelesen.)
+   → **App:** Knopf mit 🤖, Kopfzeile „KI-TUTOR“, Hinweis „Antworten schreibt eine KI“ unter jedem Wortwechsel, Datenschutz-Satz auf der KI-Seite.
+3. **Kurz und begrenzt statt endlos.** Höchstens etwa 120 Wörter je Antwort, Rückfragen bis 300 Zeichen, 10 KI-Punkte am Tag – passt zu „kurze Einheiten“ und hält die Kosten berechenbar.
+4. **Offen:** Ob für Minderjährige eine Einwilligung der Eltern nötig ist und was der Vertrag mit dem KI-Dienst zur Aufbewahrung sagt, muss eine Fachperson klären (steht in `raumlicht/store/datenschutz-abschnitt.md` unter „Noch offen“).
+
+Quellen: [SSRN – Generative AI Without Guardrails Can Harm Learning](https://papers.ssrn.com/abstract=4895486) ·
+[Wharton – Without guardrails, generative AI can harm education](https://knowledge.wharton.upenn.edu/article/without-guardrails-generative-ai-can-harm-education) ·
+[CMS – Die neuen Transparenzpflichten der KI-VO](https://cms.law/de/deu/legal-updates/deepfakes-chatbots-co.-die-neuen-transparenzpflichten-der-ki-vo) ·
+[IHK Halle – Transparenzpflichten nach der KI-Verordnung seit August 2026](https://www.ihk.de/halle/recht/transparenzpflichten-nach-der-ki-verordnung-7172022)

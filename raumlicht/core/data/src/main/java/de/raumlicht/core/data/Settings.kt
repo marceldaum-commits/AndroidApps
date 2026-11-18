@@ -145,6 +145,10 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     private val _proCode = MutableStateFlow(prefs.getString("proCode", "") ?: "")
     override val proCode: StateFlow<String> = _proCode.asStateFlow()
     override fun setProCode(code: String) { prefs.edit().putString("proCode", code).apply(); _proCode.value = code }
+    private val _kiCode = MutableStateFlow(prefs.getString("kiCode", "") ?: "")
+    override val kiCode: StateFlow<String> = _kiCode.asStateFlow()
+    override fun setKiCode(code: String) { prefs.edit().putString("kiCode", code).apply(); _kiCode.value = code }
+    override fun kiDevice(): String = prefs.getString("kiDevice", null) ?: java.util.UUID.randomUUID().toString().replace("-", "").also { prefs.edit().putString("kiDevice", it).apply() }
 
     /** Endlos üben: die zuletzt gewählte Schwierigkeit (leer = alle Stufen) */
     override var jamLevel: String

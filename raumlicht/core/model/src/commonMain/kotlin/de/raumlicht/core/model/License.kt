@@ -11,6 +11,8 @@ object License {
     const val PREFIX = "RL"
     const val APP_ID = 4
     const val PRODUCT_PASS = 1
+    /** KI-Abi-Pass: schaltet den KI-Tutor frei. Bei diesem Produkt ist [Info.day] der letzte gültige Tag (Tage seit 1.1.2020), nicht der Tag der Ausstellung. */
+    const val PRODUCT_KI = 4
     private const val ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
     /** Länge eines Codes ohne Vorsilbe und Bindestriche: 73 Byte in Base32 */
     private const val CHARS = 117
@@ -59,8 +61,8 @@ object License {
     private fun hex(s: String): ByteArray? = s.trim().takeIf { it.length % 2 == 0 && it.all { c -> c.isDigit() || c.lowercaseChar() in 'a'..'f' } }
         ?.chunked(2)?.map { it.toInt(16).toByte() }?.toByteArray()
 
-    /** Gültiger Pro-Code für Raumlicht? Sonst null. */
-    fun check(code: String?, publicKeyHex: String): Info? {
+    /** Gültiger Code für Raumlicht und das Produkt [product] (Standard: Raumlicht Pro)? Sonst null. */
+    fun check(code: String?, publicKeyHex: String, product: Int = PRODUCT_PASS): Info? {
         if (code.isNullOrBlank()) return null
         val pk = hex(publicKeyHex)?.takeIf { it.size == 32 } ?: return null
         val raw = decode(code)?.takeIf { it.size == 73 } ?: return null
@@ -69,6 +71,6 @@ object License {
         if (!Ed25519.verify(payload, raw.copyOfRange(9, 73), pk)) return null
         fun u(i: Int) = payload[i].toLong() and 0xff
         val info = Info(u(1).toInt(), u(2).toInt(), (u(3) shl 24) or (u(4) shl 16) or (u(5) shl 8) or u(6), (u(7) shl 8) or u(8))
-        return info.takeIf { it.app == APP_ID && it.product == PRODUCT_PASS }
+        return info.takeIf { it.app == APP_ID && it.product == product }
     }
 }
