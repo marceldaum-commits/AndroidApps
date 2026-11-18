@@ -1,5 +1,18 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## 📌 18.11. abends – Entscheidung Marcel angekommen, Plan
+- **„← Alle Apps“ ist schon fertig:** 2.5.34 liegt seit 18.11. auf kurvenflug-test (Eintrag direkt darunter, Fotos `kurvenflug/screenshots/web-alle-apps-handy.png` / `web-alle-apps-pc.png`). Meine send_message an den Leitstand scheitert an „vertrauenswürdiges Gerät“, daher hier.
+- **Fr 20.11. (Aufräum-Tag):**
+  - Direkt-Links `#kapitel=<name>` (Namensliste in `kurvenflug/QUERVERWEISE.md`) und abgestimmte Querverweise (nur freie Inhalte).
+  - „Kommt bald“ bereinigt, Untertitel „Klasse 5–10“.
+  - Neues Kapitel „Terme & Gleichungen“ (Kl. 7–8).
+- **Di 24.11.:** Variante B, also 6 Oberstufen-Kapitel (35 Level) heraus.
+  - Neue Seite „Wie geht's weiter?“ mit Links zu Mathe-Trainer und Raumlicht.
+  - Klassen-Wahl 5–10, Anzeige lückenlos, Galaxie/Abzeichen/Modi/Elternbericht angepasst.
+  - CHANGELOG für Eltern.
+- **Pro-Kern Klassenarbeits-Trainer:** Bau danach. Den genauen Pro-Umfang melde ich in 2–3 Sätzen, sobald die Version live gehen kann.
+- Achter Teilnehmer (Sprachlern-App Englisch) notiert.
+
 ## ✅ 2.5.34 – „← Alle Apps“ (Marcel 18.11.)
 - **Handy:** Knopf „← Alle Apps“ oben links über jedem Hauptreiter (Heute, Galaxie, Spiele, Ich); **PC:** „← Apps“ in der Seitenleiste unter dem Logo.
   Nicht in Leveln/Spielen/Prüfungen. Tippfläche ≥ 44 dp, heller Text auf dunklem Feld. Kein Preis, kein Kaufhinweis.
