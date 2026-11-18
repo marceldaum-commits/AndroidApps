@@ -2,16 +2,22 @@
 
 > „Jede App soll jede Woche neuen Content einbauen und einmal im Monat gegen Ende alles prüfen und fixen – mit einem Plan, wann was geprüft wird, damit nicht jedes Mal alles neu geprüft werden muss.“
 
-## 1. Wöchentlich: neuer Inhalt (mittwochs auf `rechenblitz-test`)
+## 1. Zweimal pro Woche: großes Inhaltsupdate (dienstags und freitags bis 16 Uhr auf `rechenblitz-test`)
 
-- Mindestens **eine neue Inhaltseinheit** pro Woche, zum Beispiel:
-  - eine neue Aufgabenart,
-  - eine neue Stufe,
-  - neue Merk-Karten oder ein Merk-Deck,
-  - neue Textaufgaben-Vorlagen,
-  - ein Rätsel- oder Reise-Kapitel.
-- **Mittwoch** auf `rechenblitz-test`, als Nachkomma-Version mit Datum. Kurz in der `MELDUNG_RECHENBLITZ.md` nennen; der Leitstand gibt frei.
-- Jede neue Einheit läuft durch die **automatischen Prüfungen**, die bei jeder Version laufen (Abschnitt 3). Sie wird außerdem im nächsten Monats-Check als „Neu-Content“ von Hand geprüft.
+> Neue Dauerregel Marcel 18.11.2026 (ersetzt „wöchentlich mittwochs“): „Ich will jede Woche Dienstag und Freitag ein großes Inhaltsupdate aller Apps.“ Erstes Update: **Freitag, 20.11.2026**.
+
+- **Wann:** dienstags und freitags bis **16 Uhr** auf `rechenblitz-test`, als Nachkomma-Version mit Datum, dazu eine Meldung in `MELDUNG_RECHENBLITZ.md`. Der Leitstand prüft am selben Tag und gibt frei.
+- **Was:** Das wählen wir selbst, je nachdem, was am meisten bringt, zum Beispiel:
+  - neue Themen mit einigen Aufgaben,
+  - bestehende Themen mit weiteren Aufgaben ausbauen,
+  - bestehende Aufgaben korrigieren und vervollständigen,
+  - neue Optionen in der App.
+- **PFLICHT** (Marcel wörtlich): „mathematisch korrekt, vollständig, nachvollziehbar. Keine Abkürzungen, weil die Schüler damit lernen.“ Das heißt:
+  - Jeder Lösungsweg zeigt **alle Schritte**.
+  - Jede nötige **Regel steht in der Erklärung, mit Beispiel**.
+  - Jedes Ergebnis ist **nachgerechnet**: mit dem unabhängigen Prüfer (Abschnitt 3) und zusätzlich durch Lesen der Lösungswege der neuen Aufgaben.
+- **Meldung:** kurz sagen, was neu ist, wie viele Aufgaben bzw. Vorlagen es sind und wie geprüft wurde.
+- Jede neue Einheit läuft durch die **automatischen Prüfungen** (Abschnitt 3). Sie wird außerdem im nächsten Monats-Check als „Neu-Content“ von Hand geprüft.
 - Die Liste steht unten in Abschnitt 5 („Neu-Content-Protokoll“). So weiß der Monats-Check genau, was neu dazugekommen ist.
 
 ## 2. Monatlich in der letzten Woche: rollierender Prüfplan
@@ -74,10 +80,12 @@ Der Inhalt ist in **4 Blöcke** geteilt. Jeden Monat wird **ein Block gründlich
 
 ## 5. Neu-Content-Protokoll
 
-| Woche (Mittwoch) | Version | Neue Inhaltseinheit | im Monats-Check geprüft |
+| Termin (Di/Fr) | Version | Neue Inhaltseinheit | im Monats-Check geprüft |
 |---|---|---|---|
-| 18.11.2026 | – | Betriebstest-Woche: nur Fehlerbehebungen, kein neuer Inhalt | – |
-| 25.11.2026 | (geplant) | Zahlen-Dungeon 3: Bosse & Freischaltungen (Roadmap Tag 8) | Nov. |
+| 18.11.2026 (Mi) | – | Betriebstest-Woche: nur Fehlerbehebungen, kein neuer Inhalt | – |
+| **Fr 20.11.2026** | (geplant) | erstes großes Inhaltsupdate | Nov. |
+| Di 24.11.2026 | (geplant) | großes Inhaltsupdate | Nov. |
+| Fr 27.11.2026 | (geplant) | großes Inhaltsupdate | Nov. |
 
 ## 6. Prüf-Protokoll
 
