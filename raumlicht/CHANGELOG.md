@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.24 – Hinweis auf Crashkurse vor der Klausur (18.11.2026)
+- Im Klausur-Planer steht jetzt 3 bis 14 Tage vor dem eingetragenen Termin ganz unten ein kurzer, sachlicher Hinweis auf unsere Crashkurse – ohne Preis, ohne Lux, mit „Ausblenden“.
+- Abschaltbar in den Einstellungen über „Hinweise auf unsere Nachhilfe zeigen“.
+
+## 2.18.23 – Vorbereitet: Hinweis auf Crashkurse vor der Klausur (18.11.2026)
+- Im Klausur-Planer ist ein kurzer, sachlicher Hinweis auf unsere Crashkurse vorbereitet (3 bis 14 Tage vor dem eingetragenen Termin, ganz unten, ausblendbar, mit demselben Schalter abschaltbar wie der Hinweis im Lernstand).
+- **Er ist noch nicht zu sehen:** Er erscheint erst, wenn die Seite der Crashkurse auf unserer Website feststeht. Bis dahin ändert sich in der App nichts.
+
 ## 2.18.22 – Anonyme Zählung, Lern-Geschenk und ein Hinweis auf die Nachhilfe – alles abschaltbar (18.11.2026)
 - **Anonyme Zählung, abschaltbar:** Raumlicht meldet uns ab jetzt, dass etwas geschah – zum Beispiel „App geöffnet“ oder „Link angetippt“. Ohne Kennung, ohne Cookie, ohne Gerätedaten, ohne Lernstand. Das hilft uns zu sehen, was genutzt wird. Schalter: Einstellungen → „Anonyme Nutzungszählung“.
 - **Hinweis auf unsere Nachhilfe, abschaltbar:** Wenn im Lernstand ein Gebiet noch hakt, kann dort ein kurzer, sachlicher Hinweis auf eine kostenlose Probestunde stehen. Nie in den Aufgaben, ohne Preis, ohne Lux, höchstens alle 14 Tage je Gebiet, mit „Ausblenden“. Schalter: Einstellungen → „Hinweise auf unsere Nachhilfe zeigen“.

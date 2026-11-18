@@ -120,7 +120,7 @@ class ModesFlowTest {
 
     @Test fun plannerSavesAndPlaysTodaysPackage() {
         val saved = ArrayList<Plan?>()
-        show { PlannerScreen(null, 100, emptyMap(), { saved += it }, { _, _, _ -> }) {} }
+        show { PlannerScreen(null, 100, emptyMap(), { saved += it }, { _, _, _ -> }, {}) }
         rule.onNodeWithTag("kapitel-3").performClick(); rule.mainClock.advanceTimeBy(300)
         assertEquals(Plan(107, setOf(3)), saved.last())
         rule.onNodeWithText("Klausur in 7 Tagen · heute 1 Aufgabe").assertExists()

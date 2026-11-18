@@ -11,8 +11,8 @@ object Zaehler {
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     const val APP = "raumlicht"
     /** Ereignisse, die es in Raumlicht gibt (aus der gemeinsamen, abschließenden Liste) */
-    val EVENTS = setOf("start", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "nachhilfe_hinweis", "geschenk_klick")
-    val PLACES = setOf("gesperrt", "einstellungen", "link", "eingabe", "lernstand", "geschenk", "fusszeile")
+    val EVENTS = setOf("start", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "crashkurs_klick", "nachhilfe_hinweis", "geschenk_klick")
+    val PLACES = setOf("gesperrt", "einstellungen", "link", "eingabe", "lernstand", "klassenarbeit", "geschenk", "fusszeile")
     val TOPICS = setOf("vektoren", "analysis", "stochastik")
     const val SWITCH = "Anonyme Nutzungszählung"
     const val SWITCH_NOTE = "Hilft uns, die App zu verbessern. Gezählt wird nur, dass etwas geschah – etwa „App geöffnet“ oder „Link angetippt“. Ohne Kennung, ohne Gerät, ohne Lernstand."
@@ -37,6 +37,8 @@ object Nachhilfe {
     const val TRIAL_URL = "https://www.mathenachhilfe-online.com/probestunde/"
     const val GIFT_URL = "https://www.mathenachhilfe-online.com/geschenke/"
     const val HOME_URL = "https://www.mathenachhilfe-online.com/"
+    /** Feste Adresse der Crashkurs-Seite (vom Leitstand am 18.11.2026 genannt). Leer = Hinweis „Klausur bald“ gibt es nicht. */
+    const val CRASH_URL = "https://www.mathenachhilfe-online.com/produkt/easy-learning-crash-kurs/"
     const val FOOTER = "Ein Angebot von Nachhilfe – online"
     const val SWITCH = "Hinweise auf unsere Nachhilfe zeigen"
     const val SWITCH_NOTE = "Im Lernstand, wenn ein Gebiet noch hakt: ein kurzer Hinweis auf eine kostenlose Probestunde. Nie in den Aufgaben."
@@ -70,6 +72,19 @@ object Nachhilfe {
         val area = weak(topics, stars).map { it.first }.firstOrNull { a -> val s = seen[Zaehler.topic(a)]
             s != "aus" && (s?.toLongOrNull()?.let { today == it || today >= it + PAUSE_DAYS } ?: true) } ?: return null
         return Hint(Zaehler.topic(area), if (area == Area.GEOMETRIE) "Vektoren" else area.title)
+    }
+    /** Hinweis im Klausur-Planer: 3 bis 14 Tage vor dem eingetragenen Termin, je Klausur einmal ausblendbar */
+    class ExamHint(val days: Int, val topic: String?, val key: String, base: String) {
+        val text get() = "In $days Tagen ist deine Klausur. Falls du noch Unterstützung möchtest: Wir bieten Crashkurse zur Vorbereitung an."
+        val link = Zaehler.link(base, "klassenarbeit", topic)
+    }
+    fun exam(plan: Plan?, today: Long, state: String, enabled: Boolean, url: String = CRASH_URL): ExamHint? {
+        if (!enabled || plan == null || url.isEmpty()) return null
+        val days = Planner.daysLeft(plan, today); if (days !in 3..14) return null
+        val key = "klausur${plan.examDay}"; if (parse(state)[key] == "aus") return null
+        // Thema nur, wenn alle gewählten Kapitel aus einem Gebiet sind
+        val areas = Levels.chapters.filter { it.number in plan.chapters }.map { it.area }.toSet()
+        return ExamHint(days, areas.singleOrNull()?.let(Zaehler::topic), key, url)
     }
     /** true, wenn dieser Hinweis heute zum ersten Mal (in dieser 14-Tage-Runde) erscheint – dann wird gezählt und der Tag gemerkt */
     fun isNew(state: String, topic: String, today: Long) = parse(state)[topic]?.toLongOrNull() != today
