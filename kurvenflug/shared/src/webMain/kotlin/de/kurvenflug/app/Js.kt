@@ -34,6 +34,7 @@ internal fun jsElternNick(): String = js("(window.KF && window.KF.elternNick ? w
 internal fun jsElternReport(json: String): Unit = js("(function () { if (window.KF && window.KF.elternReport) window.KF.elternReport(json) })()")
 internal fun jsElternRestore(link: String, force: Boolean, cb: (String) -> Unit): Unit = js("window.KF.elternRestore(link, force, cb)")
 internal fun jsCountNow(body: String): Unit = js("(function () { try { fetch('https://trainer.mathenachhilfe-online.com/zaehler/v1/e', { method: 'POST', credentials: 'omit', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: body }).catch(function () {}); } catch (e) {} })()")
+internal fun jsAllApps(): Unit = js("window.KF.allApps()")
 internal fun jsMode(): String = js("(window.kfMode || '')")
 internal fun jsOnLeave(f: () -> String): Unit = js("(function () { if (window.KF && window.KF.onLeave) window.KF.onLeave(f) })()")
 internal fun jsAtHome(home: Boolean): Unit = js("(function () { if (window.kfAtHome) window.kfAtHome(home) })()")

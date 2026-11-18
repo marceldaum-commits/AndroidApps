@@ -1,5 +1,14 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.34 – „← Alle Apps“ (Marcel 18.11.)
+- **Handy:** Knopf „← Alle Apps“ oben links über jedem Hauptreiter (Heute, Galaxie, Spiele, Ich); **PC:** „← Apps“ in der Seitenleiste unter dem Logo.
+  Nicht in Leveln/Spielen/Prüfungen. Tippfläche ≥ 44 dp, heller Text auf dunklem Feld. Kein Preis, kein Kaufhinweis.
+- Ziel: `https://www.mathenachhilfe-online.com/lern-apps/?src=kurvenflug-kopf`, auf der Test-Stufe (`*-test.*`, localhost) `staging.` statt `www.`.
+  Im Browser im selben Tab (`location.href`), als Home-Bildschirm-App im normalen Browser (`window.open`). Android-Fassung: www.
+- **Browser-Test:** Antippen auf Handy (412 px) und PC (1440 px) → Aufruf `https://staging.mathenachhilfe-online.com/lern-apps/?src=kurvenflug-kopf`.
+- **Bildschirmfotos:** `kurvenflug/screenshots/web-alle-apps-handy.png` und `web-alle-apps-pc.png` (Branch claude/gifted-shannon-657gpr).
+- versionCode 81 / 2.5.34, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.33 – Probestunden-Link vor Klassenarbeiten korrigiert
 - `https://www.mathenachhilfe-online.com/probestunde/?src=kurvenflug-klassenarbeit&thema=<id>&klasse=<n>` (statt /probestunde-anfrage/), Test angepasst.
 - versionCode 80 / 2.5.33, Prüfkette grün.

@@ -130,6 +130,8 @@ fun HomeScreen(
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
                 Column(Modifier.widthIn(max = if (wide) 1280.dp else 10_000.dp).fillMaxSize().verticalScroll(rememberScrollState()).padding(if (wide) 24.dp else 16.dp),
                     verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                    // Zurück zur App-Auswahl der Website (am PC in der Seitenleiste)
+                    if (!wide) AllAppsButton()
                     when (t) {
                         0 -> {
                             val left: @Composable () -> Unit = {
@@ -238,6 +240,7 @@ fun HomeScreen(
         if (wide) Row(Modifier.fillMaxSize().systemBarsPadding()) {
             NavigationRail(containerColor = Q.Panel.copy(alpha = 0.92f), modifier = Modifier.fillMaxHeight(), header = {
                 de.kurvenflug.app.ui.theme.KurvenflugLogo(Modifier.padding(top = 12.dp, bottom = 8.dp).size(44.dp))
+                AllAppsButton(compact = true)
             }) {
                 Spacer(Modifier.height(12.dp))
                 tabs.forEachIndexed { i, (icon, label) ->
@@ -500,5 +503,19 @@ private fun ModeTile(emoji: String, title: String, sub: String, color: Color, mo
         Text(emoji, fontSize = 28.sp)
         Text(title, fontWeight = FontWeight.Bold, color = Q.Text)
         Text(sub, style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+    }
+}
+
+
+/** „← Alle Apps“ – zurück zur App-Auswahl von Nachhilfe – online. Kein Preis, kein Kaufhinweis; Tippfläche mindestens 44 dp. */
+@Composable
+fun AllAppsButton(compact: Boolean = false) {
+    val platform = de.kurvenflug.app.LocalPlatform.current
+    val sfx = LocalSfx.current
+    Row(Modifier.heightIn(min = 44.dp).clip(RoundedCornerShape(22.dp)).background(Q.Panel.copy(alpha = 0.9f))
+        .border(1.dp, Q.Muted.copy(alpha = 0.4f), RoundedCornerShape(22.dp))
+        .clickable { sfx?.play(Sound.TAP); platform.openAllApps() }.padding(horizontal = if (compact) 8.dp else 14.dp),
+        verticalAlignment = Alignment.CenterVertically) {
+        Text(if (compact) "← Apps" else "← Alle Apps", color = Q.Text, fontWeight = FontWeight.Bold, style = MaterialTheme.typography.labelLarge)
     }
 }

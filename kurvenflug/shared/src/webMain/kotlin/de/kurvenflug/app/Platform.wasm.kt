@@ -65,6 +65,7 @@ object WebPlatform : Platform {
     override fun onHome(home: Boolean) { runCatching { jsAtHome(home) } }
     override fun installMode(): String = runCatching { jsInstallMode() }.getOrDefault("")
     override fun install() { runCatching { jsInstall() } }
+    override fun openAllApps() { runCatching { jsAllApps() } }
     override fun parentLink(): String? = runCatching { jsElternLink() }.getOrNull()
     override fun parentPair(nick: String): String = runCatching { jsElternPair(nick) }.getOrDefault("")
     override fun parentUnpair() { runCatching { jsElternUnpair() } }
