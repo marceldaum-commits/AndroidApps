@@ -36,7 +36,7 @@ object ParentOffers {
 
     /** Kostenlose Probestunde zum Thema und zur Klasse; [reason] bestimmt die Quelle (elternbericht bzw. klassenarbeit) */
     fun trialLesson(chapter: Int?, grade: Int?, reason: Reason = Reason.STUCK): String =
-        (if (reason == Reason.EXAM) "$SITE/probestunde-anfrage/?src=kurvenflug-klassenarbeit" else "$SITE/probestunde/?src=kurvenflug-elternbericht") +
+        "$SITE/probestunde/?src=kurvenflug-" + (if (reason == Reason.EXAM) "klassenarbeit" else "elternbericht") +
             (chapter?.let { TOPICS[it] }?.let { "&thema=$it" } ?: "") + (grade?.let { "&klasse=$it" } ?: "")
 
     /** Warum der Hinweis kommt */
