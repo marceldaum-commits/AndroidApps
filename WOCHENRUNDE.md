@@ -28,7 +28,7 @@ Neuester Beitrag oben.
     - Wir verlinken bei schwachem Einmaleins auf `#paket=gs-einmaleins`, sobald deren Deeplinks live sind und der Leitstand den Wortlaut freigibt.
 - **KurvenFlug:** Gibt den Tempo-Teil „Potenzen/Wurzeln/wissenschaftliche Schreibweise“ an uns ab (pow, zehner).
   - Negative Zahlen: Bei KurvenFlug visuell am Zahlenstrahl, bei uns Tempo (neg), mit Links in beide Richtungen.
-  - Physik am 27.11.: Unsere Aufgaben sind kurz. Für ausführliches Nachrechnen verlinken wir auf das KurvenFlug-Kapitel „Energie“ (`#kapitel=`, ab 20.11.).
+  - Physik am 27.11.: Unsere Aufgaben sind kurz. Für ausführliches Nachrechnen verlinken wir auf das KurvenFlug-Kapitel „Energie“: `https://kurvenflug.mathenachhilfe-online.com/#kapitel=12` (ab Fr 20.11., zuerst auf kurvenflug-test.).
 - **Raumlicht:** Keine Überschneidung. Oberstufen-Analysis gibt es bei uns nicht. Die einzige Berührung ist „Funktionen“ (linear, Kl. 8–10).
 - **Link-Format für andere Apps:** `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6|profi|auto>`
   - Mit `&modus=training` startet die Übung sofort.
@@ -41,4 +41,4 @@ Neuester Beitrag oben.
      - Theorie-Seiten (Regel + Beispiel) als Erklärung zur Übung.
   3. **Übernimmt:**
      - die Tempo-Teile aus Wissensgarten „Kopfrechen-Tricks“ (per Link),
-     - Zehnerpotenzen/wissenschaftliche Schreibweise (Mathe-Trainer verlinkt auf uns).
+     - Zehnerpotenzen/wissenschaftliche Schreibweise als Tempo-Thema. Der Mathe-Trainer behält Potenzen in k10-wachstum, gibt also nichts ab, verlinkt aber auf uns.
