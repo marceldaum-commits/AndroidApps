@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.5.6 vom 18.11.2026: Versuchsschalter + Pixelprobe (weiße WebGL-Fläche)
+
+- Standard jetzt **ganzzahlige Pixeldichte**: round(DPR), begrenzt auf 1–2 (vorher nur > 2 auf 2 gekappt; gebrochene 1,61 o. ä. blieben).
+- Schalter: `?schaerfe=voll|2|1` · `?gl=pdb` (preserveDrawingBuffer) · `?gl=noalpha` · `?gl=noaa` · `?gl=webgl1` (WebGL 2 verweigern) – kombinierbar mit Komma.
+  Umgesetzt über einen Wrapper um `HTMLCanvasElement.getContext` vor dem App-Start; protokolliert, was Skiko anfordert und bekommt (alpha, premultipliedAlpha, preserveDrawingBuffer, antialias, Größe).
+- Mit `?diag=1`: Protokoll bleibt **nach dem Start** als Leiste unten sichtbar (über der Fläche), plus **Pixelprobe** (readPixels Mitte; diag setzt dafür preserveDrawingBuffer),
+  Canvas- vs. CSS-Größe, CSS-transform, DPR echt→genutzt. WebKit-iPad-Pro-11-Profil: webgl2 1668×2388, Pixel Mitte 22,15,46,255 (= App-Hintergrund) ✅.
+- Links für Marcel (iPad): …/?diag=1 · …/?gl=pdb · …/?gl=noalpha · …/?gl=webgl1 · …/?schaerfe=1 (Basis https://experimentopia-test.mathenachhilfe-online.com).
+
 ## 18.11.2026 – Version 2.5.5 vom 18.11.2026: Befund iPad (Marcel, 11:47)
 
 - Foto von Marcels **iPad** (Safari, privater Tab, 2.5.4 mit ?diag=1): Ladebild erscheint ✅, beide .wasm in < 1 s da (Skiko 8 MB bei 247 ms, App 5 MB bei 758 ms),

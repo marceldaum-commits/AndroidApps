@@ -13,6 +13,10 @@
       window.__exSteps.push({ s: s, t: Math.round(performance.now()) });
       try { localStorage.setItem('exSchritte', JSON.stringify(window.__exSteps)); } catch (e) {}
       var d = document.getElementById('diag'); if (d) d.textContent = window.__exDiagText();
+      // mit ?diag=1 bleibt das Protokoll auch nach dem Start sichtbar (unten, über der App) – wichtig, wenn die App-Fläche weiß bleibt
+      if (window.__exDiag && document.body) { var box = document.getElementById('diagbox'); if (!box) { box = document.createElement('pre'); box.id = 'diagbox';
+        box.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:30;margin:0;max-height:45vh;overflow:auto;background:rgba(22,15,46,.88);color:#A99BD6;font:11px ui-monospace,monospace;white-space:pre-wrap;padding:6px 8px;pointer-events:none';
+        document.body.appendChild(box); } box.textContent = window.__exDiagText().replace(/ › /g, '\n'); }
     };
     window.__exDiagText = function () {
       var f = function (a) { return a.map(function (x) { return x.t + ' ms ' + x.s; }).join(' › '); };
@@ -55,7 +59,32 @@
 <script>
   // iPhones haben Pixeldichte 3: Die Zeichenfläche wäre riesig und iOS beendet den Tab dann ohne Meldung (weiße Seite).
   // Mit Dichte 2 sieht es genauso scharf aus und braucht gut die Hälfte weniger Grafikspeicher.
-  try { if ((window.devicePixelRatio || 1) > 2) Object.defineProperty(window, 'devicePixelRatio', { get: function () { return 2; }, configurable: true }); } catch (e) {}
+  // Versuchsschalter (für die iPad/iPhone-Fehlersuche, in der Adresse): ?schaerfe=voll|2|1  ?gl=pdb,noalpha,noaa,webgl1
+  var Q = new URLSearchParams(location.search), echtDpr = window.devicePixelRatio || 1;
+  var schaerfe = Q.get('schaerfe'), glOpt = (Q.get('gl') || '').split(',');
+  // Standard: ganzzahlige Pixeldichte (1 oder 2) – gebrochene Werte (z. B. 1,61 bei Zoom/Stage Manager) und 3 machen Safari Probleme bzw. kosten Speicher
+  var dpr = schaerfe === 'voll' ? echtDpr : schaerfe === '1' ? 1 : schaerfe === '2' ? 2 : Math.max(1, Math.min(2, Math.round(echtDpr)));
+  window.__exDpr = [echtDpr, dpr];
+  try { if (dpr !== echtDpr) Object.defineProperty(window, 'devicePixelRatio', { get: function () { return dpr; }, configurable: true }); } catch (e) {}
+  // Grafik-Kontext: welche Wünsche hat die App, was bekommt sie – und Schalter zum Ausprobieren
+  try {
+    var gc = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type, attrs) {
+      if (/webgl/.test(type)) {
+        attrs = Object.assign({}, attrs || {});
+        if (glOpt.indexOf('pdb') >= 0 || window.__exDiag) attrs.preserveDrawingBuffer = true;
+        if (glOpt.indexOf('noalpha') >= 0) attrs.alpha = false;
+        if (glOpt.indexOf('noaa') >= 0) attrs.antialias = false;
+        if (glOpt.indexOf('webgl1') >= 0 && type === 'webgl2') { exStep('WebGL 2 abgelehnt (Schalter webgl1)'); return null; }
+        var ctx = gc.call(this, type, attrs);
+        if (ctx && !this.__exLog) { this.__exLog = 1; window.__exGl = ctx; var a = ctx.getContextAttributes ? ctx.getContextAttributes() : {};
+          exStep(type + ' ' + this.width + '×' + this.height + ' alpha=' + a.alpha + ' pma=' + a.premultipliedAlpha + ' pdb=' + a.preserveDrawingBuffer + ' aa=' + a.antialias); }
+        if (!ctx) exStep(type + ' NICHT bekommen');
+        return ctx;
+      }
+      return gc.apply(this, arguments);
+    };
+  } catch (e) {}
   // Safari holt Tabs manchmal „eingefroren“ zurück – die Grafik ist dann weg. Sauber neu laden statt eine leere Fläche zu zeigen.
   window.addEventListener('pageshow', function (e) { if (e.persisted) location.reload(); });
   // „App installieren“: Chrome/Edge/Android melden früh, dass die App installierbar ist – das Angebot aufheben, bis jemand auf den Knopf tippt
@@ -124,6 +153,9 @@
   setTimeout(function () { var st = document.getElementById('start'); if (st && st.dataset.fertig !== '1') showProblem('Start dauert zu lange'); }, 60000);
   (function watch() { var st = document.getElementById('start'); if (st && st.dataset.fertig === '1') { window.__exStarted = Date.now(); exStep('App sichtbar'); setTimeout(function () {
     if (!appVisible()) { showProblem('keine Zeichenfläche'); return; }
+    // Pixelprobe: Was steht wirklich in der Zeichenfläche? (weiß = Safari zeigt nichts an, obwohl gezeichnet wurde?)
+    try { var gl = window.__exGl; if (gl) { var px = new Uint8Array(4), cv = gl.canvas; gl.readPixels(cv.width >> 1, cv.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+      var cs = getComputedStyle(cv); exStep('Pixel Mitte ' + Array.prototype.join.call(px, ',') + ' · Fläche ' + cv.width + '×' + cv.height + ' / CSS ' + cs.width + '×' + cs.height + (cs.transform && cs.transform !== 'none' ? ' transform ' + cs.transform : '') + ' · DPR ' + window.__exDpr.join('→')); } } catch (e) { exStep('Pixelprobe: ' + e); }
     exStep('fertig');
     // Verliert iOS den Grafik-Kontext (Metal/WebGL), zeigen wir das an, statt still eine leere Fläche zu lassen
     var a = document.getElementById('app'); var c = (a.shadowRoot && a.shadowRoot.querySelector('canvas')) || a.querySelector('canvas');

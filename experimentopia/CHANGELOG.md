@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.5.6 – Versuchsschalter für das iPad (18.11.2026)
+
+- 🧪 Ganzzahlige Pixeldichte (1 oder 2) statt gebrochener Werte; Versuchsschalter `?schaerfe=…` und `?gl=…` sowie eine Pixelprobe im Startprotokoll (`?diag=1`),
+  das jetzt auch nach dem Start unten sichtbar bleibt.
+
 ## 2.5.5 – Feineres Startprotokoll (18.11.2026)
 
 - 🩺 Das Startprotokoll (`?diag=1`) zeigt jetzt auch das Übersetzen der App-Dateien, den Start des App-Codes, die Zeichenfläche und das Laden der Schriften – um den iPad/iPhone-Fehler genau zu finden.
