@@ -1,9 +1,14 @@
 # Prüfplan KurvenFlug (Dauerregel Marcel 18.11.2026)
 
-**Wöchentlich (mittwochs auf test):** mindestens eine neue Inhaltseinheit (neues Kapitel, Level, Aufgabenreihe oder Theorie-Abschnitt,
-nach dem Lehrplan-Abgleich – Reihenfolge der „Kommt bald“-Themen siehe MELDUNG 2.5.24), kurz in MELDUNG_AN_LEITSTAND.md nennen.
+**Inhaltsupdates (Dauerregel Marcel 18.11., ersetzt „mittwochs“): jeden Dienstag und Freitag bis 16 Uhr ein GROSSES Inhaltsupdate auf test**
++ Meldung (was neu, wie viele Aufgaben, wie geprüft). Inhalt nach Wirkung: neue Themen mit Aufgaben, bestehende Themen ausweiten,
+bestehende Aufgaben korrigieren/vervollständigen, neue Optionen. Pflicht: mathematisch korrekt, vollständig, nachvollziehbar, keine Abkürzungen –
+jeder Lösungsweg mit allen Schritten (Rechenweg), jede Formel in der Theorie mit Beispiel (`TheoryFormulaTest`), jedes Ergebnis nachgerechnet
+(Lösbarkeits-Test je Level + zweite Rechnung im Test), Physik mit Einheiten. Erstes Update: Freitag, 20.11.2026.
+Reihenfolge (Lehrplan-Abgleich, MELDUNG 2.5.24): 1) Terme & Gleichungen, 2) Kreis & Flächen, 3) Wahrscheinlichkeit, 4) Radioaktivität,
+5) Strom & Ohmsches Gesetz – dazwischen Ausbau bestehender Kapitel.
 
-**Monatlich (letzte Woche):** ein Prüfblock gründlich (rollierend, nach 4 Monaten ist alles einmal gründlich geprüft)
+**Monatlich (letzte Woche, zusätzlich):** ein Prüfblock gründlich (rollierend, nach 4 Monaten ist alles einmal gründlich geprüft)
 + der Neu-Content des Monats + die Rundum-Prüfung.
 
 ## Prüfblöcke (rollierend)

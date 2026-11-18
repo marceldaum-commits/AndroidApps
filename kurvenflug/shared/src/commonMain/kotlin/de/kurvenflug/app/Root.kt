@@ -417,7 +417,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                     onExam = { vm.settings.setExamUntil(if (it) day + de.kurvenflug.core.model.ParentOffers.EXAM_DAYS else 0L) },
                     onHideHint = { vm.settings.setTutorHintOff(true) },
                     onHintSeen = { if (vm.settings.tutorHintShown != day) vm.settings.tutorHintShown = day },
-                    onCounting = vm.settings::setAnonCount, onCount = platform::count,
+                    onCounting = vm.settings::setAnonCount, onCount = platform::count, onCountAt = { e, o, t -> platform.countAt(e, o, t) },
                     pairLink = parentLink, pairNick = remember(parentLink) { platform.parentNick() },
                     onPair = { nick -> parentLink = platform.parentPair(nick) },
                     onUnpair = { platform.parentUnpair(); parentLink = platform.parentLink() },

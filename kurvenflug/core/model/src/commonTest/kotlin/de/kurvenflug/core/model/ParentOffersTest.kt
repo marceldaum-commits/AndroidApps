@@ -36,5 +36,10 @@ class ParentOffersTest {
         val b = UsageCount.body("2.5.22", mapOf("start" to 1, "level_geschafft" to 300, "name:Lena" to 1, "theorie" to 0))!!
         assertEquals("{\"app\":\"kurvenflug\",\"v\":\"2.5.22\",\"e\":{\"level_geschafft\":50,\"start\":1}}", b)
         assertTrue(UsageCount.EVENTS.size <= 20)
+        assertNull(UsageCount.body("2.5.32", mapOf("probestunde_klick" to 1)))   // Ereignisse mit Ort nie in der Sammelsendung
+        assertEquals("{\"app\":\"kurvenflug\",\"v\":\"2.5.32\",\"ev\":\"probestunde_klick\",\"ort\":\"klassenarbeit\",\"thema\":\"lineare-funktionen\"}",
+            UsageCount.single("2.5.32", "probestunde_klick", "klassenarbeit", "lineare-funktionen"))
+        assertNull(UsageCount.single("2.5.32", "start", "klassenarbeit")); assertNull(UsageCount.single("2.5.32", "pro_kasse", "irgendwo"))
+        assertEquals("{\"app\":\"kurvenflug\",\"v\":\"2.5.32\",\"ev\":\"pro_kasse\",\"ort\":\"gesperrt\"}", UsageCount.single("2.5.32", "pro_kasse", "gesperrt", "kf-3"))
     }
 }

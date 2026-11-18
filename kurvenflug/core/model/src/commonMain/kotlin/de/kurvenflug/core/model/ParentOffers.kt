@@ -61,8 +61,19 @@ object ParentOffers {
 object UsageCount {
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     /** Erlaubte Ereignisse – nichts anderes wird je gezählt */
-    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "elternbereich", "pro_ansehen", "pro_kasse", "code_eingeloest",
-        "probestunde_klick", "neukunde_klick", "nachhilfe_hinweis", "geschenk_klick")
+    /** In der Sammelsendung (ohne Ort): Anzahl je Sitzung */
+    val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "elternbereich")
+    /** Mit Ort: sofort einzeln beim Antippen (Leitstand 18.11.) */
+    val SINGLE = setOf("pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick", "nachhilfe_hinweis", "geschenk_klick")
+    val PLACES = setOf("elternbericht", "elternbereich", "gesperrt", "klassenarbeit", "geschenk", "einstellungen", "link", "eingabe", "lernstand", "fusszeile")
+
+    /** Einzelaufruf: {"app":"kurvenflug","v":"…","ev":"probestunde_klick","ort":"klassenarbeit","thema":"lineare-funktionen"} – null bei unbekannten Werten */
+    fun single(version: String, event: String, place: String, topic: String? = null): String? {
+        if (event !in SINGLE || place !in PLACES) return null
+        val t = topic?.takeIf { it in ParentOffers.ALLOWED_TOPICS }
+        return "{\"app\":\"kurvenflug\",\"v\":\"${version.filter { it.isLetterOrDigit() || it == '.' }}\",\"ev\":\"$event\",\"ort\":\"$place\"" +
+            (t?.let { ",\"thema\":\"$it\"" } ?: "") + "}"
+    }
     /** Der Zähler nimmt je Ereignis höchstens so viele an */
     const val MAX_PER_EVENT = 50
 
