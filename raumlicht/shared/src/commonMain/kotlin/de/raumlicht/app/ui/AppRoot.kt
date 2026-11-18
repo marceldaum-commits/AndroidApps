@@ -116,6 +116,8 @@ fun AppRoot(
     eltern: de.raumlicht.app.ui.settings.ElternPlatform? = null,
     /** Adresse, auf die der Hinweis „Klausur bald“ führt – die kostenlose Probestunde (leer = Hinweis gibt es nicht) */
     examUrl: String = de.raumlicht.core.model.Nachhilfe.TRIAL_URL,
+    /** „← Alle Apps“ oben auf der Startseite: zurück zur App-Auswahl der Website (null = gibt es hier nicht) */
+    onApps: (() -> Unit)? = null,
 ) {
     // ── Lern-Protokoll (nur auf dem Gerät) und Eltern-Bericht ──
     val parentText by prefs.parentLink.collectAsState()
@@ -229,7 +231,7 @@ fun AppRoot(
                 androidx.compose.foundation.layout.Box(if (column) androidx.compose.ui.Modifier.widthIn(max = 860.dp).fillMaxSize() else androidx.compose.ui.Modifier.fillMaxSize()) {
             if (needsPro(route)) de.raumlicht.app.ui.settings.ProScreen(Pro.what(route), false, true, enterCode, back) else
             when (parts[0]) {
-                Routes.HOME -> HomeScreen(Levels.chapters, starMap, { nav.go(Routes.level(it)) }, { nav.go(Routes.SETTINGS) }, locked = { needsPro(Routes.level(it)) },
+                Routes.HOME -> HomeScreen(Levels.chapters, starMap, { nav.go(Routes.level(it)) }, { nav.go(Routes.SETTINGS) }, locked = { needsPro(Routes.level(it)) }, onApps = onApps,
                     updateVersion = updateVersion, onUpdate = { nav.go(Routes.SETTINGS) },
                     dailyDone = (starMap[Daily.id(today())] ?: 0) > 0, jamBest = jamBest,
                     onDaily = { nav.go(Routes.DAILY) }, onJam = { nav.go(Routes.JAM_HOME) }, onExam = { nav.go(Routes.EXAMS) }, onMore = { nav.go(Routes.BACKSTAGE) })

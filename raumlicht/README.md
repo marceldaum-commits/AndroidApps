@@ -174,6 +174,10 @@ Freiwilliger, Ende-zu-Ende verschlüsselter Eltern-Bericht (`core/model/…/Elte
 
 ![](screenshots/90_startseite_pc.png)
 
+**„← Alle Apps“ (seit 2.18.31):** oben auf der Startseite, zurück zur App-Auswahl der Website.
+
+![](screenshots/91_alle_apps.png)
+
 ## Zählung, Nachhilfe-Hinweis, Geschenk (seit 2.18.22)
 
 Anonyme Nutzungszählung (`Zaehler`), sachlicher Nachhilfe-Hinweis im Lernstand (`Nachhilfe`), Eintrag „Lern-Geschenk verschenken“ und Absender-Zeile – beide Schalter in den Einstellungen, alles in `core/model/…/Nachhilfe.kt`.

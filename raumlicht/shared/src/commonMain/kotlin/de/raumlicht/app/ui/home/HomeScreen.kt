@@ -63,6 +63,8 @@ fun HomeScreen(
     controller: StageController = remember { StageController() },
     /** Aufgaben, die zu Raumlicht Pro gehören und noch gesperrt sind (zeigen ein Schloss) */
     locked: (String) -> Boolean = { false },
+    /** „← Alle Apps“: zurück zur App-Auswahl auf der Website (null = gibt es hier nicht) */
+    onApps: (() -> Unit)? = null,
 ) {
     val total = chapters.sumOf { c -> c.levels.sumOf { stars[it.id] ?: 0 } }; val max = chapters.sumOf { it.levels.size } * 3
     val next = chapters.flatMap { it.levels }.firstOrNull { (stars[it.id] ?: 0) == 0 }
@@ -120,6 +122,7 @@ fun HomeScreen(
         Column(Modifier.width(side).fillMaxHeight().verticalScroll(rememberScrollState()).statusBarsPadding().padding(bottom = 24.dp)) {
             Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 8.dp, top = 10.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text("TOURPLAN", Modifier.weight(1f), color = Q.Muted, fontSize = 13.sp, fontWeight = FontWeight.Black, letterSpacing = 3.sp)
+                if (onApps != null) AppsButton(onApps)
                 IconButton(onClick = onSettings) { Text("⚙", Modifier.clearAndSetSemantics { contentDescription = "Einstellungen" }, fontSize = 24.sp, color = Q.Text) }
             }
             if (updateVersion != null) de.raumlicht.app.ui.settings.UpdateBanner(updateVersion, onUpdate)
@@ -139,10 +142,12 @@ fun HomeScreen(
                 Box(Modifier.fillMaxSize().background(verticalFade(0f to Q.Space.copy(alpha = 0.55f), 0.3f to Color.Transparent, 0.75f to Color.Transparent, 1f to Q.Space)))
                 Row(Modifier.fillMaxWidth().statusBarsPadding().padding(start = 18.dp, end = 6.dp, top = 6.dp), verticalAlignment = Alignment.Top) {
                     Column(Modifier.weight(1f)) {
-                        Text("RAUMLICHT", fontSize = 28.sp, fontWeight = FontWeight.Black, letterSpacing = 4.sp, color = Q.Text)
+                        // schrumpft auf schmalen Handys, damit daneben „← Alle Apps“ und das Zahnrad Platz haben
+                        de.raumlicht.app.ui.fx.FitText("RAUMLICHT", fontSize = 28.sp, min = 17f, fontWeight = FontWeight.Black, color = Q.Text, style = LocalTextStyle.current.copy(letterSpacing = 4.sp))
                         Text("★ $total / $max", color = Q.Yellow, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                         de.raumlicht.app.ui.settings.ProBadge(Modifier.padding(top = 6.dp))
                     }
+                    if (onApps != null) AppsButton(onApps)
                     IconButton(onClick = onSettings) { Text("⚙", Modifier.clearAndSetSemantics { contentDescription = "Einstellungen" }, fontSize = 22.sp, color = Q.Text) }
                 }
                 if (next != null) NeonButton({ onLevel(next.id) }, Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp).pulse(true, 0.02f), color = Q.Green) {
@@ -170,6 +175,15 @@ fun HomeScreen(
         }
         item { chapter(false) }
     }
+    }
+}
+
+/** „← Alle Apps“: kleiner, gut sichtbarer Weg zurück zur App-Auswahl auf der Website – ohne Preis, ohne Kaufhinweis; Tippfläche mindestens 44 dp hoch */
+@Composable
+private fun AppsButton(onClick: () -> Unit) {
+    Box(Modifier.testTag("alle-apps").heightIn(min = 44.dp).clip(RoundedCornerShape(14.dp)).clickable(onClick = onClick).padding(horizontal = 4.dp), contentAlignment = Alignment.Center) {
+        Text(Nachhilfe.APPS_LABEL, Modifier.clip(RoundedCornerShape(12.dp)).background(Q.Deep.copy(alpha = 0.85f)).border(1.dp, Q.Text.copy(alpha = 0.55f), RoundedCornerShape(12.dp)).padding(horizontal = 11.dp, vertical = 7.dp),
+            color = Q.Text, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
     }
 }
 

@@ -37,6 +37,10 @@ object Nachhilfe {
     const val TRIAL_URL = "https://www.mathenachhilfe-online.com/probestunde/"
     const val GIFT_URL = "https://www.mathenachhilfe-online.com/geschenke/"
     const val HOME_URL = "https://www.mathenachhilfe-online.com/"
+    /** „← Alle Apps“ oben auf der Startseite: zurück zur App-Auswahl auf der Website (auf der Testseite deren Vorstufe) */
+    const val APPS_URL = "https://www.mathenachhilfe-online.com/lern-apps/?src=raumlicht-kopf"
+    const val APPS_TEST_URL = "https://staging.mathenachhilfe-online.com/lern-apps/?src=raumlicht-kopf"
+    const val APPS_LABEL = "← Alle Apps"
     const val FOOTER = "Ein Angebot von Nachhilfe – online"
     const val SWITCH = "Hinweise auf unsere Nachhilfe zeigen"
     const val SWITCH_NOTE = "Im Lernstand, wenn ein Gebiet noch hakt: ein kurzer Hinweis auf eine kostenlose Probestunde. Nie in den Aufgaben."

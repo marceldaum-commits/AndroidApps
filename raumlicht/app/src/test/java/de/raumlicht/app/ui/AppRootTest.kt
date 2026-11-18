@@ -43,13 +43,14 @@ class AppRootTest {
     /** Nachgestellte Plattform fürs Eltern-Koppeln: merkt sich, was hochgeladen und gelöscht würde (hier unverschlüsselt, die Verschlüsselung prüft der Browser-Test) */
     private val uploads = ArrayList<Triple<String, String, String>>(); private val deleted = ArrayList<String>()
     private var eltern: de.raumlicht.app.ui.settings.ElternPlatform? = null
+    private var appsOpened = 0
     private fun fakeEltern() = de.raumlicht.app.ui.settings.ElternPlatform("https://server.test/b/", "https://seite.test/#weg/", { "A".repeat(22) + "." + "B".repeat(22) + "." + "C".repeat(43) },
         { url, write, _, json, done -> uploads += Triple(url, write, json); done(204) }, { url, _, done -> deleted += url; done(204) })
     private fun start(pro: Boolean = false, ki: (suspend (String) -> Pair<Int, String>)? = null, kiOn: Boolean = true) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
             AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry(); de.raumlicht.app.ui.settings.ElternEntry() } },
-                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, examUrl = crash)
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, examUrl = crash, onApps = { appsOpened++ })
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -289,6 +290,17 @@ class AppRootTest {
         state = state + ("sterne" to "1-1=3;1-2=3"); rule.onNodeWithTag("eltern-senden").performClick(); settle(); assertEquals(5, uploads.size); assertTrue(uploads[4].first.contains("/s/"))
         // aufheben: der Merker der Sicherung ist weg
         rule.onNodeWithTag("eltern-aufheben").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-aufheben-ja").performScrollTo().performClick(); settle(); assertEquals("", prefs.backupMark)
+    }
+
+    /** „← Alle Apps“ oben auf der Startseite: sichtbar, groß genug zum Tippen, ohne Preis – und nur dort, nicht in Aufgaben. */
+    @Test fun alleAppsObenAufDerStartseite() {
+        start(); settle()
+        rule.onNodeWithTag("alle-apps").assertExists().assertHeightIsAtLeast(androidx.compose.ui.unit.Dp(44f)).assertWidthIsAtLeast(androidx.compose.ui.unit.Dp(44f)); rule.onNodeWithText("← Alle Apps").assertExists()
+        for (bad in listOf("€", "Pro", "kaufen")) assertFalse(bad, de.raumlicht.core.model.Nachhilfe.APPS_LABEL.contains(bad))
+        rule.onRoot().captureRoboImage("../screenshots/91_alle_apps.png")
+        rule.onNodeWithTag("alle-apps").performClick(); settle(); assertEquals(1, appsOpened)
+        nav.go(Routes.level("1-1")); settle(); rule.onNodeWithTag("alle-apps").assertDoesNotExist()
+        nav.restart(Routes.BACKSTAGE); settle(); rule.onNodeWithTag("alle-apps").assertDoesNotExist()
     }
 
     /** „Kommt bald“ auf der Seite „Mehr“: sichtbar, ohne Datum, ohne Kaufhinweis – und Antippen führt nirgendwohin. */

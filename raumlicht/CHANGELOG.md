@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.31 – „← Alle Apps“: mit einem Tipp zurück zur App-Auswahl (18.11.2026)
+- **Neu oben auf der Startseite:** der Knopf „← Alle Apps“. Er führt zurück zur Übersicht unserer Lern-Apps auf der Website. Am PC sitzt er oben rechts neben dem Zahnrad.
+- In Aufgaben, Spielen und Prüfungen erscheint er nicht – dort stört nichts.
+- **Für Eltern:** Der Knopf ist ein einfacher Link zu unserer Website, ohne Preis und ohne Kaufhinweis.
+
 ## 2.18.30 – Vor der Klausur: Hinweis auf die kostenlose Probestunde (18.11.2026)
 - **Klausur-Planer:** Der sachliche Hinweis kurz vor deiner Klausur führt jetzt zur kostenlosen Probestunde statt zu den Crashkursen. Er lässt sich weiter ausblenden und in den Einstellungen ganz abschalten.
 - Enthält die neue PC-Ansicht aus 2.18.29.

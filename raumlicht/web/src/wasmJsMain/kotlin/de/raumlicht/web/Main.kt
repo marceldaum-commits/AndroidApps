@@ -115,6 +115,7 @@ private fun WebApp() {
                 eltern = remember { val test = hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST || elternServer() != null
                     if (!de.raumlicht.core.model.Eltern.ENABLED && !test) null else de.raumlicht.app.ui.settings.ElternPlatform(elternServer() ?: if (test) de.raumlicht.core.model.Eltern.TEST_SERVER else de.raumlicht.core.model.Eltern.SERVER,
                         if (test) de.raumlicht.core.model.Eltern.TEST_PAGE else de.raumlicht.core.model.Eltern.PAGE, ::elternNeu, ::elternSenden, ::elternLoeschen, ::elternHolen, ::snapshot, ::restoreSnapshot) },
+                onApps = { openApps(if (hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST) de.raumlicht.core.model.Nachhilfe.APPS_TEST_URL else de.raumlicht.core.model.Nachhilfe.APPS_URL) },
                 countSend = { body -> beacon(de.raumlicht.core.model.Zaehler.URL, body) },
                 kiSend = { body -> kotlinx.coroutines.suspendCancellableCoroutine { c -> kiPost(kiUrl, body) { status, text -> if (c.isActive) c.resumeWith(Result.success(status to text)) } } },
                 kiEnabled = de.raumlicht.core.model.Ki.ENABLED || kiTest, version = Version.NAME,

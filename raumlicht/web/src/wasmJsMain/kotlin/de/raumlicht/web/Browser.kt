@@ -66,6 +66,8 @@ fun elternServer(): String? = js("((location.hostname === 'localhost' || locatio
 fun hostName(): String = js("location.hostname")
 /** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer KI-Server (window.__rlKiServer), sonst null */
 fun kiServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlKiServer) || null")
+/** Zur App-Auswahl der Website: im Browser im selben Tab; läuft die WebApp installiert (eigenes Fenster), im normalen Browser */
+fun openApps(url: String): Unit = js("{ var allein = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; if (window.__rlAppsZiel) { window.__rlAppsZiel(url, allein); return; } if (allein) window.open(url, '_blank', 'noopener'); else location.assign(url); }")
 fun openLink(url: String): Unit = js("window.open(url, '_blank', 'noopener')")
 /** Ladebild sanft ausblenden; spätestens jetzt wird auch die 3D-Bühne angefordert */
 fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; if (window.__rlSchritt) window.__rlSchritt('Oberfläche sichtbar – Start geschafft'); s.style.opacity = '0'; s.style.pointerEvents = 'none'; setTimeout(() => { s.style.display = 'none'; }, 380); } if (window.__rlStage) window.__rlStage(); }")
