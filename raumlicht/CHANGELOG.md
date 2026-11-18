@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.19 – Weiße Seite auf iPhone, iPad und Mac: Ursache gefunden (18.11.2026)
+- **Die Ursache ist ein Fehler im neuen Safari (27.2):** Er gibt der Zeichenbibliothek an bestimmten Stellen kaputte Zahlen weiter. Dadurch lief Raumlicht zwar, malte aber nichts – die Seite blieb weiß.
+- **Raumlicht umgeht den Fehler jetzt.** Beim Bauen der App werden alle betroffenen Aufrufe so umgeschrieben, dass Safari sie richtig ausführt. Für andere Browser ändert sich nichts.
+- Bestätigt ist das erst, wenn es auf einem echten iPhone oder iPad wieder ein Bild gibt – bitte ausprobieren.
+
 ## 2.18.18 – Start auf dem iPhone: erst das Bild, dann laden (18.11.2026)
 - **Das Ladebild erscheint jetzt immer zuerst.** Alles Schwere wird erst danach geholt – so ist beim Öffnen nie nichts zu sehen.
 - **iPhone und iPad laden die beiden großen Teile der App nacheinander** statt gleichzeitig. Das braucht weniger Speicher auf einmal.

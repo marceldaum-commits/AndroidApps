@@ -2,6 +2,26 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.19: URSACHE der weißen Seite gefunden – Safari 27.2, betrifft ALLE Compose-WebApps
+
+**Raumlicht 2.18.19 vom 18.11.2026 – nur Web-App**, auf raumlicht-test. **Bitte sofort an KurvenFlug, Wissensgarten und Experimentopia weitergeben.**
+
+**Befund vom Gerät** (Marcels Bildschirmfoto, iPad, Safari, privater Tab, `?diag=1`, Version 2.18.18): Das Schrittprotokoll läuft in 0,8 Sekunden komplett durch bis „Oberfläche sichtbar – Start geschafft“ – und die Seite ist trotzdem weiß. Kein Absturz, kein Speicherproblem, kein Ladefehler: **Die App läuft, zeichnet aber nichts.** Dazu passt die frühere Mitschrift: Farbverläufe scheitern mit `Can't wrap nullptr`.
+
+**Ursache:** WebKit-Fehler **329421** in **Safari 27.2** (macOS, iPadOS, iOS): Erreicht ein Aufruf eine WebAssembly-Funktion über einen JavaScript-**Endaufruf** (tail call), übergibt Safari für `f32`/`f64`-Werte 0 oder 1 fälschlich **NaN**, sobald der Code optimiert ist.
+Skiko (die Zeichenbibliothek von Compose Multiplatform) ruft alle Skia-Funktionen genau so auf: `(...a) => (X = loadedWasm._["X"])(...a)`. Compose misst und zeichnet dann mit NaN → weiße Seite. Laut der Quelle ist der Fehler in WebKit behoben, aber noch nicht ausgeliefert.
+Quelle: [White-Wind-LLC/table, Pull Request 174](https://github.com/White-Wind-LLC/table/pull/174) (dort auch der Verweis auf den JetBrains-Eintrag CMP-10986). Ich habe die WebKit-Meldung selbst nicht gelesen.
+Das erklärt alles: reines JS (Mathe-Trainer) geht; dein WebKit-2359-Lauf ging (ältere WebKit-Fassung ohne den Fehler); es hängt nicht an Speicher, Gerät oder Service Worker.
+
+**Abhilfe (zum Übernehmen, zwei kleine Dateien):**
+- `raumlicht/web/webpack/skiko-no-tail-call.cjs` – Webpack-Lader, schreibt in `skiko.mjs` jeden solchen Aufruf in einen `try`-Block um (dort ist er kein Endaufruf mehr); bricht den Bau ab, wenn das Muster nicht mehr passt.
+- `raumlicht/web/webpack.config.d/skiko-no-tail-call.js` – hängt den Lader ein (Kotlin nimmt den Ordner von selbst).
+- Dazu eine Prüfung im Bau-Schritt (`web/build.gradle.kts`, Aufgabe `webapp`): im fertigen `raumlicht.js` 0 Endaufrufe übrig. Ergebnis hier: 937 äußere und 999 innere Aufrufe abgesichert, 0 übrig.
+- Skiko-Fassung hier: die von Compose Multiplatform 1.9.3. Bei anderen Fassungen bitte die Zahl prüfen, die der Lader meldet.
+
+**Ehrlich:** Auf echtem Safari 27.2 **nicht geprüft** – ich habe keinen. Alle Browser-Tests (Chromium) sind grün, die Umschreibung ändert dort nichts. Ob das Bild auf Marcels iPad/iPhone zurück ist, muss er ansehen.
+Mindest-iOS unverändert 18.2. Die Absicherungen aus 2.18.16–2.18.18 (Schrittprotokoll, Meldungen, Sparmodus) bleiben drin; das Laden nacheinander und die doppelte Schärfe auf dem iPhone waren nicht die Ursache, schaden aber nicht.
+
 ## 18.11.2026 – Raumlicht 2.18.18: Schrittprotokoll, erst malen dann laden, Kern nacheinander
 
 **Raumlicht 2.18.18 vom 18.11.2026 – nur Web-App**, auf raumlicht-test. Deine drei Punkte:
