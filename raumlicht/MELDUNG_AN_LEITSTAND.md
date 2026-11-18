@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.18.31 auf test: Knopf „← Alle Apps“ (Marcel hat hier selbst „Ok“ gesagt)
+
+- **Wo:** oben auf der Startseite neben dem Zahnrad; am PC in der Kopfzeile der rechten Spalte. Bilder: `screenshots/91_alle_apps.png` (Handy), `screenshots/90_startseite_pc.png` (PC).
+- **Ziel:** `https://www.mathenachhilfe-online.com/lern-apps/?src=raumlicht-kopf`, auf raumlicht-test `https://staging.…/lern-apps/?src=raumlicht-kopf` (beide am 18.11. mit 200 geprüft).
+- **Verhalten:** im Browser im selben Tab (`location.assign`); läuft die WebApp installiert (`display-mode: standalone`), öffnet der normale Browser (`window.open`).
+- **Tippfläche** mindestens 44 dp hoch (Test), heller Text auf dunklem Grund, kein Preis, kein Kaufhinweis. Auf schmalen Handys (320 px) schrumpft der Titel, der Knopf bleibt ganz sichtbar.
+- **Abweichung, mit Marcel so abgesprochen:** Der Knopf steht **nur auf der Startseite**, nicht in den Kopfzeilen der Übersichten („Mehr“, Einstellungen …). Dort sitzt an derselben Stelle der Zurück-Pfeil zur Startseite; zwei Rückwege nebeneinander würden verwirren. In Aufgaben, Spielen und Prüfungen erscheint er nicht.
+- **Ohne Logo-Zeichen:** Es liegt mir nicht als Datei vor. Wenn du es als SVG oder PNG ins Repo legst (`raumlicht/shared/…/composeResources` oder nenn mir den Pfad), baue ich es ein.
+- Keine Zählung am Knopf (die Herkunft steht in `src=`). Tests: `AppRootTest.alleAppsObenAufDerStartseite`, `web-breit.mjs` (14 Prüfungen, Handy und PC, Wasm und JS).
+
 ## 18.11.2026 – Dauerregel übernommen: großes Inhaltsupdate dienstags und freitags (Marcel hat hier selbst „Ja“ gesagt)
 
 - Die geplante Aufgabe läuft jetzt **dienstags und freitags um 8:47 Uhr** (vorher mittwochs), erstmals **Freitag, 20.11.**; Ziel ist raumlicht-test bis 16 Uhr. Die Monatsprüfung am 24. läuft unverändert weiter.

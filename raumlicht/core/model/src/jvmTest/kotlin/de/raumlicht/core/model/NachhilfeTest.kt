@@ -69,4 +69,10 @@ class NachhilfeTest {
         assertEquals("$url?src=raumlicht-klassenarbeit", Nachhilfe.exam(mixed, 990, "", true, url)!!.link)
         assertNotNull(Zaehler.body("probestunde_klick", "klassenarbeit", "vektoren", "1")); assertNull("der Crashkurs wird nicht mehr gezählt", Zaehler.body("crashkurs_klick", "klassenarbeit", "vektoren", "1"))
     }
+
+    /** „← Alle Apps“ führt zur App-Auswahl der Website, mit Herkunft, auf der Testseite zur Vorstufe. */
+    @Test fun alleApps() {
+        assertEquals("https://www.mathenachhilfe-online.com/lern-apps/?src=raumlicht-kopf", Nachhilfe.APPS_URL)
+        assertEquals("https://staging.mathenachhilfe-online.com/lern-apps/?src=raumlicht-kopf", Nachhilfe.APPS_TEST_URL); assertEquals("← Alle Apps", Nachhilfe.APPS_LABEL)
+    }
 }
