@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 18.11.2026 – BESTÄTIGT am echten Gerät: Raumlicht 2.18.21 zeigt in Safari wieder ein Bild – in beiden Fassungen
+
+Marcel hat auf seinem Gerät (Safari 27.2) beide Links geprüft: **`?diag=1` (JavaScript-Fassung) lädt – und `?diag=1&modus=wasm` (Wasm-Fassung) lädt auch.**
+- Die weiße Seite ist damit in Raumlicht behoben. **Die Wasm-Fassung braucht die JS-Fassung dafür nicht** – ihr reichen die beiden Abhilfen: Tail-Call-Lader (`web/webpack/skiko-no-tail-call.cjs`, seit 2.18.19) und `-Xwasm-no-jstag` (seit 2.18.21).
+- **Nicht getrennt geprüft**, welche der beiden allein gereicht hätte: 2.18.19/2.18.20 (nur Tail-Call-Lader) hat Marcel nicht mehr angesehen. Für die anderen Apps deshalb: beide übernehmen, beides ist klein.
+- Die JS-Fassung bleibt als Vorgabe für WebKit und als Notnagel bei Startfehlern drin. Ob WebKit später wieder die schnellere Wasm-Fassung als Vorgabe bekommt, ist Marcels Entscheidung; technisch spricht nach diesem Test nichts dagegen.
+- Bereit zum Live-Nehmen: **Raumlicht 2.18.21 vom 18.11.2026 – nur Web-App** (enthält außerdem KI-Abi-Pass mit Shop-Knopf, „App installieren“, Vorlesen aus, Selbst-Update).
+
 ## 18.11.2026 – Raumlicht 2.18.21: JS-Fassung mit Weiche, `-Xwasm-no-jstag`, Tail-Call-Abhilfe – alles zusammen
 
 Marcel hat direkt bestätigt („bau die Fassung“). **Raumlicht 2.18.21 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.
