@@ -29,8 +29,6 @@ class BackgroundMusic(private val context: Context) {
     private var own = 1f
     /** Prüfung auf Zeit oder Pflichtteil: Musik aus */
     private var silent = false
-    /** Handy stumm oder auf Vibration geschaltet? Dann bleibt auch die Musik still. */
-    private fun muted() = runCatching { audio.ringerMode != AudioManager.RINGER_MODE_NORMAL }.getOrDefault(false)
     private var level = 0f
     private val cache = HashMap<MusicMood, ShortArray>()
     private var fadeJob: Job? = null
@@ -70,7 +68,7 @@ class BackgroundMusic(private val context: Context) {
 
     private suspend fun refresh() {
         val m = wanted
-        val shouldPlay = enabled && foreground && m != null && !silent && own > 0f && !muted()
+        val shouldPlay = enabled && foreground && m != null && !silent && own > 0f
         if (!shouldPlay) { fadeOutAndStop(); return }
         if (current == m && track != null) { fadeTo(target()); return }
         // Andere App spielt Musik (Hörbuch, Spotify …)? Dann nicht dazwischenfunken.

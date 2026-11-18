@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.12 – Ton auch bei stummem Klingelton (18.11.2026)
+- **Android:** Raumlicht blieb still, wenn der Klingelton des Handys auf stumm oder Vibration stand – auch wenn die Medien-Lautstärke aufgedreht war. Jetzt gilt wie bei Musik und Videos: Laut ist, was die Medien-Lautstärke sagt (die Lauter- und Leiser-Tasten).
+- Steht die Medien-Lautstärke auf 0, sagen das die Einstellungen weiterhin.
+
 ## 2.18.11 – Jede richtige Antwort zählt (18.11.2026)
 - **Mehrere Wege, alle richtig:** Eine Ebene lässt sich auf viele Arten aufschreiben – mit doppelten Zahlen oder mit umgedrehten Vorzeichen. Jede Fassung, die dieselbe Ebene beschreibt, wird als richtig gewertet; die Regler reichen dafür jetzt von −6 bis 6. Die Erfolgsmeldung sagt das auch.
 - **Eindeutiger Auftrag:** Bei „Normalenvektor“ (5-4) steht jetzt dabei, dass der Vektor nach unten zur Leinwand zeigen soll.

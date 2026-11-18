@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.12: Fehlerbehebung aus dem Betriebstest (kein Ton bei stummem Klingelton)
+
+**Raumlicht 2.18.12 vom 18.11.2026, Web = Android (beide 2.18.12).** Bitte statt 2.18.11 live nehmen.
+
+- **Befund (Marcels Bildschirmfoto, Android):** Medien-Lautstärke aufgedreht, Klingelton auf stumm/Vibration → Musik und Geräusche blieben still, die Einstellungen sagten „Dein Handy ist stumm“. Für Marcel war das Handy laut – zu Recht.
+- **Ursache:** Seit 2.15.0 schwieg die Android-App bei jedem Klingelton-Modus außer „normal“.
+- **Behoben:** Der Klingelton-Schalter spielt keine Rolle mehr; es gilt allein die Medien-Lautstärke (wie bei Musik und Videos). Hinweis in den Einstellungen nur noch bei Medien-Lautstärke 0. Test angepasst (`settingsExplainSilence`).
+- Falls andere Apps die Regel „Handy stumm → App stumm“ übernommen haben: bitte ebenfalls auf die Medien-Lautstärke umstellen.
+- WebApp nicht betroffen (trägt nur dieselbe Versionsnummer).
+
 ## 18.11.2026 – Raumlicht 2.18.11: „Zwei Wege, eine Kontrolle“ geprüft und abgesichert
 
 Marcel hat es direkt bestätigt. **Raumlicht 2.18.11 vom 18.11.2026, Web = Android (beide 2.18.11).** Ersetzt 2.18.10 als Stand „fertig für den Betriebstest“ (Pro-Sperre, Nacht-Auftrag, einheitliches Logo, Nova-Liste enthalten).

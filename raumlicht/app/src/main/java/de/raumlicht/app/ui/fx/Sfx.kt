@@ -25,9 +25,8 @@ class Sfx(context: Context) : SoundPlayer {
     @Volatile var master = 1f
     /** Eigene Lautstärke der Geräusche, 0..1 */
     @Volatile var level = 1f
-    private val audio = context.getSystemService(android.media.AudioManager::class.java)
-    /** Handy stumm oder auf Vibration geschaltet? Dann bleibt auch Raumlicht still. */
-    private fun muted() = runCatching { audio.ringerMode != android.media.AudioManager.RINGER_MODE_NORMAL }.getOrDefault(false)
+    // Wie laut es ist, bestimmt allein die Medien-Lautstärke des Handys (Lauter/Leiser-Tasten) – wie bei Musik und Videos.
+    // Der Klingelton-Schalter (stumm/Vibration) spielt keine Rolle mehr: Wer die Medien-Lautstärke aufdreht, will etwas hören.
 
     init {
         pool.setOnLoadCompleteListener { _, id, status -> if (status == 0) ready += id }
@@ -45,7 +44,7 @@ class Sfx(context: Context) : SoundPlayer {
 
     /** @param pitch 1 = normal, >1 höher (z. B. bei Serien) */
     override fun play(s: Sound, pitch: Float, volume: Float) {
-        if (!enabled || muted()) return
+        if (!enabled) return
         val id = ids[s] ?: return
         if (id !in ready) return
         val v = (volume * master * level).coerceIn(0f, 1f); if (v <= 0f) return
