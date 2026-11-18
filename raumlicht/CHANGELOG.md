@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.11 – Jede richtige Antwort zählt (18.11.2026)
+- **Mehrere Wege, alle richtig:** Eine Ebene lässt sich auf viele Arten aufschreiben – mit doppelten Zahlen oder mit umgedrehten Vorzeichen. Jede Fassung, die dieselbe Ebene beschreibt, wird als richtig gewertet; die Regler reichen dafür jetzt von −6 bis 6. Die Erfolgsmeldung sagt das auch.
+- **Eindeutiger Auftrag:** Bei „Normalenvektor“ (5-4) steht jetzt dabei, dass der Vektor nach unten zur Leinwand zeigen soll.
+- Ein neuer Dauertest prüft bei jeder Änderung, dass gleichwertige Antworten angenommen werden.
+
 ## 2.18.10 – Ein Logo überall, Nova kennt mehr Sätze vorab (18.11.2026)
 - **Ein Logo:** Das App-Symbol der Android-App, das Startbild und das Ladebild im Browser zeigen jetzt dasselbe Bild wie die WebApp und der Shop – Lux, die Lichtdrohne. Auf dem Handy ändert sich dadurch das Symbol auf dem Startbildschirm.
 - **Nova:** 522 typische Rückmeldungen auf Eingaben in den festen Aufgaben sind jetzt vorab vertont – sie kommen ohne Wartezeit und lassen sich mit „Alle Nova-Texte offline laden“ mitnehmen.

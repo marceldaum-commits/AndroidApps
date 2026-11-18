@@ -2,6 +2,30 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.11: „Zwei Wege, eine Kontrolle“ geprüft und abgesichert
+
+Marcel hat es direkt bestätigt. **Raumlicht 2.18.11 vom 18.11.2026, Web = Android (beide 2.18.11).** Ersetzt 2.18.10 als Stand „fertig für den Betriebstest“ (Pro-Sperre, Nacht-Auftrag, einheitliches Logo, Nova-Liste enthalten).
+
+**Neuer automatischer Test `MehrdeutigTest`** über alle 136 festen Aufgaben, 28 Prüfungsteile, 9 Schritte und die 29 Übungs-Vorlagen (je 40 Zufalls-Fassungen):
+- **Ebenen (Regler n⃗, c):** Jedes ganzzahlige Vielfache der gekürzten Gleichung, auch mit umgedrehten Vorzeichen, muss angenommen werden, sobald es sich einstellen lässt – und die Fassung mit umgedrehten Vorzeichen muss sich einstellen lassen.
+- **Richtungen (Regler d⃗):** Jedes einstellbare positive Vielfache muss angenommen werden. Wo die Gegenrichtung abgelehnt wird, muss die Aufgabe in einer begründeten Liste stehen und der Auftrag das Ziel nennen.
+- Ergebnis: 8 Ebenen- und 47 Richtungs-Aufgaben, **108 gleichwertige Antworten, alle angenommen.**
+
+**Liste der Fälle:**
+| Fall | Lösung |
+|---|---|
+| Ebenen in Koordinatenform: 5-3, 5-5, 9-4, 18-1, 18-2, 18-4, 18-6, abi-zelt-b | (a) Kontrolle prüft mathematisch (alle gegebenen Punkte liegen in der Ebene) – jedes Vielfache gilt. Erfolgsmeldung nennt das jetzt. |
+| **18-1** – Fassung mit umgedrehten Vorzeichen (−3\|−2\|−6; −6) war nicht einstellbar | **behoben:** Regler für n⃗ reicht bei allen Ebenen-Aufgaben von −6 bis 6 (vorher −5 bis 6) |
+| **5-4** Normalenvektor: (−1\|−1\|2) steht auch senkrecht, war aber nicht einstellbar und nicht ausgeschlossen | (b) **eindeutig gemacht:** „… senkrecht steht und nach unten zeigt (x₃ < 0)“ |
+| Richtungen auf ein Ziel (3-1, 3-2, 3-5, Üben „Zielen“ u. a.) | (a) jedes positive Vielfache gilt; die Gegenrichtung verfehlt das Ziel wirklich – der Auftrag nennt es („zum Ring“) |
+| Schnittgerade zweier Ebenen: 10-4, 19-3 | (b) eindeutig: „in den Raum hinein“ bzw. „nach oben (x₃ > 0)“; eigene Rückmeldung; Erfolgsmeldung „Jedes Vielfache … dieselbe Gerade“ |
+| Zwei Lösungen einer Gleichung: 9-3 (Kugel: „zuerst“), 9-6 („so weit nach oben“), 14-1 („positive Stelle“), 14-3 („Tiefpunkt“) | (b) der Auftrag nennt die gemeinte Lösung (per Test festgehalten für 10-4, 14-1, 14-3, 19-3) |
+| Punkt auf einer Geraden/Ebene frei wählbar (Üben „offener Punkt“) | (a) jeder passende Punkt gilt (6 bis 62 angenommene Punkte je Fassung) |
+| Parameterform ↔ Koordinatenform | kommt als Eingabe nicht doppelt vor: Gefragt ist jeweils genau eine Form, die Formelzeile zeigt sie |
+
+Nicht automatisch prüfbar (bleibt Lese-Prüfung): ob ein *anderer Rechenweg* zu einer Zahl führt, die die Kontrolle nicht kennt – bei Zahlen-Aufgaben gibt es genau einen Wert; benannte typische Fehler bekommen eigene Hinweise.
+Geprüft: 156 Logik-Tests, 148 App-Tests, Lint beider Fassungen, Browser. Nova-Abdeckung der erweiterten Liste: Messung läuft, Nachtrag folgt.
+
 ## 18.11.2026 – Raumlicht 2.18.10: einheitliches Logo + vorhersehbare Laufzeit-Sätze in der Liste
 
 Marcel hat beides direkt bestätigt (Logo: ja; Nova vorab: „sparsam“). **Raumlicht 2.18.10 vom 18.11.2026, Web = Android (beide 2.18.10).** Ersetzt 2.18.9 als Stand „fertig für den Betriebstest“
