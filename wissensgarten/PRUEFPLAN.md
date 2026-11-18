@@ -4,26 +4,33 @@ Dauerregel von Marcel (18.11.2026, über den Leitstand): **Jede Woche neuer Inha
 
 Stand: 18.11.2026 · 72 freie Wissenspakete mit 2472 Karten, dazu die Plus-Pakete. Die Plus-Pakete liegen privat im Repository Website_Backup im Ordner `wissensgarten-plus/` und werden im Block ihres Fachs mitgeprüft. Ihr Inhalt steht nie in öffentlichen Dateien, Korrekturen dazu nur mit Karten-ID.
 
-## 1. Jede Woche: neuer Inhalt
+## 1. Dienstag und Freitag: großes Inhaltsupdate
 
-- **Mindestens eine neue Inhaltseinheit pro Woche:** ein neues Wissenspaket oder 15–30 neue Karten in einem bestehenden Paket. Jede Karte hat ein Merkbild (`img`), die Antwort ist eindeutig, und die Klassenstufe passt.
-- **Mittwoch auf test** (`wissensgarten-test`), kurzer Eintrag in `MELDUNG_AN_LEITSTAND.md` und im CHANGELOG. Live erst nach Freigabe durch den Leitstand.
-- **Pflicht bei jedem neuen Inhalt:**
-  - `VorlesenListeTest` neu laufen lassen, damit die Nova-Liste die neuen Texte enthält.
-  - Antwortprüfung (`AntwortKontrolleTest`) grün.
-  - Erklär-Szene (`intro`) und Theorie-Knopf beim neuen Paket vorhanden.
-- **Reihenfolge der Fächer** (damit alle Altersstufen drankommen): Grundschule Mathe → Grundschule Deutsch/Sachunterricht → Klasse 5–10 → Fremdsprachen → wieder von vorn. Wünsche von Marcel oder dem Leitstand gehen vor.
+Dauerregel von Marcel (18.11.2026, ersetzt „wöchentlich mittwochs“): **Jeden Dienstag und Freitag bis 16 Uhr ein großes Inhaltsupdate auf test**, dazu eine Meldung in `MELDUNG_AN_LEITSTAND.md`. Der Leitstand prüft am selben Tag und gibt frei.
 
-| Woche | Mittwoch auf test | Vorschlag |
-|---|---|---|
-| 47 | 25.11.2026 | Grundschule Mathe: Sachaufgaben / Rechengeschichten |
-| 48 | 02.12.2026 | Sachunterricht: Winter und Weihnachten in aller Welt |
-| 49 | 09.12.2026 | Klasse 5–6: Dezimalzahlen |
-| 50 | 16.12.2026 | Englisch Grundschule: Winter, Kleidung, Feiertage |
-| 51 | 23.12.2026 | Deutsch Grundschule: Wortfamilien und Wortfelder |
-| 52 | 30.12.2026 | Allgemeinwissen: Jahresrückblick, Kalender, Jahreszeiten |
+- **Was drin ist, entscheiden wir nach Wirkung:**
+  - neue Themen und Karten,
+  - bestehende Themen ausweiten,
+  - bestehende Karten korrigieren und vervollständigen,
+  - neue Optionen in der App.
+- **Pflicht (Marcel wörtlich): „mathematisch korrekt, vollständig, nachvollziehbar. Keine Abkürzungen, weil die Schüler damit lernen.“** Das gilt für alle Fächer:
+  - fachlich korrekt,
+  - vollständige Erklärungen (Theorie-Knopf bzw. `info`),
+  - Rechenwege mit allen Schritten,
+  - jedes Ergebnis nachgeprüft (bei Mathe nachgerechnet, sonst mit Quelle).
+- **Jede neue Karte:** Merkbild (`img`), eindeutige Antwort, passende Klassenstufe. Dazu `VorlesenListeTest` neu laufen lassen (Nova-Liste) und `AntwortKontrolleTest` grün.
+- **Meldung:** was neu ist, wie viele Karten bzw. Aufgaben, wie geprüft.
 
-Die Tabelle wird am Monatsende für die nächsten Wochen fortgeschrieben.
+| Termin | Vorschlag |
+|---|---|
+| Fr 20.11.2026 | Grundschule Mathe: Rechengeschichten (Sachaufgaben mit vollständigem Rechenweg) + Ergänzung fehlender Rechenwege im Einmaleins |
+| Di 24.11.2026 | Sachunterricht: Winter, Wetter, Wasser (mit Erklärungen) |
+| Fr 27.11.2026 | Klasse 5–6: Dezimalzahlen (alle Rechenschritte) |
+| Di 01.12.2026 | Englisch Grundschule: Winter, Kleidung, Feiertage |
+| Fr 04.12.2026 | Deutsch Grundschule: Wortfamilien und Wortfelder |
+| Di 08.12.2026 | Klasse 7–8: Prozentrechnung mit Rechenwegen ausweiten |
+
+Die Tabelle wird laufend fortgeschrieben; Wünsche von Marcel oder dem Leitstand gehen vor.
 
 ## 2. Jeden Monat in der letzten Woche: Prüfen und Beheben
 
@@ -68,5 +75,5 @@ Jede Karte wird damit alle vier Monate einmal gründlich angesehen. Was im Monat
 
 ## Nächste Termine
 
-- **25.11.2026:** erster wöchentlicher Inhalt auf test.
+- **Fr 20.11.2026:** erstes großes Inhaltsupdate auf test (danach jeden Dienstag und Freitag).
 - **23.–30.11.2026:** erste Monatsprüfung, Block A (Mathe) und Rundum-Prüfung.
