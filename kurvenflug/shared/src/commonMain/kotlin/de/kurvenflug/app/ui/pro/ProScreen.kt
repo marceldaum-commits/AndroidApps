@@ -94,7 +94,7 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
                 state.pro -> {
                     val until = state.license?.until?.let { CalDate.ofEpochDay(it) }
                     Text(if (until != null) "🏫 Schullizenz – gültig bis ${until.dayOfMonth}.${until.monthValue}.${until.year}, im Unterricht und zu Hause"
-                        else if (state.viaPlay) "Gekauft über Google Play. Danke! 💛" else "Freigeschaltet mit Code. Danke! 💛",
+                        else if (state.viaPlay) "Gekauft über Google Play. Danke! 💛" else if (de.kurvenflug.app.LocalPlatform.current.isWeb) "Freigeschaltet mit Code – gilt in der Web-App. Danke! 💛" else "Freigeschaltet mit Code. Danke! 💛",
                         color = Q.Green, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
                 }
                 !available -> Text("Pro kommt bald – bis dahin ist alles frei spielbar. 🎁", color = Q.Yellow, textAlign = TextAlign.Center)
@@ -131,7 +131,8 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
                 }
             }
             Text("Für Eltern: Einmalkauf ohne Abo. " + (if (shop?.acceptsCodes == false) "Der Kauf läuft über Google Play (Ihr Google-Konto). "
-                else "Der Kauf gilt für dieses Gerät bzw. diesen Browser, ohne Konto. ") +
+                else if (de.kurvenflug.app.LocalPlatform.current.isWeb) "Der Kauf gilt in der Web-App (in diesem Browser), ohne Konto. "
+                else "Der Kauf gilt für dieses Gerät, ohne Konto. ") +
                 "Es werden keine Daten über das Kind gespeichert – nur „Pro: ja“.",
                 style = MaterialTheme.typography.labelSmall, color = Q.Muted, textAlign = TextAlign.Center)
         }

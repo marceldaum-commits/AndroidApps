@@ -1,5 +1,7 @@
 # Kurvenflug in Google Play – Klick-Liste für Marcel
 
+> **Geparkt (Marcel 18.11.2026):** Für die nächsten 1–2 Monate gibt es nur die WebApp – kein Play, keine APK. Diese Anleitung gilt erst wieder, wenn es als Android-App weitergeht.
+
 Alles, was du brauchst, liegt im Repo unter `kurvenflug/store/` bzw. am GitHub-Release:
 
 | Was | Wo |

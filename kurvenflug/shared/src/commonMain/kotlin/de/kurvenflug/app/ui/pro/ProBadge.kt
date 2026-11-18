@@ -23,12 +23,12 @@ import de.kurvenflug.app.ui.theme.Q
 import de.kurvenflug.core.model.CalDate
 
 /** Art der Freischaltung, für Eltern lesbar – z. B. „Kauf über Google Play“ oder „Schullizenz bis 31.7.2027“. */
-fun ProState.kindText(): String {
+fun ProState.kindText(web: Boolean = false): String {
     val until = license?.until?.let { CalDate.ofEpochDay(it) }
     return when {
         viaPlay -> "Einmalkauf über Google Play – unbegrenzt"
         until != null -> "Schullizenz – gültig bis ${until.dayOfMonth}.${until.monthValue}.${until.year}"
-        license != null -> "Einmalkauf über die Website (Code) – unbegrenzt"
+        license != null -> if (web) "Einmalkauf (Code) – gilt in der Web-App, unbegrenzt" else "Einmalkauf über die Website (Code) – unbegrenzt"
         else -> ""
     }
 }
@@ -37,6 +37,7 @@ fun ProState.kindText(): String {
 @Composable
 fun ProBadge(state: ProState, modifier: Modifier = Modifier) {
     if (!state.pro) return
+    val web = de.kurvenflug.app.LocalPlatform.current.isWeb
     val glow by rememberInfiniteTransition(label = "pro").animateFloat(0.85f, 1f, infiniteRepeatable(tween(1400, easing = FastOutSlowInEasing), RepeatMode.Reverse), label = "glow")
     val gold = Color(0xFFFFD54A)
     Text("⭐ Pro aktiv", color = Color(0xFF2A1E00), fontWeight = FontWeight.Black, fontSize = 13.sp, maxLines = 1, softWrap = false,
@@ -45,5 +46,5 @@ fun ProBadge(state: ProState, modifier: Modifier = Modifier) {
             .background(Brush.horizontalGradient(listOf(gold, Color(0xFFFFB300), gold)))
             .border(1.dp, Color(0xFFFFF1B0), RoundedCornerShape(50))
             .padding(horizontal = 10.dp, vertical = 4.dp)
-            .semantics { contentDescription = "Kurvenflug Pro ist aktiv. " + state.kindText() })
+            .semantics { contentDescription = "Kurvenflug Pro ist aktiv. " + state.kindText(web) })
 }

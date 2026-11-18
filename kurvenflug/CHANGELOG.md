@@ -3,6 +3,14 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.12 – Kurvenflug als App installieren
+- Neuer Knopf „App installieren“ auf der Startseite und in den Einstellungen: Kurvenflug kommt mit eigenem Symbol auf den
+  Startbildschirm, startet ohne Browser-Leiste und auch ohne Internet. Auf Android-Handys öffnet der Knopf direkt die
+  Installation, auf iPhone und iPad zeigt er in drei Schritten, wie es geht („Teilen“ → „Zum Home-Bildschirm“).
+  Ist Kurvenflug schon installiert, verschwindet der Knopf.
+- Kurvenflug gibt es vorerst nur noch als WebApp; sie aktualisiert sich von selbst.
+- Kurvenflug Pro: Ein Freischalt-Code gilt in der Web-App.
+
 ## 2.5.11 – Musik und Klänge, Vorlesen pausiert
 - Das Vorlesen macht vorerst Pause. Kurvenflug setzt ganz auf Musik und Klänge: eigene Musik je Kapitel, Töne bei Start,
   Treffer, Fehlschuss, Stern und geschafftem Level. „Musik“ und „Geräusche“ lassen sich in den Einstellungen getrennt

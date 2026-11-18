@@ -108,6 +108,13 @@ class ScreenshotTest {
         SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "0.9.0", update = UpdateState.Idle, onBack = {}, onReset = {})
     }
 
+    @Test fun installCard() = shot("103_app_installieren") {
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp), verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(14.dp)) {
+            de.kurvenflug.app.ui.home.InstallCard("prompt", onInstall = {}, onLater = {})
+            de.kurvenflug.app.ui.home.InstallCard("ios", onInstall = {}, showGuide = true)
+        }
+    }
+
     @Test fun sine() = level("5-4", name = "12_sinus", values = mapOf("a" to 2.0, "b" to 1.0, "d" to -1.0), settle = 3500,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 

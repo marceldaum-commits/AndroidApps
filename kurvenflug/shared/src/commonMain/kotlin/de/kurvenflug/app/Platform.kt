@@ -34,6 +34,13 @@ interface Platform {
     val reader: de.kurvenflug.app.ui.fx.Reader? get() = null
     /** Startbildschirm offen? (WebApp: dort darf ein Update neu laden) */
     fun onHome(home: Boolean) {}
+    /**
+     * „App installieren“ (WebApp als PWA): "prompt" = der Browser bietet die Installation an (Android/Chrome, Edge),
+     * "ios" = iPhone/iPad – Anleitung „Teilen → Zum Home-Bildschirm“, "" = nichts anzeigen (schon installiert oder nicht möglich).
+     */
+    fun installMode(): String = ""
+    /** Installations-Dialog des Browsers öffnen (nur bei "prompt") */
+    fun install() {}
 }
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */

@@ -63,6 +63,8 @@ object WebPlatform : Platform {
     override val sfx: Sfx = WebSfx
     override val reader: de.kurvenflug.app.ui.fx.Reader? get() = if (de.kurvenflug.core.model.Nova.ENABLED) de.kurvenflug.app.ui.fx.WebReader else null
     override fun onHome(home: Boolean) { runCatching { jsAtHome(home) } }
+    override fun installMode(): String = runCatching { jsInstallMode() }.getOrDefault("")
+    override fun install() { runCatching { jsInstall() } }
     override fun shareText(text: String, title: String) = jsShare(text, title)
     override fun openUrl(url: String) = jsOpen(url)
 

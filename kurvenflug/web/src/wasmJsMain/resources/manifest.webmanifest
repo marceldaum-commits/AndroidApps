@@ -3,6 +3,7 @@
   "short_name": "Kurvenflug",
   "description": "Formeln steuern das Raumschiff: Mathe und Physik für Klasse 5–13. Ohne Werbung, ohne Anmeldung.",
   "lang": "de",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

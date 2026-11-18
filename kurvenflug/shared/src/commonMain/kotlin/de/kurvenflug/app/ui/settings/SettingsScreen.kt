@@ -52,6 +52,7 @@ fun SettingsScreen(
         }
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             val platform = de.kurvenflug.app.LocalPlatform.current
+            de.kurvenflug.app.ui.home.InstallOffer(onHome = false)
             if (platform.selfUpdate) PlatformUpdateSection(installed, update, autoUpdate, onAutoUpdate)
             // Welche Version läuft? (WebApp und Play: kein Update-Knopf, aber die Nummer soll sichtbar sein)
             else if (installed.isNotBlank()) Text("Kurvenflug Version $installed" + if (platform.isWeb) " · aktualisiert sich von selbst" else " · Updates über Google Play",
@@ -122,7 +123,7 @@ private fun ProCard(state: de.kurvenflug.app.ProState, onPro: () -> Unit) {
                     Text("Kurvenflug Pro", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     de.kurvenflug.app.ui.pro.ProBadge(state, Modifier.padding(start = 8.dp))
                 }
-                Text(if (state.pro) state.kindText() + " · danke! 💛" else "Oberstufe, Extrem-Stufen, mehr Spieler" + if (de.kurvenflug.app.LocalPlatform.current.proShop?.acceptsCodes == true) " · Code einlösen" else "",
+                Text(if (state.pro) state.kindText(de.kurvenflug.app.LocalPlatform.current.isWeb) + " · danke! 💛" else "Oberstufe, Extrem-Stufen, mehr Spieler" + if (de.kurvenflug.app.LocalPlatform.current.proShop?.acceptsCodes == true) " · Code einlösen" else "",
                     style = MaterialTheme.typography.bodySmall)
             }
             Text("›", fontSize = 24.sp, color = Q.Muted)

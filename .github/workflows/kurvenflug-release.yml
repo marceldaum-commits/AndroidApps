@@ -13,11 +13,10 @@
 name: Kurvenflug APK
 
 on:
+  # Pausiert (Marcel 18.11.2026): für die nächsten 1–2 Monate nur die WebApp – keine APK, kein Play.
+  # Der Android-Code bleibt im Repo; nur von Hand startbar. Später wieder den push-Auslöser einsetzen:
+  #   push: { branches-ignore: ["kurvenflug-test", "kurvenflug-live"], paths: ["kurvenflug/**", ".github/workflows/kurvenflug-release.yml", ".github/scripts/**"] }
   workflow_dispatch:
-  push:
-    # Die WebApp-Zweige (vom Leitstand ausgeliefert) brauchen keinen APK-Bau
-    branches-ignore: ["kurvenflug-test", "kurvenflug-live"]
-    paths: ["kurvenflug/**", ".github/workflows/kurvenflug-release.yml", ".github/scripts/**"]
 
 permissions:
   contents: write

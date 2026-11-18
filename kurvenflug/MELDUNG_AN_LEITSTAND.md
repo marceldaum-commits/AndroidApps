@@ -1,5 +1,29 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.12 – nur noch WebApp + Knopf „App installieren“ (Marcel 18.11.)
+1. **Android-Code bleibt, wird nicht mehr gebaut:** Workflow `.github/workflows/kurvenflug-release.yml` läuft nicht mehr bei
+   Push (nur noch von Hand, der alte Auslöser steht als Kommentar drin) – also keine neuen APK/AAB, kein Drive-Upload mehr.
+   Die Android-Tests laufen in meiner Prüfkette trotzdem weiter mit (kostet nichts, hält den Code gesund).
+2. **Wo bei KurvenFlug APKs liegen:**
+   - **GitHub-Releases** im Repo AndroidApps: alle Tags `kurvenflug-v*` (über 50, von v0.2.1 bis v2.5.11), je mit
+     `Kurvenflug-<version>.apk`, ab 0.2x auch `…-play.aab` und WebApp-zip. **Noch nicht gelöscht** – Löschen ist endgültig,
+     ich habe Marcel gefragt.
+   - **Google Drive:** Der Workflow lud die APK in den Drive-Ordner `KURVENFLUG_DRIVE_FOLDER`, sofern `GDRIVE_SA_JSON` gesetzt war –
+     bitte dort nachsehen (darauf habe ich keinen Zugriff).
+   - **In der WebApp:** keine Download-Links, keine Hinweise auf APK/Play (der Update-Knopf mit GitHub-APK gibt es nur in der
+     Android-Fassung). README und Store-Texte: oben als „nur WebApp / geparkt“ gekennzeichnet, keine Download-Links.
+3. **Auto-Update** wie in 2.5.10 (gilt für alle; Neuladen nur an sicheren Stellen).
+4. **„App installieren“** – Karte mit Knopf oben auf der Startseite (mit „Später“ für diese Sitzung) und ganz oben in den
+   Einstellungen. Sie erscheint nur, wenn die App nicht installiert ist (`display-mode: standalone`/`navigator.standalone`):
+   Android/Chrome/Edge über `beforeinstallprompt` (wird in index.html gleich beim Laden abgefangen) → Knopf öffnet den
+   Installations-Dialog; iPhone/iPad: Anleitung „Teilen → Zum Home-Bildschirm → Hinzufügen“; sonst (z. B. Firefox am PC) kein Knopf.
+   **Browser-Test:** Android-Fall → Dialog geöffnet, Karte danach weg; iPhone-Fall (iPhone 13) → Karte mit Anleitung; als
+   installierte App → keine Karte; **Offline-Start** nach einmaligem Laden ok. Manifest: `id`, `start_url ./`, `scope ./`,
+   `display standalone`, Icons 192/512 + **maskable 512** + SVG, apple-touch-icon.
+5. **Pro:** In der WebApp „Der Kauf gilt in der Web-App (in diesem Browser)“, „Freigeschaltet mit Code – gilt in der Web-App“.
+   (Die Texte im Shop/in der Code-Mail liegen bei euch – bitte dort ebenfalls „gilt in der Web-App“.)
+- Keine neuen Dateiendungen. versionCode 59 / Version 2.5.12, Prüfkette grün.
+
 ## ✅ 2.5.11 – Vorlesen abgeschaltet, Musik und Klänge bleiben (Marcel 18.11.) · Web = APK = Play
 1. **Ein Schalter, Code bleibt:** `Nova.ENABLED = false` (`core/model/Nova.kt`). Dann gibt es keinen Reader (Android und Web):
    keine 🔊-Knöpfe (Volt-Blasen, Theorie, Aufgaben), keine Karte „Vorlesen“ (Sprechtempo, Probe, „Alle Nova-Texte offline
