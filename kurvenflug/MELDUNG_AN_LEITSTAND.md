@@ -1,5 +1,49 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.23 – Theorie geprüft: Merkformel + Beispiel für jedes Level (Marcel 18.11.)
+**Prüfung:** alle 30 Kapitel (175 Level + Extrem-Stufen), dazu Bosse, Andromeda, Rettungen, Jahreszeiten-, Tages- und Zufallsmissionen
+(nutzen die Theorie des Kapitels mit derselben Bahnart). Je Level: Steht die nötige Formel mit allen einstellbaren Größen da?
+Gibt es ein durchgerechnetes Beispiel? Passt der Inhalt zur Überschrift? Ergebnis (Level je Kapitel in Klammern):
+| Kap. | Thema (Level) | Formel in Theorie vorher | jetzt (Merkformel + Beispiel) |
+|---|---|---|---|
+| 1 | Koordinaten (7) | ja (Regel), kein Beispiel | (x \| y) + Beispiel (3 \| −2) |
+| 2 | Geraden (8) | y = mx + b ja, **m = Δy:Δx fehlte** | + Steigung aus zwei Punkten + Beispiel |
+| 3 | Parabeln (6) | ja | + Beispiel a aus Scheitel und Ziel |
+| 4 | Wurf & Schwerkraft (6) | ja | + Beispiel w = v²·sin2α:g |
+| 5 | Wellen & Wachstum (7) | ja (Sinus, a·bˣ) | je Bahnart eigene Merkformel + Beispiel |
+| 6 | Schwerkraft-Schleuder (5) | nur „nah vorbei biegt stark“ | F = G·m·M:r² + Beispiel |
+| 7 | Rendezvous (7) | „gleichsetzen“ | Verfahren + durchgerechnetes Gleichungssystem |
+| 8 | Zuordnungen (6) | ja | y = k·x / y = k:x je Bahnart + Beispiel |
+| 9 | Pythagoras (5) | ja | r = √(Δx²+Δy²) + Beispiel |
+| 10 | Logarithmus (5) | ja, d nicht in Merkformel | y = log_b(x) + d + Beispiel |
+| 11 | Laser-Optik (5) | ja | + Beispiel |
+| 12 | Energie (5) | Merkformel ohne Weiten-Formel | + s = 2·√((h−h₀)·h₀) + Beispiel |
+| 13 | Weg & Zeit (4) | ja | + v = Δs:Δt + Beispiel |
+| 14 | Trigonometrie (7) | **nein – Spiegelgesetz/Pythagoras** | tan (Laser) bzw. sin/cos (Funk) je Bahnart + Beispiele |
+| 15 | Brüche & Kommazahlen (8) | **nein – Koordinaten-Regel** | Bruch = Zähler:Nenner + Beispiel |
+| 16 | Winkel (6) | **nein – Spiegelgesetz** | Winkelsumme 180°, Nebenwinkel + Beispiel |
+| 17 | Lichtbrechung (5) | **nein – Spiegelgesetz** | sin α₁ = n·sin α₂ + Beispiel |
+| 18 | Nullstellen (6) | allgemeine Parabel-Regel | pq-Formel, d = Mitte der Nullstellen + Beispiel |
+| 19 | Ableitung & Tangente (6) | ja | + Ableitungsregel + Beispiel |
+| 20 | Extrempunkte (6) | ja | + f''-Test + Beispiel |
+| 21 | Integral (6) | ja | + Stammfunktions-Regel + Beispiel |
+| 22 | Vektoren (5) | ja | + Beispiel |
+| 23 | Prozent & Zinseszins (6) | ja (allg. Exponentiell) | b = 1 ± p:100 + Zinseszins-Beispiel |
+| 24 | Beschleunigte Bewegung (6) | ja | + Beispiel |
+| 25 | Potenzfunktionen (5) | **d fehlte in Merkformel** | y = a·xⁿ + d + Beispiel |
+| 26 | Verschobene Wellen (5) | **c fehlte in Merkformel** | y = a·sin(b·(x−c)) + d + Beispiel |
+| 27 | Waagerechter Wurf (5) | **nein – Schrägwurf-Formel** | t = √(2h:g), v = x:t + Beispiel |
+| 28 | e-Funktion (6) | ja (exponentiell, e^(k·x)) | + k = ln(q):x + Beispiel |
+| 29 | Maßstab & Karten (5) | **nein – Koordinaten-Regel** | Kästchen = Länge:Maßstab + Beispiel |
+| 30 | Binomialverteilung (6) | ja | + kumuliert + Beispiel |
+
+**Überschriften geprüft:** e-Funktion/Exponentiell sind wirklich exponentiell (a·bˣ bzw. a·e^(k·x)); Potenzfunktionen ganzrational y = a·xⁿ + d;
+nichts vertauscht. Die Kapitel-Erklärungen (1–4 Punkte) bleiben, darunter jetzt **💡 Merkformel** und **✏️ Beispiel**.
+**Absicherung (neuer Test `TheoryFormulaTest`):** jedes Kapitel-Level und jede Mission hat Theorie + Merkformel + Beispiel; jeder Regler
+(m, b, a, d, e, c, k, n, p, r, h, v, α, s₀, v₀ …) kommt in der Merkformel vor; Kap. 14/16/17 nie das Spiegelgesetz, Kap. 27 nie die
+Schrägwurf-Formel, Kap. 28 immer e^(k·x), jede Exponential-Aufgabe a·bˣ.
+- Bildschirmfoto 98_theorie angesehen. versionCode 70 / 2.5.23, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.22 – Vorgaben aus dem Ratgeber übernommen (eure Nachricht 18.11. 14:37)
 1. **Zählung:** Sendung jetzt `{"app":"kurvenflug","v":"2.5.22","e":{…}}` (ohne `f`), je Ereignis höchstens 50. Gezählt werden:
    `start`, `level_start`, `level_geschafft`, `theorie`, `elternbereich` (Eltern-Tor bestanden), `pro_ansehen` (Pro-Seite geöffnet),

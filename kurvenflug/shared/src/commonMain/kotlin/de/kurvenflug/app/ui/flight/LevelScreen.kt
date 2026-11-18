@@ -632,6 +632,14 @@ fun TheoryOverlay(t: de.kurvenflug.core.model.Theory, onClose: () -> Unit) {
                     de.kurvenflug.app.ui.fx.SpeakButton({ f }, Modifier.padding(start = 6.dp))
                 }
             }
+            // Durchgerechnetes Beispiel – genau so rechnen die Level
+            t.example?.let { x ->
+                Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Green.copy(alpha = 0.10f))
+                    .border(1.dp, Q.Green.copy(alpha = 0.4f), RoundedCornerShape(16.dp)).padding(12.dp)) {
+                    Text("✏️ Beispiel", color = Q.Green, fontWeight = FontWeight.Bold)
+                    Text(x, color = Q.Text)
+                }
+            }
             NeonButton(onClick = onClose, color = Q.Cyan, modifier = Modifier.fillMaxWidth()) {
                 Text("Verstanden – weiter üben! 🚀", color = Q.Text, fontWeight = FontWeight.Bold)
             }

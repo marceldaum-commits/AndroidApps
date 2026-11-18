@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.23 – Theorie mit Merkformel und Rechenbeispiel
+- Jede Theorie zeigt jetzt die Formel, die man für die Aufgabe wirklich braucht, mit allen Größen – und darunter ein
+  durchgerechnetes Beispiel („✏️ Beispiel“), genau so, wie man es im Level rechnet.
+- Korrigiert: Bei Winkel, Lichtbrechung und Trigonometrie stand fälschlich das Spiegelgesetz, beim waagerechten Wurf die
+  Formel für den schrägen Wurf, bei Brüchen und Maßstab die Koordinaten-Regel. Jetzt steht überall die passende Formel.
+
 ## 2.5.22 – Elternbereich nach Vorgabe
 - Vor einer Klassenarbeit zeigt der Elternbereich neben der Probestunde auch den Easy-Learning-Crashkurs
   (kostenlos für Familien mit Stundenpaket). Die Probestunde öffnet passend vorausgefüllt mit Thema und Klasse.

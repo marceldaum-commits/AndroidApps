@@ -28,7 +28,7 @@ object ReadTexts {
     }
 
     /** Theorie am Stück */
-    fun theoryAll(t: Theory) = (listOf(t.title) + t.points + listOfNotNull(t.formula)).joinToString(" ") { it.trimEnd().let { p -> if (p.last() in ".!?:") p else "$p." } }
+    fun theoryAll(t: Theory) = (listOf(t.title) + t.points + listOfNotNull(t.formula, t.example?.let { "Beispiel: $it" })).joinToString(" ") { it.trimEnd().let { p -> if (p.last() in ".!?:") p else "$p." } }
 
     /** Level mit festem Inhalt (keine Zufalls-Level wie Tagesmission oder Generator) */
     fun fixedLevels(): List<Level> = Levels.all + Levels.chapters.mapNotNull { ChapterExtreme.forChapter(it.number) } +
