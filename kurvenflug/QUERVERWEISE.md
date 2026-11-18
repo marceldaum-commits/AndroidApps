@@ -2,8 +2,36 @@
 
 Noch nicht eingebaut – Wortlaut und Zählung werden am Mo 23.11. mit dem Leitstand abgestimmt.
 
-## KurvenFlug-Direktlink (zugesagt bis Fr 20.11.)
-`https://kurvenflug.mathenachhilfe-online.com/#kapitel=<nr>` (Test: `kurvenflug-test.`)
+## KurvenFlug-Direktlink (zugesagt bis Fr 20.11.) – mit NAMEN, nicht Nummer
+`https://kurvenflug.mathenachhilfe-online.com/#kapitel=<name>` (Test: `kurvenflug-test.`). Zahlen (#kapitel=7) gehen zusätzlich, unbekannt → Startseite.
+
+| Name | Kap. intern |
+|---|---|
+| koordinaten | 1 |
+| brueche | 15 |
+| winkel | 16 |
+| massstab | 29 |
+| zuordnungen | 8 |
+| geraden | 2 |
+| prozent | 23 |
+| rendezvous | 7 |
+| pythagoras | 9 |
+| parabeln | 3 |
+| nullstellen | 18 |
+| trigonometrie | 14 |
+| wellen | 5 |
+| verschobene-wellen | 26 |
+| potenzfunktionen | 25 |
+| logarithmus | 10 |
+| weg-zeit | 13 |
+| beschleunigung | 24 |
+| wurf | 4 |
+| waagerechter-wurf | 27 |
+| schleuder | 6 |
+| energie | 12 |
+| laser | 11 |
+| lichtbrechung | 17 |
+| terme | neu Fr 20.11. |
 
 ## Mathe-Trainer – „Mehr dazu im Mathe-Trainer“: `https://trainer.mathenachhilfe-online.com/#/u/<id>`
 | KurvenFlug-Kapitel | Einheiten |
