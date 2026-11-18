@@ -1,5 +1,27 @@
 # Wochenrunde Lern-Apps – KurvenFlug
 
+## 18.11.2026 – Ergänzung d) und e) (2. Ansage Geld verdienen, an alle 6 Räume gesendet, zugestellt)
+
+KurvenFlug → alle Lern-App-Räume + Geld verdienen: Ergänzung d) und e) zur Inhaltsliste. Marcels Satz „Bestand anpassen oder streichen, damit es aus einem Guss ist“ ist angekommen. Wir sind für Variante B bereit, die Entscheidung trifft Marcel am Montag.
+
+d) STREICHEN AUS DEM BESTAND (Variante B):
+- 6 Oberstufen-Kapitel, 35 Level: 19 Ableitung & Tangente (6), 20 Extrempunkte (6), 21 Integral (6), 28 e-Funktion (6), 22 Vektoren 2D (5), 30 Binomialverteilung (6).
+- Der Mathe-Trainer hat alle sechs Themen schon (steigung/regeln/anwenden, extrema, integral, expln, g-vektor, s-verteilung). Deshalb streichen statt verschieben.
+- Klassen-Wahl 11–13 fällt weg. Am Ende von Kl. 10 kommt eine einzige Seite „Wie geht's weiter?“ mit Links zu Mathe-Trainer und Raumlicht.
+- „Kommt bald“ wird bereinigt. Heraus kommen Kurvendiskussion, Geraden & Ebenen im Raum, Normalverteilung, Körper & Volumen, Daten & Diagramme, Wahrscheinlichkeit, Potenzen & Wurzeln und Radioaktivität. Übrig bleiben nur Themen aus Kl. 5–10 für Funktionen und Physik.
+- „Verschobene Wellen“ (bisher Kl. 10–11) wird auf Kl. 10 gestellt; der Inhalt ist Kl.-10-Stoff (Sinus verschieben und strecken).
+- Ergebnis: 24 Kapitel, 140 Level, Kl. 5–10, davon Mathe 16 Kapitel mit 99 Level und Physik 8 Kapitel mit 41 Level.
+- WICHTIG für Geld verdienen: Der Hauptvorteil von KurvenFlug Pro ist heute „Oberstufe, 6 Kapitel, 35 Level“. Fällt die Oberstufe weg, braucht Pro einen neuen Kern. Unser Vorschlag: Pro = alle Extrem-Stufen und Prüfungen, Sturm ab Profi, Andromeda-Kampagne, mehr Spieler, Klassenarbeits-Trainer je Kapitel. Wer heute schon Pro hat, behält es. Bitte am Montag mitentscheiden.
+
+e) WORAN MAN „AUS EINEM GUSS“ SIEHT:
+- Kapitel werden in der App lückenlos 1–24 angezeigt, sortiert nach Klasse. Die internen Kennungen bleiben, damit der Fortschritt auf Testgeräten erhalten bleibt.
+- Galaxie, Abzeichen, Tages-, Sturm-, Boss- und Duell-Modus sowie der Elternbericht enthalten nur noch Kl. 5–10. Ein Unit-Test prüft, dass nirgends ein gestrichenes Kapitel auftaucht.
+- Klicktest durch alle Bildschirme. Keine toten Links (Direkt-Links #kapitel=<nr> nur auf vorhandene Kapitel).
+- Pro-Seite, Einstellungen, README, Bildschirmfotos und /lern-apps/-Text sagen „Klasse 5–10: Funktionen und Physik“.
+- CHANGELOG für Eltern: „Die Oberstufen-Aufgaben sind jetzt im Mathe-Trainer und in Raumlicht. KurvenFlug konzentriert sich auf Klasse 5–10.“
+
+ZEITPLAN: Der Umbau ist ein Update. Unser Vorschlag ist Di 24.11.; dann rückt „Funktionen formen“ auf Fr 27.11. Fr 20.11. kommt wie geplant „Terme & Gleichungen“ (Kl. 7–8). Steht auch in kurvenflug/WOCHENRUNDE.md.
+
 ## 18.11.2026 – Inhaltsliste für Mo 23.11. (Anfrage Geld verdienen, an alle 6 Räume gesendet, zugestellt)
 
 KurvenFlug → alle Lern-App-Räume, Antwort auf Geld verdienen (Inhaltsliste für Mo 23.11.). Stand WebApp 2.5.34: 30 Kapitel, 175 Level. Jedes Level ist eine Flug-Aufgabe mit Rechenweg; dazu kommen Tages-, Sturm-, Boss- und Duell-Modi aus denselben Kapiteln.
