@@ -33,7 +33,7 @@ fun hostName(): String = js("location.hostname")
 fun kiServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlKiServer) || null")
 fun openLink(url: String): Unit = js("window.open(url, '_blank', 'noopener')")
 /** Ladebild sanft ausblenden; spätestens jetzt wird auch die 3D-Bühne angefordert */
-fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; s.style.opacity = '0'; s.style.pointerEvents = 'none'; setTimeout(() => { s.style.display = 'none'; }, 380); } if (window.__rlStage) window.__rlStage(); }")
+fun hideStartScreen(): Unit = js("{ const s = document.getElementById('start'); if (s && s.dataset.fertig !== '1') { s.dataset.fertig = '1'; if (window.__rlSchritt) window.__rlSchritt('Oberfläche sichtbar – Start geschafft'); s.style.opacity = '0'; s.style.pointerEvents = 'none'; setTimeout(() => { s.style.display = 'none'; }, 380); } if (window.__rlStage) window.__rlStage(); }")
 /** Der Seite sagen, ob gerade die Startseite offen ist – nur dort (oder im Hintergrund) lädt sie sich nach einem Update selbst neu */
 fun atHome(on: Boolean): Unit = js("{ window.__rlHome = on; if (on && window.__rlTry) window.__rlTry(); }")
 /** Heutiger Tag in Ortszeit, gezählt seit dem 1.1.1970 */

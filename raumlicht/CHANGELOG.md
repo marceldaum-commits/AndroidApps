@@ -2,6 +2,21 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.18 – Start auf dem iPhone: erst das Bild, dann laden (18.11.2026)
+- **Das Ladebild erscheint jetzt immer zuerst.** Alles Schwere wird erst danach geholt – so ist beim Öffnen nie nichts zu sehen.
+- **iPhone und iPad laden die beiden großen Teile der App nacheinander** statt gleichzeitig. Das braucht weniger Speicher auf einmal.
+- **Schrittprotokoll für die Fehlersuche:** Hängt man `?diag=1` an die Adresse, schreibt Raumlicht beim Start jeden Schritt sichtbar mit. Bricht ein Start ab, steht beim nächsten Öffnen auf dem Ladebild, wie weit er kam.
+
+## 2.18.17 – iPad und iPhone: gestrichelte Linien abgesichert (18.11.2026)
+- Auf iPads mit neuem Safari kann die Zeichenbibliothek manche Muster nicht anlegen. Für Farbverläufe gab es schon einen Ersatz; jetzt auch für gestrichelte Linien. Betroffen waren „Binomial-Labor“, „Zufallsmaschine“ und „Geisterfahrt“ – dort konnte der Bildschirm leer bleiben. Die Linien sind auf solchen Geräten jetzt durchgezogen.
+
+## 2.18.16 – Keine weiße Seite mehr auf dem iPhone (18.11.2026)
+- **Auf manchen iPhones blieb Raumlicht weiß.** Die Ursache auf dem echten Gerät kennen wir noch nicht sicher; wahrscheinlich nimmt das iPhone Raumlicht den Speicher oder die Grafik weg. Diese Version geht beides an.
+- **Weniger Speicher auf dem iPhone:** Raumlicht zeichnet dort mit doppelter statt dreifacher Schärfe. Das sieht man kaum, braucht aber nur gut halb so viel Bildspeicher.
+- **Immer eine Meldung statt einer leeren Seite:** Fällt die Anzeige aus oder bleibt der Start hängen, erscheint ein Hinweis mit Versionsnummer und dem Knopf „Neu laden“.
+- **Raumlicht merkt, wenn das Gerät es beendet hat,** sagt das beim nächsten Start und schaltet nach dem zweiten Mal von selbst in einen Sparmodus. Der Spielstand bleibt dabei erhalten.
+- Die Diagnose-Seite zeigt jetzt auch, was kurz vor einem solchen Abbruch passiert ist.
+
 ## 2.18.15 – Raumlicht als App installieren, KI-Tutor für alle (18.11.2026)
 - **Raumlicht gibt es vorerst nur noch als Web-App** – im Browser, auf Wunsch installiert wie eine App. Die Android-App (APK) wird in den nächsten ein bis zwei Monaten nicht weiter ausgeliefert.
 - **Neu: „App installieren“** in den Einstellungen. Ein Tipp legt Raumlicht auf den Startbildschirm; dann startet es im Vollbild und auch ohne Internet. Auf iPhone und iPad zeigt eine kurze Anleitung den Weg über „Teilen → Zum Home-Bildschirm“. Ist Raumlicht schon installiert, verschwindet der Hinweis.
