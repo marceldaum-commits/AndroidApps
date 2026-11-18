@@ -114,7 +114,7 @@ fun KurvenflugRoot(
     }
     // Vorlesen: Stimme und Tempo übernehmen; solange Volt spricht, wird die Musik leiser
     val readAloud by vm.settings.readAloud.collectAsStateWithLifecycle()
-    val reader = platform.reader
+    val reader = platform.reader.takeIf { de.kurvenflug.core.model.Nova.ENABLED }   // Vorlesen vorerst aus (Marcel 18.11.)
     LaunchedEffect(readAloud) { if (!readAloud) reader?.stop() }
     val readSpeed by vm.settings.readSpeed.collectAsStateWithLifecycle()
     LaunchedEffect(readSpeed) { reader?.setSpeed(readSpeed / 100f) }

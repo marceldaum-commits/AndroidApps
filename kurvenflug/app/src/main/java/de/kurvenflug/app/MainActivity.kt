@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
         if (savedInstanceState == null) { readShared(intent); readWidget(intent); readProLink(intent) }
         (application as KurvenflugApp).music.prepare(MusicMood.MENU, MusicMood.FLIGHT)
         storeUpdates // registriert sich vor onStart
-        val platform = AndroidPlatform(this, BuildConfig.VERSION_NAME, BuildConfig.SELF_UPDATE, app.sfx, app.music, proShop, app.reader)
+        val platform = AndroidPlatform(this, BuildConfig.VERSION_NAME, BuildConfig.SELF_UPDATE, app.sfx, app.music, proShop, if (de.kurvenflug.core.model.Nova.ENABLED) app.reader else null)
         setContent { KurvenflugRoot(vm.state, platform, incomingDuel, widgetLevel) }
     }
 
@@ -63,5 +63,5 @@ class MainActivity : ComponentActivity() {
         vm.checkForUpdateIfDue(BuildConfig.VERSION_NAME)
         storeUpdates.onStart()
     }
-    override fun onStop() { storeUpdates.onStop(); (application as KurvenflugApp).reader.stop(); (application as KurvenflugApp).music.onForeground(false); super.onStop() }
+    override fun onStop() { storeUpdates.onStop(); if (de.kurvenflug.core.model.Nova.ENABLED) (application as KurvenflugApp).reader.stop(); (application as KurvenflugApp).music.onForeground(false); super.onStop() }
 }

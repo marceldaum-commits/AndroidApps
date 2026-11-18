@@ -64,6 +64,7 @@ keine Standortfreigabe, keine digitalen Käufe. Erwartet: **USK ab 0 / PEGI 3**.
 **Nachrichten-Apps / Behördliche Apps / Finanz / Gesundheit / COVID:** jeweils **Nein**.
 
 **Datensicherheit:**
+> Stand 18.11.: Vorlesen abgeschaltet – der Nova-Teil in Klammern entfällt, solange `Nova.ENABLED = false`.
 1. „Erhebt oder teilt deine App erforderliche Arten von Nutzerdaten?“ → **Nein**.
    (Spielstand und Einstellungen bleiben auf dem Gerät. Die Internet-Berechtigung dient nur der Vorlese-Stimme Nova
    (abschaltbar): Die App lädt fertige Ansagen von stimmen.mathenachhilfe-online.com; Texte, die erst in der Aufgabe
@@ -109,6 +110,10 @@ Solange das Produkt nicht angelegt ist, bleibt in der App alles frei. Ab dem Anl
    (den Kauf wickelt Google ab, die App speichert nur „Pro: ja“). Store-Eintrag zeigt „In-App-Käufe“ automatisch.
 
 ## 6b. Neue Version hochladen – Klick-Liste (bereit: **2.4.2, versionCode 46**)
+> **Stand 18.11. (2.5.11): Vorlesen ist abgeschaltet** (Vorgabe Marcel, nur der Wissensgarten liest vor). Solange gilt:
+> Punkte 4–7 unten und der Nova-Teil der Datensicherheit entfallen – die App lädt nichts von stimmen.mathenachhilfe-online.com,
+> keine KI-Kennzeichnung nötig. Wird das Vorlesen wieder eingeschaltet (`Nova.ENABLED`), gelten die Punkte wieder.
+
 1. AAB holen: GitHub → Releases → `kurvenflug-v2.4.2` → **Kurvenflug-2.4.2-play.aab** (ca. 6,5 MB; später jeweils die neueste Version).
 2. Play Console → Testen → (interner bzw. geschlossener) Test → **Neuen Release erstellen** → AAB hochladen.
 3. Versionshinweise (de-DE): Text aus `store/de-DE/release-notes.txt` einfügen (unter 500 Zeichen).

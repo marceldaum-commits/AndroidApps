@@ -26,8 +26,8 @@ android {
         applicationId = "de.kurvenflug.app"
         minSdk = 26
         targetSdk = 36
-        versionCode = 57
-        versionName = "2.5.10"
+        versionCode = 58
+        versionName = "2.5.11"
     }
 
     // Zwei Varianten aus demselben Code:

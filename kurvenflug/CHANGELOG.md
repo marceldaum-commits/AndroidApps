@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.11 – Musik und Klänge, Vorlesen pausiert
+- Das Vorlesen macht vorerst Pause. Kurvenflug setzt ganz auf Musik und Klänge: eigene Musik je Kapitel, Töne bei Start,
+  Treffer, Fehlschuss, Stern und geschafftem Level. „Musik“ und „Geräusche“ lassen sich in den Einstellungen getrennt
+  abschalten. Volt plappert wieder in seiner Roboter-Sprache (abschaltbar).
+- Die App lädt dadurch nichts mehr von einem Stimmen-Server.
+
 ## 2.5.10 – Theorie im Rechen-Stern, WebApp immer aktuell
 - Im Rechen-Stern gibt es jetzt den Knopf „📖 Theorie nachlesen“. Wer bei einer Frage hängt (oder sie einfach verstehen
   will), liest dort die passende Erklärung mit Formel und Beispiel nach und rechnet dann weiter.

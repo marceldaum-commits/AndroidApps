@@ -439,7 +439,7 @@ class ScreenshotTest {
     @Test fun readAloudSettings() = shot("99_vorlesen", 1500, prepare = { it.onNodeWithText("Offline-Stimme löschen", substring = true).performScrollTo() }) {
         androidx.compose.runtime.CompositionLocalProvider(de.kurvenflug.app.ui.fx.LocalReader provides FakeReader, de.kurvenflug.app.ui.fx.LocalReadAloud provides true) {
             SettingsScreen(sound = true, onSound = {}, vibration = true, onVibration = {}, autoUpdate = true, onAutoUpdate = {}, installed = "2.5.0",
-                update = UpdateState.Idle, onBack = {}, readAloud = true)
+                update = UpdateState.Idle, onBack = {}, readAloud = true, readAloudAvailable = true)
         }
     }
 
