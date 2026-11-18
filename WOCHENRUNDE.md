@@ -2,6 +2,43 @@
 
 Neuester Beitrag oben.
 
+## Antwort an „Geld verdienen“ (Ansage Marcel 18.11., für Montag 23.11.)
+
+**a) Inhaltsliste** (Themen-Kennungen wie im Elternbericht).
+- Alle Aufgaben werden erzeugt: 29 Themen × 6 Stufen = 174 Stufen, jede Stufe mit unbegrenzt vielen Aufgaben.
+- Geprüft wurden 261 000 Aufgaben (1 500 je Stufe) mit dem unabhängigen Prüfer.
+- Textaufgaben kommen aus 169 Vorlagen.
+
+| Kennung | Rechenblitz-Themen (Klassen) |
+|---|---|
+| grundrechenarten | Plus, Minus, Lücke (Kl. 1–5), Verdoppeln (1–6), Klammern/Punkt vor Strich (3–8) |
+| einmaleins | Mal (2–6), Geteilt (2–5) + Merk-Training (Einmaleins, Geteilt, Plus bis 20) |
+| einheiten | Geld (1–6), Uhr & Zeit (2–6), Einheiten (3–9) |
+| brueche / dezimalzahlen | Brüche (5–8), Dezimal (5–8) + Merk-Decks Brüche ↔ Dezimal/Prozent |
+| prozent | Prozent (7–10), Zinsen (7–10) |
+| negative-zahlen | Negativ (6–9) |
+| potenzen | Potenzen (8–10), Zehnerpotenzen (9–10) + Merk-Deck Quadratzahlen |
+| terme / gleichungen / funktionen | Terme (7–9), Gleichung (7–10), Funktionen linear (8–10) |
+| runden / teilbarkeit | Runden & Überschlag (4–9), Teiler/ggT/kgV (5–10) |
+| geometrie | Geometrie (3–9), Kreis (8–10) |
+| dreisatz / wahrscheinlichkeit / statistik / folgen | Dreisatz (5–8), Wahrscheinlichkeit (6–10), Statistik (5–9), Zahlenfolgen (1–10) |
+| sachaufgaben | Textaufgaben (2–10), 169 Vorlagen |
+
+**b) Überschneidungen:**
+- **Mathe-Trainer (Kl. 5–10):** gleiche Themen, aber bei uns kurz und auf Tempo, dort ausführlich in Einheiten. Abgestimmt, mit Links in beide Richtungen.
+- **Wissensgarten:** Grundschul-Mathe. Dort Merken, bei uns schnelles Abrufen, verlinkt.
+- **KurvenFlug:** negative Zahlen und Potenzen. Dort visuell, bei uns Tempo, verlinkt.
+- **Raumlicht:** keine Überschneidung. Rechenblitz hat keine Oberstufe.
+
+**c) Abgeben / übernehmen:**
+- Abgeben: nichts.
+- Übernehmen: den Tempo-Teil von Potenzen und Zehnerpotenzen (von KurvenFlug) und die Tempo-Aufgaben aus „Kopfrechen-Tricks“ (von Wissensgarten).
+- Unsere Planungen (LGS mit 2 Unbekannten, quadratische Gleichungen im Kopf, Sachaufgaben) liegen nicht in den gesperrten Oberstufen-Gebieten.
+
+**Zu Punkt 3 (weniger gleichzeitig):**
+- Einverstanden. Falls Rechenblitz in einer Woche keinen Vorrang hat, machen wir nur Fehlerbehebungen und die Monatsprüfung.
+- Vorschlag: Vorrang für die Apps mit Lücken bei Probestunden-Fächern. Rechenblitz ist mit 29 Themen schon breit aufgestellt.
+
 ## 18.11.2026 (vorgezogene Runde)
 
 - **Stand:**
