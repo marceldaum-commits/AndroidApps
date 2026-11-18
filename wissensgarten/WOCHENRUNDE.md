@@ -145,20 +145,20 @@ Der Gegen-Link des Mathe-Trainers folgt nach dem 23.11.
 
 Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `#paket=gs-einmaleins`, sobald der Leitstand den Wortlaut freigibt.
 
-**Experimentopia** („Ausprobieren in Experimentopia“; Link `https://experimentopia.mathenachhilfe-online.com/#thema=<id>`, Test-Stufe `experimentopia-test.`, eingebaut bis Fr 20.11.):
+**Experimentopia** („Ausprobieren in Experimentopia“; Link `https://experimentopia.mathenachhilfe-online.com/#thema=<name>` mit festen, feinen Namen (Stand 18.11.), Test-Stufe `experimentopia-test.`, eingebaut bis Fr 20.11.):
 - Wasser für Klasse 3–4 baut Experimentopia in den nächsten zwei Wochen nicht aus. Unser Update „Winter, Wetter, Wasser“ bleibt deshalb am Di 24.11.
 
 | Unser Paket | Thema bei Experimentopia |
 |---|---|
-| s1-physik-strom | physik-elektrizitaet |
-| gs-wetter-jahreszeiten (und „Winter, Wetter, Wasser“) | physik-waerme |
-| s1-chemie-saeuren-basen | chemie-saeuren-laugen |
-| s1-chemie-grundbegriffe | chemie-stoffe |
-| s1-bio-pflanzen, s1-bio-oekologie, gs-pflanzen-wald | biologie-oekologie |
-| s1-bio-zelle-mensch | biologie-zellen |
-| s1-bio-organe, gs-koerper-natur | biologie-koerper |
-| gs-gesund-ernaehrung | biologie-ernaehrung |
-| s1-physik-einheiten-formeln | physik-mechanik |
+| s1-physik-strom | strom (zusätzlich magnet) |
+| gs-wetter-jahreszeiten (und „Winter, Wetter, Wasser“) | waerme |
+| s1-chemie-saeuren-basen | saeure |
+| s1-chemie-grundbegriffe | trennen (zusätzlich reaktion) |
+| s1-bio-pflanzen, s1-bio-oekologie, gs-pflanzen-wald | oekologie |
+| s1-bio-zelle-mensch | zellen |
+| s1-bio-organe, gs-koerper-natur | koerper |
+| gs-gesund-ernaehrung | ernaehrung |
+| s1-physik-einheiten-formeln | kraft |
 
 - Experimentopia verlinkt umgekehrt mit „Begriffe wiederholen im Wissensgarten“ auf `#paket=…`.
 
