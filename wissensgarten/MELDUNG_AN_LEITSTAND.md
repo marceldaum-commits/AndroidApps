@@ -1,5 +1,19 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.5 vom 18.11.2026 (Web = Android): einheitliches Logo
+
+- **Schon gleich waren:**
+  - Android-Symbol (`ic_launcher_foreground`, adaptiv und einfarbig)
+  - Android-Splash (`windowSplashScreenAnimatedIcon`, gleiche Zeichnung)
+  - PWA-Symbole und Favicon (`icons/icon-192/512/maskable`, gleiche Zeichnung)
+- **Abweichend und jetzt angeglichen:**
+  - **WebApp-Ladebildschirm** zeigte 🐝 → jetzt `icons/icon-192.png`.
+  - **Willkommensbildschirm (App und Web)** zeigte drei animierte Pflanzen → jetzt das Logo. Es ist als gemeinsame Compose-Zeichnung `AppLogo` umgesetzt, aus denselben Pfaden wie das App-Symbol, und wächst sanft aus der Erde.
+  - **Teilen-Bilder Postkarte und Urkunde** trugen nur den Schriftzug → jetzt Logo + „Wissensgarten“.
+- **Bewusst unverändert:** Brummi (die Hummel) bleibt die Figur in der App, ist aber kein Logo. Einen App-Kopf mit Logo gibt es nicht; der Garten-Kopf zeigt das Profilbild des Kindes.
+- **Bildschirmfotos angesehen:** `01_willkommen`, `46_postkarte`, `47_urkunde`.
+- Tests und Lint grün.
+
 ## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.4 vom 17.11.2026 (Web = Android)
 
 **1) Aufgaben geprüft:** Alle 2 923 Karten (2 472 frei, 451 Plus) wurden automatisch geprüft (Skript, alle Rechnungen nachgerechnet, Ablenker-Paare aller Zufallsziehungen) und dann von Hand gelesen.
