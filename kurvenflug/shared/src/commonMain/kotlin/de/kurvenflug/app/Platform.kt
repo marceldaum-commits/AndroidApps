@@ -44,6 +44,14 @@ interface Platform {
     /** Anonyme Nutzungszählung: Ereignis zählen ([de.kurvenflug.core.model.UsageCount.EVENTS]); gesendet wird nur, wenn [setCounting] an ist */
     fun count(event: String) {}
     fun setCounting(on: Boolean) {}
+    /** „Eltern-Handy koppeln“ (nur WebApp): null = nicht möglich; "" = nicht gekoppelt; sonst der Link fürs Eltern-Handy */
+    fun parentLink(): String? = null
+    /** Koppeln (Schlüssel entstehen im Browser), gibt den Link zurück */
+    fun parentPair(nick: String): String = ""
+    fun parentUnpair() {}
+    fun parentNick(): String = ""
+    /** Neuer Bericht (JSON) – wird verschlüsselt und nach der Lernsitzung hochgeladen */
+    fun parentReport(json: String) {}
 }
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */

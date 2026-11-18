@@ -214,6 +214,21 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     // Elternbereich nur hinter dem Eltern-Tor (dort stehen Angebote für Eltern – nie für Kinder sichtbar)
     var parentGate by remember { mutableStateOf(false) }
     if (parentGate) de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { parentGate = false }, why = "Der Elternbereich ist für Erwachsene.") { parentGate = false; platform.count("elternbereich"); nav.goOnce(Routes.PARENT) }
+    // Eltern-Handy koppeln: solange gekoppelt, hält die App den Bericht (letzte 14 Tage) aktuell; gesendet wird beim Verlassen (kf.js)
+    var parentLink by remember { mutableStateOf(platform.parentLink()) }
+    if (!parentLink.isNullOrEmpty()) {
+        val reportStart = remember { de.kurvenflug.core.model.CalDate.startOfToday() }
+        val reportPlays by remember { vm.weekPlays(reportStart - (de.kurvenflug.core.model.ParentReport.DAYS - 1) * de.kurvenflug.core.model.Weekly.DAY) }.collectAsStateWithLifecycle(emptyList())
+        val reportProgress by vm.progress.collectAsStateWithLifecycle()
+        val reportGrade by vm.settings.grade.collectAsStateWithLifecycle()
+        LaunchedEffect(reportPlays, reportProgress, reportGrade, parentLink) {
+            val now = de.kurvenflug.core.model.nowMillis()
+            platform.parentReport(de.kurvenflug.core.model.ParentReport.json(
+                reportPlays.map { de.kurvenflug.core.model.PlayRecord(it.levelId, it.stars, it.attempts, it.seconds, it.at) },
+                reportProgress.mapValues { it.value.stars }, now, de.kurvenflug.core.model.CalDate.startOfToday(now),
+                de.kurvenflug.core.model.utcOffsetMinutes(now), reportGrade, platform.parentNick()))
+        }
+    }
     // Anonyme Nutzungszählung: Level-Abschlüsse aus dem Spielstand
     LaunchedEffect(Unit) { vm.events = platform::count }
     NavHost(nav, Routes.HOME,
@@ -389,7 +404,11 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                     onExam = { vm.settings.setExamUntil(if (it) day + de.kurvenflug.core.model.ParentOffers.EXAM_DAYS else 0L) },
                     onHideHint = { vm.settings.setTutorHintOff(true) },
                     onHintSeen = { if (vm.settings.tutorHintShown != day) vm.settings.tutorHintShown = day },
-                    onCounting = vm.settings::setAnonCount, onCount = platform::count))
+                    onCounting = vm.settings::setAnonCount, onCount = platform::count,
+                    pairLink = parentLink, pairNick = remember(parentLink) { platform.parentNick() },
+                    onPair = { nick -> parentLink = platform.parentPair(nick) },
+                    onUnpair = { platform.parentUnpair(); parentLink = platform.parentLink() },
+                    onShare = { link -> platform.shareText(link, "Kurvenflug – Lernbericht") }))
         }
         composable(Routes.RESULTS) { de.kurvenflug.app.ui.together.ResultsBoard({ nav.popSafe() }) }
         composable(Routes.STICKERS) {

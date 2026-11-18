@@ -25,7 +25,7 @@ data class WeekSummary(
 object Weekly {
     const val DAY = 86_400_000L
 
-    private fun chapterOf(levelId: String): Chapter? {
+    fun chapterOf(levelId: String): Chapter? {
         val n = when {
             Learning.isReview(levelId) -> levelId.removePrefix(Learning.PREFIX).substringBefore('-').toIntOrNull()
             else -> Levels.byId(levelId)?.chapter

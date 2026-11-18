@@ -106,6 +106,60 @@
   }
   KF.toast = toast;
 
+  // ------------------------------------------------------------ Eltern-Handy koppeln (Ende-zu-Ende verschlüsselt)
+  // id, schreib und key entstehen hier per crypto.getRandomValues und liegen nur in diesem Browser. Der Link für das Eltern-Handy
+  // trägt id und key nach „#“ – dieser Teil geht nie an einen Server. Hochgeladen wird nur „iv.ciphertext“ (AES-GCM-256).
+  var E = { id: 'kf.eltern.id', w: 'kf.eltern.schreib', k: 'kf.eltern.key', n: 'kf.eltern.name', t: 'kf.eltern.zuletzt' };
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+  function b64u(bytes) { var s = ''; for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
+  function unb64u(t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; var s = atob(t), b = new Uint8Array(s.length); for (var i = 0; i < s.length; i++) b[i] = s.charCodeAt(i); return b; }
+  function rnd(n) { var b = new Uint8Array(n); crypto.getRandomValues(b); return b64u(b); }
+  // Test-Stufe (…-test, localhost) → trainer-test / staging; sonst trainer / www
+  var testStage = /-test\.|localhost|127\.0\.0\.1/.test(location.hostname);
+  var ELTERN_API = (testStage ? 'https://trainer-test.mathenachhilfe-online.com' : 'https://trainer.mathenachhilfe-online.com') + '/eltern/v1/b/';
+  var ELTERN_PAGE = (testStage ? 'https://staging.mathenachhilfe-online.com' : 'https://www.mathenachhilfe-online.com') + '/eltern-bericht/#';
+  KF.elternLink = function () { var id = lsGet(E.id), k = lsGet(E.k); return id && k ? ELTERN_PAGE + id + '.' + k : ''; };
+  KF.elternNick = function () { return lsGet(E.n) || ''; };
+  KF.elternPair = function (nick) {
+    if (!lsGet(E.id)) { lsSet(E.id, rnd(16)); lsSet(E.w, rnd(16)); lsSet(E.k, rnd(32)); lsSet(E.t, null); }
+    lsSet(E.n, nick ? String(nick).slice(0, 30) : null);
+    pendingFirst = true;
+    return KF.elternLink();
+  };
+  KF.elternUnpair = function () {
+    var id = lsGet(E.id), w = lsGet(E.w);
+    if (id && w) fetch(ELTERN_API + id, { method: 'DELETE', headers: { 'X-Schreib': w }, credentials: 'omit', keepalive: true }).catch(function () {});
+    [E.id, E.w, E.k, E.n, E.t].forEach(function (k) { lsSet(k, null); });
+    readyBody = null; reportJson = null;
+  };
+  var reportJson = null, readyBody = null, pendingFirst = false, encrypting = null;
+  function encrypt(json) {
+    var k = lsGet(E.k); if (!k || !window.crypto || !crypto.subtle) return Promise.resolve(null);
+    var iv = new Uint8Array(12); crypto.getRandomValues(iv);
+    return crypto.subtle.importKey('raw', unb64u(k), { name: 'AES-GCM' }, false, ['encrypt'])
+      .then(function (key) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, new TextEncoder().encode(json)); })
+      .then(function (ct) { var body = b64u(iv) + '.' + b64u(new Uint8Array(ct)); return body.length <= 24 * 1024 ? body : null; })
+      .catch(function () { return null; });
+  }
+  function upload(force) {
+    var id = lsGet(E.id), w = lsGet(E.w); if (!id || !w || !readyBody) return;
+    var last = +(lsGet(E.t) || 0);
+    if (!force && Date.now() - last < 10 * 60 * 1000) return;   // höchstens alle 10 Minuten
+    var body = readyBody; lsSet(E.t, String(Date.now()));
+    fetch(ELTERN_API + id, { method: 'PUT', headers: { 'X-Schreib': w, 'Content-Type': 'text/plain' }, body: body, credentials: 'omit', keepalive: true })
+      .then(function (r) { if (!r.ok) lsSet(E.t, String(last)); }, function () { lsSet(E.t, String(last)); });
+  }
+  // Neuer Bericht aus der App: gleich verschlüsseln, damit er beim Verlassen sofort gesendet werden kann
+  KF.elternReport = function (json) {
+    if (!lsGet(E.id)) return;
+    reportJson = json;
+    encrypting = encrypt(json).then(function (b) { if (b && json === reportJson) { readyBody = b; if (pendingFirst) { pendingFirst = false; upload(true); } } });
+  };
+  function elternLeave() { if (lsGet(E.id)) upload(false); }
+  window.addEventListener('pagehide', elternLeave);
+  document.addEventListener('visibilitychange', function () { if (document.hidden) elternLeave(); });
+
   // ------------------------------------------------------------ Anonyme Nutzungszählung (nur wenn Eltern sie einschalten)
   // Die App liefert beim Verlassen/Verstecken der Seite die Ereignisliste (Text); hier wird sie einmal per sendBeacon geschickt –
   // ohne Cookies, ohne Kennung. Ist der Zähler (noch) nicht erreichbar, geht der Aufruf still ins Leere.
