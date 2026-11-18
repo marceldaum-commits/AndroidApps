@@ -2443,4 +2443,12 @@ I18N.add('en', {"% sind":"% are",
 "Neue Version {} geladen ✓":"New version {} loaded ✓",
 "Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"The web app now fetches new versions even more reliably by itself – never in the middle of a round",
 "Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon":"Brand-new music: a modern sound with reverb, pads and beats – lo-fi in the menu, pop while practising, dance in the Blitz round, trap in the dungeon",
-"Vorlesen ist vorerst ausgeschaltet – dafür gibt es die neue Musik und Klänge":"Reading aloud is switched off for now – enjoy the new music and sounds instead"});
+"Vorlesen ist vorerst ausgeschaltet – dafür gibt es die neue Musik und Klänge":"Reading aloud is switched off for now – enjoy the new music and sounds instead",
+"App installieren":"Install app",
+"📱 App installieren":"📱 Install app",
+"Auf den Startbildschirm – startet wie eine App, auch offline":"On your home screen – opens like an app, even offline",
+"📱 Rechenblitz wird installiert":"📱 Installing Rechenblitz",
+"Gilt in der Web-App auf diesem Gerät – für alle Profile":"Valid in the web app on this device – for all profiles",
+"Rechenblitz Pro gilt in der Web-App auf diesem Gerät – für alle Profile. Danke für deine Unterstützung!":"Rechenblitz Pro is active in the web app on this device – for all profiles. Thank you for your support!",
+"gilt in der Web-App":"valid in the web app",
+"Neu: Knopf „App installieren“ – Rechenblitz kommt mit einem Tipp auf den Startbildschirm und startet wie eine App, auch offline":"New: “Install app” button – Rechenblitz lands on your home screen with one tap and opens like an app, even offline"});

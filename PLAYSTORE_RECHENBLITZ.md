@@ -1,3 +1,5 @@
+> **Pausiert (Marcel 18.11.2026):** Für die nächsten 1–2 Monate gibt es Rechenblitz nur als Web-App (PWA, „App installieren“). Keine APK und kein Play. Der Android-Code bleibt im Repo, wird aber nicht gebaut oder ausgeliefert.
+
 # Rechenblitz als Android-App (APK) und im Google Play Store
 
 Stand 16.11.2026, App 3.14.x. Marcels Google-Play-Konto ist bestätigt („Nun können wir veröffentlichen“). Die Play-Fassung ist vorbereitet, siehe unten.

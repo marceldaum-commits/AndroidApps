@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.26.9';
+const APP_VERSION = '3.26.10';
 const APP_DATE = '2026-11-18';
 const CHANGELOG = [
+  ['3.26.10', '2026-11-18', ['Neu: Knopf „App installieren“ – Rechenblitz kommt mit einem Tipp auf den Startbildschirm und startet wie eine App, auch offline']],
   ['3.26.9', '2026-11-18', ['Vorlesen ist vorerst ausgeschaltet – dafür gibt es die neue Musik und Klänge']],
   ['3.26.8', '2026-11-18', ['Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon']],
   ['3.26.7', '2026-11-18', ['Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde']],

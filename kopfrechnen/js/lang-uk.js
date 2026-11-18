@@ -2443,4 +2443,12 @@ I18N.add('uk', {"% sind":"% — це",
 "Neue Version {} geladen ✓":"Нову версію {} завантажено ✓",
 "Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"Веб-застосунок ще надійніше сам завантажує нові версії – ніколи посеред раунду",
 "Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon":"Зовсім нова музика: сучасне звучання з ревербом, падами та бітом – lo-fi в меню, поп під час вправ, денс у бліц-раунді, треп у підземеллі",
-"Vorlesen ist vorerst ausgeschaltet – dafür gibt es die neue Musik und Klänge":"Читання вголос поки вимкнено – натомість є нова музика та звуки"});
+"Vorlesen ist vorerst ausgeschaltet – dafür gibt es die neue Musik und Klänge":"Читання вголос поки вимкнено – натомість є нова музика та звуки",
+"App installieren":"Встановити застосунок",
+"📱 App installieren":"📱 Встановити застосунок",
+"Auf den Startbildschirm – startet wie eine App, auch offline":"На головний екран – запускається як застосунок, навіть офлайн",
+"📱 Rechenblitz wird installiert":"📱 Rechenblitz встановлюється",
+"Gilt in der Web-App auf diesem Gerät – für alle Profile":"Діє у вебзастосунку на цьому пристрої – для всіх профілів",
+"Rechenblitz Pro gilt in der Web-App auf diesem Gerät – für alle Profile. Danke für deine Unterstützung!":"Rechenblitz Pro діє у вебзастосунку на цьому пристрої – для всіх профілів. Дякуємо за підтримку!",
+"gilt in der Web-App":"діє у вебзастосунку",
+"Neu: Knopf „App installieren“ – Rechenblitz kommt mit einem Tipp auf den Startbildschirm und startet wie eine App, auch offline":"Нове: кнопка «Встановити застосунок» – Rechenblitz одним дотиком з’являється на головному екрані й запускається як застосунок, навіть офлайн"});

@@ -1088,3 +1088,10 @@ button.badge{font:inherit;cursor:pointer}
 .nova-load { position: fixed; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 60; padding: 4px 10px; border-radius: 999px; background: var(--navy); color: #fff; box-shadow: var(--sh-act); font-size: .85rem; pointer-events: none; animation: novaPulse 1s ease-in-out infinite alternate; }
 @keyframes novaPulse { from { opacity: .55; } to { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .nova-load { animation: none; } }
+/* „App installieren“ auf der Startseite (nur solange nicht installiert) */
+.install-cta { display: flex; align-items: center; gap: 12px; width: 100%; margin: 0 0 12px; padding: 12px 14px; border: 0; border-radius: 16px; background: linear-gradient(135deg, #ff9a3c, #ff6a00); color: #0a0f24; text-align: left; font: inherit; cursor: pointer; box-shadow: 0 4px 14px rgba(255, 106, 0, .3); }
+.install-cta[hidden] { display: none; }
+.install-cta .ic { font-size: 28px; line-height: 1; }
+.install-cta b { display: block; font-size: 1.05rem; }
+.install-cta small { display: block; font-size: .85rem; opacity: .85; }
+.install-cta:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }

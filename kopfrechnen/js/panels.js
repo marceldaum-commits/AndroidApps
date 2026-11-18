@@ -6,7 +6,18 @@
    ===================================================================== */
 const Sheet = { open: false, stack: [] };
 let installPrompt = null;
-addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; });
+addEventListener('beforeinstallprompt', e => { e.preventDefault(); installPrompt = e; renderInstall(); });
+// „App installieren“ (Leitstand 18.11.: nur noch Web-App/PWA): gut sichtbar auf der Startseite und in den Einstellungen,
+// nur solange die App nicht installiert ist. Android/Chrome/Edge: Installationsdialog des Browsers, iPhone/iPad: kurze Anleitung.
+const canInstall = () => !isStandalone() && (!!installPrompt || isIOS());
+async function doInstall() {
+  if (!installPrompt) return openSheet('install');
+  installPrompt.prompt(); const r = await installPrompt.userChoice.catch(() => null); installPrompt = null; renderInstall();
+  if (r && r.outcome === 'accepted') toast('📱 Rechenblitz wird installiert');
+}
+function renderInstall() { const b = $('installCta'); if (b) b.hidden = !canInstall(); }
+addEventListener('appinstalled', () => { installPrompt = null; renderInstall(); });
+document.addEventListener('click', e => { if (e.target.closest('#installCta, [data-install]')) { Sound.init(); Sound.click(); closeSheet(); doInstall(); } });
 const isStandalone = () => IS_NATIVE || matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const isIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 // Links zur Website mit Kennung, damit man in der Statistik sieht, dass Besucher aus der App kommen
@@ -46,9 +57,9 @@ const PANELS = {
       <div class="mlabel">Mehr</div>
       ${mi('profiles', profile().emoji, 'Wer übt?', 'Profile für Geschwister & Freunde')}
       ${mi('teacher', '👩‍🏫', 'Für Lehrkräfte', 'Aufträge verschicken, Arbeitsblätter drucken')}
-      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', RBPRO.ok ? 'Rechenblitz Pro <span class="pro-on static">Pro aktiv</span>' : 'Rechenblitz Pro', RBPRO.ok ? 'Auf diesem Gerät freigeschaltet – für alle Profile' : 'Profi-Stufe, mehr Profile, Elternbericht', RBPRO.ok ? 'pro-active' : '') : ''}
+      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', RBPRO.ok ? 'Rechenblitz Pro <span class="pro-on static">Pro aktiv</span>' : 'Rechenblitz Pro', RBPRO.ok ? 'Gilt in der Web-App auf diesem Gerät – für alle Profile' : 'Profi-Stufe, mehr Profile, Elternbericht', RBPRO.ok ? 'pro-active' : '') : ''}
       ${mi('settings', '⚙️', 'Einstellungen', 'Ton, Erinnerung, Klassenstufe, Design')}
-      ${!isStandalone() && (installPrompt || isIOS()) ? mi('install', '📱', 'Als App installieren', 'Auf den Startbildschirm – läuft auch offline') : ''}
+      ${!isStandalone() && (installPrompt || isIOS()) ? mi('install', '📱', 'App installieren', 'Auf den Startbildschirm – läuft auch offline') : ''}
       </div><p class="small muted" style="text-align:center;margin:14px 0 0">Rechenblitz ${versionLabel()}${n ? ` · ${n} Meldung${n > 1 ? 'en' : ''} wartet auf Versand` : ''}</p>` };
   },
 
@@ -93,7 +104,8 @@ const PANELS = {
   settings() {
     const sw = (id, on, t, d) => `<button class="setrow" data-set="${id}" role="switch" aria-checked="${on}"><div><b>${t}</b><span>${d}</span></div><span class="switch ${on ? 'on' : ''}"></span></button>`;
     return { title: 'Einstellungen', html: `<div class="menu">
-      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', RBPRO.ok ? 'Rechenblitz Pro <span class="pro-on static">Pro aktiv</span>' : 'Rechenblitz Pro', RBPRO.ok ? 'Auf diesem Gerät freigeschaltet – für alle Profile' : 'Freischalten oder Code einlösen', RBPRO.ok ? 'pro-active' : '') : ''}
+      ${canInstall() ? '<button class="btn primary block" data-install>📱 App installieren</button>' : ''}
+      ${proLocks() || RBPRO.ok ? mi('pro', '⭐', RBPRO.ok ? 'Rechenblitz Pro <span class="pro-on static">Pro aktiv</span>' : 'Rechenblitz Pro', RBPRO.ok ? 'Gilt in der Web-App auf diesem Gerät – für alle Profile' : 'Freischalten oder Code einlösen', RBPRO.ok ? 'pro-active' : '') : ''}
       ${sw('music', musicOn(), 'Musik', 'Eigene Blitz-Melodien im Menü und im Spiel')}
       <label class="setrow col vol"><span><b>Lautstärke Musik</b></span><input type="range" id="volMusic" min="0" max="100" step="5" value="${S.settings.musicVol ?? 50}"></label>
       ${sw('sound', S.settings.sound, 'Effekte', 'Klänge bei richtig, falsch, Serien und Sternen')}
@@ -223,10 +235,10 @@ const PANELS = {
   },
 
   install() {
-    return { title: 'Als App installieren', html: installPrompt
+    return { title: 'App installieren', html: installPrompt
       ? '<p>Installiere Rechenblitz auf deinem Gerät. Dann startet es wie eine App vom Startbildschirm und funktioniert auch ohne Internet.</p><button class="btn primary block" id="btnInstall">Jetzt installieren</button>'
       : '<p>So kommt Rechenblitz auf deinen Startbildschirm:</p><ol style="padding-left:20px;line-height:1.8"><li>Tippe in Safari unten auf <b>Teilen</b> (□↑).</li><li>Wähle <b>Zum Home-Bildschirm</b>.</li><li>Tippe auf <b>Hinzufügen</b>.</li></ol>',
-      init() { const b = $('btnInstall'); if (b) b.onclick = async () => { installPrompt.prompt(); await installPrompt.userChoice.catch(() => {}); installPrompt = null; closeSheet(); }; } };
+      init() { const b = $('btnInstall'); if (b) b.onclick = () => { closeSheet(); doInstall(); }; } };
   },
   shareBox(o) {
     return { title: 'Teilen', html: `<p class="small muted" style="margin:0 0 8px">Kopiere den Text und schicke ihn z. B. per WhatsApp oder E-Mail.</p><textarea class="sharebox" readonly rows="6">${esc(o.text)}</textarea>`, init() { const t = $('sheetBody').querySelector('textarea'); t.focus(); t.select(); } };

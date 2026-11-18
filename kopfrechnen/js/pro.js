@@ -95,11 +95,11 @@ PANELS.pro = ({ what } = {}) => {
     ['💾', 'Vorlagen speichern und teilen', '„Üben nach Wunsch“ als Vorlage, Link oder QR-Code']];
   const WHAT = { profi: 'Die Profi-Stufe gehört zu Rechenblitz Pro.', profile: `Mehr als ${RBPRO.freeProfiles} Profile gibt es mit Rechenblitz Pro.`, bericht: 'Der Elternbericht gehört zu Rechenblitz Pro.', vorlage: 'Vorlagen speichern und teilen gehört zu Rechenblitz Pro.' };
   return { title: '<span>⭐</span> <span>Rechenblitz Pro</span>', html: `<div class="pro">
-    ${own ? '<p class="pro-own"><span class="pro-on static">⭐ Pro aktiv</span> Rechenblitz Pro ist auf diesem Gerät freigeschaltet – für alle Profile. Danke für deine Unterstützung!</p>'
+    ${own ? '<p class="pro-own"><span class="pro-on static">⭐ Pro aktiv</span> Rechenblitz Pro gilt in der Web-App auf diesem Gerät – für alle Profile. Danke für deine Unterstützung!</p>'
       : `${what && WHAT[what] ? `<p class="pro-what">${WHAT[what]}</p>` : ''}${!locks ? '<p class="small muted">Zurzeit sind alle Pro-Funktionen kostenlos freigeschaltet.</p>' : ''}`}
     <div class="menu">${feats.map(([i, t, s]) => `<div class="mi static"><div class="ico">${i}</div><div><b>${t}</b><span>${s}</span></div></div>`).join('')}</div>
     <p class="small muted">Kostenlos bleiben alle 29 Themen in Stufe 1–5, alle Spiele, Lösungswege, Reise und Garten – ohne Werbung.</p>
-    ${!own && locks && !proPlay() ? `<button class="btn primary big" id="proBuy">Pro kaufen – ${RBPRO.price} einmalig</button><p class="small muted" style="text-align:center;margin:4px 0 0">inkl. MwSt. · kein Abo · Kauf auf unserer Website, der Code kommt per E-Mail</p>` : ''}
+    ${!own && locks && !proPlay() ? `<button class="btn primary big" id="proBuy">Pro kaufen – ${RBPRO.price} einmalig</button><p class="small muted" style="text-align:center;margin:4px 0 0">inkl. MwSt. · kein Abo · Kauf auf unserer Website, der Code kommt per E-Mail · gilt in der Web-App</p>` : ''}
     ${own ? '' : `<form class="pro-code" id="proForm" autocomplete="off"><label class="field"><span>Code schon gekauft? Hier einfügen:</span>
       <input id="proIn" placeholder="RB-…" autocapitalize="characters" spellcheck="false" translate="no"></label><button class="btn" type="submit">Einlösen</button></form>`}
   </div>`, init() {
