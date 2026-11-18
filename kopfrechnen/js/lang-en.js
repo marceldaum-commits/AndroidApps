@@ -2439,4 +2439,6 @@ I18N.add('en', {"% sind":"% are",
 "Noch mehr Sätze kommen sofort mit Nova: Einmaleins mit Lösungswegen, Merk-Karten und Blitz-Sprüche":"Even more sentences come straight from Nova: times tables with solutions, memory cards and Blitz's sayings",
 "Offline laden zeigt die Größe jetzt genauer an":"Offline download now shows the size more accurately",
 "Überschlag: Der Hinweis sagt jetzt genau, welche Zahl wie gerundet wird":"Estimating: the hint now says exactly how to round each number",
-"Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort":"Dice questions now ask for the average instead of “about” – so there is exactly one correct answer"});
+"Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort":"Dice questions now ask for the average instead of “about” – so there is exactly one correct answer",
+"Neue Version {} geladen ✓":"New version {} loaded ✓",
+"Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"The web app now fetches new versions even more reliably by itself – never in the middle of a round"});

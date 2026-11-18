@@ -2439,4 +2439,6 @@ I18N.add('uk', {"% sind":"% — це",
 "Noch mehr Sätze kommen sofort mit Nova: Einmaleins mit Lösungswegen, Merk-Karten und Blitz-Sprüche":"Ще більше речень одразу озвучує Nova: таблиця множення з розв’язками, картки для запам’ятовування та фрази Бліца",
 "Offline laden zeigt die Größe jetzt genauer an":"Завантаження офлайн тепер точніше показує розмір",
 "Überschlag: Der Hinweis sagt jetzt genau, welche Zahl wie gerundet wird":"Оцінка: підказка тепер точно каже, як округлити кожне число",
-"Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort":"Задачі з кубиком тепер питають про середнє, а не «приблизно», – тож є рівно одна правильна відповідь"});
+"Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort":"Задачі з кубиком тепер питають про середнє, а не «приблизно», – тож є рівно одна правильна відповідь",
+"Neue Version {} geladen ✓":"Нову версію {} завантажено ✓",
+"Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"Веб-застосунок ще надійніше сам завантажує нові версії – ніколи посеред раунду"});

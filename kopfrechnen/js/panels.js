@@ -639,20 +639,21 @@ async function checkForUpdate() {
 document.addEventListener('click', e => { if (e.target.closest('[data-upd]')) { Sound.click(); checkForUpdate(); } });
 
 /* ---------- Web-App: aktualisiert sich selbst, ohne Knopf (Marcel 15.11.) ----------
-   Beim Start und bei jeder Rückkehr in die App (höchstens alle 10 Min.) still die Version auf dem Server prüfen.
+   Beim Start, bei jeder Rückkehr in die App (Tab sichtbar / Fenster im Fokus, höchstens 1× pro Minute) und spätestens alle 30 Min.
+   still die Version auf dem Server prüfen (Leitstand 18.11.).
    Ist sie neuer: Service Worker aktualisieren und neu laden, sobald man auf der Startseite ist (nie mitten in einer Runde).
    Danach zeigt Blitz „Was ist neu?“. */
 let webUpd = { at: 0, ver: null };
 async function webAutoUpdate() {
   if (IS_NATIVE || !location.protocol.startsWith('http') || !navigator.onLine || document.hidden) return;
-  if (webUpd.ver || Date.now() - webUpd.at < 600000) return;
+  if (webUpd.ver || Date.now() - webUpd.at < 60000) return;
   webUpd.at = Date.now();
   try {
     const r = await fetch('js/changelog.js?u=' + Date.now(), { cache: 'no-store' });
     const v = r.ok ? ((await r.text()).match(/APP_VERSION = '([\d.]+)'/) || [])[1] : null;
     if (!v || verNum(v) <= verNum(APP_VERSION)) return;
     let tried = null; try { tried = sessionStorage.getItem('rbAutoUpd'); } catch {}
-    if (tried === v) return;   // schon einmal versucht (z. B. Cache hängt) → keine Neulade-Schleife
+    if (tried === v) return;   // schon einmal versucht (z. B. Cache hängt) → keine Neulade-Schleife; beim nächsten Öffnen neu
     try {   // neuen Service Worker holen und abwarten, bis er aktiv ist – sonst käme beim Neuladen noch die alte Fassung aus dem Speicher
       const reg = await navigator.serviceWorker?.getRegistration(); await reg?.update();
       const sw = reg && (reg.installing || reg.waiting);
@@ -668,7 +669,12 @@ function webUpdReload() {
   save(); location.reload();
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) webAutoUpdate(); });
+addEventListener('focus', () => webAutoUpdate());
+setInterval(() => { webUpd.at = 0; webAutoUpdate(); }, 30 * 60000);
 setTimeout(webAutoUpdate, 5000);
+// nach dem automatischen Neuladen: kurzer Hinweis „Neue Version … geladen“
+(() => { let v = null; try { v = sessionStorage.getItem('rbAutoUpd'); } catch {}
+  if (v && v === APP_VERSION) { try { sessionStorage.setItem('rbAutoUpd', v + ':ok'); } catch {} setTimeout(() => toast(`Neue Version ${esc(v)} geladen ✓`, 2600), 1200); } })();
 
 /* ---------- Einzelne Bereiche zurücksetzen (Marcel 15.11.) ---------- */
 const RESET_ASK = {
