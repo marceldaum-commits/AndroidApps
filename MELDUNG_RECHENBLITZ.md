@@ -37,7 +37,7 @@ Entscheidung Marcel 18.11. (für 1–2 Monate): nur Web-App (PWA), keine APK, ke
 
 **Wo liegen APKs?**
 - **GitHub-Releases im Repo School:** 52 Releases von `rechenblitz-3.7.2` bis `rechenblitz-3.26.9`, jeweils mit der APK als Anhang. Erzeugt werden sie von `.github/workflows/rechenblitz-release.yml` bei jedem Push auf `rechenblitz-live`.
-- **Noch nicht gelöscht:** Löschen lässt sich nicht rückgängig machen. Ich warte auf Marcels ausdrückliches Okay. Marcel hat zugestimmt: Der Release-Lauf startet seit 18.11. nur noch per Hand (keine neuen APKs). Die 52 Releases kann ich mit meinen Werkzeugen nicht löschen (keine Lösch-Funktion für Releases) – Marcel bzw. der Leitstand löscht sie auf GitHub.
+- **Noch nicht gelöscht:** Löschen lässt sich nicht rückgängig machen. Ich warte auf Marcels ausdrückliches Okay. Marcel hat zugestimmt: Der Release-Lauf startet seit 18.11. nur noch per Hand (keine neuen APKs). Alle 52 Releases `rechenblitz-*` (mit APK, ZIP und Tag) wurden am 18.11. auf Marcels Wunsch gelöscht, über einen einmaligen GitHub-Ablauf, der danach wieder entfernt wurde. Auf GitHub gibt es keine Rechenblitz-APK mehr.
 - **Server:** Eigene APK-Kopien auf rechenblitz.mathenachhilfe-online.com kenne ich nicht. Falls der Leitstand dort APKs ablegt (Ersatzquelle `nativeServer` der Hülle), bitte dort entfernen.
 
 **3.26.10 ist fertig für den Betriebstest.**
