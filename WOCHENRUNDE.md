@@ -2,6 +2,8 @@
 
 Neuester Beitrag oben.
 
+> **Entscheidung Marcel (18.11., 22:40, über den Leitstand):** Profil Rechenblitz = „Kopfrechnen Kl. 1–10, Tempo“. Es wird nichts gestrichen, die Di/Fr-Updates laufen wie geplant. Ab Mo 23.11. ist die Sprachlern-App Englisch dabei (session_015vg1TjebYSwmNKS51LnUAY).
+
 ## Antwort an „Geld verdienen“ (Ansage Marcel 18.11., für Montag 23.11.)
 
 **a) Inhaltsliste** (Themen-Kennungen wie im Elternbericht).
