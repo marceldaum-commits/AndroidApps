@@ -6,7 +6,7 @@
   <title>Kurvenflug – Mathe im All</title>
   <meta name="description" content="Kurvenflug: Formeln steuern das Raumschiff. Mathe und Physik für Klasse 5–13 – ohne Werbung, ohne Anmeldung.">
   <meta name="theme-color" content="#0B1026">
-  <meta name="kurvenflug-version" content="2.5.19">
+  <meta name="kurvenflug-version" content="2.5.20">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -47,7 +47,7 @@
     <div class="s">Volt macht das Raumschiff startklar …</div>
     <div class="bar"><b id="kf-bar"></b></div>
     <div class="s" id="kf-pct" style="font-size:13px;opacity:.7">Lade …</div>
-    <div class="v">Version 2.5.19 <span id="kf-fassung"></span> · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
+    <div class="v">Version 2.5.20 <span id="kf-fassung"></span> · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></div>
   </div>
   <noscript><p style="padding:24px">Kurvenflug braucht JavaScript und einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).</p></noscript>
@@ -55,7 +55,7 @@
     // ---------------------------------------------------------------- Start: Fassung wählen, nie eine weiße Seite
     // Die Compose-Oberfläche hängt sich an <body> (Shadow-DOM) – alles, was im <body> steht, wird dann unsichtbar.
     // Darum liegen Ladebild und Fehlermeldung am <html>-Element.
-    var KF_VER = '2.5.19';
+    var KF_VER = '2.5.20';
     (function () { var l = document.getElementById('kf-loader'); if (l) document.documentElement.appendChild(l); })();
     // Pixeldichte auf 2 begrenzen: Bei 3 (neuere iPhones) wird die Zeichenfläche 1179×2556 Pixel groß – das kostet viel
     // Grafikspeicher, und iOS beendet dann den Tab (weiße Seite). Mit 2 sieht man keinen Unterschied, braucht aber weniger als die Hälfte.
@@ -97,11 +97,8 @@
       var m = kfStore('kf.modus');
       if (m === 'js' || m === 'wasm') return m;
       if (!kfWasmOk()) return 'js';
-      // Safari/WebKit (alle Browser auf iPhone/iPad, Safari am Mac): Kotlin/Wasm startet dort nicht zuverlässig
-      // („Can't wrap nullptr“, Safari 26/27) – bis zur Klärung gleich die JS-Fassung, damit nichts doppelt geladen wird.
-      // Zum Testen der schnellen Fassung: ?modus=wasm
-      var ua = navigator.userAgent, ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-      if (ios || (/AppleWebKit/.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS|Android/.test(ua))) return 'js';
+      // Safari/WebKit: seit 2.5.20 wieder die schnelle Fassung – mit -Xwasm-no-jstag und der Skiko-Umgehung für WebKit-Fehler 329421
+      // (Endaufrufe) hat Marcel sie auf dem iPhone bestätigt (18.11.). Startfehler wechseln weiter automatisch auf JS.
       // Ist die schnelle Fassung in DIESER Version schon einmal gescheitert (Fehler oder Absturz), gleich JS – eine neue Version versucht Wasm wieder
       var last = kfStore('kf.start') || '';
       if (/^wasm\|(geladen|läuft)/.test(last)) kfStore('kf.wasmGescheitert', KF_VER);
@@ -253,7 +250,7 @@
       var e = kfInstallEvt; if (!e) return; kfInstallEvt = null;
       e.prompt(); if (e.userChoice) e.userChoice.then(function (c) { if (c && c.outcome === 'accepted') kfInstalled = true; });
     };
-    var KF_VERSION = '2.5.19';
+    var KF_VERSION = '2.5.20';
     try { var kfLast = localStorage.getItem('kf.lastVersion'); if (kfLast && kfLast !== KF_VERSION) window.kfUpdated = KF_VERSION; localStorage.setItem('kf.lastVersion', KF_VERSION); } catch (e) {}
     var kfStart = Date.now(), kfPending = false, kfReloading = false, kfAtHome = true, kfReg = null;
     function kfReload() { if (!kfReloading) { kfReloading = true; location.reload(); } }
@@ -301,7 +298,7 @@
       if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js?fassung=' + window.kfMode).then(function (r) { kfReg = r; go(); }).catch(go); else go();
     };
   </script>
-  <script>window.KF_FILES = ({"wasm":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"1ac26f155eb47dc7405c.wasm","s":5848482,"t":"application/wasm"}],"js":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"}]})[window.kfMode];</script>
+  <script>window.KF_FILES = ({"wasm":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"1569fd080595cfea55c5.wasm","s":5848482,"t":"application/wasm"}],"js":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"}]})[window.kfMode];</script>
   <script src="kf.js"></script>
   <script>
     // Erst das Ladebild malen lassen (zwei Bilder lang), dann das Programm laden
