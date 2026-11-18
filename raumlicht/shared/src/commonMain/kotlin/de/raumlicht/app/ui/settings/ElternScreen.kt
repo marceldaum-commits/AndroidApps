@@ -35,11 +35,17 @@ import de.raumlicht.core.model.Qr
  * Was die Plattform für „Eltern-Handy koppeln“ beisteuert (im Browser: Zufallswerte, Verschlüsseln mit AES-GCM, Hochladen, Löschen).
  * @param create liefert frische Zufallswerte „id.schreib.key“
  * @param send verschlüsselt [json] mit [key] und lädt es nach [url] hoch; [done] bekommt den Status (204 = angekommen, 0 = keine Verbindung)
- * @param remove löscht den Bericht auf dem Server
+ * @param remove löscht den Bericht auf dem Server (und damit auch die Sicherung)
+ * @param load holt die Sicherung von [url] und entschlüsselt sie; [done] bekommt Status (200, 404, 0 = keine Verbindung, -1 = Schlüssel passt nicht) und Klartext
+ * @param snapshot der Speicherstand der App für die Sicherung
+ * @param apply setzt den Speicherstand aus einer Sicherung samt Kopplung und startet die App neu
  */
 class ElternPlatform(val server: String, val page: String, val create: () -> String,
                      val send: (url: String, write: String, key: String, json: String, done: (Int) -> Unit) -> Unit,
-                     val remove: (url: String, write: String, done: (Int) -> Unit) -> Unit)
+                     val remove: (url: String, write: String, done: (Int) -> Unit) -> Unit,
+                     val load: ((url: String, key: String, done: (Int, String) -> Unit) -> Unit)? = null,
+                     val snapshot: (() -> Map<String, String>)? = null,
+                     val apply: ((data: Map<String, String>, pairing: String) -> Unit)? = null)
 
 /** Eintrag in den Einstellungen: Ziel und ob gerade gekoppelt ist (null = gibt es hier nicht) */
 class ElternEntryState(val open: () -> Unit, val paired: Boolean)
@@ -59,12 +65,17 @@ fun QrImage(text: String, modifier: Modifier = Modifier) {
  * Seite „Eltern-Handy koppeln“ – sachlich, ohne Figur: erst erklären, dann koppeln, dann QR-Code und Link zum Weitergeben.
  * @param pairing die bestehende Kopplung oder null
  * @param status Rückmeldung zum letzten Hochladen („Bericht gesendet …“, „Keine Verbindung …“) oder null
+ * @param backup Rückmeldung zur Sicherung (leer = noch keine), null = Sicherung gibt es hier nicht
+ * @param restoreAsk nicht null: Es wurde eine Sicherung gefunden (Datum), und hier ist schon ein Lernstand – erst nachfragen
+ * @param onRestore „Fortschritt wiederherstellen“ mit dem eingefügten Link (null = gibt es hier nicht)
  */
 @Composable
-fun ElternScreen(pairing: Eltern.Pairing?, page: String, status: String?, onPair: (name: String) -> Unit, onUnpair: () -> Unit, onSendNow: () -> Unit, onBack: () -> Unit) {
+fun ElternScreen(pairing: Eltern.Pairing?, page: String, status: String?, onPair: (name: String) -> Unit, onUnpair: () -> Unit, onSendNow: () -> Unit, onBack: () -> Unit,
+                 backup: String? = null, restoreStatus: String? = null, restoreAsk: String? = null, onRestore: ((link: String) -> Unit)? = null, onRestoreYes: () -> Unit = {}, onRestoreNo: () -> Unit = {}) {
     val share = LocalShareText.current; val sfx = LocalSfx.current
     var name by rememberSaveable { mutableStateOf("") }
     var sure by rememberSaveable { mutableStateOf(false) }
+    var link by rememberSaveable { mutableStateOf("") }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Eltern-Handy koppeln", onBack)
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -75,22 +86,40 @@ fun ElternScreen(pairing: Eltern.Pairing?, page: String, status: String?, onPair
                 Text("Was deine Eltern sehen", color = Q.Cyan, fontWeight = FontWeight.Black, fontSize = 15.sp)
                 Text(Eltern.CONTENT, Modifier.testTag("eltern-inhalt"), color = Q.Text, fontSize = 13.sp, lineHeight = 18.sp)
                 Text("🔒 " + Eltern.NOTE, Modifier.testTag("eltern-hinweis"), color = Q.Muted, fontSize = 12.sp, lineHeight = 16.sp)
+                if (backup != null) Text("💾 " + Eltern.BACKUP_NOTE, Modifier.testTag("eltern-sicherung-hinweis"), color = Q.Muted, fontSize = 12.sp, lineHeight = 16.sp)
             }
             if (pairing == null) {
                 OutlinedTextField(name, { name = it.take(Eltern.MAX_NAME) }, Modifier.fillMaxWidth().testTag("eltern-name"), label = { Text("Spitzname (freiwillig)") }, singleLine = true,
                     supportingText = { Text("Steht über dem Bericht. Kein voller Name nötig.") })
                 NeonButton({ sfx?.play(Sound.TAP); onPair(name) }, Modifier.fillMaxWidth().testTag("eltern-koppeln"), color = Q.Cyan) { Text("👪 Eltern-Handy koppeln", fontWeight = FontWeight.Bold) }
+                if (onRestore != null) Column(Modifier.fillMaxWidth().background(Q.Deep, RoundedCornerShape(18.dp)).border(1.dp, Q.Green.copy(alpha = 0.6f), RoundedCornerShape(18.dp)).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("Neues Gerät? Fortschritt wiederherstellen", color = Q.Green, fontWeight = FontWeight.Black, fontSize = 15.sp)
+                    Text("War dieses Gerät oder ein altes schon gekoppelt? Auf der Eltern-Seite gibt es den Knopf „Neues Gerät des Kindes? Fortschritt übertragen“. Er kopiert den Kopplungs-Link – füge ihn hier ein.",
+                        color = Q.Text, fontSize = 13.sp, lineHeight = 18.sp)
+                    OutlinedTextField(link, { link = it.take(400) }, Modifier.fillMaxWidth().testTag("eltern-link"), label = { Text("Kopplungs-Link einfügen") }, singleLine = true)
+                    if (restoreAsk == null) NeonButton({ sfx?.play(Sound.TAP); onRestore(link) }, Modifier.fillMaxWidth().testTag("eltern-wiederherstellen"), color = Q.Green) { Text("Fortschritt wiederherstellen", fontWeight = FontWeight.Bold) }
+                    else Column(Modifier.fillMaxWidth().background(Q.Space, RoundedCornerShape(14.dp)).border(1.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(14.dp)).padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Text("Sicherung gefunden" + (if (restoreAsk.isNotEmpty()) " (Stand $restoreAsk)" else "") + ". Auf diesem Gerät gibt es schon einen Lernstand. Soll er durch die Sicherung ersetzt werden? Das lässt sich nicht rückgängig machen.",
+                            Modifier.testTag("eltern-ersetzen-frage"), color = Q.Text, fontSize = 14.sp)
+                        Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                            NeonButton(onRestoreYes, Modifier.weight(1f).testTag("eltern-ersetzen-ja"), color = Q.Orange) { Text("Ja, ersetzen") }
+                            NeonButton(onRestoreNo, Modifier.weight(1f).testTag("eltern-ersetzen-nein"), color = Q.Muted) { Text("Abbrechen") }
+                        }
+                    }
+                    if (restoreStatus != null) Text(restoreStatus, Modifier.testTag("eltern-wiederherstellen-status"), color = Q.Muted, fontSize = 13.sp)
+                }
             } else {
                 val link = remember(pairing, page) { Eltern.link(pairing, page) }
                 QrImage(link, Modifier.align(Alignment.CenterHorizontally).size(232.dp).testTag("eltern-qr"))
                 Text("Mit der Kamera des Eltern-Handys scannen", Modifier.align(Alignment.CenterHorizontally), color = Q.Muted, fontSize = 12.sp)
                 NeonButton({ share(link) }, Modifier.fillMaxWidth().testTag("eltern-teilen"), color = Q.Cyan) { Text("Link teilen", fontWeight = FontWeight.Bold) }
                 if (status != null) Text(status, Modifier.testTag("eltern-status"), color = Q.Muted, fontSize = 13.sp)
+                if (!backup.isNullOrEmpty()) Text(backup, Modifier.testTag("eltern-sicherung-status"), color = Q.Muted, fontSize = 13.sp)
                 Text("Der Bericht aktualisiert sich nach dem Lernen von selbst, höchstens alle 10 Minuten.", color = Q.Muted, fontSize = 12.sp)
                 NeonButton(onSendNow, Modifier.fillMaxWidth().testTag("eltern-senden"), color = Q.Muted) { Text("Bericht jetzt aktualisieren") }
                 if (!sure) Text("Kopplung aufheben", Modifier.testTag("eltern-aufheben").clickable { sure = true }.padding(vertical = 10.dp), color = Q.Orange, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 else Column(Modifier.fillMaxWidth().background(Q.Deep, RoundedCornerShape(18.dp)).border(1.dp, Q.Orange.copy(alpha = 0.7f), RoundedCornerShape(18.dp)).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text("Wirklich aufheben? Der Bericht wird gelöscht; der Link deiner Eltern zeigt dann nichts mehr.", color = Q.Text, fontSize = 14.sp)
+                    Text("Wirklich aufheben? Bericht und Sicherung werden gelöscht; der Link deiner Eltern zeigt dann nichts mehr. Dein Lernstand auf diesem Gerät bleibt.", color = Q.Text, fontSize = 14.sp)
                     Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                         NeonButton({ sure = false; onUnpair() }, Modifier.weight(1f).testTag("eltern-aufheben-ja"), color = Q.Orange) { Text("Ja, aufheben") }
                         NeonButton({ sure = false }, Modifier.weight(1f), color = Q.Muted) { Text("Abbrechen") }

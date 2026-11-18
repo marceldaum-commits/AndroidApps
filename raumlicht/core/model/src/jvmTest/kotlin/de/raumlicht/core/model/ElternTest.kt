@@ -40,7 +40,7 @@ class ElternTest {
         val stars = geo.take(8).associate { it.id to 1 } + ana.take(6).associate { it.id to 3 }
         var log = Eltern.add("", today - 20, min = 30, tasks = 9, right = 9); log = Eltern.add(log, today - 2, min = 12, tasks = 4, right = 1); log = Eltern.add(log, today, min = 8, tasks = 4, right = 3)
         val o = Json.parseToJsonElement(Eltern.report("Lena", stars, log, Plan(today + 5, setOf(1, 2)), today, java.time.Instant.parse("2026-11-18T15:40:07Z").toEpochMilli())).jsonObject
-        assertEquals(setOf("format", "app", "appName", "name", "stand", "zeitraum", "lernzeitMin", "tageAktiv", "aufgaben", "richtigProzent", "staerken", "schwach", "fortschritt", "letzte", "klassenarbeit", "hinweis"), o.keys)
+        assertEquals(setOf("format", "app", "appName", "name", "stand", "zeitraum", "lernzeitMin", "tageAktiv", "aufgaben", "richtigProzent", "staerken", "schwach", "fortschritt", "letzte", "verlauf", "klassenarbeit", "hinweis"), o.keys)
         assertEquals("1", o["format"]!!.jsonPrimitive.content); assertEquals("raumlicht", o["app"]!!.jsonPrimitive.content); assertEquals("Raumlicht", o["appName"]!!.jsonPrimitive.content)
         assertEquals("Lena", o["name"]!!.jsonPrimitive.content); assertEquals("2026-11-18T15:40:07Z", o["stand"]!!.jsonPrimitive.content)
         // nur die letzten 14 Tage: der Tag vor 20 Tagen zählt nicht
@@ -62,5 +62,61 @@ class ElternTest {
     @Test fun kommtBaldOhneDatumUndPreis() {
         assertTrue(Soon.topics.size in 3..8); for (t in Soon.topics) { for (bad in listOf("€", "Pro", "202", "Januar", "nächste Woche")) assertFalse(t.title + bad, (t.title + t.sub).contains(bad)) }
         assertEquals(Soon.topics.size, Soon.topics.map { it.title }.toSet().size)
+    }
+
+    // ── Sicherung des Lernstands ──
+    private val state = mapOf("sterne" to "1-1=3;1-2=2", "proCode" to "RL-PRO", "kiCode" to "RL-KI", "lernMonate" to "2026-11:40:12:9", "ton" to "0", "diary" to "x".repeat(50),
+        "kiDevice" to "geraet123", "elternKopplung" to "geheim", "elternGesendet" to "5", "elternSicherung" to "7", "sparsam" to "1", "mitschrift" to "…")
+
+    @Test fun sicherungOhneGeraeteKennungenAberMitSchreibrecht() {
+        val p = Eltern.Pairing.fresh("$id.$write.$key", "Lena")!!
+        val json = Eltern.backup(p, "2.18.27", 1_795_016_400_000L, state)!!; val o = Json.parseToJsonElement(json).jsonObject
+        assertEquals("1", o["format"]!!.jsonPrimitive.content); assertEquals("raumlicht", o["app"]!!.jsonPrimitive.content); assertEquals("2.18.27", o["v"]!!.jsonPrimitive.content)
+        assertEquals(write, o["schreib"]!!.jsonPrimitive.content); assertTrue(Regex("\\d{4}-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\dZ").matches(o["stand"]!!.jsonPrimitive.content))
+        val d = o["daten"]!!.jsonObject
+        for (k in listOf("sterne", "proCode", "kiCode", "lernMonate", "ton", "diary")) assertEquals(k, state[k], d[k]!!.jsonPrimitive.content)
+        for (k in listOf("kiDevice", "elternKopplung", "elternGesendet", "elternSicherung", "sparsam", "mitschrift")) assertNull(k, d[k])
+        assertFalse("weder Geräte-Kennung noch Schlüssel in der Sicherung", json.contains("geraet123") || json.contains(key) || json.contains("geheim"))
+        assertEquals("https://trainer.mathenachhilfe-online.com/eltern/v1/s/$id", Eltern.backupUrl(id)); assertEquals("https://trainer-test.mathenachhilfe-online.com/eltern/v1/s/$id", Eltern.backupUrl(id, Eltern.TEST_SERVER))
+    }
+
+    @Test fun rundlaufSicherungWiederherstellen() {
+        val p = Eltern.Pairing.fresh("$id.$write.$key", "Lena")!!
+        val r = Eltern.restore(Eltern.backup(p, "2.18.27", 1_795_016_400_000L, state)!!, id, key) as Eltern.Restore.Ok
+        assertEquals(state.filterKeys(Eltern::saved), r.data); assertEquals(p.encode(), r.pairing.encode()); assertEquals(10, Eltern.germanDay(r.stand).length)
+        assertTrue(Eltern.restore("""{"format":1,"app":"wissensgarten","schreib":"$write","daten":{}}""", id, key) is Eltern.Restore.OtherApp)
+        for (bad in listOf("", "kein json", """{"format":2,"app":"raumlicht","schreib":"$write","daten":{}}""", """{"format":1,"app":"raumlicht","schreib":"kurz","daten":{}}""", """{"format":1,"app":"raumlicht","schreib":"$write"}"""))
+            assertTrue(bad, Eltern.restore(bad, id, key) is Eltern.Restore.Broken)
+        // Eine Sicherung kann keine Geräte-Kennung und keine fremde Kopplung einschleusen
+        val evil = Eltern.restore("""{"format":1,"app":"raumlicht","schreib":"$write","daten":{"kiDevice":"x","elternKopplung":"y","sterne":"1-1=3"}}""", id, key) as Eltern.Restore.Ok
+        assertEquals(mapOf("sterne" to "1-1=3"), evil.data)
+    }
+
+    @Test fun kopplungsLinkLesen() {
+        assertEquals(id to key, Eltern.fromLink("  https://www.mathenachhilfe-online.com/eltern-bericht/#$id.$key \n")); assertEquals(id to key, Eltern.fromLink("$id.$key"))
+        for (bad in listOf("", "https://www.mathenachhilfe-online.com/eltern-bericht/", "#$id", "#$id.${key.dropLast(1)}", "#$id.$write.$key", "#${id.dropLast(1)}!.$key")) assertNull(bad, Eltern.fromLink(bad))
+    }
+
+    @Test fun sicherungNurBeiAenderungUndNieZuGross() {
+        assertEquals(Eltern.mark(state), Eltern.mark(state.entries.reversed().associate { it.key to it.value })); assertNotEquals(Eltern.mark(state), Eltern.mark(state + ("sterne" to "1-1=3")))
+        val p = Eltern.Pairing.fresh("$id.$write.$key", "")!!
+        assertEquals(16 + 1 + 24, Eltern.sealedLength("ab"))   // 2 + 16 Byte → 24 Zeichen base64url
+        // zu groß: erst das Tagebuch weglassen …
+        val big = Eltern.backup(p, "2.18.27", 0, state + ("diary" to "ä".repeat(300_000)))!!
+        assertFalse(big.contains("diary")); assertTrue(big.contains("sterne")); assertTrue(Eltern.sealedLength(big) <= Eltern.MAX_BACKUP)
+        // … und wenn es dann immer noch nicht passt, gar nichts senden
+        assertNull(Eltern.backup(p, "2.18.27", 0, state + ("sterne" to "x".repeat(600_000))))
+    }
+
+    @Test fun monatssummenUndVerlaufImBericht() {
+        var m = ""; m = Eltern.addMonth(m, 20_772L, min = 10, tasks = 4, right = 3); m = Eltern.addMonth(m, 20_772L, tasks = 4, right = 1); m = Eltern.addMonth(m, 20_772L - 30, min = 5)
+        assertEquals("2026-10:5:0:0;2026-11:10:8:4", m); assertEquals(m, Eltern.months(m).joinToString(";") { "${it.month}:${it.min}:${it.tasks}:${it.right}" })
+        assertEquals("2026-10:5:0:0;2026-11:10:8:4", Eltern.monthsFromLog("${20_772L - 30}:5:0:0;20770:4:3:2;20772:6:5:2")); assertEquals("", Eltern.monthsFromLog(""))
+        assertTrue(Eltern.months("murks;2026-1:1:1:1;2026-11:a:1:1").isEmpty())
+        var many = ""; for (i in 0 until 15) many = Eltern.addMonth(many, 20_772L - 31L * i, min = i + 1, tasks = 2, right = 1)
+        val v = Json.parseToJsonElement(Eltern.report("", emptyMap(), "", null, 20_772L, 0, many)).jsonObject["verlauf"]!!.jsonArray
+        assertEquals(12, v.size); val months = v.map { it.jsonObject["monat"]!!.jsonPrimitive.content }; assertEquals(months.sorted(), months); assertEquals("2026-11", months.last())
+        assertEquals(setOf("monat", "min", "aufgaben", "richtigProzent"), v[0].jsonObject.keys); assertEquals("50", v[0].jsonObject["richtigProzent"]!!.jsonPrimitive.content)
+        assertEquals(0, Json.parseToJsonElement(Eltern.report("", emptyMap(), "", null, 20_772L, 0)).jsonObject["verlauf"]!!.jsonArray.size)
     }
 }

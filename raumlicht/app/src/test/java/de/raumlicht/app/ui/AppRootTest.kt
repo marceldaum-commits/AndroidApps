@@ -252,6 +252,45 @@ class AppRootTest {
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.restart(Routes.HOME); settle(); assertEquals("nach dem Aufheben geht nichts mehr raus", 2, uploads.size)
     }
 
+    /** Sicherung und „Fortschritt wiederherstellen“: geht mit dem Bericht raus, nur bei Änderung; ein vorhandener Lernstand wird nie ohne Nachfrage ersetzt. */
+    @Test fun sicherungUndWiederherstellen() {
+        val E = de.raumlicht.core.model.Eltern; val id = "A".repeat(22); val write = "B".repeat(22); val key = "C".repeat(43)
+        var state = mapOf("sterne" to "1-1=3", "proCode" to "RL"); val applied = ArrayList<Pair<Map<String, String>, String>>(); var answer = 404 to ""; val asked = ArrayList<String>()
+        eltern = de.raumlicht.app.ui.settings.ElternPlatform("https://server.test/b/", "https://seite.test/eltern-bericht/", { "$id.$write.$key" },
+            { url, w, _, json, done -> uploads += Triple(url, w, json); done(204) }, { url, _, done -> deleted += url; done(204) },
+            load = { url, _, done -> asked += url; done(answer.first, answer.second) }, snapshot = { state }, apply = { d, p -> applied += d to p })
+        start(); rule.runOnUiThread { prefs.setParentLink(""); prefs.parentSent = 0; prefs.learnLog = ""; prefs.learnMonths = ""; prefs.backupMark = "" }
+        nav.go(Routes.PARENTS); settle(); rule.onNodeWithTag("eltern-sicherung-hinweis").assertTextContains("verschlüsselt", substring = true)
+        // Wiederherstellen: kein Link → verständliche Meldung, nichts wird abgefragt
+        rule.onNodeWithTag("eltern-link").performScrollTo().performTextInput("irgendwas"); rule.onNodeWithTag("eltern-wiederherstellen").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("eltern-wiederherstellen-status").performScrollTo().assertTextContains("kein Kopplungs-Link", substring = true); assertTrue(asked.isEmpty())
+        rule.onNodeWithTag("eltern-link").performTextClearance(); rule.onNodeWithTag("eltern-link").performTextInput("https://seite.test/eltern-bericht/#$id.$key")
+        rule.onNodeWithTag("eltern-wiederherstellen").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("eltern-wiederherstellen-status").performScrollTo().assertTextContains("Keine Sicherung gefunden", substring = true); assertEquals(listOf("https://server.test/s/$id"), asked.toList())
+        answer = 200 to """{"format":1,"app":"wissensgarten","schreib":"$write","daten":{}}"""; rule.onNodeWithTag("eltern-wiederherstellen").performClick(); settle()
+        rule.onNodeWithTag("eltern-wiederherstellen-status").assertTextContains("anderen App", substring = true)
+        // Sicherung gefunden, hier ist noch nichts gelernt → gleich einspielen, samt Kopplung mit Schreibrecht
+        val saved = E.backup(de.raumlicht.core.model.Eltern.Pairing.fresh("$id.$write.$key", "Lena")!!, "2.18.27", 1_795_016_400_000L, mapOf("sterne" to "2-1=3", "kiCode" to "KI"))!!
+        answer = 200 to saved; rule.onNodeWithTag("eltern-wiederherstellen").performClick(); settle()
+        assertEquals(1, applied.size); assertEquals(mapOf("sterne" to "2-1=3", "kiCode" to "KI"), applied[0].first); assertEquals("$id.$write.$key.Lena", applied[0].second)
+        // Hier ist schon gelernt → erst fragen; „Abbrechen“ ändert nichts, „Ja, ersetzen“ spielt ein
+        rule.runOnUiThread { prefs.learnLog = E.add("", 20_772L, tasks = 1, right = 1) }
+        rule.onNodeWithTag("eltern-wiederherstellen").performClick(); settle(); assertEquals(1, applied.size)
+        rule.onNodeWithTag("eltern-ersetzen-frage").performScrollTo().assertTextContains("schon einen Lernstand", substring = true); rule.onRoot().captureRoboImage("../screenshots/89_fortschritt_wiederherstellen.png")
+        rule.onNodeWithTag("eltern-ersetzen-nein").performScrollTo().performClick(); settle(); assertEquals(1, applied.size); rule.onNodeWithTag("eltern-ersetzen-frage").assertDoesNotExist()
+        rule.onNodeWithTag("eltern-wiederherstellen").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-ersetzen-ja").performScrollTo().performClick(); settle(); assertEquals(2, applied.size)
+        // Koppeln: Bericht (mit Monatsverlauf) und Sicherung gehen zusammen raus
+        rule.onNodeWithTag("eltern-koppeln").performScrollTo().performClick(); settle()
+        assertEquals(listOf("https://server.test/b/$id", "https://server.test/s/$id"), uploads.map { it.first }); assertTrue(uploads[0].third, uploads[0].third.contains("\"verlauf\":["))
+        assertTrue(uploads[1].third, uploads[1].third.contains("\"schreib\":\"$write\"") && uploads[1].third.contains("\"proCode\":\"RL\"") && !uploads[1].third.contains(key)); assertEquals(write, uploads[1].second)
+        rule.onNodeWithTag("eltern-sicherung-status").performScrollTo().assertTextContains("Lernstand gesichert", substring = true)
+        // ohne Änderung keine neue Sicherung, mit Änderung schon
+        rule.onNodeWithTag("eltern-senden").performScrollTo().performClick(); settle(); assertEquals(3, uploads.size); assertTrue(uploads[2].first.contains("/b/"))
+        state = state + ("sterne" to "1-1=3;1-2=3"); rule.onNodeWithTag("eltern-senden").performClick(); settle(); assertEquals(5, uploads.size); assertTrue(uploads[4].first.contains("/s/"))
+        // aufheben: der Merker der Sicherung ist weg
+        rule.onNodeWithTag("eltern-aufheben").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-aufheben-ja").performScrollTo().performClick(); settle(); assertEquals("", prefs.backupMark)
+    }
+
     /** „Kommt bald“ auf der Seite „Mehr“: sichtbar, ohne Datum, ohne Kaufhinweis – und Antippen führt nirgendwohin. */
     @Test fun kommtBald() {
         start(); nav.go(Routes.BACKSTAGE); settle()

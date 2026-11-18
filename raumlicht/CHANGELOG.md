@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.27 – Dein Lernstand geht nicht mehr verloren (18.11.2026)
+- **Neu, zunächst nur auf der Testseite: verschlüsselte Sicherung.** Ist das Eltern-Handy gekoppelt, sichert Raumlicht deinen ganzen Lernstand zusätzlich: Sterne, Rekorde, Lernverlauf, Einstellungen und deine Freischalt-Codes. Neues Handy oder gelöschte Browser-Daten sind dann kein Problem mehr.
+- **Fortschritt wiederherstellen:** Auf der Seite „Eltern-Handy koppeln“ fügst du den Kopplungs-Link ein, und alles ist wieder da. Gibt es auf dem Gerät schon einen Lernstand, fragt Raumlicht vorher nach und überschreibt nichts ungefragt.
+- **Monatsverlauf im Bericht:** Deine Eltern sehen jetzt auch, wie viel du in den letzten Monaten gelernt hast (höchstens zwölf Monate).
+- **Für Eltern:** Die Sicherung wird wie der Bericht auf dem Gerät verschlüsselt; unser Server kann sie nicht lesen. Wer den Kopplungs-Link hat, kann damit den Lernstand samt Freischalt-Codes auf ein anderes Gerät holen – den Link also nur in der Familie weitergeben. „Kopplung aufheben“ löscht Bericht und Sicherung.
+
 ## 2.18.26 – Eltern-Handy koppeln und „Kommt bald“ (18.11.2026)
 - **Neu, zunächst nur auf der Testseite: Eltern-Handy koppeln (freiwillig).** Für alle wird es freigeschaltet, sobald die Seite für die Eltern auf unserer Website fertig ist. In den Einstellungen kannst du dann deinen Lernstand mit deinen Eltern teilen: QR-Code zeigen oder Link schicken – ohne Konto. Deine Eltern sehen Lernzeit, aktive Tage, gelöste Aufgaben, deinen Fortschritt je Gebiet, was gut sitzt und was noch hakt.
 - **Du entscheidest.** Die Seite sagt genau, was im Bericht steht. „Kopplung aufheben“ löscht ihn wieder.

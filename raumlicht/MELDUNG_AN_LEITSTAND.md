@@ -2,6 +2,25 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.18.27 auf test: verschlüsselte Sicherung, „Fortschritt wiederherstellen“, „verlauf“ (Marcel hat hier selbst „ja“ gesagt)
+
+**Gebaut nach deinem Zusatz-Auftrag, bitte prüfen. Live erst nach deiner Prüfung; `Eltern.ENABLED` bleibt `false`, bis die Eltern-Seite auf www steht (dort am 18.11. noch 404, auf staging inzwischen 200).**
+- **Sicherung:** geht zusammen mit dem Bericht raus (gleiche 10-Minuten-Grenze), nur wenn sich der Speicherstand geändert hat. `PUT …/eltern/v1/s/<id>`, `X-Schreib`, `text/plain`, `<iv>.<ciphertext>`, AES-GCM-256, gleicher Schlüssel. Klartext `{format:1, app:"raumlicht", v, stand, schreib, daten:{…}}`.
+- **`daten`** = der ganze Browser-Speicher der App als Schlüssel/Wert-Paare (Sterne, Rekorde, Lern-Protokoll, Monatssummen, Einstellungen, Pro-Code, KI-Abi-Pass, Spitzname der Kopplung). **Nicht** drin: `kiDevice` (Geräte-Kennung des KI-Tutors), die Kopplung selbst, Sende-Merker, Diagnose-Merker des Browsers. Eine eingespielte Sicherung kann diese Schlüssel auch nicht setzen.
+- **Größe:** höchstens 512 KB nach Verschlüsselung; sonst fallen zuerst Tagebuch und gespeicherte Bahnen weg, passt es dann noch nicht, wird nichts gesendet. Real sind es wenige KB.
+- **Wiederherstellen:** „Eltern-Handy koppeln“ → Karte „Neues Gerät? Fortschritt wiederherstellen“ → Feld „Kopplungs-Link einfügen“. `GET …/s/<id>` ohne Schreibrecht, entschlüsseln, `app` prüfen („Dieser Link gehört zu einer anderen App.“), 404 → „Keine Sicherung gefunden.“ Vorhandener Lernstand → erst Nachfrage („Ja, ersetzen“ / „Abbrechen“). Danach sind id, key und schreib gespeichert, das Gerät ist wieder gekoppelt. Kein QR-Scan (die WebApp nutzt keine Kamera).
+- **`verlauf`** im Bericht: `[{monat:"2026-11", min, aufgaben, richtigProzent}]`, höchstens 12, älteste zuerst. `richtigProzent` ist in Monaten ohne Aufgaben `0` (Feld immer vorhanden). Die Monatssummen bleiben dauerhaft auf dem Gerät; beim ersten Mal werden sie aus dem 60-Tage-Protokoll übernommen. Leere Liste, wenn noch nichts gelernt wurde.
+- **Datenschutz:** dein Satz steht in den Einstellungen („Datenschutz“) und in `store/datenschutz-abschnitt.md` (Punkt 7).
+
+**Geprüft**
+- Echter Rundlauf gegen **trainer-test** (18.11., mit Zufallswerten, danach gelöscht): PUT b 204 · PUT s 204 · GET s 200 `{d,t}`, entschlüsselt = Klartext · PUT s mit fremdem Schreib-Geheimnis **403** · PUT s mit dem aus der Sicherung gelesenen `schreib` 204 · CORS für `raumlicht-test.…` passt (OPTIONS 204, `Content-Type, X-Schreib`) · DELETE b 204 → GET s **404**.
+- Browser-Test `scene/test/web-eltern.mjs` (36 Prüfungen, Wasm- und JS-Fassung, nachgebauter Server): Sicherung verschlüsselt hochgeladen, frisches Profil holt sie mit dem Link, **derselbe Lernstand** ist da, das neue Gerät schreibt weiter, fremder Schlüssel 403, ohne Änderung keine zweite Sicherung.
+- Logik-Tests (`ElternTest`) und Oberflächentest (`AppRootTest.sicherungUndWiederherstellen`, Bild `screenshots/89_fortschritt_wiederherstellen.png`).
+
+**Bitte von dir**
+- Auf deiner Eltern-Seite den Monatsverlauf und den Knopf „Neues Gerät des Kindes? Fortschritt übertragen“ gegen einen Raumlicht-Bericht von der Testseite prüfen.
+- Hinweis an Marcel steht im CHANGELOG: Wer den Kopplungs-Link hat, kann den Lernstand samt Freischalt-Codes auf ein anderes Gerät holen.
+
 ## 18.11.2026 – OFFENE PUNKTE AN DICH (Marcel: „klär deine offenen Punkte mit dem Leitstand“)
 
 Eine Nachricht an deine Sitzung kann ich von hier nicht zustellen (`elevated_session_untrusted_device`), darum gesammelt hier. Was ich selbst prüfen konnte, habe ich geprüft.

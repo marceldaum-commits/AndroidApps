@@ -48,6 +48,19 @@ fun elternSenden(url: String, schreib: String, key: String, json: String, done: 
     } catch (e) { done(0); }
 }""")
 fun elternLoeschen(url: String, schreib: String, done: (Int) -> Unit): Unit = js("{ try { fetch(url, { method: 'DELETE', headers: { 'X-Schreib': schreib }, credentials: 'omit', referrerPolicy: 'no-referrer' }).then(function (r) { done(r.status); }, function () { done(0); }); } catch (e) { done(0); } }")
+/** Holt die Sicherung und entschlüsselt sie mit [key]; [done] bekommt den Status (200 = gelesen, 404 = keine Sicherung, 0 = keine Verbindung, -1 = Schlüssel passt nicht) und den Klartext */
+fun elternHolen(url: String, key: String, done: (Int, String) -> Unit): Unit = js("""{
+    try {
+        var un = function (t) { var bin = atob(t.split('-').join('+').split('_').join('/')), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; };
+        fetch(url, { credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store' }).then(function (r) {
+            if (r.status !== 200) { done(r.status, ''); return; }
+            return r.json().then(function (j) { var p = String(j.d || '').split('.');
+                return crypto.subtle.importKey('raw', un(key), 'AES-GCM', false, ['decrypt']).then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: un(p[0]) }, k, un(p[1])); })
+                    .then(function (plain) { done(200, new TextDecoder().decode(plain)); }); }).catch(function () { done(-1, ''); });
+        }, function () { done(0, ''); });
+    } catch (e) { done(-1, ''); }
+}""")
+fun reloadPage(): Unit = js("location.reload()")
 /** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer Eltern-Server (window.__rlElternServer), sonst null */
 fun elternServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlElternServer) || null")
 fun hostName(): String = js("location.hostname")

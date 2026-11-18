@@ -70,6 +70,10 @@ interface Prefs {
     var parentSent: Long
     /** Lern-Protokoll je Tag (Minuten, Aufgaben, davon beim ersten Versuch) – nur auf dem Gerät; Grundlage des Eltern-Berichts */
     var learnLog: String
+    /** Monatssummen des Lernens („2026-11:Minuten:Aufgaben:richtig;…“) – dauerhaft, nur auf dem Gerät */
+    var learnMonths: String
+    /** Prüfwert der zuletzt hochgeladenen Sicherung (leer = noch keine) */
+    var backupMark: String
     /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */
     var jamLevel: String
     fun resetProgress()

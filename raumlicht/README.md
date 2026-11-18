@@ -168,6 +168,7 @@ Freiwilliger, Ende-zu-Ende verschlüsselter Eltern-Bericht (`core/model/…/Elte
 | Eltern-Handy koppeln | „Kommt bald“ |
 |---|---|
 | ![](screenshots/87_eltern_koppeln.png) | ![](screenshots/88_kommt_bald.png) |
+| ![](screenshots/89_fortschritt_wiederherstellen.png) | |
 
 ## Zählung, Nachhilfe-Hinweis, Geschenk (seit 2.18.22)
 
