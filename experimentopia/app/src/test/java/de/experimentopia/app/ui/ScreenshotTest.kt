@@ -194,6 +194,11 @@ class ScreenshotTest {
         }
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
+    @Test fun parentArea() = shot("81_elternbereich", prepare = { r -> r.onNodeWithText("Stromkreise", substring = true).performClick(); r.mainClock.advanceTimeBy(400) }) {
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalCounter provides FakeCounter) {
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.ParentArea(20_600, 8, openAtStart = true) }
+        }
+    }
     @Test fun parentsNew() = shot("78_eltern_koppeln", prepare = { r -> r.reveal { r.onNodeWithTag("eltern_koppeln") } }) {
         val sync = FakeParents(null)
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalParentSync provides sync) {
@@ -216,6 +221,12 @@ class ScreenshotTest {
             androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.ParentCard(de.experimentopia.app.ui.settings.ParentCoupling(sync), 20_600) {} }
         }
     }
+}
+
+private object FakeCounter : de.experimentopia.app.ui.fx.Counter {
+    override val enabled = kotlinx.coroutines.flow.MutableStateFlow(true)
+    override fun setEnabled(on: Boolean) { enabled.value = on }
+    override fun count(ev: String, ort: String?, thema: String?) {}
 }
 
 /** Eltern-Kopplung ohne Netz für Bildschirmfotos */

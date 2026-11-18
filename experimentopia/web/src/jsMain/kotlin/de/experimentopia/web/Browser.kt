@@ -88,3 +88,5 @@ fun httpGet(url: String, done: (Int, String) -> Unit): Unit = js("(function () {
 /** Alle Schlüssel im Browser-Speicher, die mit [prefix] beginnen (durch Zeilenumbruch getrennt) */
 fun storeKeys(prefix: String): String = js("(function () { var r = []; for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf(prefix) === 0) r.push(k); } return r.join('\\n'); })()")
 fun reloadPage(): Unit = js("location.reload()")
+/** Anonyme Zählung: POST text/plain, ohne Cookies, auch beim Schließen der Seite (keepalive); Fehler werden still verschluckt */
+fun zaehlenSenden(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', keepalive: true, mode: 'no-cors', cache: 'no-store' }).catch(function () {}); } catch (e) {} })()")

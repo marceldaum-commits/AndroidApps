@@ -2,6 +2,18 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.11.0 vom 18.11.2026: Elternbereich mit Probestunden-Hinweis (C1) + anonyme Zählung (A3) – fertig für den Betriebstest
+
+Marcel hat beides am 18.11. in dieser Sitzung bestätigt.
+- **C1 (geändert: Probestunde statt Crashkurs):** Einstellungen → „👪 Elternbereich“ (Eltern-Tor) → „📝 Klassenarbeit bald?“ mit Fach/Thema/Klasse,
+  Text wörtlich „Eine kostenlose Probestunde kann vor der Arbeit helfen.“, Knopf „Kostenlose Probestunde anfragen“, zählt `probestunde_klick` mit `ort=klassenarbeit` und `thema=<slug>`.
+  ⚠️ **Die vorgegebene Adresse `/probestunde-anfrage/` liefert 404** (geprüft 18.11., ~20 Uhr). Darum vorerst `https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-klassenarbeit&thema=<id>&klasse=<n>` (200, wie im Wissensgarten).
+  Sobald `/probestunde-anfrage/` steht: eine Konstante (`Angebote.PROBESTUNDE_PFAD`) umstellen – bitte Bescheid geben.
+- **A3 Zählung:** Format wie Wissensgarten (`{"app","v","ev","ort"?,"thema"?}`), `fetch` text/plain, `credentials:'omit'`, `keepalive:true`, `mode:'no-cors'`, kein `sendBeacon`.
+  Test-Seite/lokal → trainer-test, live → trainer. Ereignisse: `start`, `elternbereich` (ort einstellungen), `pro_ansehen`/`pro_kasse` (einstellungen|gesperrt), `code_eingeloest` (link|eingabe), `probestunde_klick` (klassenarbeit).
+  Themen: alle 13 Slugs (physik-*, chemie-*, biologie-*) – am Test-Server je 204. Schalter „Anonyme Nutzungszählung“ im Elternbereich, **Standard an** (wie die anderen Apps), Datenschutztext ergänzt.
+- Tests: `ZaehlungTest`, `tools/web-zaehlung.mjs` (Wasm und JS: genau ein `start`, text/plain, keine Cookies, nur erlaubte Felder; Schalter aus → 0 Aufrufe) ✅; alle Tests, Lint, Webapp grün. Bild 81.
+
 ## 18.11.2026 – Version 2.10.0 vom 18.11.2026: PC-Ansicht – fertig für den Betriebstest (enthält 2.9.0/2.9.1)
 
 - Wunsch von Marcel: „am PC … nicht nur strecken“. Ab 900 dp Breite eigene Anordnung: Startseite zweispaltig (links Tagesrätsel, Fächer, Klasse, Werkzeuge, Blubb-„Wusstest du?“;

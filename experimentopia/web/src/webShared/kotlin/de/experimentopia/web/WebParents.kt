@@ -29,3 +29,17 @@ class WebParentSync : ParentSync {
     override val journalKey: String = PREFIX + "forscherbuch"
     private companion object { const val KEY = "exEltern"; const val PREFIX = "experimentopia." }
 }
+
+/** Anonyme Zählung im Browser – Standard an, Schalter im Elternbereich (Speicher „experimentopia.zaehlung“) */
+class WebCounter : de.experimentopia.app.ui.fx.Counter {
+    private val test = ParentLink.isTestHost(pageHost())
+    private val _on = kotlinx.coroutines.flow.MutableStateFlow(storeGet(KEY) != "0")
+    override val enabled: kotlinx.coroutines.flow.StateFlow<Boolean> = _on
+    override fun setEnabled(on: Boolean) { storeSet(KEY, if (on) "1" else "0"); _on.value = on }
+    override fun count(ev: String, ort: String?, thema: String?) {
+        if (!_on.value) return
+        val body = de.experimentopia.core.model.Zaehlung.inhalt(Version.NAME, ev, ort, thema) ?: return
+        zaehlenSenden(de.experimentopia.core.model.Zaehlung.url(test), body)
+    }
+    private companion object { const val KEY = "experimentopia.zaehlung" }
+}

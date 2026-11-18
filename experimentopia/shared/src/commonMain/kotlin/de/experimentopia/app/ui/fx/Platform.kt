@@ -134,3 +134,12 @@ interface ParentSync {
     val journalKey: String
 }
 val LocalParentSync = staticCompositionLocalOf<ParentSync?> { null }
+
+/** Anonyme Nutzungszählung ([de.experimentopia.core.model.Zaehlung]) – abschaltbar im Elternbereich; null = gibt es hier nicht */
+interface Counter {
+    val enabled: kotlinx.coroutines.flow.StateFlow<Boolean>
+    fun setEnabled(on: Boolean)
+    /** sendet nur, wenn eingeschaltet und Ereignis/Ort erlaubt sind */
+    fun count(ev: String, ort: String? = null, thema: String? = null)
+}
+val LocalCounter = staticCompositionLocalOf<Counter?> { null }

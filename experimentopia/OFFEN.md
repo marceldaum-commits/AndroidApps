@@ -1,6 +1,6 @@
 # Experimentopia – Stand und offene Punkte (18.11.2026)
 
-**Stand:** Version 2.10.0 vom 18.11.2026 (PC-Ansicht; 2.9.1 #pro=-Link; 2.9.0 Sicherung + Wiederherstellen; 2.8.0 Eltern-Handy koppeln, live; 2.7.0 Optik + „Kommt bald“; davor 2.6.2 Theorie mit Formeln; iPad/Safari 27.2 läuft – bestätigt) liegt auf `experimentopia-test`; live ist 2.8.0 (Leitstand, 18.11.), Freigabe durch den Leitstand.
+**Stand:** Version 2.11.0 vom 18.11.2026 (Elternbereich + Zählung; 2.10.0 PC-Ansicht live; 2.9.1 #pro=-Link; 2.9.0 Sicherung + Wiederherstellen; 2.8.0 Eltern-Handy koppeln, live; 2.7.0 Optik + „Kommt bald“; davor 2.6.2 Theorie mit Formeln; iPad/Safari 27.2 läuft – bestätigt) liegt auf `experimentopia-test`; live ist 2.8.0 (Leitstand, 18.11.), Freigabe durch den Leitstand.
 
 ## Nova
 - **Seit 2.4.8 ist das Vorlesen ausgeschaltet** (Schalter `Nova.ENABLED` in `core/model/.../Nova.kt`). Zum Wiedereinschalten: auf `true` setzen, bauen – dann gilt alles Folgende wieder.
@@ -19,3 +19,4 @@
 8. **Eltern-Koppeln** (2.8.0): echter Handytest auf der Test-Seite + Eltern-Seite (Leitstand). Vor Live: CORS des Live-Servers für experimentopia.mathenachhilfe-online.com.
 9. **Prüfplan** (`PRUEFPLAN.md`): wöchentlich neuer Inhalt (mittwochs), Monatsprüfung Dezember = Block A (Wasser + Kraft).
 10. **Sicherung** (2.9.0): Zwei-Browser-Test auf der Test-Seite (koppeln → privates Fenster → Link einfügen → gleicher Stand). Leitstand gibt live frei; Marcel möchte Bescheid, wenn alles live ist.
+11. **Probestunden-Adresse**: `/probestunde-anfrage/` liefert 404 – App nutzt vorerst `/probestunde/`. Umstellen (`Angebote.PROBESTUNDE_PFAD`), sobald der Leitstand die Seite meldet.

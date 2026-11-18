@@ -44,6 +44,8 @@ fun SettingsScreen(
     pass: Boolean = false,
     /** Karte „Eltern-Handy koppeln“ (nur WebApp) */
     parents: @Composable () -> Unit = {},
+    /** Elternbereich: Klassenarbeit-Hilfe und Zählung (nach der Frage für Erwachsene) */
+    parentArea: @Composable () -> Unit = {},
 ) {
     var confirm by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -66,6 +68,7 @@ fun SettingsScreen(
                 Text("Noch nicht freigeschaltet. Einmalig ${Pro.WEB_PRICE}, kein Abo – gilt in der Web-App.", color = E.Muted, fontSize = 13.sp)
                 GlowButton(onPro, color = E.Sun) { Text("Was ist im Forscher-Pass?") }
             }
+            parentArea()
             parents()
             Panel(Modifier.fillMaxWidth()) {
                 Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = E.Mint)
@@ -114,6 +117,8 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
     val code by (state?.prefs?.proCode ?: kotlinx.coroutines.flow.MutableStateFlow<String?>(null)).collectAsState()
     val has = state?.let { Pro.valid(code, it.todayDay()) || it.prefs.pro.value } ?: false
     var gate by remember { mutableStateOf(false) }
+    val counter = LocalCounter.current
+    LaunchedEffect(Unit) { counter?.count("pro_ansehen", if (what == "Alles") "einstellungen" else "gesperrt") }
     var input by remember { mutableStateOf("") }
     var msg by remember { mutableStateOf<String?>(null) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -150,7 +155,7 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
                     val c = License.extract(input)
                     val ok = c != null && Pro.valid(c, state.todayDay())
                     msg = if (ok) "Super – der Forscher-Pass ist freigeschaltet! 🎉" else "Dieser Code passt leider nicht. Bitte genau so einfügen, wie er in der E-Mail steht."
-                    if (ok) { state.prefs.setProCode(c); sfx?.play(Sound.WIN) } else sfx?.play(Sound.SOFT)
+                    if (ok) { state.prefs.setProCode(c); sfx?.play(Sound.WIN); counter?.count("code_eingeloest", "eingabe") } else sfx?.play(Sound.SOFT)
                 }, Modifier.fillMaxWidth(), enabled = input.isNotBlank()) { Text("Code einlösen", fontWeight = FontWeight.Bold) }
                 msg?.let { Text(it, color = if (it.startsWith("Super")) E.Green else E.Pink) }
             }
@@ -159,7 +164,7 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
             GlowButton(onBack, Modifier.fillMaxWidth()) { Text("Zurück", fontWeight = FontWeight.Bold) }
         }
     }
-    if (gate) ParentGate(state?.todayDay() ?: 0L, onDismiss = { gate = false }) { gate = false; open(Pro.checkoutUrl) }
+    if (gate) ParentGate(state?.todayDay() ?: 0L, onDismiss = { gate = false }) { gate = false; counter?.count("pro_kasse", if (what == "Alles") "einstellungen" else "gesperrt"); open(Pro.checkoutUrl) }
 }
 
 /** Frage für Erwachsene vor jedem Kauf: Geburtsjahr eingeben, mindestens 18 Jahre (Familienrichtlinie). */

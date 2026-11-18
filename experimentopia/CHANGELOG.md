@@ -1,5 +1,13 @@
 # Changelog – Experimentopia
 
+## 2.11.0 – Elternbereich (18.11.2026)
+
+- 👪 **Elternbereich** in den Einstellungen (nur nach der Frage für Erwachsene):
+  - 📝 **Klassenarbeit bald?** Fach, Thema und Klasse wählen – „Eine kostenlose Probestunde kann vor der Arbeit helfen.“ Der Knopf führt zur Anfrage auf unserer Website.
+    Kinder sehen davon nichts, Blubb wirbt nie.
+  - 📊 **Anonyme Nutzungszählung** mit Schalter: gezählt werden nur App-Start und genutzte Elternknöpfe – ohne Kennung, ohne Namen, ohne Lernstand; der Server speichert nur Tagessummen.
+- Datenschutztext in der App ergänzt.
+
 ## 2.10.0 – Schön auf dem großen Bildschirm (18.11.2026)
 
 - 🖥️ **Eigene PC-Ansicht** statt einer schmalen Handy-Spalte: Auf breiten Bildschirmen (Laptop, PC, Tablet quer) ordnet sich die Startseite in zwei Spalten –

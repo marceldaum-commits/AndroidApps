@@ -50,11 +50,13 @@ private fun WebApp() {
     val prefs = remember { WebPrefs() }; val store = remember { WebStore() }; val nav = remember { Navigator() }
     val scope = rememberCoroutineScope()
     val state = remember { AppState(store, prefs, scope, { todayLocal().toLong() }, { dayStartLocal().toLong() }) }
+    val counter = remember { WebCounter() }
     // Forscher-Pass: Schlüssel/Kasse eintragen; Freischalt-Link aus der E-Mail übernehmen
     remember {
         de.experimentopia.core.model.Pro.configure(Version.PRO_KEY, Version.PRO_CHECKOUT)
         val addr = locationSearch()
-        de.experimentopia.core.model.License.extract(addr)?.let { c -> if (de.experimentopia.core.model.Pro.valid(c, todayLocal().toLong())) prefs.setProCode(c) }
+        de.experimentopia.core.model.License.extract(addr)?.let { c -> if (de.experimentopia.core.model.Pro.valid(c, todayLocal().toLong())) { prefs.setProCode(c); counter.count("code_eingeloest", "link") } }
+        counter.count("start")
         // Code sofort aus der Adresszeile entfernen (auch wenn er nicht passt)
         if (addr.contains("pro=", ignoreCase = true)) clearSearch()
         true
@@ -79,7 +81,7 @@ private fun WebApp() {
     val installer = remember { WebInstaller() }
     val reader = remember { if (de.experimentopia.core.model.Nova.ENABLED) WebReader() else null }
     val parentSync = remember { WebParentSync() }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) }, LocalParentSync provides parentSync,
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) }, LocalParentSync provides parentSync, LocalCounter provides counter,
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.BIG -> 40 }) }) {
         ExperimentopiaTheme { Surface(Modifier.fillMaxSize(), color = E.Night) {
             AppRoot(nav, state, Version.NAME, Version.DATE,
@@ -93,7 +95,8 @@ private fun WebApp() {
                     }
                 },
                 privacy = "Experimentopia speichert den Spielstand und das Forscherbuch nur in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, " +
-                    "keine Daten über dich an einen Server – außer Eltern koppeln ausdrücklich ihr Handy (dann geht ein verschlüsselter Lernbericht ohne Namen an unseren Server, siehe „Eltern-Handy koppeln“). Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i). " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
+                    "keine Daten über dich an einen Server – außer Eltern koppeln ausdrücklich ihr Handy (dann geht ein verschlüsselter Lernbericht ohne Namen an unseren Server, siehe „Eltern-Handy koppeln“). Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i). " +
+                    "Anonyme Nutzungszählung (im Elternbereich abschaltbar): nur App-Start und genutzte Elternknöpfe, ohne Kennung, ohne Namen, ohne Lernstand. " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
                     if (de.experimentopia.core.model.Nova.ENABLED) de.experimentopia.core.model.Nova.PRIVACY + " Die Sätze bleiben danach in diesem Browser." else "",
                 onRoute = { atHome(it == Route.Home) })
         } }

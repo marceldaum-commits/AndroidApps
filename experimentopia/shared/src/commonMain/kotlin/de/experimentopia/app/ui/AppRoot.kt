@@ -194,6 +194,7 @@ fun AppRoot(
                         onReset = state::reset, onPro = { nav.go(Route.ProR("Alles")) }, onBack = { nav.back() },
                         top = settingsTop, privacy = privacy ?: de.experimentopia.app.ui.settings.DEFAULT_PRIVACY,
                         audio = audio, onAudio = state.prefs::setAudio, pass = pass,
+                        parentArea = { de.experimentopia.app.ui.settings.ParentArea(state.todayDay(), grade) },
                         parents = { de.experimentopia.app.ui.settings.ParentCard(parents, state.todayDay(), hasProgress = stars.isNotEmpty() || journal.isNotEmpty()) { parents?.upload(stars, journal, grade) } },
                     )
                 }
