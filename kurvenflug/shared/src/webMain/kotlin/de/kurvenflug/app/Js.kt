@@ -3,13 +3,13 @@ package de.kurvenflug.app
 // Brücke zu kf.js (liegt neben index.html): Ton, Speicher, Teilen, Zurück-Taste. Alles bleibt im Browser.
 
 internal fun jsStoreGet(key: String): String? = js("window.localStorage.getItem(key)")
-internal fun jsStoreSet(key: String, value: String): Unit = js("{ try { window.localStorage.setItem(key, value) } catch (e) {} }")
+internal fun jsStoreSet(key: String, value: String): Unit = js("(function () { try { window.localStorage.setItem(key, value) } catch (e) {} })()")
 internal fun jsStoreRemove(key: String): Unit = js("window.localStorage.removeItem(key)")
-internal fun jsStoreKeys(): String = js("Object.keys(window.localStorage).join('\\n')")
+internal fun jsStoreKeys(): String = js("Object.keys(window.localStorage).join(String.fromCharCode(10))")
 
 internal fun jsShare(text: String, title: String): Unit = js("window.KF.share(text, title)")
 internal fun jsOpen(url: String): Unit = js("window.open(url, '_blank', 'noopener')")
-internal fun jsVibrate(ms: Int): Unit = js("{ try { if (navigator.vibrate) navigator.vibrate(ms) } catch (e) {} }")
+internal fun jsVibrate(ms: Int): Unit = js("(function () { try { if (navigator.vibrate) navigator.vibrate(ms) } catch (e) {} })()")
 internal fun jsPhoto(spec: String, title: String): Unit = js("window.KF.photo(spec, title)")
 
 internal fun jsBufNew(n: Int, rate: Int): Int = js("window.KF.bufNew(n, rate)")
@@ -26,8 +26,8 @@ internal fun jsNova(items: String): Unit = js("window.KF.nova(items)")
 internal fun jsOnUnreach(f: () -> Unit): Unit = js("window.KF.onUnreach(f)")
 internal fun jsHush(): Unit = js("window.KF.hush()")
 internal fun jsInstallMode(): String = js("(window.kfInstallMode ? window.kfInstallMode() : '')")
-internal fun jsInstall(): Unit = js("{ if (window.kfInstall) window.kfInstall() }")
-internal fun jsAtHome(home: Boolean): Unit = js("{ if (window.kfAtHome) window.kfAtHome(home) }")
+internal fun jsInstall(): Unit = js("(function () { if (window.kfInstall) window.kfInstall() })()")
+internal fun jsAtHome(home: Boolean): Unit = js("(function () { if (window.kfAtHome) window.kfAtHome(home) })()")
 internal fun jsNovaSpeed(speed: Double): Unit = js("window.KF.novaSpeed(speed)")
 internal fun jsOffStat(hashes: String, cb: (Int, Int, Double, Double, Double) -> Unit): Unit = js("window.KF.offStat(hashes, cb)")
 internal fun jsOffLoad(hashes: String, best: Boolean, progress: (Int, Int) -> Unit, done: (Int, Boolean) -> Unit): Unit = js("window.KF.offLoad(hashes, best, progress, done)")

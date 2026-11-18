@@ -8,6 +8,8 @@ kotlin {
     jvm { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs { browser(); nodejs() }
+    // Kompatibilitäts-Fassung für Browser ohne WebAssembly-GC (ältere iPhones/iPads): Kotlin/JS
+    js { browser { testTask { enabled = false } }; nodejs { testTask { useMocha { timeout = "60s" } } } }
     sourceSets {
         commonMain.dependencies {
             api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")

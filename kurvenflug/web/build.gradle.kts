@@ -39,9 +39,16 @@ kotlin {
         browser { commonWebpackConfig { outputFileName = "kurvenflug.js" } }
         binaries.executable()
     }
+    // Kompatibilitäts-Fassung (Kotlin/JS) für Browser ohne WebAssembly-GC/Ausnahmen – z. B. ältere iPhones/iPads.
+    // index.html wählt: Wasm, wenn der Browser es kann, sonst kurvenflug-compat.js.
+    js {
+        outputModuleName.set("kurvenflug-compat")
+        browser { commonWebpackConfig { outputFileName = "kurvenflug-compat.js" } }
+        binaries.executable()
+    }
     sourceSets {
         commonMain.dependencies { implementation(compose.components.resources) }
-        wasmJsMain {
+        webMain {
             kotlin.srcDir(genBuildInfo)
             dependencies { implementation(project(":shared")) }
         }
@@ -66,41 +73,58 @@ val checkWebFonts by tasks.registering {
     }
 }
 tasks.named("compileKotlinWasmJs") { dependsOn(checkWebFonts) }
+tasks.named("compileKotlinJs") { dependsOn(checkWebFonts) }
 
 /**
  * Fertige WebApp nach kurvenflug/webapp/ (index.html oben): ./gradlew :web:webapp
  * Dazu ein Service Worker mit genau diesen Dateien (offline spielbar) und version.json für den Leitstand.
  */
 val webapp by tasks.registering(Sync::class) {
-    dependsOn("wasmJsBrowserDistribution", ":core:model:vorlesenTexte")
+    dependsOn("wasmJsBrowserDistribution", "jsBrowserDistribution", ":core:model:vorlesenTexte")
     from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
+    // Kompatibilitäts-Fassung: nur das Programm – die Grafik-Bibliothek (Skiko-wasm, ohne GC) ist dieselbe Datei wie oben
+    from(layout.buildDirectory.dir("dist/js/productionExecutable")) { include("kurvenflug-compat.js") }
     // Feste Vorlese-Texte für die KI-Stimme Nova (das Stimmen-Werk holt sie hier ab)
     from(project(":core:model").layout.buildDirectory.dir("vorlesen-root"))
     into(rootProject.file("webapp"))
     exclude("**/*.map")
     filesMatching("index.html") { filter { it.replace("{{VERSION}}", appVersion) } }
     doLast {
-        // Große Dateien für das Schnell-Laden mit Fortschrittsbalken (kf.js) – Pfad, Größe, Typ
         val dir = rootProject.file("webapp")
-        val big = dir.walkTopDown().filter { it.isFile && (it.extension == "wasm" || it.name == "symbols.ttf") }   // Emoji-Schrift kommt erst nach dem Start.sortedByDescending { it.length() }
-        val json = big.joinToString(",", "[", "]") { f ->
-            "{\"u\":\"${f.relativeTo(dir).invariantSeparatorsPath}\",\"s\":${f.length()},\"t\":\"${if (f.extension == "wasm") "application/wasm" else "font/ttf"}\"}"
-        }
+        val jsDist = layout.buildDirectory.dir("dist/js/productionExecutable").get().asFile
+        // Wasm-Dateien, die die JS-Fassung braucht (Skiko), müssen in beiden Ausgaben gleich heißen
+        val jsWasm = jsDist.listFiles()!!.filter { it.extension == "wasm" && it.name != "skiko.wasm" }.map { it.name }.toSet()
+        jsWasm.forEach { n -> check(dir.resolve(n).exists() && dir.resolve(n).length() == jsDist.resolve(n).length()) { "JS-Fassung braucht $n – fehlt in der Wasm-Ausgabe" } }
+        check(jsWasm.isNotEmpty()) { "Skiko-wasm der JS-Fassung nicht gefunden" }
+        // Große Dateien für das Schnell-Laden mit Fortschrittsbalken (kf.js) – je Fassung: Pfad, Größe, Typ
+        fun entry(f: File) = "{\"u\":\"${f.relativeTo(dir).invariantSeparatorsPath}\",\"s\":${f.length()},\"t\":\"${if (f.extension == "wasm") "application/wasm" else "font/ttf"}\"}"
+        val font = dir.walkTopDown().filter { it.isFile && it.name == "symbols.ttf" }.toList()
+        val wasmFiles = dir.listFiles()!!.filter { it.extension == "wasm" }.sortedByDescending { it.length() }
+        val jsFiles = wasmFiles.filter { it.name in jsWasm }
+        val json = "{\"wasm\":" + (font + wasmFiles).joinToString(",", "[", "]") { entry(it) } +
+            ",\"js\":" + (font + jsFiles).joinToString(",", "[", "]") { entry(it) } + "}"
         val index = dir.resolve("index.html")
         index.writeText(index.readText().replace("{{FILES}}", json))
-    }
-    doLast {
-        val dir = rootProject.file("webapp")
-        // Die Liste der Vorlese-Texte (für unser Stimmen-Werk) gehört nicht ins Offline-Paket
-        val files = dir.walkTopDown().filter { it.isFile }.map { it.relativeTo(dir).invariantSeparatorsPath }
-            .filter { !it.startsWith("vorlesen/") }.sorted().toList()
-        val list = (listOf("./") + files).joinToString(",\n  ") { "\"$it\"" }
+
+        // Service Worker: gemeinsame Dateien + nur die Dateien der Fassung, die das Gerät nutzt (sw.js?fassung=wasm|js)
+        val all = dir.walkTopDown().filter { it.isFile }.map { it.relativeTo(dir).invariantSeparatorsPath }
+            .filter { !it.startsWith("vorlesen/") && it != "sw.js" }.sorted().toList()   // Vorlese-Liste gehört nicht ins Offline-Paket
+        val wasmOnly = all.filter { it == "kurvenflug.js" || (it.endsWith(".wasm") && it !in jsWasm) }
+        val jsOnly = all.filter { it == "kurvenflug-compat.js" }
+        val shared = listOf("./") + (all - wasmOnly.toSet() - jsOnly.toSet())
+        fun list(l: List<String>) = l.joinToString(",\n  ") { "\"$it\"" }
         dir.resolve("sw.js").writeText("""
             |// Kurvenflug $appVersion – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
             |const CACHE = "kurvenflug-$appVersion";
-            |const FILES = [
-            |  $list
+            |const SHARED = [
+            |  ${list(shared)}
             |];
+            |const ONLY = {
+            |  wasm: [${list(wasmOnly)}],
+            |  js: [${list(jsOnly)}]
+            |};
+            |const MODE = new URL(location).searchParams.get("fassung") === "js" ? "js" : "wasm";
+            |const FILES = SHARED.concat(ONLY[MODE]);
             |self.addEventListener("install", e => {
             |  e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: "no-cache" })))).then(() => self.skipWaiting()));
             |});
@@ -108,8 +132,16 @@ val webapp by tasks.registering(Sync::class) {
             |  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("kurvenflug-") && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
             |});
             |self.addEventListener("fetch", e => {
-            |  if (e.request.method !== "GET" || new URL(e.request.url).origin !== location.origin) return;
-            |  e.respondWith(caches.match(e.request, { ignoreSearch: true }).then(r => r || fetch(e.request)));
+            |  const url = new URL(e.request.url);
+            |  if (e.request.method !== "GET" || url.origin !== location.origin) return;
+            |  // version.json immer frisch vom Server (Update-Prüfung); ohne Netz die gespeicherte
+            |  if (url.pathname.endsWith("/version.json")) { e.respondWith(fetch(e.request).catch(() => caches.match(e.request, { ignoreSearch: true }))); return; }
+            |  e.respondWith(caches.match(e.request, { ignoreSearch: true }).then(r => r || fetch(e.request).then(res => {
+            |    // Dateien der anderen Fassung (Wechsel per Knopf) beim ersten Laden ebenfalls offline merken
+            |    const p = url.pathname.split("/").pop();
+            |    if (res.ok && (ONLY.wasm.includes(p) || ONLY.js.includes(p))) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); }
+            |    return res;
+            |  })));
             |});
             |""".trimMargin())
         dir.resolve("version.json").writeText("{\n  \"app\": \"kurvenflug\",\n  \"version\": \"$appVersion\"\n}\n")

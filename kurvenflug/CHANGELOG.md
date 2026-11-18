@@ -3,6 +3,13 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.13 – Läuft jetzt auch auf älteren iPhones und iPads
+- Auf manchen iPhones und iPads blieb die Seite weiß. Kurvenflug bringt jetzt eine zweite, „einfache“ Fassung mit, die
+  auch ältere Browser verstehen. Die App wählt selbst die passende – und klappt der Start einmal nicht, nimmt sie beim
+  nächsten Öffnen automatisch die einfache Fassung.
+- Nie mehr eine leere Seite: Geht beim Start etwas schief, erscheint eine Meldung mit „Neu laden“ und
+  „Einfache Fassung laden“.
+
 ## 2.5.12 – Kurvenflug als App installieren
 - Neuer Knopf „App installieren“ auf der Startseite und in den Einstellungen: Kurvenflug kommt mit eigenem Symbol auf den
   Startbildschirm, startet ohne Browser-Leiste und auch ohne Internet. Auf Android-Handys öffnet der Knopf direkt die
