@@ -15,6 +15,8 @@
     var p = Math.min(1, loaded / total);
     bar.style.width = (4 + 96 * p) + '%';
     if (txt) txt.textContent = p < 1 ? 'Lade … ' + Math.round(p * 100) + ' %' : 'Starte die Triebwerke …';
+    // alles geladen: stürzt der Tab jetzt beim Übersetzen ab, nimmt der nächste Start die Kompatibilitäts-Fassung (index.html)
+    if (p >= 1 && window.kfMode === 'wasm') { try { if ((localStorage.getItem('kf.start') || '').indexOf('wasm|') === 0) localStorage.setItem('kf.start', 'wasm|geladen'); } catch (e) {} }
   }
   // Jede Datei wird sofort angefragt; die Daten fließen als Strom weiter, damit der Browser das Wasm schon
   // während des Ladens übersetzen kann (instantiateStreaming). Wir zählen nur mit.
