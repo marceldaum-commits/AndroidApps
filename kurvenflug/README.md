@@ -3,6 +3,11 @@
 > **Zurzeit nur als WebApp** (Marcel 18.11.2026, für 1–2 Monate): Kurvenflug läuft im Browser und lässt sich dort als App
 > installieren (Knopf „App installieren“). Es gibt keine APK und keine Play-Version; der Android-Code bleibt im Repo, wird aber
 > nicht gebaut oder ausgeliefert (Workflow `kurvenflug-release.yml` nur von Hand). Vorlesen ist abgeschaltet (`Nova.ENABLED`).
+> **Zwei Browser-Fassungen** (seit 2.5.13): `kurvenflug.js` (Kotlin/Wasm, schnell, braucht WebAssembly-GC – Safari ab iOS 18.2) und
+> `kurvenflug-compat.js` (Kotlin/JS, Kompatibilität – iOS ab 15). `index.html` wählt: Wasm, wenn der Browser es kann und der letzte
+> Wasm-Start nicht abgestürzt ist, sonst JS. Erzwingen zum Testen: `?modus=js`, `?modus=wasm`, zurück mit `?modus=auto`.
+> Gemeinsamer Browser-Code liegt in `src/webMain` (für beide Ziele); `js("…")` nur mit Ausdrücken, keine Java-Regex-Schreibweisen
+> wie `(?i)` oder Lookbehind (JS-Tests: `./gradlew :core:model:jsNodeTest`).
 
 Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
 selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).

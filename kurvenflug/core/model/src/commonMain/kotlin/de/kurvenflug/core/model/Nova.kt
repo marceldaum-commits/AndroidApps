@@ -50,7 +50,7 @@ object Nova {
     fun chunks(spoken: String): List<String> {
         if (spoken.length <= MAX_LIVE) return listOf(spoken)
         val sentences = Regex("""[^.!?]+[.!?]*\s*""").findAll(spoken).map { it.value.trim() }.filter { it.isNotEmpty() }
-            .flatMap { s -> if (s.length <= MAX_LIVE) sequenceOf(s) else s.split(Regex("""(?<=,)\s+""")).asSequence() }.toList()
+            .flatMap { s -> if (s.length <= MAX_LIVE) sequenceOf(s) else s.split(Regex(""",\s+""")).let { parts -> parts.mapIndexed { i, x -> if (i < parts.size - 1) "$x," else x } }.asSequence()   /* ohne Lookbehind: ältere Safari */ }.toList()
         val out = ArrayList<String>(); val cur = StringBuilder()
         for (s in sentences) {
             if (cur.isNotEmpty() && cur.length + 1 + s.length > MAX_LIVE) { out += cur.toString(); cur.clear() }

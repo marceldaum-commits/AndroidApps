@@ -10,6 +10,7 @@ kotlin {
     androidTarget { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
     wasmJs { browser() }
+    js { browser { testTask { enabled = false } } }   // Kompatibilitäts-Fassung (Kotlin/JS)
     sourceSets {
         commonMain.dependencies {
             api(project(":core:model"))

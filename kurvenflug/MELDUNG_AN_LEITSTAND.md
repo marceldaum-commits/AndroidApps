@@ -1,5 +1,37 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.13 – DRINGEND iOS: weiße Seite behoben (Kompatibilitäts-Fassung + Startfehler sichtbar)
+**Ursache (Code-Analyse; kein iPhone/WebKit in meiner Umgebung, darum nicht am Gerät bestätigt):**
+- Die App läuft als Kotlin/Wasm und braucht **WebAssembly-GC + Ausnahmen** → Safari erst **ab iOS 18.2**. Ältere iPhones/iPads
+  können sie gar nicht starten. Auf neueren kann iOS den Tab beim Übersetzen des großen Wasm-Moduls (5,8 MB + 8,4 MB Grafik)
+  abschießen – Safari zeigt dann eine leere Seite.
+- **Warum weiß statt Meldung:** Die Compose-Oberfläche hängt sich beim Start als Shadow-DOM an `<body>` – ab da ist alles, was im
+  `<body>` steht (Ladebild, „Dauert etwas …“-Hinweis), unsichtbar. Jeder spätere Fehler endete deshalb leer. (Dasselbe Muster
+  betrifft vermutlich alle vier Compose-Apps.)
+- Geprüft und unauffällig: viewport/`user-scalable` (unkritisch), unser fetch-/ReadableStream-Wrapper (Safari kann
+  instantiateStreaming mit Response-Strom), Service Worker (liefert jetzt version.json immer frisch).
+
+**Behoben:**
+1. **Nie mehr weiße Seite:** Ladebild und Fehlermeldung hängen jetzt am `<html>`-Element. Jeder Startfehler (`error`,
+   `unhandledrejection`, fehlende Datei, fehlendes WebGL 2, keine Rückmeldung nach 90 s) zeigt „Kurvenflug konnte nicht starten“
+   mit Grund, **Version + Fassung + Fehlertext** und den Knöpfen **„Neu laden“** und **„Einfache Fassung laden“**
+   (bzw. „Schnelle Fassung laden“). Auf iPhone/iPad zusätzlich der Tipp, iOS zu aktualisieren.
+2. **Kompatibilitäts-Fassung (Kotlin/JS)**, gleiche Oberfläche, gleicher Spielstand: `kurvenflug-compat.js` (5,3 MB) + dieselbe
+   Skiko-Grafikdatei (Emscripten-Wasm **ohne** GC). `index.html` wählt:
+   - Wasm, wenn `WebAssembly.validate` ein Mini-Modul mit GC-Struct + try/catch_all akzeptiert,
+   - sonst JS; **und JS, wenn der letzte Wasm-Start nach vollständigem Laden nie „bereit“ meldete** (= Absturz) – automatisch.
+   - Erzwingen zum Testen: `?modus=js`, `?modus=wasm`; zurück: `?modus=auto` (wird gemerkt).
+   Service Worker speichert nur die Dateien der genutzten Fassung offline (`sw.js?fassung=wasm|js`), die andere bei Bedarf.
+3. **Mindest-iOS:** vorher **iOS 18.2** (sonst weiß) → jetzt **iOS 15** (WebGL 2), ab 18.2 die schnelle Fassung.
+4. **Tests (Chromium):** Wasm-Start ok; `?modus=js`: **alle 30 Kapitel, 0 Seitenfehler**; „Browser ohne Wasm-GC“ simuliert → JS
+   startet; simulierter Absturz nach dem Laden → nächster Start JS; JS **offline** startbar; fehlende Datei / kein WebGL 2 →
+   sichtbare Meldung. Spiellogik-Tests laufen jetzt zusätzlich unter Kotlin/JS (`jsNodeTest`). Zwei Regex-Stellen mit
+   Java-Schreibweise (`(?i)`, Lookbehind) für JS umgeschrieben. Pro-Code-Prüfung unter JS ≈ 0,4 s (unter Wasm Millisekunden).
+- **Test-Link:** https://kurvenflug-test.mathenachhilfe-online.com/ – zum gezielten Prüfen der einfachen Fassung
+  https://kurvenflug-test.mathenachhilfe-online.com/?modus=js (danach `?modus=auto`). Bitte Marcels iOS-Version notieren
+  (Einstellungen → Allgemein → Info); falls doch eine Meldung kommt, steht der Fehlertext darin – Bildschirmfoto reicht.
+- Keine neuen Dateiendungen (nur `.js`). versionCode 60 / 2.5.13, Prüfkette grün.
+
 ## ✅ 2.5.12 – nur noch WebApp + Knopf „App installieren“ (Marcel 18.11.)
 1. **Android-Code bleibt, wird nicht mehr gebaut:** Workflow `.github/workflows/kurvenflug-release.yml` läuft nicht mehr bei
    Push (nur noch von Hand, der alte Auslöser steht als Kommentar drin) – also keine neuen APK/AAB, kein Drive-Upload mehr.

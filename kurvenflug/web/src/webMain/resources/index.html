@@ -28,6 +28,14 @@
     #kf-loader .v { position: absolute; bottom: 14px; font-size: 12px; opacity: .55; }
     #kf-loader .v a { color: inherit; }
     @keyframes kf-schweben { 50% { transform: translateY(-10px) rotate(-4deg); } }
+    #kf-fehler { position: fixed; inset: 0; z-index: 40; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 14px; padding: 24px; text-align: center; background: #0B1026; color: #E8EBFF; font-family: system-ui, sans-serif; }
+    #kf-fehler .t { font-size: 22px; font-weight: 800; color: #FFD54A; }
+    #kf-fehler .d { font-size: 15px; max-width: 420px; line-height: 1.45; opacity: .9; }
+    #kf-fehler .k { font-size: 12px; opacity: .55; max-width: 420px; word-break: break-word; }
+    #kf-fehler button { font: inherit; font-size: 17px; font-weight: 700; border: 0; border-radius: 999px; padding: 12px 26px; cursor: pointer; }
+    #kf-fehler .a { background: #38E8FF; color: #0B1026; }
+    #kf-fehler .b { background: transparent; color: #38E8FF; border: 2px solid #38E8FF; }
     .kf-toast { position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%); background: #262f6b; color: #fff; padding: 10px 18px;
       border-radius: 14px; font-size: 15px; z-index: 20; box-shadow: 0 4px 18px rgba(0,0,0,.4); }
   </style>
@@ -44,12 +52,76 @@
   </div>
   <noscript><p style="padding:24px">Kurvenflug braucht JavaScript und einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).</p></noscript>
   <script>
-    // Alter Browser ohne WebAssembly-GC? Freundlich Bescheid geben statt weißer Seite.
-    window.addEventListener('error', function () {}, true);
+    // ---------------------------------------------------------------- Start: Fassung wählen, nie eine weiße Seite
+    // Die Compose-Oberfläche hängt sich an <body> (Shadow-DOM) – alles, was im <body> steht, wird dann unsichtbar.
+    // Darum liegen Ladebild und Fehlermeldung am <html>-Element.
+    var KF_VER = '{{VERSION}}';
+    (function () { var l = document.getElementById('kf-loader'); if (l) document.documentElement.appendChild(l); })();
+    function kfStore(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
+    // Kann der Browser WebAssembly mit GC und Ausnahmen (nötig für Kotlin/Wasm)? Safari erst ab iOS 18.2.
+    function kfWasmOk() {
+      try {
+        return typeof WebAssembly === 'object' && typeof WebAssembly.validate === 'function' && WebAssembly.validate(new Uint8Array(
+          [0,97,115,109,1,0,0,0,1,8,2,95,1,120,0,96,0,0,3,3,2,1,1,10,14,2,6,0,6,64,25,11,11,5,0,208,112,26,11]));
+      } catch (e) { return false; }
+    }
+    // Fassung: „wasm“ (schnell) oder „js“ (Kompatibilität, für Browser ohne WebAssembly-GC).
+    // ?modus=js / ?modus=wasm erzwingt (wird gemerkt, ?modus=auto löscht). Ist der letzte Wasm-Start nach dem Laden
+    // gescheitert (z. B. Absturz des Tabs), nimmt die App von selbst die JS-Fassung.
+    window.kfMode = (function () {
+      var q = /[?&]modus=(js|wasm|auto)/.exec(location.search);
+      if (q) kfStore('kf.modus', q[1] === 'auto' ? null : q[1]);
+      var m = kfStore('kf.modus');
+      if (m === 'js' || m === 'wasm') return m;
+      if (!kfWasmOk()) return 'js';
+      var last = kfStore('kf.start') || '';
+      if (last.indexOf('wasm|geladen') === 0 || kfStore('kf.wasmGescheitert')) { kfStore('kf.wasmGescheitert', '1'); return 'js'; }
+      return 'wasm';
+    })();
+    kfStore('kf.start', window.kfMode + '|startet');
+    var kfIsReady = false, kfReadyAt = 0, kfFailed = false;
+    function kfFail(why, detail) {
+      if (kfFailed) return; kfFailed = true;
+      if (window.kfMode === 'wasm') kfStore('kf.wasmGescheitert', '1');   // beim nächsten Laden die Kompatibilitäts-Fassung
+      kfStore('kf.start', null);
+      var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var d = document.createElement('div'); d.id = 'kf-fehler';
+      d.innerHTML = '<div style="font-size:48px">🛰️</div><div class="t">Kurvenflug konnte nicht starten</div><div class="d"></div>' +
+        '<button class="a" type="button">Neu laden</button><button class="b" type="button"></button><div class="k"></div>';
+      d.querySelector('.d').textContent = why + (ios ? ' Tipp: iPhone/iPad auf die neueste iOS-Version bringen.' : '');
+      var other = window.kfMode === 'wasm' ? 'js' : 'wasm';
+      var b = d.querySelector('.b');
+      if (other === 'wasm' && !kfWasmOk()) b.style.display = 'none';
+      b.textContent = other === 'js' ? 'Einfache Fassung laden' : 'Schnelle Fassung laden';
+      b.onclick = function () { kfStore('kf.modus', other); if (other === 'wasm') kfStore('kf.wasmGescheitert', null); location.reload(); };
+      d.querySelector('.a').onclick = function () { location.reload(); };
+      d.querySelector('.k').textContent = 'Version ' + KF_VER + ' · Fassung ' + window.kfMode + (detail ? ' · ' + String(detail).slice(0, 160) : '');
+      var l = document.getElementById('kf-loader'); if (l) l.remove();
+      document.documentElement.appendChild(d);
+      // vielleicht liegt eine kaputte alte Version im Offline-Speicher: neue holen
+      try { navigator.serviceWorker.getRegistration().then(function (r) { if (r) r.update(); }); } catch (e) {}
+    }
+    window.kfFail = kfFail;
+    // Fehler beim Start (und in den ersten Sekunden danach) → sichtbare Meldung statt weißer Seite
+    function kfEarly() { return !kfIsReady || Date.now() - kfReadyAt < 6000; }
+    window.addEventListener('error', function (e) {
+      var msg = (e && e.message) || (e && e.target && e.target.src ? 'Datei fehlt: ' + e.target.src : '');
+      if (!msg || /^Script error\.?$/.test(msg) || /ResizeObserver/.test(msg)) return;
+      if (kfEarly()) kfFail('Beim Start ist ein Fehler passiert.', msg);
+    }, true);
+    window.addEventListener('unhandledrejection', function (e) {
+      var r = e && e.reason; var msg = r && (r.message || String(r));
+      if (kfEarly()) kfFail('Beim Start ist ein Fehler passiert.', msg);
+    });
+    (function () {   // Grafik: Kurvenflug zeichnet mit WebGL 2
+      try { var c = document.createElement('canvas'); if (!(c.getContext('webgl2'))) kfFail('Dieser Browser kann die Spielgrafik (WebGL 2) nicht anzeigen.', 'kein WebGL 2'); }
+      catch (e) { kfFail('Dieser Browser kann die Spielgrafik (WebGL 2) nicht anzeigen.', e && e.message); }
+    })();
     setTimeout(function () {
       var l = document.getElementById('kf-loader');
-      if (l && !l.classList.contains('weg')) l.querySelector('.s').textContent = 'Dauert etwas … Kurvenflug braucht einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).';
+      if (l && !kfIsReady) l.querySelector('.s').textContent = 'Dauert etwas … gleich geht es los.';
     }, 15000);
+    setTimeout(function () { if (!kfIsReady) kfFail('Der Start dauert ungewöhnlich lange.', 'Zeitüberschreitung nach 90 s'); }, 90000);
     // Automatische Updates ohne Knopf (Vorgabe Marcel 18.11.: „Die WebApp muss immer automatisch aktuell sein“):
     // - geprüft wird beim Öffnen, bei jeder Rückkehr in den Tab (visibilitychange/focus) und spätestens alle 30 Minuten:
     //   Service Worker (registration.update) und version.json (ohne Cache);
@@ -99,6 +171,7 @@
     // Erst wenn die App läuft, damit das Offline-Speichern nicht mit dem ersten Laden um die Leitung kämpft.
     var kfSwDone = false;
     window.kfReady = function () {
+      if (!kfIsReady) { kfIsReady = true; kfReadyAt = Date.now(); kfStore('kf.start', null); if (window.kfMode === 'wasm') kfStore('kf.wasmGescheitert', null); }
       if (kfSwDone) return; kfSwDone = true;
       if (window.kfUpdated && window.KF && KF.toast) KF.toast('✨ Neue Version ' + window.kfUpdated + ' geladen');
       var go = function () {
@@ -108,12 +181,18 @@
         window.addEventListener('focus', kfCheck);
         window.addEventListener('pageshow', kfCheck);
       };
-      if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(function (r) { kfReg = r; go(); }).catch(go); else go();
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js?fassung=' + window.kfMode).then(function (r) { kfReg = r; go(); }).catch(go); else go();
     };
-    setTimeout(window.kfReady, 60000);   // Sicherheitsnetz, falls die App nie fertig meldet
   </script>
-  <script>window.KF_FILES = {{FILES}};</script>
+  <script>window.KF_FILES = ({{FILES}})[window.kfMode];</script>
   <script src="kf.js"></script>
-  <script src="kurvenflug.js"></script>
+  <script>
+    (function () {
+      var sc = document.createElement('script');
+      sc.src = window.kfMode === 'js' ? 'kurvenflug-compat.js' : 'kurvenflug.js';
+      sc.onerror = function () { kfFail('Ein Teil von Kurvenflug konnte nicht geladen werden. Bitte Internet prüfen.', sc.src); };
+      document.body.appendChild(sc);
+    })();
+  </script>
 </body>
 </html>
