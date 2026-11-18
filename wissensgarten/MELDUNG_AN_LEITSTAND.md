@@ -5,6 +5,27 @@
 
 
 
+
+## 2.2.14 – Eltern-Handy koppeln (18.11.2026)
+- **Marcel hat direkt bestätigt** („Ja, so bauen“).
+- **Ort:** Einstellungen → Für Eltern (hinter dem Eltern-Tor) → „📱 Eltern-Handy koppeln“, optional mit Spitzname. Danach erscheinen QR-Code, „Link schicken“, „Jetzt aktualisieren“ und „Kopplung aufheben“. Im Kinderbereich gibt es davon nichts.
+- **Werte:** id 16 B, schreib 16 B und key 32 B aus `crypto.getRandomValues` (Android: SecureRandom), base64url ohne Padding, gespeichert nur lokal je Profil.
+- **Link:** `…/eltern-bericht/#<id>.<key>`. Auf `wissensgarten-test` bzw. localhost gilt die Test-Stufe (staging. + trainer-test.), sonst www. + trainer.
+- **Hochladen:**
+  - Nach jeder Lernrunde (`endSession`), höchstens alle 10 Minuten; außerdem gleich nach dem Koppeln und mit „Jetzt aktualisieren“.
+  - AES-GCM-256 mit 12-Byte-IV über WebCrypto (Android: javax.crypto), Body `iv.ct` als text/plain, Header X-Schreib, ohne Cookies.
+- **Bericht** (`core/model/.../ElternKopplung.kt`):
+  - Felder: format, app, appName, name (nur Spitzname), klasse, stand, zeitraum, lernzeitMin, tageAktiv, aufgaben, richtigProzent, staerken/schwach (14 Tage, ≥ 5 Antworten, ≥ 85 % bzw. < 60 %), fortschritt je Beet (höchstens 15), letzte (7 Tage), klassenarbeit, hinweis.
+  - Der Profilname wird nie gesendet; die Größengrenze ist eingebaut.
+- **Aufheben:** DELETE, die Werte lokal sofort gelöscht (auch wenn der Server nicht erreichbar ist).
+- **Belege:**
+  - `ElternKopplungTest` (4 Tests).
+  - `webApp/tools/web-eltern.cjs` (Wasm und JS): ohne Kopplung nichts gesendet; PUT an die richtige Adresse; mit dem Schlüssel aus dem Link entschlüsselt (Node-Krypto); nur erlaubte Felder; Spitzname statt Profilname; DELETE; lokal gelöscht.
+  - Echter Server trainer-test: PUT 204, fremdes schreib 403, DELETE 204, CORS für wissensgarten-test ok.
+  - Bildschirmfoto `screenshots/80_eltern_gekoppelt.png`.
+- **Datenschutz** in der App ergänzt (Absatz „Eltern-Handy koppeln“). Bitte die Website-Datenschutzerklärung entsprechend ergänzen.
+- **Test-Einstieg** `window.wgElternTest` nur mit `?diag=1`.
+
 ## PRUEFPLAN.md angelegt (18.11.2026)
 - `wissensgarten/PRUEFPLAN.md`:
   - Wöchentlich mindestens eine Inhaltseinheit, mittwochs auf test, Vorschläge bis KW 52.
