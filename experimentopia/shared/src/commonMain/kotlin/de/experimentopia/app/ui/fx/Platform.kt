@@ -91,5 +91,13 @@ val LocalAutoRead = staticCompositionLocalOf { false }
 /** Vorlesen eingeschaltet (Einstellung) – dann gibt es überall 🔊-Knöpfe */
 val LocalReadOn = staticCompositionLocalOf { false }
 
+/** „App installieren“ (WebApp als PWA): ausgeblendet, Installations-Dialog des Browsers, oder Anleitung fürs iPhone/iPad */
+enum class InstallState { HIDDEN, PROMPT, IOS }
+interface Installer {
+    val state: InstallState
+    fun install()
+}
+val LocalInstaller = staticCompositionLocalOf<Installer?> { null }
+
 /** Link im Browser öffnen (Kasse, Impressum) */
 val LocalOpenLink = staticCompositionLocalOf<(String) -> Unit> { {} }

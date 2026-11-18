@@ -101,6 +101,7 @@ fun HomeScreen(
                 Text("Forscher-Pass aktiv – alle Inseln und Geräte sind offen!", color = E.Sun, fontWeight = FontWeight.Bold, fontSize = 14.sp)
             }
             banner?.invoke()
+            de.experimentopia.app.ui.common.InstallCard()
             if (welcome) Panel(border = E.Mint) {
                 BlubbSays(de.experimentopia.core.model.Say.welcome(), Mood.CHEER, size = 56.dp)
                 GlowButton(onWelcomed, Modifier.fillMaxWidth().testTag("loslegen")) { Text("🚀 Los geht's!", fontWeight = FontWeight.Bold) }

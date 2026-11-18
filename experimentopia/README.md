@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.1.1 vom 17.11.2026** · Android-App und WebApp (gleicher Code, gleiche Version) · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.5.0 vom 18.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 200 Versuche in 19 Fachbereichen (Physik, Chemie, Biologie) · 34 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -140,7 +140,13 @@ Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung ha
 | Forscher-Pass | Insel mit Pass | Pass aktiv | |
 | ![](screenshots/66_forscher_pass_kaufen.png) | ![](screenshots/67_insel_mit_pass.png) | ![](screenshots/68_forscher_pass_aktiv.png) | ![](screenshots/69_raetsel_nochmal.png) |
 
-## Android und Web
+## Nur WebApp (seit 2.5.0)
+
+Vorgabe 18.11.2026: für die nächsten Monate **nur die WebApp** (installierbar über „📲 App installieren“ – Android/Chrome direkt, iPhone/iPad mit Anleitung),
+keine APK, kein Play Store. Der Android-Code (`app/`) bleibt im Repo und baut weiter in den Tests mit, wird aber **nicht ausgeliefert**:
+`experimentopia-release.yml` läuft nur noch von Hand; die alten APKs wurden aus den GitHub-Releases entfernt (`experimentopia-apk-entfernen.yml`).
+
+## Aufbau (gemeinsamer Code)
 
 Wie Raumlicht: eine gemeinsame Codebasis (Compose Multiplatform).
 - `core/model` – Physik- und Chemie-Modelle, Versuche, Regeln (für Android und Web)
@@ -151,7 +157,6 @@ Wie Raumlicht: eine gemeinsame Codebasis (Compose Multiplatform).
   der Server zeigt sie unter https://experimentopia-test.mathenachhilfe-online.com (live: https://experimentopia.mathenachhilfe-online.com, setzt der Leitstand).
 
 **Automatische Updates:** WebApp über den Service Worker (lädt neue Versionen im Hintergrund, wechselt auf der Startseite oder im Hintergrund).
-GitHub-APK: beim Start höchstens alle 20 Stunden, Banner + Knopf in den Einstellungen (abschaltbar). Play-Fassung: über den Play Store.
 
 ## Bauen
 
@@ -159,9 +164,9 @@ GitHub-APK: beim Start höchstens alle 20 Stunden, Banner + Knopf in den Einstel
 ./gradlew :core:model:jvmTest :core:data:testDebugUnitTest   # Modelle und Speicher
 ./gradlew :web:webapp                                        # WebApp nach webapp/ (braucht python3 + fonttools für die Schriften)
 ./gradlew :app:testGithubDebugUnitTest --tests '*ScreenshotTest*'   # Bildschirmfotos nach screenshots/
-./gradlew assembleGithubRelease assemblePlayRelease          # APK mit eigenem Updater / Play-Fassung
+./gradlew assembleGithubRelease assemblePlayRelease          # Android (nur zur Kontrolle, wird zurzeit nicht ausgeliefert)
 ```
 
-Releases baut `.github/workflows/experimentopia-release.yml` (Tag `experimentopia-v<Version>`), Text aus `CHANGELOG.md`.
+Ausgeliefert wird nur die WebApp (Branch `experimentopia-test` über `experimentopia-web-test.yml`; live gibt der Leitstand frei).
 
 Datenschutz: kein Konto, keine Werbung, keine Käufe, keine Kamera, kein Mikrofon. Gespeichert wird nur auf dem Gerät. Ins Internet nur für die Update-Prüfung (abschaltbar).

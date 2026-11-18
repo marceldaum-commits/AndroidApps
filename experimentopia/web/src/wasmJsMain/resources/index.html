@@ -26,6 +26,12 @@
   @media (prefers-reduced-motion: reduce) { #start svg, .bl { animation: none; } }
   #start .fehler { color: #FFA23D; max-width: 30em; }
 </style>
+<script>
+  // „App installieren“: Chrome/Edge/Android melden früh, dass die App installierbar ist – das Angebot aufheben, bis jemand auf den Knopf tippt
+  window.__exBip = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__exBip = e; if (window.__exInstallChanged) window.__exInstallChanged(); });
+  window.addEventListener('appinstalled', function () { window.__exBip = null; if (window.__exInstallChanged) window.__exInstallChanged(); });
+</script>
 </head>
 <body>
 <div id="start">

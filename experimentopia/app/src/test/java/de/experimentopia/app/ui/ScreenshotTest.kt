@@ -92,6 +92,11 @@ class ScreenshotTest {
     @Test fun storyAgain() = shot("69_raetsel_nochmal", settle = 1500, prepare = { it.onNodeWithTag("raetsel_karte").performClick() }) {
         ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.LAB, startGuess = 1)
     }
+    @Test fun install() = shot("70_app_installieren", settle = 1500, prepare = { it.onNodeWithText("📲 App installieren").performClick() }) {
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalInstaller provides FakeInstaller) {
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp)) { de.experimentopia.app.ui.common.InstallCard() }
+        }
+    }
     @Test fun done() = shot("08_geschafft", settle = 2500) { ExperimentScreen(Catalog.byId("w5")!!, {}, {}, {}, startPhase = Phase.DONE, startGuess = 0) }
 
     @Test fun tower() = lab("w8", "10_dichteturm", settle = 4000, prepare = { it.tap("Spiritus"); it.tap("🍯 Honig"); it.tap("Speiseöl"); it.tap("💧 Wasser"); it.tap("Spülmittel"); it.mainClock.advanceTimeBy(2000); it.tap("Weintraube"); it.tap("Eiswürfel") })
@@ -182,6 +187,11 @@ class ScreenshotTest {
         }
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
+}
+
+private object FakeInstaller : de.experimentopia.app.ui.fx.Installer {
+    override val state = de.experimentopia.app.ui.fx.InstallState.IOS
+    override fun install() {}
 }
 
 /** Vorlese-Attrappe für Bildschirmfotos */

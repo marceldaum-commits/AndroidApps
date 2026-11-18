@@ -1,5 +1,12 @@
 # Changelog – Experimentopia
 
+## 2.5.0 – Experimentopia als App installieren (18.11.2026)
+
+- 📲 **„App installieren“**: Auf der Startseite und in den Einstellungen gibt es einen Knopf, mit dem man Experimentopia wie eine richtige App auf den Startbildschirm holt –
+  auf Android/Chrome direkt, auf iPhone/iPad mit einer kurzen Anleitung. Ist die App installiert, verschwindet der Knopf. Sie startet auch ohne Internet.
+- 🌐 Experimentopia gibt es vorerst **nur als WebApp** – keine APK zum Herunterladen mehr. Sie aktualisiert sich von selbst.
+- 💛 Der Forscher-Pass gilt in der Web-App.
+
 ## 2.4.8 – Vorlesen vorerst aus (18.11.2026)
 
 - 🔇 Das Vorlesen ist vorerst ausgeschaltet: keine Vorlese-Knöpfe, kein automatisches Vorlesen, keine Stimme aus dem Internet und keine Gerätestimme.

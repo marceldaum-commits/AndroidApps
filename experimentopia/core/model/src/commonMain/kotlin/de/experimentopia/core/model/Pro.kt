@@ -41,7 +41,7 @@ object Pro {
     fun locked(l: Lab, proOwned: Boolean, enabled: Boolean = ENABLED) = enabled && !proOwned && !freeLab(l)
 
     /** Satz für Eltern: Was kostet die App? Ändert sich von selbst, wenn Pro eingeschaltet wird. */
-    val purchaseNote get() = if (ENABLED) "Ein großer Teil ist kostenlos. Wer mag, kann den Forscher-Pass einmal kaufen ($WEB_PRICE, kein Abo) – nur nach einer Frage für Erwachsene."
+    val purchaseNote get() = if (ENABLED) "Ein großer Teil ist kostenlos. Wer mag, kann den Forscher-Pass einmal kaufen ($WEB_PRICE, kein Abo, gilt in der Web-App) – nur nach einer Frage für Erwachsene."
         else "Zurzeit ist alles kostenlos – es gibt nichts zu kaufen."
     val freeCount get() = Catalog.all.count(::freeExperiment)
     val benefits get() = listOf(

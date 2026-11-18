@@ -48,6 +48,7 @@ fun SettingsScreen(
         Bar("Einstellungen", onBack)
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             top()
+            de.experimentopia.app.ui.common.InstallCard()
             SoundSettings(audio, onAudio, sound, onSound, vibration, onVibration)
             if (de.experimentopia.core.model.Nova.ENABLED) ReadSettings(audio, onAudio)
             Panel(Modifier.fillMaxWidth()) {
@@ -60,7 +61,7 @@ fun SettingsScreen(
                 Text("Für Eltern: Der Forscher-Pass ist auf diesem Gerät freigeschaltet – alle Versuche und Geräte sind offen. Danke!", color = E.Text, fontSize = 13.sp)
             } else if (Pro.ENABLED) Panel(Modifier.fillMaxWidth(), border = E.Sun) {
                 Text("💛 Forscher-Pass", style = MaterialTheme.typography.titleMedium, color = E.Sun)
-                Text("Noch nicht freigeschaltet. Einmalig ${Pro.WEB_PRICE}, kein Abo.", color = E.Muted, fontSize = 13.sp)
+                Text("Noch nicht freigeschaltet. Einmalig ${Pro.WEB_PRICE}, kein Abo – gilt in der Web-App.", color = E.Muted, fontSize = 13.sp)
                 GlowButton(onPro, color = E.Sun) { Text("Was ist im Forscher-Pass?") }
             }
             Panel(Modifier.fillMaxWidth()) {
@@ -133,7 +134,7 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
                 !Pro.ENABLED -> Text("Der Forscher-Pass kommt bald – bis dahin ist alles frei. 🎁", color = E.Sun, modifier = Modifier.testTag("pro-status"))
                 else -> Panel(Modifier.fillMaxWidth(), border = E.Sun) {
                     Text(Pro.WEB_PRICE, color = E.Sun, fontWeight = FontWeight.Black, fontSize = 34.sp)
-                    Text("einmalig · kein Abo · keine Werbung · inkl. 19 % MwSt.", color = E.Text, fontSize = 13.sp)
+                    Text("einmalig · kein Abo · keine Werbung · inkl. 19 % MwSt. · gilt in der Web-App", color = E.Text, fontSize = 13.sp)
                     GlowButton({ gate = true }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = E.Sun) { Text("💛 Forscher-Pass holen", fontWeight = FontWeight.Bold) }
                     Text("Nur mit Erlaubnis der Eltern – vorher kommt eine Frage für Erwachsene.", color = E.Muted, fontSize = 12.sp)
                 }
@@ -150,7 +151,7 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
                 }, Modifier.fillMaxWidth(), enabled = input.isNotBlank()) { Text("Code einlösen", fontWeight = FontWeight.Bold) }
                 msg?.let { Text(it, color = if (it.startsWith("Super")) E.Green else E.Pink) }
             }
-            Text("Für Eltern: Einmalkauf ohne Abo. Der Kauf gilt für dieses Gerät bzw. diesen Browser, ohne Konto. Gespeichert wird nur der Freischalt-Code – nichts über das Kind. " +
+            Text("Für Eltern: Einmalkauf ohne Abo. Der Kauf gilt in der Web-App auf diesem Gerät bzw. in diesem Browser, ohne Konto. Gespeichert wird nur der Freischalt-Code – nichts über das Kind. " +
                 "Schon gemachte Versuche bleiben immer offen.", color = E.Muted, fontSize = 12.sp)
             GlowButton(onBack, Modifier.fillMaxWidth()) { Text("Zurück", fontWeight = FontWeight.Bold) }
         }

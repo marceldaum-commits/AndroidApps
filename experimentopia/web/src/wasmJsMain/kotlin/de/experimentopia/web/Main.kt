@@ -71,8 +71,9 @@ private fun WebApp() {
     LaunchedEffect(nav.stack.size) { syncHistory(nav.stack.size) { nav.back() } }
     val sfx = remember { WebSfx(prefs) }
     val music = remember { WebMusic(scope) }
+    val installer = remember { WebInstaller() }
     val reader = remember { if (de.experimentopia.core.model.Nova.ENABLED) WebReader() else null }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) },
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) },
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.BIG -> 40 }) }) {
         ExperimentopiaTheme { Surface(Modifier.fillMaxSize(), color = E.Night) {
             AppRoot(nav, state, Version.NAME, Version.DATE,

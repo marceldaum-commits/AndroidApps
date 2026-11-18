@@ -112,3 +112,11 @@ class WebReader : Reader {
 
     override fun stop() { turn++; browserStop(); novaStop(); speaking = false }
 }
+
+/** „App installieren“ im Browser: merkt sich, ob der Browser die Installation anbietet oder ob es ein iPhone/iPad ist */
+class WebInstaller : Installer {
+    override var state by mutableStateOf(InstallState.HIDDEN); private set
+    private fun refresh() { state = when (installState()) { 1 -> InstallState.PROMPT; 2 -> InstallState.IOS; else -> InstallState.HIDDEN } }
+    init { refresh(); onInstallChanged { refresh() } }
+    override fun install() { installPrompt { refresh() } }
+}

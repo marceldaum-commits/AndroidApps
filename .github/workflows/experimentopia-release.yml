@@ -12,10 +12,10 @@
 # Variable (Settings → Variables): EXPERIMENTOPIA_DRIVE_FOLDER = ID des Drive-Ordners „Experimentopia“ (eigener Unterordner)
 name: Experimentopia APK
 
+# Seit 18.11.2026 (Vorgabe Marcel): vorerst NUR WebApp – keine APK, kein Play. Dieser Ablauf läuft darum nicht mehr automatisch,
+# sondern nur noch von Hand (Actions → „Run workflow“), wenn es später wieder eine Android-App geben soll. Der Android-Code bleibt im Repo.
 on:
   workflow_dispatch:
-  push:
-    paths: ["experimentopia/**", ".github/workflows/experimentopia-release.yml", ".github/scripts/**"]
 
 permissions:
   contents: write

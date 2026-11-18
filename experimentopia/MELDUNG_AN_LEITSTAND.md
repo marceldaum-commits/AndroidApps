@@ -2,6 +2,21 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.5.0 vom 18.11.2026: nur WebApp + „App installieren“ – fertig für den Betriebstest
+
+Auf Marcels Bestätigung („Alles umsetzen“):
+1) Android-Code bleibt im Repo (`experimentopia/app`), wird in den Tests weiter mitgebaut, aber **nicht mehr ausgeliefert**: `experimentopia-release.yml` hat keinen Push-Auslöser mehr (nur noch von Hand).
+2) **APKs lagen**: als Assets in den GitHub-Releases `experimentopia-v0.1.0 … v2.4.8` (Repo marceldaum-commits/AndroidApps; Drive-Upload war nie eingerichtet, Play nie hochgeladen).
+   Entfernt durch den Workflow `experimentopia-apk-entfernen.yml` (löscht alle `.apk`-Assets, prüft danach auf 0; die Releases mit Text bleiben als Verlauf).
+   In App und README keine APK-/Play-Hinweise mehr (README: „Nur WebApp“). Der Android-Updater bleibt nur im (nicht ausgelieferten) Android-Code.
+3) Auto-Update der WebApp unverändert aktiv (2.4.7, Test `tools/web-update.mjs` 7/7).
+4) **„📲 App installieren“** auf Startseite und in den Einstellungen, nur wenn noch nicht installiert (display-mode standalone / navigator.standalone):
+   Chrome/Android über `beforeinstallprompt` (früh im index.html abgefangen), iPhone/iPad mit Anleitung „Teilen ⬆️ → Zum Home-Bildschirm → Hinzufügen“.
+   Manifest geprüft: `display: standalone`, `start_url`/`scope` `./`, Icons 192/512 `any maskable`, offline startfähig (Service Worker, getestet).
+   Browser-Test: Chrome mit Angebot → Knopf da; iPhone 13 → Knopf mit Anleitung; als installierte App → kein Knopf. Bildschirmfoto `screenshots/70_app_installieren.png`.
+5) Forscher-Pass-Texte: „gilt in der Web-App“ (Einstellungen, Kaufseite, Eltern-Hinweis, Datenschutz-Satz).
+Liegt auf test (nicht live).
+
 ## 18.11.2026 – 2.4.8 ist live
 
 - Auf Marcels „jo 2.4.8“ `experimentopia-live` auf den getesteten Stand gesetzt (fast-forward, d5e911d). Live: Vorlesen aus, texte.json leer.

@@ -58,6 +58,14 @@ fun novaCancelAll(): Unit = js("{ if (window.ExNova) window.ExNova.cancelAll(); 
 fun novaClear(done: () -> Unit): Unit = js("window.ExNova.clear(done)")
 /** Hat der Nutzer schon einmal getippt/geklickt? (vorher blockiert der Browser jeden Ton) */
 fun userActivated(): Boolean = js("{ try { return !navigator.userActivation || navigator.userActivation.hasBeenActive; } catch (e) { return true; } }")
+/** 0 = nichts anzeigen (schon installiert oder Browser kann es nicht), 1 = Installations-Dialog möglich, 2 = iPhone/iPad (Anleitung) */
+fun installState(): Int = js("""{ try {
+  if ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true) return 0;
+  if (window.__exBip) return 1;
+  var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  return ios ? 2 : 0; } catch (e) { return 0; } }""")
+fun installPrompt(done: (Boolean) -> Unit): Unit = js("{ var e = window.__exBip; if (!e) { done(false); return; } e.prompt(); e.userChoice.then(function (c) { window.__exBip = null; done(c && c.outcome === 'accepted'); }, function () { done(false); }); }")
+fun onInstallChanged(cb: () -> Unit): Unit = js("{ window.__exInstallChanged = cb; if (window.matchMedia) { try { matchMedia('(display-mode: standalone)').addEventListener('change', cb); } catch (e) {} } }")
 fun pageHost(): String = js("location.host")
 fun novaStop(): Unit = js("{ if (window.ExNova) window.ExNova.stop(); }")
 /** Den Speicher der alten Offline-Stimme (bis 2.1, ca. 63 MB) freigeben */
