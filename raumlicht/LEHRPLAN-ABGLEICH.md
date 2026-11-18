@@ -8,7 +8,7 @@ In Bayern gibt es für Jgst. 12/13 nur den Plan „erhöhtes Anforderungsniveau�
 
 Abkürzungen: BY (Jgst. 11–13), BW (BF Basisfach, LF Leistungsfach), NW (EF, GK, LK), NI (EP, gA, eA; „fak.“ = nur fakultativ), HE (E, GK, LK; „n. v.“ = nicht verbindlich), KMK (gA/eA).
 
-## Was als Nächstes kommt (Reihenfolge für die wöchentlichen Inhalte)
+## Was als Nächstes kommt (Reihenfolge für die Inhaltsupdates dienstags und freitags)
 
 Die ersten Zeilen sind in fast allen Ländern Pflicht, meist schon im Grundniveau. Die App zeigt die mit ⏳ markierten Themen als Kachel „Kommt bald“ (ohne Datum).
 

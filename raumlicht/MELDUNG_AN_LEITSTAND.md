@@ -2,6 +2,12 @@
 
 Neueste oben.
 
+## 18.11.2026 – Dauerregel übernommen: großes Inhaltsupdate dienstags und freitags (Marcel hat hier selbst „Ja“ gesagt)
+
+- Die geplante Aufgabe läuft jetzt **dienstags und freitags um 8:47 Uhr** (vorher mittwochs), erstmals **Freitag, 20.11.**; Ziel ist raumlicht-test bis 16 Uhr. Die Monatsprüfung am 24. läuft unverändert weiter.
+- Pflichtpunkte stehen im Auftragstext und in `PRUEFPLAN.md`: alle Schritte im Lösungsweg, jede Formel mit Beispiel in der Theorie, jedes Ergebnis nachgerechnet. Die Meldung nennt je Update: was neu ist, wie viele Aufgaben, wie geprüft.
+- **Umfang (Marcel direkt: „Aber heißt nicht sparsam sein … es soll voran gehen.“):** Richtwert je Update ein ganzes neues Thema als Kapitel mit mindestens 6 bis 8 Aufgaben samt Theorie, dazu nach Möglichkeit ein zweites Thema, weitere Aufgaben, Korrekturen oder eine neue Option. Gründlich prüfen und viel liefern; nur eine einzelne Aufgabe, die sich nicht sauber nachrechnen lässt, bleibt draußen und steht in der Meldung.
+
 ## 18.11.2026 – 2.18.30 auf test: Klausur-Hinweis → Probestunde (Marcel hat hier selbst „ja“ gesagt)
 
 - **Umgestellt:** Text „In N Tagen ist deine Klausur. Eine kostenlose Probestunde kann vor der Arbeit helfen.“, Knopf „Kostenlose Probestunde anfragen“. Zählung `probestunde_klick` mit `ort=klassenarbeit`; **`crashkurs_klick` ist aus der App entfernt** (du kannst es aus der Positivliste nehmen). `nachhilfe_hinweis` mit `ort=klassenarbeit` bleibt.
