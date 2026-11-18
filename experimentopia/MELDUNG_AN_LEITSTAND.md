@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 18.11.2026 – BESTÄTIGT: 2.6.1 läuft auf Marcels iPad (Safari 27.2) – bitte live freigeben
+
+- Foto von Marcel (iPad, Safari, `?diag=1`, 14:40): Startseite vollständig gezeichnet. Protokoll: „Fassung wasm (automatisch) · WebKit“, beide .wasm geladen, webgl2 2540×2120,
+  App sichtbar nach 3,0 s, **Pixel oben links 24,24,69,255** (dunkel = richtig gezeichnet, keine Umschaltung auf JS nötig), Fläche 2540×2120 / CSS 1270×1060, DPR 2→2, fertig.
+- Ursache damit bestätigt: Safari-27.2-Fehler bei Endaufrufen (WebKit 329421); die Raumlicht-Abhilfe wirkt auch hier. Die JS-Fassung bleibt als automatische Absicherung.
+- **Fertig für den Betriebstest: Experimentopia 2.6.1 vom 18.11.2026** auf experimentopia-test. Live-Freigabe durch den Leitstand.
+
 ## 18.11.2026 – Version 2.6.1 vom 18.11.2026: Raumlicht-Weg (Safari 27.2) + JS-Absicherung – fertig für den Betriebstest
 
 - **Raumlicht-Abhilfe übernommen** (Commit 92608706): `web/webpack/skiko-no-tail-call.cjs` + `web/webpack.config.d/skiko-no-tail-call.js` – alle Skiko-Aufrufe aus der

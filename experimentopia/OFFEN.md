@@ -1,6 +1,6 @@
 # Experimentopia – Stand und offene Punkte (18.11.2026)
 
-**Stand:** Version 2.4.8 vom 18.11.2026 (Vorlesen aus; Logo, eindeutige Aufträge, WebApp immer aktuell) ist live, auf `experimentopia-test` und als APK im GitHub-Release.
+**Stand:** Version 2.6.1 vom 18.11.2026 (iPad/Safari 27.2 läuft – bestätigt) liegt auf `experimentopia-test`; live ist 2.4.8, Freigabe durch den Leitstand.
 
 ## Nova
 - **Seit 2.4.8 ist das Vorlesen ausgeschaltet** (Schalter `Nova.ENABLED` in `core/model/.../Nova.kt`). Zum Wiedereinschalten: auf `true` setzen, bauen – dann gilt alles Folgende wieder.
