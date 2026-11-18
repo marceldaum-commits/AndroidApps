@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.25 – Die Formel steht jetzt ganz oben – und ein neues Kapitel fürs Abi (18.11.2026)
+- **Theorie mit Formel-Kasten:** In jeder Theorie-Karte steht die Formel, die du für die Aufgabe brauchst, jetzt ganz oben in einem eigenen Kasten – und darunter, was die Buchstaben darin bedeuten. Danach kommen wie bisher die Schritte und ein durchgerechnetes Beispiel.
+- **Neues Kapitel 26 „HNF, Abstände & Winkel“** mit acht Aufgaben: Hessesche Normalform, Abstand Gerade–Ebene, Abstand zweier paralleler Ebenen und zweier paralleler Geraden, Winkel zwischen zwei Geraden und zwischen zwei Ebenen – dazu ein Abi-Check.
+- **Fünf neue Theorie-Karten** dazu; die Karte zum Winkel zwischen zwei Vektoren erklärt jetzt jede Größe der Formel einzeln. Aufgaben zu Ebenen-Winkeln und zu parallelen Abständen zeigen ihre eigene, passende Karte.
+- **Für Eltern:** Die anonyme Zählung (abschaltbar) erfasst jetzt auch, dass eine Aufgabe gestartet oder geschafft oder eine Theorie-Karte geöffnet wurde – weiterhin ohne Kennung und ohne zu übertragen, welche Aufgabe es war.
+
 ## 2.18.24 – Hinweis auf Crashkurse vor der Klausur (18.11.2026)
 - Im Klausur-Planer steht jetzt 3 bis 14 Tage vor dem eingetragenen Termin ganz unten ein kurzer, sachlicher Hinweis auf unsere Crashkurse – ohne Preis, ohne Lux, mit „Ausblenden“.
 - Abschaltbar in den Einstellungen über „Hinweise auf unsere Nachhilfe zeigen“.

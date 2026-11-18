@@ -11,6 +11,7 @@ let fail = 0; const check = (ok, text) => { console.log((ok ? 'ok   ' : 'FAIL ')
 const run = async (q, init) => { const ctx = await b.newContext({ viewport: { width: 400, height: 860 }, serviceWorkers: 'block' }); const page = await ctx.newPage(); const calls = [];
   await ctx.addCookies([{ name: 'sitzung', value: 'geheim', domain: 'trainer.mathenachhilfe-online.com', path: '/', secure: true, sameSite: 'None' }]);
   await ctx.route(/trainer\.mathenachhilfe-online\.com/, (r) => { const q = r.request(); calls.push({ url: q.url(), method: q.method(), body: q.postData(), headers: q.headers() }); r.fulfill({ status: 204, body: '' }); });
+  await page.addInitScript(() => { window.__rlZaehleLokal = true; });      // sonst zählt die WebApp auf dem eigenen Rechner nicht
   if (init) await page.addInitScript(init);
   await page.goto(url + q); await page.waitForFunction(() => document.getElementById('start').style.display === 'none', null, { timeout: 90000 }); await page.waitForTimeout(3000); await ctx.close(); return calls; };
 { const calls = await run('');
@@ -19,4 +20,10 @@ const run = async (q, init) => { const ctx = await b.newContext({ viewport: { wi
   check(calls[0] && /^text\/plain/.test(calls[0].headers['content-type'] || '') && !calls[0].headers.cookie && !calls[0].headers.referer, 'als einfacher Text, ohne Cookie und ohne Herkunftsadresse'); }
 { const calls = await run('?modus=js'); check(calls.length === 1 && /"ev":"start"/.test(calls[0].body || ''), 'auch die JavaScript-Fassung zählt genau einmal'); }
 { const calls = await run('', () => { localStorage.setItem('raumlicht.zaehlen', '0'); }); check(calls.length === 0, 'Schalter aus: kein einziger Aufruf'); }
+{ const ctx = await b.newContext({ viewport: { width: 400, height: 860 }, serviceWorkers: 'block' }); const page = await ctx.newPage(); const calls = [];
+  await ctx.route(/trainer\.mathenachhilfe-online\.com/, (r) => { calls.push(r.request().postData()); r.fulfill({ status: 204, body: '' }); });
+  await page.goto(url + '?ziel=level/1-2'); await page.waitForFunction(() => document.getElementById('start').style.display === 'none', null, { timeout: 90000 }); await page.waitForTimeout(3000); await ctx.close();
+  check(calls.length === 0, calls.join(' ') + ' ohne ausdrückliche Freigabe zählt die WebApp auf dem eigenen Rechner nicht (Testläufe bleiben aus der Statistik)'); }
+{ const calls = await run('?ziel=level/1-2'); const evs = calls.map((c) => JSON.parse(c.body)); const lv = evs.find((e) => e.ev === 'level_start');
+  check(!!lv && lv.thema === 'vektoren' && Object.keys(lv).sort().join() === 'app,ev,thema,v', 'Aufgabe geöffnet: „level_start“ nur mit Gebiet – ohne Aufgabe, ohne Sterne'); }
 await b.close(); server.closeAllConnections(); server.close(); process.exit(fail ? 1 : 0);

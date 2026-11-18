@@ -116,3 +116,9 @@ tasks.register<Sync>("webapp") {
         out.resolve("sw.js").let { it.writeText(it.readText().replace("@WASM@", wasm.joinToString(", ", "[", "]") { "'${it.name}'" })) }
     }
 }
+
+// Fallstrick des Kotlin-Bauwerkzeugs: Ändert sich nur eingebetteter Browser-Code (js("…")), bleibt die .wasm-Datei gleich – der Optimier-Schritt hält sich dann
+// für aktuell und liefert die ALTE Brücken-Datei (.mjs) weiter. Darum gehören die .mjs-Dateien ausdrücklich zu seinen Eingaben.
+tasks.matching { it.name == "compileProductionExecutableKotlinWasmJsOptimize" }.configureEach {
+    inputs.files(fileTree(layout.buildDirectory.dir("compileSync/wasmJs/main/productionExecutable/kotlin")) { include("*.mjs") }).withPropertyName("brueckenDateien")
+}
