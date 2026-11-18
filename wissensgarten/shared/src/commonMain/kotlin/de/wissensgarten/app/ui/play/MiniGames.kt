@@ -55,10 +55,29 @@ fun QuestionText(text: String, modifier: Modifier = Modifier, autoRead: Boolean 
     val auto = LocalReadAloud.current && autoRead
     val subject = LocalSubject.current
     LaunchedEffect(text) { if (auto) { delay(250); voice?.speak(text, Voice.localeFor(subject, text)) } }
-    Row(modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-        SilbenText(text, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
-        if (voice != null) IconButton(onClick = { voice.speak(text, Voice.localeFor(subject, text)) },
-            modifier = Modifier.semantics { contentDescription = "Vorlesen" }) { Text("🔊", fontSize = 20.sp) }
+    Column(modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+        SilbenText(text, style = MaterialTheme.typography.headlineSmall, textAlign = TextAlign.Center)
+        if (voice != null) SpeakButton("Frage vorlesen", Modifier.padding(top = 8.dp)) { voice.speak(text, Voice.localeFor(subject, text)) }
+    }
+}
+
+/**
+ * Großer, gut sichtbarer Vorlese-Knopf (Daumengröße, mindestens 56 dp hoch) – an jeder Karte gleich.
+ * Wackelt beim Erscheinen kurz, damit Kinder ihn entdecken.
+ */
+@Composable
+fun SpeakButton(label: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    val wiggle = remember { androidx.compose.animation.core.Animatable(0f) }
+    LaunchedEffect(Unit) { delay(400); repeat(2) { wiggle.animateTo(8f, tween(90)); wiggle.animateTo(-8f, tween(90)) }; wiggle.animateTo(0f, tween(90)) }
+    FilledTonalButton(
+        onClick = onClick,
+        modifier = modifier.heightIn(min = 56.dp).graphicsLayer { rotationZ = wiggle.value }.semantics { contentDescription = label },
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(28.dp),
+        contentPadding = PaddingValues(horizontal = 22.dp, vertical = 10.dp),
+    ) {
+        Text("🔊", fontSize = 26.sp)
+        Spacer(Modifier.width(10.dp))
+        Text("Vorlesen", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -92,12 +111,9 @@ fun DiscoverGame(card: StudyCard, options: List<String>?, onResult: (GameResult)
             Spacer(Modifier.height(8.dp))
             QuestionText(card.front, autoRead = false)
             Text("↓", fontSize = 26.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-                Text(card.back, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary,
-                    textAlign = TextAlign.Center, modifier = Modifier.weight(1f, fill = false))
-                if (voice != null) IconButton(onClick = { manual?.cancel(); voice.stop(); manual = scope.launch { readAll(false) } },
-                    modifier = Modifier.semantics { contentDescription = "Antwort vorlesen" }) { Text("🔊", fontSize = 20.sp) }
-            }
+            Text(card.back, style = MaterialTheme.typography.headlineMedium, fontWeight = FontWeight.Black, color = MaterialTheme.colorScheme.primary,
+                textAlign = TextAlign.Center)
+            if (voice != null) SpeakButton("Antwort vorlesen", Modifier.padding(top = 8.dp)) { manual?.cancel(); voice.stop(); manual = scope.launch { readAll(false) } }
             card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 6.dp)) }
             Spacer(Modifier.height(16.dp))
             JuicyButton(

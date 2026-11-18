@@ -102,26 +102,51 @@
       setTimeout(() => say('Das dauert ungewöhnlich lange.<br><br><button onclick="location.reload()">Nochmal versuchen</button>'), 90000);
     })();
     if (!('WebAssembly' in window)) document.querySelector('#splash p').textContent = 'Dieser Browser ist leider zu alt. Bitte Chrome, Edge, Firefox oder Safari aktualisieren.';
-    // Automatische Updates ohne Knopf: neue Version wird im Hintergrund geladen und eingespielt –
-    // gleich beim Öffnen, sonst sobald die Seite kurz verlassen wird (keine Lernrunde wird unterbrochen).
+    // Automatische Updates ohne Knopf (Vorgabe: die WebApp ist immer aktuell):
+    // - Prüfen beim Öffnen, bei jeder Rückkehr in den Tab (sichtbar/Fokus) und spätestens alle 30 Minuten:
+    //   Service-Worker-Update und Abgleich von version.json (ohne Cache).
+    // - Neue Version wird sofort aktiv (sw.js: skipWaiting + clients.claim). Neu geladen wird nur in einem
+    //   ungefährlichen Moment: gleich beim Start, im Hintergrund oder auf dem Startbildschirm (nie mitten in einer Runde).
+    // - Danach kurz „Neue Version x.y.z geladen“. Spielstand (localStorage) und Nova-Dateien bleiben.
     if ('serviceWorker' in navigator) {
       const started = Date.now();
-      let waiting = false;
+      let pending = false, safe = false, loaded = null, reloading = false;
       const hadController = !!navigator.serviceWorker.controller;
+      const reloadNow = () => {
+        if (reloading) return; reloading = true;
+        try { sessionStorage.setItem('wg.update', '1'); } catch (e) {}
+        location.reload();
+      };
+      const maybeReload = () => { if (pending && (safe || document.visibilityState === 'hidden' || Date.now() - started < 15000)) reloadNow(); };
+      window.wgUpdate = { safe: (s) => { safe = !!s; maybeReload(); }, get pending() { return pending; } };
       navigator.serviceWorker.addEventListener('controllerchange', () => {
         if (!hadController) return;                      // erste Installation: nichts neu laden
-        if (Date.now() - started < 15000 || document.visibilityState === 'hidden') location.reload();
-        else waiting = true;
+        pending = true; maybeReload();
       });
-      document.addEventListener('visibilitychange', () => { if (waiting && document.visibilityState === 'hidden') location.reload(); });
+      document.addEventListener('visibilitychange', maybeReload);
+      // Nach dem Neuladen: kurzer Hinweis mit der neuen Versionsnummer
+      window.addEventListener('wg-ready', () => {
+        let was = null; try { was = sessionStorage.getItem('wg.update'); sessionStorage.removeItem('wg.update'); } catch (e) {}
+        if (!was) return;
+        fetch('version.json?nc=' + Date.now(), { cache: 'no-store' }).then((r) => r.json())
+          .then((v) => setTimeout(() => window.wg && window.wg.toast && window.wg.toast('Neue Version ' + v.version + ' geladen 🌱'), 800)).catch(() => {});
+      });
       // Erst wenn der Garten steht: Service Worker anmelden (speichert dann alles für den nächsten Start),
       // damit er beim ersten Laden nicht mit der App um die Leitung konkurriert.
       let registered = false;
       const register = () => { if (registered) return; registered = true;
-        navigator.serviceWorker.register('sw.js').then((reg) => {
-          const check = () => reg.update().catch(() => {});
+        navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then((reg) => {
+          const check = () => {
+            reg.update().catch(() => {});
+            fetch('version.json?nc=' + Date.now(), { cache: 'no-store' }).then((r) => r.json()).then((v) => {
+              if (loaded === null) { loaded = v.version; return; }
+              if (v.version !== loaded) reg.update().catch(() => {});   // neue Version auf dem Server: Update anstoßen
+            }).catch(() => {});
+          };
+          check();
           setInterval(check, 30 * 60 * 1000);
           document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') check(); });
+          window.addEventListener('focus', check);
         }).catch(() => {});
       };
       if (hadController) window.addEventListener('load', register);

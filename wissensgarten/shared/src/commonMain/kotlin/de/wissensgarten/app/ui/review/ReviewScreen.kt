@@ -367,13 +367,13 @@ private fun RevealCard(card: StudyCard, right: Boolean, paused: Boolean, onPause
                 // FlowRow: auf schmalen Handys rutscht „Vorlesen“ in die nächste Zeile statt umzubrechen
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)) {
                     AssistChip(onClick = { onPause(); drawing = true }, label = { Text(if (de.wissensgarten.app.ui.play.Drawings.rev >= 0 && de.wissensgarten.app.ui.play.Drawings.has(card.id)) "✏️ Neu malen" else "✏️ Selbst malen") })
-                    // Antwort und Erklärung (noch einmal) vorlesen
-                    if (onRead != null) AssistChip(onClick = onRead, label = { Text("🔊 Vorlesen", maxLines = 1) })
                 }
                 if (drawing) de.wissensgarten.app.ui.play.DrawDialog(card.id, "${card.front} → ${card.back}", card.img) { drawing = false }
                 SilbenText(card.front, style = MaterialTheme.typography.titleMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F))
                 SilbenText(card.back, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Black, textAlign = TextAlign.Center, color = Color(0xFF22261F))
                 card.info?.let { Text(it, style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, color = Color(0xFF4D4A3F), modifier = Modifier.padding(top = 6.dp)) }
+                // Antwort und Erklärung (noch einmal) vorlesen – groß und gut erreichbar
+                if (onRead != null) de.wissensgarten.app.ui.play.SpeakButton("Antwort vorlesen", Modifier.padding(top = 10.dp), onRead)
             }
         }
         if (!right || paused) {

@@ -700,6 +700,13 @@ open class ScreenshotTest {
         }
     }
 
+    @Test fun speakButton() = shot("76_vorlesen_knopf") {
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(24.dp), horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally) {
+            de.wissensgarten.app.ui.fx.SilbenText("Wie heißt die Hauptstadt von Frankreich?", style = androidx.compose.material3.MaterialTheme.typography.headlineSmall, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+            de.wissensgarten.app.ui.play.SpeakButton("Frage vorlesen", androidx.compose.ui.Modifier.padding(top = 8.dp)) {}
+        }
+    }
+
     @Test fun plus() = shot("65_plus") {
         de.wissensgarten.app.ui.plus.PlusScreen(
             status = de.wissensgarten.core.data.PlusStatus(active = false, enforced = true), today = 20773,

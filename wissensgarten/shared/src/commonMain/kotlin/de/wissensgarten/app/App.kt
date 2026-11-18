@@ -227,6 +227,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         val now by vm.now.collectAsStateWithLifecycle()
         val backStack by nav.currentBackStackEntryAsState()
         val route = backStack?.destination?.route
+        // Neue WebApp-Version nur auf dem Startbildschirm einspielen – nie mitten in einer Runde oder Eingabe
+        LaunchedEffect(route) { host.setSafeToUpdate(route == Routes.GARDEN) }
         val showBar = TABS.any { it.route == route }
 
         val gate = de.wissensgarten.app.ui.common.LocalParentGate.current
