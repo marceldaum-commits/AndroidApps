@@ -1,5 +1,18 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.8 – fertig für den Betriebstest: Nova abgeschlossen + einheitliches Logo · Web = APK = Play
+- **vorlesen/texte.json** (test und nach Freigabe live): **1 162 feste Texte** (153 197 Zeichen, unverändert vertont) +
+  **1 797 vorhersehbare Laufzeit-Sätze mit `"laufzeit": true`** (**94 998 Zeichen neu** – unter der 150 000er-Grenze, daher
+  ohne Vorankündigung): Volts Begrüßung mit Sternzahl (725 Sätze, 32 517 Z.), Tagesmissionen der nächsten 60 Tage mit
+  Tipp und Rechen-Stern (≈ 825 Sätze, 45 057 Z.; jeder Bau schiebt das Fenster weiter), Rechenweg-Abschluss je Level
+  (128), Geschichte/Gold-Teile (38), Andromeda (19), Sticker und Gast-Planeten (32), Auffrischen je Kapitel (30).
+  Alle als ganze Sätze. Die Satzvorlagen liegen jetzt an einer Stelle (`core/model/VoltLines.kt`), App und Liste haben
+  denselben Wortlaut. Nicht vorhersehbar (bleiben bei /jetzt): Rückmeldungen nach Fehlversuchen mit den eingestellten Werten.
+- **Klicktest:** alle 30 Kapitel im Browser gegen den echten Server – **30 / 30 Ansagen von Nova = 100 %, 0 × Gerätestimme**.
+- **Offline laden:** liest dieselbe texte.json (Android als Asset, Web von der Seite) – nimmt die Laufzeit-Sätze mit;
+  Größe kommt live aus `stand-<host>.json` („bytes“/„bytes_original“), stimmt also, sobald das Werk sie vertont hat.
+- **Logo** einheitlich (siehe 2.5.7). versionCode 55, Prüfkette grün.
+
 ## ✅ 2.5.7 – Logo überall gleich (Marcel 18.11.) · Web = APK = Play
 - **Geprüft, war schon gleich** (gleiche Geometrie und Farben, Bilder nebeneinander verglichen): icons/icon.svg,
   icon-512/-192, maskable-512 (PWA), apple-touch-icon, favicon-32, Store-Symbol icon_512, Android-Symbol

@@ -160,13 +160,7 @@ fun HangarScreen(found: List<Part>, onBack: () -> Unit, gold: List<Part> = empty
                 Text("🛸 Hangar · ${found.size}/${Story.parts.size}", style = MaterialTheme.typography.titleLarge, color = Q.Text)
             }
             Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Volt(if (complete) VoltMood.WOW else VoltMood.HAPPY, size = 56.dp, speech = when {
-                    gold.size == Story.parts.size -> "Alles Gold! Die ${Story.SHIP} fliegt mit Warp-Antrieb – du bist ein echter Profi! 🌟"
-                    complete && gold.isNotEmpty() -> "Schon ${gold.size} Gold-Teile! Jedes Kapitel mit lauter 3 ⭐ macht ein Teil golden. ✨"
-                    complete -> "Die ${Story.SHIP} fliegt! Jetzt machen wir sie golden: Schaff ein Kapitel ganz mit 3 ⭐ – dann glänzt sein Teil. ✨"
-                    found.isEmpty() -> "Hier bauen wir die ${Story.SHIP} wieder zusammen. Schaff ein ganzes Kapitel – dann finden wir das erste Teil!"
-                    else -> "Schon ${found.size} Teile! Jeder Planet, den du ganz schaffst, bringt eins mehr. 🔧"
-                })
+                Volt(if (complete) VoltMood.WOW else VoltMood.HAPPY, size = 56.dp, speech = de.kurvenflug.core.model.VoltLines.story(found.size, gold.size, complete))
                 Box(Modifier.fillMaxWidth().aspectRatio(1f).clip(RoundedCornerShape(24.dp)).background(Color(0x55070B20))
                     .border(1.5.dp, Q.Orange.copy(alpha = 0.5f), RoundedCornerShape(24.dp)).padding(24.dp)) {
                     ShipCanvas(found.map { it.chapter }.toSet(), Modifier.fillMaxSize(), time, flames = complete, gold = gold.map { it.chapter }.toSet())
@@ -286,7 +280,7 @@ fun PartFoundOverlay(parts: List<Part>, foundTotal: Set<Int>, onDone: () -> Unit
             parts.forEach { p ->
                 Text(p.emoji, fontSize = 64.sp, modifier = Modifier.graphicsLayerScale(pop.value))
                 Text(p.name, style = MaterialTheme.typography.titleLarge, color = Q.Text)
-                Volt(VoltMood.DANCE, size = 56.dp, speech = if (isGold) "Alle Level mit 3 ⭐ – mein ${p.name} glänzt jetzt golden!" else p.found)
+                Volt(VoltMood.DANCE, size = 56.dp, speech = de.kurvenflug.core.model.VoltLines.storyPart(p, isGold))
             }
             Box(Modifier.size(140.dp)) { ShipCanvas(foundTotal, Modifier.fillMaxSize(), time, flames = foundTotal.size == Story.parts.size, gold = gold) }
             Text("${foundTotal.size} von ${Story.parts.size} Teilen", color = Q.Muted)

@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.8 – Nova spricht noch mehr vorab
+- Auch Sätze mit Zahlen, die sich vorhersehen lassen – Volts Begrüßung („Schon 24 Sterne gesammelt“), Fortschritt in der
+  Geschichte und in Andromeda, die Tagesmissionen der nächsten Wochen – liegen jetzt fertig gesprochen bereit. Sie kommen
+  schneller und lassen sich mit „Alle Nova-Texte offline laden“ auch ohne Internet hören.
+
 ## 2.5.7 – Ein Logo überall
 - Das Kurvenflug-Logo (Flugbahn mit Planet) steht jetzt auch oben auf der Startseite, im Widget und auf geteilten
   Flugbahn-Fotos – genau wie das App-Symbol.
