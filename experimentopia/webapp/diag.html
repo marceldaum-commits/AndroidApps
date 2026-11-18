@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Experimentopia – Diagnose</title>
+<style>
+  body { margin: 0; padding: 16px; background: #160F2E; color: #F3EEFF; font: 15px/1.45 system-ui, sans-serif; }
+  h1 { font-size: 20px; margin: 4px 0 10px; } li { margin: 4px 0; } .ok { color: #3DF5C8; } .no { color: #FF5FA2; } .warn { color: #FFD84D; }
+  button { font: bold 15px system-ui; padding: 10px 14px; margin: 6px 6px 0 0; border-radius: 12px; border: 2px solid #3DF5C8; background: #1F5C5A; color: #fff; }
+  #vorher { background: #3a1f3f; border: 1px solid #FF5FA2; padding: 8px 10px; border-radius: 10px; margin-bottom: 10px; }
+  code { color: #A99BD6; word-break: break-all; }
+</style>
+</head>
+<body>
+<h1>🧪 Experimentopia – Diagnose</h1>
+<div id="vorher" hidden></div>
+<ol id="log"></ol>
+<button onclick="location.href='./?nc=' + Date.now()">App öffnen</button>
+<button onclick="ohneSW()">Speicher leeren &amp; App öffnen</button>
+<button onclick="localStorage.removeItem('exDiag'); location.reload()">Diagnose neu</button>
+<p><small>Bitte ein Bildschirmfoto dieser Seite schicken. Die Seite merkt sich, bei welchem Schritt ein Absturz passiert ist.</small></p>
+<script>
+  // Schritt-für-Schritt-Prüfung ohne App-Code: Was kann dieses Gerät? Wo bricht es ab? Jeder Schritt wird vorher gemerkt (localStorage),
+  // damit nach einem Absturz von Safari („weiße Seite“) beim nächsten Öffnen sichtbar ist, wo es hing.
+  var log = document.getElementById('log');
+  function zeile(t, cls) { var li = document.createElement('li'); li.textContent = t; if (cls) li.className = cls; log.appendChild(li); return li; }
+  function merke(s) { try { localStorage.setItem('exDiag', s); } catch (e) {} }
+  var vorher = null; try { vorher = localStorage.getItem('exDiag'); } catch (e) {}
+  if (vorher && vorher !== 'fertig') { var v = document.getElementById('vorher'); v.hidden = false; v.textContent = '⚠️ Beim letzten Mal abgebrochen bei: ' + vorher + ' (vermutlich Absturz – meist zu wenig Speicher)'; }
+  function ohneSW() {
+    var go = function () { location.href = './?nc=' + Date.now(); };
+    try { Promise.all([
+      navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }) : null,
+      window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k !== 'experimentopia-nova'; }).map(function (k) { return caches.delete(k); })); }) : null
+    ]).then(go, go); } catch (e) { go(); }
+  }
+  (async function () {
+    var ua = navigator.userAgent, ios = /OS (\d+)_(\d+)/.exec(ua);
+    zeile('Gerät: ' + (ios ? 'iOS ' + ios[1] + '.' + ios[2] : navigator.platform) + ' · Pixeldichte ' + devicePixelRatio + ' · ' + innerWidth + '×' + innerHeight);
+    zeile('Browser: ' + ua).className = 'warn';
+    var gc = false; try { gc = WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0])); } catch (e) {}
+    zeile('WebAssembly-GC: ' + (gc ? 'ja' : 'NEIN'), gc ? 'ok' : 'no');
+    zeile('Ausnahmen (JSTag): ' + (typeof WebAssembly === 'object' && WebAssembly.JSTag ? 'ja' : 'nein (geht trotzdem)'));
+    var c = document.createElement('canvas'), gl = null; try { gl = c.getContext('webgl2') || c.getContext('webgl'); } catch (e) {}
+    zeile('WebGL: ' + (gl ? (gl instanceof WebGL2RenderingContext ? 'WebGL 2' : 'WebGL 1') : 'NEIN'), gl ? 'ok' : 'no');
+    var sw = navigator.serviceWorker ? await navigator.serviceWorker.getRegistrations() : [];
+    var ks = window.caches ? await caches.keys() : [];
+    zeile('Service Worker: ' + sw.length + ' · Speicher: ' + (ks.join(', ') || 'leer'));
+    try { var v = await (await fetch('version.json?nc=' + Date.now(), { cache: 'no-store' })).json(); zeile('Version auf dem Server: ' + v.version + ' vom ' + v.datum, 'ok'); } catch (e) { zeile('version.json nicht ladbar: ' + e, 'no'); }
+    var sws = ''; try { sws = await (await fetch('sw.js?nc=' + Date.now(), { cache: 'no-store' })).text(); } catch (e) {}
+    var wasm = (sws.match(/'[0-9a-f]+\.wasm'/g) || []).map(function (s) { return s.replace(/'/g, ''); });
+    for (var i = 0; i < wasm.length; i++) {
+      var w = wasm[i], li = zeile('Lade ' + w + ' …');
+      merke('Laden ' + w);
+      try {
+        var t0 = performance.now(); var buf = await (await fetch(w, { cache: 'no-store' })).arrayBuffer();
+        li.textContent = w + ': ' + (buf.byteLength / 1048576).toFixed(1) + ' MB geladen, übersetze …';
+        merke('Übersetzen ' + w + ' (' + (buf.byteLength / 1048576).toFixed(1) + ' MB)');
+        await new Promise(function (r) { setTimeout(r, 50); });
+        await WebAssembly.compile(buf);
+        li.textContent = w + ': ' + (buf.byteLength / 1048576).toFixed(1) + ' MB geladen und übersetzt in ' + Math.round(performance.now() - t0) + ' ms'; li.className = 'ok';
+        buf = null;
+      } catch (e) { li.textContent = w + ': FEHLER ' + e; li.className = 'no'; }
+    }
+    merke('Zeichenfläche');
+    try { var big = document.createElement('canvas'); big.width = Math.round(innerWidth * Math.min(devicePixelRatio, 2)); big.height = Math.round(innerHeight * Math.min(devicePixelRatio, 2)); var g2 = big.getContext('webgl2'); zeile('Große Zeichenfläche ' + big.width + '×' + big.height + ': ' + (g2 ? 'ok' : 'kein WebGL 2'), g2 ? 'ok' : 'warn'); } catch (e) { zeile('Zeichenfläche: FEHLER ' + e, 'no'); }
+    merke('fertig');
+    zeile('✅ Alle Schritte durchgelaufen.', 'ok');
+  })().catch(function (e) { zeile('FEHLER: ' + e, 'no'); });
+</script>
+</body>
+</html>

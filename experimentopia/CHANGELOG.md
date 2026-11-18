@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.5.3 – Diagnose-Seite (18.11.2026)
+
+- 🩺 Neue Seite `/diag.html`: prüft Schritt für Schritt, was das Gerät kann (WebAssembly, Grafik, Speicher) und merkt sich, wo ein Absturz passiert – hilft bei der Fehlersuche auf dem iPhone.
+
 ## 2.5.2 – Stabiler auf dem iPhone (18.11.2026)
 
 - 📱 Experimentopia braucht auf iPhones jetzt deutlich weniger Grafikspeicher (sieht genauso scharf aus) – so beendet iOS die Seite nicht mehr still.

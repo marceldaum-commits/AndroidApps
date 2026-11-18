@@ -8,6 +8,6 @@ self.addEventListener('activate', (e) => { e.waitUntil(caches.keys().then((ks) =
 self.addEventListener('fetch', (e) => {
   const u = new URL(e.request.url);
   if (e.request.method !== 'GET' || u.origin !== location.origin) return;
-  if (u.pathname.endsWith('version.json') || u.searchParams.has('nc')) return;   // Versionsabgleich immer frisch aus dem Netz, nie gespeichert       // Fremdes (Impressum, Datenschutz) geht normal ins Netz
+  if (u.pathname.endsWith('version.json') || u.pathname.endsWith('diag.html') || u.searchParams.has('nc')) return;   // Versionsabgleich immer frisch aus dem Netz, nie gespeichert       // Fremdes (Impressum, Datenschutz) geht normal ins Netz
   e.respondWith(caches.match(e.request).then((hit) => hit || fetch(e.request).then((r) => { if (r.ok) { const copy = r.clone(); caches.open(CACHE).then((c) => c.put(e.request, copy)); } return r; })));
 });

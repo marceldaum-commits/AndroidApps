@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.5.3 vom 18.11.2026: iOS weiterhin weiß (auch ohne Meldung) – Diagnose-Seite
+
+- Marcel: mit 2.5.2 „noch immer weiß, keine Meldung“. Da nicht einmal das HTML-Ladebild (dunkler Hintergrund) erscheint, scheitert es **vor** jedem App-Code:
+  Absturz des Safari-Prozesses oder eine kaputte, vom Service Worker gespeicherte Antwort. Server-Antworten geprüft (Typen, no-cache) – in Ordnung.
+- Neu: **https://experimentopia-test.mathenachhilfe-online.com/diag.html** – reines HTML/JS, vom Service Worker ausgenommen. Zeigt iOS-Version, WasmGC, WebGL,
+  Service Worker/Speicher, Server-Version, lädt und übersetzt beide .wasm einzeln und merkt sich jeden Schritt (localStorage) → nach einem Absturz steht beim nächsten
+  Öffnen „Beim letzten Mal abgebrochen bei: …“. Knöpfe „App öffnen“ und „Speicher leeren & App öffnen“. WebKit-Test: alle Schritte ✅ (8,0 + 5,2 MB übersetzt in < 0,2 s).
+- Bitte Marcel: diag.html auf dem iPhone öffnen, Bildschirmfoto schicken; außerdem einmal „Speicher leeren & App öffnen“ und die App im **privaten Tab** testen (ohne Service Worker).
+
 ## 18.11.2026 – Version 2.5.2 vom 18.11.2026: iOS-Laufzeit abgesichert – fertig für den Betriebstest
 
 Test-Link: https://experimentopia-test.mathenachhilfe-online.com (2.5.2). Ursache auf Marcels iPhone (iOS ≥ 18.4) mit WebKit nicht nachstellbar; abgesichert wurden alle Kandidaten:
