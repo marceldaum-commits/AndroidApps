@@ -1,6 +1,6 @@
 # Experimentopia – Stand und offene Punkte (18.11.2026)
 
-**Stand:** Version 2.4.5 vom 18.11.2026 (ein Logo überall, Nova 100 %, eindeutige Aufträge) liegt auf `experimentopia-test` und als APK im GitHub-Release. Live ist seit 18.11.2026 **2.4.5** (`experimentopia.mathenachhilfe-online.com`, Branch `experimentopia-live` = Stand der Testseite, auf Marcels Anweisung gesetzt).
+**Stand:** Version 2.4.7 vom 18.11.2026 (Logo, Nova, eindeutige Aufträge, Android-Nova-Fix, WebApp immer aktuell) liegt auf `experimentopia-test` und als APK im GitHub-Release. Live ist seit 18.11.2026 **2.4.7** (`experimentopia.mathenachhilfe-online.com`, Branch `experimentopia-live` = Stand der Testseite, auf Marcels Anweisung gesetzt).
 
 ## Nova
 - Experimentopia nutzt **nur bereits eingesprochene Nova-Dateien**: alle 2579 Sätze aus `/vorlesen/texte.json` sind vertont (Abdeckung 100 %, geprüft 17.11. abends).

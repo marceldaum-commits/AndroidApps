@@ -2,6 +2,10 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.4.7 ist live
+
+- Auf Marcels „Ja“ `experimentopia-live` auf den getesteten Stand gesetzt (fast-forward, 3d8dd7f). Ab jetzt aktualisieren sich offene WebApps von selbst.
+
 ## 18.11.2026 – Version 2.4.7 vom 18.11.2026: WebApp immer automatisch aktuell – fertig für den Betriebstest
 
 1) Update-Prüfung beim Öffnen, bei Rückkehr (visibilitychange **und** focus) und alle 30 Minuten: `registration.update()` + Abgleich `version.json?nc=…` mit `cache:'no-store'`
