@@ -62,7 +62,7 @@ Neuester Beitrag oben.
   - Bei uns bleiben: Grundrechnen, Einmaleins, Brüche, Prozent, Zehnerpotenzen, Einheiten, Dreisatz, kurze Sachaufgaben.
   - Ausführliche Einheiten macht der Mathe-Trainer, Experimente Experimentopia.
 - **Updates:**
-  - Fr 20.11.: lineare Gleichungssysteme im Kopfrechen-Format, **nur 2 Unbekannte** (3 Unbekannte/Gauß machen Mathe-Trainer am 24.11. und Raumlicht), dazu vervollständigte Lösungswege in allen Themen.
+  - Fr 20.11. (Aufräum-Tag, Vorschlag Marcel über Experimentopia): zuerst die abgestimmten Querverweise in den Theorie-Seiten setzen, nur auf Ziele, die auf Test erreichbar sind. Danach im eigenen Profil: lineare Gleichungssysteme im Kopfrechen-Format, **nur 2 Unbekannte** (3 Unbekannte/Gauß machen Mathe-Trainer am 24.11. und Raumlicht), dazu vervollständigte Lösungswege in allen Themen.
   - Di 24.11.: quadratische Gleichungen im Kopf.
   - Fr 27.11.: Sachaufgaben ausbauen (passt zur Monatsprüfung Block C).
     - Neu: Physik-Sachaufgaben (E = P · t mit W/kW/Wh/kWh, Wirkungsgrad in %, Leistung von Motoren) mit Link „Ausprobieren in Experimentopia“.
