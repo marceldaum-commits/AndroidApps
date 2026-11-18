@@ -6,7 +6,7 @@
   <title>Kurvenflug – Mathe im All</title>
   <meta name="description" content="Kurvenflug: Formeln steuern das Raumschiff. Mathe und Physik für Klasse 5–13 – ohne Werbung, ohne Anmeldung.">
   <meta name="theme-color" content="#0B1026">
-  <meta name="kurvenflug-version" content="2.5.9">
+  <meta name="kurvenflug-version" content="2.5.10">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -39,7 +39,7 @@
     <div class="s">Volt macht das Raumschiff startklar …</div>
     <div class="bar"><b id="kf-bar"></b></div>
     <div class="s" id="kf-pct" style="font-size:13px;opacity:.7">Lade …</div>
-    <div class="v">Version 2.5.9 · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
+    <div class="v">Version 2.5.10 · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></div>
   </div>
   <noscript><p style="padding:24px">Kurvenflug braucht JavaScript und einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).</p></noscript>
@@ -50,35 +50,53 @@
       var l = document.getElementById('kf-loader');
       if (l && !l.classList.contains('weg')) l.querySelector('.s').textContent = 'Dauert etwas … Kurvenflug braucht einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).';
     }, 15000);
-    // Automatische Updates ohne Knopf: Der Service Worker lädt neue Versionen im Hintergrund.
-    // Übernommen wird sofort, wenn die Seite gerade erst geöffnet wurde – sonst im nächsten ruhigen
-    // Moment (Tab war im Hintergrund), damit niemand mitten im Level unterbrochen wird.
-    // Der Spielstand liegt im Browser-Speicher und bleibt beim Neuladen erhalten.
+    // Automatische Updates ohne Knopf (Vorgabe Marcel 18.11.: „Die WebApp muss immer automatisch aktuell sein“):
+    // - geprüft wird beim Öffnen, bei jeder Rückkehr in den Tab (visibilitychange/focus) und spätestens alle 30 Minuten:
+    //   Service Worker (registration.update) und version.json (ohne Cache);
+    // - die neue Version wird sofort aktiv (skipWaiting + clients.claim im sw.js);
+    // - neu geladen wird nur, wenn es ungefährlich ist: gerade geöffnet, Tab im Hintergrund oder auf dem Startbildschirm –
+    //   nie mitten in einer Aufgabe; danach kurz „Neue Version … geladen“.
+    // Spielstand, Einstellungen (localStorage) und die Nova-Offline-Dateien (Cache „kf-nova“) bleiben unangetastet.
+    var KF_VERSION = '2.5.10';
+    try { var kfLast = localStorage.getItem('kf.lastVersion'); if (kfLast && kfLast !== KF_VERSION) window.kfUpdated = KF_VERSION; localStorage.setItem('kf.lastVersion', KF_VERSION); } catch (e) {}
+    var kfStart = Date.now(), kfPending = false, kfReloading = false, kfAtHome = true, kfReg = null;
+    function kfReload() { if (!kfReloading) { kfReloading = true; location.reload(); } }
+    function kfSafe() { return document.hidden || Date.now() - kfStart < 15000 || kfAtHome; }
+    function kfMaybeReload() { if (kfPending && kfSafe()) kfReload(); }
+    // Die App meldet, ob der Startbildschirm offen ist (dort darf neu geladen werden)
+    window.kfAtHome = function (home) { kfAtHome = !!home; kfMaybeReload(); };
+    function kfCheck() {
+      if (kfReg) kfReg.update().catch(function () {});
+      fetch('version.json?nc=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+        if (!j || !j.version || j.version === KF_VERSION) return;
+        if (!kfReg) { kfPending = true; kfMaybeReload(); }   // ohne Service Worker: einfach neu laden
+        // mit Service Worker: erst wenn die neue Version installiert ist (controllerchange), sonst käme die alte aus dem Speicher
+      }).catch(function () {});
+    }
     if ('serviceWorker' in navigator) {
-      var kfStart = Date.now(), kfHadController = !!navigator.serviceWorker.controller, kfPending = false, kfReloading = false;
-      function kfReload() { if (!kfReloading) { kfReloading = true; location.reload(); } }
+      var kfHadController = !!navigator.serviceWorker.controller;
       navigator.serviceWorker.addEventListener('controllerchange', function () {
         if (!kfHadController) { kfHadController = true; return; }   // allererster Start: nichts neu laden
-        if (document.hidden || Date.now() - kfStart < 15000) kfReload(); else kfPending = true;
+        kfPending = true; kfMaybeReload();
       });
-      // Erst wenn die App läuft, damit das Offline-Speichern nicht mit dem ersten Laden um die Leitung kämpft.
-      // (Im Cache-Abgleich fragt der Browser nur „geändert?“ – schon geladene Dateien kommen nicht doppelt.)
-      var kfSwDone = false;
-      window.kfReady = function () {
-        if (kfSwDone) return; kfSwDone = true;
-        navigator.serviceWorker.register('sw.js').then(function (r) {
-          r.update();
-          setInterval(function () { r.update().catch(function () {}); }, 30 * 60 * 1000);
-          document.addEventListener('visibilitychange', function () {
-            if (document.hidden) { if (kfPending) kfReload(); }
-            else r.update().catch(function () {});
-          });
-        }).catch(function () {});
-      };
-      setTimeout(window.kfReady, 60000);   // Sicherheitsnetz, falls die App nie fertig meldet
     }
+    // Erst wenn die App läuft, damit das Offline-Speichern nicht mit dem ersten Laden um die Leitung kämpft.
+    var kfSwDone = false;
+    window.kfReady = function () {
+      if (kfSwDone) return; kfSwDone = true;
+      if (window.kfUpdated && window.KF && KF.toast) KF.toast('✨ Neue Version ' + window.kfUpdated + ' geladen');
+      var go = function () {
+        kfCheck();
+        setInterval(kfCheck, 30 * 60 * 1000);
+        document.addEventListener('visibilitychange', function () { if (document.hidden) kfMaybeReload(); else kfCheck(); });
+        window.addEventListener('focus', kfCheck);
+        window.addEventListener('pageshow', kfCheck);
+      };
+      if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').then(function (r) { kfReg = r; go(); }).catch(go); else go();
+    };
+    setTimeout(window.kfReady, 60000);   // Sicherheitsnetz, falls die App nie fertig meldet
   </script>
-  <script>window.KF_FILES = [{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"bb27e6fe640b796ab5e5.wasm","s":5891216,"t":"application/wasm"}];</script>
+  <script>window.KF_FILES = [{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"22587a077d16dd03e460.wasm","s":5895344,"t":"application/wasm"}];</script>
   <script src="kf.js"></script>
   <script src="kurvenflug.js"></script>
 </body>
