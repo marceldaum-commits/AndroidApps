@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.17 – Weitere Hilfe bei der Fehlersuche auf dem iPhone
+- Die Diagnose-Leiste zeigt mehr (Größen, was über der Spielfläche liegt, Farbprobe) und umrandet die Spielfläche kurz rot.
+  Im normalen Spiel ändert sich nichts.
+
 ## 2.5.16 – Hilfe bei der Fehlersuche auf dem iPhone
 - Für die Suche nach der weißen Seite auf iPhone/iPad gibt es Versuchsschalter und eine Bildprobe auf der Diagnose-Seite.
   Im normalen Spiel ändert sich nichts.
