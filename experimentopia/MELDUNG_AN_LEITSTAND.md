@@ -4,7 +4,7 @@ Neueste oben.
 
 ## 18.11.2026 – Version 2.4.5 vom 18.11.2026: „zwei Wege“ geprüft – fertig für den Betriebstest
 
-Geprüft: alle 200 Versuche – Vermutungs- und Knobelfragen (Auswahl), Erklär-Schritt (Begründungen) und **alle 35 Labor-Aufträge** (Code der Ziel-Kontrolle gelesen).
+Geprüft: alle 200 Versuche – Vermutungs- und Knobelfragen (Auswahl), Erklär-Schritt (Begründungen) und **die Ziel-Kontrolle aller 34 Labor-Geräte** (Code gelesen).
 - **Auswahlfragen**: genau eine richtige Antwort (Nacht-Auftrag, 72 Korrekturen). Neuer Test `EindeutigTest`: keine doppelten Antworten, keine gleichwertigen Größen
   (gleiche Zahl + Einheit, Prozent/Bruch für denselben Anteil), keine doppelten Begründungen – grün.
 - **Labor-Aufträge akzeptieren alle richtigen Wege** (Kontrolle rechnet mit dem Modell, nicht gegen eine Musterlösung): Wippe (jede ausgeglichene Belegung),
