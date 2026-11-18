@@ -52,3 +52,4 @@ WebApp, PC-Ansicht, Eltern-Kopplung + Sicherung, Elternbereich (Probestunde), an
 - Mendel → `k8-zufall`; Osmose (Prozent) → `k7-prozent`
 - Links in unsere Versuche, sobald wir Direkt-Links haben.
 - Rechenblitz bestätigt: Fr 27.11. Physik-Sachaufgaben (E = P·t mit W/kW/Wh/kWh, Wirkungsgrad in %, Motorleistung) mit Link „Ausprobieren in Experimentopia“.
+- Mathe-Trainer ergänzt: Fr 20.11. „Integral anwenden“, Di 24.11. Normalverteilung. Weitere Ziele: Energie/Wirkungsgrad → `k7-prozent`, Ohm/Trafo → `k8-linear`, Halbwertszeit → `k10-wachstum`, Änderungsrate/Bestand → `integral`. Gibt nichts ab; Physik erklären bleibt bei uns und KurvenFlug.
