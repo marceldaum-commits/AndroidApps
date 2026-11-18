@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.24 – Was als Nächstes kommt
+- In der Galaxie steht ganz unten „🔭 Kommt bald“: Themen aus dem Lehrplan, die Kurvenflug noch nicht hat – zum Beispiel
+  Terme & Gleichungen, Kreis & Flächen, Wahrscheinlichkeit, Strom & Ohmsches Gesetz oder Radioaktivität. Passend zur
+  gewählten Klasse stehen die eigenen Themen vorne.
+
 ## 2.5.23 – Theorie mit Merkformel und Rechenbeispiel
 - Jede Theorie zeigt jetzt die Formel, die man für die Aufgabe wirklich braucht, mit allen Größen – und darunter ein
   durchgerechnetes Beispiel („✏️ Beispiel“), genau so, wie man es im Level rechnet.

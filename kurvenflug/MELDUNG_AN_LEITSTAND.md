@@ -1,5 +1,52 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.24 – Lehrplan-Abgleich (Marcel 18.11.) + „Kommt bald“ in der Galaxie
+**Grundlage und Ehrlichkeit:** Abgleich gegen die KMK-Bildungsstandards (Primar/Sek I: Leitideen Zahl, Messen, Raum & Form,
+Funktionaler Zusammenhang, Daten & Zufall; Sek II/Abitur: Analysis, Analytische Geometrie, Stochastik; Physik: Mechanik, Elektrizität,
+Wärme, Optik, Atom-/Kernphysik) und die Kernlehrpläne Gymnasium/Realschule in BY, BW, NRW, NI, HE **aus meinem Wissen** – ich habe die
+Lehrplan-Dokumente in dieser Sitzung nicht einzeln aufgerufen. Klassenangaben sind typische Spannen über die Länder (in einzelnen
+Ländern ±1 Jahr; Realschule ohne Oberstufe).
+
+**Vorhanden (30 Kapitel):** Koordinaten (Kl. 5–6) · Brüche & Kommazahlen (5–6) · Winkel (5–6) · Maßstab & Karten (5–6) · Zuordnungen (6–7) ·
+Prozent & Zinseszins (7–8) · Geraden/lineare Funktionen (7–8) · Gleichungssysteme/Rendezvous (8) · Pythagoras (8–9) · Parabeln (9) ·
+Nullstellen/quadratische Gleichungen (9) · Trigonometrie (9–10) · Logarithmus (10) · Sinus & Exponentialwachstum (10) · Potenzfunktionen (10) ·
+Verschobene Wellen (10–11) · Ableitung & Tangente (11) · Extrempunkte (11) · e-Funktion (11–12) · Integral (12) · Vektoren 2D (11–13) ·
+Binomialverteilung (10–13) · Physik: Weg & Zeit (7) · Laser-Optik/Reflexion (7) · Energie (8–9) · Lichtbrechung (9) · Beschleunigte Bewegung (9–10) ·
+Wurf & Schwerkraft (7–10) · Waagerechter Wurf (10) · Gravitation/Schleuder (10).
+
+**Fehlt → „Kommt bald“ (in der Galaxie sichtbar, ohne Datum, ohne Kaufhinweis):**
+| Thema | Lehrplan (typisch) | vorhanden | geplant |
+|---|---|---|---|
+| Negative Zahlen | alle Länder Kl. 6–7 (Gym/RS) | nein | kommt bald |
+| Terme & Gleichungen | Kl. 7–8 | nein (nur Gleichsetzen im Rendezvous) | kommt bald – Vorschlag als erstes neues Kapitel |
+| Kreis & Flächen (π) | Kl. 5–9 | nein | kommt bald |
+| Körper & Volumen | Kl. 5–10 | nein | kommt bald |
+| Symmetrie & Abbildungen | Kl. 5–7 | nein | kommt bald |
+| Dreiecke konstruieren (Kongruenz) | Kl. 7 | nein | kommt bald |
+| Ähnlichkeit & Strahlensätze | Kl. 9 | nein | kommt bald |
+| Daten & Diagramme (Mittelwert, Median, Boxplot) | Kl. 5–8 | nein | kommt bald |
+| Wahrscheinlichkeit (Laplace, Baumdiagramm) | Kl. 6–9 | nein (nur Binomial) | kommt bald |
+| Potenzen & Wurzeln | Kl. 9–10 | teilweise (Potenzfunktionen) | kommt bald |
+| Kurvendiskussion (Wendepunkte, Scharen) | Kl. 11–12 Gym | teilweise (Extrempunkte) | kommt bald |
+| Geraden & Ebenen im Raum, Skalarprodukt | Kl. 12–13 Gym | nein (Vektoren nur 2D) | kommt bald |
+| Normalverteilung & Hypothesentest | Kl. 12–13 Gym | nein | kommt bald |
+| Kräfte & Hebel | Physik Kl. 7–8 | nein | kommt bald |
+| Druck & Auftrieb | Physik Kl. 8–9 | nein | kommt bald |
+| Strom & Ohmsches Gesetz | Physik Kl. 7–9 | nein | kommt bald |
+| Magnetismus & Induktion | Physik Kl. 8–10 | nein | kommt bald |
+| Wärme | Physik Kl. 7–9 | nein | kommt bald |
+| Kreisbahnen & Satelliten | Physik Kl. 10–11 | teilweise (Gravitation) | kommt bald |
+| Impuls & Stöße | Physik Kl. 10–11 | nein | kommt bald |
+| Schwingungen (Pendel, Feder) | Physik Kl. 10–11 | teilweise (Sinus) | kommt bald |
+| Radioaktivität (Halbwertszeit) | Physik Kl. 9–10 | teilweise (Zerfall in e-Funktion) | kommt bald |
+**Gebaut in diesem Schritt:** noch kein neues Kapitel – jedes braucht eine eigene Spielmechanik, Level mit Lösbarkeits-Prüfung,
+Theorie + Beispiel und Tests. Vorschlag Reihenfolge (passt zur Flugbahn-Idee, großer Lehrplan-Anteil): 1) Terme & Gleichungen,
+2) Kreis & Flächen, 3) Wahrscheinlichkeit, 4) Radioaktivität, 5) Strom & Ohm. Bitte Marcel kurz bestätigen oder umsortieren –
+dann je ein Kapitel pro Nachkomma-Version.
+**Umsetzung:** `core/model/Curriculum.kt` (Liste), Test `CurriculumTest` (kein Doppel zu bestehenden Kapiteln, keine Preise/Daten);
+in der Galaxie (Karte und Liste) unten „🔭 Kommt bald“, nach Fach gefiltert, Themen der gewählten Klasse zuerst und hervorgehoben.
+Im Browser angesehen. versionCode 71 / 2.5.24, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.23 – Theorie geprüft: Merkformel + Beispiel für jedes Level (Marcel 18.11.)
 **Prüfung:** alle 30 Kapitel (175 Level + Extrem-Stufen), dazu Bosse, Andromeda, Rettungen, Jahreszeiten-, Tages- und Zufallsmissionen
 (nutzen die Theorie des Kapitels mit derselben Bahnart). Je Level: Steht die nötige Formel mit allen einstellbaren Größen da?
