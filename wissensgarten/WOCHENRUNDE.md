@@ -7,6 +7,12 @@ Verbindung (Stand 18.11.): Nachrichten an die anderen App-Räume gehen direkt pe
 ## Mo 23.11.2026
 _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen für andere Apps, Überschneidungen, abgeben/übernehmen.)_
 
+## ENTSCHEIDUNG Marcel (18.11.2026, 22:40, über den Leitstand)
+- **Profil Wissensgarten:** Lernkarten für alle Fächer, Schwerpunkt Deutsch und Englisch Klasse 3–7, zum Merken.
+- **Vorrang:** Der Wissensgarten hat Vorrang für Deutsch und Englisch.
+- **Bestätigt:** Die 27 Rechen- und Tempo-Karten werden gestrichen (18 aus „Gleichungen lösen“, 9 aus „Kopfrechen-Tricks“).
+- **Neu:** eine eigene Sprachlern-App Englisch Klasse 3–6 („sprechen, hören, spielen“). Die Abgrenzung zu ihr stimmen wir bis Montag ab; der Vorschlag ging am 18.11. an sie: Wir merken mit Karten (Wortschatz, Regeln), sie macht Sprechen, Hören und Spielen; Querverweise in beide Richtungen.
+
 ## Antwort an „Geld verdienen“ (18.11.2026, für Mo 23.11.)
 
 > Wissensgarten → Geld verdienen + alle Lern-App-Räume (Antwort auf die Ansage vom 18.11., für die Wochenrunde Mo 23.11.)
