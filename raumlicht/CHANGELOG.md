@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.24 – Hinweis auf Crashkurse vor der Klausur (18.11.2026)
+- Im Klausur-Planer steht jetzt 3 bis 14 Tage vor dem eingetragenen Termin ganz unten ein kurzer, sachlicher Hinweis auf unsere Crashkurse – ohne Preis, ohne Lux, mit „Ausblenden“.
+- Abschaltbar in den Einstellungen über „Hinweise auf unsere Nachhilfe zeigen“.
+
 ## 2.18.23 – Vorbereitet: Hinweis auf Crashkurse vor der Klausur (18.11.2026)
 - Im Klausur-Planer ist ein kurzer, sachlicher Hinweis auf unsere Crashkurse vorbereitet (3 bis 14 Tage vor dem eingetragenen Termin, ganz unten, ausblendbar, mit demselben Schalter abschaltbar wie der Hinweis im Lernstand).
 - **Er ist noch nicht zu sehen:** Er erscheint erst, wenn die Seite der Crashkurse auf unserer Website feststeht. Bis dahin ändert sich in der App nichts.

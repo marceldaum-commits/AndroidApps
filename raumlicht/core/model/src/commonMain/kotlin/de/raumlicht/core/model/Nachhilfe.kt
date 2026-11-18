@@ -37,11 +37,8 @@ object Nachhilfe {
     const val TRIAL_URL = "https://www.mathenachhilfe-online.com/probestunde/"
     const val GIFT_URL = "https://www.mathenachhilfe-online.com/geschenke/"
     const val HOME_URL = "https://www.mathenachhilfe-online.com/"
-    /**
-     * Feste Adresse der Crashkurs-Seite. **Leer = noch nicht bekannt:** dann gibt es den Hinweis „Klausur bald“ nicht.
-     * Trägt ein, wer die Adresse vom Leitstand bekommt (angefragt am 18.11.2026) – dann erscheint der Hinweis von selbst.
-     */
-    const val CRASH_URL = ""
+    /** Feste Adresse der Crashkurs-Seite (vom Leitstand am 18.11.2026 genannt). Leer = Hinweis „Klausur bald“ gibt es nicht. */
+    const val CRASH_URL = "https://www.mathenachhilfe-online.com/produkt/easy-learning-crash-kurs/"
     const val FOOTER = "Ein Angebot von Nachhilfe – online"
     const val SWITCH = "Hinweise auf unsere Nachhilfe zeigen"
     const val SWITCH_NOTE = "Im Lernstand, wenn ein Gebiet noch hakt: ein kurzer Hinweis auf eine kostenlose Probestunde. Nie in den Aufgaben."

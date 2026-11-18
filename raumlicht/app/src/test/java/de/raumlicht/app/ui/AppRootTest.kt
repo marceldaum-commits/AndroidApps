@@ -37,7 +37,7 @@ class AppRootTest {
     private val KI_PASS = "RL-04208-0000Z-8GNM5-HJFN6-SDW5Y-QPW2T-BSSPN-9DS5K-7Z3A1-PTFJ2-ACM3Q-GX1H4-ZM8EV-3GR33-K3N31-3VN22-58C7D-HP8Y1-1321W-HG25S-PNJ23-FSKM6-JYD9R-GJ"
     private val KI_ALT = "RL-04208-0000Z-90JRS-KVK76-JC5YR-K5AB8-66P5J-B9FQ0-J8M2Q-N9CCS-9YCEM-0XX2C-KCRBZ-8QGFP-J83ZY-RYKBJ-8WK56-H6461-JQTF0-1PN3P-K7Q9A-337T4-N8R7X-GE"
     private val counted = ArrayList<String>()
-    private var crash = ""
+    private var crash = de.raumlicht.core.model.Nachhilfe.CRASH_URL
     private fun start(pro: Boolean = false, ki: (suspend (String) -> Pair<Int, String>)? = null, kiOn: Boolean = true) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
@@ -200,7 +200,6 @@ class AppRootTest {
 
     /** „Klausur bald“ im Klausur-Planer: erst mit bekannter Adresse, sachlich, ausblendbar, gezählt. */
     @Test fun klausurHinweis() {
-        crash = "https://www.mathenachhilfe-online.com/crashkurse/"
         start(); rule.runOnUiThread { prefs.tutorState = ""; prefs.setPlan(de.raumlicht.core.model.Plan(20_772L + 7, setOf(1, 2)).encode()) }
         nav.go(Routes.PLANNER); settle()
         rule.onNodeWithTag("klausur-hinweis").performScrollTo().assertExists(); rule.onNodeWithText("In 7 Tagen ist deine Klausur.", substring = true).assertExists()
@@ -211,9 +210,9 @@ class AppRootTest {
         rule.runOnUiThread { prefs.setPlan(""); prefs.tutorState = "" }
     }
 
-    /** Ohne Adresse der Crashkurs-Seite (Stand der ausgelieferten App) erscheint im Klausur-Planer kein Hinweis. */
+    /** Ohne Adresse der Crashkurs-Seite erscheint im Klausur-Planer kein Hinweis. */
     @Test fun klausurHinweisErstMitAdresse() {
-        start(); rule.runOnUiThread { prefs.tutorState = ""; prefs.setPlan(de.raumlicht.core.model.Plan(20_772L + 7, setOf(1, 2)).encode()) }
+        crash = ""; start(); rule.runOnUiThread { prefs.tutorState = ""; prefs.setPlan(de.raumlicht.core.model.Plan(20_772L + 7, setOf(1, 2)).encode()) }
         nav.go(Routes.PLANNER); settle(); rule.onNodeWithTag("klausur-hinweis").assertDoesNotExist(); assertTrue(counted.isEmpty())
         rule.runOnUiThread { prefs.setPlan("") }
     }

@@ -56,7 +56,8 @@ class NachhilfeTest {
         val url = "https://www.mathenachhilfe-online.com/crashkurse/"
         val geo = Levels.chapters.filter { it.area == Area.GEOMETRIE }.map { it.number }.take(2).toSet()
         val plan = Plan(1000, geo)
-        assertEquals("solange der Leitstand die Adresse nicht genannt hat, gibt es den Hinweis nicht", "", Nachhilfe.CRASH_URL); assertNull(Nachhilfe.exam(plan, 990, "", true))
+        assertEquals("https://www.mathenachhilfe-online.com/produkt/easy-learning-crash-kurs/", Nachhilfe.CRASH_URL)
+        assertEquals(Nachhilfe.CRASH_URL + "?src=raumlicht-klassenarbeit&thema=vektoren", Nachhilfe.exam(plan, 990, "", true)!!.link); assertNull("ohne Adresse kein Hinweis", Nachhilfe.exam(plan, 990, "", true, ""))
         for (d in listOf(986L, 990L, 997L)) assertNotNull("Tag $d", Nachhilfe.exam(plan, d, "", true, url))
         for (d in listOf(900L, 985L, 998L, 999L, 1000L, 1001L)) assertNull("Tag $d", Nachhilfe.exam(plan, d, "", true, url))
         val h = Nachhilfe.exam(plan, 990, "", true, url)!!

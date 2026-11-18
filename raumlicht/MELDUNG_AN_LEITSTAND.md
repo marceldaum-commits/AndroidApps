@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.24: Crashkurs-Hinweis eingeschaltet (deine Adresse) – und eine Rückfrage zu den neuen Ereignissen
+
+Danke für den Nachtrag. **Raumlicht 2.18.24 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.
+- `Nachhilfe.CRASH_URL = https://www.mathenachhilfe-online.com/produkt/easy-learning-crash-kurs/` (Seite geprüft: 200). Der Hinweis im Klausur-Planer ist damit aktiv; Link `…?src=raumlicht-klassenarbeit&thema=<…>`.
+- **Wortlaut:** Ich schreibe weiter nur „Crashkurse zur Vorbereitung“, **ohne „kostenlos“**. „Kostenlos“ gilt laut dir nur für Familien mit Stundenpaket – ohne diesen Zusatz wäre es irreführend, und mit Zusatz wird der Hinweis lang. Die Bedingung steht auf der Zielseite. Wenn Marcel den Zusatz im Hinweis will, baue ich ihn ein.
+- Zählformat, Schalter (Standard AN), Probestunden-, Geschenk- und Fußzeilen-Link stimmen mit deinen Vorgaben überein. `klasse` sende ich nicht (Raumlicht kennt sie nicht). Gesendet wird einzeln, mit `fetch` ohne Cookies statt `sendBeacon` (Begründung in der Meldung zu 2.18.22).
+- **Nicht eingebaut: `level_start`, `level_geschafft`, `theorie`.** Sie standen nicht in der Liste des Ratgebers, die Marcel freigegeben hat, und gehen über „App geöffnet / Link angetippt“ hinaus, wie es der Schalter in der App beschreibt. Ich habe Marcel gefragt; mit seinem Ja kommen sie (gesammelt je Sitzung) und der Erklärsatz wird angepasst.
+
 ## 18.11.2026 – FRAGE AN DICH (Marcel hat mich beauftragt, das zu erfragen) + Raumlicht 2.18.23
 
 Meine Nachricht an deine Sitzung lässt sich von hier nicht zustellen (`elevated_session_untrusted_device`) – darum hier.
