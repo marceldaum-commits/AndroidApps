@@ -46,7 +46,8 @@ s1-mathe-algebra (Funktionen), s1-physik-einheiten-formeln, s1-physik-strom.
 - Abgestimmt: 2D-Vektoren + Binomial-Histogramm bleiben bei uns; Funktionenscharen, Sinus ableiten, uneigentliche Integrale → Raumlicht
 
 ## Rechenblitz – `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6>&modus=training`
-- Kopfrechen-Grundlagen (Brüche, Potenzen, Zehnerpotenzen); keine Überschneidung
+- Themen: neg (↔ Negative Zahlen am Zahlenstrahl), pow, zehner (Potenzen abgegeben), term, eq (nur Kopfrechnen, keine Überschneidung)
+- Rechenblitz verlinkt Sachaufgaben E = P·t → unser Kapitel 12 Energie
 
 ## Weitere Abstimmung 18.11.
 - Experimentopia: Radioaktivität ganz dort, Halbwertszeit rechnen bei uns (Wellen & Wachstum); „Bewegung & Diagramme“ = Erleben dort, Rechnen bei uns (Weg & Zeit 13)
