@@ -1,5 +1,11 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.20 – Wasm für Safari/WebKit wieder offen (Marcel 18.11.: „Geht beides“ – ?modus=wasm und JS auf dem iPhone)
+- Die Regel „WebKit → direkt JS“ ist entfernt: iPhone/iPad/Safari bekommen wieder Kotlin/Wasm (mit `-Xwasm-no-jstag` und der
+  Skiko-Umgehung für WebKit 329421). Rückfall bleibt: Jeder Startfehler/Absturz → automatisch JS (gemerkt je Version),
+  `?modus=js` zum Erzwingen, `?modus=auto` zurück. Hinweis: Wer zuvor `?modus=wasm` aufgerufen hat, behält den Merker bis `?modus=auto`.
+- Chromium-Tests: Chrome → wasm, iPhone-/Safari-Kennung → wasm, Startfehler → js. versionCode 67 / 2.5.20, Prüfkette grün.
+
 ## ✅ 2.5.19 – Safari-27.2-Umgehung (WebKit 329421, Endaufrufe) von Raumlicht übernommen
 - `web/webpack/skiko-no-tail-call.cjs` + `web/webpack.config.d/skiko-no-tail-call.js` aus Raumlicht 92608706 übernommen: schreibt in
   `skiko.mjs` jeden Skia-Aufruf aus der Endaufruf-Stellung (try-Block). Gilt für **beide** Fassungen (Wasm und JS nutzen dasselbe

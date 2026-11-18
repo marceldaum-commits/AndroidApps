@@ -97,11 +97,8 @@
       var m = kfStore('kf.modus');
       if (m === 'js' || m === 'wasm') return m;
       if (!kfWasmOk()) return 'js';
-      // Safari/WebKit (alle Browser auf iPhone/iPad, Safari am Mac): Kotlin/Wasm startet dort nicht zuverlässig
-      // („Can't wrap nullptr“, Safari 26/27) – bis zur Klärung gleich die JS-Fassung, damit nichts doppelt geladen wird.
-      // Zum Testen der schnellen Fassung: ?modus=wasm
-      var ua = navigator.userAgent, ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-      if (ios || (/AppleWebKit/.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS|Android/.test(ua))) return 'js';
+      // Safari/WebKit: seit 2.5.20 wieder die schnelle Fassung – mit -Xwasm-no-jstag und der Skiko-Umgehung für WebKit-Fehler 329421
+      // (Endaufrufe) hat Marcel sie auf dem iPhone bestätigt (18.11.). Startfehler wechseln weiter automatisch auf JS.
       // Ist die schnelle Fassung in DIESER Version schon einmal gescheitert (Fehler oder Absturz), gleich JS – eine neue Version versucht Wasm wieder
       var last = kfStore('kf.start') || '';
       if (/^wasm\|(geladen|läuft)/.test(last)) kfStore('kf.wasmGescheitert', KF_VER);
