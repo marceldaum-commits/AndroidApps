@@ -2,6 +2,23 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.8 + Recherche „Was gilt rechtlich für den Verkauf?“ – bitte den Shop prüfen
+
+**Raumlicht 2.18.8 vom 18.11.2026, Web = Android (beide 2.18.8).** Ersetzt 2.18.7 als Stand „fertig für den Betriebstest“ (Pro scharf, Nacht-Auftrag enthalten).
+Marcel hat beides direkt beauftragt: Kauf-Knopf sachlicher, und „google nach, was Gesetz ist“.
+
+- **App:** Knopf „Zum Shop: Raumlicht Pro · 7,99 €“ (vorher „… holen“); Text: „Einmalig 7,99 € (inkl. MwSt.), kein Abo, kein Ablauf. Gekauft wird im Shop … Bist du noch nicht 18, schließen deine Eltern den Kauf ab.“
+- **Recherche (keine Rechtsberatung; Einzelheiten und Quellen in `docs/RECHERCHE.md` im Repo-Stamm, letzter Abschnitt). Für den Shop heißt das – bitte prüfen bzw. umsetzen, gilt vermutlich für alle Pro-Produkte:**
+  1. **Widerruf bei digitalen Inhalten:** Das Widerrufsrecht erlischt nur, wenn der Käufer an der Kasse per **nicht vorangekreuzter Checkbox** der sofortigen Lieferung zustimmt und den Verlust des Widerrufsrechts bestätigt –
+     und das in der Bestell-E-Mail bestätigt wird. Sonst 14 Tage Widerruf trotz Freischalt-Code.
+  2. **Widerrufsbutton (Pflicht seit 19.06.2026):** Im Fuß steht „Vertrag widerrufen“ – gut. Bitte prüfen: zwei Schritte (erklären, bestätigen) und sofortige Eingangsbestätigung per E-Mail.
+  3. **Bestell-Knopf an der Kasse:** „zahlungspflichtig bestellen“ oder „kaufen“; Preis, Umfang und „einmalig“ unmittelbar davor sichtbar.
+  4. **Produktseite Raumlicht Pro:** Umfang ist falsch („Baukästen“ sind frei). Richtig: alle 136 Aufgaben in 25 Kapiteln · alle 7 Prüfungsaufgaben, auch auf Zeit · Üben in „Abi“ und „Profi“ ·
+     Achterbahn-Baumeister, Geisterfahrt, Ringflug, Binomial-Labor · Klausur-Planer, Fehler-Tagebuch, Lernstand. Dazu fehlt ein Hinweis für Eltern/Minderjährige („Kauf durch Erwachsene“).
+  5. **Minderjährige:** Kauf ohne Eltern ist schwebend unwirksam (Taschengeldparagraf nur im Einzelfall) – Rückabwicklung auf Wunsch der Eltern einplanen.
+  6. **Werbung an Kinder (UWG Anhang Nr. 28, BGH „Runes of Magic“):** keine „Hol dir …“-Sätze in Du-Form mit Kauf-Link – bitte auch in Shop-Texten, E-Mails und den anderen Apps beachten.
+- Geprüft: Tests, Lint, WebApp im Browser. Die Kasse selbst (Checkbox, Knopf-Beschriftung, E-Mails) konnte ich nicht ansehen.
+
 ## 17.11.2026 – Raumlicht 2.18.7: Raumlicht Pro ist scharf – fertig für den Betriebstest
 
 Marcel hat die Pro-Version direkt beauftragt und auf eure Antworten verwiesen. **Raumlicht 2.18.7 vom 17.11.2026, Web = Android (beide 2.18.7).** Ersetzt 2.18.6 als Stand „fertig für den Betriebstest“

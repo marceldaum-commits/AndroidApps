@@ -132,9 +132,9 @@ fun ProScreen(what: String?, active: Boolean, offered: Boolean, onCode: (String)
                     Pro.free.forEach { Text("✓ $it", color = Q.Muted, fontSize = 13.sp) }
                 }
                 if (offered) {
-                    NeonButton({ runCatching { uri.openUri(Pro.CHECKOUT_URL) } }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = Q.Yellow) { Text("Raumlicht Pro holen · ${Pro.PRICE}", fontWeight = FontWeight.Bold) }
-                    Text("Einmalig ${Pro.PRICE} (inkl. MwSt.), kein Abo, kein Ablauf. Bezahlt wird auf mathenachhilfe-online.com – am besten zusammen mit deinen Eltern. " +
-                        "Danach bekommst du eine E-Mail mit Link und Code.", Modifier.testTag("pro-status"), color = Q.Muted, fontSize = 13.sp)
+                    NeonButton({ runCatching { uri.openUri(Pro.CHECKOUT_URL) } }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = Q.Yellow) { Text("Zum Shop: Raumlicht Pro · ${Pro.PRICE}", fontWeight = FontWeight.Bold) }
+                    Text("Einmalig ${Pro.PRICE} (inkl. MwSt.), kein Abo, kein Ablauf. Gekauft wird im Shop auf mathenachhilfe-online.com. Bist du noch nicht 18, schließen deine Eltern den Kauf ab. " +
+                        "Danach kommt eine E-Mail mit Link und Code.", Modifier.testTag("pro-status"), color = Q.Muted, fontSize = 13.sp)
                 } else Text("Raumlicht Pro ist noch nicht erhältlich.", Modifier.testTag("pro-status"), color = Q.Muted, fontSize = 13.sp)
                 Column(Modifier.fillMaxWidth().background(Q.Deep, RoundedCornerShape(18.dp)).border(1.dp, Q.Cyan.copy(alpha = 0.6f), RoundedCornerShape(18.dp)).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Du hast schon einen Code?", color = Q.Cyan, fontWeight = FontWeight.Black, fontSize = 15.sp)

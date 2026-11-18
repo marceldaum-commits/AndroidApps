@@ -27,6 +27,11 @@ Sie ist keine Rechtsberatung; Marcel klärt die Punkte mit den zuständigen Stel
 > **Stand 17.11.2026:** Raumlicht Pro ist seit Version 2.18.7 scharf geschaltet (Kauf im Shop auf mathenachhilfe-online.com, 7,99 €, Freischalt-Code per E-Mail) – auf Marcels Anweisung.
 > Die Punkte dieser Tabelle sind damit **nicht erledigt**, sondern jetzt dringend: Ob sie für den Shop bereits geklärt sind (Widerruf bei digitalen Inhalten, Kauf durch Minderjährige,
 > Preisangaben, Impressum/AGB, Daten des Lizenz-Dienstes), konnte von hier aus niemand prüfen. Keine Rechtsberatung.
+>
+> **Recherche vom 18.11.2026** (Einzelheiten und Quellen: `docs/RECHERCHE.md` im Repo-Stamm, Abschnitt „Was gilt rechtlich für den Verkauf von Raumlicht Pro?“):
+> B1 Minderjährige – Kauf ohne Eltern schwebend unwirksam, Taschengeldparagraf nur im Einzelfall; App nennt jetzt die Eltern. · B2 Widerruf – erlischt nur mit Checkbox-Zustimmung an der Kasse
+> und Bestätigung per E-Mail; **an der Kasse prüfen**. Neu seit 19.06.2026: Widerrufsbutton Pflicht (im Shop-Fuß vorhanden, Ablauf prüfen). · B3 – Produktseite nennt Preis inkl. MwSt.; Kasse nicht gesehen;
+> **Umfangs-Text auf der Produktseite falsch**. · B8 – Kauf-Knopf in der App ab 2.18.8 sachlich („Zum Shop: …“).
 
 | # | Zu klären | Warum / worauf achten | Mit wem |
 |---|---|---|---|

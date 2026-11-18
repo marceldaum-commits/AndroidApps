@@ -178,3 +178,38 @@ Was die Lernforschung dazu sagt (kurze Suche am 17.11.2026):
 
 Quellen: Meta-Analyse „Worked Examples Effect on Mathematics Performance“; Razzaq & Heffernan, „Hints: Is It Better to Give or Wait to Be Asked?“ (2010);
 The Learning Scientists, „Worked Examples: An Effective Tool for Math Learning“ (2024).
+
+## Raumlicht, 18.11.2026 – Was gilt rechtlich für den Verkauf von „Raumlicht Pro“? (Auftrag: „google nach, was Gesetz ist“)
+
+**Keine Rechtsberatung.** Zusammengetragen aus IHK-Seiten, Kanzlei-Beiträgen, Verbraucherzentrale/EVZ und Berichten über BGH-Urteile; die Gesetzestexte selbst (gesetze-im-internet.de) waren beim Abruf nicht erreichbar –
+Paragrafen bitte am Original prüfen. Lage: Raumlicht Pro ist ein digitaler Inhalt (Freischalt-Code), Einmalkauf 7,99 € im eigenen Shop, Zielgruppe überwiegend minderjährig.
+
+1. **Widerruf bei digitalen Inhalten (§ 356 Abs. 5 BGB).** Verbraucher haben 14 Tage Widerrufsrecht. Es erlischt bei digitalen Inhalten nur dann vorzeitig, wenn der Käufer **vor** der Lieferung
+   (a) ausdrücklich zustimmt, dass sofort geliefert wird, (b) bestätigt, dass er dadurch sein Widerrufsrecht verliert – üblich ist eine **nicht vorangekreuzte Checkbox** an der Kasse –
+   und (c) der Händler das auf einem dauerhaften Datenträger bestätigt (Bestell-E-Mail). Fehlt eines davon, kann der Käufer auch nach dem Freischalten noch 14 Tage widerrufen
+   (LG Köln, 21.05.2019, 31 O 372/17: ein bloßer Hinweis reicht nicht). → **Shop:** Checkbox an der Kasse und Satz in der Bestell-E-Mail prüfen. Ohne beides: Code erst nach 14 Tagen senden oder Widerrufe hinnehmen.
+2. **Widerrufsbutton (§ 356a BGB, seit 19.06.2026 Pflicht, ohne Übergangsfrist).** Wer online an Verbraucher verkauft, braucht eine gut sichtbare elektronische Widerrufsfunktion in zwei Schritten
+   (Erklärung abgeben, dann bestätigen) und muss den Eingang sofort per E-Mail bestätigen. → **Shop:** Im Fuß der Seite gibt es „Vertrag widerrufen“ (/widerruf/) – vorhanden; Zwei-Schritt-Ablauf und Eingangs-E-Mail prüfen.
+   Weitere Informationspflichten gelten seit 27.09.2026.
+3. **Bestell-Knopf und Pflichtangaben (§ 312j BGB, Art. 246a EGBGB).** Der letzte Knopf muss „zahlungspflichtig bestellen“ oder gleich eindeutig heißen („kaufen“ geht, „weiter“/„abonnieren“ nicht);
+   Preis inkl. USt, wesentliche Eigenschaften und Laufzeit müssen unmittelbar davor stehen, zusammen sichtbar. Sonst kommt kein Vertrag zustande (§ 312j Abs. 4).
+   → **Shop:** Produktseite nennt 7,99 € „inkl. MwSt.“ und „einmalig, kein Abo“ – gut. Die Kasse selbst habe ich nicht gesehen. **Der Umfang auf der Produktseite stimmt nicht** („Baukästen“ sind frei; es fehlen Geisterfahrt, Ringflug, Binomial-Labor, Planer, Tagebuch, Lernstand).
+4. **Kauf durch Minderjährige (§§ 106–110 BGB).** 7- bis 17-Jährige sind beschränkt geschäftsfähig: Ohne Einwilligung der Eltern ist der Kauf schwebend unwirksam, bis die Eltern genehmigen.
+   Ausnahme „Taschengeldparagraf“ (§ 110): wirksam, wenn vollständig mit Mitteln bezahlt, die zur freien Verfügung überlassen wurden – nicht bei Rechnung/Raten, und nicht, wenn Eltern erkennbar nicht einverstanden wären.
+   7,99 € einmalig liegt im üblichen Taschengeld-Rahmen, sicher ist das im Einzelfall nicht; die Erlaubnis, ein Handy zu nutzen, ist keine Einwilligung in Käufe.
+   → **Shop/App:** Kauf an Erwachsene richten; Eltern-Hinweis auf Produktseite und in der App; Rückabwicklung ohne Diskussion, wenn Eltern widersprechen.
+5. **Werbung gegenüber Kindern (UWG, Anhang Nr. 28).** Verboten ist die „unmittelbare Aufforderung an Kinder“, ein beworbenes Produkt zu kaufen oder die Eltern dazu zu überreden. BGH „Runes of Magic“ (I ZR 34/12, 2013/2014):
+   Du-Form plus kindertypische Sprache plus Kauf-Appell („Schnapp dir …“) mit Link zum konkreten Produkt reichte. Ob „Kinder“ bis 14 oder bis 18 meint, ist offen – vorsichtig sein.
+   → **App:** kein „Hol dir …“. Geändert in 2.18.8: Knopf heißt „Zum Shop: Raumlicht Pro · 7,99 €“, Text sachlich, mit Hinweis „Bist du noch nicht 18, schließen deine Eltern den Kauf ab.“
+6. **Datenschutz.** Was der Lizenz-Dienst zu einem Kauf speichert (E-Mail, Code, Zeitpunkt) und wie lange, gehört in die Datenschutzerklärung (Vorschlag: `raumlicht/store/datenschutz-abschnitt.md`).
+
+Quellen: [IHK Braunschweig – Widerrufs-Button verpflichtend seit Juni 2026](https://www.ihk.de/braunschweig/beratung-und-service/rechtsthemen/wirtschaftsrecht-von-a-bis-z/internet-und-recht2/widerrufs-button-verpflichtend-seit-juni-2026-7103310) ·
+[Fieldfisher – Der elektronische Widerrufsbutton kommt](https://www.fieldfisher.com/de-de/locations/germany/insights/der-elektronische-widerrufsbutton-kommt-worauf-unternehmen) ·
+[IT-Recht Kanzlei – Widerrufsrecht bei digitalen Inhalten](https://www.it-recht-kanzlei.de/widerrufsrecht-digitale-inhalte-digitale-dienstleistungen.html) ·
+[IT-Recht Kanzlei – LG Köln: Verzicht auf das Widerrufsrecht](https://www.it-recht-kanzlei.de/lg-koeln-widerrufsrecht-verzicht-digitale-inhalte.html) ·
+[Heuking – Widerrufsbelehrungen bei digitalen Inhalten](https://www.heuking.de/de/news-events/newsletter-fachbeitraege/artikel/vorsicht-bei-widerrufsbelehrungen-bei-digitalen-inhalten-und-dienstleistungen.html) ·
+[EVZ – Verträge mit Minderjährigen](https://www.evz.de/einkaufen-internet/vorsicht-falle/abofallen/vertraege-mit-minderjaehrigen.html) ·
+[LTO – BGH „Runes of Magic“](https://www.lto.de/recht/hintergruende/h/bgh-i-zr-34-12-runes-of-magic) ·
+[Heuking – Werbung gegenüber Kindern und Jugendlichen](https://www.heuking.de/de/news-events/newsletter-fachbeitraege/artikel/neues-zur-werbung-gegenueber-kindern-und-jugendlichen.html) ·
+[Händlerbund – Button-Lösung](https://www.haendlerbund.de/de/leistungen/rechtssicherheit/button-regelung) ·
+[Verbraucherzentrale – So kommt online ein Vertrag zustande](https://www.verbraucherzentrale.de/node/6762)
