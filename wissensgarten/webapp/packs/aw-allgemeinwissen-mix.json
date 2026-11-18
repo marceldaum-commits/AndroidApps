@@ -1,6 +1,6 @@
 {
   "id": "aw-allgemeinwissen-mix",
-  "version": 5,
+  "version": 6,
   "title": "Allgemeinwissen-Quiz",
   "subject": "allgemeinwissen",
   "grades": [
@@ -365,7 +365,7 @@
     {
       "id": "035",
       "q": "Welches Gas nehmen Pflanzen für die Fotosynthese auf?",
-      "a": "Kohlenstoffdioxid",
+      "a": "Kohlenstoffdioxid (Kohlendioxid)",
       "choices": [
         "Kohlenstoffmonoxid",
         "Schwefeldioxid",

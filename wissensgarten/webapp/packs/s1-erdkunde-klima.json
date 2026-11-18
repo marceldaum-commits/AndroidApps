@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-klima",
-  "version": 1,
+  "version": 2,
   "title": "Klima und Naturgefahren",
   "subject": "erdkunde",
   "grades": [
@@ -241,7 +241,7 @@
     {
       "id": "018",
       "q": "Wie heißt der Urkontinent, in dem einst alle Landmassen vereint waren?",
-      "a": "Pangäa",
+      "a": "Pangäa (Pangaea)",
       "choices": [
         "Atlantis",
         "Gondwana",
@@ -373,7 +373,7 @@
     {
       "id": "029",
       "q": "Mit welchem Gerät zeichnet man Erdbebenwellen auf?",
-      "a": "Seismograf",
+      "a": "Seismograf (Seismograph)",
       "choices": [
         "Barometer",
         "Thermometer",

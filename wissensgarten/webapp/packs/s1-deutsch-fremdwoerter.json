@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-fremdwoerter",
-  "version": 3,
+  "version": 4,
   "title": "Fremdwörter verstehen",
   "subject": "deutsch",
   "grades": [
@@ -38,7 +38,7 @@
     {
       "id": "001",
       "q": "Was bedeutet „Prognose“?",
-      "a": "Vorhersage",
+      "a": "Vorhersage (Voraussage)",
       "choices": [
         "Rückblick",
         "Behauptung",
@@ -158,7 +158,7 @@
     {
       "id": "011",
       "q": "Was bedeutet „ambivalent“?",
-      "a": "zwiespältig, hin- und hergerissen",
+      "a": "zwiespältig (hin- und hergerissen)",
       "choices": [
         "eindeutig",
         "begeistert",
@@ -194,7 +194,7 @@
     {
       "id": "014",
       "q": "Was bedeutet „Fazit“?",
-      "a": "Ergebnis, Schlussfolgerung",
+      "a": "Ergebnis (Schlussfolgerung)",
       "choices": [
         "Einleitung",
         "offene Frage",
@@ -218,7 +218,7 @@
     {
       "id": "016",
       "q": "Was bedeutet „relevant“?",
-      "a": "wichtig, bedeutsam",
+      "a": "wichtig (bedeutsam)",
       "choices": [
         "nebensächlich",
         "verwandt",
@@ -290,7 +290,7 @@
     {
       "id": "022",
       "q": "Was bedeutet „plausibel“?",
-      "a": "einleuchtend, nachvollziehbar",
+      "a": "einleuchtend (nachvollziehbar)",
       "choices": [
         "unverständlich",
         "sehr teuer",
@@ -302,7 +302,7 @@
     {
       "id": "023",
       "q": "Was bedeutet „Defizit“?",
-      "a": "Mangel, Fehlbetrag",
+      "a": "Mangel (Fehlbetrag)",
       "choices": [
         "Überschuss",
         "Vorrat",
@@ -314,7 +314,7 @@
     {
       "id": "024",
       "q": "Was bedeutet „Konsens“?",
-      "a": "Übereinstimmung, Einigkeit",
+      "a": "Übereinstimmung (Einigkeit)",
       "choices": [
         "Uneinigkeit",
         "Abstimmung",

@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-antike-mittelalter",
-  "version": 3,
+  "version": 4,
   "title": "Antike und Mittelalter",
   "subject": "geschichte",
   "grades": [
@@ -207,7 +207,7 @@
     {
       "id": "019",
       "q": "Wie heißt das große Amphitheater im antiken Rom?",
-      "a": "Kolosseum",
+      "a": "Kolosseum (Colosseum)",
       "img": "🏟️🦁"
     },
     {

@@ -1,6 +1,6 @@
 {
   "id": "s1-politik-grundgesetz",
-  "version": 4,
+  "version": 5,
   "title": "Grundgesetz und Staat",
   "subject": "politik",
   "grades": [
@@ -381,7 +381,7 @@
     {
       "id": "032",
       "q": "In welcher Stadt hat die Europäische Zentralbank ihren Sitz?",
-      "a": "Frankfurt am Main",
+      "a": "Frankfurt am Main (Frankfurt)",
       "choices": [
         "Brüssel",
         "Straßburg",

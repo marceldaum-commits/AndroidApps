@@ -1,6 +1,6 @@
 {
   "id": "s1-englisch-grundwortschatz",
-  "version": 4,
+  "version": 5,
   "title": "Englisch Grundwortschatz",
   "subject": "englisch",
   "grades": [
@@ -393,7 +393,7 @@
     {
       "id": "033",
       "q": "Was heißt „der Bahnhof“ auf Englisch?",
-      "a": "station",
+      "a": "station (train station)",
       "choices": [
         "stadium",
         "airport",

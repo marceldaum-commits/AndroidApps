@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-europa",
-  "version": 4,
+  "version": 5,
   "title": "Europa entdecken",
   "subject": "erdkunde",
   "grades": [
@@ -277,7 +277,7 @@
     {
       "id": "028",
       "q": "Welches ist der kleinste Staat Europas und der Welt?",
-      "a": "Vatikanstadt",
+      "a": "Vatikanstadt (Vatikan)",
       "choices": [
         "Monaco",
         "San Marino",

@@ -1,6 +1,6 @@
 {
   "id": "s1-latein-grundwortschatz",
-  "version": 4,
+  "version": 5,
   "title": "Latein Grundwortschatz",
   "subject": "latein",
   "grades": [
@@ -82,7 +82,7 @@
     {
       "id": "005",
       "q": "Was bedeutet „dicere“?",
-      "a": "sagen",
+      "a": "sagen (sprechen)",
       "choices": [
         "lehren",
         "führen",
@@ -127,7 +127,7 @@
     {
       "id": "009",
       "q": "Was bedeutet „clamare“?",
-      "a": "rufen, schreien",
+      "a": "rufen (schreien)",
       "choices": [
         "lachen",
         "klagen",
@@ -149,7 +149,7 @@
     {
       "id": "011",
       "q": "Was bedeutet „currere“?",
-      "a": "laufen, eilen",
+      "a": "laufen (eilen)",
       "choices": [
         "sorgen",
         "stehen",
@@ -216,7 +216,7 @@
     {
       "id": "017",
       "q": "Was bedeutet „timere“?",
-      "a": "fürchten",
+      "a": "fürchten (Angst haben)",
       "choices": [
         "zählen",
         "lieben",
@@ -227,7 +227,7 @@
     {
       "id": "018",
       "q": "Was bedeutet „debere“?",
-      "a": "müssen, sollen",
+      "a": "müssen (sollen)",
       "choices": [
         "können",
         "wollen",
@@ -249,7 +249,7 @@
     {
       "id": "020",
       "q": "Was bedeutet „vocare“?",
-      "a": "rufen, nennen",
+      "a": "rufen (nennen)",
       "choices": [
         "fragen",
         "wohnen",
@@ -260,7 +260,7 @@
     {
       "id": "021",
       "q": "Was bedeutet „servus“?",
-      "a": "Sklave, Diener",
+      "a": "Sklave (Diener)",
       "choices": [
         "Herr",
         "Bauer",
@@ -305,7 +305,7 @@
     {
       "id": "025",
       "q": "Was bedeutet „puer“?",
-      "a": "Junge",
+      "a": "Junge (Knabe)",
       "choices": [
         "Mädchen",
         "Vater",
@@ -349,7 +349,7 @@
     {
       "id": "029",
       "q": "Was bedeutet „terra“?",
-      "a": "Land, Erde",
+      "a": "Land (Erde)",
       "choices": [
         "Meer",
         "Himmel",
@@ -360,7 +360,7 @@
     {
       "id": "030",
       "q": "Was bedeutet „via“?",
-      "a": "Weg, Straße",
+      "a": "Weg (Straße)",
       "choices": [
         "Leben",
         "Stadt",

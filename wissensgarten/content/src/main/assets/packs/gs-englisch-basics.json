@@ -1,6 +1,6 @@
 {
   "id": "gs-englisch-basics",
-  "version": 2,
+  "version": 3,
   "title": "Englisch für Anfänger",
   "subject": "englisch",
   "grades": [
@@ -313,7 +313,7 @@
     {
       "id": "026",
       "q": "Was heißt „Hallo“ auf Englisch?",
-      "a": "hello",
+      "a": "hello (hi)",
       "choices": [
         "goodbye",
         "thank you",
@@ -324,7 +324,7 @@
     {
       "id": "027",
       "q": "Was heißt „Danke“ auf Englisch?",
-      "a": "thank you",
+      "a": "thank you (thanks)",
       "choices": [
         "please",
         "sorry",
@@ -335,7 +335,7 @@
     {
       "id": "028",
       "q": "Was heißt „Tschüss“ auf Englisch?",
-      "a": "goodbye",
+      "a": "goodbye (bye)",
       "choices": [
         "hello",
         "good morning",

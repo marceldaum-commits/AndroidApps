@@ -1,6 +1,6 @@
 {
   "id": "gs-koerper-natur",
-  "version": 3,
+  "version": 4,
   "title": "Körper und Natur",
   "subject": "sachunterricht",
   "grades": [
@@ -70,7 +70,7 @@
     {
       "id": "004",
       "q": "Mit welchem Sinnesorgan hörst du?",
-      "a": "Ohr",
+      "a": "Ohr (Ohren)",
       "choices": [
         "Nase",
         "Zunge",
@@ -347,8 +347,8 @@
     },
     {
       "id": "029",
-      "q": "Was brauchen grüne Pflanzen, um Nahrung herzustellen?",
-      "a": "Sonnenlicht",
+      "q": "Was brauchen grüne Pflanzen außer Wasser und Luft, um Nahrung herzustellen?",
+      "a": "Sonnenlicht (Licht)",
       "choices": [
         "Dunkelheit",
         "Schnee",

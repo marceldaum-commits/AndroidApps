@@ -1,6 +1,6 @@
 {
   "id": "s1-chemie-grundbegriffe",
-  "version": 3,
+  "version": 4,
   "title": "Chemie-Grundbegriffe",
   "subject": "chemie",
   "grades": [
@@ -140,7 +140,7 @@
     {
       "id": "012",
       "q": "Welche Bindung verbindet die Atome im Wassermolekül?",
-      "a": "Elektronenpaarbindung",
+      "a": "Elektronenpaarbindung (Atombindung)",
       "choices": [
         "Ionenbindung",
         "Metallbindung",

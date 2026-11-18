@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-20-jahrhundert",
-  "version": 5,
+  "version": 6,
   "title": "Das 20. Jahrhundert",
   "subject": "geschichte",
   "grades": [
@@ -62,7 +62,7 @@
     {
       "id": "003",
       "q": "Welcher Friedensvertrag von 1919 legte Deutschland hohe Reparationen auf?",
-      "a": "Versailler Vertrag",
+      "a": "Versailler Vertrag (Vertrag von Versailles)",
       "choices": [
         "Vertrag von Locarno",
         "Westfälischer Frieden",
@@ -158,7 +158,7 @@
     {
       "id": "012",
       "q": "Wie nennt man die Gewalttaten gegen Juden am 9./10. November 1938?",
-      "a": "Novemberpogrome",
+      "a": "Novemberpogrome (Reichspogromnacht)",
       "info": "Synagogen wurden in Brand gesetzt, Geschäfte zerstört, Menschen verhaftet und ermordet.",
       "img": "🕯️🕍",
       "choices": [
@@ -187,7 +187,7 @@
     {
       "id": "015",
       "q": "Wie hieß das größte deutsche Vernichtungslager im besetzten Polen?",
-      "a": "Auschwitz-Birkenau",
+      "a": "Auschwitz-Birkenau (Auschwitz)",
       "info": "Der 27. Januar, Tag der Befreiung von Auschwitz 1945, ist heute Holocaust-Gedenktag.",
       "img": "🕯️🕯️",
       "choices": [

@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-organe",
-  "version": 3,
+  "version": 4,
   "title": "Organe und Gesundheit",
   "subject": "biologie",
   "grades": [
@@ -445,7 +445,7 @@
     {
       "id": "035",
       "q": "Welches giftige Gas im Zigarettenrauch behindert den Sauerstofftransport?",
-      "a": "Kohlenstoffmonoxid",
+      "a": "Kohlenstoffmonoxid (Kohlenmonoxid)",
       "choices": [
         "Kohlenstoffdioxid",
         "Stickstoff",

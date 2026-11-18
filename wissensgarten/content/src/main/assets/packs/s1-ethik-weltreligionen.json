@@ -1,6 +1,6 @@
 {
   "id": "s1-ethik-weltreligionen",
-  "version": 2,
+  "version": 3,
   "title": "Weltreligionen",
   "subject": "ethik",
   "grades": [
@@ -326,7 +326,7 @@
     {
       "id": "025",
       "q": "Wie heißt die Pilgerfahrt nach Mekka?",
-      "a": "Haddsch",
+      "a": "Haddsch (Hadsch)",
       "choices": [
         "Ramadan",
         "Zakat",
@@ -434,7 +434,7 @@
     {
       "id": "034",
       "q": "Wie heißt im Buddhismus das Ziel, frei von Leid und Wiedergeburt zu sein?",
-      "a": "Nirwana",
+      "a": "Nirwana (Nirvana)",
       "choices": [
         "Paradies",
         "Karma",
@@ -446,7 +446,7 @@
     {
       "id": "035",
       "q": "Welches buddhistische Fest erinnert an Geburt, Erleuchtung und Tod Buddhas?",
-      "a": "Vesakh",
+      "a": "Vesakh (Vesak)",
       "choices": [
         "Holi",
         "Ostern",

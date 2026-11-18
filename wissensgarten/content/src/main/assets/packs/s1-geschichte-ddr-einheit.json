@@ -1,6 +1,6 @@
 {
   "id": "s1-geschichte-ddr-einheit",
-  "version": 2,
+  "version": 3,
   "title": "DDR und Deutsche Einheit",
   "subject": "geschichte",
   "grades": [
@@ -84,7 +84,7 @@
     {
       "id": "005",
       "q": "Welche Wirtschaftsform hatte die DDR?",
-      "a": "Zentrale Planwirtschaft",
+      "a": "Zentrale Planwirtschaft (Planwirtschaft)",
       "choices": [
         "Soziale Marktwirtschaft",
         "Freie Marktwirtschaft",
@@ -456,7 +456,7 @@
     {
       "id": "036",
       "q": "Welche Behörde privatisierte oder schloss nach 1990 die DDR-Staatsbetriebe?",
-      "a": "Die Treuhandanstalt",
+      "a": "Die Treuhandanstalt (Treuhand)",
       "choices": [
         "Die Bundesbank",
         "Das Kartellamt",

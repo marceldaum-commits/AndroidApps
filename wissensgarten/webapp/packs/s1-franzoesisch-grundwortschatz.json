@@ -1,6 +1,6 @@
 {
   "id": "s1-franzoesisch-grundwortschatz",
-  "version": 3,
+  "version": 4,
   "title": "Französisch Grundwortschatz",
   "subject": "franzoesisch",
   "grades": [
@@ -218,7 +218,7 @@
     {
       "id": "017",
       "q": "Was heißt „das Fahrrad“ auf Französisch?",
-      "a": "le vélo",
+      "a": "le vélo (la bicyclette)",
       "choices": [
         "la vélo",
         "le velo",

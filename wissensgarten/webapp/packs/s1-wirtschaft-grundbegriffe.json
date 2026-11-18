@@ -1,6 +1,6 @@
 {
   "id": "s1-wirtschaft-grundbegriffe",
-  "version": 2,
+  "version": 3,
   "title": "Wirtschaft und Geld",
   "subject": "wirtschaft",
   "grades": [
@@ -254,7 +254,7 @@
     {
       "id": "023",
       "q": "Welche Angabe eignet sich am besten, um Kreditangebote zu vergleichen?",
-      "a": "Der effektive Jahreszins",
+      "a": "Der effektive Jahreszins (Effektivzins)",
       "choices": [
         "Der Sollzins",
         "Die Monatsrate",

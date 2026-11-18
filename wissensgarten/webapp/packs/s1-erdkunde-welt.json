@@ -1,6 +1,6 @@
 {
   "id": "s1-erdkunde-welt",
-  "version": 3,
+  "version": 4,
   "title": "Rund um die Welt",
   "subject": "erdkunde",
   "grades": [
@@ -113,7 +113,7 @@
     {
       "id": "008",
       "q": "Wie heißt der höchste Berg der Erde?",
-      "a": "Mount Everest",
+      "a": "Mount Everest (Everest)",
       "choices": [
         "K2",
         "Kangchendzönga",
@@ -208,7 +208,7 @@
     {
       "id": "017",
       "q": "Welches ist der tiefste See der Erde?",
-      "a": "Baikalsee",
+      "a": "Baikalsee (Baikal)",
       "choices": [
         "Tanganjikasee",
         "Victoriasee",
@@ -252,7 +252,7 @@
     {
       "id": "022",
       "q": "Hauptstadt der USA?",
-      "a": "Washington, D.C.",
+      "a": "Washington, D.C. (Washington)",
       "choices": [
         "New York",
         "Los Angeles",
@@ -302,7 +302,7 @@
     {
       "id": "027",
       "q": "Hauptstadt von Japan?",
-      "a": "Tokio",
+      "a": "Tokio (Tokyo)",
       "choices": [
         "Osaka",
         "Kyoto"
@@ -312,7 +312,7 @@
     {
       "id": "028",
       "q": "Hauptstadt von China?",
-      "a": "Peking",
+      "a": "Peking (Beijing)",
       "choices": [
         "Shanghai",
         "Hongkong",
@@ -323,7 +323,7 @@
     {
       "id": "029",
       "q": "Hauptstadt von Indien?",
-      "a": "Neu-Delhi",
+      "a": "Neu-Delhi (New Delhi)",
       "choices": [
         "Mumbai",
         "Kalkutta",

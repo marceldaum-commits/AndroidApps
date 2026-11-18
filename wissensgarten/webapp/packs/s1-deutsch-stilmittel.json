@@ -1,6 +1,6 @@
 {
   "id": "s1-deutsch-stilmittel",
-  "version": 4,
+  "version": 5,
   "title": "Stilmittel erkennen",
   "subject": "deutsch",
   "grades": [
@@ -64,7 +64,7 @@
     {
       "id": "003",
       "q": "Welches Stilmittel steckt in „Milch macht müde Männer munter.“?",
-      "a": "Alliteration",
+      "a": "Alliteration (Stabreim)",
       "choices": [
         "Anapher",
         "Epipher",
@@ -76,7 +76,7 @@
     {
       "id": "004",
       "q": "Welches Stilmittel steckt in „Die Sonne lacht vom Himmel.“?",
-      "a": "Personifikation",
+      "a": "Personifikation (Personifizierung)",
       "choices": [
         "Vergleich",
         "Alliteration",
@@ -88,7 +88,7 @@
     {
       "id": "005",
       "q": "Welches Stilmittel steckt in „Ich habe es dir schon tausendmal gesagt.“?",
-      "a": "Hyperbel",
+      "a": "Hyperbel (Übertreibung)",
       "choices": [
         "Litotes",
         "Euphemismus",
@@ -183,7 +183,7 @@
     {
       "id": "013",
       "q": "Welches Stilmittel steckt in „Opa ist von uns gegangen.“ (für „gestorben“)?",
-      "a": "Euphemismus",
+      "a": "Euphemismus (Beschönigung)",
       "choices": [
         "Hyperbel",
         "Ironie",
@@ -254,7 +254,7 @@
     {
       "id": "020",
       "q": "Welches Stilmittel steckt in „Der Wind flüstert in den Bäumen.“?",
-      "a": "Personifikation",
+      "a": "Personifikation (Personifizierung)",
       "choices": [
         "Vergleich",
         "Alliteration",
@@ -285,7 +285,7 @@
     {
       "id": "024",
       "q": "Welches Stilmittel steckt in „Ich warte hier schon eine Ewigkeit!“?",
-      "a": "Hyperbel",
+      "a": "Hyperbel (Übertreibung)",
       "img": "♾️⏳"
     },
     {
@@ -302,7 +302,7 @@
     {
       "id": "026",
       "q": "Welches Stilmittel steckt in „mit Kind und Kegel“?",
-      "a": "Alliteration",
+      "a": "Alliteration (Stabreim)",
       "choices": [
         "Anapher",
         "Epipher",

@@ -1,6 +1,6 @@
 {
   "id": "s1-informatik-grundlagen",
-  "version": 3,
+  "version": 4,
   "title": "Informatik-Grundlagen",
   "subject": "informatik",
   "grades": [
@@ -171,7 +171,7 @@
     {
       "id": "015",
       "q": "Datentyp für Wahrheitswerte (wahr/falsch)?",
-      "a": "Boolean",
+      "a": "Boolean (bool)",
       "choices": [
         "Integer",
         "String",
@@ -193,7 +193,7 @@
     {
       "id": "017",
       "q": "Datentyp für ganze Zahlen?",
-      "a": "Integer",
+      "a": "Integer (int)",
       "img": "🔢",
       "choices": [
         "Boolean",

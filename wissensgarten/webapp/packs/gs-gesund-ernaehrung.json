@@ -1,6 +1,6 @@
 {
   "id": "gs-gesund-ernaehrung",
-  "version": 2,
+  "version": 3,
   "title": "Gesund und fit",
   "subject": "sachunterricht",
   "grades": [
@@ -38,7 +38,7 @@
     {
       "id": "001",
       "q": "Was davon ist ein Gemüse: Apfel, Möhre, Banane oder Kirsche?",
-      "a": "Möhre",
+      "a": "Möhre (Karotte)",
       "choices": [
         "Apfel",
         "Banane",
@@ -134,7 +134,7 @@
     {
       "id": "009",
       "q": "Was steckt reichlich in Milch und Käse und macht Knochen stark?",
-      "a": "Kalzium",
+      "a": "Kalzium (Calcium)",
       "choices": [
         "Zucker",
         "Koffein",

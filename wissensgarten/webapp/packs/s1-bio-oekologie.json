@@ -1,6 +1,6 @@
 {
   "id": "s1-bio-oekologie",
-  "version": 4,
+  "version": 5,
   "title": "Ökologie",
   "subject": "biologie",
   "grades": [
@@ -112,7 +112,7 @@
     {
       "id": "008",
       "q": "Lebewesen, die aus anorganischen Stoffen energiereiche organische Stoffe aufbauen?",
-      "a": "Produzenten",
+      "a": "Produzenten (Erzeuger)",
       "choices": [
         "Konsumenten",
         "Destruenten",
@@ -124,7 +124,7 @@
     {
       "id": "009",
       "q": "Wie heißen Lebewesen, die tote organische Stoffe zersetzen?",
-      "a": "Destruenten",
+      "a": "Destruenten (Zersetzer)",
       "choices": [
         "Produzenten",
         "Konsumenten",
@@ -350,7 +350,7 @@
     {
       "id": "029",
       "q": "Welcher Vorgang bindet CO₂ aus der Luft?",
-      "a": "Fotosynthese",
+      "a": "Fotosynthese (Photosynthese)",
       "choices": [
         "Zellatmung",
         "Verbrennung",
@@ -361,7 +361,7 @@
     {
       "id": "030",
       "q": "Wichtigstes vom Menschen freigesetztes Treibhausgas?",
-      "a": "Kohlenstoffdioxid (CO₂)",
+      "a": "Kohlenstoffdioxid (CO₂ / Kohlendioxid)",
       "choices": [
         "Sauerstoff (O₂)",
         "Stickstoff (N₂)",

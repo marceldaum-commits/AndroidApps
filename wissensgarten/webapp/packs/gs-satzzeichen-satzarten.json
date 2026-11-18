@@ -1,6 +1,6 @@
 {
   "id": "gs-satzzeichen-satzarten",
-  "version": 1,
+  "version": 2,
   "title": "Satzzeichen und Sätze",
   "subject": "deutsch",
   "grades": [
@@ -191,7 +191,7 @@
     },
     {
       "id": "014",
-      "q": "Welches Wort ist ein Fragewort?",
+      "q": "Welches Wort ist ein Fragewort: weil, warum, und oder dann?",
       "a": "warum",
       "choices": [
         "weil",

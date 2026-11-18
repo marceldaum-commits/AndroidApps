@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-pythagoras-trigo",
-  "version": 3,
+  "version": 4,
   "title": "Pythagoras & Trigonometrie",
   "subject": "mathe",
   "grades": [
@@ -204,9 +204,9 @@
     {
       "id": "015",
       "q": "Wie heißt die Kathete, die dem Winkel α gegenüberliegt?",
-      "a": "Gegenkathete von α",
+      "a": "Gegenkathete",
       "choices": [
-        "Ankathete von α",
+        "Ankathete",
         "Hypotenuse",
         "Seitenhalbierende"
       ],
@@ -216,9 +216,9 @@
     {
       "id": "016",
       "q": "Wie heißt die Kathete, die am Winkel α anliegt?",
-      "a": "Ankathete von α",
+      "a": "Ankathete",
       "choices": [
-        "Gegenkathete von α",
+        "Gegenkathete",
         "Hypotenuse",
         "Seitenhalbierende"
       ],

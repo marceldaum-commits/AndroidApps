@@ -1,6 +1,6 @@
 {
   "id": "s1-physik-strom",
-  "version": 3,
+  "version": 4,
   "title": "Strom und Magnetismus",
   "subject": "physik",
   "grades": [
@@ -133,7 +133,7 @@
     {
       "id": "009",
       "q": "Wie sind die Steckdosen in einer Wohnung geschaltet?",
-      "a": "Parallel",
+      "a": "Parallel (Parallelschaltung)",
       "choices": [
         "In Reihe",
         "Abwechselnd in Reihe und parallel",
