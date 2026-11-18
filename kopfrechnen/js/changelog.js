@@ -1,8 +1,9 @@
 'use strict';
 // Rechenblitz – Versionen mit Datum (neueste oben). Wird unter „Was ist neu?“ angezeigt.
-const APP_VERSION = '3.26.11';
+const APP_VERSION = '3.26.12';
 const APP_DATE = '2026-11-18';
 const CHANGELOG = [
+  ['3.26.12', '2026-11-18', ['Neu im Elternbereich: Eltern-Handy koppeln – Lernstand auf dem Handy der Eltern, ohne Konto und verschlüsselt']],
   ['3.26.11', '2026-11-18', ['Neuer Elternbereich: Berichte, Lern-Geschenk und die anonyme Nutzungszählung (abschaltbar)']],
   ['3.26.10', '2026-11-18', ['Neu: Knopf „App installieren“ – Rechenblitz kommt mit einem Tipp auf den Startbildschirm und startet wie eine App, auch offline']],
   ['3.26.9', '2026-11-18', ['Vorlesen ist vorerst ausgeschaltet – dafür gibt es die neue Musik und Klänge']],

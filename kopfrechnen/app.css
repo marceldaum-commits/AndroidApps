@@ -1095,3 +1095,8 @@ button.badge{font:inherit;cursor:pointer}
 .install-cta b { display: block; font-size: 1.05rem; }
 .install-cta small { display: block; font-size: .85rem; opacity: .85; }
 .install-cta:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
+/* Eltern-Handy koppeln */
+.kopplung .qrbox { display: flex; justify-content: center; margin: 8px 0 12px; }
+.kopplung .qrbox svg { width: min(220px, 70vw); height: auto; background: #fff; padding: 8px; border-radius: 12px; }
+.kopplung .kp-off { margin-top: 10px; color: var(--bad, #c62828); }
+.kopplung .kp-err { color: var(--bad, #c62828); font-weight: 700; }

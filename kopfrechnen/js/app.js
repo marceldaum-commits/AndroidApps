@@ -698,6 +698,7 @@ $('btnQuit').onclick = () => { Sound.click(); quitGame(); };
 const STAR = '<svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z" stroke-linejoin="round"/></svg>';
 function finish() {
   if (G.over) return;
+  if (typeof elternNachRunde === 'function') elternNachRunde();   // gekoppeltes Eltern-Handy: Bericht aktualisieren
   G.over = true; G.finishedAt = Date.now(); G.locked = true; G.waiting = false; $('merkOv')?.remove(); $('bzPop')?.remove(); cancelAnimationFrame(timerRaf); $('solution').hidden = true;
   const cfg = G.cfg, answered = G.correct + G.wrong, acc = answered ? G.correct / answered : 0, today = todayStr();
   let stars = null;
