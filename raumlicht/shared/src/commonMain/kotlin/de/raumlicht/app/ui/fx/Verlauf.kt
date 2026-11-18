@@ -22,6 +22,16 @@ expect fun drawNote(text: String)
 
 private var reported = HashSet<String>()
 private fun once(text: String) { if (reported.add(text)) drawNote(text) }
+/**
+ * Gestrichelte Linie – oder null (dann durchgezogen), wenn die Zeichenbibliothek das Muster nicht anlegen kann.
+ * Auf iPads mit neuem Safari scheitern solche Anfragen wie die Verläufe („Can't wrap nullptr“); ohne diesen Schutz bliebe der ganze Bildschirm leer.
+ */
+private var dashWorks = true
+fun safeDash(on: Float, off: Float): androidx.compose.ui.graphics.PathEffect? {
+    if (!dashWorks) return null
+    return try { androidx.compose.ui.graphics.PathEffect.dashPathEffect(floatArrayOf(on, off)).also { once("Strichmuster: in Ordnung") } }
+    catch (e: Throwable) { dashWorks = false; once("Strichmuster gescheitert: ${e::class.simpleName}: ${e.message} – Linien durchgezogen"); null }
+}
 private fun finite(v: Float) = if (v.isNaN() || v.isInfinite() || v <= 0f) 1f else v
 
 // Ab welcher Stufe es auf diesem Gerät klappt – damit ein Gerät, das keine Verläufe kann, nicht in jedem Bild erneut scheitert

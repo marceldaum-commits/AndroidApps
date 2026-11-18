@@ -2,6 +2,9 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.17 – iPad und iPhone: gestrichelte Linien abgesichert (18.11.2026)
+- Auf iPads mit neuem Safari kann die Zeichenbibliothek manche Muster nicht anlegen. Für Farbverläufe gab es schon einen Ersatz; jetzt auch für gestrichelte Linien. Betroffen waren „Binomial-Labor“, „Zufallsmaschine“ und „Geisterfahrt“ – dort konnte der Bildschirm leer bleiben. Die Linien sind auf solchen Geräten jetzt durchgezogen.
+
 ## 2.18.16 – Keine weiße Seite mehr auf dem iPhone (18.11.2026)
 - **Auf manchen iPhones blieb Raumlicht weiß.** Die Ursache auf dem echten Gerät kennen wir noch nicht sicher; wahrscheinlich nimmt das iPhone Raumlicht den Speicher oder die Grafik weg. Diese Version geht beides an.
 - **Weniger Speicher auf dem iPhone:** Raumlicht zeichnet dort mit doppelter statt dreifacher Schärfe. Das sieht man kaum, braucht aber nur gut halb so viel Bildspeicher.

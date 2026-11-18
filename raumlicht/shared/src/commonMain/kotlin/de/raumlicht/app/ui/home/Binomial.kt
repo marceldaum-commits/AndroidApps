@@ -75,7 +75,7 @@ fun BinomialScreen(onBack: () -> Unit) {
                 // Streubereich μ ± σ und der Erwartungswert
                 val mx = ((dist.mean + 0.5) * slot).toFloat(); val sx = (dist.sigma * slot).toFloat()
                 drawRect(Q.Pink.copy(alpha = 0.10f), Offset((mx - sx).coerceAtLeast(0f), 0f), Size(((mx + sx).coerceAtMost(w) - (mx - sx).coerceAtLeast(0f)), h))
-                drawLine(Q.Pink, Offset(mx, 0f), Offset(mx, h), 2.5f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 8f)))
+                drawLine(Q.Pink, Offset(mx, 0f), Offset(mx, h), 2.5f, pathEffect = de.raumlicht.app.ui.fx.safeDash(10f, 8f))
                 values.forEachIndexed { x, v ->
                     val bh = (h * v / top * grow.value).toFloat().coerceAtMost(h); val on = dist.counts(mode, kk, x)
                     drawRoundRect(if (x == kk) Q.Yellow else if (on) Q.Yellow.copy(alpha = 0.6f) else Q.Cyan.copy(alpha = 0.35f), Offset(x * slot + gap, h - bh), Size((slot - 2 * gap).coerceAtLeast(1f), bh), CornerRadius(3f))

@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.17: erster Befund vom echten Gerät (iPad, Safari 27.2)
+
+**Raumlicht 2.18.17 vom 18.11.2026 – nur Web-App.** Marcel hat die Diagnose-Seite geschickt – von einem **iPad** im Desktop-Modus (Safari 27.2, 1590 × 1060, Apple GPU), noch mit 2.18.15 geladen.
+- WebAssembly, WasmGC, Ausnahmen, WebGL 2 (Zeichentest stimmt): alles vorhanden. Service Worker aktiv, beide Zwischenspeicher (2.18.15 und 2.18.16) da, kein Startfehler, **„Oberfläche gestartet“**.
+- **Der eigentliche Befund:** `LinearGradientShader` scheitert dort in jeder Form mit `RuntimeException: Can't wrap nullptr` (mit Zwischenstufen, ohne, mit zwei Farben) – die Skia-Fabrik liefert null. Unser Rückfall greift („einfarbig als Ersatz“), darum startet die App.
+  Das ist dieselbe Ursache wie früher bei der weißen iPad-Seite: Eine ungefangene Ausnahme beim Zeichnen lässt die Compose-Fläche leer. **Für die anderen Compose-Apps (KurvenFlug, Wissensgarten, Experimentopia) heißt das: Jeder ungeschützte Verlauf (`Brush.verticalGradient` usw.) oder jedes andere Skia-Objekt aus einer Fabrik kann auf iPad/iPhone die Seite weiß machen.** Vorlage für den Schutz: `shared/…/fx/Verlauf.kt`.
+- In Raumlicht war noch eine Fabrik ungeschützt: `PathEffect.dashPathEffect` (Binomial-Labor, Zufallsmaschine, Geisterfahrt). Jetzt über `safeDash` mit Rückfall auf durchgezogene Linien; ob es dort wirklich scheitert, steht nach dem nächsten Besuch in der Mitschrift („Strichmuster: …“).
+- **Offen:** Ob Marcel auf dem iPad etwas Weißes sieht (laut Mitschrift läuft es) und was das **iPhone** meldet – von dort habe ich noch keine Diagnose. Warum Skia dort null liefert (Vermutung: Übergabe von Zahlenfeldern an die Bibliothek unter dem neuen Safari), habe ich nicht belegt.
+
 ## 18.11.2026 – Raumlicht 2.18.16: weiße Seite auf dem iPhone – Absicherung, Ursache noch offen
 
 Marcel hat direkt bestätigt. **Raumlicht 2.18.16 vom 18.11.2026 – nur Web-App**, liegt auf raumlicht-test.

@@ -84,7 +84,7 @@ fun ChanceScreen(onBack: () -> Unit, seed: Long = remember { nowNanos() }) {
                 val w = size.width; val h = size.height
                 fun y(f: Double) = (h * (1 - f)).toFloat()
                 for (g in 0..4) drawLine(Q.Muted.copy(alpha = 0.25f), Offset(0f, h * g / 4), Offset(w, h * g / 4), 1f)
-                drawLine(Q.Pink, Offset(0f, y(p)), Offset(w, y(p)), 3f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(14f, 10f)))
+                drawLine(Q.Pink, Offset(0f, y(p)), Offset(w, y(p)), 3f, pathEffect = de.raumlicht.app.ui.fx.safeDash(14f, 10f))
                 if (run != null && shown > 0) {
                     val path = Path(); val stepPx = maxOf(1, shown / 600)
                     for (i in 1..shown step stepPx) { val x = w * i / n; if (i == 1) path.moveTo(x, y(run.freq(i))) else path.lineTo(x, y(run.freq(i))) }

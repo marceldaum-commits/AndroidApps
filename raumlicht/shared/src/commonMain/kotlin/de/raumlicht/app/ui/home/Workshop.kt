@@ -167,7 +167,7 @@ fun GhostScreen(onBack: () -> Unit) {
             zeroLine(fRange.first, fRange.second); plot(ride.from, ride.to, fRange.first, fRange.second, Q.Cyan, 6f, ride.f)
             // nach dem Auflösen: an Hoch- und Tiefpunkten ein Lot nach unten – dort ist f′ null
             if (shown) ride.spots.filter { it.kind == SpotKind.HIGH || it.kind == SpotKind.LOW }.forEach { s -> val px = (size.width * (s.x - ride.from) / (ride.to - ride.from)).toFloat()
-                drawLine(Q.Yellow, Offset(px, 0f), Offset(px, size.height), 2f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 8f))) }
+                drawLine(Q.Yellow, Offset(px, 0f), Offset(px, size.height), 2f, pathEffect = de.raumlicht.app.ui.fx.safeDash(10f, 8f)) }
         }
         Text(if (shown) "Pink: die echte Ableitung · Gelb: deine Skizze" else "Zeichne hier mit dem Finger, wie f′ aussieht", Modifier.padding(start = 14.dp), color = Q.Pink, fontSize = 12.sp, fontWeight = FontWeight.Bold)
         Canvas(Modifier.fillMaxWidth().weight(1f).padding(horizontal = 10.dp, vertical = 4.dp).background(Q.Deep, RoundedCornerShape(16.dp)).border(1.5.dp, Q.Pink.copy(alpha = 0.6f), RoundedCornerShape(16.dp)).testTag("zeichnen")
@@ -175,7 +175,7 @@ fun GhostScreen(onBack: () -> Unit) {
             .pointerInput(key, shown) { detectTapGestures { o -> paint(o, o, size.width.toFloat(), size.height.toFloat()) } }) {
             zeroLine(lo, hi)
             if (shown) ride.spots.filter { it.kind == SpotKind.HIGH || it.kind == SpotKind.LOW }.forEach { s -> val px = (size.width * (s.x - ride.from) / (ride.to - ride.from)).toFloat()
-                drawLine(Q.Yellow, Offset(px, 0f), Offset(px, size.height), 2f, pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 8f))) }
+                drawLine(Q.Yellow, Offset(px, 0f), Offset(px, size.height), 2f, pathEffect = de.raumlicht.app.ui.fx.safeDash(10f, 8f)) }
             val w = size.width / Ghost.COLUMNS
             guess.forEachIndexed { c, v -> if (v != null) { val y = (size.height * (hi - v) / (hi - lo)).toFloat(); drawLine(Q.Yellow, Offset(c * w, y), Offset((c + 1) * w, y), 7f) } }
             if (shown) plot(ride.from, ride.to, lo, hi, Q.Pink, 6f, ride.df)
