@@ -425,7 +425,7 @@ private fun GradePicker(current: Int?, first: Boolean, onPick: (Int?) -> Unit) {
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.65f)).clickable(remember { MutableInteractionSource() }, null) {},
         contentAlignment = Alignment.Center) {
         Column(
-            Modifier.padding(20.dp).clip(RoundedCornerShape(24.dp)).background(Q.Panel).border(2.dp, Q.Cyan, RoundedCornerShape(24.dp)).padding(18.dp),
+            Modifier.widthIn(max = 640.dp).padding(20.dp).clip(RoundedCornerShape(24.dp)).background(Q.Panel).border(2.dp, Q.Cyan, RoundedCornerShape(24.dp)).padding(18.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Volt(VoltMood.HAPPY, size = 56.dp, speech = if (first) "Hi! In welcher Klasse bist du? Dann zeige ich dir zuerst, was gerade dran ist. 🎓"
