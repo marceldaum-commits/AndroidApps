@@ -120,7 +120,11 @@ fun HomeScreen(
                         0 -> {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
-                                    Text("KURVENFLUG", fontSize = 30.sp, fontWeight = FontWeight.Black, color = Q.Cyan, letterSpacing = 4.sp, maxLines = 1)
+                                    Row(verticalAlignment = Alignment.CenterVertically) {
+                                        // dasselbe Logo wie das App-Symbol
+                                        de.kurvenflug.app.ui.theme.KurvenflugLogo(Modifier.size(40.dp).padding(end = 8.dp))
+                                        Text("KURVENFLUG", fontSize = 30.sp, fontWeight = FontWeight.Black, color = Q.Cyan, letterSpacing = 4.sp, maxLines = 1)
+                                    }
                                     // Pro freigeschaltet: immer sichtbar im Kopf (Vorgabe Marcel)
                                     de.kurvenflug.app.ui.pro.ProBadge(de.kurvenflug.app.LocalPro.current, Modifier.padding(vertical = 4.dp))
                                     Text("${player?.let { "$it · " } ?: ""}Mathe & Physik im All · ${grade?.let { "Klasse $it" } ?: "Klasse 5–13"}",

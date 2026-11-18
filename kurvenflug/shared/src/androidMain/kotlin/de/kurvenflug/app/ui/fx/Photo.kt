@@ -37,7 +37,8 @@ object Photo {
             c.drawPath(p, Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE; strokeWidth = 9f; color = Color.rgb(61, 232, 255); strokeCap = Paint.Cap.ROUND })
         }
         val title = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.rgb(61, 232, 255); textSize = size * 0.06f; typeface = Typeface.DEFAULT_BOLD }
-        c.drawText("KURVENFLUG", size * 0.06f, size * 0.09f, title)
+        drawLogo(c, size * 0.06f, size * 0.025f, size * 0.085f)
+        c.drawText("KURVENFLUG", size * 0.16f, size * 0.09f, title)
         val sub = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.WHITE; textSize = size * 0.042f }
         c.drawText("${level.title}  " + "★".repeat(stars) + "☆".repeat(3 - stars), size * 0.06f, size * 0.15f, sub)
         val formula = level.params.joinToString("   ") { "${it.label} = ${num(level.values(values).getValue(it.key))}${it.unit}" }
@@ -59,3 +60,19 @@ object Photo {
         context.startActivity(Intent.createChooser(send, "Flugbahn teilen").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     }
 }
+
+/** Das App-Logo (wie icons/icon.svg, innerer Bereich wie das Android-Symbol) bei (x, y) mit Kantenlänge w */
+internal fun drawLogo(c: Canvas, x: Float, y: Float, w: Float) {
+    val crop = 18f; val k = w / (108f - 2 * crop)
+    fun px(v: Float) = x + (v - crop) * k
+    fun py(v: Float) = y + (v - crop) * k
+    c.drawRoundRect(android.graphics.RectF(x, y, x + w, y + w), w * 0.22f, w * 0.22f, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.rgb(11, 16, 38) })
+    val arc = Path().apply { moveTo(px(30f), py(76f)); quadTo(px(46f), py(26f), px(76f), py(62f)) }
+    c.drawPath(arc, Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE; strokeWidth = 3.5f * k; color = Color.rgb(56, 232, 255); strokeCap = Paint.Cap.ROUND })
+    c.drawCircle(px(76f), py(62f), 7f * k, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.rgb(255, 92, 168) })
+    val probe = Path().apply { moveTo(px(50f), py(38f)); lineTo(px(58f), py(43f)); lineTo(px(50f), py(48f)); lineTo(px(52f), py(43f)); close() }
+    c.drawPath(probe, Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.rgb(255, 213, 79) })
+    val white = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = Color.WHITE }
+    c.drawCircle(px(36f), py(38f), 1.5f * k, white); c.drawCircle(px(70f), py(34f), 1.2f * k, white)
+}
+

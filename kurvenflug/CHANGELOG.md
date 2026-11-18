@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.7 – Ein Logo überall
+- Das Kurvenflug-Logo (Flugbahn mit Planet) steht jetzt auch oben auf der Startseite, im Widget und auf geteilten
+  Flugbahn-Fotos – genau wie das App-Symbol.
+
 ## 2.5.6 – Alle Aufgaben durchgesehen, Nova zuverlässiger
 - Alle Aufgaben wurden auf Verständlichkeit geprüft. Wo nicht klar war, was man einstellen soll, steht jetzt eine Frage
   dabei („Wie schnell muss sie fliegen?“, „Welche Starthöhe h?“, „Welcher Radius?“ …). Zufallsaufgaben schreiben Geraden
