@@ -51,3 +51,4 @@ WebApp, PC-Ansicht, Eltern-Kopplung + Sicherung, Elternbereich (Probestunde), an
 - Strahlensatz beim Schatten → `k9-aehnlich`
 - Mendel → `k8-zufall`; Osmose (Prozent) → `k7-prozent`
 - Links in unsere Versuche, sobald wir Direkt-Links haben.
+- Rechenblitz bestätigt: Fr 27.11. Physik-Sachaufgaben (E = P·t mit W/kW/Wh/kWh, Wirkungsgrad in %, Motorleistung) mit Link „Ausprobieren in Experimentopia“.
