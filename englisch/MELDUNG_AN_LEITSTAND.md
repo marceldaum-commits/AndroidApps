@@ -2,6 +2,12 @@
 
 Neueste oben.
 
+## 18.11.2026 – Abgrenzung mit dem Wissensgarten vereinbart
+
+- Wissensgarten: Wortschatz, unregelmäßige Verben, Tenses, Regeln als Merkkarten; Brummi-Radio bleibt dort. Englisch-App: hören, nachsprechen, Rollenspiele, Satzbau, Hörverstehen, Chants – keine Karteikarten.
+- Gleiche Themen, andere Form, gegenseitig verlinkt: gs-englisch-school ↔ Welt 3, gs-englisch-food ↔ Welt 5, gs-englisch-clothes-weather ↔ Welt 6, gs-englisch-hobbys ↔ Welt 8, gs-englisch-familie-koerper ↔ Welt 2 (Tabelle in `wissensgarten/WOCHENRUNDE.md`).
+- Wortlisten je Welt gehen an den Wissensgarten, damit beide Apps dieselbe Schreibweise nutzen (britisch: colour, favourite …). Welt 1 ist verschickt.
+
 ## 18.11.2026 – Version 0.1.0 vom 18.11.2026: erster spielbarer Prototyp „Hello Harbour“ (noch nicht auf einer Test-Domain)
 
 - **Ordner** `englisch/webapp/` (Branch ccr-0e3accf3-cdxlc8). Nach der Namenswahl: Ordner umbenennen, `APP_ID` setzen, Workflow `<name>-web-test.yml` (Kopie Experimentopia) → Branch `<name>-test`.
