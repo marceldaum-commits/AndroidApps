@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.13 – Lux erklärt’s anders: der KI-Tutor ist eingebaut (18.11.2026)
+- **Neu, noch im Probebetrieb:** Hängst du nach einem Fehlversuch fest, erklärt dir Lux die Aufgabe mit KI-Hilfe noch einmal anders – passend zu dem, was du eingestellt hast. Du kannst nachfragen wie bei einer Nachhilfe. Lux führt dich zum Weg; die Lösung findest du selbst.
+- **Sichtbar ist der KI-Tutor zunächst nur auf der Testseite.** Für alle wird er freigeschaltet, sobald unser Server dafür bereit ist. Bis dahin ändert sich in der App nichts.
+- **Kosten und Grenzen:** 3 Proben sind frei. Mit dem „Raumlicht KI-Abi-Pass“ (kommt in den Shop, einmalig, kein Abo) gibt es 10 KI-Punkte an jedem Tag bis zum 31. Juli des Abi-Jahres. Raumlicht Pro braucht man dafür nicht.
+- **Für Eltern:** Der KI-Tutor arbeitet nur, wenn man ihn antippt. Dann gehen die Aufgabe, die Eingabe und die Frage an unseren Server, der sie von einer KI (Anthropic) beantworten lässt – ohne Namen, ohne Konto, ohne Lernstände. Jede Antwort ist als KI-Antwort gekennzeichnet. Im Pflichtteil „ohne Hilfsmittel“ gibt es ihn nicht, in der Play-Store-Fassung auch nicht.
+
 ## 2.18.12 – Ton auch bei stummem Klingelton (18.11.2026)
 - **Android:** Raumlicht blieb still, wenn der Klingelton des Handys auf stumm oder Vibration stand – auch wenn die Medien-Lautstärke aufgedreht war. Jetzt gilt wie bei Musik und Videos: Laut ist, was die Medien-Lautstärke sagt (die Lauter- und Leiser-Tasten).
 - Steht die Medien-Lautstärke auf 0, sagen das die Einstellungen weiterhin.

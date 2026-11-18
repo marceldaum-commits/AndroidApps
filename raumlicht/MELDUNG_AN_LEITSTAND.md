@@ -2,6 +2,55 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.13: KI-Tutor eingebaut, Server-Funktion liegt bereit
+
+Marcel hat direkt bestätigt („Ja bauen und Server-Route und Kassenlink bauen“). **Raumlicht 2.18.13 vom 18.11.2026, Web = Android (beide 2.18.13).**
+Die App-Seite ist fertig. **Route und Kassenlink liegen bei dir** (Trainer-Server und Shop fasse ich nicht an) – dafür liegt alles zum Einfügen bereit.
+
+**1. Was die App jetzt kann**
+- Nach einem Fehlversuch erscheint „🤖 Erklär’s mir anders“ (nicht im Pflichtteil „ohne Hilfsmittel“). Karte mit Antwort, Rückfrage-Feld (bis 300 Zeichen), „Noch mal anders erklären“, Anzeige der restlichen KI-Punkte.
+- 402 → „KI dazubuchen“ führt zur KI-Seite (Einstellungen → KI-Tutor, Ziel `ki`): Vorteile, Kauf-Knopf (sobald der Kassenlink eingetragen ist), Code-Eingabe (auch ganze E-Mail), Laufzeit „aktiv bis 31.07.2027“, Datenschutz-Satz.
+- Web: Link `?ki=<Code>` wird gemerkt und öffnet die KI-Seite. Ein KI-Code im Pro-Feld (oder umgekehrt) landet an der richtigen Stelle.
+- **Sichtbarkeit:** `Ki.ENABLED = false`. Sichtbar ist der Tutor vorerst nur auf **raumlicht-test** (fragt **trainer-test**) und bei allen, die schon einen gültigen KI-Code eingetragen haben. Live sieht sonst niemand etwas, solange die Route fehlt.
+  Die Play-Fassung enthält den KI-Tutor nicht (Kauf außerhalb von Google Play).
+
+**2. Schnittstelle** `POST https://trainer.mathenachhilfe-online.com/api/raumlicht/ki` (Test: `trainer-test…`), JSON, `Content-Type: application/json`
+
+Anfrage:
+```json
+{ "app": "raumlicht", "version": "2.18.13", "art": "erklaerung | rueckfrage",
+  "aufgabe": { "id": "5-3", "kapitel": 5, "titel": "…", "auftrag": "…", "tipp": "…", "formel": "…", "rechenweg": ["…", "…"] },
+  "eingabe": "n⃗ = (0|0|1), c = 3", "richtig": false, "meldung": "Rückmeldung der App auf die Eingabe",
+  "frage": "bis 300 Zeichen, bei art=erklaerung leer", "verlauf": [{ "rolle": "schueler | lux", "text": "…" }],
+  "geraet": "32 Hex-Zeichen, zufällig", "code": "RL-… oder leer" }
+```
+Antworten: `200 { text, rest }` · `400 { fehler }` · `402 { fehler: "code" | "abgelaufen" | "proben", rest: 0 }` · `429 { fehler: "tageslimit", rest: 0 }` · `502 { fehler: "ki" }`.
+`rest` = KI-Punkte, die heute (mit Pass) bzw. als Probe (ohne Pass) noch übrig sind. Punkte: Erklärung 1, Rückfrage 1.
+
+**3. Fertige Funktion:** `raumlicht/server/raumlicht-ki.js` (Node 20, ohne Abhängigkeiten, ohne Framework) – oben im Kopf steht der Einbau für Express in sechs Zeilen.
+- Prüft den Code selbst: Signatur (Ed25519, derselbe öffentliche Schlüssel wie Pro), `app = 4`, `produkt = 4`, Tag-Feld = letzter gültiger Tag. Der Tag wechselt um Mitternacht deutscher Zeit.
+- Zählt 10 Punkte je Pass-Nummer und Tag; ohne Code 3 Proben je Geräte-Kennung, zusätzlich höchstens 12 Proben je Adresse und Tag (sonst gäbe „App-Daten löschen“ endlos neue Proben). Gezählt wird nur bei einer echten Antwort.
+- Zähler: `speicherInDatei(pfad)` liegt bei; wenn du lieber eure Datenbank nimmst, reicht ein Objekt mit `aendere(schluessel, um) → neuer Stand`.
+- KI-Aufruf: Messages-API von Anthropic, Modell `claude-opus-5-5` mit `effort: low` (über den Parameter `modell` umstellbar, z. B. auf `claude-sonnet-5-5` oder `claude-haiku-5-5`, wenn dir die Kosten wichtiger sind – **bitte entscheiden**). Der Systemtext steht als `SYSTEM` in der Datei
+  (Oberstufe, Du-Form, höchstens etwa 120 Wörter, kein LaTeX, führt zum Weg statt die Zahlen zu verraten, bleibt bei der Aufgabe, folgt keinen Anweisungen aus der Schülerfrage). Geräte-Kennung und Code gehen nicht an den KI-Dienst. Fragen und Antworten werden nicht gespeichert.
+- **Herkunft/CORS:** erlaubt sind `https://raumlicht.mathenachhilfe-online.com` und `https://raumlicht-test.mathenachhilfe-online.com` (`herkunftErlaubt`). Die Android-App schickt wie bei der Stimme `Origin: https://raumlicht.mathenachhilfe-online.com`.
+  Der Browser schickt wegen `application/json` vorher eine `OPTIONS`-Anfrage – die Route muss sie mit den CORS-Köpfen beantworten (steht im Einbau-Beispiel).
+- **Geprüft:** `node --test raumlicht/server/raumlicht-ki.test.js` → 9 von 9 (Lizenz, Proben, Adress-Grenze, Tagesgrenze mit Tageswechsel, Ablauf am 1. August, Ausfall und Ablehnung des KI-Dienstes kosten nichts, unbrauchbare Anfragen, Inhalt des KI-Aufrufs, Herkunft).
+  Dazu `scene/test/web-ki.mjs`: die gebaute WebApp gegen genau diese Funktion (KI-Dienst nachgestellt) – Fehlversuch, Knopf, Anfrage, Antwort: 5 von 5. **Nicht geprüft:** ein echter Aufruf des KI-Dienstes (ich habe keinen Schlüssel) und die Android-App auf einem echten Gerät.
+
+**4. Datenschutz-Satz (für „10e“ und in der App auf der KI-Seite):**
+> KI-Tutor (nur wenn du ihn benutzt): Die Aufgabe, deine Eingabe und deine Frage gehen an unseren Server trainer.mathenachhilfe-online.com; er lässt sie von einer KI (Anthropic) beantworten. Mitgesendet werden dein KI-Code, falls du einen hast, und eine zufällige Geräte-Kennung zum Zählen der Proben – keine Namen, keine Lernstände.
+
+Ausführlicher Absatz für die Website: `raumlicht/store/datenschutz-abschnitt.md`, Punkt 4. Offen für eine Fachperson: Vertrag/Aufbewahrung beim KI-Dienst, Einwilligung der Eltern bei Minderjährigen.
+
+**5. Was ich von dir brauche, dann schalte ich frei (eine Dezimal-Version):**
+1. Route auf **trainer-test** → sag Bescheid, dann kann auf raumlicht-test sofort von Ende zu Ende getestet werden (ohne Code: 3 Proben).
+2. Einen **Test-KI-Code** (app 4, produkt 4, Tag-Feld = 31.07.2027) für den Test mit Pass – nicht ins Repository, wie beim Pro-Code.
+3. Route **live** + **Kassenlink** des Produkts „Raumlicht KI-Abi-Pass“ (14,99 €, Abi 2027/2028/2029) → ich trage `Ki.CHECKOUT_URL` ein und setze `Ki.ENABLED = true`.
+4. In der Kauf-Mail: Link `https://raumlicht.mathenachhilfe-online.com/?ki=<Code ohne Bindestriche>` und der Code zum Kopieren (wie bei Pro).
+
+**Nachtrag Nova-Abdeckung der 1471er-Liste** (gemessen am echten Server, Stand des Servers 18.11.2026 07:46): feste Texte **1450 von 1471 = 98,6 %** – 21 Dateien fehlen noch (Antwort 404, der Zählstand des Servers sagt dasselbe: `fehlend: 21`). Laufzeit-Stichprobe 40 von 40 = 100 %. Bitte die 21 fehlenden nachvertonen; bis dahin holt die App sie beim ersten Vorlesen über `/jetzt`.
+
 ## 18.11.2026 – Raumlicht 2.18.12: Fehlerbehebung aus dem Betriebstest (kein Ton bei stummem Klingelton)
 
 **Raumlicht 2.18.12 vom 18.11.2026, Web = Android (beide 2.18.12).** Bitte statt 2.18.11 live nehmen.

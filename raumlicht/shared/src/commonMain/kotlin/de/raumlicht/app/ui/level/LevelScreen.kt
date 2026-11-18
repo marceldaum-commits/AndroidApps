@@ -69,6 +69,10 @@ fun LevelScreen(
     @Suppress("NAME_SHADOWING") val level = remember(level.id, strictVectors) { if (strictVectors) level.withText(de.raumlicht.core.model.Notation::strict) else level }
     // Theorie zur Aufgabe: jederzeit nachlesbar, kostet keinen Stern (nur im Pflichtteil „ohne Hilfsmittel“ nicht)
     var theory by remember(level.id) { mutableStateOf(false) }
+    // KI-Tutor: nach einem Fehlversuch bietet Lux an, es anders zu erklären (nicht im Pflichtteil „ohne Hilfsmittel“)
+    val ki = LocalKi.current
+    var kiOpen by remember(level.id) { mutableStateOf(false) }
+    var lastTry by remember(level.id) { mutableStateOf<Pair<Values, String>?>(null) }
     var values by remember(level.id) { mutableStateOf(initial ?: level.start) }
     var phase by remember(level.id) { mutableStateOf(Phase.AIM) }
     var attempts by remember(level.id) { mutableIntStateOf(0) }
@@ -150,6 +154,7 @@ fun LevelScreen(
             } else {
                 sfx?.play(Sound.WRONG); view.buzz(Buzz.CRASH, vib)
                 out.flyTo?.let { to -> override = level.encode(level.objects(values, Phase.AIM).map { if (it.type == "drone") it.copy(p = to.list, mood = "sad") else it }) }
+                lastTry = values to out.message
                 if (MistakeBook.isNamed(out.message)) sink(level.id, out.message)      // typischer Fehler → ins Fehler-Tagebuch
                 says = (out.message + if (attempts == 2 && !usedTip && !strict) de.raumlicht.core.model.Vorlesen.TIP_OFFER else "") to LuxMood.SAD
             }
@@ -197,9 +202,15 @@ fun LevelScreen(
                     }
                 }
                 // Steht gerade ein Tipp oder eine Rückmeldung da, lässt sich die Aufgabenstellung wieder einblenden
-                if (phase == Phase.AIM && says.first != level.mission) Text("📋 Aufgabe zeigen", Modifier.align(Alignment.End).padding(end = 12.dp, top = 4.dp).testTag("aufgabe").clip(RoundedCornerShape(10.dp))
+                val kiChip = ki != null && !strict && lastTry != null
+                if (phase == Phase.AIM && (kiChip || says.first != level.mission)) Row(Modifier.align(Alignment.End).padding(end = 12.dp, top = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (kiChip) Text("🤖 Erklär’s mir anders", Modifier.testTag("ki").pulse(!busy && !kiOpen, 0.03f).clip(RoundedCornerShape(10.dp))
+                    .background(Q.Deep).border(1.dp, Q.Yellow.copy(alpha = 0.8f), RoundedCornerShape(10.dp)).clickable(remember { MutableInteractionSource() }, null) { if (!busy) kiOpen = true }
+                    .padding(horizontal = 10.dp, vertical = 5.dp), color = Q.Yellow, fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                if (says.first != level.mission) Text("📋 Aufgabe zeigen", Modifier.testTag("aufgabe").clip(RoundedCornerShape(10.dp))
                     .background(Q.Deep).border(1.dp, accent.copy(alpha = 0.7f), RoundedCornerShape(10.dp)).clickable(remember { MutableInteractionSource() }, null) { says = level.mission to LuxMood.IDLE }
-                    .padding(horizontal = 10.dp, vertical = 5.dp), color = Q.Text, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    .padding(horizontal = 10.dp, vertical = 5.dp), color = Q.Text, fontSize = 12.sp, fontWeight = FontWeight.Bold, maxLines = 1)
+                }
                 // Formel
                 if (context != null) Text(context, Modifier.fillMaxWidth().padding(horizontal = 12.dp).padding(top = 6.dp).testTag("zusammenhang").background(Q.Deep, RoundedCornerShape(10.dp)).padding(horizontal = 10.dp, vertical = 6.dp),
                     style = MaterialTheme.typography.bodySmall, color = Q.Text)
@@ -249,6 +260,7 @@ fun LevelScreen(
         }
         if (intro) IntroOverlay(chapter, onStep = { introStep = it }) { intro = false; onIntroSeen() }
         TheorySheet(if (theory) remember(level.id) { de.raumlicht.core.model.Theory.forLevel(level) } else null, accent) { theory = false }
+        KiSheet(kiOpen && phase == Phase.AIM, level, lastTry, accent) { kiOpen = false }
     }
 }
 

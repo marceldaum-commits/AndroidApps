@@ -68,6 +68,14 @@ private fun WebApp() {
         val code = de.raumlicht.core.model.Pro.fromLink(raw)
         if (code != null) prefs.setProCode(code)
         note("Freischalt-Link: " + if (code != null) "Code angenommen" else "Code nicht erkannt"); nav.restart(Routes.PRO) } }
+    // Link aus der E-Mail zum KI-Abi-Pass („?ki=…“): Code merken und die KI-Seite zeigen
+    LaunchedEffect(Unit) { takeParam("ki")?.let { raw ->
+        val code = de.raumlicht.core.model.Ki.fromText(raw)
+        if (code != null) prefs.setKiCode(code)
+        note("KI-Link: " + if (code != null) "Code angenommen" else "Code nicht erkannt"); nav.restart(Routes.KI) } }
+    // KI-Tutor: die Testseite fragt den Test-Server (und zeigt den Tutor schon, bevor er für alle freigegeben ist)
+    val kiTest = remember { hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST || kiServer() != null }
+    val kiUrl = remember { kiServer() ?: if (hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST) de.raumlicht.core.model.Ki.TEST_URL else de.raumlicht.core.model.Ki.URL }
     // Musik wie in der Android-App: ruhig im Menü, flotter bei Fahrt und Flug
     var mood by remember { mutableStateOf(MusicMood.MENU) }
     val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()
@@ -104,6 +112,8 @@ private fun WebApp() {
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
             AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
+                kiSend = { body -> kotlinx.coroutines.suspendCancellableCoroutine { c -> kiPost(kiUrl, body) { status, text -> if (c.isActive) c.resumeWith(Result.success(status to text)) } } },
+                kiEnabled = de.raumlicht.core.model.Ki.ENABLED || kiTest, version = Version.NAME,
                 onRoute = { atHome(it == Routes.HOME); exam = Routes.isExam(it); mood = if (Routes.isAction(it)) MusicMood.FLIGHT else MusicMood.MENU },
                 settings = { onBack ->
                     val music by prefs.music.collectAsState(); val sound by prefs.sound.collectAsState(); val volume by prefs.volume.collectAsState(); val voice by prefs.voice.collectAsState()

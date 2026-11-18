@@ -33,11 +33,14 @@ class AppRootTest {
     // Schlüssel und Code nur für Tests (Seed 0…31)
     private val PK = "03a107bff3ce10be1d70dd18e74bc09967e4d6309ba50d5f1ddc8664125531b8"
     private val PASS = "RL-04202-0000F-MGKKT-CDRGB-BYPG5-8XEVQ-M0F02-94P76-M1MXZ-28QYX-86PN1-NEY0T-JNXA5-8S0GJ-HA3X2-C0GQW-AW2K1-BQN3M-4PV5F-ZHQBG-ZKMPE-KJSDT-6VARJ-0W"
-    private fun start(pro: Boolean = false) {
+    // KI-Pässe aus dem Test-Schlüssel: gültig bis 31.07.2027 und abgelaufen am 31.07.2026 („heute“ ist im Test der 15.11.2026)
+    private val KI_PASS = "RL-04208-0000Z-8GNM5-HJFN6-SDW5Y-QPW2T-BSSPN-9DS5K-7Z3A1-PTFJ2-ACM3Q-GX1H4-ZM8EV-3GR33-K3N31-3VN22-58C7D-HP8Y1-1321W-HG25S-PNJ23-FSKM6-JYD9R-GJ"
+    private val KI_ALT = "RL-04208-0000Z-90JRS-KVK76-JC5YR-K5AB8-66P5J-B9FQ0-J8M2Q-N9CCS-9YCEM-0XX2C-KCRBZ-8QGFP-J83ZY-RYKBJ-8WK56-H6461-JQTF0-1PN3P-K7Q9A-337T4-N8R7X-GE"
+    private fun start(pro: Boolean = false, ki: (suspend (String) -> Pair<Int, String>)? = null, kiOn: Boolean = true) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
-            AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry() } },
-                onRoute = { routes += it }, proEnabled = pro, proKey = PK)
+            AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry() } },
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test")
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -111,6 +114,57 @@ class AppRootTest {
     }
 
     /** Ein gespeicherter Code, der nicht (mehr) zum Schlüssel passt, schaltet nichts frei */
+    /** KI-Tutor: erst nach einem Fehlversuch, erklärt anders, beantwortet Rückfragen, zählt Proben – und führt zum KI-Abi-Pass, wenn sie aufgebraucht sind. */
+    @Test fun kiTutor() {
+        val asked = ArrayList<String>()
+        val answers = ArrayDeque(listOf(200 to """{"text":"Stell dir den Vektor als Weg vor: erst nach vorn, dann zur Seite, dann nach oben.","rest":2}""",
+            200 to """{"text":"Genau – die erste Zahl ist der Schritt in x₁-Richtung.","rest":1}""", 402 to """{"fehler":"proben","rest":0}"""))
+        start(ki = { body -> asked += body; answers.removeFirst() })
+        nav.go(Routes.level("1-2")); settle()
+        rule.onNodeWithTag("ki").assertDoesNotExist()                                                                          // vor dem ersten Versuch kein KI-Knopf
+        rule.onNodeWithText("▶ Los").performClick(); rule.mainClock.advanceTimeBy(5000)
+        rule.onNodeWithTag("ki").assertTextContains("Erklär’s mir anders", substring = true).performClick(); settle()
+        rule.onNodeWithTag("ki-antwort").assertTextContains("Vektor als Weg", substring = true); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 2 Proben frei", substring = true)
+        assertTrue(asked[0], asked[0].contains("\"art\":\"erklaerung\"") && asked[0].contains("\"id\":\"1-2\"") && asked[0].contains("\"geraet\":\"${prefs.kiDevice()}\"") && asked[0].contains("\"code\":\"\""))
+        // Rückfrage
+        rule.onNodeWithTag("ki-frage").performTextInput("Was heißt die erste Zahl?"); rule.onNodeWithTag("ki-senden").performClick(); settle()
+        rule.onAllNodesWithTag("ki-antwort").assertCountEquals(2); rule.onNodeWithText("Was heißt die erste Zahl?").assertExists(); rule.onNodeWithTag("ki-rest").assertTextContains("Noch 1 Probe frei", substring = true)
+        assertTrue(asked[1], asked[1].contains("\"art\":\"rueckfrage\"") && asked[1].contains("Was heißt die erste Zahl?") && asked[1].contains("\"rolle\":\"lux\""))
+        rule.onRoot().captureRoboImage("../screenshots/82_ki_tutor.png")
+        // Proben aufgebraucht: freundlicher Hinweis, der bisherige Wortwechsel bleibt, „KI dazubuchen“ führt zur KI-Seite
+        rule.onNodeWithTag("ki-anders").performClick(); settle()
+        rule.onNodeWithTag("ki-problem").assertTextContains("Proben sind aufgebraucht", substring = true); rule.onAllNodesWithTag("ki-antwort").assertCountEquals(2)
+        rule.onNodeWithTag("ki-dazubuchen").performScrollTo().performClick(); settle(); assertEquals(Routes.KI, nav.top)
+        rule.onNodeWithTag("ki-status").assertTextContains("bald im Shop", substring = true); rule.onNodeWithTag("ki-kaufen").assertDoesNotExist(); rule.onNodeWithTag("ki-datenschutz").assertExists()
+        // abgelaufener Pass, falscher Code, gültiger Pass (mitten aus der E-Mail)
+        rule.onNodeWithTag("ki-code").performScrollTo().performTextInput(KI_ALT); rule.onNodeWithTag("ki-freischalten").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("ki-aktiv").assertTextContains("abgelaufen am 31.07.2026", substring = true)
+        rule.onNodeWithTag("ki-code").performScrollTo().performTextClearance(); rule.onNodeWithTag("ki-code").performTextInput("RL-12345"); rule.onNodeWithTag("ki-freischalten").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("ki-grund").assertTextContains("erkenne ich nicht", substring = true); assertEquals(KI_ALT, prefs.kiCode.value)
+        rule.onNodeWithTag("ki-code").performScrollTo().performTextClearance(); rule.onNodeWithTag("ki-code").performTextInput("Hallo!\n$KI_PASS\nViel Erfolg!"); rule.onNodeWithTag("ki-freischalten").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("ki-aktiv").assertTextContains("aktiv bis 31.07.2027", substring = true); assertEquals(KI_PASS, prefs.kiCode.value); rule.onNodeWithTag("ki-code").assertDoesNotExist()
+        rule.onRoot().captureRoboImage("../screenshots/83_ki_abi_pass.png")
+        // zurück in der Aufgabe geht der Code mit jeder Frage mit
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle(); assertEquals(Routes.level("1-2"), nav.top)
+        answers += 200 to """{"text":"Mit Pass: noch ein anderer Blick.","rest":9}"""
+        rule.onNodeWithText("▶ Los").performClick(); rule.mainClock.advanceTimeBy(5000); rule.onNodeWithTag("ki").performClick(); settle()
+        rule.onNodeWithTag("ki-antwort").assertTextContains("Mit Pass", substring = true); rule.onNodeWithTag("ki-rest").assertTextContains("Heute noch 9 KI-Punkte", substring = true)
+        assertTrue(asked.last(), asked.last().contains("\"code\":\"$KI_PASS\""))
+        rule.onNodeWithTag("ki-zu").performClick(); settle(); rule.onNodeWithTag("ki-karte").assertDoesNotExist()
+        nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("ki-eintrag").assertTextContains("KI-Abi-Pass aktiv", substring = true).assertTextContains("31.07.2027", substring = true)
+        rule.runOnUiThread { prefs.setKiCode("") }
+    }
+
+    /** Solange der KI-Tutor nicht für alle freigegeben ist, sieht ihn nur, wer schon einen KI-Code hat; ohne Server-Anbindung (Play-Fassung) gibt es ihn gar nicht. */
+    @Test fun kiTutorNurWoFreigegeben() {
+        start(ki = { 200 to """{"text":"Hallo","rest":9}""" }, kiOn = false)
+        nav.go(Routes.level("1-2")); settle(); rule.onNodeWithText("▶ Los").performClick(); rule.mainClock.advanceTimeBy(5000)
+        rule.onNodeWithTag("ki").assertDoesNotExist()
+        rule.runOnUiThread { prefs.setKiCode(KI_PASS) }; settle(); rule.onNodeWithTag("ki").assertExists()
+        rule.onNodeWithTag("ki").performClick(); settle(); rule.onNodeWithTag("ki-antwort").assertTextContains("Hallo"); rule.onNodeWithTag("ki-rest").assertTextContains("Heute noch 9 KI-Punkte", substring = true)
+        rule.runOnUiThread { prefs.setKiCode("") }
+    }
+
     @Test fun fremderCodeSchaltetNichtsFrei() {
         Settings(ApplicationProvider.getApplicationContext()).setProCode(PASS.replace("MGKKT", "MGKKV"))
         start(pro = true)

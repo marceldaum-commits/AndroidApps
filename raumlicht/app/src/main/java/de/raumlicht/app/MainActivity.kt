@@ -100,6 +100,8 @@ class MainActivity : ComponentActivity() {
             updateVersion = update?.version,
             // Raumlicht Pro über die Website gibt es nur in der GitHub-Fassung; im Play Store wäre Google Play Billing Pflicht – dort bleibt vorerst alles frei
             proEnabled = de.raumlicht.core.model.Pro.ENABLED && BuildConfig.SELF_UPDATE,
+            // KI-Tutor: wie Raumlicht Pro nur in der GitHub-Fassung (der KI-Abi-Pass wird über die Website gekauft)
+            kiSend = if (BuildConfig.SELF_UPDATE) ({ body -> de.raumlicht.app.ui.fx.KiHttp.post(body) }) else null, version = BuildConfig.VERSION_NAME,
             // Musik passt sich an: ruhig im Menü, bewegter beim Rechnen – und aus in Prüfungen auf Zeit und im Pflichtteil
             onRoute = { route -> (application as RaumlichtApp).music.let { it.setSilent(Routes.isExam(route)); it.setMood(if (Routes.isAction(route)) MusicMood.FLIGHT else MusicMood.MENU) } },
             onPlanChanged = { de.raumlicht.app.widget.DailyWidget.refresh(this@MainActivity) },
