@@ -52,9 +52,8 @@ const PANELS = {
       ${mi('merk', '🧠', 'Merk-Training', `${merkSolidAll()} Aufgaben sitzen fest`)}
       ${mi('badges', '🏅', 'Abzeichen', `${Object.keys(S.badges).length} von ${BADGES.length} gesammelt`)}
       ${mi('facts', '✖️', 'Einmaleins-Übersicht', 'Welche Reihen sitzen – und welche noch nicht')}
-      ${mi('week', '📊', 'Wochenbericht', 'Für Eltern: was geübt wurde, wo es hakt')}
-      ${mi('elternbericht', '📈', 'Elternbericht' + proBadge(), 'Verlauf über 10 Wochen, Stärken und Schwächen je Thema')}
       <div class="mlabel">Mehr</div>
+      ${mi('eltern', '👪', 'Elternbereich', 'Berichte, Lern-Geschenk, Einstellungen für Eltern')}
       ${mi('profiles', profile().emoji, 'Wer übt?', 'Profile für Geschwister & Freunde')}
       ${mi('teacher', '👩‍🏫', 'Für Lehrkräfte', 'Aufträge verschicken, Arbeitsblätter drucken')}
       ${proLocks() || RBPRO.ok ? mi('pro', '⭐', RBPRO.ok ? 'Rechenblitz Pro <span class="pro-on static">Pro aktiv</span>' : 'Rechenblitz Pro', RBPRO.ok ? 'Gilt in der Web-App auf diesem Gerät – für alle Profile' : 'Profi-Stufe, mehr Profile, Elternbericht', RBPRO.ok ? 'pro-active' : '') : ''}
@@ -170,6 +169,18 @@ const PANELS = {
   },
 
   /* ---------- Wochenbericht ---------- */
+  // Elternbereich (Leitstand 18.11.): Berichte, Lern-Geschenk, anonyme Nutzungszählung
+  eltern() {
+    const on = zaehlungAn();
+    return { title: '👪 Elternbereich', html: `<div class="menu">
+      ${mi('week', '📊', 'Wochenbericht', 'Was geübt wurde, wo es hakt')}
+      ${mi('elternbericht', '📈', 'Elternbericht' + proBadge(), 'Verlauf über 10 Wochen, Stärken und Schwächen je Thema')}
+      ${CONFIG.geschenkUrl ? miLink(CONFIG.geschenkUrl, '🎁', 'Lern-Geschenk verschenken', 'Nachhilfe-Stunden oder Lernpaket als Gutschein') : ''}
+      ${CONFIG.zaehler ? `<button class="setrow" id="zaehlSw" role="switch" aria-checked="${on}"><div><b>Anonyme Nutzungszählung</b><span>Beim Start meldet die App nur „Rechenblitz wurde geöffnet“ und die Version – ohne Namen, Kennungen oder Cookies. Hilft uns zu sehen, ob Rechenblitz genutzt wird.</span></div><span class="switch ${on ? 'on' : ''}"></span></button>` : ''}
+    </div>`, init() {
+      const b = $('zaehlSw'); if (b) b.onclick = () => { ROOT.zaehlung = !zaehlungAn(); save(); Sound.click(); b.setAttribute('aria-checked', ROOT.zaehlung); b.querySelector('.switch').classList.toggle('on', ROOT.zaehlung); };
+    } };
+  },
   week() {
     const w = weekData(0), prev = weekData(1);
     const trend = prev.n ? Math.round((w.n - prev.n) / prev.n * 100) : null;
@@ -706,3 +717,15 @@ function resetPart(what, after) {
   toast({ reise: '🗺️ Rechen-Reise neu gestartet', merk: '🧠 Merk-Training zurückgesetzt', badges: '🏅 Abzeichen zurückgesetzt', box: '📦 Fehlerkiste geleert' }[what]);
   if (after) after(); else closeSheet();
 }
+
+/* ---------- Anonyme Nutzungszählung (Leitstand 18.11.): einmal je Start {app, v, e:{start:1}} als text/plain ----------
+   Keine Namen, keine Kennungen, keine Cookies; im Elternbereich abschaltbar (Standard: an). Nicht auf localhost/Datei. */
+const zaehlungAn = () => ROOT.zaehlung !== false;
+function zaehlStart() {
+  try {
+    if (!CONFIG.zaehler || !zaehlungAn() || !/^https?:$/.test(location.protocol) && !IS_NATIVE) return;
+    if (!IS_NATIVE && /^(localhost|127\.|\[::1\])/.test(location.hostname)) return;
+    fetch(CONFIG.zaehler, { method: 'POST', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify({ app: 'rechenblitz', v: APP_VERSION, e: { start: 1 } }), credentials: 'omit', keepalive: true, cache: 'no-store' }).catch(() => {});
+  } catch {}
+}
+setTimeout(zaehlStart, 3000);

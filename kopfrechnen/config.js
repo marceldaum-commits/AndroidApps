@@ -25,6 +25,11 @@ window.RECHENBLITZ_CONFIG = {
   vorlesen: false,
   // Vorlesen nur mit der KI-Stimme „Nova“: Audiodateien von unserem Stimmen-Server; neue Texte über /jetzt (die App schickt nichts an OpenAI)
   nova: { base: 'https://stimmen.mathenachhilfe-online.com/nova/', jetzt: 'https://stimmen.mathenachhilfe-online.com/jetzt' },
+  // Anonyme Nutzungszählung (Leitstand 18.11.): beim Start nur {app, Version, start:1} – ohne Namen, Kennungen, Cookies.
+  // Abschaltbar im Elternbereich; '' = Zählung aus.
+  zaehler: 'https://trainer.mathenachhilfe-online.com/zaehler/v1/e',
+  // „🎁 Lern-Geschenk verschenken“ im Elternbereich ('' = ausgeblendet)
+  geschenkUrl: 'https://www.mathenachhilfe-online.com/geschenke/?src=rechenblitz-geschenk',
   // Adventskalender: Karte ab 15.11., Türchen 1.–24.12., nachholbar bis 6.1.
   // adventPreview: 'auto' = auf Testseiten alle Türchen offen; adventRaffleUrl = Seite zur Verlosung (leer = keine)
   advent: true,
