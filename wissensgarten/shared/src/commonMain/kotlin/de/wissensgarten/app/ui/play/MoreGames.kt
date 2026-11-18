@@ -171,7 +171,7 @@ fun TiltGame(card: StudyCard, options: List<String>, onResult: (GameResult) -> U
             color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center, modifier = Modifier.padding(top = 4.dp))
         Box(
             Modifier.fillMaxWidth().height(320.dp).padding(top = 8.dp).clip(RoundedCornerShape(24.dp))
-                .background(Brush.verticalGradient(listOf(Color(0xFF90CAF9), Color(0xFFE3F2FD), Color(0xFFC5E1A5))))
+                .background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFF90CAF9), Color(0xFFE3F2FD), Color(0xFFC5E1A5))))
                 .onSizeChanged { area = it }
                 .pointerInput(card.id) { detectHorizontalDragGestures { ch, dx -> ch.consume(); canX = (canX + dx / size.width).coerceIn(0.05f, 0.95f) } },
         ) {
@@ -236,7 +236,7 @@ fun SpeakGame(card: StudyCard, options: List<String>?, locale: Locale, onResult:
         Spacer(Modifier.height(20.dp))
         Box(
             Modifier.size(110.dp).graphicsLayer { scaleX = pulse.value; scaleY = pulse.value }.clip(CircleShape)
-                .background(Brush.radialGradient(listOf(Color(0xFFFF8A65), Color(0xFFE53935)))),
+                .background(de.wissensgarten.app.ui.fx.SafeBrush.radialGradient(listOf(Color(0xFFFF8A65), Color(0xFFE53935)))),
             contentAlignment = Alignment.Center,
         ) {
             IconButton(onClick = {

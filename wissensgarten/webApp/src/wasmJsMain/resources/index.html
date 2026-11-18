@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" data-version="@VERSION@">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -42,6 +42,54 @@
       background: #2e3b2c; color: #fff; padding: 10px 16px; border-radius: 20px; font: 15px system-ui, sans-serif; max-width: 88vw; z-index: 20; }
     #wg-toast.show { opacity: 1; transform: translate(-50%, 0); }
   </style>
+  <script>
+    // Nie eine weiße Seite: Jeder Startfehler zeigt eine sichtbare Meldung mit Version und „Neu laden“.
+    (function () {
+      var shown = false, t0 = Date.now(), notes = [];
+      window.wgStartNote = function (t) { notes.push(String(t).slice(0, 300)); if (notes.length > 12) notes.shift(); };
+      window.wgStartFailed = function (why) {
+        window.wgStartNote(why || 'unbekannt');
+        if (shown) { var d = document.getElementById('wg-fail-detail'); if (d) d.textContent = notes.join(' | '); return; }
+        shown = true;
+        var show = function () {
+          var v = document.documentElement.getAttribute('data-version') || '';
+          var box = document.createElement('div');
+          box.id = 'wg-fail';
+          box.style.cssText = 'position:fixed;inset:0;z-index:99;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;text-align:center;background:#fbf6ea;color:#2e3b2c;font:16px system-ui,sans-serif';
+          box.innerHTML = '<img src="icons/icon-192.png" width="88" height="88" style="border-radius:20px" alt="">' +
+            '<h2 style="margin:0">Der Garten konnte nicht starten 🐝</h2>' +
+            '<p style="margin:0;max-width:340px">Bitte einmal neu laden. Klappt es dann noch nicht: Auf iPhone und iPad braucht der Wissensgarten mindestens <b>iOS 18.2</b>, sonst einen aktuellen Chrome, Edge oder Firefox.</p>' +
+            '<button onclick="location.reload()" style="font:600 16px system-ui;color:#fff;background:#3f6b3a;border:0;border-radius:22px;padding:12px 22px">Neu laden</button>' +
+            '<p style="margin:0;font-size:12px;color:#7a7360">Version ' + v + '</p>' +
+            '<p id="wg-fail-detail" style="margin:0;font-size:11px;color:#9a917b;max-width:360px;word-break:break-word">' + notes.join(' | ').replace(/</g, '&lt;') + '</p>';
+          document.body.appendChild(box);
+        };
+        if (document.body) show(); else document.addEventListener('DOMContentLoaded', show);
+      };
+      // Fehler in den ersten 30 Sekunden (Start, erstes Bild) führen zur Meldung statt zu einer leeren Seite
+      window.addEventListener('error', function (e) { if (Date.now() - t0 < 30000) window.wgStartFailed((e.message || 'Fehler') + ' @' + String(e.filename || '').split('/').pop() + ':' + (e.lineno || '')); });
+      window.addEventListener('unhandledrejection', function (e) { if (Date.now() - t0 < 30000) window.wgStartFailed(e.reason && (e.reason.message || e.reason)); });
+      // WebAssembly mit „GC“ fehlt älteren Browsern (Safari vor 18.2) – 'WebAssembly' in window erkennt das nicht
+      try {
+        if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0])))
+          window.wgStartFailed('WebAssembly-GC fehlt (Browser zu alt)');
+      } catch (e) { window.wgStartFailed('WebAssembly-Prüfung: ' + e); }
+      // iPhone/iPad: Zeichenfläche auf höchstens ~3,5 Mio. Bildpunkte begrenzen – sonst bleibt das Bild auf großen Geräten weiß
+      try {
+        var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+        var real = window.devicePixelRatio || 1;
+        var px = Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight);
+        // höchstens doppelte Schärfe (statt 3×) und höchstens ~3,5 Mio. Bildpunkte: spart auf dem iPhone viel Grafikspeicher
+        var use = Math.max(1, Math.min(real, 2, Math.sqrt(3.5e6 / px)));
+        if (ios && use < real) {
+          Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true });
+          window.wgStartNote('iOS-Schärfe ' + real + ' → ' + use.toFixed(2));
+        }
+      } catch (e) {}
+      // Grafik-Kontext verloren (Speicher): Meldung statt leerer Fläche
+      window.addEventListener('webglcontextlost', function () { window.wgStartFailed('Grafik-Kontext verloren'); }, true);
+    })();
+  </script>
   <script src="wg-platform.js"></script>
   <script src="wg-stimme.js"></script>
 </head>
@@ -101,7 +149,6 @@
       setTimeout(() => say('Das Netz ist gerade langsam … Brummi fliegt weiter. 🐝'), 30000);
       setTimeout(() => say('Das dauert ungewöhnlich lange.<br><br><button onclick="location.reload()">Nochmal versuchen</button>'), 90000);
     })();
-    if (!('WebAssembly' in window)) document.querySelector('#splash p').textContent = 'Dieser Browser ist leider zu alt. Bitte Chrome, Edge, Firefox oder Safari aktualisieren.';
     // Automatische Updates ohne Knopf (Vorgabe: die WebApp ist immer aktuell):
     // - Prüfen beim Öffnen, bei jeder Rückkehr in den Tab (sichtbar/Fokus) und spätestens alle 30 Minuten:
     //   Service-Worker-Update und Abgleich von version.json (ohne Cache).

@@ -322,6 +322,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     val asked by vm.settings.reminderAsked.collectAsStateWithLifecycle()
                     val hour by vm.settings.reminderHour.collectAsStateWithLifecycle()
                     val askPermission = host.rememberNotificationPermission { ok -> vm.setReminder(ok, hour) }
+                    val installOffer by host.installOffer.collectAsStateWithLifecycle()
                     WithProfile(profile) { p ->
                         GardenScreen(
                             profile = p, beds = beds, now = now, seedsLeft = vm.seedsLeft(p),
@@ -401,6 +402,10 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             // Nur wo es Erinnerungen gibt (Android) – die WebApp kann keine senden, „Ja“ täte dort nichts
                             reminderPrompt = if (asked || !host.features.reminders) null else {
                                 { ReminderPromptCard(hour, onYes = askPermission, onNo = { vm.setReminder(false) }) }
+                            },
+                            // WebApp: „App installieren“ (nur wenn der Browser es kann und die App noch nicht installiert ist)
+                            installCard = if (installOffer.mode == InstallMode.NONE || installOffer.later) null else {
+                                { de.wissensgarten.app.ui.settings.InstallAppCard(host, inGarden = true) }
                             },
                         )
                     }

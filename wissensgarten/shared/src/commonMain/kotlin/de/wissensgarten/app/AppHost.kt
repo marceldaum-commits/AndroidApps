@@ -38,6 +38,19 @@ data class Features(
 )
 
 /**
+ * „App installieren“ (WebApp als PWA auf den Startbildschirm):
+ * [NONE] = kein Knopf (schon installiert, Android-App oder Browser ohne Möglichkeit),
+ * [PROMPT] = der Browser bietet die Installation an (Chrome/Edge/Android: `beforeinstallprompt`),
+ * [IOS_GUIDE] = iPhone/iPad: Anleitung „Teilen-Symbol → Zum Home-Bildschirm“ zeigen.
+ */
+enum class InstallMode { NONE, PROMPT, IOS_GUIDE }
+
+/** Stand des Installieren-Knopfs; [later] = im Garten „Später“ gewählt (in den Einstellungen bleibt der Knopf). */
+data class InstallOffer(val mode: InstallMode = InstallMode.NONE, val later: Boolean = false)
+
+private val noInstall: kotlinx.coroutines.flow.StateFlow<InstallOffer> = kotlinx.coroutines.flow.MutableStateFlow(InstallOffer())
+
+/**
  * Plattform-Brücke: Android-App und WebApp liefern je eine Umsetzung, die Oberfläche ist dieselbe.
  */
 interface AppHost {
@@ -56,8 +69,15 @@ interface AppHost {
     fun shareText(text: String)
     fun shareImage(image: ImageBitmap, fileName: String, text: String)
     fun printCraftSheet(bedName: String, emoji: String, items: List<CraftItem>)
-    suspend fun sharePostcard(data: KeepsakeData) { toast("Die Postkarte gibt es in der Android-App.") }
-    suspend fun shareCertificate(data: KeepsakeData) { toast("Die Urkunde gibt es in der Android-App.") }
+    // Ohne Postkarte/Urkunde (features.keepsakes = false, z. B. WebApp) blendet die Oberfläche die Knöpfe aus
+    suspend fun sharePostcard(data: KeepsakeData) { toast("Die Postkarte gibt es hier leider nicht.") }
+    suspend fun shareCertificate(data: KeepsakeData) { toast("Die Urkunde gibt es hier leider nicht.") }
+    /** „App installieren“ (nur WebApp/PWA). Standard: nicht verfügbar – in der Android-App erscheint kein Knopf. */
+    val installOffer: kotlinx.coroutines.flow.StateFlow<InstallOffer> get() = noInstall
+    /** Installations-Dialog des Browsers öffnen (nur bei [InstallMode.PROMPT]). */
+    fun requestInstall() {}
+    /** Im Garten „Später“: Karte dort eine Weile ausblenden. */
+    fun postponeInstall() {}
     /** „Alle Daten löschen“ – liefert eine Fehlermeldung (z. B. Drive offline) oder null */
     suspend fun wipeAll(): String?
     fun restart()

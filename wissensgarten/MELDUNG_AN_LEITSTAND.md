@@ -1,5 +1,44 @@
 # Meldungen an den Leitstand – Wissensgarten
 
+## iOS-Nachtrag – Version 2.2.9 vom 18.11.2026
+
+- **(a) Speicher:**
+  - iPhone/iPad zeichnen jetzt mit höchstens DPR 2, zusätzlich ist die Zeichenfläche auf 3,5 Mio. Pixel begrenzt. Ein iPhone 15 Pro Max braucht damit statt ca. 3,6 Mio. nur ca. 1,6 Mio. Pixel, also etwa 56 % weniger Canvas-Speicher.
+  - Ladegrößen: App-WASM 8,0 MB, Skiko-WASM 8,4 MB, Emoji-Schrift 2,1 MB (bereits auf die benutzten Zeichen gekürzt, wird für die Merkbilder sofort gebraucht), Symbolschrift 0,1 MB.
+  - Echten iOS-Speicher kann ich hier nicht messen (kein Gerät, kein WebKit).
+- **(b) WebGL-Kontextverlust:** wird seit 2.2.8 per `webglcontextlost` abgefangen und als Meldung mit „Neu laden“ angezeigt.
+- **(c) Alte Version:** Der Service Worker spielt neue Versionen sofort ein (`skipWaiting`/`claim`, Prüfung bei Öffnen, Fokus und alle 30 min), alte Caches werden gelöscht. Die Startbildschirm-App bekommt die neue Version spätestens beim nächsten Öffnen. Die Fehlermeldung zeigt die laufende Version.
+- **Farbverläufe:** Der Rückfall von 2.2.8 bleibt (wahrscheinlichste Ursache laut Raumlicht-Befund).
+- **Bitte auf dem iPhone testen.** Falls eine Meldung erscheint, steht der Fehlertext darin.
+
+## DRINGEND iOS weiße Seite + nur WebApp – Version 2.2.8 vom 18.11.2026
+
+### iOS: weiße Seite
+**Wahrscheinliche Ursache:** dieselbe wie bei Raumlicht auf dem iPad. Safari liefert beim Anlegen eines Farbverlaufs manchmal nichts zurück („Can't wrap nullptr“). Die Ausnahme bricht dann jedes Bild ab, die App läuft, aber die Fläche bleibt weiß. Der Wissensgarten nutzt 28 Farbverläufe (Himmel, Spiele, Plus-Abzeichen …).
+
+Behoben bzw. abgesichert:
+- **Farbverläufe:** Alle laufen jetzt über `SafeBrush` (`shared/.../ui/fx/SafeBrush.kt`). Sie rechnen mit endlichen Punkten und fallen stufenweise zurück: ohne Zwischenstufen → zwei Farben → einfarbig (Skia `Shader.makeColor`). Was auf dem Gerät greift, steht einmal in der Konsole.
+- **Startprüfung:** WasmGC wird jetzt per `WebAssembly.validate` mit GC-Testmodul geprüft, wie bei Raumlicht. Das alte `'WebAssembly' in window` erkannte fehlendes GC nicht.
+- **Nie mehr weiße Seite:** Jeder Fehler in den ersten 30 s (`error`, `unhandledrejection`, `webglcontextlost`) und fehlendes GC zeigen eine Meldung mit Logo, Version, Hinweis „mindestens iOS 18.2“, Knopf „Neu laden“ und den Fehlertexten.
+- **iPhone/iPad-Zeichenfläche:** höchstens ca. 3,5 Mio. Bildpunkte (`devicePixelRatio` begrenzt), wie bei Raumlicht für das iPad.
+
+**Geprüft in Chromium:** Normalstart ohne Meldung. GC fehlt (simuliert) → Meldung. WASM-Download blockiert → Meldung. Echtes WebKit fehlt hier (`playwright-webkit` nicht installiert), daher noch nicht auf iOS bestätigt. **Bitte Marcel auf dem iPhone testen lassen.** Falls weiter weiß: Die Meldung bzw. die Konsole nennt jetzt die Ursache.
+
+**Mindest-iOS:** vorher unklar (weiße Seite), jetzt iOS 18.2 (WasmGC), mit klarer Meldung darunter. Den Kotlin/JS-Ersatz (Compatibility-Modus) habe ich noch NICHT gebaut, weil die Ursache wahrscheinlich nicht die Wasm-Unterstützung ist. Falls doch, baue ich ihn als Nächstes.
+
+### Nur WebApp
+- `wissensgarten-release.yml` läuft nur noch über `workflow_dispatch`: kein APK/AAB, keine Releases mehr. Der Android-Code bleibt im Repo.
+- **APKs liegen** in GitHub-Releases `marceldaum-commits/AndroidApps`, Tags `wissensgarten-v0.1.0` … `wissensgarten-v2.2.7`, je `Wissensgarten-x.y.z.apk` (ab 0.18 auch `…-PlayStore.aab`). **Nicht gelöscht:** Mein GitHub-Zugang kann Release-Dateien nicht löschen, und das Löschen braucht Marcels direkte Bestätigung.
+- **Hinweise entfernt:** Datenschutz (WebApp-Fassung), Plus-/Kauf-Texte („gilt in der Web-App“, Shop statt Google Play), Radio-Hinweis, Postkarte/Urkunde, README, Store-Texte (ruhend markiert).
+- **Knopf „App installieren“:**
+  - Garten-Karte (✕ blendet 14 Tage aus) und Einstellungen.
+  - Chrome/Edge/Android über `beforeinstallprompt`, iPhone/iPad mit Anleitung „Teilen → Zum Home-Bildschirm“.
+  - Ist die App installiert (`standalone`), verschwindet der Knopf.
+- **Manifest** vollständig (standalone, `start_url`/`scope` `./`, 192/512/maskable), offline startfähig.
+- **Test** `webApp/tools/web-install.cjs`: 21/21 bestanden. Bildschirmfotos 77–79.
+
+**Tests:** alle grün, Lint 0 Fehler.
+
 ## FERTIG FÜR DEN BETRIEBSTEST – Version 2.2.7 vom 18.11.2026 (Web = Android): Vorlese-Knopf und Auto-Update
 
 **Vorlesen (Marcels Antwort):**

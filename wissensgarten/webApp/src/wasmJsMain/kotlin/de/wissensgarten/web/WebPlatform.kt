@@ -41,6 +41,9 @@ private fun jsTiltX(): Double = js("window.wg.tiltX")
 private fun jsKeepAwake(on: Boolean): Unit = js("window.wg.keepAwake(on)")
 private fun jsReload(): Unit = js("location.reload()")
 private fun jsSafe(safe: Boolean): Unit = js("window.wgUpdate && window.wgUpdate.safe(safe)")
+private fun jsInstallWatch(cb: (String) -> Unit): Unit = js("window.wg.install.onChange((s) => cb(s))")
+private fun jsInstallPrompt(): Unit = js("window.wg.install.prompt()")
+private fun jsInstallPostpone(): Unit = js("window.wg.install.postpone()")
 
 /** Geräusche: im Code erzeugt (Synth), im Browser über WebAudio abgespielt – dieselben Klänge wie in der App. */
 class WebSfx : Sfx {
@@ -202,6 +205,20 @@ class WebHost : AppHost {
     }.also { v -> v.onSpeaking = { music.duck(it) } }
     override val listener = WebListener()
     override val images = WebImages
+
+    // „App installieren“ (PWA): Stand kommt aus wg-platform.js („prompt“, „ios“ oder „none“, dazu „:spaeter“)
+    private val install = kotlinx.coroutines.flow.MutableStateFlow(InstallOffer())
+    override val installOffer: kotlinx.coroutines.flow.StateFlow<InstallOffer> = install
+    init {
+        runCatching {
+            jsInstallWatch { s ->
+                val mode = when (s.substringBefore(':')) { "prompt" -> InstallMode.PROMPT; "ios" -> InstallMode.IOS_GUIDE; else -> InstallMode.NONE }
+                install.value = InstallOffer(mode, later = s.endsWith(":spaeter"))
+            }
+        }
+    }
+    override fun requestInstall() = jsInstallPrompt()
+    override fun postponeInstall() = jsInstallPostpone()
 
     override fun toast(message: String) = jsToast(message)
     override fun setSafeToUpdate(safe: Boolean) = jsSafe(safe)

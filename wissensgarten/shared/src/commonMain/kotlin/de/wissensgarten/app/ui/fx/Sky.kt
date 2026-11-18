@@ -65,7 +65,7 @@ fun SkyScene(
         Canvas(Modifier.matchParentSize()) {
             val t = wind?.value ?: 0f
             val (top, bottom) = skyColors(time)
-            drawRect(Brush.verticalGradient(listOf(top, bottom)))
+            drawRect(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(top, bottom)))
             if (time == DayTime.NIGHT) stars(t)
             sunOrMoon(time, hour)
             if ("regenbogen" in decos && time != DayTime.NIGHT) drawDeco("regenbogen", 0f, 0f, 0f, t, false)

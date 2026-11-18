@@ -171,7 +171,7 @@ private fun Countdown(n: Int, pack: Pack, toBeat: DuelResult?) {
     val scale = remember(n) { Animatable(2f) }
     LaunchedEffect(n) { scale.animateTo(1f, spring(dampingRatio = 0.4f)) }
     Column(
-        Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(Color(0xFFFFB74D), DuelOrange))).padding(24.dp),
+        Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFFFFB74D), DuelOrange))).padding(24.dp),
         verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text("${pack.emoji} ${pack.title}", color = Color.White, style = MaterialTheme.typography.titleLarge, textAlign = TextAlign.Center)

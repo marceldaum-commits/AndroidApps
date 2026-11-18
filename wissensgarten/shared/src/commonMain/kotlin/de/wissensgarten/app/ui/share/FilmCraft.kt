@@ -68,7 +68,7 @@ object FilmPainter {
     }
 
     private fun DrawScope.drawFrame(f: GardenFilm.Frame, measurer: TextMeasurer, o: Offset, w: Float, h: Float, name: String) {
-        drawRect(Brush.verticalGradient(listOf(Color(0xFF81D4FA), Color(0xFFE1F5FE)), startY = o.y, endY = o.y + h * 0.7f), o, Size(w, h))
+        drawRect(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFF81D4FA), Color(0xFFE1F5FE)), startY = o.y, endY = o.y + h * 0.7f), o, Size(w, h))
         drawCircle(Color(0xFFFFEB3B), h * 0.08f, Offset(o.x + w * 0.85f, o.y + h * 0.15f))
         val ground = o.y + h * 0.62f
         drawRect(Color(0xFF8BC34A), Offset(o.x, ground), Size(w, o.y + h - ground))

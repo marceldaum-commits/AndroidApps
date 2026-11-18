@@ -606,7 +606,7 @@ private fun GoodNightDone(count: Int, correct: Int, onClose: () -> Unit) {
     val sfx = LocalSfx.current
     LaunchedEffect(Unit) { sfx?.play(Sound.DEW, volume = 0.4f) }
     Box(
-        Modifier.fillMaxSize().background(androidx.compose.ui.graphics.Brush.verticalGradient(listOf(Color(0xFF0D1B3D), Color(0xFF34477A)))),
+        Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFF0D1B3D), Color(0xFF34477A)))),
         contentAlignment = Alignment.Center,
     ) {
         Canvas(Modifier.matchParentSize()) {

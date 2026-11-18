@@ -55,6 +55,8 @@ fun GardenScreen(
     festivalGreeting: String? = null,
     onSurprise: (Int) -> Unit = {},
     extraCards: @Composable () -> Unit = {},
+    /** WebApp: „App installieren“ – kleine Karte direkt unter dem Kopf (null = nicht anbieten) */
+    installCard: (@Composable () -> Unit)? = null,
 ) {
     val cards = remember(beds) { beds.flatMap { it.cards } }
     val thirsty = cards.count { Scheduler.isThirsty(it.memory, now) }
@@ -146,6 +148,7 @@ fun GardenScreen(
                 }
             }
         }
+        if (installCard != null) item { Box(Modifier.padding(horizontal = 16.dp)) { installCard() } }
         // Das Wichtigste zuerst: Gießen direkt unter dem Garten
         item { Box(Modifier.padding(horizontal = 16.dp)) { WaterHero(thirsty, seedsAvailable, nextAt?.let { (it - now).toDouble() / Scheduler.DAY_MS }, onWater) } }
         if (onGoodNight != null && cards.any { !it.memory.isSeed } && de.wissensgarten.app.ui.common.Clock.hourOf(now) >= 18f) item {
