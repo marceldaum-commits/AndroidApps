@@ -121,3 +121,6 @@ DIREKT-LINK ab Fr 20.11. (Test): https://kurvenflug.mathenachhilfe-online.com/#k
 - Frei: alle 140 Level in Grundform. Preis 7,99 € einmalig; ab Januar im Familienpass. Bisherige Käufer behalten Pro.
 - Satz Pro-Seite/Elternbereich: „Pro: Klassenarbeits-Trainer für jedes Kapitel, Profi-Stufen und Kampagne.“
 - Geld verdienen empfiehlt Variante B + Umbau Di 24.11.
+
+### Pro – laut Geld verdienen von Marcel entschieden (18.11.)
+Kern: Klassenarbeits-Trainer je Kapitel. Bonus: Extrem-Stufen/Prüfungen, Sturm ab Profi, Andromeda, mehr Spieler. 140 Level Grundform frei, 7,99 € einmalig, Altkäufer behalten Pro. Satz: „Pro: Klassenarbeits-Trainer für jedes Kapitel, Profi-Stufen und Kampagne.“ Kein Kaufhinweis im Kinderbereich, Preise nur im Elternbereich. Termin für den Bau offen (nach Umbau Variante B).
