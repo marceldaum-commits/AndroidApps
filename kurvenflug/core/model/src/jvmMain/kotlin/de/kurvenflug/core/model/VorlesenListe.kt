@@ -39,9 +39,16 @@ object VorlesenListe {
         return raw.map { Nova.normalize(Speech.clean(it)) }.filter { it.isNotBlank() && it.any(Char::isLetter) }.distinct()
     }
 
-    fun json(texts: List<String>): String {
+    /** Vorhersehbare Laufzeit-Sätze (gesprochene Form), ohne die schon festen */
+    fun runtime(fixed: List<String>, today: Long): List<String> {
+        val have = fixed.toHashSet()
+        return VoltLines.runtime(today).map { Nova.normalize(Speech.clean(it)) }.filter { it.isNotBlank() && it.any(Char::isLetter) && it !in have }.distinct()
+    }
+
+    fun json(texts: List<String>, runtime: List<String> = emptyList()): String {
         fun esc(s: String) = buildString { s.forEach { c -> when (c) { '"' -> append("\\\""); '\\' -> append("\\\\"); '\n' -> append("\\n"); else -> if (c < ' ') append("\\u%04x".format(c.code)) else append(c) } } }
-        return texts.joinToString(",\n", "{\"format\": 1, \"app\": \"kurvenflug\", \"texte\": [\n", "\n]}\n") { "  {\"text\": \"${esc(it)}\", \"sprache\": \"de\"}" }
+        val all = texts.map { "  {\"text\": \"${esc(it)}\", \"sprache\": \"de\"}" } + runtime.map { "  {\"text\": \"${esc(it)}\", \"sprache\": \"de\", \"laufzeit\": true}" }
+        return all.joinToString(",\n", "{\"format\": 1, \"app\": \"kurvenflug\", \"texte\": [\n", "\n]}\n")
     }
 }
 
@@ -52,6 +59,10 @@ fun main(args: Array<String>) {
         check(Normalizer.isNormalized(t, Normalizer.Form.NFC)) { "Text nicht NFC: $t" }
         check(t.length <= VorlesenListe.MAX) { "Text länger als ${VorlesenListe.MAX} Zeichen (${t.length}): ${t.take(80)}…" }
     }
-    out.parentFile.mkdirs(); out.writeText(VorlesenListe.json(texts))
-    println("vorlesen/texte.json: ${texts.size} Texte, ${texts.sumOf { it.length }} Zeichen")
+    val today = CalDate.today().toEpochDay()
+    val runtime = VorlesenListe.runtime(texts, today).onEach { t ->
+        check(Normalizer.isNormalized(t, Normalizer.Form.NFC)) { "Text nicht NFC: $t" }
+        check(t.length <= VorlesenListe.MAX) { "Text länger als ${VorlesenListe.MAX} Zeichen: ${t.take(80)}…" } }
+    out.parentFile.mkdirs(); out.writeText(VorlesenListe.json(texts, runtime))
+    println("vorlesen/texte.json: ${texts.size} feste Texte (${texts.sumOf { it.length }} Zeichen), ${runtime.size} Laufzeit-Sätze (${runtime.sumOf { it.length }} Zeichen)")
 }

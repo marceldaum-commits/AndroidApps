@@ -74,11 +74,7 @@ fun AndromedaScreen(stars: Map<String, Int>, onLevel: (Level) -> Unit, onBack: (
                 Text("🌌 Andromeda", style = MaterialTheme.typography.titleLarge, color = Q.Text)
             }
             Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Volt(if (nova >= Andromeda.PARTS) VoltMood.DANCE else VoltMood.HAPPY, size = 52.dp, speech = when {
-                    done == 0 -> "Willkommen in Andromeda! Hier ist alles eine Stufe schwerer – und jeder Planet bringt ein Teil für unser zweites Schiff, die ${Andromeda.SHIP}. 🌌"
-                    nova < Andromeda.PARTS -> "$done Planeten geschafft! Noch ${Andromeda.PARTS - nova} Teile, dann fliegt die ${Andromeda.SHIP}."
-                    else -> "Die ${Andromeda.SHIP} ist fertig! Andromeda ist endlos – wie weit kommst du? 🚀"
-                })
+                Volt(if (nova >= Andromeda.PARTS) VoltMood.DANCE else VoltMood.HAPPY, size = 52.dp, speech = de.kurvenflug.core.model.VoltLines.andromeda(done, nova))
                 Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(Color(0x55070B20)).border(1.5.dp, Q.Violet.copy(alpha = 0.5f), RoundedCornerShape(20.dp)).padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically) {
                     Box(Modifier.size(110.dp)) {

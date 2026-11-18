@@ -51,7 +51,7 @@ fun WalkthroughOverlay(level: Level, steps: List<Step>, voltSolves: Int, onClose
     val pop = remember { Animatable(1f) }
     val scope = rememberCoroutineScope()
     val done = current >= steps.size
-    val settings = steps.mapNotNull { s -> s.sets?.let { k -> "${level.params.first { it.key == k }.label} = ${s.answerText}" } }
+    val settings = de.kurvenflug.core.model.VoltLines.settingsOf(level, steps)
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.6f)).clickable(remember { MutableInteractionSource() }, null) {}) {
         Column(
@@ -64,7 +64,7 @@ fun WalkthroughOverlay(level: Level, steps: List<Step>, voltSolves: Int, onClose
             Volt(
                 if (done) VoltMood.WOW else if (wrongPick != null) VoltMood.OOPS else VoltMood.THINK, size = 48.dp,
                 speech = when {
-                    done -> "Super gerechnet! 🎉 Jetzt stell ${settings.joinToString(" und ")} ein und starte!"
+                    done -> de.kurvenflug.core.model.VoltLines.walkthroughDone(settings)
                     wrongPick != null -> "Fast! Schau dir die Rechnung noch mal genau an. 🔍"
                     current < voltSolves || (current == voltSolves && voltSolves > 0) -> "Den ersten Schritt habe ich dir vorgerechnet. Jetzt du! 💪"
                     else -> "Tipp die richtige Zahl an. Du schaffst das! 💪"

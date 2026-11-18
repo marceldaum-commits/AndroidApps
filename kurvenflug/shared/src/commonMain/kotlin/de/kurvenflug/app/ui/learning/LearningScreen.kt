@@ -80,7 +80,7 @@ fun LearningScreen(status: List<TopicStatus>, review: Level?, doneToday: Boolean
     val secure = status.count { it.mastery == Mastery.SECURE }
     val started = status.count { it.mastery != Mastery.NEW }
     val speech = when {
-        topic != null -> "Heute kurz auffrischen: ${topic.chapter.title}! Wer in Abständen wiederholt, behält es viel länger. 🧠"
+        topic != null -> de.kurvenflug.core.model.VoltLines.refresh(topic.chapter.title)
         doneToday -> "Heute schon aufgefrischt – stark! 💪 Morgen schaue ich wieder nach."
         started == 0 -> "Spiel ein paar Level – dann zeige ich dir hier, was schon sitzt. 🚀"
         else -> "Alles frisch! Ich sage Bescheid, wenn ein Thema wieder dran ist. ✨"

@@ -163,8 +163,8 @@ fun SeasonScreen(s: SeasonEvent, year: Int, allStars: Map<String, Int>, onLevel:
                 Text("${s.emoji} ${s.planet}", style = MaterialTheme.typography.titleLarge, color = Q.Text)
             }
             Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                Volt(if (done) VoltMood.DANCE else VoltMood.HAPPY, size = 56.dp, speech = if (done) "Geschafft! Der ${s.sticker.name}-Sticker klebt jetzt in deinem Album. ${s.emoji}"
-                    else "Ein Gast-Planet ${s.during}! 5 Etappen – und am Ende gibt's einen besonderen Sticker. Keine Eile: Er kommt jedes Jahr wieder.")
+                Volt(if (done) VoltMood.DANCE else VoltMood.HAPPY, size = 56.dp, speech = if (done) de.kurvenflug.core.model.VoltLines.sticker(s.sticker.name, s.emoji)
+                    else de.kurvenflug.core.model.VoltLines.guest(s.during))
                 de.kurvenflug.app.ui.flight.ChapterCard(Seasons.chapter(s, year), 2, allStars, onLevel)
                 Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).padding(12.dp)) {
                     de.kurvenflug.app.ui.collection.StickerTile(s.sticker, done, false, Modifier.width(80.dp))
