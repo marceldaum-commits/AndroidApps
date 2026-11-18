@@ -56,7 +56,8 @@ object Keepsakes {
         val by = maxOf(y + 70f, h - 230f).coerceAtMost(h - 140f)
         p.color = Color.WHITE; c.drawRoundRect(RectF(60f, by - 70f, w - 60f, by + 60f), 60f, 60f, p)
         text(c, "🐝  ${d.name} war fleißig wie eine Biene!", w / 2f, by + 15f, 42f, BROWN, center = true)
-        text(c, "Wissensgarten", w / 2f, h - 40f, 30f, 0xFF8A8270.toInt(), center = true)
+        logo(c, w / 2f - 135f, h - 40f, 46f)
+        text(c, "Wissensgarten", w / 2f + 20f, h - 40f, 30f, 0xFF8A8270.toInt(), center = true)
         return bmp
     }
 
@@ -83,7 +84,8 @@ object Keepsakes {
         listOf(48f to 66f, 547f to 66f, 48f to 800f, 547f to 800f).forEach { (x, y) -> text(c, "🌸", x, y, 26f, Color.BLACK, center = true) }
 
         text(c, "URKUNDE", 297f, 120f, 44f, GREEN, bold = true, center = true)
-        text(c, "Wissensgarten", 297f, 150f, 16f, 0xFF8A8270.toInt(), center = true)
+        logo(c, 297f - 70f, 150f, 26f)
+        text(c, "Wissensgarten", 297f + 8f, 150f, 16f, 0xFF8A8270.toInt(), center = true)
         text(c, "für", 297f, 205f, 18f, BROWN, center = true)
         text(c, "${d.name} ${d.avatar}", 297f, 250f, 36f, BROWN, bold = true, center = true)
         val garden = GardenBitmap.render(480, 220, d.flowers, 11, party = false)
@@ -120,6 +122,26 @@ object Keepsakes {
 
     /** Namen wie „Lena/Ben“ dürfen keinen Dateipfad zerschießen */
     fun safe(name: String) = name.replace(Regex("[^\\p{L}\\p{N}_-]"), "_").ifBlank { "Garten" }
+
+    /**
+     * Das App-Logo (gleich wie das App-Symbol `ic_launcher_foreground`): Erdhügel, Stängel, Blätter, Buch-Blüte.
+     * @param x linke Kante, [baseline] Unterkante (Textgrundlinie), [h] Höhe
+     */
+    private fun logo(c: Canvas, x: Float, baseline: Float, h: Float) {
+        val s = h / 60f
+        c.save(); c.translate(x - 30f * s, baseline - 82f * s); c.scale(s, s)
+        val p = Paint(Paint.ANTI_ALIAS_FLAG)
+        fun fill(col: Long, build: android.graphics.Path.() -> Unit) { p.style = Paint.Style.FILL; p.color = col.toInt(); c.drawPath(android.graphics.Path().apply(build), p) }
+        fill(0xFF7A5232) { moveTo(30f, 74f); quadTo(54f, 62f, 78f, 74f); lineTo(78f, 78f); quadTo(54f, 84f, 30f, 78f); close() }
+        p.style = Paint.Style.STROKE; p.strokeWidth = 4f; p.strokeCap = Paint.Cap.ROUND; p.color = 0xFF3F6B3A.toInt()
+        c.drawPath(android.graphics.Path().apply { moveTo(54f, 72f); quadTo(52f, 56f, 54f, 40f) }, p)
+        fill(0xFF6FA35A) { moveTo(53f, 60f); quadTo(38f, 58f, 34f, 46f); quadTo(48f, 46f, 53f, 60f); close() }
+        fill(0xFF3F6B3A) { moveTo(55f, 54f); quadTo(70f, 52f, 74f, 40f); quadTo(60f, 40f, 55f, 54f); close() }
+        fill(0xFFF28AB2) { moveTo(54f, 40f); quadTo(46f, 30f, 38f, 32f); lineTo(38f, 26f); quadTo(47f, 24f, 54f, 32f); close() }
+        fill(0xFFE26A9C) { moveTo(54f, 40f); quadTo(62f, 30f, 70f, 32f); lineTo(70f, 26f); quadTo(61f, 24f, 54f, 32f); close() }
+        p.style = Paint.Style.FILL; p.color = 0xFFFFD54F.toInt(); c.drawCircle(54f, 30f, 3f, p)
+        c.restore()
+    }
 
     private fun text(c: Canvas, s: String, x: Float, y: Float, size: Float, color: Int, bold: Boolean = false, center: Boolean = false) {
         val p = Paint(Paint.ANTI_ALIAS_FLAG).apply {

@@ -186,11 +186,8 @@ private fun Welcome(extra: @Composable () -> Unit = {}) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-            Plant(Stage.SHOOT, 0f, 200f, 3, Modifier.size(90.dp), grow)
-            Plant(Stage.BLOOM, 0f, 330f, 5, Modifier.size(130.dp), grow)
-            Plant(Stage.TREE, 0f, 45f, 1, Modifier.size(110.dp), grow)
-        }
+        // Das App-Logo (gleich wie das App-Symbol) – wächst sanft aus der Erde
+        de.wissensgarten.app.ui.common.AppLogo(Modifier.size(150.dp), grow)
         Spacer(Modifier.height(24.dp))
         Text("Wissensgarten", style = MaterialTheme.typography.displaySmall)
         Spacer(Modifier.height(12.dp))

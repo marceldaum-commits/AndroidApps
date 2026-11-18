@@ -3,6 +3,10 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.5 – Überall dasselbe Logo (18.11.2026)
+- Das Wissensgarten-Logo (die Pflanze mit der Buch-Blüte) ist jetzt überall gleich: als App-Symbol, auf dem Willkommensbildschirm, beim Laden der WebApp und auf Postkarte und Urkunde.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.4 – Klarere Aufgaben, Nova zuverlässiger (17.11.2026)
 - **Alle 2 923 Lernkarten noch einmal gelesen:** 346 Karten sind jetzt klarer formuliert. Vokabelkarten sagen, in welche Sprache übersetzt wird; Fragen mit mehreren möglichen Antworten nennen die Auswahl; einige Ablenker, die versehentlich auch richtig waren, sind ersetzt; gleichwertige Schreibweisen (z. B. Silizium/Silicium, Jod/Iod) zählen als richtig.
 - **Nova liest zuverlässiger:** Brummi wartet kurz auf Nova (mit kleinem 🎧-Zeichen), statt gleich auf die Stimme des Geräts zu wechseln. In der WebApp wurden Sätze mit Emoji nie gefunden – behoben.
