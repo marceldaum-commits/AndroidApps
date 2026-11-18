@@ -46,3 +46,10 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 2. **Behält, obwohl es sich berührt:** Abstände, Winkel, Hesse-Form, Kreuzprodukt, Kugeln (Mathe-Trainer hat dieselben Themen als Rechentraining) – bei uns als 3D-Aufgabe zum Ausprobieren mit vollem Rechenweg, dort zum Üben in Stufen. Binomialverteilung/Galton-Brett und Analysis „Kurve abfahren“ – Erleben statt Üben. Formel-Kästen und Spickzettel – gehören zu den Aufgaben; zum Wiederholen verlinken wir auf den Wissensgarten.
 3. **Übernimmt:** vom Mathe-Trainer „Schattenwurf“ und „Körper im Raum“ (Oberstufe).
 4. **Plant neu:** Fr 20.11. Lineare Gleichungssysteme & Gauß (räumlich, drei Ebenen), evtl. stochastische Unabhängigkeit. Di 24.11. Zufallsgrößen und Normalverteilung. Danach Sinus/Kosinus ableiten, Funktionenscharen, uneigentliche Integrale, Schattenwurf/Projektion.
+
+### Ergebnis des Abgleichs mit KurvenFlug und Rechenblitz (18.11.2026, 22:17 Uhr)
+
+- **KurvenFlug** behält „Vektoren“ in 2D und „Binomialverteilung“ als Histogramm (spielerisch); 3D, Abi-Aufgaben und Binomial-/Galton-Labor bleiben bei Raumlicht. KurvenFlug baut „Geraden & Ebenen im Raum“ nicht und verlinkt zu uns (`level/3-1`, `level/5-1`, `binomial`, `galton` – nicht umbenennen). „Körper & Volumen“ als Anschauung für die Oberstufe übernimmt Raumlicht.
+- KurvenFlug hat in der Oberstufe Kapitel 19 „Ableitung & Tangente“, 20 „Extrempunkte“, 21 „Integral“, 28 „e-Funktion“; geplant „Funktionen formen“ (Di 24.11.) und „Kurvendiskussion“. **Funktionenscharen gehören Raumlicht** (KurvenFlug nimmt sie heraus); Sinus ableiten und uneigentliche Integrale baut KurvenFlug nicht. Links ab Fr 20.11.: `https://kurvenflug.mathenachhilfe-online.com/#kapitel=<nr>`, Liste in `kurvenflug/QUERVERWEISE.md`.
+- **Rechenblitz**: keine Oberstufen-Analysis. Gleichungssysteme dort nur mit 2 Unbekannten (Kopfrechnen, Kl. 8–10); drei Unbekannte/Gauß bleiben bei Raumlicht (räumlich) und beim Mathe-Trainer (Rechentraining, Di 24.11.). Link-Format `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6>&modus=training`.
+- **Mathe-Trainer** (Korrektur): Gauß-Rechentraining am Di 24.11., Normalverteilung erst am Fr 4.12.
