@@ -73,7 +73,7 @@ fun PlusScreen(
             Text("Das bringt Plus", style = MaterialTheme.typography.titleMedium)
             listOf(
                 "🎓" to "Abi- und Experten-Pakete: Stochastik, Organische Chemie, Neurobiologie, Geschichte, Naturwissenschaft, Sprache …",
-                "📦" to "Jeden Monat neue Plus-Pakete – kommen von allein in die App.",
+                "📦" to "Jeden Monat neue Plus-Pakete – kommen von allein in die Web-App.",
                 "👪" to "Bis zu 6 Profile für die ganze Familie (frei: 2).",
                 "📊" to "Wochenbericht für Eltern: Was wurde gelernt, was sitzt, wo hakt es?",
             ).forEach { (e, t) -> Row(verticalAlignment = Alignment.Top) { Text(e, fontSize = 22.sp); Spacer(Modifier.width(10.dp)); Text(t, style = MaterialTheme.typography.bodyMedium) } }
@@ -97,7 +97,7 @@ fun PlusScreen(
             if (purchaseAllowed) {
                 HorizontalDivider()
                 Text("Code eingeben", style = MaterialTheme.typography.titleMedium)
-                Text("Nach dem Kauf kommt der Code per E-Mail (dazu die Rechnung). Er gilt auf allen Geräten der Familie – einfach den Link in der E-Mail öffnen oder hier einfügen.",
+                Text("Nach dem Kauf kommt der Code per E-Mail (dazu die Rechnung). Er gilt auf allen Geräten der Familie in der Web-App – einfach den Link in der E-Mail öffnen oder hier einfügen.",
                     style = MaterialTheme.typography.bodySmall)
                 OutlinedTextField(code, { code = it; message = null }, label = { Text("WG-…") }, modifier = Modifier.fillMaxWidth(), minLines = 2)
                 Button(onClick = {

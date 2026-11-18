@@ -77,6 +77,8 @@ fun SettingsScreen(
         if (host?.features?.selfUpdate == true) key(update?.version) {
             host.UpdateSection(version, update, autoUpdate, onAutoUpdate)
         }
+        // WebApp: „App installieren“ (erscheint nur, wenn der Browser es kann und die App noch nicht installiert ist)
+        if (host != null) InstallAppCard(host, inGarden = false)
 
         syncCard()
 

@@ -60,6 +60,7 @@ fun RadioScreen(
     var level by remember { mutableFloatStateOf(0f) }
     var running by remember { mutableStateOf(false) }
     var stopRequested by remember { mutableStateOf(false) }
+    val webApp = host?.features?.label == "WebApp"
     listener.onLevel = { level = it }
 
     // Bildschirm an lassen, aber ganz dunkel – das Handy kann in der Tasche oder im Auto liegen
@@ -87,7 +88,7 @@ fun RadioScreen(
         // Sprachausgabe noch nicht bereit (kalter Start)? Kurz warten, sonst ehrlich sagen.
         var waited = 0
         while (voice?.isReady != true && waited < 4000) { delay(200); waited += 200 }
-        if (voice?.isReady != true) { problem = "Auf diesem Handy ist keine Sprachausgabe eingerichtet. In den Android-Einstellungen unter „Sprachausgabe“ lässt sie sich installieren."; running = false; return@LaunchedEffect }
+        if (voice?.isReady != true) { problem = if (webApp) "Brummis Stimme ist gerade nicht bereit. Bitte prüfe die Internetverbindung und versuche es gleich noch einmal." else "Auf diesem Handy ist keine Sprachausgabe eingerichtet. In den Android-Einstellungen unter „Sprachausgabe“ lässt sie sich installieren."; running = false; return@LaunchedEffect }
         if (index == 0) say("Hallo, hier ist Brummi-Radio! Ich stelle dir Fragen – antworte einfach laut. Wenn du aufhören willst, sag: Stopp.")
         else say("Weiter geht's!")
         loop@ for (i in index until cards.size) {

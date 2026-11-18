@@ -97,4 +97,40 @@
     else if (wg._lock) { wg._lock.release(); wg._lock = null; }
   };
   wg.visible = () => document.visibilityState === 'visible';
+
+  // „App installieren“ (PWA). Kein Knopf, wenn die WebApp schon installiert läuft oder der Browser es nicht kann.
+  // - Chrome/Edge/Android: „beforeinstallprompt“ abfangen, merken und beim Antippen prompt() aufrufen
+  // - iPhone/iPad: es gibt kein solches Ereignis – die App zeigt eine kurze Anleitung (Teilen → Zum Home-Bildschirm)
+  // Dieses Skript läuft vor der App (im <head>), damit kein frühes Ereignis verloren geht.
+  const inst = (wg.install = { deferred: null, installed: false, listeners: [] });
+  const LATER = 'wg.installSpaeter';
+  const LATER_MS = 14 * 24 * 3600 * 1000;           // „Später“ im Garten: 2 Wochen Ruhe (in den Einstellungen bleibt der Knopf)
+  const mq = (q) => { try { return window.matchMedia(q).matches; } catch (e) { return false; } };
+  inst.standalone = () => mq('(display-mode: standalone)') || mq('(display-mode: fullscreen)') || mq('(display-mode: minimal-ui)') ||
+    mq('(display-mode: window-controls-overlay)') || navigator.standalone === true;
+  inst.ios = () => /iPhone|iPad|iPod/.test(navigator.userAgent || '') || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  inst.mode = () => {
+    if (inst.installed || inst.standalone()) return 'none';
+    if (inst.deferred) return 'prompt';
+    if (inst.ios()) return 'ios';
+    return 'none';
+  };
+  inst.later = () => { try { const t = +localStorage.getItem(LATER); return !!t && Date.now() - t < LATER_MS; } catch (e) { return false; } };
+  inst.state = () => inst.mode() + (inst.later() ? ':spaeter' : '');
+  const notify = () => { const s = inst.state(); inst.listeners.forEach((cb) => { try { cb(s); } catch (e) {} }); };
+  inst.onChange = (cb) => { inst.listeners.push(cb); cb(inst.state()); };
+  inst.postpone = () => { try { localStorage.setItem(LATER, String(Date.now())); } catch (e) {} notify(); };
+  inst.prompt = () => {
+    const d = inst.deferred;
+    if (!d) return;
+    inst.deferred = null;                              // ein gemerktes Angebot lässt sich nur einmal zeigen
+    try {
+      Promise.resolve(d.prompt()).catch(() => {});
+      Promise.resolve(d.userChoice).then((c) => { if (c && c.outcome === 'accepted') inst.installed = true; notify(); }).catch(notify);
+    } catch (e) { notify(); }
+    notify();
+  };
+  window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); inst.deferred = e; notify(); });
+  window.addEventListener('appinstalled', () => { inst.installed = true; inst.deferred = null; notify(); });
+  try { window.matchMedia('(display-mode: standalone)').addEventListener('change', notify); } catch (e) {}
 })();
