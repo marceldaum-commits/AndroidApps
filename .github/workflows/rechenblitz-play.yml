@@ -7,10 +7,13 @@
 # Ergebnis: Download unter „Actions → Rechenblitz Play → Artifacts“ (90 Tage), dann in der Play Console hochladen.
 name: Rechenblitz Play
 
+# Play-Store ruht und die Upload-Schlüssel sind noch nicht eingetragen: bis dahin nur per Hand starten
+# (Actions → Rechenblitz Play → Run workflow), damit nicht jede Live-Freigabe als Fehler endet (Marcel 18.11.).
+# Für den Play-Start wieder einschalten:
+#   push:
+#     branches: [rechenblitz-live]
+#     paths: ['kopfrechnen/**', 'android-app/**', '.github/workflows/rechenblitz-play.yml']
 on:
-  push:
-    branches: [rechenblitz-live]
-    paths: ['kopfrechnen/**', 'android-app/**', '.github/workflows/rechenblitz-play.yml']
   workflow_dispatch:
 
 permissions:
