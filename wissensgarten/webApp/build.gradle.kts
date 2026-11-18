@@ -90,6 +90,14 @@ tasks.register<Sync>("exportWebApp") {
             !it.relativeTo(out).invariantSeparatorsPath.startsWith("vorlesen/") && it.name !in wasmFiles && it.name !in jsFiles }
             .map { it.relativeTo(out).invariantSeparatorsPath }.sorted().toList()
         val pre = (listOf("./") + all).joinToString(",", "[", "]") { "'$it'" }
+        // Safari 27.2 (WebKit-Fehler 329421, weiße Fläche): In beiden Bündeln darf kein Aufruf der Grafik-Bibliothek als Endaufruf stehen
+        for (b in listOf("wissensgarten.js", "wissensgarten-js.js")) {
+            val js = out.resolve(b).readText()
+            val tail = Regex("""=>\(\w+=\w+\._\.org_jetbrains_\w+\)\(""").findAll(js).count()
+            val safe = Regex("""try\{return\(\w+=\w+\._\.org_jetbrains_\w+\)\(""").findAll(js).count()
+            check(tail == 0 && safe > 900) { "Safari-Abhilfe fehlt in $b: $tail Endaufrufe übrig, $safe abgesichert" }
+            println("Safari-27.2-Abhilfe $b: $safe abgesichert, $tail Endaufrufe übrig")
+        }
         out.resolve("index.html").let { it.writeText(it.readText().replace("@SIZES@", sizes).replace("@MODEFILES@", modeFiles)) }
         out.resolve("sw.js").let { it.writeText(it.readText().replace("'@PRECACHE@'", pre)) }
         rootProject.file("webapp/version.json").writeText("{\n  \"version\": \"$versionName\",\n  \"date\": \"$versionDate\"\n}\n")
