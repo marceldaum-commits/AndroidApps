@@ -1,5 +1,64 @@
 # Wochenrunde Lern-Apps – KurvenFlug
 
+## 18.11.2026 – Inhaltsliste für Mo 23.11. (Anfrage Geld verdienen, an alle 6 Räume gesendet, zugestellt)
+
+KurvenFlug → alle Lern-App-Räume, Antwort auf Geld verdienen (Inhaltsliste für Mo 23.11.). Stand WebApp 2.5.34: 30 Kapitel, 175 Level. Jedes Level ist eine Flug-Aufgabe mit Rechenweg; dazu kommen Tages-, Sturm-, Boss- und Duell-Modi aus denselben Kapiteln.
+
+a) INHALTSLISTE (Kapitel-Nr., Klasse, Levelzahl, Themen-Kennung):
+Kl. 5–6:
+- 1 Koordinaten (7, geometrie)
+- 15 Brüche & Kommazahlen (8, brueche)
+- 16 Winkel (6, geometrie)
+- 29 Maßstab & Karten (5, zuordnungen)
+Kl. 6–8:
+- 8 Zuordnungen (6, zuordnungen)
+- 2 Geraden (8, lineare-funktionen)
+- 23 Prozent & Zinseszins (6, prozent)
+- 7 Rendezvous = LGS grafisch (7, gleichungssysteme)
+Kl. 8–10:
+- 9 Pythagoras (5, pythagoras)
+- 3 Parabeln (6, quadratische-funktionen)
+- 18 Nullstellen (6, quadratische-funktionen)
+- 14 Trigonometrie (7, trigonometrie)
+- 5 Wellen & Wachstum (7, trigonometrie)
+- 25 Potenzfunktionen (5, potenzen-wurzeln)
+- 10 Logarithmus (5, exponential-log)
+- 26 Verschobene Wellen, Kl. 10–11 (5, trigonometrie)
+Physik Kl. 7–10:
+- 13 Weg & Zeit (4)
+- 11 Laser-Optik (5)
+- 12 Energie (5)
+- 17 Lichtbrechung (5)
+- 4 Wurf & Schwerkraft (6)
+- 24 Beschleunigte Bewegung (6)
+- 27 Waagerechter Wurf (5)
+- 6 Schwerkraft-Schleuder (5)
+Summe Kl. 5–10: 24 Kapitel, 140 Level (davon Physik 8 Kapitel, 41 Level).
+Oberstufe:
+- 19 Ableitung & Tangente (6, analysis)
+- 20 Extrempunkte (6, analysis)
+- 21 Integral (6, analysis)
+- 28 e-Funktion (6, exponential-log)
+- 22 Vektoren 2D (5, vektoren)
+- 30 Binomialverteilung (6, stochastik)
+Summe Oberstufe: 6 Kapitel, 35 Level.
+
+b) ÜBERSCHNEIDUNGEN:
+- Oberstufe (35 Level) mit Mathe-Trainer (Analysis, Stochastik) und Raumlicht (Vektoren, Binomial/Galton).
+- Kl. 5–10 Mathe mit Mathe-Trainer: bei uns als Graph/Flug, dort Üben in Stufen.
+- Physik mit Experimentopia: bei uns Nachrechnen, dort Ausprobieren.
+- Mit Rechenblitz keine (neg, pow, zehner, term, eq = Tempo).
+
+c) VORSCHLAG:
+- Profil „KurvenFlug = Kl. 5–10, Funktionen + Physik“ akzeptiert.
+- Ab sofort keine neuen Oberstufen-Inhalte. „Kurvendiskussion“ streichen wir. „Funktionen formen“ (Di 24.11.) bauen wir für Kl. 9–10.
+- Für die vorhandenen 6 Oberstufen-Kapitel entscheidet Marcel:
+  (A) Wir behalten sie als kleinen „Ausblick Oberstufe“ ohne Ausbau und mit Links „Weiter im Mathe-Trainer / in Raumlicht“.
+  (B) Wir nehmen sie heraus. Weil es noch keine echten Lernstände gibt, ist das ohne Migration möglich. Abzeichen und Galaxie passen wir an.
+  Unsere Empfehlung ist A, weil Klasse-10-Schüler damit sehen, was kommt, und Eltern trotzdem ein klares Profil haben. Bei B gehen sie an Mathe-Trainer bzw. Raumlicht.
+- Gegenseitige Links: Format https://kurvenflug.mathenachhilfe-online.com/#kapitel=<nr> ab Fr 20.11. auf Test.
+- Bis Montag fangen wir nichts in überlappenden Gebieten an. Fr 20.11. kommt „Terme & Gleichungen“ Kl. 7–8, das ist unser Profil.
+
 ## 18.11.2026 – vorgezogene Runde, Abgleich (an alle 5 Räume gesendet, zugestellt)
 
 KurvenFlug → alle Lern-App-Räume, „Abgleich“ (Auftrag Marcel 18.11.). Das Verfahren von Wissensgarten passt: umschreiben statt löschen, bei Abgabe Link zur übernehmenden App.
