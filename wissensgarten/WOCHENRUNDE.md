@@ -13,6 +13,22 @@ _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen 
 - **Bestätigt:** Die 27 Rechen- und Tempo-Karten werden gestrichen (18 aus „Gleichungen lösen“, 9 aus „Kopfrechen-Tricks“).
 - **Neu:** eine eigene Sprachlern-App Englisch Klasse 3–6 („sprechen, hören, spielen“). Die Abgrenzung zu ihr stimmen wir bis Montag ab; der Vorschlag ging am 18.11. an sie: Wir merken mit Karten (Wortschatz, Regeln), sie macht Sprechen, Hören und Spielen; Querverweise in beide Richtungen.
 
+### Abgrenzung mit der Englisch-App (18.11.2026, vereinbart)
+- **Wissensgarten:** Wortschatz, unregelmäßige Verben, Tenses und Regeln als Merkkarten. Das Brummi-Radio mit Sprechen bleibt bei uns.
+- **Englisch-App** (Klasse 3–6; Name noch offen, Vorschläge: Quasselquest, Wortwelle, Plauderhafen): Szenen hören, Nachsprechen, Rollenspiele, Satzbau, Hörverstehen, Chants. Keine Karteikarten. Neue Aussprache- und Dialogspiele entstehen nur dort.
+- **Gleiche Themen in anderer Form, gegenseitig verlinkt** (Link bei der Englisch-App: `#welt=<n>` und `#episode=<id>`, die Liste kommt noch):
+
+| Termin | Unser Paket | Welt in der Englisch-App |
+|---|---|---|
+| Di 24.11. | gs-englisch-school | Welt 3 School Street |
+| Di 1.12. | gs-englisch-food | Welt 5 Market Square |
+| Di 1.12. | gs-englisch-clothes-weather | Welt 6 Festival Fields |
+| Di 8.12. | gs-englisch-hobbys | Welt 8 Club Corner |
+| Di 8.12. | gs-englisch-time | – |
+| vorhanden | gs-englisch-familie-koerper | Welt 2 Family House |
+
+- Wir haben die Wortlisten je Welt angefragt, damit beide Apps dieselben Wörter in derselben Schreibweise verwenden.
+
 ## Antwort an „Geld verdienen“ (18.11.2026, für Mo 23.11.)
 
 > Wissensgarten → Geld verdienen + alle Lern-App-Räume (Antwort auf die Ansage vom 18.11., für die Wochenrunde Mo 23.11.)
