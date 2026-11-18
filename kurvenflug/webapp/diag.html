@@ -19,7 +19,7 @@
 </head>
 <body>
   <h1>🛰️ Kurvenflug – Diagnose</h1>
-  <div class="k" id="info">Version 2.5.18</div>
+  <div class="k" id="info">Version 2.5.19</div>
   <div id="crash"></div>
   <div id="steps"></div>
   <div id="probe" style="display:none" class="s"><b>Bildprobe – was siehst du?</b>
@@ -44,7 +44,7 @@
 // stürzt der Tab ab, zeigt der nächste Aufruf, bei welchem Schritt.
 (function () {
   'use strict';
-  var FILES = [{"u":"0cbaa8dbaae9c842c53a.wasm","s":5848482},{"u":"bccfa839aa4b38489c76.wasm","s":8405319}];   // [{u, s}] – Wasm-Dateien der App, kleinste zuerst
+  var FILES = [{"u":"1ac26f155eb47dc7405c.wasm","s":5848482},{"u":"bccfa839aa4b38489c76.wasm","s":8405319}];   // [{u, s}] – Wasm-Dateien der App, kleinste zuerst
   var KEY = 'kf.diag', log = [];
   function store(v) { try { if (v === null) localStorage.removeItem(KEY); else localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
   function load() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
@@ -82,7 +82,7 @@
   function run() {
     stepsEl.innerHTML = ''; log = [];
     var info = document.getElementById('info');
-    info.textContent = 'Version 2.5.18 · ' + navigator.userAgent + ' · Bildschirm ' + screen.width + '×' + screen.height + ' · DPR ' + (window.devicePixelRatio || 1) +
+    info.textContent = 'Version 2.5.19 · ' + navigator.userAgent + ' · Bildschirm ' + screen.width + '×' + screen.height + ' · DPR ' + (window.devicePixelRatio || 1) +
       (navigator.deviceMemory ? ' · RAM ~' + navigator.deviceMemory + ' GB' : '');
     var p = step(1, 'HTML und JavaScript laufen', function () { return { text: 'ok' }; })
       .then(function () { return step(2, 'WebAssembly: GC + Ausnahmen', function () {
