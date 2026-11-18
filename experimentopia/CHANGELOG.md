@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.6.1 – Schnell auch auf iPad und iPhone (18.11.2026)
+
+- 🍎 Die Ursache der weißen Seite ist gefunden: ein Fehler in Safari 27.2 beim Zeichnen. Experimentopia umgeht ihn jetzt – Safari bekommt wieder die schnelle Fassung.
+  Sollte die Fläche trotzdem weiß bleiben, merkt die App das und wechselt von selbst auf die JS-Fassung.
+
 ## 2.6.0 – Läuft jetzt auf iPad und iPhone (18.11.2026)
 
 - 🍎 **iPad und iPhone**: Safari 27 kam mit der bisherigen Technik (Kotlin/Wasm) nicht zurecht – die Seite blieb weiß. Jetzt gibt es eine zweite Fassung (Kotlin/JS),

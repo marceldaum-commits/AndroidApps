@@ -75,8 +75,11 @@
     var webkit = (/AppleWebKit/.test(ua) && !/Chrome|Chromium|Edg\/|OPR|Android/.test(ua)) || /CriOS|FxiOS|EdgiOS/.test(ua);
     var gemerkt = null; try { gemerkt = localStorage.getItem('exModus@VERSION@'); } catch (e) {}
     window.__exAuto = m === 'auto';
-    window.__exModus = m === 'js' || m === 'wasm' ? m : (gemerkt || (webkit || !gcOk ? 'js' : 'wasm'));
-    exStep('Fassung ' + window.__exModus + (m === 'auto' ? ' (automatisch' + (gemerkt ? ', gemerkt' : webkit ? ', Safari/WebKit' : !gcOk ? ', ohne WasmGC' : '') + ')' : ' (Schalter)'));
+    // Safari 27.2 läuft mit Wasm wieder, seit die Endaufrufe der Grafik-Bibliothek umgeschrieben sind (WebKit-Fehler 329421, Abhilfe von Raumlicht).
+    // Zur Sicherheit prüft die Seite nach dem Start auf WebKit, ob wirklich etwas gezeichnet wurde – sonst JS.
+    window.__exWebkit = webkit;
+    window.__exModus = m === 'js' || m === 'wasm' ? m : (gemerkt || (!gcOk ? 'js' : 'wasm'));
+    exStep('Fassung ' + window.__exModus + (m === 'auto' ? ' (automatisch' + (gemerkt ? ', gemerkt' : !gcOk ? ', ohne WasmGC' : '') + ')' : ' (Schalter)') + (webkit ? ' · WebKit' : ''));
   })();
   // Grafik-Kontext: welche Wünsche hat die App, was bekommt sie – und Schalter zum Ausprobieren
   try {
@@ -84,7 +87,8 @@
     HTMLCanvasElement.prototype.getContext = function (type, attrs) {
       if (/webgl/.test(type)) {
         attrs = Object.assign({}, attrs || {});
-        if (glOpt.indexOf('pdb') >= 0 || window.__exDiag) attrs.preserveDrawingBuffer = true;
+        // für die Pixelprobe (Diagnose, und Wasm auf WebKit: weiße Fläche erkennen) muss das Bild lesbar bleiben
+        if (glOpt.indexOf('pdb') >= 0 || window.__exDiag || (window.__exWebkit && window.__exModus === 'wasm')) attrs.preserveDrawingBuffer = true;
         if (glOpt.indexOf('noalpha') >= 0) attrs.alpha = false;
         if (glOpt.indexOf('noaa') >= 0) attrs.antialias = false;
         if (glOpt.indexOf('webgl1') >= 0 && type === 'webgl2') { exStep('WebGL 2 abgelehnt (Schalter webgl1)'); return null; }
@@ -169,6 +173,12 @@
   (function watch() { var st = document.getElementById('start'); if (st && st.dataset.fertig === '1') { window.__exStarted = Date.now(); exStep('App sichtbar'); setTimeout(function () {
     if (!appVisible()) { showProblem('keine Zeichenfläche'); return; }
     // Pixelprobe: Was steht wirklich in der Zeichenfläche? (weiß = Safari zeigt nichts an, obwohl gezeichnet wurde?)
+    // Weiße Fläche erkennen (Safari-Fehler: App läuft, zeichnet aber nichts): oben links ist die App immer dunkel
+    try { var g0 = window.__exGl; if (g0 && window.__exWebkit && window.__exModus === 'wasm') { var p0 = new Uint8Array(4); g0.readPixels(4, g0.canvas.height - 5, 1, 1, g0.RGBA, g0.UNSIGNED_BYTE, p0);
+      exStep('Pixel oben links ' + Array.prototype.join.call(p0, ','));
+      if (p0[0] > 200 && p0[1] > 200 && p0[2] > 200) {
+        if (window.__exAuto) { try { localStorage.setItem('exModus@VERSION@', 'js'); } catch (e) {} exStep('Fläche weiß → JS'); location.reload(); return; }
+        showProblem('Fläche bleibt weiß (Safari) – bitte ?modus=js versuchen'); return; } } } catch (e) {}
     try { var gl = window.__exGl; if (gl) { var px = new Uint8Array(4), cv = gl.canvas; gl.readPixels(cv.width >> 1, cv.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
       var cs = getComputedStyle(cv); exStep('Pixel Mitte ' + Array.prototype.join.call(px, ',') + ' · Fläche ' + cv.width + '×' + cv.height + ' / CSS ' + cs.width + '×' + cs.height + (cs.transform && cs.transform !== 'none' ? ' transform ' + cs.transform : '') + ' · DPR ' + window.__exDpr.join('→')); } } catch (e) { exStep('Pixelprobe: ' + e); }
     window.__exOk = true; exStep('fertig');

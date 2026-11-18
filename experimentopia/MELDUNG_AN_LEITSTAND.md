@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.6.1 vom 18.11.2026: Raumlicht-Weg (Safari 27.2) + JS-Absicherung – fertig für den Betriebstest
+
+- **Raumlicht-Abhilfe übernommen** (Commit 92608706): `web/webpack/skiko-no-tail-call.cjs` + `web/webpack.config.d/skiko-no-tail-call.js` – alle Skiko-Aufrufe aus der
+  Endaufruf-Stellung (WebKit-Fehler 329421). Bau-Prüfung: **937 abgesichert, 0 Endaufrufe** in `experimentopia.js` (Wasm) **und** `experimentopia-js.js` (JS).
+- **Lader `?modus=auto`**: jetzt **alle** Browser Wasm (auch Safari/WebKit); nur ohne WasmGC → JS. Absicherungen → automatisch JS (je Version gemerkt):
+  (1) Wasm-Startfehler/Wächter, (2) **neu: Pixelprobe auf WebKit** – 4 s nach dem Start wird oben links gelesen (preserveDrawingBuffer nur auf WebKit+Wasm); ist die Fläche weiß
+  (r,g,b > 200, App-Hintergrund ist dunkel) → JS. `?modus=js|wasm` erzwingt eine Fassung. -Xwasm-no-jstag nicht gesetzt (laut KurvenFlug allein wirkungslos).
+- Tests `tools/web-start.mjs`: Chromium 8/8 (u. a. weiße Fläche als Safari vorgetäuscht → JS ✅, kaputtes Wasm → JS ✅), WebKit 5/5 (Wasm, keine Fehlauslösung der Pixelprobe ✅);
+  `web-update.mjs` 7/7. Auf echtem Safari 27.2 nicht geprüft – bitte Marcel: https://experimentopia-test.mathenachhilfe-online.com/?diag=1 (Protokoll zeigt „Fassung …“ und „Pixel oben links …“).
+
 ## 18.11.2026 – Version 2.6.0 vom 18.11.2026: Kotlin/JS-Ersatz für Safari – fertig für den Betriebstest
 
 Ursache (laut Leitstand/KurvenFlug): Safari 27 verarbeitet das Kotlin/Wasm-Hauptmodul nicht („WebAssembly.Module.imports unable to produce import descriptors“).

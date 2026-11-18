@@ -99,6 +99,15 @@ tasks.register<Sync>("webapp") {
         val skiko = wasm.map { it.name }.firstOrNull { jsBundle.contains(it) } ?: error("Skiko-Datei der JS-Fassung nicht gefunden")
         val plan = files.joinToString(", ", "{ ", " }") { (n, s) -> "\"$n\": $s" }
         out.resolve("index.html").let { it.writeText(it.readText().replace("@LADEPLAN@", plan).replace("@SKIKO@", skiko)) }
+        // Safari 27.2 (weiße Seite, WebKit-Fehler 329421): im fertigen Wasm-Paket darf kein Aufruf der Grafik-Bibliothek mehr als Endaufruf stehen
+        // (umgeschrieben von web/webpack/skiko-no-tail-call.cjs – übernommen von Raumlicht 2.18.19)
+        for (bundle in listOf("experimentopia.js", "experimentopia-js.js")) {
+            val js = out.resolve(bundle).readText()
+            val tail = Regex("""=>\(\w+=\w+\._\.org_jetbrains_\w+\)\(""").findAll(js).count()
+            val safe = Regex("""try\{return\(\w+=\w+\._\.org_jetbrains_\w+\)\(""").findAll(js).count()
+            check(tail == 0) { "Safari-Abhilfe fehlt in $bundle: $tail Endaufrufe übrig, $safe abgesichert" }
+            println("Safari-27.2-Abhilfe $bundle: $safe Aufrufe abgesichert, $tail Endaufrufe übrig")
+        }
         out.resolve("sw.js").let { it.writeText(it.readText().replace("@WASM@", wasm.joinToString(", ", "[", "]") { "'${it.name}'" })) }
     }
 }
