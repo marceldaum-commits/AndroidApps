@@ -48,6 +48,7 @@ s1-mathe-algebra (Funktionen), s1-physik-einheiten-formeln, s1-physik-strom.
 ## Rechenblitz – `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6>&modus=training`
 - Themen: neg (↔ Negative Zahlen am Zahlenstrahl), pow, zehner (Potenzen abgegeben), term, eq (nur Kopfrechnen, keine Überschneidung)
 - Rechenblitz verlinkt Sachaufgaben E = P·t → unser Kapitel 12 Energie
+- LGS: Rechenblitz-Theorie verlinkt #kapitel=7 (Rendezvous); wir verlinken „Schnell rechnen im Rechenblitz“ auf ?thema=lgs (Kennung kommt Fr 20.11.)
 
 ## Weitere Abstimmung 18.11.
 - Experimentopia: Radioaktivität ganz dort, Halbwertszeit rechnen bei uns (Wellen & Wachstum); „Bewegung & Diagramme“ = Erleben dort, Rechnen bei uns (Weg & Zeit 13)
