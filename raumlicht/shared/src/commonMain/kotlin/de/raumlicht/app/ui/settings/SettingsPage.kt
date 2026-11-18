@@ -57,6 +57,7 @@ fun SettingsPage(
             top()
             ProEntry()
             KiEntry()
+            ElternEntry()
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -121,6 +122,7 @@ fun SettingsPage(
                         "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen, Bewegungsaufgaben; dazu Analysis (Funktionen, Ableitung, Kurvendiskussion, Integral, Rotationskörper) und Stochastik (Laplace, Pfadregel, Vierfeldertafel, Binomialverteilung). Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)
                     if (licenses != null || onLicenses != null) TextButton({ if (onLicenses != null) onLicenses() else showLicenses = true }, Modifier.testTag("lizenzen")) { Text("Fremde Bausteine & Lizenzen") }
                     if (LocalOffers.current != null) Text("Hinweise auf unsere eigene Nachhilfe und die anonyme Nutzungszählung lassen sich oben abschalten.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+                    if (LocalElternEntry.current != null) Text("Nur wenn du dein Eltern-Handy koppelst, verlässt ein Bericht über deinen Lernstand das Gerät – verschlüsselt, und nur so lange, bis du die Kopplung aufhebst.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                     Text(versionText, style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                     // Absender-Hinweis: dezent, ohne Preis, ohne Aufforderung
                     if (LocalOffers.current != null) { val uri = androidx.compose.ui.platform.LocalUriHandler.current

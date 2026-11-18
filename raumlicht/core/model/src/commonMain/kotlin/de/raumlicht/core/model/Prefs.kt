@@ -63,6 +63,13 @@ interface Prefs {
     fun setTutorHints(on: Boolean)
     /** Wann welcher Nachhilfe-Hinweis zuletzt erschien bzw. ausgeblendet wurde (nur auf dem Gerät) */
     var tutorState: String
+    /** „Eltern-Handy koppeln“: Kennung, Schreib-Geheimnis, Schlüssel und Spitzname (leer = nicht gekoppelt) – siehe [Eltern.Pairing] */
+    val parentLink: StateFlow<String>
+    fun setParentLink(s: String)
+    /** Wann der letzte Eltern-Bericht hochgeladen wurde (Millisekunden seit 1970, 0 = nie) */
+    var parentSent: Long
+    /** Lern-Protokoll je Tag (Minuten, Aufgaben, davon beim ersten Versuch) – nur auf dem Gerät; Grundlage des Eltern-Berichts */
+    var learnLog: String
     /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */
     var jamLevel: String
     fun resetProgress()

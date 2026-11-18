@@ -24,6 +24,7 @@ object Routes {
     const val SETTINGS = "einstellungen"
     const val PRO = "pro"
     const val KI = "ki"
+    const val PARENTS = "eltern"
     const val DAILY = "tagesaufgabe"
     const val JAM_HOME = "jam"
     const val SHEET = "spickzettel"
@@ -106,9 +107,28 @@ fun AppRoot(
     countSend: ((String) -> Unit)? = null,
     /** Schalter für Zählung und Nachhilfe-Hinweise samt Geschenk-Eintrag und Fußzeile in den Einstellungen zeigen */
     offers: Boolean = true,
+    /** „Eltern-Handy koppeln“: was die Plattform dafür kann (null = hier nicht verfügbar) */
+    eltern: de.raumlicht.app.ui.settings.ElternPlatform? = null,
     /** Adresse der Crashkurs-Seite (leer = Hinweis „Klausur bald“ gibt es nicht; Tests setzen eine) */
     crashUrl: String = de.raumlicht.core.model.Nachhilfe.CRASH_URL,
 ) {
+    // ── Lern-Protokoll (nur auf dem Gerät) und Eltern-Bericht ──
+    val parentText by prefs.parentLink.collectAsState()
+    val pairing = remember(parentText) { de.raumlicht.core.model.Eltern.Pairing.decode(parentText) }
+    var parentStatus by remember { mutableStateOf<String?>(null) }
+    // Bericht bauen, verschlüsseln lassen und hochladen – frühestens alle 10 Minuten, außer es wird ausdrücklich verlangt
+    fun sendReport(force: Boolean) { val p = de.raumlicht.core.model.Eltern.Pairing.decode(prefs.parentLink.value) ?: return; val e = eltern ?: return
+        val now = de.raumlicht.app.ui.fx.nowMillis(); if (!force && now - prefs.parentSent < de.raumlicht.core.model.Eltern.MIN_GAP_MS) return
+        prefs.parentSent = now
+        val json = de.raumlicht.core.model.Eltern.report(p.name, stars.value, prefs.learnLog, de.raumlicht.core.model.Plan.decode(prefs.plan.value), today(), now)
+        e.send(de.raumlicht.core.model.Eltern.uploadUrl(p, e.server), p.write, p.key, json) { status ->
+            parentStatus = when (status) { 204, 200 -> "✓ Bericht gesendet"; 0 -> "Keine Verbindung – der Bericht wird beim nächsten Mal gesendet."; else -> "Der Bericht ließ sich gerade nicht senden (Fehler $status)." }
+            if (status != 204 && status != 200) prefs.parentSent = 0 } }
+    // Jede gelöste Aufgabe ins Lern-Protokoll; danach ggf. den Bericht auffrischen
+    @Suppress("NAME_SHADOWING") val record: (String, Int, Int) -> Unit = { id, s, a -> record(id, s, a)
+        prefs.learnLog = de.raumlicht.core.model.Eltern.add(prefs.learnLog, today(), tasks = 1, right = if (s == 3) 1 else 0); sendReport(false) }
+    // Lernzeit: jede volle Minute in einer Aufgabe oder Übung zählt
+    LaunchedEffect(nav.top) { if (Routes.isAction(nav.top)) while (true) { kotlinx.coroutines.delay(60_000); prefs.learnLog = de.raumlicht.core.model.Eltern.add(prefs.learnLog, today(), min = 1) } else sendReport(false) }
     val countOn by prefs.countUsage.collectAsState(); val hintsOn by prefs.tutorHints.collectAsState()
     // Zählen: nur mit eingeschaltetem Schalter, nur Ereignisse von der Liste – sonst geschieht nichts
     val count: (String, String?, String?) -> Unit = { ev, place, topic -> if (prefs.countUsage.value) de.raumlicht.core.model.Zaehler.body(ev, place, topic, version)?.let { countSend?.invoke(it) } }
@@ -161,6 +181,7 @@ fun AppRoot(
         de.raumlicht.app.ui.settings.LocalKiEntry provides (if (kiShown) de.raumlicht.app.ui.settings.KiEntryState({ nav.go(Routes.KI) }, kiLast, today()) else null),
         de.raumlicht.app.ui.fx.LocalCount provides count,
         de.raumlicht.app.ui.settings.LocalOffers provides (if (offers) de.raumlicht.app.ui.settings.OffersChoice(countOn, prefs::setCountUsage, hintsOn, prefs::setTutorHints) else null),
+        de.raumlicht.app.ui.settings.LocalElternEntry provides (if (eltern != null) de.raumlicht.app.ui.settings.ElternEntryState({ nav.go(Routes.PARENTS) }, pairing != null) else null),
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
         // Erkennungsmelodie: einmal je Sitzung, bei der ersten Berührung (nie vorher) – leise, damit sie niemanden erschreckt
         val jingle = de.raumlicht.app.ui.fx.LocalSfx.current
@@ -240,7 +261,7 @@ fun AppRoot(
                         BackstageEntry("📓", "Formelsammlung", "alle Formeln – mit Sprung zu den passenden Aufgaben", Q.Green, "Werkzeuge") { nav.go(Routes.SHEET) },
                         BackstageEntry("🎨", "Lux gestalten", "${Skins.unlocked(tourStars).size} von ${Skins.all.size} Farben frei · Leuchtspur und Aufsatz", Q.Cyan, "Für dich") { nav.go(Routes.WORKSHOP) },
                         BackstageEntry("🏅", "Erfolge", "${badges.count { it.earned }} von ${badges.size} verdient", Q.Yellow, "Für dich") { nav.go(Routes.BADGES) },
-                    ), back)
+                    ) + de.raumlicht.core.model.Soon.topics.map { t -> BackstageEntry(t.emoji, t.title, t.sub, Q.Muted, "Kommt bald") { } }, back)
                 }
                 Routes.EXAMS -> if (parts.size == 1) ExamPicker(Exams.all, exams, { e, timed -> nav.go(Routes.exam(e.id, timed)) }, onBack = back) else {
                     val exam = Exams.byId(parts[1])
@@ -298,6 +319,10 @@ fun AppRoot(
                 Routes.BADGES -> BadgesScreen(badges, back)
                 Routes.SETTINGS -> settings(back)
                 Routes.PRO -> de.raumlicht.app.ui.settings.ProScreen(null, proActive, proEnabled, enterCode, back)
+                Routes.PARENTS -> if (eltern == null) LaunchedEffect(Unit) { nav.back() } else de.raumlicht.app.ui.settings.ElternScreen(pairing, eltern.page, parentStatus,
+                    onPair = { name -> de.raumlicht.core.model.Eltern.Pairing.fresh(eltern.create(), name)?.let { p -> prefs.setParentLink(p.encode()); parentStatus = null; sendReport(true) } },
+                    onUnpair = { pairing?.let { p -> eltern.remove(de.raumlicht.core.model.Eltern.uploadUrl(p, eltern.server), p.write) { } }; prefs.setParentLink(""); prefs.parentSent = 0; parentStatus = null },
+                    onSendNow = { sendReport(true) }, onBack = back)
                 Routes.KI -> if (kiSend == null) LaunchedEffect(Unit) { nav.back() } else de.raumlicht.app.ui.settings.KiScreen(kiLast, today(), enterKi, back)
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }
             }

@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.25 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.26 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -42,6 +42,12 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
    Aufrufe keine IP-Adressen. *[Rechtsgrundlage eintragen; bestätigen, dass das Zugriffsprotokoll für diesen Pfad abgeschaltet ist.]*
 6. **Hinweise auf unsere Nachhilfe (ab 2.18.22, abschaltbar).** Im „Lernstand“ kann ein sachlicher Hinweis auf eine kostenlose Probestunde erscheinen, wenn ein Themengebiet noch nicht sicher sitzt.
    Ob er erscheint, entscheidet die App allein auf dem Gerät. Erst wer den Link antippt, öffnet unsere Website; die Adresse enthält dann die Herkunft (`src=raumlicht-lernstand`) und das Themengebiet.
+7. **Eltern-Handy koppeln (freiwillig, ab 2.18.26).** Wer in der WebApp „Eltern-Handy koppeln“ wählt, teilt einen Bericht über den eigenen Lernstand mit den Eltern: Lernzeit und aktive Tage der letzten
+   zwei Wochen, Zahl der gelösten Aufgaben und Anteil beim ersten Versuch, Fortschritt je Themengebiet, Stärken und Schwächen, gegebenenfalls ein selbst eingetragener Klausurtermin und ein frei gewählter Spitzname.
+   Der Bericht wird im Browser verschlüsselt (AES-GCM, 256 Bit) und so auf unserem Server `trainer.mathenachhilfe-online.com` abgelegt; der Schlüssel steckt nur im Link bzw. QR-Code für die Eltern
+   und wird nie an einen Server übertragen. Wir können den Bericht nicht lesen. Lesen kann ihn, wer den Link hat. Die Kopplung lässt sich in der App jederzeit aufheben; dabei wird der Bericht gelöscht.
+   Ohne Aktualisierung löscht der Server ihn nach 90 Tagen. Damit der Bericht Lernzeit und Sitzungen nennen kann, führt die App ein Lern-Protokoll je Tag – nur auf dem Gerät, auch ohne Kopplung.
+   *[Rechtsgrundlage (Einwilligung der Nutzerin bzw. des Nutzers; bei Minderjährigen prüfen), Speicherort und Löschkonzept bestätigen.]*
 
 ## Noch offen (nicht Teil des Textes)
 

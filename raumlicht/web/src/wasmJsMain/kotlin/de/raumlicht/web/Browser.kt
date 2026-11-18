@@ -31,6 +31,25 @@ fun installNow(): Unit = js("{ var I = window.__rlInstall; if (I && I.prompt) { 
 /** Zählaufruf abschicken: ohne Cookies, ohne auf die Antwort zu warten; Fehler bleiben ohne Folgen. „text/plain“, damit der Browser keine Vorab-Anfrage braucht. */
 // Auf dem eigenen Rechner (automatische Prüfungen) wird nicht gezählt – sonst landeten Testläufe in der echten Statistik.
 fun beacon(url: String, body: String): Unit = js("{ try { if ((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && !window.__rlZaehleLokal) return; fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true, referrerPolicy: 'no-referrer' }).catch(function () {}); } catch (e) {} }")
+// ── „Eltern-Handy koppeln“: Zufallswerte, Verschlüsselung (AES-GCM 256, 12 Byte IV) und Hochladen – alles im Browser, der Schlüssel verlässt ihn nie ──
+/** Frische Zufallswerte „id.schreib.key“ (16, 16 und 32 Byte, base64url ohne Auffüllzeichen) */
+fun elternNeu(): String = js("""(function () { function r(n) { var a = crypto.getRandomValues(new Uint8Array(n)), s = ''; for (var i = 0; i < n; i++) s += String.fromCharCode(a[i]);
+    return btoa(s).split('+').join('-').split('/').join('_').split('=').join(''); } return r(16) + '.' + r(16) + '.' + r(32); })()""")
+/** Verschlüsselt [json] mit [key] und lädt „<iv>.<verschlüsselt>“ hoch; [done] bekommt den Status (0 = keine Verbindung oder Verschlüsselung nicht möglich) */
+fun elternSenden(url: String, schreib: String, key: String, json: String, done: (Int) -> Unit): Unit = js("""{
+    try {
+        var b64 = function (u8) { var s = ''; for (var i = 0; i < u8.length; i++) s += String.fromCharCode(u8[i]); return btoa(s).split('+').join('-').split('/').join('_').split('=').join(''); };
+        var bin = atob(key.split('-').join('+').split('_').join('/')), raw = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) raw[i] = bin.charCodeAt(i);
+        var iv = crypto.getRandomValues(new Uint8Array(12));
+        crypto.subtle.importKey('raw', raw, 'AES-GCM', false, ['encrypt'])
+            .then(function (k) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, new TextEncoder().encode(json)); })
+            .then(function (ct) { return fetch(url, { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Schreib': schreib }, body: b64(iv) + '.' + b64(new Uint8Array(ct)), credentials: 'omit', referrerPolicy: 'no-referrer' }); })
+            .then(function (r) { done(r.status); }, function () { done(0); });
+    } catch (e) { done(0); }
+}""")
+fun elternLoeschen(url: String, schreib: String, done: (Int) -> Unit): Unit = js("{ try { fetch(url, { method: 'DELETE', headers: { 'X-Schreib': schreib }, credentials: 'omit', referrerPolicy: 'no-referrer' }).then(function (r) { done(r.status); }, function () { done(0); }); } catch (e) { done(0); } }")
+/** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer Eltern-Server (window.__rlElternServer), sonst null */
+fun elternServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlElternServer) || null")
 fun hostName(): String = js("location.hostname")
 /** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer KI-Server (window.__rlKiServer), sonst null */
 fun kiServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlKiServer) || null")

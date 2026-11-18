@@ -2,6 +2,26 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.26: Eltern-Handy koppeln, Lehrplan-Abgleich, Prüfplan, „Kommt bald“
+
+Marcel hat alle vier Punkte direkt bestätigt. **Raumlicht 2.18.26 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.
+
+**Eltern-Handy koppeln** (Einstellungen → „Eltern-Handy koppeln“, Ziel `eltern`)
+- (1) Knopf erzeugt `id` (16 Byte), `schreib` (16 Byte), `key` (32 Byte) mit `crypto.getRandomValues`, base64url ohne Padding (22/22/43 Zeichen); nur lokal gespeichert. QR-Code (eigener Erzeuger im Rechenkern, gegen eine Referenz geprüft) und „Link teilen“. Feld „Spitzname“ (freiwillig, höchstens 20 Zeichen).
+- (2) Bericht als JSON nach deinem Format, im Browser mit AES-GCM-256 und 12-Byte-IV verschlüsselt, `PUT …/eltern/v1/b/<id>`, `X-Schreib`, `text/plain`, Body `<iv>.<ciphertext>`. Nach jeder gelösten Aufgabe und beim Verlassen einer Aufgabe, frühestens alle 10 Minuten; beim Koppeln und auf Knopfdruck sofort.
+- (3) „Kopplung aufheben“ → `DELETE` mit `X-Schreib`, Werte lokal gelöscht.
+- (4) Rundlauf-Test `scene/test/web-eltern.mjs`: 16 von 16 in beiden Fassungen – Upload ohne Cookie, Server sieht weder Klartext noch Schlüssel, Entschlüsseln mit dem Schlüssel aus dem Link klappt, mit falschem Schlüssel nicht.
+- Gegen den echten **trainer-test** geprüft (ohne echten Bericht): `OPTIONS` 204, `PUT` 204, `PUT` mit fremdem Schreib-Geheimnis 403, `DELETE` 204. Auch **trainer** (live) antwortet auf `OPTIONS` mit 204.
+- Stufen: raumlicht-test → `trainer-test` und `https://staging.mathenachhilfe-online.com/eltern-bericht/#<id>.<key>`; live → `trainer` und `www`.
+- **Berichtsfelder:** `format, app, appName, name?, stand, zeitraum („letzte 14 Tage“), lernzeitMin, tageAktiv, aufgaben, richtigProzent?, staerken[], schwach[] (mit tipp), fortschritt[] (je Gebiet), letzte[] (bis 5 Tage), klassenarbeit? {tag, thema?}, hinweis`. **`klasse` sende ich nicht** (Raumlicht kennt sie nicht). `thema`: `vektoren`, `analysis`, `stochastik`.
+  „richtig“ heißt bei Raumlicht: beim ersten Versuch gelöst. Lernzeit zählt Minuten in Aufgaben und Übungen (neu erfasst seit dieser Version, nur auf dem Gerät – ältere Tage fehlen also).
+- Raumlicht ist Oberstufe: Die Seite spricht die Schülerin bzw. den Schüler an („Du entscheidest, ob deine Eltern mitlesen“) und sagt, dass jeder mit dem Link lesen kann. Datenschutz-Vorschlag: `store/datenschutz-abschnitt.md`, Punkt 7 (Einwilligung bei Minderjährigen bitte prüfen lassen).
+- **Nicht geprüft:** deine Eltern-Seite mit einem echten Bericht aus der App (bitte gegenprüfen), und alles auf echten Geräten.
+
+**Lehrplan-Abgleich:** `raumlicht/LEHRPLAN-ABGLEICH.md` – BY, BW, NW, NI, HE und KMK im Original gelesen (Lücken dort benannt), Liste „Thema → Lehrplan → in der App“, Reihenfolge für die nächsten Inhalte. Die sechs obersten stehen in der App als „Kommt bald“ (Seite „Mehr“, ohne Datum, ohne Kaufhinweis): LGS/Gauß, Unabhängigkeit, Zufallsgrößen, Normalverteilung, Sinus/Kosinus, Funktionenscharen.
+
+**Dauerregel:** `raumlicht/PRUEFPLAN.md` liegt im Repo (vier Blöcke, rollierend; November: Geometrie I, Kapitel 1–8). In dieser Sitzung sind zwei geplante Aufgaben eingerichtet: mittwochs 8:47 Uhr neuer Inhalt, am 24. jedes Monats 9:41 Uhr Monatsprüfung. Erster Lauf: Monatsprüfung am 24.11., neuer Inhalt am 25.11.
+
 ## 18.11.2026 – Raumlicht 2.18.25: Theorie-Prüfung, Formel-Kasten, neues Kapitel 26, drei weitere Zähl-Ereignisse
 
 Marcel hat direkt bestätigt („alles“). **Raumlicht 2.18.25 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.

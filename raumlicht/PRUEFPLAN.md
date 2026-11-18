@@ -41,6 +41,7 @@ So ist jeder Teil dreimal im Jahr gründlich dran.
 
 | Monat | Neuer Inhalt | Version |
 |---|---|---|
+| November 2026 | Eltern-Handy koppeln (Bericht, QR-Code), „Kommt bald“-Kacheln, Lern-Protokoll | 2.18.26 |
 | November 2026 | Kapitel 26 „HNF, Abstände & Winkel“ (8 Aufgaben), 5 neue Theorie-Karten, Formel-Kasten in allen Karten | 2.18.25 |
 
 ## Protokoll
