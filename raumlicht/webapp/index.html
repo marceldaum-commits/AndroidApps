@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-version="2.18.17">
+<html lang="de" data-version="2.18.18">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -41,7 +41,7 @@
   </svg>
   <b>RAUMLICHT</b>
   <div id="balken"><i></i></div>
-  <span id="start-text">lädt … Version 2.18.17 vom 18.11.2026</span>
+  <span id="start-text">lädt … Version 2.18.18 vom 18.11.2026</span>
 </div>
 <div id="app"></div>
 <a id="hilfe" href="diagnose.html">Kein Bild zu sehen? Hier tippen</a>
@@ -77,8 +77,21 @@
     window.addEventListener('unhandledrejection', function (e) { note('abgelehnt', [e.reason]); });
     window.addEventListener('webglcontextlost', function (e) { note('grafik', ['Grafik-Kontext verloren']); }, true);
     window.__rlNote = function (text) { note('info', [text]); };
+    // Schrittprotokoll: Jeder Schritt des Starts wird sofort gespeichert (übersteht einen Absturz) und mit „?diag=1“ auch sichtbar mitgeschrieben.
+    var diag = /[?&]diag=1/.test(location.search), box = null, t0 = Date.now();
+    window.__rlSchritt = function (text) { note('schritt', [text + ' (+' + (Date.now() - t0) + ' ms)']);
+      if (!diag) return;
+      if (!box) { box = document.createElement('pre'); box.id = 'schritte';
+        box.style.cssText = 'position:fixed;left:8px;right:8px;top:8px;z-index:70;margin:0;max-height:46vh;overflow:auto;background:rgba(0,0,0,.82);color:#9CFFB0;font:12px/1.35 ui-monospace,Menlo,monospace;padding:8px 10px;border-radius:10px;white-space:pre-wrap;pointer-events:none';
+        (document.body || document.documentElement).appendChild(box); }
+      box.textContent += (box.textContent ? '\n' : 'Raumlicht ' + document.documentElement.dataset.version + ' · Schrittprotokoll\n') + '+' + (Date.now() - t0) + ' ms  ' + text; };
+    // Was beim letzten Mal vor dem Abbruch zuletzt geschah (für die Meldung auf dem Ladebild und für „?diag=1“)
+    window.__rlVorher = ''; try { if (window.__rlAbsturz || diag) window.__rlVorher = localStorage.getItem('raumlicht.mitschrift.absturz') || ''; } catch (e) {}
     note('info', ['Start ' + document.documentElement.dataset.version + ' ' + location.search + ' ' + innerWidth + 'x' + innerHeight + ' @' + devicePixelRatio]);
     if (window.__rlAbsturz) note('absturz', ['Die Seite wurde beim letzten Mal vom Gerät beendet (Nr. ' + window.__rlAbsturz + ' in Folge)']);
+    window.__rlSchritt('Seite gelesen, Skripte laufen');
+    if (window.__rlVorher && (window.__rlAbsturz || diag)) { var steps = window.__rlVorher.split('\n').filter(function (l) { return / schritt /.test(l); });
+      if (steps.length) { window.__rlLetzter = steps[steps.length - 1].replace(/^\S+ schritt /, ''); window.__rlSchritt('Beim letzten Abbruch kam Raumlicht bis: ' + window.__rlLetzter); } }
   })();
   // iPad: Dort blieb das Bild weiß, während es auf dem iPhone (gleiche Browser-Technik, kleinere Zeichenfläche) läuft. Darum zeichnet die Oberfläche auf iPads
   // mit höchstens so vielen Bildpunkten wie auf einem iPhone (rund 3 Millionen) – etwas weniger scharf, dafür sichtbar. Zum Prüfen: ?ohne=schaerfe (einfache Schärfe), ?mit=schaerfe (unbegrenzt).
@@ -141,7 +154,7 @@
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed('WebAssembly-Prüfung: ' + e); }
   // ── Laden mit echtem Fortschritt: Der App-Kern (.wasm) und die Schriften werden sofort angefordert – nicht erst, wenn raumlicht.js sie verlangt –
   //    und jedes ankommende Byte bewegt den Balken. Die Größen (entpackt) trägt der Bau hier ein.
-  var PLAN = { "bccfa839aa4b38489c76.wasm": 8405319, "f042718782e87ffa982a.wasm": 5917176, "fonts/dejavu_sans.ttf": 122552, "fonts/noto_color_emoji.ttf": 270612, "raumlicht.js": 596566 }, got = {}, total = 0, early = {}, slow = false;
+  var PLAN = { "3a082e696273bbf923d0.wasm": 5917176, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 122552, "fonts/noto_color_emoji.ttf": 270612, "raumlicht.js": 596649 }, got = {}, total = 0, early = {}, slow = false;
   for (var k in PLAN) total += PLAN[k];
   window.__rlStage = function () { var f = document.getElementById('stage'); if (f && !f.getAttribute('src')) f.src = f.getAttribute('data-src'); };
   function progress() {
@@ -153,19 +166,40 @@
   }
   function keyOf(u) { u = String(u).split('?')[0]; for (var k in PLAN) if (u === k || u.slice(-k.length - 1) === '/' + k) return k; return null; }
   var realFetch = window.fetch;
+  // Wann eine Datei ganz angekommen ist (für das Laden nacheinander und fürs Schrittprotokoll)
+  var arrived = {}, whenArrived = {};
+  function arrive(key) { if (arrived[key]) { window.__rlSchritt(key.replace(/^[0-9a-f]{12,}\./, 'Kern ') + ' angekommen'); var f = arrived[key]; delete arrived[key]; f(); } }
   function tracked(key, input, init) {
+    if (!whenArrived[key]) whenArrived[key] = new Promise(function (ok) { arrived[key] = ok; });
     return realFetch.call(window, input, init).then(function (r) {
-      if (!r.ok || !r.body || typeof ReadableStream !== 'function') { if (r.ok) { got[key] = PLAN[key]; progress(); } return r; }
+      if (!r.ok || !r.body || typeof ReadableStream !== 'function') { if (r.ok) { got[key] = PLAN[key]; progress(); } arrive(key); return r; }
       var reader = r.body.getReader();
       // sofort und ohne Pause lesen (nicht erst, wenn die App die Datei abholt) – so läuft der Download durch und der Balken stimmt
       var stream = new ReadableStream({
-        start: function (c) { (function next() { reader.read().then(function (x) { if (x.done) { got[key] = PLAN[key]; progress(); c.close(); } else { got[key] = (got[key] || 0) + x.value.byteLength; progress(); c.enqueue(x.value); next(); } }, function (e) { c.error(e); }); })(); },
+        start: function (c) { (function next() { reader.read().then(function (x) { if (x.done) { got[key] = PLAN[key]; progress(); c.close(); arrive(key); } else { got[key] = (got[key] || 0) + x.value.byteLength; progress(); c.enqueue(x.value); next(); } }, function (e) { arrive(key); c.error(e); }); })(); },
         cancel: function (why) { return reader.cancel(why); } }, { highWaterMark: Infinity });
       return new Response(stream, { status: r.status, statusText: r.statusText, headers: r.headers });
     });
   }
+  // Erst das Ladebild malen, dann laden: Alles Schwere (App-Kern, Schriften, raumlicht.js) beginnt erst nach dem ersten gemalten Bild – so ist nie nichts zu sehen.
+  // Auf iPhone und iPad (und mit „?diag=1“) kommen die beiden großen Kern-Dateien nacheinander statt gleichzeitig: weniger Speicher auf einmal.
+  var einzeln = /iPhone|iPad|iPod/.test(navigator.userAgent) || window.__rlIpad || /[?&]diag=1/.test(location.search);
+  function startLoading() {
+    window.__rlSchritt('erstes Bild gemalt, Laden beginnt' + (einzeln ? ' (Kern-Dateien nacheinander)' : ''));
+    if (realFetch) { try { var prev = null;
+      for (var k in PLAN) { if (!/\.(wasm|ttf)$/.test(k)) continue;
+        if (einzeln && /\.wasm$/.test(k) && prev) { early[k] = (function (key, before) { whenArrived[key] = new Promise(function (ok) { arrived[key] = ok; }); return before.then(function () { return tracked(key, key); }); })(k, whenArrived[prev]); }
+        else early[k] = tracked(k, k);
+        if (/\.wasm$/.test(k)) prev = k; } } catch (e) { early = {}; } }
+    var s = document.createElement('script'); s.src = 'raumlicht.js';
+    s.onload = function () { got['raumlicht.js'] = PLAN['raumlicht.js']; progress(); window.__rlSchritt('raumlicht.js geladen'); };
+    s.onerror = function () { startFailed('raumlicht.js kam nicht an'); };
+    document.body.appendChild(s);
+  }
+  (function () { var started = false, go = function () { if (started) return; started = true; startLoading(); };
+    if (window.requestAnimationFrame) requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(go, 0); }); });
+    setTimeout(go, 1200); })();                                             // falls kein Bild gemalt wird (Tab im Hintergrund): trotzdem starten
   if (realFetch) {
-    try { for (var k in PLAN) if (/\.(wasm|ttf)$/.test(k)) early[k] = tracked(k, k); } catch (e) { early = {}; }
     window.fetch = function (input, init) {
       var key = keyOf(typeof input === 'string' ? input : (input && input.url) || '');
       if (key && early[key]) { var p = early[key]; delete early[key]; return p; }
@@ -173,6 +207,9 @@
     };
   }
   setTimeout(function () { slow = true; progress(); }, 25000);
+  // Nach einem Abbruch mitten im Start: auf dem Ladebild sagen, wie weit Raumlicht beim letzten Mal kam
+  if (window.__rlAbsturz && window.__rlLetzter) { var hint = document.createElement('small'); hint.id = 'letzter'; hint.style.cssText = 'color:#FFB45A;max-width:30em;text-align:center;padding:0 16px';
+    hint.textContent = 'Beim letzten Versuch brach der Start hier ab: ' + window.__rlLetzter; document.getElementById('start').appendChild(hint); }
   // iPad: sobald das Ladebild weg ist, 20 Sekunden lang den Diagnose-Knopf zeigen (außer bei den Tests von der Diagnose-Seite – dort immer)
   var watchStart = setInterval(function () { var st = document.getElementById('start'); if (st && st.dataset.fertig !== '1') return; clearInterval(watchStart);
     if (!window.__rlIpad && !/[?&](ohne|mit)=/.test(location.search)) return; var h = document.getElementById('hilfe'); h.style.display = 'block';
@@ -228,6 +265,5 @@
   }
 </script>
 <script src="rl-nova.js" defer></script>
-<script src="raumlicht.js" onload="got['raumlicht.js'] = PLAN['raumlicht.js']; progress();"></script>
 </body>
 </html>

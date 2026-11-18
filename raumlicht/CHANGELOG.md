@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.18 – Start auf dem iPhone: erst das Bild, dann laden (18.11.2026)
+- **Das Ladebild erscheint jetzt immer zuerst.** Alles Schwere wird erst danach geholt – so ist beim Öffnen nie nichts zu sehen.
+- **iPhone und iPad laden die beiden großen Teile der App nacheinander** statt gleichzeitig. Das braucht weniger Speicher auf einmal.
+- **Schrittprotokoll für die Fehlersuche:** Hängt man `?diag=1` an die Adresse, schreibt Raumlicht beim Start jeden Schritt sichtbar mit. Bricht ein Start ab, steht beim nächsten Öffnen auf dem Ladebild, wie weit er kam.
+
 ## 2.18.17 – iPad und iPhone: gestrichelte Linien abgesichert (18.11.2026)
 - Auf iPads mit neuem Safari kann die Zeichenbibliothek manche Muster nicht anlegen. Für Farbverläufe gab es schon einen Ersatz; jetzt auch für gestrichelte Linien. Betroffen waren „Binomial-Labor“, „Zufallsmaschine“ und „Geisterfahrt“ – dort konnte der Bildschirm leer bleiben. Die Linien sind auf solchen Geräten jetzt durchgezogen.
 

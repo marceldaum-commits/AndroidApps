@@ -2,6 +2,17 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.18: Schrittprotokoll, erst malen dann laden, Kern nacheinander
+
+**Raumlicht 2.18.18 vom 18.11.2026 – nur Web-App**, auf raumlicht-test. Deine drei Punkte:
+- **a) Schrittprotokoll:** `window.__rlSchritt` schreibt jeden Schritt sofort in `localStorage` (`raumlicht.mitschrift`, Zeilen „schritt …“ mit Millisekunden): Seite gelesen → erstes Bild gemalt → jede Kern-Datei angekommen → raumlicht.js geladen → Oberfläche sichtbar.
+  Mit **`?diag=1`** steht es live im Bild (grüner Kasten oben). Nach einem Abbruch (Merker `rl-lauf`) bleibt die Mitschrift als `raumlicht.mitschrift.absturz` erhalten; das Ladebild sagt dann „Beim letzten Versuch brach der Start hier ab: …“, `?diag=1` und `diagnose.html` zeigen alles.
+- **b) Lader zuerst:** Kern-Dateien, Schriften und `raumlicht.js` starten erst nach zwei `requestAnimationFrame` (Notnagel 1,2 s, falls nichts gemalt wird). `raumlicht.js` wird dafür per Skript eingehängt statt fest im HTML.
+- **c) Wasm nacheinander:** auf iPhone/iPad und mit `?diag=1` beginnt die zweite Kern-Datei erst, wenn die erste ganz da ist; sonst weiter gleichzeitig.
+- Beleg: `scene/test/web-diag.mjs` 7 von 7 (Reihenfolge der Schritte, zweite Datei 31 ms nach Ende der ersten laut Server, Abbruch-Hinweis). Übrige Browser-Tests grün.
+- **Einordnung:** „Sofort komplett weiß, nicht einmal der Lader“ passt nicht zu unserem HTML (dunkler Hintergrund im `<style>` im Kopf, vor jedem Skript). Wenn 2.18.18 auf dem iPhone mit `?diag=1` wieder ganz weiß bleibt und danach auch kein Abbruch-Hinweis erscheint, läuft dort **gar kein** Skript von uns – dann liegt es vor der Seite (Auslieferung an genau dieses Gerät, Inhaltsblocker, Profil) und nicht an Wasm oder Grafik. Erscheint der Kasten, sagt die letzte Zeile, wo es reißt.
+- Bitte Marcel auf dem iPhone öffnen lassen: `https://raumlicht-test.mathenachhilfe-online.com/?diag=1`
+
 ## 18.11.2026 – Raumlicht 2.18.17: erster Befund vom echten Gerät (iPad, Safari 27.2)
 
 **Raumlicht 2.18.17 vom 18.11.2026 – nur Web-App.** Marcel hat die Diagnose-Seite geschickt – von einem **iPad** im Desktop-Modus (Safari 27.2, 1590 × 1060, Apple GPU), noch mit 2.18.15 geladen.
