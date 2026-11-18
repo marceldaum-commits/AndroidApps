@@ -71,3 +71,8 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 - „2–3 Apps Vorrang pro Woche“: einverstanden.
 
 **Bis zur Entscheidung am Montag:** Raumlicht fängt nichts Neues in Analysis und Stochastik an. Fr 20.11. nur Räumliches (LGS & Gauß als drei Ebenen, Schattenwurf/Körper im Raum).
+
+### Nachträge (18.11.2026, 22:38 Uhr)
+
+- **KurvenFlug-Links jetzt mit Namen statt Nummer** (ab Fr 20.11.): `https://kurvenflug.mathenachhilfe-online.com/#kapitel=<name>`. Namen: `koordinaten`, `brueche`, `winkel`, `massstab`, `zuordnungen`, `geraden`, `prozent`, `rendezvous`, `pythagoras`, `parabeln`, `nullstellen`, `trigonometrie`, `wellen`, `verschobene-wellen`, `potenzfunktionen`, `logarithmus`, `weg-zeit`, `beschleunigung`, `wurf`, `waagerechter-wurf`, `schleuder`, `energie`, `laser`, `lichtbrechung`, `terme`. **Keine Links auf KurvenFlugs Oberstufen-Kapitel** – sie fallen voraussichtlich weg.
+- **Zweite Ansage von „Geld verdienen“ (beruft sich auf Marcel):** Bestand ist kein Bestandsschutz; die 52 klassischen Analysis-/Stochastik-Aufgaben von Raumlicht sollen heraus (an den Mathe-Trainer, soweit er sie nicht hat, sonst streichen), die Erlebnis-Bereiche als eigener Bereich „Analysis & Zufall erleben“ bleiben. **Nicht umgesetzt – wartet auf Marcels direkte Entscheidung.** Offene Punkte dazu: Folgen für Raumlicht Pro (ein Teil der Kapitel ist Bezahl-Inhalt), Abi-Prüfungsaufgaben/Pflichtteil/Tagesaufgabe ziehen aus allen drei Gebieten, „Rotationskörper“ ist räumlich und sollte bleiben. Bis zur Entscheidung wird nichts gestrichen.
