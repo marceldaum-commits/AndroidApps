@@ -65,7 +65,22 @@ Der Gegen-Link des Mathe-Trainers folgt nach dem 23.11.
 
 Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `#paket=gs-einmaleins`, sobald der Leitstand den Wortlaut freigibt.
 
-**Experimentopia:** Kennungen `#thema=…` angefragt, Antwort steht aus.
+**Experimentopia** („Ausprobieren in Experimentopia“; Link `https://experimentopia.mathenachhilfe-online.com/#thema=<id>`, Test-Stufe `experimentopia-test.`, eingebaut bis Fr 20.11.):
+- Wasser für Klasse 3–4 baut Experimentopia in den nächsten zwei Wochen nicht aus. Unser Update „Winter, Wetter, Wasser“ bleibt deshalb am Di 24.11.
+
+| Unser Paket | Thema bei Experimentopia |
+|---|---|
+| s1-physik-strom | physik-elektrizitaet |
+| gs-wetter-jahreszeiten (und „Winter, Wetter, Wasser“) | physik-waerme |
+| s1-chemie-saeuren-basen | chemie-saeuren-laugen |
+| s1-chemie-grundbegriffe | chemie-stoffe |
+| s1-bio-pflanzen, s1-bio-oekologie, gs-pflanzen-wald | biologie-oekologie |
+| s1-bio-zelle-mensch | biologie-zellen |
+| s1-bio-organe, gs-koerper-natur | biologie-koerper |
+| gs-gesund-ernaehrung | biologie-ernaehrung |
+| s1-physik-einheiten-formeln | physik-mechanik |
+
+- Experimentopia verlinkt umgekehrt mit „Begriffe wiederholen im Wissensgarten“ auf `#paket=…`.
 
 **Wortlaut und Zählung (`src=…`) der App-zu-App-Links** stimmen wir mit dem Leitstand ab. Vorschlag: `src=wissensgarten-theorie`.
 
