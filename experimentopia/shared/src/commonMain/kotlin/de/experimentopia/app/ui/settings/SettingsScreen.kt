@@ -42,6 +42,8 @@ fun SettingsScreen(
     onAudio: (AudioPrefs) -> Unit = {},
     /** Forscher-Pass freigeschaltet */
     pass: Boolean = false,
+    /** Karte „Eltern-Handy koppeln“ (nur WebApp) */
+    parents: @Composable () -> Unit = {},
 ) {
     var confirm by remember { mutableStateOf(false) }
     Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -64,6 +66,7 @@ fun SettingsScreen(
                 Text("Noch nicht freigeschaltet. Einmalig ${Pro.WEB_PRICE}, kein Abo – gilt in der Web-App.", color = E.Muted, fontSize = 13.sp)
                 GlowButton(onPro, color = E.Sun) { Text("Was ist im Forscher-Pass?") }
             }
+            parents()
             Panel(Modifier.fillMaxWidth()) {
                 Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = E.Mint)
                 Text(privacy, fontSize = 13.sp, color = E.Text)

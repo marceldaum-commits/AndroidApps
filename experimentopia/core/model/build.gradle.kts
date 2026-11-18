@@ -10,7 +10,7 @@ kotlin {
     js { browser() }   // Ersatz für Browser, die Kotlin/Wasm nicht verarbeiten (Safari 27)
     sourceSets {
         commonMain.dependencies { api("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"); api("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2") }
-        jvmTest.dependencies { implementation("junit:junit:4.13.2") }
+        jvmTest.dependencies { implementation("junit:junit:4.13.2"); implementation("com.google.zxing:core:3.5.3"); implementation("com.google.zxing:javase:3.5.3") }
     }
 }
 

@@ -73,3 +73,13 @@ fun dropOldVoice(): Unit = js("(function () { try { if (window.caches) caches.de
 // ── Forscher-Pass: Freischalt-Link „…/?pro=EX…“ lesen und die Adresse danach aufräumen
 fun locationSearch(): String = js("decodeURIComponent(window.location.search || '')")
 fun clearSearch(): Unit = js("(function () { try { history.replaceState(history.state, '', location.pathname); } catch (e) {} })()")
+
+// ── Eltern-Kopplung: sichere Zufallszahlen, HTTP zum Eltern-Server, Teilen
+/** [n] Zufallsbytes aus crypto.getRandomValues als Hex-Text */
+fun randomHex(n: Int): String = js("(function () { var a = new Uint8Array(n); crypto.getRandomValues(a); var s = ''; for (var i = 0; i < a.length; i++) s += (a[i] < 16 ? '0' : '') + a[i].toString(16); return s; })()")
+/** PUT/DELETE mit X-Schreib; done(Status) – 0 bei Netzfehler */
+fun httpSend(method: String, url: String, write: String, body: String, done: (Int) -> Unit): Unit = js("(function () { try { var o = { method: method, headers: { 'X-Schreib': write }, cache: 'no-store' }; if (body) { o.body = body; o.headers['Content-Type'] = 'text/plain'; } fetch(url, o).then(function (r) { done(r.status); }).catch(function () { done(0); }); } catch (e) { done(0); } })()")
+/** Teilen-Menü des Geräts, sonst in die Zwischenablage; done("geteilt" | "kopiert" | "") */
+fun shareLink(title: String, url: String, done: (String) -> Unit): Unit = js("(function () { var copy = function () { try { navigator.clipboard.writeText(url).then(function () { done('kopiert'); }, function () { done(''); }); } catch (e) { done(''); } }; if (navigator.share) { navigator.share({ title: title, url: url }).then(function () { done('geteilt'); }, function (e) { if (e && e.name === 'AbortError') done(''); else copy(); }); } else copy(); })()")
+/** Zeitzone: Minuten östlich von UTC */
+fun tzOffsetMin(): Int = js("-new Date().getTimezoneOffset()")

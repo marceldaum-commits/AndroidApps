@@ -141,6 +141,10 @@ fun AppRoot(
     var celebrate by remember { mutableStateOf<List<Badge>>(emptyList()) }
     LaunchedEffect(stats) { val n = state.newBadges(stats); if (n.isNotEmpty()) celebrate = n }
     LaunchedEffect(nav.top) { onRoute(nav.top) }
+    // Eltern-Kopplung (nur, wo die Plattform sie anbietet)
+    val parentSync = LocalParentSync.current
+    val parents = remember(parentSync) { parentSync?.let { de.experimentopia.app.ui.settings.ParentCoupling(it) } }
+    de.experimentopia.app.ui.settings.ParentAutoUpload(parents, stars, journal, grade)
     fun open(e: Experiment, daily: Boolean = false) { if (!daily && state.locked(e)) nav.go(Route.ProR(e.title)) else nav.go(Route.Exp(e.id, daily)) }
 
     CompositionLocalProvider(LocalReadOn provides (audio.read && de.experimentopia.core.model.Nova.ENABLED), LocalAutoRead provides (audio.autoRead && de.experimentopia.core.model.Nova.ENABLED)) {
@@ -188,6 +192,7 @@ fun AppRoot(
                         onReset = state::reset, onPro = { nav.go(Route.ProR("Alles")) }, onBack = { nav.back() },
                         top = settingsTop, privacy = privacy ?: de.experimentopia.app.ui.settings.DEFAULT_PRIVACY,
                         audio = audio, onAudio = state.prefs::setAudio, pass = pass,
+                        parents = { de.experimentopia.app.ui.settings.ParentCard(parents, state.todayDay()) { parents?.upload(stars, journal, grade) } },
                     )
                 }
             }

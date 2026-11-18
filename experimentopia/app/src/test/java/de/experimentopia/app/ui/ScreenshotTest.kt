@@ -94,7 +94,7 @@ class ScreenshotTest {
     }
     @Test fun install() = shot("70_app_installieren", settle = 1500, prepare = { it.onNodeWithText("📲 App installieren").performClick() }) {
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalInstaller provides FakeInstaller) {
-            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp)) { de.experimentopia.app.ui.common.InstallCard() }
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.common.InstallCard() }
         }
     }
     @Test fun done() = shot("08_geschafft", settle = 2500) { ExperimentScreen(Catalog.byId("w5")!!, {}, {}, {}, startPhase = Phase.DONE, startGuess = 0) }
@@ -194,6 +194,29 @@ class ScreenshotTest {
         }
     }
     @Test fun pro() = shot("37_forscher_pass") { ProScreen("Knallgas") {} }
+    @Test fun parentsNew() = shot("78_eltern_koppeln", prepare = { r -> r.reveal { r.onNodeWithTag("eltern_koppeln") } }) {
+        val sync = FakeParents(null)
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalParentSync provides sync) {
+            SettingsScreen(true, {}, true, {}, 5, {}, "2.8.0", "18.11.2026", {}, {}, {}, parents = { de.experimentopia.app.ui.settings.ParentCard(de.experimentopia.app.ui.settings.ParentCoupling(sync), 20_600) {} })
+        }
+    }
+    @Test fun parentsLinked() = shot("79_eltern_qr", prepare = { r -> r.onNodeWithTag("eltern_zeigen").performClick(); r.mainClock.advanceTimeBy(800); r.reveal { r.onNodeWithTag("eltern_teilen") } }) {
+        val link = ParentLink("AAAAAAAAAAAAAAAAAAAAAA", "BBBBBBBBBBBBBBBBBBBBBB", "C".repeat(43), test = true, nickname = "Mia", sentAt = 1_795_535_000_000)
+        val sync = FakeParents(link.encode())
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalParentSync provides sync) {
+            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) { de.experimentopia.app.ui.settings.ParentCard(de.experimentopia.app.ui.settings.ParentCoupling(sync), 20_600) {} }
+        }
+    }
+}
+
+/** Eltern-Kopplung ohne Netz für Bildschirmfotos */
+private class FakeParents(override var stored: String?) : de.experimentopia.app.ui.fx.ParentSync {
+    override fun random(n: Int) = ByteArray(n) { it.toByte() }
+    override fun send(method: String, url: String, write: String, body: String?, done: (Int) -> Unit) = done(204)
+    override fun share(title: String, url: String, done: (String) -> Unit) = done("kopiert")
+    override val test = true
+    override fun now() = 1_795_535_000_000L
+    override val offsetMs = 3_600_000L
 }
 
 private object FakeInstaller : de.experimentopia.app.ui.fx.Installer {

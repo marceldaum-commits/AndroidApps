@@ -101,3 +101,24 @@ val LocalInstaller = staticCompositionLocalOf<Installer?> { null }
 
 /** Link im Browser öffnen (Kasse, Impressum) */
 val LocalOpenLink = staticCompositionLocalOf<(String) -> Unit> { {} }
+
+/**
+ * Eltern-Kopplung: was die Plattform beisteuert – sichere Zufallsbytes, HTTP zum Eltern-Server, Teilen, Speicher.
+ * null = gibt es auf dieser Plattform nicht (dann bleibt der Knopf verborgen).
+ */
+interface ParentSync {
+    /** kryptografisch sichere Zufallsbytes (Browser: crypto.getRandomValues) */
+    fun random(n: Int): ByteArray
+    /** PUT/DELETE mit Kopfzeile X-Schreib; [done] bekommt den HTTP-Status (0 = kein Netz) */
+    fun send(method: String, url: String, write: String, body: String?, done: (Int) -> Unit)
+    /** Link teilen (Teilen-Menü) oder kopieren; [done]: "geteilt", "kopiert" oder "" */
+    fun share(title: String, url: String, done: (String) -> Unit)
+    /** gespeicherte Kopplung (JSON) – nur auf diesem Gerät */
+    var stored: String?
+    /** App läuft auf der Test-Stufe → Test-Server */
+    val test: Boolean
+    fun now(): Long
+    /** Zeitzone des Geräts in Millisekunden (für die Tage im Bericht) */
+    val offsetMs: Long
+}
+val LocalParentSync = staticCompositionLocalOf<ParentSync?> { null }

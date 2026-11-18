@@ -2,6 +2,23 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.8.0 vom 18.11.2026: Eltern-Handy koppeln + PRUEFPLAN.md – fertig für den Betriebstest
+
+Marcel hat beide Aufträge am 18.11. bestätigt.
+- **PRUEFPLAN.md** angelegt: wöchentlich neuer Inhalt (mittwochs auf Test), monatlich in der letzten Woche ein Insel-Block gründlich
+  (A Wasser+Kraft, B Blitz+Feuer&Eis, C Chemie+Bio, D Licht&Klang+Fallturm; Start Dez 2026 mit A) plus Neu-Content und Rundum-Prüfung (Tests, Start Chromium/WebKit, echtes iPad, Zählung, Links, Eltern-Rundlauf, offline).
+- **Eltern-Handy koppeln** (App-Teil nach eurer Spezifikation):
+  - Einstellungen → Karte „Eltern-Handy koppeln“, Koppeln und Aufheben nur hinter dem Eltern-Tor (Geburtsjahr ≥ 18 J.).
+  - id/schreib (16 B) und key (32 B) per `crypto.getRandomValues`, base64url ohne Padding (22/22/43 Zeichen), nur im localStorage (`exEltern`).
+  - QR-Code (eigener Erzeuger, mit ZXing gegengelesen) + „Link teilen“ (navigator.share, sonst Zwischenablage) + Spitzname (freiwillig, max. 20 Zeichen).
+  - Bericht Format 1 mit allen Feldern (`staerken`/`schwach` je Thema ab 3 Versuchen, thema-Slugs `physik-mechanik`, `physik-optik`, `physik-elektrizitaet`, `physik-waerme`, `physik-akustik`,
+    `chemie-stoffe`, `chemie-saeuren-laugen`, `chemie-reaktionen`, `biologie-genetik|zellen|ernaehrung|oekologie|koerper`), Zeitraum 30 Tage, Lernzeit geschätzt (Sitzungen aus dem Forscherbuch).
+  - AES-GCM-256, 12-Byte-IV, Body „<iv b64url>.<ct+tag b64url>“, PUT nach jeder Sitzung, höchstens alle 10 Min. (frühestens 1 Min. nach dem letzten Versuch); DELETE beim Aufheben.
+  - Stufe automatisch: App auf `experimentopia-test…` → trainer-test + staging; live → trainer + www.
+- **Rundlauf-Test** gegen trainer-test (`tools/eltern-rundlauf.mjs`): PUT 204 → GET → WebCrypto entschlüsselt den Kotlin-Bericht → Pflichtfelder ✓ → fremdes X-Schreib 403 → DELETE 204 → GET 404. Alle ✅.
+  Hinweis: GET liefert `{"d":"<iv>.<ct>"}` (nicht den reinen Text) – die Eltern-Seite muss das so lesen. CORS für experimentopia-test ✓ (für die Live-Domain bitte freischalten).
+- Noch nicht geprüft: Knopf auf echtem Handy auf der Test-Seite und Ansicht auf staging/eltern-bericht – bitte im Betriebstest.
+
 ## 18.11.2026 – Version 2.7.0 vom 18.11.2026: Optik + „Kommt bald“ – fertig für den Betriebstest
 
 - Auftrag (über Marcel): Lehrplan-Lücken bauen bzw. als „Kommt bald“ zeigen. Liste: `docs/LEHRPLAN-ABGLEICH.md` (BY/BW/NRW/NI/HE, Gym/RS Kl. 5–10).

@@ -1,5 +1,14 @@
 # Changelog – Experimentopia
 
+## 2.8.0 – Eltern-Handy koppeln (18.11.2026)
+
+- 👨‍👩‍👧 **Eltern-Handy koppeln** (Einstellungen, nur nach der Frage für Erwachsene): Eltern scannen einen QR-Code oder bekommen einen Link
+  und sehen auf dem eigenen Handy, was ihr Kind geschafft hat und wo es hakt – ohne Konto.
+- 🔒 **Ende-zu-Ende verschlüsselt**: Der Bericht wird auf dem Gerät mit AES-256 verschlüsselt. Der Server sieht nur unlesbaren Text, den Schlüssel kennt nur der Eltern-Link.
+  Übertragen werden nur Lern-Zahlen (Klasse, geschätzte Lernzeit, Versuche, richtige Vermutungen, Themen) und auf Wunsch ein Spitzname.
+- ⏱️ Der Bericht wird nach dem Forschen geschickt, höchstens alle 10 Minuten. „Kopplung aufheben“ löscht ihn sofort vom Server; ohne Aktualisierung verschwindet er nach 90 Tagen.
+- Ohne Kopplung geht – wie bisher – nichts über Ihr Kind ins Internet.
+
 ## 2.7.0 – Neue Optik: Schatten, Spiegel & Linsen (18.11.2026)
 
 - 🔍 **Neuer Fachbereich „Schatten, Spiegel & Linsen“** auf der Insel Licht & Klang – 11 Versuche für Kl. 3–10, passend zum Lehrplan aller Länder:

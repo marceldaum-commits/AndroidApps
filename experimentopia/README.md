@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.7.0 vom 18.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.8.0 vom 18.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -143,6 +143,12 @@ Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung ha
 | ![](screenshots/70_app_installieren.png) | ![](screenshots/71_schattenbuehne.png) | ![](screenshots/72_spiegel_laser.png) | ![](screenshots/73_lichtknick.png) |
 | Totalreflexion | Optische Bank | Lupe | Kommt bald |
 | ![](screenshots/74_totalreflexion.png) | ![](screenshots/75_optische_bank.png) | ![](screenshots/76_lupe.png) | ![](screenshots/77_kommt_bald.png) |
+| Eltern-Handy koppeln | QR-Code für Eltern | | |
+| ![](screenshots/78_eltern_koppeln.png) | ![](screenshots/79_eltern_qr.png) | | |
+
+## Eltern-Handy koppeln (seit 2.8.0)
+
+Nur nach der Frage für Erwachsene. Beim Koppeln entstehen auf dem Gerät drei Zufallswerte (`crypto.getRandomValues`): `id` (Adresse), `schreib` (Schreibrecht) und `key` (AES-256-Schlüssel). Der Bericht (JSON, Format 1) wird mit AES-GCM (12-Byte-IV, reines Kotlin, `core/model/.../AesGcm.kt`, geprüft gegen javax.crypto und WebCrypto) verschlüsselt und per `PUT` an `trainer(-test).mathenachhilfe-online.com/eltern/v1/b/<id>` geschickt – höchstens alle 10 Minuten. Eltern-Link: `…/eltern-bericht/#<id>.<key>` (der Schlüssel steht nur hinter `#` und geht nie an einen Server). QR-Code: eigener Erzeuger (`Qr.kt`, mit ZXing gegengelesen). Rundlauf-Test: `tools/eltern-rundlauf.mjs`.
 
 ## Nur WebApp (seit 2.5.0)
 
