@@ -111,7 +111,8 @@ const Nova = {
 const NovaOffline = {
   busy: false, stopFlag: false,
   host: () => (typeof IS_NATIVE !== 'undefined' && IS_NATIVE) ? 'rechenblitz.mathenachhilfe-online.com' : location.hostname,
-  async texts(lang = I18N.lang) { try { const j = await (await fetch('vorlesen/texte.json')).json(); return (j.texte || []).filter(t => t.sprache === lang).map(t => t.text); } catch { return []; } },
+  async all() { try { return ((await (await fetch('vorlesen/texte.json')).json()).texte || []); } catch { return []; } },
+  async texts(lang = I18N.lang) { return (await this.all()).filter(t => t.sprache === lang).map(t => t.text); },
   // Größe aller Dateien laut Server (live, wird kleiner, wenn der Server neu kodiert)
   async stand() { try { const r = await Nova.get(`${Nova.base()}stand-${this.host()}.json`, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch { return null; } },
   async cache() { try { return await caches.open('rb-nova'); } catch { return null; } },
@@ -122,12 +123,17 @@ const NovaOffline = {
       for (const k of await c.keys()) { try { const r = await c.match(k); bytes += (await r.blob()).size; } catch {} } }
     return { have, best, total: list.length, bytes };
   },
-  // geschätzte Download-Größe (MB) für die fehlenden Dateien dieser Sprache – Standard (40 kbit/s) und Bestqualität (128 kbit/s)
+  // geschätzte Download-Größe (MB) für die fehlenden Dateien dieser Sprache – Standard und Bestqualität.
+  // Nach Textlänge gerechnet (Bytes pro Zeichen aus der Server-Übersicht), denn kurze Aufgaben-Sätze sind viel kleiner als Theorie-Texte.
   async estimate(lang = I18N.lang) {
-    const [st, s] = await Promise.all([this.stand(), this.status(lang)]);
-    if (!st || !st.texte) return { ...s, std: null, best: null };
-    const mb = (bytes, n) => bytes ? Math.max(1, Math.round(bytes / st.texte * n / 1e6)) : null;
-    return { ...s, std: mb(st.bytes, s.total - s.have), bestMb: mb(st.bytes_original || st.bytes, s.total - s.best) };
+    const [st, s, all] = await Promise.all([this.stand(), this.status(lang), this.all()]);
+    if (!st || !st.bytes || !all.length) return { ...s, std: null, bestMb: null };
+    const c = await this.cache(), chars = all.reduce((a, t) => a + t.text.length, 0) * (st.texte && st.vorhanden ? st.vorhanden / st.texte : 1);   // nur schon vertonte Texte zählen in st.bytes
+    let missStd = 0, missBest = 0;
+    for (const t of all) { if (t.sprache !== lang) continue; const r = c ? await c.match(await Nova.url(lang, t.text)) : null;
+      if (!r) missStd += t.text.length; if (!r || r.headers.get('X-Nova-Q') !== 'best') missBest += t.text.length; }
+    const mb = (bytes, n) => n ? Math.max(1, Math.round(bytes / chars * n / 1e6)) : null;
+    return { ...s, std: mb(st.bytes, missStd), bestMb: mb(st.bytes_original || st.bytes, missBest) };
   },
   stop() { this.stopFlag = true; },
   async load(onProg = () => {}, q = 'std', lang = I18N.lang) {

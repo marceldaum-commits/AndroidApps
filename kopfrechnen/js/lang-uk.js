@@ -2435,4 +2435,6 @@ I18N.add('uk', {"% sind":"% — це",
 "{} km {} m + {} km":"{} км {} м + {} км",
 "Neues App-Symbol: der Rechenblitz ⚡":"Новий значок застосунку: блискавка Rechenblitz ⚡",
 "Ukrainisch: Brüche werden richtig vorgelesen (z. B. „дві третіх“)":"Українська: дроби тепер читаються правильно (напр., «дві третіх»)",
-"Überall dasselbe Rechenblitz-Symbol: im Kopf der App, beim Start, auf Bildern zum Teilen und beim Drucken":"Всюди однаковий значок Rechenblitz: у заголовку застосунку, під час запуску, на зображеннях для поширення та під час друку"});
+"Überall dasselbe Rechenblitz-Symbol: im Kopf der App, beim Start, auf Bildern zum Teilen und beim Drucken":"Всюди однаковий значок Rechenblitz: у заголовку застосунку, під час запуску, на зображеннях для поширення та під час друку",
+"Noch mehr Sätze kommen sofort mit Nova: Einmaleins mit Lösungswegen, Merk-Karten und Blitz-Sprüche":"Ще більше речень одразу озвучує Nova: таблиця множення з розв’язками, картки для запам’ятовування та фрази Бліца",
+"Offline laden zeigt die Größe jetzt genauer an":"Завантаження офлайн тепер точніше показує розмір"});
