@@ -1,6 +1,6 @@
 # Vorlesen mit der Stimme „Nova“ – Anleitung für andere Apps
 
-Stand: Raumlicht 2.18.9 vom 18.11.2026. Ersetzt die frühere Anleitung zur ladbaren Stimme (Sprachsynthese auf dem Gerät, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
+Stand: Raumlicht 2.18.10 vom 18.11.2026. Ersetzt die frühere Anleitung zur ladbaren Stimme (Sprachsynthese auf dem Gerät, Lautschrift, 63-MB-Download) – das alles ist ausgebaut.
 
 ## Kurz
 
@@ -17,6 +17,9 @@ Stand: Raumlicht 2.18.9 vom 18.11.2026. Ersetzt die frühere Anleitung zur ladba
 - Jeder Text steht dort **genau so, wie er gesprochen wird** (Formeln und Vektoren ausgeschrieben, kein Markup). In Raumlicht: `Vorlesen.texts()` = `Speech.clean` + Leerraum glätten.
 - Erzeugt wird die Datei bei jedem Bau (`:core:model:vorleseTexte`, eingehängt in `:web:webapp`). Der Server holt sie alle 30 Minuten und vertont Neues.
 - Ein Test prüft Format, Länge, Eindeutigkeit, NFC und dass keine Formelzeichen übrig sind (`VorlesenTest`).
+- **Vorhersehbare Laufzeit-Sätze** (seit 2.18.10) stehen mit `"laufzeit": true` in derselben Liste: bei Aufgaben mit höchstens 64 Einstell-Kombinationen jede mögliche Rückmeldung,
+  sonst die Rückmeldungen auf Eingaben, die an einer Stelle um 1 neben Lösung oder Startwert liegen – jeweils auch mit „Tipp gefällig?“. Bewusst sparsam (Raumlicht: 522 Sätze, 41 605 Zeichen);
+  Zufalls-Aufgaben gehören nicht dazu. Ein Test hält die ganze Liste unter 150 000 Zeichen (darüber vorher ankündigen).
 
 ## 2. Dateiname
 

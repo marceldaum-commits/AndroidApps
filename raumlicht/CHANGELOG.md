@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.10 – Ein Logo überall, Nova kennt mehr Sätze vorab (18.11.2026)
+- **Ein Logo:** Das App-Symbol der Android-App, das Startbild und das Ladebild im Browser zeigen jetzt dasselbe Bild wie die WebApp und der Shop – Lux, die Lichtdrohne. Auf dem Handy ändert sich dadurch das Symbol auf dem Startbildschirm.
+- **Nova:** 522 typische Rückmeldungen auf Eingaben in den festen Aufgaben sind jetzt vorab vertont – sie kommen ohne Wartezeit und lassen sich mit „Alle Nova-Texte offline laden“ mitnehmen.
+
 ## 2.18.9 – Datum berichtigt (18.11.2026)
 - Die Version 2.18.8 zeigte in den Einstellungen noch das Datum vom Vortag. Sonst ist nichts geändert.
 

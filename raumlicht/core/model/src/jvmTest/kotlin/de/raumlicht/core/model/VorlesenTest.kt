@@ -54,4 +54,14 @@ class VorlesenTest {
         assertEquals(listOf("0,75×", "0,9×", "1,0×", "1,15×", "1,3×", "1,5×"), Vorlesen.TEMPOS.map(Vorlesen::tempoLabel))
         assertEquals(100, Vorlesen.tempo(100)); assertEquals(115, Vorlesen.tempo(120)); assertEquals(75, Vorlesen.tempo(10)); assertEquals(150, Vorlesen.tempo(999))
     }
+
+    /** Vorhersehbare Rückmeldungen stehen mit Vermerk in der Liste – sparsam: zusammen unter 150 000 Zeichen, nichts doppelt */
+    @Test fun predictableFeedbackIsListedSparingly() {
+        val fixed = Vorlesen.fixedTexts(); val more = Vorlesen.predictableTexts()
+        println("VORLESEN: fest ${fixed.size} (${fixed.sumOf { it.length }} Zeichen), vorhersehbar ${more.size} (${more.sumOf { it.length }} Zeichen)")
+        assertTrue(more.size > 100); assertTrue(more.none { it in fixed.toSet() }); assertEquals(more.size, more.toSet().size)
+        assertTrue("Liste zu groß – vorher ankündigen: ${Vorlesen.texts().sumOf { it.length }}", Vorlesen.texts().sumOf { it.length } < 150_000)
+        val marked = Json.parseToJsonElement(Vorlesen.json()).jsonObject["texte"]!!.jsonArray.count { it.jsonObject["laufzeit"]?.jsonPrimitive?.content == "true" }
+        assertEquals(more.size, marked)
+    }
 }

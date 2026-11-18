@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-version="2.18.9">
+<html lang="de" data-version="2.18.10">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -34,13 +34,14 @@
   <svg viewBox="0 0 132 132" aria-hidden="true">
     <defs><radialGradient id="glut"><stop offset="0" stop-color="#46E1FF" stop-opacity=".55"/><stop offset="1" stop-color="#46E1FF" stop-opacity="0"/></radialGradient></defs>
     <circle cx="66" cy="66" r="62" fill="url(#glut)"/>
-    <path d="M14 104 L118 34" stroke="#46E1FF" stroke-width="5" stroke-linecap="round"/><path d="M34 22 L96 112" stroke="#FF5FA8" stroke-width="5" stroke-linecap="round"/><path d="M12 52 L120 84" stroke="#FFD84A" stroke-width="4" stroke-linecap="round" opacity=".9"/>
-    <ellipse cx="66" cy="68" rx="22" ry="15" fill="#E8ECFF"/><rect x="50" y="61" width="32" height="13" rx="6.5" fill="#0A0E27"/><circle cx="59" cy="67.5" r="3.4" fill="#46E1FF"/><circle cx="73" cy="67.5" r="3.4" fill="#46E1FF"/>
-    <path d="M38 52 h18 M76 52 h18" stroke="#E8ECFF" stroke-width="3.5" stroke-linecap="round"/><path d="M47 52 v7 M85 52 v7" stroke="#E8ECFF" stroke-width="2.5"/>
+    <!-- dasselbe Logo wie das App-Symbol (icon-512.png): Lux mit Rotoren und Laserlinie -->
+    <ellipse cx="36.4" cy="45.6" rx="12.9" ry="3.4" fill="none" stroke="#E8ECFF" stroke-width="1.8"/><ellipse cx="99.8" cy="45.6" rx="12.9" ry="3.4" fill="none" stroke="#E8ECFF" stroke-width="1.8"/>
+    <ellipse cx="65.9" cy="67.2" rx="26.4" ry="23.8" fill="#E8ECFF"/><ellipse cx="66.0" cy="68.3" rx="18.0" ry="9.8" fill="#0A0E27"/><ellipse cx="58.8" cy="67.2" rx="3.1" ry="6.6" fill="#3CE8FF"/><ellipse cx="73.1" cy="67.2" rx="3.1" ry="6.6" fill="#3CE8FF"/>
+    <path d="M16.0 113.7 H116.0" stroke="#FF4FA3" stroke-width="2.6" stroke-linecap="round"/>
   </svg>
   <b>RAUMLICHT</b>
   <div id="balken"><i></i></div>
-  <span id="start-text">lädt … Version 2.18.9 vom 18.11.2026</span>
+  <span id="start-text">lädt … Version 2.18.10 vom 18.11.2026</span>
 </div>
 <div id="app"></div>
 <a id="hilfe" href="diagnose.html">Kein Bild zu sehen? Hier tippen</a>
@@ -85,7 +86,7 @@
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed('WebAssembly-Prüfung: ' + e); }
   // ── Laden mit echtem Fortschritt: Der App-Kern (.wasm) und die Schriften werden sofort angefordert – nicht erst, wenn raumlicht.js sie verlangt –
   //    und jedes ankommende Byte bewegt den Balken. Die Größen (entpackt) trägt der Bau hier ein.
-  var PLAN = { "bccfa839aa4b38489c76.wasm": 8405319, "d47c82e2021549321f33.wasm": 5850157, "fonts/dejavu_sans.ttf": 122496, "fonts/noto_color_emoji.ttf": 266552, "raumlicht.js": 595987 }, got = {}, total = 0, early = {}, slow = false;
+  var PLAN = { "bccfa839aa4b38489c76.wasm": 8405319, "e1936e7204e37c5fd8b2.wasm": 5850159, "fonts/dejavu_sans.ttf": 122496, "fonts/noto_color_emoji.ttf": 266552, "raumlicht.js": 595987 }, got = {}, total = 0, early = {}, slow = false;
   for (var k in PLAN) total += PLAN[k];
   window.__rlStage = function () { var f = document.getElementById('stage'); if (f && !f.getAttribute('src')) f.src = f.getAttribute('data-src'); };
   function progress() {

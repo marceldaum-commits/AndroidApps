@@ -2,6 +2,27 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.10: einheitliches Logo + vorhersehbare Laufzeit-Sätze in der Liste
+
+Marcel hat beides direkt bestätigt (Logo: ja; Nova vorab: „sparsam“). **Raumlicht 2.18.10 vom 18.11.2026, Web = Android (beide 2.18.10).** Ersetzt 2.18.9 als Stand „fertig für den Betriebstest“
+(enthält Pro-Sperre, Nacht-Auftrag, sachlichen Kauf-Hinweis).
+
+**Logo – es war NICHT überall gleich, jetzt ist es das:**
+- Maßgeblich: `icon-512.png` der WebApp (Lux mit Rotoren und pinker Laserlinie) = Favicon, PWA-Symbol, Shop-Bild.
+- **Abweichend waren:** das Android-App-Symbol und das Android-Startbild (Achsen, Laserstrahl, Zielpunkt) sowie das Ladebild der WebApp (gekreuzte Strahlen mit kleinem Lux).
+  Alle drei zeigen jetzt dieselbe Lux-Zeichnung (`app/src/main/res/drawable/ic_launcher_foreground.xml` + neuer Hintergrund mit Schein, `web/…/index.html`).
+- Im Kopf der Startseite steht weiter der Schriftzug „RAUMLICHT“ (kein Bild); Teilen-Bilder zeigen kein Logo. Die Figur Lux in der App ist dieselbe Drohne, nur beweglich gezeichnet.
+
+**Nova – Liste abgeschlossen (sparsam, wie von Marcel gewählt):**
+- `vorlesen/texte.json`: **1471 Texte, 116 645 Zeichen** (unter 150 000 – keine Ankündigung nötig). Davon 949 feste und **522 vorhersehbare Laufzeit-Sätze mit `"laufzeit": true`** (41 605 Zeichen):
+  bei Aufgaben mit höchstens 64 Einstell-Kombinationen jede mögliche Rückmeldung, sonst die Rückmeldungen auf Eingaben, die an einer Stelle um 1 neben Lösung oder Startwert liegen – jeweils auch mit „Tipp gefällig?“.
+- **Nicht** vorab: die Zufalls-Aufgaben im endlosen Üben und in der Tagesaufgabe (praktisch unbegrenzt viele Sätze) – die laufen über `/jetzt`; gestern gemessen 40 von 40.
+- „Alle Nova-Texte offline laden“ nimmt die ganze Liste (1471) und zeigt die Größe aus eurem Zählstand.
+- Live gibt es die Liste, sobald ihr die Version live nehmt (die Live-Adresse fasse ich nicht an).
+- **Abdeckung:** messe ich nach eurem nächsten Werk-Lauf erneut und trage sie hier nach (Stand vor dieser Version: 949 von 949 fest = 100 %, Laufzeit-Stichprobe 100 %).
+
+Geprüft: 154 Logik-Tests, 148 App-Tests, Lint beider Fassungen, Browser (`web.mjs`, `web-update.mjs`, `web-nova.mjs`, `web-pro.mjs`, `web-vorversion.mjs`). Das neue Symbol habe ich nur als Zeichnung im Vergleich angesehen, nicht auf einem Handy.
+
 ## 18.11.2026 – Raumlicht 2.18.9: nur das Versionsdatum berichtigt
 
 **Raumlicht 2.18.9 vom 18.11.2026, Web = Android (beide 2.18.9).** Mein Fehler: 2.18.8 trug in App und `version.json` noch das Datum 17.11.2026. Inhaltlich gleich 2.18.8 – bitte 2.18.9 als Stand „fertig für den Betriebstest“ nehmen.

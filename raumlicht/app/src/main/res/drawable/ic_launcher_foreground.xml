@@ -1,13 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Das Raumlicht-Logo: Lux, die Lichtdrohne – dieselbe Zeichnung wie das Symbol der WebApp und das Shop-Bild (web/src/wasmJsMain/resources/icon-512.png).
+     Auf 62 % verkleinert, damit auch runde Symbol-Formen nichts abschneiden. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp" android:height="108dp"
     android:viewportWidth="108" android:viewportHeight="108">
-    <!-- Achsen x₁, x₂, x₃ -->
-    <path android:strokeColor="#FF4FA3" android:strokeWidth="2.5" android:strokeLineCap="round" android:pathData="M54,64 L34,76"/>
-    <path android:strokeColor="#5CFFA1" android:strokeWidth="2.5" android:strokeLineCap="round" android:pathData="M54,64 L78,72"/>
-    <path android:strokeColor="#38E8FF" android:strokeWidth="2.5" android:strokeLineCap="round" android:pathData="M54,64 L54,34"/>
-    <!-- Laserstrahl -->
-    <path android:strokeColor="#FFFFFF" android:strokeWidth="3.5" android:strokeLineCap="round" android:pathData="M36,70 L70,40"/>
-    <!-- Ziel -->
-    <path android:fillColor="#FFD54F" android:pathData="M70,40 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0"/>
-    <path android:strokeColor="#FFD54F" android:strokeWidth="1.5" android:pathData="M70,40 m-10,0 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0"/>
+    <group android:pivotX="54" android:pivotY="54" android:scaleX="0.62" android:scaleY="0.62">
+        <!-- Rotoren -->
+        <path android:strokeColor="#E8ECFF" android:strokeWidth="1.5" android:pathData="M19.19,37.34 a10.55,2.74 0 1,0 21.1,0 a10.55,2.74 0 1,0 -21.1,0"/>
+        <path android:strokeColor="#E8ECFF" android:strokeWidth="1.5" android:pathData="M71.08,37.34 a10.55,2.74 0 1,0 21.1,0 a10.55,2.74 0 1,0 -21.1,0"/>
+        <!-- Körper -->
+        <path android:fillColor="#E8ECFF" android:pathData="M32.27,54.95 a21.62,19.51 0 1,0 43.24,0 a21.62,19.51 0 1,0 -43.24,0"/>
+        <!-- Visier und Augen -->
+        <path android:fillColor="#0A0E27" android:pathData="M39.23,55.9 a14.77,8.02 0 1,0 29.54,0 a14.77,8.02 0 1,0 -29.54,0"/>
+        <path android:fillColor="#3CE8FF" android:pathData="M45.56,54.95 a2.53,5.38 0 1,0 5.06,0 a2.53,5.38 0 1,0 -5.06,0"/>
+        <path android:fillColor="#3CE8FF" android:pathData="M57.27,54.95 a2.53,5.38 0 1,0 5.06,0 a2.53,5.38 0 1,0 -5.06,0"/>
+        <!-- Laserlinie -->
+        <path android:strokeColor="#FF4FA3" android:strokeWidth="2.2" android:pathData="M13.08,93.02 L94.92,93.02"/>
+    </group>
 </vector>

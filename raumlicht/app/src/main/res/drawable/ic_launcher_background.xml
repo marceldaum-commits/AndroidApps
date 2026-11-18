@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hintergrund des App-Symbols: Nachtblau mit dem türkisen Schein hinter Lux – wie im Symbol der WebApp -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item><color android:color="#0A0E27"/></item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:type="radial" android:centerX="0.5" android:centerY="0.5" android:gradientRadius="34dp" android:startColor="#FF1E667D" android:endColor="#001E667D"/>
+        </shape>
+    </item>
+</layer-list>
