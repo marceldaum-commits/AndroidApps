@@ -1,5 +1,11 @@
 # Changelog – Experimentopia
 
+## 2.4.6 – Nova auf allen Android-Handys (18.11.2026)
+
+- 🔊 Auf manchen Android-Handys sprang beim Vorlesen die Gerätestimme ein, obwohl die Nova-Datei da war: Das Handy lehnte das Einstellen des Sprechtempos
+  vor dem Abspielen ab, und die App gab Nova auf. Jetzt startet Nova zuerst und das Tempo wird danach gesetzt – klappt das nicht, spricht Nova im normalen Tempo.
+- 🩺 Unter „Probe hören“ steht jetzt kurz, ob Nova gesprochen hat („Nova ✓“) oder warum nicht – das hilft bei der Fehlersuche.
+
 ## 2.4.5 – Eindeutige Aufträge (18.11.2026)
 
 - ⚗️ Beim Ausgleichen chemischer Gleichungen steht jetzt ausdrücklich „mit den kleinsten ganzen Zahlen“ – vorher galten Vielfache (z. B. 4 · 2 · 4 statt 2 · 1 · 2) nicht, ohne dass es dabeistand.

@@ -60,6 +60,8 @@ interface Reader {
     val speaking: Boolean
     /** Nova war in dieser Sitzung nicht erreichbar und die Gerätestimme ist eingesprungen (für einen einmaligen Hinweis) */
     val novaDown: Boolean get() = false
+    /** Kurze Diagnose zum letzten Vorlesen (für „Probe hören“): „Nova ✓“ oder der Grund, warum die Gerätestimme einsprang */
+    val diag: String? get() = null
     fun say(text: String)
     fun stop()
     fun configure(p: de.experimentopia.core.model.AudioPrefs)

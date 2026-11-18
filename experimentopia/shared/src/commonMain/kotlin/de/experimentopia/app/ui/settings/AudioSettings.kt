@@ -84,6 +84,7 @@ fun ReadSettings(audio: AudioPrefs, onAudio: (AudioPrefs) -> Unit) {
         }
         Text(if (speed < 1f) "🐢 langsamer" else if (speed > 1f) "🐇 schneller" else "Normal", color = E.Muted, fontSize = 12.sp)
         GlowButton({ reader.configure(audio); reader.say(ReadTexts.ui[1]) }, Modifier.fillMaxWidth().testTag("probe"), color = E.Mint) { Text("▶️ Probe hören", fontWeight = FontWeight.Bold) }
+        reader.diag?.let { Text(it, color = if (it.startsWith("Nova ✓")) E.Green else E.Sun, fontSize = 12.sp, modifier = Modifier.testTag("nova_diag")) }
         OfflineVoicePanel(reader, audio, onAudio)
     }
 }

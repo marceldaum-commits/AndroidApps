@@ -45,6 +45,7 @@ class AndroidReader(ctx: Context) : Reader {
     override var speaking by mutableStateOf(false); private set
     override var offline by mutableStateOf(OfflineVoice()); private set
     override var novaDown by mutableStateOf(false); private set
+    override var diag by mutableStateOf<String?>(null); private set
 
     private val turn = AtomicInteger(0)
     private val fetcher = Executors.newFixedThreadPool(2) { Thread(it, "nova-laden").apply { isDaemon = true } }
@@ -113,20 +114,30 @@ class AndroidReader(ctx: Context) : Reader {
         val latch = CountDownLatch(1)
         val mp = runCatching {
             MediaPlayer().apply {
-                setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_GAME).setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build())
+                setAudioAttributes(AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA).setContentType(AudioAttributes.CONTENT_TYPE_SPEECH).build())
                 setDataSource(f.path); prepare()
-                playbackParams = android.media.PlaybackParams().setSpeed(Nova.speed(prefs.rate)).setPitch(1f)
                 setOnCompletionListener { latch.countDown() }
-                setOnErrorListener { _, _, _ -> latch.countDown(); true }
+                setOnErrorListener { _, what, extra -> diagnose("Abspielfehler $what/$extra"); latch.countDown(); true }
             }
-        }.getOrElse { f.delete(); return false }
+        }.getOrElse { e ->
+            diagnose("Datei ließ sich nicht öffnen (${e.javaClass.simpleName})")
+            if (f.length() < 200) f.delete()          // nur wirklich kaputte (leere) Dateien wegwerfen
+            return false
+        }
         if (mine != turn.get()) { mp.release(); return true }
         current = mp; done = latch
-        mp.start()
+        val started = runCatching { mp.start() }.isSuccess
+        if (!started) { diagnose("Start abgelehnt"); runCatching { mp.release() }; current = null; return false }
+        // Sprechtempo erst nach dem Start setzen – manche Geräte lehnen es vorher ab. Klappt es nicht, spricht Nova eben im normalen Tempo.
+        val speed = Nova.speed(prefs.rate)
+        if (speed != 1f) runCatching { mp.playbackParams = mp.playbackParams.setSpeed(speed).setPitch(1f) }
         latch.await(2, TimeUnit.MINUTES)
         current = null; runCatching { mp.release() }
+        if (mine == turn.get()) main.post { diag = "Nova ✓" }
         return true
     }
+
+    private fun diagnose(why: String) { main.post { diag = "Nova-Problem: $why" } }
 
     override fun configure(p: AudioPrefs) { prefs = p }
 
@@ -142,6 +153,7 @@ class AndroidReader(ctx: Context) : Reader {
                 if (mine != turn.get()) return@execute
                 val f = runCatching { job.get(40, TimeUnit.SECONDS) }.getOrNull()
                 if (mine != turn.get()) return@execute
+                if (f == null) diagnose("Satz nicht geladen (kein Netz oder Server)")
                 if (f == null || !play(f, mine)) {          // offline oder Server nicht erreichbar: Rest mit der Stimme des Geräts
                     val rest = parts.drop(i).joinToString(" ")
                     main.post { if (mine == turn.get()) { novaDown = true; sayDevice(rest) } }
