@@ -85,7 +85,17 @@ fun HomeScreen(
         val wide = maxWidth >= 900.dp
         val islandCols = 2
         BubbleBackground(count = if (wide) 48 else 26)
+        val allApps = LocalAllApps.current
+        val allAppsButton: @Composable () -> Unit = {
+            if (allApps != null) Row(Modifier.heightIn(min = 44.dp).clip(CircleShape).background(E.Panel.copy(alpha = 0.85f)).border(1.5.dp, E.Sky.copy(alpha = 0.7f), CircleShape)
+                .clickable(onClick = allApps).padding(horizontal = 14.dp).testTag("alle_apps"), verticalAlignment = Alignment.CenterVertically) {
+                Text("←", color = E.Sky, fontWeight = FontWeight.Black, fontSize = 16.sp)
+                Spacer(Modifier.width(6.dp))
+                Text("Alle Apps", color = E.Text, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            }
+        }
         val header: @Composable () -> Unit = {
+            if (!wide) Row(Modifier.fillMaxWidth().padding(top = 4.dp)) { allAppsButton() }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 de.experimentopia.app.ui.common.AppLogo(if (wide) 84.dp else 70.dp)
                 BoxWithConstraints(Modifier.weight(1f).padding(start = 8.dp)) { val narrow = maxWidth < 230.dp; Column {
@@ -93,7 +103,7 @@ fun HomeScreen(
                     Text("Experimentopia", style = TextStyle(brush = Brush.horizontalGradient(listOf(E.Mint, E.Sky, E.Pink)), fontSize = if (narrow) 21.sp else if (wide) 36.sp else 28.sp, fontWeight = FontWeight.Black), maxLines = 1, softWrap = false)
                     Text(if (wide) "Dein Versuchslabor – ${Catalog.all.size} Experimente auf ${Island.entries.size} Inseln" else "Dein Versuchslabor für die Hosentasche", color = E.Muted, fontSize = if (wide) 15.sp else 13.sp)
                 } }
-                if (wide) Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.padding(end = 12.dp)) { pills(stats) }
+                if (wide) Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(end = 12.dp)) { allAppsButton(); Spacer(Modifier.width(8.dp)); pills(stats) }
                 IconButton(onClick = onSettings, modifier = Modifier.testTag("einstellungen")) { Text("⚙️", fontSize = 24.sp) }
             }
         }

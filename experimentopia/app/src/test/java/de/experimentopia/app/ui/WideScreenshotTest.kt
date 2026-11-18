@@ -32,7 +32,9 @@ class WideScreenshotTest {
     private val stats = Stats(done = 14, stars = 28, hits = 9, ahas = 5, explained = 10)
 
     @Test fun home() = shot("90_pc_start") {
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalAllApps provides {}) {
         HomeScreen(someStars, stats, Daily.forDay(20_600), false, 0, false, onIsland = {}, onDaily = {}, onFreeLab = {}, onJournal = {}, onBadges = {}, onSettings = {}, onGrade = {}, onWelcomed = {})
+        }
     }
     @Test fun subject() = shot("91_pc_fach") { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 0, { false }, {}, {}, {}) }
     @Test fun freeLab() = shot("92_pc_freies_labor") { de.experimentopia.app.ui.free.FreeLabScreen({ false }, {}, {}) }

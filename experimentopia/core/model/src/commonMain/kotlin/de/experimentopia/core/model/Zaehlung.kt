@@ -39,6 +39,9 @@ object Angebote {
     const val PROBESTUNDE_PFAD = "probestunde"
     const val PROBESTUNDE_TEXT = "Eine kostenlose Probestunde kann vor der Arbeit helfen."
 
+    /** „← Alle Apps“: zurück zur App-Auswahl auf der Website (Test-Stufe: staging) */
+    fun alleApps(test: Boolean) = (if (test) "https://staging.mathenachhilfe-online.com" else SEITE) + "/lern-apps/?src=experimentopia-kopf"
+
     fun probestunde(thema: String?, klasse: Int?): String = buildString {
         append(SEITE).append('/').append(PROBESTUNDE_PFAD).append("/?src=").append(Zaehlung.APP).append("-klassenarbeit")
         if (thema != null && thema in Zaehlung.THEMEN) append("&thema=").append(thema)

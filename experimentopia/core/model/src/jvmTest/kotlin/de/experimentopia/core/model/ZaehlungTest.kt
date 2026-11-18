@@ -17,6 +17,10 @@ class ZaehlungTest {
         assertEquals("https://trainer-test.mathenachhilfe-online.com/zaehler/v1/e", Zaehlung.url(true))
     }
 
+    @Test fun alleApps() {
+        assertEquals("https://www.mathenachhilfe-online.com/lern-apps/?src=experimentopia-kopf", Angebote.alleApps(false))
+        assertEquals("https://staging.mathenachhilfe-online.com/lern-apps/?src=experimentopia-kopf", Angebote.alleApps(true))
+    }
     @Test fun probestunde() {
         assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-klassenarbeit&thema=chemie-reaktionen&klasse=8", Angebote.probestunde("chemie-reaktionen", 8))
         assertEquals("https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-klassenarbeit", Angebote.probestunde("x", 0))

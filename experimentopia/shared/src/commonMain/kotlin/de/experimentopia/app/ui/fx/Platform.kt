@@ -143,3 +143,6 @@ interface Counter {
     fun count(ev: String, ort: String? = null, thema: String? = null)
 }
 val LocalCounter = staticCompositionLocalOf<Counter?> { null }
+
+/** „← Alle Apps“ zur Website: im Browser im selben Tab, in der installierten App im normalen Browser; null = Knopf ausblenden */
+val LocalAllApps = staticCompositionLocalOf<(() -> Unit)?> { null }

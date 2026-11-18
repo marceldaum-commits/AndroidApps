@@ -81,7 +81,7 @@ private fun WebApp() {
     val installer = remember { WebInstaller() }
     val reader = remember { if (de.experimentopia.core.model.Nova.ENABLED) WebReader() else null }
     val parentSync = remember { WebParentSync() }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) }, LocalParentSync provides parentSync, LocalCounter provides counter,
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalInstaller provides installer, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) }, LocalParentSync provides parentSync, LocalCounter provides counter, LocalAllApps provides { openSite(de.experimentopia.core.model.Angebote.alleApps(de.experimentopia.core.model.ParentLink.isTestHost(pageHost()))) },
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.BIG -> 40 }) }) {
         ExperimentopiaTheme { Surface(Modifier.fillMaxSize(), color = E.Night) {
             AppRoot(nav, state, Version.NAME, Version.DATE,

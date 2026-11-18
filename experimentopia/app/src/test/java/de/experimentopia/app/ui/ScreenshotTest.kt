@@ -76,7 +76,9 @@ class ScreenshotTest {
     }
 
     @Test fun home() = shot("01_start", settle = 4000) {
+        androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalAllApps provides {}) {
         HomeScreen(someStars, stats, Daily.forDay(20_600), false, 0, true, onIsland = {}, onDaily = {}, onFreeLab = {}, onJournal = {}, onBadges = {}, onSettings = {}, onGrade = {}, onWelcomed = {})
+        }
     }
     @Test fun island() = shot("02_insel") { IslandScreen(Island.WASSER, someStars, 4, { false }, {}, {}) }
 

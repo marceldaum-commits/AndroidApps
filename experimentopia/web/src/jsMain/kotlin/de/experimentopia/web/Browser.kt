@@ -90,3 +90,5 @@ fun storeKeys(prefix: String): String = js("(function () { var r = []; for (var 
 fun reloadPage(): Unit = js("location.reload()")
 /** Anonyme Zählung: POST text/plain, ohne Cookies, auch beim Schließen der Seite (keepalive); Fehler werden still verschluckt */
 fun zaehlenSenden(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', keepalive: true, mode: 'no-cors', cache: 'no-store' }).catch(function () {}); } catch (e) {} })()")
+/** Zur Website: im Browser im selben Tab; als installierte Home-Bildschirm-App im normalen Browser (neues Fenster) */
+fun openSite(url: String): Unit = js("(function () { try { var app = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true; if (app) window.open(url, '_blank', 'noopener'); else location.href = url; } catch (e) { location.href = url; } })()")

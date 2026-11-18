@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.11.1 – „Alle Apps“ (18.11.2026)
+
+- ← **Alle Apps**: Oben auf dem Startbildschirm (am PC in der Kopfzeile) führt ein Knopf zurück zur Übersicht aller Lern-Apps auf unserer Website.
+  Im Browser öffnet er sich im selben Tab, in der installierten App im normalen Browser. In Versuchen stört er nicht.
+
 ## 2.11.0 – Elternbereich (18.11.2026)
 
 - 👪 **Elternbereich** in den Einstellungen (nur nach der Frage für Erwachsene):

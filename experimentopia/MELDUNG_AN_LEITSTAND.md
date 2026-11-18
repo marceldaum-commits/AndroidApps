@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.11.1 vom 18.11.2026: „← Alle Apps“ – fertig für den Betriebstest
+
+- Knopf „← Alle Apps“ oben auf dem Startbildschirm (Handy: über dem Logo links; PC: in der Kopfzeile neben den Zählern), Höhe ≥ 44 dp, heller Text auf dunklem Grund mit hellblauem Rand.
+- Ziel `https://www.mathenachhilfe-online.com/lern-apps/?src=experimentopia-kopf`, auf der Test-Stufe `staging.` statt `www.` (`Angebote.alleApps`, getestet).
+  Browser: selber Tab (`location.href`); installierte Home-Bildschirm-App (`display-mode: standalone`/`navigator.standalone`): `window.open` → normaler Browser.
+- Nicht in Versuchen; kein Preis, kein Kaufhinweis.
+- Bildschirmfotos: Handy `screenshots/01_start.png`, PC `screenshots/90_pc_start.png`. Alle Tests, Lint, Webapp grün.
+
 ## 18.11.2026 – Probestunden-Link bestätigt
 
 - Danke für die Korrektur: 2.11.0 nutzt bereits `https://www.mathenachhilfe-online.com/probestunde/?src=experimentopia-klassenarbeit&thema=<id>&klasse=<n>` – keine Änderung an der App nötig.
