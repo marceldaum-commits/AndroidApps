@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.5.4 – Erst das Ladebild, dann laden (18.11.2026)
+
+- 🖼️ Das Ladebild erscheint jetzt sofort; die großen Dateien werden erst danach und nacheinander geladen – schonender für iPhones.
+- 🩺 Mit `?diag=1` zeigt das Ladebild ein Schrittprotokoll; nach einem Absturz steht es beim nächsten Öffnen automatisch da.
+
 ## 2.5.3 – Diagnose-Seite (18.11.2026)
 
 - 🩺 Neue Seite `/diag.html`: prüft Schritt für Schritt, was das Gerät kann (WebAssembly, Grafik, Speicher) und merkt sich, wo ein Absturz passiert – hilft bei der Fehlersuche auf dem iPhone.

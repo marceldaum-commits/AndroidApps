@@ -1,6 +1,26 @@
 <!doctype html>
 <html lang="de" data-version="@VERSION@">
 <head>
+<script>
+  // Schrittprotokoll: jeder Ladeschritt wird sofort gemerkt (localStorage). Stürzt Safari ab („weiße Seite“), steht beim nächsten Öffnen da, wo es hing.
+  // Sichtbar mit ?diag=1 – oder automatisch, wenn der letzte Start nicht fertig wurde.
+  (function () {
+    var prev = null; try { prev = JSON.parse(localStorage.getItem('exSchritte') || 'null'); } catch (e) {}
+    window.__exPrev = prev && prev.length && prev[prev.length - 1].s !== 'fertig' ? prev : null;
+    window.__exDiag = /[?&]diag=1/.test(location.search);
+    window.__exSteps = [];
+    window.exStep = function (s) {
+      window.__exSteps.push({ s: s, t: Math.round(performance.now()) });
+      try { localStorage.setItem('exSchritte', JSON.stringify(window.__exSteps)); } catch (e) {}
+      var d = document.getElementById('diag'); if (d) d.textContent = window.__exDiagText();
+    };
+    window.__exDiagText = function () {
+      var f = function (a) { return a.map(function (x) { return x.t + ' ms ' + x.s; }).join(' › '); };
+      return (window.__exPrev ? '⚠️ Letzter Start brach ab nach: ' + f(window.__exPrev.slice(-4)) + '\n' : '') + 'Jetzt: ' + f(window.__exSteps);
+    };
+    exStep('HTML gelesen');
+  })();
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Experimentopia – das Versuchslabor für die Hosentasche</title>
@@ -53,6 +73,7 @@
   <b>EXPERIMENTOPIA</b>
   <div id="balken"><i></i></div>
   <span id="start-text">lädt … Version @VERSION@ vom @DATUM@</span>
+  <pre id="diag" hidden style="white-space:pre-wrap;font:11px ui-monospace,monospace;color:#A99BD6;max-width:92vw;margin:6px 0 0;text-align:left"></pre>
 </div>
 <div id="app"></div>
 <script>
@@ -70,9 +91,9 @@
     d.innerHTML = '<div style="font-size:54px">🧪</div><b style="font-size:20px">Experimentopia</b><div style="max-width:30em;line-height:1.45"></div>'
       + '<button id="p-neu" style="font:bold 17px system-ui;padding:12px 22px;border-radius:16px;border:2px solid #3DF5C8;background:#1F5C5A;color:#fff">🔄 Neu laden</button>'
       + '<button id="p-leer" style="font:14px system-ui;padding:9px 16px;border-radius:14px;border:1px solid #A99BD6;background:transparent;color:#A99BD6">Speicher leeren & neu laden</button>'
-      + '<small style="color:#A99BD6;max-width:34em;word-break:break-word"></small>';
+      + '<small style="color:#A99BD6;max-width:34em;word-break:break-word;white-space:pre-wrap"></small>';
     d.children[2].textContent = text;
-    d.children[5].textContent = 'Version @VERSION@ vom @DATUM@ · ' + (ios ? 'iOS ' + ios.join('.') + ' · ' : '') + 'WasmGC ' + (wasmGC() ? 'ja' : 'nein') + (why ? ' · ' + String(why).slice(0, 160) : '');
+    d.children[5].textContent = 'Version @VERSION@ vom @DATUM@ · ' + (ios ? 'iOS ' + ios.join('.') + ' · ' : '') + 'WasmGC ' + (wasmGC() ? 'ja' : 'nein') + (why ? ' · ' + String(why).slice(0, 160) : '') + (window.__exDiagText ? '\n' + window.__exDiagText() : '');
     document.body.appendChild(d);
     document.getElementById('p-neu').onclick = function () { location.reload(); };
     document.getElementById('p-leer').onclick = function () {
@@ -95,8 +116,9 @@
   window.addEventListener('unhandledrejection', function (e) { startFailed(e.reason); });
   // Wächter: nach 60 s noch nicht gestartet, oder nach dem Start keine Zeichenfläche → Meldung statt leerer Seite
   setTimeout(function () { var st = document.getElementById('start'); if (st && st.dataset.fertig !== '1') showProblem('Start dauert zu lange'); }, 60000);
-  (function watch() { var st = document.getElementById('start'); if (st && st.dataset.fertig === '1') { window.__exStarted = Date.now(); setTimeout(function () {
+  (function watch() { var st = document.getElementById('start'); if (st && st.dataset.fertig === '1') { window.__exStarted = Date.now(); exStep('App sichtbar'); setTimeout(function () {
     if (!appVisible()) { showProblem('keine Zeichenfläche'); return; }
+    exStep('fertig');
     // Verliert iOS den Grafik-Kontext (Metal/WebGL), zeigen wir das an, statt still eine leere Fläche zu lassen
     var a = document.getElementById('app'); var c = (a.shadowRoot && a.shadowRoot.querySelector('canvas')) || a.querySelector('canvas');
     c.addEventListener('webglcontextlost', function (e) { e.preventDefault(); showProblem('Grafik vom System zurückgesetzt (WebGL-Kontext verloren)'); }, false);
@@ -120,12 +142,21 @@
       var reader = r.body.getReader();
       var stream = new ReadableStream({
         start: function (c) { (function next() { reader.read().then(function (x) { if (x.done) { got[key] = PLAN[key]; progress(); c.close(); } else { got[key] = (got[key] || 0) + x.value.byteLength; progress(); c.enqueue(x.value); next(); } }, function (e) { c.error(e); }); })(); },
-        cancel: function (why) { return reader.cancel(why); } }, { highWaterMark: Infinity });
+        cancel: function (why) { return reader.cancel(why); } });
       return new Response(stream, { status: r.status, statusText: r.statusText, headers: r.headers });
     });
   }
+  // Große Dateien nacheinander anfordern (nicht alle gleichzeitig) – schont den Speicher auf dem iPhone
+  function prefetch() {
+    var chain = Promise.resolve();
+    for (var k in PLAN) if (/\.(wasm|ttf)$/.test(k)) (function (k) {
+      var p = chain.then(function () { exStep('lade ' + k); return tracked(k, k); });
+      early[k] = p.then(function (r) { exStep(k + ' da'); return r; });
+      // die nächste Datei erst, wenn diese ganz angekommen ist
+      chain = p.then(function () { return new Promise(function (ok) { (function w() { if ((got[k] || 0) >= PLAN[k]) ok(); else setTimeout(w, 150); })(); }); }, function () {});
+    })(k);
+  }
   if (realFetch) {
-    try { for (var k in PLAN) if (/\.(wasm|ttf)$/.test(k)) early[k] = tracked(k, k); } catch (e) { early = {}; }
     window.fetch = function (input, init) {
       var key = keyOf(typeof input === 'string' ? input : (input && input.url) || '');
       if (key && early[key]) { var p = early[key]; delete early[key]; return p; }
@@ -164,6 +195,20 @@
     var waitSW = setInterval(function () { var st = document.getElementById('start'); if (!st || st.dataset.fertig === '1' || document.getElementById('problem')) { clearInterval(waitSW); startSW(); } }, 400);
   }
 </script>
-<script src="experimentopia.js" onload="got['experimentopia.js'] = PLAN['experimentopia.js']; progress();"></script>
+<script>
+  // Erst das Ladebild malen, dann laden: So sieht man immer etwas – auch wenn danach etwas schiefgeht.
+  var appStarted = false;
+  function startApp() {
+    if (appStarted) return; appStarted = true;
+    exStep('Ladebild gemalt'); prefetch();
+    var sc = document.createElement('script'); sc.src = 'experimentopia.js';
+    sc.onload = function () { got['experimentopia.js'] = PLAN['experimentopia.js']; progress(); exStep('experimentopia.js geladen'); };
+    sc.onerror = function () { showProblem('experimentopia.js nicht ladbar'); };
+    document.body.appendChild(sc);
+  }
+  if (window.__exDiag || window.__exPrev) { var dg = document.getElementById('diag'); dg.hidden = false; dg.textContent = window.__exDiagText(); }
+  requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(startApp, 30); }); });
+  setTimeout(startApp, 1500);   // falls der Tab im Hintergrund ist (dort gibt es keine Bildwechsel)
+</script>
 </body>
 </html>

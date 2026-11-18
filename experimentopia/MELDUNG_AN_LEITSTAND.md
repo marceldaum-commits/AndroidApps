@@ -2,6 +2,17 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.5.4 vom 18.11.2026: Lader zuerst, Wasm nacheinander, Schrittprotokoll – fertig für den Betriebstest
+
+- **a) Schrittprotokoll** (`?diag=1`): ganz oben im `<head>` (vor allem anderen) wird jeder Schritt in localStorage („exSchritte“) gemerkt: HTML gelesen › Ladebild gemalt ›
+  lade/da je .wasm und Schrift › experimentopia.js geladen › App sichtbar › fertig. Sichtbar im Ladebild mit `?diag=1` – und **automatisch beim nächsten Öffnen, wenn der letzte
+  Start nicht „fertig“ wurde** („⚠️ Letzter Start brach ab nach: …“). Auch auf der Fehlerseite.
+- **b) Lader zuerst**: experimentopia.js wird nicht mehr per `<script src>` im Body geladen, sondern erst nach zwei Bildwechseln (rAF·rAF + 30 ms; Fallback 1,5 s für Hintergrund-Tabs).
+- **c) Wasm nacheinander**: Skiko-Wasm (8 MB) → App-Wasm (5 MB) → Schriften, jeweils erst, wenn die vorige Datei ganz da ist (vorher alles gleichzeitig). `highWaterMark: Infinity` entfernt.
+- WebKit (iPhone-Profil): Start ✅, Reihenfolge ✅, Absturz-Protokoll nach simuliertem Abbruch sichtbar ✅; `web-start.mjs` 5/5, `web-update.mjs` 7/7.
+- Diagnose-Seite (2.5.3) bleibt: https://experimentopia-test.mathenachhilfe-online.com/diag.html
+Test-Link für Marcel: **https://experimentopia-test.mathenachhilfe-online.com/?diag=1** – bitte Foto; bleibt es weiß, ein zweites Mal öffnen (dann steht oben, wo es abbrach).
+
 ## 18.11.2026 – Version 2.5.3 vom 18.11.2026: iOS weiterhin weiß (auch ohne Meldung) – Diagnose-Seite
 
 - Marcel: mit 2.5.2 „noch immer weiß, keine Meldung“. Da nicht einmal das HTML-Ladebild (dunkler Hintergrund) erscheint, scheitert es **vor** jedem App-Code:
