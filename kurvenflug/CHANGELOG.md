@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.29 – Am PC im ganzen Bildschirm
+- Am PC (und Tablet quer) nutzt Kurvenflug jetzt den ganzen Bildschirm statt einer schmalen Handy-Spalte: Seitenleiste links,
+  die Startseite in zwei Spalten mit den Kapiteln deiner Klasse darunter, Kacheln in vier Spalten – und im Level ein großes
+  Spielfeld links mit Aufgabe und Reglern rechts daneben. Lese-Seiten wie Einstellungen und Theorie bleiben angenehm schmal.
+  Am Handy bleibt alles wie gewohnt.
+
 ## 2.5.28 – Sicherer Freischalt-Link
 - Der Pro-Freischalt-Link funktioniert jetzt auch in der neuen, sichereren Form (…#pro=CODE); alte Links gehen weiter.
   Der Code verschwindet danach sofort aus der Adresszeile.

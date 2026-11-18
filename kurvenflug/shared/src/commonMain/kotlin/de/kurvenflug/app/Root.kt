@@ -1,5 +1,7 @@
 package de.kurvenflug.app
 
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.background
 import androidx.compose.ui.draw.clip
@@ -143,12 +145,9 @@ fun KurvenflugRoot(
                     }
                 }
             }, color = Q.Space) {
-                if (!platform.isWeb) Nav(vm, platform, incomingDuel, widgetLevel)
-                // Browser am PC: Kurvenflug als Handy-Spalte in der Mitte – das Spielfeld ist quadratisch, Regler bleiben sichtbar
-                else androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
-                    val w = minOf(maxWidth, androidx.compose.ui.unit.max(360.dp, minOf(520.dp, maxHeight * 0.62f)))
-                    androidx.compose.foundation.layout.Box(Modifier.width(w).fillMaxHeight()) { Nav(vm, platform, incomingDuel, widgetLevel) }
-                }
+                // Volle Breite überall (PC: Startseite mit Seitenleiste, Level mit Spielfeld links und Reglern rechts);
+                // reine Lese-Seiten begrenzt Nav auf eine angenehme Lesebreite in der Mitte.
+                Nav(vm, platform, incomingDuel, widgetLevel)
                 // Einmal je Sitzung, dezent: Nova war nicht erreichbar – dann liest die Stimme des Geräts
                 NovaNotice(reader?.unreachable == true && readAloud)
             }
@@ -242,7 +241,10 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     }
     // Anonyme Nutzungszählung: Level-Abschlüsse aus dem Spielstand
     LaunchedEffect(Unit) { vm.events = platform::count }
+    // Spiel- und Startbildschirme nutzen die ganze Breite; Lese-Seiten (Einstellungen, Eltern, Sammlung …) höchstens 820 dp, mittig
+    val fullWidth = route == null || route in setOf(Routes.HOME, Routes.LEVEL, Routes.PLAY, Routes.BOSS, Routes.STORM, Routes.DUEL, Routes.RESCUE, Routes.CHALLENGE)
     NavHost(nav, Routes.HOME,
+        modifier = if (fullWidth) Modifier.fillMaxSize() else Modifier.fillMaxSize().wrapContentWidth(androidx.compose.ui.Alignment.CenterHorizontally).widthIn(max = 820.dp),
         enterTransition = { androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(150)) },
         exitTransition = { androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(100)) },
         popEnterTransition = { androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(150)) },
