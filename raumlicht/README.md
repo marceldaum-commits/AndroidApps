@@ -161,6 +161,14 @@ Ausliefern: `versionCode`/`versionName` und `VERSION_DATE` in `app/build.gradle.
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `raumlicht-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).
 
+## Eltern-Handy koppeln, Lehrplan, Prüfplan (seit 2.18.26)
+
+Freiwilliger, Ende-zu-Ende verschlüsselter Eltern-Bericht (`core/model/…/Eltern.kt`, QR-Code aus `Qr.kt`, Verschlüsselung im Browser). Was als Nächstes gebaut wird, steht in `LEHRPLAN-ABGLEICH.md`; wann was geprüft wird, in `PRUEFPLAN.md`; welche Formel zu welcher Aufgabe gehört, in `THEORIE-PRUEFLISTE.md`.
+
+| Eltern-Handy koppeln | „Kommt bald“ |
+|---|---|
+| ![](screenshots/87_eltern_koppeln.png) | ![](screenshots/88_kommt_bald.png) |
+
 ## Zählung, Nachhilfe-Hinweis, Geschenk (seit 2.18.22)
 
 Anonyme Nutzungszählung (`Zaehler`), sachlicher Nachhilfe-Hinweis im Lernstand (`Nachhilfe`), Eintrag „Lern-Geschenk verschenken“ und Absender-Zeile – beide Schalter in den Einstellungen, alles in `core/model/…/Nachhilfe.kt`.

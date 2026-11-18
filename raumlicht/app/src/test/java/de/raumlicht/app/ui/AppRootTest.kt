@@ -40,11 +40,16 @@ class AppRootTest {
     /** Zählaufrufe aus den Aufgaben (gestartet, geschafft, Theorie) – getrennt gesammelt */
     private val played = ArrayList<String>()
     private var crash = de.raumlicht.core.model.Nachhilfe.CRASH_URL
+    /** Nachgestellte Plattform fürs Eltern-Koppeln: merkt sich, was hochgeladen und gelöscht würde (hier unverschlüsselt, die Verschlüsselung prüft der Browser-Test) */
+    private val uploads = ArrayList<Triple<String, String, String>>(); private val deleted = ArrayList<String>()
+    private var eltern: de.raumlicht.app.ui.settings.ElternPlatform? = null
+    private fun fakeEltern() = de.raumlicht.app.ui.settings.ElternPlatform("https://server.test/b/", "https://seite.test/#weg/", { "A".repeat(22) + "." + "B".repeat(22) + "." + "C".repeat(43) },
+        { url, write, _, json, done -> uploads += Triple(url, write, json); done(204) }, { url, _, done -> deleted += url; done(204) })
     private fun start(pro: Boolean = false, ki: (suspend (String) -> Pair<Int, String>)? = null, kiOn: Boolean = true) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
-            AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry() } },
-                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, crashUrl = crash)
+            AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry(); de.raumlicht.app.ui.settings.ElternEntry() } },
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, crashUrl = crash)
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -220,6 +225,38 @@ class AppRootTest {
         crash = ""; start(); rule.runOnUiThread { prefs.tutorState = ""; prefs.setPlan(de.raumlicht.core.model.Plan(20_772L + 7, setOf(1, 2)).encode()) }
         nav.go(Routes.PLANNER); settle(); rule.onNodeWithTag("klausur-hinweis").assertDoesNotExist(); assertTrue(counted.isEmpty())
         rule.runOnUiThread { prefs.setPlan("") }
+    }
+
+    /** Eltern-Handy koppeln: erklären, koppeln (QR-Code, Link), Bericht geht raus, nach dem Lernen frühestens nach 10 Minuten wieder, aufheben löscht alles. */
+    @Test fun elternHandyKoppeln() {
+        eltern = fakeEltern(); start(); rule.runOnUiThread { prefs.setParentLink(""); prefs.parentSent = 0; prefs.learnLog = "" }
+        nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("eltern-eintrag").assertTextContains("Eltern-Handy koppeln").performClick(); settle(); assertEquals(Routes.PARENTS, nav.top)
+        rule.onNodeWithTag("eltern-inhalt").assertExists(); rule.onNodeWithTag("eltern-hinweis").assertTextContains("verschlüsselt", substring = true); rule.onNodeWithTag("eltern-qr").assertDoesNotExist()
+        assertTrue("vor dem Koppeln geht nichts raus", uploads.isEmpty())
+        rule.onNodeWithTag("eltern-name").performTextInput("Lena"); rule.onNodeWithTag("eltern-koppeln").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("eltern-qr").performScrollTo().assertExists(); rule.onNodeWithTag("eltern-status").performScrollTo().assertTextContains("Bericht gesendet", substring = true)
+        rule.onRoot().captureRoboImage("../screenshots/87_eltern_koppeln.png")
+        assertEquals(1, uploads.size); assertEquals("https://server.test/b/" + "A".repeat(22), uploads[0].first); assertEquals("B".repeat(22), uploads[0].second)
+        assertTrue(uploads[0].third, uploads[0].third.contains("\"name\":\"Lena\"") && uploads[0].third.contains("\"app\":\"raumlicht\"") && !uploads[0].third.contains("C".repeat(43)))
+        assertTrue(prefs.parentLink.value.endsWith(".Lena"))
+        // Lernen: eine gelöste Aufgabe landet im Protokoll; der nächste Bericht geht erst nach 10 Minuten
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.restart(Routes.level("1-1")); settle()
+        rule.runOnUiThread { prefs.learnLog = de.raumlicht.core.model.Eltern.add(prefs.learnLog, 20_772L, tasks = 1, right = 1) }
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.restart(Routes.HOME); settle(); assertEquals("innerhalb von 10 Minuten kein zweiter Bericht", 1, uploads.size)
+        rule.runOnUiThread { prefs.parentSent = prefs.parentSent - 11 * 60 * 1000L }
+        nav.go(Routes.BACKSTAGE); settle(); assertEquals(2, uploads.size); assertTrue(uploads[1].third.contains("\"aufgaben\":1"))
+        // aufheben: Bericht auf dem Server löschen, Werte lokal weg
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.restart(Routes.PARENTS); settle()
+        rule.onNodeWithTag("eltern-aufheben").performScrollTo().performClick(); settle(); rule.onNodeWithTag("eltern-aufheben-ja").performScrollTo().performClick(); settle()
+        assertEquals(listOf("https://server.test/b/" + "A".repeat(22)), deleted.toList()); assertEquals("", prefs.parentLink.value); rule.onNodeWithTag("eltern-koppeln").assertExists()
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.restart(Routes.HOME); settle(); assertEquals("nach dem Aufheben geht nichts mehr raus", 2, uploads.size)
+    }
+
+    /** „Kommt bald“ auf der Seite „Mehr“: sichtbar, ohne Datum, ohne Kaufhinweis – und Antippen führt nirgendwohin. */
+    @Test fun kommtBald() {
+        start(); nav.go(Routes.BACKSTAGE); settle()
+        rule.onNode(hasScrollToNodeAction()).performScrollToNode(hasText("Funktionenscharen")); settle(); rule.onNodeWithText("KOMMT BALD").assertExists()
+        rule.onNodeWithText("Normalverteilung").assertExists().performClick(); settle(); assertEquals(Routes.BACKSTAGE, nav.top); rule.onRoot().captureRoboImage("../screenshots/88_kommt_bald.png")
     }
 
     @Test fun fremderCodeSchaltetNichtsFrei() {

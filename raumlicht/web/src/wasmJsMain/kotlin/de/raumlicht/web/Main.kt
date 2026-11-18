@@ -112,6 +112,9 @@ private fun WebApp() {
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
             AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
+                eltern = remember { val test = hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST || elternServer() != null
+                    if (!de.raumlicht.core.model.Eltern.ENABLED && !test) null else de.raumlicht.app.ui.settings.ElternPlatform(elternServer() ?: if (test) de.raumlicht.core.model.Eltern.TEST_SERVER else de.raumlicht.core.model.Eltern.SERVER,
+                        if (test) de.raumlicht.core.model.Eltern.TEST_PAGE else de.raumlicht.core.model.Eltern.PAGE, ::elternNeu, ::elternSenden, ::elternLoeschen) },
                 countSend = { body -> beacon(de.raumlicht.core.model.Zaehler.URL, body) },
                 kiSend = { body -> kotlinx.coroutines.suspendCancellableCoroutine { c -> kiPost(kiUrl, body) { status, text -> if (c.isActive) c.resumeWith(Result.success(status to text)) } } },
                 kiEnabled = de.raumlicht.core.model.Ki.ENABLED || kiTest, version = Version.NAME,

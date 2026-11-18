@@ -96,7 +96,7 @@ fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
                         Text(e.title, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                         Text(e.sub, color = Q.Muted, fontSize = 12.sp)
                     }
-                    Text("›", color = e.color, fontSize = 22.sp, fontWeight = FontWeight.Black)
+                    if (e.group == "Kommt bald") Text("bald", color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold) else Text("›", color = e.color, fontSize = 22.sp, fontWeight = FontWeight.Black)
                 }
             }
         }

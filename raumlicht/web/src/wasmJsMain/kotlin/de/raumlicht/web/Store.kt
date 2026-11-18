@@ -74,6 +74,10 @@ class WebPrefs : Prefs {
     private val _kiCode = text("kiCode")
     override val kiCode: StateFlow<String> = _kiCode; override fun setKiCode(code: String) { storeSet(P + "kiCode", code); _kiCode.value = code }
     override fun kiDevice(): String = storeGet(P + "kiDevice") ?: randomId().also { storeSet(P + "kiDevice", it) }
+    private val _parentLink = text("elternKopplung")
+    override val parentLink: StateFlow<String> = _parentLink; override fun setParentLink(s: String) { if (s.isEmpty()) storeRemove(P + "elternKopplung") else storeSet(P + "elternKopplung", s); _parentLink.value = s }
+    override var parentSent: Long get() = storeGet(P + "elternGesendet")?.toLongOrNull() ?: 0L; set(v) = storeSet(P + "elternGesendet", v.toString())
+    override var learnLog: String get() = storeGet(P + "lernProtokoll") ?: ""; set(v) = storeSet(P + "lernProtokoll", v)
     private val _countUsage = flag("zaehlen", true)
     override val countUsage: StateFlow<Boolean> = _countUsage; override fun setCountUsage(on: Boolean) { put("zaehlen", on); _countUsage.value = on }
     private val _tutorHints = flag("nachhilfeHinweise", true)

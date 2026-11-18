@@ -151,6 +151,15 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     override fun kiDevice(): String = prefs.getString("kiDevice", null) ?: java.util.UUID.randomUUID().toString().replace("-", "").also { prefs.edit().putString("kiDevice", it).apply() }
 
     /** Endlos üben: die zuletzt gewählte Schwierigkeit (leer = alle Stufen) */
+    private val _parentLink = MutableStateFlow(prefs.getString("parentLink", "") ?: "")
+    override val parentLink: StateFlow<String> = _parentLink.asStateFlow()
+    override fun setParentLink(s: String) { prefs.edit().putString("parentLink", s).apply(); _parentLink.value = s }
+    override var parentSent: Long
+        get() = prefs.getLong("parentSent", 0L)
+        set(v) { prefs.edit().putLong("parentSent", v).apply() }
+    override var learnLog: String
+        get() = prefs.getString("learnLog", "") ?: ""
+        set(v) { prefs.edit().putString("learnLog", v).apply() }
     private val _countUsage = flag("countUsage", true)
     override val countUsage: StateFlow<Boolean> = _countUsage.asStateFlow()
     override fun setCountUsage(on: Boolean) { prefs.edit().putBoolean("countUsage", on).apply(); _countUsage.value = on }
