@@ -1,6 +1,19 @@
 # Meldungen an den Leitstand – Wissensgarten
 
 
+
+## iOS 2.2.12 – Safari-27.2-Abhilfe + Kotlin/JS-Fassung mit automatischer Umschaltung (18.11.2026)
+- **Raumlicht-Weg übernommen (bleibt Wasm):** `webApp/webpack/skiko-no-tail-call.cjs` und `webApp/webpack.config.d/skiko-no-tail-call.js` (findet den Lader selbst). Der Bau prüft **beide** Bündel: `wissensgarten.js` 937 abgesichert / 0 Endaufrufe, `wissensgarten-js.js` 937 / 0. Die JS-Fassung bindet Skiko genauso ein und hätte den Fehler sonst auch gehabt.
+- **`-Xwasm-no-jstag`** in allen Wasm-Modulen (core/model, core/data, shared, webApp), 0 × JSTag im Bündel.
+- **Kotlin/JS-Ziel:** Alle Module haben `js { browser(); useCommonJs() }`. Der frühere `wasmJsMain`-Code liegt jetzt in `webMain` (gemeinsam für Wasm und JS); 8 `js()`-Ausschnitte wurden auf ES5 umgeschrieben. Ausgeliefert werden beide Fassungen nebeneinander in `webapp/`. Der Service Worker speichert vorab nur die gemeinsamen Dateien, die Seite legt die Dateien ihrer eigenen Fassung selbst ab (kein 16-MB-Wasm-Download auf Geräten mit JS-Fassung).
+- **Lader (`index.html`):**
+  - `?modus=js|wasm|auto` (bleibt gemerkt, `auto` löscht den Merker).
+  - auto = Wasm. JS wird gewählt bei: kein WasmGC; Merker `wg.wasmKaputt` = diese Version; letzter Wasm-Start im selben Tab ohne „Garten steht“ (Tab-Absturz).
+  - Wasm-Startfehler, „Can't wrap nullptr“/LinkError/CompileError in der Konsole, Zeitlimit 25 s oder die neue **Bildprüfung** (4 s nach dem Start nur weiße/durchsichtige Pixel) → Merker setzen und einmal automatisch mit JS neu laden. Eine neue Version versucht wieder Wasm.
+  - WebKit startet bewusst **erst Wasm** (Raumlicht läuft so auf Marcels iPad); malt es nichts, greift die Bildprüfung.
+- **Geprüft:** Chromium – Wasm, `?modus=js` und die erzwungene Umschaltung Wasm → JS (siehe unten). Auf echtem Safari 27.2 **nicht geprüft**.
+- **Test:** https://wissensgarten-test.mathenachhilfe-online.com/?diag=1 – im Protokoll stehen „Fassung …“ und „Bildprüfung Wasm …“.
+
 ## iOS 2.2.11 – erster Befund vom iPad + feinere Diagnose (18.11.2026)
 - **Befund aus Marcels Bildschirmfoto (iPad, Safari 27.2, Desktop-Modus, 1270×1060, Schärfe 2 → 1,61):** Der Start läuft vollständig durch. Wasm, Schriften, „Garten steht“ und „erstes Bild gemalt ✓“ kommen nach 1,4 s, es gibt keinen Fehler und keine Fehlerseite. Trotzdem ist die Fläche **rein weiß**, nicht einmal cremefarben wie der Seitenhintergrund. Es liegt also nicht am Laden und nicht an einem Absturz, sondern daran, was auf der Zeichenfläche ankommt. In Chromium mit genau diesen Maßen und derselben Schärfe ist alles normal.
 - **2.2.11 misst genau das (nur mit `?diag=1`):**
