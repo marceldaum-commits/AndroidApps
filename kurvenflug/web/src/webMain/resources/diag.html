@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kurvenflug – Diagnose</title>
+  <style>
+    body { margin: 0; padding: 16px; background: #0B1026; color: #E8EBFF; font: 17px/1.4 system-ui, sans-serif; }
+    h1 { font-size: 22px; color: #38E8FF; margin: 0 0 4px; }
+    .k { font-size: 13px; opacity: .6; margin-bottom: 12px; word-break: break-word; }
+    .s { padding: 10px 12px; margin: 8px 0; border-radius: 12px; background: #1a2160; }
+    .s b { display: block; font-size: 18px; }
+    .ok { border-left: 6px solid #4CF59A; } .warn { border-left: 6px solid #FFD54A; } .bad { border-left: 6px solid #FF5C8A; } .run { border-left: 6px solid #38E8FF; }
+    .d { font-size: 14px; opacity: .85; word-break: break-word; }
+    #crash { background: #5a1030; padding: 12px; border-radius: 12px; font-size: 18px; font-weight: 700; display: none; margin: 10px 0; }
+    button { font: inherit; font-weight: 700; border: 0; border-radius: 999px; padding: 11px 20px; margin: 6px 6px 0 0; background: #38E8FF; color: #0B1026; }
+    button.b { background: transparent; color: #38E8FF; border: 2px solid #38E8FF; }
+  </style>
+</head>
+<body>
+  <h1>🛰️ Kurvenflug – Diagnose</h1>
+  <div class="k" id="info">Version {{VERSION}}</div>
+  <div id="crash"></div>
+  <div id="steps"></div>
+  <div>
+    <button id="again" type="button">Nochmal prüfen</button>
+    <button id="app" type="button">Echte App starten</button>
+    <button id="clear" class="b" type="button">Offline-Speicher leeren</button>
+  </div>
+  <div class="k" style="margin-top:14px">Bitte ein Bildschirmfoto dieser Seite schicken. Die Seite lädt die App nicht – sie prüft nur, was der Browser kann.
+    Stürzt der Tab bei einem Schritt ab, steht das beim nächsten Öffnen oben in Rot.</div>
+<script>
+// Reines HTML+JS (Vorgabe Leitstand 18.11.). Jeder Schritt wird VOR der Ausführung in localStorage notiert –
+// stürzt der Tab ab, zeigt der nächste Aufruf, bei welchem Schritt.
+(function () {
+  'use strict';
+  var FILES = {{FILES}};   // [{u, s}] – Wasm-Dateien der App, kleinste zuerst
+  var KEY = 'kf.diag', log = [];
+  function store(v) { try { if (v === null) localStorage.removeItem(KEY); else localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
+  function mb(n) { return (n / 1e6).toFixed(1) + ' MB'; }
+  var stepsEl = document.getElementById('steps');
+  function show(title, state, detail) {
+    var d = document.createElement('div'); d.className = 's ' + state;
+    d.innerHTML = '<b></b><div class="d"></div>'; d.firstChild.textContent = title; d.lastChild.textContent = detail || '';
+    stepsEl.appendChild(d); return d;
+  }
+  function set(el, state, detail) { el.className = 's ' + state; el.lastChild.textContent = detail || ''; }
+  // erst malen lassen, dann weiterrechnen
+  function paint() { return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(r, 60); }); }); }); }
+  function step(nr, title, fn) {
+    return paint().then(function () {
+      log.push({ nr: nr, title: title, state: 'läuft' }); store({ log: log, at: Date.now() });
+      var el = show(nr + ') ' + title, 'run', 'läuft …'); var t0 = performance.now();
+      return Promise.resolve().then(fn).then(function (r) {
+        var ms = Math.round(performance.now() - t0);
+        set(el, r && r.warn ? 'warn' : 'ok', (r && r.text ? r.text + ' · ' : '') + ms + ' ms');
+        log[log.length - 1].state = r && r.warn ? 'Warnung' : 'ok'; log[log.length - 1].text = r && r.text; store({ log: log, at: Date.now() });
+      }, function (e) {
+        set(el, 'bad', 'Fehler: ' + (e && e.message || e));
+        log[log.length - 1].state = 'Fehler'; log[log.length - 1].text = String(e && e.message || e); store({ log: log, at: Date.now() });
+      });
+    });
+  }
+  function validate(bytes) { try { return WebAssembly.validate(new Uint8Array(bytes)); } catch (e) { return false; } }
+  var GC = [0,97,115,109,1,0,0,0,1,8,2,95,1,120,0,96,0,0,3,3,2,1,1,10,14,2,6,0,6,64,25,11,11,5,0,208,112,26,11];   // GC-Struct + try/catch_all
+  var EXNREF = [0,97,115,109,1,0,0,0,1,4,1,96,0,0,3,2,1,0,10,8,1,6,0,31,64,0,11,11];                              // try_table (neue Ausnahmen)
+  function fetchBytes(f) {
+    return fetch(f.u, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status + ' für ' + f.u); return r.arrayBuffer(); });
+  }
+  var modules = [];
+  function run() {
+    stepsEl.innerHTML = ''; log = [];
+    var info = document.getElementById('info');
+    info.textContent = 'Version {{VERSION}} · ' + navigator.userAgent + ' · Bildschirm ' + screen.width + '×' + screen.height + ' · DPR ' + (window.devicePixelRatio || 1) +
+      (navigator.deviceMemory ? ' · RAM ~' + navigator.deviceMemory + ' GB' : '');
+    var p = step(1, 'HTML und JavaScript laufen', function () { return { text: 'ok' }; })
+      .then(function () { return step(2, 'WebAssembly: GC + Ausnahmen', function () {
+        if (typeof WebAssembly !== 'object') throw new Error('kein WebAssembly');
+        var gc = validate(GC), ex = validate(EXNREF);
+        if (!gc) throw new Error('GC/Ausnahmen fehlen (Safari erst ab iOS 18.2) · exnref: ' + (ex ? 'ja' : 'nein'));
+        return { text: 'GC + try/catch: ja · exnref (try_table): ' + (ex ? 'ja' : 'nein'), warn: !ex };
+      }); })
+      .then(function () { return step(3, 'Grafik: WebGL 2', function () {
+        var c = document.createElement('canvas'); var gl = c.getContext('webgl2');
+        if (!gl) throw new Error('kein WebGL-2-Kontext');
+        var max = gl.getParameter(gl.MAX_TEXTURE_SIZE), rb = gl.getParameter(gl.MAX_RENDERBUFFER_SIZE);
+        var w = Math.round(innerWidth * (window.devicePixelRatio || 1)), h = Math.round(innerHeight * (window.devicePixelRatio || 1));
+        var lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();
+        return { text: 'MAX_TEXTURE_SIZE ' + max + ' · MAX_RENDERBUFFER ' + rb + ' · Zeichenfläche bräuchte ' + w + '×' + h, warn: w > max || h > max };
+      }); });
+    FILES.forEach(function (f, i) {
+      p = p.then(function () { return step(4 + i, (i === 0 ? 'Kleines' : 'Großes') + ' Wasm laden + übersetzen (' + f.u + ', ' + mb(f.s) + ')', function () {
+        var t0 = performance.now(), tl;
+        return fetchBytes(f).then(function (buf) { tl = Math.round(performance.now() - t0); return WebAssembly.compile(buf); })
+          .then(function (m) { modules.push(m); return { text: 'geladen in ' + tl + ' ms, übersetzt (' + WebAssembly.Module.imports(m).length + ' Importe)' }; });
+      }); });
+    });
+    p = p.then(function () { return step(4 + FILES.length, 'Offline-Speicher (Service Worker)', function () {
+      if (!('serviceWorker' in navigator)) return { text: 'nicht vorhanden' };
+      var ctl = navigator.serviceWorker.controller;
+      return (window.caches ? caches.keys() : Promise.resolve([])).then(function (ks) {
+        return { text: (ctl ? 'aktiv: ' + ctl.scriptURL.split('/').pop() : 'keiner aktiv') + ' · Speicher: ' + (ks.join(', ') || 'leer') };
+      });
+    }); })
+    .then(function () { return step(5 + FILES.length, 'Letzter App-Start', function () {
+      var s = null; try { s = localStorage.getItem('kf.start'); } catch (e) {}
+      var f = null; try { f = localStorage.getItem('kf.wasmGescheitert'); } catch (e) {}
+      if (!s) return { text: 'kein abgebrochener Start gespeichert' + (f ? ' · Wasm war gescheitert → einfache Fassung' : '') };
+      var x = s.split('|'); return { text: 'abgebrochen: Fassung ' + x[0] + ', Stufe „' + x[1] + '“' + (x[2] ? ' (' + new Date(+x[2]).toLocaleTimeString() + ')' : ''), warn: true };
+    }); })
+    .then(function () { store({ log: log, at: Date.now(), done: true }); });
+    return p;
+  }
+  // Absturz beim letzten Mal?
+  var prev = load();
+  if (prev && !prev.done && prev.log && prev.log.length) {
+    var last = prev.log[prev.log.length - 1];
+    var c = document.getElementById('crash'); c.style.display = 'block';
+    c.textContent = '⚠️ Beim letzten Mal ist der Tab abgestürzt bei Schritt ' + last.nr + ': ' + last.title + (last.state === 'läuft' ? ' (noch am Laufen)' : '');
+  }
+  document.getElementById('again').onclick = function () { run(); };
+  document.getElementById('app').onclick = function () {
+    log.push({ nr: 6, title: 'Echte App starten', state: 'läuft' }); store({ log: log, at: Date.now() });
+    location.href = './?modus=auto';
+  };
+  document.getElementById('clear').onclick = function () {
+    var p1 = navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }) : Promise.resolve();
+    var p2 = window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k.indexOf('kurvenflug-') === 0; }).map(function (k) { return caches.delete(k); })); }) : Promise.resolve();
+    Promise.all([p1, p2]).then(function () { try { localStorage.removeItem('kf.start'); localStorage.removeItem('kf.wasmGescheitert'); } catch (e) {} alert('Offline-Speicher geleert. Spielstand bleibt erhalten.'); location.reload(); });
+  };
+  // Wurde die App aus der Diagnose gestartet und kam zurück, ist Schritt 6 erledigt; sonst zeigt Schritt „Letzter App-Start“ den Abbruch
+  run();
+})();
+</script>
+</body>
+</html>
