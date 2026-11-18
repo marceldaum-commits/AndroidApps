@@ -48,7 +48,8 @@ check(seen.length === 1 && seen[0] && seen[0].app === 'raumlicht' && seen[0].art
 check(asked.length === 1 && /<eingabe>/.test(asked[0].messages[0].content) && !JSON.stringify(asked[0]).includes(seen[0]?.geraet), 'der Server reicht Aufgabe und Eingabe an den KI-Dienst weiter – ohne Geräte-Kennung');
 // 4. (nur mit Code-Datei als drittem Argument – der Code steht nicht im Repository) echter Pass im Link: gemerkt, und die nächste Frage geht mit dem Code an den Server
 if (process.argv[4]) { const plain = fs.readFileSync(process.argv[4], 'utf8').trim().replace(/-/g, '');
-  await open('?ki=' + plain, '5-pass-aktiv');
-  check((await page.evaluate(() => localStorage.getItem('raumlicht.kiCode') || '')).replace(/-/g, '') === plain && /KI-Link: Code angenommen/.test(await log()), 'echter KI-Pass im Link wird angenommen und gemerkt'); }
+  await page.goto('about:blank'); await open('#ki=' + plain, '5-pass-aktiv');   // neue Linkform hinter dem „#“; die alte „?ki=“ prüft Schritt 1
+  check((await page.evaluate(() => localStorage.getItem('raumlicht.kiCode') || '')).replace(/-/g, '') === plain && /KI-Link: Code angenommen/.test(await log()), 'echter KI-Pass im Link „#ki=“ wird angenommen und gemerkt');
+  check(!(await page.evaluate(() => location.href)).includes(plain.slice(0, 20)), 'der KI-Code steht danach nicht mehr in der Adresszeile'); }
 check(errs.length === 0, errs.length ? 'Fehler: ' + errs.slice(0, 3).join(' | ') : 'keine Konsolenfehler');
 await b.close(); server.close(); process.exit(fail ? 1 : 0);

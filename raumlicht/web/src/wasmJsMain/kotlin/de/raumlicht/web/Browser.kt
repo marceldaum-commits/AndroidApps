@@ -130,7 +130,14 @@ fun musicSetup(render: (String) -> Unit): Unit = js("""{
 /** Welches Stück laufen soll (null = keins) und wie laut (0..1) */
 fun musicWant(mood: String?, vol: Double): Unit = js("{ const M = window.__rlMusic; if (!M) return; M.want = mood; M.vol = vol; M.apply(); }")
 
-/** Wert aus der Adresszeile („?name=…“) holen und gleich wieder herausnehmen, damit er nicht versehentlich geteilt oder beim Neuladen wiederholt wird */
-fun takeParam(name: String): String? = js("(function () { try { var u = new URL(location.href); var c = u.searchParams.get(name); if (c === null) return null; u.searchParams.delete(name); history.replaceState(history.state, '', u.pathname + u.search + u.hash); return c; } catch (e) { return null; } })()")
-/** Freischalt-Link „?pro=<Code>“ */
+/**
+ * Wert aus der Adresszeile holen und gleich wieder herausnehmen, damit er nicht versehentlich geteilt oder beim Neuladen wiederholt wird.
+ * Gelesen wird zuerst hinter dem „#“ („#name=…“ – dieser Teil geht nie an einen Server und landet in keinem Protokoll), sonst „?name=…“ (alte Karten und E-Mails).
+ */
+fun takeParam(name: String): String? = js("""(function () { try {
+    var u = new URL(location.href), h = new URLSearchParams(u.hash.charAt(0) === '#' ? u.hash.slice(1) : u.hash), c = h.get(name), q = u.searchParams.get(name);
+    if (c === null && q === null) return null;
+    if (c !== null) { h.delete(name); var rest = h.toString(); u.hash = rest ? '#' + rest : ''; }
+    u.searchParams.delete(name); history.replaceState(history.state, '', u.pathname + u.search + u.hash); return c !== null ? c : q; } catch (e) { return null; } })()""")
+/** Freischalt-Link „#pro=<Code>“ (früher „?pro=<Code>“) */
 fun takeProParam(): String? = takeParam("pro")

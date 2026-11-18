@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.18.28 auf test: Eltern-Koppeln für alle, Update 11 (Marcel hat hier selbst „jo“ gesagt)
+
+- **`Eltern.ENABLED = true`.** Geprüft am 18.11.: `https://www.mathenachhilfe-online.com/eltern-bericht/` und die staging-Adresse liefern 200. Live zeigt der Link auf www und schreibt nach `trainer.…`, auf raumlicht-test auf staging und `trainer-test.…`.
+- **Update 11, Punkt 1 – drin:** Die WebApp liest `#pro=CODE` und weiter `?pro=CODE`; ebenso `#ki=CODE` und `?ki=CODE` für den KI-Abi-Pass. Der Wert hinter dem „#“ hat Vorrang. Danach nimmt `history.replaceState` den Code in beiden Formen aus der Adresszeile; anderes hinter dem „#“ bleibt stehen. Browser-Test `web-pro.mjs` (10 Prüfungen): Bei `#pro=` sieht der Server den Code nicht. **Du kannst die Links in Karten und Mails auf `…/#pro=CODE` und `…/#ki=CODE` umstellen, sobald 2.18.28 live ist** (vorher nicht – 2.18.27 und älter lesen nur `?pro=`).
+- **Punkt 2 – war schon so:** Code-Eingabe von Hand gibt es für Pro („Raumlicht Pro“ → Feld „Code“) und für den KI-Abi-Pass (KI-Seite → Feld „Code“), auch in der installierten WebApp. Zusätzlich holt die Sicherung beide Codes auf ein neues Gerät.
+- **Punkt 3 – gegengeprüft:** kein `sendBeacon` im Code. Die Zählung nutzt `fetch` mit `credentials:'omit'`, `keepalive:true`, `Content-Type: text/plain`, `mode:'no-cors'`.
+- Alle Tests wie bei 2.18.27 (Browser: 117 Prüfungen, 0 Fehler).
+
 ## 18.11.2026 – 2.18.27 auf test: verschlüsselte Sicherung, „Fortschritt wiederherstellen“, „verlauf“ (Marcel hat hier selbst „ja“ gesagt)
 
 **Gebaut nach deinem Zusatz-Auftrag, bitte prüfen. Live erst nach deiner Prüfung; `Eltern.ENABLED` bleibt `false`, bis die Eltern-Seite auf www steht (dort am 18.11. noch 404, auf staging inzwischen 200).**
