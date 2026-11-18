@@ -24,11 +24,11 @@ Dauerregel von Marcel (18.11.2026, ersetzt „wöchentlich mittwochs“): **Jede
 | Termin | Vorschlag |
 |---|---|
 | Fr 20.11.2026 | **Aufräum-Tag** (Vorschlag Marcel): „Gleichungen lösen“ und „Kopfrechen-Tricks“ zu Merkwissen umbauen, Deeplinks `#paket=<ID>`, abgestimmte Querverweise zu Mathe-Trainer, Rechenblitz, KurvenFlug, Experimentopia und Raumlicht; danach, wenn Zeit bleibt, Rechengeschichten Klasse 1–4 |
-| Di 24.11.2026 | Sachunterricht: Winter, Wetter, Wasser (mit Erklärungen) |
-| Fr 27.11.2026 | Klasse 5–6: Dezimalzahlen (alle Rechenschritte) |
-| Di 01.12.2026 | Englisch Grundschule: Winter, Kleidung, Feiertage |
+| Di 24.11.2026 | Englisch Klasse 3–5: „School & Classroom“ (Vorrang Deutsch/Englisch laut Entscheidung vom 18.11.) + vollständige Rechenwege in Negative Zahlen, Brüche & Prozent, Algebra |
+| Fr 27.11.2026 | Deutsch Klasse 3–5: Rechtschreibstrategien (ie/ei, ss/ß, Dehnungs-h, das/dass) mit Beispielen |
+| Di 01.12.2026 | Englisch Klasse 3–6: Food & Drinks, Clothes & Weather (abgestimmt mit der Sprachlern-App) |
 | Fr 04.12.2026 | Deutsch Grundschule: Wortfamilien und Wortfelder |
-| Di 08.12.2026 | Klasse 7–8: Prozentrechnung mit Rechenwegen ausweiten |
+| Di 08.12.2026 | Englisch Klasse 4–6: Hobbys & Free Time, Time & Dates; Sachunterricht „Winter, Wetter, Wasser“ |
 
 Die Tabelle wird laufend fortgeschrieben; Wünsche von Marcel oder dem Leitstand gehen vor.
 
