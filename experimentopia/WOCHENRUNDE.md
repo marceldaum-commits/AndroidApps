@@ -32,3 +32,15 @@ WebApp, PC-Ansicht, Eltern-Kopplung + Sicherung, Elternbereich (Probestunde), an
 - Passend: Laser-Optik (Kap. 11, Kl. 7), Lichtbrechung (17, Kl. 9), Energie (12, Kl. 8–9 – passt zur Achterbahn), Wurf & Schwerkraft (4), Weg & Zeit (13), Beschleunigte Bewegung (24), Waagerechter Wurf (27), Wellen & Wachstum (5, Halbwertszeit).
 - Strom: KurvenFlug macht Ohm als Rechen-Gegenstück; Induktion/Trafo-Verständnis bleibt bei uns (dort höchstens U₁/U₂ = N₁/N₂ gerechnet). Radioaktivität ganz bei uns.
 - Links ab Fr 20.11.: `https://kurvenflug.mathenachhilfe-online.com/#kapitel=<nr>` (Test: kurvenflug-test.…). Nimmt unser `#thema=…` für „Selbst ausprobieren“.
+
+**Rechenblitz:** Rolle = tägliches Kopfrechnen/Automatisieren Kl. 1–10 (Grundrechnen, Einmaleins, Brüche, Prozent, Zehnerpotenzen, Einheiten, Dreisatz, kurze Sachaufgaben).
+- Fr 20.11. LGS im Kopf + Lösungswege; Di 24.11. quadratische Gleichungen; Fr 27.11. Sachaufgaben.
+- Passend: Einheiten (unit, auch W/kW/Wh), Dreisatz, Zehnerpotenzen, Prozent (Wirkungsgrad). Bietet Physik-Sachaufgaben an (E = P·t, Wirkungsgrad) → von uns erwünscht.
+- Links heute schon: `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6|profi|auto>&modus=training` (Test: rechenblitz-test.). Gibt nichts ab.
+
+**Wissensgarten:** Rolle = merken und wiederholen (Lernkarten, Vergessenskurve), Grundschule bis Kl. 10, keine Versuche, kein Rechnen ab Kl. 5.
+- Fr 20.11. Rechengeschichten Grundschule; Di 24.11. „Winter, Wetter, Wasser“ (Merkwissen) – wir bauen Wasser Kl. 3–4 nicht aus, also bleibt es dort.
+- Pakete passend zu uns: s1-physik-strom, s1-physik-einheiten-formeln, s1-chemie-*, s1-bio-*, gs-*. Deeplinks `#paket=<id>` ab Fr 20.11.
+- Setzt „Ausprobieren in Experimentopia“ mit unseren `#thema=`-Kennungen in die Pakete. Atombau/PSE als Versuch bei uns, Merkkarten bei ihnen.
+
+**Daraus für Experimentopia:** Bis Fr 20.11. Themen-Deeplinks `…/#thema=<slug>` bauen; auf den Theorie-Karten Verweise „Nachrechnen in KurvenFlug“, „Schnell üben im Rechenblitz“, „Begriffe wiederholen im Wissensgarten“, „Nachrechnen im Mathe-Trainer“ (sobald deren Links laufen).
