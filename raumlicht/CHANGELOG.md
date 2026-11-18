@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.22 – Anonyme Zählung, Lern-Geschenk und ein Hinweis auf die Nachhilfe – alles abschaltbar (18.11.2026)
+- **Anonyme Zählung, abschaltbar:** Raumlicht meldet uns ab jetzt, dass etwas geschah – zum Beispiel „App geöffnet“ oder „Link angetippt“. Ohne Kennung, ohne Cookie, ohne Gerätedaten, ohne Lernstand. Das hilft uns zu sehen, was genutzt wird. Schalter: Einstellungen → „Anonyme Nutzungszählung“.
+- **Hinweis auf unsere Nachhilfe, abschaltbar:** Wenn im Lernstand ein Gebiet noch hakt, kann dort ein kurzer, sachlicher Hinweis auf eine kostenlose Probestunde stehen. Nie in den Aufgaben, ohne Preis, ohne Lux, höchstens alle 14 Tage je Gebiet, mit „Ausblenden“. Schalter: Einstellungen → „Hinweise auf unsere Nachhilfe zeigen“.
+- **🎁 Lern-Geschenk verschenken:** neuer Eintrag in den Einstellungen, führt zur Geschenke-Seite auf unserer Website.
+- Ganz unten in den Einstellungen steht jetzt, von wem Raumlicht kommt: „Ein Angebot von Nachhilfe – online“.
+- **Für Eltern:** Fremde Werbung gibt es weiterhin nicht. Neu sind Hinweise auf unsere eigenen Angebote; beides oben lässt sich abschalten.
+
 ## 2.18.21 – Zweite Fassung für Safari, iPhone und iPad (18.11.2026)
 - **Raumlicht gibt es jetzt in zwei Fassungen**, die gleich aussehen und dasselbe können. Safari sowie alle Browser auf iPhone und iPad bekommen von selbst die Fassung, die dort zuverlässig ein Bild zeigt; alle anderen behalten die schnellere.
 - **Startet eine Fassung auf einem Gerät nicht, wechselt Raumlicht von selbst zur anderen** und merkt sich das. Der Spielstand bleibt.

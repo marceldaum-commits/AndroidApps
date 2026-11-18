@@ -161,6 +161,14 @@ Ausliefern: `versionCode`/`versionName` und `VERSION_DATE` in `app/build.gradle.
 GitHub baut, signiert (gleicher Schlüssel wie der Wissensgarten) und veröffentlicht `raumlicht-v<Version>` unter Releases.
 Die App findet die neue Version selbst (Einstellungen → App-Update).
 
+## Zählung, Nachhilfe-Hinweis, Geschenk (seit 2.18.22)
+
+Anonyme Nutzungszählung (`Zaehler`), sachlicher Nachhilfe-Hinweis im Lernstand (`Nachhilfe`), Eintrag „Lern-Geschenk verschenken“ und Absender-Zeile – beide Schalter in den Einstellungen, alles in `core/model/…/Nachhilfe.kt`.
+
+| Hinweis im Lernstand | Schalter in den Einstellungen |
+|---|---|
+| ![](screenshots/84_nachhilfe_hinweis.png) | ![](screenshots/85_schalter_zaehlung.png) |
+
 ## Zwei Web-Fassungen: Wasm und JavaScript (seit 2.18.21)
 
 Safari 26/27 zeigt mit der Kotlin/Wasm-Fassung eine weiße Seite. Darum baut `./gradlew :web:webapp` zwei Pakete aus denselben Quelltexten: `raumlicht.js` + Kern-`.wasm` (Kotlin/Wasm) und `raumlicht-js.js` (Kotlin/JS).

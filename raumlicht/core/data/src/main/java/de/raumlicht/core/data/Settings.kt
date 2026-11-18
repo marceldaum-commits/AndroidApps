@@ -151,6 +151,15 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     override fun kiDevice(): String = prefs.getString("kiDevice", null) ?: java.util.UUID.randomUUID().toString().replace("-", "").also { prefs.edit().putString("kiDevice", it).apply() }
 
     /** Endlos üben: die zuletzt gewählte Schwierigkeit (leer = alle Stufen) */
+    private val _countUsage = flag("countUsage", true)
+    override val countUsage: StateFlow<Boolean> = _countUsage.asStateFlow()
+    override fun setCountUsage(on: Boolean) { prefs.edit().putBoolean("countUsage", on).apply(); _countUsage.value = on }
+    private val _tutorHints = flag("tutorHints", true)
+    override val tutorHints: StateFlow<Boolean> = _tutorHints.asStateFlow()
+    override fun setTutorHints(on: Boolean) { prefs.edit().putBoolean("tutorHints", on).apply(); _tutorHints.value = on }
+    override var tutorState: String
+        get() = prefs.getString("tutorState", "") ?: ""
+        set(v) { prefs.edit().putString("tutorState", v).apply() }
     override var jamLevel: String
         get() = prefs.getString("jamLevel", "") ?: ""
         set(v) = prefs.edit().putString("jamLevel", v).apply()

@@ -263,6 +263,19 @@ class PlayFlowTest {
         assertTrue(heard.isEmpty())
     }
 
+    /** Einstellungen: Schalter für die anonyme Zählung und die Nachhilfe-Hinweise (beide abschaltbar), Geschenk-Eintrag und Absender-Zeile – ohne Preis. */
+    @Test fun schalterFuerZaehlungUndHinweise() {
+        var count = true; var hints = true
+        show { CompositionLocalProvider(de.raumlicht.app.ui.settings.LocalOffers provides de.raumlicht.app.ui.settings.OffersChoice(count, { count = it }, hints, { hints = it })) {
+            de.raumlicht.app.ui.settings.SettingsScreen(true, {}, true, {}, true, {}, true, {}, "2.18.22", de.raumlicht.app.ui.settings.UpdateState.Idle, {}) } }
+        rule.onNodeWithText("📊 Anonyme Nutzungszählung").performScrollTo().assertExists(); rule.onNodeWithText("Ohne Kennung, ohne Gerät, ohne Lernstand.", substring = true).assertExists()
+        rule.onNodeWithText("💬 Hinweise auf unsere Nachhilfe zeigen").performScrollTo().assertExists()
+        rule.onNodeWithTag("geschenk").performScrollTo().assertTextContains("Lern-Geschenk verschenken", substring = true)
+        rule.onRoot().captureRoboImage("../screenshots/85_schalter_zaehlung.png")
+        rule.onNodeWithTag("fusszeile").performScrollTo().assertTextContains("Ein Angebot von Nachhilfe – online")
+        rule.onNodeWithTag("angebote").assert(hasAnyDescendant(hasText("€", substring = true)).not())
+    }
+
     @Test fun voiceSwitchInSettings() {
         var on = true; val heard = ArrayList<String>()
         show { CompositionLocalProvider(de.raumlicht.app.ui.fx.LocalSpeaker provides de.raumlicht.app.ui.fx.Speaker { heard += it }) {

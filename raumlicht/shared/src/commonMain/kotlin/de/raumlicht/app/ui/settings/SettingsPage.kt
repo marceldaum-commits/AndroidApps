@@ -41,7 +41,7 @@ fun SettingsPage(
     /** Lizenzen der fremden Bausteine: als Text zum Anzeigen ([licenses], Android) oder als eigene Aktion ([onLicenses], Web öffnet die Datei) */
     licenses: String? = null, onLicenses: (() -> Unit)? = null,
     /** Was die App speichert und wann sie ins Internet geht – je Plattform verschieden */
-    privacy: String = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Käufe. " +
+    privacy: String = "Raumlicht speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine fremde Werbung, keine Käufe. " +
         "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)" + de.raumlicht.core.model.Vorlesen.privacyNote,
 ) {
     val speaker = de.raumlicht.app.ui.fx.LocalSpeaker.current
@@ -99,6 +99,18 @@ fun SettingsPage(
                     Text("Frag im Zweifel, wie es deine Lehrkraft haben möchte. Die Rechnung ist dieselbe.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                 }
             }
+            LocalOffers.current?.let { o ->
+                val uri = androidx.compose.ui.platform.LocalUriHandler.current; val count = de.raumlicht.app.ui.fx.LocalCount.current
+                ElevatedCard(Modifier.fillMaxWidth().testTag("angebote")) {
+                    Column(Modifier.padding(16.dp)) {
+                        Text("Mithelfen & Angebote", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+                        Toggle("📊 " + de.raumlicht.core.model.Zaehler.SWITCH, de.raumlicht.core.model.Zaehler.SWITCH_NOTE, o.count, o.setCount)
+                        Toggle("💬 " + de.raumlicht.core.model.Nachhilfe.SWITCH, de.raumlicht.core.model.Nachhilfe.SWITCH_NOTE, o.hints, o.setHints)
+                        TextButton({ count("geschenk_klick", "einstellungen", null); runCatching { uri.openUri(de.raumlicht.core.model.Zaehler.link(de.raumlicht.core.model.Nachhilfe.GIFT_URL, "geschenk")) } },
+                            Modifier.testTag("geschenk")) { Text("🎁 Lern-Geschenk verschenken") }
+                    }
+                }
+            }
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Datenschutz & Inhalte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
@@ -108,7 +120,12 @@ fun SettingsPage(
                         "Lagebeziehungen, Ebenen in Koordinatenform, Durchstoßpunkte, Normalenvektor, Skalarprodukt, Lotfußpunkt, " +
                         "Abstände, Spiegelung, Winkel, Kugeln, Kreuzprodukt mit Flächen und Volumen, Bewegungsaufgaben; dazu Analysis (Funktionen, Ableitung, Kurvendiskussion, Integral, Rotationskörper) und Stochastik (Laplace, Pfadregel, Vierfeldertafel, Binomialverteilung). Jedes Kapitel endet mit einer Aufgabe im Abitur-Stil.", style = MaterialTheme.typography.bodySmall)
                     if (licenses != null || onLicenses != null) TextButton({ if (onLicenses != null) onLicenses() else showLicenses = true }, Modifier.testTag("lizenzen")) { Text("Fremde Bausteine & Lizenzen") }
+                    if (LocalOffers.current != null) Text("Hinweise auf unsere eigene Nachhilfe und die anonyme Nutzungszählung lassen sich oben abschalten.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                     Text(versionText, style = MaterialTheme.typography.labelSmall, color = Q.Muted)
+                    // Absender-Hinweis: dezent, ohne Preis, ohne Aufforderung
+                    if (LocalOffers.current != null) { val uri = androidx.compose.ui.platform.LocalUriHandler.current
+                        TextButton({ runCatching { uri.openUri(de.raumlicht.core.model.Zaehler.link(de.raumlicht.core.model.Nachhilfe.HOME_URL, "fusszeile")) } }, Modifier.testTag("fusszeile")) {
+                            Text(de.raumlicht.core.model.Nachhilfe.FOOTER, style = MaterialTheme.typography.labelSmall, color = Q.Muted) } }
                 }
             }
             if (lastProblem != null) ElevatedCard(Modifier.fillMaxWidth()) {

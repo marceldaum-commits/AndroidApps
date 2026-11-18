@@ -66,6 +66,8 @@ fun VoiceHints(modifier: androidx.compose.ui.Modifier = androidx.compose.ui.Modi
 }
 
 /** Text weitergeben (Android: Teilen-Dialog, Web: Teilen oder Zwischenablage) */
+/** Anonyme Nutzungszählung: (Ereignis, Ort, Thema) – sendet nur, wenn der Schalter an ist und die Plattform zählen kann; sonst ohne Wirkung */
+val LocalCount = staticCompositionLocalOf<(event: String, place: String?, topic: String?) -> Unit> { { _, _, _ -> } }
 val LocalShareText = staticCompositionLocalOf<(String) -> Unit> { {} }
 /** Ergebnis-Karte als Bild teilen: Titel, Punkte, Urteil. Wo es das nicht gibt, bleibt der Knopf ohne Wirkung. */
 val LocalShareCard = staticCompositionLocalOf<(String, String, String) -> Unit> { { _, _, _ -> } }

@@ -102,7 +102,14 @@ fun AppRoot(
     kiEnabled: Boolean = de.raumlicht.core.model.Ki.ENABLED,
     /** Versionsname, geht mit jeder KI-Anfrage mit */
     version: String = "",
+    /** Sendet einen Zählaufruf (fertiger Text) an unseren Server; null = diese Plattform zählt nicht (Android pausiert, Tests) */
+    countSend: ((String) -> Unit)? = null,
+    /** Schalter für Zählung und Nachhilfe-Hinweise samt Geschenk-Eintrag und Fußzeile in den Einstellungen zeigen */
+    offers: Boolean = true,
 ) {
+    val countOn by prefs.countUsage.collectAsState(); val hintsOn by prefs.tutorHints.collectAsState()
+    // Zählen: nur mit eingeschaltetem Schalter, nur Ereignisse von der Liste – sonst geschieht nichts
+    val count: (String, String?, String?) -> Unit = { ev, place, topic -> if (prefs.countUsage.value) de.raumlicht.core.model.Zaehler.body(ev, place, topic, version)?.let { countSend?.invoke(it) } }
     val kiCode by prefs.kiCode.collectAsState()
     val kiLast = remember(kiCode, proKey) { de.raumlicht.core.model.Ki.info(kiCode, proKey)?.let(de.raumlicht.core.model.Ki::lastDay) }
     val kiShown = kiSend != null && (kiEnabled || kiLast != null)
@@ -114,7 +121,7 @@ fun AppRoot(
     val enterCode: (String) -> Boolean = { text -> val code = de.raumlicht.core.model.License.extract(text) ?: text.trim()
         // ein KI-Code im Pro-Feld (oder umgekehrt) landet trotzdem an der richtigen Stelle
         val ki = if (kiSend != null) de.raumlicht.core.model.Ki.fromText(text, proKey) else null
-        if (ki != null) { prefs.setKiCode(ki); nav.go(Routes.KI); true } else Pro.active(code, proKey).also { if (it) prefs.setProCode(code) } }
+        if (ki != null) { prefs.setKiCode(ki); nav.go(Routes.KI); true } else Pro.active(code, proKey).also { if (it) { prefs.setProCode(code); count("code_eingeloest", "eingabe", null) } } }
     val enterKi: (String) -> Boolean = { text -> val ki = de.raumlicht.core.model.Ki.fromText(text, proKey); val pro = de.raumlicht.core.model.License.extract(text) ?: text.trim()
         if (ki != null) { prefs.setKiCode(ki); true } else if (Pro.active(pro, proKey)) { prefs.setProCode(pro); nav.go(Routes.PRO); true } else false }
     val kiTutor = remember(kiShown, kiCode, kiLast) { if (!kiShown) null else de.raumlicht.app.ui.level.KiTutor(kiLast != null && today() <= kiLast,
@@ -150,6 +157,8 @@ fun AppRoot(
         de.raumlicht.app.ui.settings.LocalProEntry provides (if (proEnabled || proActive) ({ nav.go(Routes.PRO) }) else null), de.raumlicht.app.ui.settings.LocalProActive provides proActive,
         de.raumlicht.app.ui.level.LocalKi provides kiTutor,
         de.raumlicht.app.ui.settings.LocalKiEntry provides (if (kiShown) de.raumlicht.app.ui.settings.KiEntryState({ nav.go(Routes.KI) }, kiLast, today()) else null),
+        de.raumlicht.app.ui.fx.LocalCount provides count,
+        de.raumlicht.app.ui.settings.LocalOffers provides (if (offers) de.raumlicht.app.ui.settings.OffersChoice(countOn, prefs::setCountUsage, hintsOn, prefs::setTutorHints) else null),
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
         // Erkennungsmelodie: einmal je Sitzung, bei der ersten Berührung (nie vorher) – leise, damit sie niemanden erschreckt
         val jingle = de.raumlicht.app.ui.fx.LocalSfx.current
@@ -240,7 +249,19 @@ fun AppRoot(
                     val guide = Guides.byId(parts[1])
                     if (guide == null) LaunchedEffect(Unit) { nav.back() } else ExamPlay(guide, onFinished = {}, onBack = back, guided = true)
                 }
-                Routes.LEARN -> LearnScreen(remember(starMap) { Learn.topics(starMap) }, ::openChapter, back)
+                Routes.LEARN -> {
+                    val topics = remember(starMap) { Learn.topics(starMap) }
+                    val uri = androidx.compose.ui.platform.LocalUriHandler.current
+                    var state by remember { mutableStateOf(prefs.tutorState) }
+                    val day = remember { today() }
+                    val hint = remember(topics, state, hintsOn) { de.raumlicht.core.model.Nachhilfe.hint(topics, starMap, day, state, offers && hintsOn) }
+                    // beim ersten Erscheinen zählen und den Tag merken (danach ruht dieses Gebiet 14 Tage)
+                    LaunchedEffect(hint?.topic) { hint?.let { h -> if (de.raumlicht.core.model.Nachhilfe.isNew(state, h.topic, day)) { count("nachhilfe_hinweis", "lernstand", h.topic)
+                        prefs.tutorState = de.raumlicht.core.model.Nachhilfe.shown(prefs.tutorState, h.topic, day); state = prefs.tutorState } } }
+                    LearnScreen(topics, ::openChapter, back, hint,
+                        onHint = { hint?.let { h -> count("probestunde_klick", "lernstand", h.topic); runCatching { uri.openUri(h.link) } } },
+                        onHideHint = { hint?.let { h -> prefs.tutorState = de.raumlicht.core.model.Nachhilfe.hide(prefs.tutorState, h.topic); state = prefs.tutorState } })
+                }
                 Routes.PLANNER -> PlannerScreen(plan, today(), starMap, { prefs.setPlan(it?.encode() ?: ""); onPlanChanged() }, { l, s, a -> record(l.id, s, a) }, back)
                 Routes.CLASS -> ClassScreen({ l, s, a -> record(l.id, s, a) }, back)
                 Routes.MATCH -> MatchScreen(back)

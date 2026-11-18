@@ -36,11 +36,12 @@ class AppRootTest {
     // KI-Pässe aus dem Test-Schlüssel: gültig bis 31.07.2027 und abgelaufen am 31.07.2026 („heute“ ist im Test der 15.11.2026)
     private val KI_PASS = "RL-04208-0000Z-8GNM5-HJFN6-SDW5Y-QPW2T-BSSPN-9DS5K-7Z3A1-PTFJ2-ACM3Q-GX1H4-ZM8EV-3GR33-K3N31-3VN22-58C7D-HP8Y1-1321W-HG25S-PNJ23-FSKM6-JYD9R-GJ"
     private val KI_ALT = "RL-04208-0000Z-90JRS-KVK76-JC5YR-K5AB8-66P5J-B9FQ0-J8M2Q-N9CCS-9YCEM-0XX2C-KCRBZ-8QGFP-J83ZY-RYKBJ-8WK56-H6461-JQTF0-1PN3P-K7Q9A-337T4-N8R7X-GE"
+    private val counted = ArrayList<String>()
     private fun start(pro: Boolean = false, ki: (suspend (String) -> Pair<Int, String>)? = null, kiOn: Boolean = true) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
             AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry() } },
-                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test")
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", countSend = { counted += it })
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -163,6 +164,37 @@ class AppRootTest {
         rule.runOnUiThread { prefs.setKiCode(KI_PASS) }; settle(); rule.onNodeWithTag("ki").assertExists()
         rule.onNodeWithTag("ki").performClick(); settle(); rule.onNodeWithTag("ki-antwort").assertTextContains("Hallo"); rule.onNodeWithTag("ki-rest").assertTextContains("Heute noch 9 KI-Punkte", substring = true)
         rule.runOnUiThread { prefs.setKiCode("") }
+    }
+
+    /** Nachhilfe-Hinweis: nur im Lernstand, nur wenn ein Gebiet hakt, ausblendbar und abschaltbar – nie in einer Aufgabe. Gezählt wird anonym und nur bei eingeschaltetem Schalter. */
+    @Test fun nachhilfeHinweisUndZaehlung() {
+        val geo = Levels.chapters.filter { it.area == de.raumlicht.core.model.Area.GEOMETRIE }.flatMap { it.levels }.take(8)
+        stars.value = geo.associate { it.id to 1 }
+        start()
+        // in der Aufgabe und auf der Startseite: kein Hinweis
+        rule.onNodeWithTag("nachhilfe-hinweis").assertDoesNotExist(); nav.go(Routes.level("1-2")); settle(); rule.onNodeWithTag("nachhilfe-hinweis").assertDoesNotExist()
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle()
+        nav.go(Routes.LEARN); settle()
+        rule.onNodeWithTag("nachhilfe-hinweis").assertExists(); rule.onNodeWithText("Bei Vektoren hakt es noch?", substring = true).assertExists()
+        rule.onNodeWithText("€", substring = true).assertDoesNotExist()
+        rule.onRoot().captureRoboImage("../screenshots/84_nachhilfe_hinweis.png")
+        assertEquals(listOf("""{"app":"raumlicht","v":"test","ev":"nachhilfe_hinweis","ort":"lernstand","thema":"vektoren"}"""), counted.toList())
+        // noch einmal öffnen: am selben Tag sichtbar, aber nicht noch einmal gezählt
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle(); nav.go(Routes.LEARN); settle()
+        rule.onNodeWithTag("nachhilfe-hinweis").assertExists(); assertEquals(1, counted.size)
+        rule.onNodeWithTag("nachhilfe-probestunde").performClick(); settle(); assertTrue(counted.last().contains("\"ev\":\"probestunde_klick\""))
+        // ausblenden: weg, auch beim nächsten Öffnen
+        rule.onNodeWithTag("nachhilfe-aus").performClick(); settle(); rule.onNodeWithTag("nachhilfe-hinweis").assertDoesNotExist()
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle(); nav.go(Routes.LEARN); settle(); rule.onNodeWithTag("nachhilfe-hinweis").assertDoesNotExist()
+        // nichts Gezähltes enthält Kennungen, Gerätedaten oder Lernstände
+        for (b in counted) { assertTrue(b, Regex("""^\{"app":"raumlicht","v":"test","ev":"[a-z_]+"(,"ort":"[a-z]+")?(,"thema":"[a-z]+")?\}$""").matches(b)) }
+        // Schalter aus: kein Hinweis, kein Zählen
+        rule.runOnUiThread { prefs.tutorState = ""; prefs.setTutorHints(false) }
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle(); nav.go(Routes.LEARN); settle(); rule.onNodeWithTag("nachhilfe-hinweis").assertDoesNotExist()
+        rule.runOnUiThread { prefs.setTutorHints(true); prefs.setCountUsage(false) }; val before = counted.size
+        org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000)); nav.back(); settle(); nav.go(Routes.LEARN); settle()
+        rule.onNodeWithTag("nachhilfe-hinweis").assertExists(); assertEquals("Zählung aus: nichts wird gesendet", before, counted.size)
+        rule.runOnUiThread { prefs.setCountUsage(true); prefs.tutorState = "" }
     }
 
     @Test fun fremderCodeSchaltetNichtsFrei() {
