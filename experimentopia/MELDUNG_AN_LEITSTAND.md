@@ -2,6 +2,20 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.5.1 vom 18.11.2026: iOS „weiße Seite“ – Zwischenstand, fertig für den Betriebstest
+
+- **Nachgestellt mit Playwright-WebKit 26.6 (≈ Safari iOS 26), iPhone-13-Profil**: test startet einwandfrei (Bildschirmfoto ok, keine Fehler). Die weiße Seite war damit
+  hier nicht nachzustellen.
+- **Mindestversion**: Kotlin/Wasm braucht WasmGC → **Safari/iOS ab 18.2** (exnref/JSTag nutzt die App nur, wenn vorhanden – kein Problem). Ältere iOS-Versionen bekamen schon bisher
+  eine Meldung auf dem Ladebild; eine **weiße** Seite entsteht, wenn der Fehler erst nach dem Ausblenden des Ladebilds passiert (oder Safari den Tab wegen Speicher neu lädt).
+- **Nie mehr weiße Seite**: eigene Fehlerseite (unabhängig von der App) mit Version, Grund, iOS-Version, WasmGC ja/nein und den Knöpfen „🔄 Neu laden“ und
+  „Speicher leeren & neu laden“ (Service Worker + Versions-Speicher weg, Spielstand und Nova-Speicher bleiben). Greift bei: jedem Fehler vor dem Start, Fehlern in den ersten
+  Sekunden danach, wenn noch keine Zeichenfläche da ist, Wächter „nach 4 s keine Zeichenfläche“ und „nach 60 s nicht gestartet“. Ohne WasmGC auf iOS < 18.2:
+  „Dein iPhone hat iOS x.y. Experimentopia braucht mindestens iOS 18.2 – Einstellungen → Allgemein → Softwareupdate.“
+- **Test** `tools/web-start.mjs` (WebKit): normaler Start ohne Meldung ✅ · altes iOS ohne WasmGC → Meldung iOS 18.2 ✅ · fehlende Datei → „Neu laden“ ✅. Auto-Update-Test 7/7 ✅, Chrome ohne Fehlmeldung ✅.
+- **Kotlin/JS-Ersatz** (Compose-Kompatibilitätsmodus) noch **nicht** gebaut: großer Umbau (eigene JS-Fassung aller Browser-Brücken), lohnt nur, wenn die Ursache wirklich iOS < 18.2 ist.
+  Bitte Marcel: iOS-Version des iPhones (Einstellungen → Allgemein → Info) bzw. ein Foto der neuen Fehlerseite von test – dann entscheide ich. Mindestversion vorher und nachher: iOS 18.2.
+
 ## 18.11.2026 – Version 2.5.0 vom 18.11.2026: nur WebApp + „App installieren“ – fertig für den Betriebstest
 
 Auf Marcels Bestätigung („Alles umsetzen“):

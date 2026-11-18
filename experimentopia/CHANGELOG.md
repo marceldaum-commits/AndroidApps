@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.5.1 – Nie mehr eine weiße Seite (18.11.2026)
+
+- 🛟 Startet Experimentopia nicht (z. B. auf einem zu alten iPhone), erscheint jetzt immer eine klare Meldung mit „Neu laden“ – statt einer leeren Seite.
+  Auf iPhones mit zu altem iOS steht dabei, welche Version nötig ist (mindestens iOS 18.2) und wo man aktualisiert.
+
 ## 2.5.0 – Experimentopia als App installieren (18.11.2026)
 
 - 📲 **„App installieren“**: Auf der Startseite und in den Einstellungen gibt es einen Knopf, mit dem man Experimentopia wie eine richtige App auf den Startbildschirm holt –
