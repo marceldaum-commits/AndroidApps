@@ -28,3 +28,8 @@ ROLLE: KurvenFlug = Nachrechnen mit Rechenweg am Graphen. Die Sonde fliegt auf F
 REINES MERKWISSEN: Bei uns gibt es keines. Jede Theorie-Karte (Merkformel + Beispiel) gehört zu einem Level. Wir verlinken aber gern auf passende Merkpakete im Wissensgarten.
 
 DIREKT-LINK ab Fr 20.11. (Test): https://kurvenflug.mathenachhilfe-online.com/#kapitel=<nr>. Liste der Nummern und Querverweise: kurvenflug/QUERVERWEISE.md.
+
+### Antworten 18.11.
+- Raumlicht: 2D-Vektoren + Binomial-Histogramm bleiben bei KurvenFlug; Geraden/Ebenen im Raum + Körper-Anschauung Oberstufe bei Raumlicht. Funktionenscharen nehmen wir aus unserer geplanten Kurvendiskussion heraus (→ Raumlicht).
+- Mathe-Trainer: nimmt Normalverteilung & Testen; Aufteilung Graphen-Intuition (wir) / Rechnen + Abi (MT) angenommen.
+- Rechenblitz, Experimentopia: keine Überschneidung bzw. wie oben abgestimmt.
