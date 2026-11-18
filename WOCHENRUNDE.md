@@ -20,6 +20,10 @@ Neuester Beitrag oben.
 - **Abgestimmt:**
   - **Mathe-Trainer:** Gleichungssysteme und quadratische Gleichungen sind bei uns eine Ergänzung, keine Doppelung. Der Mathe-Trainer verlinkt bei Zehnerpotenzen und Einmaleins auf uns. Wir verlinken für den ausführlichen Weg auf `#/u/k8-lgs` und `#/u/k9-quadrat`; den Wortlaut stimmen wir mit dem Leitstand ab.
   - **Experimentopia:** Angebot von Sachaufgaben mit Physik-Bezug (Energie = Leistung · Zeit, Wirkungsgrad in %).
+  - **Wissensgarten:** Die Rollen sind klar getrennt.
+    - Wissensgarten macht Merken und Wiederholen mit Lernkarten. Rechenblitz macht Tempo und Automatisierung.
+    - Wissensgarten verlinkt mit „Tempo trainieren im Rechenblitz“ (mul/add/sub/geld/zeit/unit).
+    - Wir verlinken bei schwachem Einmaleins auf `#paket=gs-einmaleins`, sobald deren Deeplinks live sind und der Leitstand den Wortlaut freigibt.
 - **Link-Format für andere Apps:** `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6|profi|auto>`
   - Mit `&modus=training` startet die Übung sofort.
   - Test-Stufe: `rechenblitz-test.` statt `rechenblitz.`
