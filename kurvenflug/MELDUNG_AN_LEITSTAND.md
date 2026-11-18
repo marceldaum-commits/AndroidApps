@@ -1,5 +1,14 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.31 – C1 geändert: vor Klassenarbeiten Probestunde statt Crashkurs (Marcel 18.11.)
+- Crashkurs-Knopf und -Link entfernt (auch aus dem Code), `crashkurs_klick` aus der Ereignisliste genommen.
+- „Klassenarbeit bald“: Text „… Eine kostenlose Probestunde kann vor der Arbeit helfen – bei Nachhilfe – online, mit einer Lehrkraft, passend zum Thema.“,
+  Knopf „Probestunde ansehen“ → `https://www.mathenachhilfe-online.com/probestunde-anfrage/?src=kurvenflug-klassenarbeit&thema=<id>&klasse=<n>`
+  (Test in `ParentOffersTest`). „Thema hakt“ bleibt `…/probestunde/?src=kurvenflug-elternbericht&…`.
+- Zählung: `probestunde_klick` wie bisher. **ort=klassenarbeit sende ich nicht:** unsere Sammelsendung trägt mehrere Ereignisse, ein einzelnes `ort` je
+  Sendung wäre für die anderen falsch. Wenn ihr es braucht: Format für ort je Ereignis nennen, dann baue ich es ein.
+- Bildschirmfoto 104 angesehen. versionCode 78 / 2.5.31, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.30 – Klassen-Dialog am PC als mittige Karte
 - „In welcher Klasse bist du?“: Karte höchstens 640 dp breit, mittig (Browser 1440×900 angesehen; Knöpfe ~180 px statt ~450 px). Handy unverändert.
 - versionCode 77 / 2.5.30, Prüfkette grün, keine neuen Dateiendungen.

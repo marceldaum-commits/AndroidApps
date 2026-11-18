@@ -15,8 +15,7 @@ object ParentOffers {
     /** „Klassenarbeit bald“ gilt so lange, nachdem die Eltern es angetippt haben */
     const val EXAM_DAYS = 21L
 
-    /** Crashkurs vor einer Klassenarbeit (Wortlaut Leitstand: „kostenlos für Familien mit Stundenpaket“) */
-    const val CRASH_COURSE = "$SITE/produkt/easy-learning-crash-kurs/?src=kurvenflug-klassenarbeit"
+    // Kein Crashkurs-Link mehr (Marcel 18.11.: Crashkurs nur für Kunden) – vor Klassenarbeiten die kostenlose Probestunde
 
     /**
      * Gemeinsame Themen-Kennungen (Leitstand 18.11.; andere Werte verwirft das Probestunden-Formular) je Kurvenflug-Kapitel.
@@ -37,7 +36,7 @@ object ParentOffers {
 
     /** Kostenlose Probestunde zum Thema und zur Klasse; [reason] bestimmt die Quelle (elternbericht bzw. klassenarbeit) */
     fun trialLesson(chapter: Int?, grade: Int?, reason: Reason = Reason.STUCK): String =
-        "$SITE/probestunde/?src=kurvenflug-" + (if (reason == Reason.EXAM) "klassenarbeit" else "elternbericht") +
+        (if (reason == Reason.EXAM) "$SITE/probestunde-anfrage/?src=kurvenflug-klassenarbeit" else "$SITE/probestunde/?src=kurvenflug-elternbericht") +
             (chapter?.let { TOPICS[it] }?.let { "&thema=$it" } ?: "") + (grade?.let { "&klasse=$it" } ?: "")
 
     /** Warum der Hinweis kommt */
@@ -63,7 +62,7 @@ object UsageCount {
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
     /** Erlaubte Ereignisse – nichts anderes wird je gezählt */
     val EVENTS = setOf("start", "level_start", "level_geschafft", "theorie", "elternbereich", "pro_ansehen", "pro_kasse", "code_eingeloest",
-        "probestunde_klick", "neukunde_klick", "crashkurs_klick", "nachhilfe_hinweis", "geschenk_klick")
+        "probestunde_klick", "neukunde_klick", "nachhilfe_hinweis", "geschenk_klick")
     /** Der Zähler nimmt je Ereignis höchstens so viele an */
     const val MAX_PER_EVENT = 50
 
