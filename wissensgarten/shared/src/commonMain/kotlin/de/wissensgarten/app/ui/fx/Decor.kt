@@ -100,7 +100,7 @@ private fun DrawScope.lantern(x: Float, g: Float, h: Float, night: Boolean, t: F
     val lamp = Offset(x, g - u * 9f)
     if (night) {
         val flick = 0.85f + 0.15f * sin(t * 9f)
-        drawCircle(Brush.radialGradient(listOf(Color(0x99FFE082), Color(0x00FFE082)), lamp, u * 6f * flick), u * 6f * flick, lamp)
+        drawCircle(de.wissensgarten.app.ui.fx.SafeBrush.radialGradient(listOf(Color(0x99FFE082), Color(0x00FFE082)), lamp, u * 6f * flick), u * 6f * flick, lamp)
     }
     drawLine(Color(0xFF37474F), Offset(x, g), Offset(x, g - u * 8f), u * 0.6f)
     drawRoundRect(Color(0xFF37474F), Offset(x - u * 1.2f, g - u * 10.6f), Size(u * 2.4f, u * 3f), CornerRadius(u * 0.4f))

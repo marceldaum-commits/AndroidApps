@@ -83,7 +83,7 @@ fun DuelHubScreen(
             item {
                 Box(
                     Modifier.fillMaxWidth().clip(MaterialTheme.shapes.extraLarge)
-                        .background(Brush.linearGradient(listOf(Color(0xFFFFB74D), DuelOrange, DuelRed))).padding(20.dp),
+                        .background(de.wissensgarten.app.ui.fx.SafeBrush.linearGradient(listOf(Color(0xFFFFB74D), DuelOrange, DuelRed))).padding(20.dp),
                 ) {
                     Column {
                         Text("Fordere Familie und Freunde heraus!", style = MaterialTheme.typography.titleLarge, color = Color.White, fontWeight = FontWeight.Bold)

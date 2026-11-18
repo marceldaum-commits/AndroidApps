@@ -33,7 +33,7 @@ fun HybridReveal(h: Hybrid, onClose: () -> Unit) {
         particles.burst(Burst.CONFETTI, count = 90)
         particles.burst(Burst.SPARKLE, 0.5f, 0.4f, 30)
     }
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFFE1F5FE), Color(0xFFF3E5F5), Color(0xFFE8F5E9)))), contentAlignment = Alignment.Center) {
+    Box(Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFFE1F5FE), Color(0xFFF3E5F5), Color(0xFFE8F5E9)))), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(24.dp)) {
             Text("🔀 Neue Kreuzung gezüchtet!", style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
             Text("${h.a.emoji} ${h.a.label}  ×  ${h.b.emoji} ${h.b.label}", style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 6.dp))

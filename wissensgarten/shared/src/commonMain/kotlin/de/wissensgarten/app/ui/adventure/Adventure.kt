@@ -77,7 +77,7 @@ fun AdventurePathView(
         }
         Box(
             Modifier.fillMaxWidth().height(nodeH * stations.size + 30.dp).padding(horizontal = 12.dp)
-                .clip(MaterialTheme.shapes.extraLarge).background(Brush.verticalGradient(Meadow)),
+                .clip(MaterialTheme.shapes.extraLarge).background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(Meadow)),
         ) {
             val wind = LocalWind.current
             // Weg und Blumen-Deko
@@ -161,7 +161,7 @@ private fun StationNode(st: Station, modifier: Modifier, onClick: () -> Unit) {
     Column(modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             Modifier.size(76.dp).graphicsLayer { scaleX = pulse.value; scaleY = pulse.value }.pressBounce(interaction)
-                .clip(CircleShape).background(Brush.radialGradient(listOf(color.copy(alpha = 0.85f), color)))
+                .clip(CircleShape).background(de.wissensgarten.app.ui.fx.SafeBrush.radialGradient(listOf(color.copy(alpha = 0.85f), color)))
                 .border(5.dp, Color.White, CircleShape)
                 .clickable(interaction, null, onClick = onClick),
             contentAlignment = Alignment.Center,
@@ -219,7 +219,7 @@ fun ChestReveal(onOpen: () -> Friend?, onClose: () -> Unit) {
         rise.animateTo(1f, spring(dampingRatio = 0.45f, stiffness = 120f))
     }
     Box(
-        Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF283593), Color(0xFF7E57C2), Color(0xFFFFB74D))))
+        Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFF283593), Color(0xFF7E57C2), Color(0xFFFFB74D))))
             .clickable(androidx.compose.runtime.remember { MutableInteractionSource() }, null) { if (!opening) opening = true },
         contentAlignment = Alignment.Center,
     ) {

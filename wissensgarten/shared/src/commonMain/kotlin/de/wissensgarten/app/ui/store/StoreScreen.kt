@@ -92,7 +92,7 @@ fun StoreScreen(
                 // Kopf mit Himmel-Farbverlauf
                 Box(
                     Modifier.fillMaxWidth()
-                        .background(Brush.verticalGradient(listOf(Color(0xFF8EC5EA), Color(0xFFFFE0B2))))
+                        .background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFF8EC5EA), Color(0xFFFFE0B2))))
                         .statusBarsPadding().padding(16.dp),
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -176,7 +176,7 @@ private fun ItemCard(item: ShopItem, inv: InventoryEntity?, dew: Int, onBuy: (Sh
         Column(Modifier.padding(12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
                 Modifier.fillMaxWidth().height(120.dp).clip(MaterialTheme.shapes.medium)
-                    .background(Brush.verticalGradient(listOf(Color(0xFFCDEBFA), Color(0xFFE8F5E9)))),
+                    .background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFFCDEBFA), Color(0xFFE8F5E9)))),
                 contentAlignment = Alignment.BottomCenter,
             ) {
                 if (item.kind == ItemKind.SPECIES) {

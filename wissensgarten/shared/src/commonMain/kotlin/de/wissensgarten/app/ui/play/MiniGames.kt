@@ -193,7 +193,7 @@ fun BalloonGame(card: StudyCard, options: List<String>, onResult: (GameResult) -
             textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth().padding(top = 4.dp))
         Box(
             Modifier.fillMaxWidth().height(300.dp).padding(top = 8.dp).clip(RoundedCornerShape(24.dp))
-                .background(Brush.verticalGradient(listOf(Color(0xFFCDEBFA), Color(0xFFEAF6FD))))
+                .background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFFCDEBFA), Color(0xFFEAF6FD))))
                 .onSizeChanged { area = it },
         ) {
             val lanes = balloons.size

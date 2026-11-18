@@ -43,7 +43,7 @@ fun PlusBadge(status: PlusStatus?, modifier: Modifier = Modifier, compact: Boole
     val shine by rememberInfiniteTransition(label = "plus").animateFloat(
         -0.6f, 1.6f, infiniteRepeatable(tween(2600, delayMillis = 1800, easing = LinearEasing)), label = "glanz",
     )
-    val gold = Brush.horizontalGradient(listOf(Color(0xFFFFE082), Color(0xFFFFC94D), Color(0xFFFFE082)))
+    val gold = de.wissensgarten.app.ui.fx.SafeBrush.horizontalGradient(listOf(Color(0xFFFFE082), Color(0xFFFFC94D), Color(0xFFFFE082)))
     Box(
         modifier
             .clip(RoundedCornerShape(50))
@@ -61,7 +61,7 @@ fun PlusBadge(status: PlusStatus?, modifier: Modifier = Modifier, compact: Boole
             autoSize = if (compact) androidx.compose.foundation.text.TextAutoSize.StepBased(minFontSize = 8.sp, maxFontSize = style.fontSize) else null,
         )
         // Glanz-Streifen, der ab und zu über das Abzeichen huscht
-        Box(Modifier.matchParentSize().background(Brush.linearGradient(
+        Box(Modifier.matchParentSize().background(de.wissensgarten.app.ui.fx.SafeBrush.linearGradient(
             0f to Color.Transparent, 0.45f to Color.Transparent, 0.5f to Color.White.copy(alpha = 0.55f), 0.55f to Color.Transparent, 1f to Color.Transparent,
             start = Offset(shine * 600f - 300f, 0f), end = Offset(shine * 600f, 120f),
         )))

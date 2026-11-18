@@ -33,7 +33,7 @@ fun StoryScreen(grown: Int, read: Set<Int>, onBack: () -> Unit, onRead: (Chapter
         LazyColumn(Modifier.fillMaxSize().padding(pad), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 Box(Modifier.fillMaxWidth().clip(MaterialTheme.shapes.extraLarge)
-                    .background(Brush.linearGradient(listOf(Color(0xFF5C6BC0), Color(0xFFAB47BC)))).padding(18.dp)) {
+                    .background(de.wissensgarten.app.ui.fx.SafeBrush.linearGradient(listOf(Color(0xFF5C6BC0), Color(0xFFAB47BC)))).padding(18.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Brummi(Mood.HAPPY, size = 72.dp)
                         Column(Modifier.weight(1f)) {
@@ -120,7 +120,7 @@ fun ChapterEnd(done: Chapter, grown: Int, onNext: (Chapter) -> Unit, onWater: ()
         sfx?.play(Sound.FANFARE)
         particles.burst(Burst.CONFETTI, count = 70)
     }
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF5C6BC0), Color(0xFFAB47BC), Color(0xFFF3E5F5))))) {
+    Box(Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFF5C6BC0), Color(0xFFAB47BC), Color(0xFFF3E5F5))))) {
         Column(Modifier.fillMaxSize().statusBarsPadding().navigationBarsPadding().padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
             Text("Kapitel ${done.number} geschafft! 🎉", color = Color.White, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)

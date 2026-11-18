@@ -131,7 +131,7 @@ fun WeedScreen(cards: List<StudyCard>, peers: Map<String, List<String>>, total: 
     val scope = rememberCoroutineScope()
     val t by rememberInfiniteTransition(label = "u").animateFloat(0f, 1f, infiniteRepeatable(tween(1600, easing = LinearEasing)), label = "t")
     BackHandler { onClose() }
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFFDFF3E4), Color(0xFFF6EFD9))))) {
+    Box(Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFFDFF3E4), Color(0xFFF6EFD9))))) {
         Column(Modifier.fillMaxSize().navigationBarsPadding().padding(horizontal = 16.dp)) {
             GameTop("🌿 Unkraut-Jäten", "Richtig antworten – dann rausziehen!", onClose)
             if (index >= list.size) {
@@ -230,7 +230,7 @@ fun BlitzScreen(pool: List<StudyCard>, peers: Map<String, List<String>>, onDone:
         repeat(3) { particles.burst(Burst.CONFETTI, 0.5f, 0.3f, 40); delay(250) }
     }
     val sky = lerp(Color(0xFF263238), Color(0xFF81D4FA), bright)
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(sky, lerp(Color(0xFF455A64), Color(0xFFE1F5FE), bright))))) {
+    Box(Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(sky, lerp(Color(0xFF455A64), Color(0xFFE1F5FE), bright))))) {
         // Regen + Blitz
         Canvas(Modifier.fillMaxSize()) {
             if (!finished) for (k in 0 until 60) {
@@ -318,7 +318,7 @@ fun RhythmScreen(pool: List<StudyCard>, peers: Map<String, List<String>>, onDone
         }
     }
     val beatPhase = (elapsed % Rhythm.BEAT_MS) / Rhythm.BEAT_MS.toFloat()
-    Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF4A148C), Color(0xFF880E4F))))) {
+    Box(Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFF4A148C), Color(0xFF880E4F))))) {
         // pulsierende Lichter im Takt
         Canvas(Modifier.fillMaxSize()) {
             val pulse = 1f - beatPhase

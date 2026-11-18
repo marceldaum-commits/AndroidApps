@@ -143,7 +143,7 @@ fun DrawScope.drawChest3D(yaw: Float, open: Float, glow: Float, wobble: Float = 
     if (glow > 0.01f) {
         val top = project(view(V3(0f, hb, 0f)))
         drawCircle(
-            Brush.radialGradient(listOf(Color(0xAAFFF3B0), Color(0x00FFF3B0)), Offset(top.x, top.y - scale * 0.25f), scale * 0.6f * glow),
+            de.wissensgarten.app.ui.fx.SafeBrush.radialGradient(listOf(Color(0xAAFFF3B0), Color(0x00FFF3B0)), Offset(top.x, top.y - scale * 0.25f), scale * 0.6f * glow),
             scale * 0.6f * glow, Offset(top.x, top.y - scale * 0.25f),
         )
         for (i in 0 until 7) {

@@ -60,7 +60,7 @@ fun HiveScreen(totalReps: Int, furniture: (String) -> Int, onFurnish: (String, I
     val next = Hive.next(totalReps)
     // Auswahl lokal halten – reagiert sofort, gespeichert wird über onFurnish
     val chosenMap = remember { mutableStateMapOf<String, Int>().apply { Hive.rooms.forEach { put(it.id, furniture(it.id)) } } }
-    Column(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFFFFF8E1), Color(0xFFFFECB3))))) {
+    Column(Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFFFFF8E1), Color(0xFFFFECB3))))) {
         Top("🍯 Brummis Bienenstock", onBack)
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -237,7 +237,7 @@ fun LociScreen(suggest: List<StudyCard>, all: Map<String, StudyCard>, placed: Ma
             Top("🚶 Gedächtnis-Spaziergang", onBack)
             // Gartenkarte mit Orten
             Box(Modifier.fillMaxWidth().height(260.dp).padding(horizontal = 12.dp).clip(RoundedCornerShape(20.dp))
-                .background(Brush.verticalGradient(listOf(Color(0xFFB2DFDB), Color(0xFFA5D6A7), Color(0xFF81C784)))).onSizeChanged { size = it }) {
+                .background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFFB2DFDB), Color(0xFFA5D6A7), Color(0xFF81C784)))).onSizeChanged { size = it }) {
                 Canvas(Modifier.fillMaxSize()) {
                     val pts = Loci.places.map { Offset(it.x * size.width, it.y * size.height) }
                     val path = Path().apply { pts.forEachIndexed { i, p -> if (i == 0) moveTo(p.x, p.y) else lineTo(p.x, p.y) } }

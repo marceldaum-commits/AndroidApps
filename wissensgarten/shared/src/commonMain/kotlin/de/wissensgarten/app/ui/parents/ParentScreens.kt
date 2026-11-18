@@ -79,7 +79,7 @@ fun WeekReportScreen(profiles: List<ProfileEntity>, startId: String?, report: (S
                             overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyMedium)
                         Box(Modifier.weight(1f).height(14.dp).clip(RoundedCornerShape(7.dp)).background(MaterialTheme.colorScheme.surfaceVariant)) {
                             Box(Modifier.fillMaxHeight().fillMaxWidth(w).clip(RoundedCornerShape(7.dp))
-                                .background(Brush.horizontalGradient(listOf(Color.hsv(info.hue, 0.45f, 0.85f), Color.hsv(info.hue, 0.6f, 0.7f)))))
+                                .background(de.wissensgarten.app.ui.fx.SafeBrush.horizontalGradient(listOf(Color.hsv(info.hue, 0.45f, 0.85f), Color.hsv(info.hue, 0.6f, 0.7f)))))
                         }
                         Text("${s.reviews} · ${s.rightPct} %", Modifier.padding(start = 8.dp), style = MaterialTheme.typography.labelMedium)
                     }
@@ -132,7 +132,7 @@ private fun Stat(value: String, label: String, modifier: Modifier) {
 fun RestOverlay(name: String, onMore: () -> Unit) {
     val glow by rememberInfiniteTransition(label = "nacht").animateFloat(0.4f, 1f, infiniteRepeatable(tween(2200), RepeatMode.Reverse), label = "g")
     Box(
-        Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(Color(0xFF1B2547), Color(0xFF3B3F7A), Color(0xFF5B4E8C))))
+        Modifier.fillMaxSize().background(de.wissensgarten.app.ui.fx.SafeBrush.verticalGradient(listOf(Color(0xFF1B2547), Color(0xFF3B3F7A), Color(0xFF5B4E8C))))
             .pointerInput(Unit) { awaitPointerEventScope { while (true) awaitPointerEvent().changes.forEach { it.consume() } } },
         contentAlignment = Alignment.Center,
     ) {
