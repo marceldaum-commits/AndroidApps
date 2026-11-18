@@ -2,11 +2,46 @@
 
 Neueste oben.
 
+## 18.11.2026 – OFFENE PUNKTE AN DICH (Marcel: „klär deine offenen Punkte mit dem Leitstand“)
+
+Eine Nachricht an deine Sitzung kann ich von hier nicht zustellen (`elevated_session_untrusted_device`), darum gesammelt hier. Was ich selbst prüfen konnte, habe ich geprüft.
+
+**1. Die Eltern-Seite fehlt – von mir geprüft, bitte bauen und melden.**
+- `https://staging.mathenachhilfe-online.com/eltern-bericht/` → **404**; `https://www.mathenachhilfe-online.com/eltern-bericht/` → **404** (18.11.2026, 17 Uhr). Die Server-Route dagegen steht (PUT 204, fremdes Schreib-Geheimnis 403, DELETE 204 auf trainer-test).
+- Ich habe einen echten Bericht aus der App-Logik verschlüsselt auf trainer-test gelegt, den Link `…/eltern-bericht/#<id>.<key>` im Browser geöffnet (Seite „nicht gefunden“) und den Bericht wieder gelöscht.
+- **Folge in der App:** „Eltern-Handy koppeln“ ist in 2.18.26 **nur auf raumlicht-test** sichtbar (`Eltern.ENABLED = false`). Sobald du die Seite auf staging meldest, prüfe ich den Rundlauf bis zur Anzeige; sobald sie live ist, schalte ich frei (eine Zeile, eine Nachkomma-Version).
+- Ein Muster-Bericht, wie die App ihn sendet (entschlüsselt), zum Bauen der Seite:
+```json
+{"format":1,"app":"raumlicht","appName":"Raumlicht","name":"Testkind","stand":"2026-11-18T16:06:23Z","zeitraum":"letzte 14 Tage","lernzeitMin":55,"tageAktiv":3,"aufgaben":17,"richtigProzent":52,
+ "staerken":[{"thema":"analysis","titel":"Analysis","prozent":100}],
+ "schwach":[{"thema":"vektoren","titel":"Vektoren und Geometrie","prozent":33,"tipp":"Im Lernstand die wackeligen Kapitel noch einmal spielen – die Theorie-Karte zeigt dort die Formel und ein Beispiel."}],
+ "fortschritt":[{"titel":"Vektoren und Geometrie","geschafft":14,"von":98},{"titel":"Analysis","geschafft":8,"von":28},{"titel":"Stochastik","geschafft":0,"von":18}],
+ "letzte":[{"tag":"2026-11-12","min":25,"aufgaben":7,"richtig":3},{"tag":"2026-11-16","min":12,"aufgaben":4,"richtig":1},{"tag":"2026-11-18","min":18,"aufgaben":6,"richtig":5}],
+ "klassenarbeit":{"tag":"2026-11-23","thema":"vektoren"},"hinweis":"Raumlicht ist eine Mathe-App für die Oberstufe. Diesen Bericht teilt die Schülerin oder der Schüler selbst und kann das jederzeit beenden."}
+```
+  (Die Zahlen bei `von` sind nur ein Beispiel. `klasse` fehlt bewusst. „richtig“ = beim ersten Versuch gelöst.)
+
+**2. Fragen, die nur du oder Marcel beantworten könnt**
+- **Einwilligung bei Minderjährigen** für den Eltern-Bericht und die anonyme Zählung: Wer klärt das (Fachperson), und bis wann? Bis dahin steht in der App nur, dass die Schülerin bzw. der Schüler selbst koppelt.
+- **Crashkurs-Hinweis:** Ich schreibe „Crashkurse zur Vorbereitung“ ohne „kostenlos“, weil es laut dir nur für Familien mit Stundenpaket kostenlos ist. Ist das für Marcel in Ordnung – oder soll der Zusatz hinein?
+- **Nachhilfe- und Crashkurs-Hinweis erreichen nur Pro-Nutzer** (Lernstand und Klausur-Planer gehören zu Pro). Soll der Hinweis einen zweiten, freien Ort bekommen – oder ist das so gewollt?
+- **Zählung auf der Testseite:** raumlicht-test zählt in dieselben Tageszähler wie live (`app=raumlicht`). Soll die Testseite nicht zählen oder ein eigenes Kennzeichen bekommen?
+- **Positivliste des Zählers:** Bitte bestätigen, dass `ort` = `lernstand`, `link`, `eingabe`, `klassenarbeit`, `einstellungen`, `gesperrt` und `ev` = `level_start`, `level_geschafft`, `theorie` mit `thema` ohne `ort` angenommen werden (ich bekomme immer 204, weil der Aufruf „no-cors“ ist – einen 400er sähe ich nicht).
+- **Alte APKs:** Sie liegen weiter in den GitHub-Releases (`raumlicht-v0.1.0` … `raumlicht-v2.18.14`). Löschen ist endgültig – ich fasse sie nur auf Marcels ausdrückliches Wort an.
+- **Echte Geräte:** Liest ein Handy den QR-Code? Läuft 2.18.26 auf iPhone und iPad? Das kann nur Marcel ansehen (`https://raumlicht-test.mathenachhilfe-online.com/?diag=1`, dann Einstellungen → Eltern-Handy koppeln).
+- **Welche App meinte Marcel mit „Theorie ohne Formel“?** In Raumlicht stand die Winkel-Formel schon vorher in Karte und Aufgabe (siehe 2.18.25). Falls es eine andere App war, bitte dorthin geben.
+
+**3. Was ich von mir aus erledigt habe**
+- Probestunden-Adresse geprüft (`/probestunde/` gibt es, `/probestunde-anfrage/` nicht) – bitte im Ratgeber berichtigen.
+- Crashkurs-Adresse eingetragen und geprüft (200).
+- Zähl-Endpunkt antwortet (204); auf dem eigenen Rechner zählt die WebApp nicht mehr, damit Testläufe die Statistik nicht verfälschen.
+
 ## 18.11.2026 – Raumlicht 2.18.26: Eltern-Handy koppeln, Lehrplan-Abgleich, Prüfplan, „Kommt bald“
 
 Marcel hat alle vier Punkte direkt bestätigt. **Raumlicht 2.18.26 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.
 
 **Eltern-Handy koppeln** (Einstellungen → „Eltern-Handy koppeln“, Ziel `eltern`)
+- **Sichtbar vorerst nur auf raumlicht-test** (`Eltern.ENABLED = false`), weil die Eltern-Seite noch fehlt – siehe „Offene Punkte“ oben.
 - (1) Knopf erzeugt `id` (16 Byte), `schreib` (16 Byte), `key` (32 Byte) mit `crypto.getRandomValues`, base64url ohne Padding (22/22/43 Zeichen); nur lokal gespeichert. QR-Code (eigener Erzeuger im Rechenkern, gegen eine Referenz geprüft) und „Link teilen“. Feld „Spitzname“ (freiwillig, höchstens 20 Zeichen).
 - (2) Bericht als JSON nach deinem Format, im Browser mit AES-GCM-256 und 12-Byte-IV verschlüsselt, `PUT …/eltern/v1/b/<id>`, `X-Schreib`, `text/plain`, Body `<iv>.<ciphertext>`. Nach jeder gelösten Aufgabe und beim Verlassen einer Aufgabe, frühestens alle 10 Minuten; beim Koppeln und auf Knopfdruck sofort.
 - (3) „Kopplung aufheben“ → `DELETE` mit `X-Schreib`, Werte lokal gelöscht.
@@ -16,7 +51,7 @@ Marcel hat alle vier Punkte direkt bestätigt. **Raumlicht 2.18.26 vom 18.11.202
 - **Berichtsfelder:** `format, app, appName, name?, stand, zeitraum („letzte 14 Tage“), lernzeitMin, tageAktiv, aufgaben, richtigProzent?, staerken[], schwach[] (mit tipp), fortschritt[] (je Gebiet), letzte[] (bis 5 Tage), klassenarbeit? {tag, thema?}, hinweis`. **`klasse` sende ich nicht** (Raumlicht kennt sie nicht). `thema`: `vektoren`, `analysis`, `stochastik`.
   „richtig“ heißt bei Raumlicht: beim ersten Versuch gelöst. Lernzeit zählt Minuten in Aufgaben und Übungen (neu erfasst seit dieser Version, nur auf dem Gerät – ältere Tage fehlen also).
 - Raumlicht ist Oberstufe: Die Seite spricht die Schülerin bzw. den Schüler an („Du entscheidest, ob deine Eltern mitlesen“) und sagt, dass jeder mit dem Link lesen kann. Datenschutz-Vorschlag: `store/datenschutz-abschnitt.md`, Punkt 7 (Einwilligung bei Minderjährigen bitte prüfen lassen).
-- **Nicht geprüft:** deine Eltern-Seite mit einem echten Bericht aus der App (bitte gegenprüfen), und alles auf echten Geräten.
+- **Geprüft und gescheitert:** die Eltern-Seite – sie gibt es noch nicht (404, siehe oben). **Nicht geprüft:** alles auf echten Geräten.
 
 **Lehrplan-Abgleich:** `raumlicht/LEHRPLAN-ABGLEICH.md` – BY, BW, NW, NI, HE und KMK im Original gelesen (Lücken dort benannt), Liste „Thema → Lehrplan → in der App“, Reihenfolge für die nächsten Inhalte. Die sechs obersten stehen in der App als „Kommt bald“ (Seite „Mehr“, ohne Datum, ohne Kaufhinweis): LGS/Gauß, Unabhängigkeit, Zufallsgrößen, Normalverteilung, Sinus/Kosinus, Funktionenscharen.
 

@@ -11,6 +11,9 @@ import org.junit.Test
 class ElternTest {
     private val id = "A".repeat(22); private val write = "b-_".repeat(7) + "c"; private val key = "K9".repeat(21) + "x"
 
+    /** Solange die Eltern-Seite fehlt, bleibt das Koppeln außerhalb der Testseite unsichtbar. */
+    @Test fun nochNichtFuerAlle() { assertFalse(Eltern.ENABLED) }
+
     @Test fun kopplungUndLink() {
         val p = Eltern.Pairing.fresh("$id.$write.$key", "  Lena.M  ")!!
         assertEquals(id, p.id); assertEquals(write, p.write); assertEquals(key, p.key); assertEquals("Lena M", p.name)

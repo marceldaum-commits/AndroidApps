@@ -12,6 +12,11 @@ import kotlinx.serialization.json.put
  * Raumlicht ist für die Oberstufe: Hier koppelt die Schülerin oder der Schüler selbst.
  */
 object Eltern {
+    /**
+     * Für alle sichtbar? Noch nicht: Die Eltern-Seite (/eltern-bericht/) gab es am 18.11.2026 weder auf der Test- noch auf der Live-Stufe (404) –
+     * ein geteilter Link führte ins Leere. Solange false, gibt es „Eltern-Handy koppeln“ nur auf der Testseite. Auf true stellen, sobald der Leitstand die Seite live meldet.
+     */
+    const val ENABLED = false
     const val SERVER = "https://trainer.mathenachhilfe-online.com/eltern/v1/b/"
     const val TEST_SERVER = "https://trainer-test.mathenachhilfe-online.com/eltern/v1/b/"
     const val PAGE = "https://www.mathenachhilfe-online.com/eltern-bericht/"

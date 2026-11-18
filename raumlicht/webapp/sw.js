@@ -3,7 +3,7 @@
 const CACHE = 'raumlicht-2.18.26';
 // Der App-Kern (.wasm): Der Dateiname ändert sich mit dem Inhalt, darum darf er aus dem Zwischenspeicher des Browsers kommen –
 // die Seite hat ihn gerade erst geladen, so wird er beim ersten Besuch nicht doppelt übertragen. Danach startet die App auch ohne Netz.
-const WASM = ['806637255093beb90d68.wasm', 'bccfa839aa4b38489c76.wasm'];
+const WASM = ['76173b3158881628faa0.wasm', 'bccfa839aa4b38489c76.wasm'];
 // Alles andere beim Installieren am Zwischenspeicher des Browsers vorbei laden ('reload'): wirklich die neue Fassung
 self.addEventListener('install', (e) => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then((c) => Promise.all([c.addAll(WASM), c.addAll(['./', 'index.html', 'raumlicht.js', 'scene/index.html', 'scene/scene.js', 'rl-nova.js', 'manifest.webmanifest', 'icon-192.png', 'version.json', 'fonts/dejavu_sans.ttf', 'fonts/noto_color_emoji.ttf', 'diagnose.html'].map((u) => new Request(u, { cache: 'reload' })))]))); });
 // Schon gehörte und offline geladene Sätze der Stimme „Nova“ (raumlicht-nova, raumlicht-nova-offline) bleiben bei Updates stehen

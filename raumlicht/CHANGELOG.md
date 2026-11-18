@@ -3,7 +3,7 @@
 Jede Version steht hier mit ihrem Datum.
 
 ## 2.18.26 – Eltern-Handy koppeln und „Kommt bald“ (18.11.2026)
-- **Neu: Eltern-Handy koppeln (freiwillig).** In den Einstellungen kannst du deinen Lernstand mit deinen Eltern teilen: QR-Code zeigen oder Link schicken – ohne Konto. Deine Eltern sehen Lernzeit, aktive Tage, gelöste Aufgaben, deinen Fortschritt je Gebiet, was gut sitzt und was noch hakt.
+- **Neu, zunächst nur auf der Testseite: Eltern-Handy koppeln (freiwillig).** Für alle wird es freigeschaltet, sobald die Seite für die Eltern auf unserer Website fertig ist. In den Einstellungen kannst du dann deinen Lernstand mit deinen Eltern teilen: QR-Code zeigen oder Link schicken – ohne Konto. Deine Eltern sehen Lernzeit, aktive Tage, gelöste Aufgaben, deinen Fortschritt je Gebiet, was gut sitzt und was noch hakt.
 - **Du entscheidest.** Die Seite sagt genau, was im Bericht steht. „Kopplung aufheben“ löscht ihn wieder.
 - **Für Eltern:** Der Bericht wird auf dem Gerät verschlüsselt, bevor er es verlässt; unser Server kann ihn nicht lesen. Der Schlüssel steckt nur im Link. Wer den Link hat, kann den Bericht lesen – bitte nicht weitergeben.
 - **„Kommt bald“** auf der Seite „Mehr“: sechs Themen aus den Lehrplänen, die als Nächstes kommen – Lineare Gleichungssysteme, Unabhängigkeit, Zufallsgrößen, Normalverteilung, Sinus und Kosinus, Funktionenscharen. Ab jetzt kommt jede Woche etwas Neues dazu.
