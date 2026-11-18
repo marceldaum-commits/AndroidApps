@@ -119,7 +119,8 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
             if (shop?.acceptsCodes == true && !(state.pro && state.license?.until == null)) {
                 Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(20.dp)).background(Q.Panel).padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text("Code aus der E-Mail", fontWeight = FontWeight.Bold, color = Q.Text)
-                    Text("Am einfachsten: den Link aus der E-Mail antippen. Oder den Code hier einfügen.",
+                    Text("Am einfachsten: den Link aus der E-Mail antippen. Oder den Code hier einfügen – auf iPhone und iPad immer dann, " +
+                        "wenn Kurvenflug als App vom Home-Bildschirm läuft (sie hat einen eigenen Speicher, der Link öffnet Safari).",
                         style = MaterialTheme.typography.bodySmall, color = Q.Muted)
                     OutlinedTextField(code, { code = it; codeMsg = null }, Modifier.fillMaxWidth(), placeholder = { Text("KF-…") },
                         minLines = 2, maxLines = 5, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Ascii))
