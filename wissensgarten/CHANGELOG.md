@@ -7,6 +7,8 @@ im GitHub-Release und in der App unter „App-Update“.
 - **Verschlüsselte Sicherung:** Ist ein Eltern-Handy gekoppelt, sichert der Wissensgarten nach Lernrunden auch den ganzen Lernstand des Kindes – Ende-zu-Ende verschlüsselt mit demselben Schlüssel wie der Bericht. Niemand außer euch kann sie lesen.
 - **🔄 Fortschritt wiederherstellen:** Neues Gerät oder Browserdaten gelöscht? Im Elternbereich den Kopplungs-Link einfügen – Garten, Karten, Fortschritt und (wenn sie hineinpassen) selbst gemalte Merkbilder kommen zurück. Es wird vorher nachgefragt, und vorhandener Lernstand wird zusammengeführt statt überschrieben.
 - **Monatsverlauf:** Der Bericht auf dem Eltern-Handy zeigt jetzt auch, wie viel in den letzten Monaten gelernt wurde.
+- **Schnellerer erster Start:** Beim allerersten Öffnen hing die Seite bisher manchmal viele Sekunden, während Brummis Vorlese-Liste vorbereitet wurde. Das läuft jetzt nebenbei.
+- Freischalt-Links für Plus funktionieren jetzt auch in der neuen Form mit „#pro=“; der Code verschwindet danach sofort aus der Adresszeile.
 - Dein Lernstand bleibt vollständig erhalten.
 
 ## 2.2.14 – Eltern-Handy koppeln (18.11.2026)
