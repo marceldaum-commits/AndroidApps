@@ -2489,3 +2489,21 @@ Kopplung aufheben? Der Bericht wird vom Server gelöscht und der Link funktionie
 Kopplung aufgehoben	Unlinked	Під’єднання скасовано
 Kopplung aufgehoben – der Server war nicht erreichbar, der Bericht verfällt nach {} Tagen	Unlinked – the server could not be reached, the report expires after {} days	Під’єднання скасовано – сервер недоступний, звіт видалять через {} днів
 Neu im Elternbereich: Eltern-Handy koppeln – Lernstand auf dem Handy der Eltern, ohne Konto und verschlüsselt	New in the parents' area: link a parent's phone – learning progress on the parent's phone, no account and encrypted	Нове в розділі для батьків: під’єднання телефона батьків – навчальний прогрес на телефоні батьків, без облікового запису й зашифровано
+Fortschritt wiederherstellen	Restore progress	Відновити прогрес
+♻️ Fortschritt wiederherstellen	♻️ Restore progress	♻️ Відновити прогрес
+Neues Gerät? Mit dem Kopplungs-Link den Lernstand zurückholen	New device? Get the learning progress back with the link	Новий пристрій? Поверни навчальний прогрес за посиланням під’єднання
+Neues Gerät oder Browserdaten gelöscht? Ist das Eltern-Handy gekoppelt, liegt eine verschlüsselte Sicherung bereit. Auf der Eltern-Seite gibt es dafür den Knopf „Neues Gerät des Kindes? Fortschritt übertragen“.	New device or browser data deleted? If a parent's phone is linked, an encrypted backup is ready. On the parents' page use the button “Child's new device? Transfer progress”.	Новий пристрій або видалено дані браузера? Якщо телефон батьків під’єднано, є зашифрована резервна копія. На сторінці для батьків для цього є кнопка «Новий пристрій дитини? Перенести прогрес».
+Kopplungs-Link einfügen	Paste the link	Встав посилання під’єднання
+♻️ Wiederherstellen	♻️ Restore	♻️ Відновити
+Das ist kein gültiger Kopplungs-Link.	That is not a valid link.	Це не дійсне посилання під’єднання.
+Keine Sicherung gefunden.	No backup found.	Резервну копію не знайдено.
+Dieser Link gehört zu einer anderen App.	This link belongs to a different app.	Це посилання належить іншому застосунку.
+Der Link passt nicht zur Sicherung.	The link does not match the backup.	Посилання не відповідає резервній копії.
+Gerade keine Verbindung – bitte später nochmal.	No connection right now – please try again later.	Зараз немає з’єднання – спробуй пізніше.
+Auf diesem Gerät gibt es schon einen Lernstand. Mit der Sicherung überschreiben?	There is already learning progress on this device. Overwrite it with the backup?	На цьому пристрої вже є навчальний прогрес. Перезаписати його резервною копією?
+Nichts geändert.	Nothing changed.	Нічого не змінено.
+♻️ Fortschritt wiederhergestellt	♻️ Progress restored	♻️ Прогрес відновлено
+Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung {}i). Mit dem Kopplungs-Link lässt sich der Fortschritt auf einem neuen Gerät wiederherstellen.	With a linked parent's phone, an end-to-end encrypted backup of the learning progress is also stored (see privacy policy {}i). The link can restore the progress on a new device.	Якщо телефон батьків під’єднано, додатково зберігається наскрізно зашифрована резервна копія навчального прогресу (див. політику конфіденційності {}i). За посиланням під’єднання прогрес можна відновити на новому пристрої.
+Der Link enthält den Schlüssel – bitte nur an Eltern weitergeben. Er stellt auch den Fortschritt auf einem neuen Gerät wieder her (Elternbereich → Fortschritt wiederherstellen).	The link contains the key – please only share it with parents. It also restores the progress on a new device (parents' area → Restore progress).	Посилання містить ключ – передавай його лише батькам. Воно також відновлює прогрес на новому пристрої (розділ для батьків → Відновити прогрес).
+Mit gekoppeltem Eltern-Handy wird der Lernstand verschlüsselt gesichert – auf einem neuen Gerät „Fortschritt wiederherstellen“	With a linked parent's phone the learning progress is backed up encrypted – on a new device use “Restore progress”	Якщо телефон батьків під’єднано, навчальний прогрес зберігається в зашифрованій резервній копії – на новому пристрої використай «Відновити прогрес»
+Eltern-Bericht mit Monatsverlauf	Parents' report with monthly history	Звіт для батьків із помісячною історією

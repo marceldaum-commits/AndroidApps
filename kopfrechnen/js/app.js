@@ -160,9 +160,18 @@ const Confetti = (() => {
 function toast(html, ms = 1600) { const d = document.createElement('div'); d.className = 'toast'; d.setAttribute('role', 'status'); d.innerHTML = html; d.style.animationDuration = ms + 'ms'; document.body.appendChild(d); setTimeout(() => d.remove(), ms); }
 
 /* ================= Statistik ================= */
+// Monatssummen bleiben dauerhaft (S.hist nur 70 Tage): beim ersten Mal aus dem vorhandenen Verlauf aufbauen
+function monateInit() {
+  if (S.monate) return S.monate;
+  S.monate = {};
+  for (const [d, h] of Object.entries(S.hist || {})) { const m = S.monate[d.slice(0, 7)] || (S.monate[d.slice(0, 7)] = { ms: 0, n: 0, ok: 0 }); m.ms += h.ms; m.n += h.n; m.ok += h.ok; }
+  return S.monate;
+}
+function monatsSumme(mon, ok, ms) { const M = monateInit(), m = M[mon] || (M[mon] = { ms: 0, n: 0, ok: 0 }); m.n++; if (ok) m.ok++; m.ms += ms; }
 function recordAnswer(t, ok, dt) {
   const d = todayStr(), h = S.hist[d] || (S.hist[d] = { n: 0, ok: 0, ms: 0, tp: {} });
   h.n++; if (ok) h.ok++; h.ms += Math.min(dt, 60000);
+  monatsSumme(d.slice(0, 7), ok, Math.min(dt, 60000));   // Monatsverlauf (dauerhaft, für Eltern-Bericht und Sicherung)
   const tp = h.tp[t.topic] || (h.tp[t.topic] = [0, 0]); tp[ok ? 0 : 1]++;
   const st = S.stats[`${t.topic}|${t.lvl}`] || (S.stats[`${t.topic}|${t.lvl}`] = { ok: 0, bad: 0 }); ok ? st.ok++ : st.bad++;
   S.played[t.topic] = 1;

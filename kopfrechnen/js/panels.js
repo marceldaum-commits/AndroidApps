@@ -176,6 +176,7 @@ const PANELS = {
       ${mi('week', '📊', 'Wochenbericht', 'Was geübt wurde, wo es hakt')}
       ${mi('elternbericht', '📈', 'Elternbericht' + proBadge(), 'Verlauf über 10 Wochen, Stärken und Schwächen je Thema')}
       ${typeof PANELS.koppeln === 'function' && window.crypto && crypto.subtle ? mi('koppeln', '📲', 'Eltern-Handy koppeln' + (kopplung() ? ' <span class="pro-on static">gekoppelt</span>' : ''), 'Lernstand auf dem Eltern-Handy – ohne Konto, verschlüsselt') : ''}
+      ${typeof PANELS.wiederherstellen === 'function' && window.crypto && crypto.subtle ? mi('wiederherstellen', '♻️', 'Fortschritt wiederherstellen', 'Neues Gerät? Mit dem Kopplungs-Link den Lernstand zurückholen') : ''}
       ${CONFIG.geschenkUrl ? miLink(CONFIG.geschenkUrl, '🎁', 'Lern-Geschenk verschenken', 'Nachhilfe-Stunden oder Lernpaket als Gutschein') : ''}
       ${CONFIG.zaehler ? `<button class="setrow" id="zaehlSw" role="switch" aria-checked="${on}"><div><b>Anonyme Nutzungszählung</b><span>Beim Start meldet die App nur „Rechenblitz wurde geöffnet“ und die Version – ohne Namen, Kennungen oder Cookies. Hilft uns zu sehen, ob Rechenblitz genutzt wird.</span></div><span class="switch ${on ? 'on' : ''}"></span></button>` : ''}
     </div>`, init() {
