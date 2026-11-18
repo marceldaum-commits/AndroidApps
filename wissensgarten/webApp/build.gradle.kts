@@ -14,8 +14,15 @@ kotlin {
         browser { commonWebpackConfig { outputFileName = "wissensgarten.js" } }
         binaries.executable()
     }
+    // Kotlin/JS-Fassung: dieselbe App ohne WasmGC – der Lader in index.html wählt sie, wenn Wasm nicht klappt (Safari 27)
+    js {
+        outputModuleName.set("wissensgarten-js")
+        useCommonJs()
+        browser { commonWebpackConfig { outputFileName = "wissensgarten-js.js" } }
+        binaries.executable()
+    }
     sourceSets {
-        wasmJsMain.dependencies {
+        webMain.dependencies {
             implementation(project(":shared"))
             implementation(compose.components.resources)
             implementation("org.jetbrains.kotlinx:kotlinx-browser:0.5.0")
@@ -46,15 +53,20 @@ val copyPacks by tasks.registering {
         })
     }
 }
-kotlin.sourceSets["wasmJsMain"].resources.srcDir(genPacks)
-tasks.matching { it.name == "wasmJsProcessResources" }.configureEach { dependsOn(copyPacks) }
+kotlin.sourceSets["webMain"].resources.srcDir(genPacks)
+tasks.matching { it.name == "wasmJsProcessResources" || it.name == "jsProcessResources" }.configureEach { dependsOn(copyPacks) }
 
 // Fertige WebApp nach wissensgarten/webapp/ legen (wird auf den Branch wissensgarten-test gepusht)
 val appGradle = rootProject.file("app/build.gradle.kts").readText()
 val versionName = Regex("""versionName = "([^"]+)"""").find(appGradle)!!.groupValues[1]
 tasks.register<Sync>("exportWebApp") {
-    dependsOn("wasmJsBrowserDistribution")
-    from(layout.buildDirectory.dir("dist/wasmJs/productionExecutable"))
+    dependsOn("wasmJsBrowserDistribution", "jsBrowserDistribution")
+    val wasmDist = layout.buildDirectory.dir("dist/wasmJs/productionExecutable")
+    val jsDist = layout.buildDirectory.dir("dist/js/productionExecutable")
+    // Beide Fassungen nebeneinander (gemeinsame Dateien wie index.html, Pakete, Schriften nur einmal)
+    from(wasmDist)
+    from(jsDist)
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     into(rootProject.file("webapp"))
     exclude("**/*.map")
     filesMatching(listOf("index.html", "sw.js", "manifest.webmanifest")) { filter { it.replace("@VERSION@", versionName) } }
@@ -62,15 +74,21 @@ tasks.register<Sync>("exportWebApp") {
     doLast {
         val out = rootProject.file("webapp")
         // Echter Ladebalken: Größe der großen Startdateien (entpackt) ins HTML schreiben
-        val big = out.walkTopDown().filter { it.isFile && (it.extension == "wasm" || it.extension == "ttf" || it.name == "wissensgarten.js") }.toList()
+        val big = out.walkTopDown().filter { it.isFile && (it.extension == "wasm" || it.extension == "ttf" || it.name == "wissensgarten.js" || it.name == "wissensgarten-js.js") }.toList()
+        // Dateien, die nur eine Fassung braucht: nicht vorab für alle speichern (das iPhone soll nicht 16 MB Wasm laden, die es nicht nutzt);
+        // die Seite legt die Dateien ihrer Fassung selbst in den Zwischenspeicher
+        fun top(d: File, ext: String) = d.listFiles()!!.filter { it.isFile && it.extension == ext }.map { it.name }
+        val wasmFiles = top(wasmDist.get().asFile, "wasm") + "wissensgarten.js"
+        val jsFiles = (top(jsDist.get().asFile, "wasm") + "wissensgarten-js.js").filter { it !in wasmFiles || it == "wissensgarten-js.js" }
+        val modeFiles = "{\"wasm\":" + wasmFiles.joinToString(",", "[", "]") { "\"$it\"" } + ",\"js\":" + jsFiles.joinToString(",", "[", "]") { "\"$it\"" } + "}"
         val sizes = big.joinToString(",", "{", "}") { "\"${it.name}\":${it.length()}" }
         // Service Worker: beim Installieren alles vorab speichern → zweiter Start sofort, auch offline
         // vorlesen/ (Liste der festen Texte für den Stimm-Server „Nova“) braucht die App selbst nicht
         val all = out.walkTopDown().filter { it.isFile && !it.name.endsWith(".LICENSE.txt") && it.name != "sw.js" && it.name != "version.json" &&
-            !it.relativeTo(out).invariantSeparatorsPath.startsWith("vorlesen/") }
+            !it.relativeTo(out).invariantSeparatorsPath.startsWith("vorlesen/") && it.name !in wasmFiles && it.name !in jsFiles }
             .map { it.relativeTo(out).invariantSeparatorsPath }.sorted().toList()
         val pre = (listOf("./") + all).joinToString(",", "[", "]") { "'$it'" }
-        out.resolve("index.html").let { it.writeText(it.readText().replace("@SIZES@", sizes)) }
+        out.resolve("index.html").let { it.writeText(it.readText().replace("@SIZES@", sizes).replace("@MODEFILES@", modeFiles)) }
         out.resolve("sw.js").let { it.writeText(it.readText().replace("'@PRECACHE@'", pre)) }
         rootProject.file("webapp/version.json").writeText("{\n  \"version\": \"$versionName\",\n  \"date\": \"$versionDate\"\n}\n")
     }

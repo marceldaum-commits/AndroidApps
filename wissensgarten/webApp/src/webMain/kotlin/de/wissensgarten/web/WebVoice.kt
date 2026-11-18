@@ -26,7 +26,7 @@ private fun jsClear(): Promise<JsAny?> = js("window.wg.nova.clear()")
 fun webHost(): String = js("location.hostname")
 
 private fun jsNovaPruefung(sprech: (JsString, JsString) -> JsString, paket: (JsString) -> JsString): Unit =
-    js("{ window.wg = window.wg || {}; window.wg.novaSprech = (t, l) => sprech(t, l); window.wg.novaPaket = (p) => paket(p); }")
+    js("{ window.wg = window.wg || {}; window.wg.novaSprech = function (t, l) { return sprech(t, l); }; window.wg.novaPaket = function (p) { return paket(p); }; }")
 
 /**
  * Prüfhilfe (nur lesend, ohne Netz): Sprechtext und Dateiname so, wie die WebApp sie im Browser berechnet –

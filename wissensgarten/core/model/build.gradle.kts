@@ -9,6 +9,8 @@ kotlin {
     jvm { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs { browser() }
+    // Kotlin/JS-Fassung für Browser ohne passendes WasmGC (Safari 27 auf iPad/iPhone)
+    js { browser(); useCommonJs() }
     compilerOptions {
         optIn.add("kotlin.io.encoding.ExperimentalEncodingApi")
         freeCompilerArgs.add("-Xexpect-actual-classes")
@@ -23,7 +25,7 @@ kotlin {
         // Nova: Sprechtext und Dateiname müssen auf JVM und im Browser (Wasm) gleich sein
         commonTest.dependencies { implementation(kotlin("test")) }
         jvmTest.dependencies { implementation("junit:junit:4.13.2") }
-        wasmJsMain.dependencies {
+        webMain.dependencies {
             implementation(npm("pako", "2.1.0"))
             implementation("org.jetbrains.kotlinx:kotlinx-browser:0.5.0")
         }
