@@ -3,6 +3,16 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.21 – Mehr für Eltern
+- Der Elternbereich („Ich“ → „Für Eltern“) ist jetzt durch eine Frage für Erwachsene geschützt. Dort gibt es neu:
+  einen Hinweis, wenn ein Thema länger hakt oder eine Klassenarbeit ansteht (mit kostenloser Probestunde bei
+  Nachhilfe – online, höchstens einmal pro Woche, abschaltbar), „🎁 Lern-Geschenk verschenken“ und den Schalter
+  „Anonyme Nutzungszählung“ (aus, bis du ihn einschaltest – gezählt wird nur, wie oft gespielt wird, ohne Namen,
+  Spielstand, Cookies oder Kennung).
+- Wer Kurvenflug Pro über den Link aus der E-Mail freischaltet, bekommt jetzt eine Bestätigung.
+- Unten in den Einstellungen und im Ladebild: „Ein Angebot von Nachhilfe – online“.
+- Für Kinder ändert sich nichts: Volt und das Spiel zeigen keine Angebote.
+
 ## 2.5.20 – Schnell auch auf iPhone und iPad
 - Auf iPhone, iPad und Safari am Mac läuft jetzt wieder die schnelle Fassung von Kurvenflug. Klappt der Start einmal nicht,
   nimmt Kurvenflug von selbst die einfache Fassung.

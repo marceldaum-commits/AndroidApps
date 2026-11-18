@@ -40,6 +40,24 @@ class Settings(private val prefs: Prefs) {
     fun setAutoUpdate(v: Boolean) { prefs.edit().putBoolean("autoUpdate", v).apply(); _autoUpdate.value = v }
     fun setVoltVoice(v: Boolean) { prefs.edit().putBoolean("voltVoice", v).apply(); _voltVoice.value = v }
 
+    // ------------------------------------------------------------ Elternbereich (für das ganze Gerät)
+    private val _anonCount = flag("anonCount", false)
+    /** Anonyme Nutzungszählung – nur wenn Eltern sie einschalten (aus = Standard, datensparsam) */
+    val anonCount: StateFlow<Boolean> = _anonCount.asStateFlow()
+    fun setAnonCount(v: Boolean) { prefs.edit().putBoolean("anonCount", v).apply(); _anonCount.value = v }
+    private val _tutorHintOff = flag("tutorHintOff", false)
+    /** Nachhilfe-Hinweis im Elternbereich ausgeblendet */
+    val tutorHintOff: StateFlow<Boolean> = _tutorHintOff.asStateFlow()
+    fun setTutorHintOff(v: Boolean) { prefs.edit().putBoolean("tutorHintOff", v).apply(); _tutorHintOff.value = v }
+    /** Tag (epochDay), an dem der Nachhilfe-Hinweis zuletzt zu sehen war (Häufigkeitsgrenze) */
+    var tutorHintShown: Long
+        get() = prefs.getLong("tutorHintShown", 0)
+        set(v) = prefs.edit().putLong("tutorHintShown", v).apply()
+    private val _examUntil = MutableStateFlow(prefs.getLong("examUntil", 0))
+    /** „Klassenarbeit bald“ gilt bis zu diesem Tag (epochDay), 0 = nicht gesetzt */
+    val examUntil: StateFlow<Long> = _examUntil.asStateFlow()
+    fun setExamUntil(v: Long) { prefs.edit().putLong("examUntil", v).apply(); _examUntil.value = v }
+
     // ------------------------------------------------------------ Vorlesen (für das ganze Gerät)
     private val _readAloud = flag("readAloud", true)
     /** Volt liest Sprechblasen, Aufträge, Rechen-Stern-Fragen und Erklärungen vor */

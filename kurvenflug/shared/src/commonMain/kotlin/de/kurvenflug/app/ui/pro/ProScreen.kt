@@ -142,7 +142,7 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
 
 /** Frage für Erwachsene vor jedem Kauf: Geburtsjahr eingeben, mindestens 18 Jahre. */
 @Composable
-fun ParentGate(onDismiss: () -> Unit, onPassed: () -> Unit) {
+fun ParentGate(onDismiss: () -> Unit, why: String = "Käufe dürfen nur Erwachsene auslösen.", onPassed: () -> Unit) {
     var year by remember { mutableStateOf("") }
     var wrong by remember { mutableStateOf(false) }
     val now = remember { CalDate.today().year }
@@ -151,7 +151,7 @@ fun ParentGate(onDismiss: () -> Unit, onPassed: () -> Unit) {
         title = { Text("Frage für Erwachsene") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Bitte gib dein Geburtsjahr ein. Käufe dürfen nur Erwachsene auslösen.")
+                Text("Bitte gib dein Geburtsjahr ein. $why")
                 OutlinedTextField(year, { year = it.filter(Char::isDigit).take(4); wrong = false }, singleLine = true, placeholder = { Text("z. B. 1985") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number), isError = wrong)
                 if (wrong) Text("Das hat nicht gepasst.", color = MaterialTheme.colorScheme.error)

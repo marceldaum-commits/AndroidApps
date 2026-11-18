@@ -109,6 +109,10 @@ fun KurvenflugRoot(
     // Musik: Android sofort beim Öffnen (Vorgabe Marcel 17.11.); der Browser erlaubt Ton erst nach dem ersten Tippen –
     // dort startet sie automatisch bei der ersten Berührung. „Musik aus“ bleibt respektiert (setMusicEnabled).
     LaunchedEffect(Unit) { if (!platform.isWeb) platform.onFirstTouch() }
+    // Anonyme Nutzungszählung (Elternbereich, aus = Standard)
+    val anonCount by vm.settings.anonCount.collectAsStateWithLifecycle()
+    var startCounted by remember { mutableStateOf(false) }
+    LaunchedEffect(anonCount) { platform.setCounting(anonCount); if (anonCount && !startCounted) { startCounted = true; platform.count("start") } }
     LaunchedEffect(touched) {
         if (touched) { platform.onFirstTouch(); kotlinx.coroutines.delay(250); platform.sfx?.play(de.kurvenflug.app.ui.fx.Sound.JINGLE, volume = 0.7f) }
     }
@@ -207,6 +211,11 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     // wirkte die App nach „Zurück“ wie eingefroren, wenn Kinder schnell weitertippen.
     // Im Browser: „Zurück“ des Browsers bzw. Esc führt eine Ebene zurück
     de.kurvenflug.app.ui.fx.BackHandler(enabled = platform.isWeb && route != Routes.HOME) { nav.popSafe() }
+    // Elternbereich nur hinter dem Eltern-Tor (dort stehen Angebote für Eltern – nie für Kinder sichtbar)
+    var parentGate by remember { mutableStateOf(false) }
+    if (parentGate) de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { parentGate = false }, why = "Der Elternbereich ist für Erwachsene.") { parentGate = false; nav.goOnce(Routes.PARENT) }
+    // Anonyme Nutzungszählung: Level-Abschlüsse aus dem Spielstand
+    LaunchedEffect(Unit) { vm.events = platform::count }
     NavHost(nav, Routes.HOME,
         enterTransition = { androidx.compose.animation.fadeIn(androidx.compose.animation.core.tween(150)) },
         exitTransition = { androidx.compose.animation.fadeOut(androidx.compose.animation.core.tween(100)) },
@@ -254,7 +263,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                 player = vm.profiles.collectAsStateWithLifecycle().value.let { ps -> val id = vm.profile.collectAsStateWithLifecycle().value
                     ps.firstOrNull { it.id == id }?.takeIf { ps.size > 1 || it.name != "Spieler 1" }?.let { "${it.avatar} ${it.name}" } },
                 onProfiles = { nav.goOnce(Routes.PROFILES) },
-                onParent = { nav.goOnce(Routes.PARENT) },
+                onParent = { parentGate = true },
                 crewLine = remember(rescued) {
                     // jeden Tag sagt ein anderes Crew-Mitglied etwas (nur gerettete)
                     val saved = de.kurvenflug.core.model.Season2.crew.filter { it.n in rescued }
@@ -369,7 +378,18 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                     de.kurvenflug.core.model.nowMillis(), todayStart)
             }
             val labels = remember { (6 downTo 0).map { de.kurvenflug.core.model.CalDate.WEEKDAYS[today.minusDays(it.toLong()).dayOfWeek - 1] } }
-            de.kurvenflug.app.ui.together.ParentScreen(ps.first { it.id == cur }, week, labels) { nav.popSafe() }
+            val examUntil by vm.settings.examUntil.collectAsStateWithLifecycle()
+            val hintOff by vm.settings.tutorHintOff.collectAsStateWithLifecycle()
+            val counting by vm.settings.anonCount.collectAsStateWithLifecycle()
+            val grade by vm.settings.grade.collectAsStateWithLifecycle()
+            val day = today.toEpochDay()
+            de.kurvenflug.app.ui.together.ParentScreen(ps.first { it.id == cur }, week, labels, onBack = { nav.popSafe() },
+                parent = de.kurvenflug.app.ui.together.ParentArea(grade, day, examUntil, hintOff, remember { vm.settings.tutorHintShown }, counting,
+                    onOpen = platform::openUrl,
+                    onExam = { vm.settings.setExamUntil(if (it) day + de.kurvenflug.core.model.ParentOffers.EXAM_DAYS else 0L) },
+                    onHideHint = { vm.settings.setTutorHintOff(true) },
+                    onHintSeen = { if (vm.settings.tutorHintShown != day) vm.settings.tutorHintShown = day },
+                    onCounting = vm.settings::setAnonCount))
         }
         composable(Routes.RESULTS) { de.kurvenflug.app.ui.together.ResultsBoard({ nav.popSafe() }) }
         composable(Routes.STICKERS) {

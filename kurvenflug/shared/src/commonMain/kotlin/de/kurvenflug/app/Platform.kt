@@ -41,6 +41,9 @@ interface Platform {
     fun installMode(): String = ""
     /** Installations-Dialog des Browsers öffnen (nur bei "prompt") */
     fun install() {}
+    /** Anonyme Nutzungszählung: Ereignis zählen ([de.kurvenflug.core.model.UsageCount.EVENTS]); gesendet wird nur, wenn [setCounting] an ist */
+    fun count(event: String) {}
+    fun setCounting(on: Boolean) {}
 }
 
 /** Geräte-Dienste; ohne Bereitstellung (z. B. in Bildschirmfoto-Tests) die Standard-Umsetzung der Plattform. */

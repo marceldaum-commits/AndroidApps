@@ -99,6 +99,7 @@ fun SettingsScreen(
                 }
             }
             LicenseCard(platform.isWeb)
+            de.kurvenflug.app.ui.together.Footer(platform::openUrl)
             if (onReset != null) ResetCard(onReset)
         }
     }

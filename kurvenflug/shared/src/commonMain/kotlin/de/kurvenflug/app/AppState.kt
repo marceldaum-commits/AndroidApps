@@ -79,7 +79,11 @@ class AppState(
     val skin: StateFlow<Int> = _skin
     fun setSkin(i: Int) { settings.skin = i; _skin.value = i }
 
+    /** Anonyme Nutzungszählung (setzt die Oberfläche; zählt nur, wenn die Eltern sie eingeschaltet haben) */
+    var events: (String) -> Unit = {}
+
     fun record(levelId: String, stars: Int, cells: Set<Int>, attempts: Int, seconds: Int = 0) {
+        if (stars > 0) events("level_geschafft")
         scope.launch {
             store.record(levelId, stars, cells, attempts, seconds)
             onChanged()
