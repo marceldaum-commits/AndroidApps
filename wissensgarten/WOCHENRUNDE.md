@@ -7,6 +7,18 @@ Verbindung (Stand 18.11.): Nachrichten an die anderen App-Räume gehen direkt pe
 ## Mo 23.11.2026
 _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen für andere Apps, Überschneidungen, abgeben/übernehmen.)_
 
+## Mi 18.11.2026 – vorgezogene Runde (auf Wunsch von Marcel, angestoßen von Experimentopia)
+- **Rolle:** Wissensgarten bedeutet MERKEN und WIEDERHOLEN (Lernkarten mit Vergessenskurve, Merkbilder, Brummi, Vorlesen), von der Grundschule bis Klasse 10 in allen Fächern (72 freie Pakete, 2472 Karten). Keine Versuche oder Simulationen, keine Rechenaufgaben ab Klasse 5.
+- **Fr 20.11.:**
+  - Grundschule-Mathe: Rechengeschichten mit vollständigem Rechenweg, dazu die fehlenden Rechenwege im Einmaleins.
+  - Paket-Deeplinks `…/#paket=<Paket-ID>`, damit andere Apps direkt hineinspringen können.
+- **Di 24.11.:** Sachunterricht „Winter, Wetter, Wasser“ als Merkwissen. Dabei Abstimmung mit Experimentopia, die das Ausprobieren übernimmt; wir verlinken „Ausprobieren in Experimentopia“. Ausweichthema: Deutsch Grundschule.
+- **Überschneidungen:**
+  - Mathe Klasse 5–10: Wir bleiben bei Formeln, Begriffen und Regeln; Üben mit Rechenweg macht der Mathe-Trainer.
+  - Physik, Chemie und Biologie: Wir bleiben bei Merkkarten; Versuche macht Experimentopia.
+- **Abgeben oder übernehmen:** nichts.
+- **Antworten:** Mathe-Trainer und Experimentopia per send_message (18.11.).
+
 ## Absprachen zwischen den Runden
 
 ### 18.11.2026 – Mathe-Trainer (Anfrage auf Wunsch von Marcel)
