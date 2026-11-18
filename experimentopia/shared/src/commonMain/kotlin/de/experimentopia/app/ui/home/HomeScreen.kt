@@ -81,7 +81,7 @@ fun HomeScreen(
         BubbleBackground()
         Column(Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Blubb(Mood.HAPPY, size = 70.dp)
+                de.experimentopia.app.ui.common.AppLogo(70.dp)
                 BoxWithConstraints(Modifier.weight(1f).padding(start = 8.dp)) { val narrow = maxWidth < 230.dp; Column {
                     // auf schmalen Handys (320 px) kleiner, damit das Wort nicht umbricht
                     Text("Experimentopia", style = TextStyle(brush = Brush.horizontalGradient(listOf(E.Mint, E.Sky, E.Pink)), fontSize = if (narrow) 21.sp else 28.sp, fontWeight = FontWeight.Black), maxLines = 1, softWrap = false)

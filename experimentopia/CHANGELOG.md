@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.4.3 – Ein Logo überall (18.11.2026)
+
+- 🧪 Das Logo ist jetzt überall gleich: Der Kolben vom App-Symbol steht auch oben auf dem Startbildschirm und im Ladebild – mit sanft schwebenden Blasen.
+  Blubb bleibt als Figur in den Sprechblasen.
+
 ## 2.4.2 – Klarere Aufgaben, Nova überall (17.11.2026)
 
 - 🔍 **Alle 200 Versuche geprüft**: 72 Stellen klarer oder richtiger formuliert – z. B. fehlende Angaben ergänzt („ohne Reibung“, „verglichen mit 10 cm“),

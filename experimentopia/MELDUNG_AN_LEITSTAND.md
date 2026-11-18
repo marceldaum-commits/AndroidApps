@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.4.3 vom 18.11.2026: ein Logo überall – fertig für den Betriebstest
+
+- Referenz: App-Symbol (`icon-512.png` = Android `ic_launcher_foreground`, gleiche Geometrie). Schon gleich waren: Android-Symbol (adaptiv + monochrom), PWA-Symbole 192/512, Favicon/Apple-Touch-Icon.
+- **Angeglichen**: Kopf der Startseite (zeigte bisher die Figur Blubb mit Lächeln/Bäckchen) → `AppLogo` zeichnet exakt das App-Symbol; Ladebild der WebApp (eigene Variante) → dieselben Pfade wie das App-Symbol.
+- Forscherbuch und Teilen-Bilder: Das Forscherbuch zeigt kein Logo, Teilen-Bilder gibt es in der App nicht – nichts abzugleichen. Blubb bleibt als Figur in den Sprechblasen (kein Logo).
+- Enthält den Nacht-Auftrag aus 2.4.2 (200 Versuche geprüft, 72 Stellen geändert, Nova 100 %). Liegt auf test; live ist noch 2.4.2.
+
 ## 18.11.2026 – 2.4.2 ist live
 
 - Auf Marcels Anweisung („Stell live“) `experimentopia-live` auf den getesteten Stand von `experimentopia-test` gesetzt (fast-forward, Commit fade530). Live meldet 2.4.2; Nova-Abdeckung live 100 %.

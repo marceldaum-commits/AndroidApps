@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-version="2.4.2">
+<html lang="de" data-version="2.4.3">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -22,26 +22,26 @@
   #balken { width: 220px; max-width: 62vw; height: 8px; border-radius: 4px; background: #2E2260; overflow: hidden; }
   #balken i { display: block; height: 100%; width: 3%; border-radius: 4px; background: linear-gradient(90deg, #3DF5C8, #FF5FA2); transition: width .25s ease; }
   .bl { animation: auf 2s ease-in infinite; } .bl.b2 { animation-delay: .7s; } .bl.b3 { animation-delay: 1.3s; }
-  @keyframes auf { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-26px); opacity: 0; } }
+  @keyframes auf { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-8px); opacity: 0; } }
   @media (prefers-reduced-motion: reduce) { #start svg, .bl { animation: none; } }
   #start .fehler { color: #FFA23D; max-width: 30em; }
 </style>
 </head>
 <body>
 <div id="start">
-  <svg viewBox="0 0 132 132" aria-hidden="true">
-    <defs><radialGradient id="glut"><stop offset="0" stop-color="#3DF5C8" stop-opacity=".45"/><stop offset="1" stop-color="#3DF5C8" stop-opacity="0"/></radialGradient></defs>
-    <circle cx="66" cy="80" r="56" fill="url(#glut)"/>
-    <path d="M46 78 L86 78 L101 106 Q103 112 96 112 L36 112 Q29 112 31 106 Z" fill="#3DF5C8"/>
-    <path d="M56 26 L56 56 L31 104 Q29 112 36 112 L96 112 Q103 112 101 104 L76 56 L76 26" fill="none" stroke="#F3EEFF" stroke-width="4" stroke-linejoin="round"/>
-    <path d="M50 26 L82 26" stroke="#F3EEFF" stroke-width="5" stroke-linecap="round"/>
-    <circle cx="56" cy="94" r="6" fill="#fff"/><circle cx="76" cy="94" r="6" fill="#fff"/><circle cx="57" cy="95" r="3.2" fill="#160F2E"/><circle cx="77" cy="95" r="3.2" fill="#160F2E"/>
-    <path d="M60 104 Q66 109 72 104" stroke="#160F2E" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-    <circle class="bl" cx="62" cy="70" r="4" fill="#FF5FA2"/><circle class="bl b2" cx="70" cy="66" r="3" fill="#FFD84D"/><circle class="bl b3" cx="66" cy="72" r="2.5" fill="#7CC8FF"/>
+  <svg viewBox="16 8 76 76" aria-hidden="true">
+    <!-- dasselbe Logo wie das App-Symbol (icon-512.png, Android ic_launcher_foreground) -->
+    <defs><radialGradient id="glut"><stop offset="0" stop-color="#3DF5C8" stop-opacity=".33"/><stop offset="1" stop-color="#3DF5C8" stop-opacity="0"/></radialGradient></defs>
+    <circle cx="54" cy="66" r="34" fill="url(#glut)"/>
+    <path d="M37 66 L71 66 L77 78 Q78 82 74 82 L34 82 Q30 82 31 78 Z" fill="#3DF5C8"/>
+    <path d="M47 30 L47 50 L31 78 Q30 82 34 82 L74 82 Q78 82 77 78 L61 50 L61 30" fill="none" stroke="#F3EEFF" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M43 30 L65 30" stroke="#F3EEFF" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="47" cy="73" r="2.5" fill="#160F2E"/><circle cx="61" cy="73" r="2.5" fill="#160F2E"/>
+    <circle class="bl" cx="54" cy="22" r="4" fill="#FF5FA2"/><circle class="bl b2" cx="63" cy="14" r="2.5" fill="#FFD84D"/><circle class="bl b3" cx="46" cy="15" r="2" fill="#7CC8FF"/>
   </svg>
   <b>EXPERIMENTOPIA</b>
   <div id="balken"><i></i></div>
-  <span id="start-text">lädt … Version 2.4.2 vom 17.11.2026</span>
+  <span id="start-text">lädt … Version 2.4.3 vom 17.11.2026</span>
 </div>
 <div id="app"></div>
 <script>
@@ -56,7 +56,7 @@
   // WebAssembly mit „GC“ fehlt älteren Browsern: gleich prüfen, nicht erst alles laden
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
   // ── Laden mit echtem Fortschritt: App-Kern (.wasm) und Schriften werden sofort angefordert, jedes ankommende Byte bewegt den Balken.
-  var PLAN = { "0afa0120e8e72ddd7cd4.wasm": 5468739, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 120976, "fonts/noto_color_emoji.ttf": 665140, "experimentopia.js": 593825 }, got = {}, total = 0, early = {};
+  var PLAN = { "bccfa839aa4b38489c76.wasm": 8405319, "e77807c0e9cc3a64a568.wasm": 5472779, "fonts/dejavu_sans.ttf": 120976, "fonts/noto_color_emoji.ttf": 665140, "experimentopia.js": 593825 }, got = {}, total = 0, early = {};
   for (var k in PLAN) total += PLAN[k];
   function progress() {
     var sum = 0; for (var k in PLAN) sum += Math.min(got[k] || 0, PLAN[k]);
