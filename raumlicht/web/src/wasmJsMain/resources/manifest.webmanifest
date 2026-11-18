@@ -3,6 +3,7 @@
   "short_name": "Raumlicht",
   "description": "Oberstufen-Mathe zum Anfassen: Vektoren, Analysis und Stochastik in echtem 3D.",
   "lang": "de",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

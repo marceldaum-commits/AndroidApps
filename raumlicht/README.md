@@ -102,7 +102,7 @@ Seit 0.6.0: eigene Funktionen in „Kurve abfahren“ (`Expr` liest den Term, `C
 | ![](screenshots/64_eigene_funktion.png) | ![](screenshots/65_eigene_funktion_eingabe.png) |
 |---|---|
 
-**KI-Tutor (ab 2.18.13, zunächst nur auf der Testseite sichtbar):** Nach einem Fehlversuch erklärt Lux die Aufgabe mit KI-Hilfe anders und beantwortet Rückfragen. 3 Proben frei, danach „Raumlicht KI-Abi-Pass“
+**KI-Tutor (ab 2.18.13, seit 2.18.15 für alle sichtbar):** Nach einem Fehlversuch erklärt Lux die Aufgabe mit KI-Hilfe anders und beantwortet Rückfragen. 3 Proben frei, danach „Raumlicht KI-Abi-Pass“
 (10 KI-Punkte am Tag bis zum 31. Juli des Abi-Jahres). Die Server-Seite liegt als fertige Funktion in [`server/raumlicht-ki.js`](server/raumlicht-ki.js) (Prüfung: `node --test server/raumlicht-ki.test.js`).
 
 | „Erklär’s mir anders“ mit Rückfrage | Seite zum KI-Abi-Pass |
@@ -170,6 +170,8 @@ Lux liest mit der KI-generierten Stimme „Nova“ vor. Die App rechnet nichts: 
 Texte, die erst in der Aufgabe entstehen, lässt die App über den Server erzeugen. Einzelheiten: `VORLESEN_FUER_ANDERE_APPS.md`.
 
 ## Zwei Fassungen: GitHub und Play Store
+
+> **Pause seit 18.11.2026:** Vorerst wird nur die WebApp ausgeliefert (installierbar über „App installieren“ in den Einstellungen). Der Android-Code bleibt, der Release-Ablauf baut und veröffentlicht keine APK (`APK_AUSLIEFERN: "false"` in `.github/workflows/raumlicht-release.yml`).
 
 `github` (APK, eigener Updater) und `play` (AAB, Updates über den Store, keine Installations-Berechtigung) – siehe `STORE-RELEASE.md`.
 Tests: `./gradlew :core:model:jvmTest :app:testGithubDebugUnitTest`.

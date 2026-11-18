@@ -119,6 +119,7 @@ private fun WebApp() {
                     val music by prefs.music.collectAsState(); val sound by prefs.sound.collectAsState(); val volume by prefs.volume.collectAsState(); val voice by prefs.voice.collectAsState()
                     SettingsPage(music, prefs::setMusic, sound, prefs::setSound, vibration, prefs::setVibration, "Version ${Version.NAME} vom ${Version.DATE} · WebApp", onBack,
                         top = {
+                            InstallCard()
                             ElevatedCard(Modifier.fillMaxWidth()) { Row(Modifier.padding(horizontal = 16.dp, vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                 TextButton({ openLink("https://www.mathenachhilfe-online.com/impressum/") }) { Text("Impressum") }
                                 TextButton({ openLink("https://www.mathenachhilfe-online.com/datenschutz/") }) { Text("Datenschutz") }
@@ -163,3 +164,26 @@ private fun offRemove(server: String): Unit = js("{ window.__rlNova.offline.remo
 
 /** laufende Nummer des letzten Satzes – ein älterer darf den Ladehinweis nicht mehr ändern */
 private var novaTurn = 0
+
+/**
+ * „App installieren“ in den Einstellungen: nur sichtbar, solange Raumlicht noch nicht als App installiert ist.
+ * Wo der Browser es anbietet, ein Knopf; auf iPhone und iPad die Anleitung über „Teilen“. Der Spielstand bleibt beim Installieren erhalten.
+ */
+@Composable
+private fun InstallCard() {
+    var state by remember { mutableStateOf(installState()) }
+    LaunchedEffect(Unit) { while (true) { kotlinx.coroutines.delay(500); state = installState() } }
+    if (state != "knopf" && state != "ios") return
+    val sfx = LocalSfx.current
+    ElevatedCard(Modifier.fillMaxWidth()) { Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text("📲 Raumlicht als App", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
+        if (state == "knopf") {
+            Text("Leg Raumlicht auf deinen Startbildschirm: startet wie eine App, im Vollbild und auch ohne Internet. Dein Spielstand bleibt.", style = MaterialTheme.typography.bodyMedium)
+            NeonButton({ sfx?.play(Sound.TAP); installNow() }, Modifier.fillMaxWidth(), color = Q.Cyan) { Text("📲 App installieren", fontWeight = androidx.compose.ui.text.font.FontWeight.Bold) }
+        } else {
+            Text("So kommt Raumlicht auf deinen Home-Bildschirm – dann startet es wie eine App, im Vollbild:", style = MaterialTheme.typography.bodyMedium)
+            Text("1. Unten (oder oben) auf „Teilen“ tippen – das Viereck mit dem Pfeil nach oben\n2. „Zum Home-Bildschirm“ wählen\n3. „Hinzufügen“ antippen", style = MaterialTheme.typography.bodyMedium, color = Q.Text)
+            Text("Am besten in Safari. Dein Spielstand zieht dabei nicht mit um – installiere also gleich am Anfang.", style = MaterialTheme.typography.bodySmall, color = Q.Muted)
+        }
+    } }
+}

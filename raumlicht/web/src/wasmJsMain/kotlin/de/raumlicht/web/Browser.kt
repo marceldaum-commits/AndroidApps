@@ -19,6 +19,15 @@ fun kiPost(url: String, body: String, done: (Int, String) -> Unit): Unit = js(""
     fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: body, signal: c.signal })
         .then((r) => r.text().then((x) => done(r.status, x)), () => done(0, '')).finally(() => clearTimeout(t));
 }""")
+/** Kann die WebApp installiert werden? „installiert“ (läuft schon als App), „knopf“ (der Browser bietet es an), „ios“ (iPhone/iPad: von Hand über „Teilen“), sonst „nichts“ */
+fun installState(): String = js("""(function () {
+    var I = window.__rlInstall || {};
+    if (I.done || (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true) return 'installiert';
+    if (I.prompt) return 'knopf';
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) return 'ios';
+    return 'nichts'; })()""")
+/** Fragt den Browser, ob er die WebApp installieren soll (zeigt dessen eigenes Fenster) */
+fun installNow(): Unit = js("{ var I = window.__rlInstall; if (I && I.prompt) { var p = I.prompt; I.prompt = null; p.prompt(); if (p.userChoice) p.userChoice.then(function (c) { if (c && c.outcome === 'accepted') I.done = true; }); } }")
 fun hostName(): String = js("location.hostname")
 /** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer KI-Server (window.__rlKiServer), sonst null */
 fun kiServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlKiServer) || null")

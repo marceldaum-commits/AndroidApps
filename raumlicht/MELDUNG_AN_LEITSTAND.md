@@ -2,6 +2,25 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.15: nur noch Web-App, „App installieren“, KI-Tutor für alle
+
+Marcel hat beides direkt bestätigt („1 und 2 ja“). **Raumlicht 2.18.15 vom 18.11.2026 – nur Web-App.** (Die Angabe „Web = Android“ entfällt ab jetzt.)
+
+**A) KI-Tutor**
+- Deine Route auf **trainer-test** habe ich mit einer echten Anfrage geprüft: 200, `rest: 2`, gute Erklärung ohne Lösung; `OPTIONS` 204 (auch live).
+- `Ki.ENABLED = true`: Der KI-Tutor ist für alle sichtbar (live → trainer, raumlicht-test → trainer-test). Ohne Kassenlink: 3 Proben, Code-Eingabe, „bald im Shop“.
+- **Noch von dir:** Kassenlink (→ `Ki.CHECKOUT_URL`) und ein Test-KI-Code. Dann kommt der Kauf-Knopf mit der nächsten Nachkomma-Version.
+
+**B) Nur noch Web-App**
+1. Android-Code bleibt im Repo. `.github/workflows/raumlicht-release.yml` steht auf Pause (`APK_AUSLIEFERN: "false"`): nur noch Logik-Tests, kein Signieren, kein Bauen, kein Release, kein Drive-Upload.
+2. **Wo APKs liegen:** in den GitHub-Releases des Repos `AndroidApps`, Tags `raumlicht-v0.1.0` … `raumlicht-v2.18.14`, je `Raumlicht-<Version>.apk` und `Raumlicht-<Version>-play.aab`; dazu ggf. der Drive-Ordner „Raumlicht“, falls der Upload eingerichtet war.
+   **Ich habe nichts gelöscht** – Releases löschen ist endgültig; bitte mit Marcel entscheiden. In der WebApp selbst gab es keinen APK-Link. Wer die Android-App installiert hat, bekommt keine Updates mehr (sein Updater findet schlicht keine neuere Version).
+3. Auto-Update: siehe 2.18.14 (unverändert, `web-update.mjs` 13 von 13).
+4. **„App installieren“** in den Einstellungen ganz oben: Knopf über `beforeinstallprompt`; iPhone/iPad: Anleitung „Teilen → Zum Home-Bildschirm → Hinzufügen“; unsichtbar, wenn schon installiert (`display-mode: standalone`, `navigator.standalone`, `appinstalled`) oder wenn der Browser nichts anbietet.
+   Manifest geprüft und um `id` ergänzt (Name, Kurzname, `start_url`, `scope`, `display: standalone`, Symbole 192 und 512 maskierbar). Beleg: `scene/test/web-install.mjs`, 7 von 7.
+5. Texte: „Raumlicht Pro gilt in der Web-App.“ / „Der Pass gilt in der Web-App.“ auf der Pro- und der KI-Seite.
+- Hinweis für die Kauf-Mails und den Shop: bitte ebenfalls „gilt in der Web-App“ und keinen APK-Link mehr.
+
 ## 18.11.2026 – Raumlicht 2.18.14: Vorlesen abgeschaltet, WebApp-Update vervollständigt
 
 Marcel hat beides direkt bestätigt. **Raumlicht 2.18.14 vom 18.11.2026, Web = Android (beide 2.18.14).**

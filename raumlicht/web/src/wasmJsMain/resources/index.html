@@ -127,6 +127,10 @@
   // (Startseite oder App im Hintergrund), nie mitten in einer Aufgabe.
   window.__rlHome = true; var updateWaiting = false;
   var CURRENT = document.documentElement.dataset.version;
+  // „App installieren“: Der Browser meldet, wenn er die WebApp installieren kann – die Einstellungen zeigen dann den Knopf (nur solange sie noch nicht installiert ist)
+  window.__rlInstall = { prompt: null, done: false };
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); window.__rlInstall.prompt = e; });
+  window.addEventListener('appinstalled', function () { window.__rlInstall.prompt = null; window.__rlInstall.done = true; });
   // Vor dem Neuladen merken, von welcher Version wir kommen – danach sagt ein kurzer Hinweis „Neue Version x.y.z geladen“
   window.__rlTry = function () { if (updateWaiting && (document.hidden || window.__rlHome)) { updateWaiting = false; try { sessionStorage.setItem('rl-von', CURRENT); } catch (e) {} location.reload(); } };
   (function () { var from = null; try { from = sessionStorage.getItem('rl-von'); sessionStorage.removeItem('rl-von'); } catch (e) {}
