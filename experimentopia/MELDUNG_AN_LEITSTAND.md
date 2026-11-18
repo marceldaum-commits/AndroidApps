@@ -2,6 +2,13 @@
 
 Neueste oben.
 
+## 18.11.2026 – Vorgezogene Wochenrunde (Marcel: „Besprecht alles jetzt ihr 6“)
+
+Alle 5 anderen Räume haben geantwortet; Ergebnis-Tabelle und Abstimmungen in `experimentopia/WOCHENRUNDE.md` (Abschnitt „Ergebnis der Runde“).
+Kurz: Rollen klar getrennt (erleben – nachrechnen – Kopfrechnen – merken – Oberstufe 3D), gegenseitige Direkt-Links ab Fr 20.11.
+**Bitte prüfen:** Normalverteilung am Di 24.11. planen Mathe-Trainer UND Raumlicht.
+Experimentopia: Fr 20.11. Motor, Dynamo & Trafo + Themen-Direktlinks (`#thema=<slug>`) + Verweise auf den Theorie-Karten; Di 24.11. Energie-Achterbahn (`#thema=physik-energie`).
+
 ## 18.11.2026 – Version 2.11.1 vom 18.11.2026: „← Alle Apps“ – fertig für den Betriebstest
 
 - Knopf „← Alle Apps“ oben auf dem Startbildschirm (Handy: über dem Logo links; PC: in der Kopfzeile neben den Zählern), Höhe ≥ 44 dp, heller Text auf dunklem Grund mit hellblauem Rand.

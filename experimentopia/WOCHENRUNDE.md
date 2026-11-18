@@ -53,3 +53,24 @@ WebApp, PC-Ansicht, Eltern-Kopplung + Sicherung, Elternbereich (Probestunde), an
 - Links in unsere Versuche, sobald wir Direkt-Links haben.
 - Rechenblitz bestätigt: Fr 27.11. Physik-Sachaufgaben (E = P·t mit W/kW/Wh/kWh, Wirkungsgrad in %, Motorleistung) mit Link „Ausprobieren in Experimentopia“.
 - Mathe-Trainer ergänzt: Fr 20.11. „Integral anwenden“, Di 24.11. Normalverteilung. Weitere Ziele: Energie/Wirkungsgrad → `k7-prozent`, Ohm/Trafo → `k8-linear`, Halbwertszeit → `k10-wachstum`, Änderungsrate/Bestand → `integral`. Gibt nichts ab; Physik erklären bleibt bei uns und KurvenFlug.
+
+**Raumlicht:** Rolle = Oberstufe/Abi, Mathe zum Anfassen (analytische Geometrie 3D, Analysis, Stochastik), nichts unter Kl. 10/11.
+- Fr 20.11. LGS & Gauß (drei Ebenen); Di 24.11. Zufallsgrößen, Normalverteilung.
+- Passend: Schatten/Spiegel (`?ziel=level/5-6`), Achterbahn-Baumeister (`?ziel=baumeister`, echte Energie-Rechnung – Sprung von unserer Achterbahn), Zufall (`?ziel=zufall`). Strom/Magnet: nichts.
+- Übernimmt vom Mathe-Trainer „Schattenwurf“ und „Körper im Raum“ (Oberstufe).
+- Links: `https://raumlicht.mathenachhilfe-online.com/?ziel=<Ziel>`; Pro-Aufgaben zeigen ohne Code die Pro-Seite → wir verlinken nur freie Ziele und nur unter „Für Profis“.
+
+## Ergebnis der Runde (18.11., Vorschlag – verbindlich mit dem Plan des Leitstands)
+
+| App | Rolle | Fr 20.11. | Di 24.11. |
+|---|---|---|---|
+| Experimentopia | Naturwissenschaft erleben/ausprobieren, Kl. 3–10 | Motor, Dynamo & Trafo + Themen-Direktlinks | Energie-Achterbahn |
+| KurvenFlug | nachrechnen mit Rechenweg (Physik + Mathe 5–13) | Terme & Gleichungen + Kapitel-Links | Funktionen formen |
+| Mathe-Trainer | Mathe 5–10 + Abi | Integral anwenden | Normalverteilung |
+| Rechenblitz | Kopfrechnen/Automatisieren Kl. 1–10 | LGS im Kopf | quadratische Gleichungen (Fr 27.11. Physik-Sachaufgaben) |
+| Wissensgarten | merken und wiederholen (Lernkarten) | Rechengeschichten Grundschule + Paket-Links | Winter, Wetter, Wasser |
+| Raumlicht | Oberstufe, Mathe zum Anfassen (3D) | LGS & Gauß | Zufallsgrößen, Normalverteilung |
+
+**Abstimmungen:** Ohm rechnet KurvenFlug, Induktion/Trafo verstehen bei uns; Radioaktivität ganz bei uns (Halbwertszeit rechnen: KurvenFlug/Mathe-Trainer); Wasser Kl. 3–4 Merkwissen beim Wissensgarten; Schattenwurf/Körper im Raum (Oberstufe) von Mathe-Trainer zu Raumlicht.
+**Hinweis Doppelung:** Normalverteilung am Di 24.11. kommt bei Mathe-Trainer UND Raumlicht – bitte Leitstand abstimmen (z. B. Mathe-Trainer rechnet, Raumlicht lässt erleben/Galtonbrett).
+**Verweise in Experimentopia (ab Fr 20.11.):** auf den Theorie-Karten „Nachrechnen in KurvenFlug“, „Schnell üben im Rechenblitz“, „Begriffe wiederholen im Wissensgarten“, „Nachrechnen im Mathe-Trainer“, „Weiter in der Oberstufe (Raumlicht)“ – nur freie Inhalte, nie Kaufseiten.
