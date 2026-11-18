@@ -4,10 +4,12 @@
 # damit jede neue APK als Update über die alte installiert werden kann (Lernstand bleibt erhalten).
 name: Rechenblitz Release
 
+# Pausiert (Marcel 18.11.2026): für 1–2 Monate nur Web-App, keine APK. Nur noch per Hand startbar.
+# Für die spätere Android-App wieder einschalten:
+#   push:
+#     branches: [rechenblitz-test]
+#     paths: ['kopfrechnen/**', 'android-app/**', '.github/workflows/rechenblitz-release.yml']
 on:
-  push:
-    branches: [rechenblitz-test]
-    paths: ['kopfrechnen/**', 'android-app/**', '.github/workflows/rechenblitz-release.yml']
   workflow_dispatch:
 
 permissions:
