@@ -35,7 +35,7 @@ object ParentReport {
      * [plays]: alle Durchgänge (beliebig viele, gefiltert wird hier), [progress]: Level → Sterne (Stand jetzt),
      * [now]/[todayStart]/[offsetMin]: Zeit und Zeitzone des Geräts.
      */
-    fun json(plays: List<PlayRecord>, progress: Map<String, Int>, now: Long, todayStart: Long, offsetMin: Int, grade: Int?, nick: String?): String {
+    fun json(plays: List<PlayRecord>, progress: Map<String, Int>, now: Long, todayStart: Long, offsetMin: Int, grade: Int?, nick: String?, examSoon: Boolean = false): String {
         val from = todayStart - (DAYS - 1) * Weekly.DAY
         val recent = plays.filter { it.at >= from && it.at <= now + Weekly.DAY }
         val minutes = (recent.sumOf { it.seconds.coerceAtLeast(0) } + 30) / 60
@@ -75,6 +75,11 @@ object ParentReport {
             append(",\"letzte\":[" + days.joinToString(",") { (d, l) ->
                 "{\"tag\":\"${date(CalDate.ofEpochDay(Math2.floorDiv(from + offsetMin * 60_000L, Weekly.DAY) + d))}\",\"min\":${(l.sumOf { it.seconds.coerceAtLeast(0) } + 30) / 60},\"aufgaben\":${l.size},\"richtig\":${l.count { it.stars > 0 }}}"
             } + "]")
+            // „Klassenarbeit bald“ (Schalter der Eltern): Hinweis mit dem Thema, das gerade am meisten Übung braucht bzw. zuletzt dran war
+            if (examSoon) {
+                val topic = weak.firstOrNull()?.let { TOPIC_TITLES[it.id] ?: it.chapter.title } ?: chapters.firstOrNull()?.title
+                append(",\"hinweis\":\"${esc("Bald steht eine Klassenarbeit an" + (topic?.let { ": $it" } ?: "."))}\"")
+            }
             append("}")
         }
     }

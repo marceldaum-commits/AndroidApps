@@ -39,7 +39,9 @@ class ParentReportTest {
         val w = j["schwach"]!!.jsonArray.single().jsonObject
         assertEquals("lineare-funktionen", w["thema"]!!.jsonPrimitive.content); assertEquals(20, w["prozent"]!!.jsonPrimitive.int)
         assertTrue("Δy" in w["tipp"]!!.jsonPrimitive.content)
-        assertTrue("name" !in j && "klasse" !in j)
+        assertTrue("name" !in j && "klasse" !in j && "hinweis" !in j)
+        val e = Json.parseToJsonElement(ParentReport.json(plays, emptyMap(), now, today, 60, null, null, examSoon = true)).jsonObject
+        assertEquals("Bald steht eine Klassenarbeit an: Lineare Funktionen", e["hinweis"]!!.jsonPrimitive.content)
     }
 
     @Test fun emptyIsValid() {
