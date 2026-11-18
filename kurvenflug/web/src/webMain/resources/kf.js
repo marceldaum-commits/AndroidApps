@@ -19,24 +19,30 @@
     // alles geladen: stürzt der Tab jetzt beim Übersetzen ab, nimmt der nächste Start die Kompatibilitäts-Fassung (index.html)
     if (p >= 1 && window.kfMode === 'wasm') { try { if ((localStorage.getItem('kf.start') || '').indexOf('wasm|startet') === 0 && window.kfStage) window.kfStage('geladen'); } catch (e) {} }
   }
-  // Jede Datei wird sofort angefragt; die Daten fließen als Strom weiter, damit der Browser das Wasm schon
-  // während des Ladens übersetzen kann (instantiateStreaming). Wir zählen nur mit.
+  // Erst das Ladebild malen lassen, dann die Dateien NACHEINANDER holen (nicht parallel – schont Speicher und Leitung,
+  // iOS hat bei parallelem Laden und Übersetzen den Tab beendet). Die Daten fließen als Strom weiter, damit der Browser das
+  // Wasm schon während des Ladens übersetzen kann (instantiateStreaming). Wir zählen nur mit.
+  var realFetch = window.fetch.bind(window);   // vor dem Umleiten unten merken – sonst wartet der Abruf auf sich selbst
+  var chain = new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(r, 30); }); }); });
   files.forEach(function (f) {
-    pending[f.u] = fetch(f.u).then(function (r) {
-      if (!r.ok || !r.body) return r;
+    var finished;
+    var bodyDone = new Promise(function (r) { finished = r; });
+    pending[f.u] = chain.then(function () { return realFetch(f.u); }).then(function (r) {
+      if (!r.ok || !r.body) { finished(); return r; }
       var reader = r.body.getReader();
       var body = new ReadableStream({
         start: function (ctrl) {   // gleich alles abholen (nicht auf die App warten), die App liest später mit
           (function pump() {
             reader.read().then(function (x) {
-              if (x.done) { ctrl.close(); return; }
+              if (x.done) { ctrl.close(); finished(); return; }
               loaded += x.value.length; progress(); ctrl.enqueue(x.value); pump();
-            }, function (e) { ctrl.error(e); });
+            }, function (e) { ctrl.error(e); finished(); });
           })();
         }
       });
       return new Response(body, { status: 200, headers: { 'Content-Type': f.t } });
-    });
+    }, function (e) { finished(); throw e; });
+    chain = chain.then(function () { return bodyDone; });   // nächste Datei erst, wenn diese ganz da ist
   });
   var origFetch = window.fetch.bind(window);
   window.fetch = function (input, init) {

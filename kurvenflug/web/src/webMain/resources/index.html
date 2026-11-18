@@ -224,12 +224,13 @@
   <script>window.KF_FILES = ({{FILES}})[window.kfMode];</script>
   <script src="kf.js"></script>
   <script>
-    (function () {
+    // Erst das Ladebild malen lassen (zwei Bilder lang), dann das Programm laden
+    requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(function () {
       var sc = document.createElement('script');
       sc.src = window.kfMode === 'js' ? 'kurvenflug-compat.js' : 'kurvenflug.js';
       sc.onerror = function () { kfFail('Ein Teil von Kurvenflug konnte nicht geladen werden. Bitte Internet prüfen.', sc.src); };
       document.body.appendChild(sc);
-    })();
+    }, 30); }); });
   </script>
 </body>
 </html>

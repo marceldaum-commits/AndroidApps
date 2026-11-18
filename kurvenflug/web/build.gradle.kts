@@ -88,7 +88,7 @@ val webapp by tasks.registering(Sync::class) {
     from(project(":core:model").layout.buildDirectory.dir("vorlesen-root"))
     into(rootProject.file("webapp"))
     exclude("**/*.map")
-    filesMatching("index.html") { filter { it.replace("{{VERSION}}", appVersion) } }
+    filesMatching(listOf("index.html", "diag.html")) { filter { it.replace("{{VERSION}}", appVersion) } }
     doLast {
         val dir = rootProject.file("webapp")
         val jsDist = layout.buildDirectory.dir("dist/js/productionExecutable").get().asFile
@@ -105,10 +105,13 @@ val webapp by tasks.registering(Sync::class) {
             ",\"js\":" + (font + jsFiles).joinToString(",", "[", "]") { entry(it) } + "}"
         val index = dir.resolve("index.html")
         index.writeText(index.readText().replace("{{FILES}}", json))
+        // Diagnose-Seite: die Wasm-Dateien der schnellen Fassung, kleinste zuerst
+        val diag = dir.resolve("diag.html")
+        diag.writeText(diag.readText().replace("{{FILES}}", wasmFiles.sortedBy { it.length() }.joinToString(",", "[", "]") { "{\"u\":\"${it.name}\",\"s\":${it.length()}}" }))
 
         // Service Worker: gemeinsame Dateien + nur die Dateien der Fassung, die das Gerät nutzt (sw.js?fassung=wasm|js)
         val all = dir.walkTopDown().filter { it.isFile }.map { it.relativeTo(dir).invariantSeparatorsPath }
-            .filter { !it.startsWith("vorlesen/") && it != "sw.js" }.sorted().toList()   // Vorlese-Liste gehört nicht ins Offline-Paket
+            .filter { !it.startsWith("vorlesen/") && it != "sw.js" && it != "diag.html" }.sorted().toList()   // Diagnose immer frisch vom Server;   // Vorlese-Liste gehört nicht ins Offline-Paket
         val wasmOnly = all.filter { it == "kurvenflug.js" || (it.endsWith(".wasm") && it !in jsWasm) }
         val jsOnly = all.filter { it == "kurvenflug-compat.js" }
         val shared = listOf("./") + (all - wasmOnly.toSet() - jsOnly.toSet())

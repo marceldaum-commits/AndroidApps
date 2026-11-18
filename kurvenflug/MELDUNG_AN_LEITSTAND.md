@@ -1,5 +1,22 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.15 – Diagnose-Seite für iOS + Lader zuerst, Wasm nacheinander
+**Diagnose-Link für Marcel:** https://kurvenflug-test.mathenachhilfe-online.com/diag.html
+Reines HTML+JS, lädt die App NICHT. Jeder Schritt wird groß angezeigt und **vor** der Ausführung in localStorage (`kf.diag`)
+notiert – stürzt der Tab ab, steht beim nächsten Öffnen oben rot „Beim letzten Mal ist der Tab abgestürzt bei Schritt …“:
+1) HTML/JS ok (+ Gerät: User-Agent, Bildschirm, DPR) · 2) WebAssembly GC + try/catch und **exnref (try_table)** per `validate`
+3) WebGL 2 + `MAX_TEXTURE_SIZE`/`MAX_RENDERBUFFER_SIZE` und nötige Zeichenflächen-Größe · 4) **kleines Wasm** (App, 5,8 MB)
+einzeln laden + `WebAssembly.compile` · 5) **großes Wasm** (Skiko, 8,4 MB) einzeln laden + übersetzen (instantiate ginge nur mit
+den Emscripten-Importen, darum compile) · 6) Service Worker/Offline-Speicher (aktiv? welche Caches?) · 7) letzter abgebrochener
+App-Start (Fassung + Stufe aus dem Start-Protokoll). Knöpfe: „Nochmal prüfen“, **„Echte App starten“** (mit Start-Protokoll),
+**„Offline-Speicher leeren“** (SW abmelden, Kurvenflug-Caches löschen – Spielstand bleibt). diag.html liegt nicht im
+Offline-Speicher, kommt also immer frisch vom Server. Bitte Marcel: Seite öffnen, Bildschirmfoto (ganze Seite) schicken; bei Absturz
+noch einmal öffnen und die rote Zeile fotografieren.
+**index.html/kf.js:** Lader wird zuerst gemalt (zwei Animation-Frames, dann erst Programm-Skript und Downloads); die Wasm-Dateien
+werden **nacheinander** geholt (nächste erst, wenn die vorige ganz da ist), weiter als Strom für instantiateStreaming.
+Tests (Chromium, DPR 3 → 2): Wasm-Start, JS-Fassung, ohne GC, Datei fehlt, kein WebGL 2 – alle wie erwartet; Diagnose-Seite
+läuft durch, Absturz-Anzeige getestet. Keine neuen Dateiendungen. versionCode 62 / 2.5.15.
+
 ## ✅ 2.5.14 – iOS-Laufzeitursachen abgesichert (zu euren Nachträgen 09:17/09:23)
 Eure Nachträge (iOS 18.4+/26, WebKit-Emulation startet normal) kamen erst nach 2.5.13 bei mir an. Die JS-Fassung bleibt
 trotzdem drin – sie springt nur noch bei einem echten Abbruch ein (deckt den Speicher-Fall ab), sonst läuft wie bisher Wasm.

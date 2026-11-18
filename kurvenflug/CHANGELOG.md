@@ -3,6 +3,11 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.15 – Ruhigerer Start
+- Beim Öffnen erscheint zuerst das Ladebild, dann lädt Kurvenflug seine großen Dateien nacheinander statt alle auf einmal –
+  das schont Speicher und Leitung, besonders auf dem iPhone.
+- Für die Fehlersuche gibt es die Seite „diag.html“: Sie prüft Schritt für Schritt, was der Browser kann.
+
 ## 2.5.14 – Sparsamer auf iPhone und iPad
 - Kurvenflug braucht auf Handys mit sehr scharfem Bildschirm deutlich weniger Grafikspeicher (Zeichenfläche mit doppelter
   statt dreifacher Pixeldichte – sieht gleich aus). Ton wird erst nach dem ersten Tippen eingerichtet.
