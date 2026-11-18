@@ -4,6 +4,14 @@
 
 
 
+
+## PRUEFPLAN.md angelegt (18.11.2026)
+- `wissensgarten/PRUEFPLAN.md`:
+  - Wöchentlich mindestens eine Inhaltseinheit, mittwochs auf test, Vorschläge bis KW 52.
+  - Monatlich in der letzten Woche ein Block gründlich, rollierend in 4 Blöcken: A Mathe, B Sprachen, C Naturwissenschaften/Sachunterricht, D Gesellschaft/Allgemeinwissen. Plus-Pakete werden im Block ihres Fachs mitgeprüft.
+  - Dazu der Neu-Content und eine Rundum-Prüfung: Start, iPhone/WebKit, Update, Installation, Zählung, Links, Nova, Plus, Tests.
+- Erste Monatsprüfung: 23.–30.11.2026, Block A (Mathe). Erster Wochen-Inhalt: 25.11.2026.
+
 ## 2.2.14 – Neukundenpaket und Crashkurs im Hinweis (18.11.2026)
 - Thema-Hinweis: zweiter Knopf „Neukundenpaket ansehen“ → `/produkt/einzelnachhilfe-neukundenpaket/?src=wissensgarten-elternbericht&thema&klasse`, zählt `neukunde_klick`/`elternbericht`.
 - Klassenarbeits-Hinweis: nur ab Klasse 5 zusätzlich „Crashkurs ansehen (kostenlos für Familien mit Stundenpaket)“ → `/produkt/easy-learning-crash-kurs/?src=wissensgarten-klassenarbeit&…`, zählt `crashkurs_klick`/`klassenarbeit`.
