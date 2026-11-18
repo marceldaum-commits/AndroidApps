@@ -40,6 +40,44 @@ Marcel hat direkt bestätigt, dass ich das schreibe. Stand: Raumlicht 2.18.15 vo
 - **KI-Anteil am Code:** Der Code ist zu großen Teilen mit KI-Hilfe entstanden. Ob und wie der Antrag das nennen soll und was es für die Urheberschaft heißt, bitte klären, bevor die Lizenz festgelegt wird.
 - **Nicht in den offenen Kern:** Stimme „Nova“ (fremder Dienst), KI-Tutor, Lizenz-Schlüssel, Shop-Anbindung.
 
+### Ergänzung: Antworten auf die fünf Fragen aus dem Bewerbungsentwurf (Arbeitstitel „Lichtraum-Werkstatt“)
+
+**1) Lässt sich der Rechenkern sauber trennen? Welche Dateien gehören in den offenen Kern?** Ja. Nachgesehen in `core/model/src/commonMain/…/model/`: Außer `Pro.kt`, `Ki.kt`, `License.kt` und `Prefs.kt` benutzt **keine** Datei etwas aus Pro, KI, Freischaltung oder Stimme.
+- **Offener Kern (rund 1 200 Zeilen Kotlin + die Bühne):** `Geo.kt` (Vektoren, Geraden, Ebenen, Abstände, Schnitte), `Expr.kt` (Term-Leser, Ableitung), `Binomial.kt`, `Scene.kt` (Bühnen-Objekte und ihr JSON), `Level.kt` (Aufgaben-Modell: Regler, Formelzeile, Ergebnis), `Notation.kt`, `Difficulty.kt`, die Vorlagen für Zufalls-Aufgaben `Families.kt`/`Gen.kt`/`MoreGen.kt` (als Grundlage der Prüfer), dazu `scene/src/main.js`. Aus `shared`: Bühnen-Anbindung, Aufgaben-Bildschirm, Formel-Anzeige, Regler.
+- **Kann offen, muss nicht:** `Coaster.kt`, `Workshop.kt`, `Balloons.kt` (Erlebnis-Teile), `Klang.kt`, `MusicSynth.kt`, `SpaceMusic.kt` (Töne), `Theory.kt` (Theorie-Karten – Inhalt, eher CC als Code-Lizenz).
+- **Bleibt bei uns:** `Pro.kt`, `License.kt`, `Ed25519.kt`, `Sha512.kt`, `Ki.kt`, `Vorlesen.kt`, `Speech.kt`, `Sha256.kt`, `Updates.kt`, die Aufgaben-Sammlungen `Levels.kt`, `MoreLevels.kt`, `TourFive…Eight.kt`, `Modes.kt`, `Extras.kt`, `Play.kt` (Raumlicht-Inhalte und Spielarten), `server/`, Lux, Logo, Texte der Marke.
+- Einschränkung: `Prefs.kt` (Spielstand) nennt Pro- und KI-Code; fürs Trennen in zwei Schnittstellen teilen. Und die Aufgaben-Sammlungen sind Code – siehe Punkt 2.1 der Grundlage.
+
+**2) Ist `Workshop.kt` schon ein Editor-Ansatz?** **Nein – bitte nicht als „Stand“ zählen.** `Workshop.kt` enthält drei Erlebnis-Spiele: Achterbahn-Baumeister (fünf Stützpunkte, Probefahrt mit Physik), Geisterfahrt (Ableitung mit dem Finger zeichnen) und Ringflug.
+Ein echter Ansatz ist etwas anderes: **„3D-Rechner & Baukasten“** (`BuilderScreen` in `shared/…/home/Modes.kt`). Der kann heute: Laser (Geraden), Scheiben (Ebenen) und Kugeln per Formel in den Raum setzen, die Szene abspielen, **als Code teilen** und wieder einlesen, und im 3D-Rechner Größen daraus ausrechnen (zum Nachprüfen von Schulbuch-Aufgaben).
+Er kann **nicht**: einen Auftrag, Regler oder eine Prüfung festlegen – also keine Aufgabe erstellen. Ehrliche Formulierung für den Antrag: „Stand: Szenen-Baukasten mit Teilen per Code; neu: Aufgaben-Editor mit Auftrag, Reglern und Prüf-Logik.“ Ebenfalls Stand: „Duell per Code“ (dieselben Aufgaben über einen Code teilen).
+
+**3) Bleiben three.js-Szene und Compose-Oberfläche, oder wird der Editor eine eigene Weboberfläche?** Meine Empfehlung (Einschätzung): **Bühne bleibt** (three.js, datengetrieben, erprobt). **Abspieler und Editor als eigene, schlanke HTML-Oberfläche** (TypeScript oder Kotlin/JS), nicht Compose.
+Gründe: Compose malt im Browser auf eine Zeichenfläche – für Screenreader fast unsichtbar, 14 MB Ladegewicht, schwer in Moodle/H5P einzubetten. Eine HTML-Oberfläche ist barrierearm, klein (Bühne 570 kB + Abspieler) und lässt sich einbetten. Den Rechenkern in Kotlin behalten und nach JavaScript übersetzen (Kotlin Multiplatform kann das), damit die Prüf-Logik nur einmal existiert. Raumlicht selbst bleibt bei Compose und nutzt denselben Kern.
+
+**4) Lizenzen aller Abhängigkeiten, Schriften, Bilder, Sounds – passen MPL 2.0 und CC BY 4.0?** Ja, nach dem, was im Repository liegt (keine Rechtsberatung):
+- three.js **MIT**; Kotlin, kotlinx, Compose Multiplatform, Skiko **Apache 2.0**; Skia, js-joda **BSD-3** – alle mit MPL 2.0 verträglich (MPL erlaubt das Kombinieren mit freizügig lizenziertem Code; deren Lizenztexte müssen beiliegen, das tun sie in `lizenzen.txt`). **Kein GPL-Baustein.** Bauwerkzeug esbuild (MIT) wird nicht ausgeliefert.
+- Schriften: DejaVu Sans (Bitstream-Vera-/DejaVu-Lizenz, Weitergabe und Änderung erlaubt) und Noto Color Emoji (OFL 1.1) – beide nur in der Compose-WebApp nötig; eine HTML-Oberfläche nimmt die Schriften des Geräts und braucht sie nicht.
+- Bilder: Logo und Lux sind selbst gezeichnet (Vektor im Code) – Marke, bleiben draußen. Sonst Emojis und im Code gezeichnete Formen. Fremde Bilddateien habe ich im Web-Teil keine gefunden (nur die zwei eigenen App-Symbole); den Android-Ordner habe ich dafür nicht einzeln durchgesehen.
+- Sounds und Musik: vollständig im Code errechnet, keine Aufnahmen, keine fremden Samples.
+- **MPL 2.0 für den Kern** passt gut zum Ziel „offen, aber Verbesserungen am Kern fließen zurück“, und unsere Pro-Fassung darf als eigenes Werk darauf aufbauen. **CC BY 4.0 für Format-Beschreibung und Beispielaufgaben** passt; für das Schema selbst zusätzlich CC0 erwägen, damit jede Plattform es ohne Namensnennung einbauen kann. Ob der Fonds eine bestimmte Lizenz verlangt: nicht geprüft.
+
+**5) Grobe Aufwandsschätzung** (Personentage, meine Schätzung ohne Erfahrungswerte aus diesem Projekt – eher Größenordnung als Zusage):
+| Teil | Tage |
+|---|---|
+| Offenes Aufgabenformat: Schema, 15–20 benannte Prüfer, Versionierung, Testaufgaben, Spezifikation | 25–35 |
+| Abspieler als HTML-Oberfläche (Bühne, Regler, Rückmeldung, Tastatur) | 15–20 |
+| Editor für Lehrkräfte (Objekte, Regler, Prüfer wählen, Vorschau, Speichern/Laden) | 30–40 |
+| Teilen per Link und QR (Aufgabe im Link kodiert, ohne Server) | 4–6 |
+| Einbettung per iframe + H5P-Inhaltstyp | 8–12 |
+| LTI 1.3 (braucht einen kleinen Server und Prüfung in Moodle) | 10–15, **als Kür** |
+| Offline und Selbsthosting (Paket, Anleitung, keine fremden Server) | 3–5 |
+| 50 freie Aufgaben im neuen Format (aus vorhandenen Vorlagen neu geschrieben, geprüft) | 10–15 |
+| Barrierefreiheit (Textbeschreibung der Szene, Kontraste, Prüfung mit Screenreader) | 15–25 |
+| Öffnung: neues Repository, Bau ohne unsere Schlüssel, Doku, Beitragsregeln | 8–12 |
+| **Summe ohne LTI** | **rund 120–170** |
+Das ist für sechs Monate Förderzeit mit einer Person knapp, mit zwei gut machbar. Wenn gekürzt werden muss: LTI streichen, Editor zunächst nur für Geometrie (Punkt, Gerade, Ebene, Kugel), Analysis und Stochastik später.
+
 ## 18.11.2026 – Raumlicht 2.18.15: nur noch Web-App, „App installieren“, KI-Tutor für alle
 
 Marcel hat beides direkt bestätigt („1 und 2 ja“). **Raumlicht 2.18.15 vom 18.11.2026 – nur Web-App.** (Die Angabe „Web = Android“ entfällt ab jetzt.)
