@@ -1,3 +1,4 @@
+// HINWEIS: Vorlesen ist seit 2.18.14 abgeschaltet (Vorlesen.ENABLED = false) – dieser Test gilt erst wieder, wenn es eingeschaltet wird. Solange prüft web-still.mjs, dass nichts spricht.
 // Stimme „Nova“ in der WebApp: Die App holt zu einem Auftrag die fertige Datei vom Stimmen-Server, lässt Laufzeit-Texte erzeugen und meldet „fehlt“, wenn nichts geht.
 // node test/web-nova.mjs <webappOrdner> <irgendeine MP3-Datei>      (der Stimmen-Server wird hier nachgestellt – Chromium hat im Test kein Internet)
 import { createRequire } from 'module'; const require = createRequire(import.meta.url); const { chromium } = require('playwright');

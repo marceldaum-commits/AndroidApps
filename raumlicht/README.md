@@ -163,6 +163,8 @@ Die App findet die neue Version selbst (Einstellungen → App-Update).
 
 ## Vorlesen mit „Nova“ (seit 2.17.0)
 
+> **Seit 2.18.14 abgeschaltet** (`Vorlesen.ENABLED = false`): kein Schalter in den Einstellungen, keine Abrufe am Stimmen-Server, `texte.json` wird leer ausgeliefert. Der Code bleibt; das Folgende gilt wieder, sobald der Schalter auf `true` steht.
+
 Lux liest mit der KI-generierten Stimme „Nova“ vor. Die App rechnet nichts: Zu jedem vorlesefertigen Text liegt auf unserem Server eine MP3-Datei.
 `./gradlew :web:webapp` erzeugt dafür `webapp/vorlesen/texte.json` (alle festen Texte, Quelle `core/model/…/Vorlesen.kt`); der Server holt die Liste und vertont Neues vorab.
 Texte, die erst in der Aufgabe entstehen, lässt die App über den Server erzeugen. Einzelheiten: `VORLESEN_FUER_ANDERE_APPS.md`.

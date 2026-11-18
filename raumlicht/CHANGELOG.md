@@ -2,6 +2,12 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.14 – Vorlesen macht Pause, die WebApp hält sich selbst aktuell (18.11.2026)
+- **Vorlesen ist vorerst abgeschaltet.** Der Schalter „Lux spricht“, das Sprechtempo und das Offline-Laden der Stimme sind aus den Einstellungen verschwunden. Lux zeigt ihre Sprechblasen weiter – sie liest sie nur nicht mehr vor. Vielleicht kommt das Vorlesen später zurück.
+- **Musik und Geräusche bleiben** und lassen sich wie bisher getrennt ein- und ausschalten und einzeln leiser stellen.
+- **Für Eltern:** Damit geht Raumlicht zum Vorlesen nicht mehr ins Internet; auch die Sprachausgabe des Geräts wird nicht mehr benutzt.
+- **WebApp immer aktuell:** Die WebApp schaut beim Öffnen, bei jeder Rückkehr in den Tab und alle 30 Minuten nach einer neuen Version – jetzt auf zwei Wegen, damit niemand auf einer alten Version hängen bleibt. Neu geladen wird nur an einer ruhigen Stelle, nie mitten in einer Aufgabe; der Spielstand bleibt. Danach sagt ein kurzer Hinweis „Neue Version … geladen“.
+
 ## 2.18.13 – Lux erklärt’s anders: der KI-Tutor ist eingebaut (18.11.2026)
 - **Neu, noch im Probebetrieb:** Hängst du nach einem Fehlversuch fest, erklärt dir Lux die Aufgabe mit KI-Hilfe noch einmal anders – passend zu dem, was du eingestellt hast. Du kannst nachfragen wie bei einer Nachhilfe. Lux führt dich zum Weg; die Lösung findest du selbst.
 - **Sichtbar ist der KI-Tutor zunächst nur auf der Testseite.** Für alle wird er freigeschaltet, sobald unser Server dafür bereit ist. Bis dahin ändert sich in der App nichts.

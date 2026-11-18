@@ -82,6 +82,14 @@ object Vorlesen {
     /** Vorhersehbare Rückmeldungen, vorlesefertig – ohne die, die schon bei den festen Texten stehen */
     fun predictableTexts(): List<String> = fixedTexts().toSet().let { fixed -> predictableRaw().map { normalize(Speech.clean(it)) }.filter { it.isNotEmpty() && it !in fixed && it.length <= LIVE_MAX_CHARS }.distinct() }
     /** Alles, was vorab vertont wird (feste Texte, dann vorhersehbare Rückmeldungen) – diese Liste lädt auch „Alle Nova-Texte offline laden“ */
+    /**
+     * Vorlesen ist seit 2.18.14 abgeschaltet (Auftrag vom 18.11.2026: „erstmal rausnehmen, später evtl. wieder einfügen“) – der Code bleibt.
+     * Solange false: kein Schalter „Lux spricht“, kein Sprechtempo, kein Offline-Laden, keine Abrufe am Stimmen-Server, keine Gerätestimme, und die ausgelieferte Textliste ist leer.
+     * Zum Wiedereinschalten genügt true (und eine neue Version).
+     */
+    const val ENABLED = false
+    /** Halbsatz für den Datenschutz-Hinweis in den Einstellungen: was fürs Vorlesen ins Internet geht (leer, solange es abgeschaltet ist) */
+    val privacyNote get() = if (ENABLED) " – und zum Vorlesen, wenn du „Lux spricht“ einschaltest. $PRIVACY" else "."
     fun texts(): List<String> = fixedTexts() + predictableTexts()
 
     /** Jeder Leerraum wird zu einem Leerzeichen, vorne und hinten abgeschnitten – so rechnet auch der Stimmen-Server */
@@ -141,9 +149,9 @@ object Vorlesen {
         ?.let { if (it.startsWith("/")) SERVER + it else it }?.takeIf { it.startsWith("$SERVER/") }
 
     /** Inhalt von `vorlesen/texte.json` */
-    fun json(): String = buildJsonObject {
+    fun json(enabled: Boolean = ENABLED): String = buildJsonObject {
         put("format", FORMAT); put("app", APP)
-        put("texte", JsonArray(fixedTexts().map { t -> buildJsonObject { put("text", JsonPrimitive(t)); put("sprache", LANGUAGE) } } +
+        put("texte", JsonArray(if (!enabled) emptyList() else fixedTexts().map { t -> buildJsonObject { put("text", JsonPrimitive(t)); put("sprache", LANGUAGE) } } +
             // Rückmeldungen, die erst nach einer Eingabe fallen, aber vorhersehbar sind: der Server spricht sie vorab (der Schlüssel „laufzeit“ ist nur ein Vermerk)
             predictableTexts().map { t -> buildJsonObject { put("text", JsonPrimitive(t)); put("sprache", LANGUAGE); put("laufzeit", true) } }))
     }.toString()

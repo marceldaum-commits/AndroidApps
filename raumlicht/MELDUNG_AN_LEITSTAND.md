@@ -2,6 +2,28 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.14: Vorlesen abgeschaltet, WebApp-Update vervollständigt
+
+Marcel hat beides direkt bestätigt. **Raumlicht 2.18.14 vom 18.11.2026, Web = Android (beide 2.18.14).**
+
+**Vorlesen aus (Code bleibt):** Schalter `Vorlesen.ENABLED = false`.
+- Ausgeblendet: „Lux spricht“, Sprechtempo, Hörprobe, „Nova ohne Internet“, Nova-Hinweise; die Datenschutz-Zeile in den Einstellungen nennt das Vorlesen nicht mehr.
+- Keine Abrufe an `stimmen.mathenachhilfe-online.com` (weder Dateien noch `/jetzt` noch Zählstand), keine Gerätestimme – auch nicht bei Nutzern, die „Lux spricht“ vorher eingeschaltet hatten. Auf Android wird die Sprachausgabe gar nicht mehr angelegt.
+- `vorlesen/texte.json` wird leer ausgeliefert: `{"format":1,"app":"raumlicht","texte":[]}`. Schon geladene Offline-Dateien bleiben auf den Geräten liegen (für später).
+- Musik und Geräusche unverändert, getrennt schaltbar und einzeln regelbar.
+- Belege: `PlayFlowTest.vorlesenIstAbgeschaltet`, `VorlesenTest.abgeschaltetHeisstLeereListe`, Browser-Test `scene/test/web-still.mjs` (3 von 3: kein Abruf am Stimmen-Server, Gerätestimme schweigt, Liste leer). `web-nova.mjs` gilt erst wieder, wenn das Vorlesen zurückkommt.
+- Der Nachtrag unten (21 fehlende Nova-Dateien) hat sich damit vorerst erledigt.
+
+**WebApp immer automatisch aktuell – deine fünf Punkte:**
+1. Prüfung beim Öffnen, bei Rückkehr in den Tab (`visibilitychange`, `focus`, `pageshow`, `online`) und alle 30 Minuten: `registration.update()` **und** Abgleich von `version.json` (`fetch(…?nc=…, {cache:'no-store'})`).
+2. `skipWaiting` + `clients.claim` wie bisher; neu geladen wird auf der Startseite oder im Hintergrund, nie mitten in einer Aufgabe. Danach Hinweis „✨ Neue Version x.y.z geladen“ (5 Sekunden).
+3. Spielstand und Einstellungen bleiben; alte Caches werden entfernt, `raumlicht-nova` und `raumlicht-nova-offline` bleiben.
+4. Zweite Sicherung gegen Hängenbleiben: Meldet `version.json` eine neue Version und der Browser hat sie nach 60 Sekunden nicht übernommen, löscht die Seite den Cache der alten Version und lädt an der nächsten ruhigen Stelle neu – höchstens einmal je Version (keine Schleife).
+5. Version sichtbar: Einstellungen, „Version 2.18.14 vom 18.11.2026 · WebApp“.
+- Beleg: `scene/test/web-update.mjs`, 13 von 13 – darunter „Rückkehr in den Tab: neue Version ohne manuelles Neuladen“, „version.json als zweite Sicherung“, „keine Neulade-Schleife, Spielstand bleibt“, „Hinweis erscheint“, „offline startet die App“. Dazu `web-vorversion.mjs` (Spielstand, Pro-Code, Einstellungen bleiben beim Sprung von 2.16.3).
+
+KI-Tutor: unverändert wie in der Meldung zur 2.18.13 darunter (Schnittstelle, Funktion, offene Punkte).
+
 ## 18.11.2026 – Raumlicht 2.18.13: KI-Tutor eingebaut, Server-Funktion liegt bereit
 
 Marcel hat direkt bestätigt („Ja bauen und Server-Route und Kassenlink bauen“). **Raumlicht 2.18.13 vom 18.11.2026, Web = Android (beide 2.18.13).**

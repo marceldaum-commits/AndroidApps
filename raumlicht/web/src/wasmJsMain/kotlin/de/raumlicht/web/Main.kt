@@ -93,7 +93,7 @@ private fun WebApp() {
     val voiceStatus = remember { de.raumlicht.app.ui.fx.VoiceStatus() }
     val speaker = remember { object : Speaker {
         // „Nova“ (KI-generierte Stimme): fertige Datei von unserem Server; kommt sie nicht (offline), liest diesen Satz still die Stimme des Geräts
-        override fun say(text: String) { if (prefs.voice.value && prefs.volume.value > 0) Vorlesen.spoken(text).takeIf { it.isNotEmpty() }?.let { spoken ->
+        override fun say(text: String) { if (Vorlesen.ENABLED && prefs.voice.value && prefs.volume.value > 0) Vorlesen.spoken(text).takeIf { it.isNotEmpty() }?.let { spoken ->
             stopSpeaking(); val volume = prefs.volume.value / 100.0
             val rate = prefs.speechRate.value / 100.0
             val mine = ++novaTurn; voiceStatus.loading = true
@@ -107,7 +107,7 @@ private fun WebApp() {
                     }; null } } }
         override fun sayIfQuiet(text: String) { if (!speaking() && !novaSpeaking()) say(text) }
     } }
-    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides speaker, de.raumlicht.app.ui.fx.LocalVoiceStatus provides voiceStatus,
+    CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalSpeaker provides (if (Vorlesen.ENABLED) speaker else null), de.raumlicht.app.ui.fx.LocalVoiceStatus provides voiceStatus,
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.CRASH -> 40 }) },
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
@@ -126,7 +126,7 @@ private fun WebApp() {
                         },
                         onReset = { stars.clear(); prefs.resetProgress() }, volume = volume, onVolume = prefs::setVolume,
                         voice = voice, onVoice = { prefs.setVoice(it); if (!it) { stopSpeaking(); novaStop() } },
-                        offline = run {
+                        offline = if (!Vorlesen.ENABLED) null else run {
                             // Stand aus dem Browser übernehmen, solange die Einstellungen offen sind
                             var tick by remember { mutableStateOf(0) }; var best by remember { mutableStateOf(prefs.voiceBest) }
                             // Größe nur erfragen, wenn Vorlesen eingeschaltet ist – sonst geht die App nicht ins Netz
@@ -138,7 +138,7 @@ private fun WebApp() {
                         onLicenses = { openLink("lizenzen.txt") },
                         soundNote = if (appleTouch()) "Kein Ton? Auf iPhone und iPad bleibt Raumlicht still, solange das Gerät stumm geschaltet ist (Schalter an der Seite oder Glocke im Kontrollzentrum)." else null,
                         privacy = "Raumlicht speichert nur den Spielstand in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, keine Käufe. " +
-                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. Ins Internet geht sie sonst nur zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + Vorlesen.PRIVACY)
+                            "Die App aktualisiert sich von selbst. Musik und Klänge entstehen im Browser. " + (if (Vorlesen.ENABLED) "Ins Internet geht sie sonst nur zum Vorlesen, wenn du „Lux spricht“ einschaltest. " + Vorlesen.PRIVACY else "Sonst geht sie nicht ins Internet."))
                 })
         } }
     }

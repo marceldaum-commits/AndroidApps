@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.13 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.14 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -14,7 +14,7 @@ Eine Verbindung ins Internet baut die App nur in diesen Fällen auf:
 
 1. **Updates.** Die WebApp lädt ihre Dateien von unserem Server. Die Android-App aus dem Play Store wird über Google Play aktualisiert; die direkt von uns
    bezogene Android-App fragt bei GitHub (GitHub Inc., USA) nach, ob es eine neuere Version gibt – das lässt sich in den Einstellungen abschalten.
-2. **Vorlesen (freiwillig, standardmäßig aus).** Schaltet man „Lux spricht“ ein, wird mit der Stimme „Nova“ vorgelesen, einer mit KI (OpenAI) erzeugten Stimme.
+2. **Vorlesen (seit 2.18.14 abgeschaltet – diesen Punkt erst wieder aufnehmen, wenn es zurückkommt).** Schaltet man „Lux spricht“ ein, wird mit der Stimme „Nova“ vorgelesen, einer mit KI (OpenAI) erzeugten Stimme.
    Die festen Texte der App haben wir vorab vertont; die App lädt die Audiodateien bei Bedarf von unserem Server `stimmen.mathenachhilfe-online.com` und
    speichert sie auf dem Gerät. Texte, die erst in der Aufgabe entstehen (zum Beispiel Rückmeldungen, die eingegebene Zahlen enthalten), sendet die App ohne Angaben
    zur Person an diesen Server; er lässt sie einmalig von OpenAI (OpenAI, USA) vertonen und speichert die Audiodatei. Namen, Konten oder Geräte-Kennungen
