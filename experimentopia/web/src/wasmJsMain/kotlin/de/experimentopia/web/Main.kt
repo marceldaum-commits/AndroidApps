@@ -22,7 +22,9 @@ import kotlinx.browser.document
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+    step("App-Code läuft")
     ComposeViewport(document.getElementById("app")!!) { WebApp() }
+    step("Zeichenfläche angelegt")
 }
 
 /** Dieselben im Code erzeugten Klänge wie in der Android-App ([Synth]), über WebAudio abgespielt */
@@ -60,10 +62,10 @@ private fun WebApp() {
     val resolver = LocalFontFamilyResolver.current
     var ready by remember { mutableStateOf(false) }
     var pending by remember { mutableStateOf(2) }; var fonts by remember { mutableStateOf(listOf<Pair<String, ByteArray>>()) }
-    LaunchedEffect(Unit) { listOf("DejaVuSans" to "fonts/dejavu_sans.ttf", "NotoColorEmoji" to "fonts/noto_color_emoji.ttf").forEach { (name, url) -> loadFile(url) { b -> if (b != null) fonts = fonts + (name to b) else pending-- } } }
+    LaunchedEffect(Unit) { step("erstes Bild der App"); listOf("DejaVuSans" to "fonts/dejavu_sans.ttf", "NotoColorEmoji" to "fonts/noto_color_emoji.ttf").forEach { (name, url) -> loadFile(url) { b -> step("Schrift $name gelesen"); if (b != null) fonts = fonts + (name to b) else pending-- } } }
     LaunchedEffect(fonts.size, pending) {
         if (fonts.size < pending) return@LaunchedEffect
-        fonts.forEach { (name, bytes) -> runCatching { resolver.preload(FontFamily(Font(name, bytes))) } }
+        fonts.forEach { (name, bytes) -> step("Schrift $name vorbereiten"); runCatching { resolver.preload(FontFamily(Font(name, bytes))) }; step("Schrift $name fertig") }
         ready = true; hideStartScreen(); wakeAudioOnTouch()
     }
     if (!ready) return

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-version="2.5.4">
+<html lang="de" data-version="2.5.5">
 <head>
 <script>
   // Schrittprotokoll: jeder Ladeschritt wird sofort gemerkt (localStorage). Stürzt Safari ab („weiße Seite“), steht beim nächsten Öffnen da, wo es hing.
@@ -19,6 +19,12 @@
       return (window.__exPrev ? '⚠️ Letzter Start brach ab nach: ' + f(window.__exPrev.slice(-4)) + '\n' : '') + 'Jetzt: ' + f(window.__exSteps);
     };
     exStep('HTML gelesen');
+    // Übersetzen der Wasm-Dateien mitschreiben – hier stürzt Safari ab, wenn der Speicher nicht reicht
+    try {
+      var W = WebAssembly, mb = function (x) { return x && x.byteLength ? ' ' + (x.byteLength / 1048576).toFixed(1) + ' MB' : ''; };
+      ['instantiateStreaming', 'compileStreaming'].forEach(function (n) { var f = W[n]; if (f) W[n] = function () { exStep(n + ' beginnt'); return f.apply(W, arguments).then(function (r) { exStep(n + ' fertig'); return r; }); }; });
+      ['instantiate', 'compile'].forEach(function (n) { var f = W[n]; W[n] = function (a) { exStep(n + ' beginnt' + mb(a)); return f.apply(W, arguments).then(function (r) { exStep(n + ' fertig'); return r; }); }; });
+    } catch (e) {}
   })();
 </script>
 <meta charset="utf-8">
@@ -72,7 +78,7 @@
   </svg>
   <b>EXPERIMENTOPIA</b>
   <div id="balken"><i></i></div>
-  <span id="start-text">lädt … Version 2.5.4 vom 18.11.2026</span>
+  <span id="start-text">lädt … Version 2.5.5 vom 18.11.2026</span>
   <pre id="diag" hidden style="white-space:pre-wrap;font:11px ui-monospace,monospace;color:#A99BD6;max-width:92vw;margin:6px 0 0;text-align:left"></pre>
 </div>
 <div id="app"></div>
@@ -93,7 +99,7 @@
       + '<button id="p-leer" style="font:14px system-ui;padding:9px 16px;border-radius:14px;border:1px solid #A99BD6;background:transparent;color:#A99BD6">Speicher leeren & neu laden</button>'
       + '<small style="color:#A99BD6;max-width:34em;word-break:break-word;white-space:pre-wrap"></small>';
     d.children[2].textContent = text;
-    d.children[5].textContent = 'Version 2.5.4 vom 18.11.2026 · ' + (ios ? 'iOS ' + ios.join('.') + ' · ' : '') + 'WasmGC ' + (wasmGC() ? 'ja' : 'nein') + (why ? ' · ' + String(why).slice(0, 160) : '') + (window.__exDiagText ? '\n' + window.__exDiagText() : '');
+    d.children[5].textContent = 'Version 2.5.5 vom 18.11.2026 · ' + (ios ? 'iOS ' + ios.join('.') + ' · ' : '') + 'WasmGC ' + (wasmGC() ? 'ja' : 'nein') + (why ? ' · ' + String(why).slice(0, 160) : '') + (window.__exDiagText ? '\n' + window.__exDiagText() : '');
     document.body.appendChild(d);
     document.getElementById('p-neu').onclick = function () { location.reload(); };
     document.getElementById('p-leer').onclick = function () {
@@ -126,7 +132,7 @@
   // WebAssembly mit „GC“ fehlt älteren Browsern: gleich prüfen, nicht erst alles laden
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) showProblem('WebAssembly-GC fehlt'); } catch (e) { startFailed(e); }
   // ── Laden mit echtem Fortschritt: App-Kern (.wasm) und Schriften werden sofort angefordert, jedes ankommende Byte bewegt den Balken.
-  var PLAN = { "bccfa839aa4b38489c76.wasm": 8405319, "cda4fbdbc7f8fac05bb7.wasm": 5417758, "fonts/dejavu_sans.ttf": 120976, "fonts/noto_color_emoji.ttf": 666292, "experimentopia.js": 592379 }, got = {}, total = 0, early = {};
+  var PLAN = { "7c00c856a385d92dc8e7.wasm": 5418256, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 120976, "fonts/noto_color_emoji.ttf": 666292, "experimentopia.js": 592445 }, got = {}, total = 0, early = {};
   for (var k in PLAN) total += PLAN[k];
   function progress() {
     var sum = 0; for (var k in PLAN) sum += Math.min(got[k] || 0, PLAN[k]);
@@ -167,10 +173,10 @@
   // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
   // (Startseite oder App im Hintergrund), nie mitten in einem Versuch.
   window.__exHome = true; var updateWaiting = false;
-  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; try { sessionStorage.setItem('exVorher', '2.5.4'); } catch (e) {} location.reload(); } };
+  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; try { sessionStorage.setItem('exVorher', '2.5.5'); } catch (e) {} location.reload(); } };
   // Nach einem automatischen Update kurz zeigen, welche Version jetzt läuft (Spielstand und Einstellungen bleiben unangetastet)
-  try { var vorher = sessionStorage.getItem('exVorher'); if (vorher) { sessionStorage.removeItem('exVorher'); if (vorher !== '2.5.4') window.addEventListener('load', function () {
-    var n = document.createElement('div'); n.id = 'neu'; n.textContent = '✨ Neue Version 2.5.4 geladen';
+  try { var vorher = sessionStorage.getItem('exVorher'); if (vorher) { sessionStorage.removeItem('exVorher'); if (vorher !== '2.5.5') window.addEventListener('load', function () {
+    var n = document.createElement('div'); n.id = 'neu'; n.textContent = '✨ Neue Version 2.5.5 geladen';
     n.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9;background:#2A1F55;color:#F3EEFF;border:1px solid #3DF5C8;border-radius:14px;padding:10px 16px;font:14px sans-serif;transition:opacity .6s';
     document.body.appendChild(n); setTimeout(function () { n.style.opacity = '0'; }, 4000); setTimeout(function () { n.remove(); }, 4800); }); } } catch (e) {}
   if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
@@ -182,7 +188,7 @@
         var check = function () {
           reg.update().catch(function () {});
           fetch('version.json?nc=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (v) {
-            if (v && v.version && v.version !== '2.5.4') reg.update().catch(function () {});
+            if (v && v.version && v.version !== '2.5.5') reg.update().catch(function () {});
           }).catch(function () {});
         };
         check();

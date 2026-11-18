@@ -66,6 +66,8 @@ fun installState(): Int = js("""{ try {
   return ios ? 2 : 0; } catch (e) { return 0; } }""")
 fun installPrompt(done: (Boolean) -> Unit): Unit = js("{ var e = window.__exBip; if (!e) { done(false); return; } e.prompt(); e.userChoice.then(function (c) { window.__exBip = null; done(c && c.outcome === 'accepted'); }, function () { done(false); }); }")
 fun onInstallChanged(cb: () -> Unit): Unit = js("{ window.__exInstallChanged = cb; if (window.matchMedia) { try { matchMedia('(display-mode: standalone)').addEventListener('change', cb); } catch (e) {} } }")
+/** Schrittprotokoll (index.html): wo der Start gerade ist – bleibt nach einem Absturz sichtbar */
+fun step(s: String): Unit = js("{ if (window.exStep) window.exStep(s); }")
 fun pageHost(): String = js("location.host")
 fun novaStop(): Unit = js("{ if (window.ExNova) window.ExNova.stop(); }")
 /** Den Speicher der alten Offline-Stimme (bis 2.1, ca. 63 MB) freigeben */

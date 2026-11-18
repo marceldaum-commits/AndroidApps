@@ -19,6 +19,12 @@
       return (window.__exPrev ? '⚠️ Letzter Start brach ab nach: ' + f(window.__exPrev.slice(-4)) + '\n' : '') + 'Jetzt: ' + f(window.__exSteps);
     };
     exStep('HTML gelesen');
+    // Übersetzen der Wasm-Dateien mitschreiben – hier stürzt Safari ab, wenn der Speicher nicht reicht
+    try {
+      var W = WebAssembly, mb = function (x) { return x && x.byteLength ? ' ' + (x.byteLength / 1048576).toFixed(1) + ' MB' : ''; };
+      ['instantiateStreaming', 'compileStreaming'].forEach(function (n) { var f = W[n]; if (f) W[n] = function () { exStep(n + ' beginnt'); return f.apply(W, arguments).then(function (r) { exStep(n + ' fertig'); return r; }); }; });
+      ['instantiate', 'compile'].forEach(function (n) { var f = W[n]; W[n] = function (a) { exStep(n + ' beginnt' + mb(a)); return f.apply(W, arguments).then(function (r) { exStep(n + ' fertig'); return r; }); }; });
+    } catch (e) {}
   })();
 </script>
 <meta charset="utf-8">

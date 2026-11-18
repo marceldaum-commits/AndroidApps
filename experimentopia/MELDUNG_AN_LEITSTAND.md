@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.5.5 vom 18.11.2026: Befund iPad (Marcel, 11:47)
+
+- Foto von Marcels **iPad** (Safari, privater Tab, 2.5.4 mit ?diag=1): Ladebild erscheint ✅, beide .wasm in < 1 s da (Skiko 8 MB bei 247 ms, App 5 MB bei 758 ms),
+  experimentopia.js geladen (395 ms), Balken 70 % – **danach wird die Seite weiß**. Also: Absturz/Abbruch **nach dem Laden**, beim Übersetzen/Starten der Wasm-Dateien
+  oder beim ersten Zeichnen – typisch für einen Speicher-Abbruch des Safari-Prozesses (keine JS-Fehlermeldung möglich).
+- 2.5.5 protokolliert zusätzlich: instantiateStreaming/compile beginnt/fertig (mit Größe) · App-Code läuft · Zeichenfläche angelegt · erstes Bild · Schriften gelesen/vorbereitet ·
+  App sichtbar · fertig. Nach einem Absturz steht beim **nächsten Öffnen** oben „Letzter Start brach ab nach: …“.
+- Bitte Marcel: test mit ?diag=1 öffnen, wird es weiß → **gleich noch einmal öffnen** und das Foto mit der Zeile „⚠️ Letzter Start brach ab nach …“ schicken.
+
 ## 18.11.2026 – Version 2.5.4 vom 18.11.2026: Lader zuerst, Wasm nacheinander, Schrittprotokoll – fertig für den Betriebstest
 
 - **a) Schrittprotokoll** (`?diag=1`): ganz oben im `<head>` (vor allem anderen) wird jeder Schritt in localStorage („exSchritte“) gemerkt: HTML gelesen › Ladebild gemalt ›

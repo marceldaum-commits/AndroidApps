@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.5.5 – Feineres Startprotokoll (18.11.2026)
+
+- 🩺 Das Startprotokoll (`?diag=1`) zeigt jetzt auch das Übersetzen der App-Dateien, den Start des App-Codes, die Zeichenfläche und das Laden der Schriften – um den iPad/iPhone-Fehler genau zu finden.
+
 ## 2.5.4 – Erst das Ladebild, dann laden (18.11.2026)
 
 - 🖼️ Das Ladebild erscheint jetzt sofort; die großen Dateien werden erst danach und nacheinander geladen – schonender für iPhones.
