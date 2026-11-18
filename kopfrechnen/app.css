@@ -45,8 +45,6 @@ h1,h2,h3{color:var(--head);margin:0;letter-spacing:-.02em}
 /* Kopfzeile */
 .brand{display:flex;align-items:center;gap:10px;padding:4px 0 6px}
 .brand img{width:40px;height:40px}
-:root[data-theme=dark] .brand img{filter:invert(1)}
-@media (prefers-color-scheme:dark){:root[data-theme=auto] .brand img{filter:invert(1)}}
 .brand b{display:block;font-size:20px;font-weight:700;color:var(--head);letter-spacing:-.02em;line-height:1.1}
 .brand small{font-size:11.5px;color:var(--muted);font-weight:500}
 .spacer{flex:1}
@@ -501,6 +499,10 @@ select{font:inherit;color:inherit;width:100%;border:1px solid var(--border);back
 }
 .backlink{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:999px;background:var(--surface);border:1px solid var(--border);color:var(--head);font-weight:700;font-size:13.5px;text-decoration:none;white-space:nowrap}
 .backlink:hover{border-color:var(--orange)}
+.backlink.allapps{min-height:44px;height:auto;padding:0 14px 0 11px;font-size:14px}
+.backlink.allapps svg{flex:none}
+.topbar .backlink{min-height:44px}
+@media (max-width:420px){.topbar #topbarText{display:none}}
 
 /* ===================== 3.1: Advent, Urkunde, Flyer, Einladen, Klasse ===================== */
 .adv-ico{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#1f9d55,#167a42);display:grid;place-items:center;font-size:22px;flex:none}

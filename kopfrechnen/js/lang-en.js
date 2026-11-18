@@ -2503,4 +2503,7 @@ I18N.add('en', {"% sind":"% are",
 "Mit gekoppeltem Eltern-Handy wird der Lernstand verschlüsselt gesichert – auf einem neuen Gerät „Fortschritt wiederherstellen“":"With a linked parent's phone the learning progress is backed up encrypted – on a new device use “Restore progress”",
 "Eltern-Bericht mit Monatsverlauf":"Parents' report with monthly history",
 "Kleine Korrektur beim Wiederherstellen (Hinweistexte auf Englisch)":"Small fix when restoring (hint texts in English)",
-"Pro-Freischalt-Links sind jetzt sicherer: Der Code wird sofort aus der Adresszeile entfernt":"Pro unlock links are now safer: the code is removed from the address bar straight away"});
+"Pro-Freischalt-Links sind jetzt sicherer: Der Code wird sofort aus der Adresszeile entfernt":"Pro unlock links are now safer: the code is removed from the address bar straight away",
+"← Alle Apps":"← All apps",
+"Neu oben auf dem Start: „← Alle Apps“ führt zurück zur Auswahl aller Lern-Apps auf unserer Website":"New at the top of the home screen: “← All apps” takes you back to all our learning apps on our website",
+"Im Dunkel-Modus ist das Rechenblitz-Zeichen oben wieder orange":"In dark mode the Rechenblitz symbol at the top is orange again"});

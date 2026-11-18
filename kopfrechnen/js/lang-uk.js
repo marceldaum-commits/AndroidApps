@@ -2503,4 +2503,7 @@ I18N.add('uk', {"% sind":"% — це",
 "Mit gekoppeltem Eltern-Handy wird der Lernstand verschlüsselt gesichert – auf einem neuen Gerät „Fortschritt wiederherstellen“":"Якщо телефон батьків під’єднано, навчальний прогрес зберігається в зашифрованій резервній копії – на новому пристрої використай «Відновити прогрес»",
 "Eltern-Bericht mit Monatsverlauf":"Звіт для батьків із помісячною історією",
 "Kleine Korrektur beim Wiederherstellen (Hinweistexte auf Englisch)":"Невелике виправлення під час відновлення (підказки англійською)",
-"Pro-Freischalt-Links sind jetzt sicherer: Der Code wird sofort aus der Adresszeile entfernt":"Посилання для розблокування Pro тепер безпечніші: код одразу видаляється з адресного рядка"});
+"Pro-Freischalt-Links sind jetzt sicherer: Der Code wird sofort aus der Adresszeile entfernt":"Посилання для розблокування Pro тепер безпечніші: код одразу видаляється з адресного рядка",
+"← Alle Apps":"← Усі застосунки",
+"Neu oben auf dem Start: „← Alle Apps“ führt zurück zur Auswahl aller Lern-Apps auf unserer Website":"Нове вгорі на головному екрані: «← Усі застосунки» веде назад до вибору всіх навчальних застосунків на нашому сайті",
+"Im Dunkel-Modus ist das Rechenblitz-Zeichen oben wieder orange":"У темному режимі знак Rechenblitz угорі знову помаранчевий"});

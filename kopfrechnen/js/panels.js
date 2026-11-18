@@ -607,6 +607,16 @@ function handleHash() {
 }
 addEventListener('hashchange', handleHash);
 
+/* ---------- „← Alle Apps“ oben auf dem Start (Marcel 18.11.): zurück zur App-Auswahl der Website ----------
+   Browser: selber Tab. Installierte Web-App (Home-Bildschirm): normaler Browser (neuer Tab). Test-Stufe → staging. */
+const ALLE_APPS = st => (st === 'test' ? 'https://staging.' : 'https://www.') + 'mathenachhilfe-online.com/lern-apps/?src=rechenblitz-kopf';
+function alleAppsLink() {
+  const a = $('btnAlleApps'); if (!a) return;
+  a.href = ALLE_APPS(typeof KOPPLUNG === 'object' ? KOPPLUNG.stufe() : 'live');
+  let standalone = false; try { standalone = IS_NATIVE || matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch {}
+  if (standalone) { a.target = '_blank'; a.rel = 'noopener'; } else { a.removeAttribute('target'); a.removeAttribute('rel'); }
+}
+
 /* ================= Start ================= */
 function init() {
   I18N.lang = detectLang();
@@ -614,6 +624,7 @@ function init() {
   for (const [id, url, place] of [['lnkSite', CONFIG.websiteUrl, 'footer'], ['lnkImp', CONFIG.imprintUrl], ['lnkPriv', CONFIG.privacyUrl], ['btnSite', CONFIG.websiteUrl, 'header'], ['resultSite', CONFIG.websiteUrl, 'result']]) { const el = $(id); if (el) el.href = place ? siteLink(url, place) : url; }
   $('verText').innerHTML = `<button class="linkbtn" data-open="news">${esc(tr('Version'))} ${versionLabel()}</button>`; $('verText').setAttribute('translate', 'no');
   $('brandLink').href = siteLink(CONFIG.websiteUrl, 'logo');
+  alleAppsLink();
   if (CONFIG.lernraumUrl) { $('btnLernraum').href = siteLink(CONFIG.lernraumUrl, 'lernraum'); $('btnLernraum').hidden = false; $('topbarText').hidden = true; }
   $('btnProfile').onclick = () => openSheet('profiles');
   // Nach einem Update einmal „Was ist neu?“ mit Blitz; ganz neue Nutzer begrüßt Blitz
