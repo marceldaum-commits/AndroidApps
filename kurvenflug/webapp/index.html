@@ -6,7 +6,7 @@
   <title>Kurvenflug – Mathe im All</title>
   <meta name="description" content="Kurvenflug: Formeln steuern das Raumschiff. Mathe und Physik für Klasse 5–13 – ohne Werbung, ohne Anmeldung.">
   <meta name="theme-color" content="#0B1026">
-  <meta name="kurvenflug-version" content="2.5.11">
+  <meta name="kurvenflug-version" content="2.5.12">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -39,7 +39,7 @@
     <div class="s">Volt macht das Raumschiff startklar …</div>
     <div class="bar"><b id="kf-bar"></b></div>
     <div class="s" id="kf-pct" style="font-size:13px;opacity:.7">Lade …</div>
-    <div class="v">Version 2.5.11 · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
+    <div class="v">Version 2.5.12 · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></div>
   </div>
   <noscript><p style="padding:24px">Kurvenflug braucht JavaScript und einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).</p></noscript>
@@ -57,7 +57,23 @@
     // - neu geladen wird nur, wenn es ungefährlich ist: gerade geöffnet, Tab im Hintergrund oder auf dem Startbildschirm –
     //   nie mitten in einer Aufgabe; danach kurz „Neue Version … geladen“.
     // Spielstand, Einstellungen (localStorage) und die Nova-Offline-Dateien (Cache „kf-nova“) bleiben unangetastet.
-    var KF_VERSION = '2.5.11';
+    // „App installieren“: Android/Chrome bietet die Installation per beforeinstallprompt an – den Moment merken,
+    // die App zeigt dann ihren eigenen Knopf. iPhone/iPad kennen das nicht: dort zeigt die App eine kurze Anleitung.
+    var kfInstallEvt = null, kfInstalled = false;
+    window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); kfInstallEvt = e; });
+    window.addEventListener('appinstalled', function () { kfInstalled = true; kfInstallEvt = null; });
+    window.kfInstallMode = function () {
+      var app = (window.matchMedia && (matchMedia('(display-mode: standalone)').matches || matchMedia('(display-mode: fullscreen)').matches)) || navigator.standalone === true;
+      if (app || kfInstalled) return '';
+      if (kfInstallEvt) return 'prompt';
+      var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      return ios ? 'ios' : '';
+    };
+    window.kfInstall = function () {
+      var e = kfInstallEvt; if (!e) return; kfInstallEvt = null;
+      e.prompt(); if (e.userChoice) e.userChoice.then(function (c) { if (c && c.outcome === 'accepted') kfInstalled = true; });
+    };
+    var KF_VERSION = '2.5.12';
     try { var kfLast = localStorage.getItem('kf.lastVersion'); if (kfLast && kfLast !== KF_VERSION) window.kfUpdated = KF_VERSION; localStorage.setItem('kf.lastVersion', KF_VERSION); } catch (e) {}
     var kfStart = Date.now(), kfPending = false, kfReloading = false, kfAtHome = true, kfReg = null;
     function kfReload() { if (!kfReloading) { kfReloading = true; location.reload(); } }
@@ -96,7 +112,7 @@
     };
     setTimeout(window.kfReady, 60000);   // Sicherheitsnetz, falls die App nie fertig meldet
   </script>
-  <script>window.KF_FILES = [{"u":"95bb7376100f8739f6ed.wasm","s":5822541,"t":"application/wasm"},{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"}];</script>
+  <script>window.KF_FILES = [{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"e66646ad583df030e6c4.wasm","s":5848445,"t":"application/wasm"}];</script>
   <script src="kf.js"></script>
   <script src="kurvenflug.js"></script>
 </body>
