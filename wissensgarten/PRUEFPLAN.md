@@ -32,6 +32,8 @@ Dauerregel von Marcel (18.11.2026, ersetzt „wöchentlich mittwochs“): **Jede
 
 Die Tabelle wird laufend fortgeschrieben; Wünsche von Marcel oder dem Leitstand gehen vor.
 
+**Abgleich mit den anderen Lern-Apps (Dauerregel, 18.11.):** Vor jedem Update wird in der Wochenrunde (`WOCHENRUNDE.md`) abgestimmt, wer was herausnimmt, abgibt oder behält, damit nichts doppelt entsteht.
+
 ## 2. Jeden Monat in der letzten Woche: Prüfen und Beheben
 
 ### a) Gründliche Prüfung: ein Block pro Monat (rollierend)

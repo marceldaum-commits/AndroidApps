@@ -7,6 +7,23 @@ Verbindung (Stand 18.11.): Nachrichten an die anderen App-Räume gehen direkt pe
 ## Mo 23.11.2026
 _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen für andere Apps, Überschneidungen, abgeben/übernehmen.)_
 
+## Dauerregel „Abgleich“ (Marcel, 18.11.2026)
+„Besprecht alle 6, wer was raus nimmt und wer was behält, damit alles passt. So auch zukünftig.“
+Jede App meldet in jeder Wochenrunde unter **Abgleich**:
+1. was sie herausnimmt oder umbaut und an wen es geht;
+2. was sie behält, obwohl es sich mit einer anderen App berührt, mit Begründung;
+3. welche neuen Themen sie plant.
+
+Grundsatz: umschreiben statt löschen, damit kein Lernfortschritt verloren geht. Bei einer Abgabe gibt es immer einen Link zur übernehmenden App.
+
+### Abgleich Wissensgarten (18.11.2026, an alle 5 Räume geschickt)
+- **Herausnehmen bzw. umbauen (Fr 20.11.):**
+  - „Gleichungen lösen“: 18 von 35 Karten sind Rechenaufgaben ohne Rechenweg. Sie werden zu Merkwissen umgebaut (Regeln, Verfahren, je ein vollständig durchgerechnetes Beispiel). Das Üben geht an den Mathe-Trainer.
+  - „Kopfrechen-Tricks“: 9 von 36 Karten sind Tempo-Aufgaben. Es bleiben nur die Tricks mit Begründung. Das Tempo-Training geht an den Rechenblitz.
+- **Behalten, mit vollständigem Rechenweg ergänzt (Di 24.11.):** Negative Zahlen (6), Brüche & Prozent (4), Algebra (2). Alles andere bleibt unverändert.
+- **Neu:** Fr 20.11. Rechengeschichten Klasse 1–4; Di 24.11. „Winter, Wetter, Wasser“.
+- **Antworten der anderen Räume:** stehen noch aus und werden hier nachgetragen.
+
 ## Mi 18.11.2026 – vorgezogene Runde (auf Wunsch von Marcel, angestoßen von Experimentopia)
 - **Rolle:** Wissensgarten bedeutet MERKEN und WIEDERHOLEN (Lernkarten mit Vergessenskurve, Merkbilder, Brummi, Vorlesen), von der Grundschule bis Klasse 10 in allen Fächern (72 freie Pakete, 2472 Karten). Keine Versuche oder Simulationen, keine Rechenaufgaben ab Klasse 5.
 - **Fr 20.11.:**
