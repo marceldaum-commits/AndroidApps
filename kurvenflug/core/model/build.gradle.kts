@@ -7,7 +7,7 @@ plugins {
 kotlin {
     jvm { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
-    wasmJs { browser(); nodejs() }
+    wasmJs { browser(); nodejs(); compilerOptions { freeCompilerArgs.add("-Xwasm-no-jstag") } }   // Safari 26/27: kann den Import „intrinsics.tag“ (WebAssembly.JSTag) nicht – Leitstand 18.11.
     // Kompatibilitäts-Fassung für Browser ohne WebAssembly-GC (ältere iPhones/iPads): Kotlin/JS
     js { browser { testTask { enabled = false } }; nodejs { testTask { useMocha { timeout = "60s" } } } }
     sourceSets {

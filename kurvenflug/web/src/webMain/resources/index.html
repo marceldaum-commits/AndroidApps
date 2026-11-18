@@ -97,8 +97,15 @@
       var m = kfStore('kf.modus');
       if (m === 'js' || m === 'wasm') return m;
       if (!kfWasmOk()) return 'js';
+      // Safari/WebKit (alle Browser auf iPhone/iPad, Safari am Mac): Kotlin/Wasm startet dort nicht zuverlässig
+      // („Can't wrap nullptr“, Safari 26/27) – bis zur Klärung gleich die JS-Fassung, damit nichts doppelt geladen wird.
+      // Zum Testen der schnellen Fassung: ?modus=wasm
+      var ua = navigator.userAgent, ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (ios || (/AppleWebKit/.test(ua) && !/Chrome|Chromium|CriOS|Edg|OPR|Firefox|FxiOS|Android/.test(ua))) return 'js';
+      // Ist die schnelle Fassung in DIESER Version schon einmal gescheitert (Fehler oder Absturz), gleich JS – eine neue Version versucht Wasm wieder
       var last = kfStore('kf.start') || '';
-      if (/^wasm\|(geladen|läuft)/.test(last) || kfStore('kf.wasmGescheitert')) { kfStore('kf.wasmGescheitert', '1'); return 'js'; }
+      if (/^wasm\|(geladen|läuft)/.test(last)) kfStore('kf.wasmGescheitert', KF_VER);
+      if (kfStore('kf.wasmGescheitert') === KF_VER) return 'js';
       return 'wasm';
     })();
     // Start-Protokoll: startet → geladen (alle Dateien da) → läuft (Programm gestartet) → bereit (gelöscht).
@@ -128,7 +135,13 @@
     (function () { var f = document.getElementById('kf-fassung'); if (f) f.textContent = '· Fassung ' + window.kfMode + (window.kfPrevAbort ? ' · letzter Start abgebrochen: ' + window.kfPrevAbort : ''); })();
     function kfFail(why, detail, notTheProgram) {
       if (kfFailed) return; kfFailed = true;
-      if (window.kfMode === 'wasm' && !notTheProgram) kfStore('kf.wasmGescheitert', '1');   // beim nächsten Laden die Kompatibilitäts-Fassung
+      // Startfehler in der schnellen Fassung: ohne Zutun sofort die einfache Fassung laden (gemerkt für diese Version)
+      if (window.kfMode === 'wasm' && !notTheProgram && !kfStore('kf.modus')) {
+        kfStore('kf.wasmGescheitert', KF_VER); kfStore('kf.start', null);
+        kfStore('kf.letzterWechsel', String(detail || why).slice(0, 160));
+        location.reload(); return;
+      }
+      if (window.kfMode === 'wasm' && !notTheProgram) kfStore('kf.wasmGescheitert', KF_VER);
       kfStore('kf.start', null);
       var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       var d = document.createElement('div'); d.id = 'kf-fehler';
@@ -273,6 +286,7 @@
         kfIsReady = true; kfReadyAt = Date.now(); kfStore('kf.start', null); kfWatchCanvas();
         if (window.kfMode === 'wasm') kfStore('kf.wasmGescheitert', null);
         // Für ein Foto: Der letzte Start ist abgebrochen – sagen, wo, und welche Fassung jetzt läuft
+        var sw = kfStore('kf.letzterWechsel'); if (sw) { kfStore('kf.letzterWechsel', null); setTimeout(function () { if (window.KF && KF.toast) KF.toast('Hinweis: Schnelle Fassung ging nicht (' + sw + ') – einfache Fassung geladen.'); }, 3200); }
         if (window.kfPrevAbort) setTimeout(function () { if (window.KF && KF.toast) KF.toast('Hinweis: Letzter Start brach ab (' + window.kfPrevAbort + '). Jetzt: Fassung ' + window.kfMode + '.'); }, 3200);
       }
       if (kfSwDone) return; kfSwDone = true;

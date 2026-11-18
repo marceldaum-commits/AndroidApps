@@ -9,7 +9,7 @@ plugins {
 kotlin {
     androidTarget { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(org.jetbrains.kotlin.gradle.ExperimentalWasmDsl::class)
-    wasmJs { browser() }
+    wasmJs { browser(); compilerOptions { freeCompilerArgs.add("-Xwasm-no-jstag") } }   // Safari 26/27: kann den Import „intrinsics.tag“ (WebAssembly.JSTag) nicht – Leitstand 18.11.
     js { browser { testTask { enabled = false } } }   // Kompatibilitäts-Fassung (Kotlin/JS)
     sourceSets {
         commonMain.dependencies {
