@@ -2,6 +2,38 @@
 
 
 
+
+
+
+## PRUEFPLAN.md angelegt (18.11.2026)
+- `wissensgarten/PRUEFPLAN.md`:
+  - Wöchentlich mindestens eine Inhaltseinheit, mittwochs auf test, Vorschläge bis KW 52.
+  - Monatlich in der letzten Woche ein Block gründlich, rollierend in 4 Blöcken: A Mathe, B Sprachen, C Naturwissenschaften/Sachunterricht, D Gesellschaft/Allgemeinwissen. Plus-Pakete werden im Block ihres Fachs mitgeprüft.
+  - Dazu der Neu-Content und eine Rundum-Prüfung: Start, iPhone/WebKit, Update, Installation, Zählung, Links, Nova, Plus, Tests.
+- Erste Monatsprüfung: 23.–30.11.2026, Block A (Mathe). Erster Wochen-Inhalt: 25.11.2026.
+
+## 2.2.14 – Neukundenpaket und Crashkurs im Hinweis (18.11.2026)
+- Thema-Hinweis: zweiter Knopf „Neukundenpaket ansehen“ → `/produkt/einzelnachhilfe-neukundenpaket/?src=wissensgarten-elternbericht&thema&klasse`, zählt `neukunde_klick`/`elternbericht`.
+- Klassenarbeits-Hinweis: nur ab Klasse 5 zusätzlich „Crashkurs ansehen (kostenlos für Familien mit Stundenpaket)“ → `/produkt/easy-learning-crash-kurs/?src=wissensgarten-klassenarbeit&…`, zählt `crashkurs_klick`/`klassenarbeit`.
+- Beide Adressen geprüft (200). Tests und Bildschirmfoto `screenshots/73_nachhilfe_hinweis.png` aktualisiert.
+
+## 2.2.13 – A3, B4, C1 und Fußzeile (18.11.2026)
+- **Marcel hat direkt bestätigt** („alle vier umsetzen“). Ratgeber Teil 5 und 6 habe ich gelesen (Website_Backup, Branch claude/sleepy-knuth-4cf5u3, nur lesend).
+- **A3 Zählung:**
+  - `POST https://trainer.mathenachhilfe-online.com/zaehler/v1/e` als text/plain mit `fetch(keepalive, credentials:'omit', mode:'no-cors')`, Ersatzweg `sendBeacon`. Android: einfacher POST ohne Wiederholung.
+  - Ereignisse: `start`, `elternbereich` (Eltern-Tor gelöst), `pro_ansehen`/`pro_kasse` (ort `elternbereich` oder `gesperrt`), `code_eingeloest` (ort `link` bei ?pro=, `eingabe`), `geschenk_klick` (elternbereich), `nachhilfe_hinweis`/`probestunde_klick` (elternbericht/klassenarbeit).
+  - Positivlisten in `core/model/.../Angebote.kt`. Ein Thema außerhalb der Zählliste (sachkunde, allgemeinwissen, deutsch, englisch, einmaleins, grundrechenarten) wird beim Zählen weggelassen, das Ereignis zählt trotzdem.
+  - Schalter „Anonyme Nutzungszählung“ unter Einstellungen → Für Eltern, Standard an, mit erklärendem Satz. Die Datenschutzerklärung in der App hat einen neuen Absatz.
+  - Belege: `AngeboteTest` (8 Tests), `webApp/tools/web-zaehlung.cjs` (Wasm und JS: genau ein `start`, text/plain, ohne Cookies, nur app/v/ev; Schalter aus → kein Aufruf). Echter Aufruf an den Server: 204.
+- **B4:** `?pro=` gab es schon und zählt jetzt `code_eingeloest`/`link`. „🎁 Lern-Geschenk verschenken“ im Elternbereich → `/geschenke/?src=wissensgarten-geschenk`.
+- **C1:**
+  - Nur im Wochenbericht (hinter dem Eltern-Tor), ohne Figur, ohne Preis, Du-Form an Eltern, Knopf „Kostenlose Probestunde anfragen“ → `/probestunde/?src=wissensgarten-elternbericht|klassenarbeit&thema=…&klasse=…` und „Ausblenden“.
+  - Auslöser: Thema mit ≥ 10 Antworten und < 60 % richtig in 14 Tagen (höchstens ein Hinweis, je Thema höchstens alle 14 Tage) oder Klassenarbeit in 3–14 Tagen.
+  - Eigener Schalter „Hinweise auf unsere Nachhilfe zeigen“.
+  - **Neukundenpaket und Crashkurse fehlen**, weil es noch keine festen URLs gibt (`/crashkurse/` und `/neukundenpaket/` liefern 404). Bitte die Adressen schicken.
+- **Fußzeile:** „Ein Angebot von Nachhilfe – online“ (`?src=wissensgarten-fusszeile`) unten im Startbild und im Elternbereich.
+- **Außerdem:** Pfade nach dem Umzug `wasmJsMain` → `webMain` korrigiert (Vorlese-Liste, Android-Bau, README). Install-Test 21/21, Update 2.2.12 → 2.2.13 ok, Bildschirmfotos `screenshots/72_eltern_angebote.png` und `screenshots/73_nachhilfe_hinweis.png`.
+
 ## iOS 2.2.12 – Safari-27.2-Abhilfe + Kotlin/JS-Fassung mit automatischer Umschaltung (18.11.2026)
 - **Raumlicht-Weg übernommen (bleibt Wasm):** `webApp/webpack/skiko-no-tail-call.cjs` und `webApp/webpack.config.d/skiko-no-tail-call.js` (findet den Lader selbst). Der Bau prüft **beide** Bündel: `wissensgarten.js` 937 abgesichert / 0 Endaufrufe, `wissensgarten-js.js` 937 / 0. Die JS-Fassung bindet Skiko genauso ein und hätte den Fehler sonst auch gehabt.
 - **`-Xwasm-no-jstag`** in allen Wasm-Modulen (core/model, core/data, shared, webApp), 0 × JSTag im Bündel.
