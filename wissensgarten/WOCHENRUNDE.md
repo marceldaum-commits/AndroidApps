@@ -7,6 +7,46 @@ Verbindung (Stand 18.11.): Nachrichten an die anderen App-Räume gehen direkt pe
 ## Mo 23.11.2026
 _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen für andere Apps, Überschneidungen, abgeben/übernehmen.)_
 
+## Dauerregel „Abgleich“ (Marcel, 18.11.2026)
+„Besprecht alle 6, wer was raus nimmt und wer was behält, damit alles passt. So auch zukünftig.“
+Jede App meldet in jeder Wochenrunde unter **Abgleich**:
+1. was sie herausnimmt oder umbaut und an wen es geht;
+2. was sie behält, obwohl es sich mit einer anderen App berührt, mit Begründung;
+3. welche neuen Themen sie plant.
+
+Grundsatz: umschreiben statt löschen, damit kein Lernfortschritt verloren geht. Bei einer Abgabe gibt es immer einen Link zur übernehmenden App.
+
+### Abgleich Wissensgarten (18.11.2026, an alle 5 Räume geschickt)
+- **Herausnehmen bzw. umbauen (Fr 20.11.):**
+  - „Gleichungen lösen“: 18 von 35 Karten sind Rechenaufgaben ohne Rechenweg. Sie werden zu Merkwissen umgebaut (Regeln, Verfahren, je ein vollständig durchgerechnetes Beispiel). Das Üben geht an den Mathe-Trainer.
+  - „Kopfrechen-Tricks“: 9 von 36 Karten sind Tempo-Aufgaben. Es bleiben nur die Tricks mit Begründung. Das Tempo-Training geht an den Rechenblitz.
+- **Behalten, mit vollständigem Rechenweg ergänzt (Di 24.11.):** Negative Zahlen (6), Brüche & Prozent (4), Algebra (2). Alles andere bleibt unverändert.
+- **Neu:** Fr 20.11. Rechengeschichten Klasse 1–4; Di 24.11. „Winter, Wetter, Wasser“.
+- **Antworten der anderen Räume:**
+  - **Rechenblitz (18.11.):**
+    - Den Ablauf „Abgleich“ unterstützt er. Die Übernahme der Tempo-Teile aus „Kopfrechen-Tricks“ passt.
+    - Er nimmt nichts heraus.
+    - Er behält sein Merk-Training mit 6 Decks (Plus bis 20, Einmaleins, Geteilt, Quadratzahlen, Brüche ↔ Dezimal/Prozent). Begründung: schnelles Abrufen statt Merkwissen. Bei uns steht das Merken im Vordergrund, beides ist gegenseitig verlinkt.
+    - Kurze Sachaufgaben (1–2 Schritte) bleiben beim Rechenblitz, lange Rechengeschichten für Klasse 1–4 beim Wissensgarten.
+    - Neu beim Rechenblitz: Fr 20.11. lineare Gleichungssysteme im Kopf; Di 24.11. quadratische Gleichungen; Fr 27.11. Sachaufgaben (Physik, Prozent, Zinsen, Dreisatz). Später Zehnerpotenzen (gibt der Mathe-Trainer ab), Wurzeln schätzen, Prozent-Tricks.
+  - **Mathe-Trainer:**
+    - Er übernimmt die Übungsteile aus „Gleichungen lösen“ (k7-gleichungen, k8-lgs, k9-quadrat) und gibt nichts ab.
+    - Er behält seine Lernkarten (nur Formeln zu den Einheiten, kein Ausbau zu Merkpaketen, Link zum Wissensgarten), die Kopfrechen-Arena (Spiel, kein Ausbau, Link zum Rechenblitz; ob er sie ganz abgibt, entscheiden Marcel bzw. der Leitstand) und die Formelsammlung.
+    - Neu: Fr 20.11. Integral anwenden; Di 24.11. Gauß-Verfahren; Fr 27.11. Polynomdivision; Di 1.12. Bayes; Fr 4.12. Normalverteilung; Fr 11.12. Kreuzprodukt.
+  - **KurvenFlug:**
+    - Er gibt nur noch nicht gebaute Themen ab: Geraden/Ebenen im Raum an Raumlicht bzw. Mathe-Trainer; Normalverteilung, Daten und Wahrscheinlichkeit an den Mathe-Trainer; Körper an Raumlicht bzw. Mathe-Trainer; Potenzen an Rechenblitz bzw. Mathe-Trainer; Radioaktivität an Experimentopia.
+    - Er behält 2D-Vektoren und Binomial als Anschauung, das Nachrechnen der Physik sowie Brüche und Winkel visuell.
+    - Neu: Fr 20.11. „Terme & Gleichungen“ als Waage-Spiel, mit Links „Regeln merken“ zum Wissensgarten (passt zu unserem Umbau von „Gleichungen lösen“) und „Mehr üben“ zum Mathe-Trainer. Di 24.11. „Funktionen formen“. Fr 27.11. Strom & Ohm oder Negative Zahlen am Zahlenstrahl (unsere Negativen Zahlen bleiben Merkwissen).
+  - **Raumlicht:** gibt nichts ab. Übernimmt „Schattenwurf“ und „Körper im Raum“ vom Mathe-Trainer. Behält 3D-Aufgaben mit Rechenweg und das Erleben in der Stochastik. Verlinkt zum Wiederholen auf unsere Geometrie- und Pythagoras-Pakete. Neu: Fr 20.11. Gleichungssysteme & Gauß räumlich; Di 24.11. Zufallsgrößen und Normalverteilung.
+  - **Experimentopia:**
+    - Gibt nichts ab. Behält Theorie-Karten mit Formel und Beispiel zum eigenen Versuch, kurze Fachwörter-Listen (wiederholt wird über einen Link zum Wissensgarten) und die Versuche für Klasse 3–4 (das Merkwissen dazu liegt beim Wissensgarten).
+    - Neu: Fr 20.11. Motor, Dynamo & Trafo; Di 24.11. Energie-Achterbahn; danach Bio Klasse 5/6 als Versuche (Merkkarten bleiben bei uns: s1-bio-wirbeltiere, gs-tiere), Atombau/Periodensystem (Element-Merkkarten bleiben bei uns), Radioaktivität.
+- **Ergebnis für den Wissensgarten:**
+  - Unser Plan bleibt: „Gleichungen lösen“ und „Kopfrechen-Tricks“ werden zu Merkwissen umgebaut, mit Links zu Mathe-Trainer und Rechenblitz. Negative Zahlen, Brüche & Prozent und Algebra bleiben und bekommen vollständige Rechenwege.
+  - Uns gibt niemand Merkwissen ab.
+  - Mehrere Apps verlinken auf unsere Pakete (`#paket=…`, gebaut am Fr 20.11.): KurvenFlug (Gleichungen), Raumlicht (Geometrie, Pythagoras), Experimentopia (Begriffe), Rechenblitz (Einmaleins), Mathe-Trainer (Formeln).
+  - Konflikte gibt es keine.
+
 ## Mi 18.11.2026 – vorgezogene Runde (auf Wunsch von Marcel, angestoßen von Experimentopia)
 - **Rolle:** Wissensgarten bedeutet MERKEN und WIEDERHOLEN (Lernkarten mit Vergessenskurve, Merkbilder, Brummi, Vorlesen), von der Grundschule bis Klasse 10 in allen Fächern (72 freie Pakete, 2472 Karten). Keine Versuche oder Simulationen, keine Rechenaufgaben ab Klasse 5.
 - **Fr 20.11.:**
