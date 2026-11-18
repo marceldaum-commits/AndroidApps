@@ -122,12 +122,13 @@ Grundsatz: umschreiben statt löschen, damit kein Lernfortschritt verloren geht.
 
 Der Gegen-Link des Mathe-Trainers folgt nach dem 23.11.
 
-**KurvenFlug** (Link `https://kurvenflug.mathenachhilfe-online.com/#kapitel=<nr>`, Test-Stufe `kurvenflug-test.`; das Format geht ab Fr 20.11. auf test, KurvenFlug meldet sich):
+**KurvenFlug** (Link `https://kurvenflug.mathenachhilfe-online.com/#kapitel=<name>`, stabile Namen statt Nummern seit 18.11.; Oberstufen-Kapitel nicht verlinken, Test-Stufe `kurvenflug-test.`; das Format geht ab Fr 20.11. auf test, KurvenFlug meldet sich):
 
 | Unser Paket | Kapitel bei KurvenFlug |
 |---|---|
-| s1-mathe-algebra | Geraden 2, Zuordnungen 8, Parabeln 3, Nullstellen 18, Potenzfunktionen 25, Wellen & Wachstum 5, Logarithmus 10 |
-| s1-physik-einheiten-formeln | Weg & Zeit 13, Beschleunigte Bewegung 24, Wurf & Schwerkraft 4, Energie 12, Laser-Optik 11, Lichtbrechung 17 |
+| s1-mathe-algebra | geraden, zuordnungen, parabeln, nullstellen, potenzfunktionen, wellen, logarithmus |
+| s1-mathe-gleichungen | terme (neu ab Fr 20.11.) |
+| s1-physik-einheiten-formeln | weg-zeit, beschleunigung, wurf, energie, laser, lichtbrechung |
 | s1-physik-strom | folgt („Strom & Ohmsches Gesetz“, voraussichtlich Fr 27.11.) |
 
 **Rechenblitz** („Tempo trainieren im Rechenblitz“; Link `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6>&modus=<training|blitz>`, Test-Stufe `rechenblitz-test.`):
