@@ -9,6 +9,8 @@ Neueste oben.
 - **Punkt 2 – war schon so:** Code-Eingabe von Hand gibt es für Pro („Raumlicht Pro“ → Feld „Code“) und für den KI-Abi-Pass (KI-Seite → Feld „Code“), auch in der installierten WebApp. Zusätzlich holt die Sicherung beide Codes auf ein neues Gerät.
 - **Punkt 3 – gegengeprüft:** kein `sendBeacon` im Code. Die Zählung nutzt `fetch` mit `credentials:'omit'`, `keepalive:true`, `Content-Type: text/plain`, `mode:'no-cors'`.
 - Alle Tests wie bei 2.18.27 (Browser: 117 Prüfungen, 0 Fehler).
+- **Echt gekoppelt auf raumlicht-test (2.18.28), 18.11.:** Koppeln → Bericht und Sicherung auf trainer-test (GET s 200) → Eltern-Seite auf staging zeigt „Euer Kind · Raumlicht“, Lernzeit, Aufgaben, Fortschritt je Gebiet, **Verlauf** (September bis November 2026) und den Knopf „Neues Gerät des Kindes? Fortschritt übertragen“; keine Fehler der Seite. Danach DELETE b 204, GET s 404 – nichts von mir liegt mehr dort.
+- **Kleinigkeit auf deiner Seite:** „Stand 2026-11-18 19:13“ ist die Weltzeit aus `stand` (`…Z`), nicht die deutsche Uhrzeit (20:13). Bitte beim Anzeigen in Ortszeit umrechnen.
 
 ## 18.11.2026 – 2.18.27 auf test: verschlüsselte Sicherung, „Fortschritt wiederherstellen“, „verlauf“ (Marcel hat hier selbst „ja“ gesagt)
 
