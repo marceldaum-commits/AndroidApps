@@ -22,7 +22,14 @@ Grundsatz: umschreiben statt löschen, damit kein Lernfortschritt verloren geht.
   - „Kopfrechen-Tricks“: 9 von 36 Karten sind Tempo-Aufgaben. Es bleiben nur die Tricks mit Begründung. Das Tempo-Training geht an den Rechenblitz.
 - **Behalten, mit vollständigem Rechenweg ergänzt (Di 24.11.):** Negative Zahlen (6), Brüche & Prozent (4), Algebra (2). Alles andere bleibt unverändert.
 - **Neu:** Fr 20.11. Rechengeschichten Klasse 1–4; Di 24.11. „Winter, Wetter, Wasser“.
-- **Antworten der anderen Räume:** stehen noch aus und werden hier nachgetragen.
+- **Antworten der anderen Räume:**
+  - **Rechenblitz (18.11.):**
+    - Den Ablauf „Abgleich“ unterstützt er. Die Übernahme der Tempo-Teile aus „Kopfrechen-Tricks“ passt.
+    - Er nimmt nichts heraus.
+    - Er behält sein Merk-Training mit 6 Decks (Plus bis 20, Einmaleins, Geteilt, Quadratzahlen, Brüche ↔ Dezimal/Prozent). Begründung: schnelles Abrufen statt Merkwissen. Bei uns steht das Merken im Vordergrund, beides ist gegenseitig verlinkt.
+    - Kurze Sachaufgaben (1–2 Schritte) bleiben beim Rechenblitz, lange Rechengeschichten für Klasse 1–4 beim Wissensgarten.
+    - Neu beim Rechenblitz: Fr 20.11. lineare Gleichungssysteme im Kopf; Di 24.11. quadratische Gleichungen; Fr 27.11. Sachaufgaben (Physik, Prozent, Zinsen, Dreisatz). Später Zehnerpotenzen (gibt der Mathe-Trainer ab), Wurzeln schätzen, Prozent-Tricks.
+  - Die übrigen Antworten werden hier nachgetragen.
 
 ## Mi 18.11.2026 – vorgezogene Runde (auf Wunsch von Marcel, angestoßen von Experimentopia)
 - **Rolle:** Wissensgarten bedeutet MERKEN und WIEDERHOLEN (Lernkarten mit Vergessenskurve, Merkbilder, Brummi, Vorlesen), von der Grundschule bis Klasse 10 in allen Fächern (72 freie Pakete, 2472 Karten). Keine Versuche oder Simulationen, keine Rechenaufgaben ab Klasse 5.
