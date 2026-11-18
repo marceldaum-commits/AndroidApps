@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.26 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.27 vom 18.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -47,6 +47,9 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
    Der Bericht wird im Browser verschlüsselt (AES-GCM, 256 Bit) und so auf unserem Server `trainer.mathenachhilfe-online.com` abgelegt; der Schlüssel steckt nur im Link bzw. QR-Code für die Eltern
    und wird nie an einen Server übertragen. Wir können den Bericht nicht lesen. Lesen kann ihn, wer den Link hat. Die Kopplung lässt sich in der App jederzeit aufheben; dabei wird der Bericht gelöscht.
    Ohne Aktualisierung löscht der Server ihn nach 90 Tagen. Damit der Bericht Lernzeit und Sitzungen nennen kann, führt die App ein Lern-Protokoll je Tag – nur auf dem Gerät, auch ohne Kopplung.
+   **Sicherung (ab 2.18.27):** Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i). Sie enthält Sterne, Rekorde,
+   Lernverlauf samt Monatssummen, Einstellungen und Freischalt-Codes, aber keine Geräte-Kennungen, und wird mit demselben Schlüssel verschlüsselt. Mit dem Kopplungs-Link lässt sich der Lernstand auf einem neuen Gerät
+   zurückholen. „Kopplung aufheben“ löscht Bericht und Sicherung; ohne Aktualisierung löscht der Server beides nach 90 Tagen.
    *[Rechtsgrundlage (Einwilligung der Nutzerin bzw. des Nutzers; bei Minderjährigen prüfen), Speicherort und Löschkonzept bestätigen.]*
 
 ## Noch offen (nicht Teil des Textes)

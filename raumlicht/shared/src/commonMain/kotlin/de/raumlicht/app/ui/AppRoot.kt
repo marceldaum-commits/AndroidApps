@@ -116,19 +116,46 @@ fun AppRoot(
     val parentText by prefs.parentLink.collectAsState()
     val pairing = remember(parentText) { de.raumlicht.core.model.Eltern.Pairing.decode(parentText) }
     var parentStatus by remember { mutableStateOf<String?>(null) }
+    var backupStatus by remember { mutableStateOf<String?>(null) }
+    var restoreStatus by remember { mutableStateOf<String?>(null) }
+    var restoreFound by remember { mutableStateOf<de.raumlicht.core.model.Eltern.Restore.Ok?>(null) }
+    // Sicherung des ganzen Lernstands: mit demselben Schlüssel verschlüsselt, nur wenn sich etwas geändert hat
+    fun sendBackup(p: de.raumlicht.core.model.Eltern.Pairing, e: de.raumlicht.app.ui.settings.ElternPlatform, now: Long) { val data = e.snapshot?.invoke() ?: return; val mark = de.raumlicht.core.model.Eltern.mark(data)
+        if (mark == prefs.backupMark) return
+        val json = de.raumlicht.core.model.Eltern.backup(p, version, now, data) ?: run { backupStatus = "Die Sicherung ist zu groß geworden und wurde nicht gesendet."; return }
+        e.send(de.raumlicht.core.model.Eltern.backupUrl(p.id, e.server), p.write, p.key, json) { status ->
+            if (status == 204 || status == 200) { prefs.backupMark = mark; backupStatus = "✓ Lernstand gesichert" } else backupStatus = if (status == 0) null else "Die Sicherung ließ sich gerade nicht senden (Fehler $status)." } }
     // Bericht bauen, verschlüsseln lassen und hochladen – frühestens alle 10 Minuten, außer es wird ausdrücklich verlangt
     fun sendReport(force: Boolean) { val p = de.raumlicht.core.model.Eltern.Pairing.decode(prefs.parentLink.value) ?: return; val e = eltern ?: return
         val now = de.raumlicht.app.ui.fx.nowMillis(); if (!force && now - prefs.parentSent < de.raumlicht.core.model.Eltern.MIN_GAP_MS) return
         prefs.parentSent = now
-        val json = de.raumlicht.core.model.Eltern.report(p.name, stars.value, prefs.learnLog, de.raumlicht.core.model.Plan.decode(prefs.plan.value), today(), now)
+        val json = de.raumlicht.core.model.Eltern.report(p.name, stars.value, prefs.learnLog, de.raumlicht.core.model.Plan.decode(prefs.plan.value), today(), now, prefs.learnMonths)
         e.send(de.raumlicht.core.model.Eltern.uploadUrl(p, e.server), p.write, p.key, json) { status ->
             parentStatus = when (status) { 204, 200 -> "✓ Bericht gesendet"; 0 -> "Keine Verbindung – der Bericht wird beim nächsten Mal gesendet."; else -> "Der Bericht ließ sich gerade nicht senden (Fehler $status)." }
-            if (status != 204 && status != 200) prefs.parentSent = 0 } }
+            if (status != 204 && status != 200) prefs.parentSent = 0 }
+        sendBackup(p, e, now) }
+    // Lernen festhalten: im Tages-Protokoll (60 Tage) und in den Monatssummen (dauerhaft; beim ersten Mal aus dem Protokoll übernommen)
+    fun learn(min: Int = 0, tasks: Int = 0, right: Int = 0) {
+        if (prefs.learnMonths.isEmpty()) prefs.learnMonths = de.raumlicht.core.model.Eltern.monthsFromLog(prefs.learnLog)
+        prefs.learnLog = de.raumlicht.core.model.Eltern.add(prefs.learnLog, today(), min, tasks, right); prefs.learnMonths = de.raumlicht.core.model.Eltern.addMonth(prefs.learnMonths, today(), min, tasks, right) }
+    // Fortschritt wiederherstellen: Sicherung mit dem Kopplungs-Link holen; einen vorhandenen Lernstand nie ohne Nachfrage überschreiben
+    fun applyRestore(r: de.raumlicht.core.model.Eltern.Restore.Ok) { restoreFound = null; restoreStatus = "✓ Lernstand wiederhergestellt"; eltern?.apply?.invoke(r.data, r.pairing.encode()) }
+    fun restore(link: String) { val e = eltern ?: return; val load = e.load ?: return; restoreFound = null
+        val (id, key) = de.raumlicht.core.model.Eltern.fromLink(link) ?: run { restoreStatus = "Das ist kein Kopplungs-Link. Er sieht so aus: …/eltern-bericht/#… – am besten auf dem Eltern-Handy kopieren."; return }
+        restoreStatus = "Suche die Sicherung …"
+        load(de.raumlicht.core.model.Eltern.backupUrl(id, e.server), key) { status, plain -> when (status) {
+            200 -> when (val r = de.raumlicht.core.model.Eltern.restore(plain, id, key)) {
+                is de.raumlicht.core.model.Eltern.Restore.Ok -> if (stars.value.isNotEmpty() || prefs.learnLog.isNotEmpty()) { restoreFound = r; restoreStatus = null } else applyRestore(r)
+                de.raumlicht.core.model.Eltern.Restore.OtherApp -> restoreStatus = "Dieser Link gehört zu einer anderen App."
+                de.raumlicht.core.model.Eltern.Restore.Broken -> restoreStatus = "Die Sicherung ließ sich nicht lesen." }
+            404 -> restoreStatus = "Keine Sicherung gefunden."
+            0 -> restoreStatus = "Keine Verbindung – bitte später noch einmal versuchen."
+            -1 -> restoreStatus = "Der Schlüssel im Link passt nicht zur Sicherung. Bitte den Link vollständig kopieren."
+            else -> restoreStatus = "Die Sicherung ließ sich gerade nicht holen (Fehler $status)." } } }
     // Jede gelöste Aufgabe ins Lern-Protokoll; danach ggf. den Bericht auffrischen
-    @Suppress("NAME_SHADOWING") val record: (String, Int, Int) -> Unit = { id, s, a -> record(id, s, a)
-        prefs.learnLog = de.raumlicht.core.model.Eltern.add(prefs.learnLog, today(), tasks = 1, right = if (s == 3) 1 else 0); sendReport(false) }
+    @Suppress("NAME_SHADOWING") val record: (String, Int, Int) -> Unit = { id, s, a -> record(id, s, a); learn(tasks = 1, right = if (s == 3) 1 else 0); sendReport(false) }
     // Lernzeit: jede volle Minute in einer Aufgabe oder Übung zählt
-    LaunchedEffect(nav.top) { if (Routes.isAction(nav.top)) while (true) { kotlinx.coroutines.delay(60_000); prefs.learnLog = de.raumlicht.core.model.Eltern.add(prefs.learnLog, today(), min = 1) } else sendReport(false) }
+    LaunchedEffect(nav.top) { if (Routes.isAction(nav.top)) while (true) { kotlinx.coroutines.delay(60_000); learn(min = 1) } else sendReport(false) }
     val countOn by prefs.countUsage.collectAsState(); val hintsOn by prefs.tutorHints.collectAsState()
     // Zählen: nur mit eingeschaltetem Schalter, nur Ereignisse von der Liste – sonst geschieht nichts
     val count: (String, String?, String?) -> Unit = { ev, place, topic -> if (prefs.countUsage.value) de.raumlicht.core.model.Zaehler.body(ev, place, topic, version)?.let { countSend?.invoke(it) } }
@@ -320,8 +347,10 @@ fun AppRoot(
                 Routes.SETTINGS -> settings(back)
                 Routes.PRO -> de.raumlicht.app.ui.settings.ProScreen(null, proActive, proEnabled, enterCode, back)
                 Routes.PARENTS -> if (eltern == null) LaunchedEffect(Unit) { nav.back() } else de.raumlicht.app.ui.settings.ElternScreen(pairing, eltern.page, parentStatus,
+                    backup = if (eltern.snapshot != null) backupStatus ?: "" else null, restoreStatus = restoreStatus, restoreAsk = restoreFound?.let { de.raumlicht.core.model.Eltern.germanDay(it.stand) },
+                    onRestore = if (eltern.load != null) ({ link -> restore(link) }) else null, onRestoreYes = { restoreFound?.let { applyRestore(it) } }, onRestoreNo = { restoreFound = null; restoreStatus = "Nichts geändert." },
                     onPair = { name -> de.raumlicht.core.model.Eltern.Pairing.fresh(eltern.create(), name)?.let { p -> prefs.setParentLink(p.encode()); parentStatus = null; sendReport(true) } },
-                    onUnpair = { pairing?.let { p -> eltern.remove(de.raumlicht.core.model.Eltern.uploadUrl(p, eltern.server), p.write) { } }; prefs.setParentLink(""); prefs.parentSent = 0; parentStatus = null },
+                    onUnpair = { pairing?.let { p -> eltern.remove(de.raumlicht.core.model.Eltern.uploadUrl(p, eltern.server), p.write) { } }; prefs.setParentLink(""); prefs.parentSent = 0; prefs.backupMark = ""; parentStatus = null; backupStatus = null },
                     onSendNow = { sendReport(true) }, onBack = back)
                 Routes.KI -> if (kiSend == null) LaunchedEffect(Unit) { nav.back() } else de.raumlicht.app.ui.settings.KiScreen(kiLast, today(), enterKi, back)
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }

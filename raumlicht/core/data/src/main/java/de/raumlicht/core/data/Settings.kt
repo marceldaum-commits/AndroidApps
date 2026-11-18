@@ -160,6 +160,12 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     override var learnLog: String
         get() = prefs.getString("learnLog", "") ?: ""
         set(v) { prefs.edit().putString("learnLog", v).apply() }
+    override var learnMonths: String
+        get() = prefs.getString("learnMonths", "") ?: ""
+        set(v) { prefs.edit().putString("learnMonths", v).apply() }
+    override var backupMark: String
+        get() = prefs.getString("backupMark", "") ?: ""
+        set(v) { prefs.edit().putString("backupMark", v).apply() }
     private val _countUsage = flag("countUsage", true)
     override val countUsage: StateFlow<Boolean> = _countUsage.asStateFlow()
     override fun setCountUsage(on: Boolean) { prefs.edit().putBoolean("countUsage", on).apply(); _countUsage.value = on }

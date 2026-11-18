@@ -78,6 +78,8 @@ class WebPrefs : Prefs {
     override val parentLink: StateFlow<String> = _parentLink; override fun setParentLink(s: String) { if (s.isEmpty()) storeRemove(P + "elternKopplung") else storeSet(P + "elternKopplung", s); _parentLink.value = s }
     override var parentSent: Long get() = storeGet(P + "elternGesendet")?.toLongOrNull() ?: 0L; set(v) = storeSet(P + "elternGesendet", v.toString())
     override var learnLog: String get() = storeGet(P + "lernProtokoll") ?: ""; set(v) = storeSet(P + "lernProtokoll", v)
+    override var learnMonths: String get() = storeGet(P + "lernMonate") ?: ""; set(v) = storeSet(P + "lernMonate", v)
+    override var backupMark: String get() = storeGet(P + "elternSicherung") ?: ""; set(v) = storeSet(P + "elternSicherung", v)
     private val _countUsage = flag("zaehlen", true)
     override val countUsage: StateFlow<Boolean> = _countUsage; override fun setCountUsage(on: Boolean) { put("zaehlen", on); _countUsage.value = on }
     private val _tutorHints = flag("nachhilfeHinweise", true)
@@ -90,4 +92,12 @@ class WebPrefs : Prefs {
         listOf("jamBest", "lageBest", "balloonBest", "diary", "skin", "trail", "hat").forEach { storeRemove(P + it) }
         _jam.value = 0; _lage.value = 0; _balloon.value = 0; _exams.value = emptyMap(); _diary.value = ""; _skin.value = "pink"; _look.value = "none" to "none"
     }
+}
+
+/** Der ganze Speicherstand der WebApp für die Sicherung (ohne Geräte-Kennungen und die Kopplung selbst) */
+fun snapshot(): Map<String, String> = storeKeys(P).split('\n').filter { it.isNotBlank() }.map { it.removePrefix(P) }.filter(de.raumlicht.core.model.Eltern::saved).mapNotNull { k -> storeGet(P + k)?.let { k to it } }.toMap()
+/** Setzt den Speicherstand aus einer Sicherung, speichert die Kopplung und lädt die Seite neu, damit alles frisch gelesen wird */
+fun restoreSnapshot(data: Map<String, String>, pairing: String) {
+    snapshot().keys.forEach { storeRemove(P + it) }; data.forEach { (k, v) -> storeSet(P + k, v) }
+    storeSet(P + "elternKopplung", pairing); storeRemove(P + "elternGesendet"); storeRemove(P + "elternSicherung"); reloadPage()
 }
