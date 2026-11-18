@@ -97,3 +97,37 @@ Ergebnis steht auch in experimentopia/WOCHENRUNDE.md.
 **Mathe-Trainer (Abgleich):** gibt nichts ab; übernimmt Übungsteil „Gleichungen lösen“ (Wissensgarten), Normalverteilung & Testen (KurvenFlug), Gauß-Rechentraining. Behält Lernkarten (nur Formeln der Einheit), Kopfrechen-Arena (klein, Abgabe entscheidet Marcel/Leitstand), Formelsammlung. **Korrektur: Di 24.11. Gauß-Verfahren, Normalverteilung erst Fr 4.12.** → Doppelung mit Raumlicht am 24.11. entfällt (Raumlicht erleben, Mathe-Trainer rechnen). Weiter: Fr 27.11. Nullstellen/Polynomdivision, Di 1.12. Bayes, Fr 11.12. Kreuzprodukt.
 **KurvenFlug (Abgleich):** gibt nur noch nicht gebaute „Kommt bald“-Themen ab (Geraden & Ebenen → Raumlicht/Mathe-Trainer; Normalverteilung & Testen, Daten & Diagramme, Wahrscheinlichkeit → Mathe-Trainer; Körper & Volumen → Raumlicht/Mathe-Trainer; Potenzen/wiss. Schreibweise → Rechenblitz/Mathe-Trainer; **Radioaktivität → Experimentopia**). Behält 2D-Vektoren, Binomial als Graph, Physik-Rechnen (Optik, Energie), Brüche/Winkel visuell. Neu: Fr 20.11. Terme & Gleichungen (Waage), Di 24.11. Funktionen formen, Fr 27.11. Strom & Ohm oder Negative Zahlen; später u. a. Kräfte & Hebel, Druck, Magnetismus, Wärme, Schwingungen – **nur Rechnen**, Erleben bleibt bei uns (passt zu unseren Versuchen + „Kommt bald: Druck & Luftdruck“).
 Kapitel-Links: kurvenflug/QUERVERWEISE.md.
+
+## Für die Wochenrunde 23.11. (Anfrage „Geld verdienen“ im Auftrag Marcel): Inhaltsliste, Überschneidungen, Vorschlag
+
+**a) Inhaltsliste** (Stand 2.11.1; ein Versuch zählt in jeder Klassenstufe, für die er gedacht ist):
+
+| Fach | Thema (Kennung) | Versuche | Kl. 3–4 | Kl. 5–6 | Kl. 7–8 | Kl. 9–10 |
+|---|---|---|---|---|---|---|
+| Physik | Schwimmen, Dichte & Verdrängung (`physik-mechanik`) | 17 | 8 | 13 | 9 | 0 |
+| Physik | Hebel & Drehmoment (`physik-mechanik`) | 11 | 5 | 9 | 4 | 0 |
+| Physik | Rollen & schiefe Ebene (`physik-mechanik`) | 8 | 0 | 1 | 8 | 2 |
+| Physik | Kraft & Bewegung (Newton) (`physik-mechanik`) | 9 | 0 | 4 | 9 | 5 |
+| Physik | Fallen & Schwerkraft (`physik-mechanik`) | 11 | 4 | 4 | 6 | 5 |
+| Physik | Pendel & Schwingungen (`physik-mechanik`) | 6 | 0 | 1 | 4 | 5 |
+| Physik | Stromkreise (`physik-elektrizitaet`) | 16 | 2 | 9 | 11 | 6 |
+| Physik | Magnetismus (`physik-elektrizitaet`) | 4 | 4 | 2 | 0 | 0 |
+| Physik | Wärme & Teilchen (`physik-waerme`) | 14 | 2 | 7 | 8 | 1 |
+| Physik | Licht & Farben (`physik-optik`) | 14 | 7 | 12 | 6 | 0 |
+| Physik | Schatten, Spiegel & Linsen (`physik-optik`) | 11 | 2 | 5 | 8 | 4 |
+| Physik | Schall & Töne (`physik-akustik`) | 10 | 4 | 9 | 6 | 0 |
+| Chemie | Stoffe trennen (`chemie-stoffe`) | 7 | 1 | 6 | 5 | 0 |
+| Chemie | Säuren & Laugen (`chemie-saeuren-laugen`) | 10 | 3 | 3 | 6 | 5 |
+| Chemie | Chemische Reaktionen (`chemie-reaktionen`) | 16 | 1 | 2 | 10 | 14 |
+| Biologie | Vererbung & Genetik (`biologie-genetik`) | 8 | 0 | 0 | 4 | 8 |
+| Biologie | Zellen, Mikroskop & Osmose (`biologie-zellen`) | 9 | 1 | 5 | 7 | 3 |
+| Biologie | Nährstoffe & Enzyme (`biologie-ernaehrung`) | 8 | 2 | 2 | 5 | 5 |
+| Biologie | Pflanzen & Ökosysteme (`biologie-oekologie`) | 17 | 6 | 8 | 11 | 7 |
+| Biologie | Körper & Gesundheit (`biologie-koerper`) | 5 | 2 | 4 | 3 | 1 |
+| **Summe** | 20 Themen | **211** | 54 | 106 | 130 | 71 |
+
+Dazu 23 Themen als „Kommt bald“ (noch nicht gebaut, Liste in `core/model/.../Upcoming.kt`).
+
+**b) Überschneidungen:** keine Doppelung im Inhalt. Berührungen nur mit Rechen-Gegenstücken: KurvenFlug (Optik, Energie, Bewegung, später Kräfte/Druck/Wärme – dort nur Rechnen), Mathe-Trainer/Rechenblitz (Proportionalität, Prozent, Exponential), Wissensgarten (Begriffe als Lernkarten). Mit Raumlicht keine. Abgrenzung: Experimentopia = Versuch zum Ausprobieren, die anderen = Rechnen/Merken → gegenseitige Links.
+
+**c) Vorschlag:** nichts abgeben (nichts doppelt). Übernommen: Radioaktivität (von KurvenFlug, noch nicht gebaut). Profil wie vorgeschlagen: Experimentopia = Naturwissenschaften Kl. 3–10. Zu Punkt 3 (2–3 Apps mit Vorrang je Woche): einverstanden; das Fr-Update 20.11. (Motor, Dynamo & Trafo) liegt vor Montag und überschneidet sich mit niemandem – ab 23.11. richtet sich Experimentopia nach der Vorrang-Entscheidung.
