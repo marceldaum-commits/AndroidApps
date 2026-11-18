@@ -2,6 +2,9 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.9 – Datum berichtigt (18.11.2026)
+- Die Version 2.18.8 zeigte in den Einstellungen noch das Datum vom Vortag. Sonst ist nichts geändert.
+
 ## 2.18.8 – Kauf-Hinweis sachlicher (18.11.2026)
 - **Raumlicht Pro:** Der Knopf heißt jetzt „Zum Shop: Raumlicht Pro · 7,99 €“ statt einer Kaufaufforderung, und darunter steht klar: Wer noch nicht 18 ist, lässt die Eltern kaufen.
 

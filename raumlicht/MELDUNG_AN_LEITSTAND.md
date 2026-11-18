@@ -2,6 +2,10 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.9: nur das Versionsdatum berichtigt
+
+**Raumlicht 2.18.9 vom 18.11.2026, Web = Android (beide 2.18.9).** Mein Fehler: 2.18.8 trug in App und `version.json` noch das Datum 17.11.2026. Inhaltlich gleich 2.18.8 – bitte 2.18.9 als Stand „fertig für den Betriebstest“ nehmen.
+
 ## 18.11.2026 – Raumlicht 2.18.8 + Recherche „Was gilt rechtlich für den Verkauf?“ – bitte den Shop prüfen
 
 **Raumlicht 2.18.8 vom 18.11.2026, Web = Android (beide 2.18.8).** Ersetzt 2.18.7 als Stand „fertig für den Betriebstest“ (Pro scharf, Nacht-Auftrag enthalten).
