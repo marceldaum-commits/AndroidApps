@@ -1,5 +1,23 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.14 – iOS-Laufzeitursachen abgesichert (zu euren Nachträgen 09:17/09:23)
+Eure Nachträge (iOS 18.4+/26, WebKit-Emulation startet normal) kamen erst nach 2.5.13 bei mir an. Die JS-Fassung bleibt
+trotzdem drin – sie springt nur noch bei einem echten Abbruch ein (deckt den Speicher-Fall ab), sonst läuft wie bisher Wasm.
+**Gemessen (Chromium, iPhone-Größe 393×852, DPR 3):** JS-Heap 11–20 MB, Wasm-Speicher 17→29 MB, Audio 2–6 MB, keine Spitzen –
+aber die **Zeichenfläche war 1179×2556 px** (≈ 12 MB je Puffer, mehrere Puffer im Grafikspeicher).
+1. **Pixeldichte auf 2 begrenzt** (`devicePixelRatio` vor dem Start überschrieben) → Zeichenfläche **786×1704** (−56 % Pixel).
+2. **Kein AudioContext vor dem ersten Tippen** (Musik-Daten werden bis dahin aufgehoben).
+3. **`webglcontextlost`** an jeder Zeichenfläche (auch im Shadow-DOM) → Meldung „Die Spielgrafik wurde vom Gerät zurückgesetzt …“
+   mit „Neu laden“, Version, Fassung, DPR. Getestet mit `WEBGL_lose_context`.
+4. **Start-Protokoll für Marcels Foto:** Stufen startet → geladen → läuft → bereit. Wird iOS den Tab beenden und Safari lädt
+   neu, steht im Ladebild und danach als Hinweis: „Letzter Start brach ab (wasm – nach dem Laden / beim Aufbau der Oberfläche).
+   Jetzt: Fassung js.“ – und die JS-Fassung wird genommen. Jede Fehlermeldung nennt Version, Fassung, Fehlertext, DPR.
+5. **fetch-/ReadableStream-Weg abschaltbar:** `?direkt=1` lädt ohne unseren Vorlade-Strom (Test: startet normal).
+6. **Service Worker:** lädt nach einem SW-Wechsel nur neu, wenn `version.json` wirklich eine andere Version meldet (vorher konnte
+   ein Wechsel der Fassung einen unnötigen Neustart auslösen); version.json kommt am SW vorbei immer frisch.
+- Test-Link: https://kurvenflug-test.mathenachhilfe-online.com/ (Varianten: `?modus=js`, `?modus=wasm`, `?direkt=1`, zurück `?modus=auto`).
+- Keine neuen Dateiendungen. versionCode 61 / 2.5.14, Prüfkette grün.
+
 ## ✅ 2.5.13 – DRINGEND iOS: weiße Seite behoben (Kompatibilitäts-Fassung + Startfehler sichtbar)
 **Ursache (Code-Analyse; kein iPhone/WebKit in meiner Umgebung, darum nicht am Gerät bestätigt):**
 - Die App läuft als Kotlin/Wasm und braucht **WebAssembly-GC + Ausnahmen** → Safari erst **ab iOS 18.2**. Ältere iPhones/iPads

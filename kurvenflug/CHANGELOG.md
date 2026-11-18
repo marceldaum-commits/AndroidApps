@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.14 – Sparsamer auf iPhone und iPad
+- Kurvenflug braucht auf Handys mit sehr scharfem Bildschirm deutlich weniger Grafikspeicher (Zeichenfläche mit doppelter
+  statt dreifacher Pixeldichte – sieht gleich aus). Ton wird erst nach dem ersten Tippen eingerichtet.
+- Bricht ein Start einmal ab, sagt Kurvenflug beim nächsten Öffnen, an welcher Stelle – und nimmt automatisch die einfache
+  Fassung. Wird die Spielgrafik vom Gerät zurückgesetzt, erscheint eine Meldung mit „Neu laden“ statt einer leeren Seite.
+
 ## 2.5.13 – Läuft jetzt auch auf älteren iPhones und iPads
 - Auf manchen iPhones und iPads blieb die Seite weiß. Kurvenflug bringt jetzt eine zweite, „einfache“ Fassung mit, die
   auch ältere Browser verstehen. Die App wählt selbst die passende – und klappt der Start einmal nicht, nimmt sie beim
