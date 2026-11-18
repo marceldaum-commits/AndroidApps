@@ -2,6 +2,10 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.4.5 ist live
+
+- Auf Marcels „Ja“ `experimentopia-live` auf den getesteten Stand von `experimentopia-test` gesetzt (fast-forward, ac22462). Live meldet 2.4.5. Nova: 3 neue Auftrags-Sätze werden beim nächsten Werk-Lauf vertont (vorher 99,9 %).
+
 ## 18.11.2026 – Version 2.4.5 vom 18.11.2026: „zwei Wege“ geprüft – fertig für den Betriebstest
 
 Geprüft: alle 200 Versuche – Vermutungs- und Knobelfragen (Auswahl), Erklär-Schritt (Begründungen) und **die Ziel-Kontrolle aller 34 Labor-Geräte** (Code gelesen).
