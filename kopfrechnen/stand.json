@@ -1,4 +1,4 @@
-{"app":"rechenblitz","version":"3.26.2","shell":2,"id":"58c17c118cc60c7b","files":{
+{"app":"rechenblitz","version":"3.26.3","shell":2,"id":"ee855bd917c7a8b6","files":{
 "LICENSE-fonts-OFL.txt":"7ccbf925128fa58dd9db15a952de2cb1388bada8bceddb13b90302c63c517ef8",
 "LICENSE-qrcode-generator.txt":"cbb4dd65aafcbc67fdd469b12042464153219bc26f238b2f19858c7980e5b01a",
 "app.css":"ab7f7f590b903eabcfd941db13fe2c4c57cb4547ba30d3043c0e32b6c7fe4875",
@@ -16,15 +16,15 @@
 "index.html":"7ba3b33003d1b76811cb64c7899dce983764524be3d172597e1cb9b4aa881275",
 "js/app.js":"65a355e8f0024e9d6e331e581f0e5e0020891fab667185bc79418561ff2ad797",
 "js/blitz.js":"3ec7dd2b5818d33e1bf81767a2d3d90d3229538dac3457e0abb74e9c75b3cff0",
-"js/changelog.js":"25ebfcbd3f656261585074299783fbe38cce4232dab2eaaee3e445eb85fd114f",
+"js/changelog.js":"a8a5ebae7e5aeb819d89e3e8b95b89fcf1d3f5681014238197fbd6deb4b1eb79",
 "js/dungeon.js":"9edcfb941321c7670590e772cbee693d98503fb584a9ce4ddb9e2880fcf5236e",
 "js/elterntor.js":"82c6f5bcd82e7ef13d0333f10039dcd044b08357360e08471618bff8a0fcdf19",
 "js/engine.js":"29e9ef03a6ae24eb76d7cdb20506b2819233cd40c95a207ba2b4c36eb074d4fc",
 "js/extras.js":"d821479d36c7a9c58cd0ae88a25d6b1afb1dc66aba881113c571cce6661ec689",
 "js/garten.js":"3ea9757170b70e44abf98fa799177ab3dadb41119668cd1835dd8966a2a7cdfc",
 "js/i18n.js":"2b35c38c183aaedc9f3329f18d5a5747c59e5ffdd3a500ab750f49f53c26c11e",
-"js/lang-en.js":"79002362a4d4873bac93306ded3f31989359507493c9e29b31ead4c843cf974e",
-"js/lang-uk.js":"e7c54c9de915af63c8491876f8a5c28ebed516817da0134696e0120268b3a786",
+"js/lang-en.js":"0c21002b0d276cbddc802d555424cb64cb86979da3222a08e7d7f4149a98b44d",
+"js/lang-uk.js":"aa37a0bf582cb5e8fbc580770c5713b2921dd35c54d191c92a2b9dea8bdcfbe5",
 "js/memory.js":"91c886e79e7ba8944ab06e1748f525d09098c931011265e541bce87990b98b1a",
 "js/merkvis.js":"01b57d4e57a6de9d1d3c6aa270426043dd1270904e2b066e9ea88e79229ab2a5",
 "js/music.js":"30741773a091ef7156e6779677a604903a1abec4ccd8b4c9ebe078d62362007e",
@@ -33,10 +33,10 @@
 "js/panels.js":"83ccac4ac3b245dc881a4456bfc90f4a29bedb1b2a0eeece27a33c6a493b96c0",
 "js/pro.js":"e03cdcc44a9708e91752afa475aa6c3f4eef314e7e272a99dbc2f85ccb173f9e",
 "js/raetsel.js":"150ff6ff85bf552d1060c2a25dac9a8304b36308545b4f842df77a9c00507d1e",
-"js/rechenblitz.min.js":"f71c96bbb737969d47970c7e0bfe12dd17109f47bacda4d2c33d092ddde6278d",
+"js/rechenblitz.min.js":"bb4bcc50eafabb2d7d96bab2b7364593a7ea76c62daebbc8452ae4f432d800fd",
 "js/reise.js":"484b62edca9ccbcb55bd78c99f798dab3bb614ed0ceffe6810f05d0617748600",
 "js/reminder.js":"dc1c8158558f6cf41c8239a4a80d05738891e6e39a368b93ee72bd264fc952f7",
-"js/speech.js":"5074a33bf2b68536582a7a509d8c552002aa94f8194486695fc39524275bf003",
+"js/speech.js":"76eff110d23e7415778694a2cf60566a8c747a913ecd204e72d90740c6264a25",
 "js/theorie-i18n.js":"36ffdaad6eab3add468f2ef7981a2e41de40522b3582b16a07553a920baaf342",
 "js/theorie.js":"6f2ba4078c38443e76bde11af95ff5384bba76e2a6f196aa3012bbf931ea38c5",
 "js/vendor/nacl.min.js":"d01d638878a33e735094982276e424d89c3494c86544a740983f9c93570da67d",
@@ -44,5 +44,5 @@
 "js/welt.js":"fa8804e7e42ccf82c7010a52537939b9d60bdb7b1f5e043f0cf86dd3c6208284",
 "js/wunsch.js":"123d61f2a307f2a2edd19c0cdbf9a202e5699b3925ef1eef201ee20037402eed",
 "manifest.webmanifest":"939c5ed31ef1aa4c5ec7678f8c50f14cc5c576d647436e7d355ca463d29156b1",
-"vorlesen/texte.json":"b236dd9626ec327b1beacb760b4e4d7e8d96a6aeb791a312f7ca05d0cd6be9a0"
+"vorlesen/texte.json":"97ac547d21095b4dedecab7e4d1eaab0e80b3c1896daa72afac6ccb5e179d82f"
 }}

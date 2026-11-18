@@ -23,6 +23,18 @@ const SPEECH = {
 const SUP_DIGITS = { '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4', '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9', '⁻': '−', 'ˣ': 'x' };
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&');
 // Text (so, wie er auf dem Bildschirm steht) in sprechbare Sprache umwandeln
+// Ukrainische Brüche: Zähler (weiblich: одна, дві) + Ordnungszahl – nach 1 im Nominativ Singular („одна третя“),
+// sonst im Genitiv Plural („дві третіх“, „5 восьмих“); bisher hieß es missverständlich „2 на 3“
+const UK_ORD = { 2: 'друга', 3: 'третя', 4: 'четверта', 5: 'п’ята', 6: 'шоста', 7: 'сьома', 8: 'восьма', 9: 'дев’ята', 10: 'десята',
+  11: 'одинадцята', 12: 'дванадцята', 13: 'тринадцята', 14: 'чотирнадцята', 15: 'п’ятнадцята', 16: 'шістнадцята', 17: 'сімнадцята',
+  18: 'вісімнадцята', 19: 'дев’ятнадцята', 20: 'двадцята', 24: 'двадцять четверта', 25: 'двадцять п’ята', 30: 'тридцята',
+  36: 'тридцять шоста', 40: 'сорокова', 50: 'п’ятдесята', 100: 'сота', 1000: 'тисячна' };
+function ukFrac(n, o) {
+  const one = n % 10 === 1 && n % 100 !== 11, two = n % 10 === 2 && n % 100 !== 12;
+  const num = n === 1 ? 'одна' : n === 2 ? 'дві' : one ? `${n - 1} одна`.replace(/^0 /, '') : two ? `${n - 2} дві`.replace(/^0 /, '') : String(n);
+  if (one) return `${num} ${o}`;
+  return `${num} ${o.replace(/я$/, 'іх').replace(/а$/, 'их')}`;
+}
 function mathSpeak(text, lang = I18N.lang) {
   const L = SPEECH[lang] || SPEECH.de, sp = ` ${L.op['−'] || 'minus'} `;
   let s = ' ' + String(text).replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ') + ' ';
@@ -37,6 +49,7 @@ function mathSpeak(text, lang = I18N.lang) {
   // Brüche „3/4“ (nicht in Datumsangaben)
   s = s.replace(/(^|[^\d/])(\d+)\/(\d+)(?![\d/])/g, (m, pre, n, d) => {
     if (lang === 'de') { if (+n === 1 && +d === 2) return pre + L.half; const nm = FRAC_NAMES[+d]; return pre + (nm ? `${n} ${nm}` : `${n} ${L.over} ${d}`); }
+    if (lang === 'uk') { const o = UK_ORD[+d]; if (o) return pre + ukFrac(+n, o); }
     return pre + (+n === 1 && +d === 2 ? L.half : `${n} ${L.over} ${d}`);
   });
   // Hochzahlen: „x²“ → „x hoch 2“, „10⁻³“ → „10 hoch minus 3“

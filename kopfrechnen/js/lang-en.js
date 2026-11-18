@@ -2433,4 +2433,5 @@ I18N.add('en', {"% sind":"% are",
 "{} Teile":"{} parts",
 "{} t + {} kg":"{} t + {} kg",
 "{} km {} m + {} km":"{} km {} m + {} km",
-"Neues App-Symbol: der Rechenblitz ⚡":"New app icon: the Rechenblitz lightning bolt ⚡"});
+"Neues App-Symbol: der Rechenblitz ⚡":"New app icon: the Rechenblitz lightning bolt ⚡",
+"Ukrainisch: Brüche werden richtig vorgelesen (z. B. „дві третіх“)":"Ukrainian: fractions are now read aloud correctly (e.g. “дві третіх”)"});

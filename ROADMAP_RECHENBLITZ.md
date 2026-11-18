@@ -38,7 +38,7 @@ Jeden Tag ein vollständiges, getestetes Paket. Status: `[ ]` offen · `[x]` erl
 | 5 ✅ | Mi 18.11. (vorgezogen 16.11.) | **Rechengarten (gemütlich)** (3.14.0) | Gelöste Aufgaben lassen Pflanzen wachsen; keine Serien-Strafe: „Tage diese Woche“ statt Tage in Folge, Pausen ohne Verlust |
 | 6 ✅ | Do 19.11. (vorgezogen 17.11.) | **Zahlen-Dungeon 1** (3.21.0) | Roguelike: Räume, Gegner = Aufgaben, Lebenspunkte, kurze Läufe (3–5 Min.) |
 | 7 ✅ | Fr 20.11. | **Zahlen-Dungeon 2** | Deckbuilding: Rechen-Karten = echte Strategien (Zehnerfreund, Verdoppeln, Halbieren, Kommaschieber …) |
-| 8 | Sa 21.11. | **Zahlen-Dungeon 3** | Bosse, Freischaltungen, Balance je Klassenstufe |
+| 8 | Sa 21.11. (⏸ Betriebstest – danach) | **Zahlen-Dungeon 3** | Bosse, Freischaltungen, Balance je Klassenstufe |
 | 9 | So 22.11. | **Fehler-Detektiv 1** ⭐ | Typische Denkfehler erkennen (Reihe verrutscht, Stellenwert, Zähler+Nenner addiert, Vorzeichen, Punkt vor Strich …) und genau diesen Fehler mit Bild erklären |
 | 10 | Mo 23.11. | **Fehler-Detektiv 2** ⭐ | „Lernstand-Brief“ für Eltern (Schwachstellen in Worten, druck-/teilbar) + Brücke zur Probestunde |
 | 11 | Di 24.11. | **Sprachbrücke Mathe + Deutsch** ⭐ | Wort in Textaufgaben antippen → Übersetzung (EN/UK) + Vorlesen; Fachwörter-Sammlung (Summe, Nenner …); vorbereitet für Türkisch/Arabisch |
@@ -74,3 +74,4 @@ Jeden Tag ein vollständiges, getestetes Paket. Status: `[ ]` offen · `[x]` erl
 - 16.11. – 3.19.0: jede Stufe nachweislich schwerer (tests/schwierigkeit.js), Profi-Stufe; 3.20.0: Rechenblitz Pro (Sperren aus bis zur Kassen-URL) + Elternbericht.
 - 17.11. – 3.21.0: Zahlen-Dungeon 1 (7 Räume, 5 Herzen, Türen Kampf/Schatz/Lagerfeuer, 5 gezeichnete Monster, Wächter). Nächster Tag: Zahlen-Dungeon 2 (Rechen-Karten).
 - 17.11. – 3.26.0: Zahlen-Dungeon 2 – Rechen-Karten (8 Strategien: Zehnerfreund, Verdoppeln, Halbieren, Tauschaufgabe, Neuner-Trick, Fünfer-Trick, Kommaschieber, Probe/Schild), Deck mit Ziehen/Ablegen, neue Karte nach jedem Sieg, Kartensammlung. Nächster Tag: Zahlen-Dungeon 3 (Bosse, Freischaltungen, Balance).
+- 17./18.11. – 3.26.1/3.26.2/3.26.3 (Betriebstest, nur Fehler/Leitstand-Aufträge): Musik startet sofort, nur Nova; Aufgaben-Prüfung (10 Vorlagen eindeutiger), Nova ganze Sätze ohne Rückfall, neues App-Symbol; ukrainische Brüche richtig vorgelesen. Roadmap pausiert bis nach dem Betriebstest.
