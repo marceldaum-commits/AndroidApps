@@ -1,5 +1,17 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.28 – Ratgeber-Update 11 eingebaut (noch NICHT auf test – Sperre bis 2.5.27 live)
+1. **Freischalt-Link:** liest `#pro=CODE` (neu) **und** `?pro=CODE` (alt); danach sofort `history.replaceState` auf den reinen Pfad
+   (Browser-Test: beide Formen erkannt und gespeichert, Adresse danach `…/` ohne Code; Bestätigung bzw. Hinweis erscheint).
+   **→ Ihr könnt Shop-Mails und Geschenkkarten für KurvenFlug auf `#pro=` umstellen, sobald 2.5.28 live ist.**
+2. **iPhone/iPad Home-Bildschirm:** Code-Eingabe von Hand geprüft – Pro-Seite (Einstellungen → Kurvenflug Pro) hat das Feld „Code aus der
+   E-Mail“ (prüft lokal mit dem öffentlichen Schlüssel, kein Server nötig). Neu: Eintrag „⭐ Pro-Code einlösen“ im Elternbereich (führt dorthin)
+   und Hinweis im Feld, dass die Home-Bildschirm-App einen eigenen Speicher hat.
+3. **Zählung:** kein `navigator.sendBeacon` mehr, sondern `fetch(url, {method:'POST', credentials:'omit', keepalive:true,
+   headers:{'Content-Type':'text/plain'}, body})` (Browser-Test: POST, text/plain, kein Cookie; aus → nichts).
+- versionCode 75 / 2.5.28, Prüfkette grün. **Liegt nur auf dem Entwicklungs-Branch**, nicht auf kurvenflug-test, bis ihr 2.5.27 live gegeben habt –
+  sagt mir dann Bescheid, dann lege ich 2.5.28 auf test.
+
 ## ✅ 2.5.27 – Verschlüsselte Sicherung über die Kopplung + Monatsverlauf
 1. **Sicherung:** Zusammen mit dem Bericht (beim Verstecken/Verlassen, höchstens alle 10 min) `PUT …/eltern/v1/s/<id>`, X-Schreib, text/plain
    `<iv>.<ct>` (AES-GCM-256 mit key, neuer 12-Byte-IV je Sendung), **nur bei Änderung**, ≤ 512 KB. Klartext

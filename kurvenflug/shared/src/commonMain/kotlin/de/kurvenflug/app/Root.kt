@@ -420,7 +420,8 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                     onPair = { nick -> parentLink = platform.parentPair(nick) },
                     onUnpair = { platform.parentUnpair(); parentLink = platform.parentLink() },
                     onShare = { link -> platform.shareText(link, "Kurvenflug – Lernbericht") },
-                    onRestore = { link, force, done -> platform.parentRestore(link, force, done) }))
+                    onRestore = { link, force, done -> platform.parentRestore(link, force, done) },
+                    onPro = if (platform.proShop?.acceptsCodes == true) ({ nav.goOnce(Routes.PRO) }) else null))
         }
         composable(Routes.RESULTS) { de.kurvenflug.app.ui.together.ResultsBoard({ nav.popSafe() }) }
         composable(Routes.STICKERS) {

@@ -3,6 +3,13 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.28 – Sicherer Freischalt-Link
+- Der Pro-Freischalt-Link funktioniert jetzt auch in der neuen, sichereren Form (…#pro=CODE); alte Links gehen weiter.
+  Der Code verschwindet danach sofort aus der Adresszeile.
+- Im Elternbereich gibt es „⭐ Pro-Code einlösen“ – wichtig auf iPhone und iPad, wenn Kurvenflug als App vom Home-Bildschirm
+  läuft (dort wirkt der Link aus der Mail nicht).
+- Die anonyme Zählung schickt keine Cookies mehr mit.
+
 ## 2.5.27 – Lernstand sicher, auch auf einem neuen Gerät
 - Ist das Eltern-Handy gekoppelt, sichert Kurvenflug den Lernstand Ende-zu-Ende verschlüsselt. Neues Handy oder Browserdaten
   gelöscht? Im Elternbereich „♻️ Fortschritt wiederherstellen“ mit dem Kopplungs-Link holt alles zurück – ein vorhandener

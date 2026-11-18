@@ -267,6 +267,8 @@ class ParentArea(
     val onShare: (String) -> Unit = {},
     /** Fortschritt aus der Sicherung wiederherstellen (Kopplungs-Link) */
     val onRestore: (link: String, force: Boolean, done: (String) -> Unit) -> Unit = { _, _, d -> d("fehler") },
+    /** Pro-Code von Hand einlösen (Pro-Seite mit Code-Feld) */
+    val onPro: (() -> Unit)? = null,
 )
 
 @Composable
@@ -312,6 +314,18 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
             Text(if (exam) "Gemerkt für die nächsten Wochen" else "Antippen, wenn eine Klassenarbeit ansteht", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
         }
         Switch(exam, { sfx?.play(Sound.TICK); p.onExam(it) })
+    }
+    // Pro-Code von Hand (z. B. iPhone-App vom Home-Bildschirm, wo der Link aus der Mail nicht wirkt)
+    p.onPro?.let { open ->
+        Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TAP); open() }.padding(14.dp),
+            verticalAlignment = Alignment.CenterVertically) {
+            Text("⭐", fontSize = 24.sp)
+            Column(Modifier.weight(1f).padding(start = 10.dp)) {
+                Text("Pro-Code einlösen", fontWeight = FontWeight.Bold, color = Q.Text)
+                Text("Code aus der E-Mail oder Geschenkkarte von Hand eingeben", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+            }
+            Text("›", color = Q.Muted, fontSize = 22.sp)
+        }
     }
     // Lern-Geschenk
     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TAP); p.onCount("geschenk_klick"); p.onOpen(de.kurvenflug.core.model.ParentOffers.GIFT) }.padding(14.dp),

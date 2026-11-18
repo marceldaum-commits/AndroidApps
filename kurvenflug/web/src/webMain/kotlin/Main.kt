@@ -15,7 +15,8 @@ import kotlinx.coroutines.MainScope
 import de.kurvenflug.web.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
-private fun locationSearch(): String = js("decodeURIComponent(window.location.search || '')")
+/** Freischalt-Link: neu „#pro=CODE“ (landet nicht in Server-Logs), weiter auch „?pro=CODE“ für alte Karten und Mails */
+private fun locationSearch(): String = js("(function () { try { return decodeURIComponent((window.location.search || '') + ' ' + (window.location.hash || '')); } catch (e) { return (window.location.search || '') + ' ' + (window.location.hash || ''); } })()")
 private fun clearSearch(): Unit = js("(function () { try { history.replaceState(null, '', window.location.pathname); } catch (e) {} })()")
 
 /** Start-Protokoll (index.html): das Programm läuft – bricht der Start danach ab, weiß der nächste Start, wo */
@@ -32,7 +33,7 @@ fun main() {
     stage("läuft")
     WebPlatform.init(BuildInfo.VERSION, BuildInfo.PRO_KEY, BuildInfo.PRO_CHECKOUT)
     val settings = Settings(WebPrefs())
-    // Freischalt-Link aus der E-Mail: …/?pro=KF… → Code merken, Adresse wieder aufräumen
+    // Freischalt-Link aus der E-Mail: …/#pro=KF… (neu) oder …/?pro=KF… → Code merken, Adresse sofort aufräumen (history.replaceState)
     de.kurvenflug.core.model.License.extract(locationSearch())?.let { code ->
         settings.setProCode(code)
         clearSearch()
