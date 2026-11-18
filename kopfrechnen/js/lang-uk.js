@@ -2502,4 +2502,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Der Link enthält den Schlüssel – bitte nur an Eltern weitergeben. Er stellt auch den Fortschritt auf einem neuen Gerät wieder her (Elternbereich → Fortschritt wiederherstellen).":"Посилання містить ключ – передавай його лише батькам. Воно також відновлює прогрес на новому пристрої (розділ для батьків → Відновити прогрес).",
 "Mit gekoppeltem Eltern-Handy wird der Lernstand verschlüsselt gesichert – auf einem neuen Gerät „Fortschritt wiederherstellen“":"Якщо телефон батьків під’єднано, навчальний прогрес зберігається в зашифрованій резервній копії – на новому пристрої використай «Відновити прогрес»",
 "Eltern-Bericht mit Monatsverlauf":"Звіт для батьків із помісячною історією",
-"Kleine Korrektur beim Wiederherstellen (Hinweistexte auf Englisch)":"Невелике виправлення під час відновлення (підказки англійською)"});
+"Kleine Korrektur beim Wiederherstellen (Hinweistexte auf Englisch)":"Невелике виправлення під час відновлення (підказки англійською)",
+"Pro-Freischalt-Links sind jetzt sicherer: Der Code wird sofort aus der Adresszeile entfernt":"Посилання для розблокування Pro тепер безпечніші: код одразу видаляється з адресного рядка"});

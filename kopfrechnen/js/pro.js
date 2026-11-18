@@ -67,17 +67,26 @@ async function proRedeem(code, quiet) {
   if (!quiet) { toast('<span>⭐</span> <span>Rechenblitz Pro ist freigeschaltet – danke!</span>', 2600); if (typeof Sound !== 'undefined') Sound.win?.(); }
   renderHome(); return true;
 }
-/** Beim Start: gespeicherten Code erneut prüfen und ?pro=CODE aus dem Freischalt-Link einlösen */
+/** Beim Start: gespeicherten Code erneut prüfen und den Code aus dem Freischalt-Link einlösen.
+    Neu: #pro=CODE (bleibt im Browser, landet nicht in Server-Logs); ?pro=CODE weiter für alte Karten und Mails.
+    Der Code wird sofort aus der Adresszeile entfernt. */
+function proFromUrl() {
+  let c = null, u = location.pathname + location.search + location.hash;
+  const hm = location.hash.match(/^#(?:.*&)?pro=([^&]+)/);
+  if (hm) { c = decodeURIComponent(hm[1]); const rest = location.hash.slice(1).split('&').filter(x => !x.startsWith('pro=')).join('&'); u = location.pathname + location.search + (rest ? '#' + rest : ''); }
+  const p = new URLSearchParams(location.search);
+  if (p.get('pro')) { c = c || p.get('pro'); p.delete('pro'); const q = p.toString(); u = location.pathname + (q ? '?' + q : '') + (hm ? (u.includes('#') ? u.slice(u.indexOf('#')) : '') : location.hash); }
+  if (c) { try { history.replaceState(null, '', u); } catch {} }
+  return c;
+}
 async function proStartup() {
   if (ROOT.pro && ROOT.pro.code) RBPRO.ok = (await proVerify(ROOT.pro.code)).ok;
-  const p = new URLSearchParams(location.search), c = p.get('pro');
-  if (c) {
-    p.delete('pro'); const q = p.toString();
-    try { history.replaceState(null, '', location.pathname + (q ? '?' + q : '') + location.hash); } catch {}
-    if (!(RBPRO.ok && proNorm(c) === (ROOT.pro && ROOT.pro.code))) await proRedeem(c);
-  }
+  const c = proFromUrl();
+  if (c && !(RBPRO.ok && proNorm(c) === (ROOT.pro && ROOT.pro.code))) await proRedeem(c);
   if (RBPRO.ok) renderHome();
 }
+// Link geöffnet, während die App schon läuft (nur der #-Teil ändert sich)
+addEventListener('hashchange', async () => { const c = proFromUrl(); if (c && !(RBPRO.ok && proNorm(c) === (ROOT.pro && ROOT.pro.code))) await proRedeem(c); });
 
 /** Pro-Funktion angefragt: frei → true, sonst Pro-Fenster öffnen */
 function needPro(what) {

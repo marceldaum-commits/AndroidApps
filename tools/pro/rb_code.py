@@ -15,7 +15,7 @@ from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 APP_RECHENBLITZ, PRODUCT_PRO = 2, 1
 ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
 DAY0 = datetime.date(2020, 1, 1)
-LINK = "https://rechenblitz.mathenachhilfe-online.com/?pro="
+LINK = "https://rechenblitz.mathenachhilfe-online.com/#pro="   # seit 18.11.: im #-Teil, landet nicht in Server-Logs (?pro= liest die App weiter)
 
 
 def b32(data: bytes) -> str:
