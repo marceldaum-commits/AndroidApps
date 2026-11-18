@@ -57,8 +57,16 @@ Noch nicht eingebaut – Wortlaut und Zählung werden am Mo 23.11. mit dem Leits
 | Transformationen (geplant Di 24.11.) | formen |
 | Terme & Gleichungen (Fr 20.11.) | k7-terme, k7-gleichungen |
 
-## Experimentopia – „Selbst ausprobieren“: `…/#thema=<id>` (z. B. physik-optik)
-Optik 11/17, Energie 12 (Energie-Achterbahn Di 24.11.), Motor/Dynamo/Trafo (Fr 20.11.) ↔ geplant Strom & Ohm.
+## Experimentopia – „Selbst ausprobieren“: `https://experimentopia.mathenachhilfe-online.com/#thema=<name>` (Test: experimentopia-test.)
+| KurvenFlug | Experimentopia |
+|---|---|
+| laser, lichtbrechung | optik |
+| energie | energie (Achterbahn ab Di 24.11.) |
+| weg-zeit, beschleunigung | kraft |
+| wurf, waagerechter-wurf | fallen |
+| (geplant Strom & Ohm) | strom |
+| (Magnetismus) | elektromagnetismus |
+Experimentopia streicht „Bewegung & Diagramme“ → verweist auf weg-zeit/beschleunigung.
 
 ## Wissensgarten – „Merken im Wissensgarten“: `…/#paket=<Paket-ID>` (ab Fr 20.11.)
 s1-mathe-algebra (Funktionen), s1-physik-einheiten-formeln, s1-physik-strom.
