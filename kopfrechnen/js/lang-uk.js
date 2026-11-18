@@ -2441,4 +2441,5 @@ I18N.add('uk', {"% sind":"% — це",
 "Überschlag: Der Hinweis sagt jetzt genau, welche Zahl wie gerundet wird":"Оцінка: підказка тепер точно каже, як округлити кожне число",
 "Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort":"Задачі з кубиком тепер питають про середнє, а не «приблизно», – тож є рівно одна правильна відповідь",
 "Neue Version {} geladen ✓":"Нову версію {} завантажено ✓",
-"Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"Веб-застосунок ще надійніше сам завантажує нові версії – ніколи посеред раунду"});
+"Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"Веб-застосунок ще надійніше сам завантажує нові версії – ніколи посеред раунду",
+"Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon":"Зовсім нова музика: сучасне звучання з ревербом, падами та бітом – lo-fi в меню, поп під час вправ, денс у бліц-раунді, треп у підземеллі"});

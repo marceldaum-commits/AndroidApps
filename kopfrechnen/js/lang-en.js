@@ -2441,4 +2441,5 @@ I18N.add('en', {"% sind":"% are",
 "Überschlag: Der Hinweis sagt jetzt genau, welche Zahl wie gerundet wird":"Estimating: the hint now says exactly how to round each number",
 "Würfel-Aufgaben fragen nach dem Durchschnitt statt „ungefähr“ – so gibt es genau eine richtige Antwort":"Dice questions now ask for the average instead of “about” – so there is exactly one correct answer",
 "Neue Version {} geladen ✓":"New version {} loaded ✓",
-"Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"The web app now fetches new versions even more reliably by itself – never in the middle of a round"});
+"Die Web-App holt neue Versionen noch zuverlässiger von selbst – nie mitten in einer Runde":"The web app now fetches new versions even more reliably by itself – never in the middle of a round",
+"Ganz neue Musik: moderner Klang mit Hall, Flächen und Beat – Lo-Fi im Menü, Pop beim Üben, Dance in der Blitzrunde, Trap im Dungeon":"Brand-new music: a modern sound with reverb, pads and beats – lo-fi in the menu, pop while practising, dance in the Blitz round, trap in the dungeon"});
