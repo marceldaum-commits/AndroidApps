@@ -104,6 +104,9 @@ Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsw
 | ![Live](screenshots/72_live_rechnung.png) | ![Frage](screenshots/73_rechenstern_frage.png) | ![Richtig](screenshots/74_rechenstern_geschafft.png) | ![Aufgabe](screenshots/76_aufgabe_nach_fehlversuch.png) |
 
 ## Vorlesen mit Nova (`core/model/Speech.kt`, `Nova.kt`, `ReadTexts.kt`, `shared/ui/fx/Reader.kt`)
+
+> **Zurzeit abgeschaltet** (Marcel 18.11.: Vorlesen nur im Wissensgarten). Schalter `Nova.ENABLED` in `core/model/Nova.kt`;
+> bei `false` keine Vorlese-Knöpfe/-Einstellungen, keine Abrufe an den Stimmen-Server, keine Gerätestimme, `vorlesen/texte.json` leer.
 Volt liest Sprechblasen, Aufgaben, Rechen-Stern-Fragen und Erklärungen vor (abschaltbar, Probe-Taste). Stimme ist immer
 **„Nova – KI-generierte Stimme“** (OpenAI, Vorgabe Marcel; Tempo 1,25 legt der Server fest). Formeln und Einheiten werden in Worte
 übersetzt (`Speech.clean`: „x² − 2x“ → „x hoch 2 minus 2x“, „3 m/s“ → „3 Meter pro Sekunde“).

@@ -6,6 +6,12 @@ package de.kurvenflug.core.model
  * Dateiname: SHA-256 von "nova|" + Sprache + "|" + Text (normalisiert), Hex, erste 32 Zeichen; Ordner = die ersten 2 Zeichen.
  */
 object Nova {
+    /**
+     * Vorlesen überhaupt angeboten? Vorgabe Marcel 18.11.: vorerst aus (nur der Wissensgarten liest vor) – der Code bleibt,
+     * zum Wiedereinschalten genügt `true`. Bei `false`: keine Vorlese-Knöpfe, keine Einstellungen dazu, keine Abrufe an den
+     * Stimmen-Server, keine Gerätestimme; vorlesen/texte.json ist eine leere Liste.
+     */
+    const val ENABLED = false
     const val HOST = "stimmen.mathenachhilfe-online.com"
     const val BASE = "https://$HOST/nova/"
     const val LABEL = "Nova – KI-generierte Stimme"

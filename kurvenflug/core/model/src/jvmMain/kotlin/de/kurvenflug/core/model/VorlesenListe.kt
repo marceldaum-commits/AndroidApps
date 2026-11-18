@@ -45,6 +45,9 @@ object VorlesenListe {
         return VoltLines.runtime(today).map { Nova.normalize(Speech.clean(it)) }.filter { it.isNotBlank() && it.any(Char::isLetter) && it !in have }.distinct()
     }
 
+    /** Liste, solange das Vorlesen abgeschaltet ist ([Nova.ENABLED]) */
+    const val EMPTY = "{\"format\":1,\"app\":\"kurvenflug\",\"texte\":[]}\n"
+
     fun json(texts: List<String>, runtime: List<String> = emptyList()): String {
         fun esc(s: String) = buildString { s.forEach { c -> when (c) { '"' -> append("\\\""); '\\' -> append("\\\\"); '\n' -> append("\\n"); else -> if (c < ' ') append("\\u%04x".format(c.code)) else append(c) } } }
         val all = texts.map { "  {\"text\": \"${esc(it)}\", \"sprache\": \"de\"}" } + runtime.map { "  {\"text\": \"${esc(it)}\", \"sprache\": \"de\", \"laufzeit\": true}" }
@@ -54,6 +57,9 @@ object VorlesenListe {
 
 fun main(args: Array<String>) {
     val out = File(args[0])
+    if (!Nova.ENABLED) {   // Vorlesen abgeschaltet: leere Liste, damit das Stimmen-Werk nichts vertont
+        out.parentFile.mkdirs(); out.writeText(VorlesenListe.EMPTY); println("vorlesen/texte.json: Vorlesen abgeschaltet – leere Liste"); return
+    }
     val texts = VorlesenListe.texts(args.drop(1).map(::File))
     texts.forEach { t ->
         check(Normalizer.isNormalized(t, Normalizer.Form.NFC)) { "Text nicht NFC: $t" }

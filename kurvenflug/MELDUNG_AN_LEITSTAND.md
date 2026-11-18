@@ -1,5 +1,17 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.11 – Vorlesen abgeschaltet, Musik und Klänge bleiben (Marcel 18.11.) · Web = APK = Play
+1. **Ein Schalter, Code bleibt:** `Nova.ENABLED = false` (`core/model/Nova.kt`). Dann gibt es keinen Reader (Android und Web):
+   keine 🔊-Knöpfe (Volt-Blasen, Theorie, Aufgaben), keine Karte „Vorlesen“ (Sprechtempo, Probe, „Alle Nova-Texte offline
+   laden“), kein Hinweis „Nova nicht erreichbar“. Eltern-Text, Lizenzen und Store-Texte erwähnen das Vorlesen nicht mehr.
+   **Browser-Test:** Start und mehrere Klicks: **0 Anfragen an stimmen.mathenachhilfe-online.com bzw. /jetzt, 0 × Gerätestimme.**
+   Zum Wiedereinschalten genügt `true` (Tests und Bildschirmfotos für das Vorlesen laufen weiter mit eingeschaltetem Reader).
+2. **vorlesen/texte.json** = `{"format":1,"app":"kurvenflug","texte":[]}` (Web unter vorlesen/texte.json, APK als Asset).
+3. **Musik und Klänge:** Musik startet auf Android sofort; im Browser bei der ersten Berührung (der Browser erlaubt Ton erst
+   danach). Klänge bei Start, Treffer, Fehlschuss, Stern, Level geschafft, dazu die Erkennungsmelodie. In den Einstellungen sind
+   „🎵 Musik“ und „🔊 Geräusche“ getrennt (je mit Lautstärke); Volts Roboter-Plappern („🤖 Volt-Stimme“) ist wieder da und abschaltbar.
+4. versionCode 58, Prüfkette grün (Unit-Tests, Lint, APK, AAB, WebApp).
+
 ## ✅ 2.5.10 – fertig für den Betriebstest: WebApp aktualisiert sich selbst + Theorie im Rechen-Stern · Web = APK = Play
 **WebApp immer auf dem neuesten Stand (Leitstand 18.11.):**
 - Prüft auf neue Versionen beim Öffnen, bei Rückkehr in den Tab (visibilitychange/focus/pageshow) und alle 30 min:

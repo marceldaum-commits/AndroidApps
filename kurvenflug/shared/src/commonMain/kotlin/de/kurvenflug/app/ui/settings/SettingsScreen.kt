@@ -40,6 +40,8 @@ fun SettingsScreen(
     onPro: (() -> Unit)? = null,
     voltVoice: Boolean = true, onVoltVoice: (Boolean) -> Unit = {},
     readAloud: Boolean = true, onReadAloud: (Boolean) -> Unit = {},
+    /** Vorlesen überhaupt angeboten ([de.kurvenflug.core.model.Nova.ENABLED]; Bildschirmfoto-Test kann es einschalten) */
+    readAloudAvailable: Boolean = de.kurvenflug.core.model.Nova.ENABLED,
     readSpeed: Int = 100, onReadSpeed: (Int) -> Unit = {},
     offlineBest: Boolean = false, onOfflineBest: (Boolean) -> Unit = {},
 ) {
@@ -63,22 +65,26 @@ fun SettingsScreen(
                     Toggle("🔊 Geräusche", "Start, Flug, Treffer, Sterne, Volts Robo-Stimme", sound, onSound)
                     if (sound) Volume("Lautstärke", sfxVolume, onSfxVolume)
                     Toggle("📳 Vibration", "Kurzes Ruckeln bei Treffern", vibration, onVibration)
-                    if (!readAloud) Toggle("🤖 Volt-Stimme", "Volt plappert in Roboter-Sprache, wenn er spricht", voltVoice, onVoltVoice)
+                    if (!readAloud || !readAloudAvailable) Toggle("🤖 Volt-Stimme", "Volt plappert in Roboter-Sprache, wenn er spricht", voltVoice, onVoltVoice)
                 }
             }
-            ReadAloudCard(readAloud, onReadAloud, readSpeed, onReadSpeed, offlineBest, onOfflineBest)
+            if (readAloudAvailable) ReadAloudCard(readAloud, onReadAloud, readSpeed, onReadSpeed, offlineBest, onOfflineBest)
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     val shop = de.kurvenflug.app.LocalPro.current.locking
                     if (shop) Text("Kurvenflug ist kostenlos bis Klasse 10. Optional gibt es „Kurvenflug Pro“ als Einmalkauf ohne Abo " +
                         "(Oberstufe, Extrem-Stufen, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
+                    val nova = readAloudAvailable
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
-                        "keine Spieldaten an einen Server. Nur das Vorlesen (Nova, abschaltbar) lädt Audiodateien von unserem Server. Neue Versionen lädt die Seite von selbst."
+                        "keine Spieldaten an einen Server." + (if (nova) " Nur das Vorlesen (Nova, abschaltbar) lädt Audiodateien von unserem Server." else "") +
+                        " Neue Versionen lädt die Seite von selbst."
                         else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
-                        "Ins Internet geht die App nur für die Vorlese-Stimme Nova (abschaltbar). Neue Versionen kommen über Google Play."
+                        (if (nova) "Ins Internet geht die App nur für die Vorlese-Stimme Nova (abschaltbar). " else "Es gehen keine Spieldaten ins Internet. ") +
+                        "Neue Versionen kommen über Google Play."
                         else "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
-                        "Ins Internet geht die App nur, um nach Updates zu schauen und für die Vorlese-Stimme Nova (beides abschaltbar).", style = MaterialTheme.typography.bodySmall)
+                        (if (nova) "Ins Internet geht die App nur, um nach Updates zu schauen und für die Vorlese-Stimme Nova (beides abschaltbar)."
+                        else "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)."), style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel, Maßstab (Kl. 5/6), Zuordnungen, Prozent und Zinseszins (Kl. 6–8), " +
                         "lineare Funktionen und Gleichungssysteme (Kl. 7/8), Pythagoras (Kl. 8/9), quadratische Funktionen und Nullstellen (Kl. 9), " +
                         "Trigonometrie, Potenzfunktionen, Sinus, Exponential- und Logarithmusfunktionen (Kl. 9/10); Oberstufe: Ableitung, Extrempunkte, " +
@@ -212,13 +218,13 @@ private fun LicenseCard(web: Boolean) {
     }
 }
 
-private const val LICENSES = "Kurvenflug nutzt freie Software. Danke an alle, die sie bauen!\n\n" +
+private val LICENSES = "Kurvenflug nutzt freie Software. Danke an alle, die sie bauen!\n\n" +
     "Apache License 2.0 (apache.org/licenses/LICENSE-2.0): Kotlin, kotlinx.coroutines, kotlinx.serialization, " +
     "Jetpack Compose und Compose Multiplatform, AndroidX (Activity, Core, Lifecycle, Navigation, Room, Glance, WorkManager, " +
     "Fragment, SavedState, Startup, DataStore), Guava, JSpecify, JetBrains Annotations.\n\n" +
     "Nur in der Google-Play-Version: Play In-App Updates und Play Billing (Nutzungsbedingungen von Google), " +
-    "Google Data Transport, Firebase Encoders und javax.inject (Apache License 2.0).\n\n" +
-    "Vorlese-Stimme Nova: KI-generierte Audiodateien (OpenAI), erzeugt auf unserem Server."
+    "Google Data Transport, Firebase Encoders und javax.inject (Apache License 2.0)." +
+    (if (de.kurvenflug.core.model.Nova.ENABLED) "\n\nVorlese-Stimme Nova: KI-generierte Audiodateien (OpenAI), erzeugt auf unserem Server." else "")
 
 private const val LICENSES_WEB = "\n\nIm Browser zusätzlich: Skia/Skiko (BSD-3-Clause), Noto Color Emoji (SIL Open Font License 1.1), " +
     "DejaVu Sans (freie Bitstream-Vera-Lizenz). Volltexte in fonts-lizenzen.txt."
