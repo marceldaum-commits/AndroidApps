@@ -131,12 +131,12 @@ class NovaKatalog {
         paketeDa = true
     }
 
-    /** Wie [pakete], aber Paket für Paket mit Pausen – im Browser (ein Thread) bleibt die Oberfläche dabei flüssig */
+    /** Wie [pakete], aber Paket für Paket mit kurzen Pausen (delay statt yield: nur so kommt der Browser im Wasm-Betrieb zwischendurch zum Zug) */
     suspend fun paketeSchrittweise(packs: List<Pack>) {
         val (p, f) = packs.partition { it.isPlus }
         suspend fun texte(l: List<Pack>): HashSet<String> {
             val out = HashSet<String>()
-            for (pack in l) { (Nova.packTexte(pack) + Nova.packLaufzeit(pack)).mapTo(out) { key(it.sprache, it.text) }; kotlinx.coroutines.yield() }
+            for (pack in l) { (Nova.packTexte(pack) + Nova.packLaufzeit(pack)).mapTo(out) { key(it.sprache, it.text) }; kotlinx.coroutines.delay(1) }
             return out
         }
         val fr = texte(f).also { s -> Nova.festeTexte().mapTo(s) { key(it.sprache, it.text) } }
