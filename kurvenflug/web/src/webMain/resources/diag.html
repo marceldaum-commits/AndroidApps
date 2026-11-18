@@ -103,7 +103,8 @@
       p = p.then(function () { return step(4 + i, (i === 0 ? 'Kleines' : 'Großes') + ' Wasm laden + übersetzen (' + f.u + ', ' + mb(f.s) + ')', function () {
         var t0 = performance.now(), tl;
         return fetchBytes(f).then(function (buf) { tl = Math.round(performance.now() - t0); return WebAssembly.compile(buf); })
-          .then(function (m) { modules.push(m); return { text: 'geladen in ' + tl + ' ms, übersetzt (' + WebAssembly.Module.imports(m).length + ' Importe)' }; });
+          .then(function (m) { modules.push(m); var n = '?'; try { n = WebAssembly.Module.imports(m).length; } catch (e) { n = 'Liste nicht lesbar (' + e.message + ')'; }
+            return { text: 'geladen in ' + tl + ' ms, übersetzt ok · Importe: ' + n, warn: typeof n !== 'number' }; });
       }); });
     });
     p = p.then(function () { return step(4 + FILES.length, 'Bildprobe: WebGL-Flächen anzeigen', function () {

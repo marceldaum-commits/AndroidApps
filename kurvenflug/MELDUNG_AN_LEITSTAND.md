@@ -1,5 +1,29 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.18 – iOS/Safari: JS-Fassung automatisch, Startfehler wechseln ohne Zutun, Kotlin-Flags geprüft
+**Ursache genauer (aus Marcels iPad-Befund + Analyse der Module):**
+- Das App-Wasm importiert genau **einen Nicht-Funktions-Import: `intrinsics.tag` (kind „tag“)**. Bisher lieferte die Kotlin-Brücke
+  dafür **`WebAssembly.JSTag`** (wenn vorhanden, sonst eigenes `new WebAssembly.Tag({parameters:['externref']})`).
+  Safari 26/27 kennt JSTag, verarbeitet aber den Tag-Import offenbar fehlerhaft: `WebAssembly.Module.imports` scheitert
+  („unable to produce import descriptors“), die App startet und bricht dann mit **„Can't wrap nullptr“** ab (Skiko-Objekt null –
+  passt zu falsch weitergereichten/gefangenen JS-Ausnahmen). Das Skiko-Wasm (Emscripten, nur Funktions-Importe) ist unauffällig.
+- **Kotlin 2.2.21 – Flags geprüft:** vorhanden u. a. `-Xwasm-no-jstag`, `-Xwasm-use-new-exception-proposal`,
+  `-Xwasm-use-traps-instead-of-exceptions` (bricht try/catch – unbrauchbar). **`-Xwasm-no-jstag` ist jetzt an** (Web, shared,
+  core/model): die Brücke nutzt nie mehr `WebAssembly.JSTag`, sondern immer ein eigenes Tag (im Bündel geprüft: 0 × JSTag).
+  `-Xwasm-use-js-string-builtins` gibt es in 2.2.21 nicht als Schalter (Importe sind reine Funktionen aus `js_code`/`./skiko.mjs`).
+  Ob Safari mit no-jstag die schnelle Fassung startet, kann nur Marcel prüfen: **`…/?modus=wasm`** (danach `?modus=auto`).
+**Umgesetzt (Vorlage für die anderen Räume):**
+1. **WebKit → direkt JS:** iPhone/iPad (alle Browser) und Safari am Mac (AppleWebKit ohne Chrome/Edge/Firefox/Android) bekommen
+   sofort `kurvenflug-compat.js` – nichts wird doppelt geladen. Ausnahme zum Testen: `?modus=wasm`.
+2. **Auto-Wechsel ohne Zutun:** Jeder Startfehler der Wasm-Fassung (error/unhandledrejection inkl. „Can't wrap nullptr“, auch in
+   den ersten 6 s nach dem Start, Zeitüberschreitung, Tab-Absturz nach dem Laden) → Merker `kf.wasmGescheitert = <Version>` und
+   **sofort neu laden mit JS**; danach kurzer Hinweis „Schnelle Fassung ging nicht (…) – einfache Fassung geladen“.
+   Der Merker gilt **nur für diese Version** – eine neue Version versucht Wasm wieder (außer bei WebKit, siehe 1).
+3. diag.html: Schritt 4 wertet „Importe nicht lesbar“ jetzt als Warnung (Übersetzen ok) statt als Fehler.
+**Tests (Chromium):** Chrome → wasm; iPhone-Kennung → js; Mac-Safari-Kennung → js; iPhone + `?modus=wasm` → wasm; simulierter
+„Can't wrap nullptr“ beim Start → automatisch js, Merker 2.5.18. Test-Link: https://kurvenflug-test.mathenachhilfe-online.com/
+- versionCode 65 / 2.5.18, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.17 – Diagnose-Leiste erweitert (zu Marcels Ergebnis: alle Quadrate farbig, App mit gl=beides weiß)
 **Bei uns geprüft (Chromium, iPhone-Maße):** Über der Zeichenfläche liegt nichts – Aufbau: `<body>` (dunkelblau 11,16,38) → Shadow-DOM
 → `DIV` 393×856 (transparent) → `CANVAS` 393×852 + ein leeres `DIV` 0×0 (Texteingabe). Lader nach dem Start entfernt.

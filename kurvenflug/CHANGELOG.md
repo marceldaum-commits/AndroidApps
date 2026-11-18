@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.18 – Läuft auf iPhone und iPad
+- Auf iPhone, iPad und Safari am Mac startet Kurvenflug jetzt gleich in der Fassung, die dort zuverlässig läuft – keine
+  weiße Seite mehr. Klappt der Start in einem anderen Browser einmal nicht, wechselt Kurvenflug von selbst und ohne Zutun.
+
 ## 2.5.17 – Weitere Hilfe bei der Fehlersuche auf dem iPhone
 - Die Diagnose-Leiste zeigt mehr (Größen, was über der Spielfläche liegt, Farbprobe) und umrandet die Spielfläche kurz rot.
   Im normalen Spiel ändert sich nichts.

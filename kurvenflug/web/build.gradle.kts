@@ -36,6 +36,7 @@ kotlin {
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         outputModuleName.set("kurvenflug")
+        compilerOptions { freeCompilerArgs.add("-Xwasm-no-jstag") }   // Safari 26/27: kann den Import „intrinsics.tag“ (WebAssembly.JSTag) nicht – Leitstand 18.11.
         browser { commonWebpackConfig { outputFileName = "kurvenflug.js" } }
         binaries.executable()
     }
