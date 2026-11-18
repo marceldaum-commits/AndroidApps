@@ -114,3 +114,10 @@ DIREKT-LINK ab Fr 20.11. (Test): https://kurvenflug.mathenachhilfe-online.com/#k
 - Raumlicht: 2D-Vektoren + Binomial-Histogramm bleiben bei KurvenFlug; Geraden/Ebenen im Raum + Körper-Anschauung Oberstufe bei Raumlicht. Funktionenscharen nehmen wir aus unserer geplanten Kurvendiskussion heraus (→ Raumlicht).
 - Mathe-Trainer: nimmt Normalverteilung & Testen; Aufteilung Graphen-Intuition (wir) / Rechnen + Abi (MT) angenommen.
 - Rechenblitz, Experimentopia: keine Überschneidung bzw. wie oben abgestimmt.
+
+### Pro-Empfehlung Geld verdienen (18.11., Entscheidung Marcel Mo 23.11.)
+- Kern: Klassenarbeits-Trainer je Kapitel (passt zum Probestunden-Hinweis vor Klassenarbeiten).
+- Bonus: Extrem-Stufen/Prüfungen, Sturm ab Profi, Andromeda-Kampagne, mehr Spieler.
+- Frei: alle 140 Level in Grundform. Preis 7,99 € einmalig; ab Januar im Familienpass. Bisherige Käufer behalten Pro.
+- Satz Pro-Seite/Elternbereich: „Pro: Klassenarbeits-Trainer für jedes Kapitel, Profi-Stufen und Kampagne.“
+- Geld verdienen empfiehlt Variante B + Umbau Di 24.11.
