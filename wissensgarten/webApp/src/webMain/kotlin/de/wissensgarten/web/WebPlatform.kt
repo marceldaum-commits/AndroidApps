@@ -46,6 +46,8 @@ private fun jsSafe(safe: Boolean): Unit = js("window.wgUpdate && window.wgUpdate
 private fun jsSendCount(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true }).catch(function () {}); } catch (e) {} })()")
 // ---- Eltern-Kopplung: Zufall, AES-GCM-256 (WebCrypto), Hochladen ohne Cookies. Der Schlüssel verlässt das Gerät nur im Link für die Eltern.
 private fun jsRandomB64(n: Int): String = js("(function () { var a = new Uint8Array(n); crypto.getRandomValues(a); var s = ''; for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s).replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, ''); })()")
+/** Installierte Web-App (Home-Bildschirm) → normaler Browser; sonst im selben Tab */
+private fun jsOpenApps(url: String): Unit = js("(function () { var st = window.wg && window.wg.install && window.wg.install.standalone && window.wg.install.standalone(); if (st) window.open(url, '_blank', 'noopener'); else location.href = url; })()")
 private fun jsTestStage(): Boolean = js("(function () { var h = location.hostname; return h.indexOf('-test') >= 0 || h === 'localhost' || h === '127.0.0.1'; })()")
 private fun jsElternPut(url: String, schreib: String, key: String, json: String): Promise<JsNumber> = js("""(function () {
   function dec(t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; var b = atob(t), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
@@ -253,6 +255,9 @@ class WebHost : AppHost {
 
     override fun toast(message: String) = jsToast(message)
     override fun sendCount(url: String, body: String) = jsSendCount(url, body)
+    override val appsPageUrl: String get() =
+        (if (jsTestStage()) "https://staging.mathenachhilfe-online.com" else "https://www.mathenachhilfe-online.com") + "/lern-apps/?src=wissensgarten-kopf"
+    override fun openAppsPage() = jsOpenApps(appsPageUrl)
     override fun secureRandomB64(n: Int): String? = runCatching { jsRandomB64(n) }.getOrNull()
     override val testStage: Boolean get() = jsTestStage()
     override suspend fun elternPut(url: String, schreib: String, keyB64: String, json: String): Int =

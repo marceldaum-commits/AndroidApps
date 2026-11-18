@@ -275,6 +275,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         val playing = route in setOf(Routes.WEEDS, Routes.BLITZ, Routes.RHYTHM, Routes.LOCI, Routes.REVIEW, Routes.DUEL_PLAY, Routes.LOCAL_DUEL, Routes.ONBOARDING, Routes.TUTORIAL, Routes.ADD_PROFILE, Routes.PRIVACY)
         Box(Modifier.fillMaxSize()) {
         Scaffold(
+            // „← Alle Apps“: zurück zur App-Auswahl auf unserer Website – nur in den Hauptansichten, nie mitten in einer Runde
+            topBar = { host.appsPageUrl?.let { if (showBar) de.wissensgarten.app.ui.common.AlleAppsLeiste { host.openAppsPage() } } },
             bottomBar = {
                 if (showBar) NavigationBar {
                     TABS.forEach { t ->

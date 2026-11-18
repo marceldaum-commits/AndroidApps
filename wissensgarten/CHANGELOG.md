@@ -3,6 +3,10 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.17 – „← Alle Apps“ (18.11.2026)
+- Oben in den Hauptansichten (Garten, Samen, Laden, Familie, Mehr) führt „← Alle Apps“ zurück zur Auswahl aller Lern-Apps auf unserer Website. In laufenden Runden und Spielen erscheint der Knopf nicht.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.16 – Hinweis vor Klassenarbeiten vereinfacht (18.11.2026)
 - Steht eine Klassenarbeit an, zeigt der Wochenbericht für Eltern nur noch den Hinweis auf eine kostenlose Probestunde.
 - Dein Lernstand bleibt vollständig erhalten.

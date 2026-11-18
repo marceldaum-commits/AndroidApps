@@ -7,6 +7,22 @@
 
 
 
+
+
+## 2.2.17 – „← Alle Apps“ (18.11.2026)
+- **Ort:** schmale Leiste ganz oben in allen Hauptansichten (Garten = Startbildschirm, Samen, Laden, Familie, Mehr): App-Logo + „← Alle Apps“, Tippziel ≥ 44 px, kein Preis und kein Kaufhinweis. In Runden, Spielen, Onboarding und Dialogen erscheint die Leiste nicht.
+- **Ziel:** `https://www.mathenachhilfe-online.com/lern-apps/?src=wissensgarten-kopf`, auf der Test-Stufe `staging.`. Im Browser im selben Tab; aus der installierten Home-Bildschirm-App per `window.open` im normalen Browser.
+- **Belege:**
+  - Bildschirmfotos `screenshots/81_web_alle_apps_handy.png` (iPhone 13) und `screenshots/82_web_alle_apps_pc.png` (1280 × 800).
+  - `webApp/tools/web-alle-apps.cjs` (Handy, PC, Dunkel-Modus des Browsers): Antippen öffnet die App-Auswahl im selben Tab, alles grün.
+- Nur Web-App; die pausierte Android-App zeigt den Knopf nicht (`appsPageUrl = null`).
+
+## 2.2.16 – C1: vor Klassenarbeiten nur Probestunde (18.11.2026)
+- Crashkurs-Knopf entfernt (kein `crashkurs_klick` mehr). Text: „Am <Tag> ist die Klassenarbeit „…“. Eine kostenlose Probestunde kann vor der Arbeit helfen.“ Knopf „Kostenlose Probestunde anfragen“, zählt `probestunde_klick`/`klassenarbeit`.
+- **Abweichung:** `/probestunde-anfrage/` liefert gerade **404**, deshalb weiter `https://www.mathenachhilfe-online.com/probestunde/?src=wissensgarten-klassenarbeit&thema=…&klasse=…` (200). Bitte melden, sobald `/probestunde-anfrage/` steht, dann stelle ich um.
+- Neue Dauerregel (Di/Fr großes Inhaltsupdate bis 16 Uhr) in `PRUEFPLAN.md` übernommen; erstes Update Fr 20.11.
+- Belege: Bildschirmfoto `screenshots/73_nachhilfe_hinweis.png`, Zählung und Eltern-Rundlauf grün.
+
 ## 2.2.15 – Sicherung über die Kopplung, Wiederherstellen, Monatsverlauf (18.11.2026)
 - **Marcel hat direkt bestätigt** („Ja, so bauen“).
 - **Sicherung:**

@@ -68,6 +68,10 @@ interface AppHost {
     fun setSafeToUpdate(safe: Boolean) {}
     /** Anonymen Zählaufruf abschicken (Text, ohne Cookies, ohne Antwort abzuwarten, Fehler werden ignoriert) */
     fun sendCount(url: String, body: String) {}
+    /** Adresse der App-Auswahl auf unserer Website („← Alle Apps“) – null, wenn die Plattform keinen Knopf zeigt */
+    val appsPageUrl: String? get() = null
+    /** App-Auswahl öffnen: im Browser im selben Tab, aus der installierten Web-App im normalen Browser */
+    fun openAppsPage() {}
     /** Eltern-Kopplung: n sichere Zufallsbytes als base64url ohne Padding (null = nicht verfügbar) */
     fun secureRandomB64(n: Int): String? = null
     /** Läuft als Test-Fassung (wissensgarten-test) → Test-Server und Test-Elternseite */
