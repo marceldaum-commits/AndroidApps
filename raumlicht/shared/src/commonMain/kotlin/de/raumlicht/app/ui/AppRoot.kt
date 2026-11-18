@@ -106,6 +106,8 @@ fun AppRoot(
     countSend: ((String) -> Unit)? = null,
     /** Schalter für Zählung und Nachhilfe-Hinweise samt Geschenk-Eintrag und Fußzeile in den Einstellungen zeigen */
     offers: Boolean = true,
+    /** Adresse der Crashkurs-Seite (leer = Hinweis „Klausur bald“ gibt es nicht; Tests setzen eine) */
+    crashUrl: String = de.raumlicht.core.model.Nachhilfe.CRASH_URL,
 ) {
     val countOn by prefs.countUsage.collectAsState(); val hintsOn by prefs.tutorHints.collectAsState()
     // Zählen: nur mit eingeschaltetem Schalter, nur Ereignisse von der Liste – sonst geschieht nichts
@@ -262,7 +264,18 @@ fun AppRoot(
                         onHint = { hint?.let { h -> count("probestunde_klick", "lernstand", h.topic); runCatching { uri.openUri(h.link) } } },
                         onHideHint = { hint?.let { h -> prefs.tutorState = de.raumlicht.core.model.Nachhilfe.hide(prefs.tutorState, h.topic); state = prefs.tutorState } })
                 }
-                Routes.PLANNER -> PlannerScreen(plan, today(), starMap, { prefs.setPlan(it?.encode() ?: ""); onPlanChanged() }, { l, s, a -> record(l.id, s, a) }, back)
+                Routes.PLANNER -> {
+                    val uri = androidx.compose.ui.platform.LocalUriHandler.current
+                    var state by remember { mutableStateOf(prefs.tutorState) }
+                    val day = remember { today() }
+                    val hint = remember(plan, state, hintsOn) { de.raumlicht.core.model.Nachhilfe.exam(plan, day, state, offers && hintsOn, crashUrl) }
+                    // je Klausur einmal am Tag zählen
+                    LaunchedEffect(hint?.key) { hint?.let { h -> if (de.raumlicht.core.model.Nachhilfe.isNew(state, h.key, day)) { count("nachhilfe_hinweis", "klassenarbeit", h.topic)
+                        prefs.tutorState = de.raumlicht.core.model.Nachhilfe.shown(prefs.tutorState, h.key, day); state = prefs.tutorState } } }
+                    PlannerScreen(plan, today(), starMap, { prefs.setPlan(it?.encode() ?: ""); onPlanChanged() }, { l, s, a -> record(l.id, s, a) }, back, hint,
+                        onHint = { hint?.let { h -> count("crashkurs_klick", "klassenarbeit", h.topic); runCatching { uri.openUri(h.link) } } },
+                        onHideHint = { hint?.let { h -> prefs.tutorState = de.raumlicht.core.model.Nachhilfe.hide(prefs.tutorState, h.key); state = prefs.tutorState } })
+                }
                 Routes.CLASS -> ClassScreen({ l, s, a -> record(l.id, s, a) }, back)
                 Routes.MATCH -> MatchScreen(back)
                 "achterbahn" -> RideScreen(back, parts.getOrNull(1) ?: Coaster.rides.first().id, custom = prefs.ride, onCustom = { prefs.ride = it })

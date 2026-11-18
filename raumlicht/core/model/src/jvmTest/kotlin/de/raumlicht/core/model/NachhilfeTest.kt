@@ -50,4 +50,23 @@ class NachhilfeTest {
         val ana = Levels.chapters.filter { it.area == Area.ANALYSIS }.flatMap { it.levels }.take(8).associate { it.id to 1 }
         assertEquals("vektoren", hint(weak + ana)!!.topic); assertEquals("analysis", hint(weak + ana, 100, Nachhilfe.hide("", "vektoren"))!!.topic)
     }
+
+    /** „Klausur bald“: nur 3 bis 14 Tage vorher, nur mit bekannter Adresse, je Klausur ausblendbar – und solange die Adresse fehlt, gar nicht. */
+    @Test fun klausurHinweis() {
+        val url = "https://www.mathenachhilfe-online.com/crashkurse/"
+        val geo = Levels.chapters.filter { it.area == Area.GEOMETRIE }.map { it.number }.take(2).toSet()
+        val plan = Plan(1000, geo)
+        assertEquals("solange der Leitstand die Adresse nicht genannt hat, gibt es den Hinweis nicht", "", Nachhilfe.CRASH_URL); assertNull(Nachhilfe.exam(plan, 990, "", true))
+        for (d in listOf(986L, 990L, 997L)) assertNotNull("Tag $d", Nachhilfe.exam(plan, d, "", true, url))
+        for (d in listOf(900L, 985L, 998L, 999L, 1000L, 1001L)) assertNull("Tag $d", Nachhilfe.exam(plan, d, "", true, url))
+        val h = Nachhilfe.exam(plan, 990, "", true, url)!!
+        assertEquals(10, h.days); assertEquals("$url?src=raumlicht-klassenarbeit&thema=vektoren", h.link); assertTrue(h.text.startsWith("In 10 Tagen ist deine Klausur."))
+        for (bad in listOf("€", "Euro", "jetzt", "Lux", "!", "kostenlos")) assertFalse(bad, h.text.contains(bad))
+        assertNull(Nachhilfe.exam(plan, 990, Nachhilfe.hide("", h.key), true, url)); assertNotNull("eine andere Klausur zeigt ihn wieder", Nachhilfe.exam(Plan(1001, geo), 990, Nachhilfe.hide("", h.key), true, url))
+        assertNull(Nachhilfe.exam(plan, 990, "", false, url)); assertNull(Nachhilfe.exam(null, 990, "", true, url))
+        // gemischte Gebiete: kein Thema im Link
+        val mixed = Plan(1000, setOf(Levels.chapters.first { it.area == Area.GEOMETRIE }.number, Levels.chapters.first { it.area == Area.ANALYSIS }.number))
+        assertEquals("$url?src=raumlicht-klassenarbeit", Nachhilfe.exam(mixed, 990, "", true, url)!!.link)
+        assertNotNull(Zaehler.body("crashkurs_klick", "klassenarbeit", "vektoren", "1"))
+    }
 }

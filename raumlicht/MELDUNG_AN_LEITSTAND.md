@@ -2,6 +2,24 @@
 
 Neueste oben.
 
+## 18.11.2026 – FRAGE AN DICH (Marcel hat mich beauftragt, das zu erfragen) + Raumlicht 2.18.23
+
+Meine Nachricht an deine Sitzung lässt sich von hier nicht zustellen (`elevated_session_untrusted_device`) – darum hier.
+
+**Ich brauche von dir: die feste Adresse der Crashkurs-Seite** (Ratgeber C1 Punkt 4, dort steht noch `<URL Crashkurse>`).
+- Auf der Website gibt es `/crashkurse/`, `/crashkurs/` und `/kostenlose-crashkurse/` nicht (404). In der Seitenliste finde ich nur die Produktseite `/produkt/easy-learning-crash-kurs/`.
+  Ist das die richtige Zielseite – oder kommt die eigene Seite „Klassenarbeit steht an?“ aus Auftrag F Schritt 3? Bitte die Adresse nennen, die bleibt.
+- Stimmt „kostenlose Crashkurse“ (so im Ratgeber)? Ich schreibe bis zur Klärung nur „Crashkurse“, ohne „kostenlos“ und ohne Preis.
+
+**Erledigt hat sich die Probestunden-Adresse:** `/probestunde/` antwortet mit 200, `/probestunde-anfrage/` mit 404. Raumlicht bleibt bei `https://www.mathenachhilfe-online.com/probestunde/?src=raumlicht-lernstand&thema=…`. Bitte im Ratgeber berichtigen (A2 Punkt 3 und C1 nennen `/probestunde-anfrage/`).
+Außerdem bestätigt: Der Zähl-Endpunkt `/zaehler/v1/e` antwortet mit 204.
+
+**Raumlicht 2.18.23 vom 18.11.2026 – nur Web-App**, auf raumlicht-test: Der Hinweis „Klausur bald → Crashkurse“ ist fertig gebaut, aber **ausgeschaltet**, solange `Nachhilfe.CRASH_URL` leer ist.
+- Klausur-Planer, 3 bis 14 Tage vor dem Termin, ganz unten (getrennt von Lux): „In 7 Tagen ist deine Klausur. Falls du noch Unterstützung möchtest: Wir bieten Crashkurse zur Vorbereitung an.“ · [Crashkurse ansehen] · Ausblenden (je Klausur).
+- Link `<Adresse>?src=raumlicht-klassenarbeit&thema=<vektoren|analysis|stochastik>` (Thema nur, wenn alle gewählten Kapitel aus einem Gebiet sind). Zählt `nachhilfe_hinweis` und `crashkurs_klick`, ort `klassenarbeit`. Abschaltbar über „Hinweise auf unsere Nachhilfe zeigen“.
+- Tests: `NachhilfeTest.klausurHinweis`, `AppRootTest.klausurHinweis` und `klausurHinweisErstMitAdresse`. Bild: `screenshots/86_klausur_hinweis.png` (mit Test-Adresse).
+- Sobald du die Adresse nennst: eine Zeile, eine Nachkomma-Version. Der Klausur-Planer gehört wie der Lernstand zu Raumlicht Pro.
+
 ## 18.11.2026 – Raumlicht 2.18.22: A3 Zählung, B4 Link/Geschenk, C1 Nachhilfe-Hinweis, Fußzeile
 
 Marcel hat direkt bestätigt („alle“). Ratgeber gelesen (Teil 5 und 6). **Raumlicht 2.18.22 vom 18.11.2026 – nur Web-App**, auf raumlicht-test.
