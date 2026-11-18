@@ -17,6 +17,6 @@
 6. Betriebstest (eine Woche): nur Fehlerbehebungen, Rückmeldungen aus dem Betrieb abarbeiten.
 7. **Lehrplan-Lücken** (`docs/LEHRPLAN-ABGLEICH.md`): Marcel hat am 18.11. Bauen + „Kommt bald“ freigegeben. Erledigt: Optik (2.7.0). Als Nächstes: Motor/Dynamo/Trafo, Energie, Bio Kl. 5/6, Atombau/PSE – jeweils Kachel aus `Coming` in `Upcoming.kt` entfernen, wenn gebaut.
 8. **Eltern-Koppeln** (2.8.0): echter Handytest auf der Test-Seite + Eltern-Seite (Leitstand). Vor Live: CORS des Live-Servers für experimentopia.mathenachhilfe-online.com.
-9. **Prüfplan** (`PRUEFPLAN.md`): wöchentlich neuer Inhalt (mittwochs), Monatsprüfung Dezember = Block A (Wasser + Kraft).
+9. **Rhythmus** (`PRUEFPLAN.md`): großes Inhaltsupdate Di + Fr bis 16 Uhr auf test (erstes: Fr 20.11.), Monatsprüfung Dezember = Block A (Wasser + Kraft).
 10. **Sicherung** (2.9.0): Zwei-Browser-Test auf der Test-Seite (koppeln → privates Fenster → Link einfügen → gleicher Stand). Leitstand gibt live frei; Marcel möchte Bescheid, wenn alles live ist.
 11. **Probestunden-Adresse**: `/probestunde-anfrage/` liefert 404 – App nutzt vorerst `/probestunde/`. Umstellen (`Angebote.PROBESTUNDE_PFAD`), sobald der Leitstand die Seite meldet.

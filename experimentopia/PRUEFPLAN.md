@@ -1,19 +1,21 @@
-# Experimentopia – Prüfplan (Dauerregel von Marcel, ab 18.11.2026)
+# Experimentopia – Prüfplan und Update-Rhythmus (Dauerregeln von Marcel, 18.11.2026)
 
-**Ziel:** Jede Woche neuer Inhalt, einmal im Monat gründlich prüfen und reparieren. Wir prüfen **rollierend**: Jeden Monat ist ein Block der 8 Inseln dran.
+**Ziel:** Dienstags und freitags ein großes Inhaltsupdate, einmal im Monat gründlich prüfen und reparieren. Wir prüfen **rollierend**: Jeden Monat ist ein Block der 8 Inseln dran.
 So muss nie alles auf einmal neu geprüft werden, und jede Insel kommt alle 4 Monate gründlich dran.
 
-## 1. Wöchentlich: neuer Inhalt
+## 1. Zweimal pro Woche: großes Inhaltsupdate (Dauerregel Marcel, 18.11.2026 – ersetzt „wöchentlich mittwochs“)
 
-- Mindestens **ein neuer Versuch oder eine neue Erklärung** pro Woche. Am liebsten kommt er aus `docs/LEHRPLAN-ABGLEICH.md` (Spalte „geplant“ oder eine „Kommt bald“-Kachel).
-- **Mittwochs** auf `experimentopia-test`, mit kurzer Meldung in `MELDUNG_AN_LEITSTAND.md`. Live schaltet der Leitstand.
-- Pflicht für jeden neuen Inhalt (schon in den Tests verankert):
-  - Die Antwort wird aus dem Modell berechnet (`CatalogTest`, `OpticsTest` …).
-  - Das Ziel ist mit den Reglern erreichbar.
-  - Drei Begründungen, Merksatz und Knobelfrage sind da.
-  - Die Theorie-Karte hat Formel, Größen, Einheiten und Rechenbeispiel.
-  - Es gibt ein Bildschirmfoto in `screenshots/` (vor der Auslieferung ansehen).
-  - Version und Datum stehen in `app/build.gradle.kts`, `CHANGELOG.md`, in der App und in der Meldung.
+- **Dienstag und Freitag bis 16 Uhr** ein **großes** Inhaltsupdate auf `experimentopia-test` + Meldung in `MELDUNG_AN_LEITSTAND.md`. Der Leitstand prüft am selben Tag und gibt frei.
+  Erstes Update: **Freitag, 20.11.2026**.
+- Was hinein kommt, entscheidet die größte Wirkung (Reihenfolge aus `docs/LEHRPLAN-ABGLEICH.md`, „Kommt bald“-Kacheln):
+  neue Versuche und Themen · bestehende Themen ausweiten · bestehende Aufgaben korrigieren und vervollständigen · neue Optionen in der App.
+- **Pflicht (Marcel wörtlich): „mathematisch korrekt, vollständig, nachvollziehbar. Keine Abkürzungen, weil die Schüler damit lernen.“** Für Physik, Chemie und Biologie heißt das:
+  - fachlich korrekt, immer mit Einheiten;
+  - Formeln in der Theorie mit Bedeutung der Größen und einem Beispiel;
+  - Rechenwege mit allen Schritten (in Auflösung, Begründung und Theorie);
+  - jedes Ergebnis nachgerechnet – Antworten werden aus dem Modell berechnet und in Tests gegen Buchwerte geprüft.
+- Weiter Pflicht wie bisher: Ziel mit den Reglern erreichbar, drei Begründungen, Merksatz, Knobelfrage, Bildschirmfoto angesehen, Version + Datum überall.
+- **Meldung enthält:** was neu ist · wie viele Versuche/Aufgaben (neu, geändert, gesamt) · wie geprüft (Tests, Bildschirmfotos, Starttest).
 - Ist eine „Kommt bald“-Kachel fertig gebaut, wird sie aus `Coming` in `core/model/.../Upcoming.kt` gestrichen und in der Lehrplan-Liste auf ✅ gesetzt.
 
 ## 2. Monatlich (letzte Woche des Monats): Prüfung
