@@ -107,17 +107,32 @@ fun HomeScreen(
     val sfx = LocalSfx.current
     // Zurück-Taste: erst zum Reiter „Heute“ (bzw. Klassen-Auswahl schließen), nicht gleich die App verlassen
     de.kurvenflug.app.ui.fx.BackHandler(enabled = tab != 0 || picking) { if (picking) picking = false else tab = 0 }
-    Box(Modifier.fillMaxSize()) {
+    BoxWithConstraints(Modifier.fillMaxSize()) {
         Starfield()
-        Column(Modifier.fillMaxSize().systemBarsPadding()) {
-            AnimatedContent(tab, Modifier.weight(1f), label = "tab", transitionSpec = {
+        // Breitbild (PC, Tablet quer): Seitenleiste statt Leiste unten, Inhalte in Spalten bzw. Kachel-Raster
+        val wide = maxWidth >= 900.dp
+        val cols = if (wide) 4 else 2
+        @Composable fun Tiles(list: List<@Composable (Modifier) -> Unit>) {
+            list.chunked(cols).forEach { row ->
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    row.forEach { it(Modifier.weight(1f)) }
+                    repeat(cols - row.size) { Spacer(Modifier.weight(1f)) }
+                }
+            }
+        }
+        val tabs = listOf("🚀" to "Heute", "🗺️" to "Galaxie", "🎮" to "Spiele", "🎒" to "Ich")
+        val pages: @Composable (Modifier) -> Unit = { m ->
+            AnimatedContent(tab, m, label = "tab", transitionSpec = {
                 val dir = if (targetState > initialState) 1 else -1
                 (slideInHorizontally(tween(260)) { it / 4 * dir } + fadeIn(tween(260))) togetherWith
                     (slideOutHorizontally(tween(200)) { -it / 4 * dir } + fadeOut(tween(200)))
             }) { t ->
-                Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+                Column(Modifier.widthIn(max = if (wide) 1280.dp else 10_000.dp).fillMaxSize().verticalScroll(rememberScrollState()).padding(if (wide) 24.dp else 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)) {
                     when (t) {
                         0 -> {
+                            val left: @Composable () -> Unit = {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Column(Modifier.weight(1f)) {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -135,13 +150,15 @@ fun HomeScreen(
                             }
                             banner?.invoke()
                             InstallOffer(onHome = true)
-                            Volt(greeting?.first ?: if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = 64.dp,
+                            Volt(greeting?.first ?: if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = if (wide) 84.dp else 64.dp,
                                 speech = greeting?.second ?: if (stars == 0) "Hey! Ich bin Volt. Bereit für deine erste Mission? 🚀" else "Schon $stars ⭐ gesammelt. Weiter so, Commander!")
                             crewLine?.let { (m, line) -> de.kurvenflug.app.ui.story.CrewSays(m, line) }
                             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                                 Stat("⭐", "$stars / $maxStars", Q.Yellow, Modifier.weight(1f))
                                 Stat("⚡", "$cells", Q.Yellow, Modifier.weight(1f))
                             }
+                            }
+                            val right: @Composable () -> Unit = {
                             season?.let { (e, done) -> de.kurvenflug.app.ui.story.SeasonCard(e, done) { onSeason?.invoke() } }
                             rescueCall?.let { m -> de.kurvenflug.app.ui.story.RescueCallCard(m) { onCrew?.invoke() } }
                             continueLevel?.let { l -> ContinueCard(l, chapters.firstOrNull { it.number == l.chapter }) { onLevel(l) } }
@@ -151,53 +168,93 @@ fun HomeScreen(
                             andromeda?.let { (planet, nova) -> de.kurvenflug.app.ui.story.AndromedaCard(planet, nova) { onAndromeda?.invoke() } }
                             Text("Alle Kapitel findest du in der 🗺️ Galaxie.", color = Q.Muted, style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.clickable { sfx?.play(Sound.TAP); tab = 1 })
+                            }
+                            if (wide) {
+                                Row(horizontalArrangement = Arrangement.spacedBy(28.dp)) {
+                                    Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(14.dp)) { left() }
+                                    Column(Modifier.weight(1.2f), verticalArrangement = Arrangement.spacedBy(14.dp)) { right() }
+                                }
+                                // Am großen Bildschirm ist Platz: die Kapitel der eigenen Klasse gleich hier, ein Klick startet das nächste offene Level
+                                val mine = de.kurvenflug.core.model.Plan.sections(chapters, grade, null).firstOrNull()
+                                if (mine != null) {
+                                    Column(verticalArrangement = Arrangement.spacedBy(2.dp), modifier = Modifier.padding(top = 6.dp)) {
+                                        Text("🪐 ${mine.title}", fontWeight = FontWeight.Black, color = Q.Text, fontSize = 18.sp)
+                                        Text(mine.hint, color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+                                    }
+                                    mine.chapters.chunked(3).forEach { row ->
+                                        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                            row.forEach { c ->
+                                                Box(Modifier.weight(1f)) {
+                                                    CompactChapter(c, chapters.indexOf(c), levelStars, false) {
+                                                        sfx?.play(Sound.TAP)
+                                                        onLevel(c.levels.firstOrNull { (levelStars[it.id] ?: 0) == 0 } ?: c.levels.first())
+                                                    }
+                                                }
+                                            }
+                                            repeat(3 - row.size) { Spacer(Modifier.weight(1f)) }
+                                        }
+                                    }
+                                }
+                            } else { left(); right() }
                         }
                         1 -> Galaxy(chapters, levelStars, onLevel, bossStars, onBoss, grade, continueLevel) { picking = true }
                         2 -> {
                             TabTitle("🎮 Spiele", "Zum Wetteifern, Knobeln und Selberbauen")
-                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ModeTile("⚔️", "Duell", "zu zweit oder per Code", Q.Cyan, Modifier.weight(1f)) { onDuel?.invoke() }
-                                ModeTile("☄️", "Sturm", if (stormBest > 0) "Rekord $stormBest" else "Welle um Welle", Q.Orange, Modifier.weight(1f)) { onStorm?.invoke() }
-                            }
-                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ModeTile("🔎", "Detektiv", "Formel zur Kurve finden", Q.Violet, Modifier.weight(1f)) { onDetective?.invoke() }
-                                ModeTile("🛠️", "Baukasten", "Level bauen & teilen", Q.Green, Modifier.weight(1f)) { onBuild?.invoke() }
-                            }
+                            Tiles(listOf(
+                                { m -> ModeTile("⚔️", "Duell", "zu zweit oder per Code", Q.Cyan, m) { onDuel?.invoke() } },
+                                { m -> ModeTile("☄️", "Sturm", if (stormBest > 0) "Rekord $stormBest" else "Welle um Welle", Q.Orange, m) { onStorm?.invoke() } },
+                                { m -> ModeTile("🔎", "Detektiv", "Formel zur Kurve finden", Q.Violet, m) { onDetective?.invoke() } },
+                                { m -> ModeTile("🛠️", "Baukasten", "Level bauen & teilen", Q.Green, m) { onBuild?.invoke() } },
+                            ))
                             Text("🏫 Lehrkräfte: Die Klassen-Challenge steckt im Baukasten.", color = Q.Muted, style = MaterialTheme.typography.bodySmall)
                         }
                         else -> {
                             TabTitle("🎒 Ich", "Dein Fortschritt und deine Sammlung")
-                            if (onProfiles != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ModeTile("👥", "Spieler", player ?: "wechseln", Q.Cyan, Modifier.weight(1f), onProfiles)
-                                ModeTile("👪", "Für Eltern", "Wochenübersicht", Q.Violet, Modifier.weight(1f)) { onParent?.invoke() }
+                            val tiles = ArrayList<@Composable (Modifier) -> Unit>()
+                            if (onProfiles != null) {
+                                tiles += { m -> ModeTile("👥", "Spieler", player ?: "wechseln", Q.Cyan, m, onProfiles) }
+                                tiles += { m -> ModeTile("👪", "Für Eltern", "Wochenübersicht", Q.Violet, m) { onParent?.invoke() } }
                             }
-                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ModeTile("📊", "Lernstand", "Was sitzt schon?", Q.Green, Modifier.weight(1f)) { onLearn?.invoke() }
-                                ModeTile("🏅", "Abzeichen", "$badges/${de.kurvenflug.core.model.Badges.all.size}", Q.Yellow, Modifier.weight(1f)) { onBadges?.invoke() }
+                            tiles += { m -> ModeTile("📊", "Lernstand", "Was sitzt schon?", Q.Green, m) { onLearn?.invoke() } }
+                            tiles += { m -> ModeTile("🏅", "Abzeichen", "$badges/${de.kurvenflug.core.model.Badges.all.size}", Q.Yellow, m) { onBadges?.invoke() } }
+                            tiles += { m -> ModeTile("🛸", "Hangar", "$partsFound/${de.kurvenflug.core.model.Story.parts.size} Bauteile", Q.Orange, m) { onHangar?.invoke() } }
+                            tiles += { m -> ModeTile("📒", "Sticker", "$stickers/${de.kurvenflug.core.model.Stickers.all.size}", Q.Pink, m) { onStickers?.invoke() } }
+                            if (onCrew != null) {
+                                tiles += { m -> ModeTile("🎖️", "Crew", "$crewCount/${de.kurvenflug.core.model.Season2.crew.size} gerettet", Q.Green, m, onCrew) }
+                                tiles += { m -> ModeTile("🏠", "Station", "Räume & Deko", Q.Yellow, m) { onStation?.invoke() } }
                             }
-                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ModeTile("🛸", "Hangar", "$partsFound/${de.kurvenflug.core.model.Story.parts.size} Bauteile", Q.Orange, Modifier.weight(1f)) { onHangar?.invoke() }
-                                ModeTile("📒", "Sticker", "$stickers/${de.kurvenflug.core.model.Stickers.all.size}", Q.Pink, Modifier.weight(1f)) { onStickers?.invoke() }
-                            }
-                            if (onCrew != null) Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ModeTile("🎖️", "Crew", "$crewCount/${de.kurvenflug.core.model.Season2.crew.size} gerettet", Q.Green, Modifier.weight(1f), onCrew)
-                                ModeTile("🏠", "Station", "Räume & Deko", Q.Yellow, Modifier.weight(1f)) { onStation?.invoke() }
-                            }
-                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, Modifier.weight(1f)) { onCodex?.invoke() }
-                                ModeTile("🎨", "Werkstatt", "Sonde & Volt", Q.Orange, Modifier.weight(1f)) { onWorkshop?.invoke() }
-                            }
-                            Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                                ModeTile("🎓", "Klasse", grade?.let { "Klasse $it" } ?: "alle", Q.Cyan, Modifier.weight(1f)) { picking = true }
-                                ModeTile("⚙️", "Einstellungen", "Ton, Musik, Update", Q.Muted, Modifier.weight(1f), onSettings)
-                            }
+                            tiles += { m -> ModeTile("🪐", "Lexikon", "${de.kurvenflug.core.model.Codex.unlocked(stars).size}/${de.kurvenflug.core.model.Codex.all.size}", Q.Pink, m) { onCodex?.invoke() } }
+                            tiles += { m -> ModeTile("🎨", "Werkstatt", "Sonde & Volt", Q.Orange, m) { onWorkshop?.invoke() } }
+                            tiles += { m -> ModeTile("🎓", "Klasse", grade?.let { "Klasse $it" } ?: "alle", Q.Cyan, m) { picking = true } }
+                            tiles += { m -> ModeTile("⚙️", "Einstellungen", "Ton, Musik, Update", Q.Muted, m, onSettings) }
+                            Tiles(tiles)
                         }
                     }
                     Spacer(Modifier.height(8.dp))
                 }
+                }
             }
+        }
+        if (wide) Row(Modifier.fillMaxSize().systemBarsPadding()) {
+            NavigationRail(containerColor = Q.Panel.copy(alpha = 0.92f), modifier = Modifier.fillMaxHeight(), header = {
+                de.kurvenflug.app.ui.theme.KurvenflugLogo(Modifier.padding(top = 12.dp, bottom = 8.dp).size(44.dp))
+            }) {
+                Spacer(Modifier.height(12.dp))
+                tabs.forEachIndexed { i, (icon, label) ->
+                    val selected = tab == i
+                    val scale by animateFloatAsState(if (selected) 1.25f else 1f, spring(dampingRatio = 0.4f), label = "railIcon")
+                    NavigationRailItem(selected = selected, onClick = { if (tab != i) { sfx?.play(Sound.TICK); tab = i } },
+                        icon = { Text(icon, fontSize = 26.sp, modifier = Modifier.graphicsLayer { scaleX = scale; scaleY = scale }) },
+                        label = { Text(label, fontWeight = if (selected) FontWeight.Bold else FontWeight.Normal) },
+                        colors = NavigationRailItemDefaults.colors(indicatorColor = Q.Cyan.copy(alpha = 0.2f), selectedTextColor = Q.Cyan, unselectedTextColor = Q.Muted),
+                        modifier = Modifier.padding(vertical = 6.dp))
+                }
+            }
+            pages(Modifier.weight(1f).fillMaxHeight())
+        } else Column(Modifier.fillMaxSize().systemBarsPadding()) {
+            pages(Modifier.weight(1f))
             NavigationBar(containerColor = Q.Panel.copy(alpha = 0.96f), tonalElevation = 0.dp) {
-                listOf("🚀" to "Heute", "🗺️" to "Galaxie", "🎮" to "Spiele", "🎒" to "Ich").forEachIndexed { i, (icon, label) ->
+                tabs.forEachIndexed { i, (icon, label) ->
                     val selected = tab == i
                     val scale by animateFloatAsState(if (selected) 1.25f else 1f, spring(dampingRatio = 0.4f), label = "tabIcon")
                     NavigationBarItem(

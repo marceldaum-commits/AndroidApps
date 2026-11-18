@@ -55,7 +55,7 @@ fun WalkthroughOverlay(level: Level, steps: List<Step>, voltSolves: Int, onClose
 
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.6f)).clickable(remember { MutableInteractionSource() }, null) {}) {
         Column(
-            Modifier.align(Alignment.BottomCenter).fillMaxWidth().systemBarsPadding().padding(10.dp)
+            Modifier.align(Alignment.BottomCenter).widthIn(max = 680.dp).fillMaxWidth().systemBarsPadding().padding(10.dp)
                 .clip(RoundedCornerShape(24.dp)).background(Q.Panel).border(2.dp, Q.Violet, RoundedCornerShape(24.dp))
                 .verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp),

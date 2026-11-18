@@ -267,9 +267,15 @@ fun LevelScreen(
     Box(Modifier.fillMaxSize()) {
         Starfield(seed = level.chapter * 10 + level.number)
         BoxWithConstraints(Modifier.fillMaxSize().systemBarsPadding()) {
+        // Breitbild (PC, Tablet quer): Spielfeld groß links, Aufgabe und Regler rechts – alles ohne Scrollen
+        val wide = maxWidth >= 900.dp && maxWidth > maxHeight
         // Niedrige Bildschirme (z. B. 320 × 640): Spielfeld etwas kleiner, damit Regler und „Start“ ohne Scrollen sichtbar bleiben
-        val field = if (maxHeight < 720.dp) minOf(maxWidth - 24.dp, maxHeight * 0.4f) else maxWidth - 24.dp
-        Column(Modifier.fillMaxSize()) {
+        val field = when {
+            wide -> minOf(maxHeight - 24.dp, maxWidth * 0.56f)
+            maxHeight < 720.dp -> minOf(maxWidth - 24.dp, maxHeight * 0.4f)
+            else -> maxWidth - 24.dp
+        }
+        val head: @Composable () -> Unit = {
             // Kopfzeile
             Row(Modifier.fillMaxWidth().padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Zurück", tint = Q.Text) }
@@ -281,15 +287,16 @@ fun LevelScreen(
             }
             Volt(mood, Modifier.padding(horizontal = 12.dp).heightIn(min = 64.dp), size = 60.dp, speech = speech)
             // Sagt Volt gerade etwas anderes (Rückmeldung nach einem Fehlversuch), bleibt die Aufgabe trotzdem sichtbar
-            AnimatedVisibility(speech != level.task && phase == Phase.AIM, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
+            androidx.compose.animation.AnimatedVisibility(speech != level.task && phase == Phase.AIM, enter = fadeIn() + expandVertically(), exit = fadeOut() + shrinkVertically()) {
                 Text("📋 Aufgabe: ${level.task}", color = Q.Muted, style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(horizontal = 14.dp, vertical = 2.dp).fillMaxWidth().clip(RoundedCornerShape(10.dp))
                         .background(Q.Panel.copy(alpha = 0.6f)).clickable { speech = level.task }.padding(horizontal = 10.dp, vertical = 5.dp))
             }
-            Spacer(Modifier.height(6.dp))
+        }
+        val board: @Composable () -> Unit = {
             // Spielfeld
             Box(
-                Modifier.align(Alignment.CenterHorizontally).size(field).clip(RoundedCornerShape(18.dp))
+                Modifier.size(field).clip(RoundedCornerShape(18.dp))
                     .background(Color(0x66070B20)).border(1.5.dp, Q.Cyan.copy(alpha = 0.35f), RoundedCornerShape(18.dp))
             ) {
                 SpaceCanvas(spaceView, Modifier.fillMaxSize().onSizeChanged { canvasSize = it }.pointerInput(drag, phase, level.id) {
@@ -313,9 +320,10 @@ fun LevelScreen(
                     )
                 })
             }
-            Spacer(Modifier.height(8.dp))
+        }
+        val controls: @Composable (Modifier) -> Unit = { m ->
             // Steuerung
-            Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+            Column(m.verticalScroll(rememberScrollState()).padding(horizontal = 14.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 // Ab dem 3. Fehlversuch: Rechenweg zum Mitrechnen (nicht in Duell, Sturm, Boss)
                 AnimatedVisibility(steps != null && allowRetry && attempt >= 3 && phase == Phase.AIM,
                     enter = fadeIn() + expandVertically() + scaleIn(initialScale = 0.8f)) {
@@ -362,11 +370,25 @@ fun LevelScreen(
                 Spacer(Modifier.height(8.dp))
             }
         }
+        if (wide) Row(Modifier.fillMaxSize().padding(12.dp), horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally), verticalAlignment = Alignment.CenterVertically) {
+            board()
+            Column(Modifier.widthIn(min = 360.dp, max = 560.dp).fillMaxHeight()) {
+                head()
+                Spacer(Modifier.height(10.dp))
+                controls(Modifier.weight(1f))
+            }
+        } else Column(Modifier.fillMaxSize()) {
+            head()
+            Spacer(Modifier.height(6.dp))
+            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) { board() }
+            Spacer(Modifier.height(8.dp))
+            controls(Modifier.weight(1f))
+        }
         }
 
         // Ergebnis
         AnimatedVisibility(phase == Phase.DONE, enter = fadeIn() + scaleIn(initialScale = 0.8f, animationSpec = spring(dampingRatio = 0.6f)), exit = fadeOut(),
-            modifier = Modifier.align(Alignment.BottomCenter)) {
+            modifier = Modifier.align(Alignment.BottomCenter).widthIn(max = 640.dp)) {
             ResultCard(stars, taken.size + 0, level.cells.size, usedHelp, nextLabel, allowRetry, reward,
                 check = check, answer = answer, worked = steps, ownWay = de.kurvenflug.core.model.ReadTexts.ownWay(level, values),
                 onTheory = if (theoryText != null) ({ theory = true; sfx?.play(Sound.TICK) }) else null,
@@ -608,7 +630,7 @@ fun TheoryOverlay(t: de.kurvenflug.core.model.Theory, onClose: () -> Unit) {
     var shown by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) { shown = true }
     Box(Modifier.fillMaxSize().background(Color(0xF0070B20)).clickableNoRipple(remember { androidx.compose.foundation.interaction.MutableInteractionSource() }) {}) {
-        Column(Modifier.fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(20.dp),
+        Column(Modifier.align(Alignment.TopCenter).widthIn(max = 760.dp).fillMaxSize().systemBarsPadding().verticalScroll(rememberScrollState()).padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text("📖 ${t.emoji} ${t.title}", style = MaterialTheme.typography.headlineSmall, color = Q.Cyan, fontWeight = FontWeight.Bold)
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
@@ -656,7 +678,7 @@ fun IntroOverlay(chapter: Chapter, onDone: () -> Unit) {
     val sfx = LocalSfx.current
     LaunchedEffect(page) { sfx?.play(Sound.BEEP, volume = 0.5f) }
     Box(Modifier.fillMaxSize().background(Color(0xE6070B20)).clickableNoRipple(remember { androidx.compose.foundation.interaction.MutableInteractionSource() }) {}, contentAlignment = Alignment.Center) {
-        Column(Modifier.padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        Column(Modifier.widthIn(max = 640.dp).padding(24.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
             Text("${chapter.emoji} ${chapter.title}", style = MaterialTheme.typography.headlineMedium, color = Q.Cyan)
             Text(chapter.grades, color = Q.Muted)
             AnimatedContent(page, transitionSpec = { (slideInHorizontally { it / 2 } + fadeIn()) togetherWith (slideOutHorizontally { -it / 2 } + fadeOut()) }, label = "intro") { p ->

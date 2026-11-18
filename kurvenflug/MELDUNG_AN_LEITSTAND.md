@@ -1,5 +1,16 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.29 – PC-Ansicht im ganzen Bildschirm (Marcel 18.11.: „am PC auf Fullscreen … und nicht nur strecken“)
+- Keine feste Handy-Spalte mehr. Ab 900 dp Breite eigenes Breitbild-Layout:
+  - **Startseite:** Seitenleiste (NavigationRail) statt Leiste unten; „Heute“ zweispaltig (links Kopf, Volt, Sterne – rechts Weiter/Tagesmission/
+    Lernstand/Aurora) und darunter **„🪐 Deine Klasse“** als Kapitel-Raster (3 Spalten, Fortschrittsring, Klick startet das nächste offene Level);
+    „Spiele“ und „Ich“ als Kachel-Raster mit 4 Spalten; Inhalt höchstens 1280 dp, mittig.
+  - **Level (alle Spielarten mit dem Level-Bildschirm):** Spielfeld groß links (Höhe des Fensters), Aufgabe, Volt, Formel, Regler und „Start“
+    rechts (360–560 dp) – kein Scrollen nötig. Ergebnis-Karte, Theorie, Einführung und Rechenweg auf Lesebreite (640–760 dp).
+  - **Lese-Seiten** (Einstellungen, Eltern, Sammlung, Lernstand …): höchstens 820 dp, mittig auf dem vollen Sternenhintergrund.
+- **Handy unverändert:** alle Bildschirmfotos neu aufgenommen – keines hat sich verändert. Browser 1600×900 angesehen (Start, Level, Galaxie, Ich, Spiele).
+- versionCode 76 / 2.5.29, Prüfkette grün. Enthält auch 2.5.28 (#pro=, Pro-Code im Elternbereich, Zählung per fetch).
+
 ## ✅ 2.5.28 – Ratgeber-Update 11 eingebaut (noch NICHT auf test – Sperre bis 2.5.27 live)
 1. **Freischalt-Link:** liest `#pro=CODE` (neu) **und** `?pro=CODE` (alt); danach sofort `history.replaceState` auf den reinen Pfad
    (Browser-Test: beide Formen erkannt und gespeichert, Adresse danach `…/` ohne Code; Bestätigung bzw. Hinweis erscheint).
