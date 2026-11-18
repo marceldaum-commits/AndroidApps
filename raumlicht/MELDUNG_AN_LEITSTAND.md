@@ -49,7 +49,7 @@ Ausführlicher Absatz für die Website: `raumlicht/store/datenschutz-abschnitt.m
 3. Route **live** + **Kassenlink** des Produkts „Raumlicht KI-Abi-Pass“ (14,99 €, Abi 2027/2028/2029) → ich trage `Ki.CHECKOUT_URL` ein und setze `Ki.ENABLED = true`.
 4. In der Kauf-Mail: Link `https://raumlicht.mathenachhilfe-online.com/?ki=<Code ohne Bindestriche>` und der Code zum Kopieren (wie bei Pro).
 
-Nachtrag Nova-Abdeckung der 1471er-Liste: Die Messung läuft noch; Ergebnis folgt hier.
+**Nachtrag Nova-Abdeckung der 1471er-Liste** (gemessen am echten Server, Stand des Servers 18.11.2026 07:46): feste Texte **1450 von 1471 = 98,6 %** – 21 Dateien fehlen noch (Antwort 404, der Zählstand des Servers sagt dasselbe: `fehlend: 21`). Laufzeit-Stichprobe 40 von 40 = 100 %. Bitte die 21 fehlenden nachvertonen; bis dahin holt die App sie beim ersten Vorlesen über `/jetzt`.
 
 ## 18.11.2026 – Raumlicht 2.18.12: Fehlerbehebung aus dem Betriebstest (kein Ton bei stummem Klingelton)
 
