@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.4.5 – Eindeutige Aufträge (18.11.2026)
+
+- ⚗️ Beim Ausgleichen chemischer Gleichungen steht jetzt ausdrücklich „mit den kleinsten ganzen Zahlen“ – vorher galten Vielfache (z. B. 4 · 2 · 4 statt 2 · 1 · 2) nicht, ohne dass es dabeistand.
+- ✅ Geprüft: Alle anderen Aufträge im Labor erkennen jeden richtigen Weg an (jede passende Wippen-Belegung, jede Mischung, jeder passende Aufbau).
+
 ## 2.4.4 – Richtiges Datum (18.11.2026)
 
 - 📅 In den Einstellungen steht jetzt das richtige Versionsdatum (2.4.3 zeigte noch den 17.11.). Sonst wie 2.4.3.

@@ -2,6 +2,19 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.4.5 vom 18.11.2026: „zwei Wege“ geprüft – fertig für den Betriebstest
+
+Geprüft: alle 200 Versuche – Vermutungs- und Knobelfragen (Auswahl), Erklär-Schritt (Begründungen) und **alle 35 Labor-Aufträge** (Code der Ziel-Kontrolle gelesen).
+- **Auswahlfragen**: genau eine richtige Antwort (Nacht-Auftrag, 72 Korrekturen). Neuer Test `EindeutigTest`: keine doppelten Antworten, keine gleichwertigen Größen
+  (gleiche Zahl + Einheit, Prozent/Bruch für denselben Anteil), keine doppelten Begründungen – grün.
+- **Labor-Aufträge akzeptieren alle richtigen Wege** (Kontrolle rechnet mit dem Modell, nicht gegen eine Musterlösung): Wippe (jede ausgeglichene Belegung),
+  Flaschenzug (jede Seilzahl unter der Kraftgrenze), Rampe, Mischtemperatur (jedes Verhältnis ±1 °C), Pendel (jede Länge ±1 %), Stromkreis (jeder Aufbau mit der
+  Ziel-Stromstärke), Licht-/Farbmischen (jede Mischung, die den Zielton trifft), Titration (jede Zugabe-Folge im pH-Bereich), Ballon (jede Natron-Menge ≥ Ziel),
+  Mikroskop (jede Vergrößerung mit „gut“), Genetik (jedes Elternpaar mit dem Ziel-Anteil), Nahrungskette (jede gültige Kette), Reihenfolge der Schritte ist überall frei.
+- **Ein Fall eindeutig gemacht (b)**: Reaktions-Baukasten (8 Versuche) – Vielfache sind chemisch auch ausgeglichen, gezählt wird aber nur die kleinste Form
+  (die App sagt dann „Stimmt – aber es geht mit kleineren Zahlen!“). Der Auftrag lautet jetzt „Gleiche die Gleichung mit den kleinsten ganzen Zahlen aus …“; Test sichert das ab.
+- texte.json: 3 neue Auftrags-Sätze (klein, unter 1000 Zeichen).
+
 ## 18.11.2026 – Version 2.4.4 vom 18.11.2026: fertig für den Betriebstest (Nacht-Auftrag + Logo + Nova abgeschlossen)
 
 - **Nova abgeschlossen**: texte.json (live und test) enthält **alle** festen Sätze und alle vorhersehbaren Oberflächen-Sätze (Begrüßung, Insel-/Fach-Einleitungen,

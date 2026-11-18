@@ -12,7 +12,7 @@ internal object CatalogE {
     private fun rx(id: String) = Reactions.byId(id)
     private val KIND = listOf(c("sauer", "🍋"), c("neutral", "💧"), c("basisch", "🧼"))
     private fun reactionExp(id: String, r: String, title: String, emoji: String, grades: IntRange, story: String, predict: Quiz, reveal: String, why: List<String>, fact: String, transfer: Quiz) =
-        Experiment(id, CH, title, emoji, grades, story, predict, ReactionSetup(r), "Gleiche die Gleichung aus: links und rechts gleich viele Atome.", reveal, why, fact, transfer)
+        Experiment(id, CH, title, emoji, grades, story, predict, ReactionSetup(r), "Gleiche die Gleichung mit den kleinsten ganzen Zahlen aus: links und rechts gleich viele Atome.", reveal, why, fact, transfer)
 
     val chem = listOf(
         Experiment("c14", CH, "Der Frühstückstisch", "🥐", 4..6,
