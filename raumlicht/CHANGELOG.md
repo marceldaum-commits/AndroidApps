@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.16 – Keine weiße Seite mehr auf dem iPhone (18.11.2026)
+- **Auf manchen iPhones blieb Raumlicht weiß.** Die Ursache auf dem echten Gerät kennen wir noch nicht sicher; wahrscheinlich nimmt das iPhone Raumlicht den Speicher oder die Grafik weg. Diese Version geht beides an.
+- **Weniger Speicher auf dem iPhone:** Raumlicht zeichnet dort mit doppelter statt dreifacher Schärfe. Das sieht man kaum, braucht aber nur gut halb so viel Bildspeicher.
+- **Immer eine Meldung statt einer leeren Seite:** Fällt die Anzeige aus oder bleibt der Start hängen, erscheint ein Hinweis mit Versionsnummer und dem Knopf „Neu laden“.
+- **Raumlicht merkt, wenn das Gerät es beendet hat,** sagt das beim nächsten Start und schaltet nach dem zweiten Mal von selbst in einen Sparmodus. Der Spielstand bleibt dabei erhalten.
+- Die Diagnose-Seite zeigt jetzt auch, was kurz vor einem solchen Abbruch passiert ist.
+
 ## 2.18.15 – Raumlicht als App installieren, KI-Tutor für alle (18.11.2026)
 - **Raumlicht gibt es vorerst nur noch als Web-App** – im Browser, auf Wunsch installiert wie eine App. Die Android-App (APK) wird in den nächsten ein bis zwei Monaten nicht weiter ausgeliefert.
 - **Neu: „App installieren“** in den Einstellungen. Ein Tipp legt Raumlicht auf den Startbildschirm; dann startet es im Vollbild und auch ohne Internet. Auf iPhone und iPad zeigt eine kurze Anleitung den Weg über „Teilen → Zum Home-Bildschirm“. Ist Raumlicht schon installiert, verschwindet der Hinweis.

@@ -2,6 +2,24 @@
 
 Neueste oben.
 
+## 18.11.2026 – Raumlicht 2.18.16: weiße Seite auf dem iPhone – Absicherung, Ursache noch offen
+
+Marcel hat direkt bestätigt. **Raumlicht 2.18.16 vom 18.11.2026 – nur Web-App**, liegt auf raumlicht-test.
+
+**Ursache: nicht gefunden – ehrlich.** Ich habe hier nur Chromium, kein WebKit und kein iPhone. Dein WebKit-Lauf (startet normal) und Marcels iOS-Version schließen den Browser-Kern und fehlendes WasmGC aus. Übrig sind die Geräte-Ursachen Speicher und Grafik-Kontext; welche es ist, zeigt erst die Diagnose-Seite auf Marcels iPhone (um die habe ich ihn gebeten).
+Hinweis aus dem Code: Die Startseite ist dunkel (#0A0E27). Eine wirklich **weiße** Seite kann also nicht von unserem HTML kommen – das spricht für einen vom System beendeten Tab oder eine verlorene Zeichenfläche.
+Mindest-iOS vorher und nachher unverändert: **18.2** (WebAssembly-GC); ältere Geräte bekommen schon seit Längerem eine Meldung statt einer leeren Seite.
+
+**Was 2.18.16 tut**
+- **(a) Speicher:** iPhones zeichnen die Oberfläche mit höchstens doppelter Schärfe statt dreifacher (iPhone 15: 3,0 → 1,3 Millionen Bildpunkte). Die 3D-Bühne war schon auf 2 begrenzt, iPads schon auf rund 3 Millionen Bildpunkte. Der App-Kern hat weiter Vorrang, die Bühne wird erst danach geholt (war schon so).
+  **Nicht gemessen:** Wasm-Speicher und Heap auf dem Gerät – das geht nur dort.
+- **(b) Grafik-Kontext:** `webglcontextlost` an der Zeichenfläche der Oberfläche; kommt der Kontext nicht binnen 3 Sekunden zurück, erscheint eine Meldung mit Version und „Neu laden“. (Die Bühne meldete ihren Verlust schon.)
+- **Beendeter Tab:** Merker in `sessionStorage`, solange Raumlicht sichtbar läuft. Steht er beim Start noch, hat das Gerät die Seite beendet → Hinweis, Eintrag in der Mitschrift, die Mitschrift davor bleibt (`raumlicht.mitschrift.absturz`, sichtbar auf `diagnose.html`). Nach zwei Abbrüchen in Folge: Sparmodus (einfache Schärfe), aufhebbar mit `?mit=schaerfe`. Im Hintergrund weggeräumte Tabs zählen nicht.
+- **Hängender Start:** 45 Sekunden ohne Fortschritt → Meldung mit Version und „Neu laden“. Die Start-Fehlermeldung nennt die Browser-Anforderung nur noch, wenn wirklich WebAssembly fehlt; sonst „beim Start hängen geblieben“.
+- **(c) Alte Fassung aus dem Service Worker:** abgedeckt seit 2.18.14 (Abgleich mit `version.json`, zweite Sicherung). Eine Startbildschirm-App auf iOS hat eigenen Speicher und prüft genauso.
+- Nicht angefasst: Lade-Wrapper/`instantiateStreaming` und Ton vor dem ersten Tippen – dafür gibt es die Schalter auf der Diagnose-Seite (`?ohne=…`); ohne Befund vom Gerät wollte ich nichts blind umbauen.
+- Beleg: `scene/test/web-stoerung.mjs`, 10 von 10 (iPhone-Emulation in Chromium: Schärfe 3 → 2, Grafik-Ausfall mit Meldung, „Neu laden“, Abbruch-Hinweis, Sparmodus nach dem zweiten Abbruch, Mitschrift auf der Diagnose-Seite, hängender Start). **Das belegt die Absicherung, nicht die Behebung auf dem echten iPhone.**
+
 ## 18.11.2026 – Technische Grundlage für den Prototype-Fund-Antrag („Freie 3D-Geometrie-Werkstatt“)
 
 Marcel hat direkt bestätigt, dass ich das schreibe. Stand: Raumlicht 2.18.15 vom 18.11.2026. Zahlen aus dem Repository gezählt; Einschätzungen sind als solche gekennzeichnet. Keine Rechtsberatung.

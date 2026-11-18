@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de" data-version="2.18.15">
+<html lang="de" data-version="2.18.16">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -41,7 +41,7 @@
   </svg>
   <b>RAUMLICHT</b>
   <div id="balken"><i></i></div>
-  <span id="start-text">lädt … Version 2.18.15 vom 18.11.2026</span>
+  <span id="start-text">lädt … Version 2.18.16 vom 18.11.2026</span>
 </div>
 <div id="app"></div>
 <a id="hilfe" href="diagnose.html">Kein Bild zu sehen? Hier tippen</a>
@@ -50,6 +50,24 @@
 <script>
   // Mitschrift für die Diagnose-Seite: Fehler und Warnungen der App bleiben auf dem Gerät gespeichert (die letzten 40 Zeilen), verschickt wird nichts
   (function () {
+    // Absturz erkennen: Läuft die Seite, steht ein Merker; beim ordentlichen Verlassen (pagehide) verschwindet er. Steht er beim Start noch, hat das Gerät die Seite
+    // beendet (auf iPhone und iPad meist wegen Speichermangel – das sieht aus wie eine weiße Seite, die neu lädt). Die Mitschrift davor bleibt für die Diagnose erhalten.
+    // Nach dem zweiten Absturz in Folge startet Raumlicht im Sparmodus (einfache Schärfe); „?mit=schaerfe“ hebt ihn auf.
+    window.__rlAbsturz = 0;
+    try {
+      if (sessionStorage.getItem('rl-lauf') === '1') {
+        window.__rlAbsturz = (parseInt(sessionStorage.getItem('rl-absturz') || '0', 10) || 0) + 1; sessionStorage.setItem('rl-absturz', String(window.__rlAbsturz));
+        var before = localStorage.getItem('raumlicht.mitschrift'); if (before) localStorage.setItem('raumlicht.mitschrift.absturz', before);
+        if (window.__rlAbsturz >= 2) localStorage.setItem('raumlicht.sparsam', '1');
+      }
+      sessionStorage.setItem('rl-lauf', '1');
+      window.addEventListener('pagehide', function () { try { sessionStorage.removeItem('rl-lauf'); } catch (e) {} });
+      // Im Hintergrund räumt jedes Handy Seiten weg – das ist kein Absturz: Der Merker steht nur, solange Raumlicht sichtbar ist
+      document.addEventListener('visibilitychange', function () { try { if (document.hidden) sessionStorage.removeItem('rl-lauf'); else sessionStorage.setItem('rl-lauf', '1'); } catch (e) {} });
+      // kommt die Seite aus dem Zwischenspeicher des Browsers zurück, läuft sie wieder
+      window.addEventListener('pageshow', function (e) { if (e.persisted) { try { sessionStorage.setItem('rl-lauf', '1'); } catch (x) {} } });
+      if (/mit=schaerfe/.test(location.search)) localStorage.removeItem('raumlicht.sparsam');
+    } catch (e) {}
     var lines = [], last = '', count = 0, stamp = ''; try { localStorage.removeItem('raumlicht.mitschrift'); } catch (e) {}
     function note(kind, args) { try { var t = Array.prototype.map.call(args, function (a) { return a && a.stack ? String(a.stack) : (typeof a === 'object' ? JSON.stringify(a) : String(a)); }).join(' ');
       t = kind + ' ' + t.slice(0, 600); if (t === last) { count++; lines[lines.length - 1] = stamp + ' ' + t + '  (×' + count + ')'; } else { last = t; count = 1; stamp = new Date().toISOString().slice(11, 19); lines.push(stamp + ' ' + t); if (lines.length > 40) lines.splice(2, 1); }
@@ -60,33 +78,70 @@
     window.addEventListener('webglcontextlost', function (e) { note('grafik', ['Grafik-Kontext verloren']); }, true);
     window.__rlNote = function (text) { note('info', [text]); };
     note('info', ['Start ' + document.documentElement.dataset.version + ' ' + location.search + ' ' + innerWidth + 'x' + innerHeight + ' @' + devicePixelRatio]);
+    if (window.__rlAbsturz) note('absturz', ['Die Seite wurde beim letzten Mal vom Gerät beendet (Nr. ' + window.__rlAbsturz + ' in Folge)']);
   })();
   // iPad: Dort blieb das Bild weiß, während es auf dem iPhone (gleiche Browser-Technik, kleinere Zeichenfläche) läuft. Darum zeichnet die Oberfläche auf iPads
   // mit höchstens so vielen Bildpunkten wie auf einem iPhone (rund 3 Millionen) – etwas weniger scharf, dafür sichtbar. Zum Prüfen: ?ohne=schaerfe (einfache Schärfe), ?mit=schaerfe (unbegrenzt).
   (function () {
     var q = location.search, real = window.devicePixelRatio || 1, use = real;
     var ipad = /iPad/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
-    if (/[?&,=]schaerfe/.test(q) && /ohne=/.test(q)) use = 1;
+    var iphone = /iPhone|iPod/.test(navigator.userAgent), sparsam = false; try { sparsam = localStorage.getItem('raumlicht.sparsam') === '1'; } catch (e) {}
+    if ((/[?&,=]schaerfe/.test(q) && /ohne=/.test(q)) || sparsam) use = 1;
+    // iPhone: höchstens doppelte Schärfe (statt dreifacher) – gut halb so viel Bildspeicher, kaum sichtbar; iOS beendet Seiten, die zu viel Speicher brauchen, ohne Meldung
+    else if (iphone && !/mit=schaerfe/.test(q)) use = Math.min(real, 2);
     else if (ipad && !/mit=schaerfe/.test(q)) use = Math.max(1, Math.min(real, Math.sqrt(3.0e6 / (Math.max(screen.width, innerWidth) * Math.max(screen.height, innerHeight)))));
     if (use !== real) { try { Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true }); } catch (e) {} }
     window.__rlIpad = ipad;
-    window.__rlNote('Schärfe: Gerät ' + real + ', benutzt ' + (window.devicePixelRatio || 1).toFixed(2) + (ipad ? ' (iPad erkannt)' : ''));
+    window.__rlNote('Schärfe: Gerät ' + real + ', benutzt ' + (window.devicePixelRatio || 1).toFixed(2) + (ipad ? ' (iPad erkannt)' : '') + (iphone ? ' (iPhone erkannt)' : '') + (sparsam ? ' (Sparmodus nach Abstürzen)' : ''));
   })();
   // Startet die App nicht, sagen wir warum – statt einen leeren Bildschirm zu zeigen. Fehler werden gesammelt und auf der Diagnose-Seite gezeigt.
   var startProblems = [];
   function startFailed(why) {
     var st = document.getElementById('start'); if (!st || st.style.display === 'none') return;
     var t = document.getElementById('start-text'); t.className = 'fehler';
-    t.innerHTML = 'Das hat nicht geklappt. Raumlicht braucht einen aktuellen Browser – auf iPhone und iPad mindestens iOS 18.2, sonst Chrome, Edge oder Firefox ab 2024.<br><br><a href="diagnose.html" style="color:#46E1FF">Diagnose öffnen</a>';
+    var old = /WebAssembly/.test(String(why || ''));
+    t.innerHTML = (old ? 'Das hat nicht geklappt. Raumlicht braucht einen aktuellen Browser – auf iPhone und iPad mindestens iOS 18.2, sonst Chrome, Edge oder Firefox ab 2024.'
+                       : 'Raumlicht ist beim Start hängen geblieben. Meist hilft neu laden.') +
+      '<br><small style="opacity:.7">Version ' + document.documentElement.dataset.version + '</small><br><br>' +
+      '<button type="button" onclick="location.reload()" style="font:600 16px system-ui,sans-serif;color:#0A0E27;background:#46E1FF;border:0;border-radius:14px;padding:12px 22px">Neu laden</button>' +
+      '<br><br><a href="diagnose.html" style="color:#46E1FF">Diagnose öffnen</a>';
     if (why) { startProblems.push(String(why).slice(0, 300)); try { sessionStorage.setItem('raumlicht.startfehler', startProblems.join(' | ')); } catch (e) {} }
   }
   window.addEventListener('error', function (e) { startFailed(e.message || 'Fehler beim Laden'); });
+  // Hängt der Start ohne Fehlermeldung (nichts kommt mehr an, nichts stürzt ab), sagen wir das nach 45 Sekunden ohne Fortschritt auch
+  (function () { var lastSum = -1, quiet = 0; var w = setInterval(function () { var st = document.getElementById('start');
+    if (!st || st.dataset.fertig === '1' || st.style.display === 'none' || document.getElementById('start-text').className === 'fehler') { clearInterval(w); return; }
+    var sum = 0; for (var k in got) sum += got[k] || 0; if (sum !== lastSum) { lastSum = sum; quiet = 0; } else quiet += 1000;
+    if (quiet >= (window.__rlHangMs || 45000)) { clearInterval(w); startFailed('Start ohne Fortschritt'); } }, 1000); })();
+  // Nach dem Start: Verliert die Zeichenfläche ihren Grafik-Kontext (auf iPhones möglich) und kommt er nicht binnen drei Sekunden zurück, bliebe das Bild weiß oder schwarz stehen –
+  // stattdessen erscheint eine Meldung mit Version und „Neu laden“. Ebenso ein kurzer Hinweis, wenn das Gerät die Seite beim letzten Mal beendet hat.
+  window.__rlStoerung = function (text) {
+    if (document.getElementById('stoerung')) return;
+    var d = document.createElement('div'); d.id = 'stoerung'; d.setAttribute('role', 'alert');
+    d.style.cssText = 'position:fixed;inset:0;z-index:60;background:rgba(10,14,39,.94);color:#E8ECFF;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;font:16px system-ui,sans-serif';
+    d.innerHTML = '<div style="font-size:44px">🛠️</div><div style="max-width:26em"></div><small style="opacity:.7">Version ' + document.documentElement.dataset.version + ' · dein Spielstand ist sicher</small>' +
+      '<button type="button" style="font:600 16px system-ui,sans-serif;color:#0A0E27;background:#46E1FF;border:0;border-radius:14px;padding:12px 22px">Neu laden</button><a href="diagnose.html" style="color:#46E1FF">Diagnose öffnen</a>';
+    d.children[1].textContent = text; d.querySelector('button').onclick = function () { location.reload(); }; document.body.appendChild(d);
+  };
+  (function () { var w = setInterval(function () { var st = document.getElementById('start'); if (st && st.dataset.fertig !== '1') return;
+    var app = document.getElementById('app'); var c = app && ((app.shadowRoot && app.shadowRoot.querySelector('canvas')) || app.querySelector('canvas')); if (!c) return; clearInterval(w);
+    var lost = null;
+    c.addEventListener('webglcontextlost', function () { window.__rlNote('Grafik-Kontext der Oberfläche verloren'); clearTimeout(lost);
+      lost = setTimeout(function () { window.__rlStoerung('Die Anzeige ist ausgefallen – das Gerät hat Raumlicht die Grafik entzogen. Einmal neu laden, dann geht es weiter.'); }, 3000); });
+    c.addEventListener('webglcontextrestored', function () { clearTimeout(lost); window.__rlNote('Grafik-Kontext der Oberfläche wieder da'); });
+    if (window.__rlAbsturz) { var n = document.createElement('div'); n.id = 'absturz'; n.setAttribute('role', 'status');
+      n.textContent = window.__rlAbsturz >= 2 ? '🛟 Dein Gerät hat Raumlicht wieder beendet. Raumlicht läuft jetzt im Sparmodus (etwas weniger scharf).' : '🛟 Dein Gerät hatte Raumlicht beendet – es geht weiter, dein Spielstand ist sicher.';
+      n.style.cssText = 'position:fixed;left:12px;right:12px;bottom:14px;z-index:50;background:#161b3d;color:#eef0ff;border:1.5px solid #FFB45A;border-radius:14px;padding:10px 14px;font:600 14px system-ui,sans-serif;box-shadow:0 6px 24px rgba(0,0,0,.5);text-align:center;transition:opacity .4s';
+      document.body.appendChild(n); setTimeout(function () { n.style.opacity = '0'; setTimeout(function () { n.remove(); }, 500); }, 8000); }
+    // läuft die App eine Minute ohne Absturz, zählt die Serie wieder von vorn
+    setTimeout(function () { try { sessionStorage.removeItem('rl-absturz'); } catch (e) {} }, 60000);
+  }, 400); })();
   window.addEventListener('unhandledrejection', function (e) { startFailed(e.reason && (e.reason.message || e.reason)); });
   // WebAssembly mit „GC“ fehlt älteren Browsern (Safari vor 18.2): gleich prüfen, nicht erst 13 MB laden
   try { if (typeof WebAssembly !== 'object' || !WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0]))) startFailed('WebAssembly-GC fehlt'); } catch (e) { startFailed('WebAssembly-Prüfung: ' + e); }
   // ── Laden mit echtem Fortschritt: Der App-Kern (.wasm) und die Schriften werden sofort angefordert – nicht erst, wenn raumlicht.js sie verlangt –
   //    und jedes ankommende Byte bewegt den Balken. Die Größen (entpackt) trägt der Bau hier ein.
-  var PLAN = { "3c942f41f4f423b3d969.wasm": 5916860, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 122552, "fonts/noto_color_emoji.ttf": 270612, "raumlicht.js": 596566 }, got = {}, total = 0, early = {}, slow = false;
+  var PLAN = { "76518193446761647c4c.wasm": 5916860, "bccfa839aa4b38489c76.wasm": 8405319, "fonts/dejavu_sans.ttf": 122552, "fonts/noto_color_emoji.ttf": 270612, "raumlicht.js": 596566 }, got = {}, total = 0, early = {}, slow = false;
   for (var k in PLAN) total += PLAN[k];
   window.__rlStage = function () { var f = document.getElementById('stage'); if (f && !f.getAttribute('src')) f.src = f.getAttribute('data-src'); };
   function progress() {

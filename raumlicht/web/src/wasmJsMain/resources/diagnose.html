@@ -45,6 +45,9 @@
   row('Speichern im Browser', ls ? 'möglich' : 'gesperrt (privater Modus?) – Sterne gehen dann verloren', ls);
   var log = ''; try { log = localStorage.getItem('raumlicht.mitschrift') || ''; } catch (e) {} document.getElementById('log').textContent = log || '(leer – bitte erst Raumlicht öffnen und dann hierher zurückkommen)'; rows.push('Mitschrift:\n' + log);
   var last = ''; try { last = sessionStorage.getItem('raumlicht.startfehler') || ''; } catch (e) {}
+  // Mitschrift vom letzten Absturz (das Gerät hatte die Seite beendet) und ob der Sparmodus an ist
+  try { var crash = localStorage.getItem('raumlicht.mitschrift.absturz') || ''; if (crash) document.getElementById('log').textContent += '\n\n── vor dem letzten Absturz ──\n' + crash;
+    rows.push('Sparmodus: ' + (localStorage.getItem('raumlicht.sparsam') === '1' ? 'an (nach zwei Abstürzen in Folge)' : 'aus')); } catch (e) {}
   row('Letzter Startfehler', last || 'keiner gemeldet', !last);
   row('Service Worker', 'serviceWorker' in navigator ? (navigator.serviceWorker.controller ? 'aktiv' : 'vorhanden, noch nicht aktiv') : 'nicht verfügbar');
   if (window.caches) caches.keys().then(function (k) { row('Zwischenspeicher', k.join(', ') || 'leer'); });
