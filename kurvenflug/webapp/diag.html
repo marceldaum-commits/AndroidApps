@@ -19,13 +19,23 @@
 </head>
 <body>
   <h1>🛰️ Kurvenflug – Diagnose</h1>
-  <div class="k" id="info">Version 2.5.15</div>
+  <div class="k" id="info">Version 2.5.16</div>
   <div id="crash"></div>
   <div id="steps"></div>
+  <div id="probe" style="display:none" class="s"><b>Bildprobe – was siehst du?</b>
+    <div class="d">Es sollten vier farbige Quadrate zu sehen sein: <b style="display:inline;color:#38E8FF">türkis</b> (WebGL Standard),
+      <b style="display:inline;color:#4CF59A">grün</b> (WebGL preserveDrawingBuffer), <b style="display:inline;color:#FF5C8A">pink</b> (WebGL undurchsichtig),
+      <b style="display:inline;color:#FFB300">orange</b> (normale 2D-Fläche). Weiß oder leer = dieser Weg zeigt nichts an.</div>
+    <div id="probes" style="display:flex;gap:10px;margin-top:8px"></div>
+  </div>
   <div>
     <button id="again" type="button">Nochmal prüfen</button>
     <button id="app" type="button">Echte App starten</button>
     <button id="clear" class="b" type="button">Offline-Speicher leeren</button>
+    <div class="k" style="margin-top:10px">Versuche mit der App (Diagnose-Leiste oben): <a style="color:#38E8FF" href="./?diag=1&amp;gl=preserve">mit preserveDrawingBuffer</a> ·
+      <a style="color:#38E8FF" href="./?diag=1&amp;gl=opak">undurchsichtig</a> · <a style="color:#38E8FF" href="./?diag=1&amp;gl=beides">beides</a> ·
+      <a style="color:#38E8FF" href="./?diag=1&amp;schaerfe=voll">volle Schärfe</a> · <a style="color:#38E8FF" href="./?diag=1&amp;schaerfe=1">Schärfe 1</a> ·
+      <a style="color:#38E8FF" href="./?diag=1&amp;modus=js">einfache Fassung</a> · <a style="color:#38E8FF" href="./?diag=0&amp;gl=standard&amp;schaerfe=standard&amp;modus=auto">alles zurücksetzen</a></div>
   </div>
   <div class="k" style="margin-top:14px">Bitte ein Bildschirmfoto dieser Seite schicken. Die Seite lädt die App nicht – sie prüft nur, was der Browser kann.
     Stürzt der Tab bei einem Schritt ab, steht das beim nächsten Öffnen oben in Rot.</div>
@@ -34,7 +44,7 @@
 // stürzt der Tab ab, zeigt der nächste Aufruf, bei welchem Schritt.
 (function () {
   'use strict';
-  var FILES = [{"u":"41c4ed5386ebb6fc4f26.wasm","s":5848482},{"u":"bccfa839aa4b38489c76.wasm","s":8405319}];   // [{u, s}] – Wasm-Dateien der App, kleinste zuerst
+  var FILES = [{"u":"3adf9ece36decf6964bc.wasm","s":5848482},{"u":"bccfa839aa4b38489c76.wasm","s":8405319}];   // [{u, s}] – Wasm-Dateien der App, kleinste zuerst
   var KEY = 'kf.diag', log = [];
   function store(v) { try { if (v === null) localStorage.removeItem(KEY); else localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
   function load() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
@@ -72,7 +82,7 @@
   function run() {
     stepsEl.innerHTML = ''; log = [];
     var info = document.getElementById('info');
-    info.textContent = 'Version 2.5.15 · ' + navigator.userAgent + ' · Bildschirm ' + screen.width + '×' + screen.height + ' · DPR ' + (window.devicePixelRatio || 1) +
+    info.textContent = 'Version 2.5.16 · ' + navigator.userAgent + ' · Bildschirm ' + screen.width + '×' + screen.height + ' · DPR ' + (window.devicePixelRatio || 1) +
       (navigator.deviceMemory ? ' · RAM ~' + navigator.deviceMemory + ' GB' : '');
     var p = step(1, 'HTML und JavaScript laufen', function () { return { text: 'ok' }; })
       .then(function () { return step(2, 'WebAssembly: GC + Ausnahmen', function () {
@@ -96,14 +106,33 @@
           .then(function (m) { modules.push(m); return { text: 'geladen in ' + tl + ' ms, übersetzt (' + WebAssembly.Module.imports(m).length + ' Importe)' }; });
       }); });
     });
-    p = p.then(function () { return step(4 + FILES.length, 'Offline-Speicher (Service Worker)', function () {
+    p = p.then(function () { return step(4 + FILES.length, 'Bildprobe: WebGL-Flächen anzeigen', function () {
+      var box = document.getElementById('probes'); box.innerHTML = ''; document.getElementById('probe').style.display = 'block';
+      var dpr = window.devicePixelRatio || 1, out = [];
+      function square(css, rgb, attrs, name) {
+        var c = document.createElement('canvas'); c.width = Math.round(80 * dpr); c.height = Math.round(80 * dpr);
+        c.style.cssText = 'width:80px;height:80px;border-radius:10px;border:1px solid #445';
+        box.appendChild(c);
+        if (!attrs) { var x = c.getContext('2d'); x.fillStyle = css; x.fillRect(0, 0, c.width, c.height); out.push(name + ' ok'); return; }
+        var gl = c.getContext('webgl2', attrs); if (!gl) { out.push(name + ': kein Kontext'); return; }
+        gl.clearColor(rgb[0], rgb[1], rgb[2], 1); gl.clear(gl.COLOR_BUFFER_BIT);
+        var px = new Uint8Array(4); gl.readPixels(1, 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        out.push(name + ' liest ' + Array.prototype.join.call(px, ',') + ' · ' + JSON.stringify(gl.getContextAttributes()).replace(/"/g, ''));
+      }
+      square('#38E8FF', [0.22, 0.91, 1], {}, 'türkis/Standard');
+      square('#4CF59A', [0.3, 0.96, 0.6], { preserveDrawingBuffer: true }, 'grün/preserve');
+      square('#FF5C8A', [1, 0.36, 0.54], { alpha: false }, 'pink/opak');
+      square('#FFB300', null, null, 'orange/2D');
+      return { text: out.join(' | ') + ' – bitte melden, welche Quadrate farbig sind' };
+    }); })
+    .then(function () { return step(5 + FILES.length, 'Offline-Speicher (Service Worker)', function () {
       if (!('serviceWorker' in navigator)) return { text: 'nicht vorhanden' };
       var ctl = navigator.serviceWorker.controller;
       return (window.caches ? caches.keys() : Promise.resolve([])).then(function (ks) {
         return { text: (ctl ? 'aktiv: ' + ctl.scriptURL.split('/').pop() : 'keiner aktiv') + ' · Speicher: ' + (ks.join(', ') || 'leer') };
       });
     }); })
-    .then(function () { return step(5 + FILES.length, 'Letzter App-Start', function () {
+    .then(function () { return step(6 + FILES.length, 'Letzter App-Start', function () {
       var s = null; try { s = localStorage.getItem('kf.start'); } catch (e) {}
       var f = null; try { f = localStorage.getItem('kf.wasmGescheitert'); } catch (e) {}
       if (!s) return { text: 'kein abgebrochener Start gespeichert' + (f ? ' · Wasm war gescheitert → einfache Fassung' : '') };
@@ -122,7 +151,7 @@
   document.getElementById('again').onclick = function () { run(); };
   document.getElementById('app').onclick = function () {
     log.push({ nr: 6, title: 'Echte App starten', state: 'läuft' }); store({ log: log, at: Date.now() });
-    location.href = './?modus=auto';
+    location.href = './?modus=auto&diag=1';
   };
   document.getElementById('clear').onclick = function () {
     var p1 = navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }) : Promise.resolve();
