@@ -79,6 +79,7 @@ fun SettingsScreen(
                     val nova = readAloudAvailable
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
                         "keine Spieldaten an einen Server." + (if (nova) " Nur das Vorlesen (Nova, abschaltbar) lädt Audiodateien von unserem Server." else "") +
+                        " Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i)." +
                         " Neue Versionen lädt die Seite von selbst."
                         else if (!platform.selfUpdate) "Kurvenflug speichert nur den Spielstand auf diesem Gerät. Keine Anmeldung, keine Werbung. " +
                         (if (nova) "Ins Internet geht die App nur für die Vorlese-Stimme Nova (abschaltbar). " else "Es gehen keine Spieldaten ins Internet. ") +

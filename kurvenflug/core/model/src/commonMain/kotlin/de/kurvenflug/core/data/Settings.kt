@@ -58,6 +58,11 @@ class Settings(private val prefs: Prefs) {
     val examUntil: StateFlow<Long> = _examUntil.asStateFlow()
     fun setExamUntil(v: Long) { prefs.edit().putLong("examUntil", v).apply(); _examUntil.value = v }
 
+    /** Monatssummen des aktuellen Spielers (Eltern-Bericht „verlauf“), siehe [de.kurvenflug.core.model.MonthSums] */
+    var monthSums: String
+        get() = prefs.getString(k("monate"), "") ?: ""
+        set(v) = prefs.edit().putString(k("monate"), v).apply()
+
     // ------------------------------------------------------------ Vorlesen (für das ganze Gerät)
     private val _readAloud = flag("readAloud", true)
     /** Volt liest Sprechblasen, Aufträge, Rechen-Stern-Fragen und Erklärungen vor */

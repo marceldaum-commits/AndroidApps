@@ -265,6 +265,8 @@ class ParentArea(
     val onPair: (String) -> Unit = {},
     val onUnpair: () -> Unit = {},
     val onShare: (String) -> Unit = {},
+    /** Fortschritt aus der Sicherung wiederherstellen (Kopplungs-Link) */
+    val onRestore: (link: String, force: Boolean, done: (String) -> Unit) -> Unit = { _, _, d -> d("fehler") },
 )
 
 @Composable
@@ -300,7 +302,7 @@ private fun ParentExtras(p: ParentArea, w: WeekSummary) {
             }
         }
     }
-    if (p.pairLink != null) PairCard(p)
+    if (p.pairLink != null) { PairCard(p); RestoreCard(p) }
     // Klassenarbeit bald? (Auslöser für den Hinweis, gilt 3 Wochen)
     val exam = p.examUntil >= p.today
     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable { sfx?.play(Sound.TICK); p.onExam(!exam) }.padding(14.dp),
@@ -364,7 +366,9 @@ private fun PairCard(p: ParentArea) {
                     Text("Link teilen", fontWeight = FontWeight.Bold) }
                 TextButton(onClick = { sfx?.play(Sound.TICK); confirmOff = true }) { Text("Kopplung aufheben", color = Q.Muted) }
             }
-            Text("Der Bericht wird nach dem Üben aktualisiert (höchstens alle 10 Minuten).", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+            Text("Der Bericht wird nach dem Üben aktualisiert (höchstens alle 10 Minuten). Bei gekoppeltem Eltern-Handy wird zusätzlich eine " +
+                "Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i) – so geht auf einem neuen Gerät nichts verloren.",
+                color = Q.Muted, style = MaterialTheme.typography.labelSmall)
         }
     }
     if (confirmOff) AlertDialog(onDismissRequest = { confirmOff = false },
@@ -383,4 +387,44 @@ private fun QrImage(text: String, modifier: Modifier) {
         for (y in 0 until qr.size) for (x in 0 until qr.size) if (qr[x, y])
             drawRect(Color.Black, androidx.compose.ui.geometry.Offset((x + 4) * cell, (y + 4) * cell), androidx.compose.ui.geometry.Size(cell + 0.5f, cell + 0.5f))
     }
+}
+
+
+/** „Fortschritt wiederherstellen“: Kopplungs-Link einfügen → Sicherung holen; vorhandenen Lernstand nur nach Rückfrage überschreiben */
+@Composable
+private fun RestoreCard(p: ParentArea) {
+    val sfx = LocalSfx.current
+    var open by rememberSaveable { mutableStateOf(false) }
+    var link by rememberSaveable { mutableStateOf("") }
+    var busy by remember { mutableStateOf(false) }
+    var result by remember { mutableStateOf<String?>(null) }
+    fun go(force: Boolean) { busy = true; result = null; p.onRestore(link.trim(), force) { r -> busy = false; result = r; if (r == "ok") sfx?.play(Sound.WIN) } }
+    Column(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).background(Q.Panel).clickable(enabled = !open) { sfx?.play(Sound.TICK); open = true }.padding(14.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text("♻️ Fortschritt wiederherstellen", fontWeight = FontWeight.Bold, color = Q.Text)
+        Text("Neues Gerät oder Browserdaten gelöscht? Mit dem Kopplungs-Link (auf der Eltern-Seite: „Neues Gerät des Kindes? Fortschritt übertragen“) " +
+            "holst du den gesicherten Lernstand zurück.", color = Q.Muted, style = MaterialTheme.typography.labelSmall)
+        androidx.compose.animation.AnimatedVisibility(open) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                OutlinedTextField(link, { link = it; result = null }, label = { Text("Kopplungs-Link einfügen") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                Button(onClick = { sfx?.play(Sound.TAP); go(false) }, enabled = link.isNotBlank() && !busy,
+                    colors = ButtonDefaults.buttonColors(containerColor = Q.Cyan, contentColor = Q.Space)) { Text(if (busy) "Wird geholt …" else "Wiederherstellen", fontWeight = FontWeight.Bold) }
+                result?.let { r ->
+                    Text(when (r) {
+                        "ok" -> "✅ Lernstand übernommen – Kurvenflug startet gleich neu und ist wieder mit dem Eltern-Handy gekoppelt."
+                        "keine" -> "Keine Sicherung gefunden. Wurde auf dem alten Gerät schon gekoppelt und geübt?"
+                        "andere_app" -> "Dieser Link gehört zu einer anderen App."
+                        "link" -> "Der Link passt nicht. Bitte den ganzen Kopplungs-Link einfügen (mit allem nach #)."
+                        "vorhanden" -> "Auf diesem Gerät gibt es schon einen Lernstand."
+                        else -> "Das hat gerade nicht geklappt. Bitte Internet prüfen und noch einmal versuchen."
+                    }, color = if (r == "ok") Q.Green else Q.Yellow, style = MaterialTheme.typography.bodySmall)
+                }
+            }
+        }
+    }
+    if (result == "vorhanden") AlertDialog(onDismissRequest = { result = null },
+        title = { Text("Lernstand ersetzen?") },
+        text = { Text("Auf diesem Gerät ist schon ein Lernstand. Er wird durch die Sicherung ersetzt und geht verloren.") },
+        confirmButton = { TextButton(onClick = { go(true) }) { Text("Ersetzen") } },
+        dismissButton = { TextButton(onClick = { result = null }) { Text("Abbrechen") } })
 }

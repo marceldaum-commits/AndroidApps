@@ -3,6 +3,12 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.27 – Lernstand sicher, auch auf einem neuen Gerät
+- Ist das Eltern-Handy gekoppelt, sichert Kurvenflug den Lernstand Ende-zu-Ende verschlüsselt. Neues Handy oder Browserdaten
+  gelöscht? Im Elternbereich „♻️ Fortschritt wiederherstellen“ mit dem Kopplungs-Link holt alles zurück – ein vorhandener
+  Lernstand wird nur nach Rückfrage ersetzt.
+- Der Eltern-Bericht zeigt jetzt auch einen Monatsverlauf (Lernzeit, Aufgaben, Trefferquote je Monat).
+
 ## 2.5.26 – Eltern-Bericht mit Klassenarbeit-Hinweis
 - Steht im Elternbereich „Klassenarbeit bald“, sieht das gekoppelte Eltern-Handy einen Hinweis mit dem passenden Thema.
 
