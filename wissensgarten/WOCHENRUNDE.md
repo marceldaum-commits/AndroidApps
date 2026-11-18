@@ -84,3 +84,5 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
 
 **Wortlaut und Zählung (`src=…`) der App-zu-App-Links** stimmen wir mit dem Leitstand ab. Vorschlag: `src=wissensgarten-theorie`.
 
+**Raumlicht:** keine Überschneidung. Raumlicht verlinkt „Formeln wiederholen“ auf `#paket=s1-mathe-geometrie-formeln`, `#paket=s1-mathe-pythagoras-trigo` und, mit Plus, auf `ob-mathe-analysis`. Format bei Raumlicht: `https://raumlicht.mathenachhilfe-online.com/?ziel=level/<Kapitel>-<Nr>` bzw. `?ziel=galton|binomial|abi`. Updates bei Raumlicht: Fr 20.11. Lineare Gleichungssysteme & Gauß, Di 24.11. Zufallsgrößen und Normalverteilung.
+
