@@ -89,8 +89,10 @@
   // ------------------------------------------------------------ Teilen
   function toast(msg) {
     var t = document.createElement('div'); t.className = 'kf-toast'; t.textContent = msg;
-    document.body.appendChild(t); setTimeout(function () { t.remove(); }, 2600);
+    // an <html>, nicht an <body>: <body> trägt die Compose-Oberfläche als Shadow-DOM, dort eingehängtes wäre unsichtbar
+    document.documentElement.appendChild(t); setTimeout(function () { t.remove(); }, 2600);
   }
+  KF.toast = toast;
   KF.share = function (text, title) {
     if (navigator.share) { navigator.share({ title: title, text: text }).catch(function () {}); return; }
     if (navigator.clipboard) navigator.clipboard.writeText(text).then(function () { toast('In die Zwischenablage kopiert 📋'); }, function () { window.prompt(title, text); });

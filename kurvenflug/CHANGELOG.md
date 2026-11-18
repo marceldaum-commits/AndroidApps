@@ -3,6 +3,15 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.10 – Theorie im Rechen-Stern, WebApp immer aktuell
+- Im Rechen-Stern gibt es jetzt den Knopf „📖 Theorie nachlesen“. Wer bei einer Frage hängt (oder sie einfach verstehen
+  will), liest dort die passende Erklärung mit Formel und Beispiel nach und rechnet dann weiter.
+- WebApp im Browser: Sie holt sich neue Versionen jetzt von selbst – beim Öffnen, beim Zurückkehren in den Tab und
+  regelmäßig zwischendurch. Neu geladen wird nur an ruhigen Stellen (Startseite oder Tab im Hintergrund), nie mitten in
+  einer Aufgabe; danach erscheint kurz „✨ Neue Version … geladen“. Spielstand, Einstellungen und offline geladene
+  Nova-Texte bleiben dabei erhalten. In den Einstellungen steht die aktuelle Version.
+- Kleine Hinweise im Browser (z. B. „Foto gespeichert 📸“) waren unsichtbar – jetzt erscheinen sie wieder.
+
 ## 2.5.9 – Mehrere Lösungen zählen
 - Manche Aufgaben haben mehr als eine richtige Lösung (z. B. flacher oder steiler Wurf). Getroffen ist getroffen – und jetzt
   sagt die Lösungsanzeige auch ausdrücklich: „Deine Einstellung ist auch richtig – diese Aufgabe hat mehrere Lösungen.“

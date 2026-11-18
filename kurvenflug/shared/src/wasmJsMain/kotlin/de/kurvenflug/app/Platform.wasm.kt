@@ -62,6 +62,7 @@ object WebPlatform : Platform {
     override val selfUpdate = false
     override val sfx: Sfx = WebSfx
     override val reader: de.kurvenflug.app.ui.fx.Reader = de.kurvenflug.app.ui.fx.WebReader
+    override fun onHome(home: Boolean) { runCatching { jsAtHome(home) } }
     override fun shareText(text: String, title: String) = jsShare(text, title)
     override fun openUrl(url: String) = jsOpen(url)
 
