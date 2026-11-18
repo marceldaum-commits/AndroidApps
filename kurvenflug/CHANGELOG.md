@@ -3,6 +3,9 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.5.30 – Klassen-Auswahl am PC
+- Die Frage „In welcher Klasse bist du?“ erscheint am PC als handliche Karte in der Mitte statt über die ganze Breite.
+
 ## 2.5.29 – Am PC im ganzen Bildschirm
 - Am PC (und Tablet quer) nutzt Kurvenflug jetzt den ganzen Bildschirm statt einer schmalen Handy-Spalte: Seitenleiste links,
   die Startseite in zwei Spalten mit den Kapiteln deiner Klasse darunter, Kacheln in vier Spalten – und im Level ein großes

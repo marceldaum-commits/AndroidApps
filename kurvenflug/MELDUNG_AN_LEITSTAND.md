@@ -1,5 +1,9 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.5.30 – Klassen-Dialog am PC als mittige Karte
+- „In welcher Klasse bist du?“: Karte höchstens 640 dp breit, mittig (Browser 1440×900 angesehen; Knöpfe ~180 px statt ~450 px). Handy unverändert.
+- versionCode 77 / 2.5.30, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.5.29 – PC-Ansicht im ganzen Bildschirm (Marcel 18.11.: „am PC auf Fullscreen … und nicht nur strecken“)
 - Keine feste Handy-Spalte mehr. Ab 900 dp Breite eigenes Breitbild-Layout:
   - **Startseite:** Seitenleiste (NavigationRail) statt Leiste unten; „Heute“ zweispaltig (links Kopf, Volt, Sterne – rechts Weiter/Tagesmission/
