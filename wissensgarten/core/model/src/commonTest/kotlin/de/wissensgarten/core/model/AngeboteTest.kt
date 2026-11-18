@@ -12,8 +12,10 @@ class AngeboteTest {
     private val now = 1_800_000_000_000L
 
     @Test fun zaehlInhaltEnthaeltNurErlaubteFelder() {
-        val j = Zaehlung.inhalt("2.2.13", "probestunde_klick", "elternbericht", "brueche")!!
-        assertEquals("""{"app":"wissensgarten","v":"2.2.13","ev":"probestunde_klick","ort":"elternbericht","thema":"brueche"}""", j)
+        val j = Zaehlung.inhalt("2.2.13", "probestunde_klick", "elternbericht", "einmaleins")!!
+        assertEquals("""{"app":"wissensgarten","v":"2.2.13","ev":"probestunde_klick","ort":"elternbericht","thema":"einmaleins"}""", j)
+        // Thema, das der Zähl-Server nicht kennt: Ereignis zählt, Thema fällt weg
+        assertEquals("""{"app":"wissensgarten","v":"2.2.13","ev":"nachhilfe_hinweis","ort":"elternbericht"}""", Zaehlung.inhalt("2.2.13", "nachhilfe_hinweis", "elternbericht", "brueche"))
         // keine Kennungen, Gerätedaten, Namen oder Lernstände – nur diese fünf Schlüssel
         val keys = Regex("\"(\\w+)\":").findAll(j).map { it.groupValues[1] }.toSet()
         assertEquals(setOf("app", "v", "ev", "ort", "thema"), keys)
@@ -23,7 +25,7 @@ class AngeboteTest {
     @Test fun ungueltigeWerteWerdenNichtGesendet() {
         assertNull(Zaehlung.inhalt("1", "irgendwas"))
         assertNull(Zaehlung.inhalt("1", "start", ort = "kinderbereich"))
-        assertNull(Zaehlung.inhalt("1", "start", thema = "Lena"))
+        assertEquals("""{"app":"wissensgarten","v":"1","ev":"start"}""", Zaehlung.inhalt("1", "start", thema = "Lena"))
         // Version wird gekürzt und bereinigt
         assertEquals("""{"app":"wissensgarten","v":"12345678901234567890","ev":"start"}""", Zaehlung.inhalt("12345678901234567890xyz", "start"))
         assertEquals("""{"app":"wissensgarten","v":"2x","ev":"start"}""", Zaehlung.inhalt("2\"},{\"x", "start"))

@@ -16,7 +16,9 @@ object Zaehlung {
         "start", "elternbereich", "pro_ansehen", "pro_kasse", "code_eingeloest", "probestunde_klick",
         "neukunde_klick", "crashkurs_klick", "nachhilfe_hinweis", "geschenk_klick",
     )
-    val ORTE = setOf("elternbericht", "elternbereich", "gesperrt", "klassenarbeit", "geschenk", "einstellungen", "link", "eingabe")
+    val ORTE = setOf("elternbericht", "elternbereich", "gesperrt", "klassenarbeit", "geschenk", "einstellungen", "link", "eingabe", "lernstand", "fusszeile")
+    /** Themen, die der Zähl-Server für den Wissensgarten annimmt (Leitstand 18.11.) – andere werden beim Zählen weggelassen */
+    val ZAEHL_THEMEN = setOf("sachkunde", "allgemeinwissen", "deutsch", "englisch", "einmaleins", "grundrechenarten")
     val THEMEN = setOf(
         "grundrechenarten", "einmaleins", "brueche", "dezimalzahlen", "prozent", "zuordnungen", "terme-gleichungen",
         "lineare-funktionen", "gleichungssysteme", "pythagoras", "quadratische-funktionen", "potenzen-wurzeln", "exponential-log",
@@ -25,18 +27,18 @@ object Zaehlung {
     )
 
     /**
-     * Inhalt eines Zählaufrufs als JSON – oder null, wenn etwas nicht in den Positivlisten steht (dann wird nichts gesendet).
+     * Inhalt eines Zählaufrufs als JSON – oder null, wenn Ereignis oder Ort nicht in den Positivlisten stehen (dann wird nichts gesendet).
      * Absichtlich ohne Kennung, Zeitstempel, Gerät, Name oder Lernstand.
      */
     fun inhalt(version: String, ereignis: String, ort: String? = null, thema: String? = null): String? {
         if (ereignis !in EREIGNISSE) return null
         if (ort != null && ort !in ORTE) return null
-        if (thema != null && thema !in THEMEN) return null
+        val t = thema?.takeIf { it in ZAEHL_THEMEN }   // unbekanntes Thema: Ereignis trotzdem zählen, Thema weglassen (Server: 400)
         val v = version.take(20).filter { it.isLetterOrDigit() || it == '.' || it == '-' }
         return buildString {
             append("{\"app\":\"").append(APP).append("\",\"v\":\"").append(v).append("\",\"ev\":\"").append(ereignis).append('"')
             if (ort != null) append(",\"ort\":\"").append(ort).append('"')
-            if (thema != null) append(",\"thema\":\"").append(thema).append('"')
+            if (t != null) append(",\"thema\":\"").append(t).append('"')
             append('}')
         }
     }
