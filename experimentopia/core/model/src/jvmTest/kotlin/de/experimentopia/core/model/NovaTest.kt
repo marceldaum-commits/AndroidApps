@@ -43,7 +43,8 @@ class NovaTest {
             assertTrue("NFC: $t", Normalizer.isNormalized(t, Normalizer.Form.NFC))
             assertTrue("ohne Emojis/Markup: $t", t.none { Character.isSurrogate(it) || it in "*#_<>[]{}`" })
         }
-        assertTrue(Nova.json().startsWith("{\"format\":1,\"app\":\"experimentopia\",\"texte\":[{\"text\":"))
+        if (Nova.ENABLED) assertTrue(Nova.json().startsWith("{\"format\":1,\"app\":\"experimentopia\",\"texte\":[{\"text\":"))
+        else assertEquals("""{"format":1,"app":"experimentopia","texte":[]}""", Nova.json())   // Vorlesen aus: nichts vertonen lassen
     }
 }
 

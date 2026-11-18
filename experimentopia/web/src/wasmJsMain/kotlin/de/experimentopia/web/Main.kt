@@ -71,7 +71,7 @@ private fun WebApp() {
     LaunchedEffect(nav.stack.size) { syncHistory(nav.stack.size) { nav.back() } }
     val sfx = remember { WebSfx(prefs) }
     val music = remember { WebMusic(scope) }
-    val reader = remember { WebReader() }
+    val reader = remember { if (de.experimentopia.core.model.Nova.ENABLED) WebReader() else null }
     CompositionLocalProvider(LocalSfx provides sfx, LocalVibration provides vibration, LocalMusic provides music, LocalReader provides reader, LocalOpenLink provides { url -> openLink(url) },
         LocalBuzzer provides Buzzer { b, on -> if (on) vibrate(when (b) { Buzz.TICK -> 8; Buzz.HIT -> 18; Buzz.BIG -> 40 }) }) {
         ExperimentopiaTheme { Surface(Modifier.fillMaxSize(), color = E.Night) {
@@ -87,7 +87,7 @@ private fun WebApp() {
                 },
                 privacy = "Experimentopia speichert den Spielstand und das Forscherbuch nur in diesem Browser (auf diesem Gerät). Keine Anmeldung, keine Werbung, " +
                     "keine Daten über dich an einen Server. " + de.experimentopia.core.model.Pro.purchaseNote + " Die App aktualisiert sich von selbst. Alle Klänge und die Musik entstehen im Browser. " +
-                    de.experimentopia.core.model.Nova.PRIVACY + " Die Sätze bleiben danach in diesem Browser.",
+                    if (de.experimentopia.core.model.Nova.ENABLED) de.experimentopia.core.model.Nova.PRIVACY + " Die Sätze bleiben danach in diesem Browser." else "",
                 onRoute = { atHome(it == Route.Home) })
         } }
     }

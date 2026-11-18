@@ -1,5 +1,10 @@
 # Changelog – Experimentopia
 
+## 2.4.8 – Vorlesen vorerst aus (18.11.2026)
+
+- 🔇 Das Vorlesen ist vorerst ausgeschaltet: keine Vorlese-Knöpfe, kein automatisches Vorlesen, keine Stimme aus dem Internet und keine Gerätestimme.
+  Musik und Klänge bleiben – getrennt abschaltbar. Später kann das Vorlesen wieder eingeschaltet werden.
+
 ## 2.4.7 – WebApp immer aktuell (18.11.2026)
 
 - 🔄 Die WebApp schaut beim Öffnen, bei jeder Rückkehr in den Tab und alle 30 Minuten nach einer neuen Version und lädt sie von selbst –

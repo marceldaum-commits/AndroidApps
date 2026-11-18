@@ -24,7 +24,7 @@ import de.experimentopia.core.model.Catalog
 import de.experimentopia.core.model.Island
 import de.experimentopia.core.model.Pro
 
-val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + Pro.purchaseNote + " Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar) und – wenn Vorlesen an ist – um Sätze der Vorlese-Stimme zu laden. " + de.experimentopia.core.model.Nova.PRIVACY
+val DEFAULT_PRIVACY get() = "Experimentopia speichert nur den Spielstand und das Forscherbuch auf diesem Gerät. Keine Anmeldung, keine Werbung, keine Kamera, kein Mikrofon. " + Pro.purchaseNote + " Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)" + if (de.experimentopia.core.model.Nova.ENABLED) " und – wenn Vorlesen an ist – um Sätze der Vorlese-Stimme zu laden. " + de.experimentopia.core.model.Nova.PRIVACY else "."
 
 @Composable
 fun SettingsScreen(
@@ -49,7 +49,7 @@ fun SettingsScreen(
         Column(Modifier.verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             top()
             SoundSettings(audio, onAudio, sound, onSound, vibration, onVibration)
-            ReadSettings(audio, onAudio)
+            if (de.experimentopia.core.model.Nova.ENABLED) ReadSettings(audio, onAudio)
             Panel(Modifier.fillMaxWidth()) {
                 Text("Klassenstufe", style = MaterialTheme.typography.titleMedium, color = E.Mint)
                 Text("Passende Versuche werden hervorgehoben. Alle anderen bleiben spielbar.", color = E.Muted, fontSize = 13.sp)

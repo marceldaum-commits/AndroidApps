@@ -12,6 +12,13 @@ import kotlinx.serialization.json.putJsonArray
  * Texte, die erst zur Laufzeit entstehen, vertont der Server auf Anfrage (/jetzt) – nur der Text, ohne Angaben zum Kind.
  */
 object Nova {
+    /**
+     * Vorlesen an/aus für die ganze App (Vorgabe 18.11.2026: vorerst aus – Musik und Klänge reichen).
+     * Aus heißt: keine Vorlese-Knöpfe, kein automatisches Vorlesen, keine Abrufe beim Stimmen-Server, keine Gerätestimme,
+     * leere /vorlesen/texte.json. Der Code bleibt vollständig erhalten – zum Wiedereinschalten nur hier auf true setzen.
+     */
+    const val ENABLED = false
+
     const val SERVER = "https://stimmen.mathenachhilfe-online.com"
     const val NOW = "$SERVER/jetzt"
     /** Herkunft, unter der die Android-App beim Server anfragt (der Server nimmt nur bekannte Herkünfte an) */
@@ -82,6 +89,6 @@ object Nova {
     /** Inhalt von /vorlesen/texte.json */
     fun json(): String = buildJsonObject {
         put("format", 1); put("app", "experimentopia")
-        putJsonArray("texte") { catalog().forEach { t -> addJsonObject { put("text", t); put("sprache", LANG) } } }
+        putJsonArray("texte") { if (ENABLED) catalog().forEach { t -> addJsonObject { put("text", t); put("sprache", LANG) } } }
     }.toString()
 }

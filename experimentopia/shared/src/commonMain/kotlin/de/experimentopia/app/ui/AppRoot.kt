@@ -143,7 +143,7 @@ fun AppRoot(
     LaunchedEffect(nav.top) { onRoute(nav.top) }
     fun open(e: Experiment, daily: Boolean = false) { if (!daily && state.locked(e)) nav.go(Route.ProR(e.title)) else nav.go(Route.Exp(e.id, daily)) }
 
-    CompositionLocalProvider(LocalReadOn provides audio.read, LocalAutoRead provides audio.autoRead) {
+    CompositionLocalProvider(LocalReadOn provides (audio.read && de.experimentopia.core.model.Nova.ENABLED), LocalAutoRead provides (audio.autoRead && de.experimentopia.core.model.Nova.ENABLED)) {
     // Große Bildschirme (Laptop, Tablet quer): Hintergrund füllt alles, der Inhalt bleibt in angenehmer Lesebreite in der Mitte
     Box(Modifier.fillMaxSize().background(Brush.verticalGradient(listOf(E.Deep, E.Night))), contentAlignment = Alignment.TopCenter) {
     Box(Modifier.widthIn(max = 720.dp).fillMaxSize().pointerInput(Unit) {

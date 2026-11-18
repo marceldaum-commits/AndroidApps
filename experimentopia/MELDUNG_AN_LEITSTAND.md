@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.4.8 vom 18.11.2026: Vorlesen aus – fertig für den Betriebstest
+
+- Auf Marcels Bestätigung („Ja, abschalten“): Schalter `Nova.ENABLED = false` (core/model, Code bleibt vollständig). Aus: alle 🔊-Knöpfe und das 🔊 in Blubbs Sprechblasen,
+  automatisches Vorlesen, Bereich „Vorlesen“ in den Einstellungen (Stimme, Sprechtempo, Probe hören, Offline laden, Hinweise), Nova-Absatz im Datenschutztext.
+  Android legt den Vorleser gar nicht erst an (keine Gerätestimme), die WebApp ebenso.
+- `vorlesen/texte.json` = `{"format":1,"app":"experimentopia","texte":[]}` (Test prüft das).
+- Browser-Test (Startseite, Rätsel des Tages, Vermuten, angetippte Sprechblasen): **0 Abrufe** an stimmen.mathenachhilfe-online.com, **0 × Gerätestimme**.
+- Musik (neu seit 2.4.0) und Effekte bleiben, „Musik“ und „Effekte“ getrennt schaltbar, dazu Vibration. Blubb-Blubbern, Labor-Klänge, Erfolgs-Töne unverändert.
+- Alle Tests grün (Logik, 69 Bildschirmfotos, Lint), Web = Android. Enthält Nacht-Auftrag (2.4.2), Logo (2.4.3), eindeutige Aufträge (2.4.5), Auto-Update (2.4.7). Liegt auf test; live ist 2.4.7.
+
 ## 18.11.2026 – 2.4.7 ist live
 
 - Auf Marcels „Ja“ `experimentopia-live` auf den getesteten Stand gesetzt (fast-forward, 3d8dd7f). Ab jetzt aktualisieren sich offene WebApps von selbst.
