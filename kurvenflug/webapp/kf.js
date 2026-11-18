@@ -231,13 +231,16 @@
   document.addEventListener('visibilitychange', function () { if (document.hidden) elternLeave(); });
 
   // ------------------------------------------------------------ Anonyme Nutzungszählung (nur wenn Eltern sie einschalten)
-  // Die App liefert beim Verlassen/Verstecken der Seite die Ereignisliste (Text); hier wird sie einmal per sendBeacon geschickt –
-  // ohne Cookies, ohne Kennung. Ist der Zähler (noch) nicht erreichbar, geht der Aufruf still ins Leere.
+  // Die App liefert beim Verlassen/Verstecken der Seite die Ereignisliste (Text); hier wird sie einmal per fetch (keepalive) geschickt –
+  // ohne Cookies (credentials: 'omit'; sendBeacon würde Cookies mitschicken), ohne Kennung. Ist der Zähler nicht erreichbar, geht es still ins Leere.
   var leaveFn = null;
   KF.onLeave = function (f) { leaveFn = f; };
   function leave() {
-    if (!leaveFn || !navigator.sendBeacon) return;
-    try { var b = leaveFn(); if (b) navigator.sendBeacon('https://trainer.mathenachhilfe-online.com/zaehler/v1/e', new Blob([b], { type: 'text/plain' })); } catch (e) {}
+    if (!leaveFn) return;
+    try {
+      var b = leaveFn();
+      if (b) fetch('https://trainer.mathenachhilfe-online.com/zaehler/v1/e', { method: 'POST', credentials: 'omit', keepalive: true, headers: { 'Content-Type': 'text/plain' }, body: b }).catch(function () {});
+    } catch (e) {}
   }
   window.addEventListener('pagehide', leave);
   document.addEventListener('visibilitychange', function () { if (document.hidden) leave(); });
