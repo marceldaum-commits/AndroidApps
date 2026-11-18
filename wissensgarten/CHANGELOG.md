@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.12 – Der Garten blüht wieder auf iPad, iPhone und Mac (18.11.2026)
+- **Ursache der weißen Fläche gefunden:** Das neue Safari (27.2) gibt der Zeichenbibliothek an bestimmten Stellen kaputte Zahlen weiter. Dann läuft der Garten zwar, malt aber nichts. Der Wissensgarten umgeht diesen Fehler jetzt beim Bauen der App.
+- **Doppelt abgesichert:** Zusätzlich gibt es den Garten jetzt in einer zweiten Fassung, die ohne das neue WebAssembly auskommt. Malt die schnelle Fassung nichts oder startet sie nicht, wechselt der Garten von selbst dorthin – ohne dass man etwas tun muss.
+- Für Eltern und Tüftler: Mit `?modus=js`, `?modus=wasm` oder `?modus=auto` an der Adresse lässt sich die Fassung auch selbst wählen.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.11 – Mehr Spürsinn für iPad und iPhone (18.11.2026)
 - Die Diagnose (`?diag=1`) prüft jetzt auch, ob die Zeichenbibliothek richtig malt und was wirklich auf dem Bildschirm ankommt. Damit finden wir die Ursache der weißen Fläche auf iPad und iPhone.
 - Zum Ausprobieren: Mit `?schaerfe=voll` zeichnet der Garten auf Apple-Geräten mit voller Schärfe, mit `?schaerfe=auto` wieder sparsam.

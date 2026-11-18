@@ -36,8 +36,11 @@ import org.w3c.fetch.Response
 private const val STORE_KEY = "wg.garten"
 private val json = Json { ignoreUnknownKeys = true; encodeDefaults = false }
 
+/** fetch ohne Optionen – ein leeres RequestInit() hätte unter Kotlin/JS „cache: null“ und scheitert im Browser */
+private fun jsFetch(url: String): kotlin.js.Promise<Response> = js("fetch(url)")
+
 private suspend fun fetchText(url: String): String {
-    val r = window.fetch(url, org.w3c.fetch.RequestInit()).await<Response>()
+    val r = jsFetch(url).await<Response>()
     if (!r.ok) error("$url: ${r.status}")
     return r.text().await<JsString>().toString()
 }
@@ -122,10 +125,12 @@ fun main() {
     }
     vm.refreshPlusPacksIfDue()
     diag("App: Daten bereit → Zeichenfläche anlegen")
-    if (diagOn()) de.wissensgarten.app.ui.fx.skiaSelbsttest { diag(it) }
 
     ComposeViewport(document.body!!) {
-        LaunchedEffect(Unit) { diag("App: erstes Compose-Bild") }
+        LaunchedEffect(Unit) {
+            diag("App: erstes Compose-Bild")
+            if (diagOn()) de.wissensgarten.app.ui.fx.skiaSelbsttest { diag(it) }
+        }
         // Emoji-Schrift laden (Merkbilder!), danach erst die App zeigen
         val emoji by preloadFont(Res.font.noto_color_emoji)
         val symbols by preloadFont(Res.font.dejavu_symbols)

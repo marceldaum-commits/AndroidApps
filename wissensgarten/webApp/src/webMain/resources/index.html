@@ -152,11 +152,11 @@
     (function () {
       var shown = false, t0 = Date.now(), notes = [];
       window.wgStartNote = function (t) { notes.push(String(t).slice(0, 300)); if (notes.length > 12) notes.shift(); if (window.wgDiag) window.wgDiag('Notiz: ' + t); };
-      window.wgStartFailed = function (why) {
+      window.wgStartFailed = function (why, afterReady) {
         window.wgStartNote(why || 'unbekannt');
         if (shown) { var d = document.getElementById('wg-fail-detail'); if (d) d.textContent = notes.join(' | '); return; }
         // Wasm-Start gescheitert: einmal automatisch mit der JS-Fassung neu starten (für diese Version gemerkt)
-        if (window.wgModus === 'wasm' && window.wgModusAuto && !window.wgReady) {
+        if (window.wgModus === 'wasm' && window.wgModusAuto && (!window.wgReady || afterReady)) {
           try {
             if (!sessionStorage.getItem('wg.jsVersuch')) {
               sessionStorage.setItem('wg.jsVersuch', '1');
@@ -206,7 +206,7 @@
         var use, why;
         if (forced === 'js' || forced === 'wasm') { use = forced; why = 'Schalter ?modus=' + forced; }
         else if (!gc) { use = 'js'; why = 'kein WasmGC'; }
-        else if (webkit) { use = 'js'; why = 'Safari/WebKit'; }
+        // Safari/WebKit: seit 2.2.12 wieder Wasm (Abhilfe für WebKit-Fehler 329421 im Bündel); malt Wasm dort nichts, folgt automatisch JS
         else if (kaputt === v) { use = 'js'; why = 'Wasm-Start scheiterte vorher bei ' + v; }
         else { use = 'wasm'; why = 'Standard'; }
         // Ist der letzte Wasm-Start dieser Version im selben Tab abgestürzt (Tab neu geladen, ohne dass der Garten stand)? → JS
@@ -218,6 +218,30 @@
         window.wgModus = use; window.wgModusAuto = !forced;
         window.wgStartNote('Fassung ' + use + ' (' + why + ')');
         if (use === 'wasm' && !forced) {
+          // Malt die Wasm-Fassung wirklich? 4 s nach dem Start Bildpunkte der Zeichenfläche prüfen (direkt nach dem Malen):
+          // nur Weiß/Durchsichtig = weiße Fläche (z. B. Safari 27) → automatisch JS-Fassung
+          window.addEventListener('wg-ready', function () {
+            var seen = false, tries = 0, oraf = window.requestAnimationFrame.bind(window), until = Date.now() + 4000;
+            var look = function () {
+              try {
+                var r = document.body.shadowRoot, c = (r && r.querySelector('canvas')) || document.querySelector('canvas'); if (!c) return;
+                var gl = c.__wgGl || (c.__wgGl = c.getContext('webgl2') || c.getContext('webgl')); if (!gl) { seen = true; return; }
+                var w = gl.drawingBufferWidth, h = gl.drawingBufferHeight, px = new Uint8Array(4);
+                [[0.5, 0.5], [0.25, 0.25], [0.75, 0.75], [0.5, 0.15], [0.5, 0.85]].forEach(function (q) {
+                  gl.readPixels((w * q[0]) | 0, (h * q[1]) | 0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
+                  if (px[3] > 0 && !(px[0] > 252 && px[1] > 252 && px[2] > 252)) seen = true;
+                });
+                tries++;
+              } catch (e) { seen = true; }
+            };
+            window.requestAnimationFrame = function (cb) {
+              return oraf(function (t) { cb(t); if (!seen && Date.now() < until) look(); });
+            };
+            setTimeout(function () {
+              window.wgDiag('Bildprüfung Wasm: ' + (seen ? 'Garten sichtbar ✓' : 'nur weiß (' + tries + ' Proben)'));
+              if (!seen && tries > 0) window.wgStartFailed('Wasm zeichnet nichts (weiße Fläche)', true);
+            }, 4500);
+          });
           // „Can't wrap nullptr“ u. ä. landen oft nur in der Konsole – vor dem Start als Startfehler werten
           var oe = console.error;
           console.error = function () {
