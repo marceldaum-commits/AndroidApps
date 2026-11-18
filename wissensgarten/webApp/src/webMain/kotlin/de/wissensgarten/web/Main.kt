@@ -37,7 +37,7 @@ private const val STORE_KEY = "wg.garten"
 private val json = Json { ignoreUnknownKeys = true; encodeDefaults = false }
 
 private suspend fun fetchText(url: String): String {
-    val r = window.fetch(url).await<Response>()
+    val r = window.fetch(url, org.w3c.fetch.RequestInit()).await<Response>()
     if (!r.ok) error("$url: ${r.status}")
     return r.text().await<JsString>().toString()
 }
@@ -57,14 +57,14 @@ private suspend fun plusPackTexts(): List<String> = runCatching {
 }.getOrDefault(emptyList())
 
 /** Wert von ?pro= lesen und aus der Adresse entfernen (der Code soll nicht im Verlauf/Lesezeichen bleiben). */
-private fun takeProParam(): JsString? = js("(() => { const u = new URL(location.href); const v = u.searchParams.get('pro'); if (v) { u.searchParams.delete('pro'); history.replaceState(null, '', u.pathname + u.search + u.hash); } return v; })()")
+private fun takeProParam(): JsString? = js("(function () { var u = new URL(location.href); var v = u.searchParams.get('pro'); if (v) { u.searchParams.delete('pro'); history.replaceState(null, '', u.pathname + u.search + u.hash); } return v; })()")
 
-private fun hideSplash(): Unit = js("(() => { const s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(() => s.remove(), 600); } window.dispatchEvent(new Event('wg-ready')); })()")
+private fun hideSplash(): Unit = js("(function () { var s = document.getElementById('splash'); if (s) { s.classList.add('weg'); setTimeout(function () { s.remove(); }, 600); } window.dispatchEvent(new Event('wg-ready')); })()")
 /** Schritt ins Start-Protokoll (index.html, sichtbar mit ?diag=1) */
 private fun diag(step: String): Unit = js("window.wgDiag && window.wgDiag(step)")
 private fun diagOn(): Boolean = js("!!window.wgDiagOn")
-private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', () => cb(document.visibilityState === 'visible'))")
-private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', () => cb())")
+private fun onVisibility(cb: (Boolean) -> Unit): Unit = js("document.addEventListener('visibilitychange', function () { cb(document.visibilityState === 'visible'); })")
+private fun onBeforeUnload(cb: () -> Unit): Unit = js("window.addEventListener('pagehide', function () { cb(); })")
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalResourceApi::class)
 fun main() {

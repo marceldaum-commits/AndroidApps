@@ -11,7 +11,7 @@ import org.jetbrains.skia.Image
 @Composable
 actual fun BackHandler(enabled: Boolean, onBack: () -> Unit) { /* Web: Zurück über die Knöpfe der Oberfläche */ }
 
-private fun segmentCount(s: String): Int = js("""(() => { try { const seg = new Intl.Segmenter('de', { granularity: 'grapheme' }); globalThis.__wgSeg = Array.from(seg.segment(s), x => x.segment); } catch (e) { globalThis.__wgSeg = Array.from(s); } return globalThis.__wgSeg.length; })()""")
+private fun segmentCount(s: String): Int = js("""(function () { try { var seg = new Intl.Segmenter('de', { granularity: 'grapheme' }); globalThis.__wgSeg = Array.from(seg.segment(s), function (x) { return x.segment; }); } catch (e) { globalThis.__wgSeg = Array.from(s); } return globalThis.__wgSeg.length; })()""")
 private fun segmentAt(i: Int): String = js("globalThis.__wgSeg[i]")
 
 actual fun graphemes(s: String): List<String> {

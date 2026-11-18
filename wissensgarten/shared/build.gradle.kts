@@ -37,7 +37,10 @@ val genAppInfo by tasks.registering {
 kotlin {
     androidTarget { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) } }
     @OptIn(ExperimentalWasmDsl::class)
-    wasmJs { browser() }
+    // -Xwasm-no-jstag: kein Import von WebAssembly.JSTag – Safari 26/27 verarbeitet Tag-Importe fehlerhaft (weiße Fläche)
+    wasmJs { browser(); compilerOptions { freeCompilerArgs.add("-Xwasm-no-jstag") } }
+    // Kotlin/JS-Fassung für Browser ohne passendes WasmGC (Safari 27 auf iPad/iPhone)
+    js { browser(); useCommonJs() }
     compilerOptions {
         freeCompilerArgs.add("-Xexpect-actual-classes")
         optIn.addAll("androidx.compose.material3.ExperimentalMaterial3Api", "androidx.compose.foundation.layout.ExperimentalLayoutApi")
@@ -64,7 +67,7 @@ kotlin {
             api("androidx.activity:activity-compose:1.11.0")
             implementation("com.google.zxing:core:3.5.4")
         }
-        wasmJsMain.dependencies {
+        webMain.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-browser:0.5.0")
             implementation(npm("qrcode-generator", "1.4.4"))
         }

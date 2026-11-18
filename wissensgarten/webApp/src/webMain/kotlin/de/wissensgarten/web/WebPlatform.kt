@@ -41,7 +41,7 @@ private fun jsTiltX(): Double = js("window.wg.tiltX")
 private fun jsKeepAwake(on: Boolean): Unit = js("window.wg.keepAwake(on)")
 private fun jsReload(): Unit = js("location.reload()")
 private fun jsSafe(safe: Boolean): Unit = js("window.wgUpdate && window.wgUpdate.safe(safe)")
-private fun jsInstallWatch(cb: (String) -> Unit): Unit = js("window.wg.install.onChange((s) => cb(s))")
+private fun jsInstallWatch(cb: (String) -> Unit): Unit = js("window.wg.install.onChange(function (s) { cb(s); })")
 private fun jsInstallPrompt(): Unit = js("window.wg.install.prompt()")
 private fun jsInstallPostpone(): Unit = js("window.wg.install.postpone()")
 
@@ -285,4 +285,4 @@ object CraftHtml {
 
 /** GET mit Lizenz-Header; null bei Fehler (403/404/offline). */
 private fun fetchLicensed(url: String, code: String): kotlin.js.Promise<JsString?> =
-    js("fetch(url, { headers: { 'X-Lizenz': code }, cache: 'no-store' }).then(r => r.ok ? r.text() : null).catch(() => null)")
+    js("fetch(url, { headers: { 'X-Lizenz': code }, cache: 'no-store' }).then(function (r) { return r.ok ? r.text() : null; }).catch(function () { return null; })")
