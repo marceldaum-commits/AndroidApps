@@ -29,17 +29,17 @@ fun ParentArea(todayDays: Long, grade: Int, openAtStart: Boolean = false) {
     Panel(Modifier.fillMaxWidth().testTag("elternbereich"), border = E.Violet) {
         Text("👪 Elternbereich", style = MaterialTheme.typography.titleMedium, color = E.Violet)
         if (!unlocked) {
-            Text("Für Eltern: Hilfe vor der Klassenarbeit und Einstellungen zur anonymen Zählung.", color = E.Muted, fontSize = 13.sp)
+            Text("Für Eltern: Hilfe vor der Physik-Arbeit und Einstellungen zur anonymen Zählung.", color = E.Muted, fontSize = 13.sp)
             GlowButton({ gate = true }, Modifier.fillMaxWidth().testTag("elternbereich_oeffnen"), color = E.Violet) { Text("🔐 Elternbereich öffnen", fontWeight = FontWeight.Bold) }
         }
         AnimatedVisibility(unlocked) {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 // ── Klassenarbeit bald? → kostenlose Probestunde
-                Text("📝 Klassenarbeit bald?", color = E.Text, fontWeight = FontWeight.Bold)
-                var subject by remember { mutableStateOf(Subject.PHYSIK) }
+                // Nachhilfe gibt es nur in Physik (nicht in Chemie und Biologie) – darum nur Physik-Themen
+                Text("📝 Physik-Arbeit bald?", color = E.Text, fontWeight = FontWeight.Bold)
+                val subject = Subject.PHYSIK
                 var topic by remember { mutableStateOf<Topic?>(null) }
                 var klasse by remember { mutableIntStateOf(if (grade in 5..10) grade else 7) }
-                ChipRow(Subject.entries, subject, { "${it.emoji} ${it.title}" }, { subject = it; topic = null }, color = subject.color())
                 ChipRow(Topic.entries.filter { it.subject == subject }, topic, { "${it.emoji} ${it.title.substringBefore(" (").substringBefore(",").substringBefore(" &")}" }, { topic = it }, Modifier.testTag("arbeit_thema"), color = subject.color())
                 ChipRow((5..10).toList(), klasse, { "Kl. $it" }, { klasse = it }, color = E.Sun)
                 Text(Angebote.PROBESTUNDE_TEXT, color = E.Text, fontSize = 14.sp)

@@ -2,6 +2,11 @@
 
 Neueste oben.
 
+## 18.11.2026 – Version 2.11.2 vom 18.11.2026: Probestunde nur Physik – fertig für den Betriebstest
+
+- Hinweis von „Geld verdienen“: Nachhilfe gibt es in Physik, nicht in Chemie/Bio. Elternbereich zeigt jetzt nur „📝 Physik-Arbeit bald?“ mit Physik-Themen; Zählung `probestunde_klick` nur noch mit `physik-*`.
+- Zähl-Kennungen: „Geld verdienen“ meint, `physik-elektrizitaet`, `physik-waerme`, `physik-akustik`, `chemie-*`, `biologie-*` seien am Server nicht freigeschaltet. Am 18.11. ~20 Uhr hat **trainer-test** sie alle mit 204 angenommen, und ihr hattet sie als freigeschaltet gemeldet. Bitte für **trainer (live)** bestätigen; sonst nehme ich das Feld `thema` bei unbekannten Kennungen heraus.
+
 ## 18.11.2026 – Vorgezogene Wochenrunde (Marcel: „Besprecht alles jetzt ihr 6“)
 
 Alle 5 anderen Räume haben geantwortet; Ergebnis-Tabelle und Abstimmungen in `experimentopia/WOCHENRUNDE.md` (Abschnitt „Ergebnis der Runde“).

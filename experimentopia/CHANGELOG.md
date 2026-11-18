@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.11.2 – Probestunde nur für Physik (18.11.2026)
+
+- 📝 Der Hinweis auf die kostenlose Probestunde im Elternbereich gilt jetzt nur noch für Physik („Physik-Arbeit bald?“) – Nachhilfe gibt es in Physik, nicht in Chemie und Biologie.
+
 ## 2.11.1 – „Alle Apps“ (18.11.2026)
 
 - ← **Alle Apps**: Oben auf dem Startbildschirm (am PC in der Kopfzeile) führt ein Knopf zurück zur Übersicht aller Lern-Apps auf unserer Website.
