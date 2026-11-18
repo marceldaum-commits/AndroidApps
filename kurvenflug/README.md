@@ -1,5 +1,9 @@
 # Kurvenflug – Mathe & Physik im All (Klasse 5–13)
 
+> **Zurzeit nur als WebApp** (Marcel 18.11.2026, für 1–2 Monate): Kurvenflug läuft im Browser und lässt sich dort als App
+> installieren (Knopf „App installieren“). Es gibt keine APK und keine Play-Version; der Android-Code bleibt im Repo, wird aber
+> nicht gebaut oder ausgeliefert (Workflow `kurvenflug-release.yml` nur von Hand). Vorlesen ist abgeschaltet (`Nova.ENABLED`).
+
 Du steuerst eine Raumsonde – die Flugbahn ist eine Formel, die du selbst einstellst. Das Rechnen ist die Spielsteuerung
 selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, weitere Ideen: `../docs/APP-IDEEN.md`).
 

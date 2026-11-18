@@ -134,6 +134,7 @@ fun HomeScreen(
                                 IconButton(onClick = onSettings) { Icon(Icons.Filled.Settings, "Einstellungen", tint = Q.Muted) }
                             }
                             banner?.invoke()
+                            InstallOffer(onHome = true)
                             Volt(greeting?.first ?: if (stars == 0) VoltMood.IDLE else VoltMood.HAPPY, size = 64.dp,
                                 speech = greeting?.second ?: if (stars == 0) "Hey! Ich bin Volt. Bereit für deine erste Mission? 🚀" else "Schon $stars ⭐ gesammelt. Weiter so, Commander!")
                             crewLine?.let { (m, line) -> de.kurvenflug.app.ui.story.CrewSays(m, line) }
