@@ -26,6 +26,9 @@ object Clock {
     /** Wochentag 0 = Montag … 6 = Sonntag */
     fun weekday(ms: Long): Int = date(ms).dayOfWeek.ordinal
 
+    /** Name des Wochentags für einen lokalen Epoch-Tag (z. B. Termin einer Klassenarbeit) */
+    fun weekdayName(epochDay: Long): String = DAYS[LocalDate.fromEpochDays(epochDay.toInt()).dayOfWeek.ordinal]
+
     private val DAYS = listOf("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")
     private val MONTHS = listOf("Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember")
     /** „Montag, 3. März“ */

@@ -637,6 +637,28 @@ open class ScreenshotTest {
             dailyLimit = 20, holiday = true)
     }
 
+    /** Elternbereich: Lern-Geschenk, Schalter „Anonyme Nutzungszählung“ und „Hinweise auf unsere Nachhilfe“, Absender */
+    @Test fun elternAngebote() = shot("72_eltern_angebote") {
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp),
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(6.dp)) {
+            androidx.compose.material3.Text("Für Eltern", style = androidx.compose.material3.MaterialTheme.typography.titleMedium)
+            de.wissensgarten.app.ui.settings.ElternAngeboteContent(countUsage = true, onCountUsage = {}, tutorHints = true, onTutorHints = {}, onGift = {})
+        }
+    }
+
+    /** Wochenbericht (hinter dem Eltern-Tor): sachlicher Nachhilfe-Hinweis, ohne Figur und ohne Preis */
+    @Test fun nachhilfeHinweis() = shot("73_nachhilfe_hinweis") {
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp),
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.spacedBy(12.dp)) {
+            de.wissensgarten.app.ui.parents.NachhilfeKarte(
+                "Bruchrechnung fällt Lena gerade schwer (52 % richtig in den letzten zwei Wochen). Üben in der App hilft – manchmal braucht es aber eine Erklärung von einem Menschen. Wenn ihr mögt: Wir bieten Online-Nachhilfe an.",
+                "Kostenlose Probestunde anfragen", onOpen = {}, onHide = {})
+            de.wissensgarten.app.ui.parents.NachhilfeKarte(
+                "Am Dienstag ist die Klassenarbeit „Mathe: Brüche“. Falls ihr noch Unterstützung wollt: Wir bieten Online-Nachhilfe an – die erste Stunde ist eine kostenlose Probestunde.",
+                "Kostenlose Probestunde anfragen", onOpen = {}, onHide = {})
+        }
+    }
+
     @Test fun soundSettings() = shot("70_ton") {
         androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(16.dp)) {
             androidx.compose.material3.Text("Ton", style = androidx.compose.material3.MaterialTheme.typography.titleMedium)

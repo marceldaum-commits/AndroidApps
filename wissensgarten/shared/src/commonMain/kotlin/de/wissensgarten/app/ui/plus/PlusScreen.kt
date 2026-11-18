@@ -40,6 +40,8 @@ fun PlusScreen(
     onTrial: () -> Boolean,
     onRedeem: (String) -> PlusEntitlements.Redeem,
     onBack: () -> Unit,
+    /** Kauf-Link angetippt (für die anonyme Zählung) */
+    onCheckout: () -> Unit = {},
 ) {
     val uri = LocalUriHandler.current
     var code by remember { mutableStateOf("") }
@@ -84,10 +86,10 @@ fun PlusScreen(
             ) { Text("🎁 7 Tage gratis testen (Profile + Wochenbericht)") }
 
             if (purchaseAllowed && status.product != License.PRODUCT_FOREVER) {
-                if (checkoutYear.isNotBlank()) Button(onClick = { uri.openUri(checkoutYear) }, modifier = Modifier.fillMaxWidth()) {
+                if (checkoutYear.isNotBlank()) Button(onClick = { onCheckout(); uri.openUri(checkoutYear) }, modifier = Modifier.fillMaxWidth()) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) { Text("Plus für 1 Jahr – 19,99 €", fontWeight = FontWeight.Bold); Text("inkl. MwSt. · kein Abo, verlängert sich nicht", style = MaterialTheme.typography.labelSmall) }
                 }
-                if (checkoutForever.isNotBlank()) Button(onClick = { uri.openUri(checkoutForever) }, modifier = Modifier.fillMaxWidth(),
+                if (checkoutForever.isNotBlank()) Button(onClick = { onCheckout(); uri.openUri(checkoutForever) }, modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB8860B))) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) { Text("Plus für immer – 49,99 €", fontWeight = FontWeight.Bold); Text("inkl. MwSt. · einmal zahlen", style = MaterialTheme.typography.labelSmall) }
                 }

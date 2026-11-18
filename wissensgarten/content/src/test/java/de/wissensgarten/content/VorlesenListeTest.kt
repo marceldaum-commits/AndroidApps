@@ -15,7 +15,7 @@ import java.io.File
  * - festen Sätzen der Lern-Logik ([Nova.festeTexte]: Geschichte, Feste, Brummi-Radio, Safari),
  * - Brummis festen Sätzen in der Oberfläche (ohne Platzhalter), gesucht im Quelltext ([BrummiSaetze]).
  *
- * Ausgeliefert als `webApp/src/wasmJsMain/resources/vorlesen/texte.json` (→ `webapp/vorlesen/texte.json`).
+ * Ausgeliefert als `webApp/src/webMain/resources/vorlesen/texte.json` (→ `webapp/vorlesen/texte.json`).
  * Passt die Datei nicht mehr zum Inhalt, schreibt der Test sie neu und schlägt fehl – dann committen
  * und `./gradlew :webApp:exportWebApp` laufen lassen.
  *
@@ -24,7 +24,7 @@ import java.io.File
  */
 class VorlesenListeTest {
     private val packsDir = File("src/main/assets/packs")
-    private val out = File("../webApp/src/wasmJsMain/resources/vorlesen/texte.json")
+    private val out = File("../webApp/src/webMain/resources/vorlesen/texte.json")
     private val exported = File("../webapp/vorlesen/texte.json")
 
     private val plusDir: File? = (System.getenv("WG_PLUS_DIR")?.let(::File)

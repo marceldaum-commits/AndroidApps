@@ -24,6 +24,8 @@ object ParentGate {
     fun open(now: Long = de.wissensgarten.core.model.Platform.nowMs()) { openUntil = now + OPEN_MS }
     /** Für Tests und „Sperren“-Knopf */
     fun close() { openUntil = 0 }
+    /** Wird aufgerufen, wenn Eltern das Tor gerade geöffnet haben (für die anonyme Zählung „elternbereich“) */
+    var onPassed: (() -> Unit)? = null
 
     /** Aufgabe: zweistellig × einstellig – für Erwachsene leicht, für Grundschulkinder schwer. */
     data class Task(val a: Int, val b: Int) { val answer get() = a * b }
@@ -46,7 +48,7 @@ fun ParentGateHost(content: @Composable () -> Unit) {
     CompositionLocalProvider(LocalParentGate provides ask) {
         content()
         pending?.let { (reason, onPass) ->
-            ParentGateDialog(reason, onPass = { ParentGate.open(); pending = null; onPass() }, onCancel = { pending = null })
+            ParentGateDialog(reason, onPass = { ParentGate.open(); ParentGate.onPassed?.invoke(); pending = null; onPass() }, onCancel = { pending = null })
         }
     }
 }

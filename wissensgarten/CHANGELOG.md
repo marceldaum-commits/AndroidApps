@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.13 – Für Eltern: Lern-Geschenk, anonyme Zählung, Nachhilfe-Hinweis (18.11.2026)
+- **🎁 Lern-Geschenk verschenken:** Im Elternbereich (Einstellungen → Für Eltern) führt ein Knopf zu unseren Geschenkkarten: Wissensgarten Plus oder Nachhilfe zum Ausdrucken. Ein geschenkter Plus-Code schaltet per Link direkt frei.
+- **Anonyme Zählung, abschaltbar:** Der Garten meldet nur, dass er geöffnet wurde und ob im Elternbereich ein Link angetippt wurde. Es gibt keine Namen, keine Kennung, keinen Lernstand und keine Cookies. Ausschalten geht unter Einstellungen → Für Eltern.
+- **Hinweis auf unsere Nachhilfe – nur für Eltern:** Fällt ein Thema länger schwer oder steht eine Klassenarbeit an, kann im Wochenbericht ein sachlicher Hinweis auf eine kostenlose Probestunde erscheinen. Er kommt höchstens alle zwei Wochen, lässt sich ausblenden oder ganz abschalten und erscheint nie im Kinderbereich und nie durch Brummi.
+- Unten im Startbild und im Elternbereich steht jetzt „Ein Angebot von Nachhilfe – online“.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.12 – Der Garten blüht wieder auf iPad, iPhone und Mac (18.11.2026)
 - **Ursache der weißen Fläche gefunden:** Das neue Safari (27.2) gibt der Zeichenbibliothek an bestimmten Stellen kaputte Zahlen weiter. Dann läuft der Garten zwar, malt aber nichts. Der Wissensgarten umgeht diesen Fehler jetzt beim Bauen der App.
 - **Doppelt abgesichert:** Zusätzlich gibt es den Garten jetzt in einer zweiten Fassung, die ohne das neue WebAssembly auskommt. Malt die schnelle Fassung nichts oder startet sie nicht, wechselt der Garten von selbst dorthin – ohne dass man etwas tun muss.

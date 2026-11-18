@@ -61,6 +61,7 @@ fun SettingsScreen(
     /** Zusätzliche Einstellungen unter „Brummi liest vor“ (Stimme, Tempo, Probe) bzw. unter „Ton“ (Lautstärken) */
     voiceExtras: @Composable () -> Unit = {},
     soundExtras: @Composable () -> Unit = {},
+    parentExtras: @Composable ColumnScope.() -> Unit = {},
 ) {
     var editing by remember { mutableStateOf(false) }
     var wipeStep by remember { mutableIntStateOf(0) }
@@ -233,8 +234,10 @@ fun SettingsScreen(
             )
         }
 
+        Section("Für Eltern") { parentExtras() }
+
         Section("Datenschutz & Daten") {
-            Text("Keine Werbung, kein Tracking, kein Konto nötig. Ohne Sync bleibt alles auf diesem Gerät.", style = MaterialTheme.typography.bodySmall)
+            Text("Keine Werbung, kein Konto nötig, keine Kennung. Ohne Sync bleibt der Lernstand auf diesem Gerät.", style = MaterialTheme.typography.bodySmall)
             OutlinedButton(onClick = onPrivacy, modifier = Modifier.fillMaxWidth()) { Text("🔒 Datenschutzerklärung") }
             OutlinedButton(onClick = { wipeStep = 1 }, modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)) { Text("🗑️ Alle Daten löschen") }

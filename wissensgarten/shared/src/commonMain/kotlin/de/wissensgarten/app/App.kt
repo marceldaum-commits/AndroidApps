@@ -229,6 +229,10 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         val route = backStack?.destination?.route
         // Neue WebApp-Version nur auf dem Startbildschirm einspielen – nie mitten in einer Runde oder Eingabe
         LaunchedEffect(route) { host.setSafeToUpdate(route == Routes.GARDEN) }
+        LaunchedEffect(Unit) {
+            if (!startGezaehlt) { startGezaehlt = true; vm.zaehle("start") }
+            de.wissensgarten.app.ui.common.ParentGate.onPassed = { vm.zaehle("elternbereich") }
+        }
         val showBar = TABS.any { it.route == route }
 
         val gate = de.wissensgarten.app.ui.common.LocalParentGate.current
@@ -623,6 +627,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             syncCard = { host.SyncCard() },
                             voiceExtras = { de.wissensgarten.app.ui.settings.VoiceSettings(vm.settings, host, packs, vm.plusStatus.collectAsStateWithLifecycle().value.active) },
                             soundExtras = { de.wissensgarten.app.ui.settings.SoundSettings(vm.settings, host) },
+                            parentExtras = { de.wissensgarten.app.ui.settings.ElternAngebote(vm.settings, onGift = { vm.zaehle("geschenk_klick", "elternbereich") }) },
                             onPrivacy = { nav.navigate(Routes.PRIVACY) },
                             typing = vm.settings.typing.collectAsStateWithLifecycle().value, onTyping = { vm.settings.setTyping(it) },
                             dailyLimit = vm.settings.dailyLimit.collectAsStateWithLifecycle().value, onDailyLimit = { vm.settings.setDailyLimit(it) },
@@ -755,17 +760,63 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                 }
                 composable(Routes.PLUS) {
                     val st by vm.plusStatus.collectAsStateWithLifecycle()
+                    // Herkunft für die Zählung: aus den Einstellungen (Elternbereich) oder von einer gesperrten Funktion
+                    val plusOrt = remember { if (nav.previousBackStackEntry?.destination?.route == Routes.SETTINGS) "elternbereich" else "gesperrt" }
+                    LaunchedEffect(Unit) { vm.zaehle("pro_ansehen", plusOrt) }
                     de.wissensgarten.app.ui.plus.PlusScreen(
                         status = st, today = de.wissensgarten.core.model.Scheduler.localDay(now),
                         purchaseAllowed = host.features.plusPurchase,
                         checkoutYear = vm.entitlements.config.checkoutYear, checkoutForever = vm.entitlements.config.checkoutForever,
                         onTrial = { vm.startPlusTrial() }, onRedeem = { vm.redeemPlus(it) }, onBack = { nav.popSafe() },
+                        onCheckout = { vm.zaehle("pro_kasse", plusOrt) },
                     )
                 }
                 composable(Routes.WEEK_REPORT) {
                     val allBeds by vm.allBeds.collectAsStateWithLifecycle()
                     val logs by vm.weekLogs.collectAsStateWithLifecycle()
-                    de.wissensgarten.app.ui.parents.WeekReportScreen(profiles, profile?.id, report = { pid ->
+                    val hintLogs by vm.hintLogs.collectAsStateWithLifecycle()
+                    val hintsOn by vm.settings.tutorHints.collectAsStateWithLifecycle()
+                    var hintRev by remember { mutableIntStateOf(0) }
+                    val uri = androidx.compose.ui.platform.LocalUriHandler.current
+                    de.wissensgarten.app.ui.parents.WeekReportScreen(profiles, profile?.id, hint = { p ->
+                        if (!hintsOn) return@WeekReportScreen
+                        val m = de.wissensgarten.core.model.NachhilfeHinweis
+                        val packOf = packs.associateBy { it.id }
+                        val bedThema = allBeds.filter { it.bed.profileId == p.id }.associate { b ->
+                            b.bed.id to de.wissensgarten.core.model.Angebote.thema(b.bed.packId, b.bed.packId?.let { packOf[it]?.subject })
+                        }
+                        val cardThema = allBeds.filter { it.bed.profileId == p.id }.flatMap { b -> b.cards.map { it.id to bedThema[b.bed.id] } }.toMap()
+                        val klasse = p.level.takeIf { it in 1..13 }
+                        val hidden = remember(p.id, hintRev) { vm.settings.hintsHidden(p.id) }
+                        // 1) Klassenarbeit bald (3–14 Tage)
+                        val today = de.wissensgarten.core.model.Scheduler.localDay(now)
+                        val exam = remember(p.id, hintRev) { m.klassenarbeit(vm.settings.exams(p.id), today, hidden.filter { it.startsWith("ka:") }.map { it.removePrefix("ka:") }.toSet()) }
+                        if (exam != null) {
+                            val thema = bedThema[exam.bedId]
+                            val tag = de.wissensgarten.app.ui.common.Clock.weekdayName(exam.day)
+                            LaunchedEffect(exam.id) { vm.zaehle("nachhilfe_hinweis", "klassenarbeit", thema) }
+                            de.wissensgarten.app.ui.parents.NachhilfeKarte(
+                                "Am $tag ist die Klassenarbeit „${exam.title}“. Falls ihr noch Unterstützung wollt: Wir bieten Online-Nachhilfe an – die erste Stunde ist eine kostenlose Probestunde.",
+                                "Kostenlose Probestunde anfragen",
+                                onOpen = { vm.zaehle("probestunde_klick", "klassenarbeit", thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("klassenarbeit", thema, klasse)) } },
+                                onHide = { vm.settings.hideHint(p.id, "ka:" + exam.id); hintRev++ },
+                            )
+                            return@WeekReportScreen
+                        }
+                        // 2) Ein Thema fällt länger schwer (höchstens ein Hinweis, je Thema höchstens alle 14 Tage)
+                        val antworten = hintLogs.filter { it.profileId == p.id }.mapNotNull { l ->
+                            cardThema[l.cardId]?.let { de.wissensgarten.core.model.NachhilfeHinweis.Antwort(it, l.time, l.rating != de.wissensgarten.core.model.Rating.AGAIN.ordinal) }
+                        }
+                        val h = remember(p.id, hintRev, antworten.size) { m.pruefe(antworten, now, vm.settings.hintShown(p.id), hidden) } ?: return@WeekReportScreen
+                        LaunchedEffect(p.id, h.thema) { if (h.neu) { vm.settings.setHintShown(p.id, h.thema, now); vm.zaehle("nachhilfe_hinweis", "elternbericht", h.thema) } }
+                        de.wissensgarten.app.ui.parents.NachhilfeKarte(
+                            "${de.wissensgarten.core.model.Angebote.themaName(h.thema).replaceFirstChar { it.uppercase() }} fällt ${p.name} gerade schwer (${h.prozent} % richtig in den letzten zwei Wochen). " +
+                                "Üben in der App hilft – manchmal braucht es aber eine Erklärung von einem Menschen. Wenn ihr mögt: Wir bieten Online-Nachhilfe an.",
+                            "Kostenlose Probestunde anfragen",
+                            onOpen = { vm.zaehle("probestunde_klick", "elternbericht", h.thema); runCatching { uri.openUri(de.wissensgarten.core.model.Angebote.probestunde("elternbericht", h.thema, klasse)) } },
+                            onHide = { vm.settings.hideHint(p.id, h.thema); hintRev++ },
+                        )
+                    }, report = { pid ->
                         val subj = packs.associate { it.id to it.subject }
                         val cards = allBeds.filter { it.bed.profileId == pid }.flatMap { b -> b.cards.map { c ->
                             c.id to de.wissensgarten.core.model.WeekReport.CardInfo(c.front, b.bed.packId?.let(subj::get) ?: "eigene", c.stability, c.lapses) } }.toMap()
@@ -790,6 +841,9 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         if (profile == null) Box(Modifier.fillMaxSize()) else content(profile)
     }
 }
+
+/** Zählung „start“ nur einmal pro App-Start */
+private var startGezaehlt = false
 
 /** Erkennungsmelodie nur einmal pro App-Start */
 private var jinglePlayed = false

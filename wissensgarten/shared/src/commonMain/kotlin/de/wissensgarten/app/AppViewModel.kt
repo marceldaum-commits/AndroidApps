@@ -342,6 +342,10 @@ class AppViewModel(
     val allBeds: StateFlow<List<BedWithCards>> =
         repo.allBeds().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
+    /** Die letzten 14 Tage – für den Nachhilfe-Hinweis im Wochenbericht (Eltern-Tor) */
+    val hintLogs = repo.logsSince(de.wissensgarten.core.model.Platform.nowMs() - 14 * Scheduler.DAY_MS)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
+
     val weekLogs = repo.logsSince(de.wissensgarten.core.model.Platform.nowMs() - 7 * Scheduler.DAY_MS)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), emptyList())
 
@@ -407,10 +411,21 @@ class AppViewModel(
     val plusStatus = c.entitlements.status
 
     /** Code aus Eingabe, E-Mail oder Link übernehmen. */
-    fun redeemPlus(text: String): de.wissensgarten.core.data.PlusEntitlements.Redeem {
+    /** Code einlösen – ort: „eingabe“ (Eltern tippen ihn ein) oder „link“ (Freischalt-Link ?pro=…) */
+    fun redeemPlus(text: String, ort: String = "eingabe"): de.wissensgarten.core.data.PlusEntitlements.Redeem {
         val r = c.entitlements.redeem(text)
-        if (r == de.wissensgarten.core.data.PlusEntitlements.Redeem.OK) refreshPlusPacksIfDue(force = true)
+        if (r == de.wissensgarten.core.data.PlusEntitlements.Redeem.OK) { refreshPlusPacksIfDue(force = true); zaehle("code_eingeloest", ort) }
         return r
+    }
+
+    /**
+     * Anonyme Nutzungszählung (abschaltbar im Elternbereich): nur App, Version, Ereignis, Ort, Thema –
+     * keine Kennung, kein Name, kein Lernstand. Ist der Schalter aus, wird nichts gesendet.
+     */
+    fun zaehle(ereignis: String, ort: String? = null, thema: String? = null) {
+        if (!c.settings.countUsage.value) return
+        val body = de.wissensgarten.core.model.Zaehlung.inhalt(AppInfo.VERSION, ereignis, ort, thema) ?: return
+        host?.sendCount(de.wissensgarten.core.model.Zaehlung.URL, body)
     }
 
     fun startPlusTrial(): Boolean = c.entitlements.startTrial()

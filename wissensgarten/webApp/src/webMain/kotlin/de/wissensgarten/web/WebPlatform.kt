@@ -41,6 +41,8 @@ private fun jsTiltX(): Double = js("window.wg.tiltX")
 private fun jsKeepAwake(on: Boolean): Unit = js("window.wg.keepAwake(on)")
 private fun jsReload(): Unit = js("location.reload()")
 private fun jsSafe(safe: Boolean): Unit = js("window.wgUpdate && window.wgUpdate.safe(safe)")
+/** Zählaufruf: einfacher text/plain-Aufruf ohne Cookies (keine CORS-Vorabfrage), Antwort egal; sonst sendBeacon */
+private fun jsSendCount(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true }).catch(function () {}); } catch (e) { try { navigator.sendBeacon(url, body); } catch (e2) {} } })()")
 private fun jsInstallWatch(cb: (String) -> Unit): Unit = js("window.wg.install.onChange(function (s) { cb(s); })")
 private fun jsInstallPrompt(): Unit = js("window.wg.install.prompt()")
 private fun jsInstallPostpone(): Unit = js("window.wg.install.postpone()")
@@ -221,6 +223,7 @@ class WebHost : AppHost {
     override fun postponeInstall() = jsInstallPostpone()
 
     override fun toast(message: String) = jsToast(message)
+    override fun sendCount(url: String, body: String) = jsSendCount(url, body)
     override fun setSafeToUpdate(safe: Boolean) = jsSafe(safe)
 
     // Plus-Pakete: gleicher Server wie die WebApp (relativ), Code im Header – nichts landet in Adresse oder Protokoll

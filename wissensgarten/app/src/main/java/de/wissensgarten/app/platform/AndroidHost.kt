@@ -60,6 +60,18 @@ class AndroidHost(private val activity: Activity, private val onFlushUsage: () -
     }
 
     override fun toast(message: String) = android.widget.Toast.makeText(activity, message, android.widget.Toast.LENGTH_LONG).show()
+    override fun sendCount(url: String, body: String) {
+        // Einfacher Aufruf ohne Wiederholung, ohne Cookies; Fehler werden ignoriert
+        Thread {
+            runCatching {
+                val c = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+                c.requestMethod = "POST"; c.doOutput = true; c.connectTimeout = 5000; c.readTimeout = 5000
+                c.setRequestProperty("Content-Type", "text/plain")
+                c.outputStream.use { it.write(body.toByteArray()) }
+                c.responseCode; c.disconnect()
+            }
+        }.start()
+    }
     override fun shareText(text: String) {
         val send = Intent(Intent.ACTION_SEND).setType("text/plain").putExtra(Intent.EXTRA_TEXT, text)
         activity.startActivity(Intent.createChooser(send, "Teilen").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))

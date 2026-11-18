@@ -24,7 +24,7 @@ object PrivacyText {
     // Wenn die Android-App zurückkommt: Fassung für Android (Sync, Erinnerungen, Kamera, Updater) aus der Git-Geschichte holen.
     val sections: List<Pair<String, String>> = listOf(
         "Kurz gesagt" to
-            "Keine Werbung. Kein Tracking. Keine Analyse-Werkzeuge. Kein Konto nötig. Wir verkaufen keine Daten – an niemanden. " +
+            "Keine Werbung. Keine Analyse-Werkzeuge, keine Cookies, keine Kennung. Kein Konto nötig. Wir verkaufen keine Daten – an niemanden. " +
             "Der Lernstand bleibt in eurem Browser auf eurem Gerät.",
         "Anbieter" to
             "Wissensgarten wird von mathenachhilfe-online.com angeboten. Kontakt und Anschrift findet ihr im Impressum auf www.mathenachhilfe-online.com.",
@@ -42,6 +42,14 @@ object PrivacyText {
             "Texte, die erst in der Aufgabe entstehen (z. B. Hör-noch-mal-Sätze im Brummi-Radio), schickt die App ohne Angaben zu dir " +
             "an unseren Server stimmen.mathenachhilfe-online.com; dieser lässt sie einmalig von OpenAI vertonen und speichert die Audiodatei. " +
             "Es werden keine Namen, Konten oder Geräte-Kennungen übertragen, und unser Server speichert keine Zugriffsprotokolle.",
+        "Anonyme Nutzungszählung (abschaltbar)" to
+            "Damit wir sehen, ob die App gebraucht wird und was wir verbessern sollten, meldet sie einzelne Ereignisse an unseren Server " +
+            "trainer.mathenachhilfe-online.com: dass die App geöffnet wurde, dass der Elternbereich geöffnet wurde und ob dort ein Link (z. B. Plus, Probestunde, Lern-Geschenk) angetippt wurde. " +
+            "Übertragen werden nur App-Name, Versionsnummer, Ereignis und gegebenenfalls Ort und Thema (z. B. „Bruchrechnung“) – keine Namen, keine Kennung, keine Gerätedaten, kein Lernstand, keine Cookies. " +
+            "Der Server zählt nur Tagessummen und speichert für diese Aufrufe keine IP-Adressen. Ausschalten: Einstellungen → Für Eltern → „Anonyme Nutzungszählung“.",
+        "Hinweise auf unsere Nachhilfe" to
+            "Im Wochenbericht (nur hinter dem Eltern-Tor, nie im Kinderbereich) kann ein sachlicher Hinweis auf unsere Online-Nachhilfe erscheinen, wenn ein Thema länger schwerfällt oder eine Klassenarbeit ansteht. " +
+            "Das wird nur auf dem Gerät berechnet; der Lernstand wird dafür nicht gesendet. Höchstens alle zwei Wochen je Thema, jederzeit ausblendbar oder ganz abschaltbar.",
         "Kamera" to
             "Die Web-App nutzt keine Kamera.",
         "Teilen: Duelle, Klassen-Codes, Garten-Film, Bastelbogen" to

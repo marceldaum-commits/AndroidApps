@@ -66,6 +66,8 @@ interface AppHost {
     fun toast(message: String)
     /** WebApp: Ist gerade ein ungefährlicher Moment für ein automatisches Update (Startbildschirm, keine Runde)? */
     fun setSafeToUpdate(safe: Boolean) {}
+    /** Anonymen Zählaufruf abschicken (Text, ohne Cookies, ohne Antwort abzuwarten, Fehler werden ignoriert) */
+    fun sendCount(url: String, body: String) {}
     fun shareText(text: String)
     fun shareImage(image: ImageBitmap, fileName: String, text: String)
     fun printCraftSheet(bedName: String, emoji: String, items: List<CraftItem>)
