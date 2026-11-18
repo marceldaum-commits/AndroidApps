@@ -2,6 +2,10 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.4.2 ist live
+
+- Auf Marcels Anweisung („Stell live“) `experimentopia-live` auf den getesteten Stand von `experimentopia-test` gesetzt (fast-forward, Commit fade530). Live meldet 2.4.2; Nova-Abdeckung live 100 %.
+
 ## 17.11.2026 – Version 2.4.2 vom 17.11.2026: fertig für den Betriebstest (Aufgaben geprüft, Nova ganze Sätze)
 
 **1) Aufgaben geprüft: 200 von 200 Versuchen** (je Rätsel, Vermutung mit Auswahl, Laboraufbau, Auftrag, Auflösung, Begründungen, Merksatz, Knobelfrage) –

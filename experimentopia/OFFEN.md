@@ -1,6 +1,6 @@
 # Experimentopia – Stand und offene Punkte (17.11.2026, abends)
 
-**Stand:** Version 2.4.2 vom 17.11.2026 liegt auf `experimentopia-test` und als APK im GitHub-Release. Live (`experimentopia.mathenachhilfe-online.com`) läuft noch 2.2.1.
+**Stand:** Version 2.4.2 vom 17.11.2026 liegt auf `experimentopia-test` und als APK im GitHub-Release. Seit 18.11.2026 ist 2.4.2 auch **live** (`experimentopia.mathenachhilfe-online.com`, Branch `experimentopia-live` = Stand der Testseite, auf Marcels Anweisung gesetzt).
 
 ## Nova
 - Experimentopia nutzt **nur bereits eingesprochene Nova-Dateien**: alle 2579 Sätze aus `/vorlesen/texte.json` sind vertont (Abdeckung 100 %, geprüft 17.11. abends).
@@ -10,7 +10,7 @@
 ## Noch nicht erledigt (wird fortgesetzt)
 1. **Handytest durch Marcel** mit 2.4.2: „Probe hören“ (Nova statt Gerätestimme), „Offline laden“ (Standard/Bestqualität), Musik startet sofort beim Öffnen.
 2. **Neue Musik** (seit 2.4.0) ist noch nicht von Marcel angehört – Rückmeldung abwarten (Tempo, Stil).
-3. **Live schalten** von 2.4.2 durch den Leitstand (Meldung steht in `MELDUNG_AN_LEITSTAND.md`; diese Sitzung kann dem Leitstand nicht direkt schreiben).
+3. ~~Live schalten~~ – erledigt am 18.11.2026 (2.4.2). Der Leitstand sollte das wissen (diese Sitzung kann ihm nicht direkt schreiben).
 4. **Website/Produktseite**: Gratis-Umfang ist seit 2.3.3 **74 von 200** Versuchen (Wasserinsel + erste 5 je Insel + erste 2 je Thema) – Texte dort ggf. anpassen.
 5. **Play Store**: bleibt bis nach dem Betriebstest liegen.
 6. Betriebstest (eine Woche): nur Fehlerbehebungen, Rückmeldungen aus dem Betrieb abarbeiten.
