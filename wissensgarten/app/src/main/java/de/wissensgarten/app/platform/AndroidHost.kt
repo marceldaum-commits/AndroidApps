@@ -79,6 +79,21 @@ class AndroidHost(private val activity: Activity, private val onFlushUsage: () -
             h.responseCode.also { h.disconnect() }
         }.getOrDefault(-1)
     }
+    override suspend fun elternGetDecrypt(url: String, keyB64: String): Pair<Int, String?> = kotlinx.coroutines.withContext(Dispatchers.IO) {
+        runCatching {
+            val h = java.net.URL(url).openConnection() as java.net.HttpURLConnection
+            h.connectTimeout = 8000; h.readTimeout = 15000
+            val st = h.responseCode
+            if (st != 200) return@runCatching st to null
+            val body = h.inputStream.use { it.readBytes().toString(Charsets.UTF_8) }.also { h.disconnect() }
+            val d = org.json.JSONObject(body).getString("d").split('.')
+            val flags = android.util.Base64.URL_SAFE or android.util.Base64.NO_PADDING or android.util.Base64.NO_WRAP
+            val c = javax.crypto.Cipher.getInstance("AES/GCM/NoPadding")
+            c.init(javax.crypto.Cipher.DECRYPT_MODE, javax.crypto.spec.SecretKeySpec(android.util.Base64.decode(keyB64, flags), "AES"),
+                javax.crypto.spec.GCMParameterSpec(128, android.util.Base64.decode(d[0], flags)))
+            200 to runCatching { String(c.doFinal(android.util.Base64.decode(d[1], flags)), Charsets.UTF_8) }.getOrNull()
+        }.getOrDefault(-1 to null)
+    }
     override suspend fun elternDelete(url: String, schreib: String): Int = kotlinx.coroutines.withContext(Dispatchers.IO) {
         runCatching {
             val h = java.net.URL(url).openConnection() as java.net.HttpURLConnection

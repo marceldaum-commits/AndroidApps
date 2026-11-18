@@ -51,7 +51,9 @@ object PrivacyText {
             "Koppelt ihr im Elternbereich euer Handy, legt der Wissensgarten nach Lernrunden (höchstens alle 10 Minuten) einen kurzen Lernbericht auf unserem Server trainer.mathenachhilfe-online.com ab: " +
             "Klassenstufe, Lernzeit, aktive Tage, Anzahl und Anteil richtiger Antworten, Themen, die gut sitzen oder schwerfallen, Fortschritt je Beet, die nächste eingetragene Klassenarbeit und – nur wenn ihr ihn eintragt – einen Spitznamen. " +
             "Der Bericht wird auf diesem Gerät mit AES-256 verschlüsselt; den Schlüssel enthält nur euer Link (der Teil nach „#“ wird nie an einen Server gesendet). Unser Server kann den Bericht daher nicht lesen. " +
-            "„Kopplung aufheben“ löscht ihn sofort; ohne Aktualisierung wird er nach 90 Tagen gelöscht. Ohne Kopplung wird nichts gesendet.",
+            "„Kopplung aufheben“ löscht ihn sofort; ohne Aktualisierung wird er nach 90 Tagen gelöscht. Ohne Kopplung wird nichts gesendet. " +
+            "Bei gekoppeltem Eltern-Handy wird zusätzlich eine Ende-zu-Ende-verschlüsselte Sicherung des Lernstands gespeichert (siehe Datenschutzerklärung 10i). " +
+            "Mit dem Kopplungs-Link lässt sie sich auf einem neuen Gerät wiederherstellen („Fortschritt wiederherstellen“).",
         "Hinweise auf unsere Nachhilfe" to
             "Im Wochenbericht (nur hinter dem Eltern-Tor, nie im Kinderbereich) kann ein sachlicher Hinweis auf unsere Online-Nachhilfe erscheinen, wenn ein Thema länger schwerfällt oder eine Klassenarbeit ansteht. " +
             "Das wird nur auf dem Gerät berechnet; der Lernstand wird dafür nicht gesendet. Höchstens alle zwei Wochen je Thema, jederzeit ausblendbar oder ganz abschaltbar.",

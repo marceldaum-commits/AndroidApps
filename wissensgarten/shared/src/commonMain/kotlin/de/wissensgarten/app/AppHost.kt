@@ -76,6 +76,8 @@ interface AppHost {
     suspend fun elternPut(url: String, schreib: String, keyB64: String, json: String): Int = -1
     /** Bericht auf dem Server löschen (Kopplung aufheben); HTTP-Status, −1 bei Fehler */
     suspend fun elternDelete(url: String, schreib: String): Int = -1
+    /** Sicherung holen (GET, Antwort {"d":"iv.ct","t":…}) und mit dem Schlüssel entschlüsseln: (HTTP-Status, Klartext oder null) */
+    suspend fun elternGetDecrypt(url: String, keyB64: String): Pair<Int, String?> = -1 to null
     fun shareText(text: String)
     fun shareImage(image: ImageBitmap, fileName: String, text: String)
     fun printCraftSheet(bedName: String, emoji: String, items: List<CraftItem>)

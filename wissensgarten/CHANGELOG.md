@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.2.15 – Lernstand sicher aufbewahrt (18.11.2026)
+- **Verschlüsselte Sicherung:** Ist ein Eltern-Handy gekoppelt, sichert der Wissensgarten nach Lernrunden auch den ganzen Lernstand des Kindes – Ende-zu-Ende verschlüsselt mit demselben Schlüssel wie der Bericht. Niemand außer euch kann sie lesen.
+- **🔄 Fortschritt wiederherstellen:** Neues Gerät oder Browserdaten gelöscht? Im Elternbereich den Kopplungs-Link einfügen – Garten, Karten, Fortschritt und (wenn sie hineinpassen) selbst gemalte Merkbilder kommen zurück. Es wird vorher nachgefragt, und vorhandener Lernstand wird zusammengeführt statt überschrieben.
+- **Monatsverlauf:** Der Bericht auf dem Eltern-Handy zeigt jetzt auch, wie viel in den letzten Monaten gelernt wurde.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.14 – Eltern-Handy koppeln (18.11.2026)
 - **📱 Eltern-Handy koppeln:** Im Elternbereich (Einstellungen → Für Eltern) lässt sich euer eigenes Handy koppeln – per QR-Code oder Link, ohne Konto. Nach jeder Lernrunde seht ihr dort Lernzeit, was gut sitzt, wo es hakt und die nächste Klassenarbeit. Der Bericht ist Ende-zu-Ende verschlüsselt: den Schlüssel kennt nur euer Link, unser Server kann nichts lesen. „Kopplung aufheben“ löscht ihn sofort.
 - Im Hinweis im Wochenbericht gibt es jetzt auch „Neukundenpaket ansehen“. Steht eine Klassenarbeit an und ist das Kind ab Klasse 5, gibt es zusätzlich „Crashkurs ansehen“ – kostenlos für Familien mit Stundenpaket. Alles weiterhin nur hinter dem Eltern-Tor, ausblendbar und abschaltbar.

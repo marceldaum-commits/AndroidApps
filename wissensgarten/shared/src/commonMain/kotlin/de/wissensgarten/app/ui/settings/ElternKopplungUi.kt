@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.launch
 
 /**
  * Elternbereich: „📱 Eltern-Handy koppeln“ – Knopf mit Zustand, öffnet den Dialog.
@@ -88,5 +89,63 @@ fun ElternKopplungDialog(
             else TextButton(onClick = onDismiss) { Text("Fertig") }
         },
         dismissButton = { if (link == null) TextButton(onClick = onDismiss) { Text("Abbrechen") } },
+    )
+}
+
+/**
+ * Elternbereich: „Fortschritt wiederherstellen“ – neues Gerät, gelöschte Browserdaten … Mit dem Kopplungs-Link vom Eltern-Handy
+ * kommt der gesicherte Lernstand zurück. Vorher wird immer nachgefragt; vorhandener Lernstand wird zusammengeführt, nie überschrieben.
+ */
+@Composable
+fun WiederherstellenKnopf(
+    pruefen: suspend (String) -> de.wissensgarten.app.AppViewModel.Fund,
+    einspielen: suspend (de.wissensgarten.app.AppViewModel.Fund.Gefunden) -> String,
+    onFertig: (String) -> Unit,
+) {
+    var open by remember { mutableStateOf(false) }
+    TextButton(onClick = { open = true }, modifier = Modifier.fillMaxWidth()) { Text("🔄 Fortschritt wiederherstellen") }
+    if (!open) return
+    val scope = rememberCoroutineScope()
+    var link by remember { mutableStateOf("") }
+    var busy by remember { mutableStateOf(false) }
+    var fehler by remember { mutableStateOf<String?>(null) }
+    var fund by remember { mutableStateOf<de.wissensgarten.app.AppViewModel.Fund.Gefunden?>(null) }
+    AlertDialog(
+        onDismissRequest = { if (!busy) open = false },
+        title = { Text("🔄 Fortschritt wiederherstellen") },
+        text = {
+            Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                val f = fund
+                if (f == null) {
+                    Text("Neues Gerät oder Browserdaten gelöscht? Ist ein Eltern-Handy gekoppelt, gibt es eine verschlüsselte Sicherung. " +
+                        "Fügt hier den Kopplungs-Link ein – auf der Eltern-Seite gibt es dafür „Neues Gerät des Kindes? Fortschritt übertragen“.")
+                    OutlinedTextField(link, { link = it.trim(); fehler = null }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+                        label = { Text("Kopplungs-Link einfügen") }, placeholder = { Text("https://…/eltern-bericht/#…") })
+                } else {
+                    Text("Gefunden: der Garten von ${f.name.ifBlank { "eurem Kind" }} mit ${f.karten} Karten" +
+                        (if (f.bilder > 0) " und ${f.bilder} selbst gemalten Merkbildern" else "") + ".")
+                    if (f.hierSchonLernstand) Text("Auf diesem Gerät gibt es schon einen Lernstand. Beides wird zusammengeführt – es geht nichts verloren.",
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("Danach ist dieses Gerät wieder mit dem Eltern-Handy gekoppelt.", style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+                fehler?.let { Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall) }
+                if (busy) LinearProgressIndicator(Modifier.fillMaxWidth())
+            }
+        },
+        confirmButton = {
+            val f = fund
+            TextButton(enabled = !busy && (f != null || link.isNotBlank()), onClick = {
+                busy = true
+                scope.launch {
+                    if (f == null) when (val r = pruefen(link)) {
+                        is de.wissensgarten.app.AppViewModel.Fund.Fehler -> fehler = r.text
+                        is de.wissensgarten.app.AppViewModel.Fund.Gefunden -> fund = r
+                    } else { val msg = einspielen(f); open = false; onFertig(msg) }
+                    busy = false
+                }
+            }) { Text(if (f == null) "Prüfen" else "Wiederherstellen") }
+        },
+        dismissButton = { TextButton(enabled = !busy, onClick = { open = false }) { Text("Abbrechen") } },
     )
 }

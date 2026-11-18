@@ -74,9 +74,12 @@ object Games {
         val tier = Difficulty.tier(stage)
         val given = card.choices.orEmpty().filter { it != card.back }.distinct()
         val extra = peers.filter { it != card.back && it !in given }.distinct()
+        // Ähnlichkeit je Antwort nur einmal berechnen (nicht bei jedem Vergleich des Sortierens) – sonst blockiert der
+        // Vorab-Katalog der Stimme (alle Karten aller Pakete) den Browser beim Start für viele Sekunden
+        fun withSim(list: List<String>) = list.map { it to Difficulty.similarity(it, card.back) }
         fun order(list: List<String>): List<String> = when (tier.distractors) {
-            Difficulty.Pick.FAR -> list.sortedWith(compareBy<String> { Difficulty.similarity(it, card.back) }.thenBy { it })
-            Difficulty.Pick.NEAR -> list.sortedWith(compareByDescending<String> { Difficulty.similarity(it, card.back) }.thenBy { it })
+            Difficulty.Pick.FAR -> withSim(list).sortedWith(compareBy<Pair<String, Double>> { it.second }.thenBy { it.first }).map { it.first }
+            Difficulty.Pick.NEAR -> withSim(list).sortedWith(compareByDescending<Pair<String, Double>> { it.second }.thenBy { it.first }).map { it.first }
             // fest je Karten-Inhalt (nicht je Gerät): so lassen sich Brummi-Radio-Fragen vorab vertonen
             Difficulty.Pick.MIXED -> list.map { it to (it.hashCode() xor card.front.hashCode()) }.sortedBy { it.second }.map { it.first }
         }

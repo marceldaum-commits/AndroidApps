@@ -42,8 +42,8 @@ private fun jsTiltX(): Double = js("window.wg.tiltX")
 private fun jsKeepAwake(on: Boolean): Unit = js("window.wg.keepAwake(on)")
 private fun jsReload(): Unit = js("location.reload()")
 private fun jsSafe(safe: Boolean): Unit = js("window.wgUpdate && window.wgUpdate.safe(safe)")
-/** Zählaufruf: einfacher text/plain-Aufruf ohne Cookies (keine CORS-Vorabfrage), Antwort egal; sonst sendBeacon */
-private fun jsSendCount(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true }).catch(function () {}); } catch (e) { try { navigator.sendBeacon(url, body); } catch (e2) {} } })()")
+/** Zählaufruf: einfacher text/plain-Aufruf ohne Cookies (keine CORS-Vorabfrage), Antwort egal. Bewusst kein sendBeacon – das schickt Cookies mit. */
+private fun jsSendCount(url: String, body: String): Unit = js("(function () { try { fetch(url, { method: 'POST', body: body, headers: { 'Content-Type': 'text/plain' }, credentials: 'omit', mode: 'no-cors', keepalive: true }).catch(function () {}); } catch (e) {} })()")
 // ---- Eltern-Kopplung: Zufall, AES-GCM-256 (WebCrypto), Hochladen ohne Cookies. Der Schlüssel verlässt das Gerät nur im Link für die Eltern.
 private fun jsRandomB64(n: Int): String = js("(function () { var a = new Uint8Array(n); crypto.getRandomValues(a); var s = ''; for (var i = 0; i < a.length; i++) s += String.fromCharCode(a[i]); return btoa(s).replace(/\\+/g, '-').replace(/\\//g, '_').replace(/=+$/, ''); })()")
 private fun jsTestStage(): Boolean = js("(function () { var h = location.hostname; return h.indexOf('-test') >= 0 || h === 'localhost' || h === '127.0.0.1'; })()")
@@ -57,6 +57,19 @@ private fun jsElternPut(url: String, schreib: String, key: String, json: String)
       .then(function (ct) { return fetch(url, { method: 'PUT', headers: { 'X-Schreib': schreib, 'Content-Type': 'text/plain' }, body: enc(iv) + '.' + enc(new Uint8Array(ct)), credentials: 'omit', cache: 'no-store' }); })
       .then(function (r) { return r.status; }, function () { return -1; });
   } catch (e) { return Promise.resolve(-1); }
+})()""")
+/** GET + Entschlüsseln: Ergebnis „<status> <klartext>“ (bei Fehler nur der Status, −2 = Entschlüsseln gescheitert) */
+private fun jsElternGet(url: String, key: String): Promise<JsString> = js("""(function () {
+  function dec(t) { t = t.replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '='; var b = atob(t), a = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) a[i] = b.charCodeAt(i); return a; }
+  return fetch(url, { credentials: 'omit', cache: 'no-store' }).then(function (r) {
+    if (r.status !== 200) return String(r.status);
+    return r.json().then(function (j) {
+      var p = String(j.d || '').split('.');
+      return crypto.subtle.importKey('raw', dec(key), { name: 'AES-GCM' }, false, ['decrypt'])
+        .then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: dec(p[0]) }, k, dec(p[1])); })
+        .then(function (pt) { return '200 ' + new TextDecoder().decode(pt); }, function () { return '-2'; });
+    });
+  }, function () { return '-1'; });
 })()""")
 private fun jsElternDelete(url: String, schreib: String): Promise<JsNumber> = js("fetch(url, { method: 'DELETE', headers: { 'X-Schreib': schreib }, credentials: 'omit', cache: 'no-store' }).then(function (r) { return r.status; }, function () { return -1; })")
 private fun jsInstallWatch(cb: (String) -> Unit): Unit = js("window.wg.install.onChange(function (s) { cb(s); })")
@@ -244,6 +257,11 @@ class WebHost : AppHost {
     override val testStage: Boolean get() = jsTestStage()
     override suspend fun elternPut(url: String, schreib: String, keyB64: String, json: String): Int =
         runCatching { jsElternPut(url, schreib, keyB64, json).await<JsNumber>().toInt() }.getOrDefault(-1)
+    override suspend fun elternGetDecrypt(url: String, keyB64: String): Pair<Int, String?> = runCatching {
+        val r = jsElternGet(url, keyB64).await<JsString>().toString()
+        val st = r.substringBefore(' ').toIntOrNull() ?: -1
+        st to r.substringAfter(' ', "").takeIf { st == 200 && it.isNotEmpty() }
+    }.getOrDefault(-1 to null)
     override suspend fun elternDelete(url: String, schreib: String): Int =
         runCatching { jsElternDelete(url, schreib).await<JsNumber>().toInt() }.getOrDefault(-1)
     override fun setSafeToUpdate(safe: Boolean) = jsSafe(safe)

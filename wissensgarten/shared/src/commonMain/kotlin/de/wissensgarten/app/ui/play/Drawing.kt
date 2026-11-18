@@ -67,6 +67,8 @@ object Drawings {
     }
 
     fun delete(cardId: String) { store?.delete(key(cardId)); rev++ }
+    /** Fertiges Bild ablegen (Wiederherstellen aus der Sicherung) */
+    fun saveImage(cardId: String, img: ImageBitmap) { store?.save(key(cardId), img); rev++ }
 
     /** Ein Foto als Merkbild (quadratisch zugeschnitten, 512 px). */
     fun saveBitmap(cardId: String, src: ImageBitmap) {

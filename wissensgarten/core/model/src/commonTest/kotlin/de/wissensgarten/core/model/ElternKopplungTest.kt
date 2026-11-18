@@ -48,7 +48,7 @@ class ElternKopplungTest {
         assertTrue(b["stand"]!!.jsonPrimitive.content.startsWith("2025-11-08T15:00:00"), b["stand"].toString())
         assertNull(b["name"], "ohne Spitzname kein Name")
         val erlaubt = setOf("format", "app", "appName", "name", "klasse", "stand", "zeitraum", "lernzeitMin", "tageAktiv", "aufgaben",
-            "richtigProzent", "staerken", "schwach", "fortschritt", "letzte", "klassenarbeit", "hinweis")
+            "richtigProzent", "staerken", "schwach", "fortschritt", "letzte", "klassenarbeit", "hinweis", "verlauf")
         assertTrue(erlaubt.containsAll(b.keys), "unbekannte Felder: ${b.keys - erlaubt}")
         assertEquals("Lena", bericht(name = "  Lena ")["name"]!!.jsonPrimitive.content)
     }
@@ -77,5 +77,32 @@ class ElternKopplungTest {
         val t = ElternKopplung.berichtText(bericht())
         assertTrue(t.encodeToByteArray().size < ElternKopplung.MAX_BYTES * 70 / 100)
         Json.parseToJsonElement(t)
+    }
+
+    @Test fun linkLesen() {
+        val id = "A".repeat(22); val key = "b_-".repeat(14) + "c"
+        assertEquals(id to key, ElternKopplung.ausLink("https://www.mathenachhilfe-online.com/eltern-bericht/#$id.$key"))
+        assertEquals(id to key, ElternKopplung.ausLink("  $id.$key "))
+        assertNull(ElternKopplung.ausLink("https://www.mathenachhilfe-online.com/eltern-bericht/#kaputt"))
+    }
+
+    @Test fun monatsverlauf() {
+        val a = listOf(ElternKopplung.Antwort("x", jetzt, true), ElternKopplung.Antwort("x", jetzt, false), ElternKopplung.Antwort("x", jetzt - 40 * day, true))
+        val m = ElternKopplung.monatsSummen(a, utc)
+        assertEquals(2, m.size)
+        // gespeicherter älterer Monat mit mehr Aufgaben bleibt, auch wenn die Rohdaten gekürzt wurden
+        val alt = mapOf("2020-01" to ElternKopplung.Monat(50, 40), m.keys.first() to ElternKopplung.Monat(1, 1))
+        val z = ElternKopplung.monateZusammen(alt, m)
+        assertEquals(3, z.size); assertEquals(50, z["2020-01"]!!.aufgaben)
+        val v = ElternKopplung.bericht(null, 3, jetzt, heute, emptyList(), emptyList(), emptyList(), emptyList(), null, utc, z)["verlauf"] as JsonArray
+        assertEquals("2020-01", (v[0] as JsonObject)["monat"]!!.jsonPrimitive.content)
+        assertEquals(80, (v[0] as JsonObject)["richtigProzent"]!!.jsonPrimitive.int)
+    }
+
+    @Test fun sicherungsHuelle() {
+        val t = ElternKopplung.sicherung("2.2.15", jetzt, "S".repeat(22), kotlinx.serialization.json.JsonObject(emptyMap()))
+        val j = Json.parseToJsonElement(t) as JsonObject
+        assertEquals(setOf("format", "app", "v", "stand", "schreib", "daten"), j.keys)
+        assertEquals("wissensgarten", j["app"]!!.jsonPrimitive.content)
     }
 }
