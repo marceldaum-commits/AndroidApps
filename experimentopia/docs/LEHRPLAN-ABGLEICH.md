@@ -198,7 +198,7 @@ Fehlende Themen erscheinen in der App als „Kommt bald“ (ohne Datum, ohne Kau
 | 3 | Energie-Achterbahn (Energieformen, Erhaltung) | Kommt bald |
 | 4 | Tier-Safari, Blüten & Bestäubung, Atmung, Skelett (Bio 5/6) | Kommt bald |
 | 5 | Atom-Werkstatt & Periodensystem, Salze & Ionen | Kommt bald |
-| 6 | Druck & Luftdruck, Bewegung & Diagramme, Wärme wandert, Ladung, Echo | Kommt bald |
+| 6 | Druck & Luftdruck, Wärme wandert, Ladung, Echo | Kommt bald („Bewegung & Diagramme“ → KurvenFlug weg-zeit/beschleunigung, Wochenrunde 18.11.) |
 | 7 | Feuerwehr-Labor, Metalle & Redox, Zitronen-Batterie, Erdöl & Kunststoffe | Kommt bald |
 | 8 | Sinne & Nerven, Abwehr-Burg, Evolution, DNA & Zellteilung | Kommt bald |
 | 9 | Radioaktivität, Weltall & Jahreszeiten | Kommt bald |

@@ -11,7 +11,6 @@ object Coming {
         Upcoming(Subject.PHYSIK, "Motor, Dynamo & Trafo", "🧲", 8..10, "Magnet in die Spule – und das Lämpchen glimmt."),
         Upcoming(Subject.PHYSIK, "Energie-Achterbahn", "🎢", 7..10, "Lageenergie wird Bewegungsenergie – und wohin verschwindet der Rest?"),
         Upcoming(Subject.PHYSIK, "Druck & Luftdruck", "🤿", 7..9, "Abtauchen, Hebebühne pumpen, Halbkugeln auseinanderziehen."),
-        Upcoming(Subject.PHYSIK, "Bewegung & Diagramme", "🏎️", 7..10, "Fahr los – und das Diagramm zeichnet mit."),
         Upcoming(Subject.PHYSIK, "Wärme wandert", "🏠", 5..9, "Haus dämmen, Tee warm halten, Treibhauseffekt."),
         Upcoming(Subject.PHYSIK, "Ladung & Elektrostatik", "🎈", 7..8, "Luftballon-Haare und fliegende Papierschnipsel."),
         Upcoming(Subject.PHYSIK, "Echo & Lautstärke", "🦇", 5..7, "Wie die Fledermaus mit Schall sieht."),
