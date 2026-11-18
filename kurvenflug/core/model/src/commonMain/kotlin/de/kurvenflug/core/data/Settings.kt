@@ -41,8 +41,8 @@ class Settings(private val prefs: Prefs) {
     fun setVoltVoice(v: Boolean) { prefs.edit().putBoolean("voltVoice", v).apply(); _voltVoice.value = v }
 
     // ------------------------------------------------------------ Elternbereich (für das ganze Gerät)
-    private val _anonCount = flag("anonCount", false)
-    /** Anonyme Nutzungszählung – nur wenn Eltern sie einschalten (aus = Standard, datensparsam) */
+    private val _anonCount = flag("anonCount", true)
+    /** Anonyme Nutzungszählung – Standard an (Marcel 18.11.), im Elternbereich abschaltbar; auf dem Gerät wird nur dieser Schalter gespeichert */
     val anonCount: StateFlow<Boolean> = _anonCount.asStateFlow()
     fun setAnonCount(v: Boolean) { prefs.edit().putBoolean("anonCount", v).apply(); _anonCount.value = v }
     private val _tutorHintOff = flag("tutorHintOff", false)

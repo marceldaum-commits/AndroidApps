@@ -213,7 +213,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     de.kurvenflug.app.ui.fx.BackHandler(enabled = platform.isWeb && route != Routes.HOME) { nav.popSafe() }
     // Elternbereich nur hinter dem Eltern-Tor (dort stehen Angebote für Eltern – nie für Kinder sichtbar)
     var parentGate by remember { mutableStateOf(false) }
-    if (parentGate) de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { parentGate = false }, why = "Der Elternbereich ist für Erwachsene.") { parentGate = false; nav.goOnce(Routes.PARENT) }
+    if (parentGate) de.kurvenflug.app.ui.pro.ParentGate(onDismiss = { parentGate = false }, why = "Der Elternbereich ist für Erwachsene.") { parentGate = false; platform.count("elternbereich"); nav.goOnce(Routes.PARENT) }
     // Anonyme Nutzungszählung: Level-Abschlüsse aus dem Spielstand
     LaunchedEffect(Unit) { vm.events = platform::count }
     NavHost(nav, Routes.HOME,
@@ -389,7 +389,7 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
                     onExam = { vm.settings.setExamUntil(if (it) day + de.kurvenflug.core.model.ParentOffers.EXAM_DAYS else 0L) },
                     onHideHint = { vm.settings.setTutorHintOff(true) },
                     onHintSeen = { if (vm.settings.tutorHintShown != day) vm.settings.tutorHintShown = day },
-                    onCounting = vm.settings::setAnonCount))
+                    onCounting = vm.settings::setAnonCount, onCount = platform::count))
         }
         composable(Routes.RESULTS) { de.kurvenflug.app.ui.together.ResultsBoard({ nav.popSafe() }) }
         composable(Routes.STICKERS) {

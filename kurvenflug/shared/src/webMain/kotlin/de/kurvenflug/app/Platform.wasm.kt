@@ -70,14 +70,15 @@ object WebPlatform : Platform {
     private val counts = HashMap<String, Int>()
     private var counting = false
     private var leaveHooked = false
-    override fun count(event: String) { if (counting && event in de.kurvenflug.core.model.UsageCount.EVENTS) counts[event] = (counts[event] ?: 0) + 1 }
+    // Gezählt wird nur im Speicher (nichts auf dem Gerät abgelegt); gesendet nur, wenn die Zählung an ist
+    override fun count(event: String) { if (event in de.kurvenflug.core.model.UsageCount.EVENTS) counts[event] = (counts[event] ?: 0) + 1 }
     override fun setCounting(on: Boolean) {
         counting = on; if (!on) counts.clear()
         if (on && !leaveHooked) { leaveHooked = true; runCatching { jsOnLeave { takeBody() } } }
     }
     private fun takeBody(): String {
         if (!counting) return ""
-        val b = de.kurvenflug.core.model.UsageCount.body(versionName, runCatching { jsMode() }.getOrDefault(""), counts) ?: return ""
+        val b = de.kurvenflug.core.model.UsageCount.body(versionName, counts) ?: return ""
         counts.clear(); return b
     }
     override fun shareText(text: String, title: String) = jsShare(text, title)

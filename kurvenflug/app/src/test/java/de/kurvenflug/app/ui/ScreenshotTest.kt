@@ -289,7 +289,7 @@ class ScreenshotTest {
             de.kurvenflug.core.model.PlayRecord("15-2", 3, 1, 90, today), de.kurvenflug.core.model.PlayRecord("2-5", 3, 1, 260, today))
         de.kurvenflug.app.ui.together.ParentScreen(de.kurvenflug.core.data.Profile(0, "Lena", "🦊"),
             de.kurvenflug.core.model.Weekly.summary(plays, today + 3_600_000L, today), listOf("Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"), onBack = {},
-            parent = de.kurvenflug.app.ui.together.ParentArea(7, 20_400L, 0L, false, 0L, false, {}, {}, {}, {}, {}))
+            parent = de.kurvenflug.app.ui.together.ParentArea(7, 20_400L, 20_410L, false, 0L, true, {}, {}, {}, {}, {}))
     }
 
     @Test fun results() = shot("63_bestenliste") {
