@@ -2,6 +2,10 @@
 
 Neueste oben.
 
+## 18.11.2026 – 2.4.8 ist live
+
+- Auf Marcels „jo 2.4.8“ `experimentopia-live` auf den getesteten Stand gesetzt (fast-forward, d5e911d). Live: Vorlesen aus, texte.json leer.
+
 ## 18.11.2026 – Version 2.4.8 vom 18.11.2026: Vorlesen aus – fertig für den Betriebstest
 
 - Auf Marcels Bestätigung („Ja, abschalten“): Schalter `Nova.ENABLED = false` (core/model, Code bleibt vollständig). Aus: alle 🔊-Knöpfe und das 🔊 in Blubbs Sprechblasen,
