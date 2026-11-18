@@ -6,7 +6,7 @@
   <title>Kurvenflug – Mathe im All</title>
   <meta name="description" content="Kurvenflug: Formeln steuern das Raumschiff. Mathe und Physik für Klasse 5–13 – ohne Werbung, ohne Anmeldung.">
   <meta name="theme-color" content="#0B1026">
-  <meta name="kurvenflug-version" content="2.5.10">
+  <meta name="kurvenflug-version" content="2.5.11">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -39,7 +39,7 @@
     <div class="s">Volt macht das Raumschiff startklar …</div>
     <div class="bar"><b id="kf-bar"></b></div>
     <div class="s" id="kf-pct" style="font-size:13px;opacity:.7">Lade …</div>
-    <div class="v">Version 2.5.10 · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
+    <div class="v">Version 2.5.11 · <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></div>
   </div>
   <noscript><p style="padding:24px">Kurvenflug braucht JavaScript und einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).</p></noscript>
@@ -57,7 +57,7 @@
     // - neu geladen wird nur, wenn es ungefährlich ist: gerade geöffnet, Tab im Hintergrund oder auf dem Startbildschirm –
     //   nie mitten in einer Aufgabe; danach kurz „Neue Version … geladen“.
     // Spielstand, Einstellungen (localStorage) und die Nova-Offline-Dateien (Cache „kf-nova“) bleiben unangetastet.
-    var KF_VERSION = '2.5.10';
+    var KF_VERSION = '2.5.11';
     try { var kfLast = localStorage.getItem('kf.lastVersion'); if (kfLast && kfLast !== KF_VERSION) window.kfUpdated = KF_VERSION; localStorage.setItem('kf.lastVersion', KF_VERSION); } catch (e) {}
     var kfStart = Date.now(), kfPending = false, kfReloading = false, kfAtHome = true, kfReg = null;
     function kfReload() { if (!kfReloading) { kfReloading = true; location.reload(); } }
@@ -96,7 +96,7 @@
     };
     setTimeout(window.kfReady, 60000);   // Sicherheitsnetz, falls die App nie fertig meldet
   </script>
-  <script>window.KF_FILES = [{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"22587a077d16dd03e460.wasm","s":5895344,"t":"application/wasm"}];</script>
+  <script>window.KF_FILES = [{"u":"95bb7376100f8739f6ed.wasm","s":5822541,"t":"application/wasm"},{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":17728,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"}];</script>
   <script src="kf.js"></script>
   <script src="kurvenflug.js"></script>
 </body>
