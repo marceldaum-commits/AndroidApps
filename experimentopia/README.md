@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.11.2 vom 18.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.12.0 vom 19.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -151,6 +151,14 @@ Bestandsschutz: Schon gemachte Versuche bleiben immer offen. Die Play-Fassung ha
 | Startseite (1920 × 1000, Browser) | Lernen nach Fach | Freies Labor |
 |---|---|---|
 | ![](screenshots/93_pc_browser_1920.png) | ![](screenshots/91_pc_fach.png) | ![](screenshots/92_pc_freies_labor.png) |
+
+## Direkt-Links und Querverweise (seit 2.12.0)
+
+`…/#thema=<name>` öffnet „Lernen nach Fach“ mit aufgeklapptem Thema (feste Namen in `core/model/.../Links.kt`: schwimmen, hebel, rollen, kraft, fallen, pendel, strom, magnet, waerme, licht, optik, schall, trennen, saeure, reaktion, vererbung, zellen, ernaehrung, oekologie, koerper; angekündigt: energie, elektromagnetismus). Grobe Kennungen (physik-optik …) gehen auch; unbekannte Namen öffnen die Startseite. Querverweise zu den anderen Lern-Apps: höchstens einer je Thema (`Links.cross`), auf der Theorie-Karte, auf der Test-Stufe zu den Test-Adressen. Abgestimmt in `WOCHENRUNDE.md`.
+
+| Direkt-Link Optik | Querverweis |
+|---|---|
+| ![](screenshots/82_direktlink_optik.png) | ![](screenshots/83_querverweis.png) |
 
 ## Anonyme Zählung und Elternbereich (seit 2.11.0)
 

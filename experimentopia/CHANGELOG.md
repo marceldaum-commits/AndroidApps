@@ -1,5 +1,12 @@
 # Changelog – Experimentopia
 
+## 2.12.0 – Gemeinsam mit den anderen Lern-Apps (19.11.2026)
+
+- 🔗 **Direkt in ein Thema springen**: Links wie „…/#thema=optik“ öffnen sofort das passende Thema unter „Lernen nach Fach“. So können die anderen Lern-Apps (KurvenFlug, Mathe-Trainer, Rechenblitz, Wissensgarten, Raumlicht) genau hierher verweisen.
+- 🧭 **Weiter in der passenden App**: Auf 9 Theorie-Karten steht jetzt, wo man das Thema weiter üben kann – zum Beispiel den Strahlensatz beim Schatten im Mathe-Trainer oder die Lichtbrechung in KurvenFlug. Höchstens ein Hinweis je Thema, immer mit einem Satz, warum er passt; keine Kaufseiten.
+- 🧹 „Kommt bald“ aufgeräumt: „Bewegung & Diagramme“ gibt es zum Rechnen in KurvenFlug, darum hier nicht doppelt.
+- Experimentopia bleibt, was es ist: Naturwissenschaften zum Ausprobieren, Klasse 3–10.
+
 ## 2.11.2 – Probestunde nur für Physik (18.11.2026)
 
 - 📝 Der Hinweis auf die kostenlose Probestunde im Elternbereich gilt jetzt nur noch für Physik („Physik-Arbeit bald?“) – Nachhilfe gibt es in Physik, nicht in Chemie und Biologie.

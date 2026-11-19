@@ -92,6 +92,16 @@ fun TheorySheet(visible: Boolean, topic: Topic, pro: Boolean, onClose: () -> Uni
                     Text("📚 Wörter", color = E.Mint, fontWeight = FontWeight.Bold)
                     card.words.forEach { (w, m) -> Text("$w – $m", color = E.Text, fontSize = 13.sp) }
                 }
+                // Querverweis zu einer anderen Lern-App: höchstens einer je Thema, mit Satz, der den Zusammenhang erklärt
+                Links.cross(topic)?.let { c ->
+                    val open = LocalOpenLink.current; val test = LocalTestStage.current
+                    Panel(Modifier.fillMaxWidth().testTag("querverweis"), border = E.Violet.copy(alpha = 0.6f)) {
+                        Text("${c.emoji} ${c.heading}", color = E.Violet, fontWeight = FontWeight.Bold)
+                        Text(c.sentence, color = E.Text, fontSize = 13.sp)
+                        Text("${c.app} öffnen ↗", color = E.Sky, fontSize = 13.sp, fontWeight = FontWeight.Bold,
+                            modifier = Modifier.clip(CircleShape).clickable { open(c.url(test)) }.padding(horizontal = 10.dp, vertical = 8.dp).testTag("querverweis_link"))
+                    }
+                }
                 GlowButton(onClose, Modifier.fillMaxWidth().testTag("theorie_zu"), color = E.Mint) { Text("✅ Alles klar – weiter forschen!", fontWeight = FontWeight.Bold) }
             }
         }

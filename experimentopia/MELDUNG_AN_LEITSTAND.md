@@ -2,6 +2,15 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 2.12.0 vom 19.11.2026: Aufräum-Tag (auf heute vorgezogen) – fertig für den Betriebstest
+
+Marcel hat Spezialisierung + Aufräumen auf Do 19.11. vorgezogen (über die AppZentrale; der Vorschlag „Aufräum-Tag“ kam von Marcel selbst am 18.11.).
+- **Profil** (Entscheidung 18.11.): Naturwissenschaften Kl. 3–10, ausprobieren. Bestand: nichts zu streichen (211 Versuche, alle im Profil). „Kommt bald“: „Bewegung & Diagramme“ gestrichen (→ KurvenFlug weg-zeit/beschleunigung); übernommen: Radioaktivität (stand schon auf „Kommt bald“).
+- **Direkt-Links** `…/#thema=<name>` (20 feste Namen + angekündigt energie, elektromagnetismus; grobe Kennungen physik-*/chemie-*/biologie-* gehen auch; unbekannt → Startseite). Adresse wird danach geleert. Im echten Chromium geprüft (#thema=optik → Physik, Optik aufgeklappt).
+- **Querverweise** (Regel: höchstens einer je Thema, mit erklärendem Satz, nur Theorie-Karte, nie Kaufseiten; Test-Stufe → Test-Adressen): optik → Mathe-Trainer k9-aehnlich, licht → KurvenFlug lichtbrechung, kraft (Newton) → KurvenFlug beschleunigung, fallen → KurvenFlug wurf, strom → Mathe-Trainer k7-zuordnung, magnet → Wissensgarten s1-physik-strom, saeure → Wissensgarten s1-chemie-saeuren-basen, oekologie → Wissensgarten s1-bio-pflanzen, vererbung → Mathe-Trainer k8-zufall. (Ziel-Startseiten auf live und test erreichbar, 200; die Deeplinks der anderen Apps kommen dort bis Fr 20.11. – vorher öffnet sich deren Startseite.)
+- Versuche: 0 neu, 0 geändert, gesamt 211. Tests: `LinksTest` (Namen eindeutig, Links lesen, keine Kauf-/toten Links), alle Modell-/App-Tests, Lint, Webapp, web-start.mjs grün. Bilder 82 (Direkt-Link) und 83 (Querverweis).
+- Fr 20.11. bleibt: großes Update (Motor, Dynamo & Trafo).
+
 ## 18.11.2026 – Version 2.11.2 vom 18.11.2026: Probestunde nur Physik – fertig für den Betriebstest
 
 - Hinweis von „Geld verdienen“: Nachhilfe gibt es in Physik, nicht in Chemie/Bio. Elternbereich zeigt jetzt nur „📝 Physik-Arbeit bald?“ mit Physik-Themen; Zählung `probestunde_klick` nur noch mit `physik-*`.

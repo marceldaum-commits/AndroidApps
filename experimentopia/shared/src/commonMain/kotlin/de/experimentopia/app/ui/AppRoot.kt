@@ -45,7 +45,8 @@ sealed interface Route {
     data class Exp(val id: String, val daily: Boolean = false) : Route
     data object Free : Route
     data object Topics : Route
-    data class SubjectR(val subject: Subject) : Route
+    /** [open] = Thema gleich aufgeklappt (Direkt-Link …/#thema=<name>) */
+    data class SubjectR(val subject: Subject, val open: Topic? = null) : Route
     data class FreeRun(val lab: Lab) : Route
     data object Journal : Route
     data object Badges : Route
@@ -179,7 +180,7 @@ fun AppRoot(
                             onBack = { nav.back() }, daily = r.daily)
                     }
                 }
-                is Route.SubjectR -> de.experimentopia.app.ui.home.SubjectScreen(r.subject, stars, grade, state::locked, { open(it) }, state.prefs::setGrade) { nav.back() }
+                is Route.SubjectR -> de.experimentopia.app.ui.home.SubjectScreen(r.subject, stars, grade, state::locked, { open(it) }, state.prefs::setGrade, startOpen = r.open) { nav.back() }
                 Route.Topics -> de.experimentopia.app.ui.home.TopicScreen(stars, grade, state::locked, { open(it) }, { nav.back() })
                 Route.Free -> FreeLabScreen(state::locked, { l -> if (state.locked(l)) nav.go(Route.ProR(l.title)) else { state.prefs.countFreeLab(); nav.go(Route.FreeRun(l)) } }, { nav.back() })
                 is Route.FreeRun -> FreeLabRun(r.lab) { nav.back() }

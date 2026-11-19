@@ -163,11 +163,13 @@ class ScreenshotTest {
     @Test fun total() = lab("x6", "74_totalreflexion", prepare = { it.slide("🔴 Einfallswinkel", 50f) })
     @Test fun lens() = lab("x9", "75_optische_bank", prepare = { it.slide("⬜ Linse ↔ Schirm", 17f) })
     @Test fun loupe() = lab("x11", "76_lupe", prepare = { it.slide("🕯️ Kerze ↔ Linse", 6f) })
-    @Test fun comingSoon() = shot("77_kommt_bald", settle = 2500, prepare = { r -> r.reveal { r.onNodeWithTag("bald_${Coming.of(Subject.BIOLOGIE).size - 1}") }; r.onNodeWithTag("bald_1").performClick() }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 0, { false }, {}, {}, {}) }
+    @Test fun comingSoon() = shot("77_kommt_bald", settle = 2500, prepare = { r -> r.reveal { r.onNodeWithTag("bald_${Coming.of(Subject.BIOLOGIE).size - 1}") }; r.onNodeWithTag("bald_1").performClick() }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 0, { false }, {}, {}, onBack = {}) }
     @Test fun theory() = shot("61_theorie", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("w5")!!, {}, null, {}, startPhase = Phase.PREDICT) }
+    @Test fun theoryCross() = shot("83_querverweis", settle = 2500, prepare = { r -> r.tap("📖"); r.mainClock.advanceTimeBy(800); r.reveal { r.onNodeWithTag("querverweis") } }) { ExperimentScreen(Catalog.byId("x2")!!, {}, null, {}, startPhase = Phase.PREDICT) }
     @Test fun theoryPro() = shot("62_theorie_profi", settle = 2500, prepare = { it.tap("📖") }) { ExperimentScreen(Catalog.byId("s8")!!, {}, null, {}, startPhase = Phase.PREDICT) }
-    @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, {}) }
-    @Test fun subjectBio() = shot("64_fach_biologie", settle = 2500, prepare = { it.tap("Alle 8 Versuche") }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 9, { false }, {}, {}, {}) }
+    @Test fun deepLink() = shot("82_direktlink_optik", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, startOpen = Topic.OPTIK, onBack = {}) }
+    @Test fun subject() = shot("63_lernen_nach_fach", settle = 2500) { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 5, { false }, {}, {}, onBack = {}) }
+    @Test fun subjectBio() = shot("64_fach_biologie", settle = 2500, prepare = { it.tap("Alle 8 Versuche") }) { de.experimentopia.app.ui.home.SubjectScreen(Subject.BIOLOGIE, someStars, 9, { false }, {}, {}, onBack = {}) }
     @Test fun soundSettings() = shot("65_musik_und_vorlesen", settle = 1500, prepare = { r -> r.reveal { r.onNodeWithTag("offline_loeschen") } }) {
         androidx.compose.runtime.CompositionLocalProvider(de.experimentopia.app.ui.fx.LocalReader provides FakeReader) {
             androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(16.dp)) {

@@ -146,3 +146,6 @@ val LocalCounter = staticCompositionLocalOf<Counter?> { null }
 
 /** „← Alle Apps“ zur Website: im Browser im selben Tab, in der installierten App im normalen Browser; null = Knopf ausblenden */
 val LocalAllApps = staticCompositionLocalOf<(() -> Unit)?> { null }
+
+/** App läuft auf der Test-Stufe (experimentopia-test…/lokal) → Querverweise zeigen auf die Test-Seiten der anderen Apps */
+val LocalTestStage = staticCompositionLocalOf { false }

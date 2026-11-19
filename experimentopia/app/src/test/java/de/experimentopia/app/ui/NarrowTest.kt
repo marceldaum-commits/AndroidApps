@@ -41,7 +41,7 @@ class NarrowTest(private val name: String) {
             ExperimentopiaTheme { Surface(color = E.Night) {
                 when {
                     name == "theorie" -> androidx.compose.foundation.layout.Box { de.experimentopia.app.ui.common.TheorySheet(true, Topic.STROM, pro = true) {} }
-                    name == "fach" -> de.experimentopia.app.ui.home.SubjectScreen(Subject.CHEMIE, emptyMap(), 6, { false }, {}, {}, {})
+                    name == "fach" -> de.experimentopia.app.ui.home.SubjectScreen(Subject.CHEMIE, emptyMap(), 6, { false }, {}, {}, onBack = {})
                     name == "start" -> HomeScreen(emptyMap(), Stats(), Daily.forDay(20_600), false, 0, true, onIsland = {}, onDaily = {}, onFreeLab = {}, onJournal = {}, onBadges = {}, onSettings = {}, onGrade = {}, onWelcomed = {})
                     name.startsWith("insel_") -> IslandScreen(Island.valueOf(name.removePrefix("insel_")), emptyMap(), 0, { false }, {}, {})
                     name.startsWith("versuch_") -> { val lab = Lab.valueOf(name.removePrefix("versuch_")); val e = Catalog.all.first { it.setup.lab == lab }

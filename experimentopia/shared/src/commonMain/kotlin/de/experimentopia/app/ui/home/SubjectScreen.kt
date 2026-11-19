@@ -11,6 +11,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -54,12 +55,16 @@ fun SubjectCards(results: Map<String, Int>, onSubject: (Subject) -> Unit) {
  * Fortschritt, „Nächster Versuch“, Theorie und alle Versuche zum Aufklappen.
  */
 @Composable
-fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked: (Experiment) -> Boolean, onOpen: (Experiment) -> Unit, onGrade: (Int) -> Unit, onBack: () -> Unit) {
+fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked: (Experiment) -> Boolean, onOpen: (Experiment) -> Unit, onGrade: (Int) -> Unit,
+                  startOpen: Topic? = null, onBack: () -> Unit) {
     var subject by remember { mutableStateOf(start) }
     var theoryTopic by remember { mutableStateOf<Topic?>(null) }
-    var open by remember { mutableStateOf<Topic?>(null) }
+    var open by remember { mutableStateOf(startOpen) }
     val done = results.keys
-    val topics = Curriculum.topics(subject, grade)
+    // Direkt-Link: das verlinkte Thema immer zeigen, auch wenn der Klassenfilter es sonst ausblenden würde
+    val topics = Curriculum.topics(subject, grade).let { l -> if (startOpen != null && startOpen.subject == subject && startOpen !in l) l + startOpen else l }
+    val linked = remember { androidx.compose.foundation.relocation.BringIntoViewRequester() }
+    LaunchedEffect(startOpen) { if (startOpen != null) { kotlinx.coroutines.delay(450); linked.bringIntoView() } }
     Box(Modifier.fillMaxSize()) {
         BubbleBackground(tint = subject.color())
         Column(Modifier.fillMaxSize().systemBarsPadding()) {
@@ -76,8 +81,8 @@ fun SubjectScreen(start: Subject, results: Map<String, Int>, grade: Int, locked:
                     val (n, total) = Curriculum.progress(t, done)
                     val next = Curriculum.next(t, done, grade)
                     val frac by animateFloatAsState(n.toFloat() / total, tween(700), label = "p")
-                    Column(Modifier.weight(1f).popIn(i * 60).clip(RoundedCornerShape(20.dp)).background(E.Deep)
-                        .border(2.dp, if (n == total) E.Green else subject.color().copy(alpha = 0.6f), RoundedCornerShape(20.dp)).padding(12.dp).testTag("bereich_${t.name}"),
+                    Column(Modifier.weight(1f).then(if (t == startOpen) Modifier.bringIntoViewRequester(linked) else Modifier).popIn(i * 60).clip(RoundedCornerShape(20.dp)).background(E.Deep)
+                        .border(if (t == startOpen) 3.dp else 2.dp, if (t == startOpen) E.Sun else if (n == total) E.Green else subject.color().copy(alpha = 0.6f), RoundedCornerShape(20.dp)).padding(12.dp).testTag("bereich_${t.name}"),
                         verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Box(Modifier.size(36.dp).clip(CircleShape).background(subject.color()), contentAlignment = Alignment.Center) {

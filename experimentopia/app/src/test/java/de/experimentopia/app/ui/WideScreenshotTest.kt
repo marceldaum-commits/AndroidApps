@@ -36,6 +36,6 @@ class WideScreenshotTest {
         HomeScreen(someStars, stats, Daily.forDay(20_600), false, 0, false, onIsland = {}, onDaily = {}, onFreeLab = {}, onJournal = {}, onBadges = {}, onSettings = {}, onGrade = {}, onWelcomed = {})
         }
     }
-    @Test fun subject() = shot("91_pc_fach") { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 0, { false }, {}, {}, {}) }
+    @Test fun subject() = shot("91_pc_fach") { de.experimentopia.app.ui.home.SubjectScreen(Subject.PHYSIK, someStars, 0, { false }, {}, {}, onBack = {}) }
     @Test fun freeLab() = shot("92_pc_freies_labor") { de.experimentopia.app.ui.free.FreeLabScreen({ false }, {}, {}) }
 }
