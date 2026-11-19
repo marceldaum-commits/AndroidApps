@@ -170,3 +170,10 @@ Gestrichen: Prozent → zellen, Wachstum → saeure, Zuordnung → hebel. Je The
 - Quasselquest = Sprach-App bis Kl. 13; Wissensgarten = Kompendium übrige Fächer bis Kl. 13.
 - Raumlicht-Korrektur (19.11.): `?ziel=baumeister` ist Pro (zeigt ohne Code die Pro-Seite) → NICHT verlinken. Frei: `?ziel=erleben`, `rotation`, `galton`, `zufall`, `level/5-6`. Für die spätere Energie-Achterbahn: `?ziel=erleben`. Raumlicht 2.18.32 auf test: nur Geometrie im Raum als Aufgaben, Analysis/Zufall zum Erleben.
 - KurvenFlug 2.6.0 auf test: `#kapitel=<name>` funktioniert (lichtbrechung, beschleunigung, wurf enthalten).
+
+## Do 19.11.2026 – Umzug auf lernen.mathenachhilfe-online.com (Marcel: „Alle Apps heute“)
+
+- Standard UMZUG-LERNEN (AppZentrale): Ordner `/experimentopia/`, Hash `#umzug=<id>.<key>.<schreib>&<alter Hash>`, Klartext `{app, v:1, umzug:true, daten}`, Body text/plain `<iv>.<ct>`, Server löscht Umzugs-Sicherungen nach 30 Tagen, 301 der alten Adresse erst nach ~30 Tagen (Leitstand).
+- lernen(-test).…/experimentopia/ = derselbe Ordner wie experimentopia(-test).…; CORS *.mathenachhilfe-online.com für eltern/zaehler.
+- Ordnernamen der anderen Apps: /rechenblitz/, /kurvenflug/, /mathetrainer/, /raumlicht/, /wissensgarten/, /quasselquest/. Querverweise erst umstellen, wenn die AppZentrale die Ziel-App unter lernen. als live meldet.
+- Experimentopia 2.13.0: echter Rundlauf auf lernen-test bestanden; Live-Meldung (216aafcc) an die AppZentrale, Live-Schalten durch den Leitstand.
