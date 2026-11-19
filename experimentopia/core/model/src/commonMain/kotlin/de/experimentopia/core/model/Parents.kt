@@ -35,8 +35,8 @@ data class ParentLink(
         /** Neue Kopplung aus Zufallsbytes ([random] liefert kryptografisch sichere Bytes der Plattform) */
         fun create(random: (Int) -> ByteArray, test: Boolean, nickname: String = "") =
             ParentLink(B64u.encode(random(16)), B64u.encode(random(16)), B64u.encode(random(32)), test, nickname.trim().take(20))
-        /** Test-Stufe, wenn die App selbst auf der Test-Seite oder lokal läuft */
-        fun isTestHost(host: String) = host.contains("-test") || host.startsWith("localhost") || host.startsWith("127.") || host.contains("staging")
+        /** Test-Stufe, wenn die App selbst auf der Test-Seite (ab 2.13.0 lernen-test.…/experimentopia/) oder lokal läuft */
+        fun isTestHost(host: String) = host.startsWith("lernen-test.") || host.contains("-test") || host.startsWith("localhost") || host.startsWith("127.") || host.contains("staging")
         fun parse(s: String?): ParentLink? = s?.let { runCatching { Json.decodeFromString(serializer(), it) }.getOrNull() }
 
     }

@@ -2,6 +2,17 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 2.13.0 vom 19.11.2026: Umzug auf lernen.mathenachhilfe-online.com/experimentopia/ – fertig für den Betriebstest
+
+Marcels Entscheidung (19.11.), Standard UMZUG-LERNEN der AppZentrale. Den automatischen Lernstand-Umzug hat Marcel mir direkt bestätigt.
+- **Ordner** `/experimentopia/`. Alle Pfade der WebApp sind relativ, der Inhalt von `experimentopia/webapp/` (Branch `experimentopia-test`) kann unverändert in den Ordner.
+- **Gemeinsame Adresse**: Service Worker räumt beim Aktivieren nur Speicher mit der Vorsilbe `experimentopia-` auf und sucht nur in den eigenen (`caches.open(eigener).match`). Der Notfall-Knopf entfernt nur die eigene Registrierung (Bereich `./`) und die eigenen Speicher. Speichernamen `exEltern`, `exModus*`, `exSchritte` und `exVorher` heißen jetzt `experimentopia.*`; alte Werte werden übernommen. `ParentLink.isTestHost` erkennt `lernen-test.`.
+- **Umzug** (`umzug.js`, läuft vor dem App-Start): ALT (experimentopia(-test).…) sammelt `experimentopia.*` und `exEltern`, verschlüsselt sie mit AES-256-GCM (WebCrypto) und legt sie per PUT `trainer(-test).…/eltern/v1/s/<id>` (X-Schreib) ab. Danach leitet es mit `location.replace` weiter auf `lernen(-test).…/experimentopia/` + `?…` + `#umzug=<id>.<key>&thema=…/pro=…`. NEU nimmt die Marke sofort aus der Adresse, holt die Sicherung, entschlüsselt sie, schreibt nur bei leerem Speicher und löscht sie danach per DELETE. Kommt die neue Adresse nicht (z. B. Zertifikat fehlt noch), keine Weiterleitung und kein Hochladen: Die App läuft am alten Ort weiter, beim nächsten Öffnen neuer Versuch. Notbremse zum Testen: `?umzug=nein`.
+- **CORS geprüft**: trainer-test und trainer erlauben lernen-test.… und lernen.… (GET/PUT/DELETE, X-Schreib).
+- **Prüfungen**: `tools/web-umzug.mjs` mit echtem Chromium und echtem trainer-test, 20 Prüfungen grün. Geprüft: Lernstand und Kopplung komplett, Schlüssel nicht in der Adresse, Sicherung danach 404, zweites Öffnen ohne zweite Sicherung, vorhandener Stand nicht überschrieben, neue Adresse weg → bleibt, leer → direkt weiter, fremder Speicher und Lernstand einer anderen App unangetastet, Service-Worker-Bereich nur `/experimentopia/`. Außerdem grün: Modell- und App-Tests, Lint, Webapp, `web-start.mjs` (11 Prüfungen), `web-zaehlung.mjs`. Bild 94. Kein echtes WebKit hier: Bitte ein echtes iPhone mit der alten Adresse testen.
+- **Was der Leitstand tun muss**: (1) `webapp/` nach `lernen-test.…/experimentopia/` bringen (bzw. später live). Gültiges Zertifikat für lernen-test.… ist nötig, heute Morgen passte es noch nicht. (2) Dieselbe Version auch auf der ALTEN Adresse ausliefern, denn nur sie trägt den Lernstand mit. (3) Die alte Adresse NICHT per 301 umleiten, solange Kinder noch umziehen; sonst bleibt der Lernstand zurück. Vorschlag: frühestens nach 4 Wochen.
+- **Rückweg**: alte Adresse wieder auf 2.12.0 (`99b7e118`) bzw. live 2.11.1 (`experimentopia-live` @ `1d1362b7`). Schon umgezogene Kinder haben ihren Stand an beiden Orten, weil am alten Ort nichts gelöscht wird.
+
 ## 19.11.2026 – LIVE-MELDUNG Version 2.12.0 vom 19.11.2026 (Anfrage AppZentrale: heute live)
 
 - **Live gehen soll:** 2.12.0, Branch `ccr-2ccbaa44-nkkmyu`, App-Commit `99b7e118` (spätere Commits nur Doku). experimentopia-test zeigt 2.12.0.

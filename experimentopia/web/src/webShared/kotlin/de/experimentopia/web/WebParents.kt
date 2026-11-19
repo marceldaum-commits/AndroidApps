@@ -9,17 +9,20 @@ class WebParentSync : ParentSync {
     override fun send(method: String, url: String, write: String, body: String?, done: (Int) -> Unit) = httpSend(method, url, write, body ?: "", done)
     override fun share(title: String, url: String, done: (String) -> Unit) = shareLink(title, url, done)
     override var stored: String?
-        get() = storeGet(KEY)
-        set(v) { if (v == null) storeRemove(KEY) else storeSet(KEY, v) }
+        get() = storeGet(KEY) ?: storeGet(OLD)?.also { storeSet(KEY, it); storeRemove(OLD) }   // alter Name ohne App-Vorsilbe (bis 2.12.0)
+        set(v) { storeRemove(OLD); if (v == null) storeRemove(KEY) else storeSet(KEY, v) }
     override val test: Boolean = ParentLink.isTestHost(pageHost())
     override fun now(): Long = nowMs().toLong()
     override val offsetMs: Long get() = tzOffsetMin() * 60_000L
     override fun get(url: String, done: (Int, String) -> Unit) = httpGet(url, done)
     /** Alles, was mit „experimentopia.“ beginnt: Ergebnisse, Forscherbuch, Einstellungen, Monatssummen, Pass-Code */
-    override fun snapshot(): Map<String, String> = storeKeys(PREFIX).split('\n').filter { it.isNotEmpty() }.mapNotNull { k -> storeGet(k)?.let { k to it } }.toMap()
+    /** Kopplung (gehört zum Gerät) und Technik (Ladeprotokoll, Fassung, Umzug) gehören nicht in die Sicherung */
+    private fun learning(k: String) = k.startsWith(PREFIX) && k != KEY && k != PREFIX + "schritte" && k != PREFIX + "umzug" && !k.startsWith(PREFIX + "modus")
+    private fun keys() = storeKeys(PREFIX).split('\n').filter { it.isNotEmpty() && learning(it) }
+    override fun snapshot(): Map<String, String> = keys().mapNotNull { k -> storeGet(k)?.let { k to it } }.toMap()
     override fun restore(data: Map<String, String>) {
-        storeKeys(PREFIX).split('\n').filter { it.isNotEmpty() }.forEach { storeRemove(it) }
-        data.filterKeys { it.startsWith(PREFIX) }.forEach { (k, v) -> storeSet(k, v) }
+        keys().forEach { storeRemove(it) }
+        data.filterKeys { learning(it) }.forEach { (k, v) -> storeSet(k, v) }
         reloadPage()
     }
     override var months: String?
@@ -27,7 +30,7 @@ class WebParentSync : ParentSync {
         set(v) { if (v == null) storeRemove(PREFIX + "verlauf") else storeSet(PREFIX + "verlauf", v) }
     override val version: String get() = Version.NAME
     override val journalKey: String = PREFIX + "forscherbuch"
-    private companion object { const val KEY = "exEltern"; const val PREFIX = "experimentopia." }
+    private companion object { const val KEY = "experimentopia.eltern"; const val OLD = "exEltern"; const val PREFIX = "experimentopia." }
 }
 
 /** Anonyme Zählung im Browser – Standard an, Schalter im Elternbereich (Speicher „experimentopia.zaehlung“) */

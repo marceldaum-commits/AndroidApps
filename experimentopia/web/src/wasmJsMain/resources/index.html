@@ -5,13 +5,13 @@
   // Schrittprotokoll: jeder Ladeschritt wird sofort gemerkt (localStorage). Stürzt Safari ab („weiße Seite“), steht beim nächsten Öffnen da, wo es hing.
   // Sichtbar mit ?diag=1 – oder automatisch, wenn der letzte Start nicht fertig wurde.
   (function () {
-    var prev = null; try { prev = JSON.parse(localStorage.getItem('exSchritte') || 'null'); } catch (e) {}
+    var prev = null; try { prev = JSON.parse(localStorage.getItem('experimentopia.schritte') || 'null'); } catch (e) {}
     window.__exPrev = prev && prev.length && prev[prev.length - 1].s !== 'fertig' ? prev : null;
     window.__exDiag = /[?&]diag=1/.test(location.search);
     window.__exSteps = [];
     window.exStep = function (s) {
       window.__exSteps.push({ s: s, t: Math.round(performance.now()) });
-      try { localStorage.setItem('exSchritte', JSON.stringify(window.__exSteps)); } catch (e) {}
+      try { localStorage.setItem('experimentopia.schritte', JSON.stringify(window.__exSteps)); } catch (e) {}
       var d = document.getElementById('diag'); if (d) d.textContent = window.__exDiagText();
       // mit ?diag=1 bleibt das Protokoll auch nach dem Start sichtbar (unten, über der App) – wichtig, wenn die App-Fläche weiß bleibt
       if (window.__exDiag && document.body) { var box = document.getElementById('diagbox'); if (!box) { box = document.createElement('pre'); box.id = 'diagbox';
@@ -31,6 +31,7 @@
     } catch (e) {}
   })();
 </script>
+<script src="umzug.js"></script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Experimentopia – das Versuchslabor für die Hosentasche</title>
@@ -73,7 +74,7 @@
     var m = (Q.get('modus') || 'auto').toLowerCase(), ua = navigator.userAgent, gcOk = false;
     try { gcOk = WebAssembly.validate(new Uint8Array([0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 95, 1, 120, 0])); } catch (e) {}
     var webkit = (/AppleWebKit/.test(ua) && !/Chrome|Chromium|Edg\/|OPR|Android/.test(ua)) || /CriOS|FxiOS|EdgiOS/.test(ua);
-    var gemerkt = null; try { gemerkt = localStorage.getItem('exModus@VERSION@'); } catch (e) {}
+    var gemerkt = null; try { gemerkt = localStorage.getItem('experimentopia.modus@VERSION@'); } catch (e) {}
     window.__exAuto = m === 'auto';
     // Safari 27.2 läuft mit Wasm wieder, seit die Endaufrufe der Grafik-Bibliothek umgeschrieben sind (WebKit-Fehler 329421, Abhilfe von Raumlicht).
     // Zur Sicherheit prüft die Seite nach dem Start auf WebKit, ob wirklich etwas gezeichnet wurde – sonst JS.
@@ -135,7 +136,7 @@
     if (document.getElementById('problem')) return;
     // automatische Wahl und Wasm ist gescheitert: einmal mit der JS-Fassung versuchen (für diese Version gemerkt)
     // nur beim Start – lief die App schon, gibt es keinen Fassungswechsel
-    if (window.__exAuto && window.__exModus === 'wasm' && !window.__exOk) { try { localStorage.setItem('exModus@VERSION@', 'js'); } catch (e) {} exStep('Wasm gescheitert → JS'); location.reload(); return; }
+    if (window.__exAuto && window.__exModus === 'wasm' && !window.__exOk) { try { localStorage.setItem('experimentopia.modus@VERSION@', 'js'); } catch (e) {} exStep('Wasm gescheitert → JS'); location.reload(); return; }
     var ios = iosVersion(), gc = wasmGC(), alt = !gc && ios && (ios[0] < 18 || (ios[0] === 18 && ios[1] < 2));   // iOS-Hinweis nur, wenn WasmGC wirklich fehlt
     var text = alt ? 'Dein iPhone/iPad hat iOS ' + ios[0] + '.' + ios[1] + '. Experimentopia braucht mindestens iOS 18.2 – bitte unter Einstellungen → Allgemein → Softwareupdate aktualisieren.'
       : (!gc ? 'Dieser Browser ist zu alt für Experimentopia. Bitte Safari ab iOS 18.2 oder Chrome, Edge oder Firefox ab 2024 verwenden.'
@@ -153,8 +154,9 @@
     document.getElementById('p-leer').onclick = function () {
       var done = function () { location.reload(); };
       try { Promise.all([
-        navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }) : null,
-        window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k !== 'experimentopia-nova'; }).map(function (k) { return caches.delete(k); })); }) : null
+        // nur unsere eigene Registrierung und unsere eigenen Speicher – auf der gemeinsamen Adresse wohnen auch die anderen Lern-Apps
+        navigator.serviceWorker ? navigator.serviceWorker.getRegistration('./').then(function (r) { return r && r.scope === new URL('./', location.href).href ? r.unregister() : null; }) : null,
+        window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k.indexOf('experimentopia-') === 0 && k !== 'experimentopia-nova'; }).map(function (k) { return caches.delete(k); })); }) : null
       ]).then(done, done); } catch (e) { done(); }
     };
   }
@@ -177,7 +179,7 @@
     try { var g0 = window.__exGl; if (g0 && window.__exWebkit && window.__exModus === 'wasm') { var p0 = new Uint8Array(4); g0.readPixels(4, g0.canvas.height - 5, 1, 1, g0.RGBA, g0.UNSIGNED_BYTE, p0);
       exStep('Pixel oben links ' + Array.prototype.join.call(p0, ','));
       if (p0[0] > 200 && p0[1] > 200 && p0[2] > 200) {
-        if (window.__exAuto) { try { localStorage.setItem('exModus@VERSION@', 'js'); } catch (e) {} exStep('Fläche weiß → JS'); location.reload(); return; }
+        if (window.__exAuto) { try { localStorage.setItem('experimentopia.modus@VERSION@', 'js'); } catch (e) {} exStep('Fläche weiß → JS'); location.reload(); return; }
         showProblem('Fläche bleibt weiß (Safari) – bitte ?modus=js versuchen'); return; } } } catch (e) {}
     try { var gl = window.__exGl; if (gl) { var px = new Uint8Array(4), cv = gl.canvas; gl.readPixels(cv.width >> 1, cv.height >> 1, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px);
       var cs = getComputedStyle(cv); exStep('Pixel Mitte ' + Array.prototype.join.call(px, ',') + ' · Fläche ' + cv.width + '×' + cv.height + ' / CSS ' + cs.width + '×' + cs.height + (cs.transform && cs.transform !== 'none' ? ' transform ' + cs.transform : '') + ' · DPR ' + window.__exDpr.join('→')); } } catch (e) { exStep('Pixelprobe: ' + e); }
@@ -232,9 +234,9 @@
   // Ist eine da, lädt sie der Service Worker im Hintergrund; danach lädt sich die Seite von selbst neu – aber nur an einer ruhigen Stelle
   // (Startseite oder App im Hintergrund), nie mitten in einem Versuch.
   window.__exHome = true; var updateWaiting = false;
-  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; try { sessionStorage.setItem('exVorher', '@VERSION@'); } catch (e) {} location.reload(); } };
+  window.__exTry = function () { if (updateWaiting && (document.hidden || window.__exHome)) { updateWaiting = false; try { sessionStorage.setItem('experimentopia.vorher', '@VERSION@'); } catch (e) {} location.reload(); } };
   // Nach einem automatischen Update kurz zeigen, welche Version jetzt läuft (Spielstand und Einstellungen bleiben unangetastet)
-  try { var vorher = sessionStorage.getItem('exVorher'); if (vorher) { sessionStorage.removeItem('exVorher'); if (vorher !== '@VERSION@') window.addEventListener('load', function () {
+  try { var vorher = sessionStorage.getItem('experimentopia.vorher'); if (vorher) { sessionStorage.removeItem('experimentopia.vorher'); if (vorher !== '@VERSION@') window.addEventListener('load', function () {
     var n = document.createElement('div'); n.id = 'neu'; n.textContent = '✨ Neue Version @VERSION@ geladen';
     n.style.cssText = 'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:9;background:#2A1F55;color:#F3EEFF;border:1px solid #3DF5C8;border-radius:14px;padding:10px 16px;font:14px sans-serif;transition:opacity .6s';
     document.body.appendChild(n); setTimeout(function () { n.style.opacity = '0'; }, 4000); setTimeout(function () { n.remove(); }, 4800); }); } } catch (e) {}
@@ -265,6 +267,8 @@
   var appStarted = false;
   function startApp() {
     if (appStarted) return; appStarted = true;
+    // Läuft gerade der Umzug auf die gemeinsame Adresse (umzug.js), startet die App erst danach
+    if (window.__exUmzugWarte) { var w0 = window.__exUmzugWarte; window.__exUmzugWarte = null; appStarted = false; w0.then(startApp, startApp); return; }
     exStep('Ladebild gemalt'); prefetch();
     var datei = window.__exModus === 'js' ? 'experimentopia-js.js' : 'experimentopia.js';
     var sc = document.createElement('script'); sc.src = datei;

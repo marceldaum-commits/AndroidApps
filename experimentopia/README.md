@@ -4,7 +4,7 @@ Viele Versuche kann man zu Hause nicht machen: Säure und Lauge mischen, Knallga
 ein Klavier mit dem Flaschenzug heben. In Experimentopia geht das – auf acht Inseln, mit **Blubb**, einem neugierigen Laborkolben,
 dessen Flüssigkeit mit seiner Laune die Farbe wechselt (Recherche: `../docs/RECHERCHE.md`).
 
-**Version 2.12.0 vom 19.11.2026** · WebApp (installierbar als App, auch offline) – https://experimentopia.mathenachhilfe-online.com · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
+**Version 2.13.0 vom 19.11.2026** · WebApp (installierbar als App, auch offline) – https://lernen.mathenachhilfe-online.com/experimentopia/ (die alte Adresse experimentopia.mathenachhilfe-online.com leitet mit Lernstand dorthin um) · 211 Versuche in 20 Fachbereichen (Physik, Chemie, Biologie) · 38 Geräte im Freien Labor · 19 Reaktionsgleichungen · 13 Abzeichen
 
 ## So forscht man in Experimentopia
 
@@ -184,7 +184,7 @@ Wie Raumlicht: eine gemeinsame Codebasis (Compose Multiplatform).
 - `app` – Android: Room-Speicher, Ton über SoundPool, Updates (GitHub-APK: eigener Updater; Play-Fassung: Play In-App Updates)
 - `web` – WebApp (Kotlin/Wasm): Speicher im Browser, Ton über WebAudio, Ladebild mit echtem Balken, Service Worker
 - `webapp/` – fertig gebaute WebApp. Der Workflow `experimentopia-web-test.yml` prüft sie und spult den Branch `experimentopia-test` vor;
-  der Server zeigt sie unter https://experimentopia-test.mathenachhilfe-online.com (live: https://experimentopia.mathenachhilfe-online.com, setzt der Leitstand).
+  der Server zeigt sie unter https://lernen-test.mathenachhilfe-online.com/experimentopia/ (live: https://lernen.mathenachhilfe-online.com/experimentopia/, setzt der Leitstand). Die alten Adressen experimentopia(-test).… ziehen mit `umzug.js` um (Prüfung: `NODE_USE_ENV_PROXY=1 node tools/web-umzug.mjs`, Bild `screenshots/94_umzug_angekommen.png`).
 
 **Automatische Updates:** WebApp über den Service Worker (lädt neue Versionen im Hintergrund, wechselt auf der Startseite oder im Hintergrund).
 

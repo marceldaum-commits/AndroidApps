@@ -44,6 +44,7 @@ class ParentsTest {
         assertEquals("https://www.mathenachhilfe-online.com/eltern-bericht/#${l.id}.${l.key}", l.copy(test = false).parentUrl)
         assertEquals(l, ParentLink.parse(l.encode()))
         assertTrue(ParentLink.isTestHost("experimentopia-test.mathenachhilfe-online.com")); assertFalse(ParentLink.isTestHost("experimentopia.mathenachhilfe-online.com"))
+        assertTrue(ParentLink.isTestHost("lernen-test.mathenachhilfe-online.com")); assertFalse(ParentLink.isTestHost("lernen.mathenachhilfe-online.com"))
     }
 
     private fun decodeQr(q: Qr): String {

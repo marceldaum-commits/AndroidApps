@@ -20,3 +20,5 @@
 9. **Rhythmus** (`PRUEFPLAN.md`): großes Inhaltsupdate Di + Fr bis 16 Uhr auf test (erstes: Fr 20.11.), Monatsprüfung Dezember = Block A (Wasser + Kraft).
 10. **Sicherung** (2.9.0): Zwei-Browser-Test auf der Test-Seite (koppeln → privates Fenster → Link einfügen → gleicher Stand). Leitstand gibt live frei; Marcel möchte Bescheid, wenn alles live ist.
 11. ~~Probestunden-Adresse~~ – erledigt: `/probestunde/` ist laut Leitstand richtig (18.11.).
+
+- **Vorlesen (Nova, derzeit aus)**: Beim Wiedereinschalten den Zählstand-Pfad für die gemeinsame Adresse klären (`Audio.kt` nimmt den Seiten-Host, an der neuen Adresse wäre das `stand-lernen.….json`). Der Stimmen-Server erlaubt lernen(-test).… schon (CORS geprüft am 19.11.).

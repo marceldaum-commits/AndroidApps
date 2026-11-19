@@ -1,5 +1,11 @@
 # Changelog – Experimentopia
 
+## 2.13.0 – Neue Adresse: lernen.mathenachhilfe-online.com/experimentopia (19.11.2026)
+
+- 🏠 **Alle Lern-Apps wohnen jetzt unter einer Adresse**: Experimentopia ist ab sofort unter **lernen.mathenachhilfe-online.com/experimentopia/** zu finden. Wer die alte Adresse öffnet, wird automatisch weitergeleitet.
+- 🚚 **Der Lernstand zieht mit**: Ergebnisse, Sterne, Forscherbuch, Einstellungen und die Eltern-Kopplung kommen einmal automatisch mit an die neue Adresse. Dazu werden sie auf dem Gerät verschlüsselt, kurz auf unserem Server abgelegt (der Server sieht nur Zufallszeichen, der Schlüssel verlässt das Gerät nie Richtung Server) und gleich nach der Übernahme dort gelöscht. Ist an der neuen Adresse schon ein Lernstand, wird nichts überschrieben. Klappt der Umzug einmal nicht (zum Beispiel ohne Netz), startet die App wie gewohnt und versucht es beim nächsten Öffnen noch einmal.
+- 🧹 **Gute Nachbarn**: Die App räumt nur noch ihre eigenen Speicher auf und nennt alles im Browser-Speicher „experimentopia.…“. So kommen sich die Lern-Apps an der gemeinsamen Adresse nie in die Quere.
+
 ## 2.12.0 – Gemeinsam mit den anderen Lern-Apps (19.11.2026)
 
 - 🔗 **Direkt in ein Thema springen**: Links wie „…/#thema=optik“ öffnen sofort das passende Thema unter „Lernen nach Fach“. So können die anderen Lern-Apps (KurvenFlug, Mathe-Trainer, Rechenblitz, Wissensgarten, Raumlicht) genau hierher verweisen.

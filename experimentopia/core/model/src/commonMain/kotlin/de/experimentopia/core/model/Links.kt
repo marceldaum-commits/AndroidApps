@@ -30,7 +30,7 @@ object Links {
         return null
     }
 
-    fun url(t: Topic, test: Boolean) = (if (test) "https://experimentopia-test.mathenachhilfe-online.com" else "https://experimentopia.mathenachhilfe-online.com") + "/#thema=" + name(t)
+    fun url(t: Topic, test: Boolean) = (if (test) "https://lernen-test.mathenachhilfe-online.com" else "https://lernen.mathenachhilfe-online.com") + "/experimentopia/#thema=" + name(t)
 
     /** Querverweis zu einer anderen Lern-App */
     data class Cross(val app: String, val emoji: String, val sentence: String, private val liveUrl: String, private val testUrl: String) {

@@ -47,15 +47,15 @@ try {
     const ctx = await b.newContext(); const p = await ctx.newPage();
     await p.route('**/' + appWasm, (rt) => rt.abort());
     await p.goto('http://localhost:8792/'); await p.waitForTimeout(20000);
-    const f = await p.evaluate(() => ({ modus: window.__exModus, fertig: document.getElementById('start').dataset.fertig === '1', problem: !!document.getElementById('problem'), gemerkt: Object.keys(localStorage).filter((k) => k.startsWith('exModus')).map((k) => localStorage.getItem(k)) }));
+    const f = await p.evaluate(() => ({ modus: window.__exModus, fertig: document.getElementById('start').dataset.fertig === '1', problem: !!document.getElementById('problem'), gemerkt: Object.keys(localStorage).filter((k) => k.startsWith('experimentopia.modus')).map((k) => localStorage.getItem(k)) }));
     ok(f.fertig && !f.problem && f.modus === 'js' && f.gemerkt.includes('js'), `Wasm gescheitert → automatisch JS und gemerkt (${JSON.stringify(f)})`);
     await ctx.close();
     // Safari 27.2 zeichnet nichts (weiße Fläche): als Safari ausgeben und weiße Pixel vortäuschen → automatisch JS
     const c2 = await b.newContext({ userAgent: 'Mozilla/5.0 (iPad; CPU OS 18_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Mobile/15E148 Safari/604.1' });
     const p2 = await c2.newPage();
-    await p2.addInitScript(() => { for (const C of [WebGLRenderingContext, WebGL2RenderingContext]) { const r = C.prototype.readPixels; C.prototype.readPixels = function (x, y, w, h, f, t, px) { if (!Object.keys(localStorage).some((k) => k.startsWith('exModus')) && px && px.length >= 4) { px[0] = px[1] = px[2] = px[3] = 255; return; } return r.apply(this, arguments); }; } });
+    await p2.addInitScript(() => { for (const C of [WebGLRenderingContext, WebGL2RenderingContext]) { const r = C.prototype.readPixels; C.prototype.readPixels = function (x, y, w, h, f, t, px) { if (!Object.keys(localStorage).some((k) => k.startsWith('experimentopia.modus')) && px && px.length >= 4) { px[0] = px[1] = px[2] = px[3] = 255; return; } return r.apply(this, arguments); }; } });
     await p2.goto('http://localhost:8792/'); await p2.waitForTimeout(25000);
-    const w = await p2.evaluate(() => ({ modus: window.__exModus, fertig: document.getElementById('start').dataset.fertig === '1', problem: !!document.getElementById('problem'), gemerkt: Object.keys(localStorage).filter((k) => k.startsWith('exModus')).map((k) => localStorage.getItem(k)) }));
+    const w = await p2.evaluate(() => ({ modus: window.__exModus, fertig: document.getElementById('start').dataset.fertig === '1', problem: !!document.getElementById('problem'), gemerkt: Object.keys(localStorage).filter((k) => k.startsWith('experimentopia.modus')).map((k) => localStorage.getItem(k)) }));
     ok(w.fertig && !w.problem && w.modus === 'js' && w.gemerkt.includes('js'), `weiße Fläche auf Safari → automatisch JS (${JSON.stringify(w)})`);
     await c2.close();
   }

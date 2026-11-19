@@ -22,7 +22,8 @@ class LinksTest {
         assertEquals(Topic.STROM, Links.target("#thema=physik-elektrizitaet")!!.topic)
         assertNull("unbekannt → Startseite", Links.target("#thema=quatsch"))
         assertNull(Links.target("#pro=EX-1"))
-        assertEquals("https://experimentopia-test.mathenachhilfe-online.com/#thema=optik", Links.url(Topic.OPTIK, true))
+        assertEquals("https://lernen-test.mathenachhilfe-online.com/experimentopia/#thema=optik", Links.url(Topic.OPTIK, true))
+        assertEquals(Links.Target(Subject.PHYSIK, Topic.OPTIK), Links.target("https://lernen.mathenachhilfe-online.com/experimentopia/#thema=optik"))
     }
 
     @Test fun querverweise() {
