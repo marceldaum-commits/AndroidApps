@@ -30,7 +30,7 @@ class PruefTextTest {
     )
 
     @Test fun schreibweiseInAllenAufgaben() {
-        assertTrue(all.size > 1300)
+        assertTrue("${all.size} Aufgaben geprüft", all.size > 1200)
         val found = all.flatMap { l -> texts(l).flatMap { t -> rules.filter { (_, re) -> re.containsMatchIn(t) }.map { "${l.id}: ${it.first}: „$t“" } } }
         assertEquals("Schreibweise:\n" + found.take(25).joinToString("\n"), 0, found.size)
     }

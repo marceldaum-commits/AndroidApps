@@ -99,7 +99,9 @@ object Exams {
         ))
     }
 
-    val all = listOf(tent, screen, flight) + MoreExams.all + TourSeven.exams
+    /** Prüfungsaufgaben im Abi-Stil – seit 2.18.32 nur noch Geometrie im Raum (Analysis und Stochastik übt man im Mathe-Trainer) */
+    private val GEOMETRY = setOf("zelt", "leinwand", "drohnen", "planetarium")
+    val all = (listOf(tent, screen, flight) + MoreExams.all + TourSeven.exams).filter { it.id in GEOMETRY }
     fun byId(id: String) = all.firstOrNull { it.id == id }
 }
 

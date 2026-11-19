@@ -283,7 +283,7 @@ object Levels {
         )
     }
 
-    val chapters = listOf(
+    private val everything = listOf(
         Chapter(1, "Punkte im Raum", "Koordinaten ablesen, Mittelpunkt, Spiegeln", "Kellerclub", "🎚️", "cyan", listOf(
             "Hi, ich bin Lux – deine Lichtdrohne. Du sagst, wohin. Ich fliege.",
             "Jeder Ort auf der Bühne hat drei Koordinaten: x₁ nach vorn, x₂ nach rechts, x₃ nach oben.",
@@ -309,7 +309,20 @@ object Levels {
             "Skalarprodukt null heißt senkrecht. Damit findest du Lote, Abstände und Spiegelbilder.",
             "Das ist Abi-Niveau – und du bist bereit."), ch6),
     ) + MoreLevels.chapters + TourThree.chapters + TourFour.chapters + TourFive.chapters + TourSix.chapters + TourSeven.chapters + TourEight.chapters + TourNine.chapters
+    /**
+     * Die Tour: **nur Geometrie im Raum** (seit 2.18.32). Die klassischen Aufgaben zu Analysis und Stochastik (Kapitel 12–17 und 22–25, 52 Aufgaben)
+     * sind herausgenommen – der Mathe-Trainer hat sie alle als Rechentraining; Raumlicht zeigt Analysis und Zufall nur noch zum Erleben ([Erleben]).
+     * Die internen Kapitelnummern bleiben (Sterne, Links von außen); angezeigt wird lückenlos 1 bis 16 ([shown], [label]).
+     */
+    val chapters = everything.filter { it.area == Area.GEOMETRIE }
+    /** Herausgenommene Kapitel – nur für die Prüfung, dass sie nirgends mehr auftauchen */
+    val removed = everything - chapters.toSet()
     val all = chapters.flatMap { it.levels }
+    /** Angezeigte Kapitelnummer (1 bis 16, ohne Lücke) zur internen Nummer */
+    fun shown(number: Int): Int = chapters.indexOfFirst { it.number == number }.let { if (it < 0) number else it + 1 }
+    /** Angezeigte Aufgabennummer „Kapitel-Nr.“ zur internen Kennung (z. B. „18-3“ → „12-3“); alles andere bleibt, wie es ist */
+    fun label(id: String): String { val c = id.substringBefore('-').toIntOrNull() ?: return id
+        return if (byId(id) == null) id else "${shown(c)}-${id.substringAfter('-')}" }
     fun byId(id: String) = all.firstOrNull { it.id == id }
     fun next(id: String): Level? = all.getOrNull(all.indexOfFirst { it.id == id } + 1)
 }

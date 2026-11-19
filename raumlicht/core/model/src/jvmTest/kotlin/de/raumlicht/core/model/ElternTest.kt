@@ -36,8 +36,8 @@ class ElternTest {
 
     @Test fun berichtEnthaeltNurWasAngekuendigtIst() {
         val today = java.time.LocalDate.of(2026, 11, 18).toEpochDay()
-        val geo = Levels.chapters.filter { it.area == Area.GEOMETRIE }.flatMap { it.levels }; val ana = Levels.chapters.filter { it.area == Area.ANALYSIS }.flatMap { it.levels }
-        val stars = geo.take(8).associate { it.id to 1 } + ana.take(6).associate { it.id to 3 }
+        val geo = Levels.all
+        val stars = geo.take(8).associate { it.id to 1 }
         var log = Eltern.add("", today - 20, min = 30, tasks = 9, right = 9); log = Eltern.add(log, today - 2, min = 12, tasks = 4, right = 1); log = Eltern.add(log, today, min = 8, tasks = 4, right = 3)
         val o = Json.parseToJsonElement(Eltern.report("Lena", stars, log, Plan(today + 5, setOf(1, 2)), today, java.time.Instant.parse("2026-11-18T15:40:07Z").toEpochMilli())).jsonObject
         assertEquals(setOf("format", "app", "appName", "name", "stand", "zeitraum", "lernzeitMin", "tageAktiv", "aufgaben", "richtigProzent", "staerken", "schwach", "fortschritt", "letzte", "verlauf", "klassenarbeit", "hinweis"), o.keys)
@@ -45,9 +45,9 @@ class ElternTest {
         assertEquals("Lena", o["name"]!!.jsonPrimitive.content); assertEquals("2026-11-18T15:40:07Z", o["stand"]!!.jsonPrimitive.content)
         // nur die letzten 14 Tage: der Tag vor 20 Tagen zählt nicht
         assertEquals("20", o["lernzeitMin"]!!.jsonPrimitive.content); assertEquals("2", o["tageAktiv"]!!.jsonPrimitive.content); assertEquals("8", o["aufgaben"]!!.jsonPrimitive.content); assertEquals("50", o["richtigProzent"]!!.jsonPrimitive.content)
-        assertEquals(listOf("analysis"), o["staerken"]!!.jsonArray.map { it.jsonObject["thema"]!!.jsonPrimitive.content }); assertEquals(listOf("vektoren"), o["schwach"]!!.jsonArray.map { it.jsonObject["thema"]!!.jsonPrimitive.content })
+        assertEquals(emptyList<String>(), o["staerken"]!!.jsonArray.map { it.jsonObject["thema"]!!.jsonPrimitive.content }); assertEquals(listOf("vektoren"), o["schwach"]!!.jsonArray.map { it.jsonObject["thema"]!!.jsonPrimitive.content })
         assertEquals("33", o["schwach"]!!.jsonArray[0].jsonObject["prozent"]!!.jsonPrimitive.content)
-        assertEquals(listOf("Vektoren und Geometrie", "Analysis", "Stochastik"), o["fortschritt"]!!.jsonArray.map { it.jsonObject["titel"]!!.jsonPrimitive.content })
+        assertEquals(listOf("Vektoren und Geometrie"), o["fortschritt"]!!.jsonArray.map { it.jsonObject["titel"]!!.jsonPrimitive.content })
         assertEquals("8", o["fortschritt"]!!.jsonArray[0].jsonObject["geschafft"]!!.jsonPrimitive.content); assertEquals(geo.size.toString(), o["fortschritt"]!!.jsonArray[0].jsonObject["von"]!!.jsonPrimitive.content)
         assertEquals(listOf("2026-11-16", "2026-11-18"), o["letzte"]!!.jsonArray.map { it.jsonObject["tag"]!!.jsonPrimitive.content })
         assertEquals("2026-11-23", o["klassenarbeit"]!!.jsonObject["tag"]!!.jsonPrimitive.content); assertEquals("vektoren", o["klassenarbeit"]!!.jsonObject["thema"]!!.jsonPrimitive.content)

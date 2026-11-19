@@ -7,16 +7,6 @@ import kotlin.random.Random
 class PlayTest {
     private fun p(x: Int, y: Int, z: Int) = V3(x, y, z)
 
-    @Test fun buildLevelsHaveExactlyOneSolution() {
-        // Jede „Funktionen bauen“-Aufgabe: Unter allen Reglerstellungen führt genau eine Bahn durch alle Tore
-        Levels.chapters.first { it.number == 15 }.levels.forEach { l ->
-            fun all(i: Int): List<Values> = if (i == l.controls.size) listOf(emptyMap()) else (l.controls[i].min[0]..l.controls[i].max[0]).flatMap { v -> all(i + 1).map { it + (l.controls[i].key to listOf(v)) } }
-            val hits = all(0).filter { l.evaluate(it).success }
-            assertEquals(l.id, listOf(l.solution), hits)
-            assertTrue(l.finale!!(l.solution).path.size > 15)
-        }
-        assertTrue(Levels.byId("15-1")!!.evaluate(mapOf("m" to listOf(1), "b" to listOf(1))).message.contains("1 von 2 Toren"))
-    }
 
     @Test fun newStochasticsAndAnalysisAreRight() {
         assertEquals(0.32, 2 * 0.2 * 0.8, 1e-12); assertEquals(42, 100 - (40 + 30 - 12)); assertEquals(0.3, 12.0 / 40, 1e-12); assertEquals(5.0, Math.sqrt(100 * 0.5 * 0.5), 1e-12)
@@ -25,12 +15,10 @@ class PlayTest {
         assertEquals(6.0, d({ it * it }, 3.0), 1e-6); assertEquals(12.0, d({ (2 * it + 1) * (2 * it + 1) }, 1.0), 1e-5)
         assertTrue((0..4).all { it == 2 || it * (8 - 2 * it) < 8 }); assertEquals(800.0, 100 * Math.pow(2.0, 3.0), 0.0)
         // Fehler bekommen Namen – und landen damit im Fehler-Tagebuch
-        val msg = Levels.byId("17-1")!!.evaluate(mapOf("a" to listOf(9))).message
-        assertTrue(msg.contains("f(3), die Höhe")); assertTrue(MistakeBook.isNamed(msg))
         assertTrue(MistakeBook.isNamed(Levels.byId("2-1")!!.evaluate(mapOf("v" to listOf(-3, -4, 0))).message))
         assertFalse(MistakeBook.isNamed(Levels.byId("1-1")!!.evaluate(mapOf("P" to listOf(4, 0, 0))).message))
         // Die neuen Abi-Aufgaben
-        assertEquals(listOf("Festivalzelt", "Laser & Leinwand", "Drohnen-Show", "Lichtbogen", "Lostrommel", "Planetarium", "Einlass"), Exams.all.map { it.title })
+        assertEquals(listOf("Festivalzelt", "Laser & Leinwand", "Drohnen-Show", "Planetarium"), Exams.all.map { it.title })
     }
 
     @Test fun galtonBoardFollowsTheBinomialDistribution() {
@@ -78,7 +66,7 @@ class PlayTest {
 
     @Test fun quickCalendarAndLooks() {
         val pick = Quick.pick(3); assertEquals(Quick.TASKS, pick.size); assertTrue(pick.none { it.abi }); assertEquals(pick.map { it.id }, Quick.pick(3).map { it.id })
-        assertEquals(listOf(Area.GEOMETRIE, Area.GEOMETRIE, Area.ANALYSIS, Area.ANALYSIS, Area.STOCHASTIK, Area.STOCHASTIK), pick.map { l -> Levels.chapters.first { it.number == l.chapter }.area })
+        assertEquals(List(Quick.TASKS) { Area.GEOMETRIE }, pick.map { l -> Levels.chapters.first { it.number == l.chapter }.area })
         assertEquals(setOf(20_770L, 20_771L), Calendar.solved(mapOf("tag-20770" to 3, "tag-20771" to 1, "1-1" to 3)))
         val grid = Calendar.grid(20_772); assertEquals(5, grid.size); assertTrue(grid.all { it.size == 7 })
         assertEquals(java.time.DayOfWeek.MONDAY, java.time.LocalDate.ofEpochDay(grid[0][0]!!).dayOfWeek)

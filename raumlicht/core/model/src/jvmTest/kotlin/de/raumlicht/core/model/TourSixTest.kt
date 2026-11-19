@@ -80,69 +80,22 @@ class TourSixTest {
     private fun binom(n: Int, k: Int): Double { var c = 1.0; for (i in 1..k) c = c * (n - k + i) / i; return c }
     private fun atLeast(n: Int, k: Int, p: Double) = (k..n).sumOf { binom(n, it) * Math.pow(p, it.toDouble()) * Math.pow(1 - p, (n - it).toDouble()) }
 
-    @Test fun integrale() {
-        assertEquals(integrate(0.0, 3.0) { 2 * it }, int("22-1").toDouble(), 1e-6)
-        assertEquals(integrate(0.0, 2.0) { 3 * it * it }, int("22-2").toDouble(), 1e-6)
-        assertEquals(integrate(0.0, 2.0) { -3 * it * it + 8 * it - 2 * it }, int("22-3").toDouble(), 1e-6)
-        listOf(0.0, 2.0).forEach { assertEquals(-3 * it * it + 8 * it, 2 * it, 1e-9) }             // die genannten Schnittstellen stimmen
-        assertEquals(integrate(0.0, 3.0) { it * it - 2 * it }, int("22-4").toDouble(), 1e-6)
-        assertEquals(16.0, integrate(0.0, int("22-5").toDouble()) { 2 * it }, 1e-6)
-        assertEquals(integrate(0.0, 2.0) { -3 * it * it + 12 * it }, int("22-6").toDouble(), 1e-6)
-    }
 
-    @Test fun stochastik() {
-        assertEquals(0 * 0.5 + 2 * 0.3 + 7 * 0.2, int("23-1").toDouble(), 1e-9)
-        assertEquals(1 - atLeast(3, 2, 0.5), int("23-2") * 5 / 100.0, 1e-9)
-        val n = int("23-3"); assertTrue(1 - Math.pow(0.5, n.toDouble()) >= 0.9); assertTrue(1 - Math.pow(0.5, n - 1.0) < 0.9)
-        assertEquals(400 * 0.5 - 2 * sqrt(400 * 0.25), int("23-4") * 5.0, 1e-9)
-        // Hypothesentest genau nachgerechnet: kleinste Grenze, bei der der Irrtum höchstens 5 % ist
-        val k = int("23-5"); assertTrue(atLeast(100, k, 0.5) <= 0.05); assertTrue(atLeast(100, k - 1, 0.5) > 0.05)
-        assertEquals(0.044, atLeast(100, 59, 0.5), 0.001); assertEquals(0.067, atLeast(100, 58, 0.5), 0.001); assertEquals(0.18, atLeast(100, 55, 0.5), 0.01)
-    }
 
     @Test fun neuePruefungsaufgaben() {
-        val dome = Exams.all.first { it.id == "planetarium" }.parts.map { it.level }; val gate = Exams.all.first { it.id == "einlass" }.parts.map { it.level }
+        val dome = Exams.all.first { it.id == "planetarium" }.parts.map { it.level }
         val m = p(3, 3, 2); val n = p(1, 2, 2)
         close(Geo.distPointPlane(m, n, 22.0), dome[0].solution.getValue("a")[0].toDouble())
         assertTrue(V3.of(dome[1].solution.getValue("P")).near(Geo.footOnPlane(m, n, 22.0)))
         assertTrue(V3.of(dome[2].solution.getValue("P")).near(Geo.mirrorAtPlane(m, n, 22.0)))
         close(sqrt(25.0 - 9.0), dome[3].solution.getValue("a")[0].toDouble())
-        val r = { t: Double -> -3 * t * t + 12 * t }
-        assertEquals((0..4).maxBy { r(it.toDouble()) }, gate[0].solution.getValue("a")[0]); close(r(2.0), gate[1].solution.getValue("a")[0].toDouble())
-        close(r(gate[2].solution.getValue("a")[0].toDouble()), 0.0); assertEquals(integrate(0.0, 4.0, r), gate[3].solution.getValue("a")[0].toDouble(), 1e-5)
-        (dome + gate).forEach { lv -> assertTrue(lv.id, lv.evaluate(lv.solution).success); assertFalse(lv.id, lv.evaluate(lv.start).success) }
+        dome.forEach { lv -> assertTrue(lv.id, lv.evaluate(lv.solution).success); assertFalse(lv.id, lv.evaluate(lv.start).success) }
     }
 
-    @Test fun binomialverteilung() {
-        // Rechenkern gegen die Formel mit Binomialkoeffizienten
-        for ((n, pr) in listOf(2 to 0.4, 10 to 0.5, 37 to 0.13, 100 to 0.5, 100 to 0.02, 100 to 0.97)) { val b = Binomial(n, pr)
-            assertEquals(1.0, b.single.sum(), 1e-12)
-            for (k in 0..n) { assertEquals(binom(n, k) * Math.pow(pr, k.toDouble()) * Math.pow(1 - pr, (n - k).toDouble()), b.exactly(k), 1e-10)
-                assertEquals(atLeast(n, k, pr), b.atLeast(k), 1e-9); assertEquals(1.0, b.atMost(k) + b.atLeast(k + 1), 1e-12) }
-            assertEquals(b.atMost(n / 2) - b.atMost(n / 4), b.between(n / 4 + 1, n / 2), 1e-12) }
-        assertEquals(0.0, Binomial(10, 0.5).atMost(-1), 0.0); assertEquals(1.0, Binomial(10, 0.5).atLeast(0), 0.0); assertEquals(0.0, Binomial(10, 0.5).atLeast(11), 0.0)
-        assertEquals("94,53 %", Binomial.percent(Binomial(10, 0.5).atMost(7))); assertEquals("P(X ≥ 3) = 1 − P(X ≤ 2)  (Gegenereignis)", Binomial(10, 0.5).approach(BinomialMode.AT_LEAST, 3))
-        // Aufgaben
-        assertEquals(Binomial(2, 0.4).exactly(1), int("24-1") * 4 / 100.0, 1e-9); assertEquals(Binomial(2, 0.4).atMost(1), int("24-2") * 4 / 100.0, 1e-9)
-        assertEquals(Binomial(2, 0.3).atLeast(1), int("24-3") * 3 / 100.0, 1e-9)
-        val ten = Binomial(10, 0.5); assertEquals(Math.round(ten.between(4, 6) * 100).toInt(), int("24-4")); assertEquals(45, Math.round((ten.atMost(6) - ten.atMost(4)) * 100).toInt())
-        listOf(3 to 0.172, 4 to 0.377, 6 to 0.828, 7 to 0.945).forEach { (k, v) -> assertEquals(v, ten.atMost(k), 0.0005) }        // die abgedruckte Tabelle stimmt
-        assertEquals((0..10).first { ten.atMost(it) >= 0.9 }, int("24-5"))
-    }
 
-    @Test fun eFunktionUndLogarithmus() {
-        fun d(f: (Double) -> Double, x: Double) = (f(x + 1e-5) - f(x - 1e-5)) / 2e-5
-        fun dd(f: (Double) -> Double, x: Double) = (f(x + 1e-4) - 2 * f(x) + f(x - 1e-4)) / 1e-8
-        assertEquals(0.0, Math.exp(2.0 * int("25-1") - 4) - 1, 1e-12); assertEquals(0.0, Math.log(int("25-2") - 2.0), 1e-12)
-        val f3 = { x: Double -> (x - 2) * Math.exp(x) }; assertEquals(0.0, d(f3, int("25-3").toDouble()), 1e-6); assertTrue(dd(f3, int("25-3").toDouble()) > 0)
-        val f4 = { x: Double -> x * Math.exp(-x) }; assertEquals(0.0, dd(f4, int("25-4").toDouble()), 1e-5); assertEquals(0.0, d(f4, 1.0), 1e-6)
-        val f5 = { x: Double -> x - 4 * Math.log(x) }; assertEquals(0.0, d(f5, int("25-5").toDouble()), 1e-6); assertTrue(dd(f5, int("25-5").toDouble()) > 0)
-        assertEquals(integrate(0.0, Math.log(3.0)) { Math.exp(it) }, int("25-6").toDouble(), 1e-6)
-        assertEquals(integrate(1.0, Math.E * Math.E) { 2 / it }, int("25-7").toDouble(), 1e-5)
-    }
 
     /** Jede Zahlen-Aufgabe hat genau eine richtige Antwort im einstellbaren Bereich. */
-    @Test fun genauEineLoesung() = (TourSix.chapters + TourSeven.chapters + TourEight.chapters).flatMap { it.levels }.filter { it.controls.size == 1 && it.controls[0].kind == ControlKind.SCALAR }.forEach { lv ->
+    @Test fun genauEineLoesung() = (TourSix.chapters + TourSeven.chapters + TourEight.chapters).filter { it in Levels.chapters }.flatMap { it.levels }.filter { it.controls.size == 1 && it.controls[0].kind == ControlKind.SCALAR }.forEach { lv ->
         val c = lv.controls[0]; val ok = (c.min[0]..c.max[0]).filter { lv.evaluate(mapOf(c.key to listOf(it))).success }
         assertEquals("${lv.id}: richtige Antworten $ok", 1, ok.size)
     }
@@ -151,7 +104,7 @@ class TourSixTest {
 /** Schreibt die Bühnen aller neuen Aufgaben (vorher und gelöst) nach build/neu.json – zum Ansehen mit scene/test/shot.mjs. */
 class NewScenesDump {
     @Test fun dump() {
-        val shots = (TourSix.chapters + TourSeven.chapters + TourEight.chapters).flatMap { it.levels }.flatMap { l ->
+        val shots = (TourSix.chapters + TourSeven.chapters + TourEight.chapters).filter { it in Levels.chapters }.flatMap { it.levels }.flatMap { l ->
             listOf("""{"name":"${l.id}-a","settle":1.2,"state":${l.scene(l.start, Phase.AIM)}}""", """{"name":"${l.id}-z","settle":1.2,"state":${l.scene(l.solution, Phase.DONE)}}""") }
         val profi = (ProGen.Kind.entries.flatMap { k -> listOf(3L, 8L).map { ProGen.level(k, it) } } + MoreGen.Kind.entries.flatMap { k -> listOf(2L, 7L).map { MoreGen.level(k, it) } }).flatMap { l ->
             listOf("""{"name":"${l.id}-a","settle":1.2,"state":${l.scene(l.start, Phase.AIM)}}""", """{"name":"${l.id}-z","settle":1.2,"state":${l.scene(l.solution, Phase.DONE)}}""") }

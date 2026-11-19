@@ -15,7 +15,7 @@ class VorlesenTest {
     @Test fun abgeschaltetHeisstLeereListe() {
         assertTrue(!Vorlesen.ENABLED)
         assertEquals("""{"format":1,"app":"raumlicht","texte":[]}""", Vorlesen.json())
-        assertTrue(Vorlesen.texts().size > 1000); assertEquals(".", Vorlesen.privacyNote)
+        assertTrue("${Vorlesen.texts().size} Texte", Vorlesen.texts().size > 800); assertEquals(".", Vorlesen.privacyNote)
     }
 
     @Test fun listHasTheAgreedFormat() {

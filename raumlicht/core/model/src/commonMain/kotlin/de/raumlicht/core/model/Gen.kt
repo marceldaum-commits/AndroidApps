@@ -10,8 +10,8 @@ enum class JamTopic(val title: String, val emoji: String, val color: String, val
     SCHNITT("Schnittpunkte", "✨", "yellow", listOf(Gen.Kind.CROSS)),
     EBENEN("Ebenen", "🔷", "violet", listOf(Gen.Kind.PIERCE_FLAT, Gen.Kind.PIERCE_SKEW)),
     WINKEL("Winkel, Abstände, Kugeln", "📐", "orange", listOf(Gen.Kind.ANGLE, Gen.Kind.DIST_PLANE, Gen.Kind.FOOT, Gen.Kind.RADIUS)),
-    BEWEGUNG("Bewegung & Rotation", "🛫", "green", listOf(Gen.Kind.MOTION_POS, Gen.Kind.MOTION_SPEED, Gen.Kind.MOTION_TIME, Gen.Kind.ROTATION)),
-    MIX("Alles gemischt", "🎧", "pink", Gen.Kind.entries),
+    BEWEGUNG("Bewegung", "🛫", "green", listOf(Gen.Kind.MOTION_POS, Gen.Kind.MOTION_SPEED, Gen.Kind.MOTION_TIME)),
+    MIX("Alles gemischt", "🎧", "pink", Gen.active),
 }
 
 /**
@@ -20,6 +20,8 @@ enum class JamTopic(val title: String, val emoji: String, val color: String, val
  */
 object Gen {
     enum class Kind { MIDPOINT, VECTOR, AIM, PARAM, TRACE, CROSS, PIERCE_FLAT, PIERCE_SKEW, ANGLE, DIST_PLANE, FOOT, RADIUS, MOTION_POS, MOTION_SPEED, MOTION_TIME, ROTATION }
+    /** Aufgabenarten, die gestellt werden: alles außer dem Volumen von Rotationskörpern (Integralrechnung – seit 2.18.32 im Rotationskörper-Labor zu sehen, gerechnet wird im Mathe-Trainer) */
+    val active: List<Kind> get() = Kind.entries.filter { it != Kind.ROTATION }
 
     private val B = Bounds()
     private fun inRoom(v: V3) = (0..2).all { v.list[it] >= B.min[it] && v.list[it] <= B.max[it] }
@@ -224,7 +226,7 @@ object Daily {
     fun id(day: Long) = "$PREFIX$day"
     fun isDaily(id: String) = id.startsWith(PREFIX)
     fun forDay(day: Long): Level {
-        val kind = Gen.Kind.entries[(day % Gen.Kind.entries.size).toInt()]
+        val kind = Gen.active[(day % Gen.active.size).toInt()]
         return Gen.level(kind, day * 7919 + 13, id(day))
     }
 }
@@ -313,15 +315,15 @@ object Sheet {
             "Potenzregel: (xⁿ)′ = n · xⁿ⁻¹ · Kettenregel: äußere mal innere Ableitung",
             "Tangente in x₀: t(x) = f′(x₀) · (x − x₀) + f(x₀)",
             "Hochpunkt: f′ = 0 und f″ < 0 · Tiefpunkt: f′ = 0 und f″ > 0 · Wendestelle: f″ = 0",
-            "Fläche: A = ∫ f(x) dx (unter der Achse negativ)"), listOf(14, 15, 17)),
+            "Fläche: A = ∫ f(x) dx (unter der Achse negativ)")),
         SheetCard("🎲", "Wahrscheinlichkeit", "pink", listOf(
             "Laplace: P = günstige : mögliche",
             "Pfadregel: entlang eines Pfades multiplizieren, Pfade addieren",
             "Gegenereignis: P(mindestens eins) = 1 − P(keins)",
             "Bedingt: P(B | A) = P(A und B) : P(A)",
-            "Binomial: μ = n · p, σ = √(n · p · (1 − p))"), listOf(13, 16)),
+            "Binomial: μ = n · p, σ = √(n · p · (1 − p))")),
         SheetCard("🏺", "Rotationskörper", "violet", listOf(
             "V = π · ∫ f(x)² dx (Rotation um die x-Achse)",
-            "Zylinder: πr²h · Kegel: ⅓πr²h · Kugel: ⁴⁄₃πr³"), listOf(12), JamTopic.BEWEGUNG),
+            "Zylinder: πr²h · Kegel: ⅓πr²h · Kugel: ⁴⁄₃πr³")),
     )
 }

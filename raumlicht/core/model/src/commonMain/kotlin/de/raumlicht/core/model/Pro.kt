@@ -62,5 +62,5 @@ object Pro {
     val benefits = listOf("📚 alle ${Levels.all.size} Aufgaben in ${Levels.chapters.size} Kapiteln", "🎓 alle ${Exams.all.size} Prüfungsaufgaben im Abi-Stil, auch auf Zeit",
         "🔥 Üben in den Stufen „Abi“ und „Profi“", "🏗️ Baumeister, Geisterfahrt, Ringflug und Binomial-Labor", "📅 Klausur-Planer, Fehler-Tagebuch und Lernstand")
     /** Was auch ohne Pro bleibt */
-    val free = listOf("Kapitel 1 bis $FREE_CHAPTERS komplett", "aus jedem weiteren Kapitel die ersten $FREE_PER_CHAPTER Aufgaben", "Tagesaufgabe", "Üben in der Stufe „Einstieg“", "Kurve abfahren, Flug, Ballerbude, Zufallsmaschine, Galton-Brett")
+    val free = listOf("Kapitel 1 bis $FREE_CHAPTERS komplett", "aus jedem weiteren Kapitel die ersten $FREE_PER_CHAPTER Aufgaben", "Tagesaufgabe", "Üben in der Stufe „Einstieg“", "Kurve abfahren, Flug, Ballerbude, Zufallsmaschine, Galton-Brett, Rotationskörper-Labor")
 }

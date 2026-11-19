@@ -46,9 +46,6 @@ class NachhilfeTest {
         for (d in 101L..113L) assertNull("Tag $d: Ruhe", hint(weak, d, state))
         assertNotNull("nach 14 Tagen wieder", hint(weak, 114, state)); assertTrue(Nachhilfe.isNew(state, "vektoren", 114))
         state = Nachhilfe.hide(state, "vektoren"); for (d in listOf(114L, 200L, 9999L)) assertNull("ausgeblendet bleibt aus", hint(weak, d, state))
-        // höchstens ein Hinweis: hakt es in zwei Gebieten, kommt nur das schwächere – und nach dem Ausblenden das andere
-        val ana = Levels.chapters.filter { it.area == Area.ANALYSIS }.flatMap { it.levels }.take(8).associate { it.id to 1 }
-        assertEquals("vektoren", hint(weak + ana)!!.topic); assertEquals("analysis", hint(weak + ana, 100, Nachhilfe.hide("", "vektoren"))!!.topic)
     }
 
     /** „Klausur bald“: nur 3 bis 14 Tage vorher, nur mit bekannter Adresse, je Klausur ausblendbar – und solange die Adresse fehlt, gar nicht. */
@@ -64,9 +61,6 @@ class NachhilfeTest {
         for (bad in listOf("€", "Euro", "jetzt", "Lux", "!", "Crashkurs")) assertFalse(bad, h.text.contains(bad))
         assertNull(Nachhilfe.exam(plan, 990, Nachhilfe.hide("", h.key), true, url)); assertNotNull("eine andere Klausur zeigt ihn wieder", Nachhilfe.exam(Plan(1001, geo), 990, Nachhilfe.hide("", h.key), true, url))
         assertNull(Nachhilfe.exam(plan, 990, "", false, url)); assertNull(Nachhilfe.exam(null, 990, "", true, url))
-        // gemischte Gebiete: kein Thema im Link
-        val mixed = Plan(1000, setOf(Levels.chapters.first { it.area == Area.GEOMETRIE }.number, Levels.chapters.first { it.area == Area.ANALYSIS }.number))
-        assertEquals("$url?src=raumlicht-klassenarbeit", Nachhilfe.exam(mixed, 990, "", true, url)!!.link)
         assertNotNull(Zaehler.body("probestunde_klick", "klassenarbeit", "vektoren", "1")); assertNull("der Crashkurs wird nicht mehr gezählt", Zaehler.body("crashkurs_klick", "klassenarbeit", "vektoren", "1"))
     }
 

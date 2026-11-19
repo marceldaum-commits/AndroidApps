@@ -11,7 +11,7 @@ class TheoryTest {
     private val guides = Guides.all.flatMap { g -> g.parts.map { it.level } }
     private val seeds = 1L..5L
     private val generated: List<Pair<String, Level>> =
-        Gen.Kind.entries.flatMap { k -> seeds.map { "jam-${k.name.lowercase()}" to Gen.level(k, it) } } +
+        Gen.active.flatMap { k -> seeds.map { "jam-${k.name.lowercase()}" to Gen.level(k, it) } } +
             MoreGen.Kind.entries.flatMap { k -> seeds.map { "mehr-${k.name.lowercase()}" to MoreGen.level(k, it) } } +
             ProGen.Kind.entries.flatMap { k -> seeds.map { "profi-${k.name.lowercase()}" to ProGen.level(k, it) } }
     private val dailies = (20_770L until 20_800L).map { Daily.forDay(it) }
@@ -19,7 +19,7 @@ class TheoryTest {
     private fun texts(c: TheoryCard) = listOf(c.title, c.idea, c.trap) + c.steps + c.example
 
     @Test fun festeAufgabenUeberDieId() {
-        assertEquals(144, tour.size); assertEquals(28, exams.size); assertEquals(9, guides.size)
+        assertEquals(92, tour.size); assertEquals(16, exams.size); assertEquals(9, guides.size)
         (tour + exams + guides).forEach { l ->
             assertEquals("${l.id} „${l.title}“ steht nicht in der ID-Tabelle", 1, Theory.stage(l))
             assertTrue(l.id, Theory.forLevel(l) in Theory.cards)
@@ -42,7 +42,7 @@ class TheoryTest {
         fun fake(id: String, chapter: Int, title: String) = Gen.level(Gen.Kind.MIDPOINT, 1).let { l ->
             Level(id, chapter, title, l.mission, l.bounds, l.controls, l.solution, l.tip, l.way, formula = l.formula, objects = l.objects, evaluate = l.evaluate) }
         assertEquals("bewegung", Theory.forLevel(fake("neu-1", 11, "Unbekannt")).key); assertEquals(3, Theory.stage(fake("neu-1", 11, "Unbekannt")))
-        (1..25).forEach { ch -> assertEquals(3, Theory.stage(fake("neu-$ch", ch, "Unbekannt"))) }
+        Levels.chapters.map { it.number }.forEach { ch -> assertEquals(3, Theory.stage(fake("neu-$ch", ch, "Unbekannt"))) }
         assertSame(Theory.general, Theory.forLevel(fake("neu-2", 0, "Unbekannt"))); assertEquals(4, Theory.stage(fake("neu-2", 0, "Unbekannt")))
         // ID geht vor Titel, Titel vor Kapitel
         assertEquals("spiegeln-koordinaten", Theory.forLevel(tour.first { it.id == "1-5" }).key)      // heißt „Spiegelbild“ wie die Profi-Übung
@@ -53,7 +53,7 @@ class TheoryTest {
     }
 
     @Test fun kartenSindVollstaendigUndKurz() {
-        val all = Theory.cards + Theory.general
+        val all = Theory.cards + Theory.erleben + Theory.general
         assertEquals(all.size, all.map { it.key }.toSet().size)
         assertEquals(all.size, all.map { it.title }.toSet().size)
         assertEquals(all.size, all.map { it.emoji }.toSet().size)
@@ -72,10 +72,10 @@ class TheoryTest {
         }
         // Formelsammlung: Geometrie-, Analysis- und Stochastik-Karten zeigen auf die passende Seite
         assertEquals("Kugeln", Sheet.cards[Theory.cards.first { it.key == "schnittkreis" }.sheet!!].title)
-        assertEquals("Wahrscheinlichkeit", Sheet.cards[Theory.cards.first { it.key == "pfadregeln" }.sheet!!].title)
-        assertEquals("Rotationskörper", Sheet.cards[Theory.cards.first { it.key == "rotation" }.sheet!!].title)
+        assertEquals("Wahrscheinlichkeit", Sheet.cards[Theory.card("pfadregeln")!!.sheet!!].title)
+        assertEquals("Rotationskörper", Sheet.cards[Theory.card("rotation")!!.sheet!!].title)
         assertEquals("Bewegung", Sheet.cards[Theory.cards.first { it.key == "treffpunkt" }.sheet!!].title)
-        assertTrue(Theory.cards.size in 45..75)
+        assertTrue("${Theory.cards.size} Karten zu Aufgaben", Theory.cards.size in 40..75); assertTrue(Theory.cards.none { it in Theory.erleben })
     }
 
     @Test fun schreibweise() {
@@ -97,10 +97,9 @@ class TheoryTest {
 
     /** Strenge Schreibweise mit Ortsvektoren: darf Analysis und Stochastik nicht anfassen und muss in der Geometrie aus „B − A“ „OB⃗ − OA⃗“ machen */
     @Test fun strengeSchreibweise() {
-        val area = Levels.chapters.flatMap { c -> c.levels.map { it.id to c.area } }.toMap()
-        val other = tour.filter { area[it.id] != Area.GEOMETRIE }.map { Theory.forLevel(it).key }.toSet()
-        assertTrue(other.size >= 25)
-        Theory.cards.filter { it.key in other }.forEach { c -> texts(c).forEach { t -> assertEquals(c.key, t, Notation.strict(t)) } }
+        // Karten ohne Vektoren (Analysis und Zufall zum Erleben) bleiben in strenger Schreibweise unverändert
+        assertTrue(Theory.erleben.size >= 25)
+        Theory.erleben.forEach { c -> texts(c).forEach { t -> assertEquals(c.key, t, Notation.strict(t)) } }
         fun card(key: String) = Theory.cards.first { it.key == key }
         assertEquals("AB⃗ = OB⃗ − OA⃗ (Spitze minus Fuß)", Notation.strict(card("verbindungsvektor").steps[0]))
         assertEquals("OM⃗ = ½ · (OA⃗ + OB⃗)", Notation.strict(card("mittelpunkt").steps[0]))
