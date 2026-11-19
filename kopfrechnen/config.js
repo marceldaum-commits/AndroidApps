@@ -26,7 +26,7 @@ window.RECHENBLITZ_CONFIG = {
   // Umzug auf die gemeinsame Adresse lernen.mathenachhilfe-online.com/rechenblitz/ (Marcel 19.11.2026, js/umzug.js).
   // false = nichts passiert. true (erst wenn der Leitstand meldet, dass die neue Adresse läuft): die alte Adresse packt den
   // Lernstand verschlüsselt ein und leitet weiter, die neue Adresse übernimmt ihn.
-  umzug: false,
+  umzug: true,
   // Vorlesen nur mit der KI-Stimme „Nova“: Audiodateien von unserem Stimmen-Server; neue Texte über /jetzt (die App schickt nichts an OpenAI)
   nova: { base: 'https://stimmen.mathenachhilfe-online.com/nova/', jetzt: 'https://stimmen.mathenachhilfe-online.com/jetzt' },
   // Anonyme Nutzungszählung (Leitstand 18.11.): beim Start nur {app, Version, start:1} – ohne Namen, Kennungen, Cookies.
