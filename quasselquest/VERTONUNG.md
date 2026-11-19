@@ -43,3 +43,12 @@ werden **nicht** mit der App ausgeliefert. Deutsch bleibt bis dahin ohne Ton (nu
 
 ## Umfang (Stand 0.5.0)
 Englisch 721, Französisch 838, Spanisch 801, Deutsch 185 Texte, jeweils normal und langsam, zusammen 2545 Texte und 5090 MP3-Dateien.
+
+## Für andere Apps (Muster-Format „Tonstudio“, stabil ab format 1)
+- Jede App legt **eine** Datei `<app>/…/vorlesen/textliste.json` in genau diesem Aufbau ab. Pflichtfelder je Eintrag: `id`, `sprache`,
+  `sprechtext` und `fassungen[]` mit `art`, `speed` und `datei`. `text` und `rollen` sind freiwillig.
+- `id` = die ersten 20 Hex-Zeichen von SHA-1 über `"<sprache>|<sprechtext>"` (Unicode NFC, UTF-8, Leerraum zu einem Leerzeichen zusammengefasst, ohne Rand).
+  Gleicher Text ergibt gleiche Datei, und unveränderte Texte muss der Server nicht neu vertonen.
+- `sprache`: ISO-639-1 (`en`, `fr`, `es`, `it`, `de` …). Stimme und Sprache des Modells stehen einmal oben unter `stimmen`.
+- `datei` ist relativ zum Web-Ordner der App. Der Server legt die MP3 genau dort ab und setzt den ID3-Kommentar aus `mp3.id3_comment`.
+- Änderungen am Format nur mit neuer Nummer bei `format`. Neue, freiwillige Felder dürfen ohne neue Nummer dazukommen.

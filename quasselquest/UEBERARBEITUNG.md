@@ -32,6 +32,13 @@ Schüler: abwechslungsreich, aufbauend und mit viel Material je Klassenstufe. Hi
 3. Familien-Speicher (familie.js @ e9993ec).
 4. Material: Latein Abschnitt 2, FR/ES je 2 weitere Pakete (Lernjahr 2–3), Englisch Lernpfad Abschnitt 3.
 
+## Mi 25.11. – Ukrainisch (Marcel 19.11.2026: „Bau auch ukrainisch ein ab mittwoch“ → beides)
+1. **Deutsch für ukrainische Kinder (DaZ):** Ruby erklärt auf Ukrainisch, Übersetzungen Ukrainisch ↔ Deutsch, Lernpfad
+   „Deutsch von Anfang an“ (Ankommen, Schule, Familie, Einkaufen …) mit denselben Spielarten. Umschalter „Meine Sprache: Українська“.
+2. **Ukrainisch als Lernsprache:** eigene Einheit für das kyrillische Alphabet (Buchstaben-Bau, Wimmelbild), dann Lernpfad Abschnitt 1 wie FR/ES.
+3. **Stimme:** Piper `uk_UA-ukrainian_tts-medium`, Sprecherin 2 „tetiana“ (Recht freigegeben, Marcel gewählt). Nennung: „Stimmen lada/mykyta/tetiana: Datensatz ukrainian-tts-datasets (Yehor Smoliakov), Apache License 2.0; Modell Piper (uk_UA-ukrainian_tts-medium)“ + Apache-Lizenztext; KI-Kennzeichnung wie bei den anderen Stimmen. Vertonung im Tonstudio (Leitstand).
+4. Alles selbst geschrieben und von einem unabhängigen Lektorat auf Muttersprachler-Niveau geprüft, Recherche in docs/RECHERCHE.md.
+
 ## Bis Ende Dezember
 - **Neue Spielarten**, damit es nie eintönig wird:
   - **Rollenspiel-Dialog:** Das Kind wählt oder sagt die Antwort im Gespräch (Café, Weg fragen), mit Verzweigungen.
