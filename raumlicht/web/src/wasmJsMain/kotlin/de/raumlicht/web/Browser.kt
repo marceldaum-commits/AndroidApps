@@ -63,7 +63,7 @@ fun elternHolen(url: String, key: String, done: (Int, String) -> Unit): Unit = j
 // ── Familien-Speicher: der unveränderte Baustein familie.js (Mathe-Trainer) wird erst bei Bedarf geladen; verschlüsselt wird im Browser ──
 /**
  * Ein Aufruf an den Familien-Speicher. [was]: „neu“ (a = Spitzname) · „kinder“ (a = Familie) · „kind“ (a = Familie, b = Spitzname) ·
- * „sichern“ (a = Familie, b = Kind, c = Lernstand als JSON, d = Stand-Nummer) · „laden“ (a = Familie, b = Kind).
+ * „sichern“ (a = Familie, b = Kind, c = Lernstand als JSON, d = Stand-Nummer) · „laden“ (a = Familie, b = Kind) · „protokoll“ (a = Familie) · „loeschen“ (a = Familie).
  * [done] bekommt „ok“ oder den Grund (netz, keine, konflikt, schluessel, …) und bis zu zwei Werte.
  */
 fun familieRuf(server: String, was: String, a: String, b: String, c: String, d: String, done: (String, String, String) -> Unit): Unit = js("""{
@@ -85,8 +85,11 @@ fun familieRuf(server: String, was: String, a: String, b: String, c: String, d: 
                 var k = F.kindHinzu(F.appMerken(i.index, APP), { name: b });
                 return B.indexSichern(k.index, i.rev).then(function (s) { if (!s.ok) return ende(s.grund); ende('ok', k.kind.kindId, B.nummer); }); });
             if (was === 'sichern') return B.standSichern(APP, b, JSON.parse(c), Number(d) || 0).then(function (r) {
-                if (r.ok) return ende('ok', r.rev); if (r.grund === 'konflikt') return ende('konflikt', r.rev, r.daten ? JSON.stringify(r.daten) + '\n' + (r.stand || '') : ''); ende(r.grund); });
-            if (was === 'laden') return B.standLaden(APP, b).then(function (r) { if (!r.ok) return ende(r.grund); ende('ok', JSON.stringify(r.daten), r.rev + '|' + (r.stand || '')); });
+                if (r.ok) return ende('ok', r.rev); if (r.grund === 'keine') return ende('weg'); if (r.grund === 'konflikt') return ende('konflikt', r.rev, r.daten ? JSON.stringify(r.daten) + '\n' + (r.stand || '') : ''); ende(r.grund); });
+            if (was === 'laden') return B.standLaden(APP, b).then(function (r) { if (!r.ok && r.grund === 'keine') return B.liste().then(function (l) { ende(l.ok ? 'keine' : l.grund === 'keine' ? 'weg' : l.grund); }); if (!r.ok) return ende(r.grund); ende('ok', JSON.stringify(r.daten), r.rev + '|' + (r.stand || '')); });
+            if (was === 'protokoll') return B.protokoll().then(function (r) { if (!r.ok) return ende(r.grund === 'keine' ? 'weg' : r.grund);
+                ende('ok', ((r.daten && r.daten.eintraege) || []).map(function (e) { return String(e.art || '').split('\t').join(' ') + '\t' + String(e.t || ''); }).join('\n')); });
+            if (was === 'loeschen') return B.loeschen().then(function (r) { ende(r.ok ? 'ok' : r.grund === 'keine' ? 'weg' : r.grund); });
             ende('fehler');
         }).catch(function () { ende('baustein'); });
     } catch (e) { ende('baustein'); }

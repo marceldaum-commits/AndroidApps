@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.35 vom 19.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.36 vom 19.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -63,7 +63,10 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
    aber weder Spitznamen noch Lernstände. Freischalt-Codes und Geräte-Kennungen stehen nicht im Lernstand. Wer den Familien-Link hat, kann die Lernstände lesen und ändern.
    **Notfall-Kopie:** Beim Anlegen wird der Familien-Schlüssel zusätzlich für einen Wiederherstellungs-Schlüssel des Betreibers verschlüsselt und mit abgelegt. Der Betreiber kann damit –
    mit einem getrennt (offline) verwahrten privaten Schlüssel – einer Familie den Zugang zurückgeben, die ihren Link verloren hat; technisch könnte er so auch die Lernstände dieser Familie
-   lesen. Die bisherige Kopplung „Eltern-Handy koppeln“ (Punkt 7) bleibt daneben unverändert bestehen. Ein Gerät lässt sich jederzeit von der Familie trennen.
+   lesen; er tut das nicht und nutzt den Schlüssel nur auf Bitte der Familie. Jede Wiederherstellung steht im Protokoll, das die Familie in der App sieht. Vor dem Anlegen oder Beitreten
+   bestätigen die Eltern diesen Hinweis mit „Einverstanden“ (ab 2.18.36). **Löschen:** Eltern können die ganze Familie in der App löschen (Bestätigung mit der Familien-Nummer) – das entfernt
+   alle Lernstände aller Kinder in allen Lern-Apps vom Server, die Notfall-Kopie und das Protokoll; die Lernstände auf den Geräten bleiben.
+   Die bisherige Kopplung „Eltern-Handy koppeln“ (Punkt 7) bleibt daneben unverändert bestehen. Ein Gerät lässt sich jederzeit von der Familie trennen.
    *[Rechtsgrundlage, Löschweg für eine ganze Familie und Wortlaut zur Notfall-Kopie mit dem Leitstand/der AppZentrale abstimmen – gemeinsamer Text für alle Lern-Apps.]*
 
 ## Noch offen (nicht Teil des Textes)

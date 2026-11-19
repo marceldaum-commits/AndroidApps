@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 19.11.2026 – 2.18.36 auf test: Familien-Speicher nach FAMILIEN-SPEICHER.md v1.5 (von Marcel hier direkt bestätigt)
+
+- **Einheitlicher Eltern-Hinweis** wörtlich (`Familie.NOTE`), darunter „Datenschutzerklärung ›“ und **„Einverstanden“** – erst danach gibt es „Familie anlegen“ und „Familie beitreten“ (auch beim Öffnen mit `#familie=…`). Das Einverständnis wird nicht gespeichert; es wird bei jedem Anlegen/Beitreten neu gegeben.
+- **Protokoll** auf der Familien-Seite (`GET …/protokoll`, Einträge `{art, t}`; „angelegt“, „wiederhergestellt“ lesbar, Unbekanntes wörtlich).
+- **Familie löschen:** nur hinter dem Tor, Warnung wörtlich (`Familie.DELETE_WARNING`), Bestätigung durch Eintippen der Familien-Nummer (gelesen wie der Server: ohne Bindestrich, O→0, I/L→1), dann `loeschen()`; lokal wird nur `raumlicht.familie` entfernt. Ein einzelnes Kind entfernen gibt es nicht.
+- **Andere Geräte bei 404:** „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“ – die Verbindung wird getrennt, nichts wird gelöscht. (Der Baustein meldet 404 für „Familie weg“ und „noch kein Stand“ gleich; die Brücke unterscheidet es über `/liste`.)
+- Weiter nur Teststufe (`Familie.ENABLED = false`). Zahlen: siehe Nachtrag.
+
 ## 19.11.2026 – 2.18.35 auf test: Familien-Speicher angebunden (nur Teststufe; von Marcel hier direkt bestätigt: „daneben, eigene Version nur auf der Teststufe“)
 
 **Gebaut:**

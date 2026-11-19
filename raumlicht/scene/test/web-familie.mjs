@@ -15,7 +15,9 @@ const server = http.createServer((q, r) => {
     const darf = () => e && e.schreib === sha(h['x-schreib'] || '');
     if (pfad === '' && q.method === 'PUT') { if (!/^[\w-]{43}$/.test(h['x-notfall-pruef'] || '')) return end(400, { fehler: 'notfall_pruef' }); if (e) return end(409, { fehler: 'gibt_es_schon' });
       fam.set(id, { schreib: sha(h['x-schreib']), notfall: body, blobs: new Map() }); return end(201, {}); }
-    if (!e) return end(404, {});
+    if (!e) return end(404, { fehler: 'unbekannt' });
+    if (pfad === '' && q.method === 'DELETE') { if (!darf()) return end(403, { fehler: 'schreibrecht' }); fam.delete(id); log.status = 204; r.writeHead(204); return r.end(); }
+    if (pfad === '/protokoll') return end(200, { eintraege: [{ art: 'angelegt', t: '2026-11-19T15:31' }] });
     if (pfad === '/liste') return end(200, { blobs: [...e.blobs].map(([k, b]) => ({ pfad: k, rev: b.rev, t: b.t })) });
     if (/^\/(index|s\/[a-z][a-z0-9-]+\/([\w-]{22}|geraet-[\w-]+))$/.test(pfad)) { const b = e.blobs.get(pfad);
       if (q.method === 'GET') return b ? end(200, { d: b.d, rev: b.rev, t: b.t }) : end(404, {});
@@ -48,11 +50,14 @@ for (const modus of ['wasm', 'js']) {
   const A = await neu(1100); await A.page.addInitScript(() => { if (!localStorage.getItem('raumlicht.sterne')) { localStorage.setItem('raumlicht.sterne', '1-1=3;1-2=2'); localStorage.setItem('raumlicht.proCode', 'PRUEFCODE'); localStorage.setItem('raumlicht.kiDevice', 'geraet-alt'); } });
   await A.open(`?modus=${modus}&ziel=familie`); const a1 = await A.page.screenshot({ path: `${out}/${modus}-1-vorher.png` });
   check(seen.length === 0 && !(await st(A.page)), `${modus}: vor dem Anlegen ist nichts gespeichert und nichts gesendet`);
-  const ya = await zeile(A.page, a1, 'cyan'); await A.page.mouse.click(200, ya - 20); await A.page.waitForTimeout(4000); await A.page.screenshot({ path: `${out}/${modus}-2-angelegt.png` });
+  // erst „Einverstanden“ (einheitlicher Eltern-Hinweis), dann „Familie anlegen“
+  const ye = await zeile(A.page, a1, 'cyan'); await A.page.mouse.click(200, ye - 20); await A.page.waitForTimeout(1500); const a1b = await A.page.screenshot({ path: `${out}/${modus}-1b-einverstanden.png` });
+  check(seen.length === 0 && !(await st(A.page)), `${modus}: „Einverstanden“ allein sendet nichts`);
+  const ya = await zeile(A.page, a1b, 'cyan'); await A.page.mouse.click(200, ya - 20); await A.page.waitForTimeout(4000); await A.page.screenshot({ path: `${out}/${modus}-2-angelegt.png` });
   const sa = await st(A.page); const [famText, kid, nummer, rev] = sa.split('|'); const [famId, famKey, schreib] = (famText || '').split('.');
   check(/^[\w-]{22}\.[\w-]{43}\.[\w-]{22}\|[\w-]{22}\|[0-9A-Z]{4}-[0-9A-Z]{4}\|1\|/.test(sa), `${modus}: Familie angelegt, Kind und Familien-Nummer gemerkt, Stand 1 gesichert` + (ya < 0 ? ' – Knopf nicht gefunden' : ''));
   const e = fam.get(famId); const puts = seen.filter((s) => s.method === 'PUT');
-  check(!!e && /^[\w-]{43}\.[\w-]{16}\.[\w-]{64}$/.test(e.notfall) && puts.length === 3 && puts.every((p) => /^text\/plain/.test(p.type || '') && !p.cookie) && puts[1].pfad === '/index' && puts[2].pfad === `/s/raumlicht/${kid}` && puts[2].match === '0',
+  check(!!e && /^[\w-]{43}\.[\w-]{16}\.[\w-]{64}$/.test(e.notfall) && puts.length === 3 && seen.some((s) => s.pfad === '/protokoll') && puts.every((p) => /^text\/plain/.test(p.type || '') && !p.cookie) && puts[1].pfad === '/index' && puts[2].pfad === `/s/raumlicht/${kid}` && puts[2].match === '0',
     `${modus}: Notfall-Kopie, Index und Stand hochgeladen – als Text, ohne Cookie, mit If-Match`);
   const alles = JSON.stringify(seen) + JSON.stringify([...fam].map(([k, v]) => [k, v.notfall, [...v.blobs]]));
   check(!alles.includes(famKey) && !alles.includes('PRUEFCODE') && !alles.includes('1-1=3') && !alles.includes('geraet-alt') && [...e.blobs.values()].every((x) => /^[\w-]{16}\.[\w-]+$/.test(x.d)), `${modus}: der Server sieht weder Schlüssel noch Lernstand noch Freischalt-Code`);
@@ -65,7 +70,8 @@ for (const modus of ['wasm', 'js']) {
   // ── Gerät B (frisch): mit dem Familien-Link öffnen, beitreten, Kind wählen, Stand holen ──
   const B = await neu(1100); await B.open(`?modus=${modus}#familie=${famText}`); const b1 = await B.page.screenshot({ path: `${out}/${modus}-3-neues-geraet.png` });
   check(!(await B.page.evaluate(() => location.href)).includes(famKey), `${modus}: der Schlüssel verschwindet sofort aus der Adresszeile`);
-  const yb = await zeile(B.page, b1, 'gruen'); await B.page.mouse.click(200, yb - 20); await B.page.waitForTimeout(3000); const b2 = await B.page.screenshot({ path: `${out}/${modus}-4-kind-waehlen.png` });
+  const yeb = await zeile(B.page, b1, 'cyan'); await B.page.mouse.click(200, yeb - 20); await B.page.waitForTimeout(1500); const b1b = await B.page.screenshot({ path: `${out}/${modus}-3b-einverstanden.png` });
+  const yb = await zeile(B.page, b1b, 'gruen'); await B.page.mouse.click(200, yb - 20); await B.page.waitForTimeout(3000); const b2 = await B.page.screenshot({ path: `${out}/${modus}-4-kind-waehlen.png` });
   const yk = await zeile(B.page, b2, 'cyan', true); await B.page.mouse.click(200, yk + 20);
   await B.page.waitForFunction(() => localStorage.getItem('raumlicht.sterne') === '1-1=3;1-2=2', null, { timeout: 20000 }).catch(() => {}); await B.page.waitForTimeout(3000); await B.page.screenshot({ path: `${out}/${modus}-5-geholt.png` });
   const sb = await st(B.page);
@@ -78,6 +84,10 @@ for (const modus of ['wasm', 'js']) {
   const s3 = await N.standLaden('raumlicht', kid); const k409 = seen.filter((s) => s.status === 409 && s.pfad.startsWith('/s/'));
   check(k409.length === 1 && k409[0].match === '1' && s3.rev === 2 && s3.daten.sterne === '1-1=3;1-2=2;1-3=3' && await A.page.evaluate(() => localStorage.getItem('raumlicht.sterne')) === '1-1=3;1-2=3',
     `${modus}: veralteter Stand wird abgewiesen – weder Server noch Gerät werden still überschrieben, die Eltern werden gefragt`);
+  // ── die Familie wird (anderswo) gelöscht: Gerät B merkt es beim nächsten Sichern, trennt sich und behält seinen Lernstand ──
+  check((await N.loeschen()).ok && !fam.has(famId), `${modus}: Familie gelöscht (mit Schreibrecht)`);
+  await B.page.evaluate(() => localStorage.setItem('raumlicht.sterne', '1-1=3;1-2=2;1-3=3;1-4=1')); await B.open(`?modus=${modus}`); await B.page.waitForTimeout(2500);
+  check(!(await st(B.page)) && await B.page.evaluate(() => localStorage.getItem('raumlicht.sterne')) === '1-1=3;1-2=2;1-3=3;1-4=1', `${modus}: gibt es die Familie nicht mehr, trennt sich das Gerät – der Lernstand bleibt`);
   check(A.errs.length + B.errs.length === 0, A.errs.length + B.errs.length ? `${modus}: Fehler: ` + (A.errs[0] || B.errs[0]) : `${modus}: keine Fehler`);
   await A.ctx.close(); await B.ctx.close();
 }

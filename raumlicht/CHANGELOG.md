@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.36 – Familien-Speicher: klarer Hinweis, Protokoll und „Familie löschen“ (nur Teststufe) (19.11.2026)
+- **Ein Hinweis für alle Lern-Apps:** Bevor Eltern eine Familie anlegen oder beitreten, lesen sie denselben Text wie in unseren anderen Apps und tippen auf „Einverstanden“. Er sagt offen: Für den Notfall gibt es eine verschlüsselte Kopie des Familien-Schlüssels bei uns. Technisch könnten wir damit Lernstände lesen – wir tun das nicht und nutzen sie nur, wenn ihr uns um Wiederherstellung bittet.
+- **Protokoll:** Auf der Familien-Seite steht, wann die Familie angelegt wurde – und jede Wiederherstellung, falls es je eine gibt.
+- **Familie löschen:** Eltern können die ganze Familie löschen. Raumlicht warnt vorher deutlich (es betrifft alle Lern-Apps und alle Kinder) und verlangt die Familien-Nummer. Die Lernstände auf den Geräten bleiben.
+- Gibt es eine Familie nicht mehr, sagt Raumlicht das auf den anderen Geräten und trennt die Verbindung; der Lernstand dort bleibt.
+- Weiter nur auf der Teststufe; auf der Live-Seite ist vom Familien-Speicher noch nichts zu sehen.
+
 ## 2.18.35 – Familien-Speicher zum Ausprobieren (nur Teststufe) (19.11.2026)
 - **Neu für Eltern, vorerst nur auf der Teststufe:** In den Einstellungen gibt es „Familie (für Eltern)“. Dahinter – nach dem Eltern-Tor – legt ihr eine Familie an oder tretet ihr mit dem Familien-Link bei. Der Lernstand des Kindes wird dann verschlüsselt im gemeinsamen Familien-Speicher aller Lern-Apps gesichert.
 - **Neues Gerät?** Familien-Link öffnen oder einfügen, Kind auswählen – der Lernstand ist wieder da. Geschwister bekommen jedes einen eigenen Stand.

@@ -343,15 +343,17 @@ class AppRootTest {
         val fam = "A".repeat(22) + "." + "b".repeat(43) + "." + "C".repeat(22); val lea = "L".repeat(22); val tim = "T".repeat(22)
         var state = mapOf("stars" to "1-1=3", "proCode" to "RL-GEHEIM", "sound" to "true"); val applied = ArrayList<Map<String, String>>(); val calls = ArrayList<List<String>>()
         var saveAnswer: (() -> Triple<String, String, String>)? = null; var loadAnswer = Triple("keine", "", "")
-        familie = de.raumlicht.app.ui.settings.FamiliePlatform("https://server.test", "https://lernen.test", true, { server, what, a, b, c, d, done -> calls += listOf(what, a, b, c, d); assertEquals("https://server.test", server)
+        familie = de.raumlicht.app.ui.settings.FamiliePlatform("https://server.test", "https://lernen.test", true, { server, what, a, b, c, d, done -> if (what != "protokoll") calls += listOf(what, a, b, c, d); assertEquals("https://server.test", server)
             when (what) { "neu" -> done("ok", "$fam|$lea", "K7QX-2MFA"); "kinder" -> done("ok", "$lea\tLea\n$tim\tTim", "K7QX-2MFA"); "kind" -> done("ok", "N".repeat(22), "K7QX-2MFA")
                 "sichern" -> (saveAnswer?.invoke() ?: Triple("ok", ((d.toIntOrNull() ?: 0) + 1).toString(), "")).let { done(it.first, it.second, it.third) }
-                "laden" -> done(loadAnswer.first, loadAnswer.second, loadAnswer.third); else -> done("fehler", "", "") } }, { state }, { applied += it })
+                "laden" -> done(loadAnswer.first, loadAnswer.second, loadAnswer.third); "protokoll" -> done("ok", "angelegt\t2026-11-19T15:31", ""); "loeschen" -> done("ok", "", ""); else -> done("fehler", "", "") } }, { state }, { applied += it })
         start(); rule.runOnUiThread { prefs.family = "" }
         // Weg: Einstellungen → Eintrag → Eltern-Tor → Familien-Seite
         nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("familie-eintrag").assertTextContains("für Eltern", substring = true).performClick(); settle()
         assertNotEquals(Routes.FAMILY, nav.top); rule.onNodeWithTag("eltern-tor").assertExists(); torAuf(); assertEquals(Routes.FAMILY, nav.top)
-        rule.onNodeWithTag("familie-hinweis").assertTextContains("der Server kann nichts lesen", substring = true); rule.onNodeWithTag("familie-test").assertTextContains("Kopplung mit dem Eltern-Handy bleibt", substring = true)
+        rule.onNodeWithTag("familie-hinweis").assertTextContains("Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht", substring = true); rule.onNodeWithTag("familie-datenschutz").assertExists()
+        // erst „Einverstanden“, dann gibt es Anlegen und Beitreten
+        rule.onNodeWithTag("familie-anlegen").assertDoesNotExist(); rule.onNodeWithTag("familie-link").assertDoesNotExist(); rule.onNodeWithTag("familie-einverstanden").performScrollTo().performClick(); settle(); rule.onNodeWithTag("familie-test").assertTextContains("Kopplung mit dem Eltern-Handy bleibt", substring = true)
         // kein Link → verständliche Meldung, nichts geht raus
         rule.onNodeWithTag("familie-link").performScrollTo().performTextInput("irgendwas"); rule.onNodeWithTag("familie-beitreten").performScrollTo().performClick(); settle()
         rule.onNodeWithTag("familie-status").performScrollTo().assertTextContains("kein Familien-Link", substring = true); assertTrue(calls.isEmpty())
@@ -362,6 +364,7 @@ class AppRootTest {
         rule.onNodeWithTag("familie-dabei").assertExists(); rule.onNodeWithTag("familie-kind").assertTextContains("Lea", substring = true); rule.onNodeWithTag("familie-nummer").assertTextContains("K7QX-2MFA", substring = true)
         rule.onNodeWithTag("familie-qr").performScrollTo().assertExists(); rule.onNodeWithTag("familie-status").performScrollTo().assertTextContains("In der Familie gesichert", substring = true)
         assertEquals(1, de.raumlicht.core.model.Familie.State.decode(prefs.family)!!.rev)
+        rule.onNodeWithTag("familie-protokoll-0").performScrollTo().assertTextEquals("19.11.2026: Familie angelegt")
         rule.onRoot().captureRoboImage("../screenshots/95_familie.png")
         // nichts geändert → kein zweites Sichern beim Zurückgehen; geändert → wird gesichert
         zurueck(); assertEquals(1, calls.count { it[0] == "sichern" })
@@ -377,11 +380,22 @@ class AppRootTest {
         assertEquals("", prefs.family); val n = calls.size; state = state + ("stars" to "x"); zurueck(); assertEquals(n, calls.size)
         // beitreten mit Link: Kind wählen; hier ist schon gelernt worden → erst fragen, dann holen
         loadAnswer = Triple("ok", "{\"stars\":\"5-5=3\",\"proCode\":\"FREMD\"}", "4|2026-11-18T08:00:00Z")
-        nav.go(Routes.FAMILY); settle(); rule.onNodeWithTag("familie-link").performScrollTo().performTextInput("https://lernen.test/raumlicht/#familie=$fam"); rule.onNodeWithTag("familie-beitreten").performScrollTo().performClick(); settle()
+        nav.go(Routes.FAMILY); settle(); rule.onNodeWithTag("familie-einverstanden").performScrollTo().performClick(); settle(); rule.onNodeWithTag("familie-link").performScrollTo().performTextInput("https://lernen.test/raumlicht/#familie=$fam"); rule.onNodeWithTag("familie-beitreten").performScrollTo().performClick(); settle()
         rule.onNodeWithTag("familie-kind-0").assertTextContains("Lea"); rule.onNodeWithTag("familie-kind-1").assertTextContains("Tim").performClick(); settle()
         assertEquals(listOf("laden", fam, tim), calls.last().subList(0, 3)); rule.onNodeWithTag("familie-frage").assertTextContains("In der Familie gibt es schon einen Lernstand (Stand 18.11.2026)", substring = true)
         rule.onNodeWithTag("familie-holen-ja").performClick(); settle(); assertEquals(listOf(mapOf("stars" to "5-5=3")), applied)
         val st = de.raumlicht.core.model.Familie.State.decode(prefs.family)!!; assertEquals(tim, st.kid); assertEquals(4, st.rev); assertEquals("Tim", st.name)
+        // Familie löschen: Klartext-Warnung, erst mit der richtigen Familien-Nummer
+        rule.onNodeWithTag("familie-loeschen").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("familie-loeschen-warnung").performScrollTo().assertTextContains("Das löscht die Familie in ALLEN Lern-Apps", substring = true)
+        rule.onNodeWithTag("familie-loeschen-nummer").performScrollTo().performTextInput("K7QX-2MFB"); rule.onNodeWithTag("familie-loeschen-ja").performScrollTo().performClick(); settle()
+        assertTrue(calls.none { it[0] == "loeschen" }); rule.onNodeWithTag("familie-loeschen-falsch").assertExists(); assertNotEquals("", prefs.family)
+        rule.onNodeWithTag("familie-loeschen-nummer").performTextClearance(); rule.onNodeWithTag("familie-loeschen-nummer").performTextInput("k7qx 2mfa"); rule.onNodeWithTag("familie-loeschen-ja").performScrollTo().performClick(); settle()
+        assertEquals(listOf("loeschen", fam), calls.last().subList(0, 2)); assertEquals("", prefs.family); rule.onNodeWithTag("familie-status").performScrollTo().assertTextContains("Die Familie wurde gelöscht. Der Lernstand auf diesem Gerät bleibt.")
+        rule.onNodeWithTag("familie-dabei").assertDoesNotExist()
+        // anderes Gerät: Die Familie ist weg → verständliche Meldung, Verbindung getrennt, Lernstand bleibt
+        rule.runOnUiThread { prefs.family = de.raumlicht.core.model.Familie.State(fam, lea, "K7QX-2MFA", 3, "alt", "Lea").encode() }; saveAnswer = { Triple("weg", "", "") }
+        zurueck(); nav.restart(Routes.HOME); settle(); assertEquals("sichern", calls.last()[0]); assertEquals("", prefs.family); assertTrue(applied.size == 1)
     }
 
     /** Mit einem Familien-Link geöffnet: erst das Eltern-Tor, dann die Familien-Seite mit eingetragenem Link. */
