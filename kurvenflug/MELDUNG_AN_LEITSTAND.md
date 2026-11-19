@@ -1,5 +1,37 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.6.0 – Spezialisierung Kl. 5–10 (Variante B, Marcel 18./19.11., vorgezogen auf Do 19.11.)
+- **Oberstufe heraus:** 6 Kapitel / 35 Level (Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung).
+  KurvenFlug hat jetzt **24 Kapitel, 140 Level, Klasse 5–10, alle frei**.
+  Geprüft per Test: kein Kapitel über Klasse 10, kein Oberstufen-Level, „Kommt bald“ nur bis Klasse 10.
+- **„🎓 Wie geht's weiter?“:** Karte am Ende der Galaxie und Knopf „11 – 13 🎓“ in der Klassen-Wahl.
+  - Links: Mathe-Trainer `https://trainer.mathenachhilfe-online.com/?src=kurvenflug-weiter` und Raumlicht
+    `https://raumlicht.mathenachhilfe-online.com/?src=kurvenflug-weiter`.
+  - Kein Preis und kein Kaufhinweis (Test).
+  - Gespeicherte Klasse 11–13 wird zu 10.
+- **Überall „Klasse 5–10“:** Startseite, Klassen-Wahl (5–10), WebApp-Beschreibung (index.html, manifest), Einstellungen, README, Store-Texte.
+- **Direkt-Links** `#kapitel=<name>`:
+  - funktionieren wie in `QUERVERWEISE.md` aufgelistet; Zahlen gehen zusätzlich.
+  - Unbekannte oder gestrichene Namen (ableitung …) öffnen die Startseite.
+  - Die Adresse wird danach aufgeräumt.
+- **„Kommt bald“ bereinigt** (nur noch Profil-Themen):
+  - Negative Zahlen, Terme & Gleichungen, Spiegeln & Verschieben, Funktionen formen.
+  - Physik: Kräfte, Druck, Strom & Ohm, Magnetismus, Wärme, Kreisbahnen, Impuls, Schwingungen.
+- **Pro (vorläufig, bis der Klassenarbeits-Trainer kommt):**
+  - Extrem-Prüfungen in allen 24 Kapiteln, Sturm Profi/Extrem, Andromeda ab Planet 7, bis 6 Spieler, Pro-Werkstatt.
+  - Kein Schulstoff gesperrt.
+  - Pro-Seite: „Mit Pro gibt's Profi-Stufen, Andromeda und noch mehr!“
+- **Browser-Test (412 px):**
+  - `#kapitel=energie`, `#kapitel=7` und `?modus=js#kapitel=laser` öffnen das richtige Level.
+  - `#kapitel=ableitung` öffnet die Startseite.
+  - Gespeicherte Klasse 12 → 10.
+  - „11 – 13“ zeigt die Karte; Klick auf Mathe-Trainer → `trainer.mathenachhilfe-online.com/?src=kurvenflug-weiter`.
+- **Noch offen, kommt Fr 20.11.:**
+  - Querverweise auf den Theorie-Seiten (Mathe-Trainer, Rechenblitz, Experimentopia, Wissensgarten, Raumlicht).
+  - Neues Kapitel „Terme & Gleichungen“.
+- Bildschirmfotos `screenshots/95_wie_gehts_weiter.png`, `45_klasse_waehlen.png`, `43_galaxie.png`, `94_pro.png` (neu aufgenommen, angesehen).
+- versionCode 82 / 2.6.0, Prüfkette grün, keine neuen Dateiendungen.
+
 ## 📌 18.11. abends – Entscheidung Marcel angekommen, Plan
 - **„← Alle Apps“ ist schon fertig:** 2.5.34 liegt seit 18.11. auf kurvenflug-test (Eintrag direkt darunter, Fotos `kurvenflug/screenshots/web-alle-apps-handy.png` / `web-alle-apps-pc.png`). Meine send_message an den Leitstand scheitert an „vertrauenswürdiges Gerät“, daher hier.
 - **Fr 20.11. (Aufräum-Tag):**

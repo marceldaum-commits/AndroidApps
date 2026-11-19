@@ -7,10 +7,13 @@ import org.junit.Test
 class UpperTest {
     private val upper = Levels.all.filter { it.kind in Upper.kinds }
 
-    @Test fun fourChaptersForGrades11To13() {
-        assertEquals(listOf(19, 20, 21, 22), Levels.chapters.filter { c -> c.levels.any { it.kind in Upper.kinds } }.map { it.number }.sorted())
-        assertTrue(upper.size >= 20)
-        assertTrue(Upper.chapters.all { it.gradeRange.first >= 11 })
+    /** Profil seit 2.6.0: Klasse 5–10 – keine Oberstufen-Kapitel mehr in der App (Mathe-Trainer/Raumlicht übernehmen) */
+    @Test fun noUpperSchoolChaptersInTheApp() {
+        assertTrue(upper.isEmpty())
+        assertTrue(Levels.chapters.none { it.number in setOf(19, 20, 21, 22, 28, 30) })
+        assertTrue(Levels.chapters.filter { it.gradeRange.last > 10 }.joinToString { it.title }, Levels.chapters.all { it.gradeRange.last <= 10 })
+        assertTrue(Curriculum.upcoming.all { it.grades.last <= 10 })
+        assertTrue(Plan.grades.last == 10)
     }
 
     @Test fun polynomialHelpers() {

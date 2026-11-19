@@ -170,7 +170,7 @@ object More {
             fixed = all.filterKeys { it !in keys }, tip = tip, quiz = quiz, walk = walk)
     }
 
-    private val ch26 = Chapter(26, "Verschobene Wellen", "Klasse 10–11", "🌊",
+    private val ch26 = Chapter(26, "Verschobene Wellen", "Klasse 10", "🌊",
         listOf(
             "Bekannt: y = a · sin(b · x) + d. Neu ist c: y = a · sin(b · (x − c)) + d.",
             "c schiebt die Welle nach rechts (c > 0) oder links (c < 0). Dort, wo vorher der Nulldurchgang bei 0 war, ist er jetzt bei x = c.",

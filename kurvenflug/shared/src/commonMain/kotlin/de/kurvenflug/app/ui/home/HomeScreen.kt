@@ -144,7 +144,7 @@ fun HomeScreen(
                                     }
                                     // Pro freigeschaltet: immer sichtbar im Kopf (Vorgabe Marcel)
                                     de.kurvenflug.app.ui.pro.ProBadge(de.kurvenflug.app.LocalPro.current, Modifier.padding(vertical = 4.dp))
-                                    Text("${player?.let { "$it · " } ?: ""}Mathe & Physik im All · ${grade?.let { "Klasse $it" } ?: "Klasse 5–13"}",
+                                    Text("${player?.let { "$it · " } ?: ""}Mathe & Physik im All · ${grade?.let { "Klasse $it" } ?: "Klasse 5–10"}",
                                         color = Q.Muted, style = MaterialTheme.typography.bodySmall,
                                         modifier = Modifier.clickable(enabled = onProfiles != null) { onProfiles?.invoke() })
                                 }
@@ -337,6 +337,7 @@ private fun Galaxy(
         de.kurvenflug.app.ui.story.GalaxyMap(chapters.filter { subject == null || it.subject == subject }, chapters, stars, grade,
             continueLevel?.chapter, onLevel, bossStars, onBoss)
         ComingSoon(subject, grade)
+        NextStepsCard()
         return
     }
     de.kurvenflug.core.model.Plan.sections(chapters, grade, subject).forEach { sec ->
@@ -354,6 +355,7 @@ private fun Galaxy(
         }
     }
     ComingSoon(subject, grade)
+    NextStepsCard()
 }
 
 /**
@@ -428,7 +430,8 @@ private fun GradePicker(current: Int?, first: Boolean, onPick: (Int?) -> Unit) {
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.65f)).clickable(remember { MutableInteractionSource() }, null) {},
         contentAlignment = Alignment.Center) {
         Column(
-            Modifier.widthIn(max = 640.dp).padding(20.dp).clip(RoundedCornerShape(24.dp)).background(Q.Panel).border(2.dp, Q.Cyan, RoundedCornerShape(24.dp)).padding(18.dp),
+            Modifier.widthIn(max = 640.dp).padding(20.dp).clip(RoundedCornerShape(24.dp)).background(Q.Panel).border(2.dp, Q.Cyan, RoundedCornerShape(24.dp))
+                .verticalScroll(androidx.compose.foundation.rememberScrollState()).padding(18.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             Volt(VoltMood.HAPPY, size = 56.dp, speech = if (first) "Hi! In welcher Klasse bist du? Dann zeige ich dir zuerst, was gerade dran ist. 🎓"
@@ -442,6 +445,11 @@ private fun GradePicker(current: Int?, first: Boolean, onPick: (Int?) -> Unit) {
                     }
                 }
             }
+            var upper by remember { mutableStateOf(false) }
+            NeonButton(onClick = { sfx?.play(Sound.TAP); upper = !upper }, color = Q.Violet, modifier = Modifier.fillMaxWidth()) {
+                Text("11 – 13 🎓", fontWeight = FontWeight.Black, fontSize = 18.sp)
+            }
+            androidx.compose.animation.AnimatedVisibility(upper) { NextStepsContent() }
             Text("Alle Klassen zeigen", color = Q.Muted, modifier = Modifier.align(Alignment.End)
                 .clickable { sfx?.play(Sound.TAP); onPick(null) }.padding(6.dp))
             Text("Die Klasse sperrt nichts, sie sortiert nur. Eltern: Die Angabe bleibt auf dem Gerät.",

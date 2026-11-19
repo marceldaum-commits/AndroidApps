@@ -2,7 +2,7 @@ package de.kurvenflug.core.model
 
 /**
  * Kurvenflug Pro: Was frei bleibt und was Pro ist (Konzept Pro, Meldung an den Leitstand).
- * Frei: aller Schulstoff bis Klasse 10. Pro: Oberstufe, Extrem-Prüfungen, Sturm ab Profi, Andromeda ab Planet 7,
+ * Frei: aller Schulstoff (Klasse 5–10, alle Kapitel in der Grundform). Pro: Extrem-Prüfungen, Sturm ab Profi, Andromeda ab Planet 7,
  * mehr als 2 Spieler, Pro-Aussehen in der Werkstatt.
  *
  * Bestandsschutz: Wer in einem Pro-Kapitel schon einen Stern hat, behält das ganze Kapitel; wer schon über Planet 6
@@ -11,8 +11,8 @@ package de.kurvenflug.core.model
  */
 object Pro {
     const val APP_ID = 1
-    /** Oberstufen-Kapitel */
-    val chapters = setOf(19, 20, 21, 22, 28, 30)
+    /** Pro-Kapitel: keine mehr – die Oberstufe ist seit 2.6.0 im Mathe-Trainer/Raumlicht; alle Kapitel Kl. 5–10 sind frei */
+    val chapters = emptySet<Int>()
     const val FREE_PLANETS = 6
     const val FREE_PROFILES = 2
     const val FREE_STORM_TIER = Tier.HARD
@@ -23,8 +23,7 @@ object Pro {
     data class Perk(val emoji: String, val title: String, val text: String)
 
     val perks = listOf(
-        Perk("🎓", "Oberstufe", "Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion und Binomialverteilung – 6 Kapitel, 35 Level"),
-        Perk("🔥", "Extrem-Prüfungen", "In jedem der 30 Kapitel die ultimative Herausforderung"),
+        Perk("🔥", "Extrem-Prüfungen", "In jedem der ${Levels.chapters.size} Kapitel die ultimative Herausforderung"),
         Perk("☄️", "Asteroidensturm Profi & Extrem", "Ab Welle 13 wird es richtig wild"),
         Perk("🌌", "Andromeda ab Planet 7", "Weiterfliegen, schwerere Planeten, das Schiff Nova fertig bauen"),
         Perk("👪", "Bis 6 Spieler", "Für Geschwister und die ganze Familie"),

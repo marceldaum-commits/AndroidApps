@@ -57,7 +57,7 @@ class StoreScreenshotTest {
         HomeScreen(stars.values.sum(), Levels.all.size * 3, 12, 0, {}, Levels.chapters, stars, {}, {},
             grade = 7, continueLevel = Levels.byId("13-2"), initialTab = 1, partsFound = 5, onHangar = {})
     }
-    @Test fun s5Integral() = level("21-4", mapOf("A" to 10.0), "05_oberstufe_integral", settle = 5000, prepare = { it.onNodeWithText("🚀 Start").performClick() })
+    @Test fun s5Wave() = level("26-3", mapOf("c" to 1.0, "d" to 0.5), "05_verschobene_welle", settle = 1500)
     @Test fun s6Throw() = level("4-6", mapOf("angle" to 35.0, "v" to 5.5), "06_wurf_mond", settle = 1500)
     @Test fun s7Hangar() = shot("07_aurora") {
         de.kurvenflug.app.ui.story.HangarScreen(de.kurvenflug.core.model.Story.found(Levels.chapters, stars), {})

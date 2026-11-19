@@ -394,15 +394,6 @@ class ScreenshotTest {
     @Test fun taskStaysAfterMiss() = level("1-7", name = "76_aufgabe_nach_fehlversuch", values = mapOf("x" to -3.0, "y" to 2.0), settle = 3500,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
-    // Oberstufe (Klasse 11–13)
-    @Test fun upperTangent() = level("19-1", name = "77_oberstufe_tangente", values = mapOf("m" to 1.0), settle = 1500)
-    @Test fun upperTangentWin() = level("19-5", name = "78_oberstufe_tangente_geschafft", values = mapOf("m" to 1.5), settle = 5000,
-        prepare = { it.onNodeWithText("🚀 Start").performClick() })
-    @Test fun upperPeak() = level("20-3", name = "79_oberstufe_hochpunkt", values = mapOf("x" to -1.0))
-    @Test fun upperArea() = level("21-4", name = "80_oberstufe_integral", values = mapOf("A" to 10.0), settle = 5000,
-        prepare = { it.onNodeWithText("🚀 Start").performClick() })
-    @Test fun upperVector() = level("22-4", name = "81_oberstufe_vektor", values = mapOf("v1" to 2.0, "v2" to 2.0))
-
     // Inhaltspaket 0.20
     @Test fun moreMap() = level("29-2", name = "82_massstab", values = mapOf("x" to -2.0, "y" to 3.0))
     @Test fun morePercent() = level("23-1", name = "83_prozent", values = mapOf("b" to 1.15))
@@ -410,11 +401,6 @@ class ScreenshotTest {
     @Test fun morePower() = level("25-5", name = "85_wurzel", values = mapOf("a" to 2.0))
     @Test fun moreWave() = level("26-3", name = "86_verschobene_welle", values = mapOf("c" to 1.0, "d" to 0.5))
     @Test fun moreHorizontal() = level("27-3", name = "87_waagerechter_wurf", values = mapOf("v" to 3.0), settle = 7000,
-        prepare = { it.onNodeWithText("🚀 Start").performClick() })
-    @Test fun moreExpe() = level("28-5", name = "88_e_funktion", values = mapOf("k" to -0.3))
-
-    @Test fun binomDensity() = level("30-3", name = "89_binomial_dichte", values = mapOf("p" to 0.5))
-    @Test fun binomCumulative() = level("30-6", name = "90_binomial_kumuliert", values = mapOf("n" to 6.0), settle = 6000,
         prepare = { it.onNodeWithText("🚀 Start").performClick() })
 
     // ------------------------------------------------------------ Schwierigkeit: Extrem-Prüfung und Sturm-Stufen
@@ -441,13 +427,9 @@ class ScreenshotTest {
     @Test fun proScreen() = shot("94_pro", 2000) {
         de.kurvenflug.app.ui.pro.ProScreen(de.kurvenflug.app.ProState(pro = false, locking = true), FakeShop(true), {}, {})
     }
-    @Test fun proLockedChapter() = shot("95_pro_kapitel_gesperrt") {
-        androidx.compose.runtime.CompositionLocalProvider(de.kurvenflug.app.LocalPro provides de.kurvenflug.app.ProState(pro = false, locking = true)) {
-            androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(12.dp)) {
-                val c = Levels.chapters.first { it.number == 19 }
-                de.kurvenflug.app.ui.flight.ChapterCard(c, 3, emptyMap(), {})
-            }
-        }
+    /** 2.6.0: KurvenFlug endet mit Klasse 10 – „Wie geht's weiter?“ zeigt Mathe-Trainer und Raumlicht */
+    @Test fun nextSteps() = shot("95_wie_gehts_weiter", 1500) {
+        androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(12.dp)) { de.kurvenflug.app.ui.home.NextStepsCard() }
     }
     @Test fun proUnlocked() = shot("96_pro_freigeschaltet", 2000) {
         de.kurvenflug.app.ui.pro.ProScreen(de.kurvenflug.app.ProState(pro = true, locking = true, viaPlay = true), FakeShop(true, acceptsCodes = false), {}, {})

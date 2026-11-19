@@ -12,31 +12,27 @@ class ProTest {
     }
 
     @Test fun freeKeepsAllSchoolContentUpToGrade10() {
-        val free = Levels.chapters.filter { !Pro.isProChapter(it.number) }
-        assertEquals(24, free.size)
-        for (c in free) for (l in c.levels) assertTrue(Pro.open(l.id, false, true, none), l.id)
-        assertEquals(35, Levels.chapters.filter { Pro.isProChapter(it.number) }.sumOf { it.levels.size })
+        // Seit 2.6.0: KurvenFlug = Klasse 5–10, alle 24 Kapitel und 140 Level frei (Pro = Extras, nicht Schulstoff)
+        assertEquals(24, Levels.chapters.size)
+        assertEquals(140, Levels.all.size)
+        for (c in Levels.chapters) { assertFalse(Pro.isProChapter(c.number)); for (l in c.levels) assertTrue(Pro.open(l.id, false, true, none), l.id) }
     }
 
     @Test fun proContentLockedWhenShopOffered() {
-        assertFalse(Pro.open("19-1", false, true, none))
         assertFalse(Pro.open(ChapterExtreme.id(2), false, true, none))
         assertFalse(Pro.open("andro-7-1", false, true, none))
         assertTrue(Pro.open("andro-6-3", false, true, none))
         assertEquals(Tier.HARD, Pro.maxStormTier(false, true))
         assertEquals(2, Pro.maxProfiles(false, true))
         // mit Pro alles offen
-        assertTrue(Pro.open("19-1", true, true, none))
+        assertTrue(Pro.open(ChapterExtreme.id(2), true, true, none))
         assertTrue(Pro.open("andro-40-2", true, true, none))
         assertEquals(Tier.MAX, Pro.maxStormTier(true, true))
     }
 
     @Test fun existingProgressIsKept() {
-        // ein Stern im Kapitel Ableitung → ganzes Kapitel bleibt offen
-        val s = mapOf("19-1" to 2)
-        assertTrue(Pro.open("19-6", false, true, s))
-        assertFalse(Pro.chapterLocked(19, false, true, s))
-        assertTrue(Pro.chapterLocked(20, false, true, s))
+        // kein Kapitel ist gesperrt (Oberstufe seit 2.6.0 nicht mehr in KurvenFlug)
+        assertTrue(Levels.chapters.none { Pro.chapterLocked(it.number, false, true, none) })
         // geschaffte Extrem-Prüfung bleibt
         assertTrue(Pro.open(ChapterExtreme.id(5), false, true, mapOf(ChapterExtreme.id(5) to 1)))
         // schon auf Planet 7 gewesen → Andromeda bleibt offen
