@@ -7,9 +7,8 @@ Bei Kurvenflug ist die Formel das Steuer: Du stellst m, a, k oder den Winkel ein
 • Nach dem Treffer fragt Volt: „Wie hast du's gerechnet?“ – wer die richtige Rechnung erkennt, holt den Rechen-Stern. Danach zeigt Volt den Lösungsweg mit deinen Zahlen.
 • Nach drei Fehlversuchen rechnet Volt Schritt für Schritt mit dir.
 
-📚 175 LEVEL IN 30 KAPITELN – KLASSE 5 BIS 13
+📚 140 LEVEL IN 24 KAPITELN – KLASSE 5 BIS 10
 Mathe: Koordinaten, Brüche & Kommazahlen, Winkel, Maßstab, Zuordnungen, Prozent & Zinseszins, Geraden, Gleichungssysteme, Pythagoras, Parabeln & Nullstellen, Trigonometrie, Potenzfunktionen, Sinuswellen, Exponential- und Logarithmusfunktionen.
-Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung (Dichte und kumuliert).
 Physik: gleichförmige und beschleunigte Bewegung, Spiegel & Lichtbrechung, Energieerhaltung, schräger und waagerechter Wurf auf Erde, Mond und Mars, Gravitation.
 
 🌌 DAZU
@@ -21,7 +20,8 @@ Physik: gleichförmige und beschleunigte Bewegung, Spiegel & Lichtbrechung, Ener
 • Startbildschirm-Widget mit Tagesmission.
 
 👪 FÜR ELTERN UND LEHRKRÄFTE
-• Keine Werbung, keine Anmeldung, keine Käufe – alles frei spielbar, auch die Oberstufe.
+• Keine Werbung, keine Anmeldung, keine Käufe – alles frei spielbar.
 • Der Spielstand bleibt nur auf dem Gerät, es werden keine Daten erhoben oder weitergegeben.
 • Ohne Druck: keine verlorenen Serien, keine Strafen. Eine Runde dauert wenige Minuten.
 • Musik, Geräusche und Vibration lassen sich abschalten.
+• Oberstufe (Analysis, Vektoren, Stochastik): im Mathe-Trainer und in Raumlicht – KurvenFlug zeigt am Ende von Klasse 10 den Weg dorthin.

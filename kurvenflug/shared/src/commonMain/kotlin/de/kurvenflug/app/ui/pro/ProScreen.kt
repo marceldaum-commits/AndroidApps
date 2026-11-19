@@ -68,7 +68,7 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
             val speech = when {
                 state.pro -> "Pro ist freigeschaltet! Jetzt geht's bis ganz nach oben! 🚀"
                 locked -> "Das gehört zu Kurvenflug Pro. Frag deine Eltern!"
-                else -> "Mit Pro fliegen wir bis in die Oberstufe – und noch weiter!"
+                else -> "Mit Pro gibt's Profi-Stufen, Andromeda und noch mehr!"
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Volt(if (state.pro) VoltMood.DANCE else VoltMood.WOW, size = 64.dp)

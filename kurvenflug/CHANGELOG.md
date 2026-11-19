@@ -3,6 +3,16 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.6.0 – KurvenFlug konzentriert sich auf Klasse 5–10
+- KurvenFlug ist jetzt ganz auf **Funktionen und Physik für Klasse 5–10** ausgerichtet: 24 Planeten, 140 Level – alle frei.
+- Die Oberstufen-Aufgaben (Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung) sind jetzt im
+  **Mathe-Trainer** und in **Raumlicht**. Am Ende der Galaxie und in der Klassen-Wahl („11 – 13 🎓“) zeigt Volt unter
+  „Wie geht's weiter?“, wo es weitergeht. War Klasse 11–13 eingestellt, steht jetzt Klasse 10 da.
+- Andere Lern-Apps können direkt in ein Kapitel springen (z. B. „Energie“ oder „Rendezvous“).
+- „Kommt bald“ zeigt nur noch Themen, die zu KurvenFlug passen – z. B. Negative Zahlen, Terme & Gleichungen,
+  Funktionen formen, Strom & Ohmsches Gesetz.
+- Pro bringt weiterhin Extrem-Prüfungen, Profi-Sturm, Andromeda und mehr Spieler; wer Pro schon hat, behält es.
+
 ## 2.5.34 – Zurück zu allen Apps
 - Oben auf der Startseite (am PC in der Seitenleiste) gibt es „← Alle Apps“ – zurück zur Übersicht aller Lern-Apps von
   Nachhilfe – online.

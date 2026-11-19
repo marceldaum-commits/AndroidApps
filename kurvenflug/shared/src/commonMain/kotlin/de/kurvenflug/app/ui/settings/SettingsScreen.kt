@@ -75,7 +75,7 @@ fun SettingsScreen(
                     Text("Für Eltern & Lehrkräfte", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     val shop = de.kurvenflug.app.LocalPro.current.locking
                     if (shop) Text("Kurvenflug ist kostenlos bis Klasse 10. Optional gibt es „Kurvenflug Pro“ als Einmalkauf ohne Abo " +
-                        "(Oberstufe, Extrem-Stufen, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
+                        "(Extrem-Stufen, Andromeda, mehr Spieler). Kaufen kann man nur nach einer Frage für Erwachsene.", style = MaterialTheme.typography.bodySmall)
                     val nova = readAloudAvailable
                     Text(if (platform.isWeb) "Kurvenflug speichert den Spielstand nur hier in diesem Browser. Keine Anmeldung, keine Werbung, " +
                         "keine Spieldaten an einen Server." + (if (nova) " Nur das Vorlesen (Nova, abschaltbar) lädt Audiodateien von unserem Server." else "") +
@@ -89,8 +89,8 @@ fun SettingsScreen(
                         else "Ins Internet geht die App nur, um nach Updates zu schauen (abschaltbar)."), style = MaterialTheme.typography.bodySmall)
                     Text("Inhalte: Koordinaten, Brüche und Kommazahlen, Winkel, Maßstab (Kl. 5/6), Zuordnungen, Prozent und Zinseszins (Kl. 6–8), " +
                         "lineare Funktionen und Gleichungssysteme (Kl. 7/8), Pythagoras (Kl. 8/9), quadratische Funktionen und Nullstellen (Kl. 9), " +
-                        "Trigonometrie, Potenzfunktionen, Sinus, Exponential- und Logarithmusfunktionen (Kl. 9/10); Oberstufe: Ableitung, Extrempunkte, " +
-                        "Integral, Vektoren, e-Funktion, Binomialverteilung (Kl. 11–13). Physik: gleichförmige und beschleunigte Bewegung, Reflexion, " +
+                        "Trigonometrie, Potenzfunktionen, Sinus, Exponential- und Logarithmusfunktionen (Kl. 9/10). " +
+                        "Oberstufe: im Mathe-Trainer und in Raumlicht (siehe „Wie geht's weiter?“ in der Galaxie). Physik: gleichförmige und beschleunigte Bewegung, Reflexion, " +
                         "Lichtbrechung, Energieerhaltung, schräger und waagerechter Wurf, Gravitation.", style = MaterialTheme.typography.bodySmall)
                     Text("Version $installed" + if (platform.isWeb) " · WebApp" else "", style = MaterialTheme.typography.labelSmall, color = Q.Muted)
                     if (platform.isWeb) Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -125,7 +125,7 @@ private fun ProCard(state: de.kurvenflug.app.ProState, onPro: () -> Unit) {
                     Text("Kurvenflug Pro", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)
                     de.kurvenflug.app.ui.pro.ProBadge(state, Modifier.padding(start = 8.dp))
                 }
-                Text(if (state.pro) state.kindText(de.kurvenflug.app.LocalPlatform.current.isWeb) + " · danke! 💛" else "Oberstufe, Extrem-Stufen, mehr Spieler" + if (de.kurvenflug.app.LocalPlatform.current.proShop?.acceptsCodes == true) " · Code einlösen" else "",
+                Text(if (state.pro) state.kindText(de.kurvenflug.app.LocalPlatform.current.isWeb) + " · danke! 💛" else "Extrem-Stufen, Andromeda, mehr Spieler" + if (de.kurvenflug.app.LocalPlatform.current.proShop?.acceptsCodes == true) " · Code einlösen" else "",
                     style = MaterialTheme.typography.bodySmall)
             }
             Text("›", fontSize = 24.sp, color = Q.Muted)

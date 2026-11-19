@@ -868,9 +868,12 @@ object Levels {
         ),
     )
 
-    /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand) */
-    private val order = listOf(1, 15, 16, 29, 8, 13, 11, 2, 23, 7, 9, 3, 18, 12, 17, 4, 24, 14, 5, 25, 27, 26, 10, 6, 19, 20, 22, 21, 28, 30)
-    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + Upper.chapters + More.chapters + Stochastik.chapter).sortedBy { order.indexOf(it.number) }
+    /** Reihenfolge nach Klassenstufe (Kapitelnummern bleiben fest – daran hängt der Spielstand).
+     *  Profil seit 2.6.0: Funktionen und Physik Klasse 5–10. Die Oberstufe (19–22, 28, 30) ist im Mathe-Trainer und in Raumlicht
+     *  (Entscheidung Marcel 18.11.) – ihre Kapitel stehen nicht mehr in der App, siehe [UpperSchool]. */
+    private val order = listOf(1, 15, 16, 29, 8, 13, 11, 2, 23, 7, 9, 3, 18, 12, 17, 4, 24, 14, 5, 25, 27, 26, 10, 6)
+    val chapters: List<Chapter> = (baseChapters + extraChapters + newChapters + More.chapters)
+        .filter { it.number in order }.sortedBy { order.indexOf(it.number) }
 
     val all: List<Level> = chapters.flatMap { it.levels }
     fun byId(id: String) = all.firstOrNull { it.id == id }

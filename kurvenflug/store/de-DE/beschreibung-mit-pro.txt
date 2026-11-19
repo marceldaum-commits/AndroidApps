@@ -7,9 +7,8 @@ Bei Kurvenflug ist die Formel das Steuer: Du stellst m, a, k oder den Winkel ein
 • Nach dem Treffer fragt Volt: „Wie hast du's gerechnet?“ – wer die richtige Rechnung erkennt, holt den Rechen-Stern. Danach zeigt Volt den Lösungsweg mit deinen Zahlen.
 • Nach drei Fehlversuchen rechnet Volt Schritt für Schritt mit dir.
 
-📚 175 LEVEL IN 30 KAPITELN – KLASSE 5 BIS 13
+📚 140 LEVEL IN 24 KAPITELN – KLASSE 5 BIS 10
 Mathe: Koordinaten, Brüche & Kommazahlen, Winkel, Maßstab, Zuordnungen, Prozent & Zinseszins, Geraden, Gleichungssysteme, Pythagoras, Parabeln & Nullstellen, Trigonometrie, Potenzfunktionen, Sinuswellen, Exponential- und Logarithmusfunktionen.
-Oberstufe (mit Kurvenflug Pro): Ableitung & Tangente, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung (Dichte und kumuliert).
 Physik: gleichförmige und beschleunigte Bewegung, Spiegel & Lichtbrechung, Energieerhaltung, schräger und waagerechter Wurf auf Erde, Mond und Mars, Gravitation.
 
 🌌 DAZU
@@ -21,9 +20,8 @@ Physik: gleichförmige und beschleunigte Bewegung, Spiegel & Lichtbrechung, Ener
 • Startbildschirm-Widget mit Tagesmission.
 
 ⭐ KURVENFLUG PRO (OPTIONAL)
-Aller Schulstoff bis Klasse 10 ist frei – ohne Zeitlimit. Mit Kurvenflug Pro (einmaliger In-App-Kauf, kein Abo) kommt dazu:
-• Oberstufe: Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion und Binomialverteilung – 6 Kapitel, 35 Level
-• Extrem-Prüfungen: in jedem der 30 Kapitel die ultimative Herausforderung
+Alle 140 Level sind frei – ohne Zeitlimit. Mit Kurvenflug Pro (einmaliger In-App-Kauf, kein Abo) kommt dazu:
+• Extrem-Prüfungen: in jedem der 24 Kapitel die ultimative Herausforderung
 • Asteroidensturm Profi & Extrem
 • Andromeda ab Planet 7 – weiterfliegen und das Schiff Nova fertig bauen
 • Bis 6 Spieler auf einem Gerät (frei: 2)
@@ -35,3 +33,4 @@ Schon Geschafftes bleibt immer offen. Gekauft wird nur nach einer Frage für Erw
 • Der Spielstand bleibt nur auf dem Gerät, es werden keine Daten erhoben oder weitergegeben.
 • Ohne Druck: keine verlorenen Serien, keine Strafen. Eine Runde dauert wenige Minuten.
 • Musik, Geräusche und Vibration lassen sich abschalten.
+• Oberstufe (Analysis, Vektoren, Stochastik): im Mathe-Trainer und in Raumlicht – KurvenFlug zeigt am Ende von Klasse 10 den Weg dorthin.

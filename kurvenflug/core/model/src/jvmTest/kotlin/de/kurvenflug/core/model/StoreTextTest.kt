@@ -12,8 +12,10 @@ class StoreTextTest {
         Pro.perks.forEach { p -> assertTrue("fehlt: ${p.title}", p.title.substringBefore(" ") in withPro) }
         assertTrue("${Pro.FREE_PROFILES} Spieler frei", "frei: ${Pro.FREE_PROFILES}" in withPro)
         assertTrue("ab Planet ${Pro.FREE_PLANETS + 1}" in withPro)
-        assertTrue("${Pro.chapters.size} Kapitel" in withPro)
-        assertTrue("${Pro.chapters.sumOf { c -> Levels.chapters.first { it.number == c }.levels.size }} Level" in withPro)
+        // Seit 2.6.0 kein Pro-Schulstoff mehr: Kapitel- und Levelzahl stimmen mit der App
+        assertTrue("${Levels.all.size} LEVEL IN ${Levels.chapters.size} KAPITELN" in withPro)
+        assertTrue("in jedem der ${Levels.chapters.size} Kapitel" in withPro)
+        assertFalse("Oberstufe:" in withPro)
     }
 
     @Test fun noFreeOnlyClaims() {

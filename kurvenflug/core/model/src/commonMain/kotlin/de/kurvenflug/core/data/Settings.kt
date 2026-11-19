@@ -179,7 +179,8 @@ class Settings(private val prefs: Prefs) {
 
     /** Werte des aktuellen Profils in die Flows laden */
     private fun load() {
-        _grade.value = prefs.getInt(k("grade"), 0).takeIf { it in 5..13 }
+        // Klasse 11–13 (vor 2.6.0 wählbar) → 10: KurvenFlug endet mit Klasse 10, „Wie geht's weiter?“ zeigt den Weg
+        _grade.value = prefs.getInt(k("grade"), 0).takeIf { it in 5..13 }?.coerceAtMost(10)
         _gradeAsked.value = prefs.getBoolean(k("gradeAsked"), false)
         _look.value = Triple(prefs.getInt(k("shape"), 0), prefs.getInt(k("trail"), 0), prefs.getInt(k("hat"), 0))
         _stormBest.value = prefs.getInt(k("stormBest"), 0)
@@ -192,7 +193,7 @@ class Settings(private val prefs: Prefs) {
     }
     init { load() }
 
-    /** Klassenstufe 5–13 (null = alle Kapitel zeigen); gefragt wird nur einmal, danach über 🎓 änderbar */
+    /** Klassenstufe 5–10 (null = alle Kapitel zeigen); gefragt wird nur einmal, danach über 🎓 änderbar */
     val grade: StateFlow<Int?> = _grade.asStateFlow()
     val gradeAsked: StateFlow<Boolean> = _gradeAsked.asStateFlow()
     fun setGrade(g: Int?) {

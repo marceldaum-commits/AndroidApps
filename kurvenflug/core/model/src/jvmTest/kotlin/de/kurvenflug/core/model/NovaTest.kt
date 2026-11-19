@@ -21,7 +21,7 @@ class NovaTest {
 
     @Test fun listHasVoltsLinesAndSpokenForm() {
         val texts = VorlesenListe.texts(listOf(File("../../shared/src/commonMain/kotlin")))
-        assertTrue(texts.size > 1000)
+        assertTrue(texts.size > 900)   // 2.6.0: ohne Oberstufe weniger Texte
         // Volt-Sätze aus der Oberfläche, gesprochen wie in der App
         assertTrue(Speech.clean("Volltreffer beim ersten Versuch! Genial berechnet! 🤯") in texts)
         assertTrue(Speech.clean("Alles Wichtige zum Nachlesen – das kostet keine Sterne! 💡") in texts)

@@ -13,7 +13,7 @@ object ChapterLinks {
         18 to "nullstellen", 14 to "trigonometrie", 5 to "wellen", 26 to "verschobene-wellen", 25 to "potenzfunktionen",
         10 to "logarithmus", 13 to "weg-zeit", 24 to "beschleunigung", 4 to "wurf", 27 to "waagerechter-wurf",
         6 to "schleuder", 12 to "energie", 11 to "laser", 17 to "lichtbrechung",
-        19 to "ableitung", 20 to "extrempunkte", 21 to "integral", 22 to "vektoren", 28 to "e-funktion", 30 to "binomial",
+        // Oberstufe (ableitung, extrempunkte, integral, vektoren, e-funktion, binomial) seit 2.6.0 nicht mehr in KurvenFlug → Startseite
     )
 
     private val pattern = Regex("""[#?&\s]kapitel=([A-Za-z0-9-]{1,40})""")

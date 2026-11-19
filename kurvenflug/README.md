@@ -1,4 +1,9 @@
-# Kurvenflug – Mathe & Physik im All (Klasse 5–13)
+# Kurvenflug – Funktionen & Physik im All (Klasse 5–10)
+
+> **Profil seit 2.6.0 (Marcel 18.11.2026):** Funktionen und Physik, Klasse 5–10, „sehen und fliegen“. Die Oberstufe
+> (Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung) ist im **Mathe-Trainer** und in **Raumlicht**;
+> KurvenFlug zeigt am Ende der Galaxie und in der Klassen-Wahl „🎓 Wie geht's weiter?“ mit Links dorthin (`NextSteps.kt`).
+> Direkt-Links anderer Lern-Apps: `#kapitel=<name>` (`ChapterLinks.kt`, Liste in `QUERVERWEISE.md`).
 
 > **Zurzeit nur als WebApp** (Marcel 18.11.2026, für 1–2 Monate): Kurvenflug läuft im Browser und lässt sich dort als App
 > installieren (Knopf „App installieren“). Es gibt keine APK und keine Play-Version; der Android-Code bleibt im Repo, wird aber
@@ -15,7 +20,7 @@ selbst, kein Quiz zwischen zwei Spielphasen (Recherche: `../docs/RECHERCHE.md`, 
 Inhalte (175 Level in 30 Kapiteln, 7 Boss-Kämpfe, Tagesmission, Auffrischen mit Lernstand, Duell, Asteroidensturm, Abzeichen,
 Baukasten mit Level-Codes, Klassen-Challenge, Kurve ziehen, Formel-Detektiv, Planeten-Lexikon, Werkstatt): Koordinaten, Brüche & Kommazahlen am Zahlenstrahl, Winkel mit Geodreieck (Kl. 5–6), Zuordnungen/Prozent (Kl. 6–7), Geraden (Kl. 7–8), Pythagoras (Kl. 8–9), Parabeln (Kl. 9), Logarithmus (Kl. 10),
 Weg-Zeit und Laser-Optik (Physik 7), Energieerhaltung (Physik 8–9),
-Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); Oberstufe: Ableitung & Tangente, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung (Kl. 11–13); dazu Maßstab (Kl. 5–6), Prozent & Zinseszins (Kl. 7–8), beschleunigte Bewegung (Physik 9–10), Potenzfunktionen, verschobene Wellen, waagerechter Wurf (Kl. 10–11), e-Funktion (Kl. 11–12), Binomialverteilung – Dichte und kumuliert (Kl. 10–13).
+Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik), Sinus & Exponentialfunktion (Kl. 10), Gravitation/Swing-by (Physik Kl. 10), Trigonometrie sin/cos/tan (Kl. 9–10), Nullstellen und quadratische Ergänzung (Kl. 9), Lichtbrechung nach Snellius mit Totalreflexion (Physik 9); dazu Maßstab (Kl. 5–6), Prozent & Zinseszins (Kl. 7–8), beschleunigte Bewegung (Physik 9–10), Potenzfunktionen, verschobene Wellen, waagerechter Wurf (Kl. 10).
 
 ## Aufbau der Startseite
 - Vier Reiter unten: 🚀 **Heute** („Weiter, wo du warst“, Tagesmission, Auffrischen), 🗺️ **Galaxie** (Kapitel nach Klasse,
@@ -38,7 +43,7 @@ Rendezvous/Gleichungssysteme (Kl. 8), schräger Wurf auf Erde/Mond/Mars (Physik)
   die ersten 18 Planeten bauen das zweite Schiff „Nova“.
 - Raumstation: 6 Räume mit Sternenstaub (= alle gesammelten Sterne) freischalten, mit Stickern dekorieren, Crew wohnt dort.
   Gast-Planeten zu Halloween, Advent, Ostern (Gaußsche Osterformel) und Sommerferien mit Themen-Sticker – jedes Jahr wieder.
-- Beim ersten Start fragt Volt nach der Klasse (5–13 oder „alle“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
+- Beim ersten Start fragt Volt nach der Klasse (5–10 oder „alle“; „11–13“ zeigt „Wie geht's weiter?“). Sie sortiert nur: „Deine Klasse“, „Zum Wiederholen“,
   „Für später“ – gesperrt wird nichts.
 
 ## So funktioniert Kurvenflug
@@ -94,16 +99,15 @@ Eine Codebasis für Android **und** Browser (Kotlin Multiplatform + Compose Mult
   zugeschnittene Schriften für Emojis und Mathe-Zeichen (`web/fonts/make_fonts.py`, Noto Color Emoji / DejaVu, freie Lizenzen)
 
 ## Inhaltspaket 0.20 (`core/model/More.kt`)
-| Maßstab | Prozent | Beschleunigung | Wurzel | Welle | Waagerechter Wurf | e-Funktion |
-|---|---|---|---|---|---|---|
-| ![](screenshots/82_massstab.png) | ![](screenshots/83_prozent.png) | ![](screenshots/84_beschleunigung.png) | ![](screenshots/85_wurzel.png) | ![](screenshots/86_verschobene_welle.png) | ![](screenshots/87_waagerechter_wurf.png) | ![](screenshots/88_e_funktion.png) |
+| Maßstab | Prozent | Beschleunigung | Wurzel | Welle | Waagerechter Wurf |
+|---|---|---|---|---|---|
+| ![](screenshots/82_massstab.png) | ![](screenshots/83_prozent.png) | ![](screenshots/84_beschleunigung.png) | ![](screenshots/85_wurzel.png) | ![](screenshots/86_verschobene_welle.png) | ![](screenshots/87_waagerechter_wurf.png) |
 
-## Oberstufe (Klasse 11–13)
-Ableitung & Tangente, Extrempunkte, Integral (Treibstoff = Fläche), Vektoren in Parameterform – Kapitel 19–22 (`core/model/Upper.kt`).
+## Wie geht's weiter? (seit 2.6.0)
+KurvenFlug endet mit Klasse 10. Die Karte am Ende der Galaxie (und „11 – 13 🎓“ in der Klassen-Wahl) führt zu Mathe-Trainer und
+Raumlicht – nur Links, kein Preis. Klasse 11–13 aus älteren Spielständen wird zu 10.
 
-| Tangente | Hochpunkt | Integral | Vektoren |
-|---|---|---|---|
-| ![Tangente](screenshots/77_oberstufe_tangente.png) | ![Hochpunkt](screenshots/79_oberstufe_hochpunkt.png) | ![Integral](screenshots/80_oberstufe_integral.png) | ![Vektor](screenshots/81_oberstufe_vektor.png) |
+![Wie geht's weiter?](screenshots/95_wie_gehts_weiter.png)
 
 ## Verstehen statt nur Schieben
 Live-Rechnung beim Schieben, Rechen-Stern nach dem Treffer, danach der Lösungsweg; die Aufgabe bleibt nach Fehlversuchen sichtbar.
@@ -141,15 +145,15 @@ Nachweis per Test: `DifficultyTest` (jede Stufe strikt schwerer) und `ChapterExt
 | ![](screenshots/91_extrem_pruefung_kachel.png) | ![](screenshots/92_extrem_pruefung_geraden.png) | ![](screenshots/93_sturm_extrem.png) |
 
 ## Kurvenflug Pro (`core/model/Pro.kt`, `License.kt`, `shared/ProShop.kt`, `pro/`)
-Frei bis Klasse 10; Pro: Oberstufe, Extrem-Prüfungen, Sturm Profi/Extrem, Andromeda ab Planet 7, > 2 Spieler, Pro-Werkstatt.
+Alle 24 Kapitel / 140 Level frei; Pro: Extrem-Prüfungen, Sturm Profi/Extrem, Andromeda ab Planet 7, > 2 Spieler, Pro-Werkstatt.
 Gesperrt wird nur, wenn ein Kaufweg angeboten wird; Bestandsschutz für Begonnenes. Play-Fassung: Google Play Billing
 (Produkt `kurvenflug_pro`). Web/GitHub: Website-Kasse → signierter Code (Ed25519, offline geprüft) per E-Mail/Link.
 Schlüssel und Kasse in `pro/pro.properties` (nur der öffentliche Schlüssel!), Codes erzeugt `pro/pro_code.py`.
 
-| Pro-Seite | Pro-Kapitel gesperrt | Freigeschaltet |
-|---|---|---|
-| ![](screenshots/94_pro.png) | ![](screenshots/95_pro_kapitel_gesperrt.png) | ![](screenshots/96_pro_freigeschaltet.png) |
-| ![](screenshots/101_pro_aktiv_start.png) | ![](screenshots/102_pro_aktiv_einstellungen.png) | |
+| Pro-Seite | Freigeschaltet |
+|---|---|
+| ![](screenshots/94_pro.png) | ![](screenshots/96_pro_freigeschaltet.png) |
+| ![](screenshots/101_pro_aktiv_start.png) | ![](screenshots/102_pro_aktiv_einstellungen.png) |
 
 ## Google Play
 Zwei Varianten aus demselben Code: `github` (APK, eigener Updater, Internet + Installations-Recht) und `play`
