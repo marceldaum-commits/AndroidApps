@@ -1,5 +1,9 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.3.0 – „Warum?“ und „Mein Schulbuch“ (19.11.2026)
+- **Warum?** Bei einer falschen Antwort markiert Ruby genau die Stelle, die nicht stimmt (zum Beispiel den Akzent in „le pére“), und erklärt die Regel in einem Satz – ohne gleich die Lösung zu verraten.
+- **Mein Schulbuch:** In jeder Sprache kann euer Kind (oder ihr) die Wörter aus dem Schulbuch eintippen, nach Lektionen geordnet: „Hund = dog“, eine Zeile pro Wort. Für Deutsch einfach die Lernwörter – daraus wird ein Diktat-Spiel. Falsche Zeilen werden verständlich gemeldet. Gespielt wird mit denselben Spielen und derselben Wiederholung. Die Listen bleiben auf dem Gerät.
+
 ## 0.2.2 – Sprache bleibt auf dem Gerät (19.11.2026)
 - Aussprache-Prüfung noch strenger: Ohne eure Erlaubnis hört Quasselquest nur zu, wenn der Browser ausdrücklich bestätigt, dass die Erkennung auf dem Gerät läuft. Sonst wird nur geprüft, ob laut genug gesprochen wurde.
 - Elternbereich erklärt, ob dieses Gerät Sprache selbst erkennen kann (iPad/iPhone mit Safari kann das nicht).

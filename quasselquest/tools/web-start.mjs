@@ -62,7 +62,7 @@ async function playEpisode(page, id, shot) {
 }
 
 async function playPackRound(page, packId, shot) {
-  await page.click(`[data-pack="${packId}"]`);
+  if (packId) await page.click(`[data-pack="${packId}"]`);
   for (let guard = 0; guard < 80; guard++) {
     await wait(250);
     if (await page.$('.reward')) break;
@@ -142,6 +142,17 @@ for (const [name, type, opts] of [
       if (FOTOS && name === 'chromium_handy') await snap(page, 'sprache_' + lang);
       ok(await playPackRound(page, pack, FOTOS && name === 'chromium_handy' && (lang === 'fr' || lang === 'de') ? 'paket_' + lang : null), `Paket-Runde ${lang} (${pack}) durchgespielt`);
       await page.click('[data-home]'); await page.waitForSelector('.langbar');
+    }
+    // Mein Schulbuch: eigene Liste anlegen (erst mit Fehler), spielen – Englisch und Deutsch (Diktat)
+    for (const [lang, bad, good] of [['en', 'Hund dog\nKatze = cat', 'Hund = dog\nKatze = cat\nMaus = mouse\nBaum = tree\nHaus = house'], ['de', 'Hund = dog', 'Fahrrad\nVogel\nStraße\nBlume']]) {
+      await page.click(`[data-lang="${lang}"]`); await page.waitForSelector('[data-mine]'); await page.click('[data-mine]');
+      await page.click('[data-new]'); await page.fill('[data-name]', 'Lektion 1'); await page.fill('[data-text]', bad); await page.click('[data-save]');
+      ok((await page.textContent('[data-err]')).length > 5, `Mein Schulbuch ${lang}: falsche Zeile → Meldung „${(await page.textContent('[data-err]')).slice(0, 50)}“`);
+      await page.fill('[data-text]', good); await page.click('[data-save]'); await page.waitForSelector('[data-play]');
+      if (FOTOS && name === 'chromium_handy') await snap(page, 'schulbuch_' + lang);
+      await page.click('[data-play]');
+      ok(await playPackRound(page, null, FOTOS && name === 'chromium_handy' && lang === 'de' ? 'schulbuch_runde_de' : null), `Mein Schulbuch ${lang}: Runde gespielt`);
+      await page.click('[data-home]'); await page.waitForSelector('[data-new]'); await page.click('[data-back]'); await page.waitForSelector('.langbar');
     }
     const st2 = await page.evaluate(() => window.quasselTest.state());
     ok(Object.keys(st2.karten).length >= 20, `Wiederholung gespeichert (${Object.keys(st2.karten).length} Karten)`);

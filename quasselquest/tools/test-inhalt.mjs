@@ -188,3 +188,18 @@ test('Unsichere Aufnahmen sind markiert und bleiben die Ausnahme (unter 15 %)', 
   assert.ok(uns.length / all.length < 0.15, `${uns.length} von ${all.length} unsicher`);
   assert.match(readFileSync(new URL('audio.js', dir), 'utf8'), /!e\.unsicher/);
 });
+
+test('„Warum?“: Fehlerstelle wird genau markiert, Regel passt zur Art des Fehlers', () => {
+  assert.deepEqual(P.diff('le pére', 'le père'), { vor: 'le p', fehler: 'é', nach: 're', fehlt: false });
+  assert.equal(P.diff('Bine', 'Biene').fehlt, true);
+  assert.match(P.regel({ a: 'Vogel' }, 'de', 'vogel'), /groß/);
+  assert.match(P.regel({ a: 'le père' }, 'fr', 'le pére'), /Akzent/);
+  assert.match(P.regel({ a: 'le père' }, 'fr', 'la père'), /Artikel/);
+  assert.match(P.regel({ a: 'Heute regnet es.' }, 'de', 'Heute regnet es'), /Satzzeichen/);
+  assert.equal(P.regel({ a: 'Biene', info: 'Langes i schreibt man meistens ie.' }, 'de', 'Bine'), 'Langes i schreibt man meistens ie.');
+  // Für jede falsche Auswahl jeder Karte gibt es eine Regel und eine Markierung
+  for (const p of PACKS) for (const c of p.cards) for (const w of P.wrongs(c, p, 3)) {
+    assert.ok(P.regel(c, p.lang, w).length > 3);
+    const d = P.diff(w, c.a); assert.equal(d.vor + d.fehler + d.nach, w);
+  }
+});

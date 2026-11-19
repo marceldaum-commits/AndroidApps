@@ -313,3 +313,5 @@ h1, h2, h3 { margin: 0; }
 @keyframes balloonpop { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(0); opacity: 0; } }
 @media (min-width: 700px) { .balloons { grid-template-columns: repeat(4, 1fr); } .memory { grid-template-columns: repeat(6, 1fr); } }
 @media (max-width: 380px) { .slot { width: 34px; height: 46px; font-size: 22px; } .tile { width: 46px; height: 50px; } }
+
+mark.fehl { background: #ffd6d4; color: #b3261e; border-radius: 6px; padding: 0 3px; text-decoration: underline wavy #e53935; }
