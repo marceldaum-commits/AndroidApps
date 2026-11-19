@@ -118,7 +118,7 @@ fun SheetScreen(cards: List<SheetCard>, onChapter: (Int) -> Unit = {}, onJam: (J
                         }
                     }
                     FlowRow(Modifier.padding(top = 10.dp), horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
-                        card.chapters.forEach { n -> Jump("▶ Kapitel $n", c) { onChapter(n) } }
+                        card.chapters.forEach { n -> Jump("▶ Kapitel ${de.raumlicht.core.model.Levels.shown(n)}", c) { onChapter(n) } }
                         card.jam?.let { t -> Jump("♾️ Üben", Q.Pink) { onJam(t) } }
                     }
                 }

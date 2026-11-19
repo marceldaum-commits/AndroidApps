@@ -98,7 +98,6 @@ class ScreenshotTest {
     }
     @Test fun sheet() = shot("26_spickzettel", "start") { de.raumlicht.app.ui.home.SheetScreen(de.raumlicht.core.model.Sheet.cards, onBack = {}) }
     @Test fun motion() = level("28_bewegung", "11-5", values = mapOf("a" to listOf(1)))
-    @Test fun vase() = level("29_rotationskoerper", "12-3", values = mapOf("a" to listOf(3)))
     @Test fun backstage() = shot("30_backstage", "start") {
         de.raumlicht.app.ui.home.BackstageScreen(listOf(
             de.raumlicht.app.ui.home.BackstageEntry("🎢", "Kurve abfahren (Fahrersicht)", "Analysis erleben: Höhe, Steigung und Krümmung live im Cockpit", Q.Cyan) {},
@@ -130,9 +129,6 @@ class ScreenshotTest {
     @Test fun badges() = shot("27_abzeichen", "start") {
         de.raumlicht.app.ui.home.BadgesScreen(de.raumlicht.core.model.Badges.all(Levels.all.take(30).associate { it.id to 3 } + mapOf("tag-1" to 3, "tag-2" to 2, "tag-3" to 3), 6)) {}
     }
-    @Test fun lottery() = level("38_stochastik", "13-2")
-    @Test fun coaster() = level("39_achterbahn", "14-2", values = mapOf("a" to listOf(1)))
-    @Test fun area() = level("40_leuchtflaeche", "14-5")
     @Test fun guides() = shot("41_schritt_fuer_schritt", "start") { de.raumlicht.app.ui.home.ExamPicker(de.raumlicht.core.model.Guides.all, emptyMap(), { _, _ -> }, guided = true) {} }
     @Test fun guideStep() = shot("42_schritt", "schritt") {
         val g = de.raumlicht.core.model.Guides.all[0]
@@ -158,10 +154,6 @@ class ScreenshotTest {
     @Test fun rideOutside() = shot("50_achterbahn_aussen", "fahrt-aussen", prepare = {
         it.onNodeWithTag("sicht").performClick(); it.onNodeWithTag("fahrt-regler").performSemanticsAction(androidx.compose.ui.semantics.SemanticsActions.SetProgress) { f -> f(0.5f) }
     }) { de.raumlicht.app.ui.home.RideScreen({}, "doppel") }
-    @Test fun buildCurve() = level("52_funktion_bauen", "15-3", values = mapOf("a" to listOf(-1), "d" to listOf(1), "e" to listOf(4)))
-    @Test fun treeDiagram() = level("53_baumdiagramm", "16-1")
-    @Test fun fourFields() = level("54_vierfeldertafel", "16-3")
-    @Test fun biggestScreen() = level("55_extremwert", "17-4", values = mapOf("a" to listOf(3)))
     @Test fun galton() = shot("56_galton_brett", "galton") { de.raumlicht.app.ui.home.GaltonScreen({}) }
     @Test fun flight() = shot("57_raumflug", "raumflug", prepare = { it.onNodeWithTag("flug-kugel").performClick() }) { de.raumlicht.app.ui.home.FlightScreen({}) }
     @Test fun rideExtras() = shot("58_ableitung_und_flaeche", "fahrt-extra", prepare = {

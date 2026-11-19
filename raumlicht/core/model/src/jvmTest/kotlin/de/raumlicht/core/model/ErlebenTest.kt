@@ -47,7 +47,7 @@ class ErlebenTest {
                 if (RotationLab.problem(s) != null) continue
                 assertEquals("$s", RotationLab.numeric(s, 4000), RotationLab.volume(s), 1e-3 * (1 + RotationLab.volume(s))); assertTrue("$s", RotationLab.volume(s) > 0)
                 assertEquals("$s", 6, RotationLab.way(s).size); assertTrue(RotationLab.way(s).last().contains("π ≈")); checked++ }
-        assertTrue("genug Einstellungen geprüft: $checked", checked > 1500)
+        assertTrue("genug Einstellungen geprüft: $checked", checked > 400)
     }
 
     /** Bekannte Körper mit den Schulformeln: Zylinder, Kegel, Kugel, Halbkugel. */
@@ -71,7 +71,7 @@ class ErlebenTest {
     @Test fun verstaendlicheRueckmeldung() {
         assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.GERADE, 1, 0, 3, 3))!!.contains("kleiner")); assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.GERADE, 1, 0, 4, 2))!!.contains("kleiner"))
         assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.WURZEL, 1, 0, -2, 3))!!.contains("negative Zahl")); assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.KREIS, 2, 0, -3, 2))!!.contains("von −2 bis 2"))
-        assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.GERADE, 0, 0, 0, 3))!!.contains("dreht sich nichts")); assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.GERADE, 1, 0, -2, 3))!!.contains("unter die Achse"))
+        assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.GERADE, 0, 0, 0, 3))!!.contains("dreht sich nichts")); assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.GERADE, 2, 0, 0, 3))!!.contains("zu dick")); assertTrue(RotationLab.problem(RotationLab.Setup(RotationLab.Shape.GERADE, 1, 0, -2, 3))!!.contains("unter die Achse"))
         assertEquals("f(x) = x + 1", RotationLab.text(RotationLab.Setup(RotationLab.Shape.GERADE, 1, 1, 0, 3))); assertEquals("f(x) = 2", RotationLab.text(RotationLab.Setup(RotationLab.Shape.GERADE, 0, 2, 0, 4)))
         assertEquals("f(x) = −2 · x + 4", RotationLab.text(RotationLab.Setup(RotationLab.Shape.GERADE, -2, 4, 0, 2))); assertEquals("f(x) = √(x + 1)", RotationLab.text(RotationLab.Setup(RotationLab.Shape.WURZEL, 1, 1, 0, 3)))
         assertEquals("f(x) = √(9 − x²)", RotationLab.text(RotationLab.Setup(RotationLab.Shape.KREIS, 3, 0, -3, 3))); assertEquals("f(x) = 0,5 · x²", RotationLab.text(RotationLab.Setup(RotationLab.Shape.PARABEL, 5, 0, 0, 2)))

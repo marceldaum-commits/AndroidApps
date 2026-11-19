@@ -116,30 +116,7 @@ class LevelFlowTest {
         rule.onNodeWithText(mission).assertExists()
     }
 
-    @Test fun stepperNeverShowsTheRawCounter() {
-        play("13-1")                                               // Schritte von 10 %
-        rule.mainClock.autoAdvance = false
-        tap("plus-a-0"); rule.mainClock.advanceTimeByFrame(); rule.mainClock.advanceTimeByFrame()
-        // Mitten im Umblättern: alt und neu sind beide fertig beschriftet – nie die nackte „1“
-        rule.onAllNodesWithText("1").assertCountEquals(0)
-        rule.onAllNodesWithText("10 %")[0].assertExists()
-        rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(600)
-    }
 
-    @Test fun luxActsOutWhatTheQuestionAsks() {
-        play("13-2")                                               // zweimal ziehen MIT Zurücklegen
-        tap("plus-a-0", 5); rule.mainClock.autoAdvance = false
-        rule.onNodeWithText("▶ Los").performClick(); rule.mainClock.advanceTimeBy(700)
-        rule.onNodeWithText("1. Zug: pink – 5 von 10.").assertExists()
-        rule.mainClock.advanceTimeBy(1500); rule.onNodeWithText("Zurücklegen – wieder alle 10 da.").assertExists()
-        assertEquals(10, Regex("\"type\":\"sphere\"").findAll(stage.lastState!!).count())
-        rule.mainClock.advanceTimeBy(1300); rule.onNodeWithText("2. Zug: pink – 5 von 10.").assertExists()
-        rule.mainClock.autoAdvance = true; rule.mainClock.advanceTimeBy(4000)
-        assertEquals(listOf(3 to 1), solved)
-        assertEquals(10, Regex("\"type\":\"sphere\"").findAll(stage.lastState!!).count())          // keine Kugel verschwindet
-        assertTrue(stage.lastState!!.contains("\"plain\":true") && stage.lastState!!.contains("2. Zug"))
-        assertEquals(2, stage.log.count { it.startsWith("RL.fire") })
-    }
 
     /** Theorie zu jeder Aufgabe: Der Knopf öffnet die passende Karte, sie kostet keinen Stern, und man kommt zurück zur Aufgabe */
     @Test fun theorieKostetKeinenStern() {

@@ -53,7 +53,7 @@ object Pro {
     /** Was hinter der Sperre liegt, in Worten – für die Hinweis-Seite */
     fun what(route: String): String { val p = route.split('/')
         return when (p[0]) {
-            "level" -> Levels.byId(p.getOrElse(1) { "" })?.let { l -> "Aufgabe ${l.id} „${l.title}“" } ?: "Diese Aufgabe"
+            "level" -> Levels.byId(p.getOrElse(1) { "" })?.let { l -> "Aufgabe ${Levels.label(l.id)} „${l.title}“" } ?: "Diese Aufgabe"
             "abi" -> Exams.all.firstOrNull { it.id == p.getOrNull(1) }?.let { "Prüfungsaufgabe „${it.title}“" } ?: "Diese Prüfungsaufgabe"
             "jam" -> JamLevel.entries.firstOrNull { it.name == p.getOrNull(2) }?.let { "Üben in der Stufe „${it.title}“" } ?: "Üben mit allen Stufen gemischt"
             else -> areas[p[0]] ?: "Dieser Bereich"

@@ -65,29 +65,32 @@ fun HomeScreen(
     locked: (String) -> Boolean = { false },
     /** „← Alle Apps“: zurück zur App-Auswahl auf der Website (null = gibt es hier nicht) */
     onApps: (() -> Unit)? = null,
+    /** Zum Bereich „Analysis & Zufall erleben“ */
+    onExperience: () -> Unit = {},
 ) {
     val total = chapters.sumOf { c -> c.levels.sumOf { stars[it.id] ?: 0 } }; val max = chapters.sumOf { it.levels.size } * 3
     val next = chapters.flatMap { it.levels }.firstOrNull { (stars[it.id] ?: 0) == 0 }
     // Aufgeklappt ist immer nur ein Kapitel – zu Beginn das, in dem es weitergeht
     var open by rememberSaveable { mutableIntStateOf(next?.chapter ?: 1) }
-    var area by rememberSaveable { mutableStateOf((chapters.firstOrNull { it.number == open } ?: chapters.first()).area.name) }
     LaunchedEffect(controller) { controller.setState(Showreel.scene()); controller.camera(az = 0.75, el = 0.3, dist = 17.0) }
     // Alle paar Sekunden ein kleiner Lichtblitz – die Bühne lebt
     LaunchedEffect(controller) { while (true) { delay(6000); controller.party(1.2) } }
 
-    // Die Wahl des Gebiets – drei Gebiete wie im Abitur, so muss niemand suchen
+    // Zwei Wege (seit 2.18.32): die Tour „Geometrie im Raum“ mit ihren Kapiteln – und daneben „Analysis & Zufall erleben“ zum Ausprobieren
     val areaTabs: @Composable (Modifier) -> Unit = { m ->
-        Row(m, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Area.entries.forEach { a ->
-                val list = chapters.filter { it.area == a }; val c = stageColor(a.color); val on = a.name == area
-                val interaction = remember { MutableInteractionSource() }
-                Column(Modifier.weight(1f).testTag("gebiet-${a.name}").pressBounce(interaction).clip(RoundedCornerShape(14.dp)).background(if (on) c.copy(alpha = 0.28f) else Q.Deep)
-                    .border(if (on) 2.dp else 1.dp, if (on) c else Q.Muted.copy(alpha = 0.35f), RoundedCornerShape(14.dp))
-                    .clickable(interaction, null) { area = a.name; open = (list.firstOrNull { ch -> ch.levels.any { it.id == next?.id } } ?: list.first()).number }.padding(vertical = 7.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally) {
-                    de.raumlicht.app.ui.fx.FitText("${a.emoji} ${a.title}", Modifier.padding(horizontal = 4.dp), fontWeight = FontWeight.Black, fontSize = 14.sp, min = 10f, color = if (on) Q.Text else Q.Muted)
-                    Text("★ ${list.sumOf { ch -> ch.levels.sumOf { stars[it.id] ?: 0 } }} / ${list.sumOf { it.levels.size } * 3}", fontSize = 11.sp, color = if (on) Q.Yellow else Q.Muted)
-                }
+        Row(m.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            val c = stageColor(Area.GEOMETRIE.color)
+            Column(Modifier.weight(1f).fillMaxHeight().testTag("gebiet-GEOMETRIE").clip(RoundedCornerShape(14.dp)).background(c.copy(alpha = 0.28f)).border(2.dp, c, RoundedCornerShape(14.dp)).padding(vertical = 7.dp),
+                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                de.raumlicht.app.ui.fx.FitText("📐 Geometrie im Raum", Modifier.padding(horizontal = 4.dp), fontWeight = FontWeight.Black, fontSize = 14.sp, min = 10f, color = Q.Text)
+                Text("★ $total / $max", fontSize = 11.sp, color = Q.Yellow)
+            }
+            val interaction = remember { MutableInteractionSource() }
+            Column(Modifier.weight(1f).fillMaxHeight().testTag("erleben").pressBounce(interaction).clip(RoundedCornerShape(14.dp)).background(verticalFade(listOf(Q.Pink.copy(alpha = 0.22f), Q.Deep)))
+                .border(1.dp, Q.Pink.copy(alpha = 0.7f), RoundedCornerShape(14.dp)).clickable(interaction, null, onClick = onExperience).padding(vertical = 7.dp),
+                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+                de.raumlicht.app.ui.fx.FitText("🎢 Analysis & Zufall", Modifier.padding(horizontal = 4.dp), fontWeight = FontWeight.Black, fontSize = 14.sp, min = 10f, color = Q.Text)
+                Text("erleben ›", fontSize = 11.sp, color = Q.Pink, fontWeight = FontWeight.Bold)
             }
         }
     }
@@ -114,7 +117,7 @@ fun HomeScreen(
             }
             Column(Modifier.align(Alignment.BottomCenter).widthIn(max = 680.dp).fillMaxWidth().padding(horizontal = 18.dp, vertical = 22.dp)) {
                 if (next != null) NeonButton({ onLevel(next.id) }, Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp).pulse(true, 0.02f), color = Q.Green) {
-                    Text(if (total == 0) "▶ Tour starten" else "▶ Weiter: ${next.id} ${next.title}", fontWeight = FontWeight.Black, fontSize = 18.sp, maxLines = 1)
+                    Text(if (total == 0) "▶ Tour starten" else "▶ Weiter: ${Levels.label(next.id)} ${next.title}", fontWeight = FontWeight.Black, fontSize = 18.sp, maxLines = 1)
                 }
                 ModeTiles(dailyDone, jamBest, onDaily, onJam, onExam, onMore)
             }
@@ -127,7 +130,7 @@ fun HomeScreen(
             }
             if (updateVersion != null) de.raumlicht.app.ui.settings.UpdateBanner(updateVersion, onUpdate)
             areaTabs(Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, top = 4.dp, bottom = 10.dp))
-            val list = chapters.filter { it.area.name == area }
+            val list = chapters
             Text("${list.size} Kapitel", Modifier.padding(start = 16.dp, bottom = 6.dp).testTag("kapitel-anzahl"), color = Q.Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
             FlowRow(Modifier.fillMaxWidth().padding(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 list.forEach { c -> ChapterChip(c, stars, open == c.number, c.levels.any { it.id == next?.id }) { open = c.number } }
@@ -151,7 +154,7 @@ fun HomeScreen(
                     IconButton(onClick = onSettings) { Text("⚙", Modifier.clearAndSetSemantics { contentDescription = "Einstellungen" }, fontSize = 22.sp, color = Q.Text) }
                 }
                 if (next != null) NeonButton({ onLevel(next.id) }, Modifier.align(Alignment.BottomCenter).fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp).pulse(true, 0.02f), color = Q.Green) {
-                    Text(if (total == 0) "▶ Tour starten" else "▶ Weiter: ${next.id} ${next.title}", fontWeight = FontWeight.Black, maxLines = 1)
+                    Text(if (total == 0) "▶ Tour starten" else "▶ Weiter: ${Levels.label(next.id)} ${next.title}", fontWeight = FontWeight.Black, maxLines = 1)
                 }
             }
         }
@@ -161,9 +164,9 @@ fun HomeScreen(
         // Alle Kapitel des Gebiets mit Namen auf einen Blick – darunter das gewählte Kapitel mit seinen Aufgaben
         // Aufgeräumt (seit 2.9.2): eine einzige Zeile zum Wischen statt einer Wand aus Knöpfen. Das gewählte Kapitel rutscht von selbst ins Bild.
         item {
-            val list = chapters.filter { it.area.name == area }
-            val scroll = rememberScrollState(); val places = remember(area) { HashMap<Int, Int>() }
-            LaunchedEffect(open, area) { withFrameNanos { }; places[open]?.let { x -> scroll.animateScrollTo((x - 60).coerceAtLeast(0)) } }
+            val list = chapters
+            val scroll = rememberScrollState(); val places = remember { HashMap<Int, Int>() }
+            LaunchedEffect(open) { withFrameNanos { }; places[open]?.let { x -> scroll.animateScrollTo((x - 60).coerceAtLeast(0)) } }
             Row(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, bottom = 4.dp), verticalAlignment = Alignment.CenterVertically) {
                 Text("${list.size} Kapitel", Modifier.weight(1f).testTag("kapitel-anzahl"), color = Q.Muted, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.sp)
                 if (scroll.maxValue > 0) Text(if (scroll.value < scroll.maxValue) "wischen ›" else "‹ wischen", color = Q.Muted, fontSize = 11.sp)
@@ -210,7 +213,7 @@ private fun ChapterDetail(c: Chapter, stars: Map<String, Int>, nextId: String?, 
         .background(horizontalFade(listOf(accent.copy(alpha = 0.2f), Q.Deep))).border(1.5.dp, accent.copy(alpha = 0.7f), RoundedCornerShape(20.dp)).padding(bottom = 12.dp)) {
         Row(Modifier.fillMaxWidth().padding(start = 14.dp, end = 14.dp, top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                Text("KAPITEL ${c.number} · ${c.levels.size} AUFGABEN", color = accent, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
+                Text("KAPITEL ${Levels.shown(c.number)} · ${c.levels.size} AUFGABEN", color = accent, fontSize = 11.sp, fontWeight = FontWeight.Bold, letterSpacing = 1.5.sp)
                 Text(c.title, style = MaterialTheme.typography.titleLarge, maxLines = 1)
                 Text(c.topic, color = Q.Muted, style = MaterialTheme.typography.bodySmall, maxLines = 1)
             }

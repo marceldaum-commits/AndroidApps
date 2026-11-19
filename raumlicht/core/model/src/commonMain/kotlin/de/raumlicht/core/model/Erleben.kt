@@ -38,12 +38,14 @@ object RotationLab {
     /** Eine Einstellung: Form, Zahlen [p] und [q] (ganze Zahlen; bei der Parabel p Zehntel), Grenzen [a] < [b] */
     data class Setup(val shape: Shape, val p: Int, val q: Int, val a: Int, val b: Int)
     val presets = listOf(
-        "Zylinder" to Setup(Shape.GERADE, 0, 2, 0, 4), "Kegel" to Setup(Shape.GERADE, 1, 0, 0, 3), "Kegelstumpf" to Setup(Shape.GERADE, 1, 1, 0, 3),
+        "Zylinder" to Setup(Shape.GERADE, 0, 2, 0, 4), "Kegel" to Setup(Shape.GERADE, 1, 0, 0, 3), "Kegelstumpf" to Setup(Shape.GERADE, 1, 1, 0, 2),
         "Vase" to Setup(Shape.WURZEL, 1, 0, 0, 4), "Trichter" to Setup(Shape.WURZEL, 1, 1, 0, 3), "Kugel" to Setup(Shape.KREIS, 3, 0, -3, 3), "Kelch" to Setup(Shape.PARABEL, 5, 0, 0, 2))
     /** Erlaubte Bereiche der Regler */
-    val RANGE_P = mapOf(Shape.GERADE to -2..2, Shape.WURZEL to 1..4, Shape.KREIS to 1..4, Shape.PARABEL to 1..10)
-    val RANGE_Q = mapOf(Shape.GERADE to 0..4, Shape.WURZEL to 0..4)
-    val RANGE_X = -4..6
+    val RANGE_P = mapOf(Shape.GERADE to -2..2, Shape.WURZEL to 1..4, Shape.KREIS to 1..3, Shape.PARABEL to 1..10)
+    val RANGE_Q = mapOf(Shape.GERADE to 0..3, Shape.WURZEL to 0..4)
+    val RANGE_X = -4..4
+    /** So dick darf der Körper höchstens werden – sonst passt er nicht auf die Bühne */
+    const val MAX_RADIUS = 3.0
 
     fun f(s: Setup, x: Double): Double = when (s.shape) {
         Shape.GERADE -> s.p * x + s.q
@@ -68,6 +70,7 @@ object RotationLab {
         s.shape == Shape.KREIS && (abs(s.a) > s.p || abs(s.b) > s.p) -> "Der Halbkreis reicht nur von −${s.p} bis ${s.p}. Zieh die Grenzen in diesen Bereich."
         s.shape == Shape.GERADE && s.p == 0 && s.q == 0 -> "f(x) = 0 liegt auf der Achse – da dreht sich nichts. Stell m oder c anders ein."
         s.shape == Shape.GERADE && (f(s, s.a.toDouble()) < 0 || f(s, s.b.toDouble()) < 0) -> "Die Gerade taucht hier unter die Achse. Für einen klaren Körper bleib über der Achse: Grenzen oder c ändern."
+        profile(s).maxOf { it.second } > MAX_RADIUS + 1e-9 -> "So wird der Körper zu dick für die Bühne (Radius über 3). Nimm kleinere Zahlen oder zieh die Grenzen enger."
         else -> null
     }
     /** Größter gemeinsamer Teiler – zum Kürzen */

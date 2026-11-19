@@ -76,10 +76,12 @@ private fun Speech(text: String, mood: LuxMood = LuxMood.IDLE) {
 /** [group]: Überschrift, unter der der Eintrag auf der Seite „Mehr“ steht */
 data class BackstageEntry(val emoji: String, val title: String, val sub: String, val color: Color, val group: String = "", val onClick: () -> Unit)
 
+/** [title]/[intro]/[footer]: dieselbe Liste dient auch als Seite „Analysis & Zufall erleben“ */
 @Composable
-fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
+fun BackstageScreen(entries: List<BackstageEntry>, title: String = "Mehr", intro: String? = null, footer: (@Composable () -> Unit)? = null, onBack: () -> Unit) {
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
-        Bar("Mehr", onBack)
+        Bar(title, onBack)
+        if (intro != null) Speech(intro, LuxMood.HAPPY)
         LazyColumn(contentPadding = PaddingValues(start = 14.dp, end = 14.dp, bottom = 24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             itemsIndexed(entries) { i, e ->
                 // Überschrift, sobald eine neue Gruppe beginnt
@@ -99,6 +101,7 @@ fun BackstageScreen(entries: List<BackstageEntry>, onBack: () -> Unit) {
                     if (e.group == "Kommt bald") Text("bald", color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold) else Text("›", color = e.color, fontSize = 22.sp, fontWeight = FontWeight.Black)
                 }
             }
+            if (footer != null) item { footer() }
         }
     }
 }
@@ -309,7 +312,7 @@ fun TrainingPlay(levels: List<Level>, onSolved: (Level, Int, Int) -> Unit, title
     }
     val chapter = Levels.chapters.first { it.number == level.chapter }
     LevelScreen(level, chapter, false, {}, onSolved = { s, a -> onSolved(level, s, a) }, onNext = { idx++ }, onBack = onBack,
-        caption = "$emoji $title · ${idx + 1}/${levels.size} · Aufgabe ${level.id}")
+        caption = "$emoji $title · ${idx + 1}/${levels.size} · Aufgabe ${Levels.label(level.id)}")
 }
 
 // ───────────────────────── Lux-Werkstatt ─────────────────────────
