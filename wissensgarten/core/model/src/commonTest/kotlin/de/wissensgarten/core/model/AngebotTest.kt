@@ -24,4 +24,9 @@ class AngebotTest {
         assertTrue(Angebot.angeboten(p("s1-mathe-algebra", "mathe")))
         assertFalse(Angebot.ausgeblendet(null))
     }
+
+    @Test fun quasselquestAdresse() {
+        assertEquals("https://lernen.mathenachhilfe-online.com/quasselquest/?src=wissensgarten-sprachen", Angebot.quasselquestLink(false))
+        assertEquals("https://lernen-test.mathenachhilfe-online.com/quasselquest/?src=wissensgarten-sprachen", Angebot.quasselquestLink(true))
+    }
 }

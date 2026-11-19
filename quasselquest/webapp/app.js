@@ -37,9 +37,8 @@
   let token = 0; // wechselt bei jedem Bildschirmwechsel – laufende Abläufe brechen dann ab
   function screen(html) { token++; A.stop(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); return el; }
   const alive = (t) => t === token;
-  // Test-Stufe: Übergangs-Subdomain „…-test.“, künftig Pfad unter der gemeinsamen Adresse (z. B. …/test/quasselquest/), lokal.
-  // Bewusst ohne festen Hostnamen, damit der Umzug auf die gemeinsame Adresse nichts ändern muss.
-  const isTest = () => /(^|[.-])(test|staging)([.-]|$)|localhost|127\.0\.0\.1/.test(location.hostname) || /\/(test|staging)\//.test(location.pathname) || location.protocol === 'file:';
+  // Test-Stufe am Hostnamen (Standard UMZUG-LERNEN): „lernen-test.“, Übergang „quasselquest-test.“, lokal.
+  const isTest = () => /(^|[.-])(test|staging)([.-]|$)|localhost|127\.0\.0\.1/.test(location.hostname) || location.protocol === 'file:';
 
   // ================================================================== Ruby (SVG)
   function rubySVG() {
@@ -804,7 +803,8 @@
         ${r('device', 'Nur auf dem Gerät (empfohlen)', 'Erkennung nur, wenn der Browser sie auf dem Gerät kann (z. B. Chrome ab Version 139). Sonst wird nur geprüft, ob laut genug gesprochen wurde.')}
         ${r('off', 'Aus', 'Keine Spracherkennung; nur Aufnahme und Lautstärke auf dem Gerät.')}
         ${r('browser', 'Auch Online-Erkennung des Browsers erlauben', 'Nur mit eurer Zustimmung: Je nach Browser wird die Aufnahme des gesprochenen Satzes an den Sprachdienst des Browser-Herstellers gesendet (z. B. Google bei Chrome, Apple bei Safari). Wir selbst erhalten nichts.')}
-        <p class="muted" style="font-size:14px">Jetzt aktiv: <b data-mode></b></p></div>
+        <p class="muted" style="font-size:14px">Jetzt aktiv: <b data-mode></b></p>
+        <p class="muted" style="font-size:14px" data-hint></p></div>
       <div class="card" style="margin-top:14px"><h3>Kommt in den nächsten Wochen</h3>
         <p class="muted">Eltern-Handy koppeln mit verschlüsselter Sicherung, Pro-Freischaltung per Code, Hinweis auf Englisch-Nachhilfe, anonyme abschaltbare Zählung.</p></div>
       <div class="card" style="margin-top:14px"><h3>Daten</h3><p class="muted">Alles wird nur in diesem Browser gespeichert. Kein Konto, keine Werbung, kein Tracking.</p>
@@ -812,7 +812,12 @@
       <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}</div>
     </div>`);
     const modeTxt = () => ({ device: 'Erkennung auf dem Gerät', browser: 'Erkennung des Browsers', none: 'keine Erkennung (nur Lautstärke)' }[A.recognitionMode()]);
-    el.querySelector('[data-mode]').textContent = modeTxt();
+    const hint = () => {
+      const local = A.recognitionMode && (() => { const SR = window.SpeechRecognition || window.webkitSpeechRecognition; return !!SR && 'processLocally' in SR.prototype; })();
+      el.querySelector('[data-hint]').textContent = local ? 'Dieses Gerät kann Sprache auf dem Gerät erkennen – die Stimme eures Kindes bleibt hier.'
+        : 'Auf diesem Gerät (zum Beispiel iPad oder iPhone mit Safari) gibt es die Aussprache-Prüfung nur mit der Online-Erkennung des Herstellers (Apple bzw. Google). Ohne eure Erlaubnis prüft Quasselquest nur, ob laut genug gesprochen wurde – üben kann euer Kind trotzdem alles.';
+    };
+    el.querySelector('[data-mode]').textContent = modeTxt(); hint();
     el.querySelectorAll('input[name=rec]').forEach((x) => x.onchange = () => {
       if (x.value === 'browser' && !confirm('Online-Erkennung erlauben?\n\nDann kann der Browser die Aufnahme des gesprochenen Satzes an den Sprachdienst seines Herstellers senden (z. B. Google oder Apple). Ihr könnt das jederzeit wieder ausschalten.')) {
         el.querySelector(`input[name=rec][value="${s.recognition}"]`).checked = true; return;

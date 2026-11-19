@@ -1,5 +1,10 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.2.2 – Sprache bleibt auf dem Gerät (19.11.2026)
+- Aussprache-Prüfung noch strenger: Ohne eure Erlaubnis hört Quasselquest nur zu, wenn der Browser ausdrücklich bestätigt, dass die Erkennung auf dem Gerät läuft. Sonst wird nur geprüft, ob laut genug gesprochen wurde.
+- Elternbereich erklärt, ob dieses Gerät Sprache selbst erkennen kann (iPad/iPhone mit Safari kann das nicht).
+- Fehlt eine Aufnahme, liest die Gerätestimme jetzt in der richtigen Sprache (vorher immer Englisch).
+
 ## 0.2.1 – Bereit für die gemeinsame Adresse (19.11.2026)
 - Quasselquest läuft unter lernen.mathenachhilfe-online.com/quasselquest/ (Test: lernen-test.…). Technisch: eindeutige App-Kennung im Manifest.
 

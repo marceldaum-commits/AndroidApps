@@ -29,8 +29,8 @@ object Angebot {
     /** Darf angezeigt, neu gepflanzt bzw. vorgeschlagen werden? */
     fun angeboten(p: Pack) = !ausgeblendet(p.id)
 
-    /** Adresse von Quasselquest – wird gesetzt, sobald der Leitstand sie festgelegt hat; bis dahin nur Text ohne Knopf */
-    val QUASSELQUEST_URL: String? = null
+    /** Quasselquest auf der gemeinsamen Adresse aller Lern-Apps (Marcel, 19.11.2026); Test-Stufe: lernen-test. */
+    fun quasselquestUrl(test: Boolean) = "https://lernen${if (test) "-test" else ""}.mathenachhilfe-online.com/quasselquest/"
     const val SRC = "wissensgarten-sprachen"
-    fun quasselquestLink() = QUASSELQUEST_URL?.let { it + (if ('?' in it) "&" else "?") + "src=$SRC" }
+    fun quasselquestLink(test: Boolean) = quasselquestUrl(test) + "?src=$SRC"
 }
