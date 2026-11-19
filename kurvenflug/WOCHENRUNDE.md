@@ -124,3 +124,12 @@ DIREKT-LINK ab Fr 20.11. (Test): https://kurvenflug.mathenachhilfe-online.com/#k
 
 ### Pro – laut Geld verdienen von Marcel entschieden (18.11.)
 Kern: Klassenarbeits-Trainer je Kapitel. Bonus: Extrem-Stufen/Prüfungen, Sturm ab Profi, Andromeda, mehr Spieler. 140 Level Grundform frei, 7,99 € einmalig, Altkäufer behalten Pro. Satz: „Pro: Klassenarbeits-Trainer für jedes Kapitel, Profi-Stufen und Kampagne.“ Kein Kaufhinweis im Kinderbereich, Preise nur im Elternbereich. Termin für den Bau offen (nach Umbau Variante B).
+
+### 19.11. – Prüfung gemeinsame Adresse (an AppZentrale gemeldet, nichts umgebaut)
+- localStorage nur „kf.“; Caches „kurvenflug-<v>“, „kf-nova“, „kf-stimme“; kein IndexedDB/sessionStorage/clear().
+- Zu ändern vor Umzug: `web/src/webMain/resources/diag.html:159` (unregister aller SW → nur eigener Scope),
+  `web/build.gradle.kts:142–143` (caches.match ohne cacheName → caches.open(CACHE).match).
+- Hostname-Erkennung: `kf.js:110`, `kf.js:126–129`, `kf.js:391`.
+- Server: trainer(-test)…/eltern/v1/b|s/<id>, trainer…/zaehler/v1/e. Eigene Pfade relativ.
+- Umzug Lernstand: verschlüsselte Sicherung bzw. Umzugs-Link #umzug=<id>.<key>. Pro-Codes domainunabhängig.
+- Marcel 19.11.: Sicherung + Eltern-Kopplung immer kostenlos (bei uns schon so); Kopplung künftig einmal je Familie.

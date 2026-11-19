@@ -17,7 +17,7 @@
     bar.style.width = (4 + 96 * p) + '%';
     if (txt) txt.textContent = p < 1 ? 'Lade … ' + Math.round(p * 100) + ' %' : 'Starte die Triebwerke …';
     // alles geladen: stürzt der Tab jetzt beim Übersetzen ab, nimmt der nächste Start die Kompatibilitäts-Fassung (index.html)
-    if (p >= 1 && window.kfMode === 'wasm') { try { if ((localStorage.getItem('kf.start') || '').indexOf('wasm|startet') === 0 && window.kfStage) window.kfStage('geladen'); } catch (e) {} }
+    if (p >= 1 && window.kfMode === 'wasm') { try { if ((localStorage.getItem('kurvenflug.start') || '').indexOf('wasm|startet') === 0 && window.kfStage) window.kfStage('geladen'); } catch (e) {} }
   }
   // Erst das Ladebild malen lassen, dann die Dateien NACHEINANDER holen (nicht parallel – schont Speicher und Leitung,
   // iOS hat bei parallelem Laden und Übersetzen den Tab beendet). Die Daten fließen als Strom weiter, damit der Browser das
@@ -116,7 +116,7 @@
   // ------------------------------------------------------------ Eltern-Handy koppeln (Ende-zu-Ende verschlüsselt)
   // id, schreib und key entstehen hier per crypto.getRandomValues und liegen nur in diesem Browser. Der Link für das Eltern-Handy
   // trägt id und key nach „#“ – dieser Teil geht nie an einen Server. Hochgeladen wird nur „iv.ciphertext“ (AES-GCM-256).
-  var E = { id: 'kf.eltern.id', w: 'kf.eltern.schreib', k: 'kf.eltern.key', n: 'kf.eltern.name', t: 'kf.eltern.zuletzt' };
+  var E = { id: 'kurvenflug.eltern.id', w: 'kurvenflug.eltern.schreib', k: 'kurvenflug.eltern.key', n: 'kurvenflug.eltern.name', t: 'kurvenflug.eltern.zuletzt' };
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function b64u(bytes) { var s = ''; for (var i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]); return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''); }
@@ -177,10 +177,10 @@
   // „daten“ = alle Kurvenflug-Einträge im Browser (Fortschritt, Durchgänge, Monatssummen, Einstellungen, Pro-Code) – ohne die
   // technischen Merker und ohne die Kopplungs-Schlüssel selbst (schreib steht eigens im verschlüsselten Klartext).
   var backupPlain = null, readyBackup = null, sentBackup = null;
-  function techKey(k) { return /^kf\.(eltern\.|start$|wasmGescheitert$|modus$|opt\.|lastVersion$|diag$|letzterWechsel$)/.test(k); }
+  function techKey(k) { return /^kurvenflug\.(__praefix$|eltern\.|start$|wasmGescheitert$|modus$|opt\.|lastVersion$|diag$|letzterWechsel$)/.test(k); }
   function gameData(withPlays) {
     var d = {};
-    try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf('kf.') === 0 && !techKey(k) && (withPlays || !/^kf\.plays\./.test(k))) d[k] = localStorage.getItem(k); }); } catch (e) {}
+    try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf('kurvenflug.') === 0 && !techKey(k) && (withPlays || !/^kurvenflug\.plays\./.test(k))) d[k] = localStorage.getItem(k); }); } catch (e) {}
     return d;
   }
   function isoNow() {
@@ -199,7 +199,7 @@
     if (compare === backupPlain && readyBackup) return Promise.resolve();
     return encryptMax(json, 512 * 1024).then(function (b) { if (b) { readyBackup = b; backupPlain = compare; } });
   }
-  KF.elternHasProgress = function () { try { return Object.keys(localStorage).some(function (k) { return /^kf\.progress\./.test(k) && localStorage.getItem(k); }); } catch (e) { return false; } };
+  KF.elternHasProgress = function () { try { return Object.keys(localStorage).some(function (k) { return /^kurvenflug\.progress\./.test(k) && localStorage.getItem(k); }); } catch (e) { return false; } };
   // Wiederherstellen auf einem neuen Gerät: Link einfügen → Sicherung holen, entschlüsseln, (nach Rückfrage) übernehmen.
   // Ergebnis an cb: ok | vorhanden (Lernstand da – erst nachfragen) | keine | andere_app | link | fehler
   KF.elternRestore = function (link, force, cb) {
@@ -219,13 +219,140 @@
       if (!b || b.app !== 'kurvenflug' || !b.daten || !b.schreib) throw 'andere_app';
       if (!force && KF.elternHasProgress()) { cb('vorhanden'); return; }
       try {
-        Object.keys(localStorage).forEach(function (k) { if (k.indexOf('kf.') === 0 && !techKey(k)) localStorage.removeItem(k); });
-        Object.keys(b.daten).forEach(function (k) { if (k.indexOf('kf.') === 0 && !techKey(k)) localStorage.setItem(k, b.daten[k]); });
+        Object.keys(localStorage).forEach(function (k) { if (k.indexOf('kurvenflug.') === 0 && !techKey(k)) localStorage.removeItem(k); });
+        Object.keys(b.daten).forEach(function (k) { var n = k.indexOf('kf.') === 0 ? 'kurvenflug.' + k.slice(3) : k; if (n.indexOf('kurvenflug.') === 0 && !techKey(n)) localStorage.setItem(n, b.daten[k]); });
       } catch (e) { throw 'fehler'; }
       lsSet(E.id, id); lsSet(E.k, key); lsSet(E.w, b.schreib); lsSet(E.t, null);
       cb('ok');
       setTimeout(function () { location.reload(); }, 1800);
     }).catch(function (e) { cb(typeof e === 'string' ? e : 'fehler'); });
+  };
+  // ------------------------------------------------------------ Umzug auf lernen.mathenachhilfe-online.com/kurvenflug/ (Marcel 19.11.)
+  // ALTE Adresse (kurvenflug[-test].mathenachhilfe-online.com): vor dem Start den Lernstand einmal verschlüsselt sichern
+  // (neue id/schreib/key, PUT …/eltern/v1/s/<id>, Klartext {"app","v":1,"umzug":true,"daten"}) und mit #umzug=<id>.<key>.<schreib>
+  // weiterleiten. Fehler (offline, PUT scheitert) → NICHT weiterleiten, normal weiterspielen, beim nächsten Start erneut versuchen.
+  // NEUE Adresse: #umzug= → holen, entschlüsseln, nur in einen leeren Spielstand schreiben, DELETE, Hash aufräumen. Unter lernen. wird nie weitergeleitet.
+  var UMZUG_ZIEL = { 'kurvenflug.mathenachhilfe-online.com': 'https://lernen.mathenachhilfe-online.com/kurvenflug/',
+                     'kurvenflug-test.mathenachhilfe-online.com': 'https://lernen-test.mathenachhilfe-online.com/kurvenflug/' };
+  function umzugZiel() {
+    var z = UMZUG_ZIEL[location.hostname];
+    if (z) return z;
+    // nur zum Testen auf dem eigenen Rechner: ?umzugtest=<Ziel-Adresse>
+    var m = /^(localhost|127\.)/.test(location.hostname) && /[?&]umzugtest=([^&#]+)/.exec(location.search);
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+  function ownGameKeys() {   // alle eigenen Daten (inkl. Eltern-Kopplung und Pro-Code), ohne technische Merker
+    var d = {};
+    try { Object.keys(localStorage).forEach(function (k) { if (k.indexOf('kurvenflug.') === 0 && (!techKey(k) || /^kurvenflug\.eltern\./.test(k)) && !/^kurvenflug\.umzug\./.test(k)) d[k] = localStorage.getItem(k); }); } catch (e) {}
+    return d;
+  }
+  function encryptWith(keyB64, json) {
+    var iv = new Uint8Array(12); crypto.getRandomValues(iv);
+    return crypto.subtle.importKey('raw', unb64u(keyB64), { name: 'AES-GCM' }, false, ['encrypt'])
+      .then(function (key) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, key, new TextEncoder().encode(json)); })
+      .then(function (ct) { return b64u(iv) + '.' + b64u(new Uint8Array(ct)); });
+  }
+  // Umzug-Anfragen nie länger als 12 s warten lassen (sonst normal weiterspielen)
+  function fetchT(url, opt) { var c = window.AbortController ? new AbortController() : null; if (c) { opt.signal = c.signal; setTimeout(function () { c.abort(); }, 12000); } return fetch(url, opt); }
+  function loaderNote(text) { var e = document.getElementById('kf-pct'); if (e) e.textContent = text; }
+  // Hash ohne umzug=…, andere Teile (#kapitel=, #pro=) bleiben
+  function hashOhneUmzug(h) { var parts = String(h || '').replace(/^#/, '').split('&').filter(function (p) { return p && p.indexOf('umzug=') !== 0; }); return parts.length ? '#' + parts.join('&') : ''; }
+  function umzugAlt(ziel) {
+    var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+    var query = location.search.replace(/[?&]umzugtest=[^&#]*/, '').replace(/^&/, '?');
+    var rest = location.hash.replace(/^#/, '');
+    function go(umzug) {
+      var hash = [umzug ? 'umzug=' + umzug : '', rest].filter(Boolean).join('&');
+      var url = ziel + (query && query !== '?' ? query : '') + (hash ? '#' + hash : '');
+      if (standalone) { showReinstall(url); return; }
+      location.replace(url);
+    }
+    if (!window.crypto || !crypto.subtle || !window.fetch) return Promise.resolve();
+    // Nur umziehen, wenn die neue Adresse wirklich antwortet (gültiges Zertifikat, erreichbar) – sonst hier normal weiterspielen
+    // Prüfbild: das App-Symbol muss als echtes Bild ankommen (404, fremde Seite oder Zertifikatsfehler → onerror)
+    return new Promise(function (ok) {
+      var img = new Image(), done = false;
+      function fin(v) { if (!done) { done = true; ok(v); } }
+      img.onload = function () { fin(img.naturalWidth >= 32); }; img.onerror = function () { fin(false); };
+      setTimeout(function () { fin(false); }, 12000);
+      img.src = ziel + 'icons/icon-192.png?nc=' + Date.now();
+    }).then(function (erreichbar) { return erreichbar ? umzugJetzt() : undefined; });
+    function umzugJetzt() {
+    var daten = ownGameKeys();
+    if (!Object.keys(daten).length) { go(null); return new Promise(function () {}); }
+    if (lsGet('kurvenflug.umzug.erledigt')) { go(null); return new Promise(function () {}); }   // schon umgezogen: nur weiterleiten
+    loaderNote('Wir ziehen um … dein Lernstand kommt mit 🚀');
+    var id = rnd(16), w = rnd(16), key = rnd(32);
+    var json = JSON.stringify({ app: 'kurvenflug', v: 1, umzug: true, daten: daten });
+    if (json.length > 380 * 1024) {   // zu groß: ohne Einzelergebnisse (Monatssummen und Fortschritt bleiben)
+      Object.keys(daten).forEach(function (k) { if (/^kurvenflug\.plays\./.test(k)) delete daten[k]; });
+      json = JSON.stringify({ app: 'kurvenflug', v: 1, umzug: true, daten: daten });
+    }
+    return encryptWith(key, json).then(function (body) {
+      if (body.length > 512 * 1024) throw 'zu_gross';
+      return fetchT(SICHERUNG_API + id, { method: 'PUT', headers: { 'X-Schreib': w, 'Content-Type': 'text/plain' }, body: body, credentials: 'omit', cache: 'no-store' });
+    }).then(function (r) {
+      if (!r.ok) throw 'put';
+      lsSet('kurvenflug.umzug.erledigt', new Date().toISOString());
+      go(id + '.' + key + '.' + w);
+      return new Promise(function () {});   // Seite wechselt
+    }).catch(function () { loaderNote('Lade …'); });   // Fehler: hier weiterspielen, nächster Start versucht es erneut
+    }
+  }
+  function showReinstall(url) {
+    var d = document.createElement('div');
+    d.style.cssText = 'position:fixed;inset:0;z-index:100001;background:#0b1026;color:#e8ecff;font:16px system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center';
+    d.innerHTML = '<div style="font-size:56px">🚀</div><div style="font-size:22px;font-weight:800">KurvenFlug ist umgezogen!</div>' +
+      '<div style="max-width:420px;opacity:.85">Dein Lernstand ist schon unterwegs. Öffne die neue Adresse und installiere KurvenFlug dort bitte neu – dann kannst du dieses alte Symbol löschen.</div>';
+    var a = document.createElement('a'); a.href = url; a.textContent = 'Zur neuen Adresse'; a.target = '_blank'; a.rel = 'noopener';
+    a.style.cssText = 'background:#3de8ff;color:#0b1026;font-weight:800;padding:14px 24px;border-radius:14px;text-decoration:none;min-height:44px';
+    d.appendChild(a);
+    var l = document.getElementById('kf-loader'); if (l) l.remove();
+    document.documentElement.appendChild(d);
+  }
+  function umzugNeu(m) {
+    var id = m[1], key = m[2], w = m[3];
+    // Adresse sofort aufräumen (umzug=… nie im Verlauf, nie bei den Freischalt-/Kapitel-Links), andere Teile bleiben
+    try { history.replaceState(null, '', location.pathname + location.search + hashOhneUmzug(location.hash)); } catch (e) {}
+    lsSet('kurvenflug.umzug.offen', id + '.' + key + '.' + w);
+    return umzugHolen();
+  }
+  function umzugHolen() {
+    var p = (lsGet('kurvenflug.umzug.offen') || '').split('.');
+    if (p.length !== 3) return Promise.resolve();
+    var id = p[0], key = p[1], w = p[2];
+    loaderNote('Dein Lernstand zieht ein … 📦');
+    return fetchT(SICHERUNG_API + id, { credentials: 'omit', cache: 'no-store' }).then(function (r) {
+      if (r.status === 404) return 'weg';
+      if (!r.ok) throw 'netz';
+      return r.json().then(function (j) {
+        var parts = String(j.d || '').split('.');
+        return crypto.subtle.importKey('raw', unb64u(key), { name: 'AES-GCM' }, false, ['decrypt'])
+          .then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: unb64u(parts[0]) }, k, unb64u(parts[1] || '')); })
+          .then(function (plain) { return JSON.parse(new TextDecoder().decode(plain)); });
+      }).then(function (b) {
+        if (!b || b.app !== 'kurvenflug' || !b.daten) return 'fremd';
+        if (KF.elternHasProgress()) return 'vorhanden';   // hier gibt es schon einen Lernstand: nichts überschreiben
+        Object.keys(b.daten).forEach(function (k) { var n = k.indexOf('kf.') === 0 ? 'kurvenflug.' + k.slice(3) : k; if (n.indexOf('kurvenflug.') === 0 && !/^kurvenflug\.(umzug\.|__praefix$)/.test(n)) lsSet(n, b.daten[k]); });
+        return 'ok';
+      });
+    }).then(function (res) {
+      if (res !== 'weg') fetch(SICHERUNG_API + id, { method: 'DELETE', headers: { 'X-Schreib': w }, credentials: 'omit', keepalive: true }).catch(function () {});
+      lsSet('kurvenflug.umzug.offen', null);
+      if (res === 'ok') { lsSet('kurvenflug.umzug.angekommen', new Date().toISOString()); setTimeout(function () { toast('📦 Dein Lernstand ist mit umgezogen – willkommen an der neuen Adresse!'); }, 3500); }
+      loaderNote('Lade …');
+    }).catch(function () { loaderNote('Lade …'); });   // offline: beim nächsten Start erneut (umzug.offen bleibt)
+  }
+  /** Vor dem Laden des Programms: Umzug erledigen. Das Promise löst auf, wenn die App starten darf. */
+  KF.umzug = function () {
+    try {
+      var ziel = umzugZiel();
+      if (ziel) return umzugAlt(ziel);
+      var m = /[#&]umzug=([A-Za-z0-9_-]{22})\.([A-Za-z0-9_-]{43})\.([A-Za-z0-9_-]{22})(?=&|$)/.exec(location.hash);
+      if (m) return umzugNeu(m);
+      if (lsGet('kurvenflug.umzug.offen')) return umzugHolen();
+    } catch (e) {}
+    return Promise.resolve();
   };
   // Neuer Bericht aus der App: gleich verschlüsseln, damit er beim Verlassen sofort gesendet werden kann
   KF.elternReport = function (json) {
@@ -329,7 +456,7 @@
   KF.hush = function () { hush(); speaking(false); };
   function cached(url) {
     if (!window.caches) return fetch(url, { credentials: 'omit' }).then(function (r) { return r.ok ? r.arrayBuffer() : null; });
-    return caches.open('kf-nova').then(function (c) {
+    return caches.open('kurvenflug-nova').then(function (c) {
       // offline gespeicherte Bestqualität (nova/original/…) zuerst
       return c.match(url.replace('/nova/', '/nova/original/')).then(function (b) { return b || c.match(url); }).then(function (hit) {
         if (hit) return hit.arrayBuffer();
@@ -391,7 +518,7 @@
     var hs = hashes.split('\n').filter(Boolean), host = /^(localhost|127\.)/.test(location.hostname) ? 'kurvenflug.mathenachhilfe-online.com' : location.hostname;
     var server = fetch(NOVA + 'stand-' + host + '.json', { credentials: 'omit', cache: 'no-store' })
       .then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { return j ? [j.bytes || -1, j.bytes_original || -1] : [-1, -1]; }, function () { return [-1, -1]; });
-    var local = !window.caches ? Promise.resolve([0, 0, 0]) : caches.open('kf-nova').then(function (c) {
+    var local = !window.caches ? Promise.resolve([0, 0, 0]) : caches.open('kurvenflug-nova').then(function (c) {
       return c.keys().then(function (ks) {
         var have = {}; ks.forEach(function (k) { have[k.url] = k; });
         var std = hs.map(function (h) { return novaUrl(h, false); }).filter(function (u) { return have[u]; });
@@ -408,7 +535,7 @@
   KF.offLoad = function (hashes, best, progress, done) {
     offAbort = false;
     if (!window.caches) { done(-1, false); return; }
-    caches.open('kf-nova').then(function (c) {
+    caches.open('kurvenflug-nova').then(function (c) {
       return c.keys().then(function (ks) {
         var have = {}; ks.forEach(function (k) { have[k.url] = 1; });
         var todo = hashes.split('\n').filter(Boolean).map(function (h) { return novaUrl(h, best); }).filter(function (u) { return !have[u]; });
@@ -435,8 +562,8 @@
     }).catch(function () { done(-1, offAbort); });
   };
   KF.offCancel = function () { offAbort = true; };
-  KF.offClear = function (cb) { if (window.caches) caches.delete('kf-nova').then(function () { cb(); }, function () { cb(); }); else cb(); };
+  KF.offClear = function (cb) { if (window.caches) caches.delete('kurvenflug-nova').then(function () { cb(); }, function () { cb(); }); else cb(); };
 
   // Reste der früheren Offline-Stimme (2.0–2.3) aus dem Browser-Speicher räumen
-  if (window.caches) caches.delete('kf-stimme').catch(function () {});
+  if (window.caches) caches.delete('kurvenflug-stimme').catch(function () {});
 })();

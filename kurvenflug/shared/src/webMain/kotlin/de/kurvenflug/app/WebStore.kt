@@ -9,7 +9,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 
 /** Einstellungen im lokalen Speicher des Browsers (Vorsilbe „kf.“). Nichts verlässt das Gerät. */
-class WebPrefs(private val prefix: String = "kf.") : Prefs {
+class WebPrefs(private val prefix: String = "kurvenflug.") : Prefs {
     private fun raw(key: String) = jsStoreGet(prefix + key)
     override fun getBoolean(key: String, default: Boolean) = raw(key)?.toBooleanStrictOrNull() ?: default
     override fun getInt(key: String, default: Int) = raw(key)?.toIntOrNull() ?: default
@@ -35,7 +35,7 @@ class WebPrefs(private val prefix: String = "kf.") : Prefs {
  * Je Spieler eine Zeile pro Level; das Eltern-Protokoll behält die letzten 60 Tage.
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-class WebProgressStore(private val profile: StateFlow<Int>, private val prefix: String = "kf.") : ProgressStore {
+class WebProgressStore(private val profile: StateFlow<Int>, private val prefix: String = "kurvenflug.") : ProgressStore {
     private val progress = HashMap<Int, MutableStateFlow<List<LevelProgress>>>()
     private val playLog = HashMap<Int, MutableStateFlow<List<Play>>>()
 

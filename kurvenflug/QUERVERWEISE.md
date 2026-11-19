@@ -77,9 +77,10 @@ s1-mathe-algebra (Funktionen), s1-physik-einheiten-formeln, s1-physik-strom.
 - „Potenzen & Wurzeln / wiss. Schreibweise“ → Rechenblitz angeboten (offen).
 
 ## Raumlicht – `https://raumlicht.mathenachhilfe-online.com/?ziel=<ziel>`
-- Vektoren 22 → `level/3-1` (Geraden), `level/5-1` (Ebenen); Binomialverteilung 30 → `binomial`, `galton`
-- Raumlicht verlinkt zu uns: „Funktionen formen“, später „Kurvendiskussion“
-- Abgestimmt: 2D-Vektoren + Binomial-Histogramm bleiben bei uns; Funktionenscharen, Sinus ableiten, uneigentliche Integrale → Raumlicht
+- Nur freie Ziele verlinken: `level/3-1` (Geraden), `level/5-1` (Ebenen), `galton`, `zufall`, `erleben`, `rotation`.
+  NICHT (Pro, Marcel): `binomial`, `baumeister`, `geisterfahrt`, `ringflug`. Frei auch `raumflug`. Korrektur Raumlicht 19.11.
+- Seit 2.6.0 (Oberstufe heraus) verlinkt KurvenFlug Raumlicht nur über „Wie geht's weiter?“ (Startseite, ?src=kurvenflug-weiter).
+- Raumlicht verlinkt zu uns: „Funktionen formen“ (funktionen-formen, ab Di 24.11.).
 
 ## Rechenblitz – `https://rechenblitz.mathenachhilfe-online.com/?thema=<id>&stufe=<1–6>&modus=training`
 - Themen: neg (↔ Negative Zahlen am Zahlenstrahl), pow, zehner (Potenzen abgegeben), term, eq (nur Kopfrechnen, keine Überschneidung)

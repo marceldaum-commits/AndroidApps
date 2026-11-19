@@ -3,6 +3,14 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.7.0 – Neue Adresse: lernen.mathenachhilfe-online.com/kurvenflug/
+- Alle Lern-Apps von Nachhilfe – online wohnen jetzt unter einer gemeinsamen Adresse. Wer KurvenFlug über die alte Adresse
+  öffnet, wird automatisch weitergeleitet – **der Lernstand zieht mit** (Sterne, Klasse, Einstellungen, Eltern-Kopplung, Pro).
+  Er reist dabei verschlüsselt; der Server kann ihn nicht lesen und löscht ihn gleich nach dem Ankommen.
+- Ist an der neuen Adresse schon ein Lernstand, wird nichts überschrieben. Ohne Internet bleibt alles wie bisher und der Umzug
+  klappt beim nächsten Start.
+- Wer KurvenFlug als App auf dem Startbildschirm hat, bitte unter der neuen Adresse neu installieren – die App zeigt den Weg.
+
 ## 2.6.0 – KurvenFlug konzentriert sich auf Klasse 5–10
 - KurvenFlug ist jetzt ganz auf **Funktionen und Physik für Klasse 5–10** ausgerichtet: 24 Planeten, 140 Level – alle frei.
 - Die Oberstufen-Aufgaben (Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung) sind jetzt im
