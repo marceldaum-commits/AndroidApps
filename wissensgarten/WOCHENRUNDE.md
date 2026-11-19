@@ -226,3 +226,12 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
   - Familien-Speicher bitte wie die Kopplung: Schlüssel nur im Link bzw. QR. Der Notfall-Code muss den Schlüssel enthalten, sonst kann niemand wiederherstellen.
   - Der Generalschlüssel braucht eine eigene, auf Papier dokumentierte Freigabe-Regel.
   - WebKit: Safari löscht localStorage nach 7 Tagen ohne Besuch, wenn die Web-App nicht auf dem Home-Bildschirm liegt. Die automatische Sicherung ist deshalb dort besonders wichtig.
+- **Nachtrag 19.11., ca. 13:45 UTC (Entscheidungen Marcel, über die AppZentrale):**
+  - Alle Stände aller Apps und Kinder liegen verschlüsselt auf unserem Server, verbunden mit dem Familien-Zugang. Marcel kann den Zugang wiederherstellen, öffnen kann nur die App.
+  - Geschenk-Codes haben nur eine Einlösefrist (bis 31.12. des dritten Jahres) und gelten danach wie ein Kauf.
+  - Probe-Codes 14 Tage (einer je Familie und App), Werbe- und Lehrkräfte-Codes 3 Monate.
+  - Das Jahres-Plus bleibt ein Produkt mit Laufzeit.
+  - Für uns heißt das:
+    - Neues Code-Feld bzw. Serverprüfung für Einlösefrist und Probe (Planung am 23.11.).
+    - Der Familien-Block je App und Kind ist das Sync-Format (`SnapshotIO`).
+    - Bis dahin nichts Serverseitiges bauen.
