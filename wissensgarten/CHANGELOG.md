@@ -4,10 +4,10 @@ Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Versi
 im GitHub-Release und in der App unter „App-Update“.
 
 ## 2.2.19 – Der Wissensgarten wird zum großen Kompendium (19.11.2026)
-- **Neue Aufgabenteilung unserer Lern-Apps:** Der Wissensgarten wird das große Lernkarten-Kompendium für alle Fächer von Klasse 1 bis 13 – außer Sprachen. Englisch, Französisch, Latein, Spanisch und der Sprach-Teil von Deutsch (Rechtschreibung, Grammatik, Wortschatz) ziehen in unsere Sprach-App Quasselquest um.
-- Diese Sprachpakete lassen sich deshalb hier nicht mehr neu pflanzen. **Wer schon ein Sprach-Beet im Garten hat, behält es** – mit allen Karten und dem ganzen Lernfortschritt.
-- Literatur und Stilmittel bleiben im Wissensgarten, ebenso alle Plus-Pakete.
-- Dein Lernstand bleibt vollständig erhalten.
+- **Neue Aufgabenteilung unserer Lern-Apps:** Der Wissensgarten wird das große Lernkarten-Kompendium für alle Fächer von Klasse 1 bis 13 – außer Sprachen. Englisch, Französisch, Latein, Spanisch und der Sprach-Teil von Deutsch (Rechtschreibung, Grammatik, Wortschatz) ziehen in unsere Sprach-App Quasselquest um. Literatur und Stilmittel bleiben im Wissensgarten.
+- **Sprach-Beete sind ausgeblendet:** Wer schon ein Sprach-Beet hatte, sieht es hier nicht mehr. Stattdessen erklärt ein Hinweis im Garten, wo es weitergeht. Die Karten und der Lernstand werden dabei **nicht gelöscht** – sie bleiben gespeichert und in der Sicherung, damit sie später zu Quasselquest mitziehen können.
+- Die Plus-Pakete „Englisch-Abi-Vokabeln“ und „Experte: Sprache“ gehören jetzt auch zu Quasselquest. Wer Wissensgarten Plus hat, bekommt dort die passende Sprache geschenkt.
+- Alle anderen Fächer und Plus-Pakete bleiben unverändert.
 
 ## 2.2.18 – Aufräum-Tag: Merken statt Rechnen, Wege zu den anderen Lern-Apps (19.11.2026)
 - **„Gleichungen lösen“ ist jetzt Merkwissen:** Statt Rechenaufgaben ohne Rechenweg gibt es Regeln und Verfahren zum Merken – Waage-Prinzip, Äquivalenzumformungen, Klammern, Textaufgaben aufstellen. Jede Karte erklärt ein vollständig durchgerechnetes Beispiel mit allen Schritten und Probe. Neu: „Was ist bei einer Textaufgabe der erste Schritt?“ (36 Karten).

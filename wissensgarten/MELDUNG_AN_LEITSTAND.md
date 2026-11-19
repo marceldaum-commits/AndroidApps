@@ -9,19 +9,24 @@
 
 
 
-## 2.2.19 – Sprachpakete aus dem Angebot (19.11.2026, Entscheidung Marcel über die AppZentrale)
-- **Neues Profil:** Kompendium für alle Fächer außer Sprachen, Klasse 1–13. Sprachen übernimmt Quasselquest.
-- **Nicht mehr pflanzbar (19 freie Pakete):**
+## 2.2.19 – Sprachen an Quasselquest (19.11.2026, Entscheidungen Marcel über die AppZentrale)
+- **Ausgeblendet:** 19 freie Pakete und 2 Plus-Pakete, Liste in `core/model/.../Angebot.kt`, Test `AngebotTest`.
   - Englisch (7), Französisch (2), Latein (1), Spanisch (1).
   - Deutsch-Sprachteil: gs-lesestart, gs-rechtschreibung, gs-satzzeichen-satzarten, gs-wortarten, s1-deutsch-grammatik, s1-deutsch-zeichensetzung, s1-deutsch-fremdwoerter, aw-redewendungen.
-  - Die Liste steht in `core/model/.../Angebot.kt`, Test `AngebotTest`.
-- **Wo gefiltert wird:** Samenhandlung, Einrichtung bzw. neues Profil, Duell-Paketwahl, Zu-zweit-Duell (Zufallsthema) und der Deeplink `#paket=` (führt bei Sprachpaketen zur Paketübersicht, außer das Beet ist schon da).
-- **Bleibt erhalten:**
-  - Bereits gepflanzte Sprach-Beete samt Lernstand, mit weiteren Inhalts-Updates.
-  - Ein empfangener Duell-Code zu einem Sprachpaket funktioniert weiter.
-  - Alle Plus-Pakete, auch ob-englisch-abi-vokabeln und aw-experte-sprache: Die Entscheidung liegt bei Marcel und ist über die AppZentrale gemeldet.
-  - Die Inhalte im Repo werden nicht gelöscht; Quasselquest hat Pfad und Format bekommen.
-- **Hinweis auf Quasselquest** in der Samenhandlung, sobald es dort Inhalte und einen Link gibt.
+  - Plus: ob-englisch-abi-vokabeln, aw-experte-sprache.
+  - Es bleiben s1-deutsch-stilmittel und ob-deutsch-epochen.
+- **Ausgeblendet heißt:**
+  - In der Samenhandlung, bei Einrichtung bzw. neuem Profil, in der Duell-Wahl, im Plus-Vorschau-Katalog und beim Deeplink `#paket=` erscheinen sie nicht mehr.
+  - **Bestehende Beete** filtert `GardenRepository.beds/allBeds/bedsOnce` heraus. Garten, Gießen, Spiele, Radio, Berichte und Eltern-Bericht sehen sie nicht mehr.
+  - **Nicht gelöscht:** Sicherung bzw. Sync (`SnapshotIO`, direkt am Speicher) und Paket-Updates (`syncPacks`) behalten sie. „Profil löschen“ löscht weiterhin alles.
+- **Hinweis auf Quasselquest:**
+  - Im Garten erscheint die Karte „🗣️ Sprachen sind umgezogen!“, sobald das Kind ausgeblendete Sprach-Beete hat. Eine allgemeine Version steht oben in der Samenhandlung.
+  - Der Knopf „Zu Quasselquest“ erscheint, sobald `Angebot.QUASSELQUEST_URL` gesetzt ist (Adresse vom Leitstand). Bis dahin steht dort „Quasselquest öffnet bald – frag deine Eltern.“
+- **Belege:** Bildschirmfoto `screenshots/84_quasselquest_hinweis.png`. `webApp/tools/web-sprachen.cjs` (Wasm und JS) prüft: Das Beet ist ausgeblendet, Beet, Karten und Lernprotokoll bleiben gespeichert, und `#paket=` pflanzt kein Sprachpaket.
+- **Für den Leitstand:**
+  - Der Plus-Text im Shop bzw. auf der Website darf keine Sprachen mehr nennen.
+  - Den Plus-Endpunkt bitte so lassen: Die Pakete werden in der App ausgeblendet. Löschen auf dem Server erst nach dem Umzug zu Quasselquest.
+- **Rückweg:** 2.2.18, bzw. 2.2.17 als letzte Live-Version.
 
 ## 2.2.18 – Großes Inhaltsupdate „Aufräum-Tag“ (19.11.2026, einen Tag vor dem Termin Fr 20.11.)
 - **Abgleich umgesetzt (Wochenrunde 18.11., von Marcel bestätigt):**

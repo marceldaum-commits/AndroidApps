@@ -370,6 +370,9 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                                 Column(verticalArrangement = Arrangement.spacedBy(14.dp)) {
                                     val upd by vm.availableUpdate.collectAsStateWithLifecycle()
                                     upd?.let { de.wissensgarten.app.ui.settings.UpdateBanner(it.version) { gate("Ein Update installieren dürfen nur Eltern.") { goTab(Routes.SETTINGS) } } }
+                                    // Sprachen sind zu Quasselquest umgezogen: ausgeblendete Beete → freundlicher Hinweis
+                                    val sprachBeete by vm.sprachBeete.collectAsStateWithLifecycle()
+                                    if (sprachBeete > 0) de.wissensgarten.app.ui.common.QuasselquestHinweis(sprachBeete)
                                     // Klassenarbeiten: Countdown-Karten oder Einladung zum Eintragen
                                     val plans = remember(rev, beds, now) { vm.examPlans() }
                                     var addExam by remember { mutableStateOf(false) }
@@ -442,7 +445,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                 composable(Routes.SHOP) {
                     WithProfile(profile) { p ->
                         ShopScreen(
-                            profile = p, packs = angebot + vm.plusPreviews.collectAsStateWithLifecycle().value, beds = beds, canUse = vm.entitlements::canUse,
+                            profile = p, packs = angebot + vm.plusPreviews.collectAsStateWithLifecycle().value.filter(de.wissensgarten.core.model.Angebot::angeboten), beds = beds, canUse = vm.entitlements::canUse,
                             onLocked = {
                                 if (vm.entitlements.code != null) { host.toast("🐝 Brummi holt die Plus-Pakete … gleich noch einmal antippen."); vm.refreshPlusPacksIfDue(force = true) }
                                 else gate("Dieses Paket gehört zu Wissensgarten Plus.") { nav.navigate(Routes.PLUS) }

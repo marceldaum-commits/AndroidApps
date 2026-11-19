@@ -1,25 +1,36 @@
 package de.wissensgarten.core.model
 
 /**
- * Was der Wissensgarten neu zum Pflanzen anbietet (Profil laut Marcel, 19.11.2026): Lernkarten-Kompendium für alle Fächer
- * außer Sprachen, Klasse 1–13. Sprachen (Englisch, Französisch, Latein, Spanisch und der Sprach-Teil von Deutsch)
- * übernimmt Quasselquest.
+ * Was der Wissensgarten zeigt (Profil laut Marcel, 19.11.2026): Lernkarten-Kompendium für alle Fächer außer Sprachen, Klasse 1–13.
+ * Sprachen (Englisch, Französisch, Latein, Spanisch, der Sprach-Teil von Deutsch und die beiden Plus-Sprachpakete) übernimmt Quasselquest.
  *
- * Wichtig: Bereits gepflanzte Sprach-Beete bleiben mit allen Karten und dem ganzen Lernstand erhalten und werden weiter
- * aktualisiert – sie lassen sich nur nicht mehr neu pflanzen. Plus-Pakete bleiben unberührt (Entscheidung bei Marcel).
+ * Marcels Entscheidung (19.11.): Diese Pakete werden auch in bestehenden Gärten AUSGEBLENDET. Sie werden nicht gelöscht:
+ * Karten und Lernstand bleiben gespeichert (und in der verschlüsselten Sicherung), damit ein späterer Umzug zu Quasselquest
+ * sie übernehmen kann. Statt der Beete zeigt der Garten einen Hinweis auf Quasselquest.
  */
 object Angebot {
-    /** Fächer, die an Quasselquest gehen */
-    val SPRACH_FAECHER = setOf("englisch", "franzoesisch", "latein", "spanisch")
-
-    /** Deutsch: nur der Sprach-Teil (Rechtschreibung, Grammatik, Wortschatz) geht an Quasselquest; Literatur und Stilmittel bleiben */
-    val DEUTSCH_SPRACHE = setOf(
+    /** Freie Sprachpakete: Englisch, Französisch, Latein, Spanisch und der Sprach-Teil von Deutsch (Literatur und Stilmittel bleiben) */
+    val SPRACHPAKETE_FREI = setOf(
+        "gs-englisch-basics", "gs-englisch-familie-koerper", "gs-englisch-farben-zahlen",
+        "s1-englisch-alltag", "s1-englisch-grundwortschatz", "s1-englisch-irregular-verbs", "s1-englisch-tenses",
+        "s1-franzoesisch-grundwortschatz", "s1-franzoesisch-verben", "s1-latein-grundwortschatz", "s1-spanisch-grundwortschatz",
         "gs-lesestart", "gs-rechtschreibung", "gs-satzzeichen-satzarten", "gs-wortarten",
         "s1-deutsch-grammatik", "s1-deutsch-zeichensetzung", "s1-deutsch-fremdwoerter", "aw-redewendungen",
     )
 
-    fun istSprachpaket(p: Pack) = p.subject in SPRACH_FAECHER || p.id in DEUTSCH_SPRACHE
+    /** Plus-Sprachpakete, die komplett zu Quasselquest gehen (Kaufschutz: Käufer bekommen dort die Sprache gratis) */
+    val SPRACHPAKETE_PLUS = setOf("ob-englisch-abi-vokabeln", "aw-experte-sprache")
 
-    /** Darf neu gepflanzt bzw. vorgeschlagen werden? */
-    fun angeboten(p: Pack) = p.isPlus || !istSprachpaket(p)
+    val AUSGEBLENDET = SPRACHPAKETE_FREI + SPRACHPAKETE_PLUS
+
+    /** Gehört ein Beet (über seine Paket-ID) zu einem ausgeblendeten Sprachpaket? Eigene Beete (packId = null) nie. */
+    fun ausgeblendet(packId: String?) = packId != null && packId in AUSGEBLENDET
+
+    /** Darf angezeigt, neu gepflanzt bzw. vorgeschlagen werden? */
+    fun angeboten(p: Pack) = !ausgeblendet(p.id)
+
+    /** Adresse von Quasselquest – wird gesetzt, sobald der Leitstand sie festgelegt hat; bis dahin nur Text ohne Knopf */
+    val QUASSELQUEST_URL: String? = null
+    const val SRC = "wissensgarten-sprachen"
+    fun quasselquestLink() = QUASSELQUEST_URL?.let { it + (if ('?' in it) "&" else "?") + "src=$SRC" }
 }

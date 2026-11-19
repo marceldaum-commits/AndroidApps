@@ -66,6 +66,11 @@ class AppViewModel(
         if (id == null) flowOf(emptyList()) else repo.beds(id)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    /** Ausgeblendete Sprach-Beete des aktiven Profils (→ Hinweis auf Quasselquest im Garten) */
+    val sprachBeete: StateFlow<Int> = profile.map { it?.id }.distinctUntilChanged().flatMapLatest { id ->
+        if (id == null) flowOf(0) else repo.ausgeblendeteBeete(id)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
+
     /** Gekaufte Artikel des aktiven Profils. */
     val inventory: StateFlow<List<de.wissensgarten.core.data.db.InventoryEntity>> =
         profile.map { it?.id }.distinctUntilChanged().flatMapLatest { id ->

@@ -314,6 +314,13 @@ open class ScreenshotTest {
             de.wissensgarten.core.model.Querverweise.fuer(gl.id))) {}
     }
 
+    @Test fun quasselquest() = shot("84_quasselquest_hinweis") {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp), modifier = Modifier.padding(vertical = 24.dp)) {
+            de.wissensgarten.app.ui.common.QuasselquestHinweis(2)
+            de.wissensgarten.app.ui.common.QuasselquestHinweis(0)
+        }
+    }
+
     @Test fun shop() = shot("08_samenhandlung") {
         ShopScreen(profile, packs, garden, { true }, {}, {}, { _, _ -> })
     }
