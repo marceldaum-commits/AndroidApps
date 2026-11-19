@@ -84,13 +84,14 @@ fun TheorySheet(theory: Theory, onClose: () -> Unit) {
             }
             if (theory.links.isNotEmpty()) item {
                 val uri = androidx.compose.ui.platform.LocalUriHandler.current
+                val gate = LocalParentGate.current
                 var shown by remember { mutableStateOf(false) }
                 LaunchedEffect(Unit) { kotlinx.coroutines.delay(120L * theory.scenes.size + 200); shown = true }
                 AnimatedVisibility(shown, enter = fadeIn(tween(300)) + slideInVertically(tween(300)) { it / 3 }) {
                     Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                         Text("Hier geht's weiter", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
                         theory.links.forEach { l ->
-                            OutlinedButton(onClick = { voice?.stop(); runCatching { uri.openUri(l.url) } }, modifier = Modifier.fillMaxWidth()
+                            OutlinedButton(onClick = { voice?.stop(); if (l.mitTor) gate("Hier geht es zu einer anderen Lern-App.") { runCatching { uri.openUri(l.url) } } else runCatching { uri.openUri(l.url) } }, modifier = Modifier.fillMaxWidth()
                                 .semantics { contentDescription = l.text }) {
                                 Text(l.emoji, fontSize = 20.sp)
                                 Spacer(Modifier.width(8.dp))

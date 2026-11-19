@@ -8,7 +8,8 @@ package de.wissensgarten.core.model
 object Querverweise {
     const val SRC = "wissensgarten-theorie"
 
-    data class Link(val app: String, val emoji: String, val text: String, val url: String)
+    /** [mitTor]: Ziel-App zeigt in der Oberstufe Preise ohne Eltern-Tor (Mathe-Trainer, Raumlicht) → Link nur über das Tor (Recht V10b) */
+    data class Link(val app: String, val emoji: String, val text: String, val url: String, val mitTor: Boolean = false)
 
     private fun host(name: String, test: Boolean) = "https://$name${if (test) "-test" else ""}.mathenachhilfe-online.com"
 
@@ -67,12 +68,12 @@ object Querverweise {
 
     /** Alle Querverweise eines Pakets in fester Reihenfolge; [test] = Test-Stufe der Ziel-Apps */
     fun fuer(packId: String, test: Boolean = false): List<Link> = buildList {
-        matheTrainer[packId]?.let { add(Link("Mathe-Trainer", "🧮", "Üben mit Rechenwegen im Mathe-Trainer", "${host("trainer", test)}/?src=$SRC#/$it")) }
+        matheTrainer[packId]?.let { add(Link("Mathe-Trainer", "🧮", "Üben mit Rechenwegen im Mathe-Trainer", "${host("trainer", test)}/?src=$SRC#/$it", mitTor = true)) }
         rechenblitz[packId]?.let { q -> add(Link("Rechenblitz", "⚡", "Tempo trainieren im Rechenblitz",
             "${host("rechenblitz", test)}/?" + (if (q.isEmpty()) "" else "$q&") + "src=$SRC")) }
         kurvenFlug[packId]?.let { add(Link("KurvenFlug", "🚀", "Erleben in KurvenFlug", "${host("kurvenflug", test)}/?src=$SRC#kapitel=$it")) }
         experimentopia[packId]?.let { add(Link("Experimentopia", "🔬", "Ausprobieren in Experimentopia", "${host("experimentopia", test)}/?src=$SRC#thema=$it")) }
-        raumlicht[packId]?.let { add(Link("Raumlicht", "🔦", "Erleben in Raumlicht", "${host("raumlicht", test)}/?ziel=$it&src=$SRC")) }
+        raumlicht[packId]?.let { add(Link("Raumlicht", "🔦", "Erleben in Raumlicht", "${host("raumlicht", test)}/?ziel=$it&src=$SRC", mitTor = true)) }
     }
 
     /** Alle Paket-IDs mit mindestens einem Querverweis (für Tests) */

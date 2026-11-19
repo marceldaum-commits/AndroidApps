@@ -9,6 +9,14 @@
 
 
 
+## 2.3.4 – Korrekturen nach der Selbstprüfung (20.11.2026, „nur Korrekturen“)
+- **V10a:** „← Alle Apps“ geht über das Eltern-Tor, Grund im Tor: „Hier geht es zur Website.“
+- **V10b:** Querverweise zum Mathe-Trainer und zu Raumlicht nur über das Tor („Hier geht es zu einer anderen Lern-App.“), weil dort in der Oberstufe Preise ohne Tor stehen. Rechenblitz, KurvenFlug, Experimentopia und Quasselquest bleiben ohne Tor.
+- **Startbild-Fußzeile:** nur noch Text, kein Link zur Website.
+- **Zählung:** Auf der Test-Stufe geht sie an `trainer-test.…/zaehler/v1/e`, nicht mehr an den Live-Zähler.
+- **Rechtsbezug:** ja (V10).
+- **Rückweg:** 2.3.3.
+
 ## 2.3.3 – Mikrofon nach Regel 10k (19.11.2026, Recht V6 freigegeben)
 - **Erkennung:** Ohne Erlaubnis immer `processLocally = true` (wenn der Browser die Eigenschaft kennt, sonst keine Erkennung). `SpeechRecognition.available()` wird bewusst NICHT aufgerufen: Im Test brachte es Chromium zum Absturz (Tab abgestürzt), vor dem Push gefunden und entfernt.
   - Ohne Eltern-Erlaubnis wird nur mit `processLocally = true` erkannt. Kann das Gerät die Sprache nicht selbst, gibt es keine Erkennung; Brummi-Radio und Sprech-Spiele fallen auf Antwort-Knöpfe zurück.

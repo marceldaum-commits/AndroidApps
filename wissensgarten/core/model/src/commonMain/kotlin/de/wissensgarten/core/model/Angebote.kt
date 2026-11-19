@@ -10,6 +10,9 @@ package de.wissensgarten.core.model
 object Zaehlung {
     const val APP = "wissensgarten"
     const val URL = "https://trainer.mathenachhilfe-online.com/zaehler/v1/e"
+    /** Test-Stufe zählt auf dem Test-Server, damit die echten Zahlen nicht verfälscht werden */
+    const val URL_TEST = "https://trainer-test.mathenachhilfe-online.com/zaehler/v1/e"
+    fun url(test: Boolean) = if (test) URL_TEST else URL
 
     /** Abschließende Liste der Ereignisse (gemeinsames Format) */
     val EREIGNISSE = setOf(

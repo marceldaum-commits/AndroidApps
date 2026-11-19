@@ -432,7 +432,7 @@ class AppViewModel(
     fun zaehle(ereignis: String, ort: String? = null, thema: String? = null) {
         if (!c.settings.countUsage.value) return
         val body = de.wissensgarten.core.model.Zaehlung.inhalt(AppInfo.VERSION, ereignis, ort, thema) ?: return
-        host?.sendCount(de.wissensgarten.core.model.Zaehlung.URL, body)
+        host?.let { it.sendCount(de.wissensgarten.core.model.Zaehlung.url(it.testStage), body) }
     }
 
     fun startPlusTrial(): Boolean = c.entitlements.startTrial()

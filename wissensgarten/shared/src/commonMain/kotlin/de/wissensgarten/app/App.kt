@@ -316,7 +316,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         Box(Modifier.fillMaxSize()) {
         Scaffold(
             // „← Alle Apps“: zurück zur App-Auswahl auf unserer Website – nur in den Hauptansichten, nie mitten in einer Runde
-            topBar = { host.appsPageUrl?.let { if (showBar) de.wissensgarten.app.ui.common.AlleAppsLeiste { host.openAppsPage() } } },
+            topBar = { host.appsPageUrl?.let { if (showBar) de.wissensgarten.app.ui.common.AlleAppsLeiste { gate("Hier geht es zur Website.") { host.openAppsPage() } } } },
             bottomBar = {
                 if (showBar) NavigationBar {
                     TABS.forEach { t ->
