@@ -11,3 +11,5 @@ node web/familie/tests/familie.mjs      # erwartet: „familie: 41 Prüfungen be
 Die Tests enthalten einen nachgebauten Server (nur zum Testen; den echten `/familie/v1/` betreibt der Leitstand).
 Noch nicht in der WebApp eingebunden – die Anbindung (Spieler 0–5 → Kinder, automatisches Sichern, Elternbereich) folgt.
 Zusammenführen bei Konflikten: `core/model/FamilyMerge.kt`.
+
+Öffentlicher Wiederherstellungs-Schlüssel (X25519, Marcel 19.11., privater Teil nur in Bitwarden): `REC_PUB = vMrORj9yObM3Ijd9sGStjUB9I3f6ot9E8M-70yGeQ0M` – gilt auch für lernen-test. Kommt fest in die nächste familie.js.
