@@ -44,3 +44,4 @@ Insel-Positionen, Einstellungen, Name → fragen (Elternbereich), sonst Gerätes
   `liste`, `rechte`, `einloesen(code)` (nur hinter dem Tor), `protokoll`, `loeschen`, `nummer`, `link(app)`.
 - Sperrliste: `sperrlisteLaden({basis, f, speicher, schluessel:'quasselquest.sperrliste'})`, `codeGesperrt(code, …)` vor jeder Offline-Pro-Prüfung.
 - Datei-Weg folgt vom Mathe-Trainer; Server vom Leitstand steht noch aus.
+- Öffentlicher Wiederherstellungs-Schlüssel (privater Teil nur bei Marcel): `REC_PUB = vMrORj9yObM3Ijd9sGStjUB9I3f6ot9E8M-70yGeQ0M` – fest in familie.js, gilt auch auf lernen-test.
