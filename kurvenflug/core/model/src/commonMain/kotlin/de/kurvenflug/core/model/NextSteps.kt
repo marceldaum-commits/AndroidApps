@@ -14,7 +14,8 @@ object NextSteps {
             "https://trainer.mathenachhilfe-online.com/?src=kurvenflug-weiter"),
         App("🔦", "Raumlicht", "Mathe im Raum zum Anfassen – Oberstufe",
             "Vektoren, Geraden und Ebenen in 3D, Kurven abfahren, Galton-Brett",
-            "https://raumlicht.mathenachhilfe-online.com/?ziel=level/3-1&src=kurvenflug-weiter"   // preisfreier Einstieg (Recht V10b): auch für Kl. < 9 ohne Tor),
+            // preisfreier Einstieg (Recht V10b): auch für Kl. < 9 ohne Tor
+            "https://raumlicht.mathenachhilfe-online.com/?ziel=level/3-1&src=kurvenflug-weiter"),
     )
 
     const val TITLE = "Wie geht's weiter?"
