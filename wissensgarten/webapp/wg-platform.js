@@ -45,12 +45,20 @@
 
   // Spracherkennung (Chrome, Edge, Safari)
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  wg.srAvailable = () => !!SR;
+  // Mikrofon-Regel 10k (Recht V6): Erkennung nur im Gerät (processLocally). Online-Erkennung über den Sprachdienst des
+  // Browser-Herstellers nur, wenn Eltern sie im Elternbereich erlaubt haben (wg.srOnline, voreingestellt aus).
+  // SpeechRecognition.available() wird bewusst NICHT aufgerufen: Es brachte Chromium (ohne Gerät-Erkennung) im Test zum Absturz.
+  // Stattdessen: ohne Erlaubnis immer processLocally = true – kann das Gerät es nicht, meldet start()/onerror einen Fehler,
+  // und die App fällt auf Antwort-Knöpfe zurück. Online nur mit wg.srOnline.
+  wg.srOnline = false;
+  wg.srAvailable = () => !!SR && (wg.srOnline || 'processLocally' in SR.prototype);
   wg.sr = { state: 'idle', words: [], rec: null };
   wg.listen = (lang) => {
     if (!SR) { wg.sr.state = 'error'; return; }
     try { if (wg.sr.rec) wg.sr.rec.abort(); } catch (e) {}
+    if (!wg.srOnline && !('processLocally' in SR.prototype)) { wg.sr.state = 'error'; return; }   // ohne Erlaubnis nie online
     const r = new SR(); r.lang = lang; r.maxAlternatives = 5; r.interimResults = false; r.continuous = false;
+    if (!wg.srOnline) r.processLocally = true;
     wg.sr = { state: 'listening', words: [], rec: r };
     r.onresult = (e) => { const res = e.results[0]; const w = []; for (let i = 0; i < res.length; i++) w.push(res[i].transcript); wg.sr.words = w; wg.sr.state = 'done'; };
     r.onerror = (e) => { wg.sr.state = (e.error === 'no-speech') ? 'silence' : 'error'; };
