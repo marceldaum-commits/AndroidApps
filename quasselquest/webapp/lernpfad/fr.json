@@ -212,8 +212,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Bonjour, je es Ruby.",
-       "richtig": "Bonjour, je suis Ruby.",
+       "falsch": "Bonjour ! Moi, je es Ruby.",
+       "richtig": "Bonjour ! Moi, je suis Ruby.",
        "wort": "es",
        "korrektur": "suis",
        "choices": [
@@ -234,8 +234,8 @@
        "tipp": "Wie es geht, sagt man mit bien."
       },
       {
-       "falsch": "Bon nuit, Léa !",
-       "richtig": "Bonne nuit, Léa !",
+       "falsch": "Bon nuit, Léa ! Dors bien !",
+       "richtig": "Bonne nuit, Léa ! Dors bien !",
        "wort": "Bon",
        "korrektur": "Bonne",
        "choices": [
@@ -432,8 +432,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Tu est mon ami.",
-       "richtig": "Tu es mon ami.",
+       "falsch": "Toi, tu est mon ami.",
+       "richtig": "Toi, tu es mon ami.",
        "wort": "est",
        "korrektur": "es",
        "choices": [
@@ -443,8 +443,8 @@
        "tipp": "du bist = tu es – ohne t. est gehört zu il und elle."
       },
       {
-       "falsch": "Je suis un fille.",
-       "richtig": "Je suis une fille.",
+       "falsch": "Je suis un petite fille.",
+       "richtig": "Je suis une petite fille.",
        "wort": "un",
        "korrektur": "une",
        "choices": [
@@ -454,8 +454,8 @@
        "tipp": "fille ist weiblich – also une."
       },
       {
-       "falsch": "Je suis une garçon.",
-       "richtig": "Je suis un garçon.",
+       "falsch": "Je suis une petit garçon.",
+       "richtig": "Je suis un petit garçon.",
        "wort": "une",
        "korrektur": "un",
        "choices": [
@@ -465,8 +465,8 @@
        "tipp": "garçon ist männlich – also un."
       },
       {
-       "falsch": "Je appelle Léa.",
-       "richtig": "Je m'appelle Léa.",
+       "falsch": "Comment tu t'appelles ? Je appelle Léa.",
+       "richtig": "Comment tu t'appelles ? Je m'appelle Léa.",
        "wort": "appelle",
        "korrektur": "m'appelle",
        "choices": [
@@ -666,8 +666,8 @@
        "tipp": "Das Alter hat man: tu as dix ans."
       },
       {
-       "falsch": "J'ai dix doigt.",
-       "richtig": "J'ai dix doigts.",
+       "falsch": "J'ai deux mains et dix doigt.",
+       "richtig": "J'ai deux mains et dix doigts.",
        "wort": "doigt",
        "korrektur": "doigts",
        "choices": [
@@ -867,8 +867,8 @@
      ],
      "fehler": [
       {
-       "falsch": "La ballon est rouge.",
-       "richtig": "Le ballon est rouge.",
+       "falsch": "La ballon est rouge et rond.",
+       "richtig": "Le ballon est rouge et rond.",
        "wort": "La",
        "korrektur": "Le",
        "choices": [
@@ -900,13 +900,13 @@
        "tipp": "bateau ist männlich – also blanc."
       },
       {
-       "falsch": "J'aime la vert.",
-       "richtig": "J'aime le vert.",
-       "wort": "la",
-       "korrektur": "le",
+       "falsch": "La vert est ma couleur préférée.",
+       "richtig": "Le vert est ma couleur préférée.",
+       "wort": "La",
+       "korrektur": "Le",
        "choices": [
-        "les",
-        "une"
+        "Les",
+        "Une"
        ],
        "tipp": "Farben sind männlich: le vert."
       }
@@ -1089,8 +1089,8 @@
      ],
      "fehler": [
       {
-       "falsch": "C'est mon mère.",
-       "richtig": "C'est ma mère.",
+       "falsch": "C'est ta maman ? Oui, c'est mon mère.",
+       "richtig": "C'est ta maman ? Oui, c'est ma mère.",
        "wort": "mon",
        "korrektur": "ma",
        "choices": [
@@ -1111,8 +1111,8 @@
        "tipp": "frère ist männlich – also mon."
       },
       {
-       "falsch": "J'ai un sœur.",
-       "richtig": "J'ai une sœur.",
+       "falsch": "J'ai un petite sœur.",
+       "richtig": "J'ai une petite sœur.",
        "wort": "un",
        "korrektur": "une",
        "choices": [
@@ -1303,8 +1303,8 @@
      ],
      "fehler": [
       {
-       "falsch": "J'ai une chien.",
-       "richtig": "J'ai un chien.",
+       "falsch": "J'ai une petit chien.",
+       "richtig": "J'ai un petit chien.",
        "wort": "une",
        "korrektur": "un",
        "choices": [
@@ -1325,8 +1325,8 @@
        "tipp": "Im Französischen ist die Katze männlich: le chat."
       },
       {
-       "falsch": "J'ai un souris.",
-       "richtig": "J'ai une souris.",
+       "falsch": "J'ai un petite souris.",
+       "richtig": "J'ai une petite souris.",
        "wort": "un",
        "korrektur": "une",
        "choices": [
@@ -1531,8 +1531,8 @@
        "tipp": "Die Klammer heißt ne … pas."
       },
       {
-       "falsch": "Tu es faim ?",
-       "richtig": "Tu as faim ?",
+       "falsch": "Tu es faim et soif ?",
+       "richtig": "Tu as faim et soif ?",
        "wort": "es",
        "korrektur": "as",
        "choices": [
@@ -1542,24 +1542,24 @@
        "tipp": "Hunger hat man: tu as faim."
       },
       {
-       "falsch": "J'aime la fromage.",
-       "richtig": "J'aime le fromage.",
-       "wort": "la",
-       "korrektur": "le",
+       "falsch": "La fromage est bon.",
+       "richtig": "Le fromage est bon.",
+       "wort": "La",
+       "korrektur": "Le",
        "choices": [
-        "les",
-        "une"
+        "Les",
+        "Une"
        ],
        "tipp": "fromage ist männlich – also le."
       },
       {
-       "falsch": "J'aime le pizza.",
-       "richtig": "J'aime la pizza.",
-       "wort": "le",
-       "korrektur": "la",
+       "falsch": "Le pizza est bonne.",
+       "richtig": "La pizza est bonne.",
+       "wort": "Le",
+       "korrektur": "La",
        "choices": [
-        "les",
-        "un"
+        "Les",
+        "Un"
        ],
        "tipp": "pizza ist weiblich – also la."
       }
@@ -1745,8 +1745,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Ouvre ta livre, s'il te plaît.",
-       "richtig": "Ouvre ton livre, s'il te plaît.",
+       "falsch": "Ouvre ta livre à la page dix.",
+       "richtig": "Ouvre ton livre à la page dix.",
        "wort": "ta",
        "korrektur": "ton",
        "choices": [
@@ -1756,8 +1756,8 @@
        "tipp": "livre ist männlich – also ton."
       },
       {
-       "falsch": "J'ai une crayon.",
-       "richtig": "J'ai un crayon.",
+       "falsch": "J'ai une crayon noir.",
+       "richtig": "J'ai un crayon noir.",
        "wort": "une",
        "korrektur": "un",
        "choices": [
@@ -1767,8 +1767,8 @@
        "tipp": "crayon ist männlich – also un."
       },
       {
-       "falsch": "Où est ma sac ?",
-       "richtig": "Où est mon sac ?",
+       "falsch": "Où est ma sac bleu ?",
+       "richtig": "Où est mon sac bleu ?",
        "wort": "ma",
        "korrektur": "mon",
        "choices": [
@@ -1984,8 +1984,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Je touches mon nez.",
-       "richtig": "Je touche mon nez.",
+       "falsch": "Moi, je touches mon nez.",
+       "richtig": "Moi, je touche mon nez.",
        "wort": "touches",
        "korrektur": "touche",
        "choices": [
@@ -2006,8 +2006,8 @@
        "tipp": "la tête ist weiblich – also la."
       },
       {
-       "falsch": "Ruby a une nez rouge.",
-       "richtig": "Ruby a un nez rouge.",
+       "falsch": "Ruby a une nez rond.",
+       "richtig": "Ruby a un nez rond.",
        "wort": "une",
        "korrektur": "un",
        "choices": [
@@ -2017,8 +2017,8 @@
        "tipp": "le nez ist männlich – also un nez."
       },
       {
-       "falsch": "Léa joues avec Ruby.",
-       "richtig": "Léa joue avec Ruby.",
+       "falsch": "Léa joues et rit avec Ruby.",
+       "richtig": "Léa joue et rit avec Ruby.",
        "wort": "joues",
        "korrektur": "joue",
        "choices": [
@@ -2442,8 +2442,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Le chat est sur la lit.",
-       "richtig": "Le chat est sur le lit.",
+       "falsch": "Le chat est sur la lit bleu.",
+       "richtig": "Le chat est sur le lit bleu.",
        "wort": "la",
        "korrektur": "le",
        "choices": [
@@ -2453,8 +2453,8 @@
        "tipp": "le lit ist männlich – also sur le lit."
       },
       {
-       "falsch": "J'ai un clé.",
-       "richtig": "J'ai une clé.",
+       "falsch": "J'ai un petite clé.",
+       "richtig": "J'ai une petite clé.",
        "wort": "un",
        "korrektur": "une",
        "choices": [
@@ -2475,15 +2475,15 @@
        "tipp": "la fenêtre ist weiblich und Einzahl – grand bekommt ein -e: grande."
       },
       {
-       "falsch": "Hugo es dans la cuisine.",
-       "richtig": "Hugo est dans la cuisine.",
+       "falsch": "Où est Hugo ? Il es dans la cuisine.",
+       "richtig": "Où est Hugo ? Il est dans la cuisine.",
        "wort": "es",
        "korrektur": "est",
        "choices": [
         "suis",
         "ai"
        ],
-       "tipp": "es gehört zu tu. Bei Hugo (er) heißt es: il est."
+       "tipp": "es gehört zu tu. Bei Hugo (il) heißt es: il est."
       }
      ]
     },
@@ -2667,8 +2667,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Léa fait son devoirs.",
-       "richtig": "Léa fait ses devoirs.",
+       "falsch": "Léa fait son devoirs. Ils sont faciles.",
+       "richtig": "Léa fait ses devoirs. Ils sont faciles.",
        "wort": "son",
        "korrektur": "ses",
        "choices": [
@@ -2678,8 +2678,8 @@
        "tipp": "les devoirs sind mehrere – also ses."
       },
       {
-       "falsch": "Hugo cherche sa réveil.",
-       "richtig": "Hugo cherche son réveil.",
+       "falsch": "Hugo cherche sa petit réveil.",
+       "richtig": "Hugo cherche son petit réveil.",
        "wort": "sa",
        "korrektur": "son",
        "choices": [
@@ -2689,8 +2689,8 @@
        "tipp": "le réveil ist männlich – also son réveil."
       },
       {
-       "falsch": "Il est huit heure.",
-       "richtig": "Il est huit heures.",
+       "falsch": "Il est huit heure, je prends mon petit-déjeuner.",
+       "richtig": "Il est huit heures, je prends mon petit-déjeuner.",
        "wort": "heure",
        "korrektur": "heures",
        "choices": [
@@ -2700,8 +2700,8 @@
        "tipp": "Acht Stunden sind mehrere – heures mit -s."
       },
       {
-       "falsch": "Tu mange ton petit-déjeuner.",
-       "richtig": "Tu manges ton petit-déjeuner.",
+       "falsch": "Toi, tu mange ton petit-déjeuner.",
+       "richtig": "Toi, tu manges ton petit-déjeuner.",
        "wort": "mange",
        "korrektur": "manges",
        "choices": [
@@ -2899,8 +2899,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Est-ce que tu joue le samedi ?",
-       "richtig": "Est-ce que tu joues le samedi ?",
+       "falsch": "Et toi, est-ce que tu joue le samedi ?",
+       "richtig": "Et toi, est-ce que tu joues le samedi ?",
        "wort": "joue",
        "korrektur": "joues",
        "choices": [
@@ -2910,8 +2910,8 @@
        "tipp": "Nach tu bekommt das Verb ein -s: tu joues."
       },
       {
-       "falsch": "Le dimanche, je suis chez mon grand-mère.",
-       "richtig": "Le dimanche, je suis chez ma grand-mère.",
+       "falsch": "La maman de ma maman, c'est mon grand-mère.",
+       "richtig": "La maman de ma maman, c'est ma grand-mère.",
        "wort": "mon",
        "korrektur": "ma",
        "choices": [
@@ -2932,8 +2932,8 @@
        "tipp": "Sieben Tage sind mehrere – jours mit -s."
       },
       {
-       "falsch": "Est-ce que tu es sport le lundi ?",
-       "richtig": "Est-ce que tu as sport le lundi ?",
+       "falsch": "Est-ce que tu es sport et musique le lundi ?",
+       "richtig": "Est-ce que tu as sport et musique le lundi ?",
        "wort": "es",
        "korrektur": "as",
        "choices": [
@@ -3124,8 +3124,8 @@
      ],
      "fehler": [
       {
-       "falsch": "J'aime danse.",
-       "richtig": "J'aime danser.",
+       "falsch": "J'aime danse et chanter.",
+       "richtig": "J'aime danser et chanter.",
        "wort": "danse",
        "korrektur": "danser",
        "choices": [
@@ -3135,8 +3135,8 @@
        "tipp": "Nach aimer kommt die Grundform: danser."
       },
       {
-       "falsch": "Tu aime nager ?",
-       "richtig": "Tu aimes nager ?",
+       "falsch": "Et toi, tu aime nager ?",
+       "richtig": "Et toi, tu aimes nager ?",
        "wort": "aime",
        "korrektur": "aimes",
        "choices": [
@@ -3146,13 +3146,13 @@
        "tipp": "Nach tu bekommt das Verb ein -s: tu aimes."
       },
       {
-       "falsch": "Hugo aime la foot.",
-       "richtig": "Hugo aime le foot.",
-       "wort": "la",
-       "korrektur": "le",
+       "falsch": "La foot est génial.",
+       "richtig": "Le foot est génial.",
+       "wort": "La",
+       "korrektur": "Le",
        "choices": [
-        "les",
-        "une"
+        "Les",
+        "Une"
        ],
        "tipp": "le foot ist männlich – also le foot."
       },
@@ -3364,8 +3364,8 @@
        "tipp": "je fais, tu fais, il fait – beim Wetter also il fait."
       },
       {
-       "falsch": "Je fait du vélo.",
-       "richtig": "Je fais du vélo.",
+       "falsch": "Moi, je fait du vélo.",
+       "richtig": "Moi, je fais du vélo.",
        "wort": "fait",
        "korrektur": "fais",
        "choices": [
@@ -3375,8 +3375,8 @@
        "tipp": "Nach je heißt es: je fais."
       },
       {
-       "falsch": "Je vois une arc-en-ciel.",
-       "richtig": "Je vois un arc-en-ciel.",
+       "falsch": "Je vois une grand arc-en-ciel.",
+       "richtig": "Je vois un grand arc-en-ciel.",
        "wort": "une",
        "korrektur": "un",
        "choices": [
@@ -3588,8 +3588,8 @@
        "tipp": "il y a bleibt immer gleich – egal, wie viele Dinge es sind."
       },
       {
-       "falsch": "Il y a seize chats sur la canapé.",
-       "richtig": "Il y a seize chats sur le canapé.",
+       "falsch": "Il y a seize chats sur la canapé bleu.",
+       "richtig": "Il y a seize chats sur le canapé bleu.",
        "wort": "la",
        "korrektur": "le",
        "choices": [
@@ -3610,8 +3610,8 @@
        "tipp": "Das Alter hat man: Elle a quinze ans."
       },
       {
-       "falsch": "Il y a une crayon dans mon sac.",
-       "richtig": "Il y a un crayon dans mon sac.",
+       "falsch": "Il y a une crayon vert dans mon sac.",
+       "richtig": "Il y a un crayon vert dans mon sac.",
        "wort": "une",
        "korrektur": "un",
        "choices": [
