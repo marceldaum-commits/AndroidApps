@@ -25,7 +25,9 @@ self.addEventListener('message', (e) => { if (e.data === 'skipWaiting') self.ski
 self.addEventListener('fetch', (e) => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== self.location.origin) return;
-  if (req.url.endsWith('version.json')) { e.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.match(req))); return; }
-  e.respondWith(caches.match(req, { ignoreSearch: req.mode === 'navigate' }).then((hit) => hit || fetch(req).catch(() =>
-    req.mode === 'navigate' ? caches.match('index.html') : Response.error())));
+  // Nur im eigenen Speicher suchen (caches.open(CACHE).match): Unter lernen.… liegen alle Apps auf derselben Adresse –
+  // caches.match würde auch Dateien anderer Apps finden (z. B. deren index.html).
+  if (req.url.endsWith('version.json')) { e.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.open(CACHE).then((c) => c.match(req)))); return; }
+  e.respondWith(caches.open(CACHE).then((c) => c.match(req, { ignoreSearch: req.mode === 'navigate' }).then((hit) => hit || fetch(req).catch(() =>
+    req.mode === 'navigate' ? c.match('index.html') : Response.error()))));
 });

@@ -264,3 +264,9 @@ test('Lernpfad: jede Einheit vollständig, Bedeutungen eindeutig, Figuren vorhan
     for (const c of pk.cards) for (const w of P.wrongs(c, pk, 3)) assert.notEqual(w, c.a, wo + ': falsche Antwort = richtige');
   }
 });
+
+test('Service Worker sucht nur im eigenen Speicher (gemeinsame Adresse lernen.…)', () => {
+  const sw = readFileSync(new URL('sw.js', dir), 'utf8');
+  assert.doesNotMatch(sw, /caches\.match\(/, 'caches.match findet auch Dateien anderer Apps');
+  assert.match(sw, /caches\.open\(CACHE\)\.then\(\(c\) => c\.match/);
+});
