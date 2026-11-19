@@ -44,7 +44,7 @@ Wer weiterarbeitet, liest zuerst diese Datei, dann `MELDUNG_RECHENBLITZ.md` (obe
      - Zählung „elternbereich“ beim gelösten Tor (steht in der Positivliste).
    - **Werbekarte und Probestunden-Hinweise nur im Elternbereich** (`panels.js` PROMOS/`renderPromo`, Ergebnis-Hinweis `extras.js:207`, Menü-Probestunde, Wochenbericht). „Lern-Geschenk“ ebenfalls hinter das Tor.
    - **Schloss-Text kürzen (Marcel/Recht 19.11.):** In der Kinderansicht nur „Das gehört zu Rechenblitz Pro.“ (`pro.js`, `.pro-kind`; Übersetzungen anpassen). Der Zusatz „Deine Eltern können im Elternbereich nachsehen.“ entfällt. Der Knopf „🔒 Für Eltern“ bleibt.
-   - **Advents-Gutschein (Befund Recht, UWG):** Alle Gutschein-Hinweise aus den Kinderansichten entfernen (`extras.js` Z. 256, 267, 402, 406). Den fertigen Gutschein (`voucherHtml`, Z. 124–136, mit Code, Bedingungen und Link „Zu den Stundenpaketen“) nur im Elternbereich hinter dem Tor zeigen. Die Kinderansicht nach 24 Türchen sagt nur „Geschafft! Alle 24 Türchen.“ Notfalls sofort: `config.js adventVoucher: null`.
+   - **Advents-Gutschein (Befund Recht, UWG):** Seit 3.28.3 per `adventVoucher: null` ganz abgeschaltet. Für den Fr-Stand (Recht): Gutschein nur im Elternbereich mit sachlichem Text, keine Hinweise im Kalender, im POST `api/gutschein` das Feld `klasse` streichen (sonst müsste die Datenschutzerklärung 10b ergänzt werden). Wieder einschalten nur nach Freigabe durch Recht. Bisherige Notiz: Alle Gutschein-Hinweise aus den Kinderansichten entfernen (`extras.js` Z. 256, 267, 402, 406). Den fertigen Gutschein (`voucherHtml`, Z. 124–136, mit Code, Bedingungen und Link „Zu den Stundenpaketen“) nur im Elternbereich hinter dem Tor zeigen. Die Kinderansicht nach 24 Türchen sagt nur „Geschafft! Alle 24 Türchen.“ Notfalls sofort: `config.js adventVoucher: null`.
    - **Zehnerpotenzen ausbauen:** wissenschaftliche Schreibweise mit vollständigem Lösungsweg (Komma verschieben, Stellen zählen, Exponent), Theorie mit Regel und Beispiel. Danach den unabhängigen Prüfer laufen lassen (Abschnitt 6).
    - Meldung mit „Rechtsbezug: ja (Eltern-Tor, Werbung, Elternbericht)“.
 2. **Di 24.11. – Umbenennung „Zahlensprint“** (Marcel endgültig; DPMA frei; Recht prüft):
@@ -56,7 +56,7 @@ Wer weiterarbeitet, liest zuerst diese Datei, dann `MELDUNG_RECHENBLITZ.md` (obe
    - Rundlauf alt → neu: Lernstand, Pro, `#pro=`, `?thema=`.
    - **Auflagen Recht (V2, 19.11.):**
      - Hinweis „Früher: Rechenblitz“ etwa 3 Monate sichtbar lassen (bis ca. Ende Februar 2027).
-     - TMview und Stores prüfen vor dem 24.11. (AppZentrale/Recht).
+     - Umbenennung zum 24.11. von Recht FREIGEGEBEN (TMview nicht nötig).
      - DSE 10b, AGB § 13, Shop und Widerrufsseite am selben Tag umstellen (Leitstand).
    - Außerdem am Di: quadratische Gleichungen im Kopf, PC-Ansicht verbessern (Fotos vorher in `docs/bilder/pc-vorher/`; ab etwa 1500 px bis 1360 px Breite, Übung als Raster, rechte Startspalte füllen; Handy und iPad unverändert).
 3. **Familien-Speicher anbinden** (nach dem Fr-Update): siehe `docs/FAMILIEN-SPEICHER-RECHENBLITZ.md`.
