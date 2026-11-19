@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.3.3 – Mikrofon nur auf dem Gerät (19.11.2026)
+- **Spracherkennung bleibt auf dem Gerät:** Bei Brummi-Radio und Sprech-Spielen erkennt der Garten gesprochene Antworten jetzt nur noch, wenn das Gerät es selbst kann. Sonst gibt es Antwort-Knöpfe.
+- **Online nur mit Erlaubnis:** Im Elternbereich gibt es den neuen Schalter „Online-Spracherkennung erlauben“. Er ist ausgeschaltet. Erst wenn ihr ihn einschaltet, darf der Browser die gesprochenen Antworten an seinen Sprachdienst schicken (z. B. Google bei Chrome).
+- Am Plus-Schloss steht jetzt nur noch „Dieses Paket gehört zu Wissensgarten Plus.“
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.3.2 – Leichte Darstellung für langsame Rechner (19.11.2026)
 - **Am PC wieder in normaler Größe:** Version 2.3.1 hatte am großen Bildschirm alles zu stark vergrößert. Jetzt wird es am PC leicht verkleinert (bei einem Full-HD-Bildschirm etwa 80 %), damit mehr ohne Scrollen sichtbar ist. Die Bilder in der Anleitung sind nicht mehr riesig.
 - Im Eltern-Tor zeigt die Löschtaste „←“ (vorher ein leeres Kästchen).

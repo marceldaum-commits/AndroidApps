@@ -135,6 +135,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         val soundOn by vm.settings.sound.collectAsStateWithLifecycle()
         val sfx = host.sfx
         LaunchedEffect(soundOn) { sfx.enabled = soundOn }
+        val onlineSprache by vm.settings.onlineSprache.collectAsStateWithLifecycle()
+        LaunchedEffect(onlineSprache) { host.setOnlineSpeech(onlineSprache) }
         val musicOn by vm.settings.music.collectAsStateWithLifecycle()
         LaunchedEffect(musicOn) { host.music.setEnabled(musicOn) }
         val musicVol by vm.settings.musicVolume.collectAsStateWithLifecycle()
@@ -216,7 +218,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             nav.navigate(Routes.bed(z.bedId)) { launchSingleTop = true }
                         }
                         is AppViewModel.PaketZiel.Pflanzen -> if (gepflanzt != id) { gepflanzt = id; vm.plantPack(z.pack) }
-                        AppViewModel.PaketZiel.Plus -> { paketRequest.value = null; host.toast("🌟 Das gehört zu Wissensgarten Plus. Deine Eltern können im Elternbereich nachsehen."); nav.navigate(Routes.SHOP) { launchSingleTop = true } }
+                        AppViewModel.PaketZiel.Plus -> { paketRequest.value = null; host.toast("🌟 Dieses Paket gehört zu Wissensgarten Plus."); nav.navigate(Routes.SHOP) { launchSingleTop = true } }
                         AppViewModel.PaketZiel.Unbekannt -> { paketRequest.value = null; nav.navigate(Routes.SHOP) { launchSingleTop = true } }
                     }
                 }
@@ -463,7 +465,7 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                             profile = p, packs = angebot + vm.plusPreviews.collectAsStateWithLifecycle().value.filter(de.wissensgarten.core.model.Angebot::angeboten), beds = beds, canUse = vm.entitlements::canUse,
                             onLocked = {
                                 if (vm.entitlements.code != null) { host.toast("🐝 Brummi holt die Plus-Pakete … gleich noch einmal antippen."); vm.refreshPlusPacksIfDue(force = true) }
-                                else gate("Das gehört zu Wissensgarten Plus. Deine Eltern können im Elternbereich nachsehen.") { nav.navigate(Routes.PLUS) }
+                                else gate("Dieses Paket gehört zu Wissensgarten Plus.") { nav.navigate(Routes.PLUS) }
                             },
                             onPlant = vm::plantPack,
                             onOpenBed = { nav.navigate(Routes.bed(it)) },

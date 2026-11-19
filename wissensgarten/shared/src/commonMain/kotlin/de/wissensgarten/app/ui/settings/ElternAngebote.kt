@@ -20,6 +20,7 @@ fun ElternAngebote(settings: Settings, onGift: () -> Unit, kopplung: @Composable
         countUsage = settings.countUsage.collectAsState().value, onCountUsage = { settings.setCountUsage(it) },
         tutorHints = settings.tutorHints.collectAsState().value, onTutorHints = { settings.setTutorHints(it) },
         onGift = onGift,
+        onlineSprache = settings.onlineSprache.collectAsState().value, onOnlineSprache = { settings.setOnlineSprache(it) },
     )
 }
 
@@ -29,6 +30,7 @@ fun ElternAngeboteContent(
     tutorHints: Boolean, onTutorHints: (Boolean) -> Unit,
     onGift: () -> Unit,
     kopplung: @Composable () -> Unit = {},
+    onlineSprache: Boolean = false, onOnlineSprache: (Boolean) -> Unit = {},
 ) {
     val uri = LocalUriHandler.current
     kopplung()
@@ -54,6 +56,18 @@ fun ElternAngeboteContent(
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
         Switch(checked = tutorHints, onCheckedChange = onTutorHints)
+    }
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Column(Modifier.weight(1f)) {
+            Text("Online-Spracherkennung erlauben")
+            // Wortlaut von Recht freigegeben (V6, 19.11.2026) – nicht ändern
+            Text("Die gesprochenen Antworten schickt der Browser dann an den Sprachdienst seines Herstellers (z. B. Google bei Chrome, Apple bei Safari). " +
+                "Der Hersteller wandelt sie in eigener Verantwortung in Text um, gegebenenfalls auch außerhalb der EU. Wir erhalten und speichern dabei nichts. " +
+                "Ohne diese Erlaubnis erkennt der Garten Sprache nur, wenn das Gerät es selbst kann – sonst gibt es Antwort-Knöpfe. " +
+                "Ihr könnt die Erlaubnis hier jederzeit wieder ausschalten. Mehr in der Datenschutzerklärung (Abschnitt 10k).",
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        }
+        Switch(checked = onlineSprache, onCheckedChange = onOnlineSprache)
     }
     TextButton(onClick = { runCatching { uri.openUri(Angebote.fusszeile) } }) { Text("Ein Angebot von Nachhilfe – online") }
 }

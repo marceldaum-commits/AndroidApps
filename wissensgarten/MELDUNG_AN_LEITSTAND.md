@@ -9,6 +9,16 @@
 
 
 
+## 2.3.3 – Mikrofon nach Regel 10k (19.11.2026, Recht V6 freigegeben)
+- **Erkennung:** `wg-platform.js` prüft je Sprache mit `SpeechRecognition.available({langs, processLocally: true})`.
+  - Ohne Eltern-Erlaubnis wird nur mit `processLocally = true` erkannt. Kann das Gerät die Sprache nicht selbst, gibt es keine Erkennung; Brummi-Radio und Sprech-Spiele fallen auf Antwort-Knöpfe zurück.
+  - Online nur, wenn `wg.srOnline` gesetzt ist.
+- **Schalter:** Settings `online_spracherkennung` (voreingestellt aus) im Elternbereich hinter dem Tor, Wortlaut von Recht unverändert übernommen.
+- **Datenschutz-Text in der App** angepasst. 10c/10k auf der Website passt der Leitstand an.
+- **Schloss-Text:** nur noch „Dieses Paket gehört zu Wissensgarten Plus.“
+- **Rechtsbezug:** ja (V6, Schloss-Text).
+- **Rückweg:** 2.3.2.
+
 ## 2.3.2 – Leichte Darstellung (19.11.2026, nach Marcels Diagnose: 66 ms je Bild bei 1920×911, 4 Kerne)
 - **Bild-Bremse jetzt anpassungsfähig:** Der Abstand zwischen zwei Bildern ist mindestens das 2,5-Fache der Zeichenzeit (45–250 ms), also höchstens ~40 % Rechenzeit fürs Zeichnen.
 - **Leichte Darstellung:** Ab 40 ms je Bild merkt sich das Gerät `wg.leicht`. Ab dem nächsten Start ist `devicePixelRatio` 0,8 (nicht auf iOS), das spart etwa ein Drittel der Arbeit. Steuerung: `?leicht=aus` (bleibt aus) bzw. `?leicht=an`.

@@ -45,12 +45,26 @@
 
   // Spracherkennung (Chrome, Edge, Safari)
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  wg.srAvailable = () => !!SR;
+  // Mikrofon-Regel 10k (Recht V6): Erkennung nur im Gerät (processLocally). Online-Erkennung über den Sprachdienst des
+  // Browser-Herstellers nur, wenn Eltern sie im Elternbereich erlaubt haben (wg.srOnline, voreingestellt aus).
+  wg.srOnline = false;
+  wg.srLocal = {};   // Sprache → kann das Gerät selbst erkennen?
+  const lokalPruefen = (lang) => {
+    if (!SR || typeof SR.available !== 'function' || lang in wg.srLocal) return;
+    wg.srLocal[lang] = false;
+    try { SR.available({ langs: [lang], processLocally: true }).then((r) => { wg.srLocal[lang] = r === 'available'; }, () => {}); } catch (e) {}
+  };
+  ['de-DE', 'en-GB', 'fr-FR'].forEach(lokalPruefen);
+  wg.srAvailable = () => !!SR && (wg.srOnline || Object.keys(wg.srLocal).some((k) => wg.srLocal[k]));
   wg.sr = { state: 'idle', words: [], rec: null };
   wg.listen = (lang) => {
     if (!SR) { wg.sr.state = 'error'; return; }
     try { if (wg.sr.rec) wg.sr.rec.abort(); } catch (e) {}
+    lokalPruefen(lang);
+    const lokal = wg.srLocal[lang] === true;
+    if (!wg.srOnline && !lokal) { wg.sr.state = 'error'; return; }   // ohne Erlaubnis nie online
     const r = new SR(); r.lang = lang; r.maxAlternatives = 5; r.interimResults = false; r.continuous = false;
+    if (!wg.srOnline) r.processLocally = true;
     wg.sr = { state: 'listening', words: [], rec: r };
     r.onresult = (e) => { const res = e.results[0]; const w = []; for (let i = 0; i < res.length; i++) w.push(res[i].transcript); wg.sr.words = w; wg.sr.state = 'done'; };
     r.onerror = (e) => { wg.sr.state = (e.error === 'no-speech') ? 'silence' : 'error'; };
