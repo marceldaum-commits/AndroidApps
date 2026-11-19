@@ -37,7 +37,9 @@
   let token = 0; // wechselt bei jedem Bildschirmwechsel – laufende Abläufe brechen dann ab
   function screen(html) { token++; A.stop(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); return el; }
   const alive = (t) => t === token;
-  const isTest = () => /(^|\.)[a-z]+-test\.|localhost|127\.0\.0\.1/.test(location.hostname) || location.protocol === 'file:';
+  // Test-Stufe: Übergangs-Subdomain „…-test.“, künftig Pfad unter der gemeinsamen Adresse (z. B. …/test/quasselquest/), lokal.
+  // Bewusst ohne festen Hostnamen, damit der Umzug auf die gemeinsame Adresse nichts ändern muss.
+  const isTest = () => /(^|[.-])(test|staging)([.-]|$)|localhost|127\.0\.0\.1/.test(location.hostname) || /\/(test|staging)\//.test(location.pathname) || location.protocol === 'file:';
 
   // ================================================================== Ruby (SVG)
   function rubySVG() {
