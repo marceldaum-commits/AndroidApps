@@ -182,3 +182,9 @@ Gestrichen: Prozent → zellen, Wachstum → saeure, Zuordnung → hebel. Je The
 - Pro: Gekauftes Pro läuft nie ab; nur Probe- und Geschenk-Codes laufen ab (Ablaufdatum signiert, offline geprüft, Schutz gegen eine zurückgedrehte Uhr).
 - Familien-Speicher ohne Google auf unserem Server (eltern/v1), auf dem Gerät verschlüsselt, Familien-Code/QR, Notfall-Code + Generalschlüssel Marcel. Noch NICHTS serverseitig bauen; Feinplanung in der Wochenrunde 23.11.
 - Gemeldet: Lernstand-Schlüssel und Größe (typisch < 10 KB, höchstens ~120 KB), Aufbau der Pro-Codes; Vorschlag Produkt 3 = Probe, 4 = Geschenk. Rückfrage: Pro ist seit 17.11. scharf (Schlüssel + Kasse eingetragen), Schlösser ab Versuch 6 – gewollt?
+
+### Do 19.11.2026 nachmittags – Familien-Speicher (Marcel: „Sofort bauen“)
+- 2.13.2 (6c69e27) live seit ~15:15 Uhr (sachlicher Schloss-Text).
+- Bauplan v1.1: /familie/v1/, HKDF-SHA256(famKey, salt 32×0, info "lernapps/v1/experimentopia/<kindId>"), AES-GCM-256, Rahmen z/j, Link `#familie=<famId>.<famKey>.<schreib>`, Blob ohne procode, Konflikte nie still überschreiben. familie.js vom Mathe-Trainer (Repo mathe-trainer, nur lesen), Server vom Leitstand.
+- Öffentlicher Wiederherstellungs-Schlüssel (X25519, Notfall-Kopie): `REC_PUB = vMrORj9yObM3Ijd9sGStjUB9I3f6ot9E8M-70yGeQ0M` (privater Teil nur in Marcels Bitwarden).
+- Experimentopia: Anbindung im Di-Update 24.11. auf test; vor dem Einschalten bei echten Familien Zustimmungstext direkt mit Marcel abstimmen.
