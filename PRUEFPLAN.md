@@ -83,7 +83,7 @@ Der Inhalt ist in **4 Blöcke** geteilt. Jeden Monat wird **ein Block gründlich
 | Termin (Di/Fr) | Version | Neue Inhaltseinheit | im Monats-Check geprüft |
 |---|---|---|---|
 | 18.11.2026 (Mi) | – | Betriebstest-Woche: nur Fehlerbehebungen, kein neuer Inhalt | – |
-| **Fr 20.11.2026** | (geplant) | erstes großes Inhaltsupdate | Nov. |
+| **Fr 20.11.2026** | 3.27.0 (auf test seit 19.11.) | Gleichungssysteme (lgs, 6 Stufen, Kl. 8–10) + Theorie-Querverweise + 2 Lösungswege ergänzt | Nov. |
 | Di 24.11.2026 | (geplant) | großes Inhaltsupdate | Nov. |
 | Fr 27.11.2026 | (geplant) | großes Inhaltsupdate | Nov. |
 

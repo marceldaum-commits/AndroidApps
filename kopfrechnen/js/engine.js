@@ -98,6 +98,7 @@ function tokHtml(t) {
     case 'v': return `<span>${coefTxt(t.c)}<i class="var">x</i></span>`;
     case 'q': return `<span class="eq">${t.v}</span>`;
     case 't': return `<span class="story">${esc(t.v)}</span>`;
+    case 'y': return `<span class="lgs" translate="no">${t.v.map(z => `<span>${esc(z)}</span>`).join('')}</span>`;
   }
 }
 function tokText(t) {
@@ -110,6 +111,7 @@ function tokText(t) {
     case 'r': return `√${t.v}`;
     case 'g': return '?';
     case 'v': return coefTxt(t.c) + 'x';
+    case 'y': return t.v.join('; ');
     default: return t.v;
   }
 }
@@ -129,6 +131,7 @@ function tokSpeech(t) {
     case 'v': return `${t.c === 1 ? '' : t.c} x`;
     case 'q': return t.v === '=' ? 'gleich' : 'ungefähr';
     case 't': return t.v;
+    case 'y': return t.v.join('. ').replace(/−/g, ' minus ').replace(/\+/g, ' plus ').replace(/=/g, ' gleich ');
   }
 }
 const taskText = t => t.e.map(tokText).join(' ').replace(/\( /g, '(').replace(/ \)/g, ')');
@@ -144,7 +147,7 @@ const TOPICS = {
   neg: { g: '−3', name: 'Negativ', grp: 1 }, pow: { g: 'x²', name: 'Potenzen', grp: 1 },
   term: { g: '3x', name: 'Terme', grp: 1 }, linear: { g: 'f(x)', name: 'Funktionen', grp: 1 }, zehner: { g: '10ⁿ', name: 'Zehnerpotenzen', grp: 1 },
   order: { g: '( )', name: 'Klammern', grp: 2 }, round: { g: '≈', name: 'Runden', grp: 2 }, unit: { g: 'cm', name: 'Einheiten', grp: 2 },
-  divis: { g: 'ggT', name: 'Teiler', grp: 2 }, eq: { g: 'x=', name: 'Gleichung', grp: 2 },
+  divis: { g: 'ggT', name: 'Teiler', grp: 2 }, eq: { g: 'x=', name: 'Gleichung', grp: 2 }, lgs: { g: 'x|y', name: 'Gleichungssysteme', grp: 2 },
   zeit: { g: '🕐', name: 'Uhr & Zeit', grp: 2 }, geo: { g: '📐', name: 'Geometrie', grp: 2 }, folge: { g: '🔢', name: 'Zahlenfolgen', grp: 2 },
   dreisatz: { g: '⇄', name: 'Dreisatz', grp: 2 }, zins: { g: '🏦', name: 'Zinsen', grp: 2 }, wahr: { g: '🎲', name: 'Wahrscheinlichkeit', grp: 2 }, stat: { g: 'Ø', name: 'Statistik', grp: 2 }, kreis: { g: 'π', name: 'Kreis', grp: 2 },
   word: { g: '📖', name: 'Textaufgaben', grp: 3, wide: true }, mix: { g: '★', name: 'Alles gemischt', grp: 3, wide: true },
@@ -164,6 +167,7 @@ const LEVEL_DESC = {
   round: ['Auf Zehner runden', 'Auf Hunderter runden', 'Auf Tausender oder Zehntel runden', 'Überschlag: plus & minus', 'Überschlag: mal', 'Profi: Überschlag mit großen Zahlen, Hundertstel'],
   unit: ['m, cm, kg, g, € und ct', 'km, Liter, Stunden, Minuten', 'Mit Kommazahlen umrechnen', 'Flächen und Rauminhalte', 'Gemischte Angaben (1 h 15 min …)', 'Profi: Tempo, Kommazahlen, gemischte Einheiten'],
   divis: ['Division mit Rest', 'Quersumme', 'Größter gemeinsamer Teiler', 'Kleinstes gemeinsames Vielfaches', 'Primfaktoren & Anzahl der Teiler', 'Profi: Euklid und kgV von drei Zahlen'],
+  lgs: ['Additionsverfahren: x + y und x − y', 'Gleichsetzungsverfahren', 'Einsetzungsverfahren', 'Additionsverfahren: eine Gleichung malnehmen', 'Additionsverfahren: beide malnehmen, negative Lösungen', 'Profi: erst ordnen, große Zahlen'],
   eq: ['x + a = b', 'a · x = b und x : a = b', 'Zwei Schritte: a · x + b = c', 'Mit negativen Zahlen & Klammern', 'x auf beiden Seiten', 'Profi: Klammern auf beiden Seiten'],
   doppel: ['Verdoppeln & halbieren bis 20', 'Verdoppeln & halbieren bis 100', 'Verdoppeln & halbieren bis 1000', 'Halbieren mit Komma', 'Vierfach, Viertel, dreimal verdoppeln', 'Profi: Kommazahlen halbieren und vervielfachen'],
   geld: ['Cent plus & minus', 'Euro und Cent umrechnen, Rückgeld', 'Euro-Beträge plus & minus', 'Rückgeld und Mal mit Komma', 'Preise vergleichen (Dreisatz)', 'Profi: Kilopreise und Einkauf mit Rückgeld'],
@@ -190,9 +194,9 @@ const CLASS_TOPICS = {
   5: [['add', 4], ['sub', 4], ['mul', 3], ['div', 3], ['gap', 3], ['round', 1], ['frac', 0], ['dec', 0], ['divis', 0], ['order', 2], ['word', 1], ['doppel', 3], ['geld', 3], ['zeit', 3], ['geo', 2], ['folge', 2], ['stat', 0], ['dreisatz', 0]],
   6: [['mul', 4], ['frac', 1], ['frac', 2], ['dec', 1], ['dec', 2], ['divis', 2], ['unit', 2], ['round', 2], ['neg', 0], ['word', 2], ['doppel', 4], ['geld', 4], ['zeit', 4], ['geo', 3], ['folge', 3], ['stat', 1], ['dreisatz', 1], ['wahr', 0]],
   7: [['frac', 3], ['dec', 3], ['pct', 0], ['pct', 1], ['neg', 2], ['eq', 0], ['order', 3], ['unit', 3], ['divis', 3], ['word', 2], ['geo', 3], ['folge', 3], ['stat', 2], ['dreisatz', 2], ['dreisatz', 3], ['wahr', 1], ['term', 0], ['term', 1], ['zins', 0]],
-  8: [['frac', 4], ['dec', 4], ['pct', 2], ['neg', 3], ['eq', 1], ['eq', 2], ['pow', 0], ['round', 3], ['order', 4], ['word', 3], ['geo', 4], ['folge', 4], ['stat', 3], ['dreisatz', 4], ['wahr', 2], ['term', 2], ['term', 3], ['zins', 1], ['zins', 2], ['linear', 0], ['linear', 1], ['kreis', 0], ['kreis', 1]],
-  9: [['pct', 3], ['pow', 1], ['pow', 2], ['eq', 3], ['neg', 4], ['unit', 4], ['round', 4], ['word', 3], ['geo', 4], ['folge', 4], ['stat', 4], ['wahr', 3], ['term', 4], ['zins', 3], ['linear', 2], ['linear', 3], ['kreis', 2], ['kreis', 3], ['zehner', 0], ['zehner', 1], ['zehner', 2]],
-  10: [['pct', 4], ['pow', 3], ['pow', 4], ['eq', 4], ['divis', 4], ['word', 4], ['folge', 4], ['wahr', 4], ['zins', 4], ['linear', 4], ['kreis', 4], ['zehner', 3], ['zehner', 4]],
+  8: [['lgs', 0], ['lgs', 1], ['frac', 4], ['dec', 4], ['pct', 2], ['neg', 3], ['eq', 1], ['eq', 2], ['pow', 0], ['round', 3], ['order', 4], ['word', 3], ['geo', 4], ['folge', 4], ['stat', 3], ['dreisatz', 4], ['wahr', 2], ['term', 2], ['term', 3], ['zins', 1], ['zins', 2], ['linear', 0], ['linear', 1], ['kreis', 0], ['kreis', 1]],
+  9: [['lgs', 2], ['lgs', 3], ['pct', 3], ['pow', 1], ['pow', 2], ['eq', 3], ['neg', 4], ['unit', 4], ['round', 4], ['word', 3], ['geo', 4], ['folge', 4], ['stat', 4], ['wahr', 3], ['term', 4], ['zins', 3], ['linear', 2], ['linear', 3], ['kreis', 2], ['kreis', 3], ['zehner', 0], ['zehner', 1], ['zehner', 2]],
+  10: [['lgs', 4], ['pct', 4], ['pow', 3], ['pow', 4], ['eq', 4], ['divis', 4], ['word', 4], ['folge', 4], ['wahr', 4], ['zins', 4], ['linear', 4], ['kreis', 4], ['zehner', 3], ['zehner', 4]],
 };
 function classLevel(k, topic) { // empfohlene Stufe einer Klassenstufe (höchste genannte)
   for (let c = k; c >= 1; c--) { const hits = CLASS_TOPICS[c].filter(([t]) => t === topic); if (hits.length) return Math.max(...hits.map(h => h[1])); }
@@ -368,6 +372,65 @@ const WORD_MORE = [
     (n, n2, W_) => { const a = rnd(6, 12), b = rnd(6, 12), y = rnd(2, 10); return W_(`${n} ist ${a} Jahre alt, ${n2} ist ${b}. In wie vielen Jahren sind beide zusammen ${a + b + 2 * y} Jahre alt?`, I(y), 'Jahre', [`Heute zusammen: ${a} + ${b} = ${a + b}`, `Pro Jahr kommen 2 Jahre dazu.`, `(${a + b + 2 * y} − ${a + b}) : 2 = ${y}`]); },
   ],
 ];
+/* ---------- Lineare Gleichungssysteme mit zwei Unbekannten (Fr 20.11.2026) ----------
+   Lösungswege vollständig: Verfahren nennen, jeden Umformungsschritt, beide Unbekannten, Probe in beiden Gleichungen. */
+const LGS_Y = v => ({ t: 'y', v });                      // Gleichungssystem: v = ['I: …', 'II: …']
+const lgsCo = (c, v, first) => {                         // ein Glied: 3x, −x, + 2y, − y
+  if (!c) return '';
+  const a = Math.abs(c), s = (a === 1 ? '' : a) + v;
+  return first ? (c < 0 ? '−' : '') + s : (c < 0 ? ' − ' : ' + ') + s;
+};
+const lgsLin = (a, b) => (lgsCo(a, 'x', true) + lgsCo(b, 'y', !a)) || '0';   // 2x − 3y
+const lgsEq = (a, b, c) => `${lgsLin(a, b)} = ${fi(c)}`;
+function lgsAsk(x, y, w, sys, ask) {
+  const askX = ask === undefined ? coin() : ask;
+  return { e: [LGS_Y(sys)], a: I(askX ? x : y), noEq: true, pre: askX ? 'x =' : 'y =', hint: 'Löse das Gleichungssystem.', w };
+}
+// Probe: beide Werte in beide Gleichungen einsetzen
+function lgsProbe(eqs, x, y) {
+  return eqs.map(([nm, a, b, c]) => {
+    const parts = [a ? `${a === 1 ? '' : a === -1 ? '−' : fi(a) + ' · '}${par(x)}` : '', b ? `${b < 0 ? ' − ' : a ? ' + ' : ''}${Math.abs(b) === 1 ? '' : Math.abs(b) + ' · '}${par(y)}` : ''].join('');
+    return `Probe in ${nm}: ${parts.replace(/^− /, '−')} = ${fi(a * x + b * y)} ✓`;
+  });
+}
+// y aus einer Gleichung a·x + b·y = c berechnen, wenn x bekannt ist
+function lgsBack(nm, a, b, c, x, y) {
+  const w = [`x = ${fi(x)} in ${nm} einsetzen: ${a === 1 ? '' : a === -1 ? '−' : fi(a) + ' · '}${par(x)}${lgsCo(b, 'y', false)} = ${fi(c)}`];
+  const ax = a * x;
+  if (Math.abs(a) !== 1 || x < 0) w.push(`${fi(ax)}${lgsCo(b, 'y', false)} = ${fi(c)}`);
+  if (ax) w.push(`${ax > 0 ? '− ' + fi(ax) : '+ ' + fi(-ax)} auf beiden Seiten: ${lgsLin(0, b)} = ${fi(c - ax)}`);
+  if (b !== 1) w.push(`: ${par(b)} auf beiden Seiten: y = ${fi(c - ax)} : ${par(b)} = ${fi(y)}`);
+  return w;
+}
+// Additionsverfahren: y fällt weg (Faktoren k1, k2 mit b1·k1 + b2·k2 = 0)
+function lgsAdd(E1, E2, x, y) {
+  const [, a1, b1, c1] = E1, [, a2, b2, c2] = E2;
+  const L = lcm(Math.abs(b1), Math.abs(b2)); let k1 = L / Math.abs(b1), k2 = L / Math.abs(b2);
+  if (Math.sign(b1) === Math.sign(b2)) { if (k1 > k2) k1 = -k1; else k2 = -k2; }   // Vorzeichen auf den größeren Faktor: so bleibt eine Gleichung oft unverändert
+  const w = ['Additionsverfahren: Die Gleichungen so malnehmen, dass y beim Addieren wegfällt.'];
+  if (k1 !== 1) w.push(`I · ${par(k1)}: ${lgsEq(a1 * k1, b1 * k1, c1 * k1)}`);
+  if (k2 !== 1) w.push(`II · ${par(k2)}: ${lgsEq(a2 * k2, b2 * k2, c2 * k2)}`);
+  const A = a1 * k1 + a2 * k2, C = c1 * k1 + c2 * k2;
+  w.push(`Addieren: ${lgsLin(a1 * k1, b1 * k1)}${lgsCo(a2 * k2, 'x', false)}${lgsCo(b2 * k2, 'y', false)} = ${fi(c1 * k1)}${c2 * k2 < 0 ? ' − ' + fi(-c2 * k2) : ' + ' + fi(c2 * k2)}`);
+  w.push(`${lgsLin(A, 0)} = ${fi(C)}`);
+  if (A !== 1) w.push(`: ${par(A)} auf beiden Seiten: x = ${fi(C)} : ${par(A)} = ${fi(x)}`);
+  const [U, P_] = Math.abs(b2) < Math.abs(b1) || (Math.abs(b2) === Math.abs(b1) && Math.abs(a2) < Math.abs(a1)) ? [E2, E1] : [E1, E2];   // in die einfachere Gleichung einsetzen
+  return [...w, ...lgsBack(U[0], U[1], U[2], U[3], x, y), ...lgsProbe([P_], x, y)];
+}
+// zufällige Lösung und Koeffizienten mit Determinante ≠ 0
+function lgsPick(cmax, smin, smax, ok) {
+  for (;;) {
+    const x = rnd(smin, smax), y = rnd(smin, smax);
+    const a1 = rnd(-cmax, cmax), b1 = rnd(-cmax, cmax), a2 = rnd(-cmax, cmax), b2 = rnd(-cmax, cmax);
+    if (!a1 || !b1 || !a2 || !b2 || a1 * b2 - a2 * b1 === 0 || !x || !y || x === y || !(a1 * x + b1 * y) || !(a2 * x + b2 * y)) continue;   // keine „= 0“-Gleichung
+    if (ok && !ok(a1, b1, a2, b2, x, y)) continue;
+    return { x, y, E1: ['I', a1, b1, a1 * x + b1 * y], E2: ['II', a2, b2, a2 * x + b2 * y] };
+  }
+}
+const lgsSys = (E1, E2) => [`I: ${lgsEq(E1[1], E1[2], E1[3])}`, `II: ${lgsEq(E2[1], E2[2], E2[3])}`];
+const lgsLx = (p, q) => p ? lgsLin(p, 0) + (q ? sgnTerm(q) : '') : fi(q);          // 3x − 4
+const lgsVal = (p, x, q) => `${p === 1 ? '' : p === -1 ? '−' : fi(p) + ' · '}${par(x)}${q ? sgnTerm(q) : ''}`;   // 3 · 5 − 4
+
 const GEN = {
   add(l) { const [a, b] = ADD[l](); return { e: [N(a), O('+'), N(b)], a: I(a + b), w: addW(a, b) }; },
   sub(l) { const [x, y] = ADD[l](); return { e: [N(x + y), O('−'), N(y)], a: I(x), w: subW(x + y, y) }; },
@@ -678,6 +741,38 @@ const GEN = {
     return mk([...side(a, b), Eq(), ...side(c, d)], x, [`− ${c === 1 ? '' : c}x auf beiden Seiten: ${a - c === 1 ? '' : a - c}x${b ? sgnTerm(b) : ''} = ${fi(d)}`, ...(b ? [`${b > 0 ? '− ' + b : '+ ' + (-b)} auf beiden Seiten: ${a - c === 1 ? '' : a - c}x = ${fi(d - b)}`] : []), ...(a - c > 1 ? [`: ${a - c} auf beiden Seiten: x = ${fi(x)}`] : [])]);
   },
 
+  lgs(l) {
+    if (l === 0) {   // Additionsverfahren direkt: x + y = s, x − y = d
+      const x = rnd(3, 20), y = rnd(1, x - 1), s = x + y, d = x - y;
+      return lgsAsk(x, y, ['Additionsverfahren: I + II, dabei fällt y weg.', `(x + y) + (x − y) = ${s} + ${d}`, `2x = ${s + d}`, `: 2 auf beiden Seiten: x = ${s + d} : 2 = ${x}`, ...lgsBack('I', 1, 1, s, x, y), ...lgsProbe([['II', 1, -1, d]], x, y)],
+        [`I: x + y = ${s}`, `II: x − y = ${d}`]);
+    }
+    if (l === 2) {   // Einsetzungsverfahren: I ist nach y aufgelöst
+      let x, m, c, a, b, y; do { x = rnd(1, 12); m = rnd(2, 5); c = rnd(-9, 9); a = rnd(1, 5); b = rnd(1, 3); y = m * x + c; } while (y <= 0);
+      const s = a * x + b * y, A = a + b * m, C = b * c;
+      const ein = b === 1 ? `${lgsLin(a, 0)} + (${lgsLx(m, c)}) = ${s}` : `${lgsLin(a, 0)} + ${b} · (${lgsLx(m, c)}) = ${s}`;
+      const w = ['Einsetzungsverfahren: Für y den Term aus I in II einsetzen.', ein, `Klammer auflösen: ${lgsLin(a, 0)} + ${lgsLx(b * m, C)} = ${s}`, `Zusammenfassen: ${lgsLx(A, C)} = ${s}`];
+      if (C) w.push(`${C > 0 ? '− ' + C : '+ ' + -C} auf beiden Seiten: ${lgsLin(A, 0)} = ${s - C}`);
+      w.push(`: ${A} auf beiden Seiten: x = ${s - C} : ${A} = ${x}`, `x = ${x} in I einsetzen: y = ${lgsVal(m, x, c)} = ${y}`, ...lgsProbe([['II', a, b, s]], x, y));
+      return lgsAsk(x, y, w, [`I: y = ${lgsLx(m, c)}`, `II: ${lgsEq(a, b, s)}`]);
+    }
+    if (l === 1) {   // Gleichsetzungsverfahren: beide Gleichungen nach y aufgelöst
+      let x, m1, m2, b1, b2; do { x = rnd(-8, 8); m1 = rnd(-5, 5); m2 = rnd(-5, 5); b1 = rnd(-10, 10); b2 = b1 + (m1 - m2) * x; } while (!x || !m1 || !m2 || m1 === m2 || Math.abs(b2) > 30 || !b2);
+      const y = m1 * x + b1, D = m1 - m2, w = ['Gleichsetzungsverfahren: Beide Gleichungen sind nach y aufgelöst, also die rechten Seiten gleichsetzen.', `${lgsLx(m1, b1)} = ${lgsLx(m2, b2)}`];
+      w.push(`${m2 > 0 ? '− ' + (m2 === 1 ? '' : m2) : '+ ' + (m2 === -1 ? '' : -m2)}x auf beiden Seiten: ${lgsLx(D, b1)} = ${fi(b2)}`);
+      if (b1) w.push(`${b1 > 0 ? '− ' + b1 : '+ ' + -b1} auf beiden Seiten: ${lgsLin(D, 0)} = ${fi(b2 - b1)}`);
+      if (D !== 1) w.push(`: ${par(D)} auf beiden Seiten: x = ${fi(b2 - b1)} : ${par(D)} = ${fi(x)}`);
+      w.push(`x = ${fi(x)} in I einsetzen: y = ${lgsVal(m1, x, b1)} = ${fi(y)}`, `Probe in II: ${lgsVal(m2, x, b2)} = ${fi(m2 * x + b2)} ✓`);
+      return lgsAsk(x, y, w, [`I: y = ${lgsLx(m1, b1)}`, `II: y = ${lgsLx(m2, b2)}`]);
+    }
+    if (l === 3) {   // Additionsverfahren: eine Gleichung malnehmen
+      const { x, y, E1, E2 } = lgsPick(6, 1, 12, (a1, b1, a2, b2) => a1 > 0 && a2 > 0 && Math.abs(b1) !== Math.abs(b2) && (Math.abs(b1) % Math.abs(b2) === 0 || Math.abs(b2) % Math.abs(b1) === 0));
+      return lgsAsk(x, y, lgsAdd(E1, E2, x, y), lgsSys(E1, E2));
+    }
+    // Stufe 5: Additionsverfahren, beide Gleichungen malnehmen, negative Lösungen
+    const { x, y, E1, E2 } = lgsPick(9, -12, 12, (a1, b1, a2, b2) => lcm(Math.abs(b1), Math.abs(b2)) > Math.max(Math.abs(b1), Math.abs(b2)));
+    return lgsAsk(x, y, lgsAdd(E1, E2, x, y), lgsSys(E1, E2));
+  },
   word(l) {
     const n = pick(NAMES); let n2; do n2 = pick(NAMES); while (n2 === n);
     const W_ = (story, a, unit, w, hint) => ({ e: [Story(story)], a, unit, w, noEq: true, story: true, hint });
@@ -794,7 +889,7 @@ const GEN = {
         return S2(`Heute ist der ${a}. ${mn}. In wie vielen Tagen ist der ${b}. ${nx}?`, len - a + b, 'Tage', [`Der ${mn} hat ${len} Tage.`, `Bis zum Monatsende: ${len} − ${a} = ${len - a}`, `${len - a} + ${b} = ${len - a + b}`]); }
       if (c === 3) { const d = rnd(2, 6), h = rnd(2, 23); return S2(`Wie viele Stunden sind ${d} Tage und ${h} Stunden?`, 24 * d + h, 'h', ['1 Tag = 24 Stunden', `${d} · 24 = ${24 * d}`, `${24 * d} + ${h} = ${24 * d + h}`]); }
       const h = rnd(7, 17), m1 = 5 * rnd(0, 8), d = 5 * rnd(3, 11), s = h * 60 + m1;
-      return S2(`Von ${hm(s)} Uhr bis ${hm(s + d)} Uhr: Wie viele Minuten sind das?`, d, 'min', s % 60 + d > 60 ? [`Bis ${h + 1}:00 Uhr: ${60 - m1} Minuten`, `Dann noch ${(s + d) % 60} Minuten`, `${60 - m1} + ${(s + d) % 60} = ${d}`] : [`${(s + d) % 60 || 60} − ${m1} = ${d}`]);
+      return S2(`Von ${hm(s)} Uhr bis ${hm(s + d)} Uhr: Wie viele Minuten sind das?`, d, 'min', s % 60 + d > 60 ? [`Bis ${h + 1}:00 Uhr: ${60 - m1} Minuten`, `Dann noch ${(s + d) % 60} Minuten`, `${60 - m1} + ${(s + d) % 60} = ${d}`] : [`Ende minus Anfang (in Minuten nach ${h}:00 Uhr): ${(s + d) % 60 || 60} − ${m1} = ${d}`]);
     }
     if (l === 2) {
       if (coin()) {
@@ -837,7 +932,7 @@ const GEN = {
     if (l === 2) {
       switch (rnd(0, 2)) {
         case 0: { const a = 5 * rnd(6, 16), b = 5 * rnd(4, Math.min(20, 34 - a / 5)); return S2(`In einem Dreieck sind zwei Winkel ${a}° und ${b}° groß. Wie groß ist der dritte Winkel?`, 180 - a - b, '°', ['Alle Winkel im Dreieck zusammen: 180°', `180 − ${a} − ${b} = ${180 - a - b}`]); }
-        case 1: { const a = 5 * rnd(4, 32); return S2(`Zwei Nebenwinkel ergeben zusammen 180°. Einer ist ${a}° groß. Wie groß ist der andere?`, 180 - a, '°', [`180 − ${a} = ${180 - a}`]); }
+        case 1: { const a = 5 * rnd(4, 32); return S2(`Zwei Nebenwinkel ergeben zusammen 180°. Einer ist ${a}° groß. Wie groß ist der andere?`, 180 - a, '°', [`Nebenwinkel ergänzen sich zu 180°.`, `Der andere Winkel: 180° − ${a}° = ${180 - a}°`]); }
         default: { const b = rnd(3, 12), a = rnd(3, 15); return S2(`Ein Rechteck hat die Fläche ${a * b} cm² und ist ${b} cm breit. Wie lang ist es?`, a, 'cm', ['Länge = Fläche : Breite', `${a * b} : ${b} = ${a}`]); }
       }
     }
@@ -1136,6 +1231,12 @@ const PRO = {
     let a, d, x, b, e, c, L0, R0; do { a = rnd(2, 9); d = rnd(2, 9); x = rnd(-12, 12); b = rnd(-9, 9); e = rnd(-9, 9); c = a * (x + b) - d * (x - e); L0 = a * b - c; R0 = -d * e; } while (a === d || Math.abs(x) < 2 || !b || !e || !c || Math.abs(c) > 60 || !L0);
     const sg = v => v < 0 ? ['−', -v] : ['+', v], [sb, ab] = sg(b), [se, ae] = sg(-e), [sc, ac] = sg(-c);
     return { e: [N(a), K('('), V(1), O(sb), N(ab), K(')'), O(sc), N(ac), Eq(), N(d), K('('), V(1), O(se), N(ae), K(')')], a: I(x), noEq: true, pre: 'x =', w: [`Ausmultiplizieren: ${a}x${sgnTerm(a * b)}${sgnTerm(-c)} = ${d}x${sgnTerm(R0)}`, `Zusammenfassen: ${a}x${sgnTerm(L0)} = ${d}x${sgnTerm(R0)}`, `− ${d === 1 ? '' : d}x und ${L0 > 0 ? '− ' + L0 : '+ ' + -L0} auf beiden Seiten: ${a - d === 1 ? '' : a - d === -1 ? '−' : fi(a - d)}x = ${fi(R0 - L0)}`, `x = ${fi(R0 - L0)} : ${par(a - d)} = ${fi(x)}`] };
+  },
+  lgs() {   // Profi: Gleichungen erst ordnen, große Koeffizienten, beide malnehmen
+    const { x, y, E1, E2 } = lgsPick(12, -15, 15, (a1, b1, a2, b2) => Math.abs(a1) >= 2 && Math.abs(b2) >= 2 && lcm(Math.abs(b1), Math.abs(b2)) > Math.max(Math.abs(b1), Math.abs(b2)));
+    const [, a1, b1, c1] = E1, [, a2, b2, c2] = E2;
+    const sys = [`I: ${lgsLin(a1, 0)} = ${fi(c1)}${lgsCo(-b1, 'y', false)}`, `II: ${lgsLin(0, b2)} = ${fi(c2)}${lgsCo(-a2, 'x', false)}`];
+    return lgsAsk(x, y, ['Ordnen: alle x- und y-Glieder nach links, die Zahl nach rechts.', `I: ${lgsEq(a1, b1, c1)}`, `II: ${lgsEq(a2, b2, c2)}`, ...lgsAdd(E1, E2, x, y)], sys);
   },
   word() {
     const n = pick(NAMES); let n2; do n2 = pick(NAMES); while (n2 === n);

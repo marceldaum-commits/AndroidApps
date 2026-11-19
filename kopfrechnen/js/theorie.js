@@ -155,6 +155,14 @@ const THEORIE = {
     ['Primfaktoren: immer wieder durch die kleinstmögliche Primzahl teilen.', 'Anzahl der Teiler: jeden Exponenten um 1 erhöhen und malnehmen.'],
     ['Euklid: die größere Zahl durch die kleinere teilen, mit dem Rest weitermachen, bis der Rest 0 ist.', 'kgV von drei Zahlen: alle Primfaktoren mit ihrer höchsten Anzahl.'],
   ] },
+  lgs: { k: 'Ein Gleichungssystem besteht aus zwei Gleichungen mit zwei Unbekannten x und y. Gesucht ist das Zahlenpaar, das beide Gleichungen zugleich erfüllt. Idee: eine Unbekannte wegschaffen, die andere ausrechnen, dann einsetzen und mit einer Probe prüfen.', l: [
+    ['Additionsverfahren: Die Gleichungen werden addiert. Steht in I + y und in II − y, fällt y weg.', 'Beispiel I: x + y = 10, II: x − y = 4. I + II: 2x = 14, also x = 7.', 'x = 7 in I einsetzen: 7 + y = 10, also y = 3.', 'Probe in II: 7 − 3 = 4 ✓'],
+    ['Gleichsetzungsverfahren: Sind beide Gleichungen nach y aufgelöst, setzt man die rechten Seiten gleich – beide sind ja gleich y.', 'Beispiel I: y = 3x − 2, II: y = x + 4. Gleichsetzen: 3x − 2 = x + 4.', '− x auf beiden Seiten: 2x − 2 = 4. + 2 auf beiden Seiten: 2x = 6. Also x = 3.', 'x = 3 in I einsetzen: y = 3 · 3 − 2 = 7. Probe in II: 3 + 4 = 7 ✓'],
+    ['Einsetzungsverfahren: Ist eine Gleichung nach y aufgelöst (y = …), schreibt man diesen Term in der anderen Gleichung für y – in Klammern.', 'Beispiel I: y = 2x + 1, II: x + y = 7. Einsetzen: x + (2x + 1) = 7.', 'Klammer auflösen und zusammenfassen: 3x + 1 = 7, also 3x = 6 und x = 2.', 'x = 2 in I einsetzen: y = 2 · 2 + 1 = 5. Probe in II: 2 + 5 = 7 ✓'],
+    ['Additionsverfahren mit Malnehmen: Eine Gleichung wird zuerst mit einer Zahl malgenommen (jedes Glied!), damit vor y Gegenzahlen stehen, z. B. 6y und −6y.', 'Beispiel I: x + 6y = 45, II: 6x − y = 11. II · 6: 36x − 6y = 66.', 'Addieren: x + 36x + 6y − 6y = 45 + 66, also 37x = 111 und x = 3.', 'x = 3 in I einsetzen: 3 + 6y = 45, 6y = 42, y = 7. Probe in II: 6 · 3 − 7 = 11 ✓'],
+    ['Beide Gleichungen malnehmen: mit dem kgV der Zahlen vor y arbeiten. Ein Faktor bekommt ein Minus, wenn vor y gleiche Vorzeichen stehen.', 'Beispiel I: 2x + 3y = 12, II: 3x + 2y = 13. kgV von 3 und 2 ist 6.', 'I · 2: 4x + 6y = 24. II · (−3): −9x − 6y = −39. Addieren: −5x = −15, also x = 3.', 'x = 3 in I einsetzen: 6 + 3y = 12, 3y = 6, y = 2. Probe in II: 3 · 3 + 2 · 2 = 13 ✓'],
+    ['Erst ordnen: alle x- und y-Glieder auf die linke Seite, die Zahl auf die rechte Seite. Ein Glied, das die Seite wechselt, wechselt sein Vorzeichen.', 'Beispiel I: 5x = 13 + 2y wird zu 5x − 2y = 13. II: 3y = 9 − x wird zu x + 3y = 9.', 'Dann wie gewohnt mit dem Additionsverfahren lösen.', 'Bei großen Zahlen hilft die Probe in beiden Gleichungen besonders.'],
+  ] },
   eq: { k: 'Eine Gleichung ist wie eine Waage: Was du links machst, musst du auch rechts machen.', l: [
     ['x + a = b: auf beiden Seiten a abziehen.', 'Beispiel x + 16 = 29 → x = 29 − 16 = 13.'],
     ['a · x = b: beide Seiten durch a teilen. x : a = b: beide Seiten mal a.', 'Beispiel 4x = 40 → x = 10.'],
@@ -238,6 +246,11 @@ const THEORIE = {
 };
 
 // Thema für die Theorie: bei „Alles gemischt“ das Thema der Aufgabe
+// Querverweise zu den anderen Lern-Apps (abgestimmt in der Wochenrunde 18.11.): nur freie Inhalte, keine Kaufseiten
+const THEO_LINKS = {
+  lgs: [['📘', 'Ausführlich üben im Mathe-Trainer', 'trainer', '#/u/k8-lgs'], ['📈', 'Als Schnittpunkt zweier Geraden sehen in KurvenFlug', 'kurvenflug', '#kapitel=rendezvous']],
+};
+const theoLinkUrl = (app, hash) => `https://${app}${typeof KOPPLUNG === 'object' && KOPPLUNG.stufe() === 'test' ? '-test' : ''}.mathenachhilfe-online.com/?src=rechenblitz-theorie${hash}`;
 const theoTopic = (tp) => THEORIE[tp] ? tp : null;
 function theoExample(tp, lvl, avoid) {
   for (let i = 0; i < 12; i++) { const t = makeTask(tp, lvl); if (!avoid || taskText(t) !== avoid) return t; }
@@ -264,6 +277,7 @@ PANELS.theorie = (o = {}) => {
     <div class="theo-ex"><div class="theo-exh"><b>Beispiel</b><button class="linkbtn" id="theoNew">🔄 Anderes Beispiel</button></div>
       <div class="theo-task"><span class="expr theo-expr${ex.story ? ' storymode' : ''}">${ex.e.map(tokHtml).join('')}${ex.noEq ? '' : `<span class="eq">${esc(ex.eqSign || '=')}</span>`}</span>${ex.noEq ? ' <span class="theo-arr">→</span>' : ''} <b class="theo-ans">${ex.pre ? `<span>${esc(ex.pre)}</span> ` : ''}<span>${esc(showAns(ex.a))}</span>${ex.unit ? ` <span>${esc(ex.unit)}</span>` : ''}</b></div>
       ${(ex.w || []).length ? `<ol class="steps">${ex.w.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}</div>
+    ${(THEO_LINKS[tp] || []).length ? `<div class="theo-links">${THEO_LINKS[tp].map(([ic, t, app, h]) => `<a class="theo-link" href="${esc(theoLinkUrl(app, h))}" target="_blank" rel="noopener"><span>${ic}</span><span>${esc(t)}</span><span>↗</span></a>`).join('')}</div>` : ''}
     ${inGame ? '<button class="btn primary block" id="theoBack">Zurück zur Aufgabe</button>' : '<button class="btn primary block" id="theoGo">▶ Jetzt üben</button>'}
   </div>`, init() {
     const re = l => { const no = { ...o, lvl: l }; const top = Sheet.stack[Sheet.stack.length - 1]; if (top) top[1] = no; showPanel('theorie', no, false); };

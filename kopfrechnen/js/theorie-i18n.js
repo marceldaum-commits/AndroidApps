@@ -155,6 +155,14 @@ const THEORIE_I18N = {
       ['Prime factors: keep dividing by the smallest possible prime number.', 'Number of factors: add 1 to each exponent and multiply.'],
       ['Euclid: divide the bigger number by the smaller one, continue with the remainder until it is 0.', 'LCM of three numbers: all prime factors with their highest count.'],
     ] },
+    lgs: { k: 'A system of equations has two equations with two unknowns x and y. We look for the pair of numbers that makes both equations true at the same time. Idea: remove one unknown, work out the other, then substitute and check.', l: [
+      ['Elimination by adding: add the two equations. If I has + y and II has − y, y disappears.', 'Example I: x + y = 10, II: x − y = 4. I + II: 2x = 14, so x = 7.', 'Put x = 7 into I: 7 + y = 10, so y = 3.', 'Check in II: 7 − 3 = 4 ✓'],
+      ['Equating: if both equations are solved for y, set the right-hand sides equal – both are equal to y.', 'Example I: y = 3x − 2, II: y = x + 4. Equate: 3x − 2 = x + 4.', 'Subtract x on both sides: 2x − 2 = 4. Add 2 on both sides: 2x = 6. So x = 3.', 'Put x = 3 into I: y = 3 · 3 − 2 = 7. Check in II: 3 + 4 = 7 ✓'],
+      ['Substitution: if one equation is solved for y (y = …), write this term for y in the other equation – in brackets.', 'Example I: y = 2x + 1, II: x + y = 7. Substitute: x + (2x + 1) = 7.', 'Remove the brackets and collect terms: 3x + 1 = 7, so 3x = 6 and x = 2.', 'Put x = 2 into I: y = 2 · 2 + 1 = 5. Check in II: 2 + 5 = 7 ✓'],
+      ['Elimination with multiplying: first multiply one equation by a number (every term!) so that the y terms are opposites, e.g. 6y and −6y.', 'Example I: x + 6y = 45, II: 6x − y = 11. II · 6: 36x − 6y = 66.', 'Add: x + 36x + 6y − 6y = 45 + 66, so 37x = 111 and x = 3.', 'Put x = 3 into I: 3 + 6y = 45, 6y = 42, y = 7. Check in II: 6 · 3 − 7 = 11 ✓'],
+      ['Multiply both equations: use the LCM of the numbers in front of y. One factor gets a minus sign if the y terms have the same sign.', 'Example I: 2x + 3y = 12, II: 3x + 2y = 13. The LCM of 3 and 2 is 6.', 'I · 2: 4x + 6y = 24. II · (−3): −9x − 6y = −39. Add: −5x = −15, so x = 3.', 'Put x = 3 into I: 6 + 3y = 12, 3y = 6, y = 2. Check in II: 3 · 3 + 2 · 2 = 13 ✓'],
+      ['Rearrange first: all x and y terms to the left, the number to the right. A term that changes sides changes its sign.', 'Example I: 5x = 13 + 2y becomes 5x − 2y = 13. II: 3y = 9 − x becomes x + 3y = 9.', 'Then solve by elimination as usual.', 'With large numbers the check in both equations is especially helpful.'],
+    ] },
     eq: { k: 'An equation is like a balance: whatever you do on the left, you must also do on the right.', l: [
       ['x + a = b: subtract a on both sides.', 'Example x + 16 = 29 → x = 29 − 16 = 13.'],
       ['a × x = b: divide both sides by a. x ÷ a = b: multiply both sides by a.', 'Example 4x = 40 → x = 10.'],
@@ -388,6 +396,14 @@ const THEORIE_I18N = {
       ['НСК: розклади обидва числа на прості множники.', 'Бери кожен простий множник стільки разів, скільки він трапляється найбільше.'],
       ['Прості множники: знову й знову ділі на найменше можливе просте число.', 'Кількість дільників: збільш кожен показник на 1 і перемнож.'],
       ['Евклід: поділи більше число на менше, продовжуй з остачею, доки остача не стане 0.', 'НСК трьох чисел: усі прості множники з найбільшою кількістю.'],
+    ] },
+    lgs: { k: 'Система рівнянь — це два рівняння з двома невідомими x і y. Шукаємо пару чисел, яка задовольняє обидва рівняння одночасно. Ідея: позбутися однієї невідомої, обчислити іншу, потім підставити й перевірити.', l: [
+      ['Метод додавання: рівняння додають. Якщо в I стоїть + y, а в II − y, то y зникає.', 'Приклад I: x + y = 10, II: x − y = 4. I + II: 2x = 14, отже x = 7.', 'Підставляємо x = 7 в I: 7 + y = 10, отже y = 3.', 'Перевірка в II: 7 − 3 = 4 ✓'],
+      ['Метод порівняння: якщо обидва рівняння розв’язані відносно y, прирівнюють праві частини — адже обидві дорівнюють y.', 'Приклад I: y = 3x − 2, II: y = x + 4. Прирівнюємо: 3x − 2 = x + 4.', 'Віднімаємо x з обох боків: 2x − 2 = 4. Додаємо 2 до обох боків: 2x = 6. Отже x = 3.', 'Підставляємо x = 3 в I: y = 3 · 3 − 2 = 7. Перевірка в II: 3 + 4 = 7 ✓'],
+      ['Метод підстановки: якщо одне рівняння розв’язане відносно y (y = …), цей вираз записують замість y в іншому рівнянні — у дужках.', 'Приклад I: y = 2x + 1, II: x + y = 7. Підставляємо: x + (2x + 1) = 7.', 'Розкриваємо дужки й зводимо подібні: 3x + 1 = 7, отже 3x = 6 і x = 2.', 'Підставляємо x = 2 в I: y = 2 · 2 + 1 = 5. Перевірка в II: 2 + 5 = 7 ✓'],
+      ['Метод додавання з множенням: спочатку одне рівняння множать на число (кожен член!), щоб перед y стояли протилежні числа, напр. 6y і −6y.', 'Приклад I: x + 6y = 45, II: 6x − y = 11. II · 6: 36x − 6y = 66.', 'Додаємо: x + 36x + 6y − 6y = 45 + 66, отже 37x = 111 і x = 3.', 'Підставляємо x = 3 в I: 3 + 6y = 45, 6y = 42, y = 7. Перевірка в II: 6 · 3 − 7 = 11 ✓'],
+      ['Множимо обидва рівняння: беремо НСК чисел перед y. Один множник отримує мінус, якщо перед y однакові знаки.', 'Приклад I: 2x + 3y = 12, II: 3x + 2y = 13. НСК чисел 3 і 2 дорівнює 6.', 'I · 2: 4x + 6y = 24. II · (−3): −9x − 6y = −39. Додаємо: −5x = −15, отже x = 3.', 'Підставляємо x = 3 в I: 6 + 3y = 12, 3y = 6, y = 2. Перевірка в II: 3 · 3 + 2 · 2 = 13 ✓'],
+      ['Спочатку впорядкувати: усі члени з x і y — ліворуч, число — праворуч. Член, що переходить на інший бік, змінює знак.', 'Приклад I: 5x = 13 + 2y стає 5x − 2y = 13. II: 3y = 9 − x стає x + 3y = 9.', 'Далі розв’язуємо методом додавання, як звичайно.', 'З великими числами перевірка в обох рівняннях особливо корисна.'],
     ] },
     eq: { k: 'Рівняння — як терези: що робиш ліворуч, те саме роби й праворуч.', l: [
       ['x + a = b: відніми a з обох боків.', 'Приклад x + 16 = 29 → x = 29 − 16 = 13.'],

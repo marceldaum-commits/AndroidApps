@@ -17,6 +17,7 @@ const numsOf = t => {   // alle Zahlen der Aufgabe (auch in Textaufgaben)
     else if (k.t === 'p') out.push(Math.abs(k.b) ** Math.min(k.e, 6));
     else if (k.t === 'r') out.push(+k.v);
     else if (k.t === 'v') out.push(Math.abs(k.c));
+    else if (k.t === 'y') k.v.join(' ').match(/\d+/g).forEach(s => out.push(s));
     else if (/^[stx]$/.test(k.t)) (String(k.v).match(/\d+(?:[.,:]\d+)*/g) || []).forEach(s => out.push(s.replace(/\.(?=\d{3})/g, '')));   // 1.250.000 und 14:35 sind je eine Zahl
   }
   return out;

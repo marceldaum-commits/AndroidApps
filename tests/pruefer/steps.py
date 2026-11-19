@@ -31,7 +31,7 @@ FAC = {'mm': ('L', Fr(1, 1000)), 'cm': ('L', Fr(1, 100)), 'dm': ('L', Fr(1, 10))
   'km/h': ('v', Fr(1000, 3600)), 'm/s': ('v', 1)}
 UNIT_RE = re.compile(r'(?<![A-Za-zÄÖÜäöüß])(' + '|'.join(sorted(map(re.escape, FAC), key=len, reverse=True)) + r')(?![A-Za-zÄÖÜäöüß²³/])')
 def ev(side):
-    side = side.strip().rstrip('.!').strip()
+    side = side.strip().rstrip('.!✓').strip()
     side = re.sub(r'(?<![\d,])(\d{1,2}):(\d{2})(?!\d)', lambda m: str(int(m.group(1)) * 60 + int(m.group(2))) + ' min', side)   # Uhrzeit → Minuten nach Mitternacht
     if re.fullmatch(r'[\d\s]+ min − [\d\s]+ min', side): a, b = re.findall(r'\d+', side); return ('U', 'T', (int(a) - int(b)) * 60)
     units = UNIT_RE.findall(side)

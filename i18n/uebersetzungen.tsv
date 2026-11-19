@@ -2512,3 +2512,39 @@ Pro-Freischalt-Links sind jetzt sicherer: Der Code wird sofort aus der Adresszei
 ← Alle Apps	← All apps	← Усі застосунки
 Neu oben auf dem Start: „← Alle Apps“ führt zurück zur Auswahl aller Lern-Apps auf unserer Website	New at the top of the home screen: “← All apps” takes you back to all our learning apps on our website	Нове вгорі на головному екрані: «← Усі застосунки» веде назад до вибору всіх навчальних застосунків на нашому сайті
 Im Dunkel-Modus ist das Rechenblitz-Zeichen oben wieder orange	In dark mode the Rechenblitz symbol at the top is orange again	У темному режимі знак Rechenblitz угорі знову помаранчевий
+Gleichungssysteme	Systems of equations	Системи рівнянь
+Additionsverfahren	Elimination by adding	Метод додавання
+x + y und x − y	x + y and x − y	x + y і x − y
+Gleichsetzungsverfahren	Equating method	Метод порівняння
+Einsetzungsverfahren	Substitution	Метод підстановки
+eine Gleichung malnehmen	multiply one equation	помножити одне рівняння
+beide malnehmen, negative Lösungen	multiply both, negative solutions	помножити обидва, від’ємні розв’язки
+erst ordnen, große Zahlen	rearrange first, large numbers	спочатку впорядкувати, великі числа
+I + II, dabei fällt y weg.	I + II, so y disappears.	I + II, при цьому y зникає.
+x = {} in I einsetzen	put x = {} into I	підставляємо x = {} в I
+x = {} in II einsetzen	put x = {} into II	підставляємо x = {} в II
+− {} auf beiden Seiten	− {} on both sides	− {} з обох боків
++ {} auf beiden Seiten	+ {} on both sides	+ {} з обох боків
++ {}x auf beiden Seiten	+ {}x on both sides	+ {}x з обох боків
+− {}x auf beiden Seiten	− {}x on both sides	− {}x з обох боків
++ x auf beiden Seiten	+ x on both sides	+ x з обох боків
+− x auf beiden Seiten	− x on both sides	− x з обох боків
+: {} auf beiden Seiten: y = {}	÷ {} on both sides: y = {}	: {} з обох боків: y = {}
+Probe in I	Check in I	Перевірка в I
+Probe in II	Check in II	Перевірка в II
+Löse das Gleichungssystem.	Solve the system of equations.	Розв’яжи систему рівнянь.
+Beide Gleichungen sind nach y aufgelöst, also die rechten Seiten gleichsetzen.	Both equations are solved for y, so set the right-hand sides equal.	Обидва рівняння розв’язані відносно y, тож прирівнюємо праві частини.
+Für y den Term aus I in II einsetzen.	Substitute the term for y from I into II.	Підставляємо вираз для y з I в II.
+Klammer auflösen	Remove the brackets	Розкриваємо дужки
+Die Gleichungen so malnehmen, dass y beim Addieren wegfällt.	Multiply the equations so that y disappears when adding.	Множимо рівняння так, щоб y зник під час додавання.
+II	II	II
+Addieren	Add	Додаємо
+alle x- und y-Glieder nach links, die Zahl nach rechts.	all x and y terms to the left, the number to the right.	усі члени з x і y — ліворуч, число — праворуч.
+Ausführlich üben im Mathe-Trainer	Practise in detail in Mathe-Trainer	Докладно тренуватися в Mathe-Trainer
+Als Schnittpunkt zweier Geraden sehen in KurvenFlug	See it as the intersection of two lines in KurvenFlug	Побачити як точку перетину двох прямих у KurvenFlug
+Neues Thema „Gleichungssysteme“ (Klasse {}–{}): Additions-, Gleichsetzungs- und Einsetzungsverfahren in {} Stufen, jeder Lösungsweg mit allen Schritten und Probe	New topic “Systems of equations” (years {}–{}): elimination, equating and substitution in {} levels, every solution with all steps and a check	Нова тема «Системи рівнянь» ({}–{} клас): методи додавання, порівняння й підстановки в {} рівнях, кожен розв’язок з усіма кроками й перевіркою
+Theorie zu jedem Verfahren mit durchgerechnetem Beispiel und Links zum Mathe-Trainer und zu KurvenFlug	Theory for every method with a worked example and links to Mathe-Trainer and KurvenFlug	Теорія до кожного методу з розв’язаним прикладом і посиланнями на Mathe-Trainer і KurvenFlug
+Nebenwinkel ergänzen sich zu {}°.	Adjacent angles on a straight line add up to {}°.	Суміжні кути разом дають {}°.
+Der andere Winkel	The other angle	Інший кут
+Ende minus Anfang (in Minuten nach {} Uhr)	End minus start (in minutes after {})	Кінець мінус початок (у хвилинах після {})
+Lösungswege bei Nebenwinkeln und Minuten-Zeitspannen nennen jetzt die Regel	Solutions for adjacent angles and time spans in minutes now state the rule	Розв’язки для суміжних кутів і проміжків часу в хвилинах тепер називають правило

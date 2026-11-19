@@ -41,6 +41,23 @@ def poly_eval(s, x):
     s = s.replace('x²', 'x**2').replace('x³', 'x**3').replace(')²', ')**2')
     s = re.sub(r'(\d+)', r'F(\1)', s)
     return eval(s, {'F': F, 'x': x})
+def lgs_side(s):
+    # lineare Seite in x und y → (Faktor x, Faktor y, Zahl), unabhängig von der App ausgewertet
+    s = s.replace('−', '-').replace('·', '*')
+    s = re.sub(r'(\d)\s*([xy])', r'\1*\2', s)
+    s = re.sub(r'(\d+)', r'F(\1)', s)
+    f = lambda x, y: eval(s, {'F': F, 'x': x, 'y': y})
+    c = f(F(0), F(0)); return f(F(1), F(0)) - c, f(F(0), F(1)) - c, c
+def lgs_solve(lines):
+    rows = []
+    for ln in lines:
+        body = ln.split(': ', 1)[1]; L, R = body.split(' = ')
+        lx, ly, lc = lgs_side(L); rx, ry, rc = lgs_side(R)
+        rows.append((lx - rx, ly - ry, rc - lc))          # a·x + b·y = c
+    (a1, b1, c1), (a2, b2, c2) = rows
+    det = a1 * b2 - a2 * b1
+    assert det != 0, 'keine eindeutige Lösung'
+    return (c1 * b2 - c2 * b1) / det, (a1 * c2 - a2 * c1) / det   # Cramersche Regel
 def solve(t):
     tp, l, e, txt = t['tp'], t['l'], t['e'], t['text']
     a = F(t['a']['n'], t['a']['d'])
@@ -62,6 +79,10 @@ def solve(t):
         if s == 'von': n = [k['v'] for k in e if k['t'] == 'n']; return F(fs[0]['n'], fs[0]['d']) * n[0], ''
     if has('g') and has('q'):   # Lücke: hinterlegte Lösung einsetzen
         L, R = split_eq(e); return (a if expr_of(L, gap=a) == expr_of(R, gap=a) else None), 'Lücke'
+    if tp == 'lgs':
+        sy = next(k for k in e if k['t'] == 'y'); x, y = lgs_solve(sy['v'])
+        assert x.denominator == 1 and y.denominator == 1, 'Lösung nicht ganzzahlig'
+        return (x if t['pre'] == 'x =' else y), 'LGS'
     if tp == 'eq':
         L, R = split_eq(e); return (a if expr_of(L, x=a) == expr_of(R, x=a) else None), 'Gleichung'
     if tp == 'divis':
