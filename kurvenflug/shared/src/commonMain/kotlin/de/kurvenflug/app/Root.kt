@@ -1,5 +1,6 @@
 package de.kurvenflug.app
 
+import kotlinx.coroutines.flow.first
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.padding
@@ -44,6 +45,9 @@ import de.kurvenflug.core.model.Levels
 import de.kurvenflug.core.model.MusicMood
 import androidx.navigation.compose.currentBackStackEntryAsState
 
+
+/** Vorsilbe für Kapitel-Direktlinks in [KurvenflugRoot]s widgetLevel */
+const val CHAPTER_LINK = "kapitel:"
 
 object Routes {
     const val HOME = "start"
@@ -196,11 +200,20 @@ private fun Nav(vm: AppState, platform: Platform, incomingDuel: MutableState<Str
     }
     LaunchedEffect(shared) { shared?.let { openCode(it) } }
     // Vom Widget: direkt ins Level
+    // WebApp-Direktlink „#kapitel=<name>“ kommt als „kapitel:<name>“: erstes noch offenes Level des Kapitels (Spielstand kurz abwarten)
     val fromWidget by widgetLevel
-    LaunchedEffect(fromWidget) {
-        fromWidget?.let { id -> nav.navigate(Routes.level(id)) { launchSingleTop = true }; widgetLevel.value = null }
-    }
     val allProgress by vm.progress.collectAsStateWithLifecycle()
+    LaunchedEffect(fromWidget) {
+        val target = fromWidget ?: return@LaunchedEffect
+        val id = if (target.startsWith(CHAPTER_LINK)) {
+            val chapter = de.kurvenflug.core.model.ChapterLinks.chapter(target.removePrefix(CHAPTER_LINK))
+                ?: run { widgetLevel.value = null; return@LaunchedEffect }
+            val progress = kotlinx.coroutines.withTimeoutOrNull(1500) { vm.progress.first { it.isNotEmpty() } } ?: vm.progress.value
+            de.kurvenflug.core.model.ChapterLinks.level(chapter, progress.mapValues { it.value.stars }).id
+        } else target
+        nav.navigate(Routes.level(id)) { launchSingleTop = true }
+        widgetLevel.value = null   // erst nach dem Navigieren: sonst bricht der Neustart des Effekts das Warten ab
+    }
     val allStars = remember(allProgress) { allProgress.mapValues { it.value.stars } }
     val rescued = remember(allProgress) { allProgress.keys.filter { de.kurvenflug.core.model.Season2.isRescue(it) }.mapNotNull { it.removePrefix(de.kurvenflug.core.model.Season2.PREFIX).toIntOrNull() }.toSet() }
     val stats by vm.stats.collectAsStateWithLifecycle()

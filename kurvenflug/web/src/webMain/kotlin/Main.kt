@@ -42,6 +42,10 @@ fun main() {
         if (ok) WebPlatform.countAt("code_eingeloest", "link")
         confirm(if (ok) "🎉 Kurvenflug Pro ist freigeschaltet – viel Spaß!" else "Der Freischalt-Link hat nicht gepasst. Bitte den Code unter Einstellungen → Kurvenflug Pro eingeben.")
     }
+    // Direkt-Link anderer Lern-Apps: …/#kapitel=<name> (oder Nummer) → erstes offenes Level dieses Kapitels; Unbekanntes → Startseite
+    val chapterLink = de.kurvenflug.core.model.ChapterLinks.extract(locationSearch())
+        ?.takeIf { de.kurvenflug.core.model.ChapterLinks.chapter(it) != null }
+    if (de.kurvenflug.core.model.ChapterLinks.extract(locationSearch()) != null) clearSearch()
     val state = AppState(settings, WebProgressStore(settings.profile), MainScope())
     // Bildschirmleser-Spiegel aus: Er meldete bei Levelende gelegentlich „Node … not found“ (Compose 1.9) –
     // das grafische Flugbahn-Spiel ist mit Screenreader ohnehin kaum spielbar.
@@ -55,6 +59,7 @@ fun main() {
             ready = true
             hideLoader()
         }
-        if (ready) KurvenflugRoot(state, WebPlatform)
+        val linkTarget = remember { mutableStateOf(chapterLink?.let { de.kurvenflug.app.CHAPTER_LINK + it }) }
+        if (ready) KurvenflugRoot(state, WebPlatform, widgetLevel = linkTarget)
     }
 }
