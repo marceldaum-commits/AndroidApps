@@ -2,6 +2,20 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 0.2.2 vom 19.11.2026: Beleg „Spracherkennung nur im Gerät“ + Fehlerbehebung Gerätestimme – fertig für den Test
+
+- **Beleg (Auftrag AppZentrale / „Geld verdienen“ Nr. 5):** `node tools/web-sprache.mjs` schleust in **Chromium und WebKit** Ersatz-Erkenner ein und prüft den echten Code der App:
+  - A) Der Browser kann es auf dem Gerät → Start nur mit `processLocally = true`.
+  - B) Der Browser kann es nicht (wie Safari) → **startet nie**.
+  - C) Der Browser setzt es nur zum Schein → **startet nie** (neu: strenge Prüfung nach dem Setzen).
+  - D) Erst wenn die Eltern die Online-Erkennung ausdrücklich erlauben → Start ohne processLocally.
+  - E) Erkennung aus → startet nie.
+  - Ergebnis: alles grün. Die Web Speech API kann im Standardweg also kein Audio an Google oder Apple schicken.
+- **Elternbereich:** erklärt jetzt ehrlich, ob das Gerät Sprache selbst erkennt (iPad/Safari: nein, dann nur Lautstärke-Prüfung, außer die Eltern erlauben die Online-Erkennung).
+- **Fehler behoben:** Der Rückfall auf die Gerätestimme nahm immer eine englische Stimme, auch für Deutsch, Französisch und Spanisch (betrifft die 59 unsicheren Aufnahmen). Jetzt wird die passende Sprache genommen; getestet (F).
+- Test-Stufe nur noch über den Hostnamen („lernen-test.“, „-test.“), wie im Standard.
+- **Für live:** `quasselquest-live` kann statt a183ccf direkt auf diesen Stand. Er wurde genauso geprüft (Durchspielen in Chromium und WebKit).
+
 ## 19.11.2026 – LIVE-MELDUNG: Version 0.2.1 vom 19.11.2026, Commit 216388f für `quasselquest-live`
 
 - **Inhalt:** Sprach-Umschalter (Englisch, Deutsch, Französisch, Spanisch, Latein) und 19 Sprachpakete (658 Karten) als Spiele mit Wiederholung, dazu Englisch Welt 1 (3 Episoden). 0.2.1 enthält nur die eindeutige Manifest-id (`"id": "./"`) für die gemeinsame Adresse.
