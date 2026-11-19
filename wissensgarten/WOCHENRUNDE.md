@@ -269,3 +269,10 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
   - Geräteregel ohne Familie nur für neue Codes: Produkt 2 oder Kauftag ≥ STICHTAG. STICHTAG als leicht setzbare Konstante; den Tag nennt der Leitstand nach Marcels Entscheidung (FAM_LIVE).
   - Hinweistext beim Einlösen ohne Familie, Gültigkeit „365 Tage ab dem Einlösen, ohne automatische Verlängerung“.
   - Sperrliste vor jeder Offline-Prüfung.
+
+## Merkzettel für Mi 25.11. – Tonstudio (Vorlesen neu)
+- Textliste im Quasselquest-Format (ID, Text, Sprache, Tempo, Zielpfad), Formeln/Zahlen in Worten, aufgeteilt nach Paket.
+- Erste Lieferung: Brummi-Sätze + Laufzeit-Bausteine in 1,0 und 0,8; Kartentexte nur 1,0.
+- Plus-Inhalte NICHT in die Liste, bis der Leitstand „Plus-Audio geschützt“ gebaut hat (MP3 nur mit gültigem Code).
+- Eigene Karten/Klassen-Codes/Namen: später live übers Tonstudio (nur Arbeitsspeicher, ohne Cache/Log) – NICHT bauen vor Freigabe durch Recht.
+- Kennzeichnung „🤖 KI-generierte Stimme“ (statt „Nova – …“), Lizenzliste nach V13 (Wortlaut von der AppZentrale). Nova entfällt.
