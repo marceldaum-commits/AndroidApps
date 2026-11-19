@@ -3,6 +3,976 @@
 "app": "quasselquest",
 "texte": [
 {
+"text": "Akkusativ",
+"sprache": "de",
+"nova": "a13f260f9d5cc8438f9c7a7f6e96802d"
+},
+{
+"text": "Akkusativobjekt",
+"sprache": "de",
+"nova": "6452949896bb885cc91c9744abdef080"
+},
+{
+"text": "Anführungszeichen",
+"sprache": "de",
+"nova": "0dcf62bc40ef7d15f09a8b98e5c4123d"
+},
+{
+"text": "Argument",
+"sprache": "de",
+"nova": "d39e97f6c6c3b7f14d463908a924c00d"
+},
+{
+"text": "Atmosphäre",
+"sprache": "de",
+"nova": "0dfdf3cee8d6905e59780681d99ca0ab"
+},
+{
+"text": "Aufforderungssatz",
+"sprache": "de",
+"nova": "af453f0e4ec6ec749eec41bfbe845b87"
+},
+{
+"text": "Ausrufesatz",
+"sprache": "de",
+"nova": "bb08fc5fd01350942ec63d0b439f0c58"
+},
+{
+"text": "Ausrufezeichen",
+"sprache": "de",
+"nova": "dcbe0ccb210e6c57ea8e07ca32d0c7ed"
+},
+{
+"text": "Aussagesatz",
+"sprache": "de",
+"nova": "63d6aa9c09f7cff7f416dafb13181c60"
+},
+{
+"text": "Biene",
+"sprache": "de",
+"nova": "67681e194d5ca4a2fa90b5efcb9dbbbd"
+},
+{
+"text": "Brief",
+"sprache": "de",
+"nova": "72f3670b9e7bd76e752fd43bc5d5e0b5"
+},
+{
+"text": "Bär",
+"sprache": "de",
+"nova": "f5455d0e51715b57cd769d2035d6b98d"
+},
+{
+"text": "Das gebeugte Verb steht am Ende.",
+"sprache": "de",
+"nova": "9708a06be4de20a96e9788ad724fe0ce"
+},
+{
+"text": "Das ist nicht mein Bier.",
+"sprache": "de",
+"nova": "048804d48df7ead3459190e40d92c121"
+},
+{
+"text": "Das ist nur ein Katzensprung.",
+"sprache": "de",
+"nova": "18f81b398db06ba9eec88a95027d38db"
+},
+{
+"text": "Dativ",
+"sprache": "de",
+"nova": "d2a2d6905a0014ae454cbaea9f9fe0f6"
+},
+{
+"text": "Dativobjekt",
+"sprache": "de",
+"nova": "cd7f9642d8a5293f1ea4689917a47b88"
+},
+{
+"text": "Defizit",
+"sprache": "de",
+"nova": "5b210d144b05de749671d0c8c7d91719"
+},
+{
+"text": "Der Hund spielt im Garten.",
+"sprache": "de",
+"nova": "3534b86764a2a7931e6d3f2b3a7f0550"
+},
+{
+"text": "Der Hund, der dort bellt, heißt Bello.",
+"sprache": "de",
+"nova": "737c6bd350adeddc3d52f39acde6992c"
+},
+{
+"text": "Dilemma",
+"sprache": "de",
+"nova": "24aab8f7345e92682ddc7e260c460510"
+},
+{
+"text": "Diskriminierung",
+"sprache": "de",
+"nova": "74aec59bbd040a7f931475c869b78eb1"
+},
+{
+"text": "Diskussion",
+"sprache": "de",
+"nova": "5b005c3abebb71ec98f3040b1956fe1e"
+},
+{
+"text": "Doppelpunkt",
+"sprache": "de",
+"nova": "640e411a7e605d6c05538afc1cc311ed"
+},
+{
+"text": "Eis",
+"sprache": "de",
+"nova": "c603ef62418fad7c0eed2f4f59c8bb81"
+},
+{
+"text": "Empathie",
+"sprache": "de",
+"nova": "7177c88a4c410857e7fe0181ba89dccb"
+},
+{
+"text": "Er brachte.",
+"sprache": "de",
+"nova": "b1e2a3a70a321e74d0c7d6e507aa23e7"
+},
+{
+"text": "Er ging los, ohne sich zu verabschieden.",
+"sprache": "de",
+"nova": "25c00f6fca35de336f40f70b8bed3ab1"
+},
+{
+"text": "Er ist klein, aber sehr schnell.",
+"sprache": "de",
+"nova": "5285714c9ceb994093072b72e2888e1d"
+},
+{
+"text": "Es ist kälter, als ich dachte.",
+"sprache": "de",
+"nova": "f027e901a5f1f24ebf8582d3453f0b3b"
+},
+{
+"text": "Eulen nach Athen tragen",
+"sprache": "de",
+"nova": "ae566bd118d61ae25a1e6ed8dd7c53ea"
+},
+{
+"text": "Fahrrad",
+"sprache": "de",
+"nova": "95e62197164fab31354446a3c715e6ac"
+},
+{
+"text": "Fazit",
+"sprache": "de",
+"nova": "9117c45174a253d3ca8aa22d80cd130a"
+},
+{
+"text": "Fleisch",
+"sprache": "de",
+"nova": "a8989e2d86cbbc66bac892b1d38bfff8"
+},
+{
+"text": "Fliege",
+"sprache": "de",
+"nova": "52cf6704d9a14b7df80c35ef27c24ea9"
+},
+{
+"text": "Fragesatz",
+"sprache": "de",
+"nova": "49fd1ee8e5c4bedef316529ab48675b9"
+},
+{
+"text": "Fragezeichen",
+"sprache": "de",
+"nova": "bf88abea8e6339fc34cf88b9daa13cdd"
+},
+{
+"text": "Futur I",
+"sprache": "de",
+"nova": "201da735f265fd39b469e293b5d52a30"
+},
+{
+"text": "Futur II",
+"sprache": "de",
+"nova": "95d08f9c2ba2ee346b9512c3e73a9f1d"
+},
+{
+"text": "Fuß",
+"sprache": "de",
+"nova": "ce7973465939c0797eb2b03f1537801f"
+},
+{
+"text": "Genitiv",
+"sprache": "de",
+"nova": "0847a68058b6ebe3d2e619de2b64dc65"
+},
+{
+"text": "Hals- und Beinbruch!",
+"sprache": "de",
+"nova": "507f3b6923f99e2552b8842de1fe1a20"
+},
+{
+"text": "Hast du Hunger?",
+"sprache": "de",
+"nova": "fa42c9f38689a8916d996804dc572006"
+},
+{
+"text": "Haus",
+"sprache": "de",
+"nova": "7ebeccbdeed40dd0816dedbc5ebb8e87"
+},
+{
+"text": "Haustür",
+"sprache": "de",
+"nova": "5020cc17f067621628154238285e7d9a"
+},
+{
+"text": "Herr Kaya, unser Hausmeister, ist nett.",
+"sprache": "de",
+"nova": "e4e849984ca57ac733c460adf684917b"
+},
+{
+"text": "Heute regnet es.",
+"sprache": "de",
+"nova": "8aa0f8e64b7796735feaf84bc3132ae9"
+},
+{
+"text": "Hund",
+"sprache": "de",
+"nova": "f77acedf661b349270e6a5e3348f3c0d"
+},
+{
+"text": "Hypothese",
+"sprache": "de",
+"nova": "2e0549a8d005b75675a637b8c3f71e96"
+},
+{
+"text": "Ich freue mich darauf, dich zu sehen.",
+"sprache": "de",
+"nova": "a9391c13eb8bfb6fd8a030195373e35f"
+},
+{
+"text": "Ich glaub, mein Schwein pfeift!",
+"sprache": "de",
+"nova": "d8b04908d0b429c2b6795dba4ebbf0a1"
+},
+{
+"text": "Ich weiß, dass er kommt, und freue mich.",
+"sprache": "de",
+"nova": "29a530711800adc318e2daddd13d8e02"
+},
+{
+"text": "Intention",
+"sprache": "de",
+"nova": "e6c7fbf53a3fc3128a0704c5ef611a20"
+},
+{
+"text": "Kinder",
+"sprache": "de",
+"nova": "75bb87c443d9b6595d1b0d789bd88d71"
+},
+{
+"text": "Kohldampf",
+"sprache": "de",
+"nova": "62e8075385eb7ca589777845c796b4ad"
+},
+{
+"text": "Komm schnell her!",
+"sprache": "de",
+"nova": "9c9edcd5c93250c0837e3f6fb928468c"
+},
+{
+"text": "Kommst du mit?",
+"sprache": "de",
+"nova": "fd429e4c0f9f05d2d1f79cf195df1041"
+},
+{
+"text": "Kompromiss",
+"sprache": "de",
+"nova": "eccb8eb2e8918f059947f5c4260353f0"
+},
+{
+"text": "Konsens",
+"sprache": "de",
+"nova": "90cfb966299221e7de65243f802e5449"
+},
+{
+"text": "Konsequenz",
+"sprache": "de",
+"nova": "ab6aefd71863e33c7d50737dadf8ee28"
+},
+{
+"text": "Kriterium",
+"sprache": "de",
+"nova": "f00c2923ea3234c15bba28608bde551c"
+},
+{
+"text": "Kuh",
+"sprache": "de",
+"nova": "5eb482c3900fc42ab5cbd9bb848a3fa6"
+},
+{
+"text": "Kuss",
+"sprache": "de",
+"nova": "f1a2382a23f6dfbf10187372d947da64"
+},
+{
+"text": "Lampenfieber haben",
+"sprache": "de",
+"nova": "56b57362f5c96bb0c3558d9c39cce54e"
+},
+{
+"text": "Lehrer",
+"sprache": "de",
+"nova": "9c3351962c728539f588003e935bb060"
+},
+{
+"text": "Lena, Paul und Mia spielen Ball.",
+"sprache": "de",
+"nova": "c5aa9bee0ebe10cc6eb70d53cbde1b56"
+},
+{
+"text": "Maschine",
+"sprache": "de",
+"nova": "1c4012a942a76e9d47ebfb2ef0b22df7"
+},
+{
+"text": "Mehl",
+"sprache": "de",
+"nova": "6295b1ea370a15ba567aa681bdc25e70"
+},
+{
+"text": "Milch",
+"sprache": "de",
+"nova": "df8d5190dc53d48c58ee1ab90d0a7aad"
+},
+{
+"text": "Monolog",
+"sprache": "de",
+"nova": "4ef7127905a606f3c98315b0ae426df9"
+},
+{
+"text": "Motivation",
+"sprache": "de",
+"nova": "d0e966d442086fa8a323ee425139ef08"
+},
+{
+"text": "Mäuse",
+"sprache": "de",
+"nova": "1e263d2f6837872cf9b3797d137d47e0"
+},
+{
+"text": "Möchtest du Tee oder Kakao?",
+"sprache": "de",
+"nova": "ea995e18575c8841674ee9a41ac36969"
+},
+{
+"text": "Nein",
+"sprache": "de",
+"nova": "fe29d8859d60a05f5efb467d4f993715"
+},
+{
+"text": "Nominativ",
+"sprache": "de",
+"nova": "9ec48ec5112d4d67e5990d8bb4d1d563"
+},
+{
+"text": "Nudeln",
+"sprache": "de",
+"nova": "3f602dd2909bd71cbf92805e91ec38c8"
+},
+{
+"text": "Nuss",
+"sprache": "de",
+"nova": "74f300acb1685ab593c2f7b051a1ae0f"
+},
+{
+"text": "Oma ruft",
+"sprache": "de",
+"nova": "a8ad62f4184fc0ba2b79f5ed46a7cd44"
+},
+{
+"text": "Perfekt",
+"sprache": "de",
+"nova": "94678b220b0387f28f17fd12edf4c145"
+},
+{
+"text": "Perlen vor die Säue werfen",
+"sprache": "de",
+"nova": "0b2b069b7896c1329070abd30d338522"
+},
+{
+"text": "Phänomen",
+"sprache": "de",
+"nova": "5bc8b8cdf441aa272e5a4264dde7962e"
+},
+{
+"text": "Prognose",
+"sprache": "de",
+"nova": "6d102a5863ab188cf48b6ed785f526b0"
+},
+{
+"text": "Punkt",
+"sprache": "de",
+"nova": "8ca962d7caca9a68938d1b1e4cd9bda4"
+},
+{
+"text": "Reparatur",
+"sprache": "de",
+"nova": "6eeb661bedf037c66d4f638611464644"
+},
+{
+"text": "Resümee",
+"sprache": "de",
+"nova": "7c7e146fb36959825b051ad2df1b45c4"
+},
+{
+"text": "Rhythmus",
+"sprache": "de",
+"nova": "6b982489812151f8328b8c26fd4a2fd1"
+},
+{
+"text": "Riese",
+"sprache": "de",
+"nova": "233e280924e0c5a5ce3986f0007753c1"
+},
+{
+"text": "Rose",
+"sprache": "de",
+"nova": "684f942bc43af6f9a171efe19cba7cde"
+},
+{
+"text": "Sahne",
+"sprache": "de",
+"nova": "d8efdf37b30c55910b6608b512d468b9"
+},
+{
+"text": "Schließ bitte die Tür!",
+"sprache": "de",
+"nova": "391871b001218231b7611f92aca6517f"
+},
+{
+"text": "Schluss",
+"sprache": "de",
+"nova": "d34f948b7ac0bdfe86a3a976756cbb05"
+},
+{
+"text": "Schneemann",
+"sprache": "de",
+"nova": "7555f1b1cfba75cac390101e594a1118"
+},
+{
+"text": "Schule",
+"sprache": "de",
+"nova": "36bd235ca7fe8156a7face6b0a2f0305"
+},
+{
+"text": "Schwein haben",
+"sprache": "de",
+"nova": "8c9a3edc76a75603cc7e6c5e5a1a5a98"
+},
+{
+"text": "Sie ist gekommen.",
+"sprache": "de",
+"nova": "2fdcd060c54fce6fa6bd28d45fcdf324"
+},
+{
+"text": "Sohn",
+"sprache": "de",
+"nova": "e47e1edc6c8dff3a41f8585d02e86cfe"
+},
+{
+"text": "Sonnenblume",
+"sprache": "de",
+"nova": "1b71af8bd4152f9f1ecd8ce9f1e1ddd7"
+},
+{
+"text": "Spiel",
+"sprache": "de",
+"nova": "7c1cd786dc500c84ede934db2628d57f"
+},
+{
+"text": "Standard",
+"sprache": "de",
+"nova": "8d012435d3e0848124fb0683c712f596"
+},
+{
+"text": "Stein",
+"sprache": "de",
+"nova": "ef0e279ddd4ef6dc099aafa396ec0be5"
+},
+{
+"text": "Straße",
+"sprache": "de",
+"nova": "25955602d0021644a514a3409f4005c5"
+},
+{
+"text": "Stuhl",
+"sprache": "de",
+"nova": "c5a67921babe3f23c120e75e5d4ac8bf"
+},
+{
+"text": "Subjekt",
+"sprache": "de",
+"nova": "a2632992de6620e8fc576175080c7572"
+},
+{
+"text": "Tanne",
+"sprache": "de",
+"nova": "9a62980220a2963dd3010018d6e1c371"
+},
+{
+"text": "Tatze",
+"sprache": "de",
+"nova": "feb7f499dd47503bb41fbfb6fc254ec0"
+},
+{
+"text": "Tier",
+"sprache": "de",
+"nova": "d140e6b9d579314ec1c3f5e9aa88eabe"
+},
+{
+"text": "Tim ist so groß wie sein Vater.",
+"sprache": "de",
+"nova": "741f695fc0092077cd3ad1e0a4ac58e8"
+},
+{
+"text": "Tisch",
+"sprache": "de",
+"nova": "3eb0d3a3900426c209328300438d4252"
+},
+{
+"text": "Tomaten auf den Augen haben",
+"sprache": "de",
+"nova": "27c4989f0ca14c63f9feb6fe87f6c150"
+},
+{
+"text": "Vogel",
+"sprache": "de",
+"nova": "72271923350412ba399e9976975d6336"
+},
+{
+"text": "Wann beginnt die Schule?",
+"sprache": "de",
+"nova": "a713d684c499cd784e623fa5d1ce05b8"
+},
+{
+"text": "Wasser",
+"sprache": "de",
+"nova": "66ba407d465d56569147993d27cbb23e"
+},
+{
+"text": "Wem?",
+"sprache": "de",
+"nova": "35424d6abac9bd9e00e4fef81047c7e3"
+},
+{
+"text": "Wen oder was?",
+"sprache": "de",
+"nova": "791bae493050da0abf7a79968c972e4f"
+},
+{
+"text": "Wer oder was?",
+"sprache": "de",
+"nova": "e0f4f491ae3b5409cd8ed4e28f1d54ac"
+},
+{
+"text": "Wessen?",
+"sprache": "de",
+"nova": "eff280c33ad7bdc4b6f5bd500a675952"
+},
+{
+"text": "Wir brauchen Mehl, Eier und Milch.",
+"sprache": "de",
+"nova": "3ed3ac397c08c23df74caa653ee38d13"
+},
+{
+"text": "Wir gehen heute schwimmen.",
+"sprache": "de",
+"nova": "f5288630dd9390ada93cdfc08e947aaf"
+},
+{
+"text": "Wir sangen.",
+"sprache": "de",
+"nova": "884a7fcdb4f0d93c8c7ad87c354f5742"
+},
+{
+"text": "Zahn",
+"sprache": "de",
+"nova": "1c6b7c5362c3b039f7c0bfcb72ebdee2"
+},
+{
+"text": "Zahnbürste",
+"sprache": "de",
+"nova": "d197ebe6d0f59dedda16613605170761"
+},
+{
+"text": "Zeit",
+"sprache": "de",
+"nova": "6863e899f6eb847cb6c508a224c13a17"
+},
+{
+"text": "am schnellsten",
+"sprache": "de",
+"nova": "a8413e0fafa485cac717db89d1a9d836"
+},
+{
+"text": "ambivalent",
+"sprache": "de",
+"nova": "f48a45f2c97fe63a11b429aae4fa42ef"
+},
+{
+"text": "auf dem Holzweg sein",
+"sprache": "de",
+"nova": "35785e781313e1ce074e94cbbc27b1a1"
+},
+{
+"text": "auf großem Fuß leben",
+"sprache": "de",
+"nova": "0146141349ed18f9174fe4e162e34512"
+},
+{
+"text": "aus einer Mücke einen Elefanten machen",
+"sprache": "de",
+"nova": "801855d083f0a34f1ea8919cd117422b"
+},
+{
+"text": "bellt",
+"sprache": "de",
+"nova": "7a186569ec154a7cdaa0a29996b884be"
+},
+{
+"text": "chronologisch",
+"sprache": "de",
+"nova": "a6afbf073f294cbed675af0de0240b7c"
+},
+{
+"text": "das erste Wort des neuen Satzes",
+"sprache": "de",
+"nova": "a971b7ee950b9b9ce3f310e58a86f35e"
+},
+{
+"text": "das fünfte Rad am Wagen sein",
+"sprache": "de",
+"nova": "226f291aa1d67f950e409c36974f3a0e"
+},
+{
+"text": "das, was jemand wörtlich sagt",
+"sprache": "de",
+"nova": "9bf4db3dc96d21d25ad09270111597d0"
+},
+{
+"text": "den Nagel auf den Kopf treffen",
+"sprache": "de",
+"nova": "d08429ce88562313e8f15a632b621750"
+},
+{
+"text": "der Art und Weise",
+"sprache": "de",
+"nova": "aad21f7b92638345fec2f4ccff66135d"
+},
+{
+"text": "der Zeit",
+"sprache": "de",
+"nova": "958b00999a8eb7aefa69c9760f7224e0"
+},
+{
+"text": "des Grundes",
+"sprache": "de",
+"nova": "6ad75b539a58fe96918469f0d5d0962c"
+},
+{
+"text": "des Ortes",
+"sprache": "de",
+"nova": "175f08a41d4e1433e271852c91affb1f"
+},
+{
+"text": "die Flinte ins Korn werfen",
+"sprache": "de",
+"nova": "b401a6b509cae47e2eb841904da8ace7"
+},
+{
+"text": "die Katze im Sack kaufen",
+"sprache": "de",
+"nova": "ad915ff05cae1a12468eca68ab263b4e"
+},
+{
+"text": "die Nase voll haben",
+"sprache": "de",
+"nova": "90083e33bece32cdcde88648d1b624aa"
+},
+{
+"text": "die Ohren steif halten",
+"sprache": "de",
+"nova": "cb2768bcaafe4ac72ffadb6ee9e4ae32"
+},
+{
+"text": "dieses, jenes oder welches",
+"sprache": "de",
+"nova": "728d904207191fa8185f82ebdcbf3e4b"
+},
+{
+"text": "draußen",
+"sprache": "de",
+"nova": "b7f7c7c3d26deafa3b498519f73960b1"
+},
+{
+"text": "effizient",
+"sprache": "de",
+"nova": "63b04975c558267243278e1649aaa2ac"
+},
+{
+"text": "ein Brett vor dem Kopf haben",
+"sprache": "de",
+"nova": "3f2ec610d69d6333a474635af893e9dd"
+},
+{
+"text": "ein Doppelpunkt",
+"sprache": "de",
+"nova": "4abccbe3b0799e71be9d605eeee05085"
+},
+{
+"text": "explizit",
+"sprache": "de",
+"nova": "e5ec02d76e27121d48fb3b33aa88cde0"
+},
+{
+"text": "freundlich",
+"sprache": "de",
+"nova": "c264c54f06d6b3be5a364aa98f26558b"
+},
+{
+"text": "fühlen",
+"sprache": "de",
+"nova": "c272227a98ad28674569e4ba440de8b9"
+},
+{
+"text": "groß",
+"sprache": "de",
+"nova": "06e4f061c2e3093eeda4f2909d5d6f5f"
+},
+{
+"text": "heiß",
+"sprache": "de",
+"nova": "bae3041252e8e90adcffa23f72564235"
+},
+{
+"text": "ich gehe",
+"sprache": "de",
+"nova": "1cdfcdf76bbf3f1790a0002cd3f8c2dd"
+},
+{
+"text": "implizit",
+"sprache": "de",
+"nova": "3735b50f0c0311bf5f1eb12c4a4b7476"
+},
+{
+"text": "ins Fettnäpfchen treten",
+"sprache": "de",
+"nova": "79df2763a80fd6781350f68848779b65"
+},
+{
+"text": "jemandem Löcher in den Bauch fragen",
+"sprache": "de",
+"nova": "69ec575d3ebba07c16117e04641430dd"
+},
+{
+"text": "jemandem auf den Keks gehen",
+"sprache": "de",
+"nova": "32e6e191cbcaf0cb602e670ac86722ea"
+},
+{
+"text": "jemandem die Daumen drücken",
+"sprache": "de",
+"nova": "37b7dccefce429f044a9246fadb0191f"
+},
+{
+"text": "jemandem einen Bären aufbinden",
+"sprache": "de",
+"nova": "b1e05afa073673eaae31ad56df82fd72"
+},
+{
+"text": "jemandem reinen Wein einschenken",
+"sprache": "de",
+"nova": "89f505118a915f99a207d7b37dfea830"
+},
+{
+"text": "jemanden auf den Arm nehmen",
+"sprache": "de",
+"nova": "d26cedd0a05e1b8451b07dc4a62e7d09"
+},
+{
+"text": "kalt",
+"sprache": "de",
+"nova": "6bf9542117ad13fa8f41ff1526c81a5a"
+},
+{
+"text": "klein",
+"sprache": "de",
+"nova": "3784c58d3985f8163b103a1d6ac04dbe"
+},
+{
+"text": "laufen",
+"sprache": "de",
+"nova": "fc12e5b1074fed45b3d95ff4d136eca4"
+},
+{
+"text": "lese",
+"sprache": "de",
+"nova": "62c03a6efab236d4cb9278e7ec087e7e"
+},
+{
+"text": "mit einem großen Buchstaben",
+"sprache": "de",
+"nova": "c4f21a8f261cc0456b0a7bc50e0e177c"
+},
+{
+"text": "mit jemandem ein Hühnchen rupfen",
+"sprache": "de",
+"nova": "f164a054f0e84601bd20f7cb04183f77"
+},
+{
+"text": "objektiv",
+"sprache": "de",
+"nova": "e8bfffeec0dc92c8b421cd54c6489964"
+},
+{
+"text": "plausibel",
+"sprache": "de",
+"nova": "ea73508af727c520cd21bb07939aded6"
+},
+{
+"text": "relevant",
+"sprache": "de",
+"nova": "a86827f973966af1c835aa7178e2ecec"
+},
+{
+"text": "rote",
+"sprache": "de",
+"nova": "1ada5cc751e2ba8938fecee1879e10e7"
+},
+{
+"text": "schreiben",
+"sprache": "de",
+"nova": "f442028f69883a3eac0ae1faf6a89cfe"
+},
+{
+"text": "seinen Senf dazugeben",
+"sprache": "de",
+"nova": "efacf126ab43bec48b4dbbc688460628"
+},
+{
+"text": "sich wie ein Schneekönig freuen",
+"sprache": "de",
+"nova": "33e8bce7d092fd577c46071122d3eb0d"
+},
+{
+"text": "sich zum Affen machen",
+"sprache": "de",
+"nova": "5e7ce26567d34e20f674e0bdd4ac0474"
+},
+{
+"text": "spielen",
+"sprache": "de",
+"nova": "2db92adc828277264d3922b2a2c51559"
+},
+{
+"text": "springen",
+"sprache": "de",
+"nova": "e9e26bcb2974f41cabb798297b0d2a33"
+},
+{
+"text": "subjektiv",
+"sprache": "de",
+"nova": "156731f8c81b61530492eaeb037da534"
+},
+{
+"text": "sympathisch",
+"sprache": "de",
+"nova": "b70b7f391b4874f6e6b5e6cfcecdcba9"
+},
+{
+"text": "tolerant",
+"sprache": "de",
+"nova": "9bc42bb6cc7f5e4d11254d7dd6f16a1a"
+},
+{
+"text": "um, ohne, statt",
+"sprache": "de",
+"nova": "e9e49fa404ea2f058b1dcbc074c9c7b7"
+},
+{
+"text": "unter einer Decke stecken",
+"sprache": "de",
+"nova": "ad527404bad0aae888531dc7871a4e9e"
+},
+{
+"text": "warum",
+"sprache": "de",
+"nova": "d8287b25f3a643a5c518ca1af1c45ea2"
+},
+{
+"text": "wie auf heißen Kohlen sitzen",
+"sprache": "de",
+"nova": "67579e29cad1609917e4b76f0f43eaa7"
+},
+{
+"text": "wo sich Fuchs und Hase gute Nacht sagen",
+"sprache": "de",
+"nova": "f3987c861a023e8a2e872938693820dd"
+},
+{
+"text": "wohnen",
+"sprache": "de",
+"nova": "28e131d0f7048bab2cbfaa93ccba047c"
+},
+{
+"text": "At the moment, the kids are swimming in the lake.",
+"sprache": "en",
+"nova": "f06c1a29537e51d5019dfd3b8220b25e"
+},
+{
+"text": "Be quiet! I am writing a letter.",
+"sprache": "en",
+"nova": "fddf058b67be90d07f5c17aa8ddc909e"
+},
+{
+"text": "Can I have the bill, please?",
+"sprache": "en",
+"nova": "a9d14328b9360492452a6a4b76a813c6"
+},
+{
+"text": "Can I pay by card?",
+"sprache": "en",
+"nova": "cc483c87fc46fb88418862837861554e"
+},
+{
+"text": "Could you repeat that, please?",
+"sprache": "en",
+"nova": "b0834773a5b0a4be351ba3c2511cb932"
+},
+{
+"text": "Did you watch the match yesterday?",
+"sprache": "en",
+"nova": "b8896bb3f387926465df3acb4bc5dbdf"
+},
+{
+"text": "Do you have this in a bigger size?",
+"sprache": "en",
+"nova": "d5fa2b9cae32edcf2fba1e5bc9c0bbe9"
+},
+{
+"text": "Does your dad work in an office?",
+"sprache": "en",
+"nova": "3d52333ca101b7a14ac7c5e92741bb2c"
+},
+{
+"text": "Don't worry, I won't tell anyone.",
+"sprache": "en",
+"nova": "7337418afcabcaec693e5d1b496d2674"
+},
+{
 "text": "Eight fish, please.",
 "sprache": "en",
 "nova": "6af1f305cf0047b1984ef0ea7bf37a56"
@@ -11,6 +981,21 @@
 "text": "Enjoy your fish!",
 "sprache": "en",
 "nova": "db5cc6c2e4f99e3838d157cd1b91acde"
+},
+{
+"text": "Enjoy your meal!",
+"sprache": "en",
+"nova": "4ab62ba7673c0d2ab8b1aabc9439877c"
+},
+{
+"text": "Every morning, Tom drinks a glass of milk.",
+"sprache": "en",
+"nova": "d633cbdd5df002c20fcdd74ef198bba8"
+},
+{
+"text": "Excuse me, how do I get to the station?",
+"sprache": "en",
+"nova": "1525fab24719b54ed1e0cc2ea99c7314"
 },
 {
 "text": "Five fish, please.",
@@ -26,6 +1011,16 @@
 "text": "Four, five, six.",
 "sprache": "en",
 "nova": "168fc88ef469bdda5bc45f64efe6cc68"
+},
+{
+"text": "Friday",
+"sprache": "en",
+"nova": "5e3839b69b3d39e91c8f4154369dcd33"
+},
+{
+"text": "Go straight on.",
+"sprache": "en",
+"nova": "0526dbdc576293a5673643e39da52725"
 },
 {
 "text": "Good morning!",
@@ -76,6 +1071,11 @@
 "text": "Ha ha! It's not night!",
 "sprache": "en",
 "nova": "3332af38c546948703677f22a27d7cc8"
+},
+{
+"text": "Have you ever eaten sushi?",
+"sprache": "en",
+"nova": "9066acdff316af4660308dfd862fe361"
 },
 {
 "text": "Hello",
@@ -188,6 +1188,11 @@
 "nova": "ba7cf307fd8f74cda56e7744e845c718"
 },
 {
+"text": "How are you?",
+"sprache": "en",
+"nova": "30abde199cd4bbd963095f86b736dd2e"
+},
+{
 "text": "How many boats can you see?",
 "sprache": "en",
 "nova": "2a24a5a4e86b8a3730f5a8e86c202982"
@@ -198,9 +1203,24 @@
 "nova": "110629b0c0be1417fa65215d48d2e149"
 },
 {
+"text": "How much is it?",
+"sprache": "en",
+"nova": "dd11cd616e94ee3325035c099ae20c71"
+},
+{
+"text": "How old are you?",
+"sprache": "en",
+"nova": "31666f1a0139de6adc1f9a0f308bd362"
+},
+{
 "text": "I",
 "sprache": "en",
 "nova": "5be0b5dda2cfa08c15eb44ec6b636954"
+},
+{
+"text": "I am eight years old.",
+"sprache": "en",
+"nova": "efa61180a99353e51257a8a04014f17d"
 },
 {
 "text": "I can see five boats.",
@@ -208,9 +1228,44 @@
 "nova": "11e1a7113d2bd6b1039837fe363a1328"
 },
 {
+"text": "I collect stamps.",
+"sprache": "en",
+"nova": "ce53ada05503b54a0cf9a4a1351c15d7"
+},
+{
+"text": "I didn't see the film last night.",
+"sprache": "en",
+"nova": "b426ded1ffc6560d1213b7edde5fa5b7"
+},
+{
+"text": "I don't understand.",
+"sprache": "en",
+"nova": "539f3d2a648bf0b0617c4f97ef1ebe13"
+},
+{
+"text": "I know the answer!",
+"sprache": "en",
+"nova": "777cfb7e6f16784734688dd7ab57155b"
+},
+{
+"text": "I like playing football.",
+"sprache": "en",
+"nova": "3860c4a0b9f73d14fbd410cc286bcd17"
+},
+{
 "text": "I paint the boats.",
 "sprache": "en",
 "nova": "d21838ea667d6cbc14dacccc14ea4e0b"
+},
+{
+"text": "I think it will snow tomorrow.",
+"sprache": "en",
+"nova": "f6e219b8b2815006f647c7c002043b0e"
+},
+{
+"text": "I'd like a pizza, please.",
+"sprache": "en",
+"nova": "164098078d56de2ceb9f97b9520a3915"
 },
 {
 "text": "I'm",
@@ -218,9 +1273,39 @@
 "nova": "97b73d9c0ae5ed5d98b1224a6f85a12d"
 },
 {
+"text": "I'm full.",
+"sprache": "en",
+"nova": "871ccda1750de54d5731fcf92e7e31e2"
+},
+{
+"text": "I'm hungry.",
+"sprache": "en",
+"nova": "9a6111e9ece9fcbbce3c726d86e4f77d"
+},
+{
+"text": "I'm just looking.",
+"sprache": "en",
+"nova": "bfb5d1ed94a71be08b33343d2213b7a6"
+},
+{
+"text": "In 1969, people landed on the moon for the first time.",
+"sprache": "en",
+"nova": "fc51e8b5fd2f8ab68d9e41f4654ef01d"
+},
+{
 "text": "It's blue.",
 "sprache": "en",
 "nova": "7368814066ad5c7bb048a2fcc66b50a0"
+},
+{
+"text": "It's foggy.",
+"sprache": "en",
+"nova": "052293b96aaff8204229074e6a12f2d5"
+},
+{
+"text": "It's freezing.",
+"sprache": "en",
+"nova": "472e47e9165855c95095c00f9762b092"
 },
 {
 "text": "It's green.",
@@ -228,9 +1313,29 @@
 "nova": "451ee18e3b5a77464f0effc0f565b82c"
 },
 {
+"text": "It's my turn.",
+"sprache": "en",
+"nova": "4c9592715fa2f191aa55360f31d9294d"
+},
+{
+"text": "It's opposite the bank.",
+"sprache": "en",
+"nova": "ae4f35387822a08727e45414f7815198"
+},
+{
 "text": "It's red.",
 "sprache": "en",
 "nova": "5b63c4f90cc3661d313d442170fbe316"
+},
+{
+"text": "It's sunny and warm.",
+"sprache": "en",
+"nova": "00fc1fdef79ce839206d66f53a40cba9"
+},
+{
+"text": "Last summer we went to Italy.",
+"sprache": "en",
+"nova": "77383b6aa6034629fdf18609934a950b"
 },
 {
 "text": "Look",
@@ -243,14 +1348,34 @@
 "nova": "33ce50558361a1583a1725dc1bad8cd9"
 },
 {
+"text": "Look at those dark clouds! It is going to rain.",
+"sprache": "en",
+"nova": "c684c87d898c9d53ce98820845dbd7c4"
+},
+{
 "text": "Look! One, two, three fish.",
 "sprache": "en",
 "nova": "612c6a1a4254766b3dae09f959355be3"
 },
 {
+"text": "Look! The baby is sleeping.",
+"sprache": "en",
+"nova": "3dfcb4a99257b00ba75620d362a139a9"
+},
+{
+"text": "May I go to the toilet, please?",
+"sprache": "en",
+"nova": "0bea435ba4063dd474e2e87375c05abb"
+},
+{
 "text": "Mia",
 "sprache": "en",
 "nova": "cae5810225fa833270615545243f9e9e"
+},
+{
+"text": "Monday",
+"sprache": "en",
+"nova": "47e13cde2e1ad4d8c128617359f49a1b"
 },
 {
 "text": "Morning? I am leaving!",
@@ -303,6 +1428,11 @@
 "nova": "1024c00f6aa779c7bcb5f0ca80b610a1"
 },
 {
+"text": "My brother never watches TV in the morning.",
+"sprache": "en",
+"nova": "a4e6320bda6253bf68ed45f626a7d218"
+},
+{
 "text": "My name is Mia.",
 "sprache": "en",
 "nova": "caf77009827a97589d1e691374d75bf4"
@@ -311,6 +1441,16 @@
 "text": "My name is Ruby.",
 "sprache": "en",
 "nova": "a27b7bced86fc09b60147289fdae28ba"
+},
+{
+"text": "My name is Tom.",
+"sprache": "en",
+"nova": "1af72802e755fca1010bac27c226d1f7"
+},
+{
+"text": "My sister usually goes to school by bus.",
+"sprache": "en",
+"nova": "310291421f03efc6e7974820e963208f"
 },
 {
 "text": "Nice",
@@ -346,6 +1486,11 @@
 "text": "Now you! What colour is your boat?",
 "sprache": "en",
 "nova": "7652280152d3adbe24cf450dfac83a70"
+},
+{
+"text": "Oh no! I have lost my key. Now I can't open the door.",
+"sprache": "en",
+"nova": "a78f8ec804c133616b38615a81b697a9"
 },
 {
 "text": "One",
@@ -443,6 +1588,11 @@
 "nova": "58c281d2a40822baaa1759df5558bfa7"
 },
 {
+"text": "Saturday",
+"sprache": "en",
+"nova": "3de6df6b72e0dff86066b306d42899f9"
+},
+{
 "text": "See you soon!",
 "sprache": "en",
 "nova": "b4abc1142bcbac725801ffd0ac0eeb49"
@@ -458,9 +1608,24 @@
 "nova": "ccf5b72e78b260ac52d0340afc4998dc"
 },
 {
+"text": "She has just finished her homework.",
+"sprache": "en",
+"nova": "6ce4452a82f2a7ad96c76e2de833658c"
+},
+{
+"text": "She has lived in Berlin for five years – and she still lives there.",
+"sprache": "en",
+"nova": "2ccd87ce4cee13231f61255299b323c2"
+},
+{
 "text": "Six fish, please.",
 "sprache": "en",
 "nova": "06ab37e9756a71713f2c03b26fb018cb"
+},
+{
+"text": "Sunday",
+"sprache": "en",
+"nova": "4d789a0b084c475bc47ecb2556878e2e"
 },
 {
 "text": "Ted",
@@ -488,6 +1653,11 @@
 "nova": "ceba2349619ee0d1917bc085a8de3e03"
 },
 {
+"text": "The phone is ringing. – „Wait, I will answer it!“",
+"sprache": "en",
+"nova": "8864307a12addafec4553252c8f073c3"
+},
+{
 "text": "This",
 "sprache": "en",
 "nova": "a1a00150150784e3dce86824dc8d8941"
@@ -501,6 +1671,11 @@
 "text": "Three fish, please.",
 "sprache": "en",
 "nova": "7454de06096f9ccf0a061d832f9f5cd5"
+},
+{
+"text": "Thursday",
+"sprache": "en",
+"nova": "af72781cc54e4e91d61a7f78608508de"
 },
 {
 "text": "Touch five fish.",
@@ -563,6 +1738,21 @@
 "nova": "d00c875521d41fddc7903e396aa47a3f"
 },
 {
+"text": "Tuesday",
+"sprache": "en",
+"nova": "f554466ee79460bf83a476793c797b10"
+},
+{
+"text": "Turn left.",
+"sprache": "en",
+"nova": "ab0d9609bb698b4c2780a928cce209a1"
+},
+{
+"text": "Two days ago, my cat caught a mouse.",
+"sprache": "en",
+"nova": "7f6465817b72b07053f114872a47fc01"
+},
+{
 "text": "Two fish, please.",
 "sprache": "en",
 "nova": "d3bb2092383f7ce1cec3b27f52781e41"
@@ -571,6 +1761,31 @@
 "text": "Wait! Say thank you first!",
 "sprache": "en",
 "nova": "cb0e8802b697a939fff665a68275aef9"
+},
+{
+"text": "Water boils at 100 °C.",
+"sprache": "en",
+"nova": "eda63bb4f8d11f587342012f4249f9ce"
+},
+{
+"text": "We have bought the tickets. We are going to visit Grandma next weekend.",
+"sprache": "en",
+"nova": "90babf12d4e448f4fa43e4184fd72fc2"
+},
+{
+"text": "We have known each other since 2019.",
+"sprache": "en",
+"nova": "937b5b837d7a58d88eac5b1547432611"
+},
+{
+"text": "We were at the cinema last night.",
+"sprache": "en",
+"nova": "7f7ab978b081efe07b9e1192f1d7dea8"
+},
+{
+"text": "Wednesday",
+"sprache": "en",
+"nova": "d873859a5e204a18b4f49bcb8e1cb373"
 },
 {
 "text": "Well",
@@ -598,14 +1813,44 @@
 "nova": "81177183d647777973035108f0581490"
 },
 {
+"text": "What do you do in your free time?",
+"sprache": "en",
+"nova": "7d7e697056c059cc396d0fc35d219d42"
+},
+{
+"text": "What does … mean?",
+"sprache": "en",
+"nova": "e77d72e2cdce6196612837dc05e07332"
+},
+{
+"text": "What time is it?",
+"sprache": "en",
+"nova": "fcac8f073a17390627d6e558702b1b64"
+},
+{
+"text": "What would you like to drink?",
+"sprache": "en",
+"nova": "b09a360d7e8c4e0087431a8d5ac7c574"
+},
+{
 "text": "What's",
 "sprache": "en",
 "nova": "8a080515e28c8ca00a3d281f12a37ba5"
 },
 {
+"text": "What's the weather like today?",
+"sprache": "en",
+"nova": "831e80e723f5a22278dbbe4004d04583"
+},
+{
 "text": "What's your name?",
 "sprache": "en",
 "nova": "8873faf0097c5528ab54fff654c638c8"
+},
+{
+"text": "Would you like to go to the cinema?",
+"sprache": "en",
+"nova": "3c045125cf7db8c14175fdae8bfa7f0f"
 },
 {
 "text": "Wow, a black boat! I like it!",
@@ -658,6 +1903,46 @@
 "nova": "fd0d2dd5f8baaa80f4ab920db6c328b4"
 },
 {
+"text": "apple",
+"sprache": "en",
+"nova": "39dc91839de409963699fdb9e109f511"
+},
+{
+"text": "at the traffic lights",
+"sprache": "en",
+"nova": "f621a273d7ddd0358cbfe51a29d2bf25"
+},
+{
+"text": "aunt",
+"sprache": "en",
+"nova": "414ed09e48af99800bd5d31e6b03fee7"
+},
+{
+"text": "be, was or were, been",
+"sprache": "en",
+"nova": "c60c2e7a53ea16df7fae9c14e4901d88"
+},
+{
+"text": "bedroom",
+"sprache": "en",
+"nova": "d1f0dcf29df3412304dd044b8b38c49d"
+},
+{
+"text": "begin, began, begun",
+"sprache": "en",
+"nova": "ea472b3fa71d29b8a4742e75879b3b03"
+},
+{
+"text": "bird",
+"sprache": "en",
+"nova": "58c607e27865248ca4f5c5bccfd8c2a2"
+},
+{
+"text": "birthday",
+"sprache": "en",
+"nova": "f741bf6d97f73ef28e4bc2a526b32773"
+},
+{
 "text": "black",
 "sprache": "en",
 "nova": "2b90a162dd7b2fd10c7010948d1ac2f3"
@@ -678,9 +1963,74 @@
 "nova": "06e0efcee4cf278884212ab435c0c126"
 },
 {
+"text": "book",
+"sprache": "en",
+"nova": "8b81514dabb755442103b85bc079a317"
+},
+{
+"text": "bread",
+"sprache": "en",
+"nova": "411e1c60aaec451ea6e1cd74d2eb2181"
+},
+{
+"text": "break, broke, broken",
+"sprache": "en",
+"nova": "bad054aa654515d88bafe004ede6e3ad"
+},
+{
+"text": "breakfast",
+"sprache": "en",
+"nova": "07bcb30c6724f07265573decbc57f5e5"
+},
+{
+"text": "bring, brought, brought",
+"sprache": "en",
+"nova": "5271306a69309946981eb238305e3ffd"
+},
+{
+"text": "brother",
+"sprache": "en",
+"nova": "a825b12f2e8650825fc8af81d0ef49a2"
+},
+{
+"text": "brown",
+"sprache": "en",
+"nova": "af76c5efbfec1fafbb63a72f560a1a29"
+},
+{
+"text": "buy, bought, bought",
+"sprache": "en",
+"nova": "699cfb1ca8efdd4b7c1471523cbadf88"
+},
+{
 "text": "can",
 "sprache": "en",
 "nova": "a2c18fcb09f2a0015833fd666170467e"
+},
+{
+"text": "cat",
+"sprache": "en",
+"nova": "0dba5bba3d71eb87d45b6aefe6f0aaee"
+},
+{
+"text": "catch, caught, caught",
+"sprache": "en",
+"nova": "227b51b49d1b4c0163c246b5b8bc24c8"
+},
+{
+"text": "chair",
+"sprache": "en",
+"nova": "6367c9329d65b0d6227ec8d59c149659"
+},
+{
+"text": "chicken",
+"sprache": "en",
+"nova": "1598d9fcfa478f5c46ed2803c677265c"
+},
+{
+"text": "choose, chose, chosen",
+"sprache": "en",
+"nova": "c09fc3363f9c794e911a93a2a47deb69"
 },
 {
 "text": "colour",
@@ -688,14 +2038,114 @@
 "nova": "a569949c8843e277bda1e319cf537e89"
 },
 {
+"text": "come, came, come",
+"sprache": "en",
+"nova": "7acdfce3896c8302e801a28cd6e63064"
+},
+{
+"text": "cousin",
+"sprache": "en",
+"nova": "1ad77e41c13c0710b5231bab8c66da9c"
+},
+{
+"text": "cow",
+"sprache": "en",
+"nova": "1fee156fd6b09e97f6a514271b43c8f0"
+},
+{
+"text": "daughter",
+"sprache": "en",
+"nova": "3264f5fdc51bc0676425b2e9ad66f59e"
+},
+{
+"text": "do, did, done",
+"sprache": "en",
+"nova": "e7a00439a89ee1a50a13037d0d7b8ec9"
+},
+{
+"text": "dog",
+"sprache": "en",
+"nova": "3852d3af5675acb5385cfc283af0e249"
+},
+{
 "text": "done",
 "sprache": "en",
 "nova": "345e43575829eae6fa924f459b0f438d"
 },
 {
+"text": "donkey",
+"sprache": "en",
+"nova": "288f2eedff131b42b8b1b873477b32ab"
+},
+{
+"text": "door",
+"sprache": "en",
+"nova": "ce2799ac4772f2d1ede854f7708b554e"
+},
+{
+"text": "dress",
+"sprache": "en",
+"nova": "087ecde0c13dfe874c66ab5425b0c180"
+},
+{
+"text": "drink, drank, drunk",
+"sprache": "en",
+"nova": "31e22e13715c407ecb8feced5b74d2d2"
+},
+{
+"text": "duck",
+"sprache": "en",
+"nova": "cf8eff7c440f75d20719139ccc74f4e7"
+},
+{
+"text": "ear",
+"sprache": "en",
+"nova": "a2b2802e2cebb91178e47675fb9c45db"
+},
+{
+"text": "eat, ate, eaten",
+"sprache": "en",
+"nova": "6ccaedcbb4f4f40bee6ddbf7e012542c"
+},
+{
 "text": "eight",
 "sprache": "en",
 "nova": "3792d91ad81f987a68486f1f7fd54d1b"
+},
+{
+"text": "eleven",
+"sprache": "en",
+"nova": "9bb7895df85f61eb39f6ac7a87ad2b4b"
+},
+{
+"text": "fall, fell, fallen",
+"sprache": "en",
+"nova": "18ae8d177a0dd1c28908b0a2ebd2e148"
+},
+{
+"text": "family",
+"sprache": "en",
+"nova": "b328a7658f09c1cbd6d16aec43f932a5"
+},
+{
+"text": "father",
+"sprache": "en",
+"nova": "3c5237967e1b395f91f2634c8694528c"
+},
+{
+"text": "feel, felt, felt",
+"sprache": "en",
+"nova": "308a75f6a804619124dfa6c1e691dfd2"
+},
+{
+"text": "fifteen",
+"sprache": "en",
+"nova": "9d6de4b12538c7aab47c7726ebf9deac"
+},
+{
+"text": "find, found, found",
+"sprache": "en",
+"nova": "3923c3f238ef8f773ece602d06b2e43f"
 },
 {
 "text": "fish",
@@ -713,9 +2163,74 @@
 "nova": "84d7e715328abd8b80be1e332a121f8f"
 },
 {
+"text": "fly, flew, flown",
+"sprache": "en",
+"nova": "df7b3bbc6cc02ab88e725665cbb9f569"
+},
+{
+"text": "forget, forgot, forgotten",
+"sprache": "en",
+"nova": "82c643894fa8e6185e2602d291af1b6d"
+},
+{
 "text": "four",
 "sprache": "en",
 "nova": "6822cd3a662fe8c24f91257495559b03"
+},
+{
+"text": "friend",
+"sprache": "en",
+"nova": "9337e427cd8ff97df5cd947a94c7e8e5"
+},
+{
+"text": "get, got, got or gotten",
+"sprache": "en",
+"nova": "b602c8870fe598d3daec65e51c57bb62"
+},
+{
+"text": "give, gave, given",
+"sprache": "en",
+"nova": "e12e29b37962bdb330b2e706270736d2"
+},
+{
+"text": "gloves",
+"sprache": "en",
+"nova": "65fdde882e00323c6bbba0f80ddbfe0a"
+},
+{
+"text": "go, went, gone",
+"sprache": "en",
+"nova": "810c96cc62cc7333929d9b37b304f3d0"
+},
+{
+"text": "goat",
+"sprache": "en",
+"nova": "2e4549b8ce3901bfb51573c4d2eef20a"
+},
+{
+"text": "good morning",
+"sprache": "en",
+"nova": "45d4acda709f4b5e23fdb04841c28c5b"
+},
+{
+"text": "goodbye",
+"sprache": "en",
+"nova": "75b572fcdbd206709bceb873e9529715"
+},
+{
+"text": "grandfather",
+"sprache": "en",
+"nova": "72a969991173d28dea9c7bd72cdcae77"
+},
+{
+"text": "grandmother",
+"sprache": "en",
+"nova": "79bca84006caf0904b56ee8e0ea50bd3"
+},
+{
+"text": "grandparents",
+"sprache": "en",
+"nova": "67225f78817092293dbf2d08a68b6c64"
 },
 {
 "text": "green",
@@ -723,9 +2238,94 @@
 "nova": "ebac2ae6369a4eb9c1c6f1893008e418"
 },
 {
+"text": "grey",
+"sprache": "en",
+"nova": "e06b70ab43cd245e4a3868bd210ed1a0"
+},
+{
+"text": "hair",
+"sprache": "en",
+"nova": "dd97237ddb101b12f1aeadd5aa0ddc43"
+},
+{
+"text": "hamster",
+"sprache": "en",
+"nova": "f9a48a5def2ba01794e3e8b9662007a3"
+},
+{
+"text": "hat",
+"sprache": "en",
+"nova": "b4e4e7ac1791960387fcc2a712062d5b"
+},
+{
+"text": "have, had, had",
+"sprache": "en",
+"nova": "e5aa7c98b1ce05ef24b75eb3414d741b"
+},
+{
+"text": "head",
+"sprache": "en",
+"nova": "9725b02c32a0d7956982603693c8153c"
+},
+{
+"text": "hello",
+"sprache": "en",
+"nova": "e9c996a28204cd261d34e9b2d85b0ddc"
+},
+{
+"text": "homework",
+"sprache": "en",
+"nova": "c1ba1da098a62f128b7b54dab0c2c294"
+},
+{
+"text": "horse",
+"sprache": "en",
+"nova": "6ae682b7afb9790882cbae7e8fa333df"
+},
+{
+"text": "house",
+"sprache": "en",
+"nova": "a039a35bab93ce0b01d79175ddaf4f8f"
+},
+{
 "text": "is",
 "sprache": "en",
 "nova": "f510aa72d9a6ce87e6a9dd49b14bee0c"
+},
+{
+"text": "jacket",
+"sprache": "en",
+"nova": "f3d9ba8f16d4dced5e07c894b7a91c13"
+},
+{
+"text": "kitchen",
+"sprache": "en",
+"nova": "89a5007ac1edc8b284beb2b00eaf626e"
+},
+{
+"text": "knee",
+"sprache": "en",
+"nova": "894e131f222747e00e19763fc4a4d4c5"
+},
+{
+"text": "know, knew, known",
+"sprache": "en",
+"nova": "1f71882c6205f84f4ca008245b5c2529"
+},
+{
+"text": "leave, left, left",
+"sprache": "en",
+"nova": "fd5cffce08408195df31b035efd8ca83"
+},
+{
+"text": "leg",
+"sprache": "en",
+"nova": "19af19d27dc564e4d1ba06005f4de9cc"
+},
+{
+"text": "make, made, made",
+"sprache": "en",
+"nova": "01bbea386df9efb208e0b919ea107ba4"
 },
 {
 "text": "many",
@@ -738,6 +2338,26 @@
 "nova": "3a396607ba03950774b7e4759578b599"
 },
 {
+"text": "mother",
+"sprache": "en",
+"nova": "4704a06ce57d3e74d3fafd81384bde22"
+},
+{
+"text": "mouse",
+"sprache": "en",
+"nova": "903fe5a61d1897cb70b77bcd6f763540"
+},
+{
+"text": "mouth",
+"sprache": "en",
+"nova": "45f3976efd6ba4fb98cddd378e5afc50"
+},
+{
+"text": "my favourite subject",
+"sprache": "en",
+"nova": "77e6448878d2aa998f7e596dc0324b7c"
+},
+{
 "text": "name",
 "sprache": "en",
 "nova": "c77f17366ec41a340c1b6e223b790f2c"
@@ -746,6 +2366,11 @@
 "text": "nine",
 "sprache": "en",
 "nova": "517263bc1a04d995f7026f9c69e47bff"
+},
+{
+"text": "nose",
+"sprache": "en",
+"nova": "baed924e7547f422e2cc4f7844e2f255"
 },
 {
 "text": "one",
@@ -763,9 +2388,39 @@
 "nova": "8a283cbbde7b2b4de54b32ed9c9374c4"
 },
 {
+"text": "parents",
+"sprache": "en",
+"nova": "341c8d66aeb8b75f3f603a7bde5cbb89"
+},
+{
+"text": "pencil",
+"sprache": "en",
+"nova": "0094f12aaa8287566a57435bfaec0fb9"
+},
+{
+"text": "pig",
+"sprache": "en",
+"nova": "dd18d37d78f76bd62240e9aa777cf55e"
+},
+{
+"text": "pink",
+"sprache": "en",
+"nova": "75d1b54df9891fe8de50694998e6453b"
+},
+{
 "text": "purple",
 "sprache": "en",
 "nova": "5fdca74f9fe5d58286eed95d1f8d81b0"
+},
+{
+"text": "rabbit",
+"sprache": "en",
+"nova": "cdd0c43f1b9161037190e314c08bd303"
+},
+{
+"text": "receipt",
+"sprache": "en",
+"nova": "ef8afbc53f3b1e6c31dcfc738b52768f"
 },
 {
 "text": "red",
@@ -773,9 +2428,44 @@
 "nova": "dd42dbd14270f8dce4730dcde83c7802"
 },
 {
+"text": "ride, rode, ridden",
+"sprache": "en",
+"nova": "74410ada73b17c2dc09c351d588d0d01"
+},
+{
+"text": "ruler",
+"sprache": "en",
+"nova": "e639c7b2a50648f9d127632f2a6cc804"
+},
+{
+"text": "run, ran, run",
+"sprache": "en",
+"nova": "b0c53fe2f3415288f1e43bc1b5a8959d"
+},
+{
+"text": "say, said, said",
+"sprache": "en",
+"nova": "ab92132fa7fbbb9c93472d7e8215b8b5"
+},
+{
+"text": "scarf",
+"sprache": "en",
+"nova": "c48f5f818351eb17db92ec3e3233a69e"
+},
+{
+"text": "school",
+"sprache": "en",
+"nova": "eaa289ebbaad96a2ffa657f03c9b393c"
+},
+{
 "text": "see",
 "sprache": "en",
 "nova": "7f6c0a4ed67a780bcf2255ecfe7d81de"
+},
+{
+"text": "see, saw, seen",
+"sprache": "en",
+"nova": "00dd5509742953ec09eeecc5862f5c91"
 },
 {
 "text": "seven",
@@ -783,9 +2473,109 @@
 "nova": "958a4788de8504730f76df58e7c2a7af"
 },
 {
+"text": "sheep",
+"sprache": "en",
+"nova": "d4049679ddda5566f856d0ba4c93d387"
+},
+{
+"text": "shoes",
+"sprache": "en",
+"nova": "4d6c11d5e4dfdc9d4f3f7a712b56c1fd"
+},
+{
+"text": "shoulder",
+"sprache": "en",
+"nova": "61a67e9e92e823b18561a3493ea16405"
+},
+{
+"text": "sing, sang, sung",
+"sprache": "en",
+"nova": "5ad338de79f76f3f17ae4b3a5104f3cc"
+},
+{
+"text": "sister",
+"sprache": "en",
+"nova": "feab67e2eb6876f21d941f2d8e6d7fcb"
+},
+{
+"text": "sit, sat, sat",
+"sprache": "en",
+"nova": "1d1ee79b81ba3881190dc05de1967d77"
+},
+{
 "text": "six",
 "sprache": "en",
 "nova": "e4c55308c10683fe0abb06dedfec99e1"
+},
+{
+"text": "skirt",
+"sprache": "en",
+"nova": "b133e95b8379c2f756a53a1fe1b772a2"
+},
+{
+"text": "sleep, slept, slept",
+"sprache": "en",
+"nova": "54cddc1a0bbf03a74e818394776a4b11"
+},
+{
+"text": "socks",
+"sprache": "en",
+"nova": "9a9e89b9f7e7ac03738b78812d9752b4"
+},
+{
+"text": "son",
+"sprache": "en",
+"nova": "0d046768769ce515ef0364faf0d37adc"
+},
+{
+"text": "speak, spoke, spoken",
+"sprache": "en",
+"nova": "1acaa197e9e7bcef0d73138ed70de616"
+},
+{
+"text": "stand, stood, stood",
+"sprache": "en",
+"nova": "0ac4f3a46a4d804f7aafa5f5ba683118"
+},
+{
+"text": "station",
+"sprache": "en",
+"nova": "751c7b3ffd384726c6b173e75323e7da"
+},
+{
+"text": "sweater",
+"sprache": "en",
+"nova": "dc7120f9b5d2b5f7501e5266c53033bf"
+},
+{
+"text": "swim, swam, swum",
+"sprache": "en",
+"nova": "7ac30533ba27e0f3582c1135043f4e43"
+},
+{
+"text": "table",
+"sprache": "en",
+"nova": "dbaa7c6339b8dac7a08f375ddd213567"
+},
+{
+"text": "take, took, taken",
+"sprache": "en",
+"nova": "7c4de5183c249bfe6de92a6c964eae68"
+},
+{
+"text": "teach, taught, taught",
+"sprache": "en",
+"nova": "5e159d8587004520ee3dccc3861374ef"
+},
+{
+"text": "teacher",
+"sprache": "en",
+"nova": "1efff020703b21c2adfa94ade2167cfd"
+},
+{
+"text": "tell, told, told",
+"sprache": "en",
+"nova": "bfa52f52d54131f44fcb44daa9d1bb50"
 },
 {
 "text": "ten",
@@ -793,9 +2583,24 @@
 "nova": "26400cf0ea4fc7959a8e2e388693eec9"
 },
 {
+"text": "thank you",
+"sprache": "en",
+"nova": "7af45429b60785d64b0eeafceab58a6a"
+},
+{
 "text": "the",
 "sprache": "en",
 "nova": "ad964d35e7de80c18f9bc8a978cdc9a0"
+},
+{
+"text": "think, thought, thought",
+"sprache": "en",
+"nova": "170dc2bebc1eb88b87f011ed525c45f2"
+},
+{
+"text": "thirteen",
+"sprache": "en",
+"nova": "9d02f9c27a7b0e1cc07315dfb4852d95"
 },
 {
 "text": "three",
@@ -803,9 +2608,44 @@
 "nova": "e3a9f42ba76896aada7e68a555a94fbb"
 },
 {
+"text": "throw, threw, thrown",
+"sprache": "en",
+"nova": "2e2146ddefae7fd7bf7ac40398b9ffdd"
+},
+{
 "text": "to",
 "sprache": "en",
 "nova": "e7ecb9a4e67683ef3789ba318155fe40"
+},
+{
+"text": "to read",
+"sprache": "en",
+"nova": "c8ae1ddb4ffde5826b78129a7ad10c8d"
+},
+{
+"text": "to write",
+"sprache": "en",
+"nova": "e419eab55d1d171f361edb4263ca71d1"
+},
+{
+"text": "tomorrow",
+"sprache": "en",
+"nova": "c686ba15a4f1215649b72cf65d8c8ff1"
+},
+{
+"text": "trousers",
+"sprache": "en",
+"nova": "e456ed0837a994af2522fca6a68c8304"
+},
+{
+"text": "twelve",
+"sprache": "en",
+"nova": "70417e23a9f247afe0e4adcca4d7f3bf"
+},
+{
+"text": "twenty",
+"sprache": "en",
+"nova": "7f3c0b8ed548daad40af2a1b2a7a5784"
 },
 {
 "text": "two",
@@ -813,14 +2653,49 @@
 "nova": "8b396d3fbe6bc256508cb2f06751f4b2"
 },
 {
+"text": "uncle",
+"sprache": "en",
+"nova": "2ea19a8f53e1ca9fac0e5852f7345bb2"
+},
+{
+"text": "water",
+"sprache": "en",
+"nova": "776d50a89f311356932b13fe5bd0ffb7"
+},
+{
+"text": "wear, wore, worn",
+"sprache": "en",
+"nova": "7e4dd2e4ba3501661c67e5a5174e97a9"
+},
+{
+"text": "weekend",
+"sprache": "en",
+"nova": "410ee41002c12e709da01ab183dba660"
+},
+{
 "text": "white",
 "sprache": "en",
 "nova": "764cd6058576b90ef1a110f74027b2b3"
 },
 {
+"text": "window",
+"sprache": "en",
+"nova": "22111f2840a957799728ea208bf03ff0"
+},
+{
+"text": "write, wrote, written",
+"sprache": "en",
+"nova": "3980557b96d08113261bf2351cd295b7"
+},
+{
 "text": "yellow",
 "sprache": "en",
 "nova": "e1571d8261c5ace3220b8d0e29dc4883"
+},
+{
+"text": "yesterday",
+"sprache": "en",
+"nova": "f59e415f7b39cb3a73560c0ed49ccb98"
 },
 {
 "text": "you",
@@ -831,6 +2706,521 @@
 "text": "your",
 "sprache": "en",
 "nova": "e3164e7412b79c891998492a7e08ca26"
+},
+{
+"text": "Tengo 15 años.",
+"sprache": "es",
+"nova": "c854f0edac59976518316933b3333f61"
+},
+{
+"text": "ayer",
+"sprache": "es",
+"nova": "b8e7b5ab23a7f99d2d43bcc8a359461a"
+},
+{
+"text": "beber",
+"sprache": "es",
+"nova": "54e9f459dd597bf3f92b7069e646e7ae"
+},
+{
+"text": "comer",
+"sprache": "es",
+"nova": "71e37ee7049bd5a633f854dcc85cd164"
+},
+{
+"text": "el agua",
+"sprache": "es",
+"nova": "501751631058133aa64d1aeabcdbe802"
+},
+{
+"text": "el amigo",
+"sprache": "es",
+"nova": "f940da5fc3d18c01bc23c10a28beac1f"
+},
+{
+"text": "el año",
+"sprache": "es",
+"nova": "2a042a16b12acf57e3186761cda5b1f2"
+},
+{
+"text": "el día",
+"sprache": "es",
+"nova": "65f94638035481d21c70c08b0988bed0"
+},
+{
+"text": "el gato",
+"sprache": "es",
+"nova": "7fd1d430e0409724c96047091d832ee4"
+},
+{
+"text": "el hermano",
+"sprache": "es",
+"nova": "72dfa7521c9743800ccf1d8517e72573"
+},
+{
+"text": "el libro",
+"sprache": "es",
+"nova": "24c55ea5ea1532b3120e7cbed5b189cc"
+},
+{
+"text": "el mar",
+"sprache": "es",
+"nova": "00d11e6b2bfadef17a686f21b28f3a56"
+},
+{
+"text": "el padre",
+"sprache": "es",
+"nova": "fdd61b77a2a98b1abca5455f4404fddf"
+},
+{
+"text": "el pan",
+"sprache": "es",
+"nova": "144b2f41f96b7cc42bb84974f3fb6d44"
+},
+{
+"text": "el perro",
+"sprache": "es",
+"nova": "e52354dcdd648e3cbe0dfecdc928ce2a"
+},
+{
+"text": "el problema",
+"sprache": "es",
+"nova": "07228d912ec51609e229cd676476a988"
+},
+{
+"text": "gracias",
+"sprache": "es",
+"nova": "772f713460f1e2594f13ad714047eee7"
+},
+{
+"text": "hablar",
+"sprache": "es",
+"nova": "8d041a09d89445a3a2f4ab93291939ba"
+},
+{
+"text": "hoy",
+"sprache": "es",
+"nova": "fd70b6b427d7a54b0bc414718ad84968"
+},
+{
+"text": "la casa",
+"sprache": "es",
+"nova": "851f7011fa351a97bae944011bc6d421"
+},
+{
+"text": "la ciudad",
+"sprache": "es",
+"nova": "2d36c93cb2ef168ff707e99212158ed5"
+},
+{
+"text": "la escuela",
+"sprache": "es",
+"nova": "d50604de8954dfff71ecf701db5d5e8f"
+},
+{
+"text": "la estación",
+"sprache": "es",
+"nova": "1df9a3462a2804f67233c4a4f6d77d9b"
+},
+{
+"text": "la familia",
+"sprache": "es",
+"nova": "f0e42e46f4a6fe15f95a5adafc668424"
+},
+{
+"text": "la hermana",
+"sprache": "es",
+"nova": "7b076096b52c08dd998d1cdb12988771"
+},
+{
+"text": "la madre",
+"sprache": "es",
+"nova": "d3b55bb1f8f15a37bf3b605cbb4fe3f3"
+},
+{
+"text": "la mano",
+"sprache": "es",
+"nova": "b60f5ee0c5818e13d4cdc2424389349d"
+},
+{
+"text": "la manzana",
+"sprache": "es",
+"nova": "e110b52ce32d3ec1cc1b89094de62b43"
+},
+{
+"text": "la noche",
+"sprache": "es",
+"nova": "4f6084b44db581330b9f59fd31e90032"
+},
+{
+"text": "la playa",
+"sprache": "es",
+"nova": "fe9c2d0afae496e632c45f768926ae49"
+},
+{
+"text": "la semana",
+"sprache": "es",
+"nova": "f3e4ee8cddbf16f982e3d6b8e9906946"
+},
+{
+"text": "mañana",
+"sprache": "es",
+"nova": "e3024459d6f4cb7625dcd5d833b9e95b"
+},
+{
+"text": "por favor",
+"sprache": "es",
+"nova": "4fe3935b0106a49d99e07a9051e09281"
+},
+{
+"text": "tener",
+"sprache": "es",
+"nova": "d16101a03329a2f1fd64a9fc95325400"
+},
+{
+"text": "vivir",
+"sprache": "es",
+"nova": "c74c57660458f4991cdc7fee3bac4668"
+},
+{
+"text": "¿Cómo te llamas?",
+"sprache": "es",
+"nova": "146fa4bb7bc280fb9a995604282653e8"
+},
+{
+"text": "aller",
+"sprache": "fr",
+"nova": "714e4df509ebdf27968d73bed916e645"
+},
+{
+"text": "avoir",
+"sprache": "fr",
+"nova": "de0469c1cf02ab71c39b9bfe00f11ffe"
+},
+{
+"text": "elle fait",
+"sprache": "fr",
+"nova": "c9cbd850929aca31235ca981e1f87cbe"
+},
+{
+"text": "elles ont",
+"sprache": "fr",
+"nova": "2bf69d4bb6048544ed089605e8086e37"
+},
+{
+"text": "faire",
+"sprache": "fr",
+"nova": "0b3d0b248f8b8e00e47e6b1ffddff182"
+},
+{
+"text": "il a",
+"sprache": "fr",
+"nova": "60ed4e2ea4ba306a847970f4e17484bd"
+},
+{
+"text": "il est",
+"sprache": "fr",
+"nova": "c991a5e016401179d3af9e82695ca515"
+},
+{
+"text": "il fait",
+"sprache": "fr",
+"nova": "e175e447e808a8a73cab0ba13af8c3aa"
+},
+{
+"text": "il va",
+"sprache": "fr",
+"nova": "5999f27b38794a42c1697a43e96c55dc"
+},
+{
+"text": "ils font",
+"sprache": "fr",
+"nova": "011bbe6424ea71df2b8a9f6351097aff"
+},
+{
+"text": "ils ont",
+"sprache": "fr",
+"nova": "f66f371bfd4a5dee1a5923cf21bd428f"
+},
+{
+"text": "ils sont",
+"sprache": "fr",
+"nova": "a2c9aaf7b0207326abe03af3a02019c4"
+},
+{
+"text": "ils vont",
+"sprache": "fr",
+"nova": "d7037c09cfa28e52ea70b7151af14240"
+},
+{
+"text": "j'ai",
+"sprache": "fr",
+"nova": "7d446d77b6b6459cec2df25b0b28521b"
+},
+{
+"text": "je fais",
+"sprache": "fr",
+"nova": "fb14bebb9414ed779fb706edbd846917"
+},
+{
+"text": "je suis",
+"sprache": "fr",
+"nova": "ea94c4261221f1a533c1e6dce63c7069"
+},
+{
+"text": "je vais",
+"sprache": "fr",
+"nova": "33d30f4714fc695d7920b6cd62c031ee"
+},
+{
+"text": "l'arbre",
+"sprache": "fr",
+"nova": "2826a4db2574493388e3d44aa4a1bd92"
+},
+{
+"text": "l'argent",
+"sprache": "fr",
+"nova": "92bf32cd9a3181ca7e7e3f68c42c2cd5"
+},
+{
+"text": "l'eau",
+"sprache": "fr",
+"nova": "1128516200dfc71f6a3f675f1678be28"
+},
+{
+"text": "l'enfant",
+"sprache": "fr",
+"nova": "5e307fc8da2291f5d961234afab79c25"
+},
+{
+"text": "l'école",
+"sprache": "fr",
+"nova": "174592bac01890c5270611f829c938e5"
+},
+{
+"text": "la chambre",
+"sprache": "fr",
+"nova": "c188d54f4cc5b4dc17c00dbef5f01d8a"
+},
+{
+"text": "la cuisine",
+"sprache": "fr",
+"nova": "54e8c1c29eff51ed104513c1ddb56e65"
+},
+{
+"text": "la fenêtre",
+"sprache": "fr",
+"nova": "09844250d192c1a6c57f6bc7d605e49b"
+},
+{
+"text": "la fleur",
+"sprache": "fr",
+"nova": "39e1885897d5417a78d842a5fa47ea03"
+},
+{
+"text": "la gare",
+"sprache": "fr",
+"nova": "296ef7f632c407b516514bcfcdaff93f"
+},
+{
+"text": "la lune",
+"sprache": "fr",
+"nova": "20cdfa49242d9c57baac1f3c6716cb41"
+},
+{
+"text": "la maison",
+"sprache": "fr",
+"nova": "1965bcd8796034e35d08f1e867c96b09"
+},
+{
+"text": "la mer",
+"sprache": "fr",
+"nova": "8bf75e5154074bb60abb1ce05e328582"
+},
+{
+"text": "la mère",
+"sprache": "fr",
+"nova": "0217120751d6f9e8cb573c36b63e4622"
+},
+{
+"text": "la nuit",
+"sprache": "fr",
+"nova": "ac29c563815ccb7da156b44d47a19406"
+},
+{
+"text": "la pomme",
+"sprache": "fr",
+"nova": "63dd5928d5ba3f21262ed1b13eb373f9"
+},
+{
+"text": "la porte",
+"sprache": "fr",
+"nova": "00edfbba6f5e930b84a51ba06fa6b343"
+},
+{
+"text": "la semaine",
+"sprache": "fr",
+"nova": "291ce05e861d9633a76e367a56a56fc8"
+},
+{
+"text": "la sœur",
+"sprache": "fr",
+"nova": "bafa9fa83be8e3833c85487fc34f412a"
+},
+{
+"text": "la table",
+"sprache": "fr",
+"nova": "1a3316125097140b8e506ba6e8f4e551"
+},
+{
+"text": "la ville",
+"sprache": "fr",
+"nova": "618ebdfb86e3f6e3597ca8543b510892"
+},
+{
+"text": "la voiture",
+"sprache": "fr",
+"nova": "e2ddcfe51638fe1a0b7f22c279e6dc10"
+},
+{
+"text": "le cahier",
+"sprache": "fr",
+"nova": "23b43a3d8544033a994e2101a54b633c"
+},
+{
+"text": "le chat",
+"sprache": "fr",
+"nova": "42a520cd9cd73d0f505551f4159b1d26"
+},
+{
+"text": "le chien",
+"sprache": "fr",
+"nova": "093b7e069db4ed4d997e850aff1ca937"
+},
+{
+"text": "le fromage",
+"sprache": "fr",
+"nova": "40dc7ce7cfb4d301055789f858a4077c"
+},
+{
+"text": "le frère",
+"sprache": "fr",
+"nova": "631636a29aa0f3d19b3c4691cab15037"
+},
+{
+"text": "le jardin",
+"sprache": "fr",
+"nova": "8fe78982ea3ed6487c894bcf26ee82e7"
+},
+{
+"text": "le jour",
+"sprache": "fr",
+"nova": "627638fe4100a7d67baee93b33acdf34"
+},
+{
+"text": "le livre",
+"sprache": "fr",
+"nova": "d1729d8dbedf434e2b83ffc178d4988d"
+},
+{
+"text": "le pain",
+"sprache": "fr",
+"nova": "00f8282273f0a7e97ce4a1b838678a3e"
+},
+{
+"text": "le père",
+"sprache": "fr",
+"nova": "8868a27840aec7abc00853ec810b79c8"
+},
+{
+"text": "le soleil",
+"sprache": "fr",
+"nova": "b24f2039e6f7222b00cabd9694b56669"
+},
+{
+"text": "le vélo",
+"sprache": "fr",
+"nova": "a9113791faa73deef46fc9774a382d44"
+},
+{
+"text": "les devoirs",
+"sprache": "fr",
+"nova": "75499668a7c8a10e788f5d06bffd56ca"
+},
+{
+"text": "nous allons",
+"sprache": "fr",
+"nova": "de05608d6702986ab1fba5d6a4fe54d6"
+},
+{
+"text": "nous avons",
+"sprache": "fr",
+"nova": "6d04afda3450e6f82e1ca11636a41f2b"
+},
+{
+"text": "nous faisons",
+"sprache": "fr",
+"nova": "84c9944563b6ec0811d6db7f17fded37"
+},
+{
+"text": "nous sommes",
+"sprache": "fr",
+"nova": "34d05154c228078f750adf5cc0dd6a19"
+},
+{
+"text": "on est",
+"sprache": "fr",
+"nova": "fad351ca111244faa7da6b7cfa9590da"
+},
+{
+"text": "on va",
+"sprache": "fr",
+"nova": "b016e9e4d9da89d9a8474f7814dd314e"
+},
+{
+"text": "tu as",
+"sprache": "fr",
+"nova": "3ea44877f544c3b7347264a1d9027e7d"
+},
+{
+"text": "tu es",
+"sprache": "fr",
+"nova": "604d7fe6a1ef9f6ca082083373f298be"
+},
+{
+"text": "tu fais",
+"sprache": "fr",
+"nova": "2320cf4df7197ef199304a35cd159249"
+},
+{
+"text": "tu vas",
+"sprache": "fr",
+"nova": "bf35891ac9799068a062129b9ca4e0c0"
+},
+{
+"text": "vous allez",
+"sprache": "fr",
+"nova": "6f1cb9cbf0b16e79faedddfafddc7803"
+},
+{
+"text": "vous avez",
+"sprache": "fr",
+"nova": "e12734662ab4400e4b459774b93dfaae"
+},
+{
+"text": "vous faites",
+"sprache": "fr",
+"nova": "2cad2b2f8fd3ae6c18806219823b61ea"
+},
+{
+"text": "vous êtes",
+"sprache": "fr",
+"nova": "661b10f037938cc3b8074533a70bddb1"
+},
+{
+"text": "être",
+"sprache": "fr",
+"nova": "3c4654ed6baea3dddcafafd93fbc3f70"
 }
 ]
 }

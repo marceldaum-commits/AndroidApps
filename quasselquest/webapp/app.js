@@ -913,7 +913,7 @@
 
   function packStep(pack, L, step, frac, run) {
     return new Promise((resolve) => {
-      const tk = token;
+      let tk = token;   // wird nach jedem packFrame (neuer Bildschirm) neu gesetzt
       const say = (t) => (t && L.who ? speak(t, L.who) : Promise.resolve(false));
       const done = (cardsFirst) => {
         for (const [c, ok] of cardsFirst) { PK.note(state.karten, pack, c, ok); run.total++; if (ok) run.first++; }
@@ -923,7 +923,7 @@
       const showInfo = (el, c, extra) => rubySay(el, `${praise()} ${extra || ''}${c.info ? '<br><small style="font-weight:600">💡 ' + esc(c.info) + '</small>' : ''}`, 'dance');
 
       if (step.mode === 'memory') {
-        const el = packFrame(pack, frac, '🧠 Memory', 'Finde die Paare: Wort und Bedeutung!');
+        const el = packFrame(pack, frac, '🧠 Memory', 'Finde die Paare: Wort und Bedeutung!'); tk = token;
         el.querySelector('[data-quit]').onclick = () => resolve('quit');
         const items = [];
         step.cards.forEach((c, n) => { const k = PK.classify(c, pack.lang); items.push({ n, t: k.ziel, ziel: true, c, k }, { n, t: k.de, c, k }); });
@@ -951,7 +951,7 @@
 
       const c = step.card; const k = PK.classify(c, pack.lang);
       if (step.mode === 'ballon') {
-        const el = packFrame(pack, frac, '🎈 Ballon-Jagd', 'Tipp den richtigen Ballon an!');
+        const el = packFrame(pack, frac, '🎈 Ballon-Jagd', 'Tipp den richtigen Ballon an!'); tk = token;
         el.querySelector('[data-quit]').onclick = () => resolve('quit');
         const body = el.querySelector('[data-body]');
         const opts = shuffle([c.a].concat(PK.wrongs(c, pack, 3)));
@@ -979,7 +979,7 @@
       }
 
       if (step.mode === 'hoeren') {
-        const el = packFrame(pack, frac, '🔍 Hör-Detektiv', 'Hör zu: Was bedeutet das?');
+        const el = packFrame(pack, frac, '🔍 Hör-Detektiv', 'Hör zu: Was bedeutet das?'); tk = token;
         el.querySelector('[data-quit]').onclick = () => resolve('quit');
         const body = el.querySelector('[data-body]');
         const opts = shuffle([k.de].concat(PK.wrongs(c, pack, 3, 'de')));
@@ -1005,7 +1005,7 @@
 
       if (step.mode === 'bauen') {
         const t = PK.bauteile(c, pack.lang);
-        const el = packFrame(pack, frac, '🔤 Buchstaben-Bau', 'Bau das Wort Buchstabe für Buchstabe!');
+        const el = packFrame(pack, frac, '🔤 Buchstaben-Bau', 'Bau das Wort Buchstabe für Buchstabe!'); tk = token;
         el.querySelector('[data-quit]').onclick = () => resolve('quit');
         const body = el.querySelector('[data-body]');
         const letters = [...t.wort];

@@ -2,6 +2,34 @@
 
 Neueste oben.
 
+## 19.11.2026 – LIVE-MELDUNG: Version 0.2.1 vom 19.11.2026, Commit 216388f für `quasselquest-live`
+
+- **Inhalt:** Sprach-Umschalter (Englisch, Deutsch, Französisch, Spanisch, Latein) und 19 Sprachpakete (658 Karten) als Spiele mit Wiederholung, dazu Englisch Welt 1 (3 Episoden). 0.2.1 enthält nur die eindeutige Manifest-id (`"id": "./"`) für die gemeinsame Adresse.
+- **Geprüft auf dem echten Test-Server** `https://quasselquest-test.mathenachhilfe-online.com` (version.json = 0.2.1) mit `node tools/web-start.mjs --url=…`:
+  - Chromium Handy und PC, **WebKit iPhone 13 und iPad**: Start, alle 3 Episoden, je eine Paket-Runde in allen 5 Sprachen.
+  - Vorlesen: 76 vertonte Sätze wirklich abgespielt. Fortschritt nach Neuladen, Eltern-Tor, „← Alle Apps“ (Test: staging.), **Offline-Start mit echtem Service Worker**, keine Konsolenfehler – alles grün. 20/20 Inhaltstests.
+- **Kinderschutz:** nichts Kaufbares, keine Preise, kein Pro-Knopf (Pro-Code QQ-/App 7 vorbereitet, ohne Schlüssel unsichtbar). Mikrofon nur auf Knopfdruck, Erkennung nur im Gerät.
+- **Gemeinsame Adresse:** Pfade relativ, `register('sw.js')`, Manifest `./` mit id `./`, Speicher `quasselquest.v1`, Cache `quasselquest-<Version>` (der Service Worker löscht nur eigene). Die Test-Stufe wird über „lernen-test.“ bzw. „-test.“ im Hostnamen erkannt. Unter `lernen.` wird nichts weitergeleitet.
+  `lernen-test.mathenachhilfe-online.com/quasselquest/` war beim Prüfen noch nicht erreichbar; bitte nach dem Einrichten einmal `version.json` aufrufen (erwartet 0.2.1).
+- **Größe:** 13 MB. Beim ersten Start speichert der Service Worker alle Aufnahmen für offline (Hinweis für mobiles Datenvolumen).
+- **Rückweg:** Es ist die erste Live-Version. Zurück geht es, indem `quasselquest-live` wieder auf den Platzhalter gestellt wird (bisheriger Stand vor dem Live-Schalten). Bei späteren Versionen auf den vorherigen Live-Commit. Daten gehen dabei nicht verloren (nur im Browser, Schlüssel `quasselquest.v1`).
+- **Für den Leitstand außer Live-Schalten:** nichts Weiteres nötig. Optional: Website-Datenschutzerklärung um Quasselquest ergänzen (Text in `webapp/datenschutz.html`) und die App auf `/lern-apps/` aufnehmen.
+
+## 19.11.2026 – Version 0.2.0 vom 19.11.2026: Sprach-Umschalter + 19 Sprachpakete als Spiele – fertig für den Test
+
+Auftrag Marcel (über die AppZentrale): heute Sprachen und Sprachpakete, danach live; den Wissensgarten erst danach ohne Sprachpakete live schalten.
+- **Sprach-Umschalter** oben auf der Startseite: Englisch 💂, Deutsch 🥨, Französisch 🥐, Spanisch 💃, Latein 🏛️. Klassen 3–13. Direkt-Links: `#sprache=<en|de|fr|es|la>` und `#paket=<id>`.
+- **19 Pakete, 658 Karten** aus dem Wissensgarten (unverändert übernommen, Liste wie vom Wissensgarten bestätigt). Deutsch nur der Sprach-Teil; Stilmittel und Epochen bleiben im Wissensgarten.
+  - **Urheberrecht:** automatisch auf Namen von Lehrwerken geprüft (`tools/pakete-uebernehmen.mjs`), kein Treffer. Alle Karten sind eigene Formulierungen des Wissensgartens. Die Plus-Pakete (Abi-Vokabeln, Experte Sprache) sind noch nicht dabei; sie kommen, sobald Pfad und Schlüssel da sind, und gehören zu Pro.
+- **Spiele statt Karteikarten:** Ballon-Jagd (Auswahl), Hör-Detektiv (hören → Bedeutung wählen), Buchstaben-Bau (Wort aus Buchstaben, bei Artikeln wie „la maison“ ist der Artikel vorgegeben), Memory (Wort ↔ Bedeutung). Die Spielarten wechseln sich ab. 8 Karten je Runde mit der Erklärung (`info`) nach jeder Antwort.
+- **Wiederholung** in wachsenden Abständen (Leitner: 1, 2, 4, 8, 16, 32 Tage). Fällige Karten kommen zuerst, höchstens 5 neue je Runde. Auf jedem Paket steht, wie viele Karten sitzen.
+- **Stimmen** (Lizenzen geprüft, `LIZENZEN.md`): Deutsch thorsten (CC0), Französisch siwis (CC BY 4.0), Spanisch davefx (CC0); Latein ohne Stimme. 664 Sätze vertont (13 MB, offline).
+  Hörprüfung mit Whisper base und small: **59 Aufnahmen sind unsicher und werden NICHT abgespielt**, dort liest die Gerätestimme. Liste in `HOERPRUEFUNG.md`, bitte stichprobenweise anhören.
+- **Kein Kaufbares sichtbar:** keine Preise, kein Pro-Knopf, keine Sperren. Pro je Sprache ist vorbereitet (Sprach-Byte im Code), aber erst mit Schlüssel und Shop-Produkt aktiv.
+- **Gemeinsame Adresse:** alle Pfade relativ, Speicher `quasselquest.v1`, Cache `quasselquest-0.2.0`. Die Test-Stufe wird am Hostnamen („-test.“, „staging“) **oder** am Pfad (`/test/`) erkannt. Der Lernstand wird von 0.1.0 übernommen (Stand 2 → 3).
+- **Tests:** 20/20 Inhalts- und Logiktests (Wiederholung, falsche Antworten nie richtig, Buchstaben-Bau ergibt die Antwort, jede Ansage hat Audio, unsichere Aufnahmen markiert). Durchspielen grün in **Chromium (Handy, PC) und WebKit (iPhone 13, iPad)**: 3 Englisch-Episoden und je eine Paket-Runde in allen 5 Sprachen, offline, Eltern-Tor, „← Alle Apps“, keine Konsolenfehler. Bildschirmfotos angesehen.
+- **Noch offen:** echter Test auf iPhone/iPad (Ton!), Live-Adresse, Pro-Schlüssel, Zähl-Kennungen franzoesisch/latein/spanisch.
+
 ## 19.11.2026 – Vertonung mit freien Stimmen (Entscheidung Marcel), Nova vorbereitet – noch Version 0.1.0
 
 - **Alle 185 festen Sätze** sind vorab vertont, jeweils normal und langsam (🐢). Das sind 370 MP3-Dateien mit zusammen 2,8 MB; sie werden offline gespeichert und über Web Audio abgespielt, das funktioniert auf iOS nach der ersten Berührung.

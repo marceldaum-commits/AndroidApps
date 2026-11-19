@@ -211,7 +211,70 @@
     s.onerror = function () { startFailed(HAUPT + ' kam nicht an'); };
     document.body.appendChild(s);
   }
-  (function () { var started = false, go = function () { if (started) return; started = true; startLoading(); };
+  // ── Umzug auf die gemeinsame Adresse lernen.mathenachhilfe-online.com/raumlicht/ (seit 2.18.33) ──
+  // Dieselbe Fassung läuft auf der alten und auf der neuen Adresse. ALT: Lernstand einsammeln, im Browser verschlüsseln (AES-GCM 256), als Einmal-Sicherung
+  // auf unserem Server ablegen und zur neuen Adresse weiterleiten; der Schlüssel steht nur hinter dem „#“ und geht an keinen Server. NEU: holen, entschlüsseln,
+  // nur einspielen, wenn dort noch nichts liegt, und die Sicherung gleich wieder löschen. Klappt etwas nicht, bleibt alles, wie es ist – nächster Start, nächster Versuch.
+  var UMZUG = (function () {
+    var fertig = Promise.resolve();
+    try {
+      var T = (location.hostname === 'localhost' || location.hostname === '127.0.0.1') ? (window.__rlUmzugTest || null) : null;   // nur für die automatische Prüfung
+      var h = location.hostname, alt = T ? !!T.alt : /^raumlicht(-test)?\.mathenachhilfe-online\.com$/.test(h);
+      var test = /^(raumlicht-test|lernen-test)\./.test(h);
+      var ziel = T ? T.ziel : 'https://lernen' + (test ? '-test' : '') + '.mathenachhilfe-online.com/raumlicht/';
+      var server = T ? T.server : 'https://trainer' + (test ? '-test' : '') + '.mathenachhilfe-online.com/eltern/v1/s/';
+      var NICHT = /^raumlicht\.(mitschrift|startfehler|modus\.|sparsam|test)/;                // Merker dieses einen Browsers ziehen nicht mit
+      var eigene = function () { var out = []; for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf('raumlicht.') === 0 && !NICHT.test(k)) out.push(k); } return out; };
+      var b64 = function (u8) { var t = ''; for (var i = 0; i < u8.length; i++) t += String.fromCharCode(u8[i]); return btoa(t).split('+').join('-').split('/').join('_').split('=').join(''); };
+      var un = function (t) { var bin = atob(t.split('-').join('+').split('_').join('/')), u = new Uint8Array(bin.length); for (var i = 0; i < bin.length; i++) u[i] = bin.charCodeAt(i); return u; };
+      var zufall = function (n) { return b64(crypto.getRandomValues(new Uint8Array(n))); };
+      var raute = function () { return new URLSearchParams(location.hash.charAt(0) === '#' ? location.hash.slice(1) : location.hash); };
+      var ohneUmzug = function () { var p = raute(); p.delete('umzug'); var rest = p.toString(); try { history.replaceState(history.state, '', location.pathname + location.search + (rest ? '#' + rest : '')); } catch (e) {} };
+      var mitFrist = function (url, opt) { var c = window.AbortController ? new AbortController() : null; if (c) { opt.signal = c.signal; setTimeout(function () { c.abort(); }, 9000); } return fetch(url, opt); };
+      var sagen = function (text) { try { var st = document.getElementById('start'), m = document.getElementById('umzug'); if (!m && st) { m = document.createElement('small'); m.id = 'umzug'; m.style.cssText = 'color:#46E1FF;max-width:30em;text-align:center;padding:0 16px'; st.appendChild(m); } if (m) m.textContent = text; } catch (e) {} };
+      if (alt) {
+        var weiter = function (schluessel) { var p = raute(); p.delete('umzug'); var rest = p.toString();
+          window.__rlSchritt('Umzug: weiter zur neuen Adresse' + (schluessel ? ' mit Lernstand' : ''));
+          location.replace(ziel + location.search + (schluessel ? '#umzug=' + schluessel + (rest ? '&' + rest : '') : (rest ? '#' + rest : ''))); return new Promise(function () {}); };
+        // Erst nachsehen, ob Raumlicht an der neuen Adresse wirklich schon da ist (ein Bild von dort laden – das geht ohne Sonderrechte): sonst bliebe man vor einer Fehlerseite stehen
+        var neuDa = new Promise(function (ok) { var bild = new Image(), t = setTimeout(function () { ok(false); }, 6000);
+          bild.onload = function () { clearTimeout(t); ok(bild.naturalWidth > 0); }; bild.onerror = function () { clearTimeout(t); ok(false); }; bild.src = ziel + 'umzug-bereit.png?t=' + Date.now(); });   // die Datei gibt es erst ab 2.18.33 – so ist sicher, dass die neue Adresse den Umzug auch annimmt
+        var umziehen = function () {
+        var ks = eigene();
+        if (!ks.length) return weiter(null);                                                 // nichts mitzunehmen: gleich hinüber
+        if (!(window.crypto && crypto.subtle && window.fetch)) { window.__rlSchritt('Umzug: hier nicht möglich (keine Verschlüsselung) – Raumlicht läuft unter der alten Adresse weiter'); return null; }
+          sagen('Raumlicht zieht um – dein Lernstand kommt mit …');
+          var daten = {}; ks.forEach(function (k) { daten[k] = localStorage.getItem(k); });
+          var id = zufall(16), schreib = zufall(16), roh = crypto.getRandomValues(new Uint8Array(32)), iv = crypto.getRandomValues(new Uint8Array(12));
+          return crypto.subtle.importKey('raw', roh, 'AES-GCM', false, ['encrypt'])
+            .then(function (k) { return crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, new TextEncoder().encode(JSON.stringify({ app: 'raumlicht', v: 1, umzug: true, daten: daten }))); })
+            .then(function (ct) { return mitFrist(server + id, { method: 'PUT', headers: { 'Content-Type': 'text/plain', 'X-Schreib': schreib }, body: b64(iv) + '.' + b64(new Uint8Array(ct)), credentials: 'omit', referrerPolicy: 'no-referrer' }); })
+            .then(function (r) { if (r.status !== 204 && r.status !== 200) throw new Error('Status ' + r.status); return weiter(id + '.' + b64(roh) + '.' + schreib); })
+            .catch(function (e) { window.__rlSchritt('Umzug: gerade nicht möglich (' + String(e && e.message || e).slice(0, 80) + ') – nächster Versuch beim nächsten Start'); sagen(''); });
+        };
+        fertig = neuDa.then(function (da) { if (da) return umziehen(); window.__rlSchritt('Umzug: neue Adresse noch nicht erreichbar – Raumlicht läuft hier weiter'); return null; });
+      } else {
+        var u = raute().get('umzug'), teile = u ? u.split('.') : [];
+        if (u && teile.length === 3 && window.crypto && crypto.subtle) {
+          sagen('Willkommen an der neuen Adresse – dein Lernstand wird geholt …');
+          fertig = mitFrist(server + teile[0], { credentials: 'omit', referrerPolicy: 'no-referrer', cache: 'no-store' }).then(function (r) {
+            if (r.status !== 200) { ohneUmzug(); throw new Error('Status ' + r.status); }
+            return r.json().then(function (j) { var p = String(j.d || '').split('.');
+              return crypto.subtle.importKey('raw', un(teile[1]), 'AES-GCM', false, ['decrypt']).then(function (k) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: un(p[0]) }, k, un(p[1])); }); })
+              .then(function (klar) { var o = JSON.parse(new TextDecoder().decode(klar));
+                if (o.app !== 'raumlicht' || !o.umzug || !o.daten) throw new Error('fremde Sicherung');
+                if (eigene().length) window.__rlSchritt('Umzug: hier gibt es schon einen Lernstand – nichts überschrieben');
+                else { var n = 0; for (var k in o.daten) if (k.indexOf('raumlicht.') === 0 && !NICHT.test(k) && typeof o.daten[k] === 'string') { localStorage.setItem(k, o.daten[k]); n++; } window.__rlSchritt('Umzug: Lernstand übernommen (' + n + ' Einträge)'); }
+                // eingespielt oder schon vorhanden: Die Einmal-Sicherung wird in beiden Fällen sofort gelöscht
+                try { fetch(server + teile[0], { method: 'DELETE', headers: { 'X-Schreib': teile[2] }, credentials: 'omit', referrerPolicy: 'no-referrer', keepalive: true }).catch(function () {}); } catch (e) {}
+                ohneUmzug(); }, function (e) { ohneUmzug(); throw e; });
+          }).catch(function (e) { window.__rlSchritt('Umzug: Lernstand nicht übernommen (' + String(e && e.message || e).slice(0, 80) + ')'); }).then(function () { sagen(''); });
+        } else if (u) ohneUmzug();
+      }
+    } catch (e) { try { window.__rlSchritt('Umzug: übersprungen (' + String(e && e.message || e).slice(0, 80) + ')'); } catch (x) {} }
+    return fertig;
+  })();
+  (function () { var started = false, los = function () { if (started) return; started = true; startLoading(); }, go = function () { UMZUG.then(los, los); };
     if (window.requestAnimationFrame) requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(go, 0); }); });
     setTimeout(go, 1200); })();                                             // falls kein Bild gemalt wird (Tab im Hintergrund): trotzdem starten
   if (realFetch) {

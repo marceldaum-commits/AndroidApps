@@ -24,7 +24,7 @@
   function row(name, value, good) { rows.push(name + ': ' + value); var tr = t.insertRow(); tr.insertCell().textContent = name; var c = tr.insertCell(); c.textContent = value; if (good !== undefined) c.className = good ? 'ok' : 'bad'; }
   function wasm(bytes) { try { return typeof WebAssembly === 'object' && WebAssembly.validate(new Uint8Array(bytes)); } catch (e) { return false; } }
   var head = [0, 97, 115, 109, 1, 0, 0, 0];
-  row('Version der WebApp', '2.18.32 vom 19.11.2026');
+  row('Version der WebApp', '2.18.33 vom 19.11.2026');
   row('Browser', navigator.userAgent);
   row('Gerät laut Browser', (navigator.platform || '?') + ' · Berührungspunkte ' + (navigator.maxTouchPoints || 0) + ' · ' + (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1 ? 'iPad im Desktop-Modus (gibt sich als Mac aus)' : /iPad/.test(navigator.userAgent) ? 'iPad im Mobil-Modus' : /iPhone/.test(navigator.userAgent) ? 'iPhone' : 'anderes Gerät'));
   row('Bildschirm', innerWidth + ' × ' + innerHeight + ', Schärfe ' + (window.devicePixelRatio || 1) + ', als App gestartet: ' + ((window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone ? 'ja' : 'nein'));
@@ -50,13 +50,14 @@
     rows.push('Sparmodus: ' + (localStorage.getItem('raumlicht.sparsam') === '1' ? 'an (nach zwei Abstürzen in Folge)' : 'aus')); } catch (e) {}
   row('Letzter Startfehler', last || 'keiner gemeldet', !last);
   row('Service Worker', 'serviceWorker' in navigator ? (navigator.serviceWorker.controller ? 'aktiv' : 'vorhanden, noch nicht aktiv') : 'nicht verfügbar');
-  if (window.caches) caches.keys().then(function (k) { row('Zwischenspeicher', k.join(', ') || 'leer'); });
+  if (window.caches) caches.keys().then(function (k) { k = k.filter(function (n) { return n.indexOf('raumlicht-') === 0; }); row('Zwischenspeicher', k.join(', ') || 'leer'); });
   function probe(url, name) { var t0 = Date.now(); fetch(url, { cache: 'no-store' }).then(function (r) { return r.arrayBuffer().then(function (b) { row(name, r.status + ', ' + (r.headers.get('content-type') || '?') + ', ' + Math.round(b.byteLength / 1024) + ' KB in ' + (Date.now() - t0) + ' ms', r.ok); }); }).catch(function (e) { row(name, 'nicht ladbar: ' + e, false); }); }
   probe('version.json', 'Datei version.json'); probe('raumlicht.js', 'Datei raumlicht.js'); probe('scene/scene.js', 'Datei 3D-Bühne');
   document.getElementById('copy').onclick = function () { var s = rows.join('\n'); if (navigator.clipboard) navigator.clipboard.writeText(s).then(function () { alert('Kopiert.'); }, function () { prompt('Bitte kopieren:', s); }); else prompt('Bitte kopieren:', s); };
   document.getElementById('reset').onclick = function () {
-    var jobs = []; if (window.caches) jobs.push(caches.keys().then(function (k) { return Promise.all(k.map(function (n) { return caches.delete(n); })); }));
-    if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (r) { return Promise.all(r.map(function (x) { return x.unregister(); })); }));
+    // nur Raumlichts eigene Speicher und die eigene Anmeldung – unter der gemeinsamen Adresse liegen daneben die anderen Lern-Apps
+    var jobs = []; if (window.caches) jobs.push(caches.keys().then(function (k) { return Promise.all(k.filter(function (n) { return n.indexOf('raumlicht-') === 0; }).map(function (n) { return caches.delete(n); })); }));
+    if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistration('./').then(function (x) { return x ? x.unregister() : null; }));
     Promise.all(jobs).then(function () { location.href = './'; }, function () { location.href = './'; });   // der Spielstand (Sterne) bleibt erhalten
   };
 })();

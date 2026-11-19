@@ -3,6 +3,7 @@
   "short_name": "Quasselquest",
   "description": "Sprachen sprechen, hören und spielen – Klasse 3 bis 13.",
   "lang": "de",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
