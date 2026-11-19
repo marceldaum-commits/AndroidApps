@@ -1,12 +1,13 @@
 Quasselquest – Lizenzen
 
 Stimmen (vorab vertont mit Piper, https://github.com/OHF-Voice/piper1-gpl – nur zum Erzeugen der Audiodateien benutzt, nicht Teil der App):
-- Ruby und Mia: Piper-Stimme „en_GB-cori-medium“. Trainiert auf dem Hi-Fi Multi-Speaker English TTS Dataset (NVIDIA Corporation),
-  Lizenz CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Sprecherin: Cori Samuel (LibriVox). Quelle: https://www.openslr.org/109/
-  Bakhturina, Lavrukhin, Ginsburg, Zhang: „Hi-Fi Multi-Speaker English TTS Dataset“, Interspeech 2021.
-  Mia: Tonhöhe leicht angehoben (geändert).
-- Sam und Grandpa Ted: Piper-Stimme „en_US-john-medium“ von Bryce Beattie, Aufnahmen von LibriVox (gemeinfrei).
-  Tonhöhe und Tempo angepasst (geändert).
+- Englisch (Ruby und alle Figuren: Mia, Sam, Grandpa Ted, Mr Brown): Piper-Stimme „en_GB-cori-medium“.
+  Trainiert auf dem „Hi-Fi Multi-Speaker English TTS Dataset“ (Bakhturina, Lavrukhin, Ginsburg, Zhang; NVIDIA Corporation,
+  Interspeech 2021), Lizenz CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Sprecherin: Cori Samuel (LibriVox).
+  Quelle: https://www.openslr.org/109/ · Modell: https://huggingface.co/rhasspy/piper-voices (en/en_GB/cori/medium)
+Änderungen an allen Aufnahmen (gilt für jede Stimme): Sprechtempo angepasst, Pausen in Zahlenreihen eingefügt, Stille am Rand
+gekürzt, Lautstärke angeglichen, als MP3 gespeichert; zusätzlich je eine langsame Fassung. Die Stimmen selbst wurden nicht verändert.
+Nicht mehr verwendet: „en_US-john-medium“ (bis 0.3.3 für Sam und Grandpa Ted, gemeinfrei).
 Nicht verwendet: Piper-Stimmen, die auf den „lessac“-Daten aufbauen (nur nicht-kommerzielle Forschung erlaubt).
 
 Töne und Musik: im Code erzeugt, keine fremden Aufnahmen.
@@ -14,7 +15,8 @@ Bilder: Emoji des Geräts; Ruby (Papagei) selbst gezeichnet (SVG).
 
 Stimmen der Sprachpakete (Lizenzen geprüft am 19.11.2026):
 - Deutsch: Piper „de_DE-thorsten-medium“ (Thorsten Müller, Thorsten-Voice), CC0. Grundmodell „rdh“ ebenfalls CC0.
-- Französisch: Piper „fr_FR-siwis-medium“, Daten SIWIS French Speech Synthesis Database (Universität Edinburgh u. a.), CC BY 4.0;
+- Französisch: Piper „fr_FR-siwis-medium“, Daten SIWIS French Speech Synthesis Database (Universität Edinburgh u. a.),
+  Lizenz CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/);
   Grundmodell hifi_tts_92 (NVIDIA Hi-Fi TTS), CC BY 4.0.
 - Spanisch: Piper „es_ES-davefx-medium“, CC0. Grundmodell „rdh“ ebenfalls CC0.
 - Latein: Es gibt keine freie Stimme mit sauberer Lizenz – Latein wird gelesen, nicht vorgelesen.

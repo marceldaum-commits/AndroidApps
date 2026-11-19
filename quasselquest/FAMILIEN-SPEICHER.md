@@ -59,3 +59,7 @@ Insel-Positionen, Einstellungen, Name → fragen (Elternbereich), sonst Gerätes
 
 **Löschen** (nur hinter dem Tor): Warnung „Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. Gekaufte Codes werden wieder frei und lassen sich in einer neuen Familie erneut einlösen. Die Lernstände auf diesem Gerät bleiben erhalten.“ → Familien-Nummer eintippen → `fa.loeschen()` → lokal nur die Familien-Schlüssel entfernen.
 Bei 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“
+- **familie.js @ e9993ec** (sha256 ohne Kopfkommentar `3f7ec567e4849c3870be8398aa72894475a55df672f79f22e536fdb8f209f5f9`) = 1f4b377 + Patch: FEHLER-Tabelle um `leer: 'keine', unbekannt: 'familie-weg'` ergänzt
+  (+ Kommentar bei standLaden). Bei grund `familie-weg`: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“
+  Tests: nachgebauter Server mit `{fehler:'unbekannt'}` bzw. `{fehler:'leer'}`; „Nach dem Löschen“-Prüfung auf 'familie-weg'. → 51 Prüfungen.
+- **Recht: freigegeben mit Auflagen (A6, v1.6):** nur EIN Einwilligungstext (der Pflichttext), darunter Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und Knopf „Einverstanden – Familie anlegen“, nichts vorausgewählt. Anlegen/Beitreten nur hinter dem Eltern-Tor. Roadmap (noch nicht bauen): ein Kind einzeln löschen.

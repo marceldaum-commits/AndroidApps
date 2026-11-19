@@ -24,3 +24,8 @@ Sicherung/Kopplung immer; Nachhilfe-Hinweis für alle Sprachen. Mein Schulbuch g
 1. Code-Prüfung per Eingabe und Link mit Test-Codes (Test-Codes über AppZentrale → Marcel → Leitstand anfragen)
 2. Sperre je Sprache  3. Kaufschutz Wissensgarten-Plus  4. Kauf nur hinter dem Eltern-Tor, keine Preise im Kinderteil, Schloss-Standardtext
 5. codeGesperrt() vor Offline-Prüfung
+
+## Recht (19.11.): freigegeben mit Auflagen
+- Schloss-Text in der Kinderansicht NUR: „Das gehört zu Quasselquest Pro.“ (ohne Zusatz zu den Eltern). Der Weg zum Freischalten liegt im Elternbereich hinter dem Tor.
+- Kaufschutz wie geplant. AGB § 13 und Information der Plus-Käufer erledigen Leitstand/Marcel; Shop bleibt bis dahin privat.
+- **Bestätigt von Marcel (ELTERN-TOR.md aktualisiert, gilt für alle Apps):** Schloss nur „Das gehört zu Quasselquest Pro.“; der Weg ins Tor über einen neutralen Knopf „Für Eltern“.
