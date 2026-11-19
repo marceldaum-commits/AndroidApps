@@ -1,0 +1,276 @@
+{
+ "format": 1,
+ "quelle": "wissensgarten",
+ "pakete": [
+  {
+   "id": "gs-englisch-farben-zahlen",
+   "sprache": "en",
+   "version": 2,
+   "title": "Farben, Zahlen, Tiere",
+   "emoji": "🎨",
+   "grades": [
+    1,
+    2,
+    3
+   ],
+   "description": "Noch mehr Farben, die Zahlen bis 20, Haus- und Bauernhoftiere und freundliche Begrüßungen auf Englisch.",
+   "karten": 34
+  },
+  {
+   "id": "gs-englisch-basics",
+   "sprache": "en",
+   "version": 3,
+   "title": "Englisch für Anfänger",
+   "emoji": "🎩",
+   "grades": [
+    3,
+    4
+   ],
+   "description": "Erste englische Wörter: Farben, Zahlen, Tiere und Familie.",
+   "karten": 31
+  },
+  {
+   "id": "gs-englisch-familie-koerper",
+   "sprache": "en",
+   "version": 3,
+   "title": "Familie, Körper, Kleidung",
+   "emoji": "👕",
+   "grades": [
+    3,
+    4
+   ],
+   "description": "Englische Wörter für Familie, Körperteile, Kleidung und die Wochentage – mit lustigen Eselsbrücken.",
+   "karten": 34
+  },
+  {
+   "id": "s1-englisch-grundwortschatz",
+   "sprache": "en",
+   "version": 5,
+   "title": "Englisch Grundwortschatz",
+   "emoji": "💬",
+   "grades": [
+    5,
+    6,
+    7
+   ],
+   "description": "Wichtige englische Wörter und Sätze aus Schule und Alltag: Deutsch → Englisch.",
+   "karten": 37
+  },
+  {
+   "id": "s1-englisch-alltag",
+   "sprache": "en",
+   "version": 2,
+   "title": "Englisch im Alltag",
+   "emoji": "💬",
+   "grades": [
+    5,
+    6,
+    7
+   ],
+   "description": "Nützliche englische Sätze für Restaurant, Schule, Hobbys, Wetter, Einkaufen und Wegbeschreibungen.",
+   "karten": 36
+  },
+  {
+   "id": "s1-englisch-irregular-verbs",
+   "sprache": "en",
+   "version": 5,
+   "title": "Irregular Verbs",
+   "emoji": "📝",
+   "grades": [
+    5,
+    6,
+    7,
+    8
+   ],
+   "description": "Die wichtigsten unregelmäßigen englischen Verben mit Simple Past und Past Participle.",
+   "karten": 40
+  },
+  {
+   "id": "s1-englisch-tenses",
+   "sprache": "en",
+   "version": 2,
+   "title": "English Tenses",
+   "emoji": "⏰",
+   "grades": [
+    6,
+    7,
+    8,
+    9
+   ],
+   "description": "Simple Present bis will-Future: Signalwörter erkennen und die richtige Verbform in Lückensätze einsetzen.",
+   "karten": 35
+  },
+  {
+   "id": "gs-lesestart",
+   "sprache": "de",
+   "version": 3,
+   "title": "Lesestart",
+   "emoji": "🔤",
+   "grades": [
+    1,
+    2
+   ],
+   "description": "Anlaute, Reime und Silben – die ersten Schritte zum Lesen.",
+   "karten": 32
+  },
+  {
+   "id": "gs-wortarten",
+   "sprache": "de",
+   "version": 4,
+   "title": "Wortarten",
+   "emoji": "💬",
+   "grades": [
+    2,
+    3,
+    4
+   ],
+   "description": "Nomen, Verben und Adjektive erkennen und den richtigen Artikel finden.",
+   "karten": 32
+  },
+  {
+   "id": "gs-satzzeichen-satzarten",
+   "sprache": "de",
+   "version": 2,
+   "title": "Satzzeichen und Sätze",
+   "emoji": "❓",
+   "grades": [
+    2,
+    3
+   ],
+   "description": "Punkt, Fragezeichen und Ausrufezeichen, Satzarten, wörtliche Rede und das Komma bei Aufzählungen.",
+   "karten": 33
+  },
+  {
+   "id": "gs-rechtschreibung",
+   "sprache": "de",
+   "version": 3,
+   "title": "Richtig schreiben",
+   "emoji": "📝",
+   "grades": [
+    3,
+    4
+   ],
+   "description": "Wörter mit ie, ei, ß, ss und Dehnungs-h sowie Groß- und Kleinschreibung üben.",
+   "karten": 34
+  },
+  {
+   "id": "s1-deutsch-grammatik",
+   "sprache": "de",
+   "version": 4,
+   "title": "Deutsch Grammatik",
+   "emoji": "✏️",
+   "grades": [
+    5,
+    6,
+    7
+   ],
+   "description": "Fälle, Satzglieder, das/dass und Zeitformen sicher erkennen und anwenden.",
+   "karten": 34
+  },
+  {
+   "id": "s1-deutsch-zeichensetzung",
+   "sprache": "de",
+   "version": 2,
+   "title": "Komma & Co.",
+   "emoji": "✏️",
+   "grades": [
+    5,
+    6,
+    7,
+    8
+   ],
+   "description": "Kommaregeln, das oder dass und wörtliche Rede – mit vielen Beispielsätzen zum Ausprobieren.",
+   "karten": 34
+  },
+  {
+   "id": "s1-deutsch-fremdwoerter",
+   "sprache": "de",
+   "version": 4,
+   "title": "Fremdwörter verstehen",
+   "emoji": "🎓",
+   "grades": [
+    7,
+    8,
+    9,
+    10
+   ],
+   "description": "Was bedeuten Prognose, ambivalent oder Kompromiss? Häufige Fremdwörter verstehen und richtig schreiben.",
+   "karten": 35
+  },
+  {
+   "id": "aw-redewendungen",
+   "sprache": "de",
+   "version": 1,
+   "title": "Redewendungen",
+   "emoji": "🐷",
+   "grades": [
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    14
+   ],
+   "description": "Was heißt es, Tomaten auf den Augen zu haben? Bekannte deutsche Redewendungen mit witzigen Merkbildern.",
+   "karten": 35
+  },
+  {
+   "id": "s1-franzoesisch-grundwortschatz",
+   "sprache": "fr",
+   "version": 4,
+   "title": "Französisch Grundwortschatz",
+   "emoji": "🥖",
+   "grades": [
+    6,
+    7,
+    8
+   ],
+   "description": "Wichtige französische Wörter mit Artikel (le, la, l', les): Deutsch → Französisch.",
+   "karten": 35
+  },
+  {
+   "id": "s1-franzoesisch-verben",
+   "sprache": "fr",
+   "version": 5,
+   "title": "être, avoir, aller, faire",
+   "emoji": "🗣️",
+   "grades": [
+    7,
+    8,
+    9
+   ],
+   "description": "Die vier wichtigsten unregelmäßigen französischen Verben im Präsens konjugieren.",
+   "karten": 32
+  },
+  {
+   "id": "s1-latein-grundwortschatz",
+   "sprache": "la",
+   "version": 5,
+   "title": "Latein Grundwortschatz",
+   "emoji": "🏛️",
+   "grades": [
+    5,
+    6,
+    7,
+    8
+   ],
+   "description": "Wichtige lateinische Grundwörter – Verben, Nomen, Adjektive – mit deutscher Bedeutung.",
+   "karten": 39
+  },
+  {
+   "id": "s1-spanisch-grundwortschatz",
+   "sprache": "es",
+   "version": 4,
+   "title": "Spanisch Grundwortschatz",
+   "emoji": "💃",
+   "grades": [
+    8,
+    9,
+    10
+   ],
+   "description": "Wichtige spanische Wörter und Sätze für den Einstieg: Deutsch → Spanisch.",
+   "karten": 36
+  }
+ ]
+}

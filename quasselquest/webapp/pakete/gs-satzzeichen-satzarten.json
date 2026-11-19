@@ -1,0 +1,433 @@
+{
+  "id": "gs-satzzeichen-satzarten",
+  "version": 2,
+  "title": "Satzzeichen und Sätze",
+  "subject": "deutsch",
+  "grades": [
+    2,
+    3
+  ],
+  "emoji": "❓",
+  "tier": "free",
+  "description": "Punkt, Fragezeichen und Ausrufezeichen, Satzarten, wörtliche Rede und das Komma bei Aufzählungen.",
+  "intro": [
+    {
+      "img": "🛑✏️",
+      "text": "Wusstest du? Satzzeichen sind wie Verkehrsschilder für das Lesen. Der Punkt sagt: Stopp, hier ist der Satz zu Ende!"
+    },
+    {
+      "img": "❓❗",
+      "text": "Am Ende einer Frage steht ein Fragezeichen. Nach einem Ausruf oder einer lauten Aufforderung steht ein Ausrufezeichen."
+    },
+    {
+      "img": "🔠🏁",
+      "text": "Jeder Satz beginnt mit einem großen Buchstaben. So siehst du sofort, wo ein neuer Satz losgeht."
+    },
+    {
+      "img": "💬🗣️",
+      "text": "Was jemand sagt, steht in Anführungszeichen: Lea ruft: „Komm her!“ Bei Aufzählungen trennt das Komma: Äpfel, Birnen und Nüsse."
+    },
+    {
+      "img": "🐝🎉",
+      "text": "Los geht's, Satz-Detektiv! Brummi zeigt dir, wo die Zeichen hingehören!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Welches Zeichen steht am Ende eines Aussagesatzes?",
+      "a": "Punkt",
+      "choices": [
+        "Fragezeichen",
+        "Ausrufezeichen",
+        "Komma"
+      ],
+      "info": "Ein Aussagesatz erzählt etwas: „Ich habe einen Hund.“ Am Ende steht ein Punkt.",
+      "img": "⚫🛑"
+    },
+    {
+      "id": "002",
+      "q": "Welches Zeichen steht am Ende einer Frage?",
+      "a": "Fragezeichen",
+      "choices": [
+        "Punkt",
+        "Komma",
+        "Doppelpunkt"
+      ],
+      "info": "Wer fragt, will eine Antwort. Darum steht am Ende ein Fragezeichen.",
+      "img": "❓🤔"
+    },
+    {
+      "id": "003",
+      "q": "Welches Zeichen passt zu einem lauten Ausruf wie „Hurra“?",
+      "a": "Ausrufezeichen",
+      "choices": [
+        "Fragezeichen",
+        "Komma",
+        "Doppelpunkt"
+      ],
+      "info": "Das Ausrufezeichen zeigt: Hier wird laut gerufen oder gejubelt.",
+      "img": "❗📣"
+    },
+    {
+      "id": "004",
+      "q": "Welches Zeichen fehlt? „Wie heißt du_“",
+      "a": "?",
+      "choices": [
+        ".",
+        "!",
+        ","
+      ],
+      "info": "Mit „Wie“ fragst du etwas. Darum kommt ein Fragezeichen ans Ende.",
+      "img": "❓🙋"
+    },
+    {
+      "id": "005",
+      "q": "Welches Zeichen fehlt? „Der Hund schläft_“",
+      "a": "Punkt",
+      "choices": [
+        "Fragezeichen",
+        "Komma",
+        "Doppelpunkt"
+      ],
+      "info": "Der Satz erzählt nur etwas. Das ist ein Aussagesatz mit Punkt.",
+      "img": "🐶💤"
+    },
+    {
+      "id": "006",
+      "q": "Welches Zeichen fehlt? „Vorsicht, heiß_“",
+      "a": "!",
+      "choices": [
+        "?",
+        ",",
+        ":"
+      ],
+      "info": "Eine Warnung ruft man laut. Darum steht ein Ausrufezeichen.",
+      "img": "🔥❗"
+    },
+    {
+      "id": "007",
+      "q": "Welches Zeichen fehlt? „Kommst du mit_“",
+      "a": "?",
+      "choices": [
+        ".",
+        ",",
+        ":"
+      ],
+      "info": "Das Verb steht ganz vorne, und du willst eine Antwort: Das ist eine Frage.",
+      "img": "❓🚲"
+    },
+    {
+      "id": "008",
+      "q": "Welche Satzart ist „Die Sonne scheint.“?",
+      "a": "Aussagesatz",
+      "choices": [
+        "Fragesatz",
+        "Ausrufesatz",
+        "Aufforderungssatz"
+      ],
+      "info": "Der Satz sagt einfach etwas aus. Am Ende steht ein Punkt.",
+      "img": "☀️💬"
+    },
+    {
+      "id": "009",
+      "q": "Welche Satzart ist „Wo wohnst du?“?",
+      "a": "Fragesatz",
+      "choices": [
+        "Aussagesatz",
+        "Ausrufesatz",
+        "Aufforderungssatz"
+      ],
+      "info": "Fragesätze enden mit einem Fragezeichen und beginnen oft mit einem Fragewort.",
+      "img": "🏠❓"
+    },
+    {
+      "id": "010",
+      "q": "Welche Satzart ist „Räum bitte dein Zimmer auf!“?",
+      "a": "Aufforderungssatz",
+      "choices": [
+        "Aussagesatz",
+        "Fragesatz",
+        "Antwortsatz"
+      ],
+      "info": "Jemand soll etwas tun. Das ist eine Aufforderung.",
+      "img": "🧸👉"
+    },
+    {
+      "id": "011",
+      "q": "Welche Satzart ist „Juhu, wir haben gewonnen!“?",
+      "a": "Ausrufesatz",
+      "choices": [
+        "Aussagesatz",
+        "Fragesatz",
+        "Antwortsatz"
+      ],
+      "info": "Hier ruft jemand vor Freude laut. Das ist ein Ausrufesatz.",
+      "img": "🏆🎉"
+    },
+    {
+      "id": "012",
+      "q": "Welcher Satz ist ein Fragesatz?",
+      "a": "Wann beginnt die Schule?",
+      "choices": [
+        "Die Schule beginnt um acht.",
+        "Ich gehe zur Schule.",
+        "Beeil dich!"
+      ],
+      "info": "Am Fragezeichen erkennst du die Frage sofort.",
+      "img": "🏫❓"
+    },
+    {
+      "id": "013",
+      "q": "Welcher Satz ist ein Aufforderungssatz?",
+      "a": "Schließ bitte die Tür!",
+      "choices": [
+        "Die Tür ist zu.",
+        "Ist die Tür zu?",
+        "Die Tür quietscht."
+      ],
+      "info": "Bei einer Aufforderung soll jemand etwas tun: die Tür schließen.",
+      "img": "🚪👉"
+    },
+    {
+      "id": "014",
+      "q": "Welches Wort ist ein Fragewort: weil, warum, und oder dann?",
+      "a": "warum",
+      "choices": [
+        "weil",
+        "und",
+        "dann"
+      ],
+      "info": "Fragewörter beginnen oft mit W: wer, wie, was, wo, wann, warum.",
+      "img": "❓🔍"
+    },
+    {
+      "id": "015",
+      "q": "Wie wird aus „Du kommst mit.“ eine Frage mit Verb vorne?",
+      "a": "Kommst du mit?",
+      "choices": [
+        "Du kommst mit!",
+        "Kommst du mit.",
+        "kommst du mit?"
+      ],
+      "info": "Verb nach vorne, Fragezeichen ans Ende und groß anfangen.",
+      "img": "🔄❓"
+    },
+    {
+      "id": "016",
+      "q": "Wie beginnt jeder Satz?",
+      "a": "mit einem großen Buchstaben",
+      "choices": [
+        "mit einem kleinen Buchstaben",
+        "mit einem Komma",
+        "mit einem Punkt"
+      ],
+      "info": "Das erste Wort eines Satzes schreibst du immer groß.",
+      "img": "🔠🏁"
+    },
+    {
+      "id": "017",
+      "q": "Welcher Satz ist richtig geschrieben?",
+      "a": "Heute regnet es.",
+      "choices": [
+        "heute regnet es.",
+        "Heute regnet es",
+        "heute Regnet es."
+      ],
+      "info": "Groß anfangen und mit einem Punkt aufhören.",
+      "img": "🌧️✅"
+    },
+    {
+      "id": "018",
+      "q": "Welcher Satz ist richtig geschrieben?",
+      "a": "Hast du Hunger?",
+      "choices": [
+        "hast du Hunger?",
+        "Hast du Hunger.",
+        "Hast du hunger?"
+      ],
+      "info": "Groß anfangen, Nomen wie „Hunger“ groß schreiben und mit Fragezeichen enden.",
+      "img": "🍕❓"
+    },
+    {
+      "id": "019",
+      "q": "Welcher Satz ist richtig geschrieben?",
+      "a": "Komm schnell her!",
+      "choices": [
+        "komm schnell her!",
+        "Komm schnell her?",
+        "Komm Schnell her!"
+      ],
+      "info": "Eine Aufforderung beginnt groß und bekommt hier ein Ausrufezeichen.",
+      "img": "🏃❗"
+    },
+    {
+      "id": "020",
+      "q": "Wie viele Sätze sind das? „Ich spiele. Du liest. Er malt.“",
+      "a": "3",
+      "choices": [
+        "1",
+        "2",
+        "6"
+      ],
+      "info": "Zähle die Punkte: 3 Punkte, also 3 Sätze.",
+      "img": "⚫⚫⚫"
+    },
+    {
+      "id": "021",
+      "q": "Wo endet der erste Satz? „Tim lacht er hat Spaß“",
+      "a": "nach „lacht“",
+      "choices": [
+        "nach „Tim“",
+        "nach „er“",
+        "nach „hat“"
+      ],
+      "info": "Richtig ist: „Tim lacht. Er hat Spaß.“",
+      "img": "😂⚫"
+    },
+    {
+      "id": "022",
+      "q": "Wo fehlt das Komma? „Ich mag Äpfel Birnen und Bananen.“",
+      "a": "nach „Äpfel“",
+      "choices": [
+        "nach „Birnen“",
+        "nach „mag“",
+        "nach „und“"
+      ],
+      "info": "Richtig: „Ich mag Äpfel, Birnen und Bananen.“ Vor „und“ steht hier kein Komma.",
+      "img": "🍎🍐🍌"
+    },
+    {
+      "id": "023",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Wir brauchen Mehl, Eier und Milch.",
+      "choices": [
+        "Wir brauchen Mehl, Eier, und Milch.",
+        "Wir brauchen, Mehl, Eier und Milch.",
+        "Wir brauchen Mehl Eier und Milch."
+      ],
+      "info": "Komma zwischen den Dingen der Aufzählung, aber nicht vor dem „und“.",
+      "img": "🥚🥛"
+    },
+    {
+      "id": "024",
+      "q": "Steht in einer Aufzählung ein Komma vor dem „und“?",
+      "a": "Nein",
+      "choices": [
+        "Ja, immer",
+        "Ja, aber nur am Satzende",
+        "Ja, bei mehr als drei Dingen"
+      ],
+      "info": "Bei einer Aufzählung ersetzt das „und“ das letzte Komma: Hund, Katze und Maus.",
+      "img": "🐶🐱🐭"
+    },
+    {
+      "id": "025",
+      "q": "Wie viele Kommas fehlen? „Rot Gelb Grün und Blau sind Farben.“",
+      "a": "2",
+      "choices": [
+        "1",
+        "3",
+        "0"
+      ],
+      "info": "Richtig: „Rot, Gelb, Grün und Blau sind Farben.“",
+      "img": "🎨🌈"
+    },
+    {
+      "id": "026",
+      "q": "Wie viele Kommas fehlen? „Im Zoo gibt es Affen Löwen Bären und Zebras.“",
+      "a": "2",
+      "choices": [
+        "1",
+        "3",
+        "4"
+      ],
+      "info": "Richtig: „Im Zoo gibt es Affen, Löwen, Bären und Zebras.“",
+      "img": "🐒🦁"
+    },
+    {
+      "id": "027",
+      "q": "Wie heißen die Zeichen „ und “?",
+      "a": "Anführungszeichen",
+      "choices": [
+        "Ausrufezeichen",
+        "Fragezeichen",
+        "Kommas"
+      ],
+      "info": "Unten geht es los, oben hört es auf: „So!“ Sie rahmen die wörtliche Rede ein.",
+      "img": "💬🗣️"
+    },
+    {
+      "id": "028",
+      "q": "Was steht in Anführungszeichen?",
+      "a": "das, was jemand wörtlich sagt",
+      "choices": [
+        "jedes Nomen",
+        "das erste Wort eines Satzes",
+        "alle Verben"
+      ],
+      "info": "Wörtliche Rede: genau die Worte, die jemand sagt, wie in einer Sprechblase.",
+      "img": "💬😮"
+    },
+    {
+      "id": "029",
+      "q": "Welcher Satz ist richtig?",
+      "a": "Mia sagt: „Ich bin müde.“",
+      "choices": [
+        "Mia sagt „Ich bin müde.“",
+        "Mia sagt: Ich bin müde.",
+        "Mia sagt: „ich bin müde.“"
+      ],
+      "info": "Doppelpunkt, Anführungszeichen unten, großer Anfang, Anführungszeichen oben.",
+      "img": "😴💬"
+    },
+    {
+      "id": "030",
+      "q": "Welches Zeichen steht nach dem Begleitsatz vorne, z. B. „Ben ruft_“?",
+      "a": "Doppelpunkt",
+      "choices": [
+        "Komma",
+        "Punkt",
+        "Fragezeichen"
+      ],
+      "info": "Steht der Begleitsatz vorne, folgt ein Doppelpunkt: Ben ruft: „Hallo!“",
+      "img": "📣➡️"
+    },
+    {
+      "id": "031",
+      "q": "Welches Zeichen fehlt? Ben fragt: „Spielst du mit_“",
+      "a": "?",
+      "choices": [
+        ".",
+        "!",
+        ","
+      ],
+      "info": "Ben fragt etwas. Also steht ein Fragezeichen vor dem Anführungszeichen oben.",
+      "img": "⚽❓"
+    },
+    {
+      "id": "032",
+      "q": "Was ist der Begleitsatz? Oma ruft: „Das Essen ist fertig!“",
+      "a": "Oma ruft",
+      "choices": [
+        "Das Essen ist fertig",
+        "fertig",
+        "Das Essen"
+      ],
+      "info": "Der Begleitsatz sagt, wer spricht. Das Gesprochene steht in Anführungszeichen.",
+      "img": "👵🍲"
+    },
+    {
+      "id": "033",
+      "q": "Was schreibt man nach einem Punkt groß?",
+      "a": "das erste Wort des neuen Satzes",
+      "choices": [
+        "nur die Verben",
+        "nur das letzte Wort",
+        "gar nichts"
+      ],
+      "info": "Nach dem Punkt beginnt ein neuer Satz. Sein erstes Wort wird großgeschrieben.",
+      "img": "⚫🔠"
+    }
+  ]
+}

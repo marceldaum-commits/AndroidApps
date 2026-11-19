@@ -8,6 +8,9 @@ const dir = new URL('../webapp/', import.meta.url);
 const C = require(new URL('content.js', dir).pathname);
 globalThis.window = globalThis; // audio.js erwartet window
 const A = require(new URL('audio.js', dir).pathname);
+const P = require(new URL('pakete.js', dir).pathname);
+const PIDX = JSON.parse(readFileSync(new URL('pakete/index.json', dir), 'utf8'));
+const PACKS = PIDX.pakete.map((m) => Object.assign(JSON.parse(readFileSync(new URL('pakete/' + m.id + '.json', dir), 'utf8')), { lang: m.sprache }));
 
 const playable = C.worlds.flatMap((w) => (w.episodes || []).filter((e) => !e.soon));
 
@@ -125,7 +128,7 @@ test('Jeder feste Satz ist vorab vertont (normal und langsam) und die Dateien gi
   const idx = JSON.parse(readFileSync(new URL('audio/index.json', dir), 'utf8')).saetze;
   const norm = (t) => t.normalize('NFC').replace(/\s+/g, ' ').trim();
   const fehlt = [];
-  for (const s of C.allSpeech()) {
+  for (const s of C.allSpeech().concat(P.speech(PACKS))) {
     const e = idx[s.who + '|' + norm(s.text)];
     if (!e) { fehlt.push(s.who + '|' + s.text); continue; }
     for (const f of [e.n, e.s]) assert.ok(existsSync(new URL('audio/piper/' + f, dir)), f);
@@ -138,4 +141,43 @@ test('Nova ist vorbereitet, aber nicht freigeschaltet (erst nach Marcels Go)', (
   const t = JSON.parse(readFileSync(new URL('vorlesen/texte.json', dir), 'utf8'));
   assert.equal(t.app, 'quasselquest');
   assert.ok(t.texte.length >= 100 && t.texte.every((x) => x.sprache === 'en' && /^[0-9a-f]{32}$/.test(x.nova)));
+});
+
+test('Pakete: alle 5 Sprachen vorhanden, jede Karte hat Frage, Antwort und Merkbild', () => {
+  assert.deepEqual([...new Set(PIDX.pakete.map((p) => p.sprache))].sort(), ['de', 'en', 'es', 'fr', 'la']);
+  for (const p of PACKS) for (const c of p.cards) { assert.ok(c.q && c.a, p.id + '/' + c.id); assert.ok(c.img, p.id + '/' + c.id + ' ohne Merkbild'); }
+  // Deutsch nur Sprach-Teil: keine Stilmittel/Literatur
+  assert.ok(!PIDX.pakete.some((p) => /stilmittel|literatur|epoche/.test(p.id)));
+});
+
+test('Pakete: falsche Antworten enthalten nie die richtige; genug Auswahl für jede Karte', () => {
+  for (const p of PACKS) for (const c of p.cards) {
+    const w = P.wrongs(c, p, 3);
+    assert.ok(w.length >= 2, p.id + '/' + c.id);
+    assert.ok(!w.includes(c.a), p.id + '/' + c.id);
+    const k = P.classify(c, p.lang);
+    if (P.modes(c, p.lang).includes('hoeren')) { const wd = P.wrongs(c, p, 3, 'de'); assert.ok(wd.length >= 2 && !wd.includes(k.de), p.id + '/' + c.id); }
+  }
+});
+
+test('Buchstaben-Bau ergibt genau die Antwort', () => {
+  let n = 0;
+  for (const p of PACKS) for (const c of p.cards) {
+    const t = P.bauteile(c, p.lang); if (!t) continue; n++;
+    assert.equal(t.vor + t.wort, c.a.trim(), p.id + '/' + c.id);
+    assert.ok(t.wort.length <= 10);
+  }
+  assert.ok(n >= 150, 'genug Karten zum Bauen: ' + n);
+});
+
+test('Wiederholung: richtig → längerer Abstand, falsch → morgen wieder; fällige Karten zuerst', () => {
+  const store = {}; const p = PACKS[0]; const c = p.cards[0]; const day = 1000;
+  assert.equal(P.note(store, p, c, true, day).d, day + 1);
+  assert.equal(P.note(store, p, c, true, day + 1).d, day + 1 + 2);
+  assert.equal(P.note(store, p, c, true, day + 3).d, day + 3 + 4);
+  assert.equal(P.note(store, p, c, false, day + 7).b, 1);
+  assert.equal(store[P.key(p, c)].d, day + 8);
+  const pick = P.pick(store, p, 8, 5, day + 8);
+  assert.equal(pick[0], c, 'fällige Karte kommt zuerst');
+  assert.equal(pick.length, 6, '1 fällige + höchstens 5 neue');
 });

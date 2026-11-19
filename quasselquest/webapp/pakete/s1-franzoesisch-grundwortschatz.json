@@ -1,0 +1,432 @@
+{
+  "id": "s1-franzoesisch-grundwortschatz",
+  "version": 4,
+  "title": "Französisch Grundwortschatz",
+  "subject": "franzoesisch",
+  "grades": [
+    6,
+    7,
+    8
+  ],
+  "emoji": "🥖",
+  "tier": "free",
+  "description": "Wichtige französische Wörter mit Artikel (le, la, l', les): Deutsch → Französisch.",
+  "intro": [
+    {
+      "img": "👛🍽️",
+      "text": "Wusstest du, dass du schon Französisch kannst? Portemonnaie, Restaurant, Garage – all diese Wörter kommen aus dem Französischen!"
+    },
+    {
+      "img": "🏠🔄",
+      "text": "Im Französischen gibt es nur zwei Geschlechter: männlich (le) und weiblich (la). Und die stimmen oft nicht mit dem Deutschen überein: das Haus = la maison."
+    },
+    {
+      "img": "📌✏️",
+      "text": "Lerntrick: Lern jedes Nomen immer mit Artikel – also nicht „maison“, sondern „la maison“. Dann musst du später nie raten."
+    },
+    {
+      "img": "👂🌊",
+      "text": "Achte auf ähnliche Wörter: la mère (die Mutter) und la mer (das Meer) klingen gleich! Ein Bild im Kopf hilft: Mama am Meer."
+    },
+    {
+      "img": "🥐🚀",
+      "text": "Allez, on y va! Los geht’s mit deinen ersten französischen Wörtern."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „das Haus“ auf Französisch?",
+      "a": "la maison",
+      "choices": [
+        "le maison",
+        "la mairie",
+        "le magasin"
+      ],
+      "img": "🏠"
+    },
+    {
+      "id": "002",
+      "q": "Was heißt „der Vater“ auf Französisch?",
+      "a": "le père",
+      "choices": [
+        "la père",
+        "le pére",
+        "le mère"
+      ],
+      "img": "👨"
+    },
+    {
+      "id": "003",
+      "q": "Was heißt „die Mutter“ auf Französisch?",
+      "a": "la mère",
+      "choices": [
+        "la mer",
+        "le mère",
+        "la maire"
+      ],
+      "info": "la mer = das Meer",
+      "img": "👩"
+    },
+    {
+      "id": "004",
+      "q": "Was heißt „der Bruder“ auf Französisch?",
+      "a": "le frère",
+      "choices": [
+        "la frère",
+        "le frére",
+        "la sœur"
+      ],
+      "img": "👦"
+    },
+    {
+      "id": "005",
+      "q": "Was heißt „die Schwester“ auf Französisch?",
+      "a": "la sœur",
+      "choices": [
+        "le sœur",
+        "la soeure",
+        "la fille"
+      ],
+      "img": "👧"
+    },
+    {
+      "id": "006",
+      "q": "Was heißt „die Schule“ auf Französisch?",
+      "a": "l'école",
+      "choices": [
+        "la école",
+        "le école",
+        "l'écolle"
+      ],
+      "info": "école ist weiblich; vor Vokal wird la zu l'.",
+      "img": "🏫✏️"
+    },
+    {
+      "id": "007",
+      "q": "Was heißt „das Buch“ auf Französisch?",
+      "a": "le livre",
+      "choices": [
+        "la livre",
+        "le libre",
+        "le lièvre"
+      ],
+      "info": "la livre = das Pfund, le lièvre = der Hase",
+      "img": "📕"
+    },
+    {
+      "id": "008",
+      "q": "Was heißt „der Hund“ auf Französisch?",
+      "a": "le chien",
+      "choices": [
+        "la chien",
+        "le chat",
+        "le chient"
+      ],
+      "img": "🐶"
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „die Katze“ auf Französisch?",
+      "a": "le chat",
+      "choices": [
+        "la chat",
+        "le chien",
+        "le chapeau"
+      ],
+      "img": "🐱"
+    },
+    {
+      "id": "010",
+      "q": "Was heißt „das Brot“ auf Französisch?",
+      "a": "le pain",
+      "choices": [
+        "la pain",
+        "le pin",
+        "le pied"
+      ],
+      "img": "🥖"
+    },
+    {
+      "id": "011",
+      "q": "Was heißt „der Käse“ auf Französisch?",
+      "a": "le fromage",
+      "choices": [
+        "la fromage",
+        "le fromache",
+        "le fraise"
+      ],
+      "img": "🧀"
+    },
+    {
+      "id": "012",
+      "q": "Was heißt „das Wasser“ auf Französisch?",
+      "a": "l'eau",
+      "choices": [
+        "le eau",
+        "la eau",
+        "l'au"
+      ],
+      "info": "eau ist weiblich: l'eau (f).",
+      "img": "🚰"
+    },
+    {
+      "id": "013",
+      "q": "Was heißt „der Apfel“ auf Französisch?",
+      "a": "la pomme",
+      "choices": [
+        "le pomme",
+        "la poire",
+        "la pome"
+      ],
+      "img": "🍏"
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „die Stadt“ auf Französisch?",
+      "a": "la ville",
+      "choices": [
+        "le ville",
+        "la vie",
+        "la vile"
+      ],
+      "img": "🏙️"
+    },
+    {
+      "id": "015",
+      "q": "Was heißt „der Baum“ auf Französisch?",
+      "a": "l'arbre",
+      "choices": [
+        "la arbre",
+        "le arbre",
+        "l'arbe"
+      ],
+      "info": "arbre ist männlich: l'arbre (m).",
+      "img": "🌳"
+    },
+    {
+      "id": "016",
+      "q": "Was heißt „das Auto“ auf Französisch?",
+      "a": "la voiture",
+      "choices": [
+        "le voiture",
+        "le vélo",
+        "la vitre"
+      ],
+      "img": "🚗"
+    },
+    {
+      "id": "017",
+      "q": "Was heißt „das Fahrrad“ auf Französisch?",
+      "a": "le vélo (la bicyclette)",
+      "choices": [
+        "la vélo",
+        "le velo",
+        "la voiture"
+      ],
+      "img": "🚲"
+    },
+    {
+      "id": "018",
+      "q": "Was heißt „das Schlafzimmer“ auf Französisch?",
+      "a": "la chambre",
+      "choices": [
+        "le chambre",
+        "la cuisine",
+        "la chamber"
+      ],
+      "img": "🛏️🧸"
+    },
+    {
+      "id": "019",
+      "q": "Was heißt „die Küche“ auf Französisch?",
+      "a": "la cuisine",
+      "choices": [
+        "le cuisine",
+        "la cousine",
+        "la chambre"
+      ],
+      "info": "la cousine = die Cousine",
+      "img": "🍳"
+    },
+    {
+      "id": "020",
+      "q": "Was heißt „der Tisch“ auf Französisch?",
+      "a": "la table",
+      "choices": [
+        "le table",
+        "la tableau",
+        "la tabel"
+      ],
+      "img": "🍽️"
+    },
+    {
+      "id": "021",
+      "q": "Was heißt „das Fenster“ auf Französisch?",
+      "a": "la fenêtre",
+      "choices": [
+        "le fenêtre",
+        "la fenètre",
+        "la porte"
+      ],
+      "img": "🖼️☀️"
+    },
+    {
+      "id": "022",
+      "q": "Was heißt „die Tür“ auf Französisch?",
+      "a": "la porte",
+      "choices": [
+        "le porte",
+        "la port",
+        "la fenêtre"
+      ],
+      "img": "🚪🔑"
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „der Tag“ auf Französisch?",
+      "a": "le jour",
+      "choices": [
+        "la jour",
+        "le journal",
+        "la nuit"
+      ],
+      "img": "🌅"
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „die Nacht“ auf Französisch?",
+      "a": "la nuit",
+      "choices": [
+        "le nuit",
+        "la nuite",
+        "le jour"
+      ],
+      "img": "🌃"
+    },
+    {
+      "id": "025",
+      "q": "Was heißt „die Woche“ auf Französisch?",
+      "a": "la semaine",
+      "choices": [
+        "le semaine",
+        "la semène",
+        "le week-end"
+      ],
+      "img": "📆7️⃣"
+    },
+    {
+      "id": "026",
+      "q": "Was heißt „das Meer“ auf Französisch?",
+      "a": "la mer",
+      "choices": [
+        "la mère",
+        "le mer",
+        "la mare"
+      ],
+      "info": "la mère = die Mutter, la mare = der Teich",
+      "img": "🌊"
+    },
+    {
+      "id": "027",
+      "q": "Was heißt „die Sonne“ auf Französisch?",
+      "a": "le soleil",
+      "choices": [
+        "la soleil",
+        "le sol",
+        "le soleille"
+      ],
+      "img": "☀️"
+    },
+    {
+      "id": "028",
+      "q": "Was heißt „der Mond“ auf Französisch?",
+      "a": "la lune",
+      "choices": [
+        "le lune",
+        "la lumière",
+        "la lunne"
+      ],
+      "img": "🌙"
+    },
+    {
+      "id": "029",
+      "q": "Was heißt „die Hausaufgaben“ auf Französisch?",
+      "a": "les devoirs",
+      "choices": [
+        "les devoir",
+        "la devoirs",
+        "les travails"
+      ],
+      "img": "📝📚"
+    },
+    {
+      "id": "030",
+      "q": "Was heißt „der Bahnhof“ auf Französisch?",
+      "a": "la gare",
+      "choices": [
+        "le gare",
+        "la guerre",
+        "le garage"
+      ],
+      "info": "la guerre = der Krieg",
+      "img": "🚉🚂"
+    },
+    {
+      "id": "031",
+      "q": "Was heißt „das Geld“ auf Französisch?",
+      "a": "l'argent",
+      "choices": [
+        "la argent",
+        "le argent",
+        "l'argant"
+      ],
+      "info": "argent ist männlich: l'argent (m).",
+      "img": "💶"
+    },
+    {
+      "id": "032",
+      "q": "Was heißt „das Heft“ auf Französisch?",
+      "a": "le cahier",
+      "choices": [
+        "la cahier",
+        "le cahié",
+        "le cayer"
+      ],
+      "img": "📓"
+    },
+    {
+      "id": "033",
+      "q": "Was heißt „der Garten“ auf Französisch?",
+      "a": "le jardin",
+      "choices": [
+        "la jardin",
+        "le gardin",
+        "le jardain"
+      ],
+      "img": "🌻🏡"
+    },
+    {
+      "id": "034",
+      "q": "Was heißt „die Blume“ auf Französisch?",
+      "a": "la fleur",
+      "choices": [
+        "le fleur",
+        "la flor",
+        "la fleure"
+      ],
+      "img": "🌸"
+    },
+    {
+      "id": "035",
+      "q": "Was heißt „das Kind“ auf Französisch?",
+      "a": "l'enfant",
+      "choices": [
+        "la enfant",
+        "l'enfent",
+        "l'infant"
+      ],
+      "img": "🧒"
+    }
+  ]
+}

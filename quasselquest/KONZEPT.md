@@ -1,4 +1,15 @@
-# Konzept: Englisch-App „sprechen, hören, spielen“ (Klasse 3–6)
+# Konzept: Quasselquest – Sprachen mit Ruby (Klasse 3–13)
+
+> **Neues Profil (Entscheidung Marcel, 19.11.2026):** Quasselquest wird DIE Sprach-App bis Klasse 13 – Englisch, Deutsch (nur Sprach-Teil:
+> Rechtschreibung, Grammatik, Wortschatz), Französisch, Spanisch, Latein, mit Sprach-Umschalter. Vokabellernen gehört jetzt hierher; die Sprachpakete
+> ziehen aus dem Wissensgarten um (Literatur, Epochen, Stilmittel bleiben dort). **Pro je Sprache 7,99 €, alle Sprachen 19,99 €**; kostenlos je Sprache:
+> erste Welt, erste Episode jeder Welt, alle Spielarten, Grundwortschatz. Nachhilfe-Hinweis (Elternbereich) bei allen Sprachen. Sicherung und Kopplung immer frei.
+> Kaufschutz: Wer Wissensgarten Plus wegen Sprachpaketen gekauft hat, bekommt die passende Quasselquest-Sprache gratis.
+> Umsetzung ab 0.2.0: Sprach-Umschalter, 19 Pakete als Spiele (Ballon-Jagd, Hör-Detektiv, Buchstaben-Bau, Memory) mit Wiederholung in wachsenden Abständen.
+> Pro je Sprache: Sprach-Byte im signierten Code (1 Englisch, 2 Deutsch, 3 Französisch, 4 Latein, 5 Spanisch, 9 alle) – mit dem Leitstand abzustimmen.
+> Die Abschnitte unten beschreiben weiter den Englisch-Teil (Welten, Episoden); für die anderen Sprachen folgen Welten nach demselben Muster.
+
+## Ursprüngliches Konzept: Englisch „sprechen, hören, spielen“ (Klasse 3–6)
 
 Stand: 19.11.2026 · Entwurf zur Entscheidung durch Marcel (Abgabe bis Mo 23.11.2026, 11 Uhr) · eingearbeitet: Recherche „Sprachlern App gegen Duolingo“ und RATGEBER.md von „Geld verdienen“
 Arbeitsordner: `quasselquest/` – wird nach der Namensentscheidung in `<name>/` umbenannt, Branches `<name>-test` → `<name>-live`.
@@ -159,7 +170,7 @@ mehrere Figuren = mehrere Stimmen, britisches Englisch als Standard, weil die me
 - **Kinderbereich (UWG Anhang Nr. 28):** keine Preise, keine Kaufknöpfe, kein „Frag deine Eltern“. Gesperrte Episoden zeigen nur ein 🔒 und
   „Dieser Ort ist noch zu“ – Antippen öffnet das Eltern-Tor, nicht den Shop. Preise, Pro und Nachhilfe-Hinweis (Englisch) stehen nur hinter dem Eltern-Tor.
 
-## 8. Abgrenzung zum Wissensgarten
+## 8. Abgrenzung zum Wissensgarten (bis 19.11.2026 – durch das neue Profil überholt: Sprachen samt Vokabeln jetzt in Quasselquest)
 
 | | Wissensgarten | Neue App |
 |---|---|---|
