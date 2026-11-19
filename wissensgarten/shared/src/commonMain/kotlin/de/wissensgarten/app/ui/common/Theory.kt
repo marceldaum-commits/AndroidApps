@@ -25,7 +25,9 @@ import de.wissensgarten.app.ui.fx.Locale
 import de.wissensgarten.core.model.IntroScene
 
 /** Theorie zu einem Beet: Titel + Brummis Erklär-Szenen des Pakets (verrät nie die Antwort der aktuellen Karte). */
-data class Theory(val title: String, val scenes: List<IntroScene>)
+data class Theory(val title: String, val scenes: List<IntroScene>,
+                  /** Abgestimmte Links zu unseren anderen Lern-Apps (Üben, Tempo, Erleben, Ausprobieren) */
+                  val links: List<de.wissensgarten.core.model.Querverweise.Link> = emptyList())
 
 /** Liefert die Theorie zu einem Beet (bedId) – oder null bei eigenen Beeten ohne Erklärung. */
 val LocalTheory = staticCompositionLocalOf<(String) -> Theory?> { { null } }
@@ -77,6 +79,26 @@ fun TheorySheet(theory: Theory, onClose: () -> Unit) {
                             Spacer(Modifier.width(12.dp))
                             Text(scene.text, style = MaterialTheme.typography.bodyLarge, color = Color(0xFF3B3A30))
                         }
+                    }
+                }
+            }
+            if (theory.links.isNotEmpty()) item {
+                val uri = androidx.compose.ui.platform.LocalUriHandler.current
+                var shown by remember { mutableStateOf(false) }
+                LaunchedEffect(Unit) { kotlinx.coroutines.delay(120L * theory.scenes.size + 200); shown = true }
+                AnimatedVisibility(shown, enter = fadeIn(tween(300)) + slideInVertically(tween(300)) { it / 3 }) {
+                    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                        Text("Hier geht's weiter", style = MaterialTheme.typography.titleSmall, fontWeight = FontWeight.Bold)
+                        theory.links.forEach { l ->
+                            OutlinedButton(onClick = { voice?.stop(); runCatching { uri.openUri(l.url) } }, modifier = Modifier.fillMaxWidth()
+                                .semantics { contentDescription = l.text }) {
+                                Text(l.emoji, fontSize = 20.sp)
+                                Spacer(Modifier.width(8.dp))
+                                Text(l.text, modifier = Modifier.weight(1f))
+                            }
+                        }
+                        Text("Brummi bleibt hier – merken und wiederholen geht im Wissensgarten weiter.",
+                            style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
             }

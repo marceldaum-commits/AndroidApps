@@ -9,6 +9,28 @@
 
 
 
+## 2.2.18 – Großes Inhaltsupdate „Aufräum-Tag“ (19.11.2026, einen Tag vor dem Termin Fr 20.11.)
+- **Abgleich umgesetzt (Wochenrunde 18.11., von Marcel bestätigt):**
+  - `s1-mathe-gleichungen` v2: Die Rechenaufgaben ohne Rechenweg (001–004, 009–016, 024–026, 031–035) sind zu Merkwissen umgeschrieben: Regel bzw. Verfahren als Frage, im `info` ein vollständig durchgerechnetes Beispiel mit allen Umformungsschritten (`| − 3 → …`) und Probe. Alle 35 übrigen Karten wurden ebenfalls vervollständigt; neue Karte 036 „Textaufgabe: erster Schritt“ (4-Schritte-Verfahren). Die Erklär-Szenen enthalten jetzt die Lösungs-Reihenfolge und die Schreibweise mit Umformungsstrich. 36 Karten.
+  - `s1-mathe-kopfrechnen` v3: Die Tempo-Aufgaben (005–011, 026–030, 032, 033, 035, 036) sind zu „Welcher Trick hilft …?“ mit Begründung (Rechengesetz) und vollständigem Beispiel umgeschrieben. Die Teilbarkeits-Karten 012, 018, 019, 021 und 031 begründen jetzt auch, warum die falschen Antworten falsch sind. 36 Karten.
+  - Umgeschrieben statt gelöscht: Karten-IDs bleiben, der Lernfortschritt bleibt erhalten (`syncPacks` gleicht über `sourceId` ab).
+- **Geprüft:**
+  - Jede Rechnung in beiden Paketen wurde von Hand nachgerechnet, mit Probe.
+  - Die falschen Antworten sind so gewählt, dass sie wirklich falsch sind. Wo es zwei richtige Wege gibt (2(x + 3) = 16), nennt die Antwort beide.
+  - `AntwortKontrolleTest`, `PackValidationTest` und `DifficultyTest` sind grün. `VorlesenListeTest` ist neu gelaufen (Nova-Liste aktualisiert).
+- **Querverweise („Hier geht's weiter“ im Theorie-Blatt):**
+  - Die Knöpfe erscheinen unter Brummis Erklärung, nur für die abgestimmten Pakete (Liste in `core/model/.../Querverweise.kt`, Test `QuerverweiseTest`).
+  - Ziele: Mathe-Trainer `#/u/<id>` (Plus Analysis `#/g/analysis`), Rechenblitz `?thema=&stufe=&modus=training`, KurvenFlug `#kapitel=` (geraden, terme, weg-zeit), Experimentopia `#thema=` (12 Pakete), Raumlicht `?ziel=galton` (Wahrscheinlichkeit).
+  - Alle Links tragen `src=wissensgarten-theorie` (unser Vorschlag, bitte bestätigen oder Wortlaut nennen).
+  - Auf der Test-Stufe gehen die Links auf `<app>-test.` bzw. `trainer-test.`.
+  - Offen: die Rechenblitz-Kennung für Quadratzahlen (bis zur Antwort geht der Link zur Startseite) und die Bestätigung von Raumlicht für `galton`. Beide Fragen sind über die AppZentrale gestellt.
+- **Deeplink `#paket=<ID>`** (Web): `https://wissensgarten.mathenachhilfe-online.com/#paket=<Paket-ID>`.
+  - Ist das Paket schon im Garten, öffnet sich das Beet. Sonst wird es gepflanzt und geöffnet, mit einem Hinweis von Brummi.
+  - Ein Plus-Paket ohne Plus führt zur Paketübersicht.
+  - Der Hash wird danach aus der Adresse entfernt. Auch `hashchange` bei geöffneter App wirkt.
+  - Vor dem ersten Einrichten wartet der Link, bis das Kind angelegt ist.
+- **Rechengeschichten Klasse 1–4** sind noch nicht drin und folgen in einem der nächsten Updates.
+
 ## 2.2.17 – „← Alle Apps“ (18.11.2026)
 - **Ort:** schmale Leiste ganz oben in allen Hauptansichten (Garten = Startbildschirm, Samen, Laden, Familie, Mehr): App-Logo + „← Alle Apps“, Tippziel ≥ 44 px, kein Preis und kein Kaufhinweis. In Runden, Spielen, Onboarding und Dialogen erscheint die Leiste nicht.
 - **Ziel:** `https://www.mathenachhilfe-online.com/lern-apps/?src=wissensgarten-kopf`, auf der Test-Stufe `staging.`. Im Browser im selben Tab; aus der installierten Home-Bildschirm-App per `window.open` im normalen Browser.

@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-kopfrechnen",
-  "version": 2,
+  "version": 3,
   "title": "Kopfrechnen-Tricks",
   "subject": "mathe",
   "grades": [
@@ -9,7 +9,7 @@
   ],
   "emoji": "🧠",
   "tier": "free",
-  "description": "Rechengesetze, Teilbarkeitsregeln, Quadratzahlen, Primzahlen und clevere Tricks fürs schnelle Kopfrechnen.",
+  "description": "Rechengesetze, Teilbarkeitsregeln, Primzahlen, Quadratzahlen und clevere Kopfrechen-Tricks – jeder Trick mit Begründung und durchgerechnetem Beispiel. Tempo trainierst du im Rechenblitz.",
   "intro": [
     {
       "img": "🧠⚡",
@@ -29,7 +29,7 @@
     },
     {
       "img": "🚀🏆",
-      "text": "Los geht's! Probier die Tricks aus und werde zum Kopfrechen-Profi!"
+      "text": "Los geht's! Merk dir die Tricks und ihre Begründung. Tempo trainierst du danach im Rechenblitz."
     }
   ],
   "cards": [
@@ -42,7 +42,7 @@
         "Distributivgesetz",
         "Potenzgesetz"
       ],
-      "info": "Kommutativ = Vertauschungsgesetz: Bei Plus und Mal darfst du die Zahlen tauschen.",
+      "info": "Kommutativgesetz = Vertauschungsgesetz: Bei Plus und Mal darfst du die Zahlen tauschen. Beispiel: 3 + 8 = 8 + 3 = 11 und 4 · 7 = 7 · 4 = 28. Bei Minus und Geteilt gilt es nicht.",
       "img": "🔄"
     },
     {
@@ -54,7 +54,7 @@
         "Distributivgesetz",
         "Potenzgesetz"
       ],
-      "info": "Assoziativ = Verbindungsgesetz: Bei Plus und Mal darfst du die Klammern beliebig setzen.",
+      "info": "Assoziativgesetz = Verbindungsgesetz: Bei Plus und Mal darfst du die Klammern beliebig setzen. Beispiel: (17 + 5) + 15 = 22 + 15 = 37 und 17 + (5 + 15) = 17 + 20 = 37.",
       "img": "🤝"
     },
     {
@@ -66,7 +66,7 @@
         "Assoziativgesetz",
         "Potenzgesetz"
       ],
-      "info": "Distributiv = Verteilungsgesetz: Der Faktor wird an jeden Summanden in der Klammer verteilt.",
+      "info": "Distributivgesetz = Verteilungsgesetz: Der Faktor wird an jeden Summanden in der Klammer verteilt. Beispiel: 6 · (10 + 3) = 6 · 10 + 6 · 3 = 60 + 18 = 78.",
       "img": "🍬👫"
     },
     {
@@ -83,86 +83,86 @@
     },
     {
       "id": "005",
-      "q": "Rechne geschickt: 25 + 47 + 75",
-      "a": "147",
+      "q": "Welcher Trick macht 25 + 47 + 75 leicht?",
+      "a": "Erst 25 + 75 rechnen, das ergibt 100",
       "choices": [
-        "137",
-        "157",
-        "146"
+        "Erst 47 + 75 rechnen",
+        "Alle drei Zahlen voneinander abziehen",
+        "Erst 25 + 47 rechnen und dann 75 abziehen"
       ],
-      "info": "Erst 25 + 75 = 100, dann 100 + 47 = 147.",
+      "info": "Vertauschungs- und Verbindungsgesetz: 25 + 47 + 75 = (25 + 75) + 47 = 100 + 47 = 147. Zahlen, die zusammen 100 ergeben, rechnet man zuerst.",
       "img": "💯"
     },
     {
       "id": "006",
-      "q": "Rechne geschickt: 4 · 17 · 25",
-      "a": "1 700",
+      "q": "Welcher Trick macht 4 · 17 · 25 leicht?",
+      "a": "Erst 4 · 25 rechnen, das ergibt 100",
       "choices": [
-        "1 600",
-        "1 725",
-        "170"
+        "Erst 17 · 25 rechnen",
+        "Alle drei Zahlen addieren",
+        "4 und 25 einfach weglassen"
       ],
-      "info": "Erst 4 · 25 = 100, dann 100 · 17 = 1 700.",
+      "info": "Vertauschungs- und Verbindungsgesetz beim Malnehmen: 4 · 17 · 25 = 17 · (4 · 25) = 17 · 100 = 1 700.",
       "img": "🧮"
     },
     {
       "id": "007",
-      "q": "Rechne geschickt: 7 · 102",
-      "a": "714",
+      "q": "Welcher Trick hilft bei 7 · 102?",
+      "a": "Zerlegen: 7 · 100 + 7 · 2",
       "choices": [
-        "704",
-        "724",
-        "7 014"
+        "7 · 100 + 2",
+        "7 · 10 + 7 · 2",
+        "7 + 102"
       ],
-      "info": "Verteilen: 7 · 100 + 7 · 2 = 700 + 14 = 714.",
+      "info": "Verteilungsgesetz: 7 · 102 = 7 · (100 + 2) = 7 · 100 + 7 · 2 = 700 + 14 = 714. Häufiger Fehler: 7 · 100 + 2 = 702 – die 2 muss auch mit 7 malgenommen werden.",
       "img": "✂️"
     },
     {
       "id": "008",
-      "q": "Rechne geschickt: 8 · 99",
-      "a": "792",
+      "q": "Welcher Trick hilft bei 8 · 99?",
+      "a": "8 · 100 − 8 · 1",
       "choices": [
-        "782",
-        "800",
-        "798"
+        "8 · 100 − 1",
+        "8 · 90 + 9",
+        "8 · 100 + 8"
       ],
-      "info": "8 · 100 − 8 · 1 = 800 − 8 = 792.",
+      "info": "99 = 100 − 1. Verteilungsgesetz: 8 · 99 = 8 · (100 − 1) = 800 − 8 = 792. Häufiger Fehler: 800 − 1 = 799.",
       "img": "🎯"
     },
     {
       "id": "009",
-      "q": "Rechne geschickt: 13 · 7 + 13 · 3",
-      "a": "130",
+      "q": "Welcher Trick hilft bei 13 · 7 + 13 · 3?",
+      "a": "13 ausklammern: 13 · (7 + 3)",
       "choices": [
-        "120",
-        "140",
-        "113"
+        "7 und 3 ausklammern",
+        "13 · 7 · 3 rechnen",
+        "Alle Zahlen addieren"
       ],
-      "info": "13 ausklammern: 13 · (7 + 3) = 13 · 10 = 130.",
+      "info": "Verteilungsgesetz rückwärts (Ausklammern): 13 · 7 + 13 · 3 = 13 · (7 + 3) = 13 · 10 = 130.",
       "img": "📦"
     },
     {
       "id": "010",
-      "q": "Rechne geschickt: 298 + 156",
-      "a": "454",
+      "q": "Welcher Trick hilft bei 298 + 156?",
+      "a": "Mit 300 rechnen und danach 2 abziehen",
       "choices": [
-        "444",
-        "456",
-        "464"
+        "Mit 300 rechnen und danach 2 addieren",
+        "Mit 200 rechnen und danach 98 abziehen",
+        "156 auf 200 runden und fertig"
       ],
-      "info": "298 ist fast 300: 300 + 156 = 456, dann 2 abziehen = 454.",
+      "info": "298 ist um 2 kleiner als 300. Also: 298 + 156 = 300 + 156 − 2 = 456 − 2 = 454. Weil man 2 zu viel addiert hat, zieht man sie am Ende wieder ab.",
       "img": "🏃"
     },
     {
       "id": "011",
-      "q": "Rechne geschickt: 5 · 48",
-      "a": "240",
+      "q": "Welcher Trick hilft beim Malnehmen mit 5, z. B. 5 · 48?",
+      "a": "Mal 10 rechnen und dann halbieren",
       "choices": [
-        "220",
-        "250",
-        "200"
+        "Mal 10 rechnen und dann verdoppeln",
+        "Mal 2 rechnen und eine Null anhängen",
+        "Durch 5 teilen"
       ],
-      "info": "Mal 5 = mal 10 und dann halbieren: 480 : 2 = 240.",
+      "info": "5 ist die Hälfte von 10. Also: 5 · 48 = 48 · 10 : 2 = 480 : 2 = 240. Probe: 5 · 40 + 5 · 8 = 200 + 40 = 240 ✓.",
       "img": "🖐️"
     },
     {
@@ -174,7 +174,7 @@
         "Wenn die erste Ziffer gerade ist",
         "Wenn sie auf 5 endet"
       ],
-      "info": "Gerade Endziffern: 0, 2, 4, 6, 8. Beispiel: 3 578 ist durch 2 teilbar.",
+      "info": "Gerade Endziffern: 0, 2, 4, 6, 8. Beispiel: 3 578 endet auf 8, also ist 3 578 durch 2 teilbar (3 578 : 2 = 1 789). Die Zehner, Hunderter und Tausender sind immer durch 2 teilbar, deshalb kommt es nur auf die letzte Ziffer an.",
       "img": "👫"
     },
     {
@@ -246,7 +246,7 @@
         "2 453",
         "2 455"
       ],
-      "info": "Quersumme von 2 451: 2 + 4 + 5 + 1 = 12 – durch 3 teilbar.",
+      "info": "Quersummen: 2 451 → 2 + 4 + 5 + 1 = 12 (durch 3 teilbar ✓). 2 452 → 13, 2 453 → 14, 2 455 → 16 (nicht durch 3 teilbar). Also ist nur 2 451 durch 3 teilbar: 2 451 = 3 · 817.",
       "img": "🔍"
     },
     {
@@ -258,7 +258,7 @@
         "356",
         "344"
       ],
-      "info": "Durch 6 teilbar heißt: durch 2 UND durch 3. 354 ist gerade und hat die Quersumme 12.",
+      "info": "Durch 6 teilbar heißt: durch 2 UND durch 3. 354 ist gerade und hat die Quersumme 3 + 5 + 4 = 12 ✓ (354 = 6 · 59). 351 ist ungerade. 356 hat die Quersumme 14, 344 die Quersumme 11 – beide nicht durch 3 teilbar.",
       "img": "🎲"
     },
     {
@@ -282,7 +282,7 @@
         "33",
         "39"
       ],
-      "info": "27 = 3 · 9, 33 = 3 · 11, 39 = 3 · 13. Nur 29 hat keine weiteren Teiler.",
+      "info": "27 = 3 · 9, 33 = 3 · 11, 39 = 3 · 13 – sie haben weitere Teiler. 29 ist nicht durch 2, 3 oder 5 teilbar; mehr muss man nicht prüfen, weil schon 6 · 6 = 36 größer als 29 ist. Also ist 29 eine Primzahl.",
       "img": "💎✨"
     },
     {
@@ -335,62 +335,62 @@
     },
     {
       "id": "026",
-      "q": "12² = ?",
-      "a": "144",
+      "q": "Was bedeutet die Hochzahl 2 bei 12²?",
+      "a": "12 wird mit sich selbst malgenommen: 12 · 12",
       "choices": [
-        "124",
-        "132",
-        "154"
+        "12 · 2",
+        "12 + 12",
+        "2 · 2 · 2 … zwölfmal"
       ],
-      "info": "12² = 12 · 12 = 144. Früher nannte man 144 Stück „ein Gros“.",
+      "info": "12² (gesprochen „12 hoch 2“ oder „12 Quadrat“) = 12 · 12 = 144. Nicht verwechseln: 12 · 2 = 24.",
       "img": "🔲"
     },
     {
       "id": "027",
-      "q": "15² = ?",
-      "a": "225",
+      "q": "Trick für Quadratzahlen mit 5 am Ende, z. B. 35²?",
+      "a": "Zehnerziffer mal (Zehnerziffer + 1), dann 25 anhängen",
       "choices": [
-        "215",
-        "250",
-        "235"
+        "Beide Ziffern quadrieren und nebeneinander schreiben",
+        "Die Zahl verdoppeln und 25 anhängen",
+        "Zehnerziffer mal 5, dann 25 anhängen"
       ],
-      "info": "Trick bei 5 am Ende: 1 · 2 = 2, dann 25 anhängen → 225.",
+      "info": "35²: 3 · 4 = 12, dann 25 anhängen → 1 225. Ebenso 15²: 1 · 2 = 2 → 225. Warum? 35 · 35 = 35 · 30 + 35 · 5 = 1 050 + 175 = 1 225 ✓.",
       "img": "🖐️✨"
     },
     {
       "id": "028",
-      "q": "Welche Zahl mal sich selbst ergibt 196?",
-      "a": "14",
+      "q": "Wie heißt die Zahl, die mit sich selbst malgenommen eine Quadratzahl ergibt?",
+      "a": "Quadratwurzel",
       "choices": [
-        "13",
-        "16",
-        "12"
+        "Quersumme",
+        "Primfaktor",
+        "Hochzahl"
       ],
-      "info": "14 · 14 = 196. Merke: 13² = 169 und 16² = 256.",
+      "info": "Beispiel: 14 · 14 = 196, also ist 14 die Quadratwurzel von 196. Man schreibt √196 = 14. Ebenso √169 = 13, weil 13 · 13 = 169.",
       "img": "🔳"
     },
     {
       "id": "029",
-      "q": "17² = ?",
-      "a": "289",
+      "q": "Wie rechnest du 17² geschickt im Kopf?",
+      "a": "Zerlegen: 10 · 17 + 7 · 17",
       "choices": [
-        "279",
-        "299",
-        "269"
+        "17 · 2 rechnen",
+        "10² + 7² rechnen",
+        "17 + 17 rechnen"
       ],
-      "info": "17 · 17 = 10 · 17 + 7 · 17 = 170 + 119 = 289.",
+      "info": "17² = 17 · 17 = (10 + 7) · 17 = 10 · 17 + 7 · 17 = 170 + 119 = 289. Achtung: 10² + 7² = 100 + 49 = 149 ist falsch, weil die Mischglieder fehlen: (10 + 7)² = 100 + 2 · 10 · 7 + 49 = 100 + 140 + 49 = 289.",
       "img": "🎂"
     },
     {
       "id": "030",
-      "q": "20² = ?",
-      "a": "400",
+      "q": "Wie quadrierst du eine Zehnerzahl wie 20 oder 300?",
+      "a": "Die Ziffer quadrieren und doppelt so viele Nullen anhängen",
       "choices": [
-        "40",
-        "200",
-        "4 000"
+        "Die Ziffer quadrieren und die Nullen gleich lassen",
+        "Die Ziffer verdoppeln und die Nullen anhängen",
+        "Einfach eine Null mehr anhängen"
       ],
-      "info": "2² = 4, dann zwei Nullen anhängen: 400.",
+      "info": "20² = 20 · 20 = 2 · 2 · 10 · 10 = 4 · 100 = 400 (2 Nullen). 300² = 3 · 3 · 100 · 100 = 9 · 10 000 = 90 000 (4 Nullen).",
       "img": "🏁"
     },
     {
@@ -402,67 +402,67 @@
         "171",
         "176"
       ],
-      "info": "169 = 13 · 13. Die Nachbarn sind 12² = 144 und 14² = 196.",
+      "info": "Quadratzahlen in der Nähe: 12² = 144, 13² = 169, 14² = 196. Nur 169 liegt zwischen 160 und 180.",
       "img": "🕵️🔍"
     },
     {
       "id": "032",
-      "q": "37 · 1 000 = ?",
-      "a": "37 000",
+      "q": "Was passiert beim Malnehmen mit 1 000?",
+      "a": "Jede Ziffer rückt drei Stellen nach links: Man hängt drei Nullen an",
       "choices": [
-        "3 700",
-        "370 000",
-        "370"
+        "Man streicht drei Nullen",
+        "Man hängt eine Null an",
+        "Jede Ziffer rückt drei Stellen nach rechts"
       ],
-      "info": "Mal 1 000 heißt: drei Nullen anhängen.",
+      "info": "Beispiel: 37 · 1 000 = 37 000. Aus 3 Zehnern werden 3 Zehntausender, aus 7 Einern 7 Tausender. Bei Kommazahlen rückt das Komma drei Stellen nach rechts: 3,7 · 1 000 = 3 700.",
       "img": "🚀"
     },
     {
       "id": "033",
-      "q": "45 000 : 100 = ?",
-      "a": "450",
+      "q": "Was passiert beim Teilen durch 100?",
+      "a": "Jede Ziffer rückt zwei Stellen nach rechts",
       "choices": [
-        "45",
-        "4 500",
-        "4 500 000"
+        "Man hängt zwei Nullen an",
+        "Man streicht eine Null",
+        "Das Komma rückt zwei Stellen nach rechts"
       ],
-      "info": "Durch 100 heißt: zwei Nullen wegstreichen.",
+      "info": "Beispiel: 45 000 : 100 = 450 – zwei Nullen fallen weg. Bei Kommazahlen rückt das Komma zwei Stellen nach links: 4,5 : 100 = 0,045.",
       "img": "✂️💨"
     },
     {
       "id": "034",
-      "q": "10⁵ = ?",
-      "a": "100 000",
+      "q": "Wie viele Nullen hat 10⁵ ausgeschrieben?",
+      "a": "5",
       "choices": [
-        "10 000",
-        "1 000 000",
-        "50"
+        "4",
+        "6",
+        "10"
       ],
-      "info": "Die Hochzahl verrät die Anzahl der Nullen: 10⁵ hat 5 Nullen.",
+      "info": "Die Hochzahl gibt an, wie oft 10 malgenommen wird: 10⁵ = 10 · 10 · 10 · 10 · 10 = 100 000 – eine 1 mit 5 Nullen.",
       "img": "🔟✨"
     },
     {
       "id": "035",
-      "q": "3,7 · 100 = ?",
-      "a": "370",
+      "q": "Wohin rückt das Komma beim Malnehmen mit 100?",
+      "a": "Zwei Stellen nach rechts",
       "choices": [
-        "37",
-        "3,700",
-        "0,037"
+        "Zwei Stellen nach links",
+        "Eine Stelle nach rechts",
+        "Es bleibt stehen"
       ],
-      "info": "Mal 100: Das Komma wandert zwei Stellen nach rechts.",
+      "info": "Beispiel: 3,7 · 100 = 370. Das Komma rückt zwei Stellen nach rechts: 3,7 → 37, → 370. Fehlende Stellen füllt man mit 0 auf.",
       "img": "➡️"
     },
     {
       "id": "036",
-      "q": "6 · 4 000 = ?",
-      "a": "24 000",
+      "q": "Wie rechnest du 6 · 4 000 im Kopf?",
+      "a": "Erst 6 · 4 rechnen, dann die drei Nullen anhängen",
       "choices": [
-        "2 400",
-        "240 000",
-        "20 400"
+        "Erst 6 + 4 rechnen, dann die Nullen anhängen",
+        "6 · 4 rechnen und eine Null anhängen",
+        "Die Nullen weglassen, das Ergebnis ist 24"
       ],
-      "info": "6 · 4 = 24, dann die drei Nullen anhängen: 24 000.",
+      "info": "Verbindungsgesetz: 6 · 4 000 = 6 · 4 · 1 000 = 24 · 1 000 = 24 000.",
       "img": "💰"
     }
   ]

@@ -1,6 +1,6 @@
 {
   "id": "s1-mathe-gleichungen",
-  "version": 1,
+  "version": 2,
   "title": "Gleichungen lösen",
   "subject": "mathe",
   "grades": [
@@ -9,7 +9,7 @@
   ],
   "emoji": "⚖️",
   "tier": "free",
-  "description": "Lineare Gleichungen lösen, Terme vereinfachen, Klammern auflösen und Textaufgaben knacken – Schritt für Schritt.",
+  "description": "Regeln und Verfahren zum Merken: Waage-Prinzip, Äquivalenzumformungen, Klammern und Terme, Textaufgaben aufstellen – jedes Mal mit vollständig durchgerechnetem Beispiel und Probe.",
   "intro": [
     {
       "img": "⚖️✨",
@@ -17,69 +17,73 @@
     },
     {
       "img": "🎁❓",
-      "text": "Das x ist ein Geheimpäckchen. Deine Mission: herausfinden, was drin ist – also x ganz allein auf eine Seite bringen!"
+      "text": "Das x ist ein Geheimpäckchen. Deine Mission: x ganz allein auf eine Seite bringen. Dann siehst du, was drin ist."
     },
     {
       "img": "🔁⚖️",
-      "text": "Goldene Regel: Was du links machst, machst du auch rechts. So bleibt die Waage im Gleichgewicht. Das heißt Äquivalenzumformung."
+      "text": "Goldene Regel: Was du links machst, machst du auch rechts – addieren, abziehen, malnehmen oder teilen (aber nie durch 0). Das heißt Äquivalenzumformung."
+    },
+    {
+      "img": "🪜📋",
+      "text": "Die Reihenfolge: 1. Klammern auflösen. 2. Jede Seite zusammenfassen. 3. x-Glieder auf eine Seite, Zahlen auf die andere. 4. Durch die Zahl vor dem x teilen. 5. Probe."
+    },
+    {
+      "img": "📝🧾",
+      "text": "Hinter jedem Schritt notierst du, was du tust, zum Beispiel: 4x + 3 = 27 | − 3 → 4x = 24 | : 4 → x = 6."
     },
     {
       "img": "✅🔍",
-      "text": "Profi-Tipp: Setz deine Lösung zur Probe ein. Kommt links und rechts dasselbe heraus, hast du richtig gerechnet!"
-    },
-    {
-      "img": "🚀🏆",
-      "text": "Los geht's! Knack die Gleichungen und lüfte das Geheimnis von x!"
+      "text": "Probe: Setz deine Lösung in die Ausgangsgleichung ein. 4 · 6 + 3 = 27 – links und rechts gleich, also stimmt x = 6!"
     }
   ],
   "cards": [
     {
       "id": "001",
-      "q": "Löse: x + 7 = 15",
-      "a": "x = 8",
+      "q": "Was ist eine Gleichung?",
+      "a": "Zwei Terme, die durch ein Gleichheitszeichen verbunden sind",
       "choices": [
-        "x = 22",
-        "x = 7",
-        "x = −8"
+        "Ein Term ohne Gleichheitszeichen",
+        "Eine Rechnung, die immer stimmt",
+        "Eine einzelne Zahl mit einem Buchstaben"
       ],
-      "info": "Auf beiden Seiten 7 abziehen: x = 15 − 7 = 8. Probe: 8 + 7 = 15.",
-      "img": "🎁➕"
+      "info": "Beispiel: 2x + 3 = 11. Links vom „=“ steht der Term 2x + 3, rechts der Term 11. Wie bei einer Waage müssen beide Seiten gleich viel wiegen. Die Lösung ist x = 4, denn 2 · 4 + 3 = 8 + 3 = 11.",
+      "img": "⚖️"
     },
     {
       "id": "002",
-      "q": "Löse: x − 9 = 4",
-      "a": "x = 13",
+      "q": "Was ist die Lösung einer Gleichung?",
+      "a": "Die Zahl, die beim Einsetzen eine wahre Aussage ergibt",
       "choices": [
-        "x = −5",
-        "x = 5",
-        "x = −13"
+        "Die Zahl rechts vom Gleichheitszeichen",
+        "Die größte Zahl in der Gleichung",
+        "Die Zahl vor dem x"
       ],
-      "info": "Auf beiden Seiten 9 addieren: x = 4 + 9 = 13. Probe: 13 − 9 = 4.",
-      "img": "🎁➖"
+      "info": "Beispiel x − 9 = 4. Setzt man x = 13 ein: 13 − 9 = 4 – das ist wahr. Also ist 13 die Lösung. Mit x = 12 entstünde 12 − 9 = 3, und 3 = 4 ist falsch.",
+      "img": "🎁🔑"
     },
     {
       "id": "003",
-      "q": "Löse: 6x = 42",
-      "a": "x = 7",
+      "q": "Was ist eine Variable?",
+      "a": "Ein Buchstabe als Platzhalter für eine Zahl",
       "choices": [
-        "x = 36",
-        "x = 48",
-        "x = 6"
+        "Eine Zahl, die sich nie ändert",
+        "Ein Rechenzeichen wie + oder −",
+        "Das Ergebnis einer Gleichung"
       ],
-      "info": "Beide Seiten durch 6 teilen: x = 42 : 6 = 7.",
-      "img": "📦📦"
+      "info": "Meist schreibt man x, y oder a. In 6x = 42 steht x für die gesuchte Zahl. Lösen: 6x = 42 | : 6 → x = 7. Probe: 6 · 7 = 42 ✓. Zwischen Zahl und Variable steht ein unsichtbares Malzeichen: 6x bedeutet 6 · x.",
+      "img": "📦❓"
     },
     {
       "id": "004",
-      "q": "Löse: x : 4 = 5",
-      "a": "x = 20",
+      "q": "Was bedeutet die Schreibweise L = {5}?",
+      "a": "Die Lösungsmenge enthält genau die Zahl 5",
       "choices": [
-        "x = 1,25",
-        "x = 9",
-        "x = 1"
+        "Die Gleichung hat fünf Lösungen",
+        "Die Gleichung hat keine Lösung",
+        "x ist kleiner als 5"
       ],
-      "info": "Beide Seiten mal 4 nehmen: x = 5 · 4 = 20.",
-      "img": "🍕"
+      "info": "L steht für Lösungsmenge: alle Zahlen, die die Gleichung erfüllen. Beispiel x · 4 = 20 | : 4 → x = 5, also L = {5}. Gibt es keine Lösung, schreibt man L = { } (leere Menge). Passt jede Zahl, schreibt man L = ℚ (alle rationalen Zahlen).",
+      "img": "🧺"
     },
     {
       "id": "005",
@@ -90,8 +94,8 @@
         "Nur links 12 abziehen",
         "Beide Seiten durch 12 teilen"
       ],
-      "info": "Die Umkehrung von „+ 12“ ist „− 12“ – und zwar auf beiden Seiten. Dann ist x = 18.",
-      "img": "⚖️"
+      "info": "Die Umkehrung von „+ 12“ ist „− 12“ – und zwar auf beiden Seiten. Rechenweg: x + 12 = 30 | − 12 → x + 12 − 12 = 30 − 12 → x = 18. Probe: 18 + 12 = 30 ✓.",
+      "img": "⚖️➖"
     },
     {
       "id": "006",
@@ -102,7 +106,7 @@
         "Beide Seiten mal 5 nehmen",
         "Nur rechts durch 5 teilen"
       ],
-      "info": "Die Umkehrung von „mal 5“ ist „durch 5“. Dann ist x = 7.",
+      "info": "5x bedeutet 5 · x. Die Umkehrung von „mal 5“ ist „durch 5“. Rechenweg: 5x = 35 | : 5 → x = 35 : 5 → x = 7. Probe: 5 · 7 = 35 ✓.",
       "img": "✂️"
     },
     {
@@ -114,7 +118,7 @@
         "Das Vertauschen von x und einer Zahl",
         "Das Weglassen des Gleichheitszeichens"
       ],
-      "info": "Erlaubt: auf beiden Seiten dasselbe addieren, abziehen, mit derselben Zahl (nicht 0) malnehmen oder teilen.",
+      "info": "Erlaubt sind: auf beiden Seiten dieselbe Zahl (oder denselben Term) addieren oder abziehen, beide Seiten mit derselben Zahl außer 0 malnehmen oder durch dieselbe Zahl außer 0 teilen. Beispiel: x − 4 = 6 | + 4 → x = 10. Vorher und nachher ist 10 die Lösung.",
       "img": "⚖️🔁"
     },
     {
@@ -126,235 +130,235 @@
         "Durch negative Zahlen",
         "Durch Brüche"
       ],
-      "info": "Durch 0 zu teilen ist nicht erlaubt – das ergibt keinen Sinn.",
+      "info": "Teilen durch 0 ist nicht definiert: Keine Zahl ergibt mal 0 etwas anderes als 0. Auch Malnehmen mit 0 ist keine Äquivalenzumformung: Aus x = 3 würde 0 = 0, und die Lösung ginge verloren. Teilen durch negative Zahlen oder Brüche ist dagegen erlaubt.",
       "img": "🚫"
     },
     {
       "id": "009",
-      "q": "Löse: 4x + 3 = 27",
-      "a": "x = 6",
+      "q": "In welcher Reihenfolge löst du 4x + 3 = 27?",
+      "a": "Erst auf beiden Seiten 3 abziehen, dann beide Seiten durch 4 teilen",
       "choices": [
-        "x = 7,5",
-        "x = 24",
-        "x = 5"
+        "Erst auf beiden Seiten 3 addieren, dann durch 4 teilen",
+        "Erst auf beiden Seiten 4 abziehen, dann durch 3 teilen",
+        "Erst beide Seiten mal 4 nehmen, dann 3 abziehen"
       ],
-      "info": "Erst − 3: 4x = 24. Dann : 4: x = 6. Probe: 4 · 6 + 3 = 27.",
+      "info": "Merke: Erst Plus und Minus rückgängig machen, dann Mal und Geteilt. Rechenweg: 4x + 3 = 27 | − 3 → 4x = 24 | : 4 → x = 6. Probe: 4 · 6 + 3 = 24 + 3 = 27 ✓.",
       "img": "🧩"
     },
     {
       "id": "010",
-      "q": "Löse: 2x − 5 = 11",
-      "a": "x = 8",
+      "q": "Was ist bei 2x − 5 = 11 der erste Schritt?",
+      "a": "Auf beiden Seiten 5 addieren",
       "choices": [
-        "x = 3",
-        "x = 6",
-        "x = 16"
+        "Auf beiden Seiten 5 abziehen",
+        "Beide Seiten durch 5 teilen",
+        "Auf beiden Seiten 2 abziehen"
       ],
-      "info": "Erst + 5: 2x = 16. Dann : 2: x = 8.",
+      "info": "Die Umkehrung von „− 5“ ist „+ 5“. Rechenweg: 2x − 5 = 11 | + 5 → 2x = 16 | : 2 → x = 8. Probe: 2 · 8 − 5 = 16 − 5 = 11 ✓.",
       "img": "🔑"
     },
     {
       "id": "011",
-      "q": "Löse: 9 − x = 2",
-      "a": "x = 7",
+      "q": "Was ist bei 9 − x = 2 ein richtiger erster Schritt?",
+      "a": "Auf beiden Seiten x addieren",
       "choices": [
-        "x = 11",
-        "x = −7",
-        "x = −11"
+        "Nur links 9 abziehen",
+        "Das Minus vor dem x einfach weglassen",
+        "Beide Seiten durch x teilen"
       ],
-      "info": "Welche Zahl muss man von 9 wegnehmen, damit 2 bleibt? 9 − 7 = 2.",
+      "info": "Das Minus gehört zum x und darf nicht wegfallen. Rechenweg: 9 − x = 2 | + x → 9 = 2 + x | − 2 → 7 = x, also x = 7. Probe: 9 − 7 = 2 ✓.",
       "img": "🍪"
     },
     {
       "id": "012",
-      "q": "Löse: −3x = 18",
-      "a": "x = −6",
+      "q": "Wie löst du −3x = 18 nach x auf?",
+      "a": "Beide Seiten durch −3 teilen",
       "choices": [
-        "x = 6",
-        "x = 15",
-        "x = 21"
+        "Beide Seiten durch 3 teilen",
+        "Auf beiden Seiten 3 addieren",
+        "Auf beiden Seiten 3 abziehen"
       ],
-      "info": "Beide Seiten durch −3 teilen: x = 18 : (−3) = −6.",
+      "info": "Vor dem x steht −3, also teilt man durch −3 (mit Vorzeichen!). Rechenweg: −3x = 18 | : (−3) → x = 18 : (−3) = −6. Vorzeichenregel: Plus geteilt durch Minus ergibt Minus. Probe: −3 · (−6) = 18 ✓.",
       "img": "❄️"
     },
     {
       "id": "013",
-      "q": "Löse: x/3 + 2 = 6",
-      "a": "x = 12",
+      "q": "Wie wirst du bei x/3 = 4 den Bruch los?",
+      "a": "Beide Seiten mal 3 nehmen",
       "choices": [
-        "x = 24",
-        "x = 4",
-        "x = 6"
+        "Beide Seiten durch 3 teilen",
+        "Auf beiden Seiten 3 abziehen",
+        "Auf beiden Seiten 3 addieren"
       ],
-      "info": "Erst − 2: x/3 = 4. Dann mal 3: x = 12.",
+      "info": "x/3 bedeutet x : 3. Die Umkehrung von „durch 3“ ist „mal 3“. Vollständiges Beispiel: x/3 + 2 = 6 | − 2 → x/3 = 4 | · 3 → x = 12. Probe: 12 : 3 + 2 = 4 + 2 = 6 ✓.",
       "img": "🍰"
     },
     {
       "id": "014",
-      "q": "Löse: 0,5x + 1,5 = 4",
-      "a": "x = 5",
+      "q": "Welche Umformung macht aus 0,5x + 1,5 = 4 eine Gleichung ohne Kommazahlen?",
+      "a": "Beide Seiten mal 2 nehmen",
       "choices": [
-        "x = 2,5",
-        "x = 11",
-        "x = 1,25"
+        "Beide Seiten durch 2 teilen",
+        "Auf beiden Seiten 0,5 abziehen",
+        "Das Komma einfach streichen"
       ],
-      "info": "Erst − 1,5: 0,5x = 2,5. Dann : 0,5 (also mal 2): x = 5.",
+      "info": "Jedes Glied wird mit 2 malgenommen: 0,5x · 2 = x, 1,5 · 2 = 3 und 4 · 2 = 8. Rechenweg: 0,5x + 1,5 = 4 | · 2 → x + 3 = 8 | − 3 → x = 5. (Mit · 10 geht es auch: 5x + 15 = 40.) Probe: 0,5 · 5 + 1,5 = 2,5 + 1,5 = 4 ✓.",
       "img": "💶"
     },
     {
       "id": "015",
-      "q": "Löse: 7x + 4 = 3x + 20",
-      "a": "x = 4",
+      "q": "x steht auf beiden Seiten: 7x + 4 = 3x + 20. Was ist ein guter erster Schritt?",
+      "a": "Auf beiden Seiten 3x abziehen",
       "choices": [
-        "x = 2,4",
-        "x = 6",
-        "x = 16"
+        "Die x einfach weglassen",
+        "Beide Seiten durch x teilen",
+        "Nur rechts 3x abziehen"
       ],
-      "info": "Erst − 3x: 4x + 4 = 20. Dann − 4: 4x = 16. Also x = 4.",
+      "info": "So stehen alle x-Glieder links. Rechenweg: 7x + 4 = 3x + 20 | − 3x → 4x + 4 = 20 | − 4 → 4x = 16 | : 4 → x = 4. Probe: links 7 · 4 + 4 = 32, rechts 3 · 4 + 20 = 32 ✓.",
       "img": "⚖️🎯"
     },
     {
       "id": "016",
-      "q": "Löse: 5x − 8 = 2x + 7",
-      "a": "x = 5",
+      "q": "Merkregel für Gleichungen mit x auf beiden Seiten?",
+      "a": "x-Glieder auf eine Seite, Zahlen auf die andere",
       "choices": [
-        "x = −5",
-        "x = 3",
-        "x = 15"
+        "Alle x-Glieder einfach streichen",
+        "Zuerst alles durch x teilen",
+        "Die Seiten vertauschen, dann ist man fertig"
       ],
-      "info": "x-Terme nach links, Zahlen nach rechts: 3x = 15, also x = 5.",
+      "info": "Beispiel: 5x − 8 = 2x + 7 | − 2x → 3x − 8 = 7 | + 8 → 3x = 15 | : 3 → x = 5. Probe: links 5 · 5 − 8 = 17, rechts 2 · 5 + 7 = 17 ✓.",
       "img": "🎯"
     },
     {
       "id": "017",
-      "q": "Fasse zusammen: 3x + 5 + 2x − 1",
-      "a": "5x + 4",
+      "q": "Welche Glieder darf man zusammenfassen?",
+      "a": "Nur gleichartige Glieder: x mit x und Zahlen mit Zahlen",
       "choices": [
-        "5x + 6",
-        "9x",
-        "6x + 4"
+        "Alle Glieder, egal welche",
+        "Nur Zahlen, niemals x-Glieder",
+        "Auch x mit x²"
       ],
-      "info": "Sortieren: x zu x, Zahlen zu Zahlen. 3x + 2x = 5x und 5 − 1 = 4.",
+      "info": "Beispiel: 3x + 5 + 2x − 1 = (3x + 2x) + (5 − 1) = 5x + 4. Achtung: 5x + 4 ist nicht 9x, weil x-Glieder und Zahlen verschieden sind. Auch x und x² darf man nicht zusammenfassen.",
       "img": "🧺"
     },
     {
       "id": "018",
-      "q": "Fasse zusammen: 4a − 7a + 2a",
+      "q": "Wie schreibt man −1a kürzer?",
       "a": "−a",
       "choices": [
-        "a",
-        "−13a",
-        "13a"
+        "1a",
+        "−1",
+        "a − 1"
       ],
-      "info": "4 − 7 + 2 = −1, also −1a. Man schreibt kurz −a.",
+      "info": "Eine 1 vor der Variablen lässt man weg: 1a = a und −1a = −a. Beispiel: 4a − 7a + 2a = (4 − 7 + 2) · a = −1a = −a.",
       "img": "🍎"
     },
     {
       "id": "019",
-      "q": "Vereinfache: 2x · 3x",
-      "a": "6x²",
+      "q": "Was ergibt x · x?",
+      "a": "x²",
       "choices": [
-        "6x",
-        "5x²",
-        "5x"
+        "2x",
+        "x",
+        "2x²"
       ],
-      "info": "Zahlen malnehmen: 2 · 3 = 6. Und x · x = x².",
+      "info": "x · x = x² (gesprochen „x Quadrat“). Beispiel: 2x · 3x = 2 · 3 · x · x = 6x². Nicht verwechseln: x + x = 2x.",
       "img": "✖️"
     },
     {
       "id": "020",
-      "q": "Löse die Klammer auf: −(x − 4)",
-      "a": "−x + 4",
+      "q": "Was passiert bei einem Minus vor der Klammer?",
+      "a": "Alle Vorzeichen in der Klammer drehen sich um",
       "choices": [
-        "−x − 4",
-        "x + 4",
-        "x − 4"
+        "Nur das erste Vorzeichen dreht sich um",
+        "Die Klammer fällt einfach weg",
+        "Die Vorzeichen bleiben gleich"
       ],
-      "info": "Ein Minus vor der Klammer dreht alle Vorzeichen in der Klammer um.",
+      "info": "Ein Minus vor der Klammer bedeutet „mal (−1)“. Beispiel: −(x − 4) = (−1) · x + (−1) · (−4) = −x + 4.",
       "img": "🔄"
     },
     {
       "id": "021",
-      "q": "Löse die Klammer auf: −2(3a − 5)",
-      "a": "−6a + 10",
+      "q": "Wie löst du eine Klammer mit einem Faktor davor auf, z. B. −2(3a − 5)?",
+      "a": "Jedes Glied in der Klammer mit −2 malnehmen",
       "choices": [
-        "−6a − 10",
-        "6a − 10",
-        "−6a − 5"
+        "Nur das erste Glied mit −2 malnehmen",
+        "Die −2 zu jedem Glied addieren",
+        "Die Klammer einfach weglassen"
       ],
-      "info": "Jedes Glied mal −2: −2 · 3a = −6a und −2 · (−5) = +10.",
+      "info": "Das ist das Distributivgesetz (Verteilungsgesetz). −2 · 3a = −6a und −2 · (−5) = +10. Ergebnis: −2(3a − 5) = −6a + 10.",
       "img": "💥"
     },
     {
       "id": "022",
-      "q": "Multipliziere aus: (x + 2)(x + 5)",
-      "a": "x² + 7x + 10",
+      "q": "Wie multiplizierst du zwei Klammern aus?",
+      "a": "Jedes Glied der ersten Klammer mit jedem Glied der zweiten",
       "choices": [
-        "x² + 10",
-        "x² + 10x + 7",
-        "2x + 7"
+        "Nur die ersten Glieder miteinander",
+        "Nur die Zahlen miteinander",
+        "Die Klammern einfach weglassen"
       ],
-      "info": "Jeder mit jedem: x · x + x · 5 + 2 · x + 2 · 5 = x² + 7x + 10.",
+      "info": "Beispiel: (x + 2)(x + 5) = x · x + x · 5 + 2 · x + 2 · 5 = x² + 5x + 2x + 10 = x² + 7x + 10.",
       "img": "🧱"
     },
     {
       "id": "023",
-      "q": "Klammere den größten gemeinsamen Faktor aus: 6x + 9",
-      "a": "3(2x + 3)",
+      "q": "Was bedeutet Ausklammern?",
+      "a": "Einen gemeinsamen Faktor vor eine Klammer ziehen",
       "choices": [
-        "3(2x + 9)",
-        "6(x + 9)",
-        "9(6x + 1)"
+        "Eine Klammer weglassen",
+        "Zwei Klammern ausmultiplizieren",
+        "Alle Zahlen addieren"
       ],
-      "info": "6 und 9 haben den größten gemeinsamen Teiler 3: 6x = 3 · 2x und 9 = 3 · 3.",
+      "info": "Beispiel 6x + 9: Der größte gemeinsame Teiler von 6 und 9 ist 3. 6x = 3 · 2x und 9 = 3 · 3, also 6x + 9 = 3(2x + 3). Probe durch Ausmultiplizieren: 3 · 2x + 3 · 3 = 6x + 9 ✓.",
       "img": "📦"
     },
     {
       "id": "024",
-      "q": "Löse: 2(x + 3) = 16",
-      "a": "x = 5",
+      "q": "Was ist bei 2(x + 3) = 16 ein richtiger erster Schritt?",
+      "a": "Die Klammer auflösen oder beide Seiten durch 2 teilen",
       "choices": [
-        "x = 6,5",
-        "x = 8",
-        "x = 13"
+        "Die 2 einfach streichen",
+        "Nur in der Klammer 3 abziehen",
+        "Auf beiden Seiten 2 abziehen"
       ],
-      "info": "Klammer auflösen: 2x + 6 = 16. Dann 2x = 10, also x = 5.",
+      "info": "Weg 1: 2(x + 3) = 16 → 2x + 6 = 16 | − 6 → 2x = 10 | : 2 → x = 5. Weg 2: 2(x + 3) = 16 | : 2 → x + 3 = 8 | − 3 → x = 5. Probe: 2 · (5 + 3) = 2 · 8 = 16 ✓.",
       "img": "🎁🎁"
     },
     {
       "id": "025",
-      "q": "Löse: 4(x − 2) = 2x + 6",
-      "a": "x = 7",
+      "q": "In welcher Reihenfolge löst du eine Gleichung mit Klammern?",
+      "a": "Klammern auflösen, zusammenfassen, sortieren, durch die Zahl vor x teilen, Probe",
       "choices": [
-        "x = 4",
-        "x = 1",
-        "x = 2"
+        "Durch die Zahl vor x teilen, dann Klammern auflösen",
+        "Probe zuerst, dann Klammern auflösen",
+        "Zahlen sortieren, Klammern bleiben stehen"
       ],
-      "info": "Auflösen: 4x − 8 = 2x + 6. Dann 2x = 14, also x = 7.",
+      "info": "Beispiel: 4(x − 2) = 2x + 6 → 4x − 8 = 2x + 6 | − 2x → 2x − 8 = 6 | + 8 → 2x = 14 | : 2 → x = 7. Probe: links 4 · (7 − 2) = 4 · 5 = 20, rechts 2 · 7 + 6 = 20 ✓.",
       "img": "🔓"
     },
     {
       "id": "026",
-      "q": "Löse: 3(2x − 1) = 4x + 9",
-      "a": "x = 6",
+      "q": "Warum ist 3(2x − 1) = 6x − 1 falsch?",
+      "a": "Die 3 muss auch mit −1 malgenommen werden: richtig ist 6x − 3",
       "choices": [
-        "x = 5",
-        "x = 4",
-        "x = 3"
+        "Weil 3 · 2x = 5x ist",
+        "Weil man Klammern nie auflösen darf",
+        "Es ist richtig"
       ],
-      "info": "Auflösen: 6x − 3 = 4x + 9. Dann 2x = 12, also x = 6.",
+      "info": "Jedes Glied in der Klammer wird mit 3 malgenommen: 3 · 2x = 6x und 3 · (−1) = −3. Ganzes Beispiel: 3(2x − 1) = 4x + 9 → 6x − 3 = 4x + 9 | − 4x → 2x − 3 = 9 | + 3 → 2x = 12 | : 2 → x = 6. Probe: 3 · (12 − 1) = 33 und 4 · 6 + 9 = 33 ✓.",
       "img": "🏆"
     },
     {
       "id": "027",
-      "q": "Ist x = 3 eine Lösung von 5x − 4 = 11?",
-      "a": "Ja, denn 5 · 3 − 4 = 11",
+      "q": "Wie machst du die Probe?",
+      "a": "Die Lösung in die Ausgangsgleichung einsetzen und beide Seiten ausrechnen",
       "choices": [
-        "Nein, denn 5 · 3 − 4 = 10",
-        "Nein, die Lösung ist x = 1",
-        "Nein, die Lösung ist x = 4"
+        "Die Gleichung noch einmal abschreiben",
+        "Die Lösung mit 2 malnehmen",
+        "Nur die rechte Seite ausrechnen"
       ],
-      "info": "Probe: x einsetzen und nachrechnen. 15 − 4 = 11 – stimmt!",
+      "info": "Beispiel 5x − 4 = 11 mit x = 3: links 5 · 3 − 4 = 15 − 4 = 11, rechts 11. Beide Seiten sind gleich, also stimmt x = 3. Kommt etwas Verschiedenes heraus, steckt irgendwo ein Rechenfehler.",
       "img": "✅"
     },
     {
@@ -366,7 +370,7 @@
         "Genau zwei",
         "Unendlich viele"
       ],
-      "info": "Zieht man x ab, bleibt 2 = 5 – das ist falsch. Keine Zahl passt.",
+      "info": "Rechenweg: x + 2 = x + 5 | − x → 2 = 5. Das ist falsch, egal welche Zahl x ist. Also gibt es keine Lösung: L = { }.",
       "img": "❌"
     },
     {
@@ -378,7 +382,7 @@
         "Genau eine",
         "Genau zwei"
       ],
-      "info": "Links aufgelöst steht auch 2x + 2. Beide Seiten sind gleich – jede Zahl passt.",
+      "info": "Rechenweg: 2(x + 1) = 2x + 2 → 2x + 2 = 2x + 2 | − 2x → 2 = 2. Das ist immer wahr. Jede Zahl ist Lösung: L = ℚ.",
       "img": "♾️"
     },
     {
@@ -390,68 +394,80 @@
         "x − 3 · 4 = 11",
         "4 − 3x = 11"
       ],
-      "info": "Erst die Zahl verdreifachen (3x), dann 4 abziehen. Lösung: x = 5.",
+      "info": "„Das Dreifache einer Zahl“ = 3x, „minus 4“ = 3x − 4, „ergibt 11“ = 3x − 4 = 11. Lösen: | + 4 → 3x = 15 | : 3 → x = 5. Probe: 3 · 5 − 4 = 15 − 4 = 11 ✓.",
       "img": "📝"
     },
     {
       "id": "031",
-      "q": "Ich denke mir eine Zahl, verdopple sie und addiere 6. Ergebnis: 20. Welche Zahl?",
-      "a": "7",
+      "q": "Welche Gleichung passt: „Ich verdopple eine Zahl und addiere 6. Ergebnis: 20“?",
+      "a": "2x + 6 = 20",
       "choices": [
-        "13",
-        "8",
-        "26"
+        "2(x + 6) = 20",
+        "x + 2 + 6 = 20",
+        "6x + 2 = 20"
       ],
-      "info": "2x + 6 = 20, also 2x = 14 und x = 7.",
+      "info": "Verdoppeln = 2x, 6 addieren = 2x + 6, Ergebnis 20: 2x + 6 = 20. Lösen: | − 6 → 2x = 14 | : 2 → x = 7. Probe: 2 · 7 + 6 = 14 + 6 = 20 ✓.",
       "img": "💭"
     },
     {
       "id": "032",
-      "q": "Lea ist 3 Jahre älter als Tom. Zusammen sind sie 25. Wie alt ist Tom?",
-      "a": "11 Jahre",
+      "q": "Lea ist 3 Jahre älter als Tom, zusammen sind sie 25. Welche Gleichung passt, wenn Tom x Jahre alt ist?",
+      "a": "x + (x + 3) = 25",
       "choices": [
-        "14 Jahre",
-        "12 Jahre",
-        "22 Jahre"
+        "x + 3x = 25",
+        "3x = 25",
+        "x + 3 = 25"
       ],
-      "info": "Tom = x, Lea = x + 3. Also 2x + 3 = 25, 2x = 22, x = 11. Lea ist 14.",
+      "info": "Tom: x, Lea: x + 3. Zusammen: x + (x + 3) = 25 → 2x + 3 = 25 | − 3 → 2x = 22 | : 2 → x = 11. Tom ist 11 Jahre alt, Lea 11 + 3 = 14 Jahre. Probe: 11 + 14 = 25 ✓.",
       "img": "👧👦"
     },
     {
       "id": "033",
-      "q": "Drei aufeinanderfolgende Zahlen ergeben zusammen 48. Welche ist die kleinste?",
-      "a": "15",
+      "q": "Wie schreibst du drei aufeinanderfolgende ganze Zahlen mit x?",
+      "a": "x, x + 1, x + 2",
       "choices": [
-        "16",
-        "14",
-        "12"
+        "x, 2x, 3x",
+        "x, x + 2, x + 4",
+        "x + 1, x + 1, x + 1"
       ],
-      "info": "x + (x + 1) + (x + 2) = 48, also 3x + 3 = 48 und x = 15. Probe: 15 + 16 + 17 = 48.",
+      "info": "Jede Zahl ist um 1 größer als die vorige. Beispiel: Die Summe ist 48. x + (x + 1) + (x + 2) = 48 → 3x + 3 = 48 | − 3 → 3x = 45 | : 3 → x = 15. Die Zahlen sind 15, 16 und 17. Probe: 15 + 16 + 17 = 48 ✓.",
       "img": "👣"
     },
     {
       "id": "034",
-      "q": "Ein Rechteck ist doppelt so lang wie breit und hat 36 cm Umfang. Wie breit ist es?",
-      "a": "6 cm",
+      "q": "Ein Rechteck ist doppelt so lang wie breit. Die Breite ist x. Welcher Term beschreibt den Umfang?",
+      "a": "2 · (2x + x) = 6x",
       "choices": [
-        "12 cm",
-        "9 cm",
-        "18 cm"
+        "x · 2x",
+        "x + 2x",
+        "4x"
       ],
-      "info": "Breite x, Länge 2x: 2 · (x + 2x) = 6x = 36, also x = 6.",
+      "info": "Umfang = 2 · (Länge + Breite) = 2 · (2x + x) = 2 · 3x = 6x. Beispiel: Der Umfang ist 36 cm. 6x = 36 | : 6 → x = 6. Breite 6 cm, Länge 12 cm. Probe: 2 · (12 + 6) = 2 · 18 = 36 ✓.",
       "img": "🖼️"
     },
     {
       "id": "035",
-      "q": "4 Kinokarten und 6 € Popcorn kosten zusammen 38 €. Was kostet eine Karte?",
-      "a": "8 €",
+      "q": "4 Kinokarten und 6 € Popcorn kosten zusammen 38 €. Welche Gleichung passt (x = Preis einer Karte)?",
+      "a": "4x + 6 = 38",
       "choices": [
-        "11 €",
-        "9,50 €",
-        "32 €"
+        "4(x + 6) = 38",
+        "x + 4 + 6 = 38",
+        "6x + 4 = 38"
       ],
-      "info": "4x + 6 = 38, also 4x = 32 und x = 8.",
+      "info": "4 Karten kosten 4 · x = 4x, dazu 6 € Popcorn: 4x + 6 = 38. Lösen: | − 6 → 4x = 32 | : 4 → x = 8. Eine Karte kostet 8 €. Probe: 4 · 8 + 6 = 32 + 6 = 38 ✓.",
       "img": "🎬🍿"
+    },
+    {
+      "id": "036",
+      "q": "Was ist bei einer Textaufgabe der erste Schritt?",
+      "a": "Festlegen, wofür x steht",
+      "choices": [
+        "Sofort die Probe machen",
+        "Alle Zahlen aus dem Text addieren",
+        "Das Ergebnis schätzen und aufschreiben"
+      ],
+      "info": "Vier Schritte: 1. Festlegen, wofür x steht (z. B. x = Alter von Tom). 2. Die Gleichung aus dem Text aufstellen. 3. Die Gleichung lösen. 4. Probe am Text machen und einen Antwortsatz schreiben.",
+      "img": "🗺️"
     }
   ]
 }

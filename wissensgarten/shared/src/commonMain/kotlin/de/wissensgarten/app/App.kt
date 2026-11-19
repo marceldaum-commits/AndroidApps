@@ -120,13 +120,15 @@ fun androidx.navigation.NavController.goOnce(route: String) {
 @Composable
 fun WissensgartenApp(vm: AppViewModel, host: AppHost, startRoute: String,
                      waterRequest: MutableStateFlow<Boolean> = MutableStateFlow(false),
-                     duelRequest: MutableStateFlow<String?> = MutableStateFlow(null)) {
-    AppUi(vm, host).Root(startRoute, waterRequest, duelRequest)
+                     duelRequest: MutableStateFlow<String?> = MutableStateFlow(null),
+                     paketRequest: MutableStateFlow<String?> = MutableStateFlow(null)) {
+    AppUi(vm, host).Root(startRoute, waterRequest, duelRequest, paketRequest)
 }
 
 private class AppUi(val vm: AppViewModel, val host: AppHost) {
     @Composable
-    fun Root(startRoute: String, waterRequest: MutableStateFlow<Boolean>, duelRequest: MutableStateFlow<String?>) {
+    fun Root(startRoute: String, waterRequest: MutableStateFlow<Boolean>, duelRequest: MutableStateFlow<String?>,
+             paketRequest: MutableStateFlow<String?> = MutableStateFlow(null)) {
             val theme by vm.theme.collectAsStateWithLifecycle()
         val soundOn by vm.settings.sound.collectAsStateWithLifecycle()
         val sfx = host.sfx
@@ -187,6 +189,24 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
                     if (t.contains("WGK1-")) { if (vm.openClassCode(t)) nav.navigate(Routes.KLASSE) }
                     else if (vm.openDuelCode(t)) nav.navigate(Routes.DUEL)
                 }
+                // Deeplink …/#paket=<ID> aus einer anderen Lern-App: Beet öffnen bzw. Paket erst pflanzen
+                val paketId by paketRequest.collectAsStateWithLifecycle()
+                val allPacks by vm.packs.collectAsStateWithLifecycle()
+                var gepflanzt by remember { mutableStateOf<String?>(null) }
+                LaunchedEffect(paketId, onboardedNow, beds, allPacks) {
+                    val id = paketId ?: return@LaunchedEffect
+                    if (!onboardedNow || allPacks.isEmpty()) return@LaunchedEffect
+                    when (val z = vm.paketZiel(id)) {
+                        is AppViewModel.PaketZiel.Beet -> {
+                            paketRequest.value = null
+                            if (gepflanzt == id) host.toast("🌱 „${z.titel}“ wächst jetzt in deinem Garten!")
+                            nav.navigate(Routes.bed(z.bedId)) { launchSingleTop = true }
+                        }
+                        is AppViewModel.PaketZiel.Pflanzen -> if (gepflanzt != id) { gepflanzt = id; vm.plantPack(z.pack) }
+                        AppViewModel.PaketZiel.Plus -> { paketRequest.value = null; host.toast("🌟 Dieses Paket gehört zu Wissensgarten Plus."); nav.navigate(Routes.SHOP) { launchSingleTop = true } }
+                        AppViewModel.PaketZiel.Unbekannt -> { paketRequest.value = null; nav.navigate(Routes.SHOP) { launchSingleTop = true } }
+                    }
+                }
                 LaunchedEffect(water, beds) {
                     if (water && beds.isNotEmpty()) {
                         waterRequest.value = false
@@ -213,7 +233,8 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
         val theory = remember(beds, packs) {
             val byId = packs.associateBy { it.id }
             val map = beds.associate { b -> b.bed.id to b.bed.packId?.let(byId::get) }
-            ({ bedId: String -> map[bedId]?.let { p -> de.wissensgarten.app.ui.common.Theory("${p.emoji} ${p.title}", p.intro) } })
+            ({ bedId: String -> map[bedId]?.let { p -> de.wissensgarten.app.ui.common.Theory("${p.emoji} ${p.title}", p.intro,
+                de.wissensgarten.core.model.Querverweise.fuer(p.id, host.testStage)) } })
         }
         CompositionLocalProvider(de.wissensgarten.app.ui.common.LocalTheory provides theory) { AppNavContent(nav, startRoute) }
     }

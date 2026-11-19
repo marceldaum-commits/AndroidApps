@@ -852,6 +852,20 @@ class AppViewModel(
 
     // --- Beete & Karten ---
 
+    /** Ziel eines Deeplinks …/#paket=<ID> (andere Lern-Apps verlinken so auf unsere Pakete) */
+    sealed interface PaketZiel {
+        data class Beet(val bedId: String, val titel: String) : PaketZiel
+        data class Pflanzen(val pack: Pack) : PaketZiel
+        data object Plus : PaketZiel
+        data object Unbekannt : PaketZiel
+    }
+
+    fun paketZiel(id: String): PaketZiel {
+        val pack = packs.value.firstOrNull { it.id == id } ?: return PaketZiel.Unbekannt
+        beds.value.firstOrNull { it.bed.packId == id }?.let { return PaketZiel.Beet(it.bed.id, pack.title) }
+        return if (entitlements.canUse(pack)) PaketZiel.Pflanzen(pack) else PaketZiel.Plus
+    }
+
     fun plantPack(pack: Pack) {
         val p = profile.value ?: return
         viewModelScope.launch { repo.plantPack(p.id, pack); refreshWidget() }
