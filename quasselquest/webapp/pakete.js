@@ -62,11 +62,12 @@
   // ------------------------------------------------------------------ Spielarten je Karte
   const EINZELWORT = /^[\p{L}'’-]{2,10}$/u;
   /** Welche Spielarten passen zu dieser Karte? */
-  P.modes = (card, lang) => {
+  P.modes = (card, lang, pack) => {
     const k = P.classify(card, lang);
     if (card.diktat) return ['bauen'];
     const m = ['ballon'];
-    if (k.kind === 'zu' && P.LANGS[lang].who) m.push('hoeren');
+    // Hör-Detektiv braucht mindestens 2 andere deutsche Bedeutungen im Paket (sonst wäre die Lösung zu leicht/unmöglich)
+    if (k.kind === 'zu' && P.LANGS[lang].who && (!pack || P.wrongs(card, pack, 3, 'de').length >= 2)) m.push('hoeren');
     if (P.bauteile(card, lang)) m.push('bauen');
     return m;
   };
@@ -117,8 +118,9 @@
     const own = feld === 'a' ? (card.choices || []) : [];
     const want = feld === 'de' ? P.classify(card, pack.lang).de : card.a;
     const art = (c) => P.classify(c, pack.lang).kind + (c.satz != null ? 's' : '');
-    const gleich = pack.cards.filter((c) => c !== card && art(c) === art(card));
-    const quelle = gleich.length >= n ? gleich : pack.cards.filter((c) => c !== card);
+    const hat = (c) => feld !== 'de' || P.classify(c, pack.lang).de;
+    const gleich = pack.cards.filter((c) => c !== card && art(c) === art(card) && hat(c));
+    const quelle = gleich.length >= n ? gleich : pack.cards.filter((c) => c !== card && hat(c));
     const pool = [...new Set(quelle.map((c) => (feld === 'de' ? P.classify(c, pack.lang).de : c.a)))]
       .filter((x) => x && x !== want && !own.includes(x));
     const out = own.slice();
@@ -220,6 +222,9 @@
     const de = lang === 'de'; const e = norm(eingabe, de);
     if (!e) return { ok: false, hinweis: 'Keine Antwort.' };
     for (const a of P.akzeptiert(card.a)) if (norm(a, de) === e) return { ok: true };
+    // Latein: Längenstriche (ā ē ī ō ū) muss niemand tippen – in Klassenarbeiten werden sie auch nicht geschrieben.
+    const ohneLaenge = (t) => t.normalize('NFD').replace(/\u0304/g, '').normalize('NFC');
+    if (lang === 'la') for (const a of P.akzeptiert(card.a)) if (ohneLaenge(norm(a, de)) === ohneLaenge(e)) return { ok: true };
     const oa = (t) => t.normalize('NFD').replace(/[̀-ͯ]/g, '');
     for (const a of P.akzeptiert(card.a)) {
       if (oa(norm(a, de)) === oa(e)) return { ok: false, fast: true, hinweis: 'Fast! Nur der Akzent fehlt oder ist falsch – in der Klassenarbeit zählt er mit.' };
@@ -240,11 +245,12 @@
     { t: 'Entdecken', e: '🔍', sub: 'Wimmelbild: Wörter finden und hören' },
     { t: 'Mach, was ich sage!', e: '🖐️', sub: 'Befehle verstehen, Wörter bauen' },
     { t: 'Sätze bauen', e: '🚂', sub: 'Regel entdecken, Sätze legen' },
-    { t: 'Ruby lernt von dir', e: '🎓', sub: 'Fehler finden, nachsprechen', stimme: true },
+    { t: 'Ruby lernt von dir', e: '🎓', sub: 'Fehler finden, nachsprechen', subLesen: 'Fehler finden, Sätze legen', stimme: true },
     { t: 'Geschichte', e: '📖', sub: 'Eine kleine Geschichte verstehen' },
   ];
-  /** Lektionen einer Einheit (ohne Stimme fällt „Hören & Sprechen“ weg). */
-  P.lektionenFuer = (lang) => P.LEKTIONEN.map((l, nr) => ({ ...l, nr })).filter((l) => !l.stimme || P.LANGS[lang].who);
+  /** Lektionen einer Einheit. Ohne Stimme (Latein) wird gelesen statt gesprochen; „Ruby lernt von dir“ bleibt, wenn es Fehlersätze gibt. */
+  P.lektionenFuer = (lang) => P.LEKTIONEN.map((l, nr) => ({ ...l, nr })).filter((l) => !l.stimme || P.LANGS[lang].who || P.LERNPFAD.includes(lang))
+    .map((l) => (l.stimme && !P.LANGS[lang].who ? { ...l, sub: l.subLesen } : l));
   /** Karten einer Einheit im Paket-Format: Wörter in beide Richtungen, Sätze in beide Richtungen, Fragen zur Geschichte. */
   P.lernPack = (e, lang) => {
     const L = P.LANGS[lang]; const cards = [];
@@ -267,6 +273,8 @@
     }
     return out;
   };
+  /** Taugt ein Satz für den Satz-Zug? Mindestens 3 Wörter, kein Wort doppelt (sonst wäre die Lösung nicht eindeutig). */
+  P.zugGeeignet = (satz) => { const w = String(satz).toLowerCase().replace(/[.,!?¿¡;:]/g, '').split(/\s+/).filter(Boolean); return w.length >= 3 && new Set(w).size === w.length; };
   const mischen = (a, rnd) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   /**
    * Die Schritte einer Lektion. Schritt = { mode, card } | { mode:'memory', cards } | { mode:'neu' } | { mode:'regel' }
@@ -279,16 +287,16 @@
     const W = e.woerter.map((_, i) => i); const S = e.saetze.map((_, i) => i);
     const steps = [];
     const abwechselnd = (cards, modes) => { let last = ''; for (const c of cards) {
-      const ok = modes.filter((m) => P.modes(c, pack.lang).includes(m) || m === 'zug');
+      const ok = modes.filter((m) => P.modes(c, pack.lang, pack).includes(m) || m === 'zug');
       const pick = ok.filter((m) => m !== last); const m = (pick.length ? pick : ok)[Math.floor(rnd() * (pick.length ? pick.length : ok.length))] || 'ballon';
       last = m; steps.push({ mode: m, card: c });
     } };
     const akt = mischen(e.aktionen || [], rnd); const feh = mischen(e.fehler || [], rnd);
-    if (nr === 0 && stimme) {
+    if (nr === 0 && (stimme || pack.lang === 'la')) {
       steps.push({ mode: 'wimmel' });
       const ws = mischen(W, rnd);
       steps.push({ mode: 'memory', cards: ws.slice(0, 3).map((i) => C('w' + i + 'v')) });
-      abwechselnd(ws.slice(3, 7).map((i) => C('w' + i + 'v')), ['hoeren', 'ballon']);
+      abwechselnd(ws.slice(3, 7).map((i) => C('w' + i + 'v')), stimme ? ['hoeren', 'ballon'] : ['ballon', 'bauen']);
     } else if (nr === 1 && akt.length) {
       const ws = mischen(W, rnd);
       akt.slice(0, 3).forEach((a, k) => { steps.push({ mode: 'tpr', aktion: a }); steps.push({ mode: k === 1 ? 'ballon' : 'bauen', card: C('w' + ws[k] + 'z') }); });
@@ -299,7 +307,7 @@
       const ss = mischen(S, rnd);
       feh.forEach((f, k) => {
         steps.push({ mode: 'lehrer', fehler: f });
-        if (k < ss.length) steps.push({ mode: 'sprechen', text: e.saetze[ss[k]][0], de: e.saetze[ss[k]][1], img: e.saetze[ss[k]][2] });
+        if (k < ss.length) steps.push(stimme ? { mode: 'sprechen', text: e.saetze[ss[k]][0], de: e.saetze[ss[k]][1], img: e.saetze[ss[k]][2] } : { mode: k % 2 ? 'ballon' : 'zug', card: C('s' + ss[k] + (k % 2 ? 'v' : 'z')) });
       });
     } else if (nr === 0) {
       steps.push({ mode: 'neu' });
@@ -388,6 +396,20 @@
     const frisch = pack.cards.filter((c) => !st(c)).slice(0, neu);
     const rest = pack.cards.filter((c) => st(c) && st(c).d > day).sort((x, y) => st(x).d - st(y).d);
     return faellig.concat(frisch, rest).slice(0, n);
+  };
+  /**
+   * n Ziele ohne Wiederholung ziehen (wie aus einem Beutel): erst wenn alle dran waren, wird neu gemischt –
+   * und das erste Ziel der neuen Runde ist nie das letzte der alten. So kommen nie dieselben 2 Aufgaben abwechselnd.
+   */
+  P.ziehen = (items, n, rnd) => {
+    rnd = rnd || Math.random; const out = [];
+    if (!items || !items.length) return out;
+    while (out.length < n) {
+      const b = mischen(items, rnd);
+      if (out.length && b.length > 1 && b[0] === out[out.length - 1]) b.push(b.shift());
+      out.push(...b);
+    }
+    return out.slice(0, n);
   };
   /** Wie viele Karten sitzen (Kasten 3 oder höher)? */
   P.mastered = (store, pack) => pack.cards.filter((c) => (store[P.key(pack, c)] || {}).b >= 3).length;

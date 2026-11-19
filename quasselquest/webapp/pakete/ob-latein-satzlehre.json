@@ -1,0 +1,460 @@
+{
+  "id": "ob-latein-satzlehre",
+  "version": 1,
+  "title": "Latein Satzlehre: AcI bis ut/nē",
+  "subject": "latein",
+  "grades": [
+    9,
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "🦅",
+  "tier": "free",
+  "description": "AcI, Partizipien, Ablativus absolutus, Relativsätze, cum und ut/nē – geübt an eigenen Sätzen und echten Originalsätzen von Caesar, Cicero, Seneca und Nepos.",
+  "intro": [
+    {
+      "img": "🧩🗣️",
+      "text": "Der AcI ist der Klassiker: „Videō tē rīdēre“ – Ich sehe, dass du lachst. Akkusativ + Infinitiv = ein dass-Satz."
+    },
+    {
+      "img": "⏮️⏸️⏭️",
+      "text": "Zeitverhältnisse: Präsens = gleichzeitig, Perfekt = vorzeitig, Futur = nachzeitig. Das gilt für Infinitive und Partizipien."
+    },
+    {
+      "img": "🧲🔤",
+      "text": "Ablativus absolutus: Nomen + Partizip im Ablativ bilden einen eigenen kleinen Satz. „Urbe captā“ – nachdem die Stadt erobert worden war."
+    },
+    {
+      "img": "🔀🎯",
+      "text": "cum mit Konjunktiv heißt als, nachdem, weil oder obwohl. ut/nē mit Konjunktiv: damit (nicht), sodass."
+    },
+    {
+      "img": "📜🦅",
+      "text": "Hier liest du echte Sätze von Caesar, Cicero, Seneca und Nepos – über 2000 Jahre alt, und du verstehst sie!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was ist ein AcI?",
+      "a": "Akkusativ mit Infinitiv: ein Akkusativ als Subjekt und ein Infinitiv als Prädikat",
+      "choices": [
+        "ein Ablativ mit Partizip als eigener Gedanke",
+        "ein Relativsatz im Akkusativ",
+        "ein Imperativ mit Akkusativobjekt"
+      ],
+      "img": "🧩🗣️",
+      "info": "Ein AcI steht nach Verben des Sagens, Denkens, Wahrnehmens (dīcere, putāre, vidēre …) und wird meist mit „dass“ übersetzt."
+    },
+    {
+      "id": "002",
+      "q": "Was bedeutet „Mārcus amīcum venīre videt.“?",
+      "a": "Markus sieht, dass der Freund kommt.",
+      "choices": [
+        "Markus sieht, dass der Freund gekommen ist.",
+        "Der Freund sieht, dass Markus kommt.",
+        "Markus kommt, um den Freund zu sehen."
+      ],
+      "img": "👀🚶",
+      "info": "Akkusativ amīcum + Infinitiv venīre = AcI. Infinitiv Präsens → gleichzeitig."
+    },
+    {
+      "id": "003",
+      "q": "Was bedeutet „Scīmus Rōmānōs multa bella gessisse.“?",
+      "a": "Wir wissen, dass die Römer viele Kriege geführt haben.",
+      "choices": [
+        "Wir wissen, dass die Römer viele Kriege führen.",
+        "Die Römer wissen, dass wir viele Kriege geführt haben.",
+        "Wir wussten, dass die Römer viele Kriege geführt hatten."
+      ],
+      "img": "⚔️📜",
+      "info": "gessisse = Infinitiv Perfekt von gerere → vorzeitig: „geführt haben“."
+    },
+    {
+      "id": "004",
+      "q": "Welches Zeitverhältnis drückt der Infinitiv Perfekt im AcI aus?",
+      "a": "Vorzeitigkeit",
+      "choices": [
+        "Gleichzeitigkeit",
+        "Nachzeitigkeit",
+        "gar keines"
+      ],
+      "img": "⏮️",
+      "info": "Infinitiv Präsens = gleichzeitig, Infinitiv Perfekt = vorzeitig, Infinitiv Futur = nachzeitig."
+    },
+    {
+      "id": "005",
+      "q": "Was bedeutet „Nūntius dīcit hostēs ventūrōs esse.“?",
+      "a": "Der Bote sagt, dass die Feinde kommen werden.",
+      "choices": [
+        "Der Bote sagt, dass die Feinde kommen.",
+        "Der Bote sagt, dass die Feinde gekommen sind.",
+        "Die Feinde sagen dem Boten, dass sie kommen werden."
+      ],
+      "img": "📯⚔️",
+      "info": "ventūrōs esse = Infinitiv Futur → nachzeitig."
+    },
+    {
+      "id": "006",
+      "q": "Was bedeutet „Mārcus dīcit sē fessum esse.“?",
+      "a": "Markus sagt, dass er (selbst) müde ist.",
+      "choices": [
+        "Markus sagt, dass er müde war.",
+        "Markus sagt, dass die anderen müde sind.",
+        "Markus sagt, dass er müde sein wird."
+      ],
+      "img": "😩💤",
+      "info": "sē im AcI zeigt zurück auf das Subjekt des Satzes (Markus)."
+    },
+    {
+      "id": "007",
+      "q": "Was bedeutet „Persuādē tibi hoc sīc esse, ut scrībō.“?",
+      "a": "Überzeuge dich davon, dass es so ist, wie ich schreibe.",
+      "choices": [
+        "Ich überzeuge dich, damit du so schreibst wie ich.",
+        "Überzeuge dich, dass ich so schreibe, wie es ist.",
+        "Du hast mich überzeugt, dass es so ist, wie ich schreibe."
+      ],
+      "img": "✉️🧘",
+      "info": "Seneca, Briefe an Lucilius 1,1. AcI: hoc sīc esse. ut + Indikativ (scrībō) heißt „wie“."
+    },
+    {
+      "id": "008",
+      "q": "Was bedeutet „Patēre tua cōnsilia nōn sentīs?“?",
+      "a": "Merkst du nicht, dass deine Pläne offen daliegen?",
+      "choices": [
+        "Merkst du nicht, dass wir deine Pläne verraten haben?",
+        "Deine Pläne merken nicht, dass sie offenliegen.",
+        "Willst du deine Pläne nicht offenlegen?"
+      ],
+      "img": "🕵️📜",
+      "info": "Cicero, Erste Rede gegen Catilina 1,1. AcI: tua cōnsilia patēre (patēre = offen daliegen)."
+    },
+    {
+      "id": "009",
+      "q": "Was bedeutet „… iūrāre iussit numquam mē in amīcitiā cum Rōmānīs fore.“?",
+      "a": "… er ließ (mich) schwören, dass ich niemals mit den Römern in Freundschaft sein werde.",
+      "choices": [
+        "… er ließ (mich) schwören, dass ich niemals mit den Römern befreundet war.",
+        "… er schwor, dass er niemals mit den Römern in Freundschaft sein werde.",
+        "… er befahl den Römern zu schwören, niemals meine Freunde zu sein."
+      ],
+      "img": "🐘🔥",
+      "info": "Nepos, Hannibal 2,4: Hannibal erzählt vom Schwur, den sein Vater ihn als Kind leisten ließ. fore = futūrum esse (Infinitiv Futur)."
+    },
+    {
+      "id": "010",
+      "q": "Was bedeutet „Puer clāmāns per viam currit.“?",
+      "a": "Der Junge läuft schreiend durch die Straße.",
+      "choices": [
+        "Der Junge läuft durch die Straße, nachdem er geschrien hat.",
+        "Der schreiende Junge wurde durch die Straße gejagt.",
+        "Der Junge schreit, weil er durch die Straße läuft."
+      ],
+      "img": "🧒📢",
+      "info": "clāmāns = Partizip Präsens Aktiv, bezogen auf puer (Participium coniunctum) → gleichzeitig."
+    },
+    {
+      "id": "011",
+      "q": "Was bedeutet „Mīlitēs ab hostibus victī fūgērunt.“?",
+      "a": "Die Soldaten flohen, nachdem sie von den Feinden besiegt worden waren.",
+      "choices": [
+        "Die Soldaten besiegten die Feinde und flohen.",
+        "Die Soldaten flohen, damit sie nicht von den Feinden besiegt würden.",
+        "Die Soldaten flohen vor den Feinden, die besiegt worden waren."
+      ],
+      "img": "🛡️🏃",
+      "info": "victī = PPP, bezogen auf mīlitēs → vorzeitig und passiv. Auch gut: „Die von den Feinden besiegten Soldaten flohen.“"
+    },
+    {
+      "id": "012",
+      "q": "Welches Partizip drückt Gleichzeitigkeit aus?",
+      "a": "Partizip Präsens Aktiv (PPA, z. B. vocāns)",
+      "choices": [
+        "Partizip Perfekt Passiv (PPP, z. B. vocātus)",
+        "Partizip Futur Aktiv (PFA, z. B. vocātūrus)",
+        "Infinitiv Perfekt (z. B. vocāvisse)"
+      ],
+      "img": "⏱️🔁",
+      "info": "PPA = gleichzeitig, PPP = vorzeitig, PFA = nachzeitig."
+    },
+    {
+      "id": "013",
+      "q": "Welche Übersetzungsmöglichkeit passt zu einem Participium coniunctum?",
+      "a": "Relativsatz, Adverbialsatz (z. B. nachdem, weil) oder Beiordnung",
+      "choices": [
+        "nur ein dass-Satz",
+        "nur ein Infinitiv mit „zu“",
+        "nur wörtlich als Partizip, nie als Nebensatz"
+      ],
+      "img": "🛠️📝",
+      "info": "Probiere mehrere Möglichkeiten und nimm die, die im Deutschen am besten klingt."
+    },
+    {
+      "id": "014",
+      "q": "In „Is … rēgnī cupiditāte inductus coniūrātiōnem nōbilitātis fēcit.“ – worauf bezieht sich „inductus“?",
+      "a": "auf „is“ (Orgetorix)",
+      "choices": [
+        "auf „cupiditāte“",
+        "auf „coniūrātiōnem“",
+        "auf „nōbilitātis“"
+      ],
+      "img": "👑🤫",
+      "info": "Caesar, Der Gallische Krieg 1,2. inductus (Nominativ Singular maskulin) passt nur zu is."
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „rēgnī cupiditāte inductus“?",
+      "a": "verleitet durch das Verlangen nach der Königsherrschaft",
+      "choices": [
+        "verleitet durch die Gier des Königs",
+        "weil er das Königreich verlassen wollte",
+        "das Verlangen der Königsherrschaft anführend"
+      ],
+      "img": "👑💭",
+      "info": "Caesar, Der Gallische Krieg 1,2 (über Orgetorix). rēgnī ist Genitiv des Objekts: Verlangen nach dem Königtum."
+    },
+    {
+      "id": "016",
+      "q": "Was ist ein Ablativus absolutus?",
+      "a": "Nomen und Partizip im Ablativ, die zusammen einen eigenen Nebensatz-Gedanken bilden",
+      "choices": [
+        "ein Akkusativ mit Infinitiv nach Verben des Sagens",
+        "ein Relativsatz, der im Ablativ steht",
+        "ein Ablativ, der immer „mit“ bedeutet"
+      ],
+      "img": "🧲🔤",
+      "info": "Der Abl. abs. ist „losgelöst“ (absolūtus) vom Rest des Satzes. Übersetzung oft mit als, nachdem, weil, während."
+    },
+    {
+      "id": "017",
+      "q": "Was bedeutet „Sōle oriente puerī surgunt.“?",
+      "a": "Während die Sonne aufgeht, stehen die Jungen auf.",
+      "choices": [
+        "Nachdem die Sonne aufgegangen war, standen die Jungen auf.",
+        "Die Jungen stehen auf, damit die Sonne aufgeht.",
+        "Die Sonne geht auf, weil die Jungen aufstehen."
+      ],
+      "img": "🌅🧒",
+      "info": "oriente = PPA → gleichzeitig. Auch gut: „Bei Sonnenaufgang …“"
+    },
+    {
+      "id": "018",
+      "q": "Was bedeutet „Urbe captā hostēs domum rediērunt.“?",
+      "a": "Nachdem die Stadt erobert worden war, kehrten die Feinde nach Hause zurück.",
+      "choices": [
+        "Während die Stadt erobert wurde, kehrten die Feinde nach Hause zurück.",
+        "Die Feinde eroberten die Stadt, um nach Hause zurückzukehren.",
+        "Weil die Stadt nicht erobert worden war, kehrten die Feinde zurück."
+      ],
+      "img": "🏰🏳️",
+      "info": "captā = PPP → vorzeitig und passiv. Auch gut: „Nach der Eroberung der Stadt …“"
+    },
+    {
+      "id": "019",
+      "q": "Was bedeutet „Hīs rēbus gestīs omnī Galliā pācātā …“?",
+      "a": "Nachdem dies erledigt und ganz Gallien befriedet worden war, …",
+      "choices": [
+        "Während diese Dinge getan wurden, befriedete ganz Gallien …",
+        "Mit diesen Taten befriedete er ganz Gallien …",
+        "Weil Gallien diese Dinge getan hatte, war es ganz friedlich …"
+      ],
+      "img": "🗺️🕊️",
+      "info": "Caesar, Der Gallische Krieg 2,35 – gleich zwei Ablativi absoluti hintereinander."
+    },
+    {
+      "id": "020",
+      "q": "Was bedeutet „M. Messālā et M. Pīsōne cōnsulibus“?",
+      "a": "unter dem Konsulat von Marcus Messala und Marcus Piso",
+      "choices": [
+        "gegen die Konsuln Marcus Messala und Marcus Piso",
+        "den Konsuln Marcus Messala und Marcus Piso zuliebe",
+        "nach dem Tod der Konsuln Marcus Messala und Marcus Piso"
+      ],
+      "img": "📅🏛️",
+      "info": "Caesar, Der Gallische Krieg 1,2. Nominaler Ablativus absolutus: So gaben die Römer Jahreszahlen an (hier 61 v. Chr.)."
+    },
+    {
+      "id": "021",
+      "q": "Bestimme „Caesare duce“.",
+      "a": "Ablativus absolutus ohne Partizip (nominal)",
+      "choices": [
+        "Akkusativ mit Infinitiv",
+        "Participium coniunctum",
+        "Dativ des Besitzers"
+      ],
+      "img": "🦅🪖",
+      "info": "Caesare duce = unter der Führung Caesars. Das fehlende Partizip ergänzt man mit „sein“."
+    },
+    {
+      "id": "022",
+      "q": "Bestimme „quem“ in „Amīcus, quem vīdistī, Rōmā venit.“",
+      "a": "Akkusativ Singular, bezogen auf „amīcus“",
+      "choices": [
+        "Nominativ Singular, bezogen auf „amīcus“",
+        "Ablativ Singular, bezogen auf „Rōmā“",
+        "Akkusativ Plural, bezogen auf „amīcus“"
+      ],
+      "img": "🔗👤",
+      "info": "Der Freund, den du gesehen hast, kommt aus Rom. Geschlecht und Zahl vom Bezugswort, Kasus aus dem Relativsatz."
+    },
+    {
+      "id": "023",
+      "q": "Puella, ___ librum dedī, gaudet. (Relativpronomen: der ich das Buch gegeben habe)",
+      "a": "cui",
+      "choices": [
+        "quae",
+        "quam",
+        "cuius"
+      ],
+      "img": "👧📖",
+      "info": "Wem? → Dativ Singular: cui."
+    },
+    {
+      "id": "024",
+      "q": "Templa, ___ Rōmānī aedificāvērunt, magna sunt. (Relativpronomen: die – Akkusativ Plural Neutrum)",
+      "a": "quae",
+      "choices": [
+        "quōs",
+        "quās",
+        "quōrum"
+      ],
+      "img": "🏛️🔨",
+      "info": "Relativpronomen Neutrum Plural: quae (Nominativ und Akkusativ)."
+    },
+    {
+      "id": "025",
+      "q": "In „Gallia est omnis dīvīsa in partēs trēs, quārum ūnam incolunt Belgae …“ – worauf bezieht sich „quārum“?",
+      "a": "auf „partēs“",
+      "choices": [
+        "auf „Gallia“",
+        "auf „Belgae“",
+        "auf „omnis“"
+      ],
+      "img": "🗺️🔗",
+      "info": "Caesar, Der Gallische Krieg 1,1: „… in drei Teile, von denen die Belger den einen bewohnen“."
+    },
+    {
+      "id": "026",
+      "q": "Was bedeutet „Gallia est omnis dīvīsa in partēs trēs.“?",
+      "a": "Gallien in seiner Gesamtheit ist in drei Teile geteilt.",
+      "choices": [
+        "Ganz Gallien teilt sich in drei Parteien auf.",
+        "Gallien wurde von allen in drei Teile geteilt.",
+        "Gallien ist das Ganze aus drei Völkern."
+      ],
+      "img": "🗺️✂️",
+      "info": "Caesar, Der Gallische Krieg 1,1 – der berühmteste erste Satz der Schullektüre."
+    },
+    {
+      "id": "027",
+      "q": "Was bedeutet „Cum hostēs appropinquārent, mīlitēs portās clausērunt.“?",
+      "a": "Als (weil) sich die Feinde näherten, schlossen die Soldaten die Tore.",
+      "choices": [
+        "Weil die Soldaten die Tore schlossen, näherten sich die Feinde.",
+        "Obwohl sich die Feinde näherten, öffneten die Soldaten die Tore.",
+        "Zusammen mit den Feinden schlossen die Soldaten die Tore."
+      ],
+      "img": "🚪🔒",
+      "info": "cum + Konjunktiv Imperfekt → gleichzeitig. Ob „als“ oder „weil“, entscheidet der Zusammenhang."
+    },
+    {
+      "id": "028",
+      "q": "Welche Bedeutungen kann „cum“ mit Konjunktiv haben?",
+      "a": "als, nachdem, weil, obwohl",
+      "choices": [
+        "mit (wie die Präposition)",
+        "damit, um zu",
+        "dass (wie im AcI)"
+      ],
+      "img": "🔀",
+      "info": "cum + Konjunktiv: temporal (als, nachdem), kausal (weil), konzessiv (obwohl)."
+    },
+    {
+      "id": "029",
+      "q": "Was bedeutet „Caesarī cum id nūntiātum esset, eōs per prōvinciam nostram iter facere cōnārī, mātūrat ab urbe proficīscī.“?",
+      "a": "Als Caesar gemeldet worden war, dass sie versuchten, durch unsere Provinz zu ziehen, beeilt er sich, von der Stadt aufzubrechen.",
+      "choices": [
+        "Als Caesar meldete, dass sie durch unsere Provinz ziehen wollten, zögerte er, die Stadt zu verlassen.",
+        "Weil sie Caesar gemeldet hatten, durch die Provinz zu ziehen, eilten sie aus der Stadt.",
+        "Caesar meldet, dass sie durch unsere Provinz gezogen sind, und eilt in die Stadt."
+      ],
+      "img": "🐎💨",
+      "info": "Caesar, Der Gallische Krieg 1,7 (über die Helvetier). cum + Konj. Plusquamperfekt → vorzeitig; darin ein AcI: eōs … cōnārī. ab urbe = aus Rom."
+    },
+    {
+      "id": "030",
+      "q": "Was bedeutet „Venīmus, ut tē videāmus.“?",
+      "a": "Wir kommen, um dich zu sehen.",
+      "choices": [
+        "Wir kommen, wie wir dich sehen.",
+        "Wir kommen, weil wir dich gesehen haben.",
+        "Wir kommen, sodass du uns siehst."
+      ],
+      "img": "🚶👀",
+      "info": "ut + Konjunktiv als Absicht (final) = damit, um zu."
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet „Tacē, nē dominus nōs audiat!“?",
+      "a": "Schweig, damit der Herr uns nicht hört!",
+      "choices": [
+        "Schweig, wenn der Herr uns hört!",
+        "Schweig nicht, damit der Herr uns hört!",
+        "Schweig, weil der Herr uns nicht hört!"
+      ],
+      "img": "🤫👂",
+      "info": "nē + Konjunktiv = damit nicht."
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet „Tam fessus erat, ut dormīret.“?",
+      "a": "Er war so müde, dass er schlief.",
+      "choices": [
+        "Er war müde, damit er schlafen konnte.",
+        "Er war so müde, wie er schlief.",
+        "Er schlief, obwohl er nicht müde war."
+      ],
+      "img": "😴💤",
+      "info": "tam … ut = so …, dass (Folge, konsekutiv)."
+    },
+    {
+      "id": "033",
+      "q": "Was bedeutet „Ēsse oportet, ut vīvās, nōn vīvere, ut edās.“?",
+      "a": "Man muss essen, um zu leben, nicht leben, um zu essen.",
+      "choices": [
+        "Man muss leben, um zu essen, nicht essen, um zu leben.",
+        "Man muss sein, wie man lebt, nicht leben, wie man isst.",
+        "Du sollst essen, damit andere leben, nicht leben, damit andere essen."
+      ],
+      "img": "🍞🙂",
+      "info": "Rhetorica ad Herennium 4,39 (lange Cicero zugeschrieben). ēsse (langes ē, von edere) = essen; esse = sein. ut + Konjunktiv = um zu."
+    },
+    {
+      "id": "034",
+      "q": "Welcher Modus folgt auf finales „ut“ und „nē“?",
+      "a": "Konjunktiv",
+      "choices": [
+        "Indikativ",
+        "Imperativ",
+        "Infinitiv"
+      ],
+      "img": "🎯",
+      "info": "Absicht oder Folge → Konjunktiv. Mit Indikativ heißt ut „wie“ oder „als“."
+    },
+    {
+      "id": "035",
+      "q": "Was bedeutet „Hominēs, dum docent, discunt.“?",
+      "a": "Die Menschen lernen, während sie lehren.",
+      "choices": [
+        "Die Menschen lehren, während sie lernen.",
+        "Die Menschen lernen, damit sie lehren.",
+        "Die Menschen lehrten, bevor sie lernten."
+      ],
+      "img": "👩‍🏫🧠",
+      "info": "Seneca, Briefe an Lucilius 7,8. dum + Indikativ Präsens = während."
+    }
+  ]
+}

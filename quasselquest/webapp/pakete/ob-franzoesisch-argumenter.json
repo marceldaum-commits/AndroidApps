@@ -1,0 +1,446 @@
+{
+  "id": "ob-franzoesisch-argumenter",
+  "version": 1,
+  "title": "Argumenter & commenter",
+  "subject": "franzoesisch",
+  "grades": [
+    10,
+    11,
+    12,
+    13
+  ],
+  "emoji": "🗣️",
+  "tier": "free",
+  "description": "Oberstufe: Meinung äußern, Verbindungswörter, subjonctif nach bien que, Wortschatz Umwelt, Medien, Gesellschaft und Stilmittel.",
+  "intro": [
+    {
+      "img": "🗣️⚖️",
+      "text": "Im Kommentar zählt nicht nur WAS du denkst, sondern WIE du es verbindest: These, Argument, Beispiel, Gegenargument, Fazit."
+    },
+    {
+      "img": "🔗🧭",
+      "text": "Verbindungswörter sind Wegweiser für den Leser: donc (Folge), cependant (Gegensatz), de plus (Ergänzung), en conclusion (Schluss)."
+    },
+    {
+      "img": "🧠✨",
+      "text": "Lerntrick: Nach Wunsch, Gefühl, Pflicht, Zweifel und „obwohl“ kommt der subjonctif. Merksatz: „Il faut que tu saches : bien que ce soit dur, ça vaut le coup !“"
+    },
+    {
+      "img": "🎤❓",
+      "text": "Rhetorische Fragen, Metaphern, Aufzählungen: Wer die Stilmittel benennen kann, analysiert jeden Text sicherer."
+    },
+    {
+      "img": "🏆🚀",
+      "text": "À toi de jouer ! Zeig, dass du überzeugen kannst."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was bedeutet „cependant“?",
+      "a": "jedoch",
+      "choices": [
+        "deshalb",
+        "außerdem",
+        "zum Beispiel"
+      ],
+      "img": "⚖️↩️"
+    },
+    {
+      "id": "002",
+      "q": "Was bedeutet „en revanche“?",
+      "a": "hingegen",
+      "choices": [
+        "außerdem",
+        "folglich",
+        "schließlich"
+      ],
+      "img": "↔️"
+    },
+    {
+      "id": "003",
+      "q": "Was bedeutet „donc“?",
+      "a": "also",
+      "choices": [
+        "obwohl",
+        "trotzdem",
+        "nämlich"
+      ],
+      "img": "➡️🧩"
+    },
+    {
+      "id": "004",
+      "q": "Was bedeutet „par conséquent“?",
+      "a": "folglich",
+      "choices": [
+        "im Gegenteil",
+        "trotzdem",
+        "einerseits"
+      ],
+      "img": "🎯"
+    },
+    {
+      "id": "005",
+      "q": "Was bedeutet „d'une part … d'autre part“?",
+      "a": "einerseits … andererseits",
+      "choices": [
+        "zuerst … dann",
+        "entweder … oder",
+        "weder … noch"
+      ],
+      "img": "🤲"
+    },
+    {
+      "id": "006",
+      "q": "Bien qu'il ___ tard, nous continuons. (être)",
+      "a": "soit",
+      "choices": [
+        "est",
+        "sera",
+        "était"
+      ],
+      "img": "🌙💪",
+      "info": "bien que + subjonctif"
+    },
+    {
+      "id": "007",
+      "q": "Bien qu'elle ___ raison, personne ne l'écoute. (avoir)",
+      "a": "ait",
+      "choices": [
+        "a",
+        "avait",
+        "aie"
+      ],
+      "img": "👩‍🏫🙉",
+      "info": "subjonctif von avoir: que j'aie, qu'elle ait"
+    },
+    {
+      "id": "008",
+      "q": "Il faut que nous ___ moins de plastique. (utiliser)",
+      "a": "utilisions",
+      "choices": [
+        "utilisons",
+        "utiliserons",
+        "utilisez"
+      ],
+      "img": "♻️🛍️",
+      "info": "il faut que + subjonctif"
+    },
+    {
+      "id": "009",
+      "q": "Je ne pense pas que ce ___ une bonne idée. (être)",
+      "a": "soit",
+      "choices": [
+        "est",
+        "sois",
+        "sont"
+      ],
+      "img": "🤔👎",
+      "info": "Verneintes penser drückt Zweifel aus → subjonctif."
+    },
+    {
+      "id": "010",
+      "q": "Je pense que c'___ important. (être)",
+      "a": "est",
+      "choices": [
+        "soit",
+        "sois",
+        "être"
+      ],
+      "img": "💭✅",
+      "info": "Bejahtes penser → indicatif."
+    },
+    {
+      "id": "011",
+      "q": "Il faut que chacun ___ des efforts. (faire)",
+      "a": "fasse",
+      "choices": [
+        "fait",
+        "fera",
+        "faisons"
+      ],
+      "img": "💪🌍"
+    },
+    {
+      "id": "012",
+      "q": "Nach welcher Konjunktion steht immer der subjonctif?",
+      "a": "bien que",
+      "choices": [
+        "parce que",
+        "puisque",
+        "alors que"
+      ],
+      "img": "🔗"
+    },
+    {
+      "id": "013",
+      "q": "Was heißt „meiner Meinung nach“ auf Französisch?",
+      "a": "à mon avis",
+      "choices": [
+        "à ma avis",
+        "dans mon avis",
+        "en mon avis"
+      ],
+      "img": "🙋💬"
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „Ich bin einverstanden.“ auf Französisch?",
+      "a": "Je suis d'accord.",
+      "choices": [
+        "J'ai d'accord.",
+        "Je suis accord.",
+        "Je fais d'accord."
+      ],
+      "img": "🤝👍"
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „Je ne partage pas cet avis.“?",
+      "a": "Ich teile diese Meinung nicht.",
+      "choices": [
+        "Ich habe keine Meinung dazu.",
+        "Ich teile das Essen nicht.",
+        "Ich ändere meine Meinung nicht."
+      ],
+      "img": "🙅💬"
+    },
+    {
+      "id": "016",
+      "q": "Was bedeutet „Il est évident que …“?",
+      "a": "Es ist offensichtlich, dass …",
+      "choices": [
+        "Es ist unwahrscheinlich, dass …",
+        "Es ist schade, dass …",
+        "Es ist verboten, dass …"
+      ],
+      "img": "🔦"
+    },
+    {
+      "id": "017",
+      "q": "Was bedeutet „Force est de constater que …“?",
+      "a": "Man muss feststellen, dass …",
+      "choices": [
+        "Mit Gewalt muss man …",
+        "Die Kraft liegt darin, dass …",
+        "Man darf nicht vergessen, dass …"
+      ],
+      "img": "🔍📋"
+    },
+    {
+      "id": "018",
+      "q": "Was bedeutet „Il convient de souligner que …“?",
+      "a": "Man sollte hervorheben, dass …",
+      "choices": [
+        "Es passt nicht, dass …",
+        "Man muss bezweifeln, dass …",
+        "Es ist bequem zu sagen, dass …"
+      ],
+      "img": "🖍️"
+    },
+    {
+      "id": "019",
+      "q": "Was bedeutet „en conclusion“?",
+      "a": "abschließend",
+      "choices": [
+        "zunächst",
+        "im Gegensatz",
+        "zum Beispiel"
+      ],
+      "img": "🏁"
+    },
+    {
+      "id": "020",
+      "q": "Welcher Ausdruck leitet eine Schlussfolgerung ein?",
+      "a": "Pour conclure, …",
+      "choices": [
+        "Tout d'abord, …",
+        "Par exemple, …",
+        "De plus, …"
+      ],
+      "img": "🔚"
+    },
+    {
+      "id": "021",
+      "q": "Les réseaux sociaux sont utiles ; ___, ils peuvent rendre dépendant. (jedoch)",
+      "a": "cependant",
+      "choices": [
+        "donc",
+        "ainsi",
+        "car"
+      ],
+      "img": "📱⚖️",
+      "info": "Auch pourtant oder toutefois würden passen."
+    },
+    {
+      "id": "022",
+      "q": "Les transports publics polluent moins que la voiture. Il faut ___ les développer. (also)",
+      "a": "donc",
+      "choices": [
+        "cependant",
+        "bien que",
+        "pourtant"
+      ],
+      "img": "🚌🌱"
+    },
+    {
+      "id": "023",
+      "q": "Was bedeutet „le réchauffement climatique“?",
+      "a": "die Erderwärmung",
+      "choices": [
+        "die Klimaanlage",
+        "die Heizung",
+        "der Wetterbericht"
+      ],
+      "img": "🌡️🌍"
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „der Umweltschutz“ auf Französisch?",
+      "a": "la protection de l'environnement",
+      "choices": [
+        "la protection de la environnement",
+        "le protection de l'environnement",
+        "la protection de l'environment"
+      ],
+      "img": "🌱🛡️"
+    },
+    {
+      "id": "025",
+      "q": "Was bedeutet „les déchets“?",
+      "a": "der Müll",
+      "choices": [
+        "die Verschwendung",
+        "die Verschmutzung",
+        "die Abgase"
+      ],
+      "img": "🗑️",
+      "info": "la pollution = die Verschmutzung, le gaspillage = die Verschwendung"
+    },
+    {
+      "id": "026",
+      "q": "Was heißt „die Umweltverschmutzung“ auf Französisch?",
+      "a": "la pollution",
+      "choices": [
+        "le pollution",
+        "la polution",
+        "la pollutation"
+      ],
+      "img": "🏭💨"
+    },
+    {
+      "id": "027",
+      "q": "Was bedeutet „les énergies renouvelables“?",
+      "a": "die erneuerbaren Energien",
+      "choices": [
+        "die fossilen Energien",
+        "die Energiesparlampen",
+        "die Atomenergie"
+      ],
+      "img": "☀️🌬️"
+    },
+    {
+      "id": "028",
+      "q": "Was heißt „die sozialen Netzwerke“ auf Französisch?",
+      "a": "les réseaux sociaux",
+      "choices": [
+        "les réseaus sociaux",
+        "les réseaux socials",
+        "les résaux sociaux"
+      ],
+      "img": "📱💬",
+      "info": "réseau → réseaux, social → sociaux"
+    },
+    {
+      "id": "029",
+      "q": "Was bedeutet „une fausse information“?",
+      "a": "eine Falschmeldung",
+      "choices": [
+        "eine Eilmeldung",
+        "eine Wettervorhersage",
+        "eine Werbung"
+      ],
+      "img": "📰❓"
+    },
+    {
+      "id": "030",
+      "q": "Was heißt „die Bildschirmzeit“ auf Französisch?",
+      "a": "le temps d'écran",
+      "choices": [
+        "la temps d'écran",
+        "le temps de écran",
+        "le temps d'écrin"
+      ],
+      "img": "📱⏳"
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet „la dépendance“?",
+      "a": "die Abhängigkeit",
+      "choices": [
+        "die Unabhängigkeit",
+        "die Abteilung",
+        "die Nebenwirkung"
+      ],
+      "img": "📱🔗"
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet „l'égalité des chances“?",
+      "a": "die Chancengleichheit",
+      "choices": [
+        "das Glücksspiel",
+        "die Wahlfreiheit",
+        "die Mehrheit"
+      ],
+      "img": "⚖️🎓"
+    },
+    {
+      "id": "033",
+      "q": "Was heißt „die Arbeitslosigkeit“ auf Französisch?",
+      "a": "le chômage",
+      "choices": [
+        "la chômage",
+        "le chômeur",
+        "le chomage"
+      ],
+      "img": "📉💼",
+      "info": "le chômeur = der Arbeitslose"
+    },
+    {
+      "id": "034",
+      "q": "Was bedeutet „la mondialisation“?",
+      "a": "die Globalisierung",
+      "choices": [
+        "die Weltmeisterschaft",
+        "die Weltanschauung",
+        "die Mondlandung"
+      ],
+      "img": "🌐🚢"
+    },
+    {
+      "id": "035",
+      "q": "„Qui n'a jamais rêvé de voyager ?“ – welches Stilmittel ist das?",
+      "a": "eine rhetorische Frage",
+      "choices": [
+        "eine Metapher",
+        "eine Aufzählung",
+        "ein Vergleich"
+      ],
+      "img": "🎤🤔",
+      "info": "Eine rhetorische Frage erwartet keine Antwort."
+    },
+    {
+      "id": "036",
+      "q": "„Internet est une fenêtre sur le monde.“ – welches Stilmittel ist das?",
+      "a": "eine Metapher",
+      "choices": [
+        "ein Vergleich",
+        "eine Anapher",
+        "eine rhetorische Frage"
+      ],
+      "img": "💻🌍",
+      "info": "Mit „comme“ wäre es ein Vergleich."
+    }
+  ]
+}

@@ -1,0 +1,454 @@
+{
+  "id": "s2-latein-wortschatz",
+  "version": 1,
+  "title": "Latein Wortschatz Lernjahr 2",
+  "subject": "latein",
+  "grades": [
+    7,
+    8,
+    9
+  ],
+  "emoji": "📜",
+  "tier": "free",
+  "description": "35 wichtige Lernwörter: Nomen der 3. Deklination mit Genitiv und Geschlecht, Verben mit Stammformen.",
+  "intro": [
+    {
+      "img": "🔑🧩",
+      "text": "Bei der 3. Deklination ist der Genitiv der Schlüssel: rēx, rēgis – erst der Genitiv zeigt den Stamm rēg-."
+    },
+    {
+      "img": "🚹🚺",
+      "text": "Lern das Geschlecht gleich mit: m., f. oder n. Sonst passt später das Adjektiv nicht."
+    },
+    {
+      "img": "🪜📚",
+      "text": "Verben lernt man mit Stammformen: capere, capiō, cēpī, captum. Das Perfekt sieht oft ganz anders aus!"
+    },
+    {
+      "img": "🔗🚜",
+      "text": "Fremdwort-Brücken helfen: trahere → Traktor, mīles → Militär, caput → Kapitän."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was bedeutet „rēx, rēgis m.“?",
+      "a": "König",
+      "choices": [
+        "Gesetz",
+        "Reich",
+        "Herde"
+      ],
+      "img": "👑",
+      "info": "Verwandt mit regere (lenken). Fremdwort: Regent."
+    },
+    {
+      "id": "002",
+      "q": "Was bedeutet „lēx, lēgis f.“?",
+      "a": "Gesetz",
+      "choices": [
+        "Licht",
+        "Leser",
+        "Bein"
+      ],
+      "img": "📜⚖️",
+      "info": "Fremdwort: legal (gesetzlich)."
+    },
+    {
+      "id": "003",
+      "q": "Was bedeutet „pāx, pācis f.“?",
+      "a": "Frieden",
+      "choices": [
+        "Krieg",
+        "Paket",
+        "Pause"
+      ],
+      "img": "🕊️",
+      "info": "Fremdwort: Pazifist."
+    },
+    {
+      "id": "004",
+      "q": "Was bedeutet „vōx, vōcis f.“?",
+      "a": "Stimme (Laut)",
+      "choices": [
+        "Gesicht",
+        "Volk",
+        "Feuer"
+      ],
+      "img": "🗣️🎤",
+      "info": "Fremdwort: Vokal."
+    },
+    {
+      "id": "005",
+      "q": "Was bedeutet „mīles, mīlitis m.“?",
+      "a": "Soldat",
+      "choices": [
+        "Meile",
+        "Bürger",
+        "Bote"
+      ],
+      "img": "🪖🛡️",
+      "info": "Fremdwort: Militär."
+    },
+    {
+      "id": "006",
+      "q": "Was bedeutet „homō, hominis m.“?",
+      "a": "Mensch",
+      "choices": [
+        "Bruder",
+        "Haus",
+        "Ehre"
+      ],
+      "img": "🧍",
+      "info": "Fremdwort: Homo sapiens = der weise Mensch."
+    },
+    {
+      "id": "007",
+      "q": "Was bedeutet „tempus, temporis n.“?",
+      "a": "Zeit",
+      "choices": [
+        "Tempel",
+        "Wetter",
+        "Körper"
+      ],
+      "img": "⏰",
+      "info": "Fremdwort: Tempo."
+    },
+    {
+      "id": "008",
+      "q": "Was bedeutet „nōmen, nōminis n.“?",
+      "a": "Name",
+      "choices": [
+        "Zahl",
+        "Zeichen",
+        "Nacht"
+      ],
+      "img": "🏷️",
+      "info": "Fremdwort: Nomen (Namenwort)."
+    },
+    {
+      "id": "009",
+      "q": "Was bedeutet „iter, itineris n.“?",
+      "a": "Weg (Reise, Marsch)",
+      "choices": [
+        "Ziel",
+        "Mauer",
+        "Wiederholung"
+      ],
+      "img": "🥾🗺️",
+      "info": "Fremdwort: Itinerar (Reiseplan)."
+    },
+    {
+      "id": "010",
+      "q": "Was bedeutet „mare, maris n.“?",
+      "a": "Meer",
+      "choices": [
+        "Pferd",
+        "Fluss",
+        "Hafen"
+      ],
+      "img": "🌊",
+      "info": "Fremdwort: Marine."
+    },
+    {
+      "id": "011",
+      "q": "Was bedeutet „nox, noctis f.“?",
+      "a": "Nacht",
+      "choices": [
+        "Nuss",
+        "Tag",
+        "Stern"
+      ],
+      "img": "🌙⭐",
+      "info": "Fremdwort: Nocturne (Nachtmusik)."
+    },
+    {
+      "id": "012",
+      "q": "Was bedeutet „frāter, frātris m.“?",
+      "a": "Bruder",
+      "choices": [
+        "Vater",
+        "Freund",
+        "Schwester"
+      ],
+      "img": "👦👦",
+      "info": "Englisch: brother. Fremdwort: fraternisieren (sich verbrüdern)."
+    },
+    {
+      "id": "013",
+      "q": "Was bedeutet „cīvis, cīvis m.“?",
+      "a": "Bürger",
+      "choices": [
+        "Sklave",
+        "Soldat",
+        "Gast"
+      ],
+      "img": "🧑‍🤝‍🧑🏛️",
+      "info": "Fremdwort: zivil."
+    },
+    {
+      "id": "014",
+      "q": "Was bedeutet „hostis, hostis m.“?",
+      "a": "Feind",
+      "choices": [
+        "Gast",
+        "Freund",
+        "Bote"
+      ],
+      "img": "⚔️😠",
+      "info": "Vorsicht: hospes = Gast, hostis = Feind. Englisch: hostile (feindlich)."
+    },
+    {
+      "id": "015",
+      "q": "Was bedeutet „caput, capitis n.“?",
+      "a": "Kopf (auch: Hauptstadt)",
+      "choices": [
+        "Mütze",
+        "Kapitän",
+        "Fuß"
+      ],
+      "img": "🗣️👤",
+      "info": "Fremdwörter: Kapitel, Kapitän (der „Kopf“ des Schiffs)."
+    },
+    {
+      "id": "016",
+      "q": "Was bedeutet „flūmen, flūminis n.“?",
+      "a": "Fluss",
+      "choices": [
+        "Blume",
+        "Flamme",
+        "Ufer"
+      ],
+      "img": "🏞️",
+      "info": "Merkhilfe: Es fließt – flūmen."
+    },
+    {
+      "id": "017",
+      "q": "Was bedeutet „virtūs, virtūtis f.“?",
+      "a": "Tapferkeit (Tugend, Leistung)",
+      "choices": [
+        "Wahrheit",
+        "Sieg",
+        "Gift"
+      ],
+      "img": "🦁🏅",
+      "info": "Fremdwort: virtuos (meisterhaft). Vorsicht: vīrus = Gift."
+    },
+    {
+      "id": "018",
+      "q": "Was bedeutet „animal, animālis n.“?",
+      "a": "Lebewesen (Tier)",
+      "choices": [
+        "Seele",
+        "Mut",
+        "Jahr"
+      ],
+      "img": "🐾",
+      "info": "Fremdwort: animalisch. Vorsicht: animus = Mut, Geist."
+    },
+    {
+      "id": "019",
+      "q": "Welches Wort ist ein Neutrum?",
+      "a": "tempus, temporis",
+      "choices": [
+        "labor, labōris",
+        "mōs, mōris",
+        "lēx, lēgis"
+      ],
+      "img": "⏰🔍",
+      "info": "Wörter auf -us, -oris sind meist Neutra (tempus, corpus). labor und mōs sind maskulin, lēx ist feminin."
+    },
+    {
+      "id": "020",
+      "q": "Wie lautet der Genitiv Singular von „iter“?",
+      "a": "itineris",
+      "choices": [
+        "iteris",
+        "itrī",
+        "itinis"
+      ],
+      "img": "🥾",
+      "info": "Darum lernt man den Genitiv immer mit: Er zeigt den Stamm (itiner-)."
+    },
+    {
+      "id": "021",
+      "q": "Wie lautet der Genitiv Singular von „homō“?",
+      "a": "hominis",
+      "choices": [
+        "homōnis",
+        "homīnis",
+        "homōris"
+      ],
+      "img": "🧍",
+      "info": "homō, hominis – der Stamm ist homin-."
+    },
+    {
+      "id": "022",
+      "q": "Was heißt „Sonne“ auf Latein?",
+      "a": "sōl, sōlis m.",
+      "choices": [
+        "lūna, lūnae f.",
+        "stella, stellae f.",
+        "lūx, lūcis f."
+      ],
+      "img": "☀️",
+      "info": "Fremdwort: Solarium, Solarzelle."
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „Tod“ auf Latein?",
+      "a": "mors, mortis f.",
+      "choices": [
+        "mōs, mōris m.",
+        "mūrus, mūrī m.",
+        "nox, noctis f."
+      ],
+      "img": "🪦",
+      "info": "Fremdwort: mortal (sterblich)."
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „Kunst“ auf Latein?",
+      "a": "ars, artis f.",
+      "choices": [
+        "arma, armōrum n.",
+        "arx, arcis f.",
+        "āra, ārae f."
+      ],
+      "img": "🎨",
+      "info": "Fremdwort: Artist. Vorsicht: arma = Waffen, arx = Burg, āra = Altar."
+    },
+    {
+      "id": "025",
+      "q": "Was bedeutet „capere, capiō, cēpī, captum“?",
+      "a": "fassen (nehmen, fangen, erobern)",
+      "choices": [
+        "können",
+        "laufen",
+        "glauben"
+      ],
+      "img": "🤲🎣",
+      "info": "capere gehört zur gemischten Konjugation: capiō, capis, capit … capiunt."
+    },
+    {
+      "id": "026",
+      "q": "Was bedeutet „facere, faciō, fēcī, factum“?",
+      "a": "machen (tun)",
+      "choices": [
+        "fliehen",
+        "finden",
+        "sprechen"
+      ],
+      "img": "🔨",
+      "info": "Fremdwort: Fakt (das Gemachte, Geschehene)."
+    },
+    {
+      "id": "027",
+      "q": "Was bedeutet „relinquere, relinquō, relīquī, relictum“?",
+      "a": "verlassen (zurücklassen)",
+      "choices": [
+        "erreichen",
+        "befreien",
+        "überlegen"
+      ],
+      "img": "🚪👋",
+      "info": "Fremdwort: Relikt (Überbleibsel)."
+    },
+    {
+      "id": "028",
+      "q": "Was bedeutet „vincere, vincō, vīcī, victum“?",
+      "a": "siegen (besiegen)",
+      "choices": [
+        "leben",
+        "wachen",
+        "kommen"
+      ],
+      "img": "🏆",
+      "info": "Fremdwort: Viktoria (Sieg). vīcī wie in „Vēnī, vīdī, vīcī“."
+    },
+    {
+      "id": "029",
+      "q": "Was bedeutet „quaerere, quaerō, quaesīvī, quaesītum“?",
+      "a": "suchen (fragen)",
+      "choices": [
+        "klagen",
+        "finden",
+        "antworten"
+      ],
+      "img": "🔍❓",
+      "info": "Englisch: question. quaerere ā/ex aliquō = jemanden fragen."
+    },
+    {
+      "id": "030",
+      "q": "Was bedeutet „trahere, trahō, trāxī, tractum“?",
+      "a": "ziehen (schleppen)",
+      "choices": [
+        "tragen",
+        "treffen",
+        "übergeben"
+      ],
+      "img": "🚜",
+      "info": "Fremdwort: Traktor (der Zieher)."
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet „pōnere, pōnō, posuī, positum“?",
+      "a": "setzen (stellen, legen)",
+      "choices": [
+        "können",
+        "zeigen",
+        "trinken"
+      ],
+      "img": "📍",
+      "info": "Fremdwort: Position. Vorsicht: posse = können."
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet „iubēre, iubeō, iussī, iussum“?",
+      "a": "befehlen (anordnen)",
+      "choices": [
+        "helfen",
+        "jubeln",
+        "verbieten"
+      ],
+      "img": "📢👉",
+      "info": "Vorsicht: iuvāre = helfen. iubēre steht oft mit AcI: Caesar mīlitēs pugnāre iubet."
+    },
+    {
+      "id": "033",
+      "q": "Was bedeutet „manēre, maneō, mānsī, mānsum“?",
+      "a": "bleiben",
+      "choices": [
+        "mahnen",
+        "führen",
+        "waschen"
+      ],
+      "img": "🏠⏸️",
+      "info": "Fremdwort: permanent (dauerhaft bleibend). Vorsicht: monēre = mahnen."
+    },
+    {
+      "id": "034",
+      "q": "Wie lauten die Stammformen von „dūcere“?",
+      "a": "dūcō, dūxī, ductum",
+      "choices": [
+        "dūcō, dūcāvī, dūcātum",
+        "dūcō, dūxī, dūxum",
+        "dūciō, dūxī, ductum"
+      ],
+      "img": "🧭",
+      "info": "dūcere = führen. Fremdwort: Aquädukt (Wasserleitung)."
+    },
+    {
+      "id": "035",
+      "q": "Zu welchem Verb gehört „cecidī“?",
+      "a": "cadere (fallen)",
+      "choices": [
+        "cēdere (weichen)",
+        "capere (fassen)",
+        "currere (laufen)"
+      ],
+      "img": "🍂⬇️",
+      "info": "cadere, cadō, cecidī, cāsūrum – Perfekt mit Verdopplung (ce-cid-ī). Fremdwort: Kasus (der „Fall“)."
+    }
+  ]
+}

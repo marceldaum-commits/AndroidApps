@@ -244,6 +244,63 @@
    "karten": 32
   },
   {
+   "id": "s1-franzoesisch-alltag",
+   "sprache": "fr",
+   "version": 1,
+   "title": "Französisch im Alltag",
+   "emoji": "🛍️",
+   "grades": [
+    6,
+    7,
+    8
+   ],
+   "description": "Wörter für Schule, Freizeit, Essen und Stadt – mal Deutsch → Französisch, mal umgekehrt.",
+   "karten": 36
+  },
+  {
+   "id": "s1-franzoesisch-grammatik",
+   "sprache": "fr",
+   "version": 1,
+   "title": "Artikel, Adjektive & Fragen",
+   "emoji": "🧩",
+   "grades": [
+    6,
+    7,
+    8
+   ],
+   "description": "Grundgrammatik: Artikel, Plural, Adjektive angleichen, Verneinung und Fragen mit est-ce que.",
+   "karten": 34
+  },
+  {
+   "id": "s2-franzoesisch-passe-compose",
+   "sprache": "fr",
+   "version": 1,
+   "title": "Passé composé & futur composé",
+   "emoji": "⏪",
+   "grades": [
+    7,
+    8,
+    9
+   ],
+   "description": "Über Vergangenes erzählen (passé composé mit avoir und être) und Pläne machen (futur composé).",
+   "karten": 34
+  },
+  {
+   "id": "ob-franzoesisch-argumenter",
+   "sprache": "fr",
+   "version": 1,
+   "title": "Argumenter & commenter",
+   "emoji": "🗣️",
+   "grades": [
+    10,
+    11,
+    12,
+    13
+   ],
+   "description": "Oberstufe: Meinung äußern, Verbindungswörter, subjonctif nach bien que, Wortschatz Umwelt, Medien, Gesellschaft und Stilmittel.",
+   "karten": 36
+  },
+  {
    "id": "s1-latein-grundwortschatz",
    "sprache": "la",
    "version": 5,
@@ -259,6 +316,64 @@
    "karten": 39
   },
   {
+   "id": "s1-latein-deklination",
+   "sprache": "la",
+   "version": 1,
+   "title": "Latein: a- und o-Deklination",
+   "emoji": "🏺",
+   "grades": [
+    5,
+    6,
+    7
+   ],
+   "description": "Fälle, Endungen und Fragen: rosa, hortus, ager und templum durch alle Kasus – mit Lückensätzen und kleinen Übersetzungen.",
+   "karten": 36
+  },
+  {
+   "id": "s1-latein-konjugation",
+   "sprache": "la",
+   "version": 1,
+   "title": "Latein: Verben konjugieren",
+   "emoji": "⚔️",
+   "grades": [
+    6,
+    7,
+    8
+   ],
+   "description": "Präsens, Imperfekt und Perfekt der a-, e-, i- und konsonantischen Konjugation, dazu esse, posse und der Imperativ.",
+   "karten": 36
+  },
+  {
+   "id": "s2-latein-wortschatz",
+   "sprache": "la",
+   "version": 1,
+   "title": "Latein Wortschatz Lernjahr 2",
+   "emoji": "📜",
+   "grades": [
+    7,
+    8,
+    9
+   ],
+   "description": "35 wichtige Lernwörter: Nomen der 3. Deklination mit Genitiv und Geschlecht, Verben mit Stammformen.",
+   "karten": 35
+  },
+  {
+   "id": "ob-latein-satzlehre",
+   "sprache": "la",
+   "version": 1,
+   "title": "Latein Satzlehre: AcI bis ut/nē",
+   "emoji": "🦅",
+   "grades": [
+    9,
+    10,
+    11,
+    12,
+    13
+   ],
+   "description": "AcI, Partizipien, Ablativus absolutus, Relativsätze, cum und ut/nē – geübt an eigenen Sätzen und echten Originalsätzen von Caesar, Cicero, Seneca und Nepos.",
+   "karten": 35
+  },
+  {
    "id": "s1-spanisch-grundwortschatz",
    "sprache": "es",
    "version": 4,
@@ -271,6 +386,49 @@
    ],
    "description": "Wichtige spanische Wörter und Sätze für den Einstieg: Deutsch → Spanisch.",
    "karten": 36
+  },
+  {
+   "id": "s1-spanisch-grammatik",
+   "sprache": "es",
+   "version": 1,
+   "title": "ser, estar, gustar & Co.",
+   "emoji": "🧩",
+   "grades": [
+    6,
+    7,
+    8
+   ],
+   "description": "Spanische Grammatik zum Mitmachen: ser oder estar, hay, gustar, Verben im Presente, Stammwechsel und Adjektive.",
+   "karten": 34
+  },
+  {
+   "id": "s2-spanisch-pasado",
+   "sprache": "es",
+   "version": 1,
+   "title": "Gestern, heute, morgen",
+   "emoji": "⏳",
+   "grades": [
+    8,
+    9,
+    10
+   ],
+   "description": "Pretérito indefinido, Pretérito perfecto und ir a + Infinitiv: Erzählen, was war, was heute passiert ist und was gleich passiert.",
+   "karten": 35
+  },
+  {
+   "id": "ob-spanisch-argumentar",
+   "sprache": "es",
+   "version": 1,
+   "title": "Argumentieren auf Spanisch",
+   "emoji": "⚖️",
+   "grades": [
+    10,
+    11,
+    12,
+    13
+   ],
+   "description": "Meinung äußern, Argumente verknüpfen und Wortschatz zu Umwelt, Medien und Gesellschaft – fit für Diskussion und Klausur.",
+   "karten": 34
   }
  ]
 }

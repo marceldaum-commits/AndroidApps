@@ -1,0 +1,470 @@
+{
+  "id": "s1-latein-deklination",
+  "version": 1,
+  "title": "Latein: a- und o-Deklination",
+  "subject": "latein",
+  "grades": [
+    5,
+    6,
+    7
+  ],
+  "emoji": "🏺",
+  "tier": "free",
+  "description": "Fälle, Endungen und Fragen: rosa, hortus, ager und templum durch alle Kasus – mit Lückensätzen und kleinen Übersetzungen.",
+  "intro": [
+    {
+      "img": "🔚🔑",
+      "text": "Im Lateinischen verrät die Endung, wer was tut. „Puer lupum videt“ und „Lupum puer videt“ heißen beide: Der Junge sieht den Wolf."
+    },
+    {
+      "img": "❓🧭",
+      "text": "Frag nach dem Fall: Wer oder was? Nominativ. Wessen? Genitiv. Wem? Dativ. Wen oder was? Akkusativ. Womit, wo, wann? Ablativ."
+    },
+    {
+      "img": "🌹🌳",
+      "text": "Zwei Familien: Die a-Deklination (rosa, rosae) und die o-Deklination (hortus, hortī; templum, templī)."
+    },
+    {
+      "img": "🎵🧠",
+      "text": "Sing die Endungen als Rap: -a, -ae, -ae, -am, -ā! Was du rhythmisch sprichst, bleibt im Kopf."
+    },
+    {
+      "img": "🕵️✨",
+      "text": "Achtung, Doppelgänger: -ae, -īs und -ō können mehrere Fälle sein. Dann hilft der Satz – wie ein Detektiv!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Wie lautet der Genitiv Singular von „fēmina“?",
+      "a": "fēminae",
+      "choices": [
+        "fēminā",
+        "fēminam",
+        "fēminārum"
+      ],
+      "img": "👩🔍",
+      "info": "a-Deklination: Genitiv Singular auf -ae – „das Buch der Frau“ = liber fēminae."
+    },
+    {
+      "id": "002",
+      "q": "Wie lautet der Akkusativ Plural von „rosa“?",
+      "a": "rosās",
+      "choices": [
+        "rosae",
+        "rosīs",
+        "rosam"
+      ],
+      "img": "🌹🌹",
+      "info": "a-Deklination: Akkusativ Plural auf -ās."
+    },
+    {
+      "id": "003",
+      "q": "Wie lautet der Genitiv Plural von „silva“?",
+      "a": "silvārum",
+      "choices": [
+        "silvōrum",
+        "silvās",
+        "silvae"
+      ],
+      "img": "🌲🌲",
+      "info": "a-Deklination: -ārum, o-Deklination: -ōrum. Fremdwort: Silvester (der Name heißt „Waldmensch“)."
+    },
+    {
+      "id": "004",
+      "q": "Wie lautet der Ablativ Singular von „īnsula“?",
+      "a": "īnsulā",
+      "choices": [
+        "īnsulae",
+        "īnsulam",
+        "īnsulīs"
+      ],
+      "img": "🏝️",
+      "info": "Der Ablativ Singular der a-Deklination hat ein langes ā: in īnsulā = auf der Insel."
+    },
+    {
+      "id": "005",
+      "q": "Wie lautet der Dativ Plural von „hortus“?",
+      "a": "hortīs",
+      "choices": [
+        "hortōs",
+        "hortō",
+        "hortōrum"
+      ],
+      "img": "🌷🏡",
+      "info": "Dativ und Ablativ Plural enden in der a- und o-Deklination gleich: auf -īs."
+    },
+    {
+      "id": "006",
+      "q": "Wie lautet der Akkusativ Singular von „equus“?",
+      "a": "equum",
+      "choices": [
+        "equō",
+        "equī",
+        "equōs"
+      ],
+      "img": "🐎",
+      "info": "o-Deklination: Akkusativ Singular auf -um. Verwandt: Equiden (die Familie der Pferde)."
+    },
+    {
+      "id": "007",
+      "q": "Wie lautet der Nominativ Plural von „lupus“?",
+      "a": "lupī",
+      "choices": [
+        "lupōs",
+        "lupum",
+        "lupus"
+      ],
+      "img": "🐺🐺",
+      "info": "o-Deklination: Nominativ Plural auf -ī – lupī = die Wölfe."
+    },
+    {
+      "id": "008",
+      "q": "Wie lautet der Genitiv Singular von „ager“?",
+      "a": "agrī",
+      "choices": [
+        "agerī",
+        "agrō",
+        "agrōrum"
+      ],
+      "img": "🌾",
+      "info": "ager wirft das e weg: ager, agrī. Fremdwort: Agrarwirtschaft."
+    },
+    {
+      "id": "009",
+      "q": "Wie lautet der Genitiv Singular von „magister“?",
+      "a": "magistrī",
+      "choices": [
+        "magisterī",
+        "magistrō",
+        "magistrae"
+      ],
+      "img": "👨‍🏫",
+      "info": "magister, magistrī – wie ager verliert es das e. Fremdwort: Magister, Meister."
+    },
+    {
+      "id": "010",
+      "q": "Was heißt „der Bücher“ (Genitiv Plural) auf Latein?",
+      "a": "librōrum",
+      "choices": [
+        "liberōrum",
+        "librārum",
+        "librīs"
+      ],
+      "img": "📚",
+      "info": "liber, librī m. = Buch. Vorsicht: līberī, līberōrum = die Kinder!"
+    },
+    {
+      "id": "011",
+      "q": "Was heißt „die Inseln“ (Akkusativ Plural) auf Latein?",
+      "a": "īnsulās",
+      "choices": [
+        "īnsulae",
+        "īnsulīs",
+        "īnsulam"
+      ],
+      "img": "🏝️🏝️",
+      "info": "Akkusativ Plural der a-Deklination: -ās."
+    },
+    {
+      "id": "012",
+      "q": "Wie lautet der Nominativ Plural von „templum“?",
+      "a": "templa",
+      "choices": [
+        "templī",
+        "templae",
+        "templōs"
+      ],
+      "img": "🏛️🏛️",
+      "info": "Neutra haben im Nominativ und Akkusativ Plural immer -a."
+    },
+    {
+      "id": "013",
+      "q": "Wie lautet der Akkusativ Plural von „dōnum“?",
+      "a": "dōna",
+      "choices": [
+        "dōnōs",
+        "dōnās",
+        "dōnum"
+      ],
+      "img": "🎁🎁",
+      "info": "Neutrum: Akkusativ = Nominativ, im Plural auf -a. Fremdwort: Donator, Donation (Spende)."
+    },
+    {
+      "id": "014",
+      "q": "Wie lautet der Genitiv Plural von „oppidum“?",
+      "a": "oppidōrum",
+      "choices": [
+        "oppidārum",
+        "oppidīs",
+        "oppida"
+      ],
+      "img": "🏘️",
+      "info": "oppidum, oppidī n. = Stadt (Kleinstadt). Neutra gehören zur o-Deklination: -ōrum."
+    },
+    {
+      "id": "015",
+      "q": "Wie lautet der Vokativ Singular von „Mārcus“?",
+      "a": "Mārce",
+      "choices": [
+        "Mārcus",
+        "Mārcō",
+        "Mārcum"
+      ],
+      "img": "👋🧒",
+      "info": "Die meisten Wörter der o-Deklination auf -us rufen mit -e: „Salvē, Mārce!“"
+    },
+    {
+      "id": "016",
+      "q": "Bestimme die Form „puellārum“.",
+      "a": "Genitiv Plural",
+      "choices": [
+        "Dativ Plural",
+        "Akkusativ Plural",
+        "Genitiv Singular"
+      ],
+      "img": "👧👧",
+      "info": "-ārum ist immer Genitiv Plural der a-Deklination."
+    },
+    {
+      "id": "017",
+      "q": "Bestimme die Form „hortōs“.",
+      "a": "Akkusativ Plural",
+      "choices": [
+        "Nominativ Plural",
+        "Genitiv Plural",
+        "Akkusativ Singular"
+      ],
+      "img": "🌳🌳",
+      "info": "-ōs ist immer Akkusativ Plural der o-Deklination."
+    },
+    {
+      "id": "018",
+      "q": "Bestimme die Form „rosam“.",
+      "a": "Akkusativ Singular",
+      "choices": [
+        "Ablativ Singular",
+        "Nominativ Singular",
+        "Genitiv Plural"
+      ],
+      "img": "🌹",
+      "info": "-am ist Akkusativ Singular (wen oder was?)."
+    },
+    {
+      "id": "019",
+      "q": "Bestimme die Form „amīcīs“.",
+      "a": "Dativ/Ablativ Plural",
+      "choices": [
+        "Nominativ Plural",
+        "Genitiv Singular",
+        "Akkusativ Plural"
+      ],
+      "img": "🤝",
+      "info": "-īs kann Dativ oder Ablativ Plural sein – der Satz entscheidet."
+    },
+    {
+      "id": "020",
+      "q": "Bestimme die Form „fēminae“.",
+      "a": "Genitiv/Dativ Singular oder Nominativ Plural",
+      "choices": [
+        "Akkusativ Plural",
+        "Ablativ Singular",
+        "Genitiv Plural"
+      ],
+      "img": "👩❓",
+      "info": "-ae hat drei Möglichkeiten (ganz genau: auch Vokativ Plural). Erst der Satz zeigt, welche gemeint ist."
+    },
+    {
+      "id": "021",
+      "q": "Bestimme die Form „equō“.",
+      "a": "Dativ/Ablativ Singular",
+      "choices": [
+        "Nominativ Singular",
+        "Akkusativ Plural",
+        "Genitiv Plural"
+      ],
+      "img": "🐴",
+      "info": "-ō ist in der o-Deklination Dativ oder Ablativ Singular."
+    },
+    {
+      "id": "022",
+      "q": "Bestimme die Form „templa“.",
+      "a": "Nominativ/Akkusativ Plural",
+      "choices": [
+        "Nominativ Singular",
+        "Ablativ Singular",
+        "Genitiv Plural"
+      ],
+      "img": "🏛️",
+      "info": "Neutrum Plural: -a im Nominativ und Akkusativ (ganz genau: auch Vokativ)."
+    },
+    {
+      "id": "023",
+      "q": "Mit welcher Frage findest du den Dativ?",
+      "a": "Wem?",
+      "choices": [
+        "Wessen?",
+        "Wen oder was?",
+        "Wer oder was?"
+      ],
+      "img": "🎁➡️🧒",
+      "info": "Dativ = 3. Fall: Wem gibt Markus die Rose? – der Frau (fēminae)."
+    },
+    {
+      "id": "024",
+      "q": "Mit welcher Frage findest du den Genitiv?",
+      "a": "Wessen?",
+      "choices": [
+        "Wem?",
+        "Womit?",
+        "Wen oder was?"
+      ],
+      "img": "🔑❓",
+      "info": "Genitiv = 2. Fall: Wessen Pferd? – das Pferd des Freundes (amīcī)."
+    },
+    {
+      "id": "025",
+      "q": "Welcher lateinische Fall antwortet auf „Womit?“ oder „Wodurch?“?",
+      "a": "Ablativ",
+      "choices": [
+        "Dativ",
+        "Genitiv",
+        "Akkusativ"
+      ],
+      "img": "🗡️🔧",
+      "info": "Den Ablativ gibt es im Deutschen nicht. Er sagt womit, wodurch, wo oder wann: gladiō = mit dem Schwert."
+    },
+    {
+      "id": "026",
+      "q": "Mārcus ___ rosam dat. (wem? – Dativ von „fēmina“)",
+      "a": "fēminae",
+      "choices": [
+        "fēminam",
+        "fēminā",
+        "fēminās"
+      ],
+      "img": "🌹🎁",
+      "info": "Markus gibt der Frau eine Rose. Wem? → Dativ."
+    },
+    {
+      "id": "027",
+      "q": "Puerī in ___ lūdunt. (wo? – Ablativ von „hortus“)",
+      "a": "hortō",
+      "choices": [
+        "hortum",
+        "hortī",
+        "hortōs"
+      ],
+      "img": "⚽🌳",
+      "info": "in + Ablativ = wo? – Die Jungen spielen im Garten."
+    },
+    {
+      "id": "028",
+      "q": "Agricola ___ videt. (wen? – Akkusativ Plural von „lupus“)",
+      "a": "lupōs",
+      "choices": [
+        "lupī",
+        "lupīs",
+        "lupum"
+      ],
+      "img": "👨‍🌾🐺",
+      "info": "Der Bauer sieht die Wölfe. Wen? → Akkusativ Plural -ōs."
+    },
+    {
+      "id": "029",
+      "q": "Liber ___ est. (wessen? – Genitiv von „magister“)",
+      "a": "magistrī",
+      "choices": [
+        "magistrō",
+        "magistrum",
+        "magister"
+      ],
+      "img": "📕👨‍🏫",
+      "info": "Das Buch gehört dem Lehrer – wörtlich: Das Buch ist des Lehrers."
+    },
+    {
+      "id": "030",
+      "q": "Was bedeutet „Puerī equōs amant.“?",
+      "a": "Die Jungen lieben die Pferde.",
+      "choices": [
+        "Die Pferde lieben die Jungen.",
+        "Der Junge liebt das Pferd.",
+        "Das Pferd liebt die Jungen."
+      ],
+      "img": "🧒🐎❤️",
+      "info": "Subjekt im Nominativ (puerī), Objekt im Akkusativ (equōs). Die Endung zählt, nicht die Stellung!"
+    },
+    {
+      "id": "031",
+      "q": "Was bedeutet „Fīlia agricolae in silvā ambulat.“?",
+      "a": "Die Tochter des Bauern geht im Wald spazieren.",
+      "choices": [
+        "Die Töchter des Bauern gehen im Wald spazieren.",
+        "Der Bauer geht mit der Tochter in den Wald.",
+        "Die Tochter geht zum Bauern in den Wald."
+      ],
+      "img": "👧🌲🚶",
+      "info": "agricola ist maskulin, obwohl es zur a-Deklination gehört. agricolae = des Bauern (Genitiv)."
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet „Magister puerīs librōs dat.“?",
+      "a": "Der Lehrer gibt den Jungen Bücher.",
+      "choices": [
+        "Die Jungen geben dem Lehrer Bücher.",
+        "Der Lehrer gibt dem Jungen ein Buch.",
+        "Die Lehrer geben den Jungen Bücher."
+      ],
+      "img": "👨‍🏫📚🧒",
+      "info": "Wer? magister – Wem? puerīs – Wen oder was? librōs."
+    },
+    {
+      "id": "033",
+      "q": "In „Nauta aquam portat.“ – welcher Fall ist „aquam“?",
+      "a": "Akkusativ",
+      "choices": [
+        "Nominativ",
+        "Ablativ",
+        "Dativ"
+      ],
+      "img": "⚓💧",
+      "info": "Der Seemann trägt Wasser. Wen oder was trägt er? → aquam, Akkusativ."
+    },
+    {
+      "id": "034",
+      "q": "Welche Aussage über „nauta, nautae“ stimmt?",
+      "a": "Es ist maskulin, obwohl es auf -a endet.",
+      "choices": [
+        "Es ist feminin wie alle Wörter auf -a.",
+        "Es ist ein Neutrum.",
+        "Es gehört zur o-Deklination."
+      ],
+      "img": "⚓🧔",
+      "info": "Männliche Berufe der a-Deklination: nauta (Seemann), agricola (Bauer), poēta (Dichter). Verwandt: nautisch (die Seefahrt betreffend)."
+    },
+    {
+      "id": "035",
+      "q": "Was unterscheidet „puer“ und „ager“?",
+      "a": "ager verliert das e (agrī), puer behält es (puerī).",
+      "choices": [
+        "puer verliert das e, ager behält es.",
+        "Beide verlieren das e.",
+        "Beide behalten das e."
+      ],
+      "img": "🧒🌾",
+      "info": "Merk dir den Genitiv gleich mit: puer, puerī – ager, agrī – magister, magistrī."
+    },
+    {
+      "id": "036",
+      "q": "Welche Regel gilt für alle Neutra?",
+      "a": "Nominativ und Akkusativ sind gleich, im Plural enden sie auf -a.",
+      "choices": [
+        "Sie enden im Plural immer auf -ī.",
+        "Sie haben keinen Genitiv.",
+        "Dativ und Akkusativ sind gleich."
+      ],
+      "img": "🏛️📏",
+      "info": "templum, templum – templa, templa. Diese Regel gilt in allen Deklinationen!"
+    }
+  ]
+}

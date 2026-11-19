@@ -3623,6 +3623,1859 @@
      ]
     }
    ]
+  },
+  {
+   "id": "3",
+   "stufe": "A1.2",
+   "titel": "Unterwegs",
+   "emoji": "🚲",
+   "ziel": "Ich kann einkaufen, nach dem Weg fragen und mich verabreden.",
+   "einheiten": [
+    {
+     "id": "fr-3-1",
+     "titel": "En ville",
+     "emoji": "🏙️",
+     "ziel": "Ich kann Orte in der Stadt nennen und sagen, wohin ich will.",
+     "woerter": [
+      [
+       "la ville",
+       "die Stadt",
+       "🏙️"
+      ],
+      [
+       "la boulangerie",
+       "die Bäckerei",
+       "🥖",
+       "Hier gibt es Baguettes und Croissants."
+      ],
+      [
+       "la pharmacie",
+       "die Apotheke",
+       "💊",
+       "ph spricht man wie f."
+      ],
+      [
+       "le supermarché",
+       "der Supermarkt",
+       "🛒"
+      ],
+      [
+       "le parc",
+       "der Park",
+       "🌳",
+       "Ich gehe in den Park: Je vais au parc (à + le = au)."
+      ],
+      [
+       "la bibliothèque",
+       "die Bücherei",
+       "📚"
+      ],
+      [
+       "le cinéma",
+       "das Kino",
+       "🎬"
+      ],
+      [
+       "l'hôpital",
+       "das Krankenhaus",
+       "🏥",
+       "Das h spricht man nicht – darum l'hôpital."
+      ]
+     ],
+     "saetze": [
+      [
+       "Je veux aller au parc.",
+       "Ich will in den Park gehen.",
+       "🛝"
+      ],
+      [
+       "On peut aller au cinéma ?",
+       "Können wir ins Kino gehen?",
+       "🍿"
+      ],
+      [
+       "J'habite dans une petite ville.",
+       "Ich wohne in einer kleinen Stadt.",
+       "🏘️"
+      ],
+      [
+       "Tu veux venir ?",
+       "Willst du mitkommen?",
+       "🤗"
+      ]
+     ],
+     "regel": {
+      "titel": "vouloir und pouvoir",
+      "text": "Ich will = je veux, du willst = tu veux, er oder sie will = il/elle veut. Ich kann = je peux, du kannst = tu peux, er oder sie kann = il/elle peut. Danach kommt ein zweites Verb in der Grundform: Je veux jouer. Und on (wir) geht wie il: on veut, on peut.",
+      "beispiele": [
+       [
+        "Je veux aller au cinéma.",
+        "Ich will ins Kino gehen."
+       ],
+       [
+        "Tu peux venir au parc ?",
+        "Kannst du in den Park kommen?"
+       ],
+       [
+        "Léa peut aller à la bibliothèque.",
+        "Léa kann in die Bücherei gehen."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Un samedi en ville",
+      "zeilen": [
+       [
+        "lea",
+        "Hugo, qu'est-ce que tu veux faire aujourd'hui ?",
+        "Hugo, was willst du heute machen?"
+       ],
+       [
+        "hugo",
+        "Je veux aller au cinéma !",
+        "Ich will ins Kino gehen!"
+       ],
+       [
+        "ruby",
+        "Moi, je veux aller à la bibliothèque. J'adore les livres !",
+        "Ich will in die Bücherei gehen. Ich liebe Bücher!"
+       ],
+       [
+        "lea",
+        "On peut aller à la bibliothèque d'abord, et après au cinéma.",
+        "Wir können zuerst in die Bücherei gehen und danach ins Kino."
+       ],
+       [
+        "hugo",
+        "D'accord ! Mais avant, la boulangerie : j'ai faim !",
+        "Einverstanden! Aber vorher die Bäckerei: Ich habe Hunger!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wohin will Ruby gehen?",
+        "a": "in die Bücherei",
+        "choices": [
+         "ins Kino",
+         "in die Bäckerei",
+         "in die Apotheke"
+        ]
+       },
+       {
+        "q": "Warum will Hugo zur Bäckerei?",
+        "a": "Er hat Hunger.",
+        "choices": [
+         "Er will ein Buch.",
+         "Er will ins Kino.",
+         "Ruby hat Hunger."
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne une baguette à Hugo.",
+       "de": "Gib Hugo ein Baguette.",
+       "ding": "🥖",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux tickets de cinéma à Léa.",
+       "de": "Gib Léa zwei Kinokarten.",
+       "ding": "🎟️",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois livres à Hugo.",
+       "de": "Gib Hugo drei Bücher.",
+       "ding": "📕",
+       "anzahl": 3,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux pansements à Léa.",
+       "de": "Gib Léa zwei Pflaster.",
+       "ding": "🩹",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne quatre fleurs à Hugo.",
+       "de": "Gib Hugo vier Blumen.",
+       "ding": "🌷",
+       "anzahl": 4,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Je veux va au parc.",
+       "richtig": "Je veux aller au parc.",
+       "wort": "va",
+       "korrektur": "aller",
+       "choices": [
+        "vais",
+        "allez"
+       ],
+       "tipp": "Nach je veux kommt das zweite Verb in der Grundform: aller."
+      },
+      {
+       "falsch": "Et toi, tu veut venir au parc ?",
+       "richtig": "Et toi, tu veux venir au parc ?",
+       "wort": "veut",
+       "korrektur": "veux",
+       "choices": [
+        "voulez",
+        "vouloir"
+       ],
+       "tipp": "je veux, tu veux – mit x. Nur il und elle haben ein t: il veut."
+      },
+      {
+       "falsch": "Le pharmacie est fermée.",
+       "richtig": "La pharmacie est fermée.",
+       "wort": "Le",
+       "korrektur": "La",
+       "choices": [
+        "Les",
+        "Un"
+       ],
+       "tipp": "la pharmacie ist weiblich – also la."
+      },
+      {
+       "falsch": "Moi, je ne peut pas venir.",
+       "richtig": "Moi, je ne peux pas venir.",
+       "wort": "peut",
+       "korrektur": "peux",
+       "choices": [
+        "pouvoir",
+        "peuvent"
+       ],
+       "tipp": "je peux, tu peux – mit x. Nur il und elle haben ein t: il peut."
+      }
+     ]
+    },
+    {
+     "id": "fr-3-2",
+     "titel": "Les prix",
+     "emoji": "💶",
+     "ziel": "Ich kann bis hundert zählen und nach Preisen fragen.",
+     "woerter": [
+      [
+       "trente",
+       "dreißig",
+       "3️⃣0️⃣",
+       "31 = trente et un, 32 = trente-deux."
+      ],
+      [
+       "quarante",
+       "vierzig",
+       "4️⃣0️⃣"
+      ],
+      [
+       "cinquante",
+       "fünfzig",
+       "5️⃣0️⃣"
+      ],
+      [
+       "soixante",
+       "sechzig",
+       "6️⃣0️⃣",
+       "Das x spricht man wie s: swa-ssant."
+      ],
+      [
+       "soixante-dix",
+       "siebzig",
+       "7️⃣0️⃣",
+       "Wörtlich: sechzig-zehn. 71 = soixante et onze, 72 = soixante-douze."
+      ],
+      [
+       "quatre-vingts",
+       "achtzig",
+       "8️⃣0️⃣",
+       "Wörtlich: vier Zwanziger (4 × 20). 81 = quatre-vingt-un – ohne s!"
+      ],
+      [
+       "quatre-vingt-dix",
+       "neunzig",
+       "9️⃣0️⃣",
+       "Wörtlich: vier Zwanziger und zehn (4 × 20 + 10)."
+      ],
+      [
+       "cent",
+       "hundert",
+       "💯",
+       "Hundert Euro = cent euros – ohne un davor."
+      ]
+     ],
+     "saetze": [
+      [
+       "Ça coûte combien ?",
+       "Wie viel kostet das?",
+       "💰"
+      ],
+      [
+       "Ça fait trente euros.",
+       "Das macht dreißig Euro.",
+       "💶"
+      ],
+      [
+       "C'est trop cher !",
+       "Das ist zu teuer!",
+       "😱"
+      ],
+      [
+       "J'ai cinquante euros dans ma tirelire.",
+       "Ich habe fünfzig Euro in meiner Spardose.",
+       "🐷"
+      ]
+     ],
+     "regel": {
+      "titel": "Rechnen mit Zwanzigern",
+      "text": "Bis 69 geht es so: erst der Zehner, dann der Einer, mit Bindestrich: trente-deux (32). Bei 21, 31, 41, 51, 61 und 71 kommt et dazwischen: vingt et un. Ab 70 rechnen die Franzosen: 70 = soixante-dix (60 + 10), 80 = quatre-vingts (4 × 20), 90 = quatre-vingt-dix (4 × 20 + 10). Bei quatre-vingts steht nur dann ein s, wenn keine Zahl mehr folgt: quatre-vingt-deux.",
+      "beispiele": [
+       [
+        "trente-cinq",
+        "fünfunddreißig"
+       ],
+       [
+        "soixante-quinze",
+        "fünfundsiebzig (60 + 15)"
+       ],
+       [
+        "quatre-vingt-dix-neuf",
+        "neunundneunzig (4 × 20 + 19)"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Le marché aux puces",
+      "zeilen": [
+       [
+        "lea",
+        "Bonjour Hugo ! Le robot coûte combien ?",
+        "Hallo Hugo! Wie viel kostet der Roboter?"
+       ],
+       [
+        "hugo",
+        "Il coûte quatre-vingts euros.",
+        "Er kostet achtzig Euro."
+       ],
+       [
+        "lea",
+        "Quatre-vingts euros ? C'est trop cher !",
+        "Achtzig Euro? Das ist zu teuer!"
+       ],
+       [
+        "hugo",
+        "Bon, pour toi : cinquante euros.",
+        "Na gut, für dich: fünfzig Euro."
+       ],
+       [
+        "ruby",
+        "Trente euros, Hugo ! Il est vieux, ton robot !",
+        "Dreißig Euro, Hugo! Dein Roboter ist alt!"
+       ],
+       [
+        "hugo",
+        "Ha ha, d'accord. Trente euros !",
+        "Haha, einverstanden. Dreißig Euro!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie viel kostet der Roboter am Anfang?",
+        "a": "achtzig Euro",
+        "choices": [
+         "dreißig Euro",
+         "fünfzig Euro",
+         "hundert Euro"
+        ]
+       },
+       {
+        "q": "Für wie viel Euro verkauft Hugo den Roboter am Ende?",
+        "a": "dreißig Euro",
+        "choices": [
+         "achtzig Euro",
+         "fünfzig Euro",
+         "siebzig Euro"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne trois billets de dix euros à Léa.",
+       "de": "Gib Léa drei Zehn-Euro-Scheine.",
+       "ding": "💶",
+       "anzahl": 3,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne deux pièces à Hugo.",
+       "de": "Gib Hugo zwei Münzen.",
+       "ding": "🪙",
+       "anzahl": 2,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne un robot à Hugo.",
+       "de": "Gib Hugo einen Roboter.",
+       "ding": "🤖",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne cinq pièces à Léa.",
+       "de": "Gib Léa fünf Münzen.",
+       "ding": "🪙",
+       "anzahl": 5,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne quatre billets de vingt euros à Hugo.",
+       "de": "Gib Hugo vier Zwanzig-Euro-Scheine.",
+       "ding": "💶",
+       "anzahl": 4,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Le robot coûte quatre-vingt euros.",
+       "richtig": "Le robot coûte quatre-vingts euros.",
+       "wort": "quatre-vingt",
+       "korrektur": "quatre-vingts",
+       "choices": [
+        "quatres-vingts",
+        "quatre-vingtième"
+       ],
+       "tipp": "80 = quatre-vingts mit s. Nur wenn noch eine Zahl folgt, fällt das s weg: quatre-vingt-deux."
+      },
+      {
+       "falsch": "Ma grand-mère a quatre-vingts-deux ans.",
+       "richtig": "Ma grand-mère a quatre-vingt-deux ans.",
+       "wort": "quatre-vingts-deux",
+       "korrektur": "quatre-vingt-deux",
+       "choices": [
+        "quatre-vingt-deuxs",
+        "quatres-vingt-deux"
+       ],
+       "tipp": "Folgt nach quatre-vingts noch eine Zahl, fällt das s weg: quatre-vingt-deux."
+      },
+      {
+       "falsch": "Le robot est trop chère !",
+       "richtig": "Le robot est trop cher !",
+       "wort": "chère",
+       "korrektur": "cher",
+       "choices": [
+        "chères",
+        "chers"
+       ],
+       "tipp": "le robot ist männlich und Einzahl – also cher ohne -e."
+      },
+      {
+       "falsch": "J'ai cinquante euros dans mon petite tirelire.",
+       "richtig": "J'ai cinquante euros dans ma petite tirelire.",
+       "wort": "mon",
+       "korrektur": "ma",
+       "choices": [
+        "mes",
+        "ton"
+       ],
+       "tipp": "la tirelire ist weiblich – also ma petite tirelire."
+      }
+     ]
+    },
+    {
+     "id": "fr-3-3",
+     "titel": "Au café",
+     "emoji": "☕",
+     "ziel": "Ich kann im Café höflich bestellen.",
+     "woerter": [
+      [
+       "le chocolat chaud",
+       "der Kakao",
+       "☕",
+       "Wörtlich: heiße Schokolade."
+      ],
+      [
+       "la limonade",
+       "die Limonade",
+       "🥤"
+      ],
+      [
+       "la glace",
+       "das Eis",
+       "🍦",
+       "Gemeint ist Eis zum Schlecken."
+      ],
+      [
+       "le gâteau",
+       "der Kuchen",
+       "🍰",
+       "Mehrere: les gâteaux – mit x."
+      ],
+      [
+       "le sandwich",
+       "das Sandwich",
+       "🥪"
+      ],
+      [
+       "les frites",
+       "die Pommes",
+       "🍟",
+       "Meist in der Mehrzahl: des frites."
+      ],
+      [
+       "la soupe",
+       "die Suppe",
+       "🥣"
+      ],
+      [
+       "l'addition",
+       "die Rechnung",
+       "🧾",
+       "l'addition ist weiblich: une addition."
+      ]
+     ],
+     "saetze": [
+      [
+       "Vous désirez ?",
+       "Was darf es sein?",
+       "🤵"
+      ],
+      [
+       "Je voudrais une glace, s'il vous plaît.",
+       "Ich hätte gern ein Eis, bitte.",
+       "😋"
+      ],
+      [
+       "L'addition, s'il vous plaît !",
+       "Die Rechnung, bitte!",
+       "💳"
+      ],
+      [
+       "C'est délicieux !",
+       "Das ist lecker!",
+       "🤤"
+      ]
+     ],
+     "regel": {
+      "titel": "du, de la, des – ein bisschen davon",
+      "text": "Wenn man nicht zählt, sondern einfach „etwas davon“ meint, steht du, de la oder des davor: du gâteau (Kuchen), de la soupe (Suppe), des frites (Pommes). Vor a, e, i, o, u heißt es de l': de l'eau. Im Deutschen lässt man das einfach weg!",
+      "beispiele": [
+       [
+        "Je voudrais de la soupe.",
+        "Ich hätte gern Suppe."
+       ],
+       [
+        "Tu veux du gâteau ?",
+        "Willst du Kuchen?"
+       ],
+       [
+        "Hugo mange des frites.",
+        "Hugo isst Pommes."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Le café de Ruby",
+      "zeilen": [
+       [
+        "ruby",
+        "Bonjour ! Vous désirez ?",
+        "Hallo! Was darf es sein?"
+       ],
+       [
+        "lea",
+        "Je voudrais un chocolat chaud et du gâteau, s'il vous plaît.",
+        "Ich hätte gern einen Kakao und Kuchen, bitte."
+       ],
+       [
+        "hugo",
+        "Moi, je voudrais de la soupe… non, des frites !",
+        "Ich hätte gern Suppe … nein, Pommes!"
+       ],
+       [
+        "ruby",
+        "Voilà : un chocolat chaud, du gâteau et des frites !",
+        "Bitte schön: ein Kakao, Kuchen und Pommes!"
+       ],
+       [
+        "hugo",
+        "Mmm, c'est délicieux ! L'addition, s'il vous plaît !",
+        "Mmm, das ist lecker! Die Rechnung, bitte!"
+       ],
+       [
+        "ruby",
+        "Ça fait dix euros… ou un câlin !",
+        "Das macht zehn Euro … oder eine Umarmung!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was bestellt Hugo am Ende?",
+        "a": "Pommes",
+        "choices": [
+         "Suppe",
+         "Kuchen",
+         "einen Kakao"
+        ]
+       },
+       {
+        "q": "Was bestellt Léa?",
+        "a": "einen Kakao und Kuchen",
+        "choices": [
+         "Suppe und Pommes",
+         "eine Limonade und ein Eis",
+         "ein Sandwich und Pommes"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne une glace à Léa.",
+       "de": "Gib Léa ein Eis.",
+       "ding": "🍦",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne deux sandwichs à Hugo.",
+       "de": "Gib Hugo zwei Sandwiches.",
+       "ding": "🥪",
+       "anzahl": 2,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne trois limonades à Léa.",
+       "de": "Gib Léa drei Limonaden.",
+       "ding": "🥤",
+       "anzahl": 3,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne quatre gâteaux à Hugo.",
+       "de": "Gib Hugo vier Kuchen.",
+       "ding": "🍰",
+       "anzahl": 4,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne de la soupe à Léa.",
+       "de": "Gib Léa Suppe.",
+       "ding": "🥣",
+       "anzahl": 1,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Hugo mange du frites chaudes.",
+       "richtig": "Hugo mange des frites chaudes.",
+       "wort": "du",
+       "korrektur": "des",
+       "choices": [
+        "le",
+        "un"
+       ],
+       "tipp": "les frites sind mehrere – also des frites."
+      },
+      {
+       "falsch": "Je voudrais un petite glace, s'il vous plaît.",
+       "richtig": "Je voudrais une petite glace, s'il vous plaît.",
+       "wort": "un",
+       "korrektur": "une",
+       "choices": [
+        "le",
+        "des"
+       ],
+       "tipp": "la glace ist weiblich – also une petite glace."
+      },
+      {
+       "falsch": "L'addition, s'il vous plais !",
+       "richtig": "L'addition, s'il vous plaît !",
+       "wort": "plais",
+       "korrektur": "plaît",
+       "choices": [
+        "plaire",
+        "plaisent"
+       ],
+       "tipp": "s'il vous plaît – mit t und einem Hut auf dem i."
+      },
+      {
+       "falsch": "La soupe est délicieux.",
+       "richtig": "La soupe est délicieuse.",
+       "wort": "délicieux",
+       "korrektur": "délicieuse",
+       "choices": [
+        "délicieuxe",
+        "délicieuses"
+       ],
+       "tipp": "la soupe ist weiblich und Einzahl – aus délicieux wird délicieuse."
+      }
+     ]
+    },
+    {
+     "id": "fr-3-4",
+     "titel": "Le chemin",
+     "emoji": "🧭",
+     "ziel": "Ich kann nach dem Weg fragen und ihn erklären.",
+     "woerter": [
+      [
+       "à gauche",
+       "links",
+       "⬅️"
+      ],
+      [
+       "à droite",
+       "rechts",
+       "➡️",
+       "Achtung, nicht verwechseln: tout droit heißt geradeaus."
+      ],
+      [
+       "tout droit",
+       "geradeaus",
+       "⬆️"
+      ],
+      [
+       "le feu",
+       "die Ampel",
+       "🚦",
+       "le feu heißt auch: das Feuer."
+      ],
+      [
+       "le pont",
+       "die Brücke",
+       "🌉"
+      ],
+      [
+       "la place",
+       "der Platz",
+       "⛲"
+      ],
+      [
+       "le plan",
+       "der Stadtplan",
+       "🗺️"
+      ],
+      [
+       "le panneau",
+       "das Schild",
+       "🪧",
+       "Mehrere: les panneaux – mit x."
+      ]
+     ],
+     "saetze": [
+      [
+       "Pardon, où est la boulangerie ?",
+       "Entschuldigung, wo ist die Bäckerei?",
+       "🙋‍♀️"
+      ],
+      [
+       "Tourne à gauche au feu.",
+       "Bieg an der Ampel links ab.",
+       "↩️"
+      ],
+      [
+       "Va tout droit jusqu'au pont.",
+       "Geh geradeaus bis zur Brücke.",
+       "👣"
+      ],
+      [
+       "C'est loin ? Non, c'est tout près !",
+       "Ist es weit? Nein, es ist ganz nah!",
+       "📍"
+      ]
+     ],
+     "regel": {
+      "titel": "Wegweiser-Befehle",
+      "text": "Den Weg erklärt man mit Befehlen. Bei Verben auf -er fällt das -s der tu-Form weg: tu tournes → Tourne ! Das gilt auch für aller: tu vas → Va ! Andere Verben behalten ihr -s: tu prends → Prends ! Zu Erwachsenen oder zu mehreren sagt man: Tournez ! Allez ! Prenez !",
+      "beispiele": [
+       [
+        "Tourne à droite !",
+        "Bieg rechts ab!"
+       ],
+       [
+        "Va tout droit jusqu'à la place.",
+        "Geh geradeaus bis zum Platz."
+       ],
+       [
+        "Prenez la deuxième rue à gauche, madame.",
+        "Nehmen Sie die zweite Straße links, Madame."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Ruby cherche la bibliothèque",
+      "zeilen": [
+       [
+        "ruby",
+        "Hugo, je veux aller à la bibliothèque. C'est où ?",
+        "Hugo, ich will in die Bücherei. Wo ist das?"
+       ],
+       [
+        "hugo",
+        "Va tout droit jusqu'au pont.",
+        "Geh geradeaus bis zur Brücke."
+       ],
+       [
+        "hugo",
+        "Après le pont, tourne à droite.",
+        "Nach der Brücke bieg rechts ab."
+       ],
+       [
+        "ruby",
+        "À droite… et après ?",
+        "Rechts … und dann?"
+       ],
+       [
+        "hugo",
+        "Au feu, tourne à gauche. La bibliothèque est sur la place.",
+        "An der Ampel bieg links ab. Die Bücherei ist am Platz."
+       ],
+       [
+        "ruby",
+        "Merci ! Oh… mais je peux voler, c'est plus facile !",
+        "Danke! Oh … aber ich kann ja fliegen, das ist leichter!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wohin will Ruby?",
+        "a": "in die Bücherei",
+        "choices": [
+         "zur Brücke",
+         "ins Kino",
+         "zur Ampel"
+        ]
+       },
+       {
+        "q": "Wo biegt Ruby links ab?",
+        "a": "an der Ampel",
+        "choices": [
+         "an der Brücke",
+         "am Platz",
+         "an der Bücherei"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne un plan à Léa.",
+       "de": "Gib Léa einen Stadtplan.",
+       "ding": "🗺️",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne deux panneaux à Hugo.",
+       "de": "Gib Hugo zwei Schilder.",
+       "ding": "🪧",
+       "anzahl": 2,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne une boussole à Hugo.",
+       "de": "Gib Hugo einen Kompass.",
+       "ding": "🧭",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux boussoles à Léa.",
+       "de": "Gib Léa zwei Kompasse.",
+       "ding": "🧭",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois plans à Hugo.",
+       "de": "Gib Hugo drei Stadtpläne.",
+       "ding": "🗺️",
+       "anzahl": 3,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Tournes à droite au feu, s'il te plaît.",
+       "richtig": "Tourne à droite au feu, s'il te plaît.",
+       "wort": "Tournes",
+       "korrektur": "Tourne",
+       "choices": [
+        "Tournent",
+        "Tournez"
+       ],
+       "tipp": "Beim Befehl an einen Freund fällt bei Verben auf -er das -s weg: Tourne !"
+      },
+      {
+       "falsch": "Vas tout droit jusqu'au pont !",
+       "richtig": "Va tout droit jusqu'au pont !",
+       "wort": "Vas",
+       "korrektur": "Va",
+       "choices": [
+        "Vais",
+        "Vont"
+       ],
+       "tipp": "Auch bei aller fällt das -s weg: tu vas → Va !"
+      },
+      {
+       "falsch": "Tourne à gauche après le petite pont.",
+       "richtig": "Tourne à gauche après le petit pont.",
+       "wort": "petite",
+       "korrektur": "petit",
+       "choices": [
+        "petits",
+        "petites"
+       ],
+       "tipp": "le pont ist männlich – also le petit pont."
+      },
+      {
+       "falsch": "Au feu, tourne à droit.",
+       "richtig": "Au feu, tourne à droite.",
+       "wort": "droit",
+       "korrektur": "droite",
+       "choices": [
+        "droits",
+        "drois"
+       ],
+       "tipp": "rechts heißt à droite – mit -e. tout droit (ohne -e) heißt geradeaus."
+      }
+     ]
+    },
+    {
+     "id": "fr-3-5",
+     "titel": "Les transports",
+     "emoji": "🚏",
+     "ziel": "Ich kann sagen, womit ich fahre, und von Plänen erzählen.",
+     "woerter": [
+      [
+       "le bus",
+       "der Bus",
+       "🚌",
+       "Mit dem Bus: en bus."
+      ],
+      [
+       "le train",
+       "der Zug",
+       "🚆"
+      ],
+      [
+       "le métro",
+       "die U-Bahn",
+       "🚇"
+      ],
+      [
+       "la voiture",
+       "das Auto",
+       "🚗",
+       "Mit dem Auto: en voiture."
+      ],
+      [
+       "l'avion",
+       "das Flugzeug",
+       "✈️",
+       "l'avion ist männlich: un avion."
+      ],
+      [
+       "le bateau",
+       "das Schiff",
+       "🚢",
+       "Mehrere: les bateaux – mit x."
+      ],
+      [
+       "la trottinette",
+       "der Roller",
+       "🛴"
+      ],
+      [
+       "la gare",
+       "der Bahnhof",
+       "🚉"
+      ]
+     ],
+     "saetze": [
+      [
+       "Je vais à l'école à pied.",
+       "Ich gehe zu Fuß zur Schule.",
+       "👟"
+      ],
+      [
+       "On prend le bus ?",
+       "Nehmen wir den Bus?",
+       "🎫"
+      ],
+      [
+       "Demain, je vais prendre l'avion !",
+       "Morgen fliege ich mit dem Flugzeug!",
+       "🧳"
+      ],
+      [
+       "Le train part à neuf heures.",
+       "Der Zug fährt um neun Uhr ab.",
+       "🕘"
+      ]
+     ],
+     "regel": {
+      "titel": "Bald passiert's: aller + Grundform",
+      "text": "Was gleich oder bald passiert, sagst du mit aller und einer Grundform: je vais, tu vas, il/elle va + Verb. Je vais prendre le train heißt: Ich werde den Zug nehmen. Ganz einfach – das zweite Verb bleibt immer gleich!",
+      "beispiele": [
+       [
+        "Je vais prendre le métro.",
+        "Ich werde die U-Bahn nehmen."
+       ],
+       [
+        "Tu vas venir en voiture ?",
+        "Wirst du mit dem Auto kommen?"
+       ],
+       [
+        "Léa va faire de la trottinette.",
+        "Léa wird Roller fahren."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Le grand voyage",
+      "zeilen": [
+       [
+        "hugo",
+        "Samedi, je vais aller chez ma grand-mère à Marseille !",
+        "Am Samstag fahre ich zu meiner Oma nach Marseille!"
+       ],
+       [
+        "lea",
+        "Tu vas prendre l'avion ?",
+        "Wirst du fliegen?"
+       ],
+       [
+        "hugo",
+        "Non, je vais prendre le train. Il part à huit heures.",
+        "Nein, ich nehme den Zug. Er fährt um acht Uhr ab."
+       ],
+       [
+        "ruby",
+        "Et pour aller à la gare ?",
+        "Und wie kommst du zum Bahnhof?"
+       ],
+       [
+        "hugo",
+        "Je vais prendre le métro… avec ma trottinette !",
+        "Ich nehme die U-Bahn … mit meinem Roller!"
+       ],
+       [
+        "lea",
+        "Bon voyage, Hugo !",
+        "Gute Reise, Hugo!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Womit fährt Hugo nach Marseille?",
+        "a": "mit dem Zug",
+        "choices": [
+         "mit dem Flugzeug",
+         "mit dem Auto",
+         "mit dem Schiff"
+        ]
+       },
+       {
+        "q": "Wie kommt Hugo zum Bahnhof?",
+        "a": "mit der U-Bahn",
+        "choices": [
+         "mit dem Bus",
+         "zu Fuß",
+         "mit dem Flugzeug"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne un bus à Hugo.",
+       "de": "Gib Hugo einen Bus.",
+       "ding": "🚌",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux trains à Léa.",
+       "de": "Gib Léa zwei Züge.",
+       "ding": "🚆",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois voitures à Hugo.",
+       "de": "Gib Hugo drei Autos.",
+       "ding": "🚗",
+       "anzahl": 3,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne un avion à Léa.",
+       "de": "Gib Léa ein Flugzeug.",
+       "ding": "✈️",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne deux trottinettes à Hugo.",
+       "de": "Gib Hugo zwei Roller.",
+       "ding": "🛴",
+       "anzahl": 2,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Demain, je vais prends le train.",
+       "richtig": "Demain, je vais prendre le train.",
+       "wort": "prends",
+       "korrektur": "prendre",
+       "choices": [
+        "prend",
+        "pris"
+       ],
+       "tipp": "Nach je vais kommt die Grundform: prendre."
+      },
+      {
+       "falsch": "Et toi, tu va venir en voiture ?",
+       "richtig": "Et toi, tu vas venir en voiture ?",
+       "wort": "va",
+       "korrektur": "vas",
+       "choices": [
+        "vais",
+        "aller"
+       ],
+       "tipp": "je vais, tu vas, il va – bei tu also vas."
+      },
+      {
+       "falsch": "Le voiture de papa est neuve.",
+       "richtig": "La voiture de papa est neuve.",
+       "wort": "Le",
+       "korrektur": "La",
+       "choices": [
+        "Les",
+        "Un"
+       ],
+       "tipp": "la voiture ist weiblich – also la."
+      },
+      {
+       "falsch": "Je vais prendre la petit train.",
+       "richtig": "Je vais prendre le petit train.",
+       "wort": "la",
+       "korrektur": "le",
+       "choices": [
+        "les",
+        "une"
+       ],
+       "tipp": "le train ist männlich – also le petit train."
+      }
+     ]
+    },
+    {
+     "id": "fr-3-6",
+     "titel": "On se retrouve ?",
+     "emoji": "📆",
+     "ziel": "Ich kann mich mit Freunden verabreden.",
+     "woerter": [
+      [
+       "le copain",
+       "der Kumpel",
+       "🧑‍🤝‍🧑",
+       "Eine Freundin: la copine."
+      ],
+      [
+       "le rendez-vous",
+       "die Verabredung",
+       "📌",
+       "Mehrere: les rendez-vous – bleibt gleich."
+      ],
+      [
+       "l'après-midi",
+       "der Nachmittag",
+       "🌇",
+       "Heute Nachmittag: cet après-midi."
+      ],
+      [
+       "midi",
+       "der Mittag",
+       "🕛",
+       "Um zwölf Uhr mittags: à midi."
+      ],
+      [
+       "et demie",
+       "halb",
+       "🕟",
+       "Il est quatre heures et demie = Es ist halb fünf (4:30)."
+      ],
+      [
+       "la minute",
+       "die Minute",
+       "⏱️",
+       "Une minute ! = Einen Moment!"
+      ],
+      [
+       "libre",
+       "frei",
+       "🆓",
+       "Tu es libre ? = Hast du Zeit?"
+      ],
+      [
+       "d'accord",
+       "einverstanden",
+       "👌"
+      ]
+     ],
+     "saetze": [
+      [
+       "Tu es libre samedi ?",
+       "Hast du am Samstag Zeit?",
+       "🤔"
+      ],
+      [
+       "On se retrouve à trois heures ?",
+       "Treffen wir uns um drei Uhr?",
+       "🕒"
+      ],
+      [
+       "Tu viens chez moi ?",
+       "Kommst du zu mir?",
+       "🏡"
+      ],
+      [
+       "Désolé, je ne peux pas.",
+       "Tut mir leid, ich kann nicht.",
+       "😕"
+      ]
+     ],
+     "regel": {
+      "titel": "moi und toi",
+      "text": "Nach kleinen Wörtern wie avec (mit), chez (bei) und pour (für) sagt man nicht je oder tu, sondern moi und toi: avec moi, chez toi. Auch wenn man etwas betonen will oder ganz kurz antwortet: Moi aussi ! (Ich auch!) – Et toi ? (Und du?)",
+      "beispiele": [
+       [
+        "Tu viens avec moi ?",
+        "Kommst du mit mir?"
+       ],
+       [
+        "On joue chez toi ?",
+        "Spielen wir bei dir?"
+       ],
+       [
+        "Moi aussi, je suis libre !",
+        "Ich habe auch Zeit!"
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Un rendez-vous",
+      "zeilen": [
+       [
+        "lea",
+        "Salut Hugo ! Tu es libre samedi ?",
+        "Hallo Hugo! Hast du am Samstag Zeit?"
+       ],
+       [
+        "hugo",
+        "Samedi matin, non. Mais l'après-midi, oui !",
+        "Samstagmorgen nicht. Aber am Nachmittag ja!"
+       ],
+       [
+        "lea",
+        "Super ! Tu viens chez moi à deux heures et demie ?",
+        "Super! Kommst du um halb drei zu mir?"
+       ],
+       [
+        "hugo",
+        "D'accord ! Je peux venir avec Ruby ?",
+        "Einverstanden! Kann ich mit Ruby kommen?"
+       ],
+       [
+        "ruby",
+        "Oui ! Moi aussi, je suis libre !",
+        "Ja! Ich habe auch Zeit!"
+       ],
+       [
+        "lea",
+        "Génial ! Alors, à samedi !",
+        "Toll! Also, bis Samstag!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Um wie viel Uhr treffen sie sich?",
+        "a": "um halb drei",
+        "choices": [
+         "um zwei Uhr",
+         "um zwölf Uhr",
+         "um halb fünf"
+        ]
+       },
+       {
+        "q": "Wo treffen sie sich?",
+        "a": "bei Léa",
+        "choices": [
+         "bei Hugo",
+         "bei Ruby",
+         "im Park"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne une montre à Hugo.",
+       "de": "Gib Hugo eine Armbanduhr.",
+       "ding": "⌚",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux téléphones à Léa.",
+       "de": "Gib Léa zwei Handys.",
+       "ding": "📱",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois lettres à Hugo.",
+       "de": "Gib Hugo drei Briefe.",
+       "ding": "✉️",
+       "anzahl": 3,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux calendriers à Léa.",
+       "de": "Gib Léa zwei Kalender.",
+       "ding": "📅",
+       "anzahl": 2,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne quatre réveils à Hugo.",
+       "de": "Gib Hugo vier Wecker.",
+       "ding": "⏰",
+       "anzahl": 4,
+       "an": "hugo"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Tu viens avec je ?",
+       "richtig": "Tu viens avec moi ?",
+       "wort": "je",
+       "korrektur": "moi",
+       "choices": [
+        "me",
+        "mon"
+       ],
+       "tipp": "Nach avec sagt man moi: avec moi."
+      },
+      {
+       "falsch": "On joue chez tu ?",
+       "richtig": "On joue chez toi ?",
+       "wort": "tu",
+       "korrektur": "toi",
+       "choices": [
+        "te",
+        "ton"
+       ],
+       "tipp": "Nach chez sagt man toi: chez toi."
+      },
+      {
+       "falsch": "Léa est libre samedi. Je aussi !",
+       "richtig": "Léa est libre samedi. Moi aussi !",
+       "wort": "Je",
+       "korrektur": "Moi",
+       "choices": [
+        "Me",
+        "Mon"
+       ],
+       "tipp": "Kurze Antwort ohne Verb: Moi aussi !"
+      },
+      {
+       "falsch": "Il est deux heures et demi.",
+       "richtig": "Il est deux heures et demie.",
+       "wort": "demi",
+       "korrektur": "demie",
+       "choices": [
+        "demis",
+        "demies"
+       ],
+       "tipp": "Bei der Uhrzeit sagt man et demie – mit -e, wie l'heure."
+      }
+     ]
+    },
+    {
+     "id": "fr-3-7",
+     "titel": "Les émotions",
+     "emoji": "🎭",
+     "ziel": "Ich kann sagen, wie ich mich fühle, und andere trösten.",
+     "woerter": [
+      [
+       "content",
+       "froh",
+       "😊",
+       "Ein Mädchen sagt: Je suis contente."
+      ],
+      [
+       "triste",
+       "traurig",
+       "😢",
+       "Bleibt gleich: il est triste, elle est triste."
+      ],
+      [
+       "fâché",
+       "wütend",
+       "😠",
+       "Ein Mädchen: fâchée."
+      ],
+      [
+       "fatigué",
+       "müde",
+       "😴",
+       "Ein Mädchen: fatiguée."
+      ],
+      [
+       "malade",
+       "krank",
+       "🤒"
+      ],
+      [
+       "la peur",
+       "die Angst",
+       "😨",
+       "J'ai peur. = Ich habe Angst."
+      ],
+      [
+       "surpris",
+       "überrascht",
+       "😮",
+       "Ein Mädchen: surprise."
+      ],
+      [
+       "s'ennuyer",
+       "sich langweilen",
+       "🥱",
+       "Je m'ennuie. = Mir ist langweilig."
+      ]
+     ],
+     "saetze": [
+      [
+       "Qu'est-ce qui ne va pas ?",
+       "Was ist los?",
+       "🥺"
+      ],
+      [
+       "Je me sens bien aujourd'hui.",
+       "Ich fühle mich heute gut.",
+       "🌞"
+      ],
+      [
+       "J'ai peur du noir.",
+       "Ich habe Angst im Dunkeln.",
+       "🌑"
+      ],
+      [
+       "Ne t'inquiète pas !",
+       "Mach dir keine Sorgen!",
+       "🤗"
+      ]
+     ],
+     "regel": {
+      "titel": "Verben mit me, te, se",
+      "text": "Manche Verben haben ein kleines Extra-Wort dabei – wie „sich“ im Deutschen: s'ennuyer (sich langweilen), se sentir (sich fühlen). Es passt zur Person: je me sens, tu te sens, il se sent. Vor a, e, i, o, u wird es kurz: je m'ennuie, tu t'ennuies, il s'ennuie.",
+      "beispiele": [
+       [
+        "Je m'ennuie.",
+        "Ich langweile mich."
+       ],
+       [
+        "Tu te sens bien ?",
+        "Fühlst du dich gut?"
+       ],
+       [
+        "Hugo s'amuse avec Ruby.",
+        "Hugo hat Spaß mit Ruby."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "Un jour gris",
+      "zeilen": [
+       [
+        "lea",
+        "Hugo, qu'est-ce qui ne va pas ? Tu es triste ?",
+        "Hugo, was ist los? Bist du traurig?"
+       ],
+       [
+        "hugo",
+        "Non, je ne suis pas triste. Je m'ennuie…",
+        "Nein, ich bin nicht traurig. Mir ist langweilig …"
+       ],
+       [
+        "ruby",
+        "Tu t'ennuies ? On joue à cache-cache !",
+        "Dir ist langweilig? Wir spielen Verstecken!"
+       ],
+       [
+        "ruby",
+        "Bouh !",
+        "Buh!"
+       ],
+       [
+        "hugo",
+        "Aaah ! J'ai peur ! … Ha ha, je ne m'ennuie plus !",
+        "Aaah! Ich habe Angst! … Haha, jetzt ist mir nicht mehr langweilig!"
+       ],
+       [
+        "lea",
+        "Super ! Maintenant, tu es content !",
+        "Super! Jetzt bist du froh!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Wie fühlt sich Hugo am Anfang?",
+        "a": "Ihm ist langweilig.",
+        "choices": [
+         "Er ist traurig.",
+         "Er ist krank.",
+         "Er hat Angst."
+        ]
+       },
+       {
+        "q": "Was spielen sie?",
+        "a": "Verstecken",
+        "choices": [
+         "Fußball",
+         "Videospiele",
+         "Jacques a dit"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Léa est triste : donne un nounours à Léa.",
+       "de": "Léa ist traurig: Gib Léa einen Teddy.",
+       "ding": "🧸",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Hugo est malade : donne un thermomètre à Hugo.",
+       "de": "Hugo ist krank: Gib Hugo ein Fieberthermometer.",
+       "ding": "🌡️",
+       "anzahl": 1,
+       "an": "hugo"
+      },
+      {
+       "sag": "Hugo s'ennuie : donne trois puzzles à Hugo.",
+       "de": "Hugo langweilt sich: Gib Hugo drei Puzzles.",
+       "ding": "🧩",
+       "anzahl": 3,
+       "an": "hugo"
+      },
+      {
+       "sag": "Léa a peur du noir : donne une lampe de poche à Léa.",
+       "de": "Léa hat Angst im Dunkeln: Gib Léa eine Taschenlampe.",
+       "ding": "🔦",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Léa est contente : donne deux étoiles à Léa.",
+       "de": "Léa ist froh: Gib Léa zwei Sterne.",
+       "ding": "⭐",
+       "anzahl": 2,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Hugo s'ennuies le dimanche.",
+       "richtig": "Hugo s'ennuie le dimanche.",
+       "wort": "s'ennuies",
+       "korrektur": "s'ennuie",
+       "choices": [
+        "s'ennuyer",
+        "s'ennuient"
+       ],
+       "tipp": "Bei il und elle endet das Verb auf -e: il s'ennuie."
+      },
+      {
+       "falsch": "Et toi, tu s'amuses ?",
+       "richtig": "Et toi, tu t'amuses ?",
+       "wort": "s'amuses",
+       "korrektur": "t'amuses",
+       "choices": [
+        "s'amuse",
+        "t'amuse"
+       ],
+       "tipp": "Zu tu gehört te, vor einem Selbstlaut t': tu t'amuses."
+      },
+      {
+       "falsch": "La maman de Léa est content.",
+       "richtig": "La maman de Léa est contente.",
+       "wort": "content",
+       "korrektur": "contente",
+       "choices": [
+        "contents",
+        "contentes"
+       ],
+       "tipp": "la maman ist weiblich – also contente mit -e."
+      },
+      {
+       "falsch": "Ma sœur est fâché contre moi.",
+       "richtig": "Ma sœur est fâchée contre moi.",
+       "wort": "fâché",
+       "korrektur": "fâchée",
+       "choices": [
+        "fâchés",
+        "fâchées"
+       ],
+       "tipp": "ma sœur ist weiblich – also fâchée mit -e."
+      }
+     ]
+    },
+    {
+     "id": "fr-3-8",
+     "titel": "Joyeux anniversaire !",
+     "emoji": "🥳",
+     "ziel": "Ich kann Geburtstag feiern, gratulieren und Mengen nennen.",
+     "woerter": [
+      [
+       "l'anniversaire",
+       "der Geburtstag",
+       "🎂",
+       "l'anniversaire ist männlich: un anniversaire."
+      ],
+      [
+       "le cadeau",
+       "das Geschenk",
+       "🎁",
+       "Mehrere: les cadeaux – mit x."
+      ],
+      [
+       "la bougie",
+       "die Kerze",
+       "🕯️"
+      ],
+      [
+       "le ballon",
+       "der Luftballon",
+       "🎈",
+       "le ballon heißt auch: der Ball."
+      ],
+      [
+       "la fête",
+       "das Fest",
+       "🎊"
+      ],
+      [
+       "le bonbon",
+       "das Bonbon",
+       "🍬"
+      ],
+      [
+       "l'invitation",
+       "die Einladung",
+       "💌",
+       "l'invitation ist weiblich: une invitation."
+      ],
+      [
+       "le paquet",
+       "das Paket",
+       "📦",
+       "un paquet de bonbons = eine Tüte Bonbons."
+      ]
+     ],
+     "saetze": [
+      [
+       "Joyeux anniversaire !",
+       "Alles Gute zum Geburtstag!",
+       "🥳"
+      ],
+      [
+       "C'est quand, ton anniversaire ?",
+       "Wann hast du Geburtstag?",
+       "📆"
+      ],
+      [
+       "Souffle les bougies !",
+       "Puste die Kerzen aus!",
+       "💨"
+      ],
+      [
+       "J'ai beaucoup de cadeaux !",
+       "Ich habe viele Geschenke!",
+       "🙌"
+      ]
+     ],
+     "regel": {
+      "titel": "Mengen mit de",
+      "text": "Nach Mengenwörtern steht nur de – ohne le, la oder les: beaucoup de bonbons (viele Bonbons), un paquet de bonbons (eine Tüte Bonbons), un morceau de gâteau (ein Stück Kuchen). Auch nach combien (wie viele): combien de bougies ? Vor a, e, i, o, u wird de zu d': beaucoup d'amis.",
+      "beispiele": [
+       [
+        "Il y a beaucoup de ballons.",
+        "Es gibt viele Luftballons."
+       ],
+       [
+        "Je voudrais un morceau de gâteau.",
+        "Ich hätte gern ein Stück Kuchen."
+       ],
+       [
+        "Hugo a un paquet de bonbons.",
+        "Hugo hat eine Tüte Bonbons."
+       ]
+      ]
+     },
+     "geschichte": {
+      "titel": "La fête de Léa",
+      "zeilen": [
+       [
+        "hugo",
+        "Joyeux anniversaire, Léa ! Voilà un cadeau pour toi.",
+        "Alles Gute zum Geburtstag, Léa! Hier ist ein Geschenk für dich."
+       ],
+       [
+        "lea",
+        "Merci, Hugo ! Oh, un paquet de bonbons !",
+        "Danke, Hugo! Oh, eine Tüte Bonbons!"
+       ],
+       [
+        "ruby",
+        "Et moi, j'ai beaucoup de ballons pour toi !",
+        "Und ich habe viele Luftballons für dich!"
+       ],
+       [
+        "hugo",
+        "Regarde, le gâteau ! Il y a dix bougies.",
+        "Schau, der Kuchen! Da sind zehn Kerzen drauf."
+       ],
+       [
+        "ruby",
+        "Souffle les bougies, Léa !",
+        "Puste die Kerzen aus, Léa!"
+       ],
+       [
+        "lea",
+        "Fffff ! Un morceau de gâteau pour tout le monde !",
+        "Pffff! Ein Stück Kuchen für alle!"
+       ]
+      ],
+      "fragen": [
+       {
+        "q": "Was schenkt Hugo Léa?",
+        "a": "eine Tüte Bonbons",
+        "choices": [
+         "viele Luftballons",
+         "ein Stück Kuchen",
+         "zehn Kerzen"
+        ]
+       },
+       {
+        "q": "Wie viele Kerzen sind auf dem Kuchen?",
+        "a": "zehn",
+        "choices": [
+         "neun",
+         "elf",
+         "zwanzig"
+        ]
+       }
+      ]
+     },
+     "aktionen": [
+      {
+       "sag": "Donne un cadeau à Léa.",
+       "de": "Gib Léa ein Geschenk.",
+       "ding": "🎁",
+       "anzahl": 1,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne trois ballons à Hugo.",
+       "de": "Gib Hugo drei Luftballons.",
+       "ding": "🎈",
+       "anzahl": 3,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne cinq bougies à Léa.",
+       "de": "Gib Léa fünf Kerzen.",
+       "ding": "🕯️",
+       "anzahl": 5,
+       "an": "lea"
+      },
+      {
+       "sag": "Donne quatre bonbons à Hugo.",
+       "de": "Gib Hugo vier Bonbons.",
+       "ding": "🍬",
+       "anzahl": 4,
+       "an": "hugo"
+      },
+      {
+       "sag": "Donne deux invitations à Léa.",
+       "de": "Gib Léa zwei Einladungen.",
+       "ding": "💌",
+       "anzahl": 2,
+       "an": "lea"
+      }
+     ],
+     "fehler": [
+      {
+       "falsch": "Il y a combien des bougies sur le gâteau ?",
+       "richtig": "Il y a combien de bougies sur le gâteau ?",
+       "wort": "des",
+       "korrektur": "de",
+       "choices": [
+        "du",
+        "les"
+       ],
+       "tipp": "Nach combien steht nur de: combien de bougies ?"
+      },
+      {
+       "falsch": "Voilà un cadeau pour tu !",
+       "richtig": "Voilà un cadeau pour toi !",
+       "wort": "tu",
+       "korrektur": "toi",
+       "choices": [
+        "te",
+        "ton"
+       ],
+       "tipp": "Nach pour sagt man toi: pour toi."
+      },
+      {
+       "falsch": "Pour mon anniversaire, j'ai trois cadeaus.",
+       "richtig": "Pour mon anniversaire, j'ai trois cadeaux.",
+       "wort": "cadeaus",
+       "korrektur": "cadeaux",
+       "choices": [
+        "cadeau",
+        "cadeauxs"
+       ],
+       "tipp": "Wörter auf -eau bekommen in der Mehrzahl ein x: les cadeaux."
+      },
+      {
+       "falsch": "Le fête de Léa est géniale.",
+       "richtig": "La fête de Léa est géniale.",
+       "wort": "Le",
+       "korrektur": "La",
+       "choices": [
+        "Les",
+        "Un"
+       ],
+       "tipp": "la fête ist weiblich – also la fête."
+      }
+     ]
+    }
+   ]
   }
  ]
 }
