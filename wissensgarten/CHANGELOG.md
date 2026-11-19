@@ -3,6 +3,13 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.3.0 – Neue Adresse für alle Lern-Apps (19.11.2026)
+- **Der Wissensgarten wohnt jetzt unter lernen.mathenachhilfe-online.com/wissensgarten/** – zusammen mit allen anderen Lern-Apps unter einer Adresse.
+- **Der Garten zieht automatisch mit:** Wer die alte Adresse öffnet, wird weitergeleitet, und Brummi packt den Lernstand ein: Profile, Beete, Karten, Fortschritt, Einstellungen und (wenn sie hineinpassen) selbst gemalte Merkbilder. Das geht Ende-zu-Ende verschlüsselt, unser Server kann nichts lesen und löscht die Umzugs-Sicherung gleich danach.
+- Gibt es auf der neuen Adresse schon einen Garten, wird nichts überschrieben. Ohne Internet bleibt alles, wie es ist, und der Umzug klappt beim nächsten Öffnen.
+- Wer den Garten auf dem Startbildschirm hat: einfach einmal öffnen, danach bitte von der neuen Adresse aus neu auf den Startbildschirm legen.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.2.19 – Der Wissensgarten wird zum großen Kompendium (19.11.2026)
 - **Neue Aufgabenteilung unserer Lern-Apps:** Der Wissensgarten wird das große Lernkarten-Kompendium für alle Fächer von Klasse 1 bis 13 – außer Sprachen. Englisch, Französisch, Latein, Spanisch und der Sprach-Teil von Deutsch (Rechtschreibung, Grammatik, Wortschatz) ziehen in unsere Sprach-App Quasselquest um. Literatur und Stilmittel bleiben im Wissensgarten.
 - **Sprach-Beete sind ausgeblendet:** Wer schon ein Sprach-Beet hatte, sieht es hier nicht mehr. Stattdessen erklärt ein Hinweis im Garten, wo es weitergeht. Die Karten und der Lernstand werden dabei **nicht gelöscht** – sie bleiben gespeichert und in der Sicherung, damit sie später zu Quasselquest mitziehen können.

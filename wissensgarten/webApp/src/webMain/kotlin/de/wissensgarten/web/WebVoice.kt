@@ -23,7 +23,9 @@ private fun jsText(url: String): Promise<JsString?> = js("window.wg.nova.text(ur
 private fun jsUsed(): Promise<JsNumber> = js("window.wg.nova.used()")
 private fun jsClear(): Promise<JsAny?> = js("window.wg.nova.clear()")
 /** Host, auf dem die WebApp läuft (für den Server-Stand der Offline-Größe) */
-fun webHost(): String = js("location.hostname")
+/** Name für die Vorlese-Liste auf dem Stimmen-Server. Auf der gemeinsamen Adresse (lernen[-test].…) teilen sich alle Apps
+ *  den Hostnamen – dort gilt weiter der bisherige Name, damit Liste und Server-Stand eindeutig dem Wissensgarten gehören. */
+fun webHost(): String = js("(function () { var h = location.hostname; return h === 'lernen.mathenachhilfe-online.com' ? 'wissensgarten.mathenachhilfe-online.com' : h === 'lernen-test.mathenachhilfe-online.com' ? 'wissensgarten-test.mathenachhilfe-online.com' : h; })()")
 
 private fun jsNovaPruefung(sprech: (JsString, JsString) -> JsString, paket: (JsString) -> JsString): Unit =
     js("{ window.wg = window.wg || {}; window.wg.novaSprech = function (t, l) { return sprech(t, l); }; window.wg.novaPaket = function (p) { return paket(p); }; }")

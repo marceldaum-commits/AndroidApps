@@ -35,7 +35,7 @@ class QuerverweiseTest {
     }
 
     @Test fun eigenerDeeplink() {
-        assertEquals("https://wissensgarten.mathenachhilfe-online.com/#paket=gs-einmaleins", Querverweise.paketLink("gs-einmaleins"))
-        assertEquals("https://wissensgarten-test.mathenachhilfe-online.com/#paket=gs-einmaleins", Querverweise.paketLink("gs-einmaleins", true))
+        assertEquals("https://lernen.mathenachhilfe-online.com/wissensgarten/#paket=gs-einmaleins", Querverweise.paketLink("gs-einmaleins"))
+        assertEquals("https://lernen-test.mathenachhilfe-online.com/wissensgarten/#paket=gs-einmaleins", Querverweise.paketLink("gs-einmaleins", true))
     }
 }
