@@ -67,7 +67,7 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
             }
             val speech = when {
                 state.pro -> "Pro ist freigeschaltet! Jetzt geht's bis ganz nach oben! 🚀"
-                locked -> "Das gehört zu Kurvenflug Pro. Frag deine Eltern!"
+                locked -> PRO_LOCKED_TEXT
                 else -> "Mit Pro gibt's Profi-Stufen, Andromeda und noch mehr!"
             }
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -141,6 +141,27 @@ fun ProScreen(state: ProState, shop: ProShop?, onCode: (String) -> Unit, onBack:
         }
     }
     if (gate) ParentGate(onDismiss = { gate = false }) { gate = false; counter.countAt("pro_kasse", if (locked) "gesperrt" else "einstellungen"); shop?.buy() }
+}
+
+/**
+ * Kinder-Hinweis an jedem Pro-Schloss (UWG Anhang Nr. 28, Korrektur AppZentrale 19.11.): sachlich, kein Preis, kein Kaufknopf,
+ * keine Aufforderung an das Kind. Der einzige Weg führt zum Eltern-Tor, nie direkt zur Kasse.
+ */
+const val PRO_LOCKED_TEXT = "Das gehört zu KurvenFlug Pro. Deine Eltern können im Elternbereich nachsehen."
+
+@Composable
+fun ProLockedNotice(onBack: () -> Unit, onParents: () -> Unit) {
+    Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Text("⭐", fontSize = 56.sp)
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.widthIn(max = 520.dp)) {
+            Volt(VoltMood.HAPPY, size = 64.dp)
+            Spacer(Modifier.width(8.dp))
+            Text(PRO_LOCKED_TEXT, color = Q.Text, modifier = Modifier.clip(RoundedCornerShape(16.dp)).background(Q.Panel).padding(12.dp))
+        }
+        NeonButton(onClick = onBack, color = Q.Cyan, modifier = Modifier.widthIn(min = 220.dp)) { Text("← Zurück", fontWeight = FontWeight.Bold) }
+        TextButton(onClick = onParents) { Text("👪 Elternbereich (für Erwachsene)", color = Q.Muted) }
+    }
 }
 
 /** Frage für Erwachsene vor jedem Kauf: Geburtsjahr eingeben, mindestens 18 Jahre. */

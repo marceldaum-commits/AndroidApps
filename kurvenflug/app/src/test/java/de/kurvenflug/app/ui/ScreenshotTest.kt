@@ -431,6 +431,8 @@ class ScreenshotTest {
     @Test fun nextSteps() = shot("95_wie_gehts_weiter", 1500) {
         androidx.compose.foundation.layout.Column(androidx.compose.ui.Modifier.padding(12.dp)) { de.kurvenflug.app.ui.home.NextStepsCard() }
     }
+    /** Pro-Schloss in der Kinderansicht: sachlich, kein Preis, Weg nur über das Eltern-Tor (UWG Anh. Nr. 28) */
+    @Test fun proLockedNotice() = shot("98_pro_schloss_kinder") { de.kurvenflug.app.ui.pro.ProLockedNotice({}, {}) }
     @Test fun proUnlocked() = shot("96_pro_freigeschaltet", 2000) {
         de.kurvenflug.app.ui.pro.ProScreen(de.kurvenflug.app.ProState(pro = true, locking = true, viaPlay = true), FakeShop(true, acceptsCodes = false), {}, {})
     }

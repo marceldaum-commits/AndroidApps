@@ -51,7 +51,7 @@ fun ChapterCard(c: Chapter, index: Int, stars: Map<String, Int>, onLevel: (Level
         }
         val ps = de.kurvenflug.app.LocalPro.current
         if (de.kurvenflug.core.model.Pro.chapterLocked(c.number, ps.pro, ps.locking, stars))
-            Text("⭐ Teil von Kurvenflug Pro – antippen für mehr", color = Q.Yellow, style = MaterialTheme.typography.labelMedium)
+            Text("⭐ Teil von KurvenFlug Pro", color = Q.Yellow, style = MaterialTheme.typography.labelMedium)
         c.levels.chunked(4).forEach { row ->
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 row.forEach { l ->
