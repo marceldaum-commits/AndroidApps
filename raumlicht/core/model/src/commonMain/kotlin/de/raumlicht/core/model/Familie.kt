@@ -27,7 +27,14 @@ object Familie {
         "Sie lässt sich nur mit einem getrennt und offline aufbewahrten Schlüssel von Mathenachhilfe Online öffnen. " +
         "Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht und nutzen ihn nur, wenn ihr uns um Wiederherstellung bittet. " +
         "Jede Wiederherstellung seht ihr hier im Protokoll."
-    const val DETAILS = "Wer den Familien-Link hat, kann die Lernstände öffnen – gut aufbewahren. Freischalt-Codes stehen nicht im Lernstand der Kinder. Ohne Konto, ohne E-Mail-Adresse."
+    /** Steht unter dem Pflichttext als Link – sonst nichts (Auflage A6: nur ein Einwilligungstext) */
+    const val PRIVACY_LINK = "Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)"
+    const val AGREE_CREATE = "Einverstanden – Familie anlegen"
+    const val AGREE_JOIN = "Einverstanden – Familie beitreten"
+    /** Sicherheitshinweis (v1.7): nicht im Pflichttext, sondern dauerhaft auf der Familien-Seite, bei QR-Code, „teilen“ und Notfall-Blatt – Wortlaut nicht ändern */
+    const val SECURITY = "Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. " +
+        "Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf."
+    const val DETAILS = "Freischalt-Codes stehen nicht im Lernstand der Kinder. Ohne Konto, ohne E-Mail-Adresse."
     const val PRIVACY_URL = "https://www.mathenachhilfe-online.com/datenschutz/"
     /** Einheitliche Warnung vor dem Löschen der ganzen Familie – Wortlaut nicht ändern */
     const val DELETE_WARNING = "Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. " +

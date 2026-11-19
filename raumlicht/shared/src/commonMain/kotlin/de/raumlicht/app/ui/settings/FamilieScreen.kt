@@ -59,7 +59,6 @@ fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: St
     var name by rememberSaveable { mutableStateOf("") }
     var link by rememberSaveable(prefill) { mutableStateOf(prefill) }
     var sure by rememberSaveable { mutableStateOf(false) }
-    var agreed by rememberSaveable { mutableStateOf(false) }
     var deleting by rememberSaveable { mutableStateOf(false) }
     var typed by rememberSaveable { mutableStateOf("") }
     val uri = androidx.compose.ui.platform.LocalUriHandler.current
@@ -69,10 +68,9 @@ fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: St
             Text(Familie.INTRO, Modifier.testTag("familie-text"), style = MaterialTheme.typography.bodyLarge, color = Q.Text)
             Card(Q.Cyan) {
                 Text("🔒 " + Familie.NOTE, Modifier.testTag("familie-hinweis"), color = Q.Text, fontSize = 13.sp, lineHeight = 18.sp)
-                Text(Familie.DETAILS, Modifier.testTag("familie-einzelheiten"), color = Q.Muted, fontSize = 12.sp, lineHeight = 16.sp)
-                Text("Datenschutzerklärung ›", Modifier.testTag("familie-datenschutz").clickable { try { uri.openUri(Familie.PRIVACY_URL) } catch (e: Exception) { } }.padding(vertical = 6.dp), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
-                if (test) Text("🧪 " + Familie.TEST_NOTE, Modifier.testTag("familie-test"), color = Q.Orange, fontSize = 12.sp, lineHeight = 16.sp)
+                Text(Familie.PRIVACY_LINK + " ›", Modifier.testTag("familie-datenschutz").clickable { try { uri.openUri(Familie.PRIVACY_URL) } catch (e: Exception) { } }.padding(vertical = 6.dp), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
             }
+            if (test) Text("🧪 " + Familie.TEST_NOTE, Modifier.testTag("familie-test"), color = Q.Orange, fontSize = 12.sp, lineHeight = 16.sp)
             if (choice != null) Card(Q.Orange) {
                 Text((if (choice.conflict) "Auf einem anderen Gerät wurde weitergelernt" else "In der Familie gibt es schon einen Lernstand") + (if (choice.day.isNotEmpty()) " (Stand ${choice.day})" else "") +
                     ". Welcher soll gelten? Der andere geht dabei verloren.", Modifier.testTag("familie-frage"), color = Q.Text, fontSize = 14.sp)
@@ -84,20 +82,18 @@ fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: St
                 OutlinedTextField(name, { name = it.take(Familie.MAX_NAME) }, Modifier.fillMaxWidth().testTag("familie-name"), label = { Text("Neues Kind: Spitzname") }, singleLine = true)
                 NeonButton({ sfx?.play(Sound.TAP); onNewKid(name) }, Modifier.fillMaxWidth().testTag("familie-kind-neu"), color = Q.Muted) { Text("Als neues Kind hinzufügen") }
                 Text("Abbrechen", Modifier.testTag("familie-abbrechen").clickable(onClick = onCancelJoin).padding(vertical = 10.dp), color = Q.Muted, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-            } else if (state == null && !agreed) {
-                NeonButton({ sfx?.play(Sound.TAP); agreed = true }, Modifier.fillMaxWidth().testTag("familie-einverstanden"), color = Q.Cyan) { Text("Einverstanden", fontWeight = FontWeight.Bold) }
             } else if (state == null) {
                 Card(Q.Cyan) {
                     Text("Neue Familie anlegen", color = Q.Cyan, fontWeight = FontWeight.Black, fontSize = 15.sp)
                     OutlinedTextField(name, { name = it.take(Familie.MAX_NAME) }, Modifier.fillMaxWidth().testTag("familie-name"), label = { Text("Spitzname des Kindes (freiwillig)") }, singleLine = true,
                         supportingText = { Text("Nur die Familie kann ihn lesen. Kein voller Name nötig.") })
-                    NeonButton({ sfx?.play(Sound.TAP); onCreate(name) }, Modifier.fillMaxWidth().testTag("familie-anlegen"), color = Q.Cyan) { Text("👨‍👩‍👧 Familie anlegen", fontWeight = FontWeight.Bold) }
+                    NeonButton({ sfx?.play(Sound.TAP); onCreate(name) }, Modifier.fillMaxWidth().testTag("familie-anlegen"), color = Q.Cyan) { Text(Familie.AGREE_CREATE, fontWeight = FontWeight.Bold) }
                 }
                 Card(Q.Green) {
                     Text("Es gibt schon eine Familie?", color = Q.Green, fontWeight = FontWeight.Black, fontSize = 15.sp)
                     Text("Füge den Familien-Link ein – aus einer anderen Lern-App oder vom Notfall-Blatt.", color = Q.Text, fontSize = 13.sp, lineHeight = 18.sp)
                     OutlinedTextField(link, { link = it.take(400) }, Modifier.fillMaxWidth().testTag("familie-link"), label = { Text("Familien-Link einfügen") }, singleLine = true)
-                    NeonButton({ sfx?.play(Sound.TAP); onJoin(link) }, Modifier.fillMaxWidth().testTag("familie-beitreten"), color = Q.Green) { Text("Familie beitreten", fontWeight = FontWeight.Bold) }
+                    NeonButton({ sfx?.play(Sound.TAP); onJoin(link) }, Modifier.fillMaxWidth().testTag("familie-beitreten"), color = Q.Green) { Text(Familie.AGREE_JOIN, fontWeight = FontWeight.Bold) }
                 }
             } else {
                 val full = remember(state, base) { Familie.link(state.fam, base) }
@@ -106,10 +102,12 @@ fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: St
                     Text("Hier lernt: " + state.name.ifBlank { "Kind ohne Namen" }, Modifier.testTag("familie-kind"), color = Q.Text, fontSize = 14.sp)
                     Text("Familien-Nummer: " + state.number, Modifier.testTag("familie-nummer"), color = Q.Text, fontSize = 14.sp)
                     Text("Die Nummer öffnet nichts. Sie hilft nur, die Familie wiederzufinden, falls der Link verloren geht.", color = Q.Muted, fontSize = 12.sp, lineHeight = 16.sp)
+                    Text(Familie.DETAILS, Modifier.testTag("familie-einzelheiten"), color = Q.Muted, fontSize = 12.sp, lineHeight = 16.sp)
                 }
                 QrImage(full, Modifier.align(Alignment.CenterHorizontally).size(232.dp).testTag("familie-qr"))
                 Text("Familien-Link: auf einem anderen Gerät scannen oder als Notfall-Blatt aufbewahren", Modifier.align(Alignment.CenterHorizontally), color = Q.Muted, fontSize = 12.sp)
-                NeonButton({ share("Familien-Zugang für die Lern-Apps von Mathenachhilfe Online.\nFamilien-Nummer: ${state.number}\nLink: $full\nGut aufbewahren: Wer diesen Link hat, kann die Lernstände öffnen.") },
+                Card(Q.Orange) { Text("⚠️ " + Familie.SECURITY, Modifier.testTag("familie-sicherheit"), color = Q.Text, fontSize = 13.sp, lineHeight = 18.sp) }
+                NeonButton({ share("Familien-Zugang für die Lern-Apps von Mathenachhilfe Online.\nFamilien-Nummer: ${state.number}\nLink: $full\n${Familie.SECURITY}") },
                     Modifier.fillMaxWidth().testTag("familie-teilen"), color = Q.Cyan) { Text("Notfall-Blatt teilen", fontWeight = FontWeight.Bold) }
                 Text("Gesichert wird nach dem Lernen von selbst, wenn sich etwas geändert hat.", color = Q.Muted, fontSize = 12.sp)
                 NeonButton(onSync, Modifier.fillMaxWidth().testTag("familie-sichern"), color = Q.Muted) { Text("Jetzt sichern") }

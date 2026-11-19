@@ -50,10 +50,8 @@ for (const modus of ['wasm', 'js']) {
   const A = await neu(1100); await A.page.addInitScript(() => { if (!localStorage.getItem('raumlicht.sterne')) { localStorage.setItem('raumlicht.sterne', '1-1=3;1-2=2'); localStorage.setItem('raumlicht.proCode', 'PRUEFCODE'); localStorage.setItem('raumlicht.kiDevice', 'geraet-alt'); } });
   await A.open(`?modus=${modus}&ziel=familie`); const a1 = await A.page.screenshot({ path: `${out}/${modus}-1-vorher.png` });
   check(seen.length === 0 && !(await st(A.page)), `${modus}: vor dem Anlegen ist nichts gespeichert und nichts gesendet`);
-  // erst „Einverstanden“ (einheitlicher Eltern-Hinweis), dann „Familie anlegen“
-  const ye = await zeile(A.page, a1, 'cyan'); await A.page.mouse.click(200, ye - 20); await A.page.waitForTimeout(1500); const a1b = await A.page.screenshot({ path: `${out}/${modus}-1b-einverstanden.png` });
-  check(seen.length === 0 && !(await st(A.page)), `${modus}: „Einverstanden“ allein sendet nichts`);
-  const ya = await zeile(A.page, a1b, 'cyan'); await A.page.mouse.click(200, ya - 20); await A.page.waitForTimeout(4000); await A.page.screenshot({ path: `${out}/${modus}-2-angelegt.png` });
+  // Knopf „Einverstanden – Familie anlegen“ (der Knopf selbst ist das Einverständnis)
+  const ya = await zeile(A.page, a1, 'cyan'); await A.page.mouse.click(200, ya - 20); await A.page.waitForTimeout(4000); await A.page.screenshot({ path: `${out}/${modus}-2-angelegt.png` });
   const sa = await st(A.page); const [famText, kid, nummer, rev] = sa.split('|'); const [famId, famKey, schreib] = (famText || '').split('.');
   check(/^[\w-]{22}\.[\w-]{43}\.[\w-]{22}\|[\w-]{22}\|[0-9A-Z]{4}-[0-9A-Z]{4}\|1\|/.test(sa), `${modus}: Familie angelegt, Kind und Familien-Nummer gemerkt, Stand 1 gesichert` + (ya < 0 ? ' – Knopf nicht gefunden' : ''));
   const e = fam.get(famId); const puts = seen.filter((s) => s.method === 'PUT');
@@ -68,10 +66,10 @@ for (const modus of ['wasm', 'js']) {
   const n1 = seen.filter((s) => s.method === 'PUT').length; await A.open(`?modus=${modus}`); await A.page.waitForTimeout(1500);
   check(seen.filter((s) => s.method === 'PUT').length === n1 && await st(A.page) === sa, `${modus}: nach neu Laden bleibt die Familie, ohne Änderung keine zweite Sicherung`);
   // ── Gerät B (frisch): mit dem Familien-Link öffnen, beitreten, Kind wählen, Stand holen ──
-  const B = await neu(1100); await B.open(`?modus=${modus}#familie=${famText}`); const b1 = await B.page.screenshot({ path: `${out}/${modus}-3-neues-geraet.png` });
+  const nB = seen.filter((s) => s.method !== 'GET').length, gB = seen.length; const B = await neu(1100); await B.open(`?modus=${modus}#familie=${famText}`); const b1 = await B.page.screenshot({ path: `${out}/${modus}-3-neues-geraet.png` });
   check(!(await B.page.evaluate(() => location.href)).includes(famKey), `${modus}: der Schlüssel verschwindet sofort aus der Adresszeile`);
-  const yeb = await zeile(B.page, b1, 'cyan'); await B.page.mouse.click(200, yeb - 20); await B.page.waitForTimeout(1500); const b1b = await B.page.screenshot({ path: `${out}/${modus}-3b-einverstanden.png` });
-  const yb = await zeile(B.page, b1b, 'gruen'); await B.page.mouse.click(200, yb - 20); await B.page.waitForTimeout(3000); const b2 = await B.page.screenshot({ path: `${out}/${modus}-4-kind-waehlen.png` });
+  check(seen.length === gB && !(await st(B.page)), `${modus}: mit dem Familien-Link geöffnet – ohne „Einverstanden – Familie beitreten“ wird nichts abgefragt und nichts gespeichert`);
+  const yb = await zeile(B.page, b1, 'gruen'); await B.page.mouse.click(200, yb - 20); await B.page.waitForTimeout(3000); const b2 = await B.page.screenshot({ path: `${out}/${modus}-4-kind-waehlen.png` });
   const yk = await zeile(B.page, b2, 'cyan', true); await B.page.mouse.click(200, yk + 20);
   await B.page.waitForFunction(() => localStorage.getItem('raumlicht.sterne') === '1-1=3;1-2=2', null, { timeout: 20000 }).catch(() => {}); await B.page.waitForTimeout(3000); await B.page.screenshot({ path: `${out}/${modus}-5-geholt.png` });
   const sb = await st(B.page);

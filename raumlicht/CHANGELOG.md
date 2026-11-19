@@ -2,6 +2,11 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.38 – KI-Antworten sind als KI gekennzeichnet; Familien-Einwilligung nach Vorgabe (19.11.2026)
+- **KI-Tutor:** Unter jeder Antwort steht jetzt klein „Antwort einer KI – sie kann Fehler enthalten.“ So ist immer klar, dass hier eine KI antwortet.
+- **Familien-Speicher (nur Teststufe):** Es gibt nur noch einen Einwilligungstext. Darunter stehen der Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und die Knöpfe „Einverstanden – Familie anlegen“ bzw. „Einverstanden – Familie beitreten“. Wer nicht tippt, lädt nichts hoch.
+- **Sicherheitshinweis** direkt beim QR-Code und im Notfall-Blatt: Wer den Familien-Link hat, kann die Lernstände öffnen, ändern und löschen – nur mit Menschen teilen, denen ihr vertraut.
+
 ## 2.18.37 – Familien-Speicher: gemeinsamer Baustein auf neuem Stand (nur Teststufe) (19.11.2026)
 - Unter der Haube: Raumlicht nutzt die neue Fassung des gemeinsamen Familien-Bausteins aller Lern-Apps. Er erkennt jetzt selbst, ob es eine Familie nicht mehr gibt – eine zusätzliche Abfrage entfällt.
 - Für Eltern und Kinder sieht alles aus wie in 2.18.36. Weiter nur auf der Teststufe.

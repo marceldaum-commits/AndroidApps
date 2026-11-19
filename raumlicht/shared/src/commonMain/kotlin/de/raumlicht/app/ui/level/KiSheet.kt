@@ -116,7 +116,11 @@ fun KiSheet(open: Boolean, level: Level, attempt: Pair<Values, String>?, accent:
                     turns.forEachIndexed { i, t ->
                         if (t.role == "lux") Bubble(i) { Row(verticalAlignment = Alignment.Top) {
                             Lux(LuxMood.HAPPY, size = 44.dp)
-                            Text(t.text, Modifier.padding(start = 8.dp).weight(1f).testTag("ki-antwort").background(Q.Panel, RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).padding(12.dp), style = MaterialTheme.typography.bodyMedium, color = Q.Text)
+                            Column(Modifier.padding(start = 8.dp).weight(1f)) {
+                                Text(t.text, Modifier.fillMaxWidth().testTag("ki-antwort").background(Q.Panel, RoundedCornerShape(4.dp, 16.dp, 16.dp, 16.dp)).padding(12.dp), style = MaterialTheme.typography.bodyMedium, color = Q.Text)
+                                // Kennzeichnung nach KI-Verordnung Art. 50 – unter jeder Antwort, Wortlaut wie im Mathe-Trainer
+                                Text(Ki.LABEL, Modifier.padding(start = 4.dp, top = 3.dp).testTag("ki-kennzeichnung"), fontSize = 11.sp, color = Q.Muted)
+                            }
                         } } else Bubble(i) { Text(t.text, Modifier.fillMaxWidth().padding(start = 52.dp).background(accent.copy(alpha = 0.16f), RoundedCornerShape(16.dp, 4.dp, 16.dp, 16.dp))
                             .border(1.dp, accent.copy(alpha = 0.5f), RoundedCornerShape(16.dp, 4.dp, 16.dp, 16.dp)).padding(12.dp), style = MaterialTheme.typography.bodyMedium, color = Q.Text) }
                     }
