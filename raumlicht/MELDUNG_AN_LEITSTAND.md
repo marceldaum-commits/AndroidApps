@@ -8,7 +8,8 @@ Neueste oben.
 - **Protokoll** auf der Familien-Seite (`GET …/protokoll`, Einträge `{art, t}`; „angelegt“, „wiederhergestellt“ lesbar, Unbekanntes wörtlich).
 - **Familie löschen:** nur hinter dem Tor, Warnung wörtlich (`Familie.DELETE_WARNING`), Bestätigung durch Eintippen der Familien-Nummer (gelesen wie der Server: ohne Bindestrich, O→0, I/L→1), dann `loeschen()`; lokal wird nur `raumlicht.familie` entfernt. Ein einzelnes Kind entfernen gibt es nicht.
 - **Andere Geräte bei 404:** „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“ – die Verbindung wird getrennt, nichts wird gelöscht. (Der Baustein meldet 404 für „Familie weg“ und „noch kein Stand“ gleich; die Brücke unterscheidet es über `/liste`.)
-- Weiter nur Teststufe (`Familie.ENABLED = false`). Zahlen: siehe Nachtrag.
+- Weiter nur Teststufe (`Familie.ENABLED = false`).
+- **Geprüft:** 204 Logik-Tests, 153 Oberflächen-Tests, Lint, Browser: `web-familie.mjs` 32 von 32 (Wasm und JS), die übrigen 166 bestanden – mit einer Einschränkung: `web-vorversion.mjs` (Update von 2.16.3) meldet in etwa 2 von 5 Läufen einen Konsolenfehler mit wechselndem Text (z. B. „Failed to execute 'compile' on 'WebAssembly': HTTP status code is not ok“), sonst 6 von 6. Er entsteht beim Dateitausch der Prüfung; ob er schon vor 2.18.35 gelegentlich auftrat, ist nicht geklärt. Spielstand, Pro-Code und Einstellungen blieben in jedem Lauf erhalten.
 
 ## 19.11.2026 – 2.18.35 auf test: Familien-Speicher angebunden (nur Teststufe; von Marcel hier direkt bestätigt: „daneben, eigene Version nur auf der Teststufe“)
 
