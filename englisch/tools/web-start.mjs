@@ -97,6 +97,8 @@ for (const [name, type, opts] of [
     }
     const st = await page.evaluate(() => window.englischTest.state());
     ok(Object.values(st.progress).filter((p) => p.done).length === 3, '3 Stempel gespeichert');
+    ok(st.settings.recognition === 'device', 'Spracherkennung standardmäßig nur auf dem Gerät');
+    ok(st.week && st.week.n === 3, 'Wochenziel gezählt (3 Episoden)');
     await page.reload(); await page.waitForSelector('.world');
     ok((await page.textContent('.pill')).includes('3'), 'Fortschritt nach Neuladen noch da');
     await snap(page, 'hafen_fertig');

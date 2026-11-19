@@ -160,7 +160,7 @@
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   A.recognitionMode = () => {
     if (!SR) return 'none';
-    const pref = S().recognition || 'browser';     // 'browser' | 'device' | 'off'
+    const pref = S().recognition || 'device';      // 'device' (Standard) | 'browser' (nur mit Zustimmung der Eltern) | 'off'
     if (pref === 'off') return 'none';
     const local = 'processLocally' in SR.prototype;
     if (pref === 'device') return local ? 'device' : 'none';

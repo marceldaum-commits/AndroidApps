@@ -14,9 +14,15 @@
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-  const fresh = () => ({ v: 1, klasse: null, name: '', progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'browser' }, streak: { last: '', days: 0 } });
+  const fresh = () => ({ v: 2, klasse: null, name: '', progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device' }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
+  // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
+  if ((state.v || 1) < 2) {
+    if (state.settings.recognition === 'browser') state.settings.recognition = 'device';
+    delete state.streak; state.week = { key: '', n: 0 }; state.v = 2;
+  }
+  if (!state.week) state.week = { key: '', n: 0 };
   window.APP_SETTINGS = state.settings;
 
   // ================================================================== Hilfen
@@ -97,12 +103,20 @@
     for (const w of C.worlds) for (const e of w.episodes || []) if (!e.soon && !(prog(e.id) && prog(e.id).done)) return e.id;
     return null;
   }
-  function today() { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); }
-  function noteDay() {
-    const t = today(); if (state.streak.last === t) return;
-    const y = new Date(Date.now() - 864e5); const yy = y.getFullYear() + '-' + (y.getMonth() + 1) + '-' + y.getDate();
-    state.streak.days = state.streak.last === yy ? state.streak.days + 1 : 1; // eine Pause setzt nur neu an, es geht nichts verloren
-    state.streak.last = t;
+  // Wochenziel statt Tagesserie: nichts geht verloren, jede Woche beginnt neu und freundlich.
+  const WEEK_GOAL = 3;
+  function weekKey(d) {
+    d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const day = d.getUTCDay() || 7; d.setUTCDate(d.getUTCDate() + 4 - day);
+    const y0 = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+    return d.getUTCFullYear() + '-W' + Math.ceil(((d - y0) / 864e5 + 1) / 7);
+  }
+  function weekCount() { return state.week.key === weekKey(new Date()) ? state.week.n : 0; }
+  function noteEpisodeDone() {
+    const k = weekKey(new Date());
+    if (state.week.key !== k) state.week = { key: k, n: 0 };
+    state.week.n++;
+    return state.week.n === WEEK_GOAL;
   }
 
   // ================================================================== Start
@@ -159,7 +173,7 @@
         }).join('')}</div>
       </div>
       <div class="row" style="margin-top:14px"><button class="btn white small" data-pass>📘 Mein Reisepass</button>
-        ${state.streak.days > 1 ? `<span class="pill">🔥 ${state.streak.days} Tage dabei</span>` : ''}</div>
+        <span class="pill" title="Wochenziel">🎯 Diese Woche: ${Math.min(weekCount(), WEEK_GOAL)}/${WEEK_GOAL}${weekCount() >= WEEK_GOAL ? ' ✅' : ''}</span></div>
       <div class="section-h">Weitere Orte auf der Reise</div>
       <div class="worlds">${C.worlds.slice(1).map((w) => `<button class="wtile" data-world="${w.id}"><span class="soon">kommt bald</span><span class="e">${w.emoji}</span><b>${esc(w.title)}</b><small>${esc(w.de)} · ${w.stufe === 'gs' ? 'Kl. 3–4' : 'Kl. 5–6'}</small></button>`).join('')}</div>
       <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · Prototyp · <a href="datenschutz.html">Datenschutz</a></div>
@@ -185,7 +199,6 @@
     const { episode: ep } = C.findEpisode(id);
     const steps = [{ kind: 'scene' }].concat(ep.games.map((g) => ({ kind: 'game', g })), [{ kind: 'mission' }]);
     const run = { ep, stars: 0, max: 0, vals: {} };
-    noteDay();
     for (let i = 0; i < steps.length; i++) {
       const res = await runStep(steps[i], run, i / steps.length);
       if (res === 'quit') { save(); return home(); }
@@ -193,8 +206,9 @@
     const stars = Math.max(1, Math.min(3, Math.round(3 * (run.max ? run.stars / run.max : 1))));
     const before = prog(id);
     state.progress[id] = { done: true, stars: Math.max(stars, before ? before.stars || 0 : 0), at: Date.now() };
+    const goal = noteEpisodeDone();
     save();
-    reward(ep, stars);
+    reward(ep, stars, goal);
   }
 
   function epFrame(run, frac, inner) {
@@ -659,9 +673,9 @@
   }
 
   // ------------------------------------------------------------------ Belohnung
-  function reward(ep, stars) {
+  function reward(ep, stars, goal) {
     const el = screen(`<div class="reward">
-      ${ruby(`Du hast „${esc(ep.title)}“ geschafft! Hier ist dein Stempel! 🎉`, 'dance')}
+      ${ruby(`Du hast „${esc(ep.title)}“ geschafft! Hier ist dein Stempel! 🎉${goal ? ' Und dein Wochenziel ist erreicht – Squawk! 🏆' : ''}`, 'dance')}
       <div class="stamp">${ep.emoji}</div>
       <div class="bigstars">${[0, 1, 2].map((k) => `<span style="animation-delay:${0.5 + k * 0.25}s">${k < stars ? '⭐' : '☆'}</span>`).join('')}</div>
       <div class="row center"><button class="btn white" data-explain>💡 Ruby erklärt</button><button class="btn blue" data-home>Zum Hafen ⚓</button></div>
@@ -735,16 +749,19 @@
   function parents() {
     const s = state.settings;
     const total = C.worlds[0].episodes.filter((e) => !e.soon).length;
+    const cando = C.worlds.flatMap((w) => w.episodes || []).filter((e) => e.kann && prog(e.id) && prog(e.id).done).map((e) => e.kann);
     const r = (v, label, hint) => `<label class="radio"><input type="radio" name="rec" value="${v}" ${s.recognition === v ? 'checked' : ''}><span><b>${label}</b><br><span class="muted">${hint}</span></span></label>`;
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">👪 Für Eltern</div></div>
-      <div class="card"><h3>Fortschritt</h3><p>${stampCount()} von ${total} Episoden geschafft · ${state.streak.days || 0} ${state.streak.days === 1 ? 'Tag' : 'Tage'} in Folge dabei · Klasse ${state.klasse || '–'}</p></div>
+      <div class="card"><h3>Fortschritt</h3><p>${stampCount()} von ${total} Episoden geschafft · diese Woche ${weekCount()} (Wochenziel ${WEEK_GOAL}) · Klasse ${state.klasse || '–'}</p>
+        <h3 style="margin-top:10px">Das kann ${esc(state.name || 'euer Kind')} jetzt auf Englisch</h3>
+        ${cando.length ? `<ul>${cando.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : '<p class="muted">Sobald die erste Episode geschafft ist, steht hier, was euer Kind schon kann.</p>'}</div>
       <div class="card" style="margin-top:14px"><h3>Mikrofon und Spracherkennung</h3>
-        <p class="muted">Das Mikrofon geht nur an, wenn Ihr Kind auf 🎤 tippt. Beim Nachsprechen (Papagei-Echo) bleibt die Aufnahme auf dem Gerät und wird sofort wieder gelöscht.
-        In der Sprech-Mission kann die Spracherkennung des Browsers prüfen, ob der Satz verstanden wurde.</p>
-        ${r('browser', 'Spracherkennung des Browsers', 'Wo möglich auf dem Gerät; sonst beim Browser-Hersteller (z. B. Google bei Chrome, Apple bei Safari).')}
-        ${r('device', 'Nur auf dem Gerät', 'Erkennung nur, wenn der Browser sie auf dem Gerät kann (z. B. Chrome ab Version 139). Sonst wird nur die Lautstärke geprüft.')}
+        <p class="muted">Das Mikrofon geht nur an, wenn euer Kind auf 🎤 tippt. Beim Nachsprechen (Papagei-Echo) bleibt die Aufnahme auf dem Gerät und wird sofort wieder gelöscht.
+        In der Sprech-Mission kann eine Spracherkennung prüfen, ob der Satz verstanden wurde. <b>Standard: nur auf dem Gerät</b> – die Stimme eures Kindes verlässt das Gerät nicht.</p>
+        ${r('device', 'Nur auf dem Gerät (empfohlen)', 'Erkennung nur, wenn der Browser sie auf dem Gerät kann (z. B. Chrome ab Version 139). Sonst wird nur geprüft, ob laut genug gesprochen wurde.')}
         ${r('off', 'Aus', 'Keine Spracherkennung; nur Aufnahme und Lautstärke auf dem Gerät.')}
+        ${r('browser', 'Auch Online-Erkennung des Browsers erlauben', 'Nur mit eurer Zustimmung: Je nach Browser wird die Aufnahme des gesprochenen Satzes an den Sprachdienst des Browser-Herstellers gesendet (z. B. Google bei Chrome, Apple bei Safari). Wir selbst erhalten nichts.')}
         <p class="muted" style="font-size:14px">Jetzt aktiv: <b data-mode></b></p></div>
       <div class="card" style="margin-top:14px"><h3>Kommt in den nächsten Wochen</h3>
         <p class="muted">Eltern-Handy koppeln mit verschlüsselter Sicherung, Pro-Freischaltung per Code, Hinweis auf Englisch-Nachhilfe, anonyme abschaltbare Zählung.</p></div>
@@ -754,7 +771,12 @@
     </div>`);
     const modeTxt = () => ({ device: 'Erkennung auf dem Gerät', browser: 'Erkennung des Browsers', none: 'keine Erkennung (nur Lautstärke)' }[A.recognitionMode()]);
     el.querySelector('[data-mode]').textContent = modeTxt();
-    el.querySelectorAll('input[name=rec]').forEach((x) => x.onchange = () => { s.recognition = x.value; save(); el.querySelector('[data-mode]').textContent = modeTxt(); });
+    el.querySelectorAll('input[name=rec]').forEach((x) => x.onchange = () => {
+      if (x.value === 'browser' && !confirm('Online-Erkennung erlauben?\n\nDann kann der Browser die Aufnahme des gesprochenen Satzes an den Sprachdienst seines Herstellers senden (z. B. Google oder Apple). Ihr könnt das jederzeit wieder ausschalten.')) {
+        el.querySelector(`input[name=rec][value="${s.recognition}"]`).checked = true; return;
+      }
+      s.recognition = x.value; save(); el.querySelector('[data-mode]').textContent = modeTxt();
+    });
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); settings(); };
     el.querySelector('[data-reset]').onclick = () => {
       if (!confirm('Wirklich alle Daten (Fortschritt, Name, Einstellungen) aus diesem Browser löschen?')) return;

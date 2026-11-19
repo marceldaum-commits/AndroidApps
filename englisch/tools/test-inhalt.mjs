@@ -18,6 +18,7 @@ test('es gibt spielbare Episoden mit Szene, drei Spielen, Mission und Erklärung
     assert.equal(e.games.length, 3, e.id);
     assert.ok(e.mission.steps.length >= 2, e.id);
     assert.ok(e.explain.points.length >= 3, e.id);
+    assert.ok(e.kann && e.kann.length > 20, `${e.id}: „Das kann mein Kind jetzt“ fehlt`);
   }
 });
 
@@ -112,4 +113,10 @@ test('Service Worker kennt alle Dateien, die index.html lädt', () => {
   const sw = readFileSync(new URL('sw.js', dir), 'utf8');
   const html = readFileSync(new URL('index.html', dir), 'utf8');
   for (const m of html.matchAll(/(?:src|href)="([^"#:]+)"/g)) assert.ok(sw.includes(`'${m[1]}'`), m[1]);
+});
+
+test('Spracherkennung ist standardmäßig nur auf dem Gerät', () => {
+  const app = readFileSync(new URL('app.js', dir), 'utf8');
+  assert.match(app, /recognition: 'device'/);
+  assert.doesNotMatch(app, /recognition: 'browser'/);
 });

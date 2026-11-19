@@ -2,6 +2,16 @@
 
 Neueste oben.
 
+## 19.11.2026 – Konzept überarbeitet nach Recherche und RATGEBER (noch Version 0.1.0, nicht ausgeliefert)
+
+- Eingearbeitet: Recherche „Sprachlern App gegen Duolingo“ und RATGEBER.md Teil 5 von „Geld verdienen“, Plattform-Hinweise von Experimentopia und Mathe-Trainer.
+- **Spracherkennung jetzt standardmäßig nur auf dem Gerät.** Die Online-Erkennung des Browsers gibt es nur mit ausdrücklicher Zustimmung der Eltern hinter dem Eltern-Tor; Datenschutzseite angepasst.
+- **Wochenziel (3 Episoden) statt Tagesserie**: Es gibt keinen Serienverlust, keine Energie und keine Ligen.
+- Für Eltern: **„Das kann mein Kind jetzt auf Englisch“** mit Kann-Sätzen je Episode. Elterntexte jetzt in der ihr-Form.
+- **Korrektur:** Themen-Kennung für Zählung und Nachhilfe-Hinweis ist das vorhandene `englisch` (nicht `englisch-*`). Gebraucht wird nur die neue App-Kennung `app=<name>`.
+- Pro als Einmalkauf, ab Januar mit Familienpass. App-Nummer und Code-Präfix für `#pro=` bitte festlegen.
+- Tests: 13/13 Inhaltstests, Durchspielen in Chromium und WebKit (Handy, iPhone 13, iPad, PC) grün; Bildschirmfotos angesehen.
+
 ## 18.11.2026 – Abgrenzung mit dem Wissensgarten vereinbart
 
 - Wissensgarten: Wortschatz, unregelmäßige Verben, Tenses, Regeln als Merkkarten; Brummi-Radio bleibt dort. Englisch-App: hören, nachsprechen, Rollenspiele, Satzbau, Hörverstehen, Chants – keine Karteikarten.
@@ -31,7 +41,7 @@ Neueste oben.
 - **Bitte vom Leitstand:**
   1. Entscheidung Name/Konzept (Marcel).
   2. Subdomains `<name>` und `<name>-test` (Server holt `<name>/webapp/` aus `<name>-test`/`<name>-live`).
-  3. CORS auf trainer/trainer-test, Zähl-Kennung `app=<name>`, Themen `englisch-*`.
+  3. CORS auf trainer/trainer-test, Zähl-Kennung `app=<name>` (Thema `englisch` gibt es schon).
   4. ⚠️ **Stimmen:** Der OpenAI-Zugang meldet „kein Guthaben“ (18.11.). Für die Vertonung (britisches Englisch, mehrere Figuren) Guthaben oder Stimm-Server-Zugang. Bis dahin Prototyp mit Gerätestimme.
   5. Pro: Shop-Produkt und Signatur-Schlüssel. 6. Teilnehmerliste Montagsrunde.
 - **Abstimmung Wissensgarten:** Vorschlag – WG behält Vokabel-/Verb-/Tenses-Pakete als Merkwissen, wir bauen keine Karteikarten; gegenseitige Links (`#paket=` ↔ `#welt=`/`#episode=`). Nachricht an den WG-Raum ist raus; Antwort folgt hier.

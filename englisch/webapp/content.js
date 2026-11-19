@@ -32,7 +32,7 @@
       id: 1, title: 'Hello Harbour', de: 'Der Hafen', emoji: '⚓', stufe: 'gs',
       episodes: [
         {
-          id: 'w1e1', title: 'Hello!', de: 'Hallo sagen', emoji: '👋',
+          id: 'w1e1', kann: 'sich begrüßen, mit Namen vorstellen, nach dem Namen fragen und sich verabschieden', title: 'Hello!', de: 'Hallo sagen', emoji: '👋',
           scene: [
             { who: 'ruby', img: '🦜⚓', en: "Hello! I'm Ruby.", de: 'Hallo! Ich bin Ruby.' },
             { who: 'mia', img: '👧👋', en: "Hi, Ruby! I'm Mia.", de: 'Hi, Ruby! Ich bin Mia.' },
@@ -104,7 +104,7 @@
           wg: 'gs-englisch-basics',
         },
         {
-          id: 'w1e2', title: 'Fish and numbers', de: 'Zahlen bis 10', emoji: '🐟',
+          id: 'w1e2', kann: 'bis 10 zählen, nach einer Menge fragen („How many …?“) und höflich etwas bestellen', title: 'Fish and numbers', de: 'Zahlen bis 10', emoji: '🐟',
           scene: [
             { who: 'ted', img: '👴🎣', en: "Hello! I'm Grandpa Ted. I'm a fisherman.", de: 'Hallo! Ich bin Opa Ted. Ich bin Fischer.' },
             { who: 'ted', img: '🐟🐟🐟', en: "Look! One, two, three fish.", de: 'Schau! Ein, zwei, drei Fische.' },
@@ -165,7 +165,7 @@
           wg: 'gs-englisch-farben-zahlen',
         },
         {
-          id: 'w1e3', title: 'Colourful boats', de: 'Farben', emoji: '🎨',
+          id: 'w1e3', kann: 'acht Farben nennen, nach der Farbe fragen („What colour is …?“) und Dinge beschreiben („The boat is red.“)', title: 'Colourful boats', de: 'Farben', emoji: '🎨',
           scene: [
             { who: 'mia', img: '👧🖌️', en: 'I paint the boats.', de: 'Ich male die Boote an.' },
             { who: 'mia', img: '🟥⛵', en: 'This boat is red.', de: 'Dieses Boot ist rot.' },

@@ -1,6 +1,6 @@
 # Konzept: Englisch-App „sprechen, hören, spielen“ (Klasse 3–6)
 
-Stand: 18.11.2026 · Entwurf zur Entscheidung durch Marcel (Abgabe bis Mo 23.11.2026, 11 Uhr)
+Stand: 19.11.2026 · Entwurf zur Entscheidung durch Marcel (Abgabe bis Mo 23.11.2026, 11 Uhr) · eingearbeitet: Recherche „Sprachlern App gegen Duolingo“ und RATGEBER.md von „Geld verdienen“
 Arbeitsordner: `englisch/` – wird nach der Namensentscheidung in `<name>/` umbenannt, Branches `<name>-test` → `<name>-live`.
 
 ---
@@ -97,7 +97,10 @@ Jede Spielart ist kurz (1–2 Minuten), hat Bewegung, Ton, sofortiges Feedback u
 | 📖 **Mini-Geschichte** | Bildgeschichte mit 6–10 Sätzen, mitlesen (Wort leuchtet), danach 3 Fragen zum Hörverstehen (Bild wählen, richtig/falsch, Reihenfolge legen). | Hörverstehen |
 
 Zusätzlich:
-- **Rubys Tagesaufgabe:** 3 Minuten gemischt, jeden Tag anders. Serien werden gefeiert, eine verpasste Serie bringt keinen Verlust.
+- **Rubys Tagesaufgabe:** 3 Minuten gemischt, jeden Tag anders. Sie holt Sätze aus schon geschafften Episoden in **wachsenden Abständen** zurück
+  (nach 1, 3, 7, 14 Tagen – verteiltes Üben, aber als wechselnde Spiele, nicht als Karteikarten).
+- **Wochenziel statt Tagesserie:** 3 Episoden pro Woche werden gefeiert. Keine Serie, die reißen kann, keine Energie, keine Herzen, keine Ligen,
+  keine Benachrichtigungen (Elternkritik an Serien-Druck, Recherche „Geld verdienen“). Eingebaut seit dem Prototyp.
 - **Eigene Sätze („Vorgefertigtes ist flexibel“):** Im Papagei-Echo und in der Dialog-Bühne kann man eigene Wörter einsetzen
   (z. B. eigenen Namen, Lieblingsessen aus einer Liste). Bei unpassender Eingabe erklärt Ruby freundlich, was geht.
 
@@ -111,6 +114,7 @@ mehrere Figuren = mehrere Stimmen, britisches Englisch als Standard, weil die me
 |---|---|---|---|---|
 | **A: KI-Stimmen (OpenAI, wie „Nova“ im Wissensgarten), vorab vertont** | gut, natürliche Betonung, Akzent und Tempo steuerbar | sehr gering (Cent-Bereich je Episode) | Ergebnisse dürfen wir nutzen; OpenAI verlangt den Hinweis, dass die Stimme KI-erzeugt ist → steht in der App und im Datenschutz | ✅ **empfohlen** |
 | B: Eigene Aufnahmen mit Muttersprachlern | sehr gut, echt | hoch (Sprecher, Studio, jede Änderung neu) | Buy-out-Vertrag nötig | später für Lieblingsszenen denkbar |
+| D: Freie neuronale Stimmen (Piper), vorab vertont | gut | 0 | je Stimme verschieden, vor Nutzung prüfen | Ausweichweg, falls kein OpenAI-Guthaben |
 | C: Browser-Sprachausgabe (en-GB-Stimme des Geräts) | sehr unterschiedlich je Gerät | 0 | unproblematisch | nur **Rückfall**, wenn eine Datei fehlt (nur Stimmen, die auf dem Gerät sprechen) |
 
 - ⚠️ **Hinweis:** Der OpenAI-Zugang dieser Umgebung meldet am 18.11. „kein Guthaben“ (dasselbe Kontingent wie Experimentopia/Wissensgarten).
@@ -121,11 +125,14 @@ mehrere Figuren = mehrere Stimmen, britisches Englisch als Standard, weil die me
 ### Mikrofon und Spracherkennung
 - **Mikrofon nur auf Knopfdruck** (gedrückt halten oder antippen → rot leuchtender Ring), nie automatisch, nie im Hintergrund.
 - **Papagei-Echo funktioniert ganz ohne Server:** Die eigene Aufnahme bleibt im Arbeitsspeicher, wird einmal abgespielt und dann verworfen. Nichts wird gespeichert oder gesendet.
-- **Prüfen, ob das Wort verstanden wurde** (Dialog-Bühne, Echo-Sterne):
-  - Wo der Browser **auf dem Gerät** erkennen kann (Chrome ab Version 139 mit `processLocally`), nutzen wir das.
-  - Sonst die Spracherkennung des Browsers wie im Wissensgarten – je nach Browser auf dem Gerät oder beim Hersteller (Google, Apple).
-    Datenschutz-Hinweis wörtlich nach dem Wissensgarten-Muster.
-  - Eltern können im Elternbereich **„Nur auf dem Gerät“** wählen: dann gibt es Papagei-Echo ohne automatische Prüfung.
+- **Prüfen, ob das Wort verstanden wurde** (Sprech-Mission):
+  - **Standard: nur auf dem Gerät.** Wo der Browser auf dem Gerät erkennen kann (Chrome ab Version 139 mit `processLocally`), nutzen wir das;
+    sonst prüft die App nur, ob laut genug gesprochen wurde. **Keine Kinderstimme landet ohne Zustimmung auf fremden Servern**
+    (sonst bräuchte es Einwilligung der Eltern und eine Datenschutz-Folgenabschätzung).
+  - Die Online-Erkennung des Browsers (Google bei Chrome, Apple bei Safari) gibt es nur, wenn Eltern sie hinter dem Eltern-Tor **ausdrücklich erlauben**
+    (Nachfrage mit Erklärung, jederzeit abschaltbar).
+  - Später (nach eigenem Test mit Kinderstimmen und Zustimmung der Eltern): ein kleines Erkennungsmodell im Browser, das nur mit dem erwarteten Satz vergleicht.
+    Keine automatische Aussprache-**Note**, solange sie nicht verlässlich ist – ein Kind darf nie zu Unrecht „falsch“ hören.
 - **Kinder-Erkennung ist ungenau → großzügig werten:** Wird ein Satz nicht erkannt, sagt Ruby „Ich hab dich nicht ganz gehört – noch mal?“ und nach dem
   zweiten Versuch geht es trotzdem weiter. Nie „falsch“ für Aussprache, nie Punktabzug. Aussprache-Sterne zählen nur positiv.
 - Ohne Mikrofon (verweigert, kein Gerät, Schule): Jede Sprechaufgabe hat den Knopf „Ich sage es leise für mich“ → weiter ohne Prüfung.
@@ -143,7 +150,12 @@ mehrere Figuren = mehrere Stimmen, britisches Englisch als Standard, weil die me
 | alle Spielarten, Rubys Tagesaufgabe, Reisepass | „Klassenarbeit bald?“-Training Kl. 5/6: Hörverstehen im Stil einer Klassenarbeit |
 | Mikrofon-Funktionen, Eltern-Handy koppeln, Sicherung | Rubys Baumhaus: weitere Deko-Sets |
 
-- Preis, Laufzeit und Shop-Produkt legen Marcel und der Leitstand fest (gleiches Modell wie bei den anderen Apps).
+- **Pro als Einmalkauf** wie bei den anderen Apps; ab Januar gilt auch der **Familienpass „Alle Apps“**. Freischalten von Anfang an über den gemeinsamen Code
+  (`#pro=CODE`, danach sofort aus der Adresse entfernt; Code-Eingabe von Hand immer sichtbar). Preis, App-Nummer und Code-Präfix legen Marcel, Leitstand und „Geld verdienen“ fest.
+- **Nachhilfe-Hinweis (Auftrag C):** nur im Elternbereich hinter dem Eltern-Tor, nie im Kinderbereich, nie durch Ruby. Themen-Kennung `englisch`.
+  Auslöser „Thema hakt“ (mindestens 10 Antworten, unter 60 % richtig beim ersten Versuch in 14 Tagen) und „Englisch-Arbeit bald?“ (Termin eintragen, 3–14 Tage vorher).
+  Text und Links nach RATGEBER.md Teil 5, höchstens alle 14 Tage, ausblendbar, Schalter „Hinweise auf unsere Nachhilfe zeigen“.
+- **Zählung:** gemeinsames Format, `app=<name>`, `thema=englisch`, Ereignisse aus der gemeinsamen Liste; Schalter „Anonyme Nutzungszählung“ im Elternbereich.
 - **Kinderbereich (UWG Anhang Nr. 28):** keine Preise, keine Kaufknöpfe, kein „Frag deine Eltern“. Gesperrte Episoden zeigen nur ein 🔒 und
   „Dieser Ort ist noch zu“ – Antippen öffnet das Eltern-Tor, nicht den Shop. Preise, Pro und Nachhilfe-Hinweis (Englisch) stehen nur hinter dem Eltern-Tor.
 
@@ -161,15 +173,19 @@ mehrere Figuren = mehrere Stimmen, britisches Englisch als Standard, weil die me
   „Wörter wiederholen im Wissensgarten“ (`#paket=gs-englisch-basics` usw.).
 - Der Wissensgarten bekommt bei seinen Englisch-Paketen den Link „Sprechen üben in <Name>“ (`#welt=<n>` bzw. `#episode=<id>` – Direkt-Links baue ich ein).
 - Vokabelpakete im Wissensgarten bleiben; neue Englisch-**Hör- und Sprechspiele** entstehen nur noch bei uns.
+- **Vereinbart am 18.11.** (siehe `wissensgarten/WOCHENRUNDE.md`): gs-englisch-school ↔ Welt 3, gs-englisch-food ↔ Welt 5, gs-englisch-clothes-weather ↔ Welt 6,
+  gs-englisch-hobbys ↔ Welt 8, gs-englisch-familie-koerper ↔ Welt 2. Wortlisten je Welt schicken wir vorab, damit beide Apps dieselbe (britische) Schreibweise nutzen.
+- **Später zu klären:** Eigene Schulbuch-Wörter eintippen und daraus Hör- und Sprechspiele machen (stärkster Unterschied zu Duolingo laut Recherche) –
+  nur in Absprache mit dem Wissensgarten, damit es kein zweiter Vokabeltrainer wird.
 
 ## 9. Plattform-Bausteine (wie in den anderen Apps)
 
 - **Technik:** schlichtes JavaScript (ohne Kotlin/Wasm → keine weißen Seiten auf iPhone/iPad), eine Seite, Service Worker, offline nach dem ersten Laden,
   Auto-Update über `version.json` (nie mitten in einer Episode). Läuft in Safari/WebKit ab iOS 15, Chrome, Firefox, Edge. Android-App später als Hülle möglich.
 - **„← Alle Apps“** oben auf dem Startbildschirm → `https://www.mathenachhilfe-online.com/lern-apps/?src=<name>-kopf` (Test-Stufe: `staging.`).
-- **Eltern-Tor** (Rechenaufgabe/Geburtsjahr wie Experimentopia), dahinter: Fortschritt, Mikrofon-Einstellung, Pro, Nachhilfe-Hinweis Englisch, Kopplung.
+- **Eltern-Tor** (Geburtsjahr, mindestens 18 Jahre, wie Experimentopia), dahinter: **„Das kann mein Kind jetzt auf Englisch“** (Kann-Sätze je Episode, schon im Prototyp), Mikrofon-Einstellung, Pro, Nachhilfe-Hinweis, Kopplung.
 - **Eltern-Handy koppeln + verschlüsselte Sicherung** nach `docs/plattform/ELTERN-KOPPLUNG.md` (AES-GCM-256, Schlüssel nur im Link-Teil nach „#“).
-- **Anonyme Zählung** `POST /zaehler/v1/e` (abschaltbar, Standard wie die anderen Apps): `start`, `elternbereich`, `pro_ansehen`, `pro_kasse`, `code_eingeloest`, `probestunde_klick`.
+- **Anonyme Zählung** `POST /zaehler/v1/e` (abschaltbar, Standard wie die anderen Apps), nur Ereignisse, Orte und Themen aus der gemeinsamen Liste; Thema `englisch`.
 - **Pro-Code** `#pro=` (danach `history.replaceState`), Eingabe von Hand im Elternbereich, Prüfung offline (Unterschrift).
 - **Datenschutz** nach Wissensgarten-Vorlage, ergänzt um Papagei-Echo (keine Speicherung) und KI-Stimmen-Hinweis. Kein Konto, keine Werbung, kein Tracking, keine Personendaten an Server.
 - **Qualität:** Inhaltstests (jeder Satz hat Audio, Bild, Übersetzung; jede Hör-Aufgabe hat genau eine richtige Lösung), Starttest mit Playwright in Chromium und WebKit,
@@ -192,12 +208,12 @@ Ab Live: **Dienstag und Freitag** ein großes Inhaltsupdate (neue Welt oder Epis
 
 1. **Entscheidung** Name + Konzept (Marcel).
 2. **Subdomains** `<name>.mathenachhilfe-online.com` und `<name>-test.mathenachhilfe-online.com` (Server holt `<name>/webapp/` vom Branch `<name>-test` bzw. `<name>-live` wie bei Experimentopia).
-3. CORS für die neue Domain auf `trainer` / `trainer-test` (Zählung, Eltern-Kopplung) und Zähl-Kennungen `app=<name>`, Themen `englisch-*`.
+3. CORS für die neue Domain auf `trainer` / `trainer-test` (Zählung, Eltern-Kopplung) und neue App-Kennung `app=<name>` in der gemeinsamen Positivliste (Thema `englisch` gibt es schon).
 4. **Stimmen:** OpenAI-Guthaben oder Zugang zum Stimm-Server für die Vertonung.
 5. Pro: Shop-Produkt und Signatur-Schlüssel für Codes (wie die anderen Apps).
 6. Teilnehmerliste der Montagsrunde.
 
-## 12. Recherche (Kurzfassung, Details in `docs/RECHERCHE.md`)
+## 12. Recherche (Kurzfassung, Details in `docs/RECHERCHE.md` und in der Recherche von „Geld verdienen“: Repo website_backup, `geld-verdienen/recherche/Sprachlern App gegen Duolingo.md`)
 
 - Grundschul-Lehrpläne setzen beim Englisch auf **Hörverstehen und Sprechen vor Schrift**, mit Liedern, Reimen, Geschichten und Unterrichtsanweisungen
   (z. B. LehrplanPLUS Bayern Kl. 3/4, Lehrplan NRW, Bildungsplan BW mit Beispielcurricula). → Stufe Grundschule fast ohne Text, viel Ton.
@@ -206,3 +222,7 @@ Ab Live: **Dienstag und Freitag** ein großes Inhaltsupdate (neue Welt oder Epis
 - Erzählung + Spielmechanik binden Kinder stärker als Belohnung allein (Scoping-Review 2025, siehe Wissensgarten-Recherche). → Ruby und die Stadt-Geschichte.
 - Chrome kann seit Version 139 Sprache **auf dem Gerät** erkennen (`processLocally`) – kein Ton verlässt das Gerät. → bevorzugt nutzen.
 - Spracherkennung bei Kinderstimmen ist unzuverlässig → großzügige Wertung, nie Strafe, immer ein Weg weiter.
+- Bilder und Gesten verbessern das Behalten bei deutschen Achtjährigen noch nach sechs Monaten; Sprechangst senkt die Leistung; Aussprachetraining wirkt am besten
+  mit lautgenauem Feedback (Recherche „Geld verdienen“). → Merkbild zu jedem Satz, Sprechen privat und ohne Bewertung, lautgenaues Feedback erst nach eigenem Test.
+- Duolingo hat den Anteil sprechbarer Übungen 2026 verdoppelt; reines Antippen wirkt dagegen dünn. Unser Vorsprung liegt im Konzept: deutsch erklärt, kinderfreundlich,
+  nichts verlässt das Gerät, kein Druck, Inhalte von Menschen geprüft.
