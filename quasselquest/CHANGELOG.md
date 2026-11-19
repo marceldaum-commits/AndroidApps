@@ -1,5 +1,9 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.4.4 – Datenschutz noch genauer (19.11.2026)
+- „Deine Daten“: Eltern können das anonyme Zählen ausschalten – das steht jetzt auch im Kindertext.
+- Aufnahmen beim Nachsprechen werden jetzt auch dann sofort verworfen, wenn man das Spiel mittendrin verlässt; eine laufende Aufnahme stoppt beim Verlassen sofort.
+
 ## 0.4.3 – Lizenzhinweise ergänzt (19.11.2026)
 - Bei den Stimmen mit Namensnennungs-Lizenz (Englisch „cori“, Französisch „siwis“) steht jetzt direkt dabei, wie wir die Aufnahmen bearbeitet haben, mit Link zur Lizenz.
 
