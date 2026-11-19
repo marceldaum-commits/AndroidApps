@@ -78,7 +78,7 @@ s1-mathe-algebra (Funktionen), s1-physik-einheiten-formeln, s1-physik-strom.
 
 ## Raumlicht – `https://raumlicht.mathenachhilfe-online.com/?ziel=<ziel>`
 - Nur freie Ziele verlinken: `level/3-1` (Geraden), `level/5-1` (Ebenen), `galton`, `zufall`, `erleben`, `rotation`.
-  NICHT `binomial` (Raumlicht Pro → Pro-Seite). Korrektur Raumlicht 19.11.
+  NICHT (Pro, Marcel): `binomial`, `baumeister`, `geisterfahrt`, `ringflug`. Frei auch `raumflug`. Korrektur Raumlicht 19.11.
 - Seit 2.6.0 (Oberstufe heraus) verlinkt KurvenFlug Raumlicht nur über „Wie geht's weiter?“ (Startseite, ?src=kurvenflug-weiter).
 - Raumlicht verlinkt zu uns: „Funktionen formen“ (funktionen-formen, ab Di 24.11.).
 
