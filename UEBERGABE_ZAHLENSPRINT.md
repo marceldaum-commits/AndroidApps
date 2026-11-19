@@ -8,8 +8,11 @@ Wer weiterarbeitet, liest zuerst diese Datei, dann `MELDUNG_RECHENBLITZ.md` (obe
 - **Neu (ab 19.11.):** Repo `marceldaum-commits/AndroidApps`, Ordner `zahlensprint/` (Pfade wie hier, nur mit Präfix).
   - Arbeitsbranch `zahlensprint-test` (dceda882 = School `rechenblitz-test` a3b4d14).
   - Live `zahlensprint-live` (6e94654d = School 4df79f8 = 3.28.2). Live schaltet nur der Leitstand.
-- **Alt, eingefroren:** Repo `School`, Branches `rechenblitz-test` / `rechenblitz-live` – dort nichts mehr pushen.
-- **Noch nicht drüben:** School-Commits nach a3b4d14 auf `ccr-a093b6b5-0d6oyq` (9932c13: Doku Familien-Speicher-Auflagen; dieser Übergabe-Commit). Bitte nach `zahlensprint-test` übernehmen.
+- **Alt:** Repo `School`, Branches `rechenblitz-test` / `rechenblitz-live`.
+  - Übergangsregel des Leitstands (19.11.): Solange kein Zugriff auf AndroidApps besteht, darf auf `rechenblitz-test` gepusht werden; jeden Commit dem Leitstand melden, er übernimmt ihn per subtree.
+  - Ausgeliefert wird nur aus `zahlensprint-test`.
+- **Übernommen:** 9932c13 ist übernommen (→ e5758d96).
+- **Noch zu übernehmen:** dieser Übergabe-Commit (78465e1 und die Nachträge danach).
 
 ## 2. Stand der App
 - **Live:** 3.28.2 (19.11.) unter `lernen.mathenachhilfe-online.com/rechenblitz/`. Die alte Adresse `rechenblitz.mathenachhilfe-online.com` zieht beim Start mit Lernstand um (`js/umzug.js`, `config.js umzug: true`).
@@ -40,6 +43,7 @@ Wer weiterarbeitet, liest zuerst diese Datei, dann `MELDUNG_RECHENBLITZ.md` (obe
      - Gilt auch im Web für **alle** Außen-Links außer Impressum und Datenschutz (`elterntor.js:54`, heute `if (!IS_NATIVE …) return`), außerdem vor Elternbereich, Einstellungen, Kopplung, Löschen und Teilen.
      - Zählung „elternbereich“ beim gelösten Tor (steht in der Positivliste).
    - **Werbekarte und Probestunden-Hinweise nur im Elternbereich** (`panels.js` PROMOS/`renderPromo`, Ergebnis-Hinweis `extras.js:207`, Menü-Probestunde, Wochenbericht). „Lern-Geschenk“ ebenfalls hinter das Tor.
+   - **Advents-Gutschein (Befund Recht, UWG):** Alle Gutschein-Hinweise aus den Kinderansichten entfernen (`extras.js` Z. 256, 267, 402, 406). Den fertigen Gutschein (`voucherHtml`, Z. 124–136, mit Code, Bedingungen und Link „Zu den Stundenpaketen“) nur im Elternbereich hinter dem Tor zeigen. Die Kinderansicht nach 24 Türchen sagt nur „Geschafft! Alle 24 Türchen.“ Notfalls sofort: `config.js adventVoucher: null`.
    - **Zehnerpotenzen ausbauen:** wissenschaftliche Schreibweise mit vollständigem Lösungsweg (Komma verschieben, Stellen zählen, Exponent), Theorie mit Regel und Beispiel. Danach den unabhängigen Prüfer laufen lassen (Abschnitt 6).
    - Meldung mit „Rechtsbezug: ja (Eltern-Tor, Werbung, Elternbericht)“.
 2. **Di 24.11. – Umbenennung „Zahlensprint“** (Marcel endgültig; DPMA frei; Recht prüft):
