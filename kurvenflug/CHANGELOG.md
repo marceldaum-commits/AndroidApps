@@ -3,6 +3,10 @@
 Kurz und verständlich für Schüler und Eltern. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.7.1 – Pro-Hinweis für Kinder
+- Tippt ein Kind auf etwas, das zu KurvenFlug Pro gehört, steht dort nur noch sachlich: „Das gehört zu KurvenFlug Pro. Deine
+  Eltern können im Elternbereich nachsehen.“ – ohne Preis und ohne Kaufknopf. Die Pro-Seite gibt es nur nach der Frage für Erwachsene.
+
 ## 2.7.0 – Neue Adresse: lernen.mathenachhilfe-online.com/kurvenflug/
 - Alle Lern-Apps von Nachhilfe – online wohnen jetzt unter einer gemeinsamen Adresse. Wer KurvenFlug über die alte Adresse
   öffnet, wird automatisch weitergeleitet – **der Lernstand zieht mit** (Sterne, Klasse, Einstellungen, Eltern-Kopplung, Pro).

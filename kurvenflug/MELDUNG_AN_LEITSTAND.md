@@ -1,5 +1,12 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.7.1 – Korrektur Pro-Schloss ohne Kaufaufforderung an Kinder (UWG Anh. Nr. 28), Basis 2.7.0
+- Gesperrtes Level: nur „Das gehört zu KurvenFlug Pro. Deine Eltern können im Elternbereich nachsehen.“ + „← Zurück“ + „Elternbereich (für Erwachsene)“ → Eltern-Tor.
+  Vorher: Pro-Seite mit Preis, Kaufknopf und „Frag deine Eltern!“.
+- Pro-Seite aus den Einstellungen nur nach der Eltern-Frage. Texte bei Spielern und Kapitel sachlich.
+- Neuer Test `KidsNoPurchaseAppealTest` (keine Kaufaufforderung in der Oberfläche). Bildschirmfoto `screenshots/98_pro_schloss_kinder.png`.
+- Umzug unverändert. versionCode 84 / 2.7.1, Prüfkette grün. Rückweg: 2.7.0 (kurvenflug-test 71af24a).
+
 ## ✅ 2.7.0 – Umzugs-Version lernen(-test).mathenachhilfe-online.com/kurvenflug/ (Marcel 19.11., Standard UMZUG-LERNEN.md)
 - **Pflichtpunkte:**
   1. SW löscht nur `kurvenflug-<version>` (`/^kurvenflug-\d/`).
