@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.32 – Raumlicht wird klarer: Geometrie im Raum, dazu Analysis und Zufall zum Erleben (19.11.2026)
+- **Ein klares Profil:** Raumlicht ist jetzt ganz die App für die **Geometrie im Raum** – Punkte, Vektoren, Geraden, Ebenen, Kugeln, Abstände und Winkel. 92 Aufgaben in 16 Kapiteln, durchgehend von 1 bis 16 nummeriert.
+- **Die Rechenaufgaben zu Analysis und Stochastik sind jetzt im Mathe-Trainer.** Dort übst du sie in Stufen, mit jedem Rechenschritt. In Raumlicht findest du an ihrer Stelle den direkten Weg dorthin.
+- **Neu: „Analysis & Zufall erleben“** – direkt auf der Startseite. Hier wird nicht gerechnet, sondern ausprobiert: Kurve abfahren, Achterbahn-Baumeister, Geisterfahrt gegen f′, Zufallsmaschine, Galton-Brett, Binomial-Labor.
+- **Neu: das Rotationskörper-Labor.** Wähle eine Kurve, stell Zahlen und Grenzen ein – die Kurve dreht sich und der Körper wächst vor dir im Raum: Zylinder, Kegel, Kugel, Vase, Kelch. Darunter steht das Volumen mit dem ganzen Rechenweg.
+- Abi-Prüfungsaufgaben, „Ohne Hilfsmittel“, Tagesaufgabe und endloses Üben stellen nur noch Aufgaben zur Geometrie im Raum.
+- **Für Eltern:** Es geht nichts verloren – jede herausgenommene Aufgabenart gibt es im Mathe-Trainer. Wer Raumlicht Pro hat, behält es; es schaltet weiter alle Aufgaben, Prüfungen und Bereiche von Raumlicht frei.
+
 ## 2.18.31 – „← Alle Apps“: mit einem Tipp zurück zur App-Auswahl (18.11.2026)
 - **Neu oben auf der Startseite:** der Knopf „← Alle Apps“. Er führt zurück zur Übersicht unserer Lern-Apps auf der Website. Am PC sitzt er oben rechts neben dem Zahnrad.
 - In Aufgaben, Spielen und Prüfungen erscheint er nicht – dort stört nichts.

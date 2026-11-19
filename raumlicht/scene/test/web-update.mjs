@@ -41,7 +41,7 @@ check('zurück auf der Startseite: Update kommt von selbst', await shown() === '
 
 // 3 · Tab lange offen, dann zurückkehren: ohne Zutun (kein Aufruf von update() im Test) kommt die neue Version
 await page.evaluate(() => localStorage.setItem('raumlicht.testwert', 'bleibt'));
-publish2('9.9.2', '9.9.3'); await page.waitForTimeout(5500); await page.evaluate(() => window.dispatchEvent(new Event('focus')));
+publish2('9.9.2', '9.9.3'); await page.waitForTimeout(5500); await page.evaluate(() => window.dispatchEvent(new Event('focus'))).catch(() => {});   // lädt die Seite gerade schon neu, ist das Ziel bereits erreicht
 await page.waitForFunction(() => document.documentElement.dataset.version === '9.9.3', null, { timeout: 60000 }).catch(() => {}); await page.waitForTimeout(2500);
 check('Rückkehr in den Tab: neue Version ohne manuelles Neuladen', await shown() === '9.9.3', await shown());
 check('alter Speicher weggeräumt, Spielstand bleibt', (await cached()) === 'raumlicht-9.9.3' && await page.evaluate(() => localStorage.getItem('raumlicht.testwert') === 'bleibt'), await cached());

@@ -8,14 +8,16 @@ Angelegt am 18.11.2026 (Auftrag: „jede Woche neuer Inhalt, einmal im Monat geg
 - **Jeden Monat (ab dem 24.):** ein Block gründlich, dazu der neue Inhalt des Monats und die kurze Rundum-Prüfung.
 - Beides läuft als geplante Aufgabe in dieser Sitzung (dienstags und freitags 8:47 Uhr und am 24. um 9:41 Uhr).
 
+**Seit 2.18.32 (19.11.2026):** Raumlicht hat nur noch Aufgaben zur Geometrie im Raum (16 Kapitel, 92 Aufgaben; intern Kapitel 1–11, 18–21, 26). Die Rechenaufgaben zu Analysis und Stochastik sind herausgenommen; Block 3 und 4 prüfen stattdessen die Erlebnis-Bereiche.
+
 ## Die vier Blöcke (rollierend)
 
 | Block | Inhalt | Monate |
 |---|---|---|
 | 1 | Geometrie I: Kapitel 1–8 (Punkte, Vektoren, Geraden, Lage, Ebenen, Skalarprodukt/Spiegelung, Winkel, Abstände) | November, März, Juli |
 | 2 | Geometrie II: Kapitel 9–11, 18–21, 26 (Kugeln, Kreuzprodukt, Bewegung, Ebenen-Formen, Schnitte, Spiegeln & Lote, Kugel & Ebene, HNF) | Dezember, April, August |
-| 3 | Analysis: Kapitel 12, 14, 15, 17, 22, 25 – und die Erlebnis-Teile (Kurve abfahren, Baumeister, Geisterfahrt, eigene Funktionen) | Januar, Mai, September |
-| 4 | Stochastik: Kapitel 13, 16, 23, 24 – dazu Prüfungsaufgaben, „Rechenweg in Schritten“, Übungs- und Tagesaufgaben (alle Vorlagen), Zufallsmaschine, Galton-Brett, Binomial-Labor | Februar, Juni, Oktober |
+| 3 | Analysis & Zufall erleben: Kurve abfahren (auch eigene Funktionen), Achterbahn-Baumeister, Geisterfahrt, Rotationskörper-Labor (alle Formen und Bereiche, Rechenweg, Rückmeldungen) | Januar, Mai, September |
+| 4 | Zufallsmaschine, Galton-Brett, Binomial-Labor – dazu Prüfungsaufgaben, „Rechenweg in Schritten“, Übungs- und Tagesaufgaben (alle Vorlagen), Verweise zu den anderen Apps | Februar, Juni, Oktober |
 
 So ist jeder Teil dreimal im Jahr gründlich dran.
 
@@ -42,6 +44,7 @@ So ist jeder Teil dreimal im Jahr gründlich dran.
 | Monat | Neuer Inhalt | Version |
 |---|---|---|
 | November 2026 | Eltern-Handy koppeln (Bericht, QR-Code), „Kommt bald“-Kacheln, Lern-Protokoll | 2.18.26 |
+| November 2026 | Umbau aufs Profil „Geometrie im Raum“: 52 Rechenaufgaben zu Analysis und Stochastik heraus, Bereich „Analysis & Zufall erleben“, Rotationskörper-Labor (neu), Kapitel lückenlos 1–16 | 2.18.32 |
 | November 2026 | Kapitel 26 „HNF, Abstände & Winkel“ (8 Aufgaben), 5 neue Theorie-Karten, Formel-Kasten in allen Karten | 2.18.25 |
 
 ## Protokoll

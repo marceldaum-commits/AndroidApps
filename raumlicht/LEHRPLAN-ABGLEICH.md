@@ -8,6 +8,15 @@ In Bayern gibt es für Jgst. 12/13 nur den Plan „erhöhtes Anforderungsniveau�
 
 Abkürzungen: BY (Jgst. 11–13), BW (BF Basisfach, LF Leistungsfach), NW (EF, GK, LK), NI (EP, gA, eA; „fak.“ = nur fakultativ), HE (E, GK, LK; „n. v.“ = nicht verbindlich), KMK (gA/eA).
 
+## Profil seit 2.18.32 (19.11.2026) – bitte zuerst lesen
+
+Marcel hat entschieden: **Raumlicht = Geometrie im Raum (Oberstufe), dazu Analysis und Zufall zum Erleben.** Rechenaufgaben zu Analysis und Stochastik baut und pflegt der Mathe-Trainer.
+Für die Liste unten heißt das:
+- **Bei Raumlicht bleiben:** Nr. 1 (Lineare Gleichungssysteme – räumlich als drei Ebenen), Nr. 16 (Lage Gerade–Ebene, Ebene–Ebene), Nr. 19 (Projektion, Schattenwurf), dazu „Körper im Raum“ (vom Mathe-Trainer und KurvenFlug übernommen) und Geraden-/Ebenenscharen aus Nr. 20–25.
+- **Gehen an den Mathe-Trainer** (dort als Rechentraining): Nr. 2–15, 17, 18 und der Rest von Nr. 20–25 (Unabhängigkeit, Zufallsgrößen, Normalverteilung, Sinus/Kosinus, Funktionenscharen, uneigentliche Integrale, Änderungsrate, Steckbrief, Wachstum, Intervalle, Tests, Kombinatorik, Wurzel-/Umkehrfunktion, gebrochenrationale Funktionen, Symmetrie, Grenzwerte, Matrizen, Newton, Differentialgleichungen …).
+- **Als Erlebnis denkbar** (kein Rechentraining, erst nach Absprache in der Wochenrunde): Normalverteilung als Glockenkurve am Galton-Brett, Funktionenscharen als Kurvenfächer.
+- Die Abschnitte „Analysis“ und „Stochastik“ weiter unten beschreiben den Stand **vor** dem Umbau; die dort genannten Kapitel 12–17 und 22–25 gibt es in der App nicht mehr.
+
 ## Was als Nächstes kommt (Reihenfolge für die Inhaltsupdates dienstags und freitags)
 
 Die ersten Zeilen sind in fast allen Ländern Pflicht, meist schon im Grundniveau. Die App zeigt die mit ⏳ markierten Themen als Kachel „Kommt bald“ (ohne Datum).

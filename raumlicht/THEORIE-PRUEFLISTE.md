@@ -1,5 +1,7 @@
 # Prüfliste Theorie – Raumlicht
 
+**Seit 2.18.32 (19.11.2026):** Zu Aufgaben gehören nur noch die Geometrie-Karten. Die Karten zu Analysis und Stochastik (`Theory.erleben`) hängen an keiner Aufgabe mehr; sie bleiben für den Bereich „Analysis & Zufall erleben“ und werden weiter mitgeprüft (Format, Formel-Kasten).
+
 Erzeugt aus dem Code (Stand der Version im Kopf von CHANGELOG.md). Für jede feste Aufgabe: welche Theorie-Karte sie zeigt und welche Formel dort hervorgehoben steht.
 
 | Aufgabe | Titel | Theorie-Karte | Formel in der Karte |

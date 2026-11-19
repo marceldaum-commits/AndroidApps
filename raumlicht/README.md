@@ -4,39 +4,31 @@ Du bist Lichtdesigner:in. Laser sind Geraden, Glasscheiben und Leinwände sind E
 Die Bühne ist echtes 3D: drehen, zoomen, Punkte und Vektoren direkt im Raum ziehen. Das Rechnen ist die Spielhandlung selbst –
 man sieht nur den Anfang eines Strahls, den Rest verrät die Rechnung (Recherche: `../docs/RECHERCHE.md`).
 
-**136 Aufgaben in 25 Kapiteln** aus Geometrie, Analysis und Stochastik, jedes Kapitel endet mit einem Abi-Check – jede Aufgabe mit Tipp und Rechenweg.
-Dazu **7 Prüfungsaufgaben im Abi-Stil**, Tagesaufgabe, Endlos üben und der Bereich „Mehr“: Kurve abfahren, Flug durch den Raum, Ballerbude,
-Achterbahn-Baumeister, Geisterfahrt gegen f′, Ringflug, Zufallsmaschine, Galton-Brett, Binomial-Labor, Rechenweg in Schritten, Ohne Hilfsmittel,
+**Profil seit 2.18.32 (19.11.2026): Geometrie im Raum – dazu Analysis und Zufall zum Erleben.**
+**92 Aufgaben in 16 Kapiteln** zur Geometrie im Raum, jedes Kapitel endet mit einem Abi-Check – jede Aufgabe mit Tipp und Rechenweg.
+Dazu **4 Prüfungsaufgaben im Abi-Stil**, Tagesaufgabe, Endlos üben, der Bereich **„Analysis & Zufall erleben“** (Kurve abfahren, Achterbahn-Baumeister,
+Geisterfahrt gegen f′, Rotationskörper-Labor, Zufallsmaschine, Galton-Brett, Binomial-Labor) und der Bereich „Mehr“: Flug durch den Raum, Ballerbude, Ringflug, Rechenweg in Schritten, Ohne Hilfsmittel,
 Lage von Geraden erkennen, Fehler wiederholen, Fehler-Tagebuch, Lernstand, Klausur-Planer, Kalender der Tagesaufgaben, Duell per Code,
 Zu zweit an einem Gerät, Klassen-Paket, 3D-Rechner & Baukasten, Formelsammlung, Lux gestalten und Erfolge.
 
-| Kapitel | Gebiet | Inhalte |
-|---|---|---|
-| 1 Punkte im Raum | Geometrie | Koordinaten ablesen, Mittelpunkt, Spiegelung an Koordinatenebene, Pyramidenspitze |
-| 2 Vektoren | Geometrie | Verbindungsvektor, Vektorkette, Vielfaches, Parallelogramm, Schwerpunkt |
-| 3 Geraden | Geometrie | Richtungsvektor, Parameter t, Punktprobe, Spurpunkt |
-| 4 Lage von Geraden | Geometrie | Schnittpunkt, parallel, windschief reparieren |
-| 5 Ebenen | Geometrie | Durchstoßpunkt, Koordinatenform bauen, Normalenvektor, Schattenpunkt |
-| 6 Skalarprodukt & Spiegelung | Geometrie | orthogonal, Lotfußpunkt, Spiegelpunkt, Abstand Punkt–Ebene, Reflexion über Bande |
-| 7 Winkel | Geometrie | Vektor–Vektor, Gerade–Ebene, Ebene–Ebene (15°-Schritte, Winkelbogen in 3D) |
-| 8 Abstände | Geometrie | Lotfußpunkt auf Gerade, Punkt–Gerade, parallele Ebenen, windschiefe Geraden |
-| 9 Kugeln | Geometrie | Radius, Mittelpunkt, Gerade trifft Kugel, Tangentialebene, Schnittkreis, Berührung |
-| 10 Kreuzprodukt | Geometrie | Parallelogramm- und Dreiecksfläche, Pyramidenvolumen, Schnittgerade |
-| 11 Bewegung | Geometrie | Ort nach t Sekunden, Tempo, Treffpunkt, kleinster Abstand zweier Drohnen |
-| 12 Rotationskörper | Analysis | Zylinder, Kegel, Vase, Kugel, Trichter (V = π·∫f²) |
-| 13 Wahrscheinlichkeit | Stochastik | Laplace, Pfadregel mit/ohne Zurücklegen, Erwartungswert, Gegenereignis |
-| 14 Kurvendiskussion | Analysis | Nullstelle, Hoch-/Tiefpunkt, Wendestelle, Fläche unter der Kurve (Lux fährt mit, Tangente live) |
-| 15 Funktionen bauen | Analysis | Gerade, Scheitelform, Steckbriefaufgabe |
-| 16 Bäume, Tafeln, Binomial | Stochastik | Baumdiagramm, Vierfeldertafel, bedingte Wahrscheinlichkeit, σ |
-| 17 Ableiten & Anwenden | Analysis | Steigung, Kettenregel, Tangente, Extremwert, Wachstum |
-| 18 Ebenen in allen Formen | Geometrie | Parameter-, Normalen-, Koordinaten- und Achsenabschnittsform, Spurpunkte |
-| 19 Schnitte & Schnittwinkel | Geometrie | Schnittgerade, Winkel Ebene–Ebene und Gerade–Ebene, parallel, Abstand |
-| 20 Spiegeln & Lote | Geometrie | Spiegeln an Punkt, Gerade und Ebene, Abstand windschiefer Geraden |
-| 21 Kugel & Ebene | Geometrie | Berühren, Schnittkreis, zwei Kugeln, Durchflug |
-| 22 Integrale & Flächen | Analysis | Stammfunktion, Fläche, zwischen zwei Kurven, Bestand aus Änderungsrate |
-| 23 Erwartung, Sigma, Testen | Stochastik | fairer Einsatz, Bernoulli-Kette, Mindestanzahl, Sigma-Regel, Hypothesentest |
-| 24 Binomialverteilung | Stochastik | genau, höchstens, mindestens k Treffer – einzeln und kumuliert, Tabelle lesen |
-| 25 e-Funktion & Logarithmus | Analysis | Gleichungen, Kurvendiskussion mit Produkt- und Kettenregel, Integrale mit e^x und 1 : x |
+| Kapitel | Inhalte |
+|---|---|
+| 1 Punkte im Raum | Koordinaten ablesen, Mittelpunkt, Spiegelung an Koordinatenebene, Pyramidenspitze |
+| 2 Vektoren | Verbindungsvektor, Vektorkette, Vielfaches, Parallelogramm, Schwerpunkt |
+| 3 Geraden | Richtungsvektor, Parameter t, Punktprobe, Spurpunkt |
+| 4 Lage von Geraden | Schnittpunkt, parallel, windschief reparieren |
+| 5 Ebenen | Durchstoßpunkt, Koordinatenform bauen, Normalenvektor, Schattenpunkt |
+| 6 Skalarprodukt & Spiegelung | orthogonal, Lotfußpunkt, Spiegelpunkt, Abstand Punkt–Ebene, Reflexion über Bande |
+| 7 Winkel | Vektor–Vektor, Gerade–Ebene, Ebene–Ebene (15°-Schritte, Winkelbogen in 3D) |
+| 8 Abstände | Lotfußpunkt auf Gerade, Punkt–Gerade, parallele Ebenen, windschiefe Geraden |
+| 9 Kugeln | Radius, Mittelpunkt, Gerade trifft Kugel, Tangentialebene, Schnittkreis, Berührung |
+| 10 Kreuzprodukt | Parallelogramm- und Dreiecksfläche, Pyramidenvolumen, Schnittgerade |
+| 11 Bewegung | Ort nach t Sekunden, Tempo, Treffpunkt, kleinster Abstand zweier Drohnen |
+| 12 Ebenen in allen Formen | Parameter-, Normalen-, Koordinaten- und Achsenabschnittsform, Spurpunkte |
+| 13 Schnitte & Schnittwinkel | Schnittgerade, Winkel Ebene–Ebene und Gerade–Ebene, parallel, Abstand |
+| 14 Spiegeln & Lote | Spiegeln an Punkt, Gerade und Ebene, Abstand windschiefer Geraden |
+| 15 Kugel & Ebene | Berühren, Schnittkreis, zwei Kugeln, Durchflug |
+| 16 HNF, Abstände & Winkel | Hessesche Normalform, parallele Geraden und Ebenen, Winkel zwischen Geraden und zwischen Ebenen |
 
 **Weitere Spielarten** (Namen wie in der App, Bereich „Mehr“)
 - 🔎 **Fehler-Analyse** – typische Fehler (A − B statt B − A, nicht gemittelt, Kosinus statt Sinus, ⅓ vergessen …) werden gezielt benannt (`mistakes` in `Families`);
@@ -45,9 +37,10 @@ Zu zweit an einem Gerät, Klassen-Paket, 3D-Rechner & Baukasten, Formelsammlung,
 - 🏫 **Klassen-Paket (für Lehrkräfte)** – Paket-Code `RLK-…` (`ClassCode`). 👥 **Zu zweit an einem Gerät** (`Match`). 🧮 **3D-Rechner & Baukasten** (`Show.facts`).
 - 🎢 **Kurve abfahren (Fahrersicht)** – Fahrersicht auf dem Graphen mit Live-Cockpit für f, f′ und f″, auch mit eigener Funktion (`Coaster`, `RideScreen`, Szenen-Objekt `track`, `RL.ride`).
 - 🚀 **Flug durch den Raum** (`Flights`), 🏗️ **Achterbahn-Baumeister**, 👻 **Geisterfahrt gegen f′**, ⭕ **Ringflug**.
-- 🎈 **Ballerbude**, 🎲 **Zufallsmaschine**, 🎰 **Galton-Brett** (`Galton`), 📊 **Binomial-Labor** (`Binomial`) für die Stochastik.
+- 🎈 **Ballerbude**, 🎲 **Zufallsmaschine**, 🎰 **Galton-Brett** (`Galton`), 📊 **Binomial-Labor** (`Binomial`) – Zufall zum Erleben.
+- 🏺 **Rotationskörper-Labor** (seit 2.18.32) – Kurve, Zahlen und Grenzen frei wählen, der Körper wächst in 3D; Volumen exakt (Vielfaches von π) mit ganzem Rechenweg und Probe (`RotationLab`, `RotationScreen`).
 - 📐 **Querformat/Tablet** – Bühne links, Regler rechts (`LevelScreen`, ab Breite > 1,15 × Höhe).
-- 🎓 **Abi-Prüfungsaufgaben** – 7 Aufgaben im Abi-Stil mit mehreren Teilaufgaben und Bewertungseinheiten (`Exams`); freiwillig auf Zeit (45 s je BE).
+- 🎓 **Abi-Prüfungsaufgaben** – 4 Aufgaben im Abi-Stil (Geometrie im Raum) mit mehreren Teilaufgaben und Bewertungseinheiten (`Exams`); freiwillig auf Zeit (45 s je BE).
 - ✍️ **Ohne Hilfsmittel** – 6 kurze Aufgaben wie im Pflichtteil, ohne Tipp (`Quick`).
 - 🧭 **Lage von Geraden erkennen** – acht Runden Lagebeziehung zweier Geraden erkennen; die Bühne zeigt die Geraden erst nach der Antwort.
 - ⚔️ **Duell per Code** – Code wie `RL-4A1B2X` (Thema + Seed + Prüfziffer) steht für dieselben fünf Aufgaben, ohne Server.
@@ -59,7 +52,10 @@ Zu zweit an einem Gerät, Klassen-Paket, 3D-Rechner & Baukasten, Formelsammlung,
 - 📅 **Tagesaufgabe** – jeden Tag eine Aufgabe (Themen wechseln reihum), für drei Jahre im Test auf Lösbarkeit geprüft; 🎟️ **Kalender der Tagesaufgaben** (`Calendar`) – verpasste Tage kosten nichts.
 - 📓 **Formelsammlung** – alle Formeln, mit Sprung zu den passenden Aufgaben. 🏅 **Erfolge** – 14 Auszeichnungen für Fortschritt. Ergebnis-Karte zum Teilen (`ShareCard`).
 
-**Aufbau für Nutzer:** drei Gebiete – Geometrie (Kapitel 1–11 und 18–21), Analysis (12, 14, 15, 17, 22, 25), Stochastik (13, 16, 23, 24). Kapitel heißen nach ihrem Thema.
+**Aufbau für Nutzer:** die Tour „Geometrie im Raum“ mit 16 Kapiteln (lückenlos 1–16 angezeigt) und daneben „Analysis & Zufall erleben“. Kapitel heißen nach ihrem Thema.
+Intern tragen die Kapitel weiter ihre alten Nummern (1–11, 18–21, 26), damit Sterne und Links von außen (`?ziel=level/5-6`) gültig bleiben; `Levels.shown` und `Levels.label` rechnen für die Anzeige um.
+Die früheren Kapitel 12–17 und 22–25 (52 Rechenaufgaben zu Analysis und Stochastik) sind seit 2.18.32 herausgenommen – der Mathe-Trainer hat sie alle als Rechentraining
+(Entscheidung und Abgleich: `WOCHENRUNDE.md`). Ihre Definitionen liegen noch ungenutzt im Quelltext (`Levels.removed`) und werden nach der Live-Freigabe gelöscht.
 In älteren Abschnitten dieses READMEs und in Dateinamen der Bildschirmfotos stehen teils noch die früheren Namen
 (Gig = Aufgabe, Tagesgig = Tagesaufgabe, Jam-Session = Endlos üben, Backstage = Mehr, Spickzettel = Formelsammlung, Abzeichen = Erfolge, Zweite Chance = Fehler wiederholen).
 
@@ -82,18 +78,17 @@ In älteren Abschnitten dieses READMEs und in Dateinamen der Bildschirmfotos ste
 | ![](screenshots/20_lichtkuppel.png) | ![](screenshots/21_lichtsegel.png) | ![](screenshots/22_zeltvolumen.png) |
 | ![](screenshots/23_jam_session.png) | ![](screenshots/24_jam_aufgabe.png) | ![](screenshots/25_tagesgig.png) |
 | ![](screenshots/26_spickzettel.png) | ![](screenshots/27_abzeichen.png) | ![](screenshots/28_bewegung.png) |
-| ![](screenshots/29_rotationskoerper.png) | ![](screenshots/30_backstage.png) | ![](screenshots/31_abi_simulation.png) |
+| ![](screenshots/93_rotationskoerper_labor.png) | ![](screenshots/30_backstage.png) | ![](screenshots/31_abi_simulation.png) |
 | ![](screenshots/32_abi_teilaufgabe.png) | ![](screenshots/33_lage_check.png) | ![](screenshots/34_duell.png) |
 | ![](screenshots/35_lux_werkstatt.png) | ![](screenshots/36_show_baukasten.png) | ![](screenshots/37_widget.png) |
-| ![](screenshots/38_stochastik.png) | ![](screenshots/39_achterbahn.png) | ![](screenshots/40_leuchtflaeche.png) |
+| ![](screenshots/92_analysis_zufall_erleben.png) | | |
 | ![](screenshots/41_schritt_fuer_schritt.png) | ![](screenshots/42_schritt.png) | ![](screenshots/43_lernstand.png) |
 | ![](screenshots/44_klausur_planer.png) | ![](screenshots/45_klasse.png) | ![](screenshots/46_zu_zweit.png) |
 | ![](screenshots/47_rechner.png) | ![](screenshots/15_einstellungen.png) | |
 
 | ![](screenshots/49_achterbahn_fahrersicht.png) | ![](screenshots/50_achterbahn_aussen.png) | |
 
-| ![](screenshots/52_funktion_bauen.png) | ![](screenshots/53_baumdiagramm.png) | ![](screenshots/54_vierfeldertafel.png) |
-| ![](screenshots/55_extremwert.png) | ![](screenshots/56_galton_brett.png) | ![](screenshots/57_raumflug.png) |
+| ![](screenshots/56_galton_brett.png) | ![](screenshots/57_raumflug.png) | |
 | ![](screenshots/58_ableitung_und_flaeche.png) | ![](screenshots/59_fehler_tagebuch.png) | ![](screenshots/60_kalender.png) |
 | ![](screenshots/61_ohne_hilfsmittel.png) | ![](screenshots/62_lux_fuehrt_vor.png) | ![](screenshots/63_widget_lernstand.png) |
 
