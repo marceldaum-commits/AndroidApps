@@ -16,7 +16,7 @@
 - **Ursache für Dauer-Zeichnen gefunden:** Die globale Windzeit (`rememberWind`, unendliche Animation) und weitere Zier-Animationen lösen auf jedem Bildschirm Bilder aus, also auch in Ruhe ein volles Neuzeichnen von 1920×911 mit 60 Bildern/s.
 - **Neu, Ruhe:** 20 s ohne Eingabe → höchstens 4 Bilder/s. Die erste Eingabe (Zeiger, Taste, Mausrad, Touch) weckt sofort auf.
 - **Diagnose:** Mit `?diag=1` steht alle 10 s im Protokoll „Zeichnen: N Bilder in 10 s, Ø x ms, längstes y ms“, dazu der Grafik-Treiber (`WEBGL_debug_renderer_info`).
-- **PC-Größe korrigiert (Marcel: „alles so riesig“, „sliden ist eher ungünstig“):** keine Vergrößerung mehr, sondern Dichte × (Fensterhöhe / 1000) im Bereich 0,8–0,92 ab 800 dp Breite, Spalte 760 dp. Tutorial-Bild höchstens 320 dp breit.
+- **PC-Größe korrigiert (Marcel: „alles so riesig“, „sliden ist eher ungünstig“):** keine Vergrößerung mehr, sondern Dichte × (Fensterhöhe / 1150) im Bereich 0,7–0,85 ab 800 dp Breite (1920×911 → 0,79), Spalte 900 dp (≈ 710 px). Tutorial-Bild höchstens 320 dp breit.
 - **Eltern-Tor:** Löschtaste „←“ statt „⌫“ (fehlte in der Web-Schrift).
 - **Rückweg:** 2.3.1.
 

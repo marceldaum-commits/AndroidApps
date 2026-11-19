@@ -179,13 +179,13 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
               val outer = androidx.compose.ui.platform.LocalDensity.current
               // Nie größer als normal (sonst muss man am PC endlos scrollen). Bei niedrigen Fenstern leicht verkleinern,
               // damit möglichst alles ohne Scrollen passt (Marcel, 19.11.: „sliden ist eher ungünstig“).
-              val scale = if (maxWidth > 800.dp) (maxHeight.value / 1000f).coerceIn(0.8f, 0.92f) else 1f
+              val scale = if (maxWidth > 800.dp) (maxHeight.value / 1150f).coerceIn(0.7f, 0.85f) else 1f
               val wide = maxWidth > 800.dp
               Box(Modifier.fillMaxSize().then(if (wide) Modifier.background(androidx.compose.ui.graphics.Brush.verticalGradient(
                   listOf(androidx.compose.ui.graphics.Color(0xFFCFE8F7), MaterialTheme.colorScheme.background, androidx.compose.ui.graphics.Color(0xFFDDEFD0)))) else Modifier),
                   contentAlignment = androidx.compose.ui.Alignment.TopCenter) {
               CompositionLocalProvider(androidx.compose.ui.platform.LocalDensity provides androidx.compose.ui.unit.Density(outer.density * scale, outer.fontScale)) {
-              Box(Modifier.fillMaxHeight().widthIn(max = 760.dp).then(if (wide) Modifier.shadow(8.dp)
+              Box(Modifier.fillMaxHeight().widthIn(max = 900.dp).then(if (wide) Modifier.shadow(8.dp)
                   .background(MaterialTheme.colorScheme.background) else Modifier)) {
               de.wissensgarten.app.ui.common.ParentGateHost {
                 val nav = rememberNavController()

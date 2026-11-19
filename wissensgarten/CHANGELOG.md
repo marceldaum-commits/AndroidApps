@@ -4,7 +4,7 @@ Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Versi
 im GitHub-Release und in der App unter „App-Update“.
 
 ## 2.3.2 – Leichte Darstellung für langsame Rechner (19.11.2026)
-- **Am PC wieder in normaler Größe:** Version 2.3.1 hatte am großen Bildschirm alles zu stark vergrößert. Jetzt wird es am PC leicht verkleinert (bei einem Full-HD-Bildschirm etwa 91 %), damit mehr ohne Scrollen sichtbar ist. Die Bilder in der Anleitung sind nicht mehr riesig.
+- **Am PC wieder in normaler Größe:** Version 2.3.1 hatte am großen Bildschirm alles zu stark vergrößert. Jetzt wird es am PC leicht verkleinert (bei einem Full-HD-Bildschirm etwa 80 %), damit mehr ohne Scrollen sichtbar ist. Die Bilder in der Anleitung sind nicht mehr riesig.
 - Im Eltern-Tor zeigt die Löschtaste „←“ (vorher ein leeres Kästchen).
 - Merkt der Garten, dass ein Rechner sehr lange zum Zeichnen braucht (z. B. ein PC ohne Grafik-Beschleunigung), zeichnet er ab dem nächsten Start mit etwas weniger Bildpunkten und noch weniger Bildern pro Sekunde. Das sieht minimal weicher aus, reagiert aber deutlich schneller.
 - **Garten in Ruhe:** Berührt 20 Sekunden lang niemand den Bildschirm, bewegen sich Wind, Sonne und Schmetterlinge nur noch gemächlich. Das spart viel Rechenzeit und Akku. Beim ersten Tippen ist alles sofort wieder flüssig.
