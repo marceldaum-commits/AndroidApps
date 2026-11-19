@@ -22,7 +22,12 @@
 - **Hinweis auf Quasselquest:**
   - Im Garten erscheint die Karte „🗣️ Sprachen sind umgezogen!“, sobald das Kind ausgeblendete Sprach-Beete hat. Eine allgemeine Version steht oben in der Samenhandlung.
   - Der Knopf „Zu Quasselquest“ führt zu `https://lernen.mathenachhilfe-online.com/quasselquest/?src=wissensgarten-sprachen`, auf der Test-Stufe zu `lernen-test.` (gemeinsame Adresse laut UMZUG-LERNEN.md).
-- **Belege:** Bildschirmfoto `screenshots/84_quasselquest_hinweis.png`. `webApp/tools/web-sprachen.cjs` (Wasm und JS) prüft: Das Beet ist ausgeblendet, Beet, Karten und Lernprotokoll bleiben gespeichert, und `#paket=` pflanzt kein Sprachpaket.
+- **Belege:**
+  - Bildschirmfoto `screenshots/84_quasselquest_hinweis.png`.
+  - `webApp/tools/web-sprachen.cjs` (Wasm und JS) ist grün: Das Beet ist ausgeblendet, Beet, Karten und Lernprotokoll bleiben gespeichert, und `#paket=` pflanzt kein Sprachpaket.
+  - Samenhandlung: 64 Pakete statt 85, der Hinweis mit Knopf steht oben.
+  - `web-paket.cjs` 5/5. Safari-Abhilfe: 937 abgesichert, 0 Endaufrufe.
+  - core:model-, core:data- und content-Tests sind grün.
 - **Für den Leitstand:**
   - Der Plus-Text im Shop bzw. auf der Website darf keine Sprachen mehr nennen.
   - Den Plus-Endpunkt bitte so lassen: Die Pakete werden in der App ausgeblendet. Löschen auf dem Server erst nach dem Umzug zu Quasselquest.

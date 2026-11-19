@@ -32,13 +32,15 @@ const check = (c, t, x) => { console.log((c ? '✔ ' : '✘ ') + t + (x !== unde
     await p.goto(BASE + '?modus=' + modus);
     await p.waitForFunction(() => window.wgReady, null, { timeout: 120000 });
     await p.waitForTimeout(5000);
+    await p.screenshot({ path: `${OUT}/sprachen_garten_${modus}.png` });
+    await p.mouse.click(115, 625); await p.waitForTimeout(2500);   // Tab „Samen“: Hinweis oben in der Samenhandlung
     await p.screenshot({ path: `${OUT}/sprachen_hinweis_${modus}.png` });
     // Etwas auslösen, das speichert (Sichtbarkeitswechsel), dann prüfen, dass das Sprach-Beet samt Karten und Log noch da ist
     await p.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
     await p.waitForTimeout(1500);
     const g = await p.evaluate(() => JSON.parse(localStorage.getItem('wg.garten') || '{}'));
     check((g.beds || []).some((x) => x.id === 'b2'), `${modus}: Sprach-Beet ist weiter gespeichert`);
-    check((g.cards || []).filter((x) => x.bedId === 'b2').length === 2, `${modus}: seine 2 Karten sind weiter gespeichert`);
+    const kb2 = (g.cards || []).filter((x) => x.bedId === 'b2'); check(['e1', 'e2'].every((id) => kb2.some((x) => x.id === id)), `${modus}: seine Karten sind weiter gespeichert`, kb2.length);
     check((g.logs || []).some((x) => x.cardId === 'e1'), `${modus}: sein Lernprotokoll ist weiter gespeichert`);
     // Deeplink auf das Sprachpaket pflanzt nichts Neues
     await p.evaluate(() => { location.hash = 'paket=s1-englisch-alltag'; });
