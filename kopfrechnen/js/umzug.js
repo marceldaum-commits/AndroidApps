@@ -27,6 +27,8 @@ function umzugDaten() {
 }
 // ALT: einpacken, hochladen, weiterleiten. Gibt false zurück, wenn die App hier normal starten soll.
 async function umzugAlt() {
+  // Ist die neue Adresse erreichbar? (DNS/Netz) – sonst hier bleiben und beim nächsten Start erneut versuchen
+  try { await fetch(UMZUG.ziel(UMZUG.stufe()) + 'stand.json?u=' + Date.now(), { mode: 'no-cors', cache: 'no-store', credentials: 'omit' }); } catch { return false; }
   const daten = umzugDaten();
   if (!Object.keys(daten).length) { umzugWeiter(umzugZielUrl('')); return true; }   // nichts zu übertragen: nur weiterleiten
   const st = UMZUG.stufe(), k = { id: zufall(16), schreib: zufall(16), key: zufall(32) };

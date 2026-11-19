@@ -11,7 +11,7 @@ const API = 'https://trainer-test.mathenachhilfe-online.com/eltern/v1/s/';
 const TYPES = { html: 'text/html', js: 'text/javascript', css: 'text/css', json: 'application/json', svg: 'image/svg+xml', png: 'image/png', webmanifest: 'application/manifest+json', mp3: 'audio/mpeg' };
 const OLD_DATA = { v: 3, cur: 'p1', profiles: { p1: { name: 'Alt', emoji: '🦊', data: { total: 123, sel: { op: 'mul', lvl: 1 } } } }, pro: { code: 'TESTCODE' } };
 
-async function run(name, { umzug = true, putFail = false, newHas = null, oldHas = OLD_DATA, url = OLD, standalone = false }) {
+async function run(name, { umzug = true, putFail = false, newDown = false, newHas = null, oldHas = OLD_DATA, url = OLD, standalone = false }) {
   const b = await chromium.launch();
   const ctx = await b.newContext({ serviceWorkers: 'block', viewport: { width: 390, height: 844 }, locale: 'de-DE' });
   const store = new Map(), log = [];
@@ -21,11 +21,11 @@ async function run(name, { umzug = true, putFail = false, newHas = null, oldHas 
     const f = path.join(ROOT, p);
     if (!fs.existsSync(f)) return route.fulfill({ status: 404, body: '' });
     let body = fs.readFileSync(f);
-    if (p === 'config.js') body = Buffer.from(body.toString().replace('umzug: false', `umzug: ${umzug}`));
+    if (p === 'config.js') body = Buffer.from(body.toString().replace(/umzug: (true|false)/, `umzug: ${umzug}`));
     route.fulfill({ status: 200, body, contentType: TYPES[p.split('.').pop()] || 'application/octet-stream' });
   };
   await ctx.route(OLD + '**', serve(OLD));
-  await ctx.route(NEW + '**', serve(NEW));
+  await ctx.route(NEW + '**', newDown ? r => r.abort('namenotresolved') : serve(NEW));
   await ctx.route(API + '**', async route => {
     const r = route.request(), id = r.url().slice(API.length), m = r.method();
     log.push(m);
@@ -74,9 +74,11 @@ async function run(name, { umzug = true, putFail = false, newHas = null, oldHas 
   ok(r5.href.startsWith(OLD) && r5.log.length === 0, 'Schalter aus: trotzdem umgezogen');
   const r6 = await run('installierte App', { standalone: true });
   ok(r6.href.startsWith(OLD) && /umgezogen/.test(r6.boot) && r6.server === 1, 'installiert: kein Hinweis „neu installieren“');
+  const r8 = await run('neue Adresse nicht erreichbar', { newDown: true });
+  ok(r8.href.startsWith(OLD) && r8.log.length === 0 && r8.data && JSON.parse(r8.data).profiles.p1.data.total === 123, 'nicht erreichbar: trotzdem hochgeladen oder weitergeleitet');
   const r7 = await run('ohne eigene Daten', { oldHas: null });
   ok(r7.href.startsWith(NEW) && r7.log.length === 0, 'ohne Daten: nicht direkt weitergeleitet');
-  for (const r of [r1, r2, r3, r4, r5, r6, r7]) { console.log(`${r.name}: ${r.href.replace(/https:\/\//, '')} · Server ${r.log.join(',') || '–'} · Fehler ${r.errs.length}`); ok(!r.errs.length, r.name + ': Seitenfehler ' + r.errs.join('; ')); }
+  for (const r of [r1, r2, r3, r4, r5, r6, r7, r8]) { console.log(`${r.name}: ${r.href.replace(/https:\/\//, '')} · Server ${r.log.join(',') || '–'} · Fehler ${r.errs.length}`); ok(!r.errs.length, r.name + ': Seitenfehler ' + r.errs.join('; ')); }
   if (fails.length) { console.log('FEHLER:\n- ' + fails.join('\n- ')); process.exit(1); }
-  console.log('Umzug ✓ (gelingt, offline, schon Daten, #pro=/?thema=, Schalter aus, installiert, ohne Daten)');
+  console.log('Umzug ✓ (gelingt, offline, schon Daten, #pro=/?thema=, Schalter aus, installiert, ohne Daten, neue Adresse nicht erreichbar)');
 })();
