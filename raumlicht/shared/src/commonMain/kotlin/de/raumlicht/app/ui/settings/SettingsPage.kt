@@ -58,6 +58,7 @@ fun SettingsPage(
             ProEntry()
             KiEntry()
             ElternEntry()
+            FamilieEntry()
             ElevatedCard(Modifier.fillMaxWidth()) {
                 Column(Modifier.padding(16.dp)) {
                     Text("Ton & Gefühl", style = MaterialTheme.typography.titleMedium, color = MaterialTheme.colorScheme.primary)

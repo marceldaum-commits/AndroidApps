@@ -2,6 +2,23 @@
 
 Neueste oben.
 
+## 19.11.2026 – 2.18.35 auf test: Familien-Speicher angebunden (nur Teststufe; von Marcel hier direkt bestätigt: „daneben, eigene Version nur auf der Teststufe“)
+
+**Gebaut:**
+- `familie.js` @ 1f4b377 unverändert im Web-Paket (`web/src/wasmJsMain/resources/familie.js`, sha256 3016aabd…e640; `node familie/tests/familie.mjs` → 51 Prüfungen). Wird erst geladen, wenn die Familien-Seite etwas tut; steht in der Offline-Liste des Service Workers.
+- Brücke `familieRuf` (`web/…/Browser.kt`): neu (anlegen mit REC_PUB + X-Notfall-Pruef, Index mit Kind und App `raumlicht`), kinder, kind, sichern (`standSichern` mit rev/If-Match), laden. Aufrufe ohne Cookies und ohne Referrer.
+- Logik `core/model/…/Familie.kt`: Lernstand des Kindes = Sicherungs-Inhalt **ohne** `proCode`/`kiCode`, ohne Geräte-Kennungen, ohne Eltern-Kopplung, ohne den Familien-Link selbst. Zustand je Gerät in `raumlicht.familie` (Familie, kindId, Nummer, rev, Prüfwert, Spitzname) – wandert in keine Sicherung.
+- Seite „Familie“ (`shared/…/settings/FamilieScreen.kt`), Eintrag in den Einstellungen; **Weg nur durchs Eltern-Tor** – auch `?ziel=familie` und `#familie=…` zeigen zuerst das Tor. Der Schlüssel verschwindet beim Öffnen sofort aus der Adresszeile.
+- Gesichert wird nach dem Lernen von selbst, nur bei Änderung. **Konflikt (409):** nichts wird überschrieben; die Eltern wählen „Stand aus der Familie holen“ oder „Stand dieses Geräts behalten“. Beitritt auf einem Gerät mit eigenem Lernstand fragt ebenso.
+- Sichtbar nur auf `lernen-test.` / `raumlicht-test.` (Server `https://lernen-test.mathenachhilfe-online.com/familie/v1/`). Live: `Familie.ENABLED = false` → kein Eintrag, kein Aufruf. Zum Freischalten später: Schalter umlegen, neue Version.
+- Eltern-Kopplung (`eltern/v1`) unverändert daneben.
+
+**Noch nicht gebaut (bewusst):** Rechte (`/rechte`, `einloesen`, Sperrliste) – Pro/KI laufen weiter über die Codes auf dem Gerät; Familie auf dem Server löschen (betrifft alle Apps – bitte gemeinsame Regel); Kind umbenennen; Zusammenführen zweier Stände (derzeit Entweder-oder mit Nachfrage).
+
+**Bitte prüfen / entscheiden:** (1) Wortlaut zur Notfall-Kopie – Raumlicht sagt Eltern ausdrücklich, dass der Betreiber den Zugang wiederherstellen kann (Text in `Familie.NOTE`, Datenschutz Punkt 9); bitte für alle Apps gleich. (2) Lässt der Test-Server Aufrufe von `raumlicht-test.` (andere Herkunft) zu? Auf `lernen-test.` ist es dieselbe Herkunft.
+
+**Geprüft:** Logik-Tests, Oberflächen-Tests (neu `familienSpeicher`, `familienLinkFuehrtDurchsElternTor`), Lint, Browser-Prüfung `web-familie.mjs` (je Fassung 13: Tor, anlegen, Server sieht nichts Lesbares, zweites Gerät holt Stand, Konflikt) – Zahlen siehe Nachtrag unten. Bild `screenshots/95_familie.png`.
+
 ## 19.11.2026 – 2.18.34 auf test: Eltern-Tor vor dem Shop, Lux wirbt nicht mehr (Marcel hat hier selbst „ja“ gesagt – zu meinem Vorschlag, nicht zur vollen gemeinsamen Vorgabe)
 
 **Umgesetzt (Entscheidung „wie Mathe-Trainer“):**

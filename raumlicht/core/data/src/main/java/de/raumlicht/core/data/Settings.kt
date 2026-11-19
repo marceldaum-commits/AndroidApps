@@ -163,6 +163,9 @@ class Settings(ctx: Context) : de.raumlicht.core.model.Prefs {
     override var learnMonths: String
         get() = prefs.getString("learnMonths", "") ?: ""
         set(v) { prefs.edit().putString("learnMonths", v).apply() }
+    override var family: String
+        get() = prefs.getString("family", "") ?: ""
+        set(v) { prefs.edit().putString("family", v).apply() }
     override var backupMark: String
         get() = prefs.getString("backupMark", "") ?: ""
         set(v) { prefs.edit().putString("backupMark", v).apply() }

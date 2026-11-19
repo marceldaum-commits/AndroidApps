@@ -173,6 +173,10 @@ Freiwilliger, Ende-zu-Ende verschlüsselter Eltern-Bericht (`core/model/…/Elte
 
 ![](screenshots/94_eltern_tor.png)
 
+**Familien-Speicher (für Eltern, vorerst nur Teststufe):** Familie anlegen oder mit dem Familien-Link beitreten – der Lernstand liegt verschlüsselt im gemeinsamen Speicher aller Lern-Apps.
+
+![](screenshots/95_familie.png)
+
 **„← Alle Apps“ (seit 2.18.31):** oben auf der Startseite, zurück zur App-Auswahl der Website.
 
 ![](screenshots/91_alle_apps.png)

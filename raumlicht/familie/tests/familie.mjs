@@ -2,7 +2,7 @@
 // den echten Server baut und betreibt der Leitstand). Geprüft: X25519 nach RFC 7748, Notfall-Kopie hin und zurück,
 // Anlegen, Index, Stände je App und Kind mit rev/If-Match und 409, Liste, Löschen, kein Klartext beim Server,
 // falscher Schlüssel, ohne gzip lesbar. Aufruf: node tests/familie.mjs
-const F = await import('../familie.js');
+const F = await import('../../web/src/wasmJsMain/resources/familie.js');
 const NC = await import('node:crypto');   // unabhängige Gegenrechnung (Node-eigene Krypto)
 let n = 0, fehler = 0; const ok = (b, t) => { n++; if (!b) { fehler++; console.error('FEHLER:', t); } };
 const hex = (s) => Uint8Array.from(s.match(/../g), (x) => parseInt(x, 16));

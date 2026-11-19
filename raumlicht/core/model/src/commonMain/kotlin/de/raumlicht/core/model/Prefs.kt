@@ -74,6 +74,8 @@ interface Prefs {
     var learnMonths: String
     /** Prüfwert der zuletzt hochgeladenen Sicherung (leer = noch keine) */
     var backupMark: String
+    /** Familien-Speicher: was dieses Gerät über seine Familie weiß ([Familie.State], leer = keine) – bleibt auf dem Gerät */
+    var family: String
     /** Zuletzt gewählte Schwierigkeit im endlosen Üben (leer = alle Stufen) */
     var jamLevel: String
     fun resetProgress()

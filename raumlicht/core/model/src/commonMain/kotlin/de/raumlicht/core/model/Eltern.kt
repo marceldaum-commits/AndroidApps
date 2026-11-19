@@ -52,7 +52,7 @@ object Eltern {
     const val BACKUP_NOTE = "Solange gekoppelt ist, sichert Raumlicht deinen Lernstand zusätzlich verschlüsselt. Geht das Handy verloren oder werden die Browser-Daten gelöscht, " +
         "holst du ihn auf dem neuen Gerät mit dem Kopplungs-Link zurück. In der Sicherung stecken Sterne, Rekorde, Lernverlauf, Einstellungen und deine Freischalt-Codes."
     /** Was nicht in die Sicherung gehört: Geräte-Kennungen, die Kopplung selbst (kommt aus dem Link) und Merker dieses einen Browsers */
-    private val NOT_SAVED = setOf("kiDevice", "elternKopplung", "elternGesendet", "elternSicherung", "sparsam", "modus", "mitschrift", "startfehler", "test")
+    private val NOT_SAVED = setOf("kiDevice", "elternKopplung", "elternGesendet", "elternSicherung", "familie", "sparsam", "modus", "mitschrift", "startfehler", "test")
     fun saved(key: String) = key !in NOT_SAVED
     /** Zuerst weglassen, wenn die Sicherung zu groß würde – das braucht niemand zum Weiterlernen */
     private val DROP_FIRST = listOf("diary", "show", "ride", "flight")

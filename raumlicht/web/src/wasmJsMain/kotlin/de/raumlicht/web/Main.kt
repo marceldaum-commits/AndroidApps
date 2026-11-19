@@ -62,6 +62,7 @@ private fun WebApp() {
     if (!ready) return
     LaunchedEffect(Unit) { note("Oberfläche gestartet"); zaehle(prefs, "start", null) }
     // Direkt-Link auf einen Bildschirm („?ziel=binomial“) – für Lesezeichen und für die automatische Prüfung jedes Bildschirms; unbekannte Ziele führen zur Startseite
+    val familyLink = remember { takeParam("familie")?.let { "#familie=$it" } }   // der Schlüssel verschwindet sofort aus der Adresszeile
     LaunchedEffect(Unit) { takeParam("ziel")?.takeIf { it.isNotBlank() && it.length < 60 }?.let { nav.restart(it) } }
     // Freischalt-Link aus der E-Mail: Code prüfen, merken und die Pro-Seite zeigen (bei einem falschen Code steht dort die Eingabe bereit)
     LaunchedEffect(Unit) { takeProParam()?.let { raw ->
@@ -115,6 +116,10 @@ private fun WebApp() {
                 eltern = remember { val test = isTestSite() || elternServer() != null
                     if (!de.raumlicht.core.model.Eltern.ENABLED && !test) null else de.raumlicht.app.ui.settings.ElternPlatform(elternServer() ?: if (test) de.raumlicht.core.model.Eltern.TEST_SERVER else de.raumlicht.core.model.Eltern.SERVER,
                         if (test) de.raumlicht.core.model.Eltern.TEST_PAGE else de.raumlicht.core.model.Eltern.PAGE, ::elternNeu, ::elternSenden, ::elternLoeschen, ::elternHolen, ::snapshot, ::restoreSnapshot) },
+                familie = remember { val test = isTestSite() || familieServer() != null
+                    if (!de.raumlicht.core.model.Familie.ENABLED && !test) null else de.raumlicht.app.ui.settings.FamiliePlatform(familieServer() ?: if (test) de.raumlicht.core.model.Familie.TEST_SERVER else de.raumlicht.core.model.Familie.SERVER,
+                        if (test) de.raumlicht.core.model.Familie.TEST_SERVER else de.raumlicht.core.model.Familie.SERVER, test, ::familieRuf, ::snapshot, ::restoreFamily) },
+                familieLink = familyLink, gateFree = remember { familieTorFrei() },
                 onApps = { openApps(if (isTestSite()) de.raumlicht.core.model.Nachhilfe.APPS_TEST_URL else de.raumlicht.core.model.Nachhilfe.APPS_URL) },
                 countSend = { body -> beacon(de.raumlicht.core.model.Zaehler.URL, body) },
                 kiSend = { body -> kotlinx.coroutines.suspendCancellableCoroutine { c -> kiPost(kiUrl, body) { status, text -> if (c.isActive) c.resumeWith(Result.success(status to text)) } } },

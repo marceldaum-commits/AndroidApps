@@ -2,6 +2,14 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.35 – Familien-Speicher zum Ausprobieren (nur Teststufe) (19.11.2026)
+- **Neu für Eltern, vorerst nur auf der Teststufe:** In den Einstellungen gibt es „Familie (für Eltern)“. Dahinter – nach dem Eltern-Tor – legt ihr eine Familie an oder tretet ihr mit dem Familien-Link bei. Der Lernstand des Kindes wird dann verschlüsselt im gemeinsamen Familien-Speicher aller Lern-Apps gesichert.
+- **Neues Gerät?** Familien-Link öffnen oder einfügen, Kind auswählen – der Lernstand ist wieder da. Geschwister bekommen jedes einen eigenen Stand.
+- **Nichts wird still überschrieben:** Wurde auf zwei Geräten gelernt, fragt Raumlicht, welcher Stand gelten soll.
+- **Für Eltern:** Verschlüsselt wird im Browser, der Server kann nichts lesen. Freischalt-Codes stehen nicht im Lernstand. Für den Notfall liegt eine verschlüsselte Kopie des Familien-Schlüssels bei uns, damit wir euch den Zugang zurückgeben können, wenn der Link verloren ist. Ohne Konto, ohne E-Mail-Adresse.
+- „Eltern-Handy koppeln“ bleibt unverändert daneben bestehen. Auf der Live-Seite ist vom Familien-Speicher noch nichts zu sehen.
+- Das Eltern-Tor sagt jetzt „Dieser Bereich ist für Eltern“ (es führt nicht mehr nur zum Shop).
+
 ## 2.18.34 – Der Weg zum Shop führt über ein Eltern-Tor (19.11.2026)
 - **Eltern-Tor vor dem Shop:** Wer auf „Zum Shop“ tippt (Raumlicht Pro oder KI-Abi-Pass), löst zuerst eine kleine Rechenaufgabe. Wer unter 18 ist, kauft nicht selbst – das machen die Eltern. Einmal gelöst, bleibt das Tor zehn Minuten offen.
 - **Lux wirbt nicht mehr:** Sind die drei KI-Proben aufgebraucht, sagt Lux nur noch genau das. Tipp und Theorie helfen wie immer weiter.
