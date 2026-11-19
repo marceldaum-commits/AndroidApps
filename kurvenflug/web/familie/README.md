@@ -20,3 +20,5 @@ Zusammenführen bei Konflikten: `core/model/FamilyMerge.kt`.
 
 **Löschen** (nur hinter dem Tor): Warnung „Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. Gekaufte Codes werden wieder frei und lassen sich in einer neuen Familie erneut einlösen. Die Lernstände auf diesem Gerät bleiben erhalten.“ → Familien-Nummer eintippen → `fa.loeschen()` → lokal nur die Familien-Schlüssel entfernen.
 Bei 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“ Einzelnes Kind entfernen: noch nicht anbieten.
+
+**Auflage A6 (Recht, v1.6):** genau EIN Einwilligungstext = der Pflichttext; darunter Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und Knopf „Einverstanden – Familie anlegen“; nichts vorausgewählt. Anlegen/Beitreten nur hinter dem Eltern-Tor. Einzelnes Kind löschen: Roadmap, noch nicht bauen.
