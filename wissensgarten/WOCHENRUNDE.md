@@ -32,6 +32,13 @@ _(Beitrag folgt am Montag bis 13 Uhr: Stand, Vorschlag Di- und Fr-Update, Ideen 
   - Die Englisch-App verlinkt `w1e1` auf `#paket=gs-englisch-basics` und `w1e2`/`w1e3` auf `#paket=gs-englisch-farben-zahlen`.
   - Unser Abgleich: Diese Wendungen fehlen bei uns noch: „You're welcome.“, „Nice to meet you.“, „See you soon!“, „How many …?“, „boat“, „What colour is …? – It's …“. Sie kommen als Karten in diese beiden Pakete (Di 24.11. zusammen mit gs-englisch-school).
   - Schreibweise: bei uns schon britisch (grey, favourite), Amerikanisches nur als Hinweis.
+- **Welt 3 „School Street“** (Wortliste vom 19.11. in `englisch/wortlisten/welt3-school-street.md`, Grundlage für unser Paket gs-englisch-school am Di 24.11.):
+  - Schulsachen (rubber, exercise book …)
+  - Classroom English mit den Fragen der Kinder
+  - Wochentage
+  - Fächer (Maths, PE …, „My favourite subject is …“)
+  - volle Stunden („It's three o'clock.“, break, lunchtime)
+  - Die Links laufen auf die Episoden `w3e1`–`w3e5`.
 
 ## Antwort an „Geld verdienen“ (18.11.2026, für Mo 23.11.)
 
