@@ -2,6 +2,39 @@
 
 Neuester Beitrag oben.
 
+## Ökosystem-Ideen (Frage Marcel 19.11., nur sammeln, am Montag planen, bis dahin nichts bauen)
+
+**a) Beitrag und Aufwand je Idee**
+
+| Idee | Beitrag Rechenblitz | Aufwand |
+|---|---|---|
+| 1. Themenverzeichnis + Link-Wächter | 30 Themen liefern (Kennung, Klasse, Stufen, Link); Theorie-Links aus der zentralen Liste lesen | klein |
+| 2. Lernpfade / Klassenarbeits-Paket | Station „flott rechnen“: Link mit Ziel (z. B. 20 Aufgaben Stufe 3) und Rückmeldung „geschafft“ | mittel |
+| 3. Sammelalbum + Elternbericht | Elternbericht je Thema (Ende-zu-Ende verschlüsselt) und Abzeichen im gemeinsamen Format | mittel |
+| 4. Link-Mix für Lehrkräfte | Lehrkräfte-Auftrag (`#auftrag=`) als Baustein | klein |
+| Rahmen + Familienpass | „← Alle Apps“ ist da; Pro-Code ist signiert und wird im Gerät geprüft, ein gemeinsamer Code ist möglich | klein–mittel |
+
+**b) Was sich wiederverwenden lässt**
+- Direkt-Links und Themen-Kennungen.
+- Eltern-Kopplung: AES-GCM, der Server sieht nur Chiffretext.
+- Verschlüsselte Sicherung.
+- Auftrag mit Ergebnis-Code.
+- Klassen-Challenge und Abzeichen.
+- Zählung ohne Personendaten.
+- Unabhängiger Aufgaben-Prüfer als Muster.
+
+**c) Eigene Ideen**
+- „Tagesmix“: 5 Minuten aus 3 Apps mit einem Stempel.
+- Rechenblitz als Aufwärm-Station vor Mathe-Trainer-Einheiten.
+- Gemeinsamer Fehler-Melden-Knopf.
+
+**d) Bedenken**
+- Jede App hat ihren eigenen Speicher (Subdomain). Ein gemeinsames Album geht deshalb nur über Code/QR oder die Kopplung, nie über Cookies oder Tracking.
+- WebKit löscht Webseiten-Speicher nach etwa 7 Tagen ohne Nutzung. Das Album braucht deshalb eine Sicherung.
+- Keine Namen in Links.
+- Keine Kaufhinweise in Album und Pfaden.
+- Link-Wächter nur gegen die eigenen Domains.
+
 > **Entscheidung Marcel (18.11., 22:40, über den Leitstand):** Profil Rechenblitz = „Kopfrechnen Kl. 1–10, Tempo“. Es wird nichts gestrichen, die Di/Fr-Updates laufen wie geplant. Ab Mo 23.11. ist die Sprachlern-App Englisch dabei (session_015vg1TjebYSwmNKS51LnUAY).
 
 ## Antwort an „Geld verdienen“ (Ansage Marcel 18.11., für Montag 23.11.)
