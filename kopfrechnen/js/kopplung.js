@@ -8,8 +8,8 @@
    Sicherung (Zusatz 18.11.): mit demselben Schlüssel der ganze Lernstand dieses Profils → PUT <api>/s/<id> (nur bei Änderung, ≤ 512 KB).
    Wiederherstellen auf einem neuen Gerät über den Kopplungs-Link (GET /s/<id>, entschlüsseln, nachfragen, übernehmen, wieder gekoppelt). */
 const KOPPLUNG = {
-  // Test-Stufe auf rechenblitz-test / localhost, sonst Live
-  stufe: () => /^(rechenblitz-test\.|localhost|127\.)/.test(location.hostname) ? 'test' : 'live',
+  // Test-Stufe auf rechenblitz-test / lernen-test (gemeinsame Adresse ab 19.11.) / localhost, sonst Live
+  stufe: () => /^(rechenblitz-test\.|lernen-test\.|localhost|127\.)/.test(location.hostname) ? 'test' : 'live',
   host: (st = KOPPLUNG.stufe()) => st === 'test' ? 'https://trainer-test.mathenachhilfe-online.com/eltern/v1/' : 'https://trainer.mathenachhilfe-online.com/eltern/v1/',
   api: st => KOPPLUNG.host(st) + 'b/', sich: st => KOPPLUNG.host(st) + 's/', SMAX: 512 * 1024,
   seite: () => KOPPLUNG.stufe() === 'test' ? 'https://staging.mathenachhilfe-online.com/eltern-bericht/' : 'https://www.mathenachhilfe-online.com/eltern-bericht/',

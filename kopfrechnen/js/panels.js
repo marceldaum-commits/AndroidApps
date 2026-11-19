@@ -632,6 +632,7 @@ function init() {
   if (seen && verNum(seen) < verNum(APP_VERSION)) setTimeout(() => onHome() && openSheet('whatsnew', { since: seen }), 900);
   else if (!seen && !S.total) setTimeout(() => onHome() && openSheet('welcome'), 900);
   ROOT.seenVersion = APP_VERSION; save();
+  if (window.__umzugOk) setTimeout(() => toast('✅ Dein Lernstand ist mit umgezogen – Rechenblitz hat jetzt eine neue Adresse.', 4200), 600);
   renderPromo(); renderHome(); handleHash(); handleParams(); proStartup(); flushOutbox(); submitClassPoints(); if (S.advent && S.advent.voucherPending) fetchVoucher();
   if (IS_NATIVE) { Reminder.startup().catch(() => {}); apkUpdateCheck(); }   // APK: alle Dateien liegen im Paket, kein Service Worker nötig
   else if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').then(() => Reminder.startup()).catch(() => {});

@@ -2541,4 +2541,11 @@ I18N.add('uk', {"% sind":"% — це",
 "Nebenwinkel ergänzen sich zu {}°.":"Суміжні кути разом дають {}°.",
 "Der andere Winkel":"Інший кут",
 "Ende minus Anfang (in Minuten nach {} Uhr)":"Кінець мінус початок (у хвилинах після {})",
-"Lösungswege bei Nebenwinkeln und Minuten-Zeitspannen nennen jetzt die Regel":"Розв’язки для суміжних кутів і проміжків часу в хвилинах тепер називають правило"});
+"Lösungswege bei Nebenwinkeln und Minuten-Zeitspannen nennen jetzt die Regel":"Розв’язки для суміжних кутів і проміжків часу в хвилинах тепер називають правило",
+"✅ Dein Lernstand ist mit umgezogen – Rechenblitz hat jetzt eine neue Adresse.":"✅ Твій прогрес теж переїхав — Rechenblitz тепер має нову адресу.",
+"Wir ziehen um …":"Ми переїжджаємо …",
+"Rechenblitz ist umgezogen":"Rechenblitz переїхав",
+"Dein Lernstand ist schon unterwegs. Öffne die neue Adresse und installiere die App dort bitte neu auf dem Startbildschirm. Diese alte App kannst du danach löschen.":"Твій прогрес уже в дорозі. Відкрий нову адресу й, будь ласка, знову встанови там застосунок на головний екран. Цей старий застосунок потім можна видалити.",
+"Zur neuen Adresse":"До нової адреси",
+"Vorbereitet für den Umzug auf die gemeinsame Adresse aller Lern-Apps: Der Lernstand zieht verschlüsselt mit um":"Підготовлено до переїзду на спільну адресу всіх навчальних застосунків: прогрес переїжджає зашифрованим",
+"Speicher und Offline-Dateien tragen jetzt eindeutig den Namen Rechenblitz":"Сховище й офлайн-файли тепер чітко мають назву Rechenblitz"});

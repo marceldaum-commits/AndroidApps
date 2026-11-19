@@ -2541,4 +2541,11 @@ I18N.add('en', {"% sind":"% are",
 "Nebenwinkel ergänzen sich zu {}°.":"Adjacent angles on a straight line add up to {}°.",
 "Der andere Winkel":"The other angle",
 "Ende minus Anfang (in Minuten nach {} Uhr)":"End minus start (in minutes after {})",
-"Lösungswege bei Nebenwinkeln und Minuten-Zeitspannen nennen jetzt die Regel":"Solutions for adjacent angles and time spans in minutes now state the rule"});
+"Lösungswege bei Nebenwinkeln und Minuten-Zeitspannen nennen jetzt die Regel":"Solutions for adjacent angles and time spans in minutes now state the rule",
+"✅ Dein Lernstand ist mit umgezogen – Rechenblitz hat jetzt eine neue Adresse.":"✅ Your progress has moved too – Rechenblitz has a new address now.",
+"Wir ziehen um …":"We are moving …",
+"Rechenblitz ist umgezogen":"Rechenblitz has moved",
+"Dein Lernstand ist schon unterwegs. Öffne die neue Adresse und installiere die App dort bitte neu auf dem Startbildschirm. Diese alte App kannst du danach löschen.":"Your progress is already on its way. Open the new address and please install the app there again on your home screen. You can delete this old app afterwards.",
+"Zur neuen Adresse":"To the new address",
+"Vorbereitet für den Umzug auf die gemeinsame Adresse aller Lern-Apps: Der Lernstand zieht verschlüsselt mit um":"Prepared for the move to the shared address of all learning apps: your progress moves along, encrypted",
+"Speicher und Offline-Dateien tragen jetzt eindeutig den Namen Rechenblitz":"Storage and offline files now clearly carry the name Rechenblitz"});

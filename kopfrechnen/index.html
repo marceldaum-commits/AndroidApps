@@ -173,7 +173,7 @@ html{background:#101b43}body{margin:0}
 <script>
 /* Start erst, wenn DOM, Skripte (defer) und CSS bereit sind – das Startbild deckt solange alles ab */
 document.addEventListener('DOMContentLoaded', function () {
-  window.__cssReady.then(function () { return i18nLoad(detectLang()); }).then(function () {   // Wörterbuch vor init(): manche Texte werden direkt übersetzt
+  window.__cssReady.then(function () { return i18nLoad(detectLang()); }).then(function () { return typeof umzugStart === 'function' ? umzugStart() : null; }).catch(function () {}).then(function () {   // Wörterbuch vor init(): manche Texte werden direkt übersetzt
     try { init(); } catch (e) { window.__bootDone(); throw e; }
     Promise.resolve(i18nStart()).then(window.__bootDone, window.__bootDone);
   });

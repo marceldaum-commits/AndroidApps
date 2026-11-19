@@ -1,16 +1,16 @@
 // Rechenblitz Service Worker: App läuft nach dem ersten Besuch auch offline.
-const CACHE = 'rechenblitz-3.27.0';
-const PUSH = 'rechenblitz-push';   // Text der Erinnerung (legt die App ab) – bleibt bei Updates erhalten
+const CACHE = 'rechenblitz-3.28.0';
+const PUSH = 'rechenblitz-push', NOVA = 'rechenblitz-nova';   // Erinnerungstext und offline geladene Vorlese-Sätze – bleiben bei Updates erhalten
 const FILES = ['./', 'index.html', 'app.min.css', 'config.js', 'js/rechenblitz.min.js', 'js/lang-en.js', 'js/lang-uk.js', 'manifest.webmanifest', 'icons/logo.svg', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/icon-maskable-512.png',
   'icons/apple-touch-icon.png', 'icons/favicon-32.png', 'fonts/Inter.woff2', 'fonts/SourceSerif4-italic.woff2', 'fonts/Caveat.woff2'];
 // Beim Installieren alles frisch vom Server holen (nicht aus dem Browser-Speicher), dann sofort aktiv werden
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: 'reload' })))).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('rechenblitz-') && k !== CACHE && k !== PUSH).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('rechenblitz-') && k !== CACHE && k !== PUSH && k !== NOVA).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 self.addEventListener('fetch', e => {
   const req = e.request, url = new URL(req.url);
-  if (req.method !== 'GET' || url.origin !== location.origin || url.pathname.startsWith('/api/')) return;   // Server-Anfragen und fremde Adressen nie über den Cache
+  if (req.method !== 'GET' || url.origin !== location.origin || /\/api\//.test(url.pathname)) return;   // Server-Anfragen und fremde Adressen nie über den Cache
   if (url.search && req.mode !== 'navigate') return;   // Abfragen mit ?… (z. B. Versionsprüfung js/changelog.js?u=…) immer frisch vom Server
   // Schneller Start (Marcel 16.11.): App-Dateien sofort aus dem Speicher dieser Version, sonst Netz.
   // Neue Versionen kommen über einen neuen Service Worker (neuer Cache-Name) – die App lädt dann von selbst neu.
@@ -18,7 +18,7 @@ self.addEventListener('fetch', e => {
   e.respondWith(caches.open(CACHE).then(c => c.match(key)).then(hit => hit || fetch(req).then(r => {
     if (r.ok && req.mode !== 'navigate') { const cp = r.clone(); caches.open(CACHE).then(x => x.put(req, cp)); }
     return r;
-  })).catch(() => caches.match('index.html')));
+  })).catch(() => caches.open(CACHE).then(c => c.match('index.html'))));   // nur im eigenen Cache suchen (gemeinsame Adresse mit anderen Apps)
 });
 
 /* ---------- Erinnerung aufs Handy: Push ohne Inhalt, Text kommt aus der App ---------- */

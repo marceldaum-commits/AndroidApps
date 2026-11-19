@@ -40,7 +40,7 @@ const Nova = {
     } catch {}
     return s === text ? s : s.replace(/\s+([,.!?])/g, '$1').replace(/\s{2,}/g, ' ').trim();
   },
-  async cachePut(url, blob) { try { const c = await caches.open('rb-nova'); await c.put(url, new Response(blob, { headers: { 'Content-Type': 'audio/mpeg' } })); } catch {} },
+  async cachePut(url, blob) { try { const c = await caches.open('rechenblitz-nova'); await c.put(url, new Response(blob, { headers: { 'Content-Type': 'audio/mpeg' } })); } catch {} },
   // Audiodatei holen: Gerätespeicher → feste Adresse → /jetzt; null = gerade nicht verfügbar (Grund in Nova.fail)
   async src(text, lang, jetzt = true) {
     const key = lang + '|' + novaNorm(text), pkey = key + (jetzt ? '' : '|nur-datei');
@@ -49,7 +49,7 @@ const Nova = {
     if (this.pending.has(pkey)) return this.pending.get(pkey);
     const job = (async () => {
       const url = await this.url(lang, text);
-      try { const c = await caches.open('rb-nova'); const hit = await c.match(url); if (hit) return hit.blob(); } catch {}
+      try { const c = await caches.open('rechenblitz-nova'); const hit = await c.match(url); if (hit) return hit.blob(); } catch {}
       try {
         let r = await this.get(url);
         if (!r.ok && r.status === 404 && !jetzt) return null;   // nur nachsehen, ob es die fertige Datei gibt
@@ -115,7 +115,7 @@ const NovaOffline = {
   async texts(lang = I18N.lang) { return (await this.all()).filter(t => t.sprache === lang).map(t => t.text); },
   // Größe aller Dateien laut Server (live, wird kleiner, wenn der Server neu kodiert)
   async stand() { try { const r = await Nova.get(`${Nova.base()}stand-${this.host()}.json`, { cache: 'no-cache' }); return r.ok ? await r.json() : null; } catch { return null; } },
-  async cache() { try { return await caches.open('rb-nova'); } catch { return null; } },
+  async cache() { try { return await caches.open('rechenblitz-nova'); } catch { return null; } },
   // was liegt schon auf dem Gerät: have (beliebige Qualität) / best (Bestqualität) dieser Sprache, total, bytes (alle Nova-Dateien)
   async status(lang = I18N.lang) {
     const c = await this.cache(), list = await this.texts(lang); let have = 0, best = 0, bytes = 0;
@@ -160,7 +160,14 @@ const NovaOffline = {
       return !this.stopFlag;
     } finally { this.busy = false; }
   },
-  async clear() { try { await caches.delete('rb-nova'); } catch {} Nova.pending.clear(); },
+  async clear() { try { await caches.delete('rechenblitz-nova'); } catch {} Nova.pending.clear(); },
 };
 // Speicher der früheren Zusatzstimme (bis 3.24.x) vom Gerät räumen
-try { caches.delete('rb-stimme'); } catch {}
+// Altlasten: vor 3.28.0 hießen die Caches rb-*. Offline geladene Nova-Sätze in den neuen Cache übernehmen, dann den alten löschen.
+(async () => { try {
+  caches.delete('rb-stimme');
+  if (!(await caches.has('rb-nova'))) return;
+  const alt = await caches.open('rb-nova'), neu = await caches.open('rechenblitz-nova');
+  for (const req of await alt.keys()) { const r = await alt.match(req); if (r) await neu.put(req, r); }
+  await caches.delete('rb-nova');
+} catch {} })();
