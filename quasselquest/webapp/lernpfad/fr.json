@@ -1857,8 +1857,8 @@
        "🤕"
       ],
       [
-       "Je lave mes mains.",
-       "Ich wasche meine Hände.",
+       "Je me lave les mains.",
+       "Ich wasche mir die Hände.",
        "🧼"
       ],
       [
@@ -2044,7 +2044,7 @@
        "le pantalon",
        "die Hose",
        "👖",
-       "Eine Hose ist im Französischen ein Ding in der Einzahl: un pantalon."
+       "le pantalon ist männlich: un pantalon, mon pantalon."
       ],
       [
        "la robe",
@@ -2254,7 +2254,7 @@
         "verts",
         "vertes"
        ],
-       "tipp": "la robe ist weiblich und eine – die Farbe bekommt ein -e."
+       "tipp": "la robe ist weiblich und Einzahl – die Farbe bekommt ein -e: verte."
       }
      ]
     },
@@ -2363,8 +2363,8 @@
        ],
        [
         "lea",
-        "Non, elle n'est pas sur la table.",
-        "Nein, er ist nicht auf dem Tisch."
+        "Non, elle n'est pas sur la table de la cuisine.",
+        "Nein, auf dem Küchentisch ist er nicht."
        ],
        [
         "ruby",
@@ -2472,7 +2472,7 @@
         "grands",
         "grandes"
        ],
-       "tipp": "la fenêtre ist weiblich und eine – grand bekommt ein -e."
+       "tipp": "la fenêtre ist weiblich und Einzahl – grand bekommt ein -e: grande."
       },
       {
        "falsch": "Hugo es dans la cuisine.",
@@ -2562,7 +2562,7 @@
      ],
      "regel": {
       "titel": "son, sa, ses",
-      "text": "son, sa und ses heißen „sein“ ODER „ihr“. Es kommt nur auf das Ding an: son bei männlichen Wörtern, sa bei weiblichen, ses bei mehreren. Vor a, e, i, o, u nimmt man son: son école.",
+      "text": "son, sa und ses heißen „sein“ ODER „ihr“. Es kommt nur auf das Ding an: son bei männlichen Wörtern, sa bei weiblichen, ses bei mehreren. Trick: Fängt ein weibliches Wort mit a, e, i, o, u an, nimmt man trotzdem son – das klingt schöner: son école.",
       "beispiele": [
        [
         "Hugo cherche son réveil.",
@@ -2722,19 +2722,19 @@
        "le lundi",
        "der Montag",
        "🌕",
-       "lundi kommt von la lune (der Mond) – wie Montag! le lundi heißt auch: montags."
+       "lundi kommt von la lune (der Mond) – wie Montag! Ohne le: lundi = am Montag. Mit le: le lundi = montags (jeden Montag)."
       ],
       [
        "le mardi",
        "der Dienstag",
-       "🪐",
-       "mardi kommt vom Planeten Mars."
+       "🔴",
+       "mardi kommt von Mars, dem roten Planeten."
       ],
       [
        "le mercredi",
        "der Mittwoch",
        "🤸",
-       "Am Mittwochnachmittag haben viele Kinder in Frankreich schulfrei."
+       "Mittwochs haben viele Kinder in Frankreich keine Schule oder nur am Vormittag."
       ],
       [
        "le jeudi",
@@ -2830,7 +2830,7 @@
        ],
        [
         "ruby",
-        "Oui ! Moi, je suis dans le but !",
+        "Oui ! Moi, je suis dans les buts !",
         "Ja! Ich stehe im Tor!"
        ],
        [
@@ -3165,7 +3165,7 @@
         "géniaux",
         "géniales"
        ],
-       "tipp": "la musique ist weiblich und eine – génial bekommt ein -e."
+       "tipp": "la musique ist weiblich und Einzahl – génial bekommt ein -e: géniale."
       }
      ]
     },
@@ -3514,7 +3514,7 @@
        [
         "lea",
         "Super ! On partage : un pour toi, un pour moi…",
-        "Super! Wir teilen: einer für dich, einer für mich …"
+        "Super! Wir teilen: eins für dich, eins für mich …"
        ]
       ],
       "fragen": [
@@ -3577,15 +3577,15 @@
      ],
      "fehler": [
       {
-       "falsch": "Il est douze œufs dans la boîte.",
+       "falsch": "Il y as douze œufs dans la boîte.",
        "richtig": "Il y a douze œufs dans la boîte.",
-       "wort": "est",
-       "korrektur": "y a",
+       "wort": "as",
+       "korrektur": "a",
        "choices": [
         "es",
-        "sont"
+        "ai"
        ],
-       "tipp": "„es gibt / da sind“ heißt il y a."
+       "tipp": "il y a bleibt immer gleich – egal, wie viele Dinge es sind."
       },
       {
        "falsch": "Il y a seize chats sur la canapé.",
