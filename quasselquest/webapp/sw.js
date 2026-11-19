@@ -1,6 +1,6 @@
 // Offline-Speicher der WebApp. Die Versionsnummer wechselt mit jeder Auslieferung (prüft tools/test-inhalt.mjs).
 const VERSION = '0.1.0';
-const CACHE = 'englisch-' + VERSION;
+const CACHE = 'quasselquest-' + VERSION;
 const FILES = ['./', 'index.html', 'app.css', 'version.js', 'content.js', 'audio.js', 'app.js', 'datenschutz.html',
   'manifest.webmanifest', 'icons/icon.svg', 'icons/icon-180.png', 'icons/icon-192.png', 'icons/icon-512.png'];
 
@@ -8,7 +8,7 @@ self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(FILES.map((f) => new Request(f, { cache: 'reload' })))));
 });
 self.addEventListener('activate', (e) => {
-  e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k.startsWith('englisch-') && k !== CACHE).map((k) => caches.delete(k))))
+  e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k.startsWith('quasselquest-') && k !== CACHE).map((k) => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
 // Die App sagt Bescheid, wenn gerade keine Runde läuft – erst dann wird die neue Version aktiv.

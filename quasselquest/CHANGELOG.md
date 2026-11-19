@@ -1,4 +1,4 @@
-# Änderungen – Englisch mit Ruby (Arbeitsname)
+# Änderungen – Quasselquest (Englisch mit Ruby)
 
 ## 0.1.0 – Erster Prototyp: Hello Harbour (18.11.2026)
 - Ruby, der rote Papagei, begleitet euer Kind durch den Hafen „Hello Harbour“.

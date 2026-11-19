@@ -1,6 +1,14 @@
-# Meldungen an den Leitstand – Englisch-App (Arbeitsname, Ordner `englisch/`)
+# Meldungen an den Leitstand – Quasselquest (Englisch Kl. 3–6)
 
 Neueste oben.
+
+## 19.11.2026 – Name „Quasselquest“ umgesetzt, Prototyp 0.1.0 geht auf die Test-Stufe
+
+- Entscheidung Marcel (über die AppZentrale): **Name „Quasselquest“**. Vertonung: **erst freie Stimmen** (Piper, Lizenz je Stimme geprüft); **Nova als ausgegraute Option** vorbereiten und erst nach Marcels Go vertonen.
+- Umgesetzt: Ordner `quasselquest/`, `APP_ID = quasselquest`, „← Alle Apps“ mit `?src=quasselquest-kopf`, Titel „Quasselquest – Englisch mit Ruby“.
+- **Workflow `.github/workflows/quasselquest-web-test.yml`** (Kopie Wissensgarten): Er prüft die WebApp und die Inhaltstests und spult dann `quasselquest-test` vor. Bitte den Server so einrichten, dass er `quasselquest/webapp/` aus `quasselquest-test` unter `https://quasselquest-test.mathenachhilfe-online.com` ausliefert, und CORS auf trainer-test freischalten.
+- Inhalt wie 0.1.0 (Welt 1, 3 Episoden, 5 Spielarten). Zum Vorlesen dient vorerst die englische Gerätestimme; die Piper-Vertonung folgt.
+- Tests: 13/13 Inhaltstests, Durchspielen in Chromium und WebKit (Handy, iPhone 13, iPad, PC) grün.
 
 ## 19.11.2026 – Nachtrag „Geld verdienen“
 

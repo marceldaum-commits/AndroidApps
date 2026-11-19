@@ -95,7 +95,7 @@ for (const [name, type, opts] of [
       ok(await playEpisode(page, id, FOTOS && name === 'chromium_handy' ? s : null), `Episode ${id} durchgespielt`);
       await page.click('[data-home]'); await page.waitForSelector('.world');
     }
-    const st = await page.evaluate(() => window.englischTest.state());
+    const st = await page.evaluate(() => window.quasselTest.state());
     ok(Object.values(st.progress).filter((p) => p.done).length === 3, '3 Stempel gespeichert');
     ok(st.settings.recognition === 'device', 'Spracherkennung standardmäßig nur auf dem Gerät');
     ok(st.week && st.week.n === 3, 'Wochenziel gezählt (3 Episoden)');
@@ -109,7 +109,7 @@ for (const [name, type, opts] of [
     await snap(page, 'eltern');
     await page.click('[data-back]'); await page.click('[data-back]'); await page.waitForSelector('.world');
     await page.click('[data-allapps]').catch(() => {});
-    await page.waitForURL(/lern-apps/, { timeout: 5000 }).then(() => ok(page.url().includes('src=englisch-kopf') && page.url().includes('staging.'), '„← Alle Apps“ → ' + page.url())).catch(() => ok(false, '„← Alle Apps“ öffnet die Übersicht'));
+    await page.waitForURL(/lern-apps/, { timeout: 5000 }).then(() => ok(page.url().includes('src=quasselquest-kopf') && page.url().includes('staging.'), '„← Alle Apps“ → ' + page.url())).catch(() => ok(false, '„← Alle Apps“ öffnet die Übersicht'));
     // Offline: nach dem ersten Laden ohne Netz starten
     await page.goto(base);
     const sw = await page.evaluate(async () => { if (!navigator.serviceWorker) return 'kein SW'; const r = await navigator.serviceWorker.ready; return r.active ? 'aktiv' : 'nicht aktiv'; }).catch((e) => String(e));

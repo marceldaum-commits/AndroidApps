@@ -1,10 +1,10 @@
-# Englisch mit Ruby (Arbeitsname) – sprechen, hören, spielen · Klasse 3–6
+# Quasselquest – Englisch sprechen, hören, spielen · Klasse 3–6
 
 WebApp (PWA) in schlichtem JavaScript – ohne Kotlin/Wasm, damit iPhone und iPad keine weißen Seiten zeigen.
 Konzept: [`KONZEPT.md`](KONZEPT.md) · Meldungen: [`MELDUNG_AN_LEITSTAND.md`](MELDUNG_AN_LEITSTAND.md) · Änderungen: [`CHANGELOG.md`](CHANGELOG.md)
 
-**Stand: Version 0.1.0 vom 18.11.2026 – Prototyp „Hello Harbour“** (3 Episoden, 5 Spielarten). Der Name ist noch offen (Marcel entscheidet);
-danach wird der Ordner umbenannt und `APP_ID` in `webapp/version.js` gesetzt.
+**Stand: Version 0.1.0 vom 18.11.2026 – Prototyp „Hello Harbour“** (3 Episoden, 5 Spielarten). Name „Quasselquest“ von Marcel am 19.11.2026 entschieden.
+Test: https://quasselquest-test.mathenachhilfe-online.com (Branch `quasselquest-test`, Workflow `quasselquest-web-test.yml`) · Live nur durch den Leitstand.
 
 ## Aufbau
 - `webapp/` – die fertige WebApp (wird so ausgeliefert, kein Build-Schritt)

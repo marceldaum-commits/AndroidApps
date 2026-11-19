@@ -1,7 +1,7 @@
 # Konzept: Englisch-App „sprechen, hören, spielen“ (Klasse 3–6)
 
 Stand: 19.11.2026 · Entwurf zur Entscheidung durch Marcel (Abgabe bis Mo 23.11.2026, 11 Uhr) · eingearbeitet: Recherche „Sprachlern App gegen Duolingo“ und RATGEBER.md von „Geld verdienen“
-Arbeitsordner: `englisch/` – wird nach der Namensentscheidung in `<name>/` umbenannt, Branches `<name>-test` → `<name>-live`.
+Arbeitsordner: `quasselquest/` – wird nach der Namensentscheidung in `<name>/` umbenannt, Branches `<name>-test` → `<name>-live`.
 
 ---
 

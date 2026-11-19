@@ -7,10 +7,10 @@
   const DIAG = /[?&]diag=1/.test(location.search);
 
   // ================================================================== Speicher (nur im Browser)
-  const KEY = 'englisch.v1';
+  const KEY = 'quasselquest.v1';
   let mem = null;
   function load() {
-    try { const s = localStorage.getItem(KEY); if (s) return JSON.parse(s); } catch (e) {}
+    try { const s = localStorage.getItem(KEY) || localStorage.getItem('englisch.v1'); if (s) return JSON.parse(s); } catch (e) {} // alter Prototyp-Schlüssel
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
@@ -161,7 +161,7 @@
       <div class="top"><button class="allapps" data-allapps>← Alle Apps</button><div class="spacer"></div>
         <span class="pill" title="Stempel im Reisepass">📘 ${stampCount()}</span>
         <button class="iconbtn" data-settings aria-label="Einstellungen">⚙️</button></div>
-      <div class="title">Englisch mit Ruby</div>
+      <div class="title">Quasselquest <span style="font-size:.6em;color:var(--muted)">Englisch mit Ruby</span></div>
       ${ruby(greet + tip)}
       <div class="world">
         <div class="waves"></div><div class="boatdeco">⛵</div>
@@ -807,7 +807,7 @@
     });
   }
 
-  if (DIAG) window.englischTest = { state: () => state, C, A, home, playEpisode };
+  if (DIAG) window.quasselTest = { state: () => state, C, A, home, playEpisode };
   try { start(); } catch (e) {
     $app.innerHTML = '<div class="card" style="margin-top:40px"><b>Ups, da ist etwas schiefgegangen.</b><p>Bitte lade die Seite neu.</p><pre style="white-space:pre-wrap;font-size:12px">' + esc(e && e.stack || e) + '</pre></div>';
   }
