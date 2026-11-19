@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="de" data-version="2.3.1">
+<html lang="de" data-version="2.3.2">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Wissensgarten – Lernen & Gießen</title>
   <meta name="description" content="Wissensgarten: Lernen wie Gärtnern – jede Karte eine Pflanze, die wächst, wenn du sie gießt. Ohne Werbung, ohne Konto, Fortschritt bleibt im Browser.">
   <meta name="theme-color" content="#3f6b3a">
-  <meta name="wg-version" content="2.3.1">
+  <meta name="wg-version" content="2.3.2">
   <link rel="manifest" href="manifest.webmanifest">
   <script>
     // Schrittprotokoll (Diagnose): jeder Startschritt wird sofort im Browser-Speicher abgelegt (wg.diag).
@@ -103,7 +103,7 @@
               window.wgDiag('Fläche: ' + (c ? c.width + '×' + c.height + ' px, CSS ' + Math.round(b.width) + '×' + Math.round(b.height) + ' @' + Math.round(b.left) + ',' + Math.round(b.top) +
                 ', sichtbar ' + cs.display + '/' + cs.visibility + '/' + cs.opacity + ', Hintergrund ' + cs.backgroundColor : 'fehlt') +
                 ', Body-Hintergrund ' + getComputedStyle(document.body).backgroundColor + ', oben in der Mitte: ' + (top ? top.tagName + (top.id ? '#' + top.id : '') : '–'));
-              if (gl) window.wgDiag('WebGL: ' + gl.getParameter(gl.VERSION) + ' · ' + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + ' · Attribute ' + JSON.stringify(a));
+              if (gl) { var dri = gl.getExtension('WEBGL_debug_renderer_info'); window.wgDiag('WebGL: ' + gl.getParameter(gl.VERSION) + ' · ' + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + ' · Grafik: ' + (dri ? gl.getParameter(dri.UNMASKED_RENDERER_WEBGL) : 'unbekannt') + ' · Attribute ' + JSON.stringify(a)); }
             } catch (e) { window.wgDiag('Flächen-Info Fehler: ' + e); }
           }, 1500);
         });
@@ -129,16 +129,38 @@
       try {
         if (/[?&]bremse=aus/.test(location.search)) { window.wgStartNote && window.wgStartNote('Bild-Bremse aus'); return; }
         var orig = window.requestAnimationFrame.bind(window), cancel = window.cancelAnimationFrame.bind(window);
-        var queue = [], nextId = 1, pending = false, slow = false, cost = 0, last = 0;
+        var queue = [], nextId = 1, pending = false, slow = false, cost = 0, last = 0, leichtGemerkt = false;
+        // Erst 6 s nach dem Start messen: Vorher prüft die Start-Bildprüfung nach jedem Bild Pixel (readPixels), das wartet auf
+        // die Grafikkarte und würde die Zeit künstlich aufblähen (so geschehen in Marcels erster Diagnose: 66 ms).
+        var messen = false, stat = { n: 0, sum: 0, max: 0, t0: 0 }, letzteEingabe = performance.now();
+        ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
+          window.addEventListener(ev, function () { letzteEingabe = performance.now(); }, { capture: true, passive: true });
+        });
+        window.addEventListener('wg-ready', function () { setTimeout(function () { messen = true; stat.t0 = performance.now(); }, 6000); });
         var tick = function (t) {
-          if (slow && t - last < 45) { orig(tick); return; }
+          // Ruhe: 20 s ohne Berührung, Maus oder Taste → Hintergrund-Animationen (Wind, Sonne, Schmetterlinge) nur noch 4 Bilder/s.
+          // Die erste Eingabe weckt sofort auf. So zeichnet der Garten nicht dauernd das ganze Bild neu, wenn niemand hinsieht.
+          var ruhe = performance.now() - letzteEingabe > 20000;
+          var abstand = Math.max(ruhe ? 250 : 0, slow ? Math.min(250, Math.max(45, cost * 2.5)) : 0);
+          if (abstand && t - last < abstand) { orig(tick); return; }
           pending = false; last = t;
           var q = queue; queue = [];
           var s = performance.now();
           for (var i = 0; i < q.length; i++) { try { q[i].cb(t); } catch (e) { (function (x) { setTimeout(function () { throw x; }); })(e); } }
           var d = performance.now() - s;
-          if (q.length) cost = cost * 0.85 + d * 0.15;
-          if (!slow && cost > 22) { slow = true; window.wgDiag && window.wgDiag('Bild-Bremse an (Zeichnen ' + Math.round(cost) + ' ms) → höchstens 20 Bilder/s'); }
+          if (!messen) { if (queue.length && !pending) { pending = true; orig(tick); } return; }
+          if (q.length) {
+            cost = cost * 0.85 + d * 0.15;
+            stat.n++; stat.sum += d; if (d > stat.max) stat.max = d;
+            // Im Diagnose-Protokoll alle 10 s: Bilder, mittlere und längste Zeichenzeit
+            if (window.wgDiagOn && performance.now() - stat.t0 > 10000) {
+              window.wgDiag && window.wgDiag('Zeichnen: ' + stat.n + ' Bilder in 10 s, Ø ' + (stat.sum / stat.n).toFixed(1) + ' ms, längstes ' + Math.round(stat.max) + ' ms' + (slow ? ' (Bremse an)' : ''));
+              stat = { n: 0, sum: 0, max: 0, t0: performance.now() };
+            }
+          }
+          if (!slow && cost > 22) { slow = true; window.wgDiag && window.wgDiag('Bild-Bremse an (Zeichnen ' + Math.round(cost) + ' ms) → weniger Bilder/s, Eingaben haben Vorrang'); }
+          // Sehr langsam (z. B. ohne Grafik-Beschleunigung): ab dem nächsten Start mit etwas geringerer Auflösung zeichnen
+          if (cost > 40 && stat.n > 20 && !leichtGemerkt) { leichtGemerkt = true; try { if (localStorage.getItem('wg.leicht') !== 'aus') localStorage.setItem('wg.leicht', '1'); } catch (e) {} window.wgDiag && window.wgDiag('langsames Gerät → ab dem nächsten Start „leichte Darstellung“'); }
           else if (slow && cost < 9) { slow = false; window.wgDiag && window.wgDiag('Bild-Bremse aus (Zeichnen ' + Math.round(cost) + ' ms)'); }
           if (queue.length && !pending) { pending = true; orig(tick); }
         };
@@ -150,7 +172,7 @@
         window.cancelAnimationFrame = function (id) {
           for (var i = 0; i < queue.length; i++) if (queue[i].id === id) { queue.splice(i, 1); return; }
         };
-        window.wgBremse = function () { return { an: slow, ms: Math.round(cost) }; };
+        window.wgBremse = function () { return { an: slow, ms: Math.round(cost), ruhe: performance.now() - letzteEingabe > 20000 }; };
       } catch (e) {}
     })();
   </script>
@@ -297,6 +319,12 @@
           voll = localStorage.getItem('wg.schaerfe') === 'voll';
         } catch (e) {}
         if (voll) window.wgStartNote('Schärfe-Begrenzung aus (?schaerfe=voll)');
+        var leicht = false; try { leicht = localStorage.getItem('wg.leicht') === '1' && !/[?&]leicht=aus/.test(location.search); if (/[?&]leicht=aus/.test(location.search)) localStorage.setItem('wg.leicht', 'aus'); if (/[?&]leicht=an/.test(location.search)) { localStorage.setItem('wg.leicht', '1'); leicht = true; } } catch (e) {}
+        if (leicht && !voll && !ios) {
+          var lw = Math.min(real, 0.8);
+          Object.defineProperty(window, 'devicePixelRatio', { get: function () { return lw; }, configurable: true });
+          window.wgStartNote('leichte Darstellung (langsames Gerät): Schärfe ' + real + ' → ' + lw + ' · ausschalten mit ?leicht=aus');
+        }
         if (ios && use < real && !voll) {
           Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true });
           window.wgStartNote('iOS-Schärfe ' + real + ' → ' + use.toFixed(2));
@@ -316,14 +344,14 @@
     <div class="pct" id="pct"></div>
     <p class="hint" id="hint"></p>
     <noscript><p>Bitte JavaScript einschalten, dann wächst der Garten.</p></noscript>
-    <div class="links">Version 2.3.1 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
+    <div class="links">Version 2.3.2 · <a href="https://www.mathenachhilfe-online.com/impressum/" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" rel="noopener">Datenschutz</a><br>
       <a href="https://www.mathenachhilfe-online.com/?src=wissensgarten-fusszeile" rel="noopener">Ein Angebot von Nachhilfe – online</a></div>
   </div>
   <script>
     // Echter Ladebalken: zählt die geladenen Bytes der großen Startdateien (App, Grafik-Engine, Emoji-Schrift).
     (function () {
-      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"skiko.wasm":8405319,"wissensgarten-js.js":7334169,"wissensgarten.js":727486,"d59da3aafee0002a4a2c.wasm":8333465};
+      const sizes = {"dejavu_symbols.ttf":122572,"noto_color_emoji.ttf":2101784,"bccfa839aa4b38489c76.wasm":8405319,"skiko.wasm":8405319,"wissensgarten-js.js":7335141,"dcc3d122343783f91d6c.wasm":8334862,"wissensgarten.js":727486};
       const total = Object.values(sizes).reduce((a, b) => a + b, 0);
       const got = {};
       const bar = document.getElementById('bar'), barI = document.getElementById('barI'), pct = document.getElementById('pct');
@@ -430,7 +458,7 @@
           };
           check();
           // Dateien der eigenen Fassung (Wasm oder JS) für den nächsten Start und offline merken – nur was noch fehlt
-          const mine = ({"wasm":["bccfa839aa4b38489c76.wasm","d59da3aafee0002a4a2c.wasm","wissensgarten.js"],"js":["skiko.wasm","wissensgarten-js.js"]})[window.wgModus === 'js' ? 'js' : 'wasm'] || [];
+          const mine = ({"wasm":["bccfa839aa4b38489c76.wasm","dcc3d122343783f91d6c.wasm","wissensgarten.js"],"js":["skiko.wasm","wissensgarten-js.js"]})[window.wgModus === 'js' ? 'js' : 'wasm'] || [];
           navigator.serviceWorker.ready.then(() => caches.open('wissensgarten-' + document.documentElement.getAttribute('data-version')))
             .then((c) => Promise.all(mine.map((f) => c.match(f).then((hit) => hit || c.add(f)).catch(() => {})))).catch(() => {});
           setInterval(check, 30 * 60 * 1000);
