@@ -30,7 +30,12 @@
   - Ein Plus-Paket ohne Plus führt zur Paketübersicht.
   - Der Hash wird danach aus der Adresse entfernt. Auch `hashchange` bei geöffneter App wirkt.
   - Vor dem ersten Einrichten wartet der Link, bis das Kind angelegt ist.
-- **Rechengeschichten Klasse 1–4** sind noch nicht drin und folgen in einem der nächsten Updates.
+- **Belege:**
+  - Bildschirmfoto `screenshots/83_theorie_querverweise.png`.
+  - `webApp/tools/web-paket.cjs`: 5/5 grün (pflanzen, Hash entfernt, kein doppeltes Beet, hashchange, unbekannte ID).
+  - Bau mit Safari-27.2-Abhilfe: 937 abgesichert, 0 Endaufrufe in beiden Bundles.
+- **Rechengeschichten Klasse 1–4** sind zurückgestellt.
+- **Neues Profil (Marcel, 19.11.):** Kompendium Klasse 1–13 ohne Sprachen. Das Herausnehmen der Sprachpakete folgt mit 2.2.19 (nur auf test).
 
 ## 2.2.17 – „← Alle Apps“ (18.11.2026)
 - **Ort:** schmale Leiste ganz oben in allen Hauptansichten (Garten = Startbildschirm, Samen, Laden, Familie, Mehr): App-Logo + „← Alle Apps“, Tippziel ≥ 44 px, kein Preis und kein Kaufhinweis. In Runden, Spielen, Onboarding und Dialogen erscheint die Leiste nicht.
