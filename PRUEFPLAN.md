@@ -20,6 +20,11 @@
 - Jede neue Einheit läuft durch die **automatischen Prüfungen** (Abschnitt 3). Sie wird außerdem im nächsten Monats-Check als „Neu-Content“ von Hand geprüft.
 - Die Liste steht unten in Abschnitt 5 („Neu-Content-Protokoll“). So weiß der Monats-Check genau, was neu dazugekommen ist.
 
+### Rechtsprüfung vor jedem Live-Gang (AppZentrale 19.11.2026)
+- Jede Live-Meldung enthält die Zeile **„Rechtsbezug: ja/nein (was)“**.
+- Rechtsbezug haben: Preise und Kauf, Codes, Texte für Eltern und Kinder, Datenschutz, Werbung, Bewertungen, KI, Mikrofon.
+- Punkte mit Rechtsbezug prüft der Raum „Recht“ vor dem Live-Gang; die AppZentrale gibt die Live-Bitte erst nach dessen Freigabe weiter.
+
 ## 2. Monatlich in der letzten Woche: rollierender Prüfplan
 
 Der Inhalt ist in **4 Blöcke** geteilt. Jeden Monat wird **ein Block gründlich** geprüft. Dazu kommen jeden Monat **der Neu-Content des Monats** und die **Rundum-Prüfung**. So ist nach 4 Monaten alles einmal gründlich geprüft, ohne dass jeden Monat alles neu geprüft werden muss.
