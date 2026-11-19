@@ -2,6 +2,19 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 0.3.0 vom 19.11.2026: Pflicht 3 „Warum?“ + Pflicht 1 „Mein Schulbuch“ – fertig für den Test
+
+- **Warum?** (Pflicht 3):
+  - Bei einer falschen Ballon-Antwort wird die abweichende Stelle markiert (gemeinsamer Anfang und Ende bleiben, die Mitte ist rot unterstrichen; fehlende Buchstaben als „␣“).
+  - Dazu eine Regel in einem Kindersatz: Groß/klein, Akzent, Satzzeichen, falscher Artikel – sonst die Erklärung der Karte. Bei Vokabeln nur, wenn sie das gewählte Wort nennt, sonst „ein anderes Wort“.
+  - Die Lösung wird nicht verraten. Getestet für jede falsche Auswahl jeder Karte.
+- **Mein Schulbuch** (Pflicht 1):
+  - Je Sprache eigene Listen (Lektionen) mit „Deutsch = Fremdsprache“; als Trenner gehen auch „-“, „;“ und Tab. Für Deutsch Lernwörter, gespielt als Diktat (hören → bauen).
+  - Verständliche Meldungen je Zeile (Format, doppelt, zu lang, leer), mindestens 4 und höchstens 120 Wörter.
+  - Gespielt mit Ballon, Hör-Detektiv, Bauen und Memory, mit Wiederholung. Gespeichert nur im Gerät.
+  - Hinweis im Bildschirm: nur eigene Wörter, keine Buchseiten kopieren. Teilen per QR folgt (Di 1.12.).
+- Tests: 21/21 Inhaltstests. Durchspielen in Chromium und WebKit, inklusive Liste anlegen (erst mit Fehler, dann richtig) und Runde spielen in Englisch und Deutsch. Spracherkennungs-Beleg weiter grün. Bildschirmfotos angesehen.
+
 ## 19.11.2026 – Version 0.2.2 vom 19.11.2026: Beleg „Spracherkennung nur im Gerät“ + Fehlerbehebung Gerätestimme – fertig für den Test
 
 - **Beleg (Auftrag AppZentrale / „Geld verdienen“ Nr. 5):** `node tools/web-sprache.mjs` schleust in **Chromium und WebKit** Ersatz-Erkenner ein und prüft den echten Code der App:

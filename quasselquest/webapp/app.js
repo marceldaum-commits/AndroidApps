@@ -14,7 +14,7 @@
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei' }, week: { key: '', n: 0 } });
+  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei' }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
   // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
@@ -25,6 +25,7 @@
   if (!state.week) state.week = { key: '', n: 0 };
   // Stand 2 → 3 (19.11.2026): Quasselquest wird die Sprachen-App – Sprache wählbar, Wortschatz-Pakete mit Wiederholung
   if (state.v < 3) { state.lang = 'en'; state.karten = {}; state.introSeen = {}; state.v = 3; }
+  if (!state.eigene) state.eigene = {};
   const PK = window.PAKETE;
   window.APP_SETTINGS = state.settings;
 
@@ -166,8 +167,10 @@
     const k = state.klasse || 5;
     const list = packIndex().filter((p) => p.sprache === state.lang)
       .sort((a, b) => Math.abs(Math.min(...a.grades) - k) - Math.abs(Math.min(...b.grades) - k));
-    if (!list.length) return '<p class="muted">Pakete werden geladen …</p>';
-    return `<div class="worlds">${list.map((p) => {
+    const eigene = (state.eigene[state.lang] || []);
+    const mein = `<button class="wtile ptile mein" data-mine><span class="e">📒</span><b>Mein Schulbuch</b><small>${eigene.length ? eigene.length + (eigene.length === 1 ? ' eigene Liste' : ' eigene Listen') : 'Deine Wörter aus der Schule eintippen'}</small></button>`;
+    if (!list.length) return `<div class="worlds">${mein}</div>`;
+    return `<div class="worlds">${mein}${list.map((p) => {
       const sitzt = packMastered(p.id); const passt = p.grades.includes(k);
       return `<button class="wtile ptile" data-pack="${p.id}">${passt ? '<span class="soon fit">passt zu Kl. ' + k + '</span>' : ''}<span class="e">${p.emoji}</span><b>${esc(p.title)}</b>
         <small>Kl. ${esc(gradeText(p.grades))} · ${p.karten} Karten</small><span class="bar"><i style="width:${Math.round(100 * sitzt / p.karten)}%"></i></span><small>${sitzt} sitzen schon</small></button>`;
@@ -216,6 +219,7 @@
       const L2 = PK.LANGS[state.lang]; if (L2.who) speak(L2.hallo.replace(/ !$/, '!'), L2.who);
     });
     el.querySelectorAll('[data-pack]').forEach((b) => b.onclick = () => { A.sfx('pop'); A.vibrate(20); openPack(packIndex().find((x) => x.id === b.dataset.pack)); });
+    const mine = el.querySelector('[data-mine]'); if (mine) mine.onclick = () => { A.sfx('pop'); myLists(); };
     el.querySelectorAll('[data-ep]').forEach((b) => b.onclick = () => {
       const f = C.findEpisode(b.dataset.ep);
       if (f.episode.soon) { A.sfx('soft'); rubySay(el, `„${esc(f.episode.title)}“ baue ich gerade. Bald kannst du hier spielen! 🔨`, 'talk'); return; }
@@ -976,7 +980,7 @@
             await say(k.sprich); done([[c, first]]);
           } else {
             first = false; b.classList.add('wrong'); b.disabled = true; A.sfx('soft');
-            rubySay(el, 'Fast! Probier einen anderen Ballon. 🎈', 'talk');
+            rubySay(el, warum(c, pack.lang, opts[+b.dataset.o]), 'talk');
           }
         });
         rubySay(el, 'Welcher Ballon passt?');
@@ -1017,10 +1021,12 @@
         const extraPool = 'aeinrstlodmuhgk';
         const extra = []; while (extra.length < 2) { const x = extraPool[Math.floor(Math.random() * extraPool.length)]; if (!letters.includes(x)) extra.push(x); }
         const tiles = shuffle(letters.map((l, i) => ({ l, i })).concat(extra.map((l) => ({ l, i: -1 }))));
-        body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(c.q)}</div></div>
+        body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(c.q)}</div>
+          ${k.vorher && A.canHear(k.vorher, L.who || 'de') ? '<button class="speaker" data-hear aria-label="Anhören">🔊</button>' : (k.kind === 'diktat' ? `<div class="novoice">${esc(c.a)}<small>Keine Stimme auf diesem Gerät – lies das Wort und bau es nach.</small></div>` : '')}</div>
           <div class="slots">${t.vor ? `<span class="pre">${esc(t.vor.trim())}</span>` : ''}${letters.map((_, i) => `<span class="slot" data-s="${i}"></span>`).join('')}</div>
           <div class="tiles">${tiles.map((x, i) => `<button class="tile" data-t="${i}"${DIAG ? ` data-pos="${x.i}"` : ''}>${esc(x.l)}</button>`).join('')}</div>`;
         let pos = 0; let mistakes = 0;
+        const hb = body.querySelector('[data-hear]'); if (hb) { hb.onclick = () => { A.sfx('tap'); say(k.vorher); }; say(k.vorher); }
         body.querySelectorAll('.tile').forEach((b) => b.onclick = async () => {
           if (b.disabled || pos >= letters.length) return;
           const x = tiles[+b.dataset.t];
@@ -1042,6 +1048,68 @@
     });
   }
 
+  // ------------------------------------------------------------------ „Mein Schulbuch“
+  function myLists() {
+    const L = PK.LANGS[state.lang]; const lists = state.eigene[state.lang] || [];
+    const el = screen(`<div>
+      <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">📒 Mein Schulbuch · ${esc(L.name)}</div></div>
+      ${ruby(state.lang === 'de' ? 'Tipp deine Lernwörter ein – ich mache ein Diktat-Spiel daraus!' : 'Tipp die Wörter aus deinem Schulbuch ein – ich mache Spiele daraus! 🦜')}
+      <div class="worlds">${lists.map((l) => `<div class="wtile ptile"><span class="e">📒</span><b>${esc(l.name)}</b><small>${l.words.length} Wörter · ${packMastered('eigen-' + l.id)} sitzen</small>
+        <span class="row" style="margin-top:6px"><button class="btn small blue" data-play="${l.id}">▶ Üben</button><button class="btn small white" data-edit="${l.id}">✏️</button></span></div>`).join('')}
+        <button class="wtile ptile" data-new><span class="e">➕</span><b>Neue Liste</b><small>z. B. „Lektion 3“</small></button></div>
+      <p class="muted" style="font-size:14px;margin-top:12px">Deine Listen bleiben nur auf diesem Gerät. Bitte nur eigene Wörter eintippen, keine ganzen Seiten aus dem Buch abfotografieren oder kopieren.</p>
+    </div>`);
+    el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
+    el.querySelector('[data-new]').onclick = () => { A.sfx('tap'); listEditor(null); };
+    el.querySelectorAll('[data-edit]').forEach((b) => b.onclick = () => { A.sfx('tap'); listEditor(lists.find((l) => l.id === b.dataset.edit)); });
+    el.querySelectorAll('[data-play]').forEach((b) => b.onclick = () => {
+      const l = lists.find((x) => x.id === b.dataset.play); A.sfx('pop'); packRound(PK.listePack(l, state.lang));
+    });
+  }
+
+  function listEditor(liste) {
+    const L = PK.LANGS[state.lang]; const de = state.lang === 'de';
+    const beispiel = de ? 'Fahrrad\nVogel\nStraße' : { en: 'Hund = dog\nKatze = cat\ndie Schule = school', fr: 'der Hund = le chien\ndie Katze = le chat\ndie Schule = l’école', es: 'der Hund = el perro\ndie Katze = el gato\ndie Schule = la escuela', la: 'lieben = amare\nder Herr = dominus\ndas Wort = verbum' }[state.lang];
+    const text = liste ? liste.words.map((w) => (de ? w.ziel : `${w.de} = ${w.ziel}`)).join('\n') : '';
+    const el = screen(`<div>
+      <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">${liste ? '✏️ Liste ändern' : '➕ Neue Liste'}</div></div>
+      <div class="card"><label style="font-weight:800">Name der Liste</label>
+        <input class="input" data-name maxlength="30" placeholder="z. B. Lektion 3" value="${esc(liste ? liste.name : '')}" style="margin:6px 0 12px">
+        <label style="font-weight:800">${de ? 'Ein Lernwort pro Zeile' : `Ein Wort pro Zeile: Deutsch = ${esc(L.name)}`}</label>
+        <textarea class="input" data-text rows="9" placeholder="${esc(beispiel)}" style="margin-top:6px;font-size:18px;-webkit-user-select:text;user-select:text">${esc(text)}</textarea>
+        <div class="err" data-err></div><div class="muted" data-ok style="font-weight:700"></div>
+        <div class="row" style="margin-top:8px"><button class="btn blue" data-save>💾 Speichern</button>${liste ? '<button class="btn white small" data-del>🗑️ Löschen</button>' : ''}</div></div>
+    </div>`);
+    const ta = el.querySelector('[data-text]');
+    const check = () => {
+      const r = PK.parseListe(ta.value, state.lang);
+      el.querySelector('[data-err]').innerHTML = r.fehler.slice(0, 4).map(esc).join('<br>') + (r.fehler.length > 4 ? `<br>… und ${r.fehler.length - 4} weitere` : '');
+      el.querySelector('[data-ok]').textContent = r.words.length ? `✅ ${r.words.length} ${r.words.length === 1 ? 'Wort' : 'Wörter'} erkannt` : '';
+      return r;
+    };
+    ta.oninput = check; if (text) check();
+    el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); myLists(); };
+    el.querySelector('[data-save]').onclick = () => {
+      const r = check(); const name = el.querySelector('[data-name]').value.trim() || 'Meine Liste';
+      if (r.fehler.length) { A.sfx('soft'); rubyToast('Schau noch mal auf die rot markierten Zeilen.'); return; }
+      if (r.words.length < 4) { A.sfx('soft'); el.querySelector('[data-err]').textContent = 'Bitte mindestens 4 Wörter – sonst wird das Spiel zu leicht.'; return; }
+      const all = state.eigene[state.lang] = state.eigene[state.lang] || [];
+      if (liste) { liste.name = name; liste.words = r.words; } else all.push({ id: Date.now().toString(36), name, words: r.words });
+      save(); A.sfx('right'); confetti(40); myLists();
+    };
+    const del = el.querySelector('[data-del]'); if (del) del.onclick = () => {
+      if (!confirm(`Liste „${liste.name}“ wirklich löschen?`)) return;
+      state.eigene[state.lang] = (state.eigene[state.lang] || []).filter((l) => l !== liste); save(); myLists();
+    };
+  }
+
+  /** „Warum?“: falsche Antwort mit markierter Fehlerstelle und Regel in einem Kindersatz (verrät die Lösung nicht). */
+  function warum(card, lang, wrong) {
+    const d = PK.diff(wrong, card.a);
+    const markiert = d.fehlt ? `${esc(d.vor)}<mark class="fehl">␣</mark>${esc(d.nach)}` : `${esc(d.vor)}<mark class="fehl">${esc(d.fehler)}</mark>${esc(d.nach)}`;
+    return `Fast! In „${markiert}“ stimmt die markierte Stelle nicht.<br><small style="font-weight:600">🤔 Warum? ${esc(PK.regel(card, lang, wrong))}</small>`;
+  }
+
   function packSummary(pack, run, goal) {
     const stars = run.total ? Math.max(1, Math.round(3 * run.first / run.total)) : 1;
     const el = screen(`<div class="reward">
@@ -1051,7 +1119,7 @@
       <p style="font-weight:800">${packMastered(pack.id)} von ${pack.cards.length} Karten sitzen schon. Wiederholt wird automatisch, wenn es Zeit ist.</p>
       <div class="row center"><button class="btn white" data-again>🔁 Noch eine Runde</button><button class="btn blue" data-home>Fertig 🏠</button></div></div>`);
     setTimeout(() => { A.sfx('fanfare'); confetti(100); }, 250);
-    el.querySelector('[data-home]').onclick = () => { A.sfx('tap'); home(); };
+    el.querySelector('[data-home]').onclick = () => { A.sfx('tap'); if (pack.eigen) myLists(); else home(); };
     el.querySelector('[data-again]').onclick = () => { A.sfx('tap'); packRound(pack); };
   }
 

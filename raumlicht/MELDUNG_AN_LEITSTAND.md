@@ -23,6 +23,13 @@ Neueste oben.
 
 **Browser-Test `scene/test/web-umzug.mjs` (35 Prüfungen, Wasm und JS, drei Server auf dem Rechner = echte getrennte Speicher):** Umzug gelingt mit `?ziel=` und Raute-Teil · nur Verschlüsseltes am Server, Schlüssel nie · Sicherung nach dem Abholen gelöscht · Ziel hat schon Daten → nichts überschrieben · Server-Fehler → keine Weiterleitung, nächster Start klappt · neue Adresse antwortet mit Fehler → nichts abgelegt, keine Weiterleitung · ohne Lernstand direkt hinüber · Umzugs-Link ohne Sicherung → normaler Start · Service Worker und Diagnose-Seite lassen einen fremden Speicher (`andere-app-1`) stehen.
 
+**NACHTRAG 19.11., 9:30 Uhr – echter Rundlauf auf der Test-Stufe bestanden** (nachdem das Zertifikat für lernen-test stand):
+- `raumlicht-test.…/?ziel=galton#anker=1` mit Lernstand → `PUT 204` → Weiterleitung → `lernen-test.…/raumlicht/#anker=1`, dort 2.18.33, App gestartet, Ziel „Galton-Brett“ geöffnet, Raute-Teil erhalten, „umzug“ aus der Adresse entfernt.
+- Sterne, Monatssummen und Einstellungen sind an der neuen Adresse da; der Browser-Merker (`mitschrift`) kam nicht mit. `GET 200`, `DELETE 204` – die Einmal-Sicherung ist gelöscht.
+- Zweiter Besuch der alten Adresse, nachdem am Ziel weitergelernt wurde: Stand am Ziel unverändert, neue Sicherung geholt und gelöscht.
+- CORS von `lernen-test.…`: Zählung (`/zaehler/v1/e`) 204 mit passender Freigabe; KI auf trainer-test 204 mit passender Freigabe; KI live für `lernen.…` 204 mit passender Freigabe (nur Vorab-Anfrage geprüft, keine echte KI-Frage gestellt).
+- Weiter ungeprüft: iPhone/iPad, installierte WebApp.
+
 **Was du tun musst – in dieser Reihenfolge:**
 1. 2.18.32 live nehmen (Marcels Reihenfolge) – oder gleich 2.18.33, sie enthält 2.18.32.
 2. **Zuerst die NEUE Adresse** mit 2.18.33 bestücken (`raumlicht/webapp/` nach `lernen-test.…/raumlicht/`, dann `lernen.…/raumlicht/`). Solange dort nichts oder eine ältere Fassung liegt, zieht niemand um – die alte Adresse läuft normal weiter.
