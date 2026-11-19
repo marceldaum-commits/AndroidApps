@@ -22,3 +22,5 @@
 11. ~~Probestunden-Adresse~~ – erledigt: `/probestunde/` ist laut Leitstand richtig (18.11.).
 
 - **Vorlesen (Nova, derzeit aus)**: Beim Wiedereinschalten den Zählstand-Pfad für die gemeinsame Adresse klären (`Audio.kt` nimmt den Seiten-Host, an der neuen Adresse wäre das `stand-lernen.….json`). Der Stimmen-Server erlaubt lernen(-test).… schon (CORS geprüft am 19.11.).
+
+- **Fr 20.11. mit dem großen Update (Pflicht, Marcel auf Empfehlung von Recht, 19.11.)**: Schloss-Text in der Kinderansicht NUR „„<Versuch>“ gehört zum Forscher-Pass.“ – Zusatz „Deine Eltern können im Elternbereich nachsehen.“ entfällt (auch in `Say.PRO_ALL`). „🔐 Für Eltern“ zum Tor bleibt. `KinderTextTest` um „Deine Eltern können“ ergänzen, `proKind` anpassen. Live-Meldung mit „Rechtsbezug: ja (Kindertext am Schloss)“.
