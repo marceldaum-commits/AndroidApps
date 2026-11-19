@@ -11,7 +11,7 @@ import kotlin.random.Random
 object ElternTor {
     const val OPEN_MS = 10 * 60 * 1000L
     const val TITLE = "Für Erwachsene"
-    const val NOTE = "Wer unter 18 ist, kauft nicht selbst. Bitte löse die Aufgabe, um zum Shop zu kommen."
+    const val NOTE = "Dieser Bereich ist für Eltern. Wer unter 18 ist, kauft nicht selbst. Bitte löse die Aufgabe."
     const val WRONG = "Das stimmt nicht – hier ist eine neue Aufgabe."
     private val TEENS = mapOf(13 to "dreizehn", 14 to "vierzehn", 15 to "fünfzehn", 16 to "sechzehn", 17 to "siebzehn", 18 to "achtzehn", 19 to "neunzehn")
     private val ONES = mapOf(6 to "sechs", 7 to "sieben", 8 to "acht", 9 to "neun")

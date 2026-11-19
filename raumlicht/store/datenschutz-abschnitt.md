@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.34 vom 19.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.35 vom 19.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -57,6 +57,14 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
    Die neue Adresse holt sie ab, spielt sie ein und löscht sie sofort. Enthalten sind dieselben Angaben wie in der Sicherung bei gekoppeltem Eltern-Handy (Sterne, Rekorde, Lernverlauf,
    Einstellungen, Freischalt-Codes). Ist der Server nicht erreichbar oder die neue Adresse noch nicht bereit, passiert nichts und Raumlicht läuft unter der alten Adresse weiter.
    *[Rechtsgrundlage und Löschfrist für nicht abgeholte Einmal-Sicherungen bestätigen.]*
+9. **Familien-Speicher (freiwillig, ab 2.18.35 zunächst nur auf der Teststufe; live erst nach Freigabe).** Eltern können hinter dem Eltern-Tor eine „Familie“ anlegen oder ihr mit dem
+   Familien-Link beitreten. Raumlicht verschlüsselt dann den Lernstand des Kindes im Browser (AES-GCM, 256 Bit; gemeinsamer Baustein aller Lern-Apps) und legt ihn unter
+   `lernen.mathenachhilfe-online.com/familie/v1/` ab – ohne Konto, ohne E-Mail-Adresse, ohne Cookies. Der Server sieht eine zufällige Familien-Kennung, Zeitpunkte und Größe der Einträge,
+   aber weder Spitznamen noch Lernstände. Freischalt-Codes und Geräte-Kennungen stehen nicht im Lernstand. Wer den Familien-Link hat, kann die Lernstände lesen und ändern.
+   **Notfall-Kopie:** Beim Anlegen wird der Familien-Schlüssel zusätzlich für einen Wiederherstellungs-Schlüssel des Betreibers verschlüsselt und mit abgelegt. Der Betreiber kann damit –
+   mit einem getrennt (offline) verwahrten privaten Schlüssel – einer Familie den Zugang zurückgeben, die ihren Link verloren hat; technisch könnte er so auch die Lernstände dieser Familie
+   lesen. Die bisherige Kopplung „Eltern-Handy koppeln“ (Punkt 7) bleibt daneben unverändert bestehen. Ein Gerät lässt sich jederzeit von der Familie trennen.
+   *[Rechtsgrundlage, Löschweg für eine ganze Familie und Wortlaut zur Notfall-Kopie mit dem Leitstand/der AppZentrale abstimmen – gemeinsamer Text für alle Lern-Apps.]*
 
 ## Noch offen (nicht Teil des Textes)
 

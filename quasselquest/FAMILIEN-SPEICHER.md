@@ -48,3 +48,14 @@ Insel-Positionen, Einstellungen, Name → fragen (Elternbereich), sonst Gerätes
 - **familie.js @ ffcfe39** (sha256 `a67bc3a8939e5e72800e7b28a53ddecfc9bf71d98869f59baffe040ef6750b6f`) kam als Text vom Mathe-Trainer (19.11., 14:23 UTC).
   Einbinden: unverändert als `webapp/js/familie.js`, oben Kommentar „familie.js @ ffcfe39 (Quelle mathe-trainer)“, nichts nachladen.
   Tests: `tests/familie.mjs` (Pfad in Zeile 5 anpassen) → „familie: 41 Prüfungen bestanden“. Prüfsumme vor dem Kommentar vergleichen.
+- **NEU: familie.js @ 1f4b377** (sha256 `3016aabd994d9f00ddead3c2246b05e5dd3ec9106669638396cc42400283e640`) ersetzt ffcfe39 vollständig (19.11., 14:43 UTC).
+  `anlegen()` ohne Parameter nutzt REC_PUB und schickt X-Notfall-Pruef; Sperrliste `{sperrliste:[SHA-256(codeNr)]}`, `codeNummer(code)` → `L7.<produkt>.<serie>` für QQ-Codes, `codeGesperrt(codeOderNr)`.
+  Neue grund-Werte: gibt-es-schon, code-unbekannt, code-gesperrt, code-vergeben, noch-nicht-live. `einloesen` → `{rechte, recht}` mit `recht.codeNr`.
+  Tests → „familie: 51 Prüfungen bestanden“. Test-Server: https://lernen-test.mathenachhilfe-online.com/familie/v1/ (live: 404 noch_nicht_live).
+
+## Pflichttexte (Bauplan v1.5, AppZentrale 19.11.)
+**Hinweis beim ersten Koppeln und im Bereich „Familie“** (darunter Link zur Datenschutzerklärung und „Einverstanden“):
+„Eure Lernstände werden verschlüsselt auf unserem Server in Deutschland gespeichert. Der Schlüssel liegt auf euren Geräten. Damit wir euch helfen können, falls ihr den Familien-Zugang verliert, hinterlegen wir zusätzlich eine verschlüsselte Notfall-Kopie. Sie lässt sich nur mit einem getrennt und offline aufbewahrten Schlüssel von Mathenachhilfe Online öffnen. Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht und nutzen ihn nur, wenn ihr uns um Wiederherstellung bittet. Jede Wiederherstellung seht ihr hier im Protokoll.“
+
+**Löschen** (nur hinter dem Tor): Warnung „Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. Gekaufte Codes werden wieder frei und lassen sich in einer neuen Familie erneut einlösen. Die Lernstände auf diesem Gerät bleiben erhalten.“ → Familien-Nummer eintippen → `fa.loeschen()` → lokal nur die Familien-Schlüssel entfernen.
+Bei 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“

@@ -79,6 +79,7 @@ class WebPrefs : Prefs {
     override var parentSent: Long get() = storeGet(P + "elternGesendet")?.toLongOrNull() ?: 0L; set(v) = storeSet(P + "elternGesendet", v.toString())
     override var learnLog: String get() = storeGet(P + "lernProtokoll") ?: ""; set(v) = storeSet(P + "lernProtokoll", v)
     override var learnMonths: String get() = storeGet(P + "lernMonate") ?: ""; set(v) = storeSet(P + "lernMonate", v)
+    override var family: String get() = storeGet(P + "familie") ?: ""; set(v) = storeSet(P + "familie", v)
     override var backupMark: String get() = storeGet(P + "elternSicherung") ?: ""; set(v) = storeSet(P + "elternSicherung", v)
     private val _countUsage = flag("zaehlen", true)
     override val countUsage: StateFlow<Boolean> = _countUsage; override fun setCountUsage(on: Boolean) { put("zaehlen", on); _countUsage.value = on }
@@ -100,4 +101,9 @@ fun snapshot(): Map<String, String> = storeKeys(P).split('\n').filter { it.isNot
 fun restoreSnapshot(data: Map<String, String>, pairing: String) {
     snapshot().keys.forEach { storeRemove(P + it) }; data.forEach { (k, v) -> storeSet(P + k, v) }
     storeSet(P + "elternKopplung", pairing); storeRemove(P + "elternGesendet"); storeRemove(P + "elternSicherung"); reloadPage()
+}
+/** Setzt den Lernstand eines Kindes aus dem Familien-Speicher; Freischalt-Codes und die Eltern-Kopplung dieses Geräts bleiben. Lädt die Seite neu. */
+fun restoreFamily(data: Map<String, String>) {
+    snapshot().keys.filter { it !in de.raumlicht.core.model.Familie.RIGHTS }.forEach { storeRemove(P + it) }
+    de.raumlicht.core.model.Familie.child(data).forEach { (k, v) -> storeSet(P + k, v) }; storeRemove(P + "elternSicherung"); reloadPage()
 }

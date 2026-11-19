@@ -12,6 +12,7 @@ m = WhisperModel('small', device='cpu', compute_type='int8')
 def hoere(mp3, lang):
     raw = subprocess.check_output(['ffmpeg', '-v', 'error', '-i', mp3, '-f', 's16le', '-ac', '1', '-ar', '16000', '-'])
     a = np.frombuffer(raw, np.int16).astype(np.float32) / 32768.0
+    a = np.concatenate([np.zeros(4000, np.float32), a])   # 0,25 s Stille vorn – wie der Vorlauf in der App
     return ' '.join(x.text for x in m.transcribe(a, language=lang, beam_size=3)[0]).strip()
 n = besser = 0
 for k, e in idx['saetze'].items():

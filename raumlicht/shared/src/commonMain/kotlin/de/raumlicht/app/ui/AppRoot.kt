@@ -28,6 +28,7 @@ object Routes {
     const val PRO = "pro"
     const val KI = "ki"
     const val PARENTS = "eltern"
+    const val FAMILY = "familie"
     const val DAILY = "tagesaufgabe"
     const val JAM_HOME = "jam"
     const val SHEET = "spickzettel"
@@ -59,7 +60,7 @@ object Routes {
     const val EXPERIENCE = "erleben"
     const val ROTATION = "rotation"
     /** Seiten, die auf breiten Bildschirmen als Spalte in der Mitte stehen (Listen, Texte, Einstellungen) – alles mit Bühne oder Spielfeld nutzt die volle Breite */
-    val COLUMN_PAGES = setOf(SETTINGS, PRO, KI, PARENTS, JAM_HOME, SHEET, BADGES, BACKSTAGE, EXAMS, GUIDES, LEARN, PLANNER, DIARY, CALENDAR, EXPERIENCE)
+    val COLUMN_PAGES = setOf(SETTINGS, PRO, KI, PARENTS, FAMILY, JAM_HOME, SHEET, BADGES, BACKSTAGE, EXAMS, GUIDES, LEARN, PLANNER, DIARY, CALENDAR, EXPERIENCE)
     fun ride(id: String) = "achterbahn/$id"
     fun guide(id: String) = "schritte/$id"
     fun exam(id: String, timed: Boolean) = "abi/$id/${if (timed) 1 else 0}"
@@ -121,6 +122,12 @@ fun AppRoot(
     examUrl: String = de.raumlicht.core.model.Nachhilfe.TRIAL_URL,
     /** „← Alle Apps“ oben auf der Startseite: zurück zur App-Auswahl der Website (null = gibt es hier nicht) */
     onApps: (() -> Unit)? = null,
+    /** Familien-Speicher: was die Plattform dafür kann (null = hier nicht verfügbar) */
+    familie: de.raumlicht.app.ui.settings.FamiliePlatform? = null,
+    /** Mit einem Familien-Link („#familie=…“) geöffnet: führt durch das Eltern-Tor auf die Familien-Seite */
+    familieLink: String? = null,
+    /** Nur für die automatische Prüfung auf dem eigenen Rechner: Das Eltern-Tor steht offen */
+    gateFree: Boolean = false,
 ) {
     // ── Lern-Protokoll (nur auf dem Gerät) und Eltern-Bericht ──
     val parentText by prefs.parentLink.collectAsState()
@@ -163,9 +170,44 @@ fun AppRoot(
             -1 -> restoreStatus = "Der Schlüssel im Link passt nicht zur Sicherung. Bitte den Link vollständig kopieren."
             else -> restoreStatus = "Die Sicherung ließ sich gerade nicht holen (Fehler $status)." } } }
     // Jede gelöste Aufgabe ins Lern-Protokoll; danach ggf. den Bericht auffrischen
-    @Suppress("NAME_SHADOWING") val record: (String, Int, Int) -> Unit = { id, s, a -> record(id, s, a); learn(tasks = 1, right = if (s == 3) 1 else 0); sendReport(false) }
+    // ── Familien-Speicher (läuft neben der Eltern-Kopplung): Lernstand des Kindes ohne Freischalt-Codes; bei zwei Ständen entscheiden die Eltern ──
+    var famText by remember { mutableStateOf(prefs.family) }
+    val famState = remember(famText) { de.raumlicht.core.model.Familie.State.decode(famText) }
+    var famStatus by remember { mutableStateOf<String?>(null) }
+    var famBusy by remember { mutableStateOf(false) }
+    var famJoin by remember { mutableStateOf<Triple<String, String, List<de.raumlicht.core.model.Familie.Kid>>?>(null) }   // Familie, Nummer, Kinder
+    var famOther by remember { mutableStateOf<Triple<de.raumlicht.core.model.Familie.State, Map<String, String>, de.raumlicht.app.ui.settings.FamilieChoice>?>(null) }
+    fun famSet(st: de.raumlicht.core.model.Familie.State?) { prefs.family = st?.encode() ?: ""; famText = prefs.family }
+    fun famCall(what: String, a: String = "", b: String = "", c: String = "", d: String = "", done: (String, String, String) -> Unit) { val f = familie ?: return; famBusy = true
+        f.call(f.server, what, a, b, c, d) { st, x, y -> famBusy = false; done(st, x, y) } }
+    fun famOtherFrom(st: de.raumlicht.core.model.Familie.State, json: String, stand: String, conflict: Boolean): Boolean { val data = de.raumlicht.core.model.Familie.data(json) ?: return false
+        famOther = Triple(st, data, de.raumlicht.app.ui.settings.FamilieChoice(de.raumlicht.core.model.Eltern.germanDay(stand), conflict)); return true }
+    /** Lernstand in die Familie sichern – nur wenn sich etwas geändert hat (oder ausdrücklich verlangt) */
+    fun famSync(force: Boolean, from: de.raumlicht.core.model.Familie.State? = null) { val f = familie ?: return; val st = from ?: de.raumlicht.core.model.Familie.State.decode(prefs.family) ?: return
+        if (famBusy || famOther != null && from == null) return
+        val data = de.raumlicht.core.model.Familie.child(f.snapshot()); val mark = de.raumlicht.core.model.Eltern.mark(data); if (!force && mark == st.mark) return
+        famCall("sichern", st.fam, st.kid, de.raumlicht.core.model.Familie.json(data), st.rev.toString()) { r, x, y -> when (r) {
+            "ok" -> { famSet(st.copy(rev = x.toIntOrNull() ?: st.rev, mark = mark)); famStatus = "✓ In der Familie gesichert" }
+            "konflikt" -> { val rev = x.toIntOrNull() ?: st.rev; val now = st.copy(rev = rev)
+                if (!famOtherFrom(now, y.substringBefore('\n'), y.substringAfter('\n', ""), true)) famStatus = "Auf einem anderen Gerät wurde weitergelernt. Bitte „Stand aus der Familie holen“ antippen." else famStatus = null
+                famSet(now.copy(mark = st.mark)) }
+            "netz" -> if (force) famStatus = de.raumlicht.core.model.Familie.problem(r)
+            else -> famStatus = de.raumlicht.core.model.Familie.problem(r) } } }
+    /** Stand des Kindes aus der Familie holen: gibt es dort keinen, wird der dieses Geräts gesichert; ist hier schon gelernt worden, erst fragen */
+    fun famFetch(st: de.raumlicht.core.model.Familie.State, ask: Boolean) { val f = familie ?: return
+        famCall("laden", st.fam, st.kid) { r, x, y -> when (r) {
+            "ok" -> { val now = st.copy(rev = y.substringBefore('|').toIntOrNull() ?: 0); val data = de.raumlicht.core.model.Familie.data(x)
+                val mine = de.raumlicht.core.model.Familie.child(f.snapshot())
+                if (data == null) famStatus = de.raumlicht.core.model.Familie.problem("schluessel")
+                else if (de.raumlicht.core.model.Eltern.mark(data) == de.raumlicht.core.model.Eltern.mark(mine)) { famSet(now.copy(mark = de.raumlicht.core.model.Eltern.mark(mine))); famStatus = "✓ Dieses Gerät ist auf dem Stand der Familie" }
+                else if (ask && de.raumlicht.core.model.Familie.hasProgress(mine)) { famSet(now); famOtherFrom(now, x, y.substringAfter('|', ""), false); famStatus = null }
+                else { famSet(now.copy(mark = de.raumlicht.core.model.Eltern.mark(data))); famStatus = "✓ Lernstand aus der Familie geholt"; f.apply(data) } }
+            "keine" -> { famSet(st.copy(rev = 0, mark = "")); famSync(true, st.copy(rev = 0, mark = "")) }
+            else -> famStatus = de.raumlicht.core.model.Familie.problem(r) } } }
+    fun famPick(fam: String, number: String, kid: de.raumlicht.core.model.Familie.Kid) { famJoin = null; val st = de.raumlicht.core.model.Familie.State(fam, kid.id, number, name = kid.name); famSet(st); famFetch(st, true) }
+    @Suppress("NAME_SHADOWING") val record: (String, Int, Int) -> Unit = { id, s, a -> record(id, s, a); learn(tasks = 1, right = if (s == 3) 1 else 0); sendReport(false); famSync(false) }
     // Lernzeit: jede volle Minute in einer Aufgabe oder Übung zählt
-    LaunchedEffect(nav.top) { if (Routes.isAction(nav.top)) while (true) { kotlinx.coroutines.delay(60_000); learn(min = 1) } else sendReport(false) }
+    LaunchedEffect(nav.top) { if (Routes.isAction(nav.top)) while (true) { kotlinx.coroutines.delay(60_000); learn(min = 1) } else { sendReport(false); famSync(false) } }
     val countOn by prefs.countUsage.collectAsState(); val hintsOn by prefs.tutorHints.collectAsState()
     // Zählen: nur mit eingeschaltetem Schalter, nur Ereignisse von der Liste – sonst geschieht nichts
     val count: (String, String?, String?) -> Unit = { ev, place, topic -> if (prefs.countUsage.value) de.raumlicht.core.model.Zaehler.body(ev, place, topic, version)?.let { countSend?.invoke(it) } }
@@ -211,7 +253,8 @@ fun AppRoot(
     // Eltern-Tor: steht vor dem Weg zum Shop. Einmal gelöst bleibt es zehn Minuten offen – nur im Arbeitsspeicher, nichts wird gespeichert.
     var gateOpenedAt by remember { mutableStateOf(0L) }
     var gatePending by remember { mutableStateOf<(() -> Unit)?>(null) }
-    val gate: (() -> Unit) -> Unit = { action -> if (de.raumlicht.core.model.ElternTor.open(gateOpenedAt, de.raumlicht.app.ui.fx.nowMillis())) action() else gatePending = action }
+    val gate: (() -> Unit) -> Unit = { action -> if (gateFree || de.raumlicht.core.model.ElternTor.open(gateOpenedAt, de.raumlicht.app.ui.fx.nowMillis())) action() else gatePending = action }
+    LaunchedEffect(familieLink) { if (familieLink != null && familie != null) gate { nav.go(Routes.FAMILY) } }
     CompositionLocalProvider(LocalLuxSkin provides skin, LocalLuxLook provides look,
         de.raumlicht.app.ui.settings.LocalMix provides de.raumlicht.app.ui.settings.MixChoice(prefs.musicLevel.collectAsState().value, prefs::setMusicLevel, prefs.soundLevel.collectAsState().value, prefs::setSoundLevel),
         de.raumlicht.app.ui.settings.LocalSpeech provides de.raumlicht.app.ui.settings.SpeechChoice(prefs.speechRate.collectAsState().value, prefs::setSpeechRate),
@@ -223,6 +266,7 @@ fun AppRoot(
         de.raumlicht.app.ui.fx.LocalCount provides count,
         de.raumlicht.app.ui.settings.LocalElternTor provides gate,
         de.raumlicht.app.ui.settings.LocalOffers provides (if (offers) de.raumlicht.app.ui.settings.OffersChoice(countOn, prefs::setCountUsage, hintsOn, prefs::setTutorHints) else null),
+        de.raumlicht.app.ui.settings.LocalFamilieEntry provides (if (familie != null) de.raumlicht.app.ui.settings.FamilieEntryState({ gate { nav.go(Routes.FAMILY) } }, famState != null) else null),
         de.raumlicht.app.ui.settings.LocalElternEntry provides (if (eltern != null) de.raumlicht.app.ui.settings.ElternEntryState({ nav.go(Routes.PARENTS) }, pairing != null) else null),
         LocalMistakeSink provides { id, msg -> prefs.setDiary(DiaryEntry.add(prefs.diary.value, id, msg)) }) {
         // Erkennungsmelodie: einmal je Sitzung, bei der ersten Berührung (nie vorher) – leise, damit sie niemanden erschreckt
@@ -381,6 +425,22 @@ fun AppRoot(
                     onPair = { name -> de.raumlicht.core.model.Eltern.Pairing.fresh(eltern.create(), name)?.let { p -> prefs.setParentLink(p.encode()); parentStatus = null; sendReport(true) } },
                     onUnpair = { pairing?.let { p -> eltern.remove(de.raumlicht.core.model.Eltern.uploadUrl(p, eltern.server), p.write) { } }; prefs.setParentLink(""); prefs.parentSent = 0; prefs.backupMark = ""; parentStatus = null; backupStatus = null },
                     onSendNow = { sendReport(true) }, onBack = back)
+                Routes.FAMILY -> if (familie == null) LaunchedEffect(Unit) { nav.back() }
+                    // direkt angesteuert (z. B. „?ziel=familie“): erst durchs Eltern-Tor
+                    else if (!gateFree && !de.raumlicht.core.model.ElternTor.open(gateOpenedAt, de.raumlicht.app.ui.fx.nowMillis())) LaunchedEffect(Unit) { nav.restart(Routes.HOME); gate { nav.go(Routes.FAMILY) } }
+                    else de.raumlicht.app.ui.settings.FamilieScreen(famState, familie.base, familie.test, famStatus, famBusy, famJoin?.third, famOther?.third, familieLink.orEmpty(),
+                    onCreate = { name -> famStatus = null; val n = de.raumlicht.core.model.Familie.cleanName(name); famCall("neu", n) { r, x, y -> if (r == "ok") { val p = x.split('|')
+                        de.raumlicht.core.model.Familie.State.decode("${p[0]}|${p.getOrElse(1) { "" }}|$y|0||$n")?.let { st -> famSet(st); famSync(true, st) } ?: run { famStatus = de.raumlicht.core.model.Familie.problem("fehler") } }
+                        else famStatus = de.raumlicht.core.model.Familie.problem(r) } },
+                    onJoin = { link -> famStatus = null; val fam = de.raumlicht.core.model.Familie.fromLink(link)
+                        if (fam == null) famStatus = de.raumlicht.core.model.Familie.problem("link") else famCall("kinder", fam) { r, x, y -> if (r == "ok") famJoin = Triple(fam, y, de.raumlicht.core.model.Familie.kids(x)) else famStatus = de.raumlicht.core.model.Familie.problem(r) } },
+                    onPick = { kid -> famJoin?.let { j -> famPick(j.first, j.second, kid) } },
+                    onNewKid = { name -> famJoin?.let { j -> val n = de.raumlicht.core.model.Familie.cleanName(name); famCall("kind", j.first, n) { r, x, _ -> if (r == "ok") famPick(j.first, j.second, de.raumlicht.core.model.Familie.Kid(x, n)) else famStatus = de.raumlicht.core.model.Familie.problem(r) } } },
+                    onCancelJoin = { famJoin = null; famStatus = "Nichts geändert." },
+                    onTake = { famOther?.let { (st, data, _) -> famOther = null; famSet(st.copy(mark = de.raumlicht.core.model.Eltern.mark(data))); famStatus = "✓ Lernstand aus der Familie geholt"; familie.apply(data) } },
+                    onKeep = { famOther?.let { (st, _, _) -> famOther = null; famSet(st); famSync(true, st) } },
+                    onSync = { famStatus = null; famSync(true) }, onFetch = { famStatus = null; famState?.let { famFetch(it, true) } },
+                    onLeave = { famSet(null); famOther = null; famStatus = "Dieses Gerät ist nicht mehr mit der Familie verbunden." }, onBack = back)
                 Routes.KI -> if (kiSend == null) LaunchedEffect(Unit) { nav.back() } else de.raumlicht.app.ui.settings.KiScreen(kiLast, today(), enterKi, back)
                 else -> LaunchedEffect(Unit) { nav.restart(Routes.HOME) }
             }

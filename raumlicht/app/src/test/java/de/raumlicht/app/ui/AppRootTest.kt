@@ -44,13 +44,15 @@ class AppRootTest {
     private val uploads = ArrayList<Triple<String, String, String>>(); private val deleted = ArrayList<String>()
     private var eltern: de.raumlicht.app.ui.settings.ElternPlatform? = null
     private var appsOpened = 0
+    private var familie: de.raumlicht.app.ui.settings.FamiliePlatform? = null
+    private var familieLink: String? = null
     private fun fakeEltern() = de.raumlicht.app.ui.settings.ElternPlatform("https://server.test/b/", "https://seite.test/#weg/", { "A".repeat(22) + "." + "B".repeat(22) + "." + "C".repeat(43) },
         { url, write, _, json, done -> uploads += Triple(url, write, json); done(204) }, { url, _, done -> deleted += url; done(204) })
     private fun start(pro: Boolean = false, ki: (suspend (String) -> Pair<Int, String>)? = null, kiOn: Boolean = true) {
         prefs = Settings(ApplicationProvider.getApplicationContext())
         rule.setContent { RaumlichtTheme { Surface(color = Q.Space) { CompositionLocalProvider(LocalStageRenderer provides { _, m -> Box(m) }) {
-            AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry(); de.raumlicht.app.ui.settings.ElternEntry() } },
-                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, examUrl = crash, onApps = { appsOpened++ })
+            AppRoot(nav, prefs, stars, { id, s, _ -> stars.value = stars.value + (id to s) }, { 20_772L }, settings = { onBack -> androidx.compose.foundation.layout.Column { androidx.compose.material3.Text("EINSTELLUNGEN", androidx.compose.ui.Modifier.testTag("einst")); de.raumlicht.app.ui.settings.ProEntry(); de.raumlicht.app.ui.settings.KiEntry(); de.raumlicht.app.ui.settings.ElternEntry(); de.raumlicht.app.ui.settings.FamilieEntry() } },
+                onRoute = { routes += it }, proEnabled = pro, proKey = PK, kiSend = ki, kiEnabled = kiOn, version = "test", eltern = eltern, countSend = { if (Regex("\"ev\":\"(level_|theorie)").containsMatchIn(it)) played += it else counted += it }, examUrl = crash, onApps = { appsOpened++ }, familie = familie, familieLink = familieLink)
         } } } }
         rule.mainClock.advanceTimeBy(600)
     }
@@ -330,6 +332,67 @@ class AppRootTest {
         org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMinutes(11))
         rule.onNodeWithTag("pro-kaufen").performClick(); settle(); rule.onNodeWithTag("eltern-tor").assertExists()
         rule.onNodeWithTag("eltern-tor-abbrechen").performClick(); settle(); rule.onNodeWithTag("eltern-tor").assertDoesNotExist(); assertEquals(2, counted.count { it.contains("pro_kasse") }); assertEquals(1, counted.count { it.contains("elternbereich") })
+    }
+
+    /** Familien-Speicher: Weg nur durchs Eltern-Tor; anlegen, sichern ohne Freischalt-Codes, bei zwei Ständen entscheiden die Eltern, beitreten mit Link. */
+    @Test fun familienSpeicher() {
+        val zahl = mapOf("dreizehn" to 13, "vierzehn" to 14, "fünfzehn" to 15, "sechzehn" to 16, "siebzehn" to 17, "achtzehn" to 18, "neunzehn" to 19, "sechs" to 6, "sieben" to 7, "acht" to 8, "neun" to 9)
+        fun torAuf() { val m = Regex("Wie viel ist (\\S+) mal (\\S+)\\?").find(rule.onNodeWithTag("eltern-tor-aufgabe").fetchSemanticsNode().config[androidx.compose.ui.semantics.SemanticsProperties.Text].first().text)!!
+            (zahl.getValue(m.groupValues[1]) * zahl.getValue(m.groupValues[2])).toString().forEach { rule.onNodeWithTag("eltern-tor-taste-$it").performClick() }; rule.onNodeWithTag("eltern-tor-taste-OK").performClick(); settle() }
+        fun zurueck() { org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(300)); nav.back(); settle() }
+        val fam = "A".repeat(22) + "." + "b".repeat(43) + "." + "C".repeat(22); val lea = "L".repeat(22); val tim = "T".repeat(22)
+        var state = mapOf("stars" to "1-1=3", "proCode" to "RL-GEHEIM", "sound" to "true"); val applied = ArrayList<Map<String, String>>(); val calls = ArrayList<List<String>>()
+        var saveAnswer: (() -> Triple<String, String, String>)? = null; var loadAnswer = Triple("keine", "", "")
+        familie = de.raumlicht.app.ui.settings.FamiliePlatform("https://server.test", "https://lernen.test", true, { server, what, a, b, c, d, done -> calls += listOf(what, a, b, c, d); assertEquals("https://server.test", server)
+            when (what) { "neu" -> done("ok", "$fam|$lea", "K7QX-2MFA"); "kinder" -> done("ok", "$lea\tLea\n$tim\tTim", "K7QX-2MFA"); "kind" -> done("ok", "N".repeat(22), "K7QX-2MFA")
+                "sichern" -> (saveAnswer?.invoke() ?: Triple("ok", ((d.toIntOrNull() ?: 0) + 1).toString(), "")).let { done(it.first, it.second, it.third) }
+                "laden" -> done(loadAnswer.first, loadAnswer.second, loadAnswer.third); else -> done("fehler", "", "") } }, { state }, { applied += it })
+        start(); rule.runOnUiThread { prefs.family = "" }
+        // Weg: Einstellungen → Eintrag → Eltern-Tor → Familien-Seite
+        nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("familie-eintrag").assertTextContains("für Eltern", substring = true).performClick(); settle()
+        assertNotEquals(Routes.FAMILY, nav.top); rule.onNodeWithTag("eltern-tor").assertExists(); torAuf(); assertEquals(Routes.FAMILY, nav.top)
+        rule.onNodeWithTag("familie-hinweis").assertTextContains("der Server kann nichts lesen", substring = true); rule.onNodeWithTag("familie-test").assertTextContains("Kopplung mit dem Eltern-Handy bleibt", substring = true)
+        // kein Link → verständliche Meldung, nichts geht raus
+        rule.onNodeWithTag("familie-link").performScrollTo().performTextInput("irgendwas"); rule.onNodeWithTag("familie-beitreten").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("familie-status").performScrollTo().assertTextContains("kein Familien-Link", substring = true); assertTrue(calls.isEmpty())
+        // anlegen: Spitzname, danach sofort gesichert – ohne Freischalt-Code
+        rule.onNodeWithTag("familie-name").performScrollTo().performTextInput("Lea"); rule.onNodeWithTag("familie-anlegen").performScrollTo().performClick(); settle()
+        assertEquals(listOf("neu", "sichern"), calls.map { it[0] }); assertEquals("Lea", calls[0][1]); assertEquals(listOf(fam, lea), calls[1].subList(1, 3)); assertEquals("0", calls[1][4])
+        assertTrue(calls[1][3], calls[1][3].contains("\"stars\":\"1-1=3\"")); assertFalse("Rechte nie im Lernstand des Kindes", calls[1][3].contains("RL-GEHEIM") || calls[1][3].contains("proCode"))
+        rule.onNodeWithTag("familie-dabei").assertExists(); rule.onNodeWithTag("familie-kind").assertTextContains("Lea", substring = true); rule.onNodeWithTag("familie-nummer").assertTextContains("K7QX-2MFA", substring = true)
+        rule.onNodeWithTag("familie-qr").performScrollTo().assertExists(); rule.onNodeWithTag("familie-status").performScrollTo().assertTextContains("In der Familie gesichert", substring = true)
+        assertEquals(1, de.raumlicht.core.model.Familie.State.decode(prefs.family)!!.rev)
+        rule.onRoot().captureRoboImage("../screenshots/95_familie.png")
+        // nichts geändert → kein zweites Sichern beim Zurückgehen; geändert → wird gesichert
+        zurueck(); assertEquals(1, calls.count { it[0] == "sichern" })
+        state = state + ("stars" to "1-1=3;1-2=2"); nav.go(Routes.FAMILY); settle(); zurueck(); assertEquals(2, calls.count { it[0] == "sichern" }); assertEquals("1", calls.last()[4])
+        // anderes Gerät war schneller: nichts wird still überschrieben, die Eltern entscheiden
+        state = state + ("stars" to "1-1=3;1-2=3"); saveAnswer = { Triple("konflikt", "7", "{\"stars\":\"9-9=3\"}\n2026-11-19T10:00:00Z") }
+        nav.go(Routes.FAMILY); settle(); zurueck(); nav.go(Routes.FAMILY); settle()
+        rule.onNodeWithTag("familie-frage").assertTextContains("Auf einem anderen Gerät wurde weitergelernt (Stand 19.11.2026)", substring = true); assertTrue(applied.isEmpty())
+        val before = calls.size; zurueck(); assertEquals("solange die Frage offen ist, wird nicht gesichert", before, calls.size); nav.go(Routes.FAMILY); settle()
+        saveAnswer = null; rule.onNodeWithTag("familie-behalten").performClick(); settle(); assertEquals("7", calls.last()[4]); assertEquals(8, de.raumlicht.core.model.Familie.State.decode(prefs.family)!!.rev); assertTrue(applied.isEmpty())
+        // Gerät trennen: Lernstand bleibt, danach geht nichts mehr raus
+        rule.onNodeWithTag("familie-verlassen").performScrollTo().performClick(); settle(); rule.onNodeWithTag("familie-verlassen-ja").performScrollTo().performClick(); settle()
+        assertEquals("", prefs.family); val n = calls.size; state = state + ("stars" to "x"); zurueck(); assertEquals(n, calls.size)
+        // beitreten mit Link: Kind wählen; hier ist schon gelernt worden → erst fragen, dann holen
+        loadAnswer = Triple("ok", "{\"stars\":\"5-5=3\",\"proCode\":\"FREMD\"}", "4|2026-11-18T08:00:00Z")
+        nav.go(Routes.FAMILY); settle(); rule.onNodeWithTag("familie-link").performScrollTo().performTextInput("https://lernen.test/raumlicht/#familie=$fam"); rule.onNodeWithTag("familie-beitreten").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("familie-kind-0").assertTextContains("Lea"); rule.onNodeWithTag("familie-kind-1").assertTextContains("Tim").performClick(); settle()
+        assertEquals(listOf("laden", fam, tim), calls.last().subList(0, 3)); rule.onNodeWithTag("familie-frage").assertTextContains("In der Familie gibt es schon einen Lernstand (Stand 18.11.2026)", substring = true)
+        rule.onNodeWithTag("familie-holen-ja").performClick(); settle(); assertEquals(listOf(mapOf("stars" to "5-5=3")), applied)
+        val st = de.raumlicht.core.model.Familie.State.decode(prefs.family)!!; assertEquals(tim, st.kid); assertEquals(4, st.rev); assertEquals("Tim", st.name)
+    }
+
+    /** Mit einem Familien-Link geöffnet: erst das Eltern-Tor, dann die Familien-Seite mit eingetragenem Link. */
+    @Test fun familienLinkFuehrtDurchsElternTor() {
+        val fam = "A".repeat(22) + "." + "b".repeat(43) + "." + "C".repeat(22)
+        familie = de.raumlicht.app.ui.settings.FamiliePlatform("https://server.test", "https://lernen.test", true, { _, _, _, _, _, _, done -> done("netz", "", "") }, { emptyMap() }, { })
+        familieLink = "#familie=$fam"; start(); settle()
+        rule.onNodeWithTag("eltern-tor").assertExists(); assertNotEquals(Routes.FAMILY, nav.top)
+        rule.onNodeWithTag("eltern-tor-abbrechen").performClick(); settle(); assertNotEquals(Routes.FAMILY, nav.top)
+        // auch direkt angesteuert (wie „?ziel=familie“) geht es nur durchs Tor
+        nav.restart(Routes.FAMILY); settle(); assertNotEquals(Routes.FAMILY, nav.top); rule.onNodeWithTag("eltern-tor").assertExists(); rule.onNodeWithTag("familie-text").assertDoesNotExist()
     }
 
     /** „Analysis & Zufall erleben“: von der Startseite erreichbar, alle Erlebnis-Bereiche samt Rotationskörper-Labor, dazu die Verweise zum Üben im Mathe-Trainer. */

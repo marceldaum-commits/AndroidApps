@@ -60,6 +60,41 @@ fun elternHolen(url: String, key: String, done: (Int, String) -> Unit): Unit = j
         }, function () { done(0, ''); });
     } catch (e) { done(-1, ''); }
 }""")
+// ── Familien-Speicher: der unveränderte Baustein familie.js (Mathe-Trainer) wird erst bei Bedarf geladen; verschlüsselt wird im Browser ──
+/**
+ * Ein Aufruf an den Familien-Speicher. [was]: „neu“ (a = Spitzname) · „kinder“ (a = Familie) · „kind“ (a = Familie, b = Spitzname) ·
+ * „sichern“ (a = Familie, b = Kind, c = Lernstand als JSON, d = Stand-Nummer) · „laden“ (a = Familie, b = Kind).
+ * [done] bekommt „ok“ oder den Grund (netz, keine, konflikt, schluessel, …) und bis zu zwei Werte.
+ */
+fun familieRuf(server: String, was: String, a: String, b: String, c: String, d: String, done: (String, String, String) -> Unit): Unit = js("""{
+    var fertig = false, ende = function (s, x, y) { if (!fertig) { fertig = true; done(String(s), String(x == null ? '' : x), String(y == null ? '' : y)); } };
+    try {
+        var laden = window.__rlFamilieModul || (window.__rlFamilieModul = new Function('u', 'return import(u)')(new URL('familie.js', document.baseURI).href));
+        laden.then(function (F) {
+            var APP = 'raumlicht', teile = function (t) { var p = String(t).split('.'); return { famId: p[0], famKey: p[1], schreib: p[2] }; };
+            var zugang = function (fam) { return F.familie(fam, { basis: server, f: function (u, o) { o = o || {}; o.credentials = 'omit'; o.referrerPolicy = 'no-referrer'; return fetch(u, o); } }); };
+            var zeilen = function (index) { return (index.kinder || []).map(function (k) { return k.kindId + '\t' + String(k.name || '').split('\t').join(' ').split('\n').join(' '); }).join('\n'); };
+            var index = function (A) { return A.indexLaden().then(function (r) { return r.ok ? { index: r.daten, rev: r.rev } : r.grund === 'keine' ? A.liste().then(function (l) { return l.ok ? { index: F.neuerIndex(), rev: 0 } : { grund: l.grund }; }) : { grund: r.grund }; }); };
+            if (was === 'neu') { var fam = F.neueFamilie(), A = zugang(fam);
+                return A.anlegen().then(function (r) { if (!r.ok) return ende(r.grund);
+                    var k = F.kindHinzu(F.appMerken(F.neuerIndex(), APP), { name: a });
+                    return A.indexSichern(k.index, 0).then(function (s) { if (!s.ok) return ende(s.grund); ende('ok', fam.famId + '.' + fam.famKey + '.' + fam.schreib + '|' + k.kind.kindId, A.nummer); }); }); }
+            var B = zugang(teile(a));
+            if (was === 'kinder') return index(B).then(function (i) { if (i.grund) return ende(i.grund); ende('ok', zeilen(i.index), B.nummer); });
+            if (was === 'kind') return index(B).then(function (i) { if (i.grund) return ende(i.grund);
+                var k = F.kindHinzu(F.appMerken(i.index, APP), { name: b });
+                return B.indexSichern(k.index, i.rev).then(function (s) { if (!s.ok) return ende(s.grund); ende('ok', k.kind.kindId, B.nummer); }); });
+            if (was === 'sichern') return B.standSichern(APP, b, JSON.parse(c), Number(d) || 0).then(function (r) {
+                if (r.ok) return ende('ok', r.rev); if (r.grund === 'konflikt') return ende('konflikt', r.rev, r.daten ? JSON.stringify(r.daten) + '\n' + (r.stand || '') : ''); ende(r.grund); });
+            if (was === 'laden') return B.standLaden(APP, b).then(function (r) { if (!r.ok) return ende(r.grund); ende('ok', JSON.stringify(r.daten), r.rev + '|' + (r.stand || '')); });
+            ende('fehler');
+        }).catch(function () { ende('baustein'); });
+    } catch (e) { ende('baustein'); }
+}""")
+/** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer Familien-Server (window.__rlFamilieServer), sonst null */
+fun familieServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlFamilieServer) || null")
+/** Nur für die automatische Prüfung auf dem eigenen Rechner: Eltern-Tor offen (window.__rlTorOffen) – auf jeder echten Adresse immer false */
+fun familieTorFrei(): Boolean = js("(location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlTorOffen === true")
 fun reloadPage(): Unit = js("location.reload()")
 /** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer Eltern-Server (window.__rlElternServer), sonst null */
 fun elternServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlElternServer) || null")
