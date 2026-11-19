@@ -1,8 +1,7 @@
 package de.raumlicht.core.model
 
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
+import org.junit.Assert.*
+import org.junit.Test
 
 class FamilieTest {
     private val data = mapOf("stars" to "1:3", "proCode" to "RL-X", "kiCode" to "", "kiDevice" to "abc", "elternKopplung" to "id.key", "sound" to "true")
