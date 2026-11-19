@@ -25,6 +25,11 @@
   - Schloss-Text: „Das gehört zu Wissensgarten Plus. Deine Eltern können im Elternbereich nachsehen.“
   - Bildschirmfoto `51_eltern_tor.png`, `ParentGateTest` grün.
 - **Laden:** Der veraltete Text „Plus-Pakete (gerade gratis)“ ist entfernt, die Eltern-Info aktualisiert.
+- **Belege:**
+  - Bildschirmfotos `85_web_pc_1920.png`, `86_web_pc_1366.png` und 1280 × 800 angesehen; Handy unverändert.
+  - Grün: `web-umzug.cjs` (5 Fälle), `web-sprachen.cjs`, `web-paket.cjs`, `ParentGateTest`.
+  - Safari-Abhilfe: 937 abgesichert, 0 Endaufrufe.
+- **Rückweg:** 2.3.0 (bb0b780).
 
 ## 2.3.0 – Umzug auf lernen(-test).mathenachhilfe-online.com/wissensgarten/ (19.11.2026, Standard UMZUG-LERNEN.md)
 - **Alte Adresse** (wissensgarten[-test].…, am Hostnamen erkannt). Beim Start, bevor die App lädt (Startbild: „Wir ziehen um … Brummi packt deinen Garten ein“):
