@@ -1,6 +1,7 @@
 # Quasselquest Pro – Vorbereitung (Stand 19.11.2026, Weitergabe Leitstand über AppZentrale)
 
 Marcel: „erstelle und dann soll sie es freischalten wenn es sie gibt.. einfach vorbereiten alles“. Reihenfolge: nach 0.4.0 + PC-Ansicht.
+**Versionsnummer (Marcel 19.11.):** Die Version, mit der Pro kommt, heißt **1.5.0** – danach normal weiter (1.5.1, 1.6.0 …). Bis dahin 0.4.x.
 
 ## Codes
 - Format wie alle Lern-Apps; öffentlicher Ed25519-Schlüssel `979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812`
