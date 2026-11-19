@@ -1444,7 +1444,7 @@
               await say(f.richtig); await sleep(1400); if (alive(tk)) resolve('ok');
             } else { erster = false; o.classList.add('no'); o.disabled = true; A.sfx('soft'); rubySay(el, `Hmm, ${esc(opts[+o.dataset.o])}? Ich glaube, das stimmt auch nicht …`, 'talk'); }
           });
-        } else { erster = false; A.sfx('soft'); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); rubySay(el, `„${esc(b.textContent)}“ ist richtig. Such weiter! 🔍`, 'talk'); }
+        } else { A.sfx('soft'); b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); rubySay(el, `„${esc(b.textContent)}“ lasse ich so. Ich meine ein anderes Wort – such weiter! 🔍`, 'talk'); }
       });
       rubySay(el, 'Ich übe auch! Aber in meinem Satz ist ein Fehler. Tipp auf das falsche Wort!');
       return;

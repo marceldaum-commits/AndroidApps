@@ -1996,8 +1996,8 @@
        "tipp": "la mano ist weiblich – obwohl es auf -o endet."
       },
       {
-       "falsch": "Tengo dos ojo.",
-       "richtig": "Tengo dos ojos.",
+       "falsch": "Tengo dos ojo azules.",
+       "richtig": "Tengo dos ojos azules.",
        "wort": "ojo",
        "korrektur": "ojos",
        "choices": [
@@ -2334,7 +2334,7 @@
      ],
      "regel": {
       "titel": "ser oder estar?",
-      "text": "Beide heißen „sein“. ser (es) sagt, wer oder wie etwas ist: groß, blau, mein Freund. estar (está) sagt, wo etwas ist. Merktrick: Wo? → está.",
+      "text": "Beide heißen „sein“. ser (es) sagt, wer oder was jemand ist und wie etwas immer ist: groß, blau, mein Freund. estar (está) sagt, wo etwas ist. Merktrick: Wo? → está. (Später kommt dazu: Wie es dir gerade geht, sagt man auch mit estar – ¿Cómo estás?)",
       "beispiele": [
        [
         "La casa es grande.",
@@ -2466,8 +2466,8 @@
        "tipp": "Wer jemand ist, sagt man mit ser: Lucía es mi amiga."
       },
       {
-       "falsch": "Mi casa tiene dos ventana.",
-       "richtig": "Mi casa tiene dos ventanas.",
+       "falsch": "Mi casa tiene dos ventana grandes.",
+       "richtig": "Mi casa tiene dos ventanas grandes.",
        "wort": "ventana",
        "korrektur": "ventanas",
        "choices": [
@@ -2499,7 +2499,7 @@
        "el reloj",
        "die Uhr",
        "⌚",
-       "Wie spät? Um 1 Uhr: Es la una. Ab 2 Uhr: Son las dos, son las tres …"
+       "Wie spät ist es? 1 Uhr: Es la una. Ab 2 Uhr: Son las dos, son las tres … Das j am Ende hört man kaum."
       ],
       [
        "el despertador",
@@ -2565,7 +2565,7 @@
      ],
      "regel": {
       "titel": "Verben auf -ar",
-      "text": "Verben auf -ar sind die größte Familie und gehen alle gleich: -ar weg, Endung dran. Ich: -o, du: -as, er oder sie: -a. desayunar → desayuno, desayunas, desayuna. Genauso: cenar, hablar, estudiar. Ein Sonderfall: jugar → juego, juegas, juega.",
+      "text": "Verben auf -ar sind die größte Familie und gehen fast alle gleich: -ar weg, Endung dran. Ich: -o, du: -as, er oder sie: -a. desayunar → desayuno, desayunas, desayuna. Genauso: cenar, hablar, estudiar. Ein paar tanzen aus der Reihe, zum Beispiel jugar → juego, juegas, juega.",
       "beispiele": [
        [
         "Desayuno a las ocho.",
@@ -2703,15 +2703,15 @@
        "tipp": "la comida ist weiblich und nur eine – also rica."
       },
       {
-       "falsch": "Tengo dos despertador.",
-       "richtig": "Tengo dos despertadores.",
+       "falsch": "Tengo dos despertador rojos.",
+       "richtig": "Tengo dos despertadores rojos.",
        "wort": "despertador",
        "korrektur": "despertadores",
        "choices": [
         "despertadors",
         "despertadora"
        ],
-       "tipp": "Endet ein Wort auf einen Mitlaut, kommt in der Mehrzahl -es dran."
+       "tipp": "Endet ein Wort auf einen Mitlaut, kommt in der Mehrzahl -es dran: despertador → despertadores."
       }
      ]
     },
@@ -2754,7 +2754,8 @@
       [
        "el sábado",
        "der Samstag",
-       "🎡"
+       "🎡",
+       "sábado und Samstag kommen beide vom Sabbat, dem Ruhetag."
       ],
       [
        "el domingo",
@@ -2792,7 +2793,7 @@
      ],
      "regel": {
       "titel": "Fragewörter mit Hut",
-      "text": "Fragewörter tragen immer einen Akzent wie einen kleinen Hut: ¿qué? = was?, ¿dónde? = wo?, ¿cuándo? = wann? Sie stehen gleich vorn, direkt nach dem ¿.",
+      "text": "Fragewörter tragen immer einen Akzent wie einen kleinen Hut: ¿qué? = was?, ¿dónde? = wo?, ¿cuándo? = wann?, ¿cuántos? = wie viele? Sie stehen meist ganz vorn in der Frage.",
       "beispiele": [
        [
         "¿Qué haces el lunes?",
@@ -2833,8 +2834,8 @@
        ],
        [
         "lucia",
-        "¡Es mi cumpleaños! ¿Vienes a mi fiesta?",
-        "Ich habe Geburtstag! Kommst du zu meiner Party?"
+        "¡El sábado es mi cumpleaños! ¿Vienes a mi fiesta?",
+        "Am Samstag habe ich Geburtstag! Kommst du zu meiner Party?"
        ],
        [
         "pablo",
@@ -2902,15 +2903,15 @@
      ],
      "fehler": [
       {
-       "falsch": "Los sábado juego al fútbol.",
-       "richtig": "Los sábados juego al fútbol.",
+       "falsch": "Todos los sábado juego al fútbol.",
+       "richtig": "Todos los sábados juego al fútbol.",
        "wort": "sábado",
        "korrektur": "sábados",
        "choices": [
         "sábades",
         "sábada"
        ],
-       "tipp": "Jeden Samstag = los sábados, mit -s. Nur lunes bis viernes bleiben gleich."
+       "tipp": "Jeden Samstag = todos los sábados, mit -s. Nur lunes bis viernes bleiben in der Mehrzahl gleich."
       },
       {
        "falsch": "La lunes tengo música.",
@@ -2935,15 +2936,15 @@
        "tipp": "Wo jemand ist, fragt man mit estar: ¿Dónde está?"
       },
       {
-       "falsch": "El sábado es divertida.",
-       "richtig": "El sábado es divertido.",
+       "falsch": "El sábado es un día divertida.",
+       "richtig": "El sábado es un día divertido.",
        "wort": "divertida",
        "korrektur": "divertido",
        "choices": [
         "divertidas",
         "divertidos"
        ],
-       "tipp": "el sábado ist männlich und nur einer – also divertido."
+       "tipp": "un día ist männlich und nur einer – also divertido. Achtung: el día endet auf -a und ist trotzdem männlich!"
       }
      ]
     },
@@ -2962,7 +2963,8 @@
       [
        "el baloncesto",
        "der Basketball",
-       "🏀"
+       "🏀",
+       "In Lateinamerika sagt man oft el básquetbol."
       ],
       [
        "la natación",
@@ -3106,7 +3108,7 @@
        "an": "lucia"
       },
       {
-       "sag": "Dale tres pelotas de baloncesto a Pablo.",
+       "sag": "Dale tres balones de baloncesto a Pablo.",
        "de": "Gib Pablo drei Basketbälle.",
        "ding": "🏀",
        "anzahl": 3,
@@ -3120,7 +3122,7 @@
        "an": "pablo"
       },
       {
-       "sag": "Dale dos pelotas de fútbol a Lucía.",
+       "sag": "Dale dos balones de fútbol a Lucía.",
        "de": "Gib Lucía zwei Fußbälle.",
        "ding": "⚽",
        "anzahl": 2,
@@ -3140,8 +3142,8 @@
        "tipp": "Bei Tätigkeiten heißt es immer me gusta."
       },
       {
-       "falsch": "Juego al fútbol con mi amigos.",
-       "richtig": "Juego al fútbol con mis amigos.",
+       "falsch": "Juego al fútbol con mi tres amigos.",
+       "richtig": "Juego al fútbol con mis tres amigos.",
        "wort": "mi",
        "korrektur": "mis",
        "choices": [
@@ -3223,7 +3225,7 @@
        "el paraguas",
        "der Regenschirm",
        "☂️",
-       "para + aguas: hält das Wasser ab. Mehrzahl: los paraguas – bleibt gleich."
+       "parar (aufhalten) + aguas (Wasser): hält das Wasser ab. Mehrzahl: los paraguas – bleibt gleich."
       ]
      ],
      "saetze": [
@@ -3366,8 +3368,8 @@
        "tipp": "la nube ist weiblich – also la."
       },
       {
-       "falsch": "Hay muchas nube.",
-       "richtig": "Hay muchas nubes.",
+       "falsch": "Hay muchas nube grises.",
+       "richtig": "Hay muchas nubes grises.",
        "wort": "nube",
        "korrektur": "nubes",
        "choices": [
@@ -3407,45 +3409,45 @@
      "ziel": "Ich kann bis zwanzig zählen und sagen, wie viele es gibt.",
      "woerter": [
       [
-       "el once",
-       "die Elf",
+       "once",
+       "elf",
        "1️⃣1️⃣",
-       "Zahlen als Namen sind männlich: el once. Im Satz ohne el: Tengo once años."
+       "11 bis 15 haben eigene Namen: once, doce, trece, catorce, quince."
       ],
       [
-       "el doce",
-       "die Zwölf",
+       "doce",
+       "zwölf",
        "1️⃣2️⃣"
       ],
       [
-       "el trece",
-       "die Dreizehn",
+       "trece",
+       "dreizehn",
        "1️⃣3️⃣"
       ],
       [
-       "el catorce",
-       "die Vierzehn",
+       "catorce",
+       "vierzehn",
        "1️⃣4️⃣"
       ],
       [
-       "el quince",
-       "die Fünfzehn",
+       "quince",
+       "fünfzehn",
        "1️⃣5️⃣"
       ],
       [
-       "el dieciséis",
-       "die Sechzehn",
+       "dieciséis",
+       "sechzehn",
        "1️⃣6️⃣",
-       "Ab 16 ganz einfach: dieci + Zahl. dieciséis, diecisiete, dieciocho, diecinueve."
+       "Ab 16 ganz einfach: dieci + Zahl: dieciséis (mit Akzent!), diecisiete, dieciocho, diecinueve."
       ],
       [
-       "el diecisiete",
-       "die Siebzehn",
+       "diecisiete",
+       "siebzehn",
        "1️⃣7️⃣"
       ],
       [
-       "el veinte",
-       "die Zwanzig",
+       "veinte",
+       "zwanzig",
        "2️⃣0️⃣"
       ]
      ],
@@ -3600,15 +3602,15 @@
        "tipp": "Wie viele es gibt, sagt man mit hay."
       },
       {
-       "falsch": "Hay doce lápiz.",
-       "richtig": "Hay doce lápices.",
+       "falsch": "Hay doce lápiz amarillos.",
+       "richtig": "Hay doce lápices amarillos.",
        "wort": "lápiz",
        "korrektur": "lápices",
        "choices": [
         "lápizes",
         "lápizs"
        ],
-       "tipp": "Aus z wird in der Mehrzahl c: lápiz → lápices."
+       "tipp": "Aus z wird in der Mehrzahl c, und es kommt -es dran: lápiz → lápices."
       },
       {
        "falsch": "El gato hay en la cocina.",
