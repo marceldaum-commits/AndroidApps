@@ -44,7 +44,7 @@ for (const modus of ['wasm', 'js']) {
   check(!!put && put.id === id && put.schreib === schreib && /^text\/plain/.test(put.type || '') && !put.cookie && /^[A-Za-z0-9_-]{16}\.[A-Za-z0-9_-]+$/.test(put.body) && put.body.length < 24000, `${modus}: Bericht hochgeladen – „<iv>.<verschlüsselt>“, mit Schreib-Geheimnis, ohne Cookie`);
   check(!!put && !put.body.includes('raumlicht') && !put.body.includes(key) && !JSON.stringify(seen).includes(key), `${modus}: der Server sieht weder Klartext noch den Schlüssel`);
   let report = null; try { report = JSON.parse(await decrypt(put.body, key)); } catch (e) { console.log('     Entschlüsseln: ' + e.message); }
-  check(!!report && report.format === 1 && report.app === 'raumlicht' && report.appName === 'Raumlicht' && /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/.test(report.stand) && Array.isArray(report.fortschritt) && report.fortschritt.length === 3,
+  check(!!report && report.format === 1 && report.app === 'raumlicht' && report.appName === 'Raumlicht' && /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/.test(report.stand) && Array.isArray(report.fortschritt) && report.fortschritt.length === 1 && report.fortschritt[0].titel === 'Vektoren und Geometrie' && report.fortschritt[0].von === 92,
     `${modus}: mit dem Schlüssel aus dem Link lässt sich der Bericht entschlüsseln und lesen`);
   let wrong = false; try { await decrypt(put.body, key.slice(0, 42) + (key[42] === 'A' ? 'B' : 'A')); } catch (e) { wrong = true; }
   check(wrong, `${modus}: mit einem falschen Schlüssel geht es nicht`);

@@ -172,7 +172,7 @@ fun LevelScreen(
             Row(Modifier.fillMaxWidth().padding(end = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = onBack) { BackArrow() }
                 Column(Modifier.weight(1f)) {
-                    Text(caption ?: "${chapter.emoji} ${chapter.title} · Aufgabe ${level.id}", style = MaterialTheme.typography.labelMedium, color = accent)
+                    Text(caption ?: "${chapter.emoji} ${chapter.title} · Aufgabe ${de.raumlicht.core.model.Levels.label(level.id)}", style = MaterialTheme.typography.labelMedium, color = accent)
                     Text(level.title, style = MaterialTheme.typography.titleMedium, maxLines = 1)
                 }
                 if (level.abi) Text("🎓 Abi", Modifier.padding(end = 8.dp).background(Q.Orange.copy(alpha = 0.2f), RoundedCornerShape(8.dp)).border(1.dp, Q.Orange, RoundedCornerShape(8.dp)).padding(horizontal = 8.dp, vertical = 3.dp),

@@ -17,15 +17,13 @@ for (const [w, h, name] of [[1920, 870, 'pc'], [1366, 700, 'laptop']]) for (cons
   await page.goto(url + '?modus=' + modus); await page.waitForFunction(() => document.getElementById('start').style.display === 'none', null, { timeout: 120000 }); await page.waitForTimeout(5000);
   const before = await page.screenshot({ path: `${out}/breit-${name}-${modus}-1-start.png` });
   const side = Math.min(640, Math.max(440, w * 0.4)); const left = w - side;
-  // „Analysis“ ist der mittlere der drei Gebiets-Knöpfe oben in der rechten Spalte
-  await page.mouse.click(left + side / 2, 92); await page.waitForTimeout(2500); const after = await page.screenshot({ path: `${out}/breit-${name}-${modus}-2-analysis.png` });
-  check(Buffer.compare(before, after) !== 0, `${name}/${modus}: Gebiet in der rechten Spalte lässt sich wählen`);
   // „← Alle Apps“ sitzt in der Kopfzeile der rechten Spalte, links neben dem Zahnrad
   await page.evaluate(() => { window.__ziele = []; window.__rlAppsZiel = (u, allein) => window.__ziele.push([u, allein]); });
   await page.mouse.click(w - 111, 34); await page.waitForTimeout(600); const ziele = await page.evaluate(() => window.__ziele);
   check(ziele.length === 1 && ziele[0][0] === 'https://www.mathenachhilfe-online.com/lern-apps/?src=raumlicht-kopf' && ziele[0][1] === false, `${name}/${modus}: „← Alle Apps“ führt zur App-Auswahl der Website` + (ziele.length ? '' : ' – Knopf nicht getroffen'));
-  // erste Aufgabe des Kapitels antippen (Zeile unter dem Kapitelkopf): die Aufgabe öffnet sich
-  await page.mouse.click(left + side / 2, h - 30); await page.waitForTimeout(600);
+  // „Analysis & Zufall erleben“ ist der rechte der beiden Knöpfe oben in der rechten Spalte: führt auf die Erleben-Seite (eigene Spalte in der Mitte)
+  await page.mouse.click(left + side * 0.75, 92); await page.waitForTimeout(2500); const after = await page.screenshot({ path: `${out}/breit-${name}-${modus}-2-erleben.png` });
+  check(Buffer.compare(before, after) !== 0, `${name}/${modus}: „Analysis & Zufall erleben“ lässt sich von der Startseite öffnen`);
   check(errs.length === 0, errs.length ? `${name}/${modus}: Fehler: ` + errs[0] : `${name}/${modus}: keine Fehler`);
   await ctx.close();
 }

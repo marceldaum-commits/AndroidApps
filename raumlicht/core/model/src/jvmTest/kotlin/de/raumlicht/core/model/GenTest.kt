@@ -34,7 +34,7 @@ class GenTest {
         assertNotEquals(Gen.jam(JamTopic.MIX, 1, 0).id, Gen.jam(JamTopic.MIX, 2, 0).id)
         repeat(40) { n -> assertTrue(Gen.jam(JamTopic.SCHNITT, 7, n).id.startsWith("jam-cross")); check(Gen.jam(JamTopic.MIX, 9, n)) }
         val kinds = (0 until 60).map { Gen.jam(JamTopic.BEWEGUNG, 3, it).id.substringAfter("jam-").substringBeforeLast("-") }.toSet()
-        assertEquals(setOf("motion_pos", "motion_speed", "motion_time", "rotation"), kinds)
+        assertEquals(setOf("motion_pos", "motion_speed", "motion_time"), kinds)
     }
 
     @Test fun badges() {

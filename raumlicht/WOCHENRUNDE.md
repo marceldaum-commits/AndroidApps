@@ -79,6 +79,11 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 - **Experimentopia-Links mit festen Namen** (ab Fr 20.11. auf `experimentopia-test.`, danach live): `https://experimentopia.mathenachhilfe-online.com/#thema=<name>`. Für uns passend: Achterbahn-Baumeister → `energie` (sobald dort gebaut), Schatten-Aufgabe 5-6 → `optik`. Weitere Namen: `schwimmen`, `hebel`, `rollen`, `kraft`, `fallen`, `pendel`, `strom`, `magnet`, `waerme`, `licht`, `schall`, `elektromagnetismus`, `trennen`, `saeure`, `reaktion`, `vererbung`, `zellen`, `ernaehrung`, `oekologie`, `koerper`. Unbekannte Namen öffnen die Startseite. Experimentopia verlinkt nur auf freie Inhalte.
 - **Vorschlag „Aufräum-Tag“ für Fr 20.11.** (Experimentopia gibt ihn als Marcels Vorschlag weiter): Abgaben umsetzen, Direkt-Links und Querverweise bauen, neuer Inhalt nur im eigenen Profil; strittige Abgaben (u. a. Oberstufe Raumlicht/Mathe-Trainer) bleiben bis Montag unverändert. Für Raumlicht heißt das: Gauß als drei Ebenen (eigenes Profil) und Querverweise; an den 52 Analysis-/Stochastik-Aufgaben wird nichts geändert.
 
+## UMGESETZT am 19.11.2026 mit 2.18.32 (auf test)
+
+Der Umbau unten ist gebaut: 52 Aufgaben heraus, 92 Aufgaben in 16 Kapiteln, Bereich „Analysis & Zufall erleben“ (`?ziel=erleben`), Rotationskörper-Labor (`?ziel=rotation`). Einzelheiten in `MELDUNG_AN_LEITSTAND.md`.
+**Für die nächsten Updates:** nur Geometrie im Raum (LGS & Gauß als drei Ebenen, Schattenwurf, Körper im Raum, Lage Gerade–Ebene) und Erlebnis-Bereiche; keine neuen Rechenaufgaben zu Analysis oder Stochastik.
+
 ## ENTSCHEIDUNG von Marcel, direkt bestätigt am 18.11.2026 (gilt vor allem Älteren in dieser Datei)
 
 - **Die klassischen Aufgaben zu Analysis und Stochastik kommen aus Raumlicht heraus.** Der Mathe-Trainer hat alle 52 Aufgabentypen schon (Abgleich vom 18.11.) – also **streichen, nicht verschieben**. An ihre Stelle kommen Links „Mehr üben im Mathe-Trainer“ (`#/u/kurve`, `integral`, `expln`, `regeln`, `anwenden`, `extremwert`, `s-verteilung`, `s-test`, `s-bedingt`, `s-baum`, `a-rotation`).

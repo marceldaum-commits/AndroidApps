@@ -52,8 +52,8 @@ class ProTest {
         Levels.chapters.forEach { c -> val free = c.levels.count { Pro.freeLevel(it.id) }
             assertEquals("Kapitel ${c.number}", if (c.number <= 6) c.levels.size else 2, free)
             if (c.number > 6) assertEquals(listOf(true, true, false), c.levels.take(3).map { Pro.freeLevel(it.id) }) }
-        assertEquals(Levels.chapters.filter { it.number <= 6 }.sumOf { it.levels.size } + 20 * 2, Levels.all.count { Pro.freeLevel(it.id) })
-        assertFalse(Pro.locked("level/1-6")); assertFalse(Pro.locked("level/7-2")); assertTrue(Pro.locked("level/7-3")); assertTrue(Pro.locked("level/25-7"))
+        assertEquals(Levels.chapters.filter { it.number <= 6 }.sumOf { it.levels.size } + (Levels.chapters.size - 6) * 2, Levels.all.count { Pro.freeLevel(it.id) })
+        assertFalse(Pro.locked("level/1-6")); assertFalse(Pro.locked("level/7-2")); assertTrue(Pro.locked("level/7-3")); assertTrue(Pro.locked("level/26-7"))
         // Tagesaufgabe, Spiele und Grundfunktionen bleiben frei
         listOf("home", "tagesaufgabe", "jam", "spickzettel", "abzeichen", "backstage", "abi", "achterbahn/huegel", "raumflug", "galton", "ballerbude", "zufall", "einstellungen").forEach { assertFalse(it, Pro.locked(it)) }
         // Üben: nur „Einstieg“ frei

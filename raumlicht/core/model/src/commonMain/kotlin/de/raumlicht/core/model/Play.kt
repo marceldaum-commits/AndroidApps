@@ -139,7 +139,7 @@ object Quick {
     const val TASKS = 6
     fun pick(seed: Long): List<Level> {
         val r = Random(seed)
-        return Area.entries.flatMap { area -> Levels.chapters.filter { it.area == area }.flatMap { it.levels }.filter { !it.abi }.shuffled(r).take(TASKS / 3) }
+        return Levels.all.filter { !it.abi }.shuffled(r).take(TASKS)
     }
 }
 

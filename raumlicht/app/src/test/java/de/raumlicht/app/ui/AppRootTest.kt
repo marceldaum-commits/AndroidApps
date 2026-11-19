@@ -76,7 +76,7 @@ class AppRootTest {
         start()
         val all = listOf(Routes.DAILY, Routes.JAM_HOME, Routes.jam("MIX"), Routes.SHEET, Routes.BADGES, Routes.BACKSTAGE, Routes.EXAMS, Routes.exam("zelt", false), Routes.LAGE, Routes.DUEL, Routes.TRAINING,
             Routes.WORKSHOP, Routes.BUILDER, Routes.GUIDES, Routes.guide(de.raumlicht.core.model.Guides.all.first().id), Routes.LEARN, Routes.PLANNER, Routes.CLASS, Routes.MATCH, Routes.ride("huegel"), Routes.FLIGHT,
-            Routes.GALTON, Routes.BALLOONS, Routes.CHANCE, Routes.BUILD, Routes.GHOST, Routes.RINGS, Routes.QUICK, Routes.DIARY, Routes.CALENDAR, Routes.level("16-3"))
+            Routes.GALTON, Routes.BALLOONS, Routes.CHANCE, Routes.BUILD, Routes.GHOST, Routes.RINGS, Routes.QUICK, Routes.DIARY, Routes.CALENDAR, Routes.EXPERIENCE, Routes.ROTATION, Routes.level("18-3"))
         all.forEach { r -> nav.restart(r); settle(); assertEquals(r, listOf(Routes.HOME, r), nav.stack); rule.onNodeWithTag("gebiet-GEOMETRIE").assertDoesNotExist() }
         nav.restart("gibt/es/nicht"); settle(); settle(); assertEquals(listOf(Routes.HOME), nav.stack)       // unbekanntes Ziel: zurück zur Startseite
         assertTrue(Routes.isAction("level/3-2") && Routes.isAction("jam/MIX") && Routes.isAction("abi/zelt/1") && !Routes.isAction(Routes.HOME) && !Routes.isAction(Routes.EXAMS) && !Routes.isAction(Routes.BACKSTAGE))
@@ -303,11 +303,42 @@ class AppRootTest {
         nav.restart(Routes.BACKSTAGE); settle(); rule.onNodeWithTag("alle-apps").assertDoesNotExist()
     }
 
+    /** „Analysis & Zufall erleben“: von der Startseite erreichbar, alle Erlebnis-Bereiche samt Rotationskörper-Labor, dazu die Verweise zum Üben im Mathe-Trainer. */
+    @Test fun analysisUndZufallErleben() {
+        start(); settle(); rule.onNodeWithTag("erleben").performClick(); settle(); assertEquals(Routes.EXPERIENCE, nav.top)
+        for (t in listOf("Kurve abfahren (Fahrersicht)", "Achterbahn-Baumeister", "Geisterfahrt gegen f′", "Rotationskörper-Labor", "Zufallsmaschine", "Galton-Brett", "Binomial-Labor")) {
+            rule.onNode(hasScrollToNodeAction()).performScrollToNode(hasText(t)); rule.onNodeWithText(t).assertExists() }
+        rule.onNodeWithText("Flug durch den Raum").assertDoesNotExist()
+        rule.onRoot().captureRoboImage("../screenshots/92_analysis_zufall_erleben.png")
+        rule.onNode(hasScrollToNodeAction()).performScrollToNode(hasTestTag("trainer-links")); rule.onNodeWithTag("trainer-kurve").assertExists(); rule.onNodeWithTag("trainer-s-verteilung").assertExists()
+        rule.onNodeWithText("Die Rechenaufgaben zu Analysis und Stochastik sind jetzt im Mathe-Trainer.", substring = true).assertExists()
+        rule.onNode(hasScrollToNodeAction()).performScrollToNode(hasText("Rotationskörper-Labor")); rule.onNodeWithText("Rotationskörper-Labor").performClick(); settle(); assertEquals(Routes.ROTATION, nav.top)
+        // gestrichene Aufgaben führen nirgendwohin: zurück zur Startseite statt auf einen leeren Bildschirm
+        nav.restart(Routes.level("14-2")); settle(); assertEquals(listOf(Routes.HOME), nav.stack)
+    }
+
+    /** Rotationskörper-Labor: Vorlage wählen, eigene Zahlen einstellen, Volumen mit ganzem Rechenweg lesen – und eine verständliche Rückmeldung, wenn die Eingabe nicht passt. */
+    @Test fun rotationskoerperLabor() {
+        start(); nav.go(Routes.ROTATION); settle()
+        rule.onNodeWithTag("rotation-satz").assertTextContains("Zylinder mit Radius 2 und Höhe 4", substring = true); rule.onNodeWithTag("rotation-volumen").performScrollTo(); rule.onNodeWithText("16 · π").assertExists()
+        rule.onNodeWithTag("rotation-weg-0", useUnmergedTree = true).assertTextContains("V = π · ∫ f(x)² dx von 0 bis 4", substring = true); rule.onNodeWithTag("rotation-weg-5", useUnmergedTree = true).assertTextContains("V = 16 · π ≈ 50,27", substring = true)
+        rule.onNodeWithTag("rotation-probe", useUnmergedTree = true).assertTextContains("16π", substring = true)
+        rule.onRoot().captureRoboImage("../screenshots/93_rotationskoerper_labor.png")
+        // eigene Werte: Kugel mit Radius 3, dann Grenzen verschieben
+        rule.onNodeWithTag("rotation-vorlage-Kugel").performScrollTo().performClick(); settle()
+        rule.onNodeWithTag("rotation-volumen").performScrollTo(); rule.onNodeWithText("36 · π").assertExists(); rule.onNodeWithTag("rotation-satz").assertTextContains("Kugel mit Radius 3", substring = true)
+        rule.onNodeWithTag("plus-rotation-a").performScrollTo().performClick(); rule.onNodeWithTag("plus-rotation-a").performClick(); rule.onNodeWithTag("plus-rotation-a").performClick(); settle()
+        rule.onNodeWithTag("rotation-satz").assertTextContains("Halbkugel mit Radius 3", substring = true); rule.onNodeWithTag("rotation-volumen").performScrollTo(); rule.onNodeWithText("18 · π").assertExists()
+        // unpassend: linke Grenze über die rechte hinaus → Rückmeldung statt falschem Körper, kein Volumen
+        repeat(3) { rule.onNodeWithTag("plus-rotation-a").performScrollTo().performClick() }; settle()
+        rule.onNodeWithTag("rotation-satz").assertTextContains("kleiner sein als die rechte", substring = true); rule.onNodeWithTag("rotation-volumen").assertDoesNotExist()
+    }
+
     /** „Kommt bald“ auf der Seite „Mehr“: sichtbar, ohne Datum, ohne Kaufhinweis – und Antippen führt nirgendwohin. */
     @Test fun kommtBald() {
         start(); nav.go(Routes.BACKSTAGE); settle()
-        rule.onNode(hasScrollToNodeAction()).performScrollToNode(hasText("Funktionenscharen")); settle(); rule.onNodeWithText("KOMMT BALD").assertExists()
-        rule.onNodeWithText("Normalverteilung").assertExists().performClick(); settle(); assertEquals(Routes.BACKSTAGE, nav.top); rule.onRoot().captureRoboImage("../screenshots/88_kommt_bald.png")
+        rule.onNode(hasScrollToNodeAction()).performScrollToNode(hasText("Körper im Raum")); settle(); rule.onNodeWithText("KOMMT BALD").assertExists()
+        rule.onNodeWithText("Schattenwurf").assertExists().performClick(); settle(); assertEquals(Routes.BACKSTAGE, nav.top); rule.onRoot().captureRoboImage("../screenshots/88_kommt_bald.png")
     }
 
     @Test fun fremderCodeSchaltetNichtsFrei() {
@@ -351,8 +382,8 @@ class AppRootTest {
 
     @Test fun proOffMeansEverythingOpen() {
         start()                                                                                                             // Auslieferungsstand
-        nav.go(Routes.level("25-7")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist()
-        rule.onNodeWithText(Levels.byId("25-7")!!.title, substring = true).assertExists()
+        nav.go(Routes.level("26-7")); settle(); rule.onNodeWithTag("pro-grund").assertDoesNotExist()
+        rule.onNodeWithText(Levels.byId("26-7")!!.title, substring = true).assertExists()
         // kein Eintrag in den Einstellungen, kein Wort von einem Kauf
         nav.back(); settle(); org.robolectric.shadows.ShadowSystemClock.advanceBy(java.time.Duration.ofMillis(1000))
         nav.go(Routes.SETTINGS); settle(); rule.onNodeWithTag("einst").assertExists(); rule.onNodeWithTag("pro-eintrag").assertDoesNotExist()

@@ -177,7 +177,7 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
     if (run != null && idx < run.size) {
         val level = run[idx]
         LevelScreen(level, Levels.chapters.first { it.number == level.chapter }, false, {}, onSolved = { s, a -> if (s == 3) hits++; onSolved(level, s, a) }, onNext = { idx++ }, onBack = { pack = null },
-            caption = "🏫 Klassen-Paket · ${idx + 1}/${run.size} · Aufgabe ${level.id}", badge = "🎯 $hits")
+            caption = "🏫 Klassen-Paket · ${idx + 1}/${run.size} · Aufgabe ${Levels.label(level.id)}", badge = "🎯 $hits")
         return
     }
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding().verticalScroll(rememberScrollState())) {
@@ -201,13 +201,13 @@ fun ClassScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit) {
         }
         Text("Paket zusammenstellen (bis ${ClassCode.MAX} Aufgaben)", Modifier.padding(start = 16.dp, top = 16.dp, bottom = 6.dp), color = Q.Muted, fontSize = 12.sp, fontWeight = FontWeight.Bold)
         Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 14.dp), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            Levels.chapters.forEach { c -> Chip("${c.emoji} ${c.number}", c.number == chapter, stageColor(c.color)) { chapter = c.number } }
+            Levels.chapters.forEach { c -> Chip("${c.emoji} ${Levels.shown(c.number)}", c.number == chapter, stageColor(c.color)) { chapter = c.number } }
         }
         val ch = Levels.chapters.first { it.number == chapter }
         Text("${ch.area.title} · ${ch.title}", Modifier.padding(start = 16.dp, top = 8.dp), color = stageColor(ch.color), fontWeight = FontWeight.Bold)
         FlowRow(Modifier.padding(horizontal = 14.dp, vertical = 6.dp), horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
             ch.levels.forEach { l ->
-                Chip("${l.id} ${l.title}", l.id in picked, stageColor(ch.color), Modifier.testTag("wahl-${l.id}")) {
+                Chip("${Levels.label(l.id)} ${l.title}", l.id in picked, stageColor(ch.color), Modifier.testTag("wahl-${l.id}")) {
                     picked = if (l.id in picked) picked - l.id else if (picked.size < ClassCode.MAX) picked + l.id else picked
                 }
             }

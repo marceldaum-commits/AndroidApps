@@ -1,0 +1,46 @@
+# Hält den Branch „quasselquest-test“ aktuell. Von dort holt sich der Server die fertige WebApp
+# (Ordner quasselquest/webapp/) und liefert sie unter https://quasselquest-test.mathenachhilfe-online.com aus.
+#
+# Läuft automatisch, sobald auf dem Entwicklungs-Branch die WebApp oder die Meldung an den Leitstand geändert wurde.
+# Der Branch wird nur vorgespult (kein Überschreiben). „quasselquest-live“ setzt nur der Leitstand nach dem Test.
+name: Quasselquest WebApp → Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["ccr-0e3accf3-cdxlc8"]
+    paths: ["quasselquest/webapp/**", "quasselquest/MELDUNG_AN_LEITSTAND.md", ".github/workflows/quasselquest-web-test.yml"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: quasselquest-web-test
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ccr-0e3accf3-cdxlc8
+          fetch-depth: 0
+
+      - name: WebApp prüfen (vollständig, nur erlaubte Dateien, Version überall gleich)
+        working-directory: quasselquest
+        run: |
+          set -euo pipefail
+          for f in index.html sw.js app.js audio.js content.js version.js app.css manifest.webmanifest version.json datenschutz.html; do
+            [ -s "webapp/$f" ] || { echo "::error::webapp/$f fehlt"; exit 1; }
+          done
+          for f in webapp/*.js; do node --check "$f"; done
+          bad=$(find webapp -type f ! -regex '.*\.\(html\|css\|js\|mjs\|json\|webmanifest\|svg\|png\|jpg\|webp\|ico\|woff2\|ttf\|otf\|txt\|map\|mp3\|ogg\|wav\)$' || true)
+          [ -z "$bad" ] || { echo "::error::Nicht erlaubte Dateien: $bad"; exit 1; }
+          [ -z "$(find webapp -type l)" ] || { echo "::error::Symlinks in webapp/"; exit 1; }
+          size=$(du -sm webapp | cut -f1); [ "$size" -le 120 ] || { echo "::error::webapp ist $size MB groß (erlaubt: 120)"; exit 1; }
+          node --test tools/test-inhalt.mjs
+          echo "WebApp $(grep -oP '"version": "\K[^"]+' webapp/version.json), $size MB – in Ordnung"
+
+      - name: Branch quasselquest-test vorspulen
+        run: git push origin HEAD:refs/heads/quasselquest-test

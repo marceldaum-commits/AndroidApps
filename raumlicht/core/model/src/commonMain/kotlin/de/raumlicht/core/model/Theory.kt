@@ -778,8 +778,11 @@ object Theory {
             "M(2|4|4) – Probe: Der Punkt liegt zwischen A und B ✓"),
         "Raten kostet Zeit – eine kurze Rechnung auf Papier bringt dich schneller ins Ziel.")
 
-    /** Alle thematischen Karten: Geometrie, Analysis, Stochastik (die allgemeine Rückfall-Karte steht in [general]) */
-    val cards: List<TheoryCard> = geometry + analysis + stochastics
+    /** Die Karten zu den Aufgaben: seit 2.18.32 nur Geometrie im Raum (die allgemeine Rückfall-Karte steht in [general]) */
+    val cards: List<TheoryCard> = geometry
+    /** Karten zu Analysis und Zufall: gehören zum Bereich „Analysis & Zufall erleben“ (z. B. die Karte „rotation“ im Rotationskörper-Labor), nicht mehr zu Aufgaben */
+    val erleben: List<TheoryCard> = analysis + stochastics
+    fun card(key: String): TheoryCard? = (cards + erleben).firstOrNull { it.key == key }
 
     private val byKey = cards.associateBy { it.key }
 

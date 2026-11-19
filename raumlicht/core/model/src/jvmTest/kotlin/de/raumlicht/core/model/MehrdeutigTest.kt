@@ -79,7 +79,5 @@ class MehrdeutigTest {
 
     @Test fun directionTasksSayWhichWay() {
         assertTrue("in den Raum hinein" in Levels.byId("10-4")!!.mission); assertTrue("nach oben" in Levels.byId("19-3")!!.mission)
-        // weitere Aufgaben mit zwei mathematischen Lösungen, bei denen der Auftrag die gemeinte nennt
-        assertTrue("positive" in Levels.byId("14-1")!!.mission || "positiv" in Levels.byId("14-1")!!.mission); assertTrue("Tiefpunkt" in Levels.byId("14-3")!!.mission)
     }
 }

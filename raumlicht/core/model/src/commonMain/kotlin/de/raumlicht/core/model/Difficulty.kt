@@ -30,7 +30,7 @@ object Practice {
     class Source(val id: String, val tier: JamLevel, val topics: Set<JamTopic>, val make: (Long) -> Level)
     /** Alle Aufgabenarten des endlosen Übens */
     val sources: List<Source> =
-        Gen.Kind.entries.map { k -> Source(k.name, tier(k), JamTopic.entries.filter { it != JamTopic.MIX && k in it.kinds }.toSet()) { seed -> Gen.level(k, seed) } } +
+        Gen.active.map { k -> Source(k.name, tier(k), JamTopic.entries.filter { it != JamTopic.MIX && k in it.kinds }.toSet()) { seed -> Gen.level(k, seed) } } +
         MoreGen.Kind.entries.map { k -> Source(k.name, k.tier, setOf(k.topic)) { seed -> MoreGen.level(k, seed) } } +
         ProGen.Kind.entries.map { k -> Source(k.name, JamLevel.PROFI, proTopics(k)) { seed -> ProGen.level(k, seed) } }
     /** Aufgabenarten zu Thema und Stufe ([level] null = alle Stufen) */

@@ -246,7 +246,7 @@ fun QuickScreen(onSolved: (Level, Int, Int) -> Unit, onBack: () -> Unit, seed: L
             Spacer(Modifier.height(24.dp)); Lux(if (idx < 0) LuxMood.IDLE else if (hits >= 4) LuxMood.HAPPY else LuxMood.THINK, size = 130.dp)
             if (idx < 0) {
                 Text("Wie im Pflichtteil", fontSize = 26.sp, fontWeight = FontWeight.Black, modifier = Modifier.padding(top = 8.dp))
-                Text("Sechs kurze Aufgaben: je zwei aus Geometrie, Analysis und Stochastik. Kein Tipp, kein Taschenrechner – nur du und dein Kopf.", Modifier.padding(horizontal = 28.dp, vertical = 12.dp), textAlign = TextAlign.Center)
+                Text("Sechs kurze Aufgaben aus der Geometrie im Raum, bunt gemischt. Kein Tipp, kein Taschenrechner – nur du und dein Kopf.", Modifier.padding(horizontal = 28.dp, vertical = 12.dp), textAlign = TextAlign.Center)
                 NeonButton({ idx = 0; hits = 0 }, Modifier.padding(16.dp), color = Q.Green) { Text("▶ Los geht’s", fontWeight = FontWeight.Black) }
             } else {
                 Text("$hits von ${pack.size}", fontSize = 36.sp, fontWeight = FontWeight.Black, color = Q.Yellow, modifier = Modifier.padding(top = 8.dp))

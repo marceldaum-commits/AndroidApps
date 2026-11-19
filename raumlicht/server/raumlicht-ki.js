@@ -33,7 +33,7 @@ const HERKUNFT = ['https://raumlicht.mathenachhilfe-online.com', 'https://raumli
 const ALPHABET = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 const MODELL = 'claude-opus-5-5';
 
-const SYSTEM = `Du bist Lux, der Lern-Begleiter der App „Raumlicht“ – einer Mathe-App für die Oberstufe (Analytische Geometrie und Vektoren, dazu Analysis und Stochastik fürs Abitur).
+const SYSTEM = `Du bist Lux, der Lern-Begleiter der App „Raumlicht“ – einer Mathe-App für die Oberstufe (Analytische Geometrie und Vektoren im Raum fürs Abitur).
 Eine Schülerin oder ein Schüler hat eine Aufgabe falsch gelöst und bittet dich um Hilfe. Du bekommst die Aufgabe, die Eingabe, die Rückmeldung der App und – nur für dich – den Rechenweg der Musterlösung.
 
 So antwortest du:

@@ -2,6 +2,31 @@
 
 Neueste oben.
 
+## 19.11.2026 – 2.18.32 auf test: Umbau aufs Profil „Geometrie im Raum + Analysis & Zufall erleben“ (von Marcel direkt bestätigt am 18.11.; auf heute vorgezogen laut AppZentrale)
+
+**Herausgenommen (gestrichen, nicht verschoben – der Mathe-Trainer hat laut seinem Abgleich alle Aufgabentypen):**
+- 10 Kapitel, 52 Aufgaben: 12 Rotationskörper, 13 Wahrscheinlichkeit, 14 Kurvendiskussion, 15 Funktionen bauen, 16 Bäume/Tafeln/Binomial, 17 Ableiten & Anwenden, 22 Integrale & Flächen, 23 Erwartung/Sigma/Testen, 24 Binomialverteilung, 25 e-Funktion & Logarithmus.
+- 3 von 7 Abi-Prüfungsaufgaben (Lichtbogen, Lostrommel, Einlass). Im endlosen Üben und in der Tagesaufgabe die Aufgabenart „Rotationskörper-Volumen“. „Ohne Hilfsmittel“ zieht 6 Aufgaben nur noch aus der Geometrie.
+- „Kommt bald“: Unabhängigkeit, Zufallsgrößen, Normalverteilung, Sinus/Kosinus, Funktionenscharen → ersetzt durch Schattenwurf, Körper im Raum, Lage von Gerade und Ebene (LGS bleibt).
+
+**Bleibt / neu:**
+- **92 Aufgaben in 16 Kapiteln**, angezeigt lückenlos 1–16. Intern bleiben die Nummern 1–11, 18–21, 26 (Sterne, Links von außen wie `?ziel=level/5-6`, `level/3-1`, `level/5-1` gelten weiter). 4 Abi-Prüfungsaufgaben (Festivalzelt, Laser & Leinwand, Drohnen-Show, Planetarium).
+- **Startseite:** statt drei Gebiets-Reitern jetzt „📐 Geometrie im Raum“ und daneben „🎢 Analysis & Zufall erleben ›“.
+- **Seite „Analysis & Zufall erleben“** (`?ziel=erleben`): Kurve abfahren, Achterbahn-Baumeister, Geisterfahrt gegen f′, Rotationskörper-Labor, Zufallsmaschine, Galton-Brett, Binomial-Labor – und unten „Mehr üben im Mathe-Trainer“ mit zehn Links (`#/u/regeln`, `kurve`, `extremwert`, `integral`, `a-rotation`, `expln`, `s-baum`, `s-bedingt`, `s-verteilung`, `s-test`).
+- **Rotationskörper-Labor** (`?ziel=rotation`, frei, kein Pro): sieben Vorlagen (Zylinder, Kegel, Kegelstumpf, Vase, Trichter, Kugel, Kelch) und eigene Kurve (Gerade, Wurzel, Halbkreis, Parabel) mit eigenen Zahlen und Grenzen; der Körper wächst in 3D. Volumen exakt als Vielfaches von π und gerundet, Rechenweg in sechs Schritten, Probe mit der Schulformel bei Zylinder, Kegel, Kugel; verständliche Rückmeldung bei unpassender Eingabe.
+
+**Geprüft:**
+- Jedes Volumen des Labors ist doppelt gerechnet: exakt (Stammfunktion, Brüche) und mit 4000 bzw. 20000 Scheiben – für alle Vorlagen und alle 400+ einstellbaren gültigen Kombinationen (`ErlebenTest`). Bekannte Körper gegen die Schulformeln (Zylinder 16π, Kegel 9π, Kugel 36π, Halbkugel 18π).
+- Test, dass nirgends eine gestrichene Aufgabe auftaucht (Tour, Abi-Teil, Pflichtteil, Tagesaufgabe, Üben, Formelsammlung-Sprünge, „Kommt bald“); alte Links auf gestrichene Aufgaben führen zur Startseite.
+- 189 Logik-Tests, 150 Oberflächentests, Lint, 131 Browser-Prüfungen (Wasm und JS) – alle bestanden. Bilder: `screenshots/92_analysis_zufall_erleben.png`, `93_rotationskoerper_labor.png`.
+
+**Bitte von dir / offen:**
+- **Shop-Texte:** Raumlicht Pro und KI-Abi-Pass sollten nicht mehr „Analysis und Stochastik“ versprechen. In der App nennt Pro jetzt „alle 92 Aufgaben in 16 Kapiteln“, 4 Prüfungsaufgaben; der KI-Tutor erklärt weiter jede Aufgabe. Im Server-Prompt (`raumlicht/server/raumlicht-ki.js`) steht jetzt „Analytische Geometrie und Vektoren im Raum“ – bitte übernehmen.
+- **/lern-apps/-Text und Eltern-Seite:** Raumlicht meldet im Eltern-Bericht nur noch ein Gebiet („Vektoren und Geometrie“, 92 Aufgaben).
+- **Noch nicht gelöscht:** Die Definitionen der gestrichenen Kapitel liegen ungenutzt im Quelltext (`Levels.removed`). Ich lösche sie nach deiner Live-Freigabe, damit ein Zurück bis dahin leicht bleibt.
+- **Android-Widget „Lernstand“** (APK pausiert) zeigt noch drei Balken, zwei davon bleiben leer. Wird angepasst, falls die APK wieder ausgeliefert wird.
+- Links zum Mathe-Trainer: Die zehn Kennungen stammen aus seiner Liste vom 18.11.; ich habe sie nicht einzeln im Browser geöffnet.
+
 ## 18.11.2026 – 2.18.31 auf test: Knopf „← Alle Apps“ (Marcel hat hier selbst „Ok“ gesagt)
 
 - **Wo:** oben auf der Startseite neben dem Zahnrad; am PC in der Kopfzeile der rechten Spalte. Bilder: `screenshots/91_alle_apps.png` (Handy), `screenshots/90_startseite_pc.png` (PC).

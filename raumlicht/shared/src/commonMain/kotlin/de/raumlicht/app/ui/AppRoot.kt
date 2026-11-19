@@ -55,8 +55,11 @@ object Routes {
     const val QUICK = "pflichtteil"
     const val DIARY = "fehler-tagebuch"
     const val CALENDAR = "kalender"
+    /** „Analysis & Zufall erleben“ (seit 2.18.32) und das Rotationskörper-Labor */
+    const val EXPERIENCE = "erleben"
+    const val ROTATION = "rotation"
     /** Seiten, die auf breiten Bildschirmen als Spalte in der Mitte stehen (Listen, Texte, Einstellungen) – alles mit Bühne oder Spielfeld nutzt die volle Breite */
-    val COLUMN_PAGES = setOf(SETTINGS, PRO, KI, PARENTS, JAM_HOME, SHEET, BADGES, BACKSTAGE, EXAMS, GUIDES, LEARN, PLANNER, DIARY, CALENDAR)
+    val COLUMN_PAGES = setOf(SETTINGS, PRO, KI, PARENTS, JAM_HOME, SHEET, BADGES, BACKSTAGE, EXAMS, GUIDES, LEARN, PLANNER, DIARY, CALENDAR, EXPERIENCE)
     fun ride(id: String) = "achterbahn/$id"
     fun guide(id: String) = "schritte/$id"
     fun exam(id: String, timed: Boolean) = "abi/$id/${if (timed) 1 else 0}"
@@ -225,13 +228,23 @@ fun AppRoot(
             jingle?.play(de.raumlicht.app.ui.fx.Sound.JINGLE, volume = 0.6f) } }) {
         Crossfade(keys.last(), animationSpec = tween(180), label = "ziel") { key -> holder.SaveableStateProvider(key) {
             val route = key.substringAfter(':'); val parts = route.split('/')
+            // „Analysis & Zufall erleben“: dieselben Einträge stehen auf der Seite „Mehr“ und auf der eigenen Seite
+            val erlebenEntries = listOf(
+            BackstageEntry("🎢", "Kurve abfahren (Fahrersicht)", "Analysis erleben: Höhe, Steigung, Krümmung, Ableitungsbahn und Fläche live", Q.Cyan, "Analysis & Zufall erleben") { nav.go(Routes.ride(Coaster.rides.first().id)) },
+            BackstageEntry("🏗️", "Achterbahn-Baumeister", "Bahn selbst bauen, Probefahrt mit echter Physik – reicht der Schwung?", Q.Cyan, "Analysis & Zufall erleben") { nav.go(Routes.BUILD) },
+            BackstageEntry("👻", "Geisterfahrt gegen f′", "Zeichne die Ableitung mit dem Finger – wie nah kommst du?", Q.Pink, "Analysis & Zufall erleben") { nav.go(Routes.GHOST) },
+            BackstageEntry("🏺", "Rotationskörper-Labor", "Kurve drehen, Körper sehen: Zylinder, Kegel, Kugel, Vase – mit Rechenweg", Q.Violet, "Analysis & Zufall erleben") { nav.go(Routes.ROTATION) },
+            BackstageEntry("🎲", "Zufallsmaschine", "Münze, Würfel oder eigene Chance: erst wetten, dann tausendmal werfen", Q.Pink, "Analysis & Zufall erleben") { nav.go(Routes.CHANCE) },
+            BackstageEntry("🎰", "Galton-Brett", "Zufall erleben: Kugeln fallen, die Binomialverteilung wächst", Q.Pink, "Analysis & Zufall erleben") { nav.go(Routes.GALTON) },
+            BackstageEntry("📊", "Binomial-Labor", "n, p und k frei einstellen: genau, höchstens, mindestens – einzeln und aufsummiert", Q.Pink, "Analysis & Zufall erleben") { nav.go(Routes.BINOMIAL) },
+            )
             // Breiter Bildschirm (PC): Seiten zum Lesen und Auswählen nicht über die ganze Breite ziehen, sondern als Spalte in die Mitte setzen
             val column = needsPro(route) || route in Routes.COLUMN_PAGES
             androidx.compose.foundation.layout.Box(androidx.compose.ui.Modifier.fillMaxSize().background(Q.Space), contentAlignment = androidx.compose.ui.Alignment.TopCenter) {
                 androidx.compose.foundation.layout.Box(if (column) androidx.compose.ui.Modifier.widthIn(max = 860.dp).fillMaxSize() else androidx.compose.ui.Modifier.fillMaxSize()) {
             if (needsPro(route)) de.raumlicht.app.ui.settings.ProScreen(Pro.what(route), false, true, enterCode, back) else
             when (parts[0]) {
-                Routes.HOME -> HomeScreen(Levels.chapters, starMap, { nav.go(Routes.level(it)) }, { nav.go(Routes.SETTINGS) }, locked = { needsPro(Routes.level(it)) }, onApps = onApps,
+                Routes.HOME -> HomeScreen(Levels.chapters, starMap, { nav.go(Routes.level(it)) }, { nav.go(Routes.SETTINGS) }, locked = { needsPro(Routes.level(it)) }, onApps = onApps, onExperience = { nav.go(Routes.EXPERIENCE) },
                     updateVersion = updateVersion, onUpdate = { nav.go(Routes.SETTINGS) },
                     dailyDone = (starMap[Daily.id(today())] ?: 0) > 0, jamBest = jamBest,
                     onDaily = { nav.go(Routes.DAILY) }, onJam = { nav.go(Routes.JAM_HOME) }, onExam = { nav.go(Routes.EXAMS) }, onMore = { nav.go(Routes.BACKSTAGE) })
@@ -275,15 +288,10 @@ fun AppRoot(
                 Routes.BACKSTAGE -> {
                     val weak = remember(starMap) { Training.levels(starMap).size }
                     BackstageScreen(listOf(
-                        BackstageEntry("🎢", "Kurve abfahren (Fahrersicht)", "Analysis erleben: Höhe, Steigung, Krümmung, Ableitungsbahn und Fläche live", Q.Cyan, "Erleben") { nav.go(Routes.ride(Coaster.rides.first().id)) },
-                        BackstageEntry("🚀", "Flug durch den Raum", "Geometrie erleben: eine Gerade entlangfliegen, durch Ebenen und Kugeln", Q.Cyan, "Erleben") { nav.go(Routes.FLIGHT) },
-                        BackstageEntry("🎈", "Ballerbude", "Ballons antippen, Lux ballert sie ab – zum Spaß, mit Aufgabe oder zu zweit", Q.Pink, "Erleben") { nav.go(Routes.BALLOONS) },
-                        BackstageEntry("🏗️", "Achterbahn-Baumeister", "Bahn selbst bauen, Probefahrt mit echter Physik – reicht der Schwung?", Q.Cyan, "Erleben") { nav.go(Routes.BUILD) },
-                        BackstageEntry("👻", "Geisterfahrt gegen f′", "Zeichne die Ableitung mit dem Finger – wie nah kommst du?", Q.Pink, "Erleben") { nav.go(Routes.GHOST) },
-                        BackstageEntry("⭕", "Ringflug", "Stell den Richtungsvektor ein und flieg durch drei Ringe", Q.Green, "Erleben") { nav.go(Routes.RINGS) },
-                        BackstageEntry("🎲", "Zufallsmaschine", "Münze, Würfel oder eigene Chance: erst wetten, dann tausendmal werfen", Q.Pink, "Erleben") { nav.go(Routes.CHANCE) },
-                        BackstageEntry("🎰", "Galton-Brett", "Stochastik erleben: Kugeln fallen, die Binomialverteilung wächst", Q.Pink, "Erleben") { nav.go(Routes.GALTON) },
-                        BackstageEntry("📊", "Binomial-Labor", "n, p und k frei einstellen: genau, höchstens, mindestens – einzeln und aufsummiert", Q.Pink, "Erleben") { nav.go(Routes.BINOMIAL) },
+                        BackstageEntry("🚀", "Flug durch den Raum", "Geometrie erleben: eine Gerade entlangfliegen, durch Ebenen und Kugeln", Q.Cyan, "Raum erleben") { nav.go(Routes.FLIGHT) },
+                        BackstageEntry("🎈", "Ballerbude", "Ballons antippen, Lux ballert sie ab – zum Spaß, mit Aufgabe oder zu zweit", Q.Pink, "Raum erleben") { nav.go(Routes.BALLOONS) },
+                        BackstageEntry("⭕", "Ringflug", "Stell den Richtungsvektor ein und flieg durch drei Ringe", Q.Green, "Raum erleben") { nav.go(Routes.RINGS) },
+                    ) + erlebenEntries + listOf(
                         BackstageEntry("🧩", "Rechenweg in Schritten", "Durchstoßpunkt, Spiegelpunkt, Schnittpunkt, Abstand – Schritt für Schritt", Q.Green, "Üben") { nav.go(Routes.GUIDES) },
                         BackstageEntry("✍️", "Ohne Hilfsmittel", "6 kurze Aufgaben wie im Pflichtteil – ohne Tipp", Q.Yellow, "Üben") { nav.go(Routes.QUICK) },
                         BackstageEntry("🧭", "Lage von Geraden erkennen", "parallel, identisch, schneidend, windschief? · Rekord $lageBest/${LageCheck.ROUNDS}", Q.Yellow, "Üben") { nav.go(Routes.LAGE) },
@@ -299,7 +307,7 @@ fun AppRoot(
                         BackstageEntry("📓", "Formelsammlung", "alle Formeln – mit Sprung zu den passenden Aufgaben", Q.Green, "Werkzeuge") { nav.go(Routes.SHEET) },
                         BackstageEntry("🎨", "Lux gestalten", "${Skins.unlocked(tourStars).size} von ${Skins.all.size} Farben frei · Leuchtspur und Aufsatz", Q.Cyan, "Für dich") { nav.go(Routes.WORKSHOP) },
                         BackstageEntry("🏅", "Erfolge", "${badges.count { it.earned }} von ${badges.size} verdient", Q.Yellow, "Für dich") { nav.go(Routes.BADGES) },
-                    ) + de.raumlicht.core.model.Soon.topics.map { t -> BackstageEntry(t.emoji, t.title, t.sub, Q.Muted, "Kommt bald") { } }, back)
+                    ) + de.raumlicht.core.model.Soon.topics.map { t -> BackstageEntry(t.emoji, t.title, t.sub, Q.Muted, "Kommt bald") { } }, onBack = back)
                 }
                 Routes.EXAMS -> if (parts.size == 1) ExamPicker(Exams.all, exams, { e, timed -> nav.go(Routes.exam(e.id, timed)) }, onBack = back) else {
                     val exam = Exams.byId(parts[1])
@@ -344,6 +352,11 @@ fun AppRoot(
                 Routes.WORKSHOP -> WorkshopScreen(tourStars, skin, prefs::setSkin, badges.count { it.earned }, look, { t, h -> prefs.setLook(t, h) }, back)
                 Routes.FLIGHT -> FlightScreen(back, custom = prefs.flight, onCustom = { prefs.flight = it })
                 Routes.GALTON -> GaltonScreen(back)
+                Routes.EXPERIENCE -> { val uri = androidx.compose.ui.platform.LocalUriHandler.current
+                    BackstageScreen(erlebenEntries.map { it.copy(group = "") }, onBack = back, title = de.raumlicht.core.model.Erleben.TITLE, intro = de.raumlicht.core.model.Erleben.INTRO,
+                        footer = { TrainerLinks { url -> runCatching { uri.openUri(url) } } }) }
+                Routes.ROTATION -> { val uri = androidx.compose.ui.platform.LocalUriHandler.current
+                    RotationScreen(back, onTrainer = { runCatching { uri.openUri(de.raumlicht.core.model.Erleben.TRAINER + "a-rotation") } }) }
                 Routes.BUILD -> CoasterBuildScreen(back)
                 Routes.GHOST -> GhostScreen(back)
                 Routes.RINGS -> RingScreen(back)

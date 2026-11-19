@@ -6,12 +6,12 @@ import org.junit.Test
 /** Jede Theorie-Karte zeigt die Formel, die man für ihre Aufgaben braucht – mit Erklärung der Größen und einem durchgerechneten Beispiel. */
 class TheoryFormulaTest {
     @Test fun jedeKarteHatFormelBedeutungUndBeispiel() {
-        for (c in Theory.cards) {
+        for (c in Theory.cards + Theory.erleben) {
             val f = c.formula; assertNotNull("Karte ${c.key} hat keine Formel", f)
             assertTrue(c.key, f!!.lines.isNotEmpty() && f.lines.all { it.length in 5..110 }); assertTrue("${c.key}: Bedeutung der Größen fehlt", f.meaning.length >= 40)
             assertTrue("${c.key}: Beispiel fehlt", c.example.size >= 2); assertTrue("${c.key}: Schritte fehlen", c.steps.size >= 2)
         }
-        assertEquals("keine Formel ohne Karte", emptySet<String>(), TheoryFormulas.keys - Theory.cards.map { it.key }.toSet())
+        assertEquals("keine Formel ohne Karte", emptySet<String>(), TheoryFormulas.keys - (Theory.cards + Theory.erleben).map { it.key }.toSet())
     }
 
     /** Jede Aufgabe der App – feste, Prüfungsteile, Übungs- und Tagesaufgaben – führt zu einer Karte mit Formel (nie zur allgemeinen Karte). */

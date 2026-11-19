@@ -193,17 +193,18 @@ class ModesFlowTest {
         rule.onNodeWithText("f(x) = 2 · sin(x)").assertExists(); rule.onNodeWithText("▶ Losfahren").assertExists()
     }
 
-    @Test fun homeIsSplitIntoThreeAreas() {
-        val opened = ArrayList<String>()
-        show { HomeScreen(Levels.chapters, mapOf("1-1" to 3), { opened += it }, {}) }
-        rule.onNodeWithTag("kapitel-3").assertExists(); rule.onNodeWithTag("kapitel-14").assertDoesNotExist()       // Start: Geometrie
-        rule.onNodeWithTag("gebiet-ANALYSIS").performClick(); rule.mainClock.advanceTimeBy(600)
-        rule.onNodeWithTag("kapitel-12").assertExists(); rule.onNodeWithTag("kapitel-14").assertExists(); rule.onNodeWithTag("kapitel-3").assertDoesNotExist()
-        rule.onNodeWithTag("kapitel-14").performClick(); rule.mainClock.advanceTimeBy(600)
-        rule.onNodeWithText("Nullstelle, Extrema, Wendestelle, Fläche").assertExists()
-        rule.onNodeWithTag("gebiet-STOCHASTIK").performClick(); rule.mainClock.advanceTimeBy(600)
-        rule.onNodeWithTag("kapitel-13").assertExists(); rule.onNodeWithText("Laplace, Pfadregel, Erwartungswert").assertExists()
-        assertEquals(Area.entries.toSet(), Levels.chapters.map { it.area }.toSet())
-        assertEquals(listOf(12, 14, 15, 17, 22, 25), Levels.chapters.filter { it.area == Area.ANALYSIS }.map { it.number })
+
+    /** Startseite seit 2.18.32: alle 16 Kapitel der Geometrie im Raum auf einen Blick, lückenlos nummeriert – und daneben der Weg zu „Analysis & Zufall erleben“. */
+    @Test fun homeShowsGeometryAndTheWayToExperiences() {
+        val opened = ArrayList<String>(); var experience = 0
+        show { HomeScreen(Levels.chapters, mapOf("1-1" to 3), { opened += it }, {}, onExperience = { experience++ }) }
+        rule.onNodeWithTag("gebiet-GEOMETRIE").assertExists(); rule.onNodeWithTag("gebiet-ANALYSIS").assertDoesNotExist(); rule.onNodeWithTag("gebiet-STOCHASTIK").assertDoesNotExist()
+        rule.onNodeWithTag("kapitel-anzahl").assertTextContains("16 Kapitel")
+        rule.onNodeWithTag("kapitel-3").assertExists(); for (gone in listOf(12, 13, 14, 15, 16, 17, 22, 23, 24, 25)) rule.onNodeWithTag("kapitel-$gone").assertDoesNotExist()
+        // Kapitel 18 (intern) heißt auf dem Bildschirm Kapitel 12 – keine Lücke
+        rule.onNodeWithTag("kapitel-18").performScrollTo().performClick(); rule.mainClock.advanceTimeBy(600)
+        rule.onNodeWithText("KAPITEL 12 · 6 AUFGABEN").assertExists(); rule.onNodeWithText("KAPITEL 18", substring = true).assertDoesNotExist()
+        rule.onNodeWithTag("erleben").performClick(); rule.mainClock.advanceTimeBy(300); assertEquals(1, experience)
+        assertEquals(setOf(Area.GEOMETRIE), Levels.chapters.map { it.area }.toSet())
     }
 }
