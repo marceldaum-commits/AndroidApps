@@ -5,7 +5,6 @@ im GitHub-Release und in der App unter „App-Update“.
 
 ## 2.3.4 – Sicherer für Kinder (20.11.2026)
 - **„← Alle Apps“ nur über die Eltern-Aufgabe:** Die Übersicht liegt auf unserer Website, und dort gibt es auch Preise. Deshalb geht es dorthin jetzt erst nach der Eltern-Aufgabe. Sobald es eine eigene Übersicht ohne Preise gibt, geht es wieder direkt.
-- Links aus der Theorie zum Mathe-Trainer und zu Raumlicht laufen ebenfalls über die Eltern-Aufgabe; Rechenblitz, KurvenFlug und Experimentopia öffnen sich weiter direkt.
 - Im Startbild ist „Ein Angebot von Nachhilfe – online“ jetzt nur noch Text.
 - Auf der Test-Seite zählt die anonyme Nutzungszählung nur noch auf unserem Test-Server.
 - Dein Lernstand bleibt vollständig erhalten.

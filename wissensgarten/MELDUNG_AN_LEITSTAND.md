@@ -11,7 +11,7 @@
 
 ## 2.3.4 – Korrekturen nach der Selbstprüfung (20.11.2026, „nur Korrekturen“)
 - **V10a:** „← Alle Apps“ geht über das Eltern-Tor, Grund im Tor: „Hier geht es zur Website.“
-- **V10b:** Querverweise zum Mathe-Trainer und zu Raumlicht nur über das Tor („Hier geht es zu einer anderen Lern-App.“), weil dort in der Oberstufe Preise ohne Tor stehen. Rechenblitz, KurvenFlug, Experimentopia und Quasselquest bleiben ohne Tor.
+- **V10b:** Querverweise bleiben ohne Tor (Entscheidung AppZentrale 19.11.). Mathe-Trainer bekommt am Fr selbst ein Tor vor Preisen. Raumlicht nur auf `?ziel=galton`, ein Einstiegsziel ohne Preise. Rechenblitz, KurvenFlug, Experimentopia und Quasselquest wie bisher. Für Links, die doch ein Tor brauchen, gibt es `Querverweise.Link.mitTor` (fragt dann „Hier geht es zu einer anderen Lern-App.“).
 - **Startbild-Fußzeile:** nur noch Text, kein Link zur Website.
 - **Zählung:** Auf der Test-Stufe geht sie an `trainer-test.…/zaehler/v1/e`, nicht mehr an den Live-Zähler.
 - **Rechtsbezug:** ja (V10).
