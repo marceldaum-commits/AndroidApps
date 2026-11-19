@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 0.3.3 vom 19.11.2026: Pflicht 2 Klassenarbeits-Generalprobe – fertig für den Test
+
+- **Kind:** Startseite je Sprache „📝 Mein Test ist am …“ → Datum (morgen bis 60 Tage) + Pakete/eigene Listen. Karte zeigt „Noch N Tage · Heute dran: …“ mit ▶ Üben; Tag gilt als geschafft nach einer Runde.
+- **Generalprobe:** 12 gemischte Aufgaben, Vokabeln getippt (P.pruefeTipp: Alternativen in Klammern/Schrägstrich zählen, Akzent/Groß-klein → „Fast!“ mit Erklärung), sonst Auswahl; keine Hilfe während der Probe, Auswertung mit Lösung + „Warum?“-Regel, Fehler zurück in Kasten 1. Keine Noten, freundliche Texte auch bei 0 richtig.
+- **Eltern:** 3–14 Tage vor dem Test Hinweis „Am <Tag> ist die Arbeit in <Sprache> … kostenlose Probestunde“ → `src=quasselquest-klassenarbeit&thema=<sprache>`, Zählung `nachhilfe_hinweis`/`probestunde_klick` mit ort `klassenarbeit`; ausblendbar je Test, Schalter „Nachhilfe-Hinweise“ gilt.
+- **Pro:** gehört zum Pro-Kern, ist aber bis Pro-Schlüssel + Shop-Produkt frei sichtbar; nirgends Kaufoberfläche.
+- **Prüfung:** 23 Inhaltstests (neu: Antwortprüfung über alle Paketkarten, Lernplan), Browser-Durchlauf Chromium Handy/PC + WebKit iPhone/iPad grün, Bildschirmfotos angesehen.
+
 ## 19.11.2026 – Version 0.3.2 vom 19.11.2026: Pflicht 8 Datenschutz in Kindersprache + Datenblatt für Schulen – fertig für den Test
 
 - **Kindersprache:** Einstellungen → „🔒 Deine Daten – kurz erklärt“, sechs Sätze mit Ruby (bleibt auf dem Gerät, kein Konto, Mikrofon nur auf Knopfdruck, keine Werbung, Zählung ohne Person, eigene Listen, Eltern schalten Kopplung ein).

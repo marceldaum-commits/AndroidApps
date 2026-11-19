@@ -321,3 +321,11 @@ mark.fehl { background: #ffd6d4; color: #b3261e; border-radius: 6px; padding: 0 
 .lern p, .lern li { font-weight: 600; line-height: 1.45; }
 .hint-card { background: #fff7e0; border: 2px solid #ffd27a; margin-bottom: 14px; }
 a.btn { text-decoration: none; }
+
+.testcard { display: flex; flex-direction: column; gap: 4px; width: 100%; text-align: left; background: #fff; border-radius: 20px; padding: 14px 16px; box-shadow: 0 4px 0 #c7d6e3; margin-top: 14px; font-size: 18px; }
+.testcard small { color: var(--muted); font-weight: 600; font-size: 15px; display: block; }
+.testcard.on { background: #eef8ff; border: 2px solid #9fd0f5; gap: 10px; }
+.checklist { max-height: 46vh; overflow: auto; border: 2px solid #e3eef7; border-radius: 14px; padding: 4px 10px; }
+.probe-row { padding: 10px 0; border-bottom: 1px solid var(--line); line-height: 1.45; }
+.probe-row:last-child { border-bottom: 0; }
+.probe-row.no s { color: #b3261e; }

@@ -14,7 +14,7 @@
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
+  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, tests: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
   // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
@@ -28,6 +28,7 @@
   if (!state.eigene) state.eigene = {};
   if (!state.tage) state.tage = {};
   if (!state.hinweis) state.hinweis = {};
+  if (!state.tests) state.tests = {};
   const PK = window.PAKETE;
   window.APP_SETTINGS = state.settings;
 
@@ -223,6 +224,7 @@
       <div class="title">Quasselquest <span style="font-size:.6em;color:var(--muted)">Sprachen mit Ruby</span></div>
       ${langBar()}
       ${ruby(greet + tip)}
+      ${testAktiv() ? testCard() : ''}
       ${en ? `<div class="world">
         <div class="waves"></div><div class="boatdeco">⛵</div>
         <h2>${w1.emoji} ${esc(w1.title)}</h2><div class="sub">Welt 1 · ${esc(w1.de)}</div>
@@ -234,6 +236,7 @@
       </div>` : ''}
       <div class="row" style="margin-top:14px">${en ? '<button class="btn white small" data-pass>📘 Mein Reisepass</button>' : ''}
         <span class="pill" title="Wochenziel">🎯 Diese Woche: ${Math.min(weekCount(), WEEK_GOAL)}/${WEEK_GOAL}${weekCount() >= WEEK_GOAL ? ' ✅' : ''}</span></div>
+      ${testAktiv() ? '' : testCard()}
       <div class="section-h">${L.emoji} Wörter & Regeln üben</div>
       ${packTiles()}
       ${en ? `<div class="section-h">Weitere Orte auf der Reise</div>
@@ -250,6 +253,10 @@
     });
     el.querySelectorAll('[data-pack]').forEach((b) => b.onclick = () => { A.sfx('pop'); A.vibrate(20); openPack(packIndex().find((x) => x.id === b.dataset.pack)); });
     const mine = el.querySelector('[data-mine]'); if (mine) mine.onclick = () => { A.sfx('pop'); myLists(); };
+    const tn = el.querySelector('[data-test-new]'); if (tn) tn.onclick = () => { A.sfx('pop'); testSetup(); };
+    const tu = el.querySelector('[data-test-ueben]'); if (tu) tu.onclick = async () => { A.sfx('pop'); const p = await packById(tu.dataset.testUeben); if (p) packRound(p); };
+    const tp = el.querySelector('[data-test-probe]'); if (tp) tp.onclick = () => { A.sfx('pop'); testProbe(); };
+    const te = el.querySelector('[data-test-edit]'); if (te) te.onclick = () => { A.sfx('tap'); testSetup(); };
     el.querySelectorAll('[data-ep]').forEach((b) => b.onclick = () => {
       const f = C.findEpisode(b.dataset.ep);
       if (f.episode.soon) { A.sfx('soft'); rubySay(el, `„${esc(f.episode.title)}“ baue ich gerade. Bald kannst du hier spielen! 🔨`, 'talk'); return; }
@@ -853,6 +860,17 @@
     }
     return null;
   }
+  /** Hinweis „Klassenarbeit bald“: 3–14 Tage vor einem eingetragenen Test, je Test einmal ausblendbar. */
+  function arbeitHinweis() {
+    if (state.settings.nachhilfe === false) return null;
+    const d = PK.today();
+    for (const l of PK.ORDER) {
+      const t = state.tests[l]; if (!t) continue;
+      const rest = dayOf(t.date) - d;
+      if (rest >= 3 && rest <= 14 && state.hinweis['ka-' + l] !== t.date) return { l, t, thema: PK.LANGS[l].thema };
+    }
+    return null;
+  }
   function probestundeUrl(src, thema) {
     return `https://${isTest() ? 'staging' : 'www'}.mathenachhilfe-online.com/probestunde/?src=quasselquest-${src}&thema=${encodeURIComponent(thema)}&klasse=${encodeURIComponent(state.klasse || '')}`;
   }
@@ -877,12 +895,16 @@
     const s = state.settings;
     const hin = nachhilfeHinweis();
     if (hin) zaehlen('nachhilfe_hinweis', 'elternbericht', hin.thema);
+    const ka = arbeitHinweis();
+    if (ka) zaehlen('nachhilfe_hinweis', 'klassenarbeit', ka.thema);
     const sw = (key, label, text) => `<div class="set"><span>${label}<br><small class="muted" style="font-weight:600">${text}</small></span><button class="switch ${s[key] !== false ? 'on' : ''}" data-sw="${key}" role="switch" aria-checked="${s[key] !== false}" aria-label="${label}"></button></div>`;
     const r = (v, label, hint) => `<label class="radio"><input type="radio" name="rec" value="${v}" ${s.recognition === v ? 'checked' : ''}><span><b>${label}</b><br><span class="muted">${hint}</span></span></label>`;
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">👪 Für Eltern</div></div>
       ${hin ? `<div class="card hint-card"><p><b>${esc(PK.LANGS[hin.l].name)}</b> fällt ${esc(state.name || 'eurem Kind')} gerade schwer (${hin.st.pct} % richtig in den letzten zwei Wochen). Üben in der App hilft – manchmal braucht es aber eine Erklärung von einem Menschen. Wenn ihr mögt: Wir bieten Online-Nachhilfe an.</p>
         <div class="row"><a class="btn small blue" data-probe href="${probestundeUrl('elternbericht', hin.thema)}" target="_blank" rel="noopener">Kostenlose Probestunde anfragen</a><button class="btn small white" data-hide>Ausblenden</button></div></div>` : ''}
+      ${ka ? `<div class="card hint-card"><p>Am <b>${esc(datumText(ka.t.date))}</b> ist die Arbeit in <b>${esc(PK.LANGS[ka.l].name)}</b>. Falls ihr noch Unterstützung wollt: Eine kostenlose Probestunde kann vor der Arbeit helfen.</p>
+        <div class="row"><a class="btn small blue" data-probe-ka href="${probestundeUrl('klassenarbeit', ka.thema)}" target="_blank" rel="noopener">Kostenlose Probestunde anfragen</a><button class="btn small white" data-hide-ka>Ausblenden</button></div></div>` : ''}
       <div class="card"><h2 style="font-size:20px">Lernstand</h2><p class="muted">Klasse ${state.klasse || '–'} · diese Woche ${weekCount()} Runden (Wochenziel ${WEEK_GOAL})</p>${lernstandHtml()}</div>
       <div class="card" style="margin-top:14px"><h3>Mikrofon und Spracherkennung</h3>
         <p class="muted">Das Mikrofon geht nur an, wenn euer Kind auf 🎤 tippt. Beim Nachsprechen (Papagei-Echo) bleibt die Aufnahme auf dem Gerät und wird sofort wieder gelöscht.
@@ -896,7 +918,7 @@
         ${sw('nachhilfe', 'Hinweise auf unsere Nachhilfe zeigen', 'Nur hier im Elternbereich, wenn eine Sprache länger schwerfällt – höchstens alle 14 Tage, ausblendbar.')}
         ${sw('zaehlung', 'Anonyme Nutzungszählung', 'Hilft uns, die App zu verbessern: Gezählt wird nur, dass die App oder der Elternbereich geöffnet bzw. ein Link angetippt wurde – ohne Namen, Kennung, Cookies oder Lernstand.')}</div>
       <div class="card" style="margin-top:14px"><h3>Kommt bald</h3>
-        <p class="muted">Eltern-Handy koppeln mit verschlüsselter Sicherung (immer kostenlos) und die Klassenarbeits-Generalprobe.</p></div>
+        <p class="muted">Eltern-Handy koppeln mit verschlüsselter Sicherung (immer kostenlos).</p></div>
       <div class="card" style="margin-top:14px"><h3>Daten</h3><p class="muted">Alles wird nur in diesem Browser gespeichert. Kein Konto, keine Werbung, kein Tracking.</p>
         <div class="row"><a class="btn small white" href="datenschutz.html">Datenschutz</a><a class="btn small white" href="datenblatt-schule.html">Datenblatt für Schulen</a><button class="btn small white" data-reset>🗑️ Alle Daten löschen</button></div></div>
       <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}</div>
@@ -904,6 +926,8 @@
     el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = s[b.dataset.sw] === false; save(); A.sfx('tap'); b.classList.toggle('on', s[b.dataset.sw] !== false); b.setAttribute('aria-checked', String(s[b.dataset.sw] !== false)); });
     const probe = el.querySelector('[data-probe]'); if (probe) probe.onclick = () => zaehlen('probestunde_klick', 'elternbericht', hin.thema);
     const hide = el.querySelector('[data-hide]'); if (hide) hide.onclick = () => { state.hinweis[hin.thema] = PK.today(); save(); A.sfx('tap'); parents(); };
+    const pka = el.querySelector('[data-probe-ka]'); if (pka) pka.onclick = () => zaehlen('probestunde_klick', 'klassenarbeit', ka.thema);
+    const hka = el.querySelector('[data-hide-ka]'); if (hka) hka.onclick = () => { state.hinweis['ka-' + ka.l] = ka.t.date; save(); A.sfx('tap'); parents(); };
     const modeTxt = () => ({ device: 'Erkennung auf dem Gerät', browser: 'Erkennung des Browsers', none: 'keine Erkennung (nur Lautstärke)' }[A.recognitionMode()]);
     const hint = () => {
       const local = A.recognitionMode && (() => { const SR = window.SpeechRecognition || window.webkitSpeechRecognition; return !!SR && 'processLocally' in SR.prototype; })();
@@ -995,6 +1019,7 @@
       const res = await packStep(pack, L, plan[i], i / plan.length, run);
       if (res === 'quit') { save(); return home(); }
     }
+    const t = state.tests[pack.lang]; if (t && t.packs.includes(pack.id)) { t.done = t.done || {}; t.done[PK.today()] = 1; }
     const goal = noteEpisodeDone(); save();
     packSummary(pack, run, goal);
   }
@@ -1135,6 +1160,108 @@
         rubySay(el, 'Welcher Buchstabe kommt zuerst?');
       }
     });
+  }
+
+  // ------------------------------------------------------------------ Klassenarbeits-Generalprobe (Pflicht 2)
+  const dayOf = (iso) => { const [y, m, d] = iso.split('-').map(Number); return Math.floor((Date.UTC(y, m - 1, d)) / 864e5); };
+  const isoOf = (day) => new Date(day * 864e5).toISOString().slice(0, 10);
+  const datumText = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
+  function testSources(lang) {
+    return packIndex().filter((p) => p.sprache === lang).map((p) => ({ id: p.id, title: p.title, emoji: p.emoji }))
+      .concat((state.eigene[lang] || []).map((l) => ({ id: 'eigen-' + l.id, title: l.name + ' (eigene Liste)', emoji: '📒' })));
+  }
+  async function packById(id) {
+    if (id.startsWith('eigen-')) { const l = (state.eigene[state.lang] || []).find((x) => 'eigen-' + x.id === id); return l ? PK.listePack(l, state.lang) : null; }
+    const meta = packIndex().find((x) => x.id === id); return meta ? loadPack(meta) : null;
+  }
+  function testAktiv() { const t = state.tests[state.lang]; return !!(t && dayOf(t.date) >= PK.today()); }
+  function testCard() {
+    const t = state.tests[state.lang];
+    if (!t || dayOf(t.date) < PK.today()) return `<button class="testcard" data-test-new>📝 <b>Mein Test ist am …</b><small>Klassenarbeit oder Vokabeltest? Ich mache dir einen Lernplan.</small></button>`;
+    const heute = PK.today(); const rest = dayOf(t.date) - heute;
+    const plan = PK.lernplan(t.packs, heute, dayOf(t.date));
+    const heuteDran = plan[0];
+    const src = testSources(state.lang).find((x) => heuteDran && x.id === heuteDran.paket);
+    const erledigt = t.done && t.done[heute];
+    return `<div class="testcard on"><div>📝 <b>${rest === 0 ? 'Heute ist dein Test – viel Erfolg!' : `Test am ${esc(datumText(t.date))}`}</b>
+      <small>${rest > 0 ? `Noch ${rest} ${rest === 1 ? 'Tag' : 'Tage'}. ` : ''}${erledigt ? '✅ Für heute geschafft!' : (heuteDran && heuteDran.probe ? 'Heute: Generalprobe!' : (src ? `Heute dran: ${esc(src.title)}` : ''))}</small></div>
+      <div class="row">${src && !erledigt ? `<button class="btn small blue" data-test-ueben="${src.id}">▶ Üben</button>` : ''}<button class="btn small ${heuteDran && heuteDran.probe ? 'blue' : 'white'}" data-test-probe>📝 Generalprobe</button><button class="btn small white" data-test-edit aria-label="Test ändern">✏️</button></div></div>`;
+  }
+  function testSetup() {
+    const t = state.tests[state.lang]; const L = PK.LANGS[state.lang];
+    const min = isoOf(PK.today() + 1); const max = isoOf(PK.today() + 60);
+    const el = screen(`<div>
+      <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">📝 Mein Test · ${esc(L.name)}</div></div>
+      ${ruby('Wann ist dein Test, und was kommt dran? Ich plane jeden Tag eine kurze Runde – und am Ende eine Generalprobe wie in der Klassenarbeit!')}
+      <div class="card"><label style="font-weight:800">Datum</label>
+        <input class="input" type="date" data-date min="${min}" max="${max}" value="${esc(t ? t.date : '')}" style="margin:6px 0 12px">
+        <div style="font-weight:800;margin-bottom:6px">Was kommt dran?</div>
+        <div class="checklist">${testSources(state.lang).map((x) => `<label class="radio"><input type="checkbox" value="${x.id}" ${t && t.packs.includes(x.id) ? 'checked' : ''}><span>${x.emoji} ${esc(x.title)}</span></label>`).join('')}</div>
+        <div class="err" data-err></div>
+        <div class="row" style="margin-top:8px"><button class="btn blue" data-save>💾 Speichern</button>${t ? '<button class="btn white small" data-del>🗑️ Test löschen</button>' : ''}</div></div></div>`);
+    el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
+    el.querySelector('[data-save]').onclick = () => {
+      const date = el.querySelector('[data-date]').value; const packs = [...el.querySelectorAll('.checklist input:checked')].map((x) => x.value);
+      const err = !date ? 'Bitte wähle das Datum deines Tests.' : (dayOf(date) <= PK.today() ? 'Der Test sollte mindestens morgen sein.' : (dayOf(date) > PK.today() + 60 ? 'Plane höchstens 60 Tage im Voraus.' : (!packs.length ? 'Wähle mindestens ein Paket oder eine eigene Liste.' : '')));
+      if (err) { el.querySelector('[data-err]').textContent = err; A.sfx('soft'); return; }
+      state.tests[state.lang] = { date, packs, done: (t && t.done) || {} }; save(); A.sfx('right'); confetti(40); home();
+    };
+    const del = el.querySelector('[data-del]'); if (del) del.onclick = () => { if (!confirm('Test wirklich löschen?')) return; delete state.tests[state.lang]; save(); home(); };
+  }
+
+  /** Generalprobe im Format einer Klassenarbeit: 12 Aufgaben, Antworten tippen (Vokabeln) oder wählen, KEINE Hilfe währenddessen, Auswertung am Ende. */
+  async function testProbe() {
+    const t = state.tests[state.lang]; if (!t) return testSetup();
+    const packs = (await Promise.all(t.packs.map(packById))).filter(Boolean);
+    const pool = shuffle(packs.flatMap((p) => p.cards.map((c) => ({ p, c }))));
+    const items = pool.slice(0, Math.min(12, pool.length));
+    const antworten = [];
+    for (let i = 0; i < items.length; i++) {
+      const res = await probeStep(items[i], i, items.length);
+      if (res === 'quit') return home();
+      antworten.push(res);
+    }
+    // Auswertung: Wiederholung anpassen (falsch → morgen wieder)
+    antworten.forEach((r, i) => { PK.note(state.karten, items[i].p, items[i].c, r.ok); tally(state.lang, r.ok); });
+    save();
+    probeErgebnis(items, antworten);
+  }
+  function probeStep(item, i, n) {
+    return new Promise((resolve) => {
+      const { p, c } = item; const k = PK.classify(c, p.lang);
+      const tippen = ['zu', 'formen', 'luecke', 'diktat'].includes(k.kind) || (p.lang === 'de' && k.kind === 'frage' && /^[\p{L} -]{1,30}$/u.test(c.a));
+      const el = screen(`<div class="stage">
+        <div class="ep-top"><button class="iconbtn" data-quit aria-label="Abbrechen">✕</button><div class="progress"><i style="width:${Math.round(100 * i / n)}%"></i></div><span class="pill">${i + 1}/${n}</span></div>
+        <div class="game-title">📝 Generalprobe<small>Wie in der Klassenarbeit: erst am Ende gibt es die Auflösung.</small></div>
+        <div class="qcard"><div class="qimg">${esc(c.img || p.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? 'Schreib das Wort, das du hörst.' : c.q)}</div>
+          ${k.vorher && (k.kind === 'diktat' || k.kind === 'von') ? '<button class="slowbtn" data-hear aria-label="Anhören">🔊</button>' : ''}</div>
+        ${tippen ? `<input class="input" data-in autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Deine Antwort" style="font-size:22px;text-align:center">
+          <button class="btn blue" data-ok>Weiter ➜</button>`
+          : `<div class="opts">${shuffle([c.a].concat(PK.wrongs(c, p, 3))).map((o) => `<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join('')}</div>`}
+        </div>`);
+      const L = PK.LANGS[p.lang];
+      const hb = el.querySelector('[data-hear]'); if (hb) { hb.onclick = () => { A.sfx('tap'); if (L.who) speak(k.vorher, L.who); }; if (L.who) speak(k.vorher, L.who); }
+      el.querySelector('[data-quit]').onclick = () => { if (confirm('Generalprobe abbrechen?')) resolve('quit'); };
+      if (tippen) {
+        const inp = el.querySelector('[data-in]'); setTimeout(() => inp.focus(), 60);
+        const go = () => { A.sfx('tap'); const r = PK.pruefeTipp(inp.value, c, p.lang); resolve({ ...r, eingabe: inp.value.trim() }); };
+        el.querySelector('[data-ok]').onclick = go; inp.onkeydown = (e) => { if (e.key === 'Enter') go(); };
+      } else {
+        el.querySelectorAll('.opt').forEach((b) => b.onclick = () => { A.sfx('tap'); resolve({ ok: b.dataset.o === c.a, eingabe: b.dataset.o }); });
+      }
+    });
+  }
+  function probeErgebnis(items, antworten) {
+    const richtig = antworten.filter((r) => r.ok).length; const n = items.length;
+    const el = screen(`<div>
+      <div class="top"><div class="title" style="font-size:22px">📝 Auswertung der Generalprobe</div></div>
+      ${ruby(richtig === n ? `Alle ${n} richtig – perfekt, du bist bereit! 🏆` : (richtig === 0 ? 'Diesmal hat es noch nicht geklappt – genau dafür ist die Generalprobe da! Was noch nicht sitzt, kommt ab morgen in deinen Runden dran. Du schaffst das! 💪' : `${richtig} von ${n} richtig – gut gemacht! Was noch nicht sitzt, kommt ab morgen in deinen Runden dran.`), 'dance')}
+      <div class="card">${items.map(({ p, c }, i) => { const r = antworten[i];
+        return `<div class="probe-row ${r.ok ? 'ok' : 'no'}"><div>${r.ok ? '✅' : (r.fast ? '🟡' : '❌')} <b>${esc(c.q)}</b></div>
+          ${r.ok ? `<div>${esc(c.a)}</div>` : `<div>Deine Antwort: <s>${esc(r.eingabe || '–')}</s> · Richtig: <b>${esc(c.a)}</b></div><div class="muted" style="font-size:14px">🤔 ${esc(r.hinweis || PK.regel(c, p.lang, r.eingabe || ''))}</div>`}</div>`; }).join('')}</div>
+      <div class="row center" style="margin-top:14px"><button class="btn blue" data-home>Fertig 🏠</button></div></div>`);
+    setTimeout(() => { A.sfx('fanfare'); confetti(richtig === n ? 120 : 50); }, 200);
+    el.querySelector('[data-home]').onclick = () => { A.sfx('tap'); home(); };
   }
 
   // ------------------------------------------------------------------ „Mein Schulbuch“

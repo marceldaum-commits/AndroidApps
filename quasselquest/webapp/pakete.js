@@ -172,6 +172,42 @@
       : { id: P.wortId(w), q: `Was heißt „${w.de}“ auf ${P.LANGS[lang].name}?`, a: w.ziel, img: '📒' })),
   });
 
+  // ------------------------------------------------------------------ Klassenarbeits-Generalprobe
+  /** Alle Schreibweisen, die als richtig gelten: „thank you (thanks)“ → thank you | thanks; „got – got/gotten“ → beide Formen. */
+  P.akzeptiert = (a) => {
+    const out = new Set(); const t = String(a).trim();
+    out.add(t.replace(/\s*\([^)]*\)/g, '').trim());
+    for (const m of t.matchAll(/\(([^)]+)\)/g)) out.add(m[1].trim());
+    if (t.includes('/')) {
+      const ganz = t.replace(/\s*\([^)]*\)/g, '');
+      const teile = ganz.split(/\s*–\s*|\s*,\s*/);
+      const varianten = teile.map((x) => x.split('/').map((y) => y.trim()));
+      let combos = [[]];
+      for (const v of varianten) combos = combos.flatMap((c) => v.map((y) => c.concat(y)));
+      for (const c of combos) out.add(c.join(ganz.includes('–') ? ' – ' : ', '));
+    }
+    return [...out].filter(Boolean);
+  };
+  const norm = (t, de) => { let x = String(t).normalize('NFC').replace(/[’`]/g, "'").replace(/\s+/g, ' ').replace(/\s*[–-]\s*/g, ' – ').trim(); if (x.length > 1) x = x.replace(/[.!?]$/, ''); return de ? x : x.toLowerCase(); };
+  /** Prüft eine getippte Antwort. Deutsch: Groß/klein zählt. Liefert { ok, fast, hinweis } – „fast“ = nur Akzent anders. */
+  P.pruefeTipp = (eingabe, card, lang) => {
+    const de = lang === 'de'; const e = norm(eingabe, de);
+    if (!e) return { ok: false, hinweis: 'Keine Antwort.' };
+    for (const a of P.akzeptiert(card.a)) if (norm(a, de) === e) return { ok: true };
+    const oa = (t) => t.normalize('NFD').replace(/[̀-ͯ]/g, '');
+    for (const a of P.akzeptiert(card.a)) {
+      if (oa(norm(a, de)) === oa(e)) return { ok: false, fast: true, hinweis: 'Fast! Nur der Akzent fehlt oder ist falsch – in der Klassenarbeit zählt er mit.' };
+      if (de && norm(a, false) === norm(e, false)) return { ok: false, fast: true, hinweis: 'Fast! Achte auf Groß- und Kleinschreibung.' };
+    }
+    return { ok: false };
+  };
+  /** Lernplan bis zum Test: jeden Tag ein Paket (reihum), am letzten Tag die Generalprobe. */
+  P.lernplan = (packIds, heute, testTag) => {
+    const tage = []; const n = Math.max(0, testTag - heute);
+    for (let d = 0; d < n; d++) tage.push({ tag: heute + d, paket: d === n - 1 && n > 1 ? null : packIds[d % packIds.length], probe: d === n - 1 && n > 1 });
+    return tage;
+  };
+
   // ------------------------------------------------------------------ Wiederholung (Leitner-Kästen, wachsende Abstände)
   P.ABSTAND = [0, 1, 2, 4, 8, 16, 32];   // Tage bis zur nächsten Wiederholung je Kasten
   P.today = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 864e5);

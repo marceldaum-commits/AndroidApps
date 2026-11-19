@@ -1,5 +1,13 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.3.3 – Klassenarbeits-Generalprobe (19.11.2026)
+- „📝 Mein Test ist am …“: Datum der Klassenarbeit oder des Vokabeltests eintragen und auswählen, was drankommt (Pakete oder eigene Schulbuch-Listen).
+- Ruby macht daraus einen Lernplan: jeden Tag eine kurze Runde, am letzten Tag die Generalprobe.
+- Generalprobe wie in der Arbeit: 12 Aufgaben, Vokabeln werden getippt, erst am Ende gibt es die Auflösung – mit richtiger Lösung und kurzer Erklärung zu jedem Fehler. Keine Noten.
+- Fair geprüft: Alternativen zählen („thanks“ statt „thank you“), fehlende Akzente oder Groß-/Kleinschreibung werden als „Fast!“ erklärt.
+- Was noch nicht sitzt, kommt ab dem nächsten Tag automatisch wieder dran.
+- Elternbereich: 3 bis 14 Tage vor einer eingetragenen Arbeit ein ruhiger Hinweis auf eine kostenlose Probestunde (ausblendbar, abschaltbar).
+
 ## 0.3.2 – Datenschutz für Kinder und Schulen (19.11.2026)
 - „Deine Daten – kurz erklärt“: Ruby erklärt Kindern in sechs einfachen Sätzen, was mit ihren Daten passiert (Einstellungen).
 - Datenblatt für Schulen zum Ausdrucken: keine Konten, Daten nur auf dem Gerät, Mikrofon, Zählung, Server, AVV, Urheberrecht, Tipps für Schulgeräte.

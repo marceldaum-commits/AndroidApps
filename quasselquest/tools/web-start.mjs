@@ -154,6 +154,30 @@ for (const [name, type, opts] of [
       ok(await playPackRound(page, null, FOTOS && name === 'chromium_handy' && lang === 'de' ? 'schulbuch_runde_de' : null), `Mein Schulbuch ${lang}: Runde gespielt`);
       await page.click('[data-home]'); await page.waitForSelector('[data-new]'); await page.click('[data-back]'); await page.waitForSelector('.langbar');
     }
+    // Klassenarbeits-Generalprobe: Test eintragen (erst mit Fehler), Lernplan, Generalprobe mit Auswertung
+    await page.click('[data-lang="en"]'); await page.waitForSelector('[data-test-new]'); await page.click('[data-test-new]');
+    await page.click('[data-save]');
+    ok((await page.textContent('[data-err]')).includes('Datum'), 'Test ohne Datum → Meldung „' + (await page.textContent('[data-err]')) + '“');
+    const in5 = await page.evaluate(() => new Date((window.PAKETE.today() + 5) * 864e5).toISOString().slice(0, 10));
+    await page.fill('[data-date]', in5); await page.click('.checklist input[value="gs-englisch-basics"]');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'test_eintragen');
+    await page.click('[data-save]'); await page.waitForSelector('.testcard.on');
+    ok((await page.textContent('.testcard.on')).includes('Noch 5 Tage') && (await page.textContent('.testcard.on')).includes('Heute dran'), 'Lernplan: „' + (await page.textContent('.testcard.on small')).trim() + '“');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'test_plan');
+    await page.click('[data-test-probe]');
+    let fragen = 0;
+    for (; fragen < 20; fragen++) {
+      const s = await Promise.race([page.waitForSelector('[data-in], .opt', { timeout: 4000 }).then(() => 'q'), page.waitForSelector('.probe-row', { timeout: 4000 }).then(() => 'end')]).catch(() => 'x');
+      if (s !== 'q') break;
+      if (FOTOS && name === 'chromium_handy' && fragen === 0) await snap(page, 'generalprobe');
+      if (await page.$('[data-in]')) { await page.fill('[data-in]', fragen % 2 ? 'xyz' : ''); await page.click('[data-ok]'); }
+      else await page.click('.opt >> nth=0', { force: true });
+      await wait(120);
+    }
+    ok(fragen >= 10 && (await page.$$('.probe-row')).length === fragen, `Generalprobe: ${fragen} Aufgaben, Auswertung mit ${(await page.$$('.probe-row')).length} Zeilen`);
+    ok((await page.textContent('#app')).includes('Richtig:'), 'Auswertung zeigt die richtige Lösung');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'generalprobe_auswertung');
+    await page.click('[data-home]'); await page.waitForSelector('.testcard.on');
     const st2 = await page.evaluate(() => window.quasselTest.state());
     ok(Object.keys(st2.karten).length >= 20, `Wiederholung gespeichert (${Object.keys(st2.karten).length} Karten)`);
     await page.click('[data-lang="en"]'); await page.waitForSelector('.world');
@@ -170,12 +194,14 @@ for (const [name, type, opts] of [
     await page.click('[data-parents]'); await page.fill('.modal input', '2015'); await page.click('.modal [data-ok]');
     ok((await page.textContent('.modal .err')).includes('Erwachsene'), 'Eltern-Tor hält Kinder ab');
     await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]');
+    ok((await page.getAttribute('[data-probe-ka]', 'href') || '').includes('src=quasselquest-klassenarbeit&thema=englisch'), 'Hinweis „Arbeit in 5 Tagen“ im Elternbereich, Link mit src=klassenarbeit');
     ok(!!(await page.$('.hint-card')) && (await page.getAttribute('[data-probe]', 'href')).includes('src=quasselquest-elternbericht&thema=franzoesisch'), 'Nachhilfe-Hinweis im Elternbereich (Französisch hakt), Link mit src/thema/klasse');
-    for (let w = 0; w < 30 && !calls.some((c) => c.ev === 'nachhilfe_hinweis'); w++) await page.waitForTimeout(200);   // WebKit meldet Anfragen verzögert
-    ok(calls.some((c) => c.ev === 'elternbereich') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.thema === 'franzoesisch') && calls.every((c) => Object.keys(c).every((k) => ['app', 'v', 'ev', 'ort', 'thema'].includes(k)) && c.app === 'quasselquest'), 'Zählung: nur erlaubte Felder (' + calls.map((c) => c.ev).join(', ') + ')');
+    for (let w = 0; w < 30 && !(calls.some((c) => c.ev === 'elternbereich') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.thema === 'franzoesisch') && calls.some((c) => c.ort === 'klassenarbeit')); w++) await page.waitForTimeout(200);   // WebKit meldet Anfragen verzögert
+    ok(calls.some((c) => c.ev === 'elternbereich') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.thema === 'franzoesisch') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.ort === 'klassenarbeit') && calls.every((c) => Object.keys(c).every((k) => ['app', 'v', 'ev', 'ort', 'thema'].includes(k)) && c.app === 'quasselquest'), 'Zählung: nur erlaubte Felder (' + calls.map((c) => c.ev).join(', ') + ')');
     if (FOTOS && name === 'chromium_handy') await snap(page, 'eltern_hinweis');
     await page.click('[data-hide]'); await page.waitForSelector('input[name=rec]');
-    ok(!(await page.$('.hint-card')), 'Hinweis ausgeblendet');
+    await page.click('[data-hide-ka]'); await page.waitForSelector('input[name=rec]');
+    ok(!(await page.$('.hint-card')), 'Hinweise ausgeblendet');
     await page.click('[data-sw="zaehlung"]'); await page.waitForTimeout(1500); const n0 = calls.length;
     await page.click('[data-back]'); await page.click('[data-parents]'); await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]'); await page.waitForTimeout(1500);
     ok(calls.length === n0, 'Zählung aus → kein Aufruf');

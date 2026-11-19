@@ -203,3 +203,24 @@ test('„Warum?“: Fehlerstelle wird genau markiert, Regel passt zur Art des Fe
     const d = P.diff(w, c.a); assert.equal(d.vor + d.fehler + d.nach, w);
   }
 });
+
+test('Generalprobe: Antworten werden fair geprüft (Alternativen ja, Akzent und Großschreibung als „Fast!“)', () => {
+  assert.deepEqual(P.akzeptiert('thank you (thanks)'), ['thank you', 'thanks']);
+  assert.equal(P.pruefeTipp('  Thanks ', { a: 'thank you (thanks)' }, 'en').ok, true);
+  const fr = P.pruefeTipp('le pere', { a: 'le père' }, 'fr');
+  assert.equal(fr.ok, false); assert.equal(fr.fast, true); assert.match(fr.hinweis, /Akzent/);
+  const de = P.pruefeTipp('vogel', { a: 'Vogel' }, 'de');
+  assert.equal(de.ok, false); assert.match(de.hinweis, /Groß/);
+  assert.equal(P.pruefeTipp('Hund', { a: 'Vogel' }, 'de').fast, undefined);
+  // Jede Antwort jedes Pakets wird als richtig erkannt, wenn man sie genau abtippt
+  for (const p of PACKS) for (const c of p.cards) for (const a of P.akzeptiert(c.a)) assert.equal(P.pruefeTipp(a, c, p.lang).ok, true, `${p.id}: ${a}`);
+});
+
+test('Lernplan: jeden Tag ein Paket, am letzten Tag vor dem Test die Generalprobe', () => {
+  const plan = P.lernplan(['a', 'b'], 100, 105);
+  assert.equal(plan.length, 5);
+  assert.deepEqual(plan.map((t) => t.paket), ['a', 'b', 'a', 'b', null]);
+  assert.equal(plan[4].probe, true);
+  assert.deepEqual(P.lernplan(['a'], 100, 101), [{ tag: 100, paket: 'a', probe: false }]);
+  assert.deepEqual(P.lernplan(['a'], 100, 100), []);
+});
