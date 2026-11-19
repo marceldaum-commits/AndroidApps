@@ -118,6 +118,15 @@
   async function speak(text, who, opts) {
     return A.say(text, Object.assign({}, charVoice(who), { who: who || 'ruby' }, opts || {}));
   }
+  /** Ohne Stimme (z. B. Deutsch vorübergehend): Wort kurz zeigen, dann verdecken – aus dem Kopf bauen/schreiben. */
+  const merkBox = (wort) => `<div class="novoice merk" data-merk data-wort="${esc(wort)}">${esc(wort)}<small>Merk dir das Wort!</small></div>`;
+  function merkStart(m) {
+    if (m.dataset.zu) return; m.dataset.zu = '1'; const wort = m.dataset.wort;
+    const zeigen = () => { m.innerHTML = `${esc(wort)}<small>Merk dir das Wort!</small>`; setTimeout(verdecken, 3000); };
+    const verdecken = () => { if (!m.isConnected) return; m.innerHTML = '<button class="btn white small" data-merk-zeig>👀 Noch mal zeigen</button>'; m.querySelector('[data-merk-zeig]').onclick = () => { A.sfx('tap'); zeigen(); }; };
+    setTimeout(verdecken, 3000);
+  }
+  new MutationObserver(() => document.querySelectorAll('[data-merk]:not([data-zu])').forEach(merkStart)).observe(document.body, { childList: true, subtree: true });
   const noVoiceBox = (text, who) => A.canHear(text, who || 'ruby') ? '' :
     `<div class="novoice" data-novoice>${esc(text)}<small>${state.settings.voice === false ? 'Die Stimme ist ausgeschaltet – lies den Satz.' : 'Auf diesem Gerät gibt es keine englische Stimme – lies den Satz.'}</small></div>`;
 
@@ -868,7 +877,7 @@
     const bg = h(`<div class="modal-bg"><div class="modal card tor" role="dialog" aria-labelledby="tor-t">
       <h2 id="tor-t" style="font-size:20px">👪 Eltern-Tor</h2>
       ${grund ? `<p style="font-weight:800;margin:4px 0">${esc(grund)}</p>` : ''}<p class="muted">Dieser Bereich ist für Erwachsene. Bitte rechne:</p>
-      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b><button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button></div>
+      <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b>${A.canHear('eins', 'de') ? '<button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button>' : ''}</div>
       <div class="tor-eingabe" data-eingabe aria-label="Deine Eingabe">&nbsp;</div><div class="err" data-err></div>
       <div class="tor-tasten">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((z) => `<button class="tor-taste" data-z="${z}" aria-label="${z}">${z}</button>`).join('')}
         <button class="tor-taste" data-weg aria-label="Löschen">⌫</button><button class="tor-taste" data-z="0" aria-label="0">0</button><button class="tor-taste ok" data-ok aria-label="Bestätigen">OK</button></div>
@@ -884,7 +893,7 @@
     const zeig = () => { bg.querySelector('[data-eingabe]').textContent = eingabe || ' '; };
     bg.querySelectorAll('[data-z]').forEach((t) => t.onclick = () => { if (eingabe.length < 4) { eingabe += t.dataset.z; zeig(); A.sfx('tap'); } });
     bg.querySelector('[data-weg]').onclick = () => { eingabe = eingabe.slice(0, -1); zeig(); A.sfx('tap'); };
-    bg.querySelector('[data-vorlesen]').onclick = () => { A.sfx('tap'); speak(`${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`, 'de'); };
+    if (bg.querySelector('[data-vorlesen]')) bg.querySelector('[data-vorlesen]').onclick = () => { A.sfx('tap'); speak(`${ZAHLWORT[a]} mal ${ZAHLWORT[b]}`, 'de'); };
     bg.querySelector('[data-x]').onclick = () => { A.sfx('tap'); bg.remove(); };
     bg.querySelector('[data-ok]').onclick = () => {
       if (!eingabe) return;
@@ -1214,7 +1223,7 @@
         const extra = []; while (extra.length < 2) { const x = extraPool[Math.floor(Math.random() * extraPool.length)]; if (!letters.includes(x)) extra.push(x); }
         const tiles = shuffle(letters.map((l, i) => ({ l, i })).concat(extra.map((l) => ({ l, i: -1 }))));
         body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? c.q : bf.text)}</div>
-          ${hoer && A.canHear(hoer, L.who || 'de') ? '<button class="speaker" data-hear aria-label="Anhören">🔊</button>' : (hoer ? `<div class="novoice">${esc(c.a)}<small>Keine Stimme auf diesem Gerät – lies das Wort und bau es nach.</small></div>` : '')}</div>
+          ${hoer && L.who && A.canHear(hoer, L.who) ? '<button class="speaker" data-hear aria-label="Anhören">🔊</button>' : (hoer ? merkBox(c.a) : '')}</div>
           <div class="slots">${t.vor ? `<span class="pre">${esc(t.vor.trim())}</span>` : ''}${letters.map((_, i) => `<span class="slot" data-s="${i}"></span>`).join('')}</div>
           <div class="tiles">${tiles.map((x, i) => `<button class="tile" data-t="${i}"${DIAG ? ` data-pos="${x.i}"` : ''}>${esc(x.l)}</button>`).join('')}</div>`;
         let pos = 0; let mistakes = 0;
@@ -1661,8 +1670,8 @@
       const el = screen(`<div class="stage">
         <div class="ep-top"><button class="iconbtn" data-quit aria-label="Abbrechen">✕</button><div class="progress"><i style="width:${Math.round(100 * i / n)}%"></i></div><span class="pill">${i + 1}/${n}</span></div>
         <div class="game-title">📝 Generalprobe<small>Wie in der Klassenarbeit: erst am Ende gibt es die Auflösung.</small></div>
-        <div class="qcard"><div class="qimg">${esc(c.img || p.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? 'Schreib das Wort, das du hörst.' : (tippen && bf ? bf.text : c.q))}</div>
-          ${hoerProbe ? '<button class="slowbtn" data-hear aria-label="Anhören">🔊</button>' : ''}</div>
+        <div class="qcard"><div class="qimg">${esc(c.img || p.emoji)}</div><div class="q">${esc(k.kind === 'diktat' ? (PK.LANGS[p.lang].who ? 'Schreib das Wort, das du hörst.' : 'Merk dir das Wort – dann schreib es auf.') : (tippen && bf ? bf.text : c.q))}</div>
+          ${hoerProbe && PK.LANGS[p.lang].who ? '<button class="slowbtn" data-hear aria-label="Anhören">🔊</button>' : (k.kind === 'diktat' ? merkBox(c.a) : '')}</div>
         ${tippen ? `<input class="input" data-in autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Deine Antwort" style="font-size:22px;text-align:center">
           <button class="btn blue" data-ok>Weiter ➜</button>`
           : `<div class="opts">${shuffle([c.a].concat(PK.wrongs(c, p, 3))).map((o) => `<button class="opt" data-o="${esc(o)}">${esc(o)}</button>`).join('')}</div>`}

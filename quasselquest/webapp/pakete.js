@@ -7,7 +7,8 @@
   // Emojis statt Flaggen (Flaggen fehlen auf Windows).
   P.LANGS = {
     en: { name: 'Englisch', emoji: '💂', who: 'ruby', thema: 'englisch', hallo: 'Hello!' },
-    de: { name: 'Deutsch', emoji: '🥨', who: 'de', thema: 'deutsch', hallo: 'Hallo!' },
+    de: { name: 'Deutsch', emoji: '🥨', who: null, // vorübergehend ohne Stimme, siehe audio.js A.OHNE_TON
+ thema: 'deutsch', hallo: 'Hallo!' },
     fr: { name: 'Französisch', emoji: '🥐', who: 'fr', thema: 'franzoesisch', hallo: 'Bonjour !' },
     es: { name: 'Spanisch', emoji: '💃', who: 'es', thema: 'spanisch', hallo: '¡Hola!' },
     la: { name: 'Latein', emoji: '🏛️', who: null, thema: 'latein', hallo: 'Salve!' },

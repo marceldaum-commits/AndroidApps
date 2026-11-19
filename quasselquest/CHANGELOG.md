@@ -14,6 +14,9 @@
 - **Latein:** Jetzt mit eigenem Lernpfad „Latein von Anfang an“, Abschnitt 1 „Erste Schritte in Rom“ mit 8 Einheiten. Latein wird gelesen statt gehört: Wimmelbild und „Mach, was ich sage!“ zeigen das lateinische Wort bzw. den Befehl. Dazu 4 neue Pakete mit 142 Karten: Deklination (Kl. 5–7), Konjugation (Kl. 6–8), Wortschatz Lernjahr 2 (Kl. 7–9), Satzlehre mit Originalsätzen von Caesar, Cicero, Seneca und Nepos (Kl. 9–13).
 - Beim Tippen auf Latein muss man die Längenstriche (ā, ē, ī …) nicht mitschreiben.
 
+**Deutsch vorübergehend ohne Stimme**
+- Die bisherige deutsche Computerstimme ist entfernt. Bis eine neue (weibliche) Stimme ausgewählt ist, zeigen deutsche Übungen nur Text. Beim Diktat erscheint das Wort 3 Sekunden lang zum Merken, dann baut oder schreibt man es aus dem Kopf („👀 Noch mal zeigen“ geht immer).
+
 **KI-Stimmen gekennzeichnet**
 - Unter jeder Übung mit Vorlesen steht „🤖 KI-generierte Stimme“. Die Audiodateien sind auch technisch als KI-generiert markiert. Der Link heißt jetzt „KI-Stimmen & Lizenzen“ und nennt zu jeder Stimme Datensatz, Lizenz und Quelle.
 

@@ -165,7 +165,10 @@
    * Reihenfolge: (Nova, wenn freigegeben und gewählt) → vorab vertonte Datei → Stimme des Geräts.
    * Erfüllt sich mit true, wenn etwas zu hören war, sonst false.
    */
+  // Deutsch hat vorübergehend keine Stimme (Marcel 19.11.2026: Thorsten raus, neue Frauenstimme wird gewählt) – nur Text.
+  A.OHNE_TON = new Set(['de']);
   A.say = async (text, opts) => {
+    if (A.OHNE_TON.has(A.langOf((opts || {}).who))) return false;
     opts = opts || {};
     if (S().voice === false) return false;
     A.stop();
@@ -183,7 +186,7 @@
     return deviceSay(text, Object.assign({}, opts, { slow }));
   };
   /** Kann dieser Satz hörbar gemacht werden (Datei oder Gerätestimme)? */
-  A.canHear = (text, who) => S().voice !== false && (A.hasRecording(text, who) || A.canSpeak(A.langOf(who)));
+  A.canHear = (text, who) => !A.OHNE_TON.has(A.langOf(who)) && S().voice !== false && (A.hasRecording(text, who) || A.canSpeak(A.langOf(who)));
 
   // ------------------------------------------------------------------ Mikrofon (nur auf Knopfdruck)
   // Die Aufnahme bleibt im Arbeitsspeicher, wird abgespielt und verworfen. Nichts wird gespeichert oder gesendet.
