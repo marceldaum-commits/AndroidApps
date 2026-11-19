@@ -243,7 +243,8 @@ private fun PlusTab(plusPacks: List<Pack>, onOpenPacks: () -> Unit) {
                 Text("Alle Grundpakete bleiben kostenlos – versprochen.", style = MaterialTheme.typography.bodySmall, color = Color(0xFF4E3B00))
             }
         }
-        Text("Plus-Pakete (gerade gratis)", style = MaterialTheme.typography.titleMedium)
+        // Nur die eigenen, schon freigeschalteten Plus-Pakete – kein Preis, kein Kaufhinweis im Kinderbereich (UWG Anh. Nr. 28)
+        if (plusPacks.isNotEmpty()) Text("Deine Plus-Pakete", style = MaterialTheme.typography.titleMedium)
         plusPacks.forEach { p ->
             Row(
                 Modifier.fillMaxWidth().clip(MaterialTheme.shapes.medium).background(MaterialTheme.colorScheme.surfaceContainerLow)
@@ -262,16 +263,16 @@ private fun PlusTab(plusPacks: List<Pack>, onOpenPacks: () -> Unit) {
             }
         }
         OutlinedButton(onClick = onOpenPacks, modifier = Modifier.fillMaxWidth()) { Text("Alle Wissenspakete ansehen") }
-        TextButton(onClick = { gate("Hier steht, wie Käufe im Wissensgarten später funktionieren werden.") { parentInfo = true } },
-            modifier = Modifier.fillMaxWidth()) { Text("👨‍👩‍👧 Für Eltern: Wie wird Plus funktionieren?") }
+        TextButton(onClick = { gate("Hier steht für Eltern, was Wissensgarten Plus ist.") { parentInfo = true } },
+            modifier = Modifier.fillMaxWidth()) { Text("👨‍👩‍👧 Für Eltern: Was ist Plus?") }
     }
     if (parentInfo) AlertDialog(
         onDismissRequest = { parentInfo = false },
         title = { Text("Wissensgarten Plus – für Eltern") },
         text = {
-            Text("• Plus wird ein freiwilliger Zusatz mit weiteren Wissenspaketen.\n" +
-                "• Alle Grundpakete bleiben kostenlos. Die Plus-Pakete (heute 6) sind bis zum Start gratis.\n" +
-                "• Kaufen geht nur hinter der Eltern-Aufgabe, über den Shop auf mathenachhilfe-online.com. Der Freischalt-Code kommt per E-Mail.\n" +
+            Text("• Plus ist ein freiwilliger Zusatz mit weiteren Wissenspaketen, vor allem für die Oberstufe und Experten.\n" +
+                "• Alle Grundpakete bleiben kostenlos.\n" +
+                "• Kaufen geht nur im Elternbereich hinter der Eltern-Aufgabe, über den Shop auf mathenachhilfe-online.com. Der Freischalt-Code kommt per E-Mail.\n" +
                 "• Keine Werbung, keine Lockangebote, kein Kaufdruck auf Kinder. Brummi bettelt nie.\n" +
                 "• Ein Kauf gilt für die ganze Familie auf allen Geräten in der Web-App – kein Konto nötig.")
         },
