@@ -252,3 +252,20 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
   - Eine Datenschutz-Kurzinfo steht vor dem Beitreten.
 - **WebKit:** WebSocket läuft in Safari zuverlässig. Wenn die Verbindung abreißt, verbindet die App neu und behält den Spielstand.
 - **Aufwand:** App mittel (Lehrkraft-Ansicht, Beitreten, Spielablauf, Rangliste; die Spielmechanik des Duells wird wiederverwendet), Server klein (Weiterleitung).
+
+## Merkzettel für Di 24.11. (2.4.0, nach der Pause)
+- **Liegt schon auf dem Branch (2.3.4, nicht gebaut):**
+  - „← Alle Apps“ hinter dem Tor (V10a).
+  - Fußzeile im Startbild als Text.
+  - Test-Zählung auf trainer-test.
+  - Radio-Hinweis „Spracherkennung ist hier aus.“ (V11).
+- **Familien-Speicher (v1.7):**
+  - familie.js @ e9993ec aus dem Repo mathe-trainer holen, sha256 prüfen (3f7ec567…). REC_PUB = vMrORj9yObM3Ijd9sGStjUB9I3f6ot9E8M-70yGeQ0M.
+  - Pflichttext wörtlich, Knopf „Einverstanden – Familie anlegen/beitreten“ (A6/V8). Sicherheitshinweis bei Link, QR und Notfall-Blatt (V8).
+  - Löschen nach v1.5; „familie-weg“ → „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“
+  - Link zur Datenschutzerklärung: /datenschutz/#familien-speicher (10m).
+- **Plus (N2, V9):**
+  - Produkt 2 = „1 Jahr ab Einlösen“, einlösbar bis 31.12. Kaufjahr+3. Byte 7–8 = Kauftag (uint16 BE, Tage seit 2020-01-01, UTC), vom Leitstand bestätigt.
+  - Geräteregel ohne Familie nur für neue Codes: Produkt 2 oder Kauftag ≥ STICHTAG. STICHTAG als leicht setzbare Konstante; den Tag nennt der Leitstand nach Marcels Entscheidung (FAM_LIVE).
+  - Hinweistext beim Einlösen ohne Familie, Gültigkeit „365 Tage ab dem Einlösen, ohne automatische Verlängerung“.
+  - Sperrliste vor jeder Offline-Prüfung.
