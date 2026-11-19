@@ -2,6 +2,13 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.33 – Raumlicht zieht um: eine Adresse für alle Lern-Apps (19.11.2026)
+- **Neue Adresse:** Raumlicht läuft künftig unter `lernen.mathenachhilfe-online.com/raumlicht/` – dort wohnen alle unsere Lern-Apps zusammen.
+- **Dein Lernstand kommt mit.** Öffnest du Raumlicht unter der alten Adresse, wirst du von selbst zur neuen gebracht – mit Sternen, Rekorden, Einstellungen und Freischalt-Codes. Du musst nichts tun.
+- Klappt der Umzug einmal nicht (kein Netz oder die neue Adresse ist noch nicht bereit), läuft Raumlicht einfach unter der alten Adresse weiter und versucht es beim nächsten Öffnen wieder.
+- Hast du Raumlicht auf dem Startbildschirm installiert, installiere es bitte unter der neuen Adresse neu (Einstellungen → „App installieren“).
+- **Für Eltern:** Für den Umzug wird der Lernstand im Browser verschlüsselt, einmalig auf unserem Server abgelegt, von der neuen Adresse abgeholt und sofort gelöscht. Der Schlüssel verlässt das Gerät nie; wir können nichts lesen.
+
 ## 2.18.32 – Raumlicht wird klarer: Geometrie im Raum, dazu Analysis und Zufall zum Erleben (19.11.2026)
 - **Ein klares Profil:** Raumlicht ist jetzt ganz die App für die **Geometrie im Raum** – Punkte, Vektoren, Geraden, Ebenen, Kugeln, Abstände und Winkel. 92 Aufgaben in 16 Kapiteln, durchgehend von 1 bis 16 nummeriert.
 - **Die Rechenaufgaben zu Analysis und Stochastik sind jetzt im Mathe-Trainer.** Dort übst du sie in Stufen, mit jedem Rechenschritt. In Raumlicht findest du an ihrer Stelle den direkten Weg dorthin.

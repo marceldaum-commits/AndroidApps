@@ -1,6 +1,6 @@
 # Abschnitt für die Datenschutzerklärung der Website (Vorschlag)
 
-Stand: Raumlicht 2.18.32 vom 19.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
+Stand: Raumlicht 2.18.33 vom 19.11.2026. Zum Einfügen unter https://www.mathenachhilfe-online.com/datenschutz/ – **Vorschlag, keine Rechtsberatung**;
 bitte vor dem Veröffentlichen von einer Datenschutz-Fachperson prüfen lassen (vor allem Rechtsgrundlage und Speicherdauer der Server-Protokolle).
 
 ## Text
@@ -51,6 +51,12 @@ Angaben zum Browser bzw. zur App) in seinen Protokollen. *[Speicherdauer und Rec
    Lernverlauf samt Monatssummen, Einstellungen und Freischalt-Codes, aber keine Geräte-Kennungen, und wird mit demselben Schlüssel verschlüsselt. Mit dem Kopplungs-Link lässt sich der Lernstand auf einem neuen Gerät
    zurückholen. „Kopplung aufheben“ löscht Bericht und Sicherung; ohne Aktualisierung löscht der Server beides nach 90 Tagen.
    *[Rechtsgrundlage (Einwilligung der Nutzerin bzw. des Nutzers; bei Minderjährigen prüfen), Speicherort und Löschkonzept bestätigen.]*
+8. **Umzug auf die neue Adresse (ab 2.18.33).** Raumlicht zieht von `raumlicht.mathenachhilfe-online.com` auf `lernen.mathenachhilfe-online.com/raumlicht/` um. Damit der Lernstand mitkommt
+   (ein Browser trennt den Speicher zweier Adressen), verschlüsselt die alte Adresse ihn beim nächsten Öffnen im Browser (AES-GCM, 256 Bit) und legt ihn als Einmal-Sicherung auf unserem Server
+   `trainer.mathenachhilfe-online.com` ab. Der Schlüssel wird nur in der Adresse hinter dem „#“ an die neue Adresse weitergegeben und nie an einen Server gesendet; wir können die Sicherung nicht lesen.
+   Die neue Adresse holt sie ab, spielt sie ein und löscht sie sofort. Enthalten sind dieselben Angaben wie in der Sicherung bei gekoppeltem Eltern-Handy (Sterne, Rekorde, Lernverlauf,
+   Einstellungen, Freischalt-Codes). Ist der Server nicht erreichbar oder die neue Adresse noch nicht bereit, passiert nichts und Raumlicht läuft unter der alten Adresse weiter.
+   *[Rechtsgrundlage und Löschfrist für nicht abgeholte Einmal-Sicherungen bestätigen.]*
 
 ## Noch offen (nicht Teil des Textes)
 

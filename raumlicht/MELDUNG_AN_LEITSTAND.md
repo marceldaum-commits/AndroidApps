@@ -2,6 +2,36 @@
 
 Neueste oben.
 
+## 19.11.2026 – 2.18.33: Umzugs-Version für lernen.mathenachhilfe-online.com/raumlicht/ (Marcel hat hier selbst „Ja ja“ gesagt: Umzug heute, Reihenfolge erst 2.18.32 live, dann diese)
+
+**Dieselbe Fassung läuft alt und neu.** Enthält alles aus 2.18.29–2.18.32.
+
+**Pflichtpunkte aus UMZUG-LERNEN.md – erledigt:**
+- `sw.js`: beim Aktivieren werden nur Speicher mit Präfix `raumlicht-` gelöscht; gesucht wird nur im eigenen Speicher (`caches.open(CACHE).match`), nur für Anfragen im eigenen Ordner (`registration.scope`).
+- `diagnose.html`: „zurücksetzen“ löscht nur `raumlicht-*` und meldet nur die eigene Anmeldung ab (`getRegistration('./')`).
+- Kein `clear()`. localStorage-Präfix `raumlicht.`, sessionStorage `rl-…`, Cache-Namen `raumlicht-<Version>`, `raumlicht-nova(-offline)`. Kein IndexedDB, kein Mikrofon.
+- Manifest: `id`, `start_url`, `scope` = `./` (ergibt an der neuen Adresse `/raumlicht/`, eindeutig).
+- Test/Live: `isTestSite()` erkennt `raumlicht-test.…` und `lernen-test.…` am Hostnamen (KI-, Eltern-Server, „Alle Apps“).
+
+**Umzug des Lernstands (im Startablauf von `index.html`, vor dem Laden der App):**
+- ALT (`raumlicht(-test).mathenachhilfe-online.com`): erst prüfen, ob die neue Adresse bereit ist – ein Bild `umzug-bereit.png` von dort laden (die Datei gibt es erst ab 2.18.33; so ist sicher, dass die neue Adresse den Umzug annimmt, und niemand landet vor einer Fehlerseite). Dann alle `raumlicht.*`-Schlüssel außer Browser-Merkern (`mitschrift`, `startfehler`, `modus.`, `sparsam`, `test`) einsammeln, AES-GCM-256 mit 12-Byte-IV, `PUT trainer(-test)…/eltern/v1/s/<id>` mit `X-Schreib`, danach `location.replace` auf `lernen(-test)…/raumlicht/` + Query + `#umzug=<id>.<key>.<schreib>` (vorhandene `#pro=`/`#ki=` mit `&` angehängt). Ohne Lernstand ohne `#umzug`. Bei jedem Fehler keine Weiterleitung; nächster Start, nächster Versuch. Der Stand an der alten Adresse bleibt liegen (Rückweg).
+- NEU: `GET`, entschlüsseln, nur einspielen, wenn dort noch kein `raumlicht.*`-Stand liegt, `DELETE` mit `X-Schreib`, `umzug` aus der Adresse nehmen.
+- **Abweichung von UMZUG-LERNEN.md – bitte dort korrigieren:** Der PUT-Body ist **`text/plain` mit `<iv>.<ct>`**, nicht JSON `{"d":…}`. Am echten trainer-test geprüft (19.11.): `text/plain` → 204, JSON → **400**. GET liefert `{"d":"<iv>.<ct>","t":…}`.
+
+**Am echten Server geprüft (trainer-test, 19.11.):** PUT s **ohne Kopplung** 204 (Origin raumlicht-test) · GET mit Origin `lernen-test.…` 200, CORS passt · OPTIONS für DELETE von `lernen-test.…` 204 · DELETE 204 → GET 404. Meine Testdaten sind gelöscht.
+**Nicht prüfbar:** `https://lernen-test.mathenachhilfe-online.com/raumlicht/` und `https://lernen.…/raumlicht/` antworten mit **503** – den echten Rundlauf alt → neu konnte ich noch nicht fahren. CORS von `lernen(-test).…` für `/zaehler/v1/e` und `/api/raumlicht/ki` habe ich nicht geprüft.
+
+**Browser-Test `scene/test/web-umzug.mjs` (35 Prüfungen, Wasm und JS, drei Server auf dem Rechner = echte getrennte Speicher):** Umzug gelingt mit `?ziel=` und Raute-Teil · nur Verschlüsseltes am Server, Schlüssel nie · Sicherung nach dem Abholen gelöscht · Ziel hat schon Daten → nichts überschrieben · Server-Fehler → keine Weiterleitung, nächster Start klappt · neue Adresse antwortet mit Fehler → nichts abgelegt, keine Weiterleitung · ohne Lernstand direkt hinüber · Umzugs-Link ohne Sicherung → normaler Start · Service Worker und Diagnose-Seite lassen einen fremden Speicher (`andere-app-1`) stehen.
+
+**Was du tun musst – in dieser Reihenfolge:**
+1. 2.18.32 live nehmen (Marcels Reihenfolge) – oder gleich 2.18.33, sie enthält 2.18.32.
+2. **Zuerst die NEUE Adresse** mit 2.18.33 bestücken (`raumlicht/webapp/` nach `lernen-test.…/raumlicht/`, dann `lernen.…/raumlicht/`). Solange dort nichts oder eine ältere Fassung liegt, zieht niemand um – die alte Adresse läuft normal weiter.
+3. CORS/Allowlist für `lernen(-test).mathenachhilfe-online.com`: `/eltern/v1/b`, `/eltern/v1/s`, `/zaehler/v1/e`, `/api/raumlicht/ki`.
+4. Danach die alte Adresse auf 2.18.33 bringen. Ab dann zieht jeder beim nächsten Öffnen um.
+5. Links umstellen (Shop-Mails `#pro=`/`#ki=`, /lern-apps/, Querverweise der anderen Apps); alte Links funktionieren über die Weiterleitung weiter.
+- **Rückweg:** alte Adresse zurück auf 2.18.32 – der Lernstand liegt dort unverändert (Stand des Umzugs).
+- **Offen:** installierte WebApp (Startbildschirm) muss unter der neuen Adresse neu installiert werden; auf iPhone/iPad nicht getestet. Löschfrist für nicht abgeholte Einmal-Sicherungen (heute 90 Tage wie beim Bericht?) bitte festlegen. Datenschutztext: `store/datenschutz-abschnitt.md` Punkt 8.
+
 ## 19.11.2026 – 2.18.32 auf test: Umbau aufs Profil „Geometrie im Raum + Analysis & Zufall erleben“ (von Marcel direkt bestätigt am 18.11.; auf heute vorgezogen laut AppZentrale)
 
 **Herausgenommen (gestrichen, nicht verschoben – der Mathe-Trainer hat laut seinem Abgleich alle Aufgabentypen):**

@@ -74,8 +74,8 @@ private fun WebApp() {
         if (code != null) prefs.setKiCode(code)
         note("KI-Link: " + if (code != null) "Code angenommen" else "Code nicht erkannt"); nav.restart(Routes.KI) } }
     // KI-Tutor: die Testseite fragt den Test-Server (und zeigt den Tutor schon, bevor er für alle freigegeben ist)
-    val kiTest = remember { hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST || kiServer() != null }
-    val kiUrl = remember { kiServer() ?: if (hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST) de.raumlicht.core.model.Ki.TEST_URL else de.raumlicht.core.model.Ki.URL }
+    val kiTest = remember { isTestSite() || kiServer() != null }
+    val kiUrl = remember { kiServer() ?: if (isTestSite()) de.raumlicht.core.model.Ki.TEST_URL else de.raumlicht.core.model.Ki.URL }
     // Musik wie in der Android-App: ruhig im Menü, flotter bei Fahrt und Flug
     var mood by remember { mutableStateOf(MusicMood.MENU) }
     val musicOn by prefs.music.collectAsState(); val loud by prefs.volume.collectAsState()
@@ -112,10 +112,10 @@ private fun WebApp() {
         LocalShareText provides { text -> shareText(text) }) {
         RaumlichtTheme { Surface(Modifier.fillMaxSize(), color = Q.Space) {
             AppRoot(nav, prefs, stars.all, stars::record, { todayLocal().toLong() },
-                eltern = remember { val test = hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST || elternServer() != null
+                eltern = remember { val test = isTestSite() || elternServer() != null
                     if (!de.raumlicht.core.model.Eltern.ENABLED && !test) null else de.raumlicht.app.ui.settings.ElternPlatform(elternServer() ?: if (test) de.raumlicht.core.model.Eltern.TEST_SERVER else de.raumlicht.core.model.Eltern.SERVER,
                         if (test) de.raumlicht.core.model.Eltern.TEST_PAGE else de.raumlicht.core.model.Eltern.PAGE, ::elternNeu, ::elternSenden, ::elternLoeschen, ::elternHolen, ::snapshot, ::restoreSnapshot) },
-                onApps = { openApps(if (hostName() == de.raumlicht.core.model.Vorlesen.TEST_HOST) de.raumlicht.core.model.Nachhilfe.APPS_TEST_URL else de.raumlicht.core.model.Nachhilfe.APPS_URL) },
+                onApps = { openApps(if (isTestSite()) de.raumlicht.core.model.Nachhilfe.APPS_TEST_URL else de.raumlicht.core.model.Nachhilfe.APPS_URL) },
                 countSend = { body -> beacon(de.raumlicht.core.model.Zaehler.URL, body) },
                 kiSend = { body -> kotlinx.coroutines.suspendCancellableCoroutine { c -> kiPost(kiUrl, body) { status, text -> if (c.isActive) c.resumeWith(Result.success(status to text)) } } },
                 kiEnabled = de.raumlicht.core.model.Ki.ENABLED || kiTest, version = Version.NAME,

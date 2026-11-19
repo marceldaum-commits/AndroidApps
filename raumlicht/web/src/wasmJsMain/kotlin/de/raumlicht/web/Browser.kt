@@ -64,6 +64,8 @@ fun reloadPage(): Unit = js("location.reload()")
 /** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer Eltern-Server (window.__rlElternServer), sonst null */
 fun elternServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlElternServer) || null")
 fun hostName(): String = js("location.hostname")
+/** Läuft die WebApp auf der Test-Stufe? Alte Testadresse (raumlicht-test.…) oder die gemeinsame (lernen-test.…/raumlicht/) – am Hostnamen erkannt */
+fun isTestSite(): Boolean = js("location.hostname === 'raumlicht-test.mathenachhilfe-online.com' || location.hostname.indexOf('lernen-test.') === 0")
 /** Nur für die automatische Prüfung auf dem eigenen Rechner: anderer KI-Server (window.__rlKiServer), sonst null */
 fun kiServer(): String? = js("((location.hostname === 'localhost' || location.hostname === '127.0.0.1') && window.__rlKiServer) || null")
 /** Zur App-Auswahl der Website: im Browser im selben Tab; läuft die WebApp installiert (eigenes Fenster), im normalen Browser */
