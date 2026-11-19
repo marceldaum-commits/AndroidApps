@@ -1,0 +1,385 @@
+{
+  "id": "s1-spanisch-grundwortschatz",
+  "version": 4,
+  "title": "Spanisch Grundwortschatz",
+  "subject": "spanisch",
+  "grades": [
+    8,
+    9,
+    10
+  ],
+  "emoji": "💃",
+  "tier": "free",
+  "description": "Wichtige spanische Wörter und Sätze für den Einstieg: Deutsch → Spanisch.",
+  "intro": [
+    {
+      "img": "🌎💃",
+      "text": "Wusstest du, dass Spanisch in rund 20 Ländern Amtssprache ist? Mehr als 450 Millionen Menschen sprechen es als Muttersprache!"
+    },
+    {
+      "img": "🔤👄",
+      "text": "Gute Nachricht: Spanisch spricht man fast so, wie man es schreibt. Nur ein paar Regeln merken, z. B.: Das h bleibt stumm, das rr wird gerollt."
+    },
+    {
+      "img": "🏡🐱",
+      "text": "Lerntrick: Lern jedes Nomen mit Artikel – el oder la. Oft hilft die Endung: -o ist meist männlich (el gato), -a meist weiblich (la casa). Ausnahmen gibt’s aber!"
+    },
+    {
+      "img": "🗣️🔁",
+      "text": "Noch ein Trick: Sprich die Wörter laut nach und bau kleine Sätze damit, z. B. „Tengo un perro.“ – „Ich habe einen Hund.“"
+    },
+    {
+      "img": "☀️🚀",
+      "text": "¡Vamos! Lass uns mit deinen ersten spanischen Wörtern loslegen."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „das Haus“ auf Spanisch?",
+      "a": "la casa",
+      "choices": [
+        "el casa",
+        "la cosa",
+        "la caza"
+      ],
+      "img": "🏡"
+    },
+    {
+      "id": "002",
+      "q": "Was heißt „der Hund“ auf Spanisch?",
+      "a": "el perro",
+      "info": "Doppel-r wird gerollt: pe-rro.",
+      "img": "🐩"
+    },
+    {
+      "id": "003",
+      "q": "Was heißt „die Katze“ auf Spanisch?",
+      "a": "el gato",
+      "choices": [
+        "la gato",
+        "el pato",
+        "el gatto"
+      ],
+      "img": "😺"
+    },
+    {
+      "id": "004",
+      "q": "Was heißt „die Schule“ auf Spanisch?",
+      "a": "la escuela",
+      "choices": [
+        "el escuela",
+        "la escuala",
+        "la escalera"
+      ],
+      "info": "Auch üblich: el colegio.",
+      "img": "🏫🎒"
+    },
+    {
+      "id": "005",
+      "q": "Was heißt „das Buch“ auf Spanisch?",
+      "a": "el libro",
+      "choices": [
+        "la libra",
+        "el libre",
+        "el livro"
+      ],
+      "img": "📗"
+    },
+    {
+      "id": "006",
+      "q": "Was heißt „der Freund“ auf Spanisch?",
+      "a": "el amigo",
+      "choices": [
+        "la amiga",
+        "el enemigo",
+        "el amego"
+      ],
+      "img": "🤗"
+    },
+    {
+      "id": "007",
+      "q": "Was heißt „die Familie“ auf Spanisch?",
+      "a": "la familia",
+      "choices": [
+        "el familia",
+        "la famillia",
+        "la família"
+      ],
+      "img": "👪❤️"
+    },
+    {
+      "id": "008",
+      "q": "Was heißt „der Vater“ auf Spanisch?",
+      "a": "el padre",
+      "img": "🧔"
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „die Mutter“ auf Spanisch?",
+      "a": "la madre",
+      "choices": [
+        "el madre",
+        "la madra",
+        "la padre"
+      ],
+      "img": "👩👶"
+    },
+    {
+      "id": "010",
+      "q": "Was heißt „der Bruder“ auf Spanisch?",
+      "a": "el hermano",
+      "img": "👦👦"
+    },
+    {
+      "id": "011",
+      "q": "Was heißt „die Schwester“ auf Spanisch?",
+      "a": "la hermana",
+      "choices": [
+        "la hermano",
+        "la ermana",
+        "el hermana"
+      ],
+      "img": "👧👧"
+    },
+    {
+      "id": "012",
+      "q": "Was heißt „das Wasser“ auf Spanisch?",
+      "a": "el agua",
+      "choices": [
+        "la agua",
+        "el aqua",
+        "la água"
+      ],
+      "info": "agua ist weiblich, bekommt aber im Singular „el“ (betontes a am Anfang).",
+      "img": "🚰"
+    },
+    {
+      "id": "013",
+      "q": "Was heißt „das Brot“ auf Spanisch?",
+      "a": "el pan",
+      "img": "🍞"
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „der Apfel“ auf Spanisch?",
+      "a": "la manzana",
+      "choices": [
+        "el manzano",
+        "la manzanilla",
+        "la mansana"
+      ],
+      "info": "el manzano = der Apfelbaum",
+      "img": "🍎🍏"
+    },
+    {
+      "id": "015",
+      "q": "Was heißt „die Stadt“ auf Spanisch?",
+      "a": "la ciudad",
+      "img": "🌆"
+    },
+    {
+      "id": "016",
+      "q": "Was heißt „der Tag“ auf Spanisch?",
+      "a": "el día",
+      "choices": [
+        "la día",
+        "el diario",
+        "la noche"
+      ],
+      "info": "día ist männlich, obwohl es auf -a endet.",
+      "img": "☀️🕛"
+    },
+    {
+      "id": "017",
+      "q": "Was heißt „die Nacht“ auf Spanisch?",
+      "a": "la noche",
+      "img": "🌌"
+    },
+    {
+      "id": "018",
+      "q": "Was heißt „die Woche“ auf Spanisch?",
+      "a": "la semana",
+      "choices": [
+        "el semana",
+        "la semena",
+        "la mañana"
+      ],
+      "img": "🗓️"
+    },
+    {
+      "id": "019",
+      "q": "Was heißt „das Jahr“ auf Spanisch?",
+      "a": "el año",
+      "info": "Ohne ñ (ano) bedeutet es etwas ganz anderes!",
+      "img": "🎆📅"
+    },
+    {
+      "id": "020",
+      "q": "Was heißt „heute“ auf Spanisch?",
+      "a": "hoy",
+      "choices": [
+        "ayer",
+        "mañana",
+        "hay"
+      ],
+      "img": "📍📅"
+    },
+    {
+      "id": "021",
+      "q": "Was heißt „morgen“ (am nächsten Tag) auf Spanisch?",
+      "a": "mañana",
+      "img": "🌄➡️"
+    },
+    {
+      "id": "022",
+      "q": "Was heißt „gestern“ auf Spanisch?",
+      "a": "ayer",
+      "choices": [
+        "hoy",
+        "mañana",
+        "anoche"
+      ],
+      "info": "anoche = gestern Abend/Nacht",
+      "img": "⏮️📅"
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „danke“ auf Spanisch?",
+      "a": "gracias",
+      "img": "🙏"
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „bitte“ (um etwas bitten) auf Spanisch?",
+      "a": "por favor",
+      "choices": [
+        "de nada",
+        "perdón",
+        "para favor"
+      ],
+      "info": "de nada = gern geschehen",
+      "img": "🥺🙏"
+    },
+    {
+      "id": "025",
+      "q": "Was heißt „sprechen“ auf Spanisch?",
+      "a": "hablar",
+      "img": "💬🗣️"
+    },
+    {
+      "id": "026",
+      "q": "Was heißt „essen“ auf Spanisch?",
+      "a": "comer",
+      "choices": [
+        "beber",
+        "vivir",
+        "cocinar"
+      ],
+      "img": "🌮"
+    },
+    {
+      "id": "027",
+      "q": "Was heißt „trinken“ auf Spanisch?",
+      "a": "beber",
+      "choices": [
+        "comer",
+        "vivir",
+        "bailar"
+      ],
+      "img": "🍹"
+    },
+    {
+      "id": "028",
+      "q": "Was heißt „wohnen, leben“ auf Spanisch?",
+      "a": "vivir",
+      "choices": [
+        "vender",
+        "venir",
+        "ver"
+      ],
+      "img": "🏡❤️"
+    },
+    {
+      "id": "029",
+      "q": "Was heißt „haben“ (besitzen) auf Spanisch?",
+      "a": "tener",
+      "choices": [
+        "haber",
+        "hacer",
+        "tomar"
+      ],
+      "img": "🤲💎"
+    },
+    {
+      "id": "030",
+      "q": "Was heißt „der Strand“ auf Spanisch?",
+      "a": "la playa",
+      "choices": [
+        "el playa",
+        "la plaza",
+        "la plata"
+      ],
+      "info": "la plaza = der Platz, la plata = das Silber",
+      "img": "🏖️"
+    },
+    {
+      "id": "031",
+      "q": "Was heißt „das Meer“ auf Spanisch?",
+      "a": "el mar",
+      "img": "🌊🐬"
+    },
+    {
+      "id": "032",
+      "q": "Was heißt „die Hand“ auf Spanisch?",
+      "a": "la mano",
+      "choices": [
+        "el mano",
+        "la mana",
+        "el brazo"
+      ],
+      "info": "mano ist weiblich, obwohl es auf -o endet.",
+      "img": "✋"
+    },
+    {
+      "id": "033",
+      "q": "Was heißt „das Problem“ auf Spanisch?",
+      "a": "el problema",
+      "img": "⚠️🧩"
+    },
+    {
+      "id": "034",
+      "q": "Was heißt „der Bahnhof“ auf Spanisch?",
+      "a": "la estación",
+      "choices": [
+        "el estación",
+        "la estacion",
+        "la estancia"
+      ],
+      "img": "🚂🚉"
+    },
+    {
+      "id": "035",
+      "q": "Was heißt „Wie heißt du?“ auf Spanisch?",
+      "a": "¿Cómo te llamas?",
+      "choices": [
+        "¿Cómo estás?",
+        "¿Cómo se llama?",
+        "¿Qué te llamas?"
+      ],
+      "img": "👋❓"
+    },
+    {
+      "id": "036",
+      "q": "Was heißt „Ich bin 15 Jahre alt.“ auf Spanisch?",
+      "a": "Tengo 15 años.",
+      "choices": [
+        "Soy 15 años.",
+        "Estoy 15 años.",
+        "Tengo 15 anos."
+      ],
+      "info": "Das Alter drückt man im Spanischen mit „tener“ aus.",
+      "img": "🎂1️⃣5️⃣"
+    }
+  ]
+}

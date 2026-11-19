@@ -1,4 +1,10 @@
-# Änderungen – Quasselquest (Englisch mit Ruby)
+# Änderungen – Quasselquest (Sprachen mit Ruby)
+
+## 0.2.0 – Fünf Sprachen und Wörter-Spiele (19.11.2026)
+- Quasselquest wird die Sprachen-App: oben wählt euer Kind **Englisch, Deutsch, Französisch, Spanisch oder Latein** und kann jederzeit wechseln.
+- **19 Pakete mit 658 Karten** aus dem Wissensgarten sind umgezogen (Wortschatz, Rechtschreibung, Grammatik, Verbformen). Sie werden nicht als Karteikarten gespielt, sondern als Spiele: Ballon-Jagd, Hör-Detektiv, Buchstaben-Bau und Memory.
+- **Wiederholung in wachsenden Abständen:** Was beim ersten Versuch klappt, kommt nach 1, 2, 4, 8 … Tagen wieder; was noch hakt, kommt morgen wieder. Auf jedem Paket sieht man, wie viele Karten schon sitzen.
+- Vorgelesen wird mit freien Stimmen in jeder Sprache (Latein noch ohne Stimme). Klassen 3 bis 13 wählbar.
 
 ## 0.1.0 – Erster Prototyp: Hello Harbour (18.11.2026)
 - Ruby, der rote Papagei, begleitet euer Kind durch den Hafen „Hello Harbour“.

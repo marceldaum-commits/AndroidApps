@@ -14,7 +14,7 @@
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-  const fresh = () => ({ v: 2, klasse: null, name: '', progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei' }, week: { key: '', n: 0 } });
+  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei' }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
   // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
@@ -23,6 +23,9 @@
     delete state.streak; state.week = { key: '', n: 0 }; state.v = 2;
   }
   if (!state.week) state.week = { key: '', n: 0 };
+  // Stand 2 → 3 (19.11.2026): Quasselquest wird die Sprachen-App – Sprache wählbar, Wortschatz-Pakete mit Wiederholung
+  if (state.v < 3) { state.lang = 'en'; state.karten = {}; state.introSeen = {}; state.v = 3; }
+  const PK = window.PAKETE;
   window.APP_SETTINGS = state.settings;
 
   // ================================================================== Hilfen
@@ -34,7 +37,9 @@
   let token = 0; // wechselt bei jedem Bildschirmwechsel – laufende Abläufe brechen dann ab
   function screen(html) { token++; A.stop(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); return el; }
   const alive = (t) => t === token;
-  const isTest = () => /(^|\.)[a-z]+-test\.|localhost|127\.0\.0\.1/.test(location.hostname) || location.protocol === 'file:';
+  // Test-Stufe: Übergangs-Subdomain „…-test.“, künftig Pfad unter der gemeinsamen Adresse (z. B. …/test/quasselquest/), lokal.
+  // Bewusst ohne festen Hostnamen, damit der Umzug auf die gemeinsame Adresse nichts ändern muss.
+  const isTest = () => /(^|[.-])(test|staging)([.-]|$)|localhost|127\.0\.0\.1/.test(location.hostname) || /\/(test|staging)\//.test(location.pathname) || location.protocol === 'file:';
 
   // ================================================================== Ruby (SVG)
   function rubySVG() {
@@ -124,16 +129,20 @@
     if (!state.klasse) return onboarding();
     const m = /episode=([a-z0-9]+)/.exec(location.hash);
     if (m && C.findEpisode(m[1]) && !C.findEpisode(m[1]).episode.soon) { history.replaceState(null, '', location.pathname + location.search); return playEpisode(m[1]); }
-    if (/welt=/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+    const sp = /sprache=([a-z]{2})/.exec(location.hash); const pk = /paket=([a-z0-9-]+)/.exec(location.hash);
+    if (sp && PK.LANGS[sp[1]]) { state.lang = sp[1]; save(); }
+    if (/welt=|sprache=|paket=/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
+    if (pk) { const meta = packIndex().find((x) => x.id === pk[1]); if (meta) { state.lang = meta.sprache; save(); return openPack(meta); } }
     home();
   }
 
+  const KLASSEN = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   function onboarding() {
     let klasse = null;
     const el = screen(`<div class="stage">
-      ${ruby('Hello! Ich bin <b>Ruby</b>, ein Papagei aus England. Papageien sprechen alles nach – und du bald auch! 🦜', 'talk')}
+      ${ruby('Hello! Ich bin <b>Ruby</b>, ein Papagei, der viele Sprachen spricht. Papageien sprechen alles nach – und du bald auch! 🦜', 'talk')}
       <div class="card"><h2 style="font-size:20px">In welche Klasse gehst du?</h2><p class="muted" style="margin:6px 0 12px">Du kannst das später ändern.</p>
-        <div class="grade">${[3, 4, 5, 6].map((k) => `<button data-k="${k}" aria-label="Klasse ${k}">${k}</button>`).join('')}</div></div>
+        <div class="grade">${KLASSEN.map((k) => `<button data-k="${k}" aria-label="Klasse ${k}">${k}</button>`).join('')}</div></div>
       <div class="card"><h2 style="font-size:20px">Wie heißt du? <small class="muted">(freiwillig)</small></h2>
         <p class="muted" style="margin:6px 0 10px">Ruby und die Kinder am Hafen sagen dann deinen Namen. Er bleibt nur auf diesem Gerät.</p>
         <input class="input" data-name maxlength="15" autocomplete="off" placeholder="Vorname oder Spitzname"><div class="err" data-err></div></div>
@@ -151,18 +160,38 @@
   }
 
   // ================================================================== Startseite
+  function langBar() {
+    return `<div class="langbar" role="tablist" aria-label="Sprache wählen">${PK.ORDER.map((l) => `<button role="tab" class="lang ${state.lang === l ? 'sel' : ''}" data-lang="${l}" aria-selected="${state.lang === l}"><span>${PK.LANGS[l].emoji}</span>${esc(PK.LANGS[l].name)}</button>`).join('')}</div>`;
+  }
+  function packTiles() {
+    const k = state.klasse || 5;
+    const list = packIndex().filter((p) => p.sprache === state.lang)
+      .sort((a, b) => Math.abs(Math.min(...a.grades) - k) - Math.abs(Math.min(...b.grades) - k));
+    if (!list.length) return '<p class="muted">Pakete werden geladen …</p>';
+    return `<div class="worlds">${list.map((p) => {
+      const sitzt = packMastered(p.id); const passt = p.grades.includes(k);
+      return `<button class="wtile ptile" data-pack="${p.id}">${passt ? '<span class="soon fit">passt zu Kl. ' + k + '</span>' : ''}<span class="e">${p.emoji}</span><b>${esc(p.title)}</b>
+        <small>Kl. ${esc(gradeText(p.grades))} · ${p.karten} Karten</small><span class="bar"><i style="width:${Math.round(100 * sitzt / p.karten)}%"></i></span><small>${sitzt} sitzen schon</small></button>`;
+    }).join('')}</div>`;
+  }
+  const gradeText = (g) => { const x = g.filter((n) => n <= 13); return x.length ? (x.length > 1 ? Math.min(...x) + '–' + Math.max(...x) : String(x[0])) : 'alle'; };
+
   function home() {
+    const L = PK.LANGS[state.lang];
+    const en = state.lang === 'en';
     const w1 = C.worlds[0];
     const next = nextEpisode();
-    const greet = state.name ? `Hello, <b>${esc(state.name)}</b>! ` : 'Hello! ';
-    const tip = next ? (prog('w1e1') ? 'Weiter geht\'s! Tipp auf den hüpfenden Kreis.' : 'Komm mit zum Hafen! Tipp auf den hüpfenden Kreis.') : 'Du hast alle Orte am Hafen geschafft! Bald geht die Reise weiter. 🚢';
+    const greet = (state.name ? `${esc(L.hallo.replace(/[!¡ ]+$/, ''))}, <b>${esc(state.name)}</b>! ` : esc(L.hallo) + ' ');
+    const tip = en ? (next ? (prog('w1e1') ? 'Weiter geht\'s! Tipp auf den hüpfenden Kreis.' : 'Komm mit zum Hafen! Tipp auf den hüpfenden Kreis.') : 'Du hast alle Orte am Hafen geschafft! Bald geht die Reise weiter. 🚢')
+      : `Heute üben wir <b>${esc(L.name)}</b>. Such dir ein Paket aus – ich spiele mit dir!${L.who ? '' : ' (Latein lesen wir – vorlesen kann ich es noch nicht.)'}`;
     const el = screen(`<div>
       <div class="top"><button class="allapps" data-allapps>← Alle Apps</button><div class="spacer"></div>
         <span class="pill" title="Stempel im Reisepass">📘 ${stampCount()}</span>
         <button class="iconbtn" data-settings aria-label="Einstellungen">⚙️</button></div>
-      <div class="title">Quasselquest <span style="font-size:.6em;color:var(--muted)">Englisch mit Ruby</span></div>
+      <div class="title">Quasselquest <span style="font-size:.6em;color:var(--muted)">Sprachen mit Ruby</span></div>
+      ${langBar()}
       ${ruby(greet + tip)}
-      <div class="world">
+      ${en ? `<div class="world">
         <div class="waves"></div><div class="boatdeco">⛵</div>
         <h2>${w1.emoji} ${esc(w1.title)}</h2><div class="sub">Welt 1 · ${esc(w1.de)}</div>
         <div class="stations">${w1.episodes.map((e) => {
@@ -170,16 +199,24 @@
           return `<button class="station ${cls}" data-ep="${e.id}" aria-label="${esc(e.title)}"><span class="dot">${e.soon ? '🔜' : e.emoji}</span>
             <span class="lbl">${esc(e.title)}</span><span class="stars">${p && p.done ? '⭐'.repeat(p.stars) : ''}</span></button>`;
         }).join('')}</div>
-      </div>
-      <div class="row" style="margin-top:14px"><button class="btn white small" data-pass>📘 Mein Reisepass</button>
+      </div>` : ''}
+      <div class="row" style="margin-top:14px">${en ? '<button class="btn white small" data-pass>📘 Mein Reisepass</button>' : ''}
         <span class="pill" title="Wochenziel">🎯 Diese Woche: ${Math.min(weekCount(), WEEK_GOAL)}/${WEEK_GOAL}${weekCount() >= WEEK_GOAL ? ' ✅' : ''}</span></div>
-      <div class="section-h">Weitere Orte auf der Reise</div>
-      <div class="worlds">${C.worlds.slice(1).map((w) => `<button class="wtile" data-world="${w.id}"><span class="soon">kommt bald</span><span class="e">${w.emoji}</span><b>${esc(w.title)}</b><small>${esc(w.de)} · ${w.stufe === 'gs' ? 'Kl. 3–4' : 'Kl. 5–6'}</small></button>`).join('')}</div>
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · Prototyp · <a href="datenschutz.html">Datenschutz</a></div>
+      <div class="section-h">${L.emoji} Wörter & Regeln üben</div>
+      ${packTiles()}
+      ${en ? `<div class="section-h">Weitere Orte auf der Reise</div>
+      <div class="worlds">${C.worlds.slice(1).map((w) => `<button class="wtile" data-world="${w.id}"><span class="soon">kommt bald</span><span class="e">${w.emoji}</span><b>${esc(w.title)}</b><small>${esc(w.de)} · ${w.stufe === 'gs' ? 'Kl. 3–4' : 'Kl. 5–6'}</small></button>`).join('')}</div>` : ''}
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a></div>
     </div>`);
     el.querySelector('[data-allapps]').onclick = openAllApps;
     el.querySelector('[data-settings]').onclick = () => { A.sfx('tap'); settings(); };
-    el.querySelector('[data-pass]').onclick = () => { A.sfx('tap'); passport(); };
+    const ps = el.querySelector('[data-pass]'); if (ps) ps.onclick = () => { A.sfx('tap'); passport(); };
+    el.querySelectorAll('[data-lang]').forEach((b) => b.onclick = () => {
+      if (state.lang === b.dataset.lang) return;
+      state.lang = b.dataset.lang; save(); A.sfx('pop'); A.vibrate(15); home();
+      const L2 = PK.LANGS[state.lang]; if (L2.who) speak(L2.hallo.replace(/ !$/, '!'), L2.who);
+    });
+    el.querySelectorAll('[data-pack]').forEach((b) => b.onclick = () => { A.sfx('pop'); A.vibrate(20); openPack(packIndex().find((x) => x.id === b.dataset.pack)); });
     el.querySelectorAll('[data-ep]').forEach((b) => b.onclick = () => {
       const f = C.findEpisode(b.dataset.ep);
       if (f.episode.soon) { A.sfx('soft'); rubySay(el, `„${esc(f.episode.title)}“ baue ich gerade. Bald kannst du hier spielen! 🔨`, 'talk'); return; }
@@ -714,7 +751,7 @@
       <div class="card">
         ${sw('sound', '🔔 Töne')}${sw('voice', '🗣️ Stimme (Englisch vorlesen)')}${sw('slow', '🐢 Immer langsamer sprechen')}${sw('vibrate', '📳 Vibration')}
 
-        <div class="set"><span>🎒 Klasse</span><span class="row">${[3, 4, 5, 6].map((k) => `<button class="btn small ${state.klasse === k ? 'blue' : 'white'}" data-k="${k}">${k}</button>`).join('')}</span></div>
+        <div class="set"><span>🎒 Klasse</span><span class="row" style="justify-content:flex-end">${KLASSEN.map((k) => `<button class="btn small ${state.klasse === k ? 'blue' : 'white'}" data-k="${k}">${k}</button>`).join('')}</span></div>
         <div class="set"><span>🙂 Name</span><span class="row"><b>${esc(state.name || '–')}</b><button class="btn small white" data-name>Ändern</button></span></div>
       </div>
       <div class="card" style="margin-top:14px"><h3 style="margin-bottom:4px">🎙️ Welche Stimme?</h3>
@@ -726,7 +763,7 @@
         <div class="set"><span>👪 Für Eltern</span><button class="btn small blue" data-parents>Öffnen</button></div>
         <div class="set"><span>🔒 Datenschutz</span><a class="btn small white" href="datenschutz.html">Lesen</a></div>
       </div>
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Stimmen: Piper „cori“ (CC BY 4.0, Hi-Fi TTS von NVIDIA, Sprecherin Cori Samuel) und „john“ (gemeinfrei, LibriVox) · <a href="lizenzen.txt">Lizenzen</a></div>
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Freie Stimmen (Piper): cori, john, thorsten, siwis, davefx – Angaben unter <a href="lizenzen.txt">Lizenzen</a></div>
     </div>`);
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
     el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = !s[b.dataset.sw]; save(); A.sfx('tap'); settings(); });
@@ -790,6 +827,229 @@
     };
   }
 
+  // ================================================================== Wörter & Regeln: Pakete
+  let PACK_INDEX = [];
+  const packCache = new Map();
+  const packIndex = () => PACK_INDEX;
+  const packsReady = fetch('pakete/index.json').then((r) => r.json()).then((j) => { PACK_INDEX = j.pakete || []; }).catch(() => {});
+  async function loadPack(meta) {
+    if (packCache.has(meta.id)) return packCache.get(meta.id);
+    const p = await (await fetch('pakete/' + meta.id + '.json')).json();
+    p.lang = meta.sprache; packCache.set(meta.id, p);
+    return p;
+  }
+  function packMastered(id) {
+    let n = 0; const pre = id + '#';
+    for (const k in state.karten) if (k.startsWith(pre) && state.karten[k].b >= 3) n++;
+    return n;
+  }
+
+  async function openPack(meta) {
+    if (!meta) return home();
+    let pack;
+    try { pack = await loadPack(meta); } catch (e) { rubyToast('Das Paket lädt gerade nicht. Bist du offline? Versuch es gleich noch einmal.'); return; }
+    if (!state.introSeen[pack.id] && pack.intro && pack.intro.length) return packIntro(pack);
+    return packRound(pack);
+  }
+  function rubyToast(text) { const r = $app.querySelector('[data-rubytext]'); if (r) rubySay($app, esc(text), 'talk'); }
+
+  function packIntro(pack) {
+    let i = 0;
+    const el = screen(`<div class="stage">
+      <div class="ep-top"><button class="iconbtn" data-quit aria-label="Zurück">✕</button><div class="game-title" style="flex:1">${pack.emoji} ${esc(pack.title)}<small>${esc(pack.description)}</small></div></div>
+      <div data-box></div><div class="row center"><button class="btn blue" data-next>Weiter ➜</button></div>${ruby('', '')}</div>`);
+    const show = () => {
+      const it = pack.intro[i];
+      el.querySelector('[data-box]').innerHTML = `<div class="scene-pic">${esc(it.img || pack.emoji)}</div><div class="card" style="font-size:19px;font-weight:700;line-height:1.45">${esc(it.text)}</div>`;
+      rubySay(el, `${i + 1} von ${pack.intro.length}`);
+    };
+    el.querySelector('[data-quit]').onclick = () => { A.sfx('tap'); home(); };
+    el.querySelector('[data-next]').onclick = () => {
+      A.sfx('whoosh'); i++;
+      if (i >= pack.intro.length) { state.introSeen[pack.id] = 1; save(); packRound(pack); } else show();
+    };
+    show();
+  }
+
+  /** Eine Runde: 8 Karten, fällige zuerst. Jede Karte in einer passenden Spielart, gemischt; einmal Memory. */
+  async function packRound(pack) {
+    const L = PK.LANGS[pack.lang];
+    const cards = PK.pick(state.karten, pack, 8, 5);
+    const run = { first: 0, total: 0 };
+    // Spielarten verteilen: abwechslungsreich, aber passend zur Karte
+    let lastMode = '';
+    const plan = [];
+    const memo = cards.filter((c) => ['zu', 'von'].includes(PK.classify(c, pack.lang).kind));
+    let memoryUsed = false;
+    for (let i = 0; i < cards.length; i++) {
+      const c = cards[i];
+      if (!memoryUsed && i >= 3 && memo.filter((x) => !plan.some((p) => p.cards && p.cards.includes(x)) && cards.indexOf(x) >= i).length >= 3) {
+        const trio = memo.filter((x) => cards.indexOf(x) >= i).slice(0, 3);
+        if (trio.includes(c)) { plan.push({ mode: 'memory', cards: trio }); memoryUsed = true; continue; }
+      }
+      if (plan.some((p) => p.cards && p.cards.includes(c))) continue;
+      const ms = PK.modes(c, pack.lang);
+      const pickM = ms.filter((m) => m !== lastMode);
+      const m = (pickM.length ? pickM : ms)[Math.floor(Math.random() * (pickM.length ? pickM.length : ms.length))];
+      lastMode = m; plan.push({ mode: m, card: c });
+    }
+    for (let i = 0; i < plan.length; i++) {
+      const res = await packStep(pack, L, plan[i], i / plan.length, run);
+      if (res === 'quit') { save(); return home(); }
+    }
+    const goal = noteEpisodeDone(); save();
+    packSummary(pack, run, goal);
+  }
+
+  function packFrame(pack, frac, title, sub) {
+    const el = screen(`<div class="stage">
+      <div class="ep-top"><button class="iconbtn" data-quit aria-label="Beenden">✕</button>
+        <div class="progress"><i style="width:${Math.round(frac * 100)}%"></i></div><span class="pill">${pack.emoji}</span></div>
+      <div class="game-title">${title}<small>${sub}</small></div>
+      <div data-body class="stage" style="min-height:0"></div>${ruby('', '')}</div>`);
+    requestAnimationFrame(() => { const i = el.querySelector('.progress > i'); if (i) i.style.width = Math.round(frac * 100 + 8) + '%'; });
+    return el;
+  }
+
+  function packStep(pack, L, step, frac, run) {
+    return new Promise((resolve) => {
+      const tk = token;
+      const say = (t) => (t && L.who ? speak(t, L.who) : Promise.resolve(false));
+      const done = (cardsFirst) => {
+        for (const [c, ok] of cardsFirst) { PK.note(state.karten, pack, c, ok); run.total++; if (ok) run.first++; }
+        save(); setTimeout(() => { if (alive(tk)) resolve('ok'); }, 1300);
+      };
+      const praise = () => ['Super!', 'Richtig!', 'Klasse!', 'Stark!', 'Genau!'][Math.floor(Math.random() * 5)];
+      const showInfo = (el, c, extra) => rubySay(el, `${praise()} ${extra || ''}${c.info ? '<br><small style="font-weight:600">💡 ' + esc(c.info) + '</small>' : ''}`, 'dance');
+
+      if (step.mode === 'memory') {
+        const el = packFrame(pack, frac, '🧠 Memory', 'Finde die Paare: Wort und Bedeutung!');
+        el.querySelector('[data-quit]').onclick = () => resolve('quit');
+        const items = [];
+        step.cards.forEach((c, n) => { const k = PK.classify(c, pack.lang); items.push({ n, t: k.ziel, ziel: true, c, k }, { n, t: k.de, c, k }); });
+        const tiles = shuffle(items);
+        const body = el.querySelector('[data-body]');
+        body.innerHTML = `<div class="memory">${tiles.map((x, i) => `<button class="mem" data-i="${i}"${DIAG ? ` data-pair="${x.n}"` : ''}><span class="back">${pack.emoji}</span><span class="front">${esc(x.t)}</span></button>`).join('')}</div>`;
+        let open = []; let found = 0; const miss = new Set();
+        body.querySelectorAll('.mem').forEach((b) => b.onclick = async () => {
+          if (open.length >= 2 || b.classList.contains('up')) return;
+          A.sfx('tap'); b.classList.add('up'); open.push(b);
+          if (open.length < 2) return;
+          const [x, y] = open.map((o) => tiles[+o.dataset.i]);
+          if (x.n === y.n) {
+            open.forEach((o) => o.classList.add('ok')); open = []; found++; A.sfx('right'); A.vibrate(20);
+            await say(x.k.sprich);
+            if (found === step.cards.length) { confetti(50); rubySay(el, 'Alle Paare gefunden! 🎉', 'dance'); done(step.cards.map((c, n) => [c, !miss.has(n)])); }
+          } else {
+            miss.add(x.n); miss.add(y.n); A.sfx('soft');
+            setTimeout(() => { open.forEach((o) => o.classList.remove('up')); open = []; }, 900);
+          }
+        });
+        rubySay(el, 'Dreh zwei Karten um. Passen sie zusammen?');
+        return;
+      }
+
+      const c = step.card; const k = PK.classify(c, pack.lang);
+      if (step.mode === 'ballon') {
+        const el = packFrame(pack, frac, '🎈 Ballon-Jagd', 'Tipp den richtigen Ballon an!');
+        el.querySelector('[data-quit]').onclick = () => resolve('quit');
+        const body = el.querySelector('[data-body]');
+        const opts = shuffle([c.a].concat(PK.wrongs(c, pack, 3)));
+        const cols = ['#e53935', '#1e88e5', '#43a047', '#fb8c00', '#8e24aa'];
+        body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(c.q)}</div>
+          ${k.vorher && L.who ? '<button class="slowbtn" data-hear aria-label="Anhören">🔊</button>' : ''}</div>
+          <div class="balloons">${opts.map((o, i) => `<button class="balloon" style="--c:${cols[i % cols.length]};--d:${(i * 0.37).toFixed(2)}s" data-o="${i}"${DIAG && o === c.a ? ' data-ok' : ''}>${esc(o)}</button>`).join('')}</div>`;
+        let first = true;
+        const hb = body.querySelector('[data-hear]'); if (hb) hb.onclick = () => { A.sfx('tap'); say(k.vorher); };
+        if (k.vorher) say(k.vorher);
+        body.querySelectorAll('.balloon').forEach((b) => b.onclick = async () => {
+          if (b.disabled) return;
+          if (opts[+b.dataset.o] === c.a) {
+            b.classList.add('pop'); A.sfx('pop'); A.vibrate(25); confetti(30);
+            body.querySelectorAll('.balloon').forEach((x) => x.disabled = true);
+            showInfo(el, c, `<b>${esc(c.a)}</b>`);
+            await say(k.sprich); done([[c, first]]);
+          } else {
+            first = false; b.classList.add('wrong'); b.disabled = true; A.sfx('soft');
+            rubySay(el, 'Fast! Probier einen anderen Ballon. 🎈', 'talk');
+          }
+        });
+        rubySay(el, 'Welcher Ballon passt?');
+        return;
+      }
+
+      if (step.mode === 'hoeren') {
+        const el = packFrame(pack, frac, '🔍 Hör-Detektiv', 'Hör zu: Was bedeutet das?');
+        el.querySelector('[data-quit]').onclick = () => resolve('quit');
+        const body = el.querySelector('[data-body]');
+        const opts = shuffle([k.de].concat(PK.wrongs(c, pack, 3, 'de')));
+        body.innerHTML = `<div class="listen-row"><button class="speaker" data-play aria-label="Anhören">🔊</button><button class="slowbtn" data-slow aria-label="Langsam">🐢</button></div>
+          ${A.canHear(k.sprich, L.who) ? '' : `<div class="novoice">${esc(k.sprich)}<small>Keine Stimme verfügbar – lies das Wort.</small></div>`}
+          <div class="opts">${opts.map((o, i) => `<button class="opt" data-o="${i}"${DIAG && o === k.de ? ' data-ok' : ''}>${esc(o)}</button>`).join('')}</div>`;
+        const play = async (slow) => { const b = body.querySelector('[data-play]'); b.classList.add('playing'); await speak(k.sprich, L.who, slow ? { slow: true } : null); if (alive(tk)) b.classList.remove('playing'); };
+        body.querySelector('[data-play]').onclick = () => { A.sfx('tap'); play(); };
+        body.querySelector('[data-slow]').onclick = () => { A.sfx('tap'); play(true); };
+        let first = true;
+        body.querySelectorAll('.opt').forEach((b) => b.onclick = () => {
+          if (b.disabled) return;
+          if (opts[+b.dataset.o] === k.de) {
+            b.classList.add('sel'); A.sfx('right'); A.vibrate(25); confetti(25);
+            body.querySelectorAll('.opt').forEach((x) => x.disabled = true);
+            showInfo(el, c, `<b>${esc(k.ziel)}</b> = ${esc(k.de)}`); done([[c, first]]);
+          } else { first = false; b.classList.add('no'); b.disabled = true; A.sfx('soft'); rubySay(el, 'Hör noch mal ganz genau hin! 👂', 'talk'); play(true); }
+        });
+        rubySay(el, 'Was hörst du?');
+        setTimeout(() => { if (alive(tk)) play(); }, 300);
+        return;
+      }
+
+      if (step.mode === 'bauen') {
+        const t = PK.bauteile(c, pack.lang);
+        const el = packFrame(pack, frac, '🔤 Buchstaben-Bau', 'Bau das Wort Buchstabe für Buchstabe!');
+        el.querySelector('[data-quit]').onclick = () => resolve('quit');
+        const body = el.querySelector('[data-body]');
+        const letters = [...t.wort];
+        const extraPool = 'aeinrstlodmuhgk';
+        const extra = []; while (extra.length < 2) { const x = extraPool[Math.floor(Math.random() * extraPool.length)]; if (!letters.includes(x)) extra.push(x); }
+        const tiles = shuffle(letters.map((l, i) => ({ l, i })).concat(extra.map((l) => ({ l, i: -1 }))));
+        body.innerHTML = `<div class="qcard"><div class="qimg">${esc(c.img || pack.emoji)}</div><div class="q">${esc(c.q)}</div></div>
+          <div class="slots">${t.vor ? `<span class="pre">${esc(t.vor.trim())}</span>` : ''}${letters.map((_, i) => `<span class="slot" data-s="${i}"></span>`).join('')}</div>
+          <div class="tiles">${tiles.map((x, i) => `<button class="tile" data-t="${i}"${DIAG ? ` data-pos="${x.i}"` : ''}>${esc(x.l)}</button>`).join('')}</div>`;
+        let pos = 0; let mistakes = 0;
+        body.querySelectorAll('.tile').forEach((b) => b.onclick = async () => {
+          if (b.disabled || pos >= letters.length) return;
+          const x = tiles[+b.dataset.t];
+          if (x.l === letters[pos]) {
+            b.disabled = true; b.classList.add('used'); A.sfx('pop');
+            const sl = body.querySelector(`[data-s="${pos}"]`); sl.textContent = x.l; sl.classList.add('full'); pos++;
+            if (pos === letters.length) {
+              A.sfx('right'); A.vibrate(25); confetti(35); body.querySelector('.slots').classList.add('done');
+              body.querySelectorAll('.tile').forEach((y) => y.disabled = true);
+              showInfo(el, c, `<b>${esc(c.a)}</b>`); await say(k.sprich || c.a); done([[c, mistakes === 0]]);
+            }
+          } else {
+            mistakes++; b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); A.sfx('soft');
+            if (mistakes === 2) rubySay(el, `Tipp: Der nächste Buchstabe ist <b>${esc(letters[pos])}</b>.`, 'talk');
+          }
+        });
+        rubySay(el, 'Welcher Buchstabe kommt zuerst?');
+      }
+    });
+  }
+
+  function packSummary(pack, run, goal) {
+    const stars = run.total ? Math.max(1, Math.round(3 * run.first / run.total)) : 1;
+    const el = screen(`<div class="reward">
+      ${ruby(`Runde geschafft! ${run.first} von ${run.total} beim ersten Versuch. ${goal ? 'Dein Wochenziel ist erreicht – Squawk! 🏆' : ''}`, 'dance')}
+      <div class="stamp" style="border-color:var(--sea);color:var(--sea)">${pack.emoji}</div>
+      <div class="bigstars">${[0, 1, 2].map((k) => `<span style="animation-delay:${0.5 + k * 0.25}s">${k < stars ? '⭐' : '☆'}</span>`).join('')}</div>
+      <p style="font-weight:800">${packMastered(pack.id)} von ${pack.cards.length} Karten sitzen schon. Wiederholt wird automatisch, wenn es Zeit ist.</p>
+      <div class="row center"><button class="btn white" data-again>🔁 Noch eine Runde</button><button class="btn blue" data-home>Fertig 🏠</button></div></div>`);
+    setTimeout(() => { A.sfx('fanfare'); confetti(100); }, 250);
+    el.querySelector('[data-home]').onclick = () => { A.sfx('tap'); home(); };
+    el.querySelector('[data-again]').onclick = () => { A.sfx('tap'); packRound(pack); };
+  }
+
   // ================================================================== Offline + Update
   let updateReady = false;
   function maybeApplyUpdate() {
@@ -814,7 +1074,7 @@
 
   if (DIAG) window.quasselTest = { state: () => state, C, A, home, playEpisode };
   // Erst die Liste der vertonten Sätze laden (höchstens 2 Sekunden warten), dann starten
-  Promise.race([A.ready, sleep(2000)]).then(() => { try { start(); } catch (e) { showError(e); } });
+  Promise.race([Promise.all([A.ready, packsReady]), sleep(2500)]).then(() => { try { start(); } catch (e) { showError(e); } });
   function showError(e) {
     $app.innerHTML = '<div class="card" style="margin-top:40px"><b>Ups, da ist etwas schiefgegangen.</b><p>Bitte lade die Seite neu.</p><pre style="white-space:pre-wrap;font-size:12px">' + esc(e && e.stack || e) + '</pre></div>';
   }

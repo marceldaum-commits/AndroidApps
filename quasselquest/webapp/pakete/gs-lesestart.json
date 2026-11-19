@@ -1,0 +1,400 @@
+{
+  "id": "gs-lesestart",
+  "version": 3,
+  "title": "Lesestart",
+  "subject": "deutsch",
+  "grades": [
+    1,
+    2
+  ],
+  "emoji": "🔤",
+  "tier": "free",
+  "description": "Anlaute, Reime und Silben – die ersten Schritte zum Lesen.",
+  "intro": [
+    {
+      "img": "🐝👋",
+      "text": "Hallo, ich bin Brummi! Heute spielen wir mit Lauten und Buchstaben."
+    },
+    {
+      "img": "🍎🅰️",
+      "text": "Hör genau hin: Apfel fängt mit A an. Das ist der Anlaut."
+    },
+    {
+      "img": "🐭🏠",
+      "text": "Maus und Haus klingen am Ende gleich. Das ist ein Reim!"
+    },
+    {
+      "img": "🍌👏",
+      "text": "Klatsch mit: Ba – na – ne. Jedes Klatschen ist eine Silbe."
+    },
+    {
+      "img": "☀️➕🌸",
+      "text": "Aus zwei Wörtern wird eins: Sonne und Blume ergeben Sonnenblume."
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Los geht's! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Womit fängt Apfel an?",
+      "a": "A",
+      "choices": [
+        "E",
+        "O",
+        "U"
+      ],
+      "img": "🍎"
+    },
+    {
+      "id": "002",
+      "q": "Womit fängt Maus an?",
+      "a": "M",
+      "choices": [
+        "N",
+        "W",
+        "H"
+      ],
+      "img": "🐭"
+    },
+    {
+      "id": "003",
+      "q": "Womit fängt Sonne an?",
+      "a": "S",
+      "choices": [
+        "Z",
+        "F",
+        "R"
+      ],
+      "img": "☀️"
+    },
+    {
+      "id": "004",
+      "q": "Womit fängt Igel an?",
+      "a": "I",
+      "choices": [
+        "E",
+        "A",
+        "L"
+      ],
+      "img": "🦔"
+    },
+    {
+      "id": "005",
+      "q": "Womit fängt Fisch an?",
+      "a": "F",
+      "choices": [
+        "W",
+        "H",
+        "P"
+      ],
+      "img": "🐟"
+    },
+    {
+      "id": "006",
+      "q": "Was hörst du am Ende von Baum?",
+      "a": "M",
+      "choices": [
+        "N",
+        "B",
+        "U"
+      ],
+      "info": "Sprich langsam: Bau-mmm. Am Ende hörst du M.",
+      "img": "🌳👂"
+    },
+    {
+      "id": "007",
+      "q": "Was hörst du am Ende von Hut?",
+      "a": "T",
+      "choices": [
+        "H",
+        "U",
+        "S"
+      ],
+      "img": "🎩👂"
+    },
+    {
+      "id": "008",
+      "q": "Was hörst du am Ende von Auto?",
+      "a": "O",
+      "choices": [
+        "A",
+        "T",
+        "U"
+      ],
+      "img": "🚗👂"
+    },
+    {
+      "id": "009",
+      "q": "Was reimt sich auf Maus?",
+      "a": "Haus",
+      "choices": [
+        "Hund",
+        "Mais",
+        "Mund"
+      ],
+      "info": "Maus – Haus: Das Ende klingt gleich.",
+      "img": "🐭🎵"
+    },
+    {
+      "id": "010",
+      "q": "Was reimt sich auf Hose?",
+      "a": "Rose",
+      "choices": [
+        "Hase",
+        "Hand",
+        "Nase"
+      ],
+      "img": "👖🎵"
+    },
+    {
+      "id": "011",
+      "q": "Was reimt sich auf Fisch?",
+      "a": "Tisch",
+      "choices": [
+        "Fuß",
+        "Frosch",
+        "Busch"
+      ],
+      "img": "🐟🎵"
+    },
+    {
+      "id": "012",
+      "q": "Was reimt sich auf Kanne?",
+      "a": "Tanne",
+      "choices": [
+        "Kinder",
+        "Kamm",
+        "Sonne"
+      ],
+      "img": "☕🎵"
+    },
+    {
+      "id": "013",
+      "q": "Was reimt sich auf Bein?",
+      "a": "Stein",
+      "choices": [
+        "Baum",
+        "Bett",
+        "Bahn"
+      ],
+      "img": "🦵🎵"
+    },
+    {
+      "id": "014",
+      "q": "Was reimt sich auf Katze?",
+      "a": "Tatze",
+      "choices": [
+        "Kette",
+        "Kasse",
+        "Kerze"
+      ],
+      "img": "🐱🎵"
+    },
+    {
+      "id": "015",
+      "q": "Wie viele Silben hat Ba-na-ne?",
+      "a": "3",
+      "choices": [
+        "1",
+        "2",
+        "4"
+      ],
+      "info": "Klatsch mit: Ba – na – ne. Dreimal!",
+      "img": "🍌👏"
+    },
+    {
+      "id": "016",
+      "q": "Wie viele Silben hat Ball?",
+      "a": "1",
+      "choices": [
+        "2",
+        "3",
+        "4"
+      ],
+      "img": "⚽👏"
+    },
+    {
+      "id": "017",
+      "q": "Wie viele Silben hat Ro-se?",
+      "a": "2",
+      "choices": [
+        "1",
+        "3",
+        "4"
+      ],
+      "img": "🌹👏"
+    },
+    {
+      "id": "018",
+      "q": "Wie viele Silben hat Schmet-ter-ling?",
+      "a": "3",
+      "choices": [
+        "1",
+        "2",
+        "4"
+      ],
+      "img": "🦋👏"
+    },
+    {
+      "id": "019",
+      "q": "Wie viele Silben hat Scho-ko-la-de?",
+      "a": "4",
+      "choices": [
+        "2",
+        "3",
+        "5"
+      ],
+      "info": "Scho – ko – la – de: viermal klatschen!",
+      "img": "🍫👏"
+    },
+    {
+      "id": "020",
+      "q": "Welcher Buchstabe ist ein Selbstlaut: B, E, K oder T?",
+      "a": "E",
+      "choices": [
+        "B",
+        "K",
+        "T"
+      ],
+      "info": "Selbstlaute sind A, E, I, O, U.",
+      "img": "🔤🗣️"
+    },
+    {
+      "id": "021",
+      "q": "Welcher Buchstabe ist ein Mitlaut: A, M, I oder O?",
+      "a": "M",
+      "choices": [
+        "A",
+        "I",
+        "O"
+      ],
+      "img": "🔤🗣️"
+    },
+    {
+      "id": "022",
+      "q": "Welcher Buchstabe fehlt: H _ n d?",
+      "a": "U",
+      "choices": [
+        "O",
+        "E",
+        "I"
+      ],
+      "img": "🐶"
+    },
+    {
+      "id": "023",
+      "q": "Welcher Buchstabe fehlt: M _ n d?",
+      "a": "U",
+      "choices": [
+        "A",
+        "I",
+        "E"
+      ],
+      "img": "👄"
+    },
+    {
+      "id": "024",
+      "q": "Wie viele Selbstlaute hat Oma?",
+      "a": "2",
+      "choices": [
+        "1",
+        "3",
+        "4"
+      ],
+      "info": "O und a sind beide Selbstlaute.",
+      "img": "👵"
+    },
+    {
+      "id": "025",
+      "q": "Sonne + Blume = ?",
+      "a": "Sonnenblume",
+      "choices": [
+        "Blumensonne",
+        "Sonnenbaum",
+        "Blumentopf"
+      ],
+      "img": "☀️➕🌸"
+    },
+    {
+      "id": "026",
+      "q": "Haus + Tür = ?",
+      "a": "Haustür",
+      "choices": [
+        "Türhaus",
+        "Hausdach",
+        "Gartentür"
+      ],
+      "img": "🏠➕🚪"
+    },
+    {
+      "id": "027",
+      "q": "Schnee + Mann = ?",
+      "a": "Schneemann",
+      "choices": [
+        "Mannschnee",
+        "Schneeball",
+        "Wintermann"
+      ],
+      "img": "❄️➕👨"
+    },
+    {
+      "id": "028",
+      "q": "Zahn + Bürste = ?",
+      "a": "Zahnbürste",
+      "choices": [
+        "Bürstenzahn",
+        "Haarbürste",
+        "Zahnpasta"
+      ],
+      "img": "🦷➕✨"
+    },
+    {
+      "id": "029",
+      "q": "Welcher kleine Buchstabe gehört zu B?",
+      "a": "b",
+      "choices": [
+        "d",
+        "p",
+        "h"
+      ],
+      "info": "Achtung: b und d sehen sich ähnlich!",
+      "img": "🔠🔡"
+    },
+    {
+      "id": "030",
+      "q": "Welcher große Buchstabe gehört zu g?",
+      "a": "G",
+      "choices": [
+        "Q",
+        "O",
+        "C"
+      ],
+      "img": "🔡🔠"
+    },
+    {
+      "id": "031",
+      "q": "Welcher kleine Buchstabe gehört zu D?",
+      "a": "d",
+      "choices": [
+        "b",
+        "q",
+        "p"
+      ],
+      "img": "🔠🔡"
+    },
+    {
+      "id": "032",
+      "q": "Was fehlt im ABC: A, B, _, D?",
+      "a": "C",
+      "choices": [
+        "E",
+        "G",
+        "O"
+      ],
+      "img": "🔤"
+    }
+  ]
+}

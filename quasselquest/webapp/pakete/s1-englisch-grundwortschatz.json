@@ -1,0 +1,449 @@
+{
+  "id": "s1-englisch-grundwortschatz",
+  "version": 5,
+  "title": "Englisch Grundwortschatz",
+  "subject": "englisch",
+  "grades": [
+    5,
+    6,
+    7
+  ],
+  "emoji": "💬",
+  "tier": "free",
+  "description": "Wichtige englische Wörter und Sätze aus Schule und Alltag: Deutsch → Englisch.",
+  "intro": [
+    {
+      "img": "🏠🐭📖",
+      "text": "Wusstest du, dass Englisch und Deutsch verwandt sind? Haus – house, Maus – mouse, Buch – book: Viele Wörter klingen fast gleich!"
+    },
+    {
+      "img": "🏫🍎",
+      "text": "In diesem Paket lernst du wichtige Wörter aus Schule und Alltag. Mit ihnen kannst du schon richtig viel sagen."
+    },
+    {
+      "img": "⚠️🎭",
+      "text": "Aber Vorsicht vor „falschen Freunden“: „become“ heißt nicht bekommen, sondern werden! Und „pen“ ist kein Bleistift, sondern ein Kuli oder Füller."
+    },
+    {
+      "img": "🗣️🔁",
+      "text": "Lerntrick: Sprich jedes Wort laut aus – Englisch schreibt man oft anders, als man es spricht. Und wiederhol es lieber oft kurz als einmal lang."
+    },
+    {
+      "img": "🌟🚀",
+      "text": "Every word counts! Lass uns loslegen."
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „die Schule“ auf Englisch?",
+      "a": "school",
+      "choices": [
+        "shool",
+        "class",
+        "lesson"
+      ],
+      "img": "🏫"
+    },
+    {
+      "id": "002",
+      "q": "Was heißt „der Lehrer / die Lehrerin“ auf Englisch?",
+      "a": "teacher",
+      "choices": [
+        "student",
+        "pupil",
+        "teatcher"
+      ],
+      "img": "📚🍎"
+    },
+    {
+      "id": "003",
+      "q": "Was heißt „das Buch“ auf Englisch?",
+      "a": "book",
+      "choices": [
+        "boot",
+        "box",
+        "bag"
+      ],
+      "img": "📖"
+    },
+    {
+      "id": "004",
+      "q": "Was heißt „der Bleistift“ auf Englisch?",
+      "a": "pencil",
+      "choices": [
+        "pen",
+        "ruler",
+        "pencel"
+      ],
+      "info": "pen = Kugelschreiber / Füller",
+      "img": "✏️"
+    },
+    {
+      "id": "005",
+      "q": "Was heißt „das Lineal“ auf Englisch?",
+      "a": "ruler",
+      "choices": [
+        "rubber",
+        "pencil",
+        "ruller"
+      ],
+      "img": "📏"
+    },
+    {
+      "id": "006",
+      "q": "Was heißt „die Hausaufgaben“ auf Englisch?",
+      "a": "homework",
+      "choices": [
+        "housework",
+        "homeworks",
+        "housejob"
+      ],
+      "info": "„homework“ hat keine Mehrzahl mit -s.",
+      "img": "📝🏠"
+    },
+    {
+      "id": "007",
+      "q": "Was heißt „der Freund“ (Kumpel) auf Englisch?",
+      "a": "friend",
+      "choices": [
+        "frend",
+        "fried",
+        "family"
+      ],
+      "img": "🤝"
+    },
+    {
+      "id": "008",
+      "q": "Was heißt „die Familie“ auf Englisch?",
+      "a": "family",
+      "choices": [
+        "familie",
+        "famly",
+        "friend"
+      ],
+      "img": "👪"
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „die Mutter“ auf Englisch?",
+      "a": "mother",
+      "choices": [
+        "mather",
+        "father",
+        "brother"
+      ],
+      "img": "🤱"
+    },
+    {
+      "id": "010",
+      "q": "Was heißt „der Bruder“ auf Englisch?",
+      "a": "brother",
+      "choices": [
+        "bruther",
+        "sister",
+        "brader"
+      ],
+      "img": "👦"
+    },
+    {
+      "id": "011",
+      "q": "Was heißt „die Schwester“ auf Englisch?",
+      "a": "sister",
+      "choices": [
+        "sista",
+        "brother",
+        "sisster"
+      ],
+      "img": "👧"
+    },
+    {
+      "id": "012",
+      "q": "Was heißt „der Hund“ auf Englisch?",
+      "a": "dog",
+      "choices": [
+        "cat",
+        "dock",
+        "dogg"
+      ],
+      "img": "🐕"
+    },
+    {
+      "id": "013",
+      "q": "Was heißt „die Katze“ auf Englisch?",
+      "a": "cat",
+      "choices": [
+        "dog",
+        "kat",
+        "cut"
+      ],
+      "img": "🐈"
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „das Haus“ auf Englisch?",
+      "a": "house",
+      "choices": [
+        "horse",
+        "hous",
+        "mouse"
+      ],
+      "img": "🏠"
+    },
+    {
+      "id": "015",
+      "q": "Was heißt „die Küche“ auf Englisch?",
+      "a": "kitchen",
+      "choices": [
+        "chicken",
+        "kitten",
+        "bathroom"
+      ],
+      "info": "Achtung: chicken = Huhn, kitten = Kätzchen.",
+      "img": "🍳🔪"
+    },
+    {
+      "id": "016",
+      "q": "Was heißt „das Schlafzimmer“ auf Englisch?",
+      "a": "bedroom",
+      "choices": [
+        "bathroom",
+        "living room",
+        "bed"
+      ],
+      "img": "🛏️"
+    },
+    {
+      "id": "017",
+      "q": "Was heißt „der Tisch“ auf Englisch?",
+      "a": "table",
+      "choices": [
+        "chair",
+        "tabel",
+        "desk lamp"
+      ],
+      "img": "🍽️"
+    },
+    {
+      "id": "018",
+      "q": "Was heißt „der Stuhl“ auf Englisch?",
+      "a": "chair",
+      "choices": [
+        "table",
+        "char",
+        "cheer"
+      ],
+      "img": "💺"
+    },
+    {
+      "id": "019",
+      "q": "Was heißt „das Fenster“ auf Englisch?",
+      "a": "window",
+      "choices": [
+        "door",
+        "windo",
+        "wall"
+      ],
+      "img": "🖼️🌤️"
+    },
+    {
+      "id": "020",
+      "q": "Was heißt „die Tür“ auf Englisch?",
+      "a": "door",
+      "choices": [
+        "window",
+        "dor",
+        "floor"
+      ],
+      "img": "🚪"
+    },
+    {
+      "id": "021",
+      "q": "Was heißt „das Frühstück“ auf Englisch?",
+      "a": "breakfast",
+      "choices": [
+        "lunch",
+        "dinner",
+        "breakfest"
+      ],
+      "img": "🥞☕"
+    },
+    {
+      "id": "022",
+      "q": "Was heißt „das Brot“ auf Englisch?",
+      "a": "bread",
+      "choices": [
+        "bred",
+        "butter",
+        "brown"
+      ],
+      "img": "🍞"
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „der Apfel“ auf Englisch?",
+      "a": "apple",
+      "choices": [
+        "apel",
+        "pear",
+        "orange"
+      ],
+      "img": "🍎"
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „das Wasser“ auf Englisch?",
+      "a": "water",
+      "choices": [
+        "wather",
+        "waiter",
+        "winter"
+      ],
+      "img": "💧"
+    },
+    {
+      "id": "025",
+      "q": "Was heißt „Montag“ auf Englisch?",
+      "a": "Monday",
+      "choices": [
+        "Sunday",
+        "Mondey",
+        "Tuesday"
+      ],
+      "img": "😩📅"
+    },
+    {
+      "id": "026",
+      "q": "Was heißt „Mittwoch“ auf Englisch?",
+      "a": "Wednesday",
+      "choices": [
+        "Tuesday",
+        "Thursday",
+        "Wensday"
+      ],
+      "img": "🐫📅"
+    },
+    {
+      "id": "027",
+      "q": "Was heißt „Donnerstag“ auf Englisch?",
+      "a": "Thursday",
+      "choices": [
+        "Tuesday",
+        "Thirsday",
+        "Wednesday"
+      ],
+      "img": "⚡📅"
+    },
+    {
+      "id": "028",
+      "q": "Was heißt „der Geburtstag“ auf Englisch?",
+      "a": "birthday",
+      "choices": [
+        "birthdate",
+        "berthday",
+        "party"
+      ],
+      "img": "🎂🎈"
+    },
+    {
+      "id": "029",
+      "q": "Was heißt „Wie alt bist du?“ auf Englisch?",
+      "a": "How old are you?",
+      "choices": [
+        "How are you old?",
+        "What old are you?",
+        "How old you are?"
+      ],
+      "img": "🎂❓"
+    },
+    {
+      "id": "030",
+      "q": "Was heißt „Ich heiße Tom.“ auf Englisch?",
+      "a": "My name is Tom.",
+      "choices": [
+        "I hot Tom.",
+        "My name has Tom.",
+        "Me name is Tom."
+      ],
+      "img": "👋🏷️"
+    },
+    {
+      "id": "031",
+      "q": "Was heißt „gestern“ auf Englisch?",
+      "a": "yesterday",
+      "choices": [
+        "today",
+        "tomorrow",
+        "yesterdey"
+      ],
+      "img": "⬅️📅"
+    },
+    {
+      "id": "032",
+      "q": "Was heißt „morgen“ (am nächsten Tag) auf Englisch?",
+      "a": "tomorrow",
+      "choices": [
+        "morning",
+        "today",
+        "yesterday"
+      ],
+      "info": "morning = der Morgen (Tageszeit)",
+      "img": "➡️📅"
+    },
+    {
+      "id": "033",
+      "q": "Was heißt „der Bahnhof“ auf Englisch?",
+      "a": "station (train station)",
+      "choices": [
+        "stadium",
+        "airport",
+        "bus stop"
+      ],
+      "img": "🚉"
+    },
+    {
+      "id": "034",
+      "q": "Was heißt „grün“ auf Englisch?",
+      "a": "green",
+      "choices": [
+        "grey",
+        "grin",
+        "brown"
+      ],
+      "img": "🍀"
+    },
+    {
+      "id": "035",
+      "q": "Was heißt „lesen“ auf Englisch?",
+      "a": "to read",
+      "choices": [
+        "to write",
+        "to red",
+        "to learn"
+      ],
+      "img": "📖👀"
+    },
+    {
+      "id": "036",
+      "q": "Was heißt „schreiben“ auf Englisch?",
+      "a": "to write",
+      "choices": [
+        "to read",
+        "to right",
+        "to wright"
+      ],
+      "img": "✍️📄"
+    },
+    {
+      "id": "037",
+      "q": "Was heißt „rot“ auf Englisch?",
+      "a": "red",
+      "choices": [
+        "read",
+        "rat",
+        "rod"
+      ],
+      "img": "🔴🍓"
+    }
+  ]
+}

@@ -1,0 +1,445 @@
+{
+  "id": "gs-englisch-familie-koerper",
+  "version": 3,
+  "title": "Familie, Körper, Kleidung",
+  "subject": "englisch",
+  "grades": [
+    3,
+    4
+  ],
+  "emoji": "👕",
+  "tier": "free",
+  "description": "Englische Wörter für Familie, Körperteile, Kleidung und die Wochentage – mit lustigen Eselsbrücken.",
+  "intro": [
+    {
+      "img": "👪💬",
+      "text": "Hello! Wusstest du? Viele Körperteile heißen auf Englisch fast wie auf Deutsch: Hand – hand, Arm – arm, Finger – finger."
+    },
+    {
+      "img": "🦶🦷",
+      "text": "Manche Wörter sind Schlawiner: Ein Fuß ist „foot“, aber zwei Füße sind „feet“. Ein Zahn ist „tooth“, viele sind „teeth“."
+    },
+    {
+      "img": "👗👖🧦",
+      "text": "Kleidung zieht man auch auf Englisch an: dress, trousers, socks und shoes. Was trägst du gerade?"
+    },
+    {
+      "img": "📅🌞",
+      "text": "Die Wochentage schreibt man im Englischen immer groß: Monday, Tuesday … Sunday. In Sunday steckt die Sonne – sun!"
+    },
+    {
+      "img": "🌱🎉",
+      "text": "Let's go – los geht's! Jede richtige Antwort lässt eine Pflanze wachsen!"
+    }
+  ],
+  "cards": [
+    {
+      "id": "001",
+      "q": "Was heißt „Großvater“ auf Englisch?",
+      "a": "grandfather",
+      "choices": [
+        "grandmother",
+        "uncle",
+        "father"
+      ],
+      "info": "Großvater = grandfather, kurz „grandpa“. Oma heißt „grandma“.",
+      "img": "👴🎩"
+    },
+    {
+      "id": "002",
+      "q": "Was heißt „Eltern“ auf Englisch?",
+      "a": "parents",
+      "choices": [
+        "children",
+        "cousins",
+        "friends"
+      ],
+      "info": "Mama und Papa zusammen sind deine „parents“.",
+      "img": "👫❤️"
+    },
+    {
+      "id": "003",
+      "q": "Was heißt „Sohn“ auf Englisch?",
+      "a": "son",
+      "choices": [
+        "sun",
+        "sister",
+        "uncle"
+      ],
+      "info": "„son“ (Sohn) und „sun“ (Sonne) klingen genau gleich!",
+      "img": "👦☀️"
+    },
+    {
+      "id": "004",
+      "q": "Was bedeutet „daughter“?",
+      "a": "Tochter",
+      "choices": [
+        "Tante",
+        "Schwester",
+        "Mutter"
+      ],
+      "info": "daughter = Tochter. Das „gh“ hört man nicht: ungefähr „dóoter“.",
+      "img": "👧🎀"
+    },
+    {
+      "id": "005",
+      "q": "Was heißt „Cousine“ auf Englisch?",
+      "a": "cousin",
+      "choices": [
+        "aunt",
+        "sister",
+        "niece"
+      ],
+      "info": "Cousin und Cousine heißen beide „cousin“ – praktisch!",
+      "img": "👧👦"
+    },
+    {
+      "id": "006",
+      "q": "Was heißt „Großeltern“ auf Englisch?",
+      "a": "grandparents",
+      "choices": [
+        "parents",
+        "grandchildren",
+        "godparents"
+      ],
+      "info": "grand + parents = grandparents – Oma und Opa zusammen.",
+      "img": "👵👴"
+    },
+    {
+      "id": "007",
+      "q": "Was heißt „Kopf“ auf Englisch?",
+      "a": "head",
+      "choices": [
+        "hand",
+        "hat",
+        "hair"
+      ],
+      "info": "Kopf = head. Darauf setzt du einen „hat“, einen Hut.",
+      "img": "🙂"
+    },
+    {
+      "id": "008",
+      "q": "Was heißt „Nase“ auf Englisch?",
+      "a": "nose",
+      "choices": [
+        "knee",
+        "neck",
+        "mouth"
+      ],
+      "info": "„nose“ klingt fast wie „Nase“. Damit riechst du Blumen.",
+      "img": "👃🌸"
+    },
+    {
+      "id": "009",
+      "q": "Was heißt „Mund“ auf Englisch?",
+      "a": "mouth",
+      "choices": [
+        "mouse",
+        "nose",
+        "moon"
+      ],
+      "info": "Achtung: „mouth“ (Mund) und „mouse“ (Maus) sind verschiedene Wörter!",
+      "img": "👄"
+    },
+    {
+      "id": "010",
+      "q": "Was heißt „Haare“ auf Englisch?",
+      "a": "hair",
+      "choices": [
+        "head",
+        "ear",
+        "hand"
+      ],
+      "info": "Haare = hair. „Ich habe lange Haare“ heißt „I have long hair“.",
+      "img": "💇"
+    },
+    {
+      "id": "011",
+      "q": "Mit diesem Körperteil siehst du. Wie heißt es auf Englisch?",
+      "a": "eye",
+      "choices": [
+        "ear",
+        "nose",
+        "arm"
+      ],
+      "info": "Das Auge heißt „eye“. Man spricht es wie „ai“.",
+      "img": "👀"
+    },
+    {
+      "id": "012",
+      "q": "Was bedeutet „ear“?",
+      "a": "Ohr",
+      "choices": [
+        "Auge",
+        "Haar",
+        "Arm"
+      ],
+      "info": "ear = Ohr. Mit deinen „ears“ hörst du Musik.",
+      "img": "👂🎵"
+    },
+    {
+      "id": "013",
+      "q": "Was heißt „Bein“ auf Englisch?",
+      "a": "leg",
+      "choices": [
+        "arm",
+        "foot",
+        "neck"
+      ],
+      "info": "Bein = leg. Ein Tisch hat four legs!",
+      "img": "🦵"
+    },
+    {
+      "id": "014",
+      "q": "Was heißt „Knie“ auf Englisch?",
+      "a": "knee",
+      "choices": [
+        "nose",
+        "neck",
+        "hand"
+      ],
+      "info": "Bei „knee“ ist das k stumm: Man sagt „nie“.",
+      "img": "🦵🤕"
+    },
+    {
+      "id": "015",
+      "q": "Was heißt „Schulter“ auf Englisch?",
+      "a": "shoulder",
+      "choices": [
+        "finger",
+        "leg",
+        "elbow"
+      ],
+      "info": "Schulter = shoulder – fast gleich, oder?",
+      "img": "💪"
+    },
+    {
+      "id": "016",
+      "q": "Ein Fuß ist „foot“. Wie heißen zwei Füße?",
+      "a": "feet",
+      "choices": [
+        "foots",
+        "feets",
+        "footes"
+      ],
+      "info": "Ausnahme! one foot – two feet.",
+      "img": "🦶🦶"
+    },
+    {
+      "id": "017",
+      "q": "Ein Zahn ist „tooth“. Wie heißen viele Zähne?",
+      "a": "teeth",
+      "choices": [
+        "tooths",
+        "teeths",
+        "toothes"
+      ],
+      "info": "Ausnahme! one tooth – many teeth. Putz sie gut!",
+      "img": "🦷✨"
+    },
+    {
+      "id": "018",
+      "q": "Was heißt „Kleid“ auf Englisch?",
+      "a": "dress",
+      "choices": [
+        "skirt",
+        "shirt",
+        "dish"
+      ],
+      "info": "Kleid = dress. Für eine Party ziehst du dich schick an: „dress up“.",
+      "img": "👗"
+    },
+    {
+      "id": "019",
+      "q": "Was heißt „lange Hose“ auf Englisch?",
+      "a": "trousers (pants)",
+      "choices": [
+        "shorts",
+        "socks",
+        "shirts"
+      ],
+      "info": "Lange Hose = trousers. In Amerika sagt man „pants“.",
+      "img": "👖"
+    },
+    {
+      "id": "020",
+      "q": "Was heißt „Schuhe“ auf Englisch?",
+      "a": "shoes",
+      "choices": [
+        "socks",
+        "shirts",
+        "hats"
+      ],
+      "info": "Schuhe = shoes. Klingt wie „schuhs“.",
+      "img": "👟👞"
+    },
+    {
+      "id": "021",
+      "q": "Was heißt „Socken“ auf Englisch?",
+      "a": "socks",
+      "choices": [
+        "shoes",
+        "shorts",
+        "sacks"
+      ],
+      "info": "Socken = socks – fast gleich wie auf Deutsch!",
+      "img": "🧦"
+    },
+    {
+      "id": "022",
+      "q": "Was heißt „Hut“ auf Englisch?",
+      "a": "hat",
+      "choices": [
+        "head",
+        "hand",
+        "coat"
+      ],
+      "info": "Hut = hat. Der Zauberer zieht ein Kaninchen aus dem „hat“.",
+      "img": "🎩🐇"
+    },
+    {
+      "id": "023",
+      "q": "Was heißt „Rock“ auf Englisch?",
+      "a": "skirt",
+      "choices": [
+        "shirt",
+        "dress",
+        "sock"
+      ],
+      "info": "Achtung: Rock = skirt. „rock“ heißt auf Englisch Felsen!",
+      "img": "👚🎸"
+    },
+    {
+      "id": "024",
+      "q": "Was heißt „Schal“ auf Englisch?",
+      "a": "scarf",
+      "choices": [
+        "glove",
+        "scar",
+        "shirt"
+      ],
+      "info": "Im Winter: scarf (Schal), gloves (Handschuhe) und hat.",
+      "img": "🧣❄️"
+    },
+    {
+      "id": "025",
+      "q": "Was heißt „Handschuhe“ auf Englisch?",
+      "a": "gloves",
+      "choices": [
+        "socks",
+        "shoes",
+        "scarves"
+      ],
+      "info": "Handschuhe = gloves. Ein Handschuh = one glove.",
+      "img": "🧤⛄"
+    },
+    {
+      "id": "026",
+      "q": "Was heißt „Jacke“ auf Englisch?",
+      "a": "jacket",
+      "choices": [
+        "jumper",
+        "trousers",
+        "dress"
+      ],
+      "info": "Jacke = jacket – fast wie auf Deutsch. Bei Regen: „rain jacket“.",
+      "img": "🧥🌧️"
+    },
+    {
+      "id": "027",
+      "q": "Was bedeutet „sweater“?",
+      "a": "Pullover",
+      "choices": [
+        "Hemd",
+        "Mütze",
+        "Schlafanzug"
+      ],
+      "info": "sweater = Pullover. In England sagt man auch „jumper“.",
+      "img": "❄️🐑"
+    },
+    {
+      "id": "028",
+      "q": "Was heißt „Dienstag“ auf Englisch?",
+      "a": "Tuesday",
+      "choices": [
+        "Thursday",
+        "Sunday",
+        "Wednesday"
+      ],
+      "info": "Tuesday = Dienstag, Thursday = Donnerstag. Beide beginnen mit T!",
+      "img": "📅2️⃣"
+    },
+    {
+      "id": "029",
+      "q": "Was heißt „Freitag“ auf Englisch?",
+      "a": "Friday",
+      "choices": [
+        "Saturday",
+        "Monday",
+        "Thursday"
+      ],
+      "info": "Friday = Freitag. Sie klingen fast gleich.",
+      "img": "🎉📅"
+    },
+    {
+      "id": "030",
+      "q": "Was heißt „Samstag“ auf Englisch?",
+      "a": "Saturday",
+      "choices": [
+        "Sunday",
+        "Tuesday",
+        "Friday"
+      ],
+      "info": "Saturday = Samstag – der erste Tag des Wochenendes.",
+      "img": "⚽📅"
+    },
+    {
+      "id": "031",
+      "q": "Was heißt „Sonntag“ auf Englisch?",
+      "a": "Sunday",
+      "choices": [
+        "Monday",
+        "Saturday",
+        "Tuesday"
+      ],
+      "info": "Sunday = Sonntag. Die Sonne (sun) steckt in beiden Wörtern!",
+      "img": "☀️📅"
+    },
+    {
+      "id": "032",
+      "q": "Was bedeutet „Monday“?",
+      "a": "Montag",
+      "choices": [
+        "Mittwoch",
+        "Sonntag",
+        "Donnerstag"
+      ],
+      "info": "Monday = Montag. Im Wort steckt der Mond (moon).",
+      "img": "🌙📅"
+    },
+    {
+      "id": "033",
+      "q": "Welcher Tag kommt nach Wednesday?",
+      "a": "Thursday",
+      "choices": [
+        "Tuesday",
+        "Friday",
+        "Monday"
+      ],
+      "info": "Wednesday (Mittwoch) → Thursday (Donnerstag) → Friday (Freitag).",
+      "img": "📅➡️"
+    },
+    {
+      "id": "034",
+      "q": "Was heißt „Wochenende“ auf Englisch?",
+      "a": "weekend",
+      "choices": [
+        "weekday",
+        "holiday",
+        "week"
+      ],
+      "info": "week + end = weekend: Saturday und Sunday.",
+      "img": "🎈🛋️"
+    }
+  ]
+}

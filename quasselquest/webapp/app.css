@@ -270,3 +270,46 @@ h1, h2, h3 { margin: 0; }
   .ruby { width: 84px; height: 84px; }
   .scene-pic { font-size: 68px; }
 }
+
+/* ---------- Sprachen und Pakete (0.2.0) */
+.langbar { display: flex; gap: 8px; overflow-x: auto; padding: 6px 2px 10px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.langbar::-webkit-scrollbar { display: none; }
+.lang { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 46px; padding: 6px 14px; border-radius: 999px; background: #fff; box-shadow: 0 4px 0 #c7d6e3; font-weight: 800; font-size: 16px; }
+.lang span { font-size: 22px; }
+.lang.sel { background: var(--sea); color: #fff; box-shadow: 0 4px 0 var(--sea2); animation: popbig .4s; }
+.ptile { display: flex; flex-direction: column; gap: 4px; }
+.ptile .soon.fit { background: #dff6e3; color: #1e6c35; }
+.ptile .bar { display: block; height: 8px; border-radius: 999px; background: #eef4f9; overflow: hidden; margin-top: 4px; }
+.ptile .bar > i { display: block; height: 100%; background: linear-gradient(90deg, #2e9d4f, #7bd35b); }
+.qcard { background: #fff; border-radius: 22px; box-shadow: var(--shadow); padding: 14px 16px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.qimg { font-size: 54px; line-height: 1.1; animation: bob 2.4s ease-in-out infinite; }
+.q { font-size: 21px; font-weight: 800; line-height: 1.35; }
+.balloons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 8px 4px 4px; }
+.balloon {
+  position: relative; min-height: 86px; padding: 12px 10px 18px; border-radius: 50% 50% 46% 46% / 55% 55% 45% 45%;
+  background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.55), transparent 35%), var(--c); color: #fff; font-weight: 900; font-size: 19px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35); box-shadow: inset -6px -8px 0 rgba(0,0,0,.12); animation: float 3s ease-in-out infinite; animation-delay: var(--d);
+}
+.balloon::after { content: ""; position: absolute; left: 50%; bottom: -14px; width: 2px; height: 16px; background: rgba(0,0,0,.25); }
+.balloon.pop { animation: balloonpop .45s forwards; }
+.balloon.wrong { animation: shake .4s; opacity: .35; }
+.memory { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.mem { position: relative; min-height: 96px; border-radius: 18px; background: var(--sea); color: #fff; box-shadow: 0 5px 0 var(--sea2); font-weight: 800; font-size: 17px; padding: 8px; transition: transform .25s; }
+.mem .front { display: none; }
+.mem .back { font-size: 34px; }
+.mem.up { background: #fff; color: var(--ink); box-shadow: 0 5px 0 #c7d6e3; transform: rotateY(360deg); }
+.mem.up .front { display: block; } .mem.up .back { display: none; }
+.mem.ok { background: #dff6e3; box-shadow: 0 5px 0 #2e9d4f; animation: popbig .5s; }
+.slots { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; align-items: center; min-height: 58px; }
+.slots .pre { font-weight: 900; font-size: 24px; margin-right: 6px; color: var(--muted); }
+.slot { width: 42px; height: 52px; border-radius: 10px; border: 3px dashed #9fb6c9; background: #fff; display: grid; place-items: center; font-weight: 900; font-size: 26px; }
+.slot.full { border-style: solid; border-color: var(--sea); animation: popbig .3s; }
+.slots.done .slot { border-color: var(--green); background: #dff6e3; }
+.tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.tile { width: 52px; height: 56px; border-radius: 12px; background: #ffc83d; box-shadow: 0 5px 0 #c99410; font-weight: 900; font-size: 26px; }
+.tile.used { visibility: hidden; }
+.tile.shake { animation: shake .4s; }
+@keyframes float { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-9px) rotate(1.5deg); } }
+@keyframes balloonpop { 0% { transform: scale(1); } 40% { transform: scale(1.25); } 100% { transform: scale(0); opacity: 0; } }
+@media (min-width: 700px) { .balloons { grid-template-columns: repeat(4, 1fr); } .memory { grid-template-columns: repeat(6, 1fr); } }
+@media (max-width: 380px) { .slot { width: 34px; height: 46px; font-size: 22px; } .tile { width: 46px; height: 50px; } }
