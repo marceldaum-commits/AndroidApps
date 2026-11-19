@@ -214,8 +214,8 @@
      ],
      "fehler": [
       {
-       "falsch": "How is you?",
-       "richtig": "How are you?",
+       "falsch": "How is you? I'm fine, thanks.",
+       "richtig": "How are you? I'm fine, thanks.",
        "wort": "is",
        "korrektur": "are",
        "choices": [
@@ -236,8 +236,8 @@
        "tipp": "Es heißt thank you – ohne s."
       },
       {
-       "falsch": "Hello, I is Ruby.",
-       "richtig": "Hello, I am Ruby.",
+       "falsch": "Who are you? I is Ruby.",
+       "richtig": "Who are you? I am Ruby.",
        "wort": "is",
        "korrektur": "am",
        "choices": [
@@ -432,8 +432,8 @@
      ],
      "fehler": [
       {
-       "falsch": "You is my friend.",
-       "richtig": "You are my friend.",
+       "falsch": "You is my friend, aren't you?",
+       "richtig": "You are my friend, aren't you?",
        "wort": "is",
        "korrektur": "are",
        "choices": [
@@ -654,8 +654,8 @@
      ],
      "fehler": [
       {
-       "falsch": "I have ten finger.",
-       "richtig": "I have ten fingers.",
+       "falsch": "I have ten finger and ten toes.",
+       "richtig": "I have ten fingers and ten toes.",
        "wort": "finger",
        "korrektur": "fingers",
        "choices": [
@@ -665,8 +665,8 @@
        "tipp": "Mehr als eins: hinten kommt ein -s dran."
       },
       {
-       "falsch": "I'm eight year old.",
-       "richtig": "I'm eight years old.",
+       "falsch": "I go to school and I'm eight year old.",
+       "richtig": "I go to school and I'm eight years old.",
        "wort": "year",
        "korrektur": "years",
        "choices": [
@@ -676,8 +676,8 @@
        "tipp": "Acht Jahre sind mehr als eins – also years."
       },
       {
-       "falsch": "How old is you?",
-       "richtig": "How old are you?",
+       "falsch": "How old is you? I'm eight.",
+       "richtig": "How old are you? I'm eight.",
        "wort": "is",
        "korrektur": "are",
        "choices": [
@@ -687,8 +687,8 @@
        "tipp": "Bei you heißt es immer are."
       },
       {
-       "falsch": "I has ten fingers.",
-       "richtig": "I have ten fingers.",
+       "falsch": "I has ten fingers on my hands.",
+       "richtig": "I have ten fingers on my hands.",
        "wort": "has",
        "korrektur": "have",
        "choices": [
@@ -893,8 +893,8 @@
        "tipp": "gelb heißt auf Englisch yellow."
       },
       {
-       "falsch": "What colour are it?",
-       "richtig": "What colour is it?",
+       "falsch": "This is my ball. What colour are it?",
+       "richtig": "This is my ball. What colour is it?",
        "wort": "are",
        "korrektur": "is",
        "choices": [
@@ -904,8 +904,8 @@
        "tipp": "Bei it heißt es is."
       },
       {
-       "falsch": "I likes green.",
-       "richtig": "I like green.",
+       "falsch": "Do you like green? Yes, I likes green.",
+       "richtig": "Do you like green? Yes, I like green.",
        "wort": "likes",
        "korrektur": "like",
        "choices": [
@@ -1088,8 +1088,8 @@
      ],
      "fehler": [
       {
-       "falsch": "I have an sister.",
-       "richtig": "I have a sister.",
+       "falsch": "I have an sister. She is six.",
+       "richtig": "I have a sister. She is six.",
        "wort": "an",
        "korrektur": "a",
        "choices": [
@@ -1099,8 +1099,8 @@
        "tipp": "sister fängt mit einem Mitlaut (s) an – also a."
       },
       {
-       "falsch": "I have a apple.",
-       "richtig": "I have an apple.",
+       "falsch": "I have a apple. The apple is red.",
+       "richtig": "I have an apple. The apple is red.",
        "wort": "a",
        "korrektur": "an",
        "choices": [
@@ -1110,8 +1110,8 @@
        "tipp": "apple fängt mit einem Selbstlaut (a, e, i, o, u) an – also an."
       },
       {
-       "falsch": "My grandpa are funny.",
-       "richtig": "My grandpa is funny.",
+       "falsch": "My grandpa Tom are funny.",
+       "richtig": "My grandpa Tom is funny.",
        "wort": "are",
        "korrektur": "is",
        "choices": [
@@ -1316,8 +1316,8 @@
        "tipp": "Zwei Mäuse heißt two mice – ein besonderes Wort."
       },
       {
-       "falsch": "I have two rabbit.",
-       "richtig": "I have two rabbits.",
+       "falsch": "My two rabbit are white.",
+       "richtig": "My two rabbits are white.",
        "wort": "rabbit",
        "korrektur": "rabbits",
        "choices": [
@@ -1327,8 +1327,8 @@
        "tipp": "Mehr als eins: hinten ein -s."
       },
       {
-       "falsch": "Does you have a pet?",
-       "richtig": "Do you have a pet?",
+       "falsch": "Does you have a pet? Yes, I have a cat.",
+       "richtig": "Do you have a pet? Yes, I have a cat.",
        "wort": "Does",
        "korrektur": "Do",
        "choices": [
@@ -1338,8 +1338,8 @@
        "tipp": "Bei you fragt man mit Do."
       },
       {
-       "falsch": "I has a cat.",
-       "richtig": "I have a cat.",
+       "falsch": "Do you have a pet? Yes, I has a cat.",
+       "richtig": "Do you have a pet? Yes, I have a cat.",
        "wort": "has",
        "korrektur": "have",
        "choices": [
@@ -1533,8 +1533,8 @@
        "tipp": "Nicht mögen: don't vor das Verb."
       },
       {
-       "falsch": "I am hunger.",
-       "richtig": "I am hungry.",
+       "falsch": "I am very hunger.",
+       "richtig": "I am very hungry.",
        "wort": "hunger",
        "korrektur": "hungry",
        "choices": [
@@ -1746,8 +1746,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Where are my bag?",
-       "richtig": "Where is my bag?",
+       "falsch": "Where are my bag? It is blue.",
+       "richtig": "Where is my bag? It is blue.",
        "wort": "are",
        "korrektur": "is",
        "choices": [
@@ -1768,8 +1768,8 @@
        "tipp": "dein Buch = your book."
       },
       {
-       "falsch": "I have a pencils.",
-       "richtig": "I have a pencil.",
+       "falsch": "I have a pencils. It is green.",
+       "richtig": "I have a pencil. It is green.",
        "wort": "pencils",
        "korrektur": "pencil",
        "choices": [
@@ -1995,8 +1995,8 @@
        "tipp": "Ein Fuß: foot – zwei Füße: feet. Ein besonderes Wort!"
       },
       {
-       "falsch": "She have got blue eyes.",
-       "richtig": "She has got blue eyes.",
+       "falsch": "Has Mia got blue eyes? Yes, she have.",
+       "richtig": "Has Mia got blue eyes? Yes, she has.",
        "wort": "have",
        "korrektur": "has",
        "choices": [
@@ -2214,8 +2214,8 @@
      ],
      "fehler": [
       {
-       "falsch": "This is Mia. His dress is red.",
-       "richtig": "This is Mia. Her dress is red.",
+       "falsch": "This is my sister Mia. His dress is red.",
+       "richtig": "This is my sister Mia. Her dress is red.",
        "wort": "His",
        "korrektur": "Her",
        "choices": [
@@ -2225,8 +2225,8 @@
        "tipp": "Mia ist ein Mädchen – ihr Kleid = her dress."
       },
       {
-       "falsch": "Sam has got a cap. Her cap is blue.",
-       "richtig": "Sam has got a cap. His cap is blue.",
+       "falsch": "My brother Sam has got a cap. Her cap is blue.",
+       "richtig": "My brother Sam has got a cap. His cap is blue.",
        "wort": "Her",
        "korrektur": "His",
        "choices": [
@@ -2236,8 +2236,8 @@
        "tipp": "Sam ist ein Junge – seine Kappe = his cap."
       },
       {
-       "falsch": "My socks is green.",
-       "richtig": "My socks are green.",
+       "falsch": "My socks is green. They are new.",
+       "richtig": "My socks are green. They are new.",
        "wort": "is",
        "korrektur": "are",
        "choices": [
@@ -2247,8 +2247,8 @@
        "tipp": "Mehrere Socken – also are."
       },
       {
-       "falsch": "I've got a orange T-shirt.",
-       "richtig": "I've got an orange T-shirt.",
+       "falsch": "I've got a orange T-shirt. My T-shirt is orange.",
+       "richtig": "I've got an orange T-shirt. My T-shirt is orange.",
        "wort": "a",
        "korrektur": "an",
        "choices": [
@@ -2448,8 +2448,8 @@
        "tipp": "Nach x hängt man -es an: boxes."
       },
       {
-       "falsch": "The key are in the box.",
-       "richtig": "The key is in the box.",
+       "falsch": "One key are in the box.",
+       "richtig": "One key is in the box.",
        "wort": "are",
        "korrektur": "is",
        "choices": [
@@ -2459,8 +2459,8 @@
        "tipp": "Es ist ein Schlüssel – also is."
       },
       {
-       "falsch": "Sam has got a key. Her key is in the box.",
-       "richtig": "Sam has got a key. His key is in the box.",
+       "falsch": "My brother Sam has got a key. Her key is in the box.",
+       "richtig": "My brother Sam has got a key. His key is in the box.",
        "wort": "Her",
        "korrektur": "His",
        "choices": [
@@ -2470,8 +2470,8 @@
        "tipp": "Sam ist ein Junge – sein Schlüssel = his key."
       },
       {
-       "falsch": "Mia has got a orange sofa.",
-       "richtig": "Mia has got an orange sofa.",
+       "falsch": "Mia has got a orange sofa. Her sofa is orange.",
+       "richtig": "Mia has got an orange sofa. Her sofa is orange.",
        "wort": "a",
        "korrektur": "an",
        "choices": [
@@ -2665,8 +2665,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Sam get up at seven.",
-       "richtig": "Sam gets up at seven.",
+       "falsch": "Sam get up at seven and brushes his teeth.",
+       "richtig": "Sam gets up at seven and brushes his teeth.",
        "wort": "get",
        "korrektur": "gets",
        "choices": [
@@ -2687,8 +2687,8 @@
        "tipp": "Nach sh kommt -es: she brushes."
       },
       {
-       "falsch": "I goes to school at eight.",
-       "richtig": "I go to school at eight.",
+       "falsch": "When do you go to school? I goes at eight.",
+       "richtig": "When do you go to school? I go at eight.",
        "wort": "goes",
        "korrektur": "go",
        "choices": [
@@ -2698,8 +2698,8 @@
        "tipp": "Bei I kommt kein -s ans Verb."
       },
       {
-       "falsch": "He go to bed at nine.",
-       "richtig": "He goes to bed at nine.",
+       "falsch": "He go to bed at nine and reads a book.",
+       "richtig": "He goes to bed at nine and reads a book.",
        "wort": "go",
        "korrektur": "goes",
        "choices": [
@@ -2899,8 +2899,8 @@
      ],
      "fehler": [
       {
-       "falsch": "Do Sam go to school on Monday?",
-       "richtig": "Does Sam go to school on Monday?",
+       "falsch": "Do Sam go to school on Monday? Yes, he does.",
+       "richtig": "Does Sam go to school on Monday? Yes, he does.",
        "wort": "Do",
        "korrektur": "Does",
        "choices": [
@@ -2910,8 +2910,8 @@
        "tipp": "Bei he, she, it – und bei Sam – fragt man mit Does."
       },
       {
-       "falsch": "Does Mia goes to school?",
-       "richtig": "Does Mia go to school?",
+       "falsch": "When does Mia goes to school?",
+       "richtig": "When does Mia go to school?",
        "wort": "goes",
        "korrektur": "go",
        "choices": [
@@ -2932,15 +2932,15 @@
        "tipp": "Bei I heißt die kurze Antwort: Yes, I do."
       },
       {
-       "falsch": "See you in Friday!",
-       "richtig": "See you on Friday!",
+       "falsch": "We have sport in Monday and Friday.",
+       "richtig": "We have sport on Monday and Friday.",
        "wort": "in",
        "korrektur": "on",
        "choices": [
         "under",
         "to"
        ],
-       "tipp": "Vor Wochentagen steht on: on Friday."
+       "tipp": "Vor Wochentagen steht on: on Monday."
       }
      ]
     },
@@ -3144,8 +3144,8 @@
        "tipp": "Nach can kommt das Tu-Wort ohne Endung."
       },
       {
-       "falsch": "Mia play football on Monday.",
-       "richtig": "Mia plays football on Monday.",
+       "falsch": "Mia play football and scores a goal.",
+       "richtig": "Mia plays football and scores a goal.",
        "wort": "play",
        "korrektur": "plays",
        "choices": [
@@ -3155,15 +3155,15 @@
        "tipp": "he, she, it – das s muss mit: Mia plays."
       },
       {
-       "falsch": "Can you dance? Yes, I do.",
-       "richtig": "Can you dance? Yes, I can.",
+       "falsch": "Can Mia dance? Yes, she do.",
+       "richtig": "Can Mia dance? Yes, she can.",
        "wort": "do",
        "korrektur": "can",
        "choices": [
         "is",
-        "does"
+        "has"
        ],
-       "tipp": "Fragt man mit Can, antwortet man mit can: Yes, I can."
+       "tipp": "Fragt man mit Can, antwortet man mit can: Yes, she can."
       }
      ]
     },
@@ -3373,8 +3373,8 @@
        "tipp": "Ein Regenbogen – also there is."
       },
       {
-       "falsch": "I have cold.",
-       "richtig": "I am cold.",
+       "falsch": "I have cold and wet.",
+       "richtig": "I am cold and wet.",
        "wort": "have",
        "korrektur": "am",
        "choices": [
@@ -3384,8 +3384,8 @@
        "tipp": "Mir ist kalt = I am cold. Hier sagt man am, nicht have."
       },
       {
-       "falsch": "I've got a umbrella.",
-       "richtig": "I've got an umbrella.",
+       "falsch": "I've got a umbrella. My umbrella is red.",
+       "richtig": "I've got an umbrella. My umbrella is red.",
        "wort": "a",
        "korrektur": "an",
        "choices": [
