@@ -193,6 +193,7 @@
   }
 
   // ================================================================== Startseite
+  let leisteX = 0;   // Scroll-Position der Sprachleiste über Neuzeichnen hinweg
   function langBar() {
     return `<div class="langbar" role="tablist" aria-label="Sprache wählen">${PK.ORDER.map((l) => `<button role="tab" class="lang ${state.lang === l ? 'sel' : ''}" data-lang="${l}" aria-selected="${state.lang === l}"><span>${PK.LANGS[l].emoji}</span>${esc(PK.LANGS[l].name)}</button>`).join('')}</div>`;
   }
@@ -247,7 +248,7 @@
       <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <a href="lizenzen.txt">Stimmen &amp; Lizenzen</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
     </div>`);
     el.querySelector('[data-kids-home]').onclick = () => { A.sfx('tap'); kidsPrivacy(home); };
-    el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); elternTor(openAllApps); };
+    el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); elternTor(openAllApps, 'Hier geht es zur Website.'); };
     el.querySelector('[data-settings]').onclick = () => { A.sfx('tap'); elternTor(settings); };
     const ps = el.querySelector('[data-pass]'); if (ps) ps.onclick = () => { A.sfx('tap'); passport(); };
     el.querySelectorAll('[data-lang]').forEach((b) => b.onclick = () => {
@@ -271,6 +272,11 @@
       const w = C.worlds.find((x) => x.id === +b.dataset.world);
       rubySay(el, `Nach <b>${esc(w.title)}</b> fliegen wir bald! Dort geht es um: ${esc(w.de)}.`, 'talk');
     });
+    // Sprachleiste: Position halten und die gewählte Sprache sichtbar in die Mitte rücken (sprang sonst an den Anfang)
+    const bar = el.querySelector('.langbar'); const gew = bar && bar.querySelector('.lang.sel');
+    if (bar) { bar.scrollLeft = leisteX; if (gew) { const ziel = gew.offsetLeft - (bar.clientWidth - gew.offsetWidth) / 2;
+      requestAnimationFrame(() => { try { bar.scrollTo({ left: Math.max(0, ziel), behavior: leisteX ? 'smooth' : 'auto' }); } catch (e) { bar.scrollLeft = Math.max(0, ziel); } }); }
+      bar.addEventListener('scroll', () => { leisteX = bar.scrollLeft; }, { passive: true }); }
     lernpfad(state.lang).then((lp) => { const box = el.querySelector('[data-lp]'); if (lp && box && box.isConnected) lpPfadZeigen(el, box, lp); });
     maybeApplyUpdate();
   }
@@ -844,12 +850,12 @@
   // neue Aufgabe. Kein Zeitdruck, jederzeit abbrechen. Gelöst = 10 Minuten offen (nur im Arbeitsspeicher).
   const ZAHLWORT = { 6: 'sechs', 7: 'sieben', 8: 'acht', 9: 'neun', 13: 'dreizehn', 14: 'vierzehn', 15: 'fünfzehn', 16: 'sechzehn', 17: 'siebzehn', 18: 'achtzehn', 19: 'neunzehn' };
   let torOffenBis = 0;
-  function elternTor(dann) {
+  function elternTor(dann, grund) {
     if (Date.now() < torOffenBis) { dann(); return; }
     let a; let b; let eingabe = '';
     const bg = h(`<div class="modal-bg"><div class="modal card tor" role="dialog" aria-labelledby="tor-t">
       <h2 id="tor-t" style="font-size:20px">👪 Eltern-Tor</h2>
-      <p class="muted">Dieser Bereich ist für Erwachsene. Bitte rechne:</p>
+      ${grund ? `<p style="font-weight:800;margin:4px 0">${esc(grund)}</p>` : ''}<p class="muted">Dieser Bereich ist für Erwachsene. Bitte rechne:</p>
       <div class="tor-aufgabe"><b data-aufgabe aria-live="polite"></b><button class="slowbtn" data-vorlesen aria-label="Aufgabe vorlesen">🔊</button></div>
       <div class="tor-eingabe" data-eingabe aria-label="Deine Eingabe">&nbsp;</div><div class="err" data-err></div>
       <div class="tor-tasten">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map((z) => `<button class="tor-taste" data-z="${z}" aria-label="${z}">${z}</button>`).join('')}

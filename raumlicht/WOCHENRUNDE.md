@@ -79,7 +79,13 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 - **Experimentopia-Links mit festen Namen** (ab Fr 20.11. auf `experimentopia-test.`, danach live): `https://experimentopia.mathenachhilfe-online.com/#thema=<name>`. Für uns passend: Achterbahn-Baumeister → `energie` (sobald dort gebaut), Schatten-Aufgabe 5-6 → `optik`. Weitere Namen: `schwimmen`, `hebel`, `rollen`, `kraft`, `fallen`, `pendel`, `strom`, `magnet`, `waerme`, `licht`, `schall`, `elektromagnetismus`, `trennen`, `saeure`, `reaktion`, `vererbung`, `zellen`, `ernaehrung`, `oekologie`, `koerper`. Unbekannte Namen öffnen die Startseite. Experimentopia verlinkt nur auf freie Inhalte.
 - **Vorschlag „Aufräum-Tag“ für Fr 20.11.** (Experimentopia gibt ihn als Marcels Vorschlag weiter): Abgaben umsetzen, Direkt-Links und Querverweise bauen, neuer Inhalt nur im eigenen Profil; strittige Abgaben (u. a. Oberstufe Raumlicht/Mathe-Trainer) bleiben bis Montag unverändert. Für Raumlicht heißt das: Gauß als drei Ebenen (eigenes Profil) und Querverweise; an den 52 Analysis-/Stochastik-Aufgaben wird nichts geändert.
 
-## ENTSCHEIDUNG von Marcel, direkt bestätigt am 19.11.2026 abends – gilt für Fr 20.11. und geht allem Älteren vor
+## PAUSE bis Di 24.11.2026 – von Marcel direkt bestätigt am 19.11.2026 abends („ja pausieren“; er will erst selbst testen). Geht allem darunter vor.
+
+- **Fr 20.11.: nichts.** Kein Bauen, keine Änderung auf Test oder Live, keine Live-Bitte, keine Meldung. Stand bleibt: Teststufe 2.18.38 vom 19.11.2026, Live 2.18.34 vom 19.11.2026.
+- **Di 24.11. holt nach,** was im Abschnitt darunter für Freitag stand: Selbstprüfung, die drei PC-Punkte, dazu das Inhaltsupdate (LGS & Gauß als drei Ebenen, neue Abi-Prüfungsaufgaben). Vorher Marcels Test-Befunde abwarten bzw. einarbeiten, falls welche da sind; Live-Bitte für den dann aktuellen Stand mit Rückweg und Rechtsbezug.
+- Der Tagesbericht an die AppZentrale (Mo–Fr 9:43) läuft weiter – er berichtet nur und ändert nichts.
+
+## (überholt für Fr 20.11. – Aufgabenliste gilt jetzt für Di 24.11.) ENTSCHEIDUNG von Marcel, direkt bestätigt am 19.11.2026 abends
 
 **Fr 20.11.: KEIN Inhaltsupdate, keine neuen Funktionen. Nur prüfen und korrigieren.** Das Inhaltsupdate (LGS & Gauß als drei Ebenen, neue Abi-Prüfungsaufgaben) rutscht auf **Di 24.11.**
 
