@@ -2,6 +2,22 @@
 
 Neueste oben.
 
+## 19.11.2026 – 2.18.37 auf test: familie.js @ e9993ec übernommen (Marcel hat hier direkt „ja“ gesagt – auch dazu, künftige Baustein-Fassungen nach Lesen, Prüfsumme und Test ohne Rückfrage zu übernehmen, solange es bei der Teststufe bleibt)
+
+- `web/src/wasmJsMain/resources/familie.js` = e9993ec, sha256 3f7ec567…f5f9, `node familie/tests/familie.mjs` → 51 Prüfungen. Brücke: `familie-weg` → „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“; der Umweg über `/liste` ist entfernt. Beim Beitreten mit einem Link zu einer gelöschten Familie: „Diese Familie gibt es nicht (mehr). Stimmt der Link?“.
+- Nachgebauter Server in `web-familie.mjs` liefert jetzt dieselben Fehlertexte wie der echte (`leer` / `unbekannt`).
+- **Geprüft:** 204 Logik-Tests, 153 Oberflächen-Tests, Lint, `web-familie.mjs` 32 von 32. Die übrigen Browser-Prüfungen sind für 2.18.37 nicht erneut gelaufen (geändert wurden nur der Baustein und die Brücke); Stand 2.18.36 siehe unten.
+- **Rechtsbezug: ja** (Familien-Speicher: Speicherung von Lernständen Minderjähriger, Notfall-Kopie, Einwilligungstext) – nur Teststufe, kein Live-Gang erbeten.
+
+## 19.11.2026 – 2.18.36 auf test: Familien-Speicher nach FAMILIEN-SPEICHER.md v1.5 (von Marcel hier direkt bestätigt)
+
+- **Einheitlicher Eltern-Hinweis** wörtlich (`Familie.NOTE`), darunter „Datenschutzerklärung ›“ und **„Einverstanden“** – erst danach gibt es „Familie anlegen“ und „Familie beitreten“ (auch beim Öffnen mit `#familie=…`). Das Einverständnis wird nicht gespeichert; es wird bei jedem Anlegen/Beitreten neu gegeben.
+- **Protokoll** auf der Familien-Seite (`GET …/protokoll`, Einträge `{art, t}`; „angelegt“, „wiederhergestellt“ lesbar, Unbekanntes wörtlich).
+- **Familie löschen:** nur hinter dem Tor, Warnung wörtlich (`Familie.DELETE_WARNING`), Bestätigung durch Eintippen der Familien-Nummer (gelesen wie der Server: ohne Bindestrich, O→0, I/L→1), dann `loeschen()`; lokal wird nur `raumlicht.familie` entfernt. Ein einzelnes Kind entfernen gibt es nicht.
+- **Andere Geräte bei 404:** „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“ – die Verbindung wird getrennt, nichts wird gelöscht. (Der Baustein meldet 404 für „Familie weg“ und „noch kein Stand“ gleich; die Brücke unterscheidet es über `/liste`.)
+- Weiter nur Teststufe (`Familie.ENABLED = false`).
+- **Geprüft:** 204 Logik-Tests, 153 Oberflächen-Tests, Lint, Browser: `web-familie.mjs` 32 von 32 (Wasm und JS), die übrigen 166 bestanden – mit einer Einschränkung: `web-vorversion.mjs` (Update von 2.16.3) meldet in etwa 2 von 5 Läufen einen Konsolenfehler mit wechselndem Text (z. B. „Failed to execute 'compile' on 'WebAssembly': HTTP status code is not ok“), sonst 6 von 6. Er entsteht beim Dateitausch der Prüfung; ob er schon vor 2.18.35 gelegentlich auftrat, ist nicht geklärt. Spielstand, Pro-Code und Einstellungen blieben in jedem Lauf erhalten.
+
 ## 19.11.2026 – 2.18.35 auf test: Familien-Speicher angebunden (nur Teststufe; von Marcel hier direkt bestätigt: „daneben, eigene Version nur auf der Teststufe“)
 
 **Gebaut:**

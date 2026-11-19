@@ -11,6 +11,7 @@ Neueste oben.
 - **PC-Ansicht** ab 1100 px (Bilder vorher/nachher in screenshots/pc/). sw.js nur noch `caches.open(CACHE).match`.
 - **Prüfung:** 26 Inhaltstests, Browser-Durchlauf Chromium Handy/PC + WebKit iPhone/iPad grün (101 Prüfungen), Bildschirmfotos angesehen.
 - **Rückweg:** 0.3.3 (ed4e88b) – Lernstand bleibt (nur neue Felder lp, insel, tests).
+- **Rechtsbezug: ja** – Eltern-Tor neu (schützt Einstellungen, „Alle Apps“, Links nach außen; UWG Anh. Nr. 28), Kinder-Datenschutz-Seite jetzt auf der Startseite, Mikrofon/Spracherkennung jetzt auch für Französisch/Spanisch (weiter nur im Gerät), Audio wird beim ersten Abspielen im Gerät gespeichert. Keine Preise, kein Kauf, keine Werbung, keine neuen Daten an Server.
 
 ## 19.11.2026 – Version 0.3.3 vom 19.11.2026: Pflicht 2 Klassenarbeits-Generalprobe – fertig für den Test
 

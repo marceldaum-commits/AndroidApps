@@ -43,6 +43,23 @@ class FamilieTest {
 
     @Test fun fortschrittErkannt() { assertTrue(Familie.hasProgress(data)); assertFalse(Familie.hasProgress(mapOf("sound" to "true", "stars" to ""))) }
 
+    @Test fun einheitlicherHinweisUndLoeschWarnung() {
+        assertTrue(Familie.NOTE.startsWith("Eure Lernstände werden verschlüsselt auf unserem Server in Deutschland gespeichert."))
+        assertTrue(Familie.NOTE.contains("Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht")); assertTrue(Familie.NOTE.endsWith("Jede Wiederherstellung seht ihr hier im Protokoll."))
+        assertTrue(Familie.DELETE_WARNING.startsWith("Das löscht die Familie in ALLEN Lern-Apps")); assertTrue(Familie.DELETE_WARNING.endsWith("Die Lernstände auf diesem Gerät bleiben erhalten."))
+        assertEquals("Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.", Familie.GONE); assertEquals(Familie.GONE, Familie.problem("weg"))
+    }
+
+    @Test fun loeschenNurMitFamilienNummer() {
+        assertTrue(Familie.deleteConfirmed("k7qx 2mfa", "K7QX-2MFA")); assertTrue(Familie.deleteConfirmed("K7QX-2MFA", "K7QX-2MFA")); assertTrue(Familie.deleteConfirmed("o1li-0111", "0111-0111"))
+        assertFalse(Familie.deleteConfirmed("K7QX-2MFB", "K7QX-2MFA")); assertFalse(Familie.deleteConfirmed("", "K7QX-2MFA")); assertFalse(Familie.deleteConfirmed("", ""))
+    }
+
+    @Test fun protokollLesbar() {
+        assertEquals(listOf("20.11.2026: Zugang durch Mathenachhilfe Online wiederhergestellt", "19.11.2026: Familie angelegt"), Familie.protocol("angelegt\t2026-11-19T15:31\nwiederhergestellt\t2026-11-20T09:00"))
+        assertEquals(listOf("–: sonstiges"), Familie.protocol("sonstiges")); assertTrue(Familie.protocol("").isEmpty())
+    }
+
     @Test fun rueckmeldungenVerstaendlich() { for (r in listOf("netz", "keine", "schluessel", "schreibrecht", "noch-nicht-live", "zu-gross", "zu-oft", "link", "baustein", "fehler"))
         assertTrue(r, Familie.problem(r).length > 20) }
 }

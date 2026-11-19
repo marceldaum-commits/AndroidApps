@@ -189,6 +189,13 @@
   // Die Aufnahme bleibt im Arbeitsspeicher, wird abgespielt und verworfen. Nichts wird gespeichert oder gesendet.
   A.micSupported = () => !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
   let rec = null;
+  const urls = new Set();   // Aufnahmen nur als Blob-URL im Arbeitsspeicher – nie im Cache, nie in IndexedDB oder localStorage
+  /** Laufende Aufnahme stoppen und alle Aufnahmen verwerfen (bei jedem Bildschirmwechsel). */
+  A.verwerfen = () => {
+    if (rec) { const r = rec; rec = null; r.stop().then((x) => { if (x && x.url) { URL.revokeObjectURL(x.url); urls.delete(x.url); } }).catch(() => {}); }
+    for (const u of urls) { try { URL.revokeObjectURL(u); } catch (e) {} }
+    urls.clear();
+  };
   /**
    * Aufnahme starten. onLevel(0..1) bekommt laufend die Lautstärke.
    * Liefert ein Objekt mit stop() → Promise<{url, peak, ms}>.
@@ -221,11 +228,12 @@
     mr.start();
     const handle = {
       stop: () => new Promise((ok) => {
-        cancelAnimationFrame(raf);
+        cancelAnimationFrame(raf); if (rec === handle) rec = null;
         mr.onstop = () => {
           stream.getTracks().forEach((t) => t.stop());
           const blob = new Blob(chunks, { type: mr.mimeType || 'audio/webm' });
-          ok({ url: chunks.length ? URL.createObjectURL(blob) : null, peak, loudFrames: loud, ms: Date.now() - t0 });
+          const url = chunks.length ? URL.createObjectURL(blob) : null; chunks.length = 0; if (url) urls.add(url);
+          ok({ url, peak, loudFrames: loud, ms: Date.now() - t0 });
         };
         try { mr.stop(); } catch (e) { stream.getTracks().forEach((t) => t.stop()); ok({ url: null, peak, loudFrames: loud, ms: Date.now() - t0 }); }
       }),
@@ -238,7 +246,7 @@
   A.playUrl = (url) => new Promise((ok) => {
     if (!url) { ok(); return; }
     const a = new Audio(url);
-    const fin = () => { try { URL.revokeObjectURL(url); } catch (e) {} ok(); };
+    const fin = () => { try { URL.revokeObjectURL(url); } catch (e) {} urls.delete(url); ok(); };
     a.onended = fin; a.onerror = fin;
     a.play().catch(fin);
   });

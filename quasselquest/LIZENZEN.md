@@ -20,3 +20,7 @@ Stimmen der Sprachpakete (Lizenzen geprüft am 19.11.2026):
 - Latein: Es gibt keine freie Stimme mit sauberer Lizenz – Latein wird gelesen, nicht vorgelesen.
 
 Inhalte der Pakete: selbst geschrieben im Wissensgarten (keine Listen aus Schulbüchern), übernommen am 19.11.2026.
+
+
+## Stand 19.11.2026 (0.4.1)
+Alle englischen Figuren sprechen mit „en_GB-cori-medium“ (CC BY 4.0, Namensnennung in webapp/lizenzen.txt, sichtbar über „Stimmen & Lizenzen“ auf der Startseite). „en_US-john-medium“ wird nicht mehr verwendet. Prüfung durch Recht (Bericht 19.11., B3).

@@ -21,9 +21,27 @@ object Familie {
 
     const val INTRO = "Eine Familie, alle Lern-Apps: Der Lernstand liegt verschlüsselt im Familien-Speicher. Geht ein Gerät verloren, holt ihr ihn mit dem Familien-Link zurück – " +
         "und Geschwister lernen auf demselben Tablet, jedes mit eigenem Stand."
-    const val NOTE = "Verschlüsselt wird hier im Browser; der Server kann nichts lesen. Wer den Familien-Link hat, kann die Lernstände öffnen – gut aufbewahren. " +
-        "Freischalt-Codes stehen nicht im Lernstand der Kinder. Ohne Konto, ohne E-Mail-Adresse.\n" +
-        "Für den Notfall liegt eine verschlüsselte Kopie des Familien-Schlüssels bei uns: Nur Mathenachhilfe Online kann sie mit einem getrennt verwahrten Schlüssel öffnen, um euch den Zugang zurückzugeben, wenn der Link verloren ist."
+    /** Einheitlicher Eltern-Hinweis aller Lern-Apps (FAMILIEN-SPEICHER.md v1.5) – Wortlaut nicht ändern */
+    const val NOTE = "Eure Lernstände werden verschlüsselt auf unserem Server in Deutschland gespeichert. Der Schlüssel liegt auf euren Geräten. " +
+        "Damit wir euch helfen können, falls ihr den Familien-Zugang verliert, hinterlegen wir zusätzlich eine verschlüsselte Notfall-Kopie. " +
+        "Sie lässt sich nur mit einem getrennt und offline aufbewahrten Schlüssel von Mathenachhilfe Online öffnen. " +
+        "Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht und nutzen ihn nur, wenn ihr uns um Wiederherstellung bittet. " +
+        "Jede Wiederherstellung seht ihr hier im Protokoll."
+    const val DETAILS = "Wer den Familien-Link hat, kann die Lernstände öffnen – gut aufbewahren. Freischalt-Codes stehen nicht im Lernstand der Kinder. Ohne Konto, ohne E-Mail-Adresse."
+    const val PRIVACY_URL = "https://www.mathenachhilfe-online.com/datenschutz/"
+    /** Einheitliche Warnung vor dem Löschen der ganzen Familie – Wortlaut nicht ändern */
+    const val DELETE_WARNING = "Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. " +
+        "Gekaufte Codes werden wieder frei und lassen sich in einer neuen Familie erneut einlösen. Die Lernstände auf diesem Gerät bleiben erhalten."
+    const val GONE = "Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät."
+    const val DELETED = "Die Familie wurde gelöscht. Der Lernstand auf diesem Gerät bleibt."
+    /** Familien-Nummer so lesen wie der Server: ohne Bindestrich und Leerzeichen, groß, O→0, I/L→1 */
+    fun plainNumber(t: String) = t.uppercase().replace(Regex("[\\s-]"), "").replace('O', '0').replace(Regex("[IL]"), "1")
+    /** Löschen ist erst bestätigt, wenn die eingetippte Familien-Nummer stimmt */
+    fun deleteConfirmed(typed: String, number: String) = number.isNotBlank() && plainNumber(typed) == plainNumber(number)
+    /** Protokoll der Familie: je Zeile „<art>\t<Zeit>“ → lesbare Einträge, neueste zuerst */
+    fun protocol(text: String): List<String> = text.split('\n').mapNotNull { l -> val p = l.split('\t'); if (p[0].isBlank()) null else {
+        val what = when (p[0]) { "angelegt" -> "Familie angelegt"; "wiederhergestellt", "wiederherstellung" -> "Zugang durch Mathenachhilfe Online wiederhergestellt"; "eingeloest" -> "Code eingelöst"; else -> p[0] }
+        (Eltern.germanDay(p.getOrElse(1) { "" }).ifEmpty { "–" }) + ": " + what } }.reversed()
     const val TEST_NOTE = "Teststufe: Der Familien-Speicher wird gerade erprobt. Die bisherige Kopplung mit dem Eltern-Handy bleibt unverändert."
 
     /** Der Lernstand eines Kindes: alles, was auch die Sicherung enthält, aber ohne Rechte */
@@ -67,6 +85,7 @@ object Familie {
     fun problem(reason: String) = when (reason) {
         "netz" -> "Keine Verbindung. Bitte später noch einmal versuchen."
         "keine" -> "Diese Familie gibt es nicht (mehr). Stimmt der Link?"
+        "weg" -> GONE
         "schluessel" -> "Der Familien-Link passt nicht zu den gespeicherten Daten."
         "schreibrecht" -> "Mit diesem Link darf nicht gespeichert werden."
         "noch-nicht-live" -> "Der Familien-Speicher ist noch nicht freigeschaltet."

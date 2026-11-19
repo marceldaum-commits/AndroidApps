@@ -41,7 +41,7 @@
   const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const pickOthers = (all, not, n) => shuffle(all.filter((x) => x !== not)).slice(0, n);
   let token = 0; // wechselt bei jedem Bildschirmwechsel – laufende Abläufe brechen dann ab
-  function screen(html) { token++; A.stop(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); return el; }
+  function screen(html) { token++; A.stop(); A.verwerfen(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); return el; }
   const alive = (t) => t === token;
   // Test-Stufe am Hostnamen (Standard UMZUG-LERNEN): „lernen-test.“, Übergang „quasselquest-test.“, lokal.
   const isTest = () => /(^|[.-])(test|staging)([.-]|$)|localhost|127\.0\.0\.1/.test(location.hostname) || location.protocol === 'file:';
@@ -244,7 +244,7 @@
       ${packTiles()}
       ${en ? `<div class="section-h">Weitere Orte auf der Reise</div>
       <div class="worlds">${C.worlds.slice(1).map((w) => `<button class="wtile" data-world="${w.id}"><span class="soon">kommt bald</span><span class="e">${w.emoji}</span><b>${esc(w.title)}</b><small>${esc(w.de)} · ${w.stufe === 'gs' ? 'Kl. 3–4' : 'Kl. 5–6'}</small></button>`).join('')}</div>` : ''}
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)} · <a href="datenschutz.html">Datenschutz</a> · <a href="lizenzen.txt">Stimmen &amp; Lizenzen</a> · <button class="linkbtn" data-kids-home>🔒 Deine Daten</button></div>
     </div>`);
     el.querySelector('[data-kids-home]').onclick = () => { A.sfx('tap'); kidsPrivacy(home); };
     el.querySelector('[data-allapps]').onclick = () => { A.sfx('tap'); elternTor(openAllApps); };
@@ -809,7 +809,7 @@
         <div class="set"><span>🔒 Deine Daten – kurz erklärt</span><button class="btn small white" data-kids>Ansehen</button></div>
         <div class="set"><span>📄 Datenschutz für Erwachsene</span><a class="btn small white" href="datenschutz.html">Lesen</a></div>
       </div>
-      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Freie Stimmen (Piper): cori, john, thorsten, siwis, davefx – Angaben unter <a href="lizenzen.txt">Lizenzen</a></div>
+      <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Freie Stimmen (Piper): cori (CC BY 4.0), thorsten, siwis (CC BY 4.0), davefx – Angaben unter <a href="lizenzen.txt">Lizenzen</a></div>
     </div>`);
     el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); home(); };
     el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = !s[b.dataset.sw]; save(); A.sfx('tap'); settings(); });
@@ -823,12 +823,12 @@
   /** Datenschutz in Kindersprache (Pflicht 8): kurz, ehrlich, mit Ruby. */
   function kidsPrivacy(zurueck) {
     const punkte = [
-      ['🏠', 'Alles, was du hier lernst, bleibt auf <b>diesem Gerät</b>. Wir bekommen deinen Lernstand nicht.'],
+      ['🏠', 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>.'],
       ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
-      ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme wird nach dem Anhören gelöscht.'],
-      ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur, wie oft die App geöffnet wird – aber nie, wer du bist oder was du lernst.'],
+      ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
+      ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur anonym, wie oft etwas in der App benutzt wird – ohne deinen Namen und ohne deine Antworten. Deine Eltern können das Zählen ausschalten.'],
       ['📒', 'Deine eigenen Wortlisten bleiben auch nur hier auf dem Gerät.'],
-      ['👪', 'Manche Dinge (zum Beispiel das Eltern-Handy koppeln) dürfen nur deine Eltern einschalten. Frag sie, wenn du etwas wissen willst!'],
+      ['👪', 'Manche Dinge, zum Beispiel die Spracherkennung übers Internet, können nur Erwachsene einschalten.'],
     ];
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">🔒 Deine Daten</div></div>

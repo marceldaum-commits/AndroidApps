@@ -52,19 +52,25 @@ private fun Card(color: androidx.compose.ui.graphics.Color, content: @Composable
  * @param choice nicht null: Stand aus der Familie holen oder den dieses Geräts behalten?
  */
 @Composable
-fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: String?, busy: Boolean, kids: List<Familie.Kid>?, choice: FamilieChoice?, prefill: String,
+fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: String?, busy: Boolean, kids: List<Familie.Kid>?, choice: FamilieChoice?, prefill: String, log: List<String>?, onDelete: () -> Unit,
                   onCreate: (name: String) -> Unit, onJoin: (link: String) -> Unit, onPick: (Familie.Kid) -> Unit, onNewKid: (name: String) -> Unit, onCancelJoin: () -> Unit,
                   onTake: () -> Unit, onKeep: () -> Unit, onSync: () -> Unit, onFetch: () -> Unit, onLeave: () -> Unit, onBack: () -> Unit) {
     val share = LocalShareText.current; val sfx = LocalSfx.current
     var name by rememberSaveable { mutableStateOf("") }
     var link by rememberSaveable(prefill) { mutableStateOf(prefill) }
     var sure by rememberSaveable { mutableStateOf(false) }
+    var agreed by rememberSaveable { mutableStateOf(false) }
+    var deleting by rememberSaveable { mutableStateOf(false) }
+    var typed by rememberSaveable { mutableStateOf("") }
+    val uri = androidx.compose.ui.platform.LocalUriHandler.current
     Column(Modifier.fillMaxSize().background(Q.Space).systemBarsPadding()) {
         Bar("Familie", onBack)
         Column(Modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 8.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             Text(Familie.INTRO, Modifier.testTag("familie-text"), style = MaterialTheme.typography.bodyLarge, color = Q.Text)
             Card(Q.Cyan) {
-                Text("🔒 " + Familie.NOTE, Modifier.testTag("familie-hinweis"), color = Q.Muted, fontSize = 12.sp, lineHeight = 16.sp)
+                Text("🔒 " + Familie.NOTE, Modifier.testTag("familie-hinweis"), color = Q.Text, fontSize = 13.sp, lineHeight = 18.sp)
+                Text(Familie.DETAILS, Modifier.testTag("familie-einzelheiten"), color = Q.Muted, fontSize = 12.sp, lineHeight = 16.sp)
+                Text("Datenschutzerklärung ›", Modifier.testTag("familie-datenschutz").clickable { try { uri.openUri(Familie.PRIVACY_URL) } catch (e: Exception) { } }.padding(vertical = 6.dp), color = Q.Cyan, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                 if (test) Text("🧪 " + Familie.TEST_NOTE, Modifier.testTag("familie-test"), color = Q.Orange, fontSize = 12.sp, lineHeight = 16.sp)
             }
             if (choice != null) Card(Q.Orange) {
@@ -78,6 +84,8 @@ fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: St
                 OutlinedTextField(name, { name = it.take(Familie.MAX_NAME) }, Modifier.fillMaxWidth().testTag("familie-name"), label = { Text("Neues Kind: Spitzname") }, singleLine = true)
                 NeonButton({ sfx?.play(Sound.TAP); onNewKid(name) }, Modifier.fillMaxWidth().testTag("familie-kind-neu"), color = Q.Muted) { Text("Als neues Kind hinzufügen") }
                 Text("Abbrechen", Modifier.testTag("familie-abbrechen").clickable(onClick = onCancelJoin).padding(vertical = 10.dp), color = Q.Muted, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+            } else if (state == null && !agreed) {
+                NeonButton({ sfx?.play(Sound.TAP); agreed = true }, Modifier.fillMaxWidth().testTag("familie-einverstanden"), color = Q.Cyan) { Text("Einverstanden", fontWeight = FontWeight.Bold) }
             } else if (state == null) {
                 Card(Q.Cyan) {
                     Text("Neue Familie anlegen", color = Q.Cyan, fontWeight = FontWeight.Black, fontSize = 15.sp)
@@ -106,6 +114,11 @@ fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: St
                 Text("Gesichert wird nach dem Lernen von selbst, wenn sich etwas geändert hat.", color = Q.Muted, fontSize = 12.sp)
                 NeonButton(onSync, Modifier.fillMaxWidth().testTag("familie-sichern"), color = Q.Muted) { Text("Jetzt sichern") }
                 NeonButton(onFetch, Modifier.fillMaxWidth().testTag("familie-holen"), color = Q.Muted) { Text("Stand aus der Familie holen") }
+                if (log != null) Card(Q.Muted) {
+                    Text("Protokoll", color = Q.Text, fontWeight = FontWeight.Black, fontSize = 15.sp)
+                    if (log.isEmpty()) Text("Noch keine Einträge.", Modifier.testTag("familie-protokoll-leer"), color = Q.Muted, fontSize = 13.sp)
+                    log.forEachIndexed { i, l -> Text(l, Modifier.testTag("familie-protokoll-$i"), color = Q.Text, fontSize = 13.sp) }
+                }
                 if (!sure) Text("Dieses Gerät aus der Familie nehmen", Modifier.testTag("familie-verlassen").clickable { sure = true }.padding(vertical = 10.dp), color = Q.Orange, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 else Card(Q.Orange) {
                     Text("Wirklich? Der Lernstand bleibt auf diesem Gerät und in der Familie; nur die Verbindung wird getrennt. Mit dem Familien-Link kommt ihr jederzeit zurück.", color = Q.Text, fontSize = 14.sp)
@@ -113,6 +126,20 @@ fun FamilieScreen(state: Familie.State?, base: String, test: Boolean, status: St
                         NeonButton({ sure = false; onLeave() }, Modifier.weight(1f).testTag("familie-verlassen-ja"), color = Q.Orange) { Text("Ja, trennen") }
                         NeonButton({ sure = false }, Modifier.weight(1f), color = Q.Muted) { Text("Abbrechen") }
                     }
+                }
+            }
+            if (state != null && choice == null && kids == null) {
+                if (!deleting) Text("Familie löschen", Modifier.testTag("familie-loeschen").clickable { deleting = true; typed = "" }.padding(vertical = 10.dp), color = Q.Orange, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                else Card(Q.Orange) {
+                    Text("⚠️ " + Familie.DELETE_WARNING, Modifier.testTag("familie-loeschen-warnung"), color = Q.Text, fontSize = 14.sp, lineHeight = 19.sp)
+                    OutlinedTextField(typed, { typed = it.take(12) }, Modifier.fillMaxWidth().testTag("familie-loeschen-nummer"), label = { Text("Zum Bestätigen die Familien-Nummer eintippen") }, singleLine = true,
+                        supportingText = { Text("Sie steht oben: " + state.number) })
+                    val okay = Familie.deleteConfirmed(typed, state.number)
+                    Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                        NeonButton({ if (okay) { deleting = false; typed = ""; onDelete() } }, Modifier.weight(1f).testTag("familie-loeschen-ja"), color = if (okay) Q.Orange else Q.Muted) { Text("Endgültig löschen") }
+                        NeonButton({ deleting = false; typed = "" }, Modifier.weight(1f).testTag("familie-loeschen-nein"), color = Q.Muted) { Text("Abbrechen") }
+                    }
+                    if (!okay && typed.isNotBlank()) Text("Die Nummer stimmt noch nicht.", Modifier.testTag("familie-loeschen-falsch"), color = Q.Muted, fontSize = 12.sp)
                 }
             }
             if (busy) Text("Einen Moment …", Modifier.testTag("familie-laeuft"), color = Q.Muted, fontSize = 13.sp)
