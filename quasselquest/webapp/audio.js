@@ -69,12 +69,19 @@
     loadVoices();
     try { speechSynthesis.addEventListener('voiceschanged', loadVoices); } catch (e) { speechSynthesis.onvoiceschanged = loadVoices; }
   }
-  A.englishVoice = () => {
-    const vs = voicesCache.filter((v) => v.localService && /^en[-_]/i.test(v.lang));
-    const pick = (re) => vs.find((v) => re.test(v.lang.replace('_', '-')));
-    return pick(/^en-GB$/i) || pick(/^en-(IE|AU|NZ)$/i) || pick(/^en-US$/i) || vs[0] || null;
+  // Sprache der Gerätestimme je Figur/Stimme der Vertonung
+  const LANG_OF = { ruby: 'en', mia: 'en', sam: 'en', ted: 'en', de: 'de', fr: 'fr', es: 'es' };
+  const PREF = { en: [/^en-GB$/i, /^en-(IE|AU|NZ)$/i, /^en-US$/i], de: [/^de-DE$/i, /^de-(AT|CH)$/i], fr: [/^fr-FR$/i, /^fr-(BE|CH|CA)$/i], es: [/^es-ES$/i, /^es-/i] };
+  /** Lokale Gerätestimme für eine Sprache (nur Stimmen, die auf dem Gerät sprechen). */
+  A.deviceVoice = (lang) => {
+    lang = lang || 'en';
+    const vs = voicesCache.filter((v) => v.localService && new RegExp('^' + lang + '[-_]', 'i').test(v.lang));
+    for (const re of PREF[lang] || []) { const v = vs.find((x) => re.test(x.lang.replace('_', '-'))); if (v) return v; }
+    return vs[0] || null;
   };
-  A.canSpeak = () => 'speechSynthesis' in window && !!A.englishVoice();
+  A.englishVoice = () => A.deviceVoice('en');
+  A.canSpeak = (lang) => 'speechSynthesis' in window && !!A.deviceVoice(lang || 'en');
+  A.langOf = (who) => LANG_OF[who] || 'en';
   // ------------------------------------------------------------------ Vorab vertonte Sätze
   // Standard: freie Piper-Stimmen (audio/index.json + audio/piper/*.mp3, mit der App offline gespeichert).
   // Nova (KI-Stimme vom Stimm-Server) ist vorbereitet, aber erst nach Marcels Go eingeschaltet (window.NOVA_FREIGEGEBEN).
@@ -138,8 +145,9 @@
   }
   function deviceSay(text, opts) {
     return new Promise((ok) => {
-      if (!A.canSpeak()) { ok(false); return; }
-      const v = A.englishVoice();
+      const lang = A.langOf(opts.who);
+      if (!A.canSpeak(lang)) { ok(false); return; }
+      const v = A.deviceVoice(lang);
       let done = false;
       const fin = () => { if (done) return; done = true; clearTimeout(t); if (speakDone === fin) speakDone = null; ok(true); };
       const t = setTimeout(fin, 15000);
@@ -174,7 +182,7 @@
     return deviceSay(text, Object.assign({}, opts, { slow }));
   };
   /** Kann dieser Satz hörbar gemacht werden (Datei oder Gerätestimme)? */
-  A.canHear = (text, who) => S().voice !== false && (A.hasRecording(text, who) || A.canSpeak());
+  A.canHear = (text, who) => S().voice !== false && (A.hasRecording(text, who) || A.canSpeak(A.langOf(who)));
 
   // ------------------------------------------------------------------ Mikrofon (nur auf Knopfdruck)
   // Die Aufnahme bleibt im Arbeitsspeicher, wird abgespielt und verworfen. Nichts wird gespeichert oder gesendet.
@@ -252,7 +260,11 @@
     let r;
     try { r = new SR(); } catch (e) { ok(null); return; }
     r.lang = 'en-GB'; r.interimResults = false; r.maxAlternatives = 5; r.continuous = false;
-    if (mode === 'device') { try { r.processLocally = true; } catch (e) {} }
+    if (mode === 'device') {
+      // Streng: Bestätigt der Browser „nur auf dem Gerät“ nicht, wird gar nicht erst zugehört (sonst könnte Ton an den Hersteller gehen).
+      try { r.processLocally = true; } catch (e) {}
+      if (r.processLocally !== true) { ok(null); return; }
+    }
     let done = false;
     const fin = (v) => { if (done) return; done = true; clearTimeout(t); try { r.abort(); } catch (e) {} ok(v); };
     const t = setTimeout(() => fin([]), 6000);
