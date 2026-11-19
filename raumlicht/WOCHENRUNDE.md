@@ -79,6 +79,14 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 - **Experimentopia-Links mit festen Namen** (ab Fr 20.11. auf `experimentopia-test.`, danach live): `https://experimentopia.mathenachhilfe-online.com/#thema=<name>`. Für uns passend: Achterbahn-Baumeister → `energie` (sobald dort gebaut), Schatten-Aufgabe 5-6 → `optik`. Weitere Namen: `schwimmen`, `hebel`, `rollen`, `kraft`, `fallen`, `pendel`, `strom`, `magnet`, `waerme`, `licht`, `schall`, `elektromagnetismus`, `trennen`, `saeure`, `reaktion`, `vererbung`, `zellen`, `ernaehrung`, `oekologie`, `koerper`. Unbekannte Namen öffnen die Startseite. Experimentopia verlinkt nur auf freie Inhalte.
 - **Vorschlag „Aufräum-Tag“ für Fr 20.11.** (Experimentopia gibt ihn als Marcels Vorschlag weiter): Abgaben umsetzen, Direkt-Links und Querverweise bauen, neuer Inhalt nur im eigenen Profil; strittige Abgaben (u. a. Oberstufe Raumlicht/Mathe-Trainer) bleiben bis Montag unverändert. Für Raumlicht heißt das: Gauß als drei Ebenen (eigenes Profil) und Querverweise; an den 52 Analysis-/Stochastik-Aufgaben wird nichts geändert.
 
+## Stand 19.11.2026, 14:50 Uhr – für die nächsten Updates
+
+- **Live:** 2.18.33 (Umzug auf `lernen.mathenachhilfe-online.com/raumlicht/`), alte Adresse leitet samt Lernstand weiter.
+- **Schwerpunkt der Di/Fr-Updates (über die AppZentrale als Marcels Entscheidung gemeldet, passt zum Profil):** die **Abi-Prüfungsaufgaben zur Geometrie im Raum ausbauen** – heute 4 (Festivalzelt, Laser & Leinwand, Drohnen-Show, Planetarium), Ziel 12–20; jede vollständig und nachgerechnet (alle Schritte im Rechenweg, Test je Teilaufgabe). Ein Abi-Paket mit Preis gibt Marcel erst frei, wenn genug da sind – in der App bis dahin nichts dazu bauen oder ankündigen.
+- Daneben wie abgestimmt: LGS & Gauß als drei Ebenen (Fr 20.11.), Schattenwurf, Körper im Raum, Lage Gerade–Ebene; Querverweise zu den anderen Apps nur auf freie Ziele.
+- Später, nach den Pflichtaufgaben: teilbare Ergebnis-Karten und Urkunden auch in der WebApp.
+- **Nichts Serverseitiges** zu Familien-Speicher, Familienpass oder Pro auf Zeit bauen – Planung in der Wochenrunde am Mo 23.11.
+
 ## UMGESETZT am 19.11.2026 mit 2.18.32 (auf test)
 
 Der Umbau unten ist gebaut: 52 Aufgaben heraus, 92 Aufgaben in 16 Kapiteln, Bereich „Analysis & Zufall erleben“ (`?ziel=erleben`), Rotationskörper-Labor (`?ziel=rotation`). Einzelheiten in `MELDUNG_AN_LEITSTAND.md`.
