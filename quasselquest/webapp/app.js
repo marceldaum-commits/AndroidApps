@@ -172,8 +172,8 @@
   const KLASSEN = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   function onboarding() {
     let klasse = null;
-    const el = screen(`<div class="stage">
-      ${ruby('Hello! Ich bin <b>Ruby</b>, ein Papagei, der viele Sprachen spricht. Papageien sprechen alles nach – und du bald auch! 🦜', 'talk')}
+    const el = screen(`<div class="stage onb">
+      ${ruby('Hello! Ich bin <b>Ruby</b>, ein Papagei, der viele Sprachen spricht. Papageien sprechen alles nach – und du bald auch! 🎉', 'talk')}
       <div class="card"><h2 style="font-size:20px">In welche Klasse gehst du?</h2><p class="muted" style="margin:6px 0 12px">Du kannst das später ändern.</p>
         <div class="grade">${KLASSEN.map((k) => `<button data-k="${k}" aria-label="Klasse ${k}">${k}</button>`).join('')}</div></div>
       <div class="card"><h2 style="font-size:20px">Wie heißt du? <small class="muted">(freiwillig)</small></h2>
@@ -219,7 +219,7 @@
     const greet = (state.name ? `${esc(L.hallo.replace(/[!¡ ]+$/, ''))}, <b>${esc(state.name)}</b>! ` : esc(L.hallo) + ' ');
     const tip = en ? (next ? (prog('w1e1') ? 'Weiter geht\'s! Tipp auf den hüpfenden Kreis.' : 'Komm mit zum Hafen! Tipp auf den hüpfenden Kreis.') : 'Du hast alle Orte am Hafen geschafft! Bald geht die Reise weiter. 🚢')
       : `Heute üben wir <b>${esc(L.name)}</b>. Such dir ein Paket aus – ich spiele mit dir!${L.who ? '' : ' (Latein lesen wir – vorlesen kann ich es noch nicht.)'}`;
-    const el = screen(`<div>
+    const el = screen(`<div class="home">
       <div class="top"><button class="allapps" data-allapps>← Alle Apps</button><div class="spacer"></div>
         <span class="pill" title="Stempel im Reisepass">📘 ${stampCount()}</span>
         <button class="iconbtn" data-settings aria-label="Einstellungen">⚙️</button></div>
@@ -463,7 +463,7 @@
       if (!cmd) {
         clearTimeout(waiting); el.querySelector('[data-timer]').hidden = true; run.max++;
         A.sfx('squawk'); b.classList.add('wrong'); el.querySelectorAll('.choice').forEach((x) => x.disabled = true);
-        rubySay(el, 'Hihi, reingelegt! 🦜 Ich habe nicht „Ruby says“ gesagt. Macht nichts – weiter!', 'dance');
+        rubySay(el, 'Hihi, reingelegt! 😄 Ich habe nicht „Ruby says“ gesagt. Macht nichts – weiter!', 'dance');
         await sleep(1900); if (alive(tk)) next(); return;
       }
       if (t === target) {
@@ -832,7 +832,7 @@
     ];
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">🔒 Deine Daten</div></div>
-      ${ruby('Squawk! Ich passe auf deine Daten auf wie auf meine Federn. 🦜', 'talk')}
+      ${ruby('Squawk! Ich passe auf deine Daten auf wie auf meine Federn. 🪶', 'talk')}
       <div class="card">${punkte.map(([e, t]) => `<div class="set" style="justify-content:flex-start;gap:14px"><span style="font-size:30px">${e}</span><span style="font-weight:600">${t}</span></div>`).join('')}</div>
       <p class="muted" style="margin-top:12px">Für Erwachsene: <a href="datenschutz.html">ausführliche Datenschutzerklärung</a> · <a href="datenblatt-schule.html">Datenblatt für Schulen</a></p>
     </div>`);
