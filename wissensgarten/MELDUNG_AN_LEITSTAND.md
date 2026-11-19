@@ -10,7 +10,7 @@
 
 
 ## 2.3.3 – Mikrofon nach Regel 10k (19.11.2026, Recht V6 freigegeben)
-- **Erkennung:** `wg-platform.js` prüft je Sprache mit `SpeechRecognition.available({langs, processLocally: true})`.
+- **Erkennung:** Ohne Erlaubnis immer `processLocally = true` (wenn der Browser die Eigenschaft kennt, sonst keine Erkennung). `SpeechRecognition.available()` wird bewusst NICHT aufgerufen: Im Test brachte es Chromium zum Absturz (Tab abgestürzt), vor dem Push gefunden und entfernt.
   - Ohne Eltern-Erlaubnis wird nur mit `processLocally = true` erkannt. Kann das Gerät die Sprache nicht selbst, gibt es keine Erkennung; Brummi-Radio und Sprech-Spiele fallen auf Antwort-Knöpfe zurück.
   - Online nur, wenn `wg.srOnline` gesetzt ist.
 - **Schalter:** Settings `online_spracherkennung` (voreingestellt aus) im Elternbereich hinter dem Tor, Wortlaut von Recht unverändert übernommen.
