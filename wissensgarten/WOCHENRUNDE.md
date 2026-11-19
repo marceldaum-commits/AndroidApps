@@ -235,3 +235,20 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
     - Neues Code-Feld bzw. Serverprüfung für Einlösefrist und Probe (Planung am 23.11.).
     - Der Familien-Block je App und Kind ist das Sync-Format (`SnapshotIO`).
     - Bis dahin nichts Serverseitiges bauen.
+
+## Plan Live-Klassenspiel (Marcel: JA, 19.11.; gebaut wird nach den Pflichtaufgaben)
+- **Idee:** Die Lehrkraft (oder die Nachhilfelehrkraft bzw. die Eltern) öffnet im Wissensgarten „🏫 Klassenspiel“ und wählt ein Paket. Der Wissensgarten zeigt einen 6-stelligen Raum-Code und einen QR-Code. Die Kinder treten mit ihrem eigenen Wissensgarten oder im Browser (lernen.…/wissensgarten/#klasse=<code>) mit einem Spitznamen bei. Gespielt werden 10 Fragen mit Zeitbalken, nach jeder Frage gibt es eine Rangliste und Brummi feiert. Danach kommt das Angebot „Diese Karten in deinen Garten pflanzen“.
+- **Alles Wissen liegt im Gerät der Lehrkraft.** Der Server leitet nur weiter: Fragen und Antwortmöglichkeiten gehen von der Lehrkraft an die Kinder, die gewählte Antwort und die Zeit von den Kindern an die Lehrkraft. Ausgewertet und gezählt wird nur auf dem Gerät der Lehrkraft.
+- **Was der Server können muss:**
+  1. `POST /klasse/v1/raum` legt einen Raum an. Antwort: 6-stelliger Code plus geheimer Leitungs-Schlüssel für die Lehrkraft. Ein Raum lebt höchstens 2 Stunden bzw. 15 Minuten ohne Nachricht.
+  2. WebSocket `wss://…/klasse/v1/<code>`: Die Lehrkraft verbindet sich mit dem Leitungs-Schlüssel, Kinder ohne. Nachrichten werden nur weitergereicht (Lehrkraft → alle, Kind → Lehrkraft), höchstens 4 KB je Nachricht.
+  3. Grenzen: 40 Kinder je Raum, Rate-Limit je Verbindung, Codes nicht erratbar (Sperre nach Fehlversuchen je IP).
+  4. **Speichert nichts:** keine Datenbank, keine Konten, keine Protokolle mit Inhalten oder Spitznamen. Alles liegt nur im Arbeitsspeicher und ist mit dem Ende des Raums weg.
+  5. CORS bzw. Origin: nur *.mathenachhilfe-online.com.
+- **Kinderschutz:**
+  - Nur Spitznamen; Vorschlag: aus festen Listen zusammengesetzt („Flinke Hummel“), freie Eingabe nur mit Wortfilter.
+  - Die Lehrkraft kann Namen entfernen.
+  - Kein Chat, keine Bilder, keine Links zwischen den Teilnehmenden.
+  - Eine Datenschutz-Kurzinfo steht vor dem Beitreten.
+- **WebKit:** WebSocket läuft in Safari zuverlässig. Wenn die Verbindung abreißt, verbindet die App neu und behält den Spielstand.
+- **Aufwand:** App mittel (Lehrkraft-Ansicht, Beitreten, Spielablauf, Rangliste; die Spielmechanik des Duells wird wiederverwendet), Server klein (Weiterleitung).
