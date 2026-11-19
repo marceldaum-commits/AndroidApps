@@ -177,7 +177,9 @@ private class AppUi(val vm: AppViewModel, val host: AppHost) {
               // (statt einer schmalen Spalte), und die Ränder zeigen Himmel und Wiese statt leerer Fläche.
               androidx.compose.foundation.layout.BoxWithConstraints(Modifier.fillMaxSize()) {
               val outer = androidx.compose.ui.platform.LocalDensity.current
-              val scale = ((maxWidth.value - 760f) / 1400f + 1f).coerceIn(1f, 1.3f).let { if (maxHeight.value < 640f) 1f else it }
+              // Nie größer als normal (sonst muss man am PC endlos scrollen). Bei niedrigen Fenstern leicht verkleinern,
+              // damit möglichst alles ohne Scrollen passt (Marcel, 19.11.: „sliden ist eher ungünstig“).
+              val scale = if (maxWidth > 800.dp) (maxHeight.value / 1000f).coerceIn(0.8f, 0.92f) else 1f
               val wide = maxWidth > 800.dp
               Box(Modifier.fillMaxSize().then(if (wide) Modifier.background(androidx.compose.ui.graphics.Brush.verticalGradient(
                   listOf(androidx.compose.ui.graphics.Color(0xFFCFE8F7), MaterialTheme.colorScheme.background, androidx.compose.ui.graphics.Color(0xFFDDEFD0)))) else Modifier),

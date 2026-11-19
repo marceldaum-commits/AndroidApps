@@ -130,17 +130,37 @@
         if (/[?&]bremse=aus/.test(location.search)) { window.wgStartNote && window.wgStartNote('Bild-Bremse aus'); return; }
         var orig = window.requestAnimationFrame.bind(window), cancel = window.cancelAnimationFrame.bind(window);
         var queue = [], nextId = 1, pending = false, slow = false, cost = 0, last = 0, leichtGemerkt = false;
+        // Erst 6 s nach dem Start messen: Vorher prüft die Start-Bildprüfung nach jedem Bild Pixel (readPixels), das wartet auf
+        // die Grafikkarte und würde die Zeit künstlich aufblähen (so geschehen in Marcels erster Diagnose: 66 ms).
+        var messen = false, stat = { n: 0, sum: 0, max: 0, t0: 0 }, letzteEingabe = performance.now();
+        ['pointerdown', 'pointermove', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
+          window.addEventListener(ev, function () { letzteEingabe = performance.now(); }, { capture: true, passive: true });
+        });
+        window.addEventListener('wg-ready', function () { setTimeout(function () { messen = true; stat.t0 = performance.now(); }, 6000); });
         var tick = function (t) {
-          if (slow && t - last < Math.min(250, Math.max(45, cost * 2.5))) { orig(tick); return; }
+          // Ruhe: 20 s ohne Berührung, Maus oder Taste → Hintergrund-Animationen (Wind, Sonne, Schmetterlinge) nur noch 4 Bilder/s.
+          // Die erste Eingabe weckt sofort auf. So zeichnet der Garten nicht dauernd das ganze Bild neu, wenn niemand hinsieht.
+          var ruhe = performance.now() - letzteEingabe > 20000;
+          var abstand = Math.max(ruhe ? 250 : 0, slow ? Math.min(250, Math.max(45, cost * 2.5)) : 0);
+          if (abstand && t - last < abstand) { orig(tick); return; }
           pending = false; last = t;
           var q = queue; queue = [];
           var s = performance.now();
           for (var i = 0; i < q.length; i++) { try { q[i].cb(t); } catch (e) { (function (x) { setTimeout(function () { throw x; }); })(e); } }
           var d = performance.now() - s;
-          if (q.length) cost = cost * 0.85 + d * 0.15;
+          if (!messen) { if (queue.length && !pending) { pending = true; orig(tick); } return; }
+          if (q.length) {
+            cost = cost * 0.85 + d * 0.15;
+            stat.n++; stat.sum += d; if (d > stat.max) stat.max = d;
+            // Im Diagnose-Protokoll alle 10 s: Bilder, mittlere und längste Zeichenzeit
+            if (window.wgDiagOn && performance.now() - stat.t0 > 10000) {
+              window.wgDiag && window.wgDiag('Zeichnen: ' + stat.n + ' Bilder in 10 s, Ø ' + (stat.sum / stat.n).toFixed(1) + ' ms, längstes ' + Math.round(stat.max) + ' ms' + (slow ? ' (Bremse an)' : ''));
+              stat = { n: 0, sum: 0, max: 0, t0: performance.now() };
+            }
+          }
           if (!slow && cost > 22) { slow = true; window.wgDiag && window.wgDiag('Bild-Bremse an (Zeichnen ' + Math.round(cost) + ' ms) → weniger Bilder/s, Eingaben haben Vorrang'); }
           // Sehr langsam (z. B. ohne Grafik-Beschleunigung): ab dem nächsten Start mit etwas geringerer Auflösung zeichnen
-          if (cost > 40 && !leichtGemerkt) { leichtGemerkt = true; try { if (localStorage.getItem('wg.leicht') !== 'aus') localStorage.setItem('wg.leicht', '1'); } catch (e) {} window.wgDiag && window.wgDiag('langsames Gerät → ab dem nächsten Start „leichte Darstellung“'); }
+          if (cost > 40 && stat.n > 20 && !leichtGemerkt) { leichtGemerkt = true; try { if (localStorage.getItem('wg.leicht') !== 'aus') localStorage.setItem('wg.leicht', '1'); } catch (e) {} window.wgDiag && window.wgDiag('langsames Gerät → ab dem nächsten Start „leichte Darstellung“'); }
           else if (slow && cost < 9) { slow = false; window.wgDiag && window.wgDiag('Bild-Bremse aus (Zeichnen ' + Math.round(cost) + ' ms)'); }
           if (queue.length && !pending) { pending = true; orig(tick); }
         };
@@ -152,7 +172,7 @@
         window.cancelAnimationFrame = function (id) {
           for (var i = 0; i < queue.length; i++) if (queue[i].id === id) { queue.splice(i, 1); return; }
         };
-        window.wgBremse = function () { return { an: slow, ms: Math.round(cost) }; };
+        window.wgBremse = function () { return { an: slow, ms: Math.round(cost), ruhe: performance.now() - letzteEingabe > 20000 }; };
       } catch (e) {}
     })();
   </script>
