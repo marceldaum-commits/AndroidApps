@@ -20,3 +20,8 @@ Nie „gratis Nachhilfe“ ohne „Probestunde“. Zählung „Probestunden-Link
 
 ## C) Eltern-Tor-Standard (unverändert)
 Malaufgabe 13–19 × 6–9 in Worten mit Vorlese-Knopf, eigene Ziffern-Tastatur, nach einem Fehler neue Aufgabe, 10 Minuten offen nur im Arbeitsspeicher, Abbrechen jederzeit, kein Zeitdruck, Bildschirmleser-Beschreibung. Gelöstes Tor zählt als „elternbereich“.
+
+## D) Einstellungen: was ohne Tor bleiben darf (AppZentrale, 19.11. abends)
+- Ohne Tor: Ton, Musik, Lautstärke, Vorlesen an/aus und Tempo, Schriftgröße, Hell/Dunkel.
+- Hinter das Tor: Pro/Plus/KI, Updates, Daten zurücksetzen, Profile löschen, Datenschutz- und Zähl-Schalter, Familie/Kopplung, Online-Erkennung/Aussprache-Auswertung, Hinweise auf Nachhilfe, Klassen-Code/Kamera, Teilen nach außen.
+- Experimentopia prüfen: Forscher-Pass-Eintrag, „Fortschritt zurücksetzen“, Update-Knopf/Schalter, Eltern-Kopplung (ParentCard), Impressum/Datenschutz-Links (nur Lesen, ok) – alles außer den Ton-/Musik-/Vorlese-Schaltern hinter das Tor.
