@@ -274,5 +274,6 @@ Der Rechenblitz verlinkt umgekehrt bei schwachen Ergebnissen im Einmaleins auf `
 - Textliste im Quasselquest-Format (ID, Text, Sprache, Tempo, Zielpfad), Formeln/Zahlen in Worten, aufgeteilt nach Paket.
 - Erste Lieferung: Brummi-Sätze + Laufzeit-Bausteine in 1,0 und 0,8; Kartentexte nur 1,0.
 - Plus-Inhalte NICHT in die Liste, bis der Leitstand „Plus-Audio geschützt“ gebaut hat (MP3 nur mit gültigem Code).
-- Eigene Karten/Klassen-Codes/Namen: später live übers Tonstudio (nur Arbeitsspeicher, ohne Cache/Log) – NICHT bauen vor Freigabe durch Recht.
+- Eigene Karten/Klassen-Codes/Namen übers Tonstudio: von Recht FREIGEGEBEN (V14-Nachtrag). Voreinstellung an, Pflicht: Eltern-Schalter hinter dem Tor zum Abschalten (Wortlaut + DSE 10c von der AppZentrale abwarten), aus = Gerätestimme. Anfrage als „privat“ per POST, höchstens 300 Zeichen je Stück (längere Texte an Satzgrenzen teilen), nichts zwischenspeichern.
+- Plus-Audio nur mit gültigem Code: FREIGEGEBEN, Schutz baut der Leitstand.
 - Kennzeichnung „🤖 KI-generierte Stimme“ (statt „Nova – …“), Lizenzliste nach V13 (Wortlaut von der AppZentrale). Nova entfällt.
