@@ -28,3 +28,13 @@ Server-`rev` entscheidet, nie Zeitstempel allein. Bei 409 sicher zusammenführen
 
 ## Wiederherstellungs-Schlüssel (öffentlich, Marcel 19.11.)
 `REC_PUB = vMrORj9yObM3Ijd9sGStjUB9I3f6ot9E8M-70yGeQ0M` (X25519, 32 B base64url). Gilt auch für Test-Familien auf lernen-test; keinen eigenen Test-Schlüssel verwenden. Der private Teil liegt nur in Bitwarden.
+
+## Eltern-Hinweis und Löschen (FAMILIEN-SPEICHER.md v1.5, gilt für alle Apps)
+**Pflicht-Hinweis** beim ersten Koppeln und im Bereich „Familie“, darunter Link zur Datenschutzerklärung und „Einverstanden“ (EN/UK sinngemäß):
+„Eure Lernstände werden verschlüsselt auf unserem Server in Deutschland gespeichert. Der Schlüssel liegt auf euren Geräten. Damit wir euch helfen können, falls ihr den Familien-Zugang verliert, hinterlegen wir zusätzlich eine verschlüsselte Notfall-Kopie. Sie lässt sich nur mit einem getrennt und offline aufbewahrten Schlüssel von Mathenachhilfe Online öffnen. Technisch könnten wir damit eure Lernstände lesen; wir tun das nicht und nutzen ihn nur, wenn ihr uns um Wiederherstellung bittet. Jede Wiederherstellung seht ihr hier im Protokoll.“
+
+**Löschen** nur hinter dem Eltern-Tor:
+1. Warnung: „Das löscht die Familie in ALLEN Lern-Apps: alle Lernstände aller Kinder auf unserem Server, die Notfall-Kopie und das Protokoll. Gekaufte Codes werden wieder frei und lassen sich in einer neuen Familie erneut einlösen. Die Lernstände auf diesem Gerät bleiben erhalten.“
+2. Familien-Nummer eintippen, dann `fa.loeschen()`. Lokal nur die Familien-Schlüssel entfernen.
+3. 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“
+4. Einzelnes Kind entfernen: noch nicht anbieten.
