@@ -14,7 +14,7 @@
     return mem || null;
   }
   function save() { mem = state; try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
-  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei' }, week: { key: '', n: 0 } });
+  const fresh = () => ({ v: 3, klasse: null, name: '', lang: 'en', karten: {}, introSeen: {}, eigene: {}, tage: {}, hinweis: {}, progress: {}, settings: { sound: true, voice: true, vibrate: true, slow: false, recognition: 'device', stimme: 'frei', zaehlung: true, nachhilfe: true }, week: { key: '', n: 0 } });
   let state = load() || fresh();
   state.settings = Object.assign(fresh().settings, state.settings || {});
   // Stand 1 → 2: Spracherkennung standardmäßig nur auf dem Gerät; Wochenziel statt Tagesserie
@@ -26,6 +26,8 @@
   // Stand 2 → 3 (19.11.2026): Quasselquest wird die Sprachen-App – Sprache wählbar, Wortschatz-Pakete mit Wiederholung
   if (state.v < 3) { state.lang = 'en'; state.karten = {}; state.introSeen = {}; state.v = 3; }
   if (!state.eigene) state.eigene = {};
+  if (!state.tage) state.tage = {};
+  if (!state.hinweis) state.hinweis = {};
   const PK = window.PAKETE;
   window.APP_SETTINGS = state.settings;
 
@@ -40,6 +42,32 @@
   const alive = (t) => t === token;
   // Test-Stufe am Hostnamen (Standard UMZUG-LERNEN): „lernen-test.“, Übergang „quasselquest-test.“, lokal.
   const isTest = () => /(^|[.-])(test|staging)([.-]|$)|localhost|127\.0\.0\.1/.test(location.hostname) || location.protocol === 'file:';
+
+  // ================================================================== Anonyme Zählung (gemeinsames Format, RATGEBER Teil 5) – abschaltbar
+  // Nur app, v, ev, ort, thema. Keine Kennung, keine Cookies, kein Lernstand. Aus = kein Aufruf.
+  const ZAEHL_EV = ['start', 'elternbereich', 'pro_ansehen', 'pro_kasse', 'code_eingeloest', 'probestunde_klick', 'neukunde_klick', 'nachhilfe_hinweis'];
+  function zaehlen(ev, ort, thema) {
+    if (state.settings.zaehlung === false || !ZAEHL_EV.includes(ev) || location.protocol === 'file:' || (!DIAG && /127\.0\.0\.1|localhost/.test(location.hostname))) return;
+    const body = { app: 'quasselquest', v: window.APP_VERSION, ev };
+    if (ort) body.ort = ort; if (thema) body.thema = thema;
+    try {
+      fetch(`https://${isTest() ? 'trainer-test' : 'trainer'}.mathenachhilfe-online.com/zaehler/v1/e`,
+        { method: 'POST', body: JSON.stringify(body), keepalive: true, credentials: 'omit', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' } }).catch(() => {});
+    } catch (e) {}
+  }
+  if (DIAG) window.__zaehlTest = (ev) => ZAEHL_EV.includes(ev);
+
+  // Antworten je Sprache und Tag (für „Thema hakt“ im Elternbereich) – nur auf dem Gerät
+  function tally(lang, ok) {
+    const d = window.PAKETE.today(); const t = state.tage[lang] = state.tage[lang] || {};
+    const e = t[d] = t[d] || [0, 0]; e[0]++; if (ok) e[1]++;
+    for (const k of Object.keys(t)) if (+k < d - 60) delete t[k];
+  }
+  function stats(lang, days) {
+    const d = window.PAKETE.today(); let n = 0; let ok = 0;
+    for (const [k, v] of Object.entries(state.tage[lang] || {})) if (+k > d - days) { n += v[0]; ok += v[1]; }
+    return { n, ok, pct: n ? Math.round(100 * ok / n) : null };
+  }
 
   // ================================================================== Ruby (SVG)
   function rubySVG() {
@@ -125,6 +153,7 @@
 
   // ================================================================== Start
   function start() {
+    zaehlen('start');
     document.addEventListener('pointerdown', A.unlock, { once: true });
     if (!state.klasse) return onboarding();
     const m = /episode=([a-z0-9]+)/.exec(location.hash);
@@ -242,6 +271,7 @@
       const res = await runStep(steps[i], run, i / steps.length);
       if (res === 'quit') { save(); return home(); }
     }
+    for (let i = 0; i < run.max; i++) tally('en', i < run.stars);
     const stars = Math.max(1, Math.min(3, Math.round(3 * (run.max ? run.stars / run.max : 1))));
     const before = prog(id);
     state.progress[id] = { done: true, stars: Math.max(stars, before ? before.stars || 0 : 0), at: Date.now() };
@@ -787,20 +817,51 @@
     bg.querySelector('[data-ok]').onclick = () => {
       const y = parseInt(bg.querySelector('input').value, 10);
       if (!(y >= 1900 && y <= year - 18)) { bg.querySelector('.err').textContent = 'Dieser Bereich ist nur für Erwachsene.'; A.sfx('soft'); return; }
-      bg.remove(); parents();
+      bg.remove(); zaehlen('elternbereich'); parents();
     };
+  }
+
+  /** Nachhilfe-Hinweis (Auftrag C1): nur hier hinter dem Eltern-Tor, nur wenn ein Fach hakt, je Fach höchstens alle 14 Tage. */
+  function nachhilfeHinweis() {
+    if (state.settings.nachhilfe === false) return null;
+    const d = PK.today();
+    for (const l of PK.ORDER) {
+      const st = stats(l, 14); const thema = PK.LANGS[l].thema;
+      if (st.n >= 10 && st.pct < 60 && !(state.hinweis[thema] && d - state.hinweis[thema] < 14)) return { l, thema, st };
+    }
+    return null;
+  }
+  function probestundeUrl(src, thema) {
+    return `https://${isTest() ? 'staging' : 'www'}.mathenachhilfe-online.com/probestunde/?src=quasselquest-${src}&thema=${encodeURIComponent(thema)}&klasse=${encodeURIComponent(state.klasse || '')}`;
+  }
+  function lernstandHtml() {
+    const name = esc(state.name || 'Euer Kind');
+    const rows = [];
+    for (const l of PK.ORDER) {
+      const L = PK.LANGS[l]; const st = stats(l, 14); const st7 = stats(l, 7);
+      const packs = packIndex().filter((p) => p.sprache === l).map((p) => ({ p, m: packMastered(p.id) })).filter((x) => x.m > 0);
+      const eigen = (state.eigene[l] || []).map((x) => ({ p: { title: x.name + ' (eigene Liste)', karten: x.words.length }, m: packMastered('eigen-' + x.id) })).filter((x) => x.m > 0);
+      const can = l === 'en' ? C.worlds.flatMap((w) => w.episodes || []).filter((e) => e.kann && prog(e.id) && prog(e.id).done).map((e) => e.kann) : [];
+      if (!st.n && !packs.length && !eigen.length && !can.length) continue;
+      rows.push(`<div class="lern"><h3>${L.emoji} ${esc(L.name)}</h3>
+        <p>${st7.n ? `Diese Woche ${st7.n} Antworten, davon ${st7.pct} % beim ersten Versuch richtig.` : 'Diese Woche noch nicht geübt.'}</p>
+        ${can.length ? `<p><b>${name} kann jetzt:</b></p><ul>${can.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+        ${packs.concat(eigen).length ? `<p><b>Sitzt schon:</b></p><ul>${packs.concat(eigen).map((x) => `<li>${esc(x.p.title)}: ${x.m} von ${x.p.karten} Karten</li>`).join('')}</ul>` : ''}</div>`);
+    }
+    return rows.length ? rows.join('') : '<p class="muted">Sobald euer Kind übt, steht hier in Worten, was es schon kann – für jede Sprache.</p>';
   }
 
   function parents() {
     const s = state.settings;
-    const total = C.worlds[0].episodes.filter((e) => !e.soon).length;
-    const cando = C.worlds.flatMap((w) => w.episodes || []).filter((e) => e.kann && prog(e.id) && prog(e.id).done).map((e) => e.kann);
+    const hin = nachhilfeHinweis();
+    if (hin) zaehlen('nachhilfe_hinweis', 'elternbericht', hin.thema);
+    const sw = (key, label, text) => `<div class="set"><span>${label}<br><small class="muted" style="font-weight:600">${text}</small></span><button class="switch ${s[key] !== false ? 'on' : ''}" data-sw="${key}" role="switch" aria-checked="${s[key] !== false}" aria-label="${label}"></button></div>`;
     const r = (v, label, hint) => `<label class="radio"><input type="radio" name="rec" value="${v}" ${s.recognition === v ? 'checked' : ''}><span><b>${label}</b><br><span class="muted">${hint}</span></span></label>`;
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">👪 Für Eltern</div></div>
-      <div class="card"><h3>Fortschritt</h3><p>${stampCount()} von ${total} Episoden geschafft · diese Woche ${weekCount()} (Wochenziel ${WEEK_GOAL}) · Klasse ${state.klasse || '–'}</p>
-        <h3 style="margin-top:10px">Das kann ${esc(state.name || 'euer Kind')} jetzt auf Englisch</h3>
-        ${cando.length ? `<ul>${cando.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : '<p class="muted">Sobald die erste Episode geschafft ist, steht hier, was euer Kind schon kann.</p>'}</div>
+      ${hin ? `<div class="card hint-card"><p><b>${esc(PK.LANGS[hin.l].name)}</b> fällt ${esc(state.name || 'eurem Kind')} gerade schwer (${hin.st.pct} % richtig in den letzten zwei Wochen). Üben in der App hilft – manchmal braucht es aber eine Erklärung von einem Menschen. Wenn ihr mögt: Wir bieten Online-Nachhilfe an.</p>
+        <div class="row"><a class="btn small blue" data-probe href="${probestundeUrl('elternbericht', hin.thema)}" target="_blank" rel="noopener">Kostenlose Probestunde anfragen</a><button class="btn small white" data-hide>Ausblenden</button></div></div>` : ''}
+      <div class="card"><h2 style="font-size:20px">Lernstand</h2><p class="muted">Klasse ${state.klasse || '–'} · diese Woche ${weekCount()} Runden (Wochenziel ${WEEK_GOAL})</p>${lernstandHtml()}</div>
       <div class="card" style="margin-top:14px"><h3>Mikrofon und Spracherkennung</h3>
         <p class="muted">Das Mikrofon geht nur an, wenn euer Kind auf 🎤 tippt. Beim Nachsprechen (Papagei-Echo) bleibt die Aufnahme auf dem Gerät und wird sofort wieder gelöscht.
         In der Sprech-Mission kann eine Spracherkennung prüfen, ob der Satz verstanden wurde. <b>Standard: nur auf dem Gerät</b> – die Stimme eures Kindes verlässt das Gerät nicht.</p>
@@ -809,12 +870,18 @@
         ${r('browser', 'Auch Online-Erkennung des Browsers erlauben', 'Nur mit eurer Zustimmung: Je nach Browser wird die Aufnahme des gesprochenen Satzes an den Sprachdienst des Browser-Herstellers gesendet (z. B. Google bei Chrome, Apple bei Safari). Wir selbst erhalten nichts.')}
         <p class="muted" style="font-size:14px">Jetzt aktiv: <b data-mode></b></p>
         <p class="muted" style="font-size:14px" data-hint></p></div>
-      <div class="card" style="margin-top:14px"><h3>Kommt in den nächsten Wochen</h3>
-        <p class="muted">Eltern-Handy koppeln mit verschlüsselter Sicherung, Pro-Freischaltung per Code, Hinweis auf Englisch-Nachhilfe, anonyme abschaltbare Zählung.</p></div>
+      <div class="card" style="margin-top:14px"><h3>Einstellungen für Eltern</h3>
+        ${sw('nachhilfe', 'Hinweise auf unsere Nachhilfe zeigen', 'Nur hier im Elternbereich, wenn eine Sprache länger schwerfällt – höchstens alle 14 Tage, ausblendbar.')}
+        ${sw('zaehlung', 'Anonyme Nutzungszählung', 'Hilft uns, die App zu verbessern: Gezählt wird nur, dass die App oder der Elternbereich geöffnet bzw. ein Link angetippt wurde – ohne Namen, Kennung, Cookies oder Lernstand.')}</div>
+      <div class="card" style="margin-top:14px"><h3>Kommt bald</h3>
+        <p class="muted">Eltern-Handy koppeln mit verschlüsselter Sicherung (immer kostenlos) und die Klassenarbeits-Generalprobe.</p></div>
       <div class="card" style="margin-top:14px"><h3>Daten</h3><p class="muted">Alles wird nur in diesem Browser gespeichert. Kein Konto, keine Werbung, kein Tracking.</p>
         <div class="row"><a class="btn small white" href="datenschutz.html">Datenschutz</a><button class="btn small white" data-reset>🗑️ Alle Daten löschen</button></div></div>
       <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}</div>
     </div>`);
+    el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = s[b.dataset.sw] === false; save(); A.sfx('tap'); b.classList.toggle('on', s[b.dataset.sw] !== false); b.setAttribute('aria-checked', String(s[b.dataset.sw] !== false)); });
+    const probe = el.querySelector('[data-probe]'); if (probe) probe.onclick = () => zaehlen('probestunde_klick', 'elternbericht', hin.thema);
+    const hide = el.querySelector('[data-hide]'); if (hide) hide.onclick = () => { state.hinweis[hin.thema] = PK.today(); save(); A.sfx('tap'); parents(); };
     const modeTxt = () => ({ device: 'Erkennung auf dem Gerät', browser: 'Erkennung des Browsers', none: 'keine Erkennung (nur Lautstärke)' }[A.recognitionMode()]);
     const hint = () => {
       const local = A.recognitionMode && (() => { const SR = window.SpeechRecognition || window.webkitSpeechRecognition; return !!SR && 'processLocally' in SR.prototype; })();
@@ -925,7 +992,7 @@
       let tk = token;   // wird nach jedem packFrame (neuer Bildschirm) neu gesetzt
       const say = (t) => (t && L.who ? speak(t, L.who) : Promise.resolve(false));
       const done = (cardsFirst) => {
-        for (const [c, ok] of cardsFirst) { PK.note(state.karten, pack, c, ok); run.total++; if (ok) run.first++; }
+        for (const [c, ok] of cardsFirst) { PK.note(state.karten, pack, c, ok); tally(pack.lang, ok); run.total++; if (ok) run.first++; }
         save(); setTimeout(() => { if (alive(tk)) resolve('ok'); }, 1300);
       };
       const praise = () => ['Super!', 'Richtig!', 'Klasse!', 'Stark!', 'Genau!'][Math.floor(Math.random() * 5)];

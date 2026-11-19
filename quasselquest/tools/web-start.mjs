@@ -157,10 +157,26 @@ for (const [name, type, opts] of [
     const st2 = await page.evaluate(() => window.quasselTest.state());
     ok(Object.keys(st2.karten).length >= 20, `Wiederholung gespeichert (${Object.keys(st2.karten).length} Karten)`);
     await page.click('[data-lang="en"]'); await page.waitForSelector('.world');
+    // Zählung + Nachhilfe-Hinweis (nur Elternbereich)
+    const calls = [];
+    page.on('request', (r) => { if (r.url().includes('/zaehler/v1/e')) try { calls.push(JSON.parse(r.postData())); } catch (e) {} });
+    await page.route('**/zaehler/v1/e', (r) => r.fulfill({ status: 204, body: '' }));   // in WebKit nicht immer wirksam – gezählt wird über 'request'
+    await page.evaluate(() => { const st = window.quasselTest.state(); const d = window.PAKETE.today(); st.tage.fr = { [d]: [12, 4] }; });
+    ok(!(await page.$('.hint-card')), 'Kein Nachhilfe-Hinweis im Kinderbereich');
     await page.click('[data-settings]'); await snap(page, 'einstellungen');
     await page.click('[data-parents]'); await page.fill('.modal input', '2015'); await page.click('.modal [data-ok]');
     ok((await page.textContent('.modal .err')).includes('Erwachsene'), 'Eltern-Tor hält Kinder ab');
     await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]');
+    ok(!!(await page.$('.hint-card')) && (await page.getAttribute('[data-probe]', 'href')).includes('src=quasselquest-elternbericht&thema=franzoesisch'), 'Nachhilfe-Hinweis im Elternbereich (Französisch hakt), Link mit src/thema/klasse');
+    for (let w = 0; w < 30 && !calls.some((c) => c.ev === 'nachhilfe_hinweis'); w++) await page.waitForTimeout(200);   // WebKit meldet Anfragen verzögert
+    ok(calls.some((c) => c.ev === 'elternbereich') && calls.some((c) => c.ev === 'nachhilfe_hinweis' && c.thema === 'franzoesisch') && calls.every((c) => Object.keys(c).every((k) => ['app', 'v', 'ev', 'ort', 'thema'].includes(k)) && c.app === 'quasselquest'), 'Zählung: nur erlaubte Felder (' + calls.map((c) => c.ev).join(', ') + ')');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'eltern_hinweis');
+    await page.click('[data-hide]'); await page.waitForSelector('input[name=rec]');
+    ok(!(await page.$('.hint-card')), 'Hinweis ausgeblendet');
+    await page.click('[data-sw="zaehlung"]'); await page.waitForTimeout(1500); const n0 = calls.length;
+    await page.click('[data-back]'); await page.click('[data-parents]'); await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]'); await page.waitForTimeout(1500);
+    ok(calls.length === n0, 'Zählung aus → kein Aufruf');
+    await page.click('[data-sw="zaehlung"]');
     await snap(page, 'eltern');
     await page.click('[data-back]'); await page.click('[data-back]'); await page.waitForSelector('.world');
     await page.click('[data-allapps]').catch(() => {});

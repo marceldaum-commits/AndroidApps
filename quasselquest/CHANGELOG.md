@@ -1,5 +1,10 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.3.1 – Elternbereich: Lernstand in Worten (19.11.2026)
+- Für Eltern: Lernstand für jede Sprache in Worten – was euer Kind diese Woche geübt hat, wie viel beim ersten Versuch klappt, was es schon kann und welche Karten schon sitzen.
+- Fällt eine Sprache länger schwer, erscheint – nur im Elternbereich – ein sachlicher Hinweis auf unsere Online-Nachhilfe. Höchstens alle zwei Wochen, ausblendbar, ganz abschaltbar.
+- Anonyme Nutzungszählung (ohne Namen, Kennung, Cookies oder Lernstand), im Elternbereich abschaltbar.
+
 ## 0.3.0 – „Warum?“ und „Mein Schulbuch“ (19.11.2026)
 - **Warum?** Bei einer falschen Antwort markiert Ruby genau die Stelle, die nicht stimmt (zum Beispiel den Akzent in „le pére“), und erklärt die Regel in einem Satz – ohne gleich die Lösung zu verraten.
 - **Mein Schulbuch:** In jeder Sprache kann euer Kind (oder ihr) die Wörter aus dem Schulbuch eintippen, nach Lektionen geordnet: „Hund = dog“, eine Zeile pro Wort. Für Deutsch einfach die Lernwörter – daraus wird ein Diktat-Spiel. Falsche Zeilen werden verständlich gemeldet. Gespielt wird mit denselben Spielen und derselben Wiederholung. Die Listen bleiben auf dem Gerät.

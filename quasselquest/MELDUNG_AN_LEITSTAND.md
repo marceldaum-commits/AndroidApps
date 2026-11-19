@@ -2,6 +2,25 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 0.3.1 vom 19.11.2026: Pflicht 7 Elternbereich (Lernstand in Worten, Nachhilfe-Hinweis, Zählung) – fertig für den Test
+
+- **Lernstand in Worten** für jede Sprache:
+  - diese Woche Antworten und Anteil beim ersten Versuch,
+  - „… kann jetzt“ aus den Kann-Sätzen der Episoden,
+  - „Sitzt schon“ je Paket und je eigener Liste.
+  - Die Antworten werden nur auf dem Gerät gezählt (Tagessummen je Sprache, 60 Tage).
+- **Nachhilfe-Hinweis (Auftrag C1):**
+  - Nur im Elternbereich. Auslöser: mindestens 10 Antworten und weniger als 60 % beim ersten Versuch in 14 Tagen, je Sprache.
+  - Text wie im RATGEBER. Knopf „Kostenlose Probestunde anfragen“ → `/probestunde/?src=quasselquest-elternbericht&thema=<englisch|deutsch|franzoesisch|spanisch|latein>&klasse=<k>` (Test: staging.).
+  - „Ausblenden“ gilt 14 Tage je Fach. Schalter „Hinweise auf unsere Nachhilfe zeigen“ (an).
+  - Getestet: im Kinderbereich nie ein Hinweis.
+- **Zählung (Auftrag A):**
+  - `POST trainer(-test)…/zaehler/v1/e`, text/plain, credentials omit, keepalive, no-cors; nur app, v, ev, ort, thema.
+  - Ereignisse: start, elternbereich, nachhilfe_hinweis, probestunde_klick.
+  - Schalter „Anonyme Nutzungszählung“ (an); aus = kein Aufruf (getestet in Chromium und WebKit).
+- Datenschutz ergänzt (Zählung, Nachhilfe-Hinweis).
+- Tests: 21/21 Inhaltstests, Durchspielen in Chromium und WebKit grün, Spracherkennungs-Beleg grün, Bildschirmfotos angesehen.
+
 ## 19.11.2026 – Version 0.3.0 vom 19.11.2026: Pflicht 3 „Warum?“ + Pflicht 1 „Mein Schulbuch“ – fertig für den Test
 
 - **Warum?** (Pflicht 3):

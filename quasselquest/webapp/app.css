@@ -315,3 +315,9 @@ h1, h2, h3 { margin: 0; }
 @media (max-width: 380px) { .slot { width: 34px; height: 46px; font-size: 22px; } .tile { width: 46px; height: 50px; } }
 
 mark.fehl { background: #ffd6d4; color: #b3261e; border-radius: 6px; padding: 0 3px; text-decoration: underline wavy #e53935; }
+
+.lern { border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px; }
+.lern h3 { font-size: 18px; }
+.lern p, .lern li { font-weight: 600; line-height: 1.45; }
+.hint-card { background: #fff7e0; border: 2px solid #ffd27a; margin-bottom: 14px; }
+a.btn { text-decoration: none; }
