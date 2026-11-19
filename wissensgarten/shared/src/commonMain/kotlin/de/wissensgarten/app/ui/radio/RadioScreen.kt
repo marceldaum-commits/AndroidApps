@@ -174,7 +174,7 @@ fun RadioScreen(
             when {
                 cards.isEmpty() -> { Text("Gerade ist nichts zu gießen. Komm später wieder! 🌱", color = Color.White, textAlign = TextAlign.Center)
                     Spacer(Modifier.height(12.dp)); OutlinedButton(onClick = onClose) { Text("Zurück", color = Color.White) } }
-                !preview && !listener.available() -> { Text("Auf diesem Handy ist keine Spracherkennung verfügbar.", color = Color.White, textAlign = TextAlign.Center)
+                !preview && !listener.available() -> { Text("Spracherkennung ist hier aus.", color = Color.White, textAlign = TextAlign.Center)
                     Spacer(Modifier.height(12.dp)); OutlinedButton(onClick = onClose) { Text("Zurück", color = Color.White) } }
                 !granted -> {
                     Text("Damit Brummi deine Antworten hört, braucht er das Mikrofon. Es wird nichts aufgenommen oder gespeichert.",

@@ -3,6 +3,12 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.3.4 – Sicherer für Kinder (20.11.2026)
+- **„← Alle Apps“ nur über die Eltern-Aufgabe:** Die Übersicht liegt auf unserer Website, und dort gibt es auch Preise. Deshalb geht es dorthin jetzt erst nach der Eltern-Aufgabe. Sobald es eine eigene Übersicht ohne Preise gibt, geht es wieder direkt.
+- Im Startbild ist „Ein Angebot von Nachhilfe – online“ jetzt nur noch Text.
+- Auf der Test-Seite zählt die anonyme Nutzungszählung nur noch auf unserem Test-Server.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.3.3 – Mikrofon nur auf dem Gerät (19.11.2026)
 - **Spracherkennung bleibt auf dem Gerät:** Bei Brummi-Radio und Sprech-Spielen erkennt der Garten gesprochene Antworten jetzt nur noch, wenn das Gerät es selbst kann. Sonst gibt es Antwort-Knöpfe.
 - **Online nur mit Erlaubnis:** Im Elternbereich gibt es den neuen Schalter „Online-Spracherkennung erlauben“. Er ist ausgeschaltet. Erst wenn ihr ihn einschaltet, darf der Browser die gesprochenen Antworten an seinen Sprachdienst schicken (z. B. Google bei Chrome).

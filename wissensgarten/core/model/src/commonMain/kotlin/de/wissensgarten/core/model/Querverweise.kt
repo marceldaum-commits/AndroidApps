@@ -8,7 +8,8 @@ package de.wissensgarten.core.model
 object Querverweise {
     const val SRC = "wissensgarten-theorie"
 
-    data class Link(val app: String, val emoji: String, val text: String, val url: String)
+    /** [mitTor]: Ziel-App zeigt in der Oberstufe Preise ohne Eltern-Tor (Mathe-Trainer, Raumlicht) → Link nur über das Tor (Recht V10b) */
+    data class Link(val app: String, val emoji: String, val text: String, val url: String, val mitTor: Boolean = false)
 
     private fun host(name: String, test: Boolean) = "https://$name${if (test) "-test" else ""}.mathenachhilfe-online.com"
 
