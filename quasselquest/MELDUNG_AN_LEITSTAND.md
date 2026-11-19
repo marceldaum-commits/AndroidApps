@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 0.3.2 vom 19.11.2026: Pflicht 8 Datenschutz in Kindersprache + Datenblatt für Schulen – fertig für den Test
+
+- **Kindersprache:** Einstellungen → „🔒 Deine Daten – kurz erklärt“, sechs Sätze mit Ruby (bleibt auf dem Gerät, kein Konto, Mikrofon nur auf Knopfdruck, keine Werbung, Zählung ohne Person, eigene Listen, Eltern schalten Kopplung ein).
+- **Datenblatt für Schulen:** `datenblatt-schule.html` (zum Ausdrucken), verlinkt aus dem Elternbereich und der Datenschutzerklärung. Inhalt: Konten, Speicherort, Mikrofon, Netzverkehr, Server, AVV-Einschätzung, Käufe, Löschen, Urheberrecht, Barrierearmut, Empfehlungen für Schulgeräte.
+  ⚠️ Bitte prüfen: Angabe „eigene Server in Deutschland, keine Weitergabe an Dritte“ und die AVV-Einschätzung (keine Rechtsberatung).
+- Bei „reduzierter Bewegung“ des Systems kein Konfetti mehr (vorher nur CSS-Animationen abgeschaltet).
+- Tests: 21/21 Inhaltstests, Durchspielen in Chromium und WebKit grün; Bildschirmfotos angesehen.
+
 ## 19.11.2026 – Version 0.3.1 vom 19.11.2026: Pflicht 7 Elternbereich (Lernstand in Worten, Nachhilfe-Hinweis, Zählung) – fertig für den Test
 
 - **Lernstand in Worten** für jede Sprache:

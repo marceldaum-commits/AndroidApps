@@ -1,5 +1,10 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.3.2 – Datenschutz für Kinder und Schulen (19.11.2026)
+- „Deine Daten – kurz erklärt“: Ruby erklärt Kindern in sechs einfachen Sätzen, was mit ihren Daten passiert (Einstellungen).
+- Datenblatt für Schulen zum Ausdrucken: keine Konten, Daten nur auf dem Gerät, Mikrofon, Zählung, Server, AVV, Urheberrecht, Tipps für Schulgeräte.
+- Wer am Gerät „weniger Bewegung“ eingestellt hat, bekommt auch kein Konfetti mehr.
+
 ## 0.3.1 – Elternbereich: Lernstand in Worten (19.11.2026)
 - Für Eltern: Lernstand für jede Sprache in Worten – was euer Kind diese Woche geübt hat, wie viel beim ersten Versuch klappt, was es schon kann und welche Karten schon sitzen.
 - Fällt eine Sprache länger schwer, erscheint – nur im Elternbereich – ein sachlicher Hinweis auf unsere Online-Nachhilfe. Höchstens alle zwei Wochen, ausblendbar, ganz abschaltbar.

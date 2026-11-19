@@ -164,6 +164,9 @@ for (const [name, type, opts] of [
     await page.evaluate(() => { const st = window.quasselTest.state(); const d = window.PAKETE.today(); st.tage.fr = { [d]: [12, 4] }; });
     ok(!(await page.$('.hint-card')), 'Kein Nachhilfe-Hinweis im Kinderbereich');
     await page.click('[data-settings]'); await snap(page, 'einstellungen');
+    await page.click('[data-kids]'); ok((await page.textContent('#app')).includes('kein Konto'), 'Datenschutz in Kindersprache erreichbar');
+    if (FOTOS && name === 'chromium_handy') await snap(page, 'daten_kinder');
+    await page.click('[data-back]'); await page.waitForSelector('[data-parents]');
     await page.click('[data-parents]'); await page.fill('.modal input', '2015'); await page.click('.modal [data-ok]');
     ok((await page.textContent('.modal .err')).includes('Erwachsene'), 'Eltern-Tor hält Kinder ab');
     await page.fill('.modal input', '1985'); await page.click('.modal [data-ok]'); await page.waitForSelector('input[name=rec]');

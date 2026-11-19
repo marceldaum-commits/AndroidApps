@@ -94,8 +94,9 @@
   // ================================================================== Konfetti
   const cv = document.getElementById('confetti'); const cx = cv.getContext && cv.getContext('2d');
   let parts = []; let craf = 0;
+  const REDUCED = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
   function confetti(n) {
-    if (!cx) return;
+    if (!cx || REDUCED) return;
     const dpr = window.devicePixelRatio || 1; cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
     const cols = ['#e53935', '#1e88e5', '#fdd835', '#43a047', '#fb8c00', '#8e24aa'];
     for (let i = 0; i < (n || 80); i++) parts.push({ x: innerWidth / 2 + (Math.random() - .5) * 120, y: innerHeight * .35, vx: (Math.random() - .5) * 12, vy: -Math.random() * 12 - 4, s: 6 + Math.random() * 6, c: cols[i % cols.length], r: Math.random() * 6, vr: (Math.random() - .5) * .4, life: 120 + Math.random() * 60 });
@@ -794,7 +795,8 @@
       </div>
       <div class="card" style="margin-top:14px">
         <div class="set"><span>👪 Für Eltern</span><button class="btn small blue" data-parents>Öffnen</button></div>
-        <div class="set"><span>🔒 Datenschutz</span><a class="btn small white" href="datenschutz.html">Lesen</a></div>
+        <div class="set"><span>🔒 Deine Daten – kurz erklärt</span><button class="btn small white" data-kids>Ansehen</button></div>
+        <div class="set"><span>📄 Datenschutz für Erwachsene</span><a class="btn small white" href="datenschutz.html">Lesen</a></div>
       </div>
       <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}<br>Freie Stimmen (Piper): cori, john, thorsten, siwis, davefx – Angaben unter <a href="lizenzen.txt">Lizenzen</a></div>
     </div>`);
@@ -804,6 +806,26 @@
     el.querySelectorAll('input[name=stimme]').forEach((x) => x.onchange = () => { s.stimme = x.value; save(); A.sfx('tap'); speak("Hello! I'm Ruby.", 'ruby'); });
     el.querySelector('[data-name]').onclick = async () => { await askName(); settings(); };
     el.querySelector('[data-parents]').onclick = () => { A.sfx('tap'); parentGate(); };
+    el.querySelector('[data-kids]').onclick = () => { A.sfx('tap'); kidsPrivacy(); };
+  }
+
+  /** Datenschutz in Kindersprache (Pflicht 8): kurz, ehrlich, mit Ruby. */
+  function kidsPrivacy() {
+    const punkte = [
+      ['🏠', 'Alles, was du hier lernst, bleibt auf <b>diesem Gerät</b>. Wir bekommen deinen Lernstand nicht.'],
+      ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
+      ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme wird nach dem Anhören gelöscht.'],
+      ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur, wie oft die App geöffnet wird – aber nie, wer du bist oder was du lernst.'],
+      ['📒', 'Deine eigenen Wortlisten bleiben auch nur hier auf dem Gerät.'],
+      ['👪', 'Manche Dinge (zum Beispiel das Eltern-Handy koppeln) dürfen nur deine Eltern einschalten. Frag sie, wenn du etwas wissen willst!'],
+    ];
+    const el = screen(`<div>
+      <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">🔒 Deine Daten</div></div>
+      ${ruby('Squawk! Ich passe auf deine Daten auf wie auf meine Federn. 🦜', 'talk')}
+      <div class="card">${punkte.map(([e, t]) => `<div class="set" style="justify-content:flex-start;gap:14px"><span style="font-size:30px">${e}</span><span style="font-weight:600">${t}</span></div>`).join('')}</div>
+      <p class="muted" style="margin-top:12px">Für Erwachsene: <a href="datenschutz.html">ausführliche Datenschutzerklärung</a> · <a href="datenblatt-schule.html">Datenblatt für Schulen</a></p>
+    </div>`);
+    el.querySelector('[data-back]').onclick = () => { A.sfx('tap'); settings(); };
   }
 
   function parentGate() {
@@ -876,7 +898,7 @@
       <div class="card" style="margin-top:14px"><h3>Kommt bald</h3>
         <p class="muted">Eltern-Handy koppeln mit verschlüsselter Sicherung (immer kostenlos) und die Klassenarbeits-Generalprobe.</p></div>
       <div class="card" style="margin-top:14px"><h3>Daten</h3><p class="muted">Alles wird nur in diesem Browser gespeichert. Kein Konto, keine Werbung, kein Tracking.</p>
-        <div class="row"><a class="btn small white" href="datenschutz.html">Datenschutz</a><button class="btn small white" data-reset>🗑️ Alle Daten löschen</button></div></div>
+        <div class="row"><a class="btn small white" href="datenschutz.html">Datenschutz</a><a class="btn small white" href="datenblatt-schule.html">Datenblatt für Schulen</a><button class="btn small white" data-reset>🗑️ Alle Daten löschen</button></div></div>
       <div class="foot">Version ${esc(window.APP_VERSION)} vom ${esc(window.APP_VERSION_DATE)}</div>
     </div>`);
     el.querySelectorAll('[data-sw]').forEach((b) => b.onclick = () => { s[b.dataset.sw] = s[b.dataset.sw] === false; save(); A.sfx('tap'); b.classList.toggle('on', s[b.dataset.sw] !== false); b.setAttribute('aria-checked', String(s[b.dataset.sw] !== false)); });
