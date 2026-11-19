@@ -191,6 +191,11 @@ class Settings(private val prefs: KeyValueStore) {
     private val _tutorHints = MutableStateFlow(prefs.getBoolean("nachhilfe_hinweise", true))
     val tutorHints = _tutorHints.asStateFlow()
     fun setTutorHints(v: Boolean) { prefs.edit().putBoolean("nachhilfe_hinweise", v).apply(); _tutorHints.value = v }
+
+    /** Online-Spracherkennung (Browser-Sprachdienst, z. B. Google) – nur mit Eltern-Erlaubnis, voreingestellt AUS (Recht V6, Regel 10k). */
+    private val _onlineSprache = MutableStateFlow(prefs.getBoolean("online_spracherkennung", false))
+    val onlineSprache = _onlineSprache.asStateFlow()
+    fun setOnlineSprache(v: Boolean) { prefs.edit().putBoolean("online_spracherkennung", v).apply(); _onlineSprache.value = v }
     /** Wann wurde der Nachhilfe-Hinweis je Profil und Thema zuletzt gezeigt (Häufigkeitsgrenze) */
     fun hintShown(profileId: String): Map<String, Long> = de.wissensgarten.core.model.Zaehlung.THEMEN
         .associateWith { prefs.getLong("hinweis_${profileId}_$it", 0L) }.filterValues { it > 0 }

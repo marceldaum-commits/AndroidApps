@@ -41,7 +41,7 @@
   const shuffle = (a) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
   const pickOthers = (all, not, n) => shuffle(all.filter((x) => x !== not)).slice(0, n);
   let token = 0; // wechselt bei jedem Bildschirmwechsel – laufende Abläufe brechen dann ab
-  function screen(html) { token++; A.stop(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); return el; }
+  function screen(html) { token++; A.stop(); A.verwerfen(); $app.innerHTML = ''; const el = typeof html === 'string' ? h(html) : html; $app.appendChild(el); window.scrollTo(0, 0); return el; }
   const alive = (t) => t === token;
   // Test-Stufe am Hostnamen (Standard UMZUG-LERNEN): „lernen-test.“, Übergang „quasselquest-test.“, lokal.
   const isTest = () => /(^|[.-])(test|staging)([.-]|$)|localhost|127\.0\.0\.1/.test(location.hostname) || location.protocol === 'file:';
@@ -823,12 +823,12 @@
   /** Datenschutz in Kindersprache (Pflicht 8): kurz, ehrlich, mit Ruby. */
   function kidsPrivacy(zurueck) {
     const punkte = [
-      ['🏠', 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>. Wir bekommen sie nicht.'],
+      ['🏠', 'Deine Antworten, dein Name und dein Lernstand bleiben auf <b>diesem Gerät</b>.'],
       ['🙈', 'Du brauchst <b>kein Konto</b> und keine E-Mail. Deinen Namen musst du nicht verraten – ein Spitzname reicht.'],
       ['🎤', 'Das Mikrofon geht <b>nur an, wenn du auf 🎤 tippst</b>. Deine Aufnahme bleibt auf dem Gerät und wird nach dem Anhören gelöscht. Nur wenn deine Eltern es erlauben, darf die Spracherkennung deines Browsers übers Internet mithelfen.'],
-      ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur anonym, wie oft die App genutzt wird – ohne deinen Namen und ohne das, was du lernst.'],
+      ['🚫', 'Hier gibt es <b>keine Werbung</b>. Wir zählen nur anonym, wie oft etwas in der App benutzt wird – ohne deinen Namen und ohne deine Antworten. Deine Eltern können das Zählen ausschalten.'],
       ['📒', 'Deine eigenen Wortlisten bleiben auch nur hier auf dem Gerät.'],
-      ['👪', 'Manche Dinge, zum Beispiel das Koppeln mit dem Handy deiner Eltern, können nur Erwachsene einschalten.'],
+      ['👪', 'Manche Dinge, zum Beispiel die Spracherkennung übers Internet, können nur Erwachsene einschalten.'],
     ];
     const el = screen(`<div>
       <div class="top"><button class="iconbtn" data-back aria-label="Zurück">←</button><div class="title" style="font-size:22px">🔒 Deine Daten</div></div>

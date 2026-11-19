@@ -63,3 +63,7 @@ Bei 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand ble
   (+ Kommentar bei standLaden). Bei grund `familie-weg`: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“
   Tests: nachgebauter Server mit `{fehler:'unbekannt'}` bzw. `{fehler:'leer'}`; „Nach dem Löschen“-Prüfung auf 'familie-weg'. → 51 Prüfungen.
 - **Recht: freigegeben mit Auflagen (A6, v1.6):** nur EIN Einwilligungstext (der Pflichttext), darunter Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und Knopf „Einverstanden – Familie anlegen“, nichts vorausgewählt. Anlegen/Beitreten nur hinter dem Eltern-Tor. Roadmap (noch nicht bauen): ein Kind einzeln löschen.
+- **Recht V8 (v1.7):** Beitreten per Link/QR hinter dem Eltern-Tor mit demselben Pflichttext, Knopf „Einverstanden – Familie beitreten“ (nicht vorausgewählt), Abbrechen = nichts hochladen.
+  Sicherheitshinweis NICHT im Pflichttext, sondern dauerhaft auf der Familien-Seite und bei „Link teilen“, QR-Code und Notfall-Blatt:
+  „Wer den Familien-Link oder den QR-Code hat, kann die Lernstände eurer Familie öffnen, ändern und löschen. Teilt ihn nur mit Personen, denen ihr vertraut, und bewahrt das Notfall-Blatt sicher auf.“
+  Meldung mit „Rechtsbezug: ja (V8)“.

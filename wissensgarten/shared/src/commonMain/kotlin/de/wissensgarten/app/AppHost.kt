@@ -110,6 +110,8 @@ interface AppHost {
     /** QR-Code mit der Kamera scannen (nur wenn features.qrScan) */
     fun scanQr(onResult: (String?) -> Unit) { onResult(null) }
     /** Spracherkennung vorhanden? (Sprech-Spiel) */
+    /** Eltern-Erlaubnis für Online-Spracherkennung an die Plattform geben (Web: Browser-Sprachdienst). */
+    fun setOnlineSpeech(allowed: Boolean) {}
     fun speechAvailable(): Boolean = listener?.available() == true
     /** Seitliche Neigung des Geräts (Kipp-Spiel); null = kein Sensor */
     fun tilt(): kotlinx.coroutines.flow.Flow<Float>? = null

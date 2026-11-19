@@ -29,6 +29,7 @@ private fun jsMusicPlay(name: String, level: Double): Unit = js("window.wg.music
 private fun jsMusicStop(): Unit = js("window.wg.musicStop()")
 private fun jsMusicLevel(level: Double): Unit = js("window.wg.musicLevel(level)")
 private fun jsSrAvailable(): Boolean = js("window.wg.srAvailable()")
+private fun jsSetSrOnline(on: Boolean): Unit = js("window.wg.srOnline = on")
 private fun jsListen(lang: String): Unit = js("window.wg.listen(lang)")
 private fun jsSrState(): String = js("window.wg.sr.state")
 private fun jsSrWords(): String = js("JSON.stringify(window.wg.sr.words)")
@@ -259,6 +260,7 @@ class WebHost : AppHost {
         (if (jsTestStage()) "https://staging.mathenachhilfe-online.com" else "https://www.mathenachhilfe-online.com") + "/lern-apps/?src=wissensgarten-kopf"
     override fun openAppsPage() = jsOpenApps(appsPageUrl)
     override fun secureRandomB64(n: Int): String? = runCatching { jsRandomB64(n) }.getOrNull()
+    override fun setOnlineSpeech(allowed: Boolean) = jsSetSrOnline(allowed)
     override val testStage: Boolean get() = jsTestStage()
     override suspend fun elternPut(url: String, schreib: String, keyB64: String, json: String): Int =
         runCatching { jsElternPut(url, schreib, keyB64, json).await<JsNumber>().toInt() }.getOrDefault(-1)

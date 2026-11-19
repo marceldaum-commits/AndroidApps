@@ -34,9 +34,10 @@ object PrivacyText {
             "eures Browsers auf diesem Gerät und wird nicht an uns gesendet. Es gibt keinen Geräte-Sync – auf einem anderen Gerät beginnt ein neuer Garten. " +
             "Damit der Garten auch ohne Internet startet, legt der Browser die Programmdateien der Web-App in seinem Zwischenspeicher ab.",
         "Mikrofon (Brummi-Radio, Sprech-Spiel)" to
-            "Nur wenn euer Kind eine Sprech-Funktion startet und ihr dem Browser das Mikrofon erlaubt habt. Die Spracherkennung des Browsers " +
-            "wandelt die gesprochene Antwort in Text um – je nach Browser geschieht das auf dem Gerät oder über den Sprachdienst des Browser-Herstellers " +
-            "(z. B. Google bei Chrome, Apple bei Safari). Der Wissensgarten speichert keine Aufnahmen und sendet sie nirgendwohin.",
+            "Das Mikrofon wird nur benutzt, wenn euer Kind eine Sprech-Funktion selbst startet und ihr dem Browser das Mikrofon erlaubt habt. " +
+            "Erkannt wird die Sprache dann nur auf dem Gerät selbst, wenn es das kann; sonst gibt es Antwort-Knöpfe. " +
+            "Nur wenn ihr im Elternbereich „Online-Spracherkennung erlauben“ einschaltet (voreingestellt aus), schickt der Browser die gesprochenen Antworten " +
+            "an den Sprachdienst seines Herstellers (z. B. Google bei Chrome, Apple bei Safari). Der Wissensgarten speichert keine Aufnahmen und sendet sie nirgendwohin.",
         "Vorlesen" to
             "Vorgelesen wird mit der Stimme Nova, einer mit KI (OpenAI) erzeugten Stimme. Feste Texte vertonen wir vorab. " +
             "Texte, die erst in der Aufgabe entstehen (z. B. Hör-noch-mal-Sätze im Brummi-Radio), schickt die App ohne Angaben zu dir " +
