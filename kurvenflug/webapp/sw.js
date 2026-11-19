@@ -1,5 +1,5 @@
-// Kurvenflug 2.6.0 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
-const CACHE = "kurvenflug-2.6.0";
+// Kurvenflug 2.7.0 – Service Worker (automatisch erzeugt). Macht die WebApp offline spielbar.
+const CACHE = "kurvenflug-2.7.0";
 const SHARED = [
   "./",
   "bccfa839aa4b38489c76.wasm",
@@ -18,7 +18,7 @@ const SHARED = [
   "manifest.webmanifest"
 ];
 const ONLY = {
-  wasm: ["5f3eb7af2183871d1862.wasm",
+  wasm: ["2a5a5670d906fb236ea4.wasm",
   "kurvenflug.js"],
   js: ["kurvenflug-compat.js"]
 };
@@ -28,14 +28,15 @@ self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES.map(f => new Request(f, { cache: "no-cache" })))).then(() => self.skipWaiting()));
 });
 self.addEventListener("activate", e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("kurvenflug-") && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
+  // nur eigene, alte Programm-Caches „kurvenflug-<version>“ löschen – nie fremde Apps auf der gemeinsamen Adresse
+  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => /^kurvenflug-\d/.test(k) && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 self.addEventListener("fetch", e => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
   // version.json immer frisch vom Server (Update-Prüfung); ohne Netz die gespeicherte
-  if (url.pathname.endsWith("/version.json")) { e.respondWith(fetch(e.request).catch(() => caches.match(e.request, { ignoreSearch: true }))); return; }
-  e.respondWith(caches.match(e.request, { ignoreSearch: true }).then(r => r || fetch(e.request).then(res => {
+  if (url.pathname.endsWith("/version.json")) { e.respondWith(fetch(e.request).catch(() => caches.open(CACHE).then(c => c.match(e.request, { ignoreSearch: true })))); return; }
+  e.respondWith(caches.open(CACHE).then(c => c.match(e.request, { ignoreSearch: true })).then(r => r || fetch(e.request).then(res => {
     // Dateien der anderen Fassung (Wechsel per Knopf) beim ersten Laden ebenfalls offline merken
     const p = url.pathname.split("/").pop();
     if (res.ok && (ONLY.wasm.includes(p) || ONLY.js.includes(p))) { const copy = res.clone(); caches.open(CACHE).then(c => c.put(e.request, copy)); }

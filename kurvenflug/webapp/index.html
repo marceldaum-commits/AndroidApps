@@ -6,7 +6,7 @@
   <title>Kurvenflug – Mathe im All</title>
   <meta name="description" content="Kurvenflug: Formeln steuern das Raumschiff. Funktionen und Physik für Klasse 5–10 – ohne Werbung, ohne Anmeldung.">
   <meta name="theme-color" content="#0B1026">
-  <meta name="kurvenflug-version" content="2.6.0">
+  <meta name="kurvenflug-version" content="2.7.0">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
@@ -47,16 +47,23 @@
     <div class="s">Volt macht das Raumschiff startklar …</div>
     <div class="bar"><b id="kf-bar"></b></div>
     <div class="s" id="kf-pct" style="font-size:13px;opacity:.7">Lade …</div>
-    <div class="v">Version 2.6.0 <span id="kf-fassung"></span> · <a href="https://www.mathenachhilfe-online.com/?src=kurvenflug-fusszeile" target="_blank" rel="noopener">Ein Angebot von Nachhilfe – online</a> ·
+    <div class="v">Version 2.7.0 <span id="kf-fassung"></span> · <a href="https://www.mathenachhilfe-online.com/?src=kurvenflug-fusszeile" target="_blank" rel="noopener">Ein Angebot von Nachhilfe – online</a> ·
       <a href="https://www.mathenachhilfe-online.com/impressum/" target="_blank" rel="noopener">Impressum</a> ·
       <a href="https://www.mathenachhilfe-online.com/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></div>
   </div>
   <noscript><p style="padding:24px">Kurvenflug braucht JavaScript und einen aktuellen Browser (Chrome, Edge, Firefox oder Safari ab 2024).</p></noscript>
   <script>
+    // Gemeinsame Adresse lernen.mathenachhilfe-online.com (Marcel 19.11.): alle Schlüssel mit eindeutigem Präfix „kurvenflug.“.
+    // Einmalige Übernahme der alten „kf.“-Schlüssel (nur wenn das Ziel noch leer ist); die alten bleiben als Rückweg liegen.
+    (function () { try {
+      if (localStorage.getItem('kurvenflug.__praefix') === '1') return;
+      Object.keys(localStorage).forEach(function (k) { if (k.indexOf('kf.') === 0) { var n = 'kurvenflug.' + k.slice(3); if (localStorage.getItem(n) === null) localStorage.setItem(n, localStorage.getItem(k)); } });
+      localStorage.setItem('kurvenflug.__praefix', '1');
+    } catch (e) {} })();
     // ---------------------------------------------------------------- Start: Fassung wählen, nie eine weiße Seite
     // Die Compose-Oberfläche hängt sich an <body> (Shadow-DOM) – alles, was im <body> steht, wird dann unsichtbar.
     // Darum liegen Ladebild und Fehlermeldung am <html>-Element.
-    var KF_VER = '2.6.0';
+    var KF_VER = '2.7.0';
     (function () { var l = document.getElementById('kf-loader'); if (l) document.documentElement.appendChild(l); })();
     // Pixeldichte auf 2 begrenzen: Bei 3 (neuere iPhones) wird die Zeichenfläche 1179×2556 Pixel groß – das kostet viel
     // Grafikspeicher, und iOS beendet dann den Tab (weiße Seite). Mit 2 sieht man keinen Unterschied, braucht aber weniger als die Hälfte.
@@ -69,8 +76,8 @@
       ['schaerfe', 'gl', 'diag'].forEach(function (k) {
         var m = new RegExp('[?&]' + k + '=([a-z0-9]+)').exec(location.search);
         try {
-          if (m) { if (m[1] === 'standard' || m[1] === '0') localStorage.removeItem('kf.opt.' + k); else localStorage.setItem('kf.opt.' + k, m[1]); }
-          o[k] = localStorage.getItem('kf.opt.' + k) || '';
+          if (m) { if (m[1] === 'standard' || m[1] === '0') localStorage.removeItem('kurvenflug.opt.' + k); else localStorage.setItem('kurvenflug.opt.' + k, m[1]); }
+          o[k] = localStorage.getItem('kurvenflug.opt.' + k) || '';
         } catch (e) { o[k] = m ? m[1] : ''; }
       });
       return o;
@@ -94,22 +101,22 @@
     var kfIsReady = false, kfReadyAt = 0, kfFailed = false;
     window.kfMode = (function () {
       var q = /[?&]modus=(js|wasm|auto)/.exec(location.search);
-      if (q) kfStore('kf.modus', q[1] === 'auto' ? null : q[1]);
-      var m = kfStore('kf.modus');
+      if (q) kfStore('kurvenflug.modus', q[1] === 'auto' ? null : q[1]);
+      var m = kfStore('kurvenflug.modus');
       if (m === 'js' || m === 'wasm') return m;
       if (!kfWasmOk()) return 'js';
       // Safari/WebKit: seit 2.5.20 wieder die schnelle Fassung – mit -Xwasm-no-jstag und der Skiko-Umgehung für WebKit-Fehler 329421
       // (Endaufrufe) hat Marcel sie auf dem iPhone bestätigt (18.11.). Startfehler wechseln weiter automatisch auf JS.
       // Ist die schnelle Fassung in DIESER Version schon einmal gescheitert (Fehler oder Absturz), gleich JS – eine neue Version versucht Wasm wieder
-      var last = kfStore('kf.start') || '';
-      if (/^wasm\|(geladen|läuft)/.test(last)) kfStore('kf.wasmGescheitert', KF_VER);
-      if (kfStore('kf.wasmGescheitert') === KF_VER) return 'js';
+      var last = kfStore('kurvenflug.start') || '';
+      if (/^wasm\|(geladen|läuft)/.test(last)) kfStore('kurvenflug.wasmGescheitert', KF_VER);
+      if (kfStore('kurvenflug.wasmGescheitert') === KF_VER) return 'js';
       return 'wasm';
     })();
     // Start-Protokoll: startet → geladen (alle Dateien da) → läuft (Programm gestartet) → bereit (gelöscht).
     // Steht beim nächsten Öffnen noch eine Stufe da, ist der letzte Start dort abgebrochen (z. B. iOS hat den Tab beendet).
     var KF_STAGE_NAMES = { 'geladen': 'nach dem Laden (beim Übersetzen des Programms)', 'läuft': 'beim Aufbau der Oberfläche' };
-    window.kfPrevAbort = (function () { var p = /^(wasm|js)\|(geladen|läuft)/.exec(kfStore('kf.start') || ''); return p ? p[1] + ' – ' + KF_STAGE_NAMES[p[2]] : ''; })();
+    window.kfPrevAbort = (function () { var p = /^(wasm|js)\|(geladen|läuft)/.exec(kfStore('kurvenflug.start') || ''); return p ? p[1] + ' – ' + KF_STAGE_NAMES[p[2]] : ''; })();
     window.kfGl = { wanted: null, used: null, canvas: null };
     (function () {
       var orig = HTMLCanvasElement.prototype.getContext;
@@ -128,19 +135,19 @@
         return orig.apply(this, arguments);
       };
     })();
-    window.kfStage = function (st) { if (!kfIsReady) kfStore('kf.start', window.kfMode + '|' + st + '|' + Date.now()); };
+    window.kfStage = function (st) { if (!kfIsReady) kfStore('kurvenflug.start', window.kfMode + '|' + st + '|' + Date.now()); };
     window.kfStage('startet');
     (function () { var f = document.getElementById('kf-fassung'); if (f) f.textContent = '· Fassung ' + window.kfMode + (window.kfPrevAbort ? ' · letzter Start abgebrochen: ' + window.kfPrevAbort : ''); })();
     function kfFail(why, detail, notTheProgram) {
       if (kfFailed) return; kfFailed = true;
       // Startfehler in der schnellen Fassung: ohne Zutun sofort die einfache Fassung laden (gemerkt für diese Version)
-      if (window.kfMode === 'wasm' && !notTheProgram && !kfStore('kf.modus')) {
-        kfStore('kf.wasmGescheitert', KF_VER); kfStore('kf.start', null);
-        kfStore('kf.letzterWechsel', String(detail || why).slice(0, 160));
+      if (window.kfMode === 'wasm' && !notTheProgram && !kfStore('kurvenflug.modus')) {
+        kfStore('kurvenflug.wasmGescheitert', KF_VER); kfStore('kurvenflug.start', null);
+        kfStore('kurvenflug.letzterWechsel', String(detail || why).slice(0, 160));
         location.reload(); return;
       }
-      if (window.kfMode === 'wasm' && !notTheProgram) kfStore('kf.wasmGescheitert', KF_VER);
-      kfStore('kf.start', null);
+      if (window.kfMode === 'wasm' && !notTheProgram) kfStore('kurvenflug.wasmGescheitert', KF_VER);
+      kfStore('kurvenflug.start', null);
       var ios = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       var d = document.createElement('div'); d.id = 'kf-fehler';
       d.innerHTML = '<div style="font-size:48px">🛰️</div><div class="t">Kurvenflug konnte nicht starten</div><div class="d"></div>' +
@@ -150,7 +157,7 @@
       var b = d.querySelector('.b');
       if (other === 'wasm' && !kfWasmOk()) b.style.display = 'none';
       b.textContent = other === 'js' ? 'Einfache Fassung laden' : 'Schnelle Fassung laden';
-      b.onclick = function () { kfStore('kf.modus', other); if (other === 'wasm') kfStore('kf.wasmGescheitert', null); location.reload(); };
+      b.onclick = function () { kfStore('kurvenflug.modus', other); if (other === 'wasm') kfStore('kurvenflug.wasmGescheitert', null); location.reload(); };
       d.querySelector('.a').onclick = function () { location.reload(); };
       d.querySelector('.k').textContent = 'Version ' + KF_VER + ' · Fassung ' + window.kfMode + (detail ? ' · ' + String(detail).slice(0, 160) : '') +
         ' · ' + (window.devicePixelRatio || 1) + 'x' + (window.kfPrevAbort ? ' · vorher abgebrochen: ' + window.kfPrevAbort : '');
@@ -251,8 +258,8 @@
       var e = kfInstallEvt; if (!e) return; kfInstallEvt = null;
       e.prompt(); if (e.userChoice) e.userChoice.then(function (c) { if (c && c.outcome === 'accepted') kfInstalled = true; });
     };
-    var KF_VERSION = '2.6.0';
-    try { var kfLast = localStorage.getItem('kf.lastVersion'); if (kfLast && kfLast !== KF_VERSION) window.kfUpdated = KF_VERSION; localStorage.setItem('kf.lastVersion', KF_VERSION); } catch (e) {}
+    var KF_VERSION = '2.7.0';
+    try { var kfLast = localStorage.getItem('kurvenflug.lastVersion'); if (kfLast && kfLast !== KF_VERSION) window.kfUpdated = KF_VERSION; localStorage.setItem('kurvenflug.lastVersion', KF_VERSION); } catch (e) {}
     var kfStart = Date.now(), kfPending = false, kfReloading = false, kfAtHome = true, kfReg = null;
     function kfReload() { if (!kfReloading) { kfReloading = true; location.reload(); } }
     function kfSafe() { return document.hidden || Date.now() - kfStart < 15000 || kfAtHome; }
@@ -281,10 +288,10 @@
     var kfSwDone = false;
     window.kfReady = function () {
       if (!kfIsReady) {
-        kfIsReady = true; kfReadyAt = Date.now(); kfStore('kf.start', null); kfWatchCanvas();
-        if (window.kfMode === 'wasm') kfStore('kf.wasmGescheitert', null);
+        kfIsReady = true; kfReadyAt = Date.now(); kfStore('kurvenflug.start', null); kfWatchCanvas();
+        if (window.kfMode === 'wasm') kfStore('kurvenflug.wasmGescheitert', null);
         // Für ein Foto: Der letzte Start ist abgebrochen – sagen, wo, und welche Fassung jetzt läuft
-        var sw = kfStore('kf.letzterWechsel'); if (sw) { kfStore('kf.letzterWechsel', null); setTimeout(function () { if (window.KF && KF.toast) KF.toast('Hinweis: Schnelle Fassung ging nicht (' + sw + ') – einfache Fassung geladen.'); }, 3200); }
+        var sw = kfStore('kurvenflug.letzterWechsel'); if (sw) { kfStore('kurvenflug.letzterWechsel', null); setTimeout(function () { if (window.KF && KF.toast) KF.toast('Hinweis: Schnelle Fassung ging nicht (' + sw + ') – einfache Fassung geladen.'); }, 3200); }
         if (window.kfPrevAbort) setTimeout(function () { if (window.KF && KF.toast) KF.toast('Hinweis: Letzter Start brach ab (' + window.kfPrevAbort + '). Jetzt: Fassung ' + window.kfMode + '.'); }, 3200);
       }
       if (kfSwDone) return; kfSwDone = true;
@@ -299,16 +306,18 @@
       if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js?fassung=' + window.kfMode).then(function (r) { kfReg = r; go(); }).catch(go); else go();
     };
   </script>
-  <script>window.KF_FILES = ({"wasm":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":18104,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"5f3eb7af2183871d1862.wasm","s":6087239,"t":"application/wasm"}],"js":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":18104,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"}]})[window.kfMode];</script>
+  <script>window.KF_FILES = ({"wasm":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":18104,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"},{"u":"2a5a5670d906fb236ea4.wasm","s":6087255,"t":"application/wasm"}],"js":[{"u":"composeResources/de.kurvenflug.web.resources/files/symbols.ttf","s":18104,"t":"font/ttf"},{"u":"bccfa839aa4b38489c76.wasm","s":8405319,"t":"application/wasm"}]})[window.kfMode];</script>
   <script src="kf.js"></script>
   <script>
     // Erst das Ladebild malen lassen (zwei Bilder lang), dann das Programm laden
-    requestAnimationFrame(function () { requestAnimationFrame(function () { setTimeout(function () {
+    // Vorher: Umzug auf lernen.mathenachhilfe-online.com (alte Adresse leitet weiter, neue übernimmt den Lernstand)
+    var kfUmzug = (window.KF && KF.umzug) ? KF.umzug() : Promise.resolve();
+    requestAnimationFrame(function () { requestAnimationFrame(function () { kfUmzug.then(function () { setTimeout(function () {
       var sc = document.createElement('script');
       sc.src = window.kfMode === 'js' ? 'kurvenflug-compat.js' : 'kurvenflug.js';
       sc.onerror = function () { kfFail('Ein Teil von Kurvenflug konnte nicht geladen werden. Bitte Internet prüfen.', sc.src); };
       document.body.appendChild(sc);
-    }, 30); }); });
+    }, 30); }); }); });
   </script>
 </body>
 </html>
