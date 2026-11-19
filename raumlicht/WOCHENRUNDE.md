@@ -79,6 +79,17 @@ Links `https://trainer.mathenachhilfe-online.com/#/u/<id>`:
 - **Experimentopia-Links mit festen Namen** (ab Fr 20.11. auf `experimentopia-test.`, danach live): `https://experimentopia.mathenachhilfe-online.com/#thema=<name>`. Für uns passend: Achterbahn-Baumeister → `energie` (sobald dort gebaut), Schatten-Aufgabe 5-6 → `optik`. Weitere Namen: `schwimmen`, `hebel`, `rollen`, `kraft`, `fallen`, `pendel`, `strom`, `magnet`, `waerme`, `licht`, `schall`, `elektromagnetismus`, `trennen`, `saeure`, `reaktion`, `vererbung`, `zellen`, `ernaehrung`, `oekologie`, `koerper`. Unbekannte Namen öffnen die Startseite. Experimentopia verlinkt nur auf freie Inhalte.
 - **Vorschlag „Aufräum-Tag“ für Fr 20.11.** (Experimentopia gibt ihn als Marcels Vorschlag weiter): Abgaben umsetzen, Direkt-Links und Querverweise bauen, neuer Inhalt nur im eigenen Profil; strittige Abgaben (u. a. Oberstufe Raumlicht/Mathe-Trainer) bleiben bis Montag unverändert. Für Raumlicht heißt das: Gauß als drei Ebenen (eigenes Profil) und Querverweise; an den 52 Analysis-/Stochastik-Aufgaben wird nichts geändert.
 
+## ENTSCHEIDUNG von Marcel, direkt bestätigt am 19.11.2026 abends – gilt für Fr 20.11. und geht allem Älteren vor
+
+**Fr 20.11.: KEIN Inhaltsupdate, keine neuen Funktionen. Nur prüfen und korrigieren.** Das Inhaltsupdate (LGS & Gauß als drei Ebenen, neue Abi-Prüfungsaufgaben) rutscht auf **Di 24.11.**
+
+Am Freitag zu tun:
+1. **Gründliche Selbstprüfung:** Start in WebKit (iPhone-Technik) und am PC; alle Links und das Eltern-Tor (kein Kinderpfad führt ohne Tor zur Kasse oder nach außen – bei Raumlicht mit der abgesprochenen Ausnahme: Eltern-Kopplung, „← Alle Apps“, Mathe-Trainer-Links, Probestunde); Theorie und Lösungswege fachlich prüfen, Ergebnisse nachrechnen; Zählung, Datenschutz- und Lizenz-Hinweise; Fehlerkonsole leer. Gefundene Fehler beheben.
+2. **Die drei PC-Punkte als Korrektur (Marcel: „morgen“):** (1) Begrüßungsfenster einer Aufgabe am PC als schmale Karte in der rechten Spalte; (2) Galton-Brett und Erlebnisse gleicher Bauart: Bühne links, Bedienung rechts; (3) bei großem Fenster Schrift in Listen und Reglern maßvoll größer. Danach in 1920×1080, 1366×768, 1280×800 nachprüfen.
+3. Bereits erledigt und auf Test (2.18.38): KI-Hinweis „Antwort einer KI – sie kann Fehler enthalten.“, Familien-Texte V8. **Familien-Speicher bleibt nur auf der Teststufe** (`Familie.ENABLED = false` nicht anfassen).
+4. **Bis Fr 16 Uhr an die AppZentrale melden** (session_015vg1Tms4CCrpWLETiJCt12): was geprüft, was gefunden und behoben, Commit, Rückweg (derzeit live 2.18.34), Live-Bitte für den Freitags-Stand, Zeile „Rechtsbezug: ja/nein (was)“.
+5. Bekannter offener Punkt für die Prüfung: `web-vorversion.mjs` wackelte am 19.11. in etwa 2 von 5 Läufen (Konsolenfehler beim Dateitausch) – Ursache klären.
+
 ## Stand 19.11.2026, 14:50 Uhr – für die nächsten Updates
 
 - **Live:** 2.18.33 (Umzug auf `lernen.mathenachhilfe-online.com/raumlicht/`), alte Adresse leitet samt Lernstand weiter.

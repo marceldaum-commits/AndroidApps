@@ -38,3 +38,9 @@ Lücken: Sprechpraxis mit Rückmeldung in Schulwerkzeugen; spielerisches Latein 
 4. Leichter Klassenmodus ohne Konten (Klassen-Code) vor Sommer 2027.
 Elternbereich: Einmalkauf, Gratis-Sicherung und Kontofreiheit ausdrücklich nennen. Schullizenz einheitlich 29 €/Klasse, 149–249 €/Schule.
 - **Schloss-Text bei Pro (AppZentrale 19.11., UWG Anh. Nr. 28):** kein Preis, kein Kaufen-Knopf, keine Aufforderung ans Kind (auch nicht „Frag deine Eltern“). Nur: „Das gehört zu Quasselquest Pro.“ (Marcel/Recht 19.11.), Weg ins Tor über neutralen Knopf „Für Eltern“ → Weg nur zum Eltern-Tor.
+
+## Fr 20.11. – nur Korrekturen (Marcel: „Ja, nur Korrekturen“)
+Kein Inhaltsupdate, keine neuen Funktionen (auch NICHT Familien-Speicher / Pro – kommt Di 24.11.). Stattdessen Selbstprüfung:
+Start iPhone/WebKit + PC · alle Links + Eltern-Tor (kein Kinderpfad ohne Tor nach außen/zur Kasse) · Schloss-Texte · Inhalte fachlich korrekt ·
+Zählung, Datenschutz-, Lizenz-Hinweise, Fehlerkonsole leer. Gefundenes beheben. Bis Fr 16 Uhr an AppZentrale: geprüft / gefunden+behoben / Commit / Rückweg / „Rechtsbezug: ja/nein“.
+- **Recht V10 (Fr-Pflicht):** „← Alle Apps“ hinter dem Eltern-Tor – bei uns schon seit 0.4.0 so. Ergänzen: Grund im Tor „Hier geht es zur Website.“ (Tor bekommt optionalen Grund-Text). Links von App zu App: haben wir keine mehr (Wissensgarten-Link in 0.4.0 entfernt). Ab Di 24.11. zeigt „Alle Apps“ auf die neue preisfreie Übersicht (Adresse kommt) und darf wieder ohne Tor sein. Meldung mit „Rechtsbezug: ja (V10)“.
