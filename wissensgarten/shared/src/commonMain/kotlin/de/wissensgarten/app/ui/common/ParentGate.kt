@@ -93,18 +93,18 @@ fun ParentGateDialog(reason: String, onPass: () -> Unit, onCancel: () -> Unit, r
                 }
                 if (wrong) Text("Das war nicht richtig – hier ist eine neue Aufgabe.", color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall)
-                // Eigene Ziffern-Tastatur: 1–9, ⌫, 0, OK
-                listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("⌫", "0", "OK")).forEach { row ->
+                // Eigene Ziffern-Tastatur: 1–9, ← (löschen), 0, OK – „⌫“ fehlt in der Web-Schrift
+                listOf(listOf("1", "2", "3"), listOf("4", "5", "6"), listOf("7", "8", "9"), listOf("←", "0", "OK")).forEach { row ->
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), modifier = Modifier.fillMaxWidth()) {
                         row.forEach { k ->
                             OutlinedButton(onClick = {
                                 when (k) {
-                                    "⌫" -> input = input.dropLast(1)
+                                    "←" -> input = input.dropLast(1)
                                     "OK" -> check()
                                     else -> if (input.length < ParentGate.MAX_DIGITS) input += k
                                 }
                             }, modifier = Modifier.weight(1f).heightIn(min = 48.dp)
-                                .semantics { contentDescription = when (k) { "⌫" -> "Löschen"; "OK" -> "Bestätigen"; else -> k } },
+                                .semantics { contentDescription = when (k) { "←" -> "Löschen"; "OK" -> "Bestätigen"; else -> k } },
                                 contentPadding = PaddingValues(4.dp)) { Text(k, fontSize = 18.sp) }
                         }
                     }

@@ -57,7 +57,7 @@ fun TutorialScreen(onDone: () -> Unit) {
             }
             Plant(
                 Stage.of(memory), Scheduler.wilt(memory, now), 330f, 5,
-                Modifier.fillMaxWidth(0.7f).aspectRatio(0.9f), grow.value,
+                Modifier.fillMaxWidth(0.7f).widthIn(max = 320.dp).aspectRatio(0.9f), grow.value,
             )
             if (!memory.isSeed) {
                 val r = Scheduler.retrievability(memory, now)
