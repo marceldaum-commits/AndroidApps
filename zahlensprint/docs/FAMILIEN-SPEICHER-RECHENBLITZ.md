@@ -38,3 +38,8 @@ Server-`rev` entscheidet, nie Zeitstempel allein. Bei 409 sicher zusammenführen
 2. Familien-Nummer eintippen, dann `fa.loeschen()`. Lokal nur die Familien-Schlüssel entfernen.
 3. 404 auf anderen Geräten: „Diese Familie gibt es nicht mehr. Lernstand bleibt auf diesem Gerät.“
 4. Einzelnes Kind entfernen: noch nicht anbieten.
+
+## Freigabe „Recht“ mit Auflagen (v1.6, 19.11.)
+- Auflage A6: **nur ein Einwilligungstext** = der Pflichttext oben (unverändert), darunter der Link „Mehr dazu in der Datenschutzerklärung (Abschnitt 10m)“ und der Knopf **„Einverstanden – Familie anlegen“**. Nichts vorausgewählt.
+- Anlegen und Beitreten nur hinter dem Eltern-Tor.
+- Roadmap, noch nicht bauen: ein Kind einzeln löschen.
