@@ -2,6 +2,10 @@
 
 Jede Version steht hier mit ihrem Datum.
 
+## 2.18.37 – Familien-Speicher: gemeinsamer Baustein auf neuem Stand (nur Teststufe) (19.11.2026)
+- Unter der Haube: Raumlicht nutzt die neue Fassung des gemeinsamen Familien-Bausteins aller Lern-Apps. Er erkennt jetzt selbst, ob es eine Familie nicht mehr gibt – eine zusätzliche Abfrage entfällt.
+- Für Eltern und Kinder sieht alles aus wie in 2.18.36. Weiter nur auf der Teststufe.
+
 ## 2.18.36 – Familien-Speicher: klarer Hinweis, Protokoll und „Familie löschen“ (nur Teststufe) (19.11.2026)
 - **Ein Hinweis für alle Lern-Apps:** Bevor Eltern eine Familie anlegen oder beitreten, lesen sie denselben Text wie in unseren anderen Apps und tippen auf „Einverstanden“. Er sagt offen: Für den Notfall gibt es eine verschlüsselte Kopie des Familien-Schlüssels bei uns. Technisch könnten wir damit Lernstände lesen – wir tun das nicht und nutzen sie nur, wenn ihr uns um Wiederherstellung bittet.
 - **Protokoll:** Auf der Familien-Seite steht, wann die Familie angelegt wurde – und jede Wiederherstellung, falls es je eine gibt.

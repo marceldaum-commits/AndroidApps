@@ -20,7 +20,7 @@ const server = http.createServer((q, r) => {
     if (pfad === '/protokoll') return end(200, { eintraege: [{ art: 'angelegt', t: '2026-11-19T15:31' }] });
     if (pfad === '/liste') return end(200, { blobs: [...e.blobs].map(([k, b]) => ({ pfad: k, rev: b.rev, t: b.t })) });
     if (/^\/(index|s\/[a-z][a-z0-9-]+\/([\w-]{22}|geraet-[\w-]+))$/.test(pfad)) { const b = e.blobs.get(pfad);
-      if (q.method === 'GET') return b ? end(200, { d: b.d, rev: b.rev, t: b.t }) : end(404, {});
+      if (q.method === 'GET') return b ? end(200, { d: b.d, rev: b.rev, t: b.t }) : end(404, { fehler: 'leer' });
       if (q.method === 'PUT') { if (!darf()) return end(403, { fehler: 'schreibrecht' }); if (String(b ? b.rev : 0) !== String(h['if-match'])) return end(409, { fehler: 'veraltet', rev: b?.rev ?? 0, d: b?.d, t: b?.t });
         const nb = { d: body, rev: (b?.rev || 0) + 1, t: new Date().toISOString() }; e.blobs.set(pfad, nb); return end(200, { rev: nb.rev }); } }
     end(404, {}); }); return; }

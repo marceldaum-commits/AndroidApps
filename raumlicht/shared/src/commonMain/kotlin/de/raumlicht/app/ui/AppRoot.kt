@@ -439,7 +439,7 @@ fun AppRoot(
                         de.raumlicht.core.model.Familie.State.decode("${p[0]}|${p.getOrElse(1) { "" }}|$y|0||$n")?.let { st -> famSet(st); famSync(true, st) } ?: run { famStatus = de.raumlicht.core.model.Familie.problem("fehler") } }
                         else famStatus = de.raumlicht.core.model.Familie.problem(r) } },
                     onJoin = { link -> famStatus = null; val fam = de.raumlicht.core.model.Familie.fromLink(link)
-                        if (fam == null) famStatus = de.raumlicht.core.model.Familie.problem("link") else famCall("kinder", fam) { r, x, y -> if (r == "ok") famJoin = Triple(fam, y, de.raumlicht.core.model.Familie.kids(x)) else famStatus = de.raumlicht.core.model.Familie.problem(r) } },
+                        if (fam == null) famStatus = de.raumlicht.core.model.Familie.problem("link") else famCall("kinder", fam) { r, x, y -> if (r == "ok") famJoin = Triple(fam, y, de.raumlicht.core.model.Familie.kids(x)) else famStatus = de.raumlicht.core.model.Familie.problem(if (r == "weg") "keine" else r) } },
                     onPick = { kid -> famJoin?.let { j -> famPick(j.first, j.second, kid) } },
                     onNewKid = { name -> famJoin?.let { j -> val n = de.raumlicht.core.model.Familie.cleanName(name); famCall("kind", j.first, n) { r, x, _ -> if (r == "ok") famPick(j.first, j.second, de.raumlicht.core.model.Familie.Kid(x, n)) else famStatus = de.raumlicht.core.model.Familie.problem(r) } } },
                     onCancelJoin = { famJoin = null; famStatus = "Nichts geändert." },

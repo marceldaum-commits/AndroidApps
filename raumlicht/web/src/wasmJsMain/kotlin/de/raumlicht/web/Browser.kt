@@ -67,14 +67,14 @@ fun elternHolen(url: String, key: String, done: (Int, String) -> Unit): Unit = j
  * [done] bekommt „ok“ oder den Grund (netz, keine, konflikt, schluessel, …) und bis zu zwei Werte.
  */
 fun familieRuf(server: String, was: String, a: String, b: String, c: String, d: String, done: (String, String, String) -> Unit): Unit = js("""{
-    var fertig = false, ende = function (s, x, y) { if (!fertig) { fertig = true; done(String(s), String(x == null ? '' : x), String(y == null ? '' : y)); } };
+    var fertig = false, ende = function (s, x, y) { if (s === 'familie-weg') s = 'weg'; if (!fertig) { fertig = true; done(String(s), String(x == null ? '' : x), String(y == null ? '' : y)); } };
     try {
         var laden = window.__rlFamilieModul || (window.__rlFamilieModul = new Function('u', 'return import(u)')(new URL('familie.js', document.baseURI).href));
         laden.then(function (F) {
             var APP = 'raumlicht', teile = function (t) { var p = String(t).split('.'); return { famId: p[0], famKey: p[1], schreib: p[2] }; };
             var zugang = function (fam) { return F.familie(fam, { basis: server, f: function (u, o) { o = o || {}; o.credentials = 'omit'; o.referrerPolicy = 'no-referrer'; return fetch(u, o); } }); };
             var zeilen = function (index) { return (index.kinder || []).map(function (k) { return k.kindId + '\t' + String(k.name || '').split('\t').join(' ').split('\n').join(' '); }).join('\n'); };
-            var index = function (A) { return A.indexLaden().then(function (r) { return r.ok ? { index: r.daten, rev: r.rev } : r.grund === 'keine' ? A.liste().then(function (l) { return l.ok ? { index: F.neuerIndex(), rev: 0 } : { grund: l.grund }; }) : { grund: r.grund }; }); };
+            var index = function (A) { return A.indexLaden().then(function (r) { return r.ok ? { index: r.daten, rev: r.rev } : r.grund === 'keine' ? { index: F.neuerIndex(), rev: 0 } : { grund: r.grund }; }); };
             if (was === 'neu') { var fam = F.neueFamilie(), A = zugang(fam);
                 return A.anlegen().then(function (r) { if (!r.ok) return ende(r.grund);
                     var k = F.kindHinzu(F.appMerken(F.neuerIndex(), APP), { name: a });
@@ -85,11 +85,11 @@ fun familieRuf(server: String, was: String, a: String, b: String, c: String, d: 
                 var k = F.kindHinzu(F.appMerken(i.index, APP), { name: b });
                 return B.indexSichern(k.index, i.rev).then(function (s) { if (!s.ok) return ende(s.grund); ende('ok', k.kind.kindId, B.nummer); }); });
             if (was === 'sichern') return B.standSichern(APP, b, JSON.parse(c), Number(d) || 0).then(function (r) {
-                if (r.ok) return ende('ok', r.rev); if (r.grund === 'keine') return ende('weg'); if (r.grund === 'konflikt') return ende('konflikt', r.rev, r.daten ? JSON.stringify(r.daten) + '\n' + (r.stand || '') : ''); ende(r.grund); });
-            if (was === 'laden') return B.standLaden(APP, b).then(function (r) { if (!r.ok && r.grund === 'keine') return B.liste().then(function (l) { ende(l.ok ? 'keine' : l.grund === 'keine' ? 'weg' : l.grund); }); if (!r.ok) return ende(r.grund); ende('ok', JSON.stringify(r.daten), r.rev + '|' + (r.stand || '')); });
-            if (was === 'protokoll') return B.protokoll().then(function (r) { if (!r.ok) return ende(r.grund === 'keine' ? 'weg' : r.grund);
+                if (r.ok) return ende('ok', r.rev); if (r.grund === 'konflikt') return ende('konflikt', r.rev, r.daten ? JSON.stringify(r.daten) + '\n' + (r.stand || '') : ''); ende(r.grund); });
+            if (was === 'laden') return B.standLaden(APP, b).then(function (r) { if (!r.ok) return ende(r.grund); ende('ok', JSON.stringify(r.daten), r.rev + '|' + (r.stand || '')); });
+            if (was === 'protokoll') return B.protokoll().then(function (r) { if (!r.ok) return ende(r.grund);
                 ende('ok', ((r.daten && r.daten.eintraege) || []).map(function (e) { return String(e.art || '').split('\t').join(' ') + '\t' + String(e.t || ''); }).join('\n')); });
-            if (was === 'loeschen') return B.loeschen().then(function (r) { ende(r.ok ? 'ok' : r.grund === 'keine' ? 'weg' : r.grund); });
+            if (was === 'loeschen') return B.loeschen().then(function (r) { ende(r.ok ? 'ok' : r.grund); });
             ende('fehler');
         }).catch(function () { ende('baustein'); });
     } catch (e) { ende('baustein'); }
