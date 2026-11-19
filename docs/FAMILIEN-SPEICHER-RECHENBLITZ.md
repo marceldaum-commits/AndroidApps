@@ -25,3 +25,6 @@ Server-`rev` entscheidet, nie Zeitstempel allein. Bei 409 sicher zusammenführen
 - Automatisch sichern nach jeder Runde (höchstens alle 2 Min.) und beim Verstecken; beim Start `liste` prüfen, Neueres laden.
 - Elternbereich (hinter dem Eltern-Tor): koppeln, Kind zuordnen, Status, Notfall-Blatt, Löschen, Protokoll, Zustimmung beim ersten Koppeln.
 - Bestehende eltern/v1-Kopplung: beim Familien-Link Stand übernehmen; Bericht (`b/`) bleibt.
+
+## Wiederherstellungs-Schlüssel (öffentlich, Marcel 19.11.)
+`REC_PUB = vMrORj9yObM3Ijd9sGStjUB9I3f6ot9E8M-70yGeQ0M` (X25519, 32 B base64url). Gilt auch für Test-Familien auf lernen-test; keinen eigenen Test-Schlüssel verwenden. Der private Teil liegt nur in Bitwarden.
