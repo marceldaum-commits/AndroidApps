@@ -108,15 +108,18 @@ private fun Toggle(title: String, sub: String, on: Boolean, onChange: (Boolean) 
 }
 
 /**
- * Forscher-Pass: was drin ist, was frei bleibt, Preis, Kauf nur nach einer Frage für Erwachsene, Code-Eingabe (E-Mail/Link).
+ * Forscher-Pass: was drin ist, was frei bleibt. Kinder sehen nur „Frag deine Eltern“ – keinen Preis, keinen Kaufknopf
+ * (Entscheidung Marcel, 19.11.2026). Preis, Kauf und Code-Eingabe erst nach der Frage für Erwachsene ([ParentGate]).
  * Solange keine Kasse eingetragen ist ([Pro.ENABLED] falsch), ist alles frei und es gibt nichts zu kaufen.
  */
 @Composable
-fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, onBack: () -> Unit) {
+fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, parentsAtStart: Boolean = false, onBack: () -> Unit) {
     val sfx = LocalSfx.current; val open = LocalOpenLink.current
     val code by (state?.prefs?.proCode ?: kotlinx.coroutines.flow.MutableStateFlow<String?>(null)).collectAsState()
     val has = state?.let { Pro.valid(code, it.todayDay()) || it.prefs.pro.value } ?: false
     var gate by remember { mutableStateOf(false) }
+    /** Eltern haben die Frage für Erwachsene beantwortet → Preis, Kauf, Code */
+    var parents by remember { mutableStateOf(parentsAtStart) }
     val counter = LocalCounter.current
     LaunchedEffect(Unit) { counter?.count("pro_ansehen", if (what == "Alles") "einstellungen" else "gesperrt") }
     var input by remember { mutableStateOf("") }
@@ -131,7 +134,8 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
             }, if (has) de.experimentopia.app.ui.blubb.Mood.CHEER else de.experimentopia.app.ui.blubb.Mood.HAPPY, speak = false)
             Panel(Modifier.fillMaxWidth(), border = E.Sun) {
                 Text("Das bringt der Forscher-Pass", color = E.Sun, fontWeight = FontWeight.Black)
-                Pro.benefits.forEach { Text(it, color = E.Text, fontSize = 14.sp) }
+                // Kinder sehen kein Wort vom Kaufen – nur was drin ist
+                Pro.benefits.filter { has || parents || !Pro.ENABLED || !it.contains("kaufen") }.forEach { Text(it, color = E.Text, fontSize = 14.sp) }
             }
             Panel(Modifier.fillMaxWidth(), border = E.Mint) {
                 Text("Das bleibt immer frei", color = E.Mint, fontWeight = FontWeight.Black)
@@ -140,14 +144,20 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
             when {
                 has -> Text("✅ Freigeschaltet. Danke! 💛", color = E.Green, fontWeight = FontWeight.Bold, modifier = Modifier.testTag("pro-status"))
                 !Pro.ENABLED -> Text("Der Forscher-Pass kommt bald – bis dahin ist alles frei. 🎁", color = E.Sun, modifier = Modifier.testTag("pro-status"))
+                // Kinder: kein Preis, kein Kaufknopf – nur der Weg zu den Eltern
+                !parents -> Panel(Modifier.fillMaxWidth(), border = E.Violet) {
+                    Text("👪 Frag deine Eltern", color = E.Violet, fontWeight = FontWeight.Black, fontSize = 20.sp)
+                    Text("Zeig ihnen diese Seite. Bis dahin warten noch viele freie Versuche auf dich – auf jeder Insel die ersten fünf.", color = E.Text, fontSize = 14.sp)
+                    GlowButton({ gate = true }, Modifier.fillMaxWidth().testTag("pro-eltern"), color = E.Violet) { Text("🔐 Für Eltern", fontWeight = FontWeight.Bold) }
+                }
                 else -> Panel(Modifier.fillMaxWidth(), border = E.Sun) {
+                    Text("Für Eltern", color = E.Muted, fontSize = 12.sp)
                     Text(Pro.WEB_PRICE, color = E.Sun, fontWeight = FontWeight.Black, fontSize = 34.sp)
                     Text("einmalig · kein Abo · keine Werbung · inkl. 19 % MwSt. · gilt in der Web-App", color = E.Text, fontSize = 13.sp)
-                    GlowButton({ gate = true }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = E.Sun) { Text("💛 Forscher-Pass holen", fontWeight = FontWeight.Bold) }
-                    Text("Nur mit Erlaubnis der Eltern – vorher kommt eine Frage für Erwachsene.", color = E.Muted, fontSize = 12.sp)
+                    GlowButton({ counter?.count("pro_kasse", if (what == "Alles") "einstellungen" else "gesperrt"); open(Pro.checkoutUrl) }, Modifier.fillMaxWidth().testTag("pro-kaufen"), color = E.Sun) { Text("💛 Forscher-Pass kaufen", fontWeight = FontWeight.Bold) }
                 }
             }
-            if (!has && state != null && Pro.publicKey.length == 64) Panel(Modifier.fillMaxWidth()) {
+            if (!has && parents && state != null && Pro.publicKey.length == 64) Panel(Modifier.fillMaxWidth()) {
                 Text("Code aus der E-Mail", color = E.Text, fontWeight = FontWeight.Bold)
                 Text("Am einfachsten: den Link aus der E-Mail antippen. Oder den Code hier einfügen.", color = E.Muted, fontSize = 13.sp)
                 OutlinedTextField(input, { input = it; msg = null }, Modifier.fillMaxWidth().testTag("pro-code"), placeholder = { Text("EX-…") }, minLines = 2, maxLines = 5)
@@ -159,12 +169,12 @@ fun ProScreen(what: String, state: de.experimentopia.app.ui.AppState? = null, on
                 }, Modifier.fillMaxWidth(), enabled = input.isNotBlank()) { Text("Code einlösen", fontWeight = FontWeight.Bold) }
                 msg?.let { Text(it, color = if (it.startsWith("Super")) E.Green else E.Pink) }
             }
-            Text("Für Eltern: Einmalkauf ohne Abo. Der Kauf gilt in der Web-App auf diesem Gerät bzw. in diesem Browser, ohne Konto. Gespeichert wird nur der Freischalt-Code – nichts über das Kind. " +
+            if (parents || !Pro.ENABLED) Text("Für Eltern: Einmalkauf ohne Abo. Der Kauf gilt in der Web-App auf diesem Gerät bzw. in diesem Browser, ohne Konto. Gespeichert wird nur der Freischalt-Code – nichts über das Kind. " +
                 "Schon gemachte Versuche bleiben immer offen.", color = E.Muted, fontSize = 12.sp)
             GlowButton(onBack, Modifier.fillMaxWidth()) { Text("Zurück", fontWeight = FontWeight.Bold) }
         }
     }
-    if (gate) ParentGate(state?.todayDay() ?: 0L, onDismiss = { gate = false }) { gate = false; counter?.count("pro_kasse", if (what == "Alles") "einstellungen" else "gesperrt"); open(Pro.checkoutUrl) }
+    if (gate) ParentGate(state?.todayDay() ?: 0L, onDismiss = { gate = false }) { gate = false; parents = true; counter?.count("elternbereich", if (what == "Alles") "einstellungen" else "gesperrt") }
 }
 
 /** Frage für Erwachsene vor jedem Kauf: Geburtsjahr eingeben, mindestens 18 Jahre (Familienrichtlinie). */

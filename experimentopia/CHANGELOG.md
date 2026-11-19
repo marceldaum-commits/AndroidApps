@@ -1,5 +1,9 @@
 # Changelog – Experimentopia
 
+## 2.13.1 – Schloss heißt „Frag deine Eltern“ (19.11.2026)
+
+- 👪 Tippt ein Kind auf einen Versuch mit Schloss, sieht es nur noch „Frag deine Eltern“ und was der Forscher-Pass bringt. Es gibt keinen Preis und keinen Kaufknopf für Kinder. Preis, Kauf und Code-Eingabe erscheinen erst nach der Frage für Erwachsene. Auf jeder Insel bleiben die ersten fünf Versuche frei, die Wasserinsel ganz.
+
 ## 2.13.0 – Neue Adresse: lernen.mathenachhilfe-online.com/experimentopia (19.11.2026)
 
 - 🏠 **Alle Lern-Apps wohnen jetzt unter einer Adresse**: Experimentopia ist ab sofort unter **lernen.mathenachhilfe-online.com/experimentopia/** zu finden. Wer die alte Adresse öffnet, wird automatisch weitergeleitet.

@@ -2,6 +2,14 @@
 
 Neueste oben.
 
+## 19.11.2026 – Version 2.13.1 vom 19.11.2026: Schloss → „Frag deine Eltern“ – fertig für den Betriebstest
+
+Entscheidung Marcel (19.11., über die AppZentrale): Schlösser bleiben, Pro bleibt aktiv, 5 Versuche je Insel frei, kein Kaufknopf für Kinder.
+- Bis 2.13.0 zeigte ein Schloss Preis und „Forscher-Pass holen“ (Kauf erst hinter der Frage für Erwachsene). Jetzt sieht das Kind nur „Frag deine Eltern“, was drin ist und was frei bleibt – kein Preis, kein Kaufknopf, kein Wort vom Kaufen, keine Code-Eingabe. Erst „🔐 Für Eltern“ + Frage für Erwachsene zeigt Preis, „Forscher-Pass kaufen“ und Code-Eingabe. Gilt auch für den Weg über die Einstellungen.
+- Zählung: Das Öffnen über die Frage für Erwachsene zählt als `elternbereich` (Ort `gesperrt`/`einstellungen`), der Kauf-Klick weiter als `pro_kasse`.
+- Prüfungen: Test `proKind` (kein `pro-kaufen`, kein Preis, keine Code-Eingabe), Bilder 66_forscher_pass_kind / 66_forscher_pass_kaufen angesehen; alle Modell-/App-Tests, Lint, Webapp, web-start (11), web-umzug (21) grün. Umzug unverändert.
+- Rückweg: 2.13.0 (`216aafcc`).
+
 ## 19.11.2026 – Echter Rundlauf 2.13.0 auf lernen-test: bestanden
 
 Ausgelieferte Server, nichts von hier (`tools/web-umzug-echt.mjs`, Chromium): experimentopia-test.… mit Lernstand und `#thema=optik` → Weiterleitung `#umzug=<id>.<key>.<schreib>&thema=optik` → lernen-test.…/experimentopia/ (2.13.0) → Lernstand vollständig, Optik aufgeklappt. Server: PUT 204, GET 200, DELETE 204, danach GET 404. Bild 95. Live erst nach Freigabe des Leitstands.

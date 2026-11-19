@@ -181,7 +181,19 @@ class ScreenshotTest {
     /** Mit eingetragener Kasse: Preis, Kauf-Knopf, Code-Eingabe – und gesperrte Versuche auf der Insel */
     @Test fun proShop() {
         Pro.configure("979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812", "https://www.mathenachhilfe-online.com/kasse/?add-to-cart=4143")
-        try { shot("66_forscher_pass_kaufen") { de.experimentopia.app.ui.settings.ProScreen("Alles") {} } } finally { Pro.configure("", "") }
+        try { shot("66_forscher_pass_kaufen") { de.experimentopia.app.ui.settings.ProScreen("Alles", parentsAtStart = true) {} } } finally { Pro.configure("", "") }
+    }
+    /** Kind tippt ein Schloss an: nur „Frag deine Eltern“ – kein Preis, kein Kaufknopf (Entscheidung Marcel, 19.11.2026) */
+    @Test fun proKind() {
+        Pro.configure("979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812", "https://www.mathenachhilfe-online.com/kasse/?add-to-cart=4143")
+        try {
+            shot("66_forscher_pass_kind", prepare = { r ->
+                r.onNodeWithTag("pro-kaufen").assertDoesNotExist()
+                r.onNodeWithTag("pro-code").assertDoesNotExist()
+                r.onNodeWithText(Pro.WEB_PRICE).assertDoesNotExist()
+                r.onNodeWithTag("pro-eltern").assertExists()
+            }) { de.experimentopia.app.ui.settings.ProScreen("Knallgas") {} }
+        } finally { Pro.configure("", "") }
     }
     @Test fun proIsland() {
         Pro.configure("979eb515eb05b04dcc42e5fb776f108cdbdc86bb3c7cf28e05721fdde9e6b812", "https://www.mathenachhilfe-online.com/kasse/?add-to-cart=4143")
