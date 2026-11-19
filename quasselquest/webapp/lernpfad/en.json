@@ -617,29 +617,29 @@
      },
      "aktionen": [
       {
-       "sag": "Say “nine” to Mia.",
-       "de": "Sag „neun“ zu Mia.",
+       "sag": "Give Mia the number nine.",
+       "de": "Gib Mia die Neun.",
        "ding": "9️⃣",
        "anzahl": 1,
        "an": "mia"
       },
       {
-       "sag": "Say “three” to Sam.",
-       "de": "Sag „drei“ zu Sam.",
+       "sag": "Give Sam the number three.",
+       "de": "Gib Sam die Drei.",
        "ding": "3️⃣",
        "anzahl": 1,
        "an": "sam"
       },
       {
-       "sag": "Say “ten” to Ruby.",
-       "de": "Sag „zehn“ zu Ruby.",
+       "sag": "Give Ruby the number ten.",
+       "de": "Gib Ruby die Zehn.",
        "ding": "🔟",
        "anzahl": 1,
        "an": "ruby"
       },
       {
-       "sag": "Say “six” to Grandpa Ted.",
-       "de": "Sag „sechs“ zu Opa Ted.",
+       "sag": "Give Grandpa Ted the number six.",
+       "de": "Gib Opa Ted die Sechs.",
        "ding": "6️⃣",
        "anzahl": 1,
        "an": "ted"
@@ -1096,7 +1096,7 @@
         "on",
         "in"
        ],
-       "tipp": "sister fängt mit s an – also a."
+       "tipp": "sister fängt mit einem Mitlaut (s) an – also a."
       },
       {
        "falsch": "I have a apple.",
@@ -1107,7 +1107,7 @@
         "and",
         "on"
        ],
-       "tipp": "apple fängt mit a an – also an."
+       "tipp": "apple fängt mit einem Selbstlaut (a, e, i, o, u) an – also an."
       },
       {
        "falsch": "My grandpa are funny.",

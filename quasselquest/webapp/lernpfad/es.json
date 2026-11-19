@@ -615,36 +615,36 @@
      },
      "aktionen": [
       {
-       "sag": "Dile «nueve» a Lucía.",
-       "de": "Sag „neun“ zu Lucía.",
+       "sag": "Dale el nueve a Lucía.",
+       "de": "Gib Lucía die Neun.",
        "ding": "9️⃣",
        "anzahl": 1,
        "an": "lucia"
       },
       {
-       "sag": "Dile «tres» a Pablo.",
-       "de": "Sag „drei“ zu Pablo.",
+       "sag": "Dale el tres a Pablo.",
+       "de": "Gib Pablo die Drei.",
        "ding": "3️⃣",
        "anzahl": 1,
        "an": "pablo"
       },
       {
-       "sag": "Dile «diez» a Ruby.",
-       "de": "Sag „zehn“ zu Ruby.",
+       "sag": "Dale el diez a Ruby.",
+       "de": "Gib Ruby die Zehn.",
        "ding": "🔟",
        "anzahl": 1,
        "an": "ruby"
       },
       {
-       "sag": "Dile «siete» a Pablo.",
-       "de": "Sag „sieben“ zu Pablo.",
+       "sag": "Dale el siete a Pablo.",
+       "de": "Gib Pablo die Sieben.",
        "ding": "7️⃣",
        "anzahl": 1,
        "an": "pablo"
       },
       {
-       "sag": "Dile «ocho» a Lucía.",
-       "de": "Sag „acht“ zu Lucía.",
+       "sag": "Dale el ocho a Lucía.",
+       "de": "Gib Lucía die Acht.",
        "ding": "8️⃣",
        "anzahl": 1,
        "an": "lucia"

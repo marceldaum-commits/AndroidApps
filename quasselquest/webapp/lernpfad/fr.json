@@ -245,15 +245,15 @@
        "tipp": "nuit ist weiblich – also bonne."
       },
       {
-       "falsch": "Merci, Madame Martin. S'il te plaît !",
-       "richtig": "Merci, Madame Martin. S'il vous plaît !",
+       "falsch": "Madame Martin, s'il te plaît !",
+       "richtig": "Madame Martin, s'il vous plaît !",
        "wort": "te",
        "korrektur": "vous",
        "choices": [
         "tu",
         "toi"
        ],
-       "tipp": "Zu Erwachsenen sagt man s'il vous plaît."
+       "tipp": "Zu Lehrern und fremden Erwachsenen sagt man vous: s'il vous plaît."
       }
      ]
     },
@@ -423,24 +423,24 @@
        "an": "lea"
       },
       {
-       "sag": "Dis salut au garçon.",
-       "de": "Sag dem Jungen hallo.",
-       "ding": "🙋",
+       "sag": "Dis merci au garçon.",
+       "de": "Sag dem Jungen danke.",
+       "ding": "💐",
        "anzahl": 1,
        "an": "hugo"
       }
      ],
      "fehler": [
       {
-       "falsch": "Tu suis mon ami.",
+       "falsch": "Tu est mon ami.",
        "richtig": "Tu es mon ami.",
-       "wort": "suis",
+       "wort": "est",
        "korrektur": "es",
        "choices": [
-        "est",
+        "suis",
         "être"
        ],
-       "tipp": "du bist = tu es."
+       "tipp": "du bist = tu es – ohne t. est gehört zu il und elle."
       },
       {
        "falsch": "Je suis un fille.",
@@ -618,36 +618,36 @@
      },
      "aktionen": [
       {
-       "sag": "Dis « neuf » à Léa.",
-       "de": "Sag „neun“ zu Léa.",
+       "sag": "Donne le neuf à Léa.",
+       "de": "Gib Léa die Neun.",
        "ding": "9️⃣",
        "anzahl": 1,
        "an": "lea"
       },
       {
-       "sag": "Dis « trois » à Hugo.",
-       "de": "Sag „drei“ zu Hugo.",
+       "sag": "Donne le trois à Hugo.",
+       "de": "Gib Hugo die Drei.",
        "ding": "3️⃣",
        "anzahl": 1,
        "an": "hugo"
       },
       {
-       "sag": "Dis « dix » à Ruby.",
-       "de": "Sag „zehn“ zu Ruby.",
+       "sag": "Donne le dix à Ruby.",
+       "de": "Gib Ruby die Zehn.",
        "ding": "🔟",
        "anzahl": 1,
        "an": "ruby"
       },
       {
-       "sag": "Dis « sept » à Hugo.",
-       "de": "Sag „sieben“ zu Hugo.",
+       "sag": "Donne le sept à Hugo.",
+       "de": "Gib Hugo die Sieben.",
        "ding": "7️⃣",
        "anzahl": 1,
        "an": "hugo"
       },
       {
-       "sag": "Dis « huit » à Léa.",
-       "de": "Sag „acht“ zu Léa.",
+       "sag": "Donne le huit à Léa.",
+       "de": "Gib Léa die Acht.",
        "ding": "8️⃣",
        "anzahl": 1,
        "an": "lea"
@@ -1786,7 +1786,7 @@
         "Ouvert",
         "Ouvrent"
        ],
-       "tipp": "Eine Aufforderung ist die tu-Form ohne tu: Ouvre !"
+       "tipp": "Eine Aufforderung ist die tu-Form ohne tu – und ohne -s: tu ouvres → Ouvre !"
       }
      ]
     }
