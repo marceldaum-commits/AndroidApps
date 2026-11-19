@@ -45,7 +45,7 @@
 (function () {
   'use strict';
   var FILES = {{FILES}};   // [{u, s}] – Wasm-Dateien der App, kleinste zuerst
-  var KEY = 'kf.diag', log = [];
+  var KEY = 'kurvenflug.diag', log = [];
   function store(v) { try { if (v === null) localStorage.removeItem(KEY); else localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
   function load() { try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
   function mb(n) { return (n / 1e6).toFixed(1) + ' MB'; }
@@ -135,8 +135,8 @@
       });
     }); })
     .then(function () { return step(6 + FILES.length, 'Letzter App-Start', function () {
-      var s = null; try { s = localStorage.getItem('kf.start'); } catch (e) {}
-      var f = null; try { f = localStorage.getItem('kf.wasmGescheitert'); } catch (e) {}
+      var s = null; try { s = localStorage.getItem('kurvenflug.start'); } catch (e) {}
+      var f = null; try { f = localStorage.getItem('kurvenflug.wasmGescheitert'); } catch (e) {}
       if (!s) return { text: 'kein abgebrochener Start gespeichert' + (f ? ' · Wasm war gescheitert → einfache Fassung' : '') };
       var x = s.split('|'); return { text: 'abgebrochen: Fassung ' + x[0] + ', Stufe „' + x[1] + '“' + (x[2] ? ' (' + new Date(+x[2]).toLocaleTimeString() + ')' : ''), warn: true };
     }); })
@@ -156,9 +156,9 @@
     location.href = './?modus=auto&diag=1';
   };
   document.getElementById('clear').onclick = function () {
-    var p1 = navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); }) : Promise.resolve();
-    var p2 = window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return k.indexOf('kurvenflug-') === 0; }).map(function (k) { return caches.delete(k); })); }) : Promise.resolve();
-    Promise.all([p1, p2]).then(function () { try { localStorage.removeItem('kf.start'); localStorage.removeItem('kf.wasmGescheitert'); } catch (e) {} alert('Offline-Speicher geleert. Spielstand bleibt erhalten.'); location.reload(); });
+    var p1 = navigator.serviceWorker ? navigator.serviceWorker.getRegistrations().then(function (rs) { var own = new URL('./', location.href).href; return Promise.all(rs.filter(function (r) { return r.scope === own; }).map(function (r) { return r.unregister(); })); }) : Promise.resolve();
+    var p2 = window.caches ? caches.keys().then(function (ks) { return Promise.all(ks.filter(function (k) { return /^kurvenflug-\d/.test(k); }).map(function (k) { return caches.delete(k); })); }) : Promise.resolve();
+    Promise.all([p1, p2]).then(function () { try { localStorage.removeItem('kurvenflug.start'); localStorage.removeItem('kurvenflug.wasmGescheitert'); } catch (e) {} alert('Offline-Speicher geleert. Spielstand bleibt erhalten.'); location.reload(); });
   };
   // Wurde die App aus der Diagnose gestartet und kam zurück, ist Schritt 6 erledigt; sonst zeigt Schritt „Letzter App-Start“ den Abbruch
   run();

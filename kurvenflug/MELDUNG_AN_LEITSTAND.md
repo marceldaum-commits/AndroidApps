@@ -1,5 +1,42 @@
 # Meldungen an den Leitstand – Kurvenflug WebApp
 
+## ✅ 2.7.0 – Umzugs-Version lernen(-test).mathenachhilfe-online.com/kurvenflug/ (Marcel 19.11., Standard UMZUG-LERNEN.md)
+- **Pflichtpunkte:**
+  1. SW löscht nur `kurvenflug-<version>` (`/^kurvenflug-\d/`).
+  2. Notfall-Knopf in diag.html meldet nur die eigene Registrierung ab (scope = eigener Ordner).
+  3. Kein clear().
+  4. Alle Schlüssel `kurvenflug.` (einmalige Übernahme aus `kf.`, alte bleiben als Rückweg); Caches `kurvenflug-nova`/`kurvenflug-stimme`.
+  5. SW nutzt `caches.open(CACHE).match`.
+  6. Manifest `./`, `register('sw.js')`, alles relativ.
+  7. Kein Mikrofon.
+- **Test/Live** wird wie bisher am Hostnamen `-test.` erkannt (lernen-test → trainer-test).
+- **Alte Adresse** (kurvenflug[-test].mathenachhilfe-online.com) zieht vor dem Laden der Oberfläche um:
+  1. Hinweis „Wir ziehen um …“.
+  2. Neue id/schreib/key.
+  3. Klartext `{"app":"kurvenflug","v":1,"umzug":true,"daten":{…}}` → AES-GCM, Body text/plain `<iv>.<ct>`.
+  4. PUT trainer(-test)…/eltern/v1/s/<id>.
+  5. Weiterleitung auf `lernen(-test)…/kurvenflug/` + Query + `#umzug=<id>.<key>.<schreib>&<alter Hash>`.
+  - Ohne Daten: Weiterleitung ohne #umzug.
+  - Fehler (offline, PUT, 12-s-Zeitlimit): KEINE Weiterleitung, normal weiterspielen.
+  - **Zusatz-Sicherung:** Weitergeleitet wird nur, wenn die neue Adresse wirklich KurvenFlug ausliefert (Prüfbild `icons/icon-192.png`).
+    Heute liefert lernen-test noch 404 und ein fremdes Zertifikat → die alte Test-Adresse bleibt unverändert nutzbar, bis ihr lernen-test abbildet.
+  - Home-Bildschirm-App: Hinweis „Bitte neu installieren“ mit Knopf zur neuen Adresse.
+- **Neue Adresse:**
+  - `#umzug=` → Hash sofort entfernen (andere Teile bleiben) → GET, entschlüsseln.
+  - Nur schreiben, wenn noch kein Lernstand da ist; danach DELETE und Hinweis „Lernstand ist mit umgezogen“.
+  - Offline: merkt sich den Umzug und versucht es beim nächsten Start.
+  - Unter lernen. wird nie weitergeleitet.
+- **Browser-Tests** (zwei Ursprünge, echter trainer-test; CORS für localhost im Testgerüst ersetzt):
+  - Umzug gelingt: PUT 204, GET 200, DELETE 204; Fortschritt und Klasse da; `#kapitel=energie` öffnet Energie.
+  - Offline: bleibt, spielt normal.
+  - Neue Adresse hat schon Daten: nicht überschrieben, DELETE 204.
+  - Ziel nicht erreichbar (lernen-test heute): bleibt, kein PUT.
+  - JS-Fassung `?modus=js#kapitel=laser`: gelingt.
+  - Ohne Daten: Weiterleitung ohne #umzug, `#pro=` bleibt.
+  - Übernahme `kf.` → `kurvenflug.`: Klasse/Fortschritt bleiben.
+- **Rückweg:** 2.6.0 wieder ausliefern. Die alten `kf.`-Schlüssel bleiben im Browser liegen; was danach unter `kurvenflug.` gespielt wurde, fehlt dann.
+- versionCode 83 / 2.7.0, Prüfkette grün, keine neuen Dateiendungen.
+
 ## ✅ 2.6.0 – Spezialisierung Kl. 5–10 (Variante B, Marcel 18./19.11., vorgezogen auf Do 19.11.)
 - **Oberstufe heraus:** 6 Kapitel / 35 Level (Ableitung, Extrempunkte, Integral, Vektoren, e-Funktion, Binomialverteilung).
   KurvenFlug hat jetzt **24 Kapitel, 140 Level, Klasse 5–10, alle frei**.
