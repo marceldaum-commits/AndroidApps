@@ -161,3 +161,10 @@ Gestrichen: Prozent → zellen, Wachstum → saeure, Zuordnung → hebel. Je The
 - Wissensgarten-Paketlinks #paket=<ID> ab 2.2.18 (Fr 20.11. auf test).
 - Marcel: Ökosystem-Ideen bis Mo sammeln, NICHTS bauen. Sync-Richtung: eigene E2E-Eltern-Kopplung als Standard, optional verschlüsselte Sicherung im Google Drive der ELTERN (nur Elternbereich, vorher Datenschutzprüfung), kein Google-Konto des Kindes.
 - Unser Beitrag (an die AppZentrale geschickt): Aufwand je Idee (Verzeichnis klein, Lernpfade mittel, Album/Bericht mittel, Link-Mix klein, Familienpass klein), Wiederverwendbares (Links.kt, Kopplung/Sicherung, QR, Bericht, Zählung, Abzeichen, Ed25519), Idee „Experiment des Tages“ + Figuren-Familie, Bedenken (Kind-Daten nur über Eltern-Kopplung, OAuth nur hinter Eltern-Tor, WebKit testen, kein gemeinsamer Speicher über Domains).
+
+## 19.11. – Entscheidungen Ökosystem (Marcel, über AppZentrale)
+- Sicherung und Eltern-Kopplung in allen Apps immer kostenlos (bei uns schon so).
+- Gemeinsame Adresse lernen.mathenachhilfe-online.com/<app>/ geplant – NOCH NICHT umziehen. Unsere Prüfung (an AppZentrale): sw.js und „Speicher leeren“ löschen alle Caches/Service Worker der Domain → vor Umzug auf eigenen Präfix beschränken; localStorage-Schlüssel exEltern/exModus*/exSchritte auf Präfix experimentopia. umstellen; Lernstand-Übergabe von alter zu neuer Adresse nötig (anderer Ursprung); Pfade relativ ✓; Ed25519 domainunabhängig ✓; Basisadressen je eine Konstante.
+- Eltern-Kopplung einmal je Familie mit abgeleiteter Kennung je App (Format am Mo).
+- Reihenfolge: 1. Themenverzeichnis, Link-Wächter, einheitlicher Rahmen; 2. Link-Mix, Klassenarbeits-Paket; 3. Familienpass (Januar); 4. Elternbericht über alle Apps, Album; 5. Thema der Woche.
+- Quasselquest = Sprach-App bis Kl. 13; Wissensgarten = Kompendium übrige Fächer bis Kl. 13.
