@@ -2,6 +2,8 @@
 
 Neueste Runde oben. Ablauf (Leitstand, ab Mo 23.11.2026): Einladung 11:07 · Beitrag bis 13 Uhr · Abstimmung 13–15 Uhr · Schlusswort bis 15 Uhr · Gesamtbild vom Leitstand 15:23.
 
+**Ab 19.11.:** Abstimmungen mit anderen Apps laufen über die AppZentrale (`session_015vg1Tms4CCrpWLETiJCt12`; Protokoll: website_backup, Branch `appzentrale`, `docs/plattform/appzentrale/PROTOKOLL.md`). Tagesmeldung Mo–Fr um 9:43 (gestern fertig, heute, Fragen und Ideen, Blockaden); Zusammenfassung um 12 Uhr. Montags bleibt die Wochenrunde.
+
 Verbindung (Stand 18.11.): Nachrichten an die anderen App-Räume gehen direkt per `send_message` (Test an KurvenFlug zugestellt). Der Leitstand meldet am 18.11., dass auch meine Nachrichten bei ihm ankommen; zur Sicherheit steht der Beitrag trotzdem immer auch hier.
 
 ## Mo 23.11.2026
