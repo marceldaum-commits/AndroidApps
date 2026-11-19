@@ -1,5 +1,8 @@
 # Änderungen – Quasselquest (Sprachen mit Ruby)
 
+## 0.4.1 – Stimmen richtig genannt (19.11.2026)
+- Die freien Computer-Stimmen werden jetzt vollständig und aktuell genannt (Sprecherin, Datensatz, Lizenz, was wir an den Aufnahmen verändert haben) – sichtbar unten auf der Startseite unter „Stimmen & Lizenzen“.
+
 ## 0.4.0 – Lernpfad mit neuen Spielen, alle Karten geprüft (19.11.2026)
 **Neu: Eine Sprache von Anfang an lernen** (Englisch, Französisch, Spanisch)
 - Lernpfad mit 2 Abschnitten („Erste Schritte“ und „Mein Alltag“) zu je 8 Einheiten – Hallo, Zahlen, Farben, Familie, Tiere, Essen, Schule, Körper, Kleidung, Zuhause, Uhrzeit, Wochentage, Hobbys, Wetter und mehr.
