@@ -9,6 +9,12 @@
 
 
 
+## 2.3.2 – Leichte Darstellung (19.11.2026, nach Marcels Diagnose: 66 ms je Bild bei 1920×911, 4 Kerne)
+- **Bild-Bremse jetzt anpassungsfähig:** Der Abstand zwischen zwei Bildern ist mindestens das 2,5-Fache der Zeichenzeit (45–250 ms), also höchstens ~40 % Rechenzeit fürs Zeichnen.
+- **Leichte Darstellung:** Ab 40 ms je Bild merkt sich das Gerät `wg.leicht`. Ab dem nächsten Start ist `devicePixelRatio` 0,8 (nicht auf iOS), das spart etwa ein Drittel der Arbeit. Steuerung: `?leicht=aus` (bleibt aus) bzw. `?leicht=an`.
+- **Diagnose** nennt den Grafik-Treiber (`WEBGL_debug_renderer_info`).
+- **Rückweg:** 2.3.1.
+
 ## 2.3.1 – PC-Darstellung, Bild-Bremse, Eltern-Tor nach gemeinsamem Standard (19.11.2026)
 - **Anlass:** Marcel meldete, dass die App am PC im Vollbild nicht schön aussieht und sehr hängt.
 - **Breite Bildschirme** (`App.kt`, BoxWithConstraints):

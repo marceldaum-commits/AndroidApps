@@ -103,7 +103,7 @@
               window.wgDiag('Fläche: ' + (c ? c.width + '×' + c.height + ' px, CSS ' + Math.round(b.width) + '×' + Math.round(b.height) + ' @' + Math.round(b.left) + ',' + Math.round(b.top) +
                 ', sichtbar ' + cs.display + '/' + cs.visibility + '/' + cs.opacity + ', Hintergrund ' + cs.backgroundColor : 'fehlt') +
                 ', Body-Hintergrund ' + getComputedStyle(document.body).backgroundColor + ', oben in der Mitte: ' + (top ? top.tagName + (top.id ? '#' + top.id : '') : '–'));
-              if (gl) window.wgDiag('WebGL: ' + gl.getParameter(gl.VERSION) + ' · ' + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + ' · Attribute ' + JSON.stringify(a));
+              if (gl) { var dri = gl.getExtension('WEBGL_debug_renderer_info'); window.wgDiag('WebGL: ' + gl.getParameter(gl.VERSION) + ' · ' + gl.getParameter(gl.SHADING_LANGUAGE_VERSION) + ' · Grafik: ' + (dri ? gl.getParameter(dri.UNMASKED_RENDERER_WEBGL) : 'unbekannt') + ' · Attribute ' + JSON.stringify(a)); }
             } catch (e) { window.wgDiag('Flächen-Info Fehler: ' + e); }
           }, 1500);
         });
@@ -129,16 +129,18 @@
       try {
         if (/[?&]bremse=aus/.test(location.search)) { window.wgStartNote && window.wgStartNote('Bild-Bremse aus'); return; }
         var orig = window.requestAnimationFrame.bind(window), cancel = window.cancelAnimationFrame.bind(window);
-        var queue = [], nextId = 1, pending = false, slow = false, cost = 0, last = 0;
+        var queue = [], nextId = 1, pending = false, slow = false, cost = 0, last = 0, leichtGemerkt = false;
         var tick = function (t) {
-          if (slow && t - last < 45) { orig(tick); return; }
+          if (slow && t - last < Math.min(250, Math.max(45, cost * 2.5))) { orig(tick); return; }
           pending = false; last = t;
           var q = queue; queue = [];
           var s = performance.now();
           for (var i = 0; i < q.length; i++) { try { q[i].cb(t); } catch (e) { (function (x) { setTimeout(function () { throw x; }); })(e); } }
           var d = performance.now() - s;
           if (q.length) cost = cost * 0.85 + d * 0.15;
-          if (!slow && cost > 22) { slow = true; window.wgDiag && window.wgDiag('Bild-Bremse an (Zeichnen ' + Math.round(cost) + ' ms) → höchstens 20 Bilder/s'); }
+          if (!slow && cost > 22) { slow = true; window.wgDiag && window.wgDiag('Bild-Bremse an (Zeichnen ' + Math.round(cost) + ' ms) → weniger Bilder/s, Eingaben haben Vorrang'); }
+          // Sehr langsam (z. B. ohne Grafik-Beschleunigung): ab dem nächsten Start mit etwas geringerer Auflösung zeichnen
+          if (cost > 40 && !leichtGemerkt) { leichtGemerkt = true; try { if (localStorage.getItem('wg.leicht') !== 'aus') localStorage.setItem('wg.leicht', '1'); } catch (e) {} window.wgDiag && window.wgDiag('langsames Gerät → ab dem nächsten Start „leichte Darstellung“'); }
           else if (slow && cost < 9) { slow = false; window.wgDiag && window.wgDiag('Bild-Bremse aus (Zeichnen ' + Math.round(cost) + ' ms)'); }
           if (queue.length && !pending) { pending = true; orig(tick); }
         };
@@ -297,6 +299,12 @@
           voll = localStorage.getItem('wg.schaerfe') === 'voll';
         } catch (e) {}
         if (voll) window.wgStartNote('Schärfe-Begrenzung aus (?schaerfe=voll)');
+        var leicht = false; try { leicht = localStorage.getItem('wg.leicht') === '1' && !/[?&]leicht=aus/.test(location.search); if (/[?&]leicht=aus/.test(location.search)) localStorage.setItem('wg.leicht', 'aus'); if (/[?&]leicht=an/.test(location.search)) { localStorage.setItem('wg.leicht', '1'); leicht = true; } } catch (e) {}
+        if (leicht && !voll && !ios) {
+          var lw = Math.min(real, 0.8);
+          Object.defineProperty(window, 'devicePixelRatio', { get: function () { return lw; }, configurable: true });
+          window.wgStartNote('leichte Darstellung (langsames Gerät): Schärfe ' + real + ' → ' + lw + ' · ausschalten mit ?leicht=aus');
+        }
         if (ios && use < real && !voll) {
           Object.defineProperty(window, 'devicePixelRatio', { get: function () { return use; }, configurable: true });
           window.wgStartNote('iOS-Schärfe ' + real + ' → ' + use.toFixed(2));

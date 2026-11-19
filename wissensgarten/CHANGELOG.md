@@ -3,6 +3,11 @@
 Kurz und verständlich für Eltern und Kinder. Der Abschnitt der aktuellen Version erscheint automatisch
 im GitHub-Release und in der App unter „App-Update“.
 
+## 2.3.2 – Leichte Darstellung für langsame Rechner (19.11.2026)
+- Merkt der Garten, dass ein Rechner sehr lange zum Zeichnen braucht (z. B. ein PC ohne Grafik-Beschleunigung), zeichnet er ab dem nächsten Start mit etwas weniger Bildpunkten und noch weniger Bildern pro Sekunde. Das sieht minimal weicher aus, reagiert aber deutlich schneller.
+- Für Eltern und Tüftler: `?leicht=aus` schaltet das ab, `?leicht=an` schaltet es ein.
+- Dein Lernstand bleibt vollständig erhalten.
+
 ## 2.3.1 – Schöner am großen Bildschirm, flüssiger auf langsamen Rechnern (19.11.2026)
 - **Am PC und großen Bildschirm:** Der Garten ist jetzt größer und breiter statt einer schmalen Spalte, die Ränder zeigen Himmel und Wiese.
 - **Flüssiger auf langsamen Rechnern:** Kommt ein Rechner beim Zeichnen nicht hinterher (z. B. ohne Grafik-Beschleunigung), malt der Garten etwas weniger Bilder pro Sekunde. Dafür reagiert er sofort auf Tippen, Klicken und Wischen, statt zu hängen.
