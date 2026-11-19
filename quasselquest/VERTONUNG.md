@@ -15,7 +15,7 @@ werden **nicht** mit der App ausgeliefert. Deutsch bleibt bis dahin ohne Ton (nu
   "stimmen": { "en": { "stimme": "af_heart", "kokoro_lang": "en-us" }, "fr": { "stimme": "ff_siwis", "kokoro_lang": "fr-fr" },
                "es": { "stimme": "ef_dora", "kokoro_lang": "es" }, "it": { "stimme": "if_sara", "kokoro_lang": "it" },
                "de": { "stimme": null, "hinweis": "Stimme folgt (Chatterbox/Zonos, Leitstand)" } },
-  "mp3": { "kanaele": 1, "abtastrate": 24000, "bitrate": "48k", "id3_comment": "KI-generiert (synthetische Stimme, <Modell>)",
+  "mp3": { "kanaele": 1, "abtastrate": 24000, "bitrate": "48k", "id3_comment": "KI-generiert (synthetische Stimme, Kokoro TTS)",
            "stille_rand_kuerzen": true, "lautheit_lufs": -18, "vorlauf_s": 0.12 },
   "eintraege": [
     { "id": "3f2a…(20 Zeichen)", "sprache": "en", "text": "Give Mia three fish.", "sprechtext": "Give Mia three fish.",
@@ -36,7 +36,7 @@ werden **nicht** mit der App ausgeliefert. Deutsch bleibt bis dahin ohne Ton (nu
 | `fassungen[].datei` | Pfad relativ zu `quasselquest/webapp/`, an dem die MP3 abgelegt wird |
 
 ## Rückgabe an Quasselquest
-- Alle MP3 unter `audio/server/<sprache>/` mit den Dateinamen aus der Liste, dazu ID3-Kommentar „KI-generiert (synthetische Stimme, Kokoro-82M)“ (Deutsch später mit dem dann verwendeten Modell).
+- Alle MP3 unter `audio/server/<sprache>/` mit den Dateinamen aus der Liste, dazu ID3-Kommentar „KI-generiert (synthetische Stimme, Kokoro TTS)“ (Deutsch später mit dem dann verwendeten Modell).
 - Optional eine Datei `audio/server/pruefung.json` mit `{ "<id>": { "gehoert": "…", "treffer": 0.97 } }`, falls der Server selbst nachhört.
   Sonst übernehme ich die Hörprüfung (Whisper, wie bisher).
 - Ich baue die Dateien in `audio/index.json` ein, prüfe sie (Hörprüfung, Browser-Test) und melde die Version (geplant 0.5.1).
