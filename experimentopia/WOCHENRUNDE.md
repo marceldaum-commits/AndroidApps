@@ -154,3 +154,10 @@ Gestrichen: Prozent → zellen, Wachstum → saeure, Zuordnung → hebel. Je The
 ## Entscheidung (Leitstand, 18.11., 22:40, von Marcel)
 - Profil Experimentopia: **„Naturwissenschaften Kl. 3–10, ausprobieren (Versuche)“**. Di/Fr-Updates wie geplant.
 - Ab Mo 23.11. 8. Teilnehmer in der Wochenrunde: **Sprachlern-App Englisch** (session_015vg1TjebYSwmNKS51LnUAY).
+
+## 19.11. – AppZentrale (neu, von Marcel eingerichtet)
+- Aufräum-Tag auf heute vorgezogen → erledigt mit 2.12.0 (Direkt-Links #thema=, 9 Querverweise, „Kommt bald“ bereinigt).
+- Mathe-Trainer verlinkt ab 2.4.2 auf #thema=optik, hebel, strom, vererbung, zellen, saeure (src=mathetrainer-theorie) – bestätigt.
+- Wissensgarten-Paketlinks #paket=<ID> ab 2.2.18 (Fr 20.11. auf test).
+- Marcel: Ökosystem-Ideen bis Mo sammeln, NICHTS bauen. Sync-Richtung: eigene E2E-Eltern-Kopplung als Standard, optional verschlüsselte Sicherung im Google Drive der ELTERN (nur Elternbereich, vorher Datenschutzprüfung), kein Google-Konto des Kindes.
+- Unser Beitrag (an die AppZentrale geschickt): Aufwand je Idee (Verzeichnis klein, Lernpfade mittel, Album/Bericht mittel, Link-Mix klein, Familienpass klein), Wiederverwendbares (Links.kt, Kopplung/Sicherung, QR, Bericht, Zählung, Abzeichen, Ed25519), Idee „Experiment des Tages“ + Figuren-Familie, Bedenken (Kind-Daten nur über Eltern-Kopplung, OAuth nur hinter Eltern-Tor, WebKit testen, kein gemeinsamer Speicher über Domains).
